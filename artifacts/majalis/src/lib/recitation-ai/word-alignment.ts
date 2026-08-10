@@ -12,6 +12,8 @@
  * المرجع)، كلمة زائدة (إدراج من عند المستخدم).
  */
 
+import { softEqualNormalized } from "./soft-match";
+
 export type AlignOpType = "match" | "substitute" | "delete" | "insert";
 
 /** delete = كلمة مرجعية لم تُنطَق (ناقصة). insert = كلمة نُطقت ولا مقابل لها في المرجع (زائدة). */
@@ -24,6 +26,10 @@ export type AlignOp = {
 const MATCH_SCORE = 2;
 const SUBSTITUTE_PENALTY = -1;
 const GAP_PENALTY = -1;
+
+function isMatch(ref: string, heard: string): boolean {
+  return softEqualNormalized(ref, heard);
+}
 
 /**
  * يحاذي heardWindow (ما نُطق) مقابل refWindow (ما هو متوقَّع من المرجع)
@@ -42,7 +48,7 @@ export function alignWindow(heardWindow: string[], refWindow: string[]): AlignOp
 
   for (let i = 1; i <= n; i++) {
     for (let j = 1; j <= m; j++) {
-      const matchScore = refWindow[i - 1] === heardWindow[j - 1] ? MATCH_SCORE : SUBSTITUTE_PENALTY;
+      const matchScore = isMatch(refWindow[i - 1]!, heardWindow[j - 1]!) ? MATCH_SCORE : SUBSTITUTE_PENALTY;
       const diag = dp[i - 1][j - 1] + matchScore;
       const up = dp[i - 1][j] + GAP_PENALTY;   // حذف: كلمة مرجعية بلا مقابل مسموع
       const left = dp[i][j - 1] + GAP_PENALTY; // إدراج: كلمة مسموعة بلا مقابل مرجعي
@@ -56,10 +62,11 @@ export function alignWindow(heardWindow: string[], refWindow: string[]): AlignOp
   let j = m;
   while (i > 0 || j > 0) {
     if (i > 0 && j > 0) {
-      const matchScore = refWindow[i - 1] === heardWindow[j - 1] ? MATCH_SCORE : SUBSTITUTE_PENALTY;
+      const matched = isMatch(refWindow[i - 1]!, heardWindow[j - 1]!);
+      const matchScore = matched ? MATCH_SCORE : SUBSTITUTE_PENALTY;
       if (dp[i][j] === dp[i - 1][j - 1] + matchScore) {
         ops.push({
-          type: refWindow[i - 1] === heardWindow[j - 1] ? "match" : "substitute",
+          type: matched ? "match" : "substitute",
           refIndex: i - 1,
           heardIndex: j - 1,
         });
@@ -104,7 +111,7 @@ export function alignFittingWindow(heardWindow: string[], refWindow: string[]): 
 
   for (let i = 1; i <= n; i++) {
     for (let j = 1; j <= m; j++) {
-      const matchScore = refWindow[i - 1] === heardWindow[j - 1] ? MATCH_SCORE : SUBSTITUTE_PENALTY;
+      const matchScore = isMatch(refWindow[i - 1]!, heardWindow[j - 1]!) ? MATCH_SCORE : SUBSTITUTE_PENALTY;
       const diag = dp[i - 1][j - 1] + matchScore;
       const up = dp[i - 1][j] + GAP_PENALTY;
       const left = dp[i][j - 1] + GAP_PENALTY;
@@ -125,10 +132,11 @@ export function alignFittingWindow(heardWindow: string[], refWindow: string[]): 
   let j = m;
   while (i > 0 || j > 0) {
     if (i > 0 && j > 0) {
-      const matchScore = refWindow[i - 1] === heardWindow[j - 1] ? MATCH_SCORE : SUBSTITUTE_PENALTY;
+      const matched = isMatch(refWindow[i - 1]!, heardWindow[j - 1]!);
+      const matchScore = matched ? MATCH_SCORE : SUBSTITUTE_PENALTY;
       if (dp[i][j] === dp[i - 1][j - 1] + matchScore) {
         ops.push({
-          type: refWindow[i - 1] === heardWindow[j - 1] ? "match" : "substitute",
+          type: matched ? "match" : "substitute",
           refIndex: i - 1,
           heardIndex: j - 1,
         });

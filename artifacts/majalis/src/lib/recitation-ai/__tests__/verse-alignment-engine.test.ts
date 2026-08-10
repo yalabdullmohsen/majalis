@@ -132,19 +132,19 @@ console.log("═══ POC 5/5 — الإخلاص: مدود كاملة (تلاو
   console.log(`    تفاصيل: ${JSON.stringify(c)}`);
 }
 
-console.log("═══ حدّ معروف وموثَّق — الفاتحة:4 مع نص خام يحوي ألفًا خنجرية حرفيًا ═══");
+console.log("═══ الفاتحة:4 — نص خام بألف خنجرية لا يُنتج خطأ وهميًا (soft-match) ═══");
 {
-  // هذا سيناريو **غير واقعي عمدًا** (لا محرك ASR حقيقي يُخرج تشكيلاً قرآنيًا
-  // كاملاً بما فيه الألف الخنجرية) — يُختبَر هنا فقط ليكون الحدّ موثَّقًا
-  // صراحة لا مكتشَفًا صدفة لاحقًا. تصحيح WORD_POSITION_OVERRIDES يُصحّح
-  // جانب المرجع فقط (لأن ASR حقيقيًا يهجّي "مالك" بألف صريحة دومًا، لا
-  // بألف خنجرية) — تغذية الرسم القرآني الخام حرفيًا لهذه الكلمة تحديدًا
-  // ينتج mismatch مصطنعًا. راجع poc-results.md لتفاصيل القرار.
+  // سابقًا: تغذية الرسم الخام (ألف خنجرية) مع WORD_POSITION_OVERRIDES على
+  // المرجع كانت تُنتج mismatch مصطنعًا واحدًا عند الفاتحة:4. بعد softEqualNormalized
+  // (+ التطبيع) يجب ألا يظهر أي خطأ حفظ وهمي عند تغذية raw لكل كلمات الفاتحة.
   const ref = refWordsFor(1);
   const heardRawWithDaggerAlif = ref.map((w) => w.raw);
   const events = runSession(ref, heardRawWithDaggerAlif);
   const c = counts(events);
-  assert(c.wrong_word === 1 && c.correct === ref.length - 1, `حدّ معروف: خطأ واحد فقط عند الفاتحة:4 (${JSON.stringify(c)}) — غير واقعي بيانيًا وموثَّق`);
+  assert(
+    c.correct === ref.length && c.wrong_word === 0,
+    `نص خام كامل (بما فيه ألف خنجرية) يُحاذى بلا خطأ وهمي (${JSON.stringify(c)})`,
+  );
 }
 
 console.log("═══ إضافي — بداية من موضع خاطئ (يبدأ من منتصف السورة) ═══");

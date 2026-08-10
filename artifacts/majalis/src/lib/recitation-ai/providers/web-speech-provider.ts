@@ -1,39 +1,22 @@
 /**
- * web-speech-provider.ts
- * مزوّد يستخدم Web Speech API القياسي في المتصفح (Chrome/Edge عبر
- * `webkitSpeechRecognition` — Safari وFirefox لا يدعمانها إطلاقًا، تُكتشَف
- * الحالة بأمان عبر isAvailable()) — **حقيقي يعمل فعليًا**، ليس Stub.
+ * web-speech-provider.ts — بث حي عبر Web Speech API (Chrome/Edge).
  *
- * بنفس نمط الاستماع المستخدَم أصلاً في src/hooks/useRecitationTest.ts
- * (الميزة السابقة "اختبر تلاوتك") لكن بوضع `continuous=true` هنا لأن
- * جلسة تسميع كاملة (سورة، عدة آيات) تحتاج استماعًا مستمرًا لا مقطعًا
- * واحدًا فقط.
- *
- * هذا هو المزوّد الوحيد الذي يعمل فعليًا لزوار الموقع عبر متصفح سطح
- * المكتب/جوال خارج تطبيق iOS/Android الأصلي — بدونه، الميزة معطَّلة
- * فعليًا لأغلب زوار majlisilm.com (موقع ويب، لا تطبيق مُثبَّت).
- *
- * الصوت يُعالَج بالكامل عبر محرك التعرّف الصوتي المدمج في نظام التشغيل/
- * المتصفح (قد يُرسِله Chrome لخوادم Google للمعالجة إن لم يتوفر تعرّف
- * كامل على الجهاز — نفس السياسة المُفصَح عنها لمسار iOS الأصلي) — لا
- * إرسال لأي جزء منه لخوادم مجالس نفسها إطلاقًا.
- *
- * ⚠️ إصلاحان جوهريان (2026-07-18) لمشكلة "تعرّف ضعيف جدًا" المُبلَّغة:
- * 1. **كان الكود القديم يُغذّي نصوصًا مؤقتة غير مستقرة (interim results)
- *    لمحرك المحاذاة كأنها كلمات مؤكَّدة** — Chrome يُصدر onresult مرارًا
- *    أثناء "تنقيح" تخمينه لنفس المقطع قبل أن يستقر (مثال: "الحمد" ←
- *    "الحمد لل" ← "الحمد لله")، وكل تنقيح كان يُحتسَب كإضافة كلمات جديدة
- *    فعليًا فيولّد أخطاء وهمية كثيرة تبدو كأن "التعرّف ضعيف" بينما المشكلة
- *    في استهلاك النتيجة الخام لا في دقة Google نفسها. الإصلاح: لا تُغذَّى
- *    للمحرك إلا الكلمات من نتائج **مؤكَّدة (isFinal=true)** فقط.
- * 2. **Chrome يُوقف الاستماع المستمر (continuous) صامتًا** بعد مهلة داخلية
- *    غير موثَّقة رسميًا (عادة حول 60 ثانية أو عند صمت قصير) — بلا إعادة
- *    تشغيل تلقائية، تستمر تلاوة المستخدم بلا أي استماع فعلي بعد ذلك (يبدو
- *    "توقف عن الفهم" تمامًا). الإصلاح: `onend` يُعيد تشغيل `recognition`
- *    تلقائيًا ما دامت الجلسة لم تُنهَ عمدًا عبر endSession().
+ * - النتائج المؤكَّدة (isFinal) تُغذّى للمحرك بثقة كاملة.
+ * - الكلمات المكتملة من interim (كل ما عدا آخر كلمة قيد التنقيح)
+ *   تُصدَر فورًا بثقة منخفضة لتفعيل التمييز الحي بلا أخطاء وهمية صلبة.
+ * - عند وصول النهائي تُتخطى الكلمات التي أُصدرت كـ interim لنفس النص.
  */
-import type { ASRSession, AudioChunk, FinalResult, PartialResult, QuranASRProvider, RecitationConfig } from "../asr-provider";
+import type {
+  ASRSession,
+  AsrPipelineStatus,
+  AudioChunk,
+  FinalResult,
+  PartialResult,
+  QuranASRProvider,
+  RecitationConfig,
+} from "../asr-provider";
 import { ASRProviderUnavailableError } from "../asr-provider";
+import { normalizeQuranWord } from "../quran-normalize";
 
 type WebSpeechResult = ArrayLike<{ transcript: string; confidence: number }> & { isFinal: boolean };
 type WebSpeechRecognition = {
@@ -55,17 +38,24 @@ function getCtor(): WebSpeechRecognitionCtor | null {
   return w.SpeechRecognition || w.webkitSpeechRecognition || null;
 }
 
+/** ثقة interim منخفضة — تُصنَّف غالباً غير واضح لا خطأ صلب */
+const INTERIM_CONFIDENCE = 48;
+
 type Active = {
   recognition: WebSpeechRecognition;
   language: string;
-  processedFinalCount: number; // عدد نتائج event.results[] المؤكَّدة (isFinal) التي عُولجت فعلًا
+  processedFinalCount: number;
   finalWords: string[];
+  /** كلمات interim مكتملة أُصدرت (مطبَّعة) — لمنع التكرار عند النهائي */
+  emittedInterimNorms: string[];
   intentionallyStopped: boolean;
   restartCount: number;
   listeners: Set<(w: string, atMs: number, confidence?: number) => void>;
+  statusListeners: Set<(s: AsrPipelineStatus) => void>;
+  lastStatus: AsrPipelineStatus;
 };
 
-const MAX_AUTO_RESTARTS = 50; // سقف أمان يمنع حلقة إعادة تشغيل لا نهائية عند عطل دائم (مثال: سحب إذن الميكروفون)
+const MAX_AUTO_RESTARTS = 50;
 
 export class WebSpeechQuranASRProvider implements QuranASRProvider {
   readonly id = "web-speech";
@@ -95,9 +85,12 @@ export class WebSpeechQuranASRProvider implements QuranASRProvider {
       language: config.language,
       processedFinalCount: 0,
       finalWords: [],
+      emittedInterimNorms: [],
       intentionallyStopped: false,
       restartCount: 0,
       listeners: new Set(),
+      statusListeners: new Set(),
+      lastStatus: "listening",
     };
     this.sessions.set(id, active);
     active.recognition = this.createRecognition(Ctor, active);
@@ -109,7 +102,14 @@ export class WebSpeechQuranASRProvider implements QuranASRProvider {
       throw new ASRProviderUnavailableError({ code: "PERMISSION_DENIED", message: "تعذّر بدء الاستماع — تحقّق من إذن الميكروفون." });
     }
 
+    this.emitStatus(active, "listening");
     return { id, provider: this.id };
+  }
+
+  private emitStatus(active: Active, status: AsrPipelineStatus) {
+    if (active.lastStatus === status) return;
+    active.lastStatus = status;
+    for (const cb of active.statusListeners) cb(status);
   }
 
   private createRecognition(Ctor: WebSpeechRecognitionCtor, active: Active): WebSpeechRecognition {
@@ -120,47 +120,76 @@ export class WebSpeechQuranASRProvider implements QuranASRProvider {
     recognition.maxAlternatives = 1;
 
     recognition.onresult = (event) => {
-      // نعالج فقط النتائج المؤكَّدة (isFinal) الجديدة — النتيجة الأخيرة
-      // غالبًا مؤقتة (interim) وتتغيّر لاحقًا، فلا تُحتسَب أبدًا هنا.
+      this.emitStatus(active, "matching");
+      const now = Date.now();
+
+      // 1) interim: أصدر الكلمات المكتملة فقط (بدون الأخيرة قيد التنقيح)
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const result = event.results[i];
+        if (!result || result.isFinal) continue;
+        const transcript = result[0]?.transcript ?? "";
+        const parts = transcript.trim().split(/\s+/).filter(Boolean);
+        if (parts.length < 2) continue;
+        const complete = parts.slice(0, -1);
+        for (const w of complete) {
+          const norm = normalizeQuranWord(w);
+          if (!norm) continue;
+          if (active.emittedInterimNorms.includes(norm) &&
+              active.emittedInterimNorms[active.emittedInterimNorms.length - 1] === norm) {
+            continue;
+          }
+          // تجنّب تكرار نفس الكلمة المتتالية من interim متذبذب
+          if (active.emittedInterimNorms[active.emittedInterimNorms.length - 1] === norm) continue;
+          active.emittedInterimNorms.push(norm);
+          if (active.emittedInterimNorms.length > 24) active.emittedInterimNorms.shift();
+          for (const cb of active.listeners) cb(w, now, INTERIM_CONFIDENCE);
+        }
+      }
+
+      // 2) finals مؤكَّدة
       for (let i = active.processedFinalCount; i < event.results.length; i++) {
         const result = event.results[i];
-        if (!result.isFinal) continue;
+        if (!result?.isFinal) continue;
         const transcript = result[0]?.transcript ?? "";
-        // confidence (0-1) → نسبة مئوية 0-100 لمطابقة توثيق onPartialWord.
-        // ⚠️ Chrome يُصدر 0 تمامًا كقيمة افتراضية غير مضبوطة لمعظم النتائج
-        // (خلل موثَّق في محركه، لا انعكاسًا لثقة حقيقية منخفضة) — معاملة 0
-        // كثقة فعلية كانت ستُصنِّف أغلب التطابقات الصحيحة كـ"غير واضح" زورًا،
-        // فتُهدِم الميزة عمليًا. لذا 0 يُعامَل كـ"غير مُبلَّغ" (undefined)
-        // تمامًا مثل مزوّد لا يدعم الثقة أصلاً؛ فقط قيمة > 0 حقيقية تُفعِّل
-        // تصنيف "غير واضح".
         const rawConfidence = result[0]?.confidence;
-        const confidencePct = typeof rawConfidence === "number" && Number.isFinite(rawConfidence) && rawConfidence > 0 ? rawConfidence * 100 : undefined;
+        const confidencePct =
+          typeof rawConfidence === "number" && Number.isFinite(rawConfidence) && rawConfidence > 0
+            ? rawConfidence * 100
+            : undefined;
         const words = transcript.trim().split(/\s+/).filter(Boolean);
-        active.finalWords.push(...words);
         active.processedFinalCount = i + 1;
-        const now = Date.now();
-        for (const w of words) for (const cb of active.listeners) cb(w, now, confidencePct);
+        for (const w of words) {
+          const norm = normalizeQuranWord(w);
+          // إن أُصدرت كـ interim بنفس التطبيع في الذيل — لا تُعاد (تجنّب ازدواج المحرك)
+          const interimIdx = active.emittedInterimNorms.lastIndexOf(norm);
+          if (interimIdx >= 0 && interimIdx >= active.emittedInterimNorms.length - 4) {
+            active.finalWords.push(w);
+            continue;
+          }
+          active.finalWords.push(w);
+          for (const cb of active.listeners) cb(w, now, confidencePct);
+        }
+        active.emittedInterimNorms = [];
       }
+
+      this.emitStatus(active, "speech");
     };
 
     recognition.onerror = (event) => {
-      // "no-speech" شائع جدًا (صمت قصير) وليس عطلاً حقيقيًا — يُدار عبر
-      // onend + إعادة التشغيل التلقائية أدناه، لا داعٍ لفعل شيء هنا.
       if (event.error === "no-speech" || event.error === "aborted") return;
       console.warn(`recitation-ai web-speech: ${event.error}`);
+      if (event.error === "network") this.emitStatus(active, "reconnecting");
     };
 
     recognition.onend = () => {
       if (active.intentionallyStopped) return;
       if (active.restartCount >= MAX_AUTO_RESTARTS) return;
-      // Chrome يُنهي الاستماع المستمر صامتًا دوريًا — إعادة تشغيل فورية
-      // ضرورية وإلا يستمر المستخدم بالتلاوة دون أي استماع فعلي.
       active.restartCount += 1;
+      this.emitStatus(active, "listening");
       try {
         recognition.start();
       } catch {
-        // تعذّر إعادة التشغيل (مثال: الجلسة أُنهيت بين onend ومحاولة إعادة
-        // التشغيل) — يُترَك بصمت، endSession سيُعيد ما تجمَّع فعلًا.
+        /* ignore */
       }
     };
 
@@ -168,7 +197,7 @@ export class WebSpeechQuranASRProvider implements QuranASRProvider {
   }
 
   async transcribeChunk(_session: ASRSession, _chunk: AudioChunk): Promise<PartialResult | null> {
-    return null; // capturesAudioInternally=true
+    return null;
   }
 
   onPartialWord(session: ASRSession, callback: (word: string, atMs: number, confidence?: number) => void): () => void {
@@ -176,6 +205,14 @@ export class WebSpeechQuranASRProvider implements QuranASRProvider {
     if (!active) return () => {};
     active.listeners.add(callback);
     return () => active.listeners.delete(callback);
+  }
+
+  onPipelineStatus(session: ASRSession, callback: (status: AsrPipelineStatus) => void): () => void {
+    const active = this.sessions.get(session.id);
+    if (!active) return () => {};
+    active.statusListeners.add(callback);
+    callback(active.lastStatus);
+    return () => active.statusListeners.delete(callback);
   }
 
   async endSession(session: ASRSession): Promise<FinalResult> {

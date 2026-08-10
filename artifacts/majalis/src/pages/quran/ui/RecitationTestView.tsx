@@ -10,7 +10,13 @@ import { VerseAlignmentEngine } from "@/lib/recitation-ai/verse-alignment-engine
 import { postProcessAlignmentEvents } from "@/lib/recitation-ai/error-detector";
 import { overallSessionConfidence } from "@/lib/recitation-ai/confidence-scorer";
 import { selectBestProvider } from "@/lib/recitation-ai/provider-registry";
-import { ASRProviderUnavailableError, type QuranASRProvider, type ASRSession, type ASRProviderError } from "@/lib/recitation-ai/asr-provider";
+import {
+  ASRProviderUnavailableError,
+  type QuranASRProvider,
+  type ASRSession,
+  type ASRProviderError,
+  type AsrPipelineStatus,
+} from "@/lib/recitation-ai/asr-provider";
 import { isIOS, isAndroid, isNative } from "@/lib/capacitor-utils";
 import { checkTajweedAvailability } from "@/lib/recitation-ai/precision-level";
 import { saveRecitationSession, getRecentRecitationSessions, deleteAllRecitationSessions, type SessionRangeInput } from "@/lib/recitation-ai/recitation-session-service";
@@ -137,6 +143,8 @@ function RecitationTestPageInner() {
   const [unclearNotice, setUnclearNotice] = useState<string | null>(null);
   const unclearNoticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [audioLevel, setAudioLevel] = useState(0);
+  const [pipelineStatus, setPipelineStatus] = useState<AsrPipelineStatus>("idle");
+  const statusUnsubRef = useRef<(() => void) | null>(null);
   const wakeLockRef = useRef<ReturnType<typeof import("@/lib/wake-lock").createWakeLockController> | null>(null);
   /** وضع استماع ثم تكرار: يعرض شريط «استمع للقارئ» قبل فتح الميكروفون. */
   const [listenModelPlaying, setListenModelPlaying] = useState(false);
@@ -363,6 +371,13 @@ function RecitationTestPageInner() {
     if (provider.onAudioLevel) {
       provider.onAudioLevel(asrSession, (level) => setAudioLevel(level));
     }
+    statusUnsubRef.current?.();
+    statusUnsubRef.current = null;
+    if (provider.onPipelineStatus) {
+      statusUnsubRef.current = provider.onPipelineStatus(asrSession, (s) => setPipelineStatus(s));
+    } else {
+      setPipelineStatus("listening");
+    }
 
     if (provider.onPartialWord) {
       unsubRef.current = provider.onPartialWord(asrSession, (word, atMs, confidence) => {
@@ -379,6 +394,9 @@ function RecitationTestPageInner() {
           setListening(false);
           unsubRef.current?.();
           unsubRef.current = null;
+          statusUnsubRef.current?.();
+          statusUnsubRef.current = null;
+          setPipelineStatus("idle");
           void provider.endSession(asrSession).catch(() => {});
           setPhase("error");
         }
@@ -720,6 +738,9 @@ function RecitationTestPageInner() {
     const asrSession = asrSessionRef.current;
     unsubRef.current?.();
     unsubRef.current = null;
+    statusUnsubRef.current?.();
+    statusUnsubRef.current = null;
+    setPipelineStatus("idle");
     setListening(false);
     setPaused(true);
     if (provider && asrSession) {
@@ -868,6 +889,7 @@ function RecitationTestPageInner() {
   const finishSession = useCallback(async () => {
     setListening(false);
     setAudioLevel(0);
+    setPipelineStatus("idle");
     setListenModelPlaying(false);
     listenCancelRef.current.cancelled = true;
     try { wakeLockRef.current?.setSessionActive(false); } catch { /* ignore */ }
@@ -875,6 +897,8 @@ function RecitationTestPageInner() {
     wakeLockRef.current = null;
     unsubRef.current?.();
     unsubRef.current = null;
+    statusUnsubRef.current?.();
+    statusUnsubRef.current = null;
 
     const engine = engineRef.current;
     const provider = providerRef.current;
@@ -1478,11 +1502,17 @@ function RecitationTestPageInner() {
               {listening && !listenModelPlaying && (
                 <span className="rai-listen-wave" aria-hidden="true"><span /><span /><span /></span>
               )}
-              <span style={{ fontFamily: "var(--font-body)", fontSize: ".85rem" }}>
+              <span className="rai-pipeline-status" style={{ fontFamily: "var(--font-body)", fontSize: ".85rem" }}>
                 {listenModelPlaying
                   ? "استمع للقارئ… ثم سمّع"
                   : listening
-                    ? "استمع الآن"
+                    ? (
+                      pipelineStatus === "matching" ? "جاري المطابقة…"
+                      : pipelineStatus === "queued" ? "طابور الشبكة…"
+                      : pipelineStatus === "reconnecting" ? "إعادة الاتصال…"
+                      : pipelineStatus === "speech" ? "استماع…"
+                      : "استماع…"
+                    )
                     : paused
                       ? "متوقّف مؤقتًا"
                       : "جارٍ تهيئة الميكروفون…"}
