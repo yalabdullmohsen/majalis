@@ -88,10 +88,25 @@ if (failures.length === 0) {
         waitUntil: "domcontentloaded",
         timeout: 60_000,
       });
-      await page.waitForSelector(".mf2-lines", { timeout: 45_000 });
-      await sleep(1400);
+      // لا نلتقط قبل جاهزية QPC — التراجع لـ Amiri يُفسد المقارنة (~٢٠٪ على ص٣).
+      await page.waitForSelector(".mf2-lines--qpc-contiguous", { timeout: 60_000 });
+      await page.waitForFunction(
+        (pageNum) => {
+          const el = document.querySelector(".mf2-lines--qpc-contiguous");
+          if (!el) return false;
+          const cs = getComputedStyle(el);
+          if (Number.parseFloat(cs.opacity || "0") < 0.99) return false;
+          if (document.querySelector(".mf2-lines--unicode")) return false;
+          const family = `qpc-page-${pageNum}`;
+          return document.fonts.check(`24px "${family}"`) || document.fonts.check(`24px ${family}`);
+        },
+        n,
+        { timeout: 60_000 },
+      );
+      await page.evaluate(() => document.fonts.ready);
+      await sleep(600);
       await page.addStyleTag({
-        content: `.mpv-toolbar--ayah,.mpv-ayah-header,.mpv-ayah-footer{display:none!important}`,
+        content: `.mpv-toolbar--ayah,.mpv-ayah-header,.mpv-ayah-footer,.mpv-curl-underlay,.mpv-curl-shade{display:none!important}`,
       });
       const shotPath = join(OUT_DIR, `gen-${String(n).padStart(3, "0")}.png`);
       await page.screenshot({ path: shotPath });
@@ -100,8 +115,9 @@ if (failures.length === 0) {
         join(REF_DIR, `page-${String(n).padStart(3, "0")}.png`),
       ).toString("base64");
 
+      // مقارنة بعد تصغير ٢× لامتصاص اختلاف تنعيم الحواف بين macOS/Linux Chromium.
       const cmp = await page.evaluate(
-        async ({ genB64, refB64 }) => {
+        async ({ genB64, refB64, aaSum }) => {
           const load = (b64) =>
             new Promise((resolve, reject) => {
               const img = new Image();
@@ -111,8 +127,11 @@ if (failures.length === 0) {
             });
           const gen = await load(genB64);
           const ref = await load(refB64);
-          const w = Math.min(gen.width, ref.width);
-          const h = Math.min(gen.height, ref.height);
+          const fullW = Math.min(gen.width, ref.width);
+          const fullH = Math.min(gen.height, ref.height);
+          const scale = 2;
+          const w = Math.max(1, Math.floor(fullW / scale));
+          const h = Math.max(1, Math.floor(fullH / scale));
           const c1 = document.createElement("canvas");
           const c2 = document.createElement("canvas");
           c1.width = w;
@@ -121,6 +140,8 @@ if (failures.length === 0) {
           c2.height = h;
           const g1 = c1.getContext("2d");
           const g2 = c2.getContext("2d");
+          g1.imageSmoothingEnabled = true;
+          g2.imageSmoothingEnabled = true;
           g1.drawImage(gen, 0, 0, w, h);
           g2.drawImage(ref, 0, 0, w, h);
           const a = g1.getImageData(0, 0, w, h).data;
@@ -130,11 +151,11 @@ if (failures.length === 0) {
             const dr = Math.abs(a[i] - b[i]);
             const dg = Math.abs(a[i + 1] - b[i + 1]);
             const db = Math.abs(a[i + 2] - b[i + 2]);
-            if (dr + dg + db > 60) mismatched++;
+            if (dr + dg + db > aaSum) mismatched++;
           }
-          return { ratio: mismatched / (w * h), mismatched, w, h };
+          return { ratio: mismatched / (w * h), mismatched, w, h, fullW, fullH };
         },
-        { genB64, refB64 },
+        { genB64, refB64, aaSum: 72 },
       );
 
       results.push({ page: n, ...cmp });
