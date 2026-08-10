@@ -31,7 +31,7 @@ assert.doesNotMatch(html, /href="\[REDACTED\]"/, "no broken placeholder resource
 assert.match(html, /rel="preload"[^>]+AmiriQuran-Regular\.woff2/, "local Quran font preload");
 assert.match(html, /media="print" onload="this\.media='all'"/, "non-blocking UI font stylesheet");
 
-assert.match(queryClient, /staleTime:\s*180_000/, "TanStack staleTime tuned for catalog traffic");
+assert.match(queryClient, /staleTime:\s*300_000/, "TanStack staleTime tuned for catalog traffic");
 assert.match(queryClient, /mutations:[\s\S]*retry:\s*false/, "mutations must not auto-retry");
 assert.match(queryClient, /networkMode:\s*"online"/, "queries respect online mode (no offline spam)");
 assert.match(prewarm, /prewarmSupabaseOrigin/, "runtime Supabase origin prewarm");
