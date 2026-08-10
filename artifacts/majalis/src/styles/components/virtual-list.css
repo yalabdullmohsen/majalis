@@ -1,0 +1,27 @@
+.vlist {
+  position: relative;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vlist--virtual {
+  /* نافذة تمرير مستقلة — تمنع تضخّم DOM في الصفحات الطويلة */
+  max-height: min(70vh, 640px);
+}
+
+.vlist__spacer {
+  width: 1px;
+  pointer-events: none;
+}
+
+.vlist__row--abs {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  will-change: transform;
+}
+
+.vlist__row > * {
+  width: 100%;
+}

@@ -27,6 +27,7 @@ const ROOT = new URL("..", import.meta.url).pathname;
 // نص يستخدم الخط لأسباب زخرفية فقط — راجع تقرير 2026-07-13).
 const QURAN_EXCEPTION_FONTS = [
   "amiri quran", "amiri", "scheherazade", "kfgqpc", "uthmanic", "hafs",
+  "kfgqpc hafs uthmanic",
   "aref ruqaa", "noto naskh arabic",
   // قياس عرض أسطر QCF V2 في measure-mushaf-line-deviation.mjs (خطوط p{n}.woff2)
   "qpc",

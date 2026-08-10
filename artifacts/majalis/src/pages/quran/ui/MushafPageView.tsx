@@ -85,9 +85,9 @@ function renderLightWord(w: QpcWord, showAyahNumbers: boolean) {
 }
 
 const THEME_OPTIONS: { id: QuranReadingTheme; label: string }[] = [
-  { id: "standard", label: "عادي" },
+  { id: "standard", label: "افتراضي" },
+  { id: "warm", label: "سيبيا" },
   { id: "night", label: "ليلي" },
-  { id: "warm", label: "دافئ" },
   { id: "high-contrast", label: "عالي التباين" },
 ];
 const FRAME_OPTIONS: { id: QuranFrameStyle; label: string }[] = [

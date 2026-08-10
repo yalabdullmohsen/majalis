@@ -24,6 +24,7 @@ import { addRecitationReviewItem, getDueRecitationReviews, type RecitationReview
 import { loadRecitationSettings, saveRecitationSettings } from "@/lib/recitation-ai/recitation-settings-service";
 import { hapticNotify } from "@/lib/capacitor-utils";
 import { InteractiveMushafReveal, type WordRevealInfo } from "@/components/quran/InteractiveMushafReveal";
+import { MicPermissionHelp } from "@/components/MicPermissionHelp";
 import { loadMutashabihatIndex, getSimilarAyahs, type MutashabihMatch } from "@/lib/recitation-ai/mutashabihat";
 import { FreeformStartDetector, loadPositionIndex } from "@/lib/recitation-ai/freeform-start-detector";
 import { loadPageJuzIndex, getSegmentsForPage, getSegmentsForJuz, getSegmentsForHizb, getSegmentsForRub } from "@/lib/recitation-ai/page-juz-lookup";
@@ -1228,19 +1229,17 @@ function RecitationTestPageInner() {
             الفعلية (Capacitor iOS/Android أو متصفح) بدل نص خطأ عام، مع زر
             إعادة محاولة حقيقي (يعيد محاولة بدء الجلسة، لا مجرد إخفاء الرسالة). */}
         {errorCode === "PERMISSION_DENIED" && (
-          <div className="rai-permission-guide" role="alert">
-            <p className="rai-permission-guide__title">يحتاج التطبيق إذن الميكروفون للاستماع لتلاوتك</p>
-            <p className="rai-permission-guide__steps">
-              {isNative && isIOS
-                ? "افتح إعدادات آيفون ← مرِّر لتطبيق «المجلس العلمي» ← فعِّل «الميكروفون» و«التعرّف على الكلام»، ثم عد وحاول مجددًا."
-                : isNative && isAndroid
-                  ? "افتح إعدادات الجهاز ← التطبيقات ← «المجلس العلمي» ← الأذونات ← فعِّل «الميكروفون»، ثم عد وحاول مجددًا."
-                  : "اضغط على أيقونة القفل 🔒 بجانب عنوان الموقع في المتصفح ← اسمح بإذن «الميكروفون» لهذا الموقع، ثم أعد تحميل الصفحة."}
-            </p>
-            <button type="button" className="rai-permission-guide__retry" onClick={() => { setErrorMsg(null); setErrorCode(null); setPhase("setup"); }}>
-              حسنًا، حاول مجددًا
-            </button>
-          </div>
+          <MicPermissionHelp
+            inline
+            isNative={isNative}
+            isIOS={isIOS}
+            isAndroid={isAndroid}
+            onRetry={() => {
+              setErrorMsg(null);
+              setErrorCode(null);
+              setPhase("setup");
+            }}
+          />
         )}
 
         {recentSession && (

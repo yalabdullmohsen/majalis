@@ -6,6 +6,7 @@ import {
 } from "@/lib/plugins/speech-recognition";
 import { diffRecitation, type RecitationDiffResult } from "@/lib/recitation-diff";
 import { createMicLatencyTracker } from "@/lib/recitation-mic-latency";
+import { ensureMicPermission } from "@/lib/mic-permission";
 
 export type RecitationTestState =
   | "idle"
@@ -259,6 +260,16 @@ export function useRecitationTest(canonicalText: string) {
     }
 
     if (isNative) { setState("unsupported"); startingRef.current = false; return; }
+
+    // ويب: فحص استباقي للميكروفون قبل تشغيل محرك التعرّف
+    setState("requesting-permission");
+    const mic = await ensureMicPermission();
+    if (!mic.ok) {
+      setState(mic.state === "denied" ? "denied" : "error");
+      setErrorMessage(mic.message || "تعذّر الوصول إلى الميكروفون.");
+      startingRef.current = false;
+      return;
+    }
 
     type SpeechRecognitionCtor = new () => {
       lang: string;

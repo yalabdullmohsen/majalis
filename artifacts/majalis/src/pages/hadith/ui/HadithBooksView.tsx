@@ -13,6 +13,7 @@ import {
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
 import { extractDisplayMatn, splitHadithNarration } from "@/lib/hadith-access";
+import { VirtualList } from "@/components/VirtualList";
 import "@/styles/pages/hadith-books.css";
 import "@/styles/pages/hadith.css";
 
@@ -73,17 +74,22 @@ function ChapterList({
 }) {
   return (
     <nav className="hb-chapter-list" aria-label="قائمة الكتب والأبواب">
-      {chapters.map((ch) => (
-        <button
-          key={ch.no}
-          type="button"
-          className={`hb-chapter-item${activeNo === ch.no ? " hb-chapter-item--active" : ""}`}
-          onClick={() => onSelect(ch.no)}
-        >
-          <span className="hb-chapter-item__name">{ch.name}</span>
-          <span className="hb-chapter-item__count">{ch.hadiths.length}</span>
-        </button>
-      ))}
+      <VirtualList
+        items={chapters}
+        estimateSize={52}
+        virtualizeAbove={30}
+        getItemKey={(ch) => ch.no}
+        renderItem={(ch) => (
+          <button
+            type="button"
+            className={`hb-chapter-item${activeNo === ch.no ? " hb-chapter-item--active" : ""}`}
+            onClick={() => onSelect(ch.no)}
+          >
+            <span className="hb-chapter-item__name">{ch.name}</span>
+            <span className="hb-chapter-item__count">{ch.hadiths.length}</span>
+          </button>
+        )}
+      />
     </nav>
   );
 }

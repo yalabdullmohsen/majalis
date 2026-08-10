@@ -1,7 +1,12 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { FavoriteButton } from "@/components/FavoriteButton";
-import { readPreferences, writePreferences, type UserPreferences } from "@/lib/user-preferences";
+import {
+  readPreferences,
+  writePreferences,
+  type ReadingThemeId,
+  type UserPreferences,
+} from "@/lib/user-preferences";
 import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
 import {
   isSavedOffline,
@@ -61,6 +66,9 @@ export function ContentActionBar({
   const [readingWidth, setReadingWidth] = useState<UserPreferences["readingWidth"]>(
     () => readPreferences().readingWidth,
   );
+  const [readingTheme, setReadingTheme] = useState<ReadingThemeId>(
+    () => readPreferences().readingTheme || "default",
+  );
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
@@ -85,7 +93,7 @@ export function ContentActionBar({
   }, [readingMode]);
 
   const bumpFont = useCallback((delta: number) => {
-    const next = Math.min(28, Math.max(16, readingSize + delta));
+    const next = Math.min(32, Math.max(14, readingSize + delta));
     setReadingSize(next);
     writePreferences({ readingTextSize: String(next) });
   }, [readingSize]);
@@ -96,6 +104,16 @@ export function ContentActionBar({
     setReadingWidth(next);
     writePreferences({ readingWidth: next });
   }, [readingWidth]);
+
+  const cycleTheme = useCallback(() => {
+    const order: ReadingThemeId[] = ["default", "sepia", "night"];
+    const next = order[(order.indexOf(readingTheme) + 1) % order.length] ?? "default";
+    setReadingTheme(next);
+    writePreferences({ readingTheme: next });
+  }, [readingTheme]);
+
+  const themeLabel =
+    readingTheme === "sepia" ? "سيبيا" : readingTheme === "night" ? "ليلي" : "افتراضي";
 
   const toggleOffline = useCallback(() => {
     if (offlineSaved) {
@@ -165,8 +183,20 @@ export function ContentActionBar({
           <button type="button" className="content-action-bar__btn" onClick={() => bumpFont(-1)} aria-label="تصغير الخط">
             أ−
           </button>
+          <span className="content-action-bar__size" aria-live="polite">
+            {readingSize}px
+          </span>
           <button type="button" className="content-action-bar__btn" onClick={() => bumpFont(1)} aria-label="تكبير الخط">
             أ+
+          </button>
+          <button
+            type="button"
+            className="content-action-bar__btn"
+            onClick={cycleTheme}
+            aria-label={`ثيم القراءة: ${themeLabel}`}
+            title={`ثيم القراءة: ${themeLabel}`}
+          >
+            {themeLabel}
           </button>
           <button
             type="button"

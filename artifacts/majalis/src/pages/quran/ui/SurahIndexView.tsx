@@ -13,6 +13,7 @@ import { surahList, mushafPageHref } from "@/lib/quran-surah-list";
 import { displaySurahName } from "@/lib/quran-display";
 import { getSurahMeta } from "@/lib/quran-api";
 import { useNumerals } from "@/hooks/useNumerals";
+import { VirtualList, type VirtualListHandle } from "@/components/VirtualList";
 import "@/styles/pages/surah-index.css";
 
 type RevelationFilter = "all" | "meccan" | "medinan" | "favorites";
@@ -45,7 +46,7 @@ export default function SurahIndexPage() {
   const [sortMode, setSortMode] = useState<SortMode>("mushaf");
   const [favorites, setFavorites] = useState<Set<number>>(() => new Set());
   const [activeJump, setActiveJump] = useState<string | null>(null);
-  const rowRefs = useRef<Map<number, HTMLLIElement>>(new Map());
+  const listRef = useRef<VirtualListHandle>(null);
 
   useEffect(() => {
     applyPageSeo({
@@ -110,9 +111,9 @@ export default function SurahIndexPage() {
 
   function handleJump(jump: (typeof JUMPS)[number]) {
     setActiveJump(jump.id);
-    const target = filtered.find((s) => s.number >= jump.start && s.number <= jump.end);
-    if (!target) return;
-    rowRefs.current.get(target.number)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const index = filtered.findIndex((s) => s.number >= jump.start && s.number <= jump.end);
+    if (index < 0) return;
+    listRef.current?.scrollToIndex(index, "smooth");
   }
 
   function metaLine(s: SurahIndexEntry, startPage: number): string {
@@ -231,51 +232,51 @@ export default function SurahIndexPage() {
           <p>{filter === "favorites" ? "لا سور في مفضلتك بعد." : "لا نتائج مطابقة."}</p>
         </div>
       ) : (
-        <ol className="surah-index-list">
-          {filtered.map((s) => {
+        <VirtualList
+          ref={listRef}
+          as="ol"
+          className="surah-index-list"
+          items={filtered}
+          estimateSize={72}
+          virtualizeAbove={20}
+          getItemKey={(s) => s.number}
+          aria-label="فهرس السور"
+          renderItem={(s) => {
             const startPage = pageById.get(s.number) ?? 1;
             const fav = favorites.has(s.number);
             const displayNum = sortMode === "revelation" ? s.revelationOrder : s.number;
             const plainName = displaySurahName(s.number);
             return (
-              <li
-                key={s.number}
-                ref={(node) => {
-                  if (node) rowRefs.current.set(s.number, node);
-                  else rowRefs.current.delete(s.number);
-                }}
+              <Link
+                href={mushafPageHref(startPage)}
+                className="surah-index-row"
+                title={s.description || getSurahMeta(s.number).description || undefined}
               >
-                <Link
-                  href={mushafPageHref(startPage)}
-                  className="surah-index-row"
-                  title={s.description || getSurahMeta(s.number).description || undefined}
+                <span className="surah-index-row__num" aria-hidden="true">
+                  {fmt(displayNum)}
+                </span>
+                <span className="surah-index-row__body">
+                  <span className="surah-index-row__name">{plainName}</span>
+                  <span className="surah-index-row__meta">{metaLine(s, startPage)}</span>
+                </span>
+                <button
+                  type="button"
+                  className={`surah-index-row__fav${fav ? " is-active" : ""}`}
+                  onClick={(e) => handleToggleFavorite(s.number, e)}
+                  aria-label={fav ? `إزالة ${plainName} من المفضلة` : `إضافة ${plainName} إلى المفضلة`}
+                  aria-pressed={fav}
                 >
-                  <span className="surah-index-row__num" aria-hidden="true">
-                    {fmt(displayNum)}
-                  </span>
-                  <span className="surah-index-row__body">
-                    <span className="surah-index-row__name">{plainName}</span>
-                    <span className="surah-index-row__meta">{metaLine(s, startPage)}</span>
-                  </span>
-                  <button
-                    type="button"
-                    className={`surah-index-row__fav${fav ? " is-active" : ""}`}
-                    onClick={(e) => handleToggleFavorite(s.number, e)}
-                    aria-label={fav ? `إزالة ${plainName} من المفضلة` : `إضافة ${plainName} إلى المفضلة`}
-                    aria-pressed={fav}
-                  >
-                    <Star
-                      size={18}
-                      strokeWidth={1.8}
-                      fill={fav ? "currentColor" : "none"}
-                      aria-hidden="true"
-                    />
-                  </button>
-                </Link>
-              </li>
+                  <Star
+                    size={18}
+                    strokeWidth={1.8}
+                    fill={fav ? "currentColor" : "none"}
+                    aria-hidden="true"
+                  />
+                </button>
+              </Link>
             );
-          })}
-        </ol>
+          }}
+        />
       )}
     </div>
   );

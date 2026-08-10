@@ -19,6 +19,7 @@ import { highlightOriginalParts, scoreTolerantMatch } from "@/features/search/to
 import { getSurahMeta, SURAH_START_PAGES } from "@/lib/quran-api";
 import { mushafPageHref } from "@/lib/quran-surah-list";
 import { PageHeader } from "@/components/ui-common";
+import { VirtualList } from "@/components/VirtualList";
 import "@/styles/pages/quran-search.css";
 
 const DEBOUNCE_MS = 200;
@@ -225,8 +226,15 @@ export default function QuranSearchPage() {
       ) : null}
 
       {results.length > 0 ? (
-        <ol className="quran-search-page__list">
-          {results.map((hit) => {
+        <VirtualList
+          as="ol"
+          className="quran-search-page__list"
+          items={results}
+          estimateSize={110}
+          virtualizeAbove={12}
+          getItemKey={(hit) => `${hit.surahNumber}:${hit.ayahNumber}`}
+          aria-label="نتائج بحث الآيات"
+          renderItem={(hit) => {
             const snippet = displayAyahSnippet(
               hit.surahNumber,
               hit.ayahNumber,
@@ -234,26 +242,24 @@ export default function QuranSearchPage() {
             );
             const name = displaySurahName(hit.surahNumber);
             return (
-              <li key={`${hit.surahNumber}:${hit.ayahNumber}`}>
-                <Link
-                  href={`/mushaf/${hit.surahNumber}?ayah=${hit.ayahNumber}`}
-                  className="quran-search-page__hit"
-                >
-                  <header>
-                    <strong>سورة {name}</strong>
-                    <span className="quran-search-page__ayah-badge">
-                      الآية {toArabicDigits(hit.ayahNumber)}
-                      {hit.page ? ` · ص ${toArabicDigits(hit.page)}` : ""}
-                    </span>
-                  </header>
-                  <p dir="rtl" className="quran-search-page__ayah-text">
-                    <HighlightText text={snippet} query={debounced} />
-                  </p>
-                </Link>
-              </li>
+              <Link
+                href={`/mushaf/${hit.surahNumber}?ayah=${hit.ayahNumber}`}
+                className="quran-search-page__hit"
+              >
+                <header>
+                  <strong>سورة {name}</strong>
+                  <span className="quran-search-page__ayah-badge">
+                    الآية {toArabicDigits(hit.ayahNumber)}
+                    {hit.page ? ` · ص ${toArabicDigits(hit.page)}` : ""}
+                  </span>
+                </header>
+                <p dir="rtl" className="quran-search-page__ayah-text">
+                  <HighlightText text={snippet} query={debounced} />
+                </p>
+              </Link>
             );
-          })}
-        </ol>
+          }}
+        />
       ) : null}
 
       {truncated ? (

@@ -1,3 +1,6 @@
+/** ثيم قارئ الكتب/النصوص الطويلة — يُحفظ محليًا. */
+export type ReadingThemeId = "default" | "sepia" | "night";
+
 export type UserPreferences = {
   fontSize: "صغير" | "متوسط" | "كبير";
   interfaceLanguage: string;
@@ -6,6 +9,8 @@ export type UserPreferences = {
   readingSpacing: "ضيق" | "متوسط" | "واسع";
   /** عرض عمود النص في وضع القراءة (ch) */
   readingWidth: "ضيق" | "متوسط" | "واسع";
+  /** ثيم خلفية/حبر القارئ: افتراضي / سيبيا / ليلي */
+  readingTheme: ReadingThemeId;
   readingMode: boolean;
   imageQuality: "منخفض" | "متوسط" | "عالي";
   videoAutoplay: boolean;
@@ -40,6 +45,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   readingTextSize: "17",
   readingSpacing: "واسع",
   readingWidth: "متوسط",
+  readingTheme: "default",
   readingMode: false,
   imageQuality: "متوسط",
   videoAutoplay: false,
@@ -99,7 +105,8 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
   const densityScale = prefs.uiDensity === "compact" ? "0.92" : "1";
   root.style.setProperty("--ui-font-scale", fontScale);
   root.style.setProperty("--ui-density-scale", densityScale);
-  root.style.setProperty("--reading-font-size", `${prefs.readingTextSize}px`);
+  const readingPx = Math.min(32, Math.max(14, Number(prefs.readingTextSize) || 17));
+  root.style.setProperty("--reading-font-size", `${readingPx}px`);
   root.style.setProperty("--quran-font-size", `${prefs.quranFontScale}px`);
   root.style.setProperty(
     "--reading-line-height",
@@ -111,6 +118,7 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
   );
   root.dataset.readingMode = prefs.readingMode ? "quiet" : "normal";
   root.dataset.readingWidth = prefs.readingWidth;
+  root.dataset.readingTheme = prefs.readingTheme || "default";
   root.dir = prefs.direction;
   root.dataset.imageQuality = dataSaver ? "منخفض" : prefs.imageQuality;
   root.dataset.uiDensity = prefs.uiDensity;
