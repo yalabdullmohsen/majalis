@@ -255,6 +255,7 @@
     "assets:splash": "node scripts/generate-splash.mjs",
     "test:mushaf-311-parity": "node scripts/quran-import/mushaf-311-parity-gate.mjs",
     "test:mushaf-ref-parity": "node scripts/quran-import/mushaf-ref-parity-gate.mjs",
+    "test:mushaf-banner-density": "node scripts/quran-import/mushaf-banner-density-gate.mjs",
     "measure:mushaf-311-baseline": "node scripts/quran-import/measure-mushaf-311-baseline.mjs"
   },
   "devDependencies": {

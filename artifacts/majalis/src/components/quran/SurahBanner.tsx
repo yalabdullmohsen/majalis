@@ -1,6 +1,6 @@
 /**
- * شارة سورة مطابقة لمرجعي ٦٠٠/٦٠١:
- * جناح = وردة ثمانية واحدة + فرعان لولبيان + عقدة — بلا نقش مكرّر ولا سلاسل.
+ * شارة سورة كثيفة مطابقة لمرجعي ٦٠٠/٦٠١:
+ * ميدالية بتلات + شبكة أرابيسك متصلة تملأ الجناح + عقدة — بلا وسم pattern مكرر.
  */
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
 
@@ -14,21 +14,38 @@ type Props = {
 const PANEL_MARGIN_PX = 6;
 const PANEL_FRAC = 0.34;
 
-/** وردة ثمانية البتلات — قطر ≈٧٥٪ من ارتفاع الجناح */
-function Octofoil({ cx, cy, r }: { cx: number; cy: number; r: number }) {
-  const petals: string[] = [];
-  for (let i = 0; i < 8; i++) {
-    const a = (i * Math.PI) / 4;
-    const x = cx + Math.cos(a) * r;
-    const y = cy + Math.sin(a) * r;
-    petals.push(
-      `M${cx.toFixed(2)} ${cy.toFixed(2)} Q${(cx + Math.cos(a - 0.35) * r * 0.55).toFixed(2)} ${(cy + Math.sin(a - 0.35) * r * 0.55).toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)} Q${(cx + Math.cos(a + 0.35) * r * 0.55).toFixed(2)} ${(cy + Math.sin(a + 0.35) * r * 0.55).toFixed(2)} ${cx.toFixed(2)} ${cy.toFixed(2)}`,
+/** ميدالية دائرية كبيرة بحواف بتلات متعددة (١٤) */
+function PetalMedallion({ cx, cy, r }: { cx: number; cy: number; r: number }) {
+  const petals = 14;
+  const outer: string[] = [];
+  for (let i = 0; i < petals; i++) {
+    const a0 = (i / petals) * Math.PI * 2 - Math.PI / 2;
+    const a1 = ((i + 0.5) / petals) * Math.PI * 2 - Math.PI / 2;
+    const a2 = ((i + 1) / petals) * Math.PI * 2 - Math.PI / 2;
+    const tip = r;
+    const valley = r * 0.78;
+    const x0 = cx + Math.cos(a0) * valley;
+    const y0 = cy + Math.sin(a0) * valley;
+    const xt = cx + Math.cos(a1) * tip;
+    const yt = cy + Math.sin(a1) * tip;
+    const x2 = cx + Math.cos(a2) * valley;
+    const y2 = cy + Math.sin(a2) * valley;
+    if (i === 0) outer.push(`M${x0.toFixed(2)} ${y0.toFixed(2)}`);
+    outer.push(
+      `Q${xt.toFixed(2)} ${yt.toFixed(2)} ${x2.toFixed(2)} ${y2.toFixed(2)}`,
     );
   }
+  outer.push("Z");
   return (
-    <g aria-hidden="true" data-wing-part="rose">
+    <g aria-hidden="true" data-wing-part="medallion">
+      <circle
+        cx={cx}
+        cy={cy}
+        r={r * 0.88}
+        fill="var(--color-mushaf-ornament-mid, #EDE0C4)"
+      />
       <path
-        d={petals.join(" ")}
+        d={outer.join(" ")}
         fill="var(--color-mushaf-ornament-mid, #EDE0C4)"
         stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
         strokeWidth="1.5"
@@ -36,47 +53,128 @@ function Octofoil({ cx, cy, r }: { cx: number; cy: number; r: number }) {
       <circle
         cx={cx}
         cy={cy}
+        r={r * 0.42}
+        fill="none"
+        stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
+        strokeWidth="1.35"
+      />
+      <circle
+        cx={cx}
+        cy={cy}
         r={r * 0.22}
-        fill="var(--color-mushaf-ornament-mid, #EDE0C4)"
+        fill="var(--color-mushaf-ornament-bg, #D8C39C)"
         stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
         strokeWidth="1.2"
+      />
+      <circle
+        cx={cx}
+        cy={cy}
+        r={r * 0.08}
+        fill="var(--color-mushaf-ornament-line, #FFFFFF)"
       />
     </g>
   );
 }
 
-/** فرع أرابيسك لولبي واحد (نصف حلزون) ينتهي بلفّة مغلقة */
-function SpiralArm({
-  cx,
+/** شبكة أرابيسك متصلة (مسارات صريحة) تملأ جانبًا من الجناح */
+function ArabesqueMesh({
+  x0,
+  x1,
   cy,
-  side,
-  reach,
+  wingH,
+  dir,
 }: {
-  cx: number;
+  x0: number;
+  x1: number;
   cy: number;
-  side: "left" | "right";
-  reach: number;
+  wingH: number;
+  dir: 1 | -1;
 }) {
-  const dir = side === "left" ? -1 : 1;
-  const tipX = cx + dir * reach;
-  const midX = cx + dir * reach * 0.55;
-  const loopR = Math.max(2.2, reach * 0.14);
-  const d = [
-    `M ${cx.toFixed(2)} ${cy.toFixed(2)}`,
-    `C ${midX.toFixed(2)} ${(cy - reach * 0.42).toFixed(2)}, ${tipX.toFixed(2)} ${(cy - reach * 0.18).toFixed(2)}, ${tipX.toFixed(2)} ${cy.toFixed(2)}`,
-    `C ${tipX.toFixed(2)} ${(cy + reach * 0.28).toFixed(2)}, ${(tipX - dir * loopR * 1.6).toFixed(2)} ${(cy + loopR * 1.8).toFixed(2)}, ${(tipX - dir * loopR * 0.2).toFixed(2)} ${(cy + loopR * 0.35).toFixed(2)}`,
-    `C ${(tipX + dir * loopR * 0.9).toFixed(2)} ${(cy - loopR * 0.9).toFixed(2)}, ${(tipX + dir * loopR * 0.15).toFixed(2)} ${(cy - loopR * 1.5).toFixed(2)}, ${tipX.toFixed(2)} ${(cy - loopR * 0.15).toFixed(2)}`,
-  ].join(" ");
+  const w = Math.abs(x1 - x0);
+  const mid = (x0 + x1) / 2;
+  const h = wingH * 0.46;
+  const paths: string[] = [];
+
+  /* لفّات متشابكة — كثافة مستهدفة ٢٢–٣٨٪ مع الميدالية */
+  for (let i = 0; i < 2; i++) {
+    const t = (i + 0.35) / 2;
+    const bx = x0 + w * t;
+    const amp = h * (0.58 + (i % 2) * 0.16);
+    paths.push(
+      [
+        `M ${(bx - dir * 1.5).toFixed(2)} ${cy.toFixed(2)}`,
+        `C ${(bx + dir * w * 0.1).toFixed(2)} ${(cy - amp).toFixed(2)},`,
+        `${(bx + dir * w * 0.22).toFixed(2)} ${(cy - amp * 0.25).toFixed(2)},`,
+        `${(bx + dir * w * 0.26).toFixed(2)} ${cy.toFixed(2)}`,
+        `C ${(bx + dir * w * 0.3).toFixed(2)} ${(cy + amp * 0.6).toFixed(2)},`,
+        `${(bx + dir * w * 0.12).toFixed(2)} ${(cy + amp * 0.9).toFixed(2)},`,
+        `${(bx + dir * 0.5).toFixed(2)} ${(cy + amp * 0.12).toFixed(2)}`,
+      ].join(" "),
+    );
+  }
+  {
+    const bx = x0 + w * 0.62;
+    const amp = h * 0.64;
+    paths.push(
+      [
+        `M ${(bx + dir * 1).toFixed(2)} ${cy.toFixed(2)}`,
+        `C ${(bx - dir * w * 0.12).toFixed(2)} ${(cy + amp).toFixed(2)},`,
+        `${(bx - dir * w * 0.24).toFixed(2)} ${(cy + amp * 0.2).toFixed(2)},`,
+        `${(bx - dir * w * 0.28).toFixed(2)} ${cy.toFixed(2)}`,
+        `C ${(bx - dir * w * 0.3).toFixed(2)} ${(cy - amp * 0.55).toFixed(2)},`,
+        `${(bx - dir * w * 0.1).toFixed(2)} ${(cy - amp * 0.85).toFixed(2)},`,
+        `${bx.toFixed(2)} ${(cy - amp * 0.1).toFixed(2)}`,
+      ].join(" "),
+    );
+  }
+  paths.push(
+    [
+      `M ${x0.toFixed(2)} ${(cy - h * 0.65).toFixed(2)}`,
+      `C ${mid.toFixed(2)} ${(cy - h * 0.95).toFixed(2)},`,
+      `${mid.toFixed(2)} ${(cy - h * 0.2).toFixed(2)},`,
+      `${x1.toFixed(2)} ${(cy - h * 0.45).toFixed(2)}`,
+    ].join(" "),
+  );
+  paths.push(
+    [
+      `M ${x0.toFixed(2)} ${(cy + h * 0.65).toFixed(2)}`,
+      `C ${mid.toFixed(2)} ${(cy + h * 0.95).toFixed(2)},`,
+      `${mid.toFixed(2)} ${(cy + h * 0.2).toFixed(2)},`,
+      `${x1.toFixed(2)} ${(cy + h * 0.45).toFixed(2)}`,
+    ].join(" "),
+  );
+
+  const nodes = [
+    [x0 + w * 0.32, cy - h * 0.28],
+    [x0 + w * 0.72, cy + h * 0.26],
+  ];
+
   return (
-    <path
-      data-wing-part="spiral"
-      d={d}
-      fill="none"
-      stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <g data-wing-part="mesh" aria-hidden="true">
+      {paths.map((d, i) => (
+        <path
+          key={`m-${i}`}
+          data-wing-part="spiral"
+          d={d}
+          fill="none"
+          stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
+          strokeWidth="1.35"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      ))}
+      {nodes.map(([nx, ny], i) => (
+        <circle
+          key={`n-${i}`}
+          cx={nx}
+          cy={ny}
+          r={1.45}
+          fill="var(--color-mushaf-ornament-mid, #EDE0C4)"
+          stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
+          strokeWidth="1.1"
+        />
+      ))}
+    </g>
   );
 }
 
@@ -93,24 +191,40 @@ function WingMotifs({
   wingH: number;
   panelSide: "left" | "right";
 }) {
-  const roseR = wingH * 0.375;
+  const medR = wingH * 0.425; /* قطر ≈٨٥٪ من ارتفاع الجناح */
   const cx = wingX + wingW / 2;
-  const reach = Math.max(10, (wingW - roseR * 2) * 0.42);
   const knotX =
-    panelSide === "right" ? wingX + wingW - 3.2 : wingX + 3.2;
+    panelSide === "right" ? wingX + wingW - 3.4 : wingX + 3.4;
+  const leftPad = wingX + 2;
+  const rightPad = wingX + wingW - 2;
+  const medLeft = cx - medR * 0.95;
+  const medRight = cx + medR * 0.95;
+
   return (
     <g data-wing="1">
-      <SpiralArm cx={cx - roseR * 0.15} cy={cy} side="left" reach={reach} />
-      <SpiralArm cx={cx + roseR * 0.15} cy={cy} side="right" reach={reach} />
-      <Octofoil cx={cx} cy={cy} r={roseR} />
+      <ArabesqueMesh
+        x0={leftPad}
+        x1={medLeft}
+        cy={cy}
+        wingH={wingH}
+        dir={-1}
+      />
+      <ArabesqueMesh
+        x0={medRight}
+        x1={rightPad}
+        cy={cy}
+        wingH={wingH}
+        dir={1}
+      />
+      <PetalMedallion cx={cx} cy={cy} r={medR} />
       <circle
         data-wing-part="knot"
         cx={knotX}
         cy={cy}
-        r={2.4}
+        r={2.6}
         fill="var(--color-mushaf-ornament-mid, #EDE0C4)"
         stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
-        strokeWidth="1.2"
+        strokeWidth="1.3"
       />
     </g>
   );
@@ -146,12 +260,12 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
   }, [label]);
 
   const W = 320;
-  const H = 36;
+  const H = 40;
   const panelW = W * PANEL_FRAC;
   const panelX = (W - panelW) / 2;
-  const panelY = 5;
-  const panelH = H - 10;
-  const innerPad = 6;
+  const panelY = 7;
+  const panelH = H - 14;
+  const innerPad = 7;
   const wingH = H - innerPad * 2;
   const leftWingX = innerPad;
   const leftWingW = panelX - innerPad - 2;
@@ -171,8 +285,11 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
       aria-level={2}
       aria-label={`سورة ${aria}`}
       style={style}
-      data-ornament="wing-ref"
-      data-wing-motif="rose+spiral+spiral+knot"
+      data-ornament="wing-dense"
+      data-wing-motif="medallion+mesh+knot"
+      data-wing-density="filled"
+      data-wing-density-target="22-38"
+      data-panel-width-pct="34"
     >
       <svg
         className="mf2-surah-banner__svg"
@@ -181,26 +298,26 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
         aria-hidden="true"
         focusable="false"
       >
-        {/* إطار خارجي 2px + داخلي 1px بفاصل 3px — radius 3 */}
+        {/* إطار خارجي 2px + داخلي 1.5px بفاصل 4px — radius 4 */}
         <rect
           x="1"
           y="1"
           width={W - 2}
           height={H - 2}
-          rx="3"
+          rx="4"
           fill="var(--color-mushaf-ornament-bg, #E3D2B4)"
           stroke="var(--color-mushaf-gold-strong, #A67C3D)"
           strokeWidth="2"
         />
         <rect
-          x="5"
-          y="5"
-          width={W - 10}
-          height={H - 10}
-          rx="3"
+          x="6"
+          y="6"
+          width={W - 12}
+          height={H - 12}
+          rx="4"
           fill="none"
           stroke="var(--color-mushaf-gold-strong, #A67C3D)"
-          strokeWidth="1"
+          strokeWidth="1.5"
         />
         <WingMotifs
           wingX={leftWingX}
@@ -216,7 +333,6 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
           wingH={wingH}
           panelSide="left"
         />
-        {/* لوحة وسطى 34% — حواف رأسية مستقيمة */}
         <rect
           x={panelX}
           y={panelY}

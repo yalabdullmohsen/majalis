@@ -267,9 +267,25 @@ export function MushafPageV2({
       container.style.paddingBottom = "0";
       container.style.marginTop = "0";
       container.style.marginBottom = "0";
-      container.style.height = "100%";
       container.style.justifyContent = "";
       container.style.transform = "";
+
+      /* ارتفاع الكتلة = فجوة الرأس→الذيل حرفيًا — نفس شبكة ص٣ لكل الصفحات */
+      const headerEl = document.querySelector(".mpv-ayah-header");
+      const footerEl = document.querySelector(".mpv-ayah-footer");
+      const hr = headerEl?.getBoundingClientRect();
+      const fr = footerEl?.getBoundingClientRect();
+      let blockH = container.parentElement instanceof HTMLElement
+        ? container.parentElement.clientHeight
+        : container.clientHeight;
+      if (hr && fr && fr.top > hr.bottom) {
+        blockH = fr.top - hr.bottom;
+      }
+      if (blockH > 0) {
+        container.style.height = `${blockH.toFixed(2)}px`;
+      } else {
+        container.style.height = "100%";
+      }
 
       const widestAtRef = measureWidest(sizingEls, REF_PX);
       if (widestAtRef <= 0) return false;
@@ -324,7 +340,7 @@ export function MushafPageV2({
         }
       }
 
-      const blockH = container.clientHeight || 1;
+      blockH = container.clientHeight || blockH || 1;
       let contentTop = Infinity;
       let contentBot = -Infinity;
       for (const child of container.querySelectorAll<HTMLElement>("[data-grid-slot]")) {
