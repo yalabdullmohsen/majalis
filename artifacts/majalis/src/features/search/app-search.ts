@@ -28,6 +28,8 @@ export type AppSearchResponse = {
   counts: Record<string, number>;
   quickNavHref?: string;
   suggestion?: string | null;
+  /** أقرب ٣ بدائل عند انعدام النتائج */
+  suggestions?: string[];
   responseMs: number;
 };
 
@@ -73,21 +75,34 @@ function flattenGroups(groups: Record<string, UnifiedSearchHit[]>): AppSearchRes
   return flat;
 }
 
-/** أقرب عنوان في الفهرس عند انعدام النتائج. */
+/** أقرب عناوين في الفهرس عند انعدام النتائج (حتى ٣). */
+export function findClosestSuggestions(
+  docs: { titleAr: string; norm: string }[],
+  query: string,
+  limit = 3,
+): string[] {
+  const q = normalizeArabic(query);
+  if (!q || q.length < 2) return [];
+  type Cand = { title: string; rank: number; dist: number };
+  const scored: Cand[] = [];
+  const seen = new Set<string>();
+  for (const d of docs) {
+    const m = scoreTolerantMatch(d.titleAr, query, d.norm);
+    if (!m) continue;
+    if (seen.has(d.titleAr)) continue;
+    seen.add(d.titleAr);
+    scored.push({ title: d.titleAr, rank: m.rank, dist: m.distance });
+  }
+  scored.sort((a, b) => a.rank - b.rank || a.dist - b.dist || a.title.localeCompare(b.title, "ar"));
+  return scored.slice(0, limit).map((s) => s.title);
+}
+
+/** @deprecated استخدم findClosestSuggestions */
 export function findClosestSuggestion(
   docs: { titleAr: string; norm: string }[],
   query: string,
 ): string | null {
-  const q = normalizeArabic(query);
-  if (!q || q.length < 2) return null;
-  let best: { title: string; dist: number } | null = null;
-  for (const d of docs) {
-    const m = scoreTolerantMatch(d.titleAr, query, d.norm);
-    if (!m) continue;
-    if (m.rank <= 2) return d.titleAr;
-    if (!best || m.distance < best.dist) best = { title: d.titleAr, dist: m.distance };
-  }
-  return best?.title ?? null;
+  return findClosestSuggestions(docs, query, 1)[0] ?? null;
 }
 
 export async function runAppSearch(
@@ -141,14 +156,15 @@ export async function runAppSearch(
     counts[r.kind] = (counts[r.kind] ?? 0) + 1;
   }
 
-  const suggestion =
-    results.length === 0 ? findClosestSuggestion(docs, query) : null;
+  const suggestions =
+    results.length === 0 ? findClosestSuggestions(docs, query, 3) : [];
 
   return {
     results,
     groups,
     counts,
-    suggestion,
+    suggestion: suggestions[0] ?? null,
+    suggestions,
     responseMs: performance.now() - t0,
   };
 }

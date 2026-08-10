@@ -115,6 +115,8 @@ const MakkiMadaniPage = lazy(() => import("@/pages/quran/MakkiMadaniPage"));
 const MushafPageView = lazy(() => import("@/pages/quran/ui/MushafPageView"));
 const MushafEditionInfoPage = lazy(() => import("@/pages/quran/MushafEditionInfoPage"));
 const QuranHubPage = lazy(() => import("@/pages/quran/QuranHubPage"));
+const QuranPeoplePage = lazy(() => import("@/pages/quran/QuranPeoplePage"));
+const QuranPersonDetailPage = lazy(() => import("@/pages/quran/QuranPersonDetailPage"));
 const RecitationTestPage = lazy(() => import("@/pages/quran/RecitationTestPage"));
 const SurahStoriesPage = lazy(() => import("@/pages/quran/SurahStoriesPage"));
 const QuranTajweedPage = lazy(() => import("@/pages/quran/QuranTajweedPage"));
@@ -759,6 +761,8 @@ function Router() {
       <Route path="/quran/recitation-test-ai"><SafeLazyRoute component={RecitationTestPage} /></Route>
       <Route path="/quran/surahs"><SafeLazyRoute component={SurahIndexPage} /></Route>
       <Route path="/quran/search"><SafeLazyRoute component={QuranSearchPage} /></Route>
+      <Route path="/quran/people/:slug"><SafeLazyRoute component={QuranPersonDetailPage} /></Route>
+      <Route path="/quran/people"><SafeLazyRoute component={QuranPeoplePage} /></Route>
       <Route path="/quran/revelation-order"><SafeLazyRoute component={RevelationOrderPage} /></Route>
       <Route path="/quran/makki-madani"><SafeLazyRoute component={MakkiMadaniPage} /></Route>
       <Route path="/quran-memorization"><SafeLazyRoute component={QuranMemorizationPage} /></Route>

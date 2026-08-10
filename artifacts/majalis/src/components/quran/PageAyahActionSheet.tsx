@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, lazy, Suspense } from "react";
 import { useLocation } from "wouter";
 import {
   Copy,
@@ -23,6 +23,7 @@ import {
   Save,
   Timer,
   RefreshCw,
+  Users,
 } from "lucide-react";
 import {
   copyAyahText,
@@ -69,6 +70,8 @@ import {
   type TafsirFontScale,
 } from "@/features/mushaf";
 import "@/styles/components/ayah-action-sheet.css";
+
+const TafsirAudioSheetLazy = lazy(() => import("@/components/quran/TafsirAudioSheet"));
 
 /** مختصر ظاهر مباشرة: نحو سطرين إلى أربعة */
 const TAFSIR_COLLAPSE_CHARS = 280;
@@ -147,8 +150,10 @@ export function PageAyahActionSheet({
   const [tafsirEdition, setTafsirEdition] = useState(readStoredTafsirEdition);
   const [fontScale, setFontScale] = useState<TafsirFontScale>(readStoredTafsirFontScale);
   const [tafsirExpanded, setTafsirExpanded] = useState(false);
-  const [tafsirAudioBusy, setTafsirAudioBusy] = useState(false);
   const [tafsirAudioMsg, setTafsirAudioMsg] = useState<string | null>(null);
+  const [tafsirAudioAvailable, setTafsirAudioAvailable] = useState(false);
+  const [tafsirAudioSheetOpen, setTafsirAudioSheetOpen] = useState(false);
+  const [ayahPeople, setAyahPeople] = useState<{ slug: string; nameAr: string }[]>([]);
   const [showTranslation, setShowTranslation] = useState(readStoredTranslationEnabled);
   const [translationEdition, setTranslationEdition] = useState(readStoredTranslationEdition);
   const [translationText, setTranslationText] = useState<string | null>(null);
@@ -183,37 +188,46 @@ export function PageAyahActionSheet({
     setTafsirError(false);
     setTafsirExpanded(false);
     setTafsirAudioMsg(null);
+    setTafsirAudioAvailable(false);
+    setAyahPeople([]);
     setTranslationText(null);
     setTranslationError(false);
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const { loadTafsirAudioCatalog, findTafsirAudioForAyah } = await import(
+          "@/features/mushaf/tafsir-audio"
+        );
+        const clips = await loadTafsirAudioCatalog();
+        if (!cancelled) {
+          setTafsirAudioAvailable(Boolean(findTafsirAudioForAyah(clips, surahNum, ayahNum)));
+        }
+      } catch {
+        if (!cancelled) setTafsirAudioAvailable(false);
+      }
+      try {
+        const { loadQuranPeople, peopleForAyah } = await import("@/features/quran-people");
+        const all = await loadQuranPeople();
+        if (!cancelled) {
+          setAyahPeople(
+            peopleForAyah(all, surahNum, ayahNum).map((p) => ({
+              slug: p.slug,
+              nameAr: p.nameAr,
+            })),
+          );
+        }
+      } catch {
+        if (!cancelled) setAyahPeople([]);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [surahNum, ayahNum]);
 
-  const handleListenTafsirAudio = async () => {
-    setTafsirAudioBusy(true);
-    setTafsirAudioMsg(null);
-    try {
-      const {
-        loadTafsirAudioCatalog,
-        findTafsirAudioForAyah,
-        playTafsirAudioClip,
-        displayScholarLabel,
-      } = await import("@/features/mushaf/tafsir-audio");
-      const clips = await loadTafsirAudioCatalog();
-      const clip = findTafsirAudioForAyah(clips, surahNum, ayahNum);
-      if (!clip) {
-        setTafsirAudioMsg("لا يتوفر تفسير صوتي موثّق لهذه الآية حالياً.");
-        return;
-      }
-      const res = await playTafsirAudioClip(clip, { ayah: ayahNum, resume: true });
-      if (!res.ok) {
-        setTafsirAudioMsg(res.reason ?? "تعذّر التشغيل");
-        return;
-      }
-      setTafsirAudioMsg(`جاري الاستماع — ${displayScholarLabel(clip)}`);
-    } catch {
-      setTafsirAudioMsg("تعذّر تشغيل التفسير الصوتي.");
-    } finally {
-      setTafsirAudioBusy(false);
-    }
+  const handleListenTafsirAudio = () => {
+    setTafsirAudioSheetOpen(true);
   };
 
   useEffect(() => {
@@ -766,16 +780,39 @@ export function PageAyahActionSheet({
                   ترجمة
                 </button>
 
-                <button
-                  type="button"
-                  className={`aas-v3__chip${tafsirAudioBusy ? " is-on" : ""}`}
-                  onClick={() => void handleListenTafsirAudio()}
-                  disabled={tafsirAudioBusy}
-                  aria-label="استماع للتفسير"
-                >
-                  <Mic2 size={15} aria-hidden="true" />
-                  استماع للتفسير
-                </button>
+                {tafsirAudioAvailable ? (
+                  <button
+                    type="button"
+                    className={`aas-v3__chip${tafsirAudioSheetOpen ? " is-on" : ""}`}
+                    onClick={() => handleListenTafsirAudio()}
+                    aria-label="استماع للتفسير"
+                  >
+                    <Mic2 size={15} aria-hidden="true" />
+                    تفسير صوتي
+                  </button>
+                ) : null}
+                {ayahPeople.length > 0 ? (
+                  <button
+                    type="button"
+                    className="aas-v3__chip"
+                    onClick={() => {
+                      const first = ayahPeople[0];
+                      navigate(
+                        ayahPeople.length === 1
+                          ? `/quran/people/${first.slug}`
+                          : `/quran/people`,
+                      );
+                      onClose();
+                    }}
+                    aria-label="من ذُكر في هذه الآية"
+                  >
+                    <Users size={15} aria-hidden="true" />
+                    مَن ذُكر؟
+                    {ayahPeople.length > 1
+                      ? ` (${toArabicDigits(ayahPeople.length)})`
+                      : ` · ${ayahPeople[0].nameAr}`}
+                  </button>
+                ) : null}
               </div>
               {tafsirAudioMsg ? (
                 <p className="aas-reader__status" role="status">
@@ -969,6 +1006,17 @@ export function PageAyahActionSheet({
             onSelect={onSetReciter}
             mode="ayah"
           />
+        ) : null}
+
+        {tafsirAudioSheetOpen ? (
+          <Suspense fallback={null}>
+            <TafsirAudioSheetLazy
+              open={tafsirAudioSheetOpen}
+              onClose={() => setTafsirAudioSheetOpen(false)}
+              surah={surahNum}
+              ayah={ayahNum}
+            />
+          </Suspense>
         ) : null}
       </div>
     </div>

@@ -75,6 +75,10 @@ const clips: TafsirAudioClip[] = [
 ];
 assert.ok(findTafsirAudioForAyah(clips, 1, 3));
 assert.equal(findTafsirAudioForAyah(clips, 2, 1), null);
+
+const { findTafsirAudioForSurah } = await import("@/features/mushaf/tafsir-audio");
+assert.ok(findTafsirAudioForSurah(clips, 1));
+assert.equal(findTafsirAudioForSurah(clips, 99), null);
 assert.match(displayScholarLabel(clips[0]!), /غير موثّقة/);
 clips[0]!.attributionVerified = true;
 assert.equal(displayScholarLabel(clips[0]!), "عالم تجريبي");

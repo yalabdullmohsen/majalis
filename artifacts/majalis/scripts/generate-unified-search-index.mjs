@@ -212,12 +212,15 @@ const APP_PAGES = [
   ["app:scholars", "scholar", "أعلام الإسلام", "/scholars", ["علماء", "مشايخ"]],
   ["app:seerah", "seerah", "السيرة النبوية", "/seerah", ["سيرة"]],
   ["app:prophets", "prophet", "قصص الأنبياء", "/prophets", ["أنبياء", "ابتلاءات"]],
+  ["app:quran-people", "person", "الأشخاص في القرآن", "/quran/people", ["أعلام", "شخصيات", "مذكورون", "فرعون", "مريم"]],
   ["app:nations", "nation", "الأمم السابقة", "/nations", ["أمم"]],
   ["app:stories", "story", "القصص الإسلامية", "/stories", ["قصص"]],
   ["app:adhkar", "adhkar", "الأذكار والأدعية", "/adhkar", ["أذكار", "أدعية"]],
   ["app:duas-quran", "dua", "أدعية القرآن", "/duas-quran", ["دعاء", "قرآن"]],
   ["app:lessons", "lesson", "الدروس", "/lessons", ["دروس"]],
   ["app:courses", "course", "الدورات العلمية", "/courses", ["دورات"]],
+  ["app:glossary", "app", "المصطلحات", "/glossary", ["مصطلحات", "glossary"]],
+  ["app:reciters", "app", "القرّاء", "/reciters", ["قراء", "تلاوة"]],
   ["app:prayer", "app", "مواقيت الصلاة", "/prayer-times", ["صلاة", "أذان"]],
   ["app:adhan-settings", "settings", "إعدادات الأذان", "/adhan-settings", ["أذان", "مؤذن"]],
   ["app:settings", "settings", "الإعدادات", "/settings", ["حساب", "تفضيلات"]],
@@ -226,10 +229,54 @@ const APP_PAGES = [
   ["app:assistant", "app", "المساعد العلمي", "/assistant", ["مساعد"]],
   ["app:quiz", "app", "لعبة سين جيم", "/quiz", ["اختبار"]],
   ["app:ibtillaat", "prophet", "ابتلاءات الأنبياء", "/prophets", ["ابتلاء", "أنبياء"]],
+  ["app:tafsir-audio", "tafsir-audio", "التفسير الصوتي", "/tafsir", ["تفسير صوتي", "استماع تفسير"]],
+  ["app:quran-hub", "quran", "مركز القرآن", "/quran-hub", ["مركز", "قرآن"]],
 ];
 
 for (const [id, kind, title, href, parts] of APP_PAGES) {
   pushDoc(id, kind, title, href, parts, "صفحة");
+}
+
+// ── أشخاص القرآن (دفعة الأسماء الصريحة) ───────────────────────────────────
+try {
+  const peoplePath = path.join(appRoot, "public/data/quran-people/people.json");
+  const peopleJson = JSON.parse(fs.readFileSync(peoplePath, "utf8"));
+  for (const p of peopleJson.people ?? []) {
+    if (p.status !== "published") continue;
+    pushDoc(
+      `person:${p.slug}`,
+      "person",
+      p.nameAr,
+      `/quran/people/${p.slug}`,
+      [...(p.aliases ?? []), p.category, "أشخاص القرآن"],
+      PERSON_META(p),
+    );
+  }
+} catch (e) {
+  console.warn("quran-people index skipped:", e.message);
+}
+
+function PERSON_META(p) {
+  return `${(p.occurrences ?? []).length} موضع`;
+}
+
+// ── كتالوج التفسير الصوتي (إن وُجدت مقاطع مفعّلة) ──────────────────────────
+try {
+  const tafsirPath = path.join(appRoot, "public/data/tafsir-audio-catalog.json");
+  const tafsirJson = JSON.parse(fs.readFileSync(tafsirPath, "utf8"));
+  for (const c of tafsirJson.clips ?? []) {
+    if (!c.enabled) continue;
+    pushDoc(
+      `tafsir-audio:${c.id}`,
+      "tafsir-audio",
+      c.titleAr || c.tafsir_name || "تفسير صوتي",
+      `/tafsir`,
+      [c.scholarLabelAr, c.scholar, c.tafsir_name, "تفسير صوتي"],
+      c.scholarLabelAr,
+    );
+  }
+} catch {
+  /* optional */
 }
 
 const outDir = path.join(appRoot, "public/data/search");
