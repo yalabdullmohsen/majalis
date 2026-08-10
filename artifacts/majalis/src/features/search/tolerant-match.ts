@@ -3,7 +3,6 @@
  * ترتيب (تام → بادئة → جزئي → تحرير) + الـ اختيارية + Levenshtein.
  */
 import { normalizeArabic, normalizeForSearch } from "@/shared/arabic-normalize";
-import { expandSearchTerms } from "@/lib/search-synonyms";
 
 export type MatchKind = "exact" | "prefix" | "substring" | "edit";
 
@@ -185,18 +184,10 @@ export function expandSearchQueryVariants(query: string): string[] {
   const base = query.trim();
   if (!base) return [];
   const set = new Set<string>([base]);
-  const swapped = swapKeyboardLayout(base);
-  if (swapped && swapped !== base) set.add(swapped);
-  // مرادفات الجملة الكاملة فقط — توسيع الأجزاء المفردة (مثل «سور» من «قرآن»)
-  // كان يُغرق نتائج الاستعلامات متعددة الكلمات.
-  for (const syn of expandSearchTerms(base)) {
-    if (!syn || syn === base) continue;
-    const baseParts = base.split(/\s+/).filter(Boolean);
-    const synParts = syn.split(/\s+/).filter(Boolean);
-    if (baseParts.length > 1 && synParts.length === 1 && synParts[0]!.length <= 4) continue;
-    if (baseParts.length > 1 && /^(سور|ايه|آيه|آيات|جزء|juz)$/i.test(syn)) continue;
-    set.add(syn);
-    if (set.size >= 10) break;
+  // تبديل التخطيط فقط عند وجود حروف لاتينية (كتابة عربية على QWERTY)
+  if (/[A-Za-z]/.test(base)) {
+    const swapped = swapKeyboardLayout(base);
+    if (swapped && swapped !== base) set.add(swapped);
   }
   return [...set];
 }
