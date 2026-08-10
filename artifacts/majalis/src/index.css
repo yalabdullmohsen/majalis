@@ -15,7 +15,22 @@
   font-weight: 400;
   /* swap + preload في index.html: يظهر النص فورًا بخط نظام ثم يستبدل —
      أفضل من block الذي كان يؤخّر الرسم على الشبكات البطيئة. خطوط QPC
-     للصفحة تبقى display:block داخل useMushafPageFont. */
+     للصفحة تبقى display:block داخل useMushafPageFont.
+     size-adjust يقلّل CLS عند استبدال احتياطي النظام بـ Amiri. */
+  font-display: swap;
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+  src: url("/fonts/amiri-quran/AmiriQuran-Regular.woff2") format("woff2");
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}
+
+/* اسم عائلة بديل يطابق مصطلحات KFGQPC في --font-quran */
+@font-face {
+  font-family: "KFGQPC Hafs Uthmanic";
+  font-style: normal;
+  font-weight: 400;
   font-display: swap;
   src: url("/fonts/amiri-quran/AmiriQuran-Regular.woff2") format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
@@ -3679,7 +3694,10 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .reading-text {
-  transition: font-size 0.12s ease;
+  transition: font-size 0.12s ease, background-color 0.15s ease, color 0.15s ease;
+  font-size: var(--reading-font-size, 17px);
+  line-height: var(--reading-line-height, 1.85);
+  max-width: var(--reading-max-width, 68ch);
 }
 
 .reading-text--mode {
@@ -3687,6 +3705,29 @@ html[data-theme="dark"] .search-suggestions-panel {
   border-radius: var(--ds-radius-lg);
   background: var(--majalis-parchment);
   border: 1px solid var(--msk-border, #E8E7E2);
+}
+
+/* ثيمات قارئ الكتب — Phase 6 */
+html[data-reading-theme="sepia"] .reading-text,
+html[data-reading-theme="sepia"] .highlighted-content,
+html[data-reading-theme="sepia"] .content-surface--reading {
+  background: #f4ecd8;
+  color: #3b2f1e;
+}
+
+html[data-reading-theme="night"] .reading-text,
+html[data-reading-theme="night"] .highlighted-content,
+html[data-reading-theme="night"] .content-surface--reading {
+  background: #0f1612;
+  color: #dce5df;
+}
+
+.content-action-bar__size {
+  font-size: 0.8rem;
+  font-weight: 700;
+  min-width: 2.6rem;
+  text-align: center;
+  opacity: 0.85;
 }
 
 .faidah-card__meta,

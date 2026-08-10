@@ -5,6 +5,8 @@
 import { useState } from "react";
 import { Mic, Square, RotateCcw } from "lucide-react";
 import { useRecitationTest, hasRecitationConsent, grantRecitationConsent } from "@/hooks/useRecitationTest";
+import { MicPermissionHelp } from "@/components/MicPermissionHelp";
+import { isAndroid, isIOS, isNative } from "@/lib/capacitor-utils";
 
 export function RecitationTestPanel({ referenceText, referenceLabel }: { referenceText: string; referenceLabel: string }) {
   const [consented, setConsented] = useState(hasRecitationConsent);
@@ -88,10 +90,17 @@ export function RecitationTestPanel({ referenceText, referenceLabel }: { referen
         <p className="rtp-status rtp-status--warn">اختبار التلاوة غير مدعوم على هذا الجهاز أو المتصفح حاليًا.</p>
       )}
       {state === "denied" && (
-        <div className="rtp-status rtp-status--warn">
-          <p>{errorMessage || "لم يُمنح إذن الميكروفون. فعّله من إعدادات الجهاز لاستخدام هذه الميزة."}</p>
-          <button type="button" className="rtp-retry-btn" onClick={reset}>إعادة المحاولة</button>
-        </div>
+        <MicPermissionHelp
+          inline
+          isNative={isNative}
+          isIOS={isIOS}
+          isAndroid={isAndroid}
+          onRetry={() => {
+            reset();
+            void start();
+          }}
+          title={errorMessage || "يحتاج التطبيق إذن الميكروفون للاستماع لتلاوتك"}
+        />
       )}
       {(state === "error" || state === "no_audio") && (
         <div className="rtp-status rtp-status--warn" role="alert">

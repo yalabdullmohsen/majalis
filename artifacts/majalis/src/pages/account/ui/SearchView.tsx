@@ -11,6 +11,7 @@ import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
 import { findSeedLessonById, loadLessonsSeed } from "@/lib/lessons-seed";
+import { VirtualList } from "@/components/VirtualList";
 import "@/styles/pages/search.css";
 import "@/styles/components/surface-polish.css";
 
@@ -137,7 +138,14 @@ function Group({ title, items, render, id }: { title: string; items: any[]; rend
         <h2 className="search-results-group-title">{title}</h2>
         <span className="search-results-count">{items.length}</span>
       </div>
-      <div className="search-results-list">{items.map(render)}</div>
+      <VirtualList
+        className="search-results-list"
+        items={items}
+        estimateSize={76}
+        virtualizeAbove={18}
+        getItemKey={(item, index) => item?.id ?? item?.href ?? index}
+        renderItem={(item) => render(item)}
+      />
     </div>
   );
 }

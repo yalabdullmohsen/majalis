@@ -16,6 +16,7 @@ import { parseMushafJumpQuery, matchSurahNumber } from "@/features/search/mushaf
 import { scoreTolerantMatch } from "@/features/search/tolerant-match";
 import { toWesternDigits } from "@/shared/arabic-normalize";
 import { toArabicDigits } from "@/lib/utils";
+import { VirtualList, type VirtualListHandle } from "@/components/VirtualList";
 import "@/styles/components/quran-surah-jump-search.css";
 
 export type QuranSurahJumpSearchProps = {
@@ -128,7 +129,7 @@ export function QuranSurahJumpSearch({
   const [query, setQuery] = useState("");
   const [debounced, setDebounced] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const listRef = useRef<HTMLOListElement>(null);
+  const listRef = useRef<VirtualListHandle>(null);
 
   useEffect(() => {
     const t = window.setTimeout(() => setDebounced(query.trim()), 200);
@@ -137,7 +138,7 @@ export function QuranSurahJumpSearch({
 
   // إصلاح #950: التمرير يبدأ من أعلى القائمة لا من أسفلها
   useEffect(() => {
-    listRef.current?.scrollTo({ top: 0 });
+    listRef.current?.scrollToIndex(0, "auto");
   }, [debounced]);
 
   const lastReading = useMemo(() => lastReadingLabel(), []);
@@ -307,32 +308,34 @@ export function QuranSurahJumpSearch({
           ) : null}
 
           {hits.length > 0 ? (
-            <ol
+            <VirtualList
+              as="ol"
               ref={listRef}
               className="quran-surah-jump__list"
               aria-label={debounced ? "نتائج السور" : "فهرس السور"}
-            >
-              {hits.map((h) => (
-                <li key={h.id}>
-                  <button
-                    type="button"
-                    className="quran-surah-jump__hit"
-                    onClick={() => go(h.page, { surah: h.id })}
-                  >
-                    <span className="quran-surah-jump__num" aria-hidden="true">
-                      {toArabicDigits(h.id)}
+              items={hits}
+              estimateSize={64}
+              virtualizeAbove={20}
+              getItemKey={(h) => h.id}
+              renderItem={(h) => (
+                <button
+                  type="button"
+                  className="quran-surah-jump__hit"
+                  onClick={() => go(h.page, { surah: h.id })}
+                >
+                  <span className="quran-surah-jump__num" aria-hidden="true">
+                    {toArabicDigits(h.id)}
+                  </span>
+                  <span className="quran-surah-jump__meta-col">
+                    <strong>{h.name}</strong>
+                    <span>
+                      {h.revelation} · {toArabicDigits(h.ayahs)} آيات · ص{" "}
+                      {toArabicDigits(h.page)}
                     </span>
-                    <span className="quran-surah-jump__meta-col">
-                      <strong>{h.name}</strong>
-                      <span>
-                        {h.revelation} · {toArabicDigits(h.ayahs)} آيات · ص{" "}
-                        {toArabicDigits(h.page)}
-                      </span>
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ol>
+                  </span>
+                </button>
+              )}
+            />
           ) : null}
         </div>
       ) : null}

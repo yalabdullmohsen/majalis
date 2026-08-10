@@ -55,6 +55,9 @@ initFinalPolish();
 // Idle preconnect for audio/text CDNs — LCP/INP handshake savings without blocking mount.
 if (typeof requestIdleCallback === "function") {
   requestIdleCallback(() => {
+    void import("./lib/font-ready").then((m) => {
+      void m.warmStaticQuranicFonts(["Amiri Quran", "KFGQPC Hafs Uthmanic"]);
+    });
     prewarmAudioCdns();
     prewarmTextApis();
     prewarmSupabaseOrigin();

@@ -79,6 +79,15 @@ export class WebSpeechQuranASRProvider implements QuranASRProvider {
       });
     }
 
+    const { ensureMicPermission } = await import("@/lib/mic-permission");
+    const mic = await ensureMicPermission();
+    if (!mic.ok) {
+      throw new ASRProviderUnavailableError({
+        code: "PERMISSION_DENIED",
+        message: mic.message || "تعذّر بدء الاستماع — تحقّق من إذن الميكروفون.",
+      });
+    }
+
     const id = `web-speech-${Date.now()}`;
     const active: Active = {
       recognition: null as unknown as WebSpeechRecognition,

@@ -1,10 +1,10 @@
 /**
  * Web port of RN QuranReader font-size controls:
- * default 20, step ±2, min 12, max 40, lineHeight = fontSize * 1.5
+ * default 20, step ±2, min 14, max 32 (Phase 6 reader range), lineHeight = fontSize * 1.5
  */
 
-export const QURAN_FONT_MIN_PX = 12;
-export const QURAN_FONT_MAX_PX = 40;
+export const QURAN_FONT_MIN_PX = 14;
+export const QURAN_FONT_MAX_PX = 32;
 export const QURAN_FONT_STEP_PX = 2;
 export const QURAN_FONT_DEFAULT_PX = 20;
 export const QURAN_FONT_STORAGE_KEY = "userFontSize";

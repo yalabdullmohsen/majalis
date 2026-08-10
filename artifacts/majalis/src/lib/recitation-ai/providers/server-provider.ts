@@ -141,6 +141,15 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       });
     }
 
+    const { ensureMicPermission } = await import("@/lib/mic-permission");
+    const mic = await ensureMicPermission();
+    if (!mic.ok) {
+      throw new ASRProviderUnavailableError({
+        code: "PERMISSION_DENIED",
+        message: mic.message || "لم يُمنح إذن الميكروفون.",
+      });
+    }
+
     let stream: MediaStream;
     try {
       stream = await navigator.mediaDevices.getUserMedia({
