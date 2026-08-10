@@ -106,6 +106,17 @@ html[data-theme="dark"] .mf2-frame {
   max-width: 100%;
   margin-inline: auto;
 }
+/* آخر سطر سورة / سطر قصير بلا مطّ مفرط: عرض طبيعي مركزي */
+.mf2-lines--opening .mf2-line--surah-end,
+.mf2-line--surah-end,
+.mf2-lines--opening .mf2-line--natural,
+.mf2-line--natural {
+  transform: none !important;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  text-align: center;
+}
 .mf2-opening-frame {
   position: absolute;
   /* يشغل ٨٪→٩٢٪ من ارتفاع الكتلة (= ٨٤٪) */
@@ -419,10 +430,10 @@ html[data-theme="dark"] .mf2-surah-header__frame,
 }
 
 .mf2-bismillah {
-  /* بسملة افتتاحية — مقاس سطر الآية كامل، مركزية، بلا ميدالية رقم */
+  /* بسملة افتتاحية: نفس مقاس سطر الآية (±٢٪)، سُمك أوضح بصريًا، بلا تمديد وبلا رقم */
   font-family: "Amiri Quran", "Amiri", "Scheherazade New", serif;
   font-size: 1em;
-  font-weight: 400;
+  font-weight: 700;
   line-height: normal;
   display: flex;
   align-items: center;
@@ -439,12 +450,13 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   flex: 0 0 auto;
   min-height: 1em;
   height: auto;
-  letter-spacing: 0.04em;
-  text-rendering: optimizeLegibility;
+  letter-spacing: 0;
+  text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "liga" 1, "calt" 1;
   user-select: none;
   -webkit-user-select: none;
+  transform: none !important;
 }
 
 /* علامة نهاية الآية — مجسم QPC الأصلي بلون ذهبي (لا استبدال SVG) */

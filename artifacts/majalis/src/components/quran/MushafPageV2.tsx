@@ -14,14 +14,14 @@ import {
   MUSHAF_LAYOUT_BASELINE,
 } from "@/features/mushaf/config";
 
-/** نطاق الإطار والمحتوى لصفحتي الافتتاح (٪ من ارتفاع الكتلة) */
+/** نطاق الإطار والمحتوى لصفحتي الافتتاح (٪ من ارتفاع الكتلة) — أعلى ٨–١٠٪، أسفل ٩٠–٩٢٪ */
 const OPENING_FRAME_TOP_PCT = 8;
 const OPENING_FRAME_BOT_PCT = 92;
-/** أول محتوى بعد الضلع العلوي ≤٣٪ من ارتفاع الإطار */
+/** أول محتوى بعد الضلع العلوي — يوزّع الامتلاء كفجوات أسطر داخل الإطار */
 const OPENING_INNER_TOP_PCT =
-  OPENING_FRAME_TOP_PCT + (OPENING_FRAME_BOT_PCT - OPENING_FRAME_TOP_PCT) * 0.03;
-/** هامش سفلي ≈٢٤px على شاشة مرجعية (~٣٫٥٪) + فراغ للإطار */
-const OPENING_INNER_BOT_PCT = OPENING_FRAME_BOT_PCT - 4.2;
+  OPENING_FRAME_TOP_PCT + (OPENING_FRAME_BOT_PCT - OPENING_FRAME_TOP_PCT) * 0.035;
+/** هامش سفلي آمن للحبر (~٣٪) دون فراغ ميت كبير */
+const OPENING_INNER_BOT_PCT = OPENING_FRAME_BOT_PCT - 3.2;
 const OPENING_SIDE_PAD_PX = 20;
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — للوضع التفاعلي بلا طبقة إحداثيات. */
@@ -283,6 +283,14 @@ export function MushafPageV2({
     const BASE_FONT = MUSHAF_LAYOUT_BASELINE.fontSizePx;
     const isOpening = layout.pageNumber === 1 || layout.pageNumber === 2;
     const noStretchLines = lastSurahEndLineNumbers(layout);
+    /* صفحتا الافتتاح: آخر سطر آية في الصفحة لا يُمطّ إن قصر (مثل «المفلحون» ص٢) */
+    if (isOpening) {
+      let maxLn = 0;
+      for (const row of layout.rows) {
+        if (row.kind === "line") maxLn = Math.max(maxLn, row.lineNumber);
+      }
+      if (maxLn > 0) noStretchLines.add(maxLn);
+    }
     const slotHPct = MUSHAF_GRID.slotHeightPct;
 
     const measure = () => {
@@ -360,14 +368,19 @@ export function MushafPageV2({
         `${(container.clientHeight * (slotHPct / 100)).toFixed(2)}px`,
       );
 
-      /* ملاءمة عرض الأسطر — ص١–٢ أيضًا (البسملة تُستثنى لأنها ليست ayah line) */
+      /* ملاءمة عرض الأسطر — يُستثنى آخر سطر سورة + البسملة (ليست ayah) في كل المصحف */
       for (const [ln, el] of ayahLineRefs.current) {
         if (!el) continue;
-        /* في الصفحات العادية: آخر سطر سورة لا يُمدّ؛ في الافتتاح يُمدّ الكل عدا البسملة */
-        if (!isOpening && noStretchLines.has(ln)) {
+        if (noStretchLines.has(ln)) {
           el.style.removeProperty("--mf2-line-sx");
+          el.classList.add("mf2-line--surah-end");
+          el.classList.remove("mf2-line--natural");
+          el.dataset.noStretch = "1";
           continue;
         }
+        el.classList.remove("mf2-line--surah-end");
+        el.classList.remove("mf2-line--natural");
+        el.removeAttribute("data-no-stretch");
         const contentW = measureLineContentWidth(el);
         if (contentW <= 0) {
           el.style.removeProperty("--mf2-line-sx");
@@ -481,12 +494,13 @@ export function MushafPageV2({
         const body = openingSlots.body;
         const idx = Math.max(0, body.indexOf(gridSlot));
         const n = body.length;
-        const top = OPENING_INNER_TOP_PCT + 3.2; /* مركز أول سطر بعد الهامش */
-        const bot = OPENING_INNER_BOT_PCT - 3.2;
+        /* توزيع أوسع داخل الإطار: المساحة المكتسبة = فجوات أسطر لا حشو علوي */
+        const top = OPENING_INNER_TOP_PCT + 1.8;
+        const bot = OPENING_INNER_BOT_PCT - 1.8;
         const band = Math.max(8, bot - top);
         baseline =
           n <= 1 ? (top + bot) / 2 : top + (idx / (n - 1)) * band;
-        h = Math.min(10, Math.max(6.5, (band / Math.max(1, n - 1)) * 0.7));
+        h = Math.min(10, Math.max(6.5, (band / Math.max(1, n - 1)) * 0.72));
       }
     } else {
       const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
