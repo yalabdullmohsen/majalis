@@ -87,17 +87,28 @@ html[data-theme="dark"] .mf2-frame {
   width: 100%;
   height: 100%;
 }
-/* الصفحتان الافتتاحيتان: أسطر بعرضها الطبيعي مركزية + إطار زخرفي */
+/* الصفحتان الافتتاحيتان: ملاءمة عرض للآيات + بسملة مركزية بعرضها الطبيعي */
 .mf2-lines--opening .mf2-line {
-  text-align: center;
-  transform: none;
+  text-align: start;
+  width: max-content;
+  max-width: none;
+  margin-inline: auto;
 }
 .mf2-lines--opening.mf2-lines--qpc-contiguous .mf2-line {
-  transform: none;
+  /* scaleX يمدّ المحتوى لعرض الإطار الداخلي — الأصل في الوسط */
+  transform: scaleX(var(--mf2-line-sx, 1));
+  transform-origin: center center;
+}
+.mf2-lines--opening .mf2-grid-slot--basmala .mf2-bismillah,
+.mf2-lines--opening .mf2-bismillah {
+  transform: none !important;
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
 }
 .mf2-opening-frame {
   position: absolute;
-  /* يشغل ≈٨٪→٩٢٪ من ارتفاع الكتلة (≥٨٠٪) */
+  /* يشغل ٨٪→٩٢٪ من ارتفاع الكتلة (= ٨٤٪) */
   top: 8%;
   bottom: 8%;
   left: 12px;
@@ -408,11 +419,11 @@ html[data-theme="dark"] .mf2-surah-header__frame,
 }
 
 .mf2-bismillah {
-  /* بسملة افتتاحية فقط — ممدودة أخف من الآيات؛ ارتفاع سطر كامل بلا تراكب */
+  /* بسملة افتتاحية — مقاس سطر الآية كامل، مركزية، بلا ميدالية رقم */
   font-family: "Amiri Quran", "Amiri", "Scheherazade New", serif;
-  font-size: 0.82em;
+  font-size: 1em;
   font-weight: 400;
-  line-height: var(--mf2-lh, 1.1);
+  line-height: normal;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -420,15 +431,15 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   max-width: 100%;
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  padding: 0.12em 0;
   text-align: center;
   white-space: nowrap;
-  color: color-mix(in srgb, var(--mf2-ink, var(--color-mushaf-ink, #14110E)) 82%, transparent);
+  color: var(--mf2-ink, var(--color-mushaf-ink, #14110E));
   overflow: visible;
   flex: 0 0 auto;
   min-height: 1em;
   height: auto;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "liga" 1, "calt" 1;

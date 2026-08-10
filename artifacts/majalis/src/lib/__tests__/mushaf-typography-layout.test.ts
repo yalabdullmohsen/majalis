@@ -38,7 +38,7 @@ assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/, "أسطر 
 assert.match(mushafV2, /\.mf2-lines--qpc-contiguous/, "أسطر QPC متصلة بلا عزل bidi");
 assert.match(mushafV2, /\.mf2-lines--opening/, "فرع افتتاحي ص1–2");
 assert.match(mushafV2, /\.mf2-surah-header\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/, "رأس السورة بارتفاع طبيعي");
-assert.match(mushafV2, /\.mf2-bismillah\s*\{[\s\S]*?font-size:\s*0\.82em/, "البسملة الافتتاحية أخف من الآيات");
+assert.match(mushafV2, /\.mf2-bismillah\s*\{[\s\S]*?font-size:\s*1em/, "البسملة بمقاس سطر الآية");
 {
   const basmalaBlock = mushafV2.match(/(?:^|\n)\.mf2-bismillah\s*\{[^}]+\}/)?.[0] ?? "";
   assert.equal(/overflow:\s*hidden/.test(basmalaBlock), false, "البسملة بلا overflow:hidden يقصّ النص");
