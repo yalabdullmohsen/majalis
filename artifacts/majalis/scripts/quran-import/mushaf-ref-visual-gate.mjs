@@ -82,26 +82,27 @@ async function structuralSnapshot(page, n) {
     const cart = document.querySelector(
       ".mpv-ayah-page-badge, .mpv-ayah-page-badge__cartouche, [data-cartouche-side]",
     );
-    const footer = document.querySelector("[data-page-parity]");
-    const parity = footer?.getAttribute("data-page-parity") || null;
-    const expectParity = pageNum % 2 === 1 ? "odd" : "even";
+    const footer = document.querySelector("[data-cartouche-align], .mpv-ayah-footer");
+    const align = footer?.getAttribute("data-cartouche-align") || null;
+    let cartDx = null;
     let cartSide = null;
     if (cart) {
       const cr = cart.getBoundingClientRect();
       const midX = window.innerWidth / 2;
-      cartSide = (cr.left + cr.right) / 2 < midX ? "left" : "right";
+      const mid = (cr.left + cr.right) / 2;
+      cartDx = Math.abs(mid - midX);
+      cartSide = mid < midX - 2 ? "left" : mid > midX + 2 ? "right" : "center";
     }
-    const expectSide = expectParity === "odd" ? "right" : "left";
     const lineCount = document.querySelectorAll(".mf2-grid-slot--line .mf2-line, .mf2-line").length;
     return {
       hasFrame: Boolean(frame),
       bannerTopPct,
       qpc,
       unicode,
-      parity,
-      expectParity,
+      align,
+      cartDx,
       cartSide,
-      expectSide,
+      expectSide: "center",
       lineCount,
       contentH: lr.height,
     };
@@ -168,25 +169,25 @@ if (failures.length === 0) {
         }
         if (
           structural.bannerTopPct == null ||
-          structural.bannerTopPct < 26 ||
-          structural.bannerTopPct > 30
+          structural.bannerTopPct < 37.5 ||
+          structural.bannerTopPct > 38.5
         ) {
           failures.push({
             page: n,
-            reason: `أعلى الشارة ${structural.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ٢٦–٣٠`,
+            reason: `أعلى الشارة ${structural.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ٣٧٫٥–٣٨٫٥`,
           });
         }
       }
-      if (structural.parity && structural.parity !== structural.expectParity) {
+      if (structural.cartDx != null && structural.cartDx > 2.05) {
         failures.push({
           page: n,
-          reason: `parity=${structural.parity} متوقع ${structural.expectParity}`,
+          reason: `خرطوش غير مركزي dx=${structural.cartDx.toFixed(1)}`,
         });
       }
-      if (structural.cartSide && structural.cartSide !== structural.expectSide) {
+      if (structural.cartSide && structural.cartSide !== "center") {
         failures.push({
           page: n,
-          reason: `خرطوش ${structural.cartSide} متوقع ${structural.expectSide}`,
+          reason: `خرطوش ${structural.cartSide} متوقع center`,
         });
       }
 
@@ -257,10 +258,10 @@ if (failures.length === 0) {
           !structural.hasFrame &&
           (n > 2 ||
             (structural.bannerTopPct != null &&
-              structural.bannerTopPct >= 26 &&
-              structural.bannerTopPct <= 30)) &&
-          (!structural.parity || structural.parity === structural.expectParity) &&
-          (!structural.cartSide || structural.cartSide === structural.expectSide);
+              structural.bannerTopPct >= 37.5 &&
+              structural.bannerTopPct <= 38.5)) &&
+          (structural.cartDx == null || structural.cartDx <= 2.05) &&
+          (!structural.cartSide || structural.cartSide === "center");
 
         if (onCi && structuralOk) {
           // مراجع PNG مقفلة على macOS؛ على Linux CI نثبت استقرار اللقطة + الهيكل.

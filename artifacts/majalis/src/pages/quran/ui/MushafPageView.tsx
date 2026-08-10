@@ -756,16 +756,16 @@ export default function MushafPageView() {
             )}
           </div>
 
-          {/* ذيل: خرطوش يتناوب فردي/زوجي · وصف الحزب في الجهة المقابلة */}
+          {/* ذيل: خرطوش مركزي · وصف الحزب جانبي بلا تقاطع */}
           <footer
             className="mpv-ayah-footer"
-            data-page-parity={page % 2 === 1 ? "odd" : "even"}
+            data-cartouche-align="center"
           >
             <span className="mpv-ayah-footer__meta">{footerMetaLabel ?? ""}</span>
             <button
               type="button"
               className="mpv-ayah-page-badge"
-              data-cartouche-side={page % 2 === 1 ? "end" : "start"}
+              data-cartouche-side="center"
               onClick={openJumpModal}
               aria-haspopup="dialog"
               aria-expanded={isJumpModalVisible}

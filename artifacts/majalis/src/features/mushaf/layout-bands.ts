@@ -6,10 +6,13 @@
 export const MUSHAF_LAYOUT_BANDS = {
   /** ارتفاع شريط الأدوات العائم + هامش داخلي */
   toolbarBandPx: 52,
-  /** ارتفاع نطاق الخرطوش + وصف الحزب */
-  footerBandPx: 40,
-  /** فاصل إلزامي بين نهاية contentBand وبداية footerBand */
-  contentFooterGapPx: 12,
+  /**
+   * نطاق الذيل: خرطوش ٣٠px + ≥٨px فوق شريط الأدوات + هامش علوي
+   * يضمن ≥٢٨px بين حبر آخر سطر وأعلى الخرطوش مع contentFooterGap.
+   */
+  footerBandPx: 46,
+  /** فاصل إلزامي بين نهاية contentBand وبداية footerBand (≥٢٨px حبر→خرطوش مع موضع الخرطوش) */
+  contentFooterGapPx: 20,
   /** ارتفاع تقريبي للرأس (بدون inset-top) — للقياس/التوثيق */
   headerBandPx: 38,
 } as const;

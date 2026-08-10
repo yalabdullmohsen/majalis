@@ -16,32 +16,50 @@ import {
   MUSHAF_BOTTOM_RESERVE_PX,
   MUSHAF_LAYOUT_BANDS,
 } from "@/features/mushaf/layout-bands";
+import { mushafTypescaleCssVars } from "@/features/mushaf/typescale";
 
 /**
- * صفحتا الافتتاح (١–٢): بلا إطار زخرفي.
- * الشارة أعلاها عند ≈٢٨٪ من contentBand؛ فراغ علوي مقصود؛ بلا ملاءمة عرض.
+ * صفحتا الافتتاح (١–٢): مسار برمجي موحّد · بلا إطار.
+ * أعلى الشارة ٣٨٪ · فاصل شارة→بسملة ٢٤px · بسملة→أول سطر ٢٠px · أسطر بلا مطّ.
  */
-/** أعلى الشارة (٪ من .mf2-lines) — ٢٦–٣٠٪ */
-const OPENING_BANNER_TOP_PCT = 28;
-/** ارتفاع خانة الشارة (٪ من .mf2-lines) */
+/** أعلى الشارة (٪ من .mf2-lines / contentBand) */
+const OPENING_BANNER_TOP_PCT = 38;
+/** ارتفاع خانة الشارة = خانة سطر واحدة (٪) */
 const OPENING_BANNER_H_PCT = 6.2;
-/** فاصل أدنى بين أسفل الشارة وأعلى حبر البسملة (px) */
-const OPENING_BASMALA_GAP_PX = 22;
+/** فاصل حبر شارة→بسملة (صفحتا الافتتاح) */
+const OPENING_BANNER_TO_BASMALA_PX = 24;
+/** فاصل حبر بسملة→أول سطر آية */
+const OPENING_BASMALA_TO_LINE_PX = 20;
+/** فاصل أدنى شارة→بسملة في الصفحات العادية */
+const BANNER_BASMALA_MIN_GAP_PX = 22;
 /** هامش سفلي مقصود تحت آخر سطر (٪ من contentBand) */
 const OPENING_BOTTOM_MARGIN_PCT = 12;
-const OPENING_BODY_SLOT_H_PCT = 7.0;
-const OPENING_GAP_PCT = (OPENING_BASMALA_GAP_PX / 700) * 100;
-const OPENING_ASCENT_PAD_PCT = (14 / 700) * 100;
+/** ارتفاع خانة الجسم — أصغر من السابق لتفادي تداخل الصناديق مع فواصل الحبر */
+const OPENING_BODY_SLOT_H_PCT = 5.4;
 /** مركز الشارة للتموضع المطلق (translateY -50%) */
 const OPENING_BANNER_MID_PCT = OPENING_BANNER_TOP_PCT + OPENING_BANNER_H_PCT / 2;
-/** مركز أول سطر جسم: أسفل الشارة + فاصل ≥22px + نصف ارتفاع الخانة */
-const OPENING_BODY_TOP_PCT =
-  OPENING_BANNER_TOP_PCT +
-  OPENING_BANNER_H_PCT +
-  OPENING_GAP_PCT +
-  OPENING_BODY_SLOT_H_PCT / 2 +
-  OPENING_ASCENT_PAD_PCT;
 const OPENING_BODY_BOT_PCT = 100 - OPENING_BOTTOM_MARGIN_PCT;
+
+/** تقدير أعلى/أسفل حبر عنصر نصي */
+function measureInkBounds(el: HTMLElement): { top: number; bottom: number } {
+  const box = el.getBoundingClientRect();
+  const cs = getComputedStyle(el);
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return { top: box.top, bottom: box.bottom };
+  ctx.font = cs.font;
+  const m = ctx.measureText((el.textContent || "").trim() || "ا");
+  const ascent =
+    m.actualBoundingBoxAscent ||
+    m.fontBoundingBoxAscent ||
+    parseFloat(cs.fontSize) * 0.95;
+  const descent =
+    m.actualBoundingBoxDescent ||
+    m.fontBoundingBoxDescent ||
+    parseFloat(cs.fontSize) * 0.35;
+  const baselineY = box.top + box.height / 2 + (ascent - descent) / 2;
+  return { top: baselineY - ascent, bottom: baselineY + descent };
+}
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — للوضع التفاعلي بلا طبقة إحداثيات. */
 export function groupWordsByAyah(words: QpcWord[]): QpcWord[][] {
@@ -480,13 +498,12 @@ export function MushafPageV2({
       container.dataset.mf2Opening = isOpening ? "1" : "0";
       container.dataset.mf2Grid = "1";
 
-      /* ص١–٢: شارة عند ٢٨٪ بلا إطار — توزيع الجسم تحتها مع هامش سفلي */
+      /* ص١–٢: شارة ٣٨٪ · فاصل ٢٤px ثم ٢٠px · فجوات أسطر متساوية */
       if (isOpening) {
         const crNow = container.getBoundingClientRect();
-        if (crNow.height > 40) {
-          const bodyTop = OPENING_BODY_TOP_PCT;
-          const bodyBot = OPENING_BODY_BOT_PCT;
-          const bodyBand = Math.max(8, bodyBot - bodyTop);
+        const H = crNow.height;
+        if (H > 40) {
+          const pxPct = (px: number) => (px / H) * 100;
           container.dataset.mf2BannerTopPct = String(OPENING_BANNER_TOP_PCT);
           container.dataset.mf2OpeningNoFrame = "1";
           container.dataset.mf2FrameBand = "none";
@@ -498,39 +515,137 @@ export function MushafPageV2({
             ban.style.top = `${OPENING_BANNER_MID_PCT.toFixed(3)}%`;
             ban.style.height = `${OPENING_BANNER_H_PCT}%`;
           }
-          const bodySlots = [
-            ...container.querySelectorAll<HTMLElement>(
-              ".mf2-grid-slot--basmala, .mf2-grid-slot--line",
-            ),
+
+          const basmalaSlots = [
+            ...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--basmala"),
           ].sort(
             (a, b) =>
               Number(a.getAttribute("data-grid-slot") || 0) -
               Number(b.getAttribute("data-grid-slot") || 0),
           );
-          const nBody = bodySlots.length;
-          bodySlots.forEach((slot, idx) => {
-            const baseline =
-              nBody <= 1
-                ? (bodyTop + bodyBot) / 2
-                : bodyTop + (idx / (nBody - 1)) * bodyBand;
-            const h = Math.min(
-              9.5,
-              Math.max(
-                6.2,
-                Math.min(
-                  OPENING_BODY_SLOT_H_PCT,
-                  (bodyBand / Math.max(1, nBody - 1)) * 0.85,
-                ),
-              ),
-            );
-            slot.style.top = `${baseline.toFixed(3)}%`;
-            slot.style.height = `${h.toFixed(3)}%`;
-          });
+          const lineSlots = [
+            ...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--line"),
+          ].sort(
+            (a, b) =>
+              Number(a.getAttribute("data-grid-slot") || 0) -
+              Number(b.getAttribute("data-grid-slot") || 0),
+          );
+
+          let basmalaSlot: HTMLElement | null = basmalaSlots[0] ?? null;
+          let ayahLineSlots = lineSlots;
+          if (!basmalaSlot && lineSlots.length > 0) {
+            basmalaSlot = lineSlots[0];
+            ayahLineSlots = lineSlots.slice(1);
+          }
+
+          const placeSlotCenter = (slot: HTMLElement, centerPct: number, hPct: number) => {
+            slot.style.top = `${centerPct.toFixed(3)}%`;
+            slot.style.height = `${hPct.toFixed(3)}%`;
+          };
+
+          const inkElOf = (slot: HTMLElement): HTMLElement | null =>
+            slot.querySelector<HTMLElement>(".mf2-bismillah, .mf2-line") || slot;
+
+          const banR = banners[0]?.getBoundingClientRect();
+          const slotH = OPENING_BODY_SLOT_H_PCT;
+          const ascentPad = size * 0.72;
+
+          if (basmalaSlot && banR) {
+            /* مركز ≈ أسفل الشارة + ٢٤px + صعود الحبر */
+            let basCenterPct =
+              ((banR.bottom - crNow.top + OPENING_BANNER_TO_BASMALA_PX + ascentPad) / H) * 100;
+            placeSlotCenter(basmalaSlot, basCenterPct, slotH);
+            for (let pass = 0; pass < 3; pass++) {
+              const basInkEl = inkElOf(basmalaSlot);
+              if (!basInkEl) break;
+              const ink = measureInkBounds(basInkEl);
+              const gap = ink.top - banR.bottom;
+              const nudgePct = pxPct(OPENING_BANNER_TO_BASMALA_PX - gap);
+              if (Math.abs(nudgePct) < 0.02) break;
+              basCenterPct += nudgePct;
+              placeSlotCenter(basmalaSlot, basCenterPct, slotH);
+            }
+
+            const basInkEl = inkElOf(basmalaSlot);
+            const basInk = basInkEl
+              ? measureInkBounds(basInkEl)
+              : {
+                  top: banR.bottom + OPENING_BANNER_TO_BASMALA_PX,
+                  bottom: banR.bottom + OPENING_BANNER_TO_BASMALA_PX + size,
+                };
+            container.dataset.mf2BasmalaGap = (basInk.top - banR.bottom).toFixed(1);
+
+            if (ayahLineSlots.length > 0) {
+              let firstCenterPct =
+                ((basInk.bottom - crNow.top + OPENING_BASMALA_TO_LINE_PX + ascentPad) / H) *
+                100;
+              placeSlotCenter(ayahLineSlots[0], firstCenterPct, slotH);
+              for (let pass = 0; pass < 3; pass++) {
+                const firstInkEl = inkElOf(ayahLineSlots[0]);
+                if (!firstInkEl) break;
+                const ink = measureInkBounds(firstInkEl);
+                const gap = ink.top - basInk.bottom;
+                const nudgePct = pxPct(OPENING_BASMALA_TO_LINE_PX - gap);
+                if (Math.abs(nudgePct) < 0.02) break;
+                firstCenterPct += nudgePct;
+                placeSlotCenter(ayahLineSlots[0], firstCenterPct, slotH);
+              }
+              firstCenterPct = parseFloat(ayahLineSlots[0].style.top) || firstCenterPct;
+              container.dataset.mf2BasmalaLineGap = (() => {
+                const el = inkElOf(ayahLineSlots[0]);
+                if (!el) return "";
+                return (measureInkBounds(el).top - basInk.bottom).toFixed(1);
+              })();
+
+              /* فجوة حبر موحّدة من مرجع الأساس — نفس px في ص١ وص٢ */
+              const inkGapPx =
+                MUSHAF_LAYOUT_BASELINE.lineGapPx * (size / BASE_FONT);
+              const lineH = slotH;
+              ayahLineSlots.forEach((slot, idx) => {
+                if (idx === 0) {
+                  placeSlotCenter(slot, firstCenterPct, lineH);
+                  return;
+                }
+                const prev = inkElOf(ayahLineSlots[idx - 1]);
+                const prevInk = prev
+                  ? measureInkBounds(prev)
+                  : { top: 0, bottom: crNow.top + (H * firstCenterPct) / 100 };
+                let centerPct =
+                  ((prevInk.bottom - crNow.top + inkGapPx + size * 0.55) / H) * 100;
+                placeSlotCenter(slot, centerPct, lineH);
+                for (let pass = 0; pass < 3; pass++) {
+                  const el = inkElOf(slot);
+                  if (!el) break;
+                  const ink = measureInkBounds(el);
+                  const gap = ink.top - prevInk.bottom;
+                  const nudge = pxPct(inkGapPx - gap);
+                  if (Math.abs(nudge) < 0.02) break;
+                  centerPct += nudge;
+                  placeSlotCenter(slot, centerPct, lineH);
+                }
+              });
+
+              const gaps: number[] = [];
+              for (let i = 0; i < ayahLineSlots.length - 1; i++) {
+                const a = inkElOf(ayahLineSlots[i]);
+                const b = inkElOf(ayahLineSlots[i + 1]);
+                if (a && b) {
+                  gaps.push(
+                    measureInkBounds(b).top - measureInkBounds(a).bottom,
+                  );
+                }
+              }
+              if (gaps.length) {
+                const avg = gaps.reduce((s, g) => s + g, 0) / gaps.length;
+                container.dataset.mf2LineGapAvg = avg.toFixed(2);
+              }
+            }
+          }
         }
       }
 
-      /* فاصل حبر البسملة عن أسفل الشارة ≥20px — في كل مواضع بداية السورة */
-      {
+      /* فاصل حبر البسملة عن أسفل الشارة — صفحات عادية (≥٢٢px) */
+      if (!isOpening) {
         const banners = [
           ...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--banner"),
         ];
@@ -545,51 +660,26 @@ export function MushafPageV2({
               : null) ||
             bannerEl.parentElement?.querySelector<HTMLElement>(".mf2-bismillah") ||
             container.querySelector<HTMLElement>(".mf2-grid-slot--basmala .mf2-bismillah");
-          /* ص١: البسملة آية — أول سطر بعد الشارة */
-          const inkEl =
-            basEl ||
-            (isOpening
-              ? container.querySelector<HTMLElement>(".mf2-grid-slot--line .mf2-line")
-              : null);
-          if (!inkEl) continue;
+          if (!basEl) continue;
           const banR = bannerEl.getBoundingClientRect();
-          const cs = getComputedStyle(inkEl);
-          const canvas = document.createElement("canvas");
-          const ctx = canvas.getContext("2d");
-          let inkTop = inkEl.getBoundingClientRect().top;
-          if (ctx) {
-            ctx.font = cs.font;
-            const m = ctx.measureText((inkEl.textContent || "").trim());
-            const ascent =
-              m.actualBoundingBoxAscent ||
-              m.fontBoundingBoxAscent ||
-              parseFloat(cs.fontSize) * 0.95;
-            const descent =
-              m.actualBoundingBoxDescent ||
-              m.fontBoundingBoxDescent ||
-              parseFloat(cs.fontSize) * 0.35;
-            const box = inkEl.getBoundingClientRect();
-            const baselineY = box.top + box.height / 2 + (ascent - descent) / 2;
-            inkTop = baselineY - ascent;
-          }
+          const inkTop = measureInkBounds(basEl).top;
           const gap = inkTop - banR.bottom;
           minGap = Math.min(minGap, gap);
-          if (gap < OPENING_BASMALA_GAP_PX - 0.5) {
-            /* صفحات عادية: مواقع الشبكة كافية — لا تدفع البسملة نحو الآية */
-            if (!isOpening && inkEl.closest(".mf2-grid-slot--basmala")) {
+          if (gap < BANNER_BASMALA_MIN_GAP_PX - 0.5) {
+            /* مواقع الشبكة كافية — لا تدفع البسملة نحو الآية */
+            if (basEl.closest(".mf2-grid-slot--basmala")) {
               continue;
             }
-            const nudgePx = OPENING_BASMALA_GAP_PX - gap;
+            const nudgePx = BANNER_BASMALA_MIN_GAP_PX - gap;
             const nudgePct = (nudgePx / Math.max(1, cr.height)) * 100;
             const slot =
-              inkEl.closest<HTMLElement>(".mf2-grid-slot--basmala") ||
-              inkEl.closest<HTMLElement>(".mf2-grid-slot--line");
+              basEl.closest<HTMLElement>(".mf2-grid-slot--basmala") ||
+              basEl.closest<HTMLElement>(".mf2-grid-slot--line");
             if (slot) {
               const topPct = parseFloat(slot.style.top);
               if (Number.isFinite(topPct)) {
                 let nextTop = topPct + nudgePct;
-                /* صفحات عادية: لا تدفع البسملة فوق أول سطر آية */
-                if (!isOpening && slot.classList.contains("mf2-grid-slot--basmala")) {
+                if (slot.classList.contains("mf2-grid-slot--basmala")) {
                   const basSlot = Number(slot.getAttribute("data-grid-slot") || 0);
                   const nextLine = container.querySelector<HTMLElement>(
                     `.mf2-grid-slot--line[data-grid-slot="${basSlot + 1}"]`,
@@ -609,27 +699,25 @@ export function MushafPageV2({
                 slot.style.top = `${nextTop.toFixed(3)}%`;
               }
             }
-            /* ص١–٢: إن نُقلت البسملة/أول سطر، أزح بقية أسطر الجسم بنفس المقدار */
-            if (isOpening && slot?.classList.contains("mf2-grid-slot--line")) {
-              let passed = false;
-              for (const lineSlot of container.querySelectorAll<HTMLElement>(
-                ".mf2-grid-slot--line",
-              )) {
-                if (lineSlot === slot) {
-                  passed = true;
-                  continue;
-                }
-                if (!passed) continue;
-                const t = parseFloat(lineSlot.style.top);
-                if (Number.isFinite(t)) {
-                  lineSlot.style.top = `${(t + nudgePct).toFixed(3)}%`;
-                }
-              }
-            }
           }
         }
         if (Number.isFinite(minGap) && minGap < Infinity) {
           container.dataset.mf2BasmalaGap = minGap.toFixed(1);
+        }
+      }
+
+      /* سلّم خطوط موحّد: S على الحاوية والصدفة */
+      const typeVars = mushafTypescaleCssVars(size);
+      for (const [k, v] of Object.entries(typeVars)) {
+        container.style.setProperty(k, v);
+      }
+      const shell =
+        container.closest<HTMLElement>(".quran-shell--ayah") ||
+        container.closest<HTMLElement>(".mpv-root") ||
+        container.closest<HTMLElement>("[data-mushaf-shell]");
+      if (shell) {
+        for (const [k, v] of Object.entries(typeVars)) {
+          shell.style.setProperty(k, v);
         }
       }
 
@@ -713,18 +801,31 @@ export function MushafPageV2({
         baseline = OPENING_BANNER_MID_PCT;
         h = OPENING_BANNER_H_PCT;
       } else {
+        /* تقدير أولي قبل قياس الحبر في useLayoutEffect — نفس مسار ص١ وص٢ */
         const body = openingSlots.body;
         const idx = Math.max(0, body.indexOf(gridSlot));
         const n = body.length;
-        const top = OPENING_BODY_TOP_PCT;
+        const bannerBot = OPENING_BANNER_TOP_PCT + OPENING_BANNER_H_PCT;
+        const basmalaMid =
+          bannerBot + (OPENING_BANNER_TO_BASMALA_PX / 7) + OPENING_BODY_SLOT_H_PCT / 2;
+        const firstLineMid =
+          basmalaMid +
+          OPENING_BODY_SLOT_H_PCT / 2 +
+          (OPENING_BASMALA_TO_LINE_PX / 7) +
+          OPENING_BODY_SLOT_H_PCT / 2;
         const bot = OPENING_BODY_BOT_PCT;
-        const band = Math.max(8, bot - top);
-        baseline =
-          n <= 1 ? (top + bot) / 2 : top + (idx / (n - 1)) * band;
-        h = Math.min(
-          9.5,
-          Math.max(6.2, Math.min(OPENING_BODY_SLOT_H_PCT, (band / Math.max(1, n - 1)) * 0.85)),
-        );
+        if (idx === 0) {
+          baseline = basmalaMid;
+        } else {
+          const lineIdx = idx - 1;
+          const lineCount = Math.max(1, n - 1);
+          const band = Math.max(4, bot - firstLineMid);
+          baseline =
+            lineCount <= 1
+              ? firstLineMid
+              : firstLineMid + (lineIdx / (lineCount - 1)) * band;
+        }
+        h = OPENING_BODY_SLOT_H_PCT;
       }
     } else if (basmalaPair) {
       /* خانة البسملة المستقلة — خط أساس الشبكة (لا إزاحة من الشارة). */

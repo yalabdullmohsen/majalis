@@ -86,16 +86,16 @@ assert.equal(/mpv-ayah-nav-btn/.test(viewSrc), false, "بلا أسهم تنقّ�
 assert.equal(/pageFillMode/.test(viewSrc), false, "بلا وضع امتلاء منفصل");
 assert.equal(/Maximize2|Minimize2|mpv-fill-enter/.test(viewSrc), false, "بلا أزرار تكبير/تصغير");
 assert.match(viewSrc, /MushafPageCartoucheSvg/);
-assert.match(viewSrc, /data-page-parity/, "تناوب خرطوش فردي/زوجي");
-assert.match(viewSrc, /data-cartouche-side/, "جهة الخرطوش");
-assert.match(quranCss, /data-page-parity="odd"/, "CSS فردي");
-assert.match(quranCss, /data-page-parity="even"/, "CSS زوجي");
+assert.match(viewSrc, /data-cartouche-align="center"/, "خرطوش مركزي");
+assert.match(viewSrc, /data-cartouche-side="center"/, "جهة الخرطوش مركز");
+assert.equal(/data-page-parity/.test(viewSrc), false, "تناوب الخرطوش مُلغى");
+assert.equal(/data-page-parity="odd"/.test(quranCss), false, "بلا CSS فردي");
+assert.match(quranCss, /\.mpv-ayah-page-badge\s*\{[\s\S]*?left:\s*50%/, "خرطوش left 50%");
 assert.match(
   quranCss,
-  /\[data-page-parity="odd"\]\s+\.mpv-ayah-page-badge/,
-  "خرطوش فردي يمين",
+  /\.mpv-ayah-header\s*\{[\s\S]*?font-size:\s*var\(--mushaf-fs-header-meta/,
+  "رأس من سلّم S",
 );
-assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?font-size:\s*15px/, "رأس أوضح 15px");
 
 assert.match(immersiveSrc, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#FCF8F1"/);
 
