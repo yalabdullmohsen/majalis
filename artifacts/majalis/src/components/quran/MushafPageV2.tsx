@@ -323,7 +323,7 @@ export function MushafPageV2({
     const slotHPct = MUSHAF_GRID.slotHeightPct;
 
     const measure = () => {
-      let availableWidth = container.clientWidth;
+      const availableWidth = container.clientWidth;
       if (availableWidth <= 0) return false;
 
       const sizingEls = collectSizingEls(ayahLineRefs.current);
