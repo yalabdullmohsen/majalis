@@ -25,6 +25,7 @@ import "./styles/components/hub-card.css";
 import "./styles/brand-v4.css";
 import "./index.css";
 import "./styles/design-system.css";
+import "./styles/components/instant-interaction.css";
 import "./styles/final-release.css";
 import "./styles/brand-v4-components.css";
 import "./styles/brand-v4-contrast-fixes.css";

@@ -1,0 +1,92 @@
+/**
+ * تفاعل فوري عالمي — إزالة تأخير اللمس + تغذية بصرية عند الضغط.
+ * يعتمد GPU (transform/opacity) فقط.
+ */
+a,
+button,
+[role="button"],
+[role="tab"],
+[role="menuitem"],
+.mj-card a,
+.m2030-tile,
+.m2030-feature,
+.hp-featured-card,
+.hp-explore-item,
+.nav-link,
+.bottom-nav-item {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  a:active,
+  button:active:not(:disabled),
+  [role="button"]:active,
+  .m2030-tile:active,
+  .m2030-feature:active,
+  .hp-featured-card:active,
+  .hp-explore-item:active,
+  .bottom-nav-item:active {
+    transform: scale(0.97);
+    transition: transform 90ms ease, opacity 90ms ease;
+  }
+}
+
+/* هيكل مسار lazy */
+.lrf-wrap--skel {
+  min-height: 50dvh;
+  padding: 1.25rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lrf-skel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: min(100%, 36rem);
+  margin-inline: auto;
+}
+
+.lrf-skel__hero {
+  height: 7.5rem;
+  border-radius: 16px;
+}
+
+.lrf-skel__line {
+  height: 0.85rem;
+  border-radius: 8px;
+  width: 88%;
+}
+
+.lrf-skel__line--short {
+  width: 62%;
+}
+
+.lrf-skel__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.55rem;
+  margin-top: 0.35rem;
+}
+
+.lrf-skel__card {
+  height: 5.5rem;
+  border-radius: 14px;
+}
+
+.lrf-wrap--skel .lrf-label {
+  margin: 0.5rem auto 0;
+  font-size: 0.82rem;
+  color: var(--mj-ink-2, #4a5a53);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a:active,
+  button:active:not(:disabled),
+  [role="button"]:active {
+    transform: none !important;
+  }
+}

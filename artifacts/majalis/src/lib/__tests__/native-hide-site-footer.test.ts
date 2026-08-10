@@ -22,7 +22,7 @@ assert.match(settingsSrc, /title="عن التطبيق"/);
 assert.match(settingsSrc, /href="\/privacy"/);
 assert.match(settingsSrc, /href="\/terms"/);
 assert.match(settingsSrc, /href="\/support"/);
-assert.match(servicesSrc, /title:\s*"عن التطبيق"/);
+assert.match(servicesSrc, /title:\s*"(?:عن التطبيق|الإعدادات والمساعدة)"/);
 assert.match(servicesSrc, /href: "\/privacy"/);
 assert.match(servicesSrc, /href: "\/terms"/);
 assert.match(servicesSrc, /href: "\/support"/);

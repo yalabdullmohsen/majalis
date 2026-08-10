@@ -6,8 +6,8 @@ export function createAppQueryClient(): QueryClient {
     defaultOptions: {
       queries: {
         /** Catalog / list pages change infrequently — fewer duplicate Supabase round-trips. */
-        staleTime: 180_000,
-        gcTime: 600_000,
+        staleTime: 300_000,
+        gcTime: 900_000,
         retry: REQUEST_MAX_RETRIES,
         refetchOnWindowFocus: false,
         refetchOnReconnect: true,

@@ -1,11 +1,16 @@
 /**
- * تحميل مسبق للمسارات الأربعة الأكثر زيارة عند خمول المتصفح.
+ * تحميل مسبق للمسارات الأكثر زيارة عند خمول المتصفح.
  */
 const TOP_ROUTES: Array<() => Promise<unknown>> = [
   () => import("@/pages/account/HomePage"),
   () => import("@/pages/lessons/LessonsPage"),
   () => import("@/pages/worship/PrayerTimesPage"),
   () => import("@/pages/quran/QuranKnowledgeHubPage"),
+  () => import("@/pages/quran/QuranHubPage"),
+  () => import("@/pages/fiqh/FiqhPage"),
+  () => import("@/views/ProphetStoriesPage"),
+  () => import("@/pages/quran/QuranPeoplePage"),
+  () => import("@/views/NationsPage"),
 ];
 
 export function prefetchTopRoutesOnIdle(): void {
@@ -19,8 +24,8 @@ export function prefetchTopRoutesOnIdle(): void {
     }
   };
   if (typeof window.requestIdleCallback === "function") {
-    window.requestIdleCallback(run, { timeout: 4_000 });
+    window.requestIdleCallback(run, { timeout: 3_500 });
   } else {
-    window.setTimeout(run, 2_000);
+    window.setTimeout(run, 1_500);
   }
 }

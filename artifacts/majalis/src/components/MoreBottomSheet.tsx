@@ -197,7 +197,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
         setQuery("");
         onClose();
       }}
-      title="مركز الخدمات"
+      title="قائمة المزيد"
       snap="full"
       closeLabel="إغلاق"
       className="bottom-sheet--services"
@@ -216,7 +216,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
             if (e.key === "Enter") e.currentTarget.blur();
           }}
           className="bottom-sheet__search-input"
-          placeholder="ابحث في الخدمات…"
+          placeholder="ابحث في المزيد…"
           autoComplete="off"
           data-search-field="1"
         />

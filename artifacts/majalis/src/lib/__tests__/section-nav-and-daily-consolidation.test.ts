@@ -180,7 +180,7 @@ console.log("\n=== الشريط السفلي والمزيد ===");
   assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
   assert(moreSrc.includes("filterServicesCenterGroups") || moreSrc.includes("services-center-nav"), "المزيد من كتالوج الخدمات");
-  assert(moreSrc.includes("مركز الخدمات") || moreSrc.includes("حسابي"), "المزيد مركز خدمات");
+  assert(moreSrc.includes("قائمة المزيد") || moreSrc.includes("مركز الخدمات") || moreSrc.includes("حسابي"), "المزيد قائمة منظمة");
   assert(moreSrc.includes("query") || moreSrc.includes("search"), "بحث داخل مركز الخدمات");
 }
 

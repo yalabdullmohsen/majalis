@@ -33,12 +33,24 @@ export const NAV_SERVICE_GROUPS: ServicesCenterGroup[] = SERVICES_CENTER_GROUPS;
 export { filterServicesCenterGroups };
 export type { ServicesCenterGroup, ServicesCenterItem };
 
-/** روابط تذييل «عن المجلس» — مشتقة من مجموعة about */
+/** روابط تذييل «عن المجلس» — مشتقة من مجموعة الإعدادات والمساعدة */
 export function getAboutFooterLinks(): Array<{ href: string; label: string }> {
-  const about = SERVICES_CENTER_GROUPS.find((g) => g.id === "about");
+  const about = SERVICES_CENTER_GROUPS.find((g) => g.id === "settings" || g.id === "about");
   if (!about) return [];
+  const aboutHrefs = new Set([
+    "/about-us",
+    "/about",
+    "/methodology",
+    "/sources",
+    "/fatwa-policy",
+    "/privacy",
+    "/privacy-center",
+    "/terms",
+    "/support",
+    "/contact",
+  ]);
   return about.items
-    .filter((i) => i.action.kind === "link")
+    .filter((i) => i.action.kind === "link" && aboutHrefs.has(i.action.href))
     .map((i) => ({
       href: (i.action as { kind: "link"; href: string }).href,
       label: i.label,
