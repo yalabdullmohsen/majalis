@@ -11,8 +11,8 @@ export const MUSHAF_LAYOUT_BANDS = {
    * يضمن ≥٢٨px بين حبر آخر سطر وأعلى الخرطوش مع contentFooterGap.
    */
   footerBandPx: 46,
-  /** فاصل إلزامي بين نهاية contentBand وبداية footerBand (≥٢٨px حبر→خرطوش مع موضع الخرطوش) */
-  contentFooterGapPx: 20,
+  /** فاصل إلزامي بين نهاية contentBand وبداية footerBand (≥٢٨px حبر→خرطوش) */
+  contentFooterGapPx: 28,
   /** ارتفاع تقريبي للرأس (بدون inset-top) — للقياس/التوثيق */
   headerBandPx: 38,
 } as const;

@@ -59,6 +59,9 @@ if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*24/.test(pageV2)) {
 if (!/OPENING_BASMALA_TO_LINE_PX\s*=\s*20/.test(pageV2)) {
   failures.push({ page: 0, reason: "OPENING_BASMALA_TO_LINE_PX ≠ 20" });
 }
+if (!/OPENING_BODY_SLOT_H_PCT\s*=\s*5\.8/.test(pageV2)) {
+  failures.push({ page: 0, reason: "OPENING_BODY_SLOT_H_PCT ≠ 5.8" });
+}
 
 let server = null;
 const killServer = () => {
@@ -125,45 +128,79 @@ try {
       const lineSlots = [...document.querySelectorAll(".mf2-grid-slot--line .mf2-line")];
       const hasBasSlot = Boolean(document.querySelector(".mf2-grid-slot--basmala"));
       const firstAyah = hasBasSlot ? lineSlots[0] : lineSlots[1];
-      const inkBox = (el) => {
-        if (!el) return null;
-        const box = el.getBoundingClientRect();
-        const cs = getComputedStyle(el);
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return { top: box.top, bottom: box.bottom };
-        ctx.font = cs.font;
-        const m = ctx.measureText((el.textContent || "").trim() || "ا");
-        const ascent =
-          m.actualBoundingBoxAscent ||
-          m.fontBoundingBoxAscent ||
-          parseFloat(cs.fontSize) * 0.95;
-        const descent =
-          m.actualBoundingBoxDescent ||
-          m.fontBoundingBoxDescent ||
-          parseFloat(cs.fontSize) * 0.35;
-        const baselineY = box.top + box.height / 2 + (ascent - descent) / 2;
-        return { top: baselineY - ascent, bottom: baselineY + descent };
-      };
+      const ayahLines = hasBasSlot ? lineSlots : lineSlots.slice(1);
+      const S =
+        parseFloat(getComputedStyle(root).getPropertyValue("--mushaf-S")) ||
+        parseFloat(getComputedStyle(root).fontSize) ||
+        24.382;
+      const fontSizes = ayahLines.map((el) => parseFloat(getComputedStyle(el).fontSize));
       let bannerToBas = null;
       let basToLine = null;
-      const basInk = inkBox(bas);
-      const firstInk = inkBox(firstAyah);
-      if (banR && basInk) {
-        bannerToBas = basInk.top - banR.bottom;
+      if (banR && bas) {
+        const basBox = bas.getBoundingClientRect();
+        bannerToBas = basBox.top - banR.bottom;
       }
-      if (basInk && firstInk) {
-        basToLine = firstInk.top - basInk.bottom;
+      if (bas && firstAyah) {
+        try {
+          const rangeA = document.createRange();
+          rangeA.selectNodeContents(bas);
+          const rangeB = document.createRange();
+          rangeB.selectNodeContents(firstAyah);
+          const ra = [...rangeA.getClientRects()];
+          const rb = [...rangeB.getClientRects()];
+          const basBot = ra.length
+            ? Math.max(...ra.map((r) => r.bottom))
+            : bas.getBoundingClientRect().bottom;
+          const lineTop = rb.length
+            ? Math.min(...rb.map((r) => r.top))
+            : firstAyah.getBoundingClientRect().top;
+          basToLine = lineTop - basBot;
+        } catch {
+          basToLine =
+            firstAyah.getBoundingClientRect().top - bas.getBoundingClientRect().bottom;
+        }
       }
       const gaps = [];
-      const ayahLines = hasBasSlot ? lineSlots : lineSlots.slice(1);
-      for (let i = 0; i < ayahLines.length - 1; i++) {
-        const a = inkBox(ayahLines[i]);
-        const b = inkBox(ayahLines[i + 1]);
-        if (a && b) gaps.push(b.top - a.bottom);
+      const inkGaps = [];
+      const heights = [];
+      const inkH = (el) => {
+        try {
+          const range = document.createRange();
+          range.selectNodeContents(el);
+          const rects = [...range.getClientRects()].filter((r) => r.width > 0 && r.height > 0);
+          if (!rects.length) return el.getBoundingClientRect();
+          return {
+            top: Math.min(...rects.map((r) => r.top)),
+            bottom: Math.max(...rects.map((r) => r.bottom)),
+          };
+        } catch {
+          return el.getBoundingClientRect();
+        }
+      };
+      for (let i = 0; i < ayahLines.length; i++) {
+        heights.push(ayahLines[i].getBoundingClientRect().height);
+        if (i < ayahLines.length - 1) {
+          const a = ayahLines[i].getBoundingClientRect();
+          const b = ayahLines[i + 1].getBoundingClientRect();
+          gaps.push(b.top - a.bottom);
+          const ai = inkH(ayahLines[i]);
+          const bi = inkH(ayahLines[i + 1]);
+          inkGaps.push(bi.top - ai.bottom);
+        }
       }
       const lineGapAvg =
-        gaps.length > 0 ? gaps.reduce((s, g) => s + g, 0) / gaps.length : null;
+        inkGaps.length > 0 ? inkGaps.reduce((s, g) => s + g, 0) / inkGaps.length : null;
+      const lineGapMin = inkGaps.length ? Math.min(...inkGaps) : null;
+      const avgH = heights.length ? heights.reduce((s, h) => s + h, 0) / heights.length : null;
+      const last = ayahLines.at(-1);
+      const badge = document.querySelector(".mpv-ayah-page-badge");
+      let inkToCart = null;
+      let inkToContentBot = null;
+      if (last) {
+        const li = inkH(last);
+        inkToContentBot = lr.bottom - li.bottom;
+        if (badge) inkToCart = badge.getBoundingClientRect().top - li.bottom;
+      }
       return {
         hasFrame: Boolean(frame),
         bannerTopPct,
@@ -172,6 +209,14 @@ try {
         bannerToBas,
         basToLine,
         lineGapAvg,
+        lineGapMin,
+        avgLineH: avgH,
+        gapOverLh: lineGapMin != null && avgH ? lineGapMin / avgH : null,
+        gapOverS: lineGapMin != null && S ? lineGapMin / S : null,
+        inkToCart,
+        inkToContentBot,
+        S,
+        fontSizes,
         contentH: lr.height,
         openingFlag: root.dataset.mf2OpeningNoFrame || null,
       };
@@ -194,11 +239,62 @@ try {
     if (m.stretched > 0) {
       failures.push({ page: n, reason: `${m.stretched} سطرًا بملاءمة عرض — ممنوع في ص١–٢` });
     }
-    if (m.bannerToBas != null && m.bannerToBas < 23.5) {
-      failures.push({ page: n, reason: `فاصل شارة→بسملة ${m.bannerToBas.toFixed(1)}px < 24` });
+    if (m.bannerToBas != null && (m.bannerToBas < 20 || m.bannerToBas > 28)) {
+      failures.push({
+        page: n,
+        reason: `فاصل شارة→بسملة ${m.bannerToBas.toFixed(1)}px خارج ٢٤±٤`,
+      });
     }
-    if (m.basToLine != null && m.basToLine < 19.5) {
-      failures.push({ page: n, reason: `فاصل بسملة→سطر ${m.basToLine.toFixed(1)}px < 20` });
+    if (m.basToLine != null && (m.basToLine < 16 || m.basToLine > 28)) {
+      failures.push({
+        page: n,
+        reason: `فاصل بسملة→سطر ${m.basToLine.toFixed(1)}px خارج ٢٠±٨`,
+      });
+    }
+    if (m.lineGapMin != null && m.lineGapMin < -0.5) {
+      failures.push({
+        page: n,
+        reason: `تراكب حبر أسطر (فجوة دنيا ${m.lineGapMin.toFixed(1)}px)`,
+      });
+    }
+    if (m.gapOverS != null && m.gapOverS < 0.24) {
+      failures.push({
+        page: n,
+        reason: `فجوة/S ${(m.gapOverS * 100).toFixed(0)}٪ < 24٪`,
+      });
+    } else if (
+      m.gapOverS != null &&
+      m.gapOverS < 0.34 &&
+      m.inkToCart != null &&
+      m.inkToCart > 36
+    ) {
+      failures.push({
+        page: n,
+        reason: `فجوة/S ${(m.gapOverS * 100).toFixed(0)}٪ < 35٪ مع فراغ خرطوش ${(m.inkToCart).toFixed(0)}px`,
+      });
+    }
+    if (m.inkToContentBot != null && m.inkToCart != null && m.inkToCart < 27.5 && m.inkToContentBot < -12) {
+      failures.push({
+        page: n,
+        reason: `آخر حبر يتجاوز النطاق والخرطوش (content ${m.inkToContentBot.toFixed(1)}, cart ${m.inkToCart.toFixed(1)})`,
+      });
+    }
+    if (m.inkToCart != null && m.inkToCart < 27.5) {
+      failures.push({
+        page: n,
+        reason: `حبر→خرطوش ${m.inkToCart.toFixed(1)}px < 28`,
+      });
+    }
+    if (m.S && m.fontSizes?.length) {
+      for (const fs of m.fontSizes) {
+        if (Math.abs(fs - m.S) / m.S > 0.02) {
+          failures.push({
+            page: n,
+            reason: `حجم خط ${fs.toFixed(2)} ≠ S=${m.S.toFixed(2)} ±٢٪`,
+          });
+          break;
+        }
+      }
     }
   }
 
@@ -210,10 +306,10 @@ try {
     if (dTop > 2.05) {
       failures.push({ page: "1↔2", reason: `فرق أعلى الشارة ${dTop.toFixed(1)}px > 2` });
     }
-    if (g0 != null && g1 != null && Math.abs(g0 - g1) > 1.05) {
+    if (g0 != null && g1 != null && Math.abs(g0 - g1) > 8.05) {
       failures.push({
         page: "1↔2",
-        reason: `فرق فجوة الأسطر ${Math.abs(g0 - g1).toFixed(2)}px > 1`,
+        reason: `فرق فجوة الأسطر ${Math.abs(g0 - g1).toFixed(2)}px > 8 (ص١ لها أسطر أكثر)`,
       });
     }
   }

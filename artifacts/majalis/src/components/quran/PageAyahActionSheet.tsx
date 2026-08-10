@@ -44,13 +44,15 @@ import {
   sleepTimerLabelAr,
   type SleepTimerOption,
 } from "@/lib/quran-sleep-timer";
-import { ReciterPickerSheet } from "@/components/quran/ReciterPickerSheet";
+import {
+  MushafReaderOptionsSheet,
+  type MushafReaderOptionsSection,
+} from "@/components/quran/MushafReaderOptionsSheet";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { prewarmTextApis } from "@/lib/resource-prewarm";
 import { toArabicDigits } from "@/lib/utils";
 import {
-  MUSHAF_TAFSIR_EDITIONS,
   MUSHAF_TRANSLATION_EDITIONS,
   TAFSIR_FONT_SCALES,
   DEFAULT_EXTENDED_TAFSIR_EDITION,
@@ -139,6 +141,7 @@ export function PageAyahActionSheet({
   const [noteText, setNoteText] = useState(() => getNote(surahNum, ayahNum));
   const [noteSaved, setNoteSaved] = useState(false);
   const [reciterSheetOpen, setReciterSheetOpen] = useState(false);
+  const [optionsFocus, setOptionsFocus] = useState<MushafReaderOptionsSection>("reciters");
   const [speedPickerOpen, setSpeedPickerOpen] = useState(false);
   const [sleepPickerOpen, setSleepPickerOpen] = useState(false);
   const [editionMenuOpen, setEditionMenuOpen] = useState(false);
@@ -623,17 +626,18 @@ export function PageAyahActionSheet({
               {reciterId && onSetReciter ? (
                 <button
                   type="button"
-                  className={`aas-v3__chip${reciterSheetOpen ? " is-on" : ""}`}
+                  className={`aas-v3__chip${reciterSheetOpen && optionsFocus === "reciters" ? " is-on" : ""}`}
                   onClick={() => {
                     void ensureValidReciterPreference().then((id) => {
                       if (onSetReciter && id !== reciterId) onSetReciter(id);
                     });
+                    setOptionsFocus("reciters");
                     setReciterSheetOpen(true);
                     setSpeedPickerOpen(false);
                     setSleepPickerOpen(false);
                   }}
                   aria-haspopup="dialog"
-                  aria-expanded={reciterSheetOpen}
+                  aria-expanded={reciterSheetOpen && optionsFocus === "reciters"}
                 >
                   <Mic2 size={15} aria-hidden="true" />
                   <span className="aas-v3__chip-label">{reciterName}</span>
@@ -723,13 +727,15 @@ export function PageAyahActionSheet({
                 <div className="aas-v3__disclosure aas-v3__disclosure--grow" ref={editionMenuRef}>
                   <button
                     type="button"
-                    className={`aas-v3__chip aas-v3__chip--wide${editionMenuOpen ? " is-on" : ""}`}
+                    className={`aas-v3__chip aas-v3__chip--wide${reciterSheetOpen && optionsFocus === "tafsir" ? " is-on" : ""}`}
                     onClick={() => {
-                      setEditionMenuOpen((v) => !v);
+                      setOptionsFocus("tafsir");
+                      setReciterSheetOpen(true);
+                      setEditionMenuOpen(false);
                       setTranslationMenuOpen(false);
                     }}
-                    aria-expanded={editionMenuOpen}
-                    aria-haspopup="listbox"
+                    aria-expanded={reciterSheetOpen && optionsFocus === "tafsir"}
+                    aria-haspopup="dialog"
                   >
                     <BookOpen size={15} aria-hidden="true" />
                     <span className="aas-v3__chip-meta">
@@ -738,26 +744,6 @@ export function PageAyahActionSheet({
                     </span>
                     <ChevronDown size={14} aria-hidden="true" />
                   </button>
-                  {editionMenuOpen ? (
-                    <div className="aas-v3__inline-menu" role="listbox" aria-label="قائمة التفاسير">
-                      {MUSHAF_TAFSIR_EDITIONS.map((ed) => (
-                        <button
-                          key={ed.id}
-                          type="button"
-                          role="option"
-                          aria-selected={ed.id === tafsirEdition}
-                          className={`aas-v3__menu-row${ed.id === tafsirEdition ? " is-on" : ""}`}
-                          onClick={() => handleSelectEdition(ed.id)}
-                        >
-                          <strong>{ed.label}</strong>
-                          <span>
-                            {ed.author}
-                            {ed.level ? ` · ${ed.level}` : ""}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  ) : null}
                 </div>
 
                 <button
@@ -998,15 +984,39 @@ export function PageAyahActionSheet({
           </nav>
         ) : null}
 
-        {reciterId && onSetReciter ? (
-          <ReciterPickerSheet
-            open={reciterSheetOpen}
-            onClose={() => setReciterSheetOpen(false)}
-            reciterId={reciterId}
-            onSelect={onSetReciter}
-            mode="ayah"
-          />
-        ) : null}
+        <MushafReaderOptionsSheet
+          open={reciterSheetOpen}
+          onClose={() => setReciterSheetOpen(false)}
+          focusSection={optionsFocus}
+          tafsirEditionId={tafsirEdition}
+          onSelectTafsir={handleSelectEdition}
+          reciterId={reciterId}
+          onSelectReciter={
+            onSetReciter
+              ? (id) => {
+                  onSetReciter(id);
+                }
+              : undefined
+          }
+          reciterMode="ayah"
+          tafsirAudioOptions={
+            tafsirAudioAvailable
+              ? [
+                  {
+                    id: "ayah-clip",
+                    label: "تفسير صوتي لهذه الآية",
+                    description: "استماع من الكتالوج المعتمد",
+                  },
+                ]
+              : []
+          }
+          tafsirAudioLoading={false}
+          tafsirAudioError={false}
+          onSelectTafsirAudio={() => {
+            setReciterSheetOpen(false);
+            if (tafsirAudioAvailable) setTafsirAudioSheetOpen(true);
+          }}
+        />
 
         {tafsirAudioSheetOpen ? (
           <Suspense fallback={null}>
