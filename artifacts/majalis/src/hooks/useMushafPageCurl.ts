@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 
 /**
- * لفّ صفحة المصحف: سحب يمينًا = تقدّم (لفّ نحو اليمين)، يسارًا = رجوع.
- * يكتمل عند ≥٢٥٪ من العرض أو سرعة ≥0.5px/ms؛ وإلا ارتداد.
- * transform/opacity فقط أثناء الحركة.
+ * لفّ صفحة خفيف: سحب 1:1، انزلاق + انحناء ≤12°، عتبة 20٪ أو 0.4px/ms.
+ * transform/opacity فقط. prefers-reduced-motion → تلاشٍ 150ms.
  */
 export type MushafCurlState = {
   /** −1…1 : موجب = لفّ نحو اليمين (تالية) */
@@ -13,9 +12,12 @@ export type MushafCurlState = {
   reducedMotion: boolean;
 };
 
-const COMMIT_FRAC = 0.25;
-const VELOCITY_PX_MS = 0.5;
+const COMMIT_FRAC = 0.2;
+const VELOCITY_PX_MS = 0.4;
 const AXIS_LOCK = 1.25;
+const SETTLE_MS = 260;
+const SNAP_BACK_MS = 180;
+const FADE_MS = 150;
 
 export function useMushafPageCurl(opts: {
   onNext: () => void;
@@ -101,6 +103,7 @@ export function useMushafPageCurl(opts: {
       lastX.current = e.clientX;
       lastT.current = performance.now();
       const w = Math.max(160, widthRef.current);
+      /* تتبع 1:1 */
       const p = Math.max(-1, Math.min(1, dx / w));
       setProgress(p);
     },
@@ -125,7 +128,7 @@ export function useMushafPageCurl(opts: {
       const w = Math.max(160, widthRef.current);
       const frac = Math.abs(dx) / w;
       const fast = Math.abs(instV) >= VELOCITY_PX_MS || Math.abs(avgV) >= VELOCITY_PX_MS;
-      const commit = frac >= COMMIT_FRAC || (fast && frac >= 0.08);
+      const commit = frac >= COMMIT_FRAC || (fast && frac >= 0.06);
 
       if (commit && dx > 0) {
         setSettling(true);
@@ -133,7 +136,7 @@ export function useMushafPageCurl(opts: {
         window.setTimeout(() => {
           onNext();
           reset();
-        }, reducedMotion ? 0 : 180);
+        }, reducedMotion ? 0 : SETTLE_MS);
         return;
       }
       if (commit && dx < 0) {
@@ -142,23 +145,22 @@ export function useMushafPageCurl(opts: {
         window.setTimeout(() => {
           onPrev();
           reset();
-        }, reducedMotion ? 0 : 180);
+        }, reducedMotion ? 0 : SETTLE_MS);
         return;
       }
       setSettling(true);
       setProgress(0);
-      window.setTimeout(() => reset(), 160);
+      window.setTimeout(() => reset(), SNAP_BACK_MS);
     },
     [onNext, onPrev, reducedMotion, reset],
   );
 
-  /** تلاشي بسيط عند تفضيل تقليل الحركة */
   const onSimpleSwipeEnd = useCallback(
     (e: ReactPointerEvent) => {
       if (!reducedMotion || disabled || startX.current == null) return;
       const dx = e.clientX - startX.current;
       const w = Math.max(160, widthRef.current);
-      if (Math.abs(dx) / w >= COMMIT_FRAC || Math.abs(dx) >= 55) {
+      if (Math.abs(dx) / w >= COMMIT_FRAC || Math.abs(dx) >= 48) {
         if (dx > 0) onNext();
         else onPrev();
       }
@@ -178,5 +180,8 @@ export function useMushafPageCurl(opts: {
     setCurlWidth: (w: number) => {
       if (w > 0) widthRef.current = w;
     },
+    settleMs: SETTLE_MS,
+    snapBackMs: SNAP_BACK_MS,
+    fadeMs: FADE_MS,
   };
 }

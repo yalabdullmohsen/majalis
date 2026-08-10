@@ -575,6 +575,10 @@ export function MushafPageV2({
           const gap = inkTop - banR.bottom;
           minGap = Math.min(minGap, gap);
           if (gap < OPENING_BASMALA_GAP_PX - 0.5) {
+            /* صفحات عادية: مواقع الشبكة كافية — لا تدفع البسملة نحو الآية */
+            if (!isOpening && inkEl.closest(".mf2-grid-slot--basmala")) {
+              continue;
+            }
             const nudgePx = OPENING_BASMALA_GAP_PX - gap;
             const nudgePct = (nudgePx / Math.max(1, cr.height)) * 100;
             const slot =
@@ -583,7 +587,26 @@ export function MushafPageV2({
             if (slot) {
               const topPct = parseFloat(slot.style.top);
               if (Number.isFinite(topPct)) {
-                slot.style.top = `${(topPct + nudgePct).toFixed(3)}%`;
+                let nextTop = topPct + nudgePct;
+                /* صفحات عادية: لا تدفع البسملة فوق أول سطر آية */
+                if (!isOpening && slot.classList.contains("mf2-grid-slot--basmala")) {
+                  const basSlot = Number(slot.getAttribute("data-grid-slot") || 0);
+                  const nextLine = container.querySelector<HTMLElement>(
+                    `.mf2-grid-slot--line[data-grid-slot="${basSlot + 1}"]`,
+                  ) || [...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--line")].find(
+                    (el) => Number(el.getAttribute("data-grid-slot") || 0) > basSlot,
+                  );
+                  if (nextLine) {
+                    const nextTopPct = parseFloat(nextLine.style.top);
+                    const nextH = parseFloat(nextLine.style.height) || MUSHAF_GRID.slotHeightPct;
+                    const slotH = parseFloat(slot.style.height) || 5;
+                    if (Number.isFinite(nextTopPct)) {
+                      const maxCenter = nextTopPct - nextH / 2 - slotH / 2 - 0.35;
+                      nextTop = Math.min(nextTop, maxCenter);
+                    }
+                  }
+                }
+                slot.style.top = `${nextTop.toFixed(3)}%`;
               }
             }
             /* ص١–٢: إن نُقلت البسملة/أول سطر، أزح بقية أسطر الجسم بنفس المقدار */
@@ -679,7 +702,9 @@ export function MushafPageV2({
     let h: number;
     const isBannerSlot =
       (isOpeningPage && openingSlots.banners.includes(gridSlot)) ||
-      bannerBasmalaPairs.some((p) => p.banner === gridSlot);
+      layout.rows.some(
+        (r) => r.kind === "surah-header" && r.bannerSlot === gridSlot,
+      );
     const basmalaPair = bannerBasmalaPairs.find((p) => p.basmala === gridSlot);
 
     if (isOpeningPage && openingSlots.all.length > 0) {
@@ -702,19 +727,23 @@ export function MushafPageV2({
         );
       }
     } else if (basmalaPair) {
-      /* بسملة تحت الشارة بفاصل حبر ≥20px دون إزاحة أسطر الآيات */
-      const banBase =
-        MUSHAF_GRID.baselinesPct[basmalaPair.banner - 1] ??
-        ((basmalaPair.banner - 0.5) / MUSHAF_GRID.slotCount) * 100;
-      const banH = 5.2;
-      const basH = 5.4;
-      baseline =
-        banBase + banH / 2 + OPENING_GAP_PCT + OPENING_ASCENT_PAD_PCT + basH / 2;
-      h = basH;
+      /* خانة البسملة المستقلة — خط أساس الشبكة (لا إزاحة من الشارة). */
+      const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
+      const slotBase =
+        MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;
+      const nextBase =
+        MUSHAF_GRID.baselinesPct[Math.min(MUSHAF_GRID.slotCount - 1, idx + 1)] ??
+        slotBase + 6.57;
+      h = 3.8;
+      const maxCenter = (slotBase + nextBase) / 2 - h / 2 - 0.25;
+      baseline = Math.min(slotBase - 0.7, maxCenter);
     } else if (isBannerSlot) {
       const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
-      baseline = MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;
-      h = 5.2;
+      const slotBase =
+        MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;
+      /* ارفع الشارة قليلاً داخل خانة الفجوة لفاصل حبر ≥20px مع البسملة */
+      baseline = slotBase - 1.0;
+      h = 4.2;
     } else {
       const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
       baseline = MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;
@@ -906,6 +935,8 @@ export function MushafPageV2({
                     </div>
                   </div>
                 )}
+                {/* gap=1: المصحف يحتفظ بخانة واحدة فقط للشارة — البسملة غير مرسومة
+                    كخانة مستقلة لتفادي التراكب مع أول آية (١٨ صفحة). */}
               </Fragment>
             );
           }

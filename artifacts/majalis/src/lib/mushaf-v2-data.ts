@@ -266,10 +266,14 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
       bannerSlot = 3;
       if (chapter.bismillahPre) basmalaSlot = 4;
     } else {
+      /* الصفحات العادية: الشارة والبسملة في خانتين مستقلتين من فجوة
+       * line_number قبل أول آية. إن كانت الفجوة خانة واحدة فقط (gap===1)
+       * تُرسم البسملة داخل خانة الشارة (لا خانة مستقلة في البيانات) —
+       * يُعالَج العرض في MushafPageV2 دون مشاركة خط أساس مع أول آية. */
       bannerSlot = Math.max(1, prevUsed + 1);
       if (chapter.bismillahPre && gap >= 2) {
         basmalaSlot = bannerSlot + 1;
-      } else if (chapter.bismillahPre && gap === 1) {
+      } else {
         basmalaSlot = null;
       }
     }
