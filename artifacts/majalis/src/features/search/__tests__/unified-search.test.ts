@@ -122,6 +122,16 @@ clearUnifiedSearchIndexCache();
 primeUnifiedSearchIndex(index);
 const app = await runAppSearch("بقره", { limit: 20 });
 assert.ok(app.results.length >= 1, "runAppSearch يعيد نتائج");
+assert.equal(app.quickNavHref, undefined, "لا انتقال تلقائي — بلا quickNavHref");
 assert.ok(app.responseMs < 150, `runAppSearch <150ms (${app.responseMs.toFixed(1)})`);
+
+// اختصار مصحف يظهر كخيار أول دون إخفاء بقية النتائج
+const appQuick = await runAppSearch("البقرة", { limit: 20 });
+assert.ok(appQuick.results.length >= 1, "اسم سورة يعيد قائمة");
+assert.equal(appQuick.quickNavHref, undefined, "اسم سورة لا يفرض انتقالاً تلقائياً");
+assert.ok(
+  appQuick.results.some((r) => r.href.includes("/mushaf")),
+  "اختصار المصحف ضمن الخيارات",
+);
 
 console.log(`unified-search.test.ts: ok (${index.docs.length} docs, ${kinds.size} kinds)`);

@@ -241,7 +241,7 @@
     "verify:route-registry": "node --import tsx scripts/verify-route-registry.mjs",
     "verify:knowledge-graph": "node scripts/verify-knowledge-graph.mjs",
     "generate:search-index": "node --import tsx scripts/generate-unified-search-index.mjs",
-    "test:unified-search": "node --import tsx src/features/search/__tests__/unified-search.test.ts && node --import tsx src/features/search/__tests__/search-normalize-digits.test.ts && node --import tsx src/features/search/__tests__/tolerant-search.test.ts && node --import tsx src/features/search/__tests__/search-tolerance.test.ts && node --import tsx src/lib/__tests__/search-input-enter.test.ts",
+    "test:unified-search": "node --import tsx src/features/search/__tests__/unified-search.test.ts && node --import tsx src/features/search/__tests__/search-normalize-digits.test.ts && node --import tsx src/features/search/__tests__/tolerant-search.test.ts && node --import tsx src/features/search/__tests__/search-tolerance.test.ts && node --import tsx src/lib/__tests__/search-input-enter.test.ts && node --import tsx src/lib/__tests__/search-no-autonav.test.ts",
     "test:tolerant-search": "node --import tsx src/features/search/__tests__/tolerant-search.test.ts",
     "test:search-tolerance": "node --import tsx src/features/search/__tests__/search-tolerance.test.ts",
     "verify:json-schemas": "node --import tsx scripts/verify-json-schemas.mjs",

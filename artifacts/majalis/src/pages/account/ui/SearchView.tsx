@@ -34,7 +34,6 @@ import { addSearchHistory, getSearchHistory, clearSearchHistory } from "@/lib/se
 import { trackSearchQuery } from "@/lib/content-analytics";
 import { usePersistedState } from "@/hooks/usePersistedState";
 import {
-  parseQuickNav,
   loadUnifiedSearchIndex,
   searchUnifiedIndex,
   runAppSearch,
@@ -333,12 +332,7 @@ export default function SearchPage() {
       return;
     }
 
-    const quick = parseQuickNav(rawQuery);
-    if (quick) {
-      navigate(quick.href);
-      return;
-    }
-
+    // لا انتقال تلقائي للمصحف/الحديث — الاختصار يظهر ضمن نتائج runAppSearch ليختاره المستخدم.
     const query = normalizeArabic(rawQuery) || rawQuery.trim();
 
     searchAbortRef.current?.abort();
