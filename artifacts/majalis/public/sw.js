@@ -327,6 +327,25 @@ self.addEventListener("message", (event) => {
     return;
   }
 
+  // بعد فشل تحميل chunk: امسح كاش القشرة حتى لا تُخدم أصول/مستندات عتيقة.
+  if (msg.type === "MAJALIS_PURGE_SHELL_ASSETS") {
+    event.waitUntil(
+      (async () => {
+        try {
+          const keys = await caches.keys();
+          await Promise.all(
+            keys
+              .filter((k) => k.startsWith("majalis-offline-") || k === OFFLINE_CACHE)
+              .map((k) => caches.delete(k)),
+          );
+        } catch (_) {
+          /* ignore */
+        }
+      })(),
+    );
+    return;
+  }
+
   // Smart local schedule (adhkar / streak / khatmah / prayer reminders)
   if (msg.type === "MAJALIS_SCHEDULE_LOCAL_NOTIFS" && Array.isArray(msg.items)) {
     const STALE_TOLERANCE_MS = 2 * 60000;

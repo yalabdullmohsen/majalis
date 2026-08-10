@@ -14,6 +14,9 @@ assert.match(vercel, /"source":\s*"\/index\.html"/);
 assert.match(vercel, /no-cache, no-store, must-revalidate/);
 assert.match(vercel, /"source":\s*"\/assets\/\(\.\*\)"/);
 assert.match(vercel, /max-age=31536000,\s*immutable/);
+// مسارات SPA (غير الملفات الثابتة) يجب ألا تُخزَّن كـ HTML قديم بعد النشر
+assert.match(vercel, /\(\?!assets\/\|data\/\|fonts\/\|api\//, "SPA catch-all excludes static prefixes");
+assert.match(vercel, /no-cache, no-store, must-revalidate/);
 
 const home = readFileSync(join(root, "src/pages/account/ui/HomeView.tsx"), "utf8");
 assert.match(home, /HomeUpcomingLessons/);
@@ -23,5 +26,10 @@ assert.match(home, /lazyWithRetry/);
 const sw = readFileSync(join(root, "public/sw.js"), "utf8");
 assert.match(sw, /text\/html/);
 assert.match(sw, /asset not found/);
+assert.match(sw, /MAJALIS_PURGE_SHELL_ASSETS/);
+
+const recovery = readFileSync(join(root, "src/lib/chunk-recovery.ts"), "utf8");
+assert.match(recovery, /tryRecoverFromStaleChunk/);
+assert.match(recovery, /hardRecoverStaleDeploy/);
 
 console.log("test-html-asset-cache-headers: ok");
