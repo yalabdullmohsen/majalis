@@ -23,10 +23,12 @@ const GRID = JSON.parse(
 );
 const VIEWPORT = { width: 390, height: 844 };
 const CLEARANCE_PX = 2;
-const FREEZE_PAGES = [3, 306, 588, 599, 600, 601];
+const FREEZE_PAGES = [3, 7, 306, 588, 599, 600, 601];
+const GRID_SAMPLE_PAGES = [3, 4, 7, 100, 283, 306, 400, 500, 588, 596, 599, 600, 601, 604];
 const MAX_BASELINE_DEV_PX = 2;
 const MAX_DEAD_GAP_PCT = 6;
 const OPENING_FRAME_MIN_PCT = 80;
+const SURAH_END_MAX_RATIO = 0.9;
 
 function allPages() {
   const arg = process.env.MUSHAF_GATE_PAGES;
@@ -170,6 +172,23 @@ async function measurePage(page, pageNum) {
       const gapLimit = opening ? 10 : 6;
       const gapFail = maxGapPct > gapLimit;
 
+      const blockW = Math.max(1, lr.width);
+      const surahEnds = [];
+      for (const line of linesRoot.querySelectorAll(
+        ".mf2-line--surah-end, .mf2-line[data-no-stretch='1']",
+      )) {
+        const r = line.getBoundingClientRect();
+        const sxRaw = line.style.getPropertyValue("--mf2-line-sx");
+        const sx = sxRaw ? parseFloat(sxRaw) : 1;
+        const naturalRatio = sx > 1.01 ? r.width / sx / blockW : r.width / blockW;
+        surahEnds.push({
+          line: Number(line.getAttribute("data-line") || 0),
+          ratio: r.width / blockW,
+          naturalRatio,
+          sx: Number.isFinite(sx) ? sx : 1,
+        });
+      }
+
       return {
         clipped,
         clipStyles,
@@ -178,6 +197,7 @@ async function measurePage(page, pageNum) {
         maxGapPct,
         gapFail,
         gapLimit,
+        surahEnds,
       };
     },
     { clearance: CLEARANCE_PX, baselinesPct: GRID.baselinesPct, pageNum },
@@ -222,10 +242,10 @@ async function main() {
           reason: `إطار الافتتاح ${r.framePct?.toFixed?.(1) ?? "null"}% < ${OPENING_FRAME_MIN_PCT}%`,
         });
       }
-      if (FREEZE_PAGES.includes(n) && n > 2 && r.maxDev > MAX_BASELINE_DEV_PX) {
+      if (GRID_SAMPLE_PAGES.includes(n) && n > 2 && r.maxDev > MAX_BASELINE_DEV_PX) {
         failures.push({
           page: n,
-          reason: `انحراف خط أساس ${r.maxDev.toFixed(2)}px > ${MAX_BASELINE_DEV_PX}`,
+          reason: `عيّنة شبكة ص٧: انحراف ${r.maxDev.toFixed(2)}px > ${MAX_BASELINE_DEV_PX}`,
         });
       }
       if (FREEZE_PAGES.includes(n) && r.gapFail) {
@@ -234,7 +254,21 @@ async function main() {
           reason: `فراغ متصل ${r.maxGapPct.toFixed(1)}% > ${r.gapLimit}%`,
         });
       }
-      if ([1, 2, ...FREEZE_PAGES].includes(n)) {
+      for (const e of r.surahEnds || []) {
+        const sx = e.sx ?? 1;
+        if (sx > 1.02) {
+          failures.push({
+            page: n,
+            reason: `آخر سطر سورة ${e.line} ما زال ممدودًا sx=${sx.toFixed(2)}`,
+          });
+        } else if ((e.naturalRatio ?? e.ratio) < SURAH_END_MAX_RATIO && e.ratio > SURAH_END_MAX_RATIO) {
+          failures.push({
+            page: n,
+            reason: `آخر سطر سورة ${e.line} عُرض بالمطّ ${(e.ratio * 100).toFixed(1)}% > 90%`,
+          });
+        }
+      }
+      if ([1, 2, ...FREEZE_PAGES, ...GRID_SAMPLE_PAGES].includes(n)) {
         await page.locator(".mf2-lines").screenshot({
           path: join(OUT_DIR, `page-${String(n).padStart(3, "0")}.png`),
         });
@@ -245,6 +279,7 @@ async function main() {
         framePct: r.framePct,
         maxDevPx: r.maxDev,
         maxGapPct: r.maxGapPct,
+        surahEnds: r.surahEnds?.length ?? 0,
       });
     } catch (e) {
       failures.push({ page: n, reason: String(e?.message || e) });

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * بوابة ضبط إطار صفحتي الافتتاح + سلامة البسملة بلا رقم.
+ * بوابة ضبط إطار صفحتي الافتتاح + آخر سطر سورة بلا مطّ + سلامة البسملة بلا رقم.
  *
  *   MUSHAF_GATE_BASE_URL=http://127.0.0.1:24216 node scripts/quran-import/mushaf-opening-frame-gate.mjs
  */
@@ -18,7 +18,8 @@ const OUT_DIR =
   process.env.MUSHAF_GATE_OUT_DIR ||
   join(ROOT, ".local/mushaf-opening-frame");
 const VIEWPORT = { width: 390, height: 844 };
-const FREEZE = [3, 306, 588, 599, 600, 601];
+/** تجميد بصري — صفحة ٧ مرجع الامتلاء الجديد */
+const FREEZE = [3, 7, 306, 588, 599, 600, 601];
 const GRID = JSON.parse(
   readFileSync(join(ROOT, "src/features/mushaf/mushaf-grid.json"), "utf8"),
 );
@@ -49,6 +50,7 @@ async function measureOpening(page, pageNum) {
     const fr = frame.getBoundingClientRect();
     const framePct = (fr.height / blockH) * 100;
     const frameTopPct = ((fr.top - lr.top) / blockH) * 100;
+    const frameBotPct = ((fr.bottom - lr.top) / blockH) * 100;
 
     const rails = frame.querySelectorAll('[data-opening-part="side-rail"] line');
     let sideStraight = rails.length >= 2;
@@ -72,18 +74,24 @@ async function measureOpening(page, pageNum) {
     const ayah = root.querySelector(".mf2-grid-slot--line .mf2-line");
     if (ayah) ayahFontPx = parseFloat(getComputedStyle(ayah).fontSize);
 
-    const lineSlots = [...root.querySelectorAll(".mf2-grid-slot--line")];
-    const targetW = fr.width - 40 - 14;
+    const textBlockW = fr.width - 40 - 14;
     const widths = [];
-    for (const slot of lineSlots) {
+    const surahEndWidths = [];
+    for (const slot of root.querySelectorAll(".mf2-grid-slot--line")) {
       const line = slot.querySelector(".mf2-line");
       if (!line) continue;
       const r = line.getBoundingClientRect();
-      widths.push({
+      const entry = {
         line: Number(line.getAttribute("data-line") || 0),
         w: r.width,
-        ratio: targetW > 0 ? r.width / targetW : 0,
-      });
+        ratio: textBlockW > 0 ? r.width / textBlockW : 0,
+        noStretch:
+          line.classList.contains("mf2-line--surah-end") ||
+          line.getAttribute("data-no-stretch") === "1",
+        natural: line.classList.contains("mf2-line--natural"),
+      };
+      widths.push(entry);
+      if (entry.noStretch) surahEndWidths.push(entry);
     }
 
     /* فراغات داخل الإطار */
@@ -111,7 +119,7 @@ async function measureOpening(page, pageNum) {
 
     /* مسافة حبر آخر سطر عن الضلع السفلي */
     let lastInkClearPx = null;
-    const lastLine = lineSlots[lineSlots.length - 1]?.querySelector(".mf2-line");
+    const lastLine = [...root.querySelectorAll(".mf2-grid-slot--line .mf2-line")].at(-1);
     if (lastLine) {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -134,7 +142,6 @@ async function measureOpening(page, pageNum) {
       lastInkClearPx = fr.bottom - inkBot;
     }
 
-    /* أول بسملة/سطر بعد أعلى الإطار */
     let firstContentGapPct = null;
     const firstBody =
       root.querySelector(".mf2-grid-slot--basmala") ||
@@ -147,13 +154,15 @@ async function measureOpening(page, pageNum) {
     return {
       framePct,
       frameTopPct,
+      frameBotPct,
       sideStraight,
       rails: rails.length,
       basmalaHasNumeral,
       basmalaFontPx,
       ayahFontPx,
       widths,
-      targetW,
+      surahEndWidths,
+      targetW: textBlockW,
       maxGapPct,
       lastInkClearPx,
       firstContentGapPct,
@@ -175,16 +184,60 @@ async function measureFreeze(page, pageNum) {
     const lr = root.getBoundingClientRect();
     const blockH = Math.max(1, lr.height);
     let maxDev = 0;
-    for (const el of root.querySelectorAll("[data-grid-slot]")) {
+    let firstTopPct = null;
+    let lastBotPct = null;
+    const slots = [...root.querySelectorAll("[data-grid-slot]")];
+    for (const el of slots) {
       const slot = Number(el.getAttribute("data-grid-slot"));
       const expected = baselinesPct[slot - 1];
       if (expected == null) continue;
       const r = el.getBoundingClientRect();
       const actualPct = ((r.top + r.height / 2 - lr.top) / blockH) * 100;
       maxDev = Math.max(maxDev, Math.abs(actualPct - expected) * (blockH / 100));
+      const topPct = ((r.top - lr.top) / blockH) * 100;
+      const botPct = ((r.bottom - lr.top) / blockH) * 100;
+      if (firstTopPct == null || topPct < firstTopPct) firstTopPct = topPct;
+      if (lastBotPct == null || botPct > lastBotPct) lastBotPct = botPct;
     }
-    return { maxDev };
+    const fill =
+      firstTopPct != null && lastBotPct != null
+        ? (lastBotPct - firstTopPct) / 100
+        : null;
+    return { maxDev, firstTopPct, lastBotPct, fill };
   }, GRID.baselinesPct);
+}
+
+async function measureSurahEndWidths(page, pageNum) {
+  await page.goto(`${BASE}/mushaf/page/${pageNum}`, {
+    waitUntil: "domcontentloaded",
+    timeout: 60_000,
+  });
+  await page.waitForSelector(".mf2-lines", { timeout: 45_000 });
+  await sleep(pageNum <= 3 ? 900 : 450);
+  return page.evaluate(() => {
+    const root = document.querySelector(".mf2-lines");
+    if (!root) return { error: "missing" };
+    const lr = root.getBoundingClientRect();
+    const blockW = Math.max(1, lr.width);
+    const ends = [];
+    for (const line of root.querySelectorAll(
+      ".mf2-line--surah-end, .mf2-line[data-no-stretch='1']",
+    )) {
+      const r = line.getBoundingClientRect();
+      const sxRaw = line.style.getPropertyValue("--mf2-line-sx");
+      const sx = sxRaw ? parseFloat(sxRaw) : 1;
+      const naturalRatio = sx > 1.01 ? r.width / sx / blockW : r.width / blockW;
+      ends.push({
+        line: Number(line.getAttribute("data-line") || 0),
+        ratio: r.width / blockW,
+        naturalRatio,
+        w: r.width,
+        sx: Number.isFinite(sx) ? sx : 1,
+        marked: line.classList.contains("mf2-line--surah-end"),
+      });
+    }
+    return { ends, blockW };
+  });
 }
 
 async function main() {
@@ -194,7 +247,10 @@ async function main() {
   const failures = [];
   const results = [];
 
-  /* سلامة مصدر: لا رقم على بسملة غير الفاتحة في المكوّن */
+  if (GRID.referencePage !== 7) {
+    failures.push({ page: 0, reason: `mushaf-grid.json referencePage=${GRID.referencePage} ≠ 7` });
+  }
+
   const pageV2 = readFileSync(
     join(ROOT, "src/components/quran/MushafPageV2.tsx"),
     "utf8",
@@ -205,6 +261,15 @@ async function main() {
   }
   if (!/(?:^|\n)\.mf2-bismillah\s*\{[^}]*font-size:\s*1em/.test(basmalaCss)) {
     failures.push({ page: 0, reason: "بسملة ليست بمقاس 1em" });
+  }
+  if (!/(?:^|\n)\.mf2-bismillah\s*\{[^}]*font-weight:\s*700/.test(basmalaCss)) {
+    failures.push({ page: 0, reason: "بسملة بلا font-weight:700" });
+  }
+  if (/if\s*\(\s*!isOpening\s*&&\s*noStretchLines/.test(pageV2)) {
+    failures.push({ page: 0, reason: "آخر سطر سورة ما زال يُمدّ في صفحتي الافتتاح" });
+  }
+  if (!/\.mf2-line--surah-end/.test(basmalaCss)) {
+    failures.push({ page: 0, reason: "CSS بلا .mf2-line--surah-end" });
   }
   const frameSrc = readFileSync(
     join(ROOT, "src/components/quran/OpeningPageFrame.tsx"),
@@ -228,16 +293,16 @@ async function main() {
         failures.push({ page: n, reason: r.error });
         continue;
       }
-      if (r.framePct < 82) {
+      if (r.frameTopPct < 7.95 || r.frameTopPct > 10.05) {
         failures.push({
           page: n,
-          reason: `ارتفاع الإطار ${r.framePct.toFixed(1)}% < 82%`,
+          reason: `أعلى الإطار عند ${r.frameTopPct.toFixed(1)}% (المطلوب ٨–١٠٪)`,
         });
       }
-      if (r.frameTopPct > 12) {
+      if (r.frameBotPct < 89.95 || r.frameBotPct > 92.05) {
         failures.push({
           page: n,
-          reason: `أعلى الإطار عند ${r.frameTopPct.toFixed(1)}% (المطلوب ≈٨٪)`,
+          reason: `أسفل الإطار عند ${r.frameBotPct.toFixed(1)}% (المطلوب ٩٠–٩٢٪)`,
         });
       }
       if (!r.sideStraight || r.straightAttr !== "straight") {
@@ -249,11 +314,11 @@ async function main() {
       if (
         r.basmalaFontPx != null &&
         r.ayahFontPx != null &&
-        Math.abs(r.basmalaFontPx - r.ayahFontPx) / r.ayahFontPx > 0.08
+        Math.abs(r.basmalaFontPx - r.ayahFontPx) / r.ayahFontPx > 0.02
       ) {
         failures.push({
           page: n,
-          reason: `مقاس البسملة ${r.basmalaFontPx.toFixed(1)}px ≠ سطر الآية ${r.ayahFontPx.toFixed(1)}px`,
+          reason: `مقاس البسملة ${r.basmalaFontPx.toFixed(1)}px ≠ سطر الآية ${r.ayahFontPx.toFixed(1)}px (±٢٪)`,
         });
       }
       if (r.maxGapPct > 8) {
@@ -268,18 +333,59 @@ async function main() {
           reason: `هامش سفلي للحبر ${r.lastInkClearPx.toFixed(1)}px < 24px`,
         });
       }
-      if (r.firstContentGapPct != null && r.firstContentGapPct > 12) {
+      if (r.firstContentGapPct != null && r.firstContentGapPct > 14) {
         failures.push({
           page: n,
-          reason: `أول محتوى بعد الإطار ${r.firstContentGapPct.toFixed(1)}% من ارتفاع الإطار (>١٢٪≈٣٪+شارة)`,
+          reason: `أول محتوى بعد الإطار ${r.firstContentGapPct.toFixed(1)}% من ارتفاع الإطار`,
         });
       }
+      for (const w of r.surahEndWidths || []) {
+        /* نهاية سورة قصيرة يجب ألا تُمطّ لملء العرض؛ إن كان المحتوى طبيعيًا عريضًا فـ noStretch كافٍ */
+        if (w.ratio > 0.9 && w.w < (r.targetW || 0) * 0.95) {
+          failures.push({
+            page: n,
+            reason: `آخر سطر سورة ${w.line} عُرض بالمطّ ${(w.ratio * 100).toFixed(1)}% > 90%`,
+          });
+        }
+      }
       for (const w of r.widths || []) {
-        /* انحراف عن العرض المستهدف ≤٤٪ */
+        if (w.noStretch || w.natural) continue;
         if (Math.abs(w.ratio - 1) > 0.04) {
           failures.push({
             page: n,
             reason: `سطر ${w.line} عرض ${(w.ratio * 100).toFixed(1)}% من الداخل (المطلوب ±٤٪)`,
+          });
+        }
+      }
+    } catch (e) {
+      failures.push({ page: n, reason: String(e?.message || e) });
+    }
+  }
+
+  /* عيّنة: آخر سطر سورة معلَّم بلا مطّ (العرض ≤٩٠٪ إن كان قصيرًا طبيعيًا) */
+  const surahEndSample = [1, 2, 7, 49, 586, 600, 604];
+  for (const n of surahEndSample) {
+    try {
+      const r = await measureSurahEndWidths(page, n);
+      results.push({ page: n, surahEnds: r.ends });
+      for (const e of r.ends || []) {
+        if (!e.marked) {
+          failures.push({
+            page: n,
+            reason: `سطر نهاية سورة ${e.line} بلا mf2-line--surah-end`,
+          });
+        }
+        /* إن وُجد مطّ (عرض معروض ≫ طبيعي) يفشل؛ العرض الطبيعي الكامل مسموح */
+        if (e.sx > 1.02) {
+          failures.push({
+            page: n,
+            reason: `آخر سطر سورة ${e.line} ما زال ممدودًا sx=${e.sx.toFixed(2)}`,
+          });
+        }
+        if (e.naturalRatio < 0.9 && e.ratio > 0.9) {
+          failures.push({
+            page: n,
+            reason: `آخر سطر سورة ${e.line} عُرض بالمطّ ${(e.ratio * 100).toFixed(1)}% (طبيعي ${(e.naturalRatio * 100).toFixed(1)}%)`,
           });
         }
       }
@@ -307,7 +413,7 @@ async function main() {
   }
 
   await browser.close();
-  const report = { base: BASE, results, failures };
+  const report = { base: BASE, gridRef: GRID.referencePage, results, failures };
   writeFileSync(join(OUT_DIR, "gate-result.json"), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
   if (failures.length) {

@@ -128,6 +128,7 @@ assert.ok(
 );
 assert.equal(bismillah[0].includes("font-family: inherit"), false, "البسملة الافتتاحية لا ترث qpc-page");
 assert.match(bismillah[0], /font-size:\s*1em/, "بسملة بمقاس سطر الآية");
-assert.match(bismillah[0], /optimizeLegibility/);
+assert.match(bismillah[0], /font-weight:\s*700/, "بسملة بسُمك يقارب سطر QPC");
+assert.match(bismillah[0], /geometricPrecision|optimizeLegibility/);
 
 console.log("mushaf-fullbleed-layout.test.ts: ok");
