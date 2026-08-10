@@ -43,14 +43,23 @@ async function measureOpening(page, pageNum) {
   return page.evaluate(() => {
     const root = document.querySelector(".mf2-lines");
     if (!root) return { error: "missing lines" };
+    const body =
+      document.querySelector(".mpv-body--ayah") ||
+      document.querySelector(".qs-mushaf-body--ayah") ||
+      root.parentElement;
+    if (!body) return { error: "missing page body" };
     const lr = root.getBoundingClientRect();
-    const blockH = Math.max(1, lr.height);
+    const br = body.getBoundingClientRect();
+    /* المواصفة: نسب الإطار من كتلة الصفحة (.mpv-body--ayah) لا من .mf2-lines */
+    const blockH = Math.max(1, br.height);
     const frame = root.querySelector("[data-opening-frame]");
     if (!frame) return { error: "missing opening frame" };
     const fr = frame.getBoundingClientRect();
     const framePct = (fr.height / blockH) * 100;
-    const frameTopPct = ((fr.top - lr.top) / blockH) * 100;
-    const frameBotPct = ((fr.bottom - lr.top) / blockH) * 100;
+    const frameTopPct = ((fr.top - br.top) / blockH) * 100;
+    const frameBotPct = ((fr.bottom - br.top) / blockH) * 100;
+    const frameTopVsLinesPct = ((fr.top - lr.top) / Math.max(1, lr.height)) * 100;
+    const frameBotVsLinesPct = ((fr.bottom - lr.top) / Math.max(1, lr.height)) * 100;
 
     const rails = frame.querySelectorAll('[data-opening-part="side-rail"] line');
     let sideStraight = rails.length >= 2;
@@ -180,6 +189,12 @@ async function measureOpening(page, pageNum) {
       framePct,
       frameTopPct,
       frameBotPct,
+      frameTopVsLinesPct,
+      frameBotVsLinesPct,
+      bodyH: br.height,
+      linesH: lr.height,
+      datasetFrameTopBody: root.dataset.mf2FrameTopBody || null,
+      datasetFrameBotBody: root.dataset.mf2FrameBotBody || null,
       sideStraight,
       rails: rails.length,
       basmalaHasNumeral,
@@ -322,13 +337,13 @@ async function main() {
       if (r.frameTopPct < 7.95 || r.frameTopPct > 10.05) {
         failures.push({
           page: n,
-          reason: `أعلى الإطار عند ${r.frameTopPct.toFixed(1)}% (المطلوب ٨–١٠٪)`,
+          reason: `أعلى الإطار (من كتلة الصفحة) عند ${r.frameTopPct.toFixed(1)}% (المطلوب ٨–١٠٪)`,
         });
       }
       if (r.frameBotPct < 89.95 || r.frameBotPct > 92.05) {
         failures.push({
           page: n,
-          reason: `أسفل الإطار عند ${r.frameBotPct.toFixed(1)}% (المطلوب ٩٠–٩٢٪)`,
+          reason: `أسفل الإطار (من كتلة الصفحة) عند ${r.frameBotPct.toFixed(1)}% (المطلوب ٩٠–٩٢٪)`,
         });
       }
       if (!r.sideStraight || r.straightAttr !== "straight") {

@@ -14,22 +14,27 @@ import {
   MUSHAF_LAYOUT_BASELINE,
 } from "@/features/mushaf/config";
 
-/** نطاق الإطار لصفحتي الافتتاح (٪ من ارتفاع كتلة الرأس→الذيل) — بوابة: أعلى ٨–١٠٪، أسفل ٩٠–٩٢٪ */
-const OPENING_FRAME_TOP_PCT = 9;
-const OPENING_FRAME_BOT_PCT = 91;
-/** ارتفاع خانة الشارة (٪) — مركزها على الضلع العلوي للإطار */
+/**
+ * إطار صفحتي الافتتاح — النسب من ارتفاع **كتلة الصفحة** (`.mpv-body--ayah`)،
+ * لا من `.mf2-lines` وحدها. القياس السابق على `.mf2-lines` أعطى ٩٪ بينما
+ * الكتلة المرئية كانت ≈١٠٫٥٪ أعلى / ≈٨٩٪ أسفل؛ البوابة تتحقق من الجسم.
+ */
+const OPENING_FRAME_TOP_OF_BODY = 0.09; /* ٨–١٠٪ من .mpv-body--ayah */
+const OPENING_FRAME_BOT_OF_BODY = 0.91; /* ٩٠–٩٢٪ من .mpv-body--ayah */
+/** ارتفاع خانة الشارة (٪ من .mf2-lines) — يُحدَّث مركزها بعد قياس الإطار */
 const OPENING_BANNER_H_PCT = 6.2;
 /** فاصل أدنى بين أسفل الشارة وأعلى حبر البسملة (px) */
 const OPENING_BASMALA_GAP_PX = 22;
-/** هامش سفلي داخل الإطار قبل الضلع السفلي */
+/** هامش سفلي داخل الإطار قبل الضلع السفلي (٪ من الخطوط) */
 const OPENING_INNER_BOT_PAD_PCT = 5.0;
 const OPENING_SIDE_PAD_PX = 20;
 const OPENING_BODY_SLOT_H_PCT = 7.0;
-/** مرجع لتحويل px→٪ قبل قياس الارتفاع الحيّ */
 const OPENING_REF_BLOCK_H = 780;
 const OPENING_GAP_PCT = (OPENING_BASMALA_GAP_PX / OPENING_REF_BLOCK_H) * 100;
 const OPENING_ASCENT_PAD_PCT = (14 / OPENING_REF_BLOCK_H) * 100;
-/** مركز أول سطر جسم (بسملة/آية) تحت الشارة بفاصل حبر ≥22px */
+/** قيم CSS أولية قبل قياس الجسم — تُستبدل بالبكسل في measure() */
+const OPENING_FRAME_TOP_PCT = OPENING_FRAME_TOP_OF_BODY * 100;
+const OPENING_FRAME_BOT_PCT = OPENING_FRAME_BOT_OF_BODY * 100;
 const OPENING_BODY_TOP_PCT =
   OPENING_FRAME_TOP_PCT +
   OPENING_BANNER_H_PCT / 2 +
@@ -446,6 +451,78 @@ export function MushafPageV2({
       container.dataset.mf2Opening = isOpening ? "1" : "0";
       container.dataset.mf2Grid = "1";
 
+      /* ص١–٢: ثبّت الإطار على ٩٪/٩١٪ من .mpv-body--ayah ثم أعد توزيع الشارة/الجسم */
+      if (isOpening) {
+        const bodyEl =
+          (container.closest(".mpv-body--ayah") as HTMLElement | null) ||
+          (container.closest(".qs-mushaf-body--ayah") as HTMLElement | null) ||
+          (container.parentElement instanceof HTMLElement ? container.parentElement : null);
+        const frameEl = container.querySelector<HTMLElement>("[data-opening-frame]");
+        const br = bodyEl?.getBoundingClientRect();
+        const crNow = container.getBoundingClientRect();
+        if (frameEl && br && br.height > 40 && crNow.height > 40) {
+          const targetTop = br.top + br.height * OPENING_FRAME_TOP_OF_BODY;
+          const targetBot = br.top + br.height * OPENING_FRAME_BOT_OF_BODY;
+          const topPx = Math.max(0, targetTop - crNow.top);
+          const botPx = Math.max(0, crNow.bottom - targetBot);
+          frameEl.style.top = `${topPx.toFixed(2)}px`;
+          frameEl.style.bottom = `${botPx.toFixed(2)}px`;
+          const frameTopPct = (topPx / crNow.height) * 100;
+          const frameBotPct = ((crNow.height - botPx) / crNow.height) * 100;
+          const bodyTop =
+            frameTopPct +
+            OPENING_BANNER_H_PCT / 2 +
+            OPENING_GAP_PCT +
+            OPENING_ASCENT_PAD_PCT;
+          const bodyBot = frameBotPct - OPENING_INNER_BOT_PAD_PCT;
+          const bodyBand = Math.max(8, bodyBot - bodyTop);
+          container.dataset.mf2FrameTopBody = (
+            ((targetTop - br.top) / br.height) *
+            100
+          ).toFixed(2);
+          container.dataset.mf2FrameBotBody = (
+            ((targetBot - br.top) / br.height) *
+            100
+          ).toFixed(2);
+
+          const banners = [
+            ...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--banner"),
+          ];
+          for (const ban of banners) {
+            ban.style.top = `${frameTopPct.toFixed(3)}%`;
+            ban.style.height = `${OPENING_BANNER_H_PCT}%`;
+          }
+          const bodySlots = [
+            ...container.querySelectorAll<HTMLElement>(
+              ".mf2-grid-slot--basmala, .mf2-grid-slot--line",
+            ),
+          ].sort(
+            (a, b) =>
+              Number(a.getAttribute("data-grid-slot") || 0) -
+              Number(b.getAttribute("data-grid-slot") || 0),
+          );
+          const nBody = bodySlots.length;
+          bodySlots.forEach((slot, idx) => {
+            const baseline =
+              nBody <= 1
+                ? (bodyTop + bodyBot) / 2
+                : bodyTop + (idx / (nBody - 1)) * bodyBand;
+            const h = Math.min(
+              9.5,
+              Math.max(
+                6.2,
+                Math.min(
+                  OPENING_BODY_SLOT_H_PCT,
+                  (bodyBand / Math.max(1, nBody - 1)) * 0.85,
+                ),
+              ),
+            );
+            slot.style.top = `${baseline.toFixed(3)}%`;
+            slot.style.height = `${h.toFixed(3)}%`;
+          });
+        }
+      }
+
       /* فاصل حبر البسملة عن أسفل الشارة ≥20px — في كل مواضع بداية السورة */
       {
         const banners = [
@@ -469,7 +546,7 @@ export function MushafPageV2({
               ? container.querySelector<HTMLElement>(".mf2-grid-slot--line .mf2-line")
               : null);
           if (!inkEl) continue;
-          const br = bannerEl.getBoundingClientRect();
+          const banR = bannerEl.getBoundingClientRect();
           const cs = getComputedStyle(inkEl);
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
@@ -489,7 +566,7 @@ export function MushafPageV2({
             const baselineY = box.top + box.height / 2 + (ascent - descent) / 2;
             inkTop = baselineY - ascent;
           }
-          const gap = inkTop - br.bottom;
+          const gap = inkTop - banR.bottom;
           minGap = Math.min(minGap, gap);
           if (gap < OPENING_BASMALA_GAP_PX - 0.5) {
             const nudgePx = OPENING_BASMALA_GAP_PX - gap;
@@ -503,7 +580,7 @@ export function MushafPageV2({
                 slot.style.top = `${(topPct + nudgePct).toFixed(3)}%`;
               }
             }
-            /* ص١–٢: إن نُقلت البسملة/أول سطر، أزح بقية أسطر الجسم بنفس المقدار للحفاظ على الفجوات */
+            /* ص١–٢: إن نُقلت البسملة/أول سطر، أزح بقية أسطر الجسم بنفس المقدار */
             if (isOpening && slot?.classList.contains("mf2-grid-slot--line")) {
               let passed = false;
               for (const lineSlot of container.querySelectorAll<HTMLElement>(
