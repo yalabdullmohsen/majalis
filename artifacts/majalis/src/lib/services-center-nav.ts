@@ -34,6 +34,7 @@ import {
   Bell,
   LogOut,
 } from "lucide-react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 export type ServicesCenterAction =
   | { kind: "link"; href: string }
@@ -96,6 +97,7 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
       { id: "seerah", label: "السيرة النبوية", keywords: ["سيرة"], Icon: BookA, action: { kind: "link", href: "/seerah" } },
       { id: "tafsir", label: "التفسير", keywords: ["تفسير"], Icon: Library, action: { kind: "link", href: "/tafsir" } },
       { id: "prophets", label: "قصص الأنبياء", keywords: ["أنبياء"], Icon: BookOpen, action: { kind: "link", href: "/prophets" } },
+      { id: "quran-people", label: "الأشخاص في القرآن", keywords: ["أعلام", "شخصيات", "فرعون", "مريم"], Icon: BookOpen, action: { kind: "link", href: "/quran/people" } },
       { id: "nations", label: "الأمم السابقة", keywords: ["أمم", "عاد", "ثمود", "فرعون"], Icon: Landmark, action: { kind: "link", href: "/nations" } },
       { id: "history", label: "التاريخ الإسلامي", keywords: ["تاريخ"], Icon: Building2, action: { kind: "link", href: "/tarikh-islami" } },
     ],
@@ -174,15 +176,14 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
 ];
 
 export function filterServicesCenterGroups(query: string): ServicesCenterGroup[] {
-  const q = query.trim().toLowerCase();
+  const q = query.trim();
   if (!q) return SERVICES_CENTER_GROUPS;
   return SERVICES_CENTER_GROUPS
     .map((group) => ({
       ...group,
-      items: group.items.filter((item) => {
-        const hay = [item.label, ...(item.keywords ?? []), group.title].join(" ").toLowerCase();
-        return hay.includes(q);
-      }),
+      items: group.items.filter((item) =>
+        arabicMatchAny([item.label, ...(item.keywords ?? []), group.title], q),
+      ),
     }))
     .filter((group) => group.items.length > 0);
 }

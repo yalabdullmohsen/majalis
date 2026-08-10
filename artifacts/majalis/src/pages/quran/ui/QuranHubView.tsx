@@ -1,9 +1,9 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import {
   Layers, Circle, Star,
   BookMarked, BookOpen, Headphones, GraduationCap,
-  Moon, Heart, Sparkles, Mic, History, CalendarCheck, Search,
+  Moon, Heart, Sparkles, Mic, History, CalendarCheck, Search, Users,
   type LucideIcon,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
@@ -54,6 +54,13 @@ const QURAN_SECTIONS: QuranSection[] = [
     desc: "شاشة بحث منفصلة في نص القرآن الكريم — ابحث بكلمة أو جملة وانتقل مباشرة إلى موضع الآية في المصحف؛ يُستفاد في التعلم والتدبر",
     Icon: Search,
     tag: "بحث",
+  },
+  {
+    href: "/quran/people",
+    title: "الأشخاص في القرآن",
+    desc: "من ذُكروا بأسمائهم في القرآن مع مواضع الآيات والربط بقصص الأنبياء — بلا إسرائيليات غير محرَّرة",
+    Icon: Users,
+    tag: "أعلام",
   },
   {
     href: "/quran/surahs",
@@ -199,6 +206,18 @@ export default function QuranHubPage() {
   }, []);
 
   const mushafTarget = useMemo(() => mushafResumeTarget(), []);
+  const [tafsirAudioReady, setTafsirAudioReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    void import("@/features/mushaf/tafsir-audio").then(async ({ loadTafsirAudioCatalog }) => {
+      const clips = await loadTafsirAudioCatalog();
+      if (!cancelled) setTafsirAudioReady(clips.some((c) => c.enabled && c.streamUrl));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <div className="quran-hub-page" dir="rtl">
@@ -233,6 +252,12 @@ export default function QuranHubPage() {
       <section className="quran-hub-jump" aria-label="بحث السور والصفحات">
         <QuranSurahJumpSearch />
       </section>
+
+      {tafsirAudioReady ? (
+        <p style={{ textAlign: "center", margin: "0.5rem 1rem 0", fontSize: "0.95rem" }}>
+          <Link href="/tafsir">تفسير صوتي متاح — استمع من شيت الآية أو صفحة السورة</Link>
+        </p>
+      ) : null}
 
       <section className="quran-hub-sections">
         <h2 className="quran-hub-sections__title">أقسام القرآن</h2>

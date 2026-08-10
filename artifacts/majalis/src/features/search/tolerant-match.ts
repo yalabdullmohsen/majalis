@@ -69,7 +69,7 @@ function scorePair(hay: string, needle: string): TolerantMatch | null {
     return { kind: "exact", rank: 0, distance: 0, matchedNorm: needle };
   }
 
-  // استعلام حرفين: بادئة/تطابق فقط — بلا substring/edit يغرق النتائج
+  // استعلام حرفين: بادئة/تطابق على النص أو على كلمة — بلا substring/edit يغرق النتائج
   if (needleBare.length <= 2) {
     if (
       hay.startsWith(needle) ||
@@ -78,6 +78,17 @@ function scorePair(hay: string, needle: string): TolerantMatch | null {
       hayBare.startsWith(needle)
     ) {
       return { kind: "prefix", rank: 1, distance: 0, matchedNorm: needle };
+    }
+    for (const w of hay.split(" ")) {
+      if (
+        w === needle ||
+        w === needleBare ||
+        stripDefiniteArticle(w) === needleBare ||
+        w.startsWith(needle) ||
+        w.startsWith(needleBare)
+      ) {
+        return { kind: "prefix", rank: 1, distance: 0, matchedNorm: needle };
+      }
     }
     return null;
   }
@@ -132,7 +143,74 @@ function scorePair(hay: string, needle: string): TolerantMatch | null {
  * يقيّم تطابق haystack مع needle بعد التطبيع.
  * يُفضّل تمرير hayNorm مسبقاً إن وُجد (فهرس محمّل مرة واحدة).
  */
+export function compareTolerantMatches(a: TolerantMatch, b: TolerantMatch): number {
+  if (a.rank !== b.rank) return a.rank - b.rank;
+  return a.distance - b.distance;
+}
+
+/**
+ * تبديل تخطيط لوحة المفاتيح: كتابة عربية بحروف QWERTY أو العكس.
+ * يُستخدم كمتغيّر استعلام إضافي فوق التطبيع.
+ */
+const EN_TO_AR: Record<string, string> = {
+  q: "ض", w: "ص", e: "ث", r: "ق", t: "ف", y: "غ", u: "ع", i: "ه", o: "خ", p: "ح",
+  "[": "ج", "]": "د", a: "ش", s: "س", d: "ي", f: "ب", g: "ل", h: "ا", j: "ت", k: "ن",
+  l: "م", ";": "ك", "'": "ط", z: "ئ", x: "ء", c: "ؤ", v: "ر", b: "لا", n: "ى", m: "ة",
+  ",": "و", ".": "ز", "/": "ظ",
+};
+const AR_TO_EN: Record<string, string> = Object.fromEntries(
+  Object.entries(EN_TO_AR).map(([en, ar]) => [ar, en]),
+);
+
+export function swapKeyboardLayout(input: string): string {
+  if (!input) return "";
+  let out = "";
+  for (const ch of input) {
+    const lower = ch.toLowerCase();
+    if (EN_TO_AR[lower]) {
+      out += EN_TO_AR[lower];
+      continue;
+    }
+    if (AR_TO_EN[ch]) {
+      out += AR_TO_EN[ch];
+      continue;
+    }
+    out += ch;
+  }
+  return out;
+}
+
+export function expandSearchQueryVariants(query: string): string[] {
+  const base = query.trim();
+  if (!base) return [];
+  const set = new Set<string>([base]);
+  // تبديل التخطيط فقط عند وجود حروف لاتينية (كتابة عربية على QWERTY)
+  if (/[A-Za-z]/.test(base)) {
+    const swapped = swapKeyboardLayout(base);
+    if (swapped && swapped !== base) set.add(swapped);
+  }
+  return [...set];
+}
+
+/**
+ * يقيّم تطابق haystack مع needle بعد التطبيع.
+ * يُفضّل تمرير hayNorm مسبقاً إن وُجد (فهرس محمّل مرة واحدة).
+ */
 export function scoreTolerantMatch(
+  haystack: string | null | undefined,
+  needle: string,
+  hayNormPrecomputed?: string,
+): TolerantMatch | null {
+  const variants = expandSearchQueryVariants(needle);
+  let best: TolerantMatch | null = null;
+  for (const v of variants) {
+    const m = scoreTolerantMatchCore(haystack, v, hayNormPrecomputed);
+    best = better(best, m);
+  }
+  return best;
+}
+
+function scoreTolerantMatchCore(
   haystack: string | null | undefined,
   needle: string,
   hayNormPrecomputed?: string,
@@ -142,21 +220,18 @@ export function scoreTolerantMatch(
   const hay = hayNormPrecomputed ?? normalizeForSearch(haystack ?? "");
   if (!hay) return null;
 
-  // كلمات الاستعلام: كل كلمة يجب أن تطابق شيئاً؛ نأخذ أسوأ رتبة
   const words = q.split(" ").filter(Boolean);
   if (words.length <= 1) return scorePair(hay, q);
 
   let acc: TolerantMatch | null = null;
   for (const w of words) {
+    // كلمات قصيرة جداً لا تُسقط النتيجة متعددة الكلمات
+    if (w.length <= 1) continue;
     const m = scorePair(hay, w);
     if (!m) return null;
-    acc = better(
-      acc,
-      // ارفع الرتبة قليلاً للاستعلامات متعددة الكلمات عند النجاح الجزئي
-      m,
-    );
+    acc = better(acc, m);
   }
-  return acc;
+  return acc ?? scorePair(hay, q);
 }
 
 export function tolerantIncludes(
@@ -165,11 +240,6 @@ export function tolerantIncludes(
   hayNormPrecomputed?: string,
 ): boolean {
   return scoreTolerantMatch(haystack, needle, hayNormPrecomputed) !== null;
-}
-
-export function compareTolerantMatches(a: TolerantMatch, b: TolerantMatch): number {
-  if (a.rank !== b.rank) return a.rank - b.rank;
-  return a.distance - b.distance;
 }
 
 export type HighlightRange = { start: number; end: number };

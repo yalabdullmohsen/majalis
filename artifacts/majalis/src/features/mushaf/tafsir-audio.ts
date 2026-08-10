@@ -14,16 +14,26 @@ export type TafsirAudioClip = {
   id: string;
   scholarId: string;
   scholarLabelAr: string;
+  /** اسم التفسير المعروض */
+  tafsir_name?: string;
   /** لا تُعرض النسبة إن false */
   attributionVerified: boolean;
   titleAr: string;
+  /** نطاق العرض: سورة / آيات / جزء — وصفي للكتالوج */
+  scope?: "surah" | "ayah-range" | "juz";
   surah: number;
   ayahFrom: number;
   ayahTo: number;
   streamUrl: string;
+  /** مرادف صريح لـ streamUrl في مخطط الكتالوج */
+  url?: string;
+  duration?: number;
+  size?: number;
   sourceId: string;
   license: string;
   licenseUrl?: string;
+  /** مرجع صف في LICENSE_RISKS.md */
+  license_ref?: string;
   bytesEstimate?: number;
   enabled: boolean;
 };
@@ -65,7 +75,13 @@ export async function loadTafsirAudioCatalog(): Promise<TafsirAudioClip[]> {
       return catalogCache;
     }
     const json = (await res.json()) as CatalogPayload;
-    catalogCache = Array.isArray(json.clips) ? json.clips : [];
+    catalogCache = (Array.isArray(json.clips) ? json.clips : []).map((c) => ({
+      ...c,
+      streamUrl: c.streamUrl || c.url || "",
+      bytesEstimate: c.bytesEstimate ?? c.size,
+      scholarLabelAr: c.scholarLabelAr || (c as { scholar?: string }).scholar || "",
+      titleAr: c.titleAr || c.tafsir_name || "تفسير صوتي",
+    }));
   } catch {
     catalogCache = [];
   }
@@ -82,6 +98,20 @@ export function findTafsirAudioForAyah(
     if (isTafsirClipDisabled(c.id, c.scholarId, c.sourceId)) continue;
     if (c.surah !== surah) continue;
     if (ayah < c.ayahFrom || ayah > c.ayahTo) continue;
+    return c;
+  }
+  return null;
+}
+
+/** أول مقطع مفعّل يغطي أي جزء من السورة. */
+export function findTafsirAudioForSurah(
+  clips: TafsirAudioClip[],
+  surah: number,
+): TafsirAudioClip | null {
+  for (const c of clips) {
+    if (!c.enabled || !c.streamUrl) continue;
+    if (isTafsirClipDisabled(c.id, c.scholarId, c.sourceId)) continue;
+    if (c.surah !== surah) continue;
     return c;
   }
   return null;
@@ -176,13 +206,58 @@ export async function playTafsirAudioClip(
     if (r?.clipId === clip.id) startAt = r.currentTime;
   }
 
-  await engine.playUrl(clip.streamUrl);
+  let playUrl = clip.streamUrl || clip.url || "";
+  try {
+    const { getOfflineTafsirObjectUrl } = await import("@/features/mushaf/tafsir-audio-offline");
+    const offline = await getOfflineTafsirObjectUrl(clip.id);
+    if (offline) playUrl = offline;
+  } catch {
+    /* بث حي */
+  }
+
+  await engine.playUrl(playUrl);
   if (startAt > 0) {
     try {
       engine.seek(startAt);
     } catch {
       /* ignore */
     }
+  }
+
+  // Now Playing / مركز التحكم (iOS عبر Media Session داخل WKWebView)
+  try {
+    if (typeof navigator !== "undefined" && "mediaSession" in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: clip.titleAr || clip.tafsir_name || "تفسير صوتي",
+        artist: displayScholarLabel(clip),
+        album: "مجالس العلم — تفسير صوتي",
+      });
+      navigator.mediaSession.playbackState = "playing";
+      const seek = (d: number) => {
+        try {
+          const snap = engine.getSnapshot?.();
+          const t = typeof snap?.currentTime === "number" ? snap.currentTime : 0;
+          engine.seek(Math.max(0, t + d));
+        } catch {
+          /* ignore */
+        }
+      };
+      try {
+        navigator.mediaSession.setActionHandler("play", () => {
+          void engine.playUrl(playUrl);
+        });
+        navigator.mediaSession.setActionHandler("pause", () => engine.pause());
+        navigator.mediaSession.setActionHandler("stop", () => {
+          void stopTafsirAudio();
+        });
+        navigator.mediaSession.setActionHandler("seekbackward", () => seek(-15));
+        navigator.mediaSession.setActionHandler("seekforward", () => seek(15));
+      } catch {
+        /* منصة بلا دعم لبعض الإجراءات */
+      }
+    }
+  } catch {
+    /* ignore */
   }
 
   showMiniPlayer();

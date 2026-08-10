@@ -114,6 +114,8 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   seerah: "السيرة",
   nation: "الأمم السابقة",
   prophet: "قصص الأنبياء",
+  person: "أشخاص القرآن",
+  "tafsir-audio": "تفسير صوتي",
   dua: "الأدعية",
   tajweed: "التجويد",
   ulum: "علوم القرآن",
@@ -280,6 +282,7 @@ export default function SearchPage() {
   const [appResults, setAppResults] = useState<AppSearchResult[]>([]);
   const [appGroups, setAppGroups] = useState<Record<string, AppSearchResult[]>>({});
   const [appSuggestion, setAppSuggestion] = useState<string | null>(null);
+  const [appSuggestions, setAppSuggestions] = useState<string[]>([]);
   const [sectionFilter, setSectionFilter] = useState("all");
   const searchAbortRef = useRef<AbortController | null>(null);
 
@@ -326,6 +329,7 @@ export default function SearchPage() {
       setAppResults([]);
       setAppGroups({});
       setAppSuggestion(null);
+      setAppSuggestions([]);
       return;
     }
 
@@ -357,6 +361,7 @@ export default function SearchPage() {
       setAppResults(local.results);
       setAppGroups(local.groups);
       setAppSuggestion(local.suggestion ?? null);
+      setAppSuggestions(local.suggestions ?? (local.suggestion ? [local.suggestion] : []));
       setResponseMs(Math.round(local.responseMs));
 
       if (local.results.length > 0) {
@@ -493,6 +498,7 @@ export default function SearchPage() {
     { key: "scholar", label: "علماء" },
     { key: "adhkar", label: "أذكار" },
     { key: "story", label: "قصص" },
+    { key: "person", label: "أشخاص" },
     { key: "settings", label: "إعدادات" },
   ];
 
@@ -707,7 +713,21 @@ export default function SearchPage() {
               >
                 مسح البحث
               </button>
-              {appSuggestion && (
+              {appSuggestions.length > 0 && (
+                <p className="search-no-results__hint">
+                  هل تقصد{" "}
+                  {appSuggestions.map((s, i) => (
+                    <span key={s}>
+                      {i > 0 ? " · " : ""}
+                      <button type="button" className="search-suggestion-chip" onClick={() => submitSearch(s)}>
+                        {s}
+                      </button>
+                    </span>
+                  ))}
+                  ؟
+                </p>
+              )}
+              {!appSuggestions.length && appSuggestion && (
                 <p className="search-no-results__hint">
                   هل تقصد{" "}
                   <button type="button" className="search-suggestion-chip" onClick={() => submitSearch(appSuggestion)}>
