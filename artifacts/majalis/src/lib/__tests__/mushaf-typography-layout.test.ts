@@ -61,18 +61,18 @@ assert.match(
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /data-ornament="wing-ref"/,
-  "شارة مرجعية بلا pattern",
+  /data-ornament="wing-dense"/,
+  "شارة كثيفة بلا pattern",
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /Octofoil|SpiralArm/,
-  "وردة ثمانية + فرعان لولبيان",
+  /PetalMedallion|ArabesqueMesh/,
+  "ميدالية + شبكة أرابيسك",
 );
 assert.equal(
-  /<pattern/.test(readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8")),
+  /<pattern[\s/]/i.test(readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8")),
   false,
-  "ممنوع <pattern> مكرر في الشارة",
+  "ممنوع وسم pattern مكرر في الشارة",
 );
 const nameBlock = mushafV2.match(/\.mf2-surah-header__name\s*\{[^}]+\}/)?.[0]
   ?? mushafV2.match(/\.mf2-surah-banner__name,\s*\n\.mf2-surah-header__name\s*\{[^}]+\}/)?.[0]

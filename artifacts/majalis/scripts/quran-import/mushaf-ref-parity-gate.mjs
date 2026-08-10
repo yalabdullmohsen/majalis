@@ -110,11 +110,20 @@ async function measurePage(page, pageNum, grid) {
       const br = banner.getBoundingClientRect();
       bannerTopPct = ((br.top - cr.top) / blockH) * 100;
       const svg = banner.querySelector("svg");
-      const roses = svg?.querySelectorAll('[data-wing-part="rose"]').length ?? 0;
-      const spirals = svg?.querySelectorAll('[data-wing-part="spiral"]').length ?? 0;
+      const medallions =
+        svg?.querySelectorAll('[data-wing-part="medallion"]').length ?? 0;
+      const meshes =
+        svg?.querySelectorAll('[data-wing-part="mesh"]').length ?? 0;
       const knots = svg?.querySelectorAll('[data-wing-part="knot"]').length ?? 0;
       const patterns = svg?.querySelectorAll("pattern").length ?? 0;
-      wingOk = patterns === 0 && roses === 2 && spirals === 4 && knots === 2;
+      const dense =
+        (banner.getAttribute("data-ornament") || "").includes("wing-dense");
+      wingOk =
+        patterns === 0 &&
+        dense &&
+        medallions === 2 &&
+        meshes === 4 &&
+        knots === 2;
     }
 
     return {
@@ -185,7 +194,10 @@ async function main() {
         }
       }
       if (r.wingOk === false) {
-        failures.push({ page: n, reason: "عناصر الجناح ≠ وردة+فرعان+عقدة لكل جناح" });
+        failures.push({
+          page: n,
+          reason: "عناصر الجناح ≠ ميدالية+شبكة+عقدة (wing-dense)",
+        });
       }
       const exp = expectedHeader(n);
       if (exp && r.headerSurah !== exp) {
