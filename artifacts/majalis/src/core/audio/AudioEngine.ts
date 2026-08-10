@@ -53,6 +53,15 @@ function nextAyah(surah: number, ayah: number): { surah: number; ayah: number } 
   return null;
 }
 
+function prevAyah(surah: number, ayah: number): { surah: number; ayah: number } | null {
+  if (ayah > 1) return { surah, ayah: ayah - 1 };
+  if (surah > 1) {
+    const prevSurah = surah - 1;
+    return { surah: prevSurah, ayah: ayahCount(prevSurah) };
+  }
+  return null;
+}
+
 export class AudioEngine {
   private static instance: AudioEngine | null = null;
 
@@ -69,6 +78,8 @@ export class AudioEngine {
   private ayahListeners = new Set<AyahChangeListener>();
   private snapListeners = new Set<SnapshotListener>();
   private surahRepeatStart: { surah: number; ayah: number } | null = null;
+  /** يحدّ من إعادة الرسم أثناء timeupdate دون فقدان إحساس التقدم. */
+  private lastTimeEmitMs = 0;
 
   static getInstance(): AudioEngine {
     if (!AudioEngine.instance) AudioEngine.instance = new AudioEngine();
@@ -119,7 +130,12 @@ export class AudioEngine {
       });
       this.audio.addEventListener("waiting", () => this.setPlayerState("buffering"));
       this.audio.addEventListener("error", () => this.setPlayerState("error"));
-      this.audio.addEventListener("timeupdate", () => this.emitSnapshot());
+      this.audio.addEventListener("timeupdate", () => {
+        const now = typeof performance !== "undefined" ? performance.now() : Date.now();
+        if (now - this.lastTimeEmitMs < 200) return;
+        this.lastTimeEmitMs = now;
+        this.emitSnapshot();
+      });
       this.audio.addEventListener("ended", () => void this.onEnded());
     }
     return this.audio;
@@ -337,6 +353,7 @@ export class AudioEngine {
       await this.activatePlaybackSession();
       await el.play();
       this.setPlayerState("playing");
+      void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
     } catch (err) {
       console.warn("[AudioEngine] playAyah:", err);
       this.setPlayerState("error");
@@ -383,6 +400,29 @@ export class AudioEngine {
     if (!el || !Number.isFinite(el.duration)) return;
     el.currentTime = Math.min(el.duration, Math.max(0, seconds));
     this.emitSnapshot();
+  }
+
+  /** الآية التالية (عبر حدود السور). */
+  async skipNext(): Promise<void> {
+    if (this.surah == null || this.ayah == null) return;
+    const next = nextAyah(this.surah, this.ayah);
+    if (next) await this.playAyah(next.surah, next.ayah);
+  }
+
+  /** الآية السابقة. */
+  async skipPrev(): Promise<void> {
+    if (this.surah == null || this.ayah == null) return;
+    const prev = prevAyah(this.surah, this.ayah);
+    if (prev) await this.playAyah(prev.surah, prev.ayah);
+  }
+
+  /** دورة سرعات واجهة المشغّل المصغّر: 1 → 1.25 → 1.5 → 1 */
+  cycleMiniPlayerRate(): number {
+    const cycle = [1, 1.25, 1.5] as const;
+    const cur = normalizePlaybackRate(this.playbackRate);
+    const idx = cycle.findIndex((r) => Math.abs(r - cur) < 0.01);
+    const next = cycle[(idx + 1) % cycle.length] ?? 1;
+    return this.setPlaybackRate(next);
   }
 
   pause(): void {

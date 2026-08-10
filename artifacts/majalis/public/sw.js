@@ -134,6 +134,33 @@ async function cacheFirst(req, cacheName) {
   }
 }
 
+/**
+ * Stale-While-Revalidate: أعد الكاش فورًا وحدّث في الخلفية بهدوء.
+ * مناسب لنصوص ثابتة (قرآن/أذكار/JSON) دون إثقال الذاكرة — لا يُخزَّن إلا الاستجابة الناجحة.
+ */
+async function staleWhileRevalidate(req, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cached = await cache.match(req);
+  const networkPromise = fetch(req)
+    .then((res) => {
+      if (res && res.ok) {
+        cache.put(req, res.clone()).catch(() => undefined);
+      }
+      return res;
+    })
+    .catch(() => null);
+  if (cached) {
+    void networkPromise;
+    return cached;
+  }
+  const network = await networkPromise;
+  if (network) return network;
+  return new Response(JSON.stringify({ ok: false, error: "offline" }), {
+    status: 503,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
 /** Navigations must never be stored: current network document or offline page only. */
 async function networkFirstNavigation(req) {
   try {
@@ -207,9 +234,9 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // JSON seed chunks — cache-first (نادر التغيّر داخل نفس النشر)
+  // JSON seed chunks — SWR (قرآن/أذكار/فهارس ثابتة مع تحديث خلفي هادئ)
   if (url.pathname.startsWith("/data/") && url.pathname.endsWith(".json")) {
-    event.respondWith(cacheFirst(req, DATA_CACHE));
+    event.respondWith(staleWhileRevalidate(req, DATA_CACHE));
     return;
   }
 
@@ -225,19 +252,25 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Internal API data (lessons, fawaid, prayer) → cache-first for offline
+  // Internal API data — SWR للنصوص الأساسية (أذكار/مكتبة)، cache-first لباقي APIs الثقيلة
   if (CACHEABLE_API_PATHS.some((p) => url.pathname.startsWith(p))) {
-    event.respondWith(cacheFirst(req, DATA_CACHE));
+    const useSwr =
+      url.pathname.startsWith("/api/adhkar") || url.pathname.startsWith("/api/library");
+    event.respondWith(
+      useSwr ? staleWhileRevalidate(req, DATA_CACHE) : cacheFirst(req, DATA_CACHE),
+    );
     return;
   }
 
-  // بيانات المصحف QPC v2 (صفحات JSON + فهارس) — ثابتة ونادرة التغيّر،
-  // cache-first يسرّع تقليب الصفحات ويُتيح قراءة محدودة دون شبكة.
+  // بيانات المصحف QPC v2 — SWR للنصوص، cache-first للخطوط
   if (
     url.pathname.startsWith("/data/quran-v2/") ||
-    url.pathname === "/data/quran/page-juz-index.json" ||
-    url.pathname.startsWith("/fonts/quran/")
+    url.pathname === "/data/quran/page-juz-index.json"
   ) {
+    event.respondWith(staleWhileRevalidate(req, DATA_CACHE));
+    return;
+  }
+  if (url.pathname.startsWith("/fonts/quran/")) {
     event.respondWith(cacheFirst(req, DATA_CACHE));
     return;
   }

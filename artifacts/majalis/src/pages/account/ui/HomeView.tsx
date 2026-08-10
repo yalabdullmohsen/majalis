@@ -9,6 +9,7 @@ import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
+import { HomeLocalResumeCard } from "@/components/home/HomeLocalResumeCard";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { FridayBanner } from "@/components/FridayBanner";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
@@ -220,11 +221,14 @@ export default function HomePage() {
         </section>
       )}
 
-      <section className="m2030-band" aria-label="أكمل من حيث توقفت">
+      <section className="m2030-band" aria-label="متابعة القراءة والاستماع">
         <div className="m2030-band__head">
-          <h2 className="m2030-band__title">تابع من حيث توقفت</h2>
+          <h2 className="m2030-band__title">متابعة القراءة / الاستماع</h2>
         </div>
         <div className="m2030-panel mj-card mj-card--raised">
+          <SafeHomeSection name="local-resume">
+            <HomeLocalResumeCard />
+          </SafeHomeSection>
           <SafeHomeSection name="continue">
             <HomeContinueWidget />
           </SafeHomeSection>
