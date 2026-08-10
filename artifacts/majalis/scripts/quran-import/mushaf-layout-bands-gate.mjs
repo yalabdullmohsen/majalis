@@ -21,7 +21,7 @@ const require = createRequire(import.meta.url);
 const BANDS = {
   toolbarBandPx: 52,
   footerBandPx: 46,
-  contentFooterGapPx: 20,
+  contentFooterGapPx: 28,
 };
 const EXTERNAL_BASE = process.env.MUSHAF_GATE_BASE_URL?.replace(/\/$/, "") || "";
 const PORT = process.env.MUSHAF_GATE_PORT || "24235";
@@ -30,7 +30,33 @@ const OUT_DIR =
   process.env.MUSHAF_GATE_OUT_DIR || join(ROOT, ".local/mushaf-layout-bands");
 const VIEWPORT = { width: 390, height: 844 };
 const TOOLBAR_PAGES = [1, 2, 3, 283, 599, 600, 601];
-const FOOTER_PAGES = (process.env.MUSHAF_GATE_PAGES || "1,2,3,4,7,100,283,306,400,500,588,596,599,600,601,604")
+/* عيّنة كثيفة افتراضياً؛ MUSHAF_GATE_PAGES=1..604 أو MUSHAF_GATE_FULL=1 لكل الصفحات */
+const FOOTER_PAGES = (
+  process.env.MUSHAF_GATE_PAGES ||
+  (process.env.MUSHAF_GATE_FULL === "1"
+    ? Array.from({ length: 604 }, (_, i) => String(i + 1)).join(",")
+    : [
+        ...Array.from({ length: 30 }, (_, i) => String(i + 1)),
+        "50",
+        "100",
+        "150",
+        "200",
+        "235",
+        "283",
+        "300",
+        "350",
+        "400",
+        "450",
+        "500",
+        "550",
+        "588",
+        "596",
+        "599",
+        "600",
+        "601",
+        "604",
+      ].join(","))
+)
   .split(",")
   .map(Number)
   .filter((n) => n >= 1 && n <= 604);
@@ -60,6 +86,9 @@ const failures = [];
 const css = readFileSync(join(ROOT, "src/styles/quran.css"), "utf8");
 if (!/--mpv-toolbar-band:\s*52px/.test(css) || !/--mpv-footer-band:\s*46px/.test(css)) {
   failures.push({ page: 0, reason: "CSS vars للنطاقات ناقصة" });
+}
+if (!/--mpv-content-footer-gap:\s*28px/.test(css)) {
+  failures.push({ page: 0, reason: "--mpv-content-footer-gap يجب أن يكون 28px" });
 }
 if (!/bottom:\s*calc\(\s*var\(--inset-bottom[^)]*\)\s*\+\s*var\(--mpv-toolbar-band/.test(css)) {
   failures.push({ page: 0, reason: "الذيل ليس فوق toolbarBand" });
@@ -128,7 +157,7 @@ async function probe(n, { showToolbar }) {
     timeout: 60_000,
   });
   await page.waitForSelector(".mf2-lines", { timeout: 45_000 });
-  await sleep(n <= 3 || n === 283 ? 1100 : 550);
+  await sleep(n <= 3 || n === 283 ? 900 : n % 50 === 0 ? 400 : 220);
   if (showToolbar) {
     await page.evaluate(() => {
       document.querySelector(".quran-shell--ayah")?.classList.remove("quran-shell--chrome-hidden");
@@ -180,31 +209,22 @@ async function probe(n, { showToolbar }) {
     let maxDev = 0;
     for (const b of baselinesPx) if (b.devPx != null) maxDev = Math.max(maxDev, b.devPx);
 
-    /* ink extents via canvas for last line */
+    /* حبر آخر سطر عبر Range — أدق من تقدير canvas+منتصف الصندوق */
     let lastInk = rect(lastLine);
     if (lastLine) {
-      const cs = getComputedStyle(lastLine);
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.font = cs.font;
-        const m = ctx.measureText((lastLine.textContent || "").trim());
-        const ascent =
-          m.actualBoundingBoxAscent || m.fontBoundingBoxAscent || parseFloat(cs.fontSize) * 0.95;
-        const descent =
-          m.actualBoundingBoxDescent ||
-          m.fontBoundingBoxDescent ||
-          parseFloat(cs.fontSize) * 0.45;
-        const box = lastLine.getBoundingClientRect();
-        const baselineY = box.top + box.height / 2 + (ascent - descent) / 2;
-        lastInk = {
-          top: baselineY - ascent,
-          bottom: baselineY + descent,
-          left: box.left,
-          right: box.right,
-          h: ascent + descent,
-          w: box.width,
-        };
+      try {
+        const range = document.createRange();
+        range.selectNodeContents(lastLine);
+        const rects = [...range.getClientRects()].filter((r) => r.width > 0 && r.height > 0);
+        if (rects.length) {
+          const top = Math.min(...rects.map((r) => r.top));
+          const bottom = Math.max(...rects.map((r) => r.bottom));
+          const left = Math.min(...rects.map((r) => r.left));
+          const right = Math.max(...rects.map((r) => r.right));
+          lastInk = { top, bottom, left, right, h: bottom - top, w: right - left };
+        }
+      } catch {
+        /* keep box */
       }
     }
 
@@ -281,10 +301,18 @@ try {
     consts: BANDS,
   };
 
-  if (off.gapContentFooter != null && off.gapContentFooter < 11.5) {
+  if (off.gapContentFooter != null && off.gapContentFooter < 26) {
     failures.push({
       page: 3,
-      reason: `فاصل content→footer ${off.gapContentFooter.toFixed(1)}px < 12`,
+      reason: `فاصل content→footer ${off.gapContentFooter.toFixed(1)}px < 26`,
+    });
+  }
+  const inkToCart =
+    off.lastInk && off.badge ? off.badge.top - off.lastInk.bottom : null;
+  if (inkToCart != null && inkToCart < 27.5) {
+    failures.push({
+      page: 3,
+      reason: `حبر→خرطوش ${inkToCart.toFixed(1)}px < 28`,
     });
   }
   if (off.overlaps.badgeInk.oy > 0.5 || off.overlaps.metaInk.oy > 0.5) {
@@ -312,10 +340,15 @@ try {
     if (m.overlaps.badgeInk.oy > 0.5 || m.overlaps.metaInk.oy > 0.5) {
       failures.push({ page: n, reason: "تقاطع ذيل مع حبر" });
     }
-    if (m.gapContentFooter != null && m.gapContentFooter < 11.5) {
+    const gapCart = m.lastInk && m.badge ? m.badge.top - m.lastInk.bottom : null;
+    if (gapCart != null && gapCart < 27.5) {
+      failures.push({ page: n, reason: `حبر→خرطوش ${gapCart.toFixed(1)}px < 28` });
+    }
+    /* ص١–٢ قد تمتد قليلاً في فاصل content→footer مع بقاء ≥٢٨px للخرطوش */
+    if (n > 2 && m.gapContentFooter != null && m.gapContentFooter < 26) {
       failures.push({
         page: n,
-        reason: `فاصل content→footer ${m.gapContentFooter.toFixed(1)}px < 12`,
+        reason: `فاصل content→footer ${m.gapContentFooter.toFixed(1)}px < 26`,
       });
     }
     /* الشبكة لصفحات عادية فقط — ص١–٢ داخل الإطار بنسب مختلفة */

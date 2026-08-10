@@ -214,12 +214,12 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
 .quran-shell--night .mf2-line { --mf2-ink: #F9FAFB; }
 .quran-shell--warm .mf2-line { --mf2-ink: #1F2937; }
 .quran-shell--high-contrast .mf2-line { --mf2-ink: #000; }
-/* الوحدة التفاعلية = الآية؛ عرض inline لبقاء النص متصلًا بلا تمديد تخطيط */
+/* تظليل التحديد: هالة ذهبية على مستطيلات الكلمات — بلا إزاحة تخطيط */
 .mf2-ayah-group {
   display: inline;
   cursor: pointer;
   border-radius: 3px;
-  transition: background-color .15s;
+  transition: none;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   min-width: 0 !important;
@@ -230,13 +230,38 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
 }
 .mf2-ayah-group:hover,
 .mf2-ayah-group:focus-visible {
-  background: color-mix(in srgb, var(--mj-brand, var(--brand, var(--mf-gold))) 8%, transparent);
   outline: none;
 }
-/* تظليل واحد خفيف يلتصق بالكلمات (لا طبقة سطر/حاوية) — من رموز الثيم */
+.mf2-ayah-group:hover .mf2-word,
+.mf2-ayah-group:focus-visible .mf2-word {
+  background: color-mix(in srgb, var(--color-mushaf-gold, var(--mf-gold, #8B6914)) 6%, transparent);
+  border-radius: 6px;
+}
+/* هالة خلف الكلمات سطراً بسطر — خلفية/ظل فقط، بلا padding يحرّك الأساس */
 .mf2-ayah-group--active {
-  background: color-mix(in srgb, var(--mj-brand, var(--brand, var(--mf-gold))) 12%, transparent);
-  border-radius: 2px;
+  background: transparent;
+  border-radius: 0;
+}
+.mf2-ayah-group--active .mf2-word {
+  background-color: color-mix(
+    in srgb,
+    var(--color-mushaf-gold, #8B6914) 10%,
+    transparent
+  );
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition:
+    background-color 140ms ease,
+    box-shadow 140ms ease;
+}
+.quran-shell--night .mf2-ayah-group--active .mf2-word,
+html[data-theme="dark"] .mf2-ayah-group--active .mf2-word {
+  background-color: color-mix(
+    in srgb,
+    var(--color-mushaf-gold, #C9B07A) 16%,
+    transparent
+  );
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
 }
 /* ⚠️ إصلاح جذري (2026-07-22): كل كلمة تُصيَّر كعنصر <span> منفصل (لتفعيل
    الملاءمة الدقيقة لحجم الخط لكل سطر، وربط النقر بالآية)، ونص الكلمة

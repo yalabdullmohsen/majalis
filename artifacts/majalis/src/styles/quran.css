@@ -2038,17 +2038,26 @@ html[data-theme="dark"] .rtp-transcript {
 .qs-mushaf-body--spotlight .qs-ayah-inline__text { opacity: 0.35; transition: opacity 0.2s; }
 .qs-mushaf-body--spotlight .qs-ayah-inline.is-selected .qs-ayah-inline__text { opacity: 1; }
 
-/* أنماط تمييز الآية لتخطيط QPC (mf2) — كانت الخيارات موجودة في الإعدادات
-   دون أثر بصري على .mf2-ayah-group لأن التمييز القديم يستهدف .qs-ayah-inline فقط. */
+/* أنماط تمييز الآية لتخطيط QPC (mf2) — الهالة على الكلمات بلا إزاحة أساس */
 .qs-mushaf-body--hl-wash .mf2-ayah-group--active {
-  background: color-mix(in srgb, var(--mj-brand, var(--brand, var(--mf-gold))) 12%, transparent);
+  background: transparent;
+}
+.qs-mushaf-body--hl-wash .mf2-ayah-group--active .mf2-word {
+  background-color: color-mix(in srgb, var(--color-mushaf-gold, #8B6914) 10%, transparent);
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 .qs-mushaf-body--hl-border .mf2-ayah-group--active {
   background: transparent;
+}
+.qs-mushaf-body--hl-border .mf2-ayah-group--active .mf2-word {
   box-shadow: inset 0 0 0 1.5px var(--mf-gold, var(--brand-deep, var(--mj-brand-deep)));
+  border-radius: 6px;
 }
 .qs-mushaf-body--hl-underline .mf2-ayah-group--active {
   background: transparent;
+}
+.qs-mushaf-body--hl-underline .mf2-ayah-group--active .mf2-word {
   box-shadow: inset 0 -2px 0 var(--mf-gold, var(--brand-deep, var(--mj-brand-deep)));
 }
 .qs-mushaf-body--hl-text-color .mf2-ayah-group--active {
@@ -2056,11 +2065,20 @@ html[data-theme="dark"] .rtp-transcript {
   color: var(--mf-gold, var(--brand-deep, var(--mj-brand-deep)));
 }
 .qs-mushaf-body--hl-side-indicator .mf2-ayah-group--active {
-  background: color-mix(in srgb, var(--mf-gold, var(--brand-deep, var(--mj-brand-deep))) 8%, transparent);
+  background: transparent;
+}
+.qs-mushaf-body--hl-side-indicator .mf2-ayah-group--active .mf2-word {
+  background-color: color-mix(in srgb, var(--mf-gold, var(--brand-deep, var(--mj-brand-deep))) 8%, transparent);
   box-shadow: inset -3px 0 0 var(--mf-gold, var(--brand-deep, var(--mj-brand-deep)));
+  border-radius: 6px;
 }
 .qs-mushaf-body--spotlight .mf2-ayah-group { opacity: 0.38; transition: opacity 0.2s; }
 .qs-mushaf-body--spotlight .mf2-ayah-group--active { opacity: 1; background: transparent; }
+.qs-mushaf-body--spotlight .mf2-ayah-group--active .mf2-word {
+  background-color: color-mix(in srgb, var(--color-mushaf-gold, #8B6914) 10%, transparent);
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
 /* فهرس المصحف: تبويبات السور/الأجزاء/الإشارات */
 .qs-surah-list__tabs {
@@ -2291,7 +2309,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 .quran-shell--ayah {
   --mpv-toolbar-band: 52px;
   --mpv-footer-band: 46px;
-  --mpv-content-footer-gap: 20px;
+  --mpv-content-footer-gap: 28px;
 }
 
 /* عائم في نطاق شريط الأدوات (محجوز دائماً) */

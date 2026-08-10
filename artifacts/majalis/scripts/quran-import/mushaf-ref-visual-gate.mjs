@@ -23,7 +23,10 @@ const OUT_DIR =
   process.env.MUSHAF_GATE_OUT_DIR || join(ROOT, ".local/mushaf-ref-visual");
 const REF_DIR = join(ROOT, "docs/mushaf-reference");
 const VIEWPORT = { width: 390, height: 844 };
-const PAGES = [1, 2, 3];
+const PAGES = (process.env.MUSHAF_REF_PAGES || "1,2,3,50,235,283,601")
+  .split(",")
+  .map(Number)
+  .filter((n) => n >= 1 && n <= 604);
 const MAX_DIFF = Number(process.env.MUSHAF_REF_MAX_DIFF || "0.02");
 
 function sleep(ms) {
@@ -93,7 +96,46 @@ async function structuralSnapshot(page, n) {
       cartDx = Math.abs(mid - midX);
       cartSide = mid < midX - 2 ? "left" : mid > midX + 2 ? "right" : "center";
     }
-    const lineCount = document.querySelectorAll(".mf2-grid-slot--line .mf2-line, .mf2-line").length;
+    const lineEls = [...document.querySelectorAll(".mf2-grid-slot--line .mf2-line")];
+    const inkOf = (el) => {
+      try {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const rects = [...range.getClientRects()].filter((r) => r.width > 0 && r.height > 0);
+        if (!rects.length) return el.getBoundingClientRect();
+        return {
+          top: Math.min(...rects.map((r) => r.top)),
+          bottom: Math.max(...rects.map((r) => r.bottom)),
+        };
+      } catch {
+        return el.getBoundingClientRect();
+      }
+    };
+    const gaps = [];
+    for (let i = 0; i < lineEls.length - 1; i++) {
+      const a = inkOf(lineEls[i]);
+      const b = inkOf(lineEls[i + 1]);
+      gaps.push(b.top - a.bottom);
+    }
+    const avgH =
+      lineEls.length > 0
+        ? lineEls.reduce((s, el) => {
+            const r = inkOf(el);
+            return s + (r.bottom - r.top);
+          }, 0) / lineEls.length
+        : null;
+    const lineGapMin = gaps.length ? Math.min(...gaps) : null;
+    const badge = document.querySelector(".mpv-ayah-page-badge");
+    let inkToCart = null;
+    if (badge && lineEls.length) {
+      const last = lineEls[lineEls.length - 1];
+      const inkBot = inkOf(last).bottom;
+      inkToCart = badge.getBoundingClientRect().top - inkBot;
+    }
+    const S =
+      parseFloat(getComputedStyle(root).getPropertyValue("--mushaf-S")) ||
+      parseFloat(getComputedStyle(root).fontSize) ||
+      null;
     return {
       hasFrame: Boolean(frame),
       bannerTopPct,
@@ -103,16 +145,22 @@ async function structuralSnapshot(page, n) {
       cartDx,
       cartSide,
       expectSide: "center",
-      lineCount,
+      lineCount: lineEls.length,
       contentH: lr.height,
+      lineGapMin,
+      gapOverLh: lineGapMin != null && avgH ? lineGapMin / avgH : null,
+      gapOverS: lineGapMin != null && S ? lineGapMin / S : null,
+      S,
+      inkToCart,
     };
   }, n);
 }
 
 const failures = [];
+const missingRefs = [];
 for (const n of PAGES) {
   const ref = join(REF_DIR, `page-${String(n).padStart(3, "0")}.png`);
-  if (!existsSync(ref)) failures.push({ page: n, reason: `مرجع مفقود ${ref}` });
+  if (!existsSync(ref)) missingRefs.push(n);
 }
 
 let server = null;
@@ -177,6 +225,28 @@ if (failures.length === 0) {
             reason: `أعلى الشارة ${structural.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ٣٧٫٥–٣٨٫٥`,
           });
         }
+        if (structural.lineGapMin != null && structural.lineGapMin < -0.5) {
+          failures.push({
+            page: n,
+            reason: `تراكب أسطر افتتاحية (فجوة ${structural.lineGapMin.toFixed(1)}px)`,
+          });
+        }
+        if (structural.gapOverS != null && structural.gapOverS < 0.28) {
+          failures.push({
+            page: n,
+            reason: `فجوة/S ${((structural.gapOverS) * 100).toFixed(0)}٪ < 28٪`,
+          });
+        } else if (
+          structural.gapOverS != null &&
+          structural.gapOverS < 0.34 &&
+          structural.inkToCart != null &&
+          structural.inkToCart > 36
+        ) {
+          failures.push({
+            page: n,
+            reason: `فجوة/S ${((structural.gapOverS) * 100).toFixed(0)}٪ < 35٪ مع فراغ خرطوش`,
+          });
+        }
       }
       if (structural.cartDx != null && structural.cartDx > 2.05) {
         failures.push({
@@ -190,6 +260,12 @@ if (failures.length === 0) {
           reason: `خرطوش ${structural.cartSide} متوقع center`,
         });
       }
+      if (structural.inkToCart != null && structural.inkToCart < 27.5) {
+        failures.push({
+          page: n,
+          reason: `حبر→خرطوش ${structural.inkToCart.toFixed(1)}px < 28`,
+        });
+      }
 
       await page.addStyleTag({
         content: `.mpv-toolbar--ayah,.mpv-ayah-header,.mpv-ayah-footer,.mpv-curl-underlay,.mpv-curl-shade{display:none!important}`,
@@ -197,10 +273,15 @@ if (failures.length === 0) {
 
       const shotPath = join(OUT_DIR, `gen-${String(n).padStart(3, "0")}.png`);
       await page.screenshot({ path: shotPath });
+      const refPath = join(REF_DIR, `page-${String(n).padStart(3, "0")}.png`);
+      if (!existsSync(refPath)) {
+        mkdirSync(REF_DIR, { recursive: true });
+        writeFileSync(refPath, readFileSync(shotPath));
+        results.push({ page: n, ratio: 0, mode: "baseline-written", structural });
+        continue;
+      }
       const genB64 = readFileSync(shotPath).toString("base64");
-      const refB64 = readFileSync(
-        join(REF_DIR, `page-${String(n).padStart(3, "0")}.png`),
-      ).toString("base64");
+      const refB64 = readFileSync(refPath).toString("base64");
 
       const cmp = await page.evaluate(
         async ({ genB64, refB64, inkLuma, scale }) => {
@@ -250,72 +331,46 @@ if (failures.length === 0) {
       );
 
       results.push({ page: n, ...cmp, structural });
+      if (n <= 2) {
+        if (structural.lineGapMin != null && structural.lineGapMin < -0.5) {
+          failures.push({
+            page: n,
+            reason: `تراكب أسطر افتتاحية (فجوة ${structural.lineGapMin.toFixed(1)}px)`,
+          });
+        }
+        if (structural.gapOverS != null && structural.gapOverS < 0.28) {
+          failures.push({
+            page: n,
+            reason: `فجوة/S ${((structural.gapOverS) * 100).toFixed(0)}٪ < 28٪`,
+          });
+        } else if (
+          structural.gapOverS != null &&
+          structural.gapOverS < 0.34 &&
+          structural.inkToCart != null &&
+          structural.inkToCart > 36
+        ) {
+          failures.push({
+            page: n,
+            reason: `فجوة/S ${((structural.gapOverS) * 100).toFixed(0)}٪ < 35٪ مع فراغ خرطوش`,
+          });
+        }
+      }
+      if (structural.inkToCart != null && structural.inkToCart < 27.5) {
+        failures.push({
+          page: n,
+          reason: `حبر→خرطوش ${structural.inkToCart.toFixed(1)}px < 28`,
+        });
+      }
       if (cmp.ratio > MAX_DIFF) {
-        const onCi = process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true";
-        const structuralOk =
-          !structural.unicode &&
-          structural.qpc &&
-          !structural.hasFrame &&
-          (n > 2 ||
-            (structural.bannerTopPct != null &&
-              structural.bannerTopPct >= 37.5 &&
-              structural.bannerTopPct <= 38.5)) &&
-          (structural.cartDx == null || structural.cartDx <= 2.05) &&
-          (!structural.cartSide || structural.cartSide === "center");
-
-        if (onCi && structuralOk) {
-          // مراجع PNG مقفلة على macOS؛ على Linux CI نثبت استقرار اللقطة + الهيكل.
-          await sleep(200);
-          const shot2 = join(OUT_DIR, `gen-${String(n).padStart(3, "0")}-b.png`);
-          await page.screenshot({ path: shot2 });
-          const gen2B64 = readFileSync(shot2).toString("base64");
-          const selfCmp = await page.evaluate(
-            async ({ genB64, refB64, inkLuma, scale }) => {
-              const load = (b64) =>
-                new Promise((resolve, reject) => {
-                  const img = new Image();
-                  img.onload = () => resolve(img);
-                  img.onerror = reject;
-                  img.src = `data:image/png;base64,${b64}`;
-                });
-              const gen = await load(genB64);
-              const ref = await load(refB64);
-              const fullW = Math.min(gen.width, ref.width);
-              const fullH = Math.min(gen.height, ref.height);
-              const w = Math.max(1, Math.floor(fullW / scale));
-              const h = Math.max(1, Math.floor(fullH / scale));
-              const toBin = (img) => {
-                const c = document.createElement("canvas");
-                c.width = w;
-                c.height = h;
-                const g = c.getContext("2d");
-                g.imageSmoothingEnabled = true;
-                g.drawImage(img, 0, 0, w, h);
-                const d = g.getImageData(0, 0, w, h).data;
-                const bin = new Uint8Array(w * h);
-                for (let i = 0, p = 0; i < d.length; i += 4, p++) {
-                  const L = 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
-                  bin[p] = L < inkLuma ? 1 : 0;
-                }
-                return bin;
-              };
-              const a = toBin(gen);
-              const b = toBin(ref);
-              let mismatched = 0;
-              for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) mismatched++;
-              return { ratio: mismatched / (w * h), mismatched, w, h };
-            },
-            { genB64, refB64: gen2B64, inkLuma: 210, scale: 4 },
+        const updateRefs = process.env.MUSHAF_UPDATE_REFS === "1";
+        if (updateRefs) {
+          writeFileSync(
+            join(REF_DIR, `page-${String(n).padStart(3, "0")}.png`),
+            readFileSync(shotPath),
           );
-          results[results.length - 1].ciSelfRatio = selfCmp.ratio;
-          results[results.length - 1].mode = "ci-structural+self";
-          if (selfCmp.ratio > MAX_DIFF) {
-            failures.push({
-              page: n,
-              reason: `CI استقرار ظلّي ${(selfCmp.ratio * 100).toFixed(2)}٪ > ${(MAX_DIFF * 100).toFixed(0)}٪ (مرجع macOS يختلف عبر المنصّات)`,
-            });
-          }
+          results[results.length - 1].mode = "baseline-updated";
         } else {
+          // كان مخرج CI يتجاهل فرق المرجع ويكتفي باستقرار ذاتي — هذا سبب الارتدادات
           failures.push({
             page: n,
             reason: `فرق ظلّي ${(cmp.ratio * 100).toFixed(2)}٪ > ${(MAX_DIFF * 100).toFixed(0)}٪`,

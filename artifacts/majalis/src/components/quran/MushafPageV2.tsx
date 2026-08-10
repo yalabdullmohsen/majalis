@@ -21,6 +21,7 @@ import { mushafTypescaleCssVars } from "@/features/mushaf/typescale";
 /**
  * صفحتا الافتتاح (١–٢): مسار برمجي موحّد · بلا إطار.
  * أعلى الشارة ٣٨٪ · فاصل شارة→بسملة ٢٤px · بسملة→أول سطر ٢٠px · أسطر بلا مطّ.
+ * خانة الجسم = ٧٫٢٪ (كالشبكة) — ٥٫٤٪ كانت أصغر من ارتفاع السطر فسبّبت تراكب الصناديق.
  */
 /** أعلى الشارة (٪ من .mf2-lines / contentBand) */
 const OPENING_BANNER_TOP_PCT = 38;
@@ -32,17 +33,32 @@ const OPENING_BANNER_TO_BASMALA_PX = 24;
 const OPENING_BASMALA_TO_LINE_PX = 20;
 /** فاصل أدنى شارة→بسملة في الصفحات العادية */
 const BANNER_BASMALA_MIN_GAP_PX = 22;
-/** هامش سفلي مقصود تحت آخر سطر (٪ من contentBand) */
+/** هامش سفلي مقصود تحت آخر سطر (٪ من contentBand) — الباقي أسفل الكتلة */
 const OPENING_BOTTOM_MARGIN_PCT = 12;
-/** ارتفاع خانة الجسم — أصغر من السابق لتفادي تداخل الصناديق مع فواصل الحبر */
-const OPENING_BODY_SLOT_H_PCT = 5.4;
+/** أدنى فجوة حبر بين سطرين كنسبة من حجم الخط S (لا ارتفاع الصندوق — كان يفيض الذيل) */
+const OPENING_MIN_LINE_GAP_RATIO = 0.35;
+/** ارتفاع خانة الجسم — يقارب امتداد الحبر دون مبالغة الصندوق */
+const OPENING_BODY_SLOT_H_PCT = 5.8;
 /** مركز الشارة للتموضع المطلق (translateY -50%) */
 const OPENING_BANNER_MID_PCT = OPENING_BANNER_TOP_PCT + OPENING_BANNER_H_PCT / 2;
 const OPENING_BODY_BOT_PCT = 100 - OPENING_BOTTOM_MARGIN_PCT;
 
-/** تقدير أعلى/أسفل حبر عنصر نصي */
+/** حدود الحبر الفعلية عبر Range — أدق من تقدير canvas+منتصف الصندوق */
 function measureInkBounds(el: HTMLElement): { top: number; bottom: number } {
   const box = el.getBoundingClientRect();
+  try {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const rects = [...range.getClientRects()].filter((r) => r.width > 0 && r.height > 0);
+    if (rects.length > 0) {
+      return {
+        top: Math.min(...rects.map((r) => r.top)),
+        bottom: Math.max(...rects.map((r) => r.bottom)),
+      };
+    }
+  } catch {
+    /* fall through */
+  }
   const cs = getComputedStyle(el);
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -567,7 +583,7 @@ export function MushafPageV2({
             }
 
             const basInkEl = inkElOf(basmalaSlot);
-            const basInk = basInkEl
+            let basInk = basInkEl
               ? measureInkBounds(basInkEl)
               : {
                   top: banR.bottom + OPENING_BANNER_TO_BASMALA_PX,
@@ -575,102 +591,143 @@ export function MushafPageV2({
                 };
             container.dataset.mf2BasmalaGap = (basInk.top - banR.bottom).toFixed(1);
 
-            if (ayahLineSlots.length > 0) {
-              let firstCenterPct =
-                ((basInk.bottom - crNow.top + OPENING_BASMALA_TO_LINE_PX + ascentPad) / H) *
-                100;
-              placeSlotCenter(ayahLineSlots[0], firstCenterPct, slotH);
-              for (let pass = 0; pass < 3; pass++) {
-                const firstInkEl = inkElOf(ayahLineSlots[0]);
-                if (!firstInkEl) break;
-                const ink = measureInkBounds(firstInkEl);
-                const gap = ink.top - basInk.bottom;
-                const nudgePct = pxPct(OPENING_BASMALA_TO_LINE_PX - gap);
-                if (Math.abs(nudgePct) < 0.02) break;
-                firstCenterPct += nudgePct;
-                placeSlotCenter(ayahLineSlots[0], firstCenterPct, slotH);
+            /* ثبّت شارة→بسملة قبل توزيع الأسطر */
+            {
+              const banEl = banners[0];
+              if (banEl && basInkEl) {
+                const u = banEl.getBoundingClientRect();
+                const l = basInkEl.getBoundingClientRect();
+                const gapBox = l.top - u.bottom;
+                if (gapBox < OPENING_BANNER_TO_BASMALA_PX - 0.5) {
+                  const nudge = pxPct(OPENING_BANNER_TO_BASMALA_PX - gapBox);
+                  const t = parseFloat(basmalaSlot.style.top);
+                  if (Number.isFinite(t)) {
+                    placeSlotCenter(
+                      basmalaSlot,
+                      t + nudge,
+                      parseFloat(basmalaSlot.style.height) || slotH,
+                    );
+                  }
+                }
+                basInk = measureInkBounds(basInkEl);
+                container.dataset.mf2BasmalaGap = (basInk.top - banR.bottom).toFixed(1);
               }
-              firstCenterPct = parseFloat(ayahLineSlots[0].style.top) || firstCenterPct;
-              container.dataset.mf2BasmalaLineGap = (() => {
-                const el = inkElOf(ayahLineSlots[0]);
-                if (!el) return "";
-                return (measureInkBounds(el).top - basInk.bottom).toFixed(1);
-              })();
+            }
 
-              /* فجوة حبر موحّدة من مرجع الأساس — نفس px في ص١ وص٢ */
-              const inkGapPx =
-                MUSHAF_LAYOUT_BASELINE.lineGapPx * (size / BASE_FONT);
-              const lineH = slotH;
-              ayahLineSlots.forEach((slot, idx) => {
-                if (idx === 0) {
-                  placeSlotCenter(slot, firstCenterPct, lineH);
-                  return;
-                }
-                const prev = inkElOf(ayahLineSlots[idx - 1]);
-                const prevInk = prev
-                  ? measureInkBounds(prev)
-                  : { top: 0, bottom: crNow.top + (H * firstCenterPct) / 100 };
-                let centerPct =
-                  ((prevInk.bottom - crNow.top + inkGapPx + size * 0.55) / H) * 100;
-                placeSlotCenter(slot, centerPct, lineH);
-                for (let pass = 0; pass < 3; pass++) {
+            if (ayahLineSlots.length > 0) {
+              const sampleLine = inkElOf(ayahLineSlots[0]);
+              const sampleInk = sampleLine ? measureInkBounds(sampleLine) : null;
+              const sampleInkH = sampleInk
+                ? Math.max(size * 0.95, sampleInk.bottom - sampleInk.top)
+                : size * 1.15;
+              const lineH = OPENING_BODY_SLOT_H_PCT;
+              /* أسفل مسموح = أعلى الخرطوش − ٢٨px (يجوز امتداد طفيف في فاصل content→footer) */
+              const badgeEl = document.querySelector(".mpv-ayah-page-badge");
+              const badgeTop = badgeEl?.getBoundingClientRect().top;
+              const maxInkBottom =
+                badgeTop != null
+                  ? badgeTop - MUSHAF_LAYOUT_BANDS.contentFooterGapPx
+                  : crNow.bottom;
+              const minGap = OPENING_MIN_LINE_GAP_RATIO * size;
+              const idealGap = Math.max(
+                minGap,
+                MUSHAF_LAYOUT_BASELINE.lineGapPx * (size / BASE_FONT),
+              );
+              const nLines = ayahLineSlots.length;
+              const placeFrom = (firstTop: number, gap: number) => {
+                let top = firstTop;
+                for (const slot of ayahLineSlots) {
+                  placeSlotCenter(slot, ((top + sampleInkH * 0.5 - crNow.top) / H) * 100, lineH);
                   const el = inkElOf(slot);
-                  if (!el) break;
-                  const ink = measureInkBounds(el);
-                  const gap = ink.top - prevInk.bottom;
-                  const nudge = pxPct(inkGapPx - gap);
-                  if (Math.abs(nudge) < 0.02) break;
-                  centerPct += nudge;
-                  placeSlotCenter(slot, centerPct, lineH);
+                  if (el) {
+                    const ink = measureInkBounds(el);
+                    const adj = top - ink.top;
+                    if (Math.abs(adj) > 0.35) {
+                      placeSlotCenter(
+                        slot,
+                        parseFloat(slot.style.top) + pxPct(adj),
+                        lineH,
+                      );
+                    }
+                  }
+                  const h = el
+                    ? (() => {
+                        const b = measureInkBounds(el);
+                        return Math.max(size * 0.9, b.bottom - b.top);
+                      })()
+                    : sampleInkH;
+                  top += h + gap;
                 }
-              });
-
+              };
+              const liveBasBottom = () =>
+                basInkEl ? measureInkBounds(basInkEl).bottom : basInk.bottom;
+              const measureHeights = () =>
+                ayahLineSlots.map((slot) => {
+                  const el = inkElOf(slot);
+                  if (!el) return sampleInkH;
+                  const b = measureInkBounds(el);
+                  return Math.max(size * 0.9, b.bottom - b.top);
+                });
+              const fitGap = (firstTop: number, heights: number[]) => {
+                if (nLines <= 1) return idealGap;
+                const sumH = heights.reduce((s, h) => s + h, 0);
+                return Math.max(minGap, Math.min(idealGap, (maxInkBottom - firstTop - sumH) / (nLines - 1)));
+              };
+              let firstTop = liveBasBottom() + OPENING_BASMALA_TO_LINE_PX;
+              placeFrom(firstTop, idealGap);
+              let heights = measureHeights();
+              let gap = fitGap(firstTop, heights);
+              placeFrom(firstTop, gap);
+              heights = measureHeights();
+              firstTop = liveBasBottom() + OPENING_BASMALA_TO_LINE_PX;
+              gap = fitGap(firstTop, heights);
+              placeFrom(firstTop, gap);
+              {
+                const first = inkElOf(ayahLineSlots[0]);
+                if (first) {
+                  const need = firstTop - measureInkBounds(first).top;
+                  if (Math.abs(need) > 0.5) {
+                    const shift = pxPct(need);
+                    for (const slot of ayahLineSlots) {
+                      const t = parseFloat(slot.style.top);
+                      if (Number.isFinite(t)) placeSlotCenter(slot, t + shift, lineH);
+                    }
+                  }
+                }
+                const last = inkElOf(ayahLineSlots[ayahLineSlots.length - 1]);
+                if (last && nLines > 1) {
+                  const overflow = measureInkBounds(last).bottom - maxInkBottom;
+                  if (overflow > 0.5) {
+                    /* استثناء ضيق: اسمح بفجوة أقل من ٠٫٣٥×S لإبقاء الخرطوش ≥٢٨px */
+                    const sumH = measureHeights().reduce((s, h) => s + h, 0);
+                    const emergency = Math.max(
+                      size * 0.22,
+                      (maxInkBottom - firstTop - sumH) / (nLines - 1),
+                    );
+                    placeFrom(firstTop, emergency);
+                  }
+                }
+              }
               const gaps: number[] = [];
               for (let i = 0; i < ayahLineSlots.length - 1; i++) {
                 const a = inkElOf(ayahLineSlots[i]);
                 const b = inkElOf(ayahLineSlots[i + 1]);
                 if (a && b) {
-                  gaps.push(
-                    measureInkBounds(b).top - measureInkBounds(a).bottom,
-                  );
+                  gaps.push(measureInkBounds(b).top - measureInkBounds(a).bottom);
                 }
               }
               if (gaps.length) {
                 const avg = gaps.reduce((s, g) => s + g, 0) / gaps.length;
                 container.dataset.mf2LineGapAvg = avg.toFixed(2);
+                container.dataset.mf2LineGapMin = Math.min(...gaps).toFixed(2);
               }
-
-              /* ضمان عدم تقاطع صندوق البسملة مع الشارة/أول سطر (بوابة ink-collision) */
-              const clearBoxGap = (upper: HTMLElement, lower: HTMLElement, minPx: number) => {
-                const u = upper.getBoundingClientRect();
-                const l = lower.getBoundingClientRect();
-                const gap = l.top - u.bottom;
-                if (gap >= minPx - 0.5) return;
-                const slot =
-                  lower.closest<HTMLElement>(".mf2-grid-slot--basmala, .mf2-grid-slot--line");
-                if (!slot) return;
-                const nudge = pxPct(minPx - gap);
-                const t = parseFloat(slot.style.top);
-                if (!Number.isFinite(t)) return;
-                const h = parseFloat(slot.style.height) || slotH;
-                placeSlotCenter(slot, t + nudge, h);
-                /* إن حُرّك أول سطر، أزح بقية الأسطر بنفس المقدار للحفاظ على فجوة موحّدة */
-                if (slot === ayahLineSlots[0]) {
-                  for (let i = 1; i < ayahLineSlots.length; i++) {
-                    const ti = parseFloat(ayahLineSlots[i].style.top);
-                    if (Number.isFinite(ti)) {
-                      placeSlotCenter(ayahLineSlots[i], ti + nudge, parseFloat(ayahLineSlots[i].style.height) || slotH);
-                    }
-                  }
-                }
-              };
-              const banEl = banners[0];
-              if (banEl && basInkEl) clearBoxGap(banEl, basInkEl, 6);
-              const basBoxEl = inkElOf(basmalaSlot);
-              if (basBoxEl && ayahLineSlots[0]) {
-                const firstEl = inkElOf(ayahLineSlots[0]);
-                if (firstEl) clearBoxGap(basBoxEl, firstEl, 6);
-              }
+              container.dataset.mf2BasmalaLineGap = (() => {
+                const el = inkElOf(ayahLineSlots[0]);
+                if (!el || !basInkEl) return "";
+                return (
+                  measureInkBounds(el).top - measureInkBounds(basInkEl).bottom
+                ).toFixed(1);
+              })();
             }
           }
         }
