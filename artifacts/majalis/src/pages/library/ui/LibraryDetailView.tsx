@@ -5,7 +5,7 @@ import { ContentDetailLayout, RelatedLinks } from "@/components/platform/Content
 import { getLibraryItemById } from "@/lib/supabase";
 import { getRelatedLibraryBooks, isCatalogBookId, type LibraryItem } from "@/lib/library-service";
 import { applyPageSeo } from "@/lib/seo";
-import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
+import { bookJsonLd, breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
@@ -55,17 +55,15 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
       title: `${item.title} | المكتبة العلمية، المجلس العلمي`,
       description: item.description || item.title,
       keywords: [...(item.keywords || []), item.category, item.author, "مكتبة", "كتب"],
-      ogType: "article",
+      ogType: "book",
       canonicalPath: path,
       jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "Book",
+        bookJsonLd({
           name: item.title,
-          author: { "@type": "Person", name: item.author },
-          description: item.description,
-          inLanguage: "ar",
-        },
+          description: item.description || item.title,
+          url: path,
+          author: item.author,
+        }),
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },
           { name: "المكتبة العلمية", path: "/library" },

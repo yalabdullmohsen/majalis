@@ -41,9 +41,9 @@ export function HomeContinueWidget() {
   return (
     <Widget
       id="continue"
-      eyebrow="استمر في التعلم"
-      title="استمر من حيث توقفت"
-      description="آخر المحتويات التي تصفحتها."
+      eyebrow="متابعة التعلم"
+      title="متابعة القراءة / الاستماع"
+      description="آخر الدروس والمحتويات التي توقفت عندها."
       moreHref="/my-learning"
       moreLabel="كل نشاطي"
       state={state}

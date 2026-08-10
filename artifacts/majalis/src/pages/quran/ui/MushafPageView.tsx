@@ -5,6 +5,7 @@ import {
   Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight, Bookmark, Mic, LayoutGrid, MoreHorizontal,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { breadcrumbJsonLd, surahJsonLd } from "@/lib/seo-structured-data";
 import { toArabicDigits } from "@/lib/utils";
 import { toArabicPageDigits } from "@/lib/numerals";
 import {
@@ -330,13 +331,31 @@ export default function MushafPageView() {
   }, [v2Layout?.rubElHizbStartingOnPage, v2Layout?.hizbStartingOnPage]);
 
   useEffect(() => {
+    const path = `/mushaf/page/${page}`;
+    const description = `اقرأ صفحة ${page} من المصحف الشريف (سورة ${primarySurahMeta.name}) برواية حفص عن عاصم، بتقسيم مصحف المدينة الحقيقي.`;
     applyPageSeo({
-      path: `/mushaf/page/${page}`,
+      path,
       title: `صفحة ${page} — ${primarySurahMeta.name} | المصحف الشريف | المجلس العلمي`,
-      description: `اقرأ صفحة ${page} من المصحف الشريف (سورة ${primarySurahMeta.name}) برواية حفص عن عاصم، بتقسيم مصحف المدينة الحقيقي.`,
+      description,
       keywords: ["المصحف", "صفحات القرآن", primarySurahMeta.name, `صفحة ${page}`],
+      ogType: "article",
+      canonicalPath: path,
+      jsonLd: [
+        surahJsonLd({
+          number: primarySurahMeta.number,
+          name: primarySurahMeta.name.replace(/^سُورَةُ\s*/u, ""),
+          description,
+          url: path,
+          ayahCount: primarySurahMeta.ayahs,
+        }),
+        breadcrumbJsonLd([
+          { name: "الرئيسية", path: "/" },
+          { name: "المصحف", path: "/mushaf" },
+          { name: `صفحة ${page}`, path },
+        ]),
+      ],
     });
-  }, [page, primarySurahMeta.name]);
+  }, [page, primarySurahMeta.name, primarySurahMeta.number, primarySurahMeta.ayahs]);
 
   const goToPage = useCallback((n: number) => {
     const clamped = clampPage(n);

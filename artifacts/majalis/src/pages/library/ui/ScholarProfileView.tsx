@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link, useParams } from "wouter";
 import { ArrowRight, BookOpen, MapPin, Star, ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { personJsonLd } from "@/lib/seo-structured-data";
 import { ShareButtons } from "@/components/ContentActions";
 import { SCHOLARS, findScholarById } from "@/lib/scholars-data";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -172,15 +173,16 @@ export default function ScholarProfilePage() {
       path: `/scholars/${scholar.id}`,
       title: `${scholar.name} — سيرة العالم | المجلس العلمي`,
       description: metaDesc,
-      jsonLd: [{
-        "@context": "https://schema.org",
-        "@type": "Person",
-        name: scholar.fullName,
-        alternateName: scholar.name,
-        description: scholar.bio,
-        knowsAbout: scholar.specialty,
-        url: `https://www.majlisilm.com/scholars/${scholar.id}`,
-      }],
+      ogType: "profile",
+      jsonLd: [
+        personJsonLd({
+          name: scholar.fullName || scholar.name,
+          description: metaDesc,
+          url: `/scholars/${scholar.id}`,
+          jobTitle: scholar.specialty[0],
+          knowsAbout: scholar.specialty,
+        }),
+      ],
     });
   }, [scholar, id]);
 

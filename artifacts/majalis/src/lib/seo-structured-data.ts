@@ -241,6 +241,37 @@ export function prophetArticleJsonLd(prophet: {
   };
 }
 
+/** Structured data for a Quran surah landing / mushaf context page. */
+export function surahJsonLd(surah: {
+  number: number;
+  name: string;
+  description?: string;
+  url: string;
+  ayahCount?: number;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: `سورة ${surah.name}`,
+    alternateName: `Surah ${surah.number}`,
+    description:
+      surah.description ||
+      `سورة ${surah.name} من القرآن الكريم — قراءة وتلاوة في المجلس العلمي.`,
+    url: absoluteUrl(surah.url),
+    inLanguage: "ar",
+    isPartOf: {
+      "@type": "CreativeWork",
+      name: "القرآن الكريم",
+      inLanguage: "ar",
+    },
+    position: surah.number,
+    ...(typeof surah.ayahCount === "number"
+      ? { numberOfPages: surah.ayahCount }
+      : {}),
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+  };
+}
+
 export function islamicStoryJsonLd(story: {
   id: string | number;
   title: string;
