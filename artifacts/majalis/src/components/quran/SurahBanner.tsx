@@ -1,8 +1,10 @@
 /**
- * شارة سورة كثيفة مطابقة لمرجعي ٦٠٠/٦٠١:
- * ميدالية بتلات + شبكة أرابيسك متصلة تملأ الجناح + عقدة — بلا وسم pattern مكرر.
+ * شارة سورة رسمية متماثلة:
+ * جناح أيسر مرسوم · الجناح الأيمن مرآة تامة · سُمك لفّ موحّد ١٫٢px ·
+ * ميدالية بتلات متساوية الزوايا · لوحة وسطى بإطار ١٫٥px وزوايا مستقيمة.
  */
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
+import { MUSHAF_TYPESCALE } from "@/features/mushaf/typescale";
 
 type Props = {
   label: string;
@@ -13,10 +15,17 @@ type Props = {
 
 const PANEL_MARGIN_PX = 6;
 const PANEL_FRAC = 0.34;
+const STROKE = 1.2;
+const PANEL_STROKE = 1.5;
+/** خط الزخرفة: أبيض بعتامة ٠٫٨٥ */
+const ORNAMENT_LINE = "color-mix(in srgb, #FFFFFF 85%, transparent)";
+/** ذهبي أهدأ بدرجة */
+const GOLD_QUIET =
+  "color-mix(in srgb, var(--color-mushaf-gold-strong, #A67C3D) 82%, #8a7040)";
 
-/** ميدالية دائرية كبيرة بحواف بتلات متعددة (١٤) */
+/** ميدالية دائرية — ١٢ بتلة متساوية الزوايا */
 function PetalMedallion({ cx, cy, r }: { cx: number; cy: number; r: number }) {
-  const petals = 14;
+  const petals = 12;
   const outer: string[] = [];
   for (let i = 0; i < petals; i++) {
     const a0 = (i / petals) * Math.PI * 2 - Math.PI / 2;
@@ -47,36 +56,36 @@ function PetalMedallion({ cx, cy, r }: { cx: number; cy: number; r: number }) {
       <path
         d={outer.join(" ")}
         fill="var(--color-mushaf-ornament-mid, #EDE0C4)"
-        stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
-        strokeWidth="1.5"
+        stroke={ORNAMENT_LINE}
+        strokeWidth={STROKE}
       />
       <circle
         cx={cx}
         cy={cy}
         r={r * 0.42}
         fill="none"
-        stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
-        strokeWidth="1.35"
+        stroke={ORNAMENT_LINE}
+        strokeWidth={STROKE}
       />
       <circle
         cx={cx}
         cy={cy}
         r={r * 0.22}
         fill="var(--color-mushaf-ornament-bg, #D8C39C)"
-        stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
-        strokeWidth="1.2"
+        stroke={ORNAMENT_LINE}
+        strokeWidth={STROKE}
       />
       <circle
         cx={cx}
         cy={cy}
         r={r * 0.08}
-        fill="var(--color-mushaf-ornament-line, #FFFFFF)"
+        fill={ORNAMENT_LINE}
       />
     </g>
   );
 }
 
-/** شبكة أرابيسك متصلة (مسارات صريحة) تملأ جانبًا من الجناح */
+/** شبكة أرابيسك منظّمة — كثافة مستهدفة ٢٢–٣٨٪ */
 function ArabesqueMesh({
   x0,
   x1,
@@ -95,7 +104,6 @@ function ArabesqueMesh({
   const h = wingH * 0.46;
   const paths: string[] = [];
 
-  /* لفّات متشابكة — كثافة مستهدفة ٢٢–٣٨٪ مع الميدالية */
   for (let i = 0; i < 2; i++) {
     const t = (i + 0.35) / 2;
     const bx = x0 + w * t;
@@ -157,8 +165,8 @@ function ArabesqueMesh({
           data-wing-part="spiral"
           d={d}
           fill="none"
-          stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
-          strokeWidth="1.35"
+          stroke={ORNAMENT_LINE}
+          strokeWidth={STROKE}
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -170,8 +178,8 @@ function ArabesqueMesh({
           cy={ny}
           r={1.45}
           fill="var(--color-mushaf-ornament-mid, #EDE0C4)"
-          stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
-          strokeWidth="1.1"
+          stroke={ORNAMENT_LINE}
+          strokeWidth={STROKE}
         />
       ))}
     </g>
@@ -183,18 +191,15 @@ function WingMotifs({
   wingW,
   cy,
   wingH,
-  panelSide,
 }: {
   wingX: number;
   wingW: number;
   cy: number;
   wingH: number;
-  panelSide: "left" | "right";
 }) {
-  const medR = wingH * 0.425; /* قطر ≈٨٥٪ من ارتفاع الجناح */
+  const medR = wingH * 0.425;
   const cx = wingX + wingW / 2;
-  const knotX =
-    panelSide === "right" ? wingX + wingW - 3.4 : wingX + 3.4;
+  const knotX = wingX + wingW - 3.4;
   const leftPad = wingX + 2;
   const rightPad = wingX + wingW - 2;
   const medLeft = cx - medR * 0.95;
@@ -223,8 +228,8 @@ function WingMotifs({
         cy={cy}
         r={2.6}
         fill="var(--color-mushaf-ornament-mid, #EDE0C4)"
-        stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
-        strokeWidth="1.3"
+        stroke={ORNAMENT_LINE}
+        strokeWidth={STROKE}
       />
     </g>
   );
@@ -243,8 +248,8 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
     const fit = () => {
       const panelW = root.clientWidth * PANEL_FRAC;
       const maxW = Math.max(24, panelW - PANEL_MARGIN_PX * 2);
-      nameEl.style.fontSize = "";
-      let sizeEm = 0.85;
+      /* سقف 0.78×S — لا يتجاوز النسبة الموحّدة */
+      let sizeEm = MUSHAF_TYPESCALE.surahBannerName;
       nameEl.style.fontSize = `${sizeEm}em`;
       for (let i = 0; i < 24; i++) {
         if (nameEl.scrollWidth <= maxW) break;
@@ -269,8 +274,6 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
   const wingH = H - innerPad * 2;
   const leftWingX = innerPad;
   const leftWingW = panelX - innerPad - 2;
-  const rightWingX = panelX + panelW + 2;
-  const rightWingW = W - innerPad - rightWingX;
 
   const setNameRef = (el: HTMLSpanElement | null) => {
     nameRef.current = el;
@@ -290,6 +293,8 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
       data-wing-density="filled"
       data-wing-density-target="22-38"
       data-panel-width-pct="34"
+      data-wing-mirror="1"
+      data-stroke-uniform={STROKE}
     >
       <svg
         className="mf2-surah-banner__svg"
@@ -298,7 +303,6 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
         aria-hidden="true"
         focusable="false"
       >
-        {/* إطار خارجي 2px + داخلي 1.5px بفاصل 4px — radius 4 */}
         <rect
           x="1"
           y="1"
@@ -306,7 +310,7 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
           height={H - 2}
           rx="4"
           fill="var(--color-mushaf-ornament-bg, #E3D2B4)"
-          stroke="var(--color-mushaf-gold-strong, #A67C3D)"
+          stroke={GOLD_QUIET}
           strokeWidth="2"
         />
         <rect
@@ -316,32 +320,38 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
           height={H - 12}
           rx="4"
           fill="none"
-          stroke="var(--color-mushaf-gold-strong, #A67C3D)"
-          strokeWidth="1.5"
+          stroke={GOLD_QUIET}
+          strokeWidth={PANEL_STROKE}
         />
+        {/* جناح أيسر */}
         <WingMotifs
           wingX={leftWingX}
           wingW={leftWingW}
           cy={H / 2}
           wingH={wingH}
-          panelSide="right"
         />
-        <WingMotifs
-          wingX={rightWingX}
-          wingW={rightWingW}
-          cy={H / 2}
-          wingH={wingH}
-          panelSide="left"
-        />
+        {/* جناح أيمن = مرآة تامة حول محور الشارة */}
+        <g
+          data-wing-mirror-copy="1"
+          transform={`translate(${W}, 0) scale(-1, 1)`}
+        >
+          <WingMotifs
+            wingX={leftWingX}
+            wingW={leftWingW}
+            cy={H / 2}
+            wingH={wingH}
+          />
+        </g>
+        {/* لوحة وسطى — زوايا مستقيمة · إطار ١٫٥px بلا حليات */}
         <rect
           x={panelX}
           y={panelY}
           width={panelW}
           height={panelH}
-          rx="3"
+          rx="0"
           fill="var(--color-mushaf-panel, #FAF3E8)"
-          stroke="var(--color-mushaf-gold-strong, #A67C3D)"
-          strokeWidth="1.5"
+          stroke={GOLD_QUIET}
+          strokeWidth={PANEL_STROKE}
         />
       </svg>
       <span
@@ -350,6 +360,7 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
         lang="ar"
         dir="rtl"
         ref={setNameRef}
+        style={{ fontSize: `${MUSHAF_TYPESCALE.surahBannerName}em` }}
       >
         {label}
       </span>

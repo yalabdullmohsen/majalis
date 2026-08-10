@@ -105,7 +105,11 @@ html[data-theme="dark"] .mf2-frame {
   transform: none !important;
   width: auto;
   max-width: 100%;
+  height: auto;
   margin-inline: auto;
+}
+.mf2-lines--opening .mf2-grid-slot--line .mf2-line {
+  height: auto;
 }
 /* آخر سطر سورة / سطر قصير بلا مطّ مفرط: عرض طبيعي مركزي */
 .mf2-lines--opening .mf2-line--surah-end,

@@ -20,8 +20,8 @@ const require = createRequire(import.meta.url);
 /* bands via JSON-like read from TS source constants — mirror numbers */
 const BANDS = {
   toolbarBandPx: 52,
-  footerBandPx: 40,
-  contentFooterGapPx: 12,
+  footerBandPx: 46,
+  contentFooterGapPx: 20,
 };
 const EXTERNAL_BASE = process.env.MUSHAF_GATE_BASE_URL?.replace(/\/$/, "") || "";
 const PORT = process.env.MUSHAF_GATE_PORT || "24235";
@@ -58,7 +58,7 @@ function waitForServer(url, timeoutMs = 60_000) {
 
 const failures = [];
 const css = readFileSync(join(ROOT, "src/styles/quran.css"), "utf8");
-if (!/--mpv-toolbar-band:\s*52px/.test(css) || !/--mpv-footer-band:\s*40px/.test(css)) {
+if (!/--mpv-toolbar-band:\s*52px/.test(css) || !/--mpv-footer-band:\s*46px/.test(css)) {
   failures.push({ page: 0, reason: "CSS vars للنطاقات ناقصة" });
 }
 if (!/bottom:\s*calc\(\s*var\(--inset-bottom[^)]*\)\s*\+\s*var\(--mpv-toolbar-band/.test(css)) {

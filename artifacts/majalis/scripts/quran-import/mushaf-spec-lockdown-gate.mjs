@@ -174,9 +174,11 @@ function runStatic() {
   /* ١٠ — البسملة */
   if (!/(?:^|\n)\.mf2-bismillah\s*\{[^}]*font-size:\s*1em/.test(frameCss)) {
     fail(10, "بسملة ليست 1em");
-  } else if (!/OPENING_BASMALA_GAP_PX\s*=\s*22/.test(pageV2)) {
-    fail(10, "فاصل البسملة غير ٢٢px");
-  } else pass(10, "1em + فاصل ≥20px");
+  } else if (!/BANNER_BASMALA_MIN_GAP_PX\s*=\s*22/.test(pageV2)) {
+    fail(10, "فاصل البسملة العادي غير ٢٢px");
+  } else if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*24/.test(pageV2)) {
+    fail(10, "فاصل افتتاح شارة→بسملة غير ٢٤px");
+  } else pass(10, "1em + فواصل ٢٠/٢٢/٢٤");
 
   /* ١١ — الرأس: سور تبدأ في الصفحة */
   const pageView = read("src/pages/quran/ui/MushafPageView.tsx");
@@ -184,19 +186,21 @@ function runStatic() {
     fail(11, "الرأس لا يستخدم surahsStartingOnPage");
   } else pass(11, "headerSurahNames ← surahsStartingOnPage");
 
-  /* ١٢ — خرطوش الصفحة يتناوب فردي/زوجي (لا مركزي دائم) */
-  if (!/data-page-parity/.test(pageView)) {
-    fail(12, "تناوب خرطوش الصفحة غير مثبت");
-  } else pass(12, "data-page-parity فردي/زوجي");
+  /* ١٢ — خرطوش الصفحة مركزي (±2px) — أُلغي التناوب */
+  if (/data-page-parity/.test(pageView)) {
+    fail(12, "تناوب خرطوش الصفحة ما زال موجودًا");
+  } else if (!/data-cartouche-align="center"|data-cartouche-side="center"/.test(pageView)) {
+    fail(12, "مركزية الخرطوش غير مثبتة");
+  } else pass(12, "خرطوش مركزي (بلا تناوب)");
 
-  /* ١٣ — ص١–٢ بلا إطار · شارة عند ٢٨٪ */
+  /* ١٣ — ص١–٢ بلا إطار · شارة عند ٣٨٪ */
   if (existsSync(join(ROOT, "src/components/quran/OpeningPageFrame.tsx"))) {
     fail(13, "OpeningPageFrame.tsx ما زال موجودًا");
-  } else if (!/OPENING_BANNER_TOP_PCT\s*=\s*28/.test(pageV2)) {
-    fail(13, "OPENING_BANNER_TOP_PCT ≠ 28");
+  } else if (!/OPENING_BANNER_TOP_PCT\s*=\s*38/.test(pageV2)) {
+    fail(13, "OPENING_BANNER_TOP_PCT ≠ 38");
   } else if (!/mpv-toolbar-band|MUSHAF_LAYOUT_BANDS/.test(pageV2 + read("src/styles/quran.css"))) {
     fail(13, "نطاقات التخطيط غير مثبتة");
-  } else pass(13, "بلا إطار + شارة ٢٨٪ + نطاقات");
+  } else pass(13, "بلا إطار + شارة ٣٨٪ + نطاقات");
 
   /* ١٤ — التباين */
   if (!/test:color-contrast-gate/.test(read("package.json"))) {

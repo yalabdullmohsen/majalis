@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 
 /**
- * لفّ صفحة خفيف: سحب 1:1، انزلاق + انحناء ≤12°، عتبة 20٪ أو 0.4px/ms.
+ * لفّ صفحة بسيط: سحب 1:1، انزلاق + انحناء ≤10°، عتبة 18٪ أو 0.35px/ms.
  * transform/opacity فقط. prefers-reduced-motion → تلاشٍ 150ms.
  */
 export type MushafCurlState = {
@@ -12,11 +12,11 @@ export type MushafCurlState = {
   reducedMotion: boolean;
 };
 
-const COMMIT_FRAC = 0.2;
-const VELOCITY_PX_MS = 0.4;
+const COMMIT_FRAC = 0.18;
+const VELOCITY_PX_MS = 0.35;
 const AXIS_LOCK = 1.25;
-const SETTLE_MS = 260;
-const SNAP_BACK_MS = 180;
+const SETTLE_MS = 240;
+const SNAP_BACK_MS = 160;
 const FADE_MS = 150;
 
 export function useMushafPageCurl(opts: {

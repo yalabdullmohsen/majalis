@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 /**
- * بوابة صفحتي الافتتاح (مرجع نهائي):
+ * بوابة صفحتي الافتتاح (توحيد هندسي):
  * - صفر إطار زخرفي
- * - أعلى الشارة ٢٦٪–٣٠٪ من contentBand
- * - بلا ملاءمة عرض · فاصل بسملة ≥20px
+ * - أعلى الشارة ٣٧٫٥٪–٣٨٫٥٪ من contentBand
+ * - تطابق ص١↔ص٢ ≤2px أعلى الشارة · ≤1px فجوة أسطر
+ * - فاصل بسملة→أول سطر ≥20px · شارة→بسملة ≥24px
  *
  *   pnpm run test:mushaf-opening-frame
  */
@@ -49,8 +50,14 @@ const pageV2 = readFileSync(join(ROOT, "src/components/quran/MushafPageV2.tsx"),
 if (/OpeningPageFrame|data-opening-frame|OPENING_FRAME_TOP/.test(pageV2)) {
   failures.push({ page: 0, reason: "MushafPageV2 ما زال يشير لإطار الافتتاح" });
 }
-if (!/OPENING_BANNER_TOP_PCT\s*=\s*28/.test(pageV2)) {
-  failures.push({ page: 0, reason: "OPENING_BANNER_TOP_PCT ≠ 28" });
+if (!/OPENING_BANNER_TOP_PCT\s*=\s*38/.test(pageV2)) {
+  failures.push({ page: 0, reason: "OPENING_BANNER_TOP_PCT ≠ 38" });
+}
+if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*24/.test(pageV2)) {
+  failures.push({ page: 0, reason: "OPENING_BANNER_TO_BASMALA_PX ≠ 24" });
+}
+if (!/OPENING_BASMALA_TO_LINE_PX\s*=\s*20/.test(pageV2)) {
+  failures.push({ page: 0, reason: "OPENING_BASMALA_TO_LINE_PX ≠ 20" });
 }
 
 let server = null;
@@ -111,19 +118,60 @@ try {
         return sx && sx !== "1" && Number(sx) > 1.02;
       }).length;
       const banR = banner?.getBoundingClientRect();
-      const ink =
+      const bas =
+        document.querySelector(".mf2-grid-slot--basmala .mf2-bismillah") ||
         document.querySelector(".mf2-bismillah") ||
         document.querySelector(".mf2-grid-slot--line .mf2-line");
-      let gap = null;
-      if (banR && ink) {
-        const ir = ink.getBoundingClientRect();
-        gap = ir.top - banR.bottom;
+      const lineSlots = [...document.querySelectorAll(".mf2-grid-slot--line .mf2-line")];
+      const hasBasSlot = Boolean(document.querySelector(".mf2-grid-slot--basmala"));
+      const firstAyah = hasBasSlot ? lineSlots[0] : lineSlots[1];
+      const inkBox = (el) => {
+        if (!el) return null;
+        const box = el.getBoundingClientRect();
+        const cs = getComputedStyle(el);
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return { top: box.top, bottom: box.bottom };
+        ctx.font = cs.font;
+        const m = ctx.measureText((el.textContent || "").trim() || "ا");
+        const ascent =
+          m.actualBoundingBoxAscent ||
+          m.fontBoundingBoxAscent ||
+          parseFloat(cs.fontSize) * 0.95;
+        const descent =
+          m.actualBoundingBoxDescent ||
+          m.fontBoundingBoxDescent ||
+          parseFloat(cs.fontSize) * 0.35;
+        const baselineY = box.top + box.height / 2 + (ascent - descent) / 2;
+        return { top: baselineY - ascent, bottom: baselineY + descent };
+      };
+      let bannerToBas = null;
+      let basToLine = null;
+      const basInk = inkBox(bas);
+      const firstInk = inkBox(firstAyah);
+      if (banR && basInk) {
+        bannerToBas = basInk.top - banR.bottom;
       }
+      if (basInk && firstInk) {
+        basToLine = firstInk.top - basInk.bottom;
+      }
+      const gaps = [];
+      const ayahLines = hasBasSlot ? lineSlots : lineSlots.slice(1);
+      for (let i = 0; i < ayahLines.length - 1; i++) {
+        const a = inkBox(ayahLines[i]);
+        const b = inkBox(ayahLines[i + 1]);
+        if (a && b) gaps.push(b.top - a.bottom);
+      }
+      const lineGapAvg =
+        gaps.length > 0 ? gaps.reduce((s, g) => s + g, 0) / gaps.length : null;
       return {
         hasFrame: Boolean(frame),
         bannerTopPct,
+        bannerTopPx: br ? br.top - lr.top : null,
         stretched,
-        basmalaGap: gap,
+        bannerToBas,
+        basToLine,
+        lineGapAvg,
         contentH: lr.height,
         openingFlag: root.dataset.mf2OpeningNoFrame || null,
       };
@@ -137,17 +185,36 @@ try {
       continue;
     }
     if (m.hasFrame) failures.push({ page: n, reason: "إطار زخرفي ما زال مرسومًا" });
-    if (m.bannerTopPct == null || m.bannerTopPct < 26 || m.bannerTopPct > 30) {
+    if (m.bannerTopPct == null || m.bannerTopPct < 37.5 || m.bannerTopPct > 38.5) {
       failures.push({
         page: n,
-        reason: `أعلى الشارة ${m.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ٢٦–٣٠`,
+        reason: `أعلى الشارة ${m.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ٣٧٫٥–٣٨٫٥`,
       });
     }
     if (m.stretched > 0) {
       failures.push({ page: n, reason: `${m.stretched} سطرًا بملاءمة عرض — ممنوع في ص١–٢` });
     }
-    if (m.basmalaGap != null && m.basmalaGap < 19.5) {
-      failures.push({ page: n, reason: `فاصل بسملة ${m.basmalaGap.toFixed(1)}px < 20` });
+    if (m.bannerToBas != null && m.bannerToBas < 23.5) {
+      failures.push({ page: n, reason: `فاصل شارة→بسملة ${m.bannerToBas.toFixed(1)}px < 24` });
+    }
+    if (m.basToLine != null && m.basToLine < 19.5) {
+      failures.push({ page: n, reason: `فاصل بسملة→سطر ${m.basToLine.toFixed(1)}px < 20` });
+    }
+  }
+
+  /* تطابق ص١↔ص٢ */
+  if (results.length >= 2 && !results[0].error && !results[1].error) {
+    const dTop = Math.abs((results[0].bannerTopPx ?? 0) - (results[1].bannerTopPx ?? 0));
+    const g0 = results[0].lineGapAvg;
+    const g1 = results[1].lineGapAvg;
+    if (dTop > 2.05) {
+      failures.push({ page: "1↔2", reason: `فرق أعلى الشارة ${dTop.toFixed(1)}px > 2` });
+    }
+    if (g0 != null && g1 != null && Math.abs(g0 - g1) > 1.05) {
+      failures.push({
+        page: "1↔2",
+        reason: `فرق فجوة الأسطر ${Math.abs(g0 - g1).toFixed(2)}px > 1`,
+      });
     }
   }
 } finally {
