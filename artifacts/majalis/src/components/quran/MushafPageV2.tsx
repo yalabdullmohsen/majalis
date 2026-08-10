@@ -639,6 +639,38 @@ export function MushafPageV2({
                 const avg = gaps.reduce((s, g) => s + g, 0) / gaps.length;
                 container.dataset.mf2LineGapAvg = avg.toFixed(2);
               }
+
+              /* ضمان عدم تقاطع صندوق البسملة مع الشارة/أول سطر (بوابة ink-collision) */
+              const clearBoxGap = (upper: HTMLElement, lower: HTMLElement, minPx: number) => {
+                const u = upper.getBoundingClientRect();
+                const l = lower.getBoundingClientRect();
+                const gap = l.top - u.bottom;
+                if (gap >= minPx - 0.5) return;
+                const slot =
+                  lower.closest<HTMLElement>(".mf2-grid-slot--basmala, .mf2-grid-slot--line");
+                if (!slot) return;
+                const nudge = pxPct(minPx - gap);
+                const t = parseFloat(slot.style.top);
+                if (!Number.isFinite(t)) return;
+                const h = parseFloat(slot.style.height) || slotH;
+                placeSlotCenter(slot, t + nudge, h);
+                /* إن حُرّك أول سطر، أزح بقية الأسطر بنفس المقدار للحفاظ على فجوة موحّدة */
+                if (slot === ayahLineSlots[0]) {
+                  for (let i = 1; i < ayahLineSlots.length; i++) {
+                    const ti = parseFloat(ayahLineSlots[i].style.top);
+                    if (Number.isFinite(ti)) {
+                      placeSlotCenter(ayahLineSlots[i], ti + nudge, parseFloat(ayahLineSlots[i].style.height) || slotH);
+                    }
+                  }
+                }
+              };
+              const banEl = banners[0];
+              if (banEl && basInkEl) clearBoxGap(banEl, basInkEl, 6);
+              const basBoxEl = inkElOf(basmalaSlot);
+              if (basBoxEl && ayahLineSlots[0]) {
+                const firstEl = inkElOf(ayahLineSlots[0]);
+                if (firstEl) clearBoxGap(basBoxEl, firstEl, 6);
+              }
             }
           }
         }

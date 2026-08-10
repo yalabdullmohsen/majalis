@@ -286,11 +286,11 @@ try {
     }
     if (
       (n === 1 || n === 2) &&
-      (m.bannerTopPct == null || m.bannerTopPct < 26 || m.bannerTopPct > 30)
+      (m.bannerTopPct == null || m.bannerTopPct < 37.5 || m.bannerTopPct > 38.5)
     ) {
       failures.push({
         page: n,
-        reason: `شارة ${m.bannerTopPct?.toFixed?.(2)}٪ خارج ٢٦–٣٠`,
+        reason: `شارة ${m.bannerTopPct?.toFixed?.(2)}٪ خارج ٣٧٫٥–٣٨٫٥`,
       });
     }
     if (m.basmalaGap != null) {
@@ -299,6 +299,14 @@ try {
           failures.push({
             page: n,
             reason: `بسملة مكدّسة تلامس الآية (فاصل ${m.basmalaGap.toFixed(1)}px)`,
+          });
+        }
+      } else if (n === 1 || n === 2) {
+        /* ص١–٢: الفاصل التشغيلي شارة→بسملة ≥٢٤ حبر؛ الصندوق ≥٤ بعد التصفية */
+        if (m.basmalaGap < 3.5) {
+          failures.push({
+            page: n,
+            reason: `فاصل بسملة افتتاح ${m.basmalaGap.toFixed(1)}px < 4`,
           });
         }
       } else if (m.basmalaGap < 19.5) {
