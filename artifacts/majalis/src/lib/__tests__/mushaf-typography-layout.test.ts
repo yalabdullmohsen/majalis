@@ -118,8 +118,21 @@ assert.match(themeCss, /--color-mushaf-panel:\s*#FAF3E8/);
 assert.match(immersiveLib, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#FCF8F1"/);
 
 // 5) line-height عبر --mf2-lh
-assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?line-height:\s*var\(--mf2-lh/);
-assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?overflow-y:\s*visible/);
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?line-height:\s*normal/);
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?overflow:\s*visible/);
+assert.equal(
+  /^\s*overflow-x:\s*hidden/m.test(
+    mushafV2.match(/\.mf2-line\s*\{[^}]+\}/)?.[0] ?? "",
+  ),
+  false,
+  "ممنوع overflow-x المخفي على .mf2-line (يقصّ الحبر رأسيًا قسرًا)",
+);
+assert.match(mushafV2, /\.mf2-opening-frame/, "إطار زخرفي لصفحتي الافتتاح");
+assert.match(
+  readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8"),
+  /OpeningPageFrame/,
+  "مكوّن إطار الافتتاح",
+);
 assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?line-height:\s*2\.2/, "وضع Unicode: ارتفاع تشكيل 2.2");
 
 assert.match(quranCss, /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[\s\S]*?aspect-ratio:\s*auto/);

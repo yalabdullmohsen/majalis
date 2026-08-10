@@ -5,6 +5,7 @@ import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
 import { DRAWN_BASMALA_TEXT, drawnSurahTitleText } from "@/lib/mushaf-sizing-lines";
 import { MushafAyahMarkerSvg } from "@/components/quran/MushafOrnaments";
 import { SurahBanner } from "@/components/quran/SurahBanner";
+import { OpeningPageFrame } from "@/components/quran/OpeningPageFrame";
 import { toArabicDigits } from "@/lib/utils";
 import { wordKeyFromQpc } from "@/features/mushaf/ayah-word-keys";
 import {
@@ -12,6 +13,10 @@ import {
   MUSHAF_GRID,
   MUSHAF_LAYOUT_BASELINE,
 } from "@/features/mushaf/config";
+
+/** نطاق المحتوى داخل إطار ص١–٢ (٪ من ارتفاع الكتلة) — أوسع من الشبكة العادية */
+const OPENING_CONTENT_TOP_PCT = 14;
+const OPENING_CONTENT_BOT_PCT = 86;
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — للوضع التفاعلي بلا طبقة إحداثيات. */
 export function groupWordsByAyah(words: QpcWord[]): QpcWord[][] {
@@ -224,6 +229,20 @@ export function MushafPageV2({
   const [pageLineHeightEm, setPageLineHeightEm] = useState(1.1);
   const [fitted, setFitted] = useState(false);
 
+  /** خانات المحتوى المستخدمة — لإعادة توزيع ص١–٢ داخل الإطار بتباعد أوسع */
+  const openingSlots = useMemo(() => {
+    if (!layout || (layout.pageNumber !== 1 && layout.pageNumber !== 2)) return [] as number[];
+    const slots = new Set<number>();
+    for (const row of layout.rows) {
+      if (row.kind === "line") slots.add(row.gridSlot);
+      else {
+        slots.add(row.bannerSlot);
+        if (row.basmalaSlot != null) slots.add(row.basmalaSlot);
+      }
+    }
+    return [...slots].sort((a, b) => a - b);
+  }, [layout]);
+
   /**
    * تحجيم عرضي فقط — التموضع الرأسي مطلق على MUSHAF_GRID.baselinesPct.
    * ممنوع: flex توزيعي أو حشو ديناميكي بعد التموضع.
@@ -428,9 +447,23 @@ export function MushafPageV2({
   ].filter(Boolean).join(" ");
 
   const slotStyle = (gridSlot: number): CSSProperties => {
-    const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
-    const baseline = MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;
-    const h = MUSHAF_GRID.slotHeightPct;
+    let baseline: number;
+    let h: number;
+    if (isOpeningPage && openingSlots.length > 0) {
+      const idx = Math.max(0, openingSlots.indexOf(gridSlot));
+      const n = openingSlots.length;
+      const band = OPENING_CONTENT_BOT_PCT - OPENING_CONTENT_TOP_PCT;
+      /* تباعد متساوٍ داخل النطاق ≈١٫٤–١٫٦× الشبكة العادية */
+      baseline =
+        n === 1
+          ? (OPENING_CONTENT_TOP_PCT + OPENING_CONTENT_BOT_PCT) / 2
+          : OPENING_CONTENT_TOP_PCT + (idx / (n - 1)) * band;
+      h = Math.min(11, Math.max(7.2, (band / Math.max(1, n - 1)) * 0.72));
+    } else {
+      const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
+      baseline = MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;
+      h = MUSHAF_GRID.slotHeightPct;
+    }
     return {
       position: "absolute",
       left: 0,
@@ -445,6 +478,7 @@ export function MushafPageV2({
       boxSizing: "border-box",
       margin: 0,
       padding: 0,
+      overflow: "visible",
     };
   };
 
@@ -565,8 +599,10 @@ export function MushafPageV2({
             : fontFamily
               ? `"${fontFamily}"`
               : undefined,
+          overflow: "visible",
         }}
       >
+        {isOpeningPage ? <OpeningPageFrame /> : null}
         {layout.rows.map((row, idx) => {
           if (row.kind === "surah-header") {
             const key = `h-${row.surah.id}-${idx}`;
