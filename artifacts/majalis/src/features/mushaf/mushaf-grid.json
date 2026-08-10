@@ -1,5 +1,5 @@
 {
-  "referencePage": 7,
+  "referencePage": 283,
   "slotCount": 15,
   "baselinesPct": [
     4.0,
@@ -20,9 +20,12 @@
   ],
   "slotHeightPct": 7.2,
   "measuredInkBandPct": {
-    "firstInkTop": 3.27,
-    "lastInkBot": 96.56,
-    "fill": 0.933
+    "firstInkTopBody": 2.57,
+    "lastInkBotBody": 96.89,
+    "firstSlotMidLines": 4.0,
+    "lastSlotMidLines": 96.0,
+    "fillBody": 0.943
   },
-  "notes": "مستخرج من قياس حيّ لصفحة ٧ (390×844): مراكز الأسطر ١٥ من ٤٫٠٪ إلى ٩٦٫٠٪ بخطوة ٦٫٥٧١٤٪؛ ارتفاع الخانة ٧٫٢٪. يُطبَّق على كل الصفحات العادية بانحراف ≤2px لخانات الآيات فقط (الشارة/البسملة لها تموضع فاصل حبر مستقل)."
+  "sideMarginPx": 2,
+  "notes": "مستخرج من قياس حيّ لصفحة ٢٨٣ (الإسراء) على 390×844: مراكز خانات الآيات ١٥ من ٤٫٠٪ إلى ٩٦٫٠٪ من .mf2-lines بخطوة ٦٫٥٧١٤٪؛ ارتفاع الخانة ٧٫٢٪؛ font من mushaf-baseline.json. يُطبَّق على كل الصفحات العادية بانحراف ≤2px لخانات الآيات فقط."
 }

@@ -31,6 +31,16 @@ assert.match(quranCss, /\.quran-shell--chrome-hidden\s+\.mpv-body/);
 assert.match(quranCss, /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?position:\s*absolute/);
 assert.match(
   quranCss,
+  /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?bottom:\s*calc\(\s*var\(--inset-bottom/,
+  "شريط آية أسفل الشاشة فوق inset-bottom",
+);
+assert.equal(
+  /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[^}]*top:\s*calc\(\s*var\(--inset-top\)/.test(quranCss),
+  false,
+  "شريط آية بلا top تحت الرأس (كان يتراكب مع الشارة)",
+);
+assert.match(
+  quranCss,
   /\.mpv-toolbar\.mpv-toolbar--ayah\.mpv-toolbar--hidden\s*\{[\s\S]*?display:\s*none/,
   "إخفاء الأدوات بلا حجز مساحة في التدفق",
 );

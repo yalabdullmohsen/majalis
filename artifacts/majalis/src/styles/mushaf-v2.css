@@ -53,7 +53,8 @@ html[data-theme="dark"] .mf2-frame {
 .mf2-lines {
   position: relative;
   z-index: 1;
-  flex: 1 1 auto;
+  /* بلا flex-grow — الارتفاع يُضبط بالقياس (شبكة مطلقة)؛ النمو كان يلغي الحجز السفلي */
+  flex: 0 0 auto;
   height: 100%;
   min-height: 0;
   width: 100%;
