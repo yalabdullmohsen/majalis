@@ -95,17 +95,13 @@ async function measurePage(page, pageNum) {
       const ctx = canvas.getContext("2d");
       const clipped = [];
 
-      for (const slot of linesRoot.querySelectorAll(".mf2-grid-slot--line")) {
-        const line = slot.querySelector(".mf2-line");
-        if (!line) continue;
-        const sr = slot.getBoundingClientRect();
-        const lineRect = line.getBoundingClientRect();
-        if (sr.height < 4 || lineRect.width < 2) continue;
-
-        const cs = getComputedStyle(line);
-        const text = (line.textContent || "").replace(/\s+/g, " ").trim();
-        if (!text) continue;
-
+      function inkClearance(el, slotEl) {
+        const sr = slotEl.getBoundingClientRect();
+        const box = el.getBoundingClientRect();
+        if (sr.height < 4 || box.width < 2) return null;
+        const cs = getComputedStyle(el);
+        const text = (el.textContent || "").replace(/\s+/g, " ").trim();
+        if (!text) return null;
         ctx.font = cs.font;
         const m = ctx.measureText(text);
         const ascent =
@@ -116,34 +112,106 @@ async function measurePage(page, pageNum) {
           m.actualBoundingBoxDescent ||
           m.fontBoundingBoxDescent ||
           parseFloat(cs.fontSize) * 0.45;
-
-        /* خط الأساس ≈ منتصف صندوق السطر بعد محاذاة flex center */
-        const baselineY = lineRect.top + lineRect.height / 2 + (ascent - descent) / 2;
+        const baselineY = box.top + box.height / 2 + (ascent - descent) / 2;
         const inkTop = baselineY - ascent;
         const inkBot = baselineY + descent;
-        const topClear = inkTop - sr.top;
-        const botClear = sr.bottom - inkBot;
+        return {
+          topClear: inkTop - sr.top,
+          botClear: sr.bottom - inkBot,
+          inkTop,
+          inkBot,
+          slotH: sr.height,
+          inkH: ascent + descent,
+        };
+      }
 
-        if (topClear < clearance || botClear < clearance) {
+      for (const slot of linesRoot.querySelectorAll(".mf2-grid-slot--line")) {
+        const line = slot.querySelector(".mf2-line");
+        if (!line) continue;
+        const c = inkClearance(line, slot);
+        if (!c) continue;
+        if (c.topClear < clearance || c.botClear < clearance) {
           clipped.push({
+            kind: "line",
             line: Number(line.getAttribute("data-line") || 0),
-            topClear: +topClear.toFixed(2),
-            botClear: +botClear.toFixed(2),
-            slotH: +sr.height.toFixed(2),
-            inkH: +(ascent + descent).toFixed(2),
+            topClear: +c.topClear.toFixed(2),
+            botClear: +c.botClear.toFixed(2),
+            slotH: +c.slotH.toFixed(2),
+            inkH: +c.inkH.toFixed(2),
           });
         }
       }
 
+      /* البسملة — كانت مستثناة سابقًا فمرّ الاقتطاع */
+      for (const slot of linesRoot.querySelectorAll(".mf2-grid-slot--basmala")) {
+        const bas = slot.querySelector(".mf2-bismillah");
+        if (!bas) continue;
+        const c = inkClearance(bas, slot);
+        if (!c) continue;
+        if (c.topClear < clearance || c.botClear < clearance) {
+          clipped.push({
+            kind: "basmala",
+            topClear: +c.topClear.toFixed(2),
+            botClear: +c.botClear.toFixed(2),
+          });
+        }
+      }
+
+      /* الشارة — لا يُقصّ اسم السورة داخل إطارها */
+      for (const slot of linesRoot.querySelectorAll(".mf2-grid-slot--banner")) {
+        const name =
+          slot.querySelector(".mf2-surah-banner__name, .mf2-surah-header__name") ||
+          slot.querySelector("text, .mf2-surah-banner");
+        if (!name) continue;
+        const sr = slot.getBoundingClientRect();
+        const nr = name.getBoundingClientRect();
+        if (nr.height < 2) continue;
+        const topClear = nr.top - sr.top;
+        const botClear = sr.bottom - nr.bottom;
+        if (topClear < clearance || botClear < clearance) {
+          clipped.push({
+            kind: "banner",
+            topClear: +topClear.toFixed(2),
+            botClear: +botClear.toFixed(2),
+          });
+        }
+      }
+
+      /* فاصل حبر البسملة عن أسفل الشارة — زوج شارة↔بسملة بالخانة المتجاورة */
+      const basmalaGaps = [];
+      for (const banner of linesRoot.querySelectorAll(".mf2-grid-slot--banner")) {
+        const banRect = banner.getBoundingClientRect();
+        const banSlot = Number(banner.getAttribute("data-grid-slot"));
+        let inkEl = linesRoot.querySelector(
+          `.mf2-grid-slot--basmala[data-grid-slot="${banSlot + 1}"] .mf2-bismillah`,
+        );
+        if (!inkEl && n <= 2) {
+          inkEl = linesRoot.querySelector(".mf2-grid-slot--line .mf2-line");
+        }
+        if (!inkEl) continue;
+        const box = inkEl.getBoundingClientRect();
+        const fs = parseFloat(getComputedStyle(inkEl).fontSize) || 24;
+        /* أعلى الحبر ≈ مركز المرونة − نصف ارتفاع الحرف مع علامات */
+        const inkH = fs * 1.2;
+        const inkTop = box.top + Math.max(0, (box.height - inkH) / 2);
+        const gap = inkTop - banRect.bottom;
+        basmalaGaps.push(+gap.toFixed(2));
+      }
+
       let framePct = null;
+      let frameTopPct = null;
+      let frameBotPct = null;
       const frame = linesRoot.querySelector("[data-opening-frame]");
       if (frame) {
-        framePct = (frame.getBoundingClientRect().height / blockH) * 100;
+        const fr = frame.getBoundingClientRect();
+        framePct = (fr.height / blockH) * 100;
+        frameTopPct = ((fr.top - lr.top) / blockH) * 100;
+        frameBotPct = ((fr.bottom - lr.top) / blockH) * 100;
       }
 
       let maxDev = 0;
       if (!opening) {
-        for (const el of linesRoot.querySelectorAll("[data-grid-slot]")) {
+        for (const el of linesRoot.querySelectorAll(".mf2-grid-slot--line[data-grid-slot]")) {
           const slot = Number(el.getAttribute("data-grid-slot"));
           const expected = baselinesPct[slot - 1];
           if (expected == null) continue;
@@ -168,7 +236,6 @@ async function measurePage(page, pageNum) {
           ((ordered[i].top - ordered[i - 1].bottom) / blockH) * 100,
         );
       }
-      /* ص١–٢: فراغ داخل الإطار ≤١٠٪ */
       const gapLimit = opening ? 10 : 6;
       const gapFail = maxGapPct > gapLimit;
 
@@ -193,11 +260,14 @@ async function measurePage(page, pageNum) {
         clipped,
         clipStyles,
         framePct,
+        frameTopPct,
+        frameBotPct,
         maxDev,
         maxGapPct,
         gapFail,
         gapLimit,
         surahEnds,
+        basmalaGaps,
       };
     },
     { clearance: CLEARANCE_PX, baselinesPct: GRID.baselinesPct, pageNum },
@@ -242,6 +312,28 @@ async function main() {
           reason: `إطار الافتتاح ${r.framePct?.toFixed?.(1) ?? "null"}% < ${OPENING_FRAME_MIN_PCT}%`,
         });
       }
+      if (n === 1 || n === 2) {
+        if (r.frameTopPct != null && (r.frameTopPct < 7.95 || r.frameTopPct > 10.05)) {
+          failures.push({
+            page: n,
+            reason: `أعلى الإطار ${r.frameTopPct.toFixed(1)}% (المطلوب ٨–١٠٪)`,
+          });
+        }
+        if (r.frameBotPct != null && (r.frameBotPct < 89.95 || r.frameBotPct > 92.05)) {
+          failures.push({
+            page: n,
+            reason: `أسفل الإطار ${r.frameBotPct.toFixed(1)}% (المطلوب ٩٠–٩٢٪)`,
+          });
+        }
+      }
+      for (const g of r.basmalaGaps || []) {
+        if (g < 20) {
+          failures.push({
+            page: n,
+            reason: `فاصل حبر البسملة عن الشارة ${g}px < 20px`,
+          });
+        }
+      }
       if (GRID_SAMPLE_PAGES.includes(n) && n > 2 && r.maxDev > MAX_BASELINE_DEV_PX) {
         failures.push({
           page: n,
@@ -277,9 +369,12 @@ async function main() {
         page: n,
         clipped: r.clipped.length,
         framePct: r.framePct,
+        frameTopPct: r.frameTopPct,
+        frameBotPct: r.frameBotPct,
         maxDevPx: r.maxDev,
         maxGapPct: r.maxGapPct,
         surahEnds: r.surahEnds?.length ?? 0,
+        basmalaGaps: r.basmalaGaps,
       });
     } catch (e) {
       failures.push({ page: n, reason: String(e?.message || e) });

@@ -14,15 +14,28 @@ import {
   MUSHAF_LAYOUT_BASELINE,
 } from "@/features/mushaf/config";
 
-/** نطاق الإطار والمحتوى لصفحتي الافتتاح (٪ من ارتفاع الكتلة) — أعلى ٨–١٠٪، أسفل ٩٠–٩٢٪ */
-const OPENING_FRAME_TOP_PCT = 8;
-const OPENING_FRAME_BOT_PCT = 92;
-/** أول محتوى بعد الضلع العلوي — يوزّع الامتلاء كفجوات أسطر داخل الإطار */
-const OPENING_INNER_TOP_PCT =
-  OPENING_FRAME_TOP_PCT + (OPENING_FRAME_BOT_PCT - OPENING_FRAME_TOP_PCT) * 0.035;
-/** هامش سفلي آمن للحبر (~٣٪) دون فراغ ميت كبير */
-const OPENING_INNER_BOT_PCT = OPENING_FRAME_BOT_PCT - 3.2;
+/** نطاق الإطار لصفحتي الافتتاح (٪ من ارتفاع كتلة الرأس→الذيل) — بوابة: أعلى ٨–١٠٪، أسفل ٩٠–٩٢٪ */
+const OPENING_FRAME_TOP_PCT = 9;
+const OPENING_FRAME_BOT_PCT = 91;
+/** ارتفاع خانة الشارة (٪) — مركزها على الضلع العلوي للإطار */
+const OPENING_BANNER_H_PCT = 6.2;
+/** فاصل أدنى بين أسفل الشارة وأعلى حبر البسملة (px) */
+const OPENING_BASMALA_GAP_PX = 22;
+/** هامش سفلي داخل الإطار قبل الضلع السفلي */
+const OPENING_INNER_BOT_PAD_PCT = 5.0;
 const OPENING_SIDE_PAD_PX = 20;
+const OPENING_BODY_SLOT_H_PCT = 7.0;
+/** مرجع لتحويل px→٪ قبل قياس الارتفاع الحيّ */
+const OPENING_REF_BLOCK_H = 780;
+const OPENING_GAP_PCT = (OPENING_BASMALA_GAP_PX / OPENING_REF_BLOCK_H) * 100;
+const OPENING_ASCENT_PAD_PCT = (14 / OPENING_REF_BLOCK_H) * 100;
+/** مركز أول سطر جسم (بسملة/آية) تحت الشارة بفاصل حبر ≥22px */
+const OPENING_BODY_TOP_PCT =
+  OPENING_FRAME_TOP_PCT +
+  OPENING_BANNER_H_PCT / 2 +
+  OPENING_GAP_PCT +
+  OPENING_ASCENT_PAD_PCT;
+const OPENING_BODY_BOT_PCT = OPENING_FRAME_BOT_PCT - OPENING_INNER_BOT_PAD_PCT;
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — للوضع التفاعلي بلا طبقة إحداثيات. */
 export function groupWordsByAyah(words: QpcWord[]): QpcWord[][] {
@@ -255,6 +268,18 @@ export function MushafPageV2({
     return { all: allArr, banners: [...banners].sort((a, b) => a - b), body };
   }, [layout]);
 
+  /** شارة→بسملة في الصفحات العادية — لتطبيق فاصل الحبر دون تغيير حدود الصفحة */
+  const bannerBasmalaPairs = useMemo(() => {
+    const pairs: { banner: number; basmala: number }[] = [];
+    if (!layout) return pairs;
+    for (const row of layout.rows) {
+      if (row.kind === "surah-header" && row.basmalaSlot != null) {
+        pairs.push({ banner: row.bannerSlot, basmala: row.basmalaSlot });
+      }
+    }
+    return pairs;
+  }, [layout]);
+
   /**
    * تحجيم عرضي فقط — التموضع الرأسي مطلق على MUSHAF_GRID.baselinesPct.
    * ممنوع: flex توزيعي أو حشو ديناميكي بعد التموضع.
@@ -421,6 +446,87 @@ export function MushafPageV2({
       container.dataset.mf2Opening = isOpening ? "1" : "0";
       container.dataset.mf2Grid = "1";
 
+      /* فاصل حبر البسملة عن أسفل الشارة ≥20px — في كل مواضع بداية السورة */
+      {
+        const banners = [
+          ...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--banner"),
+        ];
+        let minGap = Infinity;
+        for (const bannerEl of banners) {
+          const headerKey = [...headerBlockRefs.current.entries()].find(
+            ([, el]) => el === bannerEl,
+          )?.[0];
+          const basEl =
+            (headerKey
+              ? basmalaRefs.current.get(headerKey)
+              : null) ||
+            bannerEl.parentElement?.querySelector<HTMLElement>(".mf2-bismillah") ||
+            container.querySelector<HTMLElement>(".mf2-grid-slot--basmala .mf2-bismillah");
+          /* ص١: البسملة آية — أول سطر بعد الشارة */
+          const inkEl =
+            basEl ||
+            (isOpening
+              ? container.querySelector<HTMLElement>(".mf2-grid-slot--line .mf2-line")
+              : null);
+          if (!inkEl) continue;
+          const br = bannerEl.getBoundingClientRect();
+          const cs = getComputedStyle(inkEl);
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          let inkTop = inkEl.getBoundingClientRect().top;
+          if (ctx) {
+            ctx.font = cs.font;
+            const m = ctx.measureText((inkEl.textContent || "").trim());
+            const ascent =
+              m.actualBoundingBoxAscent ||
+              m.fontBoundingBoxAscent ||
+              parseFloat(cs.fontSize) * 0.95;
+            const descent =
+              m.actualBoundingBoxDescent ||
+              m.fontBoundingBoxDescent ||
+              parseFloat(cs.fontSize) * 0.35;
+            const box = inkEl.getBoundingClientRect();
+            const baselineY = box.top + box.height / 2 + (ascent - descent) / 2;
+            inkTop = baselineY - ascent;
+          }
+          const gap = inkTop - br.bottom;
+          minGap = Math.min(minGap, gap);
+          if (gap < OPENING_BASMALA_GAP_PX - 0.5) {
+            const nudgePx = OPENING_BASMALA_GAP_PX - gap;
+            const nudgePct = (nudgePx / Math.max(1, cr.height)) * 100;
+            const slot =
+              inkEl.closest<HTMLElement>(".mf2-grid-slot--basmala") ||
+              inkEl.closest<HTMLElement>(".mf2-grid-slot--line");
+            if (slot) {
+              const topPct = parseFloat(slot.style.top);
+              if (Number.isFinite(topPct)) {
+                slot.style.top = `${(topPct + nudgePct).toFixed(3)}%`;
+              }
+            }
+            /* ص١–٢: إن نُقلت البسملة/أول سطر، أزح بقية أسطر الجسم بنفس المقدار للحفاظ على الفجوات */
+            if (isOpening && slot?.classList.contains("mf2-grid-slot--line")) {
+              let passed = false;
+              for (const lineSlot of container.querySelectorAll<HTMLElement>(
+                ".mf2-grid-slot--line",
+              )) {
+                if (lineSlot === slot) {
+                  passed = true;
+                  continue;
+                }
+                if (!passed) continue;
+                const t = parseFloat(lineSlot.style.top);
+                if (Number.isFinite(t)) {
+                  lineSlot.style.top = `${(t + nudgePct).toFixed(3)}%`;
+                }
+              }
+            }
+          }
+        }
+        if (Number.isFinite(minGap) && minGap < Infinity) {
+          container.dataset.mf2BasmalaGap = minGap.toFixed(1);
+        }
+      }
+
       setPageFontSize(size);
       setPageLineHeightEm(LINE_HEIGHT_EM);
       setFitted(true);
@@ -484,24 +590,44 @@ export function MushafPageV2({
   const slotStyle = (gridSlot: number): CSSProperties => {
     let baseline: number;
     let h: number;
+    const isBannerSlot =
+      (isOpeningPage && openingSlots.banners.includes(gridSlot)) ||
+      bannerBasmalaPairs.some((p) => p.banner === gridSlot);
+    const basmalaPair = bannerBasmalaPairs.find((p) => p.basmala === gridSlot);
+
     if (isOpeningPage && openingSlots.all.length > 0) {
       const isBanner = openingSlots.banners.includes(gridSlot);
       if (isBanner) {
-        /* الشارة على الضلع العلوي للإطار */
         baseline = OPENING_FRAME_TOP_PCT;
-        h = 7.5;
+        h = OPENING_BANNER_H_PCT;
       } else {
         const body = openingSlots.body;
         const idx = Math.max(0, body.indexOf(gridSlot));
         const n = body.length;
-        /* توزيع أوسع داخل الإطار: المساحة المكتسبة = فجوات أسطر لا حشو علوي */
-        const top = OPENING_INNER_TOP_PCT + 1.8;
-        const bot = OPENING_INNER_BOT_PCT - 1.8;
+        const top = OPENING_BODY_TOP_PCT;
+        const bot = OPENING_BODY_BOT_PCT;
         const band = Math.max(8, bot - top);
         baseline =
           n <= 1 ? (top + bot) / 2 : top + (idx / (n - 1)) * band;
-        h = Math.min(10, Math.max(6.5, (band / Math.max(1, n - 1)) * 0.72));
+        h = Math.min(
+          9.5,
+          Math.max(6.2, Math.min(OPENING_BODY_SLOT_H_PCT, (band / Math.max(1, n - 1)) * 0.85)),
+        );
       }
+    } else if (basmalaPair) {
+      /* بسملة تحت الشارة بفاصل حبر ≥20px دون إزاحة أسطر الآيات */
+      const banBase =
+        MUSHAF_GRID.baselinesPct[basmalaPair.banner - 1] ??
+        ((basmalaPair.banner - 0.5) / MUSHAF_GRID.slotCount) * 100;
+      const banH = 5.2;
+      const basH = 5.4;
+      baseline =
+        banBase + banH / 2 + OPENING_GAP_PCT + OPENING_ASCENT_PAD_PCT + basH / 2;
+      h = basH;
+    } else if (isBannerSlot) {
+      const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
+      baseline = MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;
+      h = 5.2;
     } else {
       const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
       baseline = MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;
@@ -522,6 +648,7 @@ export function MushafPageV2({
       margin: 0,
       padding: 0,
       overflow: "visible",
+      zIndex: isBannerSlot ? 1 : 2,
     };
   };
 

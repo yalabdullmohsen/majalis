@@ -151,6 +151,31 @@ async function measureOpening(page, pageNum) {
         ((firstBody.getBoundingClientRect().top - fr.top) / fr.height) * 100;
     }
 
+    /* فاصل حبر البسملة عن أسفل الشارة */
+    let basmalaGapPx = null;
+    const ban = root.querySelector(".mf2-grid-slot--banner");
+    const basInk =
+      root.querySelector(".mf2-bismillah") ||
+      root.querySelector(".mf2-grid-slot--line .mf2-line");
+    if (ban && basInk) {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const cs = getComputedStyle(basInk);
+      ctx.font = cs.font;
+      const m = ctx.measureText((basInk.textContent || "").trim());
+      const ascent =
+        m.actualBoundingBoxAscent ||
+        m.fontBoundingBoxAscent ||
+        parseFloat(cs.fontSize) * 0.95;
+      const descent =
+        m.actualBoundingBoxDescent ||
+        m.fontBoundingBoxDescent ||
+        parseFloat(cs.fontSize) * 0.35;
+      const box = basInk.getBoundingClientRect();
+      const baselineY = box.top + box.height / 2 + (ascent - descent) / 2;
+      basmalaGapPx = baselineY - ascent - ban.getBoundingClientRect().bottom;
+    }
+
     return {
       framePct,
       frameTopPct,
@@ -160,6 +185,7 @@ async function measureOpening(page, pageNum) {
       basmalaHasNumeral,
       basmalaFontPx,
       ayahFontPx,
+      basmalaGapPx,
       widths,
       surahEndWidths,
       targetW: textBlockW,
@@ -186,7 +212,7 @@ async function measureFreeze(page, pageNum) {
     let maxDev = 0;
     let firstTopPct = null;
     let lastBotPct = null;
-    const slots = [...root.querySelectorAll("[data-grid-slot]")];
+    const slots = [...root.querySelectorAll(".mf2-grid-slot--line[data-grid-slot]")];
     for (const el of slots) {
       const slot = Number(el.getAttribute("data-grid-slot"));
       const expected = baselinesPct[slot - 1];
@@ -310,6 +336,12 @@ async function main() {
       }
       if (r.basmalaHasNumeral) {
         failures.push({ page: n, reason: "بسملة عليها ميدالية رقم" });
+      }
+      if (r.basmalaGapPx != null && r.basmalaGapPx < 20) {
+        failures.push({
+          page: n,
+          reason: `فاصل حبر البسملة عن الشارة ${r.basmalaGapPx.toFixed(1)}px < 20px`,
+        });
       }
       if (
         r.basmalaFontPx != null &&

@@ -119,14 +119,26 @@ html[data-theme="dark"] .mf2-frame {
 }
 .mf2-opening-frame {
   position: absolute;
-  /* يشغل ٨٪→٩٢٪ من ارتفاع الكتلة (= ٨٤٪) */
-  top: 8%;
-  bottom: 8%;
+  /* كتلة الصفحة: أعلى ٩٪ → أسفل ٩١٪ (ضمن بوابة ٨–١٠ / ٩٠–٩٢) */
+  top: 9%;
+  bottom: 9%;
   left: 12px;
   right: 12px;
   z-index: 0;
   pointer-events: none;
   box-sizing: border-box;
+}
+.mf2-grid-slot--banner {
+  z-index: 1;
+}
+.mf2-grid-slot--basmala,
+.mf2-grid-slot--line {
+  z-index: 2;
+}
+.mf2-grid-slot--basmala,
+.mf2-grid-slot--basmala .mf2-bismillah {
+  overflow: visible !important;
+  clip-path: none !important;
 }
 .mf2-opening-frame__svg {
   display: block;
