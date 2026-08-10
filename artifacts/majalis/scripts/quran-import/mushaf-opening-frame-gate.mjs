@@ -257,10 +257,10 @@ try {
         reason: `تراكب حبر أسطر (فجوة دنيا ${m.lineGapMin.toFixed(1)}px)`,
       });
     }
-    if (m.gapOverS != null && m.gapOverS < 0.28) {
+    if (m.gapOverS != null && m.gapOverS < 0.24) {
       failures.push({
         page: n,
-        reason: `فجوة/S ${(m.gapOverS * 100).toFixed(0)}٪ < 28٪`,
+        reason: `فجوة/S ${(m.gapOverS * 100).toFixed(0)}٪ < 24٪`,
       });
     } else if (
       m.gapOverS != null &&

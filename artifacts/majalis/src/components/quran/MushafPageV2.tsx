@@ -626,7 +626,7 @@ export function MushafPageV2({
               const badgeTop = badgeEl?.getBoundingClientRect().top;
               const maxInkBottom =
                 badgeTop != null
-                  ? badgeTop - MUSHAF_LAYOUT_BANDS.contentFooterGapPx
+                  ? badgeTop - (MUSHAF_LAYOUT_BANDS.contentFooterGapPx + 4)
                   : crNow.bottom;
               const minGap = OPENING_MIN_LINE_GAP_RATIO * size;
               const idealGap = Math.max(

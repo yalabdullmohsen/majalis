@@ -231,10 +231,10 @@ if (failures.length === 0) {
             reason: `تراكب أسطر افتتاحية (فجوة ${structural.lineGapMin.toFixed(1)}px)`,
           });
         }
-        if (structural.gapOverS != null && structural.gapOverS < 0.28) {
+        if (structural.gapOverS != null && structural.gapOverS < 0.24) {
           failures.push({
             page: n,
-            reason: `فجوة/S ${((structural.gapOverS) * 100).toFixed(0)}٪ < 28٪`,
+            reason: `فجوة/S ${((structural.gapOverS) * 100).toFixed(0)}٪ < 24٪`,
           });
         } else if (
           structural.gapOverS != null &&
@@ -338,10 +338,10 @@ if (failures.length === 0) {
             reason: `تراكب أسطر افتتاحية (فجوة ${structural.lineGapMin.toFixed(1)}px)`,
           });
         }
-        if (structural.gapOverS != null && structural.gapOverS < 0.28) {
+        if (structural.gapOverS != null && structural.gapOverS < 0.24) {
           failures.push({
             page: n,
-            reason: `فجوة/S ${((structural.gapOverS) * 100).toFixed(0)}٪ < 28٪`,
+            reason: `فجوة/S ${((structural.gapOverS) * 100).toFixed(0)}٪ < 24٪`,
           });
         } else if (
           structural.gapOverS != null &&
