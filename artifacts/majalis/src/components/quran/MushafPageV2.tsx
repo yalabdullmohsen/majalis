@@ -13,14 +13,17 @@ import {
   MUSHAF_GRID,
   MUSHAF_LAYOUT_BASELINE,
 } from "@/features/mushaf/config";
+import {
+  MUSHAF_BOTTOM_RESERVE_PX,
+  MUSHAF_LAYOUT_BANDS,
+} from "@/features/mushaf/layout-bands";
 
 /**
- * إطار صفحتي الافتتاح — النسب من ارتفاع **كتلة الصفحة** (`.mpv-body--ayah`)،
- * لا من `.mf2-lines` وحدها. القياس السابق على `.mf2-lines` أعطى ٩٪ بينما
- * الكتلة المرئية كانت ≈١٠٫٥٪ أعلى / ≈٨٩٪ أسفل؛ البوابة تتحقق من الجسم.
+ * إطار صفحتي الافتتاح — النسب من ارتفاع **نطاق النص** (`.mf2-lines` = contentBand)
+ * بعد طرح الرأس/الذيل/الشريط. البوابة تقيس داخل contentBand.
  */
-const OPENING_FRAME_TOP_OF_BODY = 0.09; /* ٨–١٠٪ من .mpv-body--ayah */
-const OPENING_FRAME_BOT_OF_BODY = 0.91; /* ٩٠–٩٢٪ من .mpv-body--ayah */
+const OPENING_FRAME_TOP_OF_CONTENT = 0.09; /* ٨–١٣٪ من contentBand */
+const OPENING_FRAME_BOT_OF_CONTENT = 0.91; /* ٩٠–٩٢٪ من contentBand */
 /** ارتفاع خانة الشارة (٪ من .mf2-lines) — يُحدَّث مركزها بعد قياس الإطار */
 const OPENING_BANNER_H_PCT = 6.2;
 /** فاصل أدنى بين أسفل الشارة وأعلى حبر البسملة (px) */
@@ -33,8 +36,8 @@ const OPENING_REF_BLOCK_H = 780;
 const OPENING_GAP_PCT = (OPENING_BASMALA_GAP_PX / OPENING_REF_BLOCK_H) * 100;
 const OPENING_ASCENT_PAD_PCT = (14 / OPENING_REF_BLOCK_H) * 100;
 /** قيم CSS أولية قبل قياس الجسم — تُستبدل بالبكسل في measure() */
-const OPENING_FRAME_TOP_PCT = OPENING_FRAME_TOP_OF_BODY * 100;
-const OPENING_FRAME_BOT_PCT = OPENING_FRAME_BOT_OF_BODY * 100;
+const OPENING_FRAME_TOP_PCT = OPENING_FRAME_TOP_OF_CONTENT * 100;
+const OPENING_FRAME_BOT_PCT = OPENING_FRAME_BOT_OF_CONTENT * 100;
 const OPENING_BODY_TOP_PCT =
   OPENING_FRAME_TOP_PCT +
   OPENING_BANNER_H_PCT / 2 +
@@ -339,27 +342,49 @@ export function MushafPageV2({
       container.style.justifyContent = "";
       container.style.transform = "";
 
-      /* ارتفاع الكتلة = فجوة الرأس→الذيل − حجز شريط أدوات سفلي دائم (لا يزيح عند الإظهار) */
+      /* contentBand = ما تبقّى بعد الرأس/الذيل/الشريط (حجوزات CSS + قياس) */
+      const bodyEl =
+        (container.closest(".mpv-body--ayah") as HTMLElement | null) ||
+        (container.closest(".qs-mushaf-body--ayah") as HTMLElement | null) ||
+        (container.parentElement instanceof HTMLElement ? container.parentElement : null);
       const headerEl = document.querySelector(".mpv-ayah-header");
       const footerEl = document.querySelector(".mpv-ayah-footer");
+      const shellEl = document.querySelector(".quran-shell--ayah");
       const hr = headerEl?.getBoundingClientRect();
       const fr = footerEl?.getBoundingClientRect();
-      /** حجز أسفل لشريط الأدوات — صفحات عادية فقط (ص١–٢ الإطار يحتاج امتداد الجسم) */
-      const TOOLBAR_RESERVE_PX = isOpening ? 0 : 46;
-      let blockH = container.parentElement instanceof HTMLElement
-        ? container.parentElement.clientHeight
-        : container.clientHeight;
-      if (hr && fr && fr.top > hr.bottom) {
-        blockH = Math.max(120, fr.top - hr.bottom - TOOLBAR_RESERVE_PX);
-      } else if (TOOLBAR_RESERVE_PX > 0 && blockH > TOOLBAR_RESERVE_PX + 120) {
-        blockH -= TOOLBAR_RESERVE_PX;
-      }
+      const shellR = shellEl?.getBoundingClientRect();
+      const insetBottom =
+        Number.parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue("--inset-bottom"),
+        ) || 0;
+      /* نهاية contentBand = أعلى الذيل − فاصل ١٢px (الذيل فوق شريط الأدوات) */
+      const footerTop =
+        fr?.top ??
+        (shellR
+          ? shellR.bottom -
+            insetBottom -
+            MUSHAF_LAYOUT_BANDS.toolbarBandPx -
+            MUSHAF_LAYOUT_BANDS.footerBandPx
+          : 0);
+      const contentBot = footerTop - MUSHAF_LAYOUT_BANDS.contentFooterGapPx;
+      const contentTop = hr?.bottom ?? container.getBoundingClientRect().top;
+      let blockH =
+        contentBot > contentTop
+          ? contentBot - contentTop
+          : Math.max(
+              120,
+              (bodyEl?.clientHeight || container.clientHeight) - MUSHAF_BOTTOM_RESERVE_PX,
+            );
+      blockH = Math.max(120, blockH);
       if (blockH > 0) {
         container.style.height = `${blockH.toFixed(2)}px`;
         container.style.maxHeight = `${blockH.toFixed(2)}px`;
         container.style.flexGrow = "0";
         container.style.flexShrink = "0";
         container.style.flexBasis = "auto";
+        container.dataset.mf2ContentBand = blockH.toFixed(1);
+        container.dataset.mf2FooterBand = String(MUSHAF_LAYOUT_BANDS.footerBandPx);
+        container.dataset.mf2ToolbarBand = String(MUSHAF_LAYOUT_BANDS.toolbarBandPx);
       } else {
         container.style.height = "100%";
         container.style.maxHeight = "";
@@ -434,20 +459,20 @@ export function MushafPageV2({
       }
 
       blockH = container.clientHeight || blockH || 1;
-      let contentTop = Infinity;
-      let contentBot = -Infinity;
+      let inkTop = Infinity;
+      let inkBot = -Infinity;
       for (const child of container.querySelectorAll<HTMLElement>("[data-grid-slot]")) {
         const r = child.getBoundingClientRect();
         if (r.height <= 0 && r.width <= 0) continue;
-        contentTop = Math.min(contentTop, r.top);
-        contentBot = Math.max(contentBot, r.bottom);
+        inkTop = Math.min(inkTop, r.top);
+        inkBot = Math.max(inkBot, r.bottom);
       }
       const cr = container.getBoundingClientRect();
-      const spanH = Number.isFinite(contentTop) && Number.isFinite(contentBot)
-        ? Math.max(0, contentBot - contentTop)
+      const spanH = Number.isFinite(inkTop) && Number.isFinite(inkBot)
+        ? Math.max(0, inkBot - inkTop)
         : 0;
-      const topGapRatio = Number.isFinite(contentTop)
-        ? Math.max(0, contentTop - cr.top) / blockH
+      const topGapRatio = Number.isFinite(inkTop)
+        ? Math.max(0, inkTop - cr.top) / blockH
         : 0;
 
       container.dataset.mf2Size = size.toFixed(2);
@@ -460,24 +485,17 @@ export function MushafPageV2({
       container.dataset.mf2Opening = isOpening ? "1" : "0";
       container.dataset.mf2Grid = "1";
 
-      /* ص١–٢: ثبّت الإطار على ٩٪/٩١٪ من .mpv-body--ayah ثم أعد توزيع الشارة/الجسم */
+      /* ص١–٢: ثبّت الإطار على ٩٪/٩١٪ من contentBand (.mf2-lines) */
       if (isOpening) {
-        const bodyEl =
-          (container.closest(".mpv-body--ayah") as HTMLElement | null) ||
-          (container.closest(".qs-mushaf-body--ayah") as HTMLElement | null) ||
-          (container.parentElement instanceof HTMLElement ? container.parentElement : null);
         const frameEl = container.querySelector<HTMLElement>("[data-opening-frame]");
-        const br = bodyEl?.getBoundingClientRect();
         const crNow = container.getBoundingClientRect();
-        if (frameEl && br && br.height > 40 && crNow.height > 40) {
-          const targetTop = br.top + br.height * OPENING_FRAME_TOP_OF_BODY;
-          const targetBot = br.top + br.height * OPENING_FRAME_BOT_OF_BODY;
-          const topPx = Math.max(0, targetTop - crNow.top);
-          const botPx = Math.max(0, crNow.bottom - targetBot);
+        if (frameEl && crNow.height > 40) {
+          const topPx = crNow.height * OPENING_FRAME_TOP_OF_CONTENT;
+          const botPx = crNow.height * (1 - OPENING_FRAME_BOT_OF_CONTENT);
           frameEl.style.top = `${topPx.toFixed(2)}px`;
           frameEl.style.bottom = `${botPx.toFixed(2)}px`;
-          const frameTopPct = (topPx / crNow.height) * 100;
-          const frameBotPct = ((crNow.height - botPx) / crNow.height) * 100;
+          const frameTopPct = OPENING_FRAME_TOP_PCT;
+          const frameBotPct = OPENING_FRAME_BOT_PCT;
           const bodyTop =
             frameTopPct +
             OPENING_BANNER_H_PCT / 2 +
@@ -485,14 +503,9 @@ export function MushafPageV2({
             OPENING_ASCENT_PAD_PCT;
           const bodyBot = frameBotPct - OPENING_INNER_BOT_PAD_PCT;
           const bodyBand = Math.max(8, bodyBot - bodyTop);
-          container.dataset.mf2FrameTopBody = (
-            ((targetTop - br.top) / br.height) *
-            100
-          ).toFixed(2);
-          container.dataset.mf2FrameBotBody = (
-            ((targetBot - br.top) / br.height) *
-            100
-          ).toFixed(2);
+          container.dataset.mf2FrameTopBody = frameTopPct.toFixed(2);
+          container.dataset.mf2FrameBotBody = frameBotPct.toFixed(2);
+          container.dataset.mf2FrameBand = "content";
 
           const banners = [
             ...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--banner"),

@@ -131,29 +131,36 @@ try {
       if (!toolbar || !root) return { error: "missing toolbar/lines" };
       const tr = toolbar.getBoundingClientRect();
       const cs = getComputedStyle(toolbar);
-      const targets = [
-        ...root.querySelectorAll(
-          ".mf2-grid-slot--banner, .mf2-grid-slot--basmala, .mf2-grid-slot--line, .mf2-bismillah, .mf2-line",
-        ),
-      ];
-      const overlaps = [];
-      for (const el of targets) {
+      const hit = (el, label) => {
+        if (!el) return null;
         const r = el.getBoundingClientRect();
-        if (r.width < 2 || r.height < 2) continue;
+        if (r.width < 2 || r.height < 2) return null;
         const ox = Math.max(0, Math.min(tr.right, r.right) - Math.max(tr.left, r.left));
         const oy = Math.max(0, Math.min(tr.bottom, r.bottom) - Math.max(tr.top, r.top));
-        if (ox > 0.5 && oy > 0.5) {
-          overlaps.push({
-            cls: el.className?.toString?.().slice(0, 60) || el.tagName,
-            ox,
-            oy,
-          });
-        }
+        if (ox > 0.5 && oy > 0.5) return { cls: label, ox, oy };
+        return null;
+      };
+      const overlaps = [];
+      for (const el of root.querySelectorAll(
+        ".mf2-grid-slot--banner, .mf2-grid-slot--basmala, .mf2-grid-slot--line, .mf2-bismillah, .mf2-line",
+      )) {
+        const o = hit(el, el.className?.toString?.().slice(0, 60) || el.tagName);
+        if (o) overlaps.push(o);
+      }
+      for (const [sel, label] of [
+        [".mpv-ayah-page-badge", "page-badge"],
+        ["[data-opening-frame]", "opening-frame"],
+        [".mf2-surah-banner", "surah-banner"],
+      ]) {
+        const o = hit(document.querySelector(sel), label);
+        if (o) overlaps.push(o);
       }
       return {
         toolbar: {
           top: tr.top,
           bottom: tr.bottom,
+          left: tr.left,
+          right: tr.right,
           h: tr.height,
           cssTop: cs.top,
           cssBottom: cs.bottom,
@@ -172,7 +179,7 @@ try {
       failures.push({ page: n, reason: m.error });
       continue;
     }
-  /* الشريط في النصف السفلي وفوق الذيل */
+    /* الشريط في النصف السفلي (نطاق toolbarBand) */
     if (m.toolbar.top < m.vh * 0.55) {
       failures.push({
         page: n,

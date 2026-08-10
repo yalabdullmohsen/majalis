@@ -43,23 +43,18 @@ async function measureOpening(page, pageNum) {
   return page.evaluate(() => {
     const root = document.querySelector(".mf2-lines");
     if (!root) return { error: "missing lines" };
-    const body =
-      document.querySelector(".mpv-body--ayah") ||
-      document.querySelector(".qs-mushaf-body--ayah") ||
-      root.parentElement;
-    if (!body) return { error: "missing page body" };
+    /* المواصفة: نسب الإطار من contentBand (.mf2-lines) بعد طرح النطاقات */
     const lr = root.getBoundingClientRect();
-    const br = body.getBoundingClientRect();
-    /* المواصفة: نسب الإطار من كتلة الصفحة (.mpv-body--ayah) لا من .mf2-lines */
-    const blockH = Math.max(1, br.height);
+    const blockH = Math.max(1, lr.height);
     const frame = root.querySelector("[data-opening-frame]");
     if (!frame) return { error: "missing opening frame" };
     const fr = frame.getBoundingClientRect();
     const framePct = (fr.height / blockH) * 100;
-    const frameTopPct = ((fr.top - br.top) / blockH) * 100;
-    const frameBotPct = ((fr.bottom - br.top) / blockH) * 100;
-    const frameTopVsLinesPct = ((fr.top - lr.top) / Math.max(1, lr.height)) * 100;
-    const frameBotVsLinesPct = ((fr.bottom - lr.top) / Math.max(1, lr.height)) * 100;
+    const frameTopPct = ((fr.top - lr.top) / blockH) * 100;
+    const frameBotPct = ((fr.bottom - lr.top) / blockH) * 100;
+    const frameTopVsLinesPct = frameTopPct;
+    const frameBotVsLinesPct = frameBotPct;
+    const br = lr; /* contentBand */
 
     const rails = frame.querySelectorAll('[data-opening-part="side-rail"] line');
     let sideStraight = rails.length >= 2;
