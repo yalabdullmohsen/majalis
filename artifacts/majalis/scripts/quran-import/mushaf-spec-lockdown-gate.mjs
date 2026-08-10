@@ -189,17 +189,15 @@ function runStatic() {
   } else pass(12, "خرطوش موجود — الحيّ يتحقق من المركز");
 
   /* ١٣ — الإطار ٨–١٠ / ٩–٩٢ من كتلة الصفحة */
-  if (!/OPENING_FRAME_TOP_OF_BODY\s*=\s*0\.09/.test(pageV2)) {
-    fail(13, "OPENING_FRAME_TOP_OF_BODY ≠ 0.09");
-  } else if (!/OPENING_FRAME_BOT_OF_BODY\s*=\s*0\.91/.test(pageV2)) {
-    fail(13, "OPENING_FRAME_BOT_OF_BODY ≠ 0.91");
-  } else if (!/mpv-body--ayah/.test(pageV2)) {
-    fail(13, "قياس الإطار لا يرجع لكتلة الصفحة");
-  } else if (!/top:\s*9%/.test(frameCss) || !/bottom:\s*9%/.test(frameCss)) {
-    fail(13, "CSS احتياطي للإطار ليس ٩٪/٩٪");
+  if (!/OPENING_FRAME_TOP_OF_CONTENT\s*=\s*0\.09/.test(pageV2)) {
+    fail(13, "OPENING_FRAME_TOP_OF_CONTENT ≠ 0.09");
+  } else if (!/OPENING_FRAME_BOT_OF_CONTENT\s*=\s*0\.91/.test(pageV2)) {
+    fail(13, "OPENING_FRAME_BOT_OF_CONTENT ≠ 0.91");
+  } else if (!/mpv-toolbar-band|MUSHAF_LAYOUT_BANDS/.test(pageV2 + read("src/styles/quran.css"))) {
+    fail(13, "نطاقات التخطيط غير مثبتة");
   } else if (!/data-side-rails="straight"/.test(opening)) {
     fail(13, "أضلاع غير مستقيمة");
-  } else pass(13, "ثوابت جسم ٩٪/٩١٪ + CSS احتياطي");
+  } else pass(13, "ثوابت contentBand ٩٪/٩١٪ + نطاقات");
 
   /* ١٤ — التباين */
   if (!/test:color-contrast-gate/.test(read("package.json"))) {
@@ -260,8 +258,9 @@ async function measureLive(page, pageNum) {
     const frame = root.querySelector("[data-opening-frame]");
     if (frame) {
       const fr = frame.getBoundingClientRect();
-      out.frameTopBodyPct = ((fr.top - br.top) / br.height) * 100;
-      out.frameBotBodyPct = ((fr.bottom - br.top) / br.height) * 100;
+      /* نسب الإطار من contentBand (.mf2-lines) */
+      out.frameTopBodyPct = ((fr.top - lr.top) / lr.height) * 100;
+      out.frameBotBodyPct = ((fr.bottom - lr.top) / lr.height) * 100;
     }
 
     for (const el of root.querySelectorAll(".mf2-grid-slot--line[data-grid-slot]")) {

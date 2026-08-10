@@ -54,7 +54,7 @@ assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?z-index:\s*32/);
 assert.match(
   quranCss,
   /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?bottom:\s*calc\(\s*var\(--inset-bottom/,
-  "شريط آية أسفل الشاشة فوق inset-bottom",
+  "شريط آية في نطاق toolbarBand فوق inset-bottom",
 );
 assert.equal(
   /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?top:\s*calc\(var\(--inset-top\)\s*\+\s*2\.75rem\)/.test(
