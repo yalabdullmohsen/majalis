@@ -137,7 +137,14 @@ async function cacheFirst(req, cacheName) {
 /** Navigations must never be stored: current network document or offline page only. */
 async function networkFirstNavigation(req) {
   try {
-    return await fetchWithTimeout(req);
+    // تجاوز كاش HTTP للمتصفح قدر الإمكان — مستند SPA يجب أن يشير إلى hashes النشر الحالي.
+    let networkReq = req;
+    try {
+      networkReq = new Request(req, { cache: "no-store" });
+    } catch (_) {
+      networkReq = req;
+    }
+    return await fetchWithTimeout(networkReq);
   } catch {
     return (await caches.match("/offline.html", { cacheName: OFFLINE_CACHE })) ||
       new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } });
