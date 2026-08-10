@@ -12,6 +12,8 @@ export const OFFLINE_STORES = {
   adhkar: "adhkar",
   articles: "articles",
   flashcards: "flashcards",
+  /** إشارات/مفضّلات محلية (مصحف، أذكار، كتب…) */
+  bookmarks: "bookmarks",
 } as const;
 
 export type OfflineStoreName = (typeof OFFLINE_STORES)[keyof typeof OFFLINE_STORES];

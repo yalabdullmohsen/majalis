@@ -132,6 +132,7 @@ export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail
     return cached;
   }
 
+  // 1) ملفات التطبيق المحلية (/data/quran) — مصدر offline ثابت عبر SW
   const local = await fetchLocalSurahDetail(surahNumber);
   if (local) {
     writeCache(key, local);
@@ -142,36 +143,34 @@ export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail
     return local;
   }
 
+  // 2) IndexedDB (حزم دافئة) قبل طلب الشبكة
   try {
-    const { pooledFetch } = await import("@/lib/fetch-pool");
-    const res = await pooledFetch(`${BASE}/surah/${surahNumber}/quran-uthmani`, {
-      timeoutMs: 15_000,
-      dedupeKey: `quran-api:${surahNumber}`,
-    });
-    if (!res.ok) throw new Error(`AlQuran Cloud: HTTP ${res.status}`);
-    const json = await res.json();
-    if (json.code !== 200 || !json.data) throw new Error("AlQuran Cloud: unexpected response");
-    const detail: SurahDetail = json.data;
-    writeCache(key, detail);
-    surahDetailMemory.set(surahNumber, detail);
-    void import("@/lib/offline-content-store")
-      .then((m) => m.cacheQuranSurah(detail))
-      .catch(() => undefined);
-    return detail;
-  } catch (err) {
-    // Graceful offline fallback from IndexedDB before surfacing failure
-    try {
-      const { getCachedQuranSurah } = await import("@/lib/offline-content-store");
-      const offline = await getCachedQuranSurah(surahNumber);
-      if (offline) {
-        surahDetailMemory.set(surahNumber, offline);
-        return offline;
-      }
-    } catch {
-      /* ignore */
+    const { getCachedQuranSurah } = await import("@/lib/offline-content-store");
+    const offline = await getCachedQuranSurah(surahNumber);
+    if (offline) {
+      writeCache(key, offline);
+      surahDetailMemory.set(surahNumber, offline);
+      return offline;
     }
-    throw err;
+  } catch {
+    /* continue to API */
   }
+
+  const { pooledFetch } = await import("@/lib/fetch-pool");
+  const res = await pooledFetch(`${BASE}/surah/${surahNumber}/quran-uthmani`, {
+    timeoutMs: 15_000,
+    dedupeKey: `quran-api:${surahNumber}`,
+  });
+  if (!res.ok) throw new Error(`AlQuran Cloud: HTTP ${res.status}`);
+  const json = await res.json();
+  if (json.code !== 200 || !json.data) throw new Error("AlQuran Cloud: unexpected response");
+  const detail: SurahDetail = json.data;
+  writeCache(key, detail);
+  surahDetailMemory.set(surahNumber, detail);
+  void import("@/lib/offline-content-store")
+    .then((m) => m.cacheQuranSurah(detail))
+    .catch(() => undefined);
+  return detail;
   })();
 
   surahDetailInflight.set(surahNumber, run);
