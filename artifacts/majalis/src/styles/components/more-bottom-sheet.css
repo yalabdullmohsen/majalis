@@ -149,6 +149,10 @@
 
 .bottom-sheet--services .bottom-sheet__section {
   margin-block: 0 var(--mj-s4);
+  padding: var(--mj-s3);
+  border: 1px solid var(--mj-hairline);
+  border-radius: var(--mj-r-md);
+  background: color-mix(in srgb, var(--mj-bg) 70%, var(--mj-surface));
 }
 
 .bottom-sheet--services .bottom-sheet__section-label {
@@ -156,9 +160,9 @@
   padding: 0;
   font-family: var(--mj-ui) !important;
   font-size: var(--mj-fs-small);
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0;
-  color: var(--mj-ink-2) !important;
+  color: var(--mj-ink) !important;
 }
 
 .bottom-sheet--services .bottom-sheet__quick {

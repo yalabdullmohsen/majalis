@@ -1,34 +1,29 @@
 import { useEffect, useState } from "react";
 import { PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
 
-function IslamicStar({ size = 44 }: { size?: number }) {
-  const cx = size / 2;
-  const pts = Array.from({ length: 16 }, (_, i) => {
-    const r = i % 2 === 0 ? size * 0.43 : size * 0.22;
-    const a = (Math.PI / 8) * i - Math.PI / 2;
-    return `${(cx + r * Math.cos(a)).toFixed(2)},${(cx + r * Math.sin(a)).toFixed(2)}`;
-  }).join(" ");
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true"
-      className="ds-loader-svg">
-<polygon points={pts} fill="none" stroke="var(--majalis-emerald,var(--mj-brand-deep))"
-        strokeWidth="1.6" strokeLinejoin="round" opacity="0.85" />
-      <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--majalis-emerald,var(--mj-brand-deep))" opacity="0.6" />
-    </svg>
-  );
-}
-
+/**
+ * هيكل تحميل خفيف — يُشعر بالفورية بدل شاشة انتظار فارغة.
+ */
 export function LazyRouteFallback() {
-  const [retries, setRetries] = useState(0);
+  const [slow, setSlow] = useState(false);
   useEffect(() => {
-    const id = window.setTimeout(() => setRetries((n) => n + 1), PAGE_LOAD_TIMEOUT_MS);
+    const id = window.setTimeout(() => setSlow(true), Math.min(PAGE_LOAD_TIMEOUT_MS, 2_400));
     return () => window.clearTimeout(id);
-  }, [retries]);
+  }, []);
 
   return (
-    <div className="lrf-wrap" role="status" aria-label="جارٍ تحميل الصفحة…">
-      <IslamicStar size={48} />
-      <p className="lrf-label">جارٍ تحميل الصفحة…</p>
+    <div className="lrf-wrap lrf-wrap--skel" role="status" aria-label="جارٍ تحميل الصفحة…">
+      <div className="lrf-skel" aria-hidden="true">
+        <div className="lrf-skel__hero skeleton-base" />
+        <div className="lrf-skel__line skeleton-base" />
+        <div className="lrf-skel__line lrf-skel__line--short skeleton-base" />
+        <div className="lrf-skel__cards">
+          <div className="lrf-skel__card skeleton-base" />
+          <div className="lrf-skel__card skeleton-base" />
+          <div className="lrf-skel__card skeleton-base" />
+        </div>
+      </div>
+      {slow ? <p className="lrf-label">جارٍ تحميل الصفحة…</p> : null}
     </div>
   );
 }

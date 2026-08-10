@@ -18,6 +18,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { HomeCustomizeSheet } from "@/components/home/HomeCustomizeSheet";
 import { HomeRecentPagesBar } from "@/components/home/HomeRecentPagesBar";
 import { HomeExplorePlatform } from "@/components/home/HomeExplorePlatform";
+import { HomeContentHub } from "@/components/home/HomeContentHub";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
@@ -248,6 +249,10 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
+      </section>
+
+      <section className="m2030-band" aria-label="محتوى أساسي">
+        <HomeContentHub />
       </section>
 
       <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">

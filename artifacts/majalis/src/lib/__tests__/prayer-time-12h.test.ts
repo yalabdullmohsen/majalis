@@ -32,7 +32,7 @@ assert.match(mushaf, /setTextChromeVisible/);
 
 const more = readFileSync(join(root, "components/MoreBottomSheet.tsx"), "utf8");
 assert.match(more, /services-center-nav|filterServicesCenterGroups/);
-assert.match(more, /مركز الخدمات/);
+assert.match(more, /قائمة المزيد|مركز الخدمات/);
 
 const drawer = readFileSync(join(root, "components/SideNavDrawer.tsx"), "utf8");
 assert.match(drawer, /SIDEBAR_NAV_GROUPS/);

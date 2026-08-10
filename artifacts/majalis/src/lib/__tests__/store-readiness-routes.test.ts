@@ -21,13 +21,13 @@ assert.match(appSrc, /Redirect to="\/about-us"/, "who-we-are → about-us");
 assert.match(appSrc, /Redirect to="\/account-deletion"/, "delete-account → account-deletion");
 assert.match(appSrc, /Redirect to="\/contact"/, "support → contact");
 
-assert.match(navSrc, /title:\s*"عن التطبيق"/, "about group renamed");
+assert.match(navSrc, /title:\s*"الإعدادات والمساعدة"/, "settings/help group");
 assert.match(navSrc, /href: "\/support"/, "support in services center");
 assert.match(navSrc, /href: "\/delete-account"/, "delete-account in services center");
-// الحساب قبل عن التطبيق في المصفوفة
-const accountIdx = navSrc.indexOf('id: "account"');
-const aboutIdx = navSrc.indexOf('id: "about"');
-assert.ok(accountIdx > 0 && aboutIdx > accountIdx, "account group before about group");
+const featuresIdx = navSrc.indexOf('id: "features"');
+const contentIdx = navSrc.indexOf('id: "content"');
+const settingsIdx = navSrc.indexOf('id: "settings"');
+assert.ok(featuresIdx > 0 && contentIdx > featuresIdx && settingsIdx > contentIdx, "features → content → settings");
 
 assert.match(delSrc, /clearLocalBookmarks/, "clears local bookmarks on delete");
 assert.match(delSrc, /clearUserLocalDataAndMedia/, "wipes local media + IndexedDB audio on delete");
