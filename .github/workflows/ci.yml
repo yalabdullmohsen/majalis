@@ -194,8 +194,33 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
 
+
+      - name: Start shared Vite (بوابات المصحف)
+        working-directory: artifacts/majalis
+        env:
+          PORT: "24216"
+          BASE_PATH: "/"
+        run: |
+          set -euo pipefail
+          pnpm exec vite --config vite.config.ts --host 127.0.0.1 --port 24216 > /tmp/mushaf-vite.log 2>&1 &
+          echo $! > /tmp/mushaf-vite.pid
+          for i in $(seq 1 90); do
+            if curl -sf -o /dev/null "http://127.0.0.1:24216/"; then
+              echo "Vite جاهز"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Vite لم يبدأ"; tail -50 /tmp/mushaf-vite.log; exit 1
+
       - name: Mushaf gates (core + عيّنة ٢٥)
+        env:
+          MUSHAF_GATE_BASE_URL: http://127.0.0.1:24216
         run: pnpm --filter @workspace/majalis run test:mushaf-gates:core
+
+      - name: Stop shared Vite
+        if: always()
+        run: kill "$(cat /tmp/mushaf-vite.pid)" 2>/dev/null || true
 
       - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
         if: failure()
@@ -241,8 +266,33 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
 
+
+      - name: Start shared Vite (بوابات المصحف)
+        working-directory: artifacts/majalis
+        env:
+          PORT: "24216"
+          BASE_PATH: "/"
+        run: |
+          set -euo pipefail
+          pnpm exec vite --config vite.config.ts --host 127.0.0.1 --port 24216 > /tmp/mushaf-vite.log 2>&1 &
+          echo $! > /tmp/mushaf-vite.pid
+          for i in $(seq 1 90); do
+            if curl -sf -o /dev/null "http://127.0.0.1:24216/"; then
+              echo "Vite جاهز"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Vite لم يبدأ"; tail -50 /tmp/mushaf-vite.log; exit 1
+
       - name: Layout bands (عيّنة ٢٥)
+        env:
+          MUSHAF_GATE_BASE_URL: http://127.0.0.1:24216
         run: pnpm --filter @workspace/majalis run test:mushaf-layout-bands
+
+      - name: Stop shared Vite
+        if: always()
+        run: kill "$(cat /tmp/mushaf-vite.pid)" 2>/dev/null || true
 
       - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
         if: failure()
@@ -288,8 +338,33 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
 
+
+      - name: Start shared Vite (بوابات المصحف)
+        working-directory: artifacts/majalis
+        env:
+          PORT: "24216"
+          BASE_PATH: "/"
+        run: |
+          set -euo pipefail
+          pnpm exec vite --config vite.config.ts --host 127.0.0.1 --port 24216 > /tmp/mushaf-vite.log 2>&1 &
+          echo $! > /tmp/mushaf-vite.pid
+          for i in $(seq 1 90); do
+            if curl -sf -o /dev/null "http://127.0.0.1:24216/"; then
+              echo "Vite جاهز"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Vite لم يبدأ"; tail -50 /tmp/mushaf-vite.log; exit 1
+
       - name: Visual snapshot gates
+        env:
+          MUSHAF_GATE_BASE_URL: http://127.0.0.1:24216
         run: pnpm --filter @workspace/majalis run test:mushaf-visual-snapshot
+
+      - name: Stop shared Vite
+        if: always()
+        run: kill "$(cat /tmp/mushaf-vite.pid)" 2>/dev/null || true
 
       - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
         if: failure()
