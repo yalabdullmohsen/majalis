@@ -309,13 +309,14 @@ jobs:
           done
           echo "preview لم يبدأ"; tail -50 /tmp/mushaf-vite.log; exit 1
 
-      - name: Unit + active-page-lines + flip-perf
+      - name: Unit + active-page-lines + flip-perf + multi-viewport
         env:
           MUSHAF_GATE_BASE_URL: http://127.0.0.1:24216
         run: |
           pnpm --filter @workspace/majalis run test:mushaf-gates:unit
           pnpm --filter @workspace/majalis run test:mushaf-active-page-lines
           pnpm --filter @workspace/majalis run test:mushaf-flip-perf
+          pnpm --filter @workspace/majalis run test:mushaf-multi-viewport
 
       - name: Stop preview
         if: always()
