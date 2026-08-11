@@ -25,6 +25,7 @@ import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
+import { AdhanActiveOverlay } from "@/components/adhan/AdhanActiveOverlay";
 import { PrayerRespectBanner } from "@/components/adhan/PrayerRespectBanner";
 import {
   startPrayerAlertScheduler,
@@ -994,6 +995,7 @@ function AppShellInner() {
       {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
       {!hideSiteChrome && <PrayerCountdownBanner />}
       {!hideSiteChrome && <AdhanNotificationBar />}
+      {!hideSiteChrome && <AdhanActiveOverlay />}
       {!hideSiteChrome && <PrayerRespectBanner />}
       <main id="main-content" className="app-main" tabIndex={-1}>
         <Router />

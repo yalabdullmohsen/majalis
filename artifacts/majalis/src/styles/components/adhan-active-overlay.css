@@ -1,0 +1,99 @@
+/* طبقة الأذان النشط — RTL كاملة الشاشة */
+.aao-root {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(23, 61, 53, 0.55), transparent 55%),
+    linear-gradient(160deg, rgba(8, 24, 20, 0.92), rgba(16, 42, 36, 0.94));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  direction: rtl;
+  animation: aao-in 0.35s ease-out both;
+}
+
+@keyframes aao-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.aao-panel {
+  width: min(92vw, 420px);
+  color: #f7faf8;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.aao-eyebrow {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  opacity: 0.78;
+}
+
+.aao-title {
+  margin: 0;
+  font-family: var(--font-display, "Amiri", "Noto Naskh Arabic", serif);
+  font-size: clamp(1.85rem, 6vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.aao-city {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.aao-dua {
+  margin-top: 0.35rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: right;
+}
+
+.aao-dua__label {
+  margin: 0 0 0.45rem;
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
+.aao-dua__text {
+  margin: 0;
+  font-family: var(--font-display, "Amiri", "Noto Naskh Arabic", serif);
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
+.aao-stop {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.7rem 1.2rem;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--mj-brand-deep, #173d35);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.aao-dismiss {
+  background: transparent;
+  border: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.45rem;
+}

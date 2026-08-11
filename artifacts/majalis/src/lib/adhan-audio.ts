@@ -5,7 +5,8 @@
  *  - لا يُعرض اسم مؤذن شخصي إلا عند attribution === "verified".
  *  - غير ذلك: الاسم المعروض = اسم النمط فقط («أذان الحرم المكي»…).
  *
- * المصدر الحالي للملفات المتاحة: jsDelivr ← mohsalvi/adhan-audio (بث حي؛ لا حزم في الثنائي).
+ * المصدر: حزمة أوفلاين محلية خفيفة (`/sounds/adhan`) + CDN mohsalvi كاحتياط،
+ * مع كاش Cache API عبر adhan-downloads.
  * مفتاح التعطيل: `/data/adhan-audio-remote.json` عبر adhan-audio-remote-config.
  */
 
@@ -26,8 +27,14 @@ import {
   resolveIqamahClip,
   type AdhanPlaybackMode,
 } from "./adhan-playback-modes";
+import { getOfflineAdhanPack } from "./adhan-offline-assets";
 
 const CDN = "https://cdn.jsdelivr.net/gh/mohsalvi/adhan-audio@main";
+
+const OFF_MAKKAH = getOfflineAdhanPack("makkah");
+const OFF_MADINAH = getOfflineAdhanPack("madinah");
+const OFF_AQSA = getOfflineAdhanPack("aqsa");
+const OFF_TAKBIR = getOfflineAdhanPack("takbeerat");
 
 /** @deprecated استخدم AdhanPatternId — أُبقي للتوافق مع الواجهة القديمة */
 export type MuezzinStyle = string;
@@ -100,10 +107,15 @@ export const MUEZZINS: Muezzin[] = [
     followers: 720000,
     durationSec: 130,
     audioAvailable: true,
-    audioUrl: `${CDN}/general/makkah-haram-01.mp3`,
-    fajrUrl: `${CDN}/fajr/makkah-fajr-01.mp3`,
+    audioUrl:
+      OFF_MAKKAH?.local.general ||
+      OFF_MAKKAH?.remote.general ||
+      `${CDN}/general/makkah-haram-01.mp3`,
+    fajrUrl: OFF_MAKKAH?.remote.fajr || `${CDN}/fajr/makkah-fajr-01.mp3`,
+    shortUrl: OFF_MAKKAH?.local.short || OFF_TAKBIR?.local.short,
+    takbirUrl: OFF_MAKKAH?.local.takbir || OFF_TAKBIR?.local.takbir,
     sourceId: "mohsalvi-adhan-audio",
-    licenseNote: "بث عبر mohsalvi/adhan-audio — راجع CREDITS.md وLICENSE_RISKS.md",
+    licenseNote: "بث عبر mohsalvi/adhan-audio + حزمة أوفلاين محلية — راجع CREDITS.md",
   },
   {
     id: "alharam",
@@ -147,9 +159,14 @@ export const MUEZZINS: Muezzin[] = [
     followers: 580000,
     durationSec: 110,
     audioAvailable: true,
-    audioUrl: `${CDN}/general/madinah-01.mp3`,
+    audioUrl:
+      OFF_MADINAH?.local.general ||
+      OFF_MADINAH?.remote.general ||
+      `${CDN}/general/madinah-01.mp3`,
+    shortUrl: OFF_MADINAH?.local.short || OFF_TAKBIR?.local.short,
+    takbirUrl: OFF_MADINAH?.local.takbir || OFF_TAKBIR?.local.takbir,
     sourceId: "mohsalvi-adhan-audio",
-    licenseNote: "بث عبر mohsalvi/adhan-audio — راجع CREDITS.md وLICENSE_RISKS.md",
+    licenseNote: "بث عبر mohsalvi/adhan-audio + حزمة أوفلاين محلية — راجع CREDITS.md",
   },
   {
     id: "egypt",
@@ -293,9 +310,8 @@ export const MUEZZINS: Muezzin[] = [
     sourceId: "mohsalvi-adhan-audio",
     licenseNote: "بث عبر mohsalvi/adhan-audio — نسبة شخصية غير موثّقة؛ style_only",
   },
-  /* أنماط بلا ملف مرخّص مثبت بعد — ظاهرة في الفهرس كـ«قريبًا» وغير قابلة للاختيار */
   {
-    id: "aqsa-pending",
+    id: "aqsa",
     name: "أذان المسجد الأقصى",
     personName: null,
     attribution: "style_only",
@@ -307,7 +323,35 @@ export const MUEZZINS: Muezzin[] = [
     style: patternStyle("aqsa"),
     category: "الأقصى",
     tags: ["الأقصى"],
-    biography: "بانتظار توريد تسجيل مرخّص موثّق لهذا النمط. لا يُختار حتى يتوفّر الصوت.",
+    biography:
+      "تسجيل بنمط المسجد الأقصى. الملف الكامل من CDN ويُخزَّن في الكاش للأوفلاين؛ التكبيرات محلية.",
+    rating: 4.7,
+    totalRatings: 12000,
+    followers: 28000,
+    durationSec: 180,
+    audioAvailable: true,
+    audioUrl:
+      OFF_AQSA?.remote.general || `${CDN}/general/al-aqsa-jerusalem-02.mp3`,
+    shortUrl: OFF_AQSA?.local.short || OFF_TAKBIR?.local.short,
+    takbirUrl: OFF_AQSA?.local.takbir || OFF_TAKBIR?.local.takbir,
+    sourceId: "mohsalvi-adhan-audio",
+    licenseNote: "بث عبر mohsalvi/adhan-audio — راجع CREDITS.md وLICENSE_RISKS.md",
+  },
+  /* أنماط بلا ملف مرخّص مثبت بعد — ظاهرة في الفهرس كـ«قريبًا» وغير قابلة للاختيار */
+  {
+    id: "aqsa-pending",
+    name: "أذان المسجد الأقصى (قريبًا)",
+    personName: null,
+    attribution: "style_only",
+    patternId: "aqsa",
+    mosque: "المسجد الأقصى",
+    recordingYear: null,
+    origin: "القدس",
+    country: "فلسطين",
+    style: patternStyle("aqsa"),
+    category: "الأقصى",
+    tags: ["الأقصى"],
+    biography: "مدخل توافقي قديم — استخدم تسجيل «aqsa» المتاح.",
     rating: 0,
     totalRatings: 0,
     followers: 0,
@@ -315,7 +359,7 @@ export const MUEZZINS: Muezzin[] = [
     audioAvailable: false,
     audioUrl: "",
     sourceId: "mohsalvi-adhan-audio",
-    licenseNote: "لا ملف بعد — انظر LICENSE_RISKS.md",
+    licenseNote: "مُستبدل بـ aqsa — انظر LICENSE_RISKS.md",
   },
   {
     id: "levantine-pending",

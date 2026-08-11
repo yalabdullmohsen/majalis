@@ -7,4 +7,6 @@ export type AdhanEvent = {
   prayerKey: string;
   prayerName: string;
   minutesBefore?: number;
+  /** مدينة/موقع العرض في الإشعار — اختياري */
+  cityName?: string;
 };

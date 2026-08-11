@@ -28,6 +28,7 @@ import {
   clearAdhanFullDownloads,
   formatAdhanDownloadCap,
   getAdhanDownloadUsage,
+  ensureOfflineAdhanPack,
 } from "@/lib/adhan-downloads";
 import { MuezzinPicker } from "@/components/adhan/MuezzinPicker";
 import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
@@ -129,11 +130,13 @@ function AdhanDownloadRow({ onFlash }: { onFlash: () => void }) {
           onClick={() => {
             setBusy(true);
             setMsg("");
-            void downloadAdhanFullClips().then((r) => {
+            void ensureOfflineAdhanPack().then((r) =>
+              downloadAdhanFullClips().then((d) => ({ ...d, cached: r.cached })),
+            ).then((r) => {
               setBusy(false);
               setMsg(
                 r.ok
-                  ? "اكتمل التنزيل"
+                  ? "اكتمل التنزيل الأوفلاين"
                   : r.reason === "cap_reached"
                     ? "وصل السقف — احذف ثم أعد المحاولة"
                     : "تعذّر التنزيل",
@@ -287,33 +290,53 @@ function PrayerCustomizeSheet({
             />
           </div>
 
-          {(prefs.playbackMode === "short" || prefs.playbackMode === "full") ? (
-            <div className="ads-field-gap">
+          <div className="ads-field-gap">
               <div className="ads-global-label">صيغة هذه الصلاة</div>
               <div className="ads-chip-scroll" role="group" aria-label="صيغة التشغيل لهذه الصلاة">
-                {(["", "short", "full"] as const).map((mode) => (
-                  <button
-                    key={mode || "default"}
-                    type="button"
-                    className={`ads-chip${(p.deliveryMode || "") === mode ? " is-active" : ""}`}
-                    onClick={() => {
-                      onPrefs(patchPrayerPrefs(prayerKey, {
-                        deliveryMode: mode as AdhanDeliveryMode | "",
-                      }));
-                      onFlash();
-                    }}
-                  >
-                    {mode === "" ? "عام" : mode === "short" ? "قصير" : "كامل"}
-                  </button>
-                ))}
+                {(
+                  [
+                    { mode: "" as const, label: "عام" },
+                    { mode: "full" as const, label: "أذان كامل" },
+                    { mode: "takbir" as const, label: "تكبيرات فقط" },
+                    { mode: "silent" as const, label: "إشعار صامت" },
+                    { mode: "off" as const, label: "إيقاف التنبيه" },
+                  ]
+                ).map(({ mode, label }) => {
+                  const isOff = !p.enabled;
+                  const active =
+                    mode === "off"
+                      ? isOff
+                      : !isOff && (p.deliveryMode || "") === mode;
+                  return (
+                    <button
+                      key={mode || "default"}
+                      type="button"
+                      className={`ads-chip${active ? " is-active" : ""}`}
+                      onClick={() => {
+                        if (mode === "off") {
+                          onPrefs(patchPrayerPrefs(prayerKey, { enabled: false }));
+                        } else {
+                          onPrefs(
+                            patchPrayerPrefs(prayerKey, {
+                              enabled: true,
+                              deliveryMode: mode as AdhanDeliveryMode | "",
+                            }),
+                          );
+                        }
+                        onFlash();
+                      }}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
               </div>
-              {isNative && isIOS && (p.deliveryMode === "full" || (!p.deliveryMode && prefs.playbackMode === "full")) ? (
+              {isNative && isIOS && (p.deliveryMode === "full" || (!p.deliveryMode && prefs.playbackMode === "full")) && p.enabled ? (
                 <p className="ads-adhan-desc" style={{ marginTop: "0.5rem" }}>
                   الكامل على iOS = عدة إشعارات متتابعة.
                 </p>
               ) : null}
             </div>
-          ) : null}
         </div>
         <div className="ads-sheet__foot">
           <button type="button" className="ads-sheet__close" onClick={onClose}>إغلاق</button>
@@ -350,9 +373,14 @@ export default function AdhanSettingsPage() {
       ?.time ?? null;
 
   useEffect(() => {
+    void ensureOfflineAdhanPack({ muezzinId: prefs.defaultMuezzinId }).catch(() => undefined);
+  }, [prefs.defaultMuezzinId]);
+
+  useEffect(() => {
     applyPageSeo({
       path: "/adhan-settings",
       title: "إعدادات الأذان | المجلس العلمي",
+
       description: "خصّص إعدادات الأذان، اختر المؤذن والمحافظة وأوقات التنبيه لكل صلاة.",
       keywords: ["إعدادات أذان", "تنبيه الصلاة", "أوقات الصلاة", "مؤذن", "الكويت"],
       robots: "noindex, follow",
