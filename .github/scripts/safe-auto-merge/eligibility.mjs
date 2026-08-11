@@ -24,6 +24,7 @@ import {
   SAFE_LABELS,
   TITLE_BLOCK_RE,
 } from "./constants.mjs";
+import { classifyChangedPaths } from "./path-classifier.mjs";
 
 /**
  * @typedef {{ path: string, additions?: number, deletions?: number, changeType?: string }} PrFile
@@ -170,6 +171,8 @@ export function evaluateEligibility(input = {}) {
 
   const hasSafeLabel = SAFE_LABELS.some((l) => labels.includes(l));
   const checks = Array.isArray(input.checks) ? input.checks : [];
+  const pathLane = classifyChangedPaths(fileSummary.paths);
+  const req = pathLane.requiredChecks;
 
   function findCheck(re) {
     const row = checks.find((c) => re.test(c.name));
@@ -338,8 +341,9 @@ export function evaluateEligibility(input = {}) {
     );
   }
 
-  // --- required checks ---
-  // Verify build embeds typecheck + lint + test/content-guard + build (ci.yml).
+  // --- required checks (path-lane aware: skipped OK only when not required) ---
+  // Verify build embeds typecheck + lint + test/content-guard + build (ci.yml),
+  // or Fast Lane aggregate when docs/policy-only.
   const requireChecks = input.requireChecks !== false;
   let vercelPreviewKind = "unknown"; // green | ignored | pending | missing | failed
 
@@ -350,42 +354,62 @@ export function evaluateEligibility(input = {}) {
       hardBlockers.push(`CI Verify build not green (${verify.state})`);
     }
 
-    if (preview.state === "pending" || preview.state === "missing") {
-      waitBlockers.push(`preview-smoke not ready (${preview.state})`);
-    } else if (preview.state === "skip" && isContentAudit) {
-      warnings.push("preview-smoke skipped — OK for content-safe audit");
-    } else if (preview.state !== "pass" && preview.state !== "skip") {
-      hardBlockers.push(`preview-smoke not green (${preview.state})`);
+    if (req.previewSmoke) {
+      if (preview.state === "pending" || preview.state === "missing") {
+        waitBlockers.push(`preview-smoke not ready (${preview.state})`);
+      } else if (preview.state === "skip" && isContentAudit) {
+        warnings.push("preview-smoke skipped — OK for content-safe audit");
+      } else if (preview.state !== "pass" && preview.state !== "skip") {
+        hardBlockers.push(`preview-smoke not green (${preview.state})`);
+      } else if (preview.state === "skip") {
+        hardBlockers.push("preview-smoke skipped but required for this path lane");
+      }
+    } else if (preview.state === "fail") {
+      warnings.push("preview-smoke failed but not required for this path lane");
+    } else if (preview.state === "skip" || preview.state === "missing") {
+      warnings.push(
+        `preview-smoke ${preview.state} — OK (not required for lane ${pathLane.lane})`,
+      );
     }
 
-    if (vercelLint.state === "pending" || vercelLint.state === "missing") {
-      waitBlockers.push(
-        `Vercel check (lint-typecheck-build) not ready (${vercelLint.state})`,
-      );
-    } else if (vercelLint.state !== "pass" && vercelLint.state !== "skip") {
-      hardBlockers.push(
-        `Vercel check (lint-typecheck-build / git diff clean) not green (${vercelLint.state})`,
+    if (req.vercelCheck) {
+      if (vercelLint.state === "pending" || vercelLint.state === "missing") {
+        waitBlockers.push(
+          `Vercel check (lint-typecheck-build) not ready (${vercelLint.state})`,
+        );
+      } else if (vercelLint.state !== "pass" && vercelLint.state !== "skip") {
+        hardBlockers.push(
+          `Vercel check (lint-typecheck-build / git diff clean) not green (${vercelLint.state})`,
+        );
+      }
+    } else if (vercelLint.state === "skip" || vercelLint.state === "missing") {
+      warnings.push(
+        `Vercel check ${vercelLint.state} — OK (not required for lane ${pathLane.lane})`,
       );
     }
 
     if (vercelDeploy.ignoredPreview || vercelDeploy.state === "skip") {
       vercelPreviewKind = "ignored";
       warnings.push(
-        "Vercel Preview ignored/skipped (Ignored Build Step) — لا يمنع content-safe",
+        "Vercel Preview ignored/skipped (Ignored Build Step) — لا يمنع content-safe / Fast Lane",
       );
     } else if (vercelDeploy.state === "pass") {
       vercelPreviewKind = "green";
     } else if (vercelDeploy.state === "pending") {
       vercelPreviewKind = "pending";
-      if (isContentAudit) {
-        warnings.push("Vercel Preview pending — content-safe لا ينتظر Preview إلزاميًا");
+      if (isContentAudit || !req.previewSmoke) {
+        warnings.push(
+          `Vercel Preview pending — OK for lane ${pathLane.lane} / content-safe`,
+        );
       } else {
         waitBlockers.push(`Vercel deployment not ready (${vercelDeploy.state})`);
       }
     } else if (vercelDeploy.state === "missing") {
       vercelPreviewKind = "missing";
-      if (isContentAudit) {
-        warnings.push("Vercel – majalis-majalis status missing — OK for content-safe");
+      if (isContentAudit || !req.previewSmoke) {
+        warnings.push(
+          `Vercel – majalis-majalis status missing — OK for lane ${pathLane.lane}`,
+        );
       } else if (input.strictVercel === true) {
         waitBlockers.push("Vercel deployment status missing (waiting)");
       } else {
@@ -393,25 +417,54 @@ export function evaluateEligibility(input = {}) {
       }
     } else if (vercelDeploy.state === "fail") {
       vercelPreviewKind = "failed";
-      if (isContentAudit) {
+      if (isContentAudit || !req.previewSmoke) {
         warnings.push(
-          "Vercel Preview fail ignored for content-safe (production ينشر من main فقط)",
+          "Vercel Preview fail ignored for content-safe / Fast Lane (production ينشر من main فقط)",
         );
       } else {
         hardBlockers.push(`Vercel deployment not green (${vercelDeploy.state})`);
       }
     }
 
-    if (postgres.state === "pending" || postgres.state === "missing") {
-      waitBlockers.push(`postgres-integration not ready (${postgres.state})`);
+    if (req.postgres) {
+      if (postgres.state === "pending" || postgres.state === "missing") {
+        waitBlockers.push(`postgres-integration not ready (${postgres.state})`);
+      } else if (postgres.state === "fail") {
+        hardBlockers.push(`postgres-integration not green (${postgres.state})`);
+      } else if (postgres.state === "skip") {
+        hardBlockers.push("postgres-integration skipped but required for risky paths");
+      }
+    } else if (postgres.state === "skip" || postgres.state === "missing") {
+      warnings.push(
+        `postgres-integration ${postgres.state} — OK (not required for lane ${pathLane.lane})`,
+      );
     } else if (postgres.state === "fail") {
-      hardBlockers.push(`postgres-integration not green (${postgres.state})`);
+      warnings.push("postgres-integration failed but not required for this path lane");
     }
 
-    if (colorContrast.state === "pending") {
-      waitBlockers.push(`Color contrast gate not ready (${colorContrast.state})`);
-    } else if (colorContrast.state === "fail") {
-      hardBlockers.push(`Color contrast gate not green (${colorContrast.state})`);
+    if (req.colorContrast) {
+      if (colorContrast.state === "pending") {
+        waitBlockers.push(`Color contrast gate not ready (${colorContrast.state})`);
+      } else if (colorContrast.state === "fail") {
+        hardBlockers.push(`Color contrast gate not green (${colorContrast.state})`);
+      } else if (colorContrast.state === "skip" || colorContrast.state === "missing") {
+        // missing: job not reported yet on some PRs — wait only if UI/CSS lane
+        if (colorContrast.state === "missing") {
+          waitBlockers.push(`Color contrast gate not ready (${colorContrast.state})`);
+        } else {
+          hardBlockers.push("Color contrast skipped but required for UI/CSS changes");
+        }
+      }
+    } else if (
+      colorContrast.state === "skip" ||
+      colorContrast.state === "missing" ||
+      colorContrast.state === "pass"
+    ) {
+      if (colorContrast.state !== "pass") {
+        warnings.push(
+          `Color contrast ${colorContrast.state} — OK (not required for lane ${pathLane.lane})`,
+        );
+      }
     }
 
     if (hasIos && (iosStatic.state === "fail" || iosStatic.state === "pending" || iosStatic.state === "missing")) {
@@ -484,6 +537,15 @@ export function evaluateEligibility(input = {}) {
       all: labels,
       safeMatched: SAFE_LABELS.filter((l) => labels.includes(l)),
       contentSafe: isContentAudit,
+    },
+    pathLane: {
+      lane: pathLane.lane,
+      needBuild: pathLane.needBuild,
+      needMushaf: pathLane.needMushaf,
+      needPostgres: pathLane.needPostgres,
+      needFastLane: pathLane.needFastLane,
+      requiredChecks: pathLane.requiredChecks,
+      manualReview: pathLane.manualReview,
     },
   };
 }

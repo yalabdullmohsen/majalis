@@ -154,7 +154,9 @@ export function formatEligibilityReport(result, meta = {}) {
           .join("\n")
       : "",
     "### سياسة سريعة",
+    `- Path lane: \`${result.pathLane?.lane || "?"}\` (build=${result.pathLane?.needBuild ? "yes" : "no"}, mushaf=${result.pathLane?.needMushaf ? "yes" : "no"}, postgres=${result.pathLane?.needPostgres ? "yes" : "no"})`,
     `- Labels اختيارية للتصنيف (ليست شرطًا للتغييرات منخفضة المخاطر): ${SAFE_LABELS.map((l) => `\`${l}\``).join(", ")}`,
+    `- فحوص skipped مقبولة فقط إن قال path-lane إنها غير مطلوبة — لا تخطّي فحص مطلوب.`,
     `- \`content-safe\` / \`safe:content\`: مسارات مسموحة فقط — \`${CONTENT_SAFE_PATH_PATTERNS.map((r) => r.source).join(" | ")}\``,
     "- Vercel Preview ignored/skipped **لا يمنع** تدقيق المحتوى الآمن.",
     "- Production ينشر فقط بعد الدمج إلى `main` (مشروع **majalis-majalis**).",
