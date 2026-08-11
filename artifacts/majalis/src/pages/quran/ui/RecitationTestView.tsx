@@ -32,32 +32,22 @@ import { normalizeQuranWord } from "@/lib/recitation-ai/quran-normalize";
 import { applyAlertPolicy } from "@/lib/recitation-ai/session-event-policy";
 import { analyzeTajweedTimings } from "@/lib/recitation-ai/tajweed-timing";
 import { pairCorrectEventsWithTimedWords } from "@/lib/recitation-ai/pair-timed-refs";
-import { getAyahAudioUrl, loadReciterId } from "@/lib/quran-audio";
+import {
+  applyTasmeeReportToHifz,
+  buildTasmeeSessionReport,
+} from "@/lib/recitation-ai/hifz-session-bridge";
+import {
+  pausePlaybackForTasmee,
+  playTalqinAyah,
+  resumePlaybackAfterTasmee,
+  stopAuxiliaryAudioForTasmee,
+} from "@/lib/recitation-ai/playback-handoff";
 import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord, TajweedNote } from "@/lib/recitation-ai/types";
 import "@/styles/recitation-ai.css";
 
 /** يشغّل آية واحدة من everyayah ثم يحلّ عند الانتهاء (لوضع استماع ثم تكرار). */
 function playAyahOnce(surah: number, ayah: number, signal?: { cancelled: boolean }): Promise<void> {
-  const url = getAyahAudioUrl(surah, ayah, loadReciterId());
-  const audio = new Audio(url);
-  return new Promise((resolve, reject) => {
-    const cleanup = () => {
-      audio.onended = null;
-      audio.onerror = null;
-      try { audio.pause(); } catch { /* ignore */ }
-    };
-    audio.onended = () => { cleanup(); resolve(); };
-    audio.onerror = () => { cleanup(); reject(new Error("تعذّر تشغيل صوت القارئ")); };
-    void audio.play().then(() => {
-      if (signal?.cancelled) {
-        cleanup();
-        resolve();
-      }
-    }).catch((err) => {
-      cleanup();
-      reject(err);
-    });
-  });
+  return playTalqinAyah(surah, ayah, signal);
 }
 
 type Phase = "setup" | "loading" | "detecting" | "session" | "report" | "error";
@@ -88,6 +78,9 @@ function hasRecitationAiConsent(): boolean {
 }
 function grantRecitationAiConsent(): void {
   try { localStorage.setItem(RAI_CONSENT_KEY, "1"); } catch { /* تجاهل */ }
+}
+function revokeRecitationAiConsent(): void {
+  try { localStorage.removeItem(RAI_CONSENT_KEY); } catch { /* تجاهل */ }
 }
 
 /** يستخرج نصًا صالحًا للعرض ورمز الخطأ (إن وُجد) من أي خطأ مُلتقَط — يميّز ASRProviderUnavailableError (رمز حقيقي) عن أي Error عام آخر. */
@@ -166,6 +159,10 @@ function RecitationTestPageInner() {
   const [consentGiven, setConsentGiven] = useState(hasRecitationAiConsent);
   const [deletingData, setDeletingData] = useState(false);
   const [deleteResult, setDeleteResult] = useState<"success" | "error" | null>(null);
+  const [talqinPlaying, setTalqinPlaying] = useState(false);
+  const [softHold, setSoftHold] = useState(false);
+  const [hifzSavedNote, setHifzSavedNote] = useState<string | null>(null);
+  const talqinCancelRef = useRef<{ cancelled: boolean }>({ cancelled: false });
 
   // كشف المتشابهات (القسم 1: بند تفوّق — راجع src/lib/recitation-ai/mutashabihat.ts
   // وscripts/build-mutashabihat-index.mjs). يُحمَّل فقط عند بلوغ شاشة
@@ -413,15 +410,9 @@ function RecitationTestPageInner() {
     setErrorCode(null);
     setTajweedNotes([]);
     try {
-      // أوقف أي تلاوة قائمة قبل فتح الميكروفون
-      try {
-        const { getAudioEngine } = await import("@/core/audio/AudioEngine");
-        getAudioEngine().stop();
-      } catch { /* ignore */ }
-      try {
-        const { getMajlisAudioService } = await import("@/lib/majlis-audio-service");
-        await getMajlisAudioService().stop();
-      } catch { /* ignore */ }
+      // أوقف أي تلاوة قائمة قبل فتح الميكروفون (تبديل فئة الصوت)
+      await pausePlaybackForTasmee();
+      await stopAuxiliaryAudioForTasmee();
 
       // "اختبار المعلّم" (القسم 2، الوضع 5): يبدأ من آية عشوائية داخل
       // النطاق المُختار بدل أوله دومًا — يقيس قدرة الاسترجاع الفعلية لا
@@ -584,6 +575,8 @@ function RecitationTestPageInner() {
     setErrorMsg(null);
     setErrorCode(null);
     try {
+      await pausePlaybackForTasmee();
+      await stopAuxiliaryAudioForTasmee();
       const [selection, positionIndex] = await Promise.all([
         selectBestProvider(navigator.onLine, { preferTajweed: precisionLevel === "tajweed" }),
         loadPositionIndex(),
@@ -759,6 +752,8 @@ function RecitationTestPageInner() {
     const engine = engineRef.current;
     if (!provider || !engine) return;
     try {
+      setSoftHold(false);
+      setCorrectionCard(null);
       await attachAsrSession(provider, engine);
       setListening(true);
       setPaused(false);
@@ -775,6 +770,32 @@ function RecitationTestPageInner() {
   useEffect(() => {
     if (teacherHold) void pauseSession();
   }, [teacherHold, pauseSession]);
+
+  // إيقاف لطيف عند الخطأ (لطيف/متوسط/فوري) — يغلق الميكروفون دون إلزام معلّم
+  useEffect(() => {
+    if (softHold && !teacherHold) void pauseSession();
+  }, [softHold, teacherHold, pauseSession]);
+
+  // عند مغادرة صفحة التسميع: أنهِ جلسة ASR بلا تسريب، واستأنف التلاوة إن لزم
+  useEffect(() => {
+    return () => {
+      talqinCancelRef.current.cancelled = true;
+      unsubRef.current?.();
+      unsubRef.current = null;
+      statusUnsubRef.current?.();
+      statusUnsubRef.current = null;
+      const provider = providerRef.current;
+      const asrSession = asrSessionRef.current;
+      if (provider && asrSession) {
+        void provider.endSession(asrSession).catch(() => {});
+        asrSessionRef.current = null;
+      }
+      void import("@/lib/plugins/speech-recognition").then(({ getSpeechRecognitionPlugin }) => {
+        void getSpeechRecognitionPlugin()?.teardown().catch(() => undefined);
+      });
+      void resumePlaybackAfterTasmee();
+    };
+  }, []);
 
   // استئناف تلقائي أدق (القسم 12: "لا يُبقي الجلسة عالقة صامتًا عند
   // انتقال المستخدم بعيدًا"): عند إخفاء التبويب/تصغير التطبيق أثناء
@@ -817,6 +838,7 @@ function RecitationTestPageInner() {
       engineRef.current = engine;
       setCorrectionCard(null);
       setTeacherHold(false);
+      setSoftHold(false);
       await attachAsrSession(provider, engine);
       setListening(true);
       setPaused(false);
@@ -831,7 +853,23 @@ function RecitationTestPageInner() {
   const dismissCorrectionCard = useCallback(() => {
     if (teacherHold) return;
     setCorrectionCard(null);
+    setSoftHold(false);
   }, [teacherHold]);
+
+  /** تلقين: تشغيل صوت الآية للكلمة المتوقعة مع إبقاء الميكروفون متوقفًا. */
+  const playTalqinForCorrection = useCallback(async () => {
+    if (!correctionCard || talqinPlaying) return;
+    talqinCancelRef.current = { cancelled: false };
+    setTalqinPlaying(true);
+    try {
+      if (listeningRef.current) await pauseSession();
+      await playTalqinAyah(correctionCard.ref.surah, correctionCard.ref.ayah, talqinCancelRef.current);
+    } catch {
+      setUnclearNotice("تعذّر تشغيل التلقين — جرّب مجددًا");
+    } finally {
+      setTalqinPlaying(false);
+    }
+  }, [correctionCard, talqinPlaying, pauseSession]);
 
   const applyEvents = useCallback((events: AlignmentEvent[]) => {
     if (events.length === 0) return;
@@ -878,8 +916,10 @@ function RecitationTestPageInner() {
         void hapticNotify("error");
       }
       if (policy.holdSession) setTeacherHold(true);
+      if (policy.softPause) setSoftHold(true);
     } else if (lastNeeds && lastNeeds.kind === "needs_repeat" && policy.showCorrection) {
       setCorrectionCard({ ref: lastNeeds.ref, heardWord: lastNeeds.heardWord });
+      if (policy.softPause) setSoftHold(true);
     }
 
     if (recallStartAtRef.current !== null && mapped.some((e) => e.kind === "correct")) {
@@ -934,6 +974,18 @@ function RecitationTestPageInner() {
 
   const persistSession = useCallback(
     async (events: AlignmentEvent[]) => {
+      // تقرير محلي + تقدّم الحفظ — يعمل بلا حساب (وحدة ١٤)
+      try {
+        const report = buildTasmeeSessionReport(referenceWords, events);
+        const hifz = applyTasmeeReportToHifz(report, referenceWords);
+        setHifzSavedNote(
+          `حُفظ في تقدّم الحفظ: ${report.ayahCount} آية · إتقان ${report.masteryPct}% · مواضع توقّف ${report.stopPositions.length}` +
+            (hifz.memorizedAyahs > 0 ? ` · محفوظ ${hifz.memorizedAyahs}/${hifz.totalAyahs}` : ""),
+        );
+      } catch {
+        setHifzSavedNote(null);
+      }
+
       if (!user?.id) return;
       const correct = events.filter((e) => e.kind === "correct").length;
       const errors = events.filter((e) => e.kind === "error");
@@ -1154,10 +1206,10 @@ function RecitationTestPageInner() {
           </p>
           <ul className="rai-consent-screen__list">
             <li>سيُطلَب إذن الميكروفون فقط عند ضغطك "ابدأ التسميع" — لا استماع في الخلفية بلا علمك.</li>
-            <li>الصوت نفسه لا يُسجَّل ولا يُرسَل لخوادم المجلس العلمي مطلقًا؛ التعرّف الصوتي يتم على جهازك، أو عبر خدمة نظام التشغيل (Apple/Google) حين لا يتوفر تعرّف كامل محليًا.</li>
-            <li>إن سجّلت الدخول: نتيجة كل جلسة (نسبة الدقة، مواضع الأخطاء، المدة) تُحفَظ في حسابك لعرضها في التقارير ومراجعة الأخطاء المتكررة، وتُحتسَب ضمن شارات الإنجاز.</li>
-            <li>زائر بلا حساب: لا شيء يُحفَظ عبر الأجهزة — فقط أثناء الجلسة نفسها.</li>
-            <li>يمكنك حذف كل بيانات جلسات التسميع المحفوظة نهائيًا في أي وقت — الزر أدناه فعّال الآن، لا وعد مستقبلي.</li>
+            <li><strong>التعرّف محليًا أولًا</strong> على جهازك. إن لم يتوفر تعرّف عربي كامل محليًا، قد يمرّ الصوت عبر خدمة نظام التشغيل (Apple/Google) — لا يُرسَل صوت إلى خوادم المجلس العلمي مطلقًا.</li>
+            <li>إن سجّلت الدخول: نتيجة كل جلسة (نسبة الدقة، مواضع الأخطاء، المدة) تُحفَظ في حسابك لعرضها في التقارير ومراجعة الأخطاء المتكررة.</li>
+            <li>زائر بلا حساب: يُحفظ تقرير موجز وتقدّم الحفظ على جهازك فقط (محليًا).</li>
+            <li>يمكنك سحب الموافقة وحذف بيانات جلسات التسميع في أي وقت.</li>
           </ul>
 
           {user?.id && (
@@ -1496,6 +1548,17 @@ function RecitationTestPageInner() {
             يتوفر تعرّف كامل محليًا (راجع{" "}
             <Link href="/privacy" style={{ color: "var(--rai-emerald)" }}>سياسة الخصوصية</Link>).
           </p>
+          <button
+            type="button"
+            className="rai-consent-screen__delete-btn"
+            style={{ marginTop: "0.75rem" }}
+            onClick={() => {
+              revokeRecitationAiConsent();
+              setConsentGiven(false);
+            }}
+          >
+            سحب موافقة التسميع
+          </button>
         </div>
       </div>
     );
@@ -1584,14 +1647,13 @@ function RecitationTestPageInner() {
             </p>
           )}
 
-          {/* بطاقة التصحيح الحي — تُعرَض تلقائيًا فقط في alertLevel "فوري"/"معلّم
-              حقيقي" (نمط "لطيف"/"متوسط" بلا مقاطعة تلقائية عمدًا، يبقى الخطأ
-              مرئيًا في تظليل الكلمة + قائمة التقرير لاحقًا فقط). في وضع
-              المعلّم تحديدًا: الجلسة متوقفة فعليًا (مايكروفون مغلق عبر
-              teacherHold أعلاه) ولا خيار سوى "أعد من هذه الكلمة". */}
-          {correctionCard && (alertLevel === "immediate" || alertLevel === "teacher") && (
-            <div className="rai-correction-card" role="alertdialog" aria-label="بطاقة تصحيح">
+          {/* بطاقة التصحيح — تظهر عند الخطأ/إعادة مع الكلمة المتوقعة + تلقين */}
+          {correctionCard && (
+            <div className="rai-correction-card" role="alertdialog" aria-label="بطاقة تصحيح" aria-live="polite">
               {teacherHold && <p className="rai-correction-card__teacher-note">توقفت الجلسة — صحّح ثم أعد النطق</p>}
+              {!teacherHold && softHold && (
+                <p className="rai-correction-card__teacher-note">توقّفنا بلطف — أعد الكلمة أو استمع للتلقين</p>
+              )}
               <p className="rai-correction-card__row">
                 <span className="rai-correction-card__label">قرأتَ:</span>
                 <bdi className="rai-correction-card__heard">{correctionCard.heardWord}</bdi>
@@ -1601,12 +1663,28 @@ function RecitationTestPageInner() {
                 <bdi className="rai-correction-card__correct">{correctionCard.ref.raw}</bdi>
               </p>
               <div className="rai-correction-card__actions">
+                <button
+                  type="button"
+                  className="rai-correction-card__retry"
+                  onClick={() => void playTalqinForCorrection()}
+                  disabled={talqinPlaying}
+                  aria-label="تلقين: تشغيل صوت الكلمة الصحيحة"
+                >
+                  {talqinPlaying ? "جارٍ التلقين…" : "تلقين"}
+                </button>
                 <button type="button" className="rai-correction-card__retry" onClick={() => void retryFromError()} disabled={retrying}>
                   {retrying ? "جارٍ الاستئناف…" : "أعد من هذه الكلمة"}
                 </button>
                 {!teacherHold && (
-                  <button type="button" className="rai-correction-card__dismiss" onClick={dismissCorrectionCard}>
-                    إغلاق
+                  <button
+                    type="button"
+                    className="rai-correction-card__dismiss"
+                    onClick={() => {
+                      dismissCorrectionCard();
+                      void resumeSession();
+                    }}
+                  >
+                    متابعة
                   </button>
                 )}
               </div>
@@ -1713,10 +1791,15 @@ function RecitationTestPageInner() {
           )}
           <div className="rai-report__stat"><span className="rai-report__stat-val">{new Set(referenceWords.map((w) => w.ayah)).size}</span><span className="rai-report__stat-lbl">آية</span></div>
           <div className="rai-report__stat"><span className="rai-report__stat-val">{sessionConfidence}%</span><span className="rai-report__stat-lbl">ثقة التحليل</span></div>
+          <div className="rai-report__stat"><span className="rai-report__stat-val">{accuracy}%</span><span className="rai-report__stat-lbl">نسبة الإتقان</span></div>
           {mode === "teacher_test" && recallMs !== null && (
             <div className="rai-report__stat"><span className="rai-report__stat-val">{(recallMs / 1000).toFixed(1)}ث</span><span className="rai-report__stat-lbl">زمن الاسترجاع</span></div>
           )}
         </div>
+
+        {hifzSavedNote && (
+          <p className="rai-report__disclaimer" role="status">{hifzSavedNote}</p>
+        )}
 
         {bestStreak > 0 && (
           <p className="rai-report__disclaimer">

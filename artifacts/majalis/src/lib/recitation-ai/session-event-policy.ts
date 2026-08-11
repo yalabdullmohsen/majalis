@@ -17,6 +17,11 @@ export type EventPolicyDecision = {
   events: AlignmentEvent[];
   /** true: أوقف الاستماع وافتح بطاقة معلّم إلزامية */
   holdSession: boolean;
+  /**
+   * true: إيقاف مؤقّت لطيف (pause) مع بطاقة تصحيح — لا يُلزم بإعادة من الكلمة
+   * بخلاف holdSession في وضع المعلّم.
+   */
+  softPause: boolean;
   /** true: اعرض بطاقة تصحيح (اختيارية أو إلزامية حسب holdSession) */
   showCorrection: boolean;
   softPrompt: string | null;
@@ -29,6 +34,7 @@ export function shouldHoldReferenceCursor(event: AlignmentEvent): boolean {
 
 export function applyAlertPolicy(events: AlignmentEvent[], alertLevel: AlertLevel): EventPolicyDecision {
   let holdSession = false;
+  let softPause = false;
   let showCorrection = false;
   let softPrompt: string | null = null;
 
@@ -38,26 +44,31 @@ export function applyAlertPolicy(events: AlignmentEvent[], alertLevel: AlertLeve
       return e;
     }
     if (e.kind === "needs_repeat") {
-      softPrompt = "أعد الكلمة للتأكيد";
-      if (alertLevel === "immediate" || alertLevel === "teacher") showCorrection = true;
+      softPrompt = "أعد الكلمة بهدوء — يمكنك الاستماع للتلقين إن احتجت";
+      showCorrection = true;
+      if (alertLevel === "gentle" || alertLevel === "medium") softPause = true;
       return e;
     }
     if (e.kind !== "error") return e;
 
-    // لطيف: حوّل wrong_word إلى needs_repeat (تقليل الإنذارات الخاطئة)
+    // لطيف: حوّل wrong_word إلى needs_repeat + بطاقة + إيقاف مؤقّت بلا تأنيب
     if (alertLevel === "gentle" && e.errorType === "wrong_word" && e.ref && e.heardWord) {
-      softPrompt = "أعد الكلمة للتأكيد";
+      softPrompt = "توقّفنا قليلًا — أعد الكلمة بهدوء، أو استمع للتلقين";
+      showCorrection = true;
+      softPause = true;
       return { kind: "needs_repeat", ref: e.ref, heardWord: e.heardWord, confidence: e.confidence };
     }
 
     if (alertLevel === "medium" && (e.errorType === "wrong_word" || e.errorType === "missing_word")) {
-      softPrompt = e.note ?? "لاحظ موضعًا يحتاج مراجعة";
+      softPrompt = e.note ?? "لاحظ موضعًا يحتاج مراجعة — بلا عجلة";
       showCorrection = true;
+      softPause = true;
       return e;
     }
 
     if (alertLevel === "immediate") {
       showCorrection = true;
+      softPause = true;
       return e;
     }
 
@@ -70,5 +81,5 @@ export function applyAlertPolicy(events: AlignmentEvent[], alertLevel: AlertLeve
     return e;
   });
 
-  return { events: mapped, holdSession, showCorrection, softPrompt };
+  return { events: mapped, holdSession, softPause, showCorrection, softPrompt };
 }
