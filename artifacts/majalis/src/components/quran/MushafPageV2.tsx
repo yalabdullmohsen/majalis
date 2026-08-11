@@ -1006,18 +1006,25 @@ export function MushafPageV2({
         }
       }
 
-      /* سلّم خطوط موحّد: S على الحاوية والصدفة */
+      /* سلّم خطوط موحّد: S على الحاوية؛ وعلى الصدفة فقط للصفحة النشطة
+       * (الجيران prev/next كانوا يكتبون BASE فوق S المُصغَّر فيُكسر typescale). */
       const typeVars = mushafTypescaleCssVars(size);
       for (const [k, v] of Object.entries(typeVars)) {
         container.style.setProperty(k, v);
       }
-      const shell =
-        container.closest<HTMLElement>(".quran-shell--ayah") ||
-        container.closest<HTMLElement>(".mpv-root") ||
-        container.closest<HTMLElement>("[data-mushaf-shell]");
-      if (shell) {
-        for (const [k, v] of Object.entries(typeVars)) {
-          shell.style.setProperty(k, v);
+      const pageStateHost = container.closest<HTMLElement>("[data-page-state]");
+      const isActiveLeaf =
+        !pageStateHost ||
+        pageStateHost.getAttribute("data-page-state") === "active";
+      if (isActiveLeaf) {
+        const shell =
+          container.closest<HTMLElement>(".quran-shell--ayah") ||
+          container.closest<HTMLElement>(".mpv-root") ||
+          container.closest<HTMLElement>("[data-mushaf-shell]");
+        if (shell) {
+          for (const [k, v] of Object.entries(typeVars)) {
+            shell.style.setProperty(k, v);
+          }
         }
       }
 
