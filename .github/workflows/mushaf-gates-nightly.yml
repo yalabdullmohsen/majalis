@@ -116,9 +116,10 @@ jobs:
           path: artifacts/majalis/dist
 
       - name: Measure (~76 pages)
+        working-directory: artifacts/majalis
         env:
-          MUSHAF_SINGLE_PASS_OUT: artifacts/majalis/artifacts/mushaf-single-pass/measurements-shard-${{ matrix.shard }}.json
-        run: pnpm --filter @workspace/majalis run test:mushaf-single-pass:measure
+          MUSHAF_SINGLE_PASS_OUT: artifacts/mushaf-single-pass/measurements-shard-${{ matrix.shard }}.json
+        run: pnpm run test:mushaf-single-pass:measure
 
       - name: Upload shard
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -126,6 +127,7 @@ jobs:
           name: mushaf-nightly-${{ matrix.shard }}
           path: artifacts/majalis/artifacts/mushaf-single-pass/measurements-shard-${{ matrix.shard }}.json
           retention-days: 7
+          if-no-files-found: error
 
   merge:
     name: merge-and-assert

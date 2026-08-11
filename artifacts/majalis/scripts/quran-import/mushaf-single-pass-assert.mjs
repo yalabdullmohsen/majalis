@@ -49,16 +49,33 @@ function expectedAyahLines(pageNum) {
   return lines.size;
 }
 
+function collectJsonFiles(dir) {
+  const out = [];
+  if (!existsSync(dir)) return out;
+  for (const name of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, name.name);
+    if (name.isDirectory()) out.push(...collectJsonFiles(full));
+    else if (name.isFile() && name.name.endsWith(".json")) out.push(full);
+  }
+  return out.sort();
+}
+
 function loadPages() {
-  if (IN_DIR && existsSync(IN_DIR)) {
-    const files = readdirSync(IN_DIR)
-      .filter((f) => f.endsWith(".json"))
-      .sort();
+  if (IN_DIR) {
+    if (!existsSync(IN_DIR)) {
+      console.error(`single-pass-assert: IN_DIR missing: ${IN_DIR}`);
+      process.exit(1);
+    }
+    const files = collectJsonFiles(IN_DIR);
+    if (!files.length) {
+      console.error(`single-pass-assert: no JSON under ${IN_DIR}`);
+      process.exit(1);
+    }
     const byPage = new Map();
     let draws = 0;
     let mode = "merged";
     for (const f of files) {
-      const payload = JSON.parse(readFileSync(join(IN_DIR, f), "utf8"));
+      const payload = JSON.parse(readFileSync(f, "utf8"));
       mode = payload.mode || mode;
       for (const p of payload.pages || []) {
         if (p?.page != null) byPage.set(p.page, p);
