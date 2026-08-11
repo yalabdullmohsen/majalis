@@ -1,0 +1,15 @@
+
+> @workspace/majalis@1.0.0 test:mushaf-multi-viewport /Users/alabdullmohsen/majalis-correct/artifacts/majalis
+> node scripts/quran-import/mushaf-multi-viewport-gate.mjs
+
+multi-viewport-gate: preview @ http://127.0.0.1:4183 · pages=1,2,3,50,235,283,306,528,588,604 · viewports=4
+  iPhone SE / 8 (375×667): 10/10 صفحات خضراء
+  iPhone 12/13/14 (390×844): 10/10 صفحات خضراء
+  iPhone 15 Pro Max (430×932): 10/10 صفحات خضراء
+  iPad mini (744×1133): 10/10 صفحات خضراء
+{
+  "failures": 0,
+  "out": "/Users/alabdullmohsen/majalis-correct/artifacts/majalis/artifacts/mushaf-multi-viewport/report.json",
+  "elapsedMs": 61343
+}
+multi-viewport-gate: ok · 4 مقاسات × 10 صفحات
