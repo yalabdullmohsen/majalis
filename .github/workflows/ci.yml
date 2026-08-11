@@ -103,6 +103,14 @@ jobs:
       - name: Deterministic build
         run: pnpm --filter @workspace/majalis run build
 
+      - name: Upload majalis dist (مشاركة مع بوابات المصحف — بلا إعادة بناء)
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: majalis-dist
+          path: artifacts/majalis/dist
+          retention-days: 1
+          if-no-files-found: error
+
       - name: Bundle budget / no mega-seeds in entry
         run: pnpm --filter @workspace/majalis run test:bundle-budget
 
@@ -149,10 +157,23 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh run cancel "${{ github.run_id }}" || true
 
-  mushaf-gates:
-    name: mushaf-gates
+  # تمريرة قياس واحدة (عيّنة ٢٥ في PR · ٨ أجزاء × ٦٠٤ على main)
+  mushaf-measure:
+    name: mushaf-measure
+    needs: [build]
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ github.event_name == 'pull_request' && fromJSON('[1]') || fromJSON('[1,2,3,4,5,6,7,8]') }}
+    env:
+      MUSHAF_GATE_FULL: ${{ github.event_name == 'pull_request' && '0' || '1' }}
+      MUSHAF_GATE_SHARD: ${{ matrix.shard }}
+      MUSHAF_GATE_SHARDS: ${{ github.event_name == 'pull_request' && '1' || '8' }}
+      MUSHAF_GATE_USE_PREVIEW: "1"
+      PORT: "24216"
+      BASE_PATH: "/"
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -181,12 +202,70 @@ jobs:
           key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: playwright-${{ runner.os }}-
 
-      - name: Cache Vite
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+
+      - name: Download majalis dist
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: majalis-dist
+          path: artifacts/majalis/dist
+
+      - name: Single-pass measure
+        working-directory: artifacts/majalis
+        env:
+          MUSHAF_SINGLE_PASS_OUT: artifacts/mushaf-single-pass/measurements-shard-${{ matrix.shard }}.json
+        run: pnpm run test:mushaf-single-pass:measure
+
+      - name: Upload measurements shard
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: mushaf-measurements-${{ matrix.shard }}
+          path: artifacts/majalis/artifacts/mushaf-single-pass/measurements-shard-${{ matrix.shard }}.json
+          retention-days: 1
+          if-no-files-found: error
+
+      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run cancel "${{ github.run_id }}" || true
+
+  mushaf-gates:
+    name: mushaf-gates
+    needs: [build, mushaf-measure]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: Cache pnpm store
         uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
-          path: artifacts/majalis/node_modules/.vite
-          key: vite-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml', 'artifacts/majalis/vite.config.ts') }}
-          restore-keys: vite-${{ runner.os }}-
+          path: ~/.local/share/pnpm/store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: playwright-${{ runner.os }}-
 
       - name: Install
         run: pnpm install --frozen-lockfile
@@ -194,31 +273,51 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
 
+      - name: Download majalis dist
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: majalis-dist
+          path: artifacts/majalis/dist
 
-      - name: Start shared Vite (بوابات المصحف)
+      - name: Download measurement shards
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          pattern: mushaf-measurements-*
+          path: /tmp/mushaf-measurements
+          merge-multiple: true
+
+      - name: Assert all gates on single-pass JSON
+        env:
+          MUSHAF_SINGLE_PASS_IN_DIR: /tmp/mushaf-measurements
+        run: pnpm --filter @workspace/majalis run test:mushaf-single-pass:assert
+
+      - name: Start preview (وحدات Playwright المتبقية)
         working-directory: artifacts/majalis
         env:
           PORT: "24216"
           BASE_PATH: "/"
         run: |
           set -euo pipefail
-          pnpm exec vite --config vite.config.ts --host 127.0.0.1 --port 24216 > /tmp/mushaf-vite.log 2>&1 &
+          pnpm exec vite preview --config vite.config.ts --host 127.0.0.1 --port 24216 > /tmp/mushaf-vite.log 2>&1 &
           echo $! > /tmp/mushaf-vite.pid
-          for i in $(seq 1 90); do
+          for i in $(seq 1 60); do
             if curl -sf -o /dev/null "http://127.0.0.1:24216/"; then
-              echo "Vite جاهز"
+              echo "preview جاهز"
               exit 0
             fi
             sleep 1
           done
-          echo "Vite لم يبدأ"; tail -50 /tmp/mushaf-vite.log; exit 1
+          echo "preview لم يبدأ"; tail -50 /tmp/mushaf-vite.log; exit 1
 
-      - name: Mushaf gates (core + عيّنة ٢٥)
+      - name: Unit + active-page-lines + flip-perf
         env:
           MUSHAF_GATE_BASE_URL: http://127.0.0.1:24216
-        run: pnpm --filter @workspace/majalis run test:mushaf-gates:core
+        run: |
+          pnpm --filter @workspace/majalis run test:mushaf-gates:unit
+          pnpm --filter @workspace/majalis run test:mushaf-active-page-lines
+          pnpm --filter @workspace/majalis run test:mushaf-flip-perf
 
-      - name: Stop shared Vite
+      - name: Stop preview
         if: always()
         run: kill "$(cat /tmp/mushaf-vite.pid)" 2>/dev/null || true
 
@@ -230,8 +329,9 @@ jobs:
 
   layout-bands:
     name: layout-bands
+    needs: [mushaf-measure]
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -253,46 +353,20 @@ jobs:
           key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: pnpm-${{ runner.os }}-
 
-      - name: Cache Playwright browsers
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: playwright-${{ runner.os }}-
-
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright Chromium
-        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+      - name: Download measurement shards
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          pattern: mushaf-measurements-*
+          path: /tmp/mushaf-measurements
+          merge-multiple: true
 
-
-      - name: Start shared Vite (بوابات المصحف)
-        working-directory: artifacts/majalis
+      - name: Layout bands من JSON التمريرة الواحدة (نفس الصرامة، بلا إعادة رسم)
         env:
-          PORT: "24216"
-          BASE_PATH: "/"
-        run: |
-          set -euo pipefail
-          pnpm exec vite --config vite.config.ts --host 127.0.0.1 --port 24216 > /tmp/mushaf-vite.log 2>&1 &
-          echo $! > /tmp/mushaf-vite.pid
-          for i in $(seq 1 90); do
-            if curl -sf -o /dev/null "http://127.0.0.1:24216/"; then
-              echo "Vite جاهز"
-              exit 0
-            fi
-            sleep 1
-          done
-          echo "Vite لم يبدأ"; tail -50 /tmp/mushaf-vite.log; exit 1
-
-      - name: Layout bands (عيّنة ٢٥)
-        env:
-          MUSHAF_GATE_BASE_URL: http://127.0.0.1:24216
-        run: pnpm --filter @workspace/majalis run test:mushaf-layout-bands
-
-      - name: Stop shared Vite
-        if: always()
-        run: kill "$(cat /tmp/mushaf-vite.pid)" 2>/dev/null || true
+          MUSHAF_SINGLE_PASS_IN_DIR: /tmp/mushaf-measurements
+        run: pnpm --filter @workspace/majalis run test:mushaf-single-pass:assert
 
       - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
         if: failure()
@@ -302,8 +376,9 @@ jobs:
 
   visual-snapshot:
     name: visual-snapshot
+    needs: [build]
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -338,31 +413,36 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
 
+      - name: Download majalis dist
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: majalis-dist
+          path: artifacts/majalis/dist
 
-      - name: Start shared Vite (بوابات المصحف)
+      - name: Start preview
         working-directory: artifacts/majalis
         env:
           PORT: "24216"
           BASE_PATH: "/"
         run: |
           set -euo pipefail
-          pnpm exec vite --config vite.config.ts --host 127.0.0.1 --port 24216 > /tmp/mushaf-vite.log 2>&1 &
+          pnpm exec vite preview --config vite.config.ts --host 127.0.0.1 --port 24216 > /tmp/mushaf-vite.log 2>&1 &
           echo $! > /tmp/mushaf-vite.pid
-          for i in $(seq 1 90); do
+          for i in $(seq 1 60); do
             if curl -sf -o /dev/null "http://127.0.0.1:24216/"; then
-              echo "Vite جاهز"
+              echo "preview جاهز"
               exit 0
             fi
             sleep 1
           done
-          echo "Vite لم يبدأ"; tail -50 /tmp/mushaf-vite.log; exit 1
+          echo "preview لم يبدأ"; tail -50 /tmp/mushaf-vite.log; exit 1
 
-      - name: Visual snapshot gates
+      - name: Visual snapshot gates (عيّنة قابلة لإعادة الإنتاج)
         env:
           MUSHAF_GATE_BASE_URL: http://127.0.0.1:24216
         run: pnpm --filter @workspace/majalis run test:mushaf-visual-snapshot
 
-      - name: Stop shared Vite
+      - name: Stop preview
         if: always()
         run: kill "$(cat /tmp/mushaf-vite.pid)" 2>/dev/null || true
 
@@ -375,7 +455,7 @@ jobs:
   # الاسم "Verify build" يبقى لفحص حماية الفرع الحالي.
   verify:
     name: Verify build
-    needs: [build, mushaf-gates, layout-bands, visual-snapshot]
+    needs: [build, mushaf-measure, mushaf-gates, layout-bands, visual-snapshot]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -387,13 +467,15 @@ jobs:
           echo "| Job | Result |" >> "$GITHUB_STEP_SUMMARY"
           echo "|-----|--------|" >> "$GITHUB_STEP_SUMMARY"
           echo "| build | ${{ needs.build.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| mushaf-measure | ${{ needs.mushaf-measure.result }} |" >> "$GITHUB_STEP_SUMMARY"
           echo "| mushaf-gates | ${{ needs.mushaf-gates.result }} |" >> "$GITHUB_STEP_SUMMARY"
           echo "| layout-bands | ${{ needs.layout-bands.result }} |" >> "$GITHUB_STEP_SUMMARY"
           echo "| visual-snapshot | ${{ needs.visual-snapshot.result }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "قبل: Verify build متسلسل ≈ ٩٫٥ دقائق (فشل بوابة الشبكة/الجوار)." >> "$GITHUB_STEP_SUMMARY"
-          echo "بعد: أربع وظائف متوازية + عيّنة ٢٥ + تخزين مؤقت — هدف الجدار ≤ ٤ دقائق." >> "$GITHUB_STEP_SUMMARY"
+          echo "قبل: كل بوابة ترسم الصفحات من جديد (≈١٥–٤٥ دقيقة مع FULL=٦٠٤)." >> "$GITHUB_STEP_SUMMARY"
+          echo "بعد: تمريرة قياس واحدة + فحوص Node + عيّنة ٢٥ في PR · timeout ١٠ دقائق · هدف الجدار ≤٤." >> "$GITHUB_STEP_SUMMARY"
           for r in \
             "${{ needs.build.result }}" \
+            "${{ needs.mushaf-measure.result }}" \
             "${{ needs.mushaf-gates.result }}" \
             "${{ needs.layout-bands.result }}" \
             "${{ needs.visual-snapshot.result }}"

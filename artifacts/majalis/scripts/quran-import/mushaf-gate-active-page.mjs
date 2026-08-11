@@ -1,11 +1,12 @@
 /**
  * تقييد قياسات بوابات المصحف بالصفحة النشطة + عيّنة PR (٢٥ صفحة).
  * MUSHAF_GATE_PAGES → قائمة صريحة
- * MUSHAF_GATE_FULL=1 → ١..٦٠٤ (ليلي)
- * وإلا → عيّنة ٢٥ ثابتة (١٤ مرجعية + ١١ عشوائية بذرة ثابتة)
+ * MUSHAF_GATE_FULL=1 → ١..٦٠٤ (ليلي / main)
+ * وإلا → عيّنة ٢٥ ثابتة (١٥ مرجعية + ١٠ بذرة ثابتة — قابلة لإعادة الإنتاج)
+ * MUSHAF_GATE_SHARD / MUSHAF_GATE_SHARDS → توزيع الصفحات على أجزاء متوازية
  */
 export const PR_FIXED_PAGES = [
-  1, 2, 3, 7, 50, 228, 235, 283, 306, 588, 599, 600, 601, 604,
+  1, 2, 3, 7, 50, 228, 235, 283, 306, 528, 588, 599, 600, 601, 604,
 ];
 export const PR_SAMPLE_SEED = 20260811;
 export const PR_SAMPLE_SIZE = 25;
@@ -37,6 +38,12 @@ export function buildPrSamplePages(seed = PR_SAMPLE_SEED, size = PR_SAMPLE_SIZE)
   return [...fixed, ...extra].sort((a, b) => a - b);
 }
 
+export function resolveGateMode() {
+  if (process.env.MUSHAF_GATE_PAGES?.trim()) return "explicit";
+  if (process.env.MUSHAF_GATE_FULL === "1") return "full";
+  return "pr-sample";
+}
+
 export function resolveGatePages() {
   const raw = process.env.MUSHAF_GATE_PAGES?.trim();
   if (raw) {
@@ -49,6 +56,16 @@ export function resolveGatePages() {
     return Array.from({ length: 604 }, (_, i) => i + 1);
   }
   return buildPrSamplePages();
+}
+
+/** توزيع حتمي: الصفحة i تذهب للجزء (i % shards) + 1 */
+export function applyGateShard(pages) {
+  const shards = Math.max(1, Number(process.env.MUSHAF_GATE_SHARDS || 1));
+  const shard = Math.max(1, Number(process.env.MUSHAF_GATE_SHARD || 1));
+  if (shards <= 1) return { pages: [...pages], shard: 1, shards: 1 };
+  const sorted = [...pages].sort((a, b) => a - b);
+  const out = sorted.filter((_, i) => i % shards === shard - 1);
+  return { pages: out, shard, shards };
 }
 
 /**
