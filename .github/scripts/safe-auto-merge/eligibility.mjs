@@ -230,8 +230,8 @@ export function evaluateEligibility(input = {}) {
     hardBlockers.push(`dual automation branch excluded: ${branch}`);
   }
   if (!hasSafeLabel) {
-    hardBlockers.push(
-      `missing safe label (need one of: ${SAFE_LABELS.join(", ")})`,
+    warnings.push(
+      `no safe label — allowed for low-risk PRs after green checks; labels remain optional for classification: ${SAFE_LABELS.join(", ")}`,
     );
   }
 
@@ -322,11 +322,11 @@ export function evaluateEligibility(input = {}) {
     if (dangerousFiles.length || hasMigration || hasIos || hasCicd || authHits.length) {
       suggestedAddLabels.push(BLOCKED_DANGER_PATH_LABEL, RISKY_MANUAL_REVIEW_LABEL);
     }
-  } else if (hasSafeLabel && !labels.includes(RISKY_MANUAL_REVIEW_LABEL)) {
+  } else if (!labels.includes(RISKY_MANUAL_REVIEW_LABEL)) {
+    // Safe low-risk PR: clear stale danger-path label even without a safe:* label.
     suggestedRemoveLabels.push(BLOCKED_DANGER_PATH_LABEL);
   }
   if (
-    hasSafeLabel &&
     !labels.includes(SAFE_AUTO_MERGE_LABEL) &&
     !dangerousFiles.length &&
     !hasMigration &&
@@ -334,7 +334,7 @@ export function evaluateEligibility(input = {}) {
     !hasCicd
   ) {
     warnings.push(
-      `consider adding \`${SAFE_AUTO_MERGE_LABEL}\` for explicit auto-merge opt-in`,
+      `consider adding \`${SAFE_AUTO_MERGE_LABEL}\` for clearer reporting; it is no longer required for low-risk auto-merge`,
     );
   }
 

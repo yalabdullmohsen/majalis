@@ -2,7 +2,8 @@ name: Auto-ready and merge PRs to main
 
 # Safe auto-merge (squash) — Auto-merge يبقى مفعّلًا.
 # لا يحول Draft→Ready تلقائيًا.
-# يتطلب label آمنًا + فحوصات خضراء؛ يمنع المسارات الخطرة (SQL/iOS/CI/Auth/…).
+# فحوصات خضراء + بوابات المسار/الحجم؛ Labels اختيارية للتصنيف (ليست شرط دمج).
+# يمنع المسارات الخطرة (SQL/iOS/CI/Auth/…) وDraft وCHANGES_REQUESTED والتعارض.
 # بعد الدمج: Vercel ينشر الموقع — بدون TestFlight وبدون supabase db push.
 
 on:
