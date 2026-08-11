@@ -569,6 +569,63 @@ export function MushafPageV2({
         }
       }
 
+      /*
+       * ملاءمة رأسية حاجبة: بعد حجز toolbar/footer، إن تجاوز حبر الأسطر
+       * contentBand نُصغّر الخط — ممنوع القصّ بـ overflow/contain paint.
+       * يُعاد عند ResizeObserver و document.fonts.ready عبر runMeasure.
+       */
+      const MIN_FONT_PX = Math.max(11, BASE_FONT * 0.52);
+      const pitchPct =
+        (MUSHAF_GRID.baselinesPct[MUSHAF_GRID.baselinesPct.length - 1] -
+          MUSHAF_GRID.baselinesPct[0]) /
+        Math.max(1, MUSHAF_GRID.baselinesPct.length - 1);
+      const pitchPx = blockH * (pitchPct / 100);
+      /* سقف نظري: الحبر لا يتجاوز خطوة خط الأساس (~٠٫٩٢ من الخطوة) */
+      const sizeCapPitch = pitchPx / Math.max(1.05, LINE_HEIGHT_EM) * 0.92;
+      if (Number.isFinite(sizeCapPitch) && sizeCapPitch > 0) {
+        size = Math.min(size, sizeCapPitch);
+        container.style.fontSize = `${size}px`;
+      }
+
+      const deepestAyahInkBottom = () => {
+        let bot = -Infinity;
+        for (const el of container.querySelectorAll<HTMLElement>(
+          ".mf2-grid-slot--line .mf2-line, .mf2-line",
+        )) {
+          if (el.closest("[data-page-state='prev'], [data-page-state='next'], [aria-hidden='true']")
+            && !container.contains(el)) {
+            continue;
+          }
+          /* فقط أسطر هذه الحاوية */
+          if (!container.contains(el)) continue;
+          const b = measureInkBounds(el);
+          if (b.bottom > bot) bot = b.bottom;
+        }
+        return bot;
+      };
+
+      {
+        const crV = container.getBoundingClientRect();
+        const limitBot = crV.bottom - 0.35;
+        for (let guard = 0; guard < 18; guard++) {
+          const bot = deepestAyahInkBottom();
+          if (!Number.isFinite(bot) || bot <= limitBot) break;
+          if (size <= MIN_FONT_PX + 0.05) break;
+          const over = bot - limitBot;
+          const factor = Math.max(0.9, 1 - over / Math.max(80, blockH));
+          size = Math.max(MIN_FONT_PX, size * Math.min(0.985, factor));
+          container.style.fontSize = `${size}px`;
+          container.style.setProperty(
+            "--mf2-banner-h",
+            `${(container.clientHeight * (slotHPct / 100)).toFixed(2)}px`,
+          );
+        }
+        container.dataset.mf2VerticalFit = "1";
+        container.dataset.mf2InkBotClear = (
+          limitBot - deepestAyahInkBottom()
+        ).toFixed(2);
+      }
+
       blockH = container.clientHeight || blockH || 1;
       let inkTop = Infinity;
       let inkBot = -Infinity;
@@ -703,19 +760,12 @@ export function MushafPageV2({
                 ? Math.max(size * 0.95, sampleInk.bottom - sampleInk.top)
                 : size * 1.15;
               const lineH = OPENING_BODY_SLOT_H_PCT;
-              /* أسفل مسموح = أعلى الخرطوش − ٢٨px (يجوز امتداد طفيف في فاصل content→footer) */
-              const badgeEl = document.querySelector(".mpv-ayah-page-badge");
-              const badgeTop = badgeEl?.getBoundingClientRect().top;
-              const maxInkBottom =
-                badgeTop != null
-                  ? badgeTop - (MUSHAF_LAYOUT_BANDS.contentFooterGapPx + 4)
-                  : crNow.bottom;
-              const minGap = OPENING_MIN_LINE_GAP_RATIO * size;
+              const maxInkBottom = crNow.bottom - 0.5;
+              const nLines = ayahLineSlots.length;
               const idealGap = Math.max(
-                minGap,
+                OPENING_MIN_LINE_GAP_RATIO * size,
                 MUSHAF_LAYOUT_BASELINE.lineGapPx * (size / BASE_FONT),
               );
-              const nLines = ayahLineSlots.length;
               const placeFrom = (firstTop: number, gap: number) => {
                 let top = firstTop;
                 for (const slot of ayahLineSlots) {
@@ -750,26 +800,39 @@ export function MushafPageV2({
                   const b = measureInkBounds(el);
                   return Math.max(size * 0.9, b.bottom - b.top);
                 });
-              const fitGap = (firstTop: number, heights: number[]) => {
-                if (nLines <= 1) return idealGap;
-                const sumH = heights.reduce((s, h) => s + h, 0);
-                return Math.max(minGap, Math.min(idealGap, (maxInkBottom - firstTop - sumH) / (nLines - 1)));
-              };
               let firstTop = liveBasBottom() + OPENING_BASMALA_TO_LINE_PX;
-              placeFrom(firstTop, idealGap);
-              let heights = measureHeights();
-              let gap = fitGap(firstTop, heights);
-              placeFrom(firstTop, gap);
-              heights = measureHeights();
-              firstTop = liveBasBottom() + OPENING_BASMALA_TO_LINE_PX;
-              gap = fitGap(firstTop, heights);
+              let heights: number[];
+              let gap = idealGap;
+              /* صغّر الخط حتى تتّسع الأسطر بفجوة ≥ ٠٫٣٥×S داخل contentBand */
+              for (let fitPass = 0; fitPass < 14; fitPass++) {
+                const minG = OPENING_MIN_LINE_GAP_RATIO * size;
+                const idealG = Math.max(
+                  minG,
+                  MUSHAF_LAYOUT_BASELINE.lineGapPx * (size / BASE_FONT),
+                );
+                firstTop = liveBasBottom() + OPENING_BASMALA_TO_LINE_PX;
+                heights = measureHeights();
+                const sumH = heights.reduce((s, h) => s + h, 0);
+                const have = maxInkBottom - firstTop;
+                const need = sumH + Math.max(0, nLines - 1) * minG;
+                if (nLines <= 1 || need <= have + 0.5) {
+                  gap = nLines <= 1 ? idealG : Math.min(idealG, (have - sumH) / Math.max(1, nLines - 1));
+                  gap = Math.max(minG, gap);
+                  break;
+                }
+                size = Math.max(
+                  Math.max(11, BASE_FONT * 0.52),
+                  size * Math.min(0.97, (have / Math.max(need, 1)) * 0.98),
+                );
+                container.style.fontSize = `${size}px`;
+              }
               placeFrom(firstTop, gap);
               {
                 const first = inkElOf(ayahLineSlots[0]);
                 if (first) {
-                  const need = firstTop - measureInkBounds(first).top;
-                  if (Math.abs(need) > 0.5) {
-                    const shift = pxPct(need);
+                  const needShift = firstTop - measureInkBounds(first).top;
+                  if (Math.abs(needShift) > 0.5) {
+                    const shift = pxPct(needShift);
                     for (const slot of ayahLineSlots) {
                       const t = parseFloat(slot.style.top);
                       if (Number.isFinite(t)) placeSlotCenter(slot, t + shift, lineH);
@@ -780,13 +843,14 @@ export function MushafPageV2({
                 if (last && nLines > 1) {
                   const overflow = measureInkBounds(last).bottom - maxInkBottom;
                   if (overflow > 0.5) {
-                    /* استثناء ضيق: اسمح بفجوة أقل من ٠٫٣٥×S لإبقاء الخرطوش ≥٢٨px */
-                    const sumH = measureHeights().reduce((s, h) => s + h, 0);
-                    const emergency = Math.max(
-                      size * 0.22,
-                      (maxInkBottom - firstTop - sumH) / (nLines - 1),
-                    );
-                    placeFrom(firstTop, emergency);
+                    size = Math.max(Math.max(11, BASE_FONT * 0.52), size * 0.94);
+                    container.style.fontSize = `${size}px`;
+                    const minG = OPENING_MIN_LINE_GAP_RATIO * size;
+                    heights = measureHeights();
+                    const sumH = heights.reduce((s, h) => s + h, 0);
+                    firstTop = liveBasBottom() + OPENING_BASMALA_TO_LINE_PX;
+                    gap = Math.max(minG, (maxInkBottom - firstTop - sumH) / (nLines - 1));
+                    placeFrom(firstTop, gap);
                   }
                 }
               }
@@ -812,6 +876,71 @@ export function MushafPageV2({
               })();
             }
           }
+        }
+
+        /* بعد تموضع الافتتاح: إن بقي حبر خارج الصندوق صغّر الخط وأعد التوزيع */
+        {
+          const MIN_FONT_OPEN = Math.max(11, BASE_FONT * 0.52);
+          for (let guard = 0; guard < 16; guard++) {
+            const crOpen = container.getBoundingClientRect();
+            const limitBot = crOpen.bottom - 0.35;
+            const H = crOpen.height || 1;
+            let bot = -Infinity;
+            for (const el of container.querySelectorAll<HTMLElement>(
+              ".mf2-grid-slot--line .mf2-line, .mf2-line",
+            )) {
+              if (!container.contains(el)) continue;
+              bot = Math.max(bot, measureInkBounds(el).bottom);
+            }
+            if (!Number.isFinite(bot) || bot <= limitBot) break;
+            if (size <= MIN_FONT_OPEN + 0.05) break;
+            size = Math.max(MIN_FONT_OPEN, size * 0.94);
+            container.style.fontSize = `${size}px`;
+
+            const basSlot =
+              container.querySelector<HTMLElement>(".mf2-grid-slot--basmala") ||
+              [...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--line")].find((s) =>
+                s.querySelector(".mf2-bismillah"),
+              ) ||
+              null;
+            const basInk = basSlot
+              ? basSlot.querySelector<HTMLElement>(".mf2-bismillah, .mf2-line")
+              : container.querySelector<HTMLElement>(".mf2-bismillah");
+            const ayahSlots = [
+              ...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--line"),
+            ]
+              .filter((s) => !s.querySelector(".mf2-bismillah"))
+              .sort(
+                (a, b) =>
+                  Number(a.getAttribute("data-grid-slot") || 0) -
+                  Number(b.getAttribute("data-grid-slot") || 0),
+              );
+            if (!basInk || ayahSlots.length === 0) continue;
+            const firstTop = measureInkBounds(basInk).bottom + OPENING_BASMALA_TO_LINE_PX;
+            const heights = ayahSlots.map((slot) => {
+              const el = slot.querySelector<HTMLElement>(".mf2-line");
+              return el
+                ? Math.max(size * 0.85, measureInkBounds(el).bottom - measureInkBounds(el).top)
+                : size;
+            });
+            const sumH = heights.reduce((s, h) => s + h, 0);
+            const n = ayahSlots.length;
+            const rawGap = n > 1 ? (limitBot - firstTop - sumH) / (n - 1) : 0;
+            if (rawGap < 0 && sumH > 0) {
+              /* ما زال الحبر أعرض من المساحة — صغّر أكثر في الدورة التالية */
+              continue;
+            }
+            const gap = Math.max(0, rawGap);
+            let y = firstTop;
+            for (let i = 0; i < ayahSlots.length; i++) {
+              const mid = ((y + heights[i] / 2 - crOpen.top) / H) * 100;
+              ayahSlots[i].style.top = `${mid.toFixed(3)}%`;
+              ayahSlots[i].style.height = `${OPENING_BODY_SLOT_H_PCT}%`;
+              y += heights[i] + gap;
+            }
+          }
+          container.dataset.mf2OpeningVerticalFit = "1";
+          container.dataset.mf2Size = size.toFixed(2);
         }
       }
 

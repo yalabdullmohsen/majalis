@@ -395,7 +395,8 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
   transform-origin: right center;
   transform: none;
   background: var(--ayah-paper, #FAF7F2);
-  contain: layout paint;
+  /* layout فقط — contain:paint كان يقصّ حبر الأسطر عند تجاوز خاطئ للحساب */
+  contain: layout;
 }
 .mpv-flip-stage--active .mpv-flip-leaf,
 .mpv-flip-stage--flipping .mpv-flip-leaf {
