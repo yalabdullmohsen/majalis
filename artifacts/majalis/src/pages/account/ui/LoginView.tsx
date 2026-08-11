@@ -150,11 +150,12 @@ export default function LoginPage() {
             className="login-logo"
             loading="eager"
             decoding="async"
+            fetchPriority="high"
             width="512"
-            height="650"
+            height="728"
           />
           <p className="login-card__brand">المجلس العلمي</p>
-          <p className="login-card__tagline">علم نافع، ومحتوى موثوق</p>
+          <p className="login-card__tagline">علم نافع · محتوى موثوق</p>
           <h1 className="login-card__title">
             {mode === "forgot" ? "استعادة كلمة المرور" : adminLogin ? "دخول المسؤول" : "تسجيل الدخول"}
           </h1>
