@@ -10,6 +10,11 @@ import { chromium } from "playwright";
 import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -31,14 +36,7 @@ const OPENING_FRAME_MIN_PCT = 80;
 const SURAH_END_MAX_RATIO = 0.9;
 
 function allPages() {
-  const arg = process.env.MUSHAF_GATE_PAGES;
-  if (arg) {
-    return arg
-      .split(",")
-      .map(Number)
-      .filter((n) => n >= 1 && n <= 604);
-  }
-  return Array.from({ length: 604 }, (_, i) => i + 1);
+  return resolveGatePages();
 }
 
 function sleep(ms) {
@@ -50,7 +48,7 @@ async function measurePage(page, pageNum) {
     waitUntil: "domcontentloaded",
     timeout: 60_000,
   });
-  await page.waitForSelector(".mf2-lines[data-mf2-size], .mf2-lines", {
+  await page.waitForSelector(ACTIVE_LINES_WAIT_SEL, {
     timeout: 45_000,
   });
   await sleep(pageNum <= 3 || FREEZE_PAGES.includes(pageNum) ? 1100 : 500);
@@ -61,7 +59,7 @@ async function measurePage(page, pageNum) {
 
   return page.evaluate(
     ({ clearance, baselinesPct, pageNum: n }) => {
-      const linesRoot = document.querySelector(".mf2-lines");
+      const linesRoot = __mushafLinesRoot();
       if (!linesRoot) return { error: "missing .mf2-lines" };
       const lr = linesRoot.getBoundingClientRect();
       const blockH = Math.max(1, lr.height);
@@ -279,6 +277,7 @@ async function main() {
   const pages = allPages();
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: VIEWPORT });
+await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   const results = [];
   const failures = [];
   let clippedTotal = 0;

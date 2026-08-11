@@ -24,6 +24,11 @@ import { chromium } from "playwright";
 import { mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -32,11 +37,7 @@ const BASE =
   process.env.MUSHAF_GATE_BASE_URL?.replace(/\/$/, "") ||
   "https://www.majlisilm.com";
 
-const DEFAULT_PAGES = [1, 2, 3, 4, 100, 283, 311, 400, 500, 586, 596, 600, 604];
-const PAGES = (process.env.MUSHAF_GATE_PAGES || DEFAULT_PAGES.join(","))
-  .split(",")
-  .map((s) => Number(s.trim()))
-  .filter((n) => Number.isFinite(n) && n >= 1 && n <= 604);
+const PAGES = resolveGatePages();
 
 const OUT_DIR =
   process.env.MUSHAF_GATE_OUT_DIR ||
@@ -65,15 +66,15 @@ async function measurePage(page, pageNum) {
   const url = `${BASE}/mushaf/page/${pageNum}`;
   await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60_000 });
   /* وضع آية يصدّر .mf2-lines داخل .qs-mushaf-body دون غلاف .mf2-page */
-  await page.waitForSelector(".mf2-lines .mf2-line, .mf2-page .mf2-line", { timeout: 45_000 });
+  await page.waitForSelector(`${ACTIVE_LINES_WAIT_SEL} .mf2-line, .mf2-page .mf2-line`, { timeout: 45_000 });
   await sleep(900);
 
   const metrics = await page.evaluate(() => {
     const root =
-      document.querySelector(".qs-mushaf-body-inner") ||
+      __mushafActiveRoot() ||
       document.querySelector(".mf2-page") ||
-      document.querySelector(".mf2-lines");
-    const linesRoot = document.querySelector(".mf2-lines") || root;
+      __mushafLinesRoot();
+    const linesRoot = __mushafLinesRoot() || root;
     if (!root || !linesRoot) return { error: "no mushaf lines root" };
     const rootRect = root.getBoundingClientRect();
     const style = getComputedStyle(linesRoot);
@@ -316,6 +317,7 @@ async function main() {
     hasTouch: true,
   });
   const page = await context.newPage();
+  await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
 
   const results = [];
   try {

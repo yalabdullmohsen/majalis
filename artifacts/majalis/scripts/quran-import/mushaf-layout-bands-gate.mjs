@@ -13,6 +13,11 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -31,35 +36,7 @@ const OUT_DIR =
 const VIEWPORT = { width: 390, height: 844 };
 const TOOLBAR_PAGES = [1, 2, 3, 283, 599, 600, 601];
 /* عيّنة كثيفة افتراضياً؛ MUSHAF_GATE_PAGES=1..604 أو MUSHAF_GATE_FULL=1 لكل الصفحات */
-const FOOTER_PAGES = (
-  process.env.MUSHAF_GATE_PAGES ||
-  (process.env.MUSHAF_GATE_FULL === "1"
-    ? Array.from({ length: 604 }, (_, i) => String(i + 1)).join(",")
-    : [
-        ...Array.from({ length: 30 }, (_, i) => String(i + 1)),
-        "50",
-        "100",
-        "150",
-        "200",
-        "235",
-        "283",
-        "300",
-        "350",
-        "400",
-        "450",
-        "500",
-        "550",
-        "588",
-        "596",
-        "599",
-        "600",
-        "601",
-        "604",
-      ].join(","))
-)
-  .split(",")
-  .map(Number)
-  .filter((n) => n >= 1 && n <= 604);
+const FOOTER_PAGES = resolveGatePages();
 const GRID = JSON.parse(
   readFileSync(join(ROOT, "src/features/mushaf/mushaf-grid.json"), "utf8"),
 );
@@ -142,6 +119,7 @@ if (!EXTERNAL_BASE) {
 mkdirSync(OUT_DIR, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: VIEWPORT });
+await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
 const results = { bands: null, pages: {} };
 
 function overlap(a, b) {
@@ -156,7 +134,7 @@ async function probe(n, { showToolbar }) {
     waitUntil: "domcontentloaded",
     timeout: 60_000,
   });
-  await page.waitForSelector(".mf2-lines", { timeout: 45_000 });
+  await page.waitForSelector(ACTIVE_LINES_WAIT_SEL, { timeout: 45_000 });
   await sleep(n <= 3 || n === 283 ? 900 : n % 50 === 0 ? 400 : 220);
   if (showToolbar) {
     await page.evaluate(() => {
@@ -187,10 +165,9 @@ async function probe(n, { showToolbar }) {
     const meta = document.querySelector(".mpv-ayah-footer__meta");
     /* الورقة النشطة فقط — لا تحتية التقليب / الانتشار */
     const leaf =
-      document.querySelector("[data-mushaf-active-leaf='1']") ||
-      document.querySelector(".qs-mushaf-body-inner");
+      __mushafActiveRoot();
     const lines =
-      leaf?.querySelector(".mf2-lines") || document.querySelector(".mf2-lines");
+      __mushafLinesRoot();
     const toolbar = document.querySelector(".mpv-toolbar--ayah:not(.mpv-toolbar--hidden)");
     const frame = (leaf || document).querySelector("[data-opening-frame]");
     const banner = (leaf || document).querySelector(".mf2-grid-slot--banner");
@@ -313,7 +290,7 @@ try {
   const on = await probe(3, { showToolbar: true });
   results.pages[3] = { off, on };
   await page.goto(`${BASE}/mushaf/page/3`, { waitUntil: "domcontentloaded", timeout: 60_000 });
-  await page.waitForSelector(".mf2-lines", { timeout: 45_000 });
+  await page.waitForSelector(ACTIVE_LINES_WAIT_SEL, { timeout: 45_000 });
   await sleep(900);
   await page.addStyleTag({ content: `.mpv-toolbar--ayah{display:none!important}` });
   await page.screenshot({ path: join(OUT_DIR, "p3-toolbar-off.png") });

@@ -1,0 +1,60 @@
+name: Mushaf gates nightly (full 604)
+
+# مسح كامل لبوابات المصحف — ليس على كل PR.
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch: {}
+
+concurrency:
+  group: mushaf-gates-nightly
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  mushaf-full:
+    name: mushaf-gates-full-604
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      MUSHAF_GATE_FULL: "1"
+      PORT: "24216"
+      BASE_PATH: "/"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: Cache pnpm store
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: ~/.local/share/pnpm/store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: playwright-${{ runner.os }}-
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+
+      - name: Full mushaf gates (٦٠٤)
+        run: pnpm --filter @workspace/majalis run test:mushaf-gates

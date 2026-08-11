@@ -18,15 +18,17 @@ import { chromium } from "playwright";
 import { spawn } from "node:child_process";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const appRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const EXTERNAL_BASE = process.env.MUSHAF_GATE_BASE_URL?.replace(/\/$/, "") || "";
 const PORT = process.env.MUSHAF_GATE_PORT || process.env.PORT || "24228";
 const BASE = EXTERNAL_BASE || `http://127.0.0.1:${PORT}`;
-const PAGES = (process.env.MUSHAF_GATE_PAGES || "1,283,604")
-  .split(",")
-  .map((s) => Number(s.trim()))
-  .filter((n) => Number.isFinite(n) && n >= 1 && n <= 604);
+const PAGES = resolveGatePages();
 const VIEWPORT = { width: 390, height: 844 };
 
 function sleep(ms) {
@@ -52,15 +54,15 @@ function waitForServer(url, timeoutMs = 45_000) {
 async function probe(page, pageNum) {
   const url = `${BASE}/mushaf/page/${pageNum}`;
   await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60_000 });
-  await page.waitForSelector(".mf2-lines .mf2-line, .quran-shell--ayah", { timeout: 45_000 });
+  await page.waitForSelector(`${ACTIVE_LINES_WAIT_SEL}, .quran-shell--ayah`, { timeout: 45_000 });
   await sleep(1200);
 
   return page.evaluate((vh) => {
     const shell = document.querySelector(
       ".quran-shell--immersive.quran-shell--ayah, .quran-shell--ayah",
     );
-    const lines = document.querySelector(".mf2-lines");
-    const lineEls = [...document.querySelectorAll(".mf2-line")];
+    const lines = __mushafLinesRoot();
+    const lineEls = [...__mushafQueryAll(".mf2-line")];
     const nonEmpty = lineEls.filter((el) => (el.textContent || "").trim().length > 0);
     const shellRect = shell?.getBoundingClientRect();
     const linesStyle = lines ? getComputedStyle(lines) : null;
@@ -132,6 +134,7 @@ try {
 }
 
 const page = await browser.newPage({ viewport: VIEWPORT });
+await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
 const failures = [];
 
 console.log(`mushaf-render-visibility-gate base=${BASE} pages=${PAGES.join(",")}`);

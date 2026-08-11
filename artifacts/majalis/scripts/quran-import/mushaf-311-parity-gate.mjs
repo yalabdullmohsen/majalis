@@ -15,6 +15,11 @@ import {
 import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -62,7 +67,7 @@ async function measurePage(page, pageNum, baseline) {
   await sleep(150);
 
   const metrics = await page.evaluate((baseFont) => {
-    const linesRoot = document.querySelector(".mf2-lines");
+    const linesRoot = __mushafLinesRoot();
     const header = document.querySelector(".mpv-ayah-header");
     const footer = document.querySelector(".mpv-ayah-footer");
     if (!linesRoot || !header || !footer) return { error: "missing chrome" };
@@ -280,6 +285,7 @@ async function main() {
     hasTouch: true,
   });
   const page = await context.newPage();
+  await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   const results = [];
 
   try {

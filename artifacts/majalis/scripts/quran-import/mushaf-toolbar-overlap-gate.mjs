@@ -11,6 +11,11 @@ import { spawn } from "node:child_process";
 import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -103,6 +108,7 @@ if (!EXTERNAL_BASE) {
 mkdirSync(OUT_DIR, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: VIEWPORT });
+await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
 const results = [];
 
 try {
@@ -111,7 +117,7 @@ try {
       waitUntil: "domcontentloaded",
       timeout: 60_000,
     });
-    await page.waitForSelector(".mf2-lines", { timeout: 45_000 });
+    await page.waitForSelector(ACTIVE_LINES_WAIT_SEL, { timeout: 45_000 });
     await sleep(n <= 2 ? 1100 : 700);
     await page.evaluate(() => {
       document
@@ -128,10 +134,9 @@ try {
         ".mpv-toolbar--ayah:not(.mpv-toolbar--hidden)",
       );
       const leaf =
-        document.querySelector("[data-mushaf-active-leaf='1']") ||
-        document.querySelector(".qs-mushaf-body-inner");
+        __mushafActiveRoot();
       const root =
-        leaf?.querySelector(".mf2-lines") || document.querySelector(".mf2-lines");
+        __mushafLinesRoot();
       if (!toolbar || !root) return { error: "missing toolbar/lines" };
       const tr = toolbar.getBoundingClientRect();
       const cs = getComputedStyle(toolbar);

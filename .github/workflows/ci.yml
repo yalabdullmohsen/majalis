@@ -6,22 +6,28 @@ on:
   pull_request:
     branches: [main]
 
-# Concurrency منفصل لكل PR (ولكل push إلى main عبر run_id/sha).
+# إلغاء التشغيلات المتجاوَزة لنفس المرجع (تسريع طوابير PR).
 concurrency:
-  group: ci-${{ github.workflow }}-pr-${{ github.event.pull_request.number || format('push-{0}', github.sha) }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
   contents: read
+  actions: write
 
 # Pin trusted action SHAs (tag comments for humans).
 
+env:
+  # عيّنة ٢٥ صفحة افتراضياً في بوابات المصحف (انظر mushaf-gate-active-page.mjs)
+  # المسح الكامل ٦٠٤ في workflow ليلي منفصل.
+  PORT: "24216"
+  BASE_PATH: "/"
+
 jobs:
-  # الاسم "Verify build" يبقى لفحص حماية الفرع الحالي.
-  verify:
-    name: Verify build
+  build:
+    name: build
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -35,6 +41,20 @@ jobs:
         run: |
           corepack enable
           corepack prepare --activate
+
+      - name: Cache pnpm store
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: ~/.local/share/pnpm/store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
+      - name: Cache Vite
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: artifacts/majalis/node_modules/.vite
+          key: vite-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml', 'artifacts/majalis/vite.config.ts') }}
+          restore-keys: vite-${{ runner.os }}-
 
       - name: Install
         run: pnpm install --frozen-lockfile
@@ -64,40 +84,23 @@ jobs:
           pnpm --filter @workspace/majalis exec node --import tsx scripts/generate-content-counts.ts --check
           pnpm --filter @workspace/majalis exec node scripts/generate-quran-pages-manifest.mjs --check
 
-      - name: Head shell gate (viewport / no keywords / zoom)
-        run: pnpm --filter @workspace/majalis run verify:head-shell-gate
-
-      - name: PageShell gate (unified layouts)
-        run: pnpm --filter @workspace/majalis run verify:pageshell-gate
-
-      - name: Body/meta separation gate (D1)
-        run: pnpm --filter @workspace/majalis run verify:body-meta-gate
-
-      - name: Orphan discovery gate (R4)
-        run: pnpm --filter @workspace/majalis run verify:orphan-discovery
-
-      - name: No autofocus / keyboard gate
-        run: pnpm --filter @workspace/majalis run verify:no-autofocus
-
-      - name: Methodology prerender depth gate (R4)
-        run: pnpm --filter @workspace/majalis run verify:methodology-prerender
-
-      - name: Related-links dedupe gate (R4)
-        run: pnpm --filter @workspace/majalis run verify:related-dedupe
+      - name: Head / PageShell / body-meta / orphan / autofocus / methodology / related
+        run: |
+          pnpm --filter @workspace/majalis run verify:head-shell-gate
+          pnpm --filter @workspace/majalis run verify:pageshell-gate
+          pnpm --filter @workspace/majalis run verify:body-meta-gate
+          pnpm --filter @workspace/majalis run verify:orphan-discovery
+          pnpm --filter @workspace/majalis run verify:no-autofocus
+          pnpm --filter @workspace/majalis run verify:methodology-prerender
+          pnpm --filter @workspace/majalis run verify:related-dedupe
 
       - name: Cron single-response gate
         run: pnpm run verify:single-response
 
-      - name: Install Playwright Chromium (mushaf visibility gate)
-        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
-
-      - name: Full package tests
-        run: pnpm --filter @workspace/majalis run test
+      - name: Unit / package tests (بدون بوابات مصحف Playwright)
+        run: pnpm --filter @workspace/majalis run test:ci-unit
 
       - name: Deterministic build
-        env:
-          PORT: "24216"
-          BASE_PATH: "/"
         run: pnpm --filter @workspace/majalis run build
 
       - name: Bundle budget / no mega-seeds in entry
@@ -140,8 +143,195 @@ jobs:
             echo "api-server package absent — skip"
           fi
 
+      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run cancel "${{ github.run_id }}" || true
+
+  mushaf-gates:
+    name: mushaf-gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: Cache pnpm store
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: ~/.local/share/pnpm/store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: playwright-${{ runner.os }}-
+
+      - name: Cache Vite
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: artifacts/majalis/node_modules/.vite
+          key: vite-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml', 'artifacts/majalis/vite.config.ts') }}
+          restore-keys: vite-${{ runner.os }}-
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+
+      - name: Mushaf gates (core + عيّنة ٢٥)
+        run: pnpm --filter @workspace/majalis run test:mushaf-gates:core
+
+      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run cancel "${{ github.run_id }}" || true
+
+  layout-bands:
+    name: layout-bands
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: Cache pnpm store
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: ~/.local/share/pnpm/store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: playwright-${{ runner.os }}-
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+
+      - name: Layout bands (عيّنة ٢٥)
+        run: pnpm --filter @workspace/majalis run test:mushaf-layout-bands
+
+      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run cancel "${{ github.run_id }}" || true
+
+  visual-snapshot:
+    name: visual-snapshot
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: Cache pnpm store
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: ~/.local/share/pnpm/store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: playwright-${{ runner.os }}-
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+
+      - name: Visual snapshot gates
+        run: pnpm --filter @workspace/majalis run test:mushaf-visual-snapshot
+
+      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run cancel "${{ github.run_id }}" || true
+
+  # الاسم "Verify build" يبقى لفحص حماية الفرع الحالي.
+  verify:
+    name: Verify build
+    needs: [build, mushaf-gates, layout-bands, visual-snapshot]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Aggregate required jobs
+        run: |
+          set -euo pipefail
+          echo "## CI timing / results" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Job | Result |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-----|--------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| build | ${{ needs.build.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| mushaf-gates | ${{ needs.mushaf-gates.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| layout-bands | ${{ needs.layout-bands.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| visual-snapshot | ${{ needs.visual-snapshot.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "قبل: Verify build متسلسل ≈ ٩٫٥ دقائق (فشل بوابة الشبكة/الجوار)." >> "$GITHUB_STEP_SUMMARY"
+          echo "بعد: أربع وظائف متوازية + عيّنة ٢٥ + تخزين مؤقت — هدف الجدار ≤ ٤ دقائق." >> "$GITHUB_STEP_SUMMARY"
+          for r in \
+            "${{ needs.build.result }}" \
+            "${{ needs.mushaf-gates.result }}" \
+            "${{ needs.layout-bands.result }}" \
+            "${{ needs.visual-snapshot.result }}"
+          do
+            if [ "$r" != "success" ]; then
+              echo "required job not success: $r"
+              exit 1
+            fi
+          done
+          echo "Verify build OK"
+
   # ---------------------------------------------------------------------------
-  # Color contrast — Playwright Chromium (isolated job; fails loudly if missing)
+  # Color contrast — Playwright Chromium (isolated; لا يحجب Verify build)
   # ---------------------------------------------------------------------------
   color-contrast:
     name: Color contrast (Playwright)

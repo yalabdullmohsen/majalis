@@ -8,6 +8,11 @@ import { chromium } from "playwright";
 import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -38,7 +43,7 @@ async function measureBanner(page, pageNum) {
     waitUntil: "domcontentloaded",
     timeout: 60_000,
   });
-  await page.waitForSelector(".mf2-lines", { timeout: 45_000 });
+  await page.waitForSelector(ACTIVE_LINES_WAIT_SEL, { timeout: 45_000 });
   await sleep(900);
   await page.addStyleTag({
     content: `.mpv-toolbar,.mpv-navbar,.mpv-resume-banner,.qs-toast{display:none!important}`,
@@ -47,7 +52,7 @@ async function measureBanner(page, pageNum) {
 
   return page.evaluate(
     ({ tan, tanDist, baselinesPct, slotHeightPct }) => {
-      const lines = document.querySelector(".mf2-lines");
+      const lines = __mushafLinesRoot();
       const header = document.querySelector(".mpv-ayah-header");
       const footer = document.querySelector(".mpv-ayah-footer");
       if (!lines || !header || !footer) return { error: "missing chrome" };
@@ -203,6 +208,7 @@ async function main() {
   mkdirSync(OUT_DIR, { recursive: true });
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: VIEWPORT });
+await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   const results = [];
   const failures = [];
 

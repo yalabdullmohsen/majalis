@@ -74,7 +74,7 @@ jobs:
           fi
           for n in $nums; do
             gh -R "$GITHUB_REPOSITORY" pr merge "$n" --disable-auto || true
-            gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "⛔ أُلغي Auto-merge لأن الفحص المطلوب Verify build فشل." || true
+            # صامت: لا تعليق على الـPR عند فشل الفحص — يظهر في Checks فقط
           done
 
   auto-merge:
