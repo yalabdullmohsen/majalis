@@ -298,7 +298,7 @@ function AdminContent() {
             </div>
           )}
 
-          {loading && <div className="uap-empty">جارٍ التحميل…</div>}
+          {loading && <div className="uap-empty"></div>}
 
           {!loading && universities.length === 0 && (
             <div className="uap-empty">

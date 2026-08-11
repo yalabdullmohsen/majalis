@@ -318,7 +318,7 @@ export function ProphetStoriesSection() {
         لا تُنشر قصة واحدة تلقائياً، الاعتماد قرارك وحدك.
       </div>
 
-      {loading && <div className="ps-loading">جاري التحميل…</div>}
+      {loading && <div className="ps-loading"></div>}
       {error && <div className="ps-error">خطأ في التحميل: {error}</div>}
 
       {!loading && !error && stories.length === 0 && (

@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { Empty, ErrorState, QaSkeleton } from "@/components/ui-common";
+import { Empty, ErrorState, SkeletonCardGrid } from "@/components/ui-common";
+import { useDeferredLoading } from "@/hooks/useDeferredLoading";
 import { PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
 
 type PageLoadingGuardProps = {
@@ -10,12 +11,14 @@ type PageLoadingGuardProps = {
   errorText?: string;
   onRetry?: () => void;
   children: ReactNode;
-  skeleton?: "list" | "search";
+  skeleton?: "cards" | "list" | "search" | ReactNode;
+  skeletonCount?: number;
+  /** أبقِ المحتوى السابق ظاهرًا أثناء إعادة الجلب */
+  keepPrevious?: boolean;
 };
 
 /**
- * Ensures any page section exits loading within PAGE_LOAD_TIMEOUT_MS.
- * Shows skeleton (not spinner), then error or empty state — never infinite loading.
+ * هيكل تحميل مؤجّل + مهلة + خطأ صريح — بلا نص تحميل ظاهر.
  */
 export function PageLoadingGuard({
   loading,
@@ -25,9 +28,17 @@ export function PageLoadingGuard({
   errorText = "تعذّر تحميل البيانات. حاول مجددًا.",
   onRetry,
   children,
-  skeleton = "list",
+  skeleton = "cards",
+  skeletonCount = 6,
+  keepPrevious = true,
 }: PageLoadingGuardProps) {
   const [timedOut, setTimedOut] = useState(false);
+  const [hasContent, setHasContent] = useState(false);
+  const showSkeleton = useDeferredLoading(loading && !(keepPrevious && hasContent));
+
+  useEffect(() => {
+    if (!loading && !error && !empty) setHasContent(true);
+  }, [loading, error, empty]);
 
   useEffect(() => {
     if (!loading) {
@@ -38,6 +49,14 @@ export function PageLoadingGuard({
     return () => window.clearTimeout(id);
   }, [loading]);
 
+  const renderSkeleton = () => {
+    if (typeof skeleton !== "string") return skeleton;
+    if (skeleton === "search" || skeleton === "list") {
+      return <SkeletonCardGrid count={skeleton === "search" ? 5 : 4} />;
+    }
+    return <SkeletonCardGrid count={skeletonCount} />;
+  };
+
   if (timedOut && loading) {
     return (
       <ErrorState
@@ -47,12 +66,22 @@ export function PageLoadingGuard({
     );
   }
 
-  if (error) {
-    return <ErrorState text={typeof error === "string" && error.trim() ? error : errorText} onRetry={onRetry} />;
+  if (error && !(loading && keepPrevious && hasContent)) {
+    return (
+      <ErrorState
+        text={typeof error === "string" && error.trim() ? error : errorText}
+        onRetry={onRetry}
+      />
+    );
+  }
+
+  if (loading && keepPrevious && hasContent) {
+    return <>{children}</>;
   }
 
   if (loading) {
-    return skeleton === "search" ? <QaSkeleton count={5} /> : <QaSkeleton count={4} />;
+    if (!showSkeleton) return null;
+    return <>{renderSkeleton()}</>;
   }
 
   if (empty) {

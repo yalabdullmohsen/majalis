@@ -46,7 +46,7 @@ export default function TeacherDetailPage() {
   if (loading) {
     return (
       <PageShell variant="narrow" className="tch-page">
-        <PageHeader eyebrow="دروس الكويت" title="جارٍ التحميل…" showBack />
+        <PageHeader eyebrow="دروس الكويت" title="المشيخ" showBack />
         <SkeletonCardGrid count={4} />
       </PageShell>
     );
@@ -61,8 +61,7 @@ export default function TeacherDetailPage() {
           {" "}
           <Link href="/teachers">العودة لفهرس المشايخ</Link>
           {" · "}
-          <Link href="/scholars">أعلام الإسلام (علماء التراث)</Link>
-        </p>
+          <Link href="/scholars">أعلام الإسلام (علماء التراث)</Link></p>
       </PageShell>
     );
   }

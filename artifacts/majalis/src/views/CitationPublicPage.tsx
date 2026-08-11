@@ -101,7 +101,7 @@ export default function CitationPublicPage() {
   if (loading) {
     return (
       <div className="cpp-loading">
-        <Spinner className="cpp-loading__spinner" aria-label="جارٍ التحميل" />
+        <Spinner className="cpp-loading__spinner" aria-label="تجهيز المحتوى" />
       </div>
     );
   }
@@ -222,8 +222,7 @@ export default function CitationPublicPage() {
           {/* تذييل */}
           <p className="cpp-footer">
             تم إنشاء هذا الاقتباس عبر{" "}
-            <Link href="/" className="cpp-link">المجلس العلمي</Link>
-          </p>
+            <Link href="/" className="cpp-link">المجلس العلمي</Link></p>
           <div className="twh-share">
             <ShareButtons title="اقتباس من المجلس العلمي" url={typeof window !== "undefined" ? window.location.href : "https://www.majlisilm.com"} />
           </div>

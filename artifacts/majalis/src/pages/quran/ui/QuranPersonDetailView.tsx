@@ -38,15 +38,14 @@ export default function QuranPersonDetailView() {
   }, [slug]);
 
   if (person === undefined) {
-    return <div className="quran-hub-page" dir="rtl"><p style={{ padding: "2rem" }}>جاري التحميل…</p></div>;
+    return <div className="quran-hub-page" dir="rtl"><p style={{ padding: "2rem" }}></p></div>;
   }
   if (!person) {
     return (
       <div className="quran-hub-page" dir="rtl">
         <PageHero title="غير موجود" description="لم نجد هذه الشخصية في الفهرس المنشور" />
         <p style={{ padding: "1rem", textAlign: "center" }}>
-          <Link href="/quran/people">العودة إلى الذين ذكروا في القرآن</Link>
-        </p>
+          <Link href="/quran/people">العودة إلى الذين ذكروا في القرآن</Link></p>
       </div>
     );
   }

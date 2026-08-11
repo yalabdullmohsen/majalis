@@ -111,8 +111,8 @@ export function RecommendationWidget({
 
   if (loading) {
     return (
-      <div role="status" aria-label="جارٍ التحميل" className={`space-y-3 ${className}`}>
-        <span className="sr-only">جارٍ التحميل…</span>
+      <div role="status" aria-label="تجهيز المحتوى" className={`space-y-3 ${className}`}>
+        <span className="sr-only"></span>
         {Array.from({ length: Math.min(limit, 3) }).map((_, i) => (
           <div key={i} className="h-20 ds-skeleton rounded-xl" aria-hidden="true" />
         ))}

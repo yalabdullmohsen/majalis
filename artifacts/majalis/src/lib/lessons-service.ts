@@ -28,6 +28,7 @@ export type FetchLessonsResult = {
 let cachedResult: FetchLessonsResult | null = null;
 let cacheTs = 0;
 const CACHE_MS = 60_000;
+const PERSIST_KEY = "majalis-lessons-unified-v1";
 
 async function mergeDbWithSeed(dbRows: KuwaitLessonRecord[]): Promise<KuwaitLessonRecord[]> {
   const seed = await loadLessonsSeed();
@@ -35,11 +36,45 @@ async function mergeDbWithSeed(dbRows: KuwaitLessonRecord[]): Promise<KuwaitLess
   return dedupeKuwaitLessons([...dbRows, ...seedRows]);
 }
 
+function readPersistedLessons(): FetchLessonsResult | null {
+  try {
+    const raw = localStorage.getItem(PERSIST_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as FetchLessonsResult & { savedAt?: number };
+    if (!Array.isArray(parsed?.lessons) || parsed.lessons.length === 0) return null;
+    return { lessons: parsed.lessons, source: parsed.source || "seed" };
+  } catch {
+    return null;
+  }
+}
+
+function writePersistedLessons(result: FetchLessonsResult) {
+  try {
+    localStorage.setItem(
+      PERSIST_KEY,
+      JSON.stringify({ ...result, savedAt: Date.now() }),
+    );
+  } catch {
+    /* quota */
+  }
+}
+
 /** جلب جميع الدروس المعتمدة — المصدر الموحد للمنصة. */
 export async function fetchLessons(options?: { bypassCache?: boolean }): Promise<FetchLessonsResult> {
   const now = Date.now();
   if (!options?.bypassCache && cachedResult && now - cacheTs < CACHE_MS) {
     return cachedResult;
+  }
+
+  if (!options?.bypassCache && !cachedResult) {
+    const persisted = readPersistedLessons();
+    if (persisted) {
+      cachedResult = persisted;
+      cacheTs = now;
+      // تحديث خلفي
+      void fetchLessons({ bypassCache: true }).catch(() => undefined);
+      return persisted;
+    }
   }
 
   try {
@@ -52,6 +87,7 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
       const source: LessonsSource = lessons.length > dbMapped.length ? "merged" : "supabase";
       cachedResult = { lessons, source };
       cacheTs = now;
+      writePersistedLessons(cachedResult);
       return cachedResult;
     }
   } catch {
@@ -62,6 +98,7 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
   const lessons = dedupeKuwaitLessons(seed.map((row) => mapLessonRow({ ...row, source: "seed" })));
   cachedResult = { lessons: sortKuwaitLessons(lessons), source: "seed" };
   cacheTs = now;
+  writePersistedLessons(cachedResult);
   return cachedResult;
 }
 

@@ -80,8 +80,7 @@ export default function QuranPeopleView() {
           انظر أيضاً:{" "}
           <Link href="/prophets">قصص الأنبياء</Link>
           {" · "}
-          <Link href="/nations">الأمم السابقة</Link>
-        </p>
+          <Link href="/nations">الأمم السابقة</Link></p>
 
         <div className="qp-people__toolbar">
           <label>
@@ -129,7 +128,7 @@ export default function QuranPeopleView() {
         </div>
 
         {loading ? (
-          <p className="qp-people__status" role="status">جاري التحميل…</p>
+          <p className="qp-people__status" role="status"></p>
         ) : filtered.length === 0 ? (
           <p className="qp-people__status">لا نتائج مطابقة.</p>
         ) : (

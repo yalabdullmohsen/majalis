@@ -99,7 +99,7 @@ export const ar = {
   stats_login_btn: "تسجيل الدخول",
 
   // ── Common ──
-  loading: "جارٍ التحميل…",
+  loading: "تجهيز المحتوى",
   back: "رجوع",
   save: "حفظ",
   cancel: "إلغاء",

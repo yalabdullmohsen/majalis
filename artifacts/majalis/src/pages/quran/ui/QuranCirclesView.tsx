@@ -144,7 +144,7 @@ export default function QuranCirclesPage() {
           </label>
         </div>
         <p className="qc-filters__count">
-          {loading ? "جارٍ التحميل…" : `${visible.length} حلقة`}
+          {loading ? "" : `${visible.length} حلقة`}
         </p>
       </section>
 

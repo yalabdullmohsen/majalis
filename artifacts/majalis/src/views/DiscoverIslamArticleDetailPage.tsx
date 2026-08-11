@@ -39,7 +39,7 @@ export default function DiscoverIslamArticleDetailPage() {
     });
   }, [slug]);
 
-  if (item === undefined) return <div className="page-shell narrow"><PageHeader eyebrow="التعريف بالإسلام" title="جارٍ التحميل..." /></div>;
+  if (item === undefined) return <div className="page-shell narrow"><PageHeader eyebrow="التعريف بالإسلام" title="المقال" /></div>;
   if (item === null) return <div className="page-shell narrow"><Empty text="لم يُعثر على هذا المقال، أو أنه لا يزال قيد المراجعة." /></div>;
 
   const activeTranslation = viewLang === "ar" ? null : translations.find((t) => t.lang === viewLang);

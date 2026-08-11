@@ -90,7 +90,7 @@ function StageCard({
 
       {expanded && (
         <div style={{ paddingInlineStart: "1.25rem" }}>
-          {loading ? <p className="adm-empty-msg">جاري التحميل…</p> : (
+          {loading ? <p className="adm-empty-msg"></p> : (
             <>
               {courses.length === 0 && <p className="adm-empty-msg">لا مقررات بعد في هذه المرحلة.</p>}
               {courses
@@ -267,7 +267,7 @@ function CourseCard({
           </select>
 
           <div className="adm-block-title" style={{ marginBlockStart: "0.75rem" }}>الوحدات والعناصر</div>
-          {loading ? <p className="adm-empty-msg">جاري التحميل…</p> : (
+          {loading ? <p className="adm-empty-msg"></p> : (
             <>
               {units.length === 0 && <p className="adm-empty-msg">لا وحدات بعد.</p>}
               {units
@@ -411,7 +411,7 @@ function UnitCard({
 
       {expanded && (
         <div style={{ paddingInlineStart: "1.25rem" }}>
-          {loading ? <p className="adm-empty-msg">جاري التحميل…</p> : (
+          {loading ? <p className="adm-empty-msg"></p> : (
             <>
               {items.length === 0 && <p className="adm-empty-msg">لا عناصر بعد.</p>}
               {items
@@ -651,7 +651,7 @@ function BookEditor({ learningItemId }: { learningItemId: string }) {
 
   return (
     <div style={{ paddingInlineStart: "1.25rem", marginBlockEnd: "0.5rem" }}>
-      {loading ? <p className="adm-empty-msg">جاري التحميل…</p> : (
+      {loading ? <p className="adm-empty-msg"></p> : (
         <>
           {books.map((b) => (
             <div key={b.id} className="adm-item-card">

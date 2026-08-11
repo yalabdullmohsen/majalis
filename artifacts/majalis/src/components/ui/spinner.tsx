@@ -8,7 +8,7 @@ const Spinner = React.forwardRef<SVGSVGElement, Omit<LucideProps, "ref">>(
     <Loader2Icon
       ref={ref}
       role="status"
-      aria-label="جارٍ التحميل"
+      aria-label="تجهيز المحتوى"
       className={cn("size-4 animate-spin", className)}
       {...props}
     />

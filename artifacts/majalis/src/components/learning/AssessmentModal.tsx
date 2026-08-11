@@ -68,7 +68,7 @@ export function AssessmentModal({
         </div>
 
         <div className="am-modal__body">
-          {loading && <p className="am-loading">جارٍ التحميل…</p>}
+          {loading && <p className="am-loading"></p>}
           {error && <div className="mwc-error" role="alert">{error}</div>}
 
           {!loading && !error && !result && questions.length === 0 && (

@@ -41,7 +41,7 @@ export default function NewMuslimDayDetailPage() {
     }
   };
 
-  if (days === null) return <div className="page-shell narrow"><PageHeader eyebrow="المسلم الجديد" title="جارٍ التحميل..." /></div>;
+  if (days === null) return <div className="page-shell narrow"><PageHeader eyebrow="المسلم الجديد" title="اليوم" /></div>;
   if (!item) return <div className="page-shell narrow"><Empty text="لم يُعثر على هذا اليوم." /></div>;
 
   const isDone = completed.includes(dayNum);

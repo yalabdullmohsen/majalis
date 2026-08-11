@@ -226,7 +226,7 @@ function UniversitiesContent() {
         {/* إحصائية */}
         <div className="flex items-center justify-between">
           <p className="up-count-text">
-            {loading ? "جارٍ التحميل…" : `${universities.length} جامعة`}
+            {loading ? "" : `${universities.length} جامعة`}
             {search && `، نتائج "${search}"`}
           </p>
           {Object.values(filters).some(Boolean) || search ? (
