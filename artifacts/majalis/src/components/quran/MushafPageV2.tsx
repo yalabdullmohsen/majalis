@@ -533,7 +533,6 @@ export function MushafPageV2({
             sx *= Math.max(0.85, (span - over) / span);
             if (sx <= 1.0001) {
               el.style.removeProperty("--mf2-line-sx");
-              sx = 1;
               break;
             }
             el.style.setProperty("--mf2-line-sx", String(sx));
