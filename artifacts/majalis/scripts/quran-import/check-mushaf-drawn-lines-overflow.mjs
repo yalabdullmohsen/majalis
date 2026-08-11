@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 /**
- * بوابة صلبة: لا يتجاوز أي سطر مرسوم (sizingLines) عرض الحاوية — على 604 صفحة.
+ * بوابة صلبة (offline): لا يتجاوز أي سطر مرسوم (sizingLines) عرض الحاوية — على 604 صفحة.
  * measurementExclusions لا تُستثنى هنا (عكس مقياس الانحراف).
+ *
+ * ⚠️ عمى معروف: يقيس scrollWidth داخل صندوق ثابت 360px بلا DOM حيّ ولا scaleX.
+ *   تجاوز حيّ بسبب transform:scaleX أو محاذاة RTL يمرّ من هنا — البوابة الحاجبة:
+ *   `pnpm run test:mushaf-live-overflow` (مدرجة في test:mushaf-gates / Verify build).
  *
  *   node scripts/quran-import/check-mushaf-drawn-lines-overflow.mjs
  *   node scripts/quran-import/check-mushaf-drawn-lines-overflow.mjs --pages 595,1,2

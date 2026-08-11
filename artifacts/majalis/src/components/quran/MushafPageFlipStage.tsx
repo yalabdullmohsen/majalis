@@ -1,9 +1,6 @@
 /**
- * مسرح تقليب المصحف: ورقة أمامية + تحتية حقيقية (N±1) + ظلال طيّة.
- * المحتوى القرآني يبقى DOM/QPC بلا تحويل لصورة.
- *
- * مهم: في السكون لا تُركَّب صفحة تحتية تحتوي `.mf2-lines` — بوابات القياس
- * تستخدم querySelector وتعود لأول تطابق في الشجرة.
+ * مسرح تقليب المصحف: ورقة أمامية + جيران مرسومان مسبقاً (visibility).
+ * أثناء السحب يحدّث الخطاف CSS vars مباشرة — بلا إعادة رسم React لكل إطار.
  */
 import {
   type CSSProperties,
@@ -23,10 +20,8 @@ type Props = {
     onPointerUp: (e: ReactPointerEvent) => void;
     onPointerCancel: () => void;
   };
-  /** صفحة تحت الورقة أثناء التقليب (التالية عند سحب يمينًا) */
   underlay?: ReactNode;
   children: ReactNode;
-  /** ورقة يسرى في وضع الانتشار */
   spreadLeft?: ReactNode;
   isSpread?: boolean;
 };
@@ -43,6 +38,7 @@ export function MushafPageFlipStage({
   const abs = Math.abs(flip.progress);
   const flipping = flip.active || flip.settling || abs > 0.001;
   const dirNext = flip.progress >= 0;
+  /* قيم ابتدائية/سكون — أثناء السحب يكتب الخطاف مباشرة على العنصر */
   const style = {
     ["--mpv-flip" as string]: String(flip.progress),
     ["--mpv-flip-abs" as string]: String(abs),
@@ -53,21 +49,39 @@ export function MushafPageFlipStage({
   const leaf = (
     <div className="qs-mushaf-body-inner mpv-flip-leaf" data-mushaf-active-leaf="1">
       {children}
-      {flipping ? <div className="mpv-flip-leaf__curl" aria-hidden="true" /> : null}
+      <div className="mpv-flip-leaf__curl" aria-hidden="true" />
     </div>
   );
 
   const underlayNode = (
-    <div className="mpv-flip-underlay" aria-hidden="true" data-mushaf-underlay="1">
-      {/* صفحة حقيقية فقط أثناء التقليب — وإلا ورقة فارغة كـ curl القديم */}
-      {flipping && underlay ? underlay : <div className="mpv-flip-underlay__paper" />}
+    <div
+      className={[
+        "mpv-flip-underlay",
+        flipping && underlay ? "mpv-flip-underlay--live" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      aria-hidden="true"
+      data-mushaf-underlay="1"
+    >
+      {/* الجيران مرسومان مسبقاً ومخفيان بـ visibility — بلا بناء DOM وقت السحب */}
+      {underlay ? (
+        <div
+          className="mpv-flip-underlay__page"
+          style={{ visibility: flipping ? "visible" : "hidden" }}
+        >
+          {underlay}
+        </div>
+      ) : (
+        <div className="mpv-flip-underlay__paper" />
+      )}
     </div>
   );
 
   const fx = (
     <>
       <div className="mpv-flip-shade" aria-hidden="true" />
-      {flipping ? <div className="mpv-flip-corner" aria-hidden="true" /> : null}
+      <div className="mpv-flip-corner" aria-hidden="true" />
     </>
   );
 
@@ -96,7 +110,6 @@ export function MushafPageFlipStage({
 
       {isSpread ? (
         <div className="mpv-flip-book">
-          {/* الورقة النشطة أولًا في الشجرة حتى لا تلتقط البوابات .mf2-lines من التحتية */}
           {leaf}
           {underlayNode}
           {fx}

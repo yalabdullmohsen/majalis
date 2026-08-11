@@ -185,13 +185,52 @@ async function probe(n, { showToolbar }) {
     const footer = document.querySelector(".mpv-ayah-footer");
     const badge = document.querySelector(".mpv-ayah-page-badge");
     const meta = document.querySelector(".mpv-ayah-footer__meta");
-    const lines = document.querySelector(".mf2-lines");
+    /* الورقة النشطة فقط — لا تحتية التقليب / الانتشار */
+    const leaf =
+      document.querySelector("[data-mushaf-active-leaf='1']") ||
+      document.querySelector(".qs-mushaf-body-inner");
+    const lines =
+      leaf?.querySelector(".mf2-lines") || document.querySelector(".mf2-lines");
     const toolbar = document.querySelector(".mpv-toolbar--ayah:not(.mpv-toolbar--hidden)");
-    const frame = document.querySelector("[data-opening-frame]");
-    const banner = document.querySelector(".mf2-grid-slot--banner");
-    const lineEls = [...document.querySelectorAll(".mf2-grid-slot--line .mf2-line")];
-    const lastLine = lineEls.at(-1);
+    const frame = (leaf || document).querySelector("[data-opening-frame]");
+    const banner = (leaf || document).querySelector(".mf2-grid-slot--banner");
+    const lineEls = [...(lines?.querySelectorAll(".mf2-grid-slot--line .mf2-line") || [])];
+    /* أدنى حبر فعلي عبر Range لكل الأسطر — لا last-child وحده */
+    let lastLine = lineEls.at(-1);
+    let deepestBot = -Infinity;
+    for (const el of lineEls) {
+      try {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const rects = [...range.getClientRects()].filter((r) => r.width > 0 && r.height > 0);
+        const bot = rects.length
+          ? Math.max(...rects.map((r) => r.bottom))
+          : el.getBoundingClientRect().bottom;
+        if (bot > deepestBot) {
+          deepestBot = bot;
+          lastLine = el;
+        }
+      } catch {
+        const bot = el.getBoundingClientRect().bottom;
+        if (bot > deepestBot) {
+          deepestBot = bot;
+          lastLine = el;
+        }
+      }
+    }
     const lr = rect(lines);
+    /* الخرطوش يجب أن يبقى داخل footerBand */
+    const frProbe = rect(footer);
+    const brProbe = rect(badge);
+    if (brProbe && frProbe) {
+      const inBand =
+        brProbe.top >= frProbe.top - 0.5 && brProbe.bottom <= frProbe.bottom + 0.5;
+      if (!inBand) {
+        return {
+          error: `خرطوش خارج footerBand (badge.top=${brProbe.top.toFixed(1)} footer=${frProbe.top.toFixed(1)}–${frProbe.bottom.toFixed(1)})`,
+        };
+      }
+    }
     const baselinesPx = [...document.querySelectorAll(".mf2-grid-slot--line[data-grid-slot]")].map(
       (el) => {
         const r = el.getBoundingClientRect();
@@ -301,24 +340,30 @@ try {
     consts: BANDS,
   };
 
-  if (off.gapContentFooter != null && off.gapContentFooter < 26) {
-    failures.push({
-      page: 3,
-      reason: `فاصل content→footer ${off.gapContentFooter.toFixed(1)}px < 26`,
-    });
+  if (off.error) {
+    failures.push({ page: 3, reason: off.error });
+  } else {
+    if (off.gapContentFooter != null && off.gapContentFooter < 26) {
+      failures.push({
+        page: 3,
+        reason: `فاصل content→footer ${off.gapContentFooter.toFixed(1)}px < 26`,
+      });
+    }
+    const inkToCart =
+      off.lastInk && off.badge ? off.badge.top - off.lastInk.bottom : null;
+    if (inkToCart != null && inkToCart < 27.5) {
+      failures.push({
+        page: 3,
+        reason: `حبر→خرطوش ${inkToCart.toFixed(1)}px < 28`,
+      });
+    }
+    if (off.overlaps?.badgeInk?.oy > 0.5 || off.overlaps?.metaInk?.oy > 0.5) {
+      failures.push({ page: 3, reason: "تقاطع خرطوش/وصف مع حبر (شريط مخفي)" });
+    }
   }
-  const inkToCart =
-    off.lastInk && off.badge ? off.badge.top - off.lastInk.bottom : null;
-  if (inkToCart != null && inkToCart < 27.5) {
-    failures.push({
-      page: 3,
-      reason: `حبر→خرطوش ${inkToCart.toFixed(1)}px < 28`,
-    });
-  }
-  if (off.overlaps.badgeInk.oy > 0.5 || off.overlaps.metaInk.oy > 0.5) {
-    failures.push({ page: 3, reason: "تقاطع خرطوش/وصف مع حبر (شريط مخفي)" });
-  }
-  if (on.overlaps.toolbarInk.oy > 0.5 || on.overlaps.toolbarBadge.oy > 0.5) {
+  if (on.error) {
+    failures.push({ page: 3, reason: on.error });
+  } else if (on.overlaps?.toolbarInk?.oy > 0.5 || on.overlaps?.toolbarBadge?.oy > 0.5) {
     failures.push({ page: 3, reason: "تقاطع شريط مع نص/خرطوش" });
   }
   /* ثبات الأسس */
@@ -337,6 +382,10 @@ try {
     if (n === 3) continue;
     const m = await probe(n, { showToolbar: false });
     results.pages[n] = { ...(results.pages[n] || {}), off: m };
+    if (m.error) {
+      failures.push({ page: n, reason: m.error });
+      continue;
+    }
     if (m.overlaps.badgeInk.oy > 0.5 || m.overlaps.metaInk.oy > 0.5) {
       failures.push({ page: n, reason: "تقاطع ذيل مع حبر" });
     }

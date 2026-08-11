@@ -61,6 +61,7 @@ html[data-theme="dark"] .mf2-frame {
   /* شبكة مطلقة على baselines — بلا flex توزيعي */
   display: block;
   margin: 0;
+  /* الهامش الجانبي على الفتحات المطلقة (left/right) لا على padding — absolute يتجاهله */
   padding: 0;
   transition: opacity .2s ease;
   --mf2-lh: 1.35;
@@ -76,6 +77,10 @@ html[data-theme="dark"] .mf2-frame {
 }
 .mf2-grid-slot--line .mf2-line {
   width: 100%;
+}
+.mf2-lines--qpc-contiguous .mf2-grid-slot--line .mf2-line {
+  width: max-content;
+  max-width: 100%;
 }
 .mf2-grid-slot--banner .mf2-surah-header,
 .mf2-grid-slot--banner .mf2-surah-header__frame {
@@ -184,7 +189,13 @@ html[data-theme="dark"] .mf2-frame {
 /* سطر آيات QPC: نص متصل واحد — بلا عزل bidi بين المحارف */
 .mf2-lines--qpc-contiguous .mf2-line {
   unicode-bidi: plaintext;
-  /* تسوية الأطراف: --mf2-line-sx من MushafPageV2 عند قصر السطر عن العرض */
+  /* صندوق بمحتوى السطر فقط، ملتصق باليمين — scaleX لا يوسّع صندوقًا بعرض 100٪ */
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  /* RTL: ادفع السطر لجهة البدء (اليمين) */
+  margin-inline-start: 0;
+  margin-inline-end: auto;
   transform: scaleX(var(--mf2-line-sx, 1));
   transform-origin: right center;
 }
