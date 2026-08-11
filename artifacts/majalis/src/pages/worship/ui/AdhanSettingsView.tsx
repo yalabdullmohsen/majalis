@@ -297,8 +297,8 @@ function PrayerCustomizeSheet({
                   [
                     { mode: "" as const, label: "عام" },
                     { mode: "full" as const, label: "أذان كامل" },
-                    { mode: "takbir" as const, label: "تكبيرات فقط" },
-                    { mode: "silent" as const, label: "إشعار صامت" },
+                    { mode: "takbir" as const, label: "تكبيرتان فقط" },
+                    { mode: "silent" as const, label: "تنبيه صامت" },
                     { mode: "off" as const, label: "إيقاف التنبيه" },
                   ]
                 ).map(({ mode, label }) => {

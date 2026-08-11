@@ -33,6 +33,7 @@ const CDN = "https://cdn.jsdelivr.net/gh/mohsalvi/adhan-audio@main";
 
 const OFF_MAKKAH = getOfflineAdhanPack("makkah");
 const OFF_MADINAH = getOfflineAdhanPack("madinah");
+const OFF_EGYPT = getOfflineAdhanPack("egypt");
 const OFF_AQSA = getOfflineAdhanPack("aqsa");
 const OFF_TAKBIR = getOfflineAdhanPack("takbeerat");
 
@@ -111,7 +112,10 @@ export const MUEZZINS: Muezzin[] = [
       OFF_MAKKAH?.local.general ||
       OFF_MAKKAH?.remote.general ||
       `${CDN}/general/makkah-haram-01.mp3`,
-    fajrUrl: OFF_MAKKAH?.remote.fajr || `${CDN}/fajr/makkah-fajr-01.mp3`,
+    fajrUrl:
+      OFF_MAKKAH?.local.fajr ||
+      OFF_MAKKAH?.remote.fajr ||
+      `${CDN}/fajr/makkah-fajr-01.mp3`,
     shortUrl: OFF_MAKKAH?.local.short || OFF_TAKBIR?.local.short,
     takbirUrl: OFF_MAKKAH?.local.takbir || OFF_TAKBIR?.local.takbir,
     sourceId: "mohsalvi-adhan-audio",
@@ -170,26 +174,31 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "egypt",
-    name: "أذان مصري",
+    name: "الأذان المصري",
     personName: null,
     attribution: "style_only",
     patternId: "egyptian",
-    mosque: null,
+    mosque: "الجامع الأزهر",
     recordingYear: null,
     origin: "القاهرة",
     country: "مصر",
     style: patternStyle("egyptian"),
     category: "مصري",
-    tags: ["مصري", "تقليدي"],
-    biography: "تسجيل بالنمط المصري التقليدي. بلا نسبة شخصية موثّقة.",
+    tags: ["مصري", "تقليدي", "أوفلاين"],
+    biography: "تسجيل بالنمط المصري التقليدي (أوفلاين محلي). بلا نسبة شخصية موثّقة.",
     rating: 4.8,
     totalRatings: 165000,
     followers: 270000,
     durationSec: 145,
     audioAvailable: true,
-    audioUrl: `${CDN}/general/egypt-traditional-01.mp3`,
+    audioUrl:
+      OFF_EGYPT?.local.general ||
+      OFF_EGYPT?.remote.general ||
+      `${CDN}/general/egypt-traditional-01.mp3`,
+    shortUrl: OFF_EGYPT?.local.short || OFF_TAKBIR?.local.short,
+    takbirUrl: OFF_EGYPT?.local.takbir || OFF_TAKBIR?.local.takbir,
     sourceId: "mohsalvi-adhan-audio",
-    licenseNote: "بث عبر mohsalvi/adhan-audio — راجع CREDITS.md وLICENSE_RISKS.md",
+    licenseNote: "بث عبر mohsalvi/adhan-audio + حزمة أوفلاين محلية — راجع CREDITS.md",
   },
   {
     id: "abdulbasit",
@@ -324,18 +333,48 @@ export const MUEZZINS: Muezzin[] = [
     category: "الأقصى",
     tags: ["الأقصى"],
     biography:
-      "تسجيل بنمط المسجد الأقصى. الملف الكامل من CDN ويُخزَّن في الكاش للأوفلاين؛ التكبيرات محلية.",
+      "تسجيل بنمط المسجد الأقصى (أوفلاين محلي مضغوط). بلا نسبة شخصية موثّقة.",
     rating: 4.7,
     totalRatings: 12000,
     followers: 28000,
     durationSec: 180,
     audioAvailable: true,
     audioUrl:
-      OFF_AQSA?.remote.general || `${CDN}/general/al-aqsa-jerusalem-02.mp3`,
+      OFF_AQSA?.local.general ||
+      OFF_AQSA?.remote.general ||
+      `${CDN}/general/al-aqsa-jerusalem-02.mp3`,
     shortUrl: OFF_AQSA?.local.short || OFF_TAKBIR?.local.short,
     takbirUrl: OFF_AQSA?.local.takbir || OFF_TAKBIR?.local.takbir,
     sourceId: "mohsalvi-adhan-audio",
     licenseNote: "بث عبر mohsalvi/adhan-audio — راجع CREDITS.md وLICENSE_RISKS.md",
+  },
+  {
+    id: "takbeerat",
+    name: "التكبيرات فقط",
+    personName: null,
+    attribution: "style_only",
+    patternId: "makki",
+    mosque: null,
+    recordingYear: null,
+    origin: "تنبيه قصير",
+    country: "—",
+    style: "تكبيرات",
+    category: "تنبيه قصير",
+    tags: ["تكبير", "قصير", "أوفلاين"],
+    biography: "مقطع تكبيرات قصيرة أوفلاين للتنبيه السريع دون أذان كامل.",
+    rating: 4.5,
+    totalRatings: 8000,
+    followers: 12000,
+    durationSec: 12,
+    audioAvailable: true,
+    audioUrl:
+      OFF_TAKBIR?.local.general ||
+      OFF_TAKBIR?.local.takbir ||
+      `${CDN}/general/madinah-01.mp3`,
+    shortUrl: OFF_TAKBIR?.local.short,
+    takbirUrl: OFF_TAKBIR?.local.takbir,
+    sourceId: "mohsalvi-adhan-audio",
+    licenseNote: "حزمة أوفلاين محلية — راجع CREDITS.md",
   },
   /* أنماط بلا ملف مرخّص مثبت بعد — ظاهرة في الفهرس كـ«قريبًا» وغير قابلة للاختيار */
   {
@@ -442,13 +481,19 @@ export function getMuezzin(id: string, opts?: { requireFajr?: boolean }): Muezzi
  * هل يصلح هذا التسجيل لأذان الفجر؟
  * شرط شرعي: نسخة مستقلة بالتثويب — لا يكفي الأذان العام.
  */
+/** مسار تثويب: CDN `/fajr/` أو ملف محلي باسم fajr */
+export function isFajrThasweebUrl(url: string | undefined): boolean {
+  if (!url) return false;
+  return /\/fajr\//i.test(url) || /makkah-fajr|[-_/]fajr\./i.test(url);
+}
+
 export function hasFajrAdhan(m: Muezzin): boolean {
   return Boolean(
     m.fajrUrl &&
       m.audioAvailable &&
       isMuezzinSelectable(m) &&
       m.fajrUrl !== m.audioUrl &&
-      m.fajrUrl.includes("/fajr/"),
+      isFajrThasweebUrl(m.fajrUrl),
   );
 }
 

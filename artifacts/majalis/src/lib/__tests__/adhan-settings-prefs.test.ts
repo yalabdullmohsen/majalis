@@ -52,10 +52,12 @@ patchPrayerPrefs("dhuhr", { deliveryMode: "takbir" });
 assert.equal(getEffectivePlaybackMode(loadAdhanPrefs(), "dhuhr"), "takbir");
 
 patchAdhanPrefs({ playbackMode: "short", defaultMuezzinId: "madinah" });
+assert.equal(mem.get("selected_muezzin_id"), "madinah", "مزامنة selected_muezzin_id");
 patchPrayerPrefs("asr", { muezzinId: "egypt" });
 const all = applyDefaultMuezzinToAllPrayers("madinah");
 assert.equal(all.prayers.asr.muezzinId, "");
 assert.equal(all.defaultMuezzinId, "madinah");
+assert.equal(mem.get("selected_muezzin_id"), "madinah");
 
 assert.ok(ADHAN_FULL_DOWNLOAD_CAP_BYTES >= 40 * 1024 * 1024);
 assert.match(formatAdhanDownloadCap(), /ميغابايت/);

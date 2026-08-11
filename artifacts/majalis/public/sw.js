@@ -61,7 +61,10 @@ const STATIC_SHELL_ASSETS = [
   "/manifest.webmanifest",
   "/majlisilm-og-2026.jpg",
   "/sounds/adhan/makkah-general.mp3",
+  "/sounds/adhan/makkah-fajr.mp3",
   "/sounds/adhan/madinah-general.mp3",
+  "/sounds/adhan/egypt-general.mp3",
+  "/sounds/adhan/aqsa-general.mp3",
   "/sounds/adhan/takbeerat-short.mp3",
 ];
 
@@ -451,9 +454,9 @@ self.addEventListener("message", (event) => {
         resolve();
         return;
       }
-      const cityLine = cityName ? ` · ${cityName}` : "";
-      self.registration.showNotification(`🕌 حان وقت ${prayerArabic}`, {
-        body: `حيَّ على الصلاة، حيَّ على الفلاح${cityLine}`,
+      const cityLine = cityName ? ` — ${cityName}` : "";
+      self.registration.showNotification(`حان وقت ${prayerArabic}${cityLine}`, {
+        body: `حيَّ على الصلاة، حيَّ على الفلاح${cityName ? ` · ${cityName}` : ""}`,
         icon: "/logo.png?v=9",
         badge: "/favicon.png?v=9",
         dir: "rtl",

@@ -15,6 +15,25 @@ import {
 } from "./adhan-playback-modes";
 
 const STORE_KEY = "majalis-adhan-prefs-v1";
+/** مفتاح مواصفات الواجهة — يُزامَن مع defaultMuezzinId */
+export const SELECTED_MUEZZIN_STORAGE_KEY = "selected_muezzin_id";
+
+function syncSelectedMuezzinId(id: string) {
+  try {
+    if (id) localStorage.setItem(SELECTED_MUEZZIN_STORAGE_KEY, id);
+  } catch {
+    /* ignore */
+  }
+}
+
+function readSelectedMuezzinIdFallback(): string | null {
+  try {
+    const v = localStorage.getItem(SELECTED_MUEZZIN_STORAGE_KEY);
+    return v && v.trim() ? v.trim() : null;
+  } catch {
+    return null;
+  }
+}
 
 export type { AdhanPlaybackMode };
 
@@ -114,18 +133,32 @@ function defaultPrefs(): AdhanPreferences {
 export function loadAdhanPrefs(): AdhanPreferences {
   try {
     const raw = localStorage.getItem(STORE_KEY);
-    if (!raw) return defaultPrefs();
+    if (!raw) {
+      const legacyId = readSelectedMuezzinIdFallback();
+      const base = defaultPrefs();
+      if (legacyId) {
+        const withLegacy = { ...base, defaultMuezzinId: legacyId };
+        syncSelectedMuezzinId(legacyId);
+        return sanitizeFajrMuezzinPrefs(withLegacy);
+      }
+      syncSelectedMuezzinId(base.defaultMuezzinId);
+      return base;
+    }
     const parsed = JSON.parse(raw) as Partial<AdhanPreferences>;
     const base = defaultPrefs();
     const vol = typeof parsed.volume === "number" && Number.isFinite(parsed.volume)
       ? Math.min(1, Math.max(0, parsed.volume))
       : base.volume;
     const iqDelay = parsed.iqamahDelayMinutes;
+    const defaultMuezzinId =
+      parsed.defaultMuezzinId ??
+      readSelectedMuezzinIdFallback() ??
+      base.defaultMuezzinId;
     const merged: AdhanPreferences = {
       globalEnabled: parsed.globalEnabled ?? base.globalEnabled,
       browserNotificationsEnabled: parsed.browserNotificationsEnabled ?? base.browserNotificationsEnabled,
       silentReminderEnabled: parsed.silentReminderEnabled ?? base.silentReminderEnabled,
-      defaultMuezzinId: parsed.defaultMuezzinId ?? base.defaultMuezzinId,
+      defaultMuezzinId,
       playbackMode: isAdhanPlaybackMode(parsed.playbackMode)
         ? parsed.playbackMode
         : base.playbackMode,
@@ -140,6 +173,7 @@ export function loadAdhanPrefs(): AdhanPreferences {
       prayers: { ...base.prayers, ...parsed.prayers },
       fridayBannerEnabled: parsed.fridayBannerEnabled ?? base.fridayBannerEnabled,
     };
+    syncSelectedMuezzinId(merged.defaultMuezzinId);
     return sanitizeFajrMuezzinPrefs(merged);
   } catch {
     return defaultPrefs();
@@ -151,6 +185,7 @@ export function saveAdhanPrefs(prefs: AdhanPreferences): AdhanPreferences {
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(safe));
   } catch { /* ignore quota errors */ }
+  syncSelectedMuezzinId(safe.defaultMuezzinId);
   return safe;
 }
 
