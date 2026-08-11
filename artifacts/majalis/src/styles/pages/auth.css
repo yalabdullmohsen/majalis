@@ -23,18 +23,20 @@
 
 .login-logo {
   width: auto !important;
-  max-width: min(78vw, 14rem) !important;
-  max-height: min(45vh, 12rem) !important;
+  max-width: min(82vw, 15.5rem) !important;
+  max-height: min(42vh, 13.5rem) !important;
   height: auto !important;
   object-fit: contain !important;
   display: block;
   margin-inline: auto;
+  filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.35));
 }
 
 .login-card__brand {
   margin: 0.75rem 0 0;
-  font-size: var(--ds-text-base);
+  font-size: clamp(1.15rem, 3.5vw, 1.45rem);
   font-weight: 700;
+  letter-spacing: 0.01em;
   color: var(--majalis-emerald-deep);
 }
 
@@ -167,7 +169,7 @@
 }
 
 
-/* صفحة تسجيل الدخول: نفس هوية شاشة الإطلاق (أخضر داكن + زخرفة) */
+/* صفحة تسجيل الدخول: هوية الدخول (أخضر #002b21 + شعار أبيض) */
 .login-page {
   min-height: 100dvh;
   display: flex;
@@ -175,13 +177,29 @@
   align-items: center;
   padding: 24px;
   background:
-    linear-gradient(180deg, rgb(0 3 0 / 0.55) 0%, rgb(0 3 0 / 0.72) 100%),
-    url("/brand/splash-source.png") center / cover no-repeat,
-    #000300;
+    radial-gradient(ellipse 80% 55% at 50% 28%, rgba(28, 86, 66, 0.55) 0%, transparent 58%),
+    radial-gradient(ellipse 120% 80% at 50% 110%, rgba(0, 0, 0, 0.5) 0%, transparent 50%),
+    linear-gradient(180deg, #003528 0%, #002b21 48%, #001912 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-page::before {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  opacity: 0.35;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(60deg, transparent 0 22px, rgba(247, 244, 236, 0.03) 22px 23px),
+    repeating-linear-gradient(-60deg, transparent 0 22px, rgba(247, 244, 236, 0.022) 22px 23px);
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, #000 15%, transparent 70%);
 }
 
 /* بطاقة تسجيل الدخول: elevation متميزة */
 .login-card {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 22rem;
   padding: 2.25rem 2rem;
@@ -193,7 +211,7 @@
 
 /* رأس البطاقة */
 .login-card__brand {
-  font-size: 0.95rem;
+  font-size: clamp(1.1rem, 3.2vw, 1.35rem);
   color: var(--majalis-emerald-deep, var(--mj-brand-deep));
 }
 

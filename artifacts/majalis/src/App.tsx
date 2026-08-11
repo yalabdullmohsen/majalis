@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
 import { AuthProvider, useAuth } from "@/components/AuthProvider";
+import { BrandReveal } from "@/components/BrandReveal";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
 import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
@@ -1110,7 +1111,9 @@ function App() {
         <LanguageProvider>
           <UserPreferencesProvider>
             <AuthProvider>
-              <AppShell />
+              <BrandReveal>
+                <AppShell />
+              </BrandReveal>
             </AuthProvider>
           </UserPreferencesProvider>
         </LanguageProvider>

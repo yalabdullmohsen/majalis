@@ -70,8 +70,19 @@ const icon1024 = readFileSync(resolve(root, "public/brand/icon-1024.png"));
 // PNG signature + IHDR: RGB بلا ألفا (color type 2)
 assert.equal(icon1024[25], 2, "icon-1024 color type = RGB (بلا شفافية)");
 
-// لا مكوّن React Onboarding/Welcome كبوابة إقلاع
+// لا مكوّن React Onboarding/Welcome كبوابة إقلاع — كشف الهوية عبر BrandReveal بعد الإقلاع فقط
 const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8");
 assert.doesNotMatch(appSrc, /Onboarding|WelcomeScreen|IntroScreen/, "لا بوابة ترحيب React");
+assert.match(appSrc, /BrandReveal/, "كشف هوية الجلسة مربوط بعد الإقلاع الأصلي");
+
+const brandReveal = readFileSync(resolve(root, "src/components/BrandReveal.tsx"), "utf8");
+assert.match(brandReveal, /splash-logo\.png/, "يستخدم شعار المجلس");
+assert.match(brandReveal, /mj-brand-reveal-seen-v1/, "مرة واحدة لكل جلسة");
+assert.doesNotMatch(brandReveal, /mj-boot-splash/, "ليس طبقة boot في HTML");
+
+const brandCss = readFileSync(resolve(root, "src/styles/components/brand-reveal.css"), "utf8");
+assert.match(brandCss, /#002b21/, "خلفية هوية المجلس");
+assert.match(brandCss, /mj-br-curtain/, "خروج بستارة غير معتادة");
+assert.match(brandCss, /prefers-reduced-motion/, "يحترم تقليل الحركة");
 
 console.log("launch-splash-unified.test.ts: ok");
