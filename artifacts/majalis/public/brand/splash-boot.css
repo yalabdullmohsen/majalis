@@ -1,7 +1,0 @@
-/* مولَّد — خلفية الإطلاق مطابقة لـ assets/splash.png */
-html, body {
-  background-color: #002b21;
-}
-:root {
-  --mj-splash-bg: #002b21;
-}

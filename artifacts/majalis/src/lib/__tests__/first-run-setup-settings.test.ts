@@ -44,12 +44,14 @@ assert.equal(DEFAULT_PREFERENCES.seniorMode, false);
 }
 
 const app = readFileSync(resolve(root, "src/App.tsx"), "utf8");
-assert.doesNotMatch(app, /\b(Onboarding|WelcomeScreen|IntroScreen)\b/);
+assert.doesNotMatch(app, /\b(Onboarding|WelcomeScreen|IntroScreen|BrandReveal)\b/);
+assert.match(app, /AppFirstRunHost/);
 
-const brand = readFileSync(resolve(root, "src/components/BrandReveal.tsx"), "utf8");
-assert.match(brand, /FirstRunSetup/);
-assert.match(brand, /components\/FirstRunSetup/);
-assert.doesNotMatch(brand, /\b(Onboarding|WelcomeScreen|IntroScreen)\b/);
+const host = readFileSync(resolve(root, "src/components/AppFirstRunHost.tsx"), "utf8");
+assert.match(host, /FirstRunSetup/);
+assert.match(host, /components\/FirstRunSetup/);
+assert.doesNotMatch(host, /\b(Onboarding|WelcomeScreen|IntroScreen)\b/);
+assert.doesNotMatch(host, /splash-logo|mj-brand-reveal/);
 
 const frs = readFileSync(resolve(root, "src/components/FirstRunSetup.tsx"), "utf8");
 assert.match(frs, /تخطّي/);

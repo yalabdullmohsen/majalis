@@ -14,10 +14,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "../../../");
 
 // ── Phase 1: manifests ──────────────────────────────────────────────────────
-const splashMeta = JSON.parse(readFileSync(resolve(root, "public/brand/splash-meta.json"), "utf8"));
-assert.match(splashMeta.backgroundColor, /^#[0-9A-Fa-f]{6}$/);
-assert.ok(existsSync(resolve(root, "public/brand/splash-logo.png")));
-assert.ok(existsSync(resolve(root, "public/brand/splash-source.png")));
+assert.ok(existsSync(resolve(root, "public/brand/splash-logo.png")), "شعار الدخول يبقى للواجهة");
+assert.ok(!existsSync(resolve(root, "public/brand/splash-source.png")), "مصدر توليد الإقلاع محذوف");
+assert.ok(!existsSync(resolve(root, "public/brand/apple-splash")), "لا صور إقلاع PWA يتيمة");
 
 const siteManifest = JSON.parse(readFileSync(resolve(root, "public/site.webmanifest"), "utf8"));
 assert.equal(siteManifest.display, "standalone");
@@ -26,7 +25,7 @@ assert.equal(siteManifest.name, "المجلس العلمي");
 assert.equal(siteManifest.short_name, "المجلس");
 assert.equal(siteManifest.start_url, "/");
 assert.equal(siteManifest.theme_color, "#F2F4F3");
-assert.equal(siteManifest.background_color, splashMeta.backgroundColor);
+assert.equal(siteManifest.background_color, "#002b21");
 assert.ok(siteManifest.icons.some((i: { src: string }) => i.src.includes("icon-512")));
 assert.ok(existsSync(resolve(root, "public/manifest.webmanifest")));
 assert.ok(existsSync(resolve(root, "public/manifest.json")));
@@ -37,7 +36,7 @@ assert.equal(jsonManifest.short_name, "المجلس");
 assert.equal(jsonManifest.start_url, "/");
 assert.equal(jsonManifest.display, "standalone");
 assert.equal(jsonManifest.theme_color, "#F2F4F3");
-assert.equal(jsonManifest.background_color, splashMeta.backgroundColor);
+assert.equal(jsonManifest.background_color, "#002b21");
 assert.ok(existsSync(resolve(root, "public/sw.js")));
 assert.ok(existsSync(resolve(root, "public/offline.html")));
 
