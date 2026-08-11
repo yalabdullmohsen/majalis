@@ -180,7 +180,7 @@ try {
     }, { timeout: 60_000 }).catch(() => {});
     await sleep(n <= 3 || FREEZE.includes(n) ? 700 : 280);
     await page.addStyleTag({
-      content: `.mpv-toolbar--ayah,.mpv-ayah-header,.mpv-ayah-footer,.mpv-curl-underlay,.mpv-curl-shade{display:none!important}`,
+      content: `.mpv-toolbar--ayah,.mpv-ayah-header,.mpv-ayah-footer,.mpv-curl-underlay,.mpv-curl-shade,.mpv-flip-underlay,.mpv-flip-shade,.mpv-flip-corner,.mpv-flip-edge{display:none!important}`,
     });
 
     const m = await page.evaluate((eps) => {
