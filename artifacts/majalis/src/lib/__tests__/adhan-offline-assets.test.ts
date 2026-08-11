@@ -14,19 +14,29 @@ import {
 } from "../adhan-offline-assets";
 import { getMuezzin } from "../adhan-audio";
 
-assert.ok(OFFLINE_ADHAN_CORE_PACKS.length >= 4, "حزم مكة/المدينة/الأقصى/تكبيرات");
+assert.ok(OFFLINE_ADHAN_CORE_PACKS.length >= 5, "حزم مكة/المدينة/مصر/الأقصى/تكبيرات");
 assert.ok(resolveOfflineClipUrl("makkah", "general")?.startsWith("/sounds/"));
+assert.ok(resolveOfflineClipUrl("makkah", "fajr")?.startsWith("/sounds/"));
 assert.ok(resolveOfflineClipUrl("madinah", "general")?.startsWith("/sounds/"));
+assert.ok(resolveOfflineClipUrl("egypt", "general")?.startsWith("/sounds/"));
+assert.ok(resolveOfflineClipUrl("aqsa", "general")?.startsWith("/sounds/"));
 assert.ok(resolveOfflineClipUrl("takbeerat", "takbir")?.startsWith("/sounds/"));
 
 const aqsa = getMuezzin("aqsa");
 assert.equal(aqsa.audioAvailable, true, "الأقصى متاح للاختيار");
-assert.ok(aqsa.audioUrl, "رابط الأقصى");
+assert.ok(aqsa.audioUrl.startsWith("/sounds/"), "الأقصى محلي أوفلاين");
 assert.ok(aqsa.takbirUrl, "تكبيرات للأقصى");
+
+const egypt = getMuezzin("egypt");
+assert.ok(egypt.audioUrl.startsWith("/sounds/"), "مصر محلي أوفلاين");
+
+const takbeerat = getMuezzin("takbeerat");
+assert.equal(takbeerat.audioAvailable, true, "التكبيرات متاحة");
 
 const makkah = getMuezzin("makkah");
 assert.ok(makkah.audioUrl.startsWith("/sounds/") || makkah.audioUrl.includes("makkah"));
-assert.ok(makkah.fajrUrl, "فجر مكة بالتثويب");
+assert.ok(makkah.fajrUrl?.includes("fajr"), "فجر مكة بالتثويب");
+assert.ok(makkah.fajrUrl?.startsWith("/sounds/"), "فجر مكة محلي أوفلاين");
 assert.ok(makkah.shortUrl && makkah.takbirUrl, "مقاطع قصيرة لمكة");
 
 const here = dirname(fileURLToPath(import.meta.url));

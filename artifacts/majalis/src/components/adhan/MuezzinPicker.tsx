@@ -6,6 +6,10 @@ import {
   type Muezzin,
 } from "@/lib/adhan-audio";
 import { ADHAN_PATTERNS, type AdhanPatternId } from "@/lib/adhan-patterns";
+import {
+  OFFLINE_FEATURED_MUEZZIN_IDS,
+  isOfflineFeaturedMuezzin,
+} from "@/lib/adhan-offline-assets";
 import "@/styles/components/muezzin-picker.css";
 
 type Props = {
@@ -37,10 +41,19 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
     );
   }, [selectable, query]);
 
+  const featured = useMemo(() => {
+    if (query.trim()) return [] as Muezzin[];
+    const byId = new Map(filtered.map((m) => [m.id, m]));
+    return OFFLINE_FEATURED_MUEZZIN_IDS.map((id) => byId.get(id)).filter(
+      (m): m is Muezzin => Boolean(m),
+    );
+  }, [filtered, query]);
+
   const grouped = useMemo(() => {
     const map = new Map<AdhanPatternId, Muezzin[]>();
     for (const p of ADHAN_PATTERNS) map.set(p.id, []);
     for (const m of filtered) {
+      if (!query.trim() && isOfflineFeaturedMuezzin(m.id)) continue;
       const list = map.get(m.patternId) ?? [];
       list.push(m);
       map.set(m.patternId, list);
@@ -49,7 +62,7 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
       pattern: p,
       items: map.get(p.id) ?? [],
     })).filter((g) => g.items.length > 0);
-  }, [filtered]);
+  }, [filtered, query]);
 
   function clearPreviewTimers() {
     if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
@@ -112,6 +125,60 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
     onClose();
   }
 
+  function renderItem(m: Muezzin) {
+    const isSelected = selected === m.id;
+    const isPlaying = previewing === m.id;
+    const meta = [m.mosque, m.origin].filter(Boolean).join(" · ");
+    const offline = isOfflineFeaturedMuezzin(m.id);
+    return (
+      <div
+        key={m.id}
+        className={`mzp-item${isSelected ? " mzp-item--selected" : ""}${offline ? " mzp-item--offline" : ""}`}
+      >
+        <button
+          type="button"
+          onClick={() => handlePreview(m)}
+          className={`mzp-preview-btn${isPlaying ? " mzp-preview-btn--playing" : ""}`}
+          aria-label={isPlaying ? "إيقاف الاستماع" : "استماع للتجربة"}
+        >
+          <span className="mzp-preview-btn__icon" aria-hidden="true">
+            {isPlaying ? "■" : "▶"}
+          </span>
+          <span className="mzp-preview-btn__label">
+            {isPlaying ? "إيقاف" : "استماع للتجربة"}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          className="mzp-info"
+          onClick={() => handleSelect(m.id)}
+          aria-pressed={isSelected}
+          aria-label={`اختيار ${m.name}`}
+        >
+          <span className="mzp-name">
+            {m.name}
+            {offline ? <span className="mzp-offline-badge">أوفلاين</span> : null}
+          </span>
+          <span className="mzp-origin">
+            {meta ? `${meta} · ` : ""}
+            <span className="mzp-style-badge">{m.style}</span>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          className={`mzp-radio${isSelected ? " mzp-radio--selected" : ""}`}
+          onClick={() => handleSelect(m.id)}
+          aria-label={isSelected ? `مختار: ${m.name}` : `اختيار ${m.name}`}
+          aria-pressed={isSelected}
+        >
+          {isSelected ? <span className="mzp-check">✓</span> : null}
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div
       className="mzp-overlay"
@@ -137,7 +204,7 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
           <p className="mzp-subtitle">
             {requireFajr
               ? "يُعرض فقط من لديه «الصلاة خير من النوم» — بلا استبدال بالأذان العام"
-              : "اضغط «استماع للتجربة»، ثم اختر النمط المناسب"}
+              : "مكة والمدينة ومصر والأقصى والتكبيرات متاحة أوفلاين — اضغط «استماع للتجربة»"}
           </p>
           <label className="mzp-search">
             <span className="mzp-search__sr">بحث عن مؤذن</span>
@@ -158,60 +225,23 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
         </div>
 
         <div className="mzp-list">
-          {grouped.length === 0 ? (
+          {featured.length === 0 && grouped.length === 0 ? (
             <p className="mzp-empty">لا نتائج مطابقة للبحث.</p>
           ) : (
-            grouped.map(({ pattern, items }) => (
-              <div key={pattern.id} className="mzp-pattern-group">
-                <div className="mzp-pattern-label">{pattern.label}</div>
-                {items.map((m) => {
-                  const isSelected = selected === m.id;
-                  const isPlaying = previewing === m.id;
-                  const meta = [m.mosque, m.origin].filter(Boolean).join(" · ");
-                  return (
-                    <div
-                      key={m.id}
-                      className={`mzp-item${isSelected ? " mzp-item--selected" : ""}`}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => handlePreview(m)}
-                        className={`mzp-preview-btn rounded-full icon-only${isPlaying ? " mzp-preview-btn--playing" : ""}`}
-                        aria-label={
-                          isPlaying ? "إيقاف الاستماع" : "استماع للتجربة"
-                        }
-                      >
-                        {isPlaying ? "⏹" : "▶"}
-                      </button>
-
-                      <button
-                        type="button"
-                        className="mzp-info"
-                        onClick={() => handleSelect(m.id)}
-                        aria-pressed={isSelected}
-                        aria-label={`اختيار ${m.name}`}
-                      >
-                        <span className="mzp-name">{m.name}</span>
-                        <span className="mzp-origin">
-                          {meta ? `${meta} · ` : ""}
-                          <span className="mzp-style-badge">{m.style}</span>
-                        </span>
-                      </button>
-
-                      <button
-                        type="button"
-                        className={`mzp-radio${isSelected ? " mzp-radio--selected" : ""}`}
-                        onClick={() => handleSelect(m.id)}
-                        aria-label={isSelected ? `مختار: ${m.name}` : `اختيار ${m.name}`}
-                        aria-pressed={isSelected}
-                      >
-                        {isSelected ? <span className="mzp-check">✓</span> : null}
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            ))
+            <>
+              {featured.length > 0 ? (
+                <div className="mzp-pattern-group">
+                  <div className="mzp-pattern-label">متاح أوفلاين بدون إنترنت</div>
+                  {featured.map(renderItem)}
+                </div>
+              ) : null}
+              {grouped.map(({ pattern, items }) => (
+                <div key={pattern.id} className="mzp-pattern-group">
+                  <div className="mzp-pattern-label">{pattern.label}</div>
+                  {items.map(renderItem)}
+                </div>
+              ))}
+            </>
           )}
         </div>
 

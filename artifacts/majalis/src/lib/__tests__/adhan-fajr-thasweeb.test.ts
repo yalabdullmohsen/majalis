@@ -24,11 +24,15 @@ import {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
 
-// ── كتالوج: كل fajrUrl مستقل ومسار /fajr/ ─────────────────────────────
+// ── كتالوج: كل fajrUrl مستقل ومسار تثويب (CDN /fajr/ أو محلي makkah-fajr) ─
 for (const m of MUEZZINS) {
   if (!m.fajrUrl) continue;
   assert.notEqual(m.fajrUrl, m.audioUrl, `${m.id}: fajrUrl ≠ audioUrl`);
-  assert.match(m.fajrUrl, /\/fajr\//, `${m.id}: fajrUrl ضمن مجلد fajr`);
+  assert.match(
+    m.fajrUrl,
+    /\/fajr\/|makkah-fajr|[-_/]fajr\./i,
+    `${m.id}: fajrUrl مسار تثويب`,
+  );
   assert.ok(hasFajrAdhan(m) || !m.audioAvailable, `${m.id}: hasFajrAdhan`);
 }
 

@@ -17,13 +17,14 @@ export type OfflineAdhanPack = {
 
 const CDN = "https://cdn.jsdelivr.net/gh/mohsalvi/adhan-audio@main";
 
-/** الحزمة الأساسية المطلوبة للمواصفات: مكة / المدينة / الأقصى / تكبيرات */
+/** الحزمة الأساسية: مكة / المدينة / مصر / الأقصى / تكبيرات (+ فجر مكة بالتثويب) */
 export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
   {
     id: "makkah",
     labelAr: "أذان مكة المكرمة",
     local: {
       general: "/sounds/adhan/makkah-general.mp3",
+      fajr: "/sounds/adhan/makkah-fajr.mp3",
       short: "/sounds/adhan/takbeerat-short.mp3",
       takbir: "/sounds/adhan/takbeerat-short.mp3",
     },
@@ -49,14 +50,28 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     },
   },
   {
-    id: "aqsa",
-    labelAr: "أذان المسجد الأقصى",
+    id: "egypt",
+    labelAr: "الأذان المصري",
     local: {
+      general: "/sounds/adhan/egypt-general.mp3",
       short: "/sounds/adhan/takbeerat-short.mp3",
       takbir: "/sounds/adhan/takbeerat-short.mp3",
     },
     remote: {
-      // ملف أخف من jerusalem-01؛ يُنزَّل للكاش عند طلب الأوفلاين
+      general: `${CDN}/general/egypt-traditional-01.mp3`,
+      short: `${CDN}/general/madinah-01.mp3`,
+      takbir: `${CDN}/general/madinah-01.mp3`,
+    },
+  },
+  {
+    id: "aqsa",
+    labelAr: "أذان المسجد الأقصى",
+    local: {
+      general: "/sounds/adhan/aqsa-general.mp3",
+      short: "/sounds/adhan/takbeerat-short.mp3",
+      takbir: "/sounds/adhan/takbeerat-short.mp3",
+    },
+    remote: {
       general: `${CDN}/general/al-aqsa-jerusalem-02.mp3`,
       short: `${CDN}/general/madinah-01.mp3`,
       takbir: `${CDN}/general/madinah-01.mp3`,
@@ -78,10 +93,23 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
   },
 ];
 
+/** معرفات المؤذنين المضمّنة أوفلاين في الحزمة */
+export const OFFLINE_FEATURED_MUEZZIN_IDS = [
+  "makkah",
+  "madinah",
+  "egypt",
+  "aqsa",
+  "takbeerat",
+] as const;
+
 const byId = new Map(OFFLINE_ADHAN_CORE_PACKS.map((p) => [p.id, p]));
 
 export function getOfflineAdhanPack(id: string): OfflineAdhanPack | undefined {
   return byId.get(id);
+}
+
+export function isOfflineFeaturedMuezzin(id: string): boolean {
+  return (OFFLINE_FEATURED_MUEZZIN_IDS as readonly string[]).includes(id);
 }
 
 /** يفضّل المسار المحلي إن وُجد، وإلا البعيد. */
