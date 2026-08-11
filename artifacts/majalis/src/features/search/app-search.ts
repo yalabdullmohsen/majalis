@@ -21,7 +21,6 @@ import {
   type HybridSearchSource,
 } from "@/features/search/hybrid-search";
 import { isOnline } from "@/lib/offline-db";
-import { trackAnonymousSearch } from "@/lib/privacy-telemetry";
 
 export type AppSearchResult = {
   id: string;
@@ -135,7 +134,7 @@ export async function runAppSearch(
     return { results: [], groups: {}, counts: {}, responseMs: 0, source: "lexical" };
   }
 
-  trackAnonymousSearch(query);
+  void import("@/lib/privacy-telemetry").then((m) => m.trackAnonymousSearch(query));
 
   const quick = parseQuickNav(query);
   const quickHit: AppSearchResult | null = quick

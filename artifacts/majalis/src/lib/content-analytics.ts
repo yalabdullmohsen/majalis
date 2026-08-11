@@ -1,14 +1,23 @@
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { allowsAnalytics } from "@/lib/cookie-consent";
-import {
-  trackAnonymousContentView,
-  trackAnonymousSearch,
-} from "@/lib/privacy-telemetry";
 
 const SESSION_PREFIX = "majalis-view:";
 
 function sessionKey(contentType: string, contentId: string) {
   return `${SESSION_PREFIX}${contentType}:${contentId}`;
+}
+
+function enqueuePrivacy(
+  fn: "trackAnonymousContentView" | "trackAnonymousSearch",
+  ...args: [string, string] | [string]
+) {
+  void import("@/lib/privacy-telemetry").then((m) => {
+    if (fn === "trackAnonymousContentView") {
+      m.trackAnonymousContentView(args[0]!, args[1]!);
+    } else {
+      m.trackAnonymousSearch(args[0]!);
+    }
+  });
 }
 
 /** تسجيل مشاهدة محتوى — مرة واحدة لكل جلسة */
@@ -22,7 +31,7 @@ export async function trackContentView(contentType: string, contentId: string) {
     /* private mode */
   }
 
-  trackAnonymousContentView(contentType, contentId);
+  enqueuePrivacy("trackAnonymousContentView", contentType, contentId);
 
   if (!allowsAnalytics() || !isSupabaseConfigured()) return;
 
@@ -43,7 +52,7 @@ export async function trackSearchQuery(query: string) {
   const trimmed = query.trim();
   if (!trimmed || trimmed.length < 2) return;
 
-  trackAnonymousSearch(trimmed);
+  enqueuePrivacy("trackAnonymousSearch", trimmed);
 
   if (!allowsAnalytics() || !isSupabaseConfigured()) return;
 
