@@ -13,6 +13,11 @@ import {
 } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -47,7 +52,7 @@ async function measurePage(page, pageNum, grid) {
   await sleep(120);
 
   const metrics = await page.evaluate((baselinesPct) => {
-    const linesRoot = document.querySelector(".mf2-lines");
+    const linesRoot = __mushafLinesRoot();
     const header = document.querySelector(".mpv-ayah-header");
     const footer = document.querySelector(".mpv-ayah-footer");
     const surahHeader = document.querySelector(".mpv-ayah-header__surah");
@@ -161,6 +166,7 @@ async function main() {
   const grid = JSON.parse(readFileSync(GRID_PATH, "utf8"));
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: VIEWPORT });
+await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   const results = [];
   const failures = [];
 

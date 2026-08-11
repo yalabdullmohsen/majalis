@@ -42,6 +42,8 @@ assert.match(stage, /mpv-flip-stage/);
 assert.match(stage, /mpv-flip-underlay/);
 assert.match(stage, /mpv-flip-leaf/);
 assert.match(stage, /data-mushaf-active-leaf/);
+assert.match(stage, /data-page-state/);
+assert.match(stage, /data-page-state="active"/);
 assert.match(stage, /visibility/);
 assert.match(stage, /mpv-flip-underlay__paper/);
 

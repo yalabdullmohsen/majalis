@@ -13,6 +13,11 @@ import { spawn } from "node:child_process";
 import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -27,15 +32,7 @@ const GRID = JSON.parse(
 );
 const CLEARANCE = Number(process.env.MUSHAF_GATE_CLEARANCE || GRID.sideMarginPx || 2);
 
-const PAGES = (
-  process.env.MUSHAF_GATE_PAGES ||
-  (process.env.MUSHAF_GATE_FULL === "1"
-    ? Array.from({ length: 604 }, (_, i) => String(i + 1)).join(",")
-    : "1,2,3,50,228,235,283,588,599,600,601,604")
-)
-  .split(",")
-  .map(Number)
-  .filter((n) => n >= 1 && n <= 604);
+const PAGES = resolveGatePages();
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -84,6 +81,7 @@ if (!EXTERNAL_BASE) {
 
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: VIEWPORT });
+await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
 const failures = [];
 const results = [];
 
@@ -93,8 +91,7 @@ try {
       waitUntil: "domcontentloaded",
       timeout: 60_000,
     });
-    await page.waitForSelector(
-      "[data-mushaf-active-leaf] .mf2-lines, .mf2-lines",
+    await page.waitForSelector(ACTIVE_LINES_WAIT_SEL,
       { timeout: 45_000 },
     );
     await page.evaluate(() => document.fonts.ready);
@@ -102,8 +99,7 @@ try {
 
     const m = await page.evaluate((clearance) => {
       const root =
-        document.querySelector("[data-mushaf-active-leaf='1'] .mf2-lines") ||
-        document.querySelector(".mf2-lines");
+        __mushafLinesRoot();
       if (!root) return { error: "missing .mf2-lines" };
       const lr = root.getBoundingClientRect();
       const lines = [...root.querySelectorAll(".mf2-line")];

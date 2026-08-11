@@ -46,8 +46,15 @@ export function MushafPageFlipStage({
     ["--mpv-flip-dir" as string]: dirNext ? "1" : "-1",
   } as CSSProperties;
 
+  /* next عند progress≥0 (الافتراضي/السكون)، prev عند السحب للخلف */
+  const underlayState = dirNext ? "next" : "prev";
+
   const leaf = (
-    <div className="qs-mushaf-body-inner mpv-flip-leaf" data-mushaf-active-leaf="1">
+    <div
+      className="qs-mushaf-body-inner mpv-flip-leaf"
+      data-mushaf-active-leaf="1"
+      data-page-state="active"
+    >
       {children}
       <div className="mpv-flip-leaf__curl" aria-hidden="true" />
     </div>
@@ -63,11 +70,13 @@ export function MushafPageFlipStage({
         .join(" ")}
       aria-hidden="true"
       data-mushaf-underlay="1"
+      data-page-state={underlayState}
     >
       {/* الجيران مرسومان مسبقاً ومخفيان بـ visibility — بلا بناء DOM وقت السحب */}
       {underlay ? (
         <div
           className="mpv-flip-underlay__page"
+          data-page-state={underlayState}
           style={{ visibility: flipping ? "visible" : "hidden" }}
         >
           {underlay}
@@ -103,7 +112,11 @@ export function MushafPageFlipStage({
       {...flipHandlers}
     >
       {isSpread && spreadLeft ? (
-        <div className="mpv-flip-spread-left" aria-hidden={false}>
+        <div
+          className="mpv-flip-spread-left"
+          aria-hidden={false}
+          data-page-state="prev"
+        >
           {spreadLeft}
         </div>
       ) : null}

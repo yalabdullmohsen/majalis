@@ -14,6 +14,11 @@ import { spawn } from "node:child_process";
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -77,10 +82,9 @@ async function settleMushafPage(page, n) {
 async function structuralSnapshot(page, n) {
   return page.evaluate((pageNum) => {
     const leaf =
-      document.querySelector("[data-mushaf-active-leaf='1']") ||
-      document.querySelector(".qs-mushaf-body-inner");
+      __mushafActiveRoot();
     const root =
-      leaf?.querySelector(".mf2-lines") || document.querySelector(".mf2-lines");
+      __mushafLinesRoot();
     if (!root) return { error: "no lines" };
     const lr = root.getBoundingClientRect();
     const frame = (leaf || document).querySelector(
@@ -208,6 +212,7 @@ const results = [];
 if (failures.length === 0) {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: VIEWPORT, deviceScaleFactor: 1 });
+await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   try {
     for (const n of PAGES) {
       await settleMushafPage(page, n);

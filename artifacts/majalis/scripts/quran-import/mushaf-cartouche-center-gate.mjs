@@ -8,6 +8,11 @@ import { spawn } from "node:child_process";
 import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -17,10 +22,7 @@ const BASE = EXTERNAL_BASE || `http://127.0.0.1:${PORT}`;
 const OUT_DIR =
   process.env.MUSHAF_GATE_OUT_DIR || join(ROOT, ".local/mushaf-cartouche-center");
 const VIEWPORT = { width: 390, height: 844 };
-const SAMPLE = (process.env.MUSHAF_GATE_PAGES || "1,2,3,4,5,6,7,100,283,306,400,500,588,599,600,601,602,603,604")
-  .split(",")
-  .map(Number)
-  .filter((n) => n >= 1 && n <= 604);
+const SAMPLE = resolveGatePages();
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -91,6 +93,7 @@ const sample = [];
 if (failures.length === 0) {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: VIEWPORT });
+await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   try {
     for (const n of SAMPLE) {
       await page.goto(`${BASE}/mushaf/page/${n}`, {
@@ -103,7 +106,7 @@ if (failures.length === 0) {
         const badge = document.querySelector(".mpv-ayah-page-badge");
         const footer = document.querySelector(".mpv-ayah-footer");
         const toolbar = document.querySelector(".mpv-toolbar--ayah");
-        const lines = [...document.querySelectorAll(".mf2-grid-slot--line .mf2-line")];
+        const lines = [...__mushafQueryAll(".mf2-grid-slot--line .mf2-line")];
         if (!badge || !footer) return { error: "missing" };
         const br = badge.getBoundingClientRect();
         const fr = footer.getBoundingClientRect();

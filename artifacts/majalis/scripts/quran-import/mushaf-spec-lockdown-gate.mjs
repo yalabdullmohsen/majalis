@@ -21,6 +21,11 @@ import {
 import { createHash } from "node:crypto";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -230,7 +235,7 @@ async function measureLive(page, pageNum) {
     waitUntil: "domcontentloaded",
     timeout: 60_000,
   });
-  await page.waitForSelector(".mf2-lines", { timeout: 45_000 });
+  await page.waitForSelector(ACTIVE_LINES_WAIT_SEL, { timeout: 45_000 });
   await sleep(pageNum <= 2 ? 1200 : 700);
   await page.addStyleTag({
     content: `.mpv-toolbar,.mpv-navbar,.mpv-resume-banner,.qs-toast{display:none!important}`,
@@ -238,7 +243,7 @@ async function measureLive(page, pageNum) {
   await sleep(60);
 
   const measured = await page.evaluate((baselinesPct) => {
-    const root = document.querySelector(".mf2-lines");
+    const root = __mushafLinesRoot();
     const body =
       document.querySelector(".mpv-body--ayah") ||
       document.querySelector(".qs-mushaf-body--ayah") ||
@@ -349,6 +354,7 @@ async function runLive() {
   try {
     browser = await chromium.launch({ headless: true });
     const page = await browser.newPage({ viewport: VIEWPORT });
+await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
 
     for (const n of [1, 2, 3, 7, 601]) {
       try {

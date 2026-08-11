@@ -10,6 +10,11 @@ import { spawn } from "node:child_process";
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -122,13 +127,13 @@ for (let pageNumber = 1; pageNumber <= 604; pageNumber++) {
   }
 }
 
-const envPages = (process.env.MUSHAF_GATE_PAGES || "")
-  .split(",")
-  .map(Number)
-  .filter((n) => n >= 1 && n <= 604);
-const samplePages = envPages.length
-  ? envPages
-  : [...new Set([...FREEZE, ...surahStartPages])].sort((a, b) => a - b);
+/* عيّنة PR عبر resolveGatePages؛ المسح الكامل بـ MUSHAF_GATE_FULL=1 */
+const samplePages =
+  (process.env.MUSHAF_GATE_PAGES || process.env.MUSHAF_GATE_FULL === "1")
+    ? resolveGatePages()
+    : [...new Set([...FREEZE, ...surahStartPages, ...resolveGatePages()])].sort(
+        (a, b) => a - b,
+      );
 
 let server = null;
 const killServer = () => {
@@ -164,6 +169,7 @@ mkdirSync(OUT_DIR, { recursive: true });
 const results = [];
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: VIEWPORT, deviceScaleFactor: 1 });
+await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
 
 try {
   for (const n of samplePages) {
@@ -171,14 +177,13 @@ try {
       waitUntil: "domcontentloaded",
       timeout: 60_000,
     });
-    await page.waitForSelector(".mf2-lines--qpc-contiguous, .mf2-lines", {
+    await page.waitForSelector(ACTIVE_LINES_WAIT_SEL, {
       timeout: 60_000,
     });
     await page.waitForFunction(() => {
       const leaf =
-        document.querySelector("[data-mushaf-active-leaf='1']") ||
-        document.querySelector(".qs-mushaf-body-inner");
-      const el = leaf?.querySelector(".mf2-lines") || document.querySelector(".mf2-lines");
+        __mushafActiveRoot();
+      const el = __mushafLinesRoot();
       return el && Number.parseFloat(getComputedStyle(el).opacity || "0") > 0.95;
     }, { timeout: 60_000 }).catch(() => {});
     await sleep(n <= 3 || FREEZE.includes(n) ? 700 : 280);
@@ -188,10 +193,9 @@ try {
 
     const m = await page.evaluate((eps) => {
       const leaf =
-        document.querySelector("[data-mushaf-active-leaf='1']") ||
-        document.querySelector(".qs-mushaf-body-inner");
+        __mushafActiveRoot();
       const root =
-        leaf?.querySelector(".mf2-lines") || document.querySelector(".mf2-lines");
+        __mushafLinesRoot();
       if (!root) return { error: "no lines" };
       const slots = [...root.querySelectorAll("[data-grid-slot]")].map((el) => {
         const ink =

@@ -8,6 +8,11 @@ import { spawn } from "node:child_process";
 import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  ACTIVE_LINES_WAIT_SEL,
+  ACTIVE_PAGE_BROWSER_SOURCE,
+  resolveGatePages,
+} from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -86,17 +91,18 @@ const measured = [];
 if (failures.length === 0) {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: VIEWPORT });
+await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   try {
     await page.goto(`${BASE}/mushaf/page/2`, {
       waitUntil: "domcontentloaded",
       timeout: 60_000,
     });
-    await page.waitForSelector(".mf2-lines", { timeout: 45_000 });
+    await page.waitForSelector(ACTIVE_LINES_WAIT_SEL, { timeout: 45_000 });
     await page.waitForSelector(".mf2-surah-banner__name", { timeout: 45_000 });
     await sleep(1200);
     const m = await page.evaluate((ratios) => {
       const px = (el) => (el ? parseFloat(getComputedStyle(el).fontSize) || 0 : 0);
-      const lines = document.querySelector(".mf2-lines");
+      const lines = __mushafLinesRoot();
       const S = px(lines);
       const bannerName = document.querySelector(".mf2-surah-banner__name");
       const numeral = document.querySelector(".mpv-ayah-page-badge__num");
