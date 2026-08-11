@@ -154,7 +154,7 @@ export function formatEligibilityReport(result, meta = {}) {
           .join("\n")
       : "",
     "### سياسة سريعة",
-    `- Labels المسموحة للدمج التلقائي: ${SAFE_LABELS.map((l) => `\`${l}\``).join(", ")}`,
+    `- Labels اختيارية للتصنيف (ليست شرطًا للتغييرات منخفضة المخاطر): ${SAFE_LABELS.map((l) => `\`${l}\``).join(", ")}`,
     `- \`content-safe\` / \`safe:content\`: مسارات مسموحة فقط — \`${CONTENT_SAFE_PATH_PATTERNS.map((r) => r.source).join(" | ")}\``,
     "- Vercel Preview ignored/skipped **لا يمنع** تدقيق المحتوى الآمن.",
     "- Production ينشر فقط بعد الدمج إلى `main` (مشروع **majalis-majalis**).",
