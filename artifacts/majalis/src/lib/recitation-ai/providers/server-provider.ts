@@ -1,14 +1,15 @@
 /**
- * server-provider.ts — مسار بث منخفض الكمون
+ * server-provider.ts — مسار بث منخفض الكمون (REST fallback)
  *
- * MediaRecorder timeslice قصير (400ms) + نافذة متداخلة + VAD على الجهاز:
+ * MediaRecorder timeslice قصير (250ms) + نافذة متداخلة + VAD على الجهاز:
  * - لا يُرسل صمتًا للخادم
  * - يُفرّغ المخزن فور انتهاء الكلام (speechEnded)
  * - طابور إعادة محاولة عند انقطاع الشبكة
  * - حد أقصى لطلبات متزامنة لتفادي تراكم الكمون
  *
  * الخادم: POST /api/recitation-transcribe → Groq whisper-large-v3
- * (Vercel لا يدعم WebSocket ASR طويل العمر — هذا أقرب بديل عملي).
+ * (Vercel لا يدعم WebSocket ASR طويل العمر — استخدم websocket-provider مع
+ * VITE_RECITATION_WS_URL لبوابة طويلة العمر مثل Deepgram).
  */
 import type {
   ASRSession,
@@ -25,20 +26,26 @@ import { isNative } from "../../capacitor-utils";
 import { SITE_URL } from "../../site-config";
 import { normalizeQuranWord } from "../quran-normalize";
 import { getWaveformSampleIntervalMs } from "@/lib/render-fps-throttle";
+import {
+  AUDIO_BITS_PER_SECOND,
+  MIN_BLOB_BYTES,
+  SLICE_MS,
+  WINDOW_SLICES,
+  blobToBase64,
+  pickSupportedMimeType,
+} from "../streaming-audio";
 import { EnergyVad, rmsToLevel01 } from "../vad";
 
 const ENDPOINT = isNative ? `${SITE_URL}/api/recitation-transcribe` : "/api/recitation-transcribe";
 
-/** مدة كل دفعة — هدف 200–500ms للمطابقة شبه اللحظية */
-export const SLICE_MS = 400;
-/** عدد الشرائح في النافذة المتداخلة (~1.2ث سياق) */
-export const WINDOW_SLICES = 3;
+/** إعادة تصدير للعقود/الاختبارات */
+export { SLICE_MS, WINDOW_SLICES };
+
 /** أقصى طلبات Whisper متزامنة */
 const MAX_IN_FLIGHT = 2;
 /** أقصى مقاطع في طابور إعادة المحاولة */
 const MAX_QUEUE = 8;
 const WHISPER_ESTIMATED_CONFIDENCE = 72;
-const MIN_BLOB_BYTES = 120;
 
 type ApiTimedWord = { word?: string; start?: number | null; end?: number | null };
 
@@ -69,29 +76,6 @@ type Active = {
   queue: QueuedSegment[];
   lastStatus: AsrPipelineStatus;
 };
-
-function pickSupportedMimeType(): string {
-  const candidates = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/aac"];
-  for (const c of candidates) {
-    try {
-      if (typeof MediaRecorder !== "undefined" && MediaRecorder.isTypeSupported(c)) return c;
-    } catch { /* next */ }
-  }
-  return "audio/webm";
-}
-
-function blobToBase64(blob: Blob): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const result = reader.result as string;
-      const idx = result.indexOf(",");
-      resolve(idx >= 0 ? result.slice(idx + 1) : result);
-    };
-    reader.onerror = () => reject(reader.error);
-    reader.readAsDataURL(blob);
-  });
-}
 
 /** أزل بادئة النافذة المتداخلة إن طابقت ذيل آخر ما أُصدِر. */
 export function dedupeOverlappingWords(previousNorms: string[], nextRaw: string[]): { fresh: string[]; nextNormsTail: string[] } {
@@ -254,7 +238,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     try {
       recorder = new MediaRecorder(active.stream, {
         mimeType: active.mimeType,
-        audioBitsPerSecond: 24_000,
+        audioBitsPerSecond: AUDIO_BITS_PER_SECOND,
       });
     } catch {
       recorder = new MediaRecorder(active.stream, { mimeType: active.mimeType });

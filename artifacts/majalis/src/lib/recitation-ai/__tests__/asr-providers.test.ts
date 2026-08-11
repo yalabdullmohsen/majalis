@@ -5,6 +5,7 @@
  */
 import { MockQuranASRProvider } from "../providers/mock-provider";
 import { ServerQuranASRProvider } from "../providers/server-provider";
+import { WebSocketQuranASRProvider } from "../providers/websocket-provider";
 import { WebSpeechQuranASRProvider } from "../providers/web-speech-provider";
 import { checkTajweedAvailability } from "../precision-level";
 import { selectBestProvider } from "../provider-registry";
@@ -71,6 +72,19 @@ async function main() {
       threw = e instanceof ASRProviderUnavailableError;
     }
     assert(threw, "startSession يرفض بخطأ واضح بدل نتيجة وهمية حين لا يتوفر Web Speech API");
+  }
+
+  console.log("═══ WebSocketQuranASRProvider — بلا VITE_RECITATION_WS_URL ═══");
+  {
+    const provider = new WebSocketQuranASRProvider();
+    assert(!(await provider.isAvailable()), "غير متاح دون عنوان WebSocket مُهيَّأ");
+    let threw = false;
+    try {
+      await provider.startSession({ language: "ar-SA", precisionLevel: "hifz" });
+    } catch (e) {
+      threw = e instanceof ASRProviderUnavailableError && (e as ASRProviderUnavailableError).detail.code === "NOT_CONFIGURED";
+    }
+    assert(threw, "startSession يرفض بـ NOT_CONFIGURED بلا بوابة WS");
   }
 
   console.log("═══ selectBestProvider — بيئة اختبار بلا Capacitor أصلي ولا متصفح ═══");

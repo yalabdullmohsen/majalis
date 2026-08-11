@@ -397,6 +397,11 @@ html[data-theme="dark"] .rai-plain-words { color: var(--mj-brand-soft); }
 .rai-plain-word--unclear { color: var(--rai-unclear); text-decoration: underline dotted var(--rai-unclear); }
 .rai-plain-word--needs-repeat { color: var(--rai-needs-repeat); text-decoration: underline dotted var(--rai-needs-repeat); }
 .rai-plain-word--pending { color: #9CA3AF; }
+.rai-plain-word--cursor {
+  background: rgba(14, 110, 82, 0.12);
+  border-radius: 4px;
+  padding: 0 0.12em;
+}
 
 /* ── وضع المصحف التفاعلي (InteractiveMushafReveal) ──────────── */
 .imr-page {
@@ -437,6 +442,18 @@ html[data-theme="dark"] .imr-ayah--recited {
   opacity: 1;
   color: inherit;
   animation: imr-reveal 150ms ease-out;
+}
+/* الموضع الحالي المتوقع — تمييز خفيف بلا بطاقة عائمة */
+.imr-word--cursor {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  background: rgba(14, 110, 82, 0.12);
+  border-radius: 4px;
+  padding: 0 0.12em;
+  transition: background-color 0.2s ease;
+}
+html[data-theme="dark"] .imr-word--cursor {
+  background: rgba(94, 196, 154, 0.16);
 }
 @keyframes imr-reveal {
   from { filter: blur(4px); opacity: .4; }
