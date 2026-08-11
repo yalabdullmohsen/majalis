@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
 import {
@@ -21,7 +21,7 @@ import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
 import { useRestoreLastPage } from "@/hooks/useRestoreLastPage";
 import { useImmersiveSystemUi } from "@/hooks/useImmersiveSystemUi";
-import { useMushafPageCurl } from "@/hooks/useMushafPageCurl";
+import { useMushafPageFlip } from "@/hooks/useMushafPageFlip";
 import { AYAH_MUSHAF_PAPER_BG } from "@/lib/quran-immersive";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { addBookmark as addPageBookmark, isPageBookmarked } from "@/lib/quran-my-bookmarks";
@@ -29,8 +29,10 @@ import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 import { JumpPageModal } from "@/components/quran/JumpPageModal";
+import { MushafPageFlipStage } from "@/components/quran/MushafPageFlipStage";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
+import { getMushafSpread, prefersMushafSpread } from "@/lib/mushaf-spread";
 import { FONT_OPTIONS, quranFontStack } from "@/lib/quran-font-options";
 import {
   QURAN_FONT_DEFAULT_PX,
@@ -171,7 +173,13 @@ export default function MushafPageView() {
   }, [textChromeVisible]);
   const [bookmarkStatus, setBookmarkStatus] = useState<string | null>(null);
   const [pageBookmarked, setPageBookmarked] = useState(() => isPageBookmarked(page));
-  const curlStageRef = useRef<HTMLDivElement | null>(null);
+  const flipStageRef = useRef<HTMLDivElement | null>(null);
+  const [neighborLayouts, setNeighborLayouts] = useState<{
+    prev: MushafPageLayout | null;
+    next: MushafPageLayout | null;
+    spreadLeft: MushafPageLayout | null;
+  }>({ prev: null, next: null, spreadLeft: null });
+  const [spreadEnabled, setSpreadEnabled] = useState(false);
 
   // ── استئناف تلقائي: عند الدخول دون رقم صفحة صريح في الرابط، نبدأ من آخر موضع محفوظ محليًا ──
   useEffect(() => {
@@ -286,6 +294,15 @@ export default function MushafPageView() {
     }).catch(() => {});
     if (page > 1) prefetchMushafPage(page - 1);
     if (page < TOTAL_PAGES) prefetchMushafPage(page + 1);
+    /* جيران في الذاكرة لتقليب فوري (تحت الورقة) */
+    void guardAsync(signal, async () => {
+      const [prev, next] = await Promise.all([
+        page > 1 ? loadMushafPage(page - 1) : Promise.resolve(null),
+        page < TOTAL_PAGES ? loadMushafPage(page + 1) : Promise.resolve(null),
+      ]);
+      if (signal.aborted) return;
+      setNeighborLayouts((s) => ({ ...s, prev, next }));
+    }).catch(() => {});
     /* حزمة التفسير المختصر: الصفحة الحالية ± المجاورتان (خلفية، بلا حجب واجهة) */
     void import("@/features/mushaf/offline-tafsir-pack").then(({ prefetchOfflineTafsirForPage }) => {
       if (signal.aborted) return;
@@ -295,6 +312,32 @@ export default function MushafPageView() {
       abortScope(`mushaf-layout:${page}`);
     };
   }, [page]);
+
+  useEffect(() => {
+    const syncSpread = () => {
+      setSpreadEnabled(prefersMushafSpread(window.innerWidth, window.innerHeight));
+    };
+    syncSpread();
+    window.addEventListener("resize", syncSpread);
+    return () => window.removeEventListener("resize", syncSpread);
+  }, []);
+
+  const spread = useMemo(() => getMushafSpread(page, spreadEnabled), [page, spreadEnabled]);
+
+  useEffect(() => {
+    if (!spread.isSpread || spread.left == null) {
+      setNeighborLayouts((s) => ({ ...s, spreadLeft: null }));
+      return;
+    }
+    const left = spread.left;
+    let cancelled = false;
+    void loadMushafPage(left).then((layout) => {
+      if (!cancelled) setNeighborLayouts((s) => ({ ...s, spreadLeft: layout }));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [spread.isSpread, spread.left]);
 
   const primarySegment = segAyahs?.[0];
   const primarySurahMeta = primarySegment ? getSurahMeta(primarySegment.segment.surah) : getSurahForPage(page);
@@ -406,24 +449,24 @@ export default function MushafPageView() {
   const nextPage = useCallback(() => goToPage(page + 1), [goToPage, page]);
   const prevPage = useCallback(() => goToPage(page - 1), [goToPage, page]);
 
-  const curlDisabled =
-    Boolean(settingsOpen || sidebarOpen || selectedAyah || isJumpModalVisible || textChromeVisible);
+  const flipDisabled = Boolean(settingsOpen || sidebarOpen || selectedAyah || isJumpModalVisible);
 
-  const { curl, curlHandlers, setCurlWidth } = useMushafPageCurl({
+  const { flip, flipHandlers, setFlipWidth } = useMushafPageFlip({
     onNext: nextPage,
     onPrev: prevPage,
-    disabled: curlDisabled,
+    onCenterTap: () => setTextChromeVisible((v) => !v),
+    disabled: flipDisabled,
   });
 
   useEffect(() => {
-    const el = curlStageRef.current;
+    const el = flipStageRef.current;
     if (!el) return;
-    const sync = () => setCurlWidth(el.clientWidth || window.innerWidth);
+    const sync = () => setFlipWidth(el.clientWidth || window.innerWidth);
     sync();
     const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(sync) : null;
     ro?.observe(el);
     return () => ro?.disconnect();
-  }, [setCurlWidth, page]);
+  }, [setFlipWidth, page, spread.isSpread]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -683,25 +726,8 @@ export default function MushafPageView() {
             </p>
           ) : null}
 
-          {/* onClick هنا ميزة راحة بالماوس/اللمس فقط (تبديل ظهور أدوات القراءة)،
-              لا إجراء أساسي وحيد — كل التحكمات الفعلية أزرار حقيقية قابلة
-              للوصول بلوحة المفاتيح في مكان آخر بالصفحة. */}
-          <div
-            className="mpv-body mpv-body--ayah"
-            onClick={() => {
-              if (curl.active || curl.settling) return;
-              setTextChromeVisible((v) => !v);
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                setTextChromeVisible((v) => !v);
-              }
-            }}
-            role="button"
-            tabIndex={0}
-            aria-label="إظهار أو إخفاء أدوات القراءة"
-          >
+          {/* تبديل الأدوات عبر نقر الوسط في محرك التقليب؛ الحواف تقلّب الصفحات. */}
+          <div className="mpv-body mpv-body--ayah">
             {resumeBanner && (
               <div className="mpv-resume-banner">
                 <span>تابعت القراءة تلقائيًا من الصفحة {toArabicDigits(resumeBanner)}</span>
@@ -732,20 +758,46 @@ export default function MushafPageView() {
                     ["--qs-font-scale" as string]: String(prefs.fontScale / QURAN_FONT_DEFAULT_PX),
                   }}
                 >
-                  <div
-                    ref={curlStageRef}
-                    className={`mpv-curl-stage${curl.active || curl.settling ? " mpv-curl-stage--active" : ""}${curl.reducedMotion ? " mpv-curl-stage--reduced" : ""}`}
-                    data-curl-progress={curl.progress.toFixed(3)}
-                    style={
-                      {
-                        ["--mpv-curl" as string]: String(curl.progress),
-                        ["--mpv-curl-abs" as string]: String(Math.abs(curl.progress)),
-                      } as CSSProperties
+                  <MushafPageFlipStage
+                    stageRef={flipStageRef}
+                    flip={flip}
+                    flipHandlers={flipHandlers}
+                    isSpread={spread.isSpread}
+                    spreadLeft={
+                      spread.isSpread && neighborLayouts.spreadLeft ? (
+                        prefs.pageMode === "precision" ? (
+                          <MushafLayeredPage
+                            layout={neighborLayouts.spreadLeft}
+                            activeAyahKey={null}
+                            showAyahNumbers={prefs.showAyahNumbers}
+                          />
+                        ) : (
+                          <MushafLayeredPage
+                            layout={neighborLayouts.spreadLeft}
+                            activeAyahKey={null}
+                            sharedFontFamily={quranFontStack(prefs.fontId)}
+                            renderWord={(w) => renderLightWord(w, prefs.showAyahNumbers)}
+                            showAyahNumbers={prefs.showAyahNumbers}
+                          />
+                        )
+                      ) : null
                     }
-                    {...curlHandlers}
+                    underlay={
+                      (flip.progress >= 0 ? neighborLayouts.next : neighborLayouts.prev) ? (
+                        <MushafLayeredPage
+                          layout={(flip.progress >= 0 ? neighborLayouts.next : neighborLayouts.prev)!}
+                          activeAyahKey={null}
+                          showAyahNumbers={prefs.showAyahNumbers}
+                          {...(prefs.pageMode === "light"
+                            ? {
+                                sharedFontFamily: quranFontStack(prefs.fontId),
+                                renderWord: (w: QpcWord) => renderLightWord(w, prefs.showAyahNumbers),
+                              }
+                            : {})}
+                        />
+                      ) : undefined
+                    }
                   >
-                    <div className="mpv-curl-underlay" aria-hidden="true" />
-                    <div className="qs-mushaf-body-inner mpv-curl-leaf">
                     {loading || !segAyahs ? (
                       <MushafPageV2 layout={null} bare />
                     ) : prefs.pageMode === "precision" ? (
@@ -767,9 +819,7 @@ export default function MushafPageView() {
                         showAyahNumbers={prefs.showAyahNumbers}
                       />
                     )}
-                    </div>
-                    <div className="mpv-curl-shade" aria-hidden="true" />
-                  </div>
+                  </MushafPageFlipStage>
                 </div>
               </div>
             )}

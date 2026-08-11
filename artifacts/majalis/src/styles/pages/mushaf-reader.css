@@ -319,77 +319,189 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 }
 
 
-/* ── لفّ صفحة خفيف (transform/opacity فقط) ── */
-.mpv-curl-stage {
+/* ── تقليب مصحف حقيقي (RTL) — هيكل السكون مطابق لـ curl القديم ── */
+.mpv-flip-stage {
   position: relative;
   width: 100%;
   height: 100%;
   min-height: 0;
   flex: 1 1 auto;
-  perspective: 1200px;
   touch-action: pan-y;
   overflow: visible;
 }
-.mpv-curl-stage--active {
+.mpv-flip-stage--active {
   touch-action: none;
 }
-.mpv-curl-underlay {
+.mpv-flip-stage--flipping {
+  perspective: 1600px;
+}
+.mpv-flip-stage--spread {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  perspective: none;
+}
+.mpv-flip-book {
+  position: relative;
+  flex: 1 1 50%;
+  min-width: 0;
+  height: 100%;
+}
+.mpv-flip-stage--spread.mpv-flip-stage--flipping .mpv-flip-book {
+  perspective: 1600px;
+  transform-style: preserve-3d;
+}
+.mpv-flip-stage--spread .mpv-flip-spread-left {
+  flex: 1 1 50%;
+  min-width: 0;
+  height: 100%;
+  border-inline-end: 1px solid color-mix(in srgb, #000 8%, transparent);
+  background: var(--ayah-paper, #FAF7F2);
+  overflow: hidden;
+}
+.mpv-flip-underlay {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background:
-    linear-gradient(90deg, color-mix(in srgb, #000 4%, transparent), transparent 14%),
-    var(--ayah-paper, #FAF7F2);
-  opacity: calc(var(--mpv-curl-abs, 0) * 0.55);
+  overflow: hidden;
+  background: var(--ayah-paper, #FAF7F2);
+  opacity: 0;
 }
-.mpv-curl-leaf {
+.mpv-flip-stage--active .mpv-flip-underlay,
+.mpv-flip-stage--flipping .mpv-flip-underlay {
+  opacity: calc(0.35 + var(--mpv-flip-abs, 0) * 0.65);
+}
+.mpv-flip-underlay__paper {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, #000 5%, transparent), transparent 18%),
+    var(--ayah-paper, #FAF7F2);
+}
+.mpv-flip-leaf {
   position: relative;
   z-index: 1;
   width: 100%;
   height: 100%;
   transform-origin: right center;
-  transform: rotateY(calc(var(--mpv-curl, 0) * -10deg)) translate3d(calc(var(--mpv-curl, 0) * 100%), 0, 0);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
+  transform: none;
   background: var(--ayah-paper, #FAF7F2);
 }
-.mpv-curl-stage--active .mpv-curl-leaf,
-.mpv-curl-stage--active .mpv-curl-shade {
-  transition: none;
+.mpv-flip-stage--active .mpv-flip-leaf,
+.mpv-flip-stage--flipping .mpv-flip-leaf {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transform:
+    translate3d(calc(var(--mpv-flip, 0) * 92%), 0, 0)
+    rotateY(calc(var(--mpv-flip, 0) * -78deg))
+    rotateZ(calc(var(--mpv-flip, 0) * -1.2deg));
+  box-shadow:
+    calc(var(--mpv-flip, 0) * -18px) 0 28px color-mix(in srgb, #000 18%, transparent),
+    inset calc(var(--mpv-flip-abs, 0) * -10px) 0 18px color-mix(in srgb, #000 8%, transparent);
 }
-.mpv-curl-stage:not(.mpv-curl-stage--active) .mpv-curl-leaf,
-.mpv-curl-stage:not(.mpv-curl-stage--active) .mpv-curl-shade {
-  transition: transform 240ms ease-out, opacity 240ms ease-out;
-}
-.mpv-curl-shade {
+.mpv-flip-leaf__curl {
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
   background: linear-gradient(
+    105deg,
+    transparent 42%,
+    color-mix(in srgb, #000 10%, transparent) 58%,
+    color-mix(in srgb, #fff 22%, transparent) 66%,
+    transparent 78%
+  );
+  opacity: 0;
+  mix-blend-mode: multiply;
+}
+.mpv-flip-stage--active .mpv-flip-leaf__curl,
+.mpv-flip-stage--flipping .mpv-flip-leaf__curl {
+  opacity: calc(var(--mpv-flip-abs, 0) * 0.55);
+}
+.mpv-flip-stage--active .mpv-flip-leaf,
+.mpv-flip-stage--active .mpv-flip-shade,
+.mpv-flip-stage--active .mpv-flip-corner {
+  transition: none;
+}
+.mpv-flip-stage:not(.mpv-flip-stage--active) .mpv-flip-leaf,
+.mpv-flip-stage:not(.mpv-flip-stage--active) .mpv-flip-shade,
+.mpv-flip-stage:not(.mpv-flip-stage--active) .mpv-flip-corner {
+  transition: transform 320ms cubic-bezier(0.22, 0.8, 0.28, 1), opacity 320ms ease-out;
+}
+.mpv-flip-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
     90deg,
     transparent 0%,
-    color-mix(in srgb, #000 15%, transparent) 48%,
+    color-mix(in srgb, #000 22%, transparent) 46%,
+    color-mix(in srgb, #000 6%, transparent) 62%,
     transparent 100%
   );
-  opacity: calc(var(--mpv-curl-abs, 0) * 0.15);
-  transform: translate3d(calc(var(--mpv-curl, 0) * 40%), 0, 0);
+  opacity: 0;
   will-change: transform, opacity;
 }
-.mpv-curl-stage--reduced .mpv-curl-leaf {
-  transform: none;
-  opacity: calc(1 - var(--mpv-curl-abs, 0) * 0.35);
-  transition: opacity 150ms ease-out;
+.mpv-flip-stage--active .mpv-flip-shade,
+.mpv-flip-stage--flipping .mpv-flip-shade {
+  opacity: calc(var(--mpv-flip-abs, 0) * 0.42);
+  transform: translate3d(calc(var(--mpv-flip, 0) * 36%), 0, 0);
 }
-.mpv-curl-stage--reduced .mpv-curl-shade,
-.mpv-curl-stage--reduced .mpv-curl-underlay {
+.mpv-flip-corner {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 18%;
+  z-index: 4;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 80% at 0% 100%,
+    color-mix(in srgb, #000 16%, transparent) 0%,
+    transparent 62%
+  );
   opacity: 0;
 }
+.mpv-flip-stage--active .mpv-flip-corner,
+.mpv-flip-stage--flipping .mpv-flip-corner {
+  opacity: calc(var(--mpv-flip-abs, 0) * 0.65);
+  transform: translate3d(calc(var(--mpv-flip, 0) * 8%), 0, 0) skewY(calc(var(--mpv-flip, 0) * -2deg));
+}
+.mpv-flip-edge {
+  position: absolute;
+  inset-block: 0;
+  width: calc(var(--mpv-flip-edge, 0.16) * 100%);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+.mpv-flip-edge--next { inset-inline-start: 0; }
+.mpv-flip-edge--prev { inset-inline-end: 0; }
+.mpv-flip-stage--reduced .mpv-flip-leaf {
+  transform: none;
+  opacity: calc(1 - var(--mpv-flip-abs, 0) * 0.4);
+  box-shadow: none;
+  transition: opacity 150ms ease-out;
+}
+.mpv-flip-stage--reduced .mpv-flip-shade,
+.mpv-flip-stage--reduced .mpv-flip-underlay,
+.mpv-flip-stage--reduced .mpv-flip-corner,
+.mpv-flip-stage--reduced .mpv-flip-leaf__curl {
+  opacity: 0 !important;
+}
 @media (prefers-reduced-motion: reduce) {
-  .mpv-curl-leaf,
-  .mpv-curl-shade {
+  .mpv-flip-leaf,
+  .mpv-flip-shade,
+  .mpv-flip-corner {
     transition: opacity 150ms ease-out !important;
     transform: none !important;
+  }
+}
+@media (min-width: 900px) and (orientation: landscape) {
+  .mpv-flip-stage--spread {
+    max-width: min(1200px, 100%);
+    margin-inline: auto;
   }
 }
