@@ -49,11 +49,27 @@ import {
 } from "@/lib/quran-sleep-timer";
 import { getReciter } from "@/lib/quran-audio";
 
-/** Lazy adaptive bitrate helper — keeps entry free of adaptive-audio-quality. */
-let resolveAdaptiveReciterId = (id: string): string => id;
-void import("@/lib/adaptive-audio-quality").then((m) => {
-  resolveAdaptiveReciterId = m.resolveAdaptiveReciterId;
-});
+/**
+ * Adaptive bitrate — loaded only when playback starts (not on module import).
+ * First play uses the requested reciter synchronously (iOS user-gesture safe);
+ * subsequent plays use the cached resolver once the chunk arrives.
+ */
+type AdaptiveResolver = (id: string) => string;
+let adaptiveResolver: AdaptiveResolver | null = null;
+let adaptiveLoad: Promise<void> | null = null;
+
+function resolveAdaptiveReciterId(currentReciterId: string): string {
+  if (!adaptiveLoad) {
+    adaptiveLoad = import("@/lib/adaptive-audio-quality")
+      .then((m) => {
+        adaptiveResolver = m.resolveAdaptiveReciterId;
+      })
+      .catch(() => {
+        adaptiveLoad = null;
+      });
+  }
+  return adaptiveResolver ? adaptiveResolver(currentReciterId) : currentReciterId;
+}
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 

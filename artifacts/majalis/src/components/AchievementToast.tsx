@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Award, Bookmark, BookMarked, BookOpen, BookOpenCheck, Flame, Gem, GraduationCap, Landmark, Leaf, Library, Medal, Mic, Mic2, Moon, Repeat2, Scale, Sparkles, Star } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import type { EarnedBadge } from "@/lib/user-profile-service";
 import "@/styles/components/achievement-toast.css";
 
 const BADGE_ICON_MAP: Record<string, LucideIcon> = {
@@ -11,7 +10,14 @@ const BADGE_ICON_MAP: Record<string, LucideIcon> = {
 };
 
 type Props = {
-  badges: EarnedBadge[];
+  badges: Array<{
+    key: string;
+    titleAr: string;
+    descAr: string;
+    icon: string;
+    category: string;
+    earned_at: string;
+  }>;
   onDismiss: () => void;
 };
 
