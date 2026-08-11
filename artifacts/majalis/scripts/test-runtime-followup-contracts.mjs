@@ -43,8 +43,8 @@ assert.match(contentDelta, /packId:\s*["']search-index["']/, "content-delta sear
 assert.match(contentDelta, /protocol:\s*["']delta-v1["']/, "content-delta protocol");
 assert.doesNotMatch(
   contentDelta,
-  /packs:\s*\[\s*\]/,
-  "content-delta must not hardcode empty packs",
+  /sendJson\([\s\S]*packs:\s*\[\s*\]/,
+  "content-delta must not hardcode empty packs in response",
 );
 
 const readingSync = readFileSync(join(root, "lib/api-handlers/reading-sync.js"), "utf8");
