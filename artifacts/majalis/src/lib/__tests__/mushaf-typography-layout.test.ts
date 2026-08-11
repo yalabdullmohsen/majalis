@@ -144,7 +144,7 @@ assert.equal(
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8"),
-  /OPENING_BANNER_TOP_PCT\s*=\s*38/,
+  /OPENING_BANNER_TOP_PCT\s*=\s*16/,
   "شارة الافتتاح عند ٢٨٪",
 );
 assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?line-height:\s*2\.2/, "وضع Unicode: ارتفاع تشكيل 2.2");

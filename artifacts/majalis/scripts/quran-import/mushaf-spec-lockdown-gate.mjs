@@ -201,8 +201,8 @@ function runStatic() {
   /* ١٣ — ص١–٢ بلا إطار · شارة عند ٣٨٪ */
   if (existsSync(join(ROOT, "src/components/quran/OpeningPageFrame.tsx"))) {
     fail(13, "OpeningPageFrame.tsx ما زال موجودًا");
-  } else if (!/OPENING_BANNER_TOP_PCT\s*=\s*38/.test(pageV2)) {
-    fail(13, "OPENING_BANNER_TOP_PCT ≠ 38");
+  } else if (!/OPENING_BANNER_TOP_PCT\s*=\s*16/.test(pageV2)) {
+    fail(13, "OPENING_BANNER_TOP_PCT ≠ 16");
   } else if (!/mpv-toolbar-band|MUSHAF_LAYOUT_BANDS/.test(pageV2 + read("src/styles/quran.css"))) {
     fail(13, "نطاقات التخطيط غير مثبتة");
   } else pass(13, "بلا إطار + شارة ٣٨٪ + نطاقات");

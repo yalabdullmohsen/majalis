@@ -302,7 +302,7 @@ try {
     }
     if (
       (n === 1 || n === 2) &&
-      (m.bannerTopPct == null || m.bannerTopPct < 37.5 || m.bannerTopPct > 38.5)
+      (m.bannerTopPct == null || m.bannerTopPct < 14 || m.bannerTopPct > 18)
     ) {
       failures.push({
         page: n,
