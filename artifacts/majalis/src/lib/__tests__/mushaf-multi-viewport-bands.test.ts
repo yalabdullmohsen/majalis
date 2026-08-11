@@ -49,6 +49,8 @@ const pageV2 = readFileSync(resolve(root, "src/components/quran/MushafPageV2.tsx
 assert.match(pageV2, /scaleMushafLayoutBands/);
 assert.match(pageV2, /applyMushafLayoutBandCssVars/);
 assert.match(pageV2, /availableWidth \/ 358/);
+assert.match(pageV2, /offRefViewport/);
+assert.match(pageV2, /shortViewport/);
 
 const vp = readFileSync(
   resolve(root, "scripts/quran-import/mushaf-viewports.mjs"),

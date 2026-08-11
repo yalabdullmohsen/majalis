@@ -378,11 +378,19 @@ export function MushafPageV2({
       container.style.transform = "";
 
       /* contentBand = ما تبقّى بعد الرأس/الذيل/الشريط (حجوزات CSS + قياس) */
-      const bands = scaleMushafLayoutBands(window.innerHeight || 844);
-      applyMushafLayoutBandCssVars(document.documentElement, bands);
-      const shellForBands = document.querySelector(".quran-shell--ayah");
-      if (shellForBands instanceof HTMLElement) {
-        applyMushafLayoutBandCssVars(shellForBands, bands);
+      const viewportH = window.innerHeight || 844;
+      const viewportW = window.innerWidth || 390;
+      const shortViewport = viewportH < 750;
+      /* مقاسات غير المرجع فقط — الإبقاء على مسار 390×844 مطابقًا لبوابة اللقطات */
+      const offRefViewport =
+        shortViewport || Math.abs(viewportW - 390) > 12 || Math.abs(viewportH - 844) > 20;
+      const bands = scaleMushafLayoutBands(viewportH);
+      if (offRefViewport) {
+        applyMushafLayoutBandCssVars(document.documentElement, bands);
+        const shellForBands = document.querySelector(".quran-shell--ayah");
+        if (shellForBands instanceof HTMLElement) {
+          applyMushafLayoutBandCssVars(shellForBands, bands);
+        }
       }
       const bodyEl =
         (container.closest(".mpv-body--ayah") as HTMLElement | null) ||
@@ -436,11 +444,16 @@ export function MushafPageV2({
         container.style.removeProperty("--mf2-opening-line-w");
       }
 
-      /* هامش جانبي نسبي من عرض الحاوية المقيس — لا قيمة مطلقة لمقاس واحد فقط */
-      const sideClear = Math.max(
-        2,
-        Math.round((MUSHAF_GRID.sideMarginPx || 2) * Math.min(1.25, Math.max(0.85, availableWidth / 358))),
-      );
+      /* هامش جانبي: مطلق على المرجع؛ نسبي من عرض الحاوية خارج 390×844 */
+      const sideClear = offRefViewport
+        ? Math.max(
+            2,
+            Math.round(
+              (MUSHAF_GRID.sideMarginPx || 2) *
+                Math.min(1.25, Math.max(0.85, availableWidth / 358)),
+            ),
+          )
+        : Math.max(2, MUSHAF_GRID.sideMarginPx || 2);
       const fitWidth = Math.max(8, availableWidth - sideClear * 2);
 
       const widestAtRef = measureWidest(sizingEls, REF_PX);
@@ -950,12 +963,11 @@ export function MushafPageV2({
         }
       }
 
-      /* فاصل حبر البسملة عن أسفل الشارة — نسبي من contentBand (≥١٢px، سقف ٢٢) */
+      /* فاصل حبر البسملة عن أسفل الشارة — مطلق على المرجع؛ نسبي من contentBand على القصير */
       if (!isOpening) {
-        const minBannerBasGap = Math.max(
-          12,
-          Math.min(BANNER_BASMALA_MIN_GAP_PX, blockH * 0.038),
-        );
+        const minBannerBasGap = shortViewport
+          ? Math.max(12, Math.min(BANNER_BASMALA_MIN_GAP_PX, blockH * 0.038))
+          : BANNER_BASMALA_MIN_GAP_PX;
         const banners = [
           ...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--banner"),
         ];
@@ -1013,12 +1025,11 @@ export function MushafPageV2({
       }
 
       /*
-       * فاصل حبر بسملة→سطر الآية التالي — نسبي من ارتفاع contentBand المقيس.
-       * على الشاشات القصيرة (SE) تضيق خطوة الشبكة بالبكسل؛ الفجوة المطلقة ٢٢px
-       * كانت تسبب تقاطعًا. نُصغّر الخط حتى تزول التقاطعات.
+       * فاصل حبر بسملة→سطر الآية التالي — على الشاشات القصيرة فقط (SE).
+       * مسار 390×844 يبقى بلا تقليص إضافي حتى لا تنحرف visual-snapshot.
        */
-      {
-        const minBasLineGap = Math.max(6, Math.min(16, blockH * 0.014));
+      if (shortViewport) {
+        const minBasLineGap = Math.max(4, Math.min(12, blockH * 0.012));
         const basSlots = [
           ...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--basmala"),
         ];
