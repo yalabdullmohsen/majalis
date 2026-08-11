@@ -645,6 +645,14 @@ export default function MushafPageView() {
     return null;
   }, [selectedAyah, segAyahs]);
 
+  useEffect(() => {
+    if (!selectedAyah) return;
+    const meta = getSurahMeta(selectedAyah.surah);
+    if (selectedAyah.ayah >= meta.ayahs) {
+      void import("@/lib/local-milestones").then((m) => m.markSurahCompleted(selectedAyah.surah));
+    }
+  }, [selectedAyah]);
+
   const flatAyahs = useMemo(() => segAyahs?.flatMap((s) => s.ayahs) ?? [], [segAyahs]);
   const selectedIdx = selectedAyah ? flatAyahs.findIndex((a) => a.surahNumber === selectedAyah.surah && a.numberInSurah === selectedAyah.ayah) : -1;
 
@@ -795,6 +803,17 @@ export default function MushafPageView() {
                   style={{
                     ["--qs-font-size" as string]: `${prefs.fontScale}px`,
                     ["--qs-font-scale" as string]: String(prefs.fontScale / QURAN_FONT_DEFAULT_PX),
+                  }}
+                  onScroll={(e) => {
+                    const el = e.currentTarget;
+                    const max = el.scrollHeight - el.clientHeight;
+                    if (max <= 0) return;
+                    const ratio = el.scrollTop / max;
+                    if (ratio < 0.8) return;
+                    if (page < TOTAL_PAGES) {
+                      prefetchMushafPage(page + 1);
+                      if (page + 1 < TOTAL_PAGES) prefetchMushafPage(page + 2);
+                    }
                   }}
                 >
                   <MushafPageFlipStage

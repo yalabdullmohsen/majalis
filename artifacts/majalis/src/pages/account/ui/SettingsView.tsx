@@ -231,6 +231,7 @@ export default function SettingsPage() {
             <span>{t("settings_language")}</span>
             <LanguageSwitcher />
           </div>
+          <p className="settings-note">{t("lang_overlay_note")}</p>
           <p className="settings-note">السمة والمظهر</p>
           <div className="settings-option-grid" role="group" aria-label="اختيار الوضع">
             {THEME_OPTIONS.map((option) => (

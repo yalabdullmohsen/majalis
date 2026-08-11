@@ -32,6 +32,13 @@ import {
   removeOfflineReading,
   type OfflineReadingItem,
 } from "@/lib/offline-reading-pack";
+import {
+  HIGHLIGHT_COLOR_LABEL,
+  listTextHighlights,
+  removeTextHighlight,
+  searchTextHighlights,
+  type TextHighlight,
+} from "@/lib/text-highlights";
 import "@/styles/pages/vault.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
@@ -55,7 +62,70 @@ const SECTION_LABEL: Record<ReadingSection, string> = {
   assistant: "المساعد",
 };
 
-type Tab = "bookmarks" | "resume" | "notes";
+type Tab = "bookmarks" | "resume" | "notes" | "highlights";
+
+function HighlightsLibrary({ query }: { query: string }) {
+  const [items, setItems] = useState<TextHighlight[]>(() => listTextHighlights());
+
+  useEffect(() => {
+    setItems(query.trim() ? searchTextHighlights(query) : listTextHighlights());
+  }, [query]);
+
+  const remove = (id: string) => {
+    removeTextHighlight(id);
+    setItems(query.trim() ? searchTextHighlights(query) : listTextHighlights());
+  };
+
+  return (
+    <div className="vault-notes" role="tabpanel">
+      <div className="vault-notes__toolbar">
+        <span className="vault-count">{items.length} فائدة محدَّدة</span>
+        <Link href="/fawaid" className="vault-btn vault-btn--ghost">تصفح الفوائد</Link>
+      </div>
+      {items.length === 0 && (
+        <div className="vault-empty">
+          <div className="vault-empty__icon" aria-hidden="true"><Lightbulb size={40} strokeWidth={1.3} /></div>
+          <p>
+            {query
+              ? "لا نتائج في مكتبة الفوائد."
+              : "حدّد نصًا في التفسير أو الفوائد واختر لونًا لحفظ فائدة علمية هنا."}
+          </p>
+        </div>
+      )}
+      <div className="vault-notes__list">
+        {items.map((h) => (
+          <article key={h.id} className={`vault-note-card vault-hl vault-hl--${h.color}`}>
+            <span className="vault-hl__swatch" aria-label={HIGHLIGHT_COLOR_LABEL[h.color]} />
+            <p className="vault-note-card__text" dir="rtl" lang="ar">{h.quote}</p>
+            {h.note ? <p className="vault-hl__note" dir="rtl">{h.note}</p> : null}
+            <div className="vault-note-card__foot">
+              <span className="vault-note-card__date">
+                {h.sourceTitle || h.source}
+                {" · "}
+                {new Date(h.updatedAt).toLocaleDateString("ar-SA", {
+                  day: "numeric",
+                  month: "short",
+                })}
+              </span>
+              <div className="vault-note-card__actions">
+                {h.href ? (
+                  <Link href={h.href} className="vault-note-card__action">فتح</Link>
+                ) : null}
+                <button
+                  type="button"
+                  className="vault-note-card__action vault-note-card__action--danger"
+                  onClick={() => remove(h.id)}
+                >
+                  حذف
+                </button>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 const VAULT_ICON_MAP: Record<string, LucideIcon> = {
   GraduationCap, BookOpen, ScrollText, Lightbulb, Scale, HelpCircle, FileText, Pin,
@@ -219,11 +289,12 @@ function NotesTab({
 
 /** محفظة محلية للزائر: محفوظات الجهاز + استئناف القراءة بدون حساب. */
 function GuestVault() {
-  const [tab, setTab] = useState<"bookmarks" | "resume" | "offline">("bookmarks");
+  const [tab, setTab] = useState<"bookmarks" | "resume" | "offline" | "highlights">("bookmarks");
   const [bookmarks, setBookmarks] = useState<LocalBookmark[]>(() => listLocalBookmarks());
   const [offline, setOffline] = useState<OfflineReadingItem[]>(() => listOfflineReading());
   const [openOfflineId, setOpenOfflineId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
+  const highlightCount = listTextHighlights().length;
 
   const progressStore = getAllReadingProgress();
   const resume = (Object.keys(progressStore) as ReadingSection[])
@@ -310,6 +381,16 @@ function GuestVault() {
         >
           قراءة لاحقًا
           <span className="vault-tab__count">{offline.length}</span>
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "highlights"}
+          className={`vault-tab${tab === "highlights" ? " vault-tab--active" : ""}`}
+          onClick={() => setTab("highlights")}
+        >
+          مكتبة الفوائد
+          <span className="vault-tab__count">{highlightCount}</span>
         </button>
       </div>
 
@@ -407,6 +488,8 @@ function GuestVault() {
           ))}
         </div>
       )}
+
+      {tab === "highlights" && <HighlightsLibrary query={search} />}
     </div>
   );
 }
@@ -485,10 +568,12 @@ export default function VaultPage() {
     arabicMatchAny([n.note_text], search),
   );
 
+  const highlightCount = listTextHighlights().length;
   const tabs: { key: Tab; label: string; count: number }[] = [
     { key: "bookmarks", label: "المحفوظات", count: vaultData.bookmarks.length },
     { key: "resume", label: "قيد القراءة", count: vaultData.resume.length },
     { key: "notes", label: "الملاحظات", count: vaultData.notes.length },
+    { key: "highlights", label: "مكتبة الفوائد", count: highlightCount },
   ];
 
   return (
@@ -603,6 +688,12 @@ export default function VaultPage() {
                 onDelete={handleDeleteNote}
                 onEdit={handleEditNote}
               />
+            </div>
+          )}
+
+          {tab === "highlights" && (
+            <div role="tabpanel" id="vault-panel-highlights" aria-labelledby="vault-tab-highlights">
+              <HighlightsLibrary query={search} />
             </div>
           )}
         </>

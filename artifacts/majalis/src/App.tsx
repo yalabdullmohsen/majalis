@@ -18,6 +18,7 @@ import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
 import { AchievementToast } from "@/components/AchievementToast";
+import { CrossDeviceResumeToast } from "@/components/CrossDeviceResumeToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
@@ -1031,6 +1032,7 @@ function AppShellInner() {
       {newBadges.length > 0 && (
         <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
       )}
+      <CrossDeviceResumeToast />
       {searchOpen && (
         <SectionErrorBoundary name="GlobalSearchModal">
           <Suspense fallback={null}>

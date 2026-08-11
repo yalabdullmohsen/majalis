@@ -108,6 +108,14 @@ export const ar = {
   error: "حدث خطأ",
   not_found: "الصفحة غير موجودة",
   skip_to_content: "تخطّي إلى المحتوى",
+
+  // ── Mega-Prompt 4: sync / i18n / habits ──
+  vault_title: "المحفظة العلمية",
+  vault_highlights: "مكتبة الفوائد",
+  vault_highlights_empty: "حدّد نصًا في التفسير أو الفوائد واختر لونًا لحفظ فائدة علمية هنا.",
+  sync_guest_migrated: "تمت مزامنة بياناتك المحلية مع حسابك",
+  streak_days: "أيام متتابعة",
+  lang_overlay_note: "نصوص القرآن والتفسير والحديث تبقى بالعربية الأصيلة مع ترجمة سياقية عند الحاجة.",
 } as const;
 
 export type TranslationKey = keyof typeof ar;

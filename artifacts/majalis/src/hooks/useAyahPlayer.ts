@@ -32,6 +32,7 @@ import {
   observeAudioLatency,
   observeAudioThroughput,
 } from "@/lib/audio-buffer-policy";
+import { resolveAdaptiveReciterId } from "@/lib/adaptive-audio-quality";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { useWakeLock } from "@/hooks/useWakeLock";
 import { holdPreviousWhileLoading } from "@/lib/cls-layout-reserve";
@@ -222,11 +223,21 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       void claimAudio("tilawa");
     });
     void refreshQuranAudioRemoteConfig();
-    const urlQueue = audioSourceUrlQueue({ kind: "ayah", surah, ayah, reciterId: reciter });
+    const effectiveReciter = resolveAdaptiveReciterId(reciter);
+    const urlQueue = audioSourceUrlQueue({
+      kind: "ayah",
+      surah,
+      ayah,
+      reciterId: effectiveReciter,
+    });
     let urlIndex = 0;
     if (urlQueue.length === 0) {
       if (mountedRef.current) setPlayerState("error");
-      logDiagnostic("audio-chunk-fail", "no-audio-source", { surah, ayah, reciter });
+      logDiagnostic("audio-chunk-fail", "no-audio-source", {
+        surah,
+        ayah,
+        reciter: effectiveReciter,
+      });
       return;
     }
     audio.src = urlQueue[0]!;
