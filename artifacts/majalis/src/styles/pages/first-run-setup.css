@@ -1,0 +1,168 @@
+/* تهيئة التشغيل الأول — طبقة فوق التطبيق، ليست بوابة إقلاع أصلية */
+.frs-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: max(1rem, env(safe-area-inset-top)) 1rem max(1.25rem, env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--mj-brand-deep, #0f2e1d) 42%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.frs-card {
+  position: relative;
+  width: min(100%, 28rem);
+  max-height: min(92dvh, 40rem);
+  overflow: auto;
+  background: var(--mj-bg, #fff);
+  color: var(--mj-brand-deep, #0f2e1d);
+  border-radius: 1.1rem 1.1rem 0.85rem 0.85rem;
+  padding: 1.25rem 1.15rem 1.15rem;
+  box-shadow: 0 -8px 32px rgba(15, 46, 29, 0.18);
+}
+
+.frs-skip {
+  position: absolute;
+  top: 0.75rem;
+  inset-inline-start: 0.85rem;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.35rem 0.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--mj-muted, #5a6b60);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.frs-eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--mj-brand, #1f6b45);
+}
+
+.frs-step h2 {
+  margin: 0.35rem 0 0.5rem;
+  font-size: 1.45rem;
+  line-height: 1.35;
+}
+
+.frs-lead {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--mj-muted, #5a6b60);
+}
+
+.frs-label {
+  margin: 0.75rem 0 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.frs-choice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+}
+
+.frs-choice {
+  min-height: 44px;
+  text-align: start;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f2e1d) 14%, transparent);
+  border-radius: 0.7rem;
+  background: var(--mj-surface, #f7f8f5);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.frs-choice strong {
+  display: block;
+  font-size: 0.88rem;
+}
+
+.frs-choice span {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  color: var(--mj-muted, #5a6b60);
+}
+
+.frs-choice.is-active {
+  border-color: var(--mj-brand, #1f6b45);
+  background: color-mix(in srgb, var(--mj-brand, #1f6b45) 12%, transparent);
+}
+
+.frs-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 52px;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.75rem;
+  background: var(--mj-surface, #f7f8f5);
+  margin-bottom: 1rem;
+}
+
+.frs-toggle strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.frs-toggle em {
+  display: block;
+  margin-top: 0.2rem;
+  font-style: normal;
+  font-size: 0.8rem;
+  color: var(--mj-muted, #5a6b60);
+}
+
+.frs-toggle-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.frs-toggle-hint {
+  margin: 0.2rem 0 0;
+  font-size: 0.8rem;
+  color: var(--mj-muted, #5a6b60);
+}
+
+.frs-toggle input {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.frs-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.frs-btn {
+  min-height: 44px;
+  border-radius: 0.75rem;
+  border: 0;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.frs-btn--primary {
+  background: var(--mj-brand, #1f6b45);
+  color: #fff;
+}
+
+.frs-btn--ghost {
+  background: transparent;
+  color: var(--mj-muted, #5a6b60);
+}
