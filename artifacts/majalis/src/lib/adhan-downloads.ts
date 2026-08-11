@@ -4,6 +4,7 @@
  */
 
 import { getMuezzin, listSelectableMuezzins } from "./adhan-audio";
+import { OFFLINE_ADHAN_CORE_PACKS } from "./adhan-offline-assets";
 
 export const ADHAN_FULL_DOWNLOAD_CAP_BYTES = 80 * 1024 * 1024; // 80 MiB
 const CACHE_NAME = "majalis-adhan-full-v1";
@@ -73,6 +74,13 @@ function collectFullUrls(muezzinId?: string): string[] {
   for (const m of list) {
     if (m.audioUrl) urls.add(m.audioUrl);
     if (m.fajrUrl) urls.add(m.fajrUrl);
+    if (m.shortUrl) urls.add(m.shortUrl);
+    if (m.takbirUrl) urls.add(m.takbirUrl);
+  }
+  for (const pack of OFFLINE_ADHAN_CORE_PACKS) {
+    for (const u of Object.values(pack.remote)) {
+      if (u && !u.startsWith("/")) urls.add(u);
+    }
   }
   return [...urls];
 }
@@ -139,4 +147,40 @@ export async function getCachedAdhanUrl(remoteUrl: string): Promise<string | nul
   } catch {
     return null;
   }
+}
+
+/**
+ * يضمن توفّر الحزمة الأساسية أوفلاين:
+ * 1) يضع الملفات المحلية في Cache API
+ * 2) ينزّل روابط CDN الناقصة للمؤذن المختار
+ */
+export async function ensureOfflineAdhanPack(opts?: {
+  muezzinId?: string;
+}): Promise<{ ok: boolean; cached: number }> {
+  const cache = await openCache();
+  if (!cache) return { ok: false, cached: 0 };
+
+  let cached = 0;
+  for (const pack of OFFLINE_ADHAN_CORE_PACKS) {
+    for (const path of Object.values(pack.local)) {
+      if (!path) continue;
+      try {
+        const existing = await cache.match(path);
+        if (existing) {
+          cached += 1;
+          continue;
+        }
+        const res = await fetch(path, { credentials: "omit" });
+        if (res.ok) {
+          await cache.put(path, res);
+          cached += 1;
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+  }
+
+  const dl = await downloadAdhanFullClips({ muezzinId: opts?.muezzinId });
+  return { ok: dl.ok || cached > 0, cached: cached + (dl.addedBytes > 0 ? 1 : 0) };
 }
