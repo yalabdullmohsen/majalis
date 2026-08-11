@@ -183,6 +183,19 @@ export const MIND_MAPS: MindMap[] = [
           ],
         },
         {
+          id: "surah-themes",
+          label: "تشجير موضوعات السور",
+          href: "/mind-map",
+          children: [
+            { id: "st-1", label: "الفاتحة — أصول العبادة", href: "/mushaf?surah=1" },
+            { id: "st-2", label: "البقرة — التشريع والمدني", href: "/mushaf?surah=2" },
+            { id: "st-3", label: "آل عمران — الثبات والفتن", href: "/mushaf?surah=3" },
+            { id: "st-4", label: "يس — القلب والذكرى", href: "/mushaf?surah=36" },
+            { id: "st-5", label: "الملك — الملك والتوحيد", href: "/mushaf?surah=67" },
+            { id: "st-6", label: "موضوعات القرآن (فهرس)", href: "/quran-knowledge" },
+          ],
+        },
+        {
           id: "tafseer",
           label: "التفسير",
           children: [

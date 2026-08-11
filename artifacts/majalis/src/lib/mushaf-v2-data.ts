@@ -24,6 +24,10 @@ export type QpcWord = {
    * قراءة شاشة) لأنه بلا معنى خارج سياق ذلك الخط. */
   glyphText: string;
   audioUrl: string | null;
+  /** معنى إنجليزي مختصر من بيانات CDN (إن وُجد) — للقاموس الفوري في شيت الآية. */
+  translationEn: string | null;
+  /** نطق لاتيني مبسّط من بيانات CDN (إن وُجد). */
+  transliteration: string | null;
   /** مكرَّرة من الآية الأم عمدًا (denormalized) — تُغني عن أي بحث عكسي
    * لمعرفة أي آية تنتمي إليها كلمة عند التفاعل معها (نقرة تفتح Action Sheet). */
   verseKey: string;
@@ -165,6 +169,18 @@ function fetchRawPage(pageNumber: number): Promise<QpcVerse[]> {
                 // Phase 2 فعليًا؛ راجع تعليق fetch-mushaf-v2-data.mjs.
                 glyphText: w.code_v2,
                 audioUrl: w.audio_url ?? null,
+                translationEn:
+                  typeof w.translation?.text === "string"
+                    ? w.translation.text
+                    : typeof w.translation === "string"
+                      ? w.translation
+                      : null,
+                transliteration:
+                  typeof w.transliteration?.text === "string"
+                    ? w.transliteration.text
+                    : typeof w.transliteration === "string"
+                      ? w.transliteration
+                      : null,
                 verseKey: v.verse_key,
                 sajdahNumber: v.sajdah_number,
               }),
@@ -348,6 +364,13 @@ export function prefetchMushafPage(pageNumber: number): void {
  * مُحمَّل بالفعل — بلا أي طلب شبكة إضافي، ومصدره نفس بيانات QPC V2
  * المعتمدة (لا AlQuran Cloud ولا أي مصدر بديل). */
 export function getAyahTextFromLayout(layout: MushafPageLayout, verseKey: string): string {
+  return getWordsFromLayout(layout, verseKey)
+    .map((w) => w.textUthmani)
+    .join(" ");
+}
+
+/** كلمات الآية من تخطيط مُحمَّل (بدون شبكة) — للقاموس الفوري في شيت الآية. */
+export function getWordsFromLayout(layout: MushafPageLayout, verseKey: string): QpcWord[] {
   const words: QpcWord[] = [];
   for (const row of layout.rows) {
     if (row.kind === "line") {
@@ -356,8 +379,13 @@ export function getAyahTextFromLayout(layout: MushafPageLayout, verseKey: string
       }
     }
   }
-  return words
-    .sort((a, b) => a.position - b.position)
-    .map((w) => w.textUthmani)
-    .join(" ");
+  return words.sort((a, b) => a.position - b.position);
+}
+
+/** رابط نطق كلمة مفردة من مسار CDN النسبي. */
+export function resolveWordAudioUrl(audioUrl: string | null | undefined): string | null {
+  if (!audioUrl) return null;
+  if (/^https?:\/\//i.test(audioUrl)) return audioUrl;
+  const path = audioUrl.replace(/^\//, "");
+  return `https://audio.qurancdn.com/${path}`;
 }

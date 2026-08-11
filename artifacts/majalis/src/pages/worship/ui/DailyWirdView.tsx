@@ -14,6 +14,13 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import {
+  applyKhatmahDurationPreset,
+  KHATMAH_PRESETS,
+  pagesPerDayForKhatmahDays,
+} from "@/lib/khatmah-presets";
+import { predictKhatmahCompletion } from "@/lib/quran-khatmah-tracker";
+import { triggerHaptic } from "@/lib/haptics";
 import "@/styles/pages/daily-wird.css";
 
 const QURAN_PAGES = 604;
@@ -204,6 +211,13 @@ export default function DailyWirdPage() {
   const pagesInCurrentKhatma = state.totalPagesEver % QURAN_PAGES;
   const remainingInKhatma = QURAN_PAGES - pagesInCurrentKhatma;
   const khatmDays = state.pagesPerDay > 0 ? Math.ceil(remainingInKhatma / state.pagesPerDay) : null;
+  const prediction = predictKhatmahCompletion();
+
+  function applyPreset(days: number) {
+    const { pagesPerDay } = applyKhatmahDurationPreset(days);
+    persist({ ...state, pagesPerDay });
+    triggerHaptic("success");
+  }
 
   return (
     <div className="page-shell narrow wird-page">
@@ -216,6 +230,29 @@ export default function DailyWirdPage() {
       {/* البطاقة الرئيسية، الحلقة والأزرار */}
       <div className="wird-hero ui-card">
         <WirdRing pct={pct} pages={todayCompleted} target={state.pagesPerDay} />
+
+        <div className="wird-presets" role="group" aria-label="خطط الختمة">
+          {KHATMAH_PRESETS.map((p) => (
+            <button
+              key={p.id}
+              type="button"
+              className={`wird-preset-btn${state.pagesPerDay === pagesPerDayForKhatmahDays(p.days) ? " is-on" : ""}`}
+              onClick={() => applyPreset(p.days)}
+            >
+              {p.labelAr}
+              <span>{toAr(pagesPerDayForKhatmahDays(p.days))} ص/يوم</span>
+            </button>
+          ))}
+        </div>
+
+        {prediction.estimatedCompletionDate ? (
+          <p className="wird-eta">
+            متوقع الإكمال: {prediction.estimatedCompletionDate}
+            {prediction.behindSchedule
+              ? ` · متأخر ${toAr(prediction.deficitPages)} صفحة`
+              : ""}
+          </p>
+        ) : null}
 
         <div className="wird-count-btns" role="group" aria-label="إضافة صفحات">
           {[1, 2, 5].map((n) => (

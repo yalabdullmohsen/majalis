@@ -56,6 +56,8 @@ function layoutFromPageJson(pageNum: number): MushafPageLayout {
         textQpcHafs: w.text_qpc_hafs ?? w.text_uthmani,
         glyphText: w.code_v2 ?? "",
         audioUrl: null,
+        translationEn: null,
+        transliteration: null,
         verseKey: v.verse_key,
         sajdahNumber: null,
       };

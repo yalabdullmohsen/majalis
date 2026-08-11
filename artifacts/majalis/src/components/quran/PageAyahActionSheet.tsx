@@ -71,6 +71,9 @@ import {
   persistTranslationEdition,
   type TafsirFontScale,
 } from "@/features/mushaf";
+import { AyahWordGlossary } from "@/components/quran/AyahWordGlossary";
+import type { QpcWord } from "@/lib/mushaf-v2-data";
+import { triggerHaptic } from "@/lib/haptics";
 import "@/styles/components/ayah-action-sheet.css";
 
 const TafsirAudioSheetLazy = lazy(() => import("@/components/quran/TafsirAudioSheet"));
@@ -109,6 +112,8 @@ type Props = {
   onToggleRepeat?: () => void;
   sleepTimerOption?: SleepTimerOption;
   onSetSleepTimer?: (option: SleepTimerOption) => void;
+  /** كلمات الآية من تخطيط المصحف — القاموس الفوري */
+  words?: QpcWord[];
 };
 
 export function PageAyahActionSheet({
@@ -130,6 +135,7 @@ export function PageAyahActionSheet({
   onToggleRepeat,
   sleepTimerOption = "off",
   onSetSleepTimer,
+  words = [],
 }: Props) {
   const [, navigate] = useLocation();
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(surahNum, ayahNum));
@@ -410,9 +416,11 @@ export function PageAyahActionSheet({
     if (bookmarked) {
       removeBookmark(surahNum, ayahNum);
       setBookmarked(false);
+      triggerHaptic("light");
     } else {
       addBookmark({ surahNum, ayahNum, surahName, text: ayahText });
       setBookmarked(true);
+      triggerHaptic("success");
     }
   };
 
@@ -720,6 +728,8 @@ export function PageAyahActionSheet({
               ) : null}
             </div>
           ) : null}
+
+          {words.length > 0 ? <AyahWordGlossary words={words} /> : null}
 
           {showTafsirPanel ? (
             <div className="aas-v3__tafsir">

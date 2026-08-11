@@ -34,6 +34,9 @@ assert.match(reciter, /tolerantIncludes/);
 assert.match(reciter, /المختار حالياً/);
 assert.match(reciter, /التفسير والقرّاء/);
 assert.match(reciter, /min-height:\s*44px|mros-item/);
+assert.match(tsx, /AyahWordGlossary|words=/);
+assert.match(tsx, /triggerHaptic/);
+assert.match(css, /aas-v3__glossary/);
 assert.match(fetchSrc, /mj-mushaf-tafsir-sess/);
 assert.match(fetchSrc, /TafseerService/);
 

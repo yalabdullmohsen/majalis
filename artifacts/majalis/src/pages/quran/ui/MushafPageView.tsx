@@ -31,7 +31,8 @@ import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 import { JumpPageModal } from "@/components/quran/JumpPageModal";
 import { MushafPageFlipStage } from "@/components/quran/MushafPageFlipStage";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
-import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
+import { loadMushafPage, prefetchMushafPage, getWordsFromLayout, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
+import { triggerHaptic } from "@/lib/haptics";
 import { getMushafSpread, prefersMushafSpread } from "@/lib/mushaf-spread";
 import { FONT_OPTIONS, quranFontStack } from "@/lib/quran-font-options";
 import {
@@ -614,6 +615,7 @@ export default function MushafPageView() {
     if (!s || !a) return;
     setResumeAyahKey(null);
     setSelectedAyah({ surah: s, ayah: a });
+    triggerHaptic("selection");
   }, []);
   const clearAyahSelection = useCallback(() => {
     setSelectedAyah(null);
@@ -644,6 +646,11 @@ export default function MushafPageView() {
     }
     return null;
   }, [selectedAyah, segAyahs]);
+
+  const selectedAyahWords = useMemo(() => {
+    if (!selectedAyah || !v2Layout) return [];
+    return getWordsFromLayout(v2Layout, `${selectedAyah.surah}:${selectedAyah.ayah}`);
+  }, [selectedAyah, v2Layout]);
 
   const flatAyahs = useMemo(() => segAyahs?.flatMap((s) => s.ayahs) ?? [], [segAyahs]);
   const selectedIdx = selectedAyah ? flatAyahs.findIndex((a) => a.surahNumber === selectedAyah.surah && a.numberInSurah === selectedAyah.ayah) : -1;
@@ -1102,6 +1109,7 @@ export default function MushafPageView() {
             onToggleRepeat={() => setRepeatOn(!repeatOn)}
             sleepTimerOption={sleepTimer.option}
             onSetSleepTimer={setSleepTimer}
+            words={selectedAyahWords}
           />
         </SectionErrorBoundary>
       )}

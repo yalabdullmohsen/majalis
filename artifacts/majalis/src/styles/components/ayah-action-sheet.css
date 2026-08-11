@@ -980,6 +980,82 @@ html.dark .aas-reader__edition-menu,
   padding-bottom: 0.35rem;
 }
 
+/* ── قاموس كلمات الآية ── */
+.aas-v3__glossary {
+  margin: 0.15rem 0 0.55rem;
+  padding: 0.65rem 0.7rem 0.7rem;
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--color-mushaf-paper, #fff) 82%, rgba(22, 163, 74, 0.08));
+  border: 1px solid rgba(22, 163, 74, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.aas-v3__glossary-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+}
+.aas-v3__glossary-head strong {
+  font-size: 0.82rem;
+  color: var(--color-mushaf-ink, #18362a);
+}
+.aas-v3__glossary-head span {
+  font-size: 0.68rem;
+  color: var(--color-mushaf-meta, #9a7b3c);
+}
+.aas-v3__glossary-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.aas-v3__glossary-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 36px;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(22, 163, 74, 0.18);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--color-mushaf-ink, #18362a);
+  font: inherit;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+.aas-v3__glossary-chip.is-on {
+  border-color: rgba(22, 163, 74, 0.55);
+  background: rgba(22, 163, 74, 0.12);
+}
+.aas-v3__glossary-ar {
+  font-family: var(--font-quran, inherit);
+  line-height: 1.5;
+}
+.aas-v3__glossary-detail {
+  margin-top: 0.55rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(22, 163, 74, 0.12);
+}
+.aas-v3__glossary-word {
+  margin: 0 0 0.2rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-mushaf-ink, #18362a);
+}
+.aas-v3__glossary-tr,
+.aas-v3__glossary-en {
+  margin: 0.15rem 0 0;
+  font-size: 0.82rem;
+  color: var(--color-mushaf-meta, #9a7b3c);
+  line-height: 1.45;
+}
+.aas-v3__glossary-hint {
+  margin: 0.2rem 0 0;
+  font-size: 0.75rem;
+  color: var(--color-mushaf-meta, #9a7b3c);
+}
+
 .aas-v3__actions {
   display: flex;
   flex-wrap: nowrap;

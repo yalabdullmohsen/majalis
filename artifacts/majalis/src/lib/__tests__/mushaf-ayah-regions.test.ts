@@ -25,22 +25,22 @@ const layout: MushafPageLayout = {
         {
           id: 1, position: 1, lineNumber: 2, charType: "word",
           textUthmani: "بِسْمِ", textQpcHafs: "بِسْمِ", glyphText: "a",
-          audioUrl: null, verseKey: "1:1", sajdahNumber: null,
+          audioUrl: null, translationEn: null, transliteration: null, verseKey: "1:1", sajdahNumber: null,
         },
         {
           id: 2, position: 2, lineNumber: 2, charType: "word",
           textUthmani: "اللَّهِ", textQpcHafs: "اللَّهِ", glyphText: "b",
-          audioUrl: null, verseKey: "1:1", sajdahNumber: null,
+          audioUrl: null, translationEn: null, transliteration: null, verseKey: "1:1", sajdahNumber: null,
         },
         {
           id: 3, position: 3, lineNumber: 2, charType: "end",
           textUthmani: "١", textQpcHafs: "١", glyphText: "c",
-          audioUrl: null, verseKey: "1:1", sajdahNumber: null,
+          audioUrl: null, translationEn: null, transliteration: null, verseKey: "1:1", sajdahNumber: null,
         },
         {
           id: 4, position: 4, lineNumber: 2, charType: "word",
           textUthmani: "الْحَمْدُ", textQpcHafs: "الْحَمْدُ", glyphText: "d",
-          audioUrl: null, verseKey: "1:2", sajdahNumber: null,
+          audioUrl: null, translationEn: null, transliteration: null, verseKey: "1:2", sajdahNumber: null,
         },
       ],
     },
