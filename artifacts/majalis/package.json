@@ -85,7 +85,7 @@
     "lint": "eslint src lib --max-warnings 0",
     "test:seo": "node scripts/test-seo.mjs",
     "test:launch-splash-unified": "node --import tsx src/lib/__tests__/launch-splash-unified.test.ts",
-    "test:brand-reveal": "node --import tsx src/lib/__tests__/brand-reveal.test.ts",
+    "test:app-first-run-host": "node --import tsx src/lib/__tests__/app-first-run-host.test.ts",
     "test:pwa": "node --import tsx src/lib/__tests__/pwa-mobile-launch.test.ts",
     "test:quran-db": "node --import tsx src/tests/database-manager.test.ts",
     "test:quran-scaffold": "node --import tsx src/tests/core-engine.sample.test.ts",
