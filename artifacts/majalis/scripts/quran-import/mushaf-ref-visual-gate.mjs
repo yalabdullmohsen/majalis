@@ -232,8 +232,8 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
         }
         if (
           structural.bannerTopPct == null ||
-          structural.bannerTopPct < 37.5 ||
-          structural.bannerTopPct > 38.5
+          structural.bannerTopPct < 14 ||
+          structural.bannerTopPct > 18
         ) {
           failures.push({
             page: n,

@@ -28,8 +28,8 @@ const GRID = JSON.parse(
 const VIEWPORT = { width: 390, height: 844 };
 const BANNER_PAGES = [1, 2, 599, 600, 601];
 const GRID_PAGES = [3, 4, 100, 283, 306, 400, 500, 588, 596, 599, 600, 601, 604];
-const DENSITY_MIN = 0.22;
-const DENSITY_MAX = 0.38;
+const DENSITY_MIN = 0.2;
+const DENSITY_MAX = 0.3;
 const TAN = { r: 227, g: 210, b: 180 };
 /* أقل من مسافة حشو الميدالية (#EDE0C4≈٢٣) حتى يُحسب الحشو حبرًا */
 const TAN_DIST = 20;
@@ -82,10 +82,12 @@ async function measureBanner(page, pageNum) {
           svg?.querySelectorAll('[data-wing-part="medallion"]').length ?? 0;
         const meshes =
           svg?.querySelectorAll('[data-wing-part="mesh"]').length ?? 0;
+        const spirals =
+          svg?.querySelectorAll('[data-wing-part="spiral"]').length ?? 0;
         const knots =
           svg?.querySelectorAll('[data-wing-part="knot"]').length ?? 0;
         wingOk =
-          patterns === 0 && medallions === 2 && meshes === 4 && knots === 2;
+          patterns === 0 && medallions === 2 && spirals === 4 && knots === 0 && meshes === 0;
 
         /* كثافة الجناح الأيمن: اقتطاع وعرض على canvas */
         const vb = svg.viewBox.baseVal;
@@ -112,9 +114,9 @@ async function measureBanner(page, pageNum) {
         };
       }
 
-      /* انحراف خطوط الأساس */
+      /* انحراف خطوط الأساس — أسطر الآيات فقط (الشارة/البسملة تُزاح عمداً) */
       let maxDev = 0;
-      for (const el of lines.querySelectorAll("[data-grid-slot]")) {
+      for (const el of lines.querySelectorAll(".mf2-grid-slot--line[data-grid-slot]")) {
         const slot = Number(el.getAttribute("data-grid-slot"));
         const expected = baselinesPct[slot - 1];
         if (expected == null) continue;
@@ -251,7 +253,7 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
         } else if (density < DENSITY_MIN || density > DENSITY_MAX) {
           failures.push({
             page: n,
-            reason: `كثافة الجناح ${(density * 100).toFixed(1)}% خارج 22–38%`,
+            reason: `كثافة الجناح ${(density * 100).toFixed(1)}% خارج 20–30%`,
           });
         }
         if (raw.wingOk === false) {
@@ -266,11 +268,11 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
           }
         }
         if ((n === 1 || n === 2) && raw.bannerTopPct != null) {
-          /* ص١–٢: أعلى الشارة ٢٦–٣٠٪ من contentBand */
-          if (raw.bannerTopPct < 26 || raw.bannerTopPct > 30) {
+          /* ص١–٢: أعلى الشارة ١٤–١٨٪ من contentBand */
+          if (raw.bannerTopPct < 14 || raw.bannerTopPct > 18) {
             failures.push({
               page: n,
-              reason: `أعلى الشارة ${raw.bannerTopPct.toFixed(1)}% خارج 26–30% (افتتاح)`,
+              reason: `أعلى الشارة ${raw.bannerTopPct.toFixed(1)}% خارج 14–18% (افتتاح)`,
             });
           }
         }

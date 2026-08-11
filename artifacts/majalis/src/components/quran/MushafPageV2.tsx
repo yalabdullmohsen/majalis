@@ -20,21 +20,21 @@ import { mushafTypescaleCssVars } from "@/features/mushaf/typescale";
 
 /**
  * صفحتا الافتتاح (١–٢): مسار برمجي موحّد · بلا إطار.
- * أعلى الشارة ٣٨٪ · فاصل شارة→بسملة ٢٤px · بسملة→أول سطر ٢٠px · أسطر بلا مطّ.
- * خانة الجسم = ٧٫٢٪ (كالشبكة) — ٥٫٤٪ كانت أصغر من ارتفاع السطر فسبّبت تراكب الصناديق.
+ * أعلى الشارة ١٦٪ (نطاق ١٤–١٨) · كتلة متمركزة مع إزاحة علوية ٦٪ ·
+ * فاصل شارة→بسملة ٢٤px · بسملة→أول سطر ٢٠px · أسطر بلا مطّ.
  */
-/** أعلى الشارة (٪ من .mf2-lines / contentBand) */
-const OPENING_BANNER_TOP_PCT = 38;
+/** أعلى الشارة (٪ من .mf2-lines / contentBand) — ١٤٪…١٨٪ */
+const OPENING_BANNER_TOP_PCT = 16;
 /** ارتفاع خانة الشارة = خانة سطر واحدة (٪) */
-const OPENING_BANNER_H_PCT = 6.2;
+const OPENING_BANNER_H_PCT = MUSHAF_GRID.slotHeightPct;
 /** فاصل حبر شارة→بسملة (صفحتا الافتتاح) */
 const OPENING_BANNER_TO_BASMALA_PX = 24;
 /** فاصل حبر بسملة→أول سطر آية */
 const OPENING_BASMALA_TO_LINE_PX = 20;
 /** فاصل أدنى شارة→بسملة في الصفحات العادية */
 const BANNER_BASMALA_MIN_GAP_PX = 22;
-/** هامش سفلي مقصود تحت آخر سطر (٪ من contentBand) — الباقي أسفل الكتلة */
-const OPENING_BOTTOM_MARGIN_PCT = 12;
+/** هامش سفلي مقصود تحت آخر سطر (٪ من contentBand) — تمركز مع إزاحة علوية ≈٦٪ */
+const OPENING_BOTTOM_MARGIN_PCT = 18;
 /** أدنى فجوة حبر بين سطرين كنسبة من حجم الخط S (لا ارتفاع الصندوق — كان يفيض الذيل) */
 const OPENING_MIN_LINE_GAP_RATIO = 0.35;
 /** ارتفاع خانة الجسم — يقارب امتداد الحبر دون مبالغة الصندوق */
@@ -816,8 +816,8 @@ export function MushafPageV2({
                 const have = maxInkBottom - firstTop;
                 const need = sumH + Math.max(0, nLines - 1) * minG;
                 if (nLines <= 1 || need <= have + 0.5) {
-                  gap = nLines <= 1 ? idealG : Math.min(idealG, (have - sumH) / Math.max(1, nLines - 1));
-                  gap = Math.max(minG, gap);
+                  /* فجوة ثابتة بين الأسطر (لا تمديد الفراغ) — ص١ وص٢ متطابقتان ≤١px */
+                  gap = idealG;
                   break;
                 }
                 size = Math.max(
@@ -846,10 +846,8 @@ export function MushafPageV2({
                     size = Math.max(Math.max(11, BASE_FONT * 0.52), size * 0.94);
                     container.style.fontSize = `${size}px`;
                     const minG = OPENING_MIN_LINE_GAP_RATIO * size;
-                    heights = measureHeights();
-                    const sumH = heights.reduce((s, h) => s + h, 0);
                     firstTop = liveBasBottom() + OPENING_BASMALA_TO_LINE_PX;
-                    gap = Math.max(minG, (maxInkBottom - firstTop - sumH) / (nLines - 1));
+                    gap = Math.max(minG, OPENING_MIN_LINE_GAP_RATIO * size);
                     placeFrom(firstTop, gap);
                   }
                 }
@@ -966,10 +964,6 @@ export function MushafPageV2({
           const gap = inkTop - banR.bottom;
           minGap = Math.min(minGap, gap);
           if (gap < BANNER_BASMALA_MIN_GAP_PX - 0.5) {
-            /* مواقع الشبكة كافية — لا تدفع البسملة نحو الآية */
-            if (basEl.closest(".mf2-grid-slot--basmala")) {
-              continue;
-            }
             const nudgePx = BANNER_BASMALA_MIN_GAP_PX - gap;
             const nudgePct = (nudgePx / Math.max(1, cr.height)) * 100;
             const slot =
@@ -1170,9 +1164,9 @@ export function MushafPageV2({
       const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
       const slotBase =
         MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;
-      /* ارفع الشارة قليلاً داخل خانة الفجوة لفاصل حبر ≥20px مع البسملة */
-      baseline = slotBase - 1.0;
-      h = 4.2;
+      /* ارتفاع = خانة سطر؛ ارفع المركز حتى يبقى أسفل الشارة فوق البسملة بفاصل ≥٢٢px */
+      baseline = slotBase - 2.5;
+      h = MUSHAF_GRID.slotHeightPct;
     } else {
       const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
       baseline = MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;

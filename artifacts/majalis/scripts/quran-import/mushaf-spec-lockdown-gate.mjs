@@ -159,17 +159,19 @@ function runStatic() {
   else pass(6, "MAX_DEAD_GAP_PCT=6 في ink-clip");
 
   /* ٧ — كثافة الجناح */
-  if (!/data-wing-density-target="22-38"/.test(banner)) fail(7, "هدف الكثافة غير مثبت");
-  else if (!/DENSITY_MIN\s*=\s*0\.22/.test(read("scripts/quran-import/mushaf-banner-density-gate.mjs"))) {
-    fail(7, "بوابة الكثافة بلا ٠٫٢٢");
-  } else pass(7, "٢٢٪–٣٨٪");
+  if (!/data-wing-density-target="20-30"/.test(banner)) fail(7, "هدف الكثافة غير مثبت");
+  else if (!/DENSITY_MIN\s*=\s*0\.2/.test(read("scripts/quran-import/mushaf-banner-density-gate.mjs"))) {
+    fail(7, "بوابة الكثافة بلا ٠٫٢٠");
+  } else pass(7, "٢٠٪–٣٠٪");
 
   /* ٨ — عناصر الجناح */
-  if (!/data-wing-part="medallion"/.test(banner) || !/data-wing-part="knot"/.test(banner)) {
-    fail(8, "ميدالية/عقدة مفقودة");
+  if (!/data-wing-part="medallion"/.test(banner) || !/data-wing-part="spiral"/.test(banner)) {
+    fail(8, "ميدالية/لولب مفقود");
+  } else if (/data-wing-part="knot"/.test(banner) || /data-wing-part="mesh"/.test(banner)) {
+    fail(8, "موتيف زائد (knot/mesh) مرفوض");
   } else if (/<pattern[\s>]/.test(banner) || /url\(#.*pattern/.test(banner)) {
     fail(8, "موتيف pattern مكرر مرفوض");
-  } else pass(8, "medallion+mesh+knot بلا pattern");
+  } else pass(8, "medallion+twin-spiral بلا pattern");
 
   /* ٩ — آخر سطر سورة */
   if (!/mf2-line--surah-end/.test(pageV2) || !/mf2-line--surah-end/.test(frameCss)) {
@@ -201,8 +203,8 @@ function runStatic() {
   /* ١٣ — ص١–٢ بلا إطار · شارة عند ٣٨٪ */
   if (existsSync(join(ROOT, "src/components/quran/OpeningPageFrame.tsx"))) {
     fail(13, "OpeningPageFrame.tsx ما زال موجودًا");
-  } else if (!/OPENING_BANNER_TOP_PCT\s*=\s*38/.test(pageV2)) {
-    fail(13, "OPENING_BANNER_TOP_PCT ≠ 38");
+  } else if (!/OPENING_BANNER_TOP_PCT\s*=\s*16/.test(pageV2)) {
+    fail(13, "OPENING_BANNER_TOP_PCT ≠ 16");
   } else if (!/mpv-toolbar-band|MUSHAF_LAYOUT_BANDS/.test(pageV2 + read("src/styles/quran.css"))) {
     fail(13, "نطاقات التخطيط غير مثبتة");
   } else pass(13, "بلا إطار + شارة ٣٨٪ + نطاقات");
