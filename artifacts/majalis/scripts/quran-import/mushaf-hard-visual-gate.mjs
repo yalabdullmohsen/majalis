@@ -181,7 +181,7 @@ try {
     const genB64 = readFileSync(shotPath).toString("base64");
     const refB64 = readFileSync(refPath).toString("base64");
     const cmp = await page.evaluate(
-      async ({ genB64, refB64 }) => {
+      async ({ genB64, refB64, coarse }) => {
         const load = (b64) =>
           new Promise((resolve, reject) => {
             const img = new Image();
@@ -192,7 +192,7 @@ try {
         const gen = await load(genB64);
         const ref = await load(refB64);
         /* scale أعلى = مقاومة أكبر لاختلاف تنعيم الخطوط بين المنصات */
-        const scale = onCi ? 4 : 2;
+        const scale = coarse ? 4 : 2;
         const w = Math.max(1, Math.floor(Math.min(gen.width, ref.width) / scale));
         const h = Math.max(1, Math.floor(Math.min(gen.height, ref.height) / scale));
         const toBin = (img) => {
@@ -216,7 +216,7 @@ try {
         for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) diff++;
         return { ratio: diff / a.length, w, h, diff };
       },
-      { genB64, refB64 },
+      { genB64, refB64, coarse: onCi },
     );
     results.push({ page: n, ratio: cmp.ratio, mode: "compared", structural, onCi });
     if (cmp.ratio > MAX_DIFF) {
