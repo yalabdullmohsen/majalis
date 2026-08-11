@@ -4,7 +4,8 @@
  */
 
 /**
- * Opt-in / domain labels that allow auto-merge (at least one required).
+ * Optional classification labels for reporting / domain clarity.
+ * Not required for low-risk auto-merge after green checks (path/size/CI gates still apply).
  * New `safe:*` names are preferred; legacy `*-safe` kept for compatibility.
  */
 export const SAFE_LABELS = Object.freeze([
