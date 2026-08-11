@@ -32,7 +32,6 @@ import {
   observeAudioLatency,
   observeAudioThroughput,
 } from "@/lib/audio-buffer-policy";
-import { resolveAdaptiveReciterId } from "@/lib/adaptive-audio-quality";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { useWakeLock } from "@/hooks/useWakeLock";
 import { holdPreviousWhileLoading } from "@/lib/cls-layout-reserve";
@@ -49,6 +48,12 @@ import {
   type SleepTimerState,
 } from "@/lib/quran-sleep-timer";
 import { getReciter } from "@/lib/quran-audio";
+
+/** Lazy adaptive bitrate helper — keeps entry free of adaptive-audio-quality. */
+let resolveAdaptiveReciterId = (id: string): string => id;
+void import("@/lib/adaptive-audio-quality").then((m) => {
+  resolveAdaptiveReciterId = m.resolveAdaptiveReciterId;
+});
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 

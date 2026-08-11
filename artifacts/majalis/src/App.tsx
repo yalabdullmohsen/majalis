@@ -18,7 +18,6 @@ import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
 import { AchievementToast } from "@/components/AchievementToast";
-import { CrossDeviceResumeToast } from "@/components/CrossDeviceResumeToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
@@ -73,6 +72,10 @@ const GlobalSearchModal = lazyWithRetry(
 const QuranMiniPlayerBar = lazyWithRetry(
   () => import("@/components/quran/QuranMiniPlayerBar").then((m) => ({ default: m.QuranMiniPlayerBar })),
   "QuranMiniPlayerBar",
+);
+const CrossDeviceResumeToast = lazyWithRetry(
+  () => import("@/components/CrossDeviceResumeToast").then((m) => ({ default: m.CrossDeviceResumeToast })),
+  "CrossDeviceResumeToast",
 );
 
 const NotFound = lazy(() => import("@/views/not-found"));
@@ -1032,7 +1035,9 @@ function AppShellInner() {
       {newBadges.length > 0 && (
         <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
       )}
-      <CrossDeviceResumeToast />
+      <Suspense fallback={null}>
+        <CrossDeviceResumeToast />
+      </Suspense>
       {searchOpen && (
         <SectionErrorBoundary name="GlobalSearchModal">
           <Suspense fallback={null}>

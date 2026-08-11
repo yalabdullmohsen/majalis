@@ -28,7 +28,15 @@ export function CrossDeviceResumeToast() {
         const items = await getResumeItems(user.id);
         const mushaf = items.find((i) => i.content_type === "mushaf_page");
         if (!mushaf || cancelled) return;
-        const cloudPage = Math.floor(Number(mushaf.position) || Number(mushaf.content_id) || 0);
+        const cloudPage = Math.floor(
+          Number(
+            (typeof mushaf.position === "object" && mushaf.position
+              ? (mushaf.position as { item_index?: number }).item_index
+              : mushaf.position) ||
+              mushaf.content_id ||
+              0,
+          ),
+        );
         if (cloudPage < 1 || cloudPage > 604) return;
         const local = loadLastPageSync();
         if (local != null && local === cloudPage) return;
