@@ -6,7 +6,7 @@ Auto-merge يبقى **مفعّلًا** للتعديلات البسيطة/الم�
 
 PR **Ready** (غير Draft) إلى `main` عندما:
 
-1. فحوصات CI الأساسية خضراء (`Verify build` = typecheck + lint + test/content-guard + build)
+1. فحوصات CI الأساسية خضراء حسب **path lane** (`Verify build` يجمع النتائج؛ الوظائف غير المطلوبة قد تكون `skipped`؛ عند الحاجة: typecheck + lint + test/content-guard + build)
 2. ليس موسومًا `release-train-ready` (يملكه قطار الإصدار)
 3. ليس موسومًا `risky:manual-review` أو `blocked:danger-path`
 4. لا تعارض / ليس `BEHIND`
@@ -21,6 +21,7 @@ PR **Ready** (غير Draft) إلى `main` عندما:
    - `CONTINUATION_PLAN.md`
 10. **Vercel Preview ignored/skipped** لا يمنع تدقيق المحتوى الآمن
 11. إذا كانت الفحوصات **pending**: النظام ينتظر (لا يُعطّل Auto-merge نهائيًا)
+12. **Fast Lane:** توثيق/سياسة فقط → بدون build/مصحف/postgres؛ المصحف يبقى بكامل بواباته عند لمس ملفات المصحف/القرآن؛ SQL/iOS/workflows تبقى مراجعة يدوية
 
 بعد الدمج (squash): **Vercel ينشر Production من `main` تلقائيًا** عبر مشروع **`majalis-majalis`** (المشروع القديم `majalis` إن وُجد يُعامل كـ legacy).
 

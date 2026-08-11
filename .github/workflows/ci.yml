@@ -24,8 +24,92 @@ env:
   BASE_PATH: "/"
 
 jobs:
+  classify:
+    name: classify-path-lane
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      lane: ${{ steps.lane.outputs.lane }}
+      need_build: ${{ steps.lane.outputs.need_build }}
+      need_fast_lane: ${{ steps.lane.outputs.need_fast_lane }}
+      need_mushaf: ${{ steps.lane.outputs.need_mushaf }}
+      need_postgres: ${{ steps.lane.outputs.need_postgres }}
+      need_color_contrast: ${{ steps.lane.outputs.need_color_contrast }}
+      need_preview_smoke: ${{ steps.lane.outputs.need_preview_smoke }}
+      need_policy_tests: ${{ steps.lane.outputs.need_policy_tests }}
+      manual_review: ${{ steps.lane.outputs.manual_review }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Classify changed paths
+        id: lane
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD="${{ github.event.pull_request.head.sha }}"
+            node .github/scripts/ci/emit-path-lane.mjs --base "$BASE" --head "$HEAD"
+          else
+            # push to main → full suite (no dangerous skip)
+            node .github/scripts/ci/emit-path-lane.mjs --full
+          fi
+
+  fast-lane:
+    name: fast-lane
+    needs: [classify]
+    if: needs.classify.outputs.need_fast_lane == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: Cache pnpm store
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: ~/.local/share/pnpm/store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Governance / auto-merge safety gate
+        run: pnpm run verify:no-unsafe-auto-merge
+
+      - name: Safe auto-merge policy unit tests
+        if: needs.classify.outputs.need_policy_tests == 'true'
+        run: pnpm run test:safe-auto-merge
+
+      - name: Release Train unit tests (policy-adjacent)
+        if: needs.classify.outputs.need_policy_tests == 'true'
+        run: pnpm run test:release-train
+
   build:
     name: build
+    needs: [classify]
+    if: needs.classify.outputs.need_build == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -160,7 +244,13 @@ jobs:
   # تمريرة قياس واحدة (عيّنة ٢٥ في PR · ٨ أجزاء × ٦٠٤ على main)
   mushaf-measure:
     name: mushaf-measure
-    needs: [build]
+    needs: [classify, build]
+    if: |
+      always() &&
+      !cancelled() &&
+      needs.classify.result == 'success' &&
+      needs.classify.outputs.need_mushaf == 'true' &&
+      needs.build.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
@@ -236,7 +326,14 @@ jobs:
 
   mushaf-gates:
     name: mushaf-gates
-    needs: [build, mushaf-measure]
+    needs: [classify, build, mushaf-measure]
+    if: |
+      always() &&
+      !cancelled() &&
+      needs.classify.result == 'success' &&
+      needs.classify.outputs.need_mushaf == 'true' &&
+      needs.build.result == 'success' &&
+      needs.mushaf-measure.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -329,7 +426,13 @@ jobs:
 
   layout-bands:
     name: layout-bands
-    needs: [mushaf-measure]
+    needs: [classify, mushaf-measure]
+    if: |
+      always() &&
+      !cancelled() &&
+      needs.classify.result == 'success' &&
+      needs.classify.outputs.need_mushaf == 'true' &&
+      needs.mushaf-measure.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -376,7 +479,13 @@ jobs:
 
   visual-snapshot:
     name: visual-snapshot
-    needs: [build]
+    needs: [classify, build]
+    if: |
+      always() &&
+      !cancelled() &&
+      needs.classify.result == 'success' &&
+      needs.classify.outputs.need_mushaf == 'true' &&
+      needs.build.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -453,45 +562,85 @@ jobs:
         run: gh run cancel "${{ github.run_id }}" || true
 
   # الاسم "Verify build" يبقى لفحص حماية الفرع الحالي.
+  # skipped مقبول فقط إذا classifier قال إن الوظيفة غير مطلوبة.
   verify:
     name: Verify build
-    needs: [build, mushaf-measure, mushaf-gates, layout-bands, visual-snapshot]
-    if: always()
+    needs: [classify, fast-lane, build, mushaf-measure, mushaf-gates, layout-bands, visual-snapshot]
+    if: always() && !cancelled()
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Aggregate required jobs
+      - name: Aggregate required jobs (path-lane aware)
+        env:
+          LANE: ${{ needs.classify.outputs.lane }}
+          NEED_BUILD: ${{ needs.classify.outputs.need_build }}
+          NEED_FAST: ${{ needs.classify.outputs.need_fast_lane }}
+          NEED_MUSHAF: ${{ needs.classify.outputs.need_mushaf }}
+          CLASSIFY_RESULT: ${{ needs.classify.result }}
+          FAST_RESULT: ${{ needs.fast-lane.result }}
+          BUILD_RESULT: ${{ needs.build.result }}
+          MEASURE_RESULT: ${{ needs.mushaf-measure.result }}
+          GATES_RESULT: ${{ needs.mushaf-gates.result }}
+          BANDS_RESULT: ${{ needs.layout-bands.result }}
+          VISUAL_RESULT: ${{ needs.visual-snapshot.result }}
         run: |
           set -euo pipefail
-          echo "## CI timing / results" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Job | Result |" >> "$GITHUB_STEP_SUMMARY"
-          echo "|-----|--------|" >> "$GITHUB_STEP_SUMMARY"
-          echo "| build | ${{ needs.build.result }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| mushaf-measure | ${{ needs.mushaf-measure.result }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| mushaf-gates | ${{ needs.mushaf-gates.result }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| layout-bands | ${{ needs.layout-bands.result }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| visual-snapshot | ${{ needs.visual-snapshot.result }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "قبل: كل بوابة ترسم الصفحات من جديد (≈١٥–٤٥ دقيقة مع FULL=٦٠٤)." >> "$GITHUB_STEP_SUMMARY"
-          echo "بعد: تمريرة قياس واحدة + فحوص Node + عيّنة ٢٥ في PR · timeout ١٠ دقائق · هدف الجدار ≤٤." >> "$GITHUB_STEP_SUMMARY"
-          for r in \
-            "${{ needs.build.result }}" \
-            "${{ needs.mushaf-measure.result }}" \
-            "${{ needs.mushaf-gates.result }}" \
-            "${{ needs.layout-bands.result }}" \
-            "${{ needs.visual-snapshot.result }}"
-          do
-            if [ "$r" != "success" ]; then
-              echo "required job not success: $r"
-              exit 1
+          echo "## CI path-lane / results" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Key | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-----|-------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| lane | \`$LANE\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| need_build | $NEED_BUILD |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| need_fast_lane | $NEED_FAST |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| need_mushaf | $NEED_MUSHAF |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| classify | $CLASSIFY_RESULT |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| fast-lane | $FAST_RESULT |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| build | $BUILD_RESULT |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| mushaf-measure | $MEASURE_RESULT |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| mushaf-gates | $GATES_RESULT |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| layout-bands | $BANDS_RESULT |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| visual-snapshot | $VISUAL_RESULT |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "قبل: كل PR ينتظر build + مصحف + Playwright حتى لو توثيق فقط." >> "$GITHUB_STEP_SUMMARY"
+          echo "بعد: Fast Lane حسب المسارات — بوابات المصحف فقط عند تعديل المصحف/القرآن." >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$CLASSIFY_RESULT" != "success" ]; then
+            echo "classify failed: $CLASSIFY_RESULT"
+            exit 1
+          fi
+
+          check_req() {
+            local name="$1" need="$2" result="$3"
+            if [ "$need" = "true" ]; then
+              if [ "$result" != "success" ]; then
+                echo "required job '$name' not success: $result"
+                exit 1
+              fi
+              echo "OK required $name=$result"
+            else
+              if [ "$result" = "failure" ]; then
+                echo "optional job '$name' failed unexpectedly: $result"
+                exit 1
+              fi
+              echo "OK optional $name=$result (skipped allowed)"
             fi
-          done
-          echo "Verify build OK"
+          }
+
+          check_req "fast-lane" "$NEED_FAST" "$FAST_RESULT"
+          check_req "build" "$NEED_BUILD" "$BUILD_RESULT"
+          check_req "mushaf-measure" "$NEED_MUSHAF" "$MEASURE_RESULT"
+          check_req "mushaf-gates" "$NEED_MUSHAF" "$GATES_RESULT"
+          check_req "layout-bands" "$NEED_MUSHAF" "$BANDS_RESULT"
+          check_req "visual-snapshot" "$NEED_MUSHAF" "$VISUAL_RESULT"
+
+          echo "Verify build OK (lane=$LANE)"
 
   # ---------------------------------------------------------------------------
-  # Color contrast — Playwright Chromium (isolated; لا يحجب Verify build)
+  # Color contrast — Playwright Chromium (path-lane: UI/CSS / mushaf / risky)
   # ---------------------------------------------------------------------------
   color-contrast:
     name: Color contrast (Playwright)
+    needs: [classify]
+    if: needs.classify.outputs.need_color_contrast == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -525,6 +674,8 @@ jobs:
 
   postgres-integration:
     name: postgres-integration
+    needs: [classify]
+    if: needs.classify.outputs.need_postgres == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     services:
