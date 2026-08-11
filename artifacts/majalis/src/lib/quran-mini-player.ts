@@ -57,7 +57,7 @@ export function handoffMushafPlayback(opts: {
 
 export function stopMiniPlayer(): void {
   try {
-    AudioEngine.getInstance().stop();
+    AudioEngine.getInstance().stopAndUnload();
   } catch {
     /* ignore */
   }
