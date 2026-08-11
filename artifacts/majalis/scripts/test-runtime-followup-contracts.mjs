@@ -38,7 +38,14 @@ assert.doesNotMatch(prayer, /\.select\(\s*["']\*["']\s*\)/, "prayer_times must n
 assert.match(quranPersonal, /VITE_READING_SYNC/, "reading remote sync is feature-gated");
 
 const contentDelta = readFileSync(join(root, "lib/api-handlers/content-delta.js"), "utf8");
-assert.match(contentDelta, /packs:\s*\[\]/, "content-delta empty packs contract");
+assert.match(contentDelta, /function buildPacks/, "content-delta builds packs");
+assert.match(contentDelta, /packId:\s*["']search-index["']/, "content-delta search-index pack");
+assert.match(contentDelta, /protocol:\s*["']delta-v1["']/, "content-delta protocol");
+assert.doesNotMatch(
+  contentDelta,
+  /packs:\s*\[\s*\]/,
+  "content-delta must not hardcode empty packs",
+);
 
 const readingSync = readFileSync(join(root, "lib/api-handlers/reading-sync.js"), "utf8");
 assert.match(readingSync, /reading_sync_unavailable|reading_sync_schema_missing/, "no fake success without persist");
