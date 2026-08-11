@@ -175,7 +175,10 @@ try {
       timeout: 60_000,
     });
     await page.waitForFunction(() => {
-      const el = document.querySelector(".mf2-lines");
+      const leaf =
+        document.querySelector("[data-mushaf-active-leaf='1']") ||
+        document.querySelector(".qs-mushaf-body-inner");
+      const el = leaf?.querySelector(".mf2-lines") || document.querySelector(".mf2-lines");
       return el && Number.parseFloat(getComputedStyle(el).opacity || "0") > 0.95;
     }, { timeout: 60_000 }).catch(() => {});
     await sleep(n <= 3 || FREEZE.includes(n) ? 700 : 280);
@@ -184,7 +187,11 @@ try {
     });
 
     const m = await page.evaluate((eps) => {
-      const root = document.querySelector(".mf2-lines");
+      const leaf =
+        document.querySelector("[data-mushaf-active-leaf='1']") ||
+        document.querySelector(".qs-mushaf-body-inner");
+      const root =
+        leaf?.querySelector(".mf2-lines") || document.querySelector(".mf2-lines");
       if (!root) return { error: "no lines" };
       const slots = [...root.querySelectorAll("[data-grid-slot]")].map((el) => {
         const ink =
@@ -235,9 +242,9 @@ try {
         }
       }
 
-      const banner = document.querySelector(".mf2-grid-slot--banner");
-      const basmalaSlotEl = document.querySelector(".mf2-grid-slot--basmala .mf2-bismillah");
-      const basmalaStacked = document.querySelector(".mf2-bismillah--stacked");
+      const banner = root.querySelector(".mf2-grid-slot--banner");
+      const basmalaSlotEl = root.querySelector(".mf2-grid-slot--basmala .mf2-bismillah");
+      const basmalaStacked = root.querySelector(".mf2-bismillah--stacked");
       const basmala = basmalaSlotEl || basmalaStacked;
       let basmalaGap = null;
       let stacked = false;
@@ -247,7 +254,7 @@ try {
       } else if (banner && basmalaStacked) {
         stacked = true;
         /* مكدّسة داخل الشارة: الفاصل = أسفل البسملة → أعلى أول سطر آية */
-        const nextLine = document.querySelector(".mf2-grid-slot--line .mf2-line");
+        const nextLine = root.querySelector(".mf2-grid-slot--line .mf2-line");
         if (nextLine) {
           basmalaGap =
             nextLine.getBoundingClientRect().top - basmalaStacked.getBoundingClientRect().bottom;
