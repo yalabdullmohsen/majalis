@@ -87,7 +87,7 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
     layout: "list",
     items: [
       { id: "prophets", label: "قصص الأنبياء", keywords: ["أنبياء"], Icon: BookOpen, action: { kind: "link", href: "/prophets" } },
-      { id: "quran-people", label: "أشخاص القرآن", keywords: ["أعلام", "شخصيات", "فرعون", "مريم", "أشخاص"], Icon: Users, action: { kind: "link", href: "/quran/people" } },
+      { id: "quran-people", label: "الذين ذكروا في القرآن", keywords: ["أعلام", "شخصيات", "فرعون", "مريم", "أشخاص", "الذين ذكروا"], Icon: Users, action: { kind: "link", href: "/quran/people" } },
       { id: "nations", label: "الأمم السابقة", keywords: ["أمم", "عاد", "ثمود", "فرعون"], Icon: Landmark, action: { kind: "link", href: "/nations" } },
       { id: "start-here", label: "ابدأ من هنا", keywords: ["مبتدئ", "ابدأ", "دليل"], Icon: Route, action: { kind: "link", href: "/start-here" } },
       { id: "learning-paths", label: "المسارات العلمية", keywords: ["مسار", "تعلم", "منهج"], Icon: GraduationCap, action: { kind: "link", href: "/learning/paths" } },

@@ -45,7 +45,7 @@ export default function QuranPersonDetailView() {
       <div className="quran-hub-page" dir="rtl">
         <PageHero title="غير موجود" description="لم نجد هذه الشخصية في الفهرس المنشور" />
         <p style={{ padding: "1rem", textAlign: "center" }}>
-          <Link href="/quran/people">العودة للفهرس</Link>
+          <Link href="/quran/people">العودة إلى الذين ذكروا في القرآن</Link>
         </p>
       </div>
     );
@@ -58,7 +58,7 @@ export default function QuranPersonDetailView() {
         description={`${PERSON_CATEGORY_LABEL[person.category]} · ${MENTION_TYPE_LABEL[person.mentionType]}`}
       />
       <article style={{ maxWidth: 720, marginInline: "auto", padding: "0 1rem 2.5rem", lineHeight: 1.7 }}>
-        <p><Link href="/quran/people">← الفهرس</Link></p>
+        <p><Link href="/quran/people">← الذين ذكروا في القرآن</Link></p>
 
         <section style={{ marginTop: "1.25rem" }}>
           <h2 style={{ fontSize: "1.1rem", marginBottom: "0.35rem" }}>التعريف</h2>

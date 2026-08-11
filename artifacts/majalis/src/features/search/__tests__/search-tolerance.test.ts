@@ -45,7 +45,7 @@ const FIXTURE: UnifiedSearchDoc[] = [
   doc("person:qarun", "person", "قارون", "/quran/people/qarun", []),
   doc("person:dhul-qarnayn", "person", "ذو القرنين", "/quran/people/dhul-qarnayn", ["ذي القرنين"]),
   doc("person:abu-lahab", "person", "أبو لهب", "/quran/people/abu-lahab", ["ابو لهب", "لهب"]),
-  doc("app:people", "person", "الأشخاص في القرآن", "/quran/people", ["أعلام", "شخصيات"]),
+  doc("app:people", "person", "الذين ذكروا في القرآن", "/quran/people", ["أعلام", "شخصيات", "أشخاص القرآن", "اشخاص القران", "أشخاص"]),
   doc("app:prophets", "prophet", "قصص الأنبياء", "/prophets", ["أنبياء"]),
   doc("app:trials", "prophet", "ابتلاءات الأنبياء", "/prophets", ["ابتلاء"]),
   doc("app:seerah", "seerah", "السيرة النبوية", "/seerah", ["سيرة"]),
@@ -101,6 +101,7 @@ const CASES: Case[] = [
   { q: "ابو لهب", expectId: "person:abu-lahab" },
   { q: "أبو لهب", expectId: "person:abu-lahab" },
   { q: "اشخاص القران", expectId: "app:people" },
+  { q: "الذين ذكروا في القرآن", expectId: "app:people" },
   { q: "أشخاص القرآن", expectId: "app:people" },
   // أقسام التطبيق
   { q: "قصص الانبياء", expectId: "app:prophets" },

@@ -212,7 +212,7 @@ const APP_PAGES = [
   ["app:scholars", "scholar", "أعلام الإسلام", "/scholars", ["علماء", "مشايخ"]],
   ["app:seerah", "seerah", "السيرة النبوية", "/seerah", ["سيرة"]],
   ["app:prophets", "prophet", "قصص الأنبياء", "/prophets", ["أنبياء", "ابتلاءات"]],
-  ["app:quran-people", "person", "الأشخاص في القرآن", "/quran/people", ["أعلام", "شخصيات", "مذكورون", "فرعون", "مريم"]],
+  ["app:quran-people", "person", "الذين ذكروا في القرآن", "/quran/people", ["أعلام", "شخصيات", "مذكورون", "فرعون", "مريم", "أشخاص القرآن"]],
   ["app:nations", "nation", "الأمم السابقة", "/nations", ["أمم"]],
   ["app:stories", "story", "القصص الإسلامية", "/stories", ["قصص"]],
   ["app:adhkar", "adhkar", "الأذكار والأدعية", "/adhkar", ["أذكار", "أدعية"]],
@@ -237,7 +237,7 @@ for (const [id, kind, title, href, parts] of APP_PAGES) {
   pushDoc(id, kind, title, href, parts, "صفحة");
 }
 
-// ── أشخاص القرآن (دفعة الأسماء الصريحة) ───────────────────────────────────
+// ── الذين ذكروا في القرآن (دفعة الأسماء الصريحة) ─────────────────────────────
 try {
   const peoplePath = path.join(appRoot, "public/data/quran-people/people.json");
   const peopleJson = JSON.parse(fs.readFileSync(peoplePath, "utf8"));
@@ -248,7 +248,7 @@ try {
       "person",
       p.nameAr,
       `/quran/people/${p.slug}`,
-      [...(p.aliases ?? []), p.category, "أشخاص القرآن"],
+      [...(p.aliases ?? []), p.category, "الذين ذكروا في القرآن", "أشخاص القرآن"],
       PERSON_META(p),
     );
   }
