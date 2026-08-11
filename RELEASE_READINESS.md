@@ -1,7 +1,7 @@
 # جاهزية الإصدار 1.0.0 — المجلس العلمي
 
 آخر تحديث: 2026-08-09  
-التصنيف: [`PLATFORMS.md`](./PLATFORMS.md) · خصوصية: [`PRIVACY_DATA_MAP.md`](./PRIVACY_DATA_MAP.md) · تراخيص: [`CREDITS.md`](./CREDITS.md) / [`LICENSE_RISKS.md`](./LICENSE_RISKS.md)
+التصنيف: [`PLATFORMS.md`](./PLATFORMS.md) · خصوصية: [`PRIVACY_DATA_MAP.md`](./PRIVACY_DATA_MAP.md) · تراخيص: [`docs/LICENSES.md`](./docs/LICENSES.md) / [`CREDITS.md`](./CREDITS.md) / [`LICENSE_RISKS.md`](./LICENSE_RISKS.md)
 
 ## دفعة UX/بحث (2026-08-09)
 
@@ -29,7 +29,7 @@
 | م3 حذف الحساب | محسّن ✅ | `/account-deletion` + `clearUserLocalData` | تدقيق CASCADE لكل الجداول على الإنتاج |
 | م3 Sign in with Apple | غير مطلوب الآن | — | Google معطّل (`GOOGLE_OAUTH_ENABLED=false`)؛ جهّز مع التفعيل |
 | م3 خصوصية/شروط/دعم | موجود ✅ | `/privacy` `/terms` `/contact` `/support`→contact `/about` `/sources` | مطابقة PRIVACY_DATA_MAP |
-| م4 تراخيص | توثيق بدأ | CREDITS + LICENSE_RISKS | حسم بنود LICENSE_RISKS المفتوحة |
+| م4 تراخيص | جرد مكتوب ✅ | وحدة ٤٨ · `docs/LICENSES.md` + `/sources` + `test:licenses` | حسم بنود «مطلوب/غير محسوم» قبل رفع المتجر |
 | م5 بوابة محتوى شرعي | لم يبدأ | — | CI + quarantine |
 | م6 أداء/CSS | لم يبدأ | — | ميزانيات CI + دفعات حذف |
 | م7 أمان | جزئي | — | لا Sentry؛ تدقيق RLS؛ E2E حذف |
