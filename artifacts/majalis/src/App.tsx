@@ -25,7 +25,6 @@ import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
-import { AdhanActiveOverlay } from "@/components/adhan/AdhanActiveOverlay";
 import { PrayerRespectBanner } from "@/components/adhan/PrayerRespectBanner";
 import {
   startPrayerAlertScheduler,
@@ -61,6 +60,11 @@ const AdminSiteEditBar = lazyWithRetry(
   () => import("@/components/AdminSiteEditBar").then((m) => ({ default: m.AdminSiteEditBar })),
   "AdminSiteEditBar",
 );
+const AdhanActiveOverlay = lazyWithRetry(
+  () => import("@/components/adhan/AdhanActiveOverlay").then((m) => ({ default: m.AdhanActiveOverlay })),
+  "AdhanActiveOverlay",
+);
+
 const GlobalSearchModal = lazyWithRetry(
   () => import("@/components/GlobalSearchModal").then((m) => ({ default: m.GlobalSearchModal })),
   "GlobalSearchModal",
@@ -995,7 +999,13 @@ function AppShellInner() {
       {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
       {!hideSiteChrome && <PrayerCountdownBanner />}
       {!hideSiteChrome && <AdhanNotificationBar />}
-      {!hideSiteChrome && <AdhanActiveOverlay />}
+      {!hideSiteChrome && (
+        <SectionErrorBoundary name="AdhanActiveOverlay">
+          <Suspense fallback={null}>
+            <AdhanActiveOverlay />
+          </Suspense>
+        </SectionErrorBoundary>
+      )}
       {!hideSiteChrome && <PrayerRespectBanner />}
       <main id="main-content" className="app-main" tabIndex={-1}>
         <Router />
