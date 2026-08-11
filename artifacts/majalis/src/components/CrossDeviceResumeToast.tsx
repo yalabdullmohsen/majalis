@@ -41,7 +41,7 @@ export function CrossDeviceResumeToast() {
       role="status"
       style={{
         position: "fixed",
-        bottom: "calc(1rem + env(safe-area-inset-bottom, 0px))",
+        bottom: "calc(1rem + var(--inset-bottom))",
         insetInline: "1rem",
         zIndex: 80,
         maxWidth: "28rem",
