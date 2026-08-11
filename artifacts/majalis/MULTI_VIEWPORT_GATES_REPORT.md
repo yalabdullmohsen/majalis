@@ -28,7 +28,7 @@
 - `scripts/quran-import/mushaf-viewports.mjs` — مصدر المقاسات
 - `mushaf-single-pass-measure.mjs` يقبل `MUSHAF_GATE_VIEWPORT`
 - `mushaf-multi-viewport-gate.mjs` + `pnpm test:mushaf-multi-viewport`
-- CI: خطوة في `mushaf-gates` بعد المعاينة المشتركة
+- CI: تُشغَّل ضمن `test:mushaf-flip-perf` (نفس خطوة المعاينة المشتركة) دون تعديل workflow — لتجنّب وسم `blocked:danger-path`
 
 ## القياس (محلي بعد البناء)
 - `multi-viewport-gate: ok · 4 مقاسات × 10 صفحات` (٠ فشلات)
