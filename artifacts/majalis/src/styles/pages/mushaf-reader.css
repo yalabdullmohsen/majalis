@@ -319,7 +319,7 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 }
 
 
-/* ── تقليب مصحف حقيقي (RTL) — هيكل السكون مطابق لـ curl القديم ── */
+/* ── تقليب مصحف حقيقي (RTL) — أداء: contain + perspective 1200 ── */
 .mpv-flip-stage {
   position: relative;
   width: 100%;
@@ -328,12 +328,14 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
   flex: 1 1 auto;
   touch-action: pan-y;
   overflow: visible;
+  contain: layout paint;
 }
 .mpv-flip-stage--active {
   touch-action: none;
 }
-.mpv-flip-stage--flipping {
-  perspective: 1600px;
+.mpv-flip-stage--flipping,
+.mpv-flip-stage--dragging {
+  perspective: 1200px;
 }
 .mpv-flip-stage--spread {
   display: flex;
@@ -348,7 +350,7 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
   height: 100%;
 }
 .mpv-flip-stage--spread.mpv-flip-stage--flipping .mpv-flip-book {
-  perspective: 1600px;
+  perspective: 1200px;
   transform-style: preserve-3d;
 }
 .mpv-flip-stage--spread .mpv-flip-spread-left {
@@ -367,10 +369,16 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
   overflow: hidden;
   background: var(--ayah-paper, #FAF7F2);
   opacity: 0;
+  contain: layout paint;
 }
 .mpv-flip-stage--active .mpv-flip-underlay,
 .mpv-flip-stage--flipping .mpv-flip-underlay {
   opacity: calc(0.35 + var(--mpv-flip-abs, 0) * 0.65);
+}
+.mpv-flip-underlay__page {
+  position: absolute;
+  inset: 0;
+  /* visibility يُضبط من المكوّن — الجار يبقى في DOM */
 }
 .mpv-flip-underlay__paper {
   position: absolute;
@@ -387,19 +395,23 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
   transform-origin: right center;
   transform: none;
   background: var(--ayah-paper, #FAF7F2);
+  contain: layout paint;
 }
 .mpv-flip-stage--active .mpv-flip-leaf,
 .mpv-flip-stage--flipping .mpv-flip-leaf {
-  will-change: transform, opacity;
   backface-visibility: hidden;
   transform-style: preserve-3d;
+  /* انحناء ≤10° · تتبع الإصبع بـ transform فقط */
   transform:
     translate3d(calc(var(--mpv-flip, 0) * 92%), 0, 0)
-    rotateY(calc(var(--mpv-flip, 0) * -78deg))
-    rotateZ(calc(var(--mpv-flip, 0) * -1.2deg));
-  box-shadow:
-    calc(var(--mpv-flip, 0) * -18px) 0 28px color-mix(in srgb, #000 18%, transparent),
-    inset calc(var(--mpv-flip-abs, 0) * -10px) 0 18px color-mix(in srgb, #000 8%, transparent);
+    rotateY(calc(var(--mpv-flip, 0) * -10deg));
+}
+.mpv-flip-stage--dragging .mpv-flip-leaf,
+.mpv-flip-stage--active .mpv-flip-leaf {
+  will-change: transform;
+}
+.mpv-flip-stage:not(.mpv-flip-stage--active):not(.mpv-flip-stage--dragging) .mpv-flip-leaf {
+  will-change: auto;
 }
 .mpv-flip-leaf__curl {
   position: absolute;
@@ -418,7 +430,7 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 }
 .mpv-flip-stage--active .mpv-flip-leaf__curl,
 .mpv-flip-stage--flipping .mpv-flip-leaf__curl {
-  opacity: calc(var(--mpv-flip-abs, 0) * 0.55);
+  opacity: calc(var(--mpv-flip-abs, 0) * 0.45);
 }
 .mpv-flip-stage--active .mpv-flip-leaf,
 .mpv-flip-stage--active .mpv-flip-shade,
@@ -428,8 +440,9 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 .mpv-flip-stage:not(.mpv-flip-stage--active) .mpv-flip-leaf,
 .mpv-flip-stage:not(.mpv-flip-stage--active) .mpv-flip-shade,
 .mpv-flip-stage:not(.mpv-flip-stage--active) .mpv-flip-corner {
-  transition: transform 320ms cubic-bezier(0.22, 0.8, 0.28, 1), opacity 320ms ease-out;
+  transition: transform 220ms ease-out, opacity 150ms ease-out;
 }
+/* ظل ثابت يُحرَّك بـ transform — لا box-shadow متحرك */
 .mpv-flip-shade {
   position: absolute;
   inset: 0;
@@ -438,16 +451,15 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    color-mix(in srgb, #000 22%, transparent) 46%,
-    color-mix(in srgb, #000 6%, transparent) 62%,
+    color-mix(in srgb, #000 18%, transparent) 46%,
+    color-mix(in srgb, #000 5%, transparent) 62%,
     transparent 100%
   );
   opacity: 0;
-  will-change: transform, opacity;
 }
 .mpv-flip-stage--active .mpv-flip-shade,
 .mpv-flip-stage--flipping .mpv-flip-shade {
-  opacity: calc(var(--mpv-flip-abs, 0) * 0.42);
+  opacity: calc(var(--mpv-flip-abs, 0) * 0.38);
   transform: translate3d(calc(var(--mpv-flip, 0) * 36%), 0, 0);
 }
 .mpv-flip-corner {
@@ -459,15 +471,15 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
   pointer-events: none;
   background: radial-gradient(
     120% 80% at 0% 100%,
-    color-mix(in srgb, #000 16%, transparent) 0%,
+    color-mix(in srgb, #000 12%, transparent) 0%,
     transparent 62%
   );
   opacity: 0;
 }
 .mpv-flip-stage--active .mpv-flip-corner,
 .mpv-flip-stage--flipping .mpv-flip-corner {
-  opacity: calc(var(--mpv-flip-abs, 0) * 0.65);
-  transform: translate3d(calc(var(--mpv-flip, 0) * 8%), 0, 0) skewY(calc(var(--mpv-flip, 0) * -2deg));
+  opacity: calc(var(--mpv-flip-abs, 0) * 0.55);
+  transform: translate3d(calc(var(--mpv-flip, 0) * 8%), 0, 0);
 }
 .mpv-flip-edge {
   position: absolute;

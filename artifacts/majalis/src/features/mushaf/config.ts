@@ -40,6 +40,7 @@ export const MUSHAF_GRID = {
   slotCount: gridJson.slotCount,
   baselinesPct: gridJson.baselinesPct as readonly number[],
   slotHeightPct: gridJson.slotHeightPct,
+  sideMarginPx: gridJson.sideMarginPx,
 } as const;
 
 /** فجوة الأسطر النسبية (px لكل px من حجم الخط) من أساس ٣١١ — للتوافق مع البوابات القديمة */

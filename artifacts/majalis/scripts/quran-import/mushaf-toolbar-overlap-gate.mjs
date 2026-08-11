@@ -127,28 +127,51 @@ try {
       const toolbar = document.querySelector(
         ".mpv-toolbar--ayah:not(.mpv-toolbar--hidden)",
       );
-      const root = document.querySelector(".mf2-lines");
+      const leaf =
+        document.querySelector("[data-mushaf-active-leaf='1']") ||
+        document.querySelector(".qs-mushaf-body-inner");
+      const root =
+        leaf?.querySelector(".mf2-lines") || document.querySelector(".mf2-lines");
       if (!toolbar || !root) return { error: "missing toolbar/lines" };
       const tr = toolbar.getBoundingClientRect();
       const cs = getComputedStyle(toolbar);
-      const hit = (el, label) => {
-        if (!el) return null;
-        const r = el.getBoundingClientRect();
-        if (r.width < 2 || r.height < 2) return null;
+      const hitRect = (r, label) => {
+        if (!r || r.width < 2 || r.height < 2) return null;
         const ox = Math.max(0, Math.min(tr.right, r.right) - Math.max(tr.left, r.left));
         const oy = Math.max(0, Math.min(tr.bottom, r.bottom) - Math.max(tr.top, r.top));
         if (ox > 0.5 && oy > 0.5) return { cls: label, ox, oy };
         return null;
       };
+      const hit = (el, label) => {
+        if (!el) return null;
+        return hitRect(el.getBoundingClientRect(), label);
+      };
+      const hitInk = (el, label) => {
+        if (!el) return null;
+        try {
+          const range = document.createRange();
+          range.selectNodeContents(el);
+          const rects = [...range.getClientRects()].filter((r) => r.width > 0 && r.height > 0);
+          for (const r of rects) {
+            const o = hitRect(r, label);
+            if (o) return o;
+          }
+        } catch {
+          /* fall through */
+        }
+        return hit(el, label);
+      };
       const overlaps = [];
       for (const el of root.querySelectorAll(
         ".mf2-grid-slot--banner, .mf2-grid-slot--basmala, .mf2-grid-slot--line, .mf2-bismillah, .mf2-line",
       )) {
-        const o = hit(el, el.className?.toString?.().slice(0, 60) || el.tagName);
+        const o = hitInk(el, el.className?.toString?.().slice(0, 60) || el.tagName);
         if (o) overlaps.push(o);
       }
       for (const [sel, label] of [
         [".mpv-ayah-page-badge", "page-badge"],
+        [".mpv-ayah-footer__meta", "footer-meta"],
+        [".mpv-ayah-footer", "footer-band"],
         ["[data-opening-frame]", "opening-frame"],
         [".mf2-surah-banner", "surah-banner"],
       ]) {

@@ -191,7 +191,7 @@
     "test:mushaf-ayah-numerals": "node scripts/quran-import/mushaf-ayah-numerals-gate.mjs",
     "test:mushaf-ayah-spans": "node --import tsx src/lib/__tests__/mushaf-ayah-word-spans.test.ts",
     "test:ayah1-display": "node --import tsx src/lib/__tests__/quran-ayah1-display-bismillah.test.ts",
-    "test:mushaf-gates": "pnpm run test:ayah1-display && pnpm run test:mushaf-page-view && pnpm run test:mushaf-qpc-isolation && node --import tsx src/lib/__tests__/mushaf-fullbleed-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-typography-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-toolbar-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-page-digits.test.ts && node --import tsx src/lib/__tests__/mushaf-page-boundaries.test.ts && node --import tsx src/lib/__tests__/mushaf-line-deviation-metric.test.ts && pnpm run test:mushaf-sizing-lines && pnpm run test:mushaf-line-layout && pnpm run test:mushaf-drawn-overflow && pnpm run test:mushaf-ayah-spans && pnpm run test:mushaf-ayah-numerals && node --import tsx src/lib/__tests__/mushaf-surah-banner-fit.test.ts && pnpm run verify:mushaf-v2 && node --import tsx src/lib/__tests__/mushaf-smart-exit.test.ts && node --import tsx src/lib/__tests__/ayah-action-sheet-v3.test.ts && pnpm run test:mushaf-render-visibility && pnpm run test:mushaf-spec-lockdown && pnpm run test:mushaf-toolbar-overlap && pnpm run test:mushaf-layout-bands && pnpm run test:mushaf-typescale && pnpm run test:mushaf-opening-frame && pnpm run test:mushaf-cartouche-center && pnpm run test:mushaf-ink-collision && pnpm run test:mushaf-page-curl && pnpm run test:mushaf-ref-visual",
+    "test:mushaf-gates": "pnpm run test:ayah1-display && pnpm run test:mushaf-page-view && pnpm run test:mushaf-qpc-isolation && node --import tsx src/lib/__tests__/mushaf-fullbleed-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-typography-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-toolbar-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-page-digits.test.ts && node --import tsx src/lib/__tests__/mushaf-page-boundaries.test.ts && node --import tsx src/lib/__tests__/mushaf-line-deviation-metric.test.ts && pnpm run test:mushaf-sizing-lines && pnpm run test:mushaf-line-layout && pnpm run test:mushaf-drawn-overflow && pnpm run test:mushaf-ayah-spans && pnpm run test:mushaf-ayah-numerals && node --import tsx src/lib/__tests__/mushaf-surah-banner-fit.test.ts && pnpm run verify:mushaf-v2 && node --import tsx src/lib/__tests__/mushaf-smart-exit.test.ts && node --import tsx src/lib/__tests__/ayah-action-sheet-v3.test.ts && pnpm run test:mushaf-render-visibility && pnpm run test:mushaf-spec-lockdown && pnpm run test:mushaf-toolbar-overlap && pnpm run test:mushaf-layout-bands && pnpm run test:mushaf-typescale && pnpm run test:mushaf-opening-frame && pnpm run test:mushaf-cartouche-center && pnpm run test:mushaf-ink-collision && pnpm run test:mushaf-page-curl && pnpm run test:mushaf-ref-visual && pnpm run test:mushaf-live-overflow && pnpm run test:mushaf-hard-visual && pnpm run test:mushaf-flip-perf",
     "test:governance": "node scripts/test-content-governance.mjs",
     "test:counts": "node scripts/test-content-counts.mjs",
     "test:library-integrity": "node scripts/test-library-integrity.mjs",
@@ -275,7 +275,10 @@
     "test:mushaf-ink-collision": "node scripts/quran-import/mushaf-ink-collision-gate.mjs",
     "test:mushaf-typescale": "node scripts/quran-import/mushaf-typescale-gate.mjs",
     "test:phase6-typography-virtual-mic": "node --import tsx src/lib/__tests__/phase6-typography-virtual-mic.test.ts",
-    "test:pwa-dexie-offline": "node --import tsx src/lib/__tests__/pwa-dexie-offline-store.test.ts"
+    "test:pwa-dexie-offline": "node --import tsx src/lib/__tests__/pwa-dexie-offline-store.test.ts",
+    "test:mushaf-live-overflow": "node scripts/quran-import/mushaf-live-overflow-gate.mjs",
+    "test:mushaf-hard-visual": "node scripts/quran-import/mushaf-hard-visual-gate.mjs",
+    "test:mushaf-flip-perf": "node scripts/quran-import/mushaf-flip-perf-gate.mjs"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

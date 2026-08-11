@@ -18,12 +18,15 @@ const view = readFileSync(resolve(appRoot, "src/pages/quran/ui/MushafPageView.ts
 const stage = readFileSync(resolve(appRoot, "src/components/quran/MushafPageFlipStage.tsx"), "utf8");
 const css = readFileSync(resolve(appRoot, "src/styles/pages/mushaf-reader.css"), "utf8");
 
-assert.match(hook, /COMMIT_FRAC\s*=\s*0\.16/);
-assert.match(hook, /VELOCITY_PX_MS\s*=\s*0\.32/);
-assert.match(hook, /SETTLE_MS\s*=\s*320/);
+assert.match(hook, /COMMIT_FRAC\s*=\s*0\.18/);
+assert.match(hook, /VELOCITY_PX_MS\s*=\s*0\.35/);
+assert.match(hook, /SETTLE_MS\s*=\s*220/);
+assert.match(hook, /SNAP_BACK_MS\s*=\s*150/);
 assert.match(hook, /FLIP_EDGE_FRAC/);
 assert.match(hook, /onCenterTap/);
 assert.match(hook, /classifyTap/);
+assert.match(hook, /requestAnimationFrame/);
+assert.match(hook, /progressRef/);
 assert.match(hook, /prefers-reduced-motion/);
 assert.match(hook, /onNext/);
 assert.match(hook, /onPrev/);
@@ -39,15 +42,16 @@ assert.match(stage, /mpv-flip-stage/);
 assert.match(stage, /mpv-flip-underlay/);
 assert.match(stage, /mpv-flip-leaf/);
 assert.match(stage, /data-mushaf-active-leaf/);
-assert.match(stage, /flipping && underlay/);
+assert.match(stage, /visibility/);
 assert.match(stage, /mpv-flip-underlay__paper/);
 
 assert.match(css, /\.mpv-flip-leaf/);
-assert.match(css, /rotateY\(calc\(var\(--mpv-flip, 0\) \* -78deg\)\)/);
-assert.match(css, /perspective:\s*1600px/);
+assert.match(css, /rotateY\(calc\(var\(--mpv-flip, 0\) \* -10deg\)\)/);
+assert.match(css, /perspective:\s*1200px/);
+assert.match(css, /contain:\s*layout paint/);
 assert.match(css, /mpv-flip-stage--flipping/);
 assert.match(css, /prefers-reduced-motion/);
-assert.match(css, /320ms/);
+assert.match(css, /220ms/);
 assert.doesNotMatch(css, /\.mpv-curl-leaf/);
 assert.match(stage, /mpv-flip-stage--flipping/);
 

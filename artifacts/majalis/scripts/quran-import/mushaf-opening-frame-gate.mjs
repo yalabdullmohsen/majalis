@@ -109,24 +109,33 @@ try {
     await page.addStyleTag({ content: `.mpv-toolbar--ayah{display:none!important}` });
 
     const m = await page.evaluate(() => {
-      const root = document.querySelector(".mf2-lines");
+      /* الورقة النشطة فقط — جار التقليب يفسد الفجوات والمطّ */
+      const leaf =
+        document.querySelector("[data-mushaf-active-leaf='1']") ||
+        document.querySelector(".qs-mushaf-body-inner");
+      const root =
+        leaf?.querySelector(".mf2-lines") || document.querySelector(".mf2-lines");
       if (!root) return { error: "no lines" };
       const lr = root.getBoundingClientRect();
-      const frame = document.querySelector("[data-opening-frame], .mf2-opening-frame");
-      const banner = document.querySelector(".mf2-grid-slot--banner");
+      const frame = (leaf || document).querySelector(
+        "[data-opening-frame], .mf2-opening-frame",
+      );
+      const banner = root.querySelector(".mf2-grid-slot--banner");
       const br = banner?.getBoundingClientRect();
       const bannerTopPct = br && lr.height > 0 ? ((br.top - lr.top) / lr.height) * 100 : null;
-      const stretched = [...document.querySelectorAll(".mf2-line")].filter((el) => {
-        const sx = getComputedStyle(el).getPropertyValue("--mf2-line-sx").trim();
+      const stretched = [...root.querySelectorAll(".mf2-line")].filter((el) => {
+        const sx =
+          el.style.getPropertyValue("--mf2-line-sx").trim() ||
+          getComputedStyle(el).getPropertyValue("--mf2-line-sx").trim();
         return sx && sx !== "1" && Number(sx) > 1.02;
       }).length;
       const banR = banner?.getBoundingClientRect();
       const bas =
-        document.querySelector(".mf2-grid-slot--basmala .mf2-bismillah") ||
-        document.querySelector(".mf2-bismillah") ||
-        document.querySelector(".mf2-grid-slot--line .mf2-line");
-      const lineSlots = [...document.querySelectorAll(".mf2-grid-slot--line .mf2-line")];
-      const hasBasSlot = Boolean(document.querySelector(".mf2-grid-slot--basmala"));
+        root.querySelector(".mf2-grid-slot--basmala .mf2-bismillah") ||
+        root.querySelector(".mf2-bismillah") ||
+        root.querySelector(".mf2-grid-slot--line .mf2-line");
+      const lineSlots = [...root.querySelectorAll(".mf2-grid-slot--line .mf2-line")];
+      const hasBasSlot = Boolean(root.querySelector(".mf2-grid-slot--basmala"));
       const firstAyah = hasBasSlot ? lineSlots[0] : lineSlots[1];
       const ayahLines = hasBasSlot ? lineSlots : lineSlots.slice(1);
       const S =

@@ -76,16 +76,22 @@ async function settleMushafPage(page, n) {
 
 async function structuralSnapshot(page, n) {
   return page.evaluate((pageNum) => {
-    const root = document.querySelector(".mf2-lines");
+    const leaf =
+      document.querySelector("[data-mushaf-active-leaf='1']") ||
+      document.querySelector(".qs-mushaf-body-inner");
+    const root =
+      leaf?.querySelector(".mf2-lines") || document.querySelector(".mf2-lines");
     if (!root) return { error: "no lines" };
     const lr = root.getBoundingClientRect();
-    const frame = document.querySelector("[data-opening-frame], .mf2-opening-frame");
-    const banner = document.querySelector(".mf2-grid-slot--banner");
+    const frame = (leaf || document).querySelector(
+      "[data-opening-frame], .mf2-opening-frame",
+    );
+    const banner = root.querySelector(".mf2-grid-slot--banner");
     const br = banner?.getBoundingClientRect();
     const bannerTopPct =
       br && lr.height > 0 ? ((br.top - lr.top) / lr.height) * 100 : null;
-    const qpc = Boolean(document.querySelector(".mf2-lines--qpc-contiguous"));
-    const unicode = Boolean(document.querySelector(".mf2-lines--unicode"));
+    const qpc = Boolean(root.classList.contains("mf2-lines--qpc-contiguous"));
+    const unicode = Boolean(root.classList.contains("mf2-lines--unicode"));
     const cart = document.querySelector(
       ".mpv-ayah-page-badge, .mpv-ayah-page-badge__cartouche, [data-cartouche-side]",
     );
@@ -100,7 +106,7 @@ async function structuralSnapshot(page, n) {
       cartDx = Math.abs(mid - midX);
       cartSide = mid < midX - 2 ? "left" : mid > midX + 2 ? "right" : "center";
     }
-    const lineEls = [...document.querySelectorAll(".mf2-grid-slot--line .mf2-line")];
+    const lineEls = [...root.querySelectorAll(".mf2-grid-slot--line .mf2-line")];
     const inkOf = (el) => {
       try {
         const range = document.createRange();
