@@ -4,18 +4,24 @@ import { Link, useLocation } from "wouter";
 import { ArrowRight, Bell, Compass, HandHeart, MapPin, CircleDot } from "lucide-react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import {
-  KUWAIT_GOVERNORATES,
   formatTime12,
-  getSelectedGovernorate,
-  setSelectedGovernorate,
   type PrayerSlot,
 } from "@/lib/prayer-times";
 import {
+  getHighLatitudeRule,
   getPrayerCalcMethod,
+  getPrayerMadhab,
   PRAYER_CALC_METHODS,
+  setHighLatitudeRule,
   setPrayerCalcMethod,
+  setPrayerMadhab,
+  type HighLatitudeRuleId,
   type PrayerCalcMethodId,
+  type PrayerMadhabId,
 } from "@/lib/prayer-calc-prefs";
+import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
+import { PrayerLocationPicker } from "@/components/prayer/PrayerLocationPicker";
+import { PrayerAnnualTimetable } from "@/components/prayer/PrayerAnnualTimetable";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/pages/prayer-times.css";
@@ -43,9 +49,9 @@ function formatHijri(raw: string | null): string {
   return `${d} ${monthName} ${y} هـ`;
 }
 
-function kuwaitDateReadable(): string {
-  return new Intl.DateTimeFormat("ar-KW", {
-    timeZone: "Asia/Kuwait",
+function zoneDateReadable(timeZone: string): string {
+  return new Intl.DateTimeFormat("ar", {
+    timeZone,
     weekday: "long",
     year: "numeric",
     month: "long",
@@ -53,23 +59,26 @@ function kuwaitDateReadable(): string {
   }).format(new Date());
 }
 
-function kuwaitNowSeconds(): { totalMinutes: number; seconds: number } {
+function zoneNowSeconds(timeZone: string): { totalMinutes: number; seconds: number } {
   const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kuwait",
+    timeZone,
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
     hour12: false,
   }).formatToParts(new Date());
-  const h = Number(parts.find((p) => p.type === "hour")?.value ?? 0);
-  const m = Number(parts.find((p) => p.type === "minute")?.value ?? 0);
-  const s = Number(parts.find((p) => p.type === "second")?.value ?? 0);
+  const h = Number(parts.find((p) => p.type === "hour")?.value || 0);
+  const m = Number(parts.find((p) => p.type === "minute")?.value || 0);
+  const s = Number(parts.find((p) => p.type === "second")?.value || 0);
   return { totalMinutes: h * 60 + m, seconds: s };
 }
 
-function secondsUntilPrayer(prayerMinutes: number | null): { seconds: number; isTomorrow: boolean } {
+function secondsUntilPrayer(
+  prayerMinutes: number | null,
+  timeZone: string,
+): { seconds: number; isTomorrow: boolean } {
   if (prayerMinutes == null) return { seconds: 0, isTomorrow: false };
-  const now = kuwaitNowSeconds();
+  const now = zoneNowSeconds(timeZone);
   if (prayerMinutes > now.totalMinutes) {
     return { seconds: (prayerMinutes - now.totalMinutes) * 60 - now.seconds, isTomorrow: false };
   }
@@ -154,9 +163,12 @@ function rowStatusLabel(
 
 export default function PrayerTimesPage() {
   const [location, navigate] = useLocation();
-  const [govId, setGovId] = useState(() => getSelectedGovernorate().id);
+  const [locLabel, setLocLabel] = useState(() => getActivePrayerLocation().label);
+  const [locToken, setLocToken] = useState(0);
   const [govOpen, setGovOpen] = useState(false);
   const [calcMethod, setCalcMethod] = useState<PrayerCalcMethodId>(() => getPrayerCalcMethod());
+  const [madhab, setMadhab] = useState<PrayerMadhabId>(() => getPrayerMadhab());
+  const [highLat, setHighLat] = useState<HighLatitudeRuleId>(() => getHighLatitudeRule());
 
   function handleBack() {
     const current = normalizeNavPath(location);
@@ -171,31 +183,31 @@ export default function PrayerTimesPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/prayer-times",
-      title: "مواقيت الصلاة، الكويت | المجلس العلمي",
-      description: "مواقيت صلاة دقيقة لجميع مناطق الكويت، الفجر والظهر والعصر والمغرب والعشاء مع العد التنازلي.",
-      keywords: ["مواقيت الصلاة", "صلاة الكويت", "أوقات الصلاة", "الفجر", "الأذان"],
+      title: "مواقيت الصلاة العالمية أوفلاين | المجلس العلمي",
+      description: "محرك مواقيت صلاة عالمي أوفلاين لأي مدينة، مع إمساكية سنوية وعدّ تنازلي وتنبيهات محلية.",
+      keywords: ["مواقيت الصلاة", "إمساكية", "أوفلاين", "الفجر", "الأذان"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "WebPage",
-          name: "مواقيت الصلاة في الكويت",
+          name: "مواقيت الصلاة العالمية",
           url: "https://www.majlisilm.com/prayer-times",
-          description: "مواقيت الصلوات الخمس لجميع مناطق الكويت محسوبة فلكياً",
-          about: {
-            "@type": "Thing",
-            name: "مواقيت الصلاة",
-            description: "أوقات الصلوات الخمس الفجر والظهر والعصر والمغرب والعشاء",
-          },
+          description: "مواقيت الصلوات الخمس لأي مدينة في العالم بحساب فلكي محلي",
           provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
-          areaServed: { "@type": "Country", name: "الكويت" },
         },
       ],
     });
   }, []);
 
-  const { data, countdown, loading: _loading, reload } = usePrayerCountdown(govId);
+  const { data, countdown, loading: _loading, reload } = usePrayerCountdown();
   const [pinnedKey, setPinnedKey] = useState<string | null>(null);
-  const gov = KUWAIT_GOVERNORATES.find((g) => g.id === govId) ?? KUWAIT_GOVERNORATES[0];
+  const timeZone = data?.timezone || getActivePrayerLocation().timeZone;
+
+  // re-bind when location prefs change
+  useEffect(() => {
+    void locToken;
+    setLocLabel(getActivePrayerLocation().label);
+  }, [locToken]);
 
   function handleCalcMethod(id: PrayerCalcMethodId) {
     setPrayerCalcMethod(id);
@@ -204,11 +216,18 @@ export default function PrayerTimesPage() {
     reload();
   }
 
-  function handleGov(id: string) {
-    setSelectedGovernorate(id);
-    setGovId(id);
+  function handleMadhab(id: PrayerMadhabId) {
+    setPrayerMadhab(id);
+    setMadhab(id);
     setPinnedKey(null);
-    setGovOpen(false);
+    reload();
+  }
+
+  function handleHighLat(id: HighLatitudeRuleId) {
+    setHighLatitudeRule(id);
+    setHighLat(id);
+    setPinnedKey(null);
+    reload();
   }
 
   // لا شاشة تحميل تعترض — الهيكل يظهر دائماً؛ البيانات من الكاش/محلي فوراً
@@ -227,30 +246,22 @@ export default function PrayerTimesPage() {
           </button>
         </header>
         <h1 className="pts-title">الصلاة</h1>
-        <p className="pts-error" role="alert">تعذّر تجهيز المواقيت محلياً. جرّب اختيار محافظة أخرى.</p>
+        <p className="pts-error" role="alert">تعذّر تجهيز المواقيت محلياً. جرّب اختيار موقع آخر.</p>
         <button type="button" className="pts-retry" onClick={reload} aria-label="إعادة محاولة تحميل المواقيت">
           إعادة المحاولة
         </button>
-        <div id="pts-gov-panel" className="pts-gov" role="tablist" aria-label="اختيار المحافظة">
-          {KUWAIT_GOVERNORATES.map((g) => (
-            <button
-              key={g.id}
-              type="button"
-              role="tab"
-              className={`pts-gov__chip${govId === g.id ? " pts-gov__chip--active" : ""}`}
-              onClick={() => handleGov(g.id)}
-              aria-selected={govId === g.id}
-            >
-              {g.name}
-            </button>
-          ))}
-        </div>
+        <PrayerLocationPicker
+          onChanged={() => {
+            setLocToken((n) => n + 1);
+            reload();
+          }}
+        />
       </div>
     );
   }
 
   const prayers: PrayerSlot[] = (data?.prayers ?? []).filter((p) => p.time);
-  const nowInfo = kuwaitNowSeconds();
+  const nowInfo = zoneNowSeconds(timeZone);
 
   const inGrace = !pinnedKey && countdown.sinceSeconds != null;
   const ranKey = countdown.next.key;
@@ -262,7 +273,7 @@ export default function PrayerTimesPage() {
   let displayHms: string;
   let isTomorrow = false;
   if (pinnedKey && pinnedKey !== countdown.next.key) {
-    const { seconds, isTomorrow: tmrw } = secondsUntilPrayer(displayItem?.minutes ?? null);
+    const { seconds, isTomorrow: tmrw } = secondsUntilPrayer(displayItem?.minutes ?? null, timeZone);
     displayHms = formatHms(seconds);
     isTomorrow = tmrw;
   } else if (inGrace && countdown.sinceHms) {
@@ -283,7 +294,7 @@ export default function PrayerTimesPage() {
     p.minutes != null && p.minutes < nowInfo.totalMinutes && !isNext(p.key) && !(inGrace && p.key === ranKey);
 
   const hijriStr = formatHijri(data?.date?.hijri ?? null);
-  const gregStr = kuwaitDateReadable();
+  const gregStr = zoneDateReadable(timeZone);
 
   return (
     <div className="pts-screen pts-screen--with-nav" dir="rtl">
@@ -306,7 +317,7 @@ export default function PrayerTimesPage() {
             aria-controls="pts-gov-panel"
           >
             <MapPin size={15} strokeWidth={2} aria-hidden="true" />
-            <span>الكويت · {gov.name}</span>
+            <span>{locLabel}</span>
           </button>
         </div>
         <div className="pts-dates">
@@ -319,20 +330,14 @@ export default function PrayerTimesPage() {
 
       {govOpen && (
         <div id="pts-gov-panel" className="pts-gov-panel" role="region" aria-label="إعدادات الموقع والحساب">
-          <div className="pts-gov" role="tablist" aria-label="اختيار المحافظة">
-            {KUWAIT_GOVERNORATES.map((g) => (
-              <button
-                key={g.id}
-                type="button"
-                role="tab"
-                className={`pts-gov__chip${govId === g.id ? " pts-gov__chip--active" : ""}`}
-                onClick={() => handleGov(g.id)}
-                aria-selected={govId === g.id}
-              >
-                {g.name}
-              </button>
-            ))}
-          </div>
+          <PrayerLocationPicker
+            onChanged={(next) => {
+              setLocLabel(next.label);
+              setLocToken((n) => n + 1);
+              setPinnedKey(null);
+              reload();
+            }}
+          />
           <label className="pts-method" htmlFor="pts-calc-method">
             <span className="pts-method__label">طريقة الحساب</span>
             <select
@@ -347,6 +352,34 @@ export default function PrayerTimesPage() {
                   {m.labelAr}
                 </option>
               ))}
+            </select>
+          </label>
+          <label className="pts-method" htmlFor="pts-madhab">
+            <span className="pts-method__label">مذهب العصر</span>
+            <select
+              id="pts-madhab"
+              className="pts-method__select"
+              value={madhab}
+              onChange={(e) => handleMadhab(e.target.value as PrayerMadhabId)}
+              dir="rtl"
+            >
+              <option value="Shafi">شافعي / مالكي / حنبلي</option>
+              <option value="Hanafi">حنفي</option>
+            </select>
+          </label>
+          <label className="pts-method" htmlFor="pts-highlat">
+            <span className="pts-method__label">مناطق خطوط العرض العالية</span>
+            <select
+              id="pts-highlat"
+              className="pts-method__select"
+              value={highLat}
+              onChange={(e) => handleHighLat(e.target.value as HighLatitudeRuleId)}
+              dir="rtl"
+            >
+              <option value="auto">تلقائي موصى به</option>
+              <option value="MiddleOfTheNight">منتصف الليل</option>
+              <option value="SeventhOfTheNight">سُبع الليل</option>
+              <option value="TwilightAngle">زاوية الشفق</option>
             </select>
           </label>
         </div>
@@ -414,6 +447,8 @@ export default function PrayerTimesPage() {
           })}
         </nav>
       )}
+
+      <PrayerAnnualTimetable />
 
       <nav className="pts-dock" aria-label="أدوات الصلاة">
         <Link href="/adhkar" className="pts-dock__item">

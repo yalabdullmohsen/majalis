@@ -7,29 +7,23 @@ import {
   resolveAdhanParams,
   type PrayerCalcMethodId,
 } from "@/lib/prayer-calc-prefs";
+import {
+  getSelectedGovernorate,
+  setSelectedGovernorate,
+  KUWAIT_GOVERNORATES,
+  type KuwaitGovernorate,
+} from "@/lib/prayer-kuwait-geo";
+import {
+  getActivePrayerLocation,
+  prayerLocationCacheId,
+  type PrayerActiveLocation,
+} from "@/lib/prayer-location-prefs";
 
-// ─── Kuwait Governorates ────────────────────────────────────────────────────
+export { KUWAIT_GOVERNORATES, getSelectedGovernorate, setSelectedGovernorate };
+export type { KuwaitGovernorate };
 
-export type KuwaitGovernorate = {
-  id: string;
-  name: string;
-  lat: number;
-  lon: number;
-};
+// ─── Kuwait Governorates (re-exported from prayer-kuwait-geo) ───────────────
 
-// الإحداثيات مضبوطة على مراكز المحافظات الجغرافية الفعلية
-// المصدر: خرائط الكويت الرسمية + WGS84
-// الطريقة: Method 9 (Kuwait Ministry of Awqaf) — زاوية الفجر 18° / العشاء 17.5°
-export const KUWAIT_GOVERNORATES: KuwaitGovernorate[] = [
-  { id: "capital",   name: "العاصمة",        lat: 29.3697, lon: 47.9783 },
-  { id: "hawalli",   name: "حولي",            lat: 29.3339, lon: 48.0668 },
-  { id: "farwaniya", name: "الفروانية",       lat: 29.2800, lon: 47.9600 },
-  { id: "mubarak",   name: "مبارك الكبير",   lat: 29.2200, lon: 48.0800 },
-  { id: "jahra",     name: "الجهراء",         lat: 29.3418, lon: 47.6583 },
-  { id: "ahmadi",    name: "الأحمدي",         lat: 29.0769, lon: 48.0838 },
-];
-
-const GOV_STORAGE_KEY = "majalis-governorate-v1";
 const PRAYER_CACHE_KEY = "majalis-prayer-cache-v2";
 /** @deprecated legacy cache id — kept for one-release migration reads */
 const LEGACY_PRAYER_METHOD_ID = "kuwait-mwl-v1";
@@ -67,16 +61,14 @@ function writePrayerCache(cache: PrayerDayCache): void {
 
 /** قراءة فورية من الكاش — بلا شبكة ولا انتظار. */
 export function getCachedPrayerTimes(governorateId?: string): PrayerTimesPayload | null {
-  const gov = governorateId
-    ? (KUWAIT_GOVERNORATES.find((g) => g.id === governorateId) ?? KUWAIT_GOVERNORATES[0])
-    : getSelectedGovernorate();
+  const loc = resolveLocationForFetch(governorateId);
   const cache = readPrayerCache();
   const methodId = activePrayerMethodId();
-  if (!cache || cache.govId !== gov.id) return null;
+  const locId = prayerLocationCacheId(loc);
+  if (!cache || cache.govId !== locId) return null;
   if (cache.method !== methodId && cache.method !== LEGACY_PRAYER_METHOD_ID) return null;
-  // Ignore legacy cache when user switched away from Kuwait method.
   if (cache.method === LEGACY_PRAYER_METHOD_ID && getPrayerCalcMethod() !== "Kuwait") return null;
-  return cache.byDate[kuwaitDateKey()] ?? null;
+  return cache.byDate[dateKeyInZone(loc.timeZone)] ?? null;
 }
 
 function putPrayerCacheDay(govId: string, dateKey: string, payload: PrayerTimesPayload): void {
@@ -84,7 +76,6 @@ function putPrayerCacheDay(govId: string, dateKey: string, payload: PrayerTimesP
   const prev = readPrayerCache();
   const byDate = prev?.govId === govId && prev.method === methodId ? { ...prev.byDate } : {};
   byDate[dateKey] = payload;
-  // احتفظ بـ ~45 يوماً كحد أقصى في التخزين
   const keys = Object.keys(byDate).sort();
   while (keys.length > 45) {
     const drop = keys.shift();
@@ -98,17 +89,21 @@ function putPrayerCacheDay(govId: string, dateKey: string, payload: PrayerTimesP
   });
 }
 
-export function getSelectedGovernorate(): KuwaitGovernorate {
-  try {
-    const id = localStorage.getItem(GOV_STORAGE_KEY);
-    return KUWAIT_GOVERNORATES.find((g) => g.id === id) ?? KUWAIT_GOVERNORATES[0];
-  } catch {
-    return KUWAIT_GOVERNORATES[0];
+function resolveLocationForFetch(governorateId?: string): PrayerActiveLocation {
+  if (governorateId) {
+    const gov = KUWAIT_GOVERNORATES.find((g) => g.id === governorateId) ?? KUWAIT_GOVERNORATES[0]!;
+    return {
+      source: "kuwait",
+      label: `الكويت · ${gov.name}`,
+      lat: gov.lat,
+      lon: gov.lon,
+      timeZone: "Asia/Kuwait",
+      countryCode: "KW",
+      kuwaitGovId: gov.id,
+      updatedAt: new Date().toISOString(),
+    };
   }
-}
-
-export function setSelectedGovernorate(id: string): void {
-  try { localStorage.setItem(GOV_STORAGE_KEY, id); } catch { /* ignore */ }
+  return getActivePrayerLocation();
 }
 
 // ───────────────────────────────────────────────────────────────────────────
@@ -159,13 +154,27 @@ const PRAYER_META = [
   { key: "Isha", name: "العشاء", obligatory: true },
 ];
 
+function dateKeyInZone(timeZone: string, date = new Date()) {
+  try {
+    return new Intl.DateTimeFormat("en-CA", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(date);
+  } catch {
+    return new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Kuwait",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(date);
+  }
+}
+
+/** @deprecated use dateKeyInZone — kept for Kuwait callers */
 function kuwaitDateKey(date = new Date()) {
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Asia/Kuwait",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(date);
+  return dateKeyInZone("Asia/Kuwait", date);
 }
 
 function kuwaitDateParam(date = new Date()) {
@@ -220,11 +229,10 @@ function buildPayload(
   };
 }
 
-function pad2(n: number) { return String(Math.floor(n)).padStart(2, "0"); }
-function toKuwaitTime(date: Date): string {
+function toZoneTime(date: Date, timeZone: string): string {
   try {
     const parts = new Intl.DateTimeFormat("en-GB", {
-      timeZone: "Asia/Kuwait",
+      timeZone,
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
@@ -233,10 +241,49 @@ function toKuwaitTime(date: Date): string {
     const m = parts.find((p) => p.type === "minute")?.value ?? "00";
     return `${h}:${m}`;
   } catch {
-    const h = date.getUTCHours() + 3; // Kuwait UTC+3
-    const m = date.getUTCMinutes();
-    return `${pad2(h % 24)}:${pad2(m)}`;
+    return toZoneTime(date, "Asia/Kuwait");
   }
+}
+
+export async function computePrayerTimesForDate(
+  lat: number,
+  lon: number,
+  cityName: string,
+  timeZone: string,
+  date: Date,
+  methodId: PrayerCalcMethodId = getPrayerCalcMethod(),
+): Promise<PrayerTimesPayload> {
+  const adhan = await import("adhan");
+  const coordinates = new adhan.Coordinates(lat, lon);
+  const params = resolveAdhanParams(adhan, methodId, { latitude: lat, longitude: lon });
+  const pt = new adhan.PrayerTimes(coordinates, date, params);
+  const timings: Record<string, string> = {
+    Fajr: toZoneTime(pt.fajr, timeZone),
+    Sunrise: toZoneTime(pt.sunrise, timeZone),
+    Dhuhr: toZoneTime(pt.dhuhr, timeZone),
+    Asr: toZoneTime(pt.asr, timeZone),
+    Maghrib: toZoneTime(pt.maghrib, timeZone),
+    Isha: toZoneTime(pt.isha, timeZone),
+  };
+  const readable = new Intl.DateTimeFormat("ar", {
+    timeZone,
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(date);
+  const gKey = dateKeyInZone(timeZone, date);
+  const [y, m, d] = gKey.split("-");
+  return {
+    ...buildPayload(
+      timings,
+      { timezone: timeZone },
+      { readable, gregorian: { date: `${d}-${m}-${y}` } },
+      cityName,
+    ),
+    method: prayerCalcMethodLabel(methodId),
+    source: `حساب محلي أوفلاين (adhan-js، ${prayerCalcMethodLabel(methodId)})`,
+  };
 }
 
 async function computePrayerTimesLocal(
@@ -244,32 +291,9 @@ async function computePrayerTimesLocal(
   lon: number,
   cityName: string,
   methodId: PrayerCalcMethodId = getPrayerCalcMethod(),
+  timeZone = "Asia/Kuwait",
 ): Promise<PrayerTimesPayload> {
-  const adhan = await import("adhan");
-  const coordinates = new adhan.Coordinates(lat, lon);
-  const params = resolveAdhanParams(adhan, methodId);
-  const now = new Date();
-  const pt = new adhan.PrayerTimes(coordinates, now, params);
-  const timings: Record<string, string> = {
-    Fajr:    toKuwaitTime(pt.fajr),
-    Sunrise: toKuwaitTime(pt.sunrise),
-    Dhuhr:   toKuwaitTime(pt.dhuhr),
-    Asr:     toKuwaitTime(pt.asr),
-    Maghrib: toKuwaitTime(pt.maghrib),
-    Isha:    toKuwaitTime(pt.isha),
-  };
-  const readable = new Intl.DateTimeFormat("ar-KW", {
-    timeZone: "Asia/Kuwait",
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(now);
-  return {
-    ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }, cityName),
-    method: prayerCalcMethodLabel(methodId),
-    source: `حساب محلي (adhan-js، ${prayerCalcMethodLabel(methodId)})`,
-  };
+  return computePrayerTimesForDate(lat, lon, cityName, timeZone, new Date(), methodId);
 }
 
 export function staticPrayerFallback(cityName = "الكويت – محافظة العاصمة"): PrayerTimesPayload {
@@ -321,17 +345,20 @@ async function fetchAlAdhanDirect(
   return buildPayload(json.data.timings, json.data.meta, json.data.date, cityName);
 }
 
-function kuwaitNowMinutes(): number {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kuwait",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }).formatToParts(new Date());
-
-  const hour = Number(parts.find((p) => p.type === "hour")?.value || 0);
-  const minute = Number(parts.find((p) => p.type === "minute")?.value || 0);
-  return hour * 60 + minute;
+function zoneNowMinutes(timeZone = "Asia/Kuwait"): number {
+  try {
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone,
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }).formatToParts(new Date());
+    const hour = Number(parts.find((p) => p.type === "hour")?.value || 0);
+    const minute = Number(parts.find((p) => p.type === "minute")?.value || 0);
+    return hour * 60 + minute;
+  } catch {
+    return zoneNowMinutes("Asia/Kuwait");
+  }
 }
 
 function formatRemaining(ms: number): string {
@@ -363,19 +390,22 @@ export type PrayerCountdown = PrayerStatus & {
   graceNextSlot: PrayerSlot | null;
 };
 
-function kuwaitNowParts(): { minutes: number; seconds: number } {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kuwait",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  }).formatToParts(new Date());
-
-  const hour = Number(parts.find((p) => p.type === "hour")?.value || 0);
-  const minute = Number(parts.find((p) => p.type === "minute")?.value || 0);
-  const second = Number(parts.find((p) => p.type === "second")?.value || 0);
-  return { minutes: hour * 60 + minute, seconds: second };
+function zoneNowParts(timeZone = "Asia/Kuwait"): { minutes: number; seconds: number } {
+  try {
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    }).formatToParts(new Date());
+    const hour = Number(parts.find((p) => p.type === "hour")?.value || 0);
+    const minute = Number(parts.find((p) => p.type === "minute")?.value || 0);
+    const second = Number(parts.find((p) => p.type === "second")?.value || 0);
+    return { minutes: hour * 60 + minute, seconds: second };
+  } catch {
+    return zoneNowParts("Asia/Kuwait");
+  }
 }
 
 function formatHms(totalSeconds: number): string {
@@ -390,9 +420,12 @@ function formatHms(totalSeconds: number): string {
 
 const PRAYER_GRACE_MINUTES = 35;
 
-export function computePrayerCountdown(prayers: PrayerSlot[]): PrayerCountdown {
-  const status = computePrayerStatus(prayers);
-  const now = kuwaitNowParts();
+export function computePrayerCountdown(
+  prayers: PrayerSlot[],
+  timeZone = "Asia/Kuwait",
+): PrayerCountdown {
+  const status = computePrayerStatus(prayers, timeZone);
+  const now = zoneNowParts(timeZone);
   let remainingSeconds = 0;
   let sinceSeconds: number | null = null;
 
@@ -441,8 +474,11 @@ export function computePrayerCountdown(prayers: PrayerSlot[]): PrayerCountdown {
   };
 }
 
-export function computePrayerStatus(prayers: PrayerSlot[]): PrayerStatus {
-  const nowMinutes = kuwaitNowMinutes();
+export function computePrayerStatus(
+  prayers: PrayerSlot[],
+  timeZone = "Asia/Kuwait",
+): PrayerStatus {
+  const nowMinutes = zoneNowMinutes(timeZone);
   const obligatory = prayers.filter((p) => OBLIGATORY_KEYS.has(p.key) && p.minutes != null);
 
   let previous: PrayerSlot | null = null;
@@ -497,35 +533,40 @@ export function computePrayerStatus(prayers: PrayerSlot[]): PrayerStatus {
 }
 
 /**
- * مواقيت فورية: كاش → حساب محلي → fallback ثابت.
- * الشبكة تُحدَّث في الخلفية عبر refreshPrayerTimesInBackground ولا تُعيق الفتح.
+ * مواقيت فورية: كاش → حساب محلي أوفلاين → fallback ثابت.
+ * الشبكة تُحدَّث اختياريًا في الخلفية لمواقع الكويت فقط ولا تُعيق الفتح.
  */
 export async function fetchPrayerTimes(governorateId?: string): Promise<PrayerTimesPayload> {
-  const gov = governorateId
-    ? (KUWAIT_GOVERNORATES.find((g) => g.id === governorateId) ?? KUWAIT_GOVERNORATES[0])
-    : getSelectedGovernorate();
-  const cityName = `الكويت – محافظة ${gov.name}`;
-  const dateKey = kuwaitDateKey();
+  const loc = resolveLocationForFetch(governorateId);
+  const cityName = loc.label;
+  const locId = prayerLocationCacheId(loc);
+  const dateKey = dateKeyInZone(loc.timeZone);
 
-  const cached = getCachedPrayerTimes(gov.id);
+  const cached = getCachedPrayerTimes(governorateId);
   if (cached?.ok && cached.prayers?.length) {
-    void refreshPrayerTimesInBackground(gov.id);
+    if (loc.source === "kuwait") void refreshPrayerTimesInBackground(loc.kuwaitGovId);
     return cached;
   }
 
   try {
-    const local = await computePrayerTimesLocal(gov.lat, gov.lon, cityName);
-    putPrayerCacheDay(gov.id, dateKey, local);
-    void warmPrayerCacheAhead(gov, 30);
-    void refreshPrayerTimesInBackground(gov.id);
+    const local = await computePrayerTimesLocal(
+      loc.lat,
+      loc.lon,
+      cityName,
+      getPrayerCalcMethod(),
+      loc.timeZone,
+    );
+    putPrayerCacheDay(locId, dateKey, local);
+    void warmPrayerCacheAhead(loc, 30);
+    if (loc.source === "kuwait") void refreshPrayerTimesInBackground(loc.kuwaitGovId);
     return local;
   } catch {
     /* continue */
   }
 
   const fallback = staticPrayerFallback(cityName);
-  putPrayerCacheDay(gov.id, dateKey, fallback);
-  void refreshPrayerTimesInBackground(gov.id);
+  putPrayerCacheDay(locId, dateKey, fallback);
+  if (loc.source === "kuwait") void refreshPrayerTimesInBackground(loc.kuwaitGovId);
   return fallback;
 }
 
@@ -592,48 +633,51 @@ export async function refreshPrayerTimesInBackground(governorateId?: string): Pr
 }
 
 /** حساب مسبق لـ N يوماً محلياً وتعبئة الكاش. */
-export async function warmPrayerCacheAhead(gov: KuwaitGovernorate, days = 30): Promise<void> {
+export async function warmPrayerCacheAhead(
+  locOrGov: PrayerActiveLocation | KuwaitGovernorate,
+  days = 30,
+): Promise<void> {
   try {
-    const adhan = await import("adhan");
+    const loc: PrayerActiveLocation =
+      "timeZone" in locOrGov
+        ? locOrGov
+        : {
+            source: "kuwait",
+            label: `الكويت · ${locOrGov.name}`,
+            lat: locOrGov.lat,
+            lon: locOrGov.lon,
+            timeZone: "Asia/Kuwait",
+            kuwaitGovId: locOrGov.id,
+            countryCode: "KW",
+            updatedAt: new Date().toISOString(),
+          };
+    const locId = prayerLocationCacheId(loc);
     const methodId = getPrayerCalcMethod();
-    const coordinates = new adhan.Coordinates(gov.lat, gov.lon);
-    const params = resolveAdhanParams(adhan, methodId);
-    const cityName = `الكويت – محافظة ${gov.name}`;
     const methodLabel = prayerCalcMethodLabel(methodId);
     for (let i = 0; i < days; i++) {
       const d = new Date();
       d.setDate(d.getDate() + i);
-      const dateKey = kuwaitDateKey(d);
+      const dateKey = dateKeyInZone(loc.timeZone, d);
       const existing = readPrayerCache();
       if (
-        existing?.govId === gov.id &&
+        existing?.govId === locId &&
         existing.method === activePrayerMethodId() &&
         existing.byDate[dateKey]?.ok
       ) {
         continue;
       }
-      const pt = new adhan.PrayerTimes(coordinates, d, params);
-      const timings: Record<string, string> = {
-        Fajr: toKuwaitTime(pt.fajr),
-        Sunrise: toKuwaitTime(pt.sunrise),
-        Dhuhr: toKuwaitTime(pt.dhuhr),
-        Asr: toKuwaitTime(pt.asr),
-        Maghrib: toKuwaitTime(pt.maghrib),
-        Isha: toKuwaitTime(pt.isha),
-      };
-      const readable = new Intl.DateTimeFormat("ar-KW", {
-        timeZone: "Asia/Kuwait",
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }).format(d);
-      const payload = {
-        ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }, cityName),
+      const payload = await computePrayerTimesForDate(
+        loc.lat,
+        loc.lon,
+        loc.label,
+        loc.timeZone,
+        d,
+        methodId,
+      );
+      putPrayerCacheDay(locId, dateKey, {
+        ...payload,
         method: methodLabel,
-        source: `حساب محلي (adhan-js، ${methodLabel})`,
-      };
-      putPrayerCacheDay(gov.id, dateKey, payload);
+      });
     }
   } catch {
     /* ignore */

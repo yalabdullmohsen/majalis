@@ -8,6 +8,7 @@ import {
   type PrayerCountdown,
   type PrayerTimesPayload,
 } from "@/lib/prayer-times";
+import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { PRE_ALERT_MINUTES } from "@/lib/prayer-alert-preferences";
 
@@ -30,13 +31,17 @@ function syncLessonCache(payload: PrayerTimesPayload) {
   setPrayerTimesCache(cache);
 }
 
+function activeTz(payload?: PrayerTimesPayload | null): string {
+  return payload?.timezone || getActivePrayerLocation().timeZone || "Asia/Kuwait";
+}
+
 function initialPayload(governorateId?: string): PrayerTimesPayload {
   const cached = getCachedPrayerTimes(governorateId);
   if (cached?.ok && cached.prayers?.length) return cached;
-  const gov = governorateId
-    ? undefined
-    : getSelectedGovernorate();
-  const city = gov ? `الكويت – محافظة ${gov.name}` : "الكويت – محافظة العاصمة";
+  const loc = getActivePrayerLocation();
+  const city = governorateId
+    ? `الكويت – محافظة ${getSelectedGovernorate().name}`
+    : loc.label;
   return staticPrayerFallback(city);
 }
 
@@ -44,7 +49,9 @@ export function usePrayerCountdown(governorateId?: string) {
   const [data, setData] = useState<PrayerTimesPayload | null>(() => initialPayload(governorateId));
   const [countdown, setCountdown] = useState<PrayerCountdown | null>(() => {
     const seed = initialPayload(governorateId);
-    return seed.prayers?.length ? computePrayerCountdown(seed.prayers) : null;
+    return seed.prayers?.length
+      ? computePrayerCountdown(seed.prayers, activeTz(seed))
+      : null;
   });
   /** لا يمنع الرسم — يبقى للتوافق مع المستهلكين القدامى */
   const [loading, setLoading] = useState(false);
@@ -58,7 +65,9 @@ export function usePrayerCountdown(governorateId?: string) {
     let cancelled = false;
     const seed = initialPayload(governorateId);
     setData(seed);
-    setCountdown(seed.prayers?.length ? computePrayerCountdown(seed.prayers) : null);
+    setCountdown(
+      seed.prayers?.length ? computePrayerCountdown(seed.prayers, activeTz(seed)) : null,
+    );
     syncLessonCache(seed);
     setLoading(false);
 
@@ -67,7 +76,7 @@ export function usePrayerCountdown(governorateId?: string) {
         if (cancelled || !payload?.prayers?.length) return;
         setData(payload);
         syncLessonCache(payload);
-        setCountdown(computePrayerCountdown(payload.prayers));
+        setCountdown(computePrayerCountdown(payload.prayers, activeTz(payload)));
       })
       .catch(() => {
         /* الإبقاء على البذرة المحلية */
@@ -89,7 +98,7 @@ export function usePrayerCountdown(governorateId?: string) {
 
     const schedule = () => {
       if (cancelled) return;
-      const cd = computePrayerCountdown(data.prayers);
+      const cd = computePrayerCountdown(data.prayers, activeTz(data));
       setCountdown(cd);
       timer = window.setTimeout(schedule, tickIntervalFor(cd));
     };

@@ -12,6 +12,7 @@ import {
   type PrayerSlot,
   type PrayerTimesPayload,
 } from "./prayer-times";
+import { getActivePrayerLocation } from "./prayer-location-prefs";
 import {
   loadAdhanPrefs,
   PRAYER_ARABIC,
@@ -50,17 +51,22 @@ function clearAllTimers() {
 }
 
 function kuwaitNowMs(): number {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kuwait",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  }).formatToParts(new Date());
-  const h = Number(parts.find((p) => p.type === "hour")?.value ?? 0);
-  const m = Number(parts.find((p) => p.type === "minute")?.value ?? 0);
-  const s = Number(parts.find((p) => p.type === "second")?.value ?? 0);
-  return (h * 3600 + m * 60 + s) * 1000;
+  const timeZone = getActivePrayerLocation().timeZone || "Asia/Kuwait";
+  try {
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    }).formatToParts(new Date());
+    const h = Number(parts.find((p) => p.type === "hour")?.value ?? 0);
+    const m = Number(parts.find((p) => p.type === "minute")?.value ?? 0);
+    const s = Number(parts.find((p) => p.type === "second")?.value ?? 0);
+    return (h * 3600 + m * 60 + s) * 1000;
+  } catch {
+    return Date.now() % 86_400_000;
+  }
 }
 
 function prayerMs(slot: PrayerSlot): number | null {
