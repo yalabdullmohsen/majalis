@@ -68,13 +68,13 @@ assert.match(
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /data-ornament="wing-dense"/,
-  "شارة كثيفة بلا pattern",
+  /data-ornament="wing-refined"/,
+  "شارة رصينة بلا pattern",
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /PetalMedallion|ArabesqueMesh/,
-  "ميدالية + شبكة أرابيسك",
+  /PetalMedallion|TwinSpirals/,
+  "ميدالية + فرعان لولبيان",
 );
 assert.equal(
   /<pattern[\s/]/i.test(readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8")),
