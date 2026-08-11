@@ -1,6 +1,6 @@
 /**
  * نقطة الدخول الوحيدة للبحث الشامل في التطبيق.
- * فهرس مطبّع مسبقًا + تطبيع مشترك + إلغاء الاستعلام السابق.
+ * فهرس مطبّع مسبقًا + تطبيع مشترك + دمج دلالي اختياري (هجين) عند الاتصال.
  */
 import {
   loadUnifiedSearchIndex,
@@ -12,6 +12,16 @@ import { kindPriority } from "@/features/search/kind-priority";
 import { parseQuickNav } from "@/features/search/quick-nav";
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { scoreTolerantMatch, type TolerantMatch } from "@/features/search/tolerant-match";
+import {
+  attachGroups,
+  fetchSemanticHits,
+  mergeHybridResults,
+  readCachedHybridResults,
+  writeCachedHybridResults,
+  type HybridSearchSource,
+} from "@/features/search/hybrid-search";
+import { isOnline } from "@/lib/offline-db";
+import { trackAnonymousSearch } from "@/lib/privacy-telemetry";
 
 export type AppSearchResult = {
   id: string;
@@ -32,6 +42,9 @@ export type AppSearchResponse = {
   /** أقرب ٣ بدائل عند انعدام النتائج */
   suggestions?: string[];
   responseMs: number;
+  /** مصدر الدمج: lexical فقط / هجين / كاش */
+  source?: HybridSearchSource;
+  semanticHits?: number;
 };
 
 const KIND_ALIASES: Record<string, string> = {
@@ -108,16 +121,22 @@ export function findClosestSuggestion(
 
 export async function runAppSearch(
   rawQuery: string,
-  opts: { limit?: number; kind?: string; signal?: AbortSignal } = {},
+  opts: {
+    limit?: number;
+    kind?: string;
+    signal?: AbortSignal;
+    /** تعطيل الطبقة الدلالية (اختبارات/وضع محلي فقط) */
+    lexicalOnly?: boolean;
+  } = {},
 ): Promise<AppSearchResponse> {
   const t0 = performance.now();
   const query = rawQuery.trim();
   if (!query) {
-    return { results: [], groups: {}, counts: {}, responseMs: 0 };
+    return { results: [], groups: {}, counts: {}, responseMs: 0, source: "lexical" };
   }
 
-  // اختصار مصحف/حديث = نتيجة اختيارية في أعلى القائمة فقط.
-  // لا نُرجع quickNavHref ولا ننتقل تلقائيًا — المستخدم يختار من الخيارات.
+  trackAnonymousSearch(query);
+
   const quick = parseQuickNav(query);
   const quickHit: AppSearchResult | null = quick
     ? {
@@ -138,10 +157,35 @@ export async function runAppSearch(
       ? await searchUnifiedIndexAsync(docs, query, limit, opts.signal)
       : searchUnifiedIndex(docs, query, limit);
 
-  let results = flattenGroups(grouped);
+  let lexical = flattenGroups(grouped);
   if (opts.kind && opts.kind !== "all") {
     const want = KIND_ALIASES[opts.kind] ?? opts.kind;
-    results = results.filter((r) => r.kind === want || r.kind === opts.kind);
+    lexical = lexical.filter((r) => r.kind === want || r.kind === opts.kind);
+  }
+
+  let results = lexical;
+  let source: HybridSearchSource = "lexical";
+  let semanticHits = 0;
+
+  if (!opts.lexicalOnly && isOnline() && normalizeArabic(query).length >= 2) {
+    const semantic = await fetchSemanticHits(query, {
+      limit: Math.min(24, limit),
+      signal: opts.signal,
+    });
+    if (semantic.length) {
+      const merged = mergeHybridResults(lexical, semantic, limit);
+      results = merged.results;
+      semanticHits = merged.semanticHits;
+      source = "hybrid";
+      void writeCachedHybridResults(query, results);
+    }
+  } else if (!opts.lexicalOnly && !isOnline()) {
+    const cached = await readCachedHybridResults(query);
+    if (cached?.length) {
+      results = cached.slice(0, limit);
+      source = "cache";
+      semanticHits = cached.length;
+    }
   }
 
   if (quickHit) {
@@ -153,13 +197,7 @@ export async function runAppSearch(
     }
   }
 
-  const groups: Record<string, AppSearchResult[]> = {};
-  const counts: Record<string, number> = {};
-  for (const r of results) {
-    (groups[r.kind] ??= []).push(r);
-    counts[r.kind] = (counts[r.kind] ?? 0) + 1;
-  }
-
+  const { groups, counts } = attachGroups(results);
   const suggestions =
     results.length === 0 ? findClosestSuggestions(docs, query, 3) : [];
 
@@ -170,5 +208,7 @@ export async function runAppSearch(
     suggestion: suggestions[0] ?? null,
     suggestions,
     responseMs: performance.now() - t0,
+    source,
+    semanticHits,
   };
 }

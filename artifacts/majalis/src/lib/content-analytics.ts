@@ -1,4 +1,9 @@
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { allowsAnalytics } from "@/lib/cookie-consent";
+import {
+  trackAnonymousContentView,
+  trackAnonymousSearch,
+} from "@/lib/privacy-telemetry";
 
 const SESSION_PREFIX = "majalis-view:";
 
@@ -17,7 +22,9 @@ export async function trackContentView(contentType: string, contentId: string) {
     /* private mode */
   }
 
-  if (!isSupabaseConfigured()) return;
+  trackAnonymousContentView(contentType, contentId);
+
+  if (!allowsAnalytics() || !isSupabaseConfigured()) return;
 
   try {
     const { data: { user } } = await supabase.auth.getUser();
@@ -31,10 +38,14 @@ export async function trackContentView(contentType: string, contentId: string) {
   }
 }
 
-/** تسجيل استعلام بحث في Supabase (إن وُجد الجدول) */
+/** تسجيل استعلام بحث — طابور مجهول + Supabase عند الموافقة */
 export async function trackSearchQuery(query: string) {
   const trimmed = query.trim();
-  if (!trimmed || trimmed.length < 2 || !isSupabaseConfigured()) return;
+  if (!trimmed || trimmed.length < 2) return;
+
+  trackAnonymousSearch(trimmed);
+
+  if (!allowsAnalytics() || !isSupabaseConfigured()) return;
 
   try {
     await supabase.from("search_queries").insert({ query: trimmed.slice(0, 200) });

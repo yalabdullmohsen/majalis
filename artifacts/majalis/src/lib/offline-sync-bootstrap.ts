@@ -175,6 +175,18 @@ export function startOfflineSync(): void {
         /* optional */
       }
       try {
+        const { flushTelemetryQueue } = await import("@/lib/privacy-telemetry");
+        await flushTelemetryQueue();
+      } catch {
+        /* optional */
+      }
+      try {
+        const { runDeltaSync } = await import("@/lib/delta-content-sync");
+        await runDeltaSync();
+      } catch {
+        /* optional */
+      }
+      try {
         const { syncDirtyFlashcardReviews } = await import("@/lib/flashcard-service");
         const { getSupabaseClient } = await import("@/lib/supabase-bootstrap");
         const client = getSupabaseClient();

@@ -184,3 +184,32 @@ export function initClientErrorReporting() {
     true,
   );
 }
+
+/**
+ * Lightweight production fault buckets (audio context / websocket bursts)
+ * without shipping a third-party APM SDK by default.
+ */
+export function reportRuntimeFault(
+  bucket: "audio_context" | "websocket" | "recitation" | "media" | "unknown",
+  message: string,
+  detail?: string,
+): void {
+  const err = new Error(`[${bucket}] ${message}`);
+  void logClientError(
+    buildErrorReport(err, {
+      component: `runtime:${bucket}`,
+      section: bucket,
+      apiResponse: detail?.slice(0, 500),
+    }),
+  );
+  try {
+    void import("@/lib/privacy-telemetry").then((m) =>
+      m.enqueueTelemetry("client_error_bucket", {
+        bucket,
+        msg_len: message.length,
+      }),
+    );
+  } catch {
+    /* ignore */
+  }
+}

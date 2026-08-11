@@ -170,6 +170,8 @@ export const API_ROUTES = [
   { prefix: "/api/auto-content", module: "./api-handlers/auto-content.js", allowGet: true },
   { prefix: "/api/knowledge-recommendations", module: "./api-handlers/knowledge-recommendations.js", allowGet: true },
   { prefix: "/api/intelligent-search", module: "./api-handlers/intelligent-search.js", allowGet: true },
+  { prefix: "/api/search-autocomplete", module: "./api-handlers/search-autocomplete.js", allowGet: true, exact: true },
+  { prefix: "/api/telemetry", module: "./api-handlers/telemetry.js", allowGet: true, exact: true },
   // محرك البحث العربي الموحد — GET /api/search?q=...&types=...&limit=...&offset=...
   { prefix: "/api/search", module: "./api-handlers/search.js", allowGet: true, exact: true },
   { prefix: "/api/topic-content", module: "./api-handlers/topic-content.js", allowGet: true },

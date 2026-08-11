@@ -184,7 +184,9 @@ export class WebSocketQuranASRProvider implements QuranASRProvider {
       analyser.fftSize = 512;
       source.connect(analyser);
     } catch {
-      /* مؤشر المستوى اختياري */
+      void import("@/lib/error-report").then((m) =>
+        m.reportRuntimeFault("audio_context", "AudioContext init failed (websocket ASR)"),
+      );
     }
 
     const active: Active = {
@@ -287,6 +289,9 @@ export class WebSocketQuranASRProvider implements QuranASRProvider {
 
       sock.onerror = () => {
         clearTimeout(timer);
+        void import("@/lib/error-report").then((m) =>
+          m.reportRuntimeFault("websocket", "ASR WebSocket error"),
+        );
         reject(new Error("ws error"));
       };
 
@@ -304,6 +309,9 @@ export class WebSocketQuranASRProvider implements QuranASRProvider {
         active.ws = null;
         if (active.stopped) return;
         if (active.reconnectAttempts >= 3) {
+          void import("@/lib/error-report").then((m) =>
+            m.reportRuntimeFault("websocket", "ASR WebSocket reconnect burst"),
+          );
           this.emitStatus(active, "reconnecting");
           return;
         }

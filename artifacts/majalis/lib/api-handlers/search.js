@@ -350,6 +350,8 @@ export default async function handler(req, res) {
       response_ms: Date.now() - t0,
       results: sliced,
       groups,
+    }, {
+      "Cache-Control": "public, s-maxage=30, stale-while-revalidate=120, max-age=15",
     });
   } catch (err) {
     if (err.message === "search_timeout") {

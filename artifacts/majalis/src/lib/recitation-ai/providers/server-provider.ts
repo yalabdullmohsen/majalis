@@ -159,7 +159,9 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       analyser.fftSize = 512;
       source.connect(analyser);
     } catch {
-      /* مؤشر المستوى اختياري */
+      void import("@/lib/error-report").then((m) =>
+        m.reportRuntimeFault("audio_context", "AudioContext init failed (server ASR)"),
+      );
     }
 
     const active: Active = {

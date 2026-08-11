@@ -124,9 +124,11 @@ export async function fetchContentDeltas(opts?: {
   if (!isOnline()) return [];
   try {
     const state = loadDeltaSyncState();
-    const packs = opts?.packIds || ["adhkar", "tafsir", "fawaid"];
+    const packs = opts?.packIds || ["search-index", "app-version", "quran-chapters", "adhkar", "tafsir", "fawaid"];
     const params = new URLSearchParams();
     params.set("packs", packs.join(","));
+    if (state.lastSyncAt) params.set("since", state.lastSyncAt);
+    params.set("last_synced_at", state.lastSyncAt || "");
     for (const id of packs) {
       const rev = state.revisions[id];
       if (rev) params.set(`since_${id}`, rev);

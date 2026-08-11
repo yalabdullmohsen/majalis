@@ -31,6 +31,19 @@ export { kindPriority, KIND_PRIORITY } from "@/features/search/kind-priority";
 export {
   runAppSearch,
   findClosestSuggestion,
+  findClosestSuggestions,
   type AppSearchResult,
   type AppSearchResponse,
 } from "@/features/search/app-search";
+export {
+  runAutocomplete,
+  AUTOCOMPLETE_GROUP_LABELS,
+  type AutocompleteGroup,
+  type AutocompleteGroupId,
+  type AutocompleteResponse,
+} from "@/features/search/autocomplete";
+export {
+  mergeHybridResults,
+  fetchSemanticHits,
+  type HybridSearchSource,
+} from "@/features/search/hybrid-search";

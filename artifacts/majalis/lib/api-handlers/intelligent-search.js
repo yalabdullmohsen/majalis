@@ -27,7 +27,9 @@ export default async function handler(req, res) {
         userId: req.query?.userId || null,
         sessionId: req.query?.sessionId || req.headers["x-session-id"] || null,
       });
-      sendJson(res, 200, result);
+      sendJson(res, 200, result, {
+        "Cache-Control": "public, s-maxage=30, stale-while-revalidate=120, max-age=15",
+      });
     } catch (error) {
       sendJson(res, 500, { ok: false, error: error.message });
     }
