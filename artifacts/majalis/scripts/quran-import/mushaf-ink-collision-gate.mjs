@@ -227,15 +227,17 @@ try {
         for (let j = i + 1; j < slots.length; j++) {
           const a = slots[i];
           const b = slots[j];
-          /* تداخل خانات أسطر الآيات متوقع (slotH ٧٫٢٪ > خطوة ٦٫٥٧٪) — نتجاهله.
-           * البوابة تفشل فقط عند تقاطع بسملة/شارة مع حبر آية. */
+          /* تداخل خانات الأسطر/الشارة متوقع (slotH ٧٫٢٪ > خطوة ٦٫٥٧٪) — نتجاهله.
+           * البوابة تفشل عند تقاطع بسملة مع شارة أو آية (فاصل الحبر). */
           if (a.kind === "line" && b.kind === "line") continue;
           if (a.kind === "banner" && b.kind === "banner") continue;
-          const critical =
-            a.kind === "basmala" ||
-            b.kind === "basmala" ||
+          if (
             (a.kind === "banner" && b.kind === "line") ||
-            (b.kind === "banner" && a.kind === "line");
+            (b.kind === "banner" && a.kind === "line")
+          ) {
+            continue;
+          }
+          const critical = a.kind === "basmala" || b.kind === "basmala";
           if (!critical) continue;
           const yOverlap = a.top < b.bottom - eps && a.bottom > b.top + eps;
           const xOverlap = a.left < b.right - eps && a.right > b.left + eps;
@@ -306,7 +308,7 @@ try {
     ) {
       failures.push({
         page: n,
-        reason: `شارة ${m.bannerTopPct?.toFixed?.(2)}٪ خارج ٣٧٫٥–٣٨٫٥`,
+        reason: `شارة ${m.bannerTopPct?.toFixed?.(2)}٪ خارج ١٤–١٨`,
       });
     }
     if (m.basmalaGap != null) {

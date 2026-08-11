@@ -964,10 +964,6 @@ export function MushafPageV2({
           const gap = inkTop - banR.bottom;
           minGap = Math.min(minGap, gap);
           if (gap < BANNER_BASMALA_MIN_GAP_PX - 0.5) {
-            /* مواقع الشبكة كافية — لا تدفع البسملة نحو الآية */
-            if (basEl.closest(".mf2-grid-slot--basmala")) {
-              continue;
-            }
             const nudgePx = BANNER_BASMALA_MIN_GAP_PX - gap;
             const nudgePct = (nudgePx / Math.max(1, cr.height)) * 100;
             const slot =
@@ -1168,8 +1164,8 @@ export function MushafPageV2({
       const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
       const slotBase =
         MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;
-      /* ارتفاع = خانة سطر واحدة؛ إزاحة طفيفة لفاصل حبر مع البسملة */
-      baseline = slotBase - 0.55;
+      /* ارتفاع = خانة سطر؛ ارفع المركز حتى يبقى أسفل الشارة فوق البسملة بفاصل ≥٢٢px */
+      baseline = slotBase - 2.5;
       h = MUSHAF_GRID.slotHeightPct;
     } else {
       const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
