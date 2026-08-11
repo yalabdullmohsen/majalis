@@ -1,5 +1,12 @@
 import { requestFetch } from "@/lib/request-manager";
 import { toArabicIndicDigits } from "@/lib/numerals";
+import {
+  getPrayerCalcMethod,
+  prayerCalcMethodCacheId,
+  prayerCalcMethodLabel,
+  resolveAdhanParams,
+  type PrayerCalcMethodId,
+} from "@/lib/prayer-calc-prefs";
 
 // ─── Kuwait Governorates ────────────────────────────────────────────────────
 
@@ -24,7 +31,12 @@ export const KUWAIT_GOVERNORATES: KuwaitGovernorate[] = [
 
 const GOV_STORAGE_KEY = "majalis-governorate-v1";
 const PRAYER_CACHE_KEY = "majalis-prayer-cache-v2";
-const PRAYER_METHOD_ID = "kuwait-mwl-v1";
+/** @deprecated legacy cache id — kept for one-release migration reads */
+const LEGACY_PRAYER_METHOD_ID = "kuwait-mwl-v1";
+
+function activePrayerMethodId(): string {
+  return prayerCalcMethodCacheId(getPrayerCalcMethod());
+}
 
 type PrayerDayCache = {
   method: string;
@@ -59,13 +71,18 @@ export function getCachedPrayerTimes(governorateId?: string): PrayerTimesPayload
     ? (KUWAIT_GOVERNORATES.find((g) => g.id === governorateId) ?? KUWAIT_GOVERNORATES[0])
     : getSelectedGovernorate();
   const cache = readPrayerCache();
-  if (!cache || cache.govId !== gov.id || cache.method !== PRAYER_METHOD_ID) return null;
+  const methodId = activePrayerMethodId();
+  if (!cache || cache.govId !== gov.id) return null;
+  if (cache.method !== methodId && cache.method !== LEGACY_PRAYER_METHOD_ID) return null;
+  // Ignore legacy cache when user switched away from Kuwait method.
+  if (cache.method === LEGACY_PRAYER_METHOD_ID && getPrayerCalcMethod() !== "Kuwait") return null;
   return cache.byDate[kuwaitDateKey()] ?? null;
 }
 
 function putPrayerCacheDay(govId: string, dateKey: string, payload: PrayerTimesPayload): void {
+  const methodId = activePrayerMethodId();
   const prev = readPrayerCache();
-  const byDate = prev?.govId === govId && prev.method === PRAYER_METHOD_ID ? { ...prev.byDate } : {};
+  const byDate = prev?.govId === govId && prev.method === methodId ? { ...prev.byDate } : {};
   byDate[dateKey] = payload;
   // احتفظ بـ ~45 يوماً كحد أقصى في التخزين
   const keys = Object.keys(byDate).sort();
@@ -74,7 +91,7 @@ function putPrayerCacheDay(govId: string, dateKey: string, payload: PrayerTimesP
     if (drop) delete byDate[drop];
   }
   writePrayerCache({
-    method: PRAYER_METHOD_ID,
+    method: methodId,
     govId,
     byDate,
     updatedAt: new Date().toISOString(),
@@ -226,13 +243,13 @@ async function computePrayerTimesLocal(
   lat: number,
   lon: number,
   cityName: string,
+  methodId: PrayerCalcMethodId = getPrayerCalcMethod(),
 ): Promise<PrayerTimesPayload> {
-  const { Coordinates, CalculationMethod, PrayerTimes, Madhab } = await import("adhan");
-  const coordinates = new Coordinates(lat, lon);
-  const params = CalculationMethod.Kuwait();
-  params.madhab = Madhab.Shafi;
+  const adhan = await import("adhan");
+  const coordinates = new adhan.Coordinates(lat, lon);
+  const params = resolveAdhanParams(adhan, methodId);
   const now = new Date();
-  const pt = new PrayerTimes(coordinates, now, params);
+  const pt = new adhan.PrayerTimes(coordinates, now, params);
   const timings: Record<string, string> = {
     Fajr:    toKuwaitTime(pt.fajr),
     Sunrise: toKuwaitTime(pt.sunrise),
@@ -250,7 +267,8 @@ async function computePrayerTimesLocal(
   }).format(now);
   return {
     ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }, cityName),
-    source: "حساب محلي (adhan-js، طريقة الكويت)",
+    method: prayerCalcMethodLabel(methodId),
+    source: `حساب محلي (adhan-js، ${prayerCalcMethodLabel(methodId)})`,
   };
 }
 
@@ -576,18 +594,25 @@ export async function refreshPrayerTimesInBackground(governorateId?: string): Pr
 /** حساب مسبق لـ N يوماً محلياً وتعبئة الكاش. */
 export async function warmPrayerCacheAhead(gov: KuwaitGovernorate, days = 30): Promise<void> {
   try {
-    const { Coordinates, CalculationMethod, PrayerTimes, Madhab } = await import("adhan");
-    const coordinates = new Coordinates(gov.lat, gov.lon);
-    const params = CalculationMethod.Kuwait();
-    params.madhab = Madhab.Shafi;
+    const adhan = await import("adhan");
+    const methodId = getPrayerCalcMethod();
+    const coordinates = new adhan.Coordinates(gov.lat, gov.lon);
+    const params = resolveAdhanParams(adhan, methodId);
     const cityName = `الكويت – محافظة ${gov.name}`;
+    const methodLabel = prayerCalcMethodLabel(methodId);
     for (let i = 0; i < days; i++) {
       const d = new Date();
       d.setDate(d.getDate() + i);
       const dateKey = kuwaitDateKey(d);
       const existing = readPrayerCache();
-      if (existing?.govId === gov.id && existing.byDate[dateKey]?.ok) continue;
-      const pt = new PrayerTimes(coordinates, d, params);
+      if (
+        existing?.govId === gov.id &&
+        existing.method === activePrayerMethodId() &&
+        existing.byDate[dateKey]?.ok
+      ) {
+        continue;
+      }
+      const pt = new adhan.PrayerTimes(coordinates, d, params);
       const timings: Record<string, string> = {
         Fajr: toKuwaitTime(pt.fajr),
         Sunrise: toKuwaitTime(pt.sunrise),
@@ -605,7 +630,8 @@ export async function warmPrayerCacheAhead(gov: KuwaitGovernorate, days = 30): P
       }).format(d);
       const payload = {
         ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }, cityName),
-        source: "حساب محلي (adhan-js، طريقة الكويت)",
+        method: methodLabel,
+        source: `حساب محلي (adhan-js، ${methodLabel})`,
       };
       putPrayerCacheDay(gov.id, dateKey, payload);
     }

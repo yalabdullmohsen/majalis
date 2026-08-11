@@ -18,8 +18,8 @@ export const ADHAN_PLAYBACK_MODES: readonly AdhanPlaybackMode[] = [
 export const ADHAN_PLAYBACK_MODE_LABELS: Record<AdhanPlaybackMode, string> = {
   full: "أذان كامل",
   short: "قصير (≤ ٢٨ ثانية)",
-  takbir: "التكبير فقط",
-  silent: "صامت مع إشعار",
+  takbir: "تكبيرات فقط",
+  silent: "إشعار نصي صامت",
 };
 
 export type AdhanClipKind = "full" | "short" | "takbir" | "iqamah" | "fajr";

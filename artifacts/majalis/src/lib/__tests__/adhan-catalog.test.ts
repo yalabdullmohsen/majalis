@@ -51,7 +51,10 @@ for (const m of MUEZZINS) {
     );
   }
   if (m.audioAvailable) {
-    assert.ok(m.audioUrl.startsWith("https://"), `${m.id}: رابط صوت`);
+    assert.ok(
+      m.audioUrl.startsWith("https://") || m.audioUrl.startsWith("/sounds/"),
+      `${m.id}: رابط صوت محلي أو CDN`,
+    );
   } else {
     assert.equal(m.audioUrl, "", `${m.id}: بلا صوت → url فارغ`);
     assert.equal(isMuezzinSelectable(m), false, `${m.id}: غير قابل للاختيار`);

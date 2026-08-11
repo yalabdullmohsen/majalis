@@ -137,7 +137,7 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
           <p className="mzp-subtitle">
             {requireFajr
               ? "يُعرض فقط من لديه «الصلاة خير من النوم» — بلا استبدال بالأذان العام"
-              : "اضغط زر التشغيل للمعاينة، ثم اختر النمط المناسب"}
+              : "اضغط «استماع للتجربة»، ثم اختر النمط المناسب"}
           </p>
           <label className="mzp-search">
             <span className="mzp-search__sr">بحث عن مؤذن</span>
@@ -178,7 +178,7 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
                         onClick={() => handlePreview(m)}
                         className={`mzp-preview-btn rounded-full icon-only${isPlaying ? " mzp-preview-btn--playing" : ""}`}
                         aria-label={
-                          isPlaying ? "إيقاف معاينة الأذان" : "معاينة الأذان (15 ثانية)"
+                          isPlaying ? "إيقاف الاستماع" : "استماع للتجربة"
                         }
                       >
                         {isPlaying ? "⏹" : "▶"}
