@@ -77,10 +77,19 @@ describe("safe-auto-merge eligibility", () => {
     assert.ok(r.blockers.some((b) => /content-safe PR may only touch/i.test(b)));
   });
 
-  it("requires a safe label", () => {
-    const r = evaluateEligibility(base({ labels: [] }));
-    assert.equal(r.eligible, false);
-    assert.ok(r.blockers.some((b) => /missing safe label/i.test(b)));
+  it("allows unlabeled low-risk PRs after green checks (label optional)", () => {
+    const r = evaluateEligibility(
+      base({
+        labels: [],
+        files: [{ path: "docs/REALITY_AUDIT.md", additions: 10, deletions: 0 }],
+        title: "توثيق: تحديث جرد الحقيقة",
+      }),
+    );
+    assert.equal(r.eligible, true);
+    assert.equal(r.prType, "unlabeled");
+    assert.equal(r.blockers.length, 0);
+    assert.equal(r.hardBlockers.length, 0);
+    assert.ok(r.warnings.some((w) => /no safe label/i.test(w)));
   });
 
   it("blocks Draft", () => {
@@ -342,7 +351,7 @@ describe("checks + report", () => {
         headSha: "def",
       }),
     );
-    assert.ok(next.includes("missing safe label") || next.includes("غير مؤهل"));
+    assert.ok(next.includes("no safe label") || next.includes("مؤهل"));
     assert.equal(next.indexOf(REPORT_MARKER_BEGIN), next.lastIndexOf(REPORT_MARKER_BEGIN));
   });
 

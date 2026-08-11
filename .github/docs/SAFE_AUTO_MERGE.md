@@ -6,14 +6,14 @@ Auto-merge يبقى **مفعّلًا** للتعديلات البسيطة/الم�
 
 PR **Ready** (غير Draft) إلى `main` عندما:
 
-1. يحمل وسمًا آمنًا واحدًا على الأقل (انظر أدناه)
+1. فحوصات CI الأساسية خضراء حسب **path lane** (`Verify build` يجمع النتائج؛ الوظائف غير المطلوبة قد تكون `skipped`؛ عند الحاجة: typecheck + lint + test/content-guard + build)
 2. ليس موسومًا `release-train-ready` (يملكه قطار الإصدار)
 3. ليس موسومًا `risky:manual-review` أو `blocked:danger-path`
 4. لا تعارض / ليس `BEHIND`
 5. لا `CHANGES_REQUESTED`
 6. ≤ **40** ملفًا، بلا حذف كبير
-7. فحوصات CI الأساسية خضراء حسب **path lane** (`Verify build` يجمع النتائج؛ الوظائف غير المطلوبة قد تكون `skipped`)
-8. لا يلمس مسارات خطرة
+7. لا يلمس مسارات خطرة (SQL / iOS / CI / Auth / …)
+8. **Labels اختيارية** للتصنيف والوضوح — غيابها لا يمنع الدمج للتغييرات منخفضة المخاطر (يظهر تحذيرًا فقط)
 9. إذا كان الوسم `content-safe` / `safe:content`: الملفات ضمن مسارات تدقيق المحتوى فقط:
    - `artifacts/majalis/public/data/quiz/**`
    - `artifacts/majalis/public/data/**`
@@ -27,9 +27,11 @@ PR **Ready** (غير Draft) إلى `main` عندما:
 
 ## Labels
 
+Labels **اختيارية للتصنيف** — ليست شرطًا للدمج التلقائي بعد نجاح الفحوصات وسلامة المسارات.
+
 | Label | المعنى |
 |---|---|
-| `safe:auto-merge` | اشتراك صريح في الدمج التلقائي الفوري |
+| `safe:auto-merge` | وضوح إضافي في التقارير (موصى به، غير إلزامي) |
 | `safe:content` | محتوى/بذور/نصوص آمنة |
 | `safe:ui` | واجهة بسيطة |
 | `safe:test` | اختبارات/توثيق اختبارات |
@@ -37,7 +39,7 @@ PR **Ready** (غير Draft) إلى `main` عندما:
 | `risky:manual-review` | يحتاج مراجعة بشرية — يمنع auto-merge |
 | `blocked:danger-path` | ملفات خطرة — يمنع auto-merge |
 
-Aliases قديمة ما زالت مقبولة: `content-safe`, `ui-safe`, `code-safe`, `tests-safe`, `maintenance-safe`.
+Aliases قديمة ما زالت مقبولة للتصنيف: `content-safe`, `ui-safe`, `code-safe`, `tests-safe`, `maintenance-safe`.
 
 ## ما الذي لا يندمج تلقائيًا؟
 
