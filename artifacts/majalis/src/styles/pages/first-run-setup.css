@@ -6,7 +6,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding: max(1rem, env(safe-area-inset-top)) 1rem max(1.25rem, env(safe-area-inset-bottom));
+  padding: max(1rem, var(--inset-top, 0px)) 1rem max(1.25rem, var(--inset-bottom, 0px));
   background: color-mix(in srgb, var(--mj-brand-deep, #0f2e1d) 42%, transparent);
   backdrop-filter: blur(6px);
 }
