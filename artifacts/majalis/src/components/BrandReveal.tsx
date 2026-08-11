@@ -2,7 +2,7 @@
  * كشف هوية المجلس عند أول فتح للجلسة — طبقة React فوق التطبيق بعد الإقلاع الأصلي.
  * ليست شاشة boot في index.html (محظورة)، وليست بوابة ترحيب منفصلة.
  */
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type ComponentType, type ReactNode } from "react";
 import "@/styles/components/brand-reveal.css";
 
 const SESSION_KEY = "mj-brand-reveal-seen-v1";
@@ -58,6 +58,7 @@ export function BrandReveal({ children }: { children: ReactNode }) {
   const [phase, setPhase] = useState<Phase>(() =>
     alreadySeen() || shouldSkipReveal() ? "gone" : "live",
   );
+  const [FirstRunSetup, setFirstRunSetup] = useState<ComponentType | null>(null);
 
   useEffect(() => {
     if (phase !== "live") return;
@@ -96,9 +97,22 @@ export function BrandReveal({ children }: { children: ReactNode }) {
     };
   }, [phase]);
 
+  /* تهيئة التشغيل الأول — chunk منفصل بعد انتهاء كشف الهوية */
+  useEffect(() => {
+    if (phase !== "gone" || FirstRunSetup) return;
+    let alive = true;
+    void import("@/components/FirstRunSetup").then((m) => {
+      if (alive) setFirstRunSetup(() => m.FirstRunSetup);
+    });
+    return () => {
+      alive = false;
+    };
+  }, [phase, FirstRunSetup]);
+
   return (
     <>
       {children}
+      {FirstRunSetup ? <FirstRunSetup /> : null}
       {phase !== "gone" ? (
         <div
           className={`mj-brand-reveal${phase === "leaving" ? " mj-brand-reveal--leaving" : ""}`}

@@ -3,7 +3,7 @@
  * Run after `pnpm run build` (expects dist/assets).
  *
  * Budgets (post PR #633؛ محدّث 2026-08 مع إعادة مركز القرآن):
- * - Entry JS gzip ≤ 162 KiB (كان 160؛ هامش لإعادة مداخل القرآن/التسميع)
+ * - Entry JS gzip ≤ 164 KiB (كان 162؛ هامش لتهيئة التشغيل الأول الكسولة + وضع كبار السن)
  * - Icons chunk gzip ≤ 30 KiB
  * - Main CSS gzip ≤ 100 KiB
  */
@@ -37,7 +37,7 @@ const icons = rows
   .filter((r) => /^icons-.*\.js$/.test(r.f))
   .sort((a, b) => b.gz - a.gz)[0];
 
-const INITIAL_JS_GZIP_BUDGET = 162 * 1024;
+const INITIAL_JS_GZIP_BUDGET = 164 * 1024;
 const ICONS_JS_GZIP_BUDGET = 30 * 1024;
 const CSS_GZIP_BUDGET = 100 * 1024;
 const CHUNK_GZIP_SOFT = 150 * 1024;

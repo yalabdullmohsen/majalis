@@ -34,6 +34,8 @@ export type UserPreferences = {
   hapticsEnabled: boolean;
   /** تباين مرتفع اختياري — html[data-contrast=high] + prefers-contrast */
   highContrast: boolean;
+  /** وضع كبار السن: خط أكبر + تباين مرتفع + كثافة مريحة */
+  seniorMode: boolean;
 };
 
 export const SETTINGS_KEY = "majalis-user-settings-v1";
@@ -65,6 +67,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   dataSaver: false,
   hapticsEnabled: true,
   highContrast: false,
+  seniorMode: false,
 };
 
 export function readPreferences(): UserPreferences {
@@ -100,17 +103,28 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
     /* ignore */
   }
 
-  const fontScale =
-    prefs.fontSize === "صغير" ? "0.92" : prefs.fontSize === "كبير" ? "1.08" : "1";
-  const densityScale = prefs.uiDensity === "compact" ? "0.92" : "1";
+  const senior = prefs.seniorMode;
+  const fontScale = senior
+    ? "1.16"
+    : prefs.fontSize === "صغير"
+      ? "0.92"
+      : prefs.fontSize === "كبير"
+        ? "1.08"
+        : "1";
+  const densityScale = prefs.uiDensity === "compact" && !senior ? "0.92" : "1";
   root.style.setProperty("--ui-font-scale", fontScale);
   root.style.setProperty("--ui-density-scale", densityScale);
-  const readingPx = Math.min(32, Math.max(14, Number(prefs.readingTextSize) || 17));
+  const baseReading = Number(prefs.readingTextSize) || 17;
+  const readingPx = Math.min(32, Math.max(14, senior ? Math.max(baseReading, 22) : baseReading));
   root.style.setProperty("--reading-font-size", `${readingPx}px`);
   root.style.setProperty("--quran-font-size", `${prefs.quranFontScale}px`);
   root.style.setProperty(
     "--reading-line-height",
-    prefs.readingSpacing === "ضيق" ? "1.6" : prefs.readingSpacing === "متوسط" ? "1.85" : "2.1",
+    senior || prefs.readingSpacing === "واسع"
+      ? "2.1"
+      : prefs.readingSpacing === "ضيق"
+        ? "1.6"
+        : "1.85",
   );
   root.style.setProperty(
     "--reading-max-width",
@@ -121,9 +135,10 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
   root.dataset.readingTheme = prefs.readingTheme || "default";
   root.dir = prefs.direction;
   root.dataset.imageQuality = dataSaver ? "منخفض" : prefs.imageQuality;
-  root.dataset.uiDensity = prefs.uiDensity;
+  root.dataset.uiDensity = senior ? "comfortable" : prefs.uiDensity;
   root.dataset.dataSaver = dataSaver ? "1" : "0";
-  root.dataset.contrast = prefs.highContrast ? "high" : "normal";
+  root.dataset.contrast = senior || prefs.highContrast ? "high" : "normal";
+  root.dataset.seniorMode = senior ? "1" : "0";
   try {
     localStorage.setItem("adhkar_haptics_enabled", prefs.hapticsEnabled ? "true" : "false");
   } catch {
