@@ -103,25 +103,24 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
     /* ignore */
   }
 
-  const fontScale = prefs.seniorMode
+  const senior = prefs.seniorMode;
+  const fontScale = senior
     ? "1.16"
     : prefs.fontSize === "صغير"
       ? "0.92"
       : prefs.fontSize === "كبير"
         ? "1.08"
         : "1";
-  const densityScale = prefs.uiDensity === "compact" && !prefs.seniorMode ? "0.92" : "1";
+  const densityScale = prefs.uiDensity === "compact" && !senior ? "0.92" : "1";
   root.style.setProperty("--ui-font-scale", fontScale);
   root.style.setProperty("--ui-density-scale", densityScale);
-  const readingPx = Math.min(
-    32,
-    Math.max(14, Number(prefs.seniorMode ? Math.max(Number(prefs.readingTextSize) || 17, 22) : prefs.readingTextSize) || 17),
-  );
+  const baseReading = Number(prefs.readingTextSize) || 17;
+  const readingPx = Math.min(32, Math.max(14, senior ? Math.max(baseReading, 22) : baseReading));
   root.style.setProperty("--reading-font-size", `${readingPx}px`);
   root.style.setProperty("--quran-font-size", `${prefs.quranFontScale}px`);
   root.style.setProperty(
     "--reading-line-height",
-    prefs.seniorMode || prefs.readingSpacing === "واسع"
+    senior || prefs.readingSpacing === "واسع"
       ? "2.1"
       : prefs.readingSpacing === "ضيق"
         ? "1.6"
@@ -136,10 +135,10 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
   root.dataset.readingTheme = prefs.readingTheme || "default";
   root.dir = prefs.direction;
   root.dataset.imageQuality = dataSaver ? "منخفض" : prefs.imageQuality;
-  root.dataset.uiDensity = prefs.seniorMode ? "comfortable" : prefs.uiDensity;
+  root.dataset.uiDensity = senior ? "comfortable" : prefs.uiDensity;
   root.dataset.dataSaver = dataSaver ? "1" : "0";
-  root.dataset.contrast = prefs.seniorMode || prefs.highContrast ? "high" : "normal";
-  root.dataset.seniorMode = prefs.seniorMode ? "1" : "0";
+  root.dataset.contrast = senior || prefs.highContrast ? "high" : "normal";
+  root.dataset.seniorMode = senior ? "1" : "0";
   try {
     localStorage.setItem("adhkar_haptics_enabled", prefs.hapticsEnabled ? "true" : "false");
   } catch {

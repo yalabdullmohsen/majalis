@@ -2,7 +2,6 @@ import { Suspense, useEffect, useLayoutEffect, useRef, useState, type ComponentT
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
 import { AuthProvider, useAuth } from "@/components/AuthProvider";
 import { BrandReveal } from "@/components/BrandReveal";
-import { FirstRunSetup } from "@/components/FirstRunSetup";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
 import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
@@ -1114,7 +1113,6 @@ function App() {
             <AuthProvider>
               <BrandReveal>
                 <AppShell />
-                <FirstRunSetup />
               </BrandReveal>
             </AuthProvider>
           </UserPreferencesProvider>

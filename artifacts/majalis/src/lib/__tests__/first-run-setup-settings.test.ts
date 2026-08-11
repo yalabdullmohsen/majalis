@@ -44,8 +44,12 @@ assert.equal(DEFAULT_PREFERENCES.seniorMode, false);
 }
 
 const app = readFileSync(resolve(root, "src/App.tsx"), "utf8");
-assert.match(app, /FirstRunSetup/);
 assert.doesNotMatch(app, /\b(Onboarding|WelcomeScreen|IntroScreen)\b/);
+
+const brand = readFileSync(resolve(root, "src/components/BrandReveal.tsx"), "utf8");
+assert.match(brand, /FirstRunSetup/);
+assert.match(brand, /components\/FirstRunSetup/);
+assert.doesNotMatch(brand, /\b(Onboarding|WelcomeScreen|IntroScreen)\b/);
 
 const frs = readFileSync(resolve(root, "src/components/FirstRunSetup.tsx"), "utf8");
 assert.match(frs, /تخطّي/);
