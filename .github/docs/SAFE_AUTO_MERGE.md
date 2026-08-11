@@ -12,7 +12,7 @@ PR **Ready** (غير Draft) إلى `main` عندما:
 4. لا تعارض / ليس `BEHIND`
 5. لا `CHANGES_REQUESTED`
 6. ≤ **40** ملفًا، بلا حذف كبير
-7. فحوصات CI الأساسية خضراء (`Verify build` = typecheck + lint + test/content-guard + build)
+7. فحوصات CI الأساسية خضراء حسب **path lane** (`Verify build` يجمع النتائج؛ الوظائف غير المطلوبة قد تكون `skipped`)
 8. لا يلمس مسارات خطرة
 9. إذا كان الوسم `content-safe` / `safe:content`: الملفات ضمن مسارات تدقيق المحتوى فقط:
    - `artifacts/majalis/public/data/quiz/**`
@@ -21,6 +21,7 @@ PR **Ready** (غير Draft) إلى `main` عندما:
    - `CONTINUATION_PLAN.md`
 10. **Vercel Preview ignored/skipped** لا يمنع تدقيق المحتوى الآمن
 11. إذا كانت الفحوصات **pending**: النظام ينتظر (لا يُعطّل Auto-merge نهائيًا)
+12. **Fast Lane:** توثيق/سياسة فقط → بدون build/مصحف/postgres؛ المصحف يبقى بكامل بواباته عند لمس ملفات المصحف/القرآن؛ SQL/iOS/workflows تبقى مراجعة يدوية
 
 بعد الدمج (squash): **Vercel ينشر Production من `main` تلقائيًا** عبر مشروع **`majalis-majalis`** (المشروع القديم `majalis` إن وُجد يُعامل كـ legacy).
 

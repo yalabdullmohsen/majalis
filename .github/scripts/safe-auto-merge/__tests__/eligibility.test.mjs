@@ -174,6 +174,10 @@ describe("safe-auto-merge eligibility", () => {
       base({
         labels: ["code-safe"],
         files: [{ path: "artifacts/majalis/src/pages/Home.tsx", additions: 2, deletions: 1 }],
+        checks: [
+          ...greenChecks,
+          { name: "Color contrast (Playwright)", state: "pass" },
+        ],
       }),
     );
     assert.equal(r.eligible, true);
@@ -195,6 +199,11 @@ describe("safe-auto-merge eligibility", () => {
   it("blocks failed Color contrast when the check is present", () => {
     const r = evaluateEligibility(
       base({
+        labels: ["safe:ui"],
+        files: [
+          { path: "artifacts/majalis/src/index.css", additions: 2, deletions: 0 },
+          { path: "artifacts/majalis/src/components/NavBar.tsx", additions: 1, deletions: 0 },
+        ],
         checks: [
           ...greenChecks,
           { name: "Color contrast (Playwright)", state: "fail" },
@@ -202,6 +211,19 @@ describe("safe-auto-merge eligibility", () => {
       }),
     );
     assert.ok(r.blockers.some((b) => /Color contrast/i.test(b)));
+  });
+
+  it("does not require postgres or color contrast for docs-only Fast Lane", () => {
+    const r = evaluateEligibility(
+      base({
+        labels: ["maintenance-safe"],
+        files: [{ path: "docs/KNOWN_PITFALLS.md", additions: 5, deletions: 0 }],
+        checks: greenChecks.filter((c) => c.name !== "postgres-integration"),
+      }),
+    );
+    assert.equal(r.pathLane.lane, "docs-only");
+    assert.equal(r.eligible, true);
+    assert.ok(!r.blockers.some((b) => /postgres/i.test(b)));
   });
 
   it("blocks release-train-ready from immediate auto-merge", () => {
