@@ -8,12 +8,19 @@ import {
   loadQuranPeople,
   PERSON_CATEGORY_LABEL,
   MENTION_TYPE_LABEL,
+  QURAN_PEOPLE_PAGE_TITLE,
   type QuranPerson,
   type PersonCategory,
 } from "@/features/quran-people";
 import "@/styles/pages/quran-hub.css";
+import "@/styles/pages/quran-people.css";
 
 type SortMode = "alpha" | "mentions";
+
+function nameGlyph(nameAr: string): string {
+  const ch = Array.from(nameAr.trim())[0];
+  return ch || "ذ";
+}
 
 export default function QuranPeopleView() {
   const [people, setPeople] = useState<QuranPerson[]>([]);
@@ -26,8 +33,8 @@ export default function QuranPeopleView() {
 
   useEffect(() => {
     applyPageSeo({
-      title: "الأشخاص المذكورون في القرآن",
-      description: "فهرس من ذُكروا بأسمائهم في القرآن مع مواضع الآيات والربط بقصص الأنبياء.",
+      title: QURAN_PEOPLE_PAGE_TITLE,
+      description: "فهرس من ذُكروا في القرآن بأسمائهم، مع مواضع الآيات والربط بقصص الأنبياء.",
       path: "/quran/people",
     });
     let cancelled = false;
@@ -62,13 +69,13 @@ export default function QuranPeopleView() {
   }, [people, category, mention, deferredQ, sort]);
 
   return (
-    <div className="quran-hub-page" dir="rtl">
+    <div className="quran-hub-page qp-people" dir="rtl">
       <PageHero
-        title="الأشخاص المذكورون في القرآن"
+        title={QURAN_PEOPLE_PAGE_TITLE}
         description="أسماء صريحة موثّقة بمواضع الآيات — مع ربط لقصص الأنبياء دون إعادة سرد"
       />
-      <div className="quran-hub-page__body" style={{ maxWidth: 720, marginInline: "auto", padding: "0 1rem 2rem" }}>
-        <p style={{ color: "var(--color-muted, #6b6560)", fontSize: "0.95rem", lineHeight: 1.6 }}>
+      <div className="qp-people__body">
+        <p className="qp-people__intro">
           الدفعة الحالية: المذكورون بالاسم. ما ذُكر بالوصف فقط مدرج في طابور مراجعة ولا يُعرض كحقيقة قطعية.
           انظر أيضاً:{" "}
           <Link href="/prophets">قصص الأنبياء</Link>
@@ -76,71 +83,91 @@ export default function QuranPeopleView() {
           <Link href="/nations">الأمم السابقة</Link>
         </p>
 
-        <label style={{ display: "block", marginTop: "1rem" }}>
-          <span className="sr-only">بحث</span>
-          <input
-            type="search"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="ابحث باسم أو لقب…"
-            autoComplete="off"
-            enterKeyHint="search"
-            style={{
-              width: "100%",
-              padding: "0.65rem 0.85rem",
-              border: "1px solid var(--color-border, #ddd)",
-              borderRadius: 8,
-              fontSize: "1rem",
-              background: "var(--color-surface, #fff)",
-            }}
-          />
-        </label>
+        <div className="qp-people__toolbar">
+          <label>
+            <span className="sr-only">بحث</span>
+            <input
+              className="qp-people__search"
+              type="search"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="ابحث باسم أو لقب…"
+              autoComplete="off"
+              enterKeyHint="search"
+            />
+          </label>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "0.75rem" }}>
-          <select value={category} onChange={(e) => setCategory(e.target.value as PersonCategory | "all")} aria-label="التصنيف">
-            <option value="all">كل التصنيفات</option>
-            {(Object.keys(PERSON_CATEGORY_LABEL) as PersonCategory[]).map((c) => (
-              <option key={c} value={c}>{PERSON_CATEGORY_LABEL[c]}</option>
-            ))}
-          </select>
-          <select value={mention} onChange={(e) => setMention(e.target.value as typeof mention)} aria-label="نوع الذكر">
-            <option value="all">كل أنواع الذكر</option>
-            <option value="name">{MENTION_TYPE_LABEL.name}</option>
-            <option value="description">{MENTION_TYPE_LABEL.description}</option>
-          </select>
-          <select value={sort} onChange={(e) => setSort(e.target.value as SortMode)} aria-label="الترتيب">
-            <option value="alpha">أبجدي</option>
-            <option value="mentions">الأكثر ذكراً</option>
-          </select>
+          <div className="qp-people__filters">
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value as PersonCategory | "all")}
+              aria-label="التصنيف"
+            >
+              <option value="all">كل التصنيفات</option>
+              {(Object.keys(PERSON_CATEGORY_LABEL) as PersonCategory[]).map((c) => (
+                <option key={c} value={c}>{PERSON_CATEGORY_LABEL[c]}</option>
+              ))}
+            </select>
+            <select
+              value={mention}
+              onChange={(e) => setMention(e.target.value as typeof mention)}
+              aria-label="نوع الذكر"
+            >
+              <option value="all">كل أنواع الذكر</option>
+              <option value="name">{MENTION_TYPE_LABEL.name}</option>
+              <option value="description">{MENTION_TYPE_LABEL.description}</option>
+            </select>
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value as SortMode)}
+              aria-label="الترتيب"
+            >
+              <option value="alpha">أبجدي</option>
+              <option value="mentions">الأكثر ذكراً</option>
+            </select>
+          </div>
         </div>
 
         {loading ? (
-          <p style={{ marginTop: "1.5rem" }}>جاري التحميل…</p>
+          <p className="qp-people__status" role="status">جاري التحميل…</p>
         ) : filtered.length === 0 ? (
-          <p style={{ marginTop: "1.5rem" }}>لا نتائج مطابقة.</p>
+          <p className="qp-people__status">لا نتائج مطابقة.</p>
         ) : (
-          <ul style={{ listStyle: "none", padding: 0, margin: "1.25rem 0 0", display: "grid", gap: "0.65rem" }}>
-            {filtered.map((p) => (
-              <li key={p.slug}>
-                <Link
-                  href={`/quran/people/${p.slug}`}
-                  style={{
-                    display: "block",
-                    padding: "0.85rem 1rem",
-                    borderBottom: "1px solid var(--color-border, #e8e4df)",
-                    textDecoration: "none",
-                    color: "inherit",
-                  }}
-                >
-                  <strong style={{ fontSize: "1.05rem" }}>{p.nameAr}</strong>
-                  <span style={{ display: "block", fontSize: "0.85rem", color: "var(--color-muted, #6b6560)", marginTop: 4 }}>
-                    {PERSON_CATEGORY_LABEL[p.category]} · {MENTION_TYPE_LABEL[p.mentionType]} ·{" "}
-                    {toArabicDigits(p.occurrences.length)} موضع
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <>
+            <p className="qp-people__meta-count">
+              {toArabicDigits(filtered.length)} اسم
+            </p>
+            <ul className="qp-people__grid">
+              {filtered.map((p) => (
+                <li key={p.slug}>
+                  <Link
+                    href={`/quran/people/${p.slug}`}
+                    className="qp-person-card"
+                    data-category={p.category}
+                  >
+                    <div className="qp-person-card__top">
+                      <span className="qp-person-card__glyph" aria-hidden="true">
+                        {nameGlyph(p.nameAr)}
+                      </span>
+                      <div className="qp-person-card__heading">
+                        <h2 className="qp-person-card__name">{p.nameAr}</h2>
+                        <span className="qp-person-card__badge">
+                          {PERSON_CATEGORY_LABEL[p.category]}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="qp-person-card__def">{p.definition}</p>
+                    <div className="qp-person-card__foot">
+                      <span className="qp-person-card__meta">
+                        {MENTION_TYPE_LABEL[p.mentionType]} · {toArabicDigits(p.occurrences.length)} موضع
+                      </span>
+                      <span className="qp-person-card__cta" aria-hidden="true">التفاصيل ←</span>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </>
         )}
       </div>
     </div>

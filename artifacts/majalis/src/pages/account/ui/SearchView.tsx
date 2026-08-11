@@ -114,7 +114,7 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   seerah: "السيرة",
   nation: "الأمم السابقة",
   prophet: "قصص الأنبياء",
-  person: "أشخاص القرآن",
+  person: "الذين ذكروا في القرآن",
   "tafsir-audio": "تفسير صوتي",
   dua: "الأدعية",
   tajweed: "التجويد",

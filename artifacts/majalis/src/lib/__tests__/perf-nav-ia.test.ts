@@ -21,7 +21,7 @@ const contentHrefs = SERVICES_CENTER_GROUPS[1]!.items
   .filter((i) => i.action.kind === "link")
   .map((i) => (i.action as { href: string }).href);
 assert.ok(contentHrefs.indexOf("/prophets") < contentHrefs.indexOf("/nations"), "قصص الأنبياء قبل الأمم");
-assert.ok(contentHrefs.includes("/quran/people"), "أشخاص القرآن في المحتوى");
+assert.ok(contentHrefs.includes("/quran/people"), "الذين ذكروا في القرآن في المحتوى");
 assert.ok(contentHrefs.includes("/start-here") && contentHrefs.includes("/learning/paths"));
 
 const settingsHrefs = SERVICES_CENTER_GROUPS[2]!.items

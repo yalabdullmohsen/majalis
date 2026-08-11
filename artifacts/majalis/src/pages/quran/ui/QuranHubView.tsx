@@ -57,10 +57,10 @@ const QURAN_SECTIONS: QuranSection[] = [
   },
   {
     href: "/quran/people",
-    title: "الأشخاص في القرآن",
+    title: "الذين ذكروا في القرآن",
     desc: "من ذُكروا بأسمائهم في القرآن مع مواضع الآيات والربط بقصص الأنبياء — بلا إسرائيليات غير محرَّرة",
     Icon: Users,
-    tag: "أعلام",
+    tag: "أسماء",
   },
   {
     href: "/quran/surahs",

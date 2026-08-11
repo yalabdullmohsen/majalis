@@ -1,7 +1,11 @@
 /**
- * أشخاص مذكورون في القرآن — أنواع وتحميل كسول.
+ * الذين ذكروا في القرآن — أنواع وتحميل كسول.
  * لا تُعرض مادة status≠published. الوصفي/غير الموثّق → PEOPLE_REVIEW_QUEUE.
  */
+
+/** عنوان المنتج المعتمد للتنقّل والـSEO */
+export const QURAN_PEOPLE_PAGE_TITLE = "الذين ذكروا في القرآن";
+
 export type PersonCategory =
   | "prophet"
   | "righteous"

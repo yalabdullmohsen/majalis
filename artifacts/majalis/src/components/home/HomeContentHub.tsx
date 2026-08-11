@@ -7,7 +7,7 @@ function prefetch(load?: () => Promise<unknown>) {
   void load().catch(() => undefined);
 }
 
-/** محور محتوى عالي القيمة — قصص الأنبياء / أشخاص القرآن / الأمم السابقة */
+/** محور محتوى عالي القيمة — قصص الأنبياء / الذين ذكروا في القرآن / الأمم السابقة */
 export function HomeContentHub() {
   return (
     <section className="home-content-hub" aria-labelledby="home-content-hub-title">
