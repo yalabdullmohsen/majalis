@@ -3871,6 +3871,50 @@ html[data-reading-theme="night"] .content-surface--reading {
   padding-inline-start: 1.25rem;
 }
 
+.legal-license-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.legal-license-list li {
+  margin: 0;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--mj-brand-deep, currentColor) 12%, transparent);
+}
+
+.legal-license-list__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.legal-license-status {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, currentColor) 22%, transparent);
+  color: var(--mj-brand-deep, inherit);
+  background: color-mix(in srgb, var(--mj-brand, currentColor) 10%, transparent);
+}
+
+.legal-license-status[data-status="مطلوب"],
+.legal-license-status[data-status="غير محسوم"] {
+  border-color: color-mix(in srgb, var(--mj-brand-deep, currentColor) 40%, transparent);
+  background: color-mix(in srgb, var(--mj-brand-deep, currentColor) 8%, transparent);
+}
+
+.legal-license-status[data-status="معطّل"] {
+  opacity: 0.75;
+}
+
 .legal-back {
   margin-top: 2rem;
 }

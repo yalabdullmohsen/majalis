@@ -4,22 +4,109 @@ import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/Legal
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
-const DATA_SOURCES = [
-  { name: "dorar.net", desc: "موسوعة الدرر السنية للأحاديث والآثار والتخريج." },
-  { name: "sunnah.com", desc: "موسوعة الأحاديث النبوية مع ترجمات متعددة." },
-  { name: "aladhan.com", desc: "خدمة حساب مواقيت الصلاة والتقويم الهجري." },
-  { name: "alquran.cloud", desc: "بيانات القرآن الكريم بالرسم العثماني وصفحات المصحف." },
-  { name: "everyayah.com", desc: "بث تلاوات آية بآية (روابط خارجية؛ لا تُضمَّن ملفات صوت في الحزمة)." },
-  { name: "mp3quran.net", desc: "بث سور كاملة وتنزيل اختياري محلي بحدود حجم واضحة." },
+type SourceRow = {
+  name: string;
+  desc: string;
+  status: "ممنوح" | "جزئي" | "مطلوب" | "غير محسوم" | "معطّل";
+};
+
+const QURAN_SOURCES: SourceRow[] = [
+  {
+    name: "خطوط QPC V2 (مجمع الملك فهد / QUL)",
+    desc: "عرض المصحف صفحةً بصفحة. الاستخدام في تطبيق متجر يحتاج تأكيد توزيع — موثّق في docs/LICENSES.md.",
+    status: "مطلوب",
+  },
+  {
+    name: "Tanzil / AlQuran Cloud — نص عثماني",
+    desc: "نص حفص وبيانات السور المحلية. إعادة التوزيع الكامل قد تتطلب موافقة Tanzil.",
+    status: "جزئي",
+  },
+  {
+    name: "Quran.com / QUL — تخطيط الصفحات",
+    desc: "بيانات تخطيط QPC V2 عبر واجهات qurancdn. لا صور مصحف المدينة في الحزمة.",
+    status: "مطلوب",
+  },
+  {
+    name: "Amiri Quran (OFL)",
+    desc: "خط احتياطي يونيكود للعرض خارج مجسمات QPC.",
+    status: "ممنوح",
+  },
+];
+
+const AUDIO_SOURCES: SourceRow[] = [
+  {
+    name: "everyayah.com",
+    desc: "بث تلاوات آية بآية (روابط خارجية؛ لا تُضمَّن ملفات صوت في الحزمة).",
+    status: "جزئي",
+  },
+  {
+    name: "mp3quran.net",
+    desc: "بث سور كاملة وتنزيل اختياري محلي بحدود حجم واضحة.",
+    status: "جزئي",
+  },
   {
     name: "mohsalvi/adhan-audio (jsDelivr)",
-    desc: "بث تسجيلات أذان (عام/فجر). تُعرض حاليًا باسم النمط فقط بلا نسبة شخصية حتى التثبّت؛ التفاصيل في CREDITS.md.",
+    desc: "بث أذان باسم النمط فقط بلا نسبة شخصية حتى التثبّت.",
+    status: "جزئي",
   },
-  { name: "shamela.ws", desc: "المكتبة الشاملة — تراث إسلامي رقمي." },
-  { name: "dar-alifta.net", desc: "دار الإفتاء المصرية — فتاوى رسمية منشورة." },
-  { name: "binbaz.org.sa", desc: "موقع الشيخ ابن باز — فتاوى ومواد محقَّقة." },
-  { name: "iifa-fiqh.org", desc: "مجمع الفقه الإسلامي الدولي — قرارات وتوصيات." },
 ];
+
+const CONTENT_SOURCES: SourceRow[] = [
+  {
+    name: "Quran.com API — تفاسير",
+    desc: "الميسّر وغيره عبر جلب حي مع إسناد؛ لا حزمة تفاسير كاملة دون إذن.",
+    status: "جزئي",
+  },
+  {
+    name: "حصن المسلم (إشارات أذكار)",
+    desc: "حقوق الجمع والترتيب للمؤلف/الناشر؛ يُعرض مع الإسناد ويُطلب إذن الطبعة قبل التوسعة.",
+    status: "مطلوب",
+  },
+  {
+    name: "dorar.net / sunnah.com",
+    desc: "مراجع تخريج وعرض أحاديث مع العزو.",
+    status: "جزئي",
+  },
+  {
+    name: "aladhan.com",
+    desc: "حساب مواقيت الصلاة والتقويم الهجري.",
+    status: "جزئي",
+  },
+  {
+    name: "مكتبة المنصة (~١٧٣ كتابًا)",
+    desc: "فهرسة فردية ناقصة — معظمها قيد المراجعة ولا تُسوَّق كمرخّصة حتى الجرد.",
+    status: "غير محسوم",
+  },
+  {
+    name: "shamela.ws · dar-alifta · binbaz · iifa",
+    desc: "مراجع تراث وفتاوى وقرارات مع العزو عند الاقتباس.",
+    status: "جزئي",
+  },
+];
+
+function StatusBadge({ status }: { status: SourceRow["status"] }) {
+  return (
+    <span className="legal-license-status" data-status={status}>
+      {status}
+    </span>
+  );
+}
+
+function SourceList({ rows }: { rows: SourceRow[] }) {
+  return (
+    <ul className="legal-license-list">
+      {rows.map((s) => (
+        <li key={s.name}>
+          <div className="legal-license-list__head">
+            <strong dir="auto">{s.name}</strong>
+            <StatusBadge status={s.status} />
+          </div>
+          <span>{s.desc}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export default function SourcesLicensesPage() {
   useEffect(() => {
@@ -27,98 +114,82 @@ export default function SourcesLicensesPage() {
       path: "/sources",
       title: "المصادر والتراخيص | المجلس العلمي",
       description:
-        "مصادر البيانات والمراجع الخارجية المستخدمة في المجلس العلمي، وملاحظات الترخيص والاستخدام العادل.",
-      keywords: ["مصادر", "تراخيص", "المجلس العلمي", "مراجع"],
+        "جرد مصادر البيانات والأصول الرقمية في المجلس العلمي وحالة الإذن والترخيص لكل أصل.",
+      keywords: ["مصادر", "تراخيص", "QPC", "المجلس العلمي", "حقوق"],
     });
   }, []);
 
   return (
-    <LegalPageLayout eyebrow="الشفافية" title="المصادر والتراخيص" updatedAt="2026-08-09">
+    <LegalPageLayout eyebrow="الشفافية" title="المصادر والتراخيص" updatedAt="2026-08-11">
       <LegalSection title="الغرض من هذه الصفحة">
         <p>
-          نعرض هنا أبرز المصادر الخارجية التي تُستفاد منها بيانات عامة أو روابط
-          مراجعة، دون ادّعاء ملكية نصوصها الكاملة. التفصيل المنهجي للمراجعة
-          والاعتماد في صفحة <Link href="/methodology">منهجية التوثيق</Link>.
+          هذه الصفحة ملخص علني لجرد الحقوق. الجدول الكامل وحالات الإذن في{" "}
+          <code dir="ltr">docs/LICENSES.md</code>، مع{" "}
+          <code dir="ltr">CREDITS.md</code> و<code dir="ltr">LICENSE_RISKS.md</code>. المنهجية في{" "}
+          <Link href="/methodology">منهجية التوثيق</Link>.
         </p>
-      </LegalSection>
-
-      <LegalSection title="مصادر بيانات ومراجع">
-        <ul>
-          {DATA_SOURCES.map((s) => (
-            <li key={s.name}>
-              <strong dir="ltr">{s.name}</strong> — {s.desc}
-            </li>
-          ))}
-        </ul>
         <p>
-          أي مادة تُعرض في المنصة تُرفق بمصدرها قدر الإمكان؛ وما لم يُراجع بشريًا
-          يبقى موسومًا «قيد المراجعة».
+          أي أصل حالته «مطلوب» أو «غير محسوم» لا يُوسَّع في إصدار المتجر حتى يُحسم الإذن أو يُستبدل.
         </p>
       </LegalSection>
 
-      <LegalSection title="التلاوة الصوتية">
+      <LegalSection title="المصحف والنص والخطوط">
+        <SourceList rows={QURAN_SOURCES} />
+      </LegalSection>
+
+      <LegalSection title="التلاوة والأذان">
+        <SourceList rows={AUDIO_SOURCES} />
         <p>
           التشغيل الافتراضي بثّ حي من{" "}
           <a href="https://everyayah.com" target="_blank" rel="noopener noreferrer">
             everyayah.com
           </a>{" "}
-          (آية بآية) و{" "}
+          و{" "}
           <a href="https://mp3quran.net" target="_blank" rel="noopener noreferrer">
             mp3quran.net
-          </a>{" "}
-          (سورة كاملة). لا تُحزَم ملفات صوت داخل التطبيق ولا تُعاد استضافتها على
-          خوادمنا. التنزيل دون اتصال اختياري وبسقف تخزين موضّح في الإعدادات. قائمة
-          القرّاء ومجلداتهم في <code dir="ltr">CREDITS.md</code>. مفتاح تعطيل تشغيلي
-          لإخفاء قارئ أو مصدر:{" "}
+          </a>
+          . لا تُعاد استضافة الملفات على خوادمنا. مفتاح تعطيل:{" "}
           <code dir="ltr">/data/quran-audio-remote.json</code>.
         </p>
       </LegalSection>
 
-      <LegalSection title="صوت الأذان">
+      <LegalSection title="التفاسير والمحتوى والمكتبة">
+        <SourceList rows={CONTENT_SOURCES} />
         <p>
-          بث حي من مستودع{" "}
-          <a
-            href="https://github.com/mohsalvi/adhan-audio"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            mohsalvi/adhan-audio
-          </a>{" "}
-          عبر jsDelivr. لا تُحزَم ملفات الأذان في الثنائي. ما لم تُتحقَّق نسبة
-          التسجيل إلى مؤذن بعينه يُعرض باسم النمط فقط (مثل «أذان الحرم المكي»).
-          جدول التسجيلات وحالة الترخيص في <code dir="ltr">CREDITS.md</code> و{" "}
-          <code dir="ltr">LICENSE_RISKS.md</code>. مفتاح تعطيل تشغيلي:{" "}
-          <code dir="ltr">/data/adhan-audio-remote.json</code>.
+          تفسير صوتي: معطّل عمدًا (كتالوج فارغ) حتى توثيق النسبة والترخيص لكل مقطع.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="البرمجيات مفتوحة المصدر">
+        <p>
+          واجهة المنصة تستخدم مكتبات (React وVite وCapacitor وغيرها) وفق تراخيص تساهلية
+          (MIT / Apache / BSD / ISC…). بوابة CI <code dir="ltr">test:licenses</code> ترفض
+          إدخال تبعية بترخيص GPL/AGPL/SSPL صِرف في شجرة الحزم.
         </p>
       </LegalSection>
 
       <LegalSection title="التراخيص والاستخدام">
         <ul>
           <li>
-            واجهة المجلس العلمي ومكوّناتها البرمجية ملك للمنصة، ويُسمح بالتصفح
-            الشخصي والتعليمي وفق{" "}
-            <Link href="/terms">شروط الاستخدام</Link>.
+            واجهة المجلس العلمي ومكوّناتها البرمجية ملك للمنصة، ويُسمح بالتصفح الشخصي
+            والتعليمي وفق <Link href="/terms">شروط الاستخدام</Link>.
           </li>
           <li>
-            نصوص القرآن الكريم وبيانات الرسم العثماني تُعرض وفق مصادرها الموثّقة؛
-            لا ندّعي حقوقًا حصرية عليها.
+            نصوص القرآن تُعرض وفق مصادرها؛ لا ندّعي حقوقًا حصرية على النص العثماني.
           </li>
           <li>
-            الأحاديث والفتاوى والقرارات المستوردة تبقى منسوبة لمصادرها؛ الاقتباس
-            للتعليم مع العزو، لا لإعادة النشر كمنتج مستقل بلا إذن أصحاب الحقوق
-            عند الاقتضاء.
+            الأحاديث والفتاوى تبقى منسوبة لمصادرها؛ الاقتباس للتعليم مع العزو.
           </li>
           <li>
-            مكتبات الواجهة مفتوحة المصدر تُستخدم وفق تراخيصها (MIT وغيرها) كما
-            تظهر في مستودع المشروع.
+            حصن المسلم وغيره من المجاميع الحديثة لها حقوق جمع وترتيب — لا إعادة نشر كمنتج مستقل بلا إذن.
           </li>
         </ul>
       </LegalSection>
 
-      <LegalSection title="الإبلاغ عن خطأ في النسبة">
+      <LegalSection title="الإبلاغ عن خطأ في النسبة أو الترخيص">
         <p>
-          إن وجدت نسبة ناقصة أو خاطئة، راسلنا عبر{" "}
-          <Link href="/contact">تواصل معنا</Link> أو استخدم زر الإبلاغ أسفل المادة.
+          راسلنا عبر <Link href="/contact">تواصل معنا</Link> أو استخدم زر الإبلاغ أسفل المادة.
+          بلاغات الحقوق تُعالَج بأولوية قصوى.
         </p>
       </LegalSection>
 
