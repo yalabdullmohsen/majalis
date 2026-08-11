@@ -25,6 +25,7 @@ import {
   resolveGateMode,
 } from "./mushaf-gate-active-page.mjs";
 import { MUSHAF_SINGLE_PASS_MEASURE_SOURCE } from "./mushaf-single-pass-measure-fn.mjs";
+import { resolveGateViewport } from "./mushaf-viewports.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -34,7 +35,7 @@ const BASE = EXTERNAL_BASE || `http://127.0.0.1:${PORT}`;
 const OUT =
   process.env.MUSHAF_SINGLE_PASS_OUT ||
   join(ROOT, "artifacts/mushaf-single-pass/measurements.json");
-const VIEWPORT = { width: 390, height: 844 };
+const VIEWPORT = resolveGateViewport();
 const DIST_INDEX = join(ROOT, "dist/index.html");
 
 function sleep(ms) {
@@ -83,7 +84,7 @@ if (!EXTERNAL_BASE) {
     ? ["exec", "vite", "preview", "--config", "vite.config.ts", "--host", "127.0.0.1", "--port", PORT]
     : ["exec", "vite", "--config", "vite.config.ts", "--host", "127.0.0.1", "--port", PORT];
   console.log(
-    `single-pass-measure: ${usePreview ? "preview" : "vite"} على ${BASE} · صفحات=${pages.length} (shard ${shard}/${shards})`,
+    `single-pass-measure: ${usePreview ? "preview" : "vite"} على ${BASE} · صفحات=${pages.length} (shard ${shard}/${shards}) · viewport=${VIEWPORT.width}×${VIEWPORT.height}`,
   );
   server = spawn("pnpm", args, {
     cwd: ROOT,
@@ -147,6 +148,7 @@ const payload = {
   mode,
   shard,
   shards,
+  viewport: { id: VIEWPORT.id, width: VIEWPORT.width, height: VIEWPORT.height, label: VIEWPORT.label },
   pageCount: results.length,
   pageNumbers: pages,
   elapsedMs: Date.now() - t0,
@@ -155,5 +157,5 @@ const payload = {
 };
 writeFileSync(OUT, JSON.stringify(payload), "utf8");
 console.log(
-  `single-pass-measure: ${results.length} draws (shard ${shard}/${shards}) → ${OUT} in ${payload.elapsedMs}ms`,
+  `single-pass-measure: ${results.length} draws (shard ${shard}/${shards}) @ ${VIEWPORT.width}×${VIEWPORT.height} → ${OUT} in ${payload.elapsedMs}ms`,
 );
