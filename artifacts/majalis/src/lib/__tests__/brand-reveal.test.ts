@@ -14,6 +14,8 @@ assert.match(component, /export function BrandReveal/);
 assert.match(component, /\/brand\/splash-logo\.png/);
 assert.match(component, /sessionStorage/);
 assert.match(component, /prefers-reduced-motion/);
+assert.match(component, /webdriver/);
+assert.match(component, /noBrandReveal/);
 assert.doesNotMatch(component, /\bmj-boot-splash\b/);
 assert.doesNotMatch(component, /\b(Onboarding|WelcomeScreen|IntroScreen)\b/);
 

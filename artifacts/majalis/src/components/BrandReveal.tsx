@@ -20,6 +20,24 @@ function alreadySeen(): boolean {
   }
 }
 
+/** تجاوز في اختبارات المتصفح الآلية حتى لا تحجب لقطات المصحف وغيرها. */
+function shouldSkipReveal(): boolean {
+  try {
+    if (typeof navigator !== "undefined" && (navigator as Navigator & { webdriver?: boolean }).webdriver) {
+      return true;
+    }
+  } catch {
+    /* ignore */
+  }
+  try {
+    const q = new URLSearchParams(window.location.search);
+    if (q.get("noBrandReveal") === "1") return true;
+  } catch {
+    /* ignore */
+  }
+  return false;
+}
+
 function markSeen(): void {
   try {
     sessionStorage.setItem(SESSION_KEY, "1");
@@ -37,7 +55,9 @@ function prefersReducedMotion(): boolean {
 }
 
 export function BrandReveal({ children }: { children: ReactNode }) {
-  const [phase, setPhase] = useState<Phase>(() => (alreadySeen() ? "gone" : "live"));
+  const [phase, setPhase] = useState<Phase>(() =>
+    alreadySeen() || shouldSkipReveal() ? "gone" : "live",
+  );
 
   useEffect(() => {
     if (phase !== "live") return;
