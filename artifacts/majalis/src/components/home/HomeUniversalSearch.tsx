@@ -20,6 +20,7 @@ import {
   type UniversalSectionId,
   type UniversalSearchResponse,
 } from "@/features/search/universal-home-search";
+import { QURAN_MOOD_CHIPS } from "@/lib/quran-topics-index";
 import "@/styles/components/home-universal-search.css";
 
 const FOCUS_SUGGESTIONS = [
@@ -130,7 +131,7 @@ export function HomeUniversalSearch() {
           id={inputId}
           type="search"
           className="hus-input"
-          placeholder="ابحث في الآيات والكتب والعلماء والأذكار والأسئلة…"
+          placeholder="ابحث بالحالة أو المفهوم: أشعر بالحزن، الرزق، الصبر…"
           value={raw}
           autoComplete="off"
           enterKeyHint="search"
@@ -169,6 +170,18 @@ export function HomeUniversalSearch() {
         <div className="hus-panel" id={listId} role="listbox" aria-label="نتائج البحث">
           {showIdle ? (
             <div className="hus-idle">
+              <div className="hus-block">
+                <p className="hus-block__title">ابحث بالحالة أو المفهوم</p>
+                <ul className="hus-chips">
+                  {QURAN_MOOD_CHIPS.map((chip) => (
+                    <li key={chip.query}>
+                      <button type="button" onClick={() => setRaw(chip.query)}>
+                        {chip.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
               {history.length > 0 ? (
                 <div className="hus-block">
                   <p className="hus-block__title">آخر عمليات البحث</p>

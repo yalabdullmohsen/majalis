@@ -31,7 +31,19 @@ export const QURAN_TOPICS: QuranTopicEntry[] = [
   {
     id: "sabr",
     label: "الصبر",
-    aliases: ["صبر", "اصبر", "الصابرين", "تصبر"],
+    aliases: [
+      "صبر",
+      "اصبر",
+      "الصابرين",
+      "تصبر",
+      "أشعر بالحزن",
+      "حزين",
+      "الحزن",
+      "الصبر عند البلاء",
+      "البلاء",
+      "قلق",
+      "هم",
+    ],
     verses: [
       { surah: 2, ayah: 153, note: "استعينوا بالصبر والصلاة" },
       { surah: 2, ayah: 155 },
@@ -57,7 +69,7 @@ export const QURAN_TOPICS: QuranTopicEntry[] = [
   {
     id: "ibtila",
     label: "الابتلاء",
-    aliases: ["ابتلاء", "فتنة", "اختبار", "يختبر"],
+    aliases: ["ابتلاء", "فتنة", "اختبار", "يختبر", "الصبر عند البلاء", "مصيبة", "شدة"],
     verses: [
       { surah: 2, ayah: 155 },
       { surah: 29, ayah: 2 },
@@ -81,7 +93,7 @@ export const QURAN_TOPICS: QuranTopicEntry[] = [
   {
     id: "rizq",
     label: "الرزق",
-    aliases: ["رزق", "بركة", "سعة الرزق"],
+    aliases: ["رزق", "بركة", "سعة الرزق", "الرزق والبركة", "أحتاج رزقًا", "ضائقة مالية"],
     verses: [
       { surah: 2, ayah: 212 },
       { surah: 65, ayah: 2 },
@@ -234,6 +246,15 @@ function scoreTopic(topic: QuranTopicEntry, nq: string): number {
   }
   return best;
 }
+
+/** شرائح حالات شعورية/مفاهيمية للبحث السريع */
+export const QURAN_MOOD_CHIPS = [
+  { label: "أشعر بالحزن", query: "أشعر بالحزن" },
+  { label: "الرزق والبركة", query: "الرزق والبركة" },
+  { label: "الصبر عند البلاء", query: "الصبر عند البلاء" },
+  { label: "التوبة", query: "التوبة" },
+  { label: "العلم", query: "العلم" },
+] as const;
 
 /** بحث موضوعي دلالي — يُدمج في محرك البحث الرئيسي */
 export function searchQuranTopics(query: string, limit = 5): QuranTopicSearchHit[] {

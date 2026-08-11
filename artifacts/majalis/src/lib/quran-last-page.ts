@@ -23,6 +23,24 @@ export async function saveLastPage(pageNumber: number): Promise<void> {
   try {
     const page = clampMushafPage(pageNumber);
     localStorage.setItem(LAST_PAGE_KEY, page.toString());
+    const userId =
+      typeof window !== "undefined"
+        ? (window as Window & { __MAJALIS_USER_ID__?: string | null }).__MAJALIS_USER_ID__
+        : null;
+    if (userId) {
+      void import("@/lib/user-profile-service")
+        .then((m) =>
+          m.saveResumePosition(userId, {
+            content_type: "mushaf_page",
+            content_id: "last",
+            content_title: `المصحف — صفحة ${page}`,
+            content_url: `/mushaf/page/${page}`,
+            thumbnail_icon: "book-open",
+            position: { pct: page / 604, section: `page:${page}`, item_index: page },
+          }),
+        )
+        .catch(() => undefined);
+    }
   } catch (e) {
     console.error("خطأ في حفظ الصفحة", e);
   }

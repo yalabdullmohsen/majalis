@@ -68,6 +68,13 @@ const QuranMiniPlayerBar = lazyWithRetry(
   () => import("@/components/quran/QuranMiniPlayerBar").then((m) => ({ default: m.QuranMiniPlayerBar })),
   "QuranMiniPlayerBar",
 );
+const CrossDeviceResumeToast = lazyWithRetry(
+  () =>
+    import("@/components/CrossDeviceResumeToast").then((m) => ({
+      default: m.CrossDeviceResumeToast,
+    })),
+  "CrossDeviceResumeToast",
+);
 
 const NotFound = lazy(() => import("@/views/not-found"));
 const HomePage = lazy(() => import("@/pages/account/HomePage"));
@@ -1013,6 +1020,9 @@ function AppShellInner() {
       <BottomNavBar />
       <Suspense fallback={null}>
         <QuranMiniPlayerBar />
+      </Suspense>
+      <Suspense fallback={null}>
+        <CrossDeviceResumeToast />
       </Suspense>
       <VisualViewportKeyboardBridge />
       <SafeAreaDebugOverlay />

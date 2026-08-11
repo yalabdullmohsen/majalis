@@ -434,7 +434,7 @@ export async function ensureValidReciterPreference(): Promise<string> {
 const PLAYBACK_RATE_KEY = "mj-quran-playback-rate-v1";
 
 /** Valid rates — يشمل 0.75×–2× حسب متطلّب التشغيل. */
-export const VALID_PLAYBACK_RATES = [0.75, 1, 1.25, 1.5, 1.75, 2] as const;
+export const VALID_PLAYBACK_RATES = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] as const;
 const VALID_RATES: number[] = [...VALID_PLAYBACK_RATES];
 
 export function normalizePlaybackRate(rate: number): number {
@@ -455,8 +455,7 @@ export function loadPlaybackRate(): number {
   try {
     const stored = Number(localStorage.getItem(PLAYBACK_RATE_KEY));
     if (VALID_RATES.includes(stored)) return stored;
-    /* ترحيل 0.5 القديم → 0.75 */
-    if (stored === 0.5) return 0.75;
+    /* 0.5 مدعوم صراحةً للتحفيظ البطيء */
     return 1;
   } catch {
     return 1;

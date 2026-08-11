@@ -9,6 +9,7 @@
  * - Listeners are isolated with try/catch so a bad subscriber cannot crash playback.
  */
 import { getAyahAudioUrl, loadPlaybackRate, normalizePlaybackRate, savePlaybackRate } from "@/lib/quran-audio";
+import { resolveReciterForQuality } from "@/lib/audio-quality-pref";
 import { getSurahMeta } from "@/lib/quran-api";
 import {
   advanceAfterAyahEnded,
@@ -75,6 +76,9 @@ export class AudioEngine {
   private static instance: AudioEngine | null = null;
 
   private audio: HTMLAudioElement | null = null;
+  /** عنصر ثانٍ لتحميل الآية التالية مسبقًا (فجوة أقل عند الانتقال). */
+  private preloadAudio: HTMLAudioElement | null = null;
+  private preloadedKey: string | null = null;
   private reciterId = "alafasy";
   private playbackRate = 1;
   private rateHydrated = false;
@@ -419,6 +423,28 @@ export class AudioEngine {
    * Load and play a specific ayah for the active (or provided) reciter.
    * On media failure sets `playerState` to `"error"` and resolves (does not throw).
    */
+  /** حمّل الآية التالية في الخلفية لتقليل الانقطاع. */
+  private prebufferNextAyah(): void {
+    if (this.surah == null || this.ayah == null) return;
+    const next = nextAyah(this.surah, this.ayah);
+    if (!next) return;
+    const key = `${this.reciterId}:${next.surah}:${next.ayah}`;
+    if (this.preloadedKey === key) return;
+    const url = getAyahAudioUrl(next.surah, next.ayah, this.reciterId);
+    if (!url) return;
+    try {
+      if (!this.preloadAudio) {
+        this.preloadAudio = new Audio();
+        this.preloadAudio.preload = "auto";
+      }
+      this.preloadAudio.src = url;
+      this.preloadAudio.load();
+      this.preloadedKey = key;
+    } catch {
+      /* ignore preload failures */
+    }
+  }
+
   async playAyah(surah: number, ayah: number, reciterId?: string): Promise<void> {
     try {
       const { claimAudio, registerAudioStopper } = await import("@/lib/exclusive-audio-bus");
@@ -430,6 +456,7 @@ export class AudioEngine {
       /* ignore bus */
     }
     if (reciterId) this.reciterId = reciterId;
+    this.reciterId = resolveReciterForQuality(this.reciterId);
     this.surah = surah;
     this.ayah = ayah;
     if (this.repeatMode === "surah" && !this.surahRepeatStart) {
@@ -456,6 +483,7 @@ export class AudioEngine {
       await this.activatePlaybackSession();
       await el.play();
       this.setPlayerState("playing");
+      this.prebufferNextAyah();
       void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
     } catch (err) {
       console.warn("[AudioEngine] playAyah:", err);

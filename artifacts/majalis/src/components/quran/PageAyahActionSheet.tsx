@@ -24,6 +24,7 @@ import {
   Timer,
   RefreshCw,
   Users,
+  Sparkles,
 } from "lucide-react";
 import {
   copyAyahText,
@@ -32,6 +33,15 @@ import {
   shareAyahAsText,
   shareAyahWithTafsir,
 } from "@/lib/share-ayah";
+import {
+  explainAyahWithAi,
+  type AiAyahExplainResult,
+} from "@/lib/ai-ayah-explain";
+import {
+  readAudioQualityPref,
+  saveAudioQualityPref,
+  type AudioQualityPref,
+} from "@/lib/audio-quality-pref";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
 import { setMushafUnsavedWork } from "@/lib/mushaf-unsaved";
 import {
@@ -79,7 +89,7 @@ const TafsirAudioSheetLazy = lazy(() => import("@/components/quran/TafsirAudioSh
 const TAFSIR_COLLAPSE_CHARS = 280;
 const TAFSIR_BRIEF_MAX_PARAS = 4;
 
-type PanelMode = "none" | "tafsir" | "audio";
+type PanelMode = "none" | "tafsir" | "audio" | "ai";
 
 function tafsirParagraphs(text: string): string[] {
   const cleaned = text.replace(/\r\n/g, "\n").trim();
@@ -162,10 +172,15 @@ export function PageAyahActionSheet({
   const [translationText, setTranslationText] = useState<string | null>(null);
   const [translationLoading, setTranslationLoading] = useState(false);
   const [translationError, setTranslationError] = useState(false);
+  const [aiExplain, setAiExplain] = useState<AiAyahExplainResult | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const [audioQuality, setAudioQuality] = useState<AudioQualityPref>(() => readAudioQualityPref());
   const editionMenuRef = useRef<HTMLDivElement | null>(null);
   const translationMenuRef = useRef<HTMLDivElement | null>(null);
 
   const showTafsirPanel = panelMode === "tafsir";
+  const showAiPanel = panelMode === "ai";
   const showAudioTools = panelMode === "audio";
 
   useEffect(() => {
@@ -195,6 +210,9 @@ export function PageAyahActionSheet({
     setAyahPeople([]);
     setTranslationText(null);
     setTranslationError(false);
+    setAiExplain(null);
+    setAiError(null);
+    setAiLoading(false);
 
     let cancelled = false;
     void (async () => {
@@ -264,6 +282,33 @@ export function PageAyahActionSheet({
       ac.abort();
     };
   }, [surahNum, ayahNum, tafsirEdition, showTafsirPanel, tafsirRetryKey]);
+
+  useEffect(() => {
+    if (!showAiPanel) return;
+    let cancelled = false;
+    const load = async () => {
+      setAiLoading(true);
+      setAiError(null);
+      try {
+        const result = await explainAyahWithAi({
+          surah: surahNum,
+          ayah: ayahNum,
+        });
+        if (!cancelled) setAiExplain(result);
+      } catch (err) {
+        if (!cancelled) {
+          setAiError(err instanceof Error ? err.message : "تعذر تحميل الشرح");
+          setAiExplain(null);
+        }
+      } finally {
+        if (!cancelled) setAiLoading(false);
+      }
+    };
+    void load();
+    return () => {
+      cancelled = true;
+    };
+  }, [showAiPanel, surahNum, ayahNum]);
 
   useEffect(() => {
     if (!showTafsirPanel || !showTranslation) {
@@ -517,6 +562,15 @@ export function PageAyahActionSheet({
             </button>
             <button
               type="button"
+              className={`aas-v3__action${showAiPanel ? " is-on" : ""}`}
+              onClick={() => selectPanel("ai")}
+              aria-pressed={showAiPanel}
+            >
+              <Sparkles size={20} aria-hidden="true" />
+              <span>شرح ذكي</span>
+            </button>
+            <button
+              type="button"
               className={`aas-v3__action${showAudioTools || isPlaying ? " is-on" : ""}`}
               onClick={handleListen}
               disabled={!canPlay}
@@ -716,6 +770,65 @@ export function PageAyahActionSheet({
                       ))}
                     </div>
                   ) : null}
+                </div>
+              ) : null}
+              <div className="aas-v3__disclosure" role="group" aria-label="جودة الصوت">
+                {(["64", "128"] as const).map((q) => (
+                  <button
+                    key={q}
+                    type="button"
+                    className={`aas-v3__chip${audioQuality === q ? " is-on" : ""}`}
+                    onClick={() => {
+                      setAudioQuality(q);
+                      saveAudioQualityPref(q);
+                    }}
+                  >
+                    {q}kbps
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          {showAiPanel ? (
+            <div className="aas-v3__tafsir" aria-live="polite">
+              <div className="aas-v3__tafsir-tools">
+                <strong className="aas-v3__chip aas-v3__chip--wide">شرح الآية بالذكاء الاصطناعي</strong>
+                <button
+                  type="button"
+                  className="aas-v3__chip"
+                  disabled={aiLoading}
+                  onClick={() => {
+                    setAiExplain(null);
+                    void explainAyahWithAi({
+                      surah: surahNum,
+                      ayah: ayahNum,
+                      forceRefresh: true,
+                    })
+                      .then(setAiExplain)
+                      .catch((err) =>
+                        setAiError(err instanceof Error ? err.message : "تعذر التحديث"),
+                      );
+                  }}
+                >
+                  <RefreshCw size={15} aria-hidden="true" />
+                  تحديث
+                </button>
+              </div>
+              {aiLoading ? <p className="aas-v3__muted">جارٍ توليد الشرح…</p> : null}
+              {aiError ? <p className="aas-v3__error">{aiError}</p> : null}
+              {aiExplain ? (
+                <div className="aas-v3__tafsir-body">
+                  {aiExplain.cached ? (
+                    <p className="aas-v3__muted">من الكاش المحلي</p>
+                  ) : null}
+                  <h3>المعنى الإجمالي</h3>
+                  <p>{aiExplain.sections.overall}</p>
+                  <h3>أسباب النزول / السياق</h3>
+                  <p>{aiExplain.sections.context}</p>
+                  <h3>الفوائد والأحكام المستفادة</h3>
+                  <p>{aiExplain.sections.takeaways || aiExplain.raw}</p>
+                  <p className="aas-v3__muted">{aiExplain.disclaimer}</p>
                 </div>
               ) : null}
             </div>
