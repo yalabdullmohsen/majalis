@@ -2,8 +2,12 @@
 
 Enterprise runbooks and architecture references for long-term operations.
 
+> **قبل أي تعديل على المصحف:** اقرأ [KNOWN_PITFALLS.md](./KNOWN_PITFALLS.md) ثم [MUSHAF_SPEC.md](./MUSHAF_SPEC.md).
+
 | Document | Audience |
 |---|---|
+| [KNOWN_PITFALLS.md](./KNOWN_PITFALLS.md) | Engineers (مصحف / iOS) — اقرأ أولاً |
+| [MUSHAF_SPEC.md](./MUSHAF_SPEC.md) | Engineers (مصحف) |
 | [Architecture.md](./Architecture.md) | Engineers |
 | [Security.md](./Security.md) | Engineers / DevSecOps |
 | [Deployment.md](./Deployment.md) | Engineers / SRE |
