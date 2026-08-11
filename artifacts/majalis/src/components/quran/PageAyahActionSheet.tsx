@@ -33,6 +33,7 @@ import {
   shareAyahWithTafsir,
 } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
+import { addTextHighlight } from "@/lib/text-highlights";
 import { setMushafUnsavedWork } from "@/lib/mushaf-unsaved";
 import {
   VALID_PLAYBACK_RATES,
@@ -429,6 +430,17 @@ export function PageAyahActionSheet({
 
   const handleSaveNote = () => {
     saveNote(surahNum, ayahNum, noteText);
+    if (noteText.trim()) {
+      addTextHighlight({
+        color: "yellow",
+        source: "ayah",
+        sourceId: `${surahNum}:${ayahNum}`,
+        sourceTitle: `سورة ${surahName} · آية ${ayahNum}`,
+        quote: ayahText.slice(0, 2000),
+        note: noteText.trim(),
+        href: `/mushaf?ayah=${surahNum}:${ayahNum}`,
+      });
+    }
     setMushafUnsavedWork(false);
     setNoteSaved(true);
     setTimeout(() => setNoteSaved(false), 1500);

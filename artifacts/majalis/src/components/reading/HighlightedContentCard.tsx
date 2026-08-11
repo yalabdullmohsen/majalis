@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ReadingText } from "@/components/reading/ReadingText";
+import { TextHighlightCapture } from "@/components/reading/TextHighlightCapture";
 import { ContentActionBar } from "@/components/reading/ContentActionBar";
 import { markReadingProgress, type ReadingSection } from "@/lib/reading-progress";
 import { readPreferences } from "@/lib/user-preferences";
@@ -138,18 +139,25 @@ export function HighlightedContentCard({
 
       {bodyVisible && (
         <div className="highlighted-card__body">
-          <div
-            className={`highlighted-card__highlight${readingActive ? " highlighted-card__highlight--quiet" : ""}`}
+          <TextHighlightCapture
+            source={contentType || section || "content"}
+            sourceId={contentId || id}
+            sourceTitle={title || tags[0] || primaryText.slice(0, 48) || "فائدة"}
+            href={typeof window !== "undefined" ? window.location.pathname : undefined}
           >
-            {collapsible && headerAsButton ? (
-              secondaryText && <ReadingText className="highlighted-card__answer">{secondaryText}</ReadingText>
-            ) : (
-              <ReadingText className="highlighted-card__text">{primaryText}</ReadingText>
-            )}
-            {!collapsible && secondaryText && (
-              <ReadingText className="highlighted-card__secondary">{secondaryText}</ReadingText>
-            )}
-          </div>
+            <div
+              className={`highlighted-card__highlight${readingActive ? " highlighted-card__highlight--quiet" : ""}`}
+            >
+              {collapsible && headerAsButton ? (
+                secondaryText && <ReadingText className="highlighted-card__answer">{secondaryText}</ReadingText>
+              ) : (
+                <ReadingText className="highlighted-card__text">{primaryText}</ReadingText>
+              )}
+              {!collapsible && secondaryText && (
+                <ReadingText className="highlighted-card__secondary">{secondaryText}</ReadingText>
+              )}
+            </div>
+          </TextHighlightCapture>
 
           {meta.length > 0 && (
             <dl className="highlighted-card__meta">

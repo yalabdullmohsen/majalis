@@ -23,6 +23,34 @@ export async function saveLastPage(pageNumber: number): Promise<void> {
   try {
     const page = clampMushafPage(pageNumber);
     localStorage.setItem(LAST_PAGE_KEY, page.toString());
+    // Background cloud resume for signed-in users (hybrid local→cloud)
+    void (async () => {
+      try {
+        const { getSupabaseClient } = await import("@/lib/supabase-bootstrap");
+        const client = getSupabaseClient();
+        const {
+          data: { user },
+        } = await client.auth.getUser();
+        if (!user?.id) return;
+        const { saveResumePosition } = await import("@/lib/user-profile-service");
+        await saveResumePosition(user.id, {
+          content_type: "mushaf_page",
+          content_id: String(page),
+          content_title: `المصحف — صفحة ${page}`,
+          content_url: `/mushaf?page=${page}`,
+          thumbnail_icon: "BookOpen",
+          position: { item_index: page },
+        });
+        const { enqueueOutbox } = await import("@/lib/sync-outbox");
+        await enqueueOutbox("reading_progress", `mushaf:${user.id}`, {
+          userId: user.id,
+          page,
+          updatedAt: new Date().toISOString(),
+        });
+      } catch {
+        /* offline / unsigned */
+      }
+    })();
   } catch (e) {
     console.error("خطأ في حفظ الصفحة", e);
   }

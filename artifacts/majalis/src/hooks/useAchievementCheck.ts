@@ -1,12 +1,16 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useAuth } from "@/components/AuthProvider";
-import {
-  getUserProfileStats,
-  checkAndAwardBadges,
-  type EarnedBadge,
-} from "@/lib/user-profile-service";
-import { BADGE_MAP } from "@/lib/user-badges";
 import { readLocalJson, writeLocalJson, isStringArray } from "@/lib/safe-json";
+
+/** Light type — avoid pulling user-profile-service into the entry graph. */
+export type AchievementBadge = {
+  key: string;
+  titleAr: string;
+  descAr: string;
+  icon: string;
+  category: string;
+  earned_at: string;
+};
 
 const STORAGE_KEY = "majalis_notified_badges";
 
@@ -27,7 +31,7 @@ function markNotified(keys: string[]) {
 
 export function useAchievementCheck() {
   const { user, isLoggedIn } = useAuth();
-  const [newBadges, setNewBadges] = useState<EarnedBadge[]>([]);
+  const [newBadges, setNewBadges] = useState<AchievementBadge[]>([]);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const mountedRef = useRef(true);
 
@@ -45,6 +49,11 @@ export function useAchievementCheck() {
   const runCheck = useCallback(async () => {
     if (!isLoggedIn || !user?.id) return;
     try {
+      // Deferred: badge defs + profile/supabase stay out of the initial entry bundle.
+      const [{ getUserProfileStats, checkAndAwardBadges }, { BADGE_MAP }] = await Promise.all([
+        import("@/lib/user-profile-service"),
+        import("@/lib/user-badges"),
+      ]);
       const stats = await getUserProfileStats(user.id);
       const newKeys = await checkAndAwardBadges(user.id, stats);
       if (newKeys.length === 0 || !mountedRef.current) return;
@@ -53,7 +62,7 @@ export function useAchievementCheck() {
       const unnotified = newKeys.filter((k) => !notified.has(k));
       if (unnotified.length === 0) return;
 
-      const badges: EarnedBadge[] = unnotified.map((key) => {
+      const badges: AchievementBadge[] = unnotified.map((key) => {
         const def = BADGE_MAP.get(key);
         return {
           key,

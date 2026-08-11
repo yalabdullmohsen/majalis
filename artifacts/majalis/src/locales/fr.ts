@@ -110,4 +110,11 @@ export const fr: Record<TranslationKey, string> = {
   error: "Une erreur est survenue",
   not_found: "Page introuvable",
   skip_to_content: "Aller au contenu",
+
+  vault_title: "Coffre de savoir",
+  vault_highlights: "Bibliothèque des bénéfices",
+  vault_highlights_empty: "Sélectionnez un texte dans le tafsir ou les bénéfices et choisissez une couleur pour enregistrer une note.",
+  sync_guest_migrated: "Vos données locales ont été synchronisées avec votre compte",
+  streak_days: "Jours consécutifs",
+  lang_overlay_note: "Le Coran, le tafsir et les hadiths restent en arabe authentique avec des traductions contextuelles si besoin.",
 };

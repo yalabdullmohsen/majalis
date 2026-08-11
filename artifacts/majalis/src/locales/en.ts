@@ -110,4 +110,11 @@ export const en: Record<TranslationKey, string> = {
   error: "An error occurred",
   not_found: "Page not found",
   skip_to_content: "Skip to content",
+
+  vault_title: "Knowledge Vault",
+  vault_highlights: "Benefits Library",
+  vault_highlights_empty: "Select text in tafsir or benefits and choose a color to save a scholarly note.",
+  sync_guest_migrated: "Your local data was synced to your account",
+  streak_days: "Day streak",
+  lang_overlay_note: "Quran, tafsir, and hadith remain in authentic Arabic with contextual translation overlays when needed.",
 };

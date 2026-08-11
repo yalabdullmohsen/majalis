@@ -49,6 +49,28 @@ import {
 } from "@/lib/quran-sleep-timer";
 import { getReciter } from "@/lib/quran-audio";
 
+/**
+ * Adaptive bitrate — loaded only when playback starts (not on module import).
+ * First play uses the requested reciter synchronously (iOS user-gesture safe);
+ * subsequent plays use the cached resolver once the chunk arrives.
+ */
+type AdaptiveResolver = (id: string) => string;
+let adaptiveResolver: AdaptiveResolver | null = null;
+let adaptiveLoad: Promise<void> | null = null;
+
+function resolveAdaptiveReciterId(currentReciterId: string): string {
+  if (!adaptiveLoad) {
+    adaptiveLoad = import("@/lib/adaptive-audio-quality")
+      .then((m) => {
+        adaptiveResolver = m.resolveAdaptiveReciterId;
+      })
+      .catch(() => {
+        adaptiveLoad = null;
+      });
+  }
+  return adaptiveResolver ? adaptiveResolver(currentReciterId) : currentReciterId;
+}
+
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
 export function useAyahPlayer(surahNum: number, totalAyahs: number) {
@@ -222,11 +244,21 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       void claimAudio("tilawa");
     });
     void refreshQuranAudioRemoteConfig();
-    const urlQueue = audioSourceUrlQueue({ kind: "ayah", surah, ayah, reciterId: reciter });
+    const effectiveReciter = resolveAdaptiveReciterId(reciter);
+    const urlQueue = audioSourceUrlQueue({
+      kind: "ayah",
+      surah,
+      ayah,
+      reciterId: effectiveReciter,
+    });
     let urlIndex = 0;
     if (urlQueue.length === 0) {
       if (mountedRef.current) setPlayerState("error");
-      logDiagnostic("audio-chunk-fail", "no-audio-source", { surah, ayah, reciter });
+      logDiagnostic("audio-chunk-fail", "no-audio-source", {
+        surah,
+        ayah,
+        reciter: effectiveReciter,
+      });
       return;
     }
     audio.src = urlQueue[0]!;

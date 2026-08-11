@@ -32,6 +32,7 @@ import {
   type TafsirCategory,
 } from "@/lib/tafsir-seed";
 import { toArabicDigits } from "@/lib/utils";
+import { TextHighlightCapture } from "@/components/reading/TextHighlightCapture";
 import "@/styles/pages/tafsir.css";
 
 type CardItem = {
@@ -388,21 +389,28 @@ export default function TafsirPage() {
                     {card.meta ? <span className="tf-card__meta">{card.meta}</span> : null}
                   </button>
                   {isOpen ? (
-                    <div className="tf-card__body">
-                      <p className="tf-card__def">{card.body}</p>
-                      {card.example ? (
-                        <div className="tf-card__example">
-                          <span className="tf-card__example-label">أمثلة:</span>
-                          {card.example}
-                        </div>
-                      ) : null}
-                      {card.note ? <div className="tf-card__note">{card.note}</div> : null}
-                      {card.libraryId ? (
-                        <Link href={`/library/${card.libraryId}`} className="tf-card__lib">
-                          عرض الكتاب في المكتبة ←
-                        </Link>
-                      ) : null}
-                    </div>
+                    <TextHighlightCapture
+                      source="tafsir"
+                      sourceId={card.id}
+                      sourceTitle={card.title}
+                      href="/tafsir"
+                    >
+                      <div className="tf-card__body">
+                        <p className="tf-card__def">{card.body}</p>
+                        {card.example ? (
+                          <div className="tf-card__example">
+                            <span className="tf-card__example-label">أمثلة:</span>
+                            {card.example}
+                          </div>
+                        ) : null}
+                        {card.note ? <div className="tf-card__note">{card.note}</div> : null}
+                        {card.libraryId ? (
+                          <Link href={`/library/${card.libraryId}`} className="tf-card__lib">
+                            عرض الكتاب في المكتبة ←
+                          </Link>
+                        ) : null}
+                      </div>
+                    </TextHighlightCapture>
                   ) : null}
                 </article>
               );

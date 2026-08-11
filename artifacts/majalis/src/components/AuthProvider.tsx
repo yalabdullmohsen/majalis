@@ -70,6 +70,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             next !== undefined
           ) {
             setUser(next);
+            if (next?.id) {
+              void import("@/lib/guest-cloud-merge").then((m) =>
+                m.scheduleGuestCloudMerge(next.id),
+              );
+            }
           }
         } catch {
           if (activeRef.current && signedOutGeneration.current === generationAtStart) {
@@ -108,7 +113,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               .then((next) => {
                 if (!activeRef.current) return;
                 if (signedOutGeneration.current !== gen) return; // سباق sign-out
-                if (next !== null && next !== undefined) setUser(next);
+                if (next !== null && next !== undefined) {
+                  setUser(next);
+                  if (event === "SIGNED_IN" && next.id) {
+                    void import("@/lib/guest-cloud-merge").then((m) =>
+                      m.scheduleGuestCloudMerge(next.id),
+                    );
+                  }
+                }
               })
               .catch(() => {
                 /* شبكة مؤقتة — لا تمسح الجلسة */
