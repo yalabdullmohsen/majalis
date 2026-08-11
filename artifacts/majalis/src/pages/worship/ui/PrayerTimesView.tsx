@@ -10,6 +10,12 @@ import {
   setSelectedGovernorate,
   type PrayerSlot,
 } from "@/lib/prayer-times";
+import {
+  getPrayerCalcMethod,
+  PRAYER_CALC_METHODS,
+  setPrayerCalcMethod,
+  type PrayerCalcMethodId,
+} from "@/lib/prayer-calc-prefs";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/pages/prayer-times.css";
@@ -150,6 +156,7 @@ export default function PrayerTimesPage() {
   const [location, navigate] = useLocation();
   const [govId, setGovId] = useState(() => getSelectedGovernorate().id);
   const [govOpen, setGovOpen] = useState(false);
+  const [calcMethod, setCalcMethod] = useState<PrayerCalcMethodId>(() => getPrayerCalcMethod());
 
   function handleBack() {
     const current = normalizeNavPath(location);
@@ -189,6 +196,13 @@ export default function PrayerTimesPage() {
   const { data, countdown, loading: _loading, reload } = usePrayerCountdown(govId);
   const [pinnedKey, setPinnedKey] = useState<string | null>(null);
   const gov = KUWAIT_GOVERNORATES.find((g) => g.id === govId) ?? KUWAIT_GOVERNORATES[0];
+
+  function handleCalcMethod(id: PrayerCalcMethodId) {
+    setPrayerCalcMethod(id);
+    setCalcMethod(id);
+    setPinnedKey(null);
+    reload();
+  }
 
   function handleGov(id: string) {
     setSelectedGovernorate(id);
@@ -304,19 +318,37 @@ export default function PrayerTimesPage() {
       </header>
 
       {govOpen && (
-        <div id="pts-gov-panel" className="pts-gov" role="tablist" aria-label="اختيار المحافظة">
-          {KUWAIT_GOVERNORATES.map((g) => (
-            <button
-              key={g.id}
-              type="button"
-              role="tab"
-              className={`pts-gov__chip${govId === g.id ? " pts-gov__chip--active" : ""}`}
-              onClick={() => handleGov(g.id)}
-              aria-selected={govId === g.id}
+        <div id="pts-gov-panel" className="pts-gov-panel" role="region" aria-label="إعدادات الموقع والحساب">
+          <div className="pts-gov" role="tablist" aria-label="اختيار المحافظة">
+            {KUWAIT_GOVERNORATES.map((g) => (
+              <button
+                key={g.id}
+                type="button"
+                role="tab"
+                className={`pts-gov__chip${govId === g.id ? " pts-gov__chip--active" : ""}`}
+                onClick={() => handleGov(g.id)}
+                aria-selected={govId === g.id}
+              >
+                {g.name}
+              </button>
+            ))}
+          </div>
+          <label className="pts-method" htmlFor="pts-calc-method">
+            <span className="pts-method__label">طريقة الحساب</span>
+            <select
+              id="pts-calc-method"
+              className="pts-method__select"
+              value={calcMethod}
+              onChange={(e) => handleCalcMethod(e.target.value as PrayerCalcMethodId)}
+              dir="rtl"
             >
-              {g.name}
-            </button>
-          ))}
+              {PRAYER_CALC_METHODS.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.labelAr}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
       )}
 
