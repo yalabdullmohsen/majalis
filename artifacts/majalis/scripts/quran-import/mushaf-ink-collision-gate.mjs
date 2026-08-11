@@ -127,9 +127,14 @@ for (let pageNumber = 1; pageNumber <= 604; pageNumber++) {
   }
 }
 
-/* عيّنة PR عبر resolveGatePages؛ المسح الكامل بـ MUSHAF_GATE_FULL=1 */
+/* عيّنة PR عبر resolveGatePages؛ المسح الكامل بـ MUSHAF_GATE_FULL=1.
+ * محلياً بدون env: FREEZE + بدايات السور + العيّنة (أوسع للتحقق اليدوي).
+ * في CI: العيّنة ٢٥ فقط حتى يبقى الجدار ضمن الهدف. */
 const samplePages =
-  (process.env.MUSHAF_GATE_PAGES || process.env.MUSHAF_GATE_FULL === "1")
+  process.env.CI === "true" ||
+  process.env.GITHUB_ACTIONS === "true" ||
+  process.env.MUSHAF_GATE_PAGES ||
+  process.env.MUSHAF_GATE_FULL === "1"
     ? resolveGatePages()
     : [...new Set([...FREEZE, ...surahStartPages, ...resolveGatePages()])].sort(
         (a, b) => a - b,
