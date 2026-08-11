@@ -846,8 +846,6 @@ export function MushafPageV2({
                     size = Math.max(Math.max(11, BASE_FONT * 0.52), size * 0.94);
                     container.style.fontSize = `${size}px`;
                     const minG = OPENING_MIN_LINE_GAP_RATIO * size;
-                    heights = measureHeights();
-                    const sumH = heights.reduce((s, h) => s + h, 0);
                     firstTop = liveBasBottom() + OPENING_BASMALA_TO_LINE_PX;
                     gap = Math.max(minG, OPENING_MIN_LINE_GAP_RATIO * size);
                     placeFrom(firstTop, gap);
