@@ -34,3 +34,12 @@ export {
   type AppSearchResult,
   type AppSearchResponse,
 } from "@/features/search/app-search";
+export {
+  runUniversalSearch,
+  enrichWithVerseHits,
+  UNIVERSAL_DEBOUNCE_MS,
+  UNIVERSAL_SECTION_ORDER,
+  UNIVERSAL_SECTION_LABELS,
+  type UniversalSearchResponse,
+  type UniversalSectionId,
+} from "@/features/search/universal-home-search";

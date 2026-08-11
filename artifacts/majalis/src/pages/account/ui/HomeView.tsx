@@ -10,6 +10,7 @@ import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLocalResumeCard } from "@/components/home/HomeLocalResumeCard";
+import { HomeUniversalSearch } from "@/components/home/HomeUniversalSearch";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { FridayBanner } from "@/components/FridayBanner";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
@@ -185,6 +186,10 @@ export default function HomePage() {
           </>
         }
       />
+
+      <SectionErrorBoundary name="HomeUniversalSearch">
+        <HomeUniversalSearch />
+      </SectionErrorBoundary>
 
       {visibleWidgets.includes("lessons") && (
         <section className="m2030-band m2030-band--sage" aria-label="دروس اليوم">
