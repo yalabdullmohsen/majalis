@@ -43,6 +43,7 @@ import {
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
+import { QpcFontPackBanner } from "@/components/quran/QpcFontPackBanner";
 import { MushafAyahMarkerSvg, MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
 import { MushafLayeredPage } from "@/features/mushaf";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
@@ -654,6 +655,7 @@ export default function MushafPageView() {
       style={{ ["--ayah-paper" as string]: immersivePaper }}
     >
       <>
+          <QpcFontPackBanner currentPage={page} />
           {/* هيدر عائم بسيط — بلا أزرار أو خلفيات (مطابق مخطط آية) */}
           <header className="mpv-ayah-header" aria-label="معلومات الصفحة">
             <span className="mpv-ayah-header__juz">{headerJuzLabel}</span>

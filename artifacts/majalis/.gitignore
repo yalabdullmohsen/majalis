@@ -14,3 +14,4 @@ supabase/.temp/
 .tmp-seed-extract/
 .backup/
 artifacts/mushaf-single-pass/
+artifacts/mushaf-multi-viewport/
