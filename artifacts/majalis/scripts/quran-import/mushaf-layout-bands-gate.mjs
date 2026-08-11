@@ -231,20 +231,21 @@ async function probe(n, { showToolbar }) {
         };
       }
     }
-    const baselinesPx = [...document.querySelectorAll(".mf2-grid-slot--line[data-grid-slot]")].map(
-      (el) => {
-        const r = el.getBoundingClientRect();
-        const slot = Number(el.getAttribute("data-grid-slot"));
-        const mid = r.top + r.height / 2;
-        const midPct = lr && lr.h > 0 ? ((mid - lr.top) / lr.h) * 100 : null;
-        const exp = baselines[slot - 1];
-        const devPx =
-          exp != null && midPct != null && lr
-            ? Math.abs(midPct - exp) * (lr.h / 100)
-            : null;
-        return { slot, mid: +mid.toFixed(2), midPct, devPx };
-      },
-    );
+    /* فتحات الورقة النشطة فقط — جار التقليب (visibility:hidden) له شبكة صفحة أخرى */
+    const baselinesPx = [
+      ...(lines?.querySelectorAll(".mf2-grid-slot--line[data-grid-slot]") || []),
+    ].map((el) => {
+      const r = el.getBoundingClientRect();
+      const slot = Number(el.getAttribute("data-grid-slot"));
+      const mid = r.top + r.height / 2;
+      const midPct = lr && lr.h > 0 ? ((mid - lr.top) / lr.h) * 100 : null;
+      const exp = baselines[slot - 1];
+      const devPx =
+        exp != null && midPct != null && lr
+          ? Math.abs(midPct - exp) * (lr.h / 100)
+          : null;
+      return { slot, mid: +mid.toFixed(2), midPct, devPx };
+    });
     let maxDev = 0;
     for (const b of baselinesPx) if (b.devPx != null) maxDev = Math.max(maxDev, b.devPx);
 
