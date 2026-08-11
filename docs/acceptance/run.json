@@ -1,0 +1,203 @@
+{
+  "builtAgainst": {
+    "commit": "d3ce0d97d3779dfa86c6dbdaeae91bde34782d0b",
+    "shortCommit": "d3ce0d97",
+    "builtAt": "2026-08-11T15:39:52.740Z",
+    "ref": "main"
+  },
+  "ranAt": "2026-08-11T15:44:58.292Z",
+  "viewports": {
+    "390x844": [
+      {
+        "id": "01-p1",
+        "page": 1,
+        "url": "https://majlisilm.com/mushaf/page/1",
+        "ms": 6387,
+        "title": "صفحة 1 — الفاتحة | المصحف الشريف | المجلس العلمي",
+        "shot": "shots/01-p1-390x844.png",
+        "status": "ok",
+        "note": "آخر سطر الضالين"
+      },
+      {
+        "id": "02-p2",
+        "page": 2,
+        "url": "https://majlisilm.com/mushaf/page/2",
+        "ms": 5250,
+        "title": "صفحة 2 — البقرة | المصحف الشريف | المجلس العلمي",
+        "shot": "shots/02-p2-390x844.png",
+        "status": "ok",
+        "note": "آخر سطر المفلحون"
+      },
+      {
+        "id": "03-p3",
+        "page": 3,
+        "url": "https://majlisilm.com/mushaf/page/3",
+        "ms": 5410,
+        "title": "صفحة 3 — البقرة | المصحف الشريف | المجلس العلمي",
+        "shot": "shots/03-p3-390x844.png",
+        "status": "ok",
+        "note": "١٥ سطراً / آية ١٦"
+      },
+      {
+        "id": "07-p50",
+        "page": 50,
+        "url": "https://majlisilm.com/mushaf/page/50",
+        "ms": 5414,
+        "title": "صفحة 50 — آل عمران | المصحف الشريف | المجلس العلمي",
+        "shot": "shots/07-p50-390x844.png",
+        "status": "ok",
+        "note": "بسملة مستقلة"
+      },
+      {
+        "id": "07-p235",
+        "page": 235,
+        "url": "https://majlisilm.com/mushaf/page/235",
+        "ms": 5231,
+        "title": "صفحة 235 — هود | المصحف الشريف | المجلس العلمي",
+        "shot": "shots/07-p235-390x844.png",
+        "status": "ok",
+        "note": "بسملة مستقلة"
+      },
+      {
+        "id": "08-p228",
+        "page": 228,
+        "url": "https://majlisilm.com/mushaf/page/228",
+        "ms": 5252,
+        "title": "صفحة 228 — هود | المصحف الشريف | المجلس العلمي",
+        "shot": "shots/08-p228-390x844.png",
+        "status": "ok",
+        "note": "تجاوز أفقي"
+      },
+      {
+        "id": "09-p600",
+        "page": 600,
+        "url": "https://majlisilm.com/mushaf/page/600",
+        "ms": 5282,
+        "title": "صفحة 600 — العاديات | المصحف الشريف | المجلس العلمي",
+        "shot": "shots/09-p600-390x844.png",
+        "status": "ok",
+        "note": "كثافة الشارة"
+      },
+      {
+        "id": "06-toolbar",
+        "page": 1,
+        "shot": "shots/06-toolbar-p1-390x844.png",
+        "status": "ok",
+        "note": "شريط الأدوات بعد لمس"
+      },
+      {
+        "id": "10-flip",
+        "status": "measured",
+        "flipTimesMs": [
+          306,
+          311,
+          303,
+          306,
+          321,
+          320,
+          319,
+          310,
+          308,
+          295
+        ],
+        "note": "تقليب ١٠ صفحات عبر تنقل URL"
+      }
+    ],
+    "375x667": [
+      {
+        "id": "01-p1",
+        "page": 1,
+        "url": "https://majlisilm.com/mushaf/page/1",
+        "ms": 6328,
+        "title": "صفحة 1 — الفاتحة | المصحف الشريف | المجلس العلمي",
+        "shot": "se/01-p1-375x667.png",
+        "status": "ok",
+        "note": "آخر سطر الضالين"
+      },
+      {
+        "id": "02-p2",
+        "page": 2,
+        "url": "https://majlisilm.com/mushaf/page/2",
+        "ms": 5304,
+        "title": "صفحة 2 — البقرة | المصحف الشريف | المجلس العلمي",
+        "shot": "se/02-p2-375x667.png",
+        "status": "ok",
+        "note": "آخر سطر المفلحون"
+      },
+      {
+        "id": "03-p3",
+        "page": 3,
+        "url": "https://majlisilm.com/mushaf/page/3",
+        "ms": 5237,
+        "title": "صفحة 3 — البقرة | المصحف الشريف | المجلس العلمي",
+        "shot": "se/03-p3-375x667.png",
+        "status": "ok",
+        "note": "١٥ سطراً / آية ١٦"
+      },
+      {
+        "id": "07-p50",
+        "page": 50,
+        "url": "https://majlisilm.com/mushaf/page/50",
+        "ms": 5244,
+        "title": "صفحة 50 — آل عمران | المصحف الشريف | المجلس العلمي",
+        "shot": "se/07-p50-375x667.png",
+        "status": "ok",
+        "note": "بسملة مستقلة"
+      },
+      {
+        "id": "07-p235",
+        "page": 235,
+        "url": "https://majlisilm.com/mushaf/page/235",
+        "ms": 5231,
+        "title": "صفحة 235 — هود | المصحف الشريف | المجلس العلمي",
+        "shot": "se/07-p235-375x667.png",
+        "status": "ok",
+        "note": "بسملة مستقلة"
+      },
+      {
+        "id": "08-p228",
+        "page": 228,
+        "url": "https://majlisilm.com/mushaf/page/228",
+        "ms": 5282,
+        "title": "صفحة 228 — هود | المصحف الشريف | المجلس العلمي",
+        "shot": "se/08-p228-375x667.png",
+        "status": "ok",
+        "note": "تجاوز أفقي"
+      },
+      {
+        "id": "09-p600",
+        "page": 600,
+        "url": "https://majlisilm.com/mushaf/page/600",
+        "ms": 5230,
+        "title": "صفحة 600 — العاديات | المصحف الشريف | المجلس العلمي",
+        "shot": "se/09-p600-375x667.png",
+        "status": "ok",
+        "note": "كثافة الشارة"
+      },
+      {
+        "id": "06-toolbar",
+        "page": 1,
+        "shot": "se/06-toolbar-p1-375x667.png",
+        "status": "ok",
+        "note": "شريط الأدوات بعد لمس"
+      },
+      {
+        "id": "10-flip",
+        "status": "measured",
+        "flipTimesMs": [
+          516,
+          320,
+          319,
+          329,
+          314,
+          329,
+          309,
+          323,
+          323,
+          358
+        ],
+        "note": "تقليب ١٠ صفحات عبر تنقل URL"
+      }
+    ]
+  }
+}

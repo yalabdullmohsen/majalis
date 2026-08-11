@@ -10,6 +10,13 @@
  */
 import { getAyahAudioUrl, loadPlaybackRate, normalizePlaybackRate, savePlaybackRate } from "@/lib/quran-audio";
 import { getSurahMeta } from "@/lib/quran-api";
+import {
+  advanceAfterAyahEnded,
+  createLoopRuntime,
+  normalizeLoopConfig,
+  type AyahLoopConfig,
+  type AyahLoopRuntime,
+} from "@/lib/ayah-loop-controller";
 
 export type RepeatMode = "off" | "ayah" | "surah";
 export type TeachPhase = "idle" | "teacher" | "student" | "waiting";
@@ -26,6 +33,8 @@ export type AudioEngineSnapshot = {
   ayah: number | null;
   currentTime: number;
   duration: number;
+  /** وضع الحفظ النشط (نطاق آيات) إن وُجد */
+  loopConfig: AyahLoopConfig | null;
 };
 
 export type AyahChangePayload = {
@@ -80,6 +89,11 @@ export class AudioEngine {
   private surahRepeatStart: { surah: number; ayah: number } | null = null;
   /** يحدّ من إعادة الرسم أثناء timeupdate دون فقدان إحساس التقدم. */
   private lastTimeEmitMs = 0;
+  private loopSurah: number | null = null;
+  private loopRuntime: AyahLoopRuntime | null = null;
+  private loopDelayTimer: ReturnType<typeof setTimeout> | null = null;
+  private interruptionBound = false;
+  private interruptionCleanups: Array<() => void> = [];
 
   static getInstance(): AudioEngine {
     if (!AudioEngine.instance) AudioEngine.instance = new AudioEngine();
@@ -89,6 +103,7 @@ export class AudioEngine {
   /** Test helper — tears down the singleton without deleting user data. */
   static __resetInstanceForTests(): void {
     try {
+      AudioEngine.instance?.clearLoopConfig();
       AudioEngine.instance?.pause();
       AudioEngine.instance?.audio?.removeAttribute("src");
     } catch {
@@ -148,6 +163,51 @@ export class AudioEngine {
     } catch (err) {
       console.warn("[AudioEngine] native playback session:", err);
     }
+    this.bindInterruptionListeners();
+  }
+
+  /** استئناف بعد المكالمة / إيقاف عند نزع السمّاعة — عبر الجسر الأصلي. */
+  private bindInterruptionListeners(): void {
+    if (this.interruptionBound) return;
+    this.interruptionBound = true;
+    void import("@/lib/native-playback-audio").then(({ getNativePlaybackPlugin }) => {
+      void getNativePlaybackPlugin().then((plugin) => {
+        if (!plugin?.addListener) return;
+        void plugin.addListener("audioInterruption", (data) => {
+          const type = String(data.type ?? "");
+          if (type === "began") {
+            this.pause();
+            return;
+          }
+          if (type === "ended" && data.shouldResume === true) {
+            const el = this.audio;
+            if (!el || this.surah == null || this.ayah == null) return;
+            void el.play().then(() => this.setPlayerState("playing")).catch(() => {
+              this.setPlayerState("error");
+            });
+          }
+        }).then((handle) => {
+          this.interruptionCleanups.push(() => {
+            void handle.remove();
+          });
+        });
+        void plugin.addListener("audioRouteChange", (data) => {
+          // AVAudioSession.RouteChangeReason.oldDeviceUnavailable == 2
+          const reasonNum = Number(data.reason);
+          const reason = String(data.reason ?? data.type ?? "");
+          if (
+            reasonNum === 2 ||
+            /oldDeviceUnavailable|headphones|unplug|disconnect/i.test(reason)
+          ) {
+            this.pause();
+          }
+        }).then((handle) => {
+          this.interruptionCleanups.push(() => {
+            void handle.remove();
+          });
+        });
+      });
+    });
   }
 
   private async releasePlaybackSession(): Promise<void> {
@@ -215,6 +275,7 @@ export class AudioEngine {
     return {
       playerState: this.playerState,
       teachPhase: this.teachPhase,
+      loopConfig: this.loopRuntime?.active ? this.loopRuntime.config : null,
       repeatMode: this.repeatMode,
       reciterId: this.reciterId,
       playbackRate: this.playbackRate,
@@ -299,7 +360,49 @@ export class AudioEngine {
       this.surahRepeatStart = { surah: this.surah, ayah: 1 };
     }
     if (mode === "off") this.surahRepeatStart = null;
+    if (mode !== "off") this.clearLoopConfig();
     this.emitSnapshot();
+  }
+
+  private clearLoopDelay(): void {
+    if (this.loopDelayTimer != null) {
+      clearTimeout(this.loopDelayTimer);
+      this.loopDelayTimer = null;
+    }
+  }
+
+  private clearLoopConfig(): void {
+    this.clearLoopDelay();
+    this.loopRuntime = null;
+    this.loopSurah = null;
+  }
+
+  /**
+   * وضع الحفظ: نطاق آيات + تكرار + فاصل صمت.
+   * يُعطّل repeatMode البسيط. مرّر null للإلغاء.
+   */
+  setLoopConfig(
+    surah: number,
+    cfg: (Partial<AyahLoopConfig> & { startAyah: number }) | null,
+  ): AyahLoopConfig | null {
+    this.clearLoopDelay();
+    if (!cfg) {
+      this.clearLoopConfig();
+      this.emitSnapshot();
+      return null;
+    }
+    const total = ayahCount(surah);
+    const normalized = normalizeLoopConfig(cfg, total);
+    this.loopSurah = surah;
+    this.loopRuntime = createLoopRuntime(normalized);
+    this.repeatMode = "off";
+    this.surahRepeatStart = null;
+    this.emitSnapshot();
+    return normalized;
+  }
+
+  getLoopConfig(): AyahLoopConfig | null {
+    return this.loopRuntime?.active ? this.loopRuntime.config : null;
   }
 
   /**
@@ -416,9 +519,9 @@ export class AudioEngine {
     if (prev) await this.playAyah(prev.surah, prev.ayah);
   }
 
-  /** دورة سرعات واجهة المشغّل المصغّر: 1 → 1.25 → 1.5 → 1 */
+  /** دورة سرعات وضع الحفظ/المصغّر: 0.75 → 1 → 1.25 → 0.75 */
   cycleMiniPlayerRate(): number {
-    const cycle = [1, 1.25, 1.5] as const;
+    const cycle = [0.75, 1, 1.25] as const;
     const cur = normalizePlaybackRate(this.playbackRate);
     const idx = cycle.findIndex((r) => Math.abs(r - cur) < 0.01);
     const next = cycle[(idx + 1) % cycle.length] ?? 1;
@@ -426,6 +529,7 @@ export class AudioEngine {
   }
 
   pause(): void {
+    this.clearLoopDelay();
     this.audio?.pause();
     this.setPlayerState("paused");
   }
@@ -435,6 +539,7 @@ export class AudioEngine {
    * Keeps the element for a quick resume/re-play of another ayah.
    */
   stop(): void {
+    this.clearLoopDelay();
     const el = this.audio;
     if (!el) {
       this.setPlayerState("idle");
@@ -457,6 +562,7 @@ export class AudioEngine {
    * Call on leaving the reading screen so media resources are released.
    */
   stopAndUnload(): void {
+    this.clearLoopConfig();
     const el = this.audio;
     if (el) {
       try {
@@ -473,15 +579,52 @@ export class AudioEngine {
     this.teachPhase = "idle";
     this.surahRepeatStart = null;
     this.setPlayerState("idle");
+    for (const c of this.interruptionCleanups) {
+      try {
+        c();
+      } catch {
+        /* ignore */
+      }
+    }
+    this.interruptionCleanups = [];
+    this.interruptionBound = false;
     void this.releasePlaybackSession();
   }
 
   /**
-   * Handle track end: teach gap → repeat ayah/surah → or advance once.
+   * Handle track end: hifz loop → teach gap → repeat ayah/surah → or advance once.
    * Failures in nested `playAyah` already surface as `playerState: "error"`.
    */
   private async onEnded(): Promise<void> {
     try {
+      if (
+        this.loopRuntime?.active &&
+        this.loopSurah != null &&
+        this.surah === this.loopSurah &&
+        this.ayah != null
+      ) {
+        const { runtime, next } = advanceAfterAyahEnded(this.loopRuntime, this.ayah);
+        this.loopRuntime = runtime;
+        this.emitSnapshot();
+        if (next.action === "done") {
+          this.clearLoopConfig();
+          this.setPlayerState("idle");
+          return;
+        }
+        const delay = next.delayMs;
+        const playNext = () => {
+          this.loopDelayTimer = null;
+          void this.playAyah(this.loopSurah!, next.ayah);
+        };
+        if (delay > 0) {
+          this.setPlayerState("paused");
+          this.loopDelayTimer = setTimeout(playNext, delay);
+        } else {
+          playNext();
+        }
+        return;
+      }
+
       if (this.teachEnabled && this.teachPhase === "teacher") {
         this.teachPhase = "student";
         this.setPlayerState("paused");

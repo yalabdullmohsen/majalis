@@ -25,7 +25,9 @@ console.log("═══ applyAlertPolicy — gentle يحوّل wrong_word إلى 
   ];
   const d = applyAlertPolicy(events, "gentle");
   assert(d.events[0].kind === "needs_repeat", "gentle → needs_repeat");
-  assert(d.holdSession === false, "gentle لا يوقف الجلسة");
+  assert(d.holdSession === false, "gentle لا يوقف كالمعلّم");
+  assert(d.softPause === true, "gentle → إيقاف لطيف");
+  assert(d.showCorrection === true, "gentle → بطاقة تصحيح");
   assert(!!d.softPrompt, "رسالة هادئة موجودة");
 }
 

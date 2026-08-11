@@ -8,7 +8,10 @@ export type AyahLoopConfig = {
   startAyah: number;
   /** Inclusive end ayah (defaults to startAyah for single-ayah drill) */
   endAyah: number;
-  /** Total full-range repetitions (1 = play once through the range) */
+  /**
+   * Full-range repetitions: `1`–`20`, or `Infinity` (UI/persist may use `0` for infinite).
+   * `1` = play once through the range.
+   */
   repeatCount: number;
   /** Silent pause in ms after each ayah before the next play */
   delayMs: number;
@@ -34,7 +37,11 @@ export function normalizeLoopConfig(
   const start = clampAyah(partial.startAyah, totalAyahs);
   const endRaw = partial.endAyah ?? start;
   const end = Math.max(start, clampAyah(endRaw, totalAyahs));
-  const repeatCount = Math.max(1, Math.min(99, Math.floor(partial.repeatCount ?? 1)));
+  const rawRepeat = partial.repeatCount ?? 1;
+  const repeatCount =
+    rawRepeat === 0 || rawRepeat === Number.POSITIVE_INFINITY
+      ? Number.POSITIVE_INFINITY
+      : Math.max(1, Math.min(20, Math.floor(rawRepeat)));
   const delayMs = Math.max(0, Math.min(30_000, Math.floor(partial.delayMs ?? 0)));
   return { startAyah: start, endAyah: end, repeatCount, delayMs };
 }
@@ -74,7 +81,7 @@ export function advanceAfterAyahEnded(
   } else {
     // finished a full pass
     completedPasses += 1;
-    if (completedPasses >= repeatCount) {
+    if (Number.isFinite(repeatCount) && completedPasses >= repeatCount) {
       return {
         runtime: { ...runtime, completedPasses, active: false, nextAyah: startAyah },
         next: { action: "done" },
@@ -95,7 +102,7 @@ export function advanceAfterAyahEnded(
   };
 }
 
-/** Legacy single-ayah infinite repeat maps onto open-ended loop (repeatCount = Infinity-ish via flag). */
+/** Legacy single-ayah infinite repeat maps onto open-ended loop. */
 export function singleAyahInfiniteConfig(ayah: number): AyahLoopConfig {
-  return { startAyah: ayah, endAyah: ayah, repeatCount: 99, delayMs: 0 };
+  return { startAyah: ayah, endAyah: ayah, repeatCount: Number.POSITIVE_INFINITY, delayMs: 0 };
 }

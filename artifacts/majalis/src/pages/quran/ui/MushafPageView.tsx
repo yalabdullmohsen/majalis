@@ -43,6 +43,7 @@ import {
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
+import { QpcFontPackBanner } from "@/components/quran/QpcFontPackBanner";
 import { MushafAyahMarkerSvg, MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
 import { MushafLayeredPage } from "@/features/mushaf";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
@@ -50,10 +51,12 @@ import {
   captureMushafEntryOrigin,
   consumeMushafEntryOrigin,
 } from "@/lib/mushaf-entry-origin";
-import { handoffMushafPlayback } from "@/lib/quran-mini-player";
+import { handoffMushafPlayback, showMiniPlayer } from "@/lib/quran-mini-player";
 import { hasMushafUnsavedWork, setMushafUnsavedWork } from "@/lib/mushaf-unsaved";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
+import { AudioEngine } from "@/core/audio/AudioEngine";
+import { useMushafRecitationFollow } from "@/hooks/useMushafRecitationFollow";
 import "@/styles/quran.css";
 import "@/styles/mushaf-v2.css";
 import "@/styles/pages/mushaf-reader.css";
@@ -499,7 +502,6 @@ export default function MushafPageView() {
   const {
     currentAyah,
     playerState,
-    togglePlayAyah,
     reciterId,
     setReciterId,
     playbackRate,
@@ -508,6 +510,7 @@ export default function MushafPageView() {
     setRepeatOn,
     sleepTimer,
     setSleepTimer,
+    stop: stopAyahPlayer,
   } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
   const playerStateRef = useRef(playerState);
   const currentAyahRef = useRef(currentAyah);
@@ -517,6 +520,39 @@ export default function MushafPageView() {
   currentAyahRef.current = currentAyah;
   reciterIdRef.current = reciterId;
   activeSurahRef.current = activeSurahForPlayer;
+
+  const [engineAyahKey, setEngineAyahKey] = useState<string | null>(null);
+  const [enginePlaying, setEnginePlaying] = useState(false);
+
+  useEffect(() => {
+    const engine = AudioEngine.getInstance();
+    return engine.onSnapshot((s) => {
+      setEnginePlaying(s.playerState === "playing" || s.playerState === "buffering");
+      if (s.surah != null && s.ayah != null) {
+        setEngineAyahKey(`${s.surah}:${s.ayah}`);
+      } else if (s.playerState === "idle") {
+        setEngineAyahKey(null);
+      }
+    });
+  }, []);
+
+  useMushafRecitationFollow({
+    currentPage: page,
+    goToPage,
+    onEngineAyah: setEngineAyahKey,
+  });
+
+  /** تشغيل عبر المحرّك العام حتى يستمر الشريط المصغّر عبر الصفحات والمسارات. */
+  const toggleEnginePlayForAyah = useCallback(
+    (surah: number, ayah: number) => {
+      stopAyahPlayer();
+      const engine = AudioEngine.getInstance();
+      engine.setReciter(reciterId);
+      void engine.togglePlay(surah, ayah);
+      showMiniPlayer();
+    },
+    [reciterId, stopAyahPlayer],
+  );
 
   useEffect(() => {
     return () => {
@@ -584,9 +620,11 @@ export default function MushafPageView() {
   }, []);
   const v2ActiveKey = selectedAyah
     ? `${selectedAyah.surah}:${selectedAyah.ayah}`
-    : (playerState === "playing" || playerState === "buffering") && currentAyah !== null
-      ? `${activeSurahForPlayer}:${currentAyah}`
-      : resumeAyahKey;
+    : enginePlaying && engineAyahKey
+      ? engineAyahKey
+      : (playerState === "playing" || playerState === "buffering") && currentAyah !== null
+        ? `${activeSurahForPlayer}:${currentAyah}`
+        : resumeAyahKey;
 
   const shellThemeClass = `quran-shell--${prefs.readingTheme}`;
   /* Ayah reading surface is borderless by default; optional frame styles
@@ -617,6 +655,7 @@ export default function MushafPageView() {
       style={{ ["--ayah-paper" as string]: immersivePaper }}
     >
       <>
+          <QpcFontPackBanner currentPage={page} />
           {/* هيدر عائم بسيط — بلا أزرار أو خلفيات (مطابق مخطط آية) */}
           <header className="mpv-ayah-header" aria-label="معلومات الصفحة">
             <span className="mpv-ayah-header__juz">{headerJuzLabel}</span>
@@ -1038,9 +1077,14 @@ export default function MushafPageView() {
             surahName={getSurahMeta(selectedAyah.surah).name}
             ayahNum={selectedAyah.ayah}
             ayahText={selectedAyahData.text}
-            isPlaying={selectedAyah.surah === activeSurahForPlayer && currentAyah === selectedAyah.ayah && (playerState === "playing" || playerState === "buffering")}
-            canPlay={selectedAyah.surah === activeSurahForPlayer}
-            onTogglePlay={() => togglePlayAyah(selectedAyah.ayah)}
+            isPlaying={
+              (enginePlaying && engineAyahKey === `${selectedAyah.surah}:${selectedAyah.ayah}`) ||
+              (selectedAyah.surah === activeSurahForPlayer &&
+                currentAyah === selectedAyah.ayah &&
+                (playerState === "playing" || playerState === "buffering"))
+            }
+            canPlay={true}
+            onTogglePlay={() => toggleEnginePlayForAyah(selectedAyah.surah, selectedAyah.ayah)}
             onPrev={selectedIdx > 0 ? () => {
               const prev = flatAyahs[selectedIdx - 1];
               setSelectedAyah({ surah: prev.surahNumber!, ayah: prev.numberInSurah });

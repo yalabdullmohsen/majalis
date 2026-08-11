@@ -13,8 +13,9 @@ import {
   MUSHAF_LAYOUT_BASELINE,
 } from "@/features/mushaf/config";
 import {
-  MUSHAF_BOTTOM_RESERVE_PX,
-  MUSHAF_LAYOUT_BANDS,
+  applyMushafLayoutBandCssVars,
+  mushafBottomReservePx,
+  scaleMushafLayoutBands,
 } from "@/features/mushaf/layout-bands";
 import { mushafTypescaleCssVars } from "@/features/mushaf/typescale";
 
@@ -377,6 +378,20 @@ export function MushafPageV2({
       container.style.transform = "";
 
       /* contentBand = ما تبقّى بعد الرأس/الذيل/الشريط (حجوزات CSS + قياس) */
+      const viewportH = window.innerHeight || 844;
+      const viewportW = window.innerWidth || 390;
+      const shortViewport = viewportH < 750;
+      /* مقاسات غير المرجع فقط — الإبقاء على مسار 390×844 مطابقًا لبوابة اللقطات */
+      const offRefViewport =
+        shortViewport || Math.abs(viewportW - 390) > 12 || Math.abs(viewportH - 844) > 20;
+      const bands = scaleMushafLayoutBands(viewportH);
+      if (offRefViewport) {
+        applyMushafLayoutBandCssVars(document.documentElement, bands);
+        const shellForBands = document.querySelector(".quran-shell--ayah");
+        if (shellForBands instanceof HTMLElement) {
+          applyMushafLayoutBandCssVars(shellForBands, bands);
+        }
+      }
       const bodyEl =
         (container.closest(".mpv-body--ayah") as HTMLElement | null) ||
         (container.closest(".qs-mushaf-body--ayah") as HTMLElement | null) ||
@@ -391,23 +406,20 @@ export function MushafPageV2({
         Number.parseFloat(
           getComputedStyle(document.documentElement).getPropertyValue("--inset-bottom"),
         ) || 0;
-      /* نهاية contentBand = أعلى الذيل − فاصل ١٢px (الذيل فوق شريط الأدوات) */
+      /* نهاية contentBand = أعلى الذيل − فاصل مشتق من ارتفاع الشاشة */
       const footerTop =
         fr?.top ??
         (shellR
-          ? shellR.bottom -
-            insetBottom -
-            MUSHAF_LAYOUT_BANDS.toolbarBandPx -
-            MUSHAF_LAYOUT_BANDS.footerBandPx
+          ? shellR.bottom - insetBottom - bands.toolbarBandPx - bands.footerBandPx
           : 0);
-      const contentBot = footerTop - MUSHAF_LAYOUT_BANDS.contentFooterGapPx;
+      const contentBot = footerTop - bands.contentFooterGapPx;
       const contentTop = hr?.bottom ?? container.getBoundingClientRect().top;
       let blockH =
         contentBot > contentTop
           ? contentBot - contentTop
           : Math.max(
               120,
-              (bodyEl?.clientHeight || container.clientHeight) - MUSHAF_BOTTOM_RESERVE_PX,
+              (bodyEl?.clientHeight || container.clientHeight) - mushafBottomReservePx(bands),
             );
       blockH = Math.max(120, blockH);
       if (blockH > 0) {
@@ -417,8 +429,9 @@ export function MushafPageV2({
         container.style.flexShrink = "0";
         container.style.flexBasis = "auto";
         container.dataset.mf2ContentBand = blockH.toFixed(1);
-        container.dataset.mf2FooterBand = String(MUSHAF_LAYOUT_BANDS.footerBandPx);
-        container.dataset.mf2ToolbarBand = String(MUSHAF_LAYOUT_BANDS.toolbarBandPx);
+        container.dataset.mf2FooterBand = String(bands.footerBandPx);
+        container.dataset.mf2ToolbarBand = String(bands.toolbarBandPx);
+        container.dataset.mf2BandScale = (bands.toolbarBandPx / 52).toFixed(3);
       } else {
         container.style.height = "100%";
         container.style.maxHeight = "";
@@ -431,8 +444,16 @@ export function MushafPageV2({
         container.style.removeProperty("--mf2-opening-line-w");
       }
 
-      /* هامش جانبي إلزامي — المطّ لا يملأ حتى حافة الحاوية */
-      const sideClear = Math.max(2, MUSHAF_GRID.sideMarginPx || 2);
+      /* هامش جانبي: مطلق على المرجع؛ نسبي من عرض الحاوية خارج 390×844 */
+      const sideClear = offRefViewport
+        ? Math.max(
+            2,
+            Math.round(
+              (MUSHAF_GRID.sideMarginPx || 2) *
+                Math.min(1.25, Math.max(0.85, availableWidth / 358)),
+            ),
+          )
+        : Math.max(2, MUSHAF_GRID.sideMarginPx || 2);
       const fitWidth = Math.max(8, availableWidth - sideClear * 2);
 
       const widestAtRef = measureWidest(sizingEls, REF_PX);
@@ -942,8 +963,11 @@ export function MushafPageV2({
         }
       }
 
-      /* فاصل حبر البسملة عن أسفل الشارة — صفحات عادية (≥٢٢px) */
+      /* فاصل حبر البسملة عن أسفل الشارة — مطلق على المرجع؛ نسبي من contentBand على القصير */
       if (!isOpening) {
+        const minBannerBasGap = shortViewport
+          ? Math.max(12, Math.min(BANNER_BASMALA_MIN_GAP_PX, blockH * 0.038))
+          : BANNER_BASMALA_MIN_GAP_PX;
         const banners = [
           ...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--banner"),
         ];
@@ -963,8 +987,8 @@ export function MushafPageV2({
           const inkTop = measureInkBounds(basEl).top;
           const gap = inkTop - banR.bottom;
           minGap = Math.min(minGap, gap);
-          if (gap < BANNER_BASMALA_MIN_GAP_PX - 0.5) {
-            const nudgePx = BANNER_BASMALA_MIN_GAP_PX - gap;
+          if (gap < minBannerBasGap - 0.5) {
+            const nudgePx = minBannerBasGap - gap;
             const nudgePct = (nudgePx / Math.max(1, cr.height)) * 100;
             const slot =
               basEl.closest<HTMLElement>(".mf2-grid-slot--basmala") ||
@@ -998,6 +1022,45 @@ export function MushafPageV2({
         if (Number.isFinite(minGap) && minGap < Infinity) {
           container.dataset.mf2BasmalaGap = minGap.toFixed(1);
         }
+      }
+
+      /*
+       * فاصل حبر بسملة→سطر الآية التالي — على الشاشات القصيرة فقط (SE).
+       * مسار 390×844 يبقى بلا تقليص إضافي حتى لا تنحرف visual-snapshot.
+       */
+      if (shortViewport) {
+        const minBasLineGap = Math.max(4, Math.min(12, blockH * 0.012));
+        const basSlots = [
+          ...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--basmala"),
+        ];
+        for (let guard = 0; guard < 14; guard++) {
+          let worstOver = 0;
+          for (const basSlot of basSlots) {
+            const basEl =
+              basSlot.querySelector<HTMLElement>(".mf2-bismillah, .mf2-line") || basSlot;
+            const basBot = measureInkBounds(basEl).bottom;
+            const basIdx = Number(basSlot.getAttribute("data-grid-slot") || 0);
+            const nextLine =
+              container.querySelector<HTMLElement>(
+                `.mf2-grid-slot--line[data-grid-slot="${basIdx + 1}"]`,
+              ) ||
+              [...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--line")].find(
+                (el) => Number(el.getAttribute("data-grid-slot") || 0) > basIdx,
+              );
+            if (!nextLine) continue;
+            const lineInk = nextLine.querySelector<HTMLElement>(".mf2-line") || nextLine;
+            const lineTop = measureInkBounds(lineInk).top;
+            const gap = lineTop - basBot;
+            if (gap < minBasLineGap) {
+              worstOver = Math.max(worstOver, minBasLineGap - gap);
+            }
+          }
+          if (worstOver <= 0.4) break;
+          if (size <= MIN_FONT_PX + 0.05) break;
+          size = Math.max(MIN_FONT_PX, size * Math.min(0.978, 1 - worstOver / Math.max(40, blockH)));
+          container.style.fontSize = `${size}px`;
+        }
+        container.dataset.mf2BasmalaLineGap = minBasLineGap.toFixed(1);
       }
 
       /* سلّم خطوط موحّد: S على الحاوية؛ وعلى الصدفة فقط للصفحة النشطة

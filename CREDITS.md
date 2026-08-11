@@ -1,24 +1,28 @@
 # الاعتمادات والتراخيص — المجلس العلمي
 
-صفحة التطبيق الموازية: `/sources` (`SourcesLicensesPage`).
+**الجرد الكامل وحالات الإذن:** [`docs/LICENSES.md`](./docs/LICENSES.md) (وحدة ٤٨).  
+**مخاطر ما قبل المتجر:** [`LICENSE_RISKS.md`](./LICENSE_RISKS.md).  
+صفحة التطبيق: `/sources` (`SourcesLicensesPage`).
 
 | المصدر | الاستخدام | ترخيص / إسناد (حالة) | رابط |
 |---|---|---|---|
-| Tanzil / نص عثماني (عبر AlQuran Cloud وملفات محلية) | نص القرآن في المصحف والبحث | راجع `docs/quran-data-source.md` — **يُراجع قبل المتجر** | https://tanzil.net / https://alquran.cloud |
-| Quran.com CDN / QUL — تخطيط QPC V2 وخطوط الصفحات | عرض المصحف (QPC) | منظومة QUL — **يُراجع بند التوزيع** | https://quran.com / https://qul.tarteel.ai |
-| Quran.com API v4 — تفاسير | تفسير الآية في شيت المصحف | شروط Quran.com API — **يُراجع** | https://api.quran.com |
-| AlQuran Cloud — ترجمات | ترجمات اختيارية في شيت الآية | شروط الخدمة — **يُراجع** | https://alquran.cloud |
+| Tanzil / نص عثماني (عبر AlQuran Cloud وملفات محلية) | نص القرآن في المصحف والبحث | راجع `docs/LICENSES.md` و`artifacts/majalis/docs/quran-data-source.md` — **جزئي / مطلوب للمتجر** | https://tanzil.net / https://alquran.cloud |
+| Quran.com CDN / QUL — تخطيط QPC V2 وخطوط الصفحات | عرض المصحف (QPC) | منظومة QUL/KFG — **مطلوب تأكيد توزيع** | https://quran.com / https://qul.tarteel.ai |
+| Quran.com API v4 — تفاسير | تفسير الآية في شيت المصحف | شروط Quran.com API — **جزئي** | https://api.quran.com |
+| AlQuran Cloud — ترجمات | ترجمات اختيارية في شيت الآية | شروط الخدمة — **جزئي** | https://alquran.cloud |
 | مجمع الملك فهد — التفسير الميسّر (عبر Quran.com) | طبعة تفسير | إسناد لجهة الإصدار — **يُؤكد الترخيص** | — |
-| تفسير صوتي (مصحف) | بث دروس تفسير مرتبطة بآية/مقطع | **لا مقاطع مفعّلة بعد** — الكتالوج `public/data/tafsir-audio-catalog.json` فارغ حتى توثيق النسبة والترخيص؛ مفتاح تعطيل: `tafsir-audio-remote.json`؛ لا يُنسب مقطع بلا `attributionVerified` | — |
-| everyayah.com — بث آية بآية | صوت تلاوة حي (HTTP stream) | روابط خارجية؛ **لا تُضمَّن ملفات في الحزمة**؛ إسناد + رابط في `/sources` | https://everyayah.com |
-| mp3quran.net — بث/تنزيل اختياري لسور كاملة | صوت سورة كاملة؛ تنزيل اختياري محلي بحدود حجم | روابط خارجية؛ التخزين المحلي اختياري للمستخدم فقط | https://mp3quran.net |
-| خطوط الواجهة (Alexandria وغيرها في `index.html`) | واجهة المنصة | حسب ملفات الخط — انظر OFL حيث وُجد | — |
-| شارة السورة (شريط بسيط) وخرطوش رقم الصفحة وعلامة الآية Unicode (SVG) | واجهة المصحف نمط آية | **رسم أصلي للمجلس العلمي** — شارة بلا نقش طرفي؛ خرطوش + علامة آية SVG؛ تحسين QCF_BSML مؤجّل (RELEASE_READINESS) — `artifacts/majalis/src/components/quran/MushafOrnaments.tsx` | داخلي |
-| مكتبات npm (React, Vite, Capacitor, …) | تشغيل التطبيق | رخص الحزم في `node_modules` / lockfile | — |
-| محتوى المكتبة (~117 كتاباً) | صفحات الكتب | **فهرسة فردية ناقصة** — انظر `LICENSE_RISKS.md` | داخلي |
-| mohsalvi/adhan-audio (عبر jsDelivr) | بث أذان حي (عام/فجر) — لا تُضمَّن ملفات في الحزمة | مستودع خارجي مفتوح؛ **ToS/حقوق المؤذنين غير موقَّعة كتابيًا** — النسبة الشخصية **موقوفة** (عرض باسم النمط فقط) حتى التثبّت؛ انظر الجدول أدناه و`LICENSE_RISKS.md` | https://github.com/mohsalvi/adhan-audio |
+| تفسير صوتي (مصحف) | بث دروس تفسير مرتبطة بآية/مقطع | **معطّل عمدًا** — كتالوج فارغ | — |
+| everyayah.com — بث آية بآية | صوت تلاوة حي (HTTP stream) | **جزئي** — لا ملفات في الحزمة | https://everyayah.com |
+| mp3quran.net — بث/تنزيل اختياري لسور كاملة | صوت سورة كاملة؛ تنزيل اختياري محلي بحدود حجم | **جزئي** | https://mp3quran.net |
+| حصن المسلم (أذكار مستندة) | أذكار/أدعية مع إسناد | حقوق الجمع — **مطلوب** | — |
+| خطوط الواجهة (Alexandria وغيرها في `index.html`) + Amiri Quran | واجهة + احتياطي يونيكود | OFL — **ممنوح** | — |
+| شارة السورة وخرطوش وعلامة الآية Unicode (SVG) | واجهة المصحف | **رسم أصلي — ممنوح** | داخلي |
+| مكتبات npm (React, Vite, Capacitor, …) | تشغيل التطبيق | بوابة `test:licenses` ترفض GPL/AGPL الصِّرف | — |
+| محتوى المكتبة (~١٧٣ كتابًا) | صفحات الكتب | **غير محسوم** — فهرسة فردية ناقصة | داخلي |
+| mohsalvi/adhan-audio (عبر jsDelivr) | بث أذان حي | **جزئي** — نسبة شخصية موقوفة | https://github.com/mohsalvi/adhan-audio |
 
-أي صف «يُراجع» أو مخاطر = لا يُوسَّع استخدامه في 1.0.0 حتى يُحسم في `LICENSE_RISKS.md`.
+أي صف «مطلوب» أو «غير محسوم» = لا يُوسَّع في 1.0.0 حتى يُحسم في `docs/LICENSES.md` و`LICENSE_RISKS.md`.
+
 
 ## تسجيلات الأذان (بث)
 

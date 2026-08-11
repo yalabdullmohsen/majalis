@@ -77,7 +77,7 @@ const FILTER_CHIPS: { key: string; label: string }[] = [
   { key: "settings", label: "إعدادات" },
 ];
 
-const DEBOUNCE_MS = 200;
+const DEBOUNCE_MS = 120;
 
 // ── مساعدات ─────────────────────────────────────────────────────────────────
 

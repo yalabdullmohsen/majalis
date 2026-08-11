@@ -2,7 +2,8 @@
  * تمريرة قياس واحدة لصفحة مصحف — تُجمَع كل المقاييس داخل evaluate واحدة.
  * تُحقَن كنص عبر addInitScript ثم تُستدعى من الصفحة.
  */
-export const MEASURE_VIEWPORT = { width: 390, height: 844 };
+export { MUSHAF_REF_VIEWPORT as MEASURE_VIEWPORT } from "./mushaf-viewports.mjs";
+export { resolveGateViewport } from "./mushaf-viewports.mjs";
 
 /** مصدر المتصفح — يعرّف window.__mushafSinglePassMeasure */
 export const MUSHAF_SINGLE_PASS_MEASURE_SOURCE = `

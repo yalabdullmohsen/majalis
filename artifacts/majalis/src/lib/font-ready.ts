@@ -162,6 +162,24 @@ export function getFontCacheSize(): number {
   return faceRegistry.size;
 }
 
+/** يزيل وجهًا من document.fonts وfaceRegistry (نافذة ذاكرة الخطوط). */
+export function unloadFontFace(face: FontFace | null | undefined, familyHint?: string): void {
+  if (!face && !familyHint) return;
+  try {
+    if (face && typeof document !== "undefined" && document.fonts) {
+      document.fonts.delete(face);
+    }
+  } catch {
+    /* ignore */
+  }
+  const family = familyHint || face?.family?.replace(/^"|"$/g, "") || "";
+  if (family) {
+    for (const key of [...faceRegistry.keys()]) {
+      if (key.startsWith(`${family}::`)) faceRegistry.delete(key);
+    }
+  }
+}
+
 export function resetFontCacheForTests(): void {
   faceRegistry.clear();
   inflight.clear();
