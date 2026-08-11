@@ -38,6 +38,7 @@ export function MushafPageFlipStage({
   isSpread = false,
 }: Props) {
   const abs = Math.abs(flip.progress);
+  const flipping = flip.active || flip.settling || abs > 0.001;
   const dirNext = flip.progress >= 0;
   const style = {
     ["--mpv-flip" as string]: String(flip.progress),
@@ -52,6 +53,7 @@ export function MushafPageFlipStage({
       className={[
         "mpv-flip-stage",
         flip.active || flip.settling ? "mpv-flip-stage--active" : "",
+        flipping ? "mpv-flip-stage--flipping" : "",
         flip.peeling ? "mpv-flip-stage--peeling" : "",
         flip.reducedMotion ? "mpv-flip-stage--reduced" : "",
         isSpread ? "mpv-flip-stage--spread" : "",
@@ -74,7 +76,7 @@ export function MushafPageFlipStage({
         </div>
 
         <div className="qs-mushaf-body-inner mpv-flip-leaf">
-          <div className="mpv-flip-leaf__face">{children}</div>
+          {children}
           <div className="mpv-flip-leaf__curl" aria-hidden="true" />
         </div>
 

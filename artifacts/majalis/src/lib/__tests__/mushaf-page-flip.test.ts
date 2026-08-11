@@ -42,9 +42,11 @@ assert.match(stage, /mpv-flip-leaf/);
 assert.match(css, /\.mpv-flip-leaf/);
 assert.match(css, /rotateY\(calc\(var\(--mpv-flip, 0\) \* -78deg\)\)/);
 assert.match(css, /perspective:\s*1600px/);
+assert.match(css, /mpv-flip-stage--flipping/);
 assert.match(css, /prefers-reduced-motion/);
 assert.match(css, /320ms/);
 assert.doesNotMatch(css, /\.mpv-curl-leaf/);
+assert.match(stage, /mpv-flip-stage--flipping/);
 
 assert.deepEqual(getMushafSpread(1, true), { left: null, right: 1, focus: 1, isSpread: false });
 assert.deepEqual(getMushafSpread(5, true), { left: 4, right: 5, focus: 5, isSpread: true });
