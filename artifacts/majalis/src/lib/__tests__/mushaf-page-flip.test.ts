@@ -38,6 +38,9 @@ assert.doesNotMatch(view, /useMushafPageCurl|mpv-curl-stage/);
 assert.match(stage, /mpv-flip-stage/);
 assert.match(stage, /mpv-flip-underlay/);
 assert.match(stage, /mpv-flip-leaf/);
+assert.match(stage, /data-mushaf-active-leaf/);
+assert.match(stage, /flipping && underlay/);
+assert.match(stage, /mpv-flip-underlay__paper/);
 
 assert.match(css, /\.mpv-flip-leaf/);
 assert.match(css, /rotateY\(calc\(var\(--mpv-flip, 0\) \* -78deg\)\)/);

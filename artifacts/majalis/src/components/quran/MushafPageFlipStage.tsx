@@ -1,6 +1,9 @@
 /**
  * مسرح تقليب المصحف: ورقة أمامية + تحتية حقيقية (N±1) + ظلال طيّة.
  * المحتوى القرآني يبقى DOM/QPC بلا تحويل لصورة.
+ *
+ * مهم: في السكون لا تُركَّب صفحة تحتية تحتوي `.mf2-lines` — بوابات القياس
+ * تستخدم querySelector وتعود لأول تطابق في الشجرة.
  */
 import {
   type CSSProperties,
@@ -47,6 +50,27 @@ export function MushafPageFlipStage({
     ["--mpv-flip-dir" as string]: dirNext ? "1" : "-1",
   } as CSSProperties;
 
+  const leaf = (
+    <div className="qs-mushaf-body-inner mpv-flip-leaf" data-mushaf-active-leaf="1">
+      {children}
+      {flipping ? <div className="mpv-flip-leaf__curl" aria-hidden="true" /> : null}
+    </div>
+  );
+
+  const underlayNode = (
+    <div className="mpv-flip-underlay" aria-hidden="true" data-mushaf-underlay="1">
+      {/* صفحة حقيقية فقط أثناء التقليب — وإلا ورقة فارغة كـ curl القديم */}
+      {flipping && underlay ? underlay : <div className="mpv-flip-underlay__paper" />}
+    </div>
+  );
+
+  const fx = (
+    <>
+      <div className="mpv-flip-shade" aria-hidden="true" />
+      {flipping ? <div className="mpv-flip-corner" aria-hidden="true" /> : null}
+    </>
+  );
+
   return (
     <div
       ref={stageRef}
@@ -70,21 +94,21 @@ export function MushafPageFlipStage({
         </div>
       ) : null}
 
-      <div className="mpv-flip-book">
-        <div className="mpv-flip-underlay" aria-hidden="true">
-          {underlay ?? <div className="mpv-flip-underlay__paper" />}
+      {isSpread ? (
+        <div className="mpv-flip-book">
+          {/* الورقة النشطة أولًا في الشجرة حتى لا تلتقط البوابات .mf2-lines من التحتية */}
+          {leaf}
+          {underlayNode}
+          {fx}
         </div>
+      ) : (
+        <>
+          {leaf}
+          {underlayNode}
+          {fx}
+        </>
+      )}
 
-        <div className="qs-mushaf-body-inner mpv-flip-leaf">
-          {children}
-          <div className="mpv-flip-leaf__curl" aria-hidden="true" />
-        </div>
-
-        <div className="mpv-flip-shade" aria-hidden="true" />
-        <div className="mpv-flip-corner" aria-hidden="true" />
-      </div>
-
-      {/* مناطق نقر مرئية للمساعدة البصرية فقط أثناء السحب — بلا حجب اللمس */}
       <div className="mpv-flip-edge mpv-flip-edge--next" aria-hidden="true" />
       <div className="mpv-flip-edge mpv-flip-edge--prev" aria-hidden="true" />
     </div>

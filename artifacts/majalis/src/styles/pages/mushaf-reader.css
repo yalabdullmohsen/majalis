@@ -319,8 +319,7 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 }
 
 
-/* ── لفّ صفحة خفيف (transform/opacity فقط) ── */
-/* ── تقليب مصحف حقيقي (RTL) — transform/opacity فقط، بلا تشويه QPC ── */
+/* ── تقليب مصحف حقيقي (RTL) — هيكل السكون مطابق لـ curl القديم ── */
 .mpv-flip-stage {
   position: relative;
   width: 100%;
@@ -329,28 +328,26 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
   flex: 1 1 auto;
   touch-action: pan-y;
   overflow: visible;
-  /* مطابقة هيكل لفّ الصفحة السابق في السكون (بلا flex إضافي) */
-  display: block;
 }
 .mpv-flip-stage--active {
   touch-action: none;
+}
+.mpv-flip-stage--flipping {
+  perspective: 1600px;
 }
 .mpv-flip-stage--spread {
   display: flex;
   justify-content: center;
   gap: 0;
+  perspective: none;
 }
 .mpv-flip-book {
-  /* display:contents في السكون = نفس سلسلة تخطيط curl القديمة */
-  display: contents;
-}
-.mpv-flip-stage--active .mpv-flip-book,
-.mpv-flip-stage--flipping .mpv-flip-book {
-  display: block;
   position: relative;
-  width: 100%;
+  flex: 1 1 50%;
+  min-width: 0;
   height: 100%;
-  min-height: 0;
+}
+.mpv-flip-stage--spread.mpv-flip-stage--flipping .mpv-flip-book {
   perspective: 1600px;
   transform-style: preserve-3d;
 }
@@ -361,20 +358,6 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
   border-inline-end: 1px solid color-mix(in srgb, #000 8%, transparent);
   background: var(--ayah-paper, #FAF7F2);
   overflow: hidden;
-}
-.mpv-flip-stage--spread .mpv-flip-book {
-  display: block;
-  position: relative;
-  flex: 1 1 50%;
-  min-width: 0;
-  height: 100%;
-  perspective: none;
-  transform-style: flat;
-}
-.mpv-flip-stage--spread.mpv-flip-stage--active .mpv-flip-book,
-.mpv-flip-stage--spread.mpv-flip-stage--flipping .mpv-flip-book {
-  perspective: 1600px;
-  transform-style: preserve-3d;
 }
 .mpv-flip-underlay {
   position: absolute;
@@ -409,6 +392,7 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 .mpv-flip-stage--flipping .mpv-flip-leaf {
   will-change: transform, opacity;
   backface-visibility: hidden;
+  transform-style: preserve-3d;
   transform:
     translate3d(calc(var(--mpv-flip, 0) * 92%), 0, 0)
     rotateY(calc(var(--mpv-flip, 0) * -78deg))
