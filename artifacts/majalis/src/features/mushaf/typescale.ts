@@ -23,16 +23,17 @@ export const MUSHAF_TYPESCALE = {
 
 export type MushafTypescaleKey = keyof typeof MUSHAF_TYPESCALE;
 
-/** يبني خصائص CSS لـ --mushaf-S ومشتقاته */
+/** يبني خصائص CSS لـ --mushaf-S ومشتقاته (قيم px مطلقة حتى لا تُكسَر الوراثة) */
 export function mushafTypescaleCssVars(S: number = MUSHAF_S_PX): Record<string, string> {
   const s = Number.isFinite(S) && S > 0 ? S : MUSHAF_S_PX;
+  const px = (ratio: number) => `${+(s * ratio).toFixed(4)}px`;
   return {
     "--mushaf-S": `${s}px`,
-    "--mushaf-fs-body": `calc(${MUSHAF_TYPESCALE.body} * var(--mushaf-S))`,
-    "--mushaf-fs-basmala": `calc(${MUSHAF_TYPESCALE.basmala} * var(--mushaf-S))`,
-    "--mushaf-fs-surah-banner": `calc(${MUSHAF_TYPESCALE.surahBannerName} * var(--mushaf-S))`,
-    "--mushaf-fs-page-numeral": `calc(${MUSHAF_TYPESCALE.pageNumeral} * var(--mushaf-S))`,
-    "--mushaf-fs-header-meta": `calc(${MUSHAF_TYPESCALE.headerMeta} * var(--mushaf-S))`,
-    "--mushaf-fs-footer-hizb": `calc(${MUSHAF_TYPESCALE.footerHizb} * var(--mushaf-S))`,
+    "--mushaf-fs-body": px(MUSHAF_TYPESCALE.body),
+    "--mushaf-fs-basmala": px(MUSHAF_TYPESCALE.basmala),
+    "--mushaf-fs-surah-banner": px(MUSHAF_TYPESCALE.surahBannerName),
+    "--mushaf-fs-page-numeral": px(MUSHAF_TYPESCALE.pageNumeral),
+    "--mushaf-fs-header-meta": px(MUSHAF_TYPESCALE.headerMeta),
+    "--mushaf-fs-footer-hizb": px(MUSHAF_TYPESCALE.footerHizb),
   };
 }
