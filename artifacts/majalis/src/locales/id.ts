@@ -110,4 +110,11 @@ export const id: Record<TranslationKey, string> = {
   error: "Terjadi kesalahan",
   not_found: "Halaman tidak ditemukan",
   skip_to_content: "Lewati ke konten",
+
+  vault_title: "Brankas ilmu",
+  vault_highlights: "Perpustakaan faidah",
+  vault_highlights_empty: "Pilih teks di tafsir atau faidah lalu pilih warna untuk menyimpan catatan ilmiah.",
+  sync_guest_migrated: "Data lokal Anda disinkronkan ke akun",
+  streak_days: "Rentetan hari",
+  lang_overlay_note: "Teks Al-Qur'an, tafsir, dan hadis tetap dalam bahasa Arab asli dengan terjemahan kontekstual bila diperlukan.",
 };

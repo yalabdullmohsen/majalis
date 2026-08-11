@@ -28,6 +28,9 @@ export type BadgeCheckStats = {
   recitationSessions: number;         // recitation_sessions count (اختبار التسميع بالذكاء الاصطناعي)
   recitationPerfectSessions: number;  // جلسات بدقة 100% (accuracy_pct = 100)
   recitationVersesTotal: number;      // مجموع verses_count عبر كل الجلسات
+  /** Optional local milestones (guest + device) */
+  completedSurahs?: number[];
+  morningAdhkarStreak?: number;
 };
 
 export const BADGE_DEFS: BadgeDef[] = [
@@ -117,6 +120,32 @@ export const BADGE_DEFS: BadgeDef[] = [
     icon: "Sparkles",
     category: "tasbih",
     condition: (s) => s.tasbihLifetime >= 10_000,
+  },
+
+  // ── معالم قرآنية وأذكار ───────────────────────────────────────────
+  {
+    key: "surah_baqarah",
+    titleAr: "ختم سورة البقرة",
+    descAr: "أتممت قراءة سورة البقرة",
+    icon: "BookOpen",
+    category: "content",
+    condition: (s) => (s.completedSurahs ?? []).includes(2),
+  },
+  {
+    key: "adhkar_morning_7",
+    titleAr: "أذكار الصباح ٧ أيام",
+    descAr: "أتممت أذكار الصباح ٧ أيام متتالية",
+    icon: "Sun",
+    category: "streak",
+    condition: (s) => (s.morningAdhkarStreak ?? 0) >= 7,
+  },
+  {
+    key: "recitation_50_ayahs",
+    titleAr: "تسميع ٥٠ آية",
+    descAr: "سمّعت ٥٠ آية بنجاح عبر اختبار التسميع",
+    icon: "Mic",
+    category: "recitation",
+    condition: (s) => s.recitationVersesTotal >= 50,
   },
 
   // ── المسارات الشرعية ─────────────────────────────────────────────

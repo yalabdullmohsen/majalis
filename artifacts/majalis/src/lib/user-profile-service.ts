@@ -208,6 +208,18 @@ export async function checkAndAwardBadges(
     recitationVersesTotal: stats.recitationVersesTotal,
   };
 
+  try {
+    const { loadLocalMilestones } = await import("@/lib/local-milestones");
+    const m = loadLocalMilestones();
+    checkStats.completedSurahs = m.completedSurahs;
+    checkStats.morningAdhkarStreak = m.morningAdhkarStreak;
+    if (m.recitationSuccessAyahs > checkStats.recitationVersesTotal) {
+      checkStats.recitationVersesTotal = m.recitationSuccessAyahs;
+    }
+  } catch {
+    /* optional */
+  }
+
   const newKeys: string[] = [];
   for (const def of BADGE_DEFS) {
     if (alreadyEarned.has(def.key)) continue;

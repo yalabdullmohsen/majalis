@@ -17,7 +17,6 @@ import { SafeAreaDebugOverlay } from "@/components/SafeAreaDebugOverlay";
 import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
-import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
@@ -72,6 +71,15 @@ const GlobalSearchModal = lazyWithRetry(
 const QuranMiniPlayerBar = lazyWithRetry(
   () => import("@/components/quran/QuranMiniPlayerBar").then((m) => ({ default: m.QuranMiniPlayerBar })),
   "QuranMiniPlayerBar",
+);
+/** Toasts / resume prompts — not needed for first paint; keep entry lean. */
+const CrossDeviceResumeToast = lazyWithRetry(
+  () => import("@/components/CrossDeviceResumeToast").then((m) => ({ default: m.CrossDeviceResumeToast })),
+  "CrossDeviceResumeToast",
+);
+const AchievementToast = lazyWithRetry(
+  () => import("@/components/AchievementToast").then((m) => ({ default: m.AchievementToast })),
+  "AchievementToast",
 );
 
 const NotFound = lazy(() => import("@/views/not-found"));
@@ -1029,8 +1037,13 @@ function AppShellInner() {
       <VisualViewportKeyboardBridge />
       <SafeAreaDebugOverlay />
       {newBadges.length > 0 && (
-        <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
+        <Suspense fallback={null}>
+          <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
+        </Suspense>
       )}
+      <Suspense fallback={null}>
+        <CrossDeviceResumeToast />
+      </Suspense>
       {searchOpen && (
         <SectionErrorBoundary name="GlobalSearchModal">
           <Suspense fallback={null}>

@@ -110,4 +110,11 @@ export const ur: Record<TranslationKey, string> = {
   error: "خرابی پیش آئی",
   not_found: "صفحہ نہیں ملا",
   skip_to_content: "مواد پر جائیں",
+
+  vault_title: "علمی خزانہ",
+  vault_highlights: "فوائد کی لائبریری",
+  vault_highlights_empty: "تفسیر یا فوائد میں متن منتخب کر کے رنگ چنیں اور علمی فائدہ محفوظ کریں۔",
+  sync_guest_migrated: "آپ کا مقامی ڈیٹا اکاؤنٹ سے ہم آہنگ ہو گیا",
+  streak_days: "مسلسل دن",
+  lang_overlay_note: "قرآن، تفسیر اور حدیث عربی اصل میں رہتے ہیں؛ ضرورت پر سیاق کے مطابق ترجمہ دکھایا جاتا ہے۔",
 };

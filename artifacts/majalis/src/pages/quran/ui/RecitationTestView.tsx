@@ -5,6 +5,8 @@ import { applyPageSeo } from "@/lib/seo";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { useAuth } from "@/components/AuthProvider";
 import { fetchSurahDetail, getSurahList } from "@/lib/quran-api";
+import { addRecitationSuccessAyahs, markSurahCompleted } from "@/lib/local-milestones";
+import { recordUserActivity } from "@/lib/user-streak";
 import { buildReferenceWords, buildReferenceWordsForRange } from "@/lib/recitation-ai/quran-reference-words";
 import { VerseAlignmentEngine } from "@/lib/recitation-ai/verse-alignment-engine";
 import { postProcessAlignmentEvents } from "@/lib/recitation-ai/error-detector";
@@ -982,6 +984,19 @@ function RecitationTestPageInner() {
           `حُفظ في تقدّم الحفظ: ${report.ayahCount} آية · إتقان ${report.masteryPct}% · مواضع توقّف ${report.stopPositions.length}` +
             (hifz.memorizedAyahs > 0 ? ` · محفوظ ${hifz.memorizedAyahs}/${hifz.totalAyahs}` : ""),
         );
+        if (report.ayahCount > 0 && report.masteryPct >= 50) {
+          addRecitationSuccessAyahs(report.ayahCount);
+          try {
+            recordUserActivity();
+          } catch {
+            /* ignore */
+          }
+        }
+        const isWholeSurahLocal =
+          rangeMode === "surah" && mode !== "teacher_test" && mode !== "freeform";
+        if (isWholeSurahLocal && report.masteryPct >= 70) {
+          markSurahCompleted(surahNumber);
+        }
       } catch {
         setHifzSavedNote(null);
       }

@@ -318,6 +318,25 @@ button.vault-item-card__title {
 }
 .vault-note-card__edit-actions { display: flex; gap: 0.5rem; }
 
+.vault-hl { position: relative; padding-inline-start: 1.1rem; }
+.vault-hl__swatch {
+  position: absolute;
+  inset-inline-start: 0.45rem;
+  top: 0.85rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+}
+.vault-hl--yellow .vault-hl__swatch { background: #d4b84a; }
+.vault-hl--green .vault-hl__swatch { background: #3d9a5f; }
+.vault-hl--blue .vault-hl__swatch { background: #3d6fa5; }
+.vault-hl__note {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: var(--majalis-ink-soft, #5a6e68);
+  line-height: 1.55;
+}
+
 /* Modal */
 .vault-modal-backdrop {
   position: fixed;

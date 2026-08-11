@@ -110,4 +110,11 @@ export const tr: Record<TranslationKey, string> = {
   error: "Bir hata oluştu",
   not_found: "Sayfa bulunamadı",
   skip_to_content: "İçeriğe geç",
+
+  vault_title: "İlim kasası",
+  vault_highlights: "Faydalar kütüphanesi",
+  vault_highlights_empty: "Tefsir veya faydalarda metin seçip renk belirleyerek ilmi bir not kaydedin.",
+  sync_guest_migrated: "Yerel verileriniz hesabınıza senkronize edildi",
+  streak_days: "Gün serisi",
+  lang_overlay_note: "Kur'an, tefsir ve hadis metinleri özgün Arapça kalır; gerektiğinde bağlamsal çeviri eklenir.",
 };

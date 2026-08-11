@@ -12,6 +12,8 @@ import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { haptics } from "@/lib/haptics";
+import { markMorningAdhkarDone } from "@/lib/local-milestones";
+import { recordUserActivity } from "@/lib/user-streak";
 import "@/styles/pages/adhkar.css";
 import "@/styles/components/thumb-zone.css";
 
@@ -254,13 +256,22 @@ export default function AdhkarPage() {
               setDone(false);
               return ni;
             }
+            // أكمل القسم — أذكار الصباح تغذي شارة التتابع
+            if (category === "adh-morning") {
+              markMorningAdhkarDone();
+              try {
+                recordUserActivity();
+              } catch {
+                /* ignore */
+              }
+            }
             return i;
           });
         }, 700);
       }
       return next;
     });
-  }, [current, done, items.length]);
+  }, [current, done, items.length, category]);
 
   useEffect(() => () => { if (advanceTimer.current) clearTimeout(advanceTimer.current); }, []);
 
