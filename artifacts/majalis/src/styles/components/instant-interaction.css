@@ -1,6 +1,6 @@
 /**
- * تفاعل فوري عالمي — إزالة تأخير اللمس + تغذية بصرية عند الضغط.
- * يعتمد GPU (transform/opacity) فقط.
+ * تفاعل فوري عالمي — إزالة تأخير اللمس + تغذية بصرية عند الضغط ≤50ms.
+ * يعتمد GPU (transform/opacity) فقط — مدد من design/motion.css.
  */
 a,
 button,
@@ -27,8 +27,10 @@ button,
   .hp-featured-card:active,
   .hp-explore-item:active,
   .bottom-nav-item:active {
-    transform: scale(0.97);
-    transition: transform 90ms ease, opacity 90ms ease;
+    transform: scale(var(--mj-press-scale, 0.97));
+    /* instant ≤100ms — يظهر قبل أي منطق */
+    transition: transform var(--mj-motion-instant, 100ms) var(--mj-ease-accelerate, ease),
+      opacity var(--mj-motion-instant, 100ms) var(--mj-ease-accelerate, ease);
   }
 }
 

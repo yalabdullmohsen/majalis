@@ -1,0 +1,119 @@
+/**
+ * رموز الحركة واللمس — مشتقة من src/design/motion.ts (مصدر الحقيقة).
+ * لا تُعرَّف مدد/منحنيات جديدة خارج هذا الملف + motion.ts.
+ */
+:root {
+  --mj-motion-instant: 100ms;
+  --mj-motion-fast: 160ms;
+  --mj-motion-base: 220ms;
+  --mj-motion-slow: 320ms;
+  --mj-motion-page: 280ms;
+  --mj-motion-reduced: 120ms;
+
+  --mj-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --mj-ease-decelerate: cubic-bezier(0, 0, 0, 1);
+  --mj-ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --mj-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  --mj-scrim: rgba(0, 0, 0, 0.32);
+  --mj-hit-slop: 8px;
+  --mj-press-scale: 0.97;
+
+  /* --mj-touch-min يبقى من theme.css (≥44؛ حالياً 48) */
+
+  /* توافق مع الرموز القديمة في index.css */
+  --motion-fast: var(--mj-motion-fast) var(--mj-ease-accelerate);
+  --motion-normal: var(--mj-motion-base) var(--mj-ease-standard);
+  --motion-spring: var(--mj-motion-slow) var(--mj-ease-spring);
+  --motion-slow: var(--mj-motion-slow) var(--mj-ease-standard);
+  --motion-sheet: var(--mj-motion-base) var(--mj-ease-spring);
+}
+
+/* منطقة لمس موسّعة بلا تغيير المظهر */
+.mj-hit-slop {
+  position: relative;
+  min-width: var(--mj-touch-min);
+  min-height: var(--mj-touch-min);
+}
+.mj-hit-slop::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--mj-hit-slop));
+  pointer-events: auto;
+}
+
+/* انتقال مسار iOS-like (RTL: الدخول من اليسار) */
+.mj-route-stage {
+  position: relative;
+  contain: layout paint;
+  min-height: 40dvh;
+}
+.mj-route-stage__layer {
+  width: 100%;
+}
+.mj-route-stage--enter .mj-route-stage__layer {
+  animation: mj-route-enter var(--mj-motion-page) var(--mj-ease-decelerate) both;
+}
+.mj-route-stage--exit .mj-route-stage__layer {
+  animation: mj-route-exit var(--mj-motion-fast) var(--mj-ease-accelerate) both;
+}
+.mj-route-stage--back-enter .mj-route-stage__layer {
+  animation: mj-route-back-enter var(--mj-motion-page) var(--mj-ease-decelerate) both;
+}
+
+@keyframes mj-route-enter {
+  from {
+    transform: translateX(-8%);
+    opacity: 0.86;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes mj-route-exit {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(6%);
+    opacity: 0.9;
+    filter: brightness(0.92);
+  }
+}
+@keyframes mj-route-back-enter {
+  from {
+    transform: translateX(8%);
+    opacity: 0.9;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --mj-motion-instant: var(--mj-motion-reduced);
+    --mj-motion-fast: var(--mj-motion-reduced);
+    --mj-motion-base: var(--mj-motion-reduced);
+    --mj-motion-slow: var(--mj-motion-reduced);
+    --mj-motion-page: var(--mj-motion-reduced);
+    --mj-ease-standard: linear;
+    --mj-ease-decelerate: linear;
+    --mj-ease-accelerate: linear;
+    --mj-ease-spring: linear;
+  }
+
+  .mj-route-stage--enter .mj-route-stage__layer,
+  .mj-route-stage--exit .mj-route-stage__layer,
+  .mj-route-stage--back-enter .mj-route-stage__layer {
+    animation: mj-route-fade var(--mj-motion-reduced) linear both;
+  }
+}
+
+@keyframes mj-route-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

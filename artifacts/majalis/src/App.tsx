@@ -25,6 +25,8 @@ import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
+import { RouteTransition } from "@/components/navigation/RouteTransition";
+import { useEdgeBackGesture } from "@/hooks/useEdgeBackGesture";
 import { PrayerRespectBanner } from "@/components/adhan/PrayerRespectBanner";
 import {
   startPrayerAlertScheduler,
@@ -940,6 +942,8 @@ function AppShellInner() {
   const onPrayer = isPrayerTimesPath(location);
   const hideSiteChrome = immersive || onPrayer;
 
+  useEdgeBackGesture({ disabled: hideSiteChrome });
+
   useEffect(() => {
     ensureChromeMeta();
   }, [location]);
@@ -996,7 +1000,9 @@ function AppShellInner() {
       {!hideSiteChrome && <AdhanNotificationBar />}
       {!hideSiteChrome && <PrayerRespectBanner />}
       <main id="main-content" className="app-main" tabIndex={-1}>
-        <Router />
+        <RouteTransition>
+          <Router />
+        </RouteTransition>
       </main>
       {/* تذييل الموقع للويب فقط — داخل التطبيق الأصلي يُخفى (App Store: الروابط القانونية في الإعدادات) */}
       {!hideSiteChrome && !isNative && <SiteFooter />}

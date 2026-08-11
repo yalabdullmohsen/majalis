@@ -1,11 +1,11 @@
 /**
- * كتالوج اهتزاز لمسي موحّد — أنماط متدرجة لكل إجراء.
+ * كتالوج اهتزاز لمسي موحّد — Capacitor Haptics على الأصلي، Vibration على الويب.
  * يحترم إعداد المستخدم ومفتاح الأذكار القديم للتوافق.
  */
 
 export type HapticKind = "selection" | "light" | "medium" | "success" | "warning" | "error";
 
-const PATTERNS: Record<HapticKind, number | number[]> = {
+const WEB_PATTERNS: Record<HapticKind, number | number[]> = {
   selection: 10,
   light: 18,
   medium: 28,
@@ -52,14 +52,32 @@ export function setHapticsEnabled(enabled: boolean): void {
 
 /** تشغيل نمط اهتزاز — لا يرمي؛ يتجاهل المنصات بلا دعم. */
 export function triggerHaptic(kind: HapticKind = "light"): void {
-  if (typeof navigator === "undefined") return;
+  if (typeof window === "undefined") return;
   if (!isHapticsEnabled()) return;
-  if (typeof navigator.vibrate !== "function") return;
-  try {
-    navigator.vibrate(PATTERNS[kind]);
-  } catch {
-    /* ignore */
-  }
+
+  void (async () => {
+    try {
+      const { isNative, hapticTap, hapticNotify } = await import("@/lib/capacitor-utils");
+      if (isNative) {
+        if (kind === "success" || kind === "warning" || kind === "error") {
+          await hapticNotify(kind);
+          return;
+        }
+        const map = { selection: "light", light: "light", medium: "medium" } as const;
+        await hapticTap(map[kind] ?? "light");
+        return;
+      }
+    } catch {
+      /* fall through to vibrate */
+    }
+    try {
+      if (typeof navigator !== "undefined" && typeof navigator.vibrate === "function") {
+        navigator.vibrate(WEB_PATTERNS[kind]);
+      }
+    } catch {
+      /* ignore */
+    }
+  })();
 }
 
 /** اختصارات شائعة */

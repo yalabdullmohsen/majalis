@@ -19,6 +19,7 @@ const hapticsSrc = readFileSync(join(appRoot, "src/lib/haptics.ts"), "utf8");
 assert.match(hapticsSrc, /selection/, "selection pattern");
 assert.match(hapticsSrc, /success/, "success pattern");
 assert.match(hapticsSrc, /navigator\.vibrate/, "uses Vibration API");
+assert.match(hapticsSrc, /capacitor-utils|@capacitor\/haptics/, "native Capacitor path");
 
 const themeSrc = readFileSync(join(appRoot, "src/app/styles/theme.css"), "utf8");
 assert.match(themeSrc, /--mj-touch-min:\s*48px/, "48px touch token");

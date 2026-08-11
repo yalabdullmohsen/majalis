@@ -2,11 +2,11 @@ import {
   useEffect,
   useId,
   useRef,
-  useState,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
+import { MOTION_SHEET } from "@/design/motion";
 import "@/styles/components/app-bottom-sheet.css";
 
 type Props = {
@@ -24,8 +24,8 @@ type Props = {
 };
 
 /**
- * شيت سفلي موحّد — خمس طرق إغلاق:
- * سحب لأسفل · خلفية · زر سفلي · Escape/رجوع أندرويد · سحب من حافة الشاشة.
+ * شيت سفلي موحّد — سحب بمطاطية، إغلاق عند ٣٠٪ أو سرعة ≥0.5px/ms،
+ * خلفية/Escape/رجوع، بلا useState كل إطار (offset عبر ref + style).
  */
 export function AppBottomSheet({
   open,
@@ -41,14 +41,17 @@ export function AppBottomSheet({
 }: Props) {
   const titleId = useId();
   const sheetRef = useRef<HTMLDivElement>(null);
+  const scrimRef = useRef<HTMLButtonElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const dragStartY = useRef<number | null>(null);
   const dragStartT = useRef<number>(0);
+  const dragOffset = useRef(0);
   const edgeStartX = useRef<number | null>(null);
   const edgeStartY = useRef<number | null>(null);
   const historyPushed = useRef(false);
-  const [dragOffset, setDragOffset] = useState(0);
   const closingRef = useRef(false);
+  const lockScrollY = useRef(0);
+  const lockPad = useRef(0);
 
   const requestClose = () => {
     if (closingRef.current) return;
@@ -56,25 +59,51 @@ export function AppBottomSheet({
     onClose();
   };
 
+  const applyOffset = (y: number) => {
+    dragOffset.current = y;
+    const sheet = sheetRef.current;
+    const scrim = scrimRef.current;
+    if (sheet) {
+      sheet.style.willChange = "transform";
+      sheet.style.transform = y ? `translateY(${y}px)` : "";
+      sheet.style.transition = "none";
+    }
+    if (scrim) {
+      const dim = Math.max(0.12, 0.32 * (1 - Math.min(1, y / 420)));
+      scrim.style.background = `rgba(0,0,0,${dim})`;
+    }
+  };
+
+  const clearDragStyles = () => {
+    const sheet = sheetRef.current;
+    const scrim = scrimRef.current;
+    if (sheet) {
+      sheet.style.willChange = "";
+      sheet.style.transform = "";
+      sheet.style.transition = "";
+    }
+    if (scrim) scrim.style.background = "";
+    dragOffset.current = 0;
+  };
+
   useEffect(() => {
     if (!open) {
-      setDragOffset(0);
+      clearDragStyles();
       closingRef.current = false;
       return;
     }
     previouslyFocused.current = document.activeElement as HTMLElement | null;
+    lockScrollY.current = window.scrollY;
+    lockPad.current = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
     const prevOverflow = document.body.style.overflow;
-    const prevPosition = document.body.style.position;
-    const prevTop = document.body.style.top;
-    const prevWidth = document.body.style.width;
-    const prevScrollY = window.scrollY;
+    const prevPad = document.body.style.paddingInlineEnd;
+    /* حجز شريط التمرير لمنع قفزة التخطيط — بدون position:fixed إن أمكن */
     document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${prevScrollY}px`;
-    document.body.style.width = "100%";
+    if (lockPad.current > 0) {
+      document.body.style.paddingInlineEnd = `${lockPad.current}px`;
+    }
     document.body.classList.add("app-sheet-open", "filter-sheet-open");
 
-    /* لا تركّز حقول إدخال/بحث عند الفتح — يمنع فتح الكيبورد على الجوال. */
     const requested = initialFocusRef?.current;
     const isTextField =
       requested instanceof HTMLInputElement ||
@@ -106,8 +135,8 @@ export function AppBottomSheet({
         'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
       );
       if (nodes.length === 0) return;
-      const first = nodes[0];
-      const last = nodes[nodes.length - 1];
+      const first = nodes[0]!;
+      const last = nodes[nodes.length - 1]!;
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
         last.focus();
@@ -121,31 +150,32 @@ export function AppBottomSheet({
     return () => {
       window.cancelAnimationFrame(frame);
       document.body.style.overflow = prevOverflow;
-      document.body.style.position = prevPosition;
-      document.body.style.top = prevTop;
-      document.body.style.width = prevWidth;
+      document.body.style.paddingInlineEnd = prevPad;
       document.body.classList.remove("app-sheet-open", "filter-sheet-open");
-      window.scrollTo(0, prevScrollY);
+      window.scrollTo(0, lockScrollY.current);
       document.removeEventListener("keydown", onKey);
       window.removeEventListener("popstate", onPop);
       if (historyPushed.current) {
         historyPushed.current = false;
-        // إن أُغلق الشيت بوسيلة أخرى غير زر الرجوع، أزل المدخل الاصطناعي
         if (window.history.state && (window.history.state as { appSheet?: boolean }).appSheet) {
           window.history.back();
         }
       }
       previouslyFocused.current?.focus?.({ preventScroll: true });
       closingRef.current = false;
+      clearDragStyles();
     };
-  }, [open, onClose, initialFocusRef]);
+  }, [open, initialFocusRef]);
 
   if (!open || typeof document === "undefined") return null;
 
   const dismissByDrag = (offset: number, elapsedMs: number) => {
     const h = sheetRef.current?.offsetHeight ?? 400;
     const velocity = elapsedMs > 0 ? offset / elapsedMs : 0;
-    return offset > h * 0.25 || (offset > 48 && velocity > 0.65);
+    return (
+      offset > h * MOTION_SHEET.dismissRatio ||
+      (offset > 40 && velocity >= MOTION_SHEET.dismissVelocity)
+    );
   };
 
   const onHandlePointerDown = (e: ReactPointerEvent) => {
@@ -155,16 +185,35 @@ export function AppBottomSheet({
   };
   const onHandlePointerMove = (e: ReactPointerEvent) => {
     if (dragStartY.current == null) return;
-    setDragOffset(Math.max(0, e.clientY - dragStartY.current));
+    const raw = e.clientY - dragStartY.current;
+    // مطاطية عند السحب لأعلى فوق الحد
+    const y =
+      raw < 0 ? raw * MOTION_SHEET.rubberBand : Math.max(0, raw);
+    applyOffset(y < 0 ? 0 : y);
   };
   const onHandlePointerUp = () => {
     const elapsed = performance.now() - dragStartT.current;
-    if (dismissByDrag(dragOffset, elapsed)) requestClose();
+    const offset = dragOffset.current;
+    if (dismissByDrag(offset, elapsed)) {
+      requestClose();
+    } else {
+      const sheet = sheetRef.current;
+      if (sheet) {
+        sheet.style.transition = "transform var(--motion-sheet)";
+        sheet.style.transform = "translateY(0)";
+      }
+      if (scrimRef.current) scrimRef.current.style.background = "";
+      dragOffset.current = 0;
+      window.setTimeout(() => {
+        if (sheet) {
+          sheet.style.transition = "";
+          sheet.style.willChange = "";
+        }
+      }, 280);
+    }
     dragStartY.current = null;
-    setDragOffset(0);
   };
 
-  /* سحب من حافة الشاشة (iOS): بداية من الحافة الداخلية ≤ 24px */
   const onEdgePointerDown = (e: ReactPointerEvent) => {
     const rtl = document.documentElement.dir === "rtl";
     const fromEdge = rtl ? e.clientX >= window.innerWidth - 24 : e.clientX <= 24;
@@ -198,6 +247,7 @@ export function AppBottomSheet({
       onPointerCancel={onEdgePointerUp}
     >
       <button
+        ref={scrimRef}
         type="button"
         className="app-sheet-overlay__scrim"
         aria-label="إغلاق"
@@ -210,7 +260,6 @@ export function AppBottomSheet({
         aria-modal="true"
         aria-labelledby={titleId}
         tabIndex={-1}
-        style={dragOffset ? { transform: `translateY(${dragOffset}px)` } : undefined}
       >
         <div
           className="app-sheet__handle"

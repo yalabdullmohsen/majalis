@@ -303,12 +303,12 @@ body {
   --z-overlay-sheet:  10050;
   --z-overlay-toast:  10070;
 
-  /* ── الحركة — تلاشٍ وهبوط (لا ارتداد) ── */
-  --motion-fast:   120ms ease-out;
-  --motion-normal: 220ms ease-out;
-  --motion-spring: 360ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --motion-slow:   350ms ease-out;
-  --motion-sheet:  340ms cubic-bezier(0.32, 0.72, 0, 1);
+  /* ── الحركة — تُعرَّف تفصيلاً في design/motion.css (مصدر: design/motion.ts) ── */
+  --motion-fast:   var(--mj-motion-fast) var(--mj-ease-accelerate);
+  --motion-normal: var(--mj-motion-base) var(--mj-ease-standard);
+  --motion-spring: var(--mj-motion-slow) var(--mj-ease-spring);
+  --motion-slow:   var(--mj-motion-slow) var(--mj-ease-standard);
+  --motion-sheet:  var(--mj-motion-base) var(--mj-ease-spring);
 
   /* ── الحواف الآمنة (Capacitor/iOS) ── */
   --safe-top:    var(--inset-top);
