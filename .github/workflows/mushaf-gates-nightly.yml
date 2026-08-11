@@ -1,25 +1,78 @@
 name: Mushaf gates nightly (full 604)
 
-# مسح كامل لبوابات المصحف — ليس على كل PR.
+# مسح كامل ٦٠٤ — ليلي + يدوي. على الدفع لـ main يعمل المسح عبر ci.yml (٨ أجزاء).
 on:
   schedule:
     - cron: "0 3 * * *"
   workflow_dispatch: {}
+  # المسح الكامل على الدفع لـ main يتم عبر ci.yml (matrix ٨ أجزاء).
+
 
 concurrency:
-  group: mushaf-gates-nightly
+  group: mushaf-gates-nightly-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
   contents: read
+  issues: write
+  actions: write
 
 jobs:
-  mushaf-full:
-    name: mushaf-gates-full-604
+  build-dist:
+    name: build-dist
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: Cache pnpm store
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: ~/.local/share/pnpm/store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        env:
+          PORT: "24216"
+          BASE_PATH: "/"
+        run: pnpm --filter @workspace/majalis run build
+
+      - name: Upload dist
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: majalis-dist-nightly
+          path: artifacts/majalis/dist
+          retention-days: 2
+
+  measure:
+    name: measure-shard-${{ matrix.shard }}
+    needs: [build-dist]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8]
     env:
       MUSHAF_GATE_FULL: "1"
+      MUSHAF_GATE_SHARD: ${{ matrix.shard }}
+      MUSHAF_GATE_SHARDS: "8"
+      MUSHAF_GATE_USE_PREVIEW: "1"
       PORT: "24216"
       BASE_PATH: "/"
     steps:
@@ -56,5 +109,83 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
 
-      - name: Full mushaf gates (٦٠٤)
-        run: pnpm --filter @workspace/majalis run test:mushaf-gates
+      - name: Download dist
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: majalis-dist-nightly
+          path: artifacts/majalis/dist
+
+      - name: Measure (~76 pages)
+        env:
+          MUSHAF_SINGLE_PASS_OUT: artifacts/majalis/artifacts/mushaf-single-pass/measurements-shard-${{ matrix.shard }}.json
+        run: pnpm --filter @workspace/majalis run test:mushaf-single-pass:measure
+
+      - name: Upload shard
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: mushaf-nightly-${{ matrix.shard }}
+          path: artifacts/majalis/artifacts/mushaf-single-pass/measurements-shard-${{ matrix.shard }}.json
+          retention-days: 7
+
+  merge:
+    name: merge-and-assert
+    needs: [measure]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Download shards
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          pattern: mushaf-nightly-*
+          path: /tmp/mushaf-measurements
+          merge-multiple: true
+
+      - name: Assert all gates (٦٠٤)
+        env:
+          MUSHAF_SINGLE_PASS_IN_DIR: /tmp/mushaf-measurements
+        run: pnpm --filter @workspace/majalis run test:mushaf-single-pass:assert
+
+  open-issue-on-failure:
+    name: open-issue-on-failure
+    needs: [merge]
+    if: failure() && github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      issues: write
+    steps:
+      - name: Create or comment on issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TITLE="[mushaf-nightly] فشل المسح الكامل ٦٠٤ — $(date -u +%Y-%m-%d)"
+          BODY="فشل مسار Mushaf gates nightly (full 604).
+
+          - التشغيل: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          - الفرع: \`${{ github.ref_name }}\`
+          - الالتزام: \`${{ github.sha }}\`
+
+          يُفتح تلقائياً عند فشل المسح الليلي (بدل البريد)."
+          EXISTING=$(gh issue list --search "فشل المسح الكامل ٦٠٤ in:title" --state open --json number --jq '.[0].number // empty' || true)
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" --label "bug" || gh issue create --title "$TITLE" --body "$BODY"
+          fi
