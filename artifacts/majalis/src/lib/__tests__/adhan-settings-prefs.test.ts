@@ -44,7 +44,12 @@ assert.equal(getEffectivePlaybackMode(prefs, "isha"), "full");
 assert.equal(getEffectivePlaybackMode(prefs, "dhuhr"), "short");
 
 patchAdhanPrefs({ playbackMode: "silent" });
-assert.equal(getEffectivePlaybackMode(loadAdhanPrefs(), "isha"), "silent");
+// تجاوز لكل صلاة يبقى ساريًا حتى لو الوضع العام صامت
+assert.equal(getEffectivePlaybackMode(loadAdhanPrefs(), "isha"), "full");
+assert.equal(getEffectivePlaybackMode(loadAdhanPrefs(), "dhuhr"), "silent");
+
+patchPrayerPrefs("dhuhr", { deliveryMode: "takbir" });
+assert.equal(getEffectivePlaybackMode(loadAdhanPrefs(), "dhuhr"), "takbir");
 
 patchAdhanPrefs({ playbackMode: "short", defaultMuezzinId: "madinah" });
 patchPrayerPrefs("asr", { muezzinId: "egypt" });

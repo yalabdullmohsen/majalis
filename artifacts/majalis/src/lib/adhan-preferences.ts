@@ -41,14 +41,14 @@ export const PRAYER_ICON: Record<PrayerKey, string> = {
 /** Minutes before the adhan to trigger an advance reminder. 0 = disabled. */
 export type AdvanceMinutes = 0 | 5 | 10 | 15 | 20 | 30;
 
-/** تنبيه واحد قصير (افتراضي) أو أذان كامل — لكل صلاة */
-export type AdhanDeliveryMode = "short" | "full";
+/** تنبيه لكل صلاة: كامل / قصير / تكبيرات / صامت — أو فارغ = الوضع العام */
+export type AdhanDeliveryMode = AdhanPlaybackMode;
 
 export type PerPrayerPrefs = {
   enabled: boolean;         // adhan notification on/off for this prayer
   muezzinId: string;        // which muezzin to use (overrides default if set)
   advanceMinutes: AdvanceMinutes; // advance reminder, 0=off
-  /** override اختياري؛ فارغ = استخدم playbackMode العام إن كان short/full */
+  /** override اختياري؛ فارغ = استخدم playbackMode العام */
   deliveryMode?: AdhanDeliveryMode | "";
 };
 
@@ -74,7 +74,7 @@ export type AdhanPreferences = {
 };
 
 export function isAdhanDeliveryMode(v: unknown): v is AdhanDeliveryMode {
-  return v === "short" || v === "full";
+  return isAdhanPlaybackMode(v);
 }
 
 const DEFAULT_ADVANCE: Record<PrayerKey, AdvanceMinutes> = {
@@ -184,18 +184,17 @@ export function getEffectiveMuezzinId(prefs: AdhanPreferences, key: PrayerKey): 
 }
 
 /**
- * صيغة التشغيل الفعلية لصلاة: تجاوز لكل صلاة (قصير/كامل) إن وُجد،
- * وإلا الوضع العام. أوضاع takbir/silent تبقى عامة ولا تُتجاوز.
+ * صيغة التشغيل الفعلية لصلاة: تجاوز لكل صلاة إن وُجد، وإلا الوضع العام.
+ * إذا عُطّلت الصلاة (enabled=false) تُعامل كـ silent من جهة المستدعي.
  */
 export function getEffectivePlaybackMode(
   prefs: AdhanPreferences,
   key: PrayerKey,
 ): AdhanPlaybackMode {
   const global = prefs.playbackMode ?? "short";
-  if (global === "takbir" || global === "silent") return global;
   const per = prefs.prayers[key]?.deliveryMode;
   if (isAdhanDeliveryMode(per)) return per;
-  return global === "full" ? "full" : "short";
+  return global;
 }
 
 /** يطبّق المؤذن الافتراضي على كل الصلوات دفعة واحدة */

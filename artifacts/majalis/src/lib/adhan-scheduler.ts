@@ -107,7 +107,7 @@ function dispatchAdhanEvent(event: AdhanEvent) {
   showBrowserNotification(event);
 }
 
-function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
+function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) {
   const prefs = loadAdhanPrefs();
   if (!prefs.globalEnabled) return;
   const prayerPrefs = prefs.prayers[key];
@@ -170,7 +170,12 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
       (isAdhanAndroidAlarmAvailable() || iosFullAdhanActive())
     ) {
       if (fresh.vibrateEnabled) void hapticTap("medium");
-      dispatchAdhanEvent({ type: "adhan", prayerKey: key, prayerName: slot.name });
+      dispatchAdhanEvent({
+        type: "adhan",
+        prayerKey: key,
+        prayerName: slot.name,
+        cityName,
+      });
       return;
     }
     const muezzinId = getEffectiveMuezzinId(fresh, key);
@@ -181,12 +186,23 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
     const audio = playAdhan(muezzin, isFajr, mode, fresh.volume ?? 1);
     if (!audio && isFajr && mode !== "silent") return;
     if (fresh.vibrateEnabled) void hapticTap("medium");
-    dispatchAdhanEvent({ type: "adhan", prayerKey: key, prayerName: slot.name });
+    dispatchAdhanEvent({
+      type: "adhan",
+      prayerKey: key,
+      prayerName: slot.name,
+      cityName,
+    });
   }, adhanDelay);
   _timers.push(t1);
 
   // Also register with SW for background-tab notifications
-  postSwSchedule(key, PRAYER_ARABIC[key] ?? slot.name, adhanDelay, adhanTargetEpoch);
+  postSwSchedule(
+    key,
+    PRAYER_ARABIC[key] ?? slot.name,
+    adhanDelay,
+    adhanTargetEpoch,
+    cityName,
+  );
 
   // ── Advance reminder timer ──
   const advMin = prayerPrefs.advanceMinutes;
@@ -241,7 +257,7 @@ export async function startAdhanScheduler(payload: PrayerTimesPayload): Promise<
 
   for (const [slotKey, prayerKey] of SLOT_KEYS) {
     const slot = payload.prayers.find((p) => p.key === slotKey);
-    if (slot) scheduleForPrayer(slot, prayerKey);
+    if (slot) scheduleForPrayer(slot, prayerKey, payload.city);
   }
 
   // Re-schedule at midnight Kuwait time
@@ -266,8 +282,21 @@ export function stopAdhanScheduler() {
 }
 
 /** Posts SCHEDULE_ADHAN to the SW so notifications fire even in background tabs. */
-function postSwSchedule(prayerKey: PrayerKey, prayerArabic: string, delayMs: number, fireAt: number) {
+function postSwSchedule(
+  prayerKey: PrayerKey,
+  prayerArabic: string,
+  delayMs: number,
+  fireAt: number,
+  cityName?: string,
+) {
   const sw = navigator.serviceWorker?.controller;
   if (!sw) return;
-  sw.postMessage({ type: "SCHEDULE_ADHAN", prayerKey, prayerArabic, delayMs, fireAt });
+  sw.postMessage({
+    type: "SCHEDULE_ADHAN",
+    prayerKey,
+    prayerArabic,
+    delayMs,
+    fireAt,
+    cityName: cityName || "",
+  });
 }

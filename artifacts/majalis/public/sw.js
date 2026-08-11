@@ -60,6 +60,9 @@ const STATIC_SHELL_ASSETS = [
   "/site.webmanifest",
   "/manifest.webmanifest",
   "/majlisilm-og-2026.jpg",
+  "/sounds/adhan/makkah-general.mp3",
+  "/sounds/adhan/madinah-general.mp3",
+  "/sounds/adhan/takbeerat-short.mp3",
 ];
 
 self.addEventListener("install", (event) => {
@@ -430,7 +433,7 @@ self.addEventListener("message", (event) => {
 
   if (msg.type !== "SCHEDULE_ADHAN") return;
 
-  const { prayerKey, prayerArabic, delayMs, fireAt } = msg;
+  const { prayerKey, prayerArabic, delayMs, fireAt, cityName } = msg;
   if (typeof delayMs !== "number" || delayMs < 0) return;
 
   // Cancel any existing timer for this prayer
@@ -448,15 +451,21 @@ self.addEventListener("message", (event) => {
         resolve();
         return;
       }
+      const cityLine = cityName ? ` · ${cityName}` : "";
       self.registration.showNotification(`🕌 حان وقت ${prayerArabic}`, {
-        body: "حيَّ على الصلاة، حيَّ على الفلاح",
+        body: `حيَّ على الصلاة، حيَّ على الفلاح${cityLine}`,
         icon: "/logo.png?v=9",
         badge: "/favicon.png?v=9",
         dir: "rtl",
         lang: "ar",
         tag: `adhan-${prayerKey}`,
         renotify: true,
-        data: { url: "/prayer-times" },
+        requireInteraction: true,
+        actions: [
+          { action: "stop-adhan", title: "إيقاف الأذان" },
+          { action: "open-prayer", title: "مواقيت الصلاة" },
+        ],
+        data: { url: "/prayer-times", action: "adhan", prayerKey },
       }).then(resolve).catch(resolve);
     }, Math.min(delayMs, 86_400_000)); // cap at 24 h
 
@@ -489,11 +498,35 @@ self.addEventListener("push", (event) => {
 });
 
 self.addEventListener("notificationclick", (event) => {
+  const action = event.action;
   event.notification.close();
-  const target = event.notification.data?.url || "/";
+
+  if (action === "stop-adhan") {
+    event.waitUntil(
+      clients.matchAll({ type: "window", includeUncontrolled: true }).then((all) => {
+        for (const client of all) {
+          try {
+            client.postMessage({ type: "STOP_ADHAN" });
+          } catch {
+            /* ignore */
+          }
+        }
+        const target = event.notification.data?.url || "/prayer-times";
+        const match = all.find((c) => "focus" in c);
+        if (match) return match.focus();
+        return clients.openWindow(target);
+      }),
+    );
+    return;
+  }
+
+  const target =
+    action === "open-prayer"
+      ? "/prayer-times"
+      : event.notification.data?.url || "/";
   event.waitUntil(
     clients.matchAll({ type: "window", includeUncontrolled: true }).then((all) => {
-      const match = all.find((c) => c.url === target && "focus" in c);
+      const match = all.find((c) => c.url.includes(target) && "focus" in c);
       if (match) return match.focus();
       return clients.openWindow(target);
     }),
