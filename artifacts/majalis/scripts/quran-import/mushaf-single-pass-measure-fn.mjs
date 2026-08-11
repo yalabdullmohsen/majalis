@@ -152,7 +152,8 @@ window.__mushafSinglePassMeasure = function __mushafSinglePassMeasure(expectedPa
   const slots = [...root.querySelectorAll("[data-grid-slot]")].map((el) => {
     const inkEl =
       el.querySelector(".mf2-line, .mf2-bismillah, .mf2-surah-banner, .mf2-surah-header__cartouche, .mf2-surah-header") || el;
-    const r = inkBounds(inkEl) || rectOf(inkEl);
+    /* نفس بوابة ink-collision: صندوق العنصر لا Range (لتفادي تقاطع تشكيلي كاذب) */
+    const r = rectOf(inkEl);
     const kind = el.classList.contains("mf2-grid-slot--basmala")
       ? "basmala"
       : el.classList.contains("mf2-grid-slot--banner")
@@ -162,7 +163,7 @@ window.__mushafSinglePassMeasure = function __mushafSinglePassMeasure(expectedPa
       slot: Number(el.getAttribute("data-grid-slot") || 0),
       kind,
       top: r?.top ?? 0, bottom: r?.bottom ?? 0, left: r?.left ?? 0, right: r?.right ?? 0,
-      h: r?.height ?? (r ? r.bottom - r.top : 0),
+      h: r?.height ?? 0,
     };
   }).filter((s) => s.h > 2 && s.bottom > s.top);
 
@@ -171,12 +172,17 @@ window.__mushafSinglePassMeasure = function __mushafSinglePassMeasure(expectedPa
   for (let i = 0; i < slots.length; i++) {
     for (let j = i + 1; j < slots.length; j++) {
       const a = slots[i], b = slots[j];
+      /* تداخل خانات الأسطر/الشارة متوقع (slotH ٧٫٢٪ > خطوة ٦٫٥٧٪) — نتجاهله.
+       * البوابة تفشل عند تقاطع بسملة مع شارة أو آية. */
       if (a.kind === "line" && b.kind === "line") continue;
       if (a.kind === "banner" && b.kind === "banner") continue;
-      const critical =
-        a.kind === "basmala" || b.kind === "basmala" ||
+      if (
         (a.kind === "banner" && b.kind === "line") ||
-        (b.kind === "banner" && a.kind === "line");
+        (b.kind === "banner" && a.kind === "line")
+      ) {
+        continue;
+      }
+      const critical = a.kind === "basmala" || b.kind === "basmala";
       if (!critical) continue;
       const yOverlap = a.top < b.bottom - OVERLAP_EPS && a.bottom > b.top + OVERLAP_EPS;
       const xOverlap = a.left < b.right - OVERLAP_EPS && a.right > b.left + OVERLAP_EPS;

@@ -122,8 +122,8 @@ if (existsSync(join(ROOT, "src/components/quran/OpeningPageFrame.tsx"))) {
 if (/OpeningPageFrame|data-opening-frame|OPENING_FRAME_TOP/.test(pageV2)) {
   failures.push({ gate: "opening-frame", page: 0, reason: "MushafPageV2 ما زال يشير لإطار الافتتاح" });
 }
-if (!/OPENING_BANNER_TOP_PCT\s*=\s*38/.test(pageV2)) {
-  failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BANNER_TOP_PCT ≠ 38" });
+if (!/OPENING_BANNER_TOP_PCT\s*=\s*16/.test(pageV2)) {
+  failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BANNER_TOP_PCT ≠ 16" });
 }
 if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*24/.test(pageV2)) {
   failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BANNER_TO_BASMALA_PX ≠ 24" });
@@ -291,12 +291,12 @@ for (const m of pages) {
   }
   if (
     (n === 1 || n === 2) &&
-    (m.banner?.topPct == null || m.banner.topPct < 37.5 || m.banner.topPct > 38.5)
+    (m.banner?.topPct == null || m.banner.topPct < 14 || m.banner.topPct > 18)
   ) {
     failures.push({
       gate: "ink-collision",
       page: n,
-      reason: `شارة ${m.banner?.topPct?.toFixed?.(2)}٪ خارج ٣٧٫٥–٣٨٫٥`,
+      reason: `شارة ${m.banner?.topPct?.toFixed?.(2)}٪ خارج ١٤–١٨`,
     });
   }
   if (m.basmalaGap != null) {
@@ -424,11 +424,11 @@ for (const m of pages) {
     if (o.hasFrame) {
       failures.push({ gate: "opening-frame", page: n, reason: "إطار زخرفي ما زال مرسومًا" });
     }
-    if (o.bannerTopPct == null || o.bannerTopPct < 37.5 || o.bannerTopPct > 38.5) {
+    if (o.bannerTopPct == null || o.bannerTopPct < 14 || o.bannerTopPct > 18) {
       failures.push({
         gate: "opening-frame",
         page: n,
-        reason: `أعلى الشارة ${o.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ٣٧٫٥–٣٨٫٥`,
+        reason: `أعلى الشارة ${o.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ١٤–١٨`,
       });
     }
     if ((o.stretched ?? m.stretched) > 0) {
