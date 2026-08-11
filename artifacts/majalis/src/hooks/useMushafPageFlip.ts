@@ -89,7 +89,7 @@ export function useMushafPageFlip(opts: {
       if (e.button !== 0 && e.pointerType === "mouse") return;
       const target = e.target as HTMLElement | null;
       /* لا تبدأ تقليبًا من عناصر تفاعلية داخل الصفحة (آية/زر) */
-      if (target?.closest?.("button, a, [role='button'], [data-ayah-hit], .mf2-ayah-group")) {
+      if (target?.closest?.("button, a, [role='button'], [data-verse], .mfl-hit__ayah, .mf2-ayah-group")) {
         return;
       }
       const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
