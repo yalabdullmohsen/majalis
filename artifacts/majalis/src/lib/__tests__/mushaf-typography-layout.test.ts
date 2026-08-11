@@ -68,13 +68,13 @@ assert.match(
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /data-ornament="wing-dense"/,
-  "شارة كثيفة بلا pattern",
+  /data-ornament="wing-refined"/,
+  "شارة رصينة بلا pattern",
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /PetalMedallion|ArabesqueMesh/,
-  "ميدالية + شبكة أرابيسك",
+  /PetalMedallion|TwinSpirals/,
+  "ميدالية + فرعان لولبيان",
 );
 assert.equal(
   /<pattern[\s/]/i.test(readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8")),
@@ -144,7 +144,7 @@ assert.equal(
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8"),
-  /OPENING_BANNER_TOP_PCT\s*=\s*38/,
+  /OPENING_BANNER_TOP_PCT\s*=\s*16/,
   "شارة الافتتاح عند ٢٨٪",
 );
 assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?line-height:\s*2\.2/, "وضع Unicode: ارتفاع تشكيل 2.2");
