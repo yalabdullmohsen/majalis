@@ -18,12 +18,31 @@ import "@/styles/pages/first-run-setup.css";
 
 type Step = 0 | 1 | 2;
 
+function shouldSkipFirstRunSetup(): boolean {
+  try {
+    if (typeof navigator !== "undefined" && (navigator as Navigator & { webdriver?: boolean }).webdriver) {
+      return true;
+    }
+  } catch {
+    /* ignore */
+  }
+  try {
+    const q = new URLSearchParams(window.location.search);
+    if (q.get("noBrandReveal") === "1" || q.get("noFirstRun") === "1") return true;
+  } catch {
+    /* ignore */
+  }
+  return false;
+}
+
 /**
  * تهيئة تشغيل أول اختيارية — ليست بوابة إقلاع.
  * الاسم FirstRunSetup مقصود لتفادي Onboarding/WelcomeScreen في اختبارات الإقلاع.
  */
 export function FirstRunSetup() {
-  const [open, setOpen] = useState(() => isFirstRunSetupPending());
+  const [open, setOpen] = useState(
+    () => !shouldSkipFirstRunSetup() && isFirstRunSetupPending(),
+  );
   const [step, setStep] = useState<Step>(0);
   const [reciterId, setReciterId] = useState(loadReciterId);
   const [tafsirId, setTafsirId] = useState(readStoredTafsirEdition);

@@ -55,6 +55,7 @@ const frs = readFileSync(resolve(root, "src/components/FirstRunSetup.tsx"), "utf
 assert.match(frs, /تخطّي/);
 assert.match(frs, /markFirstRunSetupDone/);
 assert.match(frs, /لن نطلب إذن الإشعارات/);
+assert.match(frs, /webdriver|noFirstRun/);
 assert.doesNotMatch(frs, /Notification\.requestPermission|PushNotifications|requestPermissions/);
 
 const settings = readFileSync(resolve(root, "src/pages/account/ui/SettingsView.tsx"), "utf8");
