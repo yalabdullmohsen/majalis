@@ -320,8 +320,8 @@ export default function UniversityDetailPage() {
     return (
       <div dir="rtl" className="flex items-center justify-center min-h-screen">
         <div className="text-center space-y-3">
-          <Spinner className="size-10 icon-emerald" aria-label="جارٍ التحميل" />
-          <p className="udp-loading-text">جارٍ التحميل…</p>
+          <Spinner className="size-10 icon-emerald" aria-label="تجهيز المحتوى" />
+          <p className="udp-loading-text"></p>
         </div>
       </div>
     );

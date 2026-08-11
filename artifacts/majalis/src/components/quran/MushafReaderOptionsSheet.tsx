@@ -244,7 +244,7 @@ export function MushafReaderOptionsSheet({
               "التلاوة الصوتية",
               audioRows,
               tafsirAudioLoading ? (
-                <div className="mros-skel" aria-label="جاري التحميل" aria-busy="true">
+                <div className="mros-skel" aria-label="تجهيز المحتوى" aria-busy="true">
                   <span />
                   <span />
                   <span />

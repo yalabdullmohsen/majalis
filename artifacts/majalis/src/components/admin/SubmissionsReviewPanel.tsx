@@ -357,7 +357,7 @@ export function SubmissionsReviewPanel() {
 
       {/* Content */}
       {loading ? (
-        <div className="srp-state srp-state--loading">جارٍ التحميل...</div>
+        <div className="srp-state srp-state--loading"></div>
       ) : error ? (
         <div className="srp-state srp-state--error">{error}</div>
       ) : list.length === 0 ? (

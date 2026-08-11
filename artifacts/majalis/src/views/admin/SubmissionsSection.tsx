@@ -86,7 +86,7 @@ export function SubmissionsSection() {
         </div>
       </div>
 
-      {loading && <p className="sub-loading">جارٍ التحميل...</p>}
+      {loading && <p className="sub-loading"></p>}
 
       {!loading && items.length === 0 && (
         <p className="sub-empty">

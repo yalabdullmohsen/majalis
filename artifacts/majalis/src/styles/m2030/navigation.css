@@ -36,6 +36,20 @@ header.navbar-v3,
   padding-block: 0.35rem !important;
 }
 
+/* جوال: شريط سفلي فقط — سطح المكتب: شريط علوي فقط (بلا ازدواج لنفس التبويبات) */
+@media (max-width: 767.98px) {
+  .top-section-bar {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) {
+  .bottom-nav,
+  .bottom-nav--v2,
+  .bottom-nav--m2030 {
+    display: none !important;
+  }
+}
+
 .top-section-bar__tab {
   border-radius: var(--r-sm) !important;
   background: transparent !important;

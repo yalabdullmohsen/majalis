@@ -95,7 +95,7 @@ export function IslamicStoriesSection() {
   if (loading) {
     return (
       <div className="iss-empty">
-        جاري التحميل…
+        
       </div>
     );
   }

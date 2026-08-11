@@ -473,7 +473,7 @@ export function CategoriesSection() {
       )}
 
       {loading ? (
-        <p className="adm-empty-msg">جاري التحميل…</p>
+        <p className="adm-empty-msg"></p>
       ) : (
         <>
           {pagedTree.length === 0 && <p className="adm-empty-msg">لا تصنيفات مطابقة — جرّب «الكل» أو «إظهار جميع الحالات».</p>}

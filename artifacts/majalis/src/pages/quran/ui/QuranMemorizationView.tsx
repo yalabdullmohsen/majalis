@@ -237,7 +237,7 @@ function QuestionCard({
         <div className="qmem-input-wrap">
           {isAutoReveal ? (
             <div className="qmem-ayah-text">
-              {adjacentAyah ?? "جارٍ التحميل..."}
+              {adjacentAyah ?? ""}
             </div>
           ) : (
             <>
@@ -289,8 +289,7 @@ function QuestionCard({
           </p>
           {!isCorrect && (
             <p className="qmem-result__answer">
-              الإجابة الصحيحة: <strong>{question.correctAnswer}</strong>
-            </p>
+              الإجابة الصحيحة: <strong>{question.correctAnswer}</strong></p>
           )}
           <p className="qmem-result__full">
             الآية الكاملة: {question.fullAyah}
@@ -520,7 +519,7 @@ export default function QuranMemorizationPage() {
                 onClick={startSession}
                 disabled={loading || surahList.length === 0}
               >
-                {loading ? "جارٍ التحميل..." : "ابدأ الاختبار"}
+                {loading ? "" : "ابدأ الاختبار"}
                 {!loading && <BookOpen size={15} />}
               </button>
             </div>

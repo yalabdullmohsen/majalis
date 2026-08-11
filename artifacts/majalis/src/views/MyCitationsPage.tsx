@@ -154,7 +154,7 @@ export default function MyCitationsPage() {
   if (authLoading) {
     return (
       <div dir="rtl" className="min-h-screen flex items-center justify-center">
-        <Spinner className="size-10 icon-emerald" aria-label="جارٍ التحميل" />
+        <Spinner className="size-10 icon-emerald" aria-label="تجهيز المحتوى" />
       </div>
     );
   }
@@ -290,7 +290,7 @@ export default function MyCitationsPage() {
         <main className="flex-1 min-w-0">
           {loading ? (
             <div className="flex items-center justify-center py-16">
-              <Spinner className="size-8 icon-emerald" aria-label="جارٍ التحميل" />
+              <Spinner className="size-8 icon-emerald" aria-label="تجهيز المحتوى" />
             </div>
           ) : displayed.length === 0 ? (
             <div className="text-center py-16 space-y-3">

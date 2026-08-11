@@ -92,7 +92,7 @@ export default function Flashcards() {
       <div className="fc">
         <p className="fc-lead">راجِع اليوم</p>
         <p className="fc-sub">
-          {loading ? "جارٍ التحميل…"
+          {loading ? ""
             : dueCount ? `${ar(dueCount)} رزم فيها بطاقات مستحقة`
             : "لا مراجعة مستحقة"}
         </p>
