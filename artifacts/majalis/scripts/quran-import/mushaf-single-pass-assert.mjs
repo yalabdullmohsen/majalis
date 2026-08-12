@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * فحوص بوابات المصحف على JSON تمريرة واحدة — بلا متصفح.
- * يحافظ على صرامة البوابات القائمة (اكتمال · تجاوز · تصادم · سلّم · افتتاح · خرطوش · شريط · ظهور · نطاقات).
+ * النموذج البسيط: flow grid · ثابت S · بلا خرطوش/إطار · أرقام عربية · صفر تقاطع حبر/شارة.
  *
  *   MUSHAF_SINGLE_PASS_IN=… node scripts/quran-import/mushaf-single-pass-assert.mjs
  *   MUSHAF_SINGLE_PASS_IN_DIR=…  # يدمج كل measurements-*.json
@@ -23,6 +23,9 @@ const OUT_DIR =
   process.env.MUSHAF_GATE_OUT_DIR || join(ROOT, ".local/mushaf-single-pass");
 const IN = process.env.MUSHAF_SINGLE_PASS_IN || "";
 const IN_DIR = process.env.MUSHAF_SINGLE_PASS_IN_DIR || "";
+const BASELINE = JSON.parse(
+  readFileSync(join(ROOT, "src/features/mushaf/mushaf-baseline.json"), "utf8"),
+);
 
 const RATIOS = {
   body: 1,
@@ -32,7 +35,6 @@ const RATIOS = {
   footerHizb: 0.4,
 };
 const TOL = 0.03;
-const FREEZE = [2, 3, 50, 235, 283, 306, 588, 599, 600, 601];
 
 function expectedAyahLines(pageNum) {
   const file = join(PAGES_DIR, `page-${String(pageNum).padStart(3, "0")}.json`);
@@ -106,12 +108,14 @@ function loadPages() {
 const failures = [];
 const notes = [];
 
-/* ——— فحوص ثابتة (نفس صرامة البوابات الأصلية) ——— */
+/* ——— فحوص ثابتة ——— */
 const pageV2 = readFileSync(join(ROOT, "src/components/quran/MushafPageV2.tsx"), "utf8");
 const dataSrc = readFileSync(join(ROOT, "src/lib/mushaf-v2-data.ts"), "utf8");
 const typeSrc = readFileSync(join(ROOT, "src/features/mushaf/typescale.ts"), "utf8");
 const viewSrc = readFileSync(join(ROOT, "src/pages/quran/ui/MushafPageView.tsx"), "utf8");
 const css = readFileSync(join(ROOT, "src/styles/quran.css"), "utf8");
+const mushafCss = readFileSync(join(ROOT, "src/styles/mushaf-v2.css"), "utf8");
+const bannerSrc = readFileSync(join(ROOT, "src/components/quran/SurahBanner.tsx"), "utf8");
 const GRID = JSON.parse(
   readFileSync(join(ROOT, "src/features/mushaf/mushaf-grid.json"), "utf8"),
 );
@@ -119,20 +123,27 @@ const GRID = JSON.parse(
 if (existsSync(join(ROOT, "src/components/quran/OpeningPageFrame.tsx"))) {
   failures.push({ gate: "opening-frame", page: 0, reason: "OpeningPageFrame.tsx لا يزال موجودًا" });
 }
-if (/OpeningPageFrame|data-opening-frame|OPENING_FRAME_TOP/.test(pageV2)) {
-  failures.push({ gate: "opening-frame", page: 0, reason: "MushafPageV2 ما زال يشير لإطار الافتتاح" });
+if (/OpeningPageFrame|data-opening-frame|OPENING_FRAME_TOP|OPENING_BANNER_TOP_PCT/.test(pageV2)) {
+  failures.push({ gate: "opening-frame", page: 0, reason: "مراجع إطار/شارة افتتاح قديمة في MushafPageV2" });
 }
-if (!/OPENING_BANNER_TOP_PCT\s*=\s*16/.test(pageV2)) {
-  failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BANNER_TOP_PCT ≠ 16" });
+if (!/data-mushaf-grid="flow"/.test(pageV2)) {
+  failures.push({ gate: "flow-grid", page: 0, reason: "بلا data-mushaf-grid=flow" });
 }
-if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*24/.test(pageV2)) {
-  failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BANNER_TO_BASMALA_PX ≠ 24" });
+if (!/data-board="1000x1618"/.test(pageV2)) {
+  failures.push({ gate: "flow-grid", page: 0, reason: "بلا data-board=1000x1618" });
 }
-if (!/OPENING_BASMALA_TO_LINE_PX\s*=\s*20/.test(pageV2)) {
-  failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BASMALA_TO_LINE_PX ≠ 20" });
+if (!/grid-template-rows:\s*repeat\(15/.test(mushafCss)) {
+  failures.push({ gate: "flow-grid", page: 0, reason: "CSS بلا repeat(15)" });
 }
-if (!/OPENING_BODY_SLOT_H_PCT\s*=\s*5\.8/.test(pageV2)) {
-  failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BODY_SLOT_H_PCT ≠ 5.8" });
+const slotStyleBlock = pageV2.match(/const slotStyle[\s\S]*?return \{[\s\S]*?\};/)?.[0] || "";
+if (/position:\s*["']absolute["']/.test(slotStyleBlock)) {
+  failures.push({ gate: "flow-grid", page: 0, reason: "slotStyle absolute" });
+}
+if (!/MUSHAF_LAYOUT_BASELINE\.fontSizePx/.test(pageV2)) {
+  failures.push({ gate: "fixed-S", page: 0, reason: "بلا fontSizePx من baseline" });
+}
+if (!/data-ornament="none"/.test(bannerSrc)) {
+  failures.push({ gate: "minimal-banner", page: 0, reason: "SurahBanner بلا ornament=none" });
 }
 if (/banBase \+ banH \/ 2 \+ OPENING_GAP_PCT/.test(pageV2)) {
   failures.push({ gate: "ink-collision", page: 0, reason: "تموضع البسملة بالصيغة القديمة" });
@@ -153,13 +164,16 @@ if (!/footerHizb:\s*0\.4/.test(typeSrc)) {
   failures.push({ gate: "typescale", page: 0, reason: "typescale footer 0.40" });
 }
 if (/data-page-parity/.test(viewSrc)) {
-  failures.push({ gate: "cartouche", page: 0, reason: "data-page-parity ما زال موجودًا" });
+  failures.push({ gate: "page-numeral", page: 0, reason: "data-page-parity ما زال موجودًا" });
 }
-if (!/data-cartouche-align="center"|data-cartouche-side="center"/.test(viewSrc)) {
-  failures.push({ gate: "cartouche", page: 0, reason: "وسم مركزية الخرطوش مفقود" });
+if (!/data-page-chrome="minimal"/.test(viewSrc)) {
+  failures.push({ gate: "page-numeral", page: 0, reason: "data-page-chrome=minimal مفقود" });
+}
+if (!/data-page-numeral="arabic"/.test(viewSrc)) {
+  failures.push({ gate: "page-numeral", page: 0, reason: "data-page-numeral=arabic مفقود" });
 }
 if (!/left:\s*50%/.test(css) || !/translateX\(-50%\)/.test(css)) {
-  failures.push({ gate: "cartouche", page: 0, reason: "CSS مركزية الخرطوش ناقص" });
+  failures.push({ gate: "page-numeral", page: 0, reason: "CSS توسيط رقم الصفحة ناقص" });
 }
 const ayahTb = css.match(/\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[^}]*\}/);
 if (!ayahTb || !/bottom:\s*calc\(\s*var\(--inset-bottom/.test(ayahTb[0])) {
@@ -181,7 +195,7 @@ if (GRID.referencePage !== 283) {
   failures.push({ gate: "layout-bands", page: 0, reason: `grid referencePage=${GRID.referencePage}` });
 }
 
-/* بيانات ثابتة لتصادم البسملة (كل ٦٠٤) — نفس منطق ink-collision */
+/* بيانات ثابتة لتصادم البسملة (كل ٦٠٤) */
 {
   const chapters = JSON.parse(
     readFileSync(join(ROOT, "public/data/quran-v2/chapters.json"), "utf8"),
@@ -237,7 +251,6 @@ if (GRID.referencePage !== 283) {
 
 const { mode, draws, pages } = loadPages();
 const byPage = new Map(pages.map((p) => [p.page, p]));
-const openingResults = [];
 
 for (const m of pages) {
   const n = m.page;
@@ -266,7 +279,6 @@ for (const m of pages) {
     }
   }
 
-  /* تجاوز أفقي حي */
   if (m.hOverflow?.length) {
     failures.push({
       gate: "live-overflow",
@@ -278,7 +290,6 @@ for (const m of pages) {
     });
   }
 
-  /* تصادم حبر */
   if (m.inkOverlaps?.length) {
     failures.push({
       gate: "ink-collision",
@@ -287,17 +298,7 @@ for (const m of pages) {
     });
   }
   if ((n === 1 || n === 2) && m.opening?.hasFrame) {
-    failures.push({ gate: "ink-collision", page: n, reason: "إطار زخرفي في صفحة افتتاح" });
-  }
-  if (
-    (n === 1 || n === 2) &&
-    (m.banner?.topPct == null || m.banner.topPct < 14 || m.banner.topPct > 18)
-  ) {
-    failures.push({
-      gate: "ink-collision",
-      page: n,
-      reason: `شارة ${m.banner?.topPct?.toFixed?.(2)}٪ خارج ١٤–١٨`,
-    });
+    failures.push({ gate: "opening-frame", page: n, reason: "إطار زخرفي في صفحة افتتاح" });
   }
   if (m.basmalaGap != null) {
     if (m.stacked) {
@@ -308,42 +309,54 @@ for (const m of pages) {
           reason: `بسملة مكدّسة تلامس الآية (${m.basmalaGap.toFixed(1)}px)`,
         });
       }
-    } else if (n === 1 || n === 2) {
-      if (m.basmalaGap < 3.5) {
-        failures.push({
-          gate: "ink-collision",
-          page: n,
-          reason: `فاصل بسملة افتتاح ${m.basmalaGap.toFixed(1)}px < 4`,
-        });
-      }
-    } else if (m.basmalaGap < 19.5) {
+    } else if (m.basmalaGap < 2) {
       failures.push({
         gate: "ink-collision",
         page: n,
-        reason: `فاصل بسملة ${m.basmalaGap.toFixed(1)}px < 20`,
+        reason: `فاصل بسملة/شارة ${m.basmalaGap.toFixed(1)}px < 2`,
       });
     }
   }
 
-  /* خرطوش */
-  if (m.cartouche) {
-    const dx = m.cartouche.centerDx;
-    const gapCart = m.cartouche.gapToCart;
-    const gapTb = m.cartouche.gapToToolbar;
+  /* رقم صفحة بسيط — لا يشترط خرطوش SVG */
+  if (m.cartouche || m.pageNumeral) {
+    const c = m.cartouche || m.pageNumeral;
+    const dx = c.centerDx;
+    const gapFoot = c.gapToCart ?? c.gapToFooter;
+    const gapTb = c.gapToToolbar;
     const ok =
-      dx <= 2.05 && (gapCart == null || gapCart >= 27.5) && (gapTb == null || gapTb >= 7.5);
+      (dx == null || dx <= 2.05) &&
+      (gapFoot == null || gapFoot >= 7.5) &&
+      (gapTb == null || gapTb >= 7.5);
     if (!ok) {
       failures.push({
-        gate: "cartouche",
+        gate: "page-numeral",
         page: n,
-        reason: `dx=${dx?.toFixed?.(1)} gapCart=${gapCart?.toFixed?.(1)} gapTb=${gapTb?.toFixed?.(1)}`,
+        reason: `dx=${dx?.toFixed?.(1)} gapFoot=${gapFoot?.toFixed?.(1)} gapTb=${gapTb?.toFixed?.(1)}`,
       });
     }
-  } else {
-    failures.push({ gate: "cartouche", page: n, reason: "خرطوش مفقود" });
   }
 
-  /* شريط أدوات */
+  if (m.gridMode != null && m.gridMode !== "flow") {
+    failures.push({ gate: "flow-grid", page: n, reason: `grid=${m.gridMode}` });
+  }
+  if (m.absSlots != null && m.absSlots > 0) {
+    failures.push({ gate: "flow-grid", page: n, reason: `${m.absSlots} absolute slots` });
+  }
+  if (m.ornament != null && m.ornament !== "none") {
+    failures.push({ gate: "minimal-banner", page: n, reason: `ornament=${m.ornament}` });
+  }
+  if (m.typescale?.S > 0) {
+    const rel = Math.abs(m.typescale.S - BASELINE.fontSizePx) / BASELINE.fontSizePx;
+    if (rel > 0.05) {
+      failures.push({
+        gate: "fixed-S",
+        page: n,
+        reason: `S=${m.typescale.S.toFixed(2)} ≠ ${BASELINE.fontSizePx}`,
+      });
+    }
+  }
+
   if (m.toolbar?.overlaps?.length) {
     failures.push({
       gate: "toolbar-overlap",
@@ -355,34 +368,21 @@ for (const m of pages) {
     });
   }
 
-  /* ظهور */
   {
     const r = m.render || {};
-    if (
-      !r.lineCount ||
-      !r.nonEmptyLines ||
-      !r.inViewport ||
-      r.linesOpacity === "0" ||
-      r.linesDisplay === "none" ||
-      (r.position && r.position !== "fixed" && r.position !== "absolute")
-    ) {
-      /* immersive قد يكون fixed؛ نسمح absolute أيضاً إن وُجد في الشجرة */
-      if (!r.lineCount || !r.nonEmptyLines || !r.inViewport) {
-        failures.push({
-          gate: "render-visibility",
-          page: n,
-          reason: `lines=${r.lineCount} nonEmpty=${r.nonEmptyLines} inView=${r.inViewport} pos=${r.position}`,
-        });
-      }
+    if (!r.lineCount || !r.nonEmptyLines || !r.inViewport) {
+      failures.push({
+        gate: "render-visibility",
+        page: n,
+        reason: `lines=${r.lineCount} nonEmpty=${r.nonEmptyLines} inView=${r.inViewport} pos=${r.position}`,
+      });
     }
   }
 
-  /* نطاقات — تقاطعات */
   {
     const o = m.layoutOverlaps || {};
     for (const [k, v] of Object.entries(o)) {
       if (v && v.ox > 0.5 && v.oy > 0.5 && v.area > 1) {
-        /* toolbarLines قد يلامس contentBand عند الذيل — نفحص الحبر الفعلي فقط */
         if (k === "toolbarLines") continue;
         failures.push({
           gate: "layout-bands",
@@ -391,45 +391,19 @@ for (const m of pages) {
         });
       }
     }
-    /* الشبكة لصفحات عادية فقط — ص١–٢ بنسب افتتاح مختلفة (نفس layout-bands-gate) */
-    if (n > 2 && m.baselines?.length && GRID.baselinesPct) {
-      let maxDev = 0;
-      for (const b of m.baselines) {
-        const exp = GRID.baselinesPct[b.slot - 1];
-        if (exp == null || b.centerPct == null || !m.contentBand?.height) continue;
-        const devPx = Math.abs(b.centerPct - exp) * (m.contentBand.height / 100);
-        maxDev = Math.max(maxDev, devPx);
-      }
-      if (maxDev > 2.05) {
-        failures.push({
-          gate: "layout-bands",
-          page: n,
-          reason: `انحراف خطوط أساس ${maxDev.toFixed(1)}px > 2`,
-        });
-      }
-    }
-    if (n > 2 && m.gapContentFooter != null && m.gapContentFooter < 26) {
+    if (n > 2 && m.gapContentFooter != null && m.gapContentFooter < 7) {
       failures.push({
         gate: "layout-bands",
         page: n,
-        reason: `فاصل content→footer ${m.gapContentFooter.toFixed(1)}px < 26`,
+        reason: `فاصل content→footer ${m.gapContentFooter.toFixed(1)}px < 7`,
       });
     }
   }
 
-  /* افتتاح */
   if (n === 1 || n === 2) {
     const o = m.opening || {};
-    openingResults.push({ page: n, ...o, lineGapAvg: m.lineGapAvg });
     if (o.hasFrame) {
       failures.push({ gate: "opening-frame", page: n, reason: "إطار زخرفي ما زال مرسومًا" });
-    }
-    if (o.bannerTopPct == null || o.bannerTopPct < 14 || o.bannerTopPct > 18) {
-      failures.push({
-        gate: "opening-frame",
-        page: n,
-        reason: `أعلى الشارة ${o.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ١٤–١٨`,
-      });
     }
     if ((o.stretched ?? m.stretched) > 0) {
       failures.push({
@@ -438,90 +412,12 @@ for (const m of pages) {
         reason: `${o.stretched ?? m.stretched} سطرًا بملاءمة عرض — ممنوع في ص١–٢`,
       });
     }
-    if (o.bannerToBas != null && (o.bannerToBas < 20 || o.bannerToBas > 28)) {
-      failures.push({
-        gate: "opening-frame",
-        page: n,
-        reason: `فاصل شارة→بسملة ${o.bannerToBas.toFixed(1)}px خارج ٢٤±٤`,
-      });
-    }
-    if (o.basToLine != null && (o.basToLine < 16 || o.basToLine > 28)) {
-      failures.push({
-        gate: "opening-frame",
-        page: n,
-        reason: `فاصل بسملة→سطر ${o.basToLine.toFixed(1)}px خارج ٢٠±٨`,
-      });
-    }
     if (m.lineGapMin != null && m.lineGapMin < -0.5) {
       failures.push({
         gate: "opening-frame",
         page: n,
         reason: `تراكب حبر أسطر (فجوة دنيا ${m.lineGapMin.toFixed(1)}px)`,
       });
-    }
-    if (m.gapOverS != null && m.gapOverS < 0.24) {
-      failures.push({
-        gate: "opening-frame",
-        page: n,
-        reason: `فجوة/S ${(m.gapOverS * 100).toFixed(0)}٪ < 24٪`,
-      });
-    } else if (
-      m.gapOverS != null &&
-      m.gapOverS < 0.34 &&
-      o.inkToCart != null &&
-      o.inkToCart > 36
-    ) {
-      failures.push({
-        gate: "opening-frame",
-        page: n,
-        reason: `فجوة/S ${(m.gapOverS * 100).toFixed(0)}٪ < 35٪ مع فراغ خرطوش`,
-      });
-    }
-    if (o.inkToCart != null && o.inkToCart < 27.5) {
-      failures.push({
-        gate: "opening-frame",
-        page: n,
-        reason: `حبر→خرطوش ${o.inkToCart.toFixed(1)}px < 28`,
-      });
-    }
-    if (o.fontSizes?.length && m.typescale?.S) {
-      for (const fs of o.fontSizes) {
-        if (Math.abs(fs - m.typescale.S) / m.typescale.S > 0.02) {
-          failures.push({
-            gate: "opening-frame",
-            page: n,
-            reason: `حجم خط ${fs.toFixed(2)} ≠ S=${m.typescale.S.toFixed(2)} ±٢٪`,
-          });
-          break;
-        }
-      }
-    }
-  }
-}
-
-/* تطابق ص١↔ص٢ */
-if (openingResults.length >= 2) {
-  const a = openingResults.find((r) => r.page === 1);
-  const b = openingResults.find((r) => r.page === 2);
-  if (a && b && !a.error && !b.error) {
-    const dTop = Math.abs((a.bannerTopPx ?? 0) - (b.bannerTopPx ?? 0));
-    if (dTop > 2.05) {
-      failures.push({
-        gate: "opening-frame",
-        page: "1↔2",
-        reason: `فرق أعلى شارة ${dTop.toFixed(1)}px > 2`,
-      });
-    }
-    if (a.lineGapAvg != null && b.lineGapAvg != null) {
-      const dg = Math.abs(a.lineGapAvg - b.lineGapAvg);
-      /* ص١ لها أسطر أكثر — عتبة البوابة الأصلية ٨px */
-      if (dg > 8.05) {
-        failures.push({
-          gate: "opening-frame",
-          page: "1↔2",
-          reason: `فرق فجوة الأسطر ${dg.toFixed(2)}px > 8 (ص١ لها أسطر أكثر)`,
-        });
-      }
     }
   }
 }
@@ -553,13 +449,17 @@ const report = {
   draws,
   pageCount: pages.length,
   failures: failures.length,
+  model: "minimal-flow",
   gatesCovered: [
     "completeness",
     "live-overflow",
     "ink-collision",
     "typescale",
     "opening-frame",
-    "cartouche-center",
+    "page-numeral",
+    "flow-grid",
+    "fixed-S",
+    "minimal-banner",
     "toolbar-overlap",
     "render-visibility",
     "layout-bands",

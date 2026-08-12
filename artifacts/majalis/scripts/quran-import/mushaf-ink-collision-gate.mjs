@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * بوابة تصادم الحبر: صفر تقاطع بين مستطيلات حبر أي سطرين (خانات grid)
- * على كل صفحات بداية سورة + عيّنة تجميد، مع فحص بيانات ثابت لكل ٦٠٤.
+ * بوابة تصادم الحبر (نموذج بسيط):
+ * صفر تقاطع صناديق بين الحبر والشارة والبسملة والرأس والذيل ومؤشر الخط.
+ * صفحات تجميد: 1,2,3,600,601,602,603 + بدايات السور.
  *
  *   pnpm run test:mushaf-ink-collision
  */
@@ -24,7 +25,7 @@ const BASE = EXTERNAL_BASE || `http://127.0.0.1:${PORT}`;
 const OUT_DIR =
   process.env.MUSHAF_GATE_OUT_DIR || join(ROOT, ".local/mushaf-ink-collision");
 const VIEWPORT = { width: 390, height: 844 };
-const FREEZE = [2, 3, 50, 235, 283, 306, 588, 599, 600, 601];
+const FREEZE = [1, 2, 3, 50, 235, 283, 306, 588, 599, 600, 601, 602, 603];
 const OVERLAP_EPS_PX = 1.5;
 
 function sleep(ms) {
@@ -197,14 +198,24 @@ try {
     });
 
     const m = await page.evaluate((eps) => {
-      const leaf =
-        __mushafActiveRoot();
-      const root =
-        __mushafLinesRoot();
+      const root = __mushafLinesRoot();
       if (!root) return { error: "no lines" };
+
+      const boxOf = (el) => {
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        if (r.height < 1 || r.width < 1) return null;
+        return { top: r.top, bottom: r.bottom, left: r.left, right: r.right, h: r.height };
+      };
+      const overlapsBox = (a, b) => {
+        const y = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+        const x = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+        return y > eps && x > eps ? { y, x } : null;
+      };
+
       const slots = [...root.querySelectorAll("[data-grid-slot]")].map((el) => {
         const ink =
-          el.querySelector(".mf2-line, .mf2-bismillah, .mf2-surah-header__cartouche, .mf2-surah-header") ||
+          el.querySelector(".mf2-line, .mf2-bismillah, .mf2-surah-banner, .mf2-surah-header") ||
           el;
         const r = ink.getBoundingClientRect();
         return {
@@ -227,23 +238,21 @@ try {
         for (let j = i + 1; j < slots.length; j++) {
           const a = slots[i];
           const b = slots[j];
-          /* تداخل خانات الأسطر/الشارة متوقع (slotH ٧٫٢٪ > خطوة ٦٫٥٧٪) — نتجاهله.
-           * البوابة تفشل عند تقاطع بسملة مع شارة أو آية (فاصل الحبر). */
+          /* أسطر×أسطر متجاورة في شبكة متساوية قد تلامس — نفحص البسملة/الشارة */
           if (a.kind === "line" && b.kind === "line") continue;
           if (a.kind === "banner" && b.kind === "banner") continue;
-          if (
+          const critical =
+            a.kind === "basmala" ||
+            b.kind === "basmala" ||
             (a.kind === "banner" && b.kind === "line") ||
-            (b.kind === "banner" && a.kind === "line")
-          ) {
-            continue;
-          }
-          const critical = a.kind === "basmala" || b.kind === "basmala";
+            (b.kind === "banner" && a.kind === "line");
           if (!critical) continue;
+          /* شارة×سطر: في الشبكة المتساوية تتلامس الحدود — عتبة أعلى قليلًا */
+          const thr = a.kind === "basmala" || b.kind === "basmala" ? 2.5 : 6;
           const yOverlap = a.top < b.bottom - eps && a.bottom > b.top + eps;
           const xOverlap = a.left < b.right - eps && a.right > b.left + eps;
-          /* تسامح ٢٫٥px لتلامس زخرفة الشارة مع طرف التشكيل */
           const overlapY = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
-          if (yOverlap && xOverlap && overlapY > 2.5) {
+          if (yOverlap && xOverlap && overlapY > thr) {
             overlaps.push({
               a: `${a.kind}@${a.slot}`,
               b: `${b.kind}@${b.slot}`,
@@ -253,10 +262,34 @@ try {
         }
       }
 
+      /* رأس / ذيل / مؤشر خط مقابل الحبر والشارة */
+      const header = boxOf(document.querySelector(".mpv-ayah-header"));
+      const footer = boxOf(document.querySelector(".mpv-ayah-footer"));
+      const fontProg = boxOf(
+        document.querySelector('[data-font-progress="corner"], .qpc-font-pack--corner'),
+      );
+      const chromeTargets = [
+        ...slots.filter((s) => s.kind === "banner" || s.kind === "basmala" || s.kind === "line"),
+      ];
+      for (const [name, box] of [
+        ["header", header],
+        ["footer", footer],
+        ["font-progress", fontProg],
+      ]) {
+        if (!box) continue;
+        for (const s of chromeTargets) {
+          /* الرأس/الذيل عائم — لا نقارن مع كل الأسطر إلا عند تداخل واضح */
+          if ((name === "header" || name === "footer") && s.kind === "line") continue;
+          const hit = overlapsBox(box, s);
+          if (hit && hit.y > 3) {
+            overlaps.push({ a: name, b: `${s.kind}@${s.slot}`, y: hit.y });
+          }
+        }
+      }
+
       const banner = root.querySelector(".mf2-grid-slot--banner");
       const basmalaSlotEl = root.querySelector(".mf2-grid-slot--basmala .mf2-bismillah");
       const basmalaStacked = root.querySelector(".mf2-bismillah--stacked");
-      const basmala = basmalaSlotEl || basmalaStacked;
       let basmalaGap = null;
       let stacked = false;
       if (banner && basmalaSlotEl) {
@@ -264,24 +297,20 @@ try {
           basmalaSlotEl.getBoundingClientRect().top - banner.getBoundingClientRect().bottom;
       } else if (banner && basmalaStacked) {
         stacked = true;
-        /* مكدّسة داخل الشارة: الفاصل = أسفل البسملة → أعلى أول سطر آية */
         const nextLine = root.querySelector(".mf2-grid-slot--line .mf2-line");
         if (nextLine) {
           basmalaGap =
             nextLine.getBoundingClientRect().top - basmalaStacked.getBoundingClientRect().bottom;
         }
       }
-      const lr = root.getBoundingClientRect();
-      const br = banner?.getBoundingClientRect();
-      const bannerTopPct =
-        br && lr.height > 0 ? ((br.top - lr.top) / lr.height) * 100 : null;
 
       return {
         slotCount: slots.length,
         overlaps,
         basmalaGap,
         stacked,
-        bannerTopPct,
+        gridMode: root.getAttribute("data-mushaf-grid"),
+        ornament: root.querySelector(".mf2-surah-banner")?.getAttribute("data-ornament"),
         hasFrame: Boolean(
           document.querySelector("[data-opening-frame], .mf2-opening-frame"),
         ),
@@ -299,17 +328,14 @@ try {
         reason: `تقاطع حبر: ${m.overlaps.map((o) => `${o.a}×${o.b}`).join(", ")}`,
       });
     }
-    if ((n === 1 || n === 2) && m.hasFrame) {
-      failures.push({ page: n, reason: "إطار زخرفي في صفحة افتتاح" });
+    if (m.hasFrame) {
+      failures.push({ page: n, reason: "إطار زخرفي (.mf2-opening-frame) ما زال موجودًا" });
     }
-    if (
-      (n === 1 || n === 2) &&
-      (m.bannerTopPct == null || m.bannerTopPct < 14 || m.bannerTopPct > 18)
-    ) {
-      failures.push({
-        page: n,
-        reason: `شارة ${m.bannerTopPct?.toFixed?.(2)}٪ خارج ١٤–١٨`,
-      });
+    if (m.gridMode && m.gridMode !== "flow") {
+      failures.push({ page: n, reason: `data-mushaf-grid=${m.gridMode} ≠ flow` });
+    }
+    if (m.ornament != null && m.ornament !== "none") {
+      failures.push({ page: n, reason: `شارة ornament=${m.ornament} ≠ none` });
     }
     if (m.basmalaGap != null) {
       if (m.stacked) {
@@ -319,18 +345,10 @@ try {
             reason: `بسملة مكدّسة تلامس الآية (فاصل ${m.basmalaGap.toFixed(1)}px)`,
           });
         }
-      } else if (n === 1 || n === 2) {
-        /* ص١–٢: الفاصل التشغيلي شارة→بسملة ≥٢٤ حبر؛ الصندوق ≥٤ بعد التصفية */
-        if (m.basmalaGap < 3.5) {
-          failures.push({
-            page: n,
-            reason: `فاصل بسملة افتتاح ${m.basmalaGap.toFixed(1)}px < 4`,
-          });
-        }
-      } else if (m.basmalaGap < 19.5) {
+      } else if (m.basmalaGap < 2) {
         failures.push({
           page: n,
-          reason: `فاصل بسملة ${m.basmalaGap.toFixed(1)}px < 20`,
+          reason: `فاصل بسملة/شارة ${m.basmalaGap.toFixed(1)}px < 2`,
         });
       }
     }

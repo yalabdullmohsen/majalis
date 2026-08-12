@@ -85,12 +85,13 @@ assert.match(viewSrc, /mpv-body--ayah/);
 assert.equal(/mpv-ayah-nav-btn/.test(viewSrc), false, "بلا أسهم تنقّل في التذييل — الشارة فقط");
 assert.equal(/pageFillMode/.test(viewSrc), false, "بلا وضع امتلاء منفصل");
 assert.equal(/Maximize2|Minimize2|mpv-fill-enter/.test(viewSrc), false, "بلا أزرار تكبير/تصغير");
-assert.match(viewSrc, /MushafPageCartoucheSvg/);
-assert.match(viewSrc, /data-cartouche-align="center"/, "خرطوش مركزي");
-assert.match(viewSrc, /data-cartouche-side="center"/, "جهة الخرطوش مركز");
+assert.equal(/MushafPageCartoucheSvg/.test(viewSrc), false, "بلا خرطوش SVG في الذيل");
+assert.match(viewSrc, /data-page-chrome="minimal"/, "ذيل بسيط");
+assert.match(viewSrc, /data-page-numeral="arabic"/, "رقم صفحة عربي");
+assert.equal(/data-cartouche-align/.test(viewSrc), false, "بلا وسم خرطوش");
 assert.equal(/data-page-parity/.test(viewSrc), false, "تناوب الخرطوش مُلغى");
 assert.equal(/data-page-parity="odd"/.test(quranCss), false, "بلا CSS فردي");
-assert.match(quranCss, /\.mpv-ayah-page-badge\s*\{[\s\S]*?left:\s*50%/, "خرطوش left 50%");
+assert.match(quranCss, /\.mpv-ayah-page-badge\s*\{[\s\S]*?left:\s*50%/, "رقم الصفحة left 50%");
 assert.match(
   quranCss,
   /\.mpv-ayah-header\s*\{[\s\S]*?font-size:\s*var\(--mushaf-fs-header-meta/,
@@ -123,8 +124,7 @@ assert.equal(
 assert.match(quranCss, /\.quran-shell--ayah\s*\{/);
 assert.match(quranCss, /--color-mushaf-paper/);
 assert.match(quranCss, /\.mpv-ayah-page-badge\s*\{/);
-assert.match(quranCss, /mpv-ayah-page-badge__cartouche/);
-assert.match(viewSrc, /mpv-ayah-page-badge__cartouche/);
+assert.match(viewSrc, /mpv-ayah-page-badge__num/);
 assert.match(viewSrc, /MoreHorizontal/);
 assert.match(viewSrc, /mpv-toolbar__more/);
 assert.match(viewSrc, /aria-label="فهرس السور"/);

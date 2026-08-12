@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 /**
- * بوابة أرقام الآيات (حاجبة):
+ * بوابة أرقام الآيات (حاجبة) — نموذج الشارة البسيط:
  * 1) كل آية لها مجسم نهاية (char_type end) بـ code_v2 غير فارغ → المجموع 6236
- * 2) المصدر يعرض glyphText لمجاميع النهاية — بلا AyahMarker يستبدل المجسم
- * 3) صفحة 306 (مرجع مريم) تحتفظ بمجسمات نهاية غير فارغة
+ * 2) المصدر يعرض glyphText لمجاميع النهاية — بلا AyahMarker
+ * 3) شارة بسيطة: data-ornament=none · بلا أجنحة/ميداليات بتلات
+ * 4) صفحة 306 تحتفظ بمجسمات نهاية غير فارغة
  */
 import { readFile, readdir, access } from "node:fs/promises";
 import path from "node:path";
@@ -84,8 +85,10 @@ async function assertSource() {
   if (!/data-ayah-numeral="qpc"/.test(pageV2)) {
     issues.push("MushafPageV2 بلا data-ayah-numeral=qpc على مجسم النهاية");
   }
-  if (!/mf2-word--ayah-end[\s\S]{0,120}\{w\.glyphText\}/.test(pageV2)
-    && !/className="mf2-word mf2-word--ayah-end"[\s\S]{0,200}\{w\.glyphText\}/.test(pageV2)) {
+  if (
+    !/mf2-word--ayah-end[\s\S]{0,120}\{w\.glyphText\}/.test(pageV2) &&
+    !/className="mf2-word mf2-word--ayah-end"[\s\S]{0,200}\{w\.glyphText\}/.test(pageV2)
+  ) {
     issues.push("مجسم النهاية لا يعرض w.glyphText مباشرة");
   }
   const css = await readFile(path.join(ROOT, "src/styles/mushaf-v2.css"), "utf8");
@@ -93,20 +96,33 @@ async function assertSource() {
     issues.push("لون مجسم النهاية ليس mushaf-gold-strong");
   }
   const banner = await readFile(path.join(ROOT, "src/components/quran/SurahBanner.tsx"), "utf8");
+  if (!/data-ornament="none"/.test(banner)) {
+    issues.push("SurahBanner بلا data-ornament=none");
+  }
+  if (!/data-banner-style="minimal-rule"/.test(banner)) {
+    issues.push("SurahBanner بلا data-banner-style=minimal-rule");
+  }
+  if (/PetalMedallion|data-wing-part|data-wing-density|wing-refined|TwinSpirals/.test(banner)) {
+    issues.push("SurahBanner ما زال يحمل زخرفة جناح/ميدالية بتلات");
+  }
   if (/<pattern[\s/]/i.test(banner)) {
-    issues.push("SurahBanner ما زال يستخدم وسم pattern مكررًا");
+    issues.push("SurahBanner ما زال يستخدم وسم pattern");
   }
-  if (!/PetalMedallion|medallion/.test(banner) || !/TwinSpirals|spiral/.test(banner)) {
-    issues.push("SurahBanner بلا ميدالية/فرعين لولبيين");
+  const ornaments = await readFile(
+    path.join(ROOT, "src/components/quran/MushafOrnaments.tsx"),
+    "utf8",
+  );
+  if (/data-ayah-medal="minimal"/.test(ornaments) && !/رقم|numeral|digit/i.test(ornaments)) {
+    /* ميدالية Unicode بسيطة يجب أن تبقى حلقة فقط — الرقم من الأب */
   }
-  if (!/data-ornament="wing-refined"/.test(banner)) {
-    issues.push("SurahBanner بلا data-ornament=wing-refined");
-  }
-  if (!/data-wing-density-target="20-30"/.test(banner)) {
-    issues.push("SurahBanner بلا هدف كثافة 20-30");
+  if (!/data-page-numeral="arabic"/.test(view)) {
+    issues.push("MushafPageView بلا data-page-numeral=arabic على رقم الصفحة");
   }
   if (!/MUSHAF_LAYOUT_BASELINE/.test(pageV2) || !/MUSHAF_GRID/.test(pageV2)) {
-    issues.push("MushafPageV2 لا يستخدم MUSHAF_LAYOUT_BASELINE/MUSHAF_GRID من ص٣١١");
+    issues.push("MushafPageV2 لا يستخدم MUSHAF_LAYOUT_BASELINE/MUSHAF_GRID");
+  }
+  if (!/data-mushaf-grid="flow"/.test(pageV2)) {
+    issues.push("MushafPageV2 بلا data-mushaf-grid=flow");
   }
   return issues;
 }
@@ -142,7 +158,7 @@ async function main() {
     for (const f of fail) console.error(`  - ${f}`);
     process.exit(1);
   }
-  console.log("[mushaf-ayah-numerals-gate] OK — 6236/6236 رقم آية ظاهر (مجسم QPC)");
+  console.log("[mushaf-ayah-numerals-gate] OK — 6236/6236 رقم آية ظاهر (مجسم QPC) · شارة بسيطة");
 }
 
 main().catch((err) => {

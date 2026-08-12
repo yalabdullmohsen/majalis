@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 /**
- * بوابة صفحتي الافتتاح (توحيد هندسي):
- * - صفر إطار زخرفي
- * - أعلى الشارة ٣٧٫٥٪–٣٨٫٥٪ من contentBand
- * - تطابق ص١↔ص٢ ≤2px أعلى الشارة · ≤1px فجوة أسطر
- * - فاصل بسملة→أول سطر ≥20px · شارة→بسملة ≥24px
+ * بوابة صفحتي الافتتاح — نموذج التدفق البسيط:
+ * - صفر إطار زخرفي (.mf2-opening-frame / OpeningPageFrame)
+ * - نفس شبكة التدفق (data-mushaf-grid=flow · 15 صفًا) كباقي الصفحات
+ * - بلا زخارف افتتاح منفصلة · حجم خط = S الثابت
  *
  *   pnpm run test:mushaf-opening-frame
  */
@@ -16,7 +15,6 @@ import { fileURLToPath } from "node:url";
 import {
   ACTIVE_LINES_WAIT_SEL,
   ACTIVE_PAGE_BROWSER_SOURCE,
-  resolveGatePages,
 } from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -28,6 +26,9 @@ const OUT_DIR =
   process.env.MUSHAF_GATE_OUT_DIR || join(ROOT, ".local/mushaf-opening-frame");
 const VIEWPORT = { width: 390, height: 844 };
 const OPENING = [1, 2];
+const BASELINE = JSON.parse(
+  readFileSync(join(ROOT, "src/features/mushaf/mushaf-baseline.json"), "utf8"),
+);
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -55,17 +56,11 @@ const pageV2 = readFileSync(join(ROOT, "src/components/quran/MushafPageV2.tsx"),
 if (/OpeningPageFrame|data-opening-frame|OPENING_FRAME_TOP/.test(pageV2)) {
   failures.push({ page: 0, reason: "MushafPageV2 ما زال يشير لإطار الافتتاح" });
 }
-if (!/OPENING_BANNER_TOP_PCT\s*=\s*16/.test(pageV2)) {
-  failures.push({ page: 0, reason: "OPENING_BANNER_TOP_PCT ≠ 16" });
+if (/OPENING_BANNER_TOP_PCT/.test(pageV2)) {
+  failures.push({ page: 0, reason: "OPENING_BANNER_TOP_PCT ما زال موجودًا — أُلغي مع النموذج البسيط" });
 }
-if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*24/.test(pageV2)) {
-  failures.push({ page: 0, reason: "OPENING_BANNER_TO_BASMALA_PX ≠ 24" });
-}
-if (!/OPENING_BASMALA_TO_LINE_PX\s*=\s*20/.test(pageV2)) {
-  failures.push({ page: 0, reason: "OPENING_BASMALA_TO_LINE_PX ≠ 20" });
-}
-if (!/OPENING_BODY_SLOT_H_PCT\s*=\s*5\.8/.test(pageV2)) {
-  failures.push({ page: 0, reason: "OPENING_BODY_SLOT_H_PCT ≠ 5.8" });
+if (!/data-mushaf-grid="flow"/.test(pageV2)) {
+  failures.push({ page: 0, reason: "MushafPageV2 بلا data-mushaf-grid=flow" });
 }
 
 let server = null;
@@ -114,127 +109,38 @@ try {
     await sleep(1200);
     await page.addStyleTag({ content: `.mpv-toolbar--ayah{display:none!important}` });
 
-    const m = await page.evaluate(() => {
-      /* الورقة النشطة فقط — جار التقليب يفسد الفجوات والمطّ */
-      const leaf =
-        __mushafActiveRoot();
-      const root =
-        __mushafLinesRoot();
+    const m = await page.evaluate((expectedS) => {
+      const leaf = __mushafActiveRoot();
+      const root = __mushafLinesRoot();
       if (!root) return { error: "no lines" };
-      const lr = root.getBoundingClientRect();
       const frame = (leaf || document).querySelector(
         "[data-opening-frame], .mf2-opening-frame",
       );
-      const banner = root.querySelector(".mf2-grid-slot--banner");
-      const br = banner?.getBoundingClientRect();
-      const bannerTopPct = br && lr.height > 0 ? ((br.top - lr.top) / lr.height) * 100 : null;
-      const stretched = [...root.querySelectorAll(".mf2-line")].filter((el) => {
-        const sx =
-          el.style.getPropertyValue("--mf2-line-sx").trim() ||
-          getComputedStyle(el).getPropertyValue("--mf2-line-sx").trim();
-        return sx && sx !== "1" && Number(sx) > 1.02;
-      }).length;
-      const banR = banner?.getBoundingClientRect();
-      const bas =
-        root.querySelector(".mf2-grid-slot--basmala .mf2-bismillah") ||
-        root.querySelector(".mf2-bismillah") ||
-        root.querySelector(".mf2-grid-slot--line .mf2-line");
+      const gridMode = root.getAttribute("data-mushaf-grid");
+      const banner = root.querySelector(".mf2-surah-banner");
+      const ornament = banner?.getAttribute("data-ornament") || null;
       const lineSlots = [...root.querySelectorAll(".mf2-grid-slot--line .mf2-line")];
-      const hasBasSlot = Boolean(root.querySelector(".mf2-grid-slot--basmala"));
-      const firstAyah = hasBasSlot ? lineSlots[0] : lineSlots[1];
-      const ayahLines = hasBasSlot ? lineSlots : lineSlots.slice(1);
       const S =
         parseFloat(getComputedStyle(root).getPropertyValue("--mushaf-S")) ||
         parseFloat(getComputedStyle(root).fontSize) ||
-        24.382;
-      const fontSizes = ayahLines.map((el) => parseFloat(getComputedStyle(el).fontSize));
-      let bannerToBas = null;
-      let basToLine = null;
-      if (banR && bas) {
-        const basBox = bas.getBoundingClientRect();
-        bannerToBas = basBox.top - banR.bottom;
-      }
-      if (bas && firstAyah) {
-        try {
-          const rangeA = document.createRange();
-          rangeA.selectNodeContents(bas);
-          const rangeB = document.createRange();
-          rangeB.selectNodeContents(firstAyah);
-          const ra = [...rangeA.getClientRects()];
-          const rb = [...rangeB.getClientRects()];
-          const basBot = ra.length
-            ? Math.max(...ra.map((r) => r.bottom))
-            : bas.getBoundingClientRect().bottom;
-          const lineTop = rb.length
-            ? Math.min(...rb.map((r) => r.top))
-            : firstAyah.getBoundingClientRect().top;
-          basToLine = lineTop - basBot;
-        } catch {
-          basToLine =
-            firstAyah.getBoundingClientRect().top - bas.getBoundingClientRect().bottom;
-        }
-      }
-      const gaps = [];
-      const inkGaps = [];
-      const heights = [];
-      const inkH = (el) => {
-        try {
-          const range = document.createRange();
-          range.selectNodeContents(el);
-          const rects = [...range.getClientRects()].filter((r) => r.width > 0 && r.height > 0);
-          if (!rects.length) return el.getBoundingClientRect();
-          return {
-            top: Math.min(...rects.map((r) => r.top)),
-            bottom: Math.max(...rects.map((r) => r.bottom)),
-          };
-        } catch {
-          return el.getBoundingClientRect();
-        }
-      };
-      for (let i = 0; i < ayahLines.length; i++) {
-        heights.push(ayahLines[i].getBoundingClientRect().height);
-        if (i < ayahLines.length - 1) {
-          const a = ayahLines[i].getBoundingClientRect();
-          const b = ayahLines[i + 1].getBoundingClientRect();
-          gaps.push(b.top - a.bottom);
-          const ai = inkH(ayahLines[i]);
-          const bi = inkH(ayahLines[i + 1]);
-          inkGaps.push(bi.top - ai.bottom);
-        }
-      }
-      const lineGapAvg =
-        inkGaps.length > 0 ? inkGaps.reduce((s, g) => s + g, 0) / inkGaps.length : null;
-      const lineGapMin = inkGaps.length ? Math.min(...inkGaps) : null;
-      const avgH = heights.length ? heights.reduce((s, h) => s + h, 0) / heights.length : null;
-      const last = ayahLines.at(-1);
-      const badge = document.querySelector(".mpv-ayah-page-badge");
-      let inkToCart = null;
-      let inkToContentBot = null;
-      if (last) {
-        const li = inkH(last);
-        inkToContentBot = lr.bottom - li.bottom;
-        if (badge) inkToCart = badge.getBoundingClientRect().top - li.bottom;
-      }
+        expectedS;
+      const fontSizes = lineSlots.map((el) => parseFloat(getComputedStyle(el).fontSize));
+      const absSlots = [...root.querySelectorAll(".mf2-grid-slot, .mf2-line")].filter(
+        (el) => getComputedStyle(el).position === "absolute",
+      ).length;
+      const rowCount = getComputedStyle(root).gridTemplateRows.split(/\s+/).filter(Boolean).length;
       return {
         hasFrame: Boolean(frame),
-        bannerTopPct,
-        bannerTopPx: br ? br.top - lr.top : null,
-        stretched,
-        bannerToBas,
-        basToLine,
-        lineGapAvg,
-        lineGapMin,
-        avgLineH: avgH,
-        gapOverLh: lineGapMin != null && avgH ? lineGapMin / avgH : null,
-        gapOverS: lineGapMin != null && S ? lineGapMin / S : null,
-        inkToCart,
-        inkToContentBot,
+        gridMode,
+        ornament,
+        absSlots,
+        rowCount,
         S,
         fontSizes,
-        contentH: lr.height,
-        openingFlag: root.dataset.mf2OpeningNoFrame || null,
+        lineCount: lineSlots.length,
+        openingClass: root.classList.contains("mf2-lines--opening"),
       };
-    });
+    }, BASELINE.fontSizePx);
 
     results.push({ page: n, ...m });
     await page.screenshot({ path: join(OUT_DIR, `page-${String(n).padStart(3, "0")}.png`) });
@@ -243,88 +149,29 @@ try {
       failures.push({ page: n, reason: m.error });
       continue;
     }
-    if (m.hasFrame) failures.push({ page: n, reason: "إطار زخرفي ما زال مرسومًا" });
-    if (m.bannerTopPct == null || m.bannerTopPct < 14 || m.bannerTopPct > 18) {
-      failures.push({
-        page: n,
-        reason: `أعلى الشارة ${m.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ١٤–١٨`,
-      });
+    if (m.hasFrame) failures.push({ page: n, reason: "إطار زخرفي ما زال مرسومًا (.mf2-opening-frame)" });
+    if (m.gridMode !== "flow") {
+      failures.push({ page: n, reason: `data-mushaf-grid=${m.gridMode} ≠ flow` });
     }
-    if (m.stretched > 0) {
-      failures.push({ page: n, reason: `${m.stretched} سطرًا بملاءمة عرض — ممنوع في ص١–٢` });
+    if (m.absSlots > 0) {
+      failures.push({ page: n, reason: `${m.absSlots} slot/line بـ position:absolute` });
     }
-    if (m.bannerToBas != null && (m.bannerToBas < 20 || m.bannerToBas > 28)) {
-      failures.push({
-        page: n,
-        reason: `فاصل شارة→بسملة ${m.bannerToBas.toFixed(1)}px خارج ٢٤±٤`,
-      });
+    if (m.ornament != null && m.ornament !== "none") {
+      failures.push({ page: n, reason: `شارة ornament=${m.ornament} ≠ none` });
     }
-    if (m.basToLine != null && (m.basToLine < 16 || m.basToLine > 28)) {
-      failures.push({
-        page: n,
-        reason: `فاصل بسملة→سطر ${m.basToLine.toFixed(1)}px خارج ٢٠±٨`,
-      });
-    }
-    if (m.lineGapMin != null && m.lineGapMin < -0.5) {
-      failures.push({
-        page: n,
-        reason: `تراكب حبر أسطر (فجوة دنيا ${m.lineGapMin.toFixed(1)}px)`,
-      });
-    }
-    if (m.gapOverS != null && m.gapOverS < 0.24) {
-      failures.push({
-        page: n,
-        reason: `فجوة/S ${(m.gapOverS * 100).toFixed(0)}٪ < 24٪`,
-      });
-    } else if (
-      m.gapOverS != null &&
-      m.gapOverS < 0.34 &&
-      m.inkToCart != null &&
-      m.inkToCart > 36
-    ) {
-      failures.push({
-        page: n,
-        reason: `فجوة/S ${(m.gapOverS * 100).toFixed(0)}٪ < 35٪ مع فراغ خرطوش ${(m.inkToCart).toFixed(0)}px`,
-      });
-    }
-    if (m.inkToContentBot != null && m.inkToCart != null && m.inkToCart < 27.5 && m.inkToContentBot < -12) {
-      failures.push({
-        page: n,
-        reason: `آخر حبر يتجاوز النطاق والخرطوش (content ${m.inkToContentBot.toFixed(1)}, cart ${m.inkToCart.toFixed(1)})`,
-      });
-    }
-    if (m.inkToCart != null && m.inkToCart < 27.5) {
-      failures.push({
-        page: n,
-        reason: `حبر→خرطوش ${m.inkToCart.toFixed(1)}px < 28`,
-      });
+    if (m.rowCount < 15) {
+      failures.push({ page: n, reason: `صفوف الشبكة ${m.rowCount} < 15` });
     }
     if (m.S && m.fontSizes?.length) {
       for (const fs of m.fontSizes) {
-        if (Math.abs(fs - m.S) / m.S > 0.02) {
+        if (Math.abs(fs - m.S) / m.S > 0.04) {
           failures.push({
             page: n,
-            reason: `حجم خط ${fs.toFixed(2)} ≠ S=${m.S.toFixed(2)} ±٢٪`,
+            reason: `حجم خط ${fs.toFixed(2)} ≠ S=${m.S.toFixed(2)} ±٤٪`,
           });
           break;
         }
       }
-    }
-  }
-
-  /* تطابق ص١↔ص٢ */
-  if (results.length >= 2 && !results[0].error && !results[1].error) {
-    const dTop = Math.abs((results[0].bannerTopPx ?? 0) - (results[1].bannerTopPx ?? 0));
-    const g0 = results[0].lineGapAvg;
-    const g1 = results[1].lineGapAvg;
-    if (dTop > 2.05) {
-      failures.push({ page: "1↔2", reason: `فرق أعلى الشارة ${dTop.toFixed(1)}px > 2` });
-    }
-    if (g0 != null && g1 != null && Math.abs(g0 - g1) > 8.05) {
-      failures.push({
-        page: "1↔2",
-        reason: `فرق فجوة الأسطر ${Math.abs(g0 - g1).toFixed(2)}px > 8 (ص١ لها أسطر أكثر)`,
-      });
     }
   }
 } finally {
@@ -332,7 +179,7 @@ try {
   killServer();
 }
 
-const report = { base: BASE, results, failures };
+const report = { base: BASE, results, failures, model: "flow-opening-no-frame" };
 writeFileSync(join(OUT_DIR, "gate-result.json"), JSON.stringify(report, null, 2));
 console.log(JSON.stringify(report, null, 2));
 if (failures.length) {

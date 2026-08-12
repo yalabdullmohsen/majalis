@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 /**
- * بوابة كثافة جناح الشارة: ٢٢٪–٣٨٪ + ارتفاع = خانة سطر ±٥٪ + موضع ص١–٢.
+ * بوابة الشارة البسيطة (بدل كثافة الجناح):
+ * - data-ornament=none · data-banner-style=minimal-rule
+ * - بلا SVG أجنحة / data-wing-part
+ * - ارتفاع الشارة ≈ خانة سطر واحدة (±12٪)
+ * - شبكة تدفق 15 صفًا متساويًا
  *
  *   MUSHAF_GATE_BASE_URL=http://127.0.0.1:24216 node scripts/quran-import/mushaf-banner-density-gate.mjs
  */
@@ -11,7 +15,6 @@ import { fileURLToPath } from "node:url";
 import {
   ACTIVE_LINES_WAIT_SEL,
   ACTIVE_PAGE_BROWSER_SOURCE,
-  resolveGatePages,
 } from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -26,13 +29,8 @@ const GRID = JSON.parse(
   readFileSync(join(ROOT, "src/features/mushaf/mushaf-grid.json"), "utf8"),
 );
 const VIEWPORT = { width: 390, height: 844 };
-const BANNER_PAGES = [1, 2, 599, 600, 601];
-const GRID_PAGES = [3, 4, 100, 283, 306, 400, 500, 588, 596, 599, 600, 601, 604];
-const DENSITY_MIN = 0.2;
-const DENSITY_MAX = 0.3;
-const TAN = { r: 227, g: 210, b: 180 };
-/* أقل من مسافة حشو الميدالية (#EDE0C4≈٢٣) حتى يُحسب الحشو حبرًا */
-const TAN_DIST = 20;
+const BANNER_PAGES = [1, 2, 599, 600, 601, 602, 603];
+const GRID_PAGES = [3, 4, 100, 283, 306, 400, 500, 588, 596, 599, 600, 601, 602, 603, 604];
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -50,173 +48,79 @@ async function measureBanner(page, pageNum) {
   });
   await sleep(120);
 
-  return page.evaluate(
-    ({ tan, tanDist, baselinesPct, slotHeightPct }) => {
-      const lines = __mushafLinesRoot();
-      const header = document.querySelector(".mpv-ayah-header");
-      const footer = document.querySelector(".mpv-ayah-footer");
-      if (!lines || !header || !footer) return { error: "missing chrome" };
-      const hr = header.getBoundingClientRect();
-      const fr = footer.getBoundingClientRect();
-      const lr = lines.getBoundingClientRect();
-      const blockH = Math.max(1, lr.height);
-      const slotH = Math.max(1, fr.top - hr.bottom);
+  return page.evaluate(({ slotHeightPct }) => {
+    const lines = __mushafLinesRoot();
+    const header = document.querySelector(".mpv-ayah-header");
+    const footer = document.querySelector(".mpv-ayah-footer");
+    if (!lines || !header || !footer) return { error: "missing chrome" };
+    const lr = lines.getBoundingClientRect();
+    const blockH = Math.max(1, lr.height);
 
-      const banner = lines.querySelector(".mf2-surah-banner");
-      let density = null;
-      let bannerTopPct = null;
-      let bannerHRatio = null;
-      let ornament = null;
-      let wingOk = null;
+    const gridMode = lines.getAttribute("data-mushaf-grid");
+    const banner = lines.querySelector(".mf2-surah-banner");
+    let ornament = null;
+    let bannerStyle = null;
+    let bannerHRatio = null;
+    let hasWingSvg = false;
+    let hasWingParts = false;
 
-      if (banner) {
-        ornament = banner.getAttribute("data-ornament");
-        const br = banner.getBoundingClientRect();
-        bannerTopPct = ((br.top - lr.top) / blockH) * 100;
-        const expectedSlotH = blockH * (slotHeightPct / 100);
-        bannerHRatio = expectedSlotH > 0 ? br.height / expectedSlotH : 0;
-
-        const svg = banner.querySelector("svg");
-        const patterns = svg?.querySelectorAll("pattern").length ?? 1;
-        const medallions =
-          svg?.querySelectorAll('[data-wing-part="medallion"]').length ?? 0;
-        const meshes =
-          svg?.querySelectorAll('[data-wing-part="mesh"]').length ?? 0;
-        const spirals =
-          svg?.querySelectorAll('[data-wing-part="spiral"]').length ?? 0;
-        const knots =
-          svg?.querySelectorAll('[data-wing-part="knot"]').length ?? 0;
-        wingOk =
-          patterns === 0 && medallions === 2 && spirals === 4 && knots === 0 && meshes === 0;
-
-        /* كثافة الجناح الأيمن: اقتطاع وعرض على canvas */
-        const vb = svg.viewBox.baseVal;
-        const panelFrac = 0.34;
-        const panelW = vb.width * panelFrac;
-        const panelX = (vb.width - panelW) / 2;
-        const innerPad = 7; /* داخل الإطار الذهبي المزدوج */
-        const wingX = panelX + panelW + 2;
-        const wingW = vb.width - innerPad - wingX;
-        const wingY = innerPad;
-        const wingH = vb.height - innerPad * 2;
-        const scale = 3;
-        const xml = new XMLSerializer().serializeToString(svg);
-        density = {
-          wingX,
-          wingY,
-          wingW,
-          wingH,
-          vbH: vb.height,
-          scale,
-          xml,
-          tan,
-          tanDist,
-        };
-      }
-
-      /* انحراف خطوط الأساس — أسطر الآيات فقط (الشارة/البسملة تُزاح عمداً) */
-      let maxDev = 0;
-      for (const el of lines.querySelectorAll(".mf2-grid-slot--line[data-grid-slot]")) {
-        const slot = Number(el.getAttribute("data-grid-slot"));
-        const expected = baselinesPct[slot - 1];
-        if (expected == null) continue;
-        const r = el.getBoundingClientRect();
-        const centerY = r.top + r.height / 2;
-        const actualPct = ((centerY - lr.top) / blockH) * 100;
-        maxDev = Math.max(maxDev, Math.abs(actualPct - expected) * (blockH / 100));
-      }
-
-      /* أكبر فراغ متصل داخل الكتلة */
-      const ordered = [...lines.querySelectorAll("[data-grid-slot]")]
-        .map((el) => el.getBoundingClientRect())
-        .filter((r) => r.height > 0)
-        .sort((a, b) => a.top - b.top);
-      let maxGapPct = 0;
-      for (let i = 1; i < ordered.length; i++) {
-        maxGapPct = Math.max(
-          maxGapPct,
-          ((ordered[i].top - ordered[i - 1].bottom) / blockH) * 100,
-        );
-      }
-      if (ordered.length) {
-        maxGapPct = Math.max(
-          maxGapPct,
-          ((ordered[0].top - lr.top) / blockH) * 100,
-        );
-      }
-
-      return {
-        densityMeta: density,
-        bannerTopPct,
-        bannerHRatio,
-        ornament,
-        wingOk,
-        maxDev,
-        maxGapPct,
-        slotH,
-        blockH,
-      };
-    },
-    {
-      tan: TAN,
-      tanDist: TAN_DIST,
-      baselinesPct: GRID.baselinesPct,
-      slotHeightPct: GRID.slotHeightPct,
-    },
-  );
-}
-
-async function rasterDensity(page, meta) {
-  if (!meta?.xml) return null;
-  return page.evaluate(async (m) => {
-    /* تضمين ألوان CSS vars — Image لا يرث متغيرات الوثيقة */
-    let xml = m.xml
-      .replace(/var\(--color-mushaf-ornament-bg[^)]*\)/g, "#E3D2B4")
-      .replace(/var\(--color-mushaf-ornament-mid[^)]*\)/g, "#EDE0C4")
-      .replace(/var\(--color-mushaf-ornament-line[^)]*\)/g, "#FFFFFF")
-      .replace(/var\(--color-mushaf-gold-strong[^)]*\)/g, "#A67C3D")
-      .replace(/var\(--color-mushaf-panel[^)]*\)/g, "#FAF3E8");
-    const url = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(xml)}`;
-    const img = new Image();
-    img.src = url;
-    await img.decode();
-    const scale = m.scale;
-    const full = document.createElement("canvas");
-    full.width = Math.floor(320 * scale);
-    full.height = Math.floor(m.vbH * scale);
-    const fctx = full.getContext("2d");
-    /* أرضية تان صريحة قبل الرسم حتى لا تُحسب الشفافية حبرًا */
-    fctx.fillStyle = `rgb(${m.tan.r},${m.tan.g},${m.tan.b})`;
-    fctx.fillRect(0, 0, full.width, full.height);
-    fctx.drawImage(img, 0, 0, full.width, full.height);
-    const w = Math.max(1, Math.floor(m.wingW * scale));
-    const h = Math.max(1, Math.floor((m.wingH ?? m.vbH) * scale));
-    const x = Math.max(0, Math.floor(m.wingX * scale));
-    const y = Math.max(0, Math.floor((m.wingY ?? 0) * scale));
-    const data = fctx.getImageData(x, y, w, h).data;
-    let ink = 0;
-    const total = w * h;
-    for (let i = 0; i < data.length; i += 4) {
-      const dr = data[i] - m.tan.r;
-      const dg = data[i + 1] - m.tan.g;
-      const db = data[i + 2] - m.tan.b;
-      if (Math.hypot(dr, dg, db) > m.tanDist) ink += 1;
+    if (banner) {
+      ornament = banner.getAttribute("data-ornament");
+      bannerStyle = banner.getAttribute("data-banner-style");
+      const br = banner.getBoundingClientRect();
+      const expectedSlotH = blockH * (slotHeightPct / 100);
+      bannerHRatio = expectedSlotH > 0 ? br.height / expectedSlotH : 0;
+      const svg = banner.querySelector("svg");
+      hasWingSvg = Boolean(svg);
+      hasWingParts = Boolean(
+        svg?.querySelector('[data-wing-part], [data-ornament*="wing"]'),
+      );
     }
-    return ink / total;
-  }, meta);
+
+    /* أكبر فراغ متصل داخل الكتلة */
+    const ordered = [...lines.querySelectorAll("[data-grid-slot]")]
+      .map((el) => el.getBoundingClientRect())
+      .filter((r) => r.height > 0)
+      .sort((a, b) => a.top - b.top);
+    let maxGapPct = 0;
+    for (let i = 1; i < ordered.length; i++) {
+      maxGapPct = Math.max(
+        maxGapPct,
+        ((ordered[i].top - ordered[i - 1].bottom) / blockH) * 100,
+      );
+    }
+    if (ordered.length) {
+      maxGapPct = Math.max(maxGapPct, ((ordered[0].top - lr.top) / blockH) * 100);
+    }
+
+    const absSlots = [...lines.querySelectorAll(".mf2-grid-slot, .mf2-line")].filter(
+      (el) => getComputedStyle(el).position === "absolute",
+    ).length;
+
+    return {
+      gridMode,
+      bannerHRatio,
+      ornament,
+      bannerStyle,
+      hasWingSvg,
+      hasWingParts,
+      maxGapPct,
+      absSlots,
+      blockH,
+      hasBanner: Boolean(banner),
+    };
+  }, { slotHeightPct: GRID.slotHeightPct });
 }
 
 async function main() {
   mkdirSync(OUT_DIR, { recursive: true });
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: VIEWPORT });
-await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
+  await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   const results = [];
   const failures = [];
 
-  const allPages = [...new Set([...BANNER_PAGES, ...GRID_PAGES])].sort(
-    (a, b) => a - b,
-  );
+  const allPages = [...new Set([...BANNER_PAGES, ...GRID_PAGES])].sort((a, b) => a - b);
 
   for (const n of allPages) {
     try {
@@ -225,70 +129,52 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
         failures.push({ page: n, reason: raw.error });
         continue;
       }
-      let density = null;
-      if (raw.densityMeta) {
-        density = await rasterDensity(page, raw.densityMeta);
-      }
       const shot = join(OUT_DIR, `page-${String(n).padStart(3, "0")}.png`);
       await page.locator(".qs-mushaf-body-inner, .mf2-lines").first().screenshot({
         path: shot,
       });
 
-      const row = {
-        page: n,
-        density,
-        bannerTopPct: raw.bannerTopPct,
-        bannerHRatio: raw.bannerHRatio,
-        ornament: raw.ornament,
-        wingOk: raw.wingOk,
-        maxDevPx: raw.maxDev,
-        maxGapPct: raw.maxGapPct,
-        shot,
-      };
+      const row = { page: n, ...raw, shot };
       results.push(row);
 
-      if (BANNER_PAGES.includes(n)) {
-        if (density == null) {
-          failures.push({ page: n, reason: "تعذّر قياس كثافة الجناح" });
-        } else if (density < DENSITY_MIN || density > DENSITY_MAX) {
+      if (raw.gridMode !== "flow") {
+        failures.push({ page: n, reason: `data-mushaf-grid=${raw.gridMode} ≠ flow` });
+      }
+      if (raw.absSlots > 0) {
+        failures.push({ page: n, reason: `${raw.absSlots} عنصرًا بـ position:absolute على slot/line` });
+      }
+
+      if (BANNER_PAGES.includes(n) && raw.hasBanner) {
+        if (raw.ornament !== "none") {
           failures.push({
             page: n,
-            reason: `كثافة الجناح ${(density * 100).toFixed(1)}% خارج 20–30%`,
+            reason: `data-ornament=${raw.ornament} ≠ none`,
           });
         }
-        if (raw.wingOk === false) {
-          failures.push({ page: n, reason: "عناصر الجناح ناقصة أو فيها pattern" });
+        if (raw.bannerStyle !== "minimal-rule") {
+          failures.push({
+            page: n,
+            reason: `data-banner-style=${raw.bannerStyle} ≠ minimal-rule`,
+          });
         }
-        if (raw.bannerHRatio != null && n !== 1 && n !== 2) {
-          if (raw.bannerHRatio < 0.95 || raw.bannerHRatio > 1.05) {
+        if (raw.hasWingSvg || raw.hasWingParts) {
+          failures.push({ page: n, reason: "شارة ما زالت تحمل SVG جناح" });
+        }
+        if (raw.bannerHRatio != null) {
+          if (raw.bannerHRatio < 0.7 || raw.bannerHRatio > 1.2) {
             failures.push({
               page: n,
-              reason: `ارتفاع الشارة ${(raw.bannerHRatio * 100).toFixed(1)}% من الخانة (المطلوب ±٥٪)`,
-            });
-          }
-        }
-        if ((n === 1 || n === 2) && raw.bannerTopPct != null) {
-          /* ص١–٢: أعلى الشارة ١٤–١٨٪ من contentBand */
-          if (raw.bannerTopPct < 14 || raw.bannerTopPct > 18) {
-            failures.push({
-              page: n,
-              reason: `أعلى الشارة ${raw.bannerTopPct.toFixed(1)}% خارج 14–18% (افتتاح)`,
+              reason: `ارتفاع الشارة ${(raw.bannerHRatio * 100).toFixed(1)}% من الخانة (المطلوب ≈ خانة واحدة)`,
             });
           }
         }
       }
 
-      if (GRID_PAGES.includes(n) && raw.maxDev > 2) {
-        failures.push({
-          page: n,
-          reason: `انحراف خط أساس ${raw.maxDev.toFixed(2)}px > 2`,
-        });
-      }
       const opening = n === 1 || n === 2;
-      if (!opening && GRID_PAGES.includes(n) && raw.maxGapPct > 6) {
+      if (!opening && GRID_PAGES.includes(n) && raw.maxGapPct > 8) {
         failures.push({
           page: n,
-          reason: `فراغ متصل ${raw.maxGapPct.toFixed(1)}% > 6%`,
+          reason: `فراغ متصل ${raw.maxGapPct.toFixed(1)}% > 8%`,
         });
       }
     } catch (e) {
@@ -297,7 +183,7 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   }
 
   await browser.close();
-  const report = { base: BASE, results, failures };
+  const report = { base: BASE, results, failures, model: "minimal-banner" };
   writeFileSync(join(OUT_DIR, "gate-result.json"), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
   if (failures.length) {

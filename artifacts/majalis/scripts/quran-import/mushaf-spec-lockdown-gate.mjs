@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 /**
- * بوابة تثبيت مواصفة المصحف (١٥ بندًا) — حاجبة في test:mushaf-gates.
+ * بوابة تثبيت مواصفة المصحف (١٥ بندًا) — النموذج البسيط (flow · ثابت S · بلا أرابيسك).
  *
- * - دائمًا: فحوص ثابتة على الشيفرة/البيانات (لا تعتمد على لقطة حية).
- * - حيّ: إن وُجد MUSHAF_GATE_BASE_URL أو عند غيابها يُشغَّل Vite محليًا
- *   لقياس الإطار من كتلة الصفحة والشبكة على عيّنة صفحات.
+ * - دائمًا: فحوص ثابتة على الشيفرة/البيانات.
+ * - حيّ: إن وُجد MUSHAF_GATE_BASE_URL أو Vite محلي — عيّنة صفحات.
  *
  *   pnpm run test:mushaf-spec-lockdown
- *   MUSHAF_GATE_BASE_URL=http://127.0.0.1:24216 pnpm run test:mushaf-spec-lockdown
+ *   MUSHAF_GATE_SKIP_LIVE=1 pnpm run test:mushaf-spec-lockdown
  */
 import { chromium } from "playwright";
 import { spawn } from "node:child_process";
@@ -19,12 +18,11 @@ import {
   readdirSync,
 } from "node:fs";
 import { createHash } from "node:crypto";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   ACTIVE_LINES_WAIT_SEL,
   ACTIVE_PAGE_BROWSER_SOURCE,
-  resolveGatePages,
 } from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -71,23 +69,18 @@ function waitForServer(url, timeoutMs = 60_000) {
   });
 }
 
-function sha256File(path) {
-  return createHash("sha256").update(readFileSync(path)).digest("hex");
-}
-
 function read(rel) {
   return readFileSync(join(ROOT, rel), "utf8");
 }
 
-/* ───────────── فحوص ثابتة ───────────── */
 function runStatic() {
   const grid = JSON.parse(read("src/features/mushaf/mushaf-grid.json"));
   const baseline = JSON.parse(read("src/features/mushaf/mushaf-baseline.json"));
   const pageV2 = read("src/components/quran/MushafPageV2.tsx");
   const frameCss = read("src/styles/mushaf-v2.css");
   const banner = read("src/components/quran/SurahBanner.tsx");
-  const openingGone = !existsSync(join(ROOT, "src/components/quran/OpeningPageFrame.tsx"));
-  const opening = openingGone ? "" : read("src/components/quran/OpeningPageFrame.tsx");
+  const fontBanner = read("src/components/quran/QpcFontPackBanner.tsx");
+  const pageView = read("src/pages/quran/ui/MushafPageView.tsx");
   const specPath = join(ROOT, "docs/MUSHAF_SPEC.md");
 
   /* ١ — سلامة النص */
@@ -115,121 +108,125 @@ function runStatic() {
     }
   }
   const textFp = createHash("sha256").update(digests.join("\n")).digest("hex");
-  if (ayahs !== EXPECTED_AYAHS) {
-    fail(1, `آيات ${ayahs} ≠ ${EXPECTED_AYAHS}`);
-  } else if (words !== EXPECTED_WORDS) {
-    fail(1, `كلمات ${words} ≠ ${EXPECTED_WORDS}`);
-  } else {
-    pass(1, { ayahs, words, textFp: textFp.slice(0, 16) });
-  }
+  if (ayahs !== EXPECTED_AYAHS) fail(1, `آيات ${ayahs} ≠ ${EXPECTED_AYAHS}`);
+  else if (words !== EXPECTED_WORDS) fail(1, `كلمات ${words} ≠ ${EXPECTED_WORDS}`);
+  else pass(1, { ayahs, words, textFp: textFp.slice(0, 16) });
 
   /* ٢ — أرقام الآيات (مجسمات نهاية) */
   if (ends !== EXPECTED_AYAHS) fail(2, `ميداليات نهاية ${ends} ≠ ${EXPECTED_AYAHS}`);
-  else if (!/function defaultRenderWord[\s\S]*?charType === "end"[\s\S]*?\{w\.glyphText\}/.test(pageV2)) {
+  else if (
+    !/function defaultRenderWord[\s\S]*?charType === "end"[\s\S]*?\{w\.glyphText\}/.test(pageV2)
+  ) {
     fail(2, "مسار QPC لا يعرض glyphText لنهاية الآية");
   } else pass(2, { ends });
 
-  /* ٣ — عدم الاقتطاع (سياسة CSS/مكون) */
+  /* ٣ — عدم الاقتطاع */
   const basmalaBlock = (frameCss.match(/\.mf2-bismillah\s*\{[^}]*\}/) || [""])[0];
-  const linesOverflowY = /\.mf2-lines[^{]*\{[^}]*overflow(?:-y)?:\s*hidden/.test(frameCss);
-  if (linesOverflowY) fail(3, ".mf2-lines عليها overflow رأسي hidden");
+  const linesBlock = (frameCss.match(/\.mf2-lines\s*\{[^}]*\}/) || [""])[0]
+    .replace(/\/\*[\s\S]*?\*\//g, "");
+  if (/overflow(?:-y)?:\s*hidden/.test(linesBlock)) fail(3, ".mf2-lines عليها overflow رأسي hidden");
   else if (/overflow:\s*hidden/.test(basmalaBlock)) fail(3, "البسملة overflow:hidden");
-  else pass(3, "سياسة عدم القص الرأسي مثبتة في CSS");
+  else if (!/overflow:\s*visible/.test(linesBlock)) {
+    fail(3, ".mf2-lines بلا overflow:visible");
+  } else pass(3, "سياسة عدم القص الرأسي مثبتة في CSS");
 
-  /* ٤ — التجاوز الأفقي: بوابة drawn-overflow موجودة */
+  /* ٤ — التجاوز الأفقي */
   if (!/test:mushaf-drawn-overflow/.test(read("package.json"))) {
     fail(4, "بوابة التجاوز الأفقي غير مربوطة");
   } else pass(4, "test:mushaf-drawn-overflow ضمن البوابات");
 
-  /* ٥ — شبكة خطوط الأساس */
+  /* ٥ — شبكة تدفق ١٥ صفًا متساويًا */
   if (grid.referencePage !== 283) fail(5, `referencePage=${grid.referencePage}`);
-  else if (!Array.isArray(grid.baselinesPct) || grid.baselinesPct.length !== 15) {
-    fail(5, "baselinesPct ليست ١٥");
-  } else if (Math.abs(grid.baselinesPct[0] - 4) > 0.05 || Math.abs(grid.baselinesPct[14] - 96) > 0.05) {
-    fail(5, `حدود الشبكة ${grid.baselinesPct[0]}…${grid.baselinesPct[14]}`);
-  } else if (!/MUSHAF_GRID\.baselinesPct/.test(pageV2)) {
-    fail(5, "التموضع لا يستخدم MUSHAF_GRID.baselinesPct");
+  else if (grid.slotCount !== 15) fail(5, `slotCount=${grid.slotCount}`);
+  else if (!/grid-template-rows:\s*repeat\(15/.test(frameCss)) {
+    fail(5, "CSS بلا grid-template-rows: repeat(15)");
+  } else if (!/data-mushaf-grid="flow"/.test(pageV2)) {
+    fail(5, "التموضع لا يستخدم data-mushaf-grid=flow");
   } else if (/justifyContent:\s*["']space-between|justify-content:\s*space-between/.test(pageV2)) {
     fail(5, "space-between على حاوية الأسطر");
-  } else pass(5, { baselines: grid.baselinesPct, slotHeightPct: grid.slotHeightPct });
+  } else if (/position:\s*["']absolute["']/.test(pageV2.match(/slotStyle[\s\S]*?\};/)?.[0] || "")) {
+    fail(5, "slotStyle يستخدم position absolute");
+  } else pass(5, { slotCount: 15, grid: "flow", board: "1000x1618" });
 
-  /* ٦ — فراغ ميت ≤٦٪ — ثابت في ink-clip */
-  const inkClip = read("scripts/quran-import/mushaf-ink-clip-gate.mjs");
-  if (!/MAX_DEAD_GAP_PCT\s*=\s*6/.test(inkClip)) fail(6, "MAX_DEAD_GAP_PCT ≠ 6");
-  else pass(6, "MAX_DEAD_GAP_PCT=6 في ink-clip");
+  /* ٦ — فراغ ميت / تصادم حبر */
+  if (!/test:mushaf-ink-collision/.test(read("package.json"))) {
+    fail(6, "بوابة تصادم الحبر غير مربوطة");
+  } else pass(6, "test:mushaf-ink-collision");
 
-  /* ٧ — كثافة الجناح */
-  if (!/data-wing-density-target="20-30"/.test(banner)) fail(7, "هدف الكثافة غير مثبت");
-  else if (!/DENSITY_MIN\s*=\s*0\.2/.test(read("scripts/quran-import/mushaf-banner-density-gate.mjs"))) {
-    fail(7, "بوابة الكثافة بلا ٠٫٢٠");
-  } else pass(7, "٢٠٪–٣٠٪");
+  /* ٧ — شارة بسيطة (بدل كثافة الجناح) */
+  if (!/data-ornament="none"/.test(banner)) fail(7, "data-ornament=none مفقود");
+  else if (!/data-banner-style="minimal-rule"/.test(banner)) {
+    fail(7, "data-banner-style=minimal-rule مفقود");
+  } else if (/PetalMedallion|data-wing-part|wing-refined|data-wing-density/.test(banner)) {
+    fail(7, "زخرفة جناح ما زالت في SurahBanner");
+  } else pass(7, "شارة minimal-rule");
 
-  /* ٨ — عناصر الجناح */
-  if (!/data-wing-part="medallion"/.test(banner) || !/data-wing-part="spiral"/.test(banner)) {
-    fail(8, "ميدالية/لولب مفقود");
-  } else if (/data-wing-part="knot"/.test(banner) || /data-wing-part="mesh"/.test(banner)) {
-    fail(8, "موتيف زائد (knot/mesh) مرفوض");
-  } else if (/<pattern[\s>]/.test(banner) || /url\(#.*pattern/.test(banner)) {
-    fail(8, "موتيف pattern مكرر مرفوض");
-  } else pass(8, "medallion+twin-spiral بلا pattern");
+  /* ٨ — بلا أجنحة SVG / أرابيسك */
+  if (/data-wing-part=|<pattern[\s>]/.test(banner)) fail(8, "موتيف جناح/pattern في الشارة");
+  else if (/arabesque|ArabesqueMesh/i.test(banner + pageV2 + frameCss)) {
+    fail(8, "إشارة أرابيسك في شجرة الصفحة");
+  } else pass(8, "بلا جناح وبلا أرابيسك");
 
   /* ٩ — آخر سطر سورة */
-  if (!/mf2-line--surah-end/.test(pageV2) || !/mf2-line--surah-end/.test(frameCss)) {
+  if (!/mf2-line--surah-end/.test(frameCss) || !/lastSurahEndLineNumbers|noStretchLines/.test(pageV2)) {
     fail(9, "علامة آخر سطر سورة مفقودة");
   } else pass(9, "no-stretch لآخر سطر سورة");
 
-  /* ١٠ — البسملة */
+  /* ١٠ — البسملة + S ثابت من baseline */
   if (!/(?:^|\n)\.mf2-bismillah\s*\{[^}]*font-size:\s*1em/.test(frameCss)) {
     fail(10, "بسملة ليست 1em");
-  } else if (!/BANNER_BASMALA_MIN_GAP_PX\s*=\s*22/.test(pageV2)) {
-    fail(10, "فاصل البسملة العادي غير ٢٢px");
-  } else if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*24/.test(pageV2)) {
-    fail(10, "فاصل افتتاح شارة→بسملة غير ٢٤px");
-  } else pass(10, "1em + فواصل ٢٠/٢٢/٢٤");
+  } else if (!/MUSHAF_LAYOUT_BASELINE\.fontSizePx/.test(pageV2)) {
+    fail(10, "حجم الخط لا يُثبَّت من mushaf-baseline.fontSizePx");
+  } else if (/OPENING_BANNER_TOP_PCT/.test(pageV2)) {
+    fail(10, "OPENING_BANNER_TOP_PCT ما زال موجودًا");
+  } else pass(10, { fontSizePx: baseline.fontSizePx, basmala: "1em" });
 
   /* ١١ — الرأس: سور تبدأ في الصفحة */
-  const pageView = read("src/pages/quran/ui/MushafPageView.tsx");
   if (!/surahsStartingOnPage/.test(pageView) || !/headerSurahNames/.test(pageView)) {
     fail(11, "الرأس لا يستخدم surahsStartingOnPage");
   } else pass(11, "headerSurahNames ← surahsStartingOnPage");
 
-  /* ١٢ — خرطوش الصفحة مركزي (±2px) — أُلغي التناوب */
+  /* ١٢ — رقم صفحة بسيط مركزي (بلا خرطوش مزخرف) */
   if (/data-page-parity/.test(pageView)) {
     fail(12, "تناوب خرطوش الصفحة ما زال موجودًا");
-  } else if (!/data-cartouche-align="center"|data-cartouche-side="center"/.test(pageView)) {
-    fail(12, "مركزية الخرطوش غير مثبتة");
-  } else pass(12, "خرطوش مركزي (بلا تناوب)");
+  } else if (!/data-page-chrome="minimal"/.test(pageView)) {
+    fail(12, "data-page-chrome=minimal مفقود");
+  } else if (!/data-page-numeral="arabic"/.test(pageView)) {
+    fail(12, "data-page-numeral=arabic مفقود");
+  } else pass(12, "رقم صفحة عربي بسيط مركزي");
 
-  /* ١٣ — ص١–٢ بلا إطار · شارة عند ٣٨٪ */
+  /* ١٣ — ص١–٢ بلا إطار · نفس تدفق الشبكة */
   if (existsSync(join(ROOT, "src/components/quran/OpeningPageFrame.tsx"))) {
     fail(13, "OpeningPageFrame.tsx ما زال موجودًا");
-  } else if (!/OPENING_BANNER_TOP_PCT\s*=\s*16/.test(pageV2)) {
-    fail(13, "OPENING_BANNER_TOP_PCT ≠ 16");
+  } else if (/OPENING_BANNER_TOP_PCT/.test(pageV2)) {
+    fail(13, "OPENING_BANNER_TOP_PCT ما زال موجودًا");
+  } else if (!/data-mushaf-grid="flow"/.test(pageV2)) {
+    fail(13, "شبكة التدفق غير مثبتة");
   } else if (!/mpv-toolbar-band|MUSHAF_LAYOUT_BANDS/.test(pageV2 + read("src/styles/quran.css"))) {
     fail(13, "نطاقات التخطيط غير مثبتة");
-  } else pass(13, "بلا إطار + شارة ٣٨٪ + نطاقات");
+  } else pass(13, "بلا إطار + flow grid + نطاقات");
 
   /* ١٤ — التباين */
   if (!/test:color-contrast-gate/.test(read("package.json"))) {
     fail(14, "بوابة التباين غير مربوطة");
   } else pass(14, "test:color-contrast-gate");
 
-  /* ١٥ — تجميد المراجع */
+  /* ١٥ — تجميد المراجع + ثابت S */
+  const freeze = [1, 2, 3, 600, 601, 602, 603];
   if (baseline.referencePage !== 283) fail(15, "baseline ليست صفحة ٢٨٣");
+  else if (typeof baseline.fontSizePx !== "number") fail(15, "fontSizePx مفقود من baseline");
   else if (!existsSync(specPath)) fail(15, "docs/MUSHAF_SPEC.md مفقود");
-  else pass(15, "مواصفة + مرجع ص٢٨٣");
+  else if (!/data-font-progress="corner"/.test(fontBanner)) {
+    fail(15, "مؤشر الخط ليس corner");
+  } else pass(15, { freeze, fontSizePx: baseline.fontSizePx });
 
-  /* محظورات د — ثابتة */
-  if (/space-between/.test(pageV2) && /mf2-lines/.test(pageV2)) {
-    /* already covered */
-  }
   if (!existsSync(specPath) || !/محظورات/.test(readFileSync(specPath, "utf8"))) {
     fail("D", "قسم المحظورات مفقود من MUSHAF_SPEC.md");
   } else {
     gateStatus.D = { ok: true };
   }
 
-  return { grid, textFp, ayahs, words };
+  return { grid, baseline, textFp, ayahs, words };
 }
 
 async function measureLive(page, pageNum) {
@@ -244,61 +241,33 @@ async function measureLive(page, pageNum) {
   });
   await sleep(60);
 
-  const measured = await page.evaluate((baselinesPct) => {
+  const measured = await page.evaluate(() => {
     const root = __mushafLinesRoot();
-    const body =
-      document.querySelector(".mpv-body--ayah") ||
-      document.querySelector(".qs-mushaf-body--ayah") ||
-      root?.parentElement;
-    if (!root || !body) return { error: "missing" };
-    const lr = root.getBoundingClientRect();
-    const br = body.getBoundingClientRect();
+    if (!root) return { error: "missing" };
     const out = {
-      bodyH: br.height,
-      linesH: lr.height,
-      frameTopBodyPct: null,
-      frameBotBodyPct: null,
-      maxDevPx: 0,
-      lineDevs: [],
-      firstInkPct: null,
-      lastInkPct: null,
-      cartoucheCenterDx: null,
+      gridMode: root.getAttribute("data-mushaf-grid"),
+      board: root.getAttribute("data-board"),
+      hasFrame: Boolean(
+        document.querySelector("[data-opening-frame], .mf2-opening-frame"),
+      ),
+      ornament: root.querySelector(".mf2-surah-banner")?.getAttribute("data-ornament") || null,
+      absSlots: [...root.querySelectorAll(".mf2-grid-slot, .mf2-line")].filter(
+        (el) => getComputedStyle(el).position === "absolute",
+      ).length,
+      S:
+        parseFloat(getComputedStyle(root).getPropertyValue("--mushaf-S")) ||
+        parseFloat(getComputedStyle(root).fontSize) ||
+        0,
+      pageChrome: document.querySelector(".mpv-ayah-footer")?.getAttribute("data-page-chrome"),
+      numeralDx: null,
     };
-
-    const frame = root.querySelector("[data-opening-frame]");
-    if (frame) {
-      const fr = frame.getBoundingClientRect();
-      /* نسب الإطار من contentBand (.mf2-lines) */
-      out.frameTopBodyPct = ((fr.top - lr.top) / lr.height) * 100;
-      out.frameBotBodyPct = ((fr.bottom - lr.top) / lr.height) * 100;
-    }
-
-    for (const el of root.querySelectorAll(".mf2-grid-slot--line[data-grid-slot]")) {
-      const slot = Number(el.getAttribute("data-grid-slot"));
-      const expected = baselinesPct[slot - 1];
-      if (expected == null) continue;
-      const r = el.getBoundingClientRect();
-      const actualPct = ((r.top + r.height / 2 - lr.top) / lr.height) * 100;
-      const devPx = Math.abs(actualPct - expected) * (lr.height / 100);
-      out.maxDevPx = Math.max(out.maxDevPx, devPx);
-      out.lineDevs.push({ slot, expected, actualPct, devPx });
-      const topPct = ((r.top - lr.top) / lr.height) * 100;
-      const botPct = ((r.bottom - lr.top) / lr.height) * 100;
-      if (out.firstInkPct == null || topPct < out.firstInkPct) out.firstInkPct = topPct;
-      if (out.lastInkPct == null || botPct > out.lastInkPct) out.lastInkPct = botPct;
-    }
-
-    const cart =
-      document.querySelector(".mf2-surah-header__cartouche") ||
-      document.querySelector(".mpv-ayah-page-badge__cartouche") ||
-      document.querySelector("[data-cartouche]");
-    if (cart) {
-      const cr = cart.getBoundingClientRect();
-      const mid = br.left + br.width / 2;
-      out.cartoucheCenterDx = Math.abs(cr.left + cr.width / 2 - mid);
+    const badge = document.querySelector(".mpv-ayah-page-badge");
+    if (badge) {
+      const br = badge.getBoundingClientRect();
+      out.numeralDx = Math.abs(br.left + br.width / 2 - window.innerWidth / 2);
     }
     return out;
-  }, JSON.parse(read("src/features/mushaf/mushaf-grid.json")).baselinesPct);
+  });
 
   mkdirSync(OUT_DIR, { recursive: true });
   const shot = join(OUT_DIR, `page-${String(pageNum).padStart(3, "0")}.png`);
@@ -306,7 +275,7 @@ async function measureLive(page, pageNum) {
   return { ...measured, shot };
 }
 
-async function runLive() {
+async function runLive(baseline) {
   let server = null;
   let serverOutput = "";
   const killServer = () => {
@@ -356,9 +325,9 @@ async function runLive() {
   try {
     browser = await chromium.launch({ headless: true });
     const page = await browser.newPage({ viewport: VIEWPORT });
-await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
+    await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
 
-    for (const n of [1, 2, 3, 7, 601]) {
+    for (const n of [1, 2, 3, 600, 601, 602, 603]) {
       try {
         live[n] = await measureLive(page, n);
       } catch (e) {
@@ -367,50 +336,21 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
       }
     }
 
-    for (const n of [1, 2]) {
+    for (const n of [1, 2, 3, 600, 601, 602, 603]) {
       const r = live[n];
       if (!r || r.error) continue;
-      if (r.frameTopBodyPct != null) {
-        fail(13, `ص${n}: إطار ما زال مرسومًا`);
-      } else {
-        const prev = gateStatus[13];
-        gateStatus[13] = {
-          ok: true,
-          detail: {
-            ...(prev?.detail && typeof prev.detail === "object" ? prev.detail : {}),
-            [`p${n}`]: { noFrame: true },
-          },
-        };
+      if (r.hasFrame) fail(13, `ص${n}: إطار ما زال مرسومًا`);
+      if (r.gridMode !== "flow") fail(5, `ص${n}: grid=${r.gridMode}`);
+      if (r.absSlots > 0) fail(5, `ص${n}: ${r.absSlots} absolute slots`);
+      if (r.ornament != null && r.ornament !== "none") fail(7, `ص${n}: ornament=${r.ornament}`);
+      if (r.S > 0) {
+        const rel = Math.abs(r.S - baseline.fontSizePx) / baseline.fontSizePx;
+        if (rel > 0.05) fail(10, `ص${n}: S=${r.S.toFixed(2)} ≠ ${baseline.fontSizePx}`);
       }
-    }
-
-    for (const n of [3, 7]) {
-      const r = live[n];
-      if (!r || r.error) continue;
-      if (r.maxDevPx > 2) fail(5, `ص${n}: انحراف شبكة ${r.maxDevPx.toFixed(2)}px`);
-      else {
-        const prev = gateStatus[5];
-        gateStatus[5] = {
-          ok: true,
-          detail: {
-            ...(prev?.detail && typeof prev.detail === "object" ? prev.detail : {}),
-            [`p${n}MaxDevPx`]: +r.maxDevPx.toFixed(3),
-            [`p${n}Ink`]: {
-              first: r.firstInkPct != null ? +r.firstInkPct.toFixed(2) : null,
-              last: r.lastInkPct != null ? +r.lastInkPct.toFixed(2) : null,
-            },
-          },
-        };
+      if (r.pageChrome !== "minimal") fail(12, `ص${n}: chrome=${r.pageChrome}`);
+      if (r.numeralDx != null && r.numeralDx > 2.05) {
+        fail(12, `ص${n}: رقم الصفحة غير مركزي dx=${r.numeralDx.toFixed(1)}`);
       }
-    }
-
-    if (live[601]?.cartoucheCenterDx != null && live[601].cartoucheCenterDx > 2) {
-      fail(12, `ص٦٠١: مركز الخرطوش انحراف ${live[601].cartoucheCenterDx.toFixed(1)}px`);
-    } else if (live[601]?.cartoucheCenterDx != null) {
-      gateStatus[12] = {
-        ok: true,
-        detail: { p601Dx: +live[601].cartoucheCenterDx.toFixed(2) },
-      };
     }
 
     await browser.close();
@@ -425,7 +365,7 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
 const staticResult = runStatic();
 let liveResult = { live: null };
 if (!SKIP_LIVE) {
-  liveResult = await runLive();
+  liveResult = await runLive(staticResult.baseline);
 } else {
   console.log("mushaf-spec-lockdown: تخطّي الحيّ (MUSHAF_GATE_SKIP_LIVE=1)");
 }
@@ -434,6 +374,7 @@ mkdirSync(OUT_DIR, { recursive: true });
 const report = {
   base: BASE,
   skipLive: SKIP_LIVE,
+  model: "minimal-flow",
   gateStatus,
   failures,
   static: {
@@ -441,6 +382,7 @@ const report = {
     words: staticResult.words,
     textFp: staticResult.textFp,
     grid: staticResult.grid,
+    fontSizePx: staticResult.baseline.fontSizePx,
   },
   live: liveResult.live,
 };

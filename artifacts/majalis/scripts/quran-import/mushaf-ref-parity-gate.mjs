@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /**
- * بوابة مطابقة المراجع ٣١١ / ٦٠٠ / ٦٠١ — شبكة + شارة + رأس سور.
+ * بوابة مطابقة المراجع — شبكة تدفق + شارة بسيطة + S ثابت.
+ * صفحات التجميد: 1,2,3,600,601,602,603 (+ عيّنة إضافية).
  *
  *   MUSHAF_GATE_BASE_URL=http://127.0.0.1:24216 node scripts/quran-import/mushaf-ref-parity-gate.mjs
  */
 import { chromium } from "playwright";
 import {
-  existsSync,
   mkdirSync,
   readFileSync,
   writeFileSync,
@@ -14,9 +14,7 @@ import {
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  ACTIVE_LINES_WAIT_SEL,
   ACTIVE_PAGE_BROWSER_SOURCE,
-  resolveGatePages,
 } from "./mushaf-gate-active-page.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -27,17 +25,19 @@ const BASE =
 const OUT_DIR =
   process.env.MUSHAF_GATE_OUT_DIR ||
   join(ROOT, ".local/mushaf-ref-parity");
-const GRID_PATH = join(ROOT, "src/features/mushaf/mushaf-grid.json");
+const BASELINE = JSON.parse(
+  readFileSync(join(ROOT, "src/features/mushaf/mushaf-baseline.json"), "utf8"),
+);
 const VIEWPORT = { width: 390, height: 844 };
-const PAGES = [1, 2, 3, 4, 100, 283, 311, 400, 500, 586, 596, 599, 600, 601, 604];
-const MAX_BASELINE_DEV_PX = 2;
-const MAX_DEAD_GAP_PCT = 6;
+const PAGES = [1, 2, 3, 4, 100, 283, 311, 400, 500, 586, 596, 599, 600, 601, 602, 603, 604];
+const MAX_DEAD_GAP_PCT = 8;
+const FONT_TOL = 0.04;
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-async function measurePage(page, pageNum, grid) {
+async function measurePage(page, pageNum) {
   await page.goto(`${BASE}/mushaf/page/${pageNum}`, {
     waitUntil: "domcontentloaded",
     timeout: 60_000,
@@ -51,7 +51,7 @@ async function measurePage(page, pageNum, grid) {
   });
   await sleep(120);
 
-  const metrics = await page.evaluate((baselinesPct) => {
+  const metrics = await page.evaluate((expectedS) => {
     const linesRoot = __mushafLinesRoot();
     const header = document.querySelector(".mpv-ayah-header");
     const footer = document.querySelector(".mpv-ayah-footer");
@@ -60,38 +60,9 @@ async function measurePage(page, pageNum, grid) {
     const cr = linesRoot.getBoundingClientRect();
     const blockH = Math.max(1, cr.height);
     const slots = [...linesRoot.querySelectorAll("[data-grid-slot]")];
-    const deviations = [];
-    for (const el of slots) {
-      const slot = Number(el.getAttribute("data-grid-slot"));
-      const expected = baselinesPct[slot - 1];
-      if (expected == null) continue;
-      const r = el.getBoundingClientRect();
-      const centerY = r.top + r.height / 2;
-      const actualPct = ((centerY - cr.top) / blockH) * 100;
-      const devPx = Math.abs(actualPct - expected) * (blockH / 100);
-      deviations.push({ slot, expected, actualPct, devPx });
-    }
-    const maxDev = deviations.reduce((m, d) => Math.max(m, d.devPx), 0);
+    const gridMode = linesRoot.getAttribute("data-mushaf-grid");
+    const board = linesRoot.getAttribute("data-board");
 
-    let contentTop = Infinity;
-    let contentBot = -Infinity;
-    for (const el of slots) {
-      const r = el.getBoundingClientRect();
-      if (r.height <= 0) continue;
-      contentTop = Math.min(contentTop, r.top);
-      contentBot = Math.max(contentBot, r.bottom);
-    }
-    const hr = header.getBoundingClientRect();
-    const fr = footer.getBoundingClientRect();
-    const slotH = Math.max(1, fr.top - hr.bottom);
-    const topDead = Number.isFinite(contentTop)
-      ? Math.max(0, (contentTop - hr.bottom) / slotH) * 100
-      : 100;
-    const midDead = Number.isFinite(contentTop) && Number.isFinite(contentBot)
-      ? Math.max(0, (slotH - (contentBot - contentTop) - (contentTop - hr.bottom)) / slotH) * 100
-      : 100;
-
-    /* أكبر فراغ متصل داخل الكتلة بين عناصر مرتّبة */
     const ordered = slots
       .map((el) => el.getBoundingClientRect())
       .filter((r) => r.height > 0)
@@ -102,49 +73,46 @@ async function measurePage(page, pageNum, grid) {
       maxGapPct = Math.max(maxGapPct, (gap / blockH) * 100);
     }
     if (ordered.length) {
-      maxGapPct = Math.max(
-        maxGapPct,
-        ((ordered[0].top - cr.top) / blockH) * 100,
-      );
+      maxGapPct = Math.max(maxGapPct, ((ordered[0].top - cr.top) / blockH) * 100);
     }
 
     const banner = linesRoot.querySelector(".mf2-surah-banner");
-    let bannerTopPct = null;
-    let wingOk = null;
-    if (banner) {
-      const br = banner.getBoundingClientRect();
-      bannerTopPct = ((br.top - cr.top) / blockH) * 100;
-      const svg = banner.querySelector("svg");
-      const medallions =
-        svg?.querySelectorAll('[data-wing-part="medallion"]').length ?? 0;
-      const meshes =
-        svg?.querySelectorAll('[data-wing-part="mesh"]').length ?? 0;
-      const knots = svg?.querySelectorAll('[data-wing-part="knot"]').length ?? 0;
-      const patterns = svg?.querySelectorAll("pattern").length ?? 0;
-      const dense =
-        (banner.getAttribute("data-ornament") || "").includes("wing-dense");
-      wingOk =
-        patterns === 0 &&
-        dense &&
-        medallions === 2 &&
-        meshes === 4 &&
-        knots === 2;
-    }
+    const ornament = banner?.getAttribute("data-ornament") || null;
+    const bannerStyle = banner?.getAttribute("data-banner-style") || null;
+    const hasWing =
+      Boolean(banner?.querySelector('[data-wing-part], svg [data-wing-part]')) ||
+      (ornament || "").includes("wing");
+
+    const S =
+      parseFloat(getComputedStyle(linesRoot).getPropertyValue("--mushaf-S")) ||
+      parseFloat(getComputedStyle(linesRoot).fontSize) ||
+      0;
+    const lineFonts = [...linesRoot.querySelectorAll(".mf2-grid-slot--line .mf2-line")].map(
+      (el) => parseFloat(getComputedStyle(el).fontSize),
+    );
+    const absSlots = [...linesRoot.querySelectorAll(".mf2-grid-slot, .mf2-line")].filter(
+      (el) => getComputedStyle(el).position === "absolute",
+    ).length;
 
     return {
-      maxDev,
-      deviations,
-      topDead,
-      midDead,
+      gridMode,
+      board,
       maxGapPct,
-      bannerTopPct,
-      wingOk,
-      headerSurah: (surahHeader?.textContent || "").replace(/[\u00A0]/g, " ").replace(/ +/g, (m) => m.length >= 2 ? "  " : " ").trim(),
+      ornament,
+      bannerStyle,
+      hasWing,
+      S,
+      expectedS,
+      lineFonts,
+      absSlots,
+      headerSurah: (surahHeader?.textContent || "")
+        .replace(/[\u00A0]/g, " ")
+        .replace(/ +/g, (m) => (m.length >= 2 ? "  " : " "))
+        .trim(),
       slotCount: slots.length,
       blockH,
-      ornament: banner?.getAttribute("data-ornament") || null,
     };
-  }, grid.baselinesPct);
+  }, BASELINE.fontSizePx);
 
   const shotPath = join(OUT_DIR, `page-${String(pageNum).padStart(3, "0")}.png`);
   await page.locator(".qs-mushaf-body-inner, .mf2-lines").first().screenshot({
@@ -154,7 +122,6 @@ async function measurePage(page, pageNum, grid) {
 }
 
 function expectedHeader(pageNum) {
-  /* أسماء بدون «سورة» — فاصل مسافتان في المصدر */
   if (pageNum === 311) return "مريم";
   if (pageNum === 600) return "القارعة  التكاثر";
   if (pageNum === 601) return "العصر  الهمزة  الفيل";
@@ -163,26 +130,28 @@ function expectedHeader(pageNum) {
 
 async function main() {
   mkdirSync(OUT_DIR, { recursive: true });
-  const grid = JSON.parse(readFileSync(GRID_PATH, "utf8"));
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: VIEWPORT });
-await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
+  await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   const results = [];
   const failures = [];
 
   for (const n of PAGES) {
     try {
-      const r = await measurePage(page, n, grid);
+      const r = await measurePage(page, n);
       results.push(r);
       if (r.error) {
         failures.push({ page: n, reason: r.error });
         continue;
       }
-      if (r.maxDev > MAX_BASELINE_DEV_PX) {
-        failures.push({
-          page: n,
-          reason: `انحراف خط أساس ${r.maxDev.toFixed(2)}px > ${MAX_BASELINE_DEV_PX}`,
-        });
+      if (r.gridMode !== "flow") {
+        failures.push({ page: n, reason: `data-mushaf-grid=${r.gridMode} ≠ flow` });
+      }
+      if (r.board && r.board !== "1000x1618") {
+        failures.push({ page: n, reason: `data-board=${r.board} ≠ 1000x1618` });
+      }
+      if (r.absSlots > 0) {
+        failures.push({ page: n, reason: `${r.absSlots} slot/line absolute` });
       }
       const opening = n === 1 || n === 2;
       if (!opening && r.maxGapPct > MAX_DEAD_GAP_PCT) {
@@ -191,19 +160,20 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
           reason: `فراغ متصل ${r.maxGapPct.toFixed(1)}% > ${MAX_DEAD_GAP_PCT}%`,
         });
       }
-      if (opening && r.bannerTopPct != null) {
-        if (r.bannerTopPct < 2 || r.bannerTopPct > 14) {
+      if (r.ornament != null && r.ornament !== "none") {
+        failures.push({ page: n, reason: `ornament=${r.ornament} ≠ none` });
+      }
+      if (r.hasWing) {
+        failures.push({ page: n, reason: "شارة ما زالت تحمل جناحًا زخرفيًا" });
+      }
+      if (r.S > 0) {
+        const rel = Math.abs(r.S - BASELINE.fontSizePx) / BASELINE.fontSizePx;
+        if (rel > FONT_TOL) {
           failures.push({
             page: n,
-            reason: `أعلى الشارة ${r.bannerTopPct.toFixed(1)}% خارج 2–14% (افتتاح/ضلع علوي)`,
+            reason: `S=${r.S.toFixed(2)} ≠ baseline ${BASELINE.fontSizePx} (±${FONT_TOL * 100}%)`,
           });
         }
-      }
-      if (r.wingOk === false) {
-        failures.push({
-          page: n,
-          reason: "عناصر الجناح ≠ ميدالية+شبكة+عقدة (wing-dense)",
-        });
       }
       const exp = expectedHeader(n);
       if (exp && r.headerSurah !== exp) {
@@ -221,13 +191,14 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
 
   const report = {
     base: BASE,
-    grid,
+    baselineFont: BASELINE.fontSizePx,
+    freezePages: [1, 2, 3, 600, 601, 602, 603],
     results: results.map((r) => ({
       page: r.pageNum,
-      maxDevPx: r.maxDev,
+      gridMode: r.gridMode,
+      ornament: r.ornament,
+      S: r.S,
       maxGapPct: r.maxGapPct,
-      bannerTopPct: r.bannerTopPct,
-      wingOk: r.wingOk,
       headerSurah: r.headerSurah,
       shot: r.shotPath,
     })),

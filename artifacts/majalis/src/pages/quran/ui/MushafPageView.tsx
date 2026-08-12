@@ -44,7 +44,7 @@ import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { QpcFontPackBanner } from "@/components/quran/QpcFontPackBanner";
-import { MushafAyahMarkerSvg, MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
+import { MushafAyahMarkerSvg } from "@/components/quran/MushafOrnaments";
 import { MushafLayeredPage } from "@/features/mushaf";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import {
@@ -883,22 +883,21 @@ export default function MushafPageView() {
             )}
           </div>
 
-          {/* ذيل: خرطوش مركزي · وصف الحزب جانبي بلا تقاطع */}
+          {/* ذيل: رقم صفحة عربي بسيط في الوسط · وصف الحزب يمينًا */}
           <footer
             className="mpv-ayah-footer"
-            data-cartouche-align="center"
+            data-page-chrome="minimal"
           >
             <span className="mpv-ayah-footer__meta">{footerMetaLabel ?? ""}</span>
             <button
               type="button"
               className="mpv-ayah-page-badge"
-              data-cartouche-side="center"
+              data-page-numeral="arabic"
               onClick={openJumpModal}
               aria-haspopup="dialog"
               aria-expanded={isJumpModalVisible}
               aria-label={`الانتقال إلى صفحة — الحالية ${toArabicDigits(page)} من ${toArabicDigits(TOTAL_PAGES)}`}
             >
-              <MushafPageCartoucheSvg className="mpv-ayah-page-badge__cartouche" />
               <span className="mpv-ayah-page-badge__num">{toArabicPageDigits(page)}</span>
             </button>
           </footer>

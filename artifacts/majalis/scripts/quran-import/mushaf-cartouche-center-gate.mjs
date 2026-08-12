@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 /**
- * بوابة مركزية خرطوش رقم الصفحة (±2px) + مسافة ≥28px عن حبر آخر سطر.
+ * بوابة رقم الصفحة البسيط (بدل خرطوش مزخرف):
+ * - رقم عربي مركزي (±2px) عبر .mpv-ayah-page-badge
+ * - data-page-chrome=minimal · بلا خرطوش SVG مطلوب
+ * - مسافة مقبولة بين آخر حبر والذيل (≥8px)
+ *
  *   pnpm run test:mushaf-cartouche-center
  */
 import { chromium } from "playwright";
@@ -9,7 +13,6 @@ import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  ACTIVE_LINES_WAIT_SEL,
   ACTIVE_PAGE_BROWSER_SOURCE,
   resolveGatePages,
 } from "./mushaf-gate-active-page.mjs";
@@ -48,11 +51,14 @@ const css = readFileSync(join(ROOT, "src/styles/quran.css"), "utf8");
 if (/data-page-parity/.test(viewSrc)) {
   failures.push({ page: 0, reason: "data-page-parity ما زال موجودًا — أُلغي التناوب" });
 }
-if (!/data-cartouche-align="center"|data-cartouche-side="center"/.test(viewSrc)) {
-  failures.push({ page: 0, reason: "وسم مركزية الخرطوش مفقود في MushafPageView" });
+if (!/data-page-chrome="minimal"/.test(viewSrc)) {
+  failures.push({ page: 0, reason: "data-page-chrome=minimal مفقود في MushafPageView" });
+}
+if (!/data-page-numeral="arabic"/.test(viewSrc)) {
+  failures.push({ page: 0, reason: "data-page-numeral=arabic مفقود" });
 }
 if (!/left:\s*50%/.test(css) || !/translateX\(-50%\)/.test(css)) {
-  failures.push({ page: 0, reason: "CSS مركزية الخرطوش ناقص" });
+  failures.push({ page: 0, reason: "CSS توسيط رقم الصفحة ناقص" });
 }
 if (/data-page-parity="odd"/.test(css) || /data-page-parity="even"/.test(css)) {
   failures.push({ page: 0, reason: "CSS تناوب الخرطوش ما زال موجودًا" });
@@ -93,7 +99,7 @@ const sample = [];
 if (failures.length === 0) {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: VIEWPORT });
-await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
+  await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   try {
     for (const n of SAMPLE) {
       await page.goto(`${BASE}/mushaf/page/${n}`, {
@@ -108,6 +114,8 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
         const toolbar = document.querySelector(".mpv-toolbar--ayah");
         const lines = [...__mushafQueryAll(".mf2-grid-slot--line .mf2-line")];
         if (!badge || !footer) return { error: "missing" };
+        const chrome = footer.getAttribute("data-page-chrome");
+        const numeral = badge.getAttribute("data-page-numeral");
         const br = badge.getBoundingClientRect();
         const fr = footer.getBoundingClientRect();
         const mid = br.left + br.width / 2;
@@ -118,26 +126,40 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
           const r = el.getBoundingClientRect();
           if (r.height > 0) lastInkBot = Math.max(lastInkBot, r.bottom);
         }
-        const gapToCart = lastInkBot > 0 ? br.top - lastInkBot : null;
-        /* شريط الأدوات قد يكون مخفيًا — قِس إلى حدّ نطاق الذيل (= أعلى toolbarBand) */
+        const gapToFooter = lastInkBot > 0 ? fr.top - lastInkBot : null;
         const tr = toolbar?.getBoundingClientRect();
-        const toolbarTop =
-          tr && tr.height > 1 ? tr.top : fr.bottom;
+        const toolbarTop = tr && tr.height > 1 ? tr.top : fr.bottom;
         const gapToToolbar = toolbarTop - br.bottom;
+        const numText = (badge.textContent || "").trim();
+        const arabicOk = /^[٠-٩]+$/.test(numText);
+        const hasCartoucheSvg = Boolean(
+          document.querySelector(".mpv-ayah-page-badge__cartouche svg, [data-cartouche] svg"),
+        );
         return {
           dx,
-          gapToCart,
+          gapToFooter,
           gapToToolbar,
+          chrome,
+          numeral,
+          arabicOk,
+          hasCartoucheSvg,
           mid,
           pageMid,
-          ok: dx <= 2.05 && (gapToCart == null || gapToCart >= 27.5) && gapToToolbar >= 7.5,
+          ok:
+            dx <= 2.05 &&
+            (gapToFooter == null || gapToFooter >= 7.5) &&
+            gapToToolbar >= 7.5 &&
+            chrome === "minimal" &&
+            numeral === "arabic" &&
+            arabicOk &&
+            !hasCartoucheSvg,
         };
       });
       sample.push({ page: n, ...m });
       if (m.error || !m.ok) {
         failures.push({
           page: n,
-          reason: `dx=${m.dx?.toFixed?.(1)} gapCart=${m.gapToCart?.toFixed?.(1)} gapTb=${m.gapToToolbar?.toFixed?.(1)}`,
+          reason: `dx=${m.dx?.toFixed?.(1)} gapFoot=${m.gapToFooter?.toFixed?.(1)} gapTb=${m.gapToToolbar?.toFixed?.(1)} chrome=${m.chrome} numeral=${m.numeral} ar=${m.arabicOk} cartSvg=${m.hasCartoucheSvg}`,
         });
       }
     }
@@ -147,7 +169,13 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   }
 }
 
-const report = { base: BASE, sample, failures, staticCenterPages: 604 };
+const report = {
+  base: BASE,
+  sample,
+  failures,
+  model: "minimal-page-numeral",
+  staticCenterPages: 604,
+};
 writeFileSync(join(OUT_DIR, "gate-result.json"), JSON.stringify(report, null, 2));
 console.log(JSON.stringify(report, null, 2));
 if (failures.length) {

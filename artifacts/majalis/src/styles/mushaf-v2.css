@@ -19,26 +19,19 @@
 
 .mf2-frame {
   position: relative;
-  aspect-ratio: 0.72;
+  /* لوحة منطقية 1000×1618 — التحجيم الخارجي عبر الحاوية */
+  aspect-ratio: 1000 / 1618;
   background: var(--mf2-page-bg, var(--color-mushaf-paper, #FAF7F2));
-  border-radius: 6px;
-  padding: 0.35cqw 0;
+  border-radius: 0;
+  padding: 0;
   width: 100%;
   height: 100%;
   max-width: 100%;
   box-sizing: border-box;
   container-type: inline-size;
-  box-shadow: 0 2px 18px rgba(14, 110, 82, .12);
-  outline: 2px solid var(--mf-gold, var(--brand-deep, var(--mj-brand-deep)));
-  outline-offset: -8px;
-}
-.mf2-frame::before {
-  content: "";
-  position: absolute;
-  inset: 4px;
-  border: 1px solid var(--mf-gold-soft, rgba(14, 110, 82, .45));
-  border-radius: 4px;
-  pointer-events: none;
+  box-shadow: none;
+  outline: none;
+  overflow: visible;
 }
 html[data-theme="dark"] .mf2-frame {
   --mf2-page-bg: #0F172A;
@@ -53,22 +46,26 @@ html[data-theme="dark"] .mf2-frame {
 .mf2-lines {
   position: relative;
   z-index: 1;
-  /* بلا flex-grow — الارتفاع يُضبط بالقياس (شبكة مطلقة)؛ النمو كان يلغي الحجز السفلي */
   flex: 0 0 auto;
   height: 100%;
   min-height: 0;
   width: 100%;
-  /* شبكة مطلقة على baselines — بلا flex توزيعي */
-  display: block;
+  /* تدفق خانات متساوية — ١٥ صفًا؛ ممنوع absolute على الأسطر */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(15, minmax(0, 1fr));
+  align-content: stretch;
   margin: 0;
-  /* الهامش الجانبي على الفتحات المطلقة (left/right) لا على padding — absolute يتجاهله */
-  padding: 0;
+  padding: 0 2px;
   transition: opacity .2s ease;
   --mf2-lh: 1.35;
   --mf2-slot-h-pct: 7.2;
   box-sizing: border-box;
-  /* ممنوع القص الرأسي — حبر QPC يمتد فوق/تحت صندوق الـem */
+  /* ممنوع overflow:hidden — الاقتطاع خلل حساب لا قص */
   overflow: visible;
+}
+.mf2-lines[data-mushaf-grid="flow"] {
+  display: grid;
 }
 .mf2-grid-slot {
   pointer-events: auto;
@@ -77,10 +74,23 @@ html[data-theme="dark"] .mf2-frame {
 }
 .mf2-grid-slot--line .mf2-line {
   width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .mf2-lines--qpc-contiguous .mf2-grid-slot--line .mf2-line {
-  width: max-content;
+  width: 100%;
   max-width: 100%;
+  transform: none;
+}
+.mf2-line__run {
+  display: flex;
+  align-items: center;
+  justify-content: inherit;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
 }
 .mf2-grid-slot--banner .mf2-surah-header,
 .mf2-grid-slot--banner .mf2-surah-header__frame {
@@ -101,9 +111,14 @@ html[data-theme="dark"] .mf2-frame {
   margin-inline: auto;
 }
 .mf2-lines--opening.mf2-lines--qpc-contiguous .mf2-line {
-  /* scaleX يمدّ المحتوى لعرض الإطار الداخلي — الأصل في الوسط */
-  transform: scaleX(var(--mf2-line-sx, 1));
-  transform-origin: center center;
+  transform: none;
+  justify-content: center;
+}
+.mf2-lines--opening .mf2-line__run {
+  justify-content: center;
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
 }
 .mf2-lines--opening .mf2-grid-slot--basmala .mf2-bismillah,
 .mf2-lines--opening .mf2-bismillah {
