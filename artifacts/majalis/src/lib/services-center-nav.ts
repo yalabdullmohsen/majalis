@@ -37,6 +37,7 @@ import {
   Compass,
 } from "lucide-react";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { MORE_FEATURED_SECTIONS } from "@/features/more/moreSections";
 
 export type ServicesCenterAction =
   | { kind: "link"; href: string }
@@ -63,45 +64,21 @@ export type ServicesCenterGroup = {
   items: ServicesCenterItem[];
 };
 
+const FEATURED_HUB_ITEMS: ServicesCenterItem[] = MORE_FEATURED_SECTIONS.map((s) => ({
+  id: `hub-${s.id}`,
+  label: s.title,
+  subtitle: s.subtitle,
+  keywords: s.keywords,
+  Icon: s.icon,
+  action: { kind: "link", href: s.route },
+}));
+
 export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
   {
     id: "hubs",
     title: "الأبواب الرئيسية",
     layout: "featured",
-    items: [
-      {
-        id: "hub-prophets-nations",
-        label: "قصص الأنبياء والأمم السابقة",
-        subtitle: "الأنبياء · عاد وثمود وفرعون",
-        keywords: ["أنبياء", "أمم", "قصص", "عاد", "ثمود"],
-        Icon: BookOpen,
-        action: { kind: "link", href: "/prophets" },
-      },
-      {
-        id: "hub-seerah-history",
-        label: "السيرة النبوية والتاريخ الإسلامي",
-        subtitle: "السيرة · الحضارة والتاريخ",
-        keywords: ["سيرة", "تاريخ", "حضارة"],
-        Icon: BookA,
-        action: { kind: "link", href: "/seerah" },
-      },
-      {
-        id: "hub-tafsir-ulum",
-        label: "التفسير وعلوم القرآن",
-        subtitle: "تفسير · علوم · فهرس",
-        keywords: ["تفسير", "علوم قرآن", "قرآن"],
-        Icon: BookMarked,
-        action: { kind: "link", href: "/quran-knowledge" },
-      },
-      {
-        id: "hub-discover-quiz",
-        label: "اكتشف الإسلام وسين جيم",
-        subtitle: "للمسلم الجديد · مسابقة",
-        keywords: ["اكتشف", "دعوة", "سين جيم", "مسابقة", "quiz"],
-        Icon: Compass,
-        action: { kind: "link", href: "/discover-islam" },
-      },
-    ],
+    items: FEATURED_HUB_ITEMS,
   },
   {
     id: "features",

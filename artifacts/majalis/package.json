@@ -220,6 +220,7 @@
     "mobile:sync": "pnpm run build && cap sync ios && cap sync android && pnpm run native:strip-qpc-fonts",
     "mobile:android": "pnpm run build && cap sync android && pnpm run native:strip-qpc-fonts",
     "prepare:ios": "bash scripts/prepare-ios.sh",
+    "release:ios": "bash scripts/release-ios.sh",
     "mobile:ios": "bash scripts/prepare-ios.sh && cap open ios",
     "audit:theme-contrast": "node scripts/audit-theme-contrast.mjs",
     "test:ticker-content": "node --import tsx src/lib/__tests__/ticker-content.test.ts",
