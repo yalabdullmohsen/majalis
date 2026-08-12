@@ -316,6 +316,9 @@
 .bottom-sheet--services .bottom-sheet__featured > .more-sheet-item--featured:nth-child(2) { --more-shimmer-i: 1; }
 .bottom-sheet--services .bottom-sheet__featured > .more-sheet-item--featured:nth-child(3) { --more-shimmer-i: 2; }
 .bottom-sheet--services .bottom-sheet__featured > .more-sheet-item--featured:nth-child(4) { --more-shimmer-i: 3; }
+.bottom-sheet--services .bottom-sheet__featured > .more-sheet-item--featured:nth-child(5) { --more-shimmer-i: 4; }
+.bottom-sheet--services .bottom-sheet__featured > .more-sheet-item--featured:nth-child(6) { --more-shimmer-i: 5; }
+.bottom-sheet--services .bottom-sheet__featured > .more-sheet-item--featured:nth-child(7) { --more-shimmer-i: 6; }
 
 @keyframes more-hub-shimmer {
   0%, 35% { transform: translate3d(120%, 0, 0); }
