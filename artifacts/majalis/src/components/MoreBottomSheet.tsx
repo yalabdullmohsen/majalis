@@ -99,7 +99,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
     else if (action.kind === "logout") void handleLogout();
   };
 
-  const renderItem = (item: ServicesCenterItem, layout: "quick" | "list") => {
+  const renderItem = (item: ServicesCenterItem, layout: "quick" | "list" | "featured") => {
     const href = item.action.kind === "link" ? item.action.href : undefined;
     const active = href ? isNavHrefActive(location, href) : false;
     const soon = href ? isComingSoonPath(href) : false;
@@ -109,7 +109,11 @@ export function MoreBottomSheet({ open, onClose }: Props) {
 
     const className = [
       "more-sheet-item",
-      layout === "quick" ? "more-sheet-item--quick" : "more-sheet-item--row",
+      layout === "featured"
+        ? "more-sheet-item--featured"
+        : layout === "quick"
+          ? "more-sheet-item--quick"
+          : "more-sheet-item--row",
       active ? "more-sheet-item--active" : "",
       soon ? "more-sheet-item--soon" : "",
       isTheme ? "more-sheet-item--theme" : "",
@@ -117,22 +121,30 @@ export function MoreBottomSheet({ open, onClose }: Props) {
       .filter(Boolean)
       .join(" ");
 
+    const iconSize = layout === "featured" ? 28 : 18;
     const icon = isTheme ? (
-      resolvedTheme === "dark" ? <Sun size={18} strokeWidth={1.8} /> : <Moon size={18} strokeWidth={1.8} />
+      resolvedTheme === "dark" ? <Sun size={iconSize} strokeWidth={1.8} /> : <Moon size={iconSize} strokeWidth={1.8} />
     ) : (
-      <item.Icon size={18} strokeWidth={1.8} />
+      <item.Icon size={iconSize} strokeWidth={1.8} />
     );
 
     const label = isTheme ? "المظهر" : item.label;
-    const meta = isTheme ? themeLabel(preference, resolvedTheme) : soon ? "قريبًا" : null;
+    const meta = isTheme
+      ? themeLabel(preference, resolvedTheme)
+      : soon
+        ? "قريبًا"
+        : item.subtitle ?? null;
     const aria = isTheme
       ? `المظهر: ${themeLabel(preference, resolvedTheme)}`
       : soon
         ? `${item.label} — قريبًا`
-        : item.label;
+        : item.subtitle
+          ? `${item.label} — ${item.subtitle}`
+          : item.label;
 
     const inner = (
       <>
+        {layout === "featured" ? <span className="more-sheet-item__shimmer" aria-hidden="true" /> : null}
         <span className="more-sheet-item__icon" aria-hidden="true">{icon}</span>
         <span className="more-sheet-item__text">
           <span className="more-sheet-item__label">{label}</span>
@@ -229,8 +241,21 @@ export function MoreBottomSheet({ open, onClose }: Props) {
           groups.map((group) => (
             <section key={group.id} className="bottom-sheet__section" aria-labelledby={`svc-${group.id}`}>
               <h3 id={`svc-${group.id}`} className="bottom-sheet__section-label">{group.title}</h3>
-              <div className={group.layout === "quick" ? "bottom-sheet__quick" : "bottom-sheet__list"}>
-                {group.items.map((item) => renderItem(item, group.layout === "quick" ? "quick" : "list"))}
+              <div
+                className={
+                  group.layout === "featured"
+                    ? "bottom-sheet__featured"
+                    : group.layout === "quick"
+                      ? "bottom-sheet__quick"
+                      : "bottom-sheet__list"
+                }
+              >
+                {group.items.map((item) =>
+                  renderItem(
+                    item,
+                    group.layout === "featured" ? "featured" : group.layout === "quick" ? "quick" : "list",
+                  ),
+                )}
               </div>
             </section>
           ))
