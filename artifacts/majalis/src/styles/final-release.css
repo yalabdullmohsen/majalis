@@ -29,10 +29,10 @@
   --bottom-nav-total: var(--nav-h, calc(var(--bottom-nav-height) + var(--inset-bottom)));
   --top-section-bar-h: 3.5rem;
   --sticky-below-chrome: calc(var(--header-h, calc(56px + var(--inset-top))) + var(--top-section-bar-h));
-  /* ارتفاع الشريط المتحرك — مصدر واحد. كان الشريط 2.5rem داخل صف 2.15rem
-     بـoverflow:hidden فيُقصّ النص رأسيًا ~10px. الآن الصف يُشتق من الشريط. */
-  --ticker-h: 2.75rem;
-  --ticker-row-pad-block: 0.3rem;
+  /* ارتفاع الشريط المتحرك — أعرض رأسيًا لاستيعاب النص + badge بلا قصّ،
+     مع توسيط المحتوى عبر flex داخل .header-ticker. */
+  --ticker-h: 3.5rem;
+  --ticker-row-pad-block: 0.4rem;
   --page-gutter: var(--gutter-inline-start, max(16px, var(--inset-right)));
   --page-width: var(--content-max, 70rem);
   --motion-fast: var(--dur-fast, 140ms);
@@ -335,23 +335,28 @@ html.dark .nav-soon-badge {
   max-height: var(--ticker-h);
   display: flex;
   align-items: center;
+  justify-content: center;
   border: 1px solid var(--mj-hairline, var(--color-border));
   border-radius: var(--mj-r-sm, var(--radius-md));
   background: var(--mj-surface, var(--color-surface));
-  padding-inline: max(0.85rem, var(--inset-right, 0px))
-    max(0.85rem, var(--inset-left, 0px));
+  padding-block: 0.35rem;
+  padding-inline: max(1rem, var(--inset-right, 0px))
+    max(1rem, var(--inset-left, 0px));
   box-sizing: border-box;
   cursor: pointer;
 }
 .header-ticker--empty { visibility: hidden; flex: 0 0 8rem; }
-.header-ticker--static { padding-inline: .7rem; }
+.header-ticker--static { padding-inline: 1rem; }
 .header-ticker--paused { cursor: pause; }
 .header-ticker--paused .header-ticker__track { animation-play-state: paused; }
 
 .header-ticker__viewport {
   overflow: hidden;
   width: 100%;
+  height: 100%;
   min-width: 0;
+  display: flex;
+  align-items: center;
   /* تلاشي خفيف جدًا — قناع 14% كان يقصّ بداية «تنبيه الحديث» */
   mask-image: linear-gradient(
     to left,
@@ -373,6 +378,7 @@ html.dark .nav-soon-badge {
   display: flex;
   align-items: center;
   width: max-content;
+  min-height: 100%;
   gap: 0;
   animation-name: header-ticker-marquee;
   animation-timing-function: linear;
@@ -392,16 +398,23 @@ html.dark .nav-soon-badge {
 .header-ticker__single-item {
   width: 100%;
   min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .header-ticker__item {
   display: inline-flex;
   align-items: center;
-  gap: .4rem;
+  justify-content: center;
+  gap: .45rem;
   flex: 0 0 auto;
   text-decoration: none;
   color: var(--color-text);
-  font-size: .82rem;
-  padding-inline: .85rem;
+  font-size: .85rem;
+  line-height: 1.35;
+  padding-block: 0.15rem;
+  padding-inline: 1rem;
   position: relative;
   white-space: nowrap;
 }
@@ -433,7 +446,9 @@ html.dark .nav-soon-badge {
 .header-ticker--static .header-ticker__item {
   white-space: normal;
   flex-wrap: wrap;
+  justify-content: center;
   max-width: 100%;
+  text-align: center;
 }
 .header-ticker--static .header-ticker__text,
 .header-ticker--static .header-ticker__source { white-space: normal; }
@@ -811,6 +826,9 @@ html.dark .nav-soon-badge {
        ‎.header-ticker__viewport‎، والصف كان يقصّه رأسيًا فوق ذلك. */
     overflow-x: hidden;
     overflow-y: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     /* الارتفاع مُشتق من ارتفاع الشريط — لا رقم أصغر مكتوب يدويًا. */
     min-height: calc(var(--ticker-h) + (var(--ticker-row-pad-block) * 2));
     padding-block: var(--ticker-row-pad-block);
@@ -1674,5 +1692,5 @@ header.navbar-v3,
   .navbar-theme-toggle.navbar-search-toggle{display:none!important}
   .navbar-v3__search-row{width:100%;box-sizing:border-box;padding:.45rem max(16px,var(--gutter-inline-start,16px)) .35rem max(16px,var(--gutter-inline-end,16px));border-block-start:1px solid var(--mj-hairline,var(--color-border));background:var(--mj-bg,var(--color-background))}
   .navbar-v3__search-btn{width:100%;min-height:44px;display:flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border:1px solid var(--mj-hairline,var(--color-border));border-radius:var(--mj-r-pill,999px);background:var(--mj-surface,var(--color-surface));color:var(--mj-muted,var(--color-text-muted));text-align:start}
-  .navbar-ticker-row .header-ticker{width:100%;min-width:0;border-radius:0;min-height:var(--ticker-h);height:var(--ticker-h);max-height:var(--ticker-h);padding-inline:.75rem}
+  .navbar-ticker-row .header-ticker{width:100%;min-width:0;border-radius:0;min-height:var(--ticker-h);height:var(--ticker-h);max-height:var(--ticker-h);display:flex;align-items:center;justify-content:center;padding-block:.35rem;padding-inline:1rem}
 }
