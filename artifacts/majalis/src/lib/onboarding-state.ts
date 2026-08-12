@@ -98,8 +98,21 @@ function readFlag(name: string): boolean {
   return readRaw(name) === "1";
 }
 
+let warnedWriteFailure = false;
+
 function setFlag(name: string): boolean {
-  return writeRaw(name, "1");
+  const ok = writeRaw(name, "1");
+  // فشل دائم نادر (تخزين+كوكي معًا) — لا ندخل حلقة ظهور؛ الذاكرة تكفي للجلسة،
+  // ونُحذِّر مرة واحدة بلا إزعاج للمستخدم.
+  if (!ok && !warnedWriteFailure && typeof console !== "undefined") {
+    warnedWriteFailure = true;
+    try {
+      console.warn("[onboarding] durable write failed; session memory only", name);
+    } catch {
+      /* ignore */
+    }
+  }
+  return ok;
 }
 
 /* ── الإصدار الكبير ─────────────────────────────────────────────────── */
@@ -219,10 +232,20 @@ export function isOnboardingPending(): boolean {
   return !hasSeenOnboarding() || !hasCompletedPreferences() || !hasSeenReminderPrompt();
 }
 
+/** اسم مستقر للبوابة — مرادف لـ isOnboardingPending. */
+export function shouldShowFirstRunFlow(): boolean {
+  return isOnboardingPending();
+}
+
 /** زر «إعادة عرض التهيئة» في الإعدادات — الطريق اليدوي الوحيد. */
 export function resetOnboardingForDisplay(): void {
   clearOnboardingFlags();
   writeRaw(ONBOARDING_KEYS.majorVersion, String(ONBOARDING_MAJOR_VERSION));
+}
+
+/** مرادف صريح لمسار الإعدادات فقط — لا يُستدعى تلقائيًا عند الإقلاع. */
+export function resetOnboardingForSettingsOnly(): void {
+  resetOnboardingForDisplay();
 }
 
 /** للاختبارات فقط */

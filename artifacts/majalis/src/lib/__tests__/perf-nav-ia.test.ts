@@ -79,9 +79,9 @@ const home = readFileSync(resolve(root, "pages/account/ui/HomeView.tsx"), "utf8"
 assert.match(home, /HomeContentHub/, "الرئيسية تعرض محور المحتوى");
 
 const cookie = readFileSync(resolve(root, "components/CookieConsentBanner.tsx"), "utf8");
-assert.match(cookie, /cookie-consent--subtle/, "بانر خصوصية خفيف");
+assert.match(cookie, /markStorageNoticeSeen/, "وسم إشعار التخزين مرة واحدة");
+assert.match(cookie, /return null/, "بلا شريط خصوصية حاجب عند التشغيل");
 assert.doesNotMatch(cookie, /قبول الكل/, "بلا نافذة موافقة ثقيلة");
-assert.match(cookie, /متابعة/, "زر متابعة غير حاجب");
 
 const prefetch = readFileSync(resolve(root, "lib/prefetch-top-routes.ts"), "utf8");
 assert.match(prefetch, /ProphetStoriesPage/);

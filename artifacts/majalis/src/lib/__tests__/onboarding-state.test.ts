@@ -182,6 +182,21 @@ test("زر الإعدادات يعيد العرض عند الطلب فقط", () 
   assert.equal(isOnboardingPending(), false);
 });
 
+test("resetOnboardingForSettingsOnly و shouldShowFirstRunFlow مرادفان مستقران", () => {
+  const {
+    shouldShowFirstRunFlow,
+    resetOnboardingForSettingsOnly,
+  } = mod;
+  initOnboardingState();
+  assert.equal(shouldShowFirstRunFlow(), true);
+  markOnboardingSeen();
+  markPreferencesCompleted();
+  markReminderPromptSeen();
+  assert.equal(shouldShowFirstRunFlow(), false);
+  resetOnboardingForSettingsOnly();
+  assert.equal(shouldShowFirstRunFlow(), true);
+});
+
 /* ── إضافي: الوسم idempotent ───────────────────────────────────────── */
 test("الوسم idempotent — تكراره لا يغيّر شيئًا", () => {
   initOnboardingState();

@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { Link } from "wouter";
+import { useEffect } from "react";
 import {
   applyConsentDataset,
   hasDecidedCookieConsent,
@@ -9,54 +8,21 @@ import {
   hasSeenStorageNotice,
   markStorageNoticeSeen,
 } from "@/lib/onboarding-state";
-import "@/styles/components/cookie-consent.css";
 
 /**
- * شريط خصوصية خفيف غير حاجب — الضروري يعمل افتراضيًا،
- * والتحليلات تبقى اختيارية عبر مركز الخصوصية.
+ * لا بانر خصوصية عند التشغيل الأول — التخزين الضروري يعمل افتراضيًا،
+ * وإدارة التحليلات متاحة من مركز الخصوصية في الإعدادات.
+ * نُسجّل «شوهد» مرة واحدة بصمت حتى لا يتكرر أي شريط بعد reload.
  */
 export function CookieConsentBanner() {
-  const [open, setOpen] = useState(false);
-
   useEffect(() => {
     applyConsentDataset();
-    // مصدران للحقيقة: راية البوابة الدائمة (تنجو من إخفاق localStorage عبر
-    // الكوكي) أو قرار الموافقة القديم. أيّهما موجود ⇒ لا يُعاد الشريط.
-    if (!hasSeenStorageNotice() && !hasDecidedCookieConsent()) setOpen(true);
+    if (hasSeenStorageNotice()) return;
+    markStorageNoticeSeen();
+    if (!hasDecidedCookieConsent()) {
+      writeCookieConsent({ preferences: true, analytics: false });
+    }
   }, []);
 
-  if (!open) return null;
-
-  const continueNecessary = () => {
-    // الوسم *قبل* الإغلاق — فلا نافذة تُغلق بلا حالة محفوظة
-    markStorageNoticeSeen();
-    writeCookieConsent({ preferences: true, analytics: false });
-    setOpen(false);
-  };
-
-  return (
-    <aside
-      className="cookie-consent cookie-consent--subtle"
-      role="region"
-      aria-labelledby="cookie-consent-title"
-    >
-      <div className="cookie-consent__inner">
-        <p id="cookie-consent-title" className="cookie-consent__text cookie-consent__text--compact">
-          نستخدم تخزينًا ضروريًا للتشغيل. التحليلات اختيارية.{" "}
-          <Link href="/privacy-center" className="cookie-consent__link" onClick={continueNecessary}>
-            مركز الخصوصية
-          </Link>
-        </p>
-        <div className="cookie-consent__actions cookie-consent__actions--compact">
-          <button
-            type="button"
-            className="cookie-consent__btn cookie-consent__btn--primary"
-            onClick={continueNecessary}
-          >
-            متابعة
-          </button>
-        </div>
-      </div>
-    </aside>
-  );
+  return null;
 }
