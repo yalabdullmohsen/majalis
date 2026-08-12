@@ -108,7 +108,7 @@ const TeacherDetailPage = lazy(() => import("@/pages/lessons/TeacherDetailPage")
 const LessonsArchivePage = lazy(() => import("@/pages/lessons/LessonsArchivePage"));
 const LessonDetailPage = lazy(() => import("@/pages/lessons/LessonDetailPage"));
 const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAnnouncementDetailPage"));
-const _LibraryPage = lazy(() => import("@/pages/library/LibraryPage"));
+const LibraryPage = lazy(() => import("@/pages/library/LibraryPage"));
 const LibraryDetailPage = lazy(() => import("@/pages/library/LibraryDetailPage"));
 const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
 const PropheticMedicinePage = lazy(() => import("@/views/PropheticMedicinePage"));
@@ -211,9 +211,10 @@ const FiqhTopicPage = lazy(() => import("@/pages/fiqh/FiqhTopicPage"));
 const SeerahPage = lazy(() => import("@/views/SeerahPage"));
 const RulingsPage = lazy(() => import("@/pages/fiqh/RulingsPage"));
 const RulingDetailPage = lazy(() => import("@/pages/fiqh/RulingDetailPage"));
-const _UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
+const UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
 const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage"));
-const _KnowledgeGraphPage = lazy(() => import("@/views/KnowledgeGraphPage"));
+const KnowledgeGraphPage = lazy(() => import("@/views/KnowledgeGraphPage"));
+const MorePage = lazy(() => import("@/pages/account/MorePage"));
 const MindMapPage = lazy(() => import("@/views/MindMapPage"));
 const IslamicLandmarksPage = lazy(() => import("@/views/IslamicLandmarksPage"));
 const MutashabihatPage = lazy(() => import("@/views/MutashabihatPage"));
@@ -588,7 +589,7 @@ function Router() {
       <Route path="/sheikhs/:id"><Redirect to="/lessons" /></Route>
       <Route path="/sheikhs"><Redirect to="/lessons" /></Route>
       <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
-      <Route path="/library"><Redirect to="/" /></Route>
+      <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
       <Route path="/prophetic-medicine"><SafeLazyRoute component={PropheticMedicinePage} /></Route>
       <Route path="/quran-circles"><SafeLazyRoute component={QuranCirclesPage} /></Route>
@@ -613,7 +614,7 @@ function Router() {
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
       <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
-      <Route path="/knowledge-graph"><Redirect to="/" /></Route>
+      <Route path="/knowledge-graph"><SafeLazyRoute component={KnowledgeGraphPage} /></Route>
       <Route path="/knowledge-map"><Redirect to="/" /></Route>
       <Route path="/mind-map"><SafeLazyRoute component={MindMapPage} /></Route>
       <Route path="/islamic-landmarks"><SafeLazyRoute component={IslamicLandmarksPage} /></Route>
@@ -743,6 +744,7 @@ function Router() {
       <Route path="/mushaf/about-edition"><SafeLazyRoute component={MushafEditionInfoPage} /></Route>
       <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf"><SafeLazyRoute component={MushafPageView} /></Route>
+      <Route path="/quran/mushaf"><Redirect to="/mushaf" /></Route>
       <Route path="/mushaf-v2-preview"><Redirect to="/mushaf" /></Route>
       <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
       <Route path="/quran-knowledge"><SafeLazyRoute component={QuranKnowledgeHubPage} /></Route>
@@ -804,6 +806,7 @@ function Router() {
       <Route path="/quran/surah-stories/:number"><SafeLazyRoute component={SurahStoryDetailRoute} /></Route>
       <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
+      <Route path="/prayer"><Redirect to="/prayer-times" /></Route>
       <Route path="/prayer-countdown"><Redirect to="/prayer-times" /></Route>
       <Route path="/prayer-ranks"><SafeLazyRoute component={PrayerRanksPage} /></Route>
       <Route path="/muezzins/:rest"><Redirect to="/adhan-settings" /></Route>
@@ -860,7 +863,8 @@ function Router() {
       <Route path="/rulings/:id"><SafeLazyRoute component={RulingDetailPage} /></Route>
       <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
       <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>
-      <Route path="/updates"><Redirect to="/" /></Route>
+      <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
+      <Route path="/more"><SafeLazyRoute component={MorePage} /></Route>
       <Route path="/whats-new"><Redirect to="/" /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
       <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>
