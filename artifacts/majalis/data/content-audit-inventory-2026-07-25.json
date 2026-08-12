@@ -1,0 +1,117 @@
+{
+  "created": "2026-07-25T23:30:00Z",
+  "branch": "session/content-language-audit",
+  "scope": "Arabic educational content only — no CSS/design/admin",
+  "phases": [
+    {
+      "id": "P1",
+      "name": "فهارس الدروس والموضوعات",
+      "files": [
+        "src/lib/durus-mutanawwia-data.ts",
+        "src/lib/durus-imaniyya-data.ts",
+        "src/lib/iman-topics-data.ts",
+        "src/lib/maqasid-sharia-data.ts",
+        "src/lib/dalail-nubuwwah-data.ts",
+        "src/lib/arabic-language-data.ts",
+        "src/lib/fikr-waqia-data.ts",
+        "src/lib/quran-studies-data.ts",
+        "src/lib/sunnah-studies-data.ts",
+        "src/lib/tarikh-islami-data.ts",
+        "src/lib/tazkiya-topics-data.ts",
+        "src/lib/usra-mujtama-data.ts",
+        "src/lib/mawsuaat-data.ts"
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "أحكام أذكار فوائد أسئلة",
+      "files": [
+        "src/lib/rulings-seed.ts",
+        "src/lib/adhkar-seed.ts",
+        "src/lib/fawaid-seed.ts",
+        "src/lib/fawaid-curated-seed.ts",
+        "src/lib/qa-seed.ts"
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "اختبار مناسبات دورات مسارات",
+      "files": [
+        "src/lib/quiz-seed.ts",
+        "src/lib/islamic-occasions-seed.ts",
+        "src/lib/annual-courses-seed.ts",
+        "src/lib/masarat-data.ts",
+        "src/lib/updates-seed.ts"
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "صفحات views ذات محتوى hardcoded",
+      "files": [
+        "src/views/IslamicGlossaryPage.tsx",
+        "src/views/AkhlaqPage.tsx",
+        "src/views/SahabahPage.tsx",
+        "src/views/DuasPage.tsx",
+        "src/views/HadithSciencePage.tsx",
+        "src/views/IslamicSectsPage.tsx",
+        "src/views/SunanYawmiyyaPage.tsx",
+        "src/views/WasayaNabawiyyaPage.tsx",
+        "src/views/RaqaiqPage.tsx",
+        "src/views/HikamSalafPage.tsx",
+        "src/views/FadailAamalPage.tsx",
+        "src/views/JannaNaarPage.tsx",
+        "src/views/AdabTalabIlmPage.tsx",
+        "src/views/MalaikaPage.tsx",
+        "src/views/FiqhQawaidPage.tsx",
+        "src/views/TawhidPage.tsx",
+        "src/views/ShimaelPage.tsx",
+        "src/views/QuranTajweedPage.tsx",
+        "src/views/SalahGuidePage.tsx",
+        "src/views/SawmPage.tsx",
+        "src/views/HajjPage.tsx",
+        "src/views/ZakatPage.tsx",
+        "src/views/TaharaPage.tsx",
+        "src/views/JanazaPage.tsx",
+        "src/views/MawarithPage.tsx",
+        "src/views/UlumQuranPage.tsx",
+        "src/views/IslamStatsPage.tsx",
+        "src/views/SeerahPage.tsx",
+        "src/views/MadhahibPage.tsx"
+      ]
+    },
+    {
+      "id": "P5",
+      "name": "علماء مكتبة قصص طب أمم",
+      "files": [
+        "src/lib/scholars-data.ts",
+        "src/lib/library-catalog.ts",
+        "src/lib/islamic-stories-seed.ts",
+        "src/lib/prophetic-medicine-seed.ts",
+        "src/lib/nations-seed.ts",
+        "src/lib/nations/data",
+        "src/lib/prophets-data.ts",
+        "src/lib/miracles-seed.ts",
+        "src/lib/asma-husna-data.ts",
+        "src/lib/arbaeen-nawawi-seed.ts",
+        "src/lib/sins-rights-data.ts",
+        "src/lib/sheikhs-seed.ts"
+      ]
+    },
+    {
+      "id": "P6",
+      "name": "مرور ثاني + فحوصات نهائية"
+    }
+  ],
+  "pass1_status": "completed",
+  "pass2_status": "completed",
+  "completed_at": "2026-07-26T05:55:00Z",
+  "notes": [
+    "مرّت جميع مراحل الجرد مرة أولى ومرة ثانية",
+    "لا أخطاء Latin-in-Arabic متبقية في المحتوى",
+    "ملخصات الأحكام والمناسبات القصيرة وُسّعت",
+    "صفحات الفقه/العقيدة صُحّحت معلوماتياً",
+    "دفعة حذف تكرار مفرطة أُعيدت إلى أساس سليم",
+    "placeholders إدارية في fiqh-council تُركت كما هي (غير منشورة)",
+    "دورة تدقيق 2026-07-26 على session/content-language-audit بعد إعادة البناء من main"
+  ]
+}

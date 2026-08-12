@@ -1,0 +1,117 @@
+/* ══════════════════════════════════════════════════════════════════
+   245 — JannaNaarPage  (.jn-*)
+   ══════════════════════════════════════════════════════════════════ */
+.jn-page { min-height: 100svh; background: #F8FAFC; }
+
+.jn-hero { padding: 3.5rem 1.5rem 2.5rem; text-align: center; transition: background .3s ease; background: var(--jn-hero-bg, linear-gradient(145deg, #0A1628, var(--mj-brand-deep), var(--mj-brand))); }
+.jn-hero--naar { --jn-hero-bg: linear-gradient(145deg, #1A0000, #7B1010, #9B1C1C); }
+.jn-hero__inner { max-width: 680px; margin: 0 auto; }
+.jn-hero__badge {
+  display: inline-block; background: rgba(255,255,255,.15); color: #fff;
+  border: 1px solid rgba(255,255,255,.3); border-radius: var(--ds-radius-full);
+  padding: .3rem .9rem; font-size: .75rem; font-weight: 700; letter-spacing: normal;
+  margin-bottom: .9rem;
+}
+.jn-hero__title { font-size: 2rem; font-weight: 800; color: #fff; margin: 0 0 .5rem; }
+.jn-hero__sub { color: rgba(255,255,255,.8); font-size: .92rem; margin: 0; line-height: 1.75; max-width: 520px; margin: 0 auto; }
+
+.jn-tabs {
+  display: flex; overflow-x: auto; gap: .4rem; padding: .8rem 1rem;
+  background: #fff; border-bottom: 1px solid var(--mj-hairline);
+  position: sticky; top: var(--sticky-below-chrome, 7rem); z-index: 10; scrollbar-width: none;
+}
+.jn-tabs::-webkit-scrollbar { display: none; }
+.jn-tab {
+  white-space: nowrap; border: 1.5px solid var(--mj-hairline); background: #fff; color: #475569;
+  border-radius: var(--ds-radius-full); padding: .4rem .9rem; font-size: .8rem; font-weight: 700;
+  cursor: pointer; flex-shrink: 0; transition: all .15s ease;
+}
+.jn-tab:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
+.jn-tab--janna       { --jn-tab-active-bg: var(--mj-brand); }
+.jn-tab--naar        { --jn-tab-active-bg: #9B1C1C; }
+.jn-tab--asbab-janna { --jn-tab-active-bg: #1a3a5c; }
+.jn-tab--duas        { --jn-tab-active-bg: var(--brand-deep, var(--mj-brand-deep)); }
+.jn-tab--active { color: #fff; background: var(--jn-tab-active-bg, var(--mj-brand)); border-color: var(--jn-tab-active-bg, var(--mj-brand)); }
+
+.jn-container { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+.jn-sections { display: flex; flex-direction: column; gap: var(--ds-space-8); }
+
+.jn-section--janna       { --jn-section-color: var(--mj-brand); }
+.jn-section--naar        { --jn-section-color: #9B1C1C; }
+.jn-section--asbab-janna { --jn-section-color: #1a3a5c; }
+.jn-section--duas        { --jn-section-color: var(--brand-deep, var(--mj-brand-deep)); }
+.jn-section__title { font-size: 1.1rem; font-weight: 800; margin: 0 0 .85rem; border-inline-end: 3px solid currentColor; padding-inline-end: .7rem; color: var(--jn-section-color, var(--mj-brand)); }
+
+.jn-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .75rem; }
+.jn-desc-card {
+  background: #fff; border: 1px solid var(--mj-hairline); border-top: 3px solid var(--jn-section-color, var(--mj-brand));
+  border-radius: .9rem; padding: 1rem 1.1rem;
+  display: flex; flex-direction: column; gap: .4rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+.jn-desc-card__title { font-size: .9rem; font-weight: 800; color: #0F172A; margin: 0; }
+.jn-desc-card__text { font-size: .86rem; color: #334155; line-height: 1.75; margin: 0; }
+.jn-desc-card__ref { font-size: 0.8rem; color: #94A3B8; margin: 0; }
+
+.jn-naar-warn {
+  background: rgba(155,28,28,.07); border: 1px solid rgba(155,28,28,.2);
+  border-inline-end: 4px solid #9B1C1C; border-radius: .6rem;
+  padding: .8rem 1rem; font-size: .9rem; color: #9B1C1C;
+  font-weight: 700; line-height: 1.6;
+}
+
+.jn-intro { background: rgba(31,77,58,.06); border-inline-end: 3px solid var(--mj-brand); border-radius: .6rem; padding: .85rem 1rem; margin-bottom: 1.2rem; }
+.jn-intro p { font-size: .88rem; color: #1E293B; line-height: 1.75; margin: 0; }
+
+.jn-asbab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .8rem; }
+.jn-sabab-card {
+  background: #fff; border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius-xl);
+  padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .45rem;
+}
+.jn-sabab-num {
+  font-size: .7rem; font-weight: 900; color: #fff;
+  background: var(--mj-brand); border-radius: var(--ds-radius-full); width: 1.5rem; height: 1.5rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.jn-sabab-title { font-size: .9rem; font-weight: 800; color: #0F172A; margin: 0; }
+.jn-sabab-text { font-size: .83rem; color: #334155; line-height: 1.7; margin: 0; }
+.jn-ref { font-size: .72rem; color: #94A3B8; margin: 0; }
+
+.jn-intro--naar { background: rgba(155,28,28,.05); border-right-color: #9B1C1C; }
+.jn-intro--naar p { color: #7F1D1D; }
+.jn-sabab-card--naar { border-color: rgba(155,28,28,.15); }
+.jn-sabab-num--naar { background: #9B1C1C; }
+
+.jn-duas-list { display: flex; flex-direction: column; gap: .8rem; }
+.jn-dua-card {
+  background: #fff; border: 1px solid var(--mj-hairline); border-inline-end: 4px solid var(--mj-brand);
+  border-radius: .8rem; padding: 1rem 1.2rem;
+  display: flex; flex-direction: column; gap: .45rem;
+}
+.jn-dua-text {
+  font-family: var(--font-body);
+  font-size: 1.1rem; color: #0F172A; line-height: 1.9; margin: 0;
+}
+.jn-dua-source { font-size: .75rem; color: var(--mj-ink-2); margin: 0; }
+
+.jn-related {
+  max-width: 900px; margin: 2rem auto 0; padding: 1.5rem 1.25rem 0;
+  border-top: 1.5px solid var(--mj-hairline);
+}
+.jn-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #0F172A; margin: 0 0 .85rem; }
+.jn-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .5rem; }
+.jn-related__link {
+  display: block; text-align: center; padding: .65rem .5rem;
+  border: 1px solid var(--mj-hairline); border-radius: .55rem;
+  background: #fff; color: #0F172A;
+  font-size: .88rem; font-weight: 600; text-decoration: none;
+}
+.jn-related__link:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
+
+@media (max-width: 640px) {
+  .jn-hero__title { font-size: var(--ds-text-2xl); }
+  .jn-cards-grid { grid-template-columns: 1fr; }
+  .jn-asbab-grid { grid-template-columns: 1fr; }
+  .jn-related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+

@@ -1,0 +1,26 @@
+/* TopicsIndexPage search */
+.tip-search-wrap { padding: .5rem 0 .75rem; }
+.tip-search-input { width: 100%; }
+
+
+/* ============================================================
+   83 — TopicsIndexPage  (tip-*)
+   ============================================================ */
+.tip-section       { margin-bottom: 2rem; }
+.tip-section-title { font-size: var(--ds-text-lg); font-weight: 700; margin-bottom: 0.75rem; }
+.tip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--ds-space-3);
+}
+.tip-link {
+  display: block;
+  padding: var(--ds-space-4);
+  border-radius: var(--ds-radius);
+  border: 1px solid var(--line, #e5e7eb);
+  text-decoration: none;
+  text-align: center;
+  font-weight: 600;
+  background: var(--panel, #fff);
+}
+

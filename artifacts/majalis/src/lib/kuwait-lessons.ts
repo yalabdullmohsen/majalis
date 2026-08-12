@@ -1,0 +1,595 @@
+import { GOVERNORATES } from "@/lib/theme";
+import { resolveLessonPosterUrl } from "@/lib/lesson-image";
+import { normalizeActivityType } from "@/lib/activity-label";
+import { arabicIncludes, arabicMatchAny, normalizeArabic } from "@/lib/arabic-search";
+import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
+import { resolveGovernorateForUi, resolveRegion, displayGovernorate } from "@/lib/kuwait-regions";
+import { formatSheikhName, sheikhNameKey, stripSheikhHonorifics } from "@/lib/sheikh-name";
+import {
+  cleanTimeText,
+  computeNextOccurrenceMs,
+  DAY_INDEX,
+  formatGregorianDate,
+  formatHijriDate,
+  formatRelativeTimeDetailed,
+  isLessonInProgress,
+  getKuwaitClock,
+  isLessonThisDay,
+  isOccurrencePast,
+  resolveLessonTimeWindow,
+} from "@/lib/lesson-time";
+import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
+
+export type ActivityType = "درس" | "دورة";
+
+export type KuwaitLessonRecord = {
+  id: string;
+  title: string;
+  sheikhName: string;
+  /** منظّم الدورة — يُعرض منفصلاً عن المحاضر */
+  organizerName?: string;
+  sheikhImage?: string;
+  lessonImage?: string;
+  governorate: string;
+  region: string;
+  mosque: string;
+  day: string;
+  time: string;
+  category: string;
+  note?: string;
+  description?: string;
+  keywords?: string[];
+  endDate?: string | null;
+  startDate?: string | null;
+  sortKey: number;
+  nextOccurrenceMs: number;
+  gregorianDate?: string;
+  hijriDate?: string;
+  activityType: ActivityType;
+  sessionCount?: number;
+  linkedLessons?: string[];
+  hasLiveStream?: boolean;
+  hasRecording?: boolean;
+  mapsUrl?: string;
+  streamUrl?: string;
+  siteUrl?: string;
+  qrCodeUrl?: string;
+  recurring?: boolean;
+  courseId?: string;
+  isCourse?: boolean;
+  hasWomenSection?: boolean;
+  /** true فقط إذا كان الدرس للنساء فقط (audience = نساء) */
+  isWomenOnly?: boolean;
+  source?: "supabase" | "seed";
+  archivedAt?: string | null;
+  completeness?: number;
+  missingFields?: string[];
+};
+
+export type KuwaitLessonFilters = {
+  search: string;
+  governorate: string;
+  region: string;
+  mosque: string;
+  sheikh: string;
+  day: string;
+  category: string;
+  timeSlot: string;
+  activityType: string;
+  hasLiveStream: boolean | null;
+  contentKind: string;
+};
+
+export const KUWAIT_DAYS = [
+  "الكل",
+  "السبت",
+  "الأحد",
+  "الاثنين",
+  "الثلاثاء",
+  "الأربعاء",
+  "الخميس",
+  "الجمعة",
+];
+
+export const KUWAIT_CATEGORIES = [
+  "الكل",
+  "تفسير",
+  "فقه",
+  "عقيدة",
+  "حديث",
+  "سيرة",
+  "تجويد",
+  "تأصيل",
+  "أخرى",
+];
+
+export const ACTIVITY_TYPES = ["الكل", "درس", "دورة"] as const;
+export const CONTENT_KINDS = ["الكل", "دورة", "درس"] as const;
+
+function normalizeText(value: string) {
+  return normalizeArabic(String(value || "").trim());
+}
+
+// Strips diacritics + normalizes Arabic letter variants so that spelling
+// differences (تشكيل, أ/ا/إ, ة/ه, ى/ي) don't defeat deduplication.
+function normDedup(value: string) {
+  return normalizeArabic(String(value || "")).replace(/\s+/g, "");
+}
+
+// Primary key: normalized title + mosque + day.
+// Sheikh name is a secondary tiebreaker — included when mosque is empty to
+// avoid collapsing different lessons at different (unknown) locations.
+function lessonDedupeKey(lesson: KuwaitLessonRecord) {
+  const title  = normDedup(lesson.title);
+  const mosque = normDedup(lesson.mosque);
+  const day    = normDedup(lesson.day);
+  const sheikh = normDedup(lesson.sheikhName);
+  // When mosque is known, (title+mosque+day) uniquely identifies the lesson.
+  // When mosque is absent, add sheikh to avoid false merges.
+  const secondary = mosque || sheikh;
+  return [title, secondary, day].join("|");
+}
+
+function computeCompleteness(lesson: KuwaitLessonRecord): { score: number; missing: string[] } {
+  const missing: string[] = [];
+  let score = 0;
+  const checks: Array<[keyof KuwaitLessonRecord, number]> = [
+    ["sheikhName", 0.20],
+    ["mosque",     0.20],
+    ["day",        0.20],
+    ["time",       0.15],
+    ["category",   0.10],
+    ["governorate",0.15],
+  ];
+  for (const [field, weight] of checks) {
+    const val = lesson[field];
+    if (val && String(val).trim()) {
+      score += weight;
+    } else {
+      missing.push(field as string);
+    }
+  }
+  return { score: Math.round(score * 100) / 100, missing };
+}
+
+/** Is the lesson ready for public display (has all three essential fields)? */
+export function isLessonPublicReady(lesson: KuwaitLessonRecord): boolean {
+  return Boolean(lesson.sheikhName?.trim()) &&
+         Boolean(lesson.mosque?.trim()) &&
+         Boolean(lesson.day?.trim() || lesson.time?.trim());
+}
+
+function parseDayFromSchedule(schedule?: string): string {
+  if (!schedule?.trim()) return "";
+  const day = KUWAIT_DAYS.find((d) => d !== "الكل" && schedule.includes(d));
+  return day || schedule.trim();
+}
+
+function activityFromRow(row: any): ActivityType {
+  if (row.is_course) return "دورة";
+  return normalizeActivityType(row.activity_type);
+}
+
+function enrichScheduleFields(
+  lesson: Omit<KuwaitLessonRecord, "sortKey" | "nextOccurrenceMs"> & {
+    sortKey?: number;
+    nextOccurrenceMs?: number;
+  },
+): KuwaitLessonRecord {
+  const recurring = lesson.recurring !== false;
+  const nextMs = lesson.nextOccurrenceMs ?? computeNextOccurrenceMs(lesson.day, lesson.time);
+  const nextDate = new Date(nextMs);
+
+  return {
+    ...lesson,
+    time: cleanTimeText(lesson.time),
+    sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")) || lesson.sheikhName,
+    sortKey: lesson.sortKey ?? nextMs,
+    nextOccurrenceMs: nextMs,
+    gregorianDate: lesson.gregorianDate || (lesson.day ? formatGregorianDate(nextDate) : undefined),
+    hijriDate: lesson.hijriDate || (lesson.day ? formatHijriDate(nextDate) : undefined),
+    recurring,
+  };
+}
+
+/**
+ * العنوان المعروض = العنوان النظيف فقط.
+ * يزيل لاحقات الجلسة/الجدول التي كانت تُلحق تاريخياً بـ « — » بعد العنوان الأساسي
+ * عندما يطابق اللاحق يوماً أو وقتاً أو تسمية جلسة عامة — دون تخمين محتوى علمي.
+ */
+export function cleanLessonDisplayTitle(title: string, linkedLessons?: string[]): string {
+  const raw = String(title || "").trim();
+  if (!raw.includes(" — ")) return raw;
+  const parts = raw.split(" — ").map((p) => p.trim()).filter(Boolean);
+  if (parts.length < 2) return raw;
+  const tail = parts[parts.length - 1] || "";
+  const linked = new Set((linkedLessons || []).map((s) => s.trim()));
+  const looksLikeSession =
+    linked.has(tail) ||
+    /^(السبت|الأحد|الإثنين|الثلاثاء|الأربعاء|الخميس|الجمعة)\b/u.test(tail) ||
+    /^(المجلس الأسبوعي|البرنامج الأسبوعي)\b/u.test(tail) ||
+    /^\d{1,2}:\d{2}/.test(tail) ||
+    /بعد\s+(الفجر|الظهر|العصر|المغرب|العشاء)/u.test(tail);
+  if (looksLikeSession) return parts.slice(0, -1).join(" — ").trim() || raw;
+  return raw;
+}
+
+/** تحويل صف Supabase أو Seed إلى نموذج العرض الموحد. */
+export function mapLessonRow(row: any): KuwaitLessonRecord {
+  const day = row.day_of_week || row.day || parseDayFromSchedule(row.schedule);
+  const rawSheikh = row.sheikhs?.name || row.speaker_name || "";
+  const region = resolveRegion(row.region || "");
+  const governorate = displayGovernorate(
+    resolveGovernorateForUi(row.city || "", row.region || row.city || ""),
+  );
+  const tags = Array.isArray(row.keywords) ? row.keywords : Array.isArray(row.tags) ? row.tags : [];
+  const delivery = String(row.delivery || "");
+  const hasLiveStream =
+    Boolean(row.live_url) ||
+    tags.some((t: string) => /بث|مباشر|live/i.test(t)) ||
+    /بث|مباشر|live/i.test(delivery);
+
+  // Colons in URL path segments break Vercel routing; replace with dashes.
+  // بصمات kuwait-lessons التاريخية تُحوَّل للمعرّف الكانوني kw-* إن وُجد.
+  const rawId = String(row.external_key || row.id || "").replace(/:/g, "-");
+  const id = canonicalizeLessonPublicId(rawId);
+  const linkedLessons = Array.isArray(row.linked_titles) ? row.linked_titles : undefined;
+
+  const partialLesson = enrichScheduleFields({
+    id,
+    title: cleanLessonDisplayTitle(row.title, linkedLessons),
+    sheikhName: stripSheikhHonorifics(rawSheikh) || rawSheikh,
+    organizerName: row.organizer_name ? stripSheikhHonorifics(row.organizer_name) : undefined,
+    sheikhImage: row.sheikh_image_url || resolveLessonSheikhImage(row),
+    lessonImage: resolveLessonPosterUrl(row.poster_image_url),
+    governorate,
+    region,
+    mosque: row.mosque || "",
+    day,
+    time: row.lesson_time || row.schedule || "",
+    category: row.category || "أخرى",
+    note: row.description || undefined,
+    description: row.description || undefined,
+    keywords: tags,
+    endDate: row.end_date || null,
+    startDate: row.start_date || null,
+    activityType: activityFromRow(row),
+    sessionCount: row.session_count,
+    linkedLessons: row.linked_titles,
+    hasLiveStream,
+    hasRecording: Boolean(row.video_url || row.audio_url),
+    mapsUrl: row.maps_url,
+    streamUrl: row.live_url,
+    siteUrl: row.book_url,
+    isCourse: Boolean(row.is_course),
+    // isWomenOnly = true فقط عند وجود نص صريح (audience = نساء)
+    // hasWomenSection = true عند وجود مكان مخصص للنساء — بمعزل عن audience
+    isWomenOnly: row.audience === "نساء",
+    hasWomenSection: Boolean(row.has_women_section) || row.audience === "نساء",
+    courseId: row.course_id,
+    recurring: row.is_recurring !== false && !row.end_date,
+    archivedAt: row.archived_at || null,
+  });
+  const { score, missing } = computeCompleteness(partialLesson);
+  partialLesson.completeness = row.completeness_score != null ? Number(row.completeness_score) : score;
+  partialLesson.missingFields = missing;
+  return partialLesson;
+}
+
+function isExpired(lesson: KuwaitLessonRecord, nowMs = Date.now()): boolean {
+  if (lesson.archivedAt) return true;
+  // فقط تواريخ صريحة (endDate / startDate) — لا نُفسّر تواريخ العناوين
+  if (lesson.endDate) {
+    const end = new Date(`${lesson.endDate}T23:59:59+03:00`);
+    if (!Number.isNaN(end.getTime())) {
+      if (end.getTime() < nowMs) return true;
+      // نهاية صريحة لم تحن — أبقِ نشطًا حتى endDate (لا تُؤرشف بيوم الأسبوع)
+      return false;
+    }
+  }
+
+  if (lesson.recurring === false && lesson.startDate) {
+    const start = new Date(`${lesson.startDate}T23:59:59+03:00`);
+    if (!Number.isNaN(start.getTime()) && start.getTime() < nowMs) return true;
+  }
+
+  if (lesson.day && isOccurrencePast(lesson.day, lesson.time, lesson.recurring !== false)) {
+    return lesson.recurring === false;
+  }
+
+  return false;
+}
+
+/**
+ * "محتوى فعلي مكتمل" لدرس/دورة في هذا المشروع = عنوان حقيقي + اسم شيخ/متحدث
+ * حقيقي + موعد أسبوعي كامل (يوم ووقت) — هذه الحقول الثلاثة هي التي تُبنى
+ * عليها بطاقة الدرس (العنوان والراوي) وحساب حالته (جارٍ الآن/الوقت المتبقي
+ * عبر isLessonInProgress/computeNextOccurrenceMs في lesson-time.ts، وترتيبه
+ * في القائمة عبر sortKuwaitLessons أدناه). صف يفتقد أيًا منها ليس "درسًا
+ * ناقص حقل واحد" بل بلا هوية أو جدول فعلي — يُعرض كبطاقة شبه فارغة أو
+ * يكسر حساب الوقت (NaN/دائمًا الآن). دروس بلا صورة/وصف/رابط بث تبقى دروسًا
+ * مكتملة تمامًا (هذه الحقول اختيارية بطبيعتها في KuwaitLessonRecord).
+ */
+export function isLessonComplete(lesson: KuwaitLessonRecord): boolean {
+  return Boolean(
+    lesson.title?.trim() &&
+    lesson.sheikhName?.trim() &&
+    lesson.day?.trim() &&
+    lesson.time?.trim(),
+  );
+}
+
+export function splitKuwaitLessons(lessons: KuwaitLessonRecord[], nowMs = Date.now()) {
+  const active: KuwaitLessonRecord[] = [];
+  const archived: KuwaitLessonRecord[] = [];
+  for (const lesson of lessons) {
+    if (isExpired(lesson, nowMs)) archived.push(lesson);
+    else active.push(lesson);
+  }
+  return {
+    active: sortKuwaitLessons(active),
+    archived: sortKuwaitLessons(archived),
+  };
+}
+
+export function dedupeKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
+  // Keep the most-complete record when duplicates exist.
+  // "supabase" source beats "seed" when scores are equal.
+  const best = new Map<string, KuwaitLessonRecord>();
+  for (const lesson of lessons) {
+    const key = lessonDedupeKey(lesson);
+    const existing = best.get(key);
+    if (!existing) {
+      best.set(key, lesson);
+      continue;
+    }
+    const existingScore = existing.completeness ?? 0;
+    const newScore = lesson.completeness ?? 0;
+    const newIsDb = lesson.source === "supabase";
+    const existingIsDb = existing.source === "supabase";
+    if (newScore > existingScore || (newScore === existingScore && newIsDb && !existingIsDb)) {
+      best.set(key, lesson);
+    }
+  }
+  return Array.from(best.values());
+}
+
+export function sortKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
+  const now = new Date();
+  const enriched = lessons.map((l) => {
+    const inProgress = isLessonInProgress(l.day, l.time, now);
+    // الدرس الجاري: nextOccurrenceMs = 0 → يظهر في أعلى القائمة
+    const nextMs = inProgress ? 0 : computeNextOccurrenceMs(l.day, l.time, now);
+    return { ...l, nextOccurrenceMs: nextMs };
+  });
+  return enriched.sort((a, b) => {
+    if (a.nextOccurrenceMs !== b.nextOccurrenceMs) return a.nextOccurrenceMs - b.nextOccurrenceMs;
+    const gov = a.governorate.localeCompare(b.governorate, "ar");
+    if (gov !== 0) return gov;
+    const sheikh = a.sheikhName.localeCompare(b.sheikhName, "ar");
+    if (sheikh !== 0) return sheikh;
+    return a.title.localeCompare(b.title, "ar");
+  });
+}
+
+function matchesTimeSlot(time: string, slot: string): boolean {
+  if (slot === "الكل") return true;
+  const minutes = parseTimeToMinutesSafe(time);
+  if (minutes == null) return true;
+  if (slot === "صباحاً") return minutes < 12 * 60;
+  if (slot === "ظهراً") return minutes >= 12 * 60 && minutes < 15 * 60;
+  if (slot === "عصراً") return minutes >= 15 * 60 && minutes < 18 * 60;
+  if (slot === "مساءً") return minutes >= 18 * 60;
+  return true;
+}
+
+function parseTimeToMinutesSafe(time: string): number | null {
+  // ملاحظة: \b لا يعمل مع الحروف العربية (ASCII word boundary) — نستخدم نمط المسافة بدلاً منه
+  const match = time.match(/(\d{1,2})/);
+  if (/صباح|فجر|الصباح/u.test(time) || /(?:^|\s)ص(?:\s|$)/u.test(time)) return 8 * 60;
+  if (/ظهر/u.test(time)) return 12 * 60;
+  if (/عصر/u.test(time)) return 16 * 60;
+  if (/مغرب|مساء|العشاء/u.test(time) || /(?:^|\s)م(?:\s|$)/u.test(time)) return 19 * 60;
+  if (match) {
+    const hour = Number(match[1]);
+    // صيغة 24 ساعة: إذا الساعة >= 12 فهي بعد الظهر
+    if (hour >= 12) return hour * 60;
+    // صيغة HH:MM مع دقائق — نتحقق إن كان الرقم الأول مفصولاً بـ :
+    const hhmm = time.match(/^(\d{1,2}):(\d{2})$/);
+    if (hhmm) return Number(hhmm[1]) * 60 + Number(hhmm[2]);
+    return hour * 60;
+  }
+  return null;
+}
+
+export function filterKuwaitLessons(
+  lessons: KuwaitLessonRecord[],
+  filters: KuwaitLessonFilters,
+): KuwaitLessonRecord[] {
+  const search = normalizeText(filters.search);
+
+  return lessons.filter((lesson) => {
+    if (filters.governorate !== "كل المحافظات" && lesson.governorate !== filters.governorate) return false;
+    if (filters.region !== "كل المناطق" && lesson.region !== filters.region) return false;
+    if (filters.mosque !== "كل المساجد" && !normalizeText(lesson.mosque).includes(normalizeText(filters.mosque))) {
+      return false;
+    }
+    if (filters.sheikh !== "كل المشايخ" && sheikhNameKey(lesson.sheikhName) !== sheikhNameKey(filters.sheikh)) {
+      return false;
+    }
+    if (filters.day !== "الكل" && !lesson.day.split("،").map(d => d.trim()).includes(filters.day)) return false;
+    if (filters.category !== "الكل" && lesson.category !== filters.category) return false;
+    if (filters.activityType !== "الكل" && lesson.activityType !== filters.activityType) return false;
+    if (filters.contentKind !== "الكل") {
+      if (filters.contentKind === "دورة" && !lesson.isCourse && lesson.activityType !== "دورة") return false;
+      if (filters.contentKind === "درس" && (lesson.isCourse || lesson.activityType === "دورة")) return false;
+    }
+    if (filters.hasLiveStream === true && !lesson.hasLiveStream) return false;
+    if (filters.hasLiveStream === false && lesson.hasLiveStream) return false;
+    if (!matchesTimeSlot(lesson.time, filters.timeSlot)) return false;
+
+    if (search) {
+      if (!arabicMatchLesson(lesson, search)) return false;
+    }
+    return true;
+  });
+}
+
+function arabicMatchLesson(lesson: KuwaitLessonRecord, search: string): boolean {
+  return arabicIncludes(
+    [
+      lesson.title,
+      lesson.sheikhName,
+      lesson.mosque,
+      lesson.region,
+      lesson.governorate,
+      lesson.day,
+      lesson.time,
+      lesson.category,
+      lesson.activityType,
+      lesson.note,
+      lesson.description,
+      ...(lesson.keywords || []),
+      ...(lesson.linkedLessons || []),
+    ]
+      .filter(Boolean)
+      .join(" "),
+    search,
+  );
+}
+
+export function buildSearchSuggestions(lessons: KuwaitLessonRecord[], query: string, limit = 8): string[] {
+  const q = normalizeText(query);
+  if (!q || q.length < 2) return [];
+
+  const pool = new Set<string>();
+  for (const lesson of lessons) {
+    [lesson.title, stripSheikhLabel(lesson.sheikhName), lesson.mosque, lesson.region, lesson.governorate, lesson.category]
+      .filter(Boolean)
+      .forEach((v) => pool.add(v));
+    (lesson.keywords || []).forEach((k) => pool.add(k));
+  }
+
+  return Array.from(pool)
+    .filter((item) => arabicMatchAny([item], q))
+    .sort((a, b) => a.localeCompare(b, "ar"))
+    .slice(0, limit);
+}
+
+function stripSheikhLabel(name: string) {
+  return name.replace(/^الشيخ:\s*/u, "").trim();
+}
+
+export function extractFilterOptions(lessons: KuwaitLessonRecord[]) {
+  const regions = new Set<string>();
+  const mosques = new Set<string>();
+  const sheikhs = new Set<string>();
+
+  for (const lesson of lessons) {
+    if (lesson.region) regions.add(lesson.region);
+    if (lesson.mosque) mosques.add(lesson.mosque);
+    if (lesson.sheikhName) sheikhs.add(stripSheikhLabel(lesson.sheikhName));
+  }
+
+  return {
+    governorates: ["كل المحافظات", ...GOVERNORATES],
+    regions: ["كل المناطق", ...Array.from(regions).sort((a, b) => a.localeCompare(b, "ar"))],
+    mosques: ["كل المساجد", ...Array.from(mosques).sort((a, b) => a.localeCompare(b, "ar"))],
+    sheikhs: ["كل المشايخ", ...Array.from(sheikhs).sort((a, b) => a.localeCompare(b, "ar"))],
+    days: KUWAIT_DAYS,
+    categories: KUWAIT_CATEGORIES,
+    timeSlots: ["الكل", "صباحاً", "ظهراً", "عصراً", "مساءً"],
+    activityTypes: [...ACTIVITY_TYPES],
+    contentKinds: [...CONTENT_KINDS],
+  };
+}
+
+export const DEFAULT_KUWAIT_FILTERS: KuwaitLessonFilters = {
+  search: "",
+  governorate: "كل المحافظات",
+  region: "كل المناطق",
+  mosque: "كل المساجد",
+  sheikh: "كل المشايخ",
+  day: "الكل",
+  category: "الكل",
+  timeSlot: "الكل",
+  activityType: "الكل",
+  hasLiveStream: null,
+  contentKind: "الكل",
+};
+
+export function getRelativeStatusLabel(
+  lesson: KuwaitLessonRecord,
+  archived = false,
+  now: Date = new Date(),
+): string {
+  if (archived) return "منتهٍ";
+
+  // «جارٍ الآن» فقط بجدول مؤكد (يوم+وقت قابل للتحليل) — لا احتياطي على nextOccurrenceMs
+  // بلا بيانات كافية (يكسر الحساب أو يدّعي البث كذبًا).
+  if (
+    isLessonComplete(lesson) &&
+    lesson.day &&
+    isLessonInProgress(lesson.day, lesson.time, now)
+  ) {
+    return "جارٍ الآن";
+  }
+
+  // انتهى اليوم: بدأ موعده اليوم ولم تعد نافذة الحصة نشطة (ساعتان أو حتى الوقت المحدد)
+  if (lesson.day) {
+    const clock = getKuwaitClock(now);
+    const targetDay = DAY_INDEX[lesson.day];
+    if (targetDay !== undefined && targetDay === clock.weekday) {
+      const win = resolveLessonTimeWindow(lesson.time);
+      if (win && clock.hour * 60 + clock.minute >= win.startMin) {
+        return "انتهى اليوم";
+      }
+    }
+  }
+
+  return formatRelativeTimeDetailed(lesson.nextOccurrenceMs, lesson.time);
+}
+
+/** تسميات الحالة المسموحة في أقسام «مميز» والرئيسية فقط */
+export const FEATURED_HOME_STATUS_LABELS = ["يبدأ اليوم", "مستمر", "قادم"] as const;
+export type FeaturedHomeStatusLabel = (typeof FEATURED_HOME_STATUS_LABELS)[number];
+
+const FEATURED_HOME_EXCLUDED_LABELS = new Set(["منتهٍ", "انتهى اليوم", "انتهى"]);
+
+export function isFeaturedHomeStatusLabel(label: string): label is FeaturedHomeStatusLabel {
+  return (FEATURED_HOME_STATUS_LABELS as readonly string[]).includes(label);
+}
+
+/** تسمية مبسّطة للعرض في الرئيسية والأقسام المميزة — null إن كان الدرس منتهيًا أو غير مؤهل */
+export function getFeaturedHomeStatusLabel(
+  lesson: KuwaitLessonRecord,
+  nowMs = Date.now(),
+): FeaturedHomeStatusLabel | null {
+  if (isExpired(lesson, nowMs)) return null;
+
+  const now = new Date(nowMs);
+  if (
+    isLessonComplete(lesson) &&
+    lesson.day &&
+    isLessonInProgress(lesson.day, lesson.time, now)
+  ) {
+    return "مستمر";
+  }
+
+  const raw = getRelativeStatusLabel(lesson, false, now);
+  if (FEATURED_HOME_EXCLUDED_LABELS.has(raw)) return null;
+
+  if (lesson.day && isLessonThisDay(lesson.day, now)) return "يبدأ اليوم";
+
+  return "قادم";
+}
+
+/** دروس نشطة فقط بأحد التسميات الثلاث المسموحة للرئيسية والمميز */
+export function filterFeaturedHomeLessons(
+  lessons: KuwaitLessonRecord[],
+  nowMs = Date.now(),
+): KuwaitLessonRecord[] {
+  return splitKuwaitLessons(lessons, nowMs).active.filter(
+    (lesson) => getFeaturedHomeStatusLabel(lesson, nowMs) != null,
+  );
+}

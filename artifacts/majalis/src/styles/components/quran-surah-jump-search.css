@@ -1,0 +1,251 @@
+/* بحث انتقال السور الموحّد — مركز القرآن + شيت الفهرس */
+.quran-surah-jump {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-inline: max(0.25rem, var(--inset-right, 0px))
+    max(0.25rem, var(--inset-left, 0px));
+  min-width: 0;
+}
+
+.quran-surah-jump__title {
+  margin: 0 0 0.65rem;
+  padding-inline: 0.15rem;
+  font-family: var(--mj-ui, var(--font-body));
+  font-size: clamp(1rem, 2.8vw, 1.15rem);
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--mj-ink, var(--color-text));
+  text-align: start;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.quran-surah-jump__form {
+  margin: 0;
+  min-width: 0;
+}
+
+.quran-surah-jump__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.quran-surah-jump__icon {
+  position: absolute;
+  inset-inline-start: 0.85rem;
+  top: 0;
+  bottom: 0;
+  margin-block: auto;
+  width: 18px;
+  height: 18px;
+  color: var(--mj-muted, var(--mj-ink-2));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.quran-surah-jump__input {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding-block: 0.65rem;
+  padding-inline: 2.55rem 2.55rem;
+  border: 1px solid var(--mj-hairline, var(--color-border));
+  border-radius: var(--mj-r-md, 0.75rem);
+  background: var(--mj-surface, var(--color-surface));
+  color: var(--mj-ink, var(--color-text));
+  font-family: var(--mj-ui, var(--font-body));
+  font-size: max(16px, 1rem);
+  line-height: 1.4;
+  text-overflow: ellipsis;
+}
+
+.quran-surah-jump__input::placeholder {
+  color: var(--mj-muted, var(--mj-ink-2));
+  opacity: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quran-surah-jump__input:focus-visible {
+  outline: 2px solid var(--mj-brand);
+  outline-offset: 2px;
+}
+
+.quran-surah-jump__clear {
+  position: absolute;
+  inset-inline-end: 0.35rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  border-radius: var(--mj-r-sm, 0.5rem);
+  background: transparent;
+  color: var(--mj-ink-2);
+  cursor: pointer;
+}
+
+.quran-surah-jump__clear:focus-visible {
+  outline: 2px solid var(--mj-brand);
+  outline-offset: 1px;
+}
+
+.quran-surah-jump__body {
+  margin-block-start: 0.75rem;
+  min-width: 0;
+}
+
+.quran-surah-jump__resume {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 48px;
+  margin-block-end: 0.65rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 28%, var(--mj-hairline));
+  border-radius: var(--mj-r-md, 0.75rem);
+  background: color-mix(in srgb, var(--mj-brand) 8%, var(--mj-surface));
+  color: var(--mj-ink);
+  text-align: start;
+  cursor: pointer;
+  font-family: var(--mj-ui, var(--font-body));
+}
+
+.quran-surah-jump__resume-label {
+  font-weight: 800;
+  color: var(--mj-brand-deep, var(--mj-brand));
+}
+
+.quran-surah-jump__resume-meta {
+  font-size: 0.88rem;
+  color: var(--mj-ink-2);
+}
+
+.quran-surah-jump__list {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 calc(var(--bottom-nav-total, 5rem) + 0.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  max-height: min(60vh, 28rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.quran-surah-jump__hit {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 56px;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--mj-hairline);
+  border-radius: var(--mj-r-md, 0.75rem);
+  background: var(--mj-surface);
+  color: var(--mj-ink);
+  text-align: start;
+  cursor: pointer;
+  font-family: var(--mj-ui, var(--font-body));
+  box-sizing: border-box;
+}
+
+.quran-surah-jump__hit:hover,
+.quran-surah-jump__hit:focus-visible {
+  border-color: color-mix(in srgb, var(--mj-brand) 40%, var(--mj-hairline));
+  background: color-mix(in srgb, var(--mj-brand) 6%, var(--mj-surface));
+}
+
+.quran-surah-jump__hit:focus-visible {
+  outline: 2px solid var(--mj-brand);
+  outline-offset: 2px;
+}
+
+.quran-surah-jump__num {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: var(--mj-brand-soft);
+  color: var(--mj-brand-deep, var(--mj-brand));
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.quran-surah-jump__meta-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+  text-align: start;
+}
+
+.quran-surah-jump__meta-col strong {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--mj-ink);
+  font-family: var(--mj-ui, var(--font-body));
+}
+
+.quran-surah-jump__meta-col span {
+  font-size: 0.8rem;
+  color: var(--mj-ink-2);
+}
+
+.quran-surah-jump__hit--ayah,
+.quran-surah-jump__hit--page {
+  margin-block-end: 0.5rem;
+  justify-content: space-between;
+}
+
+.quran-surah-jump__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1.25rem 0.75rem;
+  color: var(--mj-ink-2);
+  text-align: center;
+}
+
+.quran-surah-jump__empty p {
+  margin: 0;
+}
+
+.quran-surah-jump__empty button {
+  min-height: 44px;
+  min-width: 44px;
+  padding-inline: 1rem;
+  border: 1px solid var(--mj-hairline);
+  border-radius: var(--mj-r-md);
+  background: var(--mj-surface);
+  color: var(--mj-brand);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* داخل شيت المصحف: القائمة تملأ اللوحة بلا حشو شريط سفلي عام */
+.mpv-settings-panel .quran-surah-jump__list {
+  max-height: min(48vh, 22rem);
+  padding-bottom: calc(1rem + var(--inset-bottom, 0px));
+}

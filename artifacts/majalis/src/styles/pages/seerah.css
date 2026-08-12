@@ -1,0 +1,614 @@
+/* ══════════════════════════════════════════════
+   SR. SeerahPage
+   ══════════════════════════════════════════════ */
+.seerah-page {
+  min-height: 100svh;
+  background: var(--majalis-parchment);
+  direction: rtl;
+  font-family: var(--font-body);
+  padding-bottom: 3rem;
+}
+
+/* ── Hero ── */
+.seerah-hero {
+  background-color: var(--majalis-emerald);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  color: var(--mj-bg);
+  padding: 3.5rem 1.5rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.seerah-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255,255,255,0.04), transparent);
+  pointer-events: none;
+}
+.seerah-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  background: rgba(255,255,255,0.12);
+  color: #a7f3d0;
+  font-size: 0.85rem;
+  padding: 0.35rem 1rem;
+  border-radius: 2rem;
+  margin-bottom: 1rem;
+}
+.seerah-hero__title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 800;
+  margin: 0 0 0.75rem;
+  line-height: 1.25;
+}
+.seerah-hero__sub {
+  color: #d1fae5;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.seerah-full-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 1.35rem;
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: var(--mj-bg);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+.seerah-full-cta:hover,
+.seerah-full-cta:focus-visible {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.45);
+  outline: none;
+}
+.seerah-full-cta:active {
+  transform: translateY(1px);
+}
+.seerah-full-cta__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 1rem;
+  line-height: 1;
+}
+@media (max-width: 640px) {
+  .seerah-full-cta {
+    width: calc(100% - 1.5rem);
+    max-width: 22rem;
+  }
+}
+
+/* ── Notice ── */
+.seerah-notice {
+  max-width: 920px;
+  margin: 1.5rem auto;
+  padding: 0.9rem 1.25rem;
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  border-radius: 12px;
+  font-size: 0.85rem;
+  color: var(--majalis-emerald);
+  line-height: 1.7;
+}
+@media (max-width: 640px) {
+  .seerah-notice { margin: 1rem 0.75rem; }
+}
+
+/* ── Layout ── */
+.seerah-layout {
+  max-width: 980px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+  display: flex;
+  gap: var(--ds-space-5);
+  align-items: flex-start;
+}
+@media (max-width: 720px) {
+  .seerah-layout { flex-direction: column; padding: 0 0.75rem; gap: var(--ds-space-4); }
+}
+
+/* ── Timeline Sidebar ── */
+.seerah-timeline {
+  position: sticky;
+  top: 1rem;
+  flex-shrink: 0;
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: #fff;
+  border: 1px solid var(--majalis-line);
+  border-radius: 14px;
+  padding: var(--ds-space-2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  max-height: calc(100svh - 2rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--majalis-line) transparent;
+}
+.seerah-timeline::-webkit-scrollbar { width: 4px; }
+.seerah-timeline::-webkit-scrollbar-thumb { background: var(--majalis-line); border-radius: 2px; }
+.seerah-timeline__empty {
+  margin: 0.75rem 0.5rem 0.5rem;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.8rem;
+  line-height: 1.65;
+  color: var(--majalis-muted, #5c6b64);
+  background: var(--majalis-parchment);
+  border-radius: 10px;
+  border: 1px dashed var(--majalis-line);
+}
+.seerah-sources__note {
+  margin: 0.75rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--majalis-muted, #5c6b64);
+}
+@media (max-width: 720px) {
+  .seerah-timeline {
+    position: static;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-height: none;
+    padding: var(--ds-space-2);
+    gap: 0.4rem;
+    scrollbar-width: none;
+  }
+  .seerah-timeline__empty {
+    min-width: 16rem;
+    margin: 0.35rem 0.25rem;
+  }
+  .seerah-timeline::-webkit-scrollbar { display: none; }
+}
+.seerah-timeline__line { display: none; }
+
+.seerah-timeline__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.65rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: end;
+  border-radius: 9px;
+  transition: background 0.15s;
+  width: 100%;
+}
+.seerah-timeline__item:hover { background: var(--majalis-panel); }
+.seerah-timeline__item--active { background: var(--majalis-emerald-muted, rgba(31,77,58,.08)); }
+@media (max-width: 720px) {
+  .seerah-timeline__item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.5rem 0.4rem;
+    min-width: 64px;
+    flex-shrink: 0;
+    border: 1px solid var(--majalis-line);
+    background: #fff;
+    border-radius: 10px;
+    gap: var(--ds-space-1);
+  }
+  .seerah-timeline__item--active {
+    border-color: var(--phase-color, var(--majalis-emerald));
+    background: var(--majalis-emerald-muted, rgba(31,77,58,.08));
+  }
+  .seerah-timeline__label { display: none; }
+}
+
+.seerah-timeline__dot {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: var(--majalis-parchment);
+  border: 2px solid var(--majalis-line);
+  color: var(--majalis-ink-soft);
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.seerah-timeline__label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+  text-align: end;
+}
+.seerah-timeline__title {
+  font-size: 0.79rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+.seerah-timeline__item--active .seerah-timeline__title { color: var(--majalis-ink); font-weight: 700; }
+.seerah-timeline__year {
+  font-size: 0.8rem;
+  color: color-mix(in srgb, var(--majalis-ink-soft) 65%, transparent);
+  white-space: nowrap;
+}
+
+/* ── Detail Panel ── */
+/* Seerah phase color modifiers — set both --phase-color and --panel-color */
+.seerah-phase--lineage-birth,
+.seerah-phase--youth,
+.seerah-phase--prophethood,
+.seerah-phase--hijra,
+.seerah-phase--hudaybiyya-mecca { --phase-color: var(--mj-brand-deep); --panel-color: var(--mj-brand-deep); }
+.seerah-phase--childhood,
+.seerah-phase--farewell          { --phase-color: var(--mj-brand-deep); --panel-color: var(--mj-brand-deep); }
+.seerah-phase--secret-dawah,
+.seerah-phase--death             { --phase-color: var(--mj-brand-deep); --panel-color: var(--mj-brand-deep); }
+.seerah-phase--open-dawah        { --phase-color: #9B1C1C; --panel-color: #9B1C1C; }
+.seerah-phase--year-of-sorrow    { --phase-color: #2A3E50; --panel-color: #2A3E50; }
+.seerah-phase--ghazawat          { --phase-color: #5C1C2A; --panel-color: #5C1C2A; }
+/* --panel-color/--phase-color داكنة عمدًا لتُقرَأ على .seerah-panel الفاتح
+   أصلاً — بعد تصحيح خلفية .seerah-panel للوضع الليلي (داكنة) أصبحت هذه
+   الألوان نفسها داكنة على داكن. نظائر أفتح لكل مرحلة بنفس عائلة اللون. */
+html[data-theme="dark"] .seerah-phase--lineage-birth,
+html[data-theme="dark"] .seerah-phase--youth,
+html[data-theme="dark"] .seerah-phase--prophethood,
+html[data-theme="dark"] .seerah-phase--hijra,
+html[data-theme="dark"] .seerah-phase--hudaybiyya-mecca,
+html[data-theme="dark"] .seerah-phase--childhood,
+html[data-theme="dark"] .seerah-phase--farewell,
+html[data-theme="dark"] .seerah-phase--secret-dawah,
+html[data-theme="dark"] .seerah-phase--death { --phase-color: var(--mj-brand); --panel-color: var(--mj-brand); }
+html[data-theme="dark"] .seerah-phase--open-dawah { --phase-color: #F87171; --panel-color: #F87171; }
+html[data-theme="dark"] .seerah-phase--year-of-sorrow { --phase-color: #60A5FA; --panel-color: #60A5FA; }
+html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --panel-color: #FB7185; }
+.seerah-panel {
+  flex: 1;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid var(--majalis-line);
+  padding: 1.75rem;
+  min-height: 340px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+@media (max-width: 720px) {
+  .seerah-panel { padding: var(--ds-space-5); scroll-margin-top: 1rem; }
+}
+
+.seerah-panel__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-space-4);
+  padding-bottom: 1.25rem;
+  border-bottom: 2px solid color-mix(in srgb, var(--panel-color, var(--majalis-emerald)) 31%, transparent);
+  margin-bottom: 1.25rem;
+}
+.seerah-panel__icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 0.1rem;
+}
+.seerah-panel__num {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: normal;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+}
+.seerah-panel__title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--majalis-ink);
+  margin: 0 0 0.3rem;
+  line-height: 1.25;
+}
+.seerah-panel__year {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.seerah-panel__desc {
+  font-size: 0.97rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.95;
+  margin: 0 0 1.25rem;
+}
+
+.seerah-panel__topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-2);
+  margin-bottom: 1.25rem;
+}
+.seerah-panel__topic {
+  font-size: 0.79rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 2rem;
+  border: 1px solid;
+  font-weight: 500;
+}
+
+/* key events list (replaces coming-soon banner) */
+.seerah-panel__events {
+  margin-bottom: 1.5rem;
+}
+.seerah-panel__events-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--majalis-emerald);
+  text-transform: uppercase;
+  letter-spacing: normal;
+  margin-bottom: 0.6rem;
+}
+.seerah-panel__events-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.seerah-panel__event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--majalis-ink);
+}
+.seerah-panel__event-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--majalis-emerald);
+  flex-shrink: 0;
+  margin-top: 0.42em;
+}
+
+.seerah-panel__nav {
+  display: flex;
+  gap: var(--ds-space-3);
+  flex-wrap: wrap;
+}
+.seerah-panel__nav-btn {
+  padding: 0.55rem 1.1rem;
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.83rem;
+  color: var(--majalis-ink-soft);
+  font-family: var(--font-body);
+  transition: border-color 0.15s, background 0.15s;
+}
+.seerah-panel__nav-btn:hover { border-color: color-mix(in srgb, var(--majalis-ink-soft) 50%, transparent); background: var(--majalis-parchment-deep, #f0ece4); }
+.seerah-panel__nav-btn--next { margin-inline-end: auto; }
+
+/* ── Sources ── */
+.seerah-sources {
+  max-width: 920px;
+  margin: 0 auto 2rem;
+  padding: var(--ds-space-6);
+  background: #fff;
+  border: 1px solid var(--majalis-line);
+  border-radius: 14px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+}
+@media (max-width: 640px) {
+  .seerah-sources { margin: 0 0.75rem 2rem; }
+}
+.seerah-sources__title {
+  font-size: 0.97rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  margin: 0 0 1rem;
+}
+.seerah-sources__list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2);
+}
+.seerah-sources__item {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  font-size: var(--ds-text-sm);
+  color: var(--majalis-ink-soft);
+}
+.seerah-sources__bullet { color: var(--majalis-emerald); font-size: 1.1rem; line-height: 1; }
+
+/* ── رابط عكسي لقصص الأنبياء ── */
+.seerah-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.06));
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 18%, transparent);
+  border-radius: 2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--majalis-emerald);
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+  font-family: var(--font-body);
+}
+.seerah-back-link:hover {
+  background: color-mix(in srgb, var(--majalis-emerald) 12%, transparent);
+  border-color: color-mix(in srgb, var(--majalis-emerald) 30%, transparent);
+  text-decoration: none;
+}
+
+/* ── لافتة الربط: السيرة امتداد لقصص الأنبياء ── */
+.seerah-prophets-banner {
+  max-width: 920px;
+  margin: 0.75rem auto 0;
+  padding: 0.9rem 1.25rem;
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.06));
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 15%, transparent);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--font-body);
+  flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+  .seerah-prophets-banner { margin: 0.5rem 0.75rem 0; padding: 0.75rem 1rem; gap: 0.7rem; }
+}
+.seerah-prophets-banner__icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.seerah-prophets-banner__text {
+  flex: 1;
+  min-width: 180px;
+  font-size: 0.83rem;
+  color: var(--majalis-emerald);
+  line-height: 1.75;
+  margin: 0;
+}
+.seerah-prophets-banner__link {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--majalis-emerald);
+  text-decoration: none;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 28%, transparent);
+  border-radius: 2rem;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.seerah-prophets-banner__link:hover {
+  background: color-mix(in srgb, var(--majalis-emerald) 10%, transparent);
+  text-decoration: none;
+}
+
+/* ── ديناميكي: ألوان المراحل ── */
+.seerah-back-wrap { padding: 0.75rem 1rem 0; direction: rtl; }
+.seerah-timeline__item--active .seerah-timeline__dot {
+  background: var(--phase-color, var(--majalis-emerald));
+  border-color: var(--phase-color, var(--majalis-emerald));
+  color: #fff;
+}
+.seerah-panel__header-body { flex: 1; }
+.seerah-panel__num  { color: var(--panel-color, var(--majalis-emerald)); }
+.seerah-panel__year { color: var(--panel-color, var(--majalis-emerald)); }
+.seerah-panel__topic {
+  border-color: color-mix(in srgb, var(--panel-color, var(--majalis-emerald)) 31%, transparent);
+  color: var(--panel-color, var(--majalis-emerald));
+  background: color-mix(in srgb, var(--panel-color, var(--majalis-emerald)) 5%, transparent);
+}
+.seerah-panel__share {
+  margin-top: 1rem;
+  border-color: color-mix(in srgb, var(--panel-color, var(--majalis-emerald)) 28%, transparent);
+  color: var(--panel-color, var(--majalis-emerald));
+}
+.seerah-panel__share:hover {
+  background: color-mix(in srgb, var(--panel-color, var(--majalis-emerald)) 6%, transparent);
+}
+
+.seerah-related {
+  max-width: 960px; margin: 2rem auto 0; padding: 1.5rem 1.25rem 0;
+  border-top: 1.5px solid var(--clr-border, var(--mj-brand-soft));
+}
+.seerah-related__title { font-size: var(--ds-text-base); font-weight: 700; margin: 0 0 .85rem; color: var(--clr-text-1, var(--mj-brand-deep)); }
+.seerah-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .5rem; }
+.seerah-related__link {
+  display: block; text-align: center; padding: .65rem .5rem;
+  border: 1px solid var(--clr-border, var(--mj-brand-soft)); border-radius: .55rem;
+  background: #fff; color: var(--clr-text-1, var(--mj-brand-deep));
+  font-size: .88rem; font-weight: 600; text-decoration: none;
+}
+.seerah-related__link:hover { border-color: var(--majalis-emerald, var(--mj-brand)); color: var(--majalis-emerald, var(--mj-brand)); }
+@media (max-width: 640px) {
+  .seerah-related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   214 — Seerah Page enhancements
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.seerah-timeline {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  position: relative !important;
+}
+.seerah-timeline::before {
+  content: "" !important;
+  position: absolute !important;
+  inset-inline-end: 1.5rem !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 2px !important;
+  background: linear-gradient(to bottom, var(--majalis-emerald), color-mix(in srgb, var(--majalis-emerald) 10%, transparent)) !important;
+  pointer-events: none !important;
+}
+.seerah-phase {
+  padding: 1.25rem 1.25rem 1.25rem 1.25rem !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--v2-border, #D8D2C7) !important;
+  background: var(--v2-surface, var(--mj-bg)) !important;
+  margin-bottom: 1rem !important;
+  margin-inline-end: 3rem !important;
+  position: relative !important;
+  transition: box-shadow 0.18s !important;
+}
+.seerah-phase:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
+}
+
+/* ── منقول من الطبقة الحرجة: seerah-back-link ── */
+.seerah-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--majalis-brass, var(--mj-brand));
+  text-decoration: none;
+  border: 1px solid rgba(23,61,53,0.25);
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+  transition: border-color 0.15s, background 0.15s;
+  margin-bottom: 1rem;
+  direction: rtl;
+}
+.seerah-back-link:hover {
+  background: rgba(23,61,53,0.08);
+  border-color: rgba(23,61,53,0.50);
+}
+/* ══ نهاية بطاقة الانتقال ══════════════════════════════════════════════════ */
+

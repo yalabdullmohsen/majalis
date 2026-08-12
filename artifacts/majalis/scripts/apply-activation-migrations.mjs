@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+/**
+import "dotenv/config";
+ * Apply Production Activation migrations (tracked runner + seed hook).
+ *
+ * Usage:
+ *   DATABASE_URL=postgresql://... node scripts/apply-activation-migrations.mjs
+ *   pnpm --filter @workspace/majalis run apply:activation-migrations
+ *   pnpm --filter @workspace/majalis run apply:activation-migrations -- --dry-run-seed
+ */
+import { runActivationMigrations } from "../lib/migration-runner.mjs";
+import { ACTIVATION_MIGRATION_FILES } from "../lib/migration-paths.mjs";
+
+// Explicit CLI opt-in — required if VERCEL=1 is present in the environment.
+process.env.MAJALIS_ALLOW_CLI_MIGRATIONS = "1";
+
+const dryRunSeed = process.argv.includes("--dry-run-seed");
+const skipSeed = process.argv.includes("--no-seed");
+
+async function main() {
+  console.log("Applying activation migrations:", ACTIVATION_MIGRATION_FILES.join(" → "));
+  console.log("Note: HTTP Admin/Cron paths permanently refuse DDL. This CLI is the approved path.");
+
+  const result = await runActivationMigrations({
+    seedRulings: !skipSeed,
+    dryRunSeed,
+  });
+
+  console.log(JSON.stringify(result, null, 2));
+
+  if (!result.ok) {
+    console.error("Activation incomplete.");
+    if (result.missing?.length) console.error("Missing tables:", result.missing.join(", "));
+    process.exit(1);
+  }
+
+  console.log("Activation migrations applied successfully.");
+  if (result.seed?.inserted) {
+    console.log(`Rulings seeded: ${result.seed.inserted} rows`);
+  }
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

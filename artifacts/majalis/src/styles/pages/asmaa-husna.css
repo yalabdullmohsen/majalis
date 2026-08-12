@@ -1,0 +1,418 @@
+/**
+ * أنماط صفحة الأسماء الحسنى (/asma-husna) فقط — مُستخرَجة من elite-2026.css
+ * (كانت §218). مستوردة مباشرة من src/views/AsmaaHusnaPage.tsx.
+ */
+
+/* ─────────────────────────────────────────────────────────── */
+/* §218 — صفحة الأسماء الحسنى (.ah-*)                        */
+/* ─────────────────────────────────────────────────────────── */
+
+/* Hero */
+.ah-hero {
+  background: linear-gradient(160deg, var(--mj-brand-deep) 0%, var(--mj-brand-deep) 60%, #0E5A45 100%);
+  border-radius: var(--ds-radius-2xl);
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
+}
+.ah-hero__bismillah {
+  font-size: var(--ds-text-xl);
+  font-family: var(--font-quran, serif);
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 0.75rem;
+  letter-spacing: normal;
+}
+.ah-hero__title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 0.75rem;
+  line-height: 1.2;
+}
+.ah-hero__sub {
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 0 auto 1rem;
+}
+.ah-hero__source {
+  display: inline-block;
+  margin-inline-end: 0.5rem;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.65);
+  font-style: normal;
+}
+.ah-hero__stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-2);
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.8);
+  font-weight: 600;
+}
+.ah-hero__dot { opacity: 0.4; }
+
+/* Controls */
+.ah-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+  margin-bottom: 1.5rem;
+}
+.ah-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.ah-search-icon {
+  position: absolute;
+  inset-inline-end: 0.85rem;
+  color: var(--mj-brand-deep);
+  pointer-events: none;
+}
+.ah-search {
+  width: 100%;
+  padding: 0.65rem 2.5rem 0.65rem 1rem;
+  border: 1.5px solid #C6D6CE;
+  border-radius: var(--ds-radius-lg);
+  font-size: 0.92rem;
+  background: #FFFFFF;
+  color: #1A1A18;
+  outline: none;
+  transition: border-color 0.2s;
+  direction: rtl;
+}
+.ah-search:focus { border-color: var(--mj-brand-deep); }
+.ah-cat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.ah-cat-chip {
+  padding: 0.35rem 0.85rem;
+  border-radius: 2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid #C6D6CE;
+  background: #FFFFFF;
+  color: var(--mj-brand-deep);
+  transition: all 0.15s;
+}
+.ah-cat-chip:hover { border-color: var(--mj-brand-deep); background: rgba(23,61,53,0.06); }
+.ah-cat-chip--active { background: var(--mj-brand-deep); color: #FFFFFF; border-color: var(--mj-brand-deep); }
+
+/* Grid */
+.ah-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--ds-space-3);
+  margin-bottom: 2rem;
+}
+.ah-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  /* padding-top موسَّع (كان 1rem): بعد تحويل .ah-card__num لموضع مطلق
+     (راجع تعليقه)، تدفّق .ah-card__name العادي كان سيرتفع إلى منطقة
+     الشارتين المطلقتين (num يمينًا، fav يسارًا بعرض 44px إلزامي) فيتقاطع
+     معهما مجددًا — 3.25rem يضمن مساحة كافية أسفل كلتا الشارتين
+     (top:0.5rem + ارتفاع حتى 44px). */
+  padding: 3.25rem 0.75rem 0.85rem;
+  border-radius: var(--ds-radius-xl);
+  border: 1.5px solid var(--mj-brand-soft);
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.18s;
+  gap: var(--ds-space-1);
+  box-shadow: 0 1px 4px rgba(23,61,53,0.06);
+}
+.ah-card:hover {
+  border-color: var(--mj-brand-deep);
+  box-shadow: 0 4px 16px rgba(23,61,53,0.14);
+  transform: translateY(-2px);
+}
+.ah-card__num {
+  /* موضع مطلق بالزاوية المقابلة لزر المفضلة (position: absolute؛
+     inset-inline-start: 0.5rem أدناه) — بدل التدفّق العادي المُوسَّط الذي كان يضع
+     الشارة أعلى المنتصف، فتتقاطع مع زر المفضلة عندما يُكبَّر الأخير إلى
+     44×44px إلزاميًا (قاعدة حد أدنى لمساحة النقر WCAG 2.5.5 العامة، لا
+     يصح تصغيره لتفادي التقاطع). تحقّق حي: 199 حالة تقاطع مقاسة عبر
+     بطاقات /asma-husna كلها كانت هذا النمط نفسه، 2026-07-22. */
+  position: absolute;
+  top: 0.5rem;
+  inset-inline-end: 0.5rem;
+  font-size: 0.7rem;
+  color: var(--mj-brand-deep);
+  font-weight: 700;
+  background: rgba(23,61,53,0.08);
+  border-radius: var(--ds-radius-xl);
+  padding: 0.1rem 0.45rem;
+  line-height: 1.4;
+}
+.ah-card__name {
+  font-size: var(--ds-text-xl);
+  font-weight: 800;
+  color: var(--mj-brand-deep);
+  font-family: var(--font-quran, serif);
+  line-height: 1.3;
+}
+.ah-card__meaning {
+  font-size: 0.8rem;
+  color: #3A5A4A;
+  line-height: 1.5;
+}
+.ah-card__fav {
+  position: absolute;
+  top: 0.5rem;
+  inset-inline-start: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #C0D4C8;
+  padding: 0.2rem;
+  border-radius: 50%;
+  transition: color 0.15s;
+  line-height: 1;
+}
+.ah-card__fav:hover { color: #E53E3E; }
+.ah-card__fav--active { color: #E53E3E; }
+
+/* Empty */
+.ah-empty {
+  text-align: center;
+  color: #6B9E8A;
+  padding: var(--ds-space-8);
+  font-size: 0.95rem;
+}
+
+/* Modal */
+.ah-modal-backdrop {
+  position: fixed;
+  top: 0;
+  inset-inline-end: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ds-space-4);
+}
+.ah-modal {
+  background: #FFFFFF;
+  border-radius: var(--ds-radius-2xl);
+  padding: 1.75rem;
+  max-width: 480px;
+  width: 100%;
+  text-align: end;
+  direction: rtl;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.ah-modal__head {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1.5px solid var(--mj-brand-soft);
+}
+.ah-modal__num {
+  font-size: var(--ds-text-xs);
+  color: #FFFFFF;
+  background: var(--mj-brand-deep);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.ah-modal__name {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--mj-brand-deep);
+  font-family: var(--font-quran, serif);
+  margin: 0;
+  flex: 1;
+}
+.ah-modal__fav {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #C0D4C8;
+  padding: 0.3rem;
+  transition: color 0.15s;
+}
+.ah-modal__fav--active { color: #E53E3E; }
+.ah-modal__section {
+  margin-bottom: 1rem;
+}
+.ah-modal__label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--mj-brand-deep);
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: normal;
+}
+.ah-modal__text {
+  font-size: 0.9rem;
+  color: #1A1A18;
+  line-height: 1.75;
+  margin: 0;
+}
+.ah-modal__text--quran {
+  font-family: var(--font-quran, serif);
+  font-size: 0.92rem;
+  color: var(--mj-brand-deep);
+  background: rgba(23,61,53,0.04);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--ds-radius);
+  border-inline-end: 3px solid var(--mj-brand-deep);
+}
+.ah-modal__cat-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(23,61,53,0.1);
+  color: var(--mj-brand-deep);
+  border-radius: 2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.ah-modal__close {
+  width: 100%;
+  padding: 0.7rem;
+  background: var(--mj-brand-deep);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--ds-radius-lg);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ah-modal__close:hover { background: var(--mj-brand-deep); }
+
+
+/* ── شريط تقدم المحفوظات ─────────────────────────────────── */
+.ah-progress-bar-wrap {
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 1rem;
+  background: var(--clr-canvas-1, var(--mj-bg));
+  border-radius: var(--ds-radius-lg);
+  border: 1px solid rgba(23,61,53,0.08);
+}
+.ah-progress-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--mj-ink-2);
+  margin-bottom: 0.5rem;
+}
+.ah-progress-bar-track {
+  height: 6px;
+  background: rgba(23,61,53,0.1);
+  border-radius: var(--ds-radius-full);
+  overflow: hidden;
+}
+.ah-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--mj-brand-deep), #3BAD8A);
+  border-radius: var(--ds-radius-full);
+  transition: width 0.4s ease;
+}
+
+@media (max-width: 600px) {
+  .ah-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: var(--ds-space-2); }
+  .ah-card { padding: 3.25rem 0.5rem 0.75rem; } /* padding-top موسَّع لنفس سبب القاعدة الأساسية أعلاه — كانت هذه القاعدة الفعلية الفائزة على الجوّال (max-width:600px) وتُبقي التراكب قائمًا رغم إصلاح القاعدة الأساسية */
+  .ah-card__name { font-size: 1.1rem; }
+  .ah-hero__title { font-size: 1.75rem; }
+  .ah-modal { padding: var(--ds-space-5); }
+  .ah-nod-arabic { font-size: 2rem; }
+}
+
+/* تنبيه منهجي — ضعف سرد الترمذي التفصيلي */
+.ah-method-note {
+  margin: 0 0 1.25rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--ds-radius-lg, 12px);
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep) 28%, transparent);
+  background: color-mix(in srgb, var(--mj-brand-deep) 8%, #fff);
+  color: #1a2e28;
+  font-size: 0.92rem;
+  line-height: 1.85;
+  text-align: end;
+}
+.ah-method-note strong {
+  color: var(--mj-brand-deep);
+}
+html[data-theme="dark"] .ah-method-note {
+  background: color-mix(in srgb, #3BAD8A 12%, #0f1714);
+  border-color: color-mix(in srgb, #3BAD8A 35%, transparent);
+  color: var(--mj-brand-soft);
+}
+html[data-theme="dark"] .ah-method-note strong {
+  color: #8fd6bc;
+}
+
+.ah-card__status {
+  position: absolute;
+  top: 0.5rem;
+  inset-inline-start: 2.75rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  line-height: 1.3;
+}
+.ah-card__status--thabit {
+  background: color-mix(in srgb, var(--mj-brand) 14%, #fff);
+  color: var(--mj-brand-deep);
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 35%, transparent);
+}
+.ah-card__status--mashhur {
+  background: color-mix(in srgb, #92620a 12%, #fff);
+  color: #6b4a08;
+  border: 1px solid color-mix(in srgb, #92620a 35%, transparent);
+}
+.ah-cat-chip--status { border-style: dashed; }
+.ah-modal__status {
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin: 0 0 0.55rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 0.45rem;
+}
+.ah-modal__status--thabit {
+  background: color-mix(in srgb, var(--mj-brand) 12%, #fff);
+  color: var(--mj-brand-deep);
+}
+.ah-modal__status--mashhur {
+  background: color-mix(in srgb, #92620a 12%, #fff);
+  color: #6b4a08;
+}
+.ah-modal__caution {
+  margin: 0.55rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #6b4a08;
+}
+
+/* ── نهاية §218 ────────────────────────────────────────────── */

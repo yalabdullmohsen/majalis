@@ -1,0 +1,115 @@
+/**
+ * مفضّلات محلية للجهاز — بديل آمن دون حساب.
+ * لا تُخزَّن بيانات حسّاسة؛ فقط نوع المحتوى والمعرّف والعنوان والمسار.
+ */
+
+import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
+
+const STORAGE_KEY = "majalis-local-bookmarks-v1";
+const MAX_ITEMS = 80;
+
+export type LocalBookmark = {
+  id: string;
+  contentType: string;
+  contentId: string;
+  title: string;
+  href: string;
+  savedAt: string;
+};
+
+function isBookmark(v: unknown): v is LocalBookmark {
+  return (
+    isPlainObject(v) &&
+    typeof v.id === "string" &&
+    typeof v.contentType === "string" &&
+    typeof v.contentId === "string" &&
+    typeof v.title === "string" &&
+    typeof v.href === "string" &&
+    typeof v.savedAt === "string"
+  );
+}
+
+function isBookmarkList(v: unknown): v is LocalBookmark[] {
+  return Array.isArray(v) && v.every(isBookmark);
+}
+
+function readAll(): LocalBookmark[] {
+  if (typeof window === "undefined") return [];
+  return readLocalJson<LocalBookmark[]>(STORAGE_KEY, [], isBookmarkList);
+}
+
+function writeAll(items: LocalBookmark[]) {
+  if (typeof window === "undefined") return;
+  const trimmed = items.slice(0, MAX_ITEMS);
+  writeLocalJson(STORAGE_KEY, trimmed);
+  // مرآة Dexie — لا تُعطّل المسار المتزامن إن فشل IndexedDB
+  void import("@/lib/offline-bookmarks")
+    .then((m) => m.persistOfflineBookmarks(trimmed))
+    .catch(() => undefined);
+}
+
+export function listLocalBookmarks(): LocalBookmark[] {
+  return readAll().sort((a, b) => (a.savedAt < b.savedAt ? 1 : -1));
+}
+
+export function isLocalBookmarked(contentType: string, contentId: string): boolean {
+  return readAll().some((b) => b.contentType === contentType && b.contentId === contentId);
+}
+
+export function toggleLocalBookmark(input: {
+  contentType: string;
+  contentId: string;
+  title?: string;
+  href?: string;
+}): boolean {
+  const list = readAll();
+  const idx = list.findIndex(
+    (b) => b.contentType === input.contentType && b.contentId === input.contentId,
+  );
+  if (idx >= 0) {
+    list.splice(idx, 1);
+    writeAll(list);
+    return false;
+  }
+  const href =
+    input.href ||
+    (typeof window !== "undefined" ? `${window.location.pathname}${window.location.search}` : "/");
+  list.unshift({
+    id: `lb-${input.contentType}-${input.contentId}-${Date.now()}`,
+    contentType: input.contentType,
+    contentId: input.contentId,
+    title: (input.title || "").trim() || `${input.contentType}/${input.contentId}`,
+    href,
+    savedAt: new Date().toISOString(),
+  });
+  writeAll(list);
+  return true;
+}
+
+export function removeLocalBookmark(contentType: string, contentId: string): void {
+  writeAll(readAll().filter((b) => !(b.contentType === contentType && b.contentId === contentId)));
+}
+
+export function clearLocalBookmarks(): void {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(STORAGE_KEY);
+  void import("@/lib/offline-bookmarks")
+    .then((m) => m.clearOfflineBookmarks())
+    .catch(() => undefined);
+}
+
+/** قراءة offline-first: IndexedDB ثم localStorage. */
+export async function listBookmarksOfflineFirst(): Promise<LocalBookmark[]> {
+  try {
+    const { listOfflineBookmarks, migrateLocalBookmarksToIdb } = await import(
+      "@/lib/offline-bookmarks"
+    );
+    const local = readAll();
+    await migrateLocalBookmarksToIdb(local);
+    const idb = await listOfflineBookmarks();
+    if (idb.length) return idb;
+    return local.sort((a, b) => (a.savedAt < b.savedAt ? 1 : -1));
+  } catch {
+    return listLocalBookmarks();
+  }
+}

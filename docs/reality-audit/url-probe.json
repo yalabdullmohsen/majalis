@@ -1,0 +1,34 @@
+[
+  {
+    "url": "https://majlisilm.com/mushaf",
+    "status": 200,
+    "ms": 3983,
+    "title": "صفحة 1 — الفاتحة | المصحف الشريف | المجلس العلمي",
+    "hits": 4,
+    "h1": "المصحف الشريف"
+  },
+  {
+    "url": "https://majlisilm.com/mushaf/page/1",
+    "status": 200,
+    "ms": 32668,
+    "title": "صفحة 1 — الفاتحة | المصحف الشريف | المجلس العلمي",
+    "hits": 4,
+    "h1": ""
+  },
+  {
+    "url": "https://majlisilm.com/quran-hub",
+    "status": 200,
+    "ms": 3072,
+    "title": "مركز القرآن الكريم | المجلس العلمي",
+    "hits": 0,
+    "h1": "القرآن الكريم"
+  },
+  {
+    "url": "https://majlisilm.com/quran/mushaf",
+    "status": 200,
+    "ms": 2644,
+    "title": "الصفحة غير موجودة | المجلس العلمي",
+    "hits": 0,
+    "h1": "الصفحة غير موجودة"
+  }
+]

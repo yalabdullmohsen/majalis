@@ -1,0 +1,237 @@
+/* Tasbih page — deferred from index.css */
+.tasbih-pro-page {
+  max-width: 66rem;
+}
+
+.tasbih-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--ds-space-3);
+  margin-bottom: 1rem;
+}
+
+.tasbih-stat {
+  padding: 0.9rem;
+}
+
+.tasbih-stat span {
+  color: var(--msk-text-2, var(--mj-ink-2));
+  font-size: 0.78rem;
+}
+
+.tasbih-stat strong {
+  display: block;
+  color: var(--majalis-emerald-deep);
+  font-size: 1.45rem;
+}
+
+.tasbih-layout {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.8fr) minmax(0, 1.4fr);
+  gap: var(--ds-space-4);
+  align-items: start;
+}
+
+.tasbih-wird-list,
+.tasbih-pro-card,
+.tasbih-add-card,
+.tasbih-achievements {
+  padding: var(--ds-space-4);
+}
+
+.tasbih-wird-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.tasbih-wird-list::-webkit-scrollbar {
+  display: none;
+}
+
+.tasbih-wird-list {
+  scrollbar-width: none;
+}
+
+.tasbih-wird-tab {
+  border: 1px solid var(--msk-border, var(--mj-hairline));
+  border-radius: 0.85rem;
+  background: transparent;
+  color: var(--majalis-ink);
+  padding: var(--ds-space-3);
+  text-align: end;
+  display: grid;
+  gap: 0.2rem;
+  font-family: inherit;
+}
+
+.tasbih-wird-tab.is-active {
+  border-color: var(--majalis-emerald);
+  background: color-mix(in srgb, var(--majalis-sage) 65%, var(--majalis-panel));
+}
+
+.tasbih-wird-tab small,
+.tasbih-progress-label,
+.tasbih-saved,
+.tasbih-offline-note {
+  color: var(--msk-text-2, var(--mj-ink-2));
+  font-size: 0.82rem;
+}
+
+.tasbih-main-button {
+  width: min(100%, 19rem);
+  aspect-ratio: 1;
+  margin: 1rem auto;
+  border-radius: 999px;
+  border: 6px solid var(--majalis-sage);
+  background:
+    radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--majalis-brass) 35%, transparent), transparent 35%),
+    var(--majalis-emerald);
+  color: var(--majalis-parchment);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.16);
+}
+
+.tasbih-main-button span {
+  font-size: clamp(3rem, 12vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tasbih-main-button small {
+  font-weight: 800;
+}
+
+.tasbih-pro-bar {
+  margin-top: 0.75rem;
+}
+
+.tasbih-actions-grid,
+.tasbih-add-row {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.tasbih-target-field {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-weight: 800;
+}
+
+.tasbih-target-field input,
+.tasbih-add-row input {
+  min-height: 44px;
+  border: 1px solid var(--msk-border, var(--mj-hairline));
+  border-radius: 0.65rem;
+  padding: 0 0.75rem;
+  background: transparent;
+  color: var(--majalis-ink);
+  font-family: inherit;
+}
+
+.tasbih-offline-note {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+
+/* ── السبحة — عداد Tasbih: تنسيق أفضل ── */
+.tasbih-counter {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+
+/* ══ عدّاد التسبيح (Tap Counter) ══ */
+/* منطقة ثابتة الارتفاع تحتوي العداد أو "مرة واحدة" لإبقاء أزرار التنقل في مكانها */
+.adhkar-tapper-zone {
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.adhkar-tapper-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; gap: var(--ds-space-2);
+}
+
+.adhkar-tapper {
+  position: relative;
+  width: 120px; height: 120px;
+  border: none; background: transparent;
+  cursor: pointer; padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.1s ease;
+}
+.adhkar-tapper:active { transform: scale(0.93); }
+.adhkar-tapper--done { cursor: default; }
+.adhkar-tapper--done:active { transform: none; }
+
+.adhkar-ring {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+
+.adhkar-tapper__inner {
+  position: absolute; inset: 0;
+  display: flex; align-items: center;
+  justify-content: center; gap: 0.15rem;
+  background: var(--majalis-panel, #fff);
+  border-radius: 50%;
+  margin: 6px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.adhkar-tapper__cur {
+  font-size: 1.6rem; font-weight: 800;
+  color: var(--majalis-emerald, var(--mj-brand));
+  line-height: 1; font-variant-numeric: tabular-nums;
+}
+.adhkar-tapper__sep {
+  font-size: var(--ds-text-base);
+  color: var(--mj-ink-2);
+  align-self: flex-end; margin-bottom: 0.15rem;
+}
+.adhkar-tapper__tot {
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--mj-ink-2);
+  align-self: flex-end;
+  margin-bottom: 0.1rem;
+}
+html[data-theme="dark"] .adhkar-tapper__inner,
+html.dark .adhkar-tapper__inner {
+  background: var(--mj-surface, #17201C);
+  box-shadow: none;
+}
+html[data-theme="dark"] .adhkar-tapper__sep,
+html[data-theme="dark"] .adhkar-tapper__tot,
+html.dark .adhkar-tapper__sep,
+html.dark .adhkar-tapper__tot {
+  color: var(--mj-ink-2, #B4C2BC);
+}
+.adhkar-tapper__check {
+  font-size: 2.2rem; color: var(--majalis-emerald, var(--mj-brand));
+  animation: adhkarCheckPop 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes adhkarCheckPop {
+  from { transform: scale(0.4); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.adhkar-tapper__hint {
+  font-size: 0.78rem; color: var(--txt-subdued, var(--mj-ink-2));
+  margin: 0; text-align: center;
+}
+.adhkar-tapper__complete {
+  font-size: var(--ds-text-sm); font-weight: 600;
+  color: var(--majalis-emerald, var(--mj-brand));
+  margin: 0; text-align: center;
+}

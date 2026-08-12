@@ -1,0 +1,683 @@
+[
+  {
+    "slug": "fawaz-hadith-bukhari",
+    "name": "صحيح البخاري — Hadith API",
+    "source_type": "api",
+    "source_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-bukhari.min.json",
+    "fallback_urls": [
+      "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-bukhari.json"
+    ],
+    "priority": 9,
+    "trust_score": 95,
+    "language": "ar",
+    "category": "hadith",
+    "content_types": [
+      "hadith"
+    ],
+    "fetch_interval_hours": 3,
+    "parser": "hadith_json",
+    "validator": "hadith_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "source_match": true,
+      "semantic_threshold": 0.88
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 90,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "collection": "bukhari",
+      "cursor_key": "bukhari_offset"
+    }
+  },
+  {
+    "slug": "fawaz-hadith-muslim",
+    "name": "صحيح مسلم — Hadith API",
+    "source_type": "api",
+    "source_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-muslim.min.json",
+    "fallback_urls": [
+      "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-muslim.json"
+    ],
+    "priority": 9,
+    "trust_score": 95,
+    "language": "ar",
+    "category": "hadith",
+    "content_types": [
+      "hadith"
+    ],
+    "fetch_interval_hours": 3,
+    "parser": "hadith_json",
+    "validator": "hadith_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.9
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 90,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "collection": "muslim",
+      "cursor_key": "muslim_offset"
+    }
+  },
+  {
+    "slug": "fawaz-hadith-abudawud",
+    "name": "سنن أبي داود — Hadith API",
+    "source_type": "api",
+    "source_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-abudawud.min.json",
+    "fallback_urls": [
+      "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-abudawud.json"
+    ],
+    "priority": 8,
+    "trust_score": 90,
+    "language": "ar",
+    "category": "hadith",
+    "content_types": [
+      "hadith"
+    ],
+    "fetch_interval_hours": 6,
+    "parser": "hadith_json",
+    "validator": "hadith_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.88
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 88,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "collection": "abudawud",
+      "cursor_key": "abudawud_offset"
+    }
+  },
+  {
+    "slug": "fawaz-hadith-tirmidhi",
+    "name": "جامع الترمذي — Hadith API",
+    "source_type": "api",
+    "source_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-tirmidhi.min.json",
+    "fallback_urls": [
+      "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-tirmidhi.json"
+    ],
+    "priority": 8,
+    "trust_score": 90,
+    "language": "ar",
+    "category": "hadith",
+    "content_types": [
+      "hadith"
+    ],
+    "fetch_interval_hours": 6,
+    "parser": "hadith_json",
+    "validator": "hadith_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.88
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 88,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "collection": "tirmidhi",
+      "cursor_key": "tirmidhi_offset"
+    }
+  },
+  {
+    "slug": "fawaz-hadith-nasai",
+    "name": "سنن النسائي — Hadith API",
+    "source_type": "api",
+    "source_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-nasai.min.json",
+    "fallback_urls": [
+      "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-nasai.json"
+    ],
+    "priority": 8,
+    "trust_score": 88,
+    "language": "ar",
+    "category": "hadith",
+    "content_types": [
+      "hadith"
+    ],
+    "fetch_interval_hours": 8,
+    "parser": "hadith_json",
+    "validator": "hadith_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.87
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 85,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "collection": "nasai",
+      "cursor_key": "nasai_offset"
+    }
+  },
+  {
+    "slug": "fawaz-hadith-ibnmajah",
+    "name": "سنن ابن ماجه — Hadith API",
+    "source_type": "api",
+    "source_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-ibnmajah.min.json",
+    "fallback_urls": [
+      "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-ibnmajah.json"
+    ],
+    "priority": 8,
+    "trust_score": 88,
+    "language": "ar",
+    "category": "hadith",
+    "content_types": [
+      "hadith"
+    ],
+    "fetch_interval_hours": 8,
+    "parser": "hadith_json",
+    "validator": "hadith_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.87
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 85,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "collection": "ibnmajah",
+      "cursor_key": "ibnmajah_offset"
+    }
+  },
+  {
+    "slug": "fawaz-hadith-malik",
+    "name": "موطأ مالك — Hadith API",
+    "source_type": "api",
+    "source_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-malik.min.json",
+    "fallback_urls": [
+      "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-malik.json"
+    ],
+    "priority": 8,
+    "trust_score": 90,
+    "language": "ar",
+    "category": "hadith",
+    "content_types": [
+      "hadith"
+    ],
+    "fetch_interval_hours": 12,
+    "parser": "hadith_json",
+    "validator": "hadith_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.88
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 88,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "collection": "malik",
+      "cursor_key": "malik_offset"
+    }
+  },
+  {
+    "slug": "fawaz-hadith-nawawi40",
+    "name": "الأربعون النووية — Hadith API",
+    "source_type": "api",
+    "source_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-nawawi40.min.json",
+    "fallback_urls": [
+      "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-nawawi40.json"
+    ],
+    "priority": 9,
+    "trust_score": 95,
+    "language": "ar",
+    "category": "hadith",
+    "content_types": [
+      "hadith",
+      "benefits"
+    ],
+    "fetch_interval_hours": 24,
+    "parser": "hadith_json",
+    "validator": "hadith_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.9
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 90,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "collection": "nawawi40",
+      "cursor_key": "nawawi40_offset"
+    }
+  },
+  {
+    "slug": "fawaz-hadith-riyadhussaliheen",
+    "name": "رياض الصالحين — Hadith API",
+    "source_type": "api",
+    "source_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-riyadussaliheen.min.json",
+    "fallback_urls": [
+      "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-riyadussaliheen.json"
+    ],
+    "priority": 8,
+    "trust_score": 93,
+    "language": "ar",
+    "category": "hadith",
+    "content_types": [
+      "hadith",
+      "benefits"
+    ],
+    "fetch_interval_hours": 12,
+    "parser": "hadith_json",
+    "validator": "hadith_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.88
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 90,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "collection": "riyadussaliheen",
+      "cursor_key": "riyadh_offset"
+    }
+  },
+  {
+    "slug": "islamstory-stories",
+    "name": "قصص إسلامية — IslamStory",
+    "source_type": "rss",
+    "source_url": "https://www.islamstory.com/rss",
+    "fallback_urls": [
+      "https://www.islamstory.com/feed/"
+    ],
+    "priority": 7,
+    "trust_score": 82,
+    "language": "ar",
+    "category": "stories",
+    "content_types": [
+      "stories",
+      "articles"
+    ],
+    "fetch_interval_hours": 12,
+    "parser": "rss",
+    "validator": "scholarly_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.85
+    },
+    "publication_policy": {
+      "auto_publish": false,
+      "min_trust": 75,
+      "review_on_fail": true
+    }
+  },
+  {
+    "slug": "dorar-net-hadith",
+    "name": "الدرر السنية — أحاديث",
+    "source_type": "rss",
+    "source_url": "https://dorar.net/rss/hadith",
+    "fallback_urls": [
+      "https://dorar.net/hadith/"
+    ],
+    "priority": 8,
+    "trust_score": 90,
+    "language": "ar",
+    "category": "hadith",
+    "content_types": [
+      "hadith",
+      "benefits"
+    ],
+    "fetch_interval_hours": 6,
+    "parser": "rss",
+    "validator": "hadith_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.88
+    },
+    "publication_policy": {
+      "auto_publish": false,
+      "min_trust": 85,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "requires_review": true
+    }
+  },
+  {
+    "slug": "alukah-articles",
+    "name": "شبكة الألوكة — مقالات إسلامية",
+    "source_type": "rss",
+    "source_url": "https://www.alukah.net/rss/",
+    "fallback_urls": [
+      "https://www.alukah.net/culture/"
+    ],
+    "priority": 6,
+    "trust_score": 80,
+    "language": "ar",
+    "category": "articles",
+    "content_types": [
+      "articles",
+      "benefits"
+    ],
+    "fetch_interval_hours": 8,
+    "parser": "rss",
+    "validator": "scholarly_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.84
+    },
+    "publication_policy": {
+      "auto_publish": false,
+      "min_trust": 78,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "requires_review": true
+    }
+  },
+  {
+    "slug": "islamhouse-ar",
+    "name": "موقع إسلام هاوس — عربي",
+    "source_type": "rss",
+    "source_url": "https://islamhouse.com/ar/rss/books/",
+    "fallback_urls": [
+      "https://islamhouse.com/ar/"
+    ],
+    "priority": 7,
+    "trust_score": 88,
+    "language": "ar",
+    "category": "articles",
+    "content_types": [
+      "articles",
+      "benefits"
+    ],
+    "fetch_interval_hours": 12,
+    "parser": "rss",
+    "validator": "scholarly_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.85
+    },
+    "publication_policy": {
+      "auto_publish": false,
+      "min_trust": 82,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "requires_review": true
+    }
+  },
+  {
+    "slug": "internal-fawaid",
+    "name": "المجلس العلمي — فوائد موثقة",
+    "source_type": "internal",
+    "source_url": "supabase:fawaid",
+    "priority": 10,
+    "trust_score": 98,
+    "language": "ar",
+    "category": "fawaid",
+    "content_types": [
+      "benefits"
+    ],
+    "fetch_interval_hours": 1,
+    "parser": "internal_fawaid",
+    "validator": "scholarly_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "source_match": true,
+      "semantic_threshold": 0.86
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 85,
+      "review_on_fail": false
+    },
+    "metadata": {
+      "table": "fawaid",
+      "status_filter": "approved"
+    }
+  },
+  {
+    "slug": "internal-qa",
+    "name": "المجلس العلمي — أسئلة منشورة",
+    "source_type": "internal",
+    "source_url": "supabase:qa_questions",
+    "priority": 10,
+    "trust_score": 98,
+    "language": "ar",
+    "category": "qa",
+    "content_types": [
+      "questions"
+    ],
+    "fetch_interval_hours": 1,
+    "parser": "internal_qa",
+    "validator": "scholarly_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.88
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 85,
+      "review_on_fail": false
+    },
+    "metadata": {
+      "table": "qa_questions",
+      "status_filter": "published"
+    }
+  },
+  {
+    "slug": "internal-rulings",
+    "name": "المجلس العلمي — أحكام شرعية",
+    "source_type": "internal",
+    "source_url": "supabase:sharia_rulings",
+    "priority": 9,
+    "trust_score": 95,
+    "language": "ar",
+    "category": "rulings",
+    "content_types": [
+      "rulings"
+    ],
+    "fetch_interval_hours": 2,
+    "parser": "internal_rulings",
+    "validator": "scholarly_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.87
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 80,
+      "review_on_fail": false
+    },
+    "metadata": {
+      "table": "sharia_rulings",
+      "status_filter": "approved"
+    }
+  },
+  {
+    "slug": "quran-benefits-api",
+    "name": "آيات قرآنية — api.alquran.cloud",
+    "source_type": "api",
+    "source_url": "https://api.alquran.cloud/v1/quran/quran-uthmani",
+    "fallback_urls": [
+      "https://api.alquran.cloud/v1/surah/1/quran-uthmani",
+      "https://api.alquran.cloud/v1/surah/2/quran-uthmani"
+    ],
+    "priority": 8,
+    "trust_score": 99,
+    "language": "ar",
+    "category": "fawaid",
+    "content_types": [
+      "benefits"
+    ],
+    "fetch_interval_hours": 6,
+    "parser": "quran_ayah_json",
+    "validator": "scholarly_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.92
+    },
+    "publication_policy": {
+      "auto_publish": true,
+      "min_trust": 95,
+      "review_on_fail": false
+    },
+    "metadata": {
+      "cursor_key": "quran_surah_cursor",
+      "max_surahs": 114
+    }
+  },
+  {
+    "slug": "quran-tafsir-jalalayn",
+    "name": "تفسير الجلالين — Open Quran",
+    "source_type": "api",
+    "source_url": "https://api.alquran.cloud/v1/quran/ar.jalalayn",
+    "fallback_urls": [],
+    "priority": 7,
+    "trust_score": 92,
+    "language": "ar",
+    "category": "articles",
+    "content_types": [
+      "articles",
+      "benefits"
+    ],
+    "fetch_interval_hours": 24,
+    "parser": "quran_tafsir_json",
+    "validator": "scholarly_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.9
+    },
+    "publication_policy": {
+      "auto_publish": false,
+      "min_trust": 88,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "cursor_key": "tafsir_jalalayn_cursor",
+      "collection": "jalalayn"
+    }
+  },
+  {
+    "slug": "saaid-ar-articles",
+    "name": "موقع صيد الفوائد — مقالات",
+    "source_type": "rss",
+    "source_url": "https://www.saaid.net/rss.xml",
+    "fallback_urls": [
+      "https://www.saaid.net/"
+    ],
+    "priority": 6,
+    "trust_score": 78,
+    "language": "ar",
+    "category": "articles",
+    "content_types": [
+      "articles",
+      "benefits"
+    ],
+    "fetch_interval_hours": 12,
+    "parser": "rss",
+    "validator": "scholarly_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.84
+    },
+    "publication_policy": {
+      "auto_publish": false,
+      "min_trust": 75,
+      "review_on_fail": true
+    },
+    "metadata": {
+      "requires_review": true
+    }
+  },
+  {
+    "slug": "dorar-benefits-rss",
+    "name": "الدرر السنية — فوائد وتعريفات",
+    "source_type": "rss",
+    "source_url": "https://dorar.net/rss",
+    "fallback_urls": [
+      "https://dorar.net/rss/hadith"
+    ],
+    "priority": 7,
+    "trust_score": 88,
+    "language": "ar",
+    "category": "benefits",
+    "content_types": [
+      "benefits",
+      "questions"
+    ],
+    "fetch_interval_hours": 6,
+    "parser": "rss",
+    "validator": "scholarly_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.85
+    },
+    "publication_policy": {
+      "auto_publish": false,
+      "min_trust": 82,
+      "review_on_fail": true
+    },
+    "metadata": {}
+  },
+  {
+    "slug": "alukah-qa-rss",
+    "name": "شبكة الألوكة — أسئلة وأجوبة",
+    "source_type": "rss",
+    "source_url": "https://fatwa.alukah.net/rss.aspx",
+    "fallback_urls": [
+      "https://www.alukah.net/rss/"
+    ],
+    "priority": 6,
+    "trust_score": 78,
+    "language": "ar",
+    "category": "qa",
+    "content_types": [
+      "questions",
+      "benefits"
+    ],
+    "fetch_interval_hours": 8,
+    "parser": "rss",
+    "validator": "scholarly_v1",
+    "dedup_rules": {
+      "hash": true,
+      "title_match": true,
+      "semantic_threshold": 0.85
+    },
+    "publication_policy": {
+      "auto_publish": false,
+      "min_trust": 75,
+      "review_on_fail": true
+    },
+    "metadata": {}
+  }
+]

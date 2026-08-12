@@ -1,0 +1,374 @@
+import express from "express";
+import compression from "compression";
+import path from "node:path";
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import assistantHandler from "../lib/api-handlers/assistant.js";
+import assistantHealthHandler from "../lib/api-handlers/assistant/health.js";
+import testAnthropicHandler from "../lib/api-handlers/test-anthropic.js";
+import transcribeHandler from "../lib/api-handlers/transcribe.js";
+import prayerTimesHandler from "../lib/api-handlers/prayer-times.js";
+import syncDataHandler from "../lib/api-handlers/cron/sync-data.js";
+import knowledgeSyncHandler from "../lib/api-handlers/cron/knowledge-sync.js";
+import knowledgePipelineHandler from "../lib/api-handlers/admin/knowledge-pipeline.js";
+import knowledgeSearchHandler from "../lib/api-handlers/knowledge-search.js";
+import autoContentHealthHandler from "../lib/api-handlers/cron/auto-content-health.js";
+import autoContentSyncHandler from "../lib/api-handlers/cron/auto-content-sync.js";
+import dailyBenefitRotationHandler from "../lib/api-handlers/cron/daily-benefit-rotation.js";
+import systemHealthHandler from "../lib/api-handlers/cron/system-health.js";
+import applyMigrationsHandler from "../lib/api-handlers/cron/apply-migrations.js";
+import bootstrapDatabaseHandler from "../lib/api-handlers/cron/bootstrap-database.js";
+import autoContentHandler from "../lib/api-handlers/auto-content.js";
+import autoContentAdminHandler from "../lib/api-handlers/admin/auto-content.js";
+import autoKnowledgeSyncHandler from "../lib/api-handlers/cron/auto-knowledge-sync.js";
+import connectorHealthHandler from "../lib/api-handlers/cron/connector-health.js";
+import autoKnowledgeAdminHandler from "../lib/api-handlers/admin/auto-knowledge-engine.js";
+import knowledgeRecommendationsHandler from "../lib/api-handlers/knowledge-recommendations.js";
+import intelligentSearchHandler from "../lib/api-handlers/intelligent-search.js";
+import topicContentHandler from "../lib/api-handlers/topic-content.js";
+import contentRelationsHandler from "../lib/api-handlers/content-relations.js";
+import searchAnalyticsHandler from "../lib/api-handlers/admin/search-analytics.js";
+import digitalLearningHandler from "../lib/api-handlers/digital-learning.js";
+import digitalLearningAdminHandler from "../lib/api-handlers/admin/digital-learning.js";
+import autonomousOrchestratorHandler from "../lib/api-handlers/cron/autonomous-orchestrator.js";
+import autonomousAiAdminHandler from "../lib/api-handlers/admin/autonomous-ai.js";
+import dailyContentHandler from "../lib/api-handlers/daily-content.js";
+import globalReferenceHandler from "../lib/api-handlers/global-reference.js";
+import globalReferenceAdminHandler from "../lib/api-handlers/admin/global-reference.js";
+import globalReferenceReviewHandler from "../lib/api-handlers/cron/global-reference-review.js";
+import islamicIntelligenceHandler from "../lib/api-handlers/cron/islamic-intelligence.js";
+import islamicIntelligenceAdminHandler from "../lib/api-handlers/admin/islamic-intelligence.js";
+import v1Handler from "../lib/api-handlers/v1.js";
+import v2Handler from "../lib/api-handlers/v2.js";
+import v3Handler from "../lib/api-handlers/v3.js";
+import openPlatformAdminHandler from "../lib/api-handlers/admin/open-platform.js";
+import governanceAdminHandler from "../lib/api-handlers/admin/governance.js";
+import governanceBackupHandler from "../lib/api-handlers/cron/governance-backup.js";
+import aiAgentsAdminHandler from "../lib/api-handlers/admin/ai-agents.js";
+import aiAgentsCronHandler from "../lib/api-handlers/cron/ai-agents.js";
+import scholarlySearchHandler from "../lib/api-handlers/scholarly-search.js";
+import fiqhResearchAssistantHandler from "../lib/api-handlers/fiqh-research-assistant.js";
+import knowledgeGraphHandler from "../lib/api-handlers/knowledge-graph.js";
+import citationsHandler from "../lib/api-handlers/citations.js";
+import recommendationsHandler from "../lib/api-handlers/recommendations.js";
+import contentScoringHandler from "../lib/api-handlers/cron/content-scoring.js";
+import ragResearchHandler from "../lib/api-handlers/rag-research.js";
+import universitiesHandler from "../lib/api-handlers/universities.js";
+import universitiesReviewCron from "../lib/api-handlers/cron/universities-review.js";
+import accountDeleteHandler from "../lib/api-handlers/account/delete.js";
+import accountExportHandler from "../lib/api-handlers/account/export.js";
+import { createRateLimiter } from "./rate-limit.mjs";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const appRoot = path.resolve(__dirname, "..");
+const distDir = path.resolve(appRoot, "dist");
+const seoPrerenderDir = path.resolve(appRoot, "seo-prerender");
+
+const rawPort = process.env.PORT || "24216";
+const port = Number(rawPort);
+
+if (Number.isNaN(port) || port <= 0) {
+  throw new Error(`Invalid PORT value: "${rawPort}"`);
+}
+
+const app = express();
+app.disable("x-powered-by");
+app.use(compression());
+
+app.use((_req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("X-XSS-Protection", "1; mode=block");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(self), geolocation=()");
+  next();
+});
+
+const assistantRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 15,
+  keyPrefix: "assistant",
+});
+
+const transcribeRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 8,
+  keyPrefix: "transcribe",
+});
+
+function runHandler(handler, label) {
+  return (req, res) => {
+    handler(req, res).catch((error) => {
+      console.error(`Unhandled ${label} error`, error);
+      if (!res.headersSent) {
+        const isTranscribe = label === "transcribe";
+        res.status(isTranscribe ? 500 : 200).json(
+          isTranscribe
+            ? { error: "تعذر إكمال العملية. حاول لاحقًا." }
+            : { ok: false, message: "تعذر تشغيل المساعد الآن، حاول لاحقًا.", fallback: true },
+        );
+      }
+    });
+  };
+}
+
+app.options("/api/assistant", (_req, res) => {
+  res.status(204).end();
+});
+
+app.options("/api/transcribe", (_req, res) => {
+  res.status(204).end();
+});
+
+// ── الباحث الشرعي (RAG) ────────────────────────────────────────────────────
+const ragRateLimit = createRateLimiter({ windowMs: 60_000, max: 15 });
+app.post("/api/rag/search",         express.json({ limit: "8kb" }),  ragRateLimit, runHandler(ragResearchHandler, "rag-search"));
+app.get("/api/rag/history",         runHandler(ragResearchHandler, "rag-history"));
+app.post("/api/rag/library/save",   express.json({ limit: "16kb" }), runHandler(ragResearchHandler, "rag-library-save"));
+app.get("/api/rag/library",         runHandler(ragResearchHandler, "rag-library"));
+app.delete("/api/rag/library/:id",  runHandler(ragResearchHandler, "rag-library-delete"));
+app.get("/api/rag/index/status",    runHandler(ragResearchHandler, "rag-index-status"));
+
+// ── دليل الجامعات الشرعية ──────────────────────────────────────────────────
+app.get("/api/universities/compare",         (req, res) => universitiesHandler(req, res, "compare"));
+app.get("/api/universities/:slug",           (req, res) => universitiesHandler(req, res, "detail"));
+app.get("/api/universities",                 (req, res) => universitiesHandler(req, res, "list"));
+app.post("/api/universities/compare",        express.json({ limit: "4kb" }),  (req, res) => universitiesHandler(req, res, "compare"));
+app.get("/api/admin/universities",           (req, res) => universitiesHandler(req, res, "admin-list"));
+app.post("/api/admin/universities",          express.json({ limit: "16kb" }), (req, res) => universitiesHandler(req, res, "admin-create"));
+app.put("/api/admin/universities/:id",       express.json({ limit: "16kb" }), (req, res) => universitiesHandler(req, res, "admin-update"));
+app.post("/api/admin/universities/:universityId/programs", express.json({ limit: "8kb" }), (req, res) => universitiesHandler(req, res, "admin-program-add"));
+app.put("/api/admin/programs/:id",           express.json({ limit: "8kb" }), (req, res) => universitiesHandler(req, res, "admin-program-update"));
+app.delete("/api/admin/programs/:id",        (req, res) => universitiesHandler(req, res, "admin-program-delete"));
+app.post("/api/admin/requirements/:programId", express.json({ limit: "16kb" }), (req, res) => universitiesHandler(req, res, "admin-requirements"));
+app.post("/api/admin/faqs/:universityId",    express.json({ limit: "4kb" }),  (req, res) => universitiesHandler(req, res, "admin-faq-add"));
+app.delete("/api/admin/faqs/:id",            (req, res) => universitiesHandler(req, res, "admin-faq-delete"));
+app.get("/api/admin/reminders",              (req, res) => universitiesHandler(req, res, "admin-reminders"));
+app.put("/api/admin/reminders/:id",          express.json({ limit: "4kb" }),  (req, res) => universitiesHandler(req, res, "admin-reminder-update"));
+app.get("/api/cron/universities-review",     (req, res) => universitiesReviewCron(req, res));
+
+app.post("/api/account/delete", express.json({ limit: "1kb" }), runHandler(accountDeleteHandler, "account-delete"));
+app.post("/api/account/export", express.json({ limit: "1kb" }), runHandler(accountExportHandler, "account-export"));
+app.get("/api/account/export", runHandler(accountExportHandler, "account-export"));
+
+app.get("/api/assistant/health", runHandler(assistantHealthHandler, "assistant-health"));
+app.get("/api/assistant", runHandler(assistantHandler, "assistant"));
+app.post("/api/assistant", express.json({ limit: "32kb" }), assistantRateLimit, runHandler(assistantHandler, "assistant"));
+app.get("/api/test-anthropic", runHandler(testAnthropicHandler, "test-anthropic"));
+app.post("/api/test-anthropic", runHandler(testAnthropicHandler, "test-anthropic"));
+app.post("/api/transcribe", express.json({ limit: "2mb" }), transcribeRateLimit, runHandler(transcribeHandler, "transcribe"));
+
+const fiqhResearchRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 20,
+  keyPrefix: "fiqh-research",
+});
+
+app.get("/api/fiqh-research-assistant", runHandler(fiqhResearchAssistantHandler, "fiqh-research"));
+app.post("/api/fiqh-research-assistant", express.json({ limit: "32kb" }), fiqhResearchRateLimit, runHandler(fiqhResearchAssistantHandler, "fiqh-research"));
+
+app.get("/api/prayer-times", runHandler(prayerTimesHandler, "prayer-times"));
+app.get("/api/cron/sync-data", runHandler(syncDataHandler, "cron-sync-data"));
+app.post("/api/cron/sync-data", runHandler(syncDataHandler, "cron-sync-data"));
+app.get("/api/cron/knowledge-sync", runHandler(knowledgeSyncHandler, "cron-knowledge-sync"));
+app.post("/api/cron/knowledge-sync", runHandler(knowledgeSyncHandler, "cron-knowledge-sync"));
+app.get("/api/admin/knowledge-pipeline", runHandler(knowledgePipelineHandler, "knowledge-pipeline"));
+app.post("/api/admin/knowledge-pipeline", express.json({ limit: "32kb" }), runHandler(knowledgePipelineHandler, "knowledge-pipeline"));
+app.get("/api/knowledge-search", runHandler(knowledgeSearchHandler, "knowledge-search"));
+app.post("/api/knowledge-search", express.json({ limit: "16kb" }), runHandler(knowledgeSearchHandler, "knowledge-search"));
+app.get("/api/cron/auto-content-sync", runHandler(autoContentSyncHandler, "auto-content-sync"));
+app.post("/api/cron/auto-content-sync", runHandler(autoContentSyncHandler, "auto-content-sync"));
+app.get("/api/cron/auto-content-health", runHandler(autoContentHealthHandler, "auto-content-health"));
+app.post("/api/cron/auto-content-health", runHandler(autoContentHealthHandler, "auto-content-health"));
+app.get("/api/cron/daily-benefit-rotation", runHandler(dailyBenefitRotationHandler, "daily-benefit-rotation"));
+app.post("/api/cron/daily-benefit-rotation", runHandler(dailyBenefitRotationHandler, "daily-benefit-rotation"));
+app.get("/api/cron/system-health", runHandler(systemHealthHandler, "system-health"));
+app.post("/api/cron/system-health", runHandler(systemHealthHandler, "system-health"));
+app.get("/api/cron/apply-migrations", runHandler(applyMigrationsHandler, "apply-migrations"));
+app.post("/api/cron/apply-migrations", runHandler(applyMigrationsHandler, "apply-migrations"));
+app.get("/api/cron/bootstrap-database", runHandler(bootstrapDatabaseHandler, "bootstrap-database"));
+app.post("/api/cron/bootstrap-database", runHandler(bootstrapDatabaseHandler, "bootstrap-database"));
+app.get("/api/cron/auto-knowledge-sync", runHandler(autoKnowledgeSyncHandler, "auto-knowledge-sync"));
+app.post("/api/cron/auto-knowledge-sync", runHandler(autoKnowledgeSyncHandler, "auto-knowledge-sync"));
+app.get("/api/cron/connector-health", runHandler(connectorHealthHandler, "connector-health"));
+app.post("/api/cron/connector-health", runHandler(connectorHealthHandler, "connector-health"));
+app.get("/api/auto-content", runHandler(autoContentHandler, "auto-content"));
+app.get("/api/knowledge-recommendations", runHandler(knowledgeRecommendationsHandler, "knowledge-recommendations"));
+app.get("/api/intelligent-search", runHandler(intelligentSearchHandler, "intelligent-search"));
+app.post("/api/intelligent-search", express.json({ limit: "16kb" }), runHandler(intelligentSearchHandler, "intelligent-search"));
+app.get("/api/topic-content", runHandler(topicContentHandler, "topic-content"));
+app.get("/api/content-relations", runHandler(contentRelationsHandler, "content-relations"));
+app.post("/api/content-relations", express.json({ limit: "8kb" }), runHandler(contentRelationsHandler, "content-relations"));
+app.get("/api/scholarly-search", runHandler(scholarlySearchHandler, "scholarly-search"));
+app.get("/api/admin/search-analytics", runHandler(searchAnalyticsHandler, "search-analytics"));
+app.post("/api/admin/search-analytics", express.json({ limit: "8kb" }), runHandler(searchAnalyticsHandler, "search-analytics"));
+app.get("/api/digital-learning", runHandler(digitalLearningHandler, "digital-learning"));
+app.post("/api/digital-learning", express.json({ limit: "32kb" }), runHandler(digitalLearningHandler, "digital-learning"));
+app.get("/api/admin/digital-learning", runHandler(digitalLearningAdminHandler, "digital-learning-admin"));
+app.post("/api/admin/digital-learning", express.json({ limit: "16kb" }), runHandler(digitalLearningAdminHandler, "digital-learning-admin"));
+app.get("/api/cron/autonomous-orchestrator", runHandler(autonomousOrchestratorHandler, "autonomous-orchestrator"));
+app.post("/api/cron/autonomous-orchestrator", runHandler(autonomousOrchestratorHandler, "autonomous-orchestrator"));
+app.get("/api/admin/autonomous-ai", runHandler(autonomousAiAdminHandler, "autonomous-ai-admin"));
+app.post("/api/admin/autonomous-ai", express.json({ limit: "32kb" }), runHandler(autonomousAiAdminHandler, "autonomous-ai-admin"));
+app.get("/api/daily-content", runHandler(dailyContentHandler, "daily-content"));
+app.get("/api/global-reference", runHandler(globalReferenceHandler, "global-reference"));
+app.get("/api/admin/global-reference", runHandler(globalReferenceAdminHandler, "global-reference-admin"));
+app.post("/api/admin/global-reference", express.json({ limit: "32kb" }), runHandler(globalReferenceAdminHandler, "global-reference-admin"));
+app.get("/api/cron/global-reference-review", runHandler(globalReferenceReviewHandler, "global-reference-review"));
+app.post("/api/cron/global-reference-review", runHandler(globalReferenceReviewHandler, "global-reference-review"));
+app.get("/api/cron/islamic-intelligence", runHandler(islamicIntelligenceHandler, "islamic-intelligence"));
+app.post("/api/cron/islamic-intelligence", runHandler(islamicIntelligenceHandler, "islamic-intelligence"));
+app.get("/api/admin/islamic-intelligence", runHandler(islamicIntelligenceAdminHandler, "islamic-intelligence-admin"));
+app.post("/api/admin/islamic-intelligence", express.json({ limit: "32kb" }), runHandler(islamicIntelligenceAdminHandler, "islamic-intelligence-admin"));
+const apiV1 = runHandler(v1Handler, "api-v1");
+const apiV2 = runHandler(v2Handler, "api-v2");
+const apiV3 = runHandler(v3Handler, "api-v3");
+app.get("/api/v1", apiV1);
+app.get("/api/v1/docs", apiV1);
+app.get("/api/v1/search", apiV1);
+app.get("/api/v1/resources", apiV1);
+app.get("/api/v1/topics", apiV1);
+app.get("/api/v1/topics/:id", apiV1);
+app.get("/api/v1/relations", apiV1);
+app.get("/api/v1/sources", apiV1);
+app.get("/api/v1/:resource", apiV1);
+app.get("/api/v1/:resource/:id", apiV1);
+app.get("/api/v2", apiV2);
+app.get("/api/v2/docs", apiV2);
+app.get("/api/v2/search", apiV2);
+app.get("/api/v2/:resource", apiV2);
+app.get("/api/v2/:resource/:id", apiV2);
+app.get("/api/v3", apiV3);
+app.get("/api/v3/docs", apiV3);
+app.get("/api/v3/search", apiV3);
+app.get("/api/v3/relations", apiV3);
+app.get("/api/v3/:resource", apiV3);
+app.get("/api/v3/:resource/:id", apiV3);
+app.get("/api/admin/open-platform", runHandler(openPlatformAdminHandler, "open-platform-admin"));
+app.post("/api/admin/open-platform", express.json({ limit: "32kb" }), runHandler(openPlatformAdminHandler, "open-platform-admin"));
+app.get("/api/admin/governance", runHandler(governanceAdminHandler, "governance-admin"));
+app.post("/api/admin/governance", express.json({ limit: "32kb" }), runHandler(governanceAdminHandler, "governance-admin"));
+app.get("/api/cron/governance-backup", runHandler(governanceBackupHandler, "governance-backup"));
+app.post("/api/cron/governance-backup", runHandler(governanceBackupHandler, "governance-backup"));
+app.get("/api/admin/ai-agents", runHandler(aiAgentsAdminHandler, "ai-agents-admin"));
+app.post("/api/admin/ai-agents", express.json({ limit: "32kb" }), runHandler(aiAgentsAdminHandler, "ai-agents-admin"));
+app.get("/api/cron/ai-agents", runHandler(aiAgentsCronHandler, "ai-agents-cron"));
+app.post("/api/cron/ai-agents", runHandler(aiAgentsCronHandler, "ai-agents-cron"));
+app.get("/api/admin/auto-content", runHandler(autoContentAdminHandler, "auto-content-admin"));
+app.post("/api/admin/auto-content", express.json({ limit: "16kb" }), runHandler(autoContentAdminHandler, "auto-content-admin"));
+app.get("/api/admin/auto-knowledge-engine", runHandler(autoKnowledgeAdminHandler, "auto-knowledge-admin"));
+app.post("/api/admin/auto-knowledge-engine", express.json({ limit: "32kb" }), runHandler(autoKnowledgeAdminHandler, "auto-knowledge-admin"));
+
+// ── Islamic Knowledge Graph ────────────────────────────────────────────────
+app.get("/api/knowledge-graph/node/:id/expand", runHandler(knowledgeGraphHandler, "knowledge-graph-expand"));
+app.get("/api/knowledge-graph/node/:id",        runHandler(knowledgeGraphHandler, "knowledge-graph-node"));
+app.get("/api/knowledge-graph/search",          runHandler(knowledgeGraphHandler, "knowledge-graph-search"));
+app.get("/api/knowledge-graph/nodes",           runHandler(knowledgeGraphHandler, "knowledge-graph-nodes"));
+app.get("/api/knowledge-graph",                 runHandler(knowledgeGraphHandler, "knowledge-graph"));
+app.post("/api/knowledge-graph/relationship",   express.json({ limit: "16kb" }), runHandler(knowledgeGraphHandler, "knowledge-graph-rel"));
+
+// ── Recommendations System ────────────────────────────────────────────────
+app.get("/api/recommendations/related",  runHandler(recommendationsHandler, "rec-related"));
+app.get("/api/recommendations/profile",  runHandler(recommendationsHandler, "rec-profile"));
+app.delete("/api/recommendations/profile", runHandler(recommendationsHandler, "rec-profile-delete"));
+app.post("/api/recommendations/track",   express.json({ limit: "4kb" }), runHandler(recommendationsHandler, "rec-track"));
+app.get("/api/recommendations",          runHandler(recommendationsHandler, "rec-home"));
+app.get("/api/cron/content-scoring",     runHandler(contentScoringHandler,   "content-scoring"));
+app.post("/api/cron/content-scoring",    runHandler(contentScoringHandler,   "content-scoring"));
+
+// ── Citations System ──────────────────────────────────────────────────────
+app.post("/api/citations/create",           express.json({ limit: "8kb" }), runHandler(citationsHandler, "citations-create"));
+app.get("/api/citations/format",            runHandler(citationsHandler, "citations-format"));
+app.get("/api/citations/:slug/qrcode",      runHandler(citationsHandler, "citations-qrcode"));
+app.get("/api/citations/:slug/image",       runHandler(citationsHandler, "citations-image"));
+app.post("/api/citations/:id/save",         express.json({ limit: "4kb" }), runHandler(citationsHandler, "citations-save"));
+app.get("/api/citations/:slug",             runHandler(citationsHandler, "citations-get"));
+app.get("/api/user/citations",              runHandler(citationsHandler, "citations-user-list"));
+app.post("/api/user/citations/folders",     express.json({ limit: "4kb" }), runHandler(citationsHandler, "citations-folders"));
+app.post("/api/user/citations/export",      express.json({ limit: "8kb" }), runHandler(citationsHandler, "citations-export"));
+
+const processStartedAt = Date.now();
+
+app.get("/api/healthz", (_req, res) => {
+  res.setHeader("Cache-Control", "no-store");
+  res.json({
+    ok: true,
+    service: "majalis-web",
+    at: new Date().toISOString(),
+    uptimeMs: Date.now() - processStartedAt,
+    commit: process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT || null,
+    buildId: process.env.VERCEL_DEPLOYMENT_ID || process.env.BUILD_ID || null,
+  });
+});
+
+function resolveStaticHtml(urlPath) {
+  if (urlPath === "/" || urlPath === "") {
+    const rootSeo = path.join(seoPrerenderDir, "index.html");
+    if (existsSync(rootSeo)) return rootSeo;
+    const distRootSeo = path.join(distDir, "index.seo.html");
+    if (existsSync(distRootSeo)) return distRootSeo;
+    return path.join(distDir, "index.html");
+  }
+
+  const normalized = urlPath.replace(/\/+$/, "") || "/";
+  const distSeo = path.join(distDir, normalized.slice(1), "index.html");
+  if (existsSync(distSeo)) return distSeo;
+  const nestedSeo = path.join(seoPrerenderDir, normalized.slice(1), "index.html");
+  if (existsSync(nestedSeo)) return nestedSeo;
+  return null;
+}
+
+const SPA_PREFIXES = [
+  "/search", "/topics", "/mushaf", "/learning", "/learn", "/universities",
+  "/discover-islam", "/quran", "/nations", "/prophets", "/prophet-stories",
+  "/sins-and-rights", "/arbaeen-nawawi", "/annual-courses",
+  "/scientific-announcements", "/c", "/hadith",
+  "/rulings", "/fiqh-council", "/academic-research", "/updates/auto", "/fiqh",
+  "/quran-engine",
+];
+
+function needsSpaShell(urlPath) {
+  return SPA_PREFIXES.some((p) => urlPath === p || urlPath.startsWith(`${p}/`));
+}
+
+app.use(
+  express.static(distDir, {
+    index: false,
+    maxAge: "1h",
+    setHeaders(res, filePath) {
+      if (filePath.includes(`${path.sep}assets${path.sep}`)) {
+        res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+      }
+    },
+  }),
+);
+
+app.use((req, res, next) => {
+  if (req.method !== "GET" && req.method !== "HEAD") {
+    return next();
+  }
+  if (req.path.startsWith("/api/")) {
+    return next();
+  }
+
+  const notFoundHtml = path.join(distDir, "404.html");
+  const html = resolveStaticHtml(req.path);
+  if (html) return res.sendFile(html);
+  if (needsSpaShell(req.path)) {
+    return res.sendFile(path.join(distDir, "index.html"));
+  }
+  res.status(404);
+  if (existsSync(notFoundHtml)) return res.sendFile(notFoundHtml);
+  return res
+    .type("html")
+    .send("<!doctype html><html lang=ar dir=rtl><title>غير موجود</title><h1>الصفحة غير موجودة</h1></html>");
+});
+
+app.use("/api", (_req, res) => {
+  res.status(404).json({ error: "المسار غير موجود." });
+});
+
+app.listen(port, "0.0.0.0", () => {
+  console.log(`المجلس العلمي — الخادم يعمل على http://0.0.0.0:${port}`);
+});

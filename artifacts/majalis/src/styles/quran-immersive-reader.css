@@ -1,0 +1,572 @@
+/**
+ * Flutter `QuranReaderPage` shell — parchment + SafeArea + immersive sticky.
+ */
+
+.quran-reader-page {
+  position: fixed;
+  inset: 0;
+  z-index: 10010;
+  display: flex;
+  flex-direction: column;
+  background: var(--quran-immersive-paper, #f5f5dc);
+  color: var(--quran-immersive-ink, rgba(0, 0, 0, 0.87));
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+.quran-reader-page__safe {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  /* Flutter SafeArea */
+  padding-top: var(--inset-top);
+  padding-bottom: var(--inset-bottom);
+  padding-inline-start: var(--inset-left);
+  padding-inline-end: var(--inset-right);
+}
+
+.quran-reader-page__pad {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Flutter EdgeInsets.symmetric(horizontal: 30, vertical: 20) — also ListView padding: all(30) */
+  padding: var(--quran-immersive-pad-y, 20px) var(--quran-immersive-pad-x, 30px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.quran-reader-page__pad--list {
+  padding: var(--quran-immersive-pad-x, 30px);
+}
+
+.quran-reader-page__sample {
+  margin: auto;
+  max-width: 40rem;
+  text-align: center;
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", "Amiri", serif);
+  font-size: var(--quran-immersive-fs, 28px);
+  line-height: var(--quran-immersive-lh, 56px);
+  color: inherit;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Flutter ListView.builder + InkWell selection */
+.quran-verse-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 40rem;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.quran-verse-list__item {
+  margin: 0;
+  margin-bottom: var(--quran-verse-gap, 20px);
+}
+
+.quran-verse-list__item:last-child {
+  margin-bottom: 0;
+}
+
+.quran-verse-list__verse {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  border: none;
+  border-radius: var(--quran-verse-radius, 10px);
+  background: transparent;
+  color: var(--quran-verse-ink, rgba(0, 0, 0, 0.87));
+  cursor: pointer;
+  font: inherit;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.quran-verse-list__verse.is-selected {
+  /* Colors.brown.withOpacity(0.2) */
+  background: var(--quran-verse-selected-bg, rgba(121, 85, 72, 0.2));
+  color: var(--quran-verse-selected-ink, #3e2723);
+}
+
+.quran-verse-list__text {
+  display: block;
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", "Amiri", serif);
+  font-size: var(--quran-verse-fs, 28px);
+  line-height: var(--quran-verse-lh, 56px);
+  color: inherit;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.quran-verse-list__verse.is-selected .quran-verse-list__text {
+  color: var(--quran-verse-selected-ink, #3e2723);
+}
+
+/* Immersive sticky — hide app chrome (web StatusBar / nav equivalent) */
+html.quran-immersive-sticky,
+body.quran-immersive-sticky {
+  overflow: hidden;
+  background: var(--quran-immersive-paper, #f5f5dc);
+}
+
+body.quran-immersive-sticky .bottom-nav,
+body.quran-immersive-sticky .bottom-nav--v2,
+body.quran-immersive-sticky .bottom-nav-bar,
+body.quran-immersive-sticky .navbar-v3,
+body.quran-immersive-sticky .assistant-fab,
+body.quran-immersive-sticky .scroll-to-top {
+  display: none !important;
+}
+
+/* ── Flutter ImmersiveQuranPage + PageView ── */
+.immersive-quran-page {
+  position: fixed;
+  inset: 0;
+  z-index: 10010;
+  display: flex;
+  flex-direction: column;
+  background: var(--quran-immersive-paper, #f5f5dc);
+  color: var(--quran-immersive-ink, rgba(0, 0, 0, 0.87));
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+.immersive-quran-page__safe {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--inset-top);
+  padding-bottom: var(--inset-bottom);
+  padding-inline-start: max(1rem, var(--inset-left));
+  padding-inline-end: max(1rem, var(--inset-right));
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+.immersive-quran-page__pager {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  /* Flutter PageScrollPhysics — one page at a time */
+  overscroll-behavior-x: contain;
+}
+
+.immersive-quran-page__sheet {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Flutter ListView padding: symmetric(horizontal: 30, vertical: 50) */
+  padding: var(--quran-immersive-list-pad-y, 50px) var(--quran-immersive-pad-x, 30px);
+  box-sizing: border-box;
+}
+
+.immersive-quran-page__verses {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 40rem;
+}
+
+.immersive-quran-page__verse-item {
+  margin: 0;
+}
+
+.immersive-quran-page__verse {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 10px 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.immersive-quran-page__verse-text {
+  display: block;
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: center;
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", "Amiri", serif);
+  line-height: var(--quran-immersive-lh, 2.4);
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  white-space: normal;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.immersive-quran-page__verse.is-selected {
+  /* Master Prompt: Colors.brown.withOpacity(0.2) */
+  background: var(--quran-verse-selected-bg, rgba(121, 85, 72, 0.2));
+  border-radius: 10px;
+  padding: 10px 8px;
+}
+
+.immersive-quran-page__verse.is-selected .immersive-quran-page__verse-text {
+  color: var(--quran-verse-selected-ink, #3e2723);
+}
+
+.immersive-quran-page__verse.is-reciting {
+  /* Audio tracking cursor — soft emerald pulse while recited */
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--mj-brand) 45%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--mj-brand) 8%, transparent);
+}
+
+.immersive-verse-sheet__status {
+  margin: 0;
+  padding: 0.35rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--mj-brand);
+  text-align: center;
+}
+
+/* Prefs drawer — silent personalization */
+.immersive-prefs-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10025;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.immersive-prefs-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
+.immersive-prefs-drawer {
+  position: relative;
+  z-index: 1;
+  width: min(20rem, 88vw);
+  height: 100%;
+  padding: max(1rem, var(--inset-top)) 1rem max(1rem, var(--inset-bottom));
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+  overflow-y: auto;
+  background: var(--quran-immersive-paper, #f5f5dc);
+}
+
+.immersive-prefs-drawer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.immersive-prefs-drawer__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.immersive-prefs-drawer__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.immersive-prefs-drawer__section {
+  margin-bottom: 1.25rem;
+}
+
+.immersive-prefs-drawer__label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.immersive-prefs-drawer__font-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.immersive-prefs-drawer__font-row button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.immersive-prefs-drawer__slider {
+  width: 100%;
+  accent-color: #795548; /* Flutter Slider activeColor: Colors.brown */
+}
+
+.immersive-prefs-drawer__switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 2.75rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.immersive-prefs-drawer__switch input {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: #795548;
+}
+
+/* ── Flutter ImmersiveQuranApp ── */
+.immersive-quran-app {
+  position: fixed;
+  inset: 0;
+  z-index: 10010;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.immersive-quran-app__safe {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--inset-top);
+  padding-bottom: var(--inset-bottom);
+  padding-inline-start: var(--inset-left);
+  padding-inline-end: var(--inset-right);
+}
+
+.immersive-quran-app__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.35rem 1rem;
+}
+
+.immersive-quran-app__settings-btn {
+  min-height: 2.5rem;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid rgba(121, 85, 72, 0.35);
+  border-radius: 0.55rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.immersive-quran-app__pager {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.immersive-quran-app__page {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+  scroll-snap-align: start;
+  overflow-y: auto;
+  /* Flutter: horizontal 24, vertical 16 */
+  padding: 16px 24px;
+  box-sizing: border-box;
+}
+
+.immersive-quran-app__verses {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 40rem;
+}
+
+.immersive-quran-app__verse {
+  display: block;
+  width: 100%;
+  margin: 4px 0;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: center;
+  transition: background-color 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.immersive-quran-app__verse.is-selected {
+  background: var(--quran-verse-selected-soft, rgba(121, 85, 72, 0.15));
+}
+
+.immersive-quran-app__verse.is-playing {
+  background: var(--quran-verse-playing-bg, rgba(255, 193, 7, 0.3));
+}
+
+.immersive-quran-app__verse-text {
+  display: block;
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", "Amiri", serif);
+  font-size: var(--quran-app-fs, 28px);
+  line-height: var(--quran-app-lh, 2.1);
+  color: var(--quran-app-ink, rgba(0, 0, 0, 0.87));
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.immersive-prefs-drawer__row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.25rem;
+  border: none;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  text-align: start;
+}
+
+/* Flutter showModalBottomSheet */
+.immersive-verse-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.immersive-verse-sheet-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
+.immersive-verse-sheet {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 28rem);
+  border-radius: 1rem 1rem 0 0;
+  padding: 0.5rem 0 max(1rem, var(--inset-bottom));
+  box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.12);
+  background: var(--quran-immersive-paper, #f5f5dc);
+}
+
+.immersive-verse-sheet__handle {
+  width: 2.5rem;
+  height: 0.28rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.18);
+  margin: 0.35rem auto 0.5rem;
+}
+
+.immersive-verse-sheet__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.immersive-verse-sheet__preview {
+  flex: 1;
+  margin: 0;
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", "Amiri", serif);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.immersive-verse-sheet__close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+}
+
+.immersive-verse-sheet__list {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0;
+}
+
+.immersive-verse-sheet__row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.65rem 1.25rem;
+  border: none;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.87);
+  font: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: start;
+}
+
+.immersive-verse-sheet__row:hover,
+.immersive-verse-sheet__row:focus-visible {
+  background: rgba(121, 85, 72, 0.12);
+  outline: none;
+}

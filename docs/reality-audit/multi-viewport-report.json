@@ -1,0 +1,446 @@
+{
+  "generatedAt": "2026-08-11T15:22:26.592Z",
+  "elapsedMs": 61343,
+  "viewports": [
+    {
+      "id": "iphone-se",
+      "width": 375,
+      "height": 667,
+      "label": "iPhone SE / 8"
+    },
+    {
+      "id": "iphone-12",
+      "width": 390,
+      "height": 844,
+      "label": "iPhone 12/13/14"
+    },
+    {
+      "id": "iphone-15-pro-max",
+      "width": 430,
+      "height": 932,
+      "label": "iPhone 15 Pro Max"
+    },
+    {
+      "id": "ipad-mini",
+      "width": 744,
+      "height": 1133,
+      "label": "iPad mini"
+    }
+  ],
+  "pages": [
+    1,
+    2,
+    3,
+    50,
+    235,
+    283,
+    306,
+    528,
+    588,
+    604
+  ],
+  "failures": 0,
+  "failureList": [],
+  "summary": [
+    {
+      "viewport": "iphone-se",
+      "page": 1,
+      "clipped": 0,
+      "visibleFull": 7,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 535.375,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-se",
+      "page": 2,
+      "clipped": 0,
+      "visibleFull": 6,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 536.40625,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-se",
+      "page": 3,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 535.96875,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-se",
+      "page": 50,
+      "clipped": 0,
+      "visibleFull": 13,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 540.90625,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-se",
+      "page": 235,
+      "clipped": 0,
+      "visibleFull": 13,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 540.765625,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-se",
+      "page": 283,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 535.9375,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-se",
+      "page": 306,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 536.109375,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-se",
+      "page": 528,
+      "clipped": 0,
+      "visibleFull": 13,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 540.71875,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-se",
+      "page": 588,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 536.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-se",
+      "page": 604,
+      "clipped": 0,
+      "visibleFull": 9,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 540.625,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-12",
+      "page": 1,
+      "clipped": 0,
+      "visibleFull": 7,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 688.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-12",
+      "page": 2,
+      "clipped": 0,
+      "visibleFull": 6,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 688.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-12",
+      "page": 3,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 688.265625,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-12",
+      "page": 50,
+      "clipped": 0,
+      "visibleFull": 13,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 688.578125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-12",
+      "page": 235,
+      "clipped": 0,
+      "visibleFull": 13,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 688.265625,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-12",
+      "page": 283,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 688.265625,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-12",
+      "page": 306,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 688.375,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-12",
+      "page": 528,
+      "clipped": 0,
+      "visibleFull": 13,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 688.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-12",
+      "page": 588,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 688.375,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-12",
+      "page": 604,
+      "clipped": 0,
+      "visibleFull": 9,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 688.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-15-pro-max",
+      "page": 1,
+      "clipped": 0,
+      "visibleFull": 7,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 776.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-15-pro-max",
+      "page": 2,
+      "clipped": 0,
+      "visibleFull": 6,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 776.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-15-pro-max",
+      "page": 3,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 776.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-15-pro-max",
+      "page": 50,
+      "clipped": 0,
+      "visibleFull": 13,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 776.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-15-pro-max",
+      "page": 235,
+      "clipped": 0,
+      "visibleFull": 13,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 776.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-15-pro-max",
+      "page": 283,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 776.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-15-pro-max",
+      "page": 306,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 776.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-15-pro-max",
+      "page": 528,
+      "clipped": 0,
+      "visibleFull": 13,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 776.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-15-pro-max",
+      "page": 588,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 776.078125,
+      "ok": true
+    },
+    {
+      "viewport": "iphone-15-pro-max",
+      "page": 604,
+      "clipped": 0,
+      "visibleFull": 9,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 776.078125,
+      "ok": true
+    },
+    {
+      "viewport": "ipad-mini",
+      "page": 1,
+      "clipped": 0,
+      "visibleFull": 7,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 979.609375,
+      "ok": true
+    },
+    {
+      "viewport": "ipad-mini",
+      "page": 2,
+      "clipped": 0,
+      "visibleFull": 6,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 979.609375,
+      "ok": true
+    },
+    {
+      "viewport": "ipad-mini",
+      "page": 3,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 979.609375,
+      "ok": true
+    },
+    {
+      "viewport": "ipad-mini",
+      "page": 50,
+      "clipped": 0,
+      "visibleFull": 13,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 979.609375,
+      "ok": true
+    },
+    {
+      "viewport": "ipad-mini",
+      "page": 235,
+      "clipped": 0,
+      "visibleFull": 13,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 979.609375,
+      "ok": true
+    },
+    {
+      "viewport": "ipad-mini",
+      "page": 283,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 979.609375,
+      "ok": true
+    },
+    {
+      "viewport": "ipad-mini",
+      "page": 306,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 979.609375,
+      "ok": true
+    },
+    {
+      "viewport": "ipad-mini",
+      "page": 528,
+      "clipped": 0,
+      "visibleFull": 13,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 979.609375,
+      "ok": true
+    },
+    {
+      "viewport": "ipad-mini",
+      "page": 588,
+      "clipped": 0,
+      "visibleFull": 15,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 979.609375,
+      "ok": true
+    },
+    {
+      "viewport": "ipad-mini",
+      "page": 604,
+      "clipped": 0,
+      "visibleFull": 9,
+      "hOverflow": 0,
+      "inkOverlaps": 0,
+      "contentBand": 979.609375,
+      "ok": true
+    }
+  ]
+}

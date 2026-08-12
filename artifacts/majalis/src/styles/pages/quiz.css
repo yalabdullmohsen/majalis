@@ -1,0 +1,17 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   213 — Quiz Page enhancements
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.quiz-level-badge--easy {
+  background: var(--majalis-emerald-muted) !important;
+  color: var(--majalis-emerald) !important;
+}
+.quiz-level-badge--medium {
+  background: var(--majalis-parchment-deep) !important;
+  color: var(--majalis-ink-soft) !important;
+}
+.quiz-level-badge--hard {
+  background: var(--majalis-danger-muted, #fee2e2) !important;
+  color: var(--majalis-danger, var(--mj-danger-deep)) !important;
+}
+

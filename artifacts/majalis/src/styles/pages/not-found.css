@@ -1,0 +1,133 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   72  NOT-FOUND PAGE V2  (nf2-*)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.nf2-page {
+  min-height: 70vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2.5rem 1rem 4rem;
+}
+.nf2-card {
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+
+.nf2-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-bottom: 1.1rem;
+}
+.nf2-brand__logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+.nf2-brand__name {
+  font-weight: 800;
+  color: var(--mj-brand);
+  font-size: 1.05rem;
+}
+
+/* أيقونة Compass */
+.nf2-icon-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(23,61,53,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  border: 1.5px solid rgba(23,61,53,.18);
+}
+.nf2-compass { color: var(--mj-brand); }
+
+.nf2-code {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--mj-brand);
+  letter-spacing: normal;
+  margin: 0 0 0.4rem;
+  font-variant-numeric: tabular-nums;
+}
+.nf2-title { font-size: 1.3rem; font-weight: 800; margin: 0 0 0.65rem; color: var(--clr-ink, #1a1a1a); }
+.nf2-desc { font-size: 0.87rem; color: var(--clr-ink-soft, var(--mj-muted)); line-height: 1.75; margin: 0 0 1.4rem; max-width: 420px; }
+
+/* أزرار الأكشن */
+.nf2-actions { display: flex; gap: var(--ds-space-3); flex-wrap: wrap; justify-content: center; margin-bottom: 1.75rem; }
+.nf2-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.3rem;
+  border-radius: 0.65rem;
+  font-size: 0.87rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  transition: background .15s, color .15s;
+}
+.nf2-btn--primary { background: var(--mj-brand); color: #fff; border-color: var(--mj-brand); }
+.nf2-btn--primary:hover { background: var(--mj-brand-deep); border-color: var(--mj-brand-deep); }
+.nf2-btn--outline { background: transparent; color: var(--mj-brand); border-color: var(--mj-brand); }
+.nf2-btn--outline:hover { background: rgba(23,61,53,.08); }
+
+/* أقسام مقترحة */
+.nf2-suggestions { width: 100%; margin-bottom: 1.75rem; }
+.nf2-suggestions__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--clr-ink-soft, var(--mj-muted));
+  text-transform: uppercase;
+  letter-spacing: normal;
+  margin-bottom: 0.75rem;
+}
+.nf2-suggestions__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--ds-space-2);
+}
+@media (max-width: 480px) { .nf2-suggestions__grid { grid-template-columns: repeat(2, 1fr); } }
+
+.nf2-sug-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.65rem 0.5rem;
+  border: 1.5px solid var(--clr-border, rgba(0,0,0,.1));
+  border-radius: var(--ds-radius-lg);
+  font-size: var(--ds-text-xs);
+  font-weight: 600;
+  color: var(--clr-ink, #1a1a1a);
+  text-decoration: none;
+  background: var(--clr-surface, #fff);
+  transition: border-color .15s, background .15s;
+}
+.nf2-sug-item:hover { border-color: var(--mj-brand); background: rgba(23,61,53,.05); color: var(--mj-brand); }
+.nf2-sug-item__icon { color: var(--mj-brand); }
+
+.nf2-quiz-wrap { width: 100%; }
+
+/* Dark mode 72 */
+html[data-theme="dark"] .nf2-icon-wrap { background: rgba(23,61,53,.2); border-color: rgba(23,61,53,.3); }
+html[data-theme="dark"] .nf2-sug-item { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); color: var(--mj-brand-soft); }
+html[data-theme="dark"] .nf2-sug-item:hover { border-color: var(--mj-brand); background: rgba(23,61,53,.15); }
+
+
+/* ============================================================
+   67 — NotFoundPage  (nf-*)
+   ============================================================ */
+
+.nf-link--primary   { background: var(--majalis-emerald); color: var(--majalis-parchment); }
+.nf-link--secondary { border: 1px solid var(--majalis-line); color: var(--majalis-emerald-deep); background: var(--majalis-parchment); }
+

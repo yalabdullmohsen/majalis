@@ -1,0 +1,106 @@
+/**
+ * بذرة تطوير فقط — عناصر موضّحة بـ isDemo وليس أسماء باحثين/جامعات حقيقية مزعومة.
+ * لا تُحمَّل في الإنتاج إلا إذا وُضع VITE_RESEARCH_DEMO=1 صراحةً.
+ */
+import type { ResearchRecord } from "./types";
+import { RESEARCH_PUBLISHED_FILL } from "./published-seed-fill";
+import { RESEARCH_PUBLISHED_FILL_B2 } from "./published-seed-fill-b2";
+import { RESEARCH_PUBLISHED_FILL_B3 } from "./published-seed-fill-b3";
+
+export const RESEARCH_DEMO_SEED: ResearchRecord[] = [
+  {
+    id: "demo-meta-001",
+    slug: "demo-fiqh-methodology-outline",
+    title: "[تجريبي] مخطط وصفي: مناهج البحث في الفقه المقارن",
+    titleEn: "[DEMO] Descriptive outline: comparative fiqh research methods",
+    kind: "research_abstract",
+    categoryIds: ["comparative-fiqh", "fiqh-studies"],
+    authors: [{ name: "عيّنة تجريبية — باحث أ", role: "author" }],
+    supervisor: "عيّنة تجريبية — مشرف",
+    university: "عيّنة تجريبية — جامعة",
+    college: "كلية الشريعة (عيّنة)",
+    department: "الفقه وأصوله (عيّنة)",
+    academicLevel: "masters",
+    country: "عيّنة",
+    year: 2024,
+    language: "ar",
+    pageCount: 12,
+    abstract:
+      "ملخص تجريبي لفهرسة البيانات الوصفية فقط. لا يمثّل بحثًا منشورًا ولا يُنسب لباحث حقيقي. الغرض: اختبار الواجهة ومحرك البحث في بيئة التطوير.",
+    keywords: ["تجريبي", "فقه مقارن", "مناهج بحث", "بيانات وصفية"],
+    problemStatement: "كيف تُعرض بيانات بحث شرعي دون نشر نص كامل بلا إذن؟",
+    objectives: ["اختبار بطاقة البحث", "اختبار التوثيق", "اختبار القيود الحقوقية"],
+    methodology: "وصف واجهة فقط — بلا منهج علمي حقيقي.",
+    findings: ["الواجهة تعرض الملخص دون ملف."],
+    recommendations: ["لا تُستخدم العيّنة في الإنتاج."],
+    sourceUrl: "https://www.majlisilm.com/academic-research",
+    reviewStatus: "published",
+    license: "cc_by",
+    accessType: "abstract_only",
+    peerReviewed: false,
+    featured: true,
+    isPersonal: false,
+    isDemo: true,
+    viewCount: 3,
+    citationCount: 0,
+    sourceReliability: 1,
+    publishedAt: "2026-07-01T00:00:00.000Z",
+    createdAt: "2026-07-01T00:00:00.000Z",
+    updatedAt: "2026-07-01T00:00:00.000Z",
+  },
+  {
+    id: "demo-meta-002",
+    slug: "demo-hadith-cataloging-notes",
+    title: "[تجريبي] ملاحظات فهرسة: الدراسات الحديثية المفتوحة",
+    kind: "course_paper",
+    categoryIds: ["hadith-studies", "hadith"],
+    authors: [{ name: "عيّنة تجريبية — باحث ب", role: "author" }],
+    university: "عيّنة تجريبية — معهد",
+    academicLevel: "undergraduate",
+    year: 2023,
+    language: "ar",
+    abstract:
+      "عيّنة ثانية للتطوير: بيانات وصفية فقط، بدون ملف PDF. تُستخدم للتحقق من الفلاتر والتصنيف.",
+    keywords: ["تجريبي", "حديث", "فهرسة"],
+    reviewStatus: "published",
+    license: "all_rights_reserved",
+    accessType: "metadata_only",
+    peerReviewed: false,
+    featured: false,
+    isPersonal: false,
+    isDemo: true,
+    viewCount: 1,
+    sourceReliability: 1,
+    publishedAt: "2026-06-15T00:00:00.000Z",
+    createdAt: "2026-06-15T00:00:00.000Z",
+    updatedAt: "2026-06-15T00:00:00.000Z",
+  },
+  {
+    id: "demo-personal-003",
+    slug: "demo-personal-held",
+    title: "[تجريبي] بحث شخصي قيد المراجعة (لا يُعرض للعامة)",
+    kind: "personal_research",
+    categoryIds: ["contemporary-thought"],
+    authors: [{ name: "عيّنة تجريبية — صاحب الحساب", role: "author" }],
+    academicLevel: "independent",
+    year: 2025,
+    language: "ar",
+    abstract: "عيّنة بحث شخصي — تبقى غير منشورة حتى اعتماد مراجع مخوّل.",
+    keywords: ["تجريبي", "شخصي"],
+    reviewStatus: "awaiting_review",
+    license: "author_permission",
+    accessType: "metadata_only",
+    isPersonal: true,
+    isDemo: true,
+    publishedAt: undefined,
+    createdAt: "2026-07-10T00:00:00.000Z",
+    updatedAt: "2026-07-10T00:00:00.000Z",
+  },
+];
+
+/** كتالوج منشور — بيانات وصفية لأعمال معروفة (بلا نص كامل، بلا isDemo). */
+export const RESEARCH_PUBLISHED_SEED: ResearchRecord[] = [
+  ...RESEARCH_PUBLISHED_FILL,
+  ...RESEARCH_PUBLISHED_FILL_B2,
+  ...RESEARCH_PUBLISHED_FILL_B3,
+];

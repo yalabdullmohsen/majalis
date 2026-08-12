@@ -1,0 +1,147 @@
+/* شيت سفلي موحّد — رموز theme فقط */
+.app-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--mj-z-sheet, 60);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-block-end: calc(16px + var(--inset-bottom));
+}
+.app-sheet-overlay--elevated {
+  z-index: 10060;
+}
+.app-sheet-overlay__scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: color-mix(in srgb, var(--mj-ink, #0E241E) 45%, transparent);
+  cursor: pointer;
+}
+.app-sheet-overlay > .app-sheet {
+  position: relative;
+  z-index: 1;
+}
+
+.app-sheet {
+  width: min(100%, 40rem);
+  max-height: 85svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--mj-surface, var(--surface, #fff));
+  color: var(--mj-ink, var(--text));
+  border-radius: 20px 20px 0 0;
+  box-shadow: var(--mj-sh, 0 -8px 28px rgba(11, 32, 24, 0.18));
+  margin-block-end: 0;
+  transition: transform 180ms ease;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-sheet { transition: none !important; }
+}
+
+.app-sheet--half { max-height: min(55svh, 85svh); }
+.app-sheet--full { max-height: 85svh; }
+
+.app-sheet__handle {
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 0.32rem;
+  margin: 0.65rem auto 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mj-ink, #0E241E) 28%, transparent);
+  touch-action: none;
+  cursor: grab;
+  /* منطقة لمس أوسع للمقبض */
+  padding-block: 0.55rem;
+  box-sizing: content-box;
+  background-clip: content-box;
+}
+
+.app-sheet__head {
+  flex-shrink: 0;
+  padding: 0.35rem 1.1rem 0.55rem;
+  border-bottom: 1px solid var(--mj-hairline, var(--border));
+}
+
+.app-sheet__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: var(--font-display, inherit);
+  color: var(--mj-ink, var(--text-title));
+  text-align: center;
+}
+
+.app-sheet__body {
+  flex: 1 1 auto;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0.75rem 1.1rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-sheet__footer-slot {
+  flex-shrink: 0;
+  padding: 0 1.1rem;
+}
+
+.app-sheet__footer {
+  flex-shrink: 0;
+  padding: 0.65rem 1.1rem calc(0.65rem + var(--inset-bottom));
+  border-top: 1px solid var(--mj-hairline, var(--border));
+  background: var(--mj-surface, var(--surface, #fff));
+}
+
+.app-sheet__close {
+  width: 100%;
+  min-height: 2.85rem;
+  border-radius: var(--mj-r-md, 16px);
+  border: 1px solid var(--mj-hairline, var(--border));
+  background: color-mix(in srgb, var(--mj-brand, #1E5F4B) 8%, transparent);
+  color: var(--mj-ink, var(--text));
+  font: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.app-sheet__close:active {
+  transform: scale(0.98);
+}
+
+.app-sheet__close:focus-visible {
+  outline: 2px solid var(--mj-brand, #1E5F4B);
+  outline-offset: 2px;
+}
+
+.app-sheet__close--primary {
+  border-color: transparent;
+  background: var(--mj-brand, #1F7A5A);
+  color: #fff;
+}
+
+.app-sheet__footer-slot + .app-sheet__footer {
+  border-top: 0;
+  padding-block-start: 0.35rem;
+}
+
+.app-sheet__footer-slot .app-sheet__close {
+  margin-block-end: 0.45rem;
+}
+
+.update-available-sheet__copy {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--mj-ink-muted, var(--text-muted, #4a5c55));
+  text-align: center;
+}
+
+body.app-sheet-open {
+  overflow: hidden;
+}

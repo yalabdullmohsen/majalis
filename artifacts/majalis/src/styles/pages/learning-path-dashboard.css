@@ -1,0 +1,11 @@
+/* ============================================================
+   77 — LearningPathDashboardPage  (ldb-*)
+   ============================================================ */
+
+.ldb-hero { background: linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald)); color: #fff; padding: 2.5rem 1rem; }
+
+.ldb-stat--completed  { --stat-bg: #dcfce7; --stat-color: var(--mj-brand); }
+.ldb-stat--inprogress { --stat-bg: #E6EDE9; --stat-color: var(--mj-brand-deep); }
+.ldb-stat--started    { --stat-bg: #eff6ff; --stat-color: #1d4ed8; }
+.ldb-stat--achieve    { --stat-bg: #faf5ff; --stat-color: #6b21a8; }
+

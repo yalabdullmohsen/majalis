@@ -1,0 +1,129 @@
+name: Resolve PR conflicts from main
+
+# عند تعارض أو تأخّر PR يستهدف main: يدمج origin/main في فرع الـ PR.
+# إن نجح الدمج بلا تعارض يُدفع الفرع وتُعاد الفحوصات ثم Auto-merge.
+# إن بقي تعارض يُعلَّق تعليقًا واضحًا دون دفع قسري.
+# PAT (PROD_DEPLOY_TOKEN) يُفضَّل لأن الدفع بـGITHUB_TOKEN لا يطلق CI
+# على الفرع المحدَّث — لازم لإعادة الفحوصات بعد حل التأخّر، لا للدمج.
+# إن غاب/فشل PAT نستخدم GITHUB_TOKEN مع persist-credentials.
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "رقم PR محدد (فارغ = كل المتعارضة/المتأخرة عن main)"
+        required: false
+        type: string
+  pull_request:
+    types: [synchronize, opened, reopened]
+    branches: [main]
+
+concurrency:
+  group: resolve-conflicts-${{ github.event.pull_request.number || github.event.inputs.pr_number || 'batch' }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  GH_TOKEN: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}
+
+jobs:
+  resolve:
+    if: github.repository == 'yalabdullmohsen/majalis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: قائمة PRs المتعارضة
+        id: list
+        env:
+          DISPATCH_PR: ${{ github.event.inputs.pr_number }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          ALLOW='^((cursor|session|claude|codex|automation|fix|feature|chore|docs|security|identity)/)'
+          EXCLUDE_DUAL='^(automation/content|automation/tasks)$'
+          nums=""
+          if [ "$EVENT_NAME" = "pull_request" ] && [ -n "${PR_NUMBER:-}" ]; then
+            nums="$PR_NUMBER"
+          elif [ -n "${DISPATCH_PR:-}" ]; then
+            nums="$DISPATCH_PR"
+          else
+            nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open --limit 50 \
+              --json number,mergeable,mergeStateStatus,headRefName --jq \
+              '.[] | select(.mergeable=="CONFLICTING" or .mergeStateStatus=="BEHIND" or .mergeStateStatus=="DIRTY") | .number' \
+              | tr '\n' ' ' || true)
+          fi
+          echo "nums=${nums}" >> "$GITHUB_OUTPUT"
+          echo "allow=${ALLOW}" >> "$GITHUB_OUTPUT"
+          echo "exclude_dual=${EXCLUDE_DUAL}" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        if: steps.list.outputs.nums != ''
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+          token: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Configure git auth for push
+        if: steps.list.outputs.nums != ''
+        env:
+          TOKEN: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+      - name: دمج main في الفروع المتعارضة
+        if: steps.list.outputs.nums != ''
+        env:
+          NUMS: ${{ steps.list.outputs.nums }}
+          ALLOW: ${{ steps.list.outputs.allow }}
+          EXCLUDE_DUAL: ${{ steps.list.outputs.exclude_dual }}
+        run: |
+          set -u
+          git fetch origin main
+          for n in $NUMS; do
+            echo "::group::PR #$n"
+            meta=$(gh -R "$GITHUB_REPOSITORY" pr view "$n" --json state,baseRefName,headRefName,mergeable,mergeStateStatus,isDraft \
+              --jq '{state,base:.baseRefName,head:.headRefName,mergeable,mergeStateStatus,isDraft}')
+            state=$(echo "$meta" | jq -r .state)
+            base=$(echo "$meta" | jq -r .base)
+            head=$(echo "$meta" | jq -r .head)
+            mergeable=$(echo "$meta" | jq -r .mergeable)
+            mstatus=$(echo "$meta" | jq -r .mergeStateStatus)
+            if [ "$state" != "OPEN" ] || [ "$base" != "main" ]; then
+              echo "تخطي"; echo "::endgroup::"; continue
+            fi
+            if ! echo "$head" | grep -Eq "$ALLOW"; then
+              echo "تخطي نمط"; echo "::endgroup::"; continue
+            fi
+            if echo "$head" | grep -Eq "$EXCLUDE_DUAL"; then
+              echo "تخطي dual"; echo "::endgroup::"; continue
+            fi
+            needs_update=0
+            if [ "$mergeable" = "CONFLICTING" ] || [ "$mstatus" = "BEHIND" ] || [ "$mstatus" = "DIRTY" ]; then
+              needs_update=1
+            fi
+            if [ "$needs_update" != "1" ] && [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+              echo "الفرع محدّث ولا تعارض"; echo "::endgroup::"; continue
+            fi
+            git fetch origin "$head" || { echo "تعذّر fetch"; echo "::endgroup::"; continue; }
+            git checkout -B "pr-$n" "origin/$head"
+            if git merge --no-edit origin/main; then
+              git push origin "HEAD:$head"
+              gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "✅ حُدّث الفرع من \`main\` تلقائيًا. تُعاد الفحوصات (Verify build) ثم Auto-merge (squash)." || true
+              echo "✓ دُفع $head"
+            else
+              git merge --abort || true
+              gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "⚠️ تعذّر التحديث التلقائي من \`main\` لوجود تعارض يحتاج حلًا يدويًا مع الحفاظ على تعديلات الفرع." || true
+              echo "::warning::تعارض غير قابل للحل التلقائي في #$n"
+            fi
+            echo "::endgroup::"
+          done

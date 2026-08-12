@@ -1,0 +1,256 @@
+/* ─────────────────────────────────────────────────────────── */
+/* 220 — صفحة الأدعية الشرعية (.duas-*, .dua-*)             */
+/* ─────────────────────────────────────────────────────────── */
+
+.duas-hero {
+  background: linear-gradient(150deg, var(--mj-brand-deep) 0%, var(--mj-brand) 55%, var(--mj-brand) 100%);
+  border-radius: var(--ds-radius-2xl);
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
+}
+.duas-hero__bismillah {
+  font-size: var(--ds-text-base);
+  font-family: var(--font-quran, serif);
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 0.75rem;
+  line-height: 1.9;
+}
+.duas-hero__title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 0.6rem;
+}
+.duas-hero__sub {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.85);
+  margin: 0 auto 0.75rem;
+  max-width: 500px;
+}
+.duas-hero__stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-2);
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.75);
+  font-weight: 600;
+}
+.duas-dot { opacity: 0.35; }
+
+/* Controls */
+.duas-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+  margin-bottom: 1.25rem;
+}
+.duas-search-wrap { position: relative; }
+.duas-search-icon {
+  position: absolute;
+  inset-inline-end: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--mj-brand);
+  pointer-events: none;
+}
+.duas-search {
+  width: 100%;
+  padding: 0.65rem 2.5rem 0.65rem 1rem;
+  border: 1.5px solid var(--mj-hairline, #C6D6CE);
+  border-radius: var(--ds-radius-lg);
+  font-size: 0.9rem;
+  background: var(--mj-surface, #FFFFFF);
+  color: var(--mj-ink, #1A1A18);
+  outline: none;
+  direction: rtl;
+  transition: border-color 0.2s;
+}
+.duas-search:focus { border-color: var(--mj-brand); }
+.duas-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.duas-cat {
+  padding: 0.3rem 0.75rem;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid #C6D6CE;
+  background: #FFFFFF;
+  color: var(--mj-brand-deep);
+  transition: all 0.15s;
+}
+.duas-cat:hover { border-color: var(--mj-brand); }
+.duas-cat--active { background: var(--mj-brand); color: #FFFFFF; border-color: var(--mj-brand); }
+
+/* List */
+.duas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.duas-empty {
+  text-align: center;
+  color: #497061;
+  padding: var(--ds-space-8);
+}
+
+/* Card */
+.dua-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--mj-brand-soft);
+  border-radius: var(--ds-radius-xl);
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.dua-card:hover { border-color: #9BC5B3; }
+.dua-card--open { border-color: var(--mj-brand); box-shadow: 0 4px 18px rgba(31,77,58,0.1); }
+
+.dua-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--mj-brand-soft);
+}
+.dua-card__title-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: end;
+  direction: rtl;
+  padding: 0;
+}
+.dua-card__icon { color: var(--mj-brand); flex-shrink: 0; }
+.dua-card__title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--mj-brand-deep);
+  flex: 1;
+}
+.dua-card__cat {
+  font-size: 0.8rem;
+  color: #497061;
+  background: rgba(31,77,58,0.08);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--ds-radius-xl);
+  white-space: nowrap;
+}
+.dua-card__copy {
+  background: none;
+  border: 1px solid #C6D6CE;
+  border-radius: var(--ds-radius);
+  cursor: pointer;
+  padding: 0.35rem;
+  color: #497061;
+  transition: all 0.15s;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.dua-card__copy:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
+
+.dua-card__arabic {
+  font-family: var(--font-quran, serif);
+  font-size: 1.05rem;
+  color: var(--mj-brand-deep);
+  line-height: 2;
+  padding: 0.85rem 1.15rem;
+  margin: 0;
+  direction: rtl;
+  text-align: end;
+}
+
+.dua-card__body {
+  border-top: 1px solid var(--mj-brand-soft);
+  padding: 0.85rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+/* Details */
+.dua-detail { display: flex; flex-direction: column; gap: 0.15rem; }
+.dua-detail--trans { background: rgba(31,77,58,0.03); border-radius: var(--ds-radius); padding: 0.5rem 0.75rem; }
+.dua-detail--meta { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+.dua-detail__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--mj-brand);
+  text-transform: uppercase;
+  letter-spacing: normal;
+}
+.dua-detail__text {
+  font-size: 0.83rem;
+  color: var(--mj-brand-deep);
+  line-height: 1.65;
+  margin: 0;
+}
+.dua-detail__text--trans { font-style: italic; color: var(--mj-brand-deep); }
+
+/* Virtue */
+.dua-virtue {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  background: rgba(245,200,30,0.08);
+  border: 1px solid rgba(245,200,30,0.2);
+  border-radius: var(--ds-radius);
+  padding: 0.5rem 0.75rem;
+  color: #5A4500;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.dua-virtue svg { color: #C8A100; flex-shrink: 0; margin-top: 0.15rem; }
+
+/* ── دعاء اليوم ─────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .duas-hero__title { font-size: 1.7rem; }
+  .dua-detail--meta { grid-template-columns: 1fr; }
+  .dua-card__arabic { font-size: 0.95rem; }
+}
+
+/* الوضع الليلي — بطاقات وأسطح صريحة */
+html[data-theme="dark"] .dua-card,
+html.dark .dua-card {
+  background: var(--mj-surface, #17201C);
+  border-color: var(--mj-hairline, #26332D);
+}
+html[data-theme="dark"] .dua-card__title,
+html[data-theme="dark"] .dua-card__arabic,
+html[data-theme="dark"] .dua-detail__text,
+html.dark .dua-card__title,
+html.dark .dua-card__arabic,
+html.dark .dua-detail__text {
+  color: var(--mj-ink, #E9EFEC);
+}
+html[data-theme="dark"] .dua-card__cat,
+html[data-theme="dark"] .duas-empty,
+html.dark .dua-card__cat,
+html.dark .duas-empty {
+  color: var(--mj-ink-2, #B4C2BC);
+}
+html[data-theme="dark"] .duas-cat,
+html.dark .duas-cat {
+  background: var(--mj-surface, #17201C);
+  border-color: var(--mj-hairline, #26332D);
+  color: var(--mj-brand, #4FB48B);
+}
+html[data-theme="dark"] .dua-virtue,
+html.dark .dua-virtue {
+  background: var(--mj-accent-soft, #332A16);
+  border-color: var(--mj-accent, #D2A445);
+  color: var(--mj-accent, #D2A445);
+}
+
+/* ── نهاية 220 ─────────────────────────────────────────── */

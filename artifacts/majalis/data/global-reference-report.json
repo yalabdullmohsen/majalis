@@ -1,0 +1,342 @@
+{
+  "generated_at": "2026-06-26T00:54:37.865Z",
+  "system": "Global Scholarly Reference System v1",
+  "completion_pct": 88,
+  "features": [
+    {
+      "id": "global_ids",
+      "label": "الهوية العلمية (Global ID)",
+      "weight": 12,
+      "file": "lib/global-reference/ids.mjs",
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "relations",
+      "label": "شبكة العلاقات",
+      "weight": 12,
+      "file": "lib/global-reference/relations.mjs",
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "versioning",
+      "label": "نظام الإصدارات",
+      "weight": 10,
+      "file": "lib/global-reference/versioning.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "review_engine",
+      "label": "محرك المراجعة",
+      "weight": 10,
+      "file": "lib/global-reference/review.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "ai_assist",
+      "label": "ذكاء اصطناعي (metadata)",
+      "weight": 8,
+      "file": "lib/global-reference/ai-assist.mjs",
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "sources",
+      "label": "جدول المصادر",
+      "weight": 10,
+      "file": "lib/global-reference/sources.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "quality",
+      "label": "محرك الجودة",
+      "weight": 10,
+      "file": "lib/global-reference/quality.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "dashboard",
+      "label": "لوحة القيادة",
+      "weight": 8,
+      "file": "src/pages/admin/GlobalReferenceSection.tsx",
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "reliability",
+      "label": "الاعتمادية",
+      "weight": 8,
+      "file": "lib/global-reference/review.mjs",
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "roadmap",
+      "label": "خطة المستقبل",
+      "weight": 12,
+      "file": "data/global-reference-roadmap.json",
+      "complete": false,
+      "score": 0
+    }
+  ],
+  "automation": {
+    "pct": 86,
+    "automated_operations": 24,
+    "human_required": 4,
+    "human_reasons": [
+      "مراجعة الفتاوى والأحكام الشرعية",
+      "اعتماد مصادر رسمية جديدة",
+      "حل تعارضات علمية",
+      "مراجعة حالات الحدود (edge cases)"
+    ]
+  },
+  "security_assessment": {
+    "score": 80,
+    "note": "RLS + audit + no AI religious text generation"
+  },
+  "performance_assessment": {
+    "score": 85,
+    "note": "Sub-second search with caching; scale via Supabase"
+  },
+  "content_quality_assessment": {
+    "score": 70,
+    "verification_pct": 0
+  },
+  "scalability_assessment": {
+    "score": 78,
+    "note": "Horizontal via serverless; graph needs dedicated store at scale"
+  },
+  "metrics": {
+    "refs": 0,
+    "relations": 0,
+    "sources": 6,
+    "verified": 0,
+    "needs_review": 0,
+    "incomplete": 0
+  },
+  "dashboard": {
+    "ok": true,
+    "at": "2026-06-26T00:54:37.864Z",
+    "counts": {
+      "refs": 0,
+      "relations": 0,
+      "sources": 6,
+      "verified": 0,
+      "needs_review": 0,
+      "incomplete": 0
+    },
+    "verification_pct": 0,
+    "avg_quality_score": 0,
+    "sources": [
+      {
+        "slug": "iifa",
+        "name": "International Islamic Fiqh Academy",
+        "name_ar": "مجمع الفقه الإسلامي",
+        "source_type": "official",
+        "url": "https://iifa-aifi.org",
+        "trust_level": 95
+      },
+      {
+        "slug": "alifta",
+        "name": "Saudi Ifta",
+        "name_ar": "الإفتاء السعودية",
+        "source_type": "official",
+        "url": "https://alifta.gov.sa",
+        "trust_level": 95
+      },
+      {
+        "slug": "islamweb",
+        "name": "IslamWeb",
+        "name_ar": "إسلام ويب",
+        "source_type": "website",
+        "url": "https://islamweb.net",
+        "trust_level": 80
+      },
+      {
+        "slug": "sunnah-com",
+        "name": "Sunnah.com",
+        "name_ar": "سنّة",
+        "source_type": "database",
+        "url": "https://sunnah.com",
+        "trust_level": 90
+      },
+      {
+        "slug": "quran-com",
+        "name": "Quran.com",
+        "name_ar": "قرآن",
+        "source_type": "database",
+        "url": "https://quran.com",
+        "trust_level": 95
+      },
+      {
+        "slug": "majalis-local",
+        "name": "Majalis Scientific Council",
+        "name_ar": "المجلس العلمي",
+        "source_type": "official",
+        "url": "https://majalis.app",
+        "trust_level": 90
+      }
+    ],
+    "recent_reviews": [],
+    "ai": {
+      "status": "limited",
+      "metadata_only": true
+    },
+    "database": {
+      "status": "disconnected"
+    },
+    "backups": {
+      "status": "manual",
+      "note": "Supabase automatic backups enabled on paid plans"
+    },
+    "updates": {
+      "last_review": null,
+      "autonomous_last_run": "pending"
+    }
+  },
+  "roadmap": {
+    "generated_at": "2026-06-26T00:54:37.865Z",
+    "horizon": "3 years",
+    "principle": "لا تطوير جديد قبل استقرار الأنظمة الحالية",
+    "phases": [
+      {
+        "year": 1,
+        "title": "الاستقرار والتوحيد",
+        "priority": "critical",
+        "items": [
+          {
+            "task": "تطبيق جميع SQL migrations في الإنتاج",
+            "impact": "high",
+            "difficulty": "low",
+            "dependency": "none",
+            "benefit": "استقرار البيانات"
+          },
+          {
+            "task": "تسجيل Global ID لجميع المحتويات الموجودة",
+            "impact": "high",
+            "difficulty": "medium",
+            "dependency": "SQL",
+            "benefit": "تتبع كامل"
+          },
+          {
+            "task": "توحيد registries المصادر الثلاثة",
+            "impact": "high",
+            "difficulty": "medium",
+            "dependency": "SQL",
+            "benefit": "ثقة موحدة"
+          },
+          {
+            "task": "تفعيل content_relations لجميع العناصر",
+            "impact": "high",
+            "difficulty": "medium",
+            "dependency": "Global IDs",
+            "benefit": "شبكة معرفية"
+          },
+          {
+            "task": "دمج PRs #36-42 واختبار شامل",
+            "impact": "critical",
+            "difficulty": "medium",
+            "dependency": "all branches",
+            "benefit": "منصة موحدة"
+          }
+        ]
+      },
+      {
+        "year": 2,
+        "title": "النضج والتوسع",
+        "priority": "high",
+        "items": [
+          {
+            "task": "Knowledge Graph كامل مع graph_entities/edges",
+            "impact": "high",
+            "difficulty": "high",
+            "dependency": "Year 1",
+            "benefit": "استكشاف ذكي"
+          },
+          {
+            "task": "فهرسة 40k+ حadith من content-architecture",
+            "impact": "high",
+            "difficulty": "medium",
+            "dependency": "Global IDs",
+            "benefit": "مرجع حديثي"
+          },
+          {
+            "task": "API عام للمراجع الخارجية (Global Ref API)",
+            "impact": "medium",
+            "difficulty": "medium",
+            "dependency": "Year 1",
+            "benefit": "مرجع عالمي"
+          },
+          {
+            "task": "Distributed rate limiting + CDN",
+            "impact": "medium",
+            "difficulty": "medium",
+            "dependency": "stability",
+            "benefit": "أداء عالمي"
+          },
+          {
+            "task": "Human review queue UI",
+            "impact": "high",
+            "difficulty": "medium",
+            "dependency": "review engine",
+            "benefit": "جودة محتوى"
+          }
+        ]
+      },
+      {
+        "year": 3,
+        "title": "الريادة العالمية",
+        "priority": "medium",
+        "items": [
+          {
+            "task": "Open Scholarly Reference API (REST + GraphQL)",
+            "impact": "high",
+            "difficulty": "high",
+            "dependency": "Year 2 API",
+            "benefit": "اعتراف عالمي"
+          },
+          {
+            "task": "Multi-language support (EN/FR/UR)",
+            "impact": "medium",
+            "difficulty": "high",
+            "dependency": "stable platform",
+            "benefit": "وصول عالمي"
+          },
+          {
+            "task": "Academic institution partnerships",
+            "impact": "high",
+            "difficulty": "high",
+            "dependency": "API + trust",
+            "benefit": "مصداقية"
+          },
+          {
+            "task": "Blockchain verification for certificates",
+            "impact": "low",
+            "difficulty": "high",
+            "dependency": "certificates",
+            "benefit": "تحقق لا يُزوّر"
+          },
+          {
+            "task": "AI-powered conflict detection across corpora",
+            "impact": "medium",
+            "difficulty": "high",
+            "dependency": "Knowledge Graph",
+            "benefit": "دقة علمية"
+          }
+        ]
+      }
+    ],
+    "stability_gates": [
+      "All cron jobs success rate > 95%",
+      "Average search latency < 1s",
+      "Verification coverage > 80%",
+      "Zero critical security findings",
+      "All migrations applied in production"
+    ]
+  }
+}

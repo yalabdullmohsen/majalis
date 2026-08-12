@@ -1,0 +1,278 @@
+/* القائمة الجانبية — هوية المجلس العلمي (RTL) */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.sidebar-panel {
+  position: fixed;
+  top: 0;
+  inset-inline-end: 0;
+  z-index: 101;
+  width: min(86vw, 360px);
+  height: 100dvh;
+  max-height: 100dvh;
+  background: #fbfbf8;
+  border-inline-start: 1px solid rgba(18, 54, 42, 0.14);
+  box-shadow: -18px 0 45px rgba(0, 0, 0, 0.12);
+  direction: rtl;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: calc(var(--inset-top) + 16px) 14px
+    calc(var(--inset-bottom) + 18px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #12362a, #0f4a31);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.sidebar-brand {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-title {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.sidebar-close {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.sidebar-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.sidebar-section {
+  margin-top: 16px;
+}
+
+.sidebar-section-title {
+  padding: 0 8px 8px;
+  color: #66736d;
+  font-size: 12px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.sidebar-item {
+  width: 100%;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 18px;
+  color: #1d1d1b;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid transparent;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+  box-sizing: border-box;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+}
+
+.sidebar-item:hover {
+  background: #eef5f1;
+}
+
+.sidebar-item:active {
+  transform: scale(0.98);
+}
+
+.sidebar-item.active {
+  background: #e8f0ec;
+  border-color: rgba(18, 54, 42, 0.18);
+  color: #12362a;
+}
+
+.sidebar-item-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(18, 54, 42, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #12362a;
+  flex-shrink: 0;
+}
+
+.sidebar-item.active .sidebar-item-icon {
+  background: #12362a;
+  color: #fff;
+  border-color: transparent;
+}
+
+.sidebar-item-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebar-item-title {
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1.4;
+  display: block;
+}
+
+.sidebar-item-description {
+  color: #66736d;
+  font-size: 12px;
+  line-height: 1.4;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-user-chip {
+  margin: 8px 4px 0;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: #eef5f1;
+  color: #12362a;
+  font-size: 13px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-item--danger {
+  color: #8b2e2e;
+}
+
+.sidebar-item--danger .sidebar-item-icon {
+  color: #8b2e2e;
+  border-color: rgba(139, 46, 46, 0.2);
+}
+
+@media (min-width: 768px) {
+  .sidebar-panel {
+    width: 360px;
+  }
+}
+
+/* تجاوز أنماط .side-nav-drawer--v2 القديمة داخل index.css دون كسر طبقة القفل */
+.mobile-nav-layer--drawer .sidebar-panel.side-nav-drawer--v2 {
+  width: min(86vw, 360px);
+  max-width: 360px;
+  height: 100dvh;
+  max-height: 100dvh;
+  background: #fbfbf8;
+  border-inline-start: 1px solid rgba(18, 54, 42, 0.14);
+  box-shadow: -18px 0 45px rgba(0, 0, 0, 0.12);
+  padding: calc(var(--inset-top) + 16px) 14px
+    calc(var(--inset-bottom) + 18px);
+  animation: sidebar-panel-in 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+html[data-theme="dark"] .mobile-nav-layer--drawer .sidebar-panel.side-nav-drawer--v2 {
+  background: #12211c;
+  border-left-color: rgba(237, 242, 240, 0.12);
+}
+
+html[data-theme="dark"] .sidebar-panel {
+  background: #12211c;
+  border-left-color: rgba(237, 242, 240, 0.12);
+  box-shadow: -18px 0 45px rgba(0, 0, 0, 0.45);
+}
+
+html[data-theme="dark"] .sidebar-section-title {
+  color: #9aaba4;
+}
+
+html[data-theme="dark"] .sidebar-item {
+  color: #edf2f0;
+}
+
+html[data-theme="dark"] .sidebar-item:hover {
+  background: rgba(237, 242, 240, 0.06);
+}
+
+html[data-theme="dark"] .sidebar-item.active {
+  background: rgba(15, 74, 49, 0.35);
+  border-color: rgba(237, 242, 240, 0.16);
+  color: #edf2f0;
+}
+
+html[data-theme="dark"] .sidebar-item-icon {
+  background: #1a2e28;
+  border-color: rgba(237, 242, 240, 0.12);
+  color: #c5d9cf;
+}
+
+html[data-theme="dark"] .sidebar-item.active .sidebar-item-icon {
+  background: #0f4a31;
+  color: #fff;
+}
+
+html[data-theme="dark"] .sidebar-item-description {
+  color: #9aaba4;
+}
+
+html[data-theme="dark"] .sidebar-user-chip {
+  background: rgba(15, 74, 49, 0.35);
+  color: #edf2f0;
+}
+
+@keyframes sidebar-panel-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.sidebar-panel {
+  animation: sidebar-panel-in 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-panel {
+    animation: none;
+  }
+}

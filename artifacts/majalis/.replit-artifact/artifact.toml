@@ -1,0 +1,41 @@
+kind = "web"
+previewPath = "/"
+title = "المجلس العلمي"
+version = "1.0.0"
+id = "artifacts/majalis"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24216
+
+[services.development]
+run = "pnpm --filter @workspace/majalis run dev"
+
+[services.production]
+
+[services.production.build]
+args = ["pnpm", "--filter", "@workspace/majalis", "run", "build"]
+
+[services.production.build.env]
+NODE_ENV = "production"
+
+[services.production.run]
+args = ["node", "artifacts/majalis/server/index.mjs"]
+
+[services.production.run.env]
+PORT = "24216"
+BASE_PATH = "/"
+NODE_ENV = "production"
+
+[services.production.health.startup]
+path = "/api/healthz"
+
+[services.env]
+PORT = "24216"
+BASE_PATH = "/"

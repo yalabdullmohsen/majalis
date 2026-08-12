@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.env
+.env.local
+.env.production
+*.local
+.DS_Store
+.tsbuildinfo
+test-results/
+playwright-report/
+.audit/
+supabase/.temp/
+.env.vercel-production
+.tmp-seed-extract/
+.backup/
+artifacts/mushaf-single-pass/
+artifacts/mushaf-multi-viewport/

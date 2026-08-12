@@ -1,0 +1,167 @@
+/* بحث آيات القرآن — شاشة منفصلة */
+.quran-search-page {
+  max-width: 42rem;
+  margin-inline: auto;
+  padding-block-start: 0.75rem;
+  padding-block-end: calc(var(--bottom-nav-total, 5rem) + 1rem);
+  padding-inline: var(--page-gutter, 1rem) var(--page-gutter-end, var(--page-gutter, 1rem));
+  box-sizing: border-box;
+}
+
+.quran-search-page__form {
+  margin: 0 0 1rem;
+}
+
+.quran-search-page__field {
+  position: relative;
+  display: block;
+}
+
+.quran-search-page__icon {
+  position: absolute;
+  inset-inline-start: 0.85rem;
+  top: 0;
+  bottom: 0;
+  margin-block: auto;
+  width: 18px;
+  height: 18px;
+  color: var(--mj-ink-2, #5d726a);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.quran-search-page__input {
+  width: 100%;
+  min-height: 44px;
+  padding-inline-start: 2.6rem;
+  padding-inline-end: 2.6rem;
+  box-sizing: border-box;
+}
+
+.quran-search-page__clear {
+  position: absolute;
+  inset-inline-end: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--mj-r-sm, 0.5rem);
+  background: transparent;
+  color: var(--mj-ink-2);
+  cursor: pointer;
+}
+
+.quran-search-page__status,
+.quran-search-page__hint,
+.quran-search-page__meta {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: var(--mj-ink-2, #5d726a);
+  text-align: start;
+}
+
+.quran-search-page__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.quran-search-page__hit {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.45rem;
+  min-height: 5.5rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--mj-hairline, rgba(24, 54, 42, 0.15));
+  background: var(--mj-surface, #fafaf8);
+  text-decoration: none;
+  color: inherit;
+  text-align: start;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.quran-search-page__hit:hover {
+  border-color: color-mix(in srgb, var(--mj-brand) 45%, transparent);
+  background: color-mix(in srgb, var(--mj-brand) 6%, var(--mj-surface, #fafaf8));
+}
+
+.quran-search-page__hit header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem 0.75rem;
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--mj-brand);
+  text-align: start;
+}
+
+.quran-search-page__hit header strong {
+  font-family: var(--mj-ui, var(--font-body));
+  font-weight: 800;
+  color: var(--mj-brand-deep, var(--mj-brand));
+}
+
+.quran-search-page__ayah-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: var(--mj-brand-soft);
+  color: var(--mj-brand-deep, var(--mj-brand));
+  font-weight: 800;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.quran-search-page__ayah-text,
+.quran-search-page__hit p {
+  margin: 0;
+  font-family: "Amiri Quran", "Scheherazade New", "Traditional Arabic", serif;
+  font-size: 1.15rem;
+  line-height: 2;
+  color: var(--mj-ink, #1a1a18);
+  text-align: start;
+  width: 100%;
+}
+
+.quran-search-page__surah-meta {
+  font-family: var(--mj-ui, var(--font-body)) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.5 !important;
+  color: var(--mj-ink-2) !important;
+}
+
+.quran-search-page__mark {
+  background: color-mix(in srgb, var(--mj-brand) 22%, transparent);
+  color: inherit;
+  border-radius: 0.15rem;
+  padding-inline: 0.05rem;
+}
+
+.quran-search-page__footer {
+  margin: 1.75rem 0 0;
+  font-size: 0.88rem;
+  color: var(--mj-ink-2, #5d726a);
+}
+
+.quran-search-page__footer a {
+  color: var(--mj-brand);
+  font-weight: 600;
+}
+
+.quran-search-page__surah-only {
+  margin-block-end: 1rem;
+}

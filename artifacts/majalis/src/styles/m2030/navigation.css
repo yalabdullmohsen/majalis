@@ -1,0 +1,187 @@
+/**
+ * Majlisilm 2030 — Navigation (موحّد Light/Dark)
+ * الكروم العلوي/السفلي يتبع رموز الهوية (--mj عبر aliases) لا خلفية زمردية داكنة.
+ */
+
+header.navbar-v3,
+.navbar-v3 {
+  background: var(--surface) !important;
+  background-image: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  color: var(--text) !important;
+}
+
+.navbar-v3 a,
+.navbar-v3 button,
+.navbar-brand,
+.navbar-brand span,
+.navbar-brand__copy strong {
+  color: var(--text) !important;
+}
+
+.navbar-prayer-chip {
+  background: var(--mj-brand) !important;
+  border: 1px solid var(--mj-brand) !important;
+  border-radius: var(--r-sm) !important;
+  color: var(--mj-on-brand) !important;
+}
+
+.top-section-bar {
+  background: var(--surface) !important;
+  border-bottom: 1px solid var(--border) !important;
+  backdrop-filter: none !important;
+  padding-block: 0.35rem !important;
+}
+
+/* جوال: شريط سفلي فقط — سطح المكتب: شريط علوي فقط (بلا ازدواج لنفس التبويبات) */
+@media (max-width: 767.98px) {
+  .top-section-bar {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) {
+  .bottom-nav,
+  .bottom-nav--v2,
+  .bottom-nav--m2030 {
+    display: none !important;
+  }
+}
+
+.top-section-bar__tab {
+  border-radius: var(--r-sm) !important;
+  background: transparent !important;
+  color: var(--text-2) !important;
+  border: 1px solid transparent !important;
+  min-height: 2.35rem;
+  padding-inline: 0.7rem !important;
+}
+
+.top-section-bar__tab.is-active {
+  background: var(--mj-brand-soft) !important;
+  color: var(--mj-brand) !important;
+  border-color: var(--mj-brand) !important;
+  box-shadow: inset 0 -2px 0 var(--mj-brand) !important;
+  font-weight: 700;
+}
+
+.top-section-bar__tab.is-soon:not(.is-active) {
+  color: var(--text-meta) !important;
+}
+
+.top-section-bar__soon-badge {
+  font-size: 0.58rem;
+  font-weight: 700;
+  padding: 0.08rem 0.35rem;
+  border-radius: var(--mj-r-pill);
+  background: var(--mj-surface-2, var(--surface-2));
+  color: var(--mj-muted, var(--text-meta));
+  line-height: 1.2;
+}
+
+.bottom-nav,
+.bottom-nav--v2 {
+  background: var(--surface) !important;
+  border-top: 1px solid var(--border) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding-bottom: var(--inset-bottom) !important;
+}
+
+.bottom-nav__tab {
+  color: var(--text-2) !important;
+  border-radius: 0 !important;
+  position: relative;
+  min-height: 3rem;
+}
+
+.bottom-nav__tab.is-active {
+  color: var(--brand) !important;
+  background: transparent !important;
+}
+
+.bottom-nav__tab.is-active::before {
+  content: "";
+  position: absolute;
+  top: 0.15rem;
+  inset-inline: 30%;
+  height: 2px;
+  background: var(--brand);
+  box-shadow: none;
+}
+
+.bottom-nav__tab-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.bottom-nav__tab.is-soon .bottom-nav__tab-label {
+  font-size: 0.62rem;
+}
+
+.bottom-sheet {
+  background: var(--bg) !important;
+  border-radius: var(--r-xl) var(--r-xl) 0 0 !important;
+  border-top: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+.bottom-sheet__head {
+  font-family: var(--font-display);
+  color: var(--text-title) !important;
+}
+
+.bottom-sheet__section-label {
+  color: var(--text-meta) !important;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+}
+
+.more-sheet-item {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--r-md) !important;
+  clip-path: polygon(0.45rem 0, calc(100% - 0.45rem) 0, 100% 0.45rem, 100% 100%, 0.45rem 100%, 0 calc(100% - 0.45rem));
+  color: var(--text) !important;
+  min-height: 4.75rem !important;
+}
+
+.more-sheet-item--active {
+  border-color: color-mix(in srgb, var(--brand) 45%, var(--border)) !important;
+  background: var(--brand-soft) !important;
+  color: var(--text-brand-deep) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 25%, transparent);
+}
+
+.more-sheet-item__icon {
+  color: var(--brand) !important;
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border-brand) !important;
+  border-radius: var(--r-sm) !important;
+}
+
+.more-sheet-theme-toggle {
+  background: var(--surface-2) !important;
+  color: var(--text) !important;
+  border-radius: var(--r-md) !important;
+}
+
+.sidebar-panel,
+.side-nav-drawer--v2 {
+  background: var(--bg) !important;
+}
+
+.sidebar-header {
+  background: var(--surface) !important;
+  border-radius: 0 !important;
+  color: var(--text-title) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.sidebar-item.active {
+  background: var(--brand-soft) !important;
+  box-shadow: inset -3px 0 0 var(--brand);
+}

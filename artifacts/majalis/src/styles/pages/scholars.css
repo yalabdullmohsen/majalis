@@ -1,0 +1,431 @@
+/* ══════════════════════════════════════════════
+   58. Islamic Scholars Page — أعلام الإسلام
+   ══════════════════════════════════════════════ */
+.sch-page {
+  min-height: 100svh;
+  background: var(--elite-white, var(--mj-bg));
+  color: var(--elite-ink, #1A1A18);
+  padding-bottom: 1.25rem;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding-inline-start: 1rem;
+  padding-inline-end: 1rem;
+}
+.sch-hero {
+  background: linear-gradient(160deg, var(--mj-brand-deep), var(--mj-brand-deep));
+  margin: 0 -1rem;
+  padding: 2.5rem 2rem 2rem;
+  text-align: center;
+  color: #FFFFFF;
+}
+.sch-hero__title {
+  font-family: var(--font-body);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+.sch-hero__sub {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.75);
+  max-width: 28rem;
+  margin: 0 auto 1.25rem;
+  line-height: 1.65;
+}
+.sch-hero__stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--ds-space-8);
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.6);
+  flex-wrap: wrap;
+}
+.sch-hero__stats strong { color: #FFFFFF; font-size: 1.2rem; display: block; }
+
+/* Controls */
+.sch-controls {
+  padding: 1.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+}
+.sch-search-wrap {
+  position: relative;
+  max-width: 28rem;
+}
+.sch-search-icon {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: 1rem;
+  transform: translateY(-50%);
+  color: var(--mj-ink-2);
+  pointer-events: none;
+}
+.sch-search-input {
+  width: 100%;
+  padding: 0.6rem 2.5rem 0.6rem 1rem;
+  border: 1.5px solid rgba(23,61,53,0.2);
+  border-radius: 2rem;
+  background: #FFFFFF;
+  color: var(--elite-ink, #1A1A18);
+  font-size: 0.9rem;
+  outline: none;
+}
+.sch-search-input:focus { border-color: var(--mj-brand-deep); }
+.sch-filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2);
+}
+.sch-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  color: var(--mj-ink-2);
+}
+.sch-filter-btn {
+  padding: 0.25rem 0.65rem;
+  border: 1px solid rgba(23,61,53,0.2);
+  border-radius: 2rem;
+  background: #FFFFFF;
+  color: var(--mj-ink-2);
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.sch-filter-btn:hover { border-color: var(--mj-brand-deep); color: var(--mj-brand-deep); }
+.sch-filter-btn--active {
+  background: var(--mj-brand-deep) !important;
+  color: #FFFFFF !important;
+  border-color: var(--mj-brand-deep) !important;
+}
+.sch-results-count {
+  font-size: 0.8rem;
+  color: var(--mj-ink-2);
+  margin: 0.75rem 0 1rem;
+}
+
+/* Grid */
+.sch-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-4);
+}
+.sch-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(23,61,53,0.1);
+  border-radius: var(--ds-radius-xl);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: box-shadow 0.18s;
+}
+.sch-card:hover { box-shadow: 0 6px 24px rgba(23,61,53,0.12); }
+.sch-card--open { border-color: rgba(23,61,53,0.25); }
+.sch-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-space-4);
+  padding: var(--ds-space-5);
+  cursor: pointer;
+}
+.sch-card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sch-card__initial {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  font-family: var(--font-body);
+}
+.sch-card__meta { flex: 1; }
+.sch-card__name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--elite-forest, var(--mj-brand-deep));
+  margin: 0 0 0.15rem;
+}
+.sch-card__fullname {
+  font-size: 0.78rem;
+  color: var(--mj-ink-2);
+  margin: 0 0 0.4rem;
+}
+.sch-card__tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.sch-tag {
+  font-size: 0.68rem;
+  padding: 0.12rem 0.4rem;
+  border-radius: var(--ds-radius-xl);
+  background: rgba(23,61,53,0.08);
+  color: var(--mj-brand-deep);
+  border: 1px solid rgba(23,61,53,0.12);
+}
+.sch-tag--madhhab {
+  background: rgba(100,50,200,0.08);
+  color: #5b21b6;
+  border-color: rgba(100,50,200,0.12);
+}
+.sch-card__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ds-space-1);
+  flex-shrink: 0;
+}
+.sch-card__era {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--mj-brand-deep);
+  background: rgba(23,61,53,0.08);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--ds-radius-xl);
+  white-space: nowrap;
+}
+.sch-card__died {
+  font-size: 0.8rem;
+  color: #9CA3AF;
+  white-space: nowrap;
+}
+.sch-card__bio {
+  font-size: 0.86rem;
+  color: var(--mj-ink-2);
+  line-height: 1.65;
+  margin: 0;
+  padding: 0 1.25rem 1rem;
+}
+.sch-card__details {
+  border-top: 1px solid rgba(23,61,53,0.1);
+  padding: 1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: rgba(23,61,53,0.02);
+}
+.sch-card__quote {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--mj-brand-deep);
+  border-inline-end: 3px solid var(--mj-brand-deep);
+  padding: 0.5rem 0.85rem;
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-space-2);
+  background: rgba(23,61,53,0.04);
+  border-radius: 0 0.5rem 0.5rem 0;
+  line-height: 1.7;
+}
+.sch-card__quote-icon { color: var(--mj-brand-deep); flex-shrink: 0; margin-top: 0.2rem; }
+.sch-card__works-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--elite-forest, var(--mj-brand-deep));
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.4rem;
+}
+.sch-card__works-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.sch-card__works-list li {
+  font-size: 0.8rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(23,61,53,0.12);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--ds-radius);
+  color: var(--elite-ink, #1A1A18);
+}
+.sch-card__region {
+  font-size: 0.78rem;
+  color: var(--mj-ink-2);
+  margin: 0;
+}
+.sch-card__close {
+  background: none;
+  border: 1px solid rgba(23,61,53,0.2);
+  color: var(--mj-brand-deep);
+  font-size: 0.78rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--ds-radius-xl);
+  cursor: pointer;
+  align-self: flex-start;
+}
+.sch-card__close:hover { background: rgba(23,61,53,0.05); }
+
+/* Empty state */
+.sch-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #9CA3AF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-3);
+}
+.sch-empty button {
+  background: none;
+  border: 1px solid rgba(23,61,53,0.3);
+  color: var(--mj-brand-deep);
+  padding: 0.45rem 1rem;
+  border-radius: var(--ds-radius-xl);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+/* Related */
+.sch-related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-3);
+  padding: 2rem 0 0;
+}
+.sch-related-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(23,61,53,0.2);
+  color: var(--mj-brand-deep);
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  text-decoration: none;
+}
+.sch-related-link:hover {
+  background: rgba(23,61,53,0.05);
+  text-decoration: none;
+}
+
+/* ── نهاية 58 ───────────────────────────────────────────── */
+
+/* روابط المؤلفات ↔ المكتبة */
+.sch-card__works-list a,
+.sch-profile-works a {
+  color: var(--majalis-emerald, var(--mj-brand-deep));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.sch-card__works-list a:hover,
+.sch-profile-works a:hover {
+  color: var(--majalis-emerald-deep, #0f2f28);
+}
+.sch-work--plain {
+  color: inherit;
+}
+
+/* ── منقول من الطبقة الحرجة: ScholarProfilePage ── */
+/* ══ صفحة بروفايل العالم (ScholarProfilePage) ══════════════════════════════ */
+.sch-profile-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  opacity: 0.7;
+  margin-bottom: 1.5rem;
+}
+.sch-profile-breadcrumb a { text-decoration: none; }
+.sch-profile-breadcrumb a:hover { text-decoration: underline; }
+
+.sch-profile-hero {
+  display: flex;
+  gap: var(--ds-space-6);
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+.sch-profile-avatar {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+}
+.sch-profile-hero__name { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.2rem; }
+/* .sch-profile-hero لا خلفية داكنة فعلية له (مطابقة [class$="-hero"] عن طريق
+   الخطأ)، فيرث العنوان لون أبيض غير مرئي على الخلفية الفاتحة. استثناء
+   `.sch-profile-hero, .sch-profile-hero *{color:inherit!important}` بنفس
+   التخصيص (0,1,0) يتنافس مع قاعدة [class$="-hero"] البيضاء دون ضمان فوز
+   حتمي (يعتمد على ترتيب لا يمكن ضمانه بعد التصغير/الدمج) — محدِّد مركّب
+   أعلى تخصيصًا هنا يضمن الفوز دومًا بصرف النظر عن الترتيب. تحذير: لا تستخدم
+   var(--majalis-ink) هنا رغم فوز هذه القاعدة بمعركة التخصيص — --majalis-ink
+   نفسه أيضًا مُعاد تعريفه للأبيض ضمن نفس نطاق [class$="-hero"] (بنفس آلية
+   --clr-text-1)، فتُطبَّق قيمة بيضاء رغم فوز القاعدة. لون حرفي ثابت فقط. */
+.sch-profile-hero .sch-profile-hero__name { color: #1A1A18 !important; }
+.sch-profile-hero__fullname { opacity: 0.7; font-size: 0.9rem; margin-bottom: 0.75rem; }
+.sch-profile-hero__meta { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem; }
+.sch-profile-hero__died { font-size: 0.82rem; opacity: 0.65; display: flex; align-items: center; gap: 0.3rem; }
+
+.sch-profile-section { margin-bottom: 1.75rem; }
+.sch-profile-section__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--mj-brand);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.sch-profile-bio { line-height: 1.9; }
+
+.sch-profile-quote {
+  border-inline-start: 4px solid var(--mj-brand);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  background: rgba(23,61,53,0.06);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.sch-profile-quote__icon { color: var(--mj-brand); margin-bottom: 0.5rem; }
+.sch-profile-quote p { font-size: 1.05rem; line-height: 1.8; font-style: normal; }
+.sch-profile-quote footer { font-size: 0.82rem; opacity: 0.65; margin-top: 0.5rem; }
+
+.sch-profile-works { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--ds-space-2); }
+.sch-profile-works li {
+  padding: 0.5rem 0.75rem;
+  background: rgba(23,61,53,0.06);
+  border-radius: 0.4rem;
+  font-size: 0.92rem;
+}
+.sch-profile-works li::before { content: "📖 "; }
+
+.sch-profile-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ds-space-4);
+  margin-top: 2rem;
+}
+.sch-profile-pager__btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--mj-brand);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(23,61,53,0.3);
+  border-radius: var(--ds-radius);
+  transition: background 0.15s;
+}
+.sch-profile-pager__btn:hover { background: rgba(23,61,53,0.08); }
+.sch-profile-back { margin-top: 1rem; }
+.sch-profile-notfound { text-align: center; padding: 3rem 1rem; }
+/* ══ نهاية صفحة بروفايل العالم ══════════════════════════════════════════════ */
+

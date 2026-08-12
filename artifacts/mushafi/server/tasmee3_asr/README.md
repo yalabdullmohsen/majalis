@@ -1,0 +1,329 @@
+# Tasmee3 ASR Server
+
+خادم ASR لميزة التسميع.
+
+## التشغيل المحلي
+
+```bash
+cd server/tasmee3_asr
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+## التشغيل عبر Docker
+
+```bash
+cd server/tasmee3_asr
+docker build -t tasmee3-asr .
+docker run -p 8000:8000 tasmee3-asr
+```
+
+## اختبار الصحة
+
+```bash
+curl http://localhost:8000/health
+```
+
+## ربط Flutter
+
+شغّل التطبيق بهذا الشكل:
+
+```bash
+flutter run \
+  --dart-define=TASMEE3_ASR_ENDPOINT=http://YOUR_SERVER_IP:8000/transcribe
+```
+
+مع API key:
+
+```bash
+flutter run \
+  --dart-define=TASMEE3_ASR_ENDPOINT=http://YOUR_SERVER_IP:8000/transcribe \
+  --dart-define=TASMEE3_ASR_API_KEY=your_key
+```
+
+## ملاحظات مهمة
+
+- لا تضع هذا الخادم مفتوحا للعامة بدون حماية.
+- استخدم HTTPS عند النشر الحقيقي.
+- استخدم API key.
+- عالج التسجيلات كبيانات حساسة.
+- احذف الملفات المؤقتة بعد التحليل.
+
+## Forced Alignment
+
+الإصدار 2.0 يدعم Forced Alignment.
+
+مثال الحقول المرسلة:
+
+- `audio`: ملف الصوت
+- `language`: ar
+- `expectedText`: النص المتوقع normalized
+- `expectedWords`: JSON array للكلمات المتوقعة
+- `fromSurah`
+- `fromAyah`
+- `toSurah`
+- `toAyah`
+
+الاستجابة تحتوي:
+
+```json
+{
+  "fullText": "...",
+  "confidence": 0.91,
+  "isFinal": true,
+  "alignedWords": [
+    {
+      "expectedWord": "قل",
+      "recognizedWord": "قل",
+      "globalWordIndex": 0,
+      "startMs": 120,
+      "endMs": 400,
+      "confidence": 0.98,
+      "status": "correct"
+    }
+  ]
+}
+```
+
+## Version 3.0
+
+يدعم الخادم الآن:
+
+- Edit Distance Alignment.
+- expectedWordMap.
+- ayahScores.
+- weakSpots.
+- تقليل الهلوسة عبر:
+  - condition_on_previous_text=False
+  - temperature=0.0
+
+الاستجابة تشمل:
+
+```json
+{
+  "alignedWords": [],
+  "ayahScores": [],
+  "weakSpots": []
+}
+```
+
+## Audio Validation
+
+الخادم يفحص:
+
+- حجم ملف الصوت.
+- مدة ملف الصوت عبر ffprobe.
+- يرفض الملفات الفارغة أو القصيرة جدا.
+
+متغيرات البيئة:
+
+```bash
+TASMEE3_MIN_AUDIO_BYTES=1200
+TASMEE3_MIN_AUDIO_DURATION_SECONDS=1.2
+```
+
+## Health endpoint
+
+يرجع `/health` معلومات عن:
+
+- إصدار الخادم.
+- نوع النموذج.
+- الجهاز.
+- الميزات المفعلة.
+- حد الثقة المنخفضة.
+- أقل حجم صوت.
+- أقل مدة صوت.
+
+## WebSocket Live ASR
+
+تمت إضافة endpoint:
+
+`/ws/live`
+
+مثال:
+
+```txt
+ws://localhost:8000/ws/live
+```
+
+الرسائل من العميل:
+
+```json
+{ "type": "start", "language": "ar" }
+{ "type": "audioChunk", "data": "base64..." }
+{ "type": "stop" }
+```
+
+الرسائل من الخادم:
+
+```json
+{ "type": "ready", "text": "", "confidence": 0, "words": [] }
+{ "type": "partial", "text": "", "confidence": 0, "words": [] }
+{ "type": "final", "text": "", "confidence": 0, "words": [] }
+{ "type": "error", "error": "..." }
+```
+
+ملاحظة: التحليل الحي الحقيقي يحتاج استقبال audio chunks بصيغة متفق عليها ثم تشغيل ASR على دفعات. endpoint الحالي يؤسس البروتوكول ولا يستبدل `/transcribe`.
+
+## Live Audio Chunks
+
+الإصدار الحالي يستقبل chunks بصيغة base64.
+
+ملاحظة مهمة:
+إذا كانت chunks بصيغة m4a مستقلة، قد لا يكون دمجها byte-by-byte مثاليا في كل الأجهزة.
+لإنتاج احترافي يفضل لاحقا:
+- إرسال PCM raw
+- أو WAV chunks متوافقة
+- أو استخدام native audio stream في Flutter
+- أو تسجيل ملف مستمر وقراءة tail chunks
+
+الحل الحالي عملي كتجربة أولى، وقد يحتاج تحسين حسب المنصة.
+الخادم يحلّل أحدث chunk منفرداً للـ partial، وعند stop يحلّل كل chunk على حدة ثم يضم النصوص.
+
+## Native PCM WebSocket Streaming
+
+يدعم `/ws/live` الآن binary PCM frames بالإضافة إلى بروتوكول m4a chunks.
+
+بروتوكول العميل:
+
+```json
+{
+  "type": "startPcm",
+  "language": "ar",
+  "sampleRate": 16000,
+  "channels": 1,
+  "bitsPerSample": 16
+}
+```
+
+ثم يرسل العميل binary frames مباشرة عبر WebSocket.
+
+يمكن إرسال metadata اختيارية:
+
+```json
+{
+  "type": "pcmMeta",
+  "sequence": 1
+}
+```
+
+لإنهاء الجلسة:
+
+```json
+{
+  "type": "stopPcm"
+}
+```
+
+الخادم يحول PCM إلى WAV مؤقتا ثم يحلل آخر المقاطع ويرسل:
+
+```json
+{
+  "type": "partial",
+  "text": "...",
+  "confidence": 0.8,
+  "words": []
+}
+```
+
+وعند الإيقاف:
+
+```json
+{
+  "type": "final",
+  "text": "...",
+  "confidence": 0.9,
+  "words": []
+}
+```
+
+### Android
+
+Android يستخدم AudioRecord عبر EventChannel لإرسال PCM 16-bit mono 16k.
+
+### iOS
+
+iOS يرسل PCM frames عبر EventChannel إلى Flutter ثم binary frames إلى `/ws/live`.
+
+المواصفات المستهدفة:
+
+- sampleRate: 16000
+- channels: 1
+- bitsPerSample: 16
+- format: PCM signed 16-bit
+
+الخادم يحول PCM إلى WAV مؤقتا قبل ASR.
+إذا كان النص فارغاً يُرسل partial/final فارغ وليس error.
+
+## Production Hardening
+
+تمت إضافة:
+
+- إعدادات مركزية عبر `settings.py`
+- Auth عبر API key
+- Rate limiting بسيط
+- Safe logging بدون حفظ الصوت أو طباعة API key
+- Audio validation
+- Temporary files cleanup
+- Health metrics
+- Dockerfile production
+- Docker Compose
+- WebSocket PCM و m4a chunks compatibility
+- دعم اختياري لـ `faster-whisper` عبر `TASMEE3_ASR_ENGINE=faster_whisper` إن كان مثبتاً
+
+## Environment Variables
+
+```bash
+TASMEE3_ASR_API_KEY=
+TASMEE3_ASR_MODEL=small
+TASMEE3_ASR_DEVICE=cpu
+TASMEE3_ASR_ENGINE=whisper_timestamped
+TASMEE3_RATE_LIMIT_PER_MINUTE=60
+TASMEE3_MIN_AUDIO_BYTES=1200
+TASMEE3_MAX_AUDIO_BYTES=25000000
+TASMEE3_MIN_AUDIO_DURATION_SECONDS=1.2
+TASMEE3_MAX_AUDIO_DURATION_SECONDS=180
+TASMEE3_LIVE_MIN_INTERVAL=2.5
+TASMEE3_LOG_LEVEL=INFO
+TASMEE3_TEMP_DIR=
+```
+
+## Docker Compose
+
+```bash
+cd server/tasmee3_asr
+docker compose up --build
+```
+
+## Health
+
+```bash
+curl http://localhost:8000/health
+```
+
+## Privacy
+
+الخادم لا يحفظ الصوت بشكل دائم. الملفات المؤقتة تحذف بعد التحليل.
+لا تُطبع التسجيلات أو النص الكامل أو API key في logs.
+
+## Tests
+
+```bash
+python -m pytest tests -q
+```
+
+أو بمتطلبات خفيفة بدون تحميل Whisper:
+
+```bash
+pip install -r requirements-test.txt
+python -m pytest tests -q
+```
+
+الاختبارات الحالية تغطي:
+
+* Arabic normalization
+* Alignment
+* Health endpoint
+* WebSocket ready

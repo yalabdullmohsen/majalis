@@ -1,0 +1,20 @@
+/* ============================================================
+   97 — AnnualCourseDetailPage  (acd-*)
+   ============================================================ */
+.acd-map-iframe {
+  width: 100%;
+  height: 280px;
+  border: 0;
+  border-radius: var(--ds-radius);
+  margin-top: 1rem;
+}
+.acd-register-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--ds-radius);
+  background: var(--emerald, var(--mj-brand));
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+

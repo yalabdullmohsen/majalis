@@ -1,0 +1,182 @@
+name: Auto-ready and merge PRs to main
+
+# Safe auto-merge (squash) — Auto-merge يبقى مفعّلًا.
+# لا يحول Draft→Ready تلقائيًا.
+# فحوصات خضراء + بوابات المسار/الحجم؛ Labels اختيارية للتصنيف (ليست شرط دمج).
+# يمنع المسارات الخطرة (SQL/iOS/CI/Auth/…) وDraft وCHANGES_REQUESTED والتعارض.
+# بعد الدمج: Vercel ينشر الموقع — بدون TestFlight وبدون supabase db push.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review, labeled, unlabeled]
+    branches: [main]
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "رقم PR محدد (فارغ = المؤهلة فقط)"
+        required: false
+        type: string
+
+# Concurrency منفصل لكل PR؛ الدفعات المجدولة لا تلغي تشغيل PR محدد.
+concurrency:
+  group: >-
+    auto-merge-${{
+      github.event.pull_request.number
+      || github.event.inputs.pr_number
+      || (github.event_name == 'workflow_run' && format('wr-{0}', github.event.workflow_run.id))
+      || 'schedule-batch'
+    }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+  checks: read
+  statuses: read
+
+# GITHUB_TOKEN يكفي لتفعيل --auto squash؛ لا نستخدم PAT واسعًا هنا.
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  # يُلغى Auto-merge فقط عند فشل الفحص المطلوب لحماية main (Verify build)،
+  # لا عند فشل أي job اختياري داخل workflow CI (مثل Color contrast).
+  cancel-on-ci-failure:
+    if: github.repository == 'yalabdullmohsen/majalis' && github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Disable auto-merge only if required check Verify build failed
+        env:
+          WORKFLOW_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          WORKFLOW_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          set -euo pipefail
+          # هل فشل job «Verify build» تحديدًا في هذا التشغيل؟
+          verify_failed=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${WORKFLOW_RUN_ID}/jobs" \
+            --jq '[.jobs[] | select(.name=="Verify build" and .conclusion=="failure")] | length' || echo "0")
+          if [ "${verify_failed}" = "0" ]; then
+            echo "skip: CI failed but required check Verify build did not fail — keep auto-merge"
+            exit 0
+          fi
+          nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \
+            --jq '[.[] | select(.base.ref=="main") | .number] | join(" ")' || true)
+          if [ -z "${nums}" ]; then
+            nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open \
+              --head "${GITHUB_REPOSITORY_OWNER}:${WORKFLOW_HEAD_BRANCH}" \
+              --json number --jq '.[].number' | tr '\n' ' ' || true)
+          fi
+          for n in $nums; do
+            gh -R "$GITHUB_REPOSITORY" pr merge "$n" --disable-auto || true
+            # صامت: لا تعليق على الـPR عند فشل الفحص — يظهر في Checks فقط
+          done
+
+  auto-merge:
+    if: github.repository == 'yalabdullmohsen/majalis' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout (policy scripts)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 1
+
+      - name: Select eligible PRs
+        id: targets
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
+          WORKFLOW_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          DISPATCH_PR: ${{ github.event.inputs.pr_number }}
+        run: |
+          set -euo pipefail
+          nums=""
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            [ "$PR_BASE_REF" = "main" ] || { echo "nums=" >> "$GITHUB_OUTPUT"; exit 0; }
+            [ "$PR_HEAD_REPO" = "$GITHUB_REPOSITORY" ] || { echo "nums=" >> "$GITHUB_OUTPUT"; exit 0; }
+            nums="$PR_NUMBER"
+          elif [ "$EVENT_NAME" = "workflow_run" ]; then
+            nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \
+              --jq '[.[] | select(.base.ref=="main" and .head.repo.full_name=="'"${GITHUB_REPOSITORY}"'") | .number] | join(" ")' || true)
+          else
+            nums="${DISPATCH_PR:-}"
+            if [ -z "$nums" ]; then
+              nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open --limit 30 \
+                --json number,isDraft --jq '.[] | select(.isDraft==false) | .number' | tr '\n' ' ' || true)
+            fi
+          fi
+          echo "nums=${nums}" >> "$GITHUB_OUTPUT"
+
+      - name: Enable squash auto-merge for policy-eligible Ready PRs
+        if: steps.targets.outputs.nums != ''
+        env:
+          NUMS: ${{ steps.targets.outputs.nums }}
+        run: |
+          set -u
+          REPO_FLAG=(-R "$GITHUB_REPOSITORY")
+          EVAL="node .github/scripts/safe-auto-merge/cli.mjs"
+
+          for n in $NUMS; do
+            echo "::group::PR #$n"
+            meta=$(gh "${REPO_FLAG[@]}" pr view "$n" --json state,isDraft,baseRefName,headRefName,isCrossRepository,headRefOid \
+              --jq '{state,isDraft,base:.baseRefName,branch:.headRefName,cross:.isCrossRepository,sha:.headRefOid}')
+            state=$(echo "$meta" | jq -r .state)
+            draft=$(echo "$meta" | jq -r .isDraft)
+            base=$(echo "$meta" | jq -r .base)
+            head=$(echo "$meta" | jq -r .branch)
+            cross=$(echo "$meta" | jq -r .cross)
+            head_sha_before=$(echo "$meta" | jq -r .sha)
+
+            if [ "$state" != "OPEN" ] || [ "$base" != "main" ] || [ "$cross" = "true" ]; then
+              echo "skip: not eligible base/state/cross"; echo "::endgroup::"; continue
+            fi
+            if [ "$draft" = "true" ]; then
+              echo "skip: Draft (never undraft)"; echo "::endgroup::"; continue
+            fi
+
+            # Refresh report (best-effort) then evaluate with strict Vercel gate
+            $EVAL report --pr "$n" --post || true
+
+            set +e
+            $EVAL evaluate --pr "$n" --strict-vercel
+            code=$?
+            set -e
+            # 3 = checks still pending → wait; do NOT disable auto-merge permanently
+            if [ "$code" -eq 3 ]; then
+              echo "skip: waiting on required checks (keep auto-merge undisturbed)"
+              echo "::endgroup::"; continue
+            fi
+            if [ "$code" -eq 2 ]; then
+              echo "skip: hard policy blockers (see report comment)"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
+            fi
+            if [ "$code" -ne 0 ]; then
+              echo "skip: evaluate error code=$code"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
+            fi
+
+            head_sha_after=$(gh "${REPO_FLAG[@]}" pr view "$n" --json headRefOid --jq .headRefOid)
+            if [ "$head_sha_before" != "$head_sha_after" ]; then
+              echo "skip: head SHA changed during checks ($head_sha_before -> $head_sha_after)"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
+            fi
+
+            pr_title=$(gh "${REPO_FLAG[@]}" pr view "$n" --json title --jq .title)
+            echo "enable auto-merge squash for #$n (head=$head_sha_after) subject=${pr_title}"
+            # Keep Auto-merge enabled; squash title = PR title (clear history).
+            gh "${REPO_FLAG[@]}" pr merge "$n" --auto --squash --delete-branch \
+              --subject "$pr_title" || true
+            echo "::endgroup::"
+          done

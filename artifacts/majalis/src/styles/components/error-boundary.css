@@ -1,0 +1,64 @@
+/* ── 165 — ErrorBoundary & AdminRouteGuard (eb-*) ───────────────────────── */
+.error-boundary-page {
+  max-width: 40rem;
+  margin: 3rem auto;
+  padding: 2rem 1.5rem;
+  border-radius: var(--ds-radius-lg);
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-parchment-deep);
+  text-align: center;
+}
+.error-boundary-page__title {
+  color: var(--majalis-emerald-deep);
+  margin-bottom: 0.75rem;
+  font-size: 1.35rem;
+}
+.error-boundary-page__body {
+  color: var(--majalis-ink-soft);
+  margin-bottom: 1rem;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+.error-boundary-page__id {
+  color: var(--majalis-ink-soft);
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+}
+.error-boundary-page__actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--ds-space-2);
+  flex-wrap: wrap;
+}
+.error-boundary-page__copied {
+  color: var(--majalis-ink-soft);
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+}
+.error-boundary-page__dev {
+  margin-top: 1.25rem;
+  text-align: end;
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft);
+}
+.error-boundary-page__dev summary { cursor: pointer; font-weight: 700; }
+.error-boundary-page__dev pre {
+  overflow: auto;
+  margin-top: 0.5rem;
+  white-space: pre-wrap;
+  direction: ltr;
+  text-align: start;
+}
+.access-denied__title {
+  color: var(--majalis-emerald-deep);
+  font-size: var(--ds-text-xl);
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+.access-denied__body {
+  color: var(--majalis-ink-soft);
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
+  text-align: center;
+}
+

@@ -1,0 +1,136 @@
+{
+  "generated_at": "2026-06-26T00:46:02.593Z",
+  "platform": "Digital Islamic Learning Platform v1",
+  "completion_pct": 100,
+  "features": [
+    {
+      "id": "learning_paths",
+      "label": "المسارات العلمية",
+      "weight": 12,
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "progress_system",
+      "label": "نظام التعلم والتقدم",
+      "weight": 12,
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "quiz_system",
+      "label": "نظام الاختبارات",
+      "weight": 12,
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "certificates",
+      "label": "الشهادات",
+      "weight": 8,
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "calendar",
+      "label": "التقويم العلمي",
+      "weight": 8,
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "personal_library",
+      "label": "المكتبة الشخصية",
+      "weight": 8,
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "notifications",
+      "label": "الإشعارات",
+      "weight": 8,
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "user_stats",
+      "label": "إحصاءات المستخدم",
+      "weight": 8,
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "admin_dashboard",
+      "label": "لوحة الإدارة",
+      "weight": 8,
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "ai_assistant",
+      "label": "الذكاء الاصطناعي",
+      "weight": 8,
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "performance",
+      "label": "الأداء والتوسع",
+      "weight": 5,
+      "complete": true,
+      "score": 5
+    },
+    {
+      "id": "weekly_plan",
+      "label": "الخطة الأسبوعية",
+      "weight": 3,
+      "complete": true,
+      "score": 3
+    }
+  ],
+  "metrics": {
+    "paths_count": 15,
+    "modules_count": 90,
+    "quizzes_count": 15,
+    "certificates_issued": 0,
+    "notification_rules": 9,
+    "enrollments": 0,
+    "completion_rate": 0
+  },
+  "explore_pages": [
+    "/learning",
+    "/learning/paths",
+    "/my-learning",
+    "/learning/quiz",
+    "/learning/calendar",
+    "/learning/paths/aqeedah",
+    "/learning/paths/tawheed",
+    "/learning/paths/hadith",
+    "/learning/paths/mustalah-hadith",
+    "/learning/paths/fiqh",
+    "/learning/paths/usool-fiqh",
+    "/learning/paths/tafseer",
+    "/learning/paths/uloom-quran",
+    "/learning/paths/seerah",
+    "/learning/paths/adab",
+    "/learning/paths/akhlaq",
+    "/learning/paths/arabic",
+    "/learning/paths/nahw",
+    "/learning/paths/dawah",
+    "/learning/paths/tarbiyah"
+  ],
+  "improvements": [
+    "ربط وحدات المسارات بمحتوى CMS الفعلي (دروس، كتب، فتاوى)",
+    "مزامنة التقدم عبر الأجهزة لجميع المستخدمين المسجّلين",
+    "توليد PDF للشهادات مع QR Code",
+    "ربط الإشعارات بـ Expo Push API",
+    "توسيع بنك الأسئلة وربطه بمسارات التعلم",
+    "Gamification: نقاط profiles.points و achievements"
+  ],
+  "future_development": [
+    "مسارات تفاعلية مع فيديو مدمج",
+    "مجتمعات تعلم ومنتديات",
+    "تقييم الأقران والمراجعات",
+    "تكامل Zoom/YouTube للمحاضرات المباشرة"
+  ]
+}

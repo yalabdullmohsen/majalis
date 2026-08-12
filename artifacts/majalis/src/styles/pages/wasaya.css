@@ -1,0 +1,197 @@
+/* ══════════════════════════════════════════════════════════════════
+   248 — الوصايا النبوية  (.wn-*)
+   ══════════════════════════════════════════════════════════════════ */
+
+.wn-page { min-height: 100svh; background: var(--clr-bg); }
+
+/* Hero */
+.wn-hero {
+  background: linear-gradient(135deg, #1a1000 0%, #78610a 45%, #3d2e00 100%);
+  padding: 3.5rem 1.25rem 2.5rem;
+  text-align: center; color: #fff;
+}
+.wn-hero__inner { max-width: 700px; margin: 0 auto; }
+.wn-hero__badge {
+  display: inline-block; margin-bottom: .85rem;
+  padding: .3rem .9rem; border-radius: var(--ds-radius-full);
+  background: rgba(255,255,255,.12); font-size: .8rem;
+}
+.wn-hero__title { font-size: 2.1rem; font-weight: 800; margin: 0 0 .6rem; }
+.wn-hero__sub   { font-size: var(--ds-text-base); opacity: .82; margin: 0 0 1.2rem; line-height: 1.7; }
+.wn-hero__ayah  { font-size: .95rem; opacity: .75; border-top: 1px solid rgba(255,255,255,.15); padding-top: .9rem; }
+.wn-hero__ayah span { font-size: .82rem; opacity: .65; margin-inline-end: .4rem; }
+
+/* Tabs */
+.wn-tabs {
+  display: flex; flex-wrap: wrap; gap: .5rem;
+  padding: 1rem 1.25rem; border-bottom: 1px solid var(--clr-border);
+  background: var(--clr-surface);
+  position: sticky; top: var(--sticky-below-chrome, 7rem); z-index: 10;
+}
+.wn-search-wrap { padding: .75rem 1.25rem 0; }
+.wn-search-input { width: 100%; }
+.rq-search-wrap { padding: .75rem 0 1rem; }
+.rq-search-input { width: 100%; }
+.as-search-wrap { padding: .75rem 0 .5rem; }
+.as-search-input { width: 100%; }
+.atl-search-wrap { padding: .75rem 1.5rem .25rem; }
+.atl-search-input { width: 100%; }
+.sh-search-wrap { padding: .75rem 0 .5rem; }
+.sh-search-input { width: 100%; }
+.jn-search-wrap { padding: .5rem 0 .75rem; }
+.jn-search-input { width: 100%; }
+.tw-search-wrap { padding: .5rem 0 .75rem; }
+.tw-search-input { width: 100%; }
+.mk-search-wrap { padding: .5rem 0 .75rem; }
+.mk-search-input { width: 100%; }
+.sw-search-wrap { padding: .5rem 1.5rem .25rem; }
+.sw-search-input { width: 100%; }
+.hj-search-wrap { padding: .5rem 1.5rem .25rem; }
+.hj-search-input { width: 100%; }
+.zk-search-wrap { padding: .5rem 0 .75rem; }
+.zk-search-input { width: 100%; }
+.sg-search-wrap { padding: .5rem 0 .75rem; }
+.sg-search-input { width: 100%; }
+.twh-search-wrap { padding: .75rem 0 .5rem; }
+.twh-search-input { width: 100%; }
+.uq-search-wrap { padding: .5rem 0 .75rem; }
+.uq-search-input { width: 100%; }
+.mw-search-wrap { padding: .5rem 0 .75rem; }
+.mw-search-input { width: 100%; }
+.tj-search-wrap { padding: .5rem 0 .75rem; }
+.tj-search-input { width: 100%; }
+.jnz-search-wrap { padding: .5rem 0 .75rem; }
+.jnz-search-input { width: 100%; }
+.th-search-wrap { padding: .5rem 0 .75rem; }
+.th-search-input { width: 100%; }
+.is-search-wrap { padding: .5rem 0 .75rem; }
+.is-search-input { width: 100%; }
+.sr-search-wrap { padding: .5rem .25rem .75rem; }
+.sr-search-input { width: 100%; }
+.prv-search-wrap { padding: .5rem 0 .75rem; }
+.prv-search-input { width: 100%; }
+.mm-search-wrap { padding: .5rem 0 .75rem; }
+.mm-search-input { width: 100%; }
+.qcp-search-wrap { padding: .5rem 0 .75rem; }
+.qcp-search-input { width: 100%; }
+.ocp-search-wrap { padding: .5rem 0 .75rem; }
+.ocp-search-input { width: 100%; }
+.wn-tab {
+  padding: .45rem 1.1rem; border-radius: var(--ds-radius-full);
+  border: 1.5px solid var(--clr-border); background: #fff;
+  font-size: .88rem; cursor: pointer; color: var(--clr-text-2); transition: all .18s;
+}
+.wn-tab:hover  { border-color: #78610a; color: #78610a; }
+.wn-tab--active { background: #78610a; border-color: #78610a; color: #fff; font-weight: 600; }
+
+/* Container */
+.wn-container { max-width: 900px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
+
+/* Intro */
+.wn-intro {
+  background: var(--clr-surface); border-inline-end: 4px solid #78610a;
+  border-radius: .6rem; padding: 1rem 1.2rem; margin-bottom: 1.75rem;
+  font-size: .95rem; line-height: 1.8; color: var(--clr-text-1);
+}
+
+/* Accordion cards */
+.wn-list { display: flex; flex-direction: column; gap: .75rem; }
+.wn-card { background: #fff; border: 1px solid var(--clr-border); border-radius: .75rem; overflow: hidden; }
+.wn-card__head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .9rem 1.2rem; cursor: pointer; gap: .5rem; width: 100%;
+  background: none; border: none; text-align: end;
+}
+.wn-card__head:hover { background: var(--clr-surface); }
+.wn-card__left { display: flex; align-items: center; gap: .75rem; flex: 1; }
+.wn-card__num {
+  width: 1.8rem; height: 1.8rem; flex-shrink: 0; border-radius: 50%;
+  background: #78610a; color: #fff; font-size: .8rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.wn-card__title { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); }
+.wn-card__right { display: flex; align-items: center; gap: .5rem; flex-shrink: 0; }
+.wn-card__cat {
+  font-size: .75rem; padding: .15rem .55rem; border-radius: var(--ds-radius-full);
+  font-weight: 600; white-space: nowrap;
+  background: var(--wn-cat-bg, rgba(31,77,58,.1));
+  color: var(--wn-cat-color, var(--mj-brand));
+}
+.wn-chevron { font-size: .7rem; color: var(--clr-text-2); }
+.wn-card__body { padding: 1rem 1.25rem 1.25rem; border-top: 1px solid var(--clr-divider); }
+
+/* Hadith block */
+.wn-hadith {
+  font-size: .97rem; line-height: 1.85; color: var(--clr-text-1);
+  border-inline-end: 3px solid #78610a; padding-inline-end: .85rem;
+  margin: 0 0 .6rem; font-style: normal;
+}
+.wn-hadith--sm { font-size: .9rem; margin: .4rem 0 .5rem; }
+.wn-source { font-size: .8rem; color: #78610a; font-weight: 600; margin: 0 0 .6rem; }
+.wn-benefit {
+  background: #fef9ec; border: 1px solid #e8d676; border-radius: .5rem;
+  padding: .65rem .9rem; font-size: .87rem; line-height: 1.65; color: #5a490a;
+}
+.wn-benefit__label { font-weight: 700; margin-inline-start: .4rem; }
+
+/* Khasisa list */
+.wn-khasisa-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
+.wn-khasisa-card {
+  background: #fff; border: 1px solid var(--clr-border);
+  border-inline-end: 4px solid #78610a; border-radius: .75rem;
+  padding: 1.1rem 1.25rem;
+}
+.wn-khasisa-name { font-size: var(--ds-text-base); font-weight: 700; color: #78610a; margin: 0 0 .6rem; }
+
+/* Umma list */
+.wn-umma-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
+.wn-umma-card { display: flex; gap: var(--ds-space-4); align-items: flex-start; background: #fff; border: 1px solid var(--clr-border); border-radius: .75rem; padding: 1.1rem 1.2rem; }
+.wn-umma-num {
+  width: 2rem; height: 2rem; flex-shrink: 0; border-radius: 50%;
+  background: #78610a; color: #fff; font-weight: 700; font-size: .85rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.wn-umma-title { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .4rem; }
+
+/* Pick grid */
+.wn-pick-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--ds-space-4);
+}
+.wn-pick-card {
+  background: #fff; border: 1px solid var(--clr-border);
+  border-radius: .75rem; padding: 1rem 1.1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+.wn-cat--akhlaq   { --wn-cat-color: var(--mj-brand); --wn-cat-bg: rgba(31,77,58,.1); }
+.wn-cat--ibada    { --wn-cat-color: #1a3a5c; --wn-cat-bg: rgba(26,58,92,.1); }
+.wn-cat--tawhid   { --wn-cat-color: var(--brand, var(--mj-brand)); --wn-cat-bg: rgba(124,58,237,.1); }
+.wn-cat--muamalat { --wn-cat-color: var(--mj-brand); --wn-cat-bg: rgba(23,61,53,.10); }
+.wn-cat--hayah    { --wn-cat-color: var(--mj-brand); --wn-cat-bg: rgba(15,118,110,.1); }
+.wn-pick-cat   { font-size: .8rem; font-weight: 700; margin-bottom: .3rem; color: var(--wn-cat-color, var(--mj-brand)); }
+.wn-pick-title { font-size: .93rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .4rem; }
+.wn-pick-text  { font-size: .85rem; line-height: 1.7; color: var(--clr-text-2); margin: 0 0 .4rem; }
+.wn-pick-source { font-size: .78rem; color: #78610a; font-weight: 600; }
+
+/* Amal list */
+.wn-amal-list { display: flex; flex-direction: column; gap: .85rem; margin-bottom: 1.5rem; }
+.wn-amal-item { display: flex; gap: var(--ds-space-4); align-items: flex-start; }
+.wn-amal-num {
+  width: 1.9rem; height: 1.9rem; flex-shrink: 0; border-radius: 50%;
+  border: 2px solid #78610a; color: #78610a; font-weight: 700; font-size: .82rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.wn-amal-text { font-size: .93rem; line-height: 1.7; color: var(--clr-text-1); margin: 0; }
+.wn-amal-cta {
+  background: #fef9ec; border: 1px solid #e8d676; border-radius: .75rem;
+  padding: 1.25rem 1.5rem; text-align: center;
+}
+.wn-amal-cta__icon { font-size: var(--ds-text-2xl); margin-bottom: .5rem; }
+.wn-amal-cta__text { font-size: .92rem; color: #5a490a; line-height: 1.7; font-style: normal; margin: 0; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .wn-hero__title { font-size: var(--ds-text-2xl); }
+  .wn-pick-grid { grid-template-columns: 1fr; }
+  .wn-tab { font-size: .82rem; padding: .4rem .85rem; }
+}
+

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#143F35" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>غير متصل — المجلس العلمي</title>
+  <link rel="icon" href="/favicon.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", Tahoma, "Noto Naskh Arabic", sans-serif;
+      min-height: 100svh;
+      min-height: 100dvh;
+      background:
+        radial-gradient(90% 60% at 100% 0%, rgba(184,150,63,0.12), transparent 50%),
+        linear-gradient(160deg, #143F35 0%, #1A5245 55%, #226A56 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: max(1.25rem, env(safe-area-inset-top)) 1.25rem max(1.25rem, env(safe-area-inset-bottom));
+      text-align: center;
+    }
+    .offline-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 1.1rem;
+      padding: 2rem 1.4rem 1.6rem;
+      max-width: 440px;
+      width: 100%;
+      backdrop-filter: blur(6px);
+    }
+    .offline-logo {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1rem;
+      border-radius: 0.85rem;
+      object-fit: contain;
+      background: rgba(255,255,255,0.1);
+      padding: 0.35rem;
+    }
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 900;
+      margin-bottom: 0.55rem;
+    }
+    .subtitle {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+    .offline-actions { display: grid; gap: 0.55rem; }
+    .btn {
+      display: block;
+      min-height: 48px;
+      line-height: 48px;
+      padding: 0 1.1rem;
+      border-radius: 0.65rem;
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+    .btn--primary { background: #B8963F; color: #143F35; }
+    .btn--secondary {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+    .offline-cached {
+      margin-top: 1.4rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .offline-cached p {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.7rem;
+    }
+    .cached-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+    }
+    .cached-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+    .offline-footer {
+      margin-top: 1.25rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.7);
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-card">
+    <img class="offline-logo" src="/icon-192.png" width="64" height="64" alt="المجلس العلمي" />
+    <h1>أنت غير متصل بالإنترنت</h1>
+    <p class="subtitle">
+      تعذّر الاتصال بمنصة المجلس العلمي. المحتوى المحفوظ والمصحف والأذكار قد تبقى متاحة عند فتحها مسبقًا.
+    </p>
+    <div class="offline-actions">
+      <button class="btn btn--primary" type="button" onclick="window.location.reload()">إعادة المحاولة</button>
+      <a href="/" class="btn btn--secondary">العودة للرئيسية</a>
+    </div>
+    <div class="offline-cached">
+      <p>روابط سريعة</p>
+      <div class="cached-links">
+        <a href="/adhkar" class="cached-link">الأذكار</a>
+        <a href="/quran-hub" class="cached-link">القرآن</a>
+        <a href="/prayer-times" class="cached-link">مواقيت الصلاة</a>
+        <a href="/tasbih" class="cached-link">التسبيح</a>
+        <a href="/vault" class="cached-link">المحفوظات</a>
+      </div>
+    </div>
+  </div>
+  <p class="offline-footer">المجلس العلمي — منصة العلوم الشرعية</p>
+</body>
+</html>

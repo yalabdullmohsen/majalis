@@ -1,0 +1,117 @@
+/* ══════════════════════════════════════════════
+   UDP. UniversityDetailPage
+   ══════════════════════════════════════════════ */
+.udp-root { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 1.25rem; direction: rtl; }
+.udp-update-bar {
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
+  border-bottom: 1px solid var(--majalis-emerald);
+  padding: .375rem 1rem; font-size: .75rem; color: var(--majalis-emerald); text-align: center;
+}
+.udp-prog-card { border: 1px solid var(--majalis-line); border-radius: .75rem; overflow: hidden; }
+.udp-prog-header-btn {
+  display: flex; width: 100%; align-items: flex-start; gap: .75rem;
+  padding: var(--ds-space-4); text-align: end;
+  background: none; border: none; cursor: pointer;
+  transition: background .15s;
+}
+.udp-prog-header-btn:hover { background: var(--mn-surface-hover, rgba(31,77,58,.06)); }
+.udp-badge--emerald {
+  font-size: .75rem; background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
+  color: var(--majalis-emerald); padding: .125rem .5rem;
+  border-radius: 9999px; font-weight: 500; display: inline-flex; align-items: center; gap: .25rem;
+}
+.udp-badge--neutral {
+  font-size: .75rem; background: var(--majalis-parchment-deep, #f0ece4);
+  color: var(--majalis-ink-soft); padding: .125rem .5rem; border-radius: 9999px;
+}
+.udp-prog-name { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; }
+.udp-prog-dept { font-size: .75rem; color: var(--majalis-ink-soft); margin-top: .125rem; }
+.udp-chevron { color: var(--majalis-ink-soft); opacity: .6; flex-shrink: 0; margin-top: .25rem; }
+.udp-prog-body {
+  border-top: 1px solid var(--majalis-line); padding: var(--ds-space-4); background: var(--majalis-parchment);
+}
+.udp-meta-label { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; margin-bottom: .125rem; }
+.udp-scholarship-text { color: var(--majalis-emerald); font-weight: 500; }
+.udp-section-subtitle {
+  font-size: .75rem; font-weight: 600; color: var(--majalis-ink-soft);
+  margin-bottom: .5rem; text-transform: uppercase; letter-spacing: normal;
+}
+.udp-req-item { display: flex; gap: .5rem; font-size: .875rem; color: var(--majalis-ink-soft); }
+.udp-req-check { color: var(--majalis-emerald); flex-shrink: 0; }
+.udp-req-file { color: var(--majalis-emerald); flex-shrink: 0; margin-top: .125rem; }
+.udp-step-num {
+  flex-shrink: 0; width: 1.5rem; height: 1.5rem;
+  border-radius: 9999px; background: var(--majalis-emerald);
+  color: #fff; font-size: .75rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.udp-deadline-label { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; display: block; }
+.udp-deadline-val { font-weight: 500; color: var(--majalis-emerald); display: flex; align-items: center; gap: .25rem; }
+.udp-website-btn {
+  display: inline-flex; align-items: center; gap: .375rem;
+  padding: .5rem 1rem; background: #fff;
+  color: var(--majalis-emerald); border-radius: .75rem;
+  font-size: .875rem; font-weight: 600; transition: opacity .15s;
+  text-decoration: none;
+}
+.udp-website-btn:hover { opacity: .9; }
+.udp-section-title { font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-ink); margin-bottom: .75rem; }
+.udp-about-text { font-size: .875rem; color: var(--majalis-ink-soft); line-height: 1.7; }
+.udp-degree-label {
+  font-size: .875rem; font-weight: 700; color: var(--majalis-ink-soft);
+  margin-bottom: .5rem; border-bottom: 1px solid var(--majalis-line); padding-bottom: .25rem;
+}
+.udp-faq-item { border: 1px solid var(--majalis-line); border-radius: .75rem; overflow: hidden; }
+.udp-faq-summary {
+  padding: .75rem 1rem; cursor: pointer; font-size: .875rem; font-weight: 500;
+  color: var(--majalis-ink); transition: background .15s; user-select: none; list-style: none;
+}
+.udp-faq-summary:hover { background: var(--mn-surface-hover, rgba(31,77,58,.06)); }
+.udp-faq-answer {
+  padding: .5rem 1rem 1rem;
+  font-size: .875rem; color: var(--majalis-ink-soft); line-height: 1.7;
+  border-top: 1px solid var(--majalis-line);
+}
+.udp-social-link {
+  display: inline-flex; align-items: center; padding: .375rem .75rem;
+  background: var(--majalis-panel); border: 1px solid var(--majalis-line);
+  border-radius: .75rem; font-size: .875rem; color: var(--majalis-ink-soft);
+  text-decoration: none; transition: border-color .15s;
+}
+.udp-social-link:hover { border-color: var(--majalis-emerald); }
+.udp-disclaimer {
+  background: var(--majalis-parchment-deep, #f0ece4); border-radius: .75rem;
+  padding: .75rem 1rem; font-size: .75rem; color: var(--majalis-ink-soft);
+}
+.udp-loading-text { font-size: .875rem; color: var(--majalis-ink-soft); opacity: .6; }
+.udp-not-found-title { font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-ink-soft); margin-bottom: .5rem; }
+.udp-back-link { color: var(--majalis-emerald); font-size: .875rem; text-decoration: none; }
+.udp-back-link:hover { text-decoration: underline; }
+.udp-acc-badge { background-color: var(--acc-color, #888); }
+.udp-compare-active-btn { color: var(--majalis-emerald); font-weight: 600; }
+
+/* ── نُقل إلى styles/pages/universities-admin.css ── */
+.is-summary { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius); padding: 0.75rem 1rem; font-size: var(--ds-text-sm); line-height: 1.65; color: #334155; margin-bottom: 0.9rem; }
+.is-full-toggle { background: none; border: 1px solid #cbd5e1; border-radius: var(--ds-radius-sm); padding: 0.35rem 0.75rem; font-size: 0.8rem; color: #475569; cursor: pointer; font-family: inherit; margin-bottom: 0.75rem; transition: border-color 0.15s; }
+.is-full-toggle:hover { border-color: #94a3b8; color: #1e293b; }
+.is-content { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius); padding: 1rem 1.1rem; font-size: var(--ds-text-sm); line-height: 1.7; color: #334155; white-space: pre-wrap; margin-bottom: 0.9rem; max-height: 380px; overflow-y: auto; }
+.is-lessons { margin-bottom: 0.9rem; }
+.is-lesson-item { display: flex; gap: var(--ds-space-2); align-items: flex-start; font-size: 0.8125rem; color: #334155; margin-bottom: 0.35rem; }
+.is-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.is-btn { padding: 0.45rem 1rem; border-radius: var(--ds-radius-sm); font-size: 0.8125rem; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: all 0.15s; }
+.is-btn.approve { background: var(--mj-brand); color: #fff; }
+.is-btn.approve:hover { background: var(--mj-brand); }
+.is-btn.revoke { background: #fff; color: #dc2626; border: 1px solid #fca5a5; }
+.is-btn.revoke:hover { background: #fef2f2; }
+.is-btn.disabled { opacity: 0.45; cursor: not-allowed; }
+.is-verified-info { font-size: 0.7375rem; color: #64748b; padding: 0.3rem 0; }
+.is-sources { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; }
+.is-source { font-size: 0.8rem; color: #475569; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius-sm); padding: 0.3rem 0.6rem; }
+
+
+/* ============================================================
+   90 — UniversityDetailPage  (udp-*)
+   ============================================================ */
+.udp-step-num  { background: var(--majalis-emerald); }
+.udp-acc-badge { background: var(--acc-color, var(--mj-brand)); }
+

@@ -1,0 +1,88 @@
+/* InstitutionsPage — deferred */
+
+/* ── منقول من الطبقة الحرجة: institutions ── */
+/* ══════════════════════════════════════════════════════════════════════════════
+   Phase 5 — دليل المؤسسات (Institutions)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.inst-page { padding-bottom: 4rem; }
+.inst-search-wrap { position: relative; margin-bottom: 1.25rem; }
+.inst-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+.inst-results-count {
+  font-size: 0.85rem;
+  color: var(--majalis-ink-soft);
+  margin-bottom: 0.75rem;
+}
+
+.inst-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: 1rem;
+}
+
+.inst-card {
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius-lg, 0.625rem);
+  padding: 1.125rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  transition: box-shadow 0.15s;
+}
+.inst-card:hover { box-shadow: var(--ds-shadow); }
+.inst-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.inst-card__icon { font-size: 1.8rem; flex-shrink: 0; line-height: 1; }
+.inst-card__meta { flex: 1; min-width: 0; }
+.inst-card__name {
+  margin: 0 0 0.2rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  line-height: 1.3;
+}
+.inst-card__location { font-size: 0.78rem; color: var(--majalis-ink-soft); }
+.inst-card__type-badge {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--ds-emerald-soft);
+  color: var(--ds-emerald-deep);
+  white-space: nowrap;
+}
+.inst-card__desc {
+  margin: 0;
+  font-size: 0.825rem;
+  color: var(--majalis-ink-soft);
+  line-height: 1.55;
+}
+.inst-card__links { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.25rem; }
+.inst-card__link {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.15s;
+}
+.inst-card__link:hover { opacity: 0.8; }
+.inst-card__link--web { background: var(--ds-emerald-soft); color: var(--ds-emerald-deep); }
+.inst-card__link--map { background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent); color: var(--majalis-emerald, var(--mj-brand)); }
+
+.inst-disclaimer {
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft);
+  margin-top: 2rem;
+  text-align: center;
+}

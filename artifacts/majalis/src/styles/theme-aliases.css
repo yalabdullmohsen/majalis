@@ -1,0 +1,421 @@
+/* ═══════════ جسر الهوية — aliases فقط ═══════════
+ * يُحمَّل آخر شيء في main.tsx بعد brand-v4 / m2030 / index.css
+ * يعيد توجيه الرموز القديمة (--bg/--brand/--msk-*) إلى لوحة --mj-*.
+ * --background / --primary / --font-display مصدرها app/styles/theme.css فقط.
+ */
+
+:root {
+  /* أسطح ونصوص */
+  --bg: var(--mj-bg);
+  --bg-elevated: var(--mj-surface);
+  --surface: var(--mj-surface);
+  --surface-2: var(--mj-surface-2);
+  --surface-3: var(--mj-surface-2);
+  --surface-muted: var(--mj-surface-2);
+  --surface-brand: var(--mj-brand-soft);
+  --surface-inverse: var(--mj-brand-deep);
+  --surface-elevated: var(--mj-surface);
+
+  --text-title: var(--mj-ink);
+  --text: var(--mj-ink);
+  --text-2: var(--mj-ink-2);
+  --text-muted: var(--mj-muted);
+  --text-meta: var(--mj-muted);
+  --text-on-brand: var(--mj-on-brand);
+  /* نص فوق سطح داكن دائمًا — لا يُربَط بـ --mj-ink (أسود في الوضع الفاتح) */
+  --text-on-dark: #F1F5F3;
+  --text-brand: var(--mj-brand);
+  --text-brand-deep: var(--mj-brand-deep);
+  /* أسماء قديمة خاطئة شائعة — كانت تسقط لاحتياطي نهاري ثابت */
+  --txt-primary: var(--mj-ink);
+  --txt-subdued: var(--mj-ink-2);
+  --text-primary: var(--mj-ink);
+
+  --border: var(--mj-hairline);
+  --border-strong: var(--mj-hairline);
+  --border-interactive: var(--mj-ink-2);
+  --border-brand: var(--mj-brand-soft);
+
+  --brand: var(--mj-brand);
+  --brand-hover: var(--mj-brand);
+  --brand-active: var(--mj-brand-deep);
+  --brand-soft: var(--mj-brand-soft);
+  --brand-deep: var(--mj-brand-deep);
+
+  /* ذهبي — شارات فقط */
+  --accent: var(--mj-accent);
+  --accent-soft: var(--mj-accent-soft);
+  --accent-deep: var(--mj-accent);
+
+  /* سلّم emerald القديم → لوحة جديدة */
+  --em-50: var(--mj-brand-soft);
+  --em-100: var(--mj-brand-soft);
+  --em-200: color-mix(in srgb, var(--mj-brand) 28%, var(--mj-surface));
+  --em-300: color-mix(in srgb, var(--mj-brand) 45%, var(--mj-surface));
+  --em-400: color-mix(in srgb, var(--mj-brand) 70%, var(--mj-ink));
+  --em-500: var(--mj-brand);
+  --em-600: var(--mj-brand);
+  --em-700: var(--mj-brand-deep);
+  --em-800: var(--mj-brand-deep);
+  --em-900: var(--mj-brand-deep);
+  --em-950: var(--mj-brand-deep);
+
+  --n-0: var(--mj-surface);
+  --n-50: var(--mj-bg);
+  --n-100: var(--mj-surface-2);
+  --n-200: var(--mj-hairline);
+  --n-300: var(--mj-hairline);
+  --n-400: var(--mj-muted);
+  --n-450: var(--mj-muted);
+  --n-500: var(--mj-muted);
+  --n-600: var(--mj-ink-2);
+  --n-700: var(--mj-ink-2);
+  --n-800: var(--mj-ink);
+  --n-900: var(--mj-ink);
+  --n-950: var(--mj-brand-deep);
+
+  --gold-100: var(--mj-accent-soft);
+  --gold-200: var(--mj-accent-soft);
+  --gold-300: var(--mj-accent);
+  --gold-400: var(--mj-accent);
+  --gold-500: var(--mj-accent);
+  --gold-600: var(--mj-accent);
+  --gold-700: var(--mj-accent);
+
+  /* color-* الدلالية */
+  /* color-bg/primary/text من theme.css؛ بقية الجسور الدلالية */
+  --color-background: var(--mj-bg);
+  --color-bg-soft: var(--mj-surface-2);
+  --color-surface-elevated: var(--mj-surface);
+  --color-text-muted: var(--mj-muted);
+  --color-primary-dark: var(--mj-brand-deep);
+  --color-primary-strong: var(--mj-brand-deep);
+  --color-primary-soft: var(--mj-brand-soft);
+  --color-border: var(--mj-hairline);
+
+  /* خطوط — Amiri (--mj-face) لنصوص القرآن/الحديث؛ --font-display/--font-ui من theme.css */
+  --font-face: var(--mj-face);
+
+  /* أنصاف وظلال */
+  --r-sm: var(--mj-r-sm);
+  --r-md: var(--mj-r-md);
+  --r-lg: var(--mj-r-lg);
+  --r-xl: var(--mj-r-lg);
+  --r-full: var(--mj-r-pill);
+  --radius-card: var(--mj-r-lg);
+  --e-1: var(--mj-sh);
+  --e-2: var(--mj-sh);
+  --e-3: var(--mj-sh);
+  --shadow-soft: var(--mj-sh);
+  --shadow-card: var(--mj-sh);
+  --focus-color: var(--mj-brand);
+  --focus-ring: 0 0 0 2px var(--mj-bg), 0 0 0 4px var(--mj-brand);
+
+  /* shadcn / Radix (--background/--primary/…) مُعرَّفة في theme.css فقط */
+
+  /* أسماء شائعة قديمة */
+  --majalis-emerald: var(--mj-brand);
+  --majalis-emerald-deep: var(--mj-brand-deep);
+  --majalis-parchment: var(--mj-bg);
+  --majalis-ink: var(--mj-ink);
+  --majalis-ink-soft: var(--mj-ink-2);
+  --majalis-line: var(--mj-hairline);
+  --majalis-panel: var(--mj-surface);
+  --ds-emerald: var(--mj-brand);
+  --ds-emerald-deep: var(--mj-brand-deep);
+  --msk-gold: var(--mj-brand);
+  --msk-gold-dim: var(--mj-brand-soft);
+  --msk-canvas: var(--mj-bg);
+  --msk-canvas-1: var(--mj-surface);
+  --msk-canvas-2: var(--mj-surface-2);
+  --msk-text: var(--mj-ink);
+  --msk-text-2: var(--mj-ink-2);
+  --msk-text-3: var(--mj-muted);
+  --msk-border: var(--mj-hairline);
+}
+
+html[data-theme="dark"],
+html.dark,
+[data-theme="dark"],
+.dark {
+  --bg: var(--mj-bg);
+  --bg-elevated: var(--mj-surface);
+  --surface: var(--mj-surface);
+  --surface-2: var(--mj-surface-2);
+  --surface-3: var(--mj-surface-2);
+  --surface-muted: var(--mj-surface-2);
+  --surface-brand: var(--mj-brand-soft);
+  --surface-inverse: var(--mj-bg);
+  --surface-elevated: var(--mj-surface);
+
+  --text-title: var(--mj-ink);
+  --text: var(--mj-ink);
+  --text-2: var(--mj-ink-2);
+  --txt-primary: var(--mj-ink);
+  --txt-subdued: var(--mj-ink-2);
+  --text-primary: var(--mj-ink);
+  --text-muted: var(--mj-muted);
+  --text-meta: var(--mj-muted);
+  --text-on-brand: var(--mj-on-brand);
+  /* نفس المعنى ليلًا: نص فاتح فوق الزمرد/الأسطح الداكنة الثابتة */
+  --text-on-dark: #F2F6F4;
+  --text-brand: var(--mj-brand);
+  --text-brand-deep: var(--mj-brand);
+
+  --border: var(--mj-hairline);
+  --border-strong: var(--mj-hairline);
+  --border-interactive: var(--mj-ink-2);
+  --border-brand: var(--mj-brand-soft);
+
+  --brand: var(--mj-brand);
+  --brand-hover: var(--mj-brand);
+  --brand-active: var(--mj-brand);
+  --brand-soft: var(--mj-brand-soft);
+  --brand-deep: var(--mj-brand-deep);
+  --accent: var(--mj-accent);
+  --accent-soft: var(--mj-accent-soft);
+
+  --em-50: var(--mj-brand-soft);
+  --em-100: var(--mj-brand-soft);
+  --em-500: var(--mj-brand);
+  --em-600: var(--mj-brand);
+  --em-700: var(--mj-brand);
+  --em-800: var(--mj-brand-deep);
+  --em-900: var(--mj-brand-deep);
+  --em-950: var(--mj-bg);
+
+  --n-0: var(--mj-surface);
+  --n-50: var(--mj-bg);
+  --n-100: var(--mj-surface-2);
+  --n-900: var(--mj-ink);
+
+  /* shadcn/color-bg من theme.css تتبع --mj-* في الوضع الليلي تلقائيًا */
+  --color-background: var(--mj-bg);
+  --color-border: var(--mj-hairline);
+
+  --majalis-emerald: var(--mj-brand);
+  --majalis-emerald-deep: var(--mj-brand-deep);
+  --majalis-parchment: var(--mj-bg);
+  --msk-gold: var(--mj-brand);
+  --msk-canvas: var(--mj-bg);
+  --msk-text: var(--mj-ink);
+}
+
+/* تهدئة تدرّج الهيرو على الرئيسية — نص داكن على --mj-bg (لا أبيض على فاتح) */
+.m2030-hero,
+.m2030-hero.page-hero-mj,
+.home-page-hero {
+  background: var(--mj-bg) !important;
+  color: var(--mj-ink) !important;
+}
+.m2030-hero .page-hero-mj__title,
+.m2030-hero .page-hero-mj__headline,
+.home-page-hero .page-hero-mj__title,
+.home-page-hero .page-hero-mj__headline {
+  color: var(--mj-ink) !important;
+}
+.m2030-hero .page-hero-mj__desc,
+.home-page-hero .page-hero-mj__desc {
+  color: var(--mj-ink-2) !important;
+}
+
+.bottom-nav--m2030,
+.bottom-nav {
+  background: var(--mj-surface) !important;
+  border-top-color: var(--mj-hairline) !important;
+}
+.bottom-nav__tab.is-active,
+.bottom-nav__tab[aria-current="page"] {
+  color: var(--mj-brand) !important;
+}
+
+.top-section-bar,
+.navbar-v3,
+.nav-bar {
+  background: var(--mj-surface) !important;
+  border-color: var(--mj-hairline) !important;
+  color: var(--mj-ink) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* ── كروم علوي — توحيد أزرار / شعار / بحث / تيكر (≥44×44) ── */
+.navbar-v3 .navbar-menu-btn,
+.navbar-v3 .navbar-theme-toggle,
+.navbar-v3 .navbar-mobile-login {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+  border-radius: var(--mj-r-sm) !important;
+  border: 1px solid var(--mj-hairline) !important;
+  background: var(--mj-surface-2) !important;
+  color: var(--mj-ink-2) !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+.navbar-v3 .navbar-menu-btn:active,
+.navbar-v3 .navbar-theme-toggle:active,
+.navbar-v3 .navbar-mobile-login:active,
+.navbar-v3 .navbar-mobile-login--active:active {
+  background: var(--mj-hairline) !important;
+  transform: scale(0.96);
+}
+.navbar-v3 .navbar-mobile-login--active {
+  background: var(--mj-brand-soft) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 28%, var(--mj-hairline)) !important;
+  color: var(--mj-brand) !important;
+}
+.navbar-v3 .navbar-menu-btn__geo {
+  display: none !important;
+}
+.navbar-v3 .navbar-brand__mark {
+  height: 2rem !important;
+  width: auto !important;
+  max-width: 7.5rem !important;
+  object-fit: contain !important;
+  filter: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+html[data-theme="dark"] .navbar-v3 .navbar-brand__mark,
+html.dark .navbar-v3 .navbar-brand__mark {
+  /* الشعار أخضر داكن على لوحة سوداء — يرفع قليلاً فوق --mj-bg */
+  filter: brightness(1.2) contrast(1.05) !important;
+}
+
+.navbar-v3__search-row {
+  background: var(--mj-bg) !important;
+  border-block-start-color: var(--mj-hairline) !important;
+}
+.navbar-v3__search-btn {
+  background: var(--mj-surface) !important;
+  border: 1px solid var(--mj-hairline) !important;
+  border-radius: var(--mj-r-pill) !important;
+  color: var(--mj-muted) !important;
+}
+
+.header-ticker,
+.navbar-ticker-row .header-ticker {
+  height: 2.5rem !important;
+  min-height: 2.5rem !important;
+  max-height: 2.5rem !important;
+  border: 1px solid var(--mj-hairline) !important;
+  border-radius: var(--mj-r-sm) !important;
+  background: var(--mj-surface) !important;
+  color: var(--mj-ink) !important;
+  padding-inline: 0.65rem !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+.header-ticker__viewport {
+  height: 100%;
+  min-width: 0;
+  mask-image: linear-gradient(
+    to left,
+    transparent 0%,
+    #000 4%,
+    #000 96%,
+    transparent 100%
+  ) !important;
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent 0%,
+    #000 4%,
+    #000 96%,
+    transparent 100%
+  ) !important;
+}
+.navbar-v3__inner {
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+  padding-inline: max(16px, var(--gutter-inline-start, var(--inset-right, 0px)))
+    max(16px, var(--gutter-inline-end, var(--inset-left, 0px))) !important;
+}
+.header-ticker__item,
+.header-ticker__text,
+.header-ticker__label,
+.header-ticker__source,
+.header-ticker__icon {
+  color: var(--mj-ink) !important;
+}
+.header-ticker__text {
+  font-weight: 600 !important;
+  /* تشكيل خفيف أقل ازدحامًا: الاعتماد على وزن الخط لا تراكب تشكيل ثقيل */
+  text-rendering: optimizeLegibility;
+}
+.header-ticker__label {
+  background: var(--mj-brand-soft) !important;
+  color: var(--mj-brand-deep) !important;
+  border-radius: var(--mj-r-pill) !important;
+}
+html[data-theme="dark"] .header-ticker__label,
+html.dark .header-ticker__label {
+  color: var(--mj-brand) !important;
+  background: var(--mj-brand-soft) !important;
+}
+.header-ticker__source {
+  color: var(--mj-ink-2) !important;
+  opacity: 1 !important;
+}
+.header-ticker__warn {
+  background: color-mix(in srgb, #9a3b22 14%, var(--mj-surface)) !important;
+  color: #9a3b22 !important;
+}
+.navbar-ticker-row {
+  background: var(--mj-bg) !important;
+  border-block-start-color: var(--mj-hairline) !important;
+  min-height: 2.5rem !important;
+  height: auto !important;
+}
+.header-ticker--paused .header-ticker__track {
+  animation-play-state: paused !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-ticker__track {
+    animation: none !important;
+  }
+}
+
+.ui-card,
+.ds-card,
+.card-v2 {
+  background: var(--mj-surface) !important;
+  border: 1px solid var(--mj-hairline) !important;
+  border-radius: var(--mj-r-lg) !important;
+  color: var(--mj-ink) !important;
+  box-shadow: var(--mj-sh) !important;
+}
+
+.ds-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+  gap: var(--mj-s3);
+}
+.ds-stat {
+  background: var(--mj-surface);
+  border: 1px solid var(--mj-hairline);
+  border-radius: var(--mj-r-md);
+  padding: var(--mj-s3);
+  color: var(--mj-ink);
+}
+.ds-stat strong { color: var(--mj-brand); }
+.ds-stat span { color: var(--mj-muted); }
+
+.gl-cat--active {
+  background: var(--mj-brand) !important;
+  border-color: var(--mj-brand) !important;
+  color: #fff !important;
+}
+
+html[data-theme="dark"] .gl-cat--active,
+html.dark .gl-cat--active {
+  color: var(--mj-brand-deep) !important;
+}

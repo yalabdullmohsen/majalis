@@ -1,0 +1,339 @@
+/* ============================================================
+   98 — AdhkarPage  (adhkar-* additions)
+   ألوان الثيم فقط — لا --txt-primary (رمز غير معرَّف → احتياطي نهاري دائم)
+   ============================================================ */
+.adhkar-ring-fill { transition: stroke-dashoffset 0.18s ease; }
+.adhkar-prog-fill { width: var(--adhkar-pct, 0%); }
+
+
+/* ══ 40. Adhkar Focus Mode ══════════════════════════════════════════════════ */
+.adhkar-page--focus .adhkar-focus-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-6);
+  padding: 1.5rem 0 2rem;
+}
+
+.adhkar-focus-counter {
+  font-size: var(--ds-text-sm);
+  font-weight: 600;
+  color: var(--mj-ink-2);
+  letter-spacing: normal;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  margin: 0;
+}
+
+.adhkar-focus-card {
+  background: var(--majalis-panel, var(--mj-surface));
+  border: 1px solid var(--majalis-line, var(--mj-hairline));
+  border-radius: var(--ds-radius-2xl);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  max-width: 640px;
+  width: 100%;
+  box-shadow: var(--mj-elev-1, 0 2px 16px rgba(0,0,0,.06));
+}
+
+.adhkar-focus-text {
+  font-family: var(--font-body);
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  line-height: 2.2;
+  /* حبر الثيم الصريح — بلا opacity وبلا احتياطي نهاري ثابت */
+  color: var(--majalis-ink, var(--mj-ink));
+  margin: 0 0 1rem;
+  opacity: 1;
+}
+
+.adhkar-focus-count {
+  font-size: 0.85rem;
+  color: var(--majalis-emerald, var(--mj-brand));
+  font-weight: 600;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.adhkar-focus-nav {
+  display: flex;
+  gap: var(--ds-space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.adhkar-focus-btn {
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--ds-radius-lg);
+  border: 1.5px solid var(--majalis-line, var(--mj-hairline));
+  background: var(--majalis-panel, var(--mj-surface));
+  color: var(--majalis-ink, var(--mj-ink));
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  opacity: 1;
+}
+.adhkar-focus-btn:hover:not(:disabled) {
+  background: var(--mj-brand-soft, #F0FDF4);
+  border-color: var(--majalis-emerald, var(--mj-brand));
+}
+.adhkar-focus-btn:disabled {
+  /* تعطيل باللون لا بالشفافية — يبقى مقروءًا في الليلي */
+  color: var(--mj-muted);
+  border-color: var(--mj-hairline);
+  background: var(--mj-surface-2, var(--majalis-panel));
+  cursor: not-allowed;
+}
+.adhkar-focus-btn--next {
+  background: var(--majalis-emerald, var(--mj-brand));
+  color: var(--mj-on-brand, #0C1512);
+  border-color: transparent;
+}
+.adhkar-focus-btn--next:hover:not(:disabled) {
+  background: var(--m26-green-800, var(--mj-brand-deep));
+  color: #fff;
+}
+.adhkar-focus-btn--next:disabled {
+  background: var(--mj-surface-2);
+  color: var(--mj-muted);
+  border-color: var(--mj-hairline);
+}
+.adhkar-focus-btn--details {
+  color: var(--majalis-emerald, var(--mj-brand));
+  border-color: var(--majalis-emerald, var(--mj-brand));
+  background: var(--majalis-panel, var(--mj-surface));
+}
+.adhkar-focus-btn--prev {
+  color: var(--majalis-ink, var(--mj-ink));
+}
+
+.adhkar-focus-progress {
+  width: 100%;
+  max-width: 640px;
+  height: 4px;
+  background: var(--majalis-line, var(--mj-hairline));
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.adhkar-focus-progress-fill {
+  height: 100%;
+  background: var(--majalis-emerald, var(--mj-brand));
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+@keyframes adhkarFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.adhkar-anim-fade {
+  animation: adhkarFadeIn 0.3s ease forwards;
+}
+
+/* Bottom Sheet */
+.adhkar-sheet-overlay {
+  position: fixed;
+  top: 0;
+  inset-inline-end: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+.adhkar-sheet {
+  background: var(--majalis-panel, var(--mj-surface));
+  border-radius: 1.5rem 1.5rem 0 0;
+  padding: 1.5rem 1.5rem 2rem;
+  width: 100%;
+  max-width: 640px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  animation: sheetSlideUp 0.28s cubic-bezier(.32,.72,0,1) forwards;
+}
+@keyframes sheetSlideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+.adhkar-sheet-handle {
+  width: 3rem;
+  height: 4px;
+  background: var(--majalis-line, var(--mj-hairline));
+  border-radius: 9999px;
+  margin: 0 auto 1.25rem;
+}
+.adhkar-sheet-close {
+  position: absolute;
+  top: 1.25rem;
+  inset-inline-start: 1.25rem;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--mj-ink-2);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--ds-radius);
+}
+.adhkar-sheet-title {
+  font-size: var(--ds-text-base);
+  font-weight: 700;
+  color: var(--majalis-ink, var(--mj-ink));
+  text-align: center;
+  margin: 0 0 1rem;
+}
+.adhkar-sheet-text {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  line-height: 2;
+  color: var(--majalis-ink, var(--mj-ink));
+  text-align: center;
+  padding: var(--ds-space-4);
+  background: var(--mj-brand-soft, #F0FDF4);
+  border-radius: var(--ds-radius-lg);
+  margin-bottom: 1.25rem;
+  opacity: 1;
+}
+.adhkar-sheet-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2-5);
+  margin: 0 0 1.5rem;
+}
+.adhkar-sheet-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--ds-space-4);
+  font-size: var(--ds-text-sm);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--majalis-line, var(--mj-hairline));
+}
+.adhkar-sheet-row dt {
+  color: var(--mj-ink-2);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.adhkar-sheet-row dd {
+  color: var(--majalis-ink, var(--mj-ink));
+  text-align: start;
+  margin: 0;
+}
+.adhkar-grade {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.adhkar-grade--sahih { background: #DCFCE7; color: var(--mj-brand-deep, #153025); }
+.adhkar-grade--hasan { background: #e8f5f0; color: var(--mj-brand-deep, #153025); }
+.adhkar-grade--other { background: #F3F4F6; color: var(--mj-ink-2); }
+.adhkar-sheet-share {
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+.adhkar-sheet-dismiss {
+  display: block;
+  width: 100%;
+  padding: var(--ds-space-3-5);
+  background: var(--majalis-emerald, var(--mj-brand));
+  color: var(--mj-on-brand, #fff);
+  border: none;
+  border-radius: 0.875rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* الوضع الليلي — قيم صريحة لا مشتقة من نهارية */
+html[data-theme="dark"] .adhkar-focus-card,
+html.dark .adhkar-focus-card {
+  background: var(--mj-surface, #17201C);
+  border-color: var(--mj-hairline, #26332D);
+  box-shadow: none;
+}
+html[data-theme="dark"] .adhkar-focus-text,
+html.dark .adhkar-focus-text {
+  color: var(--mj-ink, #E9EFEC);
+  opacity: 1;
+}
+html[data-theme="dark"] .adhkar-focus-counter,
+html.dark .adhkar-focus-counter {
+  color: var(--mj-ink-2, #B4C2BC);
+}
+html[data-theme="dark"] .adhkar-focus-btn,
+html.dark .adhkar-focus-btn {
+  background: var(--mj-surface, #17201C);
+  border-color: var(--mj-hairline, #26332D);
+  color: var(--mj-ink, #E9EFEC);
+}
+html[data-theme="dark"] .adhkar-focus-btn:hover:not(:disabled),
+html.dark .adhkar-focus-btn:hover:not(:disabled) {
+  background: var(--mj-brand-soft, #183329);
+  border-color: var(--mj-brand, #4FB48B);
+}
+html[data-theme="dark"] .adhkar-focus-btn:disabled,
+html.dark .adhkar-focus-btn:disabled {
+  color: var(--mj-muted, #8A9A93);
+  background: var(--mj-surface-2, #1E2925);
+  border-color: var(--mj-hairline, #26332D);
+  opacity: 1;
+}
+html[data-theme="dark"] .adhkar-focus-btn--next,
+html.dark .adhkar-focus-btn--next {
+  background: var(--mj-brand, #4FB48B);
+  color: var(--mj-on-brand, #0C1512);
+  border-color: transparent;
+}
+html[data-theme="dark"] .adhkar-focus-btn--next:disabled,
+html.dark .adhkar-focus-btn--next:disabled {
+  background: var(--mj-surface-2, #1E2925);
+  color: var(--mj-muted, #8A9A93);
+  border-color: var(--mj-hairline, #26332D);
+}
+html[data-theme="dark"] .adhkar-focus-btn--details,
+html.dark .adhkar-focus-btn--details {
+  color: var(--mj-brand, #4FB48B);
+  border-color: var(--mj-brand, #4FB48B);
+  background: var(--mj-surface, #17201C);
+}
+html[data-theme="dark"] .adhkar-sheet,
+html.dark .adhkar-sheet {
+  background: var(--mj-surface, #17201C);
+}
+html[data-theme="dark"] .adhkar-sheet-text,
+html.dark .adhkar-sheet-text {
+  background: var(--mj-brand-soft, #183329);
+  color: var(--mj-ink, #E9EFEC);
+  opacity: 1;
+}
+html[data-theme="dark"] .adhkar-sheet-title,
+html[data-theme="dark"] .adhkar-sheet-row dd,
+html.dark .adhkar-sheet-title,
+html.dark .adhkar-sheet-row dd {
+  color: var(--mj-ink, #E9EFEC);
+}
+html[data-theme="dark"] .adhkar-sheet-row dt,
+html.dark .adhkar-sheet-row dt {
+  color: var(--mj-ink-2, #B4C2BC);
+}
+html[data-theme="dark"] .adhkar-grade--sahih,
+html.dark .adhkar-grade--sahih {
+  background: var(--mj-brand-soft, #183329);
+  color: var(--mj-brand, #4FB48B);
+}
+html[data-theme="dark"] .adhkar-grade--hasan,
+html.dark .adhkar-grade--hasan {
+  background: var(--mj-brand-soft, #183329);
+  color: var(--mj-brand, #4FB48B);
+}
+html[data-theme="dark"] .adhkar-grade--other,
+html.dark .adhkar-grade--other {
+  background: var(--mj-surface-2, #1E2925);
+  color: var(--mj-ink-2, #B4C2BC);
+}

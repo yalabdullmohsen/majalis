@@ -1,0 +1,595 @@
+/**
+ * Supabase-backed import job tracking with strict FK safety.
+ * Jobs MUST exist in content_import_jobs before any content_import_staging insert.
+ */
+
+import { readFileSync } from "node:fs";
+import { getSupabaseAdmin } from "../supabase-admin.mjs";
+import { migrationFilePath } from "../migration-paths.mjs";
+
+const MIGRATION_FILE = "content_import_jobs_v1.sql";
+
+/** @type {Map<string, object>} */
+const localJobs = new Map();
+
+/** @type {Set<string>} */
+const processingLocks = new Set();
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+/** Jobs with no progress update for this long are marked failed by the watchdog. */
+export const IMPORT_WATCHDOG_MS = 60_000;
+
+export const TERMINAL_JOB_STATUSES = new Set(["completed", "failed", "cancelled"]);
+
+export const ACTIVE_JOB_STATUSES = [
+  "pending",
+  "uploading",
+  "queued",
+  "processing",
+  "parsing",
+  "validating",
+  "importing",
+];
+
+function logJobs(event, meta = {}) {
+  const jobId = meta.jobId || meta.job_id;
+  const payload = {
+    tag: "content-import:jobs",
+    event,
+    ...(jobId ? { job_id: jobId } : {}),
+    ...meta,
+    ts: new Date().toISOString(),
+  };
+  console.log(JSON.stringify(payload));
+}
+
+export function jobLog(jobId, event, meta = {}) {
+  logJobs(event, { jobId, ...meta });
+}
+
+function sanitizeCreatedBy(createdBy) {
+  if (!createdBy || createdBy === "service" || createdBy === "import-worker") return null;
+  const id = String(createdBy).trim();
+  return UUID_RE.test(id) ? id : null;
+}
+
+function loadMigrationSql() {
+  try {
+    return readFileSync(migrationFilePath(MIGRATION_FILE), "utf8");
+  } catch {
+    return null;
+  }
+}
+
+/** @deprecated SQL text for CLI docs only — never applied at runtime */
+export const ENSURE_IMPORT_JOBS_SQL = loadMigrationSql() || "";
+
+/**
+ * Verify import job tables exist (read-only probe). Never runs DDL.
+ */
+export async function verifyImportTables(admin) {
+  if (!admin) {
+    logJobs("verify_schema_skip", { reason: "no_admin" });
+    return { ok: false, error: "no_admin", schemaMutationBlocked: true };
+  }
+
+  const { error: jobsErr } = await admin.from("content_import_jobs").select("id").limit(0);
+  if (jobsErr) {
+    logJobs("verify_schema_failed", { table: "content_import_jobs", code: jobsErr.code });
+    return {
+      ok: false,
+      error: "import_schema_not_ready",
+      schemaMutationBlocked: true,
+      hint: `Apply supabase/${MIGRATION_FILE} via CLI/SQL Editor (REQUIRES_EXPLICIT_APPROVAL).`,
+    };
+  }
+
+  const { error: stagingErr } = await admin.from("content_import_staging").select("id").limit(0);
+  if (stagingErr) {
+    logJobs("verify_schema_failed", { table: "content_import_staging", code: stagingErr.code });
+    return {
+      ok: false,
+      error: "import_schema_not_ready",
+      schemaMutationBlocked: true,
+      hint: `Apply supabase/${MIGRATION_FILE} via CLI/SQL Editor (REQUIRES_EXPLICIT_APPROVAL).`,
+    };
+  }
+
+  logJobs("verify_schema_ok", { via: "verify_only" });
+  return { ok: true, via: "verify_only", schemaMutationBlocked: true };
+}
+
+/** @deprecated name kept — verify-only, never applies DDL */
+export async function ensureImportTables(admin) {
+  return verifyImportTables(admin);
+}
+
+async function recoverOrphanStaging(client) {
+  const { rowCount } = await client.query(`
+    DELETE FROM content_import_staging s
+    WHERE NOT EXISTS (SELECT 1 FROM content_import_jobs j WHERE j.id = s.job_id)
+  `);
+  return rowCount ?? 0;
+}
+
+export async function recoverImportJobIntegrity(opts = {}) {
+  const admin = getSupabaseAdmin();
+  if (!admin) return { ok: false, error: "no_admin" };
+
+  if (!opts.skipEnsure) {
+    const ensured = await verifyImportTables(admin);
+    if (!ensured.ok) return ensured;
+  }
+
+  try {
+    const { getPgClient } = await import("../database.mjs");
+    const { client } = await getPgClient();
+    try {
+      const orphans = await recoverOrphanStaging(client);
+      const { rows: stuck } = await client.query(`
+        UPDATE content_import_jobs
+        SET status = 'failed',
+            phase = 'failed',
+            import_errors = '["انتهت مهمة الاستيراد بلا صفوف — تم التنظيف التلقائي"]'::jsonb,
+            completed_at = now(),
+            updated_at = now()
+        WHERE status IN ('pending', 'uploading', 'staging')
+          AND id NOT IN (SELECT DISTINCT job_id FROM content_import_staging)
+          AND started_at < now() - interval '2 hours'
+        RETURNING id
+      `);
+      logJobs("integrity_recovery", { orphans_removed: orphans, stuck_jobs_failed: stuck.length });
+      return { ok: true, orphans_removed: orphans, stuck_jobs_failed: stuck.length };
+    } finally {
+      await client.end().catch(() => {});
+    }
+  } catch (err) {
+    logJobs("integrity_recovery_failed", { error: err.message });
+    return { ok: false, error: err.message };
+  }
+}
+
+async function stageImportRowsPostgres(jobId, payloads, startIndex) {
+  const { getPgClient } = await import("../database.mjs");
+  const { client } = await getPgClient();
+  try {
+    await client.query("BEGIN");
+    logJobs("staging_tx_begin", { jobId, rows: payloads.length, startIndex });
+
+    const batchSize = 500;
+    let staged = 0;
+    for (let i = 0; i < payloads.length; i += batchSize) {
+      const batch = payloads.slice(i, i + batchSize);
+      const values = [];
+      const params = [];
+      let paramIdx = 1;
+      for (let j = 0; j < batch.length; j++) {
+        values.push(`($${paramIdx}, $${paramIdx + 1}, $${paramIdx + 2}::jsonb)`);
+        params.push(jobId, startIndex + i + j, JSON.stringify(batch[j]));
+        paramIdx += 3;
+      }
+      await client.query(
+        `INSERT INTO content_import_staging (job_id, row_index, payload)
+         VALUES ${values.join(", ")}
+         ON CONFLICT (job_id, row_index) DO UPDATE SET payload = EXCLUDED.payload`,
+        params,
+      );
+      staged += batch.length;
+    }
+
+    await client.query("COMMIT");
+    logJobs("staging_tx_commit", { jobId, rows: staged, startIndex, endIndex: startIndex + staged - 1 });
+    return { ok: true, staged, via: "postgres" };
+  } catch (err) {
+    await client.query("ROLLBACK").catch(() => {});
+    logJobs("staging_tx_rollback", { jobId, error: err.message, startIndex });
+    throw err;
+  } finally {
+    await client.end().catch(() => {});
+  }
+}
+
+async function verifyJobPersisted(jobId, admin) {
+  const { data, error } = await admin.from("content_import_jobs").select("id, status").eq("id", jobId).maybeSingle();
+  if (error) return { ok: false, error: error.message, code: "job_lookup_failed" };
+  if (!data?.id) return { ok: false, error: "job_not_in_database", code: "job_not_persisted" };
+  return { ok: true, job: data };
+}
+
+async function insertJobPostgres({ id, type, filename, totalRows, createdBy }) {
+  const { getPgClient } = await import("../database.mjs");
+  const { client } = await getPgClient();
+  try {
+    await client.query("BEGIN");
+    await client.query(
+      `INSERT INTO content_import_jobs (id, type, filename, total_rows, created_by, status, phase)
+       VALUES ($1, $2, $3, $4, $5, 'pending', 'pending')`,
+      [id, type, filename || null, totalRows || 0, createdBy],
+    );
+    await client.query("COMMIT");
+    logJobs("job_created", { jobId: id, via: "postgres", type, totalRows });
+    return { ok: true, via: "postgres" };
+  } catch (err) {
+    await client.query("ROLLBACK").catch(() => {});
+    throw err;
+  } finally {
+    await client.end().catch(() => {});
+  }
+}
+
+async function insertJobSupabase(admin, { id, type, filename, totalRows, createdBy }) {
+  const { data, error } = await admin
+    .from("content_import_jobs")
+    .insert({
+      id,
+      type,
+      filename: filename || null,
+      total_rows: totalRows || 0,
+      created_by: createdBy,
+      status: "pending",
+      phase: "pending",
+    })
+    .select("id, started_at")
+    .single();
+
+  if (error) {
+    logJobs("job_create_failed", { jobId: id, via: "supabase", error: error.message });
+    return { ok: false, error: error.message };
+  }
+
+  logJobs("job_created", { jobId: data.id, via: "supabase", type, totalRows });
+  return { ok: true, via: "supabase", started_at: data.started_at };
+}
+
+/**
+ * Create import job — MUST persist to DB when Supabase admin is configured.
+ * @returns {Promise<{ ok: boolean, job?: object, id?: string, error?: string, persisted?: boolean, via?: string }>}
+ */
+export async function createImportJob({ type, filename, totalRows, createdBy }) {
+  const admin = getSupabaseAdmin();
+  const createdBySafe = sanitizeCreatedBy(createdBy);
+  const jobId = crypto.randomUUID();
+
+  const job = {
+    id: jobId,
+    type,
+    status: "pending",
+    phase: "pending",
+    filename: filename || null,
+    total_rows: totalRows || 0,
+    processed_rows: 0,
+    imported: 0,
+    skipped: 0,
+    failed: 0,
+    progress_pct: 0,
+    validation_errors: [],
+    import_errors: [],
+    timings: null,
+    execution_mode: null,
+    started_at: new Date().toISOString(),
+    persisted: false,
+  };
+
+  if (!admin) {
+    localJobs.set(jobId, { ...job, staged: [] });
+    logJobs("job_created", { jobId, via: "memory", type, totalRows, note: "no_supabase_admin" });
+    return { ok: true, job, id: jobId, persisted: false, via: "memory" };
+  }
+
+  const schema = await verifyImportTables(admin);
+  if (!schema.ok) {
+    return {
+      ok: false,
+      error: "import_schema_not_ready",
+      code: "schema_not_ready",
+      schemaMutationBlocked: true,
+      hint: schema.hint,
+    };
+  }
+
+  try {
+    await insertJobPostgres({ id: jobId, type, filename, totalRows, createdBy: createdBySafe });
+    job.persisted = true;
+    job.via = "postgres";
+  } catch (pgErr) {
+    logJobs("job_create_postgres_fallback", { jobId, error: pgErr.message });
+    const inserted = await insertJobSupabase(admin, {
+      id: jobId,
+      type,
+      filename,
+      totalRows,
+      createdBy: createdBySafe,
+    });
+    if (!inserted.ok) {
+      return {
+        ok: false,
+        error: inserted.error || pgErr.message,
+        code: "job_create_failed",
+      };
+    }
+    job.persisted = true;
+    job.via = inserted.via;
+    if (inserted.started_at) job.started_at = inserted.started_at;
+  }
+
+  const verified = await verifyJobPersisted(jobId, admin);
+  if (!verified.ok) {
+    logJobs("job_verify_failed_after_create", { jobId, error: verified.error });
+    return { ok: false, error: verified.error, code: verified.code };
+  }
+
+  localJobs.set(jobId, { ...job });
+  return { ok: true, job, id: jobId, persisted: true, via: job.via };
+}
+
+export async function updateImportJob(jobId, patch) {
+  const local = localJobs.get(jobId) || {};
+  const merged = { ...local, ...patch, updated_at: new Date().toISOString() };
+  localJobs.set(jobId, merged);
+
+  const admin = getSupabaseAdmin();
+  if (!admin || !jobId) return merged;
+
+  const row = {
+    status: merged.status,
+    phase: merged.phase,
+    processed_rows: merged.processed_rows,
+    imported: merged.imported,
+    skipped: merged.skipped,
+    failed: merged.failed,
+    progress_pct: merged.progress_pct,
+    validation_errors: merged.validation_errors,
+    import_errors: merged.import_errors,
+    report: merged.report,
+    timings: merged.timings,
+    execution_mode: merged.execution_mode,
+    completed_at: merged.completed_at,
+    updated_at: merged.updated_at,
+  };
+  const { error } = await admin.from("content_import_jobs").update(row).eq("id", jobId);
+  if (error) logJobs("job_update_failed", { jobId, error: error.message });
+  return merged;
+}
+
+export async function getImportJob(jobId) {
+  const admin = getSupabaseAdmin();
+  if (admin) {
+    const { data, error } = await admin.from("content_import_jobs").select("*").eq("id", jobId).maybeSingle();
+    if (error) {
+      logJobs("job_lookup_error", { jobId, error: error.message });
+    }
+    if (data) {
+      localJobs.set(jobId, data);
+      return data;
+    }
+    if (localJobs.has(jobId)) {
+      localJobs.delete(jobId);
+    }
+    return null;
+  }
+  return localJobs.get(jobId) || null;
+}
+
+export function tryAcquireProcessingLock(jobId) {
+  if (processingLocks.has(jobId)) return false;
+  processingLocks.add(jobId);
+  return true;
+}
+
+export function releaseProcessingLock(jobId) {
+  processingLocks.delete(jobId);
+}
+
+export async function listQueuedImportJobs(limit = 5) {
+  const admin = getSupabaseAdmin();
+  if (!admin) {
+    return [...localJobs.values()]
+      .filter((j) => ACTIVE_JOB_STATUSES.includes(j.status) && !TERMINAL_JOB_STATUSES.has(j.status))
+      .slice(0, limit);
+  }
+  const { data } = await admin
+    .from("content_import_jobs")
+    .select("*")
+    .in("status", ["queued", "processing", "validating", "importing", "parsing"])
+    .order("started_at", { ascending: true })
+    .limit(limit);
+  return data || [];
+}
+
+/**
+ * Mark jobs stuck in active states with no progress for IMPORT_WATCHDOG_MS as failed.
+ * @returns {Promise<{ ok: boolean, failed: string[], count: number }>}
+ */
+export async function runImportJobWatchdog(admin = getSupabaseAdmin()) {
+  if (!admin) {
+    return { ok: true, failed: [], count: 0, via: "no_admin" };
+  }
+
+  const cutoff = new Date(Date.now() - IMPORT_WATCHDOG_MS).toISOString();
+  const reason =
+    "انتهت مهلة المعالجة — لم يُسجَّل تقدّم خلال 60 ثانية. أعد المحاولة أو تحقق من DATABASE_URL وSUPABASE_SERVICE_ROLE_KEY.";
+
+  try {
+    const { getPgClient } = await import("../database.mjs");
+    const { client } = await getPgClient();
+    try {
+      const { rows } = await client.query(
+        `UPDATE content_import_jobs
+         SET status = 'failed',
+             phase = 'failed',
+             import_errors = jsonb_build_array($2::text),
+             completed_at = now(),
+             updated_at = now()
+         WHERE completed_at IS NULL
+           AND status = ANY($1::text[])
+           AND updated_at < $3::timestamptz
+         RETURNING id, status, phase, type, filename`,
+        [ACTIVE_JOB_STATUSES.filter((s) => s !== "pending"), reason, cutoff],
+      );
+      for (const row of rows) {
+        jobLog(row.id, "watchdog_failed", {
+          previous_status: row.status,
+          previous_phase: row.phase,
+          type: row.type,
+          filename: row.filename,
+          watchdog_ms: IMPORT_WATCHDOG_MS,
+        });
+      }
+      return { ok: true, failed: rows.map((r) => r.id), count: rows.length, via: "postgres" };
+    } finally {
+      await client.end().catch(() => {});
+    }
+  } catch (pgErr) {
+    logJobs("watchdog_postgres_fallback", { error: pgErr.message });
+  }
+
+  const { data: stuck, error } = await admin
+    .from("content_import_jobs")
+    .select("id, status, phase, type, filename")
+    .in("status", ACTIVE_JOB_STATUSES.filter((s) => s !== "pending"))
+    .is("completed_at", null)
+    .lt("updated_at", cutoff)
+    .limit(50);
+
+  if (error) {
+    logJobs("watchdog_query_failed", { error: error.message });
+    return { ok: false, error: error.message, failed: [], count: 0 };
+  }
+
+  const failed = [];
+  for (const job of stuck || []) {
+    const { error: updErr } = await admin
+      .from("content_import_jobs")
+      .update({
+        status: "failed",
+        phase: "failed",
+        import_errors: [reason],
+        completed_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", job.id);
+    if (!updErr) {
+      failed.push(job.id);
+      jobLog(job.id, "watchdog_failed", {
+        previous_status: job.status,
+        previous_phase: job.phase,
+        type: job.type,
+        filename: job.filename,
+        watchdog_ms: IMPORT_WATCHDOG_MS,
+        via: "supabase",
+      });
+    }
+  }
+
+  return { ok: true, failed, count: failed.length, via: "supabase" };
+}
+
+export async function cancelImportJob(jobId, reason = "أُلغيت المهمة بواسطة المستخدم") {
+  const admin = getSupabaseAdmin();
+  await updateImportJob(jobId, {
+    status: "cancelled",
+    phase: "cancelled",
+    import_errors: [reason],
+    completed_at: new Date().toISOString(),
+  });
+  releaseProcessingLock(jobId);
+  if (admin) {
+    await clearStaging(jobId);
+  }
+  jobLog(jobId, "cancelled", { reason });
+  return { ok: true, jobId, status: "cancelled" };
+}
+
+export async function stageImportRows(jobId, payloads, startIndex = 0) {
+  const admin = getSupabaseAdmin();
+
+  if (!admin) {
+    const local = localJobs.get(jobId);
+    if (!local) {
+      return { ok: false, error: "job_not_found", code: "job_not_found" };
+    }
+    local.staged = [...(local.staged || []), ...payloads];
+    localJobs.set(jobId, local);
+    logJobs("staging_memory", { jobId, rows: payloads.length, startIndex });
+    return { ok: true, staged: payloads.length, via: "memory" };
+  }
+
+  const verified = await verifyJobPersisted(jobId, admin);
+  if (!verified.ok) {
+    logJobs("staging_aborted", { jobId, reason: verified.error, code: verified.code });
+    return { ok: false, error: verified.error, code: verified.code };
+  }
+
+  try {
+    return await stageImportRowsPostgres(jobId, payloads, startIndex);
+  } catch (pgErr) {
+    logJobs("staging_postgres_fallback", { jobId, error: pgErr.message });
+  }
+
+  const rows = payloads.map((payload, i) => ({
+    job_id: jobId,
+    row_index: startIndex + i,
+    payload,
+  }));
+
+  const batchSize = 500;
+  let staged = 0;
+  for (let i = 0; i < rows.length; i += batchSize) {
+    const batch = rows.slice(i, i + batchSize);
+    const { error } = await admin.from("content_import_staging").upsert(batch, {
+      onConflict: "job_id,row_index",
+    });
+    if (error) {
+      logJobs("staging_insert_failed", { jobId, error: error.message, batchStart: startIndex + i });
+      return { ok: false, error: error.message, code: "staging_insert_failed", staged_before_failure: staged };
+    }
+    staged += batch.length;
+  }
+
+  logJobs("staging_insert_ok", { jobId, rows: staged, startIndex, endIndex: startIndex + staged - 1, via: "supabase" });
+  return { ok: true, staged, via: "supabase" };
+}
+
+export async function loadStagedPayloads(jobId) {
+  const local = localJobs.get(jobId);
+  if (local?.staged?.length) return local.staged;
+
+  const admin = getSupabaseAdmin();
+  if (!admin) return [];
+
+  const all = [];
+  let from = 0;
+  const page = 5000;
+  while (true) {
+    const { data, error } = await admin
+      .from("content_import_staging")
+      .select("row_index, payload")
+      .eq("job_id", jobId)
+      .order("row_index", { ascending: true })
+      .range(from, from + page - 1);
+    if (error) {
+      logJobs("staging_load_failed", { jobId, error: error.message });
+      break;
+    }
+    if (!data?.length) break;
+    all.push(...data.map((r) => r.payload));
+    if (data.length < page) break;
+    from += page;
+  }
+  return all;
+}
+
+export async function clearStaging(jobId) {
+  const local = localJobs.get(jobId);
+  if (local) {
+    delete local.staged;
+    localJobs.set(jobId, local);
+  }
+  const admin = getSupabaseAdmin();
+  if (admin) {
+    const { error } = await admin.from("content_import_staging").delete().eq("job_id", jobId);
+    if (error) logJobs("staging_clear_failed", { jobId, error: error.message });
+    else logJobs("staging_cleared", { jobId });
+  }
+}

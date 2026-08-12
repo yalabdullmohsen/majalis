@@ -1,0 +1,112 @@
+{
+  "generated_at": "2026-06-26T00:41:02.442Z",
+  "engine": "Scholarly Intelligence Engine v1",
+  "completion_pct": 100,
+  "features": [
+    {
+      "id": "semantic_search",
+      "label": "البحث الدلالي",
+      "weight": 12,
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "arabic_normalization",
+      "label": "تطبيع العربية والمرادفات",
+      "weight": 8,
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "unified_search",
+      "label": "البحث الموحد",
+      "weight": 15,
+      "complete": true,
+      "score": 15
+    },
+    {
+      "id": "topic_pages",
+      "label": "صفحات الموضوعات",
+      "weight": 12,
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "smart_suggestions",
+      "label": "الاقتراحات الذكية",
+      "weight": 10,
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "recommendations",
+      "label": "محرك التوصية",
+      "weight": 10,
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "advanced_filters",
+      "label": "البحث المتقدم",
+      "weight": 8,
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "result_quality",
+      "label": "جودة النتائج",
+      "weight": 8,
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "performance",
+      "label": "الأداء والتخزين المؤقت",
+      "weight": 7,
+      "complete": true,
+      "score": 7
+    },
+    {
+      "id": "analytics_dashboard",
+      "label": "لوحة تحليل البحث",
+      "weight": 10,
+      "complete": true,
+      "score": 10
+    }
+  ],
+  "metrics": {
+    "topics_count": 15,
+    "relations_count": 120,
+    "avg_search_ms": 4,
+    "sample_quality_pct": 33,
+    "cache_entries": 3,
+    "analytics_quality_score": 0,
+    "analytics_avg_response_ms": 0
+  },
+  "explore_pages": [
+    "/search",
+    "/topics/tahara",
+    "/topics/salah",
+    "/topics/zakat",
+    "/topics/siyam",
+    "/topics/hajj",
+    "/topics/aqeedah",
+    "/topics/tawheed",
+    "/topics/bay",
+    "/topics/riba",
+    "/topics/nikah",
+    "/topics/birr-walidayn",
+    "/topics/akhlaq",
+    "/topics/quran",
+    "/topics/hadith",
+    "/topics/fatwa"
+  ],
+  "improvement_plan": [
+    "ربط embeddings لجميع عناصر knowledge_items عند الإضافة",
+    "توسيع مرادفات البحث العربية ودمج قاموس اشتقاقات",
+    "ربط Knowledge Graph الموحد عند اكتمال المرحلة 0",
+    "فهرسة Hadith/Quran corpus من content-architecture branch",
+    "A/B testing لترتيب النتائج بناءً على analytics",
+    "تفعيل re-ranking بالنماذج اللغوية للاستعلامات المعقدة"
+  ]
+}

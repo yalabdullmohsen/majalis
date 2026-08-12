@@ -1,0 +1,11 @@
+/* عناوين الصفحات في الوضع الليلي: حبر ظاهر لا brand-deep (الذي يصبح #0C1512 ليلاً) */
+html[data-theme="dark"] .page-shell h1:not(.sr-only),
+html.dark .page-shell h1:not(.sr-only),
+html[data-theme="dark"] main h1:not(.sr-only),
+html.dark main h1:not(.sr-only),
+html[data-theme="dark"] .an-hero__title,
+html.dark .an-hero__title,
+html[data-theme="dark"] .cards-page-title,
+html.dark .cards-page-title {
+  color: var(--mj-ink, #E9EFEC);
+}

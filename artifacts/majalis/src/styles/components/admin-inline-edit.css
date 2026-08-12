@@ -1,0 +1,202 @@
+/* AdminInlineEdit — deferred from critical CSS */
+
+/* زر التعديل المباشر */
+.aie-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: linear-gradient(135deg, var(--majalis-emerald-deep, var(--mj-brand-deep)) 0%, var(--majalis-emerald, var(--mj-brand)) 100%);
+  color: #FFFFFF !important;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: var(--mj-font-display);
+  cursor: pointer;
+  transition: opacity 0.18s, transform 0.15s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(23,61,53,0.30);
+  white-space: nowrap;
+  text-decoration: none !important;
+  line-height: 1.4;
+}
+.aie-trigger:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(23,61,53,0.40);
+}
+.aie-trigger:active { transform: scale(0.97); }
+
+/* طبقة التعتيم */
+.aie-overlay {
+  position: fixed;
+  top: 0;
+  inset-inline-end: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  z-index: 9999;
+  background: rgba(14, 31, 22, 0.65);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ds-space-4);
+  animation: aie-fade-in 0.18s ease;
+}
+@keyframes aie-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* المودال */
+.aie-modal {
+  background: #FFFFFF;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 580px;
+  max-height: 90dvh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px rgba(14,31,22,0.25), 0 6px 20px rgba(14,31,22,0.12);
+  border: 1.5px solid rgba(23,61,53,0.18);
+  animation: aie-slide-up 0.22s cubic-bezier(0.34,1.56,0.64,1);
+  overflow: hidden;
+}
+@keyframes aie-slide-up { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* رأس المودال */
+.aie-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem 1rem;
+  border-bottom: 1.5px solid rgba(23,61,53,0.12);
+  background: linear-gradient(135deg, rgba(23,61,53,0.04) 0%, rgba(23,61,53,0.08) 100%);
+  flex-shrink: 0;
+}
+.aie-modal__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--mj-emerald-800, var(--mj-brand-deep));
+  font-family: var(--mj-font-display);
+  margin: 0;
+}
+.aie-modal__close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--msk-text-3, var(--mj-ink-2));
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  transition: background 0.15s, color 0.15s;
+}
+.aie-modal__close:hover { background: rgba(0,0,0,0.07); color: var(--msk-text, #1A1A18); }
+
+/* جسم المودال */
+.aie-modal__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--ds-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-4);
+}
+
+/* حقول النموذج */
+.aie-field { display: flex; flex-direction: column; gap: 0.35rem; }
+.aie-field__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--msk-text-2, var(--mj-ink-2));
+  font-family: var(--mj-font-display);
+}
+.aie-field__input {
+  width: 100%;
+  border: 1.5px solid rgba(23,61,53,0.18);
+  border-radius: 9px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.92rem;
+  font-family: inherit;
+  color: var(--msk-text, #1A1A18);
+  background: var(--msk-canvas, #FFFFFF);
+  direction: rtl;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+  line-height: 1.6;
+}
+.aie-field__input:focus {
+  border-color: rgba(23,61,53,0.45);
+  box-shadow: 0 0 0 3px rgba(23,61,53,0.08);
+}
+.aie-field__textarea { resize: vertical; min-height: 80px; }
+
+/* تذييل المودال */
+.aie-modal__footer {
+  padding: 1rem 1.25rem;
+  border-top: 1.5px solid rgba(23,61,53,0.10);
+  background: var(--mj-ivory-50, #F4F3EE);
+  flex-shrink: 0;
+}
+.aie-modal__error {
+  font-size: 0.83rem;
+  color: #9B1C1C;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(155,28,28,0.07);
+  border-radius: 7px;
+  border: 1px solid rgba(155,28,28,0.15);
+}
+.aie-modal__success {
+  font-size: 0.83rem;
+  color: var(--mj-brand-deep);
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(23,61,53,0.08);
+  border-radius: 7px;
+  border: 1px solid rgba(23,61,53,0.18);
+}
+.aie-modal__actions {
+  display: flex;
+  gap: var(--ds-space-3);
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+}
+
+/* أزرار المودال */
+.aie-btn {
+  padding: 0.55rem 1.35rem;
+  border-radius: 9px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: var(--mj-font-display);
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s, transform 0.12s;
+}
+.aie-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.aie-btn--primary {
+  background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(23,61,53,0.30);
+}
+.aie-btn--primary:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
+.aie-btn--ghost {
+  background: transparent;
+  color: var(--msk-text-2, var(--mj-ink-2));
+  border: 1.5px solid rgba(0,0,0,0.12);
+}
+.aie-btn--ghost:hover:not(:disabled) { background: rgba(0,0,0,0.04); }
+
+@media (max-width: 480px) {
+  .aie-modal { border-radius: 14px 14px 0 0; max-height: 95dvh; }
+  .aie-overlay { align-items: flex-end; padding: 0; }
+  .aie-modal__actions { flex-direction: column; }
+  .aie-btn { width: 100%; text-align: center; }
+}
+
+/* تباين الوضع الداكن */
+.aie-trigger {
+  color: var(--majalis-brass) !important;
+}

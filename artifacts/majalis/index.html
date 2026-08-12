@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="المجلس العلمي" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="application-name" content="المجلس العلمي" />
+    <title>المجلس العلمي | دروس شرعية ودورات علمية</title>
+    <meta name="description" content="تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
+    <meta name="robots" content="index, follow" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#F2F4F3" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F4F3" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101614" />
+    <!-- خلفية صامتة فقط — بلا صورة إقلاع ولا طبقة ويب وسيطة -->
+    <style id="mj-splash-critical">
+      html, body, #root {
+        background-color: #002b21;
+        margin: 0;
+      }
+    </style>
+    <meta name="author" content="المجلس العلمي" />
+    <link rel="canonical" href="https://majlisilm.com/" />
+    <meta property="og:site_name" content="المجلس العلمي" />
+    <meta property="og:locale" content="ar_KW" />
+    <meta property="og:title" content="المجلس العلمي | دروس شرعية ودورات علمية" />
+    <meta property="og:description" content="تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://majlisilm.com/" />
+    <meta property="og:image" content="https://majlisilm.com/majlisilm-og-2026.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="المجلس العلمي | دروس شرعية ودورات علمية" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="المجلس العلمي | دروس شرعية ودورات علمية" />
+    <meta name="twitter:description" content="تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
+    <meta name="twitter:image" content="https://majlisilm.com/majlisilm-og-2026.jpg" />
+    <meta name="twitter:image:alt" content="المجلس العلمي | دروس شرعية ودورات علمية" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon-48.png" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/icon-96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- DNS prefetch for external assets -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://ngmvmlulzacrlicuagyp.supabase.co" />
+    <link rel="dns-prefetch" href="https://ngmvmlulzacrlicuagyp.supabase.co" />
+    <link rel="preconnect" href="https://api.alquran.cloud" />
+    <link rel="dns-prefetch" href="https://api.alquran.cloud" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <!-- Audio CDNs — warm DNS/TLS before first ayah/surah playback (INP/LCP for media) -->
+    <link rel="preconnect" href="https://everyayah.com" crossorigin />
+    <link rel="dns-prefetch" href="https://everyayah.com" />
+    <link rel="preconnect" href="https://server8.mp3quran.net" crossorigin />
+    <link rel="dns-prefetch" href="https://server8.mp3quran.net" />
+    <!-- خط الواجهة الموحَّد: Alexandria (مع IBM Plex احتياطيًا). Amiri Quran محلي للمصحف فقط. -->
+    <link rel="preload" href="/fonts/amiri-quran/AmiriQuran-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" media="print" onload="this.media='all'" />
+    <script>
+      (function () {
+        var href = "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap";
+        function loadDecorFonts() {
+          if (document.getElementById("majalis-decor-fonts")) return;
+          var l = document.createElement("link");
+          l.id = "majalis-decor-fonts";
+          l.rel = "stylesheet";
+          l.href = href;
+          document.head.appendChild(l);
+        }
+        if ("requestIdleCallback" in window) {
+          requestIdleCallback(loadDecorFonts, { timeout: 4000 });
+        } else {
+          window.addEventListener("load", function () { setTimeout(loadDecorFonts, 1); }, { once: true });
+        }
+        ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (evt) {
+          window.addEventListener(evt, loadDecorFonts, { once: true, passive: true });
+        });
+      })();
+    </script>
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet" />
+    </noscript>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://majlisilm.com/#organization",
+            "name": "المجلس العلمي",
+            "url": "https://majlisilm.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://majlisilm.com/logo.png",
+              "width": 512,
+              "height": 512
+            },
+            "description": "منصة علمية عربية للدروس الشرعية والدورات العلمية وطلب العلم.",
+            "inLanguage": "ar",
+            "sameAs": []
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://majlisilm.com/#website",
+            "name": "المجلس العلمي",
+            "url": "https://majlisilm.com/",
+            "description": "منصة علمية عربية تجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد.",
+            "inLanguage": "ar",
+            "publisher": { "@id": "https://majlisilm.com/#organization" },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://majlisilm.com/search?q={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "https://majlisilm.com/#webapp",
+            "name": "المجلس العلمي",
+            "url": "https://majlisilm.com/",
+            "applicationCategory": "EducationApplication",
+            "operatingSystem": "Any",
+            "inLanguage": "ar",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "KWD"
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <script>
+      try {
+        /* مِشكاة: تطبيق الوضع (ليل/نهار) فوراً لمنع الوميض */
+        /* ترحيل v4-light-2026: إعادة تعيين التفضيل عند أول تشغيل بعد تغيير الهوية */
+        var _dsv = "v4-light-2026-naskh";
+        if (localStorage.getItem("majalis-design-v") !== _dsv) {
+          localStorage.setItem("majalis-design-v", _dsv);
+          localStorage.removeItem("majalis-theme");
+          localStorage.removeItem("majalis-font-preference");
+          localStorage.removeItem("majalis-font-preference-v2");
+        }
+        /* المفتاح الحقيقي المستخدَم في theme-preference.ts هو "majalis-theme" —
+           كان هذا المِشكاة يقرأ مفتاحًا مختلفًا ("majalis-theme-preference") لا
+           يكتب إليه أي جزء آخر من التطبيق، فكان يُنتج وميض الوضع النهاري دومًا
+           قبل أن يُصحِّحه React بعد الترطيب (2026-07-16). */
+        var storedTheme = localStorage.getItem("majalis-theme");
+        var resolved = storedTheme === "light" ? "light"
+          : storedTheme === "dark" ? "dark"
+          : storedTheme === "auto"
+            ? (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+            : "light";
+        document.documentElement.dataset.theme = resolved;
+        document.documentElement.classList.toggle("dark", resolved === "dark");
+        document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
+        /* theme-color أثناء الإقلاع = لون شاشة الدخول (يمنع وميض الشريط) */
+        var splashBg = resolved === "dark" ? "#101614" : "#F2F4F3";
+        var _themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (_themeMeta) _themeMeta.setAttribute("content", splashBg);
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+          m.setAttribute("content", splashBg);
+        });
+
+        var storedFont = localStorage.getItem("majalis-font-preference-v2");
+        document.documentElement.dataset.font =
+          storedFont === "naskh" || storedFont === "default"
+            ? storedFont
+            : "naskh";
+        document.body.classList.remove("side-nav-open", "navbar-more-open", "mobile-nav-body-lock");
+        document.body.style.removeProperty("overflow");
+        document.body.style.removeProperty("touch-action");
+        document.querySelectorAll(".mobile-nav-layer").forEach(function (el) {
+          el.remove();
+        });
+      } catch (error) {}
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- محتوى للزواحف (noscript) — يضمن فهرسة محركات البحث للمحتوى الأساسي -->
+    <noscript>
+      <style>
+        body{font-family:"Alexandria","IBM Plex Sans Arabic","Noto Sans Arabic",system-ui,sans-serif;direction:rtl;background:#FAFAF8;color:#1A1A18;max-width:960px;margin:0 auto;padding:1rem 1.5rem}
+        h1{color:#143F35;font-size:1.8rem}h2{color:#143F35;font-size:1.2rem;margin-top:1.5rem}
+        nav a{color:#143F35;margin-left:1rem;text-decoration:none}
+        ul{line-height:2}a{color:#143F35}
+      </style>
+      <main>
+        <h1>المجلس العلمي — منصة الدروس الشرعية والعلوم الإسلامية</h1>
+        <p>منصة علمية شرعية تجمع الدروس والدورات والقرآن الكريم والأذكار والفقه والمكتبة لطالب العلم.</p>
+        <nav aria-label="التنقل الرئيسي">
+          <a href="/">الرئيسية</a>
+          <a href="/lessons">الدروس</a>
+          <a href="/quran-hub">القرآن</a>
+          <a href="/adhkar">الأذكار</a>
+          <a href="/library">المكتبة</a>
+          <a href="/scholars">العلماء</a>
+          <a href="/fiqh">الفقه</a>
+          <a href="/hadith-science">علوم الحديث</a>
+          <a href="/islamic-glossary">المصطلحات</a>
+        </nav>
+        <section>
+          <h2>الدروس والدورات الشرعية</h2>
+          <p>49+ دورة علمية في التفسير والحديث والعقيدة والفقه والبلاغة والنحو والفرائض والأذكار والسيرة.</p>
+        </section>
+        <section>
+          <h2>القرآن الكريم</h2>
+          <p>المصحف الرقمي، أحكام التجويد، قصص السور، خطط التحفيظ، وعلوم القرآن.</p>
+          <ul>
+            <li><a href="/mushaf">المصحف الرقمي</a></li>
+            <li><a href="/quran/surahs">فهرس السور</a></li>
+            <li><a href="/quran/tajweed">أحكام التجويد</a></li>
+            <li><a href="/quran/surah-stories">قصص السور</a></li>
+            <li><a href="/ulum-quran">علوم القرآن</a></li>
+            <li><a href="/duas-quran">أدعية القرآن</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2>مكتبة الكتب الشرعية</h2>
+          <p>117 كتابًا في التفسير والحديث والفقه والعقيدة والأصول واللغة والتاريخ.</p>
+          <ul>
+            <li><a href="/library/book-bukhari">صحيح البخاري</a></li>
+            <li><a href="/library/book-muslim">صحيح مسلم</a></li>
+            <li><a href="/library/book-tafsir-ibnkathir">تفسير ابن كثير</a></li>
+            <li><a href="/library/book-riyadh">رياض الصالحين</a></li>
+            <li><a href="/library/book-mughni">المغني لابن قدامة</a></li>
+            <li><a href="/library/book-al-fiqh-ala-madhahib-al-arba">الفقه على المذاهب الأربعة</a></li>
+            <li><a href="/library/book-ihya">إحياء علوم الدين للغزالي</a></li>
+            <li><a href="/library/book-raheeq">الرحيق المختوم</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2>العلماء والأئمة</h2>
+          <p>96 عالمًا من أئمة المذاهب الأربعة والمحدثين والمفسرين والفقهاء.</p>
+          <ul>
+            <li><a href="/scholars/abu-hanifa">الإمام أبو حنيفة النعمان</a></li>
+            <li><a href="/scholars/malik">الإمام مالك بن أنس</a></li>
+            <li><a href="/scholars/shafi">الإمام الشافعي</a></li>
+            <li><a href="/scholars/ahmad">الإمام أحمد بن حنبل</a></li>
+            <li><a href="/scholars/bukhari">الإمام البخاري</a></li>
+            <li><a href="/scholars/ibn-taymiyya">شيخ الإسلام ابن تيمية</a></li>
+            <li><a href="/scholars/ibn-qayyim">ابن قيم الجوزية</a></li>
+            <li><a href="/scholars/nawawi">الإمام النووي</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2>الأذكار الإسلامية</h2>
+          <p>أذكار الصباح والمساء، أذكار الصلاة، الأذكار اليومية، والتسبيح والأدعية الموثقة.</p>
+          <ul>
+            <li><a href="/adhkar">موسوعة الأذكار</a></li>
+            <li><a href="/duas">الأدعية الشرعية</a></li>
+            <li><a href="/sunan-yawmiyya">السنن اليومية</a></li>
+            <li><a href="/duas-quran">أدعية القرآن</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2>الفقه والأحكام الشرعية</h2>
+          <p>أحكام ومسائل فقهية، المذاهب الأربعة، القواعد الفقهية، وقرارات المجامع المعتمدة.</p>
+          <ul>
+            <li><a href="/fiqh">بوابة الفقه</a></li>
+            <li><a href="/rulings">الأحكام الشرعية</a></li>
+            <li><a href="/fiqh-council">المجمع الفقهي</a></li>
+            <li><a href="/madhahib">المذاهب الأربعة</a></li>
+            <li><a href="/fiqh-qawaid">القواعد الفقهية</a></li>
+            <li><a href="/qa">الأسئلة والأجوبة</a></li>
+            <li><a href="/fawaid">الفوائد العلمية</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2>الحديث وعلومه</h2>
+          <p>أحاديث صحيحة وضعيفة وموضوعة، كتب الرواية، والأربعون النووية، مع مدخل إلى مصطلح الحديث.</p>
+          <ul>
+            <li><a href="/hadith">الأحاديث النبوية</a></li>
+            <li><a href="/hadith/sahih">الأحاديث الصحيحة</a></li>
+            <li><a href="/hadith/daif">الأحاديث الضعيفة</a></li>
+            <li><a href="/hadith/mawdu">الأحاديث الموضوعة</a></li>
+            <li><a href="/hadith/books">كتب الحديث</a></li>
+            <li><a href="/arbaeen-nawawi">الأربعون النووية</a></li>
+            <li><a href="/hadith-science">علوم الحديث</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2>مسابقة العلم الإسلامي</h2>
+          <p>950 سؤالًا في السيرة والفقه والعقيدة والقرآن والتاريخ بمستويات متعددة وإحصائيات أداء.</p>
+        </section>
+      </main>
+    </noscript>
+  </body>
+</html>

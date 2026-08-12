@@ -1,0 +1,236 @@
+/* ══════════════════════════════════════════════════════════
+   227 — صفحة الزكاة وأحكامها (.zk-*)
+   ══════════════════════════════════════════════════════════ */
+
+.zk-page { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+/* هيرو */
+.zk-hero {
+  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 58%, var(--mj-brand) 100%);
+  border-radius: var(--ds-radius-2xl);
+  padding: 2.5rem 1.5rem 2rem;
+  color: #FFFFFF;
+  text-align: center;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 4px 24px rgba(31,77,58,0.18);
+}
+.zk-hero__badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.85rem;
+  border-radius: var(--ds-radius-full);
+  margin-bottom: 0.75rem;
+}
+.zk-hero__title { font-size: 2rem; font-weight: 900; color: #FFFFFF; margin: 0 0 0.65rem; }
+.zk-hero__sub { font-size: 0.9rem; color: rgba(255,255,255,0.87); max-width: 520px; margin: 0 auto 1.5rem; line-height: 1.7; }
+.zk-hero__stats { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--ds-space-4); }
+.zk-hero__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.13);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 0.85rem;
+  padding: 0.65rem 1.25rem;
+  min-width: 72px;
+}
+.zk-hero__stat strong { font-size: 1.6rem; font-weight: 900; color: #FFFFFF; line-height: 1.1; }
+.zk-hero__stat span { font-size: 0.8rem; color: rgba(255,255,255,0.78); margin-top: 0.15rem; }
+
+/* المصارف الثمانية */
+.zk-mustahiq { margin-bottom: 1.75rem; }
+.zk-mustahiq__title { font-size: 1.05rem; font-weight: 800; color: var(--mj-brand-deep); margin-bottom: 0.65rem; }
+.zk-mustahiq__dalil {
+  font-size: 0.85rem;
+  color: var(--mj-brand-deep);
+  background: rgba(31,77,58,0.06);
+  border-inline-end: 3px solid var(--mj-brand);
+  border-radius: 0 0.65rem 0.65rem 0;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+.zk-mustahiq__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--ds-space-2); }
+.zk-mustahiq__item {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  background: #FFFFFF;
+  border: 1.5px solid var(--mj-brand-soft);
+  border-radius: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--mj-brand-deep);
+}
+.zk-mustahiq__num {
+  width: 20px;
+  height: 20px;
+  background: var(--mj-brand);
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+/* حاسبة الزكاة */
+.zk-calc {
+  background: #F8FBF9;
+  border: 1.5px solid #C8DDD5;
+  border-radius: var(--ds-radius-xl);
+  padding: var(--ds-space-5);
+  margin-bottom: 1.75rem;
+}
+.zk-calc__head {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--mj-brand-deep);
+  margin-bottom: 0.6rem;
+}
+.zk-calc__note {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.76rem;
+  color: var(--mj-brand);
+  margin-bottom: 1rem;
+}
+.zk-calc__fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.65rem; margin-bottom: 0.85rem; }
+.zk-calc__field { display: flex; flex-direction: column; gap: 0.3rem; }
+.zk-calc__field span { font-size: 0.78rem; font-weight: 700; color: var(--mj-brand-deep); }
+.zk-calc__input {
+  padding: 0.55rem 0.75rem;
+  border: 1.5px solid var(--mj-brand-soft);
+  border-radius: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--mj-brand-deep);
+  background: #FFFFFF;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+.zk-calc__input:focus { border-color: var(--mj-brand); }
+.zk-calc__btn {
+  padding: 0.65rem 1.5rem;
+  background: var(--mj-brand);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 0.65rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+.zk-calc__btn:hover { background: var(--mj-brand-deep); }
+.zk-calc__result {
+  margin-top: 0.85rem;
+  padding: 0.75rem 1rem;
+  background: var(--mj-brand);
+  color: #FFFFFF;
+  border-radius: 0.65rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+}
+.zk-calc__result--no { background: var(--mj-brand); }
+
+/* قائمة أنواع الزكاة */
+.zk-kinds__title { font-size: 1.05rem; font-weight: 800; color: var(--mj-brand-deep); margin-bottom: 0.85rem; }
+.zk-list { display: flex; flex-direction: column; gap: 0.7rem; }
+
+/* بطاقة النوع */
+.zk-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--mj-brand-soft);
+  border-radius: 0.9rem;
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.zk-card--open { border-color: var(--mj-brand); box-shadow: 0 3px 14px rgba(31,77,58,0.1); }
+.zk-card__header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 1.1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: var(--ds-space-3);
+  text-align: end;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.zk-card__header:hover { background: rgba(31,77,58,0.04); }
+.zk-card__icon { font-size: 1.8rem; flex-shrink: 0; line-height: 1; }
+.zk-card__header-text { flex: 1; min-width: 0; text-align: end; }
+.zk-card__title { font-size: 0.95rem; font-weight: 800; color: var(--mj-brand-deep); }
+.zk-card__rate { font-size: 0.78rem; color: var(--mj-brand); font-weight: 600; margin-top: 0.1rem; }
+.zk-card__chevron { flex-shrink: 0; color: var(--mj-brand); }
+
+/* تفاصيل */
+.zk-card__body { padding: 0 1.1rem 1.1rem; border-top: 1.5px solid var(--mj-brand-soft); }
+.zk-row { display: flex; gap: var(--ds-space-2); font-size: 0.85rem; color: var(--mj-brand-deep); line-height: 1.6; margin: 0.75rem 0 0; align-items: flex-start; }
+.zk-label { font-weight: 800; color: var(--mj-brand); white-space: nowrap; flex-shrink: 0; }
+.zk-detail { font-size: 0.87rem; color: var(--mj-brand-deep); line-height: 1.7; margin: 0.6rem 0; }
+.zk-dalil {
+  background: rgba(31,77,58,0.06);
+  border-inline-end: 3px solid var(--mj-brand);
+  border-radius: 0 0.5rem 0.5rem 0;
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 0.65rem;
+}
+.zk-dalil__text { font-size: 0.88rem; color: var(--mj-brand-deep); line-height: 1.7; font-weight: 600; }
+.zk-dalil__ref { font-size: var(--ds-text-xs); color: var(--mj-brand); font-style: normal; margin-top: 0.2rem; }
+.zk-mustahiq-inline { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.zk-chip {
+  background: rgba(31,77,58,0.08);
+  border: 1px solid rgba(31,77,58,0.2);
+  color: var(--mj-brand-deep);
+  font-size: 0.73rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--ds-radius-full);
+}
+
+/* ذات صلة */
+.zk-share { padding: 1rem 0; border-top: 1px solid rgba(31,77,58,0.1); border-bottom: 1px solid rgba(31,77,58,0.1); margin: 1.5rem 0; display: flex; justify-content: center; }
+.zk-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid var(--mj-brand-soft); }
+.zk-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-brand-deep); margin-bottom: 0.75rem; }
+.zk-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--ds-space-2); }
+.zk-related__link {
+  display: block;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid var(--mj-brand-soft);
+  border-radius: 0.65rem;
+  text-decoration: none;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--mj-brand-deep);
+  background: #FFFFFF;
+  transition: all 0.15s;
+  text-align: center;
+}
+.zk-related__link:hover { border-color: var(--mj-brand); background: rgba(31,77,58,0.05); color: var(--mj-brand); }
+
+@media (max-width: 600px) {
+  .zk-hero__title { font-size: 1.65rem; }
+  .zk-mustahiq__grid { grid-template-columns: repeat(2, 1fr); }
+  .zk-calc__fields { grid-template-columns: 1fr; }
+  .zk-related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── نهاية 227 ─────────────────────────────────────────── */

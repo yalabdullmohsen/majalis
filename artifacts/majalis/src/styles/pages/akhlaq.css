@@ -1,0 +1,287 @@
+/* ─────────────────────────────────────────────────────────── */
+/* 219 — صفحة الأخلاق الإسلامية (.akl-*)                    */
+/* ─────────────────────────────────────────────────────────── */
+
+.akl-hero {
+  background: linear-gradient(145deg, var(--mj-brand-deep) 0%, var(--mj-brand-deep) 50%, var(--mj-brand) 100%);
+  border-radius: var(--ds-radius-2xl);
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
+}
+.akl-hero__eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: normal;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.akl-hero__title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 0.75rem;
+}
+.akl-hero__sub {
+  font-size: var(--ds-text-base);
+  font-family: var(--font-quran, serif);
+  color: rgba(255,255,255,0.9);
+  line-height: 1.9;
+  max-width: 560px;
+  margin: 0 auto 1rem;
+}
+.akl-hero__source {
+  display: block;
+  font-family: inherit;
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.55);
+  font-style: normal;
+  margin-top: 0.25rem;
+}
+.akl-hero__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-2);
+  justify-content: center;
+}
+.akl-hero__badges span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255,255,255,0.12);
+  border-radius: 2rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.9);
+}
+
+/* Controls */
+.akl-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+  margin-bottom: 1.5rem;
+}
+.akl-search {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border: 1.5px solid #C6D6CE;
+  border-radius: var(--ds-radius-lg);
+  font-size: 0.92rem;
+  background: #FFFFFF;
+  color: #1A1A18;
+  outline: none;
+  direction: rtl;
+  transition: border-color 0.2s;
+}
+.akl-search:focus { border-color: var(--mj-brand); }
+.akl-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.akl-cat {
+  padding: 0.35rem 0.85rem;
+  border-radius: 2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid #C6D6CE;
+  background: #FFFFFF;
+  color: var(--mj-brand-deep);
+  transition: all 0.15s;
+}
+.akl-cat:hover { border-color: var(--mj-brand); }
+.akl-cat--active { background: var(--mj-brand); color: #FFFFFF; border-color: var(--mj-brand); }
+
+/* List */
+.akl-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+  margin-bottom: 2rem;
+}
+
+/* Card */
+.akl-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--mj-brand-soft);
+  border-radius: var(--ds-radius-xl);
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.akl-card:hover { border-color: var(--mj-brand); box-shadow: 0 2px 12px rgba(31,77,58,0.1); }
+.akl-card--open { border-color: var(--mj-brand); box-shadow: 0 4px 20px rgba(31,77,58,0.12); }
+
+.akl-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: end;
+  direction: rtl;
+}
+.akl-card__icon {
+  font-size: var(--ds-text-2xl);
+  flex-shrink: 0;
+  line-height: 1;
+}
+.akl-card__title-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.akl-card__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--mj-brand-deep);
+  margin: 0;
+}
+.akl-card__cat {
+  font-size: 0.8rem;
+  color: #497061;
+  font-weight: 600;
+}
+.akl-card__chevron { color: var(--mj-brand); flex-shrink: 0; }
+.akl-card__summary {
+  padding: 0 1.25rem 1rem;
+  font-size: 0.88rem;
+  color: var(--mj-brand-deep);
+  line-height: 1.75;
+  margin: 0;
+}
+.akl-card__body {
+  border-top: 1.5px solid var(--mj-brand-soft);
+  padding: var(--ds-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-4);
+}
+
+/* Blocks */
+.akl-block {
+  background: #F8FCF9;
+  border-radius: var(--ds-radius-lg);
+  padding: 0.85rem 1rem;
+}
+.akl-block--quran { background: rgba(31,77,58,0.05); border-inline-end: 3px solid var(--mj-brand); }
+.akl-block--hadith { background: rgba(5,46,22,0.04); border-inline-end: 3px solid var(--mj-brand-deep); }
+.akl-block--scholar { background: rgba(124,58,237,0.04); border-inline-end: 3px solid var(--brand, var(--mj-brand)); }
+.akl-block__label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--mj-brand);
+  text-transform: uppercase;
+  letter-spacing: normal;
+  margin-bottom: 0.4rem;
+}
+.akl-block--scholar .akl-block__label { color: var(--brand, var(--mj-brand)); }
+.akl-block__quran {
+  font-family: var(--font-quran, serif);
+  font-size: var(--ds-text-base);
+  color: var(--mj-brand-deep);
+  line-height: 1.9;
+  margin: 0 0 0.25rem;
+}
+.akl-block__text {
+  font-size: 0.88rem;
+  color: var(--mj-brand-deep);
+  line-height: 1.75;
+  margin: 0 0 0.25rem;
+  font-style: normal;
+}
+.akl-block__ref {
+  font-size: 0.72rem;
+  color: #497061;
+  font-weight: 600;
+}
+.akl-block__quote {
+  font-size: 0.88rem;
+  color: var(--mj-brand-deep);
+  font-style: normal;
+  line-height: 1.75;
+  margin: 0 0 0.25rem;
+  padding: 0;
+  border: none;
+}
+.akl-block__scholar {
+  font-size: 0.78rem;
+  color: var(--brand, var(--mj-brand));
+  font-weight: 700;
+}
+
+/* Practices */
+.akl-practices {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.akl-practice {
+  display: flex;
+  gap: 0.4rem;
+  align-items: flex-start;
+  font-size: 0.85rem;
+  color: var(--mj-brand-deep);
+  line-height: 1.6;
+}
+.akl-practice span { color: var(--mj-brand); font-weight: 700; flex-shrink: 0; }
+
+/* Empty */
+.akl-empty {
+  text-align: center;
+  color: #497061;
+  padding: var(--ds-space-8);
+  font-size: 0.95rem;
+}
+
+/* Related */
+.akl-related {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1.5px solid var(--mj-brand-soft);
+}
+.akl-related__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--mj-brand-deep);
+  margin-bottom: 1rem;
+}
+.akl-related__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.6rem;
+}
+.akl-related__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--mj-brand-soft);
+  border-radius: var(--ds-radius-lg);
+  text-decoration: none;
+  transition: all 0.15s;
+  background: #FFFFFF;
+}
+.akl-related__card strong { font-size: 0.88rem; color: var(--mj-brand-deep); }
+.akl-related__card span { font-size: var(--ds-text-xs); color: #497061; }
+.akl-related__card:hover { border-color: var(--mj-brand); background: rgba(31,77,58,0.04); }
+
+@media (max-width: 600px) {
+  .akl-hero__title { font-size: 1.75rem; }
+  .akl-card__header { padding: 0.85rem 1rem; }
+  .akl-card__body { padding: var(--ds-space-4); }
+  .akl-related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── نهاية 219 ─────────────────────────────────────────── */

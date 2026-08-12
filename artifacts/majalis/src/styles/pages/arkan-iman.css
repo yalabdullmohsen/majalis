@@ -1,0 +1,178 @@
+/* ══════════════════════════════════════════════════════════
+   222 — صفحة أركان الإيمان الستة (.ai-*)
+   ══════════════════════════════════════════════════════════ */
+
+/* الصفحة العامة */
+.ai-page { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+/* الهيرو */
+.ai-hero {
+  text-align: center;
+  padding: 2.5rem 1.5rem 2rem;
+  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 60%, var(--mj-brand) 100%);
+  border-radius: var(--ds-radius-2xl);
+  color: #FFFFFF;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 24px rgba(31,77,58,0.18);
+}
+.ai-hero__badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  color: #FFFFFF;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.28rem 0.9rem;
+  border-radius: var(--ds-radius-full);
+  border: 1px solid rgba(255,255,255,0.25);
+  margin-bottom: 0.85rem;
+  letter-spacing: normal;
+}
+.ai-hero__title { font-size: 2rem; font-weight: 900; color: #FFFFFF; margin: 0 0 0.7rem; line-height: 1.25; }
+.ai-hero__sub { font-size: 0.92rem; color: rgba(255,255,255,0.88); max-width: 560px; margin: 0 auto 1.5rem; line-height: 1.7; }
+
+/* أزرار التنقل السريع */
+.ai-hero__nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-top: 0.5rem; }
+.ai-hero__nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-1);
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 0.85rem;
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  min-width: 62px;
+}
+.ai-hero__nav-btn:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.4); }
+.ai-hero__nav-btn--active { background: rgba(255,255,255,0.28); border-color: #FFFFFF; box-shadow: 0 0 0 2px rgba(255,255,255,0.2); }
+.ai-hero__nav-icon { font-size: 1.4rem; line-height: 1; }
+.ai-hero__nav-label { font-size: 0.72rem; font-weight: 700; color: #FFFFFF; }
+
+/* قائمة الأركان */
+.ai-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
+
+/* بطاقة الركن */
+.ai-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--mj-brand-soft);
+  border-radius: var(--ds-radius-xl);
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(31,77,58,0.06);
+  transition: box-shadow 0.18s, border-color 0.18s;
+}
+.ai-card--open { border-color: var(--mj-brand); box-shadow: 0 4px 16px rgba(31,77,58,0.12); }
+.ai-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.1rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: end;
+  gap: var(--ds-space-3);
+  transition: background 0.15s;
+}
+.ai-card__header:hover { background: rgba(31,77,58,0.04); }
+.ai-card__header-right { display: flex; align-items: center; gap: 0.85rem; flex: 1; min-width: 0; }
+.ai-card__icon { font-size: 2rem; flex-shrink: 0; line-height: 1; }
+.ai-card__num { font-size: 0.72rem; font-weight: 700; color: var(--mj-brand); text-transform: uppercase; letter-spacing: normal; margin-bottom: 0.15rem; }
+.ai-card__title { font-size: 0.98rem; font-weight: 800; color: var(--mj-brand-deep); line-height: 1.35; }
+.ai-card__subtitle { font-size: 0.8rem; color: var(--mj-brand); margin-top: 0.15rem; }
+.ai-card__chevron { flex-shrink: 0; color: var(--mj-brand); transition: transform 0.2s; }
+
+/* محتوى البطاقة */
+.ai-card__body { padding: 0 1.25rem 1.25rem; border-top: 1.5px solid var(--mj-brand-soft); }
+.ai-card__summary { font-size: 0.9rem; color: var(--mj-brand-deep); line-height: 1.75; margin: 1rem 0 1.25rem; }
+
+/* كتل الأدلة */
+.ai-dalil {
+  border-radius: var(--ds-radius-lg);
+  padding: 0.9rem 1rem;
+  margin-bottom: 1rem;
+}
+.ai-dalil--quran { background: rgba(31,77,58,0.06); border-inline-end: 3px solid var(--mj-brand); }
+.ai-dalil--hadith { background: rgba(23,61,53,0.05); border-inline-end: 3px solid var(--mj-brand); }
+.ai-dalil__head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--mj-brand);
+  text-transform: uppercase;
+  letter-spacing: normal;
+  margin-bottom: 0.7rem;
+}
+.ai-dalil__quote { margin: 0 0 0.6rem; padding: 0; border: none; }
+.ai-dalil__quote:last-child { margin-bottom: 0; }
+.ai-dalil__text {
+  font-size: clamp(1rem, 3.4vw, 1.15rem);
+  color: var(--mj-brand-deep);
+  line-height: 1.9;
+  letter-spacing: 0;
+  font-weight: 600;
+  margin: 0 0 0.2rem;
+  font-family: var(--font-quran, "Amiri Quran", serif);
+  overflow-wrap: anywhere;
+}
+.ai-dalil__ref { font-size: 0.78rem; color: var(--mj-brand); font-style: normal; }
+
+/* تفاصيل عقدية */
+.ai-details { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1rem; }
+.ai-detail {
+  background: #F8FBF9;
+  border: 1px solid var(--mj-brand-soft);
+  border-radius: 0.65rem;
+  padding: 0.75rem 1rem;
+}
+.ai-detail__label { font-size: 0.8rem; font-weight: 800; color: var(--mj-brand); margin-bottom: 0.3rem; }
+.ai-detail__body { font-size: 0.87rem; color: var(--mj-brand-deep); line-height: 1.65; }
+
+/* قول عالم */
+.ai-scholar {
+  background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
+  border-radius: 0.85rem;
+  padding: 1rem 1.1rem;
+  color: #FFFFFF;
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+.ai-scholar__star { flex-shrink: 0; margin-top: 0.2rem; color: rgba(255,255,255,0.7); }
+.ai-scholar blockquote { margin: 0; padding: 0; border: none; }
+.ai-scholar blockquote p { font-size: 0.88rem; color: #FFFFFF; font-style: normal; line-height: 1.65; margin: 0 0 0.3rem; }
+.ai-scholar blockquote footer { font-size: 0.78rem; color: rgba(255,255,255,0.75); font-weight: 700; }
+
+/* صفحات ذات صلة */
+.ai-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid var(--mj-brand-soft); }
+.ai-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-brand-deep); margin-bottom: 0.85rem; }
+.ai-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--ds-space-2); }
+.ai-related__link {
+  display: block;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid var(--mj-brand-soft);
+  border-radius: 0.65rem;
+  text-decoration: none;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--mj-brand-deep);
+  background: #FFFFFF;
+  transition: all 0.15s;
+  text-align: center;
+}
+.ai-related__link:hover { border-color: var(--mj-brand); background: rgba(31,77,58,0.05); color: var(--mj-brand); }
+
+@media (max-width: 600px) {
+  .ai-hero__title { font-size: 1.6rem; }
+  .ai-hero__nav-btn { min-width: 54px; padding: 0.45rem 0.6rem; }
+  .ai-card__title { font-size: 0.9rem; }
+  .ai-card__body { padding: 0 1rem 1rem; }
+  .ai-related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── نهاية 222 ─────────────────────────────────────────── */
+

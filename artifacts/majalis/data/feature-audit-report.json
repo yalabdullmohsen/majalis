@@ -1,0 +1,663 @@
+{
+  "at": "2026-07-27T17:44:06.275Z",
+  "branch": "cursor/full-project-audit-pass-1f54",
+  "mainHead": "e0e286b6d",
+  "production": false,
+  "productionUrl": null,
+  "env": {
+    "VITE_SUPABASE_URL": true,
+    "VITE_SUPABASE_ANON_KEY": true,
+    "SUPABASE_URL": false,
+    "SUPABASE_ANON_KEY": false,
+    "SUPABASE_SERVICE_ROLE_KEY": false,
+    "DATABASE_URL": false,
+    "CRON_SECRET": false,
+    "OPENAI_API_KEY": false,
+    "ANTHROPIC_API_KEY": false,
+    "INSTAGRAM_GRAPH_ACCESS_TOKEN": false,
+    "INSTAGRAM_BUSINESS_ACCOUNT_ID": false,
+    "INSTAGRAM_APP_ID": false,
+    "INSTAGRAM_APP_SECRET": false
+  },
+  "features": [
+    {
+      "id": "homepage",
+      "name": "الصفحة الرئيسية",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "id": "quran-v2",
+      "name": "صفحة القرآن (v2 UX)",
+      "phase": 1,
+      "pr": 72,
+      "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/quran"
+      ]
+    },
+    {
+      "id": "quran-stories",
+      "name": "قصص سور القرآن",
+      "phase": 1,
+      "pr": 72,
+      "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/quran/surah-stories"
+      ]
+    },
+    {
+      "id": "qa-taxonomy",
+      "name": "الأسئلة والأجوبة (تصنيف v2)",
+      "phase": 2,
+      "pr": 72,
+      "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/qa"
+      ]
+    },
+    {
+      "id": "lessons-v2",
+      "name": "الدروس الشرعية (v2 UX)",
+      "phase": 1,
+      "pr": 72,
+      "branch": "cursor/ux-redesign-quran-qa-lessons-92e6",
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/lessons"
+      ]
+    },
+    {
+      "id": "sharia-rulings",
+      "name": "الأحكام الشرعية / موسوعة",
+      "phase": 5,
+      "pr": 74,
+      "branch": "cursor/sharia-rulings-encyclopedia-92e6",
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": true,
+      "migrations": [
+        "sharia_rulings_encyclopedia_v1.sql"
+      ],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/rulings"
+      ]
+    },
+    {
+      "id": "library",
+      "name": "المكتبة",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/library"
+      ]
+    },
+    {
+      "id": "miracles",
+      "name": "الإعجاز العلمي",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/miracles"
+      ]
+    },
+    {
+      "id": "fawaid",
+      "name": "الفوائد",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/fawaid"
+      ]
+    },
+    {
+      "id": "search",
+      "name": "البحث",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/search"
+      ]
+    },
+    {
+      "id": "mobile-nav",
+      "name": "القائمة على الجوال",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "id": "assistant",
+      "name": "المساعد العلمي",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [
+        "ANTHROPIC_API_KEY"
+      ],
+      "usesMock": true,
+      "hasUi": true,
+      "tested": null,
+      "status": "Blocked by Missing Secrets",
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "routes": [
+        "/assistant"
+      ]
+    },
+    {
+      "id": "admin-dashboard",
+      "name": "لوحة الإدارة",
+      "phase": 3,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/admin",
+        "/admin/dashboard"
+      ]
+    },
+    {
+      "id": "feature-status",
+      "name": "Release Gate — Feature Status",
+      "phase": 0,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/admin/feature-status"
+      ]
+    },
+    {
+      "id": "lesson-automation",
+      "name": "أتمتة مصادر الدروس",
+      "phase": 4,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "CRON_SECRET"
+      ],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Blocked by Missing Secrets",
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "routes": [
+        "/admin/sources"
+      ]
+    },
+    {
+      "id": "instagram-graph",
+      "name": "Instagram Graph + Manual Assist",
+      "phase": 4,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [
+        "INSTAGRAM_GRAPH_ACCESS_TOKEN",
+        "INSTAGRAM_BUSINESS_ACCOUNT_ID"
+      ],
+      "usesMock": true,
+      "hasUi": true,
+      "tested": null,
+      "status": "Blocked by Missing Secrets",
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "routes": [
+        "/admin/integrations/instagram"
+      ]
+    },
+    {
+      "id": "mke-v2",
+      "name": "Majlis Knowledge Engine v2",
+      "phase": 4,
+      "pr": 73,
+      "branch": "cursor/autonomous-platform-v2-92e6",
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": true,
+      "migrations": [
+        "majlis_knowledge_engine_v1.sql",
+        "majlis_knowledge_engine_v2.sql"
+      ],
+      "needsSecrets": [
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "CRON_SECRET",
+        "OPENAI_API_KEY"
+      ],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Blocked by Missing Secrets",
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "routes": [
+        "/admin/automation/platform"
+      ]
+    },
+    {
+      "id": "auto-publish",
+      "name": "Auto Content Pipeline",
+      "phase": 4,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [
+        "CRON_SECRET",
+        "SUPABASE_SERVICE_ROLE_KEY"
+      ],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Blocked by Missing Secrets",
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "routes": [
+        "/admin/auto-content"
+      ]
+    },
+    {
+      "id": "knowledge-graph",
+      "name": "Knowledge Graph",
+      "phase": 4,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": true,
+      "migrations": [
+        "knowledge_graph_phase4_v1.sql"
+      ],
+      "needsSecrets": [
+        "SUPABASE_SERVICE_ROLE_KEY"
+      ],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Blocked by Missing Secrets",
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "routes": [
+        "/admin"
+      ]
+    },
+    {
+      "id": "digital-learning",
+      "name": "التعلم الرقمي",
+      "phase": 3,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/learning/paths"
+      ]
+    },
+    {
+      "id": "fiqh-council",
+      "name": "مجلس الفقه",
+      "phase": 3,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/fiqh-council"
+      ]
+    },
+    {
+      "id": "sitemap-rss",
+      "name": "Sitemap / RSS",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/sitemap.xml"
+      ]
+    },
+    {
+      "id": "hadith-page",
+      "name": "الأحاديث الموثقة",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": true,
+      "migrations": [
+        "MAJALISILM_PRODUCTION_SETUP.sql"
+      ],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/hadith"
+      ]
+    },
+    {
+      "id": "stories-page",
+      "name": "القصص الإسلامية",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": true,
+      "migrations": [
+        "MAJALISILM_PRODUCTION_SETUP.sql"
+      ],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/stories"
+      ]
+    },
+    {
+      "id": "community-submit",
+      "name": "مقترحات المجتمع",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": true,
+      "migrations": [
+        "MAJALISILM_PRODUCTION_SETUP.sql"
+      ],
+      "needsSecrets": [
+        "SUPABASE_SERVICE_ROLE_KEY"
+      ],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Blocked by Missing Secrets",
+      "deliveryState": "Blocked",
+      "blockReason": "Secret",
+      "routes": [
+        "/submit"
+      ]
+    },
+    {
+      "id": "settings-dark",
+      "name": "الإعدادات والوضع الليلي",
+      "phase": 1,
+      "pr": null,
+      "branch": null,
+      "mergedToMain": true,
+      "inCode": true,
+      "hasRoute": true,
+      "productionOk": null,
+      "needsMigration": false,
+      "migrations": [],
+      "needsSecrets": [],
+      "usesMock": false,
+      "hasUi": true,
+      "tested": null,
+      "status": "Partial",
+      "deliveryState": "Ready",
+      "blockReason": null,
+      "routes": [
+        "/settings"
+      ]
+    }
+  ],
+  "summary": {
+    "total": 26,
+    "done": 0,
+    "partial": 19,
+    "blocked": 7,
+    "missing": 0,
+    "notProductionComplete": 0
+  }
+}

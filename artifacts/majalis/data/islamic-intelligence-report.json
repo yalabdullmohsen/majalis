@@ -1,0 +1,452 @@
+{
+  "generated_at": "2026-06-26T00:58:53.309Z",
+  "system": "Islamic Intelligence Platform v1",
+  "completion_pct": 100,
+  "automation_pct": 69,
+  "ai_agent_count": 9,
+  "agents": [
+    {
+      "id": "knowledge_auditor",
+      "label": "مدقق المعرفة",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "id": "content_planner",
+      "label": "مخطط المحتوى",
+      "schedule": "0 7 * * 1"
+    },
+    {
+      "id": "knowledge_discovery",
+      "label": "اكتشاف المعرفة",
+      "schedule": "30 */6 * * *"
+    },
+    {
+      "id": "relationship_builder",
+      "label": "باني العلاقات",
+      "schedule": "0 10 * * *"
+    },
+    {
+      "id": "quality_scorer",
+      "label": "مقياس الجودة",
+      "schedule": "0 8 * * *"
+    },
+    {
+      "id": "security_assistant",
+      "label": "مساعد الأمان",
+      "schedule": "0 2 * * 0"
+    },
+    {
+      "id": "performance_optimizer",
+      "label": "محسّن الأداء",
+      "schedule": "0 3 * * 0"
+    },
+    {
+      "id": "analytics",
+      "label": "التحليلات",
+      "schedule": "0 */6 * * *"
+    },
+    {
+      "id": "weekly_report",
+      "label": "التقرير الأسبوعي",
+      "schedule": "0 9 * * 1"
+    }
+  ],
+  "fully_autonomous_tasks": [
+    "مراجعة الروابط والمصادر",
+    "اكتشاف المحتوى الجديد (قبل المراجعة)",
+    "بناء العلاقات التلقائية",
+    "تقييم الجودة",
+    "تحليل البحث والفجوات",
+    "تدقيق الأمان",
+    "تحسين الأداء (اقتراحات)",
+    "التقرير الأسبوعي"
+  ],
+  "human_required_tasks": [
+    {
+      "task": "مراجعة الفتاوى والأحكام الشرعية",
+      "reason": "الأحكام تتطلب تحققاً من عالم مختص"
+    },
+    {
+      "task": "اعتماد مصادر رسمية جديدة",
+      "reason": "تقييم الثقة يحتاج قرار إداري"
+    },
+    {
+      "task": "حل التعارضات العلمية",
+      "reason": "الاختلاف الفقهي يحتاج مرجعية معتمدة"
+    },
+    {
+      "task": "نشر محتوى دون مصدر موثق",
+      "reason": "لا يُنشر نص شرعي بلا مستند علمي"
+    }
+  ],
+  "performance_assessment": {
+    "score": 85,
+    "avg_search_ms": 0,
+    "update_success_rate": 100
+  },
+  "security_assessment": {
+    "score": 85,
+    "note": "RLS + cron auth + metadata-only AI + no unsourced religious text"
+  },
+  "content_quality_assessment": {
+    "score": 70,
+    "verification_pct": 0,
+    "incomplete": 0,
+    "needs_review": 0
+  },
+  "features": [
+    {
+      "id": "knowledge_auditor",
+      "label": "AI Knowledge Auditor",
+      "weight": 12,
+      "file": "lib/islamic-intelligence/auditor.mjs",
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "content_planner",
+      "label": "AI Content Planner",
+      "weight": 10,
+      "file": "lib/islamic-intelligence/planner.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "knowledge_discovery",
+      "label": "AI Knowledge Discovery",
+      "weight": 10,
+      "file": "lib/islamic-intelligence/discovery.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "relationship_builder",
+      "label": "AI Relationship Builder",
+      "weight": 10,
+      "file": "lib/islamic-intelligence/relationships.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "quality_scorer",
+      "label": "AI Quality Score",
+      "weight": 10,
+      "file": "lib/islamic-intelligence/quality.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "security_assistant",
+      "label": "AI Security Assistant",
+      "weight": 8,
+      "file": "lib/islamic-intelligence/security.mjs",
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "performance_optimizer",
+      "label": "AI Performance Optimizer",
+      "weight": 8,
+      "file": "lib/islamic-intelligence/performance.mjs",
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "analytics",
+      "label": "AI Analytics",
+      "weight": 10,
+      "file": "lib/islamic-intelligence/analytics.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "weekly_report",
+      "label": "AI Weekly Report",
+      "weight": 10,
+      "file": "lib/islamic-intelligence/weekly-report.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "modularity",
+      "label": "Modular Architecture",
+      "weight": 12,
+      "file": "lib/islamic-intelligence/config.mjs",
+      "complete": true,
+      "score": 12
+    }
+  ],
+  "analytics": {
+    "ok": true,
+    "at": "2026-06-26T00:58:53.309Z",
+    "period_days": 30,
+    "most_read_topics": [],
+    "most_searched": [],
+    "pages_needing_enrichment": [],
+    "insufficient_content": [],
+    "content_growth": {
+      "new_items": 0,
+      "updated_items": 0,
+      "growth_rate": 0
+    },
+    "update_success_rate": 100,
+    "quality": {
+      "avg_score": 0,
+      "incomplete": 0,
+      "needs_review": 0
+    },
+    "relations": {
+      "total": 0
+    },
+    "verification_pct": 0,
+    "system": {
+      "ai_status": "limited",
+      "database_status": "not_configured",
+      "cron_jobs": 5
+    },
+    "search_quality_score": 0,
+    "avg_response_ms": 0,
+    "click_through_rate": 0,
+    "total_searches": 0
+  },
+  "status": {
+    "ok": true,
+    "at": "2026-06-26T00:58:53.309Z",
+    "agents": {
+      "knowledge_auditor": {
+        "id": "knowledge_auditor",
+        "label": "AI Knowledge Auditor",
+        "label_ar": "مدقق المعرفة",
+        "schedule": "0 6 * * *",
+        "module": "./auditor.mjs",
+        "exportFn": "runKnowledgeAuditor",
+        "description": "Daily full-platform audit — empty pages, broken links, duplicates, stale content"
+      },
+      "content_planner": {
+        "id": "content_planner",
+        "label": "AI Content Planner",
+        "label_ar": "مخطط المحتوى",
+        "schedule": "0 7 * * 1",
+        "module": "./planner.mjs",
+        "exportFn": "runContentPlanner",
+        "description": "Analyze gaps, search demand, and generate editorial work plans"
+      },
+      "knowledge_discovery": {
+        "id": "knowledge_discovery",
+        "label": "AI Knowledge Discovery",
+        "label_ar": "اكتشاف المعرفة",
+        "schedule": "30 */6 * * *",
+        "module": "./discovery.mjs",
+        "exportFn": "runKnowledgeDiscovery",
+        "description": "Scan trusted sources for new books, fatwas, decisions, lessons"
+      },
+      "relationship_builder": {
+        "id": "relationship_builder",
+        "label": "AI Relationship Builder",
+        "label_ar": "باني العلاقات",
+        "schedule": "0 10 * * *",
+        "module": "./relationships.mjs",
+        "exportFn": "runRelationshipBuilder",
+        "description": "Auto-link hadith↔ayah, fatwa↔decision, book↔author, lesson↔sheikh"
+      },
+      "quality_scorer": {
+        "id": "quality_scorer",
+        "label": "AI Quality Score",
+        "label_ar": "مقياس الجودة",
+        "schedule": "0 8 * * *",
+        "module": "./quality.mjs",
+        "exportFn": "runQualityScoring",
+        "description": "Unified quality index — completeness, source, freshness, linking, classification"
+      },
+      "security_assistant": {
+        "id": "security_assistant",
+        "label": "AI Security Assistant",
+        "label_ar": "مساعد الأمان",
+        "schedule": "0 2 * * 0",
+        "module": "./security.mjs",
+        "exportFn": "runSecurityAssistant",
+        "description": "Env, logs, DB performance, access anomalies, config review"
+      },
+      "performance_optimizer": {
+        "id": "performance_optimizer",
+        "label": "AI Performance Optimizer",
+        "label_ar": "محسّن الأداء",
+        "schedule": "0 3 * * 0",
+        "module": "./performance.mjs",
+        "exportFn": "runPerformanceOptimizer",
+        "description": "Slow queries, pages, images, indexes, cache recommendations"
+      },
+      "analytics": {
+        "id": "analytics",
+        "label": "AI Analytics",
+        "label_ar": "التحليلات",
+        "schedule": "0 */6 * * *",
+        "module": "./analytics.mjs",
+        "exportFn": "getIntelligenceAnalytics",
+        "description": "Top topics, search demand, enrichment needs, content growth"
+      },
+      "weekly_report": {
+        "id": "weekly_report",
+        "label": "AI Weekly Report",
+        "label_ar": "التقرير الأسبوعي",
+        "schedule": "0 9 * * 1",
+        "module": "./weekly-report.mjs",
+        "exportFn": "generateWeeklyReport",
+        "description": "Weekly summary — new/updated content, reviews, sources, system health"
+      }
+    },
+    "agent_count": 9,
+    "recent_runs": [],
+    "latest_weekly": null,
+    "analytics": {
+      "ok": true,
+      "at": "2026-06-26T00:58:53.309Z",
+      "period_days": 7,
+      "most_read_topics": [],
+      "most_searched": [],
+      "pages_needing_enrichment": [],
+      "insufficient_content": [],
+      "content_growth": {
+        "new_items": 0,
+        "updated_items": 0,
+        "growth_rate": 0
+      },
+      "update_success_rate": 100,
+      "quality": {
+        "avg_score": 0,
+        "incomplete": 0,
+        "needs_review": 0
+      },
+      "relations": {
+        "total": 0
+      },
+      "verification_pct": 0,
+      "system": {
+        "ai_status": "limited",
+        "database_status": "not_configured",
+        "cron_jobs": 5
+      },
+      "search_quality_score": 0,
+      "avg_response_ms": 0,
+      "click_through_rate": 0,
+      "total_searches": 0
+    },
+    "human_required": [
+      {
+        "task": "مراجعة الفتاوى والأحكام الشرعية",
+        "reason": "الأحكام تتطلب تحققاً من عالم مختص"
+      },
+      {
+        "task": "اعتماد مصادر رسمية جديدة",
+        "reason": "تقييم الثقة يحتاج قرار إداري"
+      },
+      {
+        "task": "حل التعارضات العلمية",
+        "reason": "الاختلاف الفقهي يحتاج مرجعية معتمدة"
+      },
+      {
+        "task": "نشر محتوى دون مصدر موثق",
+        "reason": "لا يُنشر نص شرعي بلا مستند علمي"
+      }
+    ]
+  },
+  "ai_constraints": {
+    "metadataOnly": true,
+    "generatesReligiousText": false,
+    "generatesFatwa": false,
+    "generatesHadith": false,
+    "generatesAyah": false,
+    "requireSourceUrl": true,
+    "minTrustScore": 60,
+    "minQualityScore": 70
+  },
+  "development_plan": {
+    "generated_at": "2026-06-26T00:58:53.309Z",
+    "principle": "المنصة تدير نفسها — لا تُنشئ معلومات شرعية بلا مصدر",
+    "phases": [
+      {
+        "phase": 1,
+        "title": "الاستقرار والدمج",
+        "priority": "critical",
+        "items": [
+          {
+            "task": "دمج PRs #36-43 في main",
+            "impact": "critical",
+            "benefit": "منصة موحدة"
+          },
+          {
+            "task": "تطبيق islamic_intelligence_v1.sql",
+            "impact": "high",
+            "benefit": "تخزين تقارير الوكلاء"
+          },
+          {
+            "task": "Backfill Global IDs + relations",
+            "impact": "high",
+            "benefit": "شبكة معرفية كاملة"
+          },
+          {
+            "task": "تفعيل cron islamic-intelligence",
+            "impact": "high",
+            "benefit": "مراقبة ذاتية 24/7"
+          }
+        ]
+      },
+      {
+        "phase": 2,
+        "title": "الذكاء التشغيلي",
+        "priority": "high",
+        "items": [
+          {
+            "task": "ربط Content Planner → Discovery pipeline",
+            "impact": "high",
+            "benefit": "إثراء تلقائي للفجوات"
+          },
+          {
+            "task": "Human review queue UI",
+            "impact": "high",
+            "benefit": "مراجعة الفتاوى قبل النشر"
+          },
+          {
+            "task": "Email/push للتقرير الأسبوعي",
+            "impact": "medium",
+            "benefit": "إشعار الإدارة"
+          },
+          {
+            "task": "Redis cache للبحث",
+            "impact": "medium",
+            "benefit": "أداء <100ms"
+          }
+        ]
+      },
+      {
+        "phase": 3,
+        "title": "الريادة",
+        "priority": "medium",
+        "items": [
+          {
+            "task": "Open Intelligence API",
+            "impact": "high",
+            "benefit": "تكامل خارجي"
+          },
+          {
+            "task": "Multi-agent conflict resolution",
+            "impact": "medium",
+            "benefit": "دقة علمية"
+          },
+          {
+            "task": "Predictive content planning (ML)",
+            "impact": "medium",
+            "benefit": "توقع احتياجات المستخدم"
+          }
+        ]
+      }
+    ],
+    "stability_gates": [
+      "All 9 agents run successfully weekly",
+      "Zero unsourced religious text published",
+      "Search latency < 1s",
+      "Quality avg > 70",
+      "Security score > 85"
+    ]
+  }
+}

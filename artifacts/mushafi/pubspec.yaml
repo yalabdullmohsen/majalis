@@ -1,0 +1,70 @@
+name: mushafi
+description: >
+  مصحفي — تطبيق مصحف احترافي هادئ للقراءة والتلاوة والتسميع.
+  النص القرآني من مصدر عثماني موثّق في assets/quran/quran_uthmani.json.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_riverpod: ^2.5.1
+  go_router: ^17.0.0
+  sqflite: ^2.4.2
+  path: ^1.9.1
+  path_provider: ^2.1.5
+  shared_preferences: ^2.5.3
+  flutter_secure_storage: ^10.3.1
+  just_audio: ^0.10.6
+  audio_service: ^0.18.19
+  equatable: ^2.0.7
+  collection: ^1.19.1
+  intl: ^0.20.2
+  uuid: ^4.5.1
+  permission_handler: ^11.3.1
+  speech_to_text: ^6.6.2
+  record: ^5.2.1
+  http: ^1.2.2
+  web_socket_channel: ^3.0.1
+  flutter_local_notifications: ^17.2.3
+  timezone: ^0.9.4
+  pdf: ^3.11.1
+  printing: ^5.13.4
+  share_plus: ^10.0.2
+  package_info_plus: ^8.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  mocktail: ^1.0.4
+  path_provider_platform_interface: ^2.1.2
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/data/
+    - assets/images/
+    - assets/quran/quran_uthmani.json
+    - assets/quran/quran_page_metadata.json
+    - assets/tafsir/tafsir_muyassar.json
+    - assets/fonts/NotoNaskhArabic-Regular.ttf
+    - assets/fonts/NotoNaskhArabic-Bold.ttf
+  fonts:
+    - family: MushafiQuran
+      fonts:
+        - asset: assets/fonts/ScheherazadeNew-Regular.ttf
+    - family: MushafiUi
+      fonts:
+        - asset: assets/fonts/ScheherazadeNew-Regular.ttf
+    - family: NotoNaskhArabic
+      fonts:
+        - asset: assets/fonts/NotoNaskhArabic-Regular.ttf
+        - asset: assets/fonts/NotoNaskhArabic-Bold.ttf
+          weight: 700

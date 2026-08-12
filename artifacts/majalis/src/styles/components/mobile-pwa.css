@@ -1,0 +1,110 @@
+/* Mobile-first / PWA shell polish — deferred (not critical CSS) */
+
+/* Standalone display: tighten chrome to feel native */
+@media (display-mode: standalone) {
+  .app-shell {
+    min-height: 100dvh;
+  }
+  .offline-banner {
+    padding-top: max(0.35rem, var(--inset-top));
+  }
+}
+
+/* Touch targets ≥ 44px on bottom nav tabs (iOS HIG) */
+.bottom-nav--v2 .bottom-nav__tab {
+  min-height: 48px;
+  min-width: 48px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Safe padding for primary scroll surfaces on notched devices */
+.app-main {
+  padding-inline: max(0px, var(--gutter-inline-start))
+    max(0px, var(--gutter-inline-end));
+}
+
+/* Optimized media — reserve space to reduce CLS */
+.mj-media {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  background: var(--emerald-50, #EEF1F0);
+}
+.mj-media--poster {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md, 0.65rem);
+}
+.lesson-detail-poster {
+  margin: 0.85rem 0 0;
+  overflow: hidden;
+  border-radius: var(--radius-md, 0.65rem);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
+}
+.lesson-detail-poster .mj-media {
+  display: block;
+}
+
+/* Soft install / push prompt — فوق الشريط السفلي دون ضغط المحتوى */
+.pwa-soft-banner {
+  position: fixed;
+  inset-inline: 0.75rem;
+  bottom: calc(var(--bottom-nav-total, 3.5rem) + 0.5rem);
+  z-index: 40;
+  margin: 0;
+  padding: 0.7rem 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  max-width: calc(100% - 1.5rem);
+  box-sizing: border-box;
+  border-radius: var(--radius-md, 0.65rem);
+  background: var(--emerald-500, var(--mj-brand-deep));
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(20, 63, 53, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.pwa-soft-banner__text {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 0.1rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  text-align: start;
+}
+.pwa-soft-banner__text strong {
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+.pwa-soft-banner__text span {
+  overflow-wrap: anywhere;
+}
+.pwa-soft-banner__btn {
+  flex-shrink: 0;
+  min-height: 40px;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-sm, 0.45rem);
+  border: 1px solid rgba(184, 150, 63, 0.55);
+  background: rgba(184, 150, 63, 0.22);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.pwa-soft-banner__dismiss {
+  flex-shrink: 0;
+  min-width: 36px;
+  min-height: 36px;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* عندما يظهر البنر: خلوص إضافي أسفل المحتوى حتى لا يغطّيه */
+body:has(.pwa-soft-banner) .app-main {
+  padding-block-end: calc(var(--bottom-nav-total, 3.5rem) + 4.25rem);
+}

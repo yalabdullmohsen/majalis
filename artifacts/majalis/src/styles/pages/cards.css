@@ -1,0 +1,295 @@
+/* ============================================================
+   78 — CardsPage  (cards-* additions)
+   ============================================================ */
+.cards-template-swatch { background: var(--swatch-bg, #0f0f0f); }
+.cards-preview-frame   { width: var(--cpf-w); height: var(--cpf-h); }
+.cards-export-scaler {
+  transform: scale(var(--cpf-scale, 1));
+  transform-origin: top right;
+  width: var(--cpf-cw);
+  height: var(--cpf-ch);
+}
+.cards-export-canvas {
+  width: var(--cpf-cw);
+  height: var(--cpf-ch);
+  background: var(--card-bg);
+  border: var(--card-border);
+}
+.cards-export-quote {
+  font-size: var(--card-quote-fs, 30px);
+  color: var(--card-text);
+}
+.cards-export-source {
+  color: var(--card-sub);
+  border-top: 1px solid color-mix(in srgb, var(--card-sub) 25%, transparent);
+}
+
+/* cards + shared helpers (from index) */
+/* ── Condolences & Cards pages ── */
+.cond-page,
+.cards-page {
+  min-height: 100svh;
+  background: var(--majalis-parchment);
+  padding: clamp(1.5rem, 4vw, 2.5rem) 1rem;
+}
+
+.cond-page-inner,
+.cards-page-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.cond-page-inner {
+  display: grid;
+  gap: var(--ds-space-6);
+  grid-template-columns: minmax(280px, 380px) 1fr;
+  align-items: start;
+}
+
+.cond-page-inner--single {
+  grid-template-columns: 1fr;
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+.cond-export-note {
+  margin: 0.25rem 0 0;
+  font-size: 0.78rem;
+  color: var(--msk-text-2, var(--mj-ink-2));
+  line-height: 1.6;
+}
+
+.cond-form-panel {
+  padding: var(--ds-space-5);
+}
+
+.cond-page-title,
+.cards-page-title {
+  color: var(--majalis-emerald-deep);
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  margin-bottom: 0.35rem;
+}
+
+.cond-page-desc,
+.cards-back-link {
+  color: var(--msk-text-2, var(--mj-ink-2));
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.cond-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.cond-form-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--msk-text-2, var(--mj-ink-2));
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.cond-input {
+  width: 100%;
+  border: 1px solid var(--msk-border, var(--mj-hairline));
+  border-radius: var(--ds-radius-lg);
+  padding: 0.7rem 0.85rem;
+  background: transparent;
+  color: var(--majalis-ink);
+  font-size: 0.92rem;
+  outline: none;
+}
+
+.cond-input:focus {
+  border-color: var(--majalis-emerald);
+  box-shadow: 0 0 0 2px rgba(31, 110, 84, 0.15);
+}
+
+.cond-textarea {
+  min-height: 5.5rem;
+  resize: vertical;
+}
+
+.cond-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--msk-text-2, var(--mj-ink-2));
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.cond-download-btn,
+.cards-download-btn {
+  width: 100%;
+  font-size: var(--ds-text-base);
+  padding-block: 0.85rem;
+}
+
+.cond-preview-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-3);
+}
+
+.cond-preview-title {
+  align-self: flex-start;
+  color: var(--majalis-emerald-deep);
+  font-size: var(--ds-text-base);
+}
+
+.cond-bw-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+.cards-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--ds-space-6);
+  margin-top: 1rem;
+}
+
+.cards-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-4);
+}
+
+.cards-panel {
+  padding: 1.15rem;
+}
+
+.cards-panel h2 {
+  color: var(--majalis-ink);
+  font-size: var(--ds-text-base);
+  margin-bottom: 0.75rem;
+}
+
+.cards-textarea,
+.cards-input {
+  width: 100%;
+  border: 1px solid var(--msk-border, var(--mj-hairline));
+  border-radius: var(--ds-radius-lg);
+  padding: 0.75rem 0.9rem;
+  margin-bottom: 0.65rem;
+  background: var(--majalis-parchment-deep);
+  color: var(--majalis-ink);
+  font-size: var(--ds-text-base);
+  line-height: 1.8;
+  outline: none;
+}
+
+.cards-template-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.cards-template-btn {
+  border: 2px solid var(--majalis-line);
+  border-radius: 0.85rem;
+  padding: 0.65rem;
+  background: transparent;
+  color: var(--msk-text-2, var(--mj-ink-2));
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.cards-template-btn.is-active {
+  border-color: var(--majalis-emerald);
+  background: var(--majalis-sage);
+  color: var(--majalis-emerald-deep);
+}
+
+.cards-template-swatch {
+  display: block;
+  height: 2rem;
+  margin-bottom: 0.45rem;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(36, 31, 24, 0.08);
+}
+
+.cards-size-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-2);
+}
+
+.cards-size-btn {
+  flex: 1;
+  min-width: 5.5rem;
+  min-height: 44px;
+  border: 1px solid var(--msk-border, var(--mj-hairline));
+  border-radius: 0.65rem;
+  background: transparent;
+  color: var(--msk-text-2, var(--mj-ink-2));
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.cards-size-btn.is-active {
+  background: var(--majalis-emerald);
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+}
+
+.cards-preview-wrap h2 {
+  color: var(--majalis-emerald-deep);
+  font-size: var(--ds-text-base);
+  margin-bottom: 0.75rem;
+}
+
+.cards-preview-frame {
+  overflow: hidden;
+  border-radius: var(--ds-radius-xl);
+  box-shadow: 0 16px 48px rgba(36, 31, 24, 0.12);
+}
+
+.cards-export-canvas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ds-space-12);
+  position: relative;
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+.cards-export-quote {
+  text-align: center;
+  line-height: 1.85;
+  font-weight: 700;
+  margin-bottom: 1.75rem;
+}
+
+.cards-export-source {
+  font-size: var(--ds-text-base);
+  text-align: center;
+  padding-top: 1rem;
+  width: 65%;
+}
+
+.cards-export-logo {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .cond-page-inner,
+  .cards-layout {
+    grid-template-columns: 1fr;
+  }
+}

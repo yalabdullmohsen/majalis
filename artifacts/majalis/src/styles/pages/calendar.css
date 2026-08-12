@@ -1,0 +1,235 @@
+/* Calendar — deferred from index.css */
+/* ── Calendar page ── */
+.calendar-page .cal-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ds-space-4);
+  padding: var(--ds-space-4);
+  margin-bottom: 1rem;
+}
+
+.cal-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+}
+
+.cal-nav-btn {
+  border: 1px solid var(--msk-border, var(--mj-hairline));
+  background: transparent;
+  border-radius: var(--ds-radius);
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.cal-view-tabs {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.cal-view-tab {
+  border: 1px solid var(--msk-border, var(--mj-hairline));
+  background: transparent;
+  border-radius: var(--ds-radius);
+  padding: 0.4rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cal-view-tab.is-active {
+  background: var(--majalis-emerald-deep);
+  color: var(--majalis-parchment);
+  border-color: var(--majalis-emerald-deep);
+}
+
+.cal-ics-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--msk-border, var(--mj-hairline));
+  background: transparent;
+  border-radius: var(--ds-radius);
+  padding: 0.4rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--majalis-emerald-deep);
+}
+.cal-ics-btn:hover {
+  background: var(--clr-primary, var(--mj-brand-deep));
+  color: #fff;
+  border-color: var(--clr-primary, var(--mj-brand-deep));
+}
+
+.cal-month {
+  padding: var(--ds-space-4);
+}
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+  font-size: var(--ds-text-xs);
+  font-weight: 700;
+  color: var(--msk-text-2, var(--mj-ink-2));
+  text-align: center;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+}
+
+.cal-cell {
+  aspect-ratio: 1;
+  border: 1px solid var(--msk-border, var(--mj-hairline));
+  border-radius: var(--ds-radius);
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-1);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cal-cell.is-selected {
+  border-color: var(--majalis-emerald);
+  background: var(--majalis-sage);
+}
+
+.cal-cell.is-outside {
+  opacity: 0.45;
+}
+
+.cal-cell-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--majalis-emerald);
+}
+
+.cal-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-4);
+  overflow-x: auto;
+}
+
+.cal-week-col {
+  min-width: 100px;
+}
+
+.cal-week-head {
+  width: 100%;
+  border: none;
+  background: var(--majalis-parchment-deep);
+  border-radius: var(--ds-radius);
+  padding: var(--ds-space-2);
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  font-family: inherit;
+  margin-bottom: 0.5rem;
+}
+
+.cal-week-head.is-selected {
+  background: var(--majalis-emerald-deep);
+  color: var(--majalis-parchment);
+}
+
+.cal-event-chip,
+.cal-day-item {
+  width: 100%;
+  text-align: end;
+  border: 1px solid var(--msk-border, var(--mj-hairline));
+  background: transparent;
+  border-radius: var(--ds-radius);
+  padding: var(--ds-space-2);
+  margin-bottom: 0.35rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+}
+
+.cal-day {
+  padding: var(--ds-space-4);
+}
+
+.cal-day-list {
+  display: grid;
+  gap: var(--ds-space-2);
+}
+
+.cal-day-item strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.cal-empty {
+  color: var(--msk-text-2, var(--mj-ink-2));
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.cal-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 400;
+  padding: var(--ds-space-4);
+}
+
+.cal-modal {
+  max-width: 28rem;
+  width: 100%;
+  padding: var(--ds-space-5);
+}
+
+.cal-modal-meta {
+  display: grid;
+  gap: 0.35rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.cal-modal-meta dt {
+  font-weight: 700;
+  display: inline;
+}
+
+.cal-modal-meta dd {
+  display: inline;
+  margin-inline-start: 0.35rem;
+}
+
+.cal-modal-actions {
+  display: flex;
+  gap: var(--ds-space-2);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .cal-week {
+    grid-template-columns: 1fr;
+  }
+
+  .cal-grid {
+    gap: 0.2rem;
+  }
+}
+

@@ -1,0 +1,99 @@
+/* Capacitor / native shell — global touch & safe-area contract (Vite app) */
+
+:root {
+  --safe-area-inset-top: var(--inset-top);
+  --safe-area-inset-right: var(--inset-right);
+  --safe-area-inset-bottom: var(--inset-bottom);
+  --safe-area-inset-left: var(--inset-left);
+  --safe-top: var(--safe-area-inset-top);
+  --safe-right: var(--safe-area-inset-right);
+  --safe-bottom: var(--safe-area-inset-bottom);
+  --safe-left: var(--safe-area-inset-left);
+  --sat: var(--safe-area-inset-top);
+  --sar: var(--safe-area-inset-right);
+  --sab: var(--safe-area-inset-bottom);
+  --sal: var(--safe-area-inset-left);
+}
+
+html,
+body {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* UI chrome: no accidental text selection; content/inputs stay selectable */
+button,
+a,
+nav,
+header,
+footer,
+[role="button"],
+[role="tab"],
+[role="menuitem"],
+.bottom-nav,
+.navbar-v3,
+.btn,
+.ds-btn {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+input,
+textarea,
+[contenteditable="true"],
+.selectable,
+.mushaf-text,
+.ayah-text,
+article,
+.prose {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.safe-pad-top {
+  padding-top: var(--safe-top);
+}
+
+.safe-pad-bottom {
+  padding-bottom: var(--safe-bottom);
+}
+
+.safe-pad-x {
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+}
+
+.safe-pad-all {
+  padding-top: var(--safe-top);
+  padding-right: var(--safe-right);
+  padding-bottom: var(--safe-bottom);
+  padding-left: var(--safe-left);
+}
+
+/* Smooth momentum scrolling inside WebViews */
+html.capacitor-native,
+html.capacitor-native body {
+  overscroll-behavior-y: none;
+  /* نفس لون الإطلاق — يمنع وميض أبيض بعد إخفاء Splash الأصلي */
+  background-color: var(--mj-splash-bg, #002b21);
+}
+
+html.capacitor-native .scroll-y,
+html.capacitor-native [data-scroll="y"] {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+/* تذييل الموقع مخفي في التطبيق الأصلي — بلا هامش/تمرير زائد أسفل الصفحات */
+html.capacitor-native .site-footer,
+html.capacitor-native .site-footer--v3,
+html.capacitor-native .site-footer--global {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}

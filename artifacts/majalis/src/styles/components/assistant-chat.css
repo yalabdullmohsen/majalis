@@ -1,0 +1,16 @@
+/* ── 185 — AssistantChatView CitationCard ──────────────────────────────── */
+.acv-cite-card {
+  display: flex; align-items: center; gap: var(--ds-space-2);
+  padding: 0.4rem 0.75rem; border-radius: var(--ds-radius-sm);
+  background: var(--majalis-parchment); border: 1px solid var(--majalis-line);
+  text-decoration: none; color: var(--majalis-ink);
+  font-size: 0.8rem; transition: background 0.15s;
+}
+.acv-cite-card:hover { background: var(--majalis-parchment-deep); }
+.acv-cite-card__icon { font-size: var(--ds-text-base); }
+.acv-cite-card__body { flex: 1; }
+.acv-cite-card__title { display: block; font-size: 0.8125rem; font-weight: 700; }
+.acv-cite-card__source { font-size: 0.7rem; color: var(--majalis-ink-soft); }
+.acv-cite-card__score { font-size: 0.7rem; color: #059669; font-weight: 700; }
+.acv-cite-card__arrow { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); }
+

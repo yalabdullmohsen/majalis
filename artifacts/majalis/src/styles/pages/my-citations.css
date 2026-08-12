@@ -1,0 +1,131 @@
+/* ══════════════════════════════════════════════
+   MCP. MyCitationsPage
+   ══════════════════════════════════════════════ */
+.mcp-root { min-height: 100svh; background: var(--majalis-parchment); direction: rtl; }
+.mcp-header {
+  background: var(--majalis-panel); border-bottom: 1px solid var(--majalis-line);
+  padding: 1.25rem 1rem;
+}
+.mcp-header-title { font-size: var(--ds-text-xl); font-weight: 700; color: var(--majalis-ink); }
+.mcp-header-count { font-size: .875rem; color: var(--majalis-ink-soft); margin-top: .125rem; }
+.mcp-page-title { font-size: var(--ds-text-2xl); font-weight: 700; color: var(--majalis-ink); }
+.mcp-page-desc { color: var(--majalis-ink-soft); }
+.mcp-export-btn {
+  display: inline-flex; align-items: center; gap: .375rem;
+  padding: .5rem .75rem; font-size: .875rem;
+  border: 1px solid var(--majalis-line); border-radius: .5rem;
+  background: var(--majalis-panel); color: var(--majalis-ink-soft); cursor: pointer;
+  transition: border-color .15s;
+}
+.mcp-export-btn:hover { border-color: var(--majalis-emerald); }
+.mcp-dropdown {
+  position: absolute; top: 100%; inset-inline-start: 0; margin-top: .25rem;
+  background: var(--majalis-panel); border: 1px solid var(--majalis-line);
+  border-radius: .5rem; box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  z-index: 50; min-width: 9rem; display: none;
+}
+.group:hover .mcp-dropdown { display: block; }
+.mcp-dropdown-item {
+  display: block; width: 100%; text-align: end;
+  padding: .5rem 1rem; font-size: .875rem;
+  color: var(--majalis-ink-soft); background: none; border: none; cursor: pointer;
+  transition: background .15s;
+}
+.mcp-dropdown-item:hover { background: var(--mn-surface-hover, rgba(31,77,58,.06)); }
+.mcp-export-status { font-size: .75rem; color: var(--majalis-emerald); }
+.mcp-search-input {
+  width: 100%; border: 1px solid var(--majalis-line); border-radius: .75rem;
+  padding: .625rem 1rem; font-size: .875rem; text-align: end;
+  background: var(--majalis-parchment); color: var(--majalis-ink); outline: none;
+  transition: box-shadow .15s;
+}
+.mcp-search-input:focus { box-shadow: 0 0 0 2px var(--majalis-emerald); }
+.mcp-sidebar-nav { background: var(--majalis-panel); border-radius: .75rem; border: 1px solid var(--majalis-line); overflow: hidden; }
+.mcp-tab {
+  display: block; width: 100%; text-align: end; padding: .75rem 1rem;
+  font-size: .875rem; font-weight: 500; transition: background .15s, color .15s;
+  border-bottom: 1px solid var(--majalis-line); background: none; cursor: pointer;
+  color: var(--majalis-ink-soft); border-top: none; border-inline-start: none; border-inline-end: none;
+}
+.mcp-tab:last-child { border-bottom: none; }
+.mcp-tab:hover { background: var(--mn-surface-hover, rgba(31,77,58,.06)); }
+.mcp-tab--active { background: var(--majalis-emerald-muted, rgba(31,77,58,.1)); color: var(--majalis-emerald); }
+.mcp-folders-panel { background: var(--majalis-panel); border-radius: .75rem; border: 1px solid var(--majalis-line); overflow: hidden; }
+.mcp-folders-header { display: flex; align-items: center; justify-content: space-between; padding: .75rem 1rem; border-bottom: 1px solid var(--majalis-line); }
+.mcp-folders-label { font-size: .75rem; font-weight: 600; color: var(--majalis-ink-soft); text-transform: uppercase; letter-spacing: normal; }
+.mcp-add-folder-btn { color: var(--majalis-emerald); font-size: var(--ds-text-lg); line-height: 1; background: none; border: none; cursor: pointer; }
+.mcp-add-folder-btn:hover { opacity: .8; }
+.mcp-new-folder-box { padding: .75rem; border-bottom: 1px solid var(--majalis-line); }
+.mcp-folder-name-input {
+  width: 100%; border: 1px solid var(--majalis-line); border-radius: .5rem;
+  padding: .375rem .5rem; font-size: .75rem; text-align: end;
+  background: var(--majalis-panel); outline: none; transition: box-shadow .15s;
+}
+.mcp-folder-name-input:focus { box-shadow: 0 0 0 2px var(--majalis-emerald); }
+.mcp-no-folders { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; text-align: center; padding: .75rem; }
+.mcp-folder-btn {
+  display: flex; width: 100%; align-items: center; gap: .5rem;
+  padding: .625rem 1rem; font-size: .875rem; text-align: end;
+  transition: background .15s; border-bottom: 1px solid var(--majalis-line);
+  background: none; border-top: none; border-inline-start: none; border-inline-end: none; cursor: pointer;
+}
+.mcp-folder-btn:last-child { border-bottom: none; }
+.mcp-folder-btn:hover { background: var(--mn-surface-hover, rgba(31,77,58,.06)); }
+.mcp-folder-btn--active { background: var(--majalis-emerald-muted, rgba(31,77,58,.1)); }
+.mcp-folder-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--majalis-ink-soft); }
+.mcp-cit-card { background: var(--majalis-panel); border-radius: .75rem; border: 1px solid var(--majalis-line); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.06); transition: box-shadow .15s; }
+.mcp-cit-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+.mcp-cit-title { font-size: .875rem; font-weight: 600; color: var(--majalis-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mcp-fav-btn { font-size: var(--ds-text-lg); flex-shrink: 0; transition: transform .15s; background: none; border: none; cursor: pointer; color: var(--majalis-ink-soft); opacity: .4; }
+.mcp-fav-btn:hover { transform: scale(1.1); }
+.mcp-fav-btn--active { color: var(--majalis-emerald); opacity: 1; }
+.mcp-blockquote { border-inline-end: 2px solid var(--majalis-emerald); padding-inline-end: .75rem; }
+.mcp-quoted-text { color: var(--majalis-ink); font-size: .875rem; line-height: 1.6; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.mcp-source-meta { font-size: .75rem; color: var(--majalis-ink-soft); }
+.mcp-note-textarea {
+  width: 100%; border: 1px solid var(--majalis-line); border-radius: .5rem;
+  padding: .375rem .75rem; font-size: .75rem; text-align: end;
+  background: var(--majalis-parchment); color: var(--majalis-ink);
+  outline: none; resize: none; transition: box-shadow .15s;
+}
+.mcp-note-textarea:focus { box-shadow: 0 0 0 2px var(--majalis-emerald); }
+.mcp-cancel-btn {
+  font-size: .75rem; padding: .25rem .75rem;
+  border: 1px solid var(--majalis-line); border-radius: .5rem;
+  color: var(--majalis-ink-soft); background: none; cursor: pointer;
+}
+.mcp-note-icon { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; }
+.mcp-note-text { font-size: .75rem; color: var(--majalis-ink-soft); font-style: normal; }
+.mcp-edit-note-btn { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; flex-shrink: 0; background: none; border: none; cursor: pointer; transition: opacity .15s, color .15s; }
+.mcp-edit-note-btn:hover { opacity: 1; color: var(--majalis-emerald); }
+.mcp-cit-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; padding-top: .25rem; border-top: 1px solid var(--majalis-line); }
+.mcp-cit-link { font-size: .75rem; color: var(--majalis-emerald); text-decoration: none; }
+.mcp-cit-link:hover { text-decoration: underline; }
+.mcp-note-action { font-size: .75rem; color: var(--majalis-ink-soft); background: none; border: none; cursor: pointer; transition: color .15s; }
+.mcp-note-action:hover { color: var(--majalis-emerald); }
+.mcp-usage-count { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; margin-inline-end: auto; }
+.mcp-empty-text { color: var(--majalis-ink-soft); font-size: .875rem; }
+.mcp-empty-hint { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; }
+.mcp-swatch--active { border-color: var(--majalis-ink); }
+
+
+/* ============================================================
+   86 — MyCitationsPage  (cit-*)
+   ============================================================ */
+.cit-color-swatch { background: var(--swatch-bg); }
+.cit-folder-dot   { background: var(--folder-dot-bg); }
+/* Citation content-type color tokens — set all 3 vars used across citation components */
+.cit-type--quran-ayah    { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
+.cit-type--hadith        { --cit-type-color: #1d4ed8; --cm-type-color: #1d4ed8; --cab-type-color: #1d4ed8; }
+.cit-type--scholar-quote { --cit-type-color: var(--brand, var(--mj-brand)); --cm-type-color: var(--brand, var(--mj-brand)); --cab-type-color: var(--brand, var(--mj-brand)); }
+.cit-type--fatwa,
+.cit-type--book          { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
+.cit-type--article       { --cit-type-color: #0369a1; --cm-type-color: #0369a1; --cab-type-color: #0369a1; }
+.cit-type--research      { --cit-type-color: #0c4a6e; --cm-type-color: #0c4a6e; --cab-type-color: #0c4a6e; }
+.cit-type--lesson        { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
+.cit-type--benefit       { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
+.cit-type--prophet-story { --cit-type-color: #dc2626; --cm-type-color: #dc2626; --cab-type-color: #dc2626; }
+.cit-type--qa            { --cit-type-color: var(--mj-muted); --cm-type-color: var(--mj-muted); --cab-type-color: var(--mj-muted); }
+.cit-type-bar     { background: var(--cit-type-color, var(--mj-brand)); }
+.cit-type-badge   { background: var(--cit-type-color, var(--mj-brand)); }
+

@@ -1,0 +1,94 @@
+/* Reading break reminder — web port of RN Alert.alert */
+.qe-break-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: color-mix(in srgb, #1a2e24 45%, transparent);
+  backdrop-filter: blur(4px);
+  animation: qe-break-fade 0.22s ease;
+}
+
+.qe-break-dialog {
+  width: min(100%, 22rem);
+  border-radius: 1rem;
+  padding: 1.35rem 1.25rem 1.15rem;
+  background: var(--qe-reader-bg, #faf6ef);
+  color: var(--qe-reader-text, #1a2e24);
+  border: 1px solid color-mix(in srgb, #1a2e24 12%, transparent);
+  box-shadow: 0 18px 48px color-mix(in srgb, #0a1812 28%, transparent);
+  text-align: center;
+  animation: qe-break-pop 0.28s ease;
+}
+
+.qe-break-dialog__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 0.65rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mj-brand-deep) 12%, transparent);
+  color: var(--mj-brand-deep);
+}
+
+.qe-break-dialog__title {
+  margin: 0 0 0.45rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--mj-brand-deep);
+}
+
+.qe-break-dialog__msg {
+  margin: 0 0 1.15rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--qe-reader-text, #1a2e24) 82%, transparent);
+}
+
+.qe-break-dialog__ok {
+  width: 100%;
+  min-height: 2.75rem;
+  border: none;
+  border-radius: 0.75rem;
+  background: var(--mj-brand-deep);
+  color: #f4faf7;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.qe-break-dialog__ok:hover {
+  background: #1a5244;
+}
+
+.qe-break-dialog__ok:active {
+  transform: scale(0.98);
+}
+
+@keyframes qe-break-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes qe-break-pop {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qe-break-backdrop,
+  .qe-break-dialog {
+    animation: none;
+  }
+}

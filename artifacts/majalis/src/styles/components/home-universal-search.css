@@ -1,0 +1,215 @@
+.hus {
+  position: relative;
+  width: min(100%, 40rem);
+  margin-inline: auto;
+  margin-block: 0.75rem 0.25rem;
+  z-index: 5;
+}
+
+.hus-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.hus-field {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 48px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 18%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #fff) 92%, var(--mj-brand-deep, #0f3d2e));
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 6%, transparent);
+}
+
+.hus-field.is-focused {
+  border-color: color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 42%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mj-accent, #c4a35a) 28%, transparent);
+}
+
+.hus-icon {
+  flex: 0 0 auto;
+  color: var(--mj-brand-deep, #0f3d2e);
+  opacity: 0.7;
+}
+
+.hus-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+.hus-input:focus {
+  outline: none;
+}
+
+.hus-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.hus-panel {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + 0.35rem);
+  max-height: min(68vh, 28rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 14%, transparent);
+  background: var(--mj-surface, #fff);
+  color: var(--mj-ink, #1a1a1a);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.14);
+  padding: 0.65rem 0.75rem 0.85rem;
+}
+
+.hus-block + .hus-block {
+  margin-top: 0.75rem;
+}
+
+.hus-block__title {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.hus-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hus-chips button {
+  min-height: 44px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 16%, transparent);
+  background: color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 5%, transparent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.hus-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.55rem;
+}
+
+.hus-filters button {
+  min-height: 40px;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 14%, transparent);
+  background: transparent;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.hus-filters button.is-active {
+  background: var(--mj-brand-deep, #0f3d2e);
+  color: var(--mj-on-brand, #fff);
+  border-color: transparent;
+}
+
+.hus-section + .hus-section {
+  margin-top: 0.65rem;
+  padding-top: 0.55rem;
+  border-block-start: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 10%, transparent);
+}
+
+.hus-section__head h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.88rem;
+}
+
+.hus-section__head span {
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.hus-hits {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hus-hit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.45rem 0.35rem;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  text-align: start;
+  font: inherit;
+  cursor: pointer;
+}
+
+.hus-hit:hover,
+.hus-hit:focus-visible {
+  background: color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 7%, transparent);
+}
+
+.hus-hit strong {
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.hus-hit span {
+  font-size: 0.78rem;
+  opacity: 0.8;
+  line-height: 1.45;
+}
+
+.hus-mark {
+  background: color-mix(in srgb, var(--mj-accent, #c4a35a) 45%, transparent);
+  color: inherit;
+  padding: 0 0.1em;
+  border-radius: 2px;
+}
+
+.hus-more {
+  margin-top: 0.25rem;
+  min-height: 40px;
+  padding: 0.25rem 0.5rem;
+  border: 0;
+  background: transparent;
+  color: var(--mj-brand-deep, #0f3d2e);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hus-empty {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}

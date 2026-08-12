@@ -1,0 +1,372 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import { CheckCircle2, ClipboardList, Clock, Download, FolderOpen, GraduationCap, Library, Link2, MapPin, Paperclip, PenLine, RefreshCw, User, XCircle } from "lucide-react";
+import {
+  listSubmissions,
+  reviewSubmission,
+  publishLessonAsDraft,
+  getSubmissionStats,
+  formatFileSize,
+  type UserSubmission,
+  type SubmissionStatus,
+  type SubmissionType,
+  type SubmissionStats,
+} from "@/lib/user-submissions-service";
+import "@/styles/components/submissions-review.css";
+
+const STATUS_LABEL: Record<SubmissionStatus, string> = {
+  pending:  "قيد المراجعة",
+  approved: "مقبول",
+  rejected: "مرفوض",
+};
+
+const TYPE_ICON: Record<SubmissionType, string> = {
+  adhan:  "أذان (قديم)",
+  lesson: "درس",
+};
+
+function AudioPreview({ url }: { url: string }) {
+  const [playing, setPlaying] = useState(false);
+  const ref = useRef<HTMLAudioElement | null>(null);
+
+  function toggle() {
+    if (!ref.current) {
+      ref.current = new Audio(url);
+      ref.current.addEventListener("ended", () => setPlaying(false));
+    }
+    if (playing) {
+      ref.current.pause();
+      ref.current.currentTime = 0;
+      setPlaying(false);
+    } else {
+      ref.current.play().catch(() => {});
+      setPlaying(true);
+    }
+  }
+
+  useEffect(() => () => { ref.current?.pause(); }, []);
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      className={`srp-audio-btn${playing ? " srp-audio-btn--playing" : ""}`}
+    >
+      {playing ? "⏹ إيقاف" : "▶ استمع"}
+    </button>
+  );
+}
+
+function SubmissionCard({ sub, onReview }: {
+  sub: UserSubmission;
+  onReview: (id: string, status: "approved" | "rejected", note: string) => Promise<void>;
+}) {
+  const [note, setNote]           = useState("");
+  const [loading, setLoading]     = useState(false);
+  const [expanded, setExpanded]   = useState(false);
+  const [publishing, setPublishing] = useState(false);
+  const [published, setPublished]   = useState(false);
+  const [publishError, setPublishError] = useState("");
+  async function handle(status: "approved" | "rejected") {
+    setLoading(true);
+    await onReview(sub.id, status, note);
+    setLoading(false);
+  }
+
+  const meta = (sub.meta ?? {}) as Record<string, string | number | undefined>;
+  const isAudio = sub.file_mime?.startsWith("audio");
+
+  return (
+    <div
+      className={`srp-card srp-card--${sub.status}`}
+    >
+      {/* Header */}
+      <div
+        className={`srp-card-header${sub.status !== "pending" ? ` srp-card-header--${sub.status}` : ""}`}
+        onClick={() => setExpanded((v) => !v)}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpanded((v) => !v); } }}
+        role="button"
+        tabIndex={0}
+        aria-expanded={expanded}
+      >
+        <div className="srp-card-icon">{TYPE_ICON[sub.type]}</div>
+
+        <div className="srp-card-body">
+          <div className="srp-card-title-row">
+            <span className="srp-card-title">{sub.title}</span>
+            <span
+              className={`srp-card-status-badge srp-card-status-badge--${sub.status}`}
+            >
+              {STATUS_LABEL[sub.status]}
+            </span>
+          </div>
+
+          <div className="srp-card-meta-row">
+            <User size={13} className="inline ml-1" />{sub.submitter_name}
+            {sub.submitter_email && ` · ${sub.submitter_email}`}
+            {" · "}
+            {sub.type === "adhan" ? "أذان" : "درس"}
+            {" · "}
+            {new Date(sub.created_at).toLocaleDateString("ar-KW")}
+          </div>
+
+          <div className="srp-card-chips">
+            {sub.file_name && (
+              <span className="srp-meta-chip"><Paperclip size={11} className="inline ml-1" />{sub.file_name} ({formatFileSize(sub.file_size_kb)})</span>
+            )}
+            {meta.country && <span className="srp-meta-chip"><MapPin size={11} className="inline ml-1" />{String(meta.country)}</span>}
+            {meta.muezzin_style && <span className="srp-meta-chip">{String(meta.muezzin_style)}</span>}
+            {meta.sheikh && <span className="srp-meta-chip"><GraduationCap size={11} className="inline ml-1" />{String(meta.sheikh)}</span>}
+            {meta.topic && <span className="srp-meta-chip">{String(meta.topic)}</span>}
+          </div>
+        </div>
+
+        <span className="srp-card-toggle">{expanded ? "▲" : "▼"}</span>
+      </div>
+
+      {/* Expanded */}
+      {expanded && (
+        <div className="srp-card-detail">
+          {sub.description && (
+            <div className="srp-detail-desc">
+              <div className="srp-detail-desc-label">الوصف</div>
+              <p className="srp-detail-desc-text">{sub.description}</p>
+            </div>
+          )}
+
+          {sub.file_url && isAudio && (
+            <div className="srp-audio-row">
+              <AudioPreview url={sub.file_url} />
+              <a href={sub.file_url} target="_blank" rel="noopener noreferrer" className="srp-link">
+                <Download size={13} className="inline ml-1" />تحميل الملف
+              </a>
+            </div>
+          )}
+
+          {sub.file_url && !isAudio && (
+            <div className="srp-detail-file">
+              <a href={sub.file_url} target="_blank" rel="noopener noreferrer" className="srp-link">
+                <FolderOpen size={13} className="inline ml-1" />عرض / تحميل الملف
+              </a>
+            </div>
+          )}
+
+          {meta.source_url && (
+            <div className="srp-detail-source">
+              <a href={String(meta.source_url)} target="_blank" rel="noopener noreferrer" className="srp-link">
+                <Link2 size={13} className="inline ml-1" />رابط المصدر
+              </a>
+            </div>
+          )}
+
+          {sub.reviewer_note && (
+            <div className="srp-reviewer-note">
+              <strong>ملاحظة المشرف السابقة:</strong> {sub.reviewer_note}
+            </div>
+          )}
+
+          {/* رفع الأذان ملغى — لا نشر لمكتبة المؤذنين */}
+          {sub.type === "adhan" && (
+            <div className="srp-publish-box srp-publish-box--adhan">
+              <div className="srp-publish-title srp-publish-title--adhan">ميزة رفع الأذان ملغاة</div>
+              <div className="srp-publish-desc">
+                هذا سجل تاريخي فقط. لا يمكن قبول رفع أذان جديد ولا نشره في مكتبة المؤذنين.
+              </div>
+            </div>
+          )}
+
+          {/* Publish as lesson draft */}
+          {sub.status === "approved" && sub.type === "lesson" && (
+            <div className="srp-publish-box srp-publish-box--lesson">
+              <div className="srp-publish-title srp-publish-title--lesson"><Library size={14} className="inline ml-1" />إضافة للدروس كمسودة</div>
+              <div className="srp-publish-desc">سيُضاف الدرس في قسم الدروس بصفة مسودة — يمكن نشره لاحقاً.</div>
+              {published ? (
+                <div className="srp-publish-success srp-publish-success--lesson"><CheckCircle2 size={14} className="inline ml-1" />تمت إضافته كمسودة!</div>
+              ) : (
+                <button
+                  type="button"
+                  disabled={publishing}
+                  onClick={async () => {
+                    setPublishing(true);
+                    setPublishError("");
+                    try {
+                      const res = await publishLessonAsDraft(sub);
+                      if (res.ok) setPublished(true);
+                      else setPublishError(res.error || "فشلت الإضافة كمسودة.");
+                    } catch (e) {
+                      setPublishError(e instanceof Error ? e.message : "فشلت الإضافة كمسودة.");
+                    } finally {
+                      setPublishing(false);
+                    }
+                  }}
+                  className="srp-publish-btn srp-publish-btn--lesson"
+                >
+                  {publishing ? "جارٍ الإضافة..." : <><PenLine size={13} className="inline ml-1" />إضافة كمسودة</>}
+                </button>
+              )}
+              {publishError && <div className="srp-publish-error">{publishError}</div>}
+            </div>
+          )}
+
+          {/* Review actions — دروس فقط؛ طلبات الأذان القديمة تُرفض/تُغلق بلا قبول نشر */}
+          {sub.status === "pending" && sub.type === "lesson" && (
+            <div className="srp-review-actions">
+              <label className="srp-review-label">
+                ملاحظة للمستخدم (اختياري):
+                <textarea
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  rows={2}
+                  placeholder="سبب القبول أو الرفض..."
+                  className="srp-review-textarea"
+                />
+              </label>
+              <div className="srp-review-btns">
+                <button type="button" disabled={loading} onClick={() => handle("approved")} className="srp-action-btn srp-action-btn--approve">
+                  {loading ? "..." : <><CheckCircle2 size={13} className="inline ml-1" />قبول</>}
+                </button>
+                <button type="button" disabled={loading} onClick={() => handle("rejected")} className="srp-action-btn srp-action-btn--reject">
+                  {loading ? "..." : <><XCircle size={13} className="inline ml-1" />رفض</>}
+                </button>
+              </div>
+            </div>
+          )}
+          {sub.status === "pending" && sub.type === "adhan" && (
+            <div className="srp-review-actions">
+              <p className="srp-publish-desc" style={{ marginBottom: "0.5rem" }}>
+                رفع الأذان ملغى — يمكن إغلاق هذا الطلب بالرفض مع ملاحظة للمستخدم.
+              </p>
+              <div className="srp-review-btns">
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={async () => {
+                    const msg = note.trim() || "ميزة رفع الأذان أُلغيت نهائيًا.";
+                    setLoading(true);
+                    await onReview(sub.id, "rejected", msg);
+                    setLoading(false);
+                  }}
+                  className="srp-action-btn srp-action-btn--reject"
+                >
+                  {loading ? "..." : <><XCircle size={13} className="inline ml-1" />إغلاق الطلب</>}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Main Panel ───────────────────────────────────────────────────────────────
+export function SubmissionsReviewPanel() {
+  const [list, setList]           = useState<UserSubmission[]>([]);
+  const [filterStatus, setFStatus] = useState<SubmissionStatus | "all">("pending");
+  const [filterType, setFType]     = useState<SubmissionType | "all">("all");
+  const [loading, setLoading]      = useState(true);
+  const [error, setError]          = useState("");
+  const [stats, setStats]          = useState<SubmissionStats | null>(null);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const [data, s] = await Promise.all([
+        listSubmissions({ status: filterStatus, type: filterType }),
+        getSubmissionStats(),
+      ]);
+      setList(data);
+      setStats(s);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "خطأ في التحميل");
+    } finally {
+      setLoading(false);
+    }
+  }, [filterStatus, filterType]);
+
+  useEffect(() => { load(); }, [load]);
+
+  async function handleReview(id: string, status: "approved" | "rejected", note: string) {
+    await reviewSubmission(id, status, note);
+    await load();
+  }
+
+  const pending = list.filter((s) => s.status === "pending").length;
+
+  return (
+    <div className="srp-root">
+      {/* Header */}
+      <div className="srp-header">
+        <div>
+          <h2 className="srp-header-title"><ClipboardList size={18} className="inline ml-1" />طلبات رفع المحتوى</h2>
+          {pending > 0 && (
+            <div className="srp-header-pending"><Clock size={13} className="inline ml-1" />{pending} طلب بانتظار المراجعة</div>
+          )}
+        </div>
+        <button type="button" onClick={load} className="srp-refresh-btn"><RefreshCw size={13} className="inline ml-1" />تحديث</button>
+      </div>
+
+      {/* Stats */}
+      {stats && (
+        <div className="srp-stats-grid">
+          {[
+            { label: "الكل",       val: stats.total,                       mod: "" },
+            { label: "معلق",       val: stats.pending,                     mod: "srp-stat-card--pending" },
+            { label: "مقبول",      val: stats.approved,                    mod: "srp-stat-card--approved" },
+            { label: "مرفوض",      val: stats.rejected,                    mod: "srp-stat-card--rejected" },
+            { label: "دروس", val: stats.lesson, mod: "srp-stat-card--split" },
+            ...(stats.adhanLegacy > 0
+              ? [{ label: "أذان قديم", val: stats.adhanLegacy, mod: "srp-stat-card--split" as const }]
+              : []),
+          ].map((s) => (
+            <div
+              key={s.label}
+              className={`srp-stat-card${s.mod ? ` ${s.mod}` : ""}`}
+            >
+              <div className="srp-stat-val">{s.val}</div>
+              <div className="srp-stat-label">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Filters */}
+      <div className="srp-filters">
+        {(["all", "pending", "approved", "rejected"] as const).map((s) => (
+          <button
+            key={s}
+            type="button"
+            onClick={() => setFStatus(s)}
+            className={`srp-filter-btn${filterStatus === s ? " srp-filter-btn--active" : ""}`}
+          >
+            {{ all: "الكل", pending: "قيد المراجعة", approved: "مقبول", rejected: "مرفوض" }[s]}
+          </button>
+        ))}
+        <div className="srp-filter-divider" />
+        {(["all", "lesson"] as const).map((t) => (
+          <button
+            key={t}
+            type="button"
+            onClick={() => setFType(t)}
+            className={`srp-filter-btn${filterType === t ? " srp-filter-btn--active-type" : ""}`}
+          >
+            {{ all: "كل الأنواع", lesson: "درس" }[t]}
+          </button>
+        ))}
+      </div>
+
+      {/* Content */}
+      {loading ? (
+        <div className="srp-state srp-state--loading"></div>
+      ) : error ? (
+        <div className="srp-state srp-state--error">{error}</div>
+      ) : list.length === 0 ? (
+        <div className="srp-state srp-state--empty">لا توجد طلبات بهذا التصفية</div>
+      ) : (
+        list.map((sub) => (
+          <SubmissionCard key={sub.id} sub={sub} onReview={handleReview} />
+        ))
+      )}
+    </div>
+  );
+}

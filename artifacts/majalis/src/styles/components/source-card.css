@@ -1,0 +1,86 @@
+/* ── 194 — SourceCard color helpers ───────────────────────────────────────── */
+.src-type--quran-verse   { --sc-color: var(--mj-brand); }
+.src-type--hadith        { --sc-color: #856404; }
+.src-type--tafsir,
+.src-type--dhikr         { --sc-color: var(--mj-brand-deep); }
+.src-type--fatwa         { --sc-color: #721c24; }
+.src-type--fiqh-decision { --sc-color: #004085; }
+.src-type--book,
+.src-type--story         { --sc-color: #383d41; }
+.src-type--lesson        { --sc-color: #0c5460; }
+.src-type--benefit       { --sc-color: #533f03; }
+.src-type--article       { --sc-color: #3d1a78; }
+.src-type--ruling        { --sc-color: #856404; }
+.src-type--quote         { --sc-color: #212529; }
+.sc-color-bar { background: var(--sc-color, var(--mj-ink-2)); }
+.sc-color-bg  { background: var(--sc-color, var(--mj-ink-2)); }
+
+/* ── نُقل إلى styles/components/islamic-quiz-game.css ── */
+/* ── Shared dynamic color utility ───────────────────────────────────────────── */
+.rw-type--lesson     { --rw-color: var(--majalis-emerald, var(--mj-brand)); }
+.rw-type--hadith     { --rw-color: #1d4ed8; }
+.rw-type--fatwa,
+.rw-type--book,
+.rw-type--dhikr,
+.rw-type--quran-ayah { --rw-color: var(--majalis-emerald, var(--mj-brand)); }
+.rw-type--benefit    { --rw-color: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
+.rw-type--scholar    { --rw-color: var(--brand, var(--mj-brand)); }
+.rw-type--qa         { --rw-color: #0369a1; }
+.rw-type--ruling     { --rw-color: var(--majalis-ink-soft, #4A4A4A); }
+.rw-type--story      { --rw-color: var(--majalis-danger, #9B1C1C); }
+.rw-type--miracle    { --rw-color: #0c4a6e; }
+.rw-color-bg { background: var(--rw-color, var(--mj-brand)); }
+
+/* ── SheikhsPageClient (spc-*) ────────────────────────────────────────────────── */
+.spc-channels-section { margin-bottom: 2.5rem; }
+.spc-section-h2  { font-size: 1.1rem; font-weight: 700; color: var(--majalis-ink, #EDE9DD); margin-bottom: 1rem; border-inline-end: 3px solid var(--majalis-brass, var(--mj-brand)); padding-inline-end: 0.75rem; }
+.spc-section-note { font-size: 0.82rem; color: var(--majalis-ink-muted, #9BA3B5); margin-bottom: 1.25rem; }
+.spc-channels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--ds-space-5); }
+.spc-channel-card  { background: var(--majalis-panel, rgba(255,255,255,0.07)); border: 1px solid rgba(255,255,255,0.10); border-radius: var(--ds-radius-lg); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.30); }
+.spc-channel-video  { aspect-ratio: 16/9; background: #000; }
+.spc-channel-iframe { width: 100%; height: 100%; border: none; display: block; }
+.spc-channel-body   { padding: var(--ds-space-4); }
+.spc-channel-name   { font-weight: 700; font-size: 0.95rem; color: var(--majalis-ink, #EDE9DD); margin-bottom: 0.75rem; }
+.spc-channel-links  { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
+.spc-channel-link   { display: inline-block; padding: 0.3rem 0.75rem; background: rgba(255,255,255,0.07); color: var(--majalis-ink-soft, #C9C5B8); border-radius: var(--ds-radius-sm); font-size: 0.78rem; font-weight: 600; text-decoration: none; border: 1px solid rgba(255,255,255,0.12); transition: background 0.15s; }
+.spc-channel-link:hover { background: rgba(255,255,255,0.12); }
+
+/* ── ScienceCard (sc-card-*) ─────────────────────────────────────────────────── */
+.sc-card {
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  border-top: 3px solid var(--sc-color, var(--majalis-emerald));
+  border-radius: var(--ds-radius-xl);
+}
+
+.sc-card__title { font-weight: 700; color: var(--majalis-ink); font-size: var(--ds-text-base); line-height: 1.35; margin-bottom: .25rem; }
+.sc-card__desc  { font-size: .75rem; color: var(--majalis-ink-soft); line-height: 1.6; }
+
+.sc-card:hover .sc-card__cta { color: var(--majalis-emerald); opacity: 1; }
+
+/* ── LevelTimeline (lt-*) ────────────────────────────────────────────────────── */
+
+.lt-dot--panel-border { border-color: var(--majalis-panel); }
+
+.lt-badge         { background: var(--lt-badge-bg, var(--majalis-ink-soft)); }
+
+/* ── LevelTimeline extensions ─────────────────────────────────────────────── */
+
+.lt-empty { font-size: .875rem; color: var(--majalis-ink-soft); opacity: .6; grid-column: span 2; text-align: center; padding: 1rem 0; margin: 0; }
+
+/* ── BookCard extensions ─────────────────────────────────────────────────── */
+
+.bc-difficulty--easy, .bc-difficulty--medium { color: var(--majalis-emerald); background: var(--majalis-emerald-muted, rgba(31,77,58,.12)); }
+.bc-difficulty--hard { color: var(--majalis-ink-soft); background: var(--majalis-parchment-deep, #f0ece4); }
+
+/* ── AchievementBadges extensions ─────────────────────────────────────────── */
+
+/* ── StreakCounter extensions ─────────────────────────────────────────────── */
+
+.streak-number--active { font-size: var(--ds-text-3xl); font-weight: 700; color: var(--majalis-emerald); }
+
+.streak-label--active { font-size: .75rem; color: var(--majalis-emerald); margin-top: .25rem; }
+.streak-label { font-size: .75rem; color: var(--majalis-ink-soft); margin-top: .25rem; }
+
+/* ── RelatedKnowledge/KRI → styles/components/related-knowledge.css ── */
+

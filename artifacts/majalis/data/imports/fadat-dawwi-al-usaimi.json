@@ -1,0 +1,30 @@
+[
+  {
+    "title": "فاضت",
+    "description": "درس إيماني يعالج رقة القلب وزيادة الإيمان وأثر المواعظ في حياة المسلم، ويهدف إلى تذكير المسلم بالله تعالى، وإحياء القلب، وتعظيم مراقبة الله، وترقيق النفس بالكتاب والسنة. للرجال — يوجد مكان مخصص للنساء. الجهة المنظمة: مسجد حصن الصقر. الجهة المتعاونة: الجمعية الكويتية لمهارات الحياة (مهارات).",
+    "sheikh_name": "د. محمد ضاوي العصيمي",
+    "day_of_week": "الثلاثاء",
+    "date": "2026-06-30",
+    "lesson_time": "بعد صلاة المغرب مباشرة",
+    "schedule": "الثلاثاء 30 يونيو 2026 — بعد صلاة المغرب مباشرة",
+    "mosque": "مسجد حصن الصقر",
+    "city": "الفروانية",
+    "region": "الرقعي — بجانب صالة الأفراح",
+    "category": "الإيمان والرقائق",
+    "audience": "الكل",
+    "delivery": "كلاهما",
+    "keywords": ["إيمان", "رقائق", "تزكية", "وعظ", "درس علمي", "بث مباشر", "حضوري", "الرقعي"],
+    "external_key": "sci-fadat-dawwi-al-usaimi",
+    "poster_image_url": "/images/posters/fadat-dawwi-al-usaimi.svg",
+    "live_url": "https://www.instagram.com/dr_alosimi/",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%D9%85%D8%B3%D8%AC%D8%AF+%D8%AD%D8%B5%D9%86+%D8%A7%D9%84%D8%B5%D9%82%D8%B1+%D8%A7%D9%84%D8%B1%D9%82%D8%B9%D9%8A+%D8%A7%D9%84%D9%83%D9%88%D9%8A%D8%AA",
+    "is_recurring": false,
+    "activity_type": "درس",
+    "is_course": false,
+    "organizer": "مسجد حصن الصقر",
+    "co_organizer": "الجمعية الكويتية لمهارات الحياة (مهارات)",
+    "has_women_place": true,
+    "source_url": "https://www.majlisilm.com/lessons/sci-fadat-dawwi-al-usaimi",
+    "status": "approved"
+  }
+]

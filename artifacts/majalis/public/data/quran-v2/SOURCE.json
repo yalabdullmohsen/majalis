@@ -1,0 +1,20 @@
+{
+  "mushafId": 1,
+  "mushafLabel": "QCF V2 / hafs v2",
+  "fonts": "public/fonts/qpc-v2/p{n}.woff2 ← quran.com/fonts/quran/hafs/v2/woff2",
+  "api": "https://api.qurancdn.com/api/qdc/verses/by_page/{n}?mushaf=1",
+  "adoptedAt": "2026-08-08T20:17:57.133Z",
+  "fingerprint": {
+    "ayahCount": 6236,
+    "wordCount": 83665,
+    "verseOrderLen": 6236,
+    "codesSha": "b21f6bdad370b8a6feea12236c844f809b3bdf9c191d312ac216543ed3c3ab7d",
+    "textsSha": "d7d6cae756ecb5fafe2885e9ab0f7193e9771864216b93ceb364b80a39a6ae26",
+    "verseOrderSha": "c7fb16ced00ce9d1cacd0d1405d9ad2958219e1f7bbe89c1ae37899d84fb1264"
+  },
+  "policyAr": "المصحف المعتمد الوحيد لـ quran-v2 = mushaf=1. يُمنع جلب أو مزامنة حدود الصفحات/الأسطر من mushaf≠1.",
+  "forbiddenMushafIds": [
+    2
+  ],
+  "bookmarksNoteAr": "جدول Supabase bookmarks عام (content_type) وليس رقم صفحة مصحف. فواصل المصحف في localStorage (myBookmarks) تُهاجر إلى ayahKey عبر legacy-page-first-ayah.json + mushaf-ayah-page-index.generated.ts."
+}

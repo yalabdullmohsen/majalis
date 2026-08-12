@@ -1,0 +1,204 @@
+/* دليل فقهي تعليمي مشترك لأقسام العبادات والمعاملات (.fg-*) */
+.fg-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+  direction: rtl;
+}
+
+.fg-hero {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%, rgba(255, 255, 255, 0.08), transparent),
+    linear-gradient(135deg, var(--mj-brand-deep) 0%, #1e5a48 55%, var(--mj-brand) 100%);
+  border-radius: var(--ds-radius-2xl, 1.25rem);
+  padding: 2.35rem 1.4rem 2rem;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 24px rgba(20, 63, 53, 0.18);
+}
+.fg-hero__badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ecfdf5;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.28rem 0.9rem;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+.fg-hero__title {
+  font-size: clamp(1.55rem, 4vw, 2.05rem);
+  font-weight: 900;
+  margin: 0 0 0.65rem;
+  line-height: 1.25;
+  color: #fff;
+}
+.fg-hero__sub {
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+.fg-method {
+  background: var(--surface-brand, var(--brand-soft));
+  border: 1px solid var(--border-brand, var(--border));
+  border-inline-end: 3px solid var(--brand);
+  border-radius: 0.85rem;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.86rem;
+  color: var(--textPrimary, var(--text));
+  line-height: 1.7;
+}
+
+.fg-search {
+  margin-bottom: 1rem;
+}
+.fg-search__input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 0.85rem;
+  padding: 0.7rem 0.95rem;
+  font-size: 0.92rem;
+  background: var(--cardBackground, var(--surface));
+  color: var(--textPrimary, var(--text));
+}
+.fg-search__input:focus {
+  outline: 2px solid color-mix(in srgb, var(--brand) 35%, transparent);
+  border-color: var(--brand);
+}
+
+.fg-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.15rem;
+}
+.fg-tab {
+  border: 1.5px solid var(--border);
+  background: var(--cardBackground, var(--surface));
+  color: var(--textPrimary, var(--text));
+  border-radius: 999px;
+  padding: 0.42rem 0.9rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.fg-tab--active {
+  background: var(--brand-deep, var(--brand));
+  border-color: var(--brand-deep, var(--brand));
+  color: var(--text-on-brand);
+}
+
+.fg-intro {
+  font-size: 0.9rem;
+  color: var(--textSecondary, var(--text-2));
+  line-height: 1.75;
+  margin: 0 0 1rem;
+}
+
+.fg-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+.fg-card {
+  background: var(--cardBackground, var(--surface));
+  border: 1.5px solid var(--border);
+  border-radius: 1rem;
+  padding: 1rem 1.05rem;
+}
+.fg-card__title {
+  margin: 0 0 0.45rem;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--textPrimary, var(--text));
+}
+.fg-card__summary {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--textSecondary, var(--text-2));
+  line-height: 1.75;
+}
+.fg-card__points {
+  margin: 0.7rem 0 0;
+  padding-inline-end: 1.1rem;
+  color: var(--textSecondary, var(--text-2));
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+.fg-card__evidence {
+  margin-top: 0.75rem;
+  background: var(--surface-brand, var(--brand-soft));
+  border-radius: 0.7rem;
+  padding: 0.7rem 0.85rem;
+  font-size: 0.86rem;
+  color: var(--textSecondary, var(--text-2));
+  line-height: 1.7;
+}
+.fg-card__evidence strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.78rem;
+  color: var(--text-brand, var(--brand));
+}
+.fg-card__note {
+  margin: 0.65rem 0 0;
+  font-size: 0.82rem;
+  color: var(--textMuted, var(--text-muted));
+  line-height: 1.65;
+}
+
+.fg-empty {
+  text-align: center;
+  color: var(--textMuted, var(--text-muted));
+  padding: 1.5rem 0.5rem;
+  font-size: 0.9rem;
+}
+
+.fg-related {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+.fg-related__title {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--textPrimary, var(--text));
+}
+.fg-related__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.fg-related__link {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid var(--border);
+  background: var(--surface-2, var(--surface));
+  color: var(--textPrimary, var(--text));
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.fg-related__link:hover {
+  background: var(--selectedBackground, var(--brand));
+  border-color: var(--brand);
+  color: var(--selectedText, var(--text-on-brand));
+}
+html[data-theme="dark"] .fg-related__link:hover {
+  color: var(--text-on-brand);
+}
+
+@media (max-width: 640px) {
+  .fg-page { padding: 1rem 0.75rem 3rem; }
+  .fg-hero { padding: 1.85rem 1rem 1.6rem; border-radius: 1rem; }
+  .fg-tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 0.25rem; }
+  .fg-tab { flex-shrink: 0; }
+}

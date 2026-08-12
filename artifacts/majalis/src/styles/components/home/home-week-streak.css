@@ -1,0 +1,81 @@
+/* ── 177c — HomeWeekStreak ──────────────────────────────────────────────── */
+.hws { margin: 0; }
+.hws__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ds-space-2);
+  margin-bottom: 0.75rem;
+}
+.hws__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.hws__streak-badge {
+  font-size: 0.78rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FF6B35, #FF8C42);
+  color: #fff;
+  border-radius: var(--ds-radius-full);
+  padding: 0.1rem 0.55rem;
+}
+.hws__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+  margin-bottom: 0.6rem;
+}
+.hws__day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-1);
+}
+.hws__circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(31,77,58,0.18);
+  background: rgba(31,77,58,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: var(--mj-brand);
+  transition: background 0.2s, border-color 0.2s;
+}
+.hws__day--done .hws__circle {
+  background: var(--mj-brand);
+  border-color: var(--mj-brand);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(31,77,58,0.25);
+}
+.hws__day--today .hws__circle {
+  border-color: var(--mj-brand);
+  border-width: 2.5px;
+}
+.hws__label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft);
+}
+.hws__day--today .hws__label {
+  color: var(--mj-brand);
+  font-weight: 800;
+}
+.hws__tip {
+  font-size: 0.76rem;
+  color: var(--majalis-ink-soft);
+  text-align: center;
+  margin: 0.25rem 0 0;
+}
+.hws__tip--congrats {
+  color: var(--mj-brand);
+  font-weight: 700;
+}
+
+/* ── نُقل إلى styles/pages/arbaeen-nawawi.css ── */

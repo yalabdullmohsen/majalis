@@ -1,0 +1,137 @@
+/* ============================================================
+   95 — OccasionsPage  (ocp-*)
+   ============================================================ */
+.ocp-month-filter                   { max-width: 16rem; }
+.occasions-filter__count--empty     { padding: 1rem 0; }
+
+/* ── منقول من الطبقة الحرجة (elite-2026) ── */
+/* ══════════════════════════════════════════════
+   45. Occasions Page — المناسبات الإسلامية
+   ══════════════════════════════════════════════ */
+.occasions-filter {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.occasions-filter__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--elite-ink-soft, #5D726A);
+}
+
+.occasions-filter__count {
+  font-size: 0.8rem;
+  color: var(--elite-ink-muted, var(--mj-ink-2));
+}
+
+.occasions-filter__sacred-note {
+  font-size: 0.8rem;
+  color: var(--elite-forest, var(--mj-brand-deep));
+  font-weight: 600;
+}
+
+.occasions-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-4);
+}
+
+.occasion-detail {
+  padding: 1.25rem !important;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+}
+
+.occasion-detail__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ds-space-3);
+  flex-wrap: wrap;
+}
+
+.occasion-detail__head h2 {
+  margin: 0 !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: var(--elite-ink, var(--mj-brand-deep)) !important;
+  line-height: 1.4 !important;
+}
+
+.occasion-detail__month-badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--elite-forest, var(--mj-brand-deep));
+  background: var(--elite-sage-2, var(--mj-brand-soft));
+  border: 1px solid rgba(24,54,42,0.15);
+  border-radius: var(--ds-radius-full);
+  padding: 0.15rem 0.55rem;
+  white-space: nowrap;
+  margin-inline-start: 0.35rem;
+  display: inline-block;
+}
+
+.occasion-detail__countdown {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--elite-ink-muted, var(--mj-ink-2));
+  white-space: nowrap;
+  background: var(--elite-cream, #F4F4F1);
+  border-radius: var(--ds-radius-full);
+  padding: 0.25rem 0.65rem;
+  flex-shrink: 0;
+}
+
+.occasion-detail__countdown--soon {
+  color: #C0392B;
+  background: rgba(192,57,43,0.08);
+}
+
+.occasion-detail__date {
+  font-size: 0.78rem;
+  color: var(--elite-ink-soft, #5D726A);
+  margin: 0;
+}
+
+.occasion-detail p {
+  font-size: var(--ds-text-sm);
+  color: var(--elite-ink-soft, #5D726A);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.occasion-detail h3 {
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
+  margin: 0 !important;
+  text-transform: uppercase;
+  letter-spacing: normal;
+}
+
+.occasion-detail ul {
+  margin: 0;
+  padding-inline-start: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.occasion-detail ul li {
+  font-size: 0.86rem;
+  color: var(--elite-ink, var(--mj-brand-deep));
+  line-height: 1.6;
+}
+
+.occasion-evidence {
+  font-size: 0.8rem;
+  color: var(--elite-ink-soft, #5D726A);
+  border-inline-start: 2.5px solid var(--elite-forest, var(--mj-brand-deep));
+  padding-inline-start: 0.65rem;
+  margin: 0;
+  line-height: 1.6;
+}

@@ -1,0 +1,106 @@
+{
+  "branch": "session/content-enrichment-round-2",
+  "mode": "enrichment_and_audit",
+  "started": "2026-07-26T07:20:00Z",
+  "updated": "2026-07-26T07:42:46Z",
+  "baseline_from_counts": {
+    "quiz": 1097,
+    "quiz_with_explanation": 328,
+    "fawaid": 556,
+    "qa": 400,
+    "rulings_seed": 83,
+    "rulings_encyclopedia": 583,
+    "stories": 59,
+    "library": 146,
+    "scholars": 109,
+    "adhkar": 311,
+    "lessons_approx": 1308
+  },
+  "gap_analysis": {
+    "stories_short_lt_800": 14,
+    "scholars_bio_lt_200": 21,
+    "scholars_pending_review": 3,
+    "library_desc_lt_120": 93,
+    "quiz_without_explanation": 769,
+    "prophets_bio_lt_180": 22,
+    "rulings_seed_body_lt_400": 21,
+    "thin_lesson_files": [
+      "durus-mutanawwia-data.ts",
+      "durus-imaniyya-data.ts",
+      "arabic-language-data.ts",
+      "tazkiya-topics-data.ts",
+      "usra-mujtama-data.ts"
+    ]
+  },
+  "priorities": [
+    "expand_short_stories_and_add_unique",
+    "expand_scholars_bios_and_add_unique_books",
+    "quiz_explanations_backfill_and_new",
+    "adhkar_unique_authenticated",
+    "rulings_and_thin_lessons",
+    "prophets_enrichment"
+  ],
+  "batches_done": [
+    "stories_expand_14_add_8",
+    "scholars_bios_expand_21_add_8_books_add_10_desc_expand",
+    "quiz_explanations_769_add_40_adhkar_add_6",
+    "rulings_expand_14_lessons_enrich_802_prophets_22",
+    "quiz_dedupe_final"
+  ],
+  "added_counts": {
+    "stories_expanded": 14,
+    "stories_new": 8,
+    "stories_total_now": 67,
+    "scholars_expanded_bios": 21,
+    "scholars_new": 8,
+    "scholars_total_now": 117,
+    "library_new": 10,
+    "library_total_now": 156,
+    "quiz_explanations_backfilled": 769,
+    "quiz_new": 40,
+    "quiz_total_now": 1137,
+    "adhkar_new": 6,
+    "adhkar_total_seed_now": 317,
+    "rulings_seed_expanded": 14,
+    "lesson_summaries_enriched": 802,
+    "prophets_bios_expanded": 22
+  },
+  "needs_post_review_notes": [
+    "كتب JSON الجديدة verificationStatus=pending_review حتى مراجعة الطبعات والربط الكامل بـ authorId",
+    "adh-345 (حفظني بالإسلام): حسن بطرق، يُراجع تحرير المعاصرين للسند",
+    "adh-346 (لا سهل إلا ما جعلته سهلا): حسن عند ابن حبان، يُراجع الخلاف في التصحيح"
+  ],
+  "status": "merged_and_deployed",
+  "final_counts": {
+    "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
+    "generatedAt": "2026-07-26",
+    "books": 156,
+    "scholars": 117,
+    "fawaid": 556,
+    "quizQuestions": 1137,
+    "mindMaps": 23,
+    "rulings": 583,
+    "courses": 63,
+    "miracles": 60,
+    "adhkar": 317,
+    "qa": 400,
+    "nations": 17,
+    "stories": 67,
+    "quiz_with_explanation": 1137
+  },
+  "gates": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "vite_build": "pass",
+    "quiz_integrity": "pass",
+    "scholarly_content_guard": "pass",
+    "nations": "pass",
+    "library_integrity": "pass",
+    "scholars_integrity": "pass",
+    "counts": "pass",
+    "identity": "pass",
+    "data_quality": "pass_0_issues"
+  },
+  "merge_commit": "adf275ec",
+  "deploy_run": 30193245017
+}

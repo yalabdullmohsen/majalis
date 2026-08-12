@@ -1,0 +1,117 @@
+/* Cookie / privacy — subtle non-blocking footer strip (never full-screen) */
+.cookie-consent {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 12000;
+  padding: 0.5rem 0.65rem;
+  padding-bottom: max(0.5rem, var(--inset-bottom));
+  pointer-events: none;
+}
+
+.cookie-consent--subtle .cookie-consent__inner {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 14px;
+  box-shadow: 0 8px 22px -16px rgba(11, 32, 24, 0.4);
+}
+
+.cookie-consent__inner {
+  pointer-events: auto;
+  max-width: 42rem;
+  margin-inline: auto;
+  padding: 1rem 1.1rem;
+  border-radius: var(--mj-r-md, 16px);
+  background: color-mix(in srgb, var(--mj-surface, #fff) 92%, transparent);
+  backdrop-filter: blur(10px);
+  color: var(--mj-ink, #16241e);
+  border: 1px solid var(--mj-hairline, #e3e8e6);
+  box-shadow: var(--mj-sh, 0 10px 26px -18px rgba(11, 32, 24, 0.45));
+}
+
+.cookie-consent__title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.cookie-consent__text {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--mj-ink-2, #4a5a53);
+}
+
+.cookie-consent__text--compact {
+  margin: 0;
+  flex: 1;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.cookie-consent__actions--compact {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.cookie-consent__actions--compact .cookie-consent__btn {
+  min-height: 34px;
+  padding-inline: 0.85rem;
+  font-size: 0.8rem;
+  border-radius: 12px;
+  touch-action: manipulation;
+}
+
+.cookie-consent__link {
+  color: var(--mj-brand, #1f7a5a);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cookie-consent__opts {
+  display: grid;
+  gap: 0.4rem;
+  margin-block-end: 0.75rem;
+}
+
+.cookie-consent__opt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.cookie-consent__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.cookie-consent__btn {
+  min-height: 40px;
+  padding-inline: 0.9rem;
+  border-radius: var(--mj-r-sm, 12px);
+  border: 1px solid var(--mj-hairline, #e3e8e6);
+  background: var(--mj-surface-2, #e9edeb);
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cookie-consent__btn--primary {
+  background: var(--mj-brand, #1f7a5a);
+  border-color: transparent;
+  color: var(--mj-on-brand, #fff);
+}
+
+.cookie-consent__btn--ghost {
+  background: transparent;
+}
+
+html[data-theme="dark"] .cookie-consent__inner {
+  background: var(--mj-surface);
+  border-color: var(--mj-hairline);
+}

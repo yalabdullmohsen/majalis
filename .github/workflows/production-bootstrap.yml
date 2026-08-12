@@ -1,0 +1,75 @@
+name: Production Bootstrap
+
+# Manual only — never auto-migrate on push to main.
+# Run from Actions after reviewing schema SQL changes.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    if: github.repository == 'yalabdullmohsen/majalis'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "24"
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Verify Transaction Pooler DATABASE_URL
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::error::DATABASE_URL secret is required for Production Bootstrap"
+            echo "Format: postgresql://postgres.[ref]:[pass]@aws-1-*.pooler.supabase.com:6543/postgres"
+            exit 1
+          fi
+          node --input-type=module -e "
+          import { isTransactionPoolerUrl, describeDatabaseUrlConfig } from './artifacts/majalis/lib/database.mjs';
+          if (!isTransactionPoolerUrl(process.env.DATABASE_URL)) {
+            console.error('DATABASE_URL must use Supabase Transaction Pooler (port 6543, *.pooler.supabase.com)');
+            console.error(describeDatabaseUrlConfig());
+            process.exit(1);
+          }
+          console.log('DATABASE_URL is valid Transaction Pooler format');
+          "
+
+      - name: Apply SQL migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        run: |
+          cd artifacts/majalis
+          node --input-type=module -e "
+          import { applyMigrations, verifySchema } from './lib/db-migrate.mjs';
+          const r = await applyMigrations({ continueOnError: false });
+          const v = await verifySchema();
+          console.log(JSON.stringify({ migrations: r, schema: v }, null, 2));
+          if (!v.ok) process.exit(1);
+          "
+
+      - name: Trigger production bootstrap cron
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "::error::CRON_SECRET secret is required"
+            exit 1
+          fi
+          curl -sf -H "Authorization: Bearer $CRON_SECRET" \
+            "https://www.majlisilm.com/api/cron/bootstrap-database"

@@ -1,0 +1,394 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+import { Scale } from "lucide-react";
+import { Link, useSearch } from "wouter";
+import { getQaCategories, getQaQuestions } from "@/lib/supabase";
+import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/qa.css";
+import "@/styles/pages/fiqh-hub.css";
+
+const FIQH_HUB_TABS = [
+  { key: "rulings", label: "الأحكام الشرعية", href: "/rulings" },
+  { key: "qa",      label: "الأسئلة والأجوبة", href: "/qa" },
+  { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },
+] as const;
+type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];
+
+function FiqhHubStrip({ current }: { current: FiqhTab }) {
+  return (
+    <nav className="fiqh-hub-strip" dir="rtl" aria-label="الأقسام الشرعية">
+      <Link href="/fiqh" className="fiqh-hub-strip__brand"><Scale size={14} className="inline ms-1" />الفقه الإسلامي</Link>
+      <span className="fiqh-hub-strip__sep" aria-hidden="true">·</span>
+      {FIQH_HUB_TABS.map((item) => (
+        <Link
+          key={item.key}
+          href={item.href}
+          className={`fiqh-hub-strip__tab${item.key === current ? " fiqh-hub-strip__tab--active" : ""}`}
+          aria-current={item.key === current ? "page" : undefined}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
+import { RequestManager } from "@/lib/request-manager";
+import { QA_DISCLAIMER } from "@/lib/theme";
+import { PageHeader, QaSkeleton } from "@/components/ui-common";
+import { PageLoadingGuard } from "@/components/PageLoadingGuard";
+import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import { usePersistedState } from "@/hooks/usePersistedState";
+import { DEMO_QA, DEMO_QA_CATEGORIES, ensureDemoContentLoaded } from "@/lib/demo-content";
+import { loadSeedQa } from "@/lib/qa-seed";
+import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
+import { QaCard } from "@/components/qa/QaCard";
+import { useAuth } from "@/components/AuthProvider";
+import { QA_CANONICAL_CATEGORIES, resolveCategorySlug } from "@/lib/qa-categories";
+import {
+  countByCategorySlug,
+  markQaSeen,
+  normalizeQaItems,
+  pickRandomQaItem,
+  QA_SORT_LABELS,
+  sortQaItems,
+  type QaSortMode,
+} from "@/lib/qa-utils";
+
+function Disclaimer() {
+  return (
+    <div className="qa-disclaimer">
+      <p>{QA_DISCLAIMER}</p>
+    </div>
+  );
+}
+
+
+export default function QaPage({
+  initialCategories,
+  initialQuestions,
+}: {
+  initialCategories?: any[];
+  initialQuestions?: any[];
+} = {}) {
+  useReadingScrollMemory("qa");
+  const { isAdmin } = useAuth();
+  const [rawItems, setRawItems] = useState<any[]>(initialQuestions ?? []);
+  const [categories, setCategories] = useState<any[]>(initialCategories ?? []);
+  const [loading, setLoading] = useState(!initialQuestions);
+  const [categoriesLoading, setCategoriesLoading] = useState(!initialCategories);
+  const [categorySlug, setCategorySlug] = usePersistedState("filters:/qa:categorySlug", "all");
+  const [search, setSearch] = usePersistedState("filters:/qa:search", "");
+  const [sortMode, setSortMode] = usePersistedState<QaSortMode>("filters:/qa:sortMode", "default");
+  const [randomId, setRandomId] = useState<string | null>(null);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const debouncedSearch = useDebouncedValue(search);
+  const urlSearch = useSearch();
+
+  const items = useMemo(() => normalizeQaItems(rawItems), [rawItems]);
+
+  // رابط وارد بـ`?cat=...` (من FiqhPage) كان يُتجاهَل كليًا: الحالة تُقرأ
+  // فقط من usePersistedState بلا مزامنة مع URL الفعلي عند الوصول — نفس
+  // عائلة عطل TYPE_HREF.scholar الصامت. اكتُشف بالفحص المباشر 2026-07-18.
+  // امتداد 2026-07-20: نفس العطل بالضبط وُجد في رابطين إضافيين لم يُقرآ
+  // مُعامَلاهما إطلاقًا — `search-suggestions.ts` يبني `/qa?q=...` و
+  // `rulings-relations.ts` يبني `/qa?search=...` (اسمان مختلفان من
+  // مصدرين مختلفين)؛ كلاهما يُقرآن الآن دفاعيًا.
+  useEffect(() => {
+    const params = new URLSearchParams(urlSearch);
+    const cat = params.get("cat");
+    const q = params.get("q") || params.get("search");
+    const focusId = params.get("id");
+    if (cat) setCategorySlug(cat);
+    if (q) setSearch(q);
+    if (focusId) {
+      // تمييز السؤال المقصود عند القدوم من روابط الفقه/التوصيات
+      setRandomId(focusId);
+    }
+  }, [urlSearch]);
+
+  useEffect(() => {
+    let cancelled = false;
+    void loadSeedQa().then((seed) => {
+      if (cancelled) return;
+      const topQa = seed.filter((q) => q.answer).slice(0, 8);
+      const faqSchema = topQa.length
+        ? {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: topQa.map((q) => ({
+              "@type": "Question",
+              name: q.question,
+              acceptedAnswer: { "@type": "Answer", text: q.answer },
+            })),
+          }
+        : undefined;
+      applyPageSeo({
+        path: "/qa",
+        title: "الأسئلة والأجوبة الشرعية | المجلس العلمي",
+        description: "أسئلة وأجوبة شرعية في الفقه والعقيدة والعبادات والمعاملات، موثقة من العلماء والمراجع الموثوقة.",
+        keywords: ["أسئلة وأجوبة", "أجوبة شرعية", "فقه إسلامي", "سؤال وجواب", "معلومات إسلامية"],
+        ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
+      });
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const loadCategories = useCallback(async () => {
+    setCategoriesLoading(true);
+    try {
+      const { data } = await RequestManager.run("qa:categories", () => getQaCategories());
+      setCategories(data?.length ? data : DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"));
+    } catch {
+      setCategories(DEMO_QA_CATEGORIES.filter((c) => c.id !== "all"));
+    } finally {
+      setCategoriesLoading(false);
+    }
+  }, []);
+
+  const loadQuestions = useCallback(async () => {
+    setLoading(true);
+    try {
+      const { data } = await RequestManager.run("qa:questions", () =>
+        getQaQuestions({
+          categoryId: categorySlug === "all" ? undefined : categorySlug,
+          search: debouncedSearch,
+        }),
+      );
+      if (data.length > 0) {
+        setRawItems(data);
+      } else {
+        await ensureDemoContentLoaded();
+        setRawItems([...DEMO_QA]);
+      }
+    } catch {
+      await ensureDemoContentLoaded();
+      setRawItems([...DEMO_QA]);
+    } finally {
+      setLoading(false);
+    }
+  }, [categorySlug, debouncedSearch]);
+
+  useEffect(() => {
+    if (initialCategories) return;
+    loadCategories();
+  }, [loadCategories, initialCategories]);
+
+  useEffect(() => {
+    if (initialQuestions && categorySlug === "all" && !debouncedSearch.trim()) return;
+    loadQuestions();
+  }, [loadQuestions, initialQuestions, categorySlug, debouncedSearch]);
+
+  const categoryCounts = useMemo(() => countByCategorySlug(items), [items]);
+
+  const categoryGrid = useMemo(() => {
+    const dbBySlug = new Map(
+      categories.map((c) => [c.slug || c.id?.replace("seed-cat-", ""), c]),
+    );
+    return QA_CANONICAL_CATEGORIES.filter((c) => {
+      const count = categoryCounts[c.slug] || 0;
+      return count > 0 || dbBySlug.has(c.slug);
+    }).map((c) => ({
+      slug: c.slug,
+      name: c.name,
+      description: c.description,
+      count: categoryCounts[c.slug] || 0,
+      id: dbBySlug.get(c.slug)?.id || c.slug,
+    }));
+  }, [categories, categoryCounts]);
+
+  const filteredItems = useMemo(() => {
+    if (categorySlug === "all") return items;
+    return items.filter((q) => {
+      const slug = q.qa_categories?.slug || q.category_slug;
+      const cat = categories.find((c) => c.id === categorySlug);
+      // resolveCategorySlug() applies the same legacy/aliased-slug mapping
+      // that countByCategorySlug() already uses to build the category
+      // grid's displayed counts (e.g. "nikah"/"talaq" → "family"). Without
+      // it here, a question tagged with an aliased DB category slug was
+      // counted toward its canonical category's badge but excluded when
+      // that category was actually clicked — a silent "count says N,
+      // click shows fewer" mismatch.
+      return (
+        slug === categorySlug ||
+        slug === cat?.slug ||
+        q.category_id === categorySlug ||
+        resolveCategorySlug(slug) === categorySlug
+      );
+    });
+  }, [items, categorySlug, categories]);
+
+  const sortedItems = useMemo(
+    () => sortQaItems(filteredItems, sortMode === "random" ? "default" : sortMode),
+    [filteredItems, sortMode],
+  );
+
+  // التمرير بعد اكتمال التحميل — وإلا يفشل getElementById قبل رسم البطاقات
+  useEffect(() => {
+    if (loading || !randomId) return;
+    const timer = window.setTimeout(() => {
+      document.getElementById(randomId)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 80);
+    return () => window.clearTimeout(timer);
+  }, [loading, randomId, sortedItems.length]);
+
+  const randomItem = useMemo(() => {
+    if (!randomId) return null;
+    return items.find((q) => q.id === randomId) || null;
+  }, [items, randomId]);
+
+  const handleRandom = () => {
+    const picked = pickRandomQaItem(filteredItems);
+    if (picked) setRandomId(picked.id);
+  };
+
+  const emptyMessage = useMemo(() => {
+    if (debouncedSearch.trim()) {
+      return `لا توجد أسئلة مطابقة لـ «${debouncedSearch.trim()}».`;
+    }
+    if (categorySlug !== "all") {
+      return "لا توجد أسئلة في هذا التصنيف.";
+    }
+    return "لا توجد أسئلة منشورة.";
+  }, [categorySlug, debouncedSearch]);
+
+  const filtersPanel = (
+    <>
+      <input
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="ابحث في الأسئلة والأجوبة..."
+        className="page-search-input full content-hub-search qa-v2-search"
+        aria-label="بحث في الأسئلة والأجوبة"
+      />
+      <div className="qa-sort-row qa-v2-sort-row" role="radiogroup" aria-label="ترتيب الأسئلة">
+        {(Object.keys(QA_SORT_LABELS) as QaSortMode[]).map((mode) => (
+          <button
+            key={mode}
+            role="radio"
+            type="button"
+            className={`content-hub-chip${sortMode === mode ? " content-hub-chip--active" : ""}`}
+            onClick={() => {
+              setSortMode(mode);
+              if (mode === "random") handleRandom();
+            }}
+            aria-checked={sortMode === mode}
+          >
+            {QA_SORT_LABELS[mode]}
+          </button>
+        ))}
+      </div>
+      <section className="qa-v2-categories" aria-labelledby="qa-categories-heading">
+        <h2 id="qa-categories-heading" className="qa-v2-section-title">التصنيفات</h2>
+        {categoriesLoading ? (
+          <QaSkeleton count={4} />
+        ) : (
+          <div className="qa-v2-category-grid">
+            <button
+              type="button"
+              className={`qa-v2-category-card${categorySlug === "all" ? " is-active" : ""}`}
+              onClick={() => setCategorySlug("all")}
+            >
+              <span className="qa-v2-category-card__name">الكل</span>
+              {isAdmin && <span className="qa-v2-category-card__count">{items.length}</span>}
+            </button>
+            {categoryGrid.map((cat) => (
+              <button
+                key={cat.slug}
+                type="button"
+                className={`qa-v2-category-card${categorySlug === cat.slug || categorySlug === cat.id ? " is-active" : ""}`}
+                onClick={() => setCategorySlug(cat.slug)}
+              >
+                <span className="qa-v2-category-card__name">{cat.name}</span>
+                {isAdmin && <span className="qa-v2-category-card__count">{cat.count}</span>}
+              </button>
+            ))}
+          </div>
+        )}
+      </section>
+    </>
+  );
+
+  return (
+    <div className="page-shell narrow content-hub-page qa-page qa-page-v2 ds-page">
+      <PageHeader
+        eyebrow=""
+        title="الأسئلة والأجوبة"
+        subtitle="أسئلة وأجوبة شرعية موثّقة"
+      />
+
+      <FiqhHubStrip current="qa" />
+
+      <Disclaimer />
+
+      <div className="ds-section__head">
+        {isAdmin && (
+          <div className="page-stats-row page-stats-row--flush">
+            <span>{sortedItems.length} سؤال</span>
+            <span>{categoryGrid.length} تصنيف</span>
+          </div>
+        )}
+        <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
+      </div>
+
+      {randomItem && (
+        <section className="qa-random-highlight">
+          <h2 className="qa-random-title">سؤال عشوائي</h2>
+          <QaCard item={randomItem} defaultOpen />
+          <button type="button" className="qa-random-refresh ds-btn ds-btn--ghost ds-btn--sm" onClick={handleRandom}>
+            سؤال آخر
+          </button>
+        </section>
+      )}
+
+      <PageLoadingGuard
+        loading={loading}
+        empty={!loading && sortedItems.length === 0}
+        emptyText={emptyMessage}
+        onRetry={loadQuestions}
+      >
+        <div className="qa-grid">
+          {sortedItems.map((q) => (
+            <div key={q.id} onMouseEnter={() => markQaSeen(q.id)}>
+              <QaCard item={q} defaultOpen={q.id === randomId} />
+            </div>
+          ))}
+        </div>
+      </PageLoadingGuard>
+
+      <aside className="ds-filters-panel ds-filters-panel--desktop">
+        <div className="ds-filters-panel__head">
+          <h2>بحث وتصفية</h2>
+        </div>
+        {filtersPanel}
+      </aside>
+
+      <div className="twh-share">
+        <ShareButtons title="الأسئلة والأجوبة الشرعية — المجلس العلمي" url="https://www.majlisilm.com/qa" />
+      </div>
+
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
+        {filtersPanel}
+      </FilterBottomSheet>
+      <RelatedKnowledge kind="question" title="أسئلة ومواد ذات صلة" limit={6} />
+      <ExploreAlsoNav
+        title="استكشف أيضًا"
+        links={[
+          { href: "/rulings", label: "موسوعة الأحكام" },
+          { href: "/fiqh", label: "بوابة الفقه" },
+          { href: "/fiqh-council", label: "المجمع الفقهي" },
+          { href: "/lessons", label: "الدروس العلمية" },
+        ]}
+      />
+
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه والأحكام" count={4} />
+      </div>
+    </div>
+  );
+}

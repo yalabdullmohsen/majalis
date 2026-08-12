@@ -1,0 +1,2861 @@
+{
+  "$comment": "titleSuffix يُضاف برمجيًا من site.config.json — لا تكتب «| المجلس العلمي» داخل title. siteUrl/siteName/defaultImage مرآة لـ site.config.json (يحرسها scripts/test-seo.mjs).",
+  "siteUrl": "https://majlisilm.com",
+  "siteName": "المجلس العلمي",
+  "defaultImage": "/majlisilm-og-2026.jpg",
+  "ogImageWidth": 1200,
+  "ogImageHeight": 630,
+  "defaultKeywords": [
+    "المجلس العلمي",
+    "دروس علمية",
+    "دروس شرعية",
+    "دروس صوتية",
+    "دورات شرعية",
+    "طلب العلم",
+    "القرآن الكريم",
+    "السنة النبوية",
+    "الفوائد العلمية",
+    "الأذكار"
+  ],
+  "routes": [
+    {
+      "path": "/",
+      "title": "المجلس العلمي — دروس شرعية ودورات علمية",
+      "suffix": false,
+      "description": "منصة علمية عربية تجمع الدروس الشرعية والدورات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم.",
+      "keywords": [
+        "المجلس العلمي",
+        "دروس علمية",
+        "دروس شرعية",
+        "دروس صوتية",
+        "دورات شرعية",
+        "طلب العلم",
+        "القرآن الكريم",
+        "السنة النبوية"
+      ],
+      "sitemap": true,
+      "changefreq": "daily",
+      "priority": 1
+    },
+    {
+      "path": "/lessons",
+      "title": "الدروس",
+      "description": "جميع الدروس والدورات الشرعية — مرتّبة حسب أقرب موعد مع بحث وفلاتر للمكان والتصنيف.",
+      "keywords": [
+        "دروس علمية",
+        "دروس شرعية",
+        "دروس صوتية",
+        "دورات شرعية",
+        "طلب العلم",
+        "تفسير",
+        "فقه",
+        "عقيدة",
+        "حديث"
+      ],
+      "sitemap": true,
+      "changefreq": "daily",
+      "priority": 0.9
+    },
+    {
+      "path": "/calendar",
+      "title": "تقويم الدروس",
+      "description": "تقويم شهري وأسبوعي ويومي للدروس والدورات — جداول المواعيد والأماكن.",
+      "keywords": [
+        "تقويم الدروس",
+        "جدول الدروس",
+        "دروس الكويت",
+        "جدول الدروس"
+      ],
+      "sitemap": true,
+      "changefreq": "daily",
+      "priority": 0.88
+    },
+    {
+      "path": "/kuwait-lessons",
+      "title": "دروس المشايخ القادمة",
+      "description": "أرشيف الدروس الشرعية — مواقع، أوقات، وجداول أسبوعية.",
+      "keywords": [
+        "دروس الكويت",
+        "دروس شرعية",
+        "جداول الدروس"
+      ],
+      "sitemap": false,
+      "changefreq": "daily",
+      "priority": 0.3
+    },
+    {
+      "path": "/adhkar",
+      "title": "الأذكار",
+      "description": "أذكار وأدعية مأثورة — صباح ومساء ونوم وسفر وصلاة — مع بيان المصدر والدرجة قدر الإمكان، وما لم يُراجع يُوسم قيد المراجعة.",
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82
+    },
+    {
+      "path": "/quran/tajweed",
+      "title": "علم التجويد",
+      "description": "دروس وقواعد التجويد مع أمثلة صوتية واختبارات تعليمية.",
+      "keywords": [
+        "تجويد",
+        "قراءة القرآن",
+        "أحكام التجويد"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82
+    },
+    {
+      "path": "/quran/surah-stories",
+      "title": "قصص القرآن",
+      "description": "قصص القرآن — أسماء السور، أسباب التسمية، المحاور، والقصص القرآنية الموثقة.",
+      "keywords": [
+        "قصص القرآن",
+        "تفسير",
+        "سور القرآن",
+        "مكية",
+        "مدنية"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.84
+    },
+    {
+      "path": "/quran/makki-madani",
+      "title": "السور المكية والمدنية | المجلس العلمي",
+      "description": "مدخل علمي مبسط إلى ضابط المكي والمدني وخصائصهما وأثر معرفة زمن النزول في فهم القرآن.",
+      "keywords": [
+        "السور المكية",
+        "السور المدنية",
+        "علوم القرآن",
+        "زمن النزول"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
+    },
+    {
+      "path": "/prayer-ranks",
+      "title": "مراتب الناس في الصلاة",
+      "description": "مراتب الناس في الصلاة الخمس — من الظالم لنفسه إلى المقرّب، مع أدلة ومصادر.",
+      "keywords": [
+        "مراتب الصلاة",
+        "خشوع",
+        "محاسبة النفس",
+        "ابن القيم"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.76
+    },
+    {
+      "path": "/prayer-times",
+      "title": "مواقيت الصلاة",
+      "description": "مواقيت الصلاة في الكويت مع العد التنازلي للصلاة القادمة.",
+      "keywords": [
+        "مواقيت الصلاة",
+        "الكويت"
+      ],
+      "sitemap": true,
+      "changefreq": "daily",
+      "priority": 0.88
+    },
+    {
+      "path": "/qibla",
+      "title": "اتجاه القبلة",
+      "description": "احسب اتجاه القبلة بدقة بحسب موقعك الجغرافي باستخدام البوصلة الرقمية.",
+      "keywords": [
+        "القبلة",
+        "اتجاه الكعبة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/tasbih",
+      "title": "عداد التسبيح",
+      "description": "مسبحة إلكترونية ذكية للتسبيح والتهليل والاستغفار مع حفظ الأوراد والأذكار.",
+      "keywords": [
+        "تسبيح",
+        "مسبحة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/daily-wird",
+      "title": "الورد اليومي",
+      "description": "تتبّع وردك اليومي من القرآن الكريم، حدّد هدفك اليومي وتابع تقدمك نحو الختم.",
+      "keywords": [
+        "ورد",
+        "قرآن"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/occasions",
+      "title": "المناسبات الإسلامية",
+      "description": "مناسبات إسلامية معتمدة مع الأعمال المستحبة والأدلة.",
+      "keywords": [
+        "مناسبات",
+        "رمضان",
+        "عيد"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/arbaeen-nawawi",
+      "title": "الأربعون النووية",
+      "description": "الأربعون حديثاً النووية الجامعة لأحكام الإسلام مع شرح موجز وفوائد ومصدر لكل حديث.",
+      "keywords": [
+        "الأربعون النووية",
+        "حديث"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
+    },
+    {
+      "path": "/learning/paths",
+      "title": "المسارات العلمية",
+      "description": "مسارات تعليمية منظمة من المبتدئ للمتقدم في العلوم الشرعية.",
+      "keywords": [
+        "مسارات علمية",
+        "تعلم الإسلام",
+        "تعليم ديني"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.78
+    },
+    {
+      "path": "/my-learning",
+      "title": "حسابي",
+      "description": "تتبع تقدمك وإنجازاتك في المسارات العلمية.",
+      "keywords": [
+        "تعلم",
+        "تقدم دراسي"
+      ],
+      "sitemap": false,
+      "changefreq": "weekly",
+      "priority": 0.65,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/announcements",
+      "title": "الدروس",
+      "description": "الدروس والدورات الشرعية — جداول أسبوعية ومواقع وروابط.",
+      "keywords": [
+        "إعلانات دروس",
+        "دروس شرعية",
+        "جداول الدروس",
+        "دورات علمية"
+      ],
+      "sitemap": false,
+      "changefreq": "daily",
+      "priority": 0.3,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/lessons/current",
+      "title": "الدروس",
+      "description": "الدروس والدورات الشرعية — جداول أسبوعية محدّثة ومواعيد العلماء ومنهجية التعلم.",
+      "keywords": [
+        "إعلانات دروس",
+        "دروس حالية",
+        "جداول الدروس"
+      ],
+      "sitemap": false,
+      "changefreq": "daily",
+      "priority": 0.3,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/courses",
+      "title": "الدروس",
+      "description": "عرض الدورات الشرعية كاملة مع جميع الدروس والجداول الأسبوعية والروابط.",
+      "keywords": [
+        "دورات شرعية",
+        "دروس",
+        "جداول أسبوعية",
+        "دورات علمية"
+      ],
+      "sitemap": false,
+      "changefreq": "weekly",
+      "priority": 0.3
+    },
+    {
+      "path": "/library",
+      "title": "المكتبة العلمية",
+      "description": "مكتبة علمية تضم كتبًا ومتونًا وتفريغات وملخصات وموادًا صوتية ومرئية لطالب العلم.",
+      "keywords": [
+        "مكتبة علمية",
+        "كتب إسلامية",
+        "متون",
+        "تفريغات",
+        "ملخصات شرعية"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.85
+    },
+    {
+      "path": "/miracles",
+      "title": "إشارات كونية في الوحي",
+      "description": "موضوعات للتأمل في آيات الخلق بحذر منهجي؛ المعتمد: الإعجاز البياني والغيبي والتشريعي.",
+      "keywords": [
+        "إشارات كونية",
+        "تفكر في الخلق",
+        "إعجاز بياني",
+        "علوم القرآن"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/fawaid",
+      "title": "الفوائد",
+      "description": "فوائد دينية مختارة ومراجعة تساعد طالب العلم على الانتفاع المختصر الموثق.",
+      "keywords": [
+        "فوائد دينية",
+        "فوائد شرعية",
+        "اقتباسات علمية",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/hadith",
+      "title": "الأحاديث النبوية",
+      "description": "أحاديث نبوية من مصادر موثوقة مع بيان المصدر والدرجة المنسوبة قدر الإمكان؛ راجع التخريج قبل الاستشهاد.",
+      "keywords": [
+        "أحاديث نبوية",
+        "صحيح البخاري",
+        "صحيح مسلم",
+        "السنة النبوية",
+        "حديث شريف"
+      ],
+      "sitemap": true,
+      "changefreq": "daily",
+      "priority": 0.8
+    },
+    {
+      "path": "/hadith/sahih",
+      "title": "الأحاديث الصحيحة — مرجع الصحيحين",
+      "description": "مرجع صحيح البخاري وصحيح مسلم كاملاً مع بحث وتصفية؛ الصحة بعضوية الصحيحين، بلا درجات ملفّقة.",
+      "keywords": [
+        "أحاديث صحيحة",
+        "صحيح البخاري",
+        "صحيح مسلم",
+        "الصحيحان",
+        "مرجع الحديث",
+        "الحديث الصحيح",
+        "السنة النبوية"
+      ],
+      "changefreq": "daily",
+      "priority": 0.75
+    },
+    {
+      "path": "/hadith/daif",
+      "title": "الأحاديث الضعيفة",
+      "description": "روايات مشهورة على الألسنة مقرونة بدرجتها وتخريجها المنسوب: منها الحسن، ومنها الضعيف، ومنها ما لا تصح نسبته — بيانٌ للتمييز.",
+      "keywords": [
+        "أحاديث ضعيفة",
+        "درجة الحديث",
+        "الحديث المردود",
+        "ضعف الإسناد",
+        "تخريج الحديث",
+        "علم الحديث"
+      ],
+      "changefreq": "daily",
+      "priority": 0.6
+    },
+    {
+      "path": "/hadith/books",
+      "title": "الكتب الحديثية الكاملة",
+      "description": "تصفّح الكتب الحديثية الكاملة: صحيح البخاري، صحيح مسلم، الأربعون النووية، الأحاديث القدسية، والسنن الأربعة — مع البحث بالكتاب والباب.",
+      "keywords": [
+        "صحيح البخاري كامل",
+        "صحيح مسلم كامل",
+        "الأربعون النووية",
+        "أحاديث قدسية",
+        "سنن أبي داود",
+        "سنن الترمذي",
+        "علم الحديث"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
+    },
+    {
+      "path": "/hadith/books-and-rulings",
+      "title": "كتب الحديث والأحكام",
+      "description": "بوابة كتب الحديث والأحكام المرتبطة بها — مع روابط للكتب الكاملة والأقسام التعليمية.",
+      "keywords": [
+        "كتب الحديث",
+        "كتب الأحكام",
+        "عمدة الأحكام",
+        "بلوغ المرام",
+        "علم الحديث"
+      ],
+      "changefreq": "monthly",
+      "priority": 0.55
+    },
+    {
+      "path": "/hadith/mawdu",
+      "title": "الأحاديث الموضوعة",
+      "description": "أشهر الموضوعات على النبي ﷺ مع تخريج من حكم بالوضع وبحث نصي — للتحذير ونشر الوعي لا للاحتجاج.",
+      "keywords": [
+        "أحاديث موضوعة",
+        "الحديث الموضوع",
+        "الأحاديث المكذوبة",
+        "التحذير من الأحاديث الموضوعة",
+        "علم الحديث"
+      ],
+      "changefreq": "daily",
+      "priority": 0.6
+    },
+    {
+      "path": "/prophets/tree",
+      "title": "شجرة أنساب الأنبياء",
+      "description": "شجرة الأنبياء والرسل الكرام المذكورين في القرآن الكريم — تسلسل زمني وعائلي يوضح العلاقات بين الأنبياء.",
+      "keywords": [
+        "شجرة الأنبياء",
+        "تسلسل الأنبياء",
+        "أنبياء القرآن",
+        "رسل الله",
+        "قصص الأنبياء"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.7
+    },
+    {
+      "path": "/prophets",
+      "title": "الأنبياء والرسل",
+      "description": "قصص الأنبياء الكرام المذكورين في القرآن الكريم — نبذات تعريفية ودروس وعبر مستقاة من المصادر الموثوقة.",
+      "keywords": [
+        "قصص الأنبياء",
+        "أنبياء القرآن",
+        "سيرة الأنبياء",
+        "قصص إسلامية",
+        "دروس الأنبياء",
+        "آدم ونوح وموسى وعيسى ومحمد"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.85,
+      "ogType": "article"
+    },
+    {
+      "path": "/stories",
+      "title": "القصص الإسلامية",
+      "description": "قصص موثقة عن صحابة النبي ﷺ والفتوحات الإسلامية والتاريخ الإسلامي — مستقاة من المصادر المعتمدة كسيرة ابن هشام والبداية والنهاية.",
+      "keywords": [
+        "قصص إسلامية",
+        "صحابة",
+        "فتوحات إسلامية",
+        "تاريخ إسلامي",
+        "قصص الصحابة",
+        "سيرة",
+        "أبو بكر",
+        "عمر",
+        "عثمان",
+        "علي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82,
+      "ogType": "article"
+    },
+    {
+      "path": "/qa",
+      "title": "الأسئلة والأجوبة الشرعية",
+      "description": "أسئلة وأجوبة شرعية موثّقة بالأدلة من القرآن والسنة وقول أهل العلم، مصنّفة حسب الأبواب للبحث السريع.",
+      "keywords": [
+        "أسئلة وأجوبة",
+        "فتاوى",
+        "مسائل شرعية",
+        "فقه",
+        "عقيدة"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82
+    },
+    {
+      "path": "/quiz",
+      "title": "لعبة سين جيم – أسئلة وأجوبة",
+      "description": "اختبر معلوماتك الشرعية عبر لعبة سين جيم: مجالات متعددة، مستويات صعوبة، ونظام نقاط مع مراجعة الإجابات. لا تُقدَّم فتاوى شخصية.",
+      "keywords": [
+        "سين جيم",
+        "مسابقات شرعية",
+        "أسئلة دينية",
+        "اختبار معلومات",
+        "الأنبياء",
+        "الصحابة"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.78
+    },
+    {
+      "path": "/assistant",
+      "title": "المساعد العلمي",
+      "description": "مساعد ذكي عربي يرشدك إلى الدروس والكتب والفوائد داخل المجلس العلمي دون ادعاء الإفتاء.",
+      "keywords": [
+        "المساعد العلمي",
+        "المساعد الذكي",
+        "بحث في الدروس",
+        "بحث في الكتب",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.7
+    },
+    {
+      "path": "/cards",
+      "title": "البطاقات الدعوية",
+      "description": "صمّم بطاقات اقتباسات وفوائد دعوية بقوالب عربية أنيقة وحمّلها PNG للمشاركة.",
+      "keywords": [
+        "بطاقات دعوية",
+        "اقتباسات إسلامية",
+        "تصميم بطاقات",
+        "فوائد دينية"
+      ],
+      "sitemap": false,
+      "changefreq": "weekly",
+      "priority": 0.7,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/transcribe",
+      "title": "تفريغ الدروس",
+      "description": "حوّل الدروس الصوتية والمرئية إلى نص مع تلخيص ذكي واستخراج الفوائد العلمية.",
+      "keywords": [
+        "تفريغ دروس",
+        "تحويل صوت إلى نص",
+        "تلخيص دروس",
+        "فوائد علمية"
+      ],
+      "sitemap": false,
+      "changefreq": "weekly",
+      "priority": 0.72,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/search",
+      "title": "البحث العلمي",
+      "description": "ابحث في الدروس والمكتبة العلمية والفوائد والأسئلة والأجوبة داخل المجلس العلمي.",
+      "keywords": [
+        "بحث علمي",
+        "بحث في الدروس",
+        "بحث في الكتب",
+        "طلب العلم",
+        "المجلس العلمي"
+      ],
+      "sitemap": false,
+      "changefreq": "weekly",
+      "priority": 0.7,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/about",
+      "title": "من نحن",
+      "description": "تعرف على المجلس العلمي — منصة علمية شرعية كويتية تجمع الدروس والفوائد والأذكار والأسئلة في مكان واحد.",
+      "keywords": [
+        "من نحن",
+        "المجلس العلمي",
+        "منصة علمية",
+        "دروس الكويت"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.65
+    },
+    {
+      "path": "/sources",
+      "title": "المصادر والتراخيص",
+      "description": "مصادر البيانات والمراجع الخارجية المستخدمة في المجلس العلمي، وملاحظات الترخيص والاستخدام العادل.",
+      "keywords": [
+        "مصادر",
+        "تراخيص",
+        "المجلس العلمي",
+        "مراجع"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.55
+    },
+    {
+      "path": "/privacy",
+      "title": "سياسة الخصوصية",
+      "description": "سياسة الخصوصية لمنصة المجلس العلمي — كيف نجمع البيانات ونحميها ونستخدمها.",
+      "keywords": [
+        "سياسة الخصوصية",
+        "خصوصية",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "yearly",
+      "priority": 0.4
+    },
+    {
+      "path": "/terms",
+      "title": "شروط الاستخدام",
+      "description": "شروط استخدام منصة المجلس العلمي — حقوق ومسؤوليات المستخدم.",
+      "keywords": [
+        "شروط الاستخدام",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "yearly",
+      "priority": 0.4
+    },
+    {
+      "path": "/contact",
+      "title": "تواصل معنا",
+      "description": "تواصل مع فريق المجلس العلمي — استفسارات، اقتراحات، وإبلاغ عن مشاكل.",
+      "keywords": [
+        "تواصل",
+        "اتصل بنا",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.5
+    },
+    {
+      "path": "/login",
+      "title": "تسجيل الدخول",
+      "description": "تسجيل الدخول أو إنشاء حساب في المجلس العلمي للاستفادة من مزايا التسجيل والمتابعة.",
+      "keywords": [
+        "تسجيل الدخول",
+        "حساب المجلس العلمي",
+        "إنشاء حساب"
+      ],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin",
+      "title": "لوحة التحكم",
+      "description": "لوحة إدارة المحتوى والإشراف على منصة المجلس العلمي الشرعية.",
+      "keywords": [
+        "لوحة التحكم",
+        "إدارة المحتوى"
+      ],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/dashboard",
+      "title": "لوحة التحكم المتقدمة",
+      "description": "إحصائيات المنصة والبلاغات المعلّقة وإدارة المحتوى المتقدمة.",
+      "keywords": [
+        "لوحة التحكم",
+        "إحصائيات",
+        "بلاغات"
+      ],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/sources",
+      "title": "مصادر الاستيراد — لوحة التحكم",
+      "description": "إدارة مصادر استيراد المحتوى في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation/sources",
+      "title": "مصادر الأتمتة — لوحة التحكم",
+      "description": "إدارة مصادر الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation/dashboard",
+      "title": "لوحة الأتمتة — لوحة التحكم",
+      "description": "لوحة متابعة عمليات الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation/platform",
+      "title": "منصة الأتمتة — لوحة التحكم",
+      "description": "إعدادات منصة الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation/center",
+      "title": "مركز الأتمتة — لوحة التحكم",
+      "description": "مركز التحكم بعمليات الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/autonomous-platform",
+      "title": "المنصة الذاتية — لوحة التحكم",
+      "description": "إدارة المنصة ذاتية التشغيل في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation",
+      "title": "الأتمتة — لوحة التحكم",
+      "description": "إدارة عمليات الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/integrations/instagram",
+      "title": "تكامل إنستغرام — لوحة التحكم",
+      "description": "إدارة تكامل إنستغرام في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/review-center",
+      "title": "مركز المراجعة — لوحة التحكم",
+      "description": "مركز مراجعة المحتوى في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation/review",
+      "title": "مراجعة الأتمتة — لوحة التحكم",
+      "description": "مراجعة نتائج الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/content-import/url",
+      "title": "استيراد محتوى عبر رابط — لوحة التحكم",
+      "description": "استيراد محتوى من رابط خارجي في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/content-import/image",
+      "title": "استيراد محتوى عبر صورة — لوحة التحكم",
+      "description": "استيراد محتوى من صورة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/import",
+      "title": "استيراد المحتوى — لوحة التحكم",
+      "description": "أدوات استيراد المحتوى في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/content",
+      "title": "إدارة المحتوى — لوحة التحكم",
+      "description": "إدارة محتوى المنصة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/auto-content",
+      "title": "المحتوى الآلي — لوحة التحكم",
+      "description": "إدارة المحتوى المُولَّد آليًا في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/fiqh-review",
+      "title": "مراجعة الفقه — لوحة التحكم",
+      "description": "مراجعة المحتوى الفقهي في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/fiqh-quality",
+      "title": "جودة المحتوى الفقهي — لوحة التحكم",
+      "description": "مراقبة جودة المحتوى الفقهي في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/content-production",
+      "title": "إنتاج المحتوى — لوحة التحكم",
+      "description": "خط إنتاج المحتوى في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation/content-production",
+      "title": "إنتاج المحتوى الآلي — لوحة التحكم",
+      "description": "إنتاج المحتوى الآلي عبر الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/feature-status",
+      "title": "حالة الميزات — لوحة التحكم",
+      "description": "متابعة حالة ميزات المنصة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/users",
+      "title": "إدارة المستخدمين — لوحة التحكم",
+      "description": "إدارة حسابات المستخدمين في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/universities",
+      "title": "إدارة الجامعات — لوحة التحكم",
+      "description": "إدارة دليل الجامعات في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/fiqh-council",
+      "title": "الهيئات والمنظمات الإسلامية",
+      "description": "قرارات وبحوث وتوصيات وبيانات وفتاوى جماعية من المجمع الفقهي — مع تصنيف وبحث ومراجع.",
+      "keywords": [
+        "المجمع الفقهي",
+        "قرارات فقهية",
+        "فتاوى جماعية",
+        "فقه معاصر"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.88
+    },
+    {
+      "path": "/fiqh-council/resolutions",
+      "title": "قرارات المجمع الفقهي",
+      "description": "قرارات المجمع الفقهي الإسلامي في القضايا المعاصرة — مع تصنيف ومراجع.",
+      "keywords": [
+        "المجمع الفقهي",
+        "قرارات فقهية",
+        "فقه معاصر"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.84
+    },
+    {
+      "path": "/fiqh-council/fatwas",
+      "title": "الفتاوى الجماعية",
+      "description": "فتاوى جماعية صادرة عن المجمع الفقهي الإسلامي — مع أدلة ومراجع.",
+      "keywords": [
+        "فتاوى جماعية",
+        "المجمع الفقهي",
+        "فقه"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.84
+    },
+    {
+      "path": "/fiqh-council/research",
+      "title": "بحوث المجمع الفقهي",
+      "description": "بحوث ودراسات فقهية في القضايا المعاصرة — منظمة وقابلة للبحث.",
+      "keywords": [
+        "بحوث فقهية",
+        "المجمع الفقهي",
+        "فقه معاصر"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.83
+    },
+    {
+      "path": "/fiqh-council/nawazil",
+      "title": "فقه النوازل",
+      "description": "قضايا معاصرة مرتبطة بقرارات وفتاوى موثّقة: الذكاء الاصطناعي، العملات الرقمية، الطب الحديث، وغيرها.",
+      "keywords": [
+        "فقه النوازل",
+        "نوازل معاصرة",
+        "المجمع الفقهي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.86
+    },
+    {
+      "path": "/fiqh-council/search",
+      "title": "البحث المتقدم",
+      "description": "بحث متقدم في قرارات وفتاوى المجمع الفقهي — بالعنوان والنص والمصدر والتصنيف.",
+      "keywords": [
+        "بحث فقهي",
+        "المجمع الفقهي",
+        "قرارات فقهية"
+      ],
+      "sitemap": false,
+      "changefreq": "weekly",
+      "priority": 0.84,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/fiqh-council/research-assistant",
+      "title": "مساعد الباحث الفقهي",
+      "description": "مساعد بحث فقهي متخصص — يبحث في القرارات والفتاوى المنشورة ويُلخّص النتائج مع المصادر والمراجع.",
+      "keywords": [
+        "مساعد الباحث الفقهي",
+        "بحث فقهي",
+        "المجمع الفقهي",
+        "قرارات فقهية"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.87
+    },
+    {
+      "path": "/fiqh-council/compare",
+      "title": "مقارنة القرارات الفقهية",
+      "description": "قارِن بين قرارات وفتاوى المجمع الفقهي — المصدر، الأدلة، ونقاط الاتفاق والاختلاف.",
+      "keywords": [
+        "مقارنة فقهية",
+        "قرارات",
+        "المجمع الفقهي"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.8
+    },
+    {
+      "path": "/fiqh-council/categories",
+      "title": "التصنيفات الفقهية",
+      "description": "تصفّح محتوى المجمع الفقهي الإسلامي حسب التصنيفات الفقهية والموضوعات العلمية.",
+      "keywords": [
+        "تصنيفات فقهية",
+        "المجمع الفقهي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82
+    },
+    {
+      "path": "/fiqh-council/recommendations",
+      "title": "توصيات المجمع الفقهي",
+      "description": "توصيات رسمية صادرة عن المجمع الفقهي الإسلامي — مع مراجع ومصادر موثقة.",
+      "keywords": [
+        "توصيات فقهية",
+        "المجمع الفقهي",
+        "فقه معاصر"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.83
+    },
+    {
+      "path": "/fiqh-council/live",
+      "title": "البيانات الحية للمجمع الفقهي",
+      "description": "آخر جلسات المجمع الفقهي والقرارات والتوصيات الموثقة — بيانات حية من مصادر رسمية.",
+      "keywords": [
+        "المجمع الفقهي",
+        "جلسات",
+        "قرارات",
+        "بيانات حية"
+      ],
+      "sitemap": true,
+      "changefreq": "daily",
+      "priority": 0.9
+    },
+    {
+      "path": "/fiqh-council/issues",
+      "title": "المسائل الفقهية",
+      "description": "موسوعة المسائل الفقهية — ملفات جامعة تربط القرارات والفتاوى والبحوث والأدلة.",
+      "keywords": [
+        "المسائل الفقهية",
+        "المجمع الفقهي",
+        "قرارات فقهية"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.89
+    },
+    {
+      "path": "/fiqh-council/index",
+      "title": "الفهرس الموضوعي",
+      "description": "فهرس موضوعي للمسائل والقرارات الفقهية — العبادات، المعاملات، النوازل، الاقتصاد، الطب، التقنية.",
+      "keywords": [
+        "فهرس فقهي",
+        "المجمع الفقهي",
+        "تصنيفات فقهية"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.87
+    },
+    {
+      "path": "/fiqh-council/stats",
+      "title": "إحصائيات المجمع الفقهي",
+      "description": "إحصائيات المجمع الفقهي — عدد القرارات والفتاوى والبحوث وأكثر التصنيفات قراءة.",
+      "keywords": [
+        "إحصائيات فقهية",
+        "المجمع الفقهي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82
+    },
+    {
+      "path": "/fiqh-council/archive",
+      "title": "أرشيف المجمع الفقهي",
+      "description": "أرشيف قرارات وفتاوى وتوصيات المجمع الفقهي الإسلامي — للمرجعية والبحث.",
+      "keywords": [
+        "أرشيف فقهي",
+        "المجمع الفقهي",
+        "قرارات سابقة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/rulings",
+      "title": "الأحكام الشرعية",
+      "description": "مكتبة شاملة للأحكام الشرعية في العبادات والمعاملات والأسرة — مرتبطة بالأدلة.",
+      "keywords": [
+        "أحكام شرعية",
+        "فقه",
+        "عبادات",
+        "معاملات"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.87
+    },
+    {
+      "path": "/annual-courses",
+      "title": "الدورات العلمية",
+      "description": "الدورات السنوية والموسمية والبرامج العلمية — جداول ومشايخ وتسجيل.",
+      "keywords": [
+        "دورات علمية",
+        "دورات شرعية",
+        "برامج علمية",
+        "طلب العلم"
+      ],
+      "sitemap": false,
+      "changefreq": "weekly",
+      "priority": 0.86,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/updates",
+      "title": "آخر المستجدات",
+      "description": "آخر القرارات والفتاوى والدروس والدورات والكتب والإعلانات — مرتّبة زمنياً.",
+      "keywords": [
+        "مستجدات",
+        "أخبار علمية",
+        "قرارات جديدة",
+        "فتاوى جديدة"
+      ],
+      "sitemap": true,
+      "changefreq": "daily",
+      "priority": 0.85
+    },
+    {
+      "path": "/404",
+      "title": "الصفحة غير موجودة",
+      "description": "تعذر العثور على الصفحة المطلوبة — استخدم البحث أو عد للصفحة الرئيسية للمجلس العلمي.",
+      "keywords": [
+        "404",
+        "الصفحة غير موجودة",
+        "المجلس العلمي"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/submit",
+      "title": "أضف محتوى",
+      "description": "شارك في بناء المنصة العلمية بإضافة درس أو سؤال للمراجعة والنشر.",
+      "keywords": [
+        "إضافة محتوى",
+        "مقترح",
+        "مشاركة علمية"
+      ],
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.6
+    },
+    {
+      "path": "/seerah",
+      "title": "السيرة النبوية الشريفة",
+      "description": "السيرة النبوية المطهرة لنبينا محمد ﷺ، مرتبة ومفصّلة من المولد الشريف إلى الوفاة الكريمة.",
+      "keywords": [
+        "السيرة النبوية",
+        "سيرة النبي محمد",
+        "تاريخ الإسلام",
+        "النبي محمد",
+        "الهجرة النبوية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.85
+    },
+    {
+      "path": "/flashcards",
+      "title": "البطاقات التعليمية",
+      "description": "بطاقات تعليمية تفاعلية لمراجعة المعلومات الشرعية والعلمية وتثبيتها بأسلوب التعلم المتباعد.",
+      "keywords": [
+        "بطاقات تعليمية",
+        "مراجعة المعلومات",
+        "التعلم التفاعلي",
+        "حفظ الأحكام",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/memorize",
+      "title": "بطاقات الحفظ",
+      "description": "احفظ المتون والمصطلحات بالتكرار المتباعد — رزم يومية بثلاثة تقييمات فقط.",
+      "keywords": [
+        "بطاقات الحفظ",
+        "تكرار متباعد",
+        "حفظ المتون",
+        "الأربعون النووية",
+        "مصطلحات الحديث"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.86
+    },
+    {
+      "path": "/learning-plan",
+      "title": "خطة التعلم",
+      "description": "ضع خطة تعلم شخصية منظمة لطلب العلم الشرعي وتتبع تقدمك في حفظ القرآن والأحاديث ودراسة العلوم الشرعية.",
+      "keywords": [
+        "خطة التعلم",
+        "جدول الدراسة",
+        "طلب العلم",
+        "التعلم المنظم",
+        "دراسة الشريعة"
+      ],
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.72,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/tawhid",
+      "title": "العقيدة والتوحيد",
+      "description": "أساسيات علم التوحيد وأسماء الله الحسنى وصفاته العلا، مع الأدلة من الكتاب والسنة.",
+      "keywords": [
+        "علم التوحيد",
+        "أسماء الله الحسنى",
+        "صفات الله",
+        "العقيدة الإسلامية",
+        "علم العقيدة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
+    },
+    {
+      "path": "/knowledge-graph",
+      "title": "الرسم البياني المعرفي الإسلامي",
+      "description": "استكشف شبكة المعرفة الإسلامية التفاعلية التي تربط العلوم الشرعية ببعضها البعض.",
+      "keywords": [
+        "خريطة المعرفة",
+        "شبكة العلوم الشرعية",
+        "العلوم الإسلامية",
+        "الترابط العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/notification-settings",
+      "title": "الإشعارات",
+      "description": "إعدادات إشعارات الدروس ومواقيت الصلاة والأذكار في تطبيق المجلس العلمي.",
+      "keywords": [
+        "إعدادات الإشعارات",
+        "تذكيرات الصلاة",
+        "تذكيرات الدروس"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/car-mode",
+      "title": "وضع السيارة",
+      "description": "واجهة مبسطة لاستماع الدروس والأذكار بأمان أثناء القيادة.",
+      "keywords": [
+        "وضع السيارة",
+        "استماع الدروس",
+        "القيادة الآمنة"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/mosque-mode",
+      "title": "وضع المسجد",
+      "description": "عرض مواقيت الصلاة والأذكار على شاشات المساجد بتنسيق احترافي.",
+      "keywords": [
+        "وضع المسجد",
+        "شاشة المسجد",
+        "مواقيت الصلاة"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/family",
+      "title": "وضع الأسرة",
+      "description": "تعلّم مع عائلتك في بيئة تفاعلية ودية مصممة للأسرة المسلمة.",
+      "keywords": [
+        "وضع الأسرة",
+        "تعليم الأطفال الإسلام",
+        "تعلم جماعي"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/study-room",
+      "title": "غرفة الدراسة",
+      "description": "بيئة دراسة مركّزة مع أدوات المذاكرة والتركيز لطالب العلم الشرعي.",
+      "keywords": [
+        "غرفة الدراسة",
+        "بيئة التركيز",
+        "مذاكرة",
+        "طلب العلم"
+      ],
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.7,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/settings",
+      "title": "الإعدادات",
+      "description": "إدارة إعدادات حسابك وتفضيلاتك في منصة المجلس العلمي.",
+      "keywords": [
+        "إعدادات الحساب",
+        "تفضيلات المستخدم"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/register",
+      "title": "إنشاء حساب",
+      "description": "انضم إلى منصة المجلس العلمي وابدأ رحلتك في طلب العلم الشرعي.",
+      "keywords": [
+        "إنشاء حساب",
+        "تسجيل",
+        "المجلس العلمي"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/vault",
+      "title": "مخزن المعرفة",
+      "description": "احفظ الفوائد والدروس والمقتطفات الشرعية في مخزنك الشخصي للرجوع إليها في أي وقت.",
+      "keywords": [
+        "حفظ الفوائد",
+        "مخزن المعرفة",
+        "مفضلاتي",
+        "طلب العلم"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/stats",
+      "title": "إحصائياتي",
+      "description": "تتبع تقدمك في طلب العلم واستعرض إحصائيات نشاطك على منصة المجلس العلمي.",
+      "keywords": [
+        "إحصائيات",
+        "تقدم التعلم",
+        "طلب العلم"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/institutions",
+      "title": "دليل المؤسسات الإسلامية",
+      "description": "دليل المؤسسات والمراكز العلمية الإسلامية المعتمدة في العالم العربي.",
+      "keywords": [
+        "المؤسسات الإسلامية",
+        "مراكز علمية",
+        "دور العلم",
+        "معاهد شرعية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.72
+    },
+    {
+      "path": "/universities",
+      "title": "دليل الجامعات والكليات الشرعية",
+      "description": "دليل شامل للجامعات والمؤسسات الأكاديمية الإسلامية المعتمدة في العالم العربي والإسلامي.",
+      "keywords": [
+        "جامعات إسلامية",
+        "الجامعات العربية",
+        "أكاديميات شرعية",
+        "دراسة الشريعة"
+      ],
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.72,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/methodology",
+      "title": "منهجيتنا في التوثيق",
+      "description": "مصادر التحقق، منهجية المراجعة البشرية، وضمانات جودة المحتوى الشرعي في المجلس العلمي.",
+      "keywords": [
+        "منهجية التوثيق",
+        "مصادر علمية",
+        "مراجعة بشرية",
+        "توثيق شرعي"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.7
+    },
+    {
+      "path": "/fatwa-policy",
+      "title": "سياسة الفتوى والمراجعة",
+      "description": "كيف تُعرض الفتاوى والأحكام في المجلس العلمي، وما حدود المنصة، وسير المراجعة والاعتماد.",
+      "keywords": [
+        "سياسة الفتوى",
+        "مراجعة شرعية",
+        "توثيق",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.65
+    },
+    {
+      "path": "/sahabah",
+      "title": "أعلام الصحابة الكرام",
+      "description": "تراجم الصحابة الكرام رضي الله عنهم — سيرتهم وفضائلهم وروياتهم من أصح المصادر.",
+      "keywords": [
+        "الصحابة",
+        "سيرة الصحابة",
+        "أعلام الإسلام",
+        "رجال حول الرسول"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82
+    },
+    {
+      "path": "/sheikhs",
+      "title": "الدروس",
+      "description": "دليل المشايخ ودروسهم — يُحيلك إلى صفحة الدروس الشرعية.",
+      "keywords": [
+        "مشايخ",
+        "دروس شرعية",
+        "علماء"
+      ],
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.3
+    },
+    {
+      "path": "/scholars",
+      "title": "أعلام الإسلام",
+      "description": "سير أعلام العلماء والمحدثين والمفسرين والفقهاء عبر التاريخ الإسلامي.",
+      "keywords": [
+        "علماء الإسلام",
+        "سير الأعلام",
+        "المحدثون",
+        "المفسرون",
+        "الفقهاء"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/shamael",
+      "title": "صفةُ سيِّد الخلقِ ﷺ",
+      "description": "صفته ﷺ خَلقاً وخُلُقاً وهَدياً من أصحّ الروايات في الشمائل المحمدية للترمذي.",
+      "keywords": [
+        "الشمائل المحمدية",
+        "صفة النبي",
+        "هدي النبي",
+        "خُلق النبي ﷺ"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/janna-naar",
+      "title": "صفة الجنة",
+      "description": "أوصاف الجنة والنار من القرآن الكريم والسنة النبوية الصحيحة — أبوابها وأنهارها وأسباب دخولها.",
+      "keywords": [
+        "صفة الجنة",
+        "صفة النار",
+        "الجنة في القرآن",
+        "عذاب النار",
+        "الآخرة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.8
+    },
+    {
+      "path": "/alamat-saah",
+      "title": "علامات الساعة",
+      "description": "علامات الساعة الصغرى والكبرى — الترتيب والتحقق والدلائل من الكتاب والسنة الصحيحة.",
+      "keywords": [
+        "علامات الساعة",
+        "أشراط الساعة",
+        "علامات القيامة",
+        "علامات يوم القيامة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/malaika",
+      "title": "الملائكة في الإسلام",
+      "description": "عالم الملائكة في الإسلام — صفاتهم ومهامهم وأسماؤهم وما ورد في القرآن والسنة.",
+      "keywords": [
+        "الملائكة",
+        "عالم الملائكة",
+        "جبريل",
+        "ميكائيل",
+        "ملائكة الله"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.76
+    },
+    {
+      "path": "/wasaya-nabawiyya",
+      "title": "الوصايا النبوية",
+      "description": "الوصايا النبوية الجامعة — توجيهات النبي ﷺ في الدين والدنيا والأخلاق والأسرة.",
+      "keywords": [
+        "الوصايا النبوية",
+        "وصايا النبي ﷺ",
+        "توجيهات نبوية",
+        "أحاديث الوصايا"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.76
+    },
+    {
+      "path": "/raqaiq",
+      "title": "الرقائق والزهد",
+      "description": "أحاديث الرقائق والزهد والتذكير بالآخرة — ترقيق القلوب وتزكية النفوس.",
+      "keywords": [
+        "الرقائق",
+        "الزهد",
+        "ترقيق القلوب",
+        "التزهيد في الدنيا",
+        "أحاديث الرقائق"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/tawba",
+      "title": "التوبة والاستغفار",
+      "description": "أحكام التوبة وشروطها وأثرها وفضل الاستغفار من القرآن والسنة النبوية الصحيحة.",
+      "keywords": [
+        "التوبة",
+        "الاستغفار",
+        "شروط التوبة",
+        "فضل الاستغفار",
+        "التوبة النصوح"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/amr-bil-maruf",
+      "title": "الأمر بالمعروف والنهي عن المنكر",
+      "description": "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة.",
+      "keywords": [
+        "أمر بالمعروف",
+        "نهي عن المنكر",
+        "مراتب الإنكار",
+        "الإنكار باليد",
+        "الإنكار بالقلب"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/akhlaq",
+      "title": "مكارم الأخلاق",
+      "description": "الفضائل والرذائل والآداب الإسلامية من القرآن والسنة — بناء الشخصية المسلمة الكاملة.",
+      "keywords": [
+        "الأخلاق الإسلامية",
+        "الفضائل",
+        "الآداب الشرعية",
+        "بناء الشخصية المسلمة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/salah-guide",
+      "title": "دليل الصلاة الكامل",
+      "description": "دليل الصلاة الكامل للمبتدئ والمتقن — شروطها وأركانها وواجباتها وسننها مع التوضيح.",
+      "keywords": [
+        "كيفية الصلاة",
+        "أركان الصلاة",
+        "صفة الصلاة",
+        "دليل الصلاة",
+        "تعلم الصلاة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.85
+    },
+    {
+      "path": "/zakat",
+      "title": "الزكاة وأحكامها",
+      "description": "أحكام الزكاة الشرعية — مصارفها ومقاديرها وشروطها ومن تجب عليه بالأدلة الشرعية.",
+      "keywords": [
+        "أحكام الزكاة",
+        "مصارف الزكاة",
+        "فريضة الزكاة",
+        "نصاب الزكاة",
+        "الزكاة في الإسلام"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.83
+    },
+    {
+      "path": "/jumuah",
+      "title": "صلاة الجمعة",
+      "description": "حكم صلاة الجمعة وشروطها وهيئة الخطبة وآداب اليوم من الأدلة الشرعية.",
+      "keywords": [
+        "صلاة الجمعة",
+        "خطبة الجمعة",
+        "آداب الجمعة",
+        "غسل الجمعة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
+    },
+    {
+      "path": "/riba",
+      "title": "الربا وأحكامه",
+      "description": "تعريف الربا وأنواعه وحرمة الفائدة البنكية والبدائل الشرعية بالأدلة.",
+      "keywords": [
+        "الربا",
+        "الفائدة البنكية",
+        "ربا النسيئة",
+        "التمويل الإسلامي"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.84
+    },
+    {
+      "path": "/nikah",
+      "title": "النكاح وأحكامه",
+      "description": "أركان عقد النكاح وشروطه والمهر وحقوق الزوجين في الإسلام.",
+      "keywords": [
+        "النكاح",
+        "الزواج في الإسلام",
+        "أركان النكاح",
+        "المهر"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.83
+    },
+    {
+      "path": "/talaq",
+      "title": "الطلاق والعدة",
+      "description": "أحكام الطلاق الرجعي والبائن والعدة والخلع وأدب الفراق.",
+      "keywords": [
+        "الطلاق",
+        "العدة",
+        "الخلع",
+        "أحكام الطلاق"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
+    },
+    {
+      "path": "/udhiya",
+      "title": "الأضحية وأحكامها",
+      "description": "حكم الأضحية وشروطها ووقتها وعيوبها المانعة وآداب الذبح والتوزيع.",
+      "keywords": [
+        "الأضحية",
+        "عيد الأضحى",
+        "شروط الأضحية",
+        "أيام التشريق"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
+    },
+    {
+      "path": "/ruqya",
+      "title": "الرقية الشرعية",
+      "description": "مشروعية الرقية الشرعية وضوابط التوحيد وما يُحذر منه من الشرك والدجل.",
+      "keywords": [
+        "الرقية الشرعية",
+        "العين",
+        "السحر",
+        "الرقية بالقرآن"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
+    },
+    {
+      "path": "/waqf",
+      "title": "الوقف وأحكامه",
+      "description": "حقيقة الوقف وشروطه وأنواعه وأمانة النظّار والصدقة الجارية.",
+      "keywords": [
+        "الوقف",
+        "الصدقة الجارية",
+        "الأوقاف",
+        "أحكام الوقف"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.81
+    },
+    {
+      "path": "/sadaqa",
+      "title": "الصدقة وفضائلها",
+      "description": "فضل الصدقة وآداب الإنفاق والفرق بينها وبين الزكاة وصدقة كل معروف.",
+      "keywords": [
+        "الصدقة",
+        "الإنفاق",
+        "فضائل الصدقة",
+        "الصدقة الجارية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.81
+    },
+    {
+      "path": "/sawm",
+      "title": "الصيام وأحكامه",
+      "description": "أحكام الصيام وشروطه ومفسداته والصيام المستحب من القرآن والسنة النبوية الصحيحة.",
+      "keywords": [
+        "أحكام الصيام",
+        "صيام رمضان",
+        "مفسدات الصيام",
+        "الصيام المستحب",
+        "صيام المسلم"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.83
+    },
+    {
+      "path": "/hajj",
+      "title": "الحج والعمرة",
+      "description": "مناسك الحج والعمرة وأحكامهما وشروطهما وأعمالهما بالتفصيل من كتب الفقه المعتمدة.",
+      "keywords": [
+        "أحكام الحج",
+        "مناسك الحج",
+        "أحكام العمرة",
+        "الحج والعمرة",
+        "فريضة الحج"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.83
+    },
+    {
+      "path": "/tahara",
+      "title": "الطهارة وأحكامها",
+      "description": "أحكام الطهارة في الإسلام — الوضوء والغسل والتيمم ومس المصحف وأنواع النجاسات.",
+      "keywords": [
+        "أحكام الطهارة",
+        "الوضوء",
+        "الغسل",
+        "التيمم",
+        "نواقض الوضوء"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
+    },
+    {
+      "path": "/janaza",
+      "title": "أحكام الجنائز",
+      "description": "أحكام الجنائز الشرعية — تغسيل الميت وتكفينه والصلاة عليه ودفنه والتعزية.",
+      "keywords": [
+        "أحكام الجنائز",
+        "صلاة الجنازة",
+        "تغسيل الميت",
+        "الدفن في الإسلام",
+        "أحكام الميت"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/mawarith",
+      "title": "علم المواريث والفرائض",
+      "description": "علم المواريث والفرائض — أسباب الإرث وموانعه والحصص الشرعية للورثة.",
+      "keywords": [
+        "المواريث الشرعية",
+        "علم الفرائض",
+        "الميراث في الإسلام",
+        "حصص الإرث"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/madhahib",
+      "title": "المذاهب الفقهية الأربعة",
+      "description": "المذاهب الفقهية الأربعة — الحنفي والمالكي والشافعي والحنبلي، أصولها ومميزاتها وأئمتها.",
+      "keywords": [
+        "المذاهب الفقهية",
+        "المذهب الحنفي",
+        "المذهب المالكي",
+        "المذهب الشافعي",
+        "المذهب الحنبلي"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/asma-husna",
+      "title": "الأسماء الحسنى",
+      "description": "أسماء الله الحسنى التسعة والتسعون — معانيها وآثارها وكيف يتعبد بها المسلم.",
+      "keywords": [
+        "أسماء الله الحسنى",
+        "99 اسم لله",
+        "صفات الله",
+        "الأسماء الإلهية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.85
+    },
+    {
+      "path": "/arkan",
+      "title": "أركان الإسلام الخمسة",
+      "description": "أركان الإسلام الخمسة — الشهادتان والصلاة والزكاة والصوم والحج بالأدلة الشرعية.",
+      "keywords": [
+        "أركان الإسلام",
+        "الشهادتان",
+        "الصلاة والزكاة",
+        "الصوم والحج",
+        "مبادئ الإسلام"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.85
+    },
+    {
+      "path": "/arkan-iman",
+      "title": "أركان الإيمان الستة",
+      "description": "أركان الإيمان الستة — الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر.",
+      "keywords": [
+        "أركان الإيمان",
+        "الإيمان بالله",
+        "الإيمان بالملائكة",
+        "الإيمان بالقدر",
+        "العقيدة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.85
+    },
+    {
+      "path": "/duas",
+      "title": "الأدعية الشرعية",
+      "description": "أدعية ثابتة من القرآن والسنة النبوية الصحيحة لجميع المناسبات والأحوال.",
+      "keywords": [
+        "الأدعية الشرعية",
+        "أدعية القرآن",
+        "أدعية السنة",
+        "دعاء المسلم",
+        "أدعية مستجابة"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82
+    },
+    {
+      "path": "/duas-quran",
+      "title": "أدعية القرآن الكريم",
+      "description": "الأدعية الواردة في القرآن الكريم — دعاء الأنبياء والمؤمنين مع التفسير والفائدة.",
+      "keywords": [
+        "أدعية القرآن",
+        "دعاء الأنبياء",
+        "دعاء المؤمنين",
+        "أدعية قرآنية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.8
+    },
+    {
+      "path": "/sunan-yawmiyya",
+      "title": "السنن النبوية اليومية",
+      "description": "السنن اليومية للمسلم — سنن الاستيقاظ والنوم والأكل والشرب والخروج والدخول.",
+      "keywords": [
+        "السنن اليومية",
+        "سنن المسلم",
+        "سنة النبي اليومية",
+        "العبادات اليومية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/adab-talab-ilm",
+      "title": "آداب طالب العلم",
+      "description": "آداب طلب العلم الشرعي — الإخلاص والتواضع والصبر والتحصيل العلمي الصحيح.",
+      "keywords": [
+        "آداب طالب العلم",
+        "طلب العلم الشرعي",
+        "آداب العلم",
+        "منهجية الدراسة الشرعية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/fiqh",
+      "title": "الفقه والأحكام",
+      "description": "أبواب الفقه الإسلامي — العبادات والمعاملات والأحوال الشخصية والفقه المعاصر.",
+      "keywords": [
+        "الفقه الإسلامي",
+        "أبواب الفقه",
+        "فقه العبادات",
+        "فقه المعاملات"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.82
+    },
+    {
+      "path": "/quran-knowledge",
+      "title": "القرآن وعلومه",
+      "description": "فهرس القرآن وعلومه وأسباب النزول وقصص السور في مكان واحد.",
+      "keywords": [
+        "القرآن وعلومه",
+        "فهرس القرآن",
+        "علوم القرآن",
+        "أسباب النزول"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.85
+    },
+    {
+      "path": "/occasions-lessons",
+      "title": "المناسبات والدروس",
+      "description": "المناسبات الشرعية والدروس المرتبطة بها في مكان واحد.",
+      "keywords": [
+        "المناسبات الشرعية",
+        "الدروس",
+        "التقويم الهجري"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/islamic-directory",
+      "title": "الدليل الإسلامي",
+      "description": "دليل المؤسسات والمعالم الإسلامية.",
+      "keywords": [
+        "الدليل الإسلامي",
+        "مؤسسات إسلامية",
+        "معالم إسلامية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/memorization",
+      "title": "الحفظ والمراجعة",
+      "description": "خطط الحفظ والمراجعة وأدوات تثبيت القرآن والمتون.",
+      "keywords": [
+        "الحفظ والمراجعة",
+        "خطط الحفظ",
+        "مراجعة القرآن"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/hadith-science",
+      "title": "مصطلح الحديث",
+      "description": "علم مصطلح الحديث — أنواع الحديث وقواعد التصحيح والتضعيف والجرح والتعديل.",
+      "keywords": [
+        "مصطلح الحديث",
+        "علم الحديث",
+        "الحديث الصحيح والضعيف",
+        "الجرح والتعديل"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/ulum-quran",
+      "title": "علوم القرآن الكريم",
+      "description": "علوم القرآن الكريم — التجويد والتفسير والناسخ والمنسوخ وأسباب النزول والقراءات.",
+      "keywords": [
+        "علوم القرآن",
+        "أسباب النزول",
+        "الناسخ والمنسوخ",
+        "القراءات القرآنية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.78
+    },
+    {
+      "path": "/tafsir",
+      "title": "علم التفسير",
+      "description": "موسوعة تعليمية في علم التفسير: نشأته، أنواعه، أصوله، شروط المفسّر، المصطلحات، أشهر المفسرين وكتبهم، ومسار دراسة عملي مع روابط للمصحف والمكتبة.",
+      "keywords": [
+        "تفسير",
+        "علم التفسير",
+        "أصول التفسير",
+        "كتب التفسير",
+        "المفسرون",
+        "التفسير بالمأثور",
+        "ابن كثير",
+        "الطبري",
+        "السعدي"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.8
+    },
+    {
+      "path": "/fiqh-qawaid",
+      "title": "القواعد الفقهية الكبرى",
+      "description": "القواعد الفقهية الكبرى وتطبيقاتها الفقهية — الضرر والضرار والمشقة والعادة محكّمة.",
+      "keywords": [
+        "القواعد الفقهية",
+        "أصول الفقه",
+        "القواعد الكلية",
+        "تطبيقات فقهية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/mushaf",
+      "title": "المصحف الشريف",
+      "description": "المصحف الشريف كاملاً — اقرأ القرآن الكريم سورة سورة بخط عثماني واضح، مع الاستماع لكل آية ومشاركتها.",
+      "keywords": [
+        "المصحف الشريف",
+        "قراءة القرآن",
+        "القرآن الكريم",
+        "مصحف إلكتروني"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.9,
+      "ogType": "article"
+    },
+    {
+      "path": "/quran-hub",
+      "title": "القرآن الكريم",
+      "description": "مركز القرآن الكريم — المصحف الرقمي والتجويد والقراءات وعلوم القرآن.",
+      "keywords": [
+        "مركز القرآن",
+        "قرآن كريم",
+        "مصحف رقمي",
+        "تجويد القرآن"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.85
+    },
+    {
+      "path": "/kids",
+      "title": "ركن الأطفال (قريبًا)",
+      "description": "ركن الأطفال في المجلس العلمي قيد التجهيز — محتوى تعليمي ميسّر وآمن قريبًا.",
+      "keywords": [
+        "الأطفال",
+        "تعليم الأطفال",
+        "قريبًا"
+      ],
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.3,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/mind-map",
+      "title": "الخرائط الذهنية",
+      "description": "خريطة ذهنية تفاعلية للعلوم الإسلامية — ربط المفاهيم والتصورات الشرعية بصرياً.",
+      "keywords": [
+        "الخريطة الذهنية",
+        "خريطة العلوم الإسلامية",
+        "تصور المعرفة الشرعية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.65
+    },
+    {
+      "path": "/knowledge-map",
+      "title": "ترابط العلوم الإسلامية",
+      "description": "خريطة تفاعلية للمعرفة الإسلامية — تصفح العلوم الشرعية بصرياً بشكل تفاعلي.",
+      "keywords": [
+        "الخريطة المعرفية",
+        "خريطة العلوم",
+        "تصفح المعرفة الإسلامية"
+      ],
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.72,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/hikam-salaf",
+      "title": "حِكَم السلف الصالح",
+      "description": "حكم ومواعظ السلف الصالح — أقوال الصحابة والتابعين والأئمة في الدين والتزكية.",
+      "keywords": [
+        "حكم السلف",
+        "أقوال الصحابة",
+        "مواعظ التابعين",
+        "أقوال الأئمة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/fadail-aamal",
+      "title": "فضائل الأعمال",
+      "description": "فضائل الأعمال الصالحة — الصدقة والذكر والصلاة والصيام والحج من القرآن والسنة.",
+      "keywords": [
+        "فضائل الأعمال",
+        "فضل الصدقة",
+        "فضل الذكر",
+        "فضل الصيام",
+        "الأعمال الصالحة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/topics",
+      "title": "الموضوعات العلمية",
+      "description": "تصفح المحتوى حسب الموضوع — العقيدة والفقه والحديث والقرآن والسيرة والأخلاق.",
+      "keywords": [
+        "مواضيع إسلامية",
+        "تصنيفات إسلامية",
+        "المحتوى الشرعي",
+        "أبواب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/sitemap",
+      "title": "أهم الأقسام",
+      "description": "دليل لأهم أقسام المجلس العلمي — قرآن وحديث وفقه وعقيدة وسيرة وأدوات التعلم والخدمات.",
+      "keywords": [
+        "خريطة الموقع",
+        "أقسام المجلس العلمي"
+      ],
+      "sitemap": true
+    },
+    {
+      "path": "/features-in-progress",
+      "title": "مميزات قيد التطوير",
+      "description": "الميزات والأقسام قيد التطوير — خارطة طريق منصة المجلس العلمي للمرحلة القادمة.",
+      "keywords": [
+        "قيد التطوير",
+        "خارطة الطريق",
+        "مستجدات التطوير"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/islamic-glossary",
+      "title": "المصطلحات الإسلامية",
+      "description": "موسوعة المصطلحات الإسلامية — تعريف المصطلحات الفقهية والعقدية والحديثية والقرآنية.",
+      "keywords": [
+        "المصطلحات الإسلامية",
+        "تعريف المصطلحات الفقهية",
+        "مصطلحات علم الحديث"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/islam-stats",
+      "title": "الإسلام في أرقام",
+      "description": "إحصائيات وأرقام عن الإسلام والمسلمين في العالم — انتشار الإسلام والمساجد والمسلمون.",
+      "keywords": [
+        "الإسلام في أرقام",
+        "إحصائيات المسلمين",
+        "انتشار الإسلام",
+        "عدد المسلمين"
+      ],
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.72,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/academic-research",
+      "title": "الأبحاث الشرعية",
+      "description": "مكتبة أكاديمية متخصصة في جمع وتنظيم الأبحاث والدراسات الشرعية الموثقة، مع حفظ حقوق الباحثين والجهات العلمية.",
+      "keywords": [
+        "الأبحاث الشرعية",
+        "رسائل ماجستير",
+        "أطروحات دكتوراه",
+        "دراسات إسلامية",
+        "مكتبة أكاديمية"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/academic-research/submit",
+      "title": "أضف بحثًا",
+      "description": "تقديم بحث شرعي للمراجعة — لا يُنشر مباشرة.",
+      "keywords": [
+        "إضافة بحث",
+        "أبحاث شرعية"
+      ],
+      "sitemap": false,
+      "changefreq": "yearly",
+      "priority": 0.3,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/academic-research/assistant",
+      "title": "مساعدة الباحث",
+      "description": "أدوات مساعدة للبحث الشرعي دون كتابة البحث نيابة عن الطالب.",
+      "keywords": [
+        "مساعدة بحث",
+        "خطة بحث"
+      ],
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.4,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/learning/calendar",
+      "title": "التقويم العلمي",
+      "description": "تقويم الأحداث والدروس والدورات الإسلامية القادمة، تابع المواعيد العلمية لعلماء الكويت.",
+      "keywords": [
+        "تقويم دروس",
+        "دورات إسلامية",
+        "مواعيد علمية",
+        "أحداث شرعية"
+      ],
+      "sitemap": false,
+      "changefreq": "daily",
+      "priority": 0.75,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/learning/quiz",
+      "title": "اختبار المسارات العلمية",
+      "description": "اختبر مستواك في العلوم الإسلامية عبر أسئلة تفاعلية مصنّفة حسب المسار والمستوى.",
+      "keywords": [
+        "اختبار إسلامي",
+        "مسار تعليمي",
+        "تقييم المستوى الشرعي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.72
+    },
+    {
+      "path": "/prayer-countdown",
+      "title": "عداد الصلاة القادمة",
+      "description": "عداد تنازلي لوقت الصلاة القادمة في الكويت، اعرف الوقت المتبقي حتى الأذان.",
+      "keywords": [
+        "عداد صلاة",
+        "وقت الصلاة القادمة",
+        "مواقيت الصلاة الكويت",
+        "أذان"
+      ],
+      "sitemap": false,
+      "changefreq": "always",
+      "priority": 0.7,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/prophetic-medicine",
+      "title": "الطب النبوي",
+      "description": "الطب النبوي وهدي النبي ﷺ في الصحة والغذاء والتداوي — من الكتاب والسنة الصحيحة.",
+      "keywords": [
+        "الطب النبوي",
+        "هدي النبي في الصحة",
+        "الطب في الإسلام",
+        "العلاج بالسنة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/islamic-sects",
+      "title": "الفرق الإسلامية",
+      "description": "استعراض علمي تاريخي للفرق الإسلامية — نشأتها وعقائدها وانتشارها وموقف أهل السنة منها.",
+      "keywords": [
+        "الفرق الإسلامية",
+        "علم الملل والنحل",
+        "الفرق والمذاهب"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.72
+    },
+    {
+      "path": "/family-mode",
+      "title": "وضع الأسرة المسلمة",
+      "description": "محتوى إسلامي مناسب للعائلة — أذكار ومحفوظات وقصص للأطفال في بيئة آمنة.",
+      "keywords": [
+        "وضع الأسرة",
+        "إسلام الأطفال",
+        "محتوى إسلامي عائلي"
+      ],
+      "sitemap": false,
+      "changefreq": "weekly",
+      "priority": 0.68,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/start-here",
+      "title": "ابدأ من هنا",
+      "description": "مسار تعريفي مرتّب لطالب العلم المبتدئ: العقيدة، الصلاة، السيرة، القرآن، الأذكار، الفقه، الدروس. ٨ خطوات واضحة.",
+      "keywords": [
+        "ابدأ من هنا",
+        "طالب العلم المبتدئ",
+        "كيف أبدأ بطلب العلم",
+        "مسار إسلامي",
+        "المجلس العلمي"
+      ],
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.85,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/adhan-settings",
+      "title": "إعدادات الأذان",
+      "description": "ضبط إعدادات الأذان والتنبيهات لأوقات الصلاة في المجلس العلمي.",
+      "keywords": [
+        "إعدادات الأذان",
+        "تنبيهات الصلاة"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/my-submissions",
+      "title": "مساهماتي",
+      "description": "استعرض المحتوى الذي أرسلته للمراجعة على منصة المجلس العلمي.",
+      "keywords": [
+        "مساهماتي",
+        "محتوى مُرسَل"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/my-citations",
+      "title": "مكتبة الاقتباسات",
+      "description": "الاقتباسات الإسلامية التي حفظتها من الدروس والفتاوى والأحاديث.",
+      "keywords": [
+        "اقتباساتي",
+        "حفظ الاقتباسات"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/researcher-profile",
+      "title": "ملف الباحث",
+      "description": "الملف الشخصي للباحث الشرعي على منصة المجلس العلمي.",
+      "keywords": [
+        "ملف الباحث",
+        "البحث الشرعي"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/quran-circles",
+      "title": "حلقات تحفيظ القرآن",
+      "description": "دليل حلقات تحفيظ القرآن في الكويت والمنصات الموثوقة — بروابط تسجيل وتواصل من وزارة الأوقاف والمصادر المعلنة.",
+      "keywords": [
+        "حلقات القرآن",
+        "حفظ القرآن",
+        "أوقاف الكويت",
+        "حلقات عن بعد"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7,
+      "robots": "index, follow"
+    },
+    {
+      "path": "/quran-memorization",
+      "title": "اختبارات الحفظ القرآني",
+      "description": "منظومة متكاملة لاختبار حفظ القرآن الكريم — 12 نوعًا من الاختبارات ونظام المراجعة المتباعدة SM-2.",
+      "keywords": [
+        "حفظ القرآن",
+        "اختبارات القرآن",
+        "مراجعة الحفظ",
+        "اختبار السور",
+        "حفظ الآيات",
+        "القرآن الكريم"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.8
+    },
+    {
+      "path": "/quran/memorization-plans",
+      "title": "خطط الحفظ والمراجعة",
+      "description": "خطط مرنة لحفظ القرآن ومراجعته حسب الوقت والعمر، مع متابعة محلية وأيام تعويض واختبار تسميع.",
+      "keywords": [
+        "خطة حفظ القرآن",
+        "مراجعة القرآن",
+        "تثبيت الحفظ",
+        "مصحف المدينة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
+    },
+    {
+      "path": "/mutashabihat",
+      "title": "الآيات المتشابهات في القرآن الكريم",
+      "description": "نظام متخصص لدراسة الآيات المتشابهات في القرآن الكريم — مصادر علمية معتمدة مع بيان الاختلاف الدقيق.",
+      "keywords": [
+        "الآيات المتشابهات",
+        "متشابه القرآن",
+        "درة التنزيل",
+        "البرهان في متشابه القرآن",
+        "حفظ القرآن"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.8
+    },
+    {
+      "path": "/islamic-landmarks",
+      "title": "المشاهد الإسلامية والمساجد التاريخية",
+      "description": "خريطة تفاعلية للمشاهد الإسلامية والمساجد التاريخية حول العالم — مع الوصف والموقع والأهمية التاريخية.",
+      "keywords": [
+        "المساجد التاريخية",
+        "المشاهد الإسلامية",
+        "المسجد الحرام",
+        "المسجد النبوي",
+        "المسجد الأقصى",
+        "مساجد العالم"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/tajweed",
+      "title": "علم التجويد",
+      "description": "دروس شاملة في أحكام التجويد من مخارج الحروف والصفات إلى أحكام المد والوقف.",
+      "keywords": [
+        "تجويد",
+        "أحكام التجويد",
+        "تعلم التجويد",
+        "مخارج الحروف"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/universities/compare",
+      "title": "مقارنة الجامعات الإسلامية",
+      "description": "قارن بين الجامعات الإسلامية في العالم من حيث التخصصات والمناهج وشروط القبول.",
+      "keywords": [
+        "مقارنة جامعات إسلامية",
+        "جامعات شريعة",
+        "دراسة الشريعة"
+      ],
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.65,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/anbiya",
+      "title": "الأنبياء والرسل",
+      "description": "سيرة الأنبياء والرسل من آدم إلى محمد صلى الله عليه وسلم مع الدروس والعبر.",
+      "keywords": [
+        "الأنبياء",
+        "قصص الأنبياء",
+        "الرسل",
+        "سيرة الأنبياء",
+        "المجلس العلمي"
+      ],
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/auth/callback",
+      "title": "إتمام تسجيل الدخول",
+      "description": "إتمام تسجيل الدخول إلى منصة المجلس العلمي للوصول لمحتواك الشرعي.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/auth/register",
+      "title": "إنشاء حساب",
+      "description": "إنشاء حساب جديد على منصة المجلس العلمي للوصول للمحتوى الشرعي كاملاً.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/learning",
+      "title": "المسارات العلمية",
+      "description": "اكتشف مسارات التعلم الشرعي المنظّمة على منصة المجلس العلمي من العقيدة والفقه والتفسير وعلوم الحديث.",
+      "keywords": [
+        "مسارات تعلم",
+        "طلب العلم",
+        "منهج دراسي إسلامي",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": "0.75",
+      "robots": "index, follow"
+    },
+    {
+      "path": "/profile",
+      "title": "الملف الشخصي",
+      "description": "إحصائياتك وإنجازاتك ومستواك العلمي الشرعي في منصة المجلس العلمي.",
+      "keywords": [
+        "ملف شخصي",
+        "إحصائيات"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/researcher",
+      "title": "ملف الباحث الشرعي",
+      "description": "ملف الباحث الشرعي ومساهماته العلمية على منصة المجلس العلمي.",
+      "keywords": [
+        "باحث شرعي",
+        "بحث علمي"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/research",
+      "title": "بحوث المجمع الفقهي",
+      "description": "البحوث والدراسات الشرعية المتاحة على منصة المجلس العلمي.",
+      "keywords": [
+        "بحث شرعي",
+        "دراسات إسلامية"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/upload",
+      "title": "رفع محتوى إسلامي",
+      "description": "رفع الملفات والمحتوى العلمي الشرعي ومشاركته على منصة المجلس العلمي.",
+      "keywords": [
+        "رفع ملف",
+        "مشاركة محتوى"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/account-deletion",
+      "title": "حذف الحساب نهائياً",
+      "description": "طلب حذف حسابك وبياناتك الشخصية من منصة المجلس العلمي.",
+      "keywords": [
+        "حذف الحساب",
+        "حذف البيانات",
+        "الخصوصية",
+        "حذف بيانات المستخدم"
+      ],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/sins-and-rights",
+      "title": "الذنوب والحقوق",
+      "description": "منظومة معرفية شرعية مترابطة تشرح أنواع الذنوب والتمييز بين حقوق الله وحقوق العباد وشروط التوبة الصحيحة لكل نوع، مع الأدلة من القرآن والسنة.",
+      "keywords": [
+        "الذنوب والحقوق",
+        "التوبة الصحيحة",
+        "رد المظالم",
+        "حقوق العباد",
+        "حقوق الله",
+        "الكبائر"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.8
+    },
+    {
+      "path": "/durus-imaniyya",
+      "title": "دروس إيمانية",
+      "description": "أمراض القلوب وأعمالها وتزكية النفس بأسلوب تربوي موجز.",
+      "keywords": [
+        "دروس إيمانية",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/durus-mutanawwia",
+      "title": "دروس متنوعة",
+      "description": "فهارس دراسية في أبواب العلم والعمل والواقع.",
+      "keywords": [
+        "دروس متنوعة",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/iman-topics",
+      "title": "موضوعات إيمانية",
+      "description": "موضوعات مركّزة في الإيمان والعمل.",
+      "keywords": [
+        "موضوعات إيمانية",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/quran-studies",
+      "title": "دراسات قرآنية",
+      "description": "قصص وأمثال ومحاور قرآنية بمتن موجز موثّق.",
+      "keywords": [
+        "دراسات قرآنية",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": false,
+      "changefreq": "weekly",
+      "priority": 0.7,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/sunnah-studies",
+      "title": "دراسات سنية",
+      "description": "أبواب من السنة النبوية بمتن موجز.",
+      "keywords": [
+        "دراسات سنية",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/tazkiya-topics",
+      "title": "موضوعات التزكية",
+      "description": "تزكية النفس والأخلاق العملية.",
+      "keywords": [
+        "موضوعات التزكية",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/tarikh-islami",
+      "title": "التاريخ الإسلامي",
+      "description": "محطات تاريخية بعبرة منهجية.",
+      "keywords": [
+        "التاريخ الإسلامي",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/usra-mujtama",
+      "title": "الأسرة والمجتمع",
+      "description": "بناء البيت المسلم والعلاقات الاجتماعية.",
+      "keywords": [
+        "الأسرة والمجتمع",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/fikr-waqia",
+      "title": "الفكر والواقع",
+      "description": "معالجة قضايا الشباب والعمل والواقع المعاصر.",
+      "keywords": [
+        "الفكر والواقع",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/mawsuaat",
+      "title": "فهارس الموسوعات",
+      "description": "فهارس دراسية موسوعية مختصرة.",
+      "keywords": [
+        "فهارس الموسوعات",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/arabic-language",
+      "title": "اللغة العربية",
+      "description": "النحو والصرف والبلاغة لطالب العلم الشرعي.",
+      "keywords": [
+        "اللغة العربية",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/maqasid-sharia",
+      "title": "مقاصد الشريعة",
+      "description": "مقاصد الشريعة الإسلامية وأثرها في فهم الأحكام.",
+      "keywords": [
+        "مقاصد الشريعة",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/dalail-nubuwwah",
+      "title": "دلائل النبوة",
+      "description": "دلائل نبوة النبي ﷺ من القرآن والسنة الصحيحة.",
+      "keywords": [
+        "دلائل النبوة",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/learn/aqeedat-ahl-sunnah",
+      "title": "عقيدة أهل السنة والجماعة",
+      "description": "معالم منهج أهل السنة: التلقي والإيمان والصفات والصحابة والقدر — دروس منظّمة.",
+      "keywords": [
+        "عقيدة أهل السنة والجماعة",
+        "أهل السنة",
+        "العقيدة",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/learn/aqsam-tawheed",
+      "title": "أقسام التوحيد الثلاثة",
+      "description": "توحيد الربوبية والألوهية والأسماء والصفات على منهج السلف.",
+      "keywords": [
+        "أقسام التوحيد الثلاثة",
+        "أهل السنة",
+        "العقيدة",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/learn/nawaqid-islam",
+      "title": "نواقض الإسلام",
+      "description": "مدخل منضبط لنواقض الإسلام مع ضوابط التكفير.",
+      "keywords": [
+        "نواقض الإسلام",
+        "أهل السنة",
+        "العقيدة",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/learn/iman-billah",
+      "title": "الإيمان بالله",
+      "description": "الركن الأول: الربوبية والألوهية والأسماء والصفات.",
+      "keywords": [
+        "الإيمان بالله",
+        "أهل السنة",
+        "العقيدة",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/quran/recitation-test-ai",
+      "title": "التلاوة | المجلس العلمي",
+      "description": "اختبر تلاوتك للقرآن الكريم مع تصحيح فوري. سجّل تلاوتك وقارنها بالنص القرآني واحصل على تقرير مفصّل.",
+      "keywords": [
+        "التلاوة",
+        "اختبار تلاوة",
+        "تصحيح تلاوة",
+        "مصحف تفاعلي",
+        "التعرف الصوتي"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.8
+    },
+    {
+      "path": "/quran/surahs",
+      "title": "فهرس سور القرآن الكريم",
+      "description": "فهرس كامل لسور القرآن الكريم الـ114 مع بيان مكيّها ومدنيّها وعدد آياتها وترتيب نزولها.",
+      "keywords": [
+        "سور القرآن",
+        "فهرس السور",
+        "القرآن الكريم",
+        "المصحف",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.7
+    },
+    {
+      "path": "/quran/search",
+      "title": "بحث في القرآن الكريم | المجلس العلمي",
+      "description": "ابحث في نص آيات القرآن الكريم محليًا واعرض النتائج في شاشة منفصلة مع الانتقال المباشر إلى موضع الآية في المصحف.",
+      "keywords": [
+        "بحث القرآن",
+        "بحث الآيات",
+        "المصحف",
+        "آيات قرآنية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.7
+    },
+    {
+      "path": "/quran/revelation-order",
+      "title": "ترتيب نزول سور القرآن الكريم | المجلس العلمي",
+      "description": "ترتيب نزول سور القرآن الكريم حسب الروايات المعتمدة، مع بيان المكي والمدني وسبب النزول.",
+      "keywords": [
+        "ترتيب النزول",
+        "نزول القرآن",
+        "مكي ومدني",
+        "أسباب النزول"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.6
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+/* Prayer ranks — deferred from index.css */
+/* ── Prayer ranks page ───────────────────────────────────────────────────── */
+.prayer-ranks-actions {
+  display: flex;
+  gap: var(--ds-space-2);
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.prayer-ranks-source,
+.prayer-ranks-notes {
+  padding: var(--ds-space-4);
+  margin-bottom: 1rem;
+}
+
+.prayer-ranks-timeline {
+  display: grid;
+  gap: var(--ds-space-4);
+  position: relative;
+}
+
+.prayer-rank-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--ds-space-4);
+  padding: var(--ds-space-4);
+}
+
+.prayer-rank-card__num {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+  font-weight: 900;
+}
+
+.prayer-rank-card__eyebrow,
+.prayer-rank-card__meta {
+  color: var(--msk-text-2, var(--mj-ink-2));
+  font-size: 0.85rem;
+}
+
+.prayer-rank-card__text {
+  color: var(--majalis-ink);
+  line-height: 1.9;
+}
+
+.prayer-rank-card__meta {
+  display: grid;
+  gap: 0.35rem;
+}
+
+
+/* ── فضائل الصلاة وإصلاحها (prv-*) ── */
+.prv-section {
+  margin-top: 2.5rem;
+}
+
+.prv-section-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--majalis-ink, var(--mj-brand-deep));
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--majalis-emerald-soft, #EBF5F0);
+}
+
+.prv-virtues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: var(--ds-space-3-5);
+}
+
+.prv-virtue-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2);
+}
+
+.prv-virtue-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
+  margin: 0;
+}
+
+.prv-virtue-text {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.9;
+  color: var(--majalis-ink, var(--mj-brand-deep));
+  margin: 0;
+  direction: rtl;
+  flex: 1;
+}
+
+.prv-virtue-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.prv-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.3rem;
+}
+
+.prv-badge--sahih {
+  background: var(--majalis-emerald-soft, #EBF5F0);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
+}
+
+.prv-badge--quran {
+  background: rgba(124,58,237,0.10);
+  color: var(--brand, var(--mj-brand));
+}
+
+.prv-badge--other {
+  background: var(--majalis-emerald-soft, #EBF5F0);
+  color: var(--majalis-ink-soft, #5D726A);
+}
+
+.prv-virtue-narrator,
+.prv-virtue-source {
+  font-size: 0.8rem;
+  color: var(--majalis-ink-soft, #5D726A);
+}
+
+.prv-virtue-narrator::before { content: "·"; margin-inline-start: 0.3rem; }
+
+.prv-tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.prv-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--majalis-line, #d4e6de);
+  border-radius: 0.65rem;
+  padding: 0.75rem 1rem;
+}
+
+.prv-tip-num {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--majalis-emerald, var(--mj-brand-deep));
+  color: #fff;
+  font-weight: 900;
+  font-size: var(--ds-text-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.prv-tip-text {
+  font-size: 0.86rem;
+  color: var(--majalis-ink, var(--mj-brand-deep));
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ══ صفحة المنهجية ══ */

@@ -1,0 +1,14 @@
+/* ============================================================
+   66 — CertificateVerifyPage  (cvp-*)
+   ============================================================ */
+.cvp-shell { text-align: center; padding-top: 3rem; }
+.cvp-title { font-size: var(--ds-text-2xl); font-weight: 700; margin-bottom: 1.5rem; }
+.cvp-result { padding: var(--ds-space-8); border-radius: var(--ds-radius); }
+.cvp-result--valid  { border: 2px solid var(--emerald-deep); background: var(--panel); }
+.cvp-result--invalid { border: 1px solid var(--line); }
+
+.cvp-result-title { font-weight: 700; margin-bottom: 0.5rem; }
+
+.cvp-result-msg   { color: var(--ink-soft); }
+.cvp-back-link    { display: inline-block; margin-top: 2rem; }
+

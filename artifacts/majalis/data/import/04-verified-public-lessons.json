@@ -1,0 +1,63 @@
+[
+  {
+    "title": "تفسير سورة النحل",
+    "sheikh_name": "د. عثمان بن محمد الخميس",
+    "category": "تفسير",
+    "city": "العاصمة",
+    "region": "منطقة الصديق",
+    "mosque": "مسجد موضي",
+    "day_of_week": "الجمعة",
+    "lesson_time": "بعد صلاة المغرب",
+    "description": "درس أسبوعي ثابت في التفسير — المتابعة الحالية من الآية 40.",
+    "source_url": "https://www.facebook.com/drooss_kw",
+    "source_name": "دروس الكويت (drooss_kw) — بيانات وصفية عامة",
+    "status": "approved",
+    "activity_type": "درس"
+  },
+  {
+    "title": "شرح كتاب تلخيص مختصر المقنع",
+    "sheikh_name": "د. عثمان بن محمد الخميس",
+    "category": "فقه",
+    "city": "العاصمة",
+    "region": "منطقة الصديق",
+    "mosque": "مسجد الياقوت",
+    "day_of_week": "الأربعاء",
+    "lesson_time": "بعد صلاة المغرب",
+    "description": "درس أسبوعي في الفقه — آخر التحديثات في باب الشروط في النكاح.",
+    "source_url": "https://www.facebook.com/drooss_kw",
+    "source_name": "دروس الكويت (drooss_kw) — بيانات وصفية عامة",
+    "status": "approved",
+    "activity_type": "درس"
+  },
+  {
+    "title": "الدورة العلمية التأصيلية",
+    "sheikh_name": "د. راشد صليهم فهد الصليهم",
+    "category": "تأصيل",
+    "city": "العاصمة",
+    "region": "القيروان",
+    "mosque": "مسجد أبي واقد الليثي",
+    "day_of_week": "الاثنين",
+    "lesson_time": "6:00 م — 8:50 م",
+    "description": "برنامج علمي أسبوعي بثلاث جلسات متتابعة — بيانات إعلان عامة من المصادر الرسمية للشيخ.",
+    "source_url": "https://www.majlisilm.com/lessons",
+    "source_name": "إعلانات موثقة — الكويت",
+    "status": "approved",
+    "activity_type": "دورة",
+    "is_course": true
+  },
+  {
+    "title": "شرح كتاب الصلاة من إعانة الطالب",
+    "sheikh_name": "الشيخ أسامة الشطي",
+    "category": "فقه",
+    "city": "العاصمة",
+    "region": "الكويت",
+    "mosque": "مسجد أحمد العميري",
+    "day_of_week": "الثلاثاء",
+    "lesson_time": "6:00 مساءً",
+    "description": "درس حضوري مع نقل مباشر عبر معهد الأندلس الشرعي — بيانات إعلان عامة.",
+    "source_url": "https://www.majlisilm.com/lessons",
+    "source_name": "إعلانات موثقة — الكويت",
+    "status": "approved",
+    "activity_type": "درس"
+  }
+]

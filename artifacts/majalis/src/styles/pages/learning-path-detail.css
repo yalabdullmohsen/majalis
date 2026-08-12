@@ -1,0 +1,319 @@
+/* ═══════════════════════════════════════════════════════════════════
+   64  LearningPathDetailPage v2 — Hero + Ring + Modules
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Hero ── */
+.lpd2-hero {
+  background: linear-gradient(160deg, var(--mj-brand-deep), var(--mj-brand-deep), var(--mj-brand-deep));
+  border-radius: 1.1rem;
+  padding: 1.4rem 1.4rem 1rem;
+  margin-bottom: 1.25rem;
+  color: var(--mj-bg);
+}
+.lpd2-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.73rem;
+  margin-bottom: 0.9rem;
+  color: rgba(250,248,242,.6);
+}
+.lpd2-breadcrumb a {
+  color: rgba(250,248,242,.8);
+  text-decoration: none;
+  transition: color .15s;
+}
+.lpd2-breadcrumb a:hover { color: var(--mj-bg); }
+
+.lpd2-hero__body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ds-space-4);
+}
+.lpd2-hero__info { flex: 1; }
+.lpd2-hero__badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+.lpd2-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-1);
+  padding: 0.18rem 0.55rem;
+  border-radius: var(--ds-radius-full);
+  font-size: 0.69rem;
+  font-weight: 600;
+}
+.lpd2-badge--level  { background: rgba(94,203,161,.18); color: #a8edca; border: 1px solid rgba(94,203,161,.3); }
+.lpd2-badge--hours  { background: rgba(250,248,242,.1);  color: rgba(250,248,242,.85); border: 1px solid rgba(250,248,242,.2); }
+.lpd2-badge--mods   { background: rgba(250,248,242,.1);  color: rgba(250,248,242,.85); border: 1px solid rgba(250,248,242,.2); }
+
+.lpd2-hero__title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--mj-bg);
+  margin-bottom: 0.4rem;
+  line-height: 1.35;
+}
+.lpd2-hero__desc {
+  font-size: 0.83rem;
+  color: rgba(250,248,242,.7);
+  line-height: 1.55;
+}
+
+/* Hero progress bar */
+.lpd2-hero__bar {
+  height: 4px;
+  background: rgba(255,255,255,.12);
+  border-radius: var(--ds-radius-full);
+  margin-top: 1rem;
+  overflow: hidden;
+}
+.lpd2-hero__bar-fill {
+  height: 100%;
+  background: #5ecba1;
+  border-radius: var(--ds-radius-full);
+  transition: width .5s ease;
+}
+
+/* ── Progress ring (on dark hero) ── */
+.lpd2-ring {
+  position: relative;
+  width: 76px; height: 76px;
+  flex-shrink: 0;
+}
+.lpd2-ring__track { stroke: rgba(255,255,255,.12); }
+.lpd2-ring__fill  { stroke: #5ecba1; }
+.lpd2-ring__pct {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #a8edca;
+  pointer-events: none;
+}
+
+/* ── Enroll button ── */
+.lpd2-enroll-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-2);
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--ds-radius-lg);
+  background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
+  color: var(--mj-bg);
+  border: none;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  transition: opacity .15s;
+}
+.lpd2-enroll-btn:disabled { opacity: 0.65; cursor: wait; }
+.lpd2-enroll-btn:hover:not(:disabled) { opacity: 0.9; }
+.lpd2-enroll-btn--cert { background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand)); text-decoration: none; }
+
+/* ── Next module ── */
+
+/* ── Section title ── */
+.lpd2-section-title {
+  font-size: var(--ds-text-base);
+  font-weight: 700;
+  color: var(--clr-ink, #1a1a1a);
+  margin-bottom: 0.75rem;
+}
+
+/* ── ماذا ستتعلم ── */
+.lpd2-what-you-learn { margin-bottom: 1.25rem; }
+.lpd2-what-you-learn ul { display: grid; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+.lpd2-what-you-learn li {
+  position: relative;
+  padding-inline-end: 1.4rem;
+  font-size: 0.88rem;
+  color: var(--clr-ink, #1a1a1a);
+  line-height: 1.6;
+}
+.lpd2-what-you-learn li::before {
+  content: "✓";
+  position: absolute;
+  inset-inline-end: 0;
+  color: var(--majalis-emerald, var(--mj-brand));
+  font-weight: 800;
+}
+
+/* ── المراحل والمقررات ── */
+.lpd2-stage { margin-bottom: 1.75rem; }
+.lpd2-stage__title { font-size: 1.05rem; font-weight: 800; color: var(--majalis-emerald-deep, var(--mj-brand-deep)); margin-bottom: 0.3rem; }
+.lpd2-stage__desc { font-size: 0.82rem; color: var(--majalis-ink-soft); margin-bottom: 0.85rem; }
+.lpd2-stage__courses { display: grid; gap: var(--ds-space-3); }
+
+.lpd2-course-card {
+  border: 1.5px solid var(--clr-border, rgba(0,0,0,.09));
+  border-radius: 0.9rem;
+  background: var(--clr-surface, #fff);
+  overflow: hidden;
+}
+.lpd2-course-card--locked { opacity: 0.6; }
+.lpd2-course-card__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-3);
+  padding: 0.9rem 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: end;
+}
+.lpd2-course-card__head:disabled { cursor: not-allowed; }
+.lpd2-course-card__head-main { display: flex; align-items: center; gap: var(--ds-space-2); color: var(--majalis-emerald, var(--mj-brand)); }
+.lpd2-course-card__title { font-size: 0.92rem; font-weight: 700; color: var(--clr-ink, #1a1a1a); }
+.lpd2-course-card__head-meta { display: flex; align-items: center; gap: 0.6rem; font-size: 0.76rem; color: var(--majalis-ink-soft); }
+.lpd2-chevron--open { transform: rotate(180deg); transition: transform .2s; }
+.lpd2-course-card__bar { height: 4px; background: rgba(23,61,53,.08); }
+.lpd2-course-card__bar-fill { height: 100%; background: var(--majalis-emerald, var(--mj-brand)); transition: width .3s; }
+.lpd2-course-card__locked-note { padding: 0 1rem 0.75rem; font-size: 0.76rem; color: var(--majalis-ink-soft); margin: 0; }
+.lpd2-course-card__body { padding: 0 1rem 1rem; border-top: 1px solid var(--clr-border, rgba(0,0,0,.06)); padding-top: 0.85rem; }
+.lpd2-course-card__desc { font-size: 0.82rem; color: var(--majalis-ink-soft); margin-bottom: 0.75rem; }
+.lpd2-course-card__empty { font-size: 0.82rem; color: var(--majalis-ink-soft); padding: 0.75rem 1rem; margin: 0; }
+
+.lpd2-book-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.74rem;
+  color: var(--majalis-ink-soft);
+  margin-top: 0.35rem;
+  flex-wrap: wrap;
+}
+.lpd2-book-chip__role {
+  background: rgba(23,61,53,.08);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--ds-radius-full);
+  font-weight: 600;
+  font-size: 0.68rem;
+}
+.lpd2-book-chip__link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dashed currentColor;
+}
+.lpd2-book-chip__link:hover,
+.lpd2-book-chip__link:focus-visible {
+  color: var(--majalis-emerald, var(--mj-brand));
+}
+
+/* ── Modules list ── */
+.lpd2-modules { display: grid; gap: 0.6rem; margin-bottom: 1.5rem; }
+.lpd2-module {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-space-3);
+  padding: 0.85rem 1rem;
+  border-radius: var(--ds-radius-lg);
+  border: 1.5px solid var(--clr-border, rgba(0,0,0,.09));
+  background: var(--clr-surface, #fff);
+  transition: border-color .15s;
+}
+.lpd2-module:hover { border-color: rgba(23,61,53,.3); }
+.lpd2-module--done {
+  background: rgba(23,61,53,.04);
+  border-color: rgba(23,61,53,.18);
+}
+.lpd2-module__num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--clr-border, rgba(0,0,0,.12));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: var(--clr-ink-soft, var(--mj-muted));
+}
+.lpd2-module--done .lpd2-module__num { border-color: var(--mj-brand); }
+.lpd2-module__check { color: var(--mj-brand); }
+.lpd2-module__body { flex: 1; min-width: 0; }
+.lpd2-module__type-row {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  color: var(--clr-ink-soft, var(--mj-muted));
+  margin-bottom: 0.2rem;
+}
+.lpd2-module__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--clr-ink, #1a1a1a);
+  line-height: 1.35;
+}
+.lpd2-module--done .lpd2-module__title { color: var(--mj-brand); }
+
+.lpd2-module__action { flex-shrink: 0; display: flex; align-items: center; }
+.lpd2-module__done-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--mj-brand);
+  background: rgba(23,61,53,.08);
+  border: 1px solid rgba(23,61,53,.2);
+  border-radius: var(--ds-radius-full);
+  padding: 0.2rem 0.55rem;
+}
+.lpd2-quiz-btn,
+.lpd2-complete-btn {
+  padding: 0.32rem 0.75rem;
+  border-radius: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s;
+  white-space: nowrap;
+}
+.lpd2-quiz-btn {
+  background: var(--mj-brand);
+  color: var(--mj-bg);
+  text-decoration: none;
+  border: none;
+}
+.lpd2-complete-btn {
+  background: transparent;
+  border: 1.5px solid var(--mj-brand);
+  color: var(--mj-brand);
+}
+.lpd2-quiz-btn:hover,
+.lpd2-complete-btn:hover { opacity: 0.8; }
+
+/* ── AI Insights ── */
+
+/* Dark mode 64 */
+
+html[data-theme="dark"] .lpd2-module {
+  background: rgba(255,255,255,.03);
+  border-color: rgba(255,255,255,.1);
+}
+html[data-theme="dark"] .lpd2-module--done { background: rgba(23,61,53,.1); border-color: rgba(23,61,53,.25); }
+html[data-theme="dark"] .lpd2-module__title { color: var(--mj-brand-soft); }
+html[data-theme="dark"] .lpd2-module--done .lpd2-module__title { color: #5ecba1; }
+
+/* ══════════════════════════════════════════════════════
+   62  Learning Path Detail Page  (lpd-*)
+   ══════════════════════════════════════════════════════ */
+
+.lpd-badge--level    { background: var(--panel-soft); }
+.lpd-badge--progress { background: var(--emerald-light, #d4e9dc); }
+

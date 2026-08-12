@@ -1,0 +1,229 @@
+/* ============================================================
+   QiblaPage — وصلة القبلة التفاعلية (offline-first)
+   ============================================================ */
+
+.qibla-aligned { color: var(--mj-brand); }
+
+.qibla-page { background: var(--elite-white, var(--mj-bg)) !important; }
+
+.qibla-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-5);
+  padding: 0.5rem 1rem 2rem;
+  --qibla-bg: var(--mj-brand-soft);
+  --qibla-face-hi: color-mix(in srgb, var(--mj-brand-soft) 70%, #fff);
+  --qibla-face-lo: var(--mj-brand-soft);
+  min-height: 22rem; /* CLS: reserve dial + meta */
+}
+
+.qibla-dial {
+  position: relative;
+  width: min(280px, 90vw);
+  height: min(280px, 90vw);
+  contain: layout paint;
+}
+
+.qibla-dial--aligned::after {
+  content: "";
+  position: absolute;
+  inset: -6%;
+  border-radius: 50%;
+  box-shadow: 0 0 28px rgba(22, 163, 74, 0.35);
+  pointer-events: none;
+  animation: qibla-glow-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes qibla-glow-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.9; }
+}
+
+.qibla-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 16px rgba(22, 163, 74, 0.15));
+  display: block;
+}
+
+.qibla-aligned-badge {
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
+  color: var(--elite-white, var(--mj-bg)) !important;
+  border-radius: var(--ds-radius-full);
+  padding: 0.45rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: normal;
+  animation: qibla-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes qibla-pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.qibla-info-row {
+  display: flex;
+  gap: var(--ds-space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.qibla-info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  background: #fff;
+  border: 1px solid rgba(22, 163, 74, 0.15);
+  border-radius: var(--ds-radius-lg);
+  padding: 0.6rem 1.1rem;
+  min-width: 90px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.qibla-info-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--txt-muted, var(--mj-ink-2));
+  text-align: center;
+}
+
+.qibla-info-value {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--elite-forest, var(--mj-brand-deep));
+  font-variant-numeric: tabular-nums;
+}
+
+.qibla-geo-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--txt-muted, var(--mj-ink-2));
+  text-align: center;
+  min-height: 2.6rem;
+}
+
+.qibla-geo-place { font-weight: 700; color: var(--elite-forest, var(--mj-brand-deep)); }
+.qibla-geo-coords { font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; }
+.qibla-geo-acc { opacity: 0.85; }
+
+.qibla-permit-btn {
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 0.6rem;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.qibla-hint {
+  font-size: 0.8rem;
+  color: var(--txt-muted, var(--mj-ink-2));
+  text-align: center;
+  max-width: 260px;
+}
+
+.qibla-loading,
+.qibla-error {
+  font-size: 0.9rem;
+  color: var(--txt-muted, var(--mj-ink-2));
+  text-align: center;
+  padding: 1rem;
+}
+
+.qibla-manual {
+  width: min(100%, 22rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.qibla-manual-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--elite-forest, var(--mj-brand-deep));
+}
+
+.qibla-manual-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.qibla-city-select {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  border-radius: 0.55rem;
+  padding: 0.5rem 0.65rem;
+  background: #fff;
+  font: inherit;
+}
+
+.qibla-manual-btn {
+  border: none;
+  border-radius: 0.55rem;
+  padding: 0.5rem 0.85rem;
+  background: var(--elite-forest, var(--mj-brand-deep));
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.qibla-calib-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  padding-bottom: calc(1.25rem + var(--inset-bottom));
+  background: rgba(15, 23, 20, 0.45);
+  backdrop-filter: blur(4px);
+}
+
+.qibla-calib-modal {
+  width: min(100%, 22rem);
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.35rem 1.25rem 1.2rem;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.qibla-calib-figure {
+  margin: 0;
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--mj-brand);
+  letter-spacing: 0.05em;
+}
+
+.qibla-calib-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--elite-forest, var(--mj-brand-deep));
+}
+
+.qibla-calib-body {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--txt-muted, var(--mj-ink-2));
+}

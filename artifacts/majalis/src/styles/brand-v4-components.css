@@ -1,0 +1,244 @@
+/**
+ * ══════════════════════════════════════════════════════════════════════════
+ *  هوية v4 — طبقة المظهر المشتركة (الشكل والحركة فقط)
+ * ══════════════════════════════════════════════════════════════════════════
+ *
+ * تُحمَّل أخيرًا، بعد كل ملفات CSS القديمة.
+ *
+ * لماذا محدّدات العائلة ([class$="-card"]) ولماذا الشكل فقط
+ * ────────────────────────────────────────────────────────
+ * في المشروع مئات أصناف البطاقات والأزرار بأسماء مختلفة (lesson-card,
+ * lib-card, home-qa-card, ds-btn, lad-btn …) نشأت عبر عشرات الجلسات. توحيدها
+ * صنفًا صنفًا مستحيل عمليًا، ومحدّدات العائلة تلتقطها كلها دفعة واحدة.
+ *
+ * لكن هذه التقنية سبق أن سبّبت عطلًا حقيقيًا في هذا المستودع: محدّد
+ * [class$="-hero"] افترض خلفية داكنة فجعل نصًا أبيض على خلفية فاتحة في 96+
+ * صفحة. الدرس المستفاد مطبَّق هنا كقاعدة صارمة:
+ *
+ *   هذه الطبقة لا تحدّد color ولا background إطلاقًا.
+ *   فقط: نصف القطر · الظل · الانتقال · حلقة التركيز · مساحة اللمس.
+ *
+ * الألوان كلها تأتي من رموز brand-v4.css، فلا يمكن لهذه الطبقة أن تكسر
+ * تباينًا لأنها لا تعرف شيئًا عن الألوان أصلًا.
+ */
+
+/* ══════════════════════════════════════════════════════════════
+   ١) البطاقات — حواف أكبر وظل ناعم ملوّن بدل الحد الرمادي الجاف
+   ══════════════════════════════════════════════════════════════ */
+.ui-card,
+[class$="-card"],
+[class*="-card "] {
+  border-radius: var(--r-lg);
+  transition: var(--t-colors), box-shadow var(--dur) var(--ease),
+              transform var(--dur) var(--ease-out);
+}
+
+/* الارتفاع يُطبَّق فقط على البطاقات التي لها سطح فعلي — لا على البطاقات
+   الشفافة أو المرسومة بحد فقط، وإلا ظهر ظل معلّق في الفراغ. */
+.ui-card {
+  box-shadow: var(--e-1);
+}
+
+/* البطاقات القابلة للنقر ترتفع قليلًا — إشارة تفاعل من لغة التطبيقات.
+   pointer: fine وحدها كي لا يبقى أثر hover عالقًا بعد اللمس على الجوال. */
+@media (hover: hover) and (pointer: fine) {
+  a.ui-card:hover,
+  button.ui-card:hover,
+  .ui-card-btn:hover,
+  a[class$="-card"]:hover,
+  button[class$="-card"]:hover {
+    box-shadow: var(--e-3);
+    transform: translateY(-2px);
+  }
+}
+
+.ui-card:active,
+a[class$="-card"]:active,
+button[class$="-card"]:active {
+  transform: translateY(0);
+  box-shadow: var(--e-1);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ٢) الأزرار — نصف قطر موحّد + مساحة لمس 44px (إرشادات Apple)
+   ══════════════════════════════════════════════════════════════ */
+button,
+.ds-btn,
+[class$="-btn"],
+[class*="-btn "] {
+  border-radius: var(--r-md);
+  transition: var(--t-colors), box-shadow var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease);
+}
+
+/* الأزرار الدائرية/الحبّة تحتفظ بشكلها — لا يفرض عليها --r-md.
+   ⚠ :not(body):not(html) ضرورية وليست احتياطًا: صنف الجسم "has-assistant-fab"
+   ينتهي بـ-fab فطابقه [class$="-fab"] وأعطى body نصف قطر 9999px. Chromium
+   لا يرسم استدارة body (ينشر خلفيته للـcanvas) فمرّت كل فحوص Playwright،
+   بينما WebKit/Safari يرسمها — فظهرت على iPhone «قبة» خضراء تبتلع الهيدر
+   وقوس أخضر عند الحافة (شكوى المالك حرفيًا، 2026-07-25). أي إضافة لاحقة
+   لهذه القائمة يجب أن تحمل نفس الاستثناء. */
+button.rounded-full,
+[class*="rounded-full"]:not(body):not(html),
+[class$="-fab"]:not(body):not(html),
+[class$="-pill"]:not(body):not(html),
+[class$="-chip"]:not(body):not(html),
+[class$="-tag"]:not(body):not(html) {
+  border-radius: var(--r-full);
+}
+
+/* هدف لمس لا يقل عن 44×44 على الأجهزة اللمسية — أكثر سبب شائع لرفض
+   App Store، ويصعّب الاستخدام بإصبع الإبهام. */
+@media (pointer: coarse) {
+  button:not(.rounded-full):not([class*="icon-only"]),
+  .ds-btn,
+  [class$="-btn"] {
+    min-height: 44px;
+  }
+}
+
+button:active:not(:disabled),
+.ds-btn:active:not(:disabled),
+[class$="-btn"]:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+button:disabled,
+.ds-btn:disabled,
+[class$="-btn"]:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ٣) حقول الإدخال — حد يحقق 3:1 (WCAG 1.4.11) + حلقة تركيز واضحة
+   ══════════════════════════════════════════════════════════════ */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+textarea,
+select,
+.adm-input,
+.adm-select,
+.adm-textarea,
+[class$="-input"],
+[class$="-select"],
+[class$="-textarea"] {
+  border-radius: var(--r-sm);
+  border-color: var(--border-interactive);
+  transition: var(--t-colors), box-shadow var(--dur-fast) var(--ease);
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[class$="-input"]:focus-visible,
+[class$="-textarea"]:focus-visible {
+  border-color: var(--focus-color);
+  box-shadow: 0 0 0 3px hsl(158 50% 35% / 0.18);
+  outline: none;
+}
+
+/* حجم خط 16px على الجوال يمنع iOS Safari من تكبير الصفحة تلقائيًا عند
+   التركيز على الحقل — سلوك يكسر التخطيط ويبدو كعطل. */
+@media (max-width: 768px) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select {
+    font-size: max(16px, var(--fs-base));
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ٤) التركيز — حلقة واحدة موحّدة عبر الموقع كله
+   ══════════════════════════════════════════════════════════════ */
+:where(a, button, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+/* الفأرة لا تُظهر الحلقة، لوحة المفاتيح تُظهرها — :focus-visible يتكفّل بذلك. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ٥) الأسطح المرتفعة — قوائم، أوراق سفلية، نوافذ
+   ══════════════════════════════════════════════════════════════ */
+[class$="-modal"],
+[class$="-dialog"],
+[class$="-sheet"],
+[class$="-drawer"],
+[class$="-popover"],
+[class$="-dropdown"],
+[role="dialog"] {
+  border-radius: var(--r-2xl);
+  box-shadow: var(--e-4);
+}
+
+/* الأوراق السفلية مستديرة من الأعلى فقط — تلتصق بحافة الشاشة. */
+[class$="-bottom-sheet"],
+[class*="bottom-sheet"] {
+  border-radius: var(--r-2xl) var(--r-2xl) 0 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ٦) الصور والوسائط
+   ══════════════════════════════════════════════════════════════ */
+[class$="-thumb"],
+[class$="-cover"],
+[class$="-poster"],
+[class$="-avatar"] {
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+[class$="-avatar"],
+[class*="avatar-"] {
+  border-radius: var(--r-full);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ٧) احترام تفضيل تقليل الحركة — إلزامي، لا خيار
+   ══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .ui-card:hover,
+  a[class$="-card"]:hover,
+  button:active,
+  [class$="-btn"]:active {
+    transform: none !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ٨) استثناءات مقصودة
+   ══════════════════════════════════════════════════════════════ */
+
+/* المصحف: تخطيط الصفحة القرآنية محسوب بدقة (عرض السطر، موضع رقم الآية،
+   حدود الإطار المذهَّب). أي نصف قطر أو ظل مفروض من الخارج يزحزح النص عن
+   موضعه المضبوط، ولذلك يُستثنى القسم بأكمله من هذه الطبقة. */
+.mushaf-page,
+.mushaf-page *,
+[class^="mushaf-"],
+[class^="msk-"],
+[class^="quran-page"] {
+  box-shadow: revert;
+  transform: none;
+}
+
+/* جداول الإدارة تبقى بحواف صغيرة — الحواف الكبيرة تهدر مساحة في شاشات
+   كثيفة البيانات وتصعّب المسح البصري للصفوف. */
+.admin-table,
+.admin-table *,
+[class^="adm-table"] {
+  border-radius: var(--r-xs);
+}

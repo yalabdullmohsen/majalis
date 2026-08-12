@@ -1,0 +1,39 @@
+name: majlisilm_flutter
+description: >
+  Modular Flutter monorepo for Majlisilm (المجلس العلمي).
+  Phase 1: lib/user_app — Quran reader, AI recitation, educational tracks.
+  Phase 2: lib/admin_panel — moderation hub (await Continue Phase 2).
+publish_to: "none"
+version: 1.0.0+5
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  provider: ^6.1.2
+  just_audio: ^0.9.40
+  shared_preferences: ^2.3.2
+  speech_to_text: ^7.0.0
+  sqflite: ^2.3.3+2
+  path: ^1.9.0
+  path_provider: ^2.1.4
+  google_fonts: ^6.2.1
+  record: ^5.2.0
+  web_socket_channel: ^3.0.1
+  permission_handler: ^11.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  # Place Uthmani TTF under assets/fonts/ and uncomment when available:
+  # fonts:
+  #   - family: UthmaniFont
+  #     fonts:
+  #       - asset: assets/fonts/UthmanicHafs.ttf

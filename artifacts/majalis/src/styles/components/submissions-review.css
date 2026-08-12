@@ -1,0 +1,113 @@
+/* ── 198 — SubmissionsReviewPanel (srp-*) ────────────────────────────────────── */
+.srp-root  { direction: rtl; padding: 1.5rem 0; }
+.srp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; flex-wrap: wrap; gap: var(--ds-space-2); }
+.srp-header-title   { font-size: 1.1rem; font-weight: 800; color: var(--majalis-ink); margin: 0 0 0.2rem; }
+.srp-header-pending { font-size: 0.78rem; color: var(--majalis-emerald); font-weight: 600; }
+.srp-refresh-btn { padding: 0.4rem 0.875rem; border-radius: var(--ds-radius); border: 1.5px solid var(--majalis-line); background: var(--majalis-panel); font-size: 0.8rem; cursor: pointer; font-family: inherit; color: var(--majalis-ink); }
+
+.srp-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--ds-space-2); margin-bottom: 1.25rem; }
+.srp-stat-card  { background: var(--srp-stat-bg, #f3f4f6); border-radius: var(--ds-radius-lg); padding: 0.625rem 0.5rem; text-align: center; }
+.srp-stat-card--pending  { --srp-stat-bg: #F0F9FF;                             --srp-stat-color: #0369A1; }
+.srp-stat-card--approved { --srp-stat-bg: var(--majalis-emerald-soft,#EBF5F0); --srp-stat-color: var(--majalis-emerald-deep,var(--mj-brand-deep)); }
+.srp-stat-card--rejected { --srp-stat-bg: var(--majalis-danger-muted,rgba(155,28,28,0.07)); --srp-stat-color: var(--majalis-danger,#9B1C1C); }
+.srp-stat-card--split    { --srp-stat-bg: #eff6ff; --srp-stat-color: #1d4ed8; }
+.srp-stat-val   { font-size: var(--ds-text-xl); font-weight: 800; color: var(--srp-stat-color, var(--mj-ink-2)); }
+.srp-stat-label { font-size: 0.6rem; color: var(--srp-stat-color, var(--mj-ink-2)); font-weight: 600; margin-top: 0.1rem; }
+
+.srp-filters       { display: flex; gap: var(--ds-space-2); margin-bottom: 1.25rem; flex-wrap: wrap; }
+.srp-filter-divider { width: 1px; background: var(--majalis-line); margin: 0 0.25rem; }
+.srp-filter-btn {
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  border: 1.5px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.srp-filter-btn--active      { border-color: var(--majalis-emerald-deep, var(--mj-brand-deep)); background: var(--majalis-emerald-deep, var(--mj-brand-deep)); color: #fff; }
+.srp-filter-btn--active-type { border-color: var(--brand, var(--mj-brand)); background: var(--brand, var(--mj-brand)); color: #fff; }
+
+.srp-state           { text-align: center; padding: var(--ds-space-8); color: #9ca3af; }
+.srp-state--error    { text-align: start; padding: var(--ds-space-4); background: var(--majalis-danger-muted, #fef2f2); border: 1px solid var(--majalis-danger, #dc2626); border-radius: 0.6rem; color: var(--majalis-danger, var(--mj-danger-deep)); font-size: 0.85rem; }
+.srp-state--empty    { padding: var(--ds-space-12); }
+
+.srp-card { background: var(--majalis-panel); border-radius: var(--ds-radius-xl); border: 1.5px solid var(--majalis-line); margin-bottom: 0.875rem; overflow: hidden; }
+.srp-card--approved { border-color: rgba(23,61,53,0.25); }
+.srp-card--rejected { border-color: rgba(155,28,28,0.2); }
+.srp-card-header { display: flex; align-items: flex-start; gap: var(--ds-space-3); padding: 0.875rem 1rem; cursor: pointer; background: var(--majalis-panel); }
+.srp-card-header--approved { background: var(--majalis-emerald-soft, #EBF5F0); }
+.srp-card-header--rejected { background: var(--majalis-danger-muted, rgba(155,28,28,0.07)); }
+.srp-card-icon   { width: 40px; height: 40px; border-radius: var(--ds-radius); background: var(--majalis-parchment-deep); display: flex; align-items: center; justify-content: center; font-size: var(--ds-text-xl); flex-shrink: 0; }
+.srp-card-body   { flex: 1; min-width: 0; }
+.srp-card-title-row { display: flex; align-items: center; gap: var(--ds-space-2); flex-wrap: wrap; }
+.srp-card-title { font-weight: 700; font-size: 0.9rem; color: var(--majalis-ink); }
+.srp-card-status-badge { padding: 0.15rem 0.5rem; border-radius: 9999px; font-size: 0.68rem; font-weight: 600; background: #e5e7eb; color: var(--mj-ink-2); border: 1px solid #d1d5db; }
+.srp-card-status-badge--pending  { background: #F0F9FF; color: #0369A1; border-color: #BAE6FD; }
+.srp-card-status-badge--approved { background: var(--majalis-emerald-soft, #EBF5F0); color: var(--majalis-emerald-deep, var(--mj-brand-deep)); border-color: rgba(23,61,53,0.25); }
+.srp-card-status-badge--rejected { background: var(--majalis-danger-muted, rgba(155,28,28,0.07)); color: var(--majalis-danger, #9B1C1C); border-color: rgba(155,28,28,0.2); }
+.srp-card-meta-row { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); margin-top: 0.2rem; }
+.srp-card-chips { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; margin-top: 0.3rem; }
+.srp-card-toggle { color: var(--majalis-ink-soft); font-size: 0.8rem; flex-shrink: 0; }
+.srp-meta-chip { padding: 0.15rem 0.45rem; border-radius: 0.4rem; font-size: 0.68rem; background: var(--majalis-parchment-deep); color: var(--majalis-ink); border: 1px solid var(--majalis-line); }
+
+.srp-card-detail { padding: 0 1rem 1rem; border-top: 1px solid var(--majalis-line); }
+.srp-detail-desc { margin-top: 0.875rem; }
+.srp-detail-desc-label { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); font-weight: 600; margin-bottom: 0.35rem; }
+.srp-detail-desc-text  { font-size: 0.85rem; color: var(--majalis-ink); line-height: 1.6; margin: 0; }
+.srp-audio-row  { margin-top: 0.875rem; display: flex; align-items: center; gap: var(--ds-space-3); }
+.srp-detail-file, .srp-detail-source { margin-top: 0.875rem; }
+.srp-detail-source { margin-top: 0.5rem; }
+.srp-link       { font-size: 0.8rem; color: var(--majalis-emerald); font-weight: 600; text-decoration: underline; }
+.srp-reviewer-note { margin-top: 0.875rem; padding: 0.6rem 0.875rem; background: var(--majalis-parchment-deep); border-radius: var(--ds-radius); font-size: 0.8rem; color: var(--majalis-ink); }
+.srp-publish-error { margin-top: 0.5rem; font-size: var(--ds-text-xs); color: var(--majalis-danger, var(--mj-danger-deep)); }
+
+.srp-audio-btn {
+  display: flex; align-items: center; gap: 0.3rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 0.4rem;
+  border: none;
+  background: var(--majalis-emerald-deep, var(--mj-brand-deep));
+  color: #fff;
+  font-size: var(--ds-text-xs);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.srp-audio-btn--playing { background: var(--majalis-danger, #9B1C1C); }
+
+.srp-publish-box { margin-top: 1rem; padding: var(--ds-space-3-5); border-radius: var(--ds-radius-lg); }
+.srp-publish-box--adhan  { background: var(--majalis-emerald-muted); border: 1px solid var(--majalis-line); }
+.srp-publish-box--lesson { background: var(--majalis-parchment-deep); border: 1px solid var(--majalis-line); }
+.srp-publish-title       { font-size: 0.78rem; font-weight: 600; margin-bottom: 0.5rem; }
+.srp-publish-title--adhan  { color: var(--majalis-emerald); }
+.srp-publish-title--lesson { color: var(--majalis-ink); margin-bottom: 0.4rem; }
+.srp-publish-desc        { font-size: 0.72rem; color: var(--majalis-ink-soft); margin-bottom: 0.625rem; }
+.srp-publish-success     { font-size: 0.8rem; font-weight: 700; }
+.srp-publish-success--adhan  { color: var(--majalis-emerald); }
+.srp-publish-success--lesson { color: var(--majalis-emerald); }
+.srp-publish-btn {
+  padding: 0.45rem 1rem;
+  border-radius: var(--ds-radius);
+  border: none;
+  background: var(--majalis-emerald-deep, var(--mj-brand-deep));
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.srp-publish-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+.srp-publish-btn--lesson  { background: #1d4ed8; }
+.srp-publish-btn--lesson:disabled { background: #9ca3af; }
+
+.srp-review-actions { margin-top: 1rem; display: flex; flex-direction: column; gap: var(--ds-space-2-5); }
+.srp-review-label   { font-size: 0.78rem; font-weight: 600; color: var(--majalis-ink); }
+.srp-review-textarea { margin-top: 0.35rem; width: 100%; padding: 0.5rem 0.75rem; border-radius: var(--ds-radius); border: 1.5px solid var(--majalis-line); font-family: inherit; font-size: 0.82rem; direction: rtl; box-sizing: border-box; resize: vertical; }
+.srp-review-btns     { display: flex; gap: var(--ds-space-2); }
+.srp-action-btn { flex: 1; padding: 0.55rem; border-radius: 0.6rem; border: none; color: #fff; font-size: 0.85rem; font-weight: 700; cursor: pointer; font-family: inherit; }
+.srp-action-btn--approve { background: var(--mj-brand-deep); }
+.srp-action-btn--reject  { background: #dc2626; }
+

@@ -1,0 +1,135 @@
+/* Car mode — deferred from design-system.css */
+/* ── وضع السيارة ──────────────────────────────────────────────────── */
+.car-mode {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #0d1117;
+  color: #f0f0f0;
+  padding: 0;
+  direction: rtl;
+  user-select: none;
+}
+.car-mode--loading { align-items: center; justify-content: center; }
+
+.car-mode__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.car-mode__exit {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 0.5rem;
+}
+.car-mode__label { font-size: 1rem; font-weight: 700; color: #fff; }
+
+.car-mode__now-playing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  gap: 0.5rem;
+}
+.car-mode__disk {
+  font-size: 4rem;
+  margin-bottom: 0.75rem;
+  animation: carDiskSpin 4s linear infinite paused;
+}
+.car-mode--playing .car-mode__disk { animation-play-state: running; }
+@keyframes carDiskSpin { to { transform: rotate(360deg); } }
+.car-mode__category { font-size: 0.85rem; color: rgba(255,255,255,0.45); letter-spacing: normal; }
+.car-mode__title {
+  font-size: clamp(1.25rem, 5vw, 2rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.4;
+  max-width: 600px;
+}
+.car-mode__speaker { font-size: 1rem; color: rgba(255,255,255,0.6); }
+.car-mode__counter { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+
+.car-mode__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+.car-mode__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.15s, transform 0.1s;
+  font-size: 1.75rem;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+.car-mode__btn:active { transform: scale(0.93); }
+.car-mode__btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.car-mode__btn--sm { width: 64px; height: 64px; }
+.car-mode__btn--play {
+  width: 88px;
+  height: 88px;
+  font-size: 2.25rem;
+  background: var(--ds-emerald, var(--mj-brand));
+  box-shadow: 0 4px 20px rgba(42,122,79,0.45);
+}
+.car-mode__btn--play:hover { background: var(--ds-emerald-deep, var(--mj-brand)); }
+
+.car-mode__playlist {
+  max-height: 240px;
+  overflow-y: auto;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 0.5rem 0;
+}
+.car-mode__playlist-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.65);
+  cursor: pointer;
+  text-align: end;
+  direction: rtl;
+  transition: background 0.1s;
+  font-size: 0.88rem;
+}
+.car-mode__playlist-item:hover { background: rgba(255,255,255,0.06); }
+.car-mode__playlist-item--active { background: rgba(42,122,79,0.2); color: #fff; }
+.car-mode__playlist-num { flex-shrink: 0; width: 24px; font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+.car-mode__playlist-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.car-mode__playlist-speaker { flex-shrink: 0; font-size: 0.72rem; color: rgba(255,255,255,0.35); }
+
+.car-mode__empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: rgba(255,255,255,0.5);
+}
+.car-mode__back-btn {
+  padding: 0.65rem 1.5rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 0.5rem;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- الإطار الخارجي -->
+  <path d="M0,0 L80,0 L80,6 L6,6 L6,80 L0,80 Z" fill="#A78747" opacity="0.45"/>
+  <!-- الإطار الداخلي -->
+  <path d="M12,12 L68,12 L68,16 L16,16 L16,68 L12,68 Z" fill="#A78747" opacity="0.22"/>
+  <!-- معينة زاوية -->
+  <polygon points="6,28 16,18 26,28 16,38" fill="#A78747" opacity="0.40"/>
+  <!-- نقطة الزاوية -->
+  <rect x="0" y="0" width="8" height="8" rx="1" fill="#795B25" opacity="0.55"/>
+  <!-- خط أفقي رفيع -->
+  <line x1="0" y1="10" x2="35" y2="10" stroke="#A78747" stroke-width="0.8" opacity="0.35"/>
+  <!-- خط رأسي رفيع -->
+  <line x1="10" y1="0" x2="10" y2="35" stroke="#A78747" stroke-width="0.8" opacity="0.35"/>
+</svg>

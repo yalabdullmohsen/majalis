@@ -1,0 +1,509 @@
+#!/usr/bin/env node
+/**
+ * فحص سلامة فهرس المكتبة — src/data/library-catalog.json
+ *
+ * يفشل الاختبار إذا:
+ *  1. وُجد معرّفان مكرران (id أو slug).
+ *  2. وُجد عنوانان مطبَّعان متطابقان لنفس المؤلف المطبَّع (تكرار محتوى).
+ *  3. وُجد كتاب بلا عنوان أو بلا مؤلف.
+ *  4. وُجد verificationStatus: "verified" بلا sources.
+ *  5. وُجدت عبارة مبالغ فيها بلا مصدر في أي وصف.
+ *  6. تباعد هذا الملف عن src/lib/library-catalog.ts (المصدر الحي الوحيد
+ *     الذي يستهلكه التطبيق فعلياً — راجع تعليق مطابق في generate-seo.mjs).
+ *
+ * ⚠️ اكتُشف 2026-07-18: كان هذا الملف قد جمد عند 102 كتاب بينما
+ * library-catalog.ts وصل 127 — 25+ كتاباً لم تُفحص إطلاقاً بواسطة هذا
+ * السكربت لأشهر (منها ما احتوى فعلياً عبارات مبالغ فيها غير مصدَّرة، لم
+ * تُكتشف إلا بعد إعادة المزامنة). الفحص 6 أدناه يمنع تكرار هذا الانجراف
+ * صامتاً — إن ظهر فرق، شغّل `npx tsx scripts/regen-library-catalog-json.mjs`
+ * لإعادة المزامنة قبل أي commit.
+ *
+ * التشغيل: node scripts/test-library-integrity.mjs
+ * ويصدّر أيضًا دوال التطبيع لإعادة استخدامها في أدوات الفحص والدمج.
+ */
+import { readFile } from "node:fs/promises";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { dirname, resolve } from "node:path";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const APP_ROOT = resolve(HERE, "..");
+const CATALOG_PATH = resolve(APP_ROOT, "src/data/library-catalog.json");
+const CATALOG_TS_PATH = resolve(APP_ROOT, "src/lib/library-catalog.ts");
+const AUTHORS_PATH = resolve(APP_ROOT, "src/data/library-authors.json");
+const REDIRECTS_PATH = resolve(HERE, "redirects.books.json");
+const VERCEL_PATH = resolve(APP_ROOT, "vercel.json");
+
+/* ================================================================== */
+/* التطبيع العربي — مصدر واحد يستخدمه الكاشف والاختبار                */
+/* ================================================================== */
+
+/** التشكيل والعلامات الفوقية + الكشيدة */
+const DIACRITICS = /[ؐ-ًؚ-ٰٟۖ-ۭـ]/g;
+
+/** ترقيم وفواصل تُستبدل بمسافة */
+const PUNCTUATION = /[«»"'”“‘’()[\]{}—–\-_.,;:!?؟،؛/\\|]/g;
+
+/** كلمات وظيفية تُحذف عند تطبيع العنوان */
+export const TITLE_STOPWORDS = ["في", "من", "على", "شرح", "كتاب"];
+
+/** ألقاب تُحذف عند تطبيع اسم المؤلف */
+export const AUTHOR_HONORIFICS = [
+  "شيخ الإسلام",
+  "حجة الإسلام",
+  "ولي الدين",
+  "الإمام",
+  "الشيخ",
+  "الحافظ",
+  "العلامة",
+];
+
+/** توحيد الحروف العربية وإزالة التشكيل والترقيم */
+export function normalizeArabic(input) {
+  if (!input) return "";
+  return String(input)
+    .replace(DIACRITICS, "")
+    .replace(/ﷺ/g, " ")
+    .replace(/[أإآٱ]/g, "ا")
+    .replace(/ة/g, "ه")
+    .replace(/ى/g, "ي")
+    .replace(/ؤ/g, "و")
+    .replace(/ئ/g, "ي")
+    .replace(PUNCTUATION, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * تطبيع العنوان: إزالة التشكيل والكشيدة، حذف «ال» التعريف،
+ * توحيد الحروف، ثم حذف الكلمات الوظيفية.
+ * ملاحظة: تُقتطع «ال» قبل توحيد الهمزات حتى لا تُبتر «أل» من «ألفية».
+ */
+export function normalizeTitle(input) {
+  if (!input) return "";
+  const stopwords = new Set(TITLE_STOPWORDS.map((word) => normalizeArabic(word)));
+
+  return String(input)
+    .replace(DIACRITICS, "")
+    .replace(/ﷺ/g, " ")
+    .replace(PUNCTUATION, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(" ")
+    .map((word) => (word.startsWith("ال") && word.length > 3 ? word.slice(2) : word))
+    .map((word) => normalizeArabic(word))
+    .filter((word) => word && !stopwords.has(word))
+    .join(" ");
+}
+
+/**
+ * أطول تتابع كلماتٍ مشترك بين نصّين بعد التطبيع العربي.
+ * يُستعمل لكشف تكرار *مضمون* حقلٍ داخل آخر حين تختلف الصياغة قليلاً
+ * فلا يمسكه البحث عن لفظٍ ثابت (راجع فحص caution أدناه).
+ */
+export function sharedWordRun(a, b) {
+  const left = normalizeArabic(a).split(" ").filter(Boolean);
+  const right = normalizeArabic(b).split(" ").filter(Boolean);
+  if (!left.length || !right.length) return 0;
+  let best = 0;
+  // مصفوفة سطرٍ واحد: أطول لاحقة مشتركة تنتهي عند كل موضع.
+  let previous = new Array(right.length + 1).fill(0);
+  for (let i = 1; i <= left.length; i += 1) {
+    const current = new Array(right.length + 1).fill(0);
+    for (let j = 1; j <= right.length; j += 1) {
+      if (left[i - 1] === right[j - 1]) {
+        current[j] = previous[j - 1] + 1;
+        if (current[j] > best) best = current[j];
+      }
+    }
+    previous = current;
+  }
+  return best;
+}
+
+/** تطبيع اسم المؤلف: توحيد الحروف + حذف الألقاب */
+export function normalizeAuthor(input) {
+  if (!input) return "";
+  let value = normalizeArabic(input);
+  for (const honorific of AUTHOR_HONORIFICS) {
+    value = value.split(normalizeArabic(honorific)).join(" ");
+  }
+  return value.replace(/\s+/g, " ").trim();
+}
+
+/* ================================================================== */
+/* عبارات مبالغ فيها بلا مصدر — ممنوعة في الأوصاف                     */
+/* ================================================================== */
+export const OVERCLAIM_PHRASES = [
+  "أهم كتاب",
+  "أفضل كتاب",
+  "أعظم كتاب",
+  "أدق ما كُتب",
+  "أدق وأجمع",
+  "لا غنى عنه",
+  "لا نظير له",
+  "المرجع الأول",
+  "الأشمل",
+  "أشمل موسوعة",
+  "بلا منازع",
+];
+
+/* ================================================================== */
+/* الفحص                                                              */
+/* ================================================================== */
+async function main() {
+  const failures = [];
+  const warnings = [];
+  const fail = (rule, message) => failures.push(`[${rule}] ${message}`);
+
+  const books = JSON.parse(await readFile(CATALOG_PATH, "utf8"));
+
+  if (!Array.isArray(books)) {
+    console.error("❌ library-catalog.json يجب أن يكون مصفوفة كتب في المستوى الأعلى.");
+    process.exit(1);
+  }
+
+  /* 1) معرّفات مكررة ----------------------------------------------- */
+  const seenIds = new Map();
+  const seenSlugs = new Map();
+  for (const book of books) {
+    if (!book.id) {
+      fail("DUP_ID", `كتاب بلا معرّف: ${JSON.stringify(book.title ?? book)}`);
+      continue;
+    }
+    if (seenIds.has(book.id)) fail("DUP_ID", `معرّف مكرر: ${book.id}`);
+    seenIds.set(book.id, book);
+
+    if (book.slug) {
+      if (seenSlugs.has(book.slug)) fail("DUP_SLUG", `slug مكرر: ${book.slug}`);
+      seenSlugs.set(book.slug, book);
+      if (book.slug !== book.id) {
+        fail("SLUG_MISMATCH", `slug (${book.slug}) لا يساوي المعرّف (${book.id}).`);
+      }
+    }
+  }
+
+  /* 2) عنوان مطبَّع متطابق لنفس المؤلف المطبَّع ---------------------- */
+  const byTitleAuthor = new Map();
+  for (const book of books) {
+    const nTitle = book.normalizedTitle || normalizeTitle(book.title);
+    const nAuthor = normalizeAuthor(book.author);
+    const key = `${nTitle}|||${nAuthor}`;
+    const existing = byTitleAuthor.get(key);
+    if (existing) {
+      fail(
+        "DUP_CONTENT",
+        `تكرار محتوى: «${book.title}» (${book.id}) و«${existing.title}» (${existing.id}) — العنوان والمؤلف المطبَّعان متطابقان.`
+      );
+    } else {
+      byTitleAuthor.set(key, book);
+    }
+  }
+
+  /* 2أ) عنوان مطبَّع يحتوي عنواناً آخر لنفس المؤلف --------------------- */
+  // اكتُشف 2026-07-27: «معالم التنزيل» و«معالم التنزيل في تفسير القرآن»
+  // للبغوي كانا كتابين منفصلين في المكتبة، وأفلتا من الفحص (2) لأنه
+  // يطابق العناوين المطبَّعة تطابقاً تاماً فقط. الكلمات الزائدة هنا
+  // وصفٌ للفن لا عنوانٌ ثانٍ، فاحتواء أحد العنوانين للآخر لنفس المؤلف
+  // مؤشرُ تكرارٍ يجب حسمه (دمجٌ + تحويل) أو تمييزٌ صريح في العنوان.
+  const normalizedByAuthor = new Map();
+  for (const book of books) {
+    const nTitle = book.normalizedTitle || normalizeTitle(book.title);
+    const nAuthor = normalizeAuthor(book.author);
+    const bucket = normalizedByAuthor.get(nAuthor) ?? [];
+    for (const other of bucket) {
+      const a = ` ${nTitle} `;
+      const b = ` ${other.nTitle} `;
+      if (nTitle !== other.nTitle && (a.includes(b) || b.includes(a))) {
+        fail(
+          "DUP_CONTENT_SUBSET",
+          `تكرار محتمل: «${book.title}» (${book.id}) و«${other.book.title}» (${other.book.id}) — أحد العنوانين المطبَّعين يحتوي الآخر ولهما المؤلف نفسه.`
+        );
+      }
+    }
+    bucket.push({ nTitle, book });
+    normalizedByAuthor.set(nAuthor, bucket);
+  }
+
+  /* 2ب) اتساق معرّف المؤلف (تحذير) ---------------------------------- */
+  const authorIdByNormalized = new Map();
+  for (const book of books) {
+    if (!book.authorId) continue;
+    const nAuthor = normalizeAuthor(book.author);
+    const existing = authorIdByNormalized.get(nAuthor);
+    if (existing && existing !== book.authorId) {
+      warnings.push(
+        `معرّف مؤلف غير متسق: «${book.author}» مرتبط بـ ${existing} و ${book.authorId} (${book.id}).`
+      );
+    } else if (!existing) {
+      authorIdByNormalized.set(nAuthor, book.authorId);
+    }
+  }
+
+  /* 3) عنوان أو مؤلف ناقص ------------------------------------------ */
+  for (const book of books) {
+    if (!book.title || !String(book.title).trim()) {
+      fail("MISSING_TITLE", `كتاب بلا عنوان: ${book.id}`);
+    }
+    if (!book.author || !String(book.author).trim()) {
+      fail("MISSING_AUTHOR", `كتاب بلا مؤلف: ${book.id}`);
+    }
+  }
+
+  /* 4) verified بلا مصادر ------------------------------------------ */
+  for (const book of books) {
+    if (book.verificationStatus === "verified") {
+      if (!Array.isArray(book.sources) || book.sources.length === 0) {
+        fail("VERIFIED_NO_SOURCES", `${book.id} موسوم verified بلا sources.`);
+      }
+    }
+    if (Array.isArray(book.editions)) {
+      for (const edition of book.editions) {
+        if (edition?.verificationStatus === "verified" && !edition.sourceUrl && !edition.isbn) {
+          fail(
+            "VERIFIED_NO_SOURCES",
+            `طبعة «${edition.editionId ?? "?"}» في ${book.id} موسومة verified بلا sourceUrl أو isbn.`
+          );
+        }
+      }
+    }
+  }
+
+  /* 5) عبارات مبالغ فيها ------------------------------------------- */
+  const overclaims = OVERCLAIM_PHRASES.map((phrase) => ({
+    raw: phrase,
+    norm: normalizeArabic(phrase),
+  }));
+  for (const book of books) {
+    const description = normalizeArabic(book.description || "");
+    for (const phrase of overclaims) {
+      if (description.includes(phrase.norm)) {
+        fail("OVERCLAIM", `${book.id} — الوصف يحتوي عبارة مبالغ فيها: «${phrase.raw}».`);
+      }
+    }
+  }
+
+  /* فحوص مساندة ----------------------------------------------------- */
+  try {
+    const authors = JSON.parse(await readFile(AUTHORS_PATH, "utf8"));
+    const authorIds = new Set(authors.map((author) => author.id));
+    for (const book of books) {
+      if (book.authorId && !authorIds.has(book.authorId)) {
+        fail("UNKNOWN_AUTHOR_ID", `${book.id} يشير إلى authorId غير معروف: ${book.authorId}`);
+      }
+    }
+    const ids = authors.map((author) => author.id);
+    for (const id of new Set(ids.filter((id, index) => ids.indexOf(id) !== index))) {
+      fail("DUP_AUTHOR_ID", `معرّف مؤلف مكرر في library-authors.json: ${id}`);
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    warnings.push("لم يُعثر على src/data/library-authors.json — تخطّي فحص المؤلفين.");
+  }
+
+  try {
+    const redirects = JSON.parse(await readFile(REDIRECTS_PATH, "utf8"));
+    for (const rule of redirects) {
+      const fromId = String(rule.from).replace("/library/", "");
+      const toId = String(rule.to).replace("/library/", "");
+      if (seenIds.has(fromId)) {
+        fail("REDIRECT_LIVE_SOURCE", `تحويل من ${rule.from} لكن المعرّف ما زال في الفهرس.`);
+      }
+      if (!seenIds.has(toId)) {
+        fail("REDIRECT_DEAD_TARGET", `تحويل إلى ${rule.to} لكن المعرّف غير موجود في الفهرس.`);
+      }
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    warnings.push("لم يُعثر على scripts/redirects.books.json — تخطّي فحص التحويلات.");
+  }
+
+  /* 5ب) تحويلات vercel.json — الملف الذي يُنفَّذ فعلاً على الإنتاج ----- */
+  // اكتُشف 2026-07-27 بفحص الموقع الحيّ: كانت في vercel.json كتلةُ
+  // تحويلاتٍ قديمة معكوسةُ الاتجاه سبقت الكتلة الصحيحة (وفيرسل يُنفِّذ
+  // أوّل قاعدة مطابقة)، فصار /library/book-tafsir-al-saadi يحوّل إلى
+  // معرّفٍ ميت يحوّل إليه من جديد ⇒ حلقةُ تحويلٍ لا نهائية أخفت أربعة
+  // كتبٍ حيّة عن الزوار (تفسير السعدي، والآجرومية، والمستصفى، ومنهاج
+  // الطالبين) رغم سلامة بياناتها في الفهرس. فحصُ redirects.books.json
+  // وحده لم يكشفها لأنه لا يقرأ vercel.json أصلاً.
+  try {
+    const vercel = JSON.parse(await readFile(VERCEL_PATH, "utf8"));
+    const rules = (vercel.redirects ?? []).filter((rule) =>
+      String(rule.source).startsWith("/library/")
+    );
+    const targetBySource = new Map();
+    for (const rule of rules) {
+      const from = String(rule.source).replace("/library/", "");
+      const to = String(rule.destination).replace("/library/", "");
+      if (seenIds.has(from)) {
+        fail(
+          "VERCEL_REDIRECT_LIVE_SOURCE",
+          `vercel.json يحوّل ${rule.source} وهو كتاب حيّ في الفهرس ⇒ الصفحة لا تُفتح.`
+        );
+      }
+      if (!seenIds.has(to)) {
+        fail(
+          "VERCEL_REDIRECT_DEAD_TARGET",
+          `vercel.json يحوّل ${rule.source} إلى ${rule.destination} وهو معرّف غير موجود في الفهرس.`
+        );
+      }
+      const previous = targetBySource.get(from);
+      if (previous && previous !== to) {
+        fail(
+          "VERCEL_REDIRECT_CONFLICT",
+          `vercel.json فيه قاعدتان متعارضتان لـ ${rule.source}: ${previous} و ${to} (تُنفَّذ الأولى فقط).`
+        );
+      }
+      targetBySource.set(from, previous ?? to);
+    }
+    for (const [from, to] of targetBySource) {
+      if (targetBySource.get(to) === from) {
+        fail("VERCEL_REDIRECT_LOOP", `حلقة تحويل في vercel.json: ${from} ⇄ ${to}.`);
+      }
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    warnings.push("لم يُعثر على vercel.json — تخطّي فحص تحويلات الإنتاج.");
+  }
+
+  /* 6) تباعد عن المصدر الحي library-catalog.ts ----------------------- */
+  // قراءة كنص خام (لا استيراد وحدة) حتى يعمل هذا السكربت بـ`node` عادي
+  // بلا الحاجة لـ`tsx` — نفس انضباط audit-data-quality.mjs.
+  try {
+    const tsSource = await readFile(CATALOG_TS_PATH, "utf8");
+    const liveIds = new Set([...tsSource.matchAll(/\n\s{4}id:\s*"([^"]+)"/g)].map((m) => m[1]));
+    const jsonIds = new Set(books.map((b) => b.id));
+
+    const missingFromJson = [...liveIds].filter((id) => !jsonIds.has(id));
+    const orphanedInJson = [...jsonIds].filter((id) => !liveIds.has(id));
+
+    if (missingFromJson.length) {
+      fail(
+        "JSON_TS_DRIFT",
+        `${missingFromJson.length} كتاباً في library-catalog.ts غائب عن library-catalog.json (${missingFromJson.slice(0, 5).join(", ")}${missingFromJson.length > 5 ? "…" : ""}). شغّل: npx tsx scripts/regen-library-catalog-json.mjs`
+      );
+    }
+    if (orphanedInJson.length) {
+      fail(
+        "JSON_TS_DRIFT",
+        `${orphanedInJson.length} كتاباً في library-catalog.json غير موجود في library-catalog.ts الحي (${orphanedInJson.slice(0, 5).join(", ")}${orphanedInJson.length > 5 ? "…" : ""}). شغّل: npx tsx scripts/regen-library-catalog-json.mjs`
+      );
+    }
+    /* 6ب) تباعد نصّي لا مجرّد تباعد معرّفات ----------------------------- */
+    // اكتُشف 2026-07-31 (ج-٣٩٠): الفحص أعلاه يقابل المعرّفات وحدها، فكان
+    // يمرّ أخضرَ و28 وصفاً في المرآة JSON متجمّد على صيغة قديمة سبقت إثراء
+    // library-catalog.ts. وهو عين القانون الأربعين: تغطيةٌ بلا حدِّ خطأٍ
+    // تَعُدُّ الخطأَ إنجازاً. فيُقابَل الآن نصُّ الحقول المشتركة أيضاً وحدُّ
+    // خطئها صفر. (العنوان والمؤلف والفئة كانت مطابقة 173/173 عند الرصد؛
+    // التباعد كان محصوراً في description وحده.)
+    const tsBlocks = [...tsSource.matchAll(/\n {4}id: "([^"]+)"([\s\S]*?)\n {2}\},/g)];
+    const tsFields = new Map(
+      tsBlocks.map(([, id, body]) => {
+        const read = (key) => {
+          // الحقل قد يلتفّ إلى السطر التالي إذا طال نصّه
+          const m = body.match(new RegExp(`${key}:\\s*\\n?\\s*"((?:[^"\\\\]|\\\\.)*)"`));
+          return m ? JSON.parse(`"${m[1]}"`) : null;
+        };
+        return [id, { title: read("title"), author: read("author"), category: read("category"), description: read("description") }];
+      })
+    );
+    const MIRRORED_FIELDS = ["title", "author", "category", "description"];
+    const textDrift = [];
+    for (const book of books) {
+      const live = tsFields.get(book.id);
+      if (!live) continue; // غيابه أصلاً يُمسك بفحص المعرّفات أعلاه
+      for (const field of MIRRORED_FIELDS) {
+        if (live[field] === null) continue; // حقل اختياري غائب عن TS
+        if ((book[field] ?? "") !== live[field]) textDrift.push(`${book.id}.${field}`);
+      }
+    }
+    if (textDrift.length) {
+      fail(
+        "JSON_TS_DRIFT",
+        `${textDrift.length} حقلاً نصّياً في library-catalog.json يخالف نظيره في library-catalog.ts الحي (${textDrift.slice(0, 5).join("، ")}${textDrift.length > 5 ? "…" : ""}). شغّل: npx tsx scripts/regen-library-catalog-json.mjs`
+      );
+    }
+    // حارسُ الحارس: لو انكسر تحليلُ TS لَمَرَّ الفحصُ أعلاه فارغاً بلا خطأ
+    if (tsFields.size !== liveIds.size) {
+      fail(
+        "JSON_TS_DRIFT",
+        `تحليل حقول library-catalog.ts أنتج ${tsFields.size} سجلاً مقابل ${liveIds.size} معرّفاً — الفحص النصّي غير موثوق حتى يُصلَح المحلِّل.`
+      );
+    }
+
+    /* 7) نظافة حقل caution — يُقرأ من TS لأن JSON لا يحمله ----------- */
+    // اكتُشف 2026-07-27: LibraryDetailPage تطبع البادئة «تنبيه علمي:»
+    // بنفسها قبل نصّ caution، وكانت الحقول الأربعة كلها تبدأ بـ«تنبيه:»
+    // ⇒ يقرأ الزائر «تنبيه علمي: تنبيه: …». وفي book-ihya كان التنبيه
+    // نفسه مكتوباً مرّتين: داخل description وفي caution معاً ⇒ يظهر
+    // مكرّراً في الصفحة. والوصف ليس مكانه أصلاً: library-service.ts
+    // يستثني ذوات caution من الإبراز في الرئيسية بالحقل لا بالنص.
+    const entries = [...tsSource.matchAll(/\n\s{4}id:\s*"([^"]+)"([\s\S]*?)\n\s{2}\},/g)];
+    for (const [, id, body] of entries) {
+      // بلا `,\n` في الذيل: caution آخرُ حقلٍ في السجل غالباً فلا سطر بعده.
+      const caution = (body.match(/\n\s{4}caution:\s*\n?\s*"([\s\S]*?)",/) || [])[1];
+      const description = (body.match(/\n\s{4}description:\s*\n?\s*"([\s\S]*?)",/) || [])[1] || "";
+      if (caution && /^\s*تنبيه/.test(caution)) {
+        fail(
+          "CAUTION_PREFIX_STUTTER",
+          `${id} — نصّ caution يبدأ بـ«تنبيه» والواجهة تسبقه بـ«تنبيه علمي:» ⇒ تكرار البادئة عند الزائر.`
+        );
+      }
+      if (/تنبيه علمي/.test(description)) {
+        fail(
+          "CAUTION_IN_DESCRIPTION",
+          `${id} — «تنبيه علمي» مكتوب داخل description؛ موضعه حقل caution وحده (وإلا ظهر مرّتين أو لم يُستثنَ من إبراز الرئيسية).`
+        );
+      }
+      // اكتُشف 2026-07-27 (الدفعة التالية): الفحصان أعلاه يمسكان اللفظ
+      // «تنبيه علمي» وحده، فأفلت منهما ثلاثة كتب يتكرّر فيها *مضمون*
+      // التنبيه داخل description بصياغة مقاربة لا بنفس اللفظ ⇒ يقرؤه
+      // الزائر مرّتين: فِقرةً في الوصف ثمّ تحت عنوان «تنبيه علمي:».
+      // فيُقاس التكرار بأطول تتابع كلماتٍ مشترك بعد التطبيع لا بلفظ ثابت.
+      if (caution && sharedWordRun(description, caution) >= 5) {
+        fail(
+          "CAUTION_ECHOED_IN_DESCRIPTION",
+          `${id} — مضمون caution مكرَّر داخل description (تتابع ${sharedWordRun(description, caution)} كلمات مشترك) ⇒ يقرؤه الزائر مرّتين؛ موضعه حقل caution وحده.`
+        );
+      }
+      /* 8) parts_label لا بدّ أن يحمل كمّاً معدوداً -------------------- */
+      // اكتُشف 2026-07-27: LibraryPage تطبع parts_label شارةً على غلاف
+      // البطاقة بجوار شارات مثل «4 أجزاء»، فيقرؤها الزائر عدداً. وكانت
+      // ثلاثة سجلات تضع فيها كلمةً بلا عدد: «عدة مجلدات» (وعدٌ بجمعٍ لا
+      // يقول كم)، و«مسند»/«أبواب» (اسم فنٍّ لا كمّ). فتُقاس القيمة
+      // بمعناها — أتحمل عدداً؟ — لا بلفظٍ ممنوعٍ بعينه.
+      const partsLabel = (body.match(/\n\s{4}parts_label:\s*"([^"]*)"/) || [])[1];
+      if (partsLabel !== undefined) {
+        const normalized = normalizeArabic(partsLabel);
+        const hasDigit = /[0-9٠-٩]/.test(normalized);
+        const hasSpelledCount =
+          /(واحد|واحدة|جزءان|جزءين|جزان|جزين|مجلدان|مجلدين|كتابان|كتابين|اثنان|اثنين|ثلاث|اربع|خمس|ست|سبع|ثمان|تسع|عشر)/.test(
+            normalized
+          );
+        if (!hasDigit && !hasSpelledCount) {
+          fail(
+            "PARTS_LABEL_WITHOUT_COUNT",
+            `${id} — parts_label «${partsLabel}» لا يحمل عدداً، وهو يُعرض شارةَ كمٍّ على غلاف البطاقة ⇒ يقرؤه الزائر عدد أجزاء وليس كذلك. إمّا عددٌ صريح وإمّا حذف الحقل.`
+          );
+        }
+      }
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    warnings.push("لم يُعثر على src/lib/library-catalog.ts — تخطّي فحص التباعد.");
+  }
+
+  /* التقرير --------------------------------------------------------- */
+  console.log(`فهرس المكتبة: ${books.length} كتابًا.`);
+  for (const warning of warnings) console.log(`تحذير: ${warning}`);
+
+  if (failures.length) {
+    console.error(`\nفشل فحص السلامة (${failures.length} خطأ):`);
+    for (const failure of failures) console.error(`   ${failure}`);
+    process.exit(1);
+  }
+
+  console.log("نجح فحص سلامة فهرس المكتبة.");
+}
+
+const isDirectRun = process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url;
+if (isDirectRun) await main();

@@ -1,0 +1,449 @@
+/* ═══════════════════════════════════════════════════════════════
+   قسم «الأمم السابقة»
+   يعتمد متغيرات الهوية القائمة (--elite-forest وأخواتها) ولا يعرّف
+   ألواناً جديدة خارج النظام. RTL أصيل، ومقاسات تعمل من 320px صعوداً.
+   ═══════════════════════════════════════════════════════════════ */
+
+.nations-page {
+  --nat-ink: var(--elite-forest, #173D35);
+  --nat-soft: color-mix(in srgb, var(--nat-ink) 8%, transparent);
+  --nat-line: color-mix(in srgb, var(--nat-ink) 18%, transparent);
+  padding-bottom: 4rem;
+}
+
+/* ── شريط الأدوات والبحث ─────────────────────────────────────── */
+.nations-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 60rem;
+  margin: 0 auto 1rem;
+  padding-inline: 1rem;
+}
+.nations-search { display: block; }
+.nations-search__input {
+  inline-size: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--nat-line);
+  border-radius: 0.9rem;
+  font-size: 0.95rem;
+  background: var(--surface, #fff);
+  color: inherit;
+}
+.nations-search__input:focus-visible {
+  outline: 2px solid var(--nat-ink);
+  outline-offset: 2px;
+}
+.nations-view-switch {
+  display: flex;
+  gap: 0.4rem;
+  background: var(--nat-soft);
+  padding: 0.25rem;
+  border-radius: 0.8rem;
+}
+.nations-view-btn {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  border-radius: 0.6rem;
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+}
+.nations-view-btn.is-active {
+  background: var(--nat-ink);
+  color: #fff;
+}
+
+.nations-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  max-width: 60rem;
+  margin: 0 auto 1rem;
+  padding-inline: 1rem;
+}
+.nations-select {
+  flex: 1 1 9rem;
+  text-overflow: ellipsis;
+  min-inline-size: 0;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--nat-line);
+  border-radius: 0.7rem;
+  background: var(--surface, #fff);
+  font-size: 0.85rem;
+  color: inherit;
+}
+.nations-reset {
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--nat-line);
+  border-radius: 0.7rem;
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+}
+
+.nations-count {
+  max-width: 60rem;
+  margin: 0 auto 0.5rem;
+  padding-inline: 1rem;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+.nations-empty {
+  max-width: 40rem;
+  margin: 2rem auto;
+  padding-inline: 1rem;
+  text-align: center;
+  line-height: 1.9;
+  opacity: 0.85;
+}
+.nations-link {
+  color: var(--nat-ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── البطاقات ────────────────────────────────────────────────── */
+.nations-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding-inline: 1rem;
+}
+@media (min-width: 640px) {
+  .nations-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nations-toolbar { flex-direction: row; align-items: center; }
+  .nations-search { flex: 1; }
+}
+@media (min-width: 1024px) {
+  .nations-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.nation-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem;
+  border: 1px solid var(--nat-line);
+  border-radius: 1rem;
+  background: var(--surface, #fff);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.nation-card:hover,
+.nation-card:focus-visible { border-color: var(--nat-ink); transform: translateY(-2px); }
+.nation-card__head { display: flex; align-items: flex-start; gap: 0.65rem; }
+.nation-card__icon { color: var(--nat-ink); flex-shrink: 0; margin-block-start: 0.15rem; }
+.nation-card__title-wrap { min-inline-size: 0; }
+.nation-card__title { margin: 0; font-size: 1.05rem; font-weight: 800; line-height: 1.4; }
+.nation-card__prophet { margin: 0.15rem 0 0; font-size: 0.8rem; opacity: 0.75; }
+.nation-card__summary {
+  margin: 0;
+  font-size: 0.87rem;
+  line-height: 1.85;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.nation-card__meta { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-block-start: auto; }
+
+.nation-chip {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: var(--nat-soft);
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.nation-chip--punishment { background: var(--nat-ink); color: #fff; }
+.nation-chip--time { opacity: 0.8; }
+.nation-chip--link { text-decoration: none; color: inherit; }
+
+/* ── التسلسل الزمني ──────────────────────────────────────────── */
+.nations-timeline { max-width: 46rem; margin: 0 auto; padding-inline: 1rem; }
+.nations-timeline__note {
+  font-size: 0.82rem;
+  line-height: 1.9;
+  padding: 0.75rem 0.9rem;
+  border-inline-start: 3px solid var(--nat-ink);
+  background: var(--nat-soft);
+  border-radius: 0.6rem;
+}
+.nations-timeline__list { list-style: none; margin: 1rem 0 0; padding: 0; }
+.nations-timeline__item { position: relative; }
+.nations-timeline__link {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.7rem;
+  padding: 0.7rem 0;
+  border-block-end: 1px solid var(--nat-line);
+  text-decoration: none;
+  color: inherit;
+}
+.nations-timeline__dot {
+  inline-size: 0.6rem;
+  block-size: 0.6rem;
+  border-radius: 50%;
+  background: var(--nat-ink);
+  grid-row: span 2;
+  margin-block-start: 0.4rem;
+}
+.nations-timeline__name { font-weight: 700; }
+.nations-timeline__era { font-size: 0.78rem; opacity: 0.7; line-height: 1.7; }
+.nations-timeline__undated { margin-block-start: 1.5rem; }
+.nations-timeline__undated-title { font-size: 0.95rem; margin-block-end: 0.5rem; }
+.nations-timeline__undated-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+/* ── صفحة التفاصيل ───────────────────────────────────────────── */
+.nation-progress {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 5;
+  block-size: 3px;
+  background: var(--nat-soft);
+}
+.nation-progress__bar { block-size: 100%; background: var(--nat-ink); transition: width 0.1s linear; }
+
+.nation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 46rem;
+  margin: 0 auto 1rem;
+  padding-inline: 1rem;
+}
+.nation-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--nat-line);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+}
+.nation-action.is-active { background: var(--nat-ink); color: #fff; border-color: var(--nat-ink); }
+.nation-action--static { cursor: default; opacity: 0.8; }
+.nation-mode { display: flex; gap: 0.25rem; margin-inline-start: auto; background: var(--nat-soft); padding: 0.2rem; border-radius: 999px; }
+.nation-mode__btn {
+  padding: 0.35rem 0.8rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+}
+.nation-mode__btn.is-active { background: var(--nat-ink); color: #fff; }
+
+/* خصوصية أعلى: قواعد التخطيط العامة في design-system تُطبَّق بعد هذا الملف
+   في ترتيب الحزم، فبدون تأهيل بـ.nations-page يعود الشريط عمودياً. */
+.nations-page .nation-flow {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  overflow-x: auto;
+  list-style: none;
+  margin: 0 auto 1.25rem;
+  padding: 0 1rem 0.4rem;
+  max-width: 46rem;
+  scrollbar-width: thin;
+}
+.nations-page .nation-flow__step {
+  flex: 0 0 auto !important;
+  inline-size: 7.75rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--nat-line);
+  border-radius: 0.7rem;
+  background: var(--surface, #fff);
+}
+.nation-flow__label { display: block; font-size: 0.7rem; opacity: 0.65; margin-block-end: 0.2rem; }
+.nation-flow__value { display: flex; align-items: center; gap: 0.3rem; font-size: 0.82rem; font-weight: 700; line-height: 1.6; }
+
+.nation-facts {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 46rem;
+  margin: 0 auto 1.5rem;
+  padding-inline: 1rem;
+}
+@media (min-width: 640px) { .nation-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.nation-fact { padding: 0.7rem 0.8rem; border-radius: 0.7rem; background: var(--nat-soft); }
+.nation-fact__label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  opacity: 0.7;
+  margin-block-end: 0.25rem;
+}
+.nation-fact__value { display: block; font-size: 0.85rem; line-height: 1.9; }
+
+.nation-toc {
+  max-width: 46rem;
+  margin: 0 auto 1.25rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--nat-line);
+  border-radius: 0.9rem;
+}
+.nation-toc__title { display: flex; align-items: center; gap: 0.35rem; margin: 0 0 0.5rem; font-size: 0.9rem; }
+.nation-toc__list { margin: 0; padding-inline-start: 1.2rem; display: grid; gap: 0.3rem; }
+.nation-toc__link { color: inherit; text-decoration: none; font-size: 0.85rem; line-height: 1.9; }
+.nation-toc__link:hover { text-decoration: underline; }
+.nation-toc__resume {
+  display: inline-block;
+  margin-block-start: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--nat-ink);
+}
+
+.nation-story { max-width: 46rem; margin: 0 auto; padding-inline: 1rem; }
+.nation-chapter { margin-block-end: 2rem; scroll-margin-block-start: 5rem; }
+.nation-chapter__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 0 0.6rem;
+  padding-inline-start: 0.6rem;
+  border-inline-start: 4px solid var(--nat-ink);
+  line-height: 1.6;
+}
+.nation-chapter__p { margin: 0 0 0.85rem; font-size: 0.95rem; line-height: 2.1; }
+
+.nation-notknown {
+  margin: 0.85rem 0;
+  padding: 0.7rem 0.85rem;
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, #b45309 10%, transparent);
+  border-inline-start: 3px solid #b45309;
+  font-size: 0.84rem;
+  line-height: 1.9;
+}
+
+.nation-evidences { display: grid; gap: 0.6rem; margin-block: 0.9rem; }
+.nation-evidence {
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.7rem;
+  border-inline-start: 4px solid var(--nat-ink);
+  background: var(--nat-soft);
+}
+.nation-evidence__kind {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--nat-ink);
+  color: #fff;
+  margin-block-end: 0.4rem;
+}
+.nation-evidence__text { margin: 0 0 0.35rem; font-size: 0.92rem; line-height: 2.1; }
+.nation-evidence__ref { font-size: 0.75rem; opacity: 0.75; font-style: normal; }
+.nation-evidence--hadith { border-inline-start-color: var(--mj-brand); }
+.nation-evidence--hadith .nation-evidence__kind { background: var(--mj-brand); }
+.nation-evidence--tafsir { border-inline-start-color: #1d4ed8; }
+.nation-evidence--tafsir .nation-evidence__kind { background: #1d4ed8; }
+.nation-evidence--disputed { border-inline-start-color: #b45309; }
+.nation-evidence--disputed .nation-evidence__kind { background: #b45309; }
+.nation-evidence--unverified { border-inline-start-color: #9b1c1c; }
+.nation-evidence--unverified .nation-evidence__kind { background: #9b1c1c; }
+
+.nation-section { max-width: 46rem; margin: 0 auto 1.75rem; padding-inline: 1rem; }
+.nation-section__title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0 0 0.7rem;
+}
+.nation-section--today { padding-block: 1rem; border-radius: 0.9rem; background: var(--nat-soft); }
+.nation-list { margin: 0; padding-inline-start: 1.2rem; display: grid; gap: 0.45rem; }
+.nation-list li { font-size: 0.9rem; line-height: 2; }
+
+.nation-refs { list-style: none; margin: 0 0 0.7rem; padding: 0; display: grid; gap: 0.4rem; }
+.nation-ref {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.6rem;
+  background: var(--nat-soft);
+}
+.nation-ref__surah { font-weight: 800; font-size: 0.85rem; }
+.nation-ref__note { font-size: 0.78rem; opacity: 0.75; }
+
+.nation-status-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+.nation-status {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.7rem;
+  border-inline-start: 4px solid var(--nat-ink);
+  background: var(--nat-soft);
+}
+.nation-status__badge {
+  justify-self: start;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--nat-ink);
+  color: #fff;
+}
+.nation-status__claim { font-size: 0.88rem; font-weight: 700; line-height: 1.8; }
+.nation-status__note { font-size: 0.8rem; line-height: 1.9; opacity: 0.85; }
+.nation-status--disputed { border-inline-start-color: #b45309; }
+.nation-status--disputed .nation-status__badge { background: #b45309; }
+.nation-status--unverified { border-inline-start-color: #9b1c1c; }
+.nation-status--unverified .nation-status__badge { background: #9b1c1c; }
+
+.nation-map-note { font-size: 0.85rem; line-height: 1.95; margin: 0 0 0.5rem; }
+
+.nation-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  max-width: 46rem;
+  margin: 2rem auto 1rem;
+  padding-inline: 1rem;
+}
+.nation-nav__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--nat-line);
+  border-radius: 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: inherit;
+  max-inline-size: 42%;
+}
+.nation-nav__index { font-size: 0.82rem; font-weight: 700; color: var(--nat-ink); text-decoration: none; }
+
+.nations-share { max-width: 46rem; margin: 1.5rem auto 0; padding-inline: 1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nation-card, .nation-progress__bar { transition: none; }
+}

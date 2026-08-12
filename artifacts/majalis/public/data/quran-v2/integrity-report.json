@@ -1,0 +1,468 @@
+{
+  "generatedAt": "2026-07-19T05:31:35.390Z",
+  "totalPageFiles": 604,
+  "totalSurahs": 114,
+  "totalAyahs": 6236,
+  "maxLineNumberSeen": 15,
+  "totalWords": 83665,
+  "issuesCount": 0,
+  "issues": [],
+  "checksums": {
+    "1": {
+      "ayahCount": 7,
+      "sha256": "2ba2195e4abc07d8"
+    },
+    "2": {
+      "ayahCount": 286,
+      "sha256": "014ffebd104ffb6a"
+    },
+    "3": {
+      "ayahCount": 200,
+      "sha256": "b99bcfb626829b2f"
+    },
+    "4": {
+      "ayahCount": 176,
+      "sha256": "33951f1b03885ece"
+    },
+    "5": {
+      "ayahCount": 120,
+      "sha256": "1a2872cc175bb877"
+    },
+    "6": {
+      "ayahCount": 165,
+      "sha256": "fcbf43307a2fc843"
+    },
+    "7": {
+      "ayahCount": 206,
+      "sha256": "3f556f861bd384ba"
+    },
+    "8": {
+      "ayahCount": 75,
+      "sha256": "4f280b68f84cced9"
+    },
+    "9": {
+      "ayahCount": 129,
+      "sha256": "ae8c6aa84b5f72b4"
+    },
+    "10": {
+      "ayahCount": 109,
+      "sha256": "82ccbf0b2f1c0cca"
+    },
+    "11": {
+      "ayahCount": 123,
+      "sha256": "01506f4aa306a369"
+    },
+    "12": {
+      "ayahCount": 111,
+      "sha256": "43fbee903b73c163"
+    },
+    "13": {
+      "ayahCount": 43,
+      "sha256": "fe9aacc82630ad91"
+    },
+    "14": {
+      "ayahCount": 52,
+      "sha256": "89317d8f076b9de9"
+    },
+    "15": {
+      "ayahCount": 99,
+      "sha256": "fa6a74a8543d4142"
+    },
+    "16": {
+      "ayahCount": 128,
+      "sha256": "f84cfcb47f718ade"
+    },
+    "17": {
+      "ayahCount": 111,
+      "sha256": "a501aaa452f13e40"
+    },
+    "18": {
+      "ayahCount": 110,
+      "sha256": "15cdd942150ed42f"
+    },
+    "19": {
+      "ayahCount": 98,
+      "sha256": "8964e634a23d8986"
+    },
+    "20": {
+      "ayahCount": 135,
+      "sha256": "af4076db5d44a2cd"
+    },
+    "21": {
+      "ayahCount": 112,
+      "sha256": "1b2950308e364bce"
+    },
+    "22": {
+      "ayahCount": 78,
+      "sha256": "43504461903bb589"
+    },
+    "23": {
+      "ayahCount": 118,
+      "sha256": "55373a8454b6e3fb"
+    },
+    "24": {
+      "ayahCount": 64,
+      "sha256": "8aaa260e3f87f1c4"
+    },
+    "25": {
+      "ayahCount": 77,
+      "sha256": "b1e77faf33564589"
+    },
+    "26": {
+      "ayahCount": 227,
+      "sha256": "5bffd75877045271"
+    },
+    "27": {
+      "ayahCount": 93,
+      "sha256": "35edc82d18f24556"
+    },
+    "28": {
+      "ayahCount": 88,
+      "sha256": "ae6ff42351384926"
+    },
+    "29": {
+      "ayahCount": 69,
+      "sha256": "d0b3e25f55fede2f"
+    },
+    "30": {
+      "ayahCount": 60,
+      "sha256": "38f585b829fb9b5c"
+    },
+    "31": {
+      "ayahCount": 34,
+      "sha256": "3acebe2568e48683"
+    },
+    "32": {
+      "ayahCount": 30,
+      "sha256": "e5ce04cd5b3ba0d0"
+    },
+    "33": {
+      "ayahCount": 73,
+      "sha256": "2eaebccbe5c06176"
+    },
+    "34": {
+      "ayahCount": 54,
+      "sha256": "812b62d296ec67f5"
+    },
+    "35": {
+      "ayahCount": 45,
+      "sha256": "e4ef83ffd138c32e"
+    },
+    "36": {
+      "ayahCount": 83,
+      "sha256": "e64e490b7b7d18b2"
+    },
+    "37": {
+      "ayahCount": 182,
+      "sha256": "522d9a485785920c"
+    },
+    "38": {
+      "ayahCount": 88,
+      "sha256": "7013d1fe6fc0ba2f"
+    },
+    "39": {
+      "ayahCount": 75,
+      "sha256": "b4afebe152605751"
+    },
+    "40": {
+      "ayahCount": 85,
+      "sha256": "7ffe26d51f9cd766"
+    },
+    "41": {
+      "ayahCount": 54,
+      "sha256": "9b6be60242ef891e"
+    },
+    "42": {
+      "ayahCount": 53,
+      "sha256": "6230d3336e914a06"
+    },
+    "43": {
+      "ayahCount": 89,
+      "sha256": "d7e7996ee67a8ff3"
+    },
+    "44": {
+      "ayahCount": 59,
+      "sha256": "9ede703b891f744b"
+    },
+    "45": {
+      "ayahCount": 37,
+      "sha256": "b5d7111af142d4c9"
+    },
+    "46": {
+      "ayahCount": 35,
+      "sha256": "e45ade84b291b783"
+    },
+    "47": {
+      "ayahCount": 38,
+      "sha256": "1859e840369cdfda"
+    },
+    "48": {
+      "ayahCount": 29,
+      "sha256": "2ce9cd160f1a3d19"
+    },
+    "49": {
+      "ayahCount": 18,
+      "sha256": "8fc990877c1bcda1"
+    },
+    "50": {
+      "ayahCount": 45,
+      "sha256": "c575a1737dc4b867"
+    },
+    "51": {
+      "ayahCount": 60,
+      "sha256": "5b45f89b8dc79227"
+    },
+    "52": {
+      "ayahCount": 49,
+      "sha256": "73361f9f3dca193d"
+    },
+    "53": {
+      "ayahCount": 62,
+      "sha256": "61c493038075b3e6"
+    },
+    "54": {
+      "ayahCount": 55,
+      "sha256": "d25934f79c3f5ae3"
+    },
+    "55": {
+      "ayahCount": 78,
+      "sha256": "a00ca54df507de94"
+    },
+    "56": {
+      "ayahCount": 96,
+      "sha256": "7a0d0b7b09f26e87"
+    },
+    "57": {
+      "ayahCount": 29,
+      "sha256": "13f5a620d5ae2af9"
+    },
+    "58": {
+      "ayahCount": 22,
+      "sha256": "fb53b13bb3490448"
+    },
+    "59": {
+      "ayahCount": 24,
+      "sha256": "6d4c8f8b18c2b9ce"
+    },
+    "60": {
+      "ayahCount": 13,
+      "sha256": "f7b4d2a984709e68"
+    },
+    "61": {
+      "ayahCount": 14,
+      "sha256": "d7d872da1fe9aea5"
+    },
+    "62": {
+      "ayahCount": 11,
+      "sha256": "37c3ea911aba7791"
+    },
+    "63": {
+      "ayahCount": 11,
+      "sha256": "633b2e7edd8f0d42"
+    },
+    "64": {
+      "ayahCount": 18,
+      "sha256": "c1dc17db9cbaefc5"
+    },
+    "65": {
+      "ayahCount": 12,
+      "sha256": "573f8e94ef8e40a7"
+    },
+    "66": {
+      "ayahCount": 12,
+      "sha256": "65ecf394fac011a8"
+    },
+    "67": {
+      "ayahCount": 30,
+      "sha256": "d0ad328bb77712d4"
+    },
+    "68": {
+      "ayahCount": 52,
+      "sha256": "6cacad8371b9fc0f"
+    },
+    "69": {
+      "ayahCount": 52,
+      "sha256": "cc581450bf822f4a"
+    },
+    "70": {
+      "ayahCount": 44,
+      "sha256": "dead8840458ef4b7"
+    },
+    "71": {
+      "ayahCount": 28,
+      "sha256": "8722eadabe58ddd8"
+    },
+    "72": {
+      "ayahCount": 28,
+      "sha256": "1f6284782aaee3db"
+    },
+    "73": {
+      "ayahCount": 20,
+      "sha256": "5b6e60f3c4cd9ae0"
+    },
+    "74": {
+      "ayahCount": 56,
+      "sha256": "818588eb213d0bae"
+    },
+    "75": {
+      "ayahCount": 40,
+      "sha256": "5b5867dd2767975f"
+    },
+    "76": {
+      "ayahCount": 31,
+      "sha256": "037c87df84a45eb3"
+    },
+    "77": {
+      "ayahCount": 50,
+      "sha256": "ed2e02465ce78c4b"
+    },
+    "78": {
+      "ayahCount": 40,
+      "sha256": "15fa5f112ba3e023"
+    },
+    "79": {
+      "ayahCount": 46,
+      "sha256": "970548bc896e805c"
+    },
+    "80": {
+      "ayahCount": 42,
+      "sha256": "b6be5feb6b9c2743"
+    },
+    "81": {
+      "ayahCount": 29,
+      "sha256": "36f85cb625430a4a"
+    },
+    "82": {
+      "ayahCount": 19,
+      "sha256": "43d9207fbe48fc81"
+    },
+    "83": {
+      "ayahCount": 36,
+      "sha256": "ebf64a8194c92d9c"
+    },
+    "84": {
+      "ayahCount": 25,
+      "sha256": "0ae5dd19b5f18e73"
+    },
+    "85": {
+      "ayahCount": 22,
+      "sha256": "628b5a569d15ac93"
+    },
+    "86": {
+      "ayahCount": 17,
+      "sha256": "54436aee6a2d619b"
+    },
+    "87": {
+      "ayahCount": 19,
+      "sha256": "2311fa1a111fa1d1"
+    },
+    "88": {
+      "ayahCount": 26,
+      "sha256": "ffdc61fa63064cff"
+    },
+    "89": {
+      "ayahCount": 30,
+      "sha256": "c73884ad137750c7"
+    },
+    "90": {
+      "ayahCount": 20,
+      "sha256": "170130a58d283dbf"
+    },
+    "91": {
+      "ayahCount": 15,
+      "sha256": "2cdd89e5bc8c90d5"
+    },
+    "92": {
+      "ayahCount": 21,
+      "sha256": "12c988739a9291ce"
+    },
+    "93": {
+      "ayahCount": 11,
+      "sha256": "2750d74a1ae961b4"
+    },
+    "94": {
+      "ayahCount": 8,
+      "sha256": "c69dc90a275b60b9"
+    },
+    "95": {
+      "ayahCount": 8,
+      "sha256": "91ed6edf72cc8795"
+    },
+    "96": {
+      "ayahCount": 19,
+      "sha256": "5dbb99a6de945327"
+    },
+    "97": {
+      "ayahCount": 5,
+      "sha256": "8a9901a57b618bb1"
+    },
+    "98": {
+      "ayahCount": 8,
+      "sha256": "ed6f983570c44d6c"
+    },
+    "99": {
+      "ayahCount": 8,
+      "sha256": "545382c35cc116f8"
+    },
+    "100": {
+      "ayahCount": 11,
+      "sha256": "4c09f2da2ad0c253"
+    },
+    "101": {
+      "ayahCount": 11,
+      "sha256": "81b7133000d6e75c"
+    },
+    "102": {
+      "ayahCount": 8,
+      "sha256": "2c62e60ffc74ec22"
+    },
+    "103": {
+      "ayahCount": 3,
+      "sha256": "205a4044c0cbe663"
+    },
+    "104": {
+      "ayahCount": 9,
+      "sha256": "de72cfaa34a75ff7"
+    },
+    "105": {
+      "ayahCount": 5,
+      "sha256": "1e59281367136074"
+    },
+    "106": {
+      "ayahCount": 4,
+      "sha256": "f832a34cd8a80c6d"
+    },
+    "107": {
+      "ayahCount": 7,
+      "sha256": "ade2dcbbf01d0b4a"
+    },
+    "108": {
+      "ayahCount": 3,
+      "sha256": "14b9a38f680eecaf"
+    },
+    "109": {
+      "ayahCount": 6,
+      "sha256": "af3c13370c3d729a"
+    },
+    "110": {
+      "ayahCount": 3,
+      "sha256": "1a30968545385b77"
+    },
+    "111": {
+      "ayahCount": 5,
+      "sha256": "4250ca6f4506cb6b"
+    },
+    "112": {
+      "ayahCount": 4,
+      "sha256": "d7e6b7a6e7e349b3"
+    },
+    "113": {
+      "ayahCount": 5,
+      "sha256": "a1cef8b5b2493a02"
+    },
+    "114": {
+      "ayahCount": 6,
+      "sha256": "a48d74dba8472cb1"
+    }
+  }
+}

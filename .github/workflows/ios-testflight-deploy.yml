@@ -1,0 +1,122 @@
+name: iOS TestFlight Deploy
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      changelog:
+        description: "TestFlight changelog"
+        required: false
+        type: string
+        default: ""
+
+concurrency:
+  group: ios-testflight-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  APP_IDENTIFIER: com.yousef.majlisilm
+  APPLE_TEAM_ID: 5D8TX37HTS
+
+jobs:
+  testflight:
+    name: fastlane-beta
+    runs-on: macos-14
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Select Xcode
+        run: |
+          set -euo pipefail
+          sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer || \
+            sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+          xcodebuild -version
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: Install JS deps + web build + Capacitor sync
+        env:
+          PORT: "24216"
+          BASE_PATH: "/"
+        run: |
+          set -euo pipefail
+          pnpm install --frozen-lockfile
+          pnpm --filter @workspace/majalis run build
+          cd artifacts/majalis
+          pnpm exec cap sync ios
+
+      - name: Cache SPM
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: |
+            ~/Library/Developer/Xcode/DerivedData
+            artifacts/majalis/ios/App/App.xcodeproj/project.xcworkspace/xcshareddata/swiftpm
+          key: spm-${{ runner.os }}-${{ hashFiles('artifacts/majalis/ios/App/CapApp-SPM/Package.swift') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Install Fastlane gems
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Resolve SPM packages
+        working-directory: artifacts/majalis/ios/App
+        run: |
+          set -euo pipefail
+          xcodebuild -resolvePackageDependencies -project App.xcodeproj -scheme App
+
+      - name: Decode App Store Connect API key material
+        env:
+          APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${APP_STORE_CONNECT_API_KEY_KEY:-}" ]; then
+            echo "::error::Missing secret APP_STORE_CONNECT_API_KEY_KEY (Base64 .p8)"
+            exit 1
+          fi
+          echo "ASC API key material present (base64 length=${#APP_STORE_CONNECT_API_KEY_KEY})"
+
+      - name: Run Fastlane beta
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          ITC_TEAM_ID: ${{ secrets.ITC_TEAM_ID }}
+          APPLE_TEAM_ID: ${{ env.APPLE_TEAM_ID }}
+          APP_IDENTIFIER: ${{ env.APP_IDENTIFIER }}
+          TESTFLIGHT_CHANGELOG: ${{ github.event.inputs.changelog || github.event.head_commit.message || github.ref_name }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        run: bundle exec fastlane ios beta
+
+      - name: Upload IPA artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: majlisilm-testflight-ipa
+          path: |
+            artifacts/majalis/ios/build/*.ipa
+            artifacts/majalis/ios/build/*.xcresult
+          if-no-files-found: warn

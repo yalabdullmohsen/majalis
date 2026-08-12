@@ -1,0 +1,38 @@
+/* ── SensitiveContentWarning (scw-*) ── */
+.scw-banner {
+  display: flex;
+  gap: 0.85rem;
+  background: rgba(180,83,9,.06);
+  border: 1.5px solid rgba(180,83,9,.2);
+  border-radius: 0.85rem;
+  padding: 0.95rem 1.1rem;
+  margin-bottom: 1.25rem;
+  direction: rtl;
+}
+.scw-banner__icon { color: #b45309; flex-shrink: 0; margin-top: 0.1rem; }
+.scw-banner__body { flex: 1; }
+.scw-banner__title {
+  font-size: 0.87rem;
+  font-weight: 700;
+  color: #b45309;
+  margin: 0 0 0.35rem;
+}
+.scw-banner__text {
+  font-size: 0.81rem;
+  color: var(--clr-ink-soft, var(--mj-muted));
+  line-height: 1.65;
+  margin: 0 0 0.5rem;
+}
+.scw-banner__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-1);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--mj-brand);
+  text-decoration: none;
+}
+.scw-banner__link:hover { text-decoration: underline; }
+
+html[data-theme="dark"] .scw-banner { background: rgba(180,83,9,.1); border-color: rgba(180,83,9,.3); }
+

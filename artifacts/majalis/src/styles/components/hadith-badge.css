@@ -1,0 +1,15 @@
+/* ── 181 — HomeTawheed HadithBadge ─────────────────────────────────────── */
+.hadith-badge {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  margin-top: 0.45rem; font-size: 0.8rem; line-height: 1.4;
+  color: var(--majalis-ink-soft); background: var(--majalis-parchment);
+  border-radius: 0.35rem; padding: 0.18rem 0.45rem;
+  border-inline-end: 3px solid var(--hdb-color, var(--majalis-emerald-deep));
+  direction: rtl;
+}
+.hadith-badge__grade { font-weight: 700; color: var(--hdb-color); font-size: 0.68rem; }
+.hadith-badge--sahih { --hdb-color: var(--majalis-emerald, var(--mj-brand)); }
+.hadith-badge--hasan { --hdb-color: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
+.hadith-badge--daif  { --hdb-color: var(--majalis-danger, #9B1C1C); }
+.hadith-badge--mawdu { --hdb-color: var(--majalis-danger, #9B1C1C); }
+

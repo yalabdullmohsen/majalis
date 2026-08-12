@@ -1,0 +1,86 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   73  SCHOLARLY TRUST & SAFETY LAYER  (stb-* scw-* adv-error-*)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── AsyncDataView Error State ── */
+.adv-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-3);
+  padding: 2.5rem 1rem;
+  text-align: center;
+}
+.adv-error-state__icon { color: #dc2626; opacity: 0.75; }
+.adv-error-state__msg  { font-size: 0.88rem; color: var(--clr-ink-soft, var(--mj-muted)); margin: 0; max-width: 340px; }
+.adv-error-state__retry {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  background: var(--mj-brand);
+  color: #fff;
+  border: none;
+  border-radius: var(--ds-radius);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s;
+}
+.adv-error-state__retry:hover { background: var(--mj-brand-deep); }
+
+/* ── نُقل إلى styles/components/scholarly-trust.css ── */
+/* ── نُقل إلى styles/components/sensitive-content.css ── */
+/* ── Global Design Consistency Fixes ── */
+
+/* Button focus visible improvement */
+button:focus-visible,
+a:focus-visible,
+[tabindex="0"]:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2.5px solid var(--mj-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Prevent text overflow in cards */
+.ui-card h2,
+.ui-card h3,
+.ui-card p {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Consistent card hover transition */
+.ui-card {
+  transition: box-shadow .18s, border-color .18s, transform .15s;
+}
+
+/* ── تنويه المواريث → pages/mawarith.css ── */
+
+/* Fatwa content type badge */
+
+.ftw-type-badge--fatwa   { background: rgba(23,61,53,.1); color: var(--mj-brand); }
+.ftw-type-badge--article { background: rgba(59,130,246,.1); color: var(--brand, var(--mj-brand)); }
+.ftw-type-badge--general { background: rgba(107,114,128,.1); color: var(--mj-muted); }
+.ftw-type-badge--scholar { background: rgba(139,92,246,.1); color: var(--brand, var(--mj-brand)); }
+
+/* AI disclaimer bar in research pages */
+.ai-disclaimer-bar {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  background: rgba(23,61,53,.05);
+  border-inline-end: 3px solid var(--mj-brand);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.79rem;
+  color: var(--clr-ink-soft, var(--mj-muted));
+  border-radius: 0 0.5rem 0.5rem 0;
+  margin-top: 1rem;
+  direction: rtl;
+}
+.ai-disclaimer-bar__icon { color: var(--mj-brand); flex-shrink: 0; margin-top: 0.1rem; }
+html[data-theme="dark"] .ai-disclaimer-bar { background: rgba(23,61,53,.1); }
+

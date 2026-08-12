@@ -1,0 +1,1545 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "corepack enable && cd ../.. && corepack pnpm install --frozen-lockfile --prod=false",
+  "buildCommand": "pnpm run build",
+  "outputDirectory": "dist",
+  "git": {
+    "deploymentEnabled": true
+  },
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 60,
+      "includeFiles": "{lib/**,supabase/**,data/**,src/data/universities-catalog.json,public/data/rulings-encyclopedia/**,dist/index.html}"
+    }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/process-import-jobs",
+      "schedule": "*/10 * * * *"
+    },
+    {
+      "path": "/api/cron/sync-data",
+      "schedule": "5 21 * * *"
+    },
+    {
+      "path": "/api/cron/sync-fiqh-council",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/knowledge-sync",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/auto-knowledge-sync",
+      "schedule": "30 2 * * *"
+    },
+    {
+      "path": "/api/cron/auto-content-sync",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/auto-content-health",
+      "schedule": "15 3 * * *"
+    },
+    {
+      "path": "/api/cron/daily-benefit-rotation",
+      "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/system-health",
+      "schedule": "45 3 * * *"
+    },
+    {
+      "path": "/api/cron/connector-health",
+      "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/platform-bootstrap",
+      "schedule": "30 4 * * *"
+    },
+    {
+      "path": "/api/cron/bootstrap-database",
+      "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron/apply-migrations",
+      "schedule": "0 4 * * 0"
+    },
+    {
+      "path": "/api/cron/check-fiqh-links",
+      "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/cron/scholarly-verification",
+      "schedule": "0 8 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-orchestrator",
+      "schedule": "15 8 * * *"
+    },
+    {
+      "path": "/api/cron/global-reference-review",
+      "schedule": "0 9 * * 0"
+    },
+    {
+      "path": "/api/cron/islamic-intelligence",
+      "schedule": "0 10 * * *"
+    },
+    {
+      "path": "/api/cron/governance-backup",
+      "schedule": "10 4 * * 0"
+    },
+    {
+      "path": "/api/cron/ai-agents",
+      "schedule": "30 10 * * *"
+    },
+    {
+      "path": "/api/cron/verified-knowledge",
+      "schedule": "0 11 * * *"
+    },
+    {
+      "path": "/api/cron/source-monitor",
+      "schedule": "*/30 * * * *"
+    },
+    {
+      "path": "/api/cron/job-worker",
+      "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/cron/lesson-intelligence",
+      "schedule": "15,45 * * * *"
+    },
+    {
+      "path": "/api/cron/monitor-sources",
+      "schedule": "10 6 * * *"
+    },
+    {
+      "path": "/api/cron/lesson-source-monitor",
+      "schedule": "30 6 * * *"
+    },
+    {
+      "path": "/api/cron/telegram-processor",
+      "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/cron/majlis-knowledge-engine",
+      "schedule": "5 * * * *"
+    },
+    {
+      "path": "/api/cron/content-scheduler",
+      "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/knowledge-reasoning",
+      "schedule": "30 11 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-fetch",
+      "schedule": "20 * * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-validate",
+      "schedule": "0 */2 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-questions",
+      "schedule": "0 */3 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-benefits",
+      "schedule": "30 */6 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-reindex",
+      "schedule": "10 2 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-audit",
+      "schedule": "20 4 * * 0"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-cleanup",
+      "schedule": "0 3 1 * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-bootstrap",
+      "schedule": "30 5 * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-monitor",
+      "schedule": "10,40 * * * *"
+    },
+    {
+      "path": "/api/cron/autonomous-platform-recovery",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/content-scoring",
+      "schedule": "0 1 * * *"
+    },
+    {
+      "path": "/api/cron/universities-review",
+      "schedule": "0 2 * * 1"
+    },
+    {
+      "path": "/api/cron/researches-daily-import",
+      "schedule": "20 5 * * *"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/support",
+      "destination": "/contact",
+      "permanent": false
+    },
+    {
+      "source": "/who-we-are",
+      "destination": "/about",
+      "permanent": false
+    },
+    {
+      "source": "/delete-account",
+      "destination": "/account-deletion",
+      "permanent": false
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "morning"
+        }
+      ],
+      "destination": "/adhkar/morning",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-morning"
+        }
+      ],
+      "destination": "/adhkar/morning",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "evening"
+        }
+      ],
+      "destination": "/adhkar/evening",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-evening"
+        }
+      ],
+      "destination": "/adhkar/evening",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "sleep"
+        }
+      ],
+      "destination": "/adhkar/sleep",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-sleep"
+        }
+      ],
+      "destination": "/adhkar/sleep",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "wakeup"
+        }
+      ],
+      "destination": "/adhkar/wakeup",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-wakeup"
+        }
+      ],
+      "destination": "/adhkar/wakeup",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "home-in"
+        }
+      ],
+      "destination": "/adhkar/home-in",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-home-in"
+        }
+      ],
+      "destination": "/adhkar/home-in",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "home-out"
+        }
+      ],
+      "destination": "/adhkar/home-out",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-home-out"
+        }
+      ],
+      "destination": "/adhkar/home-out",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "mosque"
+        }
+      ],
+      "destination": "/adhkar/mosque",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-mosque"
+        }
+      ],
+      "destination": "/adhkar/mosque",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "food"
+        }
+      ],
+      "destination": "/adhkar/food",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-food"
+        }
+      ],
+      "destination": "/adhkar/food",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "travel"
+        }
+      ],
+      "destination": "/adhkar/travel",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-travel"
+        }
+      ],
+      "destination": "/adhkar/travel",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "wudu"
+        }
+      ],
+      "destination": "/adhkar/wudu",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-wudu"
+        }
+      ],
+      "destination": "/adhkar/wudu",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "salah"
+        }
+      ],
+      "destination": "/adhkar/salah",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-salah"
+        }
+      ],
+      "destination": "/adhkar/salah",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "after-salah"
+        }
+      ],
+      "destination": "/adhkar/after-salah",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-after-salah"
+        }
+      ],
+      "destination": "/adhkar/after-salah",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "distress"
+        }
+      ],
+      "destination": "/adhkar/distress",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-distress"
+        }
+      ],
+      "destination": "/adhkar/distress",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "istikharah"
+        }
+      ],
+      "destination": "/adhkar/istikharah",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-istikharah"
+        }
+      ],
+      "destination": "/adhkar/istikharah",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "istighfar"
+        }
+      ],
+      "destination": "/adhkar/istighfar",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-istighfar"
+        }
+      ],
+      "destination": "/adhkar/istighfar",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "salawat"
+        }
+      ],
+      "destination": "/adhkar/salawat",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-salawat"
+        }
+      ],
+      "destination": "/adhkar/salawat",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "rain"
+        }
+      ],
+      "destination": "/adhkar/rain",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-rain"
+        }
+      ],
+      "destination": "/adhkar/rain",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "wind"
+        }
+      ],
+      "destination": "/adhkar/wind",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-wind"
+        }
+      ],
+      "destination": "/adhkar/wind",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "market"
+        }
+      ],
+      "destination": "/adhkar/market",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-market"
+        }
+      ],
+      "destination": "/adhkar/market",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "clothing"
+        }
+      ],
+      "destination": "/adhkar/clothing",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-clothing"
+        }
+      ],
+      "destination": "/adhkar/clothing",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "vehicle"
+        }
+      ],
+      "destination": "/adhkar/vehicle",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-vehicle"
+        }
+      ],
+      "destination": "/adhkar/vehicle",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "misc"
+        }
+      ],
+      "destination": "/adhkar/misc",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-misc"
+        }
+      ],
+      "destination": "/adhkar/misc",
+      "permanent": true
+    },
+    {
+      "source": "/researches",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/sharia-research",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/muezzins",
+      "destination": "/adhan-settings",
+      "permanent": true
+    },
+    {
+      "source": "/muezzins/:path*",
+      "destination": "/adhan-settings",
+      "permanent": true
+    },
+    {
+      "source": "/fatwa/:id",
+      "destination": "/rulings/:id",
+      "permanent": true
+    },
+    {
+      "source": "/fatwa",
+      "destination": "/fiqh",
+      "permanent": true
+    },
+    {
+      "source": "/glossary",
+      "destination": "/islamic-glossary",
+      "permanent": true
+    },
+    {
+      "source": "/flashcards",
+      "destination": "/memorize",
+      "permanent": true
+    },
+    {
+      "source": "/scholarly-research",
+      "destination": "/qa",
+      "permanent": true
+    },
+    {
+      "source": "/islamic-stories",
+      "destination": "/stories",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path/dashboard",
+      "destination": "/my-learning",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path/book/:bookId",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path/:scienceSlug",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/learning-plan",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/masarat",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/knowledge-map",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/learning/quiz",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
+      "source": "/mushaf-v2-preview",
+      "destination": "/mushaf",
+      "permanent": true
+    },
+    {
+      "source": "/features-in-progress",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/quran",
+      "destination": "/quran-hub",
+      "permanent": true
+    },
+    {
+      "source": "/quran-studies",
+      "destination": "/quran-knowledge",
+      "permanent": true
+    },
+    {
+      "source": "/quran/tafsir",
+      "destination": "/tafsir",
+      "permanent": true
+    },
+    {
+      "source": "/anbiya",
+      "destination": "/prophets",
+      "permanent": true
+    },
+    {
+      "source": "/start-here",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/learning/calendar",
+      "destination": "/occasions-lessons",
+      "permanent": true
+    },
+    {
+      "source": "/prayer-countdown",
+      "destination": "/prayer-times",
+      "permanent": true
+    },
+    {
+      "source": "/annual-courses",
+      "destination": "/lessons?tab=courses",
+      "permanent": true
+    },
+    {
+      "source": "/surah-stories",
+      "destination": "/quran/surah-stories",
+      "permanent": true
+    },
+    {
+      "source": "/search/%7Bsearch_term_string%7D",
+      "destination": "/search",
+      "permanent": false
+    },
+    {
+      "source": "/search/%7Bsearch_term_string%7D(.*)",
+      "destination": "/search",
+      "permanent": false
+    },
+    {
+      "source": "/scholars/ibn-al-qayyim-alt",
+      "destination": "/scholars/al-sakhawi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-uthaymeen-older",
+      "destination": "/scholars/abd-al-karim-al-khudair",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-uthaymin-ext",
+      "destination": "/scholars/ibn-jibreen",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-ghazali-junior",
+      "destination": "/scholars/ibn-ata-allah-al-sakandari",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/amir-al-san'ani",
+      "destination": "/scholars/al-amir-al-sanani",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-qurtubi-scholar",
+      "destination": "/scholars/al-qurtubi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-mufli",
+      "destination": "/scholars/ibn-muflih",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-nawawi",
+      "destination": "/scholars/nawawi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-bayhaqi",
+      "destination": "/scholars/bayhaki",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-mubarakfuri-2",
+      "destination": "/scholars/mubarakfuri",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-izz-ibn-abdes-salam",
+      "destination": "/scholars/izz-ibn-abd-al-salam",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-al-mubarak-senior",
+      "destination": "/scholars/ibn-mubarak",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-haytami",
+      "destination": "/scholars/ibn-hajar-haytami",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-khatib-baghdadi",
+      "destination": "/scholars/khatib-baghdadi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-mizzi-2",
+      "destination": "/scholars/al-mizzi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-juzayy-2",
+      "destination": "/scholars/ibn-juzayy",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-mustasfa",
+      "destination": "/library/book-al-mustasfa-ghazali",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-alfiyya",
+      "destination": "/library/book-alfiyyah",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-saadi",
+      "destination": "/library/book-tafsir-al-saadi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-tafsir-saadi",
+      "destination": "/library/book-tafsir-al-saadi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-minhaj-talibin",
+      "destination": "/library/book-al-minhaj-nawawi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-maalem-tanzil",
+      "destination": "/library/book-tafsir-al-baghawi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-muqaddimah",
+      "destination": "/library/book-muqaddima-ibn-khaldun",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-tabari-tafsir",
+      "destination": "/library/book-tafsir-tabari",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-baghawi-tafsir",
+      "destination": "/library/book-tafsir-al-baghawi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-ajurrumiyya",
+      "destination": "/library/book-ajrumiyyah",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-madaarij",
+      "destination": "/library/book-madarij",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-bulugh",
+      "destination": "/library/book-bulugh-maram",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/amir-al-san%27ani",
+      "destination": "/scholars/al-amir-al-sanani",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-al-salah",
+      "destination": "/scholars/ibn-salah",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-abi-shayba",
+      "destination": "/scholars/ibn-abi-shaybah",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/fakhr-al-razi",
+      "destination": "/scholars/fakhr-razi",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.majlisilm.com"
+        }
+      ],
+      "destination": "https://majlisilm.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/library",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/updates",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/knowledge-graph",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/academic-research",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/quran-index",
+      "destination": "/quran-knowledge",
+      "permanent": true
+    },
+    {
+      "source": "/asbab-al-nuzul",
+      "destination": "/quran-knowledge",
+      "permanent": true
+    },
+    {
+      "source": "/quran-stories",
+      "destination": "/quran-knowledge",
+      "permanent": true
+    },
+    {
+      "source": "/memorization-tests",
+      "destination": "/memorization",
+      "permanent": true
+    },
+    {
+      "source": "/memorization-plans",
+      "destination": "/memorization",
+      "permanent": true
+    },
+    {
+      "source": "/islamic-institutions",
+      "destination": "/islamic-directory",
+      "permanent": true
+    },
+    {
+      "source": "/mosques",
+      "destination": "/islamic-directory",
+      "permanent": true
+    },
+    {
+      "source": "/reviewed-cards",
+      "destination": "/my-learning",
+      "permanent": true
+    },
+    {
+      "source": "/scientific-library",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/latest",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/fatwas",
+      "destination": "/fiqh",
+      "permanent": true
+    },
+    {
+      "source": "/explore",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/research",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/whats-new",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/news",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/events",
+      "destination": "/occasions-lessons",
+      "permanent": true
+    },
+    {
+      "source": "/islamic-events",
+      "destination": "/occasions-lessons",
+      "permanent": true
+    },
+    {
+      "source": "/lesson-calendar",
+      "destination": "/occasions-lessons",
+      "permanent": true
+    },
+    {
+      "source": "/review-plans",
+      "destination": "/memorization",
+      "permanent": true
+    },
+    {
+      "source": "/masajid",
+      "destination": "/islamic-directory",
+      "permanent": true
+    },
+    {
+      "source": "/quran-sciences",
+      "destination": "/quran-knowledge",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/feed.xml",
+      "destination": "/api/feed"
+    },
+    {
+      "source": "/lessons/:id",
+      "destination": "/api/lessons/:id"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/favicon.ico",
+      "destination": "/favicon.png"
+    },
+    {
+      "source": "/search/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/about-us",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/topics/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/mushaf/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learning/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/universities/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/discover-islam/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/quran/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/nations/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/prophets/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/prophet-stories/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sins-and-rights/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/arbaeen-nawawi/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/annual-courses/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scientific-announcements/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/c/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/hadith/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/fiqh-council/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/academic-research/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/updates/auto/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/fiqh/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/quran-engine",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/quran-engine/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/memorize",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/memorize/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/quran-knowledge",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/quran-knowledge/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/occasions-lessons",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/occasions-lessons/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/islamic-directory",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/islamic-directory/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/memorization",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/memorization/:path*",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-DNS-Prefetch-Control",
+          "value": "on"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(self), geolocation=(self), interest-cohort=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://platform.twitter.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https://everyayah.com https://server8.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.alquran.cloud https://api.quran.com https://api.aladhan.com https://everyayah.com https://server8.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; frame-src 'self' https://platform.twitter.com https://syndication.twitter.com https://www.google.com https://maps.google.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/apple-app-site-association",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/version.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/sw-version.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/logo.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/logo-icon.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/favicon.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/favicon.svg",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/site.webmanifest",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.webmanifest",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/majlisilm-og-2026.jpg",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(logo\\.png|logo-icon\\.png|favicon\\.png|favicon\\.svg|opengraph\\.jpg)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}

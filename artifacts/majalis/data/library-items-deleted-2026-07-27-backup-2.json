@@ -1,0 +1,22 @@
+[
+ {
+  "archived_at": null,
+  "category": "فقه",
+  "created_at": "2026-07-26 18:00:14.672099+00",
+  "description": "سجل تجريبي لاختبار استيراد المكتبة.",
+  "external_key": null,
+  "external_url": "https://www.majlisilm.com/library",
+  "file_url": null,
+  "id": "f8771396-4e8e-4785-b603-3203376f05f5",
+  "published_at": null,
+  "scheduled_at": null,
+  "sheikh_id": null,
+  "slug": null,
+  "source_url": null,
+  "status": "approved",
+  "title": "كتاب تجريبي Phase2 — مختصر الحكم",
+  "trust_level": 50,
+  "type": "كتاب",
+  "verification_status": "needs_review"
+ }
+]

@@ -1,0 +1,77 @@
+/* ══════════════════════════════════════════════════════
+   55  My Submissions Page  (msp-* / msr-*)
+   ══════════════════════════════════════════════════════ */
+
+/* ─ Page shell ─ */
+.msp-page { direction: rtl; max-width: 620px; margin: 0 auto; padding: 1.25rem 1rem 5rem; }
+
+/* ─ Header ─ */
+.msp-header { margin-bottom: 1.5rem; }
+.msp-eyebrow { font-size: var(--ds-text-xs); color: var(--majalis-emerald); font-weight: 600; text-transform: uppercase; letter-spacing: normal; margin: 0 0 0.25rem; }
+.msp-title { font-size: 1.4rem; font-weight: 800; color: var(--majalis-ink); margin: 0 0 0.35rem; }
+.msp-subtitle { font-size: 0.82rem; color: var(--majalis-ink-muted, #9BA3B5); margin: 0; }
+
+/* ─ Search box ─ */
+.msp-search-box { background: var(--majalis-panel, rgba(255,255,255,0.08)); border-radius: var(--ds-radius-xl); border: 1.5px solid rgba(255,255,255,0.10); padding: var(--ds-space-5); margin-bottom: 1.5rem; }
+.msp-search-label { font-size: 0.85rem; font-weight: 600; color: var(--majalis-ink-soft); margin: 0 0 0.875rem; }
+.msp-search-form { display: flex; gap: var(--ds-space-2); }
+.msp-email-input { flex: 1; padding: 0.65rem 0.875rem; border-radius: 0.6rem; border: 1.5px solid rgba(255,255,255,0.10); font-size: var(--ds-text-sm); font-family: inherit; direction: ltr; outline: none; }
+.msp-search-btn { padding: 0.65rem 1.25rem; border-radius: 0.6rem; border: none; background: var(--mj-brand-deep); color: #fff; font-size: var(--ds-text-sm); font-weight: 600; cursor: pointer; font-family: inherit; flex-shrink: 0; }
+.msp-search-btn.is-loading { background: #9ca3af; cursor: not-allowed; }
+
+/* ─ Error ─ */
+.msp-error { padding: 0.75rem 1rem; background: rgba(193,89,90,0.10); border: 1px solid rgba(193,89,90,0.30); border-radius: 0.6rem; color: var(--msk-red, #C1595A); font-size: 0.85rem; margin-bottom: 1rem; }
+
+/* ─ Stats grid ─ */
+.msp-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--ds-space-2); margin-bottom: 1.25rem; }
+.msp-stat { border-radius: var(--ds-radius-lg); padding: var(--ds-space-3); text-align: center; }
+.msp-stat__val { font-size: 1.4rem; font-weight: 800; }
+.msp-stat__label { font-size: 0.65rem; margin-top: 0.1rem; font-weight: 600; }
+.msp-stat--total   { background: var(--majalis-parchment-deep); }
+.msp-stat--pending  { background: var(--majalis-parchment-deep); }
+.msp-stat--approved { background: var(--majalis-emerald-muted); }
+.msp-stat--rejected { background: var(--majalis-danger-muted, #fef2f2); }
+.msp-stat--total .msp-stat__val,   .msp-stat--total .msp-stat__label   { color: var(--majalis-ink-soft); }
+.msp-stat--pending .msp-stat__val, .msp-stat--pending .msp-stat__label  { color: #0369A1; }
+.msp-stat--approved .msp-stat__val,.msp-stat--approved .msp-stat__label { color: var(--majalis-emerald); }
+.msp-stat--rejected .msp-stat__val,.msp-stat--rejected .msp-stat__label { color: var(--msk-red, #C1595A); }
+
+/* ─ Empty state ─ */
+.msp-empty-state { text-align: center; padding: 3rem 1rem; }
+.msp-empty-state__icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.msp-empty-state__msg { color: var(--majalis-ink-muted, #9BA3B5); font-size: 0.9rem; }
+
+/* ─ CTA buttons ─ */
+.msp-cta-btn { padding: 0.6rem 1.5rem; border-radius: 0.6rem; border: none; background: var(--mj-brand-deep); color: #fff; font-family: inherit; font-size: var(--ds-text-sm); font-weight: 600; cursor: pointer; margin-top: 0.75rem; }
+.msp-cta-btn--gradient { padding: 0.7rem 2rem; border-radius: 0.875rem; font-size: 0.9rem; font-weight: 700; background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand-deep)); margin-top: 0; }
+
+/* ─ Results count ─ */
+.msp-results-count { font-size: 0.78rem; color: var(--majalis-ink-muted, #9BA3B5); margin-bottom: 0.875rem; }
+
+/* ─ No-search CTA ─ */
+.msp-cta { text-align: center; padding: var(--ds-space-4); }
+.msp-cta__text { font-size: 0.82rem; color: var(--majalis-ink-muted, #9BA3B5); margin-bottom: 1rem; }
+
+/* ─ Submission row card (msr-*) ─ */
+.msr-status--pending  { --msr-bg: #F0F9FF; --msr-color: #0369A1; --msr-border: #A7F3D0; }
+.msr-status--approved { --msr-bg: #f0fdf4; --msr-color: var(--majalis-emerald); --msr-border: #86efac; }
+.msr-status--rejected { --msr-bg: #fef2f2; --msr-color: var(--msk-red, #C1595A); --msr-border: #fca5a5; }
+.msr-card { background: var(--majalis-panel, rgba(255,255,255,0.08)); border-radius: var(--ds-radius-xl); border: 1.5px solid var(--msr-border, #86efac); overflow: hidden; margin-bottom: 0.875rem; }
+.msr-card__status-bar { background: var(--msr-bg, var(--mj-brand-soft)); padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.4rem; border-bottom: 1px solid var(--msr-border, #86efac); }
+.msr-card__status-label { font-size: 0.78rem; font-weight: 700; color: var(--msr-color, var(--majalis-emerald)); }
+.msr-card__date { margin-inline-end: auto; font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); }
+.msr-card__body { padding: 0.875rem 1rem; }
+.msr-card__title-row { display: flex; gap: var(--ds-space-2); align-items: flex-start; margin-bottom: 0.5rem; }
+.msr-card__type-icon { font-size: var(--ds-text-xl); }
+.msr-card__info { flex: 1; }
+.msr-card__title { font-weight: 700; font-size: 0.9rem; color: var(--majalis-ink); }
+.msr-card__meta { font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); margin-top: 0.15rem; }
+.msr-card__audio-btn { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.65rem; border-radius: 0.4rem; border: none; background: var(--mj-brand-deep); color: #fff; font-size: var(--ds-text-xs); font-weight: 600; cursor: pointer; font-family: inherit; margin-bottom: 0.5rem; }
+.msr-card__audio-btn.is-playing { background: #ef4444; }
+.msr-card__reviewer-note { padding: 0.6rem 0.875rem; border-radius: var(--ds-radius); font-size: 0.82rem; margin-top: 0.5rem; }
+.msr-card__reviewer-note--approved { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
+.msr-card__reviewer-note--rejected { background: var(--majalis-danger-muted, #fef2f2); color: var(--majalis-danger, var(--mj-danger-deep)); }
+.msr-card__notice { margin-top: 0.5rem; font-size: 0.78rem; color: var(--majalis-emerald); font-weight: 600; }
+.msr-card__resubmit { margin-top: 0.75rem; }
+.msr-card__resubmit-link { font-size: 0.78rem; color: var(--majalis-emerald); font-weight: 600; text-decoration: underline; cursor: pointer; }
+

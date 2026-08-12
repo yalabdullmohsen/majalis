@@ -1,0 +1,663 @@
+/* ════════════════════════════════════════════════════════════
+   مواقيت الصلاة — تصميم الشاشة الداكنة (زمرد + ذهب)
+   مطابق لهوية دليل الصلاة: خلفية غابة زمردية، نص أبيض، تمييز ذهبي
+   فئات pts-* لتجنّب تعارض !important من elite-2026 على .pt-*
+   ════════════════════════════════════════════════════════════ */
+
+/* عند فتح صفحة المواقيت (NavBar مخفي): لوّن منطقة safe-area على html/body
+   بنفس الزمرد حتى لا يظهر شريط أبيض فوق الشاشة الخضراء. */
+html.pts-immersive,
+html.pts-immersive body {
+  /* يوحَّد مع أسفل تدرّج .pts-screen ويهزم m2030 em-950 إن اختلف */
+  background-color: var(--em-950, var(--mj-brand-deep, #081A16)) !important;
+  background-image: none !important;
+}
+
+/* شريط الأقسام — يهزم theme-aliases (.top-section-bar { background: var(--mj-surface) !important }) */
+html.pts-immersive .top-section-bar.mj-nav-skin,
+html.pts-immersive .top-section-bar {
+  background: var(--em-950, var(--mj-brand-deep, #081A16)) !important;
+  border-block-end-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
+  border-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
+  color: #FAFAF8 !important;
+  backdrop-filter: none !important;
+}
+html.pts-immersive .top-section-bar__tab {
+  color: rgba(250, 250, 248, 0.72) !important;
+}
+html.pts-immersive .top-section-bar__tab:hover {
+  color: #FAFAF8 !important;
+}
+html.pts-immersive .top-section-bar__tab.is-active {
+  color: #0E241E !important;
+  background: color-mix(in srgb, var(--gold-300, #E3CB8C) 88%, #fff) !important;
+}
+
+/*
+ * الشريط السفلي + حشو safe-area: نفس زمرد الصفحة — يهزم
+ * theme-aliases (.bottom-nav--m2030 { background: var(--mj-surface) !important }).
+ */
+html.pts-immersive .bottom-nav.bottom-nav--m2030,
+html.pts-immersive .bottom-nav.bottom-nav--v2,
+html.pts-immersive .bottom-nav--m2030,
+html.pts-immersive .bottom-nav--v2,
+html.pts-immersive .bottom-nav {
+  background: var(--em-950, var(--mj-brand-deep, #081A16)) !important;
+  border-block-start-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
+  border-top-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+html.pts-immersive .bottom-nav--v2 .bottom-nav__tab,
+html.pts-immersive .bottom-nav .bottom-nav__tab {
+  color: rgba(250, 250, 248, 0.72) !important;
+}
+html.pts-immersive .bottom-nav--v2 .bottom-nav__tab.is-active,
+html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
+  color: #E3CB8C !important;
+  background: color-mix(in srgb, var(--gold-400, #D2B063) 18%, transparent) !important;
+}
+
+.pts-screen--with-nav {
+  /* مع شريط الأقسام العلوي + الشريط السفلي: لا سحب تحت النوتش */
+  margin-block-start: 0 !important;
+  margin-inline: 0 !important;
+  padding-block-start: 0.85rem !important;
+  padding-bottom: calc(var(--bottom-nav-total, 4.5rem) + 16px) !important;
+  box-sizing: border-box;
+}
+
+.pts-screen {
+  /* مربوط بهوية v4 — لا باليتة موازية */
+  --pts-bg-0: var(--em-950, #081A16);
+  --pts-bg-1: var(--em-800, var(--mj-brand-deep));
+  --pts-bg-2: var(--em-700, #195345);
+  /* ذهب فاتح ثابت للنص على الخلفية الزمردية — لا --gold-300/=mj-accent الداكن
+     (#B08A3E ≈ 3.7:1 على #123F2E؛ #E3CB8C يمرّ ≥4.5:1 لبوابة التباين). */
+  --pts-gold: #E3CB8C;
+  --pts-gold-soft: color-mix(in srgb, #D2B063 28%, transparent);
+  --pts-gold-line: color-mix(in srgb, #D2B063 40%, transparent);
+  /* أبيض صلب — لا --n-50/--mj-bg/--mj-ink (تنقلب سوداء حسب السمة) */
+  --pts-white: #FAFAF8;
+  --pts-muted: rgba(250, 250, 248, 0.78);
+  --pts-row: rgba(250, 250, 248, 0.06);
+  --pts-row-active: color-mix(in srgb, var(--gold-400, #D2B063) 18%, transparent);
+
+  direction: rtl;
+  /* ملء الشاشة كاملة — NavBar مخفي على هذا المسار، فلا نخصم ارتفاع هيدر.
+     الهامش السالب يلغي padding الآمن على html/body الذي كان يظهر شريطًا أبيض
+     فوق الخلفية الخضراء (السبب الجذري لفراغ الرأس الأبيض). */
+  min-height: 100dvh;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  margin-block-start: calc(-1 * var(--inset-top));
+  margin-inline: calc(-1 * var(--inset-left)) calc(-1 * var(--inset-right));
+  color: var(--pts-white);
+  /* لون صلب تحت التدرّج — قياس التباين وfallback عند تعطيل الصور */
+  background-color: var(--pts-bg-1);
+  background-image:
+    radial-gradient(ellipse 90% 55% at 70% 8%, rgba(212, 196, 160, 0.08), transparent 55%),
+    linear-gradient(180deg, var(--pts-bg-1) 0%, var(--pts-bg-0) 48%, #0A221C 100%);
+  padding:
+    max(0.85rem, var(--inset-top))
+    max(1.1rem, var(--inset-right))
+    calc(var(--bottom-nav-h, 64px) + 1.25rem + var(--inset-bottom))
+    max(1.1rem, var(--inset-left));
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.pts-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cpath d='M36 6L42 24L60 18L54 36L72 36L54 42L60 54L42 48L36 66L30 48L12 54L18 42L0 36L18 30L12 18L30 24Z' fill='none' stroke='rgba(255,255,255,0.035)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 72px 72px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pts-screen > * {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 32rem;
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+/* ── رأس ── */
+.pts-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+.pts-header__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  width: 100%;
+}
+.pts-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--pts-gold-line);
+  background: rgba(250, 250, 248, 0.06);
+  color: var(--pts-white);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.pts-back:hover {
+  background: var(--pts-gold-soft);
+}
+.pts-back:focus-visible {
+  outline: 2px solid var(--pts-gold);
+  outline-offset: 2px;
+}
+.pts-title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(1.85rem, 6vw, 2.35rem);
+  font-weight: 800;
+  color: var(--pts-white);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.pts-title.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.pts-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-inline-start: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--pts-gold);
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.pts-location:hover {
+  opacity: 0.85;
+}
+.pts-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.78rem;
+  /* لون صلب مقروء فوق الزمرد (بدل color-mix الشفاف) — ≥4.5:1 */
+  color: #C8D4CE;
+  background-color: var(--pts-bg-1);
+  border-radius: 0.35rem;
+  padding: 0.1rem 0.15rem;
+}
+.pts-dates__sep { opacity: 0.5; }
+
+/* ── محافظات + طريقة الحساب ── */
+.pts-gov-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.15rem 0 0.35rem;
+}
+.pts-gov {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.pts-method {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.pts-method__label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--pts-muted);
+}
+.pts-method__select {
+  width: 100%;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--pts-white);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.45rem 0.65rem;
+}
+.pts-gov__chip {
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--pts-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.pts-gov__chip:hover {
+  color: var(--pts-white);
+  border-color: var(--pts-gold-line);
+}
+.pts-gov__chip--active {
+  background: var(--pts-gold-soft);
+  border-color: var(--pts-gold);
+  color: var(--pts-white);
+}
+
+/* ── بطل العدّاد + ظلّ المسجد ── */
+.pts-hero {
+  position: relative;
+  min-height: 168px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem 0.75rem 1.15rem;
+  overflow: hidden;
+  border-radius: 0;
+}
+.pts-mosque {
+  position: absolute;
+  inset-inline: 0;
+  bottom: -8px;
+  width: 100%;
+  height: auto;
+  max-height: 180px;
+  color: var(--pts-gold);
+  pointer-events: none;
+  z-index: 0;
+}
+.pts-hero__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+.pts-hero__label {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(250, 250, 248, 0.78);
+  letter-spacing: 0.02em;
+}
+.pts-hero__name {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(1.85rem, 7vw, 2.55rem);
+  font-weight: 800;
+  color: var(--pts-white);
+  line-height: 1.25;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+}
+.pts-hero__countdown {
+  margin-top: 0.25rem;
+  font-family: var(--font-body);
+  font-size: clamp(2.15rem, 9vw, 3rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--pts-white);
+  line-height: 1.05;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+.pts-hero__hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.72rem;
+  color: var(--pts-muted);
+  max-width: 16rem;
+  line-height: 1.45;
+}
+.pts-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.55rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.pts-badge {
+  background: var(--pts-gold-soft);
+  border: 1px solid var(--pts-gold-line);
+  color: var(--pts-gold);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.pts-hero__reset {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  color: var(--pts-gold);
+  font-size: 0.72rem;
+  padding: 0.25rem 0.8rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+.pts-hero__reset:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ── قائمة المواقيت (صفوف عمودية كالصورة) ── */
+.pts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 100%;
+  margin-top: 0.25rem;
+}
+.pts-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--pts-white);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.15s ease;
+  text-align: start;
+}
+.pts-row:hover {
+  background: var(--pts-row);
+}
+.pts-row--next {
+  background: var(--pts-row-active);
+  box-shadow: inset 0 0 0 1px var(--pts-gold-line);
+}
+.pts-row--next:hover {
+  background: rgba(212, 196, 160, 0.24);
+}
+.pts-row--pinned:not(.pts-row--next) {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+.pts-row--past {
+  opacity: 0.48;
+}
+.pts-row--past .pts-row__time {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+.pts-row__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.pts-row__name {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--pts-white);
+}
+.pts-row--next .pts-row__name {
+  font-weight: 700;
+}
+.pts-row__status {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--pts-muted);
+}
+.pts-row--next .pts-row__status {
+  color: var(--pts-gold);
+}
+.pts-row__time {
+  font-size: 1.02rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: rgba(250, 250, 248, 0.88);
+  direction: ltr;
+  unicode-bidi: isolate;
+  flex-shrink: 0;
+}
+.pts-row--next .pts-row__time {
+  color: var(--pts-gold);
+}
+
+/* ── أدوات الصلاة فقط (قبلة + تنبيهات) ── */
+.pts-dock {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.55rem;
+  margin-top: 0.35rem;
+  padding: 0.65rem 0.15rem 0.1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.pts-dock__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  color: var(--pts-gold);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.45rem 0.2rem;
+  border-radius: 12px;
+  transition: background 0.15s, color 0.15s;
+}
+.pts-dock__item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--pts-white);
+}
+.pts-dock__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  background: rgba(212, 196, 160, 0.1);
+  border: 1px solid var(--pts-gold-line);
+  color: var(--pts-gold);
+}
+
+.pts-skeleton,
+.pts-error {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--pts-muted);
+  font-size: 0.95rem;
+}
+.pts-error {
+  color: #F0A8A8;
+  margin-block: 0.75rem;
+}
+.pts-retry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.45rem 1.1rem;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pts-more {
+  margin: 0.75rem 1rem 0;
+  margin-block-start: auto;
+  border-radius: var(--mj-r-md, 16px);
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  padding: 0.35rem 0.65rem;
+  order: 40;
+}
+.pts-more > summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.45rem 0.25rem;
+  list-style: none;
+}
+.pts-more > summary::-webkit-details-marker { display: none; }
+.pts-sheet-close {
+  position: sticky;
+  bottom: 0;
+  padding: 0.75rem 1rem calc(0.75rem + var(--inset-bottom));
+  background: linear-gradient(to top, var(--pts-bg, #0E241E) 70%, transparent);
+  margin-block-start: 0.5rem;
+}
+.pts-sheet-close__btn {
+  width: 100%;
+  min-height: 2.75rem;
+  border-radius: var(--mj-r-md, 16px);
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pts-row { transition: none; }
+}
+
+/* سطح المكتب: خلفية ممتلئة بعرض الشاشة، محتوى مركزي مقروء */
+@media (min-width: 640px) {
+  .pts-screen {
+    margin-bottom: 0;
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 100dvh;
+  }
+}
+
+/* ── حراسة نص أبيض: تتفوق على قواعد page-shell/h2/a العامة (!important) ── */
+.pts-screen,
+.pts-screen .pts-back,
+.pts-screen .pts-title,
+.pts-screen .pts-hero__label,
+.pts-screen .pts-hero__name,
+.pts-screen .pts-hero__countdown,
+.pts-screen .pts-hero__hint,
+.pts-screen .pts-row,
+.pts-screen .pts-row__name,
+.pts-screen .pts-row__status,
+.pts-screen .pts-row__time,
+.pts-screen .pts-dates,
+.pts-screen .pts-gov__chip,
+.pts-screen .pts-more > summary,
+.pts-screen .pts-retry,
+.pts-screen .pts-skeleton,
+.pts-screen .pts-error {
+  color: var(--pts-white) !important;
+}
+.pts-screen .pts-location,
+.pts-screen .pts-hero__reset,
+.pts-screen .pts-badge,
+.pts-screen .pts-dock__item,
+.pts-screen .pts-dock__icon,
+.pts-screen .pts-row--next .pts-row__name,
+.pts-screen .pts-row--next .pts-row__status,
+.pts-screen .pts-row--next .pts-row__time {
+  color: var(--pts-gold) !important;
+}
+.pts-screen .pts-hero__label,
+.pts-screen .pts-hero__hint,
+.pts-screen .pts-row__status,
+.pts-screen .pts-gov__chip:not(.pts-gov__chip--active),
+.pts-screen .pts-skeleton {
+  color: var(--pts-muted) !important;
+}
+.pts-screen .pts-row__time {
+  color: rgba(250, 250, 248, 0.88) !important;
+}
+.pts-screen .pts-gov__chip--active {
+  color: var(--pts-white) !important;
+}
+.pts-screen .pts-dock__item:hover {
+  color: var(--pts-white) !important;
+}
+.pts-screen .pts-error {
+  color: #F0A8A8 !important;
+}
+
+/* ── Universal location + annual timetable ── */
+.pts-loc { display: flex; flex-direction: column; gap: 0.65rem; margin-block: 0.5rem; }
+.pts-loc__current { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; font-size: 0.85rem; color: var(--majalis-ink-soft, #5a6e68); }
+.pts-loc__tz { opacity: 0.75; font-size: 0.75rem; }
+.pts-loc__gps, .pts-annual__gen, .pts-annual__export {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font: inherit; font-size: 0.85rem; padding: 0.45rem 0.75rem;
+  border-radius: 0.5rem; border: 1px solid var(--mj-border, rgba(23,61,53,.18));
+  background: var(--mj-surface, #fff); cursor: pointer; color: var(--majalis-ink, #1a2e28);
+}
+.pts-loc__gps:disabled, .pts-annual__gen:disabled { opacity: 0.6; cursor: wait; }
+.pts-loc__err { margin: 0; color: #b42318; font-size: 0.8rem; }
+.pts-loc__section { margin: 0.35rem 0 0; font-size: 0.8rem; font-weight: 600; }
+.pts-loc__filters { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.pts-loc__field { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.8rem; }
+.pts-loc__field select, .pts-loc__search input, .pts-annual__controls input, .pts-annual__controls select {
+  font: inherit; padding: 0.4rem 0.55rem; border-radius: 0.45rem;
+  border: 1px solid var(--mj-border, rgba(23,61,53,.18)); background: var(--mj-surface, #fff);
+}
+.pts-loc__search { display: flex; align-items: center; gap: 0.4rem; }
+.pts-loc__search input { flex: 1; }
+.pts-loc__hits { list-style: none; margin: 0; padding: 0; max-height: 12rem; overflow: auto; display: flex; flex-direction: column; gap: 0.25rem; }
+.pts-loc__hit {
+  width: 100%; text-align: start; display: flex; flex-direction: column; gap: 0.1rem;
+  padding: 0.45rem 0.55rem; border-radius: 0.45rem; border: 1px solid transparent;
+  background: transparent; font: inherit; cursor: pointer;
+}
+.pts-loc__hit:hover, .pts-loc__hit.is-active { background: var(--ds-emerald-soft, rgba(23,61,53,.08)); border-color: var(--mj-border, rgba(23,61,53,.14)); }
+.pts-loc__hit-meta { font-size: 0.72rem; opacity: 0.7; }
+.pts-loc__empty { padding: 0.5rem; font-size: 0.8rem; opacity: 0.75; }
+
+.pts-annual { margin: 1rem 0 1.25rem; padding: 0.85rem; border-radius: 0.75rem; border: 1px solid var(--mj-border, rgba(23,61,53,.14)); background: var(--mj-surface-muted, rgba(23,61,53,.03)); }
+.pts-annual__head { display: flex; align-items: center; gap: 0.4rem; }
+.pts-annual__head h2 { margin: 0; font-size: 1rem; }
+.pts-annual__hint { margin: 0.35rem 0 0.6rem; font-size: 0.8rem; color: var(--majalis-ink-soft, #5a6e68); }
+.pts-annual__controls { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: end; }
+.pts-annual__controls label { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.78rem; }
+.pts-annual__table-wrap { margin-top: 0.75rem; overflow: auto; max-height: 22rem; }
+.pts-annual__table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+.pts-annual__table th, .pts-annual__table td { padding: 0.35rem 0.4rem; border-bottom: 1px solid var(--mj-border, rgba(23,61,53,.1)); text-align: center; white-space: nowrap; }
+.pts-annual__table th { position: sticky; top: 0; background: var(--mj-surface, #fff); }

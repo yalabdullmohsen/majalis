@@ -1,0 +1,20 @@
+[
+  {
+    "number": 1,
+    "name": "الفاتحة",
+    "englishName": "Al-Fatihah",
+    "ayahs": 7,
+    "revelation": "مكية",
+    "summary": "أعظم سور القرآن، تُعدل ثلثه في المعنى.",
+    "themes": ["توحيد", "عبادة", "هداية"]
+  },
+  {
+    "number": 112,
+    "name": "الإخلاص",
+    "englishName": "Al-Ikhlas",
+    "ayahs": 4,
+    "revelation": "مكية",
+    "summary": "سورة التوحيد الخالص.",
+    "themes": ["توحيد", "إخلاص"]
+  }
+]

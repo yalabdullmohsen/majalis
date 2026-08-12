@@ -1,0 +1,41 @@
+/* ── 156 — LessonImportImagePage (lip-*) ────────────────────────────────── */
+.lip-page-header   { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--ds-space-3); margin-bottom: 1rem; }
+.lip-page-title    { margin: 0 0 0.35rem; color: var(--majalis-emerald-deep); font-size: 1.1rem; font-weight: 700; }
+.lip-page-sub      { margin: 0; color: var(--majalis-ink-soft); font-size: var(--ds-text-sm); }
+.lip-back-link     { font-size: 0.8125rem; color: var(--majalis-emerald-deep); text-decoration: none; white-space: nowrap; }
+.lip-vision-warn   { background: rgba(31,77,58,0.08); border: 1px solid rgba(24,54,42,0.3); border-radius: var(--ds-radius); padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: var(--ds-text-sm); color: var(--mj-brand); }
+.lip-upload-sec    { background: var(--majalis-panel, #f9f7f1); border: 1px solid var(--majalis-line); border-radius: 0.625rem; padding: var(--ds-space-4); margin-bottom: 1rem; }
+.lip-upload-h3     { margin: 0 0 0.75rem; font-size: 0.9375rem; color: var(--majalis-emerald-deep); }
+.lip-upload-meta   { display: grid; gap: var(--ds-space-3); grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 0.75rem; }
+.lip-upload-row    { display: flex; align-items: center; gap: var(--ds-space-2-5); flex-wrap: wrap; }
+.lip-upload-btn    { padding: 0.625rem 1.25rem; background: var(--majalis-emerald); color: var(--majalis-parchment); border: none; border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; font-weight: 600; }
+.lip-upload-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.lip-retry-btn     { padding: 0.625rem 1.25rem; background: rgba(31,77,58,0.08); color: var(--mj-brand); border: 1px solid rgba(24,54,42,0.3); border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; font-weight: 600; }
+.lip-error-msg     { font-size: 0.8125rem; color: var(--mj-danger-deep); margin-top: 0.5rem; background: var(--mj-danger-soft); padding: 0.5rem 0.75rem; border-radius: var(--ds-radius-sm); }
+.lip-upload-hint   { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); margin-top: 0.5rem; }
+.lip-badges-row    { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; margin-bottom: 0.75rem; }
+.lip-sheikh-badge  { padding: 0.25rem 0.625rem; border-radius: var(--ds-radius-full); background: #DBEAFE; color: #1D4ED8; font-size: var(--ds-text-xs); }
+.lip-draft-grid    { display: grid; gap: var(--ds-space-4); grid-template-columns: minmax(240px, 1fr) minmax(280px, 2fr); margin-bottom: 1rem; }
+.lip-panel         { background: var(--majalis-panel, #f9f7f1); border: 1px solid var(--majalis-line); border-radius: 0.625rem; padding: var(--ds-space-4); }
+.lip-panel-h3      { margin: 0 0 0.75rem; font-size: 0.9375rem; color: var(--majalis-emerald-deep); }
+.lip-panel-h3--sm  { margin: 1rem 0 0.5rem; font-size: var(--ds-text-sm); color: var(--majalis-emerald-deep); }
+.lip-no-image      { color: var(--majalis-ink-soft); font-size: var(--ds-text-sm); }
+.lip-preview-img   { width: 100%; border-radius: var(--ds-radius-sm); border: 1px solid var(--majalis-line); }
+.lip-ocr-pre       { white-space: pre-wrap; font-size: var(--ds-text-xs); max-height: 12rem; overflow: auto; background: var(--majalis-parchment-deep); padding: var(--ds-space-2); border-radius: var(--ds-radius-sm); margin: 0; direction: rtl; }
+.lip-warnings      { margin: 0.75rem 0 0; padding-inline-start: 1rem; font-size: var(--ds-text-xs); color: var(--mj-brand); }
+.lip-actions       { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; }
+.lip-approve-btn   { padding: 0.5rem 1rem; background: var(--majalis-emerald-deep); color: #fff; border: none; border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; font-weight: 600; }
+.lip-approve-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.lip-draft-btn     { padding: 0.5rem 1rem; background: var(--majalis-panel); color: var(--majalis-emerald-deep); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; }
+.lip-draft-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.lip-extract-btn   { padding: 0.5rem 1rem; background: var(--majalis-panel); color: var(--majalis-ink); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; }
+.lip-hidden-input  { display: none; }
+.lip-loading-wrap  { margin-top: 1rem; }
+.lip-extract-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.lip-reject-btn    { padding: 0.5rem 1rem; background: var(--mj-danger-soft); color: var(--mj-danger-deep); border: none; border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; }
+.lip-reject-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.lip-day-label     { display: flex; align-items: center; gap: 0.3rem; cursor: pointer; font-size: var(--ds-text-sm); font-weight: var(--lip-dl-fw, 400); color: var(--lip-dl-color, var(--majalis-ink)); }
+.lip-day-label.is-disabled { cursor: default; }
+.lip-day-repeat    { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); margin-top: 0.25rem; }
+.lip-checkbox-row  { display: flex; align-items: center; gap: var(--ds-space-2); }
+

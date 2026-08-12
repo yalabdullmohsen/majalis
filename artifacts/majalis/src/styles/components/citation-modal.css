@@ -1,0 +1,24 @@
+/* ── 186 — CitationModal ────────────────────────────────────────────────── */
+.cm-modal { background: var(--majalis-panel); color: var(--majalis-ink); }
+.cm-header { border-bottom: 1px solid var(--majalis-line); }
+.cm-type-badge { background: var(--cm-type-color, var(--majalis-emerald-deep)); }
+.cm-close { color: var(--majalis-ink-soft); }
+.cm-tabs { border-bottom: 1px solid var(--majalis-line); }
+.cm-tab { color: var(--majalis-ink-soft); }
+.cm-tab--active { border-bottom: 2px solid var(--mn-border-active, var(--majalis-emerald)); color: var(--mn-text-active, var(--majalis-emerald-deep)); }
+.cm-label { color: var(--majalis-ink-soft); }
+.cm-field {
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-parchment);
+  color: var(--majalis-ink);
+}
+.cm-field:focus { outline: 2px solid var(--majalis-emerald); }
+.cm-field--readonly { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
+.cm-preview-card { background: var(--majalis-parchment-deep); border-color: var(--majalis-line); }
+.cm-preview-title { color: var(--majalis-emerald-deep); }
+.cm-preview-text { color: var(--majalis-ink); border-inline-end: 4px solid var(--majalis-emerald); }
+.cm-preview-ref { color: var(--majalis-ink-soft); }
+.cm-qr-link { color: var(--majalis-ink-soft); }
+.cm-status { color: var(--mn-text-active, var(--majalis-emerald-deep)); }
+.cm-qr-btn { color: var(--mn-text-active, var(--majalis-emerald-deep)); }
+

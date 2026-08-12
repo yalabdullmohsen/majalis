@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "total": 1744,
+  "generatedAt": "2026-07-30T04:47:35.402Z",
+  "chunks": [
+    {
+      "file": "daif-000.json",
+      "count": 200,
+      "key": "daif"
+    },
+    {
+      "file": "daif-001.json",
+      "count": 126,
+      "key": "daif"
+    },
+    {
+      "file": "mawdu-002.json",
+      "count": 200,
+      "key": "mawdu"
+    },
+    {
+      "file": "mawdu-003.json",
+      "count": 60,
+      "key": "mawdu"
+    },
+    {
+      "file": "sahih-004.json",
+      "count": 200,
+      "key": "sahih"
+    },
+    {
+      "file": "sahih-005.json",
+      "count": 200,
+      "key": "sahih"
+    },
+    {
+      "file": "sahih-006.json",
+      "count": 200,
+      "key": "sahih"
+    },
+    {
+      "file": "sahih-007.json",
+      "count": 200,
+      "key": "sahih"
+    },
+    {
+      "file": "sahih-008.json",
+      "count": 200,
+      "key": "sahih"
+    },
+    {
+      "file": "sahih-009.json",
+      "count": 158,
+      "key": "sahih"
+    }
+  ]
+}

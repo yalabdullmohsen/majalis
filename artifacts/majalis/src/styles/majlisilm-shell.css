@@ -1,0 +1,503 @@
+/**
+ * MajlisIlm Flutter shell styles — navigation, courses, search, tafsir modal.
+ */
+
+.majlisilm-app {
+  position: fixed;
+  inset: 0;
+  z-index: 10005;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5dc;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.majlisilm-app--embedded {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  min-height: 70vh;
+}
+
+.majlisilm-app__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  padding-top: max(0.65rem, var(--inset-top));
+  flex-shrink: 0;
+}
+
+.majlisilm-app__title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.majlisilm-app__actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.majlisilm-app__actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.majlisilm-app__body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.majlisilm-app__reader {
+  position: absolute;
+  inset: 0;
+}
+
+.majlisilm-app__nav {
+  display: flex;
+  flex-shrink: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  padding-bottom: var(--inset-bottom);
+}
+
+.majlisilm-app[data-dark="1"] .majlisilm-app__nav {
+  background: #222;
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.majlisilm-app__nav button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  min-height: 3.5rem;
+  border: none;
+  background: transparent;
+  color: #888;
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.majlisilm-app__nav button.is-on {
+  color: #795548;
+  font-weight: 700;
+}
+
+/* Educational courses */
+.edu-courses {
+  height: 100%;
+  overflow-y: auto;
+  padding: 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.edu-courses__title {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.edu-courses__title--spaced {
+  margin-top: 1.5rem;
+}
+
+.edu-courses__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.edu-courses__card {
+  margin-bottom: 0.65rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: rgba(121, 85, 72, 0.05);
+}
+
+.edu-courses__card-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.edu-courses__bar {
+  margin-top: 0.5rem;
+  height: 6px;
+  border-radius: 999px;
+  background: #d1d5db;
+  overflow: hidden;
+}
+
+.edu-courses__bar > span {
+  display: block;
+  height: 100%;
+  background: #795548;
+  border-radius: inherit;
+}
+
+.edu-courses__pct {
+  margin: 0.35rem 0 0;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+.edu-courses__adhkar {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.edu-courses__check {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 2.75rem;
+  cursor: pointer;
+}
+
+.edu-courses__check input {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: #795548;
+}
+
+.majlisilm-app__edu {
+  padding: 1rem 1rem max(1rem, var(--inset-bottom));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+}
+
+/* AI Recitation widget */
+.ai-recitation {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(121, 85, 72, 0.06);
+}
+
+.ai-recitation__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.ai-recitation__hint {
+  margin: 0 0 0.75rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.ai-recitation__target {
+  margin: 0 0 0.85rem;
+  padding: 0.65rem;
+  border-radius: 8px;
+  background: rgba(121, 85, 72, 0.08);
+  text-align: center;
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", serif);
+  font-size: 1.15rem;
+  line-height: 1.9;
+}
+
+.ai-recitation__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 0.55rem;
+  background: #795548;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ai-recitation__btn--active {
+  background: #b45309;
+}
+
+.ai-recitation__btn--ghost {
+  background: transparent;
+  color: #795548;
+  border: 1px solid rgba(121, 85, 72, 0.35);
+  margin-top: 0.65rem;
+}
+
+.ai-recitation__score {
+  margin: 0 0 0.45rem;
+  font-weight: 700;
+}
+
+.ai-recitation__bar {
+  height: 8px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+  margin-bottom: 0.65rem;
+}
+
+.ai-recitation__bar > span {
+  display: block;
+  height: 100%;
+  background: #795548;
+  border-radius: inherit;
+  transition: width 0.25s ease;
+}
+
+.ai-recitation__transcript {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+/* Smart search */
+.smart-search {
+  position: fixed;
+  inset: 0;
+  z-index: 10040;
+  display: flex;
+  flex-direction: column;
+  background: #faf8f5;
+}
+
+.smart-search__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  padding-top: max(0.65rem, var(--inset-top));
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.smart-search__back {
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.smart-search__input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.65rem;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.smart-search__input-wrap input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font: inherit;
+  outline: none;
+}
+
+.smart-search__input-wrap button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: inline-flex;
+}
+
+.smart-search__chips {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.5rem 0.75rem;
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.smart-search__chip {
+  flex-shrink: 0;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(121, 85, 72, 0.25);
+  background: transparent;
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.smart-search__chip.is-on {
+  background: #795548;
+  border-color: #795548;
+  color: #fff;
+}
+
+.smart-search__results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.smart-search__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: transparent;
+  text-align: start;
+  font: inherit;
+  cursor: pointer;
+}
+
+.smart-search__icon {
+  color: #795548;
+  margin-top: 0.15rem;
+}
+
+.smart-search__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.smart-search__text strong {
+  font-weight: 600;
+}
+
+.smart-search__text small {
+  opacity: 0.65;
+  font-size: 0.8rem;
+}
+
+.smart-search__empty {
+  padding: 2rem 1rem;
+  text-align: center;
+  opacity: 0.6;
+}
+
+/* Tafsir modal */
+.tafsir-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.tafsir-modal-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+.tafsir-modal {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 32rem);
+  height: min(60vh, 32rem);
+  background: #faf8f5;
+  border-radius: 24px 24px 0 0;
+  padding: 1.25rem 1.5rem max(1.5rem, var(--inset-bottom));
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.tafsir-modal__handle {
+  width: 45px;
+  height: 5px;
+  margin: 0 auto 0.75rem;
+  border-radius: 10px;
+  background: #bdbdbd;
+}
+
+.tafsir-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  inset-inline-start: 0.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.tafsir-modal__verse {
+  margin: 0.5rem 0 1rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: rgba(121, 85, 72, 0.08);
+  text-align: center;
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.8;
+}
+
+.tafsir-modal__heading {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #795548;
+}
+
+.tafsir-modal__divider {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0.5rem 0 0.75rem;
+}
+
+.tafsir-modal__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tafsir-modal__body p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+/* Embedded immersive reader inside shell */
+.immersive-quran-app--embedded {
+  position: absolute;
+  inset: 0;
+  z-index: auto;
+}
+
+.immersive-quran-app--embedded .immersive-quran-app__toolbar {
+  display: none;
+}

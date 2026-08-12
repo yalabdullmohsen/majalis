@@ -1,0 +1,520 @@
+/* Mushaf v2 reader — deferred from elite-2026.css */
+/* ============================================================
+   222 — قارئ المصحف الجديد (mushaf-v2-*) — المرحلة 8
+   ترقيم مدينة 604 صفحة، سحب أفقي، Bottom Sheet بدل الأزرار الدائمة،
+   وضع هادئ. خط النص القرآني var(--font-quran) حصرًا، والواجهة
+   var(--font-ui)/Alexandria لكل ما عداه.
+   ============================================================ */
+.quran-shell.mushaf-v2 {
+  /* قراءة غامرة كاملة الشاشة (NavBar/BottomNavBar/المساعد العائم مخفية
+     كليًا على /mushaf — راجع hiddenOnPage في NavBar.tsx/BottomNavBar.tsx/
+     AssistantFloatingWidget.tsx): لا حجز لارتفاع شريط علوي/سفلي عام بعد
+     الآن، فقط 100dvh كاملة؛ حواف الشاشة الآمنة (النوتش/شريط الإيماءات)
+     تُترَك لـpadding الهيدر/الصفحة نفسها (رموز --inset-* هناك). */
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--majalis-panel);
+  overflow: hidden;
+}
+
+.mushaf-v2__header {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .3rem .45rem;
+  padding-top: max(.3rem, var(--inset-top));
+  border-bottom: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  flex-shrink: 0;
+}
+.mushaf-v2__sidebar-btn,
+.mushaf-v2__pager-btn,
+.mushaf-v2__sidebar-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: .6rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-emerald-deep);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.mushaf-v2__pager-btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+.mushaf-v2__header-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.mushaf-v2__header-surah {
+  font-family: var(--font-quran);
+  font-size: 1.05rem;
+  color: var(--majalis-emerald-deep);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.mushaf-v2__header-meta {
+  font-size: .72rem;
+  color: var(--majalis-ink-soft);
+}
+.mushaf-v2__header-spacer { width: 44px; flex-shrink: 0; }
+
+.mushaf-v2__page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  touch-action: pan-y;
+  padding-block: 8px;
+  padding-inline: max(1rem, var(--inset-left)) max(1rem, var(--inset-right));
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  cursor: pointer;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mushaf-v2__page { transition: transform .12s ease-out; }
+}
+
+.mushaf-v2--quiet .mushaf-v2__page {
+  padding-top: max(6px, var(--inset-top));
+  padding-bottom: max(6px, var(--inset-bottom));
+}
+
+.mushaf-v2__ayahs {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  cursor: default;
+  box-sizing: border-box;
+  /* تبرير مصحفي مع keep-all — بلا letter-spacing/word-spacing يدوي */
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: right;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  white-space: normal;
+  letter-spacing: normal;
+  word-spacing: normal;
+}
+.mushaf-v2__ayah-wrap {
+  display: contents;
+}
+.mushaf-v2__surah-marker {
+  display: block;
+  text-align: center;
+  font-family: var(--font-quran);
+  font-size: 1.2rem;
+  color: var(--majalis-emerald-deep);
+  margin: 1.25rem 0 .5rem;
+}
+.mushaf-v2__bismillah {
+  display: block;
+  text-align: center;
+  font-family: var(--font-quran);
+  font-size: 1.35rem;
+  color: var(--majalis-emerald-deep);
+  margin: .25rem 0 .75rem;
+}
+.mushaf-v2__ayah {
+  font-family: var(--font-quran);
+  font-size: 1.6rem;
+  /* ارتفاع أوفر للتشكيل العلوي/السفلي */
+  line-height: 2.5;
+  color: var(--majalis-ink);
+  cursor: pointer;
+  border-radius: .3rem;
+  padding: .15rem .2rem;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  white-space: normal;
+  /* تمنع قائمة تحديد/نسخ النص الأصلية من iOS Safari من الظهور فوق ضغطتنا
+     المطوّلة المخصَّصة (فتح لوحة إجراءات الآية) — النسخ متاح من داخل تلك
+     اللوحة نفسها، لا حاجة لتحديد النص يدويًا. */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.mushaf-v2__ayah:hover,
+.mushaf-v2__ayah:focus-visible {
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 6%, transparent);
+  outline: none;
+}
+.mushaf-v2__ayah--playing {
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 10%, transparent);
+}
+/* رقم الآية كعنصر ذرّي منعزل — طبق الحل التقني المحدَّد حرفيًا: عنصر واحد
+   (ayah-marker) لا ينكسر، لا ينعكس، لا يتأثر بالسياق الثنائي الاتجاه
+   المحيط به مهما كان (رقم آيات عربية أو لاتينية، خانة واحدة أو خانتين أو
+   ثلاث). unicode-bidi:isolate (لا plaintext) يبقي direction:rtl الموروث
+   من dir="rtl" على .quran-shell كأساس اتجاه هذا العنصر المعزول، بلا
+   استبدال بخوارزمية "أول حرف قوي" (وهو ما يفعله plaintext ولا نريده هنا:
+   محتوى هذا العنصر بالكامل أقواس زخرفية + أرقام، بلا حرف قوي واحد). */
+.mushaf-v2__ayah-num,
+.ayah-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  unicode-bidi: isolate;
+  direction: rtl;
+  flex-shrink: 0;
+  font-size: 1.05rem;
+  color: var(--majalis-emerald-deep);
+  margin-inline-start: .2rem;
+  margin-inline-end: .35rem;
+}
+.mushaf-v2__sajda-mark {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: .68rem;
+  font-weight: 700;
+  color: #7A5E14;
+  background: rgba(176,141,46,.14);
+  border: 1px solid rgba(176,141,46,.35);
+  border-radius: var(--ds-radius-full);
+  padding: .08rem .5rem;
+  margin-inline-start: .4rem;
+  vertical-align: middle;
+}
+html[data-theme="dark"] .mushaf-v2__sajda-mark {
+  color: #E8C97A;
+  background: rgba(232,201,122,.14);
+  border-color: rgba(232,201,122,.35);
+}
+
+.mushaf-v2__pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-4);
+  padding: .35rem .5rem;
+  padding-bottom: max(.35rem, var(--inset-bottom));
+  border-top: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  flex-shrink: 0;
+}
+.mushaf-v2__pager-count {
+  font-variant-numeric: tabular-nums;
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  min-width: 5rem;
+  text-align: center;
+}
+
+/* ── الفهرس (سورة/جزء/صفحة) ──
+   z-index مرتفع جدًا عمدًا (10000): .navbar-v3 يستخدم 9999 مُثبَّتة حرفيًا
+   (لا تتبع سلّم --z-* المُعرَّف في index.css) — رصدتُ هذا فعليًا حين فشل
+   Playwright بالنقر على تبويب "جزء" لأن الهيدر الثابت اعترض النقر رغم
+   ظهور الفهرس بصريًا فوقه. */
+.mushaf-v2__sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay-drawer, 10040);
+  background: rgba(0,0,0,.45);
+  display: flex;
+  justify-content: flex-end;
+}
+.mushaf-v2__sidebar {
+  width: min(360px, 88vw);
+  height: 100%;
+  background: var(--majalis-panel);
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--inset-top);
+  padding-bottom: var(--inset-bottom);
+}
+.mushaf-v2__sidebar-head {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .75rem;
+  border-bottom: 1px solid var(--majalis-line);
+}
+.mushaf-v2__sidebar-tabs {
+  flex: 1;
+  display: flex;
+  gap: .4rem;
+}
+.mushaf-v2__sidebar-tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .3rem;
+  min-height: 40px;
+  border-radius: .6rem;
+  border: 1px solid var(--majalis-line);
+  background: transparent;
+  color: var(--majalis-ink-soft);
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.mushaf-v2__sidebar-tab.is-active {
+  background: var(--majalis-emerald-deep);
+  border-color: var(--majalis-emerald-deep);
+  color: #fff;
+}
+
+.mushaf-v2__juz-list {
+  overflow-y: auto;
+  padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.mushaf-v2__juz-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: 0 .9rem;
+  border-radius: .6rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  font-weight: 700;
+  font-size: .88rem;
+  cursor: pointer;
+}
+.mushaf-v2__juz-item.is-active {
+  border-color: var(--majalis-emerald-deep);
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 8%, transparent);
+}
+.mushaf-v2__juz-item-page {
+  font-size: .75rem;
+  color: var(--majalis-ink-soft);
+  font-weight: 600;
+}
+
+.mushaf-v2__page-jump {
+  display: flex;
+  gap: .5rem;
+  padding: .75rem;
+}
+.mushaf-v2__page-jump-btn {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: .6rem;
+  border: none;
+  background: var(--majalis-emerald-deep);
+  color: #fff;
+  font-weight: 700;
+  font-size: .85rem;
+  cursor: pointer;
+}
+
+
+/* ── تقليب مصحف حقيقي (RTL) — أداء: contain + perspective 1200 ── */
+.mpv-flip-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  touch-action: pan-y;
+  overflow: visible;
+  contain: layout paint;
+}
+.mpv-flip-stage--active {
+  touch-action: none;
+}
+.mpv-flip-stage--flipping,
+.mpv-flip-stage--dragging {
+  perspective: 1200px;
+}
+.mpv-flip-stage--spread {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  perspective: none;
+}
+.mpv-flip-book {
+  position: relative;
+  flex: 1 1 50%;
+  min-width: 0;
+  height: 100%;
+}
+.mpv-flip-stage--spread.mpv-flip-stage--flipping .mpv-flip-book {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+.mpv-flip-stage--spread .mpv-flip-spread-left {
+  flex: 1 1 50%;
+  min-width: 0;
+  height: 100%;
+  border-inline-end: 1px solid color-mix(in srgb, #000 8%, transparent);
+  background: var(--ayah-paper, #FAF7F2);
+  overflow: hidden;
+}
+.mpv-flip-underlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--ayah-paper, #FAF7F2);
+  opacity: 0;
+  contain: layout paint;
+}
+.mpv-flip-stage--active .mpv-flip-underlay,
+.mpv-flip-stage--flipping .mpv-flip-underlay {
+  opacity: calc(0.35 + var(--mpv-flip-abs, 0) * 0.65);
+}
+.mpv-flip-underlay__page {
+  position: absolute;
+  inset: 0;
+  /* visibility يُضبط من المكوّن — الجار يبقى في DOM */
+}
+.mpv-flip-underlay__paper {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, #000 5%, transparent), transparent 18%),
+    var(--ayah-paper, #FAF7F2);
+}
+.mpv-flip-leaf {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  transform-origin: right center;
+  transform: none;
+  background: var(--ayah-paper, #FAF7F2);
+  /* layout فقط — contain:paint كان يقصّ حبر الأسطر عند تجاوز خاطئ للحساب */
+  contain: layout;
+}
+.mpv-flip-stage--active .mpv-flip-leaf,
+.mpv-flip-stage--flipping .mpv-flip-leaf {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  /* انحناء ≤10° · تتبع الإصبع بـ transform فقط */
+  transform:
+    translate3d(calc(var(--mpv-flip, 0) * 92%), 0, 0)
+    rotateY(calc(var(--mpv-flip, 0) * -10deg));
+}
+.mpv-flip-stage--dragging .mpv-flip-leaf,
+.mpv-flip-stage--active .mpv-flip-leaf {
+  will-change: transform;
+}
+.mpv-flip-stage:not(.mpv-flip-stage--active):not(.mpv-flip-stage--dragging) .mpv-flip-leaf {
+  will-change: auto;
+}
+.mpv-flip-leaf__curl {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    color-mix(in srgb, #000 10%, transparent) 58%,
+    color-mix(in srgb, #fff 22%, transparent) 66%,
+    transparent 78%
+  );
+  opacity: 0;
+  mix-blend-mode: multiply;
+}
+.mpv-flip-stage--active .mpv-flip-leaf__curl,
+.mpv-flip-stage--flipping .mpv-flip-leaf__curl {
+  opacity: calc(var(--mpv-flip-abs, 0) * 0.45);
+}
+.mpv-flip-stage--active .mpv-flip-leaf,
+.mpv-flip-stage--active .mpv-flip-shade,
+.mpv-flip-stage--active .mpv-flip-corner {
+  transition: none;
+}
+.mpv-flip-stage:not(.mpv-flip-stage--active) .mpv-flip-leaf,
+.mpv-flip-stage:not(.mpv-flip-stage--active) .mpv-flip-shade,
+.mpv-flip-stage:not(.mpv-flip-stage--active) .mpv-flip-corner {
+  transition: transform 220ms ease-out, opacity 150ms ease-out;
+}
+/* ظل ثابت يُحرَّك بـ transform — لا box-shadow متحرك */
+.mpv-flip-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, #000 18%, transparent) 46%,
+    color-mix(in srgb, #000 5%, transparent) 62%,
+    transparent 100%
+  );
+  opacity: 0;
+}
+.mpv-flip-stage--active .mpv-flip-shade,
+.mpv-flip-stage--flipping .mpv-flip-shade {
+  opacity: calc(var(--mpv-flip-abs, 0) * 0.38);
+  transform: translate3d(calc(var(--mpv-flip, 0) * 36%), 0, 0);
+}
+.mpv-flip-corner {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 18%;
+  z-index: 4;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 80% at 0% 100%,
+    color-mix(in srgb, #000 12%, transparent) 0%,
+    transparent 62%
+  );
+  opacity: 0;
+}
+.mpv-flip-stage--active .mpv-flip-corner,
+.mpv-flip-stage--flipping .mpv-flip-corner {
+  opacity: calc(var(--mpv-flip-abs, 0) * 0.55);
+  transform: translate3d(calc(var(--mpv-flip, 0) * 8%), 0, 0);
+}
+.mpv-flip-edge {
+  position: absolute;
+  inset-block: 0;
+  width: calc(var(--mpv-flip-edge, 0.16) * 100%);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+.mpv-flip-edge--next { inset-inline-start: 0; }
+.mpv-flip-edge--prev { inset-inline-end: 0; }
+.mpv-flip-stage--reduced .mpv-flip-leaf {
+  transform: none;
+  opacity: calc(1 - var(--mpv-flip-abs, 0) * 0.4);
+  box-shadow: none;
+  transition: opacity 150ms ease-out;
+}
+.mpv-flip-stage--reduced .mpv-flip-shade,
+.mpv-flip-stage--reduced .mpv-flip-underlay,
+.mpv-flip-stage--reduced .mpv-flip-corner,
+.mpv-flip-stage--reduced .mpv-flip-leaf__curl {
+  opacity: 0 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mpv-flip-leaf,
+  .mpv-flip-shade,
+  .mpv-flip-corner {
+    transition: opacity 150ms ease-out !important;
+    transform: none !important;
+  }
+}
+@media (min-width: 900px) and (orientation: landscape) {
+  .mpv-flip-stage--spread {
+    max-width: min(1200px, 100%);
+    margin-inline: auto;
+  }
+}

@@ -1,0 +1,50 @@
+/* ── 159 — FiqhCouncilSection (fcs-*) ───────────────────────────────────── */
+.fcs-header         { display: flex; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: var(--ds-space-3); align-items: center; }
+.fcs-title          { margin: 0; color: var(--majalis-emerald-deep); font-size: var(--ds-text-base); font-weight: 700; }
+.fcs-header-actions { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; align-items: center; }
+.fcs-link           { font-size: 0.8125rem; color: var(--majalis-emerald-deep); text-decoration: none; }
+.fcs-add-btn        { padding: 0.5rem 1rem; background: var(--majalis-emerald); color: var(--majalis-parchment); border: none; border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; }
+.fcs-alerts-sec     { margin-bottom: 1rem; }
+
+.fcs-h3             { font-size: 0.9375rem; color: var(--majalis-emerald-deep); margin: 0 0 0.5rem; }
+.fcs-h3--mt         { margin-top: 1rem; }
+.fcs-muted          { color: var(--majalis-ink-soft); }
+.fcs-text-sm        { font-size: 0.8125rem; color: var(--majalis-ink-soft); }
+.fcs-text-xs        { font-size: var(--ds-text-xs); }
+.fcs-grid-gap       { display: grid; gap: 0.35rem; }
+.fcs-grid-gap-sm    { display: grid; gap: var(--ds-space-2); }
+.fcs-grid-gap-md    { display: grid; gap: var(--ds-space-3); }
+.fcs-grid-gap-lg    { display: grid; gap: var(--ds-space-4); }
+.fcs-logs-grid      { display: grid; gap: 0.35rem; max-height: 16rem; overflow-y: auto; }
+.fcs-item-card      { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); padding: var(--ds-space-4); }
+.fcs-item-meta      { margin: 0.5rem 0; font-size: var(--ds-text-sm); color: var(--majalis-ink-soft); }
+.fcs-item-actions   { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; }
+.fcs-btn            { font-size: var(--ds-text-xs); cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; }
+.fcs-btn--danger    { font-size: var(--ds-text-xs); cursor: pointer; color: #dc2626; background: none; border: none; font-family: inherit; padding: 0; }
+.fcs-a              { font-size: var(--ds-text-xs); color: var(--majalis-emerald-deep); }
+.fcs-dup-reasons    { margin: 0.35rem 0; font-size: 0.8125rem; color: var(--majalis-ink-soft); }
+.fcs-dup-actions    { display: flex; gap: var(--ds-space-2); }
+.fcs-flex-header    { display: flex; gap: var(--ds-space-3); flex-wrap: wrap; align-items: center; }
+.fcs-relation-title { margin: 0.35rem 0; font-size: 0.8125rem; }
+.fcs-relation-reasons { margin: 0; font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); }
+.fcs-relation-actions { display: flex; gap: var(--ds-space-2); margin-top: 0.35rem; }
+.fcs-unanswered-actions { display: flex; gap: var(--ds-space-2); margin-top: 0.35rem; flex-wrap: wrap; align-items: center; }
+.fcs-session-meta   { margin: 0.35rem 0; font-size: 0.8125rem; color: var(--majalis-ink-soft); }
+.fcs-session-actions { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; }
+.fcs-sync-btn       { padding: 0.5rem 1rem; background: var(--majalis-emerald); color: var(--majalis-parchment); border: none; border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; }
+.fcs-sync-btn:disabled { cursor: wait; opacity: 0.7; }
+.fcs-source-meta    { color: var(--majalis-ink-soft); margin-top: 0.25rem; font-size: 0.8125rem; }
+.fcs-job-meta       { color: var(--majalis-ink-soft); margin-top: 0.25rem; font-size: var(--ds-text-xs); }
+.fcs-job-btn        { text-align: end; cursor: pointer; width: 100%; font-family: inherit; background: none; border: none; padding: 0; }
+.fcs-filters-row    { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; margin-bottom: 1rem; }
+.fcs-search         { flex: 1; min-width: 140px; }
+.fcs-items-grid     { display: grid; gap: var(--ds-space-3); }
+.fcs-empty          { color: var(--majalis-ink-soft); font-size: var(--ds-text-sm); }
+
+.fcs-scan-btn       { padding: 0.5rem 1rem; cursor: pointer; font-family: inherit; background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); }
+.fcs-scan-btn:disabled { cursor: wait; }
+.fcs-toggle-btn     { padding: 0.5rem 1rem; cursor: pointer; font-family: inherit; background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); }
+.fcs-btn--ms      { font-size: var(--ds-text-xs); cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; margin-inline-start: 0.5rem; }
+.fcs-stats-sec    { margin-top: 1rem; }
+.fcs-sel-sm       { font-size: var(--ds-text-xs); min-width: 12rem; }
+

@@ -1,0 +1,211 @@
+/* Quran Circles directory */
+.qc-page {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 3rem;
+  color: var(--majalis-ink, #1c1b19);
+}
+
+.qc-hero {
+  margin-bottom: 1.25rem;
+}
+
+.qc-hero__eyebrow {
+  margin: 0;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.qc-hero__title {
+  margin: 0.25rem 0 0.5rem;
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+}
+
+.qc-hero__lead {
+  margin: 0;
+  line-height: 1.7;
+  color: var(--msk-text-2, var(--mj-ink-2));
+  font-size: 0.95rem;
+}
+
+.qc-hero__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+}
+
+.qc-hero__links a {
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+
+.qc-filters {
+  padding: 0.85rem;
+  border: 1px solid var(--majalis-line, #e8e4dc);
+  border-radius: 12px;
+  background: var(--majalis-parchment, #fafaf8);
+  margin-bottom: 1.25rem;
+}
+
+.qc-filters__search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.04);
+  margin-bottom: 0.75rem;
+}
+
+.qc-filters__search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font: inherit;
+  outline: none;
+}
+
+.qc-filters__row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.qc-filters__row label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  color: #666;
+}
+
+.qc-filters__row select {
+  font: inherit;
+  padding: 0.4rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--majalis-line, #e8e4dc);
+  background: #fff;
+}
+
+.qc-filters__count {
+  margin: 0.65rem 0 0;
+  font-size: 0.82rem;
+  color: #666;
+}
+
+.qc-group {
+  margin-bottom: 1.5rem;
+}
+
+.qc-group__title {
+  margin: 0 0 0.65rem;
+  font-size: 1.05rem;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
+}
+
+.qc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.qc-card {
+  border: 1px solid var(--majalis-line, #e8e4dc);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  background: #fff;
+}
+
+.qc-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.qc-card__head h3 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.qc-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.55rem 0;
+}
+
+.qc-card__badges span {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(20, 63, 53, 0.08);
+  color: var(--mj-brand-deep);
+}
+
+.qc-card__meta {
+  margin: 0.25rem 0;
+  font-size: 0.84rem;
+  color: #555;
+  display: flex;
+  gap: 0.35rem;
+  align-items: flex-start;
+  line-height: 1.5;
+}
+
+.qc-card__desc {
+  margin: 0.45rem 0 0;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: #444;
+}
+
+.qc-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.7rem;
+}
+
+.qc-card__actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--mj-brand-deep);
+  text-decoration: none;
+}
+
+.qc-empty {
+  text-align: center;
+  color: #777;
+  padding: 2rem 1rem;
+}
+
+.qc-footnote {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--majalis-line, #e8e4dc);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: #666;
+}
+
+.qc-footnote a {
+  color: var(--mj-brand-deep);
+}
+
+@media (max-width: 640px) {
+  .qc-filters__row {
+    grid-template-columns: 1fr;
+  }
+}

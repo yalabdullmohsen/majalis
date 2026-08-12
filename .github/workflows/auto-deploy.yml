@@ -1,0 +1,208 @@
+name: Auto Deploy main → production
+
+# بوابة جودة + تحقق صحة بعد وصول main.
+# النشر الفعلي يتم مباشرة من Vercel على فرع main
+# (artifacts/majalis/vercel.json → git.deploymentEnabled.main = true).
+# لا يوجد فرع Git باسم production — أُزيل الاعتماد عليه بعد اختفائه من remote
+# (fatal: couldn't find remote ref production، 2026-07-26).
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch: {}
+
+# يمنع تشغيل نسختين متزامنتين. لا نُلغي تشغيلًا جاريًا (cancel-in-progress:
+# false) — تحقق إنتاجي منتصف الطريق لا يجوز قطعه.
+concurrency:
+  group: auto-deploy-main
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+
+jobs:
+  deploy:
+    if: github.repository == 'yalabdullmohsen/majalis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    outputs:
+      short_sha: ${{ steps.meta.outputs.short_sha }}
+      pr_number: ${{ steps.meta.outputs.pr_number }}
+      pr_title: ${{ steps.meta.outputs.pr_title }}
+      version_ok: ${{ steps.verify.outputs.version_ok }}
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Meta (PR / commit)
+        id: meta
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          short=$(echo "${{ github.sha }}" | cut -c1-8)
+          echo "short_sha=$short" >> "$GITHUB_OUTPUT"
+          pr_json=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${{ github.sha }}/pulls" \
+            --jq '.[0] | {number,title}' 2>/dev/null || echo '{}')
+          echo "pr_number=$(echo "$pr_json" | jq -r '.number // empty')" >> "$GITHUB_OUTPUT"
+          echo "pr_title=$(echo "$pr_json" | jq -r '.title // empty')" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: |
+          pnpm run typecheck:libs
+          pnpm --filter @workspace/majalis run typecheck
+
+      - name: Production build (تحقق من main قبل الاعتماد على النشر)
+        env:
+          PORT: "24216"
+          BASE_PATH: "/"
+        run: pnpm --filter @workspace/majalis run build
+
+      - name: انتظار استقرار نشر Vercel + version.json + HTTP 200 (مع إعادة محاولة واحدة)
+        id: verify
+        env:
+          EXPECT_SHA: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+
+          verify_once() {
+            local attempt="$1"
+            echo "—— محاولة تحقق #$attempt ——"
+            if [ "$EVENT_NAME" = "push" ]; then
+              sleep 90
+            else
+              sleep 15
+            fi
+            ok_http=0
+            for i in 1 2 3 4 5 6; do
+              code=$(curl -sS -o /tmp/majlisilm-health.html -w "%{http_code}" \
+                --max-time 30 -L "https://www.majlisilm.com/" || echo "000")
+              echo "محاولة HTTP $i: $code (www)"
+              if [ "$code" = "200" ]; then
+                ok_http=1
+                break
+              fi
+              code2=$(curl -sS -o /tmp/majlisilm-health2.html -w "%{http_code}" \
+                --max-time 30 -L "https://majlisilm.com/" || echo "000")
+              echo "محاولة HTTP $i: $code2 (apex)"
+              if [ "$code2" = "200" ]; then
+                ok_http=1
+                break
+              fi
+              sleep 20
+            done
+            if [ "$ok_http" != "1" ]; then
+              echo "HTTP لم يُرجع 200"
+              return 1
+            fi
+
+            # على push فقط نطابق version.json مع الـcommit المدموج
+            if [ "$EVENT_NAME" != "push" ]; then
+              echo "version_ok=skip" >> "$GITHUB_OUTPUT"
+              return 0
+            fi
+
+            ok_ver=0
+            for i in 1 2 3 4 5 6 7 8; do
+              body=$(curl -sS --max-time 30 -L "https://www.majlisilm.com/version.json" || true)
+              got=$(echo "$body" | jq -r '.commit // empty' 2>/dev/null || true)
+              echo "version.json محاولة $i: ${got:-empty}"
+              if [ "$got" = "$EXPECT_SHA" ]; then
+                ok_ver=1
+                break
+              fi
+              sleep 20
+            done
+            if [ "$ok_ver" != "1" ]; then
+              echo "version.json لا يطابق $EXPECT_SHA (got=${got:-})"
+              return 1
+            fi
+            echo "version_ok=1" >> "$GITHUB_OUTPUT"
+            echo "✓ الإنتاج 200 و version.json = $EXPECT_SHA"
+            return 0
+          }
+
+          if verify_once 1; then
+            exit 0
+          fi
+          echo "فشل التحقق — إعادة محاولة تلقائية واحدة…"
+          # أفرغ مخرجات سابقة قد تكون كُتبت
+          echo "version_ok=0" >> "$GITHUB_OUTPUT"
+          if verify_once 2; then
+            exit 0
+          fi
+          # صامت تجاه التنبيه بالبريد — الفشل يظهر في Checks فقط
+          exit 1
+
+  notify-success:
+    name: notify-success
+    needs: [deploy]
+    if: >
+      github.repository == 'yalabdullmohsen/majalis' &&
+      github.event_name == 'push' &&
+      needs.deploy.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: رسالة نجاح واحدة (ملخص + webhook اختياري)
+        env:
+          SHORT: ${{ needs.deploy.outputs.short_sha }}
+          PRN: ${{ needs.deploy.outputs.pr_number }}
+          PRT: ${{ needs.deploy.outputs.pr_title }}
+          SHA: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+          WEBHOOK: ${{ secrets.DEPLOY_NOTIFY_WEBHOOK }}
+        run: |
+          set -euo pipefail
+          SITE="https://www.majlisilm.com"
+          MSG=$(cat <<EOF
+          ✅ نُشر بنجاح — مجالس العلم
+          PR: ${PRN:-—} — ${PRT:-—}
+          Commit: ${SHORT} (${SHA})
+          Build / run: ${RUN_ID}
+          الموقع: ${SITE}
+          version.json: ${SITE}/version.json
+          البوابات: Verify build أخضر → دمج squash → نشر Vercel → تطابق version.json
+          EOF
+          )
+          echo "$MSG"
+          {
+            echo "## نشر ناجح"
+            echo ""
+            echo "- **PR:** #${PRN:-—} — ${PRT:-—}"
+            echo "- **Commit:** \`${SHORT}\` (\`${SHA}\`)"
+            echo "- **Build:** [\`${RUN_ID}\`](${{ github.server_url }}/${{ github.repository }}/actions/runs/${RUN_ID})"
+            echo "- **الموقع:** ${SITE}"
+            echo "- **version.json:** ${SITE}/version.json"
+            echo "- **ملخص البوابات:** Verify build → auto-merge squash → Vercel → تطابق commit"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -n "${WEBHOOK:-}" ]; then
+            # webhook اختياري (Slack/Discord/email bridge) — إشعار واحد بعد النجاح فقط
+            payload=$(jq -n --arg text "$MSG" '{text:$text, content:$text}')
+            curl -sS -X POST -H 'Content-Type: application/json' -d "$payload" "$WEBHOOK" || true
+          else
+            echo "لا يوجد DEPLOY_NOTIFY_WEBHOOK — الملخص في Actions فقط (اضبط إعدادات GitHub للإشعار)."
+          fi

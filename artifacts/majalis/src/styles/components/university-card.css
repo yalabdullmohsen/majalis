@@ -1,0 +1,12 @@
+/* ── 192 — UniversityCard helpers ─────────────────────────────────────────── */
+.univ-card__logo     { background: rgba(255,255,255,0.9); }
+.univ-card__location { color: var(--majalis-ink-soft); }
+.univ-card__meta     { color: var(--majalis-ink-soft); }
+.univ-card__updated  { color: var(--majalis-line); }
+.univ-acc--accredited  { --acc-color: var(--mj-brand); --univ-acc: var(--mj-brand); }
+.univ-acc--provisional { --acc-color: var(--mj-brand); --univ-acc: var(--mj-brand); }
+.univ-acc--unverified  { --acc-color: var(--mj-muted); --univ-acc: var(--mj-muted); }
+.univ-acc--unknown     { --acc-color: #9ca3af; --univ-acc: #9ca3af; }
+.univ-card__acc-dot  { background: var(--univ-acc, var(--majalis-line)); }
+/* ── نُقل إلى styles/components/adhan-notification.css ── */
+/* ── نُقل إلى styles/components/prayer-countdown-banner.css ── */

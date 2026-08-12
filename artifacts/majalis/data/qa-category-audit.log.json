@@ -1,0 +1,22 @@
+{
+  "at": "2026-07-25T11:18:07.873Z",
+  "total": 360,
+  "byCategory": {
+    "sahabah": 22,
+    "aqeedah": 36,
+    "anbiya": 32,
+    "tahara": 30,
+    "salah": 23,
+    "zakat": 23,
+    "sawm": 25,
+    "hajj": 18,
+    "seerah": 27,
+    "hadith": 30,
+    "adhkar": 28,
+    "quran": 19,
+    "adab": 16,
+    "fiqh": 31
+  },
+  "misclassified": 0,
+  "corrections": []
+}

@@ -1,0 +1,31 @@
+{
+  "referencePage": 283,
+  "slotCount": 15,
+  "baselinesPct": [
+    4.0,
+    10.5714,
+    17.1429,
+    23.7143,
+    30.2857,
+    36.8571,
+    43.4286,
+    50.0,
+    56.5714,
+    63.1429,
+    69.7143,
+    76.2857,
+    82.8571,
+    89.4286,
+    96.0
+  ],
+  "slotHeightPct": 7.2,
+  "measuredInkBandPct": {
+    "firstInkTopBody": 2.57,
+    "lastInkBotBody": 96.89,
+    "firstSlotMidLines": 4.0,
+    "lastSlotMidLines": 96.0,
+    "fillBody": 0.943
+  },
+  "sideMarginPx": 2,
+  "notes": "مشتق من contentBand فقط (.mf2-lines بعد طرح header/footer/toolbar على 390×844). مرجع ص٢٨٣: مراكز ١٥ خانة من ٤٫٠٪ إلى ٩٦٫٠٪ بخطوة ٦٫٥٧١٤٪؛ ارتفاع الخانة ٧٫٢٪؛ fill داخل contentBand ≈0.943. انحراف ≤2px. انظر layout-bands.ts و MUSHAF_SPEC.md."
+}

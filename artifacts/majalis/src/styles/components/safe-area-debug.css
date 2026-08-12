@@ -1,0 +1,47 @@
+.safe-area-debug {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+}
+.safe-area-debug__top {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: var(--inset-top);
+  background: rgb(255 60 60 / 28%);
+}
+.safe-area-debug__bottom {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: var(--inset-bottom);
+  background: rgb(60 120 255 / 28%);
+}
+.safe-area-debug__start {
+  /* RTL: بداية القراءة = اليمين = inset-right */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: max(var(--inset-right), var(--edge-deadzone));
+  background: rgb(60 200 120 / 22%);
+}
+.safe-area-debug__end {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-end: 0;
+  width: max(var(--inset-left), var(--edge-deadzone));
+  background: rgb(200 180 40 / 22%);
+}
+.safe-area-debug__label {
+  position: absolute;
+  top: calc(var(--inset-top) + 4px);
+  inset-inline-start: 8px;
+  font: 11px/1.2 ui-monospace, monospace;
+  color: #fff;
+  background: rgb(0 0 0 / 55%);
+  padding: 2px 6px;
+  border-radius: 4px;
+}

@@ -1,0 +1,124 @@
+/* Kids hub — deferred from final-release.css */
+/* ══ قسم الأطفال — لمسات ألطف ضمن نفس الهوية الزمردية (لا ألوان دخيلة) ══ */
+.kids-hub-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1rem 1rem 3rem;
+}
+.kids-hub-intro {
+  text-align: center;
+  padding: 1.75rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--r-xl, 1.5rem);
+  background: linear-gradient(160deg, var(--brand-soft) 0%, var(--bg) 100%);
+  border: 1px solid color-mix(in srgb, var(--brand-deep) 10%, transparent);
+}
+.kids-hub-intro__icon { color: var(--brand); margin-bottom: 0.5rem; }
+.kids-hub-intro__title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--brand-deep);
+  margin: 0 0 0.4rem;
+}
+.kids-hub-intro__sub {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.6;
+}
+.kids-hub-soon__badge {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--brand-deep, var(--mj-brand-deep));
+  background: color-mix(in srgb, var(--brand, var(--mj-brand)) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand, var(--mj-brand)) 28%, transparent);
+}
+.kids-hub-soon__note {
+  margin: 0.85rem 0 0;
+  font-size: 0.84rem;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+.kids-hub-soon__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+.kids-hub-soon__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--brand-deep, var(--mj-brand-deep)) 18%, transparent);
+  background: var(--bg, #fff);
+  color: var(--brand-deep, var(--mj-brand-deep));
+  text-decoration: none;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+.kids-hub-soon__btn--primary {
+  background: var(--brand-deep, var(--mj-brand-deep));
+  color: #fafaf8;
+  border-color: transparent;
+}
+.kids-hub-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+@media (min-width: 480px) {
+  .kids-hub-grid { grid-template-columns: 1fr 1fr; }
+}
+.kids-hub-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border-radius: var(--r-lg, 1.25rem);
+  text-decoration: none;
+  min-height: 44px;
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.kids-hub-card:hover { transform: translateY(-1px); }
+.kids-hub-card__icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-full);
+  background: var(--brand-soft);
+  color: var(--brand);
+}
+.kids-hub-card__body { flex: 1; min-width: 0; }
+.kids-hub-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--brand-deep);
+  margin: 0 0 0.2rem;
+}
+.kids-hub-card__desc {
+  font-size: 0.8rem;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.5;
+}
+.kids-hub-card__chevron { flex-shrink: 0; color: var(--text-muted); }
+
+html[data-theme="dark"] .kids-hub-intro {
+  background: linear-gradient(160deg, var(--surface-brand) 0%, var(--surface) 100%);
+  border-color: var(--border);
+}
+html[data-theme="dark"] .kids-hub-intro__title,
+html[data-theme="dark"] .kids-hub-card__title { color: var(--text); }
+html[data-theme="dark"] .kids-hub-intro__sub,
+html[data-theme="dark"] .kids-hub-card__desc { color: var(--text-2); }
+html[data-theme="dark"] .kids-hub-card__icon { background: var(--brand-soft); color: var(--text-brand); }

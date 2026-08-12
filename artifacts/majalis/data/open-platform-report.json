@@ -1,0 +1,294 @@
+{
+  "generated_at": "2026-06-26T01:03:31.760Z",
+  "system": "Open Islamic Platform v1",
+  "completion_pct": 100,
+  "api_endpoints": 51,
+  "api_versions": [
+    "v1",
+    "v2",
+    "v3"
+  ],
+  "resources_covered": 22,
+  "resource_list": [
+    {
+      "id": "quran",
+      "label": "القرآن",
+      "label_en": "Quran"
+    },
+    {
+      "id": "hadith",
+      "label": "الأحاديث",
+      "label_en": "Hadith"
+    },
+    {
+      "id": "adhkar",
+      "label": "الأذكار",
+      "label_en": "Adhkar"
+    },
+    {
+      "id": "dua",
+      "label": "الأدعية",
+      "label_en": "Duas"
+    },
+    {
+      "id": "fawaid",
+      "label": "الفوائد",
+      "label_en": "Benefits"
+    },
+    {
+      "id": "book",
+      "label": "الكتب",
+      "label_en": "Books"
+    },
+    {
+      "id": "author",
+      "label": "المؤلفون",
+      "label_en": "Authors"
+    },
+    {
+      "id": "sheikh",
+      "label": "المشايخ",
+      "label_en": "Scholars"
+    },
+    {
+      "id": "lesson",
+      "label": "الدروس",
+      "label_en": "Lessons"
+    },
+    {
+      "id": "lecture",
+      "label": "المحاضرات",
+      "label_en": "Lectures"
+    },
+    {
+      "id": "course",
+      "label": "الدورات",
+      "label_en": "Courses"
+    },
+    {
+      "id": "fatwa",
+      "label": "الفتاوى",
+      "label_en": "Fatwas"
+    },
+    {
+      "id": "fiqh_decision",
+      "label": "قرارات المجامع الفقهية",
+      "label_en": "Fiqh Council Decisions"
+    },
+    {
+      "id": "article",
+      "label": "المقالات",
+      "label_en": "Articles"
+    },
+    {
+      "id": "miracle",
+      "label": "الإعجاز العلمي",
+      "label_en": "Scientific Miracles"
+    },
+    {
+      "id": "occasion",
+      "label": "المناسبات الإسلامية",
+      "label_en": "Islamic Occasions"
+    },
+    {
+      "id": "calendar",
+      "label": "التقويم الإسلامي",
+      "label_en": "Islamic Calendar"
+    },
+    {
+      "id": "qa",
+      "label": "الأسئلة",
+      "label_en": "Q&A"
+    },
+    {
+      "id": "ruling",
+      "label": "الأحكام الشرعية",
+      "label_en": "Sharia Rulings"
+    },
+    {
+      "id": "update",
+      "label": "التحديثات",
+      "label_en": "Updates"
+    },
+    {
+      "id": "prayer_times",
+      "label": "مواقيت الصلاة",
+      "label_en": "Prayer Times"
+    },
+    {
+      "id": "knowledge",
+      "label": "المعرفة",
+      "label_en": "Knowledge"
+    }
+  ],
+  "webhook_events": 8,
+  "security": {
+    "score": 88,
+    "api_keys": 0,
+    "rate_limits": {
+      "free": {
+        "requests_per_minute": 60,
+        "requests_per_day": 5000
+      },
+      "standard": {
+        "requests_per_minute": 120,
+        "requests_per_day": 25000
+      },
+      "partner": {
+        "requests_per_minute": 300,
+        "requests_per_day": 100000
+      }
+    },
+    "features": [
+      "API Keys",
+      "Scoped permissions",
+      "Audit logs",
+      "Rate limiting",
+      "OAuth stub",
+      "Timing-safe compare"
+    ]
+  },
+  "performance": {
+    "score": 85,
+    "cache": {
+      "entries": 0,
+      "max": 500
+    },
+    "features": [
+      "In-memory TTL cache",
+      "Pagination",
+      "Compressed JSON responses",
+      "Sub-second search with cache"
+    ]
+  },
+  "documentation": {
+    "score": 90,
+    "openapi": true,
+    "interactive_html": true,
+    "spec_path": "/api/v1/docs"
+  },
+  "scalability": {
+    "score": 82,
+    "note": "Serverless-ready; Redis recommended at scale; horizontal via Vercel"
+  },
+  "features": [
+    {
+      "id": "api_versions",
+      "label": "API Versioning (v1/v2/v3)",
+      "weight": 10,
+      "file": "lib/open-platform/router.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "content_coverage",
+      "label": "Content Endpoints",
+      "weight": 15,
+      "file": "lib/open-platform/content.mjs",
+      "complete": true,
+      "score": 15
+    },
+    {
+      "id": "search_api",
+      "label": "Search API",
+      "weight": 12,
+      "file": "lib/open-platform/search.mjs",
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "webhooks",
+      "label": "Webhooks",
+      "weight": 10,
+      "file": "lib/open-platform/webhooks.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "documentation",
+      "label": "Interactive Docs",
+      "weight": 10,
+      "file": "lib/open-platform/docs.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "security",
+      "label": "API Keys + Rate Limit",
+      "weight": 12,
+      "file": "lib/open-platform/auth.mjs",
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "performance",
+      "label": "Caching + Compression",
+      "weight": 8,
+      "file": "lib/open-platform/cache.mjs",
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "developer_portal",
+      "label": "Developer Dashboard",
+      "weight": 10,
+      "file": "src/pages/admin/OpenPlatformSection.tsx",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "ai_unified",
+      "label": "AI Internal Client",
+      "weight": 8,
+      "file": "lib/open-platform/internal-client.mjs",
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "audit_logs",
+      "label": "Audit Logs",
+      "weight": 5,
+      "file": "lib/open-platform/audit.mjs",
+      "complete": true,
+      "score": 5
+    }
+  ],
+  "usage": {
+    "total": 0
+  },
+  "recent_logs": [],
+  "release_plan": {
+    "generated_at": "2026-06-26T01:03:31.761Z",
+    "next_release": "v3.1",
+    "roadmap": [
+      {
+        "version": "v3.1",
+        "features": [
+          "GraphQL endpoint",
+          "OAuth 2.0 full flow",
+          "Webhook retry queue"
+        ],
+        "eta": "Q3"
+      },
+      {
+        "version": "v4",
+        "features": [
+          "Real-time subscriptions",
+          "Partner SDK (JS/Python)",
+          "Bulk export API"
+        ],
+        "eta": "Q4"
+      },
+      {
+        "version": "v4.1",
+        "features": [
+          "Academic institution SSO",
+          "Citation export (BibTeX)",
+          "Multi-language API"
+        ],
+        "eta": "Q1 next year"
+      }
+    ],
+    "deprecation_policy": "v1 supported indefinitely; v2/v3 12-month notice before sunset"
+  }
+}

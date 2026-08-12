@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-10",
+  "notes": "كتالوج بث فقط — لا تضمين في الحزمة. الحقول: id, scholar/scholarLabelAr, tafsir_name, scope, url/streamUrl, duration, size, license_ref, enabled. لا تُضاف مقاطع إلا بعد توثيق كامل في LICENSE_RISKS.md وCREDITS.md (اسم، رابط، جهة نشر، نص إذن، نسبة). المصفوفة فارغة عمداً حتى يتوفّر مصدر موثّق.",
+  "schemaExample": {
+    "id": "example-disabled",
+    "scholarId": "example",
+    "scholarLabelAr": "اسم الشيخ",
+    "tafsir_name": "اسم التفسير",
+    "scope": "ayah-range",
+    "surah": 1,
+    "ayahFrom": 1,
+    "ayahTo": 7,
+    "url": "https://example.invalid/clip.mp3",
+    "streamUrl": "https://example.invalid/clip.mp3",
+    "duration": 0,
+    "size": 0,
+    "license": "",
+    "license_ref": "LICENSE_RISKS.md#tafsir-audio",
+    "sourceId": "pending",
+    "attributionVerified": false,
+    "enabled": false,
+    "titleAr": "مثال — معطّل"
+  },
+  "clips": []
+}

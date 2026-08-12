@@ -1,0 +1,22 @@
+[
+ {
+  "answer": "نعم، جُوز للمسافر جمع الصلاتين مع بقاء أسباب الجمع.",
+  "archived_at": null,
+  "category_id": "9e6562e3-ee5b-4aea-82a3-e025c6c13689",
+  "created_at": "2026-07-27 00:00:42.096588+00",
+  "evidence": null,
+  "external_key": null,
+  "id": "0d4e8319-9bbb-446b-99fa-9e37eeca7f7e",
+  "published_at": null,
+  "question": "هل يجوز الجمع بين الصلاتين للمسافر في Phase2؟",
+  "reference": "اختبار استيراد Phase2",
+  "review_status": "approved",
+  "ruling_type": null,
+  "scheduled_at": null,
+  "slug": null,
+  "source_url": null,
+  "status": "published",
+  "updated_at": "2026-07-27 00:00:42.096588+00",
+  "verification_status": "needs_review"
+ }
+]

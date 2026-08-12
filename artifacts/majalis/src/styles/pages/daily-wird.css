@@ -1,0 +1,330 @@
+/* ══════════════════════════════════════════════
+   44. Daily Wird Page — الورد اليومي
+   ══════════════════════════════════════════════ */
+.wird-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-4);
+}
+
+.wird-hero {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  padding: 1.75rem 1.25rem !important;
+  text-align: center;
+}
+
+.wird-ring {
+  filter: drop-shadow(0 4px 16px rgba(22,163,74,0.15));
+  flex-shrink: 0;
+}
+
+.wird-count-btns {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+.wird-count-btn {
+  min-width: 3.5rem;
+  padding: 0.55rem 0.9rem;
+  background: var(--elite-sage-2, var(--mj-brand-soft)) !important;
+  border: 1.5px solid rgba(22,163,74,0.25);
+  border-radius: 0.6rem;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.wird-count-btn:hover:not(:disabled) {
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
+  color: #fff !important;
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(24,54,42,0.2);
+}
+
+.wird-count-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.wird-done-msg {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--mj-brand);
+}
+
+.wird-remaining {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--elite-ink-soft, #5D726A);
+}
+
+.wird-reset-btn {
+  background: transparent !important;
+  border: 1px solid rgba(192,57,43,0.3);
+  border-radius: var(--ds-radius);
+  color: #C0392B !important;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 0.35rem 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.wird-reset-btn:hover {
+  background: rgba(192,57,43,0.06) !important;
+}
+
+.wird-stats-row {
+  display: flex;
+  gap: var(--ds-space-5);
+  justify-content: center;
+  border-top: 1px solid var(--elite-border, rgba(0,0,0,0.07));
+  padding-top: 0.875rem;
+  width: 100%;
+}
+
+.wird-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.wird-stat span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--elite-ink-muted, var(--mj-ink-2));
+  text-transform: uppercase;
+  letter-spacing: normal;
+}
+
+.wird-stat strong {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--elite-forest, var(--mj-brand-deep));
+}
+
+.wird-settings {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.875rem !important;
+  padding: 1.25rem !important;
+}
+
+.wird-settings__title {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: var(--elite-ink, var(--mj-brand-deep)) !important;
+  margin: 0 !important;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--elite-border, rgba(0,0,0,0.07));
+}
+
+.wird-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--elite-ink-soft, #5D726A);
+}
+
+.wird-field input,
+.wird-field select {
+  padding: 0.55rem 0.75rem;
+  border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.15));
+  border-radius: 0.6rem;
+  background: var(--elite-white, var(--mj-bg));
+  color: var(--elite-ink, var(--mj-brand-deep));
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.wird-field input:focus,
+.wird-field select:focus {
+  outline: none;
+  border-color: var(--elite-forest, var(--mj-brand-deep));
+  box-shadow: 0 0 0 3px rgba(24,54,42,0.09);
+}
+
+.wird-quran-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.1rem;
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
+  color: var(--mj-bg) !important;
+  border-radius: 0.65rem;
+  font-size: var(--ds-text-sm);
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.15s;
+  align-self: flex-start;
+}
+
+.wird-quran-link:hover {
+  opacity: 0.88;
+}
+
+.wird-streak-card {
+  padding: 1.25rem 1.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.6rem !important;
+}
+
+.wird-streak-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-4);
+  flex-wrap: wrap;
+}
+
+.wird-streak-num {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+}
+
+.wird-streak-icon {
+  color: var(--majalis-emerald, var(--mj-brand));
+}
+
+.wird-streak-count {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--majalis-emerald, var(--mj-brand));
+  line-height: 1;
+}
+
+.wird-streak-label {
+  font-size: 0.82rem;
+  color: var(--majalis-ink-soft, #5D726A);
+  font-weight: 600;
+}
+
+.wird-khatm-est {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--majalis-ink-soft, #5D726A);
+  font-weight: 600;
+}
+
+.wird-khatm-est svg {
+  color: var(--majalis-emerald, var(--mj-brand));
+  flex-shrink: 0;
+}
+
+.wird-streak-msg {
+  margin: 0;
+  font-size: 0.83rem;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
+  font-weight: 600;
+  font-style: normal;
+  border-inline-end: 2px solid var(--majalis-emerald, var(--mj-brand));
+  padding-inline-end: 0.6rem;
+}
+
+/* ── بطاقة تقدم الختمة ── */
+.khatma-progress-card {
+  padding: var(--ds-space-5);
+}
+.khatma-progress-body {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-5);
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.khatma-ring {
+  flex-shrink: 0;
+}
+.khatma-progress-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+  min-width: 150px;
+}
+.khatma-stat span {
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft, var(--mj-ink-2));
+}
+.khatma-stat strong {
+  font-size: 0.92rem;
+  color: var(--majalis-emerald, var(--mj-brand));
+  font-weight: 700;
+}
+.khatma-bar-wrap {
+  height: 7px;
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.10));
+  border-radius: var(--ds-radius-full);
+  overflow: hidden;
+}
+.khatma-bar-fill {
+  height: 100%;
+  background: var(--majalis-emerald, var(--mj-brand));
+  border-radius: var(--ds-radius-full);
+  transition: width 0.4s ease;
+}
+.khatma-celebration {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3-5);
+  padding: 1rem 1.25rem;
+  border-radius: 0.875rem;
+  background: linear-gradient(135deg, rgba(23,61,53,.12), rgba(23,61,53,.06));
+  border: 1px solid rgba(23,61,53,.25);
+  color: var(--mj-brand);
+  animation: khatma-pop 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.khatma-celebration strong {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.khatma-celebration p {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+.khatma-celebration svg {
+  color: var(--mj-brand);
+  flex-shrink: 0;
+}
+@keyframes khatma-pop {
+  0%   { transform: scale(0.92); opacity: 0; }
+  60%  { transform: scale(1.02); }
+  100% { transform: scale(1);    opacity: 1; }
+}
+html[data-theme="dark"] .khatma-celebration {
+  background: linear-gradient(135deg, rgba(23,61,53,.2), rgba(23,61,53,.08));
+  border-color: rgba(23,61,53,.3);
+  color: #6ab58e;
+}
+html[data-theme="dark"] .khatma-celebration svg { color: #6ab58e; }
+html[data-theme="dark"] .khatma-bar-fill {
+  background: var(--mj-brand);
+}
+
+/* ============================================================
+   105 — DailyWirdPage  (dwd-*)
+   ============================================================ */
+.dwd-ring-fill { transition: stroke-dashoffset 0.4s ease; }
+

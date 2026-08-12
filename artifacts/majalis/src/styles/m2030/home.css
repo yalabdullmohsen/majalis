@@ -1,0 +1,338 @@
+/**
+ * Majlisilm 2030 — Home (كثافة أفضل + ألوان من الرموز فقط)
+ */
+
+.m2030-home {
+  --m2030-pad: clamp(0.85rem, 3.5vw, 1.35rem);
+  background: transparent;
+  color: var(--text);
+  padding-block-end: calc(var(--bottom-nav-h, 3rem) + 1.1rem);
+}
+
+/* Hero — الهوية الجديدة عبر PageHero؛ أبطل التدرّج الداكن القديم */
+.m2030-hero.page-hero-mj,
+.home-page-hero.page-hero-mj {
+  position: relative;
+  isolation: isolate;
+  min-height: 0;
+  display: block;
+  justify-content: unset;
+  padding:
+    calc(0.55rem + var(--inset-top))
+    var(--m2030-pad, clamp(0.85rem, 3.5vw, 1.35rem))
+    0.75rem;
+  overflow: hidden;
+  color: var(--mj-ink);
+  background: var(--mj-bg);
+}
+
+.m2030-hero__pattern,
+.m2030-hero__glow {
+  display: none !important;
+}
+
+.m2030-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 38rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.m2030-hero__brand,
+.m2030-hero__headline,
+.m2030-hero__lead {
+  color: var(--mj-ink);
+}
+
+.m2030-hero__lead {
+  color: var(--mj-ink-2);
+}
+
+.m2030-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-start: 0.2rem;
+}
+
+.m2030-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 2.65rem;
+  padding: 0.55rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+  border-radius: var(--mj-r-pill);
+  clip-path: none;
+}
+
+.m2030-btn--primary {
+  background: var(--mj-brand);
+  color: var(--mj-on-brand);
+}
+
+.m2030-btn--primary:hover {
+  background: var(--mj-brand-deep, var(--mj-brand));
+}
+
+.m2030-btn--ghost {
+  background: var(--mj-surface);
+  color: var(--mj-ink);
+  border: 1px solid var(--mj-hairline);
+}
+
+.m2030-btn--ghost:hover {
+  background: var(--mj-brand-soft);
+}
+
+.m2030-band {
+  padding: 0.95rem var(--m2030-pad);
+}
+
+.m2030-band--sage {
+  background: var(--surface-2);
+}
+
+.m2030-band__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-block-end: 0.65rem;
+}
+
+.m2030-band__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.28rem;
+  font-weight: 700;
+  color: var(--text-title);
+  line-height: 1.25;
+}
+
+.m2030-band__sub {
+  margin: 0.1rem 0 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.m2030-band__link {
+  font-size: 0.82rem;
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.m2030-prayer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 0.85rem 0.95rem;
+  background: var(--mj-brand-deep, var(--em-900));
+  color: #F7FAF8;
+  text-decoration: none;
+  border-radius: var(--mj-r-lg);
+  clip-path: none;
+}
+
+.m2030-prayer__ring {
+  --p: 72;
+  width: 3.85rem;
+  height: 3.85rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, var(--mj-brand-deep, var(--em-900)) 58%, transparent 59%),
+    conic-gradient(from 210deg, color-mix(in srgb, #F7FAF8 85%, transparent) calc(var(--p) * 1%), color-mix(in srgb, #F7FAF8 16%, transparent) 0);
+  display: grid;
+  place-items: center;
+}
+
+.m2030-prayer__ring-inner {
+  width: 2.45rem;
+  height: 2.45rem;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, #F7FAF8 35%, transparent);
+  display: grid;
+  place-items: center;
+  font-size: 0.62rem;
+  color: color-mix(in srgb, #F7FAF8 78%, transparent);
+}
+
+.m2030-prayer__name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: #F7FAF8;
+}
+
+.m2030-prayer__time {
+  margin: 0.15rem 0 0;
+  font-size: 0.86rem;
+  color: color-mix(in srgb, #F7FAF8 82%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+
+.m2030-prayer__cta {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+  color: color-mix(in srgb, #F7FAF8 88%, transparent);
+  font-weight: 600;
+}
+
+.m2030-quick {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+@media (min-width: 720px) {
+  .m2030-quick { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.m2030-tile {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.8rem 0.75rem;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--mj-r-lg);
+  clip-path: none;
+  transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+
+.m2030-tile:hover {
+  border-color: color-mix(in srgb, var(--brand) 45%, var(--border));
+  background: var(--surface-2);
+}
+
+.m2030-tile__icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  display: grid;
+  place-items: center;
+  color: var(--brand);
+  border: 1px solid color-mix(in srgb, var(--brand) 30%, transparent);
+  transform: rotate(45deg);
+  margin-block-end: 0.15rem;
+}
+
+.m2030-tile__icon > * { transform: rotate(-45deg); }
+
+.m2030-tile__label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-title);
+}
+
+.m2030-tile__desc {
+  font-size: 0.74rem;
+  color: var(--text-meta);
+}
+
+.m2030-featured {
+  display: grid;
+  gap: 0.5rem;
+}
+
+@media (min-width: 720px) {
+  .m2030-featured { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.m2030-feature {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.9rem 0.85rem;
+  text-decoration: none;
+  /* ألوان صلبة قابلة للقياس — html يحمل تدرّجًا؛ بدون تحتية معتمة → NO_COLOR في البوابة */
+  color: #16241E;
+  background-color: #FFFFFF;
+  background-image: none;
+  border: 1px solid var(--border);
+  clip-path: none;
+  border-radius: var(--mj-r-lg);
+}
+
+html[data-theme="dark"] .m2030-feature,
+html.dark .m2030-feature {
+  color: #E9EFEC;
+  background-color: #17201C;
+}
+
+.m2030-feature__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: #16241E;
+  background-color: transparent;
+  background-image: none;
+}
+
+html[data-theme="dark"] .m2030-feature__title,
+html.dark .m2030-feature__title {
+  color: #E9EFEC;
+}
+
+.m2030-feature__desc {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.m2030-feature__cta {
+  margin-block-start: 0.15rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--brand);
+}
+
+.m2030-panel {
+  padding: 0.85rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-inline-start: 3px solid var(--brand);
+}
+
+.m2030-customize {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.15rem auto 0;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.78rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+}
+
+.m2030-home .home-main,
+.m2030-home .home-container {
+  max-width: none;
+  padding: 0.35rem var(--m2030-pad) 1.1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.m2030-home .hpv4-hero,
+.m2030-home .hp-quick-nav {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .m2030-hero__pattern,
+  .m2030-hero__glow { animation: none !important; }
+}

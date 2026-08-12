@@ -1,0 +1,34 @@
+/* ScholarFollowButton */
+
+/* ── منقول من الطبقة الحرجة: scholar-follow-btn ── */
+/* ── زر متابعة الشيخ ─────────────────────────────────────────────── */
+.scholar-follow-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border: 1.5px solid var(--ds-emerald);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ds-emerald-deep);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.scholar-follow-btn:hover { background: color-mix(in srgb, var(--ds-emerald) 10%, transparent); }
+.scholar-follow-btn--following {
+  background: var(--ds-emerald);
+  color: #fff;
+}
+.scholar-follow-btn--following:hover {
+  background: var(--ds-emerald-deep);
+  border-color: var(--ds-emerald-deep);
+}
+.scholar-follow-btn--compact { padding: 0.3rem 0.7rem; font-size: 0.78rem; }
+.scholar-follow-btn__count {
+  font-size: 0.75rem;
+  opacity: 0.75;
+  margin-inline-end: 0.2rem;
+}

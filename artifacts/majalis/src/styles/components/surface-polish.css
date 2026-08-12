@@ -1,0 +1,32 @@
+/* تلميع سطحي — تباين أوضح وسطوع بطاقات أعلى */
+.hp-featured-card {
+  border-radius: 20px !important;
+  border: 1px solid rgba(18, 54, 42, 0.16) !important;
+  background: #fffefb !important;
+  box-shadow: 0 8px 28px rgba(18, 54, 42, 0.07) !important;
+}
+.hp-featured-card__title {
+  color: #12362a !important;
+  font-weight: 800 !important;
+}
+.hp-featured-card__desc {
+  color: #524e4a !important;
+}
+.hp-explore-item {
+  border-radius: 16px !important;
+  border: 1px solid rgba(18, 54, 42, 0.14) !important;
+  background: #fffefb !important;
+}
+.hp-explore-item__title {
+  color: #161513 !important;
+  font-weight: 700 !important;
+}
+.hp-explore-item__desc {
+  color: #524e4a !important;
+}
+.srch-quick-card {
+  border-radius: 16px !important;
+  border: 1px solid rgba(18, 54, 42, 0.16) !important;
+  background: #fffefb !important;
+  color: #12362a !important;
+}

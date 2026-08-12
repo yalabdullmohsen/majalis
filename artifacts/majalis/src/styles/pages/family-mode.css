@@ -1,0 +1,133 @@
+/* ============================================================
+   74 — FamilyModePage  (fm-* additions)
+   ============================================================ */
+.fm-loading-wrap  { margin: 3rem auto; }
+.fm-login-prompt  { text-align: center; padding-top: 3rem; }
+.fm-login-icon    { font-size: 3rem; margin-bottom: 1rem; }
+.fm-login-msg     { color: var(--majalis-ink-soft, #5c564c); margin-bottom: 1rem; }
+.fm-joined__icon  { font-size: 3rem; }
+.fm-btn--back     { margin-top: 1.5rem; }
+
+
+/* ── الوضع العائلي ───────────────────────────────────────────────── */
+.fm-page { padding-bottom: 4rem; }
+
+.fm-role-picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.fm-role-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.5rem 1rem;
+  border: 2px solid var(--ds-line-color);
+  border-radius: var(--ds-radius-lg, 0.625rem);
+  background: var(--majalis-panel, #fff);
+  cursor: pointer;
+  transition: border-color 0.15s;
+  text-align: center;
+}
+.fm-role-btn:hover { border-color: var(--ds-emerald); }
+.fm-role-btn__icon { font-size: 2.5rem; }
+.fm-role-btn__label { font-size: 1rem; font-weight: 800; color: var(--majalis-ink); }
+.fm-role-btn__sub { font-size: 0.78rem; color: var(--majalis-ink-soft); }
+
+.fm-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.fm-section-title { font-size: 1rem; font-weight: 700; color: var(--majalis-ink); margin: 0; }
+.fm-empty { color: var(--majalis-ink-soft); font-size: 0.9rem; padding: 1rem 0; }
+
+.fm-btn {
+  padding: 0.5rem 1.1rem;
+  border: 1.5px solid var(--ds-line-color);
+  border-radius: var(--ds-radius, 0.5rem);
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--majalis-ink);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.fm-btn:hover { border-color: var(--ds-emerald); }
+.fm-btn--primary { background: var(--ds-emerald); color: #fff; border-color: var(--ds-emerald); }
+.fm-btn--primary:hover { background: var(--ds-emerald-deep); }
+.fm-btn--sm { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
+.fm-btn--danger { border-color: #dc2626; color: #dc2626; }
+.fm-btn--danger:hover { background: #fee2e2; }
+.fm-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.fm-invite-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: color-mix(in srgb, var(--ds-emerald) 5%, var(--majalis-panel, #fff));
+  border: 1.5px dashed var(--ds-emerald);
+  border-radius: var(--ds-radius-lg, 0.625rem);
+  margin-bottom: 0.75rem;
+}
+.fm-invite-card__body { display: flex; align-items: center; gap: 0.75rem; }
+.fm-invite-card__label { font-size: 0.78rem; color: var(--majalis-ink-soft); }
+.fm-invite-card__code {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: normal;
+  color: var(--ds-emerald-deep);
+  font-family: monospace;
+}
+.fm-invite-card__hint { font-size: 0.75rem; color: var(--majalis-ink-soft); }
+.fm-invite-card__actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+
+.fm-child-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius-lg, 0.625rem);
+  margin-bottom: 0.75rem;
+}
+.fm-child-card__avatar { font-size: 2rem; flex-shrink: 0; }
+.fm-child-card__info { flex: 1; }
+.fm-child-card__name { font-size: 0.95rem; font-weight: 700; color: var(--majalis-ink); display: block; margin-bottom: 0.3rem; }
+.fm-child-card__stats { display: flex; gap: 0.75rem; font-size: 0.8rem; color: var(--majalis-ink-soft); flex-wrap: wrap; }
+
+.fm-child { }
+.fm-child__hint { font-size: 0.9rem; color: var(--majalis-ink-soft); margin-bottom: 1rem; }
+.fm-child__form { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.75rem; }
+.fm-code-input {
+  flex: 1;
+  max-width: 160px;
+  padding: 0.65rem 1rem;
+  border: 2px solid var(--ds-line-color);
+  border-radius: var(--ds-radius, 0.5rem);
+  font-size: 1.25rem;
+  font-family: monospace;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--majalis-ink);
+  background: var(--majalis-panel, #fff);
+}
+.fm-code-input:focus { outline: none; border-color: var(--ds-emerald); }
+.fm-child__error { color: #dc2626; font-size: 0.85rem; }
+.fm-joined {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--majalis-ink);
+}
+

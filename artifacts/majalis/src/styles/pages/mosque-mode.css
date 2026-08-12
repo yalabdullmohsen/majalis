@@ -1,0 +1,108 @@
+/* Mosque mode — deferred from design-system.css */
+/* ── وضع المسجد ─────────────────────────────────────────────────── */
+.mosque-mode {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #f9f7f1;
+  direction: rtl;
+}
+.mosque-mode__silence-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  background: var(--mj-brand);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.mosque-mode__silence-alert span:first-child { font-size: 1.25rem; }
+.mosque-mode__silence-dismiss {
+  margin-inline-end: auto;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mosque-mode__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.mosque-mode__exit {
+  font-size: 1rem;
+  color: #5c564c;
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+}
+.mosque-mode__label { font-size: 1rem; font-weight: 700; color: var(--mj-brand); }
+
+.mosque-mode__prayer-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--mj-brand) 0%, var(--mj-brand) 100%);
+  color: #fff;
+  gap: 0.4rem;
+}
+.mosque-mode__prayer-label { font-size: 0.85rem; opacity: 0.75; }
+.mosque-mode__prayer-name { font-size: 2.25rem; font-weight: 900; margin: 0; }
+.mosque-mode__countdown {
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: normal;
+}
+.mosque-mode__prayer-time { font-size: 1rem; opacity: 0.7; }
+.mosque-mode__countdown--elapsed { font-size: clamp(2.5rem, 10vw, 3.5rem); opacity: 0.9; }
+
+.mosque-mode__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 1.5rem;
+  flex: 1;
+}
+@media (min-width: 480px) {
+  .mosque-mode__grid { grid-template-columns: repeat(3, 1fr); }
+}
+.mosque-mode__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.25rem 0.75rem;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 1rem;
+  text-decoration: none;
+  color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.mosque-mode__link:active { transform: scale(0.97); }
+.mosque-mode__link-icon { font-size: 2rem; }
+.mosque-mode__link-label { font-size: 0.88rem; font-weight: 700; color: var(--mj-brand); text-align: center; }
+.mosque-mode__pwa-hint {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #9e9186;
+  padding: 1rem;
+}
+

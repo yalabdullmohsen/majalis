@@ -1,0 +1,460 @@
+/**
+ * ══════════════════════════════════════════════════════════════════════════
+ *  هوية v4 — تصحيحات تباين مُقاسة (لا تخمين)
+ * ══════════════════════════════════════════════════════════════════════════
+ *
+ * كل قاعدة هنا نتيجة قياس فعلي عبر Playwright: لون النص المحسوب مقابل أقرب
+ * خلفية غير شفافة فعليًا، ونسبة WCAG حقيقية دون الحد. لا قاعدة هنا «احتياطية».
+ *
+ * السبب الجذري المشترك
+ * ────────────────────
+ * كتلة html[data-theme="dark"] في index.css تُسطّح رموزًا دلالية مختلفة إلى
+ * قيمة واحدة: 11 رمزًا (gold / green / success / warning / brass / emerald …)
+ * تصير كلها #5CC49A، و24 رمز سطح تصير لونًا واحدًا. أي مكوّن يستعمل رمزًا
+ * كخلفية وآخر كنص يقع في تصادم — أوضحه .navbar-login الذي كان لونه ولون
+ * خلفيته متطابقين حرفيًا (1:1، نص غير مرئي إطلاقًا).
+ *
+ * هذه أعطال سابقة لهوية v4 (تحقّقت من ذلك: كتلة #5CC49A لم تُمس في هذا
+ * العمل)، لكن إصلاحها جزء أصيل من «توحيد الهوية» — لا معنى لهوية موحّدة
+ * والوضع الداكن مكسور في 39 موضعًا.
+ *
+ * لماذا لم تُصلَح الكتلة نفسها: الرموز الـ11 مستعملة كخلفية في مواضع وكنص
+ * في أخرى؛ تغييرها مركزيًا يُصلح نصف المواضع ويكسر النصف الآخر. التصحيح
+ * الموضعي المقاس أدقّ وأقل خطرًا، وقابل للتحقق آليًا بإعادة تشغيل الكاشف.
+ */
+
+/* ══════════════════════════════════════════════════════════════
+   أ) نص فاتح فوق الأخضر النعناعي #5CC49A — يحتاج نصًا داكنًا
+   النعناعي لون فاتح (إضاءة عالية)؛ النص الأبيض عليه 2.14:1 فقط.
+   ══════════════════════════════════════════════════════════════ */
+html[data-theme="dark"] :is(
+  .navbar-login,
+  .widget-shell__empty-cta,
+  .hsh-eyebrow,
+  .hsh-step__num,
+  .kuwait-tab--active,
+  .lib-sort-btn--active,
+  .content-hub-chip--active,
+  .tip-cat-btn--active,
+  .lpp-cat-btn--active,
+  .adhkar-focus-btn--next
+) {
+  color: var(--em-950) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ب) مكوّنات بقيت خلفيتها بيضاء في الوضع الداكن بينما صار نصها فاتحًا
+   ══════════════════════════════════════════════════════════════ */
+html[data-theme="dark"] :is(
+  .hsh-step,
+  .pt-gov-chip,
+  .seerah-timeline__title,
+  .seerah-sources__item,
+  .sch-related-link,
+  .pt-quick-link,
+  .tip-section-count,
+  .lpp-how-num
+) {
+  background-color: var(--surface-2) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ج) نص أسود/داكن بقي فوق أسطح صارت داكنة
+   ══════════════════════════════════════════════════════════════ */
+html[data-theme="dark"] :is(
+  .pt-prayer,
+  .pt-prayer--past,
+  .pt-prayer--next,
+  .pt-prayer--pinned,
+  .pt-prayer--sunrise,
+  .highlighted-card__head-btn,
+  .qa-v2-category-card,
+  .quran-hub-card__tag,
+  .home-eyebrow,
+  .pt-prayer__done
+) {
+  color: var(--text) !important;
+}
+
+/* البطاقات الداخلية للدروس: نص رمادي فاتح (#5C5C56) فوق سطح أخضر داكن. */
+html[data-theme="dark"] :is(
+  .lesson-unified-card__status,
+  .lesson-unified-card__meta-label,
+  .lesson-unified-card__category,
+  .lesson-unified-card__sheikh
+) {
+  color: var(--text-2) !important;
+}
+
+/* عناصر تحت 4.5:1 بقليل — تُرفع إلى لون العلامة الفاتح (8.08:1). */
+html[data-theme="dark"] :is(
+  .lesson-unified-card__flag,
+  .instagram-academy-link__cta,
+  .seerah-timeline__year
+) {
+  color: var(--text-brand) !important;
+}
+
+/* فاصل زخرفي كان شبه معدوم الظهور. */
+html[data-theme="dark"] .fiqh-hub-strip__sep {
+  color: var(--text-muted) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   د) الوضع الفاتح
+   ══════════════════════════════════════════════════════════════ */
+
+/* شارة «٩ أجزاء»: نص أبيض فوق سطح البطاقة شبه الأبيض (1.01:1).
+   تُعطى خلفية العلامة كي يصحّ النص الأبيض عليها (6.43:1). */
+.lib-card-parts-badge {
+  background-color: var(--brand) !important;
+  color: var(--text-on-brand) !important;
+}
+
+/* تاريخ الوفاة في بطاقة العالِم — رمادي فاتح جدًا (2.54:1). */
+.sch-card__died {
+  color: var(--text-2) !important;
+}
+
+/* زر «تسجيل الدخول» داخل الودجات الفارغة: رمادي فوق أخضر داكن. */
+.widget-shell__empty-cta {
+  color: var(--text-on-brand) !important;
+}
+
+/* أبناء الحاويات التي أُعيد تلوين خلفيتها في (ب): بعضهم يحمل لونًا داكنًا
+   مثبتًا كان يصلح على الخلفية البيضاء الأصلية ولم يعد يصلح بعد تعتيمها.
+   يقيسها الكاشف كمخالفات جديدة، فتُورَّث ألوان النص الصحيحة صراحةً. */
+html[data-theme="dark"] :is(.hsh-step, .pt-gov-chip, .seerah-timeline__title,
+  .seerah-sources__item, .sch-related-link, .pt-quick-link, .tip-section-count,
+  .lpp-how-num) :is(span, p, div, a, h1, h2, h3, h4, strong, small, time
+  ):not(.hsh-step__num):not([class*="--active"]) {
+  color: inherit !important;
+}
+
+html[data-theme="dark"] :is(.hsh-step__cta, .hsh-step__desc, .hsh-step__title) {
+  color: var(--text) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   هـ) تصحيحات تحتاج وزنًا أعلى من القواعد المتنافسة
+   ══════════════════════════════════════════════════════════════
+   بعض العناصر تتنازع عليها عدة ملفات بقواعد !important (مثال:
+   .lesson-unified-card__status له 4 تعريفات لون في 3 ملفات). تكرار الصنف
+   يرفع الوزن فيحسم التنازع دون تتبّع أي قاعدة تفوز في كل حالة.
+
+   ⚠ درس من محاولة أولى فاشلة: أول صياغة لهذه الكتلة طبّقت نصًا فاتحًا على
+   بطاقة الدرس في الوضعين معًا، افتراضًا أن خلفيتها خضراء داكنة دائمًا —
+   وهي بيضاء في الوضع الفاتح، فانقلبت 10 مخالفات إلى 22. كل قاعدة هنا
+   الآن مقيَّدة بالوضع الذي قِيست فيه فعلًا، ولا تفترض خلفية قط. */
+
+html[data-theme="dark"] :is(
+  .lesson-unified-card__status,
+  .lesson-unified-card__meta-label
+).lesson-unified-card__status,
+html[data-theme="dark"] .lesson-unified-card__meta-label.lesson-unified-card__meta-label {
+  color: #D8E6E0 !important;
+}
+html[data-theme="dark"] .lesson-unified-card__category.lesson-unified-card__category,
+html[data-theme="dark"] .lesson-unified-card__sheikh.lesson-unified-card__sheikh {
+  color: #EDF2F0 !important;
+}
+
+/* نقطة الخط الزمني فوق سطح داكن (لا فوق النعناعي كما صُنِّفت أول مرة). */
+html[data-theme="dark"] .seerah-timeline__dot.seerah-timeline__dot {
+  color: var(--text) !important;
+}
+
+/* سنة الخط الزمني ونص مجموعة الفلاتر — لون نص فقط، بلا مساس بالخلفيات
+   (تغيير خلفية الحاوية سابقًا كشف نصًا أسود بداخلها وضاعف المخالفات). */
+html[data-theme="dark"] .seerah-timeline__year.seerah-timeline__year,
+html[data-theme="dark"] .sch-filter-group span {
+  color: var(--text-2) !important;
+}
+
+/* زر «القائمة» في الوضع الفاتح ورث نصًا أبيض من نمط هيدر داكن قديم. */
+html:not([data-theme="dark"]) .navbar-menu-btn.navbar-menu-btn {
+  color: var(--text) !important;
+}
+
+/* نقطة الخط الزمني: خلفيتها تختلف بين حالتين (نعناعية للمرحلة النشطة،
+   داكنة لغيرها) فيتعذّر اختيار لون نص يصلح للحالتين. الحل تثبيت الخلفية
+   صراحةً بدل افتراضها — هنا نحن من يحدّدها، فلا افتراض. */
+html[data-theme="dark"] .seerah-timeline__dot.seerah-timeline__dot {
+  background-color: var(--em-300) !important;
+  color: var(--em-950) !important;
+}
+
+/* سنة الخط الزمني تقع فوق سطح أبيض بقي فاتحًا في الوضع الداكن. لا تُلمس
+   خلفية الحاوية (محاولة سابقة كشفت نصًا أسود بداخلها)، بل يُثبَّت لون نص
+   داكن يصحّ على الأبيض: n-600 = 6.73:1. */
+html[data-theme="dark"] .seerah-timeline__year.seerah-timeline__year {
+  color: var(--n-600) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   و) دفعة ثانية — مسارات لم تشملها الجولة الأولى (2026-07-25)
+   ══════════════════════════════════════════════════════════════
+   وسّعتُ الكاشف من 16 مسارًا إلى 41، فظهرت 67 مخالفة إضافية على 25
+   مسارًا لم يكن يفحصها. الأنماط نفسها المعروفة (تسطيح رموز الثيم الداكن)،
+   لا أنماط جديدة. كل قاعدة هنا مقيَّدة بالوضع الذي قِيست فيه فعلًا.
+   ────────────────────────────────────────────────────────────── */
+
+/* (١) نص أسود بقي فوق الأسطح التي صارت داكنة — 8 مواضع. */
+html[data-theme="dark"] :is(
+  .akl-card__header, .mdb-card__header,
+  .rq-card__head, .sb-card__head, .sw-card__head, .zk-card__header
+) {
+  color: var(--text) !important;
+}
+
+/* (٢) نص أبيض فوق الأخضر النعناعي الفاتح — 2.14:1. */
+html[data-theme="dark"] :is(
+  .hadith-quick-cat--active, .jnz-step__num, .qzg-count-btn,
+  .sb-cat-btn, .twh-pillar-num, .cal-view-tab
+) {
+  color: var(--em-950) !important;
+}
+
+/* (٣) أخضر متوسّط أو باهت فوق سطح أخضر داكن (2.1–4.03:1) —
+   يُرفع إلى لون العلامة الفاتح (8.08:1 على السطح الداكن). */
+html[data-theme="dark"] :is(
+  .ads-perm-badge, .content-action-bar__btn,
+  .cal-ics-btn, .isp-badge, .isp-card__cta, .akl-card__cat,
+  .mdb-card__spread
+) {
+  color: var(--text-brand) !important;
+}
+
+/* (٤) رماديات باهتة فوق الأسطح الداكنة. */
+html[data-theme="dark"] :is(
+  .ads-advance-label, .ads-prayer-muezzin-override, .ads-sunrise-tag,
+  .tawheed-hadith-badge, .navbar-menu-btn__label
+) {
+  color: var(--text-2) !important;
+}
+
+/* (٥) الوضع الفاتح: رماديات أفتح من اللازم على الأبيض (2.5–3.1:1). */
+:is(.sm-card__desc, .sw-card__chevron, .mk-count, .mdb-card__spread) {
+  color: var(--text-2);
+}
+
+/* (٦) عنوان بطاقة الإعجاز فوق خلفيات مُلوَّنة داكنة ثابتة في الوضعين
+   (بنّي/كحلي/أخضر حسب التصنيف) — النص الرمادي عليها 2.6:1. */
+.miracle-item__title.miracle-item__title {
+  color: #EDF2F0 !important;
+}
+
+/* (٧) عناوين وسائل المساعدة في اللعبة: أزرق/بنفسجي على خلفية شبه بيضاء
+   (3.79 و4.47) — تُغمَّق درجتان مع الحفاظ على تمييز كل وسيلة بلونها. */
+.qzg-lifeline-info__title.qzg-ll--transfer { color: #1F6392 !important; }
+.qzg-lifeline-info__title.qzg-ll--exclude  { color: #6D3480 !important; }
+
+/* (٨) زر عدد الفرق النشط: نص أبيض فوق الذهبي (2.81:1). الذهبي لون فاتح
+   نسبيًا فيلزمه نص داكن — وهذا موضع أدخلَته هوية v4 نفسها. */
+.qzg-count-btn--on.qzg-count-btn--on { color: var(--n-950) !important; }
+
+/* ══════════════════════════════════════════════════════════════
+   ز) عناصر متعدّدة الحالات — تُثبَّت خلفيتها ولونها معًا
+   ══════════════════════════════════════════════════════════════
+   هذه الأصناف تظهر بخلفيتين مختلفتين حسب الحالة (نشط/غير نشط)، فأي
+   قاعدة تحدّد اللون وحده تُصلح حالة وتكسر الأخرى — وهو ما حدث فعلًا في
+   المحاولة الأولى (67 ← 32 لكن بمخالفات جديدة). الحل: تحديد الخلفية
+   واللون معًا فتصبح النسبة معلومة لا مفترَضة. */
+
+/* تقويم: الخلايا وأزرار التنقّل بقيت بخلفية فاتحة في الوضع الداكن. */
+html[data-theme="dark"] :is(.cal-cell, .cal-nav-btn) {
+  background-color: var(--surface-2) !important;
+  color: var(--text) !important;
+}
+html[data-theme="dark"] :is(.cal-cell-hijri, .cal-cell-more) {
+  color: var(--text-2) !important;
+}
+
+/* تبويبات نشطة نصّها أبيض بينما خلفيتها بقيت شبه بيضاء (1.05:1). */
+:is(.sw-tab--active, .jnz-tab--active, .mk-cat-pill--active) {
+  background-color: var(--brand) !important;
+  color: var(--text-on-brand) !important;
+}
+:is(.sw-tab--active, .jnz-tab--active, .mk-cat-pill--active) :is(span, .sw-tab__label) {
+  color: inherit !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ح) تصنيف نهائي حسب إضاءة الخلفية المقيسة فعليًا
+   ══════════════════════════════════════════════════════════════
+   بدل التخمين حسب اسم الصنف، صُنِّفت البقية آليًا بحساب إضاءة الخلفية
+   المقيسة لكل عنصر: خلفية فاتحة ⇒ نص داكن، وخلفية داكنة ⇒ نص فاتح.
+   هذا ما أنهى دورة «أُصلح واحدًا فينكشف آخر» التي مرّت بها المحاولتان
+   السابقتان (67 ← 32 ← 21). */
+
+/* خلفيتها بقيت فاتحة في الوضع الداكن (لم تحصل على سطح داكن قط). */
+html[data-theme="dark"] :is(
+  .hmb-body, .isp-tag, .prophets-lux-tab, .rq-tab,
+  .zk-calc__field, .qzg-mode-btn
+) {
+  color: var(--n-800) !important;
+}
+html[data-theme="dark"] :is(.myl2-btn--primary, .nf2-btn--primary) {
+  background-color: var(--brand) !important;
+  color: var(--text-on-brand) !important;
+}
+html[data-theme="dark"] .mk-cat-pill:not(.mk-cat-pill--active) span {
+  color: var(--n-800) !important;
+}
+
+/* خلفيتها داكنة فبقي نصها داكنًا. */
+html[data-theme="dark"] :is(
+  .cal-cell-event, .cal-cell-num, .cal-view-tab,
+  .highlighted-card__local-reading,
+  .qs-mushaf-footer-row__page
+) {
+  color: var(--text) !important;
+}
+html[data-theme="dark"] .qs-mushaf-header-row span {
+  color: var(--text) !important;
+}
+
+/* عنوان وسيلة «خصم نقاط»: برتقالي فاتح على خلفية شبه بيضاء (1.7:1). */
+.qzg-lifeline-info__title.qzg-ll--score { color: #8A5A00 !important; }
+
+/* ══════════════════════════════════════════════════════════════
+   ط) أصناف الحالة (--active / --on / --primary)
+   ══════════════════════════════════════════════════════════════
+   قواعدها القائمة أعلى وزنًا من مجموعات الأصناف أعلاه، فتُكرَّر الأصناف
+   لرفع الوزن. وحيث تتعدّد الخلفيات تُثبَّت الخلفية واللون معًا. */
+
+html[data-theme="dark"] .rq-tab--active.rq-tab--active,
+html[data-theme="dark"] .qzg-mode-btn--on.qzg-mode-btn--on {
+  color: var(--text) !important;
+}
+
+/* زر مسارات التعلّم: نسخة عادية على سطح فاتح، ونسخة أساسية على سطح
+   العلامة — لكل حالة لونها الصحيح. */
+html[data-theme="dark"] .myl2-btn.myl2-btn:not(.myl2-btn--primary) {
+  color: var(--n-800) !important;
+}
+html[data-theme="dark"] .myl2-btn--primary.myl2-btn--primary {
+  color: var(--text-on-brand) !important;
+}
+html[data-theme="dark"] .myl2-empty :is(p, span) {
+  color: var(--text-2) !important;
+}
+
+/* التقويم: الخلية والحدث يظهران بخلفيتين مختلفتين حسب الحالة، فتُثبَّت. */
+html[data-theme="dark"] .cal-cell-event.cal-cell-event {
+  background-color: var(--surface-3) !important;
+  color: var(--text) !important;
+}
+html[data-theme="dark"] .cal-cell-num.cal-cell-num {
+  color: var(--text) !important;
+}
+
+/* بطاقة الحديث في التقويم: خلفيتها فاتحة في الوضع الداكن. */
+html[data-theme="dark"] .hmb-body.hmb-body {
+  color: var(--n-800) !important;
+}
+
+/* آخر ثلاثة مواضع مقيسة. */
+html[data-theme="dark"] .cal-view-tab.is-active {
+  color: var(--em-950) !important;
+}
+html[data-theme="dark"] .mpv-navbar__page-input-wrap span {
+  color: var(--text-2) !important;
+}
+html[data-theme="dark"] .mk-cat-pill--active :is(span, a) {
+  color: var(--text-on-brand) !important;
+}
+
+/* الزر المُحدَّد (outline) في صفحة المسبحة: لونه صار لون العلامة بعد
+   إخراجه من القاعدة الشاملة، وهو قريب من سطحه الداكن (1.82:1). */
+html[data-theme="dark"] .nf2-btn--outline.nf2-btn--outline {
+  color: var(--text-brand) !important;
+}
+/* شارة التصنيف النشطة في الإعجاز: الابن يرث لونًا باهتًا رغم تحديد الأب. */
+/* الوزن هنا مقصود: القاعدة المنافسة
+   html[data-theme="dark"] .page-shell span:not([class]) تساوي (0,3,2)،
+   فلا يكفي محدِّد بصنفين + «*». تكرار الصنف ثلاثًا مع span يتجاوزها. */
+html[data-theme="dark"] .mk-cat-pill--active.mk-cat-pill--active,
+html[data-theme="dark"] .mk-cat-pill--active.mk-cat-pill--active.mk-cat-pill--active span {
+  color: #FFFFFF !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ي) مواضع لا تظهر إلا على الإنتاج (بيانات حيّة من Supabase)
+   ══════════════════════════════════════════════════════════════
+   المعاينة المحلية لا تصل إلى قاعدة البيانات، فصفحات مثل /qa و/rulings
+   و/learning/paths تُصيَّر فارغة محليًا ولا يرى الكاشف شاراتها وتصنيفاتها
+   إطلاقًا. تشغيل الكاشف على majlisilm.com نفسه كشف هذه التسعة بعد أن
+   أعطى الفحص المحلي صفرًا — التغطية تشمل حالة البيانات لا المسارات فقط. */
+
+/* شارة الحكم «مباح» وحدها خلفيتها زرقاء فاتحة ثابتة؛ بقية صيغ .qa-badge
+   (واجب/سنة/…) خلفيتها داكنة، فتقييد القاعدة بالصنف الفرعي ضروري —
+   تعميمها على .qa-badge كلها قلبها إلى نص داكن على داكن (1.49:1). */
+html[data-theme="dark"] .qa-badge.qa-ruling--mubah {
+  color: var(--n-900) !important;
+}
+
+/* أزرار التصنيف وعدّاداتها في المسارات: خلفياتها بقيت فاتحة في الداكن. */
+html[data-theme="dark"] :is(.lpp-cat-count, .lpp-cat-btn) {
+  color: var(--n-800) !important;
+}
+html[data-theme="dark"] .lpp-cat-btn {
+  background-color: var(--surface-2) !important;
+  color: var(--text) !important;
+}
+
+/* شارة مستوى المسار: نص أبيض فوق سطح العلامة الفاتح في الوضع الفاتح. */
+.lpp-path-card__badge {
+  background-color: var(--brand) !important;
+  color: var(--text-on-brand) !important;
+}
+
+/* أخضر باهت فوق أسطح داكنة (2.8–4.03:1) — يُرفع للون العلامة الفاتح. */
+/* ملاحظة: .hadith-grade مستثناة عمدًا. كل صيغها (سahih/hasan/daif/mawdu)
+   شارات بألوان باستيل فاتحة تعرّف خلفيتها ونصها معًا في index.css
+   وmajalis-v2.css. فرض لون نص فاتح عليها قلب «حسن» و«حسن صحيح» إلى
+   1.82–1.96:1 فوق خلفياتهما الفاتحة — نفس فخّ .qa-badge. أي عطل في صيغة
+   بعينها يُعالَج بتلك الصيغة وحدها لا بالصنف الأب. */
+html[data-theme="dark"] :is(
+  .ruling-card__category, .login-card__brand, .login-card__subtitle
+) {
+  color: var(--text-brand) !important;
+}
+html[data-theme="dark"] .ruling-pagination button {
+  color: var(--text-brand) !important;
+}
+
+/* .hadith-grade--sahih وحدها: في الوضع الداكن خلفيتها تصبح شفافة تقريبًا
+   (rgba(92,196,154,.08)) فتقع فعليًا على سطح البطاقة الداكن var(--mj-brand-deep)،
+   بينما تحتفظ بقية الصيغ بخلفياتها الباستيل الفاتحة. لذلك تُعالَج هي
+   وحدها — تطبيقًا للقاعدة التي كسرتها ثلاث مرات قبل ذلك.
+   4.03:1 ← نحو 8:1 بلون العلامة الفاتح. الوضع الفاتح غير مُمسوس. */
+html[data-theme="dark"] .hadith-grade--sahih {
+  color: var(--text-brand) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ط) أزرار primary في الوضع الداكن — ملء --brand العميق + نص أبيض
+   (بعد إلغاء تسطيح --color-primary إلى النعناعي في elite-2026)
+   ══════════════════════════════════════════════════════════════ */
+html[data-theme="dark"] :is(
+  .btn--primary,
+  .ds-btn--primary,
+  .btn-primary,
+  .page-action-btn--primary
+) {
+  background-color: var(--brand) !important;
+  border-color: var(--brand) !important;
+  color: var(--text-on-brand) !important;
+}
+
+/* روابط التمييز على الأسطح الداكنة تستخدم --text-brand لا ملء الزر */
+html[data-theme="dark"] :is(
+  a.ds-text-link,
+  .text-brand,
+  .link-brand
+) {
+  color: var(--text-brand) !important;
+}

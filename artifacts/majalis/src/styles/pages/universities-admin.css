@@ -1,0 +1,113 @@
+/* ══════════════════════════════════════════════
+   UAP. UniversitiesAdminPage
+   ══════════════════════════════════════════════ */
+.uap-label { display: block; font-size: .75rem; font-weight: 500; color: var(--majalis-ink-soft); margin-bottom: .25rem; }
+.uap-input {
+  width: 100%; padding: .5rem .75rem; font-size: .875rem;
+  border-radius: .75rem; border: 1px solid var(--majalis-line);
+  background: var(--majalis-parchment); color: var(--majalis-ink); outline: none;
+  transition: box-shadow .15s;
+}
+.uap-input:focus { box-shadow: 0 0 0 2px var(--majalis-emerald); }
+.uap-check-label { font-size: .875rem; color: var(--majalis-ink); }
+.uap-save-btn {
+  padding: .5rem 1.25rem; background: var(--majalis-emerald);
+  color: #fff; font-size: .875rem; font-weight: 500; border-radius: .75rem;
+  border: none; cursor: pointer; transition: background .15s;
+}
+.uap-save-btn:hover { background: var(--majalis-emerald-deep, var(--mj-brand)); }
+.uap-save-btn:disabled { opacity: .5; cursor: not-allowed; }
+.uap-cancel-btn {
+  padding: .5rem 1rem; background: var(--majalis-parchment-deep, #f0ece4);
+  color: var(--majalis-ink); font-size: .875rem; border-radius: .75rem;
+  border: none; cursor: pointer; transition: background .15s;
+}
+.uap-cancel-btn:hover { background: var(--majalis-line); }
+.uap-text-cancel {
+  padding: .5rem .75rem; font-size: .875rem; color: var(--majalis-ink-soft);
+  background: none; border: none; cursor: pointer; transition: color .15s;
+}
+.uap-text-cancel:hover { color: var(--majalis-ink); }
+.uap-prog-form-box { background: var(--majalis-parchment-deep, #f0ece4); border-radius: .75rem; padding: var(--ds-space-4); }
+.uap-form-title { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; }
+.uap-subnav { display: flex; gap: .25rem; border-bottom: 1px solid var(--majalis-line); }
+.uap-tab {
+  padding: .625rem 1rem; font-size: .875rem; font-weight: 500;
+  border-bottom: 2px solid transparent; transition: color .15s, border-color .15s;
+  color: var(--majalis-ink-soft); background: none; border-top: none;
+  border-inline-start: none; border-inline-end: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: .25rem;
+}
+.uap-tab:hover { color: var(--majalis-ink); }
+.uap-tab--active { border-bottom-color: var(--majalis-emerald); color: var(--majalis-emerald); }
+.uap-form-box { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-xl); padding: var(--ds-space-5); }
+.uap-box-title { font-weight: 700; color: var(--majalis-ink); margin-bottom: 1rem; }
+.uap-empty { text-align: center; padding: 2.5rem 0; color: var(--majalis-ink-soft); opacity: .6; }
+.uap-add-link { margin-top: .75rem; font-size: .875rem; color: var(--majalis-emerald); background: none; border: none; cursor: pointer; }
+.uap-add-link:hover { text-decoration: underline; }
+.uap-uni-card { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-xl); padding: var(--ds-space-4); }
+.uap-uni-name { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; }
+.uap-verified-badge { font-size: .75rem; background: var(--majalis-emerald-muted, rgba(31,77,58,.1)); color: var(--majalis-emerald); padding: .125rem .375rem; border-radius: .25rem; }
+.uap-unpublished-badge { font-size: .75rem; background: #fef2f2; color: var(--majalis-danger, #dc2626); padding: .125rem .375rem; border-radius: .25rem; }
+.uap-uni-meta { font-size: .75rem; color: var(--majalis-ink-soft); margin-top: .125rem; }
+.uap-uni-date { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .4; margin-top: .125rem; }
+.uap-view-btn {
+  padding: .375rem .625rem; font-size: .75rem;
+  background: var(--majalis-parchment-deep, #f0ece4); color: var(--majalis-ink-soft);
+  border-radius: .5rem; border: none; cursor: pointer; text-decoration: none;
+  transition: background .15s;
+}
+.uap-view-btn:hover { background: var(--majalis-line); }
+.uap-edit-btn {
+  padding: .375rem .625rem; font-size: .75rem;
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.1)); color: var(--majalis-emerald);
+  border-radius: .5rem; border: none; cursor: pointer;
+  transition: opacity .15s;
+}
+.uap-edit-btn:hover { opacity: .8; }
+.uap-progs-list { padding-inline-end: .5rem; border-inline-end: 1px solid var(--majalis-line); }
+.uap-prog-item { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: var(--majalis-ink-soft); }
+.uap-prog-dot { color: var(--majalis-emerald); }
+.uap-deg-badge { background: var(--majalis-parchment-deep, #f0ece4); padding: .125rem .375rem; border-radius: .25rem; }
+.uap-add-prog-btn { font-size: .75rem; color: var(--majalis-emerald); background: none; border: none; cursor: pointer; }
+.uap-add-prog-btn:hover { text-decoration: underline; }
+.uap-note { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; }
+.uap-reminder-card { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: .75rem; padding: var(--ds-space-4); }
+.uap-reminder-title { font-weight: 600; font-size: .875rem; color: var(--majalis-ink); }
+.uap-reminder-link { font-size: .75rem; color: var(--majalis-emerald); margin-top: .25rem; display: block; }
+.uap-reminder-link:hover { text-decoration: underline; }
+
+/* ── أنماط قصص الأنبياء نُقلت بالكامل إلى styles/pages/prophet-stories.css ── */
+
+/* ════════════════════════════════════════════════════════════
+   IS-ADMIN. IslamicStoriesSection (Admin)
+   ════════════════════════════════════════════════════════════ */
+.is-wrap { direction: rtl; font-family: inherit; }
+.is-header { margin-bottom: 1.5rem; }
+.is-title { font-size: 1.375rem; font-weight: 700; color: #1e293b; margin: 0 0 0.25rem; }
+.is-subtitle { font-size: 0.8125rem; color: #64748b; margin: 0; }
+.is-stats { display: flex; gap: var(--ds-space-3); margin-top: 1rem; flex-wrap: wrap; }
+.is-stat { background: #f1f5f9; border-radius: var(--ds-radius); padding: 0.45rem 0.85rem; font-size: 0.8125rem; }
+.is-stat strong { color: #0f172a; }
+.is-stat span { color: #64748b; margin-inline-end: 0.25rem; }
+.is-filters { display: flex; gap: var(--ds-space-2); margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; }
+.is-filters input { flex: 1; min-width: 160px; padding: 0.45rem 0.75rem; border: 1px solid #e2e8f0; border-radius: var(--ds-radius-sm); font-size: 0.8125rem; outline: none; font-family: inherit; direction: rtl; }
+.is-filters input:focus { border-color: #94a3b8; }
+.is-filters select { padding: 0.45rem 0.75rem; border: 1px solid #e2e8f0; border-radius: var(--ds-radius-sm); font-size: 0.8125rem; background: #fff; cursor: pointer; font-family: inherit; }
+.is-list { display: flex; flex-direction: column; gap: 0.9rem; }
+.is-card { background: #fff; border: 1px solid #e2e8f0; border-radius: var(--ds-radius-lg); overflow: hidden; }
+.is-card.approved { border-color: #bbf7d0; }
+.is-card-head { display: flex; align-items: center; gap: var(--ds-space-3); padding: 0.875rem 1.1rem; cursor: pointer; background: #f8fafc; border-bottom: 1px solid transparent; transition: background 0.15s; }
+.is-card.approved .is-card-head { background: #f0fdf4; }
+.is-card-head:hover { background: #f1f5f9; }
+.is-card.approved .is-card-head:hover { background: #dcfce7; }
+.is-icon { font-size: 1.4rem; }
+.is-info { flex: 1; }
+.is-name { font-size: 0.975rem; font-weight: 700; color: #1e293b; }
+.is-meta { font-size: var(--ds-text-xs); color: #64748b; margin-top: 2px; }
+.is-badge { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 9999px; letter-spacing: normal; }
+.is-badge.pending { background: rgba(23,61,53,0.08); color: var(--mj-brand); border: 1px solid rgba(24,54,42,0.3); }
+.is-badge.done { background: #dcfce7; color: var(--mj-brand); border: 1px solid #bbf7d0; }
+.is-toggle { font-size: var(--ds-text-xs); color: #94a3b8; }
+.is-body { padding: 1.1rem 1.25rem; border-top: 1px solid #e2e8f0; }
+.is-section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: normal; color: #64748b; margin-bottom: 0.5rem; }

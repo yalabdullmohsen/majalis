@@ -1,0 +1,135 @@
+/* ── Tajweed Page Styles ── */
+.tj-page { direction: rtl; }
+
+.tj-hero {
+  background: linear-gradient(135deg, var(--majalis-emerald-deep, var(--mj-brand-deep)) 0%, var(--majalis-emerald, var(--mj-brand)) 100%);
+  color: #FFFFFF;
+  border-radius: var(--ds-radius-xl);
+  padding: 2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.tj-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04) 0%, transparent 45%);
+  pointer-events: none;
+}
+.tj-hero .ds-hero__eyebrow { color: rgba(200,240,220,0.7); font-size: 0.8rem; letter-spacing: normal; text-transform: uppercase; margin-bottom: 0.4rem; }
+.tj-hero .ds-hero__title { color: #FFFFFF; font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; margin: 0 0 0.5rem; }
+.tj-hero .ds-hero__subtitle { color: rgba(255,255,255,0.8); font-size: 0.9rem; margin: 0; }
+
+.tj-intro-box {
+  background: var(--majalis-emerald-soft, var(--mj-brand-soft));
+  border: 1px solid rgba(31,77,58,0.15);
+  border-radius: var(--ds-radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.tj-intro-box p { margin: 0 0 0.75rem; color: var(--majalis-ink); font-size: 0.92rem; line-height: 1.7; }
+.tj-intro-box p:last-child { margin-bottom: 0; }
+.tj-hadith { font-style: normal; color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important; font-size: 0.88rem !important; border-inline-end: 3px solid var(--majalis-emerald); padding-inline-end: 0.75rem; }
+
+.tj-grid { display: grid; gap: var(--ds-space-3); margin-bottom: 2rem; }
+
+/* Tajweed rule color modifiers — set --tj-accent per category group */
+.tj-card--izhar-halqi, .tj-card--idgham-bighunnah, .tj-card--idgham-bila-ghunnah,
+.tj-card--iqlab, .tj-card--ikhfa-haqiqi               { --tj-accent: var(--mj-brand-deep); }
+.tj-card--izhar-shafawi, .tj-card--idgham-shafawi,
+.tj-card--ikhfa-shafawi                                { --tj-accent: var(--mj-brand); }
+.tj-card--madd-tabii, .tj-card--madd-muttasil, .tj-card--madd-munfasil,
+.tj-card--madd-lazim, .tj-card--madd-arid, .tj-card--madd-leen,
+.tj-card--madd-badal                                   { --tj-accent: var(--mj-brand-deep); }
+.tj-card--qalqalah, .tj-card--tafkhim-tarqiq,
+.tj-card--waqf, .tj-card--ghunnah                     { --tj-accent: var(--mj-brand-deep); }
+.tj-card {
+  border-radius: 0.875rem;
+  border: 1px solid rgba(31,77,58,0.12);
+  overflow: hidden;
+  background: var(--majalis-panel, #FFFFFF);
+  transition: box-shadow 0.2s;
+}
+.tj-card:hover { box-shadow: 0 4px 16px rgba(31,77,58,0.1); }
+
+.tj-card__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-3);
+  padding: 0.9rem 1.1rem;
+  text-align: end;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-inline-start: 4px solid var(--tj-accent, var(--mj-brand-deep));
+  font-family: inherit;
+}
+.tj-card__title-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; flex: 1; }
+.tj-cat-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--tj-accent, var(--mj-brand-deep));
+  letter-spacing: normal;
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+/* --tj-accent قيم خضراء داكنة مخصَّصة لكل نوع بطاقة، بلا نسخة ليلية —
+   على خلفية بطاقة داكنة (2026-07-17). */
+html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
+.tj-card__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--majalis-ink); margin: 0; }
+.tj-toggle { font-size: 0.7rem; color: var(--majalis-ink-soft); flex-shrink: 0; }
+
+.tj-card__body { padding: 0.1rem 1.1rem 1.1rem; border-top: 1px solid rgba(31,77,58,0.08); }
+.tj-definition { font-size: 0.88rem; color: var(--majalis-ink); line-height: 1.75; margin: 0.75rem 0 0.5rem; }
+.tj-example {
+  background: var(--majalis-emerald-soft, var(--mj-brand-soft));
+  border-radius: var(--ds-radius);
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+}
+.tj-example-label { color: var(--majalis-ink-soft); font-size: var(--ds-text-xs); }
+.tj-example-text { color: var(--majalis-emerald-deep, var(--mj-brand-deep)); font-size: var(--ds-text-base); font-weight: 600; line-height: 1.8; }
+
+.tj-types { display: grid; gap: var(--ds-space-2); margin-top: 0.75rem; }
+.tj-type {
+  background: var(--majalis-parchment, #FAF7F2);
+  border-radius: var(--ds-radius);
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--majalis-line, #E8E2D8);
+}
+.tj-type-name { color: var(--tj-accent, var(--mj-brand-deep)); font-size: 0.85rem; display: block; margin-bottom: 0.2rem; }
+.tj-type-def { font-size: 0.8rem; color: var(--majalis-ink-soft); margin: 0 0 0.25rem; }
+.tj-type-ex { font-size: 0.88rem; color: var(--majalis-emerald-deep, var(--mj-brand-deep)); font-weight: 600; }
+
+.tj-related {
+  background: var(--majalis-emerald-deep, var(--mj-brand-deep));
+  color: #FFFFFF;
+  border-radius: var(--ds-radius-xl);
+  padding: 1.25rem 1.5rem;
+  margin-top: 2rem;
+}
+.tj-related-title { font-weight: 700; margin-bottom: 0.75rem; color: rgba(200,240,220,0.8); font-size: 0.82rem; text-transform: uppercase; letter-spacing: normal; }
+.tj-related-list { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
+.tj-related-link {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 2rem;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 0.82rem;
+  transition: background 0.15s;
+}
+.tj-related-link:hover { background: rgba(255,255,255,0.18); }
+
+/* ── نهاية PERF-UX-2026 ─────────────────────────────────────── */

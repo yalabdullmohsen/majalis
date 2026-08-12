@@ -1,0 +1,48 @@
+/* ── 173 — AchievementToast (at-*) ──────────────────────────────────────── */
+.at-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  inset-inline-end: 1.5rem;
+  z-index: 9999;
+  max-width: 22rem;
+  width: calc(100vw - 3rem);
+  background: linear-gradient(135deg, #064e3b, var(--mj-brand));
+  color: #fff;
+  border-radius: var(--ds-radius-lg);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  transition: opacity 0.35s, transform 0.35s;
+  opacity: 0;
+  transform: translateY(1.5rem);
+}
+.at-toast--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.at-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+.at-body { flex: 1; min-width: 0; }
+.at-label {
+  margin: 0 0 0.2rem;
+  font-size: 0.7rem;
+  color: #a7f3d0;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: normal;
+}
+.at-title  { margin: 0 0 0.25rem; font-size: var(--ds-text-base); font-weight: 800; }
+.at-desc   { margin: 0; font-size: 0.82rem; color: #d4e9dc; line-height: 1.5; }
+.at-more   { margin: 0.4rem 0 0; font-size: 0.78rem; color: #a7f3d0; }
+.at-close  {
+  background: none;
+  border: none;
+  color: #a7f3d0;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0;
+  flex-shrink: 0;
+}
+

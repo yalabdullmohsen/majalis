@@ -1,0 +1,602 @@
+{
+  "generated_at": "2026-06-26T01:09:15.356Z",
+  "system": "Enterprise Governance & Editorial Platform v1",
+  "production_readiness_pct": 73,
+  "completion_pct": 100,
+  "features": [
+    {
+      "id": "rbac",
+      "label": "RBAC (10 roles)",
+      "weight": 12,
+      "file": "lib/governance/rbac.mjs",
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "lifecycle",
+      "label": "Content Lifecycle",
+      "weight": 12,
+      "file": "lib/governance/lifecycle.mjs",
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "scientific_review",
+      "label": "Scientific Review",
+      "weight": 12,
+      "file": "lib/governance/review.mjs",
+      "complete": true,
+      "score": 12
+    },
+    {
+      "id": "audit_trail",
+      "label": "Audit Trail",
+      "weight": 10,
+      "file": "lib/governance/audit.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "quality_monitoring",
+      "label": "Quality Monitoring",
+      "weight": 10,
+      "file": "lib/governance/quality.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "system_monitoring",
+      "label": "System Monitoring",
+      "weight": 10,
+      "file": "lib/governance/monitoring.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "backup_recovery",
+      "label": "Backup & Recovery",
+      "weight": 8,
+      "file": "lib/governance/backup.mjs",
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "security",
+      "label": "Security Audit",
+      "weight": 10,
+      "file": "lib/governance/security.mjs",
+      "complete": true,
+      "score": 10
+    },
+    {
+      "id": "scalability",
+      "label": "Performance/Scale",
+      "weight": 8,
+      "file": "lib/governance/performance.mjs",
+      "complete": true,
+      "score": 8
+    },
+    {
+      "id": "documentation",
+      "label": "Technical Docs",
+      "weight": 8,
+      "file": "data/governance-technical-docs.json",
+      "complete": true,
+      "score": 8
+    }
+  ],
+  "roles_count": 10,
+  "lifecycle_stages": 9,
+  "assessments": {
+    "security": {
+      "score": 40,
+      "critical": 0,
+      "warnings": 0
+    },
+    "performance": {
+      "score": 80,
+      "cache": {
+        "entries": 0,
+        "max": 500
+      }
+    },
+    "content_quality": {
+      "score": 61,
+      "completeness_pct": 70,
+      "verification_pct": 0,
+      "needs_review_pct": 0,
+      "duplicate_count": 0,
+      "broken_links_count": 0,
+      "update_success_rate": 90,
+      "by_section": {},
+      "kpis": [
+        "completeness_pct",
+        "verification_pct",
+        "needs_review_pct",
+        "duplicate_count",
+        "broken_links_count",
+        "update_success_rate"
+      ],
+      "overall_score": 61
+    },
+    "documentation": {
+      "score": 90,
+      "files": [
+        "data/governance-technical-docs.json",
+        "data/governance-technical-docs.md"
+      ]
+    },
+    "scalability": {
+      "score": 80,
+      "capabilities": {
+        "millions_of_requests": "Requires Redis cache + CDN (partially ready)",
+        "new_sources_without_refactor": true,
+        "new_sections_easily": true,
+        "auto_index_updates": false,
+        "background_task_distribution": "partial (cron + queue)"
+      }
+    },
+    "reliability": {
+      "score": 65,
+      "backups": {
+        "status": "supabase_auto",
+        "note": "Supabase automatic backups on paid plans; governance backup cron weekly",
+        "last_check": null
+      },
+      "cron": {
+        "total": 12,
+        "status": "dev_mode",
+        "jobs": [
+          {
+            "name": "orchestrator",
+            "schedule": "0 */6 * * *",
+            "path": "/api/cron/autonomous-orchestrator",
+            "status": "degraded"
+          },
+          {
+            "name": "queueWorker",
+            "schedule": "0 * * * *",
+            "path": "/api/cron/queue-worker",
+            "status": "degraded"
+          },
+          {
+            "name": "dailyContent",
+            "schedule": "0 5 * * *",
+            "path": "/api/cron/daily-content",
+            "status": "degraded"
+          },
+          {
+            "name": "securityAudit",
+            "schedule": "0 2 * * 0",
+            "path": "/api/cron/security-audit",
+            "status": "degraded"
+          },
+          {
+            "name": "reports",
+            "schedule": "0 6 * * *",
+            "path": "/api/cron/reports",
+            "status": "degraded"
+          }
+        ]
+      }
+    }
+  },
+  "monitoring": {
+    "ok": false,
+    "at": "2026-06-26T01:09:15.349Z",
+    "database": {
+      "status": "not_configured",
+      "pooler": false
+    },
+    "vercel": {
+      "status": "local",
+      "region": "local",
+      "cron": "missing_secret"
+    },
+    "supabase": {
+      "status": "disconnected",
+      "service_role": false
+    },
+    "cron_jobs": {
+      "total": 12,
+      "status": "dev_mode",
+      "jobs": [
+        {
+          "name": "orchestrator",
+          "schedule": "0 */6 * * *",
+          "path": "/api/cron/autonomous-orchestrator",
+          "status": "degraded"
+        },
+        {
+          "name": "queueWorker",
+          "schedule": "0 * * * *",
+          "path": "/api/cron/queue-worker",
+          "status": "degraded"
+        },
+        {
+          "name": "dailyContent",
+          "schedule": "0 5 * * *",
+          "path": "/api/cron/daily-content",
+          "status": "degraded"
+        },
+        {
+          "name": "securityAudit",
+          "schedule": "0 2 * * 0",
+          "path": "/api/cron/security-audit",
+          "status": "degraded"
+        },
+        {
+          "name": "reports",
+          "schedule": "0 6 * * *",
+          "path": "/api/cron/reports",
+          "status": "degraded"
+        }
+      ]
+    },
+    "ai": {
+      "status": "limited",
+      "metadata_only": true,
+      "openai": false,
+      "anthropic": false
+    },
+    "queue": {
+      "pending": 0,
+      "failed": 0
+    },
+    "backups": {
+      "status": "supabase_auto",
+      "note": "Supabase automatic backups on paid plans; governance backup cron weekly",
+      "last_check": null
+    },
+    "storage": {
+      "cache_entries": 0
+    },
+    "performance": {
+      "avg_duration_ms": 6,
+      "success_rate": 100
+    },
+    "platform_stats": null,
+    "system_health": {
+      "ok": false,
+      "at": "2026-06-26T01:09:15.348Z",
+      "durationMs": 7,
+      "lastRun": {
+        "autoContent": null,
+        "autoKnowledgeEngine": null
+      },
+      "metrics": {
+        "sourcesTotal": 0,
+        "sourcesActive": 0,
+        "connectorsActive": 0,
+        "itemsNewToday": 0,
+        "itemsPublishedToday": 0,
+        "itemsUpdated": 0,
+        "itemsPublished": 0,
+        "itemsPending": 0,
+        "lastDurationMs": null
+      },
+      "errors": [
+        "Missing env: SUPABASE_SERVICE_ROLE_KEY",
+        "Supabase service role not configured",
+        "PostgreSQL pooler: DATABASE_URL not configured — set Supabase Transaction Pooler URL on Vercel (postgresql://postgres.[ref]:[password]@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres)"
+      ],
+      "ai": {
+        "openai": "fallback_mode",
+        "anthropic": "not_used_by_pipeline",
+        "status": "heuristic_fallback"
+      },
+      "supabase": {
+        "status": "not_configured",
+        "url": true,
+        "serviceRole": false,
+        "anonKey": true
+      },
+      "database": {
+        "status": "error",
+        "source": "none",
+        "urlConfig": {
+          "configured": false,
+          "rawIsTransactionPooler": false,
+          "rawHost": null,
+          "rawPort": null,
+          "rawUser": null,
+          "expectedPoolerHost": "aws-1-ap-northeast-1.pooler.supabase.com",
+          "expectedPoolerPort": 6543,
+          "matchesExpectedPooler": false,
+          "needsVercelUpdate": false,
+          "hasPlaceholderPassword": true,
+          "normalized": false,
+          "normalizeReason": "empty",
+          "connectionSource": "none"
+        },
+        "connection": {
+          "error": "DATABASE_URL not configured — set Supabase Transaction Pooler URL on Vercel (postgresql://postgres.[ref]:[password]@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres)"
+        }
+      },
+      "cron": {
+        "secretConfigured": false,
+        "routes": [
+          {
+            "path": "/api/cron/auto-knowledge-sync",
+            "schedule": "30 */6 * * *",
+            "label": "Auto Knowledge Engine (full)"
+          },
+          {
+            "path": "/api/cron/auto-content-sync",
+            "schedule": "0 */6 * * *",
+            "label": "Auto Content Sync"
+          },
+          {
+            "path": "/api/cron/knowledge-sync",
+            "schedule": "0 */6 * * *",
+            "label": "Knowledge Sync (legacy)"
+          },
+          {
+            "path": "/api/cron/connector-health",
+            "schedule": "0 * * * *",
+            "label": "Connector Health"
+          },
+          {
+            "path": "/api/cron/auto-content-health",
+            "schedule": "15 */6 * * *",
+            "label": "Auto Content Health"
+          },
+          {
+            "path": "/api/cron/system-health",
+            "schedule": "45 */6 * * *",
+            "label": "System Health Monitor"
+          },
+          {
+            "path": "/api/cron/sync-fiqh-council",
+            "schedule": "0 6 * * *",
+            "label": "Fiqh Council Sync"
+          },
+          {
+            "path": "/api/cron/check-fiqh-links",
+            "schedule": "0 7 * * *",
+            "label": "Fiqh Link Check"
+          },
+          {
+            "path": "/api/cron/scholarly-verification",
+            "schedule": "0 8 * * *",
+            "label": "Scholarly Verification"
+          },
+          {
+            "path": "/api/cron/global-reference-review",
+            "schedule": "0 9 * * 0",
+            "label": "Global Reference Review (weekly)"
+          },
+          {
+            "path": "/api/cron/governance-backup",
+            "schedule": "0 4 * * 0",
+            "label": "Governance Backup (weekly)"
+          },
+          {
+            "path": "/api/cron/apply-migrations",
+            "schedule": "0 5 * * 0",
+            "label": "Schema Migrations (weekly verify)"
+          }
+        ],
+        "status": "dev_mode"
+      },
+      "queue": {
+        "status": "unknown",
+        "pending": 0,
+        "processing": 0,
+        "failed": 0
+      },
+      "env": {
+        "SUPABASE_URL": true,
+        "SUPABASE_SERVICE_ROLE_KEY": false,
+        "SUPABASE_ANON_KEY": true,
+        "CRON_SECRET": false,
+        "OPENAI_API_KEY": false,
+        "ANTHROPIC_API_KEY": false,
+        "DATABASE_URL": false,
+        "POSTGRES_URL": false,
+        "POSTGRES_PASSWORD": false,
+        "SUPABASE_ACCESS_TOKEN": false
+      },
+      "autoContent": {
+        "ok": false,
+        "at": "2026-06-26T01:09:15.341Z",
+        "cron": {
+          "route": "/api/cron/auto-content-sync",
+          "vercelSchedule": "0 */6 * * *",
+          "status": "missing_secret"
+        },
+        "env": {
+          "SUPABASE_URL": true,
+          "SUPABASE_SERVICE_ROLE_KEY": false,
+          "SUPABASE_ANON_KEY": true,
+          "CRON_SECRET": false,
+          "OPENAI_API_KEY": false,
+          "ANTHROPIC_API_KEY": false,
+          "DATABASE_URL": false,
+          "POSTGRES_URL": false,
+          "POSTGRES_PASSWORD": false,
+          "SUPABASE_ACCESS_TOKEN": false
+        },
+        "database": {
+          "status": "not_configured"
+        },
+        "ai": {
+          "openai": "missing",
+          "anthropic": "unused_by_pipeline"
+        },
+        "queue": {
+          "status": "inline",
+          "pending": 0
+        },
+        "cache": {
+          "status": "none"
+        },
+        "workers": {
+          "status": "serverless"
+        },
+        "sources": {
+          "total": 0,
+          "active": 0,
+          "healthy": 0
+        }
+      },
+      "autoKnowledgeEngine": {
+        "stats": null
+      },
+      "pipeline": {
+        "runs": [],
+        "recentLogs": []
+      }
+    }
+  },
+  "quality": {
+    "completeness_pct": 70,
+    "verification_pct": 0,
+    "needs_review_pct": 0,
+    "duplicate_count": 0,
+    "broken_links_count": 0,
+    "update_success_rate": 90,
+    "by_section": {},
+    "kpis": [
+      "completeness_pct",
+      "verification_pct",
+      "needs_review_pct",
+      "duplicate_count",
+      "broken_links_count",
+      "update_success_rate"
+    ],
+    "overall_score": 61
+  },
+  "audit": {
+    "total": 0,
+    "by_action": {},
+    "by_outcome": {}
+  },
+  "review_queue_size": 0,
+  "risks": [
+    {
+      "id": "R1",
+      "risk": "Client-exposed admin secret (VITE_ADMIN_API_SECRET)",
+      "priority": "critical",
+      "mitigation": "Move to server-only env"
+    },
+    {
+      "id": "R7",
+      "risk": "PRs #36-45 not merged to main",
+      "priority": "critical",
+      "mitigation": "Merge and integration test"
+    },
+    {
+      "id": "R2",
+      "risk": "In-memory rate limiting on serverless",
+      "priority": "high",
+      "mitigation": "Redis/Upstash distributed limits"
+    },
+    {
+      "id": "R3",
+      "risk": "Fragmented audit logs across systems",
+      "priority": "medium",
+      "mitigation": "governance_audit_log unified (implemented)"
+    },
+    {
+      "id": "R4",
+      "risk": "No automated DR recovery test",
+      "priority": "medium",
+      "mitigation": "Quarterly restore drill"
+    },
+    {
+      "id": "R5",
+      "risk": "Legacy 3-role profile vs 10 governance roles",
+      "priority": "medium",
+      "mitigation": "Migrate users to governance_user_roles"
+    },
+    {
+      "id": "R6",
+      "risk": "Review backlog without SLA",
+      "priority": "low",
+      "mitigation": "Phase 2 editorial workflow"
+    }
+  ],
+  "maintenance_plan": {
+    "generated_at": "2026-06-26T01:09:15.356Z",
+    "principle": "الصيانة الوقائية قبل التوسع",
+    "schedule": [
+      {
+        "frequency": "daily",
+        "tasks": [
+          "مراجعة queue",
+          "فحص cron jobs",
+          "مراقبة AI agents"
+        ]
+      },
+      {
+        "frequency": "weekly",
+        "tasks": [
+          "backup verification",
+          "security audit",
+          "quality KPI review",
+          "audit log cleanup"
+        ]
+      },
+      {
+        "frequency": "monthly",
+        "tasks": [
+          "RLS policy review",
+          "migration verify",
+          "performance assessment",
+          "documentation update"
+        ]
+      },
+      {
+        "frequency": "quarterly",
+        "tasks": [
+          "DR recovery test",
+          "RBAC audit",
+          "penetration review",
+          "capacity planning"
+        ]
+      }
+    ],
+    "phases": [
+      {
+        "phase": 1,
+        "title": "استقرار الإنتاج",
+        "items": [
+          "دمج PRs #36-45",
+          "تطبيق governance_v1.sql",
+          "Assign governance roles to staff",
+          "Enable Supabase PITR"
+        ]
+      },
+      {
+        "phase": 2,
+        "title": "تشغيل تحريري",
+        "items": [
+          "Review queue UI workflow",
+          "Email notifications for pending reviews",
+          "SLA timers for editorial stages"
+        ]
+      },
+      {
+        "phase": 3,
+        "title": "نضج مؤسسي",
+        "items": [
+          "SSO for editorial staff",
+          "Distributed cache (Redis)",
+          "External alerting (Slack/PagerDuty)"
+        ]
+      }
+    ]
+  },
+  "docs_summary": {
+    "architecture": true,
+    "database_schema": true,
+    "apis": true,
+    "cron_jobs": true,
+    "ai_agents": true,
+    "deployment": true,
+    "monitoring": true,
+    "backup": true,
+    "security_policies": true
+  }
+}
