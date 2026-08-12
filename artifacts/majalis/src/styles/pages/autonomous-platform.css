@@ -53,7 +53,10 @@
 .aup-sb--slow, .aup-sb--running      { background: #226A5622; color: var(--mj-brand); }
 .aup-sb--dead, .aup-sb--blocked,
 .aup-sb--failed, .aup-sb--error      { background: #991B1B22; color: var(--mj-danger-deep); }
-.aup-sb--unauthorized                { background: var(--brand, var(--mj-brand))22; color: var(--brand, var(--mj-brand)); }
+/* كان ‎background: var(--brand, …)22‎ — إلحاق ‎22‎ بعد ‎var()‎ قيمة غير صالحة
+   (المقصود كان hex بشفافية مثل ‎#065F4622‎)، فالخلفية تُهمَل ولون النص نفس
+   لون العلامة ⇒ نص شبه معدوم. الصحيح color-mix + حبر داكن مقروء. */
+.aup-sb--unauthorized                { background: color-mix(in srgb, var(--brand, var(--mj-brand)) 14%, transparent); color: var(--brand-deep, var(--mj-brand-deep)); }
 .aup-sources-grid   { display: grid; gap: 0.4rem; }
 .aup-source-card    { padding: 0.5rem 0.75rem; border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); }
 .aup-source-row     { display: flex; gap: var(--ds-space-3); align-items: center; flex-wrap: wrap; }

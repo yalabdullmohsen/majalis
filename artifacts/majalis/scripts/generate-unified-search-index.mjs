@@ -281,9 +281,17 @@ try {
 
 const outDir = path.join(appRoot, "public/data/search");
 fs.mkdirSync(outDir, { recursive: true });
+/* حتمية البناء: كان هنا ‎generatedAt: new Date()...‎ فيتغيّر كل يوم ويتّسخ
+   ‎public/data/search/index.json‎ (3.9MB) في كل بناء، ويفشل
+   ‎git diff --exit-code‎ في CI في أي يوم يختلف عن يوم آخر commit — عطل
+   مؤجَّل بمقدار يوم دائمًا.
+
+   الحقل محذوف لا مُصلَّح: لا يقرأه أي كود في المستودع (تحقّقت)، وكل بديل
+   زمني يبقى غير حتمي — تاريخ آخر commit مثلًا يفشل في PR لأن
+   ‎actions/checkout‎ ينشئ merge commit بتاريخ *الآن*. من احتاج معرفة نسخة
+   الفهرس فـ‎/version.json‎ يحمل الـcommit الفعلي. */
 const payload = {
   version: 2,
-  generatedAt: new Date().toISOString().slice(0, 10),
   count: docs.length,
   docs,
 };

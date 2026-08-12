@@ -1,0 +1,143 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   tokens.css — أزواج (سطح ← لون فوقه). مصدر واحد لكل قرار «ما لون النص
+   فوق هذا السطح؟». يُحمَّل بعد brand-v4.css ويشتق منه، لا يستنسخ قيمه.
+
+   ⚠️ تحذير تعارض مقصود التوثيق:
+   في brand-v4.css الرمز ‎--surface-brand‎ = ‎var(--em-100)‎ = ‎#DCE7E1‎، أي
+   *غسلة خضراء فاتحة* لا الأخضر الغامق. لذلك ربط ‎--on-brand: #FFFFFF‎ به
+   يعطي تباين ‎1.24:1‎ — كارثة. لم يُعَد تعريفه هنا (عشرات المكونات تعتمده
+   بمعناه الفاتح). بدلًا من ذلك للأسطح الخضراء الغامقة أسماء صريحة:
+
+     --surface-brand-solid   الأخضر الأساسي (em-600) ← --on-brand
+     --surface-brand-strong  الأخضر الغامق  (em-800) ← --on-brand
+     --surface-brand-wash    الغسلة الفاتحة (em-100) ← --on-brand-wash
+
+   القاعدة الملزمة: لا يُضبط أيّ من هذه الأسطح دون ضبط لون النص المقابل له
+   في نفس القاعدة. الصنف ‎.surface-brand‎ أدناه يضمن ذلك بنيويًا.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── أسطح العلامة الغامقة + ما يُكتب فوقها ─────────────────────────── */
+  --surface-brand-solid: var(--em-600, #1e5f4b);
+  --surface-brand-strong: var(--em-800, #12362c);
+  --surface-brand-deepest: var(--em-900, #0e241e);
+
+  /* أبيض صريح — لا رمادي داكن ولا أسود مخفَّف فوق الأخضر إطلاقًا */
+  --on-brand: #ffffff;
+  --on-brand-secondary: rgba(255, 255, 255, 0.82);
+  --on-brand-tertiary: rgba(255, 255, 255, 0.64);
+
+  /* حالات التفاعل فوق الأخضر — شفافيات محدّدة، بلا انقلاب إلى داكن */
+  --on-brand-hover-bg: rgba(255, 255, 255, 0.24);
+  --on-brand-active-bg: rgba(255, 255, 255, 0.32);
+  --on-brand-quiet-bg: rgba(255, 255, 255, 0.14);
+  --on-brand-hairline: rgba(255, 255, 255, 0.22);
+  --on-brand-disabled: rgba(255, 255, 255, 0.45);
+  /* حلقة تركيز بيضاء بشفافية — لا الأزرق الافتراضي */
+  --on-brand-focus-ring: rgba(255, 255, 255, 0.92);
+
+  /* ── الغسلة الفاتحة: حبر غامق فوقها، لا أبيض ───────────────────────── */
+  --surface-brand-wash: var(--em-100, #dce7e1);
+  --on-brand-wash: var(--em-900, #0e241e);
+  --on-brand-wash-secondary: var(--em-700, #174a3a);
+
+  /* ── بقية الأزواج الدلالية ─────────────────────────────────────────── */
+  --surface-page: var(--bg);
+  --on-page: var(--text);
+  --surface-card: var(--surface);
+  --on-card: var(--text);
+  --surface-muted-pair: var(--surface-muted);
+  --on-muted: var(--text-2);
+
+  /* أدنى فاتح مقبول فوق سطح علامة (بوابة «لا أسود على الأخضر») */
+  --on-brand-min-luma: #e5e5e5;
+}
+
+/* الوضع الليلي: نفس الأزواج بالضبط — لا مسار لوني منفصل.
+   الأسطح الغامقة تبقى غامقة والنص فوقها يبقى أبيض، فلا شيء يُقلب. */
+html[data-theme="dark"],
+html.dark {
+  --surface-brand-solid: var(--brand, #2e8b6f);
+  --surface-brand-strong: var(--brand-deep, #1a3e34);
+  /* الغسلة في الليلي غامقة أصلًا (brand-v4: --surface-brand: #173028)،
+     فالحبر فوقها يجب أن يكون فاتحًا لا غامقًا. */
+  --surface-brand-wash: #173028;
+  --on-brand-wash: var(--text-on-dark, #f1f5f3);
+  --on-brand-wash-secondary: rgba(241, 245, 243, 0.82);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   الوراثة التلقائية بدل التلوين اليدوي.
+
+   ‎.surface-brand‎ يضبط الخلفية *و* لون النص معًا — لا يُفصلان أبدًا. كل نص
+   وأيقونة بداخله يرث اللون عبر currentColor، فلا حاجة لتلوين كل عنصر يدويًا
+   ولا فرصة لنسيان واحد.
+   ═══════════════════════════════════════════════════════════════════════ */
+.surface-brand,
+.surface-brand-strong {
+  background-color: var(--surface-brand-solid);
+  color: var(--on-brand);
+}
+
+.surface-brand-strong {
+  background-color: var(--surface-brand-strong);
+}
+
+/* كل نص داخل السطح يرث — لا لون صريح مطلوب على العناصر الداخلية */
+.surface-brand :where(h1, h2, h3, h4, h5, h6, p, span, strong, em, li, dt, dd, time, small, label),
+.surface-brand-strong
+  :where(h1, h2, h3, h4, h5, h6, p, span, strong, em, li, dt, dd, time, small, label) {
+  color: inherit;
+}
+
+/* الأيقونات: currentColor لا لون ثابت داخل SVG */
+.surface-brand :where(svg),
+.surface-brand-strong :where(svg) {
+  color: inherit;
+  stroke: currentColor;
+}
+.surface-brand :where(svg[data-filled="true"]),
+.surface-brand-strong :where(svg[data-filled="true"]) {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* النص الثانوي/الثالثي: لون صريح لا opacity.
+   opacity يخفي العيب من بوابة التباين — getComputedStyle(color) يقول
+   ‎#FFFFFF‎ بينما البكسل المرسوم أخفت بكثير. */
+.surface-brand :where(.on-brand-secondary),
+.surface-brand-strong :where(.on-brand-secondary) {
+  color: var(--on-brand-secondary);
+}
+.surface-brand :where(.on-brand-tertiary),
+.surface-brand-strong :where(.on-brand-tertiary) {
+  color: var(--on-brand-tertiary);
+}
+
+/* الأزرار داخل السطح: كل الحالات بيضاء بشفافيات محدّدة */
+.surface-brand :where(button, .btn, a.btn),
+.surface-brand-strong :where(button, .btn, a.btn) {
+  color: var(--on-brand);
+  background-color: var(--on-brand-quiet-bg);
+  border-color: var(--on-brand-hairline);
+}
+.surface-brand :where(button, .btn, a.btn):hover,
+.surface-brand-strong :where(button, .btn, a.btn):hover {
+  background-color: var(--on-brand-hover-bg);
+  color: var(--on-brand);
+}
+.surface-brand :where(button, .btn, a.btn):active,
+.surface-brand-strong :where(button, .btn, a.btn):active {
+  background-color: var(--on-brand-active-bg);
+  color: var(--on-brand);
+}
+.surface-brand :where(button, .btn, a.btn):disabled,
+.surface-brand-strong :where(button, .btn, a.btn):disabled {
+  color: var(--on-brand-disabled);
+  background-color: var(--on-brand-quiet-bg);
+}
+.surface-brand :where(button, .btn, a, [tabindex]):focus-visible,
+.surface-brand-strong :where(button, .btn, a, [tabindex]):focus-visible {
+  outline: 2px solid var(--on-brand-focus-ring);
+  outline-offset: 2px;
+}

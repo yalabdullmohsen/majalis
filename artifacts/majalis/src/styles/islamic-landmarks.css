@@ -407,7 +407,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255,255,255,0.35);
+  /* كان ‎rgba(255,255,255,0.35)‎ = 2.96:1 فوق التدرّج الأخضر. هذا لون الأيقونة
+     البديلة/نص alt حين تفشل الصورة — يجب أن يُرى. الرمز الثالثي (.64) يعطي
+     ‎6.0:1‎ ويبقى هادئًا بصريًا. */
+  color: var(--on-brand-tertiary, rgba(255,255,255,0.64));
   border-radius: 18px 18px 0 0;
 }
 

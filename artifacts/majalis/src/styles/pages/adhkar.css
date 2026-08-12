@@ -84,9 +84,12 @@
   background: var(--mj-surface-2, var(--majalis-panel));
   cursor: not-allowed;
 }
+/* كان ‎color: var(--mj-on-brand, #0C1512)‎ و‎--mj-on-brand‎ غير معرَّف في
+   المستودع إطلاقًا ⇒ الاحتياط شبه الأسود ‎#0C1512‎ هو ما يُرسم فعلًا فوق
+   الأخضر: تباين 2.47:1. الرمز الصحيح ‎--on-brand‎ = أبيض صريح. */
 .adhkar-focus-btn--next {
   background: var(--majalis-emerald, var(--mj-brand));
-  color: var(--mj-on-brand, #0C1512);
+  color: var(--on-brand, #ffffff);
   border-color: transparent;
 }
 .adhkar-focus-btn--next:hover:not(:disabled) {

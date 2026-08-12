@@ -207,8 +207,24 @@ export function HeaderTicker() {
     if (activeIndex >= items.length) setActiveIndex(0);
   }, [activeIndex, items.length]);
 
+  // حالة fallback: لا شريط فارغ بحدود على الجوال. سطر واحد ثابت محايد —
+  // بلا نصّ شرعي (فالنص الشرعي لا يُعرض إلا كاملًا غير مقصوص).
   if (items.length === 0) {
-    return <div className="header-ticker header-ticker--empty" aria-hidden="true" />;
+    return (
+      <div className="header-ticker header-ticker--static header-ticker--fallback" role="status">
+        <div className="header-ticker__single-item">
+          <TickerEntry
+            item={{
+              key: "fallback",
+              Icon: Sparkles,
+              label: "مجالس العلم",
+              text: "تصفّح المصحف والدروس والفتاوى",
+              href: "/quran-hub",
+            }}
+          />
+        </div>
+      </div>
+    );
   }
 
   const pauseHandlers = {

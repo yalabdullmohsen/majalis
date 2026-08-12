@@ -7,6 +7,7 @@ import { SideNavDrawer } from "./SideNavDrawer";
 import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
+import { useIsMobileNav } from "@/hooks/useIsMobileNav";
 import { isNavHrefActive } from "@/lib/nav-active";
 import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
@@ -46,16 +47,6 @@ function PrayerChip() {
   );
 }
 
-function useIsMobile() {
-  const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth <= 879 : false);
-  useEffect(() => {
-    const onResize = () => setMobile(window.innerWidth <= 879);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-  return mobile;
-}
-
 function tabCls(active: boolean, extra = "") {
   return `nav-tab${active ? " nav-tab--active" : ""}${extra ? " " + extra : ""}`;
 }
@@ -65,7 +56,7 @@ export default function NavBar() {
   const { t } = useLanguage();
   const { resolvedTheme, toggleDark } = useThemePreference();
   const [location, navigate] = useLocation();
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobileNav();
   const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
   const [collapsed, setCollapsed] = useState(false);
 

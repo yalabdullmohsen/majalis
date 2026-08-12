@@ -5,6 +5,10 @@ import {
   hasDecidedCookieConsent,
   writeCookieConsent,
 } from "@/lib/cookie-consent";
+import {
+  hasSeenStorageNotice,
+  markStorageNoticeSeen,
+} from "@/lib/onboarding-state";
 import "@/styles/components/cookie-consent.css";
 
 /**
@@ -16,12 +20,16 @@ export function CookieConsentBanner() {
 
   useEffect(() => {
     applyConsentDataset();
-    if (!hasDecidedCookieConsent()) setOpen(true);
+    // مصدران للحقيقة: راية البوابة الدائمة (تنجو من إخفاق localStorage عبر
+    // الكوكي) أو قرار الموافقة القديم. أيّهما موجود ⇒ لا يُعاد الشريط.
+    if (!hasSeenStorageNotice() && !hasDecidedCookieConsent()) setOpen(true);
   }, []);
 
   if (!open) return null;
 
   const continueNecessary = () => {
+    // الوسم *قبل* الإغلاق — فلا نافذة تُغلق بلا حالة محفوظة
+    markStorageNoticeSeen();
     writeCookieConsent({ preferences: true, analytics: false });
     setOpen(false);
   };

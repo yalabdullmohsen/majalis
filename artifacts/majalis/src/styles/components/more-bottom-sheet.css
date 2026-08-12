@@ -2,6 +2,22 @@
  * يغلب طبقات m2030/index/final-release المتعارضة للشيت.
  */
 
+/* الورقة كانت تنتهي 16px فوق حدّ الشاشة، أي *فوق* الشريط السفلي (64px +
+   safe-area): فزرّ «إغلاق» المثبّت في ذيل الورقة يزاحم تبويبات التنقّل
+   ويصير غير واضح أي منهما يُلمس. الحل: ترفع الورقة بارتفاع الشريط السفلي
+   على مقاسات الجوال، فيبقى الشريط ظاهرًا وقابلًا للّمس والإغلاق فوقه. */
+@media (max-width: 879px) {
+  .app-sheet.bottom-sheet--services,
+  .bottom-sheet.bottom-sheet--services {
+    margin-block-end: var(--bottom-nav-total, calc(64px + var(--inset-bottom, 0px)));
+    /* لا يتجاوز ارتفاع الورقة المساحة المتبقية فوق الشريط السفلي */
+    max-height: min(
+      85svh,
+      calc(100dvh - var(--inset-top, 0px) - var(--bottom-nav-total, 64px) - 0.75rem)
+    );
+  }
+}
+
 .bottom-sheet-overlay {
   position: fixed;
   inset: 0;

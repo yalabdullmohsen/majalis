@@ -18,12 +18,15 @@ import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/
 import { refreshQuranAudioRemoteConfig } from "./lib/quran-audio-remote-config";
 import { armSplashAutoHide } from "./lib/splash-screen";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
+import { initOnboardingState } from "./lib/onboarding-state";
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
 import "./app/styles/theme.css";
 import "./styles/components/page-hero.css";
 import "./styles/components/hub-card.css";
 // Majlisilm 2030 + طبقات الأساس (تُبقى كما هي — لا حذف في هذا الـPR)
 import "./styles/brand-v4.css";
+// أزواج (سطح ← لون فوقه) — يشتق من brand-v4 ويجب أن يليه مباشرة
+import "./styles/tokens.css";
 import "./index.css";
 import "./styles/design-system.css";
 import "./styles/components/instant-interaction.css";
@@ -92,6 +95,11 @@ async function mount() {
 
   // داخل Capacitor: ألغِ SW/CacheStorage القديمة قبل أول رسم حتى لا تُخدم أصول عتيقة.
   await purgeNativeWebRuntimeCaches();
+
+  // بوابة التشغيل الأول: ترحيل المفاتيح القديمة وتثبيت الإصدار الكبير قبل
+  // أول رسم — وإلا قرأت المكوّنات حالة غير مُرحَّلة فأعادت عرض التهيئة.
+  // idempotent: تكرار الاستدعاء بلا أثر.
+  initOnboardingState();
 
   // Render immediately — do not block the shell on Supabase bootstrap.
   createRoot(document.getElementById("root")!).render(

@@ -1674,6 +1674,61 @@ hr.decorative,
   font-weight: 600;
 }
 
+/* ── حبّة «مضى على أذان …» ─────────────────────────────────────────────
+   كانت ‎.hcp-since-pill*‎ و‎.hcp-next-hint‎ بلا *أيّ* قاعدة CSS في المستودع:
+   عناصر مرسومة غير منسّقة، وشريط التقدّم ‎--hcp-bar-w‎ يُضبط في JSX ولا
+   يستهلكه أحد فلا يُرسم أبدًا. والنص كان يرث لون
+   ‎.hcp-strip__countdown--elapsed‎ (أخضر غامق) — فحين رُكّبت الحبّة على سطح
+   أخضر ظهر الوقت داكنًا على أخضر.
+   الآن: سطح علامة صريح + ‎--on-brand‎، والزوج لا يُفصل.               */
+.hcp-since-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: var(--surface-brand-solid, #1e5f4b);
+  color: var(--on-brand, #ffffff);
+  border: 1px solid var(--on-brand-hairline, rgba(255, 255, 255, 0.22));
+  isolation: isolate;
+}
+
+.hcp-since-pill__text {
+  position: relative;
+  z-index: 1;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+/* شريط تقدّم فترة السماح — يستهلك --hcp-bar-w أخيرًا */
+.hcp-since-pill__bar {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  z-index: 0;
+  height: 2px;
+  width: var(--hcp-bar-w, 0%);
+  background: var(--on-brand, #ffffff);
+  opacity: 0.55;
+  transition: width 1s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hcp-since-pill__bar { transition: none; }
+}
+
+.hcp-next-hint {
+  margin-inline-start: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-2, #3e3a35);
+  font-variant-numeric: tabular-nums;
+}
+
 /* ═══════════════════════════════════════════════════════
    Tasbih — SVG Progress Ring Counter
    ═══════════════════════════════════════════════════════ */
