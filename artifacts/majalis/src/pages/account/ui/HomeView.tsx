@@ -13,7 +13,6 @@ import { HomeLocalResumeCard } from "@/components/home/HomeLocalResumeCard";
 import { HomeUniversalSearch } from "@/components/home/HomeUniversalSearch";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { FridayBanner } from "@/components/FridayBanner";
-import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { toArabicDigits } from "@/lib/utils";
 import { PageHero } from "@/components/ui/PageHero";
@@ -117,28 +116,8 @@ export default function HomePage() {
   }, [user?.id]);
 
   const visibleWidgets = visibleWidgetOrder(homePrefs);
-  const restWidgetOrder = visibleWidgets.filter((id) => id !== "lessons" && id !== "prayer" && id !== "continue");
-
-  const [heroPrayers, setHeroPrayers] = useState<PrayerTimesPayload | null>(null);
-  useEffect(() => {
-    fetchPrayerTimes().then(setHeroPrayers).catch(() => {});
-  }, []);
-  const [heroCountdown, setHeroCountdown] = useState<{ name: string; hms: string; progress: number } | null>(null);
-  useEffect(() => {
-    if (!heroPrayers?.prayers?.length) return;
-    const tick = () => {
-      const cd = computePrayerCountdown(heroPrayers.prayers);
-      const inGrace = cd.sinceSeconds != null;
-      const name = inGrace && cd.graceNextSlot ? cd.graceNextSlot.name : cd.next?.name;
-      const hms = inGrace && cd.graceNextHms ? cd.graceNextHms : cd.remainingHms;
-      const remaining = Math.max(0, Math.round((cd.remainingMs ?? 0) / 1000));
-      const progress = Math.max(8, Math.min(92, 100 - Math.round((remaining / (6 * 3600)) * 100)));
-      if (name && hms) setHeroCountdown({ name, hms, progress });
-    };
-    tick();
-    const t = setInterval(tick, 1000);
-    return () => clearInterval(t);
-  }, [heroPrayers]);
+  // lessons + continue لهما أقسام مخصّصة أعلاه؛ الباقي (بما فيها الصلاة) في الأسفل
+  const restWidgetOrder = visibleWidgets.filter((id) => id !== "lessons" && id !== "continue");
 
   useEffect(() => {
     applyPageSeo({
@@ -173,17 +152,12 @@ export default function HomePage() {
         title="المجلس العلمي"
         description={dailyCtx.greeting}
         actions={
-          <>
-            <Link
-              href={isFirstVisit ? "/start-here" : continueHref}
-              className="mj-btn m2030-btn m2030-btn--primary"
-            >
-              {isFirstVisit ? "ابدأ من هنا" : "تابع التصفح"}
-            </Link>
-            <Link href="/learning/paths" className="mj-btn m2030-btn m2030-btn--ghost">
-              المسارات العلمية
-            </Link>
-          </>
+          <Link
+            href={isFirstVisit ? "/start-here" : continueHref}
+            className="mj-btn m2030-btn m2030-btn--primary"
+          >
+            {isFirstVisit ? "ابدأ من هنا" : "تابع التصفح"}
+          </Link>
         }
       />
 
@@ -194,10 +168,7 @@ export default function HomePage() {
       {visibleWidgets.includes("lessons") && (
         <section className="m2030-band m2030-band--sage" aria-label="دروس اليوم">
           <div className="m2030-band__head">
-            <div>
-              <h2 className="m2030-band__title">اليوم في المنصة</h2>
-              <p className="m2030-band__sub">دروس ودورات قادمة</p>
-            </div>
+            <h2 className="m2030-band__title">دروس اليوم</h2>
             <Link href="/lessons" className="m2030-band__link">كل الدروس</Link>
           </div>
           <SafeHomeSection name="lessons">
@@ -207,28 +178,9 @@ export default function HomePage() {
         </section>
       )}
 
-      {heroCountdown && (
-        <section className="m2030-band" aria-label="ملخص الصلاة">
-          <Link
-            href="/prayer-times"
-            className="m2030-prayer"
-            style={{ ["--p" as string]: String(heroCountdown.progress) }}
-          >
-            <div className="m2030-prayer__ring" aria-hidden="true">
-              <div className="m2030-prayer__ring-inner">صلاة</div>
-            </div>
-            <div>
-              <p className="m2030-prayer__name">{heroCountdown.name}</p>
-              <p className="m2030-prayer__time">بعد {toArabicDigits(heroCountdown.hms)}</p>
-              <p className="m2030-prayer__cta">عرض مواقيت اليوم ←</p>
-            </div>
-          </Link>
-        </section>
-      )}
-
       <section className="m2030-band" aria-label="متابعة القراءة والاستماع">
         <div className="m2030-band__head">
-          <h2 className="m2030-band__title">متابعة القراءة / الاستماع</h2>
+          <h2 className="m2030-band__title">متابعة</h2>
         </div>
         <div className="m2030-panel mj-card mj-card--raised">
           <SafeHomeSection name="local-resume">
@@ -242,10 +194,7 @@ export default function HomePage() {
 
       <section className="m2030-band m2030-band--sage" aria-label="إجراءات سريعة">
         <div className="m2030-band__head">
-          <div>
-            <h2 className="m2030-band__title">وصول سريع</h2>
-            <p className="m2030-band__sub">مسارات يومية بلا ازدحام</p>
-          </div>
+          <h2 className="m2030-band__title">وصول سريع</h2>
         </div>
         <div className="m2030-quick">
           {QUICK_LINKS.map(({ href, Icon: Ico, label, desc }) => (
@@ -270,10 +219,7 @@ export default function HomePage() {
 
       <section className="m2030-band" aria-label="أقسام علمية">
         <div className="m2030-band__head">
-          <div>
-            <h2 className="m2030-band__title">بوابات العلم</h2>
-            <p className="m2030-band__sub">محاور شرعية منظمة</p>
-          </div>
+          <h2 className="m2030-band__title">بوابات العلم</h2>
         </div>
         <div className="m2030-featured">
           {FEATURED_CATS.map(({ href, title, desc, cta, Icon }) => (

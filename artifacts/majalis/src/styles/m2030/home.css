@@ -18,12 +18,32 @@
   display: block;
   justify-content: unset;
   padding:
-    calc(0.55rem + var(--inset-top))
+    calc(0.35rem + var(--inset-top))
     var(--m2030-pad, clamp(0.85rem, 3.5vw, 1.35rem))
-    0.75rem;
+    0.45rem;
   overflow: hidden;
   color: var(--mj-ink);
   background: var(--mj-bg);
+}
+
+/* هيرو الرئيسية: كثافة أقل — عنوان + تحية + زر واحد */
+.home-page-hero .page-hero-mj__content {
+  gap: 0.4rem;
+  max-width: 28rem;
+}
+.home-page-hero .page-hero-mj__title {
+  font-size: clamp(1.35rem, 4.2vw, 1.75rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.home-page-hero .page-hero-mj__desc {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  max-width: 22rem;
+}
+.home-page-hero .page-hero-mj__actions {
+  margin-block-start: 0.15rem;
 }
 
 .m2030-hero__pattern,
@@ -93,7 +113,7 @@
 }
 
 .m2030-band {
-  padding: 0.95rem var(--m2030-pad);
+  padding: 0.75rem var(--m2030-pad);
 }
 
 .m2030-band--sage {
