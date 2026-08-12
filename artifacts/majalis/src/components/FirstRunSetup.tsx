@@ -1,7 +1,11 @@
 import { useMemo, useState } from "react";
 import {
+  getFirstRunResumeStep,
   isFirstRunSetupPending,
   markFirstRunSetupDone,
+  markPreferencesStepDone,
+  markRemindersStepDone,
+  markWelcomeStepDone,
 } from "@/lib/first-run-setup";
 import {
   getFeaturedReciters,
@@ -38,12 +42,15 @@ function shouldSkipFirstRunSetup(): boolean {
 /**
  * تهيئة تشغيل أول اختيارية — ليست بوابة إقلاع.
  * الاسم FirstRunSetup مقصود لتفادي Onboarding/WelcomeScreen في اختبارات الإقلاع.
+ *
+ * كل زر (ابدأ / متابعة / تخطّي / إنهاء) يوسم الحالة *قبل* إغلاق أو الانتقال،
+ * حتى لا يعيد reload أو فتح التطبيق النوافذ بعد التفاعل.
  */
 export function FirstRunSetup() {
   const [open, setOpen] = useState(
     () => !shouldSkipFirstRunSetup() && isFirstRunSetupPending(),
   );
-  const [step, setStep] = useState<Step>(0);
+  const [step, setStep] = useState<Step>(() => getFirstRunResumeStep());
   const [reciterId, setReciterId] = useState(loadReciterId);
   const [tafsirId, setTafsirId] = useState(readStoredTafsirEdition);
   const { preferences, updatePreferences } = useUserPreferences();
@@ -59,22 +66,28 @@ export function FirstRunSetup() {
 
   if (!open) return null;
 
-  const finish = (skipped: boolean) => {
+  const closeFully = (skipped: boolean) => {
+    // الوسم أولًا — قبل أي إغلاق أو تنقّل — حتى يصمد عبر reload فوري
     markFirstRunSetupDone(skipped);
     setOpen(false);
   };
 
-  const skip = () => finish(true);
+  const skip = () => closeFully(true);
 
-  const nextFromWelcome = () => setStep(1);
+  const nextFromWelcome = () => {
+    markWelcomeStepDone();
+    setStep(1);
+  };
 
   const nextFromPrefs = () => {
     saveReciterId(reciterId);
     persistTafsirEdition(tafsirId);
+    markPreferencesStepDone(false);
     setStep(2);
   };
 
   const completeReminders = () => {
+    // تفضيل محلي فقط — بلا طلب إذن نظام هنا (الإذن لاحقًا من الإعدادات)
     updatePreferences({
       lessonNotifications: remindersOn,
       contentNotifications: remindersOn,
@@ -82,7 +95,9 @@ export function FirstRunSetup() {
       lectureNotifications: remindersOn,
       updateNotifications: remindersOn,
     });
-    finish(false);
+    markRemindersStepDone();
+    markFirstRunSetupDone(false);
+    setOpen(false);
   };
 
   return (
@@ -163,7 +178,7 @@ export function FirstRunSetup() {
           <div className="frs-step">
             <h2 id="frs-title">التذكيرات (اختياري)</h2>
             <p className="frs-lead">
-              فعّل تفضيل التذكيرات محليًا فقط. لن نطلب إذن الإشعارات الآن — يُطلب عند أول استخدام فعلي مع سبب واضح.
+              احفظ التفضيل محليًا فقط. إذن النظام يُطلب لاحقًا من الإعدادات عند التفعيل الصريح — ليس الآن.
             </p>
             <div className="frs-toggle">
               <div>

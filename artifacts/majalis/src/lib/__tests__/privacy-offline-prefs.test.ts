@@ -27,7 +27,11 @@ assert.match(outboxSrc, /Last-Write-Wins|updatedAt/, "LWW / updatedAt strategy")
 assert.match(outboxSrc, /shouldDeferHeavySync/, "data saver defer helper");
 
 const appSrc = readFileSync(join(appRoot, "src/App.tsx"), "utf8");
-assert.match(appSrc, /CookieConsentBanner/, "consent banner mounted");
+assert.match(appSrc, /CookieConsentBanner/, "consent bootstrap mounted (silent)");
 assert.match(appSrc, /privacy-center/, "privacy center route");
+
+const bannerSrc = readFileSync(join(appRoot, "src/components/CookieConsentBanner.tsx"), "utf8");
+assert.match(bannerSrc, /return null/, "no first-run privacy banner UI");
+assert.match(bannerSrc, /markStorageNoticeSeen/, "storage notice marked once");
 
 console.log("privacy-offline-prefs: OK");
