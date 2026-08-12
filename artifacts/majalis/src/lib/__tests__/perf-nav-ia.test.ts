@@ -12,19 +12,37 @@ import { HOME_CONTENT_HUB } from "@/lib/home-content-hub";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
 const groupIds = SERVICES_CENTER_GROUPS.map((g) => g.id);
-assert.deepEqual(groupIds, ["features", "content", "settings"], "هيكل المزيد ثلاثي");
-assert.equal(SERVICES_CENTER_GROUPS[0]?.title, "مميزات التطبيق");
-assert.equal(SERVICES_CENTER_GROUPS[1]?.title, "المحتوى والأقسام");
-assert.equal(SERVICES_CENTER_GROUPS[2]?.title, "الإعدادات والمساعدة");
+assert.deepEqual(groupIds, ["hubs", "features", "content", "settings"], "هيكل المزيد: أبواب ثم مميزات ثم محتوى ثم إعدادات");
+assert.equal(SERVICES_CENTER_GROUPS[0]?.title, "الأبواب الرئيسية");
+assert.equal(SERVICES_CENTER_GROUPS[0]?.layout, "featured");
+assert.equal(SERVICES_CENTER_GROUPS[1]?.title, "مميزات التطبيق");
+assert.equal(SERVICES_CENTER_GROUPS[2]?.title, "المحتوى والأقسام");
+assert.equal(SERVICES_CENTER_GROUPS[3]?.title, "الإعدادات والمساعدة");
 
-const contentHrefs = SERVICES_CENTER_GROUPS[1]!.items
+const hubLabels = SERVICES_CENTER_GROUPS[0]!.items.map((i) => i.label);
+assert.deepEqual(
+  hubLabels,
+  [
+    "قصص الأنبياء والأمم السابقة",
+    "السيرة النبوية والتاريخ الإسلامي",
+    "التفسير وعلوم القرآن",
+    "اكتشف الإسلام وسين جيم",
+  ],
+  "ترتيب الأبواب المميزة ثابت",
+);
+const hubHrefs = SERVICES_CENTER_GROUPS[0]!.items
+  .filter((i) => i.action.kind === "link")
+  .map((i) => (i.action as { href: string }).href);
+assert.deepEqual(hubHrefs, ["/prophets", "/seerah", "/quran-knowledge", "/discover-islam"]);
+
+const contentHrefs = SERVICES_CENTER_GROUPS[2]!.items
   .filter((i) => i.action.kind === "link")
   .map((i) => (i.action as { href: string }).href);
 assert.ok(contentHrefs.indexOf("/prophets") < contentHrefs.indexOf("/nations"), "قصص الأنبياء قبل الأمم");
 assert.ok(contentHrefs.includes("/quran/people"), "الذين ذكروا في القرآن في المحتوى");
 assert.ok(contentHrefs.includes("/start-here") && contentHrefs.includes("/learning/paths"));
 
-const settingsHrefs = SERVICES_CENTER_GROUPS[2]!.items
+const settingsHrefs = SERVICES_CENTER_GROUPS[3]!.items
   .filter((i) => i.action.kind === "link")
   .map((i) => (i.action as { href: string }).href);
 for (const href of ["/about-us", "/about", "/privacy", "/delete-account", "/support"]) {

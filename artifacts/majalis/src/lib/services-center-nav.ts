@@ -49,6 +49,8 @@ export type ServicesCenterAction =
 export type ServicesCenterItem = {
   id: string;
   label: string;
+  /** وصف قصير يظهر تحت العنوان في مربعات الأبواب المميزة */
+  subtitle?: string;
   keywords?: string[];
   Icon: LucideIcon;
   action: ServicesCenterAction;
@@ -57,11 +59,50 @@ export type ServicesCenterItem = {
 export type ServicesCenterGroup = {
   id: string;
   title: string;
-  layout?: "quick" | "list";
+  layout?: "quick" | "list" | "featured";
   items: ServicesCenterItem[];
 };
 
 export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
+  {
+    id: "hubs",
+    title: "الأبواب الرئيسية",
+    layout: "featured",
+    items: [
+      {
+        id: "hub-prophets-nations",
+        label: "قصص الأنبياء والأمم السابقة",
+        subtitle: "الأنبياء · عاد وثمود وفرعون",
+        keywords: ["أنبياء", "أمم", "قصص", "عاد", "ثمود"],
+        Icon: BookOpen,
+        action: { kind: "link", href: "/prophets" },
+      },
+      {
+        id: "hub-seerah-history",
+        label: "السيرة النبوية والتاريخ الإسلامي",
+        subtitle: "السيرة · الحضارة والتاريخ",
+        keywords: ["سيرة", "تاريخ", "حضارة"],
+        Icon: BookA,
+        action: { kind: "link", href: "/seerah" },
+      },
+      {
+        id: "hub-tafsir-ulum",
+        label: "التفسير وعلوم القرآن",
+        subtitle: "تفسير · علوم · فهرس",
+        keywords: ["تفسير", "علوم قرآن", "قرآن"],
+        Icon: BookMarked,
+        action: { kind: "link", href: "/quran-knowledge" },
+      },
+      {
+        id: "hub-discover-quiz",
+        label: "اكتشف الإسلام وسين جيم",
+        subtitle: "للمسلم الجديد · مسابقة",
+        keywords: ["اكتشف", "دعوة", "سين جيم", "مسابقة", "quiz"],
+        Icon: Compass,
+        action: { kind: "link", href: "/discover-islam" },
+      },
+    ],
+  },
   {
     id: "features",
     title: "مميزات التطبيق",
