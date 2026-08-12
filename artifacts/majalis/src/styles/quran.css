@@ -2608,7 +2608,8 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   max-height: none;
   width: 100%;
   margin: 0;
-  padding: 0;
+  /* هامش جانبي للحبر — لا تُصفَّر (كانت padding:0 تسبب تجاوزًا أفقيًا) */
+  padding: 0 8px;
   pointer-events: auto;
   overflow: visible;
 }
@@ -2668,7 +2669,6 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   color: color-mix(in srgb, var(--color-mushaf-gold, #B08D57) 72%, transparent);
   pointer-events: none;
   z-index: 1;
-  font-size: 0.85em;
 }
 .mpv-ayah-footer__meta:empty {
   visibility: hidden;

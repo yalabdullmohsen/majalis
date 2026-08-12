@@ -110,6 +110,48 @@ function collectSizingEls(map: Map<string | number, HTMLElement>): HTMLElement[]
   return out;
 }
 
+/** عرض محتوى السطر عند sx=1 — للكشف عن الحاجة لضغط أفقي بلا تغيير S. */
+function measureLineContentWidth(el: HTMLElement): number {
+  const prevSx = el.style.getPropertyValue("--mf2-line-sx");
+  const prevW = el.style.width;
+  const prevJustify = el.style.justifyContent;
+  el.style.setProperty("--mf2-line-sx", "1");
+  el.style.width = "max-content";
+  el.style.justifyContent = "flex-start";
+  const run = el.querySelector(".mf2-line__run");
+  let w = 0;
+  if (run instanceof HTMLElement) {
+    const prevDisplay = run.style.display;
+    const prevRunW = run.style.width;
+    const prevRunJ = run.style.justifyContent;
+    run.style.display = "inline-flex";
+    run.style.width = "max-content";
+    run.style.justifyContent = "flex-start";
+    w = run.getBoundingClientRect().width;
+    run.style.display = prevDisplay;
+    run.style.width = prevRunW;
+    run.style.justifyContent = prevRunJ;
+  } else {
+    const words = el.querySelectorAll(".mf2-word, .mf2-ayah-group");
+    if (words.length === 0) w = el.scrollWidth;
+    else {
+      let minL = Infinity;
+      let maxR = -Infinity;
+      for (const node of words) {
+        const r = (node as HTMLElement).getBoundingClientRect();
+        minL = Math.min(minL, r.left);
+        maxR = Math.max(maxR, r.right);
+      }
+      w = Number.isFinite(minL) ? Math.max(0, maxR - minL) : 0;
+    }
+  }
+  el.style.width = prevW;
+  el.style.justifyContent = prevJustify;
+  if (prevSx) el.style.setProperty("--mf2-line-sx", prevSx);
+  else el.style.removeProperty("--mf2-line-sx");
+  return w;
+}
+
 function applyTempFontSize(els: HTMLElement[], fontSizePx: number | ""): void {
   for (const el of els) {
     el.style.fontSize = fontSizePx === "" ? "" : `${fontSizePx}px`;
@@ -318,12 +360,11 @@ export function MushafPageV2({
             ),
           )
         : Math.max(2, MUSHAF_GRID.sideMarginPx || 2);
-      void availableWidth;
       void sideClear;
       void sizingEls;
 
       const size = BASE_FONT;
-      /* حجم خط موحّد لكل الصفحات — مخزّن في MUSHAF_SPEC / mushaf-baseline — بلا تحجيم لكل صفحة */
+      /* حجم خط موحّد لكل الصفحات — بلا تحجيم S لكل صفحة */
       const bound = "flow-grid-fixed-S" as const;
       applyTempFontSize(sizingEls, "");
       for (const el of sizingEls) el.style.overflowX = "";
@@ -335,17 +376,29 @@ export function MushafPageV2({
         `${(container.clientHeight * (1 / MUSHAF_GRID.slotCount)).toFixed(2)}px`,
       );
 
-      /* توزيع مسافات بين الكلمات دون تغيير S — أسطر غير مركزية */
+      const fitWidth = Math.max(8, availableWidth - sideClear * 2);
+
+      /* توزيع مسافات؛ إن تجاوز المحتوى العمود: ضغط أفقي scaleX بلا تغيير S */
       for (const [ln, el] of ayahLineRefs.current) {
-        el.style.removeProperty("--mf2-line-sx");
         el.style.width = "100%";
+        el.style.maxWidth = "100%";
+        el.style.minWidth = "0";
         if (noStretchLines.has(ln) || isOpening) {
+          el.style.removeProperty("--mf2-line-sx");
           el.style.justifyContent = "center";
           el.dataset.centered = "1";
           continue;
         }
         el.style.justifyContent = "space-between";
         el.dataset.centered = "0";
+        el.style.removeProperty("--mf2-line-sx");
+        /* قياس بعد التخطيط: scrollWidth يكشف تجاوز flex */
+        void el.offsetWidth;
+        const natural = Math.max(measureLineContentWidth(el), el.scrollWidth);
+        if (natural > fitWidth + 0.5) {
+          const sx = Math.min(1, fitWidth / natural);
+          el.style.setProperty("--mf2-line-sx", sx.toFixed(5));
+        }
       }
 
       container.dataset.mf2Size = size.toFixed(2);

@@ -56,7 +56,7 @@ html[data-theme="dark"] .mf2-frame {
   grid-template-rows: repeat(15, minmax(0, 1fr));
   align-content: stretch;
   margin: 0;
-  padding: 0 2px;
+  padding: 0 8px;
   transition: opacity .2s ease;
   --mf2-lh: 1.35;
   --mf2-slot-h-pct: 7.2;
@@ -71,6 +71,8 @@ html[data-theme="dark"] .mf2-frame {
   pointer-events: auto;
   overflow: visible;
   contain: none;
+  min-width: 0;
+  max-width: 100%;
 }
 .mf2-grid-slot--line .mf2-line {
   width: 100%;
@@ -82,7 +84,8 @@ html[data-theme="dark"] .mf2-frame {
 .mf2-lines--qpc-contiguous .mf2-grid-slot--line .mf2-line {
   width: 100%;
   max-width: 100%;
-  transform: none;
+  transform: scaleX(var(--mf2-line-sx, 1));
+  transform-origin: center center;
 }
 .mf2-grid-slot--banner .mf2-surah-header,
 .mf2-grid-slot--banner .mf2-surah-header__frame {
@@ -157,9 +160,9 @@ html[data-theme="dark"] .mf2-frame {
   flex: 0 0 auto;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
   box-sizing: border-box;
   min-height: 0;
-  min-width: 0;
   height: 100%;
   display: flex;
   align-items: center;
@@ -180,16 +183,18 @@ html[data-theme="dark"] .mf2-frame {
   overflow: visible;
   clip-path: none;
   contain: none;
-  transform: none;
+  transform: scaleX(var(--mf2-line-sx, 1));
+  transform-origin: center center;
 }
-/* سطر آيات QPC: كلمات في تدفق flex — بلا scaleX */
+/* سطر آيات QPC: كلمات في تدفق flex — scaleX اختياري عند تجاوز العرض */
 .mf2-lines--qpc-contiguous .mf2-line {
   unicode-bidi: plaintext;
   display: flex;
   width: 100%;
   max-width: 100%;
   margin-inline: 0;
-  transform: none;
+  transform: scaleX(var(--mf2-line-sx, 1));
+  transform-origin: center center;
 }
 .mf2-line__run {
   display: flex;

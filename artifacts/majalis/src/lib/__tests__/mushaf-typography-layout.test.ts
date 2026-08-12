@@ -115,7 +115,8 @@ assert.match(pageComp, /measurement-exclusions|metric-only/, "استثناءات
 assert.equal(/SHORT_FILL_RATIO/.test(pageComp), false, "بلا SHORT_FILL_RATIO / fit لكل سطر");
 assert.match(pageComp, /glyphText/, "مجسم الآية في دقة QPC");
 assert.match(pageComp, /drawnSurahTitleText/, "شارة السورة بالرسم العثماني");
-assert.equal(/scaleX\(var\(--mf2-line-sx/.test(mushafV2), false, "بلا scaleX لتسوية العرض");
+assert.match(pageComp, /--mf2-line-sx|mf2-line-sx/, "ضغط أفقي اختياري عند تجاوز العمود بلا تغيير S");
+assert.match(mushafV2, /scaleX\(var\(--mf2-line-sx/, "scaleX مشروط عبر --mf2-line-sx");
 assert.match(pageComp, /data-mf2-bind|dataset\.mf2Bind|flow-grid-fixed-S/, "تشخيص قيد التحجيم");
 assert.match(pageComp, /pageFont\.failed|useUnicodeSafe/, "انتظار خط QPC بلا fallback نظام");
 assert.equal(/OPENING_BANNER_TOP_PCT/.test(pageComp), false, "بلا OPENING_BANNER_TOP_PCT");

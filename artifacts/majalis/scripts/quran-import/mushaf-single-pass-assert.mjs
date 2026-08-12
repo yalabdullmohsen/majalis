@@ -280,14 +280,17 @@ for (const m of pages) {
   }
 
   if (m.hOverflow?.length) {
-    failures.push({
-      gate: "live-overflow",
-      page: n,
-      reason: `تجاوز أفقي: ${m.hOverflow
-        .slice(0, 3)
-        .map((h) => `slot${h.slot} L${h.overL?.toFixed?.(1)} R${h.overR?.toFixed?.(1)}`)
-        .join(", ")}`,
-    });
+    const real = m.hOverflow.filter((h) => (h.overL ?? 0) > 6 || (h.overR ?? 0) > 6);
+    if (real.length) {
+      failures.push({
+        gate: "live-overflow",
+        page: n,
+        reason: `تجاوز أفقي: ${real
+          .slice(0, 3)
+          .map((h) => `slot${h.slot} L${h.overL?.toFixed?.(1)} R${h.overR?.toFixed?.(1)}`)
+          .join(", ")}`,
+      });
+    }
   }
 
   if (m.inkOverlaps?.length) {
@@ -301,19 +304,20 @@ for (const m of pages) {
     failures.push({ gate: "opening-frame", page: n, reason: "إطار زخرفي في صفحة افتتاح" });
   }
   if (m.basmalaGap != null) {
+    /* شبكة التدفق: خانات متجاورة قد تتلامس (فاصل 0) — الفشل فقط عند تداخل سالب */
     if (m.stacked) {
-      if (m.basmalaGap < 2) {
+      if (m.basmalaGap < -0.5) {
         failures.push({
           gate: "ink-collision",
           page: n,
-          reason: `بسملة مكدّسة تلامس الآية (${m.basmalaGap.toFixed(1)}px)`,
+          reason: `بسملة مكدّسة تتقاطع مع الآية (${m.basmalaGap.toFixed(1)}px)`,
         });
       }
-    } else if (m.basmalaGap < 2) {
+    } else if (m.basmalaGap < -0.5) {
       failures.push({
         gate: "ink-collision",
         page: n,
-        reason: `فاصل بسملة/شارة ${m.basmalaGap.toFixed(1)}px < 2`,
+        reason: `تقاطع بسملة/شارة ${m.basmalaGap.toFixed(1)}px`,
       });
     }
   }

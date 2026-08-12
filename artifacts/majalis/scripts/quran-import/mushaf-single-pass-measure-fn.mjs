@@ -111,13 +111,16 @@ window.__mushafSinglePassMeasure = function __mushafSinglePassMeasure(expectedPa
     }
   }
 
-  const sideClear = 2;
+  const padL = Number.parseFloat(getComputedStyle(root).paddingLeft) || 0;
+  const padR = Number.parseFloat(getComputedStyle(root).paddingRight) || 0;
+  /* هامش أمان داخل الحشو — التجاوز = خروج عن صندوق .mf2-lines لا عن الحشو */
+  const sideClear = 0.5;
   const hOverflow = [];
   for (const ln of lines) {
     if (!ln.ink || !ln.hasText) continue;
-    const overL = Math.max(0, cr.left + sideClear - ln.ink.left);
+    const overL = Math.max(0, (cr.left + sideClear) - ln.ink.left);
     const overR = Math.max(0, ln.ink.right - (cr.right - sideClear));
-    if (overL > 0.35 || overR > 0.35) hOverflow.push({ slot: ln.slot, overL, overR });
+    if (overL > 0.35 || overR > 0.35) hOverflow.push({ slot: ln.slot, overL, overR, padL, padR });
   }
 
   const bannerSlot = root.querySelector(".mf2-grid-slot--banner");
