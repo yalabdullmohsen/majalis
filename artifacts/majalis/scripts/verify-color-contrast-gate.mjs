@@ -62,8 +62,8 @@ const ASSERTIONS = [
   // "مواسم التعلّم" — شارة عنوان بقسم: نص على خلفية --elite-forest العميقة
   // (تبقى #143F35 في الوضع الليلي؛ لا تُسطَّح إلى نعناعي).
   { route: "/", selector: ".lsw-section .ds-section__title", mode: "dark", min: 3 },
-  // ── أبطال الصفحات (2026-08): بطل الرئيسية يعرض title + greeting + أزرار؛
-  // شعار «المعرفة الإسلامية الرقمية» انتقل لشريط الترويسة (.navbar-v3__tagline).
+  // ── أبطال الصفحات (2026-08): بطل الرئيسية يعرض title + تحية + زر؛
+  // شعار «المجلس العلمي» في شريط الترويسة (.navbar-v3__tagline).
   { route: "/", selector: ".page-hero-mj__title", mode: "light", min: 3 },
   { route: "/", selector: ".navbar-v3__tagline", mode: "light", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__desc", mode: "light", min: 4.5 },

@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { useId, useMemo, useState, type MouseEvent } from "react";
+import { useCallback, useId, useMemo, useState, type MouseEvent } from "react";
 import { ChevronLeft, Moon, Search, Sun } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
@@ -38,6 +38,11 @@ export function MoreBottomSheet({ open, onClose }: Props) {
   const searchId = useId();
 
   const groups = useMemo(() => filterServicesCenterGroups(query), [query]);
+
+  const handleSheetClose = useCallback(() => {
+    setQuery("");
+    onClose();
+  }, [onClose]);
 
   const onSoonClick = (label: string) => {
     onClose();
@@ -205,10 +210,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
   return (
     <AppBottomSheet
       open={open}
-      onClose={() => {
-        setQuery("");
-        onClose();
-      }}
+      onClose={handleSheetClose}
       title="قائمة المزيد"
       snap="full"
       closeLabel="إغلاق"

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { LayoutGrid } from "lucide-react";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
@@ -10,6 +10,7 @@ import { MoreBottomSheet } from "./MoreBottomSheet";
 
 const HREF_TO_ID: Record<string, BottomTabId> = {
   "/mushaf": "quran",
+  "/quran-hub": "quran",
   "/quran-knowledge": "quran",
   "/lessons": "lessons",
   "/prayer-times": "prayer",
@@ -17,6 +18,7 @@ const HREF_TO_ID: Record<string, BottomTabId> = {
 };
 
 const TAB_PREFETCH: Record<string, () => Promise<unknown>> = {
+  "/quran-hub": () => import("@/pages/quran/QuranHubPage"),
   "/mushaf": () => import("@/pages/quran/ui/MushafPageView"),
   "/quran-knowledge": () => import("@/pages/quran/QuranKnowledgeHubPage"),
   "/lessons": () => import("@/pages/lessons/LessonsPage"),
@@ -31,8 +33,15 @@ export function BottomNavBar() {
   const [moreOpen, setMoreOpen] = useState(false);
   const prefetched = useRef(new Set<string>());
 
+  const closeMore = useCallback(() => setMoreOpen(false), []);
+
+  // أي تنقّل (تبويب سفلي أو رابط داخل الشيت) يغلق «المزيد» فورًا —
+  // يمنع بقاء body position:fixed بعد مغادرة الشيت.
+  useEffect(() => {
+    setMoreOpen(false);
+  }, [location]);
+
   const activeId = getActiveTab(location);
-  // اختيار أحادي: فتح شيت «المزيد» يلغي إضاءة التبويبات الأخرى
   const moreActive = moreOpen || activeId === "more";
 
   if (isImmersiveChromePath(location)) return null;
@@ -61,7 +70,10 @@ export function BottomNavBar() {
               onTouchStart={() => triggerPrefetch(href)}
               onMouseEnter={() => triggerPrefetch(href)}
               onFocus={() => triggerPrefetch(href)}
-              onClick={() => haptics.selection()}
+              onClick={() => {
+                closeMore();
+                haptics.selection();
+              }}
             >
               <span className="bottom-nav__tab-icon" aria-hidden="true">
                 <Icon size={20} strokeWidth={active ? 2.25 : 1.75} aria-hidden={true} />
@@ -76,7 +88,7 @@ export function BottomNavBar() {
           className={`bottom-nav__tab${moreActive ? " is-active" : ""}`}
           onClick={() => {
             haptics.selection();
-            setMoreOpen(true);
+            setMoreOpen((v) => !v);
           }}
           aria-label="المزيد"
           aria-haspopup="dialog"
@@ -90,7 +102,7 @@ export function BottomNavBar() {
         </button>
       </nav>
 
-      <MoreBottomSheet open={moreOpen} onClose={() => setMoreOpen(false)} />
+      <MoreBottomSheet open={moreOpen} onClose={closeMore} />
     </>
   );
 }

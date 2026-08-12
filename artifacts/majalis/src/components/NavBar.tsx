@@ -163,9 +163,9 @@ export default function NavBar() {
           <Link
             href="/"
             className="navbar-v3__tagline"
-            aria-label="المعرفة الإسلامية الرقمية — الرئيسية"
+            aria-label="المجلس العلمي — الرئيسية"
           >
-            المعرفة الإسلامية الرقمية
+            المجلس العلمي
           </Link>
 
           {/* Desktop tabs */}

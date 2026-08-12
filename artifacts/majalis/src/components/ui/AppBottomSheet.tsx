@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useEffect,
   useId,
   useRef,
@@ -26,6 +27,10 @@ type Props = {
 /**
  * شيت سفلي موحّد — خمس طرق إغلاق:
  * سحب لأسفل · خلفية · زر سفلي · Escape/رجوع أندرويد · سحب من حافة الشاشة.
+ *
+ * Lifecycle: `onClose` يُحفظ في ref حتى لا يُعاد تشغيل أثر القفل/التاريخ
+ * عند كل إعادة تصيير للأب (كانت تسبب سباق pushState/back وتجميد التنقّل
+ * بعد فتح «المزيد»).
  */
 export function AppBottomSheet({
   open,
@@ -49,12 +54,16 @@ export function AppBottomSheet({
   const historyPushed = useRef(false);
   const [dragOffset, setDragOffset] = useState(0);
   const closingRef = useRef(false);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+  const initialFocusRefStable = useRef(initialFocusRef);
+  initialFocusRefStable.current = initialFocusRef;
 
-  const requestClose = () => {
+  const requestClose = useCallback(() => {
     if (closingRef.current) return;
     closingRef.current = true;
-    onClose();
-  };
+    onCloseRef.current();
+  }, []);
 
   useEffect(() => {
     if (!open) {
@@ -75,7 +84,7 @@ export function AppBottomSheet({
     document.body.classList.add("app-sheet-open", "filter-sheet-open");
 
     /* لا تركّز حقول إدخال/بحث عند الفتح — يمنع فتح الكيبورد على الجوال. */
-    const requested = initialFocusRef?.current;
+    const requested = initialFocusRefStable.current?.current;
     const isTextField =
       requested instanceof HTMLInputElement ||
       requested instanceof HTMLTextAreaElement ||
@@ -130,15 +139,16 @@ export function AppBottomSheet({
       window.removeEventListener("popstate", onPop);
       if (historyPushed.current) {
         historyPushed.current = false;
-        // إن أُغلق الشيت بوسيلة أخرى غير زر الرجوع، أزل المدخل الاصطناعي
+        // استبدال المدخل بدل الرجوع في التاريخ حتى لا يتعارض مع تنقّل الموجّه
+        // أثناء بقاء الشيت مفتوحًا (سبب تجميد التبويبات السفلية).
         if (window.history.state && (window.history.state as { appSheet?: boolean }).appSheet) {
-          window.history.back();
+          window.history.replaceState(null, "");
         }
       }
       previouslyFocused.current?.focus?.({ preventScroll: true });
       closingRef.current = false;
     };
-  }, [open, onClose, initialFocusRef]);
+  }, [open, requestClose]);
 
   if (!open || typeof document === "undefined") return null;
 
