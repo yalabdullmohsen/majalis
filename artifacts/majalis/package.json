@@ -296,7 +296,7 @@
     "test:mushaf-page-completeness": "node scripts/quran-import/mushaf-page-completeness-gate.mjs",
     "test:first-run-setup": "node --import tsx src/lib/__tests__/first-run-setup-settings.test.ts",
     "native:strip-qpc-fonts": "node scripts/native-strip-qpc-fonts.mjs",
-    "test:qpc-font-pack": "node --import tsx src/lib/__tests__/qpc-font-pack.test.ts",
+    "test:qpc-font-pack": "node --import tsx src/lib/__tests__/qpc-font-pack.test.ts && node --import tsx src/lib/__tests__/qpc-font-banner-prod-gate.test.ts",
     "test:licenses": "node scripts/verify-licenses-gate.mjs"
   },
   "devDependencies": {
