@@ -23,17 +23,37 @@ const hubLabels = SERVICES_CENTER_GROUPS[0]!.items.map((i) => i.label);
 assert.deepEqual(
   hubLabels,
   [
+    "سين جيم",
     "قصص الأنبياء والأمم السابقة",
-    "السيرة النبوية والتاريخ الإسلامي",
-    "التفسير وعلوم القرآن",
-    "اكتشف الإسلام وسين جيم",
+    "الذين ذكروا في القرآن",
+    "التفسير",
+    "السيرة النبوية",
+    "اكتشف الإسلام",
+    "التاريخ الإسلامي",
   ],
-  "ترتيب الأبواب المميزة ثابت",
+  "ترتيب الأبواب المميزة السبعة ثابت",
 );
 const hubHrefs = SERVICES_CENTER_GROUPS[0]!.items
   .filter((i) => i.action.kind === "link")
   .map((i) => (i.action as { href: string }).href);
-assert.deepEqual(hubHrefs, ["/prophets", "/seerah", "/quran-knowledge", "/discover-islam"]);
+assert.deepEqual(hubHrefs, [
+  "/quiz",
+  "/prophets",
+  "/quran/people",
+  "/tafsir",
+  "/seerah",
+  "/discover-islam",
+  "/tarikh-islami",
+]);
+
+const moreSections = readFileSync(resolve(root, "features/more/moreSections.ts"), "utf8");
+assert.match(moreSections, /MORE_FEATURED_SECTIONS/, "مصدر واحد moreSections.ts");
+assert.match(moreSections, /tier: "featured"/, "الأبواب tier=featured");
+
+const app = readFileSync(resolve(root, "App.tsx"), "utf8");
+for (const href of hubHrefs) {
+  assert.ok(app.includes(`path="${href}"`), `مسار مسجّل في App: ${href}`);
+}
 
 const contentHrefs = SERVICES_CENTER_GROUPS[2]!.items
   .filter((i) => i.action.kind === "link")
