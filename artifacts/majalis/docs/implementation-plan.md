@@ -19,3 +19,5 @@
 5. `/knowledge-graph` → `KnowledgeGraphPage`
 6. `/more` صفحة فهرس حقيقية من `moreSections`
 7. بوابة اختبار: المسارات لا تُحوَّل للرئيسية
+
+| وثائق §٨ | كُتبت أوليًا | PERFORMANCE/ACCESSIBILITY/SEO/SECURITY/CONTENT_GOVERNANCE/RELEASE_READINESS |
