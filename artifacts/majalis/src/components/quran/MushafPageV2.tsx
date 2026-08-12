@@ -110,50 +110,6 @@ function collectSizingEls(map: Map<string | number, HTMLElement>): HTMLElement[]
   return out;
 }
 
-/** عرض المحتوى الجوهري للسطر (بلا scaleX وبلا عرض الحاوية 100%). */
-function measureLineContentWidth(el: HTMLElement): number {
-  el.style.setProperty("--mf2-line-sx", "1");
-  const run = el.querySelector(".mf2-line__run");
-  if (run instanceof HTMLElement) {
-    const prevDisplay = run.style.display;
-    const prevWidth = run.style.width;
-    run.style.display = "inline-block";
-    run.style.width = "max-content";
-    const w = run.getBoundingClientRect().width;
-    run.style.display = prevDisplay;
-    run.style.width = prevWidth;
-    return w;
-  }
-  const words = el.querySelectorAll(".mf2-word");
-  if (words.length === 0) return el.scrollWidth;
-  let minL = Infinity;
-  let maxR = -Infinity;
-  for (const node of words) {
-    const r = (node as HTMLElement).getBoundingClientRect();
-    minL = Math.min(minL, r.left);
-    maxR = Math.max(maxR, r.right);
-  }
-  return Number.isFinite(minL) ? Math.max(0, maxR - minL) : 0;
-}
-
-function measureWidest(els: HTMLElement[], fontSizePx: number): number {
-  let widest = 0;
-  for (const el of els) {
-    const prevOverflow = el.style.overflowX;
-    const prevSize = el.style.fontSize;
-    const prevSx = el.style.getPropertyValue("--mf2-line-sx");
-    el.style.overflowX = "visible";
-    el.style.fontSize = `${fontSizePx}px`;
-    el.style.setProperty("--mf2-line-sx", "1");
-    widest = Math.max(widest, measureLineContentWidth(el));
-    el.style.fontSize = prevSize;
-    el.style.overflowX = prevOverflow;
-    if (prevSx) el.style.setProperty("--mf2-line-sx", prevSx);
-    else el.style.removeProperty("--mf2-line-sx");
-  }
-  return widest;
-}
-
 function applyTempFontSize(els: HTMLElement[], fontSizePx: number | ""): void {
   for (const el of els) {
     el.style.fontSize = fontSizePx === "" ? "" : `${fontSizePx}px`;

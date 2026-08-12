@@ -84,14 +84,6 @@ html[data-theme="dark"] .mf2-frame {
   max-width: 100%;
   transform: none;
 }
-.mf2-line__run {
-  display: flex;
-  align-items: center;
-  justify-content: inherit;
-  width: 100%;
-  min-width: 0;
-  gap: 0;
-}
 .mf2-grid-slot--banner .mf2-surah-header,
 .mf2-grid-slot--banner .mf2-surah-header__frame {
   width: 100%;
@@ -103,12 +95,12 @@ html[data-theme="dark"] .mf2-frame {
   width: 100%;
   height: 100%;
 }
-/* الصفحتان الافتتاحيتان: ملاءمة عرض للآيات + بسملة مركزية بعرضها الطبيعي */
+/* الصفحتان الافتتاحيتان: أسطر مركزية بلا تمدد مسافات */
 .mf2-lines--opening .mf2-line {
-  text-align: start;
-  width: max-content;
-  max-width: none;
-  margin-inline: auto;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: 0;
 }
 .mf2-lines--opening.mf2-lines--qpc-contiguous .mf2-line {
   transform: none;
@@ -125,68 +117,57 @@ html[data-theme="dark"] .mf2-frame {
   transform: none !important;
   width: auto;
   max-width: 100%;
-  height: auto;
+  height: 100%;
   margin-inline: auto;
 }
 .mf2-lines--opening .mf2-grid-slot--line .mf2-line {
-  height: auto;
+  height: 100%;
 }
-/* آخر سطر سورة / سطر قصير بلا مطّ مفرط: عرض طبيعي مركزي */
+/* آخر سطر سورة / سطر قصير: مركزي بلا تمدد */
 .mf2-lines--opening .mf2-line--surah-end,
 .mf2-line--surah-end,
 .mf2-lines--opening .mf2-line--natural,
 .mf2-line--natural {
   transform: none !important;
-  width: max-content;
+  justify-content: center;
+  width: 100%;
   max-width: 100%;
-  margin-inline: auto;
+  margin-inline: 0;
   text-align: center;
 }
-.mf2-opening-frame {
-  position: absolute;
-  /* كتلة الصفحة: أعلى ٩٪ → أسفل ٩١٪ (ضمن بوابة ٨–١٠ / ٩٠–٩٢) */
-  top: 9%;
-  bottom: 9%;
-  left: 12px;
-  right: 12px;
-  z-index: 0;
-  pointer-events: none;
-  box-sizing: border-box;
+.mf2-opening-frame,
+.mf2-opening-frame__svg {
+  display: none !important;
 }
+
 .mf2-grid-slot--banner {
-  z-index: 1;
+  z-index: auto;
 }
 .mf2-grid-slot--basmala,
 .mf2-grid-slot--line {
-  z-index: 2;
+  z-index: auto;
 }
 .mf2-grid-slot--basmala,
 .mf2-grid-slot--basmala .mf2-bismillah {
   overflow: visible !important;
   clip-path: none !important;
 }
-.mf2-opening-frame__svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
 
 .mf2-line {
-  /* بلا حدّ رأسي يقصّ الحبر — التموضع على خط الأساس مطلقًا */
   flex: 0 0 auto;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
   min-height: 0;
   min-width: 0;
-  height: auto;
-  display: block;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   direction: rtl;
   text-align: start;
-  /* normal داخليًا + --mf2-lh كحد أدنى بصري للهبوط */
   line-height: normal;
-  padding-block: 0.12em;
+  padding-block: 0;
   word-spacing: normal;
   letter-spacing: 0;
   color: var(--mf2-ink, var(--color-mushaf-ink, #1A1510));
@@ -196,26 +177,27 @@ html[data-theme="dark"] .mf2-frame {
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
-  /* overflow-x المخفي يحوّل overflow-y إلى auto قسرًا (مواصفة CSS) فيقصّ الحبر */
   overflow: visible;
   clip-path: none;
   contain: none;
+  transform: none;
 }
-/* سطر آيات QPC: نص متصل واحد — بلا عزل bidi بين المحارف */
+/* سطر آيات QPC: كلمات في تدفق flex — بلا scaleX */
 .mf2-lines--qpc-contiguous .mf2-line {
   unicode-bidi: plaintext;
-  /* صندوق بمحتوى السطر فقط، ملتصق باليمين — scaleX لا يوسّع صندوقًا بعرض 100٪ */
-  display: block;
-  width: max-content;
+  display: flex;
+  width: 100%;
   max-width: 100%;
-  /* RTL: ادفع السطر لجهة البدء (اليمين) */
-  margin-inline-start: 0;
-  margin-inline-end: auto;
-  transform: scaleX(var(--mf2-line-sx, 1));
-  transform-origin: right center;
+  margin-inline: 0;
+  transform: none;
 }
 .mf2-line__run {
-  display: inline;
+  display: flex;
+  align-items: center;
+  justify-content: inherit;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
   white-space: nowrap;
   word-spacing: normal;
   letter-spacing: 0;
@@ -442,25 +424,32 @@ html[data-theme="dark"] .mf2-sajda-badge {
   text-align: center;
   font-size: 0.92em;
 }
-.mf2-surah-badge {
-  position: absolute;
-  inset: 0;
+.mf2-surah-badge,
+.mf2-surah-badge__bar,
+.mf2-surah-banner__svg {
+  display: none !important;
+}
+.mf2-surah-banner,
+.mf2-surah-banner--minimal {
+  position: relative;
   width: 100%;
-  max-width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
   pointer-events: none;
-  color: var(--color-mushaf-gold, #B08D57);
-  overflow: visible;
-}
-.mf2-surah-badge__bar {
-  position: absolute;
-  inset: 0;
   box-sizing: border-box;
-  background: var(--color-mushaf-badge-bg, #FAF3E8);
-  border: 1px solid var(--color-mushaf-gold-soft, #C9B07A);
-  border-radius: 3px;
 }
-.mf2-surah-banner {
+.mf2-surah-banner__rule {
+  flex: 1 1 0;
+  height: 1px;
+  min-width: 1.5rem;
+  max-width: 28%;
+  background: color-mix(in srgb, var(--color-mushaf-gold-strong, #A67C3D) 35%, transparent);
+  align-self: center;
+}
+.mf2-surah-header__frame {
   position: relative;
   width: 100%;
   height: 100%;
@@ -468,37 +457,33 @@ html[data-theme="dark"] .mf2-sajda-badge {
   align-items: center;
   justify-content: center;
 }
-.mf2-surah-banner__svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
 .mf2-surah-header__cartouche {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  inset: auto;
   width: 100%;
   max-width: 100%;
   height: 100%;
   pointer-events: none;
   color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .mf2-surah-banner__name,
 .mf2-surah-header__name {
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  flex: 0 0 auto;
   font-family: inherit, "Amiri Quran", "Amiri", "Scheherazade New", serif;
-  font-size: 0.85em;
+  font-size: 0.92em;
   font-weight: 400;
-  color: var(--color-mushaf-ink, #161513);
+  color: var(--color-mushaf-gold-strong, #A67C3D);
   letter-spacing: normal;
-  line-height: 1.2;
+  line-height: 1;
   white-space: nowrap;
-  max-width: calc(34% - 12px);
-  overflow: hidden;
-  text-overflow: clip;
-  padding-block: 0.1em;
+  max-width: none;
+  overflow: visible;
+  padding-block: 0;
   padding-inline: 0;
   box-sizing: border-box;
   text-align: center;
@@ -576,7 +561,8 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   position: relative;
   z-index: 1;
   font-family: inherit, "Amiri Quran", "Amiri", "Noto Naskh Arabic", var(--font-quran, serif);
-  font-size: 0.38em;
+  /* ٦٢٪ من حجم نص الآية */
+  font-size: 0.62em;
   font-weight: 600;
   line-height: 1;
   color: var(--color-mushaf-numeral, #6B4E2A);
@@ -584,23 +570,26 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   direction: ltr;
 }
 
-/* هيكل تحميل (skeleton) — أسطر عاجية باهتة بنبض خفيف، بلا أي نص إطلاقًا
-   قبل اكتمال تحميل خط الصفحة (القسم 5.3: يُمنع FOUT منعًا باتًا هنا). */
+/* هيكل تحميل — نفس شبكة ١٥ خانة؛ بلا نص قبل جاهزية الخط */
 .mf2-skeleton {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: repeat(15, minmax(0, 1fr));
   height: 100%;
-  gap: 4%;
+  width: 100%;
+  gap: 0;
+  padding: 0 2px;
+  box-sizing: border-box;
 }
 .mf2-skeleton--overlay {
   position: absolute;
-  inset: 3.2cqw 2.6cqw;
+  inset: 0;
   z-index: 2;
   background: var(--mf2-page-bg, #F8F7F3);
 }
 .mf2-skeleton__line {
-  flex: 1;
-  border-radius: 4px;
+  align-self: center;
+  height: 38%;
+  border-radius: 2px;
   background: linear-gradient(90deg, rgba(14,110,82,.06), rgba(14,110,82,.13), rgba(14,110,82,.06));
   background-size: 200% 100%;
   animation: mf2-skeleton-pulse 1.6s ease-in-out infinite;

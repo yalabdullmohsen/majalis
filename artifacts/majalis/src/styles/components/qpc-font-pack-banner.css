@@ -1,7 +1,7 @@
 /* مؤشّر تنزيل خطوط QPC — ركن سفلي غير معيق، لا يغطي الرأس */
 .qpc-font-pack--corner {
   position: fixed;
-  inset-inline-end: max(0.5rem, env(safe-area-inset-right, 0px));
+  inset-inline-end: max(0.5rem, var(--inset-right, 0px));
   bottom: calc(var(--inset-bottom, 0px) + var(--mpv-toolbar-band, 52px) + 0.35rem);
   inset-inline-start: auto;
   top: auto;

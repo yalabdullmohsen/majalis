@@ -44,7 +44,7 @@ assert.match(mushafV2, /\.mf2-bismillah\s*\{[\s\S]*?font-weight:\s*700/, "الب
   const basmalaBlock = mushafV2.match(/(?:^|\n)\.mf2-bismillah\s*\{[^}]+\}/)?.[0] ?? "";
   assert.equal(/overflow:\s*hidden/.test(basmalaBlock), false, "البسملة بلا overflow:hidden يقصّ النص");
 }
-assert.match(mushafV2, /--mf2-line-sx/, "تسوية أطراف الأسطر عبر --mf2-line-sx");
+assert.match(mushafV2, /justify-content:\s*space-between/, "تسوية عرض السطر عبر space-between");
 assert.match(mushafV2, /\.mf2-line--surah-end/, "صنف آخر سطر سورة بلا مطّ");
 assert.match(pageComp, /lastSurahEndLineNumbers|noStretchLines/, "آخر سطر سورة بلا تمديد");
 assert.equal(
@@ -108,16 +108,16 @@ assert.match(pageComp, /data-mushaf-grid="flow"/);
 assert.match(pageComp, /data-board="1000x1618"/);
 assert.match(pageComp, /MUSHAF_LAYOUT_BASELINE\.fontSizePx/);
 assert.match(pageComp, /isOpening/);
-assert.equal(/justifyContent:\s*"space-between"/.test(pageComp), false, "بلا justifyContent space-between");
+assert.match(pageComp, /justifyContent\s*=\s*["']space-between["']/, "توزيع مسافات أفقي بين الكلمات");
 assert.match(pageComp, /pageFontSize/);
 assert.match(pageComp, /ayahLineRefs/, "أسطر الآيات للتحجيم العرضي");
 assert.match(pageComp, /measurement-exclusions|metric-only/, "استثناءات المقياس مفصولة عن التحجيم");
 assert.equal(/SHORT_FILL_RATIO/.test(pageComp), false, "بلا SHORT_FILL_RATIO / fit لكل سطر");
 assert.match(pageComp, /glyphText/, "مجسم الآية في دقة QPC");
 assert.match(pageComp, /drawnSurahTitleText/, "شارة السورة بالرسم العثماني");
-assert.match(pageComp, /--mf2-line-sx|mf2-line-sx/, "تسوية عرض السطر عبر scaleX اختياري");
+assert.equal(/scaleX\(var\(--mf2-line-sx/.test(mushafV2), false, "بلا scaleX لتسوية العرض");
 assert.match(pageComp, /data-mf2-bind|dataset\.mf2Bind|flow-grid-fixed-S/, "تشخيص قيد التحجيم");
-assert.match(pageComp, /pageFont\.failed|useUnicodeSafe/, "تراجع تلقائي عند فشل خط QPC");
+assert.match(pageComp, /pageFont\.failed|useUnicodeSafe/, "انتظار خط QPC بلا fallback نظام");
 assert.equal(/OPENING_BANNER_TOP_PCT/.test(pageComp), false, "بلا OPENING_BANNER_TOP_PCT");
 assert.equal(
   /position:\s*["']absolute["']/.test(pageComp.match(/const slotStyle[\s\S]*?return \{[\s\S]*?\};/)?.[0] || ""),
