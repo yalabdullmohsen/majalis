@@ -5,7 +5,6 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -282,30 +281,17 @@ try {
 
 const outDir = path.join(appRoot, "public/data/search");
 fs.mkdirSync(outDir, { recursive: true });
-/* حتمية البناء: ‎new Date()‎ هنا كان يغيّر ‎generatedAt‎ كل يوم، فيتّسخ
-   ‎public/data/search/index.json‎ (3.9MB) في كل بناء ويفشل
+/* حتمية البناء: كان هنا ‎generatedAt: new Date()...‎ فيتغيّر كل يوم ويتّسخ
+   ‎public/data/search/index.json‎ (3.9MB) في كل بناء، ويفشل
    ‎git diff --exit-code‎ في CI في أي يوم يختلف عن يوم آخر commit — عطل
-   مؤجَّل بمقدار يوم واحد دائمًا. المصدر الآن تاريخ آخر commit، فالبناء من
-   نفس الشجرة يعطي نفس الملف بايتًا ببايت. */
-function deterministicBuildDate() {
-  if (process.env.SOURCE_DATE_EPOCH) {
-    return new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000)
-      .toISOString()
-      .slice(0, 10);
-  }
-  try {
-    return execFileSync("git", ["log", "-1", "--format=%cs"], {
-      cwd: appRoot,
-      encoding: "utf8",
-    }).trim();
-  } catch {
-    return "unknown";
-  }
-}
+   مؤجَّل بمقدار يوم دائمًا.
 
+   الحقل محذوف لا مُصلَّح: لا يقرأه أي كود في المستودع (تحقّقت)، وكل بديل
+   زمني يبقى غير حتمي — تاريخ آخر commit مثلًا يفشل في PR لأن
+   ‎actions/checkout‎ ينشئ merge commit بتاريخ *الآن*. من احتاج معرفة نسخة
+   الفهرس فـ‎/version.json‎ يحمل الـcommit الفعلي. */
 const payload = {
   version: 2,
-  generatedAt: deterministicBuildDate(),
   count: docs.length,
   docs,
 };
