@@ -3,9 +3,10 @@
  */
 import { validateLessonDraft } from "./content-validator.mjs";
 
-// خُفِّض من 0.95 للسماح بنشر محتوى أكثر
-const AUTO_PUBLISH_MIN_CONFIDENCE = 0.65;
-const TRUSTED_LEVELS = new Set(["official", "trusted", "community"]);
+/** حد الثقة للنشر التلقائي — أقل منه → مراجعة بشرية. */
+const AUTO_PUBLISH_MIN_CONFIDENCE = 0.95;
+/** مستويات مسموح لها بالنشر التلقائي (المجتمع → مراجعة فقط). */
+const AUTO_PUBLISH_LEVELS = new Set(["official", "trusted"]);
 
 function pick(data, ...keys) {
   for (const k of keys) {
@@ -15,10 +16,19 @@ function pick(data, ...keys) {
   return "";
 }
 
-// حقل العنوان فقط إلزامي — باقي الحقول اختيارية لاستيعاب بيانات ناقصة
+/** حقول لازمة لجودة المسودة قبل النشر التلقائي. */
 export function validateAutomationRequiredFields(parsed, { sourceUrl, imageUrl } = {}) {
   const missing = [];
   if (!pick(parsed, "title")) missing.push("title");
+  if (!pick(parsed, "speaker_name", "sheikh_name")) missing.push("speaker_name");
+  if (!pick(parsed, "start_date", "gregorian_date") && !pick(parsed, "day_of_week", "day")) {
+    missing.push("date_or_day");
+  }
+  if (!pick(parsed, "mosque", "location") && !pick(parsed, "region") && !pick(parsed, "live_url")) {
+    missing.push("place_or_live");
+  }
+  if (!imageUrl) missing.push("image");
+  if (!sourceUrl) missing.push("source_url");
   return missing;
 }
 
@@ -59,8 +69,8 @@ export function evaluateAutoPublish({
     reasons.push("المصدر معطّل");
   }
 
-  if (!TRUSTED_LEVELS.has(source.trust_level)) {
-    reasons.push(`مستوى ثقة غير كافٍ: ${source.trust_level}`);
+  if (!AUTO_PUBLISH_LEVELS.has(source.trust_level)) {
+    reasons.push(`مستوى ثقة غير كافٍ للنشر التلقائي: ${source.trust_level}`);
   }
 
   if (!source.auto_publish_allowed) {
@@ -68,7 +78,7 @@ export function evaluateAutoPublish({
   }
 
   if ((confidenceScore ?? 0) < AUTO_PUBLISH_MIN_CONFIDENCE) {
-    reasons.push(`ثقة منخفضة (${Math.round((confidenceScore ?? 0) * 100)}% < 65%)`);
+    reasons.push(`ثقة منخفضة (${Math.round((confidenceScore ?? 0) * 100)}% < 95%)`);
   }
 
   if (duplicate?.isDuplicate) {
@@ -107,7 +117,7 @@ export function evaluateAutoPublish({
     reasons.push("صورة الإعلان مطلوبة للنشر التلقائي");
   }
 
-  const hasSheikh = Boolean(sheikhMatch?.matched?.id || pick(parsed, "speaker_name"));
+  const hasSheikh = Boolean(sheikhMatch?.matched?.id || pick(parsed, "speaker_name", "sheikh_name"));
   if (!hasSheikh) {
     reasons.push("اسم الشيخ غير معروف");
   }
@@ -116,13 +126,15 @@ export function evaluateAutoPublish({
     reasons.push("لا يوجد مصدر أصلي");
   }
 
+  // القرار يعتمد على *كل* الأسباب — لا تُجمَع ثم تُتجاهل.
   const canAuto =
-    source.active &&
-    TRUSTED_LEVELS.has(source.trust_level) &&
-    (confidenceScore ?? 0) >= AUTO_PUBLISH_MIN_CONFIDENCE &&
+    reasons.length === 0 &&
     missing.length === 0 &&
-    validation.canPublish &&
-    title.length >= 3;
+    Boolean(validation.canPublish) &&
+    source.active &&
+    AUTO_PUBLISH_LEVELS.has(source.trust_level) &&
+    source.auto_publish_allowed === true &&
+    (confidenceScore ?? 0) >= AUTO_PUBLISH_MIN_CONFIDENCE;
 
   if (canAuto) {
     return {
@@ -141,4 +153,4 @@ export function evaluateAutoPublish({
   };
 }
 
-export { AUTO_PUBLISH_MIN_CONFIDENCE };
+export { AUTO_PUBLISH_MIN_CONFIDENCE, AUTO_PUBLISH_LEVELS };

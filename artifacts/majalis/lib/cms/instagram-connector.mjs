@@ -92,6 +92,7 @@ export async function discoverInstagramSource(source, { runId } = {}) {
   }
 
   if (!isInstagramBlocked(imported, fetchError) && imported?.imageUrl) {
+    const graphMissing = !isInstagramGraphConfigured();
     return {
       items: [
         {
@@ -104,7 +105,11 @@ export async function discoverInstagramSource(source, { runId } = {}) {
       ],
       connectorRequired: false,
       instagramLimited: true,
-      hint: null,
+      // بلا Graph API: أي نتيجة OG تُعامَل كمساعد يدوي — لا مسار اكتشاف كامل.
+      manualAssistMode: graphMissing,
+      hint: graphMissing
+        ? "Instagram connector not configured — Manual Assist Mode"
+        : null,
     };
   }
 
