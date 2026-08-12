@@ -16,6 +16,7 @@
     "lint": "pnpm --filter @workspace/majalis run lint",
     "test": "pnpm --filter @workspace/majalis run test && pnpm run test:release-train && pnpm run test:safe-auto-merge",
     "verify:production-complete": "pnpm --filter @workspace/majalis run verify:production-complete",
+    "verify:pr": "node scripts/verify-pr.mjs",
     "verify:no-unsafe-auto-merge": "node scripts/verify-no-unsafe-auto-merge.mjs",
     "verify:no-runtime-ddl": "node scripts/verify-no-runtime-ddl.mjs",
     "verify:single-response": "node scripts/verify-single-response-pattern.mjs",

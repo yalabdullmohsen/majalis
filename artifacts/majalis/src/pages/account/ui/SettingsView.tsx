@@ -8,6 +8,7 @@ import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";
 import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
 import { clearQuranCache } from "@/lib/quran-api";
+import { resetFirstRunSetup } from "@/lib/first-run-setup";
 import { type UserPreferences } from "@/lib/user-preferences";
 import { clearLocalBookmarks } from "@/lib/local-bookmarks";
 import { clearOfflineReading } from "@/lib/offline-reading-pack";
@@ -439,6 +440,20 @@ export default function SettingsPage() {
           </div>
           <button type="button" className="ui-card-btn" onClick={() => clearQuranCache()}>
             {t("settings_clear_quran_cache")}
+          </button>
+          {/* الطريق اليدوي الوحيد لإعادة عرض التهيئة — لا شيء آخر يعيدها */}
+          <p className="settings-note">
+            تظهر شاشات التهيئة مرة واحدة فقط. اضغط أدناه لعرضها من جديد.
+          </p>
+          <button
+            type="button"
+            className="ui-card-btn"
+            onClick={() => {
+              resetFirstRunSetup();
+              window.location.reload();
+            }}
+          >
+            إعادة عرض التهيئة
           </button>
         </LegalSection>
       )}

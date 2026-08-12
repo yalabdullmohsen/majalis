@@ -47,8 +47,9 @@
 /* ── Adhan Toast — إشعار الأذان ── */
 .anb-toast--adhan {
   background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 55%, var(--mj-brand-deep) 100%);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: #FFFFFF;
+  border: 1px solid var(--on-brand-hairline, rgba(255,255,255,0.22));
+  /* الخلفية ولون النص في نفس القاعدة — لا يُفصلان (بوابة «لا سطح بلا لون») */
+  color: var(--on-brand, #FFFFFF);
   animation: anb-rise 0.38s cubic-bezier(0.34,1.4,0.64,1) both,
              anb-glow-pulse 2.5s ease-in-out 0.4s infinite;
 }
@@ -92,15 +93,23 @@
   letter-spacing: -.01em;
 }
 .anb-toast--reminder .anb-toast__title { color: var(--mj-brand); }
+/* «حيَّ على الصلاة • حيَّ على الفلاح» كان باهتًا غير مقروء.
+   السبب: opacity:.75 على الفقرة فوق الأخضر ⇒ أبيض فعلي ≈ #BFCFC9 وتباين
+   ~3.1:1 لنص 12.8px. والأسوأ أنّ opacity يخفي العيب عن بوابة التباين:
+   getComputedStyle(color) تقول #FFFFFF بينما البكسل المرسوم أخفت.
+   الحل: لون صريح من الرمز، وopacity يبقى 1. */
 .anb-toast__sub {
   font-size: .78rem;
-  opacity: .8;
+  opacity: 1;
   margin: 0;
   line-height: 1.5;
 }
 .anb-toast--adhan .anb-toast__sub {
-  opacity: .75;
+  color: var(--on-brand-secondary, rgba(255, 255, 255, 0.82));
   font-size: .8rem;
+}
+.anb-toast--reminder .anb-toast__sub {
+  color: var(--text-2, #3e3a35);
 }
 
 /* ── progress bar under Adhan toast ── */
@@ -133,16 +142,39 @@
   transition: background .14s ease, transform .1s ease;
 }
 .anb-btn:active { transform: scale(.9); }
-.anb-toast--adhan  .anb-btn { background: rgba(255,255,255,.12); color: #fff; }
-.anb-toast--adhan  .anb-btn:hover { background: rgba(255,255,255,.24); }
+/* أزرار الإغلاق (×) والصوت داخل السطح الأخضر: أبيض صريح في كل الحالات،
+   وأيقونات lucide ترث عبر currentColor (بلا stroke ثابت داخل الـSVG). */
+.anb-toast--adhan .anb-btn {
+  background: var(--on-brand-quiet-bg, rgba(255,255,255,.14));
+  color: var(--on-brand, #ffffff);
+  border: 1px solid var(--on-brand-hairline, rgba(255,255,255,.22));
+}
+.anb-toast--adhan .anb-btn > svg { stroke: currentColor; fill: none; }
+.anb-toast--adhan .anb-btn:hover {
+  background: var(--on-brand-hover-bg, rgba(255,255,255,.24));
+  color: var(--on-brand, #ffffff);
+}
+.anb-toast--adhan .anb-btn:active {
+  background: var(--on-brand-active-bg, rgba(255,255,255,.32));
+  color: var(--on-brand, #ffffff);
+}
+.anb-toast--adhan .anb-btn:disabled {
+  color: var(--on-brand-disabled, rgba(255,255,255,.45));
+}
+.anb-toast--adhan .anb-btn:focus-visible {
+  outline: 2px solid var(--on-brand-focus-ring, rgba(255,255,255,.92));
+  outline-offset: 2px;
+}
 .anb-toast--reminder .anb-btn { background: rgba(23,61,53,.09); color: var(--mj-brand); }
 .anb-toast--reminder .anb-btn:hover { background: rgba(23,61,53,.18); }
+/* كان rgba(255,255,255,.75) لنص 10.4px ⇒ ~3.4:1 (يفشل 4.5:1).
+   أبيض صريح كامل + خلفية أقوى قليلًا. */
 .anb-muted-tag {
-  font-size: .65rem;
+  font-size: .68rem;
   padding: .15rem .45rem;
   border-radius: .3rem;
-  background: rgba(255,255,255,.15);
-  color: rgba(255,255,255,.75);
-  font-weight: 600;
+  background: var(--on-brand-quiet-bg, rgba(255,255,255,.14));
+  color: var(--on-brand, #ffffff);
+  font-weight: 700;
 }
 

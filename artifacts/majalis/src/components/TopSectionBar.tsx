@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isComingSoonPath } from "@/lib/nav-visibility";
 import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
+import { useIsMobileNav } from "@/hooks/useIsMobileNav";
 
 /* هوية التبويب العلوي تُحسم عبر styles/m2030/navigation.css */
 
@@ -164,15 +165,23 @@ export function isTabActive(location: string, href: string): boolean {
 
 export function TopSectionBar() {
   const [location] = useLocation();
+  const isMobileNav = useIsMobileNav();
   const prefetched = useRef(new Set<string>());
   const scrollRef = useRef<HTMLDivElement>(null);
   const activeRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
+    if (isMobileNav) return;
     activeRef.current?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-  }, [location]);
+  }, [location, isMobileNav]);
 
   if (isImmersiveChromePath(location)) return null;
+
+  // على الجوال هذا الشريط تكرار حرفي للشريط السفلي — SECTION_TABS مبنية من
+  // نفس BOTTOM_NAV_TABS. يُلغى من الشجرة (لا يُخفى بـCSS) فيُستعاد ~3.5rem من
+  // ارتفاع الشاشة ويزول landmark تنقّل مكرر لقارئات الشاشة. يبقى كما هو على
+  // سطح المكتب/التابلت حيث لا شريط سفلي (‎@media (min-width: 880px)‎).
+  if (isMobileNav) return null;
 
   function triggerPrefetch(tab: SectionTab) {
     if (prefetched.current.has(tab.href)) return;

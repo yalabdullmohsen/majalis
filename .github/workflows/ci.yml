@@ -5,11 +5,14 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  merge_group:
+    types: [checks_requested]
 
 # إلغاء التشغيلات المتجاوَزة لنفس المرجع (تسريع طوابير PR).
+# ملاحظة: merge_group لا يُلغى — كل دفعة merge queue يجب أن تكمل.
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: ci-${{ github.event_name == 'merge_group' && github.run_id || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'merge_group' }}
 
 permissions:
   contents: read
@@ -18,12 +21,16 @@ permissions:
 # Pin trusted action SHAs (tag comments for humans).
 
 env:
-  # عيّنة ٢٥ صفحة افتراضياً في بوابات المصحف (انظر mushaf-gate-active-page.mjs)
-  # المسح الكامل ٦٠٤ في workflow ليلي منفصل.
   PORT: "24216"
   BASE_PATH: "/"
+  # مسار PR السريع: صفحات مرجعية فقط على مقاس واحد 390×844.
+  # المسح الكامل ٦٠٤ × ٤ مقاسات في mushaf-gates-nightly.yml.
+  PR_MUSHAF_PAGES: "1,2,3,4,283,600"
 
 jobs:
+  # ---------------------------------------------------------------------------
+  # ١) تصنيف المسارات + بصمة المصدر (مفتاح الكاش المركّب)
+  # ---------------------------------------------------------------------------
   classify:
     name: classify-path-lane
     runs-on: ubuntu-latest
@@ -38,6 +45,7 @@ jobs:
       need_preview_smoke: ${{ steps.lane.outputs.need_preview_smoke }}
       need_policy_tests: ${{ steps.lane.outputs.need_policy_tests }}
       manual_review: ${{ steps.lane.outputs.manual_review }}
+      src_fingerprint: ${{ steps.fp.outputs.fingerprint }}
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -61,10 +69,24 @@ jobs:
             HEAD="${{ github.event.pull_request.head.sha }}"
             node .github/scripts/ci/emit-path-lane.mjs --base "$BASE" --head "$HEAD"
           else
-            # push to main → full suite (no dangerous skip)
+            # push to main / merge_group → full suite (no dangerous skip)
             node .github/scripts/ci/emit-path-lane.mjs --full
           fi
 
+      # مفتاح الكاش المركّب: hash(lockfile) + hash(src) + hash(public/data) +
+      # hash(scripts/config). إن لم يتغيّر المصدر تُعاد نتيجة البناء من الكاش
+      # بلا تشغيل أي بوابة من جديد.
+      - name: Compute source fingerprint
+        id: fp
+        run: |
+          set -euo pipefail
+          FP="${{ hashFiles('pnpm-lock.yaml', 'artifacts/majalis/package.json', 'artifacts/majalis/vite.config.ts', 'artifacts/majalis/tsconfig*.json', 'artifacts/majalis/src/**', 'artifacts/majalis/lib/**', 'artifacts/majalis/public/**', 'artifacts/majalis/index.html', 'artifacts/majalis/scripts/**') }}"
+          echo "fingerprint=$FP" >> "$GITHUB_OUTPUT"
+          echo "بصمة المصدر: $FP"
+
+  # ---------------------------------------------------------------------------
+  # ٢) بوابة الحكامة السريعة (بلا بناء)
+  # ---------------------------------------------------------------------------
   fast-lane:
     name: fast-lane
     needs: [classify]
@@ -72,28 +94,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: 24
-
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack prepare --activate
-
-      - name: Cache pnpm store
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: ~/.local/share/pnpm/store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: pnpm-${{ runner.os }}-
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
 
       - name: Governance / auto-merge safety gate
         run: pnpm run verify:no-unsafe-auto-merge
@@ -106,56 +108,23 @@ jobs:
         if: needs.classify.outputs.need_policy_tests == 'true'
         run: pnpm run test:release-train
 
-  build:
-    name: build
+  # ---------------------------------------------------------------------------
+  # ٣) فحوص ثابتة — تتوازى مع البناء ولا تحجزه
+  #    (كانت داخل build فتؤخّر كل بوابات المصحف بلا سبب)
+  # ---------------------------------------------------------------------------
+  static-checks:
+    name: static-checks
     needs: [classify]
     if: needs.classify.outputs.need_build == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 10
     steps:
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
 
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: 24
-
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack prepare --activate
-
-      - name: Cache pnpm store
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: ~/.local/share/pnpm/store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: pnpm-${{ runner.os }}-
-
-      - name: Cache Vite
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: artifacts/majalis/node_modules/.vite
-          key: vite-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml', 'artifacts/majalis/vite.config.ts') }}
-          restore-keys: vite-${{ runner.os }}-
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
-
-      - name: Governance / auto-merge safety gate
-        run: pnpm run verify:no-unsafe-auto-merge
-
-      - name: Release Train unit tests
-        run: pnpm run test:release-train
-
-      - name: Safe auto-merge policy unit tests
-        run: pnpm run test:safe-auto-merge
-
-      - name: tsc -b (clean + build)
-        run: |
-          pnpm exec tsc -b --clean
-          pnpm exec tsc -b
+      # تزايدي: كان `tsc -b --clean && tsc -b` يهدم الكاش في كل تشغيل.
+      - name: tsc -b (incremental)
+        run: pnpm exec tsc -b
 
       - name: typecheck (workspace)
         run: pnpm run typecheck
@@ -167,6 +136,83 @@ jobs:
         run: |
           pnpm --filter @workspace/majalis exec node --import tsx scripts/generate-content-counts.ts --check
           pnpm --filter @workspace/majalis exec node scripts/generate-quran-pages-manifest.mjs --check
+
+  # ---------------------------------------------------------------------------
+  # ٤) البناء — الوظيفة الوحيدة المسموح لها بالبناء في كل الـworkflow.
+  #    ترفع dist كـartifact؛ كل بوابة أخرى تنزّله ولا تبني.
+  # ---------------------------------------------------------------------------
+  build:
+    name: build
+    needs: [classify]
+    if: needs.classify.outputs.need_build == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
+
+      # كاش نتيجة البناء بمفتاح بصمة المصدر: إعادة تشغيل، rebase بلا تغيير
+      # مصدر، أو دفعة merge queue لنفس الشجرة ← لا بناء إطلاقًا.
+      - name: Restore dist by source fingerprint
+        id: dist-cache
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: artifacts/majalis/dist
+          key: dist-${{ runner.os }}-${{ needs.classify.outputs.src_fingerprint }}
+
+      - name: Build (تخطّي عند إصابة الكاش)
+        if: steps.dist-cache.outputs.cache-hit != 'true'
+        run: pnpm --filter @workspace/majalis run build
+
+      # version.json يحمل الـcommit — يُعاد بصمه دائمًا حتى مع dist من الكاش
+      # وإلا نشرنا/فحصنا sha قديمًا. رخيص (~1ث) ويحفظ صحة فحص الإصدار.
+      - name: Re-stamp version.json for this commit
+        working-directory: artifacts/majalis
+        run: node scripts/generate-version.mjs
+
+      - name: Upload majalis dist (المصدر الوحيد لكل البوابات)
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: majalis-dist
+          path: artifacts/majalis/dist
+          retention-days: 1
+          if-no-files-found: error
+
+      - name: Bundle budget / no mega-seeds in entry
+        run: pnpm --filter @workspace/majalis run test:bundle-budget
+
+      - name: git diff --exit-code (build must not dirty tree)
+        run: git diff --exit-code
+
+      - name: Deploy output verify
+        run: pnpm --filter @workspace/majalis run verify:deploy
+
+      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run cancel "${{ github.run_id }}" || true
+
+  # ---------------------------------------------------------------------------
+  # ٥) بوابات المستودع (وحدات + SQL + سياسات) — تتوازى مع البناء
+  # ---------------------------------------------------------------------------
+  repo-gates:
+    name: repo-gates
+    needs: [classify]
+    if: needs.classify.outputs.need_build == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
+
+      - name: Governance / auto-merge safety gate
+        run: pnpm run verify:no-unsafe-auto-merge
+
+      - name: Release Train + safe auto-merge unit tests
+        run: |
+          pnpm run test:release-train
+          pnpm run test:safe-auto-merge
 
       - name: Head / PageShell / body-meta / orphan / autofocus / methodology / related
         run: |
@@ -183,26 +229,6 @@ jobs:
 
       - name: Unit / package tests (بدون بوابات مصحف Playwright)
         run: pnpm --filter @workspace/majalis run test:ci-unit
-
-      - name: Deterministic build
-        run: pnpm --filter @workspace/majalis run build
-
-      - name: Upload majalis dist (مشاركة مع بوابات المصحف — بلا إعادة بناء)
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: majalis-dist
-          path: artifacts/majalis/dist
-          retention-days: 1
-          if-no-files-found: error
-
-      - name: Bundle budget / no mega-seeds in entry
-        run: pnpm --filter @workspace/majalis run test:bundle-budget
-
-      - name: git diff --exit-code (build must not dirty tree)
-        run: git diff --exit-code
-
-      - name: Deploy output verify
-        run: pnpm --filter @workspace/majalis run verify:deploy
 
       - name: Verify no runtime DDL
         run: pnpm verify:no-runtime-ddl
@@ -235,13 +261,10 @@ jobs:
             echo "api-server package absent — skip"
           fi
 
-      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
-        if: failure()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh run cancel "${{ github.run_id }}" || true
-
-  # تمريرة قياس واحدة (عيّنة ٢٥ في PR · ٨ أجزاء × ٦٠٤ على main)
+  # ---------------------------------------------------------------------------
+  # ٦) قياس المصحف — PR: ٦ صفحات مرجعية × مقاس واحد على ٤ shards
+  #    main/nightly: ٦٠٤ صفحة على ٨ shards
+  # ---------------------------------------------------------------------------
   mushaf-measure:
     name: mushaf-measure
     needs: [classify, build]
@@ -254,51 +277,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        shard: ${{ github.event_name == 'pull_request' && fromJSON('[1]') || fromJSON('[1,2,3,4,5,6,7,8]') }}
+        shard: ${{ github.event_name == 'pull_request' && fromJSON('[1,2,3,4]') || fromJSON('[1,2,3,4,5,6,7,8]') }}
     env:
       MUSHAF_GATE_FULL: ${{ github.event_name == 'pull_request' && '0' || '1' }}
+      MUSHAF_GATE_PAGES: ${{ github.event_name == 'pull_request' && '1,2,3,4,283,600' || '' }}
+      MUSHAF_GATE_VIEWPORT: ${{ github.event_name == 'pull_request' && '390x844' || '' }}
       MUSHAF_GATE_SHARD: ${{ matrix.shard }}
-      MUSHAF_GATE_SHARDS: ${{ github.event_name == 'pull_request' && '1' || '8' }}
+      MUSHAF_GATE_SHARDS: ${{ github.event_name == 'pull_request' && '4' || '8' }}
       MUSHAF_GATE_USE_PREVIEW: "1"
-      PORT: "24216"
-      BASE_PATH: "/"
     steps:
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
         with:
-          node-version: 24
+          playwright: "true"
 
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack prepare --activate
-
-      - name: Cache pnpm store
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: ~/.local/share/pnpm/store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: pnpm-${{ runner.os }}-
-
-      - name: Cache Playwright browsers
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: playwright-${{ runner.os }}-
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
-
-      - name: Install Playwright Chromium
-        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
-
-      - name: Download majalis dist
+      - name: Download majalis dist (بلا إعادة بناء)
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: majalis-dist
@@ -337,40 +332,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
         with:
-          node-version: 24
+          playwright: "true"
 
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack prepare --activate
-
-      - name: Cache pnpm store
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: ~/.local/share/pnpm/store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: pnpm-${{ runner.os }}-
-
-      - name: Cache Playwright browsers
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: playwright-${{ runner.os }}-
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
-
-      - name: Install Playwright Chromium
-        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
-
-      - name: Download majalis dist
+      - name: Download majalis dist (بلا إعادة بناء)
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: majalis-dist
@@ -390,9 +357,6 @@ jobs:
 
       - name: Start preview (وحدات Playwright المتبقية)
         working-directory: artifacts/majalis
-        env:
-          PORT: "24216"
-          BASE_PATH: "/"
         run: |
           set -euo pipefail
           pnpm exec vite preview --config vite.config.ts --host 127.0.0.1 --port 24216 > /tmp/mushaf-vite.log 2>&1 &
@@ -436,28 +400,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: 24
-
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack prepare --activate
-
-      - name: Cache pnpm store
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: ~/.local/share/pnpm/store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: pnpm-${{ runner.os }}-
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
 
       - name: Download measurement shards
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
@@ -489,40 +433,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
         with:
-          node-version: 24
+          playwright: "true"
 
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack prepare --activate
-
-      - name: Cache pnpm store
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: ~/.local/share/pnpm/store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: pnpm-${{ runner.os }}-
-
-      - name: Cache Playwright browsers
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: playwright-${{ runner.os }}-
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
-
-      - name: Install Playwright Chromium
-        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
-
-      - name: Download majalis dist
+      - name: Download majalis dist (بلا إعادة بناء)
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: majalis-dist
@@ -530,9 +446,6 @@ jobs:
 
       - name: Start preview
         working-directory: artifacts/majalis
-        env:
-          PORT: "24216"
-          BASE_PATH: "/"
         run: |
           set -euo pipefail
           pnpm exec vite preview --config vite.config.ts --host 127.0.0.1 --port 24216 > /tmp/mushaf-vite.log 2>&1 &
@@ -561,11 +474,92 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh run cancel "${{ github.run_id }}" || true
 
-  # الاسم "Verify build" يبقى لفحص حماية الفرع الحالي.
-  # skipped مقبول فقط إذا classifier قال إن الوظيفة غير مطلوبة.
+  # ---------------------------------------------------------------------------
+  # ٧) تباين الألوان — ينزّل dist ولا يبني (كان يعيد البناء كاملًا)
+  # ---------------------------------------------------------------------------
+  color-contrast:
+    name: Color contrast (Playwright)
+    needs: [classify, build]
+    if: |
+      always() &&
+      !cancelled() &&
+      needs.classify.result == 'success' &&
+      needs.classify.outputs.need_color_contrast == 'true' &&
+      needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
+        with:
+          playwright: "true"
+
+      - name: Download majalis dist (بلا إعادة بناء)
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: majalis-dist
+          path: artifacts/majalis/dist
+
+      - name: Color contrast gate
+        run: pnpm --filter @workspace/majalis run test:color-contrast-gate
+
+      - name: On-brand contrast gate (لا أسود على الأخضر)
+        run: pnpm --filter @workspace/majalis run test:on-brand-contrast
+
+  postgres-integration:
+    name: postgres-integration
+    needs: [classify]
+    if: needs.classify.outputs.need_postgres == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: majalis_test
+          POSTGRES_PASSWORD: majalis_test
+          POSTGRES_DB: majalis_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U majalis_test -d majalis_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
+
+      - name: Queue integration (REQUIRED)
+        env:
+          REQUIRE_POSTGRES_INTEGRATION: "1"
+          MIGRATION_TEST_DATABASE_URL: postgresql://majalis_test:majalis_test@localhost:5432/majalis_test
+          DATABASE_URL: postgresql://majalis_test:majalis_test@localhost:5432/majalis_test
+          NODE_ENV: test
+        run: pnpm run test:postgres-integration
+
+      - name: Migration verify + upgrade idempotency
+        env:
+          MIGRATION_TEST_DATABASE_URL: postgresql://majalis_test:majalis_test@localhost:5432/majalis_test
+        run: |
+          pnpm run db:migration:verify
+          pnpm run db:migration:verify:upgrade
+
+  # ---------------------------------------------------------------------------
+  # ٨) البوابة المطلوبة الوحيدة لحماية الفرع — الاسم "Verify build" ثابت.
+  # ---------------------------------------------------------------------------
   verify:
     name: Verify build
-    needs: [classify, fast-lane, build, mushaf-measure, mushaf-gates, layout-bands, visual-snapshot]
+    needs:
+      - classify
+      - fast-lane
+      - static-checks
+      - build
+      - repo-gates
+      - mushaf-measure
+      - mushaf-gates
+      - layout-bands
+      - visual-snapshot
     if: always() && !cancelled()
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -578,30 +572,33 @@ jobs:
           NEED_MUSHAF: ${{ needs.classify.outputs.need_mushaf }}
           CLASSIFY_RESULT: ${{ needs.classify.result }}
           FAST_RESULT: ${{ needs.fast-lane.result }}
+          STATIC_RESULT: ${{ needs.static-checks.result }}
           BUILD_RESULT: ${{ needs.build.result }}
+          REPO_GATES_RESULT: ${{ needs.repo-gates.result }}
           MEASURE_RESULT: ${{ needs.mushaf-measure.result }}
           GATES_RESULT: ${{ needs.mushaf-gates.result }}
           BANDS_RESULT: ${{ needs.layout-bands.result }}
           VISUAL_RESULT: ${{ needs.visual-snapshot.result }}
         run: |
           set -euo pipefail
-          echo "## CI path-lane / results" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Key | Value |" >> "$GITHUB_STEP_SUMMARY"
-          echo "|-----|-------|" >> "$GITHUB_STEP_SUMMARY"
-          echo "| lane | \`$LANE\` |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| need_build | $NEED_BUILD |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| need_fast_lane | $NEED_FAST |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| need_mushaf | $NEED_MUSHAF |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| classify | $CLASSIFY_RESULT |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| fast-lane | $FAST_RESULT |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| build | $BUILD_RESULT |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| mushaf-measure | $MEASURE_RESULT |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| mushaf-gates | $GATES_RESULT |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| layout-bands | $BANDS_RESULT |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| visual-snapshot | $VISUAL_RESULT |" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "قبل: كل PR ينتظر build + مصحف + Playwright حتى لو توثيق فقط." >> "$GITHUB_STEP_SUMMARY"
-          echo "بعد: Fast Lane حسب المسارات — بوابات المصحف فقط عند تعديل المصحف/القرآن." >> "$GITHUB_STEP_SUMMARY"
+          {
+            echo "## CI path-lane / results"
+            echo "| Job | Result |"
+            echo "|-----|--------|"
+            echo "| lane | \`$LANE\` |"
+            echo "| classify | $CLASSIFY_RESULT |"
+            echo "| fast-lane | $FAST_RESULT |"
+            echo "| static-checks | $STATIC_RESULT |"
+            echo "| build | $BUILD_RESULT |"
+            echo "| repo-gates | $REPO_GATES_RESULT |"
+            echo "| mushaf-measure | $MEASURE_RESULT |"
+            echo "| mushaf-gates | $GATES_RESULT |"
+            echo "| layout-bands | $BANDS_RESULT |"
+            echo "| visual-snapshot | $VISUAL_RESULT |"
+            echo ""
+            echo "بناء واحد فقط (وظيفة \`build\`) — كل البوابات تنزّل dist."
+            echo "مسار PR: ٦ صفحات مرجعية × 390×844 على ٤ shards. الكامل ليلاً."
+          } >> "$GITHUB_STEP_SUMMARY"
 
           if [ "$CLASSIFY_RESULT" != "success" ]; then
             echo "classify failed: $CLASSIFY_RESULT"
@@ -626,100 +623,12 @@ jobs:
           }
 
           check_req "fast-lane" "$NEED_FAST" "$FAST_RESULT"
+          check_req "static-checks" "$NEED_BUILD" "$STATIC_RESULT"
           check_req "build" "$NEED_BUILD" "$BUILD_RESULT"
+          check_req "repo-gates" "$NEED_BUILD" "$REPO_GATES_RESULT"
           check_req "mushaf-measure" "$NEED_MUSHAF" "$MEASURE_RESULT"
           check_req "mushaf-gates" "$NEED_MUSHAF" "$GATES_RESULT"
           check_req "layout-bands" "$NEED_MUSHAF" "$BANDS_RESULT"
           check_req "visual-snapshot" "$NEED_MUSHAF" "$VISUAL_RESULT"
 
           echo "Verify build OK (lane=$LANE)"
-
-  # ---------------------------------------------------------------------------
-  # Color contrast — Playwright Chromium (path-lane: UI/CSS / mushaf / risky)
-  # ---------------------------------------------------------------------------
-  color-contrast:
-    name: Color contrast (Playwright)
-    needs: [classify]
-    if: needs.classify.outputs.need_color_contrast == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    steps:
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: 24
-
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack prepare --activate
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
-
-      - name: Install Playwright Chromium
-        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
-
-      - name: Build majalis
-        env:
-          PORT: "24216"
-          BASE_PATH: "/"
-        run: pnpm --filter @workspace/majalis run build
-
-      - name: Color contrast gate
-        run: pnpm --filter @workspace/majalis run test:color-contrast-gate
-
-  postgres-integration:
-    name: postgres-integration
-    needs: [classify]
-    if: needs.classify.outputs.need_postgres == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: majalis_test
-          POSTGRES_PASSWORD: majalis_test
-          POSTGRES_DB: majalis_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U majalis_test -d majalis_test"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: 24
-
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack prepare --activate
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
-
-      - name: Queue integration (REQUIRED)
-        env:
-          REQUIRE_POSTGRES_INTEGRATION: "1"
-          MIGRATION_TEST_DATABASE_URL: postgresql://majalis_test:majalis_test@localhost:5432/majalis_test
-          DATABASE_URL: postgresql://majalis_test:majalis_test@localhost:5432/majalis_test
-          NODE_ENV: test
-        run: pnpm run test:postgres-integration
-
-      - name: Migration verify + upgrade idempotency
-        env:
-          MIGRATION_TEST_DATABASE_URL: postgresql://majalis_test:majalis_test@localhost:5432/majalis_test
-        run: |
-          pnpm run db:migration:verify
-          pnpm run db:migration:verify:upgrade
