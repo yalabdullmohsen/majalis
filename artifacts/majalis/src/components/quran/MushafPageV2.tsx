@@ -119,7 +119,7 @@ function measureLineContentWidth(el: HTMLElement): number {
   el.style.width = "max-content";
   el.style.justifyContent = "flex-start";
   const run = el.querySelector(".mf2-line__run");
-  let w = 0;
+  let w: number;
   if (run instanceof HTMLElement) {
     const prevDisplay = run.style.display;
     const prevRunW = run.style.width;
