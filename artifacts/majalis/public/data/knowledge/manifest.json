@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "updated_at": "2026-08-13",
+  "totals": {
+    "all": 3111,
+    "verified": 2382,
+    "needs_review": 729,
+    "quiz": 2100,
+    "prophets": 25,
+    "nations": 16,
+    "people": 101
+  },
+  "sections": [
+    "quiz",
+    "prophets",
+    "nations",
+    "quran-people",
+    "tafsir",
+    "history",
+    "discover-islam",
+    "intro-islam"
+  ]
+}
