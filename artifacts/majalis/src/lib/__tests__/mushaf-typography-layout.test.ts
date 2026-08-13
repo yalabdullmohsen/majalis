@@ -57,24 +57,26 @@ assert.equal(
   false,
   "بلا تقليص خانة بنسبة 0.72 لفرض الامتلاء",
 );
-assert.match(mushafV2, /\.mf2-surah-banner/, "شارة سورة مزخرفة");
-assert.match(mushafV2, /\.mf2-surah-banner__svg/, "SVG الشارة");
+assert.match(mushafV2, /\.mf2-surah-banner/, "شارة سورة");
+assert.match(mushafV2, /\.mf2-surah-banner__bar/, "شريط الشارة البسيط");
 assert.match(pageComp, /SurahBanner/, "مكوّن SurahBanner");
-assert.match(mushafV2, /\.mf2-surah-header__name\s*\{[\s\S]*?max-width:\s*calc\(34%/, "اسم الشارة داخل اللوحة الوسطى");
+assert.match(mushafV2, /\.mf2-surah-header__name\s*\{[\s\S]*?max-width:\s*calc\(100%/, "اسم الشارة بعرض الشريط");
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /PANEL_MARGIN_PX|scrollWidth/,
-  "تصغير اسم الشارة داخل اللوحة",
+  /NAME_MARGIN_PX|scrollWidth/,
+  "تصغير اسم الشارة داخل الشريط",
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /data-ornament="wing-refined"/,
-  "شارة رصينة بلا pattern",
+  /data-ornament="simple-strip"/,
+  "شارة بسيطة بلا زخارف",
 );
-assert.match(
-  readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /PetalMedallion|TwinSpirals/,
-  "ميدالية + فرعان لولبيان",
+assert.equal(
+  /PetalMedallion|TwinSpirals|WingMotifs/.test(
+    readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
+  ),
+  false,
+  "حذف الميداليات والأرابيسك من الشارة",
 );
 assert.equal(
   /<pattern[\s/]/i.test(readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8")),
@@ -94,6 +96,12 @@ assert.match(pageComp, /sizingEls|sizing-line|ayahLineCount|ayahLineRefs/, "تح
 assert.match(pageComp, /MUSHAF_LAYOUT_BASELINE|MUSHAF_GRID/, "تخطيط من أساس ٣١١ + شبكة");
 assert.match(mushafV2, /data-ornament|mf2-surah-banner/, "شارة سورة");
 assert.match(pageComp, /SurahBanner/, "مكوّن SurahBanner");
+assert.equal(
+  /PetalMedallion|TwinSpirals/.test(
+    readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
+  ),
+  false,
+);
 assert.equal(
   /flex:\s*1\s+1\s+0/.test(mushafV2.match(/\.mf2-line\s*\{[\s\S]*?\n\}/)?.[0] ?? ""),
   false,

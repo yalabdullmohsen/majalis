@@ -96,14 +96,14 @@ async function assertSource() {
   if (/<pattern[\s/]/i.test(banner)) {
     issues.push("SurahBanner ما زال يستخدم وسم pattern مكررًا");
   }
-  if (!/PetalMedallion|medallion/.test(banner) || !/TwinSpirals|spiral/.test(banner)) {
-    issues.push("SurahBanner بلا ميدالية/فرعين لولبيين");
+  if (/PetalMedallion|TwinSpirals|WingMotifs|data-wing-part/.test(banner)) {
+    issues.push("SurahBanner ما زال يحتوي زخارف جناح — المطلوب شريط بسيط");
   }
-  if (!/data-ornament="wing-refined"/.test(banner)) {
-    issues.push("SurahBanner بلا data-ornament=wing-refined");
+  if (!/data-ornament="simple-strip"/.test(banner)) {
+    issues.push("SurahBanner بلا data-ornament=simple-strip");
   }
-  if (!/data-wing-density-target="20-30"/.test(banner)) {
-    issues.push("SurahBanner بلا هدف كثافة 20-30");
+  if (!/mf2-surah-banner__bar/.test(banner)) {
+    issues.push("SurahBanner بلا شريط mf2-surah-banner__bar");
   }
   if (!/MUSHAF_LAYOUT_BASELINE/.test(pageV2) || !/MUSHAF_GRID/.test(pageV2)) {
     issues.push("MushafPageV2 لا يستخدم MUSHAF_LAYOUT_BASELINE/MUSHAF_GRID من ص٣١١");
