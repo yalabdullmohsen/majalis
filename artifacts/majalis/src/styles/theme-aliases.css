@@ -13,6 +13,11 @@
   --surface-3: var(--mj-surface-2);
   --surface-muted: var(--mj-surface-2);
   --surface-brand: var(--mj-brand-soft);
+  /* أسطح العلامة الغامقة للشيت/الأبواب — لا تُترك فارغة بعد تحميل الجسر */
+  --surface-brand-solid: var(--mj-brand);
+  --surface-brand-strong: var(--mj-brand-deep);
+  --on-brand: var(--mj-on-brand, #ffffff);
+  --on-brand-secondary: color-mix(in srgb, var(--mj-on-brand, #ffffff) 82%, transparent);
   --surface-inverse: var(--mj-brand-deep);
   --surface-elevated: var(--mj-surface);
 
@@ -145,6 +150,10 @@ html.dark,
   --surface-3: var(--mj-surface-2);
   --surface-muted: var(--mj-surface-2);
   --surface-brand: var(--mj-brand-soft);
+  --surface-brand-solid: var(--mj-brand);
+  --surface-brand-strong: var(--mj-brand-deep);
+  --on-brand: var(--mj-on-brand, #ffffff);
+  --on-brand-secondary: color-mix(in srgb, var(--mj-on-brand, #ffffff) 82%, transparent);
   --surface-inverse: var(--mj-bg);
   --surface-elevated: var(--mj-surface);
 
