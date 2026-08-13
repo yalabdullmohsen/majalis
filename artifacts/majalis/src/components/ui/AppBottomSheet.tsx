@@ -231,7 +231,13 @@ export function AppBottomSheet({
           onPointerUp={onHandlePointerUp}
           onPointerCancel={onHandlePointerUp}
         />
-        <header className="app-sheet__head">
+        <header
+          className="app-sheet__head"
+          onPointerDown={onHandlePointerDown}
+          onPointerMove={onHandlePointerMove}
+          onPointerUp={onHandlePointerUp}
+          onPointerCancel={onHandlePointerUp}
+        >
           <h2 id={titleId} className="app-sheet__title">{title}</h2>
         </header>
         <div className="app-sheet__body">{children}</div>
