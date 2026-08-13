@@ -1,0 +1,13 @@
+---
+description: SEO تقني — metadata وcanonical وstructured data
+globs: artifacts/majalis/src/**/*.{tsx,ts}
+alwaysApply: false
+---
+
+# المجلس العلمي — SEO
+
+- كل صفحة عامة: `title` مستقل، `meta description`، `canonical`، Open Graph، Twitter Card.
+- لا تُدرج في `sitemap.xml` صفحات 404 أو محوّلة للرئيسية أو `noindex`.
+- JSON-LD عند الحاجة: WebSite (+ SearchAction إن وُجد بحث حقيقي) · Organization · BreadcrumbList · Article · Book · Course · FAQPage · Person.
+- روابط داخلية: عالم↔كتب↔فتاوى↔دروس · آية↔تفسير↔درس · مصطلح↔دروس.
+- نتائج البحث: `noindex`. صفحة «قيد الإكمال» مسموحة مع `noindex` وحذف من sitemap.

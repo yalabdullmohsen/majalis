@@ -9,8 +9,14 @@ import {
   BookOpen,
   Building2,
   Compass,
+  Heart,
   Library,
+  Radio,
+  Settings,
   Star,
+  Download,
+  User,
+  Scale,
   Users,
 } from "lucide-react";
 
@@ -99,6 +105,93 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     tier: "featured",
     order: 7,
     keywords: ["تاريخ", "حضارة"],
+  },
+];
+
+/** مربعات أصغر تحت السبعة — بلا تكرار لعناصر الشريط السفلي (رئيسية/دروس/قرآن/صلاة). */
+export const MORE_STANDARD_SECTIONS: MoreSection[] = [
+  {
+    id: "adhkar",
+    title: "الأذكار",
+    icon: BookMarked,
+    route: "/adhkar",
+    tier: "standard",
+    order: 10,
+  },
+  {
+    id: "duas",
+    title: "الأدعية",
+    icon: Heart,
+    route: "/duas",
+    tier: "standard",
+    order: 11,
+  },
+  {
+    id: "library",
+    title: "المكتبة",
+    icon: Library,
+    route: "/library",
+    tier: "standard",
+    order: 12,
+  },
+  {
+    id: "broadcast",
+    title: "البث",
+    icon: Radio,
+    route: "/updates",
+    tier: "standard",
+    order: 13,
+  },
+  {
+    id: "fatwas",
+    title: "الفتاوى",
+    icon: Scale,
+    route: "/rulings",
+    tier: "standard",
+    order: 14,
+  },
+  {
+    id: "favorites",
+    title: "المفضلة",
+    icon: Star,
+    route: "/my-citations",
+    tier: "standard",
+    order: 15,
+  },
+  {
+    id: "downloads",
+    title: "التنزيلات",
+    icon: Download,
+    route: "/vault",
+    tier: "standard",
+    order: 16,
+  },
+  {
+    id: "knowledge-graph",
+    title: "الرسم المعرفي",
+    icon: Compass,
+    route: "/knowledge-graph",
+    tier: "standard",
+    order: 17,
+  },
+];
+
+export const MORE_ACCOUNT_SECTIONS: MoreSection[] = [
+  {
+    id: "account",
+    title: "الحساب",
+    icon: User,
+    route: "/my-learning",
+    tier: "standard",
+    order: 90,
+  },
+  {
+    id: "settings",
+    title: "الإعدادات",
+    icon: Settings,
+    route: "/settings",
+    tier: "standard",
+    order: 91,
   },
 ];
 

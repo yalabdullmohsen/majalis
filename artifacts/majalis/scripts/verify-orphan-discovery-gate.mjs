@@ -43,14 +43,15 @@ const ENTRY_FILES = [
   "lib/nav-map.ts",
   "lib/services-center-nav.ts",
   "lib/site-footer-nav.ts",
-  // صفحة /more الحقيقية + خريطة الموقع + مركز علوم القرآن
+  // صفحة /more الحقيقية + مصدر الأقسام + خريطة الموقع + مركز علوم القرآن
   "pages/account/MorePage.tsx",
+  "features/more/moreSections.ts",
   "pages/account/ui/SiteMapView.tsx",
   "pages/quran/QuranKnowledgeHubPage.tsx",
 ];
 
 const ALLOWLIST_PATH = join(appRoot, "scripts/orphan-discovery-allowlist.json");
-const linkRe = /(?:href|to)\s*[:=]\s*["'`](\/[^"'`?#]*)/g;
+const linkRe = /(?:href|to|route)\s*[:=]\s*["'`](\/[^"'`?#]*)/g;
 
 function linksIn(file) {
   if (!existsSync(file)) return [];
