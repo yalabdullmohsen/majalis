@@ -1,0 +1,13 @@
+---
+description: أمن الواجهة والـAPI — OWASP وsanitize ومنع تسريب الأسرار
+globs: artifacts/majalis/**/*.{tsx,ts,mjs}
+alwaysApply: false
+---
+
+# المجلس العلمي — أمن
+
+- المتصفح: مفتاح `anon` فقط؛ لا أسرار في الحزمة الأمامية.
+- افترض RLS مفعّلاً على جداول المستخدم؛ لا تعتمد على إخفاء المسار.
+- أي `dangerouslySetInnerHTML` / HTML خام → sanitize؛ validate المدخلات.
+- rate limiting لمسارات التواصل/البحث/المساعد؛ لا تسجّل بيانات حساسة.
+- رؤوس: CSP (قلّل unsafe-inline) · X-Frame-Options · nosniff · Referrer-Policy · Permissions-Policy · HSTS عبر الاستضافة.

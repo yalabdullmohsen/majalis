@@ -1,0 +1,65 @@
+/* صفحة /more — شبكة مربعات كبيرة ثم أصغر */
+.more-page-section {
+  margin-block: 1.25rem 0.5rem;
+}
+.more-page-section__title {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--mj-ink, var(--foreground));
+}
+.more-page-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+.more-page-grid--featured {
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+}
+.more-page-grid--standard,
+.more-page-grid--account {
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+}
+.more-page-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1rem 0.75rem;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  background: var(--mj-surface, var(--card, #fff));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #0d5c4d) 18%, transparent);
+  border-radius: 0.75rem;
+  min-height: 88px;
+  min-width: 44px;
+  transition: transform 0.12s ease, background-color 0.12s ease;
+}
+.more-page-tile--lg {
+  min-height: 112px;
+  padding: 1.15rem 0.85rem;
+}
+.more-page-tile--sm {
+  min-height: 76px;
+  padding: 0.75rem 0.5rem;
+}
+.more-page-tile:active {
+  transform: scale(0.97);
+}
+.more-page-tile__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.more-page-tile--sm .more-page-tile__title {
+  font-size: 0.82rem;
+}
+.more-page-tile__sub {
+  font-size: 0.72rem;
+  opacity: 0.75;
+  line-height: 1.3;
+}

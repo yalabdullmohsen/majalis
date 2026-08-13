@@ -66,3 +66,33 @@
   gap: 0.5rem 0.75rem;
   margin: 0.5rem 0 0.25rem;
 }
+
+.ct-trust-box {
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #0d5c4d) 22%, transparent);
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, var(--mj-brand, #0d5c4d) 6%, transparent);
+}
+.ct-trust-box__meta {
+  display: grid;
+  gap: 0.45rem 1rem;
+  margin: 0 0 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+.ct-trust-box__meta dt {
+  margin: 0;
+  font-size: 0.72rem;
+  opacity: 0.75;
+}
+.ct-trust-box__meta dd {
+  margin: 0.1rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.ct-trust-box__disclaimer {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--majalis-muted, inherit);
+}
