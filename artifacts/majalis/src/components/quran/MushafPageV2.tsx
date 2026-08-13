@@ -434,17 +434,17 @@ export function MushafPageV2({
         container.style.removeProperty("--mf2-opening-line-w");
       }
 
-      /* هامش جانبي: الجسم مبطّن ١٫٥٪ أصلًا — لا نضاعف الحجز داخل الحاوية */
+      /* هامش جانبي داخل الحاوية (الجسم مبطّن ١٫٥٪) — ٢px يمنع تجاوز الحبر على CI */
       const sideClear = offRefViewport
         ? Math.max(
-            0.5,
+            2,
             Math.round(
               (MUSHAF_GRID.sideMarginPx || 2) *
                 Math.min(1.25, Math.max(0.85, availableWidth / 358)) *
-                0.25,
+                0.35,
             ),
           )
-        : 0.5;
+        : 2;
       const fitWidth = Math.max(8, availableWidth - sideClear * 2);
 
       const widestAtRef = measureWidest(sizingEls, REF_PX);
@@ -691,8 +691,8 @@ export function MushafPageV2({
                 crNow.left + sideClear - ink.left,
                 ink.right - (crNow.right - sideClear),
               );
-              if (over <= 0.35) break;
-              gapPx *= 0.88;
+              if (over <= 0.15) break;
+              gapPx *= 0.85;
               if (gapPx < 0.05) {
                 el.style.removeProperty("--mf2-word-gap");
                 break;
