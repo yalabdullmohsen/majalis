@@ -190,7 +190,7 @@ export function TopSectionBar() {
   }
 
   return (
-    <nav className="top-section-bar mj-nav-skin" aria-label="أقسام رئيسية">
+    <nav className="top-section-bar mj-nav-skin mj-chrome-stable" aria-label="أقسام رئيسية">
       <div className="top-section-bar__scroll" ref={scrollRef}>
         {SECTION_TABS.map((tab) => {
           const active = isTabActive(location, tab.href);

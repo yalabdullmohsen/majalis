@@ -299,7 +299,7 @@
     "native:strip-qpc-fonts": "node scripts/native-strip-qpc-fonts.mjs",
     "test:qpc-font-pack": "node --import tsx src/lib/__tests__/qpc-font-pack.test.ts && node --import tsx src/lib/__tests__/qpc-font-banner-prod-gate.test.ts",
     "test:licenses": "node scripts/verify-licenses-gate.mjs",
-    "test:native-feel": "node --import tsx src/lib/__tests__/native-feel-motion.test.ts",
+    "test:native-feel": "node --import tsx src/lib/__tests__/native-feel-motion.test.ts && node --import tsx src/lib/__tests__/spatial-nav.test.ts",
     "test:mushaf-aya-parity": "node scripts/quran-import/mushaf-aya-parity-gate.mjs"
   },
   "devDependencies": {

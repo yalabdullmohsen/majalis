@@ -24,12 +24,17 @@ assert.match(instant, /touch-action:\s*manipulation/);
 
 const native = read("src/styles/components/native-feel.css");
 assert.match(native, /mj-route-enter/);
+assert.match(native, /mj-route-push/);
+assert.match(native, /mj-route-pop/);
 assert.match(native, /mj-smooth-image/);
 assert.match(native, /cubic-bezier\(0\.22/);
+assert.match(native, /mj-chrome-stable/);
 
 const app = read("src/App.tsx");
 assert.match(app, /EdgeSwipeBack/);
 assert.match(app, /RouteEnterMotion/);
+
+assert.ok(existsSync(resolve(root, "src/lib/spatial-nav.ts")));
 
 const main = read("src/main.tsx");
 assert.match(main, /native-feel\.css/);
