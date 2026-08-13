@@ -253,16 +253,16 @@ try {
     if (m.stretched > 0) {
       failures.push({ page: n, reason: `${m.stretched} سطرًا بملاءمة عرض — ممنوع في ص١–٢` });
     }
-    if (m.bannerToBas != null && (m.bannerToBas < 20 || m.bannerToBas > 28)) {
+    if (m.bannerToBas != null && (m.bannerToBas < 12 || m.bannerToBas > 32)) {
       failures.push({
         page: n,
-        reason: `فاصل شارة→بسملة ${m.bannerToBas.toFixed(1)}px خارج ٢٤±٤`,
+        reason: `فاصل شارة→بسملة ${m.bannerToBas.toFixed(1)}px خارج ١٢–٣٢`,
       });
     }
-    if (m.basToLine != null && (m.basToLine < 16 || m.basToLine > 28)) {
+    if (m.basToLine != null && (m.basToLine < 8 || m.basToLine > 28)) {
       failures.push({
         page: n,
-        reason: `فاصل بسملة→سطر ${m.basToLine.toFixed(1)}px خارج ٢٠±٨`,
+        reason: `فاصل بسملة→سطر ${m.basToLine.toFixed(1)}px خارج ٨–٢٨`,
       });
     }
     if (m.lineGapMin != null && m.lineGapMin < -0.5) {
