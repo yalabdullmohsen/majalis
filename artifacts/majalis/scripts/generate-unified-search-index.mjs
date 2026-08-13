@@ -279,6 +279,34 @@ try {
   /* optional */
 }
 
+
+// ── معرفة الأقسام السبعة (knowledge) — عناوين فقط ─────────────────────────
+try {
+  const { loadKnowledgeItems } = await import("./content-gates/lib.mjs");
+  const items = loadKnowledgeItems().filter((it) => it.review_status === "verified");
+  const hrefFor = (it) => {
+    const sec = it.section || "knowledge";
+    return `/knowledge/${sec}/${encodeURIComponent(it.id)}`;
+  };
+  for (const it of items) {
+    // لا نفهرس كل أسئلة السين جيم (آلاف) — عيّنة العناوين غير quiz + أصول المقالات
+    if (it.section === "quiz") continue;
+    pushDoc(
+      `knowledge:${it.id}`,
+      it.section || "knowledge",
+      it.title,
+      hrefFor(it),
+      [...(it.tags || []), "معرفة"],
+      (it.tags || [])[0],
+    );
+  }
+  // فهرس مكثّف لبنك الأسئلة: الفئات فقط
+  pushDoc("knowledge:quiz-bank", "quiz", "بنك أسئلة سين جيم (معرفة)", "/knowledge/quiz", ["سين جيم", "أسئلة"], "knowledge");
+} catch (e) {
+  console.warn("knowledge index skipped:", e.message);
+}
+
+
 const outDir = path.join(appRoot, "public/data/search");
 fs.mkdirSync(outDir, { recursive: true });
 /* حتمية البناء: كان هنا ‎generatedAt: new Date()...‎ فيتغيّر كل يوم ويتّسخ

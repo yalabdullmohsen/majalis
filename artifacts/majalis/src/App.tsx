@@ -154,6 +154,7 @@ const HowToBecomeMuslimPage = lazy(() => import("@/views/HowToBecomeMuslimPage")
 const NewMuslimPathPage = lazy(() => import("@/views/NewMuslimPathPage"));
 const NewMuslimDayDetailPage = lazy(() => import("@/views/NewMuslimDayDetailPage"));
 const DiscoverIslamContactPage = lazy(() => import("@/views/DiscoverIslamContactPage"));
+const KnowledgeSectionPage = lazy(() => import("@/views/KnowledgeSectionPage"));
 const AdhkarPage = lazy(() => import("@/pages/worship/AdhkarPage"));
 const QaPage = lazy(() => import("@/views/QaPage"));
 const QuizPage = lazy(() => import("@/pages/account/QuizPage"));
@@ -801,6 +802,9 @@ function Router() {
       <Route path="/discover-islam/new-muslim"><SafeLazyRoute component={NewMuslimPathPage} /></Route>
       <Route path="/discover-islam/new-muslim/:day"><SafeLazyRoute component={NewMuslimDayDetailPage} /></Route>
       <Route path="/discover-islam/contact"><SafeLazyRoute component={DiscoverIslamContactPage} /></Route>
+      <Route path="/knowledge/:section/:id"><SafeLazyRoute component={KnowledgeSectionPage} /></Route>
+      <Route path="/knowledge/:section"><SafeLazyRoute component={KnowledgeSectionPage} /></Route>
+      <Route path="/knowledge"><Redirect to="/knowledge/intro-islam" /></Route>
       <Route path="/fiqh/topics/:topicId"><SafeLazyRoute component={FiqhTopicPage} /></Route>
       <Route path="/fiqh"><SafeLazyRoute component={FiqhPage} /></Route>
       <Route path="/seerah"><SafeLazyRoute component={SeerahPage} /></Route>

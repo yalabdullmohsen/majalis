@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quiz.schema.json",
+  "title": "QuizQuestion",
+  "allOf": [{ "$ref": "knowledge-item.schema.json" }],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["difficulty", "category", "pattern", "options", "correct"],
+      "properties": {
+        "difficulty": { "enum": ["مبتدئ", "متوسط", "متقدم"] },
+        "category": { "type": "string" },
+        "pattern": { "enum": ["mcq", "tf", "complete_ayah", "who_said", "order"] },
+        "options": { "type": "array", "minItems": 2 },
+        "correct": { "type": ["string", "number", "array"] },
+        "article_id": { "type": "string" }
+      }
+    }
+  }
+}

@@ -130,4 +130,17 @@ if (errors.length) {
   console.error("content-guard FAILED:\n" + errors.map((e) => `✗ ${e}`).join("\n"));
   process.exit(1);
 }
+
+/** 7) بوابات طبقة المعرفة إن وُجد المانيفست */
+{
+  const manifest = path.join(ROOT, "public/data/knowledge/manifest.json");
+  if (fs.existsSync(manifest)) {
+    const { spawnSync } = await import("node:child_process");
+    const r = spawnSync(process.execPath, [path.join(ROOT, "scripts/content-gates/run-all.mjs")], {
+      stdio: "inherit",
+    });
+    if (r.status !== 0) process.exit(r.status || 1);
+  }
+}
+
 console.log("content-guard OK — لا عيوب مكتشفة في البذور/التوجيه/السكربتات المفحوصة.");

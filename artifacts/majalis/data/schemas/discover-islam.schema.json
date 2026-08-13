@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "discover-islam.schema.json",
+  "title": "DiscoverIslam",
+  "allOf": [{ "$ref": "knowledge-item.schema.json" }]
+}
