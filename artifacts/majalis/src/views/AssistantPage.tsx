@@ -6,6 +6,7 @@ import { AssistantChatView } from "@/components/assistant/AssistantChatView";
 import { applyPageSeo } from "@/lib/seo";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import "@/styles/pages/assistant.css";
+import "@/styles/pages/assistant-shell.css";
 
 export { ASSISTANT_FAILURE_MESSAGE as FAILURE_MESSAGE } from "@/hooks/useAssistantChat";
 

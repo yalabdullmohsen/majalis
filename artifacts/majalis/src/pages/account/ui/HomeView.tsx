@@ -34,6 +34,7 @@ import {
   type HomepagePrefs,
 } from "@/lib/homepage-layout";
 import "@/styles/m2030/home.css";
+import "@/styles/pages/home-legacy.css";
 
 const HomeCompactPrayer = lazyWithRetry(() => import("@/components/home/HomeCompactPrayer").then((m) => ({ default: m.HomeCompactPrayer })), "HomeCompactPrayer");
 const HomeDailyBenefits = lazyWithRetry(() => import("@/components/home/HomeDailyBenefits").then((m) => ({ default: m.HomeDailyBenefits })), "HomeDailyBenefits");

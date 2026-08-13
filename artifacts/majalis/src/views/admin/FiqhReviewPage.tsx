@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 import { SkeletonCardGrid } from "@/components/ui-common";
+import "@/styles/pages/misc-page-legacy.css";
 import { FiqhAdminSubnav } from "@/components/fiqh-council/FiqhAdminSubnav";
 import { FiqhCompletionBarFromItem } from "@/components/fiqh-council/FiqhCompletionBar";
 import {

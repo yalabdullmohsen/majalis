@@ -8,6 +8,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { HubCard } from "@/components/ui/HubCard";
 import "@/styles/pages/tawhid.css";
+import "@/styles/pages/misc-page-legacy.css";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
 

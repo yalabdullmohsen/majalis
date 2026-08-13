@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import type { ChatMessage } from "@/hooks/useAssistantChat";
 import { AssistantReply } from "./AssistantReply";
 import "@/styles/components/assistant-chat.css";
+import "@/styles/pages/assistant-shell.css";
 
 type Props = {
   messages: ChatMessage[];

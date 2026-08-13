@@ -20,6 +20,7 @@ import {
 import { mushafPageHref } from "@/lib/quran-surah-list";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/pages/quran-hub.css";
+import "@/styles/pages/misc-page-legacy.css";
 
 type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; tag: string; featured?: boolean };
 

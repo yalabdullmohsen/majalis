@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { FilterChip } from "./FilterChip";
+import "@/styles/components/filters.css";
 
 export type SegmentedFilterItem = {
   id: string;

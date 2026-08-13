@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
 import { ADMIN_ACCESS_DENIED_MESSAGE } from "@/lib/auth-messages";
-import "@/styles/pages/auth.css";
+import "@/styles/components/admin-gate.css";
 
 /**
  * AdminRouteGuard — حارس صفحات لوحة التحكم

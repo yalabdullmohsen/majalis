@@ -1,0 +1,70 @@
+/* deferred from index.css */
+.search-page-form .search-suggestions-root {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-page-form .search-suggestions-root input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  padding: 0.65rem 0.75rem;
+  color: var(--majalis-ink);
+}
+
+.search-page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  margin: 0 0 1.25rem;
+}
+
+.search-page-hint {
+  text-align: center;
+  color: var(--msk-text-2, #5C5C56);
+  padding: 2rem 0;
+}
+
+.search-page-summary {
+  font-size: 0.8125rem;
+  color: var(--msk-text-2, #5C5C56);
+  margin: 0 0 1.5rem;
+}
+
+.search-page-summary span {
+  font-weight: 700;
+  color: var(--majalis-ink);
+}
+
+.sheikh-avatar-ring.optimized-sheikh-image,
+.optimized-sheikh-image.sheikh-avatar-ring,
+.search-result-avatar.optimized-sheikh-image {
+  border-radius: 999px;
+  width: 3.75rem;
+  height: 3.75rem;
+  min-width: 3.75rem;
+  min-height: 3.75rem;
+}
+
+.search-result-row--quran {
+  border-inline-start: 3px solid var(--clr-primary, var(--mj-brand));
+  background: rgba(23,61,53, 0.03);
+}
+
+.search-result-row--quran .search-result-title {
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", serif);
+  font-size: 1.15rem;
+  line-height: 2;
+  direction: rtl;
+}
+
+.search-result-quran-link {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+  color: var(--clr-primary, var(--mj-brand));
+  font-weight: 600;
+}
