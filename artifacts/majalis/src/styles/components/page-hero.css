@@ -155,10 +155,10 @@ html.dark .pattern-backdrop {
   max-width: none;
 }
 .filter-chips__chip.is-active {
-  background: color-mix(in srgb, var(--mj-brand, var(--color-primary)) 14%, transparent);
-  color: var(--mj-brand-deep, var(--mj-brand, var(--color-primary)));
+  background: var(--mj-brand, var(--color-primary));
+  color: #fff;
   border-color: var(--mj-brand, var(--color-primary));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mj-brand, var(--color-primary)) 35%, transparent);
+  box-shadow: none;
 }
 .filter-chips__soon {
   font-size: 0.68rem;

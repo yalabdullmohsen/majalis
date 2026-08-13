@@ -61,44 +61,57 @@ fi
 cp "$SRC" "$LOGO_OUT"
 cp "$SRC" "$ICON_ONLY_OUT"
 
-# Build a 2732×2732 white splash with the logo centered (~40% width).
-python3 - "$SRC" "$SPLASH_OUT" <<'PY'
-import sys
+# دخولية لون صامت فقط — ممنوع إعادة الصورة القديمة / الخلفية البيضاء
+python3 - "$SPLASH_OUT" <<'PY'
 from pathlib import Path
-
-src_path, out_path = Path(sys.argv[1]), Path(sys.argv[2])
+out_path = Path(__import__("sys").argv[1])
 try:
     from PIL import Image
 except ImportError:
-    import subprocess
+    import subprocess, sys
     subprocess.check_call([sys.executable, "-m", "pip", "install", "--user", "pillow", "-q"])
     from PIL import Image
-
 SIZE = 2732
-canvas = Image.new("RGBA", (SIZE, SIZE), (255, 255, 255, 255))
-logo = Image.open(src_path).convert("RGBA")
-target_w = int(SIZE * 0.40)
-scale = target_w / logo.width
-target_h = max(1, int(logo.height * scale))
-logo = logo.resize((target_w, target_h), Image.Resampling.LANCZOS)
-x = (SIZE - target_w) // 2
-y = (SIZE - target_h) // 2
-canvas.alpha_composite(logo, (x, y))
-canvas.convert("RGB").save(out_path, "PNG", optimize=True)
-print(f"wrote splash {out_path} ({SIZE}x{SIZE})")
+# #002b21
+canvas = Image.new("RGB", (SIZE, SIZE), (0, 43, 33))
+canvas.save(out_path, "PNG", optimize=True)
+print(f"wrote solid splash {out_path} (#002b21 {SIZE}x{SIZE})")
 PY
 
 echo "Source assets ready in $ASSETS_DIR"
 echo "  logo.png / icon-only.png ← $SRC"
-echo "  splash.png ← white 2732 canvas"
+echo "  splash.png ← solid #002b21 (no legacy artwork)"
 
 echo "Generating platform assets: ${PLATFORM_FLAGS[*]}"
 pnpm exec capacitor-assets generate \
   "${PLATFORM_FLAGS[@]}" \
-  --iconBackgroundColor "#ffffff" \
-  --iconBackgroundColorDark "#143F35" \
-  --splashBackgroundColor "#ffffff" \
-  --splashBackgroundColorDark "#143F35"
+  --iconBackgroundColor "#002b21" \
+  --iconBackgroundColorDark "#002b21" \
+  --splashBackgroundColor "#002b21" \
+  --splashBackgroundColorDark "#002b21"
+
+# أعد فرض drawable لوني بعد أي مخرجات capacitor-assets قد تعيد PNG
+SPLASH_XML="$ROOT/android/app/src/main/res/drawable/splash.xml"
+ICON_XML="$ROOT/android/app/src/main/res/drawable/splash_icon.xml"
+if [[ -d "$ROOT/android/app/src/main/res" ]]; then
+  find "$ROOT/android/app/src/main/res" -name 'splash.png' -delete || true
+  rm -f "$ROOT/android/app/src/main/res/drawable/splash_icon.png" || true
+  cat > "$SPLASH_XML" <<'EOF'
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/splash_background" />
+</shape>
+EOF
+  cat > "$ICON_XML" <<'EOF'
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#002b21" android:pathData="M0,0h108v108h-108z" />
+</vector>
+EOF
+  echo "Restored color-only Android splash drawables"
+fi
 
 echo "Done. Sync native projects if needed:"
 echo "  pnpm exec cap sync ios"

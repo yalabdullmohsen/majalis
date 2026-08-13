@@ -87,6 +87,15 @@ export { PageHeader, Card, ListRow, Button as MjButton, Badge, Progress, SearchF
 export { PageHero } from "@/components/ui/PageHero";
 export { PatternBackdrop } from "@/components/ui/PatternBackdrop";
 export { FilterChips } from "@/components/ui/FilterChips";
+export {
+  FilterBar,
+  FilterChip,
+  FilterSheet,
+  FilterToggle,
+  SegmentedFilter,
+  ActiveFilters,
+  FilterResetButton,
+} from "@/components/filters";
 export { HubCard } from "@/components/ui/HubCard";
 
 export function Loading({ title }: { label?: string; title?: string } = {}) {
