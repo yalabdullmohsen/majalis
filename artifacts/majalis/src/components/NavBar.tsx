@@ -137,7 +137,7 @@ export default function NavBar() {
   return (
     <>
       <header
-        className={`navbar-v3 border-b mj-nav-skin${isMenuOpen ? " navbar-v3--menu-open" : ""}${collapsed ? " is-collapsed" : ""}`}
+        className={`navbar-v3 border-b mj-nav-skin mj-chrome-stable${isMenuOpen ? " navbar-v3--menu-open" : ""}${collapsed ? " is-collapsed" : ""}`}
       >
         <div className="navbar-v3__inner">
           <div className="navbar-v3__start">

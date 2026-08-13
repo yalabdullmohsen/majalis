@@ -56,7 +56,7 @@
   display: none;
 }
 
-/* —— دخول صفحة بلا ومض أبيض (opacity/transform فقط) —— */
+/* —— انتقالات مكانية (Instagram-grade): transform + opacity فقط —— */
 @keyframes mj-route-enter {
   from {
     opacity: 0.01;
@@ -68,12 +68,122 @@
   }
 }
 
+@keyframes mj-route-push-in {
+  from {
+    opacity: 0.92;
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes mj-route-pop-in {
+  from {
+    opacity: 0.88;
+    transform: translate3d(-28%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes mj-route-tab-in {
+  from {
+    opacity: 0.01;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes mj-route-modal-in {
+  from {
+    opacity: 0.96;
+    transform: translate3d(0, 12%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+#main-content.mj-route-enter > *,
+#main-content.mj-route-push,
+#main-content.mj-route-pop,
+#main-content.mj-route-tab,
+#main-content.mj-route-modal {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
 #main-content.mj-route-enter > * {
   animation: mj-route-enter 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+#main-content.mj-route-push {
+  animation: mj-route-push-in 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  box-shadow: -12px 0 40px rgb(0 0 0 / 12%);
+}
+
+#main-content.mj-route-pop {
+  animation: mj-route-pop-in 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+#main-content.mj-route-tab {
+  animation: mj-route-tab-in 220ms ease both;
+}
+
+#main-content.mj-route-modal {
+  animation: mj-route-modal-in 360ms cubic-bezier(0.22, 1.05, 0.36, 1) both;
+}
+
+/* سحب حافة تفاعلي */
+.mj-edge-swipe-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  pointer-events: none;
+  background: rgb(0 0 0 / 45%);
+  opacity: 0;
+  will-change: opacity;
+}
+
+#main-content.mj-edge-swiping {
+  position: relative;
+  z-index: 130;
+  box-shadow: -8px 0 28px rgb(0 0 0 / 18%);
+  border-start-start-radius: 12px;
+  border-end-start-radius: 12px;
+}
+
+/* هيدر/شريط خارج #main-content — ثابتان مكانياً أثناء انزلاق المحتوى */
+.mj-chrome-stable {
+  transform: translateZ(0);
+  contain: layout style;
+}
+
+@keyframes mj-back-nudge {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  40% { transform: translate3d(5px, 0, 0) scale(0.94); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+.mj-back-nudge {
+  animation: mj-back-nudge 280ms cubic-bezier(0.22, 1.2, 0.36, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  #main-content.mj-route-enter > * {
+  #main-content.mj-route-enter > *,
+  #main-content.mj-route-push,
+  #main-content.mj-route-pop,
+  #main-content.mj-route-tab,
+  #main-content.mj-route-modal,
+  .mj-back-nudge {
     animation: none !important;
   }
   .mj-pressable:active,

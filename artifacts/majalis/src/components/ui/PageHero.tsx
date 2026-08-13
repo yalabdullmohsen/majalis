@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useState } from "react";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { cn } from "@/lib/utils";
 import { PatternBackdrop } from "./PatternBackdrop";
@@ -33,6 +34,7 @@ export function PageHero({
   children,
 }: PageHeroProps) {
   const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
+  const [nudge, setNudge] = useState(false);
 
   return (
     <header className={cn("page-hero-mj", className)} dir="rtl">
@@ -41,8 +43,12 @@ export function PageHero({
         {showBack ? (
           <button
             type="button"
-            className="page-hero-mj__back mj-btn mj-btn--ghost"
-            onClick={() => goBackOrFallback(currentPath)}
+            className={cn("page-hero-mj__back mj-btn mj-btn--ghost mj-pressable", nudge && "mj-back-nudge")}
+            onClick={() => {
+              setNudge(true);
+              window.setTimeout(() => setNudge(false), 300);
+              goBackOrFallback(currentPath);
+            }}
             aria-label="رجوع"
           >
             → رجوع
