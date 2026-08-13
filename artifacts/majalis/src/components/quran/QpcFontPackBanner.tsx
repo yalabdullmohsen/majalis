@@ -18,20 +18,41 @@ async function localFontsAvailable(): Promise<boolean> {
   }
 }
 
+type Props = {
+  currentPage: number;
+  /**
+   * `sheet` — داخل إعدادات القراءة فقط (الافتراضي المطلوب).
+   * لا يظهر كشريط علوي فوق الحبر أبدًا.
+   */
+  variant?: "sheet" | "overlay";
+};
+
 /**
- * شريط تقدّم تنزيل خطوط QPC — يظهر عندما تُستبعد الخطوط من الحزمة الأصلية
- * (بعد native:strip-qpc-fonts) أو عند نقص الكاش على الجهاز الأصلي.
- * القراءة ممكنة أثناء التنزيل للصفحات الجاهزة.
+ * تقدّم تنزيل خطوط QPC — في شيت الإعدادات فقط.
+ * يختفي بعد ١٫٥ ثانية من آخر تفاعل/اكتمال، ولا يتراكب مع الحبر.
  */
-export function QpcFontPackBanner({ currentPage }: { currentPage: number }) {
+export function QpcFontPackBanner({ currentPage, variant = "sheet" }: Props) {
   const [visible, setVisible] = useState(false);
   const [ratio, setRatio] = useState(0);
   const [label, setLabel] = useState("جاري تجهيز خطوط المصحف…");
+  const [busy, setBusy] = useState(false);
   const started = useRef(false);
+  const hideTimer = useRef(0);
   const pageRef = useRef(currentPage);
   pageRef.current = currentPage;
 
+  const scheduleHide = (ms = 1500) => {
+    if (hideTimer.current) window.clearTimeout(hideTimer.current);
+    hideTimer.current = window.setTimeout(() => setVisible(false), ms);
+  };
+
+  const bumpInteraction = () => {
+    setVisible(true);
+    scheduleHide(1500);
+  };
+
   useEffect(() => {
+    if (variant !== "sheet") return;
     if (started.current) return;
     started.current = true;
     const ac = new AbortController();
@@ -39,13 +60,11 @@ export function QpcFontPackBanner({ currentPage }: { currentPage: number }) {
     void (async () => {
       const bundled = await localFontsAvailable();
       const meta = readFontPackMeta();
-      /* ويب مع خطوط في الحزمة: لا شريط إجبار — التحميل الكسول يكفي */
       if (bundled && !isNative) return;
-      /* أصلي بعد اكتمال الكاش: لا إعادة تنزيل */
       if (isNative && meta.completed >= QPC_PAGE_COUNT * 0.9) return;
-      /* أصلي وما زالت الخطوط في الحزمة: لا تنزيل كامل */
       if (bundled && isNative && meta.completed > 0) return;
 
+      setBusy(true);
       setVisible(true);
       const priority = pagesInWindow(pageRef.current, 2);
       const rest = Array.from({ length: QPC_PAGE_COUNT }, (_, i) => i + 1).filter(
@@ -59,25 +78,50 @@ export function QpcFontPackBanner({ currentPage }: { currentPage: number }) {
         onProgress: (p) => {
           setRatio(p.ratio);
           setLabel(`خطوط المصحف ${Math.round(p.ratio * 100)}٪`);
+          bumpInteraction();
         },
       });
+      setBusy(false);
       if (result.downloaded > 0) {
         setLabel("خطوط المصحف جاهزة للقراءة دون اتصال");
         setRatio(1);
-        window.setTimeout(() => setVisible(false), 1800);
       } else {
         setLabel("تُحمَّل الخطوط عند الحاجة من الشبكة");
-        window.setTimeout(() => setVisible(false), 2400);
       }
+      scheduleHide(1500);
     })();
 
-    return () => ac.abort();
-  }, []);
+    return () => {
+      ac.abort();
+      if (hideTimer.current) window.clearTimeout(hideTimer.current);
+    };
+  }, [variant]);
 
-  if (!visible) return null;
+  /* ممنوع الظهور كشريط علوي فوق الصفحة */
+  if (variant !== "sheet") return null;
+  if (!visible && !busy) {
+    return (
+      <button
+        type="button"
+        className="qpc-font-pack qpc-font-pack--sheet qpc-font-pack--idle"
+        onClick={() => {
+          setVisible(true);
+          scheduleHide(1500);
+        }}
+      >
+        تحقق من خطوط المصحف
+      </button>
+    );
+  }
 
   return (
-    <div className="qpc-font-pack" role="status" aria-live="polite">
+    <div
+      className="qpc-font-pack qpc-font-pack--sheet"
+      role="status"
+      aria-live="polite"
+      data-font-pack-ui="sheet"
+      onPointerDown={bumpInteraction}
+    >
       <p className="qpc-font-pack__label">{label}</p>
       <div className="qpc-font-pack__track" aria-hidden="true">
         <div className="qpc-font-pack__fill" style={{ width: `${Math.round(ratio * 100)}%` }} />

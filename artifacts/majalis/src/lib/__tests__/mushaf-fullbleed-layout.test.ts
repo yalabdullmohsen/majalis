@@ -21,7 +21,7 @@ assert.equal(
   false,
   ".mpv-body--ayah بلا max-width:720px الذي كان يحبس الصفحة",
 );
-assert.match(mpvBodyBlock[0], /max\(2px,\s*var\(--inset-left\)\)/);
+assert.match(mpvBodyBlock[0], /max\(1\.5vw,\s*var\(--inset-left\)\)/);
 assert.match(mpvBodyBlock[0], /box-sizing:\s*border-box/);
 assert.match(mpvBodyBlock[0], /width:\s*100%/);
 assert.equal(/83vh/.test(mpvBodyBlock[0]), false, ".mpv-body--ayah بلا سقف 83vh");
@@ -86,11 +86,12 @@ assert.equal(/mpv-ayah-nav-btn/.test(viewSrc), false, "بلا أسهم تنقّ�
 assert.equal(/pageFillMode/.test(viewSrc), false, "بلا وضع امتلاء منفصل");
 assert.equal(/Maximize2|Minimize2|mpv-fill-enter/.test(viewSrc), false, "بلا أزرار تكبير/تصغير");
 assert.match(viewSrc, /MushafPageCartoucheSvg/);
-assert.match(viewSrc, /data-cartouche-align="center"/, "خرطوش مركزي");
-assert.match(viewSrc, /data-cartouche-side="center"/, "جهة الخرطوش مركز");
-assert.equal(/data-page-parity/.test(viewSrc), false, "تناوب الخرطوش مُلغى");
-assert.equal(/data-page-parity="odd"/.test(quranCss), false, "بلا CSS فردي");
-assert.match(quranCss, /\.mpv-ayah-page-badge\s*\{[\s\S]*?left:\s*50%/, "خرطوش left 50%");
+assert.match(viewSrc, /data-cartouche-align="parity"/, "خرطوش تناوب آية");
+assert.match(viewSrc, /data-page-parity=\{pageParity\}/, "parity ديناميكي");
+assert.match(viewSrc, /data-cartouche-side=\{pageParity === "odd" \? "right" : "left"\}/, "جهة خرطوش فردي/زوجي");
+assert.match(quranCss, /data-page-parity="odd"/, "CSS فردي يمين");
+assert.match(quranCss, /data-page-parity="even"/, "CSS زوجي يسار");
+assert.equal(/left:\s*50%/.test(quranCss.match(/\.mpv-ayah-page-badge\s*\{[^}]+\}/)?.[0] ?? ""), false, "بلا خرطوش مركزي");
 assert.match(
   quranCss,
   /\.mpv-ayah-header\s*\{[\s\S]*?font-size:\s*var\(--mushaf-fs-header-meta/,

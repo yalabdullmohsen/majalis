@@ -1,16 +1,29 @@
-/* شريط تنزيل خطوط QPC — رموز الثيم + --inset-* */
-.qpc-font-pack {
-  position: absolute;
-  inset-inline: 0.75rem;
-  top: calc(var(--inset-top, 0rem) + 0.5rem);
-  z-index: 40;
-  padding: 0.55rem 0.75rem;
+/* تقدّم خطوط QPC — داخل شيت الإعدادات فقط (لا شريط علوي فوق الحبر) */
+.qpc-font-pack--sheet {
+  position: relative;
+  inset: auto;
+  top: auto;
+  z-index: 1;
+  max-width: none;
+  margin: 0.35rem 0 0;
+  pointer-events: auto;
+  background: color-mix(in srgb, var(--mj-brand-deep, #0f3d33) 92%, transparent);
+  color: var(--mj-bg, #fff);
   border-radius: 0.65rem;
-  background: color-mix(in srgb, var(--mj-brand-deep) 88%, transparent);
-  color: var(--mj-bg);
-  pointer-events: none;
-  max-width: 22rem;
-  margin-inline: auto;
+  padding: 0.55rem 0.75rem;
+}
+
+.qpc-font-pack--sheet.qpc-font-pack--idle {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--ayah-badge-border, #D1C7BD) 70%, transparent);
+  background: color-mix(in srgb, var(--ayah-paper, #FAF7F2) 88%, transparent);
+  color: var(--ayah-ink, #1A1510);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: start;
+  width: 100%;
 }
 
 .qpc-font-pack__label {
@@ -23,13 +36,18 @@
 .qpc-font-pack__track {
   height: 0.35rem;
   border-radius: 999rem;
-  background: color-mix(in srgb, var(--mj-bg) 22%, transparent);
+  background: color-mix(in srgb, var(--mj-bg, #fff) 22%, transparent);
   overflow: hidden;
 }
 
 .qpc-font-pack__fill {
   height: 100%;
   border-radius: inherit;
-  background: var(--mj-brand);
+  background: var(--mj-brand, #176B57);
   transition: width var(--mj-motion-fast, 0.2s) ease;
+}
+
+/* أي ظهور مطلق علوي قديم — معطّل */
+.qpc-font-pack:not(.qpc-font-pack--sheet) {
+  display: none !important;
 }

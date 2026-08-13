@@ -187,27 +187,27 @@ function runStatic() {
     fail(10, "فاصل افتتاح شارة→بسملة غير ٢٤px");
   } else pass(10, "1em + فواصل ٢٠/٢٢/٢٤");
 
-  /* ١١ — الرأس: سور تبدأ في الصفحة */
+  /* ١١ — الرأس: سور تبدأ أو تستمر في الصفحة */
   const pageView = read("src/pages/quran/ui/MushafPageView.tsx");
-  if (!/surahsStartingOnPage/.test(pageView) || !/headerSurahNames/.test(pageView)) {
-    fail(11, "الرأس لا يستخدم surahsStartingOnPage");
-  } else pass(11, "headerSurahNames ← surahsStartingOnPage");
+  if (!/surahsOnPage|surahsStartingOnPage/.test(pageView) || !/headerSurahNames/.test(pageView)) {
+    fail(11, "الرأس لا يستخدم surahsOnPage/surahsStartingOnPage");
+  } else pass(11, "headerSurahNames ← سور الصفحة");
 
-  /* ١٢ — خرطوش الصفحة مركزي (±2px) — أُلغي التناوب */
-  if (/data-page-parity/.test(pageView)) {
-    fail(12, "تناوب خرطوش الصفحة ما زال موجودًا");
-  } else if (!/data-cartouche-align="center"|data-cartouche-side="center"/.test(pageView)) {
-    fail(12, "مركزية الخرطوش غير مثبتة");
-  } else pass(12, "خرطوش مركزي (بلا تناوب)");
+  /* ١٢ — خرطوش فردي يمين / زوجي يسار — مرجع آية */
+  if (!/data-page-parity/.test(pageView)) {
+    fail(12, "تناوب خرطوش الصفحة مفقود");
+  } else if (!/data-cartouche-align="parity"/.test(pageView)) {
+    fail(12, "وسم parity للخرطوش مفقود");
+  } else pass(12, "خرطوش تناوب آية (فردي/زوجي)");
 
-  /* ١٣ — ص١–٢ بلا إطار · شارة عند ٣٨٪ */
+  /* ١٣ — ص١–٢ بلا إطار · شارة مرجع آية ≈٢٧٫٧٪ شاشة */
   if (existsSync(join(ROOT, "src/components/quran/OpeningPageFrame.tsx"))) {
     fail(13, "OpeningPageFrame.tsx ما زال موجودًا");
-  } else if (!/OPENING_BANNER_TOP_PCT\s*=\s*16/.test(pageV2)) {
-    fail(13, "OPENING_BANNER_TOP_PCT ≠ 16");
+  } else if (!/OPENING_BANNER_TOP_PCT\s*=\s*20/.test(pageV2)) {
+    fail(13, "OPENING_BANNER_TOP_PCT ≠ 20");
   } else if (!/mpv-toolbar-band|MUSHAF_LAYOUT_BANDS/.test(pageV2 + read("src/styles/quran.css"))) {
     fail(13, "نطاقات التخطيط غير مثبتة");
-  } else pass(13, "بلا إطار + شارة ٣٨٪ + نطاقات");
+  } else pass(13, "بلا إطار + شارة آية + نطاقات");
 
   /* ١٤ — التباين */
   if (!/test:color-contrast-gate/.test(read("package.json"))) {
@@ -263,6 +263,7 @@ async function measureLive(page, pageNum) {
       firstInkPct: null,
       lastInkPct: null,
       cartoucheCenterDx: null,
+      cartoucheMidPct: null,
     };
 
     const frame = root.querySelector("[data-opening-frame]");
@@ -288,14 +289,16 @@ async function measureLive(page, pageNum) {
       if (out.lastInkPct == null || botPct > out.lastInkPct) out.lastInkPct = botPct;
     }
 
-    const cart =
+    const cartBadge =
+      document.querySelector(".mpv-ayah-page-badge") ||
       document.querySelector(".mf2-surah-header__cartouche") ||
       document.querySelector(".mpv-ayah-page-badge__cartouche") ||
       document.querySelector("[data-cartouche]");
-    if (cart) {
-      const cr = cart.getBoundingClientRect();
-      const mid = br.left + br.width / 2;
-      out.cartoucheCenterDx = Math.abs(cr.left + cr.width / 2 - mid);
+    if (cartBadge) {
+      const cr = cartBadge.getBoundingClientRect();
+      const midX = cr.left + cr.width / 2;
+      out.cartoucheMidPct = (midX / window.innerWidth) * 100;
+      out.cartoucheCenterDx = Math.abs(midX - window.innerWidth / 2);
     }
     return out;
   }, JSON.parse(read("src/features/mushaf/mushaf-grid.json")).baselinesPct);
@@ -404,13 +407,18 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
       }
     }
 
-    if (live[601]?.cartoucheCenterDx != null && live[601].cartoucheCenterDx > 2) {
-      fail(12, `ص٦٠١: مركز الخرطوش انحراف ${live[601].cartoucheCenterDx.toFixed(1)}px`);
-    } else if (live[601]?.cartoucheCenterDx != null) {
-      gateStatus[12] = {
-        ok: true,
-        detail: { p601Dx: +live[601].cartoucheCenterDx.toFixed(2) },
-      };
+    if (live[601]?.cartoucheMidPct != null) {
+      const pct = live[601].cartoucheMidPct;
+      const odd = 601 % 2 === 1;
+      const sideOk = odd ? pct >= 70 : pct <= 30;
+      if (!sideOk) {
+        fail(12, `ص٦٠١: جانب الخرطوش خاطئ midPct=${pct.toFixed(1)}`);
+      } else {
+        gateStatus[12] = {
+          ok: true,
+          detail: { p601MidPct: +pct.toFixed(2), parity: odd ? "odd-right" : "even-left" },
+        };
+      }
     }
 
     await browser.close();

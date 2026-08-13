@@ -18,11 +18,11 @@ const view = readFileSync(resolve(appRoot, "src/pages/quran/ui/MushafPageView.ts
 const stage = readFileSync(resolve(appRoot, "src/components/quran/MushafPageFlipStage.tsx"), "utf8");
 const css = readFileSync(resolve(appRoot, "src/styles/pages/mushaf-reader.css"), "utf8");
 
-assert.match(hook, /COMMIT_FRAC\s*=\s*0\.18/);
-assert.match(hook, /VELOCITY_PX_MS\s*=\s*0\.35/);
-assert.match(hook, /SETTLE_MS\s*=\s*220/);
-assert.match(hook, /SNAP_BACK_MS\s*=\s*150/);
-assert.match(hook, /FLIP_EDGE_FRAC/);
+assert.match(hook, /COMMIT_FRAC\s*=\s*0\.25/);
+assert.match(hook, /VELOCITY_PX_MS\s*=\s*0\.5/);
+assert.match(hook, /SETTLE_MS\s*=\s*280/);
+assert.match(hook, /SNAP_BACK_MS\s*=\s*160/);
+assert.match(hook, /FLIP_EDGE_FRAC\s*=\s*0\.15/);
 assert.match(hook, /onCenterTap/);
 assert.match(hook, /classifyTap/);
 assert.match(hook, /requestAnimationFrame/);

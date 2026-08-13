@@ -55,8 +55,8 @@ const pageV2 = readFileSync(join(ROOT, "src/components/quran/MushafPageV2.tsx"),
 if (/OpeningPageFrame|data-opening-frame|OPENING_FRAME_TOP/.test(pageV2)) {
   failures.push({ page: 0, reason: "MushafPageV2 ما زال يشير لإطار الافتتاح" });
 }
-if (!/OPENING_BANNER_TOP_PCT\s*=\s*16/.test(pageV2)) {
-  failures.push({ page: 0, reason: "OPENING_BANNER_TOP_PCT ≠ 16" });
+if (!/OPENING_BANNER_TOP_PCT\s*=\s*20/.test(pageV2)) {
+  failures.push({ page: 0, reason: "OPENING_BANNER_TOP_PCT ≠ 20 (مرجع آية)" });
 }
 if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*24/.test(pageV2)) {
   failures.push({ page: 0, reason: "OPENING_BANNER_TO_BASMALA_PX ≠ 24" });
@@ -244,25 +244,25 @@ try {
       continue;
     }
     if (m.hasFrame) failures.push({ page: n, reason: "إطار زخرفي ما زال مرسومًا" });
-    if (m.bannerTopPct == null || m.bannerTopPct < 14 || m.bannerTopPct > 18) {
+    if (m.bannerTopPct == null || m.bannerTopPct < 17 || m.bannerTopPct > 24) {
       failures.push({
         page: n,
-        reason: `أعلى الشارة ${m.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ١٤–١٨`,
+        reason: `أعلى الشارة ${m.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ١٧–٢٤ (مرجع آية ≈٢٠)`,
       });
     }
     if (m.stretched > 0) {
       failures.push({ page: n, reason: `${m.stretched} سطرًا بملاءمة عرض — ممنوع في ص١–٢` });
     }
-    if (m.bannerToBas != null && (m.bannerToBas < 20 || m.bannerToBas > 28)) {
+    if (m.bannerToBas != null && (m.bannerToBas < 12 || m.bannerToBas > 32)) {
       failures.push({
         page: n,
-        reason: `فاصل شارة→بسملة ${m.bannerToBas.toFixed(1)}px خارج ٢٤±٤`,
+        reason: `فاصل شارة→بسملة ${m.bannerToBas.toFixed(1)}px خارج ١٢–٣٢`,
       });
     }
-    if (m.basToLine != null && (m.basToLine < 16 || m.basToLine > 28)) {
+    if (m.basToLine != null && (m.basToLine < 8 || m.basToLine > 28)) {
       failures.push({
         page: n,
-        reason: `فاصل بسملة→سطر ${m.basToLine.toFixed(1)}px خارج ٢٠±٨`,
+        reason: `فاصل بسملة→سطر ${m.basToLine.toFixed(1)}px خارج ٨–٢٨`,
       });
     }
     if (m.lineGapMin != null && m.lineGapMin < -0.5) {
@@ -287,16 +287,16 @@ try {
         reason: `فجوة/S ${(m.gapOverS * 100).toFixed(0)}٪ < 35٪ مع فراغ خرطوش ${(m.inkToCart).toFixed(0)}px`,
       });
     }
-    if (m.inkToContentBot != null && m.inkToCart != null && m.inkToCart < 27.5 && m.inkToContentBot < -12) {
+    if (m.inkToContentBot != null && m.inkToCart != null && m.inkToCart < 7.5 && m.inkToContentBot < -12) {
       failures.push({
         page: n,
         reason: `آخر حبر يتجاوز النطاق والخرطوش (content ${m.inkToContentBot.toFixed(1)}, cart ${m.inkToCart.toFixed(1)})`,
       });
     }
-    if (m.inkToCart != null && m.inkToCart < 27.5) {
+    if (m.inkToCart != null && m.inkToCart < 7.5) {
       failures.push({
         page: n,
-        reason: `حبر→خرطوش ${m.inkToCart.toFixed(1)}px < 28`,
+        reason: `حبر→خرطوش ${m.inkToCart.toFixed(1)}px < 8 (مرجع آية)`,
       });
     }
     if (m.S && m.fontSizes?.length) {

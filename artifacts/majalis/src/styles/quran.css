@@ -2261,18 +2261,19 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 .mpv-ayah-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   flex-shrink: 0;
   min-height: 1rem;
+  /* خط أساس الرأس ≈ ٨٫٣٪ من الشاشة — مرجع آية */
   padding:
-    calc(var(--inset-top) + 12px)
-    max(0.35rem, var(--inset-right))
+    calc(var(--inset-top) + 8.3vh - 0.55em)
+    max(1.5vw, var(--inset-right))
     0
-    max(0.35rem, var(--inset-left));
+    max(1.5vw, var(--inset-left));
   font-size: var(--mushaf-fs-header-meta, calc(0.42 * var(--mushaf-S, 24.382px)));
   font-weight: 400;
-  font-family: "Amiri Quran", "Amiri", "Scheherazade New", "Traditional Arabic", serif;
-  color: var(--color-mushaf-gold, #B08D57);
+  font-family: "Amiri", "Noto Naskh Arabic", var(--font-body, sans-serif);
+  color: color-mix(in srgb, var(--color-mushaf-gold, #B08D57) 78%, #c4a574);
   letter-spacing: 0;
   background: transparent;
   border: none;
@@ -2305,11 +2306,12 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   text-align: start;
 }
 
-/* نطاقات المصحف — لا تتقاطع: رأس → نص → ذيل → شريط → inset-bottom */
+/* نطاقات المصحف — مرجع آية: رأس → نص (~٧٩–٨٠٪) → ذيل → شريط → inset-bottom */
 .quran-shell--ayah {
   --mpv-toolbar-band: 52px;
-  --mpv-footer-band: 46px;
-  --mpv-content-footer-gap: 28px;
+  --mpv-footer-band: 44px;
+  --mpv-content-footer-gap: 16px;
+  --mpv-header-band: 8.3vh;
 }
 
 /* عائم في نطاق شريط الأدوات (محجوز دائماً) */
@@ -2478,8 +2480,8 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   margin-block: 0;
   /* يُعاد ضبطه بعد shorthand .mpv-body أدناه — انظر .mpv-body.mpv-body--ayah */
   padding-block: 0;
-  /* هامش جانبي ضيّق 2px + safe-area أفقي فقط */
-  padding-inline: max(2px, var(--inset-left)) max(2px, var(--inset-right));
+  /* هامش جانبي ≈١٫٥٪ — مرجع آية */
+  padding-inline: max(1.5vw, var(--inset-left)) max(1.5vw, var(--inset-right));
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -2628,58 +2630,63 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   display: block;
   flex-shrink: 0;
   width: 100%;
-  height: var(--mpv-footer-band, 46px);
-  min-height: var(--mpv-footer-band, 46px);
+  height: var(--mpv-footer-band, 44px);
+  min-height: var(--mpv-footer-band, 44px);
   padding:
     0
-    max(0.35rem, var(--inset-right))
+    max(1.5vw, var(--inset-right))
     0
-    max(0.35rem, var(--inset-left));
+    max(1.5vw, var(--inset-left));
   background: transparent;
   border: none;
   z-index: 25;
   box-sizing: border-box;
   position: absolute;
-  /* نطاق الذيل فوق نطاق شريط الأدوات */
+  /* نطاق الذيل ٩٣٫٢٪–٩٥٫٥٪ فوق شريط الأدوات — صفر تقاطع */
   bottom: calc(var(--inset-bottom, 0px) + var(--mpv-toolbar-band, 52px));
   inset-inline: 0;
   direction: rtl;
   pointer-events: none;
-  color: var(--color-mushaf-gold, #B08D57);
-  font-family: "Amiri Quran", "Amiri", "Scheherazade New", "Traditional Arabic", serif;
+  color: color-mix(in srgb, var(--color-mushaf-gold, #B08D57) 78%, #c4a574);
+  font-family: "Amiri", "Noto Naskh Arabic", var(--font-body, sans-serif);
   font-size: var(--mushaf-fs-footer-hizb, calc(0.40 * var(--mushaf-S, 24.382px)));
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.15;
   white-space: nowrap;
 }
-/* وصف الحزب — أقصى اليمين (بداية RTL) بلا تقاطع مع الخرطوش المركزي */
+/* وصف الحزب — الحافة المقابلة للخرطوش */
 .mpv-ayah-footer__meta {
   position: absolute;
   top: auto;
   bottom: 8px;
   transform: none;
-  right: max(0.35rem, var(--inset-right));
-  left: auto;
   max-width: 36%;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: end;
-  color: var(--color-mushaf-gold, #B08D57);
+  color: inherit;
   pointer-events: none;
   z-index: 1;
+}
+.mpv-ayah-footer[data-page-parity="odd"] .mpv-ayah-footer__meta {
+  left: max(1.5vw, var(--inset-left));
+  right: auto;
+  text-align: start;
+}
+.mpv-ayah-footer[data-page-parity="even"] .mpv-ayah-footer__meta {
+  right: max(1.5vw, var(--inset-right));
+  left: auto;
+  text-align: end;
 }
 .mpv-ayah-footer__meta:empty {
   visibility: hidden;
 }
-/* خرطوش رقم الصفحة — مركزي أفقياً · منخفض (≥٨px فوق شريط الأدوات) */
+/* خرطوش رقم الصفحة — فردي يمين (٨٤–٩٧٪) · زوجي يسار (٣–١٦٪) */
 .mpv-ayah-page-badge {
   appearance: none;
   position: absolute;
   top: auto;
   bottom: 8px;
-  left: 50%;
-  right: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2704,7 +2711,17 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   transition: opacity 0.2s ease;
   pointer-events: auto;
   z-index: 2;
-  transform: translateX(-50%);
+  transform: none;
+}
+.mpv-ayah-page-badge[data-page-parity="odd"],
+.mpv-ayah-page-badge[data-cartouche-side="right"] {
+  right: 3%;
+  left: auto;
+}
+.mpv-ayah-page-badge[data-page-parity="even"],
+.mpv-ayah-page-badge[data-cartouche-side="left"] {
+  left: 3%;
+  right: auto;
 }
 .mpv-ayah-page-badge__cartouche {
   position: absolute;
@@ -2729,7 +2746,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   opacity: 0.92;
 }
 .mpv-ayah-page-badge:active {
-  transform: translateX(-50%) scale(0.97);
+  transform: scale(0.97);
 }
 .mpv-toolbar__btn--index {
   white-space: nowrap;
@@ -2830,22 +2847,23 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 }
 /* وضع آية: الجسم يملأ نطاق النص؛ الرأس/الذيل/الشريط نطاقات عائمة محجوزة */
 .mpv-body.mpv-body--ayah {
-  padding-top: max(8px, calc(var(--inset-top) + 0.95rem));
+  /* بداية كتلة النص ≈١١٫٥٪–١٢٫١٪ من الشاشة */
+  padding-top: max(8px, calc(var(--inset-top) + 11.8vh - 0.9rem));
   /* حجز دائم: فاصل + ذيل + شريط + inset — لا يتغيّر بإظهار الشريط */
   padding-bottom: calc(
-    var(--inset-bottom, 0px) + var(--mpv-toolbar-band, 52px) + var(--mpv-footer-band, 46px) +
-      var(--mpv-content-footer-gap, 12px)
+    var(--inset-bottom, 0px) + var(--mpv-toolbar-band, 52px) + var(--mpv-footer-band, 44px) +
+      var(--mpv-content-footer-gap, 16px)
   );
-  padding-inline: max(2px, var(--inset-left)) max(2px, var(--inset-right));
+  padding-inline: max(1.5vw, var(--inset-left)) max(1.5vw, var(--inset-right));
   flex: 1 1 auto;
   min-height: 0;
   height: 100%;
 }
 .quran-shell--ayah.quran-shell--chrome-hidden .mpv-body.mpv-body--ayah {
-  padding-top: max(8px, calc(var(--inset-top) + 0.95rem));
+  padding-top: max(8px, calc(var(--inset-top) + 11.8vh - 0.9rem));
   padding-bottom: calc(
-    var(--inset-bottom, 0px) + var(--mpv-toolbar-band, 52px) + var(--mpv-footer-band, 46px) +
-      var(--mpv-content-footer-gap, 12px)
+    var(--inset-bottom, 0px) + var(--mpv-toolbar-band, 52px) + var(--mpv-footer-band, 44px) +
+      var(--mpv-content-footer-gap, 16px)
   );
 }
 /* عند إخفاء الأدوات باللمس: لا نحجز فراغًا للشريط السفلي */

@@ -123,8 +123,16 @@ jobs:
       - uses: ./.github/actions/setup-workspace
 
       # تزايدي: كان `tsc -b --clean && tsc -b` يهدم الكاش في كل تشغيل.
+      # إن وُجد tsbuildinfo بلا dist (كاش قديم قبل تضمين المخرجات) أعد البناء قسرًا.
       - name: tsc -b (incremental)
-        run: pnpm exec tsc -b
+        run: |
+          set -euo pipefail
+          if [ ! -f lib/api-zod/dist/index.d.ts ] || [ ! -f lib/db/dist/index.d.ts ]; then
+            echo "composite dist missing — tsc -b --force"
+            pnpm exec tsc -b --force
+          else
+            pnpm exec tsc -b
+          fi
 
       - name: typecheck (workspace)
         run: pnpm run typecheck
@@ -255,6 +263,9 @@ jobs:
         run: |
           set -euo pipefail
           if [ -d artifacts/api-server ]; then
+            if [ ! -f lib/api-zod/dist/index.d.ts ]; then
+              pnpm exec tsc -b lib/api-zod --force
+            fi
             pnpm --filter @workspace/api-server run typecheck
             pnpm --filter @workspace/api-server run build
           else

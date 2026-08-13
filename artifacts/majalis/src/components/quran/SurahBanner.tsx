@@ -84,7 +84,7 @@ function PetalMedallion({ cx, cy, r }: { cx: number; cy: number; r: number }) {
   );
 }
 
-/** فرعان لولبيان متناظران فقط حول الميدالية */
+/** فرعان لولبيان + لفّات ثانوية لكثافة أرابيسك آية */
 function TwinSpirals({
   cx,
   cy,
@@ -119,26 +119,23 @@ function TwinSpirals({
     `${(cx + medR * 1.15).toFixed(2)} ${(cy + amp * 0.55).toFixed(2)},`,
     `${(cx + medR * 0.75).toFixed(2)} ${(cy + amp * 0.08).toFixed(2)}`,
   ].join(" ");
+  /* لفّات كثافة إضافية */
+  const left2 = [
+    `M ${(cx - medR * 0.55).toFixed(2)} ${(cy - medR * 0.35).toFixed(2)}`,
+    `Q ${(leftEnd + wingW * 0.18).toFixed(2)} ${(cy - amp * 1.15).toFixed(2)},`,
+    `${(leftEnd + 8).toFixed(2)} ${(cy - amp * 0.2).toFixed(2)}`,
+  ].join(" ");
+  const right2 = [
+    `M ${(cx + medR * 0.55).toFixed(2)} ${(cy - medR * 0.35).toFixed(2)}`,
+    `Q ${(rightEnd - wingW * 0.18).toFixed(2)} ${(cy - amp * 1.15).toFixed(2)},`,
+    `${(rightEnd - 8).toFixed(2)} ${(cy - amp * 0.2).toFixed(2)}`,
+  ].join(" ");
   return (
     <g data-wing-part="spirals" aria-hidden="true">
-      <path
-        data-wing-part="spiral"
-        d={left}
-        fill="none"
-        stroke={ORNAMENT_LINE}
-        strokeWidth={STROKE}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        data-wing-part="spiral"
-        d={right}
-        fill="none"
-        stroke={ORNAMENT_LINE}
-        strokeWidth={STROKE}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path data-wing-part="spiral" d={left} fill="none" stroke={ORNAMENT_LINE} strokeWidth={STROKE} strokeLinecap="round" strokeLinejoin="round" />
+      <path data-wing-part="spiral" d={right} fill="none" stroke={ORNAMENT_LINE} strokeWidth={STROKE} strokeLinecap="round" strokeLinejoin="round" />
+      <path data-wing-part="spiral" d={left2} fill="none" stroke={ORNAMENT_LINE} strokeWidth={STROKE * 0.9} strokeLinecap="round" />
+      <path data-wing-part="spiral" d={right2} fill="none" stroke={ORNAMENT_LINE} strokeWidth={STROKE * 0.9} strokeLinecap="round" />
     </g>
   );
 }

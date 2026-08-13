@@ -26,6 +26,6 @@
     "lastSlotMidLines": 96.0,
     "fillBody": 0.943
   },
-  "sideMarginPx": 2,
+  "sideMarginPx": 6,
   "notes": "مشتق من contentBand فقط (.mf2-lines بعد طرح header/footer/toolbar على 390×844). مرجع ص٢٨٣: مراكز ١٥ خانة من ٤٫٠٪ إلى ٩٦٫٠٪ بخطوة ٦٫٥٧١٤٪؛ ارتفاع الخانة ٧٫٢٪؛ fill داخل contentBand ≈0.943. انحراف ≤2px. انظر layout-bands.ts و MUSHAF_SPEC.md."
 }

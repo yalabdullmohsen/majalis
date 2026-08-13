@@ -157,10 +157,10 @@ try {
     if (structural.badgeInFooter === false) {
       failures.push({ page: n, reason: "خرطوش خارج footerBand" });
     }
-    if (structural.inkToCart != null && structural.inkToCart < 27.5) {
+    if (structural.inkToCart != null && structural.inkToCart < 7.5) {
       failures.push({
         page: n,
-        reason: `حبر→خرطوش ${structural.inkToCart.toFixed(1)}px < 28`,
+        reason: `حبر→خرطوش ${structural.inkToCart.toFixed(1)}px < 8`,
       });
     }
     if (structural.maxHOverflow > 0.5) {

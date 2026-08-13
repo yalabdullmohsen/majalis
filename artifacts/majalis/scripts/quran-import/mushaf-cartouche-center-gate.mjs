@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * بوابة مركزية خرطوش رقم الصفحة (±2px) + مسافة ≥28px عن حبر آخر سطر.
+ * بوابة خرطوش آية: فردي يمين · زوجي يسار · بلا تقاطع مع الذيل/الشريط.
  *   pnpm run test:mushaf-cartouche-center
  */
 import { chromium } from "playwright";
@@ -20,7 +20,7 @@ const EXTERNAL_BASE = process.env.MUSHAF_GATE_BASE_URL?.replace(/\/$/, "") || ""
 const PORT = process.env.MUSHAF_GATE_PORT || "24242";
 const BASE = EXTERNAL_BASE || `http://127.0.0.1:${PORT}`;
 const OUT_DIR =
-  process.env.MUSHAF_GATE_OUT_DIR || join(ROOT, ".local/mushaf-cartouche-center");
+  process.env.MUSHAF_GATE_OUT_DIR || join(ROOT, ".local/mushaf-cartouche-parity");
 const VIEWPORT = { width: 390, height: 844 };
 const SAMPLE = resolveGatePages();
 
@@ -45,17 +45,17 @@ function waitForServer(url, timeoutMs = 60_000) {
 const failures = [];
 const viewSrc = readFileSync(join(ROOT, "src/pages/quran/ui/MushafPageView.tsx"), "utf8");
 const css = readFileSync(join(ROOT, "src/styles/quran.css"), "utf8");
-if (/data-page-parity/.test(viewSrc)) {
-  failures.push({ page: 0, reason: "data-page-parity ما زال موجودًا — أُلغي التناوب" });
+if (!/data-page-parity/.test(viewSrc)) {
+  failures.push({ page: 0, reason: "data-page-parity مفقود — مطلوب تناوب آية" });
 }
-if (!/data-cartouche-align="center"|data-cartouche-side="center"/.test(viewSrc)) {
-  failures.push({ page: 0, reason: "وسم مركزية الخرطوش مفقود في MushafPageView" });
+if (!/data-cartouche-align="parity"/.test(viewSrc)) {
+  failures.push({ page: 0, reason: "وسم parity للخرطوش مفقود" });
 }
-if (!/left:\s*50%/.test(css) || !/translateX\(-50%\)/.test(css)) {
-  failures.push({ page: 0, reason: "CSS مركزية الخرطوش ناقص" });
+if (!/data-page-parity="odd"/.test(css) || !/data-page-parity="even"/.test(css)) {
+  failures.push({ page: 0, reason: "CSS تناوب الخرطوش مفقود" });
 }
-if (/data-page-parity="odd"/.test(css) || /data-page-parity="even"/.test(css)) {
-  failures.push({ page: 0, reason: "CSS تناوب الخرطوش ما زال موجودًا" });
+if (/data-cartouche-side="center"/.test(viewSrc)) {
+  failures.push({ page: 0, reason: "خرطوش مركزي ما زال موجودًا — المرجع آية يرفضه" });
 }
 
 let server = null;
@@ -93,7 +93,7 @@ const sample = [];
 if (failures.length === 0) {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: VIEWPORT });
-await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
+  await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   try {
     for (const n of SAMPLE) {
       await page.goto(`${BASE}/mushaf/page/${n}`, {
@@ -102,7 +102,7 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
       });
       await page.waitForSelector(".mpv-ayah-page-badge", { timeout: 45_000 });
       await sleep(n <= 3 ? 900 : 400);
-      const m = await page.evaluate(() => {
+      const m = await page.evaluate((pageNum) => {
         const badge = document.querySelector(".mpv-ayah-page-badge");
         const footer = document.querySelector(".mpv-ayah-footer");
         const toolbar = document.querySelector(".mpv-toolbar--ayah");
@@ -111,33 +111,37 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
         const br = badge.getBoundingClientRect();
         const fr = footer.getBoundingClientRect();
         const mid = br.left + br.width / 2;
-        const pageMid = window.innerWidth / 2;
-        const dx = Math.abs(mid - pageMid);
+        const w = window.innerWidth;
+        const odd = pageNum % 2 === 1;
+        const midPct = (mid / w) * 100;
+        const sideOk = odd ? midPct >= 70 : midPct <= 30;
         let lastInkBot = 0;
         for (const el of lines) {
           const r = el.getBoundingClientRect();
           if (r.height > 0) lastInkBot = Math.max(lastInkBot, r.bottom);
         }
         const gapToCart = lastInkBot > 0 ? br.top - lastInkBot : null;
-        /* شريط الأدوات قد يكون مخفيًا — قِس إلى حدّ نطاق الذيل (= أعلى toolbarBand) */
         const tr = toolbar?.getBoundingClientRect();
-        const toolbarTop =
-          tr && tr.height > 1 ? tr.top : fr.bottom;
+        const toolbarTop = tr && tr.height > 1 ? tr.top : fr.bottom;
         const gapToToolbar = toolbarTop - br.bottom;
+        const bandsOk =
+          fr.bottom <= toolbarTop + 1 &&
+          (gapToCart == null || gapToCart >= 8) &&
+          gapToToolbar >= 6;
         return {
-          dx,
+          midPct,
+          odd,
+          sideOk,
           gapToCart,
           gapToToolbar,
-          mid,
-          pageMid,
-          ok: dx <= 2.05 && (gapToCart == null || gapToCart >= 27.5) && gapToToolbar >= 7.5,
+          ok: sideOk && bandsOk,
         };
-      });
+      }, n);
       sample.push({ page: n, ...m });
       if (m.error || !m.ok) {
         failures.push({
           page: n,
-          reason: `dx=${m.dx?.toFixed?.(1)} gapCart=${m.gapToCart?.toFixed?.(1)} gapTb=${m.gapToToolbar?.toFixed?.(1)}`,
+          reason: `midPct=${m.midPct?.toFixed?.(1)} sideOk=${m.sideOk} gapCart=${m.gapToCart?.toFixed?.(1)} gapTb=${m.gapToToolbar?.toFixed?.(1)}`,
         });
       }
     }
@@ -147,11 +151,11 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
   }
 }
 
-const report = { base: BASE, sample, failures, staticCenterPages: 604 };
+const report = { base: BASE, sample, failures, parityPages: 604 };
 writeFileSync(join(OUT_DIR, "gate-result.json"), JSON.stringify(report, null, 2));
 console.log(JSON.stringify(report, null, 2));
 if (failures.length) {
   console.error(`FAIL ${failures.length}`);
   process.exit(1);
 }
-console.log("mushaf-cartouche-center-gate: ok");
+console.log("mushaf-cartouche-parity-gate: ok");

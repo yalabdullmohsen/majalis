@@ -35,8 +35,10 @@ assert.match(
   "كلمات QPC بلا isolate يقطع التشكيل",
 );
 assert.match(pageComp, /mf2-lines--qpc-contiguous/, "مسار الدقة يفعّل الأسطر المتصلة");
-assert.match(pageComp, /textQpcHafs/, "مسار Unicode الآمن يستخدم textQpcHafs لا glyph عند الفشل");
-assert.match(pageComp, /pageFont\.failed/, "فشل خط الصفحة يفعّل التراجع");
+assert.match(pageComp, /useUnicodeSafe\s*=\s*false/, "مسار QPC موحّد — بلا عثماني متدفق");
+assert.match(pageComp, /glyphText/, "علامات الآيات من محرف QPC");
+assert.match(pageComp, /mushafScale|scaleFactor/, "تحجيم عبر --mushaf-scale");
+assert.match(dataLoader, /textQpcHafs/, "البيانات تحتفظ بـ textQpcHafs للبحث/الطبقة المخفية");
 
 assert.match(viewSrc, /qs-mushaf-body--ayah/);
 assert.match(dataLoader, /code_v2/, "التحميل يعتمد code_v2 لا code_v1");
