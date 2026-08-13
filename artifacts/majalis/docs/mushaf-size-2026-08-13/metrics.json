@@ -1,0 +1,93 @@
+{
+  "pages": {
+    "1": {
+      "lineCount": 7,
+      "contentTopPct": 11.9,
+      "contentBotPct": 91.10000000000001,
+      "firstInkTopPct": 37.24544579383886,
+      "lastInkBotPct": 74.40480598341233,
+      "headerBasePct": 8.074181723933648,
+      "bannerTopPct": 27.7371519549763,
+      "fontSizePx": 20.0882,
+      "charHeightPct": 3.909952606635071,
+      "minCover": 0.11510821080455973,
+      "medianCover": 0.4942590451016025,
+      "maxWordGap": 0,
+      "medianWordGap": 0,
+      "anyClipped": false,
+      "anyOverflowX": false,
+      "basmalaCount": 1,
+      "fills": [
+        0.115,
+        0.494,
+        0.627,
+        0.638,
+        0.606,
+        0.477,
+        0.28
+      ]
+    },
+    "2": {
+      "lineCount": 6,
+      "contentTopPct": 11.9,
+      "contentBotPct": 91.10000000000001,
+      "firstInkTopPct": 43.4713788507109,
+      "lastInkBotPct": 74.40480598341233,
+      "headerBasePct": 7.982912470379147,
+      "bannerTopPct": 27.7371519549763,
+      "fontSizePx": 18.3064,
+      "charHeightPct": 3.909952606635071,
+      "minCover": 0.2607384767883694,
+      "medianCover": 0.5623657690401453,
+      "maxWordGap": 0,
+      "medianWordGap": 0,
+      "anyClipped": false,
+      "anyOverflowX": false,
+      "basmalaCount": 1,
+      "fills": [
+        0.43,
+        0.567,
+        0.576,
+        0.562,
+        0.434,
+        0.261
+      ]
+    },
+    "3": {
+      "lineCount": 15,
+      "contentTopPct": 11.9,
+      "contentBotPct": 91.10000000000001,
+      "firstInkTopPct": 12.02143809241706,
+      "lastInkBotPct": 90.81290728672985,
+      "headerBasePct": 8.239410545023695,
+      "bannerTopPct": null,
+      "fontSizePx": 23.368,
+      "charHeightPct": 4.502369668246446,
+      "minCover": 0.969973566826367,
+      "medianCover": 0.9771600859078143,
+      "maxWordGap": 1.15625,
+      "medianWordGap": 0.59375,
+      "anyClipped": false,
+      "anyOverflowX": false,
+      "basmalaCount": 0,
+      "fills": [
+        0.978,
+        0.977,
+        0.976,
+        0.978,
+        0.977,
+        0.975,
+        0.977,
+        0.977,
+        0.977,
+        0.977,
+        0.97,
+        0.977,
+        0.978,
+        0.977,
+        0.97
+      ]
+    }
+  },
+  "failures": []
+}

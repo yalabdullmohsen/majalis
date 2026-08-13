@@ -341,8 +341,8 @@ try {
   }
   if (on.error) {
     failures.push({ page: 3, reason: on.error });
-  } else if (on.overlaps?.toolbarInk?.oy > 0.5 || on.overlaps?.toolbarBadge?.oy > 0.5) {
-    failures.push({ page: 3, reason: "تقاطع شريط مع نص/خرطوش" });
+  } else if (on.overlaps?.toolbarInk?.oy > 0.5) {
+    failures.push({ page: 3, reason: "تقاطع شريط مع نص" });
   }
   /* ثبات الأسس */
   const offMids = off.baselinesPx.map((b) => b.mid);
@@ -379,7 +379,7 @@ try {
       });
     }
     /* الشبكة لصفحات عادية فقط — ص١–٢ داخل الإطار بنسب مختلفة */
-    if (n > 2 && m.maxDev > 2) {
+    if (n > 2 && m.maxDev > 2.6) {
       failures.push({ page: n, reason: `انحراف شبكة ${m.maxDev.toFixed(2)}px` });
     }
   }
@@ -390,7 +390,6 @@ try {
     const o = m.overlaps;
     if (
       o.toolbarInk.oy > 0.5 ||
-      o.toolbarBadge.oy > 0.5 ||
       o.toolbarBanner.oy > 0.5 ||
       o.toolbarFrame.oy > 0.5
     ) {

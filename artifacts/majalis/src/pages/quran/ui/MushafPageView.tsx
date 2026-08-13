@@ -32,6 +32,7 @@ import { JumpPageModal } from "@/components/quran/JumpPageModal";
 import { MushafPageFlipStage } from "@/components/quran/MushafPageFlipStage";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout } from "@/lib/mushaf-v2-data";
+import { ensureMushafPageFont } from "@/hooks/useMushafPageFont";
 import { getMushafSpread, prefersMushafSpread } from "@/lib/mushaf-spread";
 import { FONT_OPTIONS } from "@/lib/quran-font-options";
 import {
@@ -275,6 +276,11 @@ export default function MushafPageView() {
     }).catch(() => {});
     if (page > 1) prefetchMushafPage(page - 1);
     if (page < TOTAL_PAGES) prefetchMushafPage(page + 1);
+    /* تحميل مسبق لخطوط الصفحة الحالية والجيران + خط بسملة الفاتحة */
+    void ensureMushafPageFont(page).catch(() => {});
+    void ensureMushafPageFont(1).catch(() => {});
+    if (page > 1) void ensureMushafPageFont(page - 1).catch(() => {});
+    if (page < TOTAL_PAGES) void ensureMushafPageFont(page + 1).catch(() => {});
     /* جيران في الذاكرة لتقليب فوري (تحت الورقة) */
     void guardAsync(signal, async () => {
       const [prev, next] = await Promise.all([

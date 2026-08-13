@@ -4,7 +4,7 @@
  * تشغيل: npx tsx src/lib/__tests__/mushaf-fullbleed-layout.test.ts
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -53,13 +53,13 @@ assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?position:\s*absolute/, "ر
 assert.match(quranCss, /\.mpv-ayah-footer\s*\{[\s\S]*?position:\s*absolute/, "ذيل عائم لا يزيح النص");
 assert.match(
   quranCss,
-  /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*calc\(\s*var\(--inset-top[^)]*\)\s*\+\s*11\.8vh\s*\)/,
-  "بداية كتلة النص عند ١١٫٨٪",
+  /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*calc\(\s*var\(--inset-top,\s*0px\)\s*\+\s*11\.9vh\)/,
+  "بداية كتلة النص عند ١١٫٩٪",
 );
 assert.match(
   quranCss,
-  /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-bottom:\s*calc\(\s*var\(--inset-bottom[^)]*\)\s*\+\s*8\.5vh\s*\)/,
-  "نهاية كتلة النص عند ٩١٫٥٪",
+  /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-bottom:\s*calc\(\s*var\(--inset-bottom,\s*0px\)\s*\+\s*8\.9vh\)/,
+  "نهاية كتلة النص عند ٩١٫١٪",
 );
 assert.equal(
   /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*1\.35rem/.test(quranCss),
@@ -150,12 +150,20 @@ const bismillah = mushafV2.match(/(?:^|\n)\.mf2-bismillah\s*\{[^}]+\}/);
 assert.ok(bismillah, ".mf2-bismillah معرّف");
 assert.match(bismillah[0], /white-space:\s*nowrap/);
 assert.ok(
-  bismillah[0].includes("Amiri Quran"),
-  "البسملة الافتتاحية بخط رقعة/ثلث (Amiri) أخف من الآيات",
+  bismillah[0].includes("qpc-page-1"),
+  "البسملة الموحّدة بخط QPC صفحة ١ (أسلوب الفاتحة)",
 );
-assert.equal(bismillah[0].includes("font-family: inherit"), false, "البسملة الافتتاحية لا ترث qpc-page");
+assert.equal(bismillah[0].includes("Amiri Quran"), false, "لا مسار Amiri بديل للبسملة");
 assert.match(bismillah[0], /font-size:\s*1em/, "بسملة بمقاس سطر الآية");
-assert.match(bismillah[0], /font-weight:\s*700/, "بسملة بسُمك يقارب سطر QPC");
 assert.match(bismillah[0], /geometricPrecision|optimizeLegibility/);
+
+const pageV2 = readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8");
+assert.match(pageV2, /BasmalaLine/);
+assert.match(pageV2, /MAX_WORD_GAP_PX\s*=\s*18/);
+assert.doesNotMatch(pageV2, /DRAWN_BASMALA_TEXT/);
+assert.ok(
+  existsSync(resolve(appRoot, "src/components/quran/BasmalaLine.tsx")),
+  "مكوّن بسملة واحد",
+);
 
 console.log("mushaf-fullbleed-layout.test.ts: ok");

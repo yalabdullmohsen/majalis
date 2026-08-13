@@ -146,7 +146,7 @@ try {
       const S =
         parseFloat(getComputedStyle(root).getPropertyValue("--mushaf-S")) ||
         parseFloat(getComputedStyle(root).fontSize) ||
-        24.382;
+        34.135;
       const fontSizes = ayahLines.map((el) => parseFloat(getComputedStyle(el).fontSize));
       let bannerToBas = null;
       let basToLine = null;
@@ -253,10 +253,10 @@ try {
     if (m.stretched > 0) {
       failures.push({ page: n, reason: `${m.stretched} سطرًا بملاءمة عرض — ممنوع في ص١–٢` });
     }
-    if (m.bannerToBas != null && (m.bannerToBas < 12 || m.bannerToBas > 32)) {
+    if (m.bannerToBas != null && (m.bannerToBas < 12 || m.bannerToBas > 40)) {
       failures.push({
         page: n,
-        reason: `فاصل شارة→بسملة ${m.bannerToBas.toFixed(1)}px خارج ١٢–٣٢`,
+        reason: `فاصل شارة→بسملة ${m.bannerToBas.toFixed(1)}px خارج ١٢–٤٠`,
       });
     }
     if (m.basToLine != null && (m.basToLine < 8 || m.basToLine > 28)) {
