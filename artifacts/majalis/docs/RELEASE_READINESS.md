@@ -16,8 +16,6 @@
 | JS gzip رئيسي | ~135 KB | فوق هدف الحزمة الكلية |
 | CSS حرج | فوق 60 KB gzip | **فوق الهدف** |
 
-إنتاج عند الكتابة: راقب `https://majlisilm.com/version.json`.
-
 ## ٢. PRs هذه الجولة
 | PR | النتيجة |
 |----|---------|
@@ -30,11 +28,11 @@
 ## ٣. هل جاهز للإطلاق؟
 **لا بعد** — متبقٍ مقيس:
 1. أداء: تقطيع CSS/`index.css`، LCP/TTI غير مقيسة بـLighthouse في الجلسة.
-2. بحث موحّد/SEO كامل/sitemap ديناميكي كامل يحتاج جولة مستقلة.
+2. بحث موحّد/SEO كامل يحتاج جولة مستقلة.
 3. أمان: مراجعة CSP/`unsafe-inline` وRLS يدوي في Supabase.
 4. PWA offline كامل + Playwright smoke لكل المسارات.
 5. تنظيف رموز `--background/--primary` المكررة إلى مصدر `@theme` واحد.
-6. محتوى شرعي/تراخيص: قرار بشري لـeveryayah/mp3quran (`LICENSE_RISKS.md`).
+6. تراخيص صوت: قرار بشري (`LICENSE_RISKS.md`).
 
 ## ٤. أوامر
 ```bash
