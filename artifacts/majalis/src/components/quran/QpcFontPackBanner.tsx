@@ -18,6 +18,16 @@ async function localFontsAvailable(): Promise<boolean> {
   }
 }
 
+/** شريط/مؤشر التشخيص: تطوير فقط أو ?fontDebug=1 — ممنوع في إنتاج الويب. */
+function fontProgressUiAllowed(): boolean {
+  if (import.meta.env.DEV) return true;
+  try {
+    return new URLSearchParams(window.location.search).get("fontDebug") === "1";
+  } catch {
+    return false;
+  }
+}
+
 type Props = {
   currentPage: number;
   /**
@@ -28,8 +38,8 @@ type Props = {
 };
 
 /**
- * تقدّم تنزيل خطوط QPC — في شيت الإعدادات فقط.
- * يختفي بعد ١٫٥ ثانية من آخر تفاعل/اكتمال، ولا يتراكب مع الحبر.
+ * تنزيل خلفي لخطوط QPC عند الحاجة.
+ * واجهة التشخيص (نسبة٪ / زر تحقق): تطوير أو fontDebug فقط.
  */
 export function QpcFontPackBanner({ currentPage, variant = "sheet" }: Props) {
   const [visible, setVisible] = useState(false);
@@ -40,6 +50,7 @@ export function QpcFontPackBanner({ currentPage, variant = "sheet" }: Props) {
   const hideTimer = useRef(0);
   const pageRef = useRef(currentPage);
   pageRef.current = currentPage;
+  const showUi = fontProgressUiAllowed();
 
   const scheduleHide = (ms = 1500) => {
     if (hideTimer.current) window.clearTimeout(hideTimer.current);
@@ -47,6 +58,7 @@ export function QpcFontPackBanner({ currentPage, variant = "sheet" }: Props) {
   };
 
   const bumpInteraction = () => {
+    if (!showUi) return;
     setVisible(true);
     scheduleHide(1500);
   };
@@ -64,23 +76,27 @@ export function QpcFontPackBanner({ currentPage, variant = "sheet" }: Props) {
       if (isNative && meta.completed >= QPC_PAGE_COUNT * 0.9) return;
       if (bundled && isNative && meta.completed > 0) return;
 
-      setBusy(true);
-      setVisible(true);
+      if (showUi) {
+        setBusy(true);
+        setVisible(true);
+        setLabel("تنزيل خطوط المصحف (WOFF2)…");
+      }
       const priority = pagesInWindow(pageRef.current, 2);
       const rest = Array.from({ length: QPC_PAGE_COUNT }, (_, i) => i + 1).filter(
         (p) => !priority.includes(p),
       );
-      setLabel("تنزيل خطوط المصحف (WOFF2)…");
       const result = await downloadQpcFontPack({
         pages: [...priority, ...rest],
         concurrency: isNative ? 2 : 4,
         signal: ac.signal,
         onProgress: (p) => {
+          if (!showUi) return;
           setRatio(p.ratio);
           setLabel(`خطوط المصحف ${Math.round(p.ratio * 100)}٪`);
           bumpInteraction();
         },
       });
+      if (!showUi) return;
       setBusy(false);
       if (result.downloaded > 0) {
         setLabel("خطوط المصحف جاهزة للقراءة دون اتصال");
@@ -95,10 +111,11 @@ export function QpcFontPackBanner({ currentPage, variant = "sheet" }: Props) {
       ac.abort();
       if (hideTimer.current) window.clearTimeout(hideTimer.current);
     };
-  }, [variant]);
+  }, [variant, showUi]);
 
   /* ممنوع الظهور كشريط علوي فوق الصفحة */
   if (variant !== "sheet") return null;
+  if (!showUi) return null;
   if (!visible && !busy) {
     return (
       <button

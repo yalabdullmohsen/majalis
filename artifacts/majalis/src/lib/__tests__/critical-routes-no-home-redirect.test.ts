@@ -44,5 +44,18 @@ for (const path of ["/library", "/updates", "/knowledge-graph"]) {
     `vercel.json لا يجوز أن يحوّل ${path} إلى /`,
   );
 }
+assert.match(
+  vercel,
+  /"source"\s*:\s*"\/prayer"[\s\S]{0,160}"destination"\s*:\s*"\/prayer-times"/,
+  "vercel يجب أن يحوّل /prayer → /prayer-times",
+);
+assert.match(
+  vercel,
+  /"source"\s*:\s*"\/quran\/mushaf"[\s\S]{0,160}"destination"\s*:\s*"\/mushaf"/,
+  "vercel يجب أن يحوّل /quran/mushaf → /mushaf",
+);
+
+const seo = readFileSync(resolve(root, "src/lib/seo-routes.json"), "utf8");
+assert.match(seo, /"path"\s*:\s*"\/more"/, "/more يجب أن يكون في seo-routes للـprerender");
 
 console.log("critical-routes-no-home-redirect.test.ts: ok");
