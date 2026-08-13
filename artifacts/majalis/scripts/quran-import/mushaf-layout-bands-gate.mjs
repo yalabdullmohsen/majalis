@@ -26,7 +26,7 @@ const require = createRequire(import.meta.url);
 const BANDS = {
   toolbarBandPx: 52,
   footerBandPx: 44,
-  contentFooterGapPx: 16,
+  contentFooterGapPx: 4,
 };
 const EXTERNAL_BASE = process.env.MUSHAF_GATE_BASE_URL?.replace(/\/$/, "") || "";
 const PORT = process.env.MUSHAF_GATE_PORT || "24235";
@@ -64,11 +64,11 @@ const css = readFileSync(join(ROOT, "src/styles/quran.css"), "utf8");
 if (!/--mpv-toolbar-band:\s*52px/.test(css) || !/--mpv-footer-band:\s*44px/.test(css)) {
   failures.push({ page: 0, reason: "CSS vars للنطاقات ناقصة (toolbar 52 / footer 44)" });
 }
-if (!/--mpv-content-footer-gap:\s*16px/.test(css)) {
-  failures.push({ page: 0, reason: "--mpv-content-footer-gap يجب أن يكون 16px (مرجع آية)" });
+if (!/--mpv-content-footer-gap:\s*4px/.test(css)) {
+  failures.push({ page: 0, reason: "--mpv-content-footer-gap يجب أن يكون 4px (مرجع آية ٩١٫٥٪→٩٤٫٣٪)" });
 }
-if (!/bottom:\s*calc\(\s*var\(--inset-bottom[^)]*\)\s*\+\s*var\(--mpv-toolbar-band/.test(css)) {
-  failures.push({ page: 0, reason: "الذيل ليس فوق toolbarBand" });
+if (!/top:\s*calc\(\s*94\.3vh/.test(css)) {
+  failures.push({ page: 0, reason: "مركز الذيل/الخرطوش ليس عند 94.3vh" });
 }
 if (!existsSync(join(ROOT, "src/features/mushaf/layout-bands.ts"))) {
   failures.push({ page: 0, reason: "layout-bands.ts مفقود" });

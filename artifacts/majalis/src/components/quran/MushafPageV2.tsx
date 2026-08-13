@@ -320,7 +320,7 @@ export function MushafPageV2({
 
     const LINE_HEIGHT_EM = MUSHAF_LAYOUT_BASELINE.lineHeightEm;
     const REF_PX = 100;
-    const MIN_LINE_FILL = 0.98;
+      const MIN_LINE_FILL = 0.995;
     /* S المحسوب × --mushaf-scale — بلا فرع إعادة التفاف */
     const BASE_FONT = MUSHAF_LAYOUT_BASELINE.fontSizePx * scaleFactor;
     const isOpening = layout.pageNumber === 1 || layout.pageNumber === 2;
@@ -344,7 +344,10 @@ export function MushafPageV2({
       const sizingEls = collectSizingEls(ayahLineRefs.current);
       if (sizingEls.length === 0) return false;
 
-      for (const el of sizingEls) el.style.removeProperty("--mf2-line-sx");
+      for (const el of sizingEls) {
+        el.style.removeProperty("--mf2-line-sx");
+        el.style.removeProperty("--mf2-word-gap");
+      }
       container.style.gap = "0";
       container.style.paddingTop = "0";
       container.style.paddingBottom = "0";
@@ -375,21 +378,30 @@ export function MushafPageV2({
       const headerEl = document.querySelector(".mpv-ayah-header");
       const footerEl = document.querySelector(".mpv-ayah-footer");
       const shellEl = document.querySelector(".quran-shell--ayah");
-      const hr = headerEl?.getBoundingClientRect();
       const fr = footerEl?.getBoundingClientRect();
       const shellR = shellEl?.getBoundingClientRect();
       const insetBottom =
         Number.parseFloat(
           getComputedStyle(document.documentElement).getPropertyValue("--inset-bottom"),
         ) || 0;
-      /* نهاية contentBand = أعلى الذيل − فاصل مشتق من ارتفاع الشاشة */
+      /* نهاية contentBand = أعلى الذيل − فاصل؛ البداية = حشو الجسم (١١٫٨٪) لا أسفل الرأس */
       const footerTop =
         fr?.top ??
         (shellR
           ? shellR.bottom - insetBottom - bands.toolbarBandPx - bands.footerBandPx
           : 0);
-      const contentBot = footerTop - bands.contentFooterGapPx;
-      const contentTop = hr?.bottom ?? container.getBoundingClientRect().top;
+      let contentTop = container.getBoundingClientRect().top;
+      let contentBot = footerTop - bands.contentFooterGapPx;
+      if (bodyEl) {
+        const br = bodyEl.getBoundingClientRect();
+        const bcs = getComputedStyle(bodyEl);
+        const padTop = Number.parseFloat(bcs.paddingTop) || 0;
+        const padBot = Number.parseFloat(bcs.paddingBottom) || 0;
+        contentTop = br.top + padTop;
+        contentBot = Math.min(contentBot, br.bottom - padBot);
+      } else if (headerEl) {
+        contentTop = Math.max(contentTop, headerEl.getBoundingClientRect().bottom);
+      }
       let blockH =
         contentBot > contentTop
           ? contentBot - contentTop
@@ -400,7 +412,9 @@ export function MushafPageV2({
       blockH = Math.max(120, blockH);
       if (blockH > 0) {
         container.style.height = `${blockH.toFixed(2)}px`;
-        container.style.maxHeight = `${blockH.toFixed(2)}px`;
+        /* ممنوع maxHeight يقصّ الحبر — التجاوز يُعالَج بملاءمة الخط لا بالقصّ */
+        container.style.maxHeight = "none";
+        container.style.overflow = "visible";
         container.style.flexGrow = "0";
         container.style.flexShrink = "0";
         container.style.flexBasis = "auto";
@@ -420,39 +434,60 @@ export function MushafPageV2({
         container.style.removeProperty("--mf2-opening-line-w");
       }
 
-      /* هامش جانبي: مطلق على المرجع؛ نسبي من عرض الحاوية خارج 390×844 */
+      /* هامش جانبي: الجسم مبطّن ١٫٥٪ أصلًا — لا نضاعف الحجز داخل الحاوية */
       const sideClear = offRefViewport
         ? Math.max(
-            2,
+            0.5,
             Math.round(
               (MUSHAF_GRID.sideMarginPx || 2) *
-                Math.min(1.25, Math.max(0.85, availableWidth / 358)),
+                Math.min(1.25, Math.max(0.85, availableWidth / 358)) *
+                0.25,
             ),
           )
-        : Math.max(2, MUSHAF_GRID.sideMarginPx || 2);
+        : 0.5;
       const fitWidth = Math.max(8, availableWidth - sideClear * 2);
 
       const widestAtRef = measureWidest(sizingEls, REF_PX);
       if (widestAtRef <= 0) return false;
 
+      const MIN_FONT_PX = Math.max(11, BASE_FONT * 0.52);
       let size = BASE_FONT;
       const bound = "grid-311" as const;
       const maxFont = BASE_FONT * (1 + MUSHAF_FONT_DEV_MAX);
 
-      for (let guard = 0; guard < 12; guard++) {
-        applyTempFontSize(sizingEls, size);
-        container.style.fontSize = `${size}px`;
+      const applySizeProbe = (px: number) => {
+        applyTempFontSize(sizingEls, px);
+        container.style.fontSize = `${px}px`;
         container.style.setProperty("--mf2-lh", String(LINE_HEIGHT_EM));
-        let widestAtSize = 0;
         for (const el of sizingEls) {
           el.style.overflowX = "visible";
-          el.style.setProperty("--mf2-line-sx", "1");
-          widestAtSize = Math.max(widestAtSize, measureLineContentWidth(el));
+          el.style.removeProperty("--mf2-line-sx");
+          el.style.removeProperty("--mf2-word-gap");
         }
-        if (widestAtSize <= fitWidth) break;
-        size *= (fitWidth / widestAtSize) * 0.992;
+      };
+
+      const widestAt = (px: number) => {
+        applySizeProbe(px);
+        let w = 0;
+        for (const el of sizingEls) w = Math.max(w, measureLineContentWidth(el));
+        return w;
+      };
+
+      /* بحث ثنائي على مقياس الخط بدقة ٠٫٢٥px حتى يتّسع أفقيًا */
+      {
+        let lo = MIN_FONT_PX;
+        let hi = Math.min(maxFont, BASE_FONT * 1.08);
+        if (widestAt(hi) > fitWidth) {
+          while (hi - lo > 0.25) {
+            const mid = (lo + hi) / 2;
+            if (widestAt(mid) <= fitWidth) lo = mid;
+            else hi = mid;
+          }
+          size = lo;
+        } else {
+          size = hi;
+        }
       }
-      if (size > maxFont) size = maxFont;
 
       applyTempFontSize(sizingEls, "");
       for (const el of sizingEls) el.style.overflowX = "";
@@ -494,52 +529,62 @@ export function MushafPageV2({
         return { left: r.left, right: r.right };
       };
 
-      /* ملاءمة عرض الأسطر — ص١–٢ بلا مطّ؛ يُستثنى آخر سطر سورة في بقية المصحف */
-      const crFit = container.getBoundingClientRect();
-      for (const [ln, el] of ayahLineRefs.current) {
-        if (!el) continue;
-        if (isOpening || noStretchLines.has(ln)) {
+      /* ملاءمة عرض الأسطر عبر مسافات الكلمات — بلا scaleX يشوّه المحارف */
+      const countWordGaps = (el: HTMLElement) => {
+        const words = el.querySelectorAll(".mf2-word");
+        return Math.max(0, words.length - 1);
+      };
+      const applyWordGaps = () => {
+        const crFit = container.getBoundingClientRect();
+        for (const [ln, el] of ayahLineRefs.current) {
+          if (!el) continue;
           el.style.removeProperty("--mf2-line-sx");
-          el.classList.add(isOpening ? "mf2-line--natural" : "mf2-line--surah-end");
-          if (isOpening) el.classList.add("mf2-line--opening-natural");
-          else el.classList.remove("mf2-line--natural");
-          el.dataset.noStretch = "1";
-          continue;
-        }
-        el.classList.remove("mf2-line--surah-end");
-        el.classList.remove("mf2-line--natural");
-        el.classList.remove("mf2-line--opening-natural");
-        el.removeAttribute("data-no-stretch");
-        const contentW = measureLineContentWidth(el);
-        if (contentW <= 0) {
-          el.style.removeProperty("--mf2-line-sx");
-          continue;
-        }
-        const fill = contentW / fitWidth;
-        let sx = fill < MIN_LINE_FILL ? 1 / fill : 1;
-        if (sx > 1.0001) {
-          el.style.setProperty("--mf2-line-sx", String(sx));
-          /* تحقّق بعد التحويل: لا يخرج الحبر عن الحاوية + الهامش */
-          for (let pass = 0; pass < 6; pass++) {
+          if (isOpening || noStretchLines.has(ln)) {
+            el.style.removeProperty("--mf2-word-gap");
+            el.classList.add(isOpening ? "mf2-line--natural" : "mf2-line--surah-end");
+            if (isOpening) el.classList.add("mf2-line--opening-natural");
+            else el.classList.remove("mf2-line--natural");
+            el.dataset.noStretch = "1";
+            continue;
+          }
+          el.classList.remove("mf2-line--surah-end");
+          el.classList.remove("mf2-line--natural");
+          el.classList.remove("mf2-line--opening-natural");
+          el.removeAttribute("data-no-stretch");
+          el.style.removeProperty("--mf2-word-gap");
+          const contentW = measureLineContentWidth(el);
+          const gaps = countWordGaps(el);
+          if (contentW <= 0 || gaps <= 0) continue;
+          const room = Math.max(8, crFit.width - sideClear * 2);
+          const fill = contentW / room;
+          if (fill >= MIN_LINE_FILL) continue;
+          /* بحث ثنائي على فجوة الكلمات حتى ملء النطاق بلا تجاوز */
+          let lo = 0;
+          let hi = Math.max(0.05, (room - contentW) / gaps);
+          for (let pass = 0; pass < 14; pass++) {
+            const mid = (lo + hi) / 2;
+            el.style.setProperty("--mf2-word-gap", `${mid.toFixed(3)}px`);
             const ink = measureInkX(el);
-            const overL = Math.max(0, crFit.left + sideClear - ink.left);
-            const overR = Math.max(0, ink.right - (crFit.right - sideClear));
-            const over = Math.max(overL, overR);
-            if (over <= 0.25) break;
-            const span = Math.max(1, ink.right - ink.left);
-            sx *= Math.max(0.85, (span - over) / span);
-            if (sx <= 1.0001) {
-              el.style.removeProperty("--mf2-line-sx");
+            const over = Math.max(
+              0,
+              crFit.left + sideClear - ink.left,
+              ink.right - (crFit.right - sideClear),
+            );
+            const span = ink.right - ink.left;
+            if (over > 0.35) hi = mid;
+            else if (span < room - 0.75) lo = mid;
+            else {
+              lo = mid;
               break;
             }
-            el.style.setProperty("--mf2-line-sx", String(sx));
           }
-        } else {
-          el.style.removeProperty("--mf2-line-sx");
+          if (lo < 0.05) el.style.removeProperty("--mf2-word-gap");
+          else el.style.setProperty("--mf2-word-gap", `${lo.toFixed(3)}px`);
         }
-      }
+      };
+      applyWordGaps();
 
-      /* تمريرة أمان: صغّر الخط و/أو خفّض المطّ حتى يبقى هامش الحبر */
+      /* تمريرة أمان أفقية: صغّر الخط و/أو خفّض الفجوة حتى يبقى هامش الحبر */
       for (let guard = 0; guard < 10; guard++) {
         const crNow = container.getBoundingClientRect();
         let maxOver = 0;
@@ -557,21 +602,19 @@ export function MushafPageV2({
         container.style.fontSize = `${size}px`;
         for (const el of sizingEls) {
           if (!el) continue;
-          const cur = Number.parseFloat(el.style.getPropertyValue("--mf2-line-sx") || "1");
-          if (Number.isFinite(cur) && cur > 1.001) {
-            const next = Math.max(1, cur * 0.97);
-            if (next <= 1.001) el.style.removeProperty("--mf2-line-sx");
-            else el.style.setProperty("--mf2-line-sx", String(next));
+          const cur = Number.parseFloat(el.style.getPropertyValue("--mf2-word-gap") || "0");
+          if (Number.isFinite(cur) && cur > 0.05) {
+            const next = cur * 0.92;
+            if (next < 0.05) el.style.removeProperty("--mf2-word-gap");
+            else el.style.setProperty("--mf2-word-gap", `${next.toFixed(3)}px`);
           }
         }
       }
 
       /*
-       * ملاءمة رأسية حاجبة: بعد حجز toolbar/footer، إن تجاوز حبر الأسطر
-       * contentBand نُصغّر الخط — ممنوع القصّ بـ overflow/contain paint.
-       * يُعاد عند ResizeObserver و document.fonts.ready عبر runMeasure.
+       * ملاءمة رأسية: بحث ثنائي بدقة ٠٫٢٥px حتى يملأ الحبر الشريط بلا فائض.
+       * ممنوع القصّ بـ overflow/contain paint — التجاوز في DEV يرمي خطأ.
        */
-      const MIN_FONT_PX = Math.max(11, BASE_FONT * 0.52);
       const pitchPct =
         (MUSHAF_GRID.baselinesPct[MUSHAF_GRID.baselinesPct.length - 1] -
           MUSHAF_GRID.baselinesPct[0]) /
@@ -589,11 +632,6 @@ export function MushafPageV2({
         for (const el of container.querySelectorAll<HTMLElement>(
           ".mf2-grid-slot--line .mf2-line, .mf2-line",
         )) {
-          if (el.closest("[data-page-state='prev'], [data-page-state='next'], [aria-hidden='true']")
-            && !container.contains(el)) {
-            continue;
-          }
-          /* فقط أسطر هذه الحاوية */
           if (!container.contains(el)) continue;
           const b = measureInkBounds(el);
           if (b.bottom > bot) bot = b.bottom;
@@ -601,26 +639,82 @@ export function MushafPageV2({
         return bot;
       };
 
+      const applyVerticalSize = (px: number) => {
+        size = px;
+        container.style.fontSize = `${px}px`;
+        container.style.setProperty(
+          "--mf2-banner-h",
+          `${(container.clientHeight * (slotHPct / 100)).toFixed(2)}px`,
+        );
+      };
+
       {
         const crV = container.getBoundingClientRect();
         const limitBot = crV.bottom - 0.35;
-        for (let guard = 0; guard < 18; guard++) {
+        const inkFits = (px: number) => {
+          applyVerticalSize(px);
+          for (const el of sizingEls) el.style.removeProperty("--mf2-word-gap");
+          let widest = 0;
+          for (const el of sizingEls) widest = Math.max(widest, measureLineContentWidth(el));
+          if (widest > fitWidth + 0.75) return false;
           const bot = deepestAyahInkBottom();
-          if (!Number.isFinite(bot) || bot <= limitBot) break;
-          if (size <= MIN_FONT_PX + 0.05) break;
-          const over = bot - limitBot;
-          const factor = Math.max(0.9, 1 - over / Math.max(80, blockH));
-          size = Math.max(MIN_FONT_PX, size * Math.min(0.985, factor));
-          container.style.fontSize = `${size}px`;
-          container.style.setProperty(
-            "--mf2-banner-h",
-            `${(container.clientHeight * (slotHPct / 100)).toFixed(2)}px`,
-          );
+          return Number.isFinite(bot) && bot <= limitBot;
+        };
+        /* بحث ثنائي: أكبر مقياس ≤ الأفقي يتّسع رأسيًا — بلا نمو يتجاوز الملاءمة الأفقية */
+        {
+          let lo = MIN_FONT_PX;
+          let hi = size;
+          if (!inkFits(hi)) {
+            while (hi - lo > 0.25) {
+              const mid = (lo + hi) / 2;
+              if (inkFits(mid)) lo = mid;
+              else hi = mid;
+            }
+            applyVerticalSize(lo);
+          } else {
+            applyVerticalSize(hi);
+          }
+        }
+        /* بعد ثبات المقاس الرأسي: أعد امتداد الأسطر لملء ١٫٥٪→٩٨٫٤٪ */
+        applyWordGaps();
+        /* تمريرة قصّ أفقية نهائية — صفر تجاوز */
+        {
+          const crNow = container.getBoundingClientRect();
+          for (const el of sizingEls) {
+            if (!el || el.dataset.noStretch === "1") continue;
+            let gapPx = Number.parseFloat(el.style.getPropertyValue("--mf2-word-gap") || "0");
+            if (!Number.isFinite(gapPx) || gapPx <= 0) continue;
+            for (let pass = 0; pass < 12; pass++) {
+              const ink = measureInkX(el);
+              const over = Math.max(
+                0,
+                crNow.left + sideClear - ink.left,
+                ink.right - (crNow.right - sideClear),
+              );
+              if (over <= 0.35) break;
+              gapPx *= 0.88;
+              if (gapPx < 0.05) {
+                el.style.removeProperty("--mf2-word-gap");
+                break;
+              }
+              el.style.setProperty("--mf2-word-gap", `${gapPx.toFixed(3)}px`);
+            }
+          }
         }
         container.dataset.mf2VerticalFit = "1";
         container.dataset.mf2InkBotClear = (
           limitBot - deepestAyahInkBottom()
         ).toFixed(2);
+        const inkClear = limitBot - deepestAyahInkBottom();
+        if (
+          import.meta.env.DEV &&
+          Number.isFinite(inkClear) &&
+          inkClear < -1.5
+        ) {
+          throw new Error(
+            `[mushaf] بتر حبر بعد الملاءمة: page=${layout.pageNumber} overflow=${(-inkClear).toFixed(1)}px — لا يُقصّ بصمت`,
+          );
+        }
       }
 
       blockH = container.clientHeight || blockH || 1;
@@ -757,7 +851,8 @@ export function MushafPageV2({
                 ? Math.max(size * 0.95, sampleInk.bottom - sampleInk.top)
                 : size * 1.15;
               const lineH = OPENING_BODY_SLOT_H_PCT;
-              const maxInkBottom = crNow.bottom - 0.5;
+              /* نهاية الكتلة ≈٧٤٫٨٪ شاشة = OPENING_BODY_BOT_PCT من contentBand */
+              const maxInkBottom = crNow.top + (OPENING_BODY_BOT_PCT / 100) * H - 0.5;
               const nLines = ayahLineSlots.length;
               const idealGap = Math.max(
                 OPENING_MIN_LINE_GAP_RATIO * size,
@@ -813,8 +908,10 @@ export function MushafPageV2({
                 const have = maxInkBottom - firstTop;
                 const need = sumH + Math.max(0, nLines - 1) * minG;
                 if (nLines <= 1 || need <= have + 0.5) {
-                  /* فجوة ثابتة بين الأسطر (لا تمديد الفراغ) — ص١ وص٢ متطابقتان ≤١px */
-                  gap = idealG;
+                  /* وزّع الفراغ المتبقي بالتساوي حتى نهاية الكتلة ٧٤٫٨٪ */
+                  const gapCount = Math.max(1, nLines - 1);
+                  const fillGap = nLines <= 1 ? idealG : (have - sumH) / gapCount;
+                  gap = Math.max(idealG, fillGap);
                   break;
                 }
                 size = Math.max(
@@ -844,7 +941,10 @@ export function MushafPageV2({
                     container.style.fontSize = `${size}px`;
                     const minG = OPENING_MIN_LINE_GAP_RATIO * size;
                     firstTop = liveBasBottom() + OPENING_BASMALA_TO_LINE_PX;
-                    gap = Math.max(minG, OPENING_MIN_LINE_GAP_RATIO * size);
+                    heights = measureHeights();
+                    const sumH2 = heights.reduce((s, h) => s + h, 0);
+                    const have2 = maxInkBottom - firstTop;
+                    gap = Math.max(minG, (have2 - sumH2) / Math.max(1, nLines - 1));
                     placeFrom(firstTop, gap);
                   }
                 }

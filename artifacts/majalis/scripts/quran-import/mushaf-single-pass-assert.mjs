@@ -178,8 +178,11 @@ if (ayahTb && /top:\s*calc\(\s*var\(--inset-top\)/.test(ayahTb[0])) {
 if (!/--mpv-toolbar-band:\s*52px/.test(css) || !/--mpv-footer-band:\s*44px/.test(css)) {
   failures.push({ gate: "layout-bands", page: 0, reason: "CSS vars للنطاقات ناقصة (toolbar 52 / footer 44)" });
 }
-if (!/--mpv-content-footer-gap:\s*16px/.test(css)) {
-  failures.push({ gate: "layout-bands", page: 0, reason: "--mpv-content-footer-gap يجب أن يكون 16px (مرجع آية)" });
+if (!/--mpv-content-footer-gap:\s*4px/.test(css)) {
+  failures.push({ gate: "layout-bands", page: 0, reason: "--mpv-content-footer-gap يجب أن يكون 4px (مرجع آية ٩١٫٥٪)" });
+}
+if (!/top:\s*calc\(\s*94\.3vh/.test(css)) {
+  failures.push({ gate: "layout-bands", page: 0, reason: "مركز الذيل ليس عند 94.3vh" });
 }
 if (!existsSync(join(ROOT, "src/features/mushaf/layout-bands.ts"))) {
   failures.push({ gate: "layout-bands", page: 0, reason: "layout-bands.ts مفقود" });

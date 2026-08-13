@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * بوابة شارة السورة البسيطة: بلا أرابيسك · شريط عاجي · ارتفاع خانة ±٥٪ · موضع ص١–٢.
+ * بوابة شارة السورة المزخرفة: جناح+ميدالية · ارتفاع خانة ±٥٪ · موضع ص١–٢.
  *
  *   MUSHAF_GATE_BASE_URL=http://127.0.0.1:24216 node scripts/quran-import/mushaf-banner-density-gate.mjs
  */
@@ -28,8 +28,8 @@ const GRID = JSON.parse(
 const VIEWPORT = { width: 390, height: 844 };
 const BANNER_PAGES = [1, 2, 599, 600, 601];
 const GRID_PAGES = [3, 4, 100, 283, 306, 400, 500, 588, 596, 599, 600, 601, 604];
-/** الشارة البسيطة (simple-strip) — لا كثافة جناح */
-const SIMPLE_STRIP = "simple-strip";
+/** الشارة المزخرفة (wing-refined) — مرجع آية */
+const ORNAMENT = "wing-refined";
 const TAN = { r: 227, g: 210, b: 180 };
 /* أقل من مسافة حشو الميدالية (#EDE0C4≈٢٣) حتى يُحسب الحشو حبرًا */
 const TAN_DIST = 20;
@@ -88,14 +88,13 @@ async function measureBanner(page, pageNum) {
           svg?.querySelectorAll('[data-wing-part="knot"]').length ?? 0;
         wingOk =
           patterns === 0 &&
-          medallions === 0 &&
-          spirals === 0 &&
-          knots === 0 &&
-          meshes === 0 &&
-          ornament === "simple-strip" &&
-          !!banner.querySelector(".mf2-surah-banner__bar");
+          medallions >= 1 &&
+          spirals >= 1 &&
+          meshes >= 1 &&
+          ornament === "wing-refined" &&
+          !!svg;
 
-        /* الشريط البسيط: لا قياس كثافة جناح */
+        /* كثافة تقريبية للجناح — اختيارية في هذه البوابة */
         density = null;
       }
 
@@ -233,11 +232,11 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
       results.push(row);
 
       if (BANNER_PAGES.includes(n)) {
-        if (raw.ornament !== SIMPLE_STRIP) {
-          failures.push({ page: n, reason: `شارة ليست simple-strip (got ${raw.ornament})` });
+        if (raw.ornament !== ORNAMENT) {
+          failures.push({ page: n, reason: `شارة ليست wing-refined (got ${raw.ornament})` });
         }
         if (raw.wingOk === false) {
-          failures.push({ page: n, reason: "زخارف متبقية أو شريط بسيط ناقص" });
+          failures.push({ page: n, reason: "زخارف الجناح/الميدالية ناقصة" });
         }
         if (raw.bannerHRatio != null && n !== 1 && n !== 2) {
           if (raw.bannerHRatio < 0.95 || raw.bannerHRatio > 1.05) {

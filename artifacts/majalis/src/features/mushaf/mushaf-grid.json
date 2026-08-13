@@ -2,30 +2,30 @@
   "referencePage": 283,
   "slotCount": 15,
   "baselinesPct": [
-    4.0,
-    10.5714,
-    17.1429,
-    23.7143,
-    30.2857,
-    36.8571,
-    43.4286,
+    2.5,
+    9.2857,
+    16.0714,
+    22.8571,
+    29.6429,
+    36.4286,
+    43.2143,
     50.0,
-    56.5714,
-    63.1429,
-    69.7143,
-    76.2857,
-    82.8571,
-    89.4286,
-    96.0
+    56.7857,
+    63.5714,
+    70.3571,
+    77.1429,
+    83.9286,
+    90.7143,
+    97.5
   ],
   "slotHeightPct": 7.2,
   "measuredInkBandPct": {
-    "firstInkTopBody": 2.57,
-    "lastInkBotBody": 96.89,
-    "firstSlotMidLines": 4.0,
-    "lastSlotMidLines": 96.0,
-    "fillBody": 0.943
+    "firstInkTopBody": 1.2,
+    "lastInkBotBody": 98.2,
+    "firstSlotMidLines": 2.5,
+    "lastSlotMidLines": 97.5,
+    "fillBody": 0.97
   },
   "sideMarginPx": 6,
-  "notes": "مشتق من contentBand فقط (.mf2-lines بعد طرح header/footer/toolbar على 390×844). مرجع ص٢٨٣: مراكز ١٥ خانة من ٤٫٠٪ إلى ٩٦٫٠٪ بخطوة ٦٫٥٧١٤٪؛ ارتفاع الخانة ٧٫٢٪؛ fill داخل contentBand ≈0.943. انحراف ≤2px. انظر layout-bands.ts و MUSHAF_SPEC.md."
+  "notes": "مراكز ١٥ خانة من ٢٫٥٪ إلى ٩٧٫٥٪ بخطوة ٦٫٧٨٥٧٪ داخل contentBand (١١٫٨→٩١٫٥) لتحقيق امتلاء شاشة ≥٧٩٪ بلا بتر. ارتفاع الخانة ٧٫٢٪. انظر layout-bands.ts و MUSHAF_SPEC.md."
 }
