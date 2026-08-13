@@ -2,6 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "wouter";
 import {
   getKnowledgeItem,
+  knowledgeArticleJsonLd,
+  knowledgeFaqJsonLd,
+  knowledgeHref,
   loadSectionItems,
   markDiscoverStation,
   readKnowledgeProgress,
@@ -45,10 +48,14 @@ export default function KnowledgeSectionPage() {
           setItems([]);
           if (one && section === "discover-islam") markDiscoverStation(one.id);
           if (one) {
+            const path = `/knowledge/${section}/${id}`;
+            const desc = one.body.replace(/##[^\n]*/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
             applyPageSeo({
-              path: `/knowledge/${section}/${id}`,
+              path,
               title: `${one.title} | ${SECTION_TITLE[section] || "معرفة"}`,
-              description: one.body.slice(0, 140),
+              description: desc,
+              ogType: "article",
+              jsonLd: [knowledgeArticleJsonLd(one, path)],
             });
           }
         }
@@ -57,10 +64,13 @@ export default function KnowledgeSectionPage() {
         if (!cancelled) {
           setItems(list);
           setItem(null);
+          const path = `/knowledge/${section}`;
+          const faq = section === "discover-islam" ? knowledgeFaqJsonLd(list) : null;
           applyPageSeo({
-            path: `/knowledge/${section}`,
+            path,
             title: `${SECTION_TITLE[section] || section} | معرفة`,
-            description: `فهرس قسم ${SECTION_TITLE[section] || section}`,
+            description: `فهرس قسم ${SECTION_TITLE[section] || section} — محتوى موثّق وفق منهج أهل السنة.`,
+            jsonLd: faq ? [faq] : undefined,
           });
         }
       }
@@ -149,7 +159,7 @@ export default function KnowledgeSectionPage() {
               <ul>
                 {item.related.map((r) => (
                   <li key={r}>
-                    <Link href={`/knowledge/${section}/${r}`}>{r}</Link>
+                    <Link href={knowledgeHref(r)}>{r}</Link>
                   </li>
                 ))}
               </ul>
