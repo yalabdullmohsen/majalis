@@ -14,7 +14,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "../../../");
 
 // ── Phase 1: manifests ──────────────────────────────────────────────────────
-assert.ok(existsSync(resolve(root, "public/brand/splash-logo.png")), "شعار الدخول يبقى للواجهة");
+assert.ok(existsSync(resolve(root, "public/brand/official.png")), "المصدر الرسمي للهوية");
 assert.ok(!existsSync(resolve(root, "public/brand/splash-source.png")), "مصدر توليد الإقلاع محذوف");
 assert.ok(!existsSync(resolve(root, "public/brand/apple-splash")), "لا صور إقلاع PWA يتيمة");
 
@@ -55,7 +55,7 @@ assert.equal(normalizePath("/lessons/?tab=1#x"), "/lessons");
 assert.equal(normalizePath("/"), "/");
 
 const seoRoutes = JSON.parse(readFileSync(resolve(root, "src/lib/seo-routes.json"), "utf8"));
-assert.equal(seoRoutes.defaultImage, "/majlisilm-og-2026.jpg");
+assert.equal(seoRoutes.defaultImage, "/brand/og-1200x630.f8a88bc42a.png");
 
 // ── Phase 5/6: push API handler exists + no private key leak patterns in client
 assert.ok(existsSync(resolve(root, "lib/api-handlers/push-subscribe.js")));

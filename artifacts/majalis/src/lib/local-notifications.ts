@@ -110,7 +110,7 @@ export function sendLocalNotification(
   try {
     new Notification(title, {
       body: options?.body,
-      icon: options?.icon ?? "/logo.png",
+      icon: options?.icon ?? "/brand/official.png?v=f8a88bc42a",
       tag: options?.tag,
       dir: "rtl",
       lang: "ar",

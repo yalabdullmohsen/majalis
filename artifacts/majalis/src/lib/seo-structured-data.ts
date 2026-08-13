@@ -23,7 +23,7 @@ export function organizationJsonLd() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: absoluteUrl("/logo.png"),
+    logo: absoluteUrl("/brand/official.png?v=f8a88bc42a"),
     description:
       "منصة علمية عربية تجمع الدروس الشرعية والدورات والقرآن والأذكار والفوائد في مكان واحد.",
     inLanguage: "ar",
@@ -43,7 +43,7 @@ export function websiteJsonLd() {
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
-      logo: absoluteUrl("/logo.png"),
+      logo: absoluteUrl("/brand/official.png?v=f8a88bc42a"),
     },
     potentialAction: {
       "@type": "SearchAction",

@@ -26,7 +26,7 @@
  * - الحجم: 1024×1024 بكسل
  * - الصيغة: PNG، بدون شفافية (alpha channel)
  * - الخلفية: زمردية داكنة #153025
- * - الشعار: خطاطة "المجلس العلمي" من public/logo-calligraphy.png
+ * - الشعار: المصدر الوحيد public/brand/official.png (اشتق عبر pnpm run derive:brand)
  * - لا حواف دائرية — iOS يطبقها تلقائياً
  */
 

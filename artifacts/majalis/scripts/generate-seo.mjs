@@ -51,6 +51,11 @@ async function main() {
 // المصادر
 // ─────────────────────────────────────────────────────────────────────────────
 const SITE = JSON.parse(await readFile(resolve(appRoot, "site.config.json"), "utf8"));
+const BRAND_ASSETS = JSON.parse(
+  await readFile(resolve(appRoot, "public/brand/assets.json"), "utf8"),
+);
+const BRAND_HASH = BRAND_ASSETS.hash || "0";
+const BRAND_LOGO = `${BRAND_ASSETS.logo || "/brand/official.png"}?v=${BRAND_HASH}`;
 const SITE_URL = SITE.siteUrl;
 const SITE_NAME = SITE.siteName;
 const TITLE_SUFFIX = SITE.titleSuffix;
@@ -315,7 +320,7 @@ function siteJsonLdScript() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: absoluteUrl("/logo.png"),
+    logo: absoluteUrl("/brand/official.png?v=f8a88bc42a"),
     inLanguage: "ar",
   };
   const site = {
@@ -446,12 +451,11 @@ function breadcrumbFor(route, parents = []) {
   return breadcrumbJsonLdScript(items);
 }
 
-const HEAD_ASSETS = `<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" href="/favicon.png" sizes="512x512" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`;
+const HEAD_ASSETS = `<link rel="icon" href="/favicon.ico?v=${BRAND_HASH}" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon-32.png?v=${BRAND_HASH}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/icon-192.png?v=${BRAND_HASH}" sizes="192x192" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=${BRAND_HASH}" />
+    <link rel="manifest" href="/site.webmanifest" />`;
 
 /**
  * D1: فصل حقول المحتوى
@@ -512,6 +516,7 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
     <meta property="og:image:width" content="${OG_W}" />
     <meta property="og:image:height" content="${OG_H}" />
     <meta property="og:image:alt" content="${escapeHtml(title)}" />
+    <meta property="og:image:type" content="image/png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(title)}" />
     <meta name="twitter:description" content="${escapeHtml(metaDescription)}" />
@@ -527,7 +532,7 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
         "@type": "Organization",
         name: SITE_NAME,
         url: SITE_URL,
-        logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png") },
+        logo: { "@type": "ImageObject", url: absoluteUrl("/brand/official.png?v=f8a88bc42a") },
       },
     })}
     ${breadcrumbFor(route, parents)}

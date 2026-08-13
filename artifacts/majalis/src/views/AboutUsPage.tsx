@@ -18,7 +18,7 @@ export default function AboutUsPage() {
           "@type": "Organization",
           name: "المجلس العلمي",
           url: "https://www.majlisilm.com",
-          logo: "https://www.majlisilm.com/logo.png",
+          logo: "https://majlisilm.com/brand/official.png?v=f8a88bc42a",
           description: "منصة شرعية رقمية كويتية تجمع الدروس والأحكام الشرعية والقرآن والأذكار في مرجع موثوق",
           foundingDate: "2024",
           areaServed: { "@type": "Country", name: "الكويت" },

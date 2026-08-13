@@ -1,7 +1,7 @@
 /**
  * بوابة توحيد الوسوم (Release Gate v6 / PR1):
  * - theme-color من site.config.json فقط
- * - OG افتراضي 1200×630 وmajlisilm-og-2026.jpg
+ * - OG افتراضي 1200×630 وbrand/og-1200x630.f8a88bc42a.png
  * - لا meta keywords
  * - تنقّل prerender موحّد العدد/الترتيب
  * - short_name قصير لا يُبتر
@@ -23,7 +23,7 @@ function read(rel) {
 const site = JSON.parse(read("site.config.json"));
 const theme = site.themeColor || "#1F7A5A";
 const themeDark = site.themeColorDark || "#4FB48B";
-const defaultImage = site.defaultImage || "/majlisilm-og-2026.jpg";
+const defaultImage = site.defaultImage || "/brand/og-1200x630.f8a88bc42a.png";
 const ogW = String(site.ogImageWidth || 1200);
 const ogH = String(site.ogImageHeight || 630);
 const navExpected = (site.prerenderNav || []).map((n) => n.label);
@@ -31,8 +31,8 @@ const navExpected = (site.prerenderNav || []).map((n) => n.label);
 if (!/^#[0-9A-Fa-f]{6}$/.test(theme) || !/^#[0-9A-Fa-f]{6}$/.test(themeDark)) {
   issues.push("site.config.json: themeColor / themeColorDark يجب أن يكونا hex سداسي");
 }
-if (defaultImage !== "/majlisilm-og-2026.jpg") {
-  issues.push(`defaultImage يجب أن يكون /majlisilm-og-2026.jpg (وجد ${defaultImage})`);
+if (!String(defaultImage).startsWith("/brand/og-1200x630.")) {
+  issues.push(`defaultImage يجب أن يكون /brand/og-1200x630.<hash>.png (وجد ${defaultImage})`);
 }
 if (site.siteShortName !== "المجلس") {
   issues.push(`siteShortName يجب أن يكون «المجلس» لتفادي البتر — وجد «${site.siteShortName}»`);
@@ -61,8 +61,8 @@ if (!/name="color-scheme"[^>]*content="light dark"/.test(indexHtml)) {
 if (/name="keywords"/.test(indexHtml)) {
   issues.push("index.html: احذف meta keywords");
 }
-if (!indexHtml.includes("majlisilm-og-2026.jpg")) {
-  issues.push("index.html: OG يجب أن يستخدم majlisilm-og-2026.jpg");
+if (!/brand\/og-1200x630\.[a-f0-9]+\.png/.test(indexHtml)) {
+  issues.push("index.html: OG يجب أن يستخدم /brand/og-1200x630.<hash>.png");
 }
 if (!indexHtml.includes('apple-mobile-web-app-title" content="المجلس العلمي"')) {
   issues.push("index.html: apple-mobile-web-app-title يجب أن يكون المجلس العلمي");

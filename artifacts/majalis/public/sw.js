@@ -45,9 +45,9 @@ const CACHEABLE_API_PATHS = [
 
 const STATIC_SHELL_ASSETS = [
   "/offline.html",
-  "/logo.png",
+  "/brand/official.png?v=f8a88bc42a",
   "/favicon.png",
-  "/favicon.svg",
+  "/favicon.ico?v=f8a88bc42a",
   "/favicon-48.png",
   "/apple-touch-icon.png",
   "/icon-96.png",
@@ -59,7 +59,7 @@ const STATIC_SHELL_ASSETS = [
   "/manifest.json",
   "/site.webmanifest",
   "/manifest.webmanifest",
-  "/majlisilm-og-2026.jpg",
+  "/brand/og-1200x630.f8a88bc42a.png",
   "/sounds/adhan/makkah-general.mp3",
   "/sounds/adhan/makkah-fajr.mp3",
   "/sounds/adhan/madinah-general.mp3",
@@ -418,7 +418,7 @@ self.addEventListener("message", (event) => {
           }
           self.registration.showNotification(item.title || "المجلس العلمي", {
             body: item.body || "",
-            icon: "/logo.png?v=9",
+            icon: "/brand/official.png?v=f8a88bc42a",
             badge: "/favicon.png?v=9",
             dir: "rtl",
             lang: "ar",
@@ -457,7 +457,7 @@ self.addEventListener("message", (event) => {
       const cityLine = cityName ? ` — ${cityName}` : "";
       self.registration.showNotification(`حان وقت ${prayerArabic}${cityLine}`, {
         body: `حيَّ على الصلاة، حيَّ على الفلاح${cityName ? ` · ${cityName}` : ""}`,
-        icon: "/logo.png?v=9",
+        icon: "/brand/official.png?v=f8a88bc42a",
         badge: "/favicon.png?v=9",
         dir: "rtl",
         lang: "ar",
@@ -488,7 +488,7 @@ self.addEventListener("push", (event) => {
   const title = payload.title || "المجلس العلمي";
   const options = {
     body: payload.body || "",
-    icon: "/logo.png?v=9",
+    icon: "/brand/official.png?v=f8a88bc42a",
     badge: "/favicon.png?v=9",
     dir: "rtl",
     lang: "ar",

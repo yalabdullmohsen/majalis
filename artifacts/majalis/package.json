@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
-    "generate:seo": "node --import tsx scripts/generate-seo.mjs",
+    "generate:seo": "pnpm run derive:brand && node --import tsx scripts/generate-seo.mjs",
     "generate:quran-pages": "node scripts/generate-quran-pages-manifest.mjs",
     "generate:sheikhs": "node scripts/generate-sheikh-portraits.mjs",
     "generate:quiz": "node scripts/generate-quiz-questions.mjs",
@@ -209,7 +209,7 @@
     "build:page-juz-index": "node --import tsx scripts/build-page-juz-index.mjs",
     "verify:no-mock-asr": "node scripts/verify-no-mock-asr-in-app.mjs",
     "test:no-mock-asr-guard": "node scripts/__tests__/verify-no-mock-asr-in-app.test.mjs",
-    "test:brand-identity": "node scripts/test-brand-identity-gate.mjs && node scripts/verify-brand-green-hex.mjs",
+    "test:brand-identity": "node scripts/test-brand-identity-gate.mjs && node scripts/verify-brand-green-hex.mjs && pnpm run test:brand-image",
     "test:color-contrast-gate": "node scripts/verify-color-contrast-gate.mjs",
     "test:on-brand-contrast": "node scripts/verify-on-brand-contrast.mjs",
     "audit:color-contrast": "node scripts/audit-color-contrast.mjs",
@@ -300,7 +300,9 @@
     "test:qpc-font-pack": "node --import tsx src/lib/__tests__/qpc-font-pack.test.ts && node --import tsx src/lib/__tests__/qpc-font-banner-prod-gate.test.ts",
     "test:licenses": "node scripts/verify-licenses-gate.mjs",
     "test:native-feel": "node --import tsx src/lib/__tests__/native-feel-motion.test.ts && node --import tsx src/lib/__tests__/spatial-nav.test.ts",
-    "test:mushaf-aya-parity": "node scripts/quran-import/mushaf-aya-parity-gate.mjs"
+    "test:mushaf-aya-parity": "node scripts/quran-import/mushaf-aya-parity-gate.mjs",
+    "derive:brand": "node scripts/derive-official-brand.mjs",
+    "test:brand-image": "node scripts/test-brand-image-gate.mjs"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

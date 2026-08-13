@@ -14,7 +14,7 @@ type CacheEntry = ProcessedSheikhImage & { blobUrls: string[] };
 
 const CACHE = new Map<string, CacheEntry>();
 const CACHE_MAX = 48;
-const FALLBACK_LOGO = "/logo.png";
+const FALLBACK_LOGO = "/brand/official.png";
 
 const BG_TOP = "#F3EBD8";
 const BG_BOTTOM = "#FAF6EE";

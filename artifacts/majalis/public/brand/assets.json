@@ -1,0 +1,28 @@
+{
+  "hash": "f8a88bc42a",
+  "bg": "#002b21",
+  "ogAlt": "شعار المجلس العلمي — خط عربي ورمز القلم على الكتاب فوق خلفية خضراء داكنة",
+  "source": "/brand/official.png",
+  "ogImage": "/brand/og-1200x630.f8a88bc42a.png",
+  "ogImageAbsolute": "https://majlisilm.com/brand/og-1200x630.f8a88bc42a.png",
+  "ogImageWidth": 1200,
+  "ogImageHeight": 630,
+  "logo": "/brand/official.png",
+  "logoAbsolute": "https://majlisilm.com/brand/official.png?v=f8a88bc42a",
+  "icons": {
+    "faviconIco": "/favicon.ico",
+    "favicon16": "/favicon-16.png",
+    "favicon32": "/favicon-32.png",
+    "favicon48": "/favicon-48.png",
+    "faviconPng": "/favicon.png",
+    "appleTouch": "/apple-touch-icon.png",
+    "icon96": "/icon-96.png",
+    "icon192": "/icon-192.png",
+    "icon512": "/icon-512.png",
+    "iconMaskable512": "/icon-maskable-512.png",
+    "brand512": "/brand/icon-512.png",
+    "brand512Maskable": "/brand/icon-512-maskable.png",
+    "brand1024": "/brand/icon-1024.png",
+    "brand1024Maskable": "/brand/icon-1024-maskable.png"
+  }
+}

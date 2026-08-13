@@ -57,7 +57,7 @@ function extractLessonIdParam(req) {
 
 const SITE_NAME = "المجلس العلمي";
 const SITE_URL = "https://majlisilm.com";
-const DEFAULT_IMAGE = `${SITE_URL}/majlisilm-og-2026.jpg`;
+const DEFAULT_IMAGE = `${SITE_URL}/brand/og-1200x630.f8a88bc42a.png`;
 const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url)";
 
 function escapeHtml(value) {

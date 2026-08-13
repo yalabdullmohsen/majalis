@@ -1,10 +1,8 @@
 {
   "$comment": "المصدر الوحيد لهوية المنصة. يُقرأ من التطبيق (src/lib/site-config.ts) ومن سكربتات البناء (scripts/*.mjs). لا تكتب اسم المنصة أو نطاقها أو بريدها يدويًا في أي ملف آخر.",
-
   "siteName": "المجلس العلمي",
   "siteShortName": "المجلس",
   "siteDescription": "منصة علمية عربية للدروس الشرعية والدورات العلمية وطلب العلم.",
-
   "$domainNote": "النطاق المعتمد هو المجرّد (بلا www) منذ 2026-07-22 — الخادم يحوّل www إليه بـ308 (Vercel Primary Domain غُيِّر من طرف المالك مباشرة بعد حلقة إعادة توجيه لا نهائية كانت تُعطِّل كل مسار غير الرئيسية). للعودة لـwww: اعكس القيم هنا وفي لوحة Vercel معًا، ثم أعد البناء.",
   "siteUrl": "https://majlisilm.com",
   "legacyOrigins": [
@@ -12,34 +10,59 @@
     "http://majlisilm.com",
     "http://www.majlisilm.com"
   ],
-
   "titleSuffix": " | المجلس العلمي",
-
   "$emailNote": "بريد التواصل الرسمي الوحيد للمنصة كاملةً — استفسارات عامة، ملاحظات تقنية، تصحيح محتوى علمي، إبلاغ عن خطأ، اقتراحات وشراكات. لا بريد آخر معتمد.",
   "contactEmail": "Majlisilm.app@gmail.com",
-
   "$forbiddenNote": "أسماء وعناوين ممنوعة في أي نص معروض للمستخدم — يحرسها scripts/test-identity.mjs. استثناء وحيد: contactEmail أعلاه معتمَد رغم كونه على نطاق gmail.com.",
-  "forbiddenBrandNames": ["مجالس العلم", "منصة المجالس", "مجالس العلمية"],
-  "forbiddenEmailDomains": ["gmail.com", "hotmail.com", "outlook.com", "yahoo.com"],
-
-  "defaultImage": "/majlisilm-og-2026.jpg",
+  "forbiddenBrandNames": [
+    "مجالس العلم",
+    "منصة المجالس",
+    "مجالس العلمية"
+  ],
+  "forbiddenEmailDomains": [
+    "gmail.com",
+    "hotmail.com",
+    "outlook.com",
+    "yahoo.com"
+  ],
+  "defaultImage": "/brand/og-1200x630.f8a88bc42a.png",
   "ogImageWidth": 1200,
   "ogImageHeight": 630,
-
   "$themeNote": "theme-color = لون سطح الصفحة لشريط الحالة (ثابت عبر المسارات). لون العلامة يبقى --mj-brand في theme.css.",
   "themeColor": "#F2F4F3",
   "themeColorDark": "#101614",
   "brandColor": "#1F7A5A",
   "brandColorDark": "#4FB48B",
-
   "$navNote": "تنقّل قشرة الـprerender موحّد لكل الصفحات (لا يختلف عدد/ترتيب الروابط بين المسارات).",
   "prerenderNav": [
-    { "path": "/", "label": "الرئيسية" },
-    { "path": "/lessons", "label": "الدروس" },
-    { "path": "/quran-hub", "label": "القرآن" },
-    { "path": "/adhkar", "label": "الأذكار" },
-    { "path": "/prayer-times", "label": "الصلاة" },
-    { "path": "/fiqh", "label": "الفقه" },
-    { "path": "/search", "label": "البحث" }
-  ]
+    {
+      "path": "/",
+      "label": "الرئيسية"
+    },
+    {
+      "path": "/lessons",
+      "label": "الدروس"
+    },
+    {
+      "path": "/quran-hub",
+      "label": "القرآن"
+    },
+    {
+      "path": "/adhkar",
+      "label": "الأذكار"
+    },
+    {
+      "path": "/prayer-times",
+      "label": "الصلاة"
+    },
+    {
+      "path": "/fiqh",
+      "label": "الفقه"
+    },
+    {
+      "path": "/search",
+      "label": "البحث"
+    }
+  ],
+  "brandImageHash": "f8a88bc42a"
 }

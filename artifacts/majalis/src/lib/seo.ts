@@ -255,7 +255,7 @@ export function applyPageSeo(options: PageSeoOptions) {
   const canonicalPath = normalizePath(options.canonicalPath || normalized);
   const canonical = absoluteUrl(canonicalPath);
   // Prefer explicit page image → route default → branded OG share card
-  const imagePath = options.image || seoData.defaultImage || "/majlisilm-og-2026.jpg";
+  const imagePath = options.image || seoData.defaultImage || "/brand/og-1200x630.f8a88bc42a.png";
   const image = /^https?:\/\//i.test(imagePath) ? imagePath : absoluteUrl(imagePath);
   const robots = options.robots || "index, follow";
   const ogType = options.ogType || "website";
@@ -284,11 +284,13 @@ export function applyPageSeo(options: PageSeoOptions) {
   upsertMeta("property", "og:image:alt", options.title);
   upsertMeta("property", "og:image:width", String(seoData.ogImageWidth || 1200));
   upsertMeta("property", "og:image:height", String(seoData.ogImageHeight || 630));
+  upsertMeta("property", "og:image:type", "image/png");
 
   upsertMeta("name", "twitter:card", "summary_large_image");
   upsertMeta("name", "twitter:title", options.title);
   upsertMeta("name", "twitter:description", options.description);
   upsertMeta("name", "twitter:image", image);
+  upsertMeta("name", "twitter:image:alt", options.title);
   upsertMeta("name", "twitter:url", canonical);
 
   upsertCanonical(canonical);

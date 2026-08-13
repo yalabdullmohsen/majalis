@@ -21,7 +21,7 @@ const SHEIKH_PHOTOS: Record<string, string> = {
 /** Resolve a local sheikh photo from name; falls back to logo.png. */
 export function resolveLocalSheikhPhoto(name?: string | null): string {
   const key = sheikhNameKey(name || "");
-  if (!key) return "/logo.png";
+  if (!key) return "/brand/official.png";
 
   for (const [pattern, path] of Object.entries(SHEIKH_PHOTOS)) {
     const patternKey = sheikhNameKey(pattern);
@@ -30,7 +30,7 @@ export function resolveLocalSheikhPhoto(name?: string | null): string {
     }
   }
 
-  return "/logo.png";
+  return "/brand/official.png";
 }
 
 export const SHEIKH_PHOTO_PATHS = Object.values(SHEIKH_PHOTOS);

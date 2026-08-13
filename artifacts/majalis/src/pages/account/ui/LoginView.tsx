@@ -145,7 +145,7 @@ export default function LoginPage() {
       <div className="login-card">
         <div className="login-card__header">
           <img
-            src="/brand/splash-logo.png"
+            src="/brand/official.png?v=f8a88bc42a"
             alt="المجلس العلمي"
             className="login-logo"
             loading="eager"
