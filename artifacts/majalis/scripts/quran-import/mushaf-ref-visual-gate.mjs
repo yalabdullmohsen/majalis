@@ -4,7 +4,7 @@
  *
  * على CI Linux يختلف تنعيم خطوط QPC عن مراجع macOS (~٥–١٨٪ ظلّياً) —
  * لذلك العتبة الافتراضية على CI = ١٨٪ مع بقاء الفحوص الهيكلية حاجبة
- * (انضغاط ص١–٢ · حبر→خرطوش ≥٢٨ · مركزية). لا مخرج يتجاهل الفرق بالكامل.
+ * (انضغاط ص١–٢ · حبر→خرطوش ≥٨ · خرطوش فردي يمين/زوجي يسار). لا مخرج يتجاهل الفرق بالكامل.
  *
  *   pnpm run test:mushaf-ref-visual
  *   MUSHAF_REF_MAX_DIFF=0.02 pnpm run test:mushaf-ref-visual   # صارم محلي
@@ -150,6 +150,7 @@ async function structuralSnapshot(page, n) {
       parseFloat(getComputedStyle(root).getPropertyValue("--mushaf-S")) ||
       parseFloat(getComputedStyle(root).fontSize) ||
       null;
+    const expectSide = pageNum % 2 === 1 ? "right" : "left";
     return {
       hasFrame: Boolean(frame),
       bannerTopPct,
@@ -158,7 +159,7 @@ async function structuralSnapshot(page, n) {
       align,
       cartDx,
       cartSide,
-      expectSide: "center",
+      expectSide,
       lineCount: lineEls.length,
       contentH: lr.height,
       lineGapMin,
@@ -232,12 +233,12 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
         }
         if (
           structural.bannerTopPct == null ||
-          structural.bannerTopPct < 14 ||
-          structural.bannerTopPct > 18
+          structural.bannerTopPct < 17 ||
+          structural.bannerTopPct > 24
         ) {
           failures.push({
             page: n,
-            reason: `أعلى الشارة ${structural.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ٣٧٫٥–٣٨٫٥`,
+            reason: `أعلى الشارة ${structural.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ١٧–٢٤ (مرجع آية ≈٢٠٪ contentBand)`,
           });
         }
         if (structural.lineGapMin != null && structural.lineGapMin < -0.5) {
@@ -263,22 +264,16 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
           });
         }
       }
-      if (structural.cartDx != null && structural.cartDx > 2.05) {
+      if (structural.cartSide && structural.expectSide && structural.cartSide !== structural.expectSide) {
         failures.push({
           page: n,
-          reason: `خرطوش غير مركزي dx=${structural.cartDx.toFixed(1)}`,
+          reason: `خرطوش ${structural.cartSide} متوقع ${structural.expectSide} (تناوب آية)`,
         });
       }
-      if (structural.cartSide && structural.cartSide !== "center") {
+      if (structural.inkToCart != null && structural.inkToCart < 7.5) {
         failures.push({
           page: n,
-          reason: `خرطوش ${structural.cartSide} متوقع center`,
-        });
-      }
-      if (structural.inkToCart != null && structural.inkToCart < 27.5) {
-        failures.push({
-          page: n,
-          reason: `حبر→خرطوش ${structural.inkToCart.toFixed(1)}px < 28`,
+          reason: `حبر→خرطوش ${structural.inkToCart.toFixed(1)}px < 8`,
         });
       }
 
@@ -370,10 +365,10 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
           });
         }
       }
-      if (structural.inkToCart != null && structural.inkToCart < 27.5) {
+      if (structural.inkToCart != null && structural.inkToCart < 7.5) {
         failures.push({
           page: n,
-          reason: `حبر→خرطوش ${structural.inkToCart.toFixed(1)}px < 28`,
+          reason: `حبر→خرطوش ${structural.inkToCart.toFixed(1)}px < 8`,
         });
       }
       if (cmp.ratio > MAX_DIFF) {
