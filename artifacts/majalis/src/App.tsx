@@ -13,6 +13,7 @@ import { BottomNavBar } from "@/components/BottomNavBar";
 import { TopSectionBar } from "@/components/TopSectionBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { GlobalBackButton } from "@/components/GlobalBackButton";
+import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
 import { SafeAreaDebugOverlay } from "@/components/SafeAreaDebugOverlay";
 import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
@@ -996,6 +997,8 @@ function AppShellInner() {
       <NavProgressBar />
       <SeoManager />
       <ScrollResetOnNav />
+      <RouteEnterMotion />
+      <EdgeSwipeBack />
       <IslamicReminderBootstrap />
       <AdhanSchedulerBootstrap />
       <PrayerAlertSchedulerBootstrap />

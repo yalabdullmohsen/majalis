@@ -31,6 +31,7 @@ import "./styles/tokens.css";
 import "./index.css";
 import "./styles/design-system.css";
 import "./styles/components/instant-interaction.css";
+import "./styles/components/native-feel.css";
 import "./styles/components/chunk-recovery-toast.css";
 import "./styles/final-release.css";
 import "./styles/brand-v4-components.css";

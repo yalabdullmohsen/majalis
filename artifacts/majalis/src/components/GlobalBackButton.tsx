@@ -46,7 +46,7 @@ export function GlobalBackButton() {
   return (
     <button
       type="button"
-      className="global-back-btn"
+      className="global-back-btn mj-pressable"
       onClick={goBack}
       aria-label="رجوع"
       title="رجوع"
