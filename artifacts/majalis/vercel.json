@@ -1166,6 +1166,16 @@
       "source": "/quran-sciences",
       "destination": "/quran-knowledge",
       "permanent": true
+    },
+    {
+      "source": "/prayer",
+      "destination": "/prayer-times",
+      "permanent": true
+    },
+    {
+      "source": "/quran/mushaf",
+      "destination": "/mushaf",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -1323,6 +1333,10 @@
     },
     {
       "source": "/memorization/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/more",
       "destination": "/index.html"
     }
   ],
