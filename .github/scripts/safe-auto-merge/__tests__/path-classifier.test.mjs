@@ -106,13 +106,15 @@ describe("path-classifier", () => {
     assert.equal(tsOnly.needBuild, true);
     assert.equal(tsOnly.needMushaf, false);
     assert.equal(tsOnly.needColorContrast, false);
-    assert.equal(tsOnly.needPreviewSmoke, true);
+    assert.equal(tsOnly.needPreviewSmoke, false);
 
     const css = classifyChangedPaths([
       "artifacts/majalis/src/index.css",
       "artifacts/majalis/src/components/NavBar.tsx",
     ]);
     assert.equal(css.needColorContrast, true);
+    assert.equal(css.requiredChecks.colorContrast, false);
+    assert.equal(css.needVercelCheck, false);
   });
 
   it("auto-merge / pr-safe-merge-report workflows are policy not risky", () => {
@@ -123,5 +125,16 @@ describe("path-classifier", () => {
     assert.equal(r.lane, "policy-only");
     assert.equal(r.manualReview, false);
     assert.equal(r.needFastLane, true);
+  });
+
+  it("throughput workflows + majalis vercel.json are policy not risky", () => {
+    const r = classifyChangedPaths([
+      ".github/workflows/vercel-check.yml",
+      ".github/workflows/preview-smoke.yml",
+      "artifacts/majalis/vercel.json",
+    ]);
+    assert.equal(r.manualReview, false);
+    assert.equal(r.needPreviewSmoke, false);
+    assert.equal(r.needVercelCheck, false);
   });
 });

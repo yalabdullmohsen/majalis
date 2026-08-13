@@ -14,6 +14,7 @@ import {
   CONTENT_SAFE_LABELS,
   CONTENT_SAFE_PATH_PATTERNS,
   DANGER_PATH_PATTERNS,
+  isAutoMergeAllowlistedPath,
   MAX_DELETED_FILES,
   MAX_FILES_FOR_AUTO_MERGE,
   MAX_TOTAL_DELETIONS,
@@ -82,6 +83,7 @@ export function summarizeFiles(files = []) {
 export function findDangerousFiles(paths = []) {
   const hits = [];
   for (const p of paths) {
+    if (isAutoMergeAllowlistedPath(p)) continue;
     for (const re of DANGER_PATH_PATTERNS) {
       if (re.test(p)) {
         hits.push({ path: p, reason: `danger_path:${re}` });
@@ -312,8 +314,8 @@ export function evaluateEligibility(input = {}) {
   );
   const hasCicd = fileSummary.paths.some(
     (p) =>
-      /^\.github\/workflows\//i.test(p) ||
-      /^fastlane\//i.test(p),
+      !isAutoMergeAllowlistedPath(p) &&
+      (/^\.github\/workflows\//i.test(p) || /^fastlane\//i.test(p)),
   );
   if (hasMigration) hardBlockers.push("migration / SQL change → manual review");
   if (hasIos) hardBlockers.push("iOS / Capacitor native change → manual review");

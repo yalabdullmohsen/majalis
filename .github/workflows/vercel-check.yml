@@ -1,11 +1,14 @@
-name: Vercel Check (PR)
+name: Vercel Check (manual)
+
+# كان يكرر lint+typecheck+build على كل PR بجانب CI/Verify build.
+# أُوقف التشغيل التلقائي — استخدم workflow_dispatch عند التشخيص فقط.
+# راجع docs/CI_THROUGHPUT.md.
 
 on:
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 concurrency:
-  group: vercel-check-${{ github.workflow }}-pr-${{ github.event.pull_request.number }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -20,18 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: 24
-
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack prepare --activate
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup-workspace
 
       - name: TypeScript check
         run: pnpm run typecheck

@@ -96,6 +96,29 @@ export const DANGER_PATH_PATTERNS = Object.freeze([
   /AuthKey_/i,
 ]);
 
+/**
+ * مسارات مستثناة من danger-path للدمج التلقائي (throughput):
+ * تعطيل فحوص مكررة / bootstrap يدوي / قصر نشر Vercel على main.
+ * ci.yml وauto-deploy وrelease وios-testflight تبقى خطرًا.
+ */
+export const AUTO_MERGE_PATH_ALLOWLIST = Object.freeze([
+  /^\.github\/workflows\/auto-merge-to-main\.yml$/i,
+  /^\.github\/workflows\/pr-safe-merge-report\.yml$/i,
+  /^\.github\/workflows\/vercel-check\.yml$/i,
+  /^\.github\/workflows\/preview-smoke\.yml$/i,
+  /^\.github\/workflows\/tasmee3_ci\.yml$/i,
+  /^\.github\/workflows\/owner-bootstrap\.yml$/i,
+  /^\.github\/workflows\/platform-bootstrap\.yml$/i,
+  /^\.github\/workflows\/production-bootstrap\.yml$/i,
+  /^\.github\/workflows\/phase2-trial-import\.yml$/i,
+  /^artifacts\/majalis\/vercel\.json$/i,
+]);
+
+export function isAutoMergeAllowlistedPath(path) {
+  const p = String(path || "");
+  return AUTO_MERGE_PATH_ALLOWLIST.some((re) => re.test(p));
+}
+
 /** Auth / security / RLS signals (paths or basename cues). */
 export const AUTH_SECURITY_PATH_PATTERNS = Object.freeze([
   /(^|\/)auth\//i,

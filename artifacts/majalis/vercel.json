@@ -5,7 +5,9 @@
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
   "git": {
-    "deploymentEnabled": true
+    "deploymentEnabled": {
+      "main": true
+    }
   },
   "functions": {
     "api/index.js": {
