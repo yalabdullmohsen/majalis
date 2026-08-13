@@ -1,11 +1,8 @@
 import { Fragment, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { useMushafPageFont, mushafPageFontFamily } from "@/hooks/useMushafPageFont";
-import { quranFontStack } from "@/lib/quran-font-options";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
 import { DRAWN_BASMALA_TEXT, drawnSurahTitleText } from "@/lib/mushaf-sizing-lines";
-import { MushafAyahMarkerSvg } from "@/components/quran/MushafOrnaments";
 import { SurahBanner } from "@/components/quran/SurahBanner";
-import { toArabicDigits } from "@/lib/utils";
 import { wordKeyFromQpc } from "@/features/mushaf/ayah-word-keys";
 import {
   MUSHAF_FONT_DEV_MAX,
@@ -20,12 +17,12 @@ import {
 import { mushafTypescaleCssVars } from "@/features/mushaf/typescale";
 
 /**
- * صفحتا الافتتاح (١–٢): مسار برمجي موحّد · بلا إطار.
- * أعلى الشارة ١٦٪ (نطاق ١٤–١٨) · كتلة متمركزة مع إزاحة علوية ٦٪ ·
+ * صفحتا الافتتاح (١–٢): مسار برمجي موحّد · بلا إطار — مرجع آية.
+ * أعلى الشارة ≈٢٧٫٧٪ من الشاشة ≈٢٠٪ من contentBand · نهاية الكتلة ≈٧٤٫٨٪ شاشة.
  * فاصل شارة→بسملة ٢٤px · بسملة→أول سطر ٢٠px · أسطر بلا مطّ.
  */
-/** أعلى الشارة (٪ من .mf2-lines / contentBand) — ١٤٪…١٨٪ */
-const OPENING_BANNER_TOP_PCT = 16;
+/** أعلى الشارة (٪ من .mf2-lines / contentBand) — مرجع آية ٢٧٫٧٪ شاشة */
+const OPENING_BANNER_TOP_PCT = 20;
 /** ارتفاع خانة الشارة = خانة سطر واحدة (٪) */
 const OPENING_BANNER_H_PCT = MUSHAF_GRID.slotHeightPct;
 /** فاصل حبر شارة→بسملة (صفحتا الافتتاح) */
@@ -34,8 +31,8 @@ const OPENING_BANNER_TO_BASMALA_PX = 24;
 const OPENING_BASMALA_TO_LINE_PX = 20;
 /** فاصل أدنى شارة→بسملة في الصفحات العادية */
 const BANNER_BASMALA_MIN_GAP_PX = 22;
-/** هامش سفلي مقصود تحت آخر سطر (٪ من contentBand) — تمركز مع إزاحة علوية ≈٦٪ */
-const OPENING_BOTTOM_MARGIN_PCT = 18;
+/** هامش سفلي تحت آخر سطر — نهاية كتلة ≈٧٤٫٨٪ شاشة داخل contentBand */
+const OPENING_BOTTOM_MARGIN_PCT = 21;
 /** أدنى فجوة حبر بين سطرين كنسبة من حجم الخط S (لا ارتفاع الصندوق — كان يفيض الذيل) */
 const OPENING_MIN_LINE_GAP_RATIO = 0.35;
 /** ارتفاع خانة الجسم — يقارب امتداد الحبر دون مبالغة الصندوق */
@@ -93,7 +90,9 @@ type Props = {
   layout: MushafPageLayout | null;
   activeAyahKey?: string | null;
   onAyahPress?: (verseKey: string) => void;
+  /** @deprecated مسار عثماني متدفق أُلغي — يُتجاهل بصريًا */
   sharedFontFamily?: string;
+  /** مخصّص اختياري؛ لا يُستخدم لإعادة الالتفاف */
   renderWord?: (w: QpcWord) => ReactNode;
   bare?: boolean;
   showAyahNumbers?: boolean;
@@ -102,6 +101,8 @@ type Props = {
    * التفاعل ينتقل لطبقة الإحداثيات (MushafHitLayer).
    */
   visualOnly?: boolean;
+  /** مقياس الخط من الإعدادات: --mushaf-scale مضروب في S المحسوب */
+  mushafScale?: number;
 };
 
 const ROW_COUNT_STANDARD = 15;
@@ -137,28 +138,6 @@ function defaultRenderWord(w: QpcWord, showAyahNumbers: boolean) {
       <span className="mf2-word" data-word-key={wordKey}>{w.glyphText}</span>
     </Fragment>
   );
-}
-
-/**
- * نص Unicode (textQpcHafs) — المسار الآمن مع Amiri Quran.
- * يمنع عرض code_v2/Presentation Forms بخط عام → تكسّر الحروف.
- */
-function renderUnicodeWord(w: QpcWord, showAyahNumbers: boolean) {
-  if (w.charType === "end") {
-    const n = Number(w.textUthmani.replace(/\D/g, "")) || 0;
-    return (
-      <Fragment key={w.id}>
-        {showAyahNumbers ? (
-          <span className="mf2-ayah-marker" aria-label={`آية ${toArabicDigits(n)}`}>
-            <MushafAyahMarkerSvg className="mf2-ayah-marker__ring" />
-            <span className="mf2-ayah-marker__num">{toArabicDigits(n)}</span>
-          </span>
-        ) : null}
-        {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
-      </Fragment>
-    );
-  }
-  return <span key={w.id} className="mf2-word">{w.textQpcHafs}</span>;
 }
 
 function collectSizingEls(map: Map<string | number, HTMLElement>): HTMLElement[] {
@@ -252,30 +231,33 @@ export function MushafPageV2({
   layout,
   activeAyahKey,
   onAyahPress,
-  sharedFontFamily,
-  renderWord,
+  sharedFontFamily: _sharedFontFamilyIgnored,
+  renderWord: _renderWordIgnored,
   bare,
   showAyahNumbers = true,
   visualOnly = false,
+  mushafScale = 1,
 }: Props) {
-  const wantPrecision = !sharedFontFamily;
-  const pageFont = useMushafPageFont(wantPrecision ? (layout?.pageNumber ?? null) : null);
-
-  const useUnicodeSafe = Boolean(sharedFontFamily) || pageFont.failed;
-  const fontReady = useUnicodeSafe ? true : pageFont.ready;
+  /* مسار بصري واحد: QPC دائمًا. sharedFontFamily/renderWord لا يبدّلان الالتفاف. */
+  void _sharedFontFamilyIgnored;
+  void _renderWordIgnored;
+  const pageFont = useMushafPageFont(layout?.pageNumber ?? null);
+  /** لا مسار عثماني متدفق — الشبكة ١٥ خانة + fit-to-width فقط */
+  const useUnicodeSafe = false;
+  const fontReady = pageFont.ready || pageFont.failed;
 
   const fontFamily = useMemo(() => {
-    if (sharedFontFamily) return sharedFontFamily;
-    if (pageFont.failed) return quranFontStack("amiri");
     if (layout) return mushafPageFontFamily(layout.pageNumber);
     return undefined;
-  }, [sharedFontFamily, pageFont.failed, layout]);
+  }, [layout]);
 
-  const wordRenderer = useMemo(() => {
-    if (renderWord && !pageFont.failed) return renderWord;
-    if (useUnicodeSafe) return (w: QpcWord) => renderUnicodeWord(w, showAyahNumbers);
-    return (w: QpcWord) => defaultRenderWord(w, showAyahNumbers);
-  }, [renderWord, pageFont.failed, useUnicodeSafe, showAyahNumbers]);
+  const wordRenderer = useMemo(
+    () => (w: QpcWord) => defaultRenderWord(w, showAyahNumbers),
+    [showAyahNumbers],
+  );
+  const scaleFactor = Number.isFinite(mushafScale) && mushafScale > 0
+    ? Math.min(1.65, Math.max(0.7, mushafScale))
+    : 1;
 
   /** أسطر الآيات المرسومة — وحدها تدخل في sizeByWidth */
   const ayahLineRefs = useRef(new Map<number, HTMLDivElement>());
@@ -333,20 +315,14 @@ export function MushafPageV2({
       return;
     }
 
-    if (useUnicodeSafe) {
-      setPageFontSize(null);
-      setPageLineHeightEm(1.1);
-      setFitted(true);
-      return;
-    }
-
     const container = linesContainerRef.current;
     if (!container) return;
 
     const LINE_HEIGHT_EM = MUSHAF_LAYOUT_BASELINE.lineHeightEm;
     const REF_PX = 100;
     const MIN_LINE_FILL = 0.98;
-    const BASE_FONT = MUSHAF_LAYOUT_BASELINE.fontSizePx;
+    /* S المحسوب × --mushaf-scale — بلا فرع إعادة التفاف */
+    const BASE_FONT = MUSHAF_LAYOUT_BASELINE.fontSizePx * scaleFactor;
     const isOpening = layout.pageNumber === 1 || layout.pageNumber === 2;
     const noStretchLines = lastSurahEndLineNumbers(layout);
     /* صفحتا الافتتاح: بلا ملاءمة عرض لأي سطر — عرض طبيعي مركزي */
@@ -1154,7 +1130,7 @@ export function MushafPageV2({
       ro?.disconnect();
       cleanupInline();
     };
-  }, [fontReady, layout, useUnicodeSafe]);
+  }, [fontReady, layout, scaleFactor]);
 
   if (!layout) {
     return bare

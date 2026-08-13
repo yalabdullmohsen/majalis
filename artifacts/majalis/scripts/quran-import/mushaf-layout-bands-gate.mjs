@@ -25,8 +25,8 @@ const require = createRequire(import.meta.url);
 /* bands via JSON-like read from TS source constants — mirror numbers */
 const BANDS = {
   toolbarBandPx: 52,
-  footerBandPx: 46,
-  contentFooterGapPx: 28,
+  footerBandPx: 44,
+  contentFooterGapPx: 16,
 };
 const EXTERNAL_BASE = process.env.MUSHAF_GATE_BASE_URL?.replace(/\/$/, "") || "";
 const PORT = process.env.MUSHAF_GATE_PORT || "24235";

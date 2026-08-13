@@ -1,7 +1,7 @@
 # مواصفة المصحف
 
-> **إلزامي قبل أي تعديل على المصحف:** اقرأ [KNOWN_PITFALLS.md](./KNOWN_PITFALLS.md).
+> **إلزامي:** مرجع آية في [`docs/mushaf-ref/aya/`](./mushaf-ref/aya/) يفوز على أي قرار سابق.
 
-المواصفة التفصيلية (مصدر الحقيقة للتنفيذ والقياس):
+المواصفة التفصيلية:
 
 [`artifacts/majalis/docs/MUSHAF_SPEC.md`](../artifacts/majalis/docs/MUSHAF_SPEC.md)

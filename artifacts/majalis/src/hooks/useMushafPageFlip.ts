@@ -1,8 +1,6 @@
 /**
- * تقليب مصحف حقيقي (RTL) — أداء أولاً:
- * - تقدّم السحب في useRef + تحديث CSS مباشرة داخل rAF (بلا setState كل إطار)
- * - قياسات العرض عند pointerdown فقط
- * - عتبة ١٨٪ / ٠٫٣٥px/ms · settle 220ms · ارتداد ١٥٠ms
+ * تقليب مصحف حقيقي (RTL) — مرجع آية:
+ * - عتبة ٢٥٪ / ٠٫٥px/ms · settle 280ms · ارتداد ١٦٠ms · حافة ١٥٪
  */
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 
@@ -15,16 +13,16 @@ export type MushafFlipState = {
   peeling: boolean;
 };
 
-const COMMIT_FRAC = 0.18;
-const VELOCITY_PX_MS = 0.35;
+const COMMIT_FRAC = 0.25;
+const VELOCITY_PX_MS = 0.5;
 const AXIS_LOCK = 1.2;
-const SETTLE_MS = 220;
-const SNAP_BACK_MS = 150;
+const SETTLE_MS = 280;
+const SNAP_BACK_MS = 160;
 const FADE_MS = 150;
 const TAP_MAX_MS = 320;
 const TAP_MAX_PX = 12;
-/** نسبة عرض منطقة النقر على الحافة */
-export const FLIP_EDGE_FRAC = 0.16;
+/** نسبة عرض منطقة النقر على الحافة — مرجع آية ١٥٪ */
+export const FLIP_EDGE_FRAC = 0.15;
 
 function applyFlipVars(el: HTMLElement | null, progress: number) {
   if (!el) return;

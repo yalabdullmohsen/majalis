@@ -18,8 +18,8 @@ const pageComp = readFileSync(resolve(appRoot, "src/components/quran/MushafPageV
 const immersiveLib = readFileSync(resolve(appRoot, "src/lib/quran-immersive.ts"), "utf8");
 const themeCss = readFileSync(resolve(appRoot, "src/app/styles/theme.css"), "utf8");
 
-// 1) هوامش جانبية ضيّقة 2px + safe-area
-assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?max\(2px,\s*var\(--inset-left\)\)/);
+// 1) هوامش جانبية ≈١٫٥٪ + safe-area — مرجع آية
+assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?max\(1\.5vw,\s*var\(--inset-left\)\)/);
 assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?box-sizing:\s*border-box/);
 assert.equal(/4\.5vw/.test(quranCss.match(/\.mpv-body--ayah\s*\{[\s\S]*?\n\}/)?.[0] ?? ""), false, "بلا هامش 4.5vw");
 assert.match(mushafV2, /\.mf2-page\s*\{[\s\S]*?box-sizing:\s*border-box/);
@@ -115,7 +115,7 @@ assert.match(pageComp, /glyphText/, "مجسم الآية في دقة QPC");
 assert.match(pageComp, /drawnSurahTitleText/, "شارة السورة بالرسم العثماني");
 assert.match(pageComp, /MIN_LINE_FILL/, "حد أدنى لامتلاء عرض السطر قبل scaleX");
 assert.match(pageComp, /data-mf2-bind|dataset\.mf2Bind/, "تشخيص قيد التحجيم");
-assert.match(pageComp, /pageFont\.failed|useUnicodeSafe/, "تراجع تلقائي عند فشل خط QPC");
+assert.match(pageComp, /mushafScale|scaleFactor|--mushaf-scale|useUnicodeSafe\s*=\s*false/, "مسار QPC موحّد عبر --mushaf-scale");
 
 // 4) رموز الألوان المرجعية
 assert.match(themeCss, /--color-mushaf-bg:\s*#FCF8F1/);
@@ -144,8 +144,8 @@ assert.equal(
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8"),
-  /OPENING_BANNER_TOP_PCT\s*=\s*16/,
-  "شارة الافتتاح عند ٢٨٪",
+  /OPENING_BANNER_TOP_PCT\s*=\s*20/,
+  "شارة الافتتاح مرجع آية ≈٢٧٫٧٪ شاشة",
 );
 assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?line-height:\s*2\.2/, "وضع Unicode: ارتفاع تشكيل 2.2");
 

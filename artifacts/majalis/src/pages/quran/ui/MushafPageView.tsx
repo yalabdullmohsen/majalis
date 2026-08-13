@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
 import {
@@ -15,7 +15,7 @@ import {
   type Ayah, type SurahSummary,
 } from "@/lib/quran-api";
 import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
-import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode } from "@/hooks/useQuranPreferences";
+import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle } from "@/hooks/useQuranPreferences";
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
@@ -31,9 +31,9 @@ import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 import { JumpPageModal } from "@/components/quran/JumpPageModal";
 import { MushafPageFlipStage } from "@/components/quran/MushafPageFlipStage";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
-import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
+import { loadMushafPage, prefetchMushafPage, type MushafPageLayout } from "@/lib/mushaf-v2-data";
 import { getMushafSpread, prefersMushafSpread } from "@/lib/mushaf-spread";
-import { FONT_OPTIONS, quranFontStack } from "@/lib/quran-font-options";
+import { FONT_OPTIONS } from "@/lib/quran-font-options";
 import {
   QURAN_FONT_DEFAULT_PX,
   QURAN_FONT_MAX_PX,
@@ -44,7 +44,7 @@ import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { QpcFontPackBanner } from "@/components/quran/QpcFontPackBanner";
-import { MushafAyahMarkerSvg, MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
+import { MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
 import { MushafLayeredPage } from "@/features/mushaf";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import {
@@ -70,25 +70,6 @@ function clampPage(n: number): number {
   return Math.min(TOTAL_PAGES, Math.max(1, n));
 }
 
-/** عرض كلمة للوضع الخفيف: نص Unicode + علامة آية SVG أصلية (لا glyph QPC). */
-function renderLightWord(w: QpcWord, showAyahNumbers: boolean) {
-  if (w.charType === "end") {
-    const n = Number(w.textUthmani.replace(/\D/g, "")) || 0;
-    return (
-      <Fragment key={w.id}>
-        {showAyahNumbers ? (
-          <span className="mf2-ayah-marker" aria-label={`آية ${toArabicDigits(n)}`}>
-            <MushafAyahMarkerSvg className="mf2-ayah-marker__ring" />
-            <span className="mf2-ayah-marker__num">{toArabicDigits(n)}</span>
-          </span>
-        ) : null}
-        {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
-      </Fragment>
-    );
-  }
-  return <span key={w.id} className="mf2-word">{w.textQpcHafs}</span>;
-}
-
 const THEME_OPTIONS: { id: QuranReadingTheme; label: string }[] = [
   { id: "standard", label: "افتراضي" },
   { id: "warm", label: "سيبيا" },
@@ -110,10 +91,7 @@ const HIGHLIGHT_OPTIONS: { id: QuranHighlightStyle; label: string }[] = [
   { id: "spotlight", label: "مصباح القراءة" },
   { id: "side-indicator", label: "مؤشر جانبي" },
 ];
-const PAGE_MODE_OPTIONS: { id: QuranPageMode; label: string; hint: string }[] = [
-  { id: "precision", label: "دقة مطبعية (الافتراضي)", hint: "خط QPC مطابق للمطبوع لكل صفحة — ~155 كيلوبايت/صفحة عند الفتح" },
-  { id: "light", label: "خفيف", hint: "خط موحّد لكل الصفحات — بلا تحميل إضافي، مناسب لبطء الاتصال" },
-];
+/* وضع «خفيف» أُلغي بصريًا — مسار QPC موحّد دائمًا عبر --mushaf-scale */
 
 export default function MushafPageView() {
   // مُثبَّت أيضًا على المسار القديم /mushaf/:surah (رقم سورة) — يُحوَّل
@@ -351,18 +329,22 @@ export default function MushafPageView() {
     if (!juz) return "—";
     return `الجزء ${toArabicDigits(juz)}`;
   }, [juz]);
-  /** يسار الرأس: سور تبدأ في الصفحة فقط؛ وإلا السورة المستمرة — فاصل مسافتان */
+  /** يسار الرأس: سور تبدأ أو تستمر في الصفحة — بلا كلمة «سورة» · فاصل مسافة */
   const headerSurahNames = useMemo(() => {
     const strip = (raw: string) =>
       String(raw ?? "").replace(/^(?:سُورَةُ|سورة)\s*/u, "").trim();
+    const onPage = v2Layout?.surahsOnPage ?? [];
+    if (onPage.length) {
+      return onPage.map((s) => strip(s.nameArabic ?? "")).filter(Boolean).join(" ");
+    }
     const starters = v2Layout?.surahsStartingOnPage ?? [];
     if (starters.length) {
-      return starters.map((s) => strip(s.nameArabic ?? "")).filter(Boolean).join("\u00A0\u00A0");
+      return starters.map((s) => strip(s.nameArabic ?? "")).filter(Boolean).join(" ");
     }
-    const continuing = v2Layout?.surahsOnPage?.[0];
-    if (continuing) return strip(continuing.nameArabic ?? "");
     return strip(primarySurahMeta.name ?? "");
   }, [v2Layout, primarySurahMeta.name]);
+  const pageParity = page % 2 === 1 ? "odd" : "even";
+  const mushafScale = prefs.fontScale / QURAN_FONT_DEFAULT_PX;
   /** ذيل: ربع/نصف/ثلاثة أرباع أو بداية حزب */
   const footerMetaLabel = useMemo(() => {
     const rub = v2Layout?.rubElHizbStartingOnPage;
@@ -663,9 +645,8 @@ export default function MushafPageView() {
       style={{ ["--ayah-paper" as string]: immersivePaper }}
     >
       <>
-          <QpcFontPackBanner currentPage={page} />
           {/* هيدر عائم بسيط — بلا أزرار أو خلفيات (مطابق مخطط آية) */}
-          <header className="mpv-ayah-header" aria-label="معلومات الصفحة">
+          <header className="mpv-ayah-header" aria-label="معلومات الصفحة" data-aya-header="1">
             <span className="mpv-ayah-header__juz">{headerJuzLabel}</span>
             <span className="mpv-ayah-header__surah">{headerSurahNames}</span>
           </header>
@@ -802,7 +783,8 @@ export default function MushafPageView() {
                   className={`qs-mushaf-body qs-mushaf-body--ayah qs-mushaf-body--hl-${prefs.highlightStyle} ${prefs.highlightStyle === "spotlight" && selectedAyah ? "qs-mushaf-body--spotlight" : ""}`}
                   style={{
                     ["--qs-font-size" as string]: `${prefs.fontScale}px`,
-                    ["--qs-font-scale" as string]: String(prefs.fontScale / QURAN_FONT_DEFAULT_PX),
+                    ["--qs-font-scale" as string]: String(mushafScale),
+                    ["--mushaf-scale" as string]: String(mushafScale),
                   }}
                   onScroll={(e) => {
                     const el = e.currentTarget;
@@ -823,21 +805,12 @@ export default function MushafPageView() {
                     isSpread={spread.isSpread}
                     spreadLeft={
                       spread.isSpread && neighborLayouts.spreadLeft ? (
-                        prefs.pageMode === "precision" ? (
-                          <MushafLayeredPage
-                            layout={neighborLayouts.spreadLeft}
-                            activeAyahKey={null}
-                            showAyahNumbers={prefs.showAyahNumbers}
-                          />
-                        ) : (
-                          <MushafLayeredPage
-                            layout={neighborLayouts.spreadLeft}
-                            activeAyahKey={null}
-                            sharedFontFamily={quranFontStack(prefs.fontId)}
-                            renderWord={(w) => renderLightWord(w, prefs.showAyahNumbers)}
-                            showAyahNumbers={prefs.showAyahNumbers}
-                          />
-                        )
+                        <MushafLayeredPage
+                          layout={neighborLayouts.spreadLeft}
+                          activeAyahKey={null}
+                          showAyahNumbers={prefs.showAyahNumbers}
+                          mushafScale={mushafScale}
+                        />
                       ) : null
                     }
                     underlay={
@@ -846,35 +819,21 @@ export default function MushafPageView() {
                           layout={(flip.progress >= 0 ? neighborLayouts.next : neighborLayouts.prev)!}
                           activeAyahKey={null}
                           showAyahNumbers={prefs.showAyahNumbers}
-                          {...(prefs.pageMode === "light"
-                            ? {
-                                sharedFontFamily: quranFontStack(prefs.fontId),
-                                renderWord: (w: QpcWord) => renderLightWord(w, prefs.showAyahNumbers),
-                              }
-                            : {})}
+                          mushafScale={mushafScale}
                         />
                       ) : undefined
                     }
                   >
                     {loading || !segAyahs ? (
-                      <MushafPageV2 layout={null} bare />
-                    ) : prefs.pageMode === "precision" ? (
-                      <MushafLayeredPage
-                        layout={v2Layout}
-                        activeAyahKey={v2ActiveKey}
-                        onAyahPress={handleV2AyahPress}
-                        onBackgroundPress={clearAyahSelection}
-                        showAyahNumbers={prefs.showAyahNumbers}
-                      />
+                      <MushafPageV2 layout={null} bare mushafScale={mushafScale} />
                     ) : (
                       <MushafLayeredPage
                         layout={v2Layout}
                         activeAyahKey={v2ActiveKey}
                         onAyahPress={handleV2AyahPress}
                         onBackgroundPress={clearAyahSelection}
-                        sharedFontFamily={quranFontStack(prefs.fontId)}
-                        renderWord={(w) => renderLightWord(w, prefs.showAyahNumbers)}
                         showAyahNumbers={prefs.showAyahNumbers}
+                        mushafScale={mushafScale}
                       />
                     )}
                   </MushafPageFlipStage>
@@ -883,16 +842,18 @@ export default function MushafPageView() {
             )}
           </div>
 
-          {/* ذيل: خرطوش مركزي · وصف الحزب جانبي بلا تقاطع */}
+          {/* ذيل: خرطوش فردي يمين / زوجي يسار · وصف الحزب على الحافة المقابلة */}
           <footer
             className="mpv-ayah-footer"
-            data-cartouche-align="center"
+            data-cartouche-align="parity"
+            data-page-parity={pageParity}
           >
             <span className="mpv-ayah-footer__meta">{footerMetaLabel ?? ""}</span>
             <button
               type="button"
               className="mpv-ayah-page-badge"
-              data-cartouche-side="center"
+              data-cartouche-side={pageParity === "odd" ? "right" : "left"}
+              data-page-parity={pageParity}
               onClick={openJumpModal}
               aria-haspopup="dialog"
               aria-expanded={isJumpModalVisible}
@@ -948,12 +909,17 @@ export default function MushafPageView() {
               <span className="mpv-settings-group__label">حجم الخط</span>
               <div className="mpv-settings-group__grid">
                 <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.max(QURAN_FONT_MIN_PX, prefs.fontScale - QURAN_FONT_STEP_PX))}>أصغر −</button>
-                <span className="mpv-chip is-active">{prefs.fontScale}px</span>
+                <span className="mpv-chip is-active">{Math.round(mushafScale * 100)}٪</span>
                 <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.min(QURAN_FONT_MAX_PX, prefs.fontScale + QURAN_FONT_STEP_PX))}>أكبر +</button>
               </div>
               <small style={{ display: "block", opacity: .7, marginTop: ".35rem" }}>
-                يكبّر الصفحة مع تمرير داخل الإطار — بلا قصّ بـtransform.
+                مقياس موحّد عبر --mushaf-scale على شبكة الـ١٥ خانة — بلا إعادة التفاف.
               </small>
+            </div>
+
+            <div className="mpv-settings-group" data-font-pack-sheet="1">
+              <span className="mpv-settings-group__label">خطوط المصحف</span>
+              <QpcFontPackBanner currentPage={page} variant="sheet" />
             </div>
 
             <div className="mpv-settings-group">
@@ -994,7 +960,7 @@ export default function MushafPageView() {
             </div>
 
             <div className="mpv-settings-group">
-              <span className="mpv-settings-group__label">خط المصحف</span>
+              <span className="mpv-settings-group__label">خط الواجهة (غير المصحف)</span>
               <div className="mpv-settings-group__grid">
                 {FONT_OPTIONS.map((o) => (
                   <button
@@ -1010,7 +976,7 @@ export default function MushafPageView() {
                 ))}
               </div>
               <small style={{ display: "block", opacity: .7, marginTop: ".35rem" }}>
-                يُطبَّق في الوضع الخفيف وعارض محرك القرآن (أميري / نسخ / شهرزاد).
+                نص المصحف دائمًا من خط الصفحة QPC — هذا الخيار لعناصر الواجهة فقط.
               </small>
             </div>
 
@@ -1034,21 +1000,6 @@ export default function MushafPageView() {
                   إخفاء
                 </button>
               </div>
-            </div>
-
-            <div className="mpv-settings-group">
-              <span className="mpv-settings-group__label">وضع عرض الصفحة</span>
-              <div className="mpv-settings-group__grid">
-                {PAGE_MODE_OPTIONS.map((o) => (
-                  <button key={o.id} type="button" className={`mpv-chip ${prefs.pageMode === o.id ? "is-active" : ""}`} onClick={() => setPref("pageMode", o.id)}>
-                    {o.label}
-                  </button>
-                ))}
-              </div>
-              <small style={{ display: "block", opacity: .7, marginTop: ".35rem" }}>
-                {PAGE_MODE_OPTIONS.find((o) => o.id === prefs.pageMode)?.hint}{" "}
-                <a href="/mushaf/about-edition" target="_blank" rel="noopener noreferrer">عن طبعة المصحف</a>
-              </small>
             </div>
 
             <div className="mpv-settings-group">

@@ -1,25 +1,46 @@
 /**
- * نطاقات تخطيط المصحف — مصدر واحد للثوابت (CSS vars + JS).
- * الترتيب من الأعلى للأسفل: header → content → footer → toolbar → inset-bottom.
- * لا تتقاطع النطاقات؛ contentBand يُشتق بعد طرح الثلاثة الأخرى.
+ * نطاقات تخطيط المصحف — مرجع آية (٪ من ارتفاع الشاشة).
+ * الترتيب: header → content (~٧٩–٨٠٪) → footer → toolbar → inset-bottom.
+ * صفر تقاطع بين النطاقات والحبر.
  *
- * الاشتقاق النسبي: عند قصر ارتفاع الشاشة عن المرجع (٨٤٤) تُصغَّر النطاقات
- * بنسبة الارتفاع مع أرضيات تحافظ على أهداف لمس ≥٤٤px للشريط.
+ * @see docs/mushaf-ref/aya/README.md
  */
 export const MUSHAF_LAYOUT_REF_VIEWPORT_H = 844;
+export const MUSHAF_LAYOUT_REF_VIEWPORT_W = 390;
+
+/** نسب آية مقيسة من المرجع */
+export const MUSHAF_AYA_BANDS_PCT = {
+  headerBaseline: 8.3,
+  contentTopMin: 11.5,
+  contentTopMax: 12.1,
+  contentBotMin: 91.1,
+  contentBotMax: 91.8,
+  contentFillMin: 79,
+  contentFillMax: 80,
+  footerTop: 93.2,
+  footerBot: 95.5,
+  sideMarginStart: 1.5,
+  sideMarginEnd: 98.4,
+  cartoucheOddStart: 84,
+  cartoucheOddEnd: 97,
+  cartoucheEvenStart: 3,
+  cartoucheEvenEnd: 16,
+  openingBannerTop: 27.7,
+  openingBlockEnd: 74.8,
+} as const;
 
 export const MUSHAF_LAYOUT_BANDS = {
   /** ارتفاع شريط الأدوات العائم + هامش داخلي */
   toolbarBandPx: 52,
   /**
-   * نطاق الذيل: خرطوش ٣٠px + ≥٨px فوق شريط الأدوات + هامش علوي
-   * يضمن ≥٢٨px بين حبر آخر سطر وأعلى الخرطوش مع contentFooterGap.
+   * نطاق الذيل: خرطوش ٣٠px + ≥٨px فوق شريط الأدوات
+   * يقابل ≈٩٣٫٢٪–٩٥٫٥٪ من الشاشة
    */
-  footerBandPx: 46,
-  /** فاصل إلزامي بين نهاية contentBand وبداية footerBand (≥٢٨px حبر→خرطوش) */
-  contentFooterGapPx: 28,
-  /** ارتفاع تقريبي للرأس (بدون inset-top) — للقياس/التوثيق */
-  headerBandPx: 38,
+  footerBandPx: 44,
+  /** فاصل بين نهاية contentBand وبداية footerBand */
+  contentFooterGapPx: 16,
+  /** ارتفاع تقريبي للرأس عند خط أساس ٨٫٣٪ */
+  headerBandPx: Math.round((MUSHAF_AYA_BANDS_PCT.headerBaseline / 100) * MUSHAF_LAYOUT_REF_VIEWPORT_H),
 } as const;
 
 export type MushafLayoutBandValues = {
@@ -31,7 +52,6 @@ export type MushafLayoutBandValues = {
 
 /**
  * نطاقات مشتقّة من ارتفاع نافذة العرض المقيس — لا قيم مضبوطة على مقاس واحد.
- * على المقاسات ≥ المرجع تُبقى الثوابت كما هي (لا نكبّر الشريط بلا داعٍ).
  */
 export function scaleMushafLayoutBands(
   viewportH: number,
@@ -45,7 +65,7 @@ export function scaleMushafLayoutBands(
   return {
     toolbarBandPx: Math.max(44, Math.round(MUSHAF_LAYOUT_BANDS.toolbarBandPx * scale)),
     footerBandPx: Math.max(34, Math.round(MUSHAF_LAYOUT_BANDS.footerBandPx * scale)),
-    contentFooterGapPx: Math.max(16, Math.round(MUSHAF_LAYOUT_BANDS.contentFooterGapPx * scale)),
+    contentFooterGapPx: Math.max(12, Math.round(MUSHAF_LAYOUT_BANDS.contentFooterGapPx * scale)),
     headerBandPx: Math.max(28, Math.round(MUSHAF_LAYOUT_BANDS.headerBandPx * scale)),
   };
 }
@@ -82,3 +102,13 @@ export type MushafBandHeights = {
   toolbarBandPx: number;
   contentFooterGapPx: number;
 };
+
+/** يتحقق من صفر تقاطع بين النطاقات الأربعة */
+export function assertMushafBandsDisjoint(bands: MushafLayoutBandValues, viewportH: number): boolean {
+  const header = bands.headerBandPx;
+  const footer = bands.footerBandPx;
+  const toolbar = bands.toolbarBandPx;
+  const gap = bands.contentFooterGapPx;
+  const content = viewportH - header - footer - toolbar - gap;
+  return content > 0 && header > 0 && footer > 0 && toolbar > 0 && gap >= 0;
+}
