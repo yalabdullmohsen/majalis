@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prophet.schema.json",
+  "title": "ProphetArticle",
+  "allOf": [{ "$ref": "knowledge-item.schema.json" }],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string" },
+        "nation_id": { "type": "string" },
+        "ayah_refs": { "type": "array" }
+      }
+    }
+  }
+}

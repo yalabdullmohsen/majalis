@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "knowledge-item.schema.json",
+  "title": "KnowledgeItem",
+  "type": "object",
+  "required": ["id", "title", "body", "evidences", "sources", "tags", "related", "review_status", "updated_at"],
+  "properties": {
+    "id": { "type": "string", "minLength": 2 },
+    "title": { "type": "string", "minLength": 2 },
+    "body": { "type": "string" },
+    "evidences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "ref", "text"],
+        "properties": {
+          "type": { "enum": ["ayah", "hadith", "athar", "quote"] },
+          "ref": { "type": "string" },
+          "text": { "type": "string" },
+          "grade": { "type": "string" },
+          "graded_by": { "type": "string" }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["book", "author"],
+        "properties": {
+          "book": { "type": "string" },
+          "author": { "type": "string" },
+          "locator": { "type": "string" }
+        }
+      }
+    },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "related": { "type": "array", "items": { "type": "string" } },
+    "review_status": { "enum": ["verified", "needs_review"] },
+    "updated_at": { "type": "string" },
+    "israiliyat": { "enum": ["مسكوت_عنه"] },
+    "section": { "type": "string" },
+    "meta": { "type": "object" }
+  },
+  "additionalProperties": true
+}
