@@ -101,9 +101,10 @@ html[data-theme="dark"] .mf2-frame {
   margin-inline: auto;
 }
 .mf2-lines--opening.mf2-lines--qpc-contiguous .mf2-line {
-  /* scaleX يمدّ المحتوى لعرض الإطار الداخلي — الأصل في الوسط */
-  transform: scaleX(var(--mf2-line-sx, 1));
+  /* الصفحتان الافتتاحيتان: بلا مطّ عرض — عرض طبيعي مركزي */
+  transform: none !important;
   transform-origin: center center;
+  margin-inline: auto;
 }
 .mf2-lines--opening .mf2-grid-slot--basmala .mf2-bismillah,
 .mf2-lines--opening .mf2-bismillah {
@@ -189,21 +190,27 @@ html[data-theme="dark"] .mf2-frame {
 /* سطر آيات QPC: نص متصل واحد — بلا عزل bidi بين المحارف */
 .mf2-lines--qpc-contiguous .mf2-line {
   unicode-bidi: plaintext;
-  /* صندوق بمحتوى السطر فقط، ملتصق باليمين — scaleX لا يوسّع صندوقًا بعرض 100٪ */
   display: block;
   width: max-content;
   max-width: 100%;
-  /* RTL: ادفع السطر لجهة البدء (اليمين) */
   margin-inline-start: 0;
   margin-inline-end: auto;
-  transform: scaleX(var(--mf2-line-sx, 1));
-  transform-origin: right center;
+  /* بلا scaleX — التمديد عبر --mf2-word-gap (مسافات بين الكلمات) */
+  transform: none;
+}
+.mf2-lines--opening.mf2-lines--qpc-contiguous .mf2-line {
+  transform: none;
+  transform-origin: center center;
+  margin-inline: auto;
 }
 .mf2-line__run {
   display: inline;
   white-space: nowrap;
   word-spacing: normal;
   letter-spacing: 0;
+}
+.mf2-lines--qpc-contiguous .mf2-word + .mf2-word {
+  margin-inline-start: var(--mf2-word-gap, 0px);
 }
 html[data-theme="dark"] .mf2-line { --mf2-ink: #F9FAFB; }
 /* ورقة آية فاتحة تحت الوضع الداكن العام — أبقِ الحبر داكنًا حتى لا يبهت النص */
@@ -294,13 +301,13 @@ html[data-theme="dark"] .mf2-ayah-group--active .mf2-word {
   letter-spacing: 0;
   word-spacing: normal;
 }
-/* دقة QPC: بلا مسافات CSS بين الكلمات — هندسة الخط تملأ العرض */
+/* دقة QPC: التمديد الأفقي عبر --mf2-word-gap المحسوب لكل سطر */
 .mf2-lines--qpc-contiguous .mf2-word {
   unicode-bidi: normal;
 }
 .mf2-lines:not(.mf2-lines--unicode) .mf2-word + .mf2-word,
 .mf2-lines:not(.mf2-lines--unicode) .mf2-ayah-group + .mf2-ayah-group .mf2-word:first-child {
-  margin-inline-start: 0;
+  margin-inline-start: var(--mf2-word-gap, 0px);
 }
 /* وضع Unicode يحتاج فاصلًا بصريًا بسيطًا */
 .mf2-lines--unicode .mf2-word + .mf2-word,
@@ -454,16 +461,16 @@ html[data-theme="dark"] .mf2-sajda-badge {
   justify-content: center;
 }
 .mf2-surah-banner__bar {
-  position: absolute;
-  inset: 0;
-  box-sizing: border-box;
-  background: var(--color-mushaf-panel, #FAF3E8);
-  border: 1px solid var(--color-mushaf-gold-strong, #A67C3D);
-  border-radius: 3px;
-  pointer-events: none;
+  display: none;
 }
 .mf2-surah-banner__svg {
-  display: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: block;
 }
 .mf2-surah-header__cartouche {
   position: absolute;
@@ -485,8 +492,8 @@ html[data-theme="dark"] .mf2-sajda-badge {
   letter-spacing: normal;
   line-height: 1.2;
   white-space: nowrap;
-  max-width: calc(100% - 16px);
-  overflow: hidden;
+  max-width: calc(34% - 12px);
+  overflow: visible;
   text-overflow: clip;
   padding-block: 0.1em;
   padding-inline: 0;

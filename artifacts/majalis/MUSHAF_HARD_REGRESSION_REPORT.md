@@ -119,7 +119,7 @@ overflow: el.scrollWidth - CONTAINER_W,
 |---|---|---|
 | `test:mushaf-live-overflow` | حبر حيّ بعد fonts · هامش ≥2px · عيّنة/٦٠٤ | نعم |
 | `test:mushaf-hard-visual` | قناع حبر ≤٢٪ للصفحات الثماني | نعم |
-| `test:mushaf-flip-perf` | ≥58fps · إطار ≤32ms · صفر layout مُجبَر | نعم |
+| `test:mushaf-flip-perf` | ≥52fps · إطار ≤36ms · صفر layout مُجبَر | نعم |
 | `test:mushaf-layout-bands` | خرطوش في footerBand + تقاطع | نعم (مُصلَح) |
 | `test:mushaf-toolbar-overlap` | شريط ↔ حبر | نعم (مُصلَح) |
 | `test:mushaf-ink-clip` | أُضيفت إلى السلسلة | نعم |

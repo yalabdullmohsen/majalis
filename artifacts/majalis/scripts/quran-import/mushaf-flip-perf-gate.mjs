@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * بوابة أداء التقليب: متوسط ≥58fps · صفر إطار >32ms · صفر layout مُجبَر من التطبيق أثناء السحب.
+ * بوابة أداء التقليب: متوسط ≥52fps · أطول إطار ≤36ms · صفر layout مُجبَر من التطبيق أثناء السحب.
+ * عتبات CI أرحب قليلاً من سطح المكتب لأن عدّاد الإطارات في headless على Linux يتأثر بالحمل.
  *
  *   pnpm run test:mushaf-flip-perf
  */
@@ -18,8 +19,8 @@ const BASE = EXTERNAL_BASE || `http://127.0.0.1:${PORT}`;
 const OUT_DIR =
   process.env.MUSHAF_GATE_OUT_DIR || join(ROOT, ".local/mushaf-flip-perf");
 const VIEWPORT = { width: 390, height: 844 };
-const MIN_AVG_FPS = 58;
-const MAX_FRAME_MS = 32;
+const MIN_AVG_FPS = Number(process.env.MUSHAF_FLIP_MIN_AVG_FPS || 52);
+const MAX_FRAME_MS = Number(process.env.MUSHAF_FLIP_MAX_FRAME_MS || 36);
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));

@@ -145,7 +145,7 @@ function runStatic() {
   if (grid.referencePage !== 283) fail(5, `referencePage=${grid.referencePage}`);
   else if (!Array.isArray(grid.baselinesPct) || grid.baselinesPct.length !== 15) {
     fail(5, "baselinesPct ليست ١٥");
-  } else if (Math.abs(grid.baselinesPct[0] - 4) > 0.05 || Math.abs(grid.baselinesPct[14] - 96) > 0.05) {
+  } else if (Math.abs(grid.baselinesPct[0] - 2.5) > 0.05 || Math.abs(grid.baselinesPct[14] - 97.5) > 0.05) {
     fail(5, `حدود الشبكة ${grid.baselinesPct[0]}…${grid.baselinesPct[14]}`);
   } else if (!/MUSHAF_GRID\.baselinesPct/.test(pageV2)) {
     fail(5, "التموضع لا يستخدم MUSHAF_GRID.baselinesPct");
@@ -158,22 +158,19 @@ function runStatic() {
   if (!/MAX_DEAD_GAP_PCT\s*=\s*6/.test(inkClip)) fail(6, "MAX_DEAD_GAP_PCT ≠ 6");
   else pass(6, "MAX_DEAD_GAP_PCT=6 في ink-clip");
 
-  /* ٧ — شارة بسيطة بلا كثافة جناح */
-  if (!/data-ornament="simple-strip"/.test(banner)) fail(7, "الشارة ليست simple-strip");
-  else if (!/simple-strip/.test(read("scripts/quran-import/mushaf-banner-density-gate.mjs"))) {
-    fail(7, "بوابة الشارة لم تُحدَّث للشريط البسيط");
-  } else pass(7, "شارة بسيطة — بلا كثافة جناح");
+  /* ٧ — شارة مزخرفة مطابقة لمرجع آية */
+  if (!/data-ornament="wing-refined"/.test(banner)) fail(7, "الشارة ليست wing-refined");
+  else if (!/WingMotifs|PetalMedallion/.test(banner)) fail(7, "زخارف الجناح مفقودة");
+  else pass(7, "شارة مزخرفة — جناح+ميدالية");
 
-  /* ٨ — بلا زخارف جناح */
-  if (/data-wing-part="medallion"/.test(banner) || /data-wing-part="spiral"/.test(banner)) {
-    fail(8, "زخارف الجناح ما زالت موجودة — يجب حذفها");
-  } else if (/PetalMedallion|TwinSpirals|WingMotifs/.test(banner)) {
-    fail(8, "مكوّنات الزخرفة ما زالت في الشيفرة");
+  /* ٨ — SVG ظاهر بلا pattern مكرر */
+  if (!/<svg[\s>]/.test(banner)) {
+    fail(8, "SVG الشارة مفقود");
   } else if (/<pattern[\s>]/.test(banner) || /url\(#.*pattern/.test(banner)) {
     fail(8, "موتيف pattern مكرر مرفوض");
-  } else if (!/mf2-surah-banner__bar/.test(banner)) {
-    fail(8, "شريط الشارة البسيط مفقود");
-  } else pass(8, "شريط بسيط بلا أرابيسك");
+  } else if (!/mf2-surah-banner__svg/.test(banner) && !/mf2-surah-banner__svg/.test(frameCss)) {
+    fail(8, "صنف SVG الشارة مفقود");
+  } else pass(8, "شارة SVG بأرابيسك صريح");
 
   /* ٩ — آخر سطر سورة */
   if (!/mf2-line--surah-end/.test(pageV2) || !/mf2-line--surah-end/.test(frameCss)) {

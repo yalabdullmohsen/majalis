@@ -31,8 +31,8 @@ assert.match(quranCss, /\.quran-shell--chrome-hidden\s+\.mpv-body/);
 assert.match(quranCss, /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?position:\s*absolute/);
 assert.match(
   quranCss,
-  /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?bottom:\s*calc\(\s*var\(--inset-bottom/,
-  "شريط آية أسفل الشاشة فوق inset-bottom",
+  /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?top:\s*calc\(\s*94\.3vh/,
+  "شريط آية تحت الخرطوش عند ٩٤٫٣vh",
 );
 assert.equal(
   /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[^}]*top:\s*calc\(\s*var\(--inset-top\)/.test(quranCss),
@@ -51,7 +51,16 @@ assert.match(
 );
 assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?position:\s*absolute/, "رأس عائم لا يزيح النص");
 assert.match(quranCss, /\.mpv-ayah-footer\s*\{[\s\S]*?position:\s*absolute/, "ذيل عائم لا يزيح النص");
-assert.match(quranCss, /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*max\(8px/);
+assert.match(
+  quranCss,
+  /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*calc\(\s*var\(--inset-top[^)]*\)\s*\+\s*11\.8vh\s*\)/,
+  "بداية كتلة النص عند ١١٫٨٪",
+);
+assert.match(
+  quranCss,
+  /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-bottom:\s*calc\(\s*var\(--inset-bottom[^)]*\)\s*\+\s*8\.5vh\s*\)/,
+  "نهاية كتلة النص عند ٩١٫٥٪",
+);
 assert.equal(
   /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*1\.35rem/.test(quranCss),
   false,

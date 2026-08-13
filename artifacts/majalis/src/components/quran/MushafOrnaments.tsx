@@ -62,7 +62,7 @@ export function MushafAyahMarkerSvg({ className }: { className?: string }) {
   );
 }
 
-/** خرطوش رقم الصفحة — مزخرف واضح، يُعرض وسط أسفل الصفحة */
+/** خرطوش رقم الصفحة — إطار ذهبي مزدوج · لفائف جانبية · خلفية بيج */
 export function MushafPageCartoucheSvg({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, "");
   return (
@@ -79,37 +79,41 @@ export function MushafPageCartoucheSvg({ className }: { className?: string }) {
           <stop offset="100%" stopColor="var(--color-mushaf-gold-strong, #A67C3D)" />
         </linearGradient>
       </defs>
-      {/* جسم الخرطوش */}
+      <path
+        d="M34 28 C22 10 6 14 8 28 C6 42 22 46 34 28 Z"
+        fill="var(--color-mushaf-panel, #FAF3E8)"
+        stroke={`url(#${uid}-pg)`}
+        strokeWidth="1.6"
+      />
+      <circle cx="16" cy="28" r="4.2" fill={`url(#${uid}-pg)`} opacity="0.9" />
+      <path
+        d="M166 28 C178 10 194 14 192 28 C194 42 178 46 166 28 Z"
+        fill="var(--color-mushaf-panel, #FAF3E8)"
+        stroke={`url(#${uid}-pg)`}
+        strokeWidth="1.6"
+      />
+      <circle cx="184" cy="28" r="4.2" fill={`url(#${uid}-pg)`} opacity="0.9" />
       <rect
-        x="36"
-        y="10"
-        width="128"
-        height="36"
-        rx="12"
+        x="32"
+        y="8"
+        width="136"
+        height="40"
+        rx="10"
         fill="var(--color-mushaf-panel, #FAF3E8)"
         stroke="var(--color-mushaf-gold-strong, #A67C3D)"
-        strokeWidth="1.75"
+        strokeWidth="2"
       />
       <rect
-        x="42"
-        y="15"
-        width="116"
-        height="26"
-        rx="9"
+        x="38"
+        y="13"
+        width="124"
+        height="30"
+        rx="7"
         fill="none"
         stroke={`url(#${uid}-pg)`}
-        strokeWidth="0.7"
-        opacity="0.65"
+        strokeWidth="0.85"
+        opacity="0.75"
       />
-      {/* لفائف جانبية أوضح */}
-      <g fill="none" stroke="var(--color-mushaf-gold-strong, #A67C3D)" strokeWidth="1.35">
-        <path d="M28 28 C18 18 10 20 12 28 C10 36 18 38 28 28" />
-        <path d="M32 28 C38 22 44 22 50 28 C44 34 38 34 32 28" />
-        <circle cx="22" cy="28" r="3" fill={`url(#${uid}-pg)`} stroke="none" opacity="0.85" />
-        <path d="M172 28 C182 18 190 20 188 28 C190 36 182 38 172 28" />
-        <path d="M168 28 C162 22 156 22 150 28 C156 34 162 34 168 28" />
-        <circle cx="178" cy="28" r="3" fill={`url(#${uid}-pg)`} stroke="none" opacity="0.85" />
-      </g>
     </svg>
   );
 }

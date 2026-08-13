@@ -33,12 +33,14 @@ export const MUSHAF_LAYOUT_BANDS = {
   /** ارتفاع شريط الأدوات العائم + هامش داخلي */
   toolbarBandPx: 52,
   /**
-   * نطاق الذيل: خرطوش ٣٠px + ≥٨px فوق شريط الأدوات
-   * يقابل ≈٩٣٫٢٪–٩٥٫٥٪ من الشاشة
+   * نطاق الذيل: خرطوش ٣٠px · مركزه ٩٤٫٣٪ (٩٣٫٢٪–٩٥٫٥٪)
    */
   footerBandPx: 44,
-  /** فاصل بين نهاية contentBand وبداية footerBand */
-  contentFooterGapPx: 16,
+  /**
+   * فاصل ضيق بين نهاية الحبر (٩١٫٥٪) وأعلى الذيل (~٩١٫٧٪ عند مركز ٩٤٫٣٪)
+   * — ١٦px السابقة كانت تُنهي الكتلة عند ~٨٩٫٩٪
+   */
+  contentFooterGapPx: 4,
   /** ارتفاع تقريبي للرأس عند خط أساس ٨٫٣٪ */
   headerBandPx: Math.round((MUSHAF_AYA_BANDS_PCT.headerBaseline / 100) * MUSHAF_LAYOUT_REF_VIEWPORT_H),
 } as const;
@@ -65,7 +67,7 @@ export function scaleMushafLayoutBands(
   return {
     toolbarBandPx: Math.max(44, Math.round(MUSHAF_LAYOUT_BANDS.toolbarBandPx * scale)),
     footerBandPx: Math.max(34, Math.round(MUSHAF_LAYOUT_BANDS.footerBandPx * scale)),
-    contentFooterGapPx: Math.max(12, Math.round(MUSHAF_LAYOUT_BANDS.contentFooterGapPx * scale)),
+    contentFooterGapPx: Math.max(2, Math.round(MUSHAF_LAYOUT_BANDS.contentFooterGapPx * scale)),
     headerBandPx: Math.max(28, Math.round(MUSHAF_LAYOUT_BANDS.headerBandPx * scale)),
   };
 }
