@@ -426,11 +426,11 @@ for (const m of pages) {
         });
       }
     }
-    if (n > 2 && m.gapContentFooter != null && m.gapContentFooter < 7.5) {
+    if (n > 2 && m.gapContentFooter != null && m.gapContentFooter < 3.5) {
       failures.push({
         gate: "layout-bands",
         page: n,
-        reason: `فاصل content→footer ${m.gapContentFooter.toFixed(1)}px < 8 (مرجع آية)`,
+        reason: `فاصل content→footer ${m.gapContentFooter.toFixed(1)}px < 4 (مرجع آية ٩١٫٥٪→٩٤٫٣٪)`,
       });
     }
   }

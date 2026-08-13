@@ -53,8 +53,8 @@ assert.match(quranCss, /@media\s*\(max-width:\s*480px\)/);
 assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?z-index:\s*32/);
 assert.match(
   quranCss,
-  /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?bottom:\s*calc\(\s*var\(--inset-bottom/,
-  "شريط آية في نطاق toolbarBand فوق inset-bottom",
+  /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?top:\s*calc\(\s*94\.3vh/,
+  "شريط آية تحت الخرطوش عند ٩٤٫٣vh",
 );
 assert.equal(
   /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?top:\s*calc\(var\(--inset-top\)\s*\+\s*2\.75rem\)/.test(

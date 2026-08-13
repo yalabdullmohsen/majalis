@@ -2315,9 +2315,9 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 /* عائم في نطاق شريط الأدوات (محجوز دائماً) */
 .mpv-toolbar.mpv-toolbar--ayah {
   position: absolute;
-  top: auto;
-  /* داخل toolbarBand فوق inset-bottom */
-  bottom: calc(var(--inset-bottom, 0px) + 6px);
+  /* تحت الخرطوش (مركزه ٩٤٫٣٪ وارتفاعه ≈٣٠px) — بلا تراكب */
+  top: calc(94.3vh + 18px);
+  bottom: auto;
   inset-inline: 0.35rem;
   left: auto;
   right: auto;

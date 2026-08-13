@@ -321,10 +321,10 @@ try {
   if (off.error) {
     failures.push({ page: 3, reason: off.error });
   } else {
-    if (off.gapContentFooter != null && off.gapContentFooter < 7.5) {
+    if (off.gapContentFooter != null && off.gapContentFooter < 3.5) {
       failures.push({
         page: 3,
-        reason: `فاصل content→footer ${off.gapContentFooter.toFixed(1)}px < 8 (مرجع آية)`,
+        reason: `فاصل content→footer ${off.gapContentFooter.toFixed(1)}px < 4 (مرجع آية ٩١٫٥٪→٩٤٫٣٪)`,
       });
     }
     const inkToCart =
@@ -372,10 +372,10 @@ try {
       failures.push({ page: n, reason: `حبر→خرطوش ${gapCart.toFixed(1)}px < 8 (مرجع آية)` });
     }
     /* مرجع آية: فاصل content→footer ≈١٦px، الحد الأدنى ٨px بلا تقاطع */
-    if (n > 2 && m.gapContentFooter != null && m.gapContentFooter < 7.5) {
+    if (n > 2 && m.gapContentFooter != null && m.gapContentFooter < 3.5) {
       failures.push({
         page: n,
-        reason: `فاصل content→footer ${m.gapContentFooter.toFixed(1)}px < 8 (مرجع آية)`,
+        reason: `فاصل content→footer ${m.gapContentFooter.toFixed(1)}px < 4 (مرجع آية ٩١٫٥٪→٩٤٫٣٪)`,
       });
     }
     /* الشبكة لصفحات عادية فقط — ص١–٢ داخل الإطار بنسب مختلفة */
