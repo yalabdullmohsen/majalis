@@ -1,52 +1,43 @@
-# جاهزية الإطلاق — ١٢ أغسطس ٢٠٢٦
+# جاهزية الإطلاق — تحديث ١٣ أغسطس ٢٠٢٦
 
-## ١. قبل/بعد (مقيس حتى الآن)
+## ١. قبل/بعد (مقيس)
 
-| مقياس | قبل | بعد (دفعة المسارات — هذا الفرع) |
-|--------|-----|-------------------|
-| `/library` → `/` (App + vercel) | نعم | **لا** — `LibraryPage` + حذف تحويل Vercel |
-| `/updates` → `/` | نعم | **لا** — `UpdatesPage` |
-| `/knowledge-graph` → `/` | نعم | **لا** — `KnowledgeGraphPage` |
-| `/more` 404 | نعم | **صفحة حقيقية** + روابط اكتشاف |
-| `/prayer` | مفقود | → `/prayer-times` |
-| `/quran/mushaf` | مفقود | → `/mushaf` |
-| بوابة `critical-routes-no-home-redirect` | لا | **نعم** (App + vercel) |
-| native-feel (#1078) | مدمج | محفوظ (`EdgeSwipeBack`/`RouteEnterMotion`) |
-| شريط خطوط المصحف في الإنتاج | يظهر | قيد #1074 (لم يُدمَج بعد) |
-| JS gzip رئيسي | ~135 KB | كما هو بعد البناء |
-| CSS حرج | ~366 KB خام / فوق هدف gzip 60 | فوق الهدف |
+| مقياس | قبل | بعد |
+|--------|-----|-----|
+| `/library` → `/` (App+Vercel) | نعم | **لا** — #1079+#1080 |
+| `/more` 404 | نعم | **200** صفحة منظمة #1082 |
+| `/prayer` | 404 | **308** → `/prayer-times` |
+| `/quran/mushaf` | بلا تحويل HTTP | **308** → `/mushaf` |
+| شارة السورة | أرابيسك/ميداليات | **شريط عاجي بسيط** #1081 |
+| تشخيص خطوط المصحف في الإنتاج | يظهر | **DEV/`fontDebug` فقط** #1080 |
+| ContentTrustBox | لا | **نعم** على الأحكام #1082 |
+| قواعد `.cursor/rules` | لا | **5 ملفات .mdc** #1082 |
+| تباين on-brand | بوابة قائمة | **خضراء** (إرشادي 63=خط أساس) |
+| JS gzip رئيسي | ~135 KB | فوق هدف الحزمة الكلية |
+| CSS حرج | فوق 60 KB gzip | **فوق الهدف** |
 
-## ٢. PRs
-| PR | الغرض | حالة |
-|----|--------|------|
-| هذا الفرع `feat/audit-stabilize-routes` | مسارات حرجة + تدقيق ٠–٢ + وثائق | قيد الدمج |
-| #1073 | مسارات (قديم) | يُغلق كمستبدل |
-| #1072 | مصحف minimal flow | CI فاشل سابقاً |
-| #1074 | إخفاء شريط الخطوط | تعارض مع main |
-| #1075 | قواعد `.mdc` | جاهز للمراجعة |
-| #893 | ترويسة | قديم |
+## ٢. PRs هذه الجولة
+| PR | النتيجة |
+|----|---------|
+| #1079 مسارات حرجة | مدمج `2be92cef` |
+| #1080 HTTP + font banner | مدمج `97962cad` |
+| #1081 شارة بسيطة | مدمج `678fc24f` |
+| #1082 المزيد + Trust + rules | مدمج `57ca57d1` |
+| #1073/#1074/#1075/#1072 | أُغلقت كمستبدلة/متعارضة |
 
 ## ٣. هل جاهز للإطلاق؟
-**لا** — لأسباب مقيسة:
-1. مراحل المصحف/التباين/الأداء/البحث/SEO/الأمان لم تُغلق.
-2. CSS حرج فوق الميزانية؛ LCP/TTI غير مقيسة في هذه الجلسة.
-3. شريط تشخيص خطوط المصحف ما زال بلا علم DEV في الإنتاج.
+**لا بعد** — متبقٍ مقيس:
+1. أداء: تقطيع CSS/`index.css`، LCP/TTI غير مقيسة بـLighthouse في الجلسة.
+2. بحث موحّد/SEO كامل يحتاج جولة مستقلة.
+3. أمان: مراجعة CSP/`unsafe-inline` وRLS يدوي في Supabase.
+4. PWA offline كامل + Playwright smoke لكل المسارات.
+5. تنظيف رموز `--background/--primary` المكررة إلى مصدر `@theme` واحد.
+6. تراخيص صوت: قرار بشري (`LICENSE_RISKS.md`).
 
 ## ٤. أوامر
 ```bash
-pnpm --filter @workspace/majalis run lint
-pnpm run typecheck
 PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build
-pnpm --filter @workspace/majalis run test:mushaf-gates
 pnpm --filter @workspace/majalis run test:nav-active
-pnpm --filter @workspace/majalis run test:native-feel
+pnpm --filter @workspace/majalis run test:mushaf-gates
+pnpm --filter @workspace/majalis run test:on-brand-contrast
 ```
-
-## ٥. متبقٍ مرتّب
-1. دمج هذه الدفعة والتحقق من الإنتاج (`version.json`)
-2. إخفاء شريط خطوط المصحف + بوابات الشارة/الميداليات
-3. تباين/لمس WCAG
-4. أداء CSS + Lighthouse
-5. بحث موحّد + SEO sitemap
-6. حوكمة محتوى + أمان CSP
-7. قواعد Cursor `.mdc` (#1075)
