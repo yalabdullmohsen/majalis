@@ -43,7 +43,8 @@ const ENTRY_FILES = [
   "lib/nav-map.ts",
   "lib/services-center-nav.ts",
   "lib/site-footer-nav.ts",
-  // الجولة الخامسة: خريطة الموقع + مركز علوم القرآن سطوح اكتشاف صريحة
+  // صفحة /more الحقيقية + خريطة الموقع + مركز علوم القرآن
+  "pages/account/MorePage.tsx",
   "pages/account/ui/SiteMapView.tsx",
   "pages/quran/QuranKnowledgeHubPage.tsx",
 ];
