@@ -95,7 +95,6 @@ export function QpcFontPackBanner({ currentPage, variant = "sheet" }: Props) {
       ac.abort();
       if (hideTimer.current) window.clearTimeout(hideTimer.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- once per mount in sheet
   }, [variant]);
 
   /* ممنوع الظهور كشريط علوي فوق الصفحة */
