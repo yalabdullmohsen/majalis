@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { cn } from "@/lib/utils";
 import { PatternBackdrop } from "./PatternBackdrop";
+import "@/styles/components/page-hero.css";
 
 type PageHeroProps = {
   eyebrow?: string;

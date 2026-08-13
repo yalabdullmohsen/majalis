@@ -1,0 +1,36 @@
+/* حارس الأدمن فقط — لا يسحب auth.css الكامل إلى CSS الحرج */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 1.25rem 4rem;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 24rem;
+  padding: var(--ds-space-8);
+  border-radius: var(--ds-radius-lg);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
+  background: transparent;
+  box-shadow: 0 10px 30px rgba(22, 78, 60, 0.06);
+}
+
+.login-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.login-back-link {
+  color: var(--majalis-emerald-deep);
+  font-weight: 600;
+  font-size: var(--ds-text-sm);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.login-back-link:hover {
+  color: var(--majalis-emerald);
+}

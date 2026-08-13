@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Link } from "wouter";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import "@/styles/components/hub-card.css";
 
 export type HubCardProps = {
   href: string;

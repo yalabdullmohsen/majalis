@@ -21,9 +21,7 @@ import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 import { initOnboardingState } from "./lib/onboarding-state";
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
 import "./app/styles/theme.css";
-import "./styles/components/page-hero.css";
-import "./styles/components/filters.css";
-import "./styles/components/hub-card.css";
+// page-hero / filters / hub-card تُحمَّل مع مكوّناتها (خارج CSS الحرج)
 // Majlisilm 2030 + طبقات الأساس (تُبقى كما هي — لا حذف في هذا الـPR)
 import "./styles/brand-v4.css";
 // أزواج (سطح ← لون فوقه) — يشتق من brand-v4 ويجب أن يليه مباشرة

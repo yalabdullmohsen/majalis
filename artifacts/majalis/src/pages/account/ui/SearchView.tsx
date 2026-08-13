@@ -13,6 +13,7 @@ import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
 import { findSeedLessonById, loadLessonsSeed } from "@/lib/lessons-seed";
 import { VirtualList } from "@/components/VirtualList";
 import "@/styles/pages/search.css";
+import "@/styles/pages/search-legacy.css";
 import "@/styles/components/surface-polish.css";
 
 /* ── تمييز على النص الأصلي عبر محرك التسامح الموحّد ── */

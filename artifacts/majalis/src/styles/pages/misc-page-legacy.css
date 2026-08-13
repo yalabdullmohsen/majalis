@@ -1,0 +1,414 @@
+/* deferred from index.css */
+.kuwait-tab {
+  border: 1px solid var(--msk-border, #E8E7E2);
+  background: transparent;
+  color: var(--msk-text-2, #5C5C56);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  font-size: var(--ds-text-sm);
+  font-weight: 700;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.kuwait-tab--active {
+  background: var(--msk-gold, var(--mj-brand-deep));
+  color: #fff;
+  border-color: transparent;
+  font-weight: 700;
+}
+
+.kuwait-tab__soon {
+  display: inline-block;
+  margin-inline-start: 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(31, 77, 58, 0.12);
+  color: var(--msk-gold, var(--mj-brand-deep));
+}
+
+.kuwait-tab--active .kuwait-tab__soon {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+.sheikh-detail-hero {
+  padding: clamp(1.15rem, 3vw, 1.75rem);
+  margin-bottom: 1.5rem;
+}
+
+.sheikh-detail-hero__main {
+  display: flex;
+  gap: 1.15rem;
+  align-items: flex-start;
+}
+
+.sheikh-detail-hero__copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.sheikh-detail-name {
+  margin: 0;
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+}
+
+.sheikh-detail-hero__title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.sheikh-detail-badge {
+  font-size: var(--ds-text-xs);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: var(--majalis-sage);
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
+}
+
+.sheikh-detail-bio {
+  margin: 0 0 0.75rem;
+  color: var(--majalis-ink);
+  line-height: 1.85;
+}
+
+.sheikh-detail-meta-row,
+.sheikh-detail-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.65rem;
+}
+
+.sheikh-detail-section {
+  margin-bottom: 2rem;
+}
+
+.sheikh-detail-section-title {
+  font-size: var(--ds-text-lg);
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  margin: 0 0 1rem;
+}
+
+.sheikh-detail-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-2);
+}
+
+.optimized-sheikh-image {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: var(--ds-radius-xl);
+  border: 1.5px solid rgba(31,77,58,0.3);
+  background: linear-gradient(180deg, #f3ebd8 0%, #faf6ee 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.65) inset,
+    0 4px 14px rgba(36, 31, 24, 0.1);
+  contain: layout style paint;
+}
+
+.optimized-sheikh-image--ratio-1-1 {
+  aspect-ratio: 1 / 1;
+}
+
+.optimized-sheikh-image--ratio-4-5 {
+  aspect-ratio: 4 / 5;
+}
+
+.optimized-sheikh-image--ratio-3-4 {
+  aspect-ratio: 3 / 4;
+}
+
+.optimized-sheikh-image--avatar {
+  border-radius: 999px;
+}
+
+.optimized-sheikh-image--responsive {
+  width: 6.5rem;
+}
+
+.optimized-sheikh-image__img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--sheikh-object-position, 50% 36%);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.optimized-sheikh-image--processed .optimized-sheikh-image__img,
+.optimized-sheikh-image--css .optimized-sheikh-image__img,
+.optimized-sheikh-image--logo-fallback .optimized-sheikh-image__img {
+  opacity: 1;
+}
+
+.optimized-sheikh-image--css .optimized-sheikh-image__img {
+  filter: contrast(1.04) brightness(1.02) saturate(1.03);
+}
+
+.optimized-sheikh-image--logo-fallback .optimized-sheikh-image__img {
+  object-fit: contain;
+  padding: 0.55rem;
+  background: linear-gradient(180deg, #f3ebd8 0%, #faf6ee 100%);
+}
+
+.optimized-sheikh-image__skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #ebe3d1 0%, #f5efe3 100%);
+  overflow: hidden;
+}
+
+.optimized-sheikh-image__skeleton-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.45) 45%,
+    transparent 100%
+  );
+  animation: optimized-sheikh-shimmer 1.35s ease-in-out infinite;
+}
+
+.optimized-sheikh-image--loading .optimized-sheikh-image__img {
+  opacity: 0;
+}
+
+.content-detail-header {
+  margin-bottom: 1.5rem;
+}
+
+.content-detail-meta {
+  font-size: var(--ds-text-sm);
+  color: var(--ink-soft, #5c5348);
+  margin-bottom: 0.5rem;
+}
+
+.content-detail-title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: var(--emerald-deep, var(--mj-brand-deep));
+  line-height: 1.35;
+  margin: 0 0 0.75rem;
+}
+
+.content-detail-subtitle {
+  color: var(--ink-soft, #5c5348);
+  line-height: 1.7;
+  margin: 0 0 1rem;
+}
+
+.content-detail-body {
+  line-height: 1.85;
+  margin-bottom: 1.25rem;
+}
+
+.content-detail-body p {
+  margin: 0 0 0.75rem;
+}
+
+.content-detail-heading {
+  font-size: var(--ds-text-md);
+  color: var(--emerald-deep, var(--mj-brand-deep));
+  margin: 1rem 0 0.5rem;
+}
+
+.content-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-space-2);
+  margin-top: 1rem;
+}
+
+.content-detail-actions .share-btns {
+  display: contents;
+}
+
+.content-detail-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  height: 44px;
+  padding: .4rem .875rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--majalis-emerald, var(--mj-brand));
+  background: transparent;
+  color: var(--majalis-emerald, var(--mj-brand));
+  cursor: pointer;
+  font-family: inherit;
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background .15s, color .15s;
+}
+
+.content-detail-action-btn:hover {
+  background: var(--majalis-emerald, var(--mj-brand));
+  color: #fff;
+}
+
+.content-detail-evidence ul,
+.content-detail-sources ul {
+  padding-right: 1.25rem;
+  line-height: 1.8;
+}
+
+.content-detail-related {
+  margin-top: 2rem;
+}
+
+.content-detail-related h2,
+.content-detail-evidence h2,
+.content-detail-sources h2 {
+  font-size: var(--ds-text-lg);
+  color: var(--emerald-deep, var(--mj-brand-deep));
+  margin-bottom: 0.75rem;
+}
+
+.content-detail-section {
+  margin-bottom: 1rem;
+}
+
+.content-detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ds-text-sm);
+}
+
+.content-detail-table th,
+.content-detail-table td {
+  border: 1px solid var(--line, #ddd5c8);
+  padding: 0.5rem 0.75rem;
+  text-align: right;
+}
+
+.fiqh-review-filters {
+  display: flex;
+  gap: var(--ds-space-2);
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.fiqh-review-filters button {
+  border: 1px solid var(--mn-border-default);
+  background: transparent;
+  border-radius: var(--mn-chip-radius);
+  padding: var(--mn-chip-py) var(--mn-chip-px);
+  font-size: var(--mn-chip-font);
+  font-family: inherit;
+  color: var(--mn-text-default);
+  cursor: pointer;
+  transition: background var(--mn-transition), border-color var(--mn-transition), color var(--mn-transition);
+  min-height: var(--mn-item-h);
+}
+
+.fiqh-review-filters button:hover {
+  background: var(--mn-surface-hover);
+  border-color: var(--mn-border-active);
+  color: var(--mn-text-active);
+}
+
+.fiqh-review-filter--active {
+  background: var(--mn-surface-active) !important;
+  border-color: var(--mn-border-active) !important;
+  color: var(--mn-text-active) !important;
+  font-weight: 700;
+}
+
+.fiqh-review-list {
+  display: grid;
+  gap: var(--ds-space-4);
+}
+
+.fiqh-review-card {
+  padding: var(--ds-space-4);
+}
+
+.fiqh-review-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ds-space-4);
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.fiqh-review-card h2 {
+  margin: 0 0 0.35rem;
+  font-size: var(--ds-text-base);
+}
+
+.fiqh-review-meta {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft, #5c5348);
+}
+
+.fiqh-review-tags {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0;
+}
+
+.fiqh-review-tag {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(180, 83, 9, 0.12);
+  color: var(--majalis-emerald);
+}
+
+.fiqh-review-issues {
+  margin: 0.5rem 0 0.75rem;
+  padding-inline-start: 1.1rem;
+  font-size: 0.8125rem;
+  color: var(--ink-soft, #5c5348);
+}
+
+.fiqh-review-issue--error {
+  color: #b91c1c;
+}
+
+.fiqh-review-actions {
+  display: flex;
+  gap: var(--ds-space-2);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.fiqh-review-actions button,
+.fiqh-review-actions a {
+  font-size: var(--ds-text-xs);
+  cursor: pointer;
+}
+
+.kuwait-tab {
+  transition: background 160ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 160ms ease,
+              color 160ms ease,
+              transform 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.kuwait-tab:hover:not(.kuwait-tab--active) {
+  border-color: rgba(22, 96, 72, 0.3);
+  color: var(--majalis-emerald-deep);
+  transform: scale(1.02);
+}
+
+.kuwait-tab:active { transform: scale(0.97); }

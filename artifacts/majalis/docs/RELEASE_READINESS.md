@@ -1,4 +1,4 @@
-# جاهزية الإطلاق — ١٣ أغسطس ٢٠٢٦ (نهائي للدفعة)
+# جاهزية الإطلاق — ١٣ أغسطس ٢٠٢٦
 
 ## ١. قبل/بعد
 
@@ -11,15 +11,15 @@
 | كاش `/` | `no-store` | `public, max-age=0, must-revalidate` |
 | robots `/search` | ممنوع | مؤكَّد ببوابة |
 | ContentTrustBox / قواعد Cursor | لا | نعم |
-| JS gzip رئيسي | ~131 KB | ~131 KB |
-| CSS gzip حرج | ~66 KB | **فوق 60** |
+| JS gzip رئيسي | ~131 KB | ~135 KB |
+| CSS gzip حرج | ~66 KB | **~57 KB (<60)** |
 
 ## ٢. البوابات
-`test:nav-active` (+ critical routes + trust + perf-seo-cache) · `test:on-brand-contrast` · `test:mushaf-*` · Playwright: `tests/01-smoke` + `tests/10-critical-acceptance` (`test:playwright-smoke`).
+`test:nav-active` (+ critical routes + trust + perf-seo-cache + critical-css-gzip) · `test:on-brand-contrast` · `test:mushaf-*` · Playwright: `tests/01-smoke` + `tests/10-critical-acceptance` (`test:playwright-smoke`).
 
 ## ٣. هل جاهز للإطلاق؟
-**لا** — يحتاج قبل إطلاق كامل:
-1. خفض CSS الحرج تحت 60 KB gzip وقياس Lighthouse.
+**لا بالكامل** — بقي قبل إطلاق كامل:
+1. قياس Lighthouse (LCP/TTI/INP/CLS) @390×844 4G.
 2. قرار بشري لتراخيص everyayah/mp3quran/أذان مضمّن.
 3. تأكيد RLS يدوي في لوحة Supabase للنوازل الحساسة.
 4. تشغيل Playwright smoke على CI بانتظام ضد معاينة.
