@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { Search, ChevronLeft, BookOpen, Star, Filter } from "lucide-react";
+import { ChevronLeft, BookOpen, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SCHOLARS } from "@/lib/scholars-data";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
+import { ActiveFilters, FilterBar, SegmentedFilter } from "@/components/filters";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import "@/styles/pages/scholars.css";
 
 const ERAS = ["الكل", "الأئمة الأربعة", "المحدثون", "العلماء الكبار", "المجددون", "المعاصرون"];
@@ -16,6 +18,7 @@ export default function IslamicScholarsPage() {
   const [era, setEra] = useState("الكل");
   const [specialty, setSpecialty] = useState("الكل");
   const [query, setQuery] = useState("");
+  const debouncedQuery = useDebouncedValue(query, 250);
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
@@ -41,12 +44,26 @@ export default function IslamicScholarsPage() {
     });
   }, []);
 
-  const filtered = SCHOLARS.filter(s => {
-    const matchEra = era === "الكل" || s.era === era;
-    const matchSpec = specialty === "الكل" || s.specialty.includes(specialty);
-    const matchQ = arabicMatchAny([s.name, s.fullName, s.bio, ...s.specialty], query);
-    return matchEra && matchSpec && matchQ;
-  });
+  const filtered = useMemo(
+    () =>
+      SCHOLARS.filter((s) => {
+        const matchEra = era === "الكل" || s.era === era;
+        const matchSpec = specialty === "الكل" || s.specialty.includes(specialty);
+        const matchQ = arabicMatchAny([s.name, s.fullName, s.bio, ...s.specialty], debouncedQuery);
+        return matchEra && matchSpec && matchQ;
+      }),
+    [era, specialty, debouncedQuery],
+  );
+
+  const activeItems = [
+    ...(era !== "الكل" ? [{ id: "era", label: era, onRemove: () => setEra("الكل") }] : []),
+    ...(specialty !== "الكل"
+      ? [{ id: "spec", label: specialty, onRemove: () => setSpecialty("الكل") }]
+      : []),
+    ...(debouncedQuery.trim()
+      ? [{ id: "q", label: `بحث: ${debouncedQuery.trim()}`, onRemove: () => setQuery("") }]
+      : []),
+  ];
 
   return (
     <div className="sch-page" dir="rtl">
@@ -65,57 +82,40 @@ export default function IslamicScholarsPage() {
 
       {/* ── بحث وتصفية ────────────────────────────────────────── */}
       <div className="sch-controls">
-        <div className="sch-search-wrap">
-          <Search size={16} className="sch-search-icon" />
-          <input
-            className="sch-search-input"
-            type="search"
-            aria-label="ابحث في العلماء" placeholder="ابحث في العلماء..."
-            value={query}
-            onChange={e => setQuery(e.target.value)}
+        <FilterBar
+          searchValue={query}
+          onSearchChange={setQuery}
+          searchPlaceholder="ابحث في العلماء..."
+          searchAriaLabel="ابحث في العلماء"
+          activeCount={activeItems.length}
+          onClearAll={
+            activeItems.length > 0
+              ? () => {
+                  setEra("الكل");
+                  setSpecialty("الكل");
+                  setQuery("");
+                }
+              : undefined
+          }
+        />
+        <div className="sch-filters">
+          <p className="sch-filter-label">الحقبة</p>
+          <SegmentedFilter
+            ariaLabel="تصفية حسب الحقبة"
+            value={era}
+            onChange={setEra}
+            items={ERAS.map((e) => ({ id: e, label: e }))}
+          />
+          <p className="sch-filter-label">التخصص</p>
+          <SegmentedFilter
+            ariaLabel="تصفية حسب التخصص"
+            value={specialty}
+            onChange={setSpecialty}
+            items={SPECIALTIES.map((s) => ({ id: s, label: s }))}
           />
         </div>
-        <div className="sch-filters">
-          <div className="sch-filter-group" role="tablist" aria-label="تصفية حسب الحقبة">
-            <Filter size={13} />
-            <span>الحقبة:</span>
-            {ERAS.map(e => (
-              <button
-                key={e}
-                role="tab"
-                type="button"
-                className={["sch-filter-btn", era === e ? "sch-filter-btn--active" : ""].join(" ")}
-                onClick={() => setEra(e)}
-                aria-selected={era === e}
-              >
-                {e}
-              </button>
-            ))}
-          </div>
-          <div className="sch-filter-group" role="tablist" aria-label="تصفية حسب التخصص">
-            <span>التخصص:</span>
-            {SPECIALTIES.map(s => (
-              <button
-                key={s}
-                role="tab"
-                type="button"
-                className={["sch-filter-btn", specialty === s ? "sch-filter-btn--active" : ""].join(" ")}
-                onClick={() => setSpecialty(s)}
-                aria-selected={specialty === s}
-              >
-                {s}
-              </button>
-            ))}
-          </div>
-        </div>
+        <ActiveFilters items={activeItems} resultCount={filtered.length} />
       </div>
-
-      {/* ── نتيجة البحث ────────────────────────────────────────── */}
-      <p className="sch-results-count" aria-live="polite" aria-atomic="true">
-        {filtered.length === SCHOLARS.length
-          ? `${SCHOLARS.length} عالماً`
-          : `${filtered.length} من ${SCHOLARS.length} عالماً`}
-      </p>
 
       {/* ── شبكة العلماء ──────────────────────────────────────── */}
       <div className="sch-grid">
@@ -193,7 +193,7 @@ export default function IslamicScholarsPage() {
 
       {filtered.length === 0 && (
         <div className="sch-empty">
-          <Search size={40} />
+          <BookOpen size={40} />
           <p>لا توجد نتائج للبحث عن «{query}»</p>
           <button type="button" onClick={() => { setQuery(""); setEra("الكل"); setSpecialty("الكل"); }}>
             مسح التصفية

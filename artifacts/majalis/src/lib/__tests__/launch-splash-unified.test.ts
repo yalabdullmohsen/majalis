@@ -48,6 +48,21 @@ assert.match(styles, /Theme\.SplashScreen/);
 assert.match(styles, /windowSplashScreenBackground/);
 assert.match(styles, /@drawable\/splash_icon/);
 
+assert.ok(!existsSync(resolve(root, "android/app/src/main/res/drawable/splash.png")), "لا splash.png قديم");
+assert.ok(!existsSync(resolve(root, "android/app/src/main/res/drawable/splash_icon.png")), "لا splash_icon.png قديم");
+assert.ok(existsSync(resolve(root, "android/app/src/main/res/drawable/splash.xml")), "splash لون XML");
+assert.ok(existsSync(resolve(root, "android/app/src/main/res/drawable/splash_icon.xml")), "splash_icon لون XML");
+const splashXml = readFileSync(resolve(root, "android/app/src/main/res/drawable/splash.xml"), "utf8");
+assert.match(splashXml, /splash_background/, "splash.xml يستخدم لون الخلفية");
+const splashIconXml = readFileSync(
+  resolve(root, "android/app/src/main/res/drawable/splash_icon.xml"),
+  "utf8",
+);
+assert.match(splashIconXml, /#002b21/, "أيقونة الإطلاق بلون صامت");
+assert.ok(
+  !existsSync(resolve(root, "android/app/src/main/res/drawable-port-xxxhdpi/splash.png")),
+  "لا كثافات splash.png قديمة",
+);
 const main = readFileSync(
   resolve(root, "android/app/src/main/java/com/majlisilm/app/MainActivity.java"),
   "utf8",

@@ -1,12 +1,11 @@
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useEffect, useMemo, useState, useCallback, startTransition } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { Link, useLocation } from "wouter";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { PageHeader, FilterChips } from "@/components/ui-common";
+import { PageHeader, ErrorState, Empty } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
-import { toArabicDigits } from "@/lib/utils";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { computeNextOccurrenceMs } from "@/lib/lesson-time";
@@ -32,6 +31,14 @@ import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/l
 import { applyPageSeo } from "@/lib/seo";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { formatSheikhName } from "@/lib/sheikh-name";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+import {
+  ActiveFilters,
+  FilterBar,
+  FilterSheet,
+  SegmentedFilter,
+  type ActiveFilterItem,
+} from "@/components/filters";
 
 type TabId = "all" | "men" | "women" | "courses" | "makkah" | "madinah";
 
@@ -44,9 +51,6 @@ const TAB_LABELS: Record<TabId, string> = {
   madinah: "المسجد النبوي",
 };
 
-// لا توجد بيانات دروس فعلية من الحرمين الشريفين في مصدر البيانات الحالي
-// (دروس كويتية محليًا) — نُبقي التبويبين ظاهرين ونُعلمِ المستخدم صراحةً بدل
-// عرضهما فارغين بلا تفسير.
 const TAB_COMING_SOON: Partial<Record<TabId, boolean>> = { makkah: true, madinah: true };
 
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
@@ -62,7 +66,11 @@ function useTabFromUrl(): [TabId, (tab: TabId) => void] {
 
   const setTab = useCallback(
     (next: TabId) => {
-      setLocation(next === "all" ? "/lessons" : `/lessons?tab=${next}`);
+      const params = new URLSearchParams(window.location.search);
+      if (next === "all") params.delete("tab");
+      else params.set("tab", next);
+      const q = params.toString();
+      setLocation(q ? `/lessons?${q}` : "/lessons");
       setTabState(next);
     },
     [setLocation],
@@ -73,9 +81,10 @@ function useTabFromUrl(): [TabId, (tab: TabId) => void] {
 
 function readTabFromUrl(): TabId {
   if (typeof window === "undefined") return "all";
-  const params = new URLSearchParams(window.location.search);
-  const value = params.get("tab");
-  if (value === "courses" || value === "men" || value === "women" || value === "makkah" || value === "madinah") return value;
+  const value = new URLSearchParams(window.location.search).get("tab");
+  if (value === "courses" || value === "men" || value === "women" || value === "makkah" || value === "madinah") {
+    return value;
+  }
   return "all";
 }
 
@@ -83,146 +92,115 @@ function filterByTab(lessons: KuwaitLessonRecord[], tab: TabId): KuwaitLessonRec
   if (tab === "courses") return lessons.filter((l) => l.isCourse || l.activityType === "دورة");
   if (tab === "men") return lessons.filter((l) => !l.hasWomenSection);
   if (tab === "women") return lessons.filter((l) => l.hasWomenSection);
-  if (tab === "makkah") return lessons.filter((l) =>
-    /مك[ةه]|الحرم المك|المسجد الحرام|البيت الحرام/u.test(l.mosque || "")
-  );
-  if (tab === "madinah") return lessons.filter((l) =>
-    /المدين[ةه]|المسجد النبوي|الحرم النبوي/u.test(l.mosque || "")
-  );
+  if (tab === "makkah") {
+    return lessons.filter((l) => /مك[ةه]|الحرم المك|المسجد الحرام|البيت الحرام/u.test(l.mosque || ""));
+  }
+  if (tab === "madinah") {
+    return lessons.filter((l) => /المدين[ةه]|المسجد النبوي|الحرم النبوي/u.test(l.mosque || ""));
+  }
   return lessons;
 }
 
-function LessonsFilterPanel({
+function countActiveFacetFilters(filters: KuwaitLessonFilters): number {
+  let n = 0;
+  if (filters.search.trim()) n++;
+  if (filters.governorate !== DEFAULT_KUWAIT_FILTERS.governorate) n++;
+  if (filters.region !== DEFAULT_KUWAIT_FILTERS.region) n++;
+  if (filters.mosque !== DEFAULT_KUWAIT_FILTERS.mosque) n++;
+  if (filters.sheikh !== DEFAULT_KUWAIT_FILTERS.sheikh) n++;
+  if (filters.day !== DEFAULT_KUWAIT_FILTERS.day) n++;
+  if (filters.category !== DEFAULT_KUWAIT_FILTERS.category) n++;
+  if (filters.timeSlot !== DEFAULT_KUWAIT_FILTERS.timeSlot) n++;
+  if (filters.activityType !== DEFAULT_KUWAIT_FILTERS.activityType) n++;
+  if (filters.hasLiveStream !== DEFAULT_KUWAIT_FILTERS.hasLiveStream) n++;
+  return n;
+}
+
+function LessonsFilterFields({
   filters,
   setFilter,
   options,
   regionOptions,
-  suggestions,
-  showSuggestions,
-  setShowSuggestions,
-  onClose,
 }: {
   filters: KuwaitLessonFilters;
   setFilter: <K extends keyof KuwaitLessonFilters>(key: K, value: KuwaitLessonFilters[K]) => void;
   options: ReturnType<typeof extractFilterOptions>;
   regionOptions: string[];
-  suggestions: string[];
-  showSuggestions: boolean;
-  setShowSuggestions: (v: boolean) => void;
-  onClose?: () => void;
 }) {
   return (
-    <div className="lessons-v2-filters ui-card mj-card">
-      <div className="lessons-v2-filters__head">
-        <h2>تصفية الدروس</h2>
-        {onClose && (
-          <button type="button" className="lessons-v2-filters__close" onClick={onClose} aria-label="إغلاق">
-            ×
-          </button>
-        )}
-      </div>
-
-      <form className="lessons-v2-search" onSubmit={(e) => e.preventDefault()}>
-        <input
-          value={filters.search}
-          onChange={(e) => setFilter("search", e.target.value)}
-          onFocus={() => setShowSuggestions(true)}
-          onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-          placeholder="ابحث: عنوان، شيخ، مسجد..."
-          aria-label="بحث في الدروس"
-          role="combobox"
-          aria-expanded={showSuggestions && suggestions.length > 0}
-          aria-autocomplete="list"
-          aria-controls="lessons-search-listbox"
-          aria-haspopup="listbox"
-        />
-        {showSuggestions && suggestions.length > 0 && (
-          <ul id="lessons-search-listbox" className="lessons-search-suggestions" role="listbox" aria-label="اقتراحات البحث">
-            {suggestions.map((item) => (
-              <li key={item} role="option" aria-selected={false}>
-                <button type="button" onMouseDown={() => setFilter("search", item)}>
-                  {item}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </form>
-
-      <div className="lessons-v2-filters-grid">
-        <label>
-          المحافظة
-          <select value={filters.governorate} onChange={(e) => setFilter("governorate", e.target.value)}>
-            {options.governorates.map((v) => (
-              <option key={v} value={v}>{v}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          المنطقة
-          <select value={filters.region} onChange={(e) => setFilter("region", e.target.value)}>
-            {regionOptions.map((v) => (
-              <option key={v} value={v}>{v}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          الشيخ
-          <select value={filters.sheikh} onChange={(e) => setFilter("sheikh", e.target.value)}>
-            {options.sheikhs.map((v) => (
-              <option key={v} value={v}>
-                {v === "كل المشايخ" ? v : (formatSheikhName(v) || v)}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          التصنيف
-          <select value={filters.category} onChange={(e) => setFilter("category", e.target.value)}>
-            {options.categories.map((v) => (
-              <option key={v} value={v}>{v}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          اليوم
-          <select value={filters.day} onChange={(e) => setFilter("day", e.target.value)}>
-            {options.days.map((v) => (
-              <option key={v} value={v}>{v}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          الوقت
-          <select value={filters.timeSlot} onChange={(e) => setFilter("timeSlot", e.target.value)}>
-            {options.timeSlots.map((v) => (
-              <option key={v} value={v}>{v}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          نوع النشاط
-          <select value={filters.activityType} onChange={(e) => setFilter("activityType", e.target.value)}>
-            {options.activityTypes.map((v) => (
-              <option key={v} value={v}>{v}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          بث مباشر
-          <select
-            value={filters.hasLiveStream === null ? "الكل" : filters.hasLiveStream ? "نعم" : "لا"}
-            onChange={(e) => {
-              const v = e.target.value;
-              setFilter("hasLiveStream", v === "الكل" ? null : v === "نعم");
-            }}
-          >
-            <option value="الكل">الكل</option>
-            <option value="نعم">يوجد بث</option>
-            <option value="لا">بدون بث</option>
-          </select>
-        </label>
-      </div>
+    <div className="mj-filter-fields">
+      <label>
+        المحافظة
+        <select value={filters.governorate} onChange={(e) => setFilter("governorate", e.target.value)}>
+          {options.governorates.map((v) => (
+            <option key={v} value={v}>{v}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        المنطقة
+        <select value={filters.region} onChange={(e) => setFilter("region", e.target.value)}>
+          {regionOptions.map((v) => (
+            <option key={v} value={v}>{v}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        الشيخ
+        <select value={filters.sheikh} onChange={(e) => setFilter("sheikh", e.target.value)}>
+          {options.sheikhs.map((v) => (
+            <option key={v} value={v}>
+              {v === "كل المشايخ" ? v : (formatSheikhName(v) || v)}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        التصنيف
+        <select value={filters.category} onChange={(e) => setFilter("category", e.target.value)}>
+          {options.categories.map((v) => (
+            <option key={v} value={v}>{v}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        اليوم
+        <select value={filters.day} onChange={(e) => setFilter("day", e.target.value)}>
+          {options.days.map((v) => (
+            <option key={v} value={v}>{v}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        الوقت
+        <select value={filters.timeSlot} onChange={(e) => setFilter("timeSlot", e.target.value)}>
+          {options.timeSlots.map((v) => (
+            <option key={v} value={v}>{v}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        نوع النشاط
+        <select value={filters.activityType} onChange={(e) => setFilter("activityType", e.target.value)}>
+          {options.activityTypes.map((v) => (
+            <option key={v} value={v}>{v}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        بث مباشر
+        <select
+          value={filters.hasLiveStream === null ? "الكل" : filters.hasLiveStream ? "نعم" : "لا"}
+          onChange={(e) => {
+            const v = e.target.value;
+            setFilter("hasLiveStream", v === "الكل" ? null : v === "نعم");
+          }}
+        >
+          <option value="الكل">الكل</option>
+          <option value="نعم">يوجد بث</option>
+          <option value="لا">بدون بث</option>
+        </select>
+      </label>
       <AdminQuickEdit section="lessons" />
     </div>
   );
@@ -239,7 +217,16 @@ export default function LessonsPage({
   const [archivedLessons, setArchivedLessons] = useState<KuwaitLessonRecord[]>(initialArchived ?? []);
   const [loading, setLoading] = useState(!initialActive);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [filters, setFilters] = useState<KuwaitLessonFilters>(DEFAULT_KUWAIT_FILTERS);
+  const [filters, setFilters] = useState<KuwaitLessonFilters>(() => {
+    const base = { ...DEFAULT_KUWAIT_FILTERS };
+    if (typeof window !== "undefined") {
+      const q = new URLSearchParams(window.location.search).get("search");
+      if (q) base.search = q;
+    }
+    return base;
+  });
+  const [searchDraft, setSearchDraft] = useState(() => filters.search);
+  const debouncedSearch = useDebouncedValue(searchDraft, 250);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -248,39 +235,42 @@ export default function LessonsPage({
   const [, navigateTo] = useLocation();
   const { user, isLoggedIn, isAdmin } = useAuth();
 
-  // رابط وارد بـ`?search=...` (من rulings-relations.ts، يُعرَض في بطاقات
-  // "مواد ذات صلة" بصفحات الأحكام الشرعية) كان يُتجاهَل كليًا: `filters`
-  // يُهيَّأ دائماً بـDEFAULT_KUWAIT_FILTERS بلا قراءة أي شيء غير `tab` من
-  // الرابط الفعلي — عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف
-  // بالفحص المباشر 2026-07-18.
   useEffect(() => {
-    const q = new URLSearchParams(window.location.search).get("search");
-    if (q) setFilters((prev) => ({ ...prev, search: q }));
-  }, []);
+    setFilters((prev) => (prev.search === debouncedSearch ? prev : { ...prev, search: debouncedSearch }));
+  }, [debouncedSearch]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const current = params.get("search") || "";
+    if ((debouncedSearch || "") === current) return;
+    if (debouncedSearch.trim()) params.set("search", debouncedSearch.trim());
+    else params.delete("search");
+    const q = params.toString();
+    const next = q ? `/lessons?${q}` : "/lessons";
+    window.history.replaceState(window.history.state, "", next);
+  }, [debouncedSearch]);
 
   useEffect(() => {
     applyPageSeo({
       path: "/lessons",
       canonicalPath: "/lessons",
       title: "الدروس الشرعية والعلمية | المجلس العلمي",
-      description: "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم، فقه وعقيدة وقرآن وسيرة ولغة عربية. محتوى معتمد في منهج المجلس العلمي",
+      description:
+        "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم، فقه وعقيدة وقرآن وسيرة ولغة عربية. محتوى معتمد في منهج المجلس العلمي",
       keywords: ["دروس شرعية", "دروس دينية", "دروس علمية", "علماء الكويت", "حلقات علمية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "الدروس الشرعية والدورات العلمية",
-          description: "دروس ودورات علمية من أئمة وعلماء الكويت في الفقه والعقيدة والقرآن والسيرة؛ محتوى معتمد في منهج المجلس العلمي",
-          numberOfItems: 8,
+          description:
+            "دروس ودورات علمية من أئمة وعلماء الكويت في الفقه والعقيدة والقرآن والسيرة؛ محتوى معتمد في منهج المجلس العلمي",
+          numberOfItems: 4,
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "الدروس الشرعية", url: "https://www.majlisilm.com/lessons?tab=lessons" },
+            { "@type": "ListItem", position: 1, name: "جميع الدروس", url: "https://www.majlisilm.com/lessons" },
             { "@type": "ListItem", position: 2, name: "الدورات العلمية", url: "https://www.majlisilm.com/lessons?tab=courses" },
-            { "@type": "ListItem", position: 3, name: "الفقه وأصوله", url: "https://www.majlisilm.com/lessons?topic=فقه" },
-            { "@type": "ListItem", position: 4, name: "العقيدة الإسلامية", url: "https://www.majlisilm.com/lessons?topic=عقيدة" },
-            { "@type": "ListItem", position: 5, name: "علوم القرآن والتفسير", url: "https://www.majlisilm.com/lessons?topic=قرآن" },
-            { "@type": "ListItem", position: 6, name: "السيرة النبوية", url: "https://www.majlisilm.com/lessons?topic=سيرة" },
-            { "@type": "ListItem", position: 7, name: "الحديث الشريف", url: "https://www.majlisilm.com/lessons?topic=حديث" },
-            { "@type": "ListItem", position: 8, name: "اللغة العربية", url: "https://www.majlisilm.com/lessons?topic=لغة" },
+            { "@type": "ListItem", position: 3, name: "الدروس الرجالية", url: "https://www.majlisilm.com/lessons?tab=men" },
+            { "@type": "ListItem", position: 4, name: "الدروس النسائية", url: "https://www.majlisilm.com/lessons?tab=women" },
           ],
         },
       ],
@@ -310,24 +300,8 @@ export default function LessonsPage({
     }
   }, [isLoggedIn, user]);
 
-  useEffect(() => {
-    if (!filtersOpen) return;
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setFiltersOpen(false); };
-    document.addEventListener("keydown", handler);
-    document.body.classList.add("filter-sheet-open");
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", handler);
-      document.body.classList.remove("filter-sheet-open");
-      document.body.style.overflow = prev;
-    };
-  }, [filtersOpen]);
-
   const tabLessons = useMemo(() => filterByTab(activeLessons, tab), [activeLessons, tab]);
-
   const options = useMemo(() => extractFilterOptions(tabLessons), [tabLessons]);
-
   const regionOptions = useMemo(() => {
     if (filters.governorate === "كل المحافظات") return options.regions;
     return ["كل المناطق", ...regionsForGovernorate(filters.governorate)];
@@ -338,91 +312,138 @@ export default function LessonsPage({
     [tabLessons, filters],
   );
 
-
-  const pageStats = useMemo(() => {
-    const sheikhs = new Set(activeLessons.map((l) => l.sheikhName).filter(Boolean));
-    const mosques = new Set(activeLessons.map((l) => l.mosque).filter(Boolean));
-    const courses = filterByTab(activeLessons, "courses").length;
-    const lessons = filterByTab(activeLessons, "men").length + filterByTab(activeLessons, "women").length;
-    const latest = sortKuwaitLessons(activeLessons)[0];
-    return {
-      lessons,
-      courses,
-      sheikhs: sheikhs.size,
-      mosques: mosques.size,
-      lastUpdate: latest?.gregorianDate || "—",
-    };
-  }, [activeLessons]);
-
   const featuredSections = useMemo(() => {
     const pool = filterFeaturedHomeLessons(tabLessons);
     const sorted = sortKuwaitLessons(pool);
-    const now    = Date.now();
-    const THRESHOLD_MS = 36 * 60 * 60 * 1000; // 36 ساعة
-
-    // "الأقرب موعدًا": فقط الدروس الجارية الآن أو التي تبدأ خلال 36 ساعة
-    const upcoming = sorted.filter((l) => {
-      const label = getFeaturedHomeStatusLabel(l);
-      if (label === "مستمر" || label === "يبدأ اليوم") return true;
-      return label === "قادم" && computeNextOccurrenceMs(l.day, l.time) - now <= THRESHOLD_MS;
-    }).slice(0, 4);
-
+    const now = Date.now();
+    const THRESHOLD_MS = 36 * 60 * 60 * 1000;
+    const upcoming = sorted
+      .filter((l) => {
+        const label = getFeaturedHomeStatusLabel(l);
+        if (label === "مستمر" || label === "يبدأ اليوم") return true;
+        return label === "قادم" && computeNextOccurrenceMs(l.day, l.time) - now <= THRESHOLD_MS;
+      })
+      .slice(0, 4);
     const upcomingIds = new Set(upcoming.map((l) => l.id));
-
     const popular = [...pool]
       .sort((a, b) => (b.keywords?.length || 0) - (a.keywords?.length || 0))
       .filter((l) => !upcomingIds.has(l.id))
       .slice(0, 4);
     const popularIds = new Set(popular.map((l) => l.id));
-
     const shownIds = new Set([...upcomingIds, ...popularIds]);
-    const featured = pool
-      .filter((l) => l.hasLiveStream && !shownIds.has(l.id))
-      .slice(0, 4);
-
+    const featured = pool.filter((l) => l.hasLiveStream && !shownIds.has(l.id)).slice(0, 4);
     return { upcoming, popular, featured };
   }, [tabLessons]);
 
-  // الدروس المعروضة في الأقسام المميزة، لاستبعادها من القائمة الرئيسية
+  const showFeatured = !filters.search && filters.governorate === "كل المحافظات" && tab === "all";
   const featuredIds = useMemo(() => {
-    const showFeatured = !filters.search && filters.governorate === "كل المحافظات";
     if (!showFeatured) return new Set<string>();
     return new Set([
       ...featuredSections.upcoming.map((l) => l.id),
       ...featuredSections.popular.map((l) => l.id),
       ...featuredSections.featured.map((l) => l.id),
     ]);
-  }, [featuredSections, filters.search, filters.governorate]);
+  }, [featuredSections, showFeatured]);
+
+  const mainList = useMemo(
+    () => filtered.filter((l) => !featuredIds.has(l.id)),
+    [filtered, featuredIds],
+  );
 
   useEffect(() => {
-    if (!filters.search.trim()) {
+    if (!searchDraft.trim()) {
       setSuggestions([]);
       return;
     }
-    setSuggestions(buildSearchSuggestions([...tabLessons, ...archivedLessons], filters.search));
-  }, [filters.search, tabLessons, archivedLessons]);
+    setSuggestions(buildSearchSuggestions([...tabLessons, ...archivedLessons], searchDraft));
+  }, [searchDraft, tabLessons, archivedLessons]);
 
   const setFilter = <K extends keyof KuwaitLessonFilters>(key: K, value: KuwaitLessonFilters[K]) => {
-    setFilters((prev) => {
-      const next = { ...prev, [key]: value };
-      if (key === "governorate") next.region = "كل المناطق";
-      return next;
+    startTransition(() => {
+      setFilters((prev) => {
+        const next = { ...prev, [key]: value };
+        if (key === "governorate") next.region = "كل المناطق";
+        return next;
+      });
     });
   };
 
-  const activeFilterCount = useMemo(() => {
-    let n = 0;
-    if (filters.search.trim()) n++;
-    if (filters.governorate !== DEFAULT_KUWAIT_FILTERS.governorate) n++;
-    if (filters.region !== DEFAULT_KUWAIT_FILTERS.region) n++;
-    if (filters.mosque !== DEFAULT_KUWAIT_FILTERS.mosque) n++;
-    if (filters.sheikh !== DEFAULT_KUWAIT_FILTERS.sheikh) n++;
-    if (filters.day !== DEFAULT_KUWAIT_FILTERS.day) n++;
-    if (filters.category !== DEFAULT_KUWAIT_FILTERS.category) n++;
-    if (filters.timeSlot !== DEFAULT_KUWAIT_FILTERS.timeSlot) n++;
-    if (filters.activityType !== DEFAULT_KUWAIT_FILTERS.activityType) n++;
-    if (filters.hasLiveStream !== DEFAULT_KUWAIT_FILTERS.hasLiveStream) n++;
-    return n;
+  const clearAllFilters = useCallback(() => {
+    setSearchDraft("");
+    setFilters(DEFAULT_KUWAIT_FILTERS);
+  }, []);
+
+  const activeFilterCount = useMemo(() => countActiveFacetFilters(filters), [filters]);
+
+  const activeFilterItems = useMemo<ActiveFilterItem[]>(() => {
+    const items: ActiveFilterItem[] = [];
+    if (filters.search.trim()) {
+      items.push({
+        id: "search",
+        label: `بحث: ${filters.search.trim()}`,
+        onRemove: () => {
+          setSearchDraft("");
+          setFilter("search", "");
+        },
+      });
+    }
+    if (filters.governorate !== DEFAULT_KUWAIT_FILTERS.governorate) {
+      items.push({
+        id: "gov",
+        label: filters.governorate,
+        onRemove: () => setFilter("governorate", DEFAULT_KUWAIT_FILTERS.governorate),
+      });
+    }
+    if (filters.region !== DEFAULT_KUWAIT_FILTERS.region) {
+      items.push({
+        id: "region",
+        label: filters.region,
+        onRemove: () => setFilter("region", DEFAULT_KUWAIT_FILTERS.region),
+      });
+    }
+    if (filters.sheikh !== DEFAULT_KUWAIT_FILTERS.sheikh) {
+      items.push({
+        id: "sheikh",
+        label: formatSheikhName(filters.sheikh) || filters.sheikh,
+        onRemove: () => setFilter("sheikh", DEFAULT_KUWAIT_FILTERS.sheikh),
+      });
+    }
+    if (filters.category !== DEFAULT_KUWAIT_FILTERS.category) {
+      items.push({
+        id: "cat",
+        label: filters.category,
+        onRemove: () => setFilter("category", DEFAULT_KUWAIT_FILTERS.category),
+      });
+    }
+    if (filters.day !== DEFAULT_KUWAIT_FILTERS.day) {
+      items.push({
+        id: "day",
+        label: filters.day,
+        onRemove: () => setFilter("day", DEFAULT_KUWAIT_FILTERS.day),
+      });
+    }
+    if (filters.timeSlot !== DEFAULT_KUWAIT_FILTERS.timeSlot) {
+      items.push({
+        id: "time",
+        label: filters.timeSlot,
+        onRemove: () => setFilter("timeSlot", DEFAULT_KUWAIT_FILTERS.timeSlot),
+      });
+    }
+    if (filters.activityType !== DEFAULT_KUWAIT_FILTERS.activityType) {
+      items.push({
+        id: "activity",
+        label: filters.activityType,
+        onRemove: () => setFilter("activityType", DEFAULT_KUWAIT_FILTERS.activityType),
+      });
+    }
+    if (filters.hasLiveStream !== null) {
+      items.push({
+        id: "live",
+        label: filters.hasLiveStream ? "بث مباشر" : "بدون بث",
+        onRemove: () => setFilter("hasLiveStream", null),
+      });
+    }
+    return items;
   }, [filters]);
 
   const toggleReg = async (lessonId: string) => {
@@ -432,11 +453,11 @@ export default function LessonsPage({
     }
     try {
       if (myReg.includes(lessonId)) {
-        await unregisterFromLesson(user.id, lessonId);
         setMyReg(myReg.filter((id) => id !== lessonId));
+        await unregisterFromLesson(user.id, lessonId);
       } else {
-        await registerForLesson(user.id, lessonId);
         setMyReg([...myReg, lessonId]);
+        await registerForLesson(user.id, lessonId);
       }
     } catch {
       /* silent */
@@ -496,119 +517,104 @@ export default function LessonsPage({
   );
 
   return (
-    <div className="page-shell lessons-page-v2 ds-page mj-page">
-      <PageHeader
-        title="الدروس"
-        subtitle="مرتّبة حسب أقرب موعد"
-        showBack={false}
-      />
+    <div className="page-shell lessons-page-v2 lessons-page-v3 ds-page mj-page">
+      <PageHeader title="الدروس" subtitle="أقرب المواعيد أولًا" showBack={false} />
 
-      <div className="lessons-v2-toolbar">
-        <FilterChips
+      <div className="lessons-v3-sticky">
+        <FilterBar
+          searchValue={searchDraft}
+          onSearchChange={setSearchDraft}
+          searchPlaceholder="ابحث عن درس أو شيخ أو مسجد…"
+          searchAriaLabel="بحث في الدروس"
+          suggestions={suggestions}
+          showSuggestions={showSuggestions}
+          onSuggestionsOpenChange={setShowSuggestions}
+          onSuggestionPick={(item) => {
+            setSearchDraft(item);
+            setFilter("search", item);
+          }}
+          activeCount={activeFilterCount}
+          onOpenFilters={() => setFiltersOpen(true)}
+          filtersOpen={filtersOpen}
+          filterToggleLabel="تصفية"
+          onClearAll={activeFilterCount > 0 ? clearAllFilters : undefined}
+          listboxId="lessons-search-listbox"
+        />
+
+        <SegmentedFilter
           ariaLabel="تبويبات الدروس"
           value={tab}
           onChange={(id) => setTab(id as TabId)}
+          className="lessons-v3-tabs filter-chips"
           items={(Object.keys(TAB_LABELS) as TabId[]).map((tabId) => ({
             id: tabId,
             label: TAB_LABELS[tabId],
             soon: TAB_COMING_SOON[tabId],
           }))}
         />
-        <div className="lessons-v2-toolbar-actions">
-          {activeFilterCount > 0 && (
-            <button
-              type="button"
-              className="lessons-v2-clear-btn"
-              onClick={() => setFilters(DEFAULT_KUWAIT_FILTERS)}
-              aria-label="مسح التصفية"
-            >
-              مسح ✕
-            </button>
-          )}
-          <button
-            type="button"
-            className={`lessons-v2-filter-toggle${activeFilterCount > 0 ? " lessons-v2-filter-toggle--active" : ""}`}
-            onClick={() => setFiltersOpen(true)}
-            aria-label="فتح التصفية"
-          >
-            بحث وتصفية
-            {activeFilterCount > 0 && (
-              <span className="lessons-v2-filter-badge" aria-label={`${toArabicDigits(activeFilterCount)} تصفية نشطة`}>
-                {toArabicDigits(activeFilterCount)}
-              </span>
-            )}
-          </button>
-        </div>
+
+        <ActiveFilters
+          items={activeFilterItems}
+          onClearAll={clearAllFilters}
+          resultCount={activeFilterCount > 0 && !loading ? filtered.length : null}
+        />
       </div>
 
-      {activeFilterCount > 0 && !loading && (
-        <p className="lessons-v2-result-count" aria-live="polite">
-          {filtered.length === 0
-            ? "لا توجد نتائج مطابقة"
-            : `${filtered.length} ${filtered.length === 1 ? "نتيجة" : "نتائج"} مطابقة`}
-        </p>
-      )}
-
-      <div className="lessons-v2-layout">
+      <div className="lessons-v2-layout lessons-v3-layout">
         <main className="lessons-v2-main">
-          {/* عناوين بنيوية ثابتة تظهر أثناء التحميل أيضًا — تمنع اختفاء
-              .lessons-v2-section__title / .lessons-past-section__title عند بطء الشبكة
-              أو مهلة Supabase (بوابة تباين الألوان تعتمد وجودهما في DOM). */}
-          {loading && (
-            <div className="lessons-v2-loading-chrome" aria-hidden="true">
-              <h2 className="lessons-v2-section__title">الشائع</h2>
-              <h2 className="lessons-past-section__title">الدروس السابقة</h2>
-            </div>
-          )}
+          {loadError && !loading ? (
+            <ErrorState text={loadError} onRetry={() => safeLocationReload()} />
+          ) : null}
+
           <PageLoadingGuard
             loading={loading}
-            error={loadError}
+            error={null}
             empty={false}
-            emptyText="لا توجد دروس مطابقة للتصفية الحالية. أعد ضبط المنطقة أو التصنيف لعرض المزيد."
+            emptyText="لا توجد دروس مطابقة للتصفية الحالية."
             onRetry={() => safeLocationReload()}
           >
             <>
-              {!filters.search && filters.governorate === "كل المحافظات" && (
+              {TAB_COMING_SOON[tab] ? (
+                <Empty
+                  text={`لم تُوثَّق بعدُ دروس ${TAB_LABELS[tab]} من مصدر معتمد. تصفّح تبويب «الكل» للمتاح الآن.`}
+                />
+              ) : (
                 <>
-                  {featuredSections.upcoming.length > 0 && (
+                  {showFeatured && featuredSections.upcoming.length > 0 && (
                     <section className="lessons-v2-section">
                       <h2 className="lessons-v2-section__title">
-                        {featuredSections.upcoming.some(l => getFeaturedHomeStatusLabel(l) === "مستمر")
-                          ? "جارٍ الآن"
+                        {featuredSections.upcoming.some((l) => getFeaturedHomeStatusLabel(l) === "مستمر")
+                          ? "دروس اليوم"
                           : "الأقرب موعدًا"}
                       </h2>
                       {renderGrid(featuredSections.upcoming, "", true)}
                     </section>
                   )}
-                  {featuredSections.featured.length > 0 && (
+
+                  {showFeatured && featuredSections.featured.length > 0 && (
                     <section className="lessons-v2-section">
-                      <h2 className="lessons-v2-section__title">المميز: بث مباشر</h2>
+                      <h2 className="lessons-v2-section__title">بث مباشر</h2>
                       {renderGrid(featuredSections.featured, "feat-", true)}
                     </section>
                   )}
+
                   <section className="lessons-v2-section">
-                    <h2 className="lessons-v2-section__title">الشائع</h2>
-                    {renderGrid(featuredSections.popular, "pop-", true)}
+                    <h2 className="lessons-v2-section__title">
+                      {tab === "courses"
+                        ? "الدورات"
+                        : tab === "women"
+                          ? "دروس نسائية"
+                          : tab === "men"
+                            ? "دروس رجالية"
+                            : "كل الدروس"}
+                    </h2>
+                    {mainList.length === 0 ? (
+                      <Empty text="لا توجد دروس مطابقة — جرّب مسح الفلاتر أو توسيع البحث." />
+                    ) : (
+                      renderGrid(mainList)
+                    )}
                   </section>
                 </>
-              )}
-
-              {(filters.search || filters.governorate !== "كل المحافظات") && (
-              <section className="lessons-v2-section">
-                <h2 className="lessons-v2-section__title">
-                  {tab === "courses" ? "دورات" : tab === "women" ? "نشاطات للنساء" : tab === "men" ? "دروس رجالية" : "جميع الدروس"}
-                  {isAdmin && ` (${filtered.filter((l) => !featuredIds.has(l.id)).length})`}
-                </h2>
-                {filtered.filter((l) => !featuredIds.has(l.id)).length === 0 ? (
-                  <p className="lessons-empty-state">
-                    {TAB_COMING_SOON[tab]
-                      ? `لم تُوثَّق بعدُ دروس ${TAB_LABELS[tab]} من مصدر معتمد؛ ولا يُدرَج هنا درس إلا بعد التحقق من مكانه ووقته وشيخه. تصفّح تبويب «جميع الدروس» للمتاح الآن.`
-                      : `لا توجد ${TAB_LABELS[tab]} مطابقة للفلاتر الحالية — جرّب توسيع المنطقة أو التصنيف.`}
-                  </p>
-                ) : (
-                  renderGrid(filtered.filter((l) => !featuredIds.has(l.id)))
-                )}
-              </section>
               )}
 
               {!loading && !loadError ? (
@@ -617,9 +623,7 @@ export default function LessonsPage({
                   <p className="lessons-empty-state">
                     الدروس المنتهية في{" "}
                     <Link href="/lessons/archive">الأرشيف</Link>
-                    {archivedLessons.length > 0
-                      ? ` (${archivedLessons.length})`
-                      : " — لا يوجد مؤرشف حالياً"}
+                    {archivedLessons.length > 0 ? ` (${archivedLessons.length})` : " — لا يوجد مؤرشف حالياً"}
                     .
                   </p>
                 </section>
@@ -628,47 +632,29 @@ export default function LessonsPage({
           </PageLoadingGuard>
         </main>
 
-        <aside className="lessons-v2-sidebar">
-          <LessonsFilterPanel
-            filters={filters}
-            setFilter={setFilter}
-            options={options}
-            regionOptions={regionOptions}
-            suggestions={suggestions}
-            showSuggestions={showSuggestions}
-            setShowSuggestions={setShowSuggestions}
-          />
-        </aside>
-      </div>
-
-      <div className="lessons-v2-stats">
-        <div className="lessons-v2-stat"><strong>{pageStats.lessons}</strong><span>درس</span></div>
-        <div className="lessons-v2-stat"><strong>{pageStats.courses}</strong><span>دورة</span></div>
-        <div className="lessons-v2-stat"><strong>{pageStats.sheikhs}</strong><span>شيخ</span></div>
-        <div className="lessons-v2-stat"><strong>{pageStats.mosques}</strong><span>مسجد</span></div>
-        <div className="lessons-v2-stat"><strong>{pageStats.lastUpdate}</strong><span>آخر تحديث</span></div>
-      </div>
-
-      {filtersOpen && (
-        // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل
-        // كامل بلوحة المفاتيح.
-         
-        <div className="lessons-v2-sheet-backdrop" onClick={() => setFiltersOpen(false)} role="presentation">
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-          <div className="lessons-v2-sheet" onClick={(e) => e.stopPropagation()}>
-            <LessonsFilterPanel
+        <aside className="lessons-v2-sidebar" aria-label="تصفية سطح المكتب">
+          <div className="lessons-v2-filters ui-card mj-card">
+            <div className="lessons-v2-filters__head">
+              <h2>تصفية الدروس</h2>
+            </div>
+            <LessonsFilterFields
               filters={filters}
               setFilter={setFilter}
               options={options}
               regionOptions={regionOptions}
-              suggestions={suggestions}
-              showSuggestions={showSuggestions}
-              setShowSuggestions={setShowSuggestions}
-              onClose={() => setFiltersOpen(false)}
             />
           </div>
-        </div>
-      )}
+        </aside>
+      </div>
+
+      <FilterSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="تصفية الدروس">
+        <LessonsFilterFields
+          filters={filters}
+          setFilter={setFilter}
+          options={options}
+          regionOptions={regionOptions}
+        />
+      </FilterSheet>
 
       <div className="twh-share">
         <ShareButtons aria-label="الدروس العلمية — المجلس العلمي" url="https://www.majlisilm.com/lessons" />
@@ -683,7 +669,7 @@ export default function LessonsPage({
           { href: "/fiqh", label: "الفقه والأحكام" },
         ]}
       />
-      <div className="px-4 pb-6 mt-4">
+      <div className="lessons-v3-footer-pad">
         <SectionQuiz categoryId={["hadith", "fiqh"]} aria-label="اختبر معلوماتك في الدروس الشرعية" count={4} />
       </div>
     </div>

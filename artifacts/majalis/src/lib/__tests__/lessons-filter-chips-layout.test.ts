@@ -10,23 +10,18 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
 
-const chipsCss = readFileSync(resolve(appRoot, "src/styles/components/page-hero.css"), "utf8");
+const filtersCss = readFileSync(resolve(appRoot, "src/styles/components/filters.css"), "utf8");
 const lessonsCss = readFileSync(resolve(appRoot, "src/styles/pages/lessons.css"), "utf8");
 const chipsTsx = readFileSync(resolve(appRoot, "src/components/ui/FilterChips.tsx"), "utf8");
 const lessonsView = readFileSync(resolve(appRoot, "src/pages/lessons/ui/LessonsView.tsx"), "utf8");
 
 assert.equal(/exclusive-choice/.test(chipsTsx), false, "بلا exclusive-choice يفرض شكلًا متضاربًا");
-assert.match(chipsCss, /\.filter-chips\s*\{[\s\S]*?flex-wrap:\s*wrap/);
-assert.match(chipsCss, /\.filter-chips\s*\{[\s\S]*?border-radius:\s*var\(--mj-r-md/);
-assert.match(chipsCss, /\.filter-chips__chip\s*\{[\s\S]*?min-height:\s*44px/);
-assert.match(chipsCss, /\.filter-chips__chip\s*\{[\s\S]*?border-radius:\s*var\(--mj-r-sm/);
-assert.equal(
-  /\.filter-chips\s*\{[\s\S]*?border-radius:\s*var\(--mj-r-pill/.test(chipsCss),
-  false,
-  "حاوية التصفية بلا pill",
-);
-assert.match(chipsCss, /\.filter-chips__label\s*\{[\s\S]*?text-overflow:\s*clip/);
-assert.match(lessonsCss, /\.lessons-page-v2 \.filter-chips/);
+assert.match(chipsTsx, /SegmentedFilter/, "FilterChips يغلف النظام الموحّد");
+assert.match(filtersCss, /\.mj-filter-chip\s*\{[\s\S]*?min-height:\s*44px/);
+assert.match(filtersCss, /\.mj-filter-chip\.is-active\s*\{[\s\S]*?color:\s*#fff/);
+assert.match(lessonsCss, /\.lessons-page-v3/);
 assert.match(lessonsView, /all:\s*"الكل"/);
+assert.match(lessonsView, /SegmentedFilter|FilterBar/);
+assert.match(lessonsView, /useDebouncedValue/);
 
 console.log("lessons-filter-chips-layout.test.ts: ok");
