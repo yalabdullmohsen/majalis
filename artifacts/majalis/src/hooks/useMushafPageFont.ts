@@ -56,6 +56,11 @@ function pruneOutsideWindow(center: number): void {
   }
 }
 
+/** يحمّل خط صفحة QPC (مثلاً صفحة ١ لبسملة موحّدة على كل الصفحات). */
+export async function ensureMushafPageFont(page: number): Promise<void> {
+  return ensurePageFontLoaded(page);
+}
+
 async function ensurePageFontLoaded(page: number): Promise<void> {
   if (loadedFonts.has(page)) {
     const f = loadedFonts.get(page)!;

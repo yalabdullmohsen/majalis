@@ -2262,13 +2262,13 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   align-items: baseline;
   flex-shrink: 0;
   min-height: 1rem;
-  /* خط أساس الرأس ≈ ٨٫٣٪ من الشاشة — مرجع آية */
+  /* خط أساس الرأس ≈ ٨٫٣٪ من الشاشة — مرجع آية (لا inset+٨٫٣ فيضاعف الإزاحة) */
   padding:
-    calc(var(--inset-top) + 8.3vh - 1.05em)
+    max(calc(8.3vh - 1.05em), var(--inset-top, 0px))
     max(1.5vw, var(--inset-right))
     0
     max(1.5vw, var(--inset-left));
-  font-size: var(--mushaf-fs-header-meta, calc(0.42 * var(--mushaf-S, 24.382px)));
+  font-size: var(--mushaf-fs-header-meta, calc(0.42 * var(--mushaf-S, 34.135px)));
   font-weight: 400;
   font-family: "Amiri", "Noto Naskh Arabic", var(--font-body, sans-serif);
   color: color-mix(in srgb, var(--color-mushaf-gold, #B08D57) 78%, #c4a574);
@@ -2847,9 +2847,9 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 }
 /* وضع آية: الجسم يملأ نطاق النص؛ الرأس/الذيل/الشريط نطاقات عائمة محجوزة */
 .mpv-body.mpv-body--ayah {
-  /* بداية كتلة النص ≈١١٫٨٪ · نهايتها ≈٩١٫٥٪ (مرجع آية) — الذيل/الشريط عائمات */
-  padding-top: calc(var(--inset-top, 0px) + 11.8vh);
-  padding-bottom: calc(var(--inset-bottom, 0px) + 8.5vh);
+  /* بداية كتلة النص ≈١١٫٨٪ · نهايتها ≈٩١٫٥٪ (مرجع آية) — بلا مضاعفة inset فوق ١١٫٨vh */
+  padding-top: max(11.8vh, var(--inset-top, 0px));
+  padding-bottom: max(7.5vh, var(--inset-bottom, 0px));
   /* هامش أفقي ١٫٥٪ … ٩٨٫٤٪ من عرض الشاشة */
   padding-inline: max(1.5vw, var(--inset-left, 0px)) max(1.5vw, var(--inset-right, 0px));
   flex: 1 1 auto;
@@ -2858,8 +2858,8 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 }
 .quran-shell--ayah.quran-shell--chrome-hidden .mpv-body.mpv-body--ayah {
   /* نفس نطاق الحبر مع/بدون شريط — ممنوع تصفير الحجز السفلي */
-  padding-top: calc(var(--inset-top, 0px) + 11.8vh);
-  padding-bottom: calc(var(--inset-bottom, 0px) + 8.5vh);
+  padding-top: max(11.8vh, var(--inset-top, 0px));
+  padding-bottom: max(7.5vh, var(--inset-bottom, 0px));
 }
 /* عند إخفاء الأدوات باللمس: لا نحجز فراغًا للشريط السفلي */
 .quran-shell--chrome-hidden .mpv-body:not(.mpv-body--ayah) {

@@ -65,7 +65,7 @@ html[data-theme="dark"] .mf2-frame {
   padding: 0;
   transition: opacity .2s ease;
   --mf2-lh: 1.35;
-  --mf2-slot-h-pct: 7.2;
+  --mf2-slot-h-pct: 6.6;
   box-sizing: border-box;
   /* ممنوع القص الرأسي — حبر QPC يمتد فوق/تحت صندوق الـem */
   overflow: visible;
@@ -172,7 +172,7 @@ html[data-theme="dark"] .mf2-frame {
   text-align: start;
   /* normal داخليًا + --mf2-lh كحد أدنى بصري للهبوط */
   line-height: normal;
-  padding-block: 0.12em;
+  padding-block: 0.02em;
   word-spacing: normal;
   letter-spacing: 0;
   color: var(--mf2-ink, var(--color-mushaf-ink, #1A1510));
@@ -512,10 +512,10 @@ html[data-theme="dark"] .mf2-surah-header__frame,
 }
 
 .mf2-bismillah {
-  /* بسملة افتتاحية: نفس مقاس سطر الآية (±٢٪)، سُمك أوضح بصريًا، بلا تمديد وبلا رقم */
-  font-family: "Amiri Quran", "Amiri", "Scheherazade New", serif;
+  /* بسملة موحّدة: محارف QPC صفحة ١ — نفس مقاس سطر الآية، بلا مسار Amiri بديل */
+  font-family: "qpc-page-1", var(--font-quran, serif);
   font-size: 1em;
-  font-weight: 700;
+  font-weight: 400;
   line-height: normal;
   display: flex;
   align-items: center;
@@ -539,6 +539,16 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   user-select: none;
   -webkit-user-select: none;
   transform: none !important;
+}
+.mf2-bismillah__run {
+  display: inline-block;
+  white-space: nowrap;
+}
+.mf2-bismillah.mf2-line {
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  justify-content: center;
 }
 
 /* علامة نهاية الآية — مجسم QPC الأصلي بلون ذهبي (لا استبدال SVG) */

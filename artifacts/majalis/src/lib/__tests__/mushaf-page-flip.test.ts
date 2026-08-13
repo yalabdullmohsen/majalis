@@ -1,5 +1,5 @@
 /**
- * تقليب مصحف حقيقي — بوابة.
+ * تقليب/انزلاق مصحف — بوابة.
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-page-flip.test.ts
  */
 import assert from "node:assert/strict";
@@ -17,10 +17,11 @@ const hook = readFileSync(resolve(appRoot, "src/hooks/useMushafPageFlip.ts"), "u
 const view = readFileSync(resolve(appRoot, "src/pages/quran/ui/MushafPageView.tsx"), "utf8");
 const stage = readFileSync(resolve(appRoot, "src/components/quran/MushafPageFlipStage.tsx"), "utf8");
 const css = readFileSync(resolve(appRoot, "src/styles/pages/mushaf-reader.css"), "utf8");
+const basmala = readFileSync(resolve(appRoot, "src/components/quran/BasmalaLine.tsx"), "utf8");
 
 assert.match(hook, /COMMIT_FRAC\s*=\s*0\.25/);
 assert.match(hook, /VELOCITY_PX_MS\s*=\s*0\.5/);
-assert.match(hook, /SETTLE_MS\s*=\s*280/);
+assert.match(hook, /SETTLE_MS\s*=\s*260/);
 assert.match(hook, /SNAP_BACK_MS\s*=\s*160/);
 assert.match(hook, /FLIP_EDGE_FRAC\s*=\s*0\.15/);
 assert.match(hook, /onCenterTap/);
@@ -36,6 +37,7 @@ assert.match(view, /MushafPageFlipStage/);
 assert.match(view, /flipDisabled/);
 assert.match(view, /neighborLayouts/);
 assert.match(view, /getMushafSpread/);
+assert.match(view, /prefetchMushafPage/);
 assert.doesNotMatch(view, /useMushafPageCurl|mpv-curl-stage/);
 
 assert.match(stage, /mpv-flip-stage/);
@@ -46,17 +48,22 @@ assert.match(stage, /data-page-state/);
 assert.match(stage, /data-page-state="active"/);
 assert.match(stage, /visibility/);
 assert.match(stage, /mpv-flip-underlay__paper/);
+assert.doesNotMatch(stage, /mpv-flip-shade|mpv-flip-leaf__curl|mpv-flip-corner/);
 
 assert.match(css, /\.mpv-flip-leaf/);
-assert.match(css, /rotateY\(calc\(var\(--mpv-flip, 0\) \* -10deg\)\)/);
-assert.match(css, /perspective:\s*1200px/);
+assert.match(css, /translate3d\(calc\(var\(--mpv-flip, 0\) \* 100%\)/);
+assert.doesNotMatch(css, /rotateY\(/);
+assert.doesNotMatch(css, /perspective:\s*1200px/);
+assert.match(css, /260ms ease-out/);
 assert.match(css, /contain:\s*layout/);
-assert.doesNotMatch(css, /\.mpv-flip-leaf\s*\{[^}]*contain:\s*layout paint/);
 assert.match(css, /mpv-flip-stage--flipping/);
 assert.match(css, /prefers-reduced-motion/);
-assert.match(css, /220ms/);
 assert.doesNotMatch(css, /\.mpv-curl-leaf/);
 assert.match(stage, /mpv-flip-stage--flipping/);
+
+assert.match(basmala, /BASMALA_QPC_WORDS/);
+assert.match(basmala, /qpc-page-1|mushafPageFontFamily\(1\)/);
+assert.match(basmala, /showNumber/);
 
 assert.deepEqual(getMushafSpread(1, true), { left: null, right: 1, focus: 1, isSpread: false });
 assert.deepEqual(getMushafSpread(5, true), { left: 4, right: 5, focus: 5, isSpread: true });

@@ -1,0 +1,53 @@
+[
+  {
+    "page": 1,
+    "headerBase": 8.76406990521327,
+    "bannerTop": 27.68161285545024,
+    "firstInkPct": 37.20564277251185,
+    "lastInkPct": 74.47978376777252,
+    "fillPct": 37.274140995260666,
+    "medianGap": null,
+    "maxCssGap": 0,
+    "medianCover": 48.133012820512825,
+    "minCover": 11.205929487179487,
+    "medianGlyphH": 3.909952606635071,
+    "fontSize": 20.1661,
+    "basmalaUnified": true,
+    "basmalaNumbered": "1",
+    "overflowX": 0
+  },
+  {
+    "page": 2,
+    "headerBase": 8.70112559241706,
+    "bannerTop": 27.68161285545024,
+    "firstInkPct": 43.433427132701425,
+    "lastInkPct": 74.47978376777252,
+    "fillPct": 31.046356635071092,
+    "medianGap": null,
+    "maxCssGap": 0,
+    "medianCover": 48.52564102564102,
+    "minCover": 25.388621794871796,
+    "medianGlyphH": 3.909952606635071,
+    "fontSize": 18.3765,
+    "basmalaUnified": true,
+    "basmalaNumbered": "0",
+    "overflowX": 0
+  },
+  {
+    "page": 3,
+    "headerBase": 8.875148104265403,
+    "bannerTop": null,
+    "firstInkPct": 11.927021623222748,
+    "lastInkPct": 90.92583678909952,
+    "fillPct": 78.99881516587678,
+    "medianGap": 0.640625,
+    "maxCssGap": 1.168,
+    "medianCover": 94.78766025641025,
+    "minCover": 94.09054487179486,
+    "medianGlyphH": 4.502369668246446,
+    "fontSize": 23.368,
+    "basmalaUnified": false,
+    "basmalaNumbered": null,
+    "overflowX": 0
+  }
+]

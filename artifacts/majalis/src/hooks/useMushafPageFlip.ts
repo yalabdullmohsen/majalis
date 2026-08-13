@@ -1,6 +1,6 @@
 /**
- * تقليب مصحف حقيقي (RTL) — مرجع آية:
- * - عتبة ٢٥٪ / ٠٫٥px/ms · settle 280ms · ارتداد ١٦٠ms · حافة ١٥٪
+ * انزلاق صفحة مصحف (RTL / paged) — بلا لفّ ثلاثي الأبعاد:
+ * - عتبة ٢٥٪ / ٠٫٥px/ms · settle 260ms · ارتداد ١٦٠ms · حافة ١٥٪
  */
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 
@@ -16,7 +16,7 @@ export type MushafFlipState = {
 const COMMIT_FRAC = 0.25;
 const VELOCITY_PX_MS = 0.5;
 const AXIS_LOCK = 1.2;
-const SETTLE_MS = 280;
+const SETTLE_MS = 260;
 const SNAP_BACK_MS = 160;
 const FADE_MS = 150;
 const TAP_MAX_MS = 320;

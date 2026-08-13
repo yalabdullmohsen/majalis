@@ -54,7 +54,7 @@ check(/contentFillMin:\s*79/.test(bands), "امتلاء ≥٧٩٪");
 check(/COMMIT_FRAC\s*=\s*0\.25/.test(flip), "عتبة ٢٥٪");
 check(/VELOCITY_PX_MS\s*=\s*0\.5/.test(flip), "سرعة ٠٫٥");
 check(/FLIP_EDGE_FRAC\s*=\s*0\.15/.test(flip), "حافة ١٥٪");
-check(/SETTLE_MS\s*=\s*280/.test(flip), "settle 280ms");
+check(/SETTLE_MS\s*=\s*260/.test(flip), "settle 260ms");
 
 // ٦) افتتاح
 check(/OPENING_BANNER_TOP_PCT\s*=\s*20/.test(pageV2), "شارة افتتاح مرجع آية");

@@ -319,7 +319,7 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 }
 
 
-/* ── تقليب مصحف حقيقي (RTL) — أداء: contain + perspective 1200 ── */
+/* ── انزلاق صفحة مصحف (RTL / paged) — بلا perspective/rotateY/ظلال ثقيلة ── */
 .mpv-flip-stage {
   position: relative;
   width: 100%;
@@ -327,7 +327,7 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
   min-height: 0;
   flex: 1 1 auto;
   touch-action: pan-y;
-  overflow: visible;
+  overflow: hidden;
   contain: layout paint;
 }
 .mpv-flip-stage--active {
@@ -335,23 +335,26 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 }
 .mpv-flip-stage--flipping,
 .mpv-flip-stage--dragging {
-  perspective: 1200px;
+  /* انزلاق ثنائي الأبعاد فقط */
+  perspective: none;
 }
 .mpv-flip-stage--spread {
   display: flex;
   justify-content: center;
   gap: 0;
   perspective: none;
+  overflow: hidden;
 }
 .mpv-flip-book {
   position: relative;
   flex: 1 1 50%;
   min-width: 0;
   height: 100%;
+  overflow: hidden;
 }
 .mpv-flip-stage--spread.mpv-flip-stage--flipping .mpv-flip-book {
-  perspective: 1200px;
-  transform-style: preserve-3d;
+  perspective: none;
+  transform-style: flat;
 }
 .mpv-flip-stage--spread .mpv-flip-spread-left {
   flex: 1 1 50%;
@@ -373,119 +376,55 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 }
 .mpv-flip-stage--active .mpv-flip-underlay,
 .mpv-flip-stage--flipping .mpv-flip-underlay {
-  opacity: calc(0.35 + var(--mpv-flip-abs, 0) * 0.65);
+  opacity: 1;
 }
 .mpv-flip-underlay__page {
   position: absolute;
   inset: 0;
-  /* visibility يُضبط من المكوّن — الجار يبقى في DOM */
 }
 .mpv-flip-underlay__paper {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, color-mix(in srgb, #000 5%, transparent), transparent 18%),
-    var(--ayah-paper, #FAF7F2);
+  background: var(--ayah-paper, #FAF7F2);
 }
 .mpv-flip-leaf {
   position: relative;
   z-index: 1;
   width: 100%;
   height: 100%;
-  transform-origin: right center;
+  transform-origin: center center;
   transform: none;
   background: var(--ayah-paper, #FAF7F2);
-  /* layout فقط — contain:paint كان يقصّ حبر الأسطر عند تجاوز خاطئ للحساب */
   contain: layout;
+  will-change: auto;
 }
 .mpv-flip-stage--active .mpv-flip-leaf,
 .mpv-flip-stage--flipping .mpv-flip-leaf {
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
-  /* انحناء ≤10° · تتبع الإصبع بـ transform فقط */
-  transform:
-    translate3d(calc(var(--mpv-flip, 0) * 92%), 0, 0)
-    rotateY(calc(var(--mpv-flip, 0) * -10deg));
+  /* الصفحة تتبع الإصبع كوحدة واحدة — translateX فقط */
+  transform: translate3d(calc(var(--mpv-flip, 0) * 100%), 0, 0);
 }
 .mpv-flip-stage--dragging .mpv-flip-leaf,
 .mpv-flip-stage--active .mpv-flip-leaf {
   will-change: transform;
+  transition: none;
 }
 .mpv-flip-stage:not(.mpv-flip-stage--active):not(.mpv-flip-stage--dragging) .mpv-flip-leaf {
   will-change: auto;
 }
+.mpv-flip-stage.mpv-flip-stage--flipping:not(.mpv-flip-stage--dragging) .mpv-flip-leaf {
+  transition: transform 260ms ease-out;
+}
 .mpv-flip-leaf__curl {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(
-    105deg,
-    transparent 42%,
-    color-mix(in srgb, #000 10%, transparent) 58%,
-    color-mix(in srgb, #fff 22%, transparent) 66%,
-    transparent 78%
-  );
-  opacity: 0;
-  mix-blend-mode: multiply;
+  display: none !important;
 }
-.mpv-flip-stage--active .mpv-flip-leaf__curl,
-.mpv-flip-stage--flipping .mpv-flip-leaf__curl {
-  opacity: calc(var(--mpv-flip-abs, 0) * 0.45);
-}
-.mpv-flip-stage--active .mpv-flip-leaf,
-.mpv-flip-stage--active .mpv-flip-shade,
-.mpv-flip-stage--active .mpv-flip-corner {
-  transition: none;
-}
-.mpv-flip-stage:not(.mpv-flip-stage--active) .mpv-flip-leaf,
-.mpv-flip-stage:not(.mpv-flip-stage--active) .mpv-flip-shade,
-.mpv-flip-stage:not(.mpv-flip-stage--active) .mpv-flip-corner {
-  transition: transform 220ms ease-out, opacity 150ms ease-out;
-}
-/* ظل ثابت يُحرَّك بـ transform — لا box-shadow متحرك */
-.mpv-flip-shade {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    color-mix(in srgb, #000 18%, transparent) 46%,
-    color-mix(in srgb, #000 5%, transparent) 62%,
-    transparent 100%
-  );
-  opacity: 0;
-}
-.mpv-flip-stage--active .mpv-flip-shade,
-.mpv-flip-stage--flipping .mpv-flip-shade {
-  opacity: calc(var(--mpv-flip-abs, 0) * 0.38);
-  transform: translate3d(calc(var(--mpv-flip, 0) * 36%), 0, 0);
-}
+.mpv-flip-shade,
 .mpv-flip-corner {
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  width: 18%;
-  z-index: 4;
-  pointer-events: none;
-  background: radial-gradient(
-    120% 80% at 0% 100%,
-    color-mix(in srgb, #000 12%, transparent) 0%,
-    transparent 62%
-  );
-  opacity: 0;
-}
-.mpv-flip-stage--active .mpv-flip-corner,
-.mpv-flip-stage--flipping .mpv-flip-corner {
-  opacity: calc(var(--mpv-flip-abs, 0) * 0.55);
-  transform: translate3d(calc(var(--mpv-flip, 0) * 8%), 0, 0);
+  display: none !important;
 }
 .mpv-flip-edge {
   position: absolute;
   inset-block: 0;
-  width: calc(var(--mpv-flip-edge, 0.16) * 100%);
+  width: calc(var(--mpv-flip-edge, 0.15) * 100%);
   z-index: 5;
   pointer-events: none;
   opacity: 0;
@@ -494,20 +433,20 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 .mpv-flip-edge--prev { inset-inline-end: 0; }
 .mpv-flip-stage--reduced .mpv-flip-leaf {
   transform: none;
-  opacity: calc(1 - var(--mpv-flip-abs, 0) * 0.4);
+  opacity: calc(1 - var(--mpv-flip-abs, 0) * 0.55);
   box-shadow: none;
   transition: opacity 150ms ease-out;
 }
+.mpv-flip-stage--reduced .mpv-flip-underlay {
+  opacity: calc(var(--mpv-flip-abs, 0) * 0.85);
+}
 .mpv-flip-stage--reduced .mpv-flip-shade,
-.mpv-flip-stage--reduced .mpv-flip-underlay,
 .mpv-flip-stage--reduced .mpv-flip-corner,
 .mpv-flip-stage--reduced .mpv-flip-leaf__curl {
-  opacity: 0 !important;
+  display: none !important;
 }
 @media (prefers-reduced-motion: reduce) {
-  .mpv-flip-leaf,
-  .mpv-flip-shade,
-  .mpv-flip-corner {
+  .mpv-flip-leaf {
     transition: opacity 150ms ease-out !important;
     transform: none !important;
   }

@@ -146,7 +146,7 @@ try {
       const S =
         parseFloat(getComputedStyle(root).getPropertyValue("--mushaf-S")) ||
         parseFloat(getComputedStyle(root).fontSize) ||
-        24.382;
+        34.135;
       const fontSizes = ayahLines.map((el) => parseFloat(getComputedStyle(el).fontSize));
       let bannerToBas = null;
       let basToLine = null;

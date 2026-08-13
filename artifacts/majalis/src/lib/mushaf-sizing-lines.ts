@@ -30,7 +30,7 @@ export type SizingLineKind = (typeof SIZING_LINE_KINDS)[number];
 /** أنواع تدخل فعليًا في حساب حجم الخط الموحّد للصفحة */
 export const WIDTH_SIZING_LINE_KINDS = ["ayah"] as const;
 
-/** بسملة افتتاحية Unicode — خط رقعة/ثلث ممدود أخف من أسطر الآيات (ليست آية الفاتحة) */
+/** محارف Unicode احتياطية للاختبارات غير البصرية — العرض الحي عبر BasmalaLine (QPC ص١) */
 export const DRAWN_BASMALA_TEXT = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
 
 /**
