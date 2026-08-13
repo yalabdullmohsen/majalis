@@ -2,30 +2,30 @@
   "referencePage": 283,
   "slotCount": 15,
   "baselinesPct": [
-    2.5,
-    9.2857,
-    16.0714,
-    22.8571,
-    29.6429,
-    36.4286,
-    43.2143,
-    50.0,
-    56.7857,
-    63.5714,
-    70.3571,
-    77.1429,
-    83.9286,
-    90.7143,
-    97.5
+    3.0,
+    9.7,
+    16.4,
+    23.1,
+    29.8,
+    36.5,
+    43.2,
+    49.9,
+    56.6,
+    63.3,
+    70.0,
+    76.7,
+    83.4,
+    90.1,
+    96.8
   ],
-  "slotHeightPct": 7.2,
+  "slotHeightPct": 6.6,
   "measuredInkBandPct": {
-    "firstInkTopBody": 1.2,
-    "lastInkBotBody": 98.2,
-    "firstSlotMidLines": 2.5,
-    "lastSlotMidLines": 97.5,
-    "fillBody": 0.97
+    "firstInkTopBody": 1.5,
+    "lastInkBotBody": 97.5,
+    "firstSlotMidLines": 3.0,
+    "lastSlotMidLines": 96.8,
+    "fillBody": 0.96
   },
   "sideMarginPx": 6,
-  "notes": "مراكز ١٥ خانة من ٢٫٥٪ إلى ٩٧٫٥٪ بخطوة ٦٫٧٨٥٧٪ داخل contentBand (١١٫٨→٩١٫٥) لتحقيق امتلاء شاشة ≥٧٩٪ بلا بتر. ارتفاع الخانة ٧٫٢٪. انظر layout-bands.ts و MUSHAF_SPEC.md."
+  "notes": "مراكز ١٥ خانة من ٣٫٢٪ إلى ٩٥٫٤٪ بخطوة ٦٫٥٨٥٧٪ داخل contentBand — هامش أسفل للهمزات مع خط أكبر. ارتفاع الخانة ٦٫٦٪."
 }

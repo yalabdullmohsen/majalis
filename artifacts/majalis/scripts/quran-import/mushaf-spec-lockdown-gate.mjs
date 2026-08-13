@@ -145,7 +145,7 @@ function runStatic() {
   if (grid.referencePage !== 283) fail(5, `referencePage=${grid.referencePage}`);
   else if (!Array.isArray(grid.baselinesPct) || grid.baselinesPct.length !== 15) {
     fail(5, "baselinesPct ليست ١٥");
-  } else if (Math.abs(grid.baselinesPct[0] - 2.5) > 0.05 || Math.abs(grid.baselinesPct[14] - 97.5) > 0.05) {
+  } else if (Math.abs(grid.baselinesPct[0] - 3.0) > 0.05 || Math.abs(grid.baselinesPct[14] - 96.8) > 0.05) {
     fail(5, `حدود الشبكة ${grid.baselinesPct[0]}…${grid.baselinesPct[14]}`);
   } else if (!/MUSHAF_GRID\.baselinesPct/.test(pageV2)) {
     fail(5, "التموضع لا يستخدم MUSHAF_GRID.baselinesPct");

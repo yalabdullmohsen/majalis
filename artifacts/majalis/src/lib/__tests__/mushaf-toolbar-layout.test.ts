@@ -51,16 +51,13 @@ assert.match(quranCss, /\.mpv-toolbar--ayah\s+\.mpv-toolbar__btn\s*\{[\s\S]*?whi
 assert.match(quranCss, /\.mpv-toolbar--ayah\s+\.mpv-toolbar__label\s*\{[\s\S]*?white-space:\s*nowrap/);
 assert.match(quranCss, /@media\s*\(max-width:\s*480px\)/);
 assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?z-index:\s*32/);
-assert.match(
-  quranCss,
-  /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?top:\s*calc\(\s*94\.3vh/,
-  "شريط آية تحت الخرطوش عند ٩٤٫٣vh",
-);
-assert.equal(
-  /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?top:\s*calc\(var\(--inset-top\)\s*\+\s*2\.75rem\)/.test(
-    quranCss,
-  ),
-  false,
+const ayahToolbarBlock =
+  quranCss.match(/\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[^}]*\}/)?.[0] ?? "";
+assert.match(ayahToolbarBlock, /95\.7vh|100dvh - var\(--inset-bottom/, "شريط آية مضبوط داخل الشاشة");
+assert.doesNotMatch(ayahToolbarBlock, /top:\s*calc\(\s*94\.3vh\s*\+/, "شريط آية لم يعد 94.3vh+ بلا clamp");
+assert.doesNotMatch(
+  ayahToolbarBlock,
+  /top:\s*calc\(var\(--inset-top\)\s*\+\s*2\.75rem\)/,
   "شريط آية لم يعد تحت الرأس بـ 2.75rem",
 );
 

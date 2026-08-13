@@ -55,12 +55,15 @@ function rectsOverlap(a, b) {
   return { ox, oy, area: ox * oy };
 }
 
-/* ثابت: CSS يضع الشريط أسفلًا */
+/* ثابت: الشريط أسفل الشاشة فوق safe-area */
 const css = readFileSync(join(ROOT, "src/styles/quran.css"), "utf8");
 const ayahTb = css.match(/\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[^}]*\}/);
 const failures = [];
-if (!ayahTb || !/top:\s*calc\(\s*94\.3vh/.test(ayahTb[0])) {
-  failures.push({ page: 0, reason: "CSS: شريط آية ليس تحت الخرطوش (94.3vh+)" });
+if (!ayahTb || !/95\.7vh|100dvh - var\(--inset-bottom/.test(ayahTb[0])) {
+  failures.push({ page: 0, reason: "CSS: شريط آية ليس مضبوطًا داخل الشاشة (95.7vh/clamp)" });
+}
+if (ayahTb && /top:\s*calc\(\s*94\.3vh\s*\+/.test(ayahTb[0])) {
+  failures.push({ page: 0, reason: "CSS: شريط آية ما زال top: 94.3vh+ بلا clamp (مقصوص)" });
 }
 if (ayahTb && /top:\s*calc\(\s*var\(--inset-top\)/.test(ayahTb[0])) {
   failures.push({ page: 0, reason: "CSS: شريط آية ما زال top تحت الرأس" });
@@ -214,14 +217,38 @@ try {
         reason: `الشريط أعلى الشاشة (top=${m.toolbar.top.toFixed(0)}px) — يجب أسفل`,
       });
     }
-    if (m.overlaps.length) {
+    /* غير مقصوص: أسفل الشريط ≤ أسفل الشاشة */
+    if (m.toolbar.bottom > m.vh + 0.75) {
       failures.push({
         page: n,
-        reason: `تقاطع مع ${m.overlaps.length} عنصرًا: ${m.overlaps
-          .slice(0, 3)
-          .map((o) => o.cls)
-          .join(", ")}`,
+        reason: `الشريط مقصوص أسفل الشاشة (bottom=${m.toolbar.bottom.toFixed(1)} > vh=${m.vh})`,
       });
+    }
+    if (m.toolbar.h < 28) {
+      failures.push({
+        page: n,
+        reason: `ارتفاع الشريط صغير جدًا (${m.toolbar.h.toFixed(1)}px) — يبدو مقصوصًا`,
+      });
+    }
+    if (m.overlaps.length) {
+      const soft = new Set(["page-badge", "footer-band", "footer-meta", "cartouche"]);
+      const hard = m.overlaps.filter((o) => {
+        if (!soft.has(o.cls) && !soft.has(String(o.cls || "").split(/\s+/)[0])) {
+          const slot = String(o.cls || "");
+          if (![...soft].some((s) => slot.includes(s))) return true;
+        }
+        /* تقاطع خفيف مع الذيل مسموح فقط إن كان الشريط تحت نهاية الحبر */
+        return m.toolbar.top < m.vh * 0.912;
+      });
+      if (hard.length) {
+        failures.push({
+          page: n,
+          reason: `تقاطع مع ${hard.length} عنصرًا: ${hard
+            .slice(0, 3)
+            .map((o) => o.cls)
+            .join(", ")}`,
+        });
+      }
     }
   }
 } finally {

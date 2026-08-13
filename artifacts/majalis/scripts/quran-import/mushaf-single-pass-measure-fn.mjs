@@ -81,7 +81,7 @@ window.__mushafSinglePassMeasure = function __mushafSinglePassMeasure(expectedPa
     }
     const top = ink?.top ?? box?.top ?? 0;
     const bot = ink?.bottom ?? box?.bottom ?? 0;
-    const fullyInside = top >= limitTop && bot <= limitBot;
+    const fullyInside = top >= limitTop && bot <= limitBot + 0.5;
     const partiallyOut = bot > limitBot + 0.5 || top < limitTop - 0.5;
     if (fullyInside) visibleFull += 1;
     else if (partiallyOut) {

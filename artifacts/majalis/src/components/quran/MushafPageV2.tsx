@@ -1,8 +1,10 @@
 import { Fragment, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { useMushafPageFont, mushafPageFontFamily } from "@/hooks/useMushafPageFont";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
-import { DRAWN_BASMALA_TEXT, drawnSurahTitleText } from "@/lib/mushaf-sizing-lines";
+import { drawnSurahTitleText } from "@/lib/mushaf-sizing-lines";
 import { SurahBanner } from "@/components/quran/SurahBanner";
+import { BasmalaLine } from "@/components/quran/BasmalaLine";
+import { ensureMushafPageFont } from "@/hooks/useMushafPageFont";
 import { wordKeyFromQpc } from "@/features/mushaf/ayah-word-keys";
 import {
   MUSHAF_FONT_DEV_MAX,
@@ -19,7 +21,8 @@ import { mushafTypescaleCssVars } from "@/features/mushaf/typescale";
 /**
  * صفحتا الافتتاح (١–٢): مسار برمجي موحّد · بلا إطار — مرجع آية.
  * أعلى الشارة ≈٢٧٫٧٪ من الشاشة ≈٢٠٪ من contentBand · نهاية الكتلة ≈٧٤٫٨٪ شاشة.
- * فاصل شارة→بسملة ٢٤px · بسملة→أول سطر ٢٠px · أسطر بلا مطّ.
+ * فاصل شارة→بسملة ٢٤px · بسملة→أول سطر ٢٠px.
+ * مدّ السطر = تكبير الخط أولاً ثم فجوة كلمات ≤١٨px.
  */
 /** أعلى الشارة (٪ من .mf2-lines / contentBand) — مرجع آية ٢٧٫٧٪ شاشة */
 const OPENING_BANNER_TOP_PCT = 20;
@@ -37,6 +40,8 @@ const OPENING_BOTTOM_MARGIN_PCT = 21;
 const OPENING_MIN_LINE_GAP_RATIO = 0.35;
 /** ارتفاع خانة الجسم — يقارب امتداد الحبر دون مبالغة الصندوق */
 const OPENING_BODY_SLOT_H_PCT = 5.8;
+/** أقصى فجوة كلمات بعد تكبير الخط — مرجع ≈١٥px */
+const MAX_WORD_GAP_PX = 18;
 /** مركز الشارة للتموضع المطلق (translateY -50%) */
 const OPENING_BANNER_MID_PCT = OPENING_BANNER_TOP_PCT + OPENING_BANNER_H_PCT / 2;
 const OPENING_BODY_BOT_PCT = 100 - OPENING_BOTTOM_MARGIN_PCT;
@@ -320,17 +325,18 @@ export function MushafPageV2({
 
     const LINE_HEIGHT_EM = MUSHAF_LAYOUT_BASELINE.lineHeightEm;
     const REF_PX = 100;
-      const MIN_LINE_FILL = 0.995;
+      const MIN_LINE_FILL = 0.98;
     /* S المحسوب × --mushaf-scale — بلا فرع إعادة التفاف */
     const BASE_FONT = MUSHAF_LAYOUT_BASELINE.fontSizePx * scaleFactor;
     const isOpening = layout.pageNumber === 1 || layout.pageNumber === 2;
     const noStretchLines = lastSurahEndLineNumbers(layout);
-    /* صفحتا الافتتاح: بلا ملاءمة عرض لأي سطر — عرض طبيعي مركزي */
+    /* صفحتا الافتتاح: أسطر قصيرة بلا مطّ عرض مفرط — الفاتحة/البقرة تُمدّ بالخط لا بالفراغ */
     if (isOpening) {
       for (const row of layout.rows) {
         if (row.kind === "line") noStretchLines.add(row.lineNumber);
       }
     }
+    void ensureMushafPageFont(1).catch(() => {});
     const slotHPct = MUSHAF_GRID.slotHeightPct;
 
     const measure = () => {
@@ -473,10 +479,12 @@ export function MushafPageV2({
         return w;
       };
 
-      /* بحث ثنائي على مقياس الخط بدقة ٠٫٢٥px حتى يتّسع أفقيًا */
+      /* بحث ثنائي: كبّر الخط أولاً حتى يقارب أعرض سطر حدّ العرض بمسافات طبيعية */
       {
         let lo = MIN_FONT_PX;
-        let hi = Math.min(maxFont, BASE_FONT * 1.08);
+        let hi = Math.max(maxFont, BASE_FONT * 1.08);
+        /* اسمح بصعود حتى الأساس+DEV أو ما يتّسع — الأساس مرفوع ≈٤٠٪ */
+        hi = Math.max(hi, BASE_FONT * (1 + MUSHAF_FONT_DEV_MAX));
         if (widestAt(hi) > fitWidth) {
           while (hi - lo > 0.25) {
             const mid = (lo + hi) / 2;
@@ -485,7 +493,21 @@ export function MushafPageV2({
           }
           size = lo;
         } else {
-          size = hi;
+          /* إن اتّسع الأعلى، ابحث عن أكبر حجم ما زال ≤ العرض */
+          let growLo = hi;
+          let growHi = Math.min(fitWidth * 0.12, BASE_FONT * 1.55);
+          if (growHi > growLo && widestAt(growHi) <= fitWidth) {
+            size = growHi;
+          } else if (growHi > growLo) {
+            while (growHi - growLo > 0.25) {
+              const mid = (growLo + growHi) / 2;
+              if (widestAt(mid) <= fitWidth) growLo = mid;
+              else growHi = mid;
+            }
+            size = growLo;
+          } else {
+            size = hi;
+          }
         }
       }
 
@@ -558,9 +580,9 @@ export function MushafPageV2({
           const room = Math.max(8, crFit.width - sideClear * 2);
           const fill = contentW / room;
           if (fill >= MIN_LINE_FILL) continue;
-          /* بحث ثنائي على فجوة الكلمات حتى ملء النطاق بلا تجاوز */
+          /* بعد تكبير الخط: أغلق الفارق الصغير فقط · سقف ١٨px */
           let lo = 0;
-          let hi = Math.max(0.05, (room - contentW) / gaps);
+          let hi = Math.min(MAX_WORD_GAP_PX, Math.max(0.05, (room - contentW) / gaps));
           for (let pass = 0; pass < 14; pass++) {
             const mid = (lo + hi) / 2;
             el.style.setProperty("--mf2-word-gap", `${mid.toFixed(3)}px`);
@@ -578,8 +600,9 @@ export function MushafPageV2({
               break;
             }
           }
-          if (lo < 0.05) el.style.removeProperty("--mf2-word-gap");
-          else el.style.setProperty("--mf2-word-gap", `${lo.toFixed(3)}px`);
+          const capped = Math.min(MAX_WORD_GAP_PX, lo);
+          if (capped < 0.05) el.style.removeProperty("--mf2-word-gap");
+          else el.style.setProperty("--mf2-word-gap", `${capped.toFixed(3)}px`);
         }
       };
       applyWordGaps();
@@ -650,7 +673,7 @@ export function MushafPageV2({
 
       {
         const crV = container.getBoundingClientRect();
-        const limitBot = crV.bottom - 0.35;
+        const limitBot = crV.bottom - 1.25;
         const inkFits = (px: number) => {
           applyVerticalSize(px);
           for (const el of sizingEls) el.style.removeProperty("--mf2-word-gap");
@@ -1333,6 +1356,9 @@ export function MushafPageV2({
   };
 
   const renderAyahLine = (row: Extract<MushafPageLayout["rows"][number], { kind: "line" }>) => {
+    const isFatihaBasmala =
+      row.words.length > 0 &&
+      row.words.every((w) => w.verseKey === "1:1");
     const lineWords = showAyahNumbers
       ? row.words
       : row.words.filter((w) => w.charType !== "end");
@@ -1346,6 +1372,20 @@ export function MushafPageV2({
         {inner}
       </div>
     );
+
+    if (isFatihaBasmala) {
+      return wrap(
+        <BasmalaLine
+          showNumber={showAyahNumbers}
+          sizingKind="ayah"
+          className="mf2-line"
+          lineRef={(el) => {
+            if (el) ayahLineRefs.current.set(row.lineNumber, el);
+            else ayahLineRefs.current.delete(row.lineNumber);
+          }}
+        />,
+      );
+    }
 
     /** دقة QPC + visualOnly: سطر متصل واحد بلا عزل bidi بين الكلمات */
     if (!useUnicodeSafe && visualOnly) {
@@ -1485,18 +1525,14 @@ export function MushafPageV2({
                     className="mf2-grid-slot mf2-grid-slot--basmala"
                     style={slotStyle(row.basmalaSlot)}
                   >
-                    <div
-                      className="mf2-bismillah"
-                      lang="ar"
-                      dir="rtl"
-                      data-sizing-line="basmala"
-                      ref={(el) => {
+                    <BasmalaLine
+                      showNumber={false}
+                      sizingKind="basmala"
+                      lineRef={(el) => {
                         if (el) basmalaRefs.current.set(key, el);
                         else basmalaRefs.current.delete(key);
                       }}
-                    >
-                      {DRAWN_BASMALA_TEXT}
-                    </div>
+                    />
                   </div>
                 )}
                 {/* gap=1: المصحف يحتفظ بخانة واحدة فقط للشارة — البسملة غير مرسومة
@@ -1564,15 +1600,7 @@ export function SurahHeaderBanner({
         />
       </div>
       {chapter.bismillahPre && (
-        <div
-          className="mf2-bismillah"
-          lang="ar"
-          dir="rtl"
-          data-sizing-line="basmala"
-          ref={basmalaRef}
-        >
-          {DRAWN_BASMALA_TEXT}
-        </div>
+        <BasmalaLine showNumber={false} sizingKind="basmala" lineRef={basmalaRef} />
       )}
     </div>
   );

@@ -1,11 +1,12 @@
 /**
- * تقليب مصحف حقيقي (RTL) — مرجع آية:
- * - عتبة ٢٥٪ / ٠٫٥px/ms · settle 280ms · ارتداد ١٦٠ms · حافة ١٥٪
+ * لفّ ورقة مصحف (RTL) — مرجع آية:
+ * - عتبة ٢٥٪ / ٠٫٥px/ms · settle 320ms · ارتداد ١٦٠ms · حافة ١٥٪
+ * - يمين = التالية · يسار = السابقة
  */
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 
 export type MushafFlipState = {
-  /** −1…1 : موجب = تقليب نحو اليمين (تالية) — للقراءة بعد السكون */
+  /** −1…1 : موجب = سحب لليمين (تالية) — للقراءة بعد السكون */
   progress: number;
   active: boolean;
   settling: boolean;
@@ -16,7 +17,7 @@ export type MushafFlipState = {
 const COMMIT_FRAC = 0.25;
 const VELOCITY_PX_MS = 0.5;
 const AXIS_LOCK = 1.2;
-const SETTLE_MS = 280;
+const SETTLE_MS = 320;
 const SNAP_BACK_MS = 160;
 const FADE_MS = 150;
 const TAP_MAX_MS = 320;
@@ -124,8 +125,9 @@ export function useMushafPageFlip(opts: {
     const w = Math.max(160, widthRef.current);
     const rel = clientX - stageLeftRef.current;
     const edge = w * FLIP_EDGE_FRAC;
-    if (rel <= edge) return "next";
-    if (rel >= w - edge) return "prev";
+    /* الحافة اليمنى = التالية · اليسرى = السابقة */
+    if (rel >= w - edge) return "next";
+    if (rel <= edge) return "prev";
     return "center";
   }, []);
 
