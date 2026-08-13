@@ -61,11 +61,11 @@ function waitForServer(url, timeoutMs = 60_000) {
 
 const failures = [];
 const css = readFileSync(join(ROOT, "src/styles/quran.css"), "utf8");
-if (!/--mpv-toolbar-band:\s*52px/.test(css) || !/--mpv-footer-band:\s*46px/.test(css)) {
-  failures.push({ page: 0, reason: "CSS vars للنطاقات ناقصة" });
+if (!/--mpv-toolbar-band:\s*52px/.test(css) || !/--mpv-footer-band:\s*44px/.test(css)) {
+  failures.push({ page: 0, reason: "CSS vars للنطاقات ناقصة (toolbar 52 / footer 44)" });
 }
-if (!/--mpv-content-footer-gap:\s*28px/.test(css)) {
-  failures.push({ page: 0, reason: "--mpv-content-footer-gap يجب أن يكون 28px" });
+if (!/--mpv-content-footer-gap:\s*16px/.test(css)) {
+  failures.push({ page: 0, reason: "--mpv-content-footer-gap يجب أن يكون 16px (مرجع آية)" });
 }
 if (!/bottom:\s*calc\(\s*var\(--inset-bottom[^)]*\)\s*\+\s*var\(--mpv-toolbar-band/.test(css)) {
   failures.push({ page: 0, reason: "الذيل ليس فوق toolbarBand" });
@@ -321,18 +321,18 @@ try {
   if (off.error) {
     failures.push({ page: 3, reason: off.error });
   } else {
-    if (off.gapContentFooter != null && off.gapContentFooter < 26) {
+    if (off.gapContentFooter != null && off.gapContentFooter < 7.5) {
       failures.push({
         page: 3,
-        reason: `فاصل content→footer ${off.gapContentFooter.toFixed(1)}px < 26`,
+        reason: `فاصل content→footer ${off.gapContentFooter.toFixed(1)}px < 8 (مرجع آية)`,
       });
     }
     const inkToCart =
       off.lastInk && off.badge ? off.badge.top - off.lastInk.bottom : null;
-    if (inkToCart != null && inkToCart < 27.5) {
+    if (inkToCart != null && inkToCart < 7.5) {
       failures.push({
         page: 3,
-        reason: `حبر→خرطوش ${inkToCart.toFixed(1)}px < 28`,
+        reason: `حبر→خرطوش ${inkToCart.toFixed(1)}px < 8 (مرجع آية)`,
       });
     }
     if (off.overlaps?.badgeInk?.oy > 0.5 || off.overlaps?.metaInk?.oy > 0.5) {
@@ -368,14 +368,14 @@ try {
       failures.push({ page: n, reason: "تقاطع ذيل مع حبر" });
     }
     const gapCart = m.lastInk && m.badge ? m.badge.top - m.lastInk.bottom : null;
-    if (gapCart != null && gapCart < 27.5) {
-      failures.push({ page: n, reason: `حبر→خرطوش ${gapCart.toFixed(1)}px < 28` });
+    if (gapCart != null && gapCart < 7.5) {
+      failures.push({ page: n, reason: `حبر→خرطوش ${gapCart.toFixed(1)}px < 8 (مرجع آية)` });
     }
-    /* ص١–٢ قد تمتد قليلاً في فاصل content→footer مع بقاء ≥٢٨px للخرطوش */
-    if (n > 2 && m.gapContentFooter != null && m.gapContentFooter < 26) {
+    /* مرجع آية: فاصل content→footer ≈١٦px، الحد الأدنى ٨px بلا تقاطع */
+    if (n > 2 && m.gapContentFooter != null && m.gapContentFooter < 7.5) {
       failures.push({
         page: n,
-        reason: `فاصل content→footer ${m.gapContentFooter.toFixed(1)}px < 26`,
+        reason: `فاصل content→footer ${m.gapContentFooter.toFixed(1)}px < 8 (مرجع آية)`,
       });
     }
     /* الشبكة لصفحات عادية فقط — ص١–٢ داخل الإطار بنسب مختلفة */

@@ -122,8 +122,8 @@ if (existsSync(join(ROOT, "src/components/quran/OpeningPageFrame.tsx"))) {
 if (/OpeningPageFrame|data-opening-frame|OPENING_FRAME_TOP/.test(pageV2)) {
   failures.push({ gate: "opening-frame", page: 0, reason: "MushafPageV2 ما زال يشير لإطار الافتتاح" });
 }
-if (!/OPENING_BANNER_TOP_PCT\s*=\s*16/.test(pageV2)) {
-  failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BANNER_TOP_PCT ≠ 16" });
+if (!/OPENING_BANNER_TOP_PCT\s*=\s*20/.test(pageV2)) {
+  failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BANNER_TOP_PCT ≠ 20 (مرجع آية)" });
 }
 if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*24/.test(pageV2)) {
   failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BANNER_TO_BASMALA_PX ≠ 24" });
@@ -152,14 +152,21 @@ if (!/headerMeta:\s*0\.42/.test(typeSrc)) {
 if (!/footerHizb:\s*0\.4/.test(typeSrc)) {
   failures.push({ gate: "typescale", page: 0, reason: "typescale footer 0.40" });
 }
-if (/data-page-parity/.test(viewSrc)) {
-  failures.push({ gate: "cartouche", page: 0, reason: "data-page-parity ما زال موجودًا" });
+if (!/data-page-parity/.test(viewSrc)) {
+  failures.push({ gate: "cartouche", page: 0, reason: "data-page-parity مفقود — مطلوب تناوب آية" });
 }
-if (!/data-cartouche-align="center"|data-cartouche-side="center"/.test(viewSrc)) {
-  failures.push({ gate: "cartouche", page: 0, reason: "وسم مركزية الخرطوش مفقود" });
+if (!/data-cartouche-align="parity"/.test(viewSrc)) {
+  failures.push({ gate: "cartouche", page: 0, reason: "وسم parity للخرطوش مفقود" });
 }
-if (!/left:\s*50%/.test(css) || !/translateX\(-50%\)/.test(css)) {
-  failures.push({ gate: "cartouche", page: 0, reason: "CSS مركزية الخرطوش ناقص" });
+if (/data-cartouche-side="center"/.test(viewSrc) || /data-cartouche-align="center"/.test(viewSrc)) {
+  failures.push({ gate: "cartouche", page: 0, reason: "خرطوش مركزي ممنوع — مرجع آية فردي/زوجي" });
+}
+if (!/data-page-parity="odd"/.test(css) || !/data-page-parity="even"/.test(css)) {
+  failures.push({ gate: "cartouche", page: 0, reason: "CSS تناوب فردي/زوجي ناقص" });
+}
+const badgeRule = css.match(/\.mpv-ayah-page-badge\s*\{[^}]+\}/)?.[0] ?? "";
+if (/left:\s*50%/.test(badgeRule)) {
+  failures.push({ gate: "cartouche", page: 0, reason: "CSS خرطوش مركزي (left:50%) ممنوع" });
 }
 const ayahTb = css.match(/\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[^}]*\}/);
 if (!ayahTb || !/bottom:\s*calc\(\s*var\(--inset-bottom/.test(ayahTb[0])) {
@@ -168,11 +175,11 @@ if (!ayahTb || !/bottom:\s*calc\(\s*var\(--inset-bottom/.test(ayahTb[0])) {
 if (ayahTb && /top:\s*calc\(\s*var\(--inset-top\)/.test(ayahTb[0])) {
   failures.push({ gate: "toolbar-overlap", page: 0, reason: "CSS: شريط آية ما زال top تحت الرأس" });
 }
-if (!/--mpv-toolbar-band:\s*52px/.test(css) || !/--mpv-footer-band:\s*46px/.test(css)) {
-  failures.push({ gate: "layout-bands", page: 0, reason: "CSS vars للنطاقات ناقصة" });
+if (!/--mpv-toolbar-band:\s*52px/.test(css) || !/--mpv-footer-band:\s*44px/.test(css)) {
+  failures.push({ gate: "layout-bands", page: 0, reason: "CSS vars للنطاقات ناقصة (toolbar 52 / footer 44)" });
 }
-if (!/--mpv-content-footer-gap:\s*28px/.test(css)) {
-  failures.push({ gate: "layout-bands", page: 0, reason: "--mpv-content-footer-gap يجب أن يكون 28px" });
+if (!/--mpv-content-footer-gap:\s*16px/.test(css)) {
+  failures.push({ gate: "layout-bands", page: 0, reason: "--mpv-content-footer-gap يجب أن يكون 16px (مرجع آية)" });
 }
 if (!existsSync(join(ROOT, "src/features/mushaf/layout-bands.ts"))) {
   failures.push({ gate: "layout-bands", page: 0, reason: "layout-bands.ts مفقود" });
@@ -291,12 +298,12 @@ for (const m of pages) {
   }
   if (
     (n === 1 || n === 2) &&
-    (m.banner?.topPct == null || m.banner.topPct < 14 || m.banner.topPct > 18)
+    (m.banner?.topPct == null || m.banner.topPct < 17 || m.banner.topPct > 24)
   ) {
     failures.push({
       gate: "ink-collision",
       page: n,
-      reason: `شارة ${m.banner?.topPct?.toFixed?.(2)}٪ خارج ١٤–١٨`,
+      reason: `شارة ${m.banner?.topPct?.toFixed?.(2)}٪ خارج ١٧–٢٤ (مرجع آية ≈٢٠)`,
     });
   }
   if (m.basmalaGap != null) {
@@ -325,18 +332,26 @@ for (const m of pages) {
     }
   }
 
-  /* خرطوش */
+  /* خرطوش — تناوب آية: فردي يمين / زوجي يسار (≥٨px فوق الحبر) */
   if (m.cartouche) {
-    const dx = m.cartouche.centerDx;
     const gapCart = m.cartouche.gapToCart;
     const gapTb = m.cartouche.gapToToolbar;
+    const midPct =
+      m.vw > 0 && m.cartouche.midX != null
+        ? (m.cartouche.midX / m.vw) * 100
+        : null;
+    const odd = n % 2 === 1;
+    const sideOk =
+      midPct == null ? false : odd ? midPct >= 70 : midPct <= 30;
     const ok =
-      dx <= 2.05 && (gapCart == null || gapCart >= 27.5) && (gapTb == null || gapTb >= 7.5);
+      sideOk &&
+      (gapCart == null || gapCart >= 7.5) &&
+      (gapTb == null || gapTb >= 7.5);
     if (!ok) {
       failures.push({
         gate: "cartouche",
         page: n,
-        reason: `dx=${dx?.toFixed?.(1)} gapCart=${gapCart?.toFixed?.(1)} gapTb=${gapTb?.toFixed?.(1)}`,
+        reason: `parity=${odd ? "odd-right" : "even-left"} midPct=${midPct?.toFixed?.(1)} gapCart=${gapCart?.toFixed?.(1)} gapTb=${gapTb?.toFixed?.(1)}`,
       });
     }
   } else {
@@ -408,11 +423,11 @@ for (const m of pages) {
         });
       }
     }
-    if (n > 2 && m.gapContentFooter != null && m.gapContentFooter < 26) {
+    if (n > 2 && m.gapContentFooter != null && m.gapContentFooter < 7.5) {
       failures.push({
         gate: "layout-bands",
         page: n,
-        reason: `فاصل content→footer ${m.gapContentFooter.toFixed(1)}px < 26`,
+        reason: `فاصل content→footer ${m.gapContentFooter.toFixed(1)}px < 8 (مرجع آية)`,
       });
     }
   }
@@ -424,11 +439,11 @@ for (const m of pages) {
     if (o.hasFrame) {
       failures.push({ gate: "opening-frame", page: n, reason: "إطار زخرفي ما زال مرسومًا" });
     }
-    if (o.bannerTopPct == null || o.bannerTopPct < 14 || o.bannerTopPct > 18) {
+    if (o.bannerTopPct == null || o.bannerTopPct < 17 || o.bannerTopPct > 24) {
       failures.push({
         gate: "opening-frame",
         page: n,
-        reason: `أعلى الشارة ${o.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ١٤–١٨`,
+        reason: `أعلى الشارة ${o.bannerTopPct?.toFixed?.(2) ?? "null"}٪ خارج ١٧–٢٤ (مرجع آية ≈٢٠)`,
       });
     }
     if ((o.stretched ?? m.stretched) > 0) {
@@ -477,11 +492,11 @@ for (const m of pages) {
         reason: `فجوة/S ${(m.gapOverS * 100).toFixed(0)}٪ < 35٪ مع فراغ خرطوش`,
       });
     }
-    if (o.inkToCart != null && o.inkToCart < 27.5) {
+    if (o.inkToCart != null && o.inkToCart < 7.5) {
       failures.push({
         gate: "opening-frame",
         page: n,
-        reason: `حبر→خرطوش ${o.inkToCart.toFixed(1)}px < 28`,
+        reason: `حبر→خرطوش ${o.inkToCart.toFixed(1)}px < 8 (مرجع آية)`,
       });
     }
     if (o.fontSizes?.length && m.typescale?.S) {
