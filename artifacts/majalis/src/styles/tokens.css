@@ -18,9 +18,14 @@
 
 :root {
   /* ── أسطح العلامة الغامقة + ما يُكتب فوقها ─────────────────────────── */
-  --surface-brand-solid: var(--em-600, #1e5f4b);
-  --surface-brand-strong: var(--em-800, #12362c);
-  --surface-brand-deepest: var(--em-900, #0e241e);
+  /* يجب تعريف solid/strong هنا — لا في الوضع الليلي فقط (كان السبب الجذري) */
+  --surface-brand-solid: var(--brand, var(--em-600, #1e5f4b));
+  --surface-brand-strong: var(--brand-deep, var(--em-800, #12362c));
+  /*
+   * ملاحظة: ‎--surface-brand‎ في brand-v4/theme-aliases = غسلة فاتحة.
+   * المكوّنات ذات النص الأبيض تستخدم ‎.surface-brand‎ / ‎--surface-brand-solid‎.
+   */
+  --surface-brand: var(--surface-brand-solid);
 
   /* أبيض صريح — لا رمادي داكن ولا أسود مخفَّف فوق الأخضر إطلاقًا */
   --on-brand: #ffffff;
@@ -75,12 +80,13 @@ html.dark {
    ═══════════════════════════════════════════════════════════════════════ */
 .surface-brand,
 .surface-brand-strong {
-  background-color: var(--surface-brand-solid);
-  color: var(--on-brand);
+  /* احتياطي صلب: إن سقط المتغيّر لا يبقى نص أبيض على شفاف */
+  background-color: var(--surface-brand-solid, var(--mj-brand, var(--brand, #1e5f4b)));
+  color: var(--on-brand, #ffffff);
 }
 
 .surface-brand-strong {
-  background-color: var(--surface-brand-strong);
+  background-color: var(--surface-brand-strong, var(--mj-brand-deep, var(--brand-deep, #12362c)));
 }
 
 /* كل نص داخل السطح يرث — لا لون صريح مطلوب على العناصر الداخلية */

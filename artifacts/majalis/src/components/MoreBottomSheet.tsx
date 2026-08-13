@@ -114,8 +114,8 @@ export function MoreBottomSheet({ open, onClose }: Props) {
 
     const className = [
       "more-sheet-item",
-      layout === "featured"
-        ? "more-sheet-item--featured"
+        layout === "featured"
+        ? "more-sheet-item--featured surface-brand"
         : layout === "quick"
           ? "more-sheet-item--quick"
           : "more-sheet-item--row",
@@ -153,7 +153,11 @@ export function MoreBottomSheet({ open, onClose }: Props) {
         <span className="more-sheet-item__icon" aria-hidden="true">{icon}</span>
         <span className="more-sheet-item__text">
           <span className="more-sheet-item__label">{label}</span>
-          {meta ? <span className="more-sheet-item__meta">{meta}</span> : null}
+          {meta ? (
+            <span className={`more-sheet-item__meta${layout === "featured" ? " on-brand-secondary" : ""}`}>
+              {meta}
+            </span>
+          ) : null}
         </span>
         {layout === "list" ? (
           isTheme ? (
