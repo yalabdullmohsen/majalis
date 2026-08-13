@@ -2316,7 +2316,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 .mpv-toolbar.mpv-toolbar--ayah {
   position: absolute;
   /* تحت الخرطوش (مركزه ٩٤٫٣٪ وارتفاعه ≈٣٠px) — بلا تراكب */
-  top: calc(94.3vh + 18px);
+  top: calc(94.3vh + 28px);
   bottom: auto;
   inset-inline: 0.35rem;
   left: auto;

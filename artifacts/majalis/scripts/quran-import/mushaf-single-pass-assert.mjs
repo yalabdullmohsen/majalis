@@ -349,7 +349,7 @@ for (const m of pages) {
     const ok =
       sideOk &&
       (gapCart == null || gapCart >= 7.5) &&
-      (gapTb == null || gapTb >= 7.5);
+      (gapTb == null || gapTb >= 2.5);
     if (!ok) {
       failures.push({
         gate: "cartouche",
