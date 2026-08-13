@@ -169,8 +169,8 @@ if (/left:\s*50%/.test(badgeRule)) {
   failures.push({ gate: "cartouche", page: 0, reason: "CSS خرطوش مركزي (left:50%) ممنوع" });
 }
 const ayahTb = css.match(/\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[^}]*\}/);
-if (!ayahTb || !/bottom:\s*calc\(\s*var\(--inset-bottom/.test(ayahTb[0])) {
-  failures.push({ gate: "toolbar-overlap", page: 0, reason: "CSS: شريط آية بلا bottom فوق inset-bottom" });
+if (!ayahTb || !/top:\s*calc\(\s*94\.3vh/.test(ayahTb[0])) {
+  failures.push({ gate: "toolbar-overlap", page: 0, reason: "CSS: شريط آية ليس تحت الخرطوش (94.3vh+)" });
 }
 if (ayahTb && /top:\s*calc\(\s*var\(--inset-top\)/.test(ayahTb[0])) {
   failures.push({ gate: "toolbar-overlap", page: 0, reason: "CSS: شريط آية ما زال top تحت الرأس" });
