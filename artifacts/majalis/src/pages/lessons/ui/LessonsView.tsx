@@ -41,6 +41,7 @@ import {
   type ActiveFilterItem,
 } from "@/components/filters";
 
+import { SITE_URL } from "@/lib/site-config";
 type TabId = "all" | "men" | "women" | "courses" | "makkah" | "madinah";
 
 const TAB_LABELS: Record<TabId, string> = {
@@ -268,10 +269,10 @@ export default function LessonsPage({
             "دروس ودورات علمية من أئمة وعلماء الكويت في الفقه والعقيدة والقرآن والسيرة؛ محتوى معتمد في منهج المجلس العلمي",
           numberOfItems: 4,
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "جميع الدروس", url: "https://www.majlisilm.com/lessons" },
-            { "@type": "ListItem", position: 2, name: "الدورات العلمية", url: "https://www.majlisilm.com/lessons?tab=courses" },
-            { "@type": "ListItem", position: 3, name: "الدروس الرجالية", url: "https://www.majlisilm.com/lessons?tab=men" },
-            { "@type": "ListItem", position: 4, name: "الدروس النسائية", url: "https://www.majlisilm.com/lessons?tab=women" },
+            { "@type": "ListItem", position: 1, name: "جميع الدروس", url: `${SITE_URL}/lessons` },
+            { "@type": "ListItem", position: 2, name: "الدورات العلمية", url: `${SITE_URL}/lessons?tab=courses` },
+            { "@type": "ListItem", position: 3, name: "الدروس الرجالية", url: `${SITE_URL}/lessons?tab=men` },
+            { "@type": "ListItem", position: 4, name: "الدروس النسائية", url: `${SITE_URL}/lessons?tab=women` },
           ],
         },
       ],
@@ -658,7 +659,7 @@ export default function LessonsPage({
       </FilterSheet>
 
       <div className="twh-share">
-        <ShareButtons aria-label="الدروس العلمية — المجلس العلمي" url="https://www.majlisilm.com/lessons" />
+        <ShareButtons aria-label="الدروس العلمية — المجلس العلمي" url={`${SITE_URL}/lessons`} />
       </div>
       <ExploreAlsoNav
         title="استكشف أيضًا"

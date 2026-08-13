@@ -3,8 +3,9 @@
 | بند | حالة مقيسة |
 |-----|-------------|
 | مفتاح المتصفح | anon فقط في الحزمة الأمامية |
-| RLS | يُراجع آلياً عبر `test:supabase-policy-audit` |
-| CSP | مفعّل في `vercel.json` (ما زال `unsafe-inline` للسكربت/الأنماط — تقليص لاحق) |
+| RLS (CI) | `test:supabase-policy-audit` يفحص سياسات مستودع SQL — **لا يغني عن تأكيد يدوي في لوحة Supabase** للنوازل الحساسة |
+| RLS (إنتاج) | معلّق يدويًا قبل الإطلاق الكامل (انظر `RELEASE_READINESS.md`) |
+| CSP | مفعّل في `vercel.json`؛ ما زال `'unsafe-inline'` لـ`script-src`/`style-src` — إزالة تتطلّب nonce/hash مع Vite SPA (لم تُنفَّذ بعد) |
 | `X-Frame-Options` | DENY |
 | `X-Content-Type-Options` | nosniff |
 | `Referrer-Policy` | strict-origin-when-cross-origin |

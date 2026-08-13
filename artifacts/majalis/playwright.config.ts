@@ -1,5 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const baseURL = process.env.PLAYWRIGHT_BASE_URL?.replace(/\/$/, "") || "http://localhost:5173";
+const useRemote = Boolean(process.env.PLAYWRIGHT_BASE_URL);
+
 export default defineConfig({
   testDir: "./tests",
   timeout: 30_000,
@@ -9,7 +12,7 @@ export default defineConfig({
   workers: 1,
   reporter: [["list"], ["html", { open: "never", outputFolder: "playwright-report" }]],
   use: {
-    baseURL: "http://localhost:5173",
+    baseURL,
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "off",
@@ -30,10 +33,14 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: "pnpm exec vite --config vite.config.ts --host 0.0.0.0 --port 5173",
-    url: "http://localhost:5173",
-    reuseExistingServer: true,
-    timeout: 60_000,
-  },
+  ...(useRemote
+    ? {}
+    : {
+        webServer: {
+          command: "pnpm exec vite --config vite.config.ts --host 0.0.0.0 --port 5173",
+          url: "http://localhost:5173",
+          reuseExistingServer: true,
+          timeout: 60_000,
+        },
+      }),
 });

@@ -22,6 +22,7 @@ import { toArabicDigits } from "@/lib/utils";
 import "@/styles/pages/quran-hub.css";
 import "@/styles/pages/misc-page-legacy.css";
 
+import { SITE_URL } from "@/lib/site-config";
 type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; tag: string; featured?: boolean };
 
 /* ── بيانات أقسام القرآن ──────────────────────────────────── */
@@ -199,7 +200,7 @@ export default function QuranHubPage() {
             position: i + 1,
             name: s.title,
             description: s.desc,
-            url: `https://www.majlisilm.com${s.href}`,
+            url: `${SITE_URL}${s.href}`,
           })),
         },
       ],
@@ -298,7 +299,7 @@ export default function QuranHubPage() {
       </section>
 
       <div className="twh-share">
-        <ShareButtons title="مركز القرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/quran-hub" />
+        <ShareButtons title="مركز القرآن الكريم — المجلس العلمي" url={`${SITE_URL}/quran-hub`} />
       </div>
     </div>
   );

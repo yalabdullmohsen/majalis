@@ -8,6 +8,15 @@ function absoluteUrl(path: string) {
   return new URL(path, SITE_URL).toString();
 }
 
+/** رابط مطلق على النطاق المعتمد (بلا www). */
+export function siteAbsoluteUrl(path = "/") {
+  return absoluteUrl(path);
+}
+
+export function getSeoSiteUrl() {
+  return SITE_URL;
+}
+
 export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",

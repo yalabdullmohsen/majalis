@@ -21,8 +21,10 @@
 **لا بالكامل** — بقي قبل إطلاق كامل:
 1. قياس Lighthouse (LCP/TTI/INP/CLS) @390×844 4G.
 2. قرار بشري لتراخيص everyayah/mp3quran/أذان مضمّن.
-3. تأكيد RLS يدوي في لوحة Supabase للنوازل الحساسة.
-4. تشغيل Playwright smoke على CI بانتظام ضد معاينة.
+3. تأكيد RLS يدوي في لوحة Supabase للنوازل الحساسة (فحص CI لا يكفي وحده).
+4. CSP بدون `unsafe-inline` (يتطلّب nonce/hash).
+
+Playwright critical (`tests/10-critical-acceptance`) يُشغَّل ضد معاينة Vercel عبر `preview-smoke.yml` عند توفر Preview.
 
 ## ٤. أوامر
 ```bash
