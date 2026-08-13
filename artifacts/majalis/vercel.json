@@ -1058,21 +1058,6 @@
       "permanent": true
     },
     {
-      "source": "/library",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/updates",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/knowledge-graph",
-      "destination": "/",
-      "permanent": true
-    },
-    {
       "source": "/academic-research",
       "destination": "/",
       "permanent": true

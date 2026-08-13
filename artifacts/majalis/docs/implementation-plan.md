@@ -1,0 +1,23 @@
+# خطة التنفيذ — المجلس العلمي (١٢ أغسطس ٢٠٢٦)
+
+سجل حيّ — **ليست بوابة انتظار**. الأولوية: استقرار ← مصحف ← مسارات ← وصول ← أداء ← بحث ← SEO.
+
+| مرحلة | الحالة | ملاحظة |
+|-------|--------|--------|
+| ٠ جرد | جارية | `AUDIT_2026-08-12.md` |
+| ١ استقرار | جزئي | ErrorBoundary موجود؛ MJL بلا أثر مسمّى |
+| ٢ مسارات | **التالي فوراً** | فك Redirect للرئيسية |
+| ٣ مصحف | PR #1072 | انتظار Verify build / إكمال |
+| ٤–٦ تباين/UI/أداء | معلّق | بعد المسارات |
+| ٧–١٥ | معلّق | دفعات ≤٤٠ ملفاً |
+
+## دفعة حالية (هذا الفرع)
+1. `/library` → `LibraryPage`
+2. `/quran/mushaf` → `/mushaf`
+3. `/prayer` → `/prayer-times`
+4. `/updates` → `UpdatesPage` (+ noindex إن لزم)
+5. `/knowledge-graph` → `KnowledgeGraphPage`
+6. `/more` صفحة فهرس حقيقية من `moreSections`
+7. بوابة اختبار: المسارات لا تُحوَّل للرئيسية
+
+| وثائق §٨ | كُتبت أوليًا | PERFORMANCE/ACCESSIBILITY/SEO/SECURITY/CONTENT_GOVERNANCE/RELEASE_READINESS |
