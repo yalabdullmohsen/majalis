@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * بوابة كثافة جناح الشارة: ٢٢٪–٣٨٪ + ارتفاع = خانة سطر ±٥٪ + موضع ص١–٢.
+ * بوابة شارة السورة البسيطة: بلا أرابيسك · شريط عاجي · ارتفاع خانة ±٥٪ · موضع ص١–٢.
  *
  *   MUSHAF_GATE_BASE_URL=http://127.0.0.1:24216 node scripts/quran-import/mushaf-banner-density-gate.mjs
  */
@@ -28,8 +28,8 @@ const GRID = JSON.parse(
 const VIEWPORT = { width: 390, height: 844 };
 const BANNER_PAGES = [1, 2, 599, 600, 601];
 const GRID_PAGES = [3, 4, 100, 283, 306, 400, 500, 588, 596, 599, 600, 601, 604];
-const DENSITY_MIN = 0.2;
-const DENSITY_MAX = 0.3;
+/** الشارة البسيطة (simple-strip) — لا كثافة جناح */
+const SIMPLE_STRIP = "simple-strip";
 const TAN = { r: 227, g: 210, b: 180 };
 /* أقل من مسافة حشو الميدالية (#EDE0C4≈٢٣) حتى يُحسب الحشو حبرًا */
 const TAN_DIST = 20;
@@ -77,7 +77,7 @@ async function measureBanner(page, pageNum) {
         bannerHRatio = expectedSlotH > 0 ? br.height / expectedSlotH : 0;
 
         const svg = banner.querySelector("svg");
-        const patterns = svg?.querySelectorAll("pattern").length ?? 1;
+        const patterns = svg?.querySelectorAll("pattern").length ?? 0;
         const medallions =
           svg?.querySelectorAll('[data-wing-part="medallion"]').length ?? 0;
         const meshes =
@@ -87,31 +87,16 @@ async function measureBanner(page, pageNum) {
         const knots =
           svg?.querySelectorAll('[data-wing-part="knot"]').length ?? 0;
         wingOk =
-          patterns === 0 && medallions === 2 && spirals === 4 && knots === 0 && meshes === 0;
+          patterns === 0 &&
+          medallions === 0 &&
+          spirals === 0 &&
+          knots === 0 &&
+          meshes === 0 &&
+          ornament === "simple-strip" &&
+          !!banner.querySelector(".mf2-surah-banner__bar");
 
-        /* كثافة الجناح الأيمن: اقتطاع وعرض على canvas */
-        const vb = svg.viewBox.baseVal;
-        const panelFrac = 0.34;
-        const panelW = vb.width * panelFrac;
-        const panelX = (vb.width - panelW) / 2;
-        const innerPad = 7; /* داخل الإطار الذهبي المزدوج */
-        const wingX = panelX + panelW + 2;
-        const wingW = vb.width - innerPad - wingX;
-        const wingY = innerPad;
-        const wingH = vb.height - innerPad * 2;
-        const scale = 3;
-        const xml = new XMLSerializer().serializeToString(svg);
-        density = {
-          wingX,
-          wingY,
-          wingW,
-          wingH,
-          vbH: vb.height,
-          scale,
-          xml,
-          tan,
-          tanDist,
-        };
+        /* الشريط البسيط: لا قياس كثافة جناح */
+        density = null;
       }
 
       /* انحراف خطوط الأساس — أسطر الآيات فقط (الشارة/البسملة تُزاح عمداً) */
@@ -248,16 +233,11 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
       results.push(row);
 
       if (BANNER_PAGES.includes(n)) {
-        if (density == null) {
-          failures.push({ page: n, reason: "تعذّر قياس كثافة الجناح" });
-        } else if (density < DENSITY_MIN || density > DENSITY_MAX) {
-          failures.push({
-            page: n,
-            reason: `كثافة الجناح ${(density * 100).toFixed(1)}% خارج 20–30%`,
-          });
+        if (raw.ornament !== SIMPLE_STRIP) {
+          failures.push({ page: n, reason: `شارة ليست simple-strip (got ${raw.ornament})` });
         }
         if (raw.wingOk === false) {
-          failures.push({ page: n, reason: "عناصر الجناح ناقصة أو فيها pattern" });
+          failures.push({ page: n, reason: "زخارف متبقية أو شريط بسيط ناقص" });
         }
         if (raw.bannerHRatio != null && n !== 1 && n !== 2) {
           if (raw.bannerHRatio < 0.95 || raw.bannerHRatio > 1.05) {

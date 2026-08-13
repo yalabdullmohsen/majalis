@@ -158,20 +158,22 @@ function runStatic() {
   if (!/MAX_DEAD_GAP_PCT\s*=\s*6/.test(inkClip)) fail(6, "MAX_DEAD_GAP_PCT ≠ 6");
   else pass(6, "MAX_DEAD_GAP_PCT=6 في ink-clip");
 
-  /* ٧ — كثافة الجناح */
-  if (!/data-wing-density-target="20-30"/.test(banner)) fail(7, "هدف الكثافة غير مثبت");
-  else if (!/DENSITY_MIN\s*=\s*0\.2/.test(read("scripts/quran-import/mushaf-banner-density-gate.mjs"))) {
-    fail(7, "بوابة الكثافة بلا ٠٫٢٠");
-  } else pass(7, "٢٠٪–٣٠٪");
+  /* ٧ — شارة بسيطة بلا كثافة جناح */
+  if (!/data-ornament="simple-strip"/.test(banner)) fail(7, "الشارة ليست simple-strip");
+  else if (!/simple-strip/.test(read("scripts/quran-import/mushaf-banner-density-gate.mjs"))) {
+    fail(7, "بوابة الشارة لم تُحدَّث للشريط البسيط");
+  } else pass(7, "شارة بسيطة — بلا كثافة جناح");
 
-  /* ٨ — عناصر الجناح */
-  if (!/data-wing-part="medallion"/.test(banner) || !/data-wing-part="spiral"/.test(banner)) {
-    fail(8, "ميدالية/لولب مفقود");
-  } else if (/data-wing-part="knot"/.test(banner) || /data-wing-part="mesh"/.test(banner)) {
-    fail(8, "موتيف زائد (knot/mesh) مرفوض");
+  /* ٨ — بلا زخارف جناح */
+  if (/data-wing-part="medallion"/.test(banner) || /data-wing-part="spiral"/.test(banner)) {
+    fail(8, "زخارف الجناح ما زالت موجودة — يجب حذفها");
+  } else if (/PetalMedallion|TwinSpirals|WingMotifs/.test(banner)) {
+    fail(8, "مكوّنات الزخرفة ما زالت في الشيفرة");
   } else if (/<pattern[\s>]/.test(banner) || /url\(#.*pattern/.test(banner)) {
     fail(8, "موتيف pattern مكرر مرفوض");
-  } else pass(8, "medallion+twin-spiral بلا pattern");
+  } else if (!/mf2-surah-banner__bar/.test(banner)) {
+    fail(8, "شريط الشارة البسيط مفقود");
+  } else pass(8, "شريط بسيط بلا أرابيسك");
 
   /* ٩ — آخر سطر سورة */
   if (!/mf2-line--surah-end/.test(pageV2) || !/mf2-line--surah-end/.test(frameCss)) {
