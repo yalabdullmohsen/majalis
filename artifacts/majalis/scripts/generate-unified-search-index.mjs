@@ -280,28 +280,38 @@ try {
 }
 
 
-// ── معرفة الأقسام السبعة (knowledge) — عناوين فقط ─────────────────────────
+// ── معرفة الأقسام السبعة (knowledge) — عناوين فقط عند وجود المانيفست ─────
 try {
-  const { loadKnowledgeItems } = await import("./content-gates/lib.mjs");
-  const items = loadKnowledgeItems().filter((it) => it.review_status === "verified");
-  const hrefFor = (it) => {
-    const sec = it.section || "knowledge";
-    return `/knowledge/${sec}/${encodeURIComponent(it.id)}`;
-  };
-  for (const it of items) {
-    // لا نفهرس كل أسئلة السين جيم (آلاف) — عيّنة العناوين غير quiz + أصول المقالات
-    if (it.section === "quiz") continue;
-    pushDoc(
-      `knowledge:${it.id}`,
-      it.section || "knowledge",
-      it.title,
-      hrefFor(it),
-      [...(it.tags || []), "معرفة"],
-      (it.tags || [])[0],
-    );
+  const knowledgeManifest = path.join(appRoot, "public/data/knowledge/manifest.json");
+  if (fs.existsSync(knowledgeManifest)) {
+    const { loadKnowledgeItems } = await import("./content-gates/lib.mjs");
+    const items = loadKnowledgeItems().filter((it) => it.review_status === "verified");
+    const hrefFor = (it) => {
+      const sec = it.section || "knowledge";
+      return `/knowledge/${sec}/${encodeURIComponent(it.id)}`;
+    };
+    for (const it of items) {
+      if (it.section === "quiz") continue;
+      pushDoc(
+        `knowledge:${it.id}`,
+        it.section || "knowledge",
+        it.title,
+        hrefFor(it),
+        [...(it.tags || []), "معرفة"],
+        (it.tags || [])[0],
+      );
+    }
+    if (items.some((it) => it.section === "quiz")) {
+      pushDoc(
+        "knowledge:quiz-bank",
+        "quiz",
+        "بنك أسئلة سين جيم (معرفة)",
+        "/knowledge/quiz",
+        ["سين جيم", "أسئلة"],
+        "knowledge",
+      );
+    }
   }
-  // فهرس مكثّف لبنك الأسئلة: الفئات فقط
-  pushDoc("knowledge:quiz-bank", "quiz", "بنك أسئلة سين جيم (معرفة)", "/knowledge/quiz", ["سين جيم", "أسئلة"], "knowledge");
 } catch (e) {
   console.warn("knowledge index skipped:", e.message);
 }
