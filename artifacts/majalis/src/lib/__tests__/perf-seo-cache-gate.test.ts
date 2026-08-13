@@ -25,6 +25,10 @@ assert.equal(
 assert.match(robots, /Disallow:\s*\/search/);
 assert.match(robots, /Disallow:\s*\/admin/);
 assert.equal(/<loc>https:\/\/majlisilm\.com\/search<\/loc>/.test(sitemap), false);
+assert.match(sitemap, /<loc>https:\/\/majlisilm\.com\/hadith\/sahih<\/loc>/);
+assert.match(sitemap, /<loc>https:\/\/majlisilm\.com\/hadith\/daif<\/loc>/);
+assert.match(sitemap, /<loc>https:\/\/majlisilm\.com\/hadith\/books-and-rulings<\/loc>/);
+assert.match(sitemap, /<loc>https:\/\/majlisilm\.com\/hadith\/mawdu<\/loc>/);
 assert.match(appSearch, /export async function runAppSearch/);
 
 console.log("perf-seo-cache-gate.test.ts: ok");

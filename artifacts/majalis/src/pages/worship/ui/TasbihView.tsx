@@ -22,6 +22,7 @@ import {
   type TasbeehWird,
 } from "@/lib/tasbeeh-storage";
 
+import { SITE_URL } from "@/lib/site-config";
 const MAX_CUSTOM_TARGET = 99999;
 
 function writeAwrad(items: TasbeehWird[]) {
@@ -51,7 +52,7 @@ export default function TasbihPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "عداد التسبيح الرقمي",
-          url: "https://www.majlisilm.com/tasbih",
+          url: `${SITE_URL}/tasbih`,
           description: "عداد تسبيح رقمي مع أوراد قابلة للتخصيص لذكر الله في أي وقت",
           applicationCategory: "LifestyleApplication",
           inLanguage: "ar",
@@ -247,7 +248,7 @@ export default function TasbihPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="التسبيح الرقمي — المجلس العلمي" url="https://www.majlisilm.com/tasbih" />
+        <ShareButtons title="التسبيح الرقمي — المجلس العلمي" url={`${SITE_URL}/tasbih`} />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأذكار والأخلاق" count={4} />

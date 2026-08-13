@@ -85,7 +85,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://majlisilm.com/miracles</loc>
     <changefreq>weekly</changefreq>
@@ -102,9 +101,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://majlisilm.com/hadith/sahih</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/hadith/daif</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://majlisilm.com/hadith/books</loc>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/hadith/books-and-rulings</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/hadith/mawdu</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/prophets/tree</loc>
@@ -4487,12 +4506,32 @@
     <priority>0.69</priority>
   </url>
   <url>
+    <loc>https://majlisilm.com/learning/paths/adab</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/learning/paths/akhlaq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majlisilm.com/learning/paths/aqeedah</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/learning/paths/tawheed</loc>
+    <loc>https://majlisilm.com/learning/paths/arabic</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/learning/paths/dawah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/learning/paths/fiqh</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -4507,22 +4546,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/learning/paths/fiqh</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/learning/paths/usool-fiqh</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/learning/paths/tafseer</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/learning/paths/uloom-quran</loc>
+    <loc>https://majlisilm.com/learning/paths/nahw</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -4532,32 +4556,27 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/learning/paths/adab</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/learning/paths/akhlaq</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/learning/paths/arabic</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/learning/paths/nahw</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/learning/paths/dawah</loc>
+    <loc>https://majlisilm.com/learning/paths/tafseer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/learning/paths/tarbiyah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/learning/paths/tawheed</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/learning/paths/uloom-quran</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/learning/paths/usool-fiqh</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

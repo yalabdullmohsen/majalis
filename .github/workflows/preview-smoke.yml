@@ -146,3 +146,20 @@ jobs:
           fi
 
           echo "preview-smoke ok for $base"
+
+      - name: Setup workspace (Playwright critical)
+        if: steps.preview.outputs.preview_ready == 'true'
+        uses: ./.github/actions/setup-workspace
+        with:
+          playwright: "true"
+
+      - name: Playwright critical acceptance against Preview
+        if: steps.preview.outputs.preview_ready == 'true'
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ steps.preview.outputs.preview_url }}
+        run: |
+          set -euo pipefail
+          pnpm --filter @workspace/majalis exec playwright test \
+            tests/10-critical-acceptance.spec.ts \
+            --project=desktop
+          echo "playwright-critical ok"

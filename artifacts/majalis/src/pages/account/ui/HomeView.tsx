@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { BookMarked, BookOpen, GraduationCap, Scale, Scroll, Target, Wrench } from "lucide-react";
 import contentCounts from "@/data/content-counts.json";
 import { applyPageSeo } from "@/lib/seo";
+import { defaultSiteJsonLd } from "@/lib/seo-structured-data";
 import { useDailyContext } from "@/lib/daily-context";
 import { useAuth } from "@/components/AuthProvider";
 import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
@@ -126,17 +127,7 @@ export default function HomePage() {
       title: "المجلس العلمي، منصة العلوم الإسلامية",
       description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الأحكام الشرعية، والفقه المعاصر.",
       keywords: ["المجلس العلمي", "علوم إسلامية", "قرآن كريم", "أذكار", "أحكام شرعية", "دروس علمية"],
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "المجلس العلمي",
-          url: "https://www.majlisilm.com",
-          logo: "https://www.majlisilm.com/logo.png",
-          description: "منصة إسلامية شاملة للعلوم الشرعية",
-          inLanguage: "ar",
-        },
-      ],
+      jsonLd: defaultSiteJsonLd(),
     });
   }, []);
 

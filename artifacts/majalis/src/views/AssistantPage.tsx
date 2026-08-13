@@ -8,6 +8,7 @@ import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import "@/styles/pages/assistant.css";
 import "@/styles/pages/assistant-shell.css";
 
+import { SITE_URL } from "@/lib/site-config";
 export { ASSISTANT_FAILURE_MESSAGE as FAILURE_MESSAGE } from "@/hooks/useAssistantChat";
 
 const QUICK_PROMPTS = [
@@ -47,7 +48,7 @@ export default function AssistantPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "المساعد العلمي الذكي",
-          url: "https://www.majlisilm.com/assistant",
+          url: `${SITE_URL}/assistant`,
           description: "مساعد شرعي ذكي يجيب على أسئلتك في الفقه والعقيدة والقرآن والحديث",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",
