@@ -24,7 +24,10 @@ export type KnowledgeItem = {
   meta?: Record<string, unknown>;
 };
 
-const base = `${import.meta.env.BASE_PATH || "/"}data/knowledge`.replace(/\/{2,}/g, "/");
+const base = `${String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/") }data/knowledge`.replace(
+  /\/{2,}/g,
+  "/",
+);
 
 async function fetchJson<T>(url: string): Promise<T | null> {
   try {
