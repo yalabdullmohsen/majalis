@@ -673,7 +673,7 @@ export function MushafPageV2({
 
       {
         const crV = container.getBoundingClientRect();
-        const limitBot = crV.bottom - 0.35;
+        const limitBot = crV.bottom - 1.25;
         const inkFits = (px: number) => {
           applyVerticalSize(px);
           for (const el of sizingEls) el.style.removeProperty("--mf2-word-gap");
