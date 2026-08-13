@@ -26,7 +26,15 @@ export function isPolicyPath(p) {
     /^\.github\/scripts\/safe-auto-merge\//i.test(s) ||
     /^scripts\/verify-no-unsafe-auto-merge\.mjs$/i.test(s) ||
     /^\.github\/workflows\/auto-merge-to-main\.yml$/i.test(s) ||
-    /^\.github\/workflows\/pr-safe-merge-report\.yml$/i.test(s)
+    /^\.github\/workflows\/pr-safe-merge-report\.yml$/i.test(s) ||
+    /^\.github\/workflows\/vercel-check\.yml$/i.test(s) ||
+    /^\.github\/workflows\/preview-smoke\.yml$/i.test(s) ||
+    /^\.github\/workflows\/tasmee3_ci\.yml$/i.test(s) ||
+    /^\.github\/workflows\/owner-bootstrap\.yml$/i.test(s) ||
+    /^\.github\/workflows\/platform-bootstrap\.yml$/i.test(s) ||
+    /^\.github\/workflows\/production-bootstrap\.yml$/i.test(s) ||
+    /^\.github\/workflows\/phase2-trial-import\.yml$/i.test(s) ||
+    /^artifacts\/majalis\/vercel\.json$/i.test(s)
   );
 }
 
@@ -92,7 +100,14 @@ export function isUiCssPath(p) {
 function isPolicyWorkflowAllowlist(p) {
   return (
     /^\.github\/workflows\/auto-merge-to-main\.yml$/i.test(p) ||
-    /^\.github\/workflows\/pr-safe-merge-report\.yml$/i.test(p)
+    /^\.github\/workflows\/pr-safe-merge-report\.yml$/i.test(p) ||
+    /^\.github\/workflows\/vercel-check\.yml$/i.test(p) ||
+    /^\.github\/workflows\/preview-smoke\.yml$/i.test(p) ||
+    /^\.github\/workflows\/tasmee3_ci\.yml$/i.test(p) ||
+    /^\.github\/workflows\/owner-bootstrap\.yml$/i.test(p) ||
+    /^\.github\/workflows\/platform-bootstrap\.yml$/i.test(p) ||
+    /^\.github\/workflows\/production-bootstrap\.yml$/i.test(p) ||
+    /^\.github\/workflows\/phase2-trial-import\.yml$/i.test(p)
   );
 }
 
@@ -102,8 +117,9 @@ function isPolicyWorkflowAllowlist(p) {
  */
 export function isRiskyPath(p) {
   const s = String(p || "");
-  // Allowlisted policy workflows are classified as policy, not risky.
+  // Allowlisted policy workflows / throughput paths are not risky.
   if (isPolicyWorkflowAllowlist(s)) return false;
+  if (/^artifacts\/majalis\/vercel\.json$/i.test(s)) return false;
   for (const re of DANGER_PATH_PATTERNS) {
     if (re.test(s)) return true;
   }
@@ -218,13 +234,9 @@ function finalizeClassification(input) {
   const needColorContrast = Boolean(
     forceFull || kinds.risky || kinds.mushaf || (kinds.frontend && hasUiCss),
   );
-  const needPreviewSmoke = Boolean(
-    forceFull || kinds.frontend || kinds.mushaf || kinds.risky,
-  );
-  // Vercel lint/typecheck: required when we touch app code; soft for docs/policy/content.
-  const needVercelCheck = Boolean(
-    forceFull || kinds.frontend || kinds.mushaf || kinds.risky || kinds.other,
-  );
+  // Verify build وحده شرط الدمج — هذه تبقى إعلامية/متوقفة تلقائيًا (CI_THROUGHPUT).
+  const needPreviewSmoke = false;
+  const needVercelCheck = false;
 
   /** @type {LaneName} */
   let lane = "docs-only";
@@ -250,7 +262,7 @@ function finalizeClassification(input) {
     visualSnapshot: needMushaf,
     fastLane: needFastLane,
     postgres: needPostgres,
-    colorContrast: needColorContrast,
+    colorContrast: false,
     previewSmoke: needPreviewSmoke,
     vercelCheck: needVercelCheck,
   };

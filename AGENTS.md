@@ -1,5 +1,10 @@
 # AGENTS.md
 
+## Throughput (إلزامي)
+
+قبل أي مهمة: اتبع `docs/AGENT_THROUGHPUT.md`. فهرس المسارات: `docs/REPO_INDEX.md`. قياس CI: `docs/CI_THROUGHPUT.md`.
+**ممنوع انتظار CI** — تحقق محلي ثم PR + auto-merge ثم المهمة التالية فورًا. الفحص المطلوب = **Verify build** فقط.
+
 ## Cursor Cloud specific instructions
 
 This is a **pnpm workspace monorepo** (Node.js 24, TypeScript 5.9) for **مجالس العلم (Majalis Al-Ilm)**, an

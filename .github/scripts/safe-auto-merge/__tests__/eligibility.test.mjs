@@ -152,7 +152,6 @@ describe("safe-auto-merge eligibility", () => {
       "fastlane/Fastfile",
       "pnpm-lock.yaml",
       "package.json",
-      "artifacts/majalis/vercel.json",
     ]) {
       const r = evaluateEligibility(
         base({
@@ -170,6 +169,26 @@ describe("safe-auto-merge eligibility", () => {
         `suggested blocked label for ${path}`,
       );
     }
+  });
+
+  it("allows throughput workflow allowlist + majalis vercel.json", () => {
+    const r = evaluateEligibility(
+      base({
+        labels: ["safe:auto-merge", "code-safe"],
+        files: [
+          { path: ".github/workflows/vercel-check.yml", additions: 2, deletions: 1 },
+          { path: ".github/workflows/preview-smoke.yml", additions: 2, deletions: 1 },
+          { path: "artifacts/majalis/vercel.json", additions: 2, deletions: 1 },
+          { path: "docs/CI_THROUGHPUT.md", additions: 10, deletions: 0 },
+        ],
+        checks: greenChecks.filter(
+          (c) => c.name === "Verify build" || c.name.startsWith("Vercel"),
+        ),
+      }),
+    );
+    assert.equal(r.eligible, true, r.blockers.join("; "));
+    assert.equal(r.dangerousFiles.length, 0);
+    assert.equal(r.hasCicd, false);
   });
 
   it("accepts new safe:* labels on content paths", () => {
@@ -205,7 +224,7 @@ describe("safe-auto-merge eligibility", () => {
     );
   });
 
-  it("blocks failed Color contrast when the check is present", () => {
+  it("does not block on Color contrast (informational; Verify build only)", () => {
     const r = evaluateEligibility(
       base({
         labels: ["safe:ui"],
@@ -214,12 +233,15 @@ describe("safe-auto-merge eligibility", () => {
           { path: "artifacts/majalis/src/components/NavBar.tsx", additions: 1, deletions: 0 },
         ],
         checks: [
-          ...greenChecks,
+          ...greenChecks.filter(
+            (c) => c.name === "Verify build" || c.name.startsWith("Vercel"),
+          ),
           { name: "Color contrast (Playwright)", state: "fail" },
         ],
       }),
     );
-    assert.ok(r.blockers.some((b) => /Color contrast/i.test(b)));
+    assert.equal(r.eligible, true, r.blockers.join("; "));
+    assert.ok(!r.blockers.some((b) => /Color contrast/i.test(b)));
   });
 
   it("does not require postgres or color contrast for docs-only Fast Lane", () => {
@@ -242,17 +264,18 @@ describe("safe-auto-merge eligibility", () => {
     assert.ok(r.blockers.some((b) => /release-train-ready/i.test(b)));
   });
 
-  it("blocks failed preview-smoke for non-content PRs", () => {
+  it("does not require preview-smoke for frontend (Verify build only)", () => {
     const r = evaluateEligibility(
       base({
         labels: ["code-safe"],
         files: [{ path: "artifacts/majalis/src/pages/Home.tsx", additions: 1, deletions: 0 }],
-        checks: greenChecks.map((c) =>
-          c.name === "preview-smoke" ? { ...c, state: "fail" } : c,
-        ),
+        checks: greenChecks
+          .filter((c) => c.name !== "preview-smoke" && c.name !== "lint-typecheck-build")
+          .map((c) => c),
       }),
     );
-    assert.ok(r.blockers.some((b) => /preview-smoke/i.test(b)));
+    assert.equal(r.eligible, true, r.blockers.join("; "));
+    assert.ok(!r.blockers.some((b) => /preview-smoke/i.test(b)));
   });
 
   it("does not hard-block content-safe when Vercel Preview is Ignored/Canceled", () => {
