@@ -1,5 +1,5 @@
 /**
- * بوابة شارة السورة — جناحان + أرابيسك + لوحة وسطى (مرجع آية).
+ * بوابة شارة السورة — زخرفة إسلامية خفيفة + لوحة وسطى.
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -10,14 +10,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const banner = readFileSync(resolve(__dirname, "../../components/quran/SurahBanner.tsx"), "utf8");
 const css = readFileSync(resolve(__dirname, "../../styles/mushaf-v2.css"), "utf8");
 
-assert.match(banner, /data-ornament="wing-refined"/);
-assert.match(banner, /PetalMedallion/);
-assert.match(banner, /WingMotifs/);
-assert.match(banner, /data-wing-mirror/);
+assert.match(banner, /data-ornament="islamic-light"/);
+assert.match(banner, /SideOrnament/);
 assert.match(banner, /<svg[\s>]/);
 assert.match(banner, /scrollWidth/);
 assert.match(banner, /0\.92/, "اسم السورة يُصغَّر عند الحاجة");
 assert.equal(/data-ornament="simple-strip"/.test(banner), false);
+assert.equal(/data-ornament="wing-refined"/.test(banner), false);
 assert.match(css, /\.mf2-surah-banner__svg\s*\{/);
 assert.match(
   css.match(/\.mf2-surah-banner__svg\s*\{[^}]+\}/)?.[0] ?? "",

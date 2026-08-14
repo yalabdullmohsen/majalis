@@ -15,6 +15,11 @@
   /* الهوامش تُدار من غلاف آية (.mpv-body--ayah) — هنا بلا حشو إضافي */
   padding: 0;
   box-sizing: border-box;
+  /* إعدادات مركزية قابلة للضبط من الواجهة بدون كسر رسم QPC */
+  --mushaf-word-tightness: 1;
+  --mushaf-line-width: 100%;
+  --mushaf-font-scale: var(--mushaf-scale, 1);
+  --mushaf-line-height: var(--mf2-lh, 1.32);
 }
 
 .mf2-frame {
@@ -279,7 +284,7 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
   color: inherit;
   background-color: color-mix(
     in srgb,
-    var(--color-mushaf-gold, #B08D57) 22%,
+    var(--color-mushaf-gold, #8F7340) 36%,
     var(--color-mushaf-paper, #FCF8F1)
   );
   border-radius: 0.2em;
@@ -294,7 +299,7 @@ html[data-theme="dark"] .mf2-ayah-group--active .mf2-word {
   color: inherit;
   background-color: color-mix(
     in srgb,
-    var(--color-mushaf-gold, #C9B07A) 28%,
+    var(--color-mushaf-gold, #C9B07A) 40%,
     transparent
   );
   box-shadow: none;
@@ -543,7 +548,7 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   max-width: 100%;
   box-sizing: border-box;
   margin: 0;
-  padding: 0.12em 0;
+  padding: 0.08em 0;
   text-align: center;
   white-space: nowrap;
   color: var(--mf2-ink, var(--color-mushaf-ink, #14110E));
@@ -552,6 +557,8 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   min-height: 1em;
   height: auto;
   letter-spacing: 0;
+  word-spacing: 0;
+  --mf2-word-gap: 0px;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "liga" 1, "calt" 1;
@@ -566,6 +573,10 @@ html[data-theme="dark"] .mf2-surah-header__frame,
 }
 .mf2-bismillah .mf2-word {
   font-family: "qpc-page-1", var(--font-quran, serif) !important;
+}
+.mf2-bismillah .mf2-word + .mf2-word {
+  /* محارف QPC مصمّمة متلاصقة — ممنوع وراثة فجوة أسطر الآيات */
+  margin-inline-start: 0;
 }
 .mf2-bismillah.mf2-line {
   width: max-content;

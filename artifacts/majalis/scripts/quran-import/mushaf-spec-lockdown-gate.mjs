@@ -158,10 +158,10 @@ function runStatic() {
   if (!/MAX_DEAD_GAP_PCT\s*=\s*6/.test(inkClip)) fail(6, "MAX_DEAD_GAP_PCT ≠ 6");
   else pass(6, "MAX_DEAD_GAP_PCT=6 في ink-clip");
 
-  /* ٧ — شارة مزخرفة مطابقة لمرجع آية */
-  if (!/data-ornament="wing-refined"/.test(banner)) fail(7, "الشارة ليست wing-refined");
-  else if (!/WingMotifs|PetalMedallion/.test(banner)) fail(7, "زخارف الجناح مفقودة");
-  else pass(7, "شارة مزخرفة — جناح+ميدالية");
+  /* ٧ — شارة مزخرفة إسلامية خفيفة */
+  if (!/data-ornament="islamic-light"/.test(banner)) fail(7, "الشارة ليست islamic-light");
+  else if (!/SideOrnament/.test(banner)) fail(7, "زخارف جانبية مفقودة");
+  else pass(7, "شارة إسلامية خفيفة");
 
   /* ٨ — SVG ظاهر بلا pattern مكرر */
   if (!/<svg[\s>]/.test(banner)) {
@@ -182,9 +182,9 @@ function runStatic() {
     fail(10, "بسملة ليست 1em");
   } else if (!/BANNER_BASMALA_MIN_GAP_PX\s*=\s*22/.test(pageV2)) {
     fail(10, "فاصل البسملة العادي غير ٢٢px");
-  } else if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*24/.test(pageV2)) {
-    fail(10, "فاصل افتتاح شارة→بسملة غير ٢٤px");
-  } else pass(10, "1em + فواصل ٢٠/٢٢/٢٤");
+  } else if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*18/.test(pageV2)) {
+    fail(10, "فاصل افتتاح شارة→بسملة غير ١٨px");
+  } else pass(10, "1em + فواصل ١٨/١٤/٢٢");
 
   /* ١١ — الرأس: سور تبدأ أو تستمر في الصفحة */
   const pageView = read("src/pages/quran/ui/MushafPageView.tsx");

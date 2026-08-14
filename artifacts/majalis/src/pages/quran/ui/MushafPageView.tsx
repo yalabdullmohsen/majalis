@@ -46,6 +46,7 @@ import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { QpcFontPackBanner } from "@/components/quran/QpcFontPackBanner";
 import { MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
+import { MushafPageProgressRail } from "@/components/quran/MushafPageProgressRail";
 import { MushafLayeredPage, MUSHAF_OPTICAL_FONT_SCALE } from "@/features/mushaf";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import {
@@ -902,6 +903,13 @@ export default function MushafPageView() {
               <span className="mpv-ayah-page-badge__num">{toArabicPageDigits(page)}</span>
             </button>
           </footer>
+          <MushafPageProgressRail
+            page={page}
+            totalPages={TOTAL_PAGES}
+            pulseKey={page}
+            visible={!selectedAyah}
+            onJump={openJumpModal}
+          />
         </>
 
       {sidebarOpen && (

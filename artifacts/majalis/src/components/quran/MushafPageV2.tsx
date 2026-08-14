@@ -10,7 +10,9 @@ import {
   MUSHAF_FONT_DEV_MAX,
   MUSHAF_GRID,
   MUSHAF_LAYOUT_BASELINE,
+  MUSHAF_MIN_LINE_FILL,
   MUSHAF_OPTICAL_FONT_SCALE,
+  MUSHAF_WORD_GAP_MAX_PX,
 } from "@/features/mushaf/config";
 import {
   applyMushafLayoutBandCssVars,
@@ -22,17 +24,17 @@ import { mushafTypescaleCssVars } from "@/features/mushaf/typescale";
 /**
  * صفحتا الافتتاح (١–٢): مسار برمجي موحّد · بلا إطار — مرجع آية.
  * أعلى الشارة ≈٢٧٫٧٪ من الشاشة ≈٢٠٪ من contentBand · نهاية الكتلة ≈٧٤٫٨٪ شاشة.
- * فاصل شارة→بسملة ٢٤px · بسملة→أول سطر ٢٠px.
- * مدّ السطر = تكبير الخط أولاً ثم فجوة كلمات ≤١٨px.
+ * فاصل شارة→بسملة ١٨px · بسملة→أول سطر ١٤px.
+ * مدّ السطر = تكبير الخط أولاً ثم فجوة كلمات ≤ MUSHAF_WORD_GAP_MAX_PX.
  */
 /** أعلى الشارة (٪ من .mf2-lines / contentBand) — مرجع آية ٢٧٫٧٪ شاشة */
 const OPENING_BANNER_TOP_PCT = 20;
 /** ارتفاع خانة الشارة = خانة سطر واحدة (٪) */
 const OPENING_BANNER_H_PCT = MUSHAF_GRID.slotHeightPct;
 /** فاصل حبر شارة→بسملة (صفحتا الافتتاح) */
-const OPENING_BANNER_TO_BASMALA_PX = 24;
+const OPENING_BANNER_TO_BASMALA_PX = 18;
 /** فاصل حبر بسملة→أول سطر آية */
-const OPENING_BASMALA_TO_LINE_PX = 20;
+const OPENING_BASMALA_TO_LINE_PX = 14;
 /** فاصل أدنى شارة→بسملة في الصفحات العادية */
 const BANNER_BASMALA_MIN_GAP_PX = 22;
 /** فاصل أدنى حبر بين آخر سطر سورة سابقة وأعلى شارة السورة التالية */
@@ -43,8 +45,8 @@ const OPENING_BOTTOM_MARGIN_PCT = 21;
 const OPENING_MIN_LINE_GAP_RATIO = 0.35;
 /** ارتفاع خانة الجسم — يقارب امتداد الحبر دون مبالغة الصندوق */
 const OPENING_BODY_SLOT_H_PCT = 5.8;
-/** أقصى فجوة كلمات بعد تكبير الخط — مرجع ≈١٥px */
-const MAX_WORD_GAP_PX = 18;
+/** أقصى فجوة كلمات بعد تكبير الخط — من الإعداد المركزي */
+const MAX_WORD_GAP_PX = MUSHAF_WORD_GAP_MAX_PX;
 /** مركز الشارة للتموضع المطلق (translateY -50%) */
 const OPENING_BANNER_MID_PCT = OPENING_BANNER_TOP_PCT + OPENING_BANNER_H_PCT / 2;
 const OPENING_BODY_BOT_PCT = 100 - OPENING_BOTTOM_MARGIN_PCT;
@@ -343,7 +345,7 @@ export function MushafPageV2({
 
     const LINE_HEIGHT_EM = MUSHAF_LAYOUT_BASELINE.lineHeightEm;
     const REF_PX = 100;
-      const MIN_LINE_FILL = 0.98;
+      const MIN_LINE_FILL = MUSHAF_MIN_LINE_FILL;
     /* S المحسوب × --mushaf-scale — بلا فرع إعادة التفاف */
     const BASE_FONT = MUSHAF_LAYOUT_BASELINE.fontSizePx * scaleFactor;
     const isOpening = layout.pageNumber === 1 || layout.pageNumber === 2;
@@ -598,7 +600,7 @@ export function MushafPageV2({
           const room = Math.max(8, crFit.width - sideClear * 2);
           const fill = contentW / room;
           if (fill >= MIN_LINE_FILL) continue;
-          /* بعد تكبير الخط: أغلق الفارق الصغير فقط · سقف ١٨px */
+          /* بعد تكبير الخط: أغلق الفارق الصغير فقط · سقف مركزي */
           let lo = 0;
           let hi = Math.min(MAX_WORD_GAP_PX, Math.max(0.05, (room - contentW) / gaps));
           for (let pass = 0; pass < 14; pass++) {

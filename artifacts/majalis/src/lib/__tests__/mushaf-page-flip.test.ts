@@ -19,7 +19,7 @@ const stage = readFileSync(resolve(appRoot, "src/components/quran/MushafPageFlip
 const css = readFileSync(resolve(appRoot, "src/styles/pages/mushaf-reader.css"), "utf8");
 const basmala = readFileSync(resolve(appRoot, "src/components/quran/BasmalaLine.tsx"), "utf8");
 
-assert.match(hook, /COMMIT_FRAC\s*=\s*0\.25/);
+assert.match(hook, /COMMIT_FRAC\s*=\s*0\.28/);
 assert.match(hook, /VELOCITY_PX_MS\s*=\s*0\.5/);
 assert.match(hook, /SETTLE_MS\s*=\s*250/);
 assert.match(hook, /SNAP_BACK_MS\s*=\s*160/);
@@ -72,8 +72,11 @@ assert.match(basmala, /BASMALA_QPC_WORDS/);
 assert.match(basmala, /mushafPageFontFamily\(1\)/);
 assert.match(basmala, /showNumber/);
 assert.match(basmala, /data-basmala-encoding="code_v2"/);
-assert.match(basmala, /BASMALA_QPC_WORDS = \["ﺧ"/);
+assert.match(basmala, /0xfc41/);
+assert.match(basmala, /0xfc45/);
+assert.doesNotMatch(basmala, /0xfea7/);
 assert.doesNotMatch(basmala, /BASMALA_QPC_WORDS = \["ﭑ"/);
+assert.doesNotMatch(basmala, /BASMALA_QPC_END = "mej"/);
 
 assert.deepEqual(getMushafSpread(1, true), { left: null, right: 1, focus: 1, isSpread: false });
 assert.deepEqual(getMushafSpread(5, true), { left: 4, right: 5, focus: 5, isSpread: true });

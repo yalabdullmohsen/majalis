@@ -28,8 +28,8 @@ const GRID = JSON.parse(
 const VIEWPORT = { width: 390, height: 844 };
 const BANNER_PAGES = [1, 2, 599, 600, 601];
 const GRID_PAGES = [3, 4, 100, 283, 306, 400, 500, 588, 596, 599, 600, 601, 604];
-/** الشارة المزخرفة (wing-refined) — مرجع آية */
-const ORNAMENT = "wing-refined";
+/** الشارة المزخرفة (islamic-light) — زخرفة حديثة خفيفة */
+const ORNAMENT = "islamic-light";
 const TAN = { r: 227, g: 210, b: 180 };
 /* أقل من مسافة حشو الميدالية (#EDE0C4≈٢٣) حتى يُحسب الحشو حبرًا */
 const TAN_DIST = 20;
@@ -78,20 +78,12 @@ async function measureBanner(page, pageNum) {
 
         const svg = banner.querySelector("svg");
         const patterns = svg?.querySelectorAll("pattern").length ?? 0;
-        const medallions =
-          svg?.querySelectorAll('[data-wing-part="medallion"]').length ?? 0;
-        const meshes =
-          svg?.querySelectorAll('[data-wing-part="mesh"]').length ?? 0;
-        const spirals =
-          svg?.querySelectorAll('[data-wing-part="spiral"]').length ?? 0;
-        const knots =
-          svg?.querySelectorAll('[data-wing-part="knot"]').length ?? 0;
+        const sideOrnaments =
+          svg?.querySelectorAll("[data-ornament-side]").length ?? 0;
         wingOk =
           patterns === 0 &&
-          medallions >= 1 &&
-          spirals >= 1 &&
-          meshes >= 1 &&
-          ornament === "wing-refined" &&
+          sideOrnaments >= 1 &&
+          ornament === "islamic-light" &&
           !!svg;
 
         /* كثافة تقريبية للجناح — اختيارية في هذه البوابة */
@@ -233,7 +225,7 @@ await page.addInitScript({ content: ACTIVE_PAGE_BROWSER_SOURCE });
 
       if (BANNER_PAGES.includes(n)) {
         if (raw.ornament !== ORNAMENT) {
-          failures.push({ page: n, reason: `شارة ليست wing-refined (got ${raw.ornament})` });
+          failures.push({ page: n, reason: `شارة ليست islamic-light (got ${raw.ornament})` });
         }
         if (raw.wingOk === false) {
           failures.push({ page: n, reason: "زخارف الجناح/الميدالية ناقصة" });

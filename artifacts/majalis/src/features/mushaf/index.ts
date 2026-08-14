@@ -4,6 +4,8 @@ export {
   AYAH_PRESS_DELAY_MS,
   MUSHAF_PAGE_LINE_SLOTS,
   MUSHAF_OPTICAL_FONT_SCALE,
+  MUSHAF_WORD_GAP_MAX_PX,
+  MUSHAF_MIN_LINE_FILL,
   type MushafFeatureFlags,
   type MushafSourceAdapter,
   type MushafSourceId,

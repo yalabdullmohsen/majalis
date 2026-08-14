@@ -44,11 +44,20 @@ if (!existsSync(basmalaPath)) failures.push({ gate: "static", reason: "BasmalaLi
 const pageV2 = readFileSync(join(ROOT, "src/components/quran/MushafPageV2.tsx"), "utf8");
 if (!/BasmalaLine/.test(pageV2)) failures.push({ gate: "static", reason: "MushafPageV2 بلا BasmalaLine" });
 if (/DRAWN_BASMALA_TEXT/.test(pageV2)) failures.push({ gate: "static", reason: "مسار بسملة Unicode ثانٍ ما زال حيًا" });
-if (!/MAX_WORD_GAP_PX\s*=\s*18/.test(pageV2)) failures.push({ gate: "static", reason: "سقف فجوة ١٨px مفقود" });
+if (!/MAX_WORD_GAP_PX\s*=\s*MUSHAF_WORD_GAP_MAX_PX/.test(pageV2) && !/MUSHAF_WORD_GAP_MAX_PX/.test(pageV2)) {
+  failures.push({ gate: "static", reason: "سقف فجوة الكلمات غير مربوط بالإعداد المركزي" });
+}
+const mushafConfig = readFileSync(join(ROOT, "src/features/mushaf/config.ts"), "utf8");
+if (!/MUSHAF_WORD_GAP_MAX_PX\s*=\s*10/.test(mushafConfig)) {
+  failures.push({ gate: "static", reason: "MUSHAF_WORD_GAP_MAX_PX يجب أن يكون ١٠px" });
+}
 if (/isFatihaBasmala/.test(pageV2)) failures.push({ gate: "static", reason: "مسار استبدال ١:١ بـ BasmalaLine ما زال حيًا" });
 const basmalaSrc = readFileSync(basmalaPath, "utf8");
 if (!/data-basmala-encoding="code_v2"/.test(basmalaSrc) || /BASMALA_QPC_WORDS = \["ﭑ"/.test(basmalaSrc)) {
   failures.push({ gate: "static", reason: "البسملة ليست بمحارف code_v2" });
+}
+if (!/0xfc41/.test(basmalaSrc) || /0xfea7/.test(basmalaSrc)) {
+  failures.push({ gate: "static", reason: "محرف البسملة الأول يجب أن يكون U+FC41 من page-001" });
 }
 const quranCss = readFileSync(join(ROOT, "src/styles/quran.css"), "utf8");
 if (!/11\.9vh/.test(quranCss) || !/8\.9vh/.test(quranCss)) {
