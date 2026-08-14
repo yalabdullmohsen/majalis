@@ -166,6 +166,9 @@ const ASSERTIONS = [
   // توحيد ليلي/طباعة 2026-08-14
   { route: "/prophets", selector: ".prophets-lux-hero__title", mode: "dark", min: 4.5 },
   { route: "/prophets", selector: ".prophets-lux-tab--active", mode: "dark", min: 3 },
+  { route: "/prophets/adam", selector: ".prophet-section-lux__title", mode: "dark", min: 4.5 },
+  { route: "/prophets/adam", selector: ".prophet-detail-lux__name", mode: "dark", min: 4.5 },
+  { route: "/prophets/adam", selector: ".prophet-lesson-card__text", mode: "dark", min: 4.5 },
   { route: "/quran/people", selector: ".qp-people__intro", mode: "dark", min: 4.5 },
   { route: "/quran-knowledge", selector: ".hub-card__title", mode: "dark", min: 4.5 },
   { route: "/janaza", selector: ".jnz-step__title", mode: "dark", min: 4.5 },

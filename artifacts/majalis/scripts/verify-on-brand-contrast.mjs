@@ -92,7 +92,9 @@ const VAR_HEX = {
   "--mj-ink": "#0e241e", "--text": "#121916", "--text-2": "#3e3a35",
   "--text-muted": "#57534c", "--text-title": "#0e241e",
   "--on-brand": "#ffffff", "--text-on-brand": "#fffefb",
-  "--text-on-dark": "#f1f5f3",
+  "--text-on-dark": "#ffffff",
+  "--text-on-dark-secondary": "#f3f5f4",
+  "--text-primary-inverse": "#ffffff",
 };
 
 /** يستخرج أول لون قابل للحلّ من تصريح CSS، أو null. */
@@ -460,7 +462,7 @@ if (JSON_OUT) {
    ويحتاج مراجعة فردية. قفله يمنع أي سطح أخضر *جديد* بلا لون نص، ويُنقَص
    الرقم تدريجيًا. لا سقف صامت: الرقم مطبوع دائمًا.                     */
 const HARD_FAIL_KINDS = new Set(["dark-on-brand", "opacity-fade-on-brand"]);
-const SURFACE_WITHOUT_COLOR_BASELINE = 63;
+const SURFACE_WITHOUT_COLOR_BASELINE = 62;
 
 const hardFails = violations.filter((v) => HARD_FAIL_KINDS.has(v.kind));
 const advisory = violations.filter((v) => !HARD_FAIL_KINDS.has(v.kind));
