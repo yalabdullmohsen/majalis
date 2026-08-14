@@ -10,9 +10,9 @@
   text-align: center;
   padding: 2.25rem 1.25rem 1.5rem;
   background: linear-gradient(160deg, var(--mj-brand-deep), var(--mj-brand-deep), var(--mj-brand-deep));
-  color: var(--mj-bg);
+  color: var(--on-dark-strong, #FFFFFF);
 }
-.srp-hero__icon { color: rgba(250,248,242,.75); margin-bottom: 0.6rem; }
+.srp-hero__icon { color: var(--on-dark-body, #F8FAFC); margin-bottom: 0.6rem; }
 .srp-hero__title {
   font-size: 1.45rem;
   font-weight: 800;
@@ -20,7 +20,7 @@
 }
 .srp-hero__sub {
   font-size: 0.82rem;
-  color: rgba(250,248,242,.75);
+  color: var(--on-dark-body, #F8FAFC);
   max-width: 36rem;
   line-height: 1.65;
 }
@@ -192,7 +192,7 @@
 .srp-intent-chip--active {
   background: var(--mj-brand);
   border-color: var(--mj-brand);
-  color: var(--mj-bg);
+  color: var(--on-dark-strong, #FFFFFF);
 }
 .srp-prompts { display: flex; flex-direction: column; gap: 0.4rem; }
 .srp-prompt-btn {

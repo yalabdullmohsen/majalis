@@ -110,7 +110,7 @@ function SectionCard({
           <h3 className="font-extrabold text-gray-900 dark:text-white text-base leading-tight">
             {section.title}
           </h3>
-          <span className="text-xs text-gray-400">{section.lessons.length} موضوعًا</span>
+          <span className="text-xs text-gray-400 dark:text-gray-300">{section.lessons.length} موضوعًا</span>
         </div>
         <span
           className="flex-shrink-0 text-lg transition-transform duration-200"
@@ -129,19 +129,19 @@ function SectionCard({
                 <div className="flex items-start gap-2.5 px-3 py-2.5 rounded-xl text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                   <span
                     className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5"
-                    style={{ background: section.color, opacity: 0.85 }}
+                    style={{ background: section.color }}
                   >
                     {idx + 1}
                   </span>
-                  <span className="leading-snug">
+                  <span className="leading-snug font-medium">
                     {lesson.title}
                     {lesson.summary && (
-                      <span className="block mt-1 text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
+                      <span className="block mt-1 text-xs text-gray-500 dark:text-gray-300 leading-relaxed font-medium">
                         {lesson.summary}
                       </span>
                     )}
                     {lesson.body && (
-                      <span className="block mt-1.5 text-xs text-gray-600 dark:text-gray-300 leading-relaxed font-normal border-r-2 pr-2" style={{ borderColor: section.color }}>
+                      <span className="block mt-1.5 text-xs text-gray-600 dark:text-gray-300 leading-relaxed font-medium border-r-2 pr-2" style={{ borderColor: section.color }}>
                         {lesson.body}
                       </span>
                     )}

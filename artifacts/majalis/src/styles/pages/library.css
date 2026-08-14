@@ -155,7 +155,7 @@
 .lib-card-cover--placeholder::before { top: 0.55rem; }
 .lib-card-cover--placeholder::after { bottom: 0.55rem; }
 .lib-card-cover__icon {
-  color: rgba(255,255,255,0.55);
+  color: var(--on-dark-secondary, #E8EEEC);
   flex-shrink: 0;
 }
 .lib-card-cover__title {
@@ -171,7 +171,7 @@
 }
 .lib-card-cover__cat {
   font-size: 0.78rem;
-  color: rgba(255,255,255,0.68);
+  color: var(--on-dark-body, #F8FAFC);
   text-align: center;
   line-height: 1.3;
 }

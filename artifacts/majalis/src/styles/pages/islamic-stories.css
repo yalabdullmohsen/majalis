@@ -92,7 +92,7 @@
 .isp-chip.is-active {
   background: var(--elite-forest, var(--mj-brand-deep));
   border-color: transparent;
-  color: var(--mj-bg);
+  color: var(--on-dark-strong, #FFFFFF);
 }
 
 .isp-result-count {
@@ -164,7 +164,7 @@
 }
 
 .isp-badge--cat  { background: rgba(190,199,195,0.18); color: #D6D5CE; border: 1px solid rgba(190,199,195,0.3); }
-.isp-badge--era  { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.6); }
+.isp-badge--era  { background: rgba(255,255,255,0.07); color: var(--on-dark-secondary, #E8EEEC); }
 
 .isp-card__divider {
   height: 1px;
@@ -182,7 +182,7 @@
 }
 
 .isp-card__summary {
-  color: rgba(255,255,255,0.65);
+  color: var(--on-dark-body, #F8FAFC);
   font-size: 0.82rem;
   line-height: 1.65;
   margin: 0;
@@ -310,7 +310,7 @@
 }
 
 .isp-detail__summary {
-  color: rgba(250,248,242,0.82);
+  color: var(--on-dark-body, #F8FAFC);
   font-size: 0.95rem;
   line-height: 1.75;
   margin: 0;

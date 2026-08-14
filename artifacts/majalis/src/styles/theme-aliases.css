@@ -17,7 +17,7 @@
   --surface-brand-solid: var(--mj-brand);
   --surface-brand-strong: var(--mj-brand-deep);
   --on-brand: var(--mj-on-brand, #ffffff);
-  --on-brand-secondary: color-mix(in srgb, var(--mj-on-brand, #ffffff) 82%, transparent);
+  --on-brand-secondary: var(--on-dark-body, #F8FAFC);
   --surface-inverse: var(--mj-brand-deep);
   --surface-elevated: var(--mj-surface);
 
@@ -28,9 +28,13 @@
   --text-meta: var(--mj-muted);
   --text-on-brand: var(--mj-on-brand);
   /* نص فوق سطح داكن — أبيض صلب بلا شفافية (قصص الأنبياء، أبطال زمردي…) */
-  --text-on-dark: #FFFFFF;
-  --text-on-dark-secondary: #F3F5F4;
-  --text-primary-inverse: var(--text-on-dark);
+  --on-dark-strong: #FFFFFF;
+  --on-dark-body: #F8FAFC;
+  --on-dark-secondary: #E8EEEC;
+  --color-on-dark: var(--on-dark-strong);
+  --text-on-dark: var(--on-dark-strong);
+  --text-on-dark-secondary: var(--on-dark-secondary);
+  --text-primary-inverse: var(--on-dark-strong);
   --text-brand: var(--mj-brand);
   --text-brand-deep: var(--mj-brand-deep);
   /* أسماء قديمة خاطئة شائعة — كانت تسقط لاحتياطي نهاري ثابت */
@@ -173,9 +177,13 @@ html.dark,
   --text-muted: var(--mj-muted);
   --text-meta: var(--mj-muted);
   --text-on-brand: #06231A;
-  --text-on-dark: #FFFFFF;
-  --text-on-dark-secondary: #F3F5F4;
-  --text-primary-inverse: var(--text-on-dark);
+  --on-dark-strong: #FFFFFF;
+  --on-dark-body: #F8FAFC;
+  --on-dark-secondary: #E8EEEC;
+  --color-on-dark: var(--on-dark-strong);
+  --text-on-dark: var(--on-dark-strong);
+  --text-on-dark-secondary: var(--on-dark-secondary);
+  --text-primary-inverse: var(--on-dark-strong);
   --text-brand: var(--mj-brand);
   --text-brand-deep: var(--accent-strong, #7BD6AE);
 

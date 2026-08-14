@@ -20,7 +20,10 @@ function assert(cond: boolean, label: string) {
 }
 
 console.log("\n=== قصص الأنبياء — نص على الداكن ===");
-assert(/--text-on-dark:\s*#FFFFFF/.test(aliases), "توكن --text-on-dark أبيض صلب");
+assert(
+  /--text-on-dark:\s*var\(--on-dark-strong\)/.test(aliases) || /--text-on-dark:\s*#FFFFFF/.test(aliases),
+  "توكن --text-on-dark أبيض صلب",
+);
 assert(aliases.includes("--text-on-dark-secondary"), "توكن ثانوي على الداكن");
 assert(css.includes("--ps-text-primary: var(--text-on-dark"), "تفصيل الأنبياء يربط النص الأساسي بالتوكن");
 assert(css.includes("--ps-text-body: var(--text-on-dark"), "نص القصة من التوكن");
