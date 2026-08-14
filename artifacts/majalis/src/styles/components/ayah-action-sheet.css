@@ -1295,6 +1295,27 @@ html.dark .aas-reader__edition-menu,
   color: var(--color-mushaf-ink, #1a1510);
 }
 
+.aas-v3__audio-error {
+  margin: 0 0 0.5rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--destructive) 28%, transparent);
+  background: color-mix(in srgb, var(--destructive) 10%, var(--color-mushaf-paper, var(--card)));
+  color: var(--destructive);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.aas-v3__spin {
+  flex-shrink: 0;
+  animation: aas-v3-spin 0.7s linear infinite;
+}
+
+@keyframes aas-v3-spin {
+  to { transform: rotate(360deg); }
+}
+
 .aas-v3__nav {
   flex-shrink: 0;
   display: flex;

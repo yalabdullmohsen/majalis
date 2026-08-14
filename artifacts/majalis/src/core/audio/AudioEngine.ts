@@ -8,7 +8,7 @@
  * - Never throws into UI for media failures — sets `playerState: "error"` instead.
  * - Listeners are isolated with try/catch so a bad subscriber cannot crash playback.
  */
-import { getAyahAudioUrl, loadPlaybackRate, normalizePlaybackRate, savePlaybackRate } from "@/lib/quran-audio";
+import { listAyahAudioUrls, loadPlaybackRate, normalizePlaybackRate, savePlaybackRate } from "@/lib/quran-audio";
 import { getSurahMeta } from "@/lib/quran-api";
 import {
   advanceAfterAyahEnded,
@@ -451,8 +451,8 @@ export class AudioEngine {
       return;
     }
 
-    const url = getAyahAudioUrl(surah, ayah, this.reciterId);
-    if (!url) {
+    const urls = listAyahAudioUrls(surah, ayah, this.reciterId);
+    if (!urls.length) {
       this.setPlayerState(
         "error",
         "هذا القارئ لا يدعم تلاوة الآية آيةً آية. اختر قارئًا آخر أو شغّل السورة كاملة.",
@@ -462,21 +462,39 @@ export class AudioEngine {
     this.setPlayerState("loading");
     if (this.teachEnabled) this.teachPhase = "teacher";
 
-    try {
-      el.src = url;
-      el.playbackRate = this.playbackRate;
-      await this.activatePlaybackSession();
-      await el.play();
-      this.setPlayerState("playing");
-      void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
-    } catch (err) {
-      console.warn("[AudioEngine] playAyah:", err);
-      const offline =
-        typeof navigator !== "undefined" && navigator.onLine === false
-          ? "تحقق من الاتصال بالشبكة ثم أعد المحاولة."
-          : "تعذّر تشغيل التلاوة. أعد المحاولة أو غيّر القارئ.";
-      this.setPlayerState("error", offline);
+    let lastErr: unknown = null;
+    for (const url of urls) {
+      try {
+        el.src = url;
+        el.playbackRate = this.playbackRate;
+        await this.activatePlaybackSession();
+        await el.play();
+        this.setPlayerState("playing");
+        void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
+        return;
+      } catch (err) {
+        lastErr = err;
+        console.warn("[AudioEngine] playAyah candidate failed:", url, err);
+      }
     }
+
+    console.warn("[AudioEngine] playAyah:", lastErr);
+    const name =
+      lastErr && typeof lastErr === "object" && "name" in lastErr
+        ? String((lastErr as { name: string }).name)
+        : "";
+    if (name === "NotAllowedError") {
+      this.setPlayerState(
+        "error",
+        "الجهاز منع التشغيل قبل تفاعل المستخدم — اضغط زر التلاوة مرة أخرى.",
+      );
+      return;
+    }
+    const offline =
+      typeof navigator !== "undefined" && navigator.onLine === false
+        ? "تحقق من الاتصال بالشبكة ثم أعد المحاولة."
+        : "تعذّر تشغيل التلاوة. أعد المحاولة أو غيّر القارئ.";
+    this.setPlayerState("error", offline);
   }
 
   /**

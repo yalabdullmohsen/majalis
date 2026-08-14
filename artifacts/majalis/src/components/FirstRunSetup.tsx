@@ -109,7 +109,10 @@ export function FirstRunSetup() {
 
         {step === 0 && (
           <div className="frs-step">
-            <p className="frs-eyebrow">مجالس العلم</p>
+            <div className="frs-brand-mark" aria-hidden="true">
+              <img src="/logo-icon.png" alt="" width={64} height={64} decoding="async" />
+            </div>
+            <p className="frs-eyebrow">المجلس العلمي</p>
             <h2 id="frs-title">مرحبًا بك</h2>
             <p className="frs-lead">
               دليل سريع لبدء الاستخدام — يمكنك تخطّيه والمتابعة مباشرة.

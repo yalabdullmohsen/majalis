@@ -47,6 +47,7 @@ import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { QpcFontPackBanner } from "@/components/quran/QpcFontPackBanner";
 import { MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
 import { MushafPageProgressRail } from "@/components/quran/MushafPageProgressRail";
+import { MushafBottomPager } from "@/components/quran/MushafBottomPager";
 import { MushafLayeredPage, MUSHAF_OPTICAL_FONT_SCALE } from "@/features/mushaf";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import {
@@ -543,11 +544,15 @@ export default function MushafPageView() {
 
   const [engineAyahKey, setEngineAyahKey] = useState<string | null>(null);
   const [enginePlaying, setEnginePlaying] = useState(false);
+  const [engineLoading, setEngineLoading] = useState(false);
+  const [engineError, setEngineError] = useState<string | null>(null);
 
   useEffect(() => {
     const engine = AudioEngine.getInstance();
     return engine.onSnapshot((s) => {
       setEnginePlaying(s.playerState === "playing" || s.playerState === "buffering");
+      setEngineLoading(s.playerState === "loading");
+      setEngineError(s.playerState === "error" ? s.errorMessage : null);
       if (s.surah != null && s.ayah != null) {
         setEngineAyahKey(`${s.surah}:${s.ayah}`);
       } else if (s.playerState === "idle") {
@@ -634,6 +639,7 @@ export default function MushafPageView() {
     if (!s || !a) return;
     setResumeAyahKey(null);
     setSelectedAyah({ surah: s, ayah: a });
+    setTextChromeVisible(false);
   }, []);
   const clearAyahSelection = useCallback(() => {
     setSelectedAyah(null);
@@ -910,6 +916,22 @@ export default function MushafPageView() {
             visible={!selectedAyah && !flip.active && !flip.settling}
             onJump={openJumpModal}
           />
+          <MushafBottomPager
+            page={page}
+            totalPages={TOTAL_PAGES}
+            visible={
+              textChromeVisible &&
+              !selectedAyah &&
+              !flip.active &&
+              !flip.settling &&
+              !sidebarOpen &&
+              !settingsOpen
+            }
+            onPrev={prevPage}
+            onNext={nextPage}
+            onJump={openJumpModal}
+            onIndex={() => setSidebarOpen(true)}
+          />
         </>
 
       {sidebarOpen && (
@@ -1101,6 +1123,8 @@ export default function MushafPageView() {
                 (playerState === "playing" || playerState === "buffering"))
             }
             canPlay={true}
+            audioError={engineError}
+            audioLoading={engineLoading}
             onTogglePlay={() => toggleEnginePlayForAyah(selectedAyah.surah, selectedAyah.ayah)}
             onPrev={selectedIdx > 0 ? () => {
               const prev = flatAyahs[selectedIdx - 1];

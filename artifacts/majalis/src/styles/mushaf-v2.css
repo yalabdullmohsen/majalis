@@ -51,7 +51,10 @@ html[data-theme="dark"] .mf2-frame {
 }
 /* توحيد مع وضع القراءة المختار داخل المصحف (راجع تعليق --mf2-ink أعلاه
    لنفس السبب الجذري). */
-.quran-shell--night .mf2-frame { --mf2-page-bg: #0F172A; box-shadow: 0 2px 24px rgba(0,0,0,.4); }
+.quran-shell--night .mf2-frame {
+  --mf2-page-bg: var(--color-mushaf-paper, #12100C);
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+}
 .quran-shell--warm .mf2-frame { --mf2-page-bg: #fdf3e3; }
 .quran-shell--high-contrast .mf2-frame { --mf2-page-bg: #fff; }
 
@@ -284,7 +287,7 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
   color: inherit;
   background-color: color-mix(
     in srgb,
-    var(--color-mushaf-gold, #8F7340) 36%,
+    var(--color-mushaf-gold, #8F7340) 42%,
     var(--color-mushaf-paper, #FCF8F1)
   );
   border-radius: 0.2em;
@@ -299,8 +302,8 @@ html[data-theme="dark"] .mf2-ayah-group--active .mf2-word {
   color: inherit;
   background-color: color-mix(
     in srgb,
-    var(--color-mushaf-gold, #C9B07A) 40%,
-    transparent
+    var(--color-mushaf-gold, #C9B07A) 48%,
+    var(--color-mushaf-paper, #12100C)
   );
   box-shadow: none;
 }
