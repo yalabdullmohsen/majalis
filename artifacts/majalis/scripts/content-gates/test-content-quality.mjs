@@ -5,7 +5,7 @@ import { loadKnowledgeItems, wordCount, fail, ok } from "./lib.mjs";
 const MIN_WORDS = {
   prophet: 350,
   nation: 70,
-  "quran-person": 20,
+  "quran-person": 400,
   history: 60,
   "intro-islam": 40,
   "discover-islam": 30,
