@@ -355,19 +355,46 @@ html.dark [aria-disabled="true"] {
 html[data-theme="dark"] .hub-card,
 html.dark .hub-card,
 html[data-theme="dark"] .quran-hub-feature-item,
-html.dark .quran-hub-feature-item {
+html.dark .quran-hub-feature-item,
+html[data-theme="dark"] .quran-hub-card,
+html.dark .quran-hub-card {
   background: var(--surface, #1B2421) !important;
   border-color: var(--border, #35443F) !important;
   color: var(--txt-primary, #ECF2EF) !important;
 }
 html[data-theme="dark"] .hub-card__title,
 html[data-theme="dark"] .quran-hub-feature-item__text,
+html[data-theme="dark"] .quran-hub-card__title,
+html[data-theme="dark"] .quran-hub-sections__title,
+html[data-theme="dark"] .quran-hub-features__title,
+html[data-theme="dark"] .quran-hub-card__link,
 html.dark .hub-card__title,
-html.dark .quran-hub-feature-item__text {
-  color: var(--txt-primary, #ECF2EF) !important;
+html.dark .quran-hub-feature-item__text,
+html.dark .quran-hub-card__title,
+html.dark .quran-hub-sections__title,
+html.dark .quran-hub-features__title,
+html.dark .quran-hub-card__link {
+  color: var(--elite-forest, var(--accent-strong, #7BD6AE)) !important;
 }
 html[data-theme="dark"] .hub-card__desc,
-html.dark .hub-card__desc {
+html[data-theme="dark"] .quran-hub-card__desc,
+html.dark .hub-card__desc,
+html.dark .quran-hub-card__desc {
+  color: var(--txt-secondary, #C2CFCA) !important;
+}
+html[data-theme="dark"] .quran-hub-card__body,
+html.dark .quran-hub-card__body {
+  background: var(--surface, #1B2421) !important;
+}
+html[data-theme="dark"] .quran-hub-page,
+html.dark .quran-hub-page {
+  background: var(--bg, #131A18) !important;
+  color: var(--txt-primary, #ECF2EF) !important;
+}
+html[data-theme="dark"] .lesson-unified-card__meta,
+html[data-theme="dark"] .lesson-unified-card__desc,
+html.dark .lesson-unified-card__meta,
+html.dark .lesson-unified-card__desc {
   color: var(--txt-secondary, #C2CFCA) !important;
 }
 

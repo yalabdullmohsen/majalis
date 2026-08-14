@@ -11,7 +11,7 @@
   --text-body: var(--font-base, 1.0625rem);
   --text-body-sm: 0.9375rem; /* 15px */
   --text-label: var(--font-sm, 0.9375rem);
-  --text-caption: var(--font-xs, 0.84375rem);
+  --text-caption: var(--font-xs, 0.875rem);
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;

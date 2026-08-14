@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { CalendarDays, ChevronLeft, ChevronRight, Heart, HelpCircle, LayoutList, Sparkles } from "lucide-react";
+import { CalendarDays, ChevronLeft, ChevronRight, HelpCircle, LayoutList, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
@@ -135,22 +135,6 @@ const MIRACLES_LIST = [
 
 function prophetColor(slug: string) { return PROPHET_HUE[slug] || IVORY; }
 
-function useBookmarks() {
-  const [bookmarks, setBookmarks] = useState<string[]>(() => {
-    try { return JSON.parse(localStorage.getItem("prophet-bookmarks") || "[]"); }
-    catch { return []; }
-  });
-  const toggle = useCallback((slug: string) => {
-    setBookmarks(prev => {
-      const next = prev.includes(slug) ? prev.filter(s => s !== slug) : [...prev, slug];
-      try { localStorage.setItem("prophet-bookmarks", JSON.stringify(next)); } catch { /* localStorage unavailable */ }
-      return next;
-    });
-  }, []);
-  const has = useCallback((slug: string) => bookmarks.includes(slug), [bookmarks]);
-  return { toggle, has, count: bookmarks.length };
-}
-
 // ── Geometric SVG Components ────────────────────────────────────────────────
 
 function IslamicStar({ size = 32, color = IVORY, opacity = 1 }: { size?: number; color?: string; opacity?: number }) {
@@ -199,14 +183,10 @@ const QUIZ_QUESTIONS = [
 function ProphetCard({
   prophet,
   onSelect,
-  isBookmarked,
-  onBookmark,
   index = 0,
 }: {
   prophet: ProphetRecord;
   onSelect: () => void;
-  isBookmarked: boolean;
-  onBookmark: (e: React.MouseEvent) => void;
   index?: number;
 }) {
   const color = prophetColor(prophet.slug);
@@ -270,17 +250,6 @@ function ProphetCard({
         </div>
       </div>
 
-      <button
-        type="button"
-        className="prophet-lux-card__bookmark"
-        onClick={onBookmark}
-        aria-label={isBookmarked ? "إزالة من المفضلة" : "إضافة للمفضلة"}
-      >
-        {isBookmarked
-          ? <Heart size={16} className="icon-danger--filled" />
-          : <Heart size={16} />}
-      </button>
-
       {isUlulAzm && <div className="prophet-lux-card__azm-tag">أولو العزم</div>}
       <div className="prophet-lux-card__border" />
     </div>
@@ -295,14 +264,10 @@ function ProphetDetailView({
   slug,
   onBack,
   onNavigate,
-  isBookmarked,
-  onBookmark,
 }: {
   slug: string;
   onBack: () => void;
   onNavigate: (slug: string) => void;
-  isBookmarked: boolean;
-  onBookmark: () => void;
 }) {
   const p = getProphet(slug);
   const sup = SUPPLEMENT[slug];
@@ -457,11 +422,6 @@ function ProphetDetailView({
       <div className="prophet-detail-lux__topbar">
         <button type="button" className="prophet-lux-back" onClick={onBack}>← قائمة الأنبياء</button>
         <div className="prophet-detail-lux__actions">
-          <button type="button" className="prophet-action-btn" onClick={onBookmark}>
-            {isBookmarked
-              ? <><Heart size={13} className="inline icon-danger--filled ms-1" />محفوظ</>
-              : <><Heart size={13} className="inline ms-1" />احفظ</>}
-          </button>
           <div className="prophet-font-controls">
             <button type="button" onClick={() => setFontSize(s => Math.max(13, s - 1))} aria-label="تصغير الخط">أ−</button>
             <button type="button" onClick={() => setFontSize(s => Math.min(22, s + 1))} aria-label="تكبير الخط">أ+</button>
@@ -929,7 +889,7 @@ function QuizView({ onClose }: { onClose: () => void }) {
 
 // ── Main Page ────────────────────────────────────────────────────────────────
 
-type View = "grid" | "timeline" | "ulul-azm" | "miracles" | "compare" | "bookmarks" | "quiz";
+type View = "grid" | "timeline" | "ulul-azm" | "miracles" | "compare" | "quiz";
 
 const TABS: { id: View; label: string }[] = [
   { id: "grid",      label: "القائمة" },
@@ -937,7 +897,6 @@ const TABS: { id: View; label: string }[] = [
   { id: "ulul-azm",  label: "أولو العزم" },
   { id: "miracles",  label: "المعجزات" },
   { id: "compare",   label: "مقارنة" },
-  { id: "bookmarks", label: "المفضلة" },
   { id: "quiz",      label: "اختبر نفسك" },
 ];
 
@@ -945,7 +904,6 @@ export default function ProphetStoriesPage() {
   const [search, setSearch] = useState("");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [view, setView] = useState<View>("grid");
-  const { toggle: toggleBookmark, has: isBookmarked, count: bookmarkCount } = useBookmarks();
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -963,9 +921,7 @@ export default function ProphetStoriesPage() {
     if (match) setSelectedSlug(match[1]);
   }, []);
 
-  const results = view === "bookmarks"
-    ? searchProphets(search).filter(p => isBookmarked(p.slug))
-    : searchProphets(search);
+  const results = searchProphets(search);
 
   if (selectedSlug) {
     return (
@@ -973,8 +929,6 @@ export default function ProphetStoriesPage() {
         slug={selectedSlug}
         onBack={() => setSelectedSlug(null)}
         onNavigate={setSelectedSlug}
-        isBookmarked={isBookmarked(selectedSlug)}
-        onBookmark={() => toggleBookmark(selectedSlug)}
       />
     );
   }
@@ -1039,9 +993,8 @@ export default function ProphetStoriesPage() {
             >
               {t.id === "grid"      && <><LayoutList size={14} strokeWidth={1.8} aria-hidden="true" /> {t.label}</>}
               {t.id === "timeline"  && <><CalendarDays size={14} strokeWidth={1.8} aria-hidden="true" /> {t.label}</>}
-              {t.id === "bookmarks" && <><Heart size={14} strokeWidth={1.8} aria-hidden="true" /> {t.label}{bookmarkCount > 0 ? ` (${bookmarkCount})` : ""}</>}
               {t.id === "quiz"      && <><HelpCircle size={14} strokeWidth={1.8} aria-hidden="true" /> {t.label}</>}
-              {!["grid","timeline","bookmarks","quiz"].includes(t.id) && t.label}
+              {!["grid","timeline","quiz"].includes(t.id) && t.label}
             </button>
           ))}
         </div>
@@ -1074,8 +1027,8 @@ export default function ProphetStoriesPage() {
           </div>
         )}
 
-        {/* قائمة + مفضلة */}
-        {(view === "grid" || view === "bookmarks") && (
+        {/* قائمة */}
+        {view === "grid" && (
           <div className="prophets-lux-container">
             <div className="prophets-lux-search-wrap">
               <input
@@ -1109,8 +1062,6 @@ export default function ProphetStoriesPage() {
                       prophet={p}
                       index={i}
                       onSelect={() => setSelectedSlug(p.slug)}
-                      isBookmarked={isBookmarked(p.slug)}
-                      onBookmark={e => { e.stopPropagation(); toggleBookmark(p.slug); }}
                     />
                   ))}
                 </div>

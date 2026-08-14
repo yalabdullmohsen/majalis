@@ -52,21 +52,20 @@ export const MUSHAF_FONT_DEV_MAX = 0.18;
 
 /**
  * مضاعف بصري على مقياس المصحف قبل الملاءمة.
- * يُبقى عند ١٫٠ حتى لا تُقصّ أسطر SE في بوابات multi-viewport
- * (١٫٠٤ كان يُسقط سطرًا واحدًا على صفحات ضيقة رغم clipped=0).
+ * ١٫٠٢ أقصى آمن (البوابات ترفض >١٫٠٢)؛ ١٫٠٤ كان يُسقط سطرًا على SE.
  */
-export const MUSHAF_OPTICAL_FONT_SCALE = 1;
+export const MUSHAF_OPTICAL_FONT_SCALE = 1.02;
 
 /**
  * سقف فجوة الكلمات (px) بعد تكبير الخط — أقرب للمصحف المطبوع.
  * يُطبَّق عبر --mf2-word-gap فقط (لا word-spacing/letter-spacing على QPC).
  */
-export const MUSHAF_WORD_GAP_MAX_PX = 7;
+export const MUSHAF_WORD_GAP_MAX_PX = 6;
 
 /**
  * حد امتلاء السطر قبل إضافة فجوة — أعلى = فجوة أقل/أندر (الخط يُكبَّر أولًا).
  */
-export const MUSHAF_MIN_LINE_FILL = 0.96;
+export const MUSHAF_MIN_LINE_FILL = 0.975;
 
 /** أقصى انحراف لفجوة الأسطر النسبية (±٥٪) */
 export const MUSHAF_GAP_DEV_MAX = 0.05;

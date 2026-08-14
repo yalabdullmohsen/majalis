@@ -256,7 +256,9 @@ html.dark,
   --mj-muted: #9FB0AB;
   --mj-brand: #5CC095;
   --mj-brand-soft: #16261F;
+  /* خلفية عميقة فقط — لا يُستخدم كلون نص (العناوين عبر --elite-forest / accent) */
   --mj-brand-deep: #0E1C17;
+  --elite-forest: #8FD4B0;
   --mj-on-brand: #06231A;
   --mj-accent: #D9B871;
   --mj-accent-soft: #2A3733;
