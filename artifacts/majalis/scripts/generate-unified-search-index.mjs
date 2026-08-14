@@ -191,7 +191,7 @@ if (fs.existsSync(qaDir)) {
         `qa:${row.id}`,
         "qa",
         q,
-        `/qa/${row.id}`,
+        `/quiz?qa=${encodeURIComponent(row.id)}`,
         [row.qa_categories?.name, row.ruling_type, row.answer?.slice(0, 100)],
         row.qa_categories?.name || "فتوى",
       );

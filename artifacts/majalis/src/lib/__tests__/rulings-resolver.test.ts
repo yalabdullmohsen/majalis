@@ -7,6 +7,10 @@ import {
   inferRulingContentType,
   isAllowedOnRulingsRoute,
 } from "../rulings-content-type";
+import {
+  auditRulingPublicationRows,
+  isPubliclyPublishedRuling,
+} from "../rulings-publication-gate";
 import { evaluateRulingRecord, httpStatusForRulingResolve } from "../rulings-resolver";
 import { RULINGS_ENCYCLOPEDIA_SEED } from "../rulings-encyclopedia-seed.generated";
 
@@ -57,6 +61,33 @@ console.log("\n=== البذرة المولَّدة خالية من QA ===");
   assert(RULINGS_ENCYCLOPEDIA_SEED.length > 0, `seed not empty (${RULINGS_ENCYCLOPEDIA_SEED.length})`);
 }
 
+console.log("\n=== بوابة النشر العامة ===");
+{
+  assert(
+    !isPubliclyPublishedRuling({
+      title: "حضانة",
+      body: "نص طويل بما يكفي",
+      verification_status: "pending_review" as never,
+      status: "approved",
+    }),
+    "pending_review not public",
+  );
+  assert(
+    isPubliclyPublishedRuling({
+      title: "حكم معتمد",
+      body: "نص الحكم المعتمد بما يكفي للعرض",
+      verification_status: "approved",
+      status: "approved",
+    }),
+    "approved+approved public",
+  );
+
+  const audit = auditRulingPublicationRows(RULINGS_ENCYCLOPEDIA_SEED);
+  assert(audit.total === RULINGS_ENCYCLOPEDIA_SEED.length, "audit total");
+  assert(audit.publicEligible === 0, `seed publicEligible=0 (actual ${audit.publicEligible})`);
+  assert(audit.needs_review > 0, "seed needs_review > 0");
+}
+
 console.log("\n=== نتائج الـ resolver ===");
 {
   const wrong = evaluateRulingRecord("qa-ruling-seed-qa-1005", {
@@ -72,10 +103,22 @@ console.log("\n=== نتائج الـ resolver ===");
   const sample = RULINGS_ENCYCLOPEDIA_SEED.find((r) => (r.external_key || r.id || "").startsWith("ruling-"));
   assert(Boolean(sample), "sample ruling exists");
   if (sample) {
-    const found = evaluateRulingRecord(sample.external_key || sample.id, sample);
-    assert(found.status === "found", "found real ruling");
-    assert((found.data?.body?.length || 0) > 20, "body present");
+    const blocked = evaluateRulingRecord(sample.external_key || sample.id, sample);
+    assert(blocked.status === "unpublished", "pending seed → unpublished");
+    assert(httpStatusForRulingResolve(blocked.status) === 404, "HTTP 404 unpublished");
   }
+
+  const published = evaluateRulingRecord("ruling-approved-sample", {
+    id: "ruling-approved-sample",
+    external_key: "ruling-approved-sample",
+    title: "حكم معتمد للاختبار",
+    body: "نص حكم معتمد بما يكفي للتحقق من البوابة",
+    category: "الطهارة",
+    verification_status: "approved",
+    status: "approved",
+  });
+  assert(published.status === "found", "approved found");
+  assert(httpStatusForRulingResolve(published.status) === 200, "HTTP 200 approved");
 
   const removed = evaluateRulingRecord("ruling-x", {
     id: "ruling-x",

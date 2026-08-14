@@ -13,7 +13,7 @@ export async function buildRulingRelations(ruling: ShariaRulingExtended): Promis
         type: "qa",
         id: qa.id,
         title: qa.question,
-        href: `/qa#${qa.id}`,
+        href: `/quiz?qa=${encodeURIComponent(qa.id)}`,
         meta: qa.qa_categories?.name,
       });
     }
@@ -47,7 +47,7 @@ export async function buildRulingRelations(ruling: ShariaRulingExtended): Promis
       type: "qa",
       id: "search",
       title: `أسئلة في ${kw}`,
-      href: `/qa?search=${encodeURIComponent(kw)}`,
+      href: `/quiz?search=${encodeURIComponent(kw)}`,
       meta: "بحث",
     });
     links.push({

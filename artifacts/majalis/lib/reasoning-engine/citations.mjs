@@ -24,7 +24,7 @@ export function resolveHref(item) {
     book: `/library`,
     sheikh: `/sheikhs/${id}`,
     fawaid: `/fawaid`,
-    qa: `/qa`,
+    qa: `/quiz`,
     course: `/annual-courses/${id}`,
     miracle: `/miracles`,
     quran: `/quran`,

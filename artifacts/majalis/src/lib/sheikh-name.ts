@@ -1,5 +1,5 @@
 const HONORIFIC_PREFIX =
-  /^(?:فضيلة|معالي|سمو|صاحب|العلامة|الشيخ(?:ة)?(?:\s+الدكتور(?:ة)?|\s+د\.?)?|الدكتور(?:ة)?|د\.|Dr\.?)\s+/iu;
+  /^(?:فضيلة|معالي|سمو|صاحب|العلامة|الشيخ(?:ة)?(?:\s+الدكتور(?:ة)?|\s+د\.?)?|الدكتور(?:ة)?|د\.|Dr\.?|الأستاذ(?:ة)?|القارئ)\s+/iu;
 
 const DEGREE_PREFIX = /^(?:د\.|Dr\.)\s*/iu;
 
@@ -21,11 +21,12 @@ export function stripSheikhHonorifics(name: string): string {
   let value = String(name || "").trim();
   if (!value) return "";
 
-  // أزل «الشيخ:» إن وُجدت مسبقًا حتى لا تُضاعَف لاحقًا
-  value = value.replace(LABEL_PREFIX, "").trim();
-
-  for (let i = 0; i < 4; i += 1) {
-    const next = value.replace(HONORIFIC_PREFIX, "").replace(DEGREE_PREFIX, "").trim();
+  for (let i = 0; i < 6; i += 1) {
+    const next = value
+      .replace(LABEL_PREFIX, "")
+      .replace(HONORIFIC_PREFIX, "")
+      .replace(DEGREE_PREFIX, "")
+      .trim();
     if (next === value) break;
     value = next;
   }

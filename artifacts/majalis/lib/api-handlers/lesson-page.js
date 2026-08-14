@@ -75,8 +75,29 @@ function clamp(text, max = 300) {
   return t.length > max ? `${t.slice(0, max - 1)}…` : t;
 }
 
+
+function stripSpeakerHonorific(name) {
+  let value = String(name || "").trim();
+  if (!value) return "";
+  value = value.replace(/^(?:الشيخة?|الدكتور(?:ة)?|الأستاذ(?:ة)?|القارئ)\s*[:：]\s*/u, "").trim();
+  for (let i = 0; i < 4; i++) {
+    const next = value
+      .replace(/^(?:فضيلة|معالي|العلامة|الشيخ(?:ة)?(?:\s+الدكتور(?:ة)?|\s+د\.?)?|الدكتور(?:ة)?|د\.)\s+/iu, "")
+      .trim();
+    if (next === value) break;
+    value = next;
+  }
+  return value.replace(/\s+/g, " ").trim();
+}
+
+function formatSpeakerLabel(name) {
+  const core = stripSpeakerHonorific(name);
+  if (!core) return "";
+  return `المحاضر: ${core}`;
+}
+
 function lessonDescription(row) {
-  const parts = [row.description, row.speaker_name && `الشيخ ${row.speaker_name}`, row.mosque, row.city]
+  const parts = [row.description, row.speaker_name && formatSpeakerLabel(row.speaker_name), row.mosque, row.city]
     .filter(Boolean);
   return clamp(parts.join(" — ") || `درس شرعي على منصة ${SITE_NAME}`, 300);
 }

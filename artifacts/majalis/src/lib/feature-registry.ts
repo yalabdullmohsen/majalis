@@ -38,7 +38,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "arbaeen",      label: "الأربعون النووية",   path: "/arbaeen-nawawi",group:"حديث",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "daily-wird",   label: "الورد اليومي",       path: "/daily-wird",   group: "عبادات",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "tasbih",       label: "التسبيح",            path: "/tasbih",       group: "عبادات",        status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "qa",           label: "الأسئلة والأجوبة",  path: "/qa",             group: "تعليم",         status: "active",       inSideNav: false, inBottomNav: false },
+  { id: "qa",           label: "الأسئلة والأجوبة",  path: "/quiz",             group: "تعليم",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "quiz",         label: "لعبة سين جيم – أسئلة وأجوبة", path: "/quiz",   group: "تفاعلي",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "stories",      label: "القصص الإسلامية",   path: "/stories",      group: "قصص",           status: "active",       inSideNav: false, inBottomNav: false },
   { id: "prophets",     label: "قصص الأنبياء",      path: "/prophets",     group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
@@ -68,7 +68,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "flashcards",   label: "بطاقات المراجعة",  path: "/flashcards",   group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "knowledge-graph",label:"خارطة المعرفة",   path: "/knowledge-graph",group:"أدوات",        status: "disabled",       inSideNav: false,  inBottomNav: false },
   /* عُطِّلت 2026-07-23: أُزيلت من كل نقاط الدخول (رئيسية/قوائم/خرائط ذهنية/
-     مسارات)، والمسار القديم يُعاد توجيهه دائمًا إلى /qa (App.tsx + vercel.json).
+     مسارات)، والمسار القديم يُعاد توجيهه دائمًا إلى /quiz (App.tsx + vercel.json).
      الكود (ScholarlyResearchPage.tsx وrag-service.ts) لم يُحذف عمدًا — بلا
      أي معتمِد آخر (تحقّقتُ)، فيمكن إعادة تفعيله لاحقًا دون إعادة بناء. */
   { id: "scholarly-research",label:"الباحث الشرعي",path: "/scholarly-research",group:"أدوات",    status: "disabled",     inSideNav: false, inBottomNav: false },

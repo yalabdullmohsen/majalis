@@ -619,17 +619,23 @@ jobs:
           check_req() {
             local name="$1" need="$2" result="$3"
             if [ "$need" = "true" ]; then
-              if [ "$result" != "success" ]; then
-                echo "required job '$name' not success: $result"
+              if [ "$result" = "success" ]; then
+                echo "OK required $name=$result"
+                return 0
+              fi
+              if [ "$result" = "cancelled" ]; then
+                echo "required job '$name' was cancelled (غالبًا fail-fast من وظيفة أخرى) — ليس نجاحًا"
                 exit 1
               fi
-              echo "OK required $name=$result"
+              echo "required job '$name' not success: $result"
+              exit 1
             else
               if [ "$result" = "failure" ]; then
                 echo "optional job '$name' failed unexpectedly: $result"
                 exit 1
               fi
-              echo "OK optional $name=$result (skipped allowed)"
+              # skipped / cancelled / success مسموح عندما need=false
+              echo "OK optional $name=$result (skipped/cancelled allowed when not required)"
             fi
           }
 

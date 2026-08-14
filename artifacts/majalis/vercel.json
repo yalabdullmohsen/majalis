@@ -774,8 +774,18 @@
       "permanent": true
     },
     {
+      "source": "/qa",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
+      "source": "/qa/(.*)",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
       "source": "/scholarly-research",
-      "destination": "/qa",
+      "destination": "/quiz",
       "permanent": true
     },
     {

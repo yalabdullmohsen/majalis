@@ -3,7 +3,7 @@
     "id": "kw-othman-tafsir-nahl-0",
     "external_key": "kw-othman-tafsir-nahl-0",
     "title": "تفسير سورة النحل",
-    "speaker_name": "د. عثمان بن محمد الخميس",
+    "speaker_name": "عثمان بن محمد الخميس",
     "sheikh_image_url": "/sheikhs/othman-alkhamees.jpg",
     "poster_image_url": "/images/posters/othman-tafsir-nahl.svg",
     "category": "تفسير",
@@ -31,14 +31,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "د. عثمان بن محمد الخميس"
+      "name": "عثمان بن محمد الخميس"
     }
   },
   {
     "id": "kw-othman-sahih-muslim-0",
     "external_key": "kw-othman-sahih-muslim-0",
     "title": "قراءة كتاب صحيح مسلم",
-    "speaker_name": "د. عثمان بن محمد الخميس",
+    "speaker_name": "عثمان بن محمد الخميس",
     "sheikh_image_url": "/sheikhs/othman-alkhamees.jpg",
     "poster_image_url": "/images/posters/othman-sahih-muslim.svg",
     "category": "حديث",
@@ -66,14 +66,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "د. عثمان بن محمد الخميس"
+      "name": "عثمان بن محمد الخميس"
     }
   },
   {
     "id": "kw-othman-talkhis-mukhtasar-almuqni-0",
     "external_key": "kw-othman-talkhis-mukhtasar-almuqni-0",
     "title": "شرح كتاب تلخيص مختصر المقنع",
-    "speaker_name": "د. عثمان بن محمد الخميس",
+    "speaker_name": "عثمان بن محمد الخميس",
     "sheikh_image_url": "/sheikhs/othman-alkhamees.jpg",
     "poster_image_url": "/images/posters/othman-talkhis-almuqni.svg",
     "category": "فقه",
@@ -101,14 +101,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "د. عثمان بن محمد الخميس"
+      "name": "عثمان بن محمد الخميس"
     }
   },
   {
     "id": "kw-rashed-fundamental-course-0",
     "external_key": "kw-rashed-fundamental-course-0",
-    "title": "الدورة العلمية التأصيلية — بلوغ المرام من أدلة الأحكام",
-    "speaker_name": "د. راشد صليهم فهد الصليهم",
+    "title": "الدورة العلمية التأصيلية",
+    "speaker_name": "راشد صليهم فهد الصليهم",
     "sheikh_image_url": "/sheikhs/rashed-alsulayyim.svg",
     "poster_image_url": "/images/posters/rashed-fundamental-course.svg",
     "category": "تأصيل",
@@ -142,14 +142,14 @@
       "قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي"
     ],
     "sheikhs": {
-      "name": "د. راشد صليهم فهد الصليهم"
+      "name": "راشد صليهم فهد الصليهم"
     }
   },
   {
     "id": "kw-rashed-fundamental-course-1",
     "external_key": "kw-rashed-fundamental-course-1",
-    "title": "الدورة العلمية التأصيلية — القواعد المثلى في صفات الله وأسمائه الحسنى",
-    "speaker_name": "د. راشد صليهم فهد الصليهم",
+    "title": "الدورة العلمية التأصيلية",
+    "speaker_name": "راشد صليهم فهد الصليهم",
     "sheikh_image_url": "/sheikhs/rashed-alsulayyim.svg",
     "poster_image_url": "/images/posters/rashed-fundamental-course.svg",
     "category": "تأصيل",
@@ -183,14 +183,14 @@
       "قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي"
     ],
     "sheikhs": {
-      "name": "د. راشد صليهم فهد الصليهم"
+      "name": "راشد صليهم فهد الصليهم"
     }
   },
   {
     "id": "kw-rashed-fundamental-course-2",
     "external_key": "kw-rashed-fundamental-course-2",
-    "title": "الدورة العلمية التأصيلية — قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي",
-    "speaker_name": "د. راشد صليهم فهد الصليهم",
+    "title": "الدورة العلمية التأصيلية",
+    "speaker_name": "راشد صليهم فهد الصليهم",
     "sheikh_image_url": "/sheikhs/rashed-alsulayyim.svg",
     "poster_image_url": "/images/posters/rashed-fundamental-course.svg",
     "category": "تأصيل",
@@ -224,14 +224,14 @@
       "قراءة في كتاب دعوى تعارض السنة النبوية مع العلم التجريبي"
     ],
     "sheikhs": {
-      "name": "د. راشد صليهم فهد الصليهم"
+      "name": "راشد صليهم فهد الصليهم"
     }
   },
   {
     "id": "kw-mansour-altafsir-alwadih-0",
     "external_key": "kw-mansour-altafsir-alwadih-0",
     "title": "قراءة كتب متنوعة والتفسير الواضح",
-    "speaker_name": "د. منصور بن ناصر الخالدي",
+    "speaker_name": "منصور بن ناصر الخالدي",
     "sheikh_image_url": "/sheikhs/mansour-alkhalidi.jpg",
     "poster_image_url": "/images/posters/mansour-friday-reading.svg",
     "category": "تفسير",
@@ -257,14 +257,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "د. منصور بن ناصر الخالدي"
+      "name": "منصور بن ناصر الخالدي"
     }
   },
   {
     "id": "kw-osama-shatti-prayer-book-0",
     "external_key": "kw-osama-shatti-prayer-book-0",
     "title": "شرح كتاب الصلاة من إعانة الطالب",
-    "speaker_name": "الشيخ أسامة الشطي",
+    "speaker_name": "أسامة الشطي",
     "sheikh_image_url": "/sheikhs/osama-alshatti.svg",
     "poster_image_url": "/images/posters/osama-shatti-prayer-book.svg",
     "category": "فقه",
@@ -292,7 +292,7 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "الشيخ أسامة الشطي"
+      "name": "أسامة الشطي"
     }
   },
   {
@@ -399,7 +399,7 @@
   {
     "id": "kw-salem-altaweel-ajwiba-sunniyah-0",
     "external_key": "kw-salem-altaweel-ajwiba-sunniyah-0",
-    "title": "شرح كتاب الأجوبة السنيّة في العقيدة السلفية — يُعقد مرة كل أسبوعين",
+    "title": "شرح كتاب الأجوبة السنيّة في العقيدة السلفية",
     "speaker_name": "سالم بن سعد الطويل",
     "sheikh_image_url": "/sheikhs/salem-altaweel.jpg",
     "category": "عقيدة",
@@ -425,6 +425,9 @@
     "is_recurring": true,
     "activity_type": "درس",
     "is_course": false,
+    "linked_titles": [
+      "يُعقد مرة كل أسبوعين"
+    ],
     "sheikhs": {
       "name": "سالم بن سعد الطويل"
     }
@@ -432,8 +435,8 @@
   {
     "id": "kw-mutlaq-aljasr-talaeea-elm-0",
     "external_key": "kw-mutlaq-aljasr-talaeea-elm-0",
-    "title": "دورة طلائع العلم لطلاب العلم المبتدئين — الدورة الإلكترونية",
-    "speaker_name": "د. مطلق جاسر مطلق الجاسر",
+    "title": "دورة طلائع العلم لطلاب العلم المبتدئين",
+    "speaker_name": "مطلق جاسر مطلق الجاسر",
     "sheikh_image_url": "/sheikhs/mutlaq-aljasr.jpg",
     "category": "تأصيل",
     "city": "",
@@ -457,15 +460,18 @@
     "activity_type": "دورة",
     "is_course": true,
     "course_id": "mutlaq-aljasr-talaeea-elm",
+    "linked_titles": [
+      "الدورة الإلكترونية"
+    ],
     "sheikhs": {
-      "name": "د. مطلق جاسر مطلق الجاسر"
+      "name": "مطلق جاسر مطلق الجاسر"
     }
   },
   {
     "id": "kw-jury-aldahi-sharia-program-4-0",
     "external_key": "kw-jury-aldahi-sharia-program-4-0",
-    "title": "برنامج شرعي مبسط — المستوى الرابع — جلسات الأحد والثلاثاء والخميس",
-    "speaker_name": "د. لولوة الوهيب وأخريات",
+    "title": "برنامج شرعي مبسط — المستوى الرابع",
+    "speaker_name": "لولوة الوهيب وأخريات",
     "sheikh_image_url": "",
     "category": "فقه",
     "city": "العاصمة",
@@ -492,15 +498,19 @@
     "is_recurring": false,
     "activity_type": "درس",
     "is_course": false,
+    "linked_titles": [
+      "جلسات الأحد والثلاثاء والخميس"
+    ],
     "sheikhs": {
-      "name": "د. لولوة الوهيب وأخريات"
+      "name": "لولوة الوهيب وأخريات"
     }
   },
   {
     "id": "kw-ajraa-murtaqa-course-3-0",
     "external_key": "kw-ajraa-murtaqa-course-3-0",
-    "title": "دورة الشيخ الأجراح العلمية — الثالثة — شرح كتاب التوحيد — د.مطلق الجاسر (7/5–7/8)",
-    "speaker_name": "الشيخ محمد سليمان الأجراح",
+    "title": "دورة الشيخ الأجراح العلمية — الثالثة",
+    "speaker_name": "مطلق الجاسر",
+    "organizer_name": "محمد سليمان الأجراح",
     "sheikh_image_url": "",
     "category": "تأصيل",
     "city": "حولي",
@@ -535,14 +545,15 @@
       "شرح متن الأجرومية — الشيخ خالد العتيبي (7/26–7/29)"
     ],
     "sheikhs": {
-      "name": "الشيخ محمد سليمان الأجراح"
+      "name": "مطلق الجاسر"
     }
   },
   {
     "id": "kw-ajraa-murtaqa-course-3-1",
     "external_key": "kw-ajraa-murtaqa-course-3-1",
-    "title": "دورة الشيخ الأجراح العلمية — الثالثة — شرح تنبيه الفقيه وتفقيه النبيه — الشيخ أسامة الشطي (7/12–7/15)",
-    "speaker_name": "الشيخ محمد سليمان الأجراح",
+    "title": "دورة الشيخ الأجراح العلمية — الثالثة",
+    "speaker_name": "أسامة الشطي",
+    "organizer_name": "محمد سليمان الأجراح",
     "sheikh_image_url": "",
     "category": "تأصيل",
     "city": "حولي",
@@ -577,14 +588,15 @@
       "شرح متن الأجرومية — الشيخ خالد العتيبي (7/26–7/29)"
     ],
     "sheikhs": {
-      "name": "الشيخ محمد سليمان الأجراح"
+      "name": "أسامة الشطي"
     }
   },
   {
     "id": "kw-ajraa-murtaqa-course-3-2",
     "external_key": "kw-ajraa-murtaqa-course-3-2",
-    "title": "دورة الشيخ الأجراح العلمية — الثالثة — شرح فتح الرحيم الملك العلام — د.عبدالمحسن المعيلي (7/19–7/22)",
-    "speaker_name": "الشيخ محمد سليمان الأجراح",
+    "title": "دورة الشيخ الأجراح العلمية — الثالثة",
+    "speaker_name": "عبدالمحسن المعيلي",
+    "organizer_name": "محمد سليمان الأجراح",
     "sheikh_image_url": "",
     "category": "تأصيل",
     "city": "حولي",
@@ -619,14 +631,15 @@
       "شرح متن الأجرومية — الشيخ خالد العتيبي (7/26–7/29)"
     ],
     "sheikhs": {
-      "name": "الشيخ محمد سليمان الأجراح"
+      "name": "عبدالمحسن المعيلي"
     }
   },
   {
     "id": "kw-ajraa-murtaqa-course-3-3",
     "external_key": "kw-ajraa-murtaqa-course-3-3",
-    "title": "دورة الشيخ الأجراح العلمية — الثالثة — شرح متن الأجرومية — الشيخ خالد العتيبي (7/26–7/29)",
-    "speaker_name": "الشيخ محمد سليمان الأجراح",
+    "title": "دورة الشيخ الأجراح العلمية — الثالثة",
+    "speaker_name": "خالد العتيبي",
+    "organizer_name": "محمد سليمان الأجراح",
     "sheikh_image_url": "",
     "category": "تأصيل",
     "city": "حولي",
@@ -661,14 +674,14 @@
       "شرح متن الأجرومية — الشيخ خالد العتيبي (7/26–7/29)"
     ],
     "sheikhs": {
-      "name": "الشيخ محمد سليمان الأجراح"
+      "name": "خالد العتيبي"
     }
   },
   {
     "id": "kw-murtaqa-madarij-altalab-0",
     "external_key": "kw-murtaqa-madarij-altalab-0",
-    "title": "دورة مدارج الطلب — المسار الانتقائي — متاح 24 ساعة",
-    "speaker_name": "د. مطلق الجاسر وآخرون",
+    "title": "دورة مدارج الطلب",
+    "speaker_name": "متاح 24 ساعة",
     "sheikh_image_url": "",
     "category": "تأصيل",
     "city": "",
@@ -698,15 +711,18 @@
     "activity_type": "دورة",
     "is_course": true,
     "course_id": "murtaqa-madarij-altalab",
+    "linked_titles": [
+      "المسار الانتقائي — متاح 24 ساعة"
+    ],
     "sheikhs": {
-      "name": "د. مطلق الجاسر وآخرون"
+      "name": "متاح 24 ساعة"
     }
   },
   {
     "id": "kw-nabil-alawadhi-seerah-weekly-0",
     "external_key": "kw-nabil-alawadhi-seerah-weekly-0",
     "title": "قراءة في السيرة النبوية",
-    "speaker_name": "الشيخ نبيل بن علي العوضي",
+    "speaker_name": "نبيل بن علي العوضي",
     "sheikh_image_url": "/sheikhs/nabil-alawadhi.jpg",
     "category": "أخرى",
     "city": "العاصمة",
@@ -731,14 +747,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "الشيخ نبيل بن علي العوضي"
+      "name": "نبيل بن علي العوضي"
     }
   },
   {
     "id": "kw-abdulaziz-alfawzan-fiqh-weekly-0",
     "external_key": "kw-abdulaziz-alfawzan-fiqh-weekly-0",
     "title": "شرح زاد المستقنع في الفقه الحنبلي",
-    "speaker_name": "د. عبدالعزيز بن فوزان الفوزان",
+    "speaker_name": "عبدالعزيز بن فوزان الفوزان",
     "sheikh_image_url": "",
     "category": "فقه",
     "city": "العاصمة",
@@ -763,14 +779,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "د. عبدالعزيز بن فوزان الفوزان"
+      "name": "عبدالعزيز بن فوزان الفوزان"
     }
   },
   {
     "id": "kw-khalid-almushlih-usool-program-0",
     "external_key": "kw-khalid-almushlih-usool-program-0",
-    "title": "برنامج أصول الفقه للمبتدئين — الجلسة الأسبوعية",
-    "speaker_name": "د. خالد بن علي المشيقح",
+    "title": "برنامج أصول الفقه للمبتدئين",
+    "speaker_name": "خالد بن علي المشيقح",
     "sheikh_image_url": "",
     "category": "فقه",
     "city": "",
@@ -794,15 +810,18 @@
     "is_recurring": true,
     "activity_type": "درس",
     "is_course": false,
+    "linked_titles": [
+      "الجلسة الأسبوعية"
+    ],
     "sheikhs": {
-      "name": "د. خالد بن علي المشيقح"
+      "name": "خالد بن علي المشيقح"
     }
   },
   {
     "id": "kw-tafsir-juzama-weekly-0",
     "external_key": "kw-tafsir-juzama-weekly-0",
     "title": "تفسير جزء عم",
-    "speaker_name": "الشيخ فهد بن سليمان العجلان",
+    "speaker_name": "فهد بن سليمان العجلان",
     "sheikh_image_url": "",
     "category": "تفسير",
     "city": "حولي",
@@ -827,14 +846,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "الشيخ فهد بن سليمان العجلان"
+      "name": "فهد بن سليمان العجلان"
     }
   },
   {
     "id": "kw-hadith-riyad-salihin-weekly-0",
     "external_key": "kw-hadith-riyad-salihin-weekly-0",
     "title": "شرح رياض الصالحين",
-    "speaker_name": "الشيخ حسن بن علي الحسيني",
+    "speaker_name": "حسن بن علي الحسيني",
     "sheikh_image_url": "",
     "category": "حديث",
     "city": "",
@@ -858,14 +877,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "الشيخ حسن بن علي الحسيني"
+      "name": "حسن بن علي الحسيني"
     }
   },
   {
     "id": "kw-aqeedah-wasitiyya-advanced-weekly-0",
     "external_key": "kw-aqeedah-wasitiyya-advanced-weekly-0",
     "title": "شرح العقيدة الواسطية",
-    "speaker_name": "د. عبدالله بن فهد المطلق",
+    "speaker_name": "عبدالله بن فهد المطلق",
     "sheikh_image_url": "",
     "category": "عقيدة",
     "city": "الفروانية",
@@ -890,14 +909,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "د. عبدالله بن فهد المطلق"
+      "name": "عبدالله بن فهد المطلق"
     }
   },
   {
     "id": "kw-fiqh-ibadaat-course-0",
     "external_key": "kw-fiqh-ibadaat-course-0",
-    "title": "دورة الفقه العملي للعبادات — الدرس الأول — الطهارة",
-    "speaker_name": "د. يوسف بن أحمد القاسم",
+    "title": "دورة الفقه العملي للعبادات",
+    "speaker_name": "الطهارة",
     "sheikh_image_url": "",
     "category": "فقه",
     "city": "العاصمة",
@@ -929,14 +948,14 @@
       "الدرس الثاني — الصلاة"
     ],
     "sheikhs": {
-      "name": "د. يوسف بن أحمد القاسم"
+      "name": "الطهارة"
     }
   },
   {
     "id": "kw-fiqh-ibadaat-course-1",
     "external_key": "kw-fiqh-ibadaat-course-1",
-    "title": "دورة الفقه العملي للعبادات — الدرس الثاني — الصلاة",
-    "speaker_name": "د. يوسف بن أحمد القاسم",
+    "title": "دورة الفقه العملي للعبادات",
+    "speaker_name": "الصلاة",
     "sheikh_image_url": "",
     "category": "فقه",
     "city": "العاصمة",
@@ -968,14 +987,14 @@
       "الدرس الثاني — الصلاة"
     ],
     "sheikhs": {
-      "name": "د. يوسف بن أحمد القاسم"
+      "name": "الصلاة"
     }
   },
   {
     "id": "kw-seerah-ghazawaat-weekly-0",
     "external_key": "kw-seerah-ghazawaat-weekly-0",
     "title": "غزوات النبي ﷺ",
-    "speaker_name": "الشيخ عبدالرحمن بن ناصر البراك (تلاوةً من دروسه)",
+    "speaker_name": "عبدالرحمن بن ناصر البراك (تلاوةً من دروسه)",
     "sheikh_image_url": "",
     "category": "أخرى",
     "city": "حولي",
@@ -1000,14 +1019,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "الشيخ عبدالرحمن بن ناصر البراك (تلاوةً من دروسه)"
+      "name": "عبدالرحمن بن ناصر البراك (تلاوةً من دروسه)"
     }
   },
   {
     "id": "kw-aqeeda-tahawiyya-weekly-0",
     "external_key": "kw-aqeeda-tahawiyya-weekly-0",
     "title": "شرح العقيدة الطحاوية",
-    "speaker_name": "الشيخ عبدالله بن سالم الجهني",
+    "speaker_name": "عبدالله بن سالم الجهني",
     "sheikh_image_url": "",
     "category": "عقيدة",
     "city": "العاصمة",
@@ -1031,14 +1050,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "الشيخ عبدالله بن سالم الجهني"
+      "name": "عبدالله بن سالم الجهني"
     }
   },
   {
     "id": "kw-arabic-nahw-beginner-course-0",
     "external_key": "kw-arabic-nahw-beginner-course-0",
-    "title": "دورة النحو للمبتدئين — الفصل الأول",
-    "speaker_name": "الشيخ أحمد بن عبدالله القحطاني",
+    "title": "دورة النحو للمبتدئين",
+    "speaker_name": "أحمد بن عبدالله القحطاني",
     "sheikh_image_url": "",
     "category": "تأصيل",
     "city": "حولي",
@@ -1062,15 +1081,18 @@
     "activity_type": "دورة",
     "is_course": true,
     "course_id": "arabic-nahw-beginner-course",
+    "linked_titles": [
+      "الفصل الأول"
+    ],
     "sheikhs": {
-      "name": "الشيخ أحمد بن عبدالله القحطاني"
+      "name": "أحمد بن عبدالله القحطاني"
     }
   },
   {
     "id": "kw-fiqh-purification-program-0",
     "external_key": "kw-fiqh-purification-program-0",
-    "title": "أحكام الطهارة من أوّلها إلى آخرها — الجلسة الأسبوعية",
-    "speaker_name": "الشيخ فيصل بن محمد المشعل",
+    "title": "أحكام الطهارة من أوّلها إلى آخرها",
+    "speaker_name": "فيصل بن محمد المشعل",
     "sheikh_image_url": "",
     "category": "فقه",
     "city": "",
@@ -1093,15 +1115,18 @@
     "is_recurring": true,
     "activity_type": "درس",
     "is_course": false,
+    "linked_titles": [
+      "الجلسة الأسبوعية"
+    ],
     "sheikhs": {
-      "name": "الشيخ فيصل بن محمد المشعل"
+      "name": "فيصل بن محمد المشعل"
     }
   },
   {
     "id": "kw-tazkiya-nafs-weekly-0",
     "external_key": "kw-tazkiya-nafs-weekly-0",
     "title": "تزكية النفس وإصلاح القلب",
-    "speaker_name": "الشيخ حامد بن عبدالرحمن الهاشمي",
+    "speaker_name": "حامد بن عبدالرحمن الهاشمي",
     "sheikh_image_url": "",
     "category": "أخرى",
     "city": "الفروانية",
@@ -1125,14 +1150,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "الشيخ حامد بن عبدالرحمن الهاشمي"
+      "name": "حامد بن عبدالرحمن الهاشمي"
     }
   },
   {
     "id": "kw-hadith-sahih-bukhari-read-0",
     "external_key": "kw-hadith-sahih-bukhari-read-0",
     "title": "قراءة صحيح البخاري",
-    "speaker_name": "الشيخ خالد بن عبدالله البسام",
+    "speaker_name": "خالد بن عبدالله البسام",
     "sheikh_image_url": "",
     "category": "حديث",
     "city": "العاصمة",
@@ -1156,14 +1181,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "الشيخ خالد بن عبدالله البسام"
+      "name": "خالد بن عبدالله البسام"
     }
   },
   {
     "id": "kw-tafsir-tabari-weekly-0",
     "external_key": "kw-tafsir-tabari-weekly-0",
     "title": "تفسير جامع البيان — الطبري",
-    "speaker_name": "د. سالم الطويل",
+    "speaker_name": "سالم الطويل",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تفسير",
     "city": "حولي",
@@ -1187,14 +1212,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "د. سالم الطويل"
+      "name": "سالم الطويل"
     }
   },
   {
     "id": "kw-aqeedah-wasitiyya-course-0",
     "external_key": "kw-aqeedah-wasitiyya-course-0",
-    "title": "دورة شرح العقيدة الواسطية — الدورة الكاملة",
-    "speaker_name": "د. عبد الرزاق البدر",
+    "title": "دورة شرح العقيدة الواسطية",
+    "speaker_name": "عبد الرزاق البدر",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "عقيدة",
     "city": "",
@@ -1219,15 +1244,18 @@
     "activity_type": "دورة",
     "is_course": true,
     "course_id": "aqeedah-wasitiyya-course",
+    "linked_titles": [
+      "الدورة الكاملة"
+    ],
     "sheikhs": {
-      "name": "د. عبد الرزاق البدر"
+      "name": "عبد الرزاق البدر"
     }
   },
   {
     "id": "kw-seerah-nabawiyya-weekly-0",
     "external_key": "kw-seerah-nabawiyya-weekly-0",
     "title": "السيرة النبوية المفصّلة",
-    "speaker_name": "د. راغب السرجاني",
+    "speaker_name": "راغب السرجاني",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "أخرى",
     "city": "حولي",
@@ -1251,14 +1279,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "د. راغب السرجاني"
+      "name": "راغب السرجاني"
     }
   },
   {
     "id": "kw-fiqh-maliki-risala-program-0",
     "external_key": "kw-fiqh-maliki-risala-program-0",
     "title": "برنامج شرح رسالة ابن أبي زيد القيرواني",
-    "speaker_name": "د. محمد الأمين الشنقيطي",
+    "speaker_name": "محمد الأمين الشنقيطي",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "فقه",
     "city": "",
@@ -1283,14 +1311,14 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "د. محمد الأمين الشنقيطي"
+      "name": "محمد الأمين الشنقيطي"
     }
   },
   {
     "id": "kw-jahraa-muhimmat-aqeeda-women-2026-0",
     "external_key": "kw-jahraa-muhimmat-aqeeda-women-2026-0",
-    "title": "دورة مهمات في العقيدة — ثلاثة الأصول — القواعد الأربع — نواقض الإسلام",
-    "speaker_name": "أ. جميلة الهاجري",
+    "title": "دورة مهمات في العقيدة",
+    "speaker_name": "نواقض الإسلام",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "العاصمة",
@@ -1315,15 +1343,18 @@
     "activity_type": "دورة",
     "is_course": true,
     "course_id": "jahraa-muhimmat-aqeeda-women-2026",
+    "linked_titles": [
+      "ثلاثة الأصول — القواعد الأربع — نواقض الإسلام"
+    ],
     "sheikhs": {
-      "name": "أ. جميلة الهاجري"
+      "name": "نواقض الإسلام"
     }
   },
   {
     "id": "kw-asima-umdat-ahkam-sarra-2026-0",
     "external_key": "kw-asima-umdat-ahkam-sarra-2026-0",
-    "title": "دورة عمدة الأحكام — للإمام عبدالغني المقدسي — عمدة الأحكام — 18 مجلساً",
-    "speaker_name": "الشيخ د. محمد هشام طاهري",
+    "title": "دورة عمدة الأحكام — للإمام عبدالغني المقدسي",
+    "speaker_name": "18 مجلساً",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "",
@@ -1348,15 +1379,18 @@
     "activity_type": "دورة",
     "is_course": true,
     "course_id": "asima-umdat-ahkam-sarra-2026",
+    "linked_titles": [
+      "عمدة الأحكام — 18 مجلساً"
+    ],
     "sheikhs": {
-      "name": "الشيخ د. محمد هشام طاهري"
+      "name": "18 مجلساً"
     }
   },
   {
     "id": "kw-mahboula-dosari-umdat-tawhid-2026-0",
     "external_key": "kw-mahboula-dosari-umdat-tawhid-2026-0",
-    "title": "دورة عمدة الأحكام وكتاب التوحيد — المهبولة — شرح عمدة الأحكام (كتاب الطهارة)",
-    "speaker_name": "الشيخ فهد بن سعود الدوسري",
+    "title": "دورة عمدة الأحكام وكتاب التوحيد — المهبولة",
+    "speaker_name": "فهد بن سعود الدوسري",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "",
@@ -1387,14 +1421,14 @@
       "شرح كتاب التوحيد"
     ],
     "sheikhs": {
-      "name": "الشيخ فهد بن سعود الدوسري"
+      "name": "فهد بن سعود الدوسري"
     }
   },
   {
     "id": "kw-mahboula-dosari-umdat-tawhid-2026-1",
     "external_key": "kw-mahboula-dosari-umdat-tawhid-2026-1",
-    "title": "دورة عمدة الأحكام وكتاب التوحيد — المهبولة — شرح كتاب التوحيد",
-    "speaker_name": "الشيخ فهد بن سعود الدوسري",
+    "title": "دورة عمدة الأحكام وكتاب التوحيد — المهبولة",
+    "speaker_name": "فهد بن سعود الدوسري",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "",
@@ -1425,14 +1459,14 @@
       "شرح كتاب التوحيد"
     ],
     "sheikhs": {
-      "name": "الشيخ فهد بن سعود الدوسري"
+      "name": "فهد بن سعود الدوسري"
     }
   },
   {
     "id": "kw-ahmadi-zad-muslim-ulum-quran-2026-0",
     "external_key": "kw-ahmadi-zad-muslim-ulum-quran-2026-0",
-    "title": "الميسر في علوم القرآن — دورة زاد المسلم العلمية الأولى — المجلس الأول — علوم القرآن",
-    "speaker_name": "الشيخ لافي عايض العازمي",
+    "title": "الميسر في علوم القرآن — دورة زاد المسلم العلمية الأولى",
+    "speaker_name": "علوم القرآن",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "",
@@ -1465,14 +1499,14 @@
       "المجلس الثاني — علوم القرآن"
     ],
     "sheikhs": {
-      "name": "الشيخ لافي عايض العازمي"
+      "name": "علوم القرآن"
     }
   },
   {
     "id": "kw-ahmadi-zad-muslim-ulum-quran-2026-1",
     "external_key": "kw-ahmadi-zad-muslim-ulum-quran-2026-1",
-    "title": "الميسر في علوم القرآن — دورة زاد المسلم العلمية الأولى — المجلس الثاني — علوم القرآن",
-    "speaker_name": "الشيخ لافي عايض العازمي",
+    "title": "الميسر في علوم القرآن — دورة زاد المسلم العلمية الأولى",
+    "speaker_name": "علوم القرآن",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "",
@@ -1505,7 +1539,7 @@
       "المجلس الثاني — علوم القرآن"
     ],
     "sheikhs": {
-      "name": "الشيخ لافي عايض العازمي"
+      "name": "علوم القرآن"
     }
   },
   {
@@ -1543,8 +1577,8 @@
   {
     "id": "kw-ahmadi-zad-muslim-usool-athlatha-2026-0",
     "external_key": "kw-ahmadi-zad-muslim-usool-athlatha-2026-0",
-    "title": "ثلاثة الأصول والقواعد الأربع — دورة زاد المسلم العلمية الأولى — خارطة طريق مفيدة لطالب علم العقيدة",
-    "speaker_name": "الشيخ د. محمد عبدالله العتيبي",
+    "title": "ثلاثة الأصول والقواعد الأربع — دورة زاد المسلم العلمية الأولى",
+    "speaker_name": "محمد عبدالله العتيبي",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "",
@@ -1577,14 +1611,14 @@
       "الأصول الثلاثة — الجلسة الأولى والثانية"
     ],
     "sheikhs": {
-      "name": "الشيخ د. محمد عبدالله العتيبي"
+      "name": "محمد عبدالله العتيبي"
     }
   },
   {
     "id": "kw-ahmadi-zad-muslim-usool-athlatha-2026-1",
     "external_key": "kw-ahmadi-zad-muslim-usool-athlatha-2026-1",
-    "title": "ثلاثة الأصول والقواعد الأربع — دورة زاد المسلم العلمية الأولى — القواعد الأربعة",
-    "speaker_name": "الشيخ د. محمد عبدالله العتيبي",
+    "title": "ثلاثة الأصول والقواعد الأربع — دورة زاد المسلم العلمية الأولى",
+    "speaker_name": "محمد عبدالله العتيبي",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "",
@@ -1617,14 +1651,14 @@
       "الأصول الثلاثة — الجلسة الأولى والثانية"
     ],
     "sheikhs": {
-      "name": "الشيخ د. محمد عبدالله العتيبي"
+      "name": "محمد عبدالله العتيبي"
     }
   },
   {
     "id": "kw-ahmadi-zad-muslim-usool-athlatha-2026-2",
     "external_key": "kw-ahmadi-zad-muslim-usool-athlatha-2026-2",
-    "title": "ثلاثة الأصول والقواعد الأربع — دورة زاد المسلم العلمية الأولى — الأصول الثلاثة — الجلسة الأولى والثانية",
-    "speaker_name": "الشيخ د. محمد عبدالله العتيبي",
+    "title": "ثلاثة الأصول والقواعد الأربع — دورة زاد المسلم العلمية الأولى",
+    "speaker_name": "الجلسة الأولى والثانية",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "",
@@ -1657,14 +1691,14 @@
       "الأصول الثلاثة — الجلسة الأولى والثانية"
     ],
     "sheikhs": {
-      "name": "الشيخ د. محمد عبدالله العتيبي"
+      "name": "الجلسة الأولى والثانية"
     }
   },
   {
     "id": "kw-zad-aldawee-13-fitna-hadiths-2026-0",
     "external_key": "kw-zad-aldawee-13-fitna-hadiths-2026-0",
-    "title": "أحاديث في الفتن والحوادث — المجلس الثالث عشر — المجلس الثالث عشر",
-    "speaker_name": "الشيخ د. محمد عبدالله العتيبي",
+    "title": "أحاديث في الفتن والحوادث — المجلس الثالث عشر",
+    "speaker_name": "محمد عبدالله العتيبي",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "حديث",
     "city": "الأحمدي",
@@ -1688,15 +1722,18 @@
     "is_recurring": true,
     "activity_type": "درس",
     "is_course": false,
+    "linked_titles": [
+      "المجلس الثالث عشر"
+    ],
     "sheikhs": {
-      "name": "الشيخ د. محمد عبدالله العتيبي"
+      "name": "محمد عبدالله العتيبي"
     }
   },
   {
     "id": "kw-ahmadi-umdat-ahkam-sabah-abu-khashaba-2026-0",
     "external_key": "kw-ahmadi-umdat-ahkam-sabah-abu-khashaba-2026-0",
     "title": "شرح عمدة الأحكام — مسجد أبو طاهر السلفي",
-    "speaker_name": "د. دهام أبو خشبة",
+    "speaker_name": "دهام أبو خشبة",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "فقه",
     "city": "الأحمدي",
@@ -1721,7 +1758,7 @@
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
-      "name": "د. دهام أبو خشبة"
+      "name": "دهام أبو خشبة"
     }
   },
   {
@@ -1760,7 +1797,7 @@
   {
     "id": "sci-rawdat-alafham-muwaiziri",
     "external_key": "sci-rawdat-alafham-muwaiziri",
-    "title": "روضة الأفهام في شرح زوائد المحرر على بلوغ المرام",
+    "title": "شرح روضة الأفهام في شرح زوائد المحرر على بلوغ المرام",
     "speaker_name": "الشيخ حسين بن مبارك المويزري",
     "sheikh_image_url": "/sheikhs/hussein-muwaiziri.svg",
     "category": "فقه",

@@ -47,15 +47,14 @@ console.log("\n=== qa-to-quiz — تحويل آمن typed ===");
   assert(new Set(ids).size === ids.length, "لا تكرار في معرّفات الأسئلة المحوّلة");
 }
 
-console.log("\n=== recent-pages — /qa و /quiz منفصلان ===");
+console.log("\n=== recent-pages — /qa ملغى و/quiz وحيد ===");
 {
   const src = readFileSync(resolve(libRoot, "recent-pages.ts"), "utf8");
   const quizKeys = [...src.matchAll(/^\s*"(\/quiz)"\s*:/gm)].map((m) => m[1]);
   const qaKeys = [...src.matchAll(/^\s*"(\/qa)"\s*:/gm)].map((m) => m[1]);
   assert(quizKeys.length === 1, `مفتاح "/quiz" يظهر مرة واحدة فقط (الفعلي: ${quizKeys.length})`);
-  assert(qaKeys.length === 1, `مفتاح "/qa" يظهر مرة واحدة فقط (الفعلي: ${qaKeys.length})`);
+  assert(qaKeys.length === 0, `مفتاح "/qa" غير موجود بعد التحويل إلى /quiz (الفعلي: ${qaKeys.length})`);
   assert(/"\/quiz"\s*:\s*"لعبة سين جيم"/.test(src), 'تسمية "/quiz" هي «لعبة سين جيم»');
-  assert(/"\/qa"\s*:\s*"الأسئلة والأجوبة"/.test(src), 'تسمية "/qa" هي «الأسئلة والأجوبة»');
 }
 
 console.log(`\n=== النتيجة: ${passed} نجاح، ${failed} فشل ===`);

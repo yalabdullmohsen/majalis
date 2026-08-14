@@ -62,6 +62,35 @@ export function rulingRichBody(row) {
   return parts.filter(Boolean).join("\n");
 }
 
+/** مرآة خفيفة لبوابة النشر العامة — لا pending_review في sitemap/prerender */
+function isPubliclyPublishedRuling(row) {
+  const title = String(row?.title ?? "").trim();
+  const body = String(row?.body ?? "").trim();
+  if (!title || !body) return false;
+  const verification = String(row?.verification_status ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/-/g, "_");
+  const status = String(row?.status ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/-/g, "_");
+  const blocked = new Set([
+    "draft",
+    "pending",
+    "pending_review",
+    "needs_review",
+    "rejected",
+    "archived",
+    "",
+  ]);
+  if (blocked.has(verification)) return false;
+  if (verification !== "approved" && verification !== "published") return false;
+  if (status && blocked.has(status) && status !== "approved" && status !== "published") return false;
+  if (status && status !== "approved" && status !== "published") return false;
+  return true;
+}
+
 export async function loadEncyclopediaRulingsForSeo(appRoot) {
   const manifestPath = resolve(appRoot, "public/data/rulings-encyclopedia/manifest.json");
   if (!existsSync(manifestPath)) return [];
@@ -78,6 +107,7 @@ export async function loadEncyclopediaRulingsForSeo(appRoot) {
       if (/[؟?]\s*$/u.test(title)) continue;
       if (/^(هل|كيف|متى|أين|لماذا|كم)\b/u.test(title)) continue;
       if (!row.body || !String(row.body).trim()) continue;
+      if (!isPubliclyPublishedRuling(row)) continue;
       out.push(row);
     }
   }

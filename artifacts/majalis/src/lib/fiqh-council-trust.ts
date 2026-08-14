@@ -58,8 +58,18 @@ export function isPublicDisplayableItem(item: FiqhCouncilItem): boolean {
   return isVerifiedPublicItem(item);
 }
 
+/**
+ * مسألة عامة فقط إن كانت منشورة وموثّقة رسميًا ولها مادّة كافية
+ * (ملخص حكم + مستند) — لا تُعرض مسائل العنوان/سطر واحد فقط.
+ */
 export function isPublicIssue(issue: FiqhCouncilIssue): boolean {
-  return issue.status === "published" && issue.documentation_level === "official_verified";
+  if (issue.status !== "published") return false;
+  if (issue.documentation_level !== "official_verified") return false;
+  const ruling = String(issue.ruling_summary ?? "").trim();
+  const evidence = String(issue.evidence_summary ?? "").trim();
+  if (ruling.length < 60) return false;
+  if (evidence.length < 30) return false;
+  return true;
 }
 
 /** تحقق قبل النشر — يُستخدم في الإدارة */

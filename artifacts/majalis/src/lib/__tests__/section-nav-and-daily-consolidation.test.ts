@@ -50,7 +50,8 @@ console.log("\n=== isTabActive ===");
   assert(isTabActive("/mushaf", "/quran-knowledge") === true, "توافق مسارات المعرفة");
   assert(isTabActive("/hadith", "/lessons") === true, "الحديث تحت الدروس");
   assert(isTabActive("/adhkar", "/prayer-times") === true, "الأذكار تحت الصلاة");
-  assert(isTabActive("/qa", "/fiqh") === true, "الأسئلة تحت فقه");
+  assert(isTabActive("/quiz", "/fiqh") === true, "لعبة سين جيم تحت فقه");
+  assert(isTabActive("/qa", "/fiqh") === true, "مسار /qa القديم يُحسب تحت فقه أثناء التحويل");
   assert(isTabActive("/library/book-1", "/quran-knowledge") === false, "مسار كتاب لا يفعّل قرآن");
 }
 

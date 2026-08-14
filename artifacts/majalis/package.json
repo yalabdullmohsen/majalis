@@ -314,6 +314,11 @@
     "test:native-feel": "node --import tsx src/lib/__tests__/native-feel-motion.test.ts && node --import tsx src/lib/__tests__/spatial-nav.test.ts",
     "test:mushaf-density-gate": "node scripts/quran-import/mushaf-density-gate.mjs",
     "test:mushaf-aya-parity": "node scripts/quran-import/mushaf-aya-parity-gate.mjs",
+    "test:rulings-publication-gate": "node scripts/audit-rulings-publication-gate.mjs",
+    "test:production-p0-regressions": "node --import tsx src/lib/__tests__/production-p0-regressions.test.ts",
+    "test:lesson-roles": "node --import tsx src/lib/__tests__/lesson-role-validation.test.ts",
+    "test:fiqh-council-completeness": "node --import tsx src/lib/__tests__/fiqh-council-completeness.test.ts",
+    "refresh:lessons-snapshot": "node --import tsx scripts/refresh-lessons-seed-snapshot.mjs",
     "lint:design-tokens": "node scripts/lint-design-tokens.mjs"
   },
   "devDependencies": {
