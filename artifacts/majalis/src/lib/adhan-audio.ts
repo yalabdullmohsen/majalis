@@ -20,7 +20,9 @@ import {
 import {
   isAdhanPlaying as playbackIsPlaying,
   playAdhanUrl,
+  playAdhanUrlAsync,
   stopAdhan as playbackStop,
+  type AdhanPlayResult,
 } from "./adhan-playback";
 import {
   resolveAdhanClip,
@@ -146,7 +148,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "madinah",
-    name: "أذان المسجد النبوي",
+    name: "أذان الحرم المدني",
     personName: null,
     attribution: "style_only",
     patternId: "madani",
@@ -174,7 +176,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "egypt",
-    name: "الأذان المصري",
+    name: "أذان هادئ",
     personName: null,
     attribution: "style_only",
     patternId: "egyptian",
@@ -183,9 +185,9 @@ export const MUEZZINS: Muezzin[] = [
     origin: "القاهرة",
     country: "مصر",
     style: patternStyle("egyptian"),
-    category: "مصري",
-    tags: ["مصري", "تقليدي", "أوفلاين"],
-    biography: "تسجيل بالنمط المصري التقليدي (أوفلاين محلي). بلا نسبة شخصية موثّقة.",
+    category: "هادئ",
+    tags: ["هادئ", "مصري", "أوفلاين"],
+    biography: "تسجيل هادئ بالنمط المصري التقليدي (أوفلاين محلي). بلا نسبة شخصية موثّقة.",
     rating: 4.8,
     totalRatings: 165000,
     followers: 270000,
@@ -350,7 +352,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "takbeerat",
-    name: "التكبيرات فقط",
+    name: "أذان قصير / تنبيه فقط",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -360,7 +362,7 @@ export const MUEZZINS: Muezzin[] = [
     country: "—",
     style: "تكبيرات",
     category: "تنبيه قصير",
-    tags: ["تكبير", "قصير", "أوفلاين"],
+    tags: ["تكبير", "قصير", "تنبيه", "أوفلاين"],
     biography: "مقطع تكبيرات قصيرة أوفلاين للتنبيه السريع دون أذان كامل.",
     rating: 4.5,
     totalRatings: 8000,
@@ -543,9 +545,18 @@ export function previewAdhan(muezzin: Muezzin): HTMLAudioElement {
   if (!muezzin.audioUrl) {
     throw new Error(`لا ملف معاينة للتسجيل: ${muezzin.id}`);
   }
-  const audio = playAdhanUrl(muezzin.audioUrl, 0.8);
-  audio.addEventListener("loadedmetadata", () => {
-    setTimeout(() => stopAdhan(), 15_000);
-  });
+  const audio = playAdhanUrl(muezzin.audioUrl, 0.8, { maxMs: 15_000, fadeIn: true });
   return audio;
+}
+
+/** معاينة مع نتيجة واضحة للواجهة (لا فشل صامت). */
+export async function previewAdhanAsync(muezzin: Muezzin): Promise<AdhanPlayResult> {
+  if (!muezzin.audioUrl) {
+    return {
+      ok: false,
+      code: "missing_file",
+      message: `لا ملف معاينة للتسجيل: ${muezzin.id}`,
+    };
+  }
+  return playAdhanUrlAsync(muezzin.audioUrl, 0.8, { maxMs: 15_000, fadeIn: true });
 }

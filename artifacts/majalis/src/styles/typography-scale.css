@@ -1,16 +1,23 @@
 /**
  * سُلّم طباعي موحّد للواجهة (خارج المصحف).
+ * رسم المصحف (QPC) لا يتأثر — يستخدم --mushaf-font-scale فقط.
  */
 :root {
   --text-display: clamp(1.75rem, 5.2vw, 2.25rem);
-  --text-h1: clamp(1.375rem, 3.8vw, 1.625rem);
-  --text-h2: clamp(1.25rem, 3.2vw, 1.375rem);
-  --text-h3: 1.125rem;
+  --text-h1: clamp(1.375rem, 3.8vw, 1.625rem); /* 22–26px */
+  --text-h2: clamp(1.25rem, 3.2vw, 1.375rem); /* 20–22px */
+  --text-h3: 1.1875rem; /* ~19px */
   --text-body-lg: 1.125rem;
   --text-body: var(--font-base, 1.0625rem);
-  --text-body-sm: 0.9375rem;
-  --text-label: var(--font-sm, 0.875rem);
-  --text-caption: var(--font-xs, 0.8125rem);
+  --text-body-sm: 0.9375rem; /* 15px */
+  --text-label: var(--font-sm, 0.9375rem);
+  --text-caption: var(--font-xs, 0.84375rem);
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
 
   --mj-fs-display: var(--text-display);
   --mj-fs-h1: var(--text-h1);
@@ -31,7 +38,35 @@
 
 body {
   font-size: var(--text-body);
+  font-weight: var(--font-weight-regular, 400);
   line-height: var(--lh-body, 1.7);
+}
+
+h1,
+.mj-page-title,
+.page-title {
+  font-weight: var(--font-weight-extrabold, 800);
+  line-height: var(--line-height-tight, 1.35);
+}
+
+h2,
+.mj-section-title,
+.section-title {
+  font-weight: var(--font-weight-bold, 700);
+}
+
+h3,
+.mj-card-title,
+.card-title {
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+button,
+.mj-btn,
+.ads-pill-btn,
+.filter-chip,
+[role="tab"] {
+  font-weight: var(--font-weight-semibold, 600);
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
@@ -42,6 +77,7 @@ select {
 
 .bottom-nav__tab-label,
 .bottom-nav--v2 .bottom-nav__tab-label {
-  font-size: var(--text-caption) !important;
+  font-size: max(0.78125rem, var(--text-caption)) !important; /* ≥12.5px */
+  font-weight: var(--font-weight-medium, 500) !important;
   line-height: 1.25 !important;
 }

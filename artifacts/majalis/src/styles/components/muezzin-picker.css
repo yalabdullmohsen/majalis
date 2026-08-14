@@ -86,6 +86,17 @@
   .mzp-progress__bar { transition: none; }
 }
 
+.mzp-preview-error {
+  margin: 0.5rem 0 0;
+  padding: 0.5rem 0.65rem;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--mj-danger, #b42318) 12%, transparent);
+  color: var(--mj-danger, #b42318);
+  font-size: var(--font-sm, 0.875rem);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
 .mzp-list {
   padding: 0.55rem 0.85rem;
   overflow-y: auto;

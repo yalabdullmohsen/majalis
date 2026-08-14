@@ -11,6 +11,12 @@ import { ADHAN_SHORT_MAX_SEC } from "./adhan-playback-modes";
 export const ADHAN_IOS_MAX_SEGMENTS = 4;
 export const ADHAN_IOS_SEGMENT_MAX_SEC = Math.min(28, ADHAN_SHORT_MAX_SEC);
 
+/**
+ * مقاطع الأذان الكامل المتعدّدة (`adhan_*_gen_sN.caf`) غير مضمّنة بعد في الحزمة.
+ * عند false نجدول إشعارًا واحدًا بصوت قصير مخصّص بدل سلسلة ملفات مفقودة (صمت).
+ */
+export const ADHAN_IOS_MULTI_SEGMENT_BUNDLED = false;
+
 export type AdhanIosSegmentPlan = {
   /** معرّف الإشعار */
   id: number;
@@ -194,6 +200,46 @@ export async function scheduleIosFullAdhan(opts: {
   startAtMs: number;
   durationsSec?: number[];
 }): Promise<{ ok: boolean; ids: number[] }> {
+  // بدون مقاطع مرخّصة في الحزمة: إشعار واحد بصوت قصير مضمّن (لا صمت من ملفات ناقصة).
+  if (!ADHAN_IOS_MULTI_SEGMENT_BUNDLED) {
+    const { resolveAdhanStyleNotificationSound } = await import(
+      "./prayer-notification-sounds"
+    );
+    const dayKey = new Date(opts.startAtMs).toISOString().slice(0, 10);
+    const id = chainIdBase(opts.prayerKey, dayKey);
+    const plan: AdhanIosSegmentPlan[] = [
+      {
+        id,
+        sound: resolveAdhanStyleNotificationSound(opts.recordingId),
+        atMs: opts.startAtMs,
+        title: `أذان ${opts.prayerName}`,
+        body: "حيَّ على الصلاة — افتح التطبيق لسماع الأذان الكامل",
+        prayerKey: opts.prayerKey,
+        segmentIndex: 0,
+      },
+    ];
+    const result = await scheduleAdhanIosSegmentChain(plan);
+    if (result.ok) {
+      try {
+        const { rememberAdhanResumeContext } = await import("./adhan-smart-cancel");
+        const key = opts.prayerKey as
+          | "fajr"
+          | "dhuhr"
+          | "asr"
+          | "maghrib"
+          | "isha";
+        rememberAdhanResumeContext({
+          prayerKey: key,
+          muezzinId: opts.recordingId,
+          isFajr: opts.isFajr,
+        });
+      } catch {
+        /* ignore */
+      }
+    }
+    return result;
+  }
+
   const plan = buildAdhanIosSegmentPlan({
     prayerKey: opts.prayerKey,
     prayerName: opts.prayerName,

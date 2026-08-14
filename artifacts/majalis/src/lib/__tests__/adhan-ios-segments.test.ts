@@ -5,6 +5,7 @@
 import assert from "node:assert/strict";
 import {
   ADHAN_IOS_MAX_SEGMENTS,
+  ADHAN_IOS_MULTI_SEGMENT_BUNDLED,
   ADHAN_IOS_SEGMENT_MAX_SEC,
   adhanIosSoundName,
   buildAdhanIosSegmentPlan,
@@ -65,6 +66,11 @@ const scheduled = await scheduleIosFullAdhan({
   startAtMs: start,
 });
 assert.equal(scheduled.ok, true);
-assert.equal(scheduled.ids.length, 4);
+if (ADHAN_IOS_MULTI_SEGMENT_BUNDLED) {
+  assert.equal(scheduled.ids.length, 4);
+} else {
+  // بدون مقاطع مرخّصة: إشعار واحد بصوت قصير مضمّن
+  assert.equal(scheduled.ids.length, 1);
+}
 
 console.log("adhan-ios-segments.test.ts: ok");

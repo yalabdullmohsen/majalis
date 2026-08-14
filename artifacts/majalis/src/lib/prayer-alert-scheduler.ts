@@ -205,7 +205,26 @@ export async function startPrayerAlertScheduler(
 
   if (opts?.forceNativeReschedule || batchSig !== _lastScheduleSig) {
     _lastScheduleSig = batchSig;
-    await rescheduleAllNativePrayers(slots, prefs);
+    try {
+      await rescheduleAllNativePrayers(slots, prefs);
+      const { savePrayerScheduleStatus } = await import("./prayer-schedule-status");
+      savePrayerScheduleStatus({
+        ok: true,
+        atIso: new Date().toISOString(),
+        prayerCount: slots.length,
+        soundProfile: prefs.soundProfile,
+      });
+    } catch (e) {
+      const { savePrayerScheduleStatus } = await import("./prayer-schedule-status");
+      savePrayerScheduleStatus({
+        ok: false,
+        atIso: new Date().toISOString(),
+        prayerCount: slots.length,
+        soundProfile: prefs.soundProfile,
+        note: e instanceof Error ? e.message : "schedule_failed",
+      });
+      throw e;
+    }
   }
 
   const next = findNextUpcoming(payload.prayers);

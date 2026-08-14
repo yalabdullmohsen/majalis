@@ -8,12 +8,22 @@ import {
   DEFAULT_ALERT_SOUND,
   ensureNotificationChannels,
 } from "@/lib/notifications/channels";
+import {
+  PRAYER_CUSTOM_SOUNDS_ENABLED,
+  PRAYER_SOUND_FILES,
+  platformNotificationSoundName,
+} from "@/lib/prayer-notification-sounds";
 
 export const TEST_NOTIFICATION_NATIVE_ID = 99901;
 export const TEST_NOTIFICATION_TITLE = "اختبار إشعار المجلس";
 export const TEST_NOTIFICATION_BODY =
   "إن رأيت هذا التنبيه فالصوت والبanner والحمولة تعمل على الجهاز.";
 export const TEST_NOTIFICATION_URL = "/notification-settings";
+
+function testNotificationSound(): string {
+  if (!PRAYER_CUSTOM_SOUNDS_ENABLED) return DEFAULT_ALERT_SOUND;
+  return platformNotificationSoundName(PRAYER_SOUND_FILES.clear);
+}
 
 export type TestNotificationResult = {
   ok: boolean;
@@ -46,7 +56,7 @@ export async function fireTestLocalNotification(): Promise<TestNotificationResul
               at: new Date(Date.now() + 1500),
               allowWhileIdle: true,
             },
-            sound: DEFAULT_ALERT_SOUND,
+            sound: testNotificationSound(),
             channelId: CHANNEL_GENERAL,
             interruptionLevel: "timeSensitive",
             extra: {

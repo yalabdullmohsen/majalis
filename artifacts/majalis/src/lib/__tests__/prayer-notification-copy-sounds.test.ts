@@ -55,14 +55,16 @@ assert.equal(preAlertKindForMinutes(5), "pre-5");
 assert.equal(preAlertKindForMinutes(7), "pre-10");
 console.log("  ✓ preAlertKindForMinutes buckets");
 
-// ── أصوات: fallback آمن إلى default ما دامت الملفات غير مفعّلة ──
-assert.equal(PRAYER_CUSTOM_SOUNDS_ENABLED, false);
-assert.equal(resolvePrayerNotificationSound("quiet", "auto"), DEFAULT_ALERT_SOUND);
-assert.equal(resolvePrayerNotificationSound("clear", "system"), DEFAULT_ALERT_SOUND);
+// ── أصوات: مفعّلة بعد تضمين ملفات الحزمة ──
+assert.equal(PRAYER_CUSTOM_SOUNDS_ENABLED, true);
+assert.equal(resolvePrayerNotificationSound("quiet", "system"), DEFAULT_ALERT_SOUND);
+assert.equal(resolvePrayerNotificationSound("quiet", "auto"), "prayer_quiet.caf");
+assert.equal(resolvePrayerNotificationSound("clear", "auto"), "prayer_clear.caf");
+assert.equal(resolvePrayerNotificationSound("soft", "clear"), "prayer_clear.caf");
 assert.equal(soundRoleForNotifKind("pre"), "quiet");
 assert.equal(soundRoleForNotifKind("enter"), "clear");
 assert.equal(soundRoleForNotifKind("post"), "soft");
 assert.ok(PRAYER_SOUND_FILES.quiet.endsWith(".caf"));
-console.log("  ✓ prayer sound resolve falls back to default");
+console.log("  ✓ prayer sound resolve uses custom caf when enabled");
 
 console.log("\nprayer-notification-copy-sounds: all checks passed");
