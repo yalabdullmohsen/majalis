@@ -329,7 +329,7 @@ const MethodologyPage = lazy(() => import("@/views/MethodologyPage"));
 const MyCitationsPage = lazy(() => import("@/views/MyCitationsPage"));
 // ScholarlyResearchPage عُطِّلت 2026-07-23 — الاستيراد الكسول أُزيل (لم يعد
 // يُستهلَك)؛ ملف المكوّن نفسه باقٍ بلا حذف (راجع feature-registry.ts).
-const _AcademicResearchPage  = lazy(() => import("@/views/AcademicResearchPage"));
+const AcademicResearchPage  = lazy(() => import("@/views/AcademicResearchPage"));
 const ResearchDetailPage    = lazy(() => import("@/views/ResearchDetailPage"));
 const ResearchSubmitPage    = lazy(() => import("@/views/ResearchSubmitPage"));
 const ResearchAssistantPage = lazy(() => import("@/views/ResearchAssistantPage"));
@@ -722,9 +722,10 @@ function Router() {
       <Route path="/academic-research/submit"><SafeLazyRoute component={ResearchSubmitPage} /></Route>
       <Route path="/academic-research/assistant"><SafeLazyRoute component={ResearchAssistantPage} /></Route>
       <Route path="/academic-research/:id"><SafeLazyRoute component={ResearchDetailPage} /></Route>
-      <Route path="/academic-research"><Redirect to="/" /></Route>
-      <Route path="/researches"><Redirect to="/" /></Route>
-      <Route path="/sharia-research"><Redirect to="/" /></Route>
+      <Route path="/academic-research"><SafeLazyRoute component={AcademicResearchPage} /></Route>
+      <Route path="/researches"><Redirect to="/academic-research" /></Route>
+      <Route path="/sharia-research"><Redirect to="/academic-research" /></Route>
+      <Route path="/research"><Redirect to="/academic-research" /></Route>
       <Route path="/learning-path/dashboard"><Redirect to="/my-learning" /></Route>
       <Route path="/learning-path/book/:bookId"><Redirect to="/learning/paths" /></Route>
       <Route path="/learning-path/:scienceSlug"><Redirect to="/learning/paths" /></Route>
@@ -775,8 +776,6 @@ function Router() {
       <Route path="/masajid"><Redirect to="/islamic-directory" /></Route>
       <Route path="/quran-sciences"><Redirect to="/quran-knowledge" /></Route>
 
-      <Route path="/research"><Redirect to="/" /></Route>
-
       <Route path="/kids"><SafeLazyRoute component={KidsPage} /></Route>
       <Route path="/quran/recitation-test-ai"><SafeLazyRoute component={RecitationTestPage} /></Route>
       <Route path="/quran/surahs"><SafeLazyRoute component={SurahIndexPage} /></Route>
@@ -790,8 +789,6 @@ function Router() {
       <Route path="/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
       <Route path="/surah-stories"><Redirect to="/quran/surah-stories" /></Route>
       <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
-      {/* مسارات الاختصار — public redirects */}
-      <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>
       {/* الفقه الإسلامي الموحّد + السيرة النبوية */}
       <Route path="/tawhid"><SafeLazyRoute component={TawhidPage} /></Route>
       <Route path="/discover-islam"><SafeLazyRoute component={DiscoverIslamPage} /></Route>

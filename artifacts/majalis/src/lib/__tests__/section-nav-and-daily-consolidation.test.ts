@@ -71,7 +71,12 @@ console.log("\n=== سجل الميزات ===");
 {
   const entry = FEATURE_REGISTRY.find((f) => f.id === "scholarly-research");
   assert(entry?.status === "disabled", "الباحث الشرعي معطّل");
-  assert(HIDDEN_FROM_NAV_PATHS.has("/universities"), "universities مخفي");
+  const uni = FEATURE_REGISTRY.find((f) => f.id === "universities");
+  assert(uni?.status === "active", "دليل الجامعات فعّال");
+  assert(!HIDDEN_FROM_NAV_PATHS.has("/universities"), "universities ظاهر في الاكتشاف");
+  const researches = FEATURE_REGISTRY.find((f) => f.id === "researches");
+  assert(researches?.status === "active", "الأبحاث والرسائل فعّالة");
+  assert(!HIDDEN_FROM_NAV_PATHS.has("/academic-research"), "academic-research ظاهر في الاكتشاف");
 }
 
 console.log("\n=== vercel redirects للتنظيف ===");
@@ -79,10 +84,7 @@ console.log("\n=== vercel redirects للتنظيف ===");
   const vercelConfig = JSON.parse(readFileSync(resolve(appRoot, "vercel.json"), "utf-8"));
   const redirects = vercelConfig.redirects as Array<{ source: string; destination: string; permanent: boolean }>;
   const expect: Array<[string, string]> = [
-    ["/library", "/"],
-    ["/updates", "/"],
-    ["/knowledge-graph", "/"],
-    ["/academic-research", "/"],
+    ["/researches", "/academic-research"],
     ["/quran-index", "/quran-knowledge"],
     ["/memorization-tests", "/memorization"],
     ["/islamic-institutions", "/islamic-directory"],
@@ -95,6 +97,8 @@ console.log("\n=== vercel redirects للتنظيف ===");
     assert(!!rule && rule.destination === destination && rule.permanent === true,
       `توجيه ${source} → ${destination}`);
   }
+  assert(!redirects.some((r) => r.source === "/academic-research" && r.destination === "/"),
+    "لا توجيه academic-research إلى الرئيسية");
 }
 
 console.log("\n=== PRIMARY_NAV ===");
@@ -107,12 +111,13 @@ console.log("\n=== PRIMARY_NAV ===");
 
 console.log("\n=== nav-visibility تنظيف ===");
 {
-  for (const p of ["/library", "/updates", "/knowledge-graph", "/academic-research", "/flashcards", "/ulum-quran", "/occasions", "/institutions"]) {
+  for (const p of ["/library", "/updates", "/knowledge-graph", "/flashcards", "/ulum-quran", "/occasions", "/institutions"]) {
     assert(HIDDEN_FROM_NAV_PATHS.has(p), `${p} مخفي من الاكتشاف`);
   }
   assert(resolveMergedPath("/library") === "/", "library → /");
   assert(resolveMergedPath("/quran-index") === "/quran-knowledge", "quran-index → hub");
   assert(resolveMergedPath("/reviewed-cards") === "/my-learning", "reviewed-cards → حسابي");
+  assert(resolveMergedPath("/researches") === "/academic-research", "researches → academic-research");
   assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 10, "جدول التوجيه غير فارغ");
   assert(isComingSoonPath("/kids"), "الأطفال قريبًا");
   assert(!isComingSoonPath("/mushaf"), "المصحف لم يعد قريبًا");
@@ -121,6 +126,7 @@ console.log("\n=== nav-visibility تنظيف ===");
   const homeHrefs = FEATURE_CATS.flatMap((c) => c.items.map((i) => i.href));
   assert(!homeHrefs.includes("/library") && !homeHrefs.includes("/flashcards"), "الكتالوج بلا مكتبة/بطاقات منفصلة");
   assert(homeHrefs.includes("/quran-knowledge") && homeHrefs.includes("/memorization"), "البوابات في الكتالوج");
+  assert(homeHrefs.includes("/universities") && homeHrefs.includes("/academic-research"), "الجامعات والرسائل في الكتالوج");
   assert(filterNavItems([{ href: "/library" }, { href: "/mushaf" }]).map((i) => i.href).join(",") === "/mushaf",
     "filterNavItems يسقط المكتبة");
 }
@@ -135,12 +141,15 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   const homeSrc = readFileSync(resolve(appRoot, "src/pages/account/ui/HomeView.tsx"), "utf-8");
   const footerSrc = readFileSync(resolve(appRoot, "src/components/SiteFooter.tsx"), "utf-8");
   const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8");
-  for (const src of [moreSrc, sideSrc, sidebarNavSrc, servicesNavSrc]) {
+  for (const src of [moreSrc, sideSrc, sidebarNavSrc]) {
     assert(!src.includes('href: "/library"') && !src.includes('"/library"'), "لا رابط مكتبة قديم /library");
     assert(!src.includes('"/updates"'), "لا آخر المستجدات");
     assert(!src.includes('"/knowledge-graph"'), "لا استكشف المعرفة");
-    assert(!src.includes('"/academic-research"'), "لا بحث علمي");
   }
+  assert(servicesNavSrc.includes('"/academic-research"') && servicesNavSrc.includes('"/universities"'),
+    "الجامعات والرسائل في مركز الخدمات");
+  assert(appSrc.includes("AcademicResearchPage") && !appSrc.includes('<Route path="/academic-research"><Redirect to="/"'),
+    "صفحة الأبحاث مفعّلة بلا تحويل للرئيسية");
   assert(!homeSrc.includes("HomeAboutSection"), "من نحن خارج الرئيسية");
   const footerNavSrc = readFileSync(resolve(appRoot, "src/lib/site-footer-nav.ts"), "utf-8");
   assert(footerSrc.includes("SITE_FOOTER_GROUPS") || footerSrc.includes("site-footer-nav"), "التذييل من مصدر المجموعات");

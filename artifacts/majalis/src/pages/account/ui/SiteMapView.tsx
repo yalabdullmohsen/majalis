@@ -164,6 +164,7 @@ const SECTIONS = [
       { href: "/sources", label: "المصادر والتراخيص", desc: "مراجع البيانات وملاحظات الترخيص" },
       { href: "/universities", label: "الجامعات الشرعية", desc: "دليل الجامعات والمقارنة" },
       { href: "/universities/compare", label: "مقارنة الجامعات", desc: "مقارنة البرامج الشرعية" },
+      { href: "/academic-research", label: "رسائل الماجستير والدكتوراه", desc: "مكتبة الأبحاث والرسائل الشرعية" },
       { href: "/fiqh-council", label: "المجمع الفقهي", desc: "قرارات المجامع الفقهية" },
       { href: "/hadith-science", label: "علوم الحديث", desc: "مصطلح الحديث ودرجاته" },
       { href: "/islamic-glossary", label: "المصطلحات", desc: "معجم المصطلحات الشرعية" },

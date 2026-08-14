@@ -27,7 +27,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "lessons",      label: "الدروس",             path: "/lessons",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "annual-courses",label:"الدورات العلمية",    path: "/annual-courses",group:"تعليم",         status: "disabled",     inSideNav: false, inBottomNav: false },
   { id: "library",      label: "المكتبة",            path: "/library",      group: "تعليم",         status: "disabled",       inSideNav: false,  inBottomNav: false },
-  { id: "researches",   label: "الأبحاث الشرعية",   path: "/academic-research", group: "تعليم",  status: "disabled",       inSideNav: false,  inBottomNav: false },
+  { id: "researches",   label: "الأبحاث والرسائل", path: "/academic-research", group: "تعليم",  status: "active",        inSideNav: true,   inBottomNav: false },
   { id: "fawaid",       label: "الفوائد",            path: "/fawaid",       group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "hadith-index", label: "الأحاديث النبوية",   path: "/hadith",       group: "حديث",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "hadith-sahih", label: "الأحاديث الصحيحة",  path: "/hadith/sahih", group: "حديث",          status: "active",       inSideNav: false, inBottomNav: false },
@@ -72,7 +72,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
      الكود (ScholarlyResearchPage.tsx وrag-service.ts) لم يُحذف عمدًا — بلا
      أي معتمِد آخر (تحقّقتُ)، فيمكن إعادة تفعيله لاحقًا دون إعادة بناء. */
   { id: "scholarly-research",label:"الباحث الشرعي",path: "/scholarly-research",group:"أدوات",    status: "disabled",     inSideNav: false, inBottomNav: false },
-  { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "disabled",     inSideNav: false, inBottomNav: false },
+  { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── التعلم — بوابة إلى الفقه والأحكام والسيرة والعقيدة وقصص الأنبياء والأمم
   { id: "learn",         label: "تعلّم",             path: "/learn",        group: "تعلم",          status: "disabled",     inSideNav: false, inBottomNav: false },
