@@ -27,8 +27,10 @@
   --text-muted: var(--mj-muted);
   --text-meta: var(--mj-muted);
   --text-on-brand: var(--mj-on-brand);
-  /* نص فوق سطح داكن دائمًا — لا يُربَط بـ --mj-ink (أسود في الوضع الفاتح) */
-  --text-on-dark: #F1F5F3;
+  /* نص فوق سطح داكن — أبيض صلب بلا شفافية (قصص الأنبياء، أبطال زمردي…) */
+  --text-on-dark: #FFFFFF;
+  --text-on-dark-secondary: #F3F5F4;
+  --text-primary-inverse: var(--text-on-dark);
   --text-brand: var(--mj-brand);
   --text-brand-deep: var(--mj-brand-deep);
   /* أسماء قديمة خاطئة شائعة — كانت تسقط لاحتياطي نهاري ثابت */
@@ -171,7 +173,9 @@ html.dark,
   --text-muted: var(--mj-muted);
   --text-meta: var(--mj-muted);
   --text-on-brand: #06231A;
-  --text-on-dark: #ECF2EF;
+  --text-on-dark: #FFFFFF;
+  --text-on-dark-secondary: #F3F5F4;
+  --text-primary-inverse: var(--text-on-dark);
   --text-brand: var(--mj-brand);
   --text-brand-deep: var(--accent-strong, #7BD6AE);
 
