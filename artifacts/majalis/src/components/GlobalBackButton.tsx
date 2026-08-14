@@ -1,31 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { useLocation } from "wouter";
 import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { goBackOrFallback } from "@/lib/navigation-back";
+import { haptics } from "@/lib/haptics";
 
 /**
- * زر رجوع عام يظهر في كل شاشة غير الرئيسية بعد تمرير طفيف.
- * يتضمن micro-interaction (mj-back-nudge) عند الضغط.
+ * زر رجوع عام واضح في كل شاشة غير الرئيسية/الغامرة —
+ * بدون شرط تمرير؛ مساحة لمس ≥44px عبر CSS.
  */
 export function GlobalBackButton() {
   const [location] = useLocation();
-  const [pastThreshold, setPastThreshold] = useState(false);
   const [nudge, setNudge] = useState(false);
-
-  useEffect(() => {
-    setPastThreshold(window.scrollY > 120);
-    const onScroll = () => setPastThreshold(window.scrollY > 120);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [location]);
 
   if (location === "/") return null;
   if (isImmersiveChromePath(location) || isPrayerTimesPath(location)) return null;
-  if (!pastThreshold) return null;
 
   const goBack = () => {
+    haptics.selection();
     setNudge(true);
     window.setTimeout(() => setNudge(false), 300);
     goBackOrFallback(location);

@@ -162,10 +162,12 @@ export function QuranMiniPlayerBar() {
   const engine = AudioEngine.getInstance();
   const totalAyahs = getSurahMeta(snap.surah).ayahs;
   const loopActive = snap.loopConfig != null;
+  const isError = snap.playerState === "error";
+  const isLoading = snap.playerState === "loading" || snap.playerState === "buffering";
 
   return (
     <div
-      className={`quran-mini-player${expanded ? " quran-mini-player--expanded" : ""}${immersive ? " quran-mini-player--immersive" : ""}`}
+      className={`quran-mini-player${expanded ? " quran-mini-player--expanded" : ""}${immersive ? " quran-mini-player--immersive" : ""}${isError ? " quran-mini-player--error" : ""}`}
       role="region"
       aria-label="تشغيل التلاوة"
       onPointerDown={onPointerDown}
@@ -176,6 +178,23 @@ export function QuranMiniPlayerBar() {
     >
       <div className="quran-mini-player__handle" aria-hidden="true" />
 
+      {isError && (
+        <div className="quran-mini-player__error" role="alert">
+          <span>{snap.errorMessage || "تعذّر تشغيل التلاوة."}</span>
+          <button
+            type="button"
+            className="quran-mini-player__retry"
+            onClick={() => {
+              if (snap.surah != null && snap.ayah != null) {
+                void engine.playAyah(snap.surah, snap.ayah, snap.reciterId);
+              }
+            }}
+          >
+            إعادة المحاولة
+          </button>
+        </div>
+      )}
+
       <div className="quran-mini-player__bar">
         <button
           type="button"
@@ -185,6 +204,7 @@ export function QuranMiniPlayerBar() {
           <strong>{reciterName}</strong>
           <span>
             {surahName} · آية {toArabicDigits(snap.ayah)}
+            {isLoading ? " · جارٍ التحميل…" : ""}
           </span>
         </button>
 

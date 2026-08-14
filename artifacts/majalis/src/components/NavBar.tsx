@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, lazy, Suspense } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
@@ -11,27 +11,14 @@ import { useIsMobileNav } from "@/hooks/useIsMobileNav";
 import { isNavHrefActive } from "@/lib/nav-active";
 import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
-import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
+import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import "@/styles/components/dark-emerald-menus.css";
 
 const HeaderTicker = lazy(() =>
   import("./HeaderTicker").then((m) => ({ default: m.HeaderTicker })),
 );
 function PrayerChip() {
-  const [cd, setCd] = useState<PrayerCountdown | null>(null);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  useEffect(() => {
-    let prayers: Parameters<typeof computePrayerCountdown>[0] = [];
-    fetchPrayerTimes()
-      .then((payload) => {
-        prayers = payload.prayers;
-        setCd(computePrayerCountdown(prayers));
-        intervalRef.current = setInterval(() => setCd(computePrayerCountdown(prayers)), 1000);
-      })
-      .catch(() => {});
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, []);
+  const { countdown: cd } = usePrayerCountdown();
 
   if (!cd?.next) return null;
   // خلال فترة السماح (٣٥ دقيقة بعد الأذان) نعرض عدّادًا تصاعديًا منذ أذان

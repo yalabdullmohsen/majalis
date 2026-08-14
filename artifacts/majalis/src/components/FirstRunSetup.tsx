@@ -112,14 +112,31 @@ export function FirstRunSetup() {
             <p className="frs-eyebrow">مجالس العلم</p>
             <h2 id="frs-title">مرحبًا بك</h2>
             <p className="frs-lead">
-              مصحف، تلاوة، وتفسير موثّق — يمكنك ضبط تفضيلاتك الآن أو تخطّي التهيئة والمتابعة مباشرة.
+              دليل سريع لبدء الاستخدام — يمكنك تخطّيه والمتابعة مباشرة.
             </p>
+            <ul className="frs-guide" aria-label="دليل أول دخول">
+              <li>
+                <strong>الرجوع:</strong> زر الرجوع أعلى الصفحة، أو اسحب من حافة الشاشة اليمنى.
+              </li>
+              <li>
+                <strong>البحث:</strong> أيقونة البحث في الشريط العلوي.
+              </li>
+              <li>
+                <strong>الصلاة والأذان:</strong> من مواقيت الصلاة وإعدادات الأذان/التنبيهات.
+              </li>
+              <li>
+                <strong>المصحف والتلاوة:</strong> من تبويب القرآن — شغّل الآية من الصفحة أو الشريط.
+              </li>
+              <li>
+                <strong>الإعدادات:</strong> من المزيد ← الإعدادات (وإعادة هذا الدليل من هناك).
+              </li>
+            </ul>
             <div className="frs-actions">
               <button type="button" className="frs-btn frs-btn--primary" onClick={nextFromWelcome}>
-                ابدأ
+                ابدأ الآن
               </button>
               <button type="button" className="frs-btn frs-btn--ghost" onClick={skip}>
-                تخطّي والمتابعة
+                لا تعرض مرة أخرى
               </button>
             </div>
           </div>

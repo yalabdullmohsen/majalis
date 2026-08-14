@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent }
 import { Link } from "wouter";
 import { Clock, Repeat2, ScrollText, Heart, BookOpen, Sparkles, Megaphone } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown, type PrayerSlot } from "@/lib/prayer-times";
+import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import {
   buildTickerPool,
   pickNextBatch,
@@ -26,43 +26,9 @@ type TickerItem = {
   kind?: TickerKind;
 };
 
+/** عنصر الصلاة من مصدر العدّ الموحّد — ثوانٍ حية كل ثانية */
 function usePrayerTickerItem(): TickerItem | null {
-  const [cd, setCd] = useState<PrayerCountdown | null>(null);
-  useEffect(() => {
-    let prayers: PrayerSlot[] = [];
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    let cancelled = false;
-
-    const schedule = () => {
-      if (cancelled || !prayers.length) return;
-      const next = computePrayerCountdown(prayers);
-      setCd(next);
-      const inGrace = next.sinceSeconds != null;
-      const preAlert = next.remainingMs > 0 && next.remainingMs <= 15 * 60 * 1000;
-      timer = setTimeout(schedule, inGrace || preAlert ? 1_000 : 30_000);
-    };
-
-    fetchPrayerTimes()
-      .then((payload) => {
-        if (cancelled) return;
-        prayers = payload.prayers;
-        schedule();
-      })
-      .catch(() => {});
-
-    const onVisible = () => {
-      if (document.visibilityState !== "visible") return;
-      if (timer) clearTimeout(timer);
-      schedule();
-    };
-    document.addEventListener("visibilitychange", onVisible);
-
-    return () => {
-      cancelled = true;
-      if (timer) clearTimeout(timer);
-      document.removeEventListener("visibilitychange", onVisible);
-    };
-  }, []);
+  const { countdown: cd } = usePrayerCountdown();
 
   if (!cd?.next) return null;
   const inGrace = cd.sinceSeconds != null;
@@ -75,12 +41,11 @@ function usePrayerTickerItem(): TickerItem | null {
       href: "/prayer-times",
     };
   }
-  const hm = cd.remainingHms.split(":").slice(0, 2).join(":");
   return {
     key: "prayer",
     Icon: Clock,
     label: `المتبقي على صلاة ${cd.next.name}`,
-    text: hm,
+    text: cd.remainingHms,
     href: "/prayer-times",
   };
 }

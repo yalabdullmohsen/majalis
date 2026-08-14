@@ -10,18 +10,9 @@ import {
 } from "@/lib/prayer-times";
 import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
-import { PRE_ALERT_MINUTES } from "@/lib/prayer-alert-preferences";
 
-const PRE_ALERT_MS = PRE_ALERT_MINUTES * 60_000;
-const FAST_TICK_MS = 1_000;
-const SLOW_TICK_MS = 30_000;
-
-function tickIntervalFor(cd: PrayerCountdown | null): number {
-  if (!cd) return SLOW_TICK_MS;
-  if (cd.sinceSeconds != null) return FAST_TICK_MS;
-  if (cd.remainingMs > 0 && cd.remainingMs <= PRE_ALERT_MS) return FAST_TICK_MS;
-  return SLOW_TICK_MS;
-}
+/** عدّاد الثواني يُحدَّث كل ثانية دائمًا — صفحة الصلاة والشريط يعرضان HMS كاملًا. */
+const TICK_MS = 1_000;
 
 function syncLessonCache(payload: PrayerTimesPayload) {
   const cache: Record<string, number> = {};
@@ -98,24 +89,50 @@ export function usePrayerCountdown(governorateId?: string) {
 
     const schedule = () => {
       if (cancelled) return;
+      /* دائمًا من Date.now عبر computePrayerCountdown — لا تراكم عدّاد قديم */
       const cd = computePrayerCountdown(data.prayers, activeTz(data));
       setCountdown(cd);
-      timer = window.setTimeout(schedule, tickIntervalFor(cd));
+      timer = window.setTimeout(schedule, TICK_MS);
     };
 
     schedule();
 
-    const onVisible = () => {
-      if (document.visibilityState !== "visible") return;
+    const resyncNow = () => {
       if (timer != null) window.clearTimeout(timer);
       schedule();
     };
+
+    const onVisible = () => {
+      if (document.visibilityState !== "visible") return;
+      resyncNow();
+    };
     document.addEventListener("visibilitychange", onVisible);
+
+    let removeAppListener: (() => void) | undefined;
+    void import("@capacitor/app")
+      .then(({ App }) =>
+        App.addListener("appStateChange", ({ isActive }) => {
+          if (isActive) resyncNow();
+        }),
+      )
+      .then((handle) => {
+        if (cancelled) {
+          void handle.remove();
+          return;
+        }
+        removeAppListener = () => {
+          void handle.remove();
+        };
+      })
+      .catch(() => {
+        /* ويب / بلا Capacitor */
+      });
 
     return () => {
       cancelled = true;
       if (timer != null) window.clearTimeout(timer);
       document.removeEventListener("visibilitychange", onVisible);
+      removeAppListener?.();
     };
   }, [data]);
 

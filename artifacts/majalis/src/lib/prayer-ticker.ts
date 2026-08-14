@@ -24,10 +24,12 @@ export type PrayerTickerState = {
 const PRE_ADHAN_WINDOW_MS = 15 * 60 * 1000;
 const POST_ADHAN_WINDOW_MS = 35 * 60 * 1000;
 
-/** Tick interval: 1s only while showing seconds to the user; otherwise 30s. */
-export function recommendedTickMs(state: PrayerTickerState): number {
-  if (state.mode === "countdown" || state.mode === "elapsed") return 1_000;
-  return 30_000;
+/**
+ * Tick interval: 1s whenever HMS with seconds is shown (countdown / elapsed / upcoming).
+ * Battery cost is one timer; freeze-until-remount was worse UX than a 1s tick.
+ */
+export function recommendedTickMs(_state: PrayerTickerState): number {
+  return 1_000;
 }
 
 /**
