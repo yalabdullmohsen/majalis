@@ -1,0 +1,47 @@
+/**
+ * سُلّم طباعي موحّد للواجهة (خارج المصحف).
+ */
+:root {
+  --text-display: clamp(1.75rem, 5.2vw, 2.25rem);
+  --text-h1: clamp(1.375rem, 3.8vw, 1.625rem);
+  --text-h2: clamp(1.25rem, 3.2vw, 1.375rem);
+  --text-h3: 1.125rem;
+  --text-body-lg: 1.125rem;
+  --text-body: var(--font-base, 1.0625rem);
+  --text-body-sm: 0.9375rem;
+  --text-label: var(--font-sm, 0.875rem);
+  --text-caption: var(--font-xs, 0.8125rem);
+
+  --mj-fs-display: var(--text-display);
+  --mj-fs-h1: var(--text-h1);
+  --mj-fs-h2: var(--text-h2);
+  --mj-fs-body: var(--text-body);
+  --mj-fs-small: var(--text-label);
+  --mj-fs-tiny: var(--text-caption);
+  --mj-fs-btn: var(--text-label);
+
+  --ds-text-2xs: var(--text-caption);
+  --ds-text-xs: var(--text-caption);
+  --ds-text-sm: var(--text-label);
+  --ds-text-base: var(--text-body);
+  --ds-text-md: var(--text-body-lg);
+  --ds-text-lg: var(--text-h3);
+  --ds-text-xl: var(--text-h2);
+}
+
+body {
+  font-size: var(--text-body);
+  line-height: var(--lh-body, 1.7);
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+textarea,
+select {
+  font-size: max(1rem, 16px);
+}
+
+.bottom-nav__tab-label,
+.bottom-nav--v2 .bottom-nav__tab-label {
+  font-size: var(--text-caption) !important;
+  line-height: 1.25 !important;
+}

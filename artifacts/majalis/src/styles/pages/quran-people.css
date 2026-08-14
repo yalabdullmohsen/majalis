@@ -248,9 +248,19 @@
 }
 
 .qp-person-card__cta {
-  font-size: 0.78rem;
+  font-size: var(--font-xs, 0.8125rem);
   font-weight: 700;
-  color: var(--qp-brand-deep);
+  color: var(--qp-brand);
+}
+
+html[data-theme="dark"] .qp-people {
+  --qp-surface: var(--surface, #1B2421);
+  --qp-ink: var(--text-primary, #ECF2EF);
+  --qp-ink-2: var(--text-secondary, #C2CFCA);
+  --qp-line: var(--border, #35443F);
+  --qp-brand: var(--accent, #5CC095);
+  --qp-brand-deep: var(--accent-strong, #7BD6AE);
+  --qp-canvas: var(--bg, #131A18);
 }
 
 html[data-theme="dark"] .qp-person-card {
@@ -260,7 +270,13 @@ html[data-theme="dark"] .qp-person-card {
       color-mix(in srgb, var(--qp-accent) 16%, var(--qp-surface)) 0%,
       var(--qp-surface) 50%
     );
+  border-color: var(--border, #35443F);
   box-shadow: none;
+}
+
+html[data-theme="dark"] .qp-person-card__cta,
+html.dark .qp-person-card__cta {
+  color: var(--accent-strong, #7BD6AE);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,98 @@
+/**
+ * Design tokens المركزية — نهاري + ليلي.
+ * كل سطح/نص/حد يمر من هنا. يُحمَّل بعد theme.css وقبل الطبقات القديمة.
+ */
+:root {
+  /* أسطح */
+  --bg: var(--mj-bg);
+  --surface: var(--mj-surface);
+  --surface-muted: var(--mj-surface-2);
+  --surface-elevated: var(--mj-surface);
+  --surface-brand: var(--mj-brand);
+  --surface-brand-soft: var(--mj-brand-soft);
+  --surface-1: var(--mj-surface);
+  --surface-2: var(--mj-surface-2);
+  --surface-3: var(--mj-surface-3, var(--mj-surface-2));
+
+  /* حدود */
+  --border: var(--mj-hairline);
+  --border-strong: var(--mj-border-strong, color-mix(in srgb, var(--mj-ink) 18%, var(--mj-hairline)));
+  --border-subtle: var(--mj-hairline);
+
+  /* نصوص */
+  --text-primary: var(--mj-ink);
+  --text-secondary: var(--mj-ink-2);
+  --text-muted: var(--mj-muted);
+  --txt-primary: var(--mj-ink);
+  --txt-secondary: var(--mj-ink-2);
+  --txt-muted: var(--mj-muted);
+  --text-on-brand: var(--mj-on-brand);
+  --text-on-brand-secondary: color-mix(in srgb, var(--mj-on-brand) 82%, transparent);
+
+  /* أيقونات */
+  --icon-primary: var(--mj-ink);
+  --icon-muted: var(--mj-muted);
+
+  /* تمييز */
+  --accent: var(--mj-brand);
+  --accent-strong: var(--mj-brand);
+  --on-accent: var(--mj-on-brand);
+  --danger: var(--mj-danger);
+  --warning: var(--mj-accent);
+  --success: var(--mj-brand);
+
+  /* طباعة */
+  --font-xs: 0.8125rem;   /* ≥13px */
+  --font-sm: 0.875rem;    /* 14px */
+  --font-base: 1.0625rem; /* ~17px */
+  --font-md: 1.125rem;    /* 18px */
+  --font-lg: 1.25rem;     /* 20px */
+  --font-xl: clamp(1.375rem, 3.5vw, 1.625rem); /* 22–26px */
+  --lh-ui: 1.55;
+  --lh-body: 1.7;
+  --lh-prose: 1.8;
+}
+
+html[data-theme="dark"],
+html.dark,
+[data-theme="dark"],
+.dark {
+  --bg: #131A18;
+  --surface: #1B2421;
+  --surface-muted: #222D29;
+  --surface-elevated: #222D29;
+  --surface-brand: #5CC095;
+  --surface-brand-soft: #16261F;
+  --surface-1: #1B2421;
+  --surface-2: #222D29;
+  --surface-3: #2A3733;
+  --border: #35443F;
+  --border-strong: #445651;
+  --border-subtle: #35443F;
+  --text-primary: #ECF2EF;
+  --text-secondary: #C2CFCA;
+  --text-muted: #9FB0AB;
+  --txt-primary: #ECF2EF;
+  --txt-secondary: #C2CFCA;
+  --txt-muted: #9FB0AB;
+  /* فوق الأخضر الفاتح (أزرار brand) */
+  --text-on-brand: #06231A;
+  --text-on-brand-secondary: #0E2A22;
+  --icon-primary: #ECF2EF;
+  --icon-muted: #9FB0AB;
+  --accent: #5CC095;
+  --accent-strong: #7BD6AE;
+  --on-accent: #06231A;
+  --danger: #F2B8C0;
+  --warning: #D9B871;
+  --success: #7BD6AE;
+}
+
+/* فوق الأسطح الخضراء الغامقة — أبيض دائمًا */
+.surface-brand-strong,
+.surface-brand:not(.surface-brand--soft),
+[data-on-brand="light"] {
+  --text-on-brand: #FFFFFF;
+  --text-on-brand-secondary: #ECF2EF;
+  color: #FFFFFF;
+}

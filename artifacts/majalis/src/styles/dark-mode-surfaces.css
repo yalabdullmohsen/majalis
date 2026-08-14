@@ -203,3 +203,180 @@ html[data-theme="dark"] .sq-header :where(*),
 html.dark .sq-header :where(*) {
   color: var(--on-accent, #06231A) !important;
 }
+
+/* ── أسطح بيضاء صلبة / حبر #111 في صفحات المحتوى ── */
+html[data-theme="dark"] :where(
+  .jnz-page, .hj-page, .tw-page, .sg-page, .uq-page, .sb-page,
+  .mw-page, .fa-page, .dq-page, .fq-page
+),
+html.dark :where(
+  .jnz-page, .hj-page, .tw-page, .sg-page, .uq-page, .sb-page,
+  .mw-page, .fa-page, .dq-page, .fq-page
+) {
+  background: var(--bg, #131A18) !important;
+  color: var(--txt-primary, #ECF2EF);
+}
+
+html[data-theme="dark"] :where(
+  .jnz-steps, .jnz-takfin-card, .jnz-rukn-card, .jnz-dafn-card,
+  .jnz-adab-card, .jnz-related, .hj-card, .hj-wajib-card, .hj-mashar-card,
+  .hj-umra-step, .hj-stat-card, .tw-shart-card, .tw-nawaa-card, .tw-dhikr-card,
+  .tw-athar-card, .sg-rukn-card, .sg-khushuu-card, .sg-rank-card, .sg-suwar-card,
+  .sg-nawfil-card, .uq-type-card, .uq-jam-card, .uq-tafsir-card, .uq-naskh-card,
+  .sb-card, .mw-warith-row, .mw-haqq-card, .mw-asab-card, .mw-hajb-card,
+  .mw-masala-card, .fa-card, .dq-card, .fq-rule-card
+),
+html.dark :where(
+  .jnz-steps, .jnz-takfin-card, .jnz-rukn-card, .jnz-dafn-card,
+  .jnz-adab-card, .jnz-related, .hj-card, .hj-wajib-card, .hj-mashar-card,
+  .hj-umra-step, .hj-stat-card, .tw-shart-card, .tw-nawaa-card, .tw-dhikr-card,
+  .tw-athar-card, .sg-rukn-card, .sg-khushuu-card, .sg-rank-card, .sg-suwar-card,
+  .sg-nawfil-card, .uq-type-card, .uq-jam-card, .uq-tafsir-card, .uq-naskh-card,
+  .sb-card, .mw-warith-row, .mw-haqq-card, .mw-asab-card, .mw-hajb-card,
+  .mw-masala-card, .fa-card, .dq-card, .fq-rule-card
+) {
+  background: var(--surface, #1B2421) !important;
+  border-color: var(--border, #35443F) !important;
+  color: var(--txt-primary, #ECF2EF);
+}
+
+/* ── عناوين كانت #111 في صفحات رُمِّزت أسطحها ── */
+html[data-theme="dark"] :where(
+  .jnz-step__title, .jnz-takfin-card__title, .jnz-rukn-card__title,
+  .jnz-dafn-card__title, .jnz-adab-card__title, .jnz-related__title, .jnz-subtitle,
+  .hj-card__title, .hj-wajib-card__title, .hj-mashar-card__name, .hj-umra-step__title,
+  .hj-stat-card__value, .hj-related__title,
+  .tw-shart-title, .tw-nawaa-title, .tw-dhikr-arabic, .tw-afdhal-awqat__title,
+  .tw-athar-title, .tw-related__title,
+  .sg-subhead, .sg-rukn-title, .sg-step-action, .sg-khushuu-title,
+  .sg-hadith-item__text, .sg-rank-card__title, .sg-suwar-card__name,
+  .sg-nawfil-card__name, .sg-related__title,
+  .uq-subhead, .uq-type-card__title, .uq-jam-title, .uq-tafsir-title,
+  .uq-mufassir-name, .uq-ijaz-title, .uq-naskh-title, .uq-related__title,
+  .sb-card__name, .sb-legacy__label, .sb-related__title,
+  .mw-warith-name, .mw-haqq-title, .mw-diptych__title, .mw-reason-item__title,
+  .mw-asab-type, .mw-hajb-type, .mw-awl-box__title, .mw-masala-title, .mw-related__title,
+  .fa-card__title, .fa-related__title,
+  .dq-card__name, .dq-adab-box__title, .dq-related__title
+),
+html.dark :where(
+  .jnz-step__title, .jnz-takfin-card__title, .jnz-rukn-card__title,
+  .jnz-dafn-card__title, .jnz-adab-card__title, .jnz-related__title, .jnz-subtitle,
+  .hj-card__title, .hj-wajib-card__title, .hj-mashar-card__name, .hj-umra-step__title,
+  .hj-stat-card__value, .hj-related__title,
+  .tw-shart-title, .tw-nawaa-title, .tw-dhikr-arabic, .tw-afdhal-awqat__title,
+  .tw-athar-title, .tw-related__title,
+  .sg-subhead, .sg-rukn-title, .sg-step-action, .sg-khushuu-title,
+  .sg-hadith-item__text, .sg-rank-card__title, .sg-suwar-card__name,
+  .sg-nawfil-card__name, .sg-related__title,
+  .uq-subhead, .uq-type-card__title, .uq-jam-title, .uq-tafsir-title,
+  .uq-mufassir-name, .uq-ijaz-title, .uq-naskh-title, .uq-related__title,
+  .sb-card__name, .sb-legacy__label, .sb-related__title,
+  .mw-warith-name, .mw-haqq-title, .mw-diptych__title, .mw-reason-item__title,
+  .mw-asab-type, .mw-hajb-type, .mw-awl-box__title, .mw-masala-title, .mw-related__title,
+  .fa-card__title, .fa-related__title,
+  .dq-card__name, .dq-adab-box__title, .dq-related__title
+) {
+  color: var(--txt-primary, #ECF2EF) !important;
+}
+
+/* بحث / فلاتر */
+html[data-theme="dark"] .srch-history-wrap,
+html.dark .srch-history-wrap {
+  background: var(--surface-muted, #222D29) !important;
+  border-color: var(--border, #35443F) !important;
+}
+html[data-theme="dark"] .srch-history-chip,
+html.dark .srch-history-chip {
+  background: var(--surface, #1B2421) !important;
+  border-color: var(--border-strong, #445651) !important;
+  color: var(--txt-primary, #ECF2EF) !important;
+}
+html[data-theme="dark"] .srch-quick-card,
+html.dark .srch-quick-card {
+  background: var(--surface, #1B2421) !important;
+  border-color: var(--border, #35443F) !important;
+  color: var(--txt-primary, #ECF2EF) !important;
+}
+html[data-theme="dark"] .srch-quick-card:hover,
+html.dark .srch-quick-card:hover {
+  background: var(--surface-muted, #222D29) !important;
+  border-color: var(--accent, #5CC095) !important;
+}
+html[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select,
+html.dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html.dark textarea,
+html.dark select {
+  background-color: var(--surface, #1B2421);
+  color: var(--txt-primary, #ECF2EF);
+  border-color: var(--border-strong, #445651);
+}
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder,
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: var(--txt-muted, #9FB0AB);
+  opacity: 1;
+}
+
+/* تنقّل سفلي — وضوح نشط/خامل */
+html[data-theme="dark"] .bottom-nav__tab,
+html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab,
+html.dark .bottom-nav__tab,
+html.dark .bottom-nav--v2 .bottom-nav__tab {
+  color: var(--txt-muted, #9FB0AB) !important;
+}
+html[data-theme="dark"] .bottom-nav__tab.is-active,
+html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
+html.dark .bottom-nav__tab.is-active,
+html.dark .bottom-nav--v2 .bottom-nav__tab.is-active {
+  color: var(--accent-strong, #7BD6AE) !important;
+  background: color-mix(in srgb, var(--accent, #5CC095) 14%, transparent) !important;
+}
+html[data-theme="dark"] .bottom-nav__tab-label,
+html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab-label,
+html.dark .bottom-nav__tab-label,
+html.dark .bottom-nav--v2 .bottom-nav__tab-label {
+  font-size: var(--font-xs, 0.8125rem) !important;
+  color: inherit !important;
+}
+
+/* أزرار معطّلة — مقروءة لا شفافة بالكامل */
+html[data-theme="dark"] :disabled,
+html.dark :disabled,
+html[data-theme="dark"] [aria-disabled="true"],
+html.dark [aria-disabled="true"] {
+  opacity: 0.58 !important;
+}
+
+/* بطاقات أقسام / hubs — نص من التوكنز */
+html[data-theme="dark"] .hub-card,
+html.dark .hub-card,
+html[data-theme="dark"] .quran-hub-feature-item,
+html.dark .quran-hub-feature-item {
+  background: var(--surface, #1B2421) !important;
+  border-color: var(--border, #35443F) !important;
+  color: var(--txt-primary, #ECF2EF) !important;
+}
+html[data-theme="dark"] .hub-card__title,
+html[data-theme="dark"] .quran-hub-feature-item__text,
+html.dark .hub-card__title,
+html.dark .quran-hub-feature-item__text {
+  color: var(--txt-primary, #ECF2EF) !important;
+}
+html[data-theme="dark"] .hub-card__desc,
+html.dark .hub-card__desc {
+  color: var(--txt-secondary, #C2CFCA) !important;
+}
+
+/* نوافذ / حوارات عامة */
+html[data-theme="dark"] [role="dialog"],
+html.dark [role="dialog"],
+html[data-theme="dark"] .dialog-content,
+html.dark .dialog-content {
+  background: var(--surface-elevated, #222D29);
+  color: var(--txt-primary, #ECF2EF);
+  border-color: var(--border-strong, #445651);
+}

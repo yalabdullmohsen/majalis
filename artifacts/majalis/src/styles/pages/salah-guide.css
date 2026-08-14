@@ -55,7 +55,7 @@
 
 /* tabs */
 .sg-tabs-bar {
-  display: flex; overflow-x: auto; gap: 0; background: #F9FAFB;
+  display: flex; overflow-x: auto; gap: 0; background: var(--mj-bg);
   border-bottom: 2px solid var(--mj-hairline); padding: 0 .5rem; scrollbar-width: none;
 }
 .sg-tabs-bar::-webkit-scrollbar { display: none; }
@@ -82,7 +82,7 @@
 .sg-section { animation: sg-fade .25s ease; }
 @keyframes sg-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .sg-lead    { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0 0 1.2rem; border-inline-end: 3px solid var(--majalis-emerald,var(--mj-brand-deep)); padding-inline-end: .75rem; }
-.sg-subhead { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.sg-subhead { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-ink); margin: 0 0 .75rem; }
 .sg-subhead--mt { margin-top: 1.5rem; }
 
 /* شروط */
@@ -104,7 +104,7 @@
 .sg-arkan-list { display: flex; flex-direction: column; gap: .45rem; }
 .sg-rukn-row {
   display: flex; gap: .7rem; align-items: flex-start;
-  background: #fff; border: 1px solid var(--mj-hairline); border-radius: .65rem; padding: .6rem .85rem;
+  background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .65rem; padding: .6rem .85rem;
 }
 .sg-rukn-num {
   background: var(--mj-brand-deep); color: #fff;
@@ -112,13 +112,13 @@
   display: flex; align-items: center; justify-content: center;
   font-size: .7rem; font-weight: 800; flex-shrink: 0;
 }
-.sg-rukn-title { display: block; font-weight: 700; font-size: .85rem; color: #111; margin-bottom: .1rem; }
+.sg-rukn-title { display: block; font-weight: 700; font-size: .85rem; color: var(--mj-ink); margin-bottom: .1rem; }
 .sg-rukn-desc  { display: block; font-size: .77rem; color: var(--mj-ink-2); line-height: 1.4; }
 
 /* كيفية */
 .sg-steps-list { display: flex; flex-direction: column; gap: .55rem; }
 .sg-step-card {
-  background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; overflow: hidden;
+  background: var(--mj-surface); border: 1.5px solid var(--mj-hairline); border-radius: .8rem; overflow: hidden;
 }
 .sg-step-card--open { border-color: var(--majalis-emerald,var(--mj-brand-deep)); }
 .sg-step-head {
@@ -132,7 +132,7 @@
   display: flex; align-items: center; justify-content: center;
   font-size: .7rem; font-weight: 800; flex-shrink: 0;
 }
-.sg-step-action { flex: 1; font-size: .85rem; color: #111; font-weight: 600; line-height: 1.4; text-align: end; }
+.sg-step-action { flex: 1; font-size: .85rem; color: var(--mj-ink); font-weight: 600; line-height: 1.4; text-align: end; }
 .sg-chevron { font-size: .8rem; color: #9CA3AF; transition: transform .2s; flex-shrink: 0; }
 .sg-chevron--open { transform: rotate(180deg); }
 .sg-step-body { padding: .6rem 1rem .85rem; border-top: 1px solid #F3F4F6; }
@@ -180,10 +180,10 @@
 /* خشوع */
 .sg-khushuu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.2rem; }
 .sg-khushuu-card {
-  background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .85rem; text-align: center;
+  background: var(--mj-surface); border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .85rem; text-align: center;
 }
 .sg-khushuu-icon  { font-size: var(--ds-text-2xl); display: block; margin-bottom: .4rem; }
-.sg-khushuu-title { font-size: .82rem; font-weight: 700; color: #111; display: block; margin-bottom: .3rem; }
+.sg-khushuu-title { font-size: .82rem; font-weight: 700; color: var(--mj-ink); display: block; margin-bottom: .3rem; }
 .sg-khushuu-desc  { font-size: .73rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 .sg-khushuu-hadith {
@@ -205,8 +205,8 @@
 .sg-ayah-card__note { font-size: .78rem; color: var(--mj-ink-2); display: block; }
 
 .sg-ahadith-list { display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1.3rem; }
-.sg-hadith-item { background: #fff; border: 1px solid var(--mj-hairline); border-radius: .7rem; padding: .75rem 1rem; }
-.sg-hadith-item__text   { font-size: .85rem; color: #111; line-height: 1.7; margin: 0 0 .3rem; font-weight: 600; }
+.sg-hadith-item { background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .7rem; padding: .75rem 1rem; }
+.sg-hadith-item__text   { font-size: .85rem; color: var(--mj-ink); line-height: 1.7; margin: 0 0 .3rem; font-weight: 600; }
 .sg-hadith-item__source { font-size: .72rem; color: var(--majalis-emerald,var(--mj-brand-deep)); font-style: normal; font-weight: 600; }
 
 .sg-reminder-box {
@@ -225,14 +225,14 @@
 
 /* ── مراتب المصلين ── */
 .sg-ranks-list { display: flex; flex-direction: column; gap: .75rem; }
-.sg-rank-card { background: #fff; border: 1px solid var(--mj-hairline); border-radius: .75rem; padding: var(--ds-space-4); }
+.sg-rank-card { background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .75rem; padding: var(--ds-space-4); }
 .sg-rank-card__header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .6rem; }
 .sg-rank-card__num {
   width: 28px; height: 28px; background: var(--clr-primary,var(--mj-brand)); color: #fff;
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   font-size: .8rem; font-weight: 800; flex-shrink: 0;
 }
-.sg-rank-card__title { display: block; font-size: .9rem; font-weight: 700; color: #111; }
+.sg-rank-card__title { display: block; font-size: .9rem; font-weight: 700; color: var(--mj-ink); }
 .sg-rank-card__ruling {
   display: inline-block; margin-top: .2rem; font-size: .72rem; font-weight: 600;
   background: rgba(23,61,53,.1); color: var(--clr-primary,var(--mj-brand));
@@ -245,9 +245,9 @@
 /* ── سور الصلاة والنوافل ── */
 .sg-suwar-grid { display: grid; grid-template-columns: 1fr; gap: .7rem; }
 @media (min-width:560px) { .sg-suwar-grid { grid-template-columns: repeat(2,1fr); } }
-.sg-suwar-card { background: #fff; border: 1px solid var(--mj-hairline); border-radius: .75rem; padding: .85rem 1rem; }
+.sg-suwar-card { background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .75rem; padding: .85rem 1rem; }
 .sg-suwar-card__top { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-bottom: .5rem; }
-.sg-suwar-card__name { font-size: .92rem; font-weight: 800; color: #111; }
+.sg-suwar-card__name { font-size: .92rem; font-weight: 800; color: var(--mj-ink); }
 .sg-suwar-card__rec {
   font-size: .72rem; font-weight: 700; padding: .15rem .55rem; border-radius: 20px;
 }
@@ -257,9 +257,9 @@
 .sg-suwar-card__note { font-size: .8rem; color: #555; line-height: 1.65; margin: 0; }
 
 .sg-nawafil-list { display: flex; flex-direction: column; gap: .65rem; }
-.sg-nawfil-card { background: #fff; border: 1px solid var(--mj-hairline); border-radius: .7rem; padding: .85rem 1rem; }
+.sg-nawfil-card { background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .7rem; padding: .85rem 1rem; }
 .sg-nawfil-card__header { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-bottom: .4rem; }
-.sg-nawfil-card__name { font-size: .88rem; font-weight: 700; color: #111; }
+.sg-nawfil-card__name { font-size: .88rem; font-weight: 700; color: var(--mj-ink); }
 .sg-nawfil-card__rakat {
   font-size: .72rem; font-weight: 600; background: rgba(23,61,53,.1);
   color: var(--clr-primary,var(--mj-brand)); padding: .12rem .5rem; border-radius: 20px;
@@ -268,10 +268,10 @@
 
 /* related */
 .sg-related { margin-top: 2.5rem; }
-.sg-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.sg-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-ink); margin: 0 0 .75rem; }
 .sg-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .sg-related__link {
-  background: #fff; border: 1px solid var(--mj-hairline); border-radius: .6rem;
+  background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .6rem;
   padding: .6rem .7rem; font-size: .82rem; color: var(--majalis-emerald,var(--mj-brand-deep));
   text-align: center; text-decoration: none; font-weight: 600;
   transition: background .15s; display: block;

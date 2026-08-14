@@ -1,5 +1,7 @@
 # الوضع الليلي — أسطح متمايزة (2026-08-14)
 
+راجع أيضًا: [`DESIGN_TOKENS.md`](./DESIGN_TOKENS.md) للتوكنز الدلالية والطباعة.
+
 ## قبل → بعد (رموز)
 
 | الرمز | قبل (ليلي) | بعد |
@@ -25,12 +27,15 @@
 - الصيام: بطاقات/دليل/شارة فرض ليلية
 - الدروس: بطاقة متمايزة، هيكل `--surface-3`، زر ثانوي بحد مرئي
 - تنقّل سفلي / ترويسة: `--surface-1`
+- الأنبياء: `--ps-on-emerald` أبيض دائمًا؛ `--ps-surface`/`--ps-canvas` من التوكنز ليلاً (لا جزيرة بيضاء)
+- نافذة قفز المصحف: سطح/نص ثانوي من التوكنز
+- أشخاص القرآن: زر «التفاصيل» بـ `--accent` لا `--brand-deep` الداكن
 
 ## بوابات
 
 - `pnpm run test:color-contrast-gate` (= `test:contrast`)
-- تأكيدات جديدة لـ `/tahara` `/sawm` `/lessons` ليلاً
+- `pnpm run lint:design-tokens` — منع `text-black` / `bg-white` / `#111`
+- تأكيدات جديدة لـ `/tahara` `/sawm` `/lessons` `/prophets` `/janaza` ليلاً
 - كشف تسرّب سطح ≥`#C0C0C0` على مسارات حرجة
-- فحص مصدر `background: #fff` في ملفات الإصلاح
 
-المصحف: بلا تغيير على `features/mushaf` / QPC / `MUSHAF_SPEC`.
+المصحف: بلا تغيير على `features/mushaf` / QPC / `MUSHAF_SPEC` (كروم القفز فقط).

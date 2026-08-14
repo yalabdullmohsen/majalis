@@ -85,7 +85,7 @@
 }
 .tg-banner__cta {
   flex-shrink: 0;
-  background: #fff;
+  background: var(--mj-surface);
   color: var(--mj-brand);
   font-weight: 700;
   font-size: 0.82rem;
@@ -153,7 +153,7 @@
   display: flex;
   gap: var(--ds-space-3);
   align-items: flex-start;
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid #e4ede9;
   border-radius: 0.875rem;
   padding: var(--ds-space-3-5);
@@ -181,7 +181,7 @@
   display: block;
   font-size: var(--ds-text-sm);
   font-weight: 800;
-  color: #1a1a1a;
+  color: var(--mj-ink);
   margin-bottom: 0.25rem;
 }
 .hsh-step__desc {

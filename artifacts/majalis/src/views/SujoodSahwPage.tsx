@@ -140,7 +140,7 @@ export default function SujoodSahwPage() {
           {RULINGS.map((r) => (
             <div
               key={r.id}
-              className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm"
+              className="rounded-2xl border overflow-hidden shadow-sm bg-[var(--mj-surface)] border-[var(--mj-hairline)]"
               style={{ borderInlineStart: `4px solid ${r.color}` }}
             >
               <div className="p-5">
