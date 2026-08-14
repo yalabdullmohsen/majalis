@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
 import {
-  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight, Bookmark, Mic, LayoutGrid, MoreHorizontal,
+  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, Bookmark, Mic, LayoutGrid, MoreHorizontal,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd, surahJsonLd } from "@/lib/seo-structured-data";
@@ -46,7 +46,6 @@ import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { QpcFontPackBanner } from "@/components/quran/QpcFontPackBanner";
 import { MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
-import { MushafPageProgressRail } from "@/components/quran/MushafPageProgressRail";
 import { MushafBottomPager } from "@/components/quran/MushafBottomPager";
 import { MushafLayeredPage, MUSHAF_OPTICAL_FONT_SCALE } from "@/features/mushaf";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
@@ -595,14 +594,9 @@ export default function MushafPageView() {
     };
   }, []);
 
-  // زر رجوع داخل الشريط العلوي — يُغني عن GlobalBackButton العائم العام
-  // الذي أُخفي على مسار /mushaf/page تحديدًا (راجع GlobalBackButton.tsx).
-  // أول رجوع في الوضع الغامر يُظهر الأدوات؛ الثاني يخرج إلى أصل الدخول.
-  const goBack = useCallback(() => {
-    if (!textChromeVisible) {
-      setTextChromeVisible(true);
-      return;
-    }
+  // زر رجوع/خروج داخل المصحف — يُغني عن GlobalBackButton العائم.
+  // زر «خروج» الدائم يخرج فورًا؛ زر الشريط عند إخفاء الأدوات يُظهرها أولًا.
+  const exitMushaf = useCallback(() => {
     if (hasMushafUnsavedWork()) {
       const ok = window.confirm("لديك ملاحظة غير محفوظة. هل تريد الخروج دون حفظ؟");
       if (!ok) return;
@@ -625,7 +619,6 @@ export default function MushafPageView() {
     }
     goBackOrFallback(location);
   }, [
-    textChromeVisible,
     location,
     playerState,
     currentAyah,
@@ -701,8 +694,9 @@ export default function MushafPageView() {
             role="toolbar"
             aria-label="أدوات المصحف"
           >
-            <button type="button" className="mpv-toolbar__btn" onClick={goBack} aria-label="رجوع">
-              <ArrowRight size={16} aria-hidden="true" />
+            <button type="button" className="mpv-toolbar__btn" onClick={exitMushaf} aria-label="خروج من المصحف">
+              <X size={16} aria-hidden="true" />
+              <span className="mpv-toolbar__label">خروج</span>
             </button>
             <button
               type="button"
@@ -909,13 +903,17 @@ export default function MushafPageView() {
               <span className="mpv-ayah-page-badge__num">{toArabicPageDigits(page)}</span>
             </button>
           </footer>
-          <MushafPageProgressRail
-            page={page}
-            totalPages={TOTAL_PAGES}
-            pulseKey={page}
-            visible={!selectedAyah && !flip.active && !flip.settling}
-            onJump={openJumpModal}
-          />
+          {!textChromeVisible && !selectedAyah ? (
+            <button
+              type="button"
+              className="mpv-exit-chip"
+              onClick={exitMushaf}
+              aria-label="خروج من المصحف"
+            >
+              <X size={18} aria-hidden="true" />
+              <span>خروج</span>
+            </button>
+          ) : null}
           <MushafBottomPager
             page={page}
             totalPages={TOTAL_PAGES}

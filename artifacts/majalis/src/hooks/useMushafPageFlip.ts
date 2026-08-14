@@ -146,7 +146,7 @@ export function useMushafPageFlip(opts: {
       if (disabled) return;
       if (e.button !== 0 && e.pointerType === "mouse") return;
       const target = e.target as HTMLElement | null;
-      if (target?.closest?.("button, a, [role='button'], [data-verse], .mfl-hit__ayah, .mf2-ayah-group, .aas-sheet, .aas-panel, .mpv-toolbar, .mpv-page-rail")) {
+      if (target?.closest?.("button, a, [role='button'], [data-verse], .mfl-hit__ayah, .mf2-ayah-group, .aas-sheet, .aas-panel, .mpv-toolbar, .mpv-bottom-pager, .mpv-exit-chip")) {
         return;
       }
       const stage = e.currentTarget as HTMLElement;

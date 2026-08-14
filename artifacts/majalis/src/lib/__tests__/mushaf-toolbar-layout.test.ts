@@ -19,7 +19,7 @@ const toolbarBlock = viewSrc.match(
 assert.ok(toolbarBlock, "كتلة شريط الأدوات موجودة في MushafPageView");
 
 const primaryAria = [
-  'aria-label="رجوع"',
+  'aria-label="خروج من المصحف"',
   'aria-label="فهرس السور"',
   'aria-label="التسميع"',
   'aria-label="إعدادات القراءة"',

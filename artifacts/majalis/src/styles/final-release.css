@@ -69,6 +69,16 @@ body {
   padding-inline: var(--gutter-inline-start) var(--gutter-inline-end);
 }
 
+/* صفحات ذات بطل ممتد — بلا هامش مزدوج من .app-main */
+.app-main:has(.prophets-lux-page),
+.app-main:has(.prophet-detail-lux),
+.app-main:has(.quran-hub-page),
+.app-main:has(.nations-page),
+.app-main:has(.seerah-page),
+.app-main:has(.quran-people-page) {
+  padding-inline: 0;
+}
+
 :where(h1, h2, h3, h4) {
   color: var(--color-text);
   font-family: var(--font-app, var(--font-body, "Amiri", "Noto Naskh Arabic", serif));

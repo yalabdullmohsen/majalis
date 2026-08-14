@@ -9,6 +9,7 @@ import { haptics } from "@/lib/haptics";
 /**
  * زر رجوع عام واضح في كل شاشة غير الرئيسية/الغامرة —
  * بدون شرط تمرير؛ مساحة لمس ≥44px عبر CSS.
+ * يُخفى في قصص الأنبياء (لها رجوع داخلي) حتى لا يزاحم المحتوى.
  */
 export function GlobalBackButton() {
   const [location] = useLocation();
@@ -16,6 +17,10 @@ export function GlobalBackButton() {
 
   if (location === "/") return null;
   if (isImmersiveChromePath(location) || isPrayerTimesPath(location)) return null;
+  const path = location.replace(/\/+$/, "") || "/";
+  if (path === "/prophets" || path.startsWith("/prophets/") || path.startsWith("/prophet-stories") || path.startsWith("/prophets-stories")) {
+    return null;
+  }
 
   const goBack = () => {
     haptics.selection();

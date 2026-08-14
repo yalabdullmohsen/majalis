@@ -79,7 +79,7 @@ html.dark .nb-table__row--clickable:hover td {
 /* ── Hero (قائمة) ── */
 .prophets-lux-hero {
   position: relative;
-  padding: 4rem 1.5rem 3rem;
+  padding: 4rem max(1rem, var(--page-gutter, 1rem)) 3rem;
   text-align: center;
   overflow: hidden;
   background-color: var(--ps-emerald);
@@ -87,6 +87,8 @@ html.dark .nb-table__row--clickable:hover td {
   background-size: 100px 100px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--ps-on-emerald);
+  width: 100%;
+  box-sizing: border-box;
 }
 .prophets-lux-hero__stars {
   position: absolute;
@@ -190,7 +192,12 @@ html.dark .nb-table__row--clickable:hover td {
 .prophets-lux-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--ds-space-6);
+  padding: var(--ds-space-5) max(0.85rem, var(--page-gutter, 1rem));
+}
+@media (max-width: 480px) {
+  .prophets-lux-container {
+    padding-inline: 0.75rem;
+  }
 }
 
 /* ── Search ── */
@@ -331,15 +338,7 @@ html.dark .nb-table__row--clickable:hover td {
   font-weight: 600;
 }
 .prophet-lux-card__bookmark {
-  position: absolute;
-  top: 0.6rem;
-  inset-inline-end: 0.6rem;
-  background: none;
-  border: none;
-  font-size: var(--ds-text-base);
-  cursor: pointer;
-  padding: 0.2rem;
-  z-index: 2;
+  display: none !important;
 }
 .prophet-lux-card__border {
   position: absolute;
