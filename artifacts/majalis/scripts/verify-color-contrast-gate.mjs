@@ -146,6 +146,13 @@ const ASSERTIONS = [
   { route: "/adhkar", selector: ".adhkar-focus-counter", mode: "dark", min: 4.5 },
   { route: "/adhkar", selector: ".adhkar-focus-text", mode: "light", min: 7 },
   { route: "/hadith", selector: ".hadith-card__text", mode: "dark", min: 4.5 },
+  // الطهارة: نص/تبويب أبيض فوق أخضر الهوية؛ التبويب النشط لوحة فاتحة
+  { route: "/tahara", selector: ".th-hero__title", mode: "light", min: 4.5 },
+  { route: "/tahara", selector: ".th-hero__title", mode: "dark", min: 4.5 },
+  { route: "/tahara", selector: ".th-tab:not(.th-tab--active)", mode: "light", min: 4.5 },
+  { route: "/tahara", selector: ".th-tab:not(.th-tab--active)", mode: "dark", min: 4.5 },
+  { route: "/tahara", selector: ".th-tab--active", mode: "light", min: 4.5 },
+  { route: "/tahara", selector: ".th-tab--active", mode: "dark", min: 4.5 },
 ];
 
 /** مسارات عامة من seo-routes — فحص عنوان لكل مسار × وضعين (تغطية كاملة لا عيّنة). */

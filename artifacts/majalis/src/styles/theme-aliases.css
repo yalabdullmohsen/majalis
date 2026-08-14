@@ -98,8 +98,8 @@
   --color-primary-soft: var(--mj-brand-soft);
   --color-border: var(--mj-hairline);
 
-  /* خطوط — Amiri (--mj-face) لنصوص القرآن/الحديث؛ --font-display/--font-ui من theme.css */
-  --font-face: var(--mj-face);
+  /* خطوط — --font-app للنصوص؛ --font-quran للمصحف فقط */
+  --font-face: var(--font-app);
 
   /* أنصاف وظلال */
   --r-sm: var(--mj-r-sm);

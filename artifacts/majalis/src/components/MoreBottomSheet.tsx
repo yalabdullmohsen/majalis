@@ -246,7 +246,12 @@ export function MoreBottomSheet({ open, onClose }: Props) {
         ) : (
           groups.map((group) => (
             <section key={group.id} className="bottom-sheet__section" aria-labelledby={`svc-${group.id}`}>
-              <h3 id={`svc-${group.id}`} className="bottom-sheet__section-label">{group.title}</h3>
+              <h3
+                id={`svc-${group.id}`}
+                className={`bottom-sheet__section-label${group.id === "hubs" ? " sr-only" : ""}`}
+              >
+                {group.title}
+              </h3>
               <div
                 className={
                   group.layout === "featured"

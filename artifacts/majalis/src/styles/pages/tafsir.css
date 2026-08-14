@@ -6,12 +6,12 @@
   max-width: 860px;
   margin: 0 auto;
   padding: 1.5rem 1rem 4rem;
-  font-family: var(--font-tafsir, "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif);
+  font-family: var(--font-app, var(--font-tafsir, "Amiri", "Noto Naskh Arabic", serif));
   line-height: 1.85;
 }
 
 .tf-hero {
-  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 55%, #1a5c4a 100%);
+  background: linear-gradient(135deg, var(--color-brand-deep, var(--mj-brand-deep)) 0%, var(--color-brand, var(--mj-brand)) 100%);
   border-radius: var(--ds-radius-2xl);
   padding: 2.5rem 1.5rem 2rem;
   color: #FFFFFF;
@@ -62,7 +62,7 @@
   color: var(--mj-brand-deep);
   line-height: 1.85;
   font-size: 1rem;
-  font-family: var(--font-tafsir, "Amiri", "Noto Naskh Arabic", serif);
+  font-family: var(--font-app, var(--font-tafsir, "Amiri", "Noto Naskh Arabic", serif));
 }
 
 .tf-cta {
@@ -182,7 +182,7 @@
   color: #1A3A2E;
   line-height: 1.85;
   font-size: 1rem;
-  font-family: var(--font-tafsir, "Amiri", "Noto Naskh Arabic", serif);
+  font-family: var(--font-app, var(--font-tafsir, "Amiri", "Noto Naskh Arabic", serif));
 }
 .tf-card__example {
   font-size: 0.85rem;
@@ -274,7 +274,7 @@
   color: #1A3A2E;
   line-height: 1.85;
   font-size: 1rem;
-  font-family: var(--font-tafsir, "Amiri", "Noto Naskh Arabic", serif);
+  font-family: var(--font-app, var(--font-tafsir, "Amiri", "Noto Naskh Arabic", serif));
 }
 
 .tf-section-head {
