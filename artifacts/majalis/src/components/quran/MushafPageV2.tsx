@@ -1124,14 +1124,38 @@ export function MushafPageV2({
             if (Number.isFinite(topPct)) {
               bannerEl.style.top = `${(topPct + nudgePct).toFixed(3)}%`;
             }
-            /* ادفع البسملة المقترنة بنفس الإزاحة كي لا تتقاطع الشارة معها */
+            /* ادفع البسملة المقترنة بنفس الإزاحة كي لا تتقاطع الشارة معها —
+             * مع سقف يحول دون تقاطع حبرها مع السطر التالي (ظهر على iPad ٧٤٤). */
             const basSlot = container.querySelector<HTMLElement>(
               `.mf2-grid-slot--basmala[data-grid-slot="${banSlot + 1}"]`,
             );
             if (basSlot) {
               const basTop = parseFloat(basSlot.style.top);
               if (Number.isFinite(basTop)) {
-                basSlot.style.top = `${(basTop + nudgePct).toFixed(3)}%`;
+                let nextTop = basTop + nudgePct;
+                const nextLine =
+                  container.querySelector<HTMLElement>(
+                    `.mf2-grid-slot--line[data-grid-slot="${banSlot + 2}"]`,
+                  ) ||
+                  [...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--line")].find(
+                    (el) => Number(el.getAttribute("data-grid-slot") || 0) > banSlot + 1,
+                  );
+                const basEl =
+                  basSlot.querySelector<HTMLElement>(".mf2-bismillah") || basSlot;
+                if (nextLine) {
+                  const nextInk =
+                    nextLine.querySelector<HTMLElement>(".mf2-line") || nextLine;
+                  const nextInkTop = measureInkBounds(nextInk).top;
+                  const basH = Math.max(
+                    4,
+                    measureInkBounds(basEl).bottom - measureInkBounds(basEl).top,
+                  );
+                  const maxCenterPct =
+                    ((nextInkTop - 3 - basH / 2 - cr.top) / Math.max(1, cr.height)) *
+                    100;
+                  nextTop = Math.min(nextTop, maxCenterPct);
+                }
+                basSlot.style.top = `${nextTop.toFixed(3)}%`;
               }
             }
           }
