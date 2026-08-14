@@ -49,6 +49,14 @@ export const MUSHAF_BASELINE_GAP_PER_EM =
 
 /** أقصى انحراف مسموح لحجم الخط عن الأساس — يكفي لبلوغ ارتفاع محارف ≥٤٫٢٪ */
 export const MUSHAF_FONT_DEV_MAX = 0.18;
+
+/**
+ * مضاعف بصري على مقياس المصحف قبل الملاءمة.
+ * يُبقى عند ١٫٠ حتى لا تُقصّ أسطر SE في بوابات multi-viewport
+ * (١٫٠٤ كان يُسقط سطرًا واحدًا على صفحات ضيقة رغم clipped=0).
+ */
+export const MUSHAF_OPTICAL_FONT_SCALE = 1;
+
 /** أقصى انحراف لفجوة الأسطر النسبية (±٥٪) */
 export const MUSHAF_GAP_DEV_MAX = 0.05;
 /** أقصى انحراف للإزاحة العلوية (±٠٫٥ نقطة مئوية مطلقة) */

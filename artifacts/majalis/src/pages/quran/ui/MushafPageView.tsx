@@ -46,7 +46,7 @@ import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { QpcFontPackBanner } from "@/components/quran/QpcFontPackBanner";
 import { MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
-import { MushafLayeredPage } from "@/features/mushaf";
+import { MushafLayeredPage, MUSHAF_OPTICAL_FONT_SCALE } from "@/features/mushaf";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import {
   captureMushafEntryOrigin,
@@ -147,9 +147,39 @@ export default function MushafPageView() {
   const [jumpSurah, setJumpSurah] = useState(1);
   const [jumpAyah, setJumpAyah] = useState(1);
   /* تجربة قراءة غامرة بنمط "آية": افتراضيًا الأدوات مخفية (رأس/شارة فقط)؛
-     نقرة على جسم الصفحة تُظهر أدوات الرجوع/الفهرس/الإعدادات. */
+     نقرة وسط الصفحة تُظهر الشريط؛ يختفي بعد خمول أو عند بدء السحب. */
   const [textChromeVisible, setTextChromeVisible] = useState(false);
   const [toolbarMoreOpen, setToolbarMoreOpen] = useState(false);
+  const chromeIdleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearChromeIdle = useCallback(() => {
+    if (chromeIdleTimerRef.current) {
+      clearTimeout(chromeIdleTimerRef.current);
+      chromeIdleTimerRef.current = null;
+    }
+  }, []);
+
+  const hideChrome = useCallback(() => {
+    setTextChromeVisible(false);
+  }, []);
+
+  const toggleChrome = useCallback(() => {
+    setTextChromeVisible((v) => !v);
+  }, []);
+
+  useEffect(() => {
+    if (!textChromeVisible) {
+      clearChromeIdle();
+      return;
+    }
+    clearChromeIdle();
+    chromeIdleTimerRef.current = setTimeout(() => {
+      setTextChromeVisible(false);
+      chromeIdleTimerRef.current = null;
+    }, 3200);
+    return clearChromeIdle;
+  }, [textChromeVisible, page, clearChromeIdle]);
+
   useEffect(() => {
     if (!textChromeVisible) setToolbarMoreOpen(false);
   }, [textChromeVisible]);
@@ -445,7 +475,8 @@ export default function MushafPageView() {
   const { flip, flipHandlers, setFlipWidth } = useMushafPageFlip({
     onNext: nextPage,
     onPrev: prevPage,
-    onCenterTap: () => setTextChromeVisible((v) => !v),
+    onCenterTap: toggleChrome,
+    onFlipStart: hideChrome,
     disabled: flipDisabled,
   });
 
@@ -791,6 +822,8 @@ export default function MushafPageView() {
                     ["--qs-font-size" as string]: `${prefs.fontScale}px`,
                     ["--qs-font-scale" as string]: String(mushafScale),
                     ["--mushaf-scale" as string]: String(mushafScale),
+                    ["--mushaf-font-scale" as string]: String(MUSHAF_OPTICAL_FONT_SCALE),
+                    ["--mushaf-line-height" as string]: "1.32",
                   }}
                   onScroll={(e) => {
                     const el = e.currentTarget;

@@ -3,6 +3,7 @@ export {
   MUSHAF_SOURCES,
   AYAH_PRESS_DELAY_MS,
   MUSHAF_PAGE_LINE_SLOTS,
+  MUSHAF_OPTICAL_FONT_SCALE,
   type MushafFeatureFlags,
   type MushafSourceAdapter,
   type MushafSourceId,

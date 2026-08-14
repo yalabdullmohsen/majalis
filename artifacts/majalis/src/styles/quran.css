@@ -2345,19 +2345,28 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   z-index: 30;
   flex: none;
   pointer-events: auto;
+  transition: opacity 200ms ease-out, transform 220ms ease-out;
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
 }
 .mpv-toolbar.mpv-toolbar--ayah.mpv-toolbar--hidden {
   display: none !important;
-  transform: none;
+  transform: translate3d(0, 6px, 0);
   opacity: 0;
   pointer-events: none;
 }
 .quran-shell--chrome-hidden .mpv-toolbar.mpv-toolbar--ayah {
   display: none !important;
-  transform: none;
+  transform: translate3d(0, 6px, 0);
   opacity: 0;
   pointer-events: none;
 }
+@media (prefers-reduced-motion: reduce) {
+  .mpv-toolbar.mpv-toolbar--ayah {
+    transition: none;
+  }
+}
+
 .quran-shell--ayah.quran-shell--night .mpv-toolbar--ayah {
   background: color-mix(in srgb, var(--ayah-paper, #0F172A) 82%, transparent) !important;
   border-color: color-mix(in srgb, var(--ayah-badge-border, #334155) 55%, transparent) !important;

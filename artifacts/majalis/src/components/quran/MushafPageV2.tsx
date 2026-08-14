@@ -10,6 +10,7 @@ import {
   MUSHAF_FONT_DEV_MAX,
   MUSHAF_GRID,
   MUSHAF_LAYOUT_BASELINE,
+  MUSHAF_OPTICAL_FONT_SCALE,
 } from "@/features/mushaf/config";
 import {
   applyMushafLayoutBandCssVars,
@@ -278,8 +279,8 @@ export function MushafPageV2({
     [showAyahNumbers],
   );
   const scaleFactor = Number.isFinite(mushafScale) && mushafScale > 0
-    ? Math.min(1.65, Math.max(0.7, mushafScale))
-    : 1;
+    ? Math.min(1.65, Math.max(0.7, mushafScale * MUSHAF_OPTICAL_FONT_SCALE))
+    : MUSHAF_OPTICAL_FONT_SCALE;
 
   /** أسطر الآيات المرسومة — وحدها تدخل في sizeByWidth */
   const ayahLineRefs = useRef(new Map<number, HTMLDivElement>());

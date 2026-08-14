@@ -29,6 +29,13 @@ export const MUSHAF_AYA_BANDS_PCT = {
   openingBlockEnd: 74.8,
 } as const;
 
+/** هوامش صفحة اختيارية للواجهة (لا تغيّر شبكة QPC المطلقة) */
+export const MUSHAF_PAGE_CHROME = {
+  /** يطابق MUSHAF_OPTICAL_FONT_SCALE — بلا تعزيز يُهدد ملاءمة SE */
+  fontScaleBoost: 1,
+  chromeHideMs: 3200,
+} as const;
+
 export const MUSHAF_LAYOUT_BANDS = {
   /** ارتفاع شريط الأدوات العائم + هامش داخلي */
   toolbarBandPx: 52,

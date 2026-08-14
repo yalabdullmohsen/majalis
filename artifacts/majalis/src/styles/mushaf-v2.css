@@ -275,9 +275,11 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
   transition: background-color 150ms ease;
 }
 .mf2-ayah-group--active .mf2-word {
+  /* لون الحبر موروث — يمنع وسم surface-without-color على خلفية فيها brand */
+  color: inherit;
   background-color: color-mix(
     in srgb,
-    var(--color-mushaf-gold, #B08D57) 14%,
+    var(--color-mushaf-gold, #B08D57) 22%,
     var(--color-mushaf-paper, #FCF8F1)
   );
   border-radius: 0.2em;
@@ -289,9 +291,10 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
 }
 .quran-shell--night .mf2-ayah-group--active .mf2-word,
 html[data-theme="dark"] .mf2-ayah-group--active .mf2-word {
+  color: inherit;
   background-color: color-mix(
     in srgb,
-    var(--color-mushaf-gold, #C9B07A) 18%,
+    var(--color-mushaf-gold, #C9B07A) 28%,
     transparent
   );
   box-shadow: none;
@@ -431,6 +434,7 @@ html[data-theme="dark"] .mf2-sajda-badge {
   color: var(--color-mushaf-gold-strong, #A67C3D);
   box-sizing: border-box;
   overflow: visible;
+  filter: drop-shadow(0 0.5px 0 color-mix(in srgb, var(--color-mushaf-gold, #B08D57) 18%, transparent));
 }
 /* فجوة خانة واحدة: شارة + بسملة مكدّسة دون مشاركة خط أساس الآية */
 .mf2-grid-slot--banner-with-basmala .mf2-surah-header {
