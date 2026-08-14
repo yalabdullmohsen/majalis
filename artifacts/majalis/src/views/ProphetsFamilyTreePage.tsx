@@ -97,7 +97,7 @@ function NodeBox({ placed, onClick }: {
         x={NODE_W / 2} y={NODE_H / 2 - 6}
         textAnchor="middle" dominantBaseline="middle"
         fontSize={isAnc ? 10 : 13} fontWeight={700}
-        fontFamily="IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif"
+        fontFamily="Amiri, Noto Naskh Arabic, serif"
         fill={textClr}
       >
         {node.name}
@@ -106,7 +106,7 @@ function NodeBox({ placed, onClick }: {
         <text
           x={NODE_W / 2} y={NODE_H / 2 + 11}
           textAnchor="middle" dominantBaseline="middle"
-          fontSize={8.5} fontFamily="IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif"
+          fontSize={8.5} fontFamily="Amiri, Noto Naskh Arabic, serif"
           fill={isLast ? "rgba(255,255,255,0.8)" : "#5C5C56"}
         >
           {truncateAtWord(node.era, 20)}
@@ -116,7 +116,7 @@ function NodeBox({ placed, onClick }: {
         <text
           x={NODE_W / 2} y={NODE_H / 2 + 10}
           textAnchor="middle" fontSize={8}
-          fill="rgba(255,255,255,0.6)" fontFamily="IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif"
+          fill="rgba(255,255,255,0.6)" fontFamily="Amiri, Noto Naskh Arabic, serif"
         >
           ···
         </text>
@@ -219,7 +219,7 @@ export default function ProphetsFamilyTreePage() {
   const selectedNode = placed.find(p => p.node.id === selected)?.node;
 
   return (
-    <div dir="rtl" style={{ minHeight: "100svh", background: "var(--mj-brand-soft)", fontFamily: "IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100svh", background: "var(--mj-brand-soft)", fontFamily: "var(--font-app)" }}>
       {/* Header */}
       <header style={{
         background: "linear-gradient(135deg,#0c2318,#1a3d2b)",

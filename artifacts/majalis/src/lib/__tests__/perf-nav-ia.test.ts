@@ -24,21 +24,23 @@ assert.deepEqual(
   hubLabels,
   [
     "سين جيم",
-    "قصص الأنبياء والأمم السابقة",
+    "قصص الأنبياء",
+    "الأمم السابقة",
     "الذين ذكروا في القرآن",
     "التفسير",
     "السيرة النبوية",
     "اكتشف الإسلام",
     "التاريخ الإسلامي",
   ],
-  "ترتيب الأبواب المميزة السبعة ثابت",
+  "ترتيب الأبواب المميزة ثابت",
 );
 const hubHrefs = SERVICES_CENTER_GROUPS[0]!.items
   .filter((i) => i.action.kind === "link")
   .map((i) => (i.action as { href: string }).href);
 assert.deepEqual(hubHrefs, [
   "/quiz",
-  "/prophets",
+  "/prophets-stories",
+  "/nations",
   "/quran/people",
   "/tafsir",
   "/seerah",

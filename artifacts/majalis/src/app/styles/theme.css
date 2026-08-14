@@ -40,9 +40,11 @@
   --color-danger-deep: #991B1B;
   --color-splash: #002b21;
 
-  --font-face: "Amiri", serif;
-  --font-ui: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
-  --font-num: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  /* مرجع الإنتاج: فقرات/عناوين بطاقات /tafsir (.tf-intro + .tf-card__term) = Amiri نَسخي */
+  --font-app: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-face: var(--font-app);
+  --font-ui: var(--font-app);
+  --font-num: var(--font-app);
 
   --radius-mj-sm: 12px;
   --radius-mj-md: 16px;
@@ -111,8 +113,9 @@
   --primary-foreground: var(--color-on-brand);
   --ring: var(--color-brand);
   --border: var(--color-hairline);
-  --font-sans: var(--font-ui);
-  --font-display: var(--font-ui);
+  --font-sans: var(--font-app);
+  --font-display: var(--font-app);
+  --font-body: var(--font-app);
 }
 
 :root {
@@ -179,9 +182,10 @@
   --mj-s6: 24px;
   --mj-s8: 32px;
   --mj-s12: 48px;
-  --mj-face: "Amiri", serif;
-  --mj-ui: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
-  --mj-num: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-app: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --mj-face: var(--font-app);
+  --mj-ui: var(--font-app);
+  --mj-num: var(--font-app);
   --mj-fs-display: 40px;
   --mj-fs-h1: 28px;
   --mj-fs-h2: 20px;
@@ -190,12 +194,12 @@
   --mj-fs-btn: 14px;
   --mj-fs-small: 14px;
   --mj-fs-tiny: 12px;
-  --mj-lh-tight: 1;
-  --mj-lh-title: 1.45;
-  --mj-lh-card: 1.55;
-  --mj-lh-ui: 1.7;
-  --mj-lh-body: 1.7;
-  --mj-lh-small: 1.65;
+  --mj-lh-tight: 1.15;
+  --mj-lh-title: 1.55;
+  --mj-lh-card: 1.7;
+  --mj-lh-ui: 1.85;
+  --mj-lh-body: 1.85;
+  --mj-lh-small: 1.75;
   --mj-lh-sacred: 2.1;
 
   /* طبقات ارتفاع — بديل ظل واحد */
@@ -227,9 +231,9 @@
   --ring: var(--mj-brand);
   --border: var(--mj-hairline);
   --input: var(--mj-hairline);
-  --font-sans: var(--mj-ui);
-  --font-display: var(--mj-ui);
-  --font-body: var(--mj-ui);
+  --font-sans: var(--font-app);
+  --font-display: var(--font-app);
+  --font-body: var(--font-app);
   --color-bg: var(--mj-bg);
   --color-primary: var(--mj-brand);
   --color-text: var(--mj-ink);
@@ -358,11 +362,11 @@ input,
 select,
 textarea {
   font-size: max(16px, 1em);
-  font-family: var(--mj-ui);
+  font-family: var(--font-app);
 }
 
 body {
-  font-family: var(--mj-ui);
+  font-family: var(--font-app);
   font-size: var(--mj-fs-body);
   line-height: var(--mj-lh-body);
   color: var(--mj-ink);
@@ -575,7 +579,7 @@ a:active {
   gap: var(--mj-s2);
   border: 0;
   cursor: pointer;
-  font-family: var(--mj-ui);
+  font-family: var(--font-app);
   font-size: var(--mj-fs-btn);
   font-weight: 500;
   line-height: var(--mj-lh-tight);
@@ -641,14 +645,14 @@ html.dark .mj-btn--ghost {
   color: var(--mj-ink);
 }
 .mj-type-ui {
-  font-family: var(--mj-ui);
+  font-family: var(--font-app);
   font-size: var(--mj-fs-body);
   font-weight: 400;
   line-height: var(--mj-lh-ui);
   color: var(--mj-ink);
 }
 .mj-type-muted {
-  font-family: var(--mj-ui);
+  font-family: var(--font-app);
   font-size: var(--mj-fs-small);
   font-weight: 400;
   line-height: var(--mj-lh-small);
@@ -697,7 +701,7 @@ html.dark .mj-btn--ghost {
   border: 1px solid var(--mj-hairline);
   border-radius: var(--mj-r-pill);
   padding: 11px 18px;
-  font-family: var(--mj-ui);
+  font-family: var(--font-app);
   font-size: var(--mj-fs-small);
   color: var(--mj-ink);
 }

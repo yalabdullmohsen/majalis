@@ -606,6 +606,8 @@ function Router() {
       <Route path="/stories"><SafeLazyRoute component={IslamicStoriesPage} /></Route>
       <Route path="/nations/:slug"><SafeLazyRoute component={NationDetailPage} /></Route>
       <Route path="/nations"><SafeLazyRoute component={NationsPage} /></Route>
+      <Route path="/prophets-stories/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
+      <Route path="/prophets-stories"><Redirect to="/prophets" /></Route>
       <Route path="/prophet-stories/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/prophet-stories"><Redirect to="/prophets" /></Route>
       <Route path="/prophets/tree"><SafeLazyRoute component={ProphetsFamilyTreePage} /></Route>
