@@ -53,7 +53,7 @@
   display: flex;
   overflow-x: auto;
   gap: 0;
-  background: #F9FAFB;
+  background: var(--mj-bg);
   border-bottom: 2px solid var(--mj-hairline);
   padding: 0 .5rem;
   scrollbar-width: none;
@@ -91,7 +91,7 @@
   display: flex;
   gap: .9rem;
   align-items: flex-start;
-  background: #fff;
+  background: var(--mj-surface);
   border: 1.5px solid var(--mj-hairline);
   border-radius: .8rem;
   padding: .9rem 1rem;
@@ -106,7 +106,7 @@
   flex-shrink: 0;
 }
 .tw-shart-content { flex: 1; }
-.tw-shart-title { font-weight: 700; font-size: .92rem; color: #111; display: block; margin-bottom: .3rem; }
+.tw-shart-title { font-weight: 700; font-size: .92rem; color: var(--mj-ink); display: block; margin-bottom: .3rem; }
 .tw-shart-desc  { font-size: .83rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .5rem; }
 .tw-shart-dalil {
   display: flex;
@@ -139,14 +139,14 @@
 /* أنواع */
 .tw-anwaa-grid { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.5rem; }
 .tw-nawaa-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1.5px solid var(--mj-hairline);
   border-radius: .8rem;
   padding: .9rem 1rem;
 }
 .tw-nawaa-head { display: flex; gap: .75rem; align-items: flex-start; margin-bottom: .5rem; }
 .tw-nawaa-icon  { font-size: 1.3rem; flex-shrink: 0; }
-.tw-nawaa-title { display: block; font-weight: 700; font-size: .9rem; color: #111; margin-bottom: .2rem; }
+.tw-nawaa-title { display: block; font-weight: 700; font-size: .9rem; color: var(--mj-ink); margin-bottom: .2rem; }
 .tw-nawaa-hukm  { display: inline-block; padding: .15rem .5rem; border-radius: .35rem; font-size: .68rem; font-weight: 700; }
 .tw-nawaa-hukm--wajib    { background: var(--mj-danger-soft); color: var(--mj-danger-deep); }
 .tw-nawaa-hukm--mustahabb { background: #D4E9DC; color: var(--mj-brand-deep); }
@@ -165,7 +165,7 @@
 /* أذكار */
 .tw-dhikr-list { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.5rem; }
 .tw-dhikr-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1.5px solid var(--mj-hairline);
   border-radius: .8rem;
   overflow: hidden;
@@ -186,7 +186,7 @@
 .tw-dhikr-times { flex: 1; font-size: .75rem; color: var(--mj-ink-2); text-align: end; }
 .tw-dhikr-chevron { font-size: .8rem; color: #9CA3AF; transition: transform .2s; margin-inline-end: auto; }
 .tw-dhikr-chevron--open { transform: rotate(180deg); }
-.tw-dhikr-arabic { font-family: var(--font-body); font-size: 1.05rem; line-height: 2; color: #111; padding: .5rem .9rem .7rem; margin: 0; border-top: 1px solid #F3F4F6; }
+.tw-dhikr-arabic { font-family: var(--font-body); font-size: 1.05rem; line-height: 2; color: var(--mj-ink); padding: .5rem .9rem .7rem; margin: 0; border-top: 1px solid #F3F4F6; }
 .tw-dhikr-body  { padding: .5rem .9rem .75rem; border-top: 1px solid #F3F4F6; }
 .tw-dhikr-reward {
   display: flex; gap: .45rem; align-items: flex-start;
@@ -198,10 +198,10 @@
 
 /* أوقات */
 .tw-afdhal-awqat { margin-top: 1.5rem; }
-.tw-afdhal-awqat__title { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.tw-afdhal-awqat__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-ink); margin: 0 0 .75rem; }
 .tw-awqat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
 .tw-awqat-item {
-  background: #F9FAFB;
+  background: var(--mj-bg);
   border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .65rem .8rem;
@@ -215,7 +215,7 @@
   display: flex;
   gap: .75rem;
   align-items: flex-start;
-  background: #fff;
+  background: var(--mj-surface);
   border: 1.5px solid var(--mj-danger-soft);
   border-radius: .8rem;
   padding: .85rem 1rem;
@@ -235,14 +235,14 @@
 /* آثار */
 .tw-athaar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.5rem; }
 .tw-athar-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1.5px solid var(--mj-hairline);
   border-radius: .8rem;
   padding: .85rem .9rem;
   text-align: center;
 }
 .tw-athar-icon  { font-size: 1.6rem; display: block; margin-bottom: .4rem; }
-.tw-athar-title { font-size: .82rem; font-weight: 700; color: #111; display: block; margin-bottom: .3rem; }
+.tw-athar-title { font-size: .82rem; font-weight: 700; color: var(--mj-ink); display: block; margin-bottom: .3rem; }
 .tw-athar-desc  { font-size: .74rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 .tw-hadith-box {
@@ -261,7 +261,7 @@ html[data-theme="dark"] .tw-related__title,
 html.dark .tw-related__title { color: var(--mj-ink, #F2F4F3); }
 .tw-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .tw-related__link {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .6rem;
   padding: .6rem .7rem;
@@ -275,12 +275,12 @@ html.dark .tw-related__title { color: var(--mj-ink, #F2F4F3); }
 }
 .tw-related__link:hover { background: var(--mj-brand-soft); border-color: var(--majalis-emerald,var(--mj-brand-deep)); }
 
-/* خلفية الرابط بيضاء ثابتة — لا نعناعي ليلي فوق أبيض */
+/* سطح ليلي — رابط بلون accent مقروء لا brand-deep */
 html[data-theme="dark"] .tw-related__link,
 html.dark .tw-related__link {
-  color: var(--mj-brand-deep);
-  background: #fff;
-  border-color: var(--mj-hairline);
+  color: var(--accent, #5CC095);
+  background: var(--surface, #1B2421);
+  border-color: var(--border, #35443F);
 }
 
 @media (max-width: 640px) {

@@ -630,7 +630,7 @@ html.dark .nav-soon-badge {
   border-radius: 0.5rem;
   background: transparent;
   color: var(--color-text-muted);
-  font-size: 0.6875rem;
+  font-size: var(--font-xs, 0.8125rem);
   font-weight: 600;
   line-height: 1.1;
   text-decoration: none;
@@ -657,7 +657,7 @@ html.dark .nav-soon-badge {
 }
 .bottom-nav--v2 .bottom-nav__tab-label {
   display: block;
-  font-size: 0.6875rem;
+  font-size: var(--font-xs, 0.8125rem);
   font-weight: 600;
   line-height: 1.15;
   max-width: 100%;
@@ -744,7 +744,7 @@ html.dark .nav-soon-badge {
     box-shadow: none !important;
     background: transparent !important;
     color: var(--color-text-muted) !important;
-    font-size: 0.6875rem !important;
+    font-size: var(--font-xs, 0.8125rem) !important;
     font-weight: 600 !important;
     line-height: 1.1 !important;
     letter-spacing: 0 !important;
@@ -779,7 +779,7 @@ html.dark .nav-soon-badge {
   .bottom-nav--v2 .bottom-nav__tab-label,
   .bottom-nav .bottom-nav__tab-label {
     display: block !important;
-    font-size: 0.6875rem !important;
+    font-size: var(--font-xs, 0.8125rem) !important;
     font-weight: inherit !important;
     line-height: 1.15 !important;
     max-width: 100% !important;
@@ -1491,7 +1491,7 @@ a.twitter-timeline {
   .navbar-brand__copy strong { font-size: .76rem; }
   /* على أضيق عرض: صغّر الخط قليلًا مع الإبقاء على nowrap — بلا ellipsis */
   .bottom-nav--v2 .bottom-nav__tab-label,
-  .bottom-nav .bottom-nav__tab-label { font-size: 0.625rem !important; }
+  .bottom-nav .bottom-nav__tab-label { font-size: var(--font-xs, 0.8125rem) !important; }
 }
 
 /* ══ عقد أسطح الصفحات + نماذج + جداول + تمرير أفقي (iPhone) ══ */

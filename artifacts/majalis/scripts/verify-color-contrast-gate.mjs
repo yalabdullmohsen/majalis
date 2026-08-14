@@ -163,6 +163,12 @@ const ASSERTIONS = [
   { route: "/sawm", selector: ".sw-badge--fard", mode: "dark", min: 4.5 },
   { route: "/lessons", selector: ".lesson-unified-card__title", mode: "dark", min: 3 },
   { route: "/lessons", selector: ".lesson-unified-card__btn--ghost", mode: "dark", min: 4.5 },
+  // توحيد ليلي/طباعة 2026-08-14
+  { route: "/prophets", selector: ".prophets-lux-hero__title", mode: "dark", min: 4.5 },
+  { route: "/prophets", selector: ".prophets-lux-tab--active", mode: "dark", min: 3 },
+  { route: "/quran/people", selector: ".qp-people__intro", mode: "dark", min: 4.5 },
+  { route: "/quran-knowledge", selector: ".hub-card__title", mode: "dark", min: 4.5 },
+  { route: "/janaza", selector: ".jnz-step__title", mode: "dark", min: 4.5 },
 ];
 
 /** مسارات عامة من seo-routes — فحص عنوان لكل مسار × وضعين (تغطية كاملة لا عيّنة). */

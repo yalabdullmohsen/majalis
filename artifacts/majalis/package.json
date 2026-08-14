@@ -313,7 +313,8 @@
     "test:licenses": "node scripts/verify-licenses-gate.mjs",
     "test:native-feel": "node --import tsx src/lib/__tests__/native-feel-motion.test.ts && node --import tsx src/lib/__tests__/spatial-nav.test.ts",
     "test:mushaf-density-gate": "node scripts/quran-import/mushaf-density-gate.mjs",
-    "test:mushaf-aya-parity": "node scripts/quran-import/mushaf-aya-parity-gate.mjs"
+    "test:mushaf-aya-parity": "node scripts/quran-import/mushaf-aya-parity-gate.mjs",
+    "lint:design-tokens": "node scripts/lint-design-tokens.mjs"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

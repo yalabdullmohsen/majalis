@@ -2,7 +2,7 @@
    231 · FadailAamalPage · /fadail-aamal
    ══════════════════════════════════════════════════════════ */
 
-.fa-page { min-height: 100svh; background: #F9FAFB; padding-bottom: 4rem; }
+.fa-page { min-height: 100svh; background: var(--mj-bg); padding-bottom: 4rem; }
 
 .fa-hero {
   background: linear-gradient(155deg, var(--mj-brand-deep) 0%, var(--mj-brand) 70%, var(--mj-brand) 100%);
@@ -47,8 +47,8 @@
   border-radius: .6rem;
   padding: .7rem 1rem;
   font-size: .9rem;
-  color: #111;
-  background: #fff;
+  color: var(--mj-ink);
+  background: var(--mj-surface);
   outline: none;
   transition: border-color .18s;
   direction: rtl;
@@ -62,7 +62,7 @@
   margin-bottom: .75rem;
 }
 .fa-cat-btn {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid #D1D5DB;
   border-radius: var(--ds-radius-full);
   padding: .3rem .85rem;
@@ -83,7 +83,7 @@
 }
 
 .fa-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .85rem;
   padding: 1.1rem 1rem;
@@ -110,12 +110,12 @@
 .fa-card__grade--sahih { background: #D4E9DC; color: var(--mj-brand-deep); }
 .fa-card__grade--hasan { background: rgba(23,61,53,.12); color: var(--mj-brand); }
 
-.fa-card__title { font-size: .92rem; font-weight: 700; color: #111; margin: 0; }
+.fa-card__title { font-size: .92rem; font-weight: 700; color: var(--mj-ink); margin: 0; }
 .fa-card__text {
   font-size: .87rem;
   line-height: 1.9;
   color: #1F2937;
-  background: #F9FAFB;
+  background: var(--mj-bg);
   border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: .4rem;
   padding: .6rem .75rem;
@@ -133,10 +133,10 @@
 .fa-empty p { margin: 0; font-size: .9rem; }
 
 .fa-related { margin-top: 2.5rem; }
-.fa-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.fa-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-ink); margin: 0 0 .75rem; }
 .fa-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .fa-related__link {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .6rem;
   padding: .6rem .7rem;

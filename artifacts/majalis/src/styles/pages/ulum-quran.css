@@ -30,7 +30,7 @@
 /* tabs */
 .uq-tabs-bar {
   display: flex; overflow-x: auto; gap: 0;
-  background: #F9FAFB; border-bottom: 2px solid var(--mj-hairline);
+  background: var(--mj-bg); border-bottom: 2px solid var(--mj-hairline);
   padding: 0 .5rem; scrollbar-width: none;
 }
 .uq-tabs-bar::-webkit-scrollbar { display: none; }
@@ -48,7 +48,7 @@
 .uq-section { animation: uq-fade .25s ease; }
 @keyframes uq-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .uq-lead    { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0 0 1.2rem; border-inline-end: 3px solid var(--majalis-emerald,var(--mj-brand)); padding-inline-end: .75rem; }
-.uq-subhead { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.uq-subhead { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-ink); margin: 0 0 .75rem; }
 .uq-subhead--mt { margin-top: 1.5rem; }
 .uq-info-box--mt { margin-top: 1.2rem; }
 
@@ -61,9 +61,9 @@
 /* types */
 .uq-types-list { display: flex; flex-direction: column; gap: .75rem; }
 .uq-type-card {
-  background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem 1rem;
+  background: var(--mj-surface); border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem 1rem;
 }
-.uq-type-card__title { font-weight: 700; font-size: .9rem; color: #111; margin: 0 0 .35rem; }
+.uq-type-card__title { font-weight: 700; font-size: .9rem; color: var(--mj-ink); margin: 0 0 .35rem; }
 .uq-type-card__desc  { font-size: .83rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .5rem; }
 .uq-dalil-box {
   display: flex; gap: .4rem; align-items: flex-start;
@@ -74,7 +74,7 @@
 
 /* jam */
 .uq-jam-list { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.2rem; }
-.uq-jam-card { background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; overflow: hidden; }
+.uq-jam-card { background: var(--mj-surface); border: 1.5px solid var(--mj-hairline); border-radius: .8rem; overflow: hidden; }
 .uq-jam-card--open { border-color: var(--majalis-emerald,var(--mj-brand)); }
 .uq-jam-head {
   display: flex; align-items: center; gap: .75rem;
@@ -87,7 +87,7 @@
   display: flex; align-items: center; justify-content: center;
   font-size: .8rem; font-weight: 800; flex-shrink: 0;
 }
-.uq-jam-title { flex: 1; font-weight: 700; font-size: .9rem; color: #111; }
+.uq-jam-title { flex: 1; font-weight: 700; font-size: .9rem; color: var(--mj-ink); }
 .uq-jam-chevron { font-size: .8rem; color: #9CA3AF; transition: transform .2s; }
 .uq-jam-chevron--open { transform: rotate(180deg); }
 .uq-jam-body { margin: 0; padding: .5rem 1rem .9rem 1rem; border-top: 1px solid #F3F4F6; list-style: none; display: flex; flex-direction: column; gap: .4rem; }
@@ -107,21 +107,21 @@
 .uq-tafsir-types { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.5rem; }
 .uq-tafsir-card {
   display: flex; gap: .75rem; align-items: flex-start;
-  background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem 1rem;
+  background: var(--mj-surface); border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem 1rem;
 }
 .uq-tafsir-icon  { font-size: 1.4rem; flex-shrink: 0; }
-.uq-tafsir-title { font-weight: 700; font-size: .9rem; color: #111; display: block; margin-bottom: .25rem; }
+.uq-tafsir-title { font-weight: 700; font-size: .9rem; color: var(--mj-ink); display: block; margin-bottom: .25rem; }
 .uq-tafsir-desc  { font-size: .82rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .3rem; }
 .uq-tafsir-ex    { font-size: .74rem; color: var(--majalis-emerald,var(--mj-brand)); font-weight: 600; }
 
 .uq-mufassirun { display: flex; flex-direction: column; gap: .5rem; }
 .uq-mufassir-row {
   display: flex; align-items: flex-start; gap: var(--ds-space-4);
-  background: #F9FAFB; border-radius: .65rem; padding: .65rem .85rem;
+  background: var(--mj-bg); border-radius: .65rem; padding: .65rem .85rem;
   flex-wrap: wrap;
 }
 .uq-mufassir-info { display: flex; flex-direction: column; min-width: 8rem; }
-.uq-mufassir-name { font-weight: 700; font-size: .85rem; color: #111; }
+.uq-mufassir-name { font-weight: 700; font-size: .85rem; color: var(--mj-ink); }
 .uq-mufassir-era  { font-size: .72rem; color: #9CA3AF; }
 .uq-mufassir-kitab { display: block; font-size: .83rem; font-weight: 600; color: var(--majalis-emerald,var(--mj-brand)); }
 .uq-mufassir-note  { display: block; font-size: .72rem; color: var(--mj-ink-2); }
@@ -129,11 +129,11 @@
 /* إعجاز */
 .uq-ijaz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.5rem; }
 .uq-ijaz-card {
-  background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem;
+  background: var(--mj-surface); border: 1.5px solid var(--mj-hairline); border-radius: .8rem;
   padding: .9rem; text-align: center;
 }
 .uq-ijaz-icon  { font-size: 1.6rem; display: block; margin-bottom: .4rem; }
-.uq-ijaz-title { font-size: .8rem; font-weight: 700; color: #111; display: block; margin-bottom: .3rem; }
+.uq-ijaz-title { font-size: .8rem; font-weight: 700; color: var(--mj-ink); display: block; margin-bottom: .3rem; }
 .uq-ijaz-desc  { font-size: .73rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 .uq-ijaz-ayah {
@@ -145,7 +145,7 @@
 
 /* محكم ومتشابه */
 .uq-mm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-.uq-mm-card { background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem; }
+.uq-mm-card { background: var(--mj-surface); border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem; }
 .uq-mm-title { font-size: .9rem; font-weight: 800; color: var(--majalis-emerald,var(--mj-brand)); margin: 0 0 .4rem; }
 .uq-mm-def   { font-size: .8rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .5rem; }
 .uq-mm-examples { display: flex; flex-direction: column; gap: .25rem; }
@@ -159,7 +159,7 @@
 .uq-naskh-list { display: flex; flex-direction: column; gap: .75rem; }
 .uq-naskh-card {
   display: flex; gap: .75rem; align-items: flex-start;
-  background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem 1rem;
+  background: var(--mj-surface); border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem 1rem;
 }
 .uq-naskh-num {
   background: #1a1a2e; color: #fff;
@@ -167,16 +167,16 @@
   display: flex; align-items: center; justify-content: center;
   font-size: .8rem; font-weight: 800; flex-shrink: 0;
 }
-.uq-naskh-title { font-weight: 700; font-size: .88rem; color: #111; margin: 0 0 .25rem; display: block; }
+.uq-naskh-title { font-weight: 700; font-size: .88rem; color: var(--mj-ink); margin: 0 0 .25rem; display: block; }
 .uq-naskh-desc  { font-size: .82rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .3rem; display: block; }
 .uq-naskh-ex    { font-size: .74rem; color: var(--majalis-emerald,var(--mj-brand)); font-weight: 600; display: block; }
 
 /* related */
 .uq-related { margin-top: 2.5rem; }
-.uq-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.uq-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-ink); margin: 0 0 .75rem; }
 .uq-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .uq-related__link {
-  background: #fff; border: 1px solid var(--mj-hairline); border-radius: .6rem;
+  background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .6rem;
   padding: .6rem .7rem; font-size: .82rem; color: var(--majalis-emerald,var(--mj-brand));
   text-align: center; text-decoration: none; font-weight: 600;
   transition: background .15s; display: block;
@@ -200,7 +200,7 @@
   margin: 1.25rem 0;
 }
 .uq-qiraat-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid rgba(23,61,53,.14);
   border-radius: 12px;
   padding: 1rem 1.1rem;

@@ -26,6 +26,9 @@ import "./app/styles/theme.css";
 import "./styles/brand-v4.css";
 // أزواج (سطح ← لون فوقه) — يشتق من brand-v4 ويجب أن يليه مباشرة
 import "./styles/tokens.css";
+// رموز دلالية موحّدة (سطح/نص/حد/خطوط) — بعد tokens وقبل الطبقات القديمة
+import "./styles/design-tokens.css";
+import "./styles/typography-scale.css";
 import "./index.css";
 import "./styles/design-system.css";
 import "./styles/components/instant-interaction.css";
