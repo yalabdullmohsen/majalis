@@ -56,7 +56,6 @@ export function MushafPageFlipStage({
       data-page-state="active"
     >
       {children}
-      <div className="mpv-flip-leaf__curl" aria-hidden="true" />
     </div>
   );
 
@@ -85,13 +84,6 @@ export function MushafPageFlipStage({
         <div className="mpv-flip-underlay__paper" />
       )}
     </div>
-  );
-
-  const fx = (
-    <>
-      <div className="mpv-flip-shade" aria-hidden="true" />
-      <div className="mpv-flip-corner" aria-hidden="true" />
-    </>
   );
 
   return (
@@ -125,13 +117,11 @@ export function MushafPageFlipStage({
         <div className="mpv-flip-book">
           {leaf}
           {underlayNode}
-          {fx}
         </div>
       ) : (
         <>
           {leaf}
           {underlayNode}
-          {fx}
         </>
       )}
 

@@ -1,6 +1,6 @@
 /**
- * بسملة موحّدة بأسلوب الفاتحة (محارف QPC من صفحة ١).
- * الفرق الوحيد المسموح: ميدالية رقم ١ في الفاتحة فقط.
+ * بسملة زخرفية (غير آية) — محارف code_v2 من صفحة ١ مع خط qpc-page-1.
+ * الفاتحة ١:١ تُرسم من كلمات الصفحة نفسها في MushafPageV2 — لا عبر هذا المكوّن.
  */
 import { useEffect, type Ref } from "react";
 import {
@@ -8,12 +8,12 @@ import {
   mushafPageFontFamily,
 } from "@/hooks/useMushafPageFont";
 
-/** محارف بسملة الفاتحة من page-001.json (خط qpc-page-1) */
-export const BASMALA_QPC_WORDS = ["ﭑ", "ﭒ", "ﭓ", "ﭔ"] as const;
-export const BASMALA_QPC_END = "ﭕ";
+/** code_v2 لبسملة ١:١ من page-001.json — يطابق خط qpc-v2/p1.woff2 */
+export const BASMALA_QPC_WORDS = ["ﺧ", "ﱂ", "ﱃ", "ﱄ"] as const;
+export const BASMALA_QPC_END = "mej";
 
 export type BasmalaLineProps = {
-  /** ميدالية رقم ١ — للفاتحة فقط */
+  /** ميدالية رقم ١ — نادر للزخرفة؛ الفاتحة من كلمات الصفحة */
   showNumber?: boolean;
   className?: string;
   lineRef?: Ref<HTMLDivElement>;
@@ -32,6 +32,7 @@ export function BasmalaLine({
   }, []);
 
   const family = mushafPageFontFamily(1);
+  const fontStyle = { fontFamily: `"${family}"` } as const;
 
   return (
     <div
@@ -44,11 +45,12 @@ export function BasmalaLine({
       data-sizing-line={sizingKind}
       data-basmala="unified"
       data-basmala-numbered={showNumber ? "1" : "0"}
-      style={{ fontFamily: `"${family}"` }}
+      data-basmala-encoding="code_v2"
+      style={fontStyle}
     >
-      <span className="mf2-line__run mf2-bismillah__run">
+      <span className="mf2-line__run mf2-bismillah__run" style={fontStyle}>
         {BASMALA_QPC_WORDS.map((glyph, i) => (
-          <span key={i} className="mf2-word" data-basmala-word={i + 1}>
+          <span key={i} className="mf2-word" data-basmala-word={i + 1} style={fontStyle}>
             {glyph}
           </span>
         ))}
@@ -58,6 +60,7 @@ export function BasmalaLine({
             data-char-type="end"
             data-ayah-numeral="qpc"
             data-basmala-end="1"
+            style={fontStyle}
           >
             {BASMALA_QPC_END}
           </span>

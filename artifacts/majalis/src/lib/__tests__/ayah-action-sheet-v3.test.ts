@@ -16,6 +16,10 @@ const fetchSrc = readFileSync(join(root, "features/mushaf/fetch-ayah-content.ts"
 assert.match(tsx, /aas-v3__actions/);
 assert.match(tsx, /aas-v3__header/);
 assert.match(tsx, /aas-v3__nav/);
+assert.match(tsx, /sheetStage/);
+assert.match(tsx, /is-peek/);
+assert.match(tsx, /is-expanded/);
+assert.match(tsx, /aas-v3__more-link/);
 assert.match(tsx, /shareAyahAsText/);
 assert.match(tsx, /moreOpen/);
 assert.match(tsx, /panelMode/);
@@ -27,7 +31,11 @@ assert.doesNotMatch(tsx, /aas-v3__close/, "شريط إغلاق أسود أُزي
 assert.match(css, /prefers-reduced-motion/);
 assert.match(css, /--color-mushaf-/);
 assert.match(css, /min-height:\s*44px/);
-assert.match(css, /max-height:\s*min\(70dvh/);
+assert.match(css, /\.aas-panel--v3\.is-peek/);
+assert.match(css, /height:\s*35dvh/);
+assert.match(css, /height:\s*90dvh/);
+assert.match(css, /--aas-sheet-radius:\s*24px/);
+assert.match(css, /rgba\(0,\s*0,\s*0,\s*0\.15\)/);
 assert.match(css, /position:\s*relative/);
 assert.doesNotMatch(css, /\.aas-v3__close\s*\{[^}]*background:\s*var\(--color-mushaf-ink/, "لا خلفية سوداء للإغلاق");
 assert.match(reciter, /tolerantIncludes/);

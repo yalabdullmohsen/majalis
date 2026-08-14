@@ -50,11 +50,12 @@ check(/MUSHAF_AYA_BANDS_PCT/.test(bands), "ثوابت آية في layout-bands")
 check(/assertMushafBandsDisjoint/.test(bands), "بوابة صفر تقاطع");
 check(/contentFillMin:\s*79/.test(bands), "امتلاء ≥٧٩٪");
 
-// ٥) قلب صفحة آية
+// ٥) قلب صفحة آية — انزلاق بسيط · نصف الشاشة · ٢٥٠ms
 check(/COMMIT_FRAC\s*=\s*0\.25/.test(flip), "عتبة ٢٥٪");
 check(/VELOCITY_PX_MS\s*=\s*0\.5/.test(flip), "سرعة ٠٫٥");
-check(/FLIP_EDGE_FRAC\s*=\s*0\.15/.test(flip), "حافة ١٥٪");
-check(/SETTLE_MS\s*=\s*320/.test(flip), "settle 320ms");
+check(/FLIP_EDGE_FRAC\s*=\s*0\.5/.test(flip), "نصف الشاشة للنقر");
+check(/SETTLE_MS\s*=\s*250/.test(flip), "settle 250ms");
+check(/rel >= w \/ 2 \? "next" : "prev"/.test(flip), "يمين تالية · يسار سابقة");
 
 // ٦) افتتاح
 check(/OPENING_BANNER_TOP_PCT\s*=\s*20/.test(pageV2), "شارة افتتاح مرجع آية");

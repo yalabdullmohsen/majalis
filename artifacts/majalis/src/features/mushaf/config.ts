@@ -47,8 +47,8 @@ export const MUSHAF_GRID = {
 export const MUSHAF_BASELINE_GAP_PER_EM =
   MUSHAF_LAYOUT_BASELINE.lineGapPx / MUSHAF_LAYOUT_BASELINE.fontSizePx;
 
-/** أقصى انحراف مسموح لحجم الخط عن الأساس (±٣٪) قبل استثناء السطر الطويل */
-export const MUSHAF_FONT_DEV_MAX = 0.03;
+/** أقصى انحراف مسموح لحجم الخط عن الأساس — يكفي لبلوغ ارتفاع محارف ≥٤٫٢٪ */
+export const MUSHAF_FONT_DEV_MAX = 0.18;
 /** أقصى انحراف لفجوة الأسطر النسبية (±٥٪) */
 export const MUSHAF_GAP_DEV_MAX = 0.05;
 /** أقصى انحراف للإزاحة العلوية (±٠٫٥ نقطة مئوية مطلقة) */
