@@ -73,13 +73,13 @@ assert.match(
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /data-ornament="wing-refined"/,
-  "شارة مزخرفة مطابقة لمرجع آية",
+  /data-ornament="islamic-light"/,
+  "شارة زخرفة إسلامية خفيفة",
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /PetalMedallion|WingMotifs/,
-  "ميداليات وأجنحة أرابيسك",
+  /SideOrnament/,
+  "زخرفة جانبية هندسية",
 );
 assert.equal(
   /<pattern[\s/]/i.test(readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8")),
@@ -101,7 +101,7 @@ assert.match(mushafV2, /data-ornament|mf2-surah-banner/, "شارة سورة");
 assert.match(pageComp, /SurahBanner/, "مكوّن SurahBanner");
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /PetalMedallion|WingMotifs/,
+  /SideOrnament/,
 );
 assert.equal(
   /flex:\s*1\s+1\s+0/.test(mushafV2.match(/\.mf2-line\s*\{[\s\S]*?\n\}/)?.[0] ?? ""),

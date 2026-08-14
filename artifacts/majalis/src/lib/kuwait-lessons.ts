@@ -547,7 +547,9 @@ export function getRelativeStatusLabel(
     }
   }
 
-  return formatRelativeTimeDetailed(lesson.nextOccurrenceMs, lesson.time);
+  /* أعد حساب الموعد القادم بالنسبة لـ now — لا تعتمد على nextOccurrenceMs المخزَّن عند البناء */
+  const nextMs = computeNextOccurrenceMs(lesson.day, lesson.time, now);
+  return formatRelativeTimeDetailed(nextMs, lesson.time, now.getTime());
 }
 
 /** تسميات الحالة المسموحة في أقسام «مميز» والرئيسية فقط */

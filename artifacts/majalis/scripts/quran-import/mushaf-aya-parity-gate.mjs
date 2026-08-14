@@ -51,7 +51,7 @@ check(/assertMushafBandsDisjoint/.test(bands), "بوابة صفر تقاطع");
 check(/contentFillMin:\s*79/.test(bands), "امتلاء ≥٧٩٪");
 
 // ٥) قلب صفحة آية — انزلاق بسيط · نصف الشاشة · ٢٥٠ms
-check(/COMMIT_FRAC\s*=\s*0\.25/.test(flip), "عتبة ٢٥٪");
+check(/COMMIT_FRAC\s*=\s*0\.28/.test(flip), "عتبة ٢٨٪");
 check(/VELOCITY_PX_MS\s*=\s*0\.5/.test(flip), "سرعة ٠٫٥");
 check(/FLIP_EDGE_FRAC\s*=\s*0\.5/.test(flip), "نصف الشاشة للنقر");
 check(/SETTLE_MS\s*=\s*250/.test(flip), "settle 250ms");

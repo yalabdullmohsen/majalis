@@ -125,11 +125,11 @@ if (/OpeningPageFrame|data-opening-frame|OPENING_FRAME_TOP/.test(pageV2)) {
 if (!/OPENING_BANNER_TOP_PCT\s*=\s*20/.test(pageV2)) {
   failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BANNER_TOP_PCT ≠ 20 (مرجع آية)" });
 }
-if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*24/.test(pageV2)) {
-  failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BANNER_TO_BASMALA_PX ≠ 24" });
+if (!/OPENING_BANNER_TO_BASMALA_PX\s*=\s*18/.test(pageV2)) {
+  failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BANNER_TO_BASMALA_PX ≠ 18" });
 }
-if (!/OPENING_BASMALA_TO_LINE_PX\s*=\s*20/.test(pageV2)) {
-  failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BASMALA_TO_LINE_PX ≠ 20" });
+if (!/OPENING_BASMALA_TO_LINE_PX\s*=\s*14/.test(pageV2)) {
+  failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BASMALA_TO_LINE_PX ≠ 14" });
 }
 if (!/OPENING_BODY_SLOT_H_PCT\s*=\s*5\.8/.test(pageV2)) {
   failures.push({ gate: "opening-frame", page: 0, reason: "OPENING_BODY_SLOT_H_PCT ≠ 5.8" });

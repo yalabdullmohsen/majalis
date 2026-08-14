@@ -1,6 +1,6 @@
 /**
  * تقليب صفحة مصحف (RTL) — انزلاق أفقي بسيط:
- * - عتبة ٢٥٪ / ٠٫٥px/ms · settle 250ms · ارتداد ١٦٠ms
+ * - عتبة ٢٨٪ / ٠٫٥٥px/ms · settle 250ms · ارتداد ١٦٠ms
  * - سحب يسار→يمين = التالية (SPEC)
  * - نقر: يمين = التالية · يسار = السابقة · وسط = إظهار/إخفاء الشريط
  */
@@ -15,16 +15,18 @@ export type MushafFlipState = {
   peeling: boolean;
 };
 
-const COMMIT_FRAC = 0.25;
-const VELOCITY_PX_MS = 0.5;
+const COMMIT_FRAC = 0.28;
+const VELOCITY_PX_MS = 0.55;
 const AXIS_LOCK = 1.2;
 const SETTLE_MS = 250;
 const SNAP_BACK_MS = 160;
 const FADE_MS = 150;
-const TAP_MAX_MS = 320;
-const TAP_MAX_PX = 12;
+const TAP_MAX_MS = 300;
+const TAP_MAX_PX = 14;
 /** نصف الشاشة: يمين = التالية · يسار = السابقة */
 export const FLIP_EDGE_FRAC = 0.5;
+/** نطاق الوسط لإظهار/إخفاء الشريط — بقية العرض للنقر التالي/السابق */
+const CENTER_TAP_FRAC = 0.18;
 
 function applyFlipVars(el: HTMLElement | null, progress: number) {
   if (!el) return;
@@ -144,7 +146,7 @@ export function useMushafPageFlip(opts: {
       if (disabled) return;
       if (e.button !== 0 && e.pointerType === "mouse") return;
       const target = e.target as HTMLElement | null;
-      if (target?.closest?.("button, a, [role='button'], [data-verse], .mfl-hit__ayah, .mf2-ayah-group, .aas-sheet, .aas-panel, .mpv-toolbar")) {
+      if (target?.closest?.("button, a, [role='button'], [data-verse], .mfl-hit__ayah, .mf2-ayah-group, .aas-sheet, .aas-panel, .mpv-toolbar, .mpv-page-rail")) {
         return;
       }
       const stage = e.currentTarget as HTMLElement;
@@ -220,7 +222,7 @@ export function useMushafPageFlip(opts: {
         const tapX = startX.current;
         const w = Math.max(160, widthRef.current);
         const rel = tapX - stageLeftRef.current;
-        const centerBand = w * 0.22;
+        const centerBand = w * CENTER_TAP_FRAC;
         const mid = w / 2;
         const isCenter = rel > mid - centerBand / 2 && rel < mid + centerBand / 2;
         const zone = classifyTap(tapX);

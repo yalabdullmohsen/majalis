@@ -439,3 +439,66 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
     margin-inline: auto;
   }
 }
+
+/* مؤشر تقدّم صفحة — شريط جانبي خفيف لا يغطي الحبر */
+.mpv-page-rail {
+  position: absolute;
+  inset-block: 18% 16%;
+  inset-inline-end: max(2px, var(--inset-left, 0px));
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: 18px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms ease;
+}
+.mpv-page-rail--shown {
+  opacity: 1;
+  pointer-events: auto;
+}
+.mpv-page-rail__track {
+  position: relative;
+  flex: 1 1 auto;
+  width: 3px;
+  min-height: 64px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-mushaf-gold-soft, #C9B07A) 35%, transparent);
+  cursor: pointer;
+}
+.mpv-page-rail__fill {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--color-mushaf-gold-strong, #A67C3D) 70%, #5a4a28);
+}
+.mpv-page-rail__thumb {
+  position: absolute;
+  inset-inline: -3px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-mushaf-gold-strong, #A67C3D);
+  transform: translateY(50%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, #fff 55%, transparent);
+}
+.mpv-page-rail__label {
+  font-size: 0.62rem;
+  line-height: 1;
+  color: color-mix(in srgb, var(--color-mushaf-ink, #14110E) 55%, transparent);
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+.quran-shell--night .mpv-page-rail__label,
+html[data-theme="dark"] .mpv-page-rail__label {
+  color: color-mix(in srgb, #F9FAFB 55%, transparent);
+}
+.quran-shell--chrome-hidden .mpv-page-rail:not(.mpv-page-rail--shown) {
+  opacity: 0;
+}

@@ -159,7 +159,11 @@ assert.match(bismillah[0], /geometricPrecision|optimizeLegibility/);
 
 const pageV2 = readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8");
 assert.match(pageV2, /BasmalaLine/);
-assert.match(pageV2, /MAX_WORD_GAP_PX\s*=\s*18/);
+assert.match(pageV2, /MAX_WORD_GAP_PX\s*=\s*MUSHAF_WORD_GAP_MAX_PX/);
+assert.match(
+  readFileSync(resolve(appRoot, "src/features/mushaf/config.ts"), "utf8"),
+  /MUSHAF_WORD_GAP_MAX_PX\s*=\s*10/,
+);
 assert.doesNotMatch(pageV2, /DRAWN_BASMALA_TEXT/);
 assert.ok(
   existsSync(resolve(appRoot, "src/components/quran/BasmalaLine.tsx")),
