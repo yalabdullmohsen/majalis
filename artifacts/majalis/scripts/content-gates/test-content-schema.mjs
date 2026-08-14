@@ -31,11 +31,23 @@ function validateItem(it, file, issues) {
     if (it.review_status === "verified") {
       issues.push(`${file}: ${it.id} verified without sources`);
     }
+  } else {
+    for (const s of it.sources) {
+      if (!s || typeof s !== "object") {
+        issues.push(`${file}: ${it.id} source not object`);
+        continue;
+      }
+      if (!String(s.book || "").trim()) issues.push(`${file}: ${it.id} source missing book`);
+      if (!String(s.author || "").trim()) issues.push(`${file}: ${it.id} source missing author`);
+    }
   }
   if (it.review_status === "verified") {
     const hasEv = Array.isArray(it.evidences) && it.evidences.length > 0;
     const hasSrc = Array.isArray(it.sources) && it.sources.length > 0;
     if (!hasEv || !hasSrc) issues.push(`${file}: ${it.id} verified requires evidences+sources`);
+  }
+  if (it.updated_at && !/^\d{4}-\d{2}-\d{2}/.test(String(it.updated_at))) {
+    issues.push(`${file}: ${it.id} updated_at invalid (${it.updated_at})`);
   }
 }
 

@@ -1,7 +1,7 @@
 {
   "version": 2,
   "updated_at": "2026-08-14",
-  "round": "fill-round3",
+  "round": "audit-expand",
   "totals": {
     "all": 3634,
     "verified": 2437,
@@ -11,7 +11,9 @@
     "nations": 16,
     "people": 101,
     "tafsir": 1171,
-    "discover": 190
+    "discover": 190,
+    "history": 17,
+    "intro-islam": 14
   },
   "sections": [
     "quiz",
@@ -22,5 +24,24 @@
     "history",
     "discover-islam",
     "intro-islam"
-  ]
+  ],
+  "audit": {
+    "generated_at": "2026-08-14",
+    "gates": [
+      "schema",
+      "ayah",
+      "hadith",
+      "dupes",
+      "links",
+      "quality",
+      "lang",
+      "audit"
+    ],
+    "soft_findings": {
+      "repeated_blocks": 35,
+      "quran_people_under_400": 99,
+      "israiliyat_mention_no_field_no_disclaimer": 21,
+      "legacy_quiz_demo": 4946
+    }
+  }
 }

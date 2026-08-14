@@ -13,6 +13,7 @@ const gates = [
   "test-content-links.mjs",
   "test-content-quality.mjs",
   "test-content-lang.mjs",
+  "test-content-audit.mjs",
 ];
 
 let failed = 0;

@@ -98,6 +98,20 @@ export function wordCount(t) {
     .filter(Boolean).length;
 }
 
+/** قسم المعرفة من مسار الملف. */
+export function sectionOf(it) {
+  const f = it.__file || "";
+  if (f.includes("/prophets/")) return "prophets";
+  if (f.includes("/nations/")) return "nations";
+  if (f.includes("/quran-people/")) return "quran-people";
+  if (f.includes("/history/")) return "history";
+  if (f.includes("/intro-islam/")) return "intro-islam";
+  if (f.includes("/discover-islam/")) return "discover-islam";
+  if (f.includes("/tafsir/")) return "tafsir";
+  if (f.includes("/quiz/")) return "quiz";
+  return "other";
+}
+
 export function loadKnowledgeItems() {
   const files = walkJson(KNOWLEDGE).filter((f) => !f.endsWith("manifest.json"));
   const items = [];
