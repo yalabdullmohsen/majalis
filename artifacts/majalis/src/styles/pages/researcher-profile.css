@@ -34,7 +34,7 @@
   padding: 0.6rem 0.875rem;
   background: var(--ds-emerald-soft);
   border-radius: var(--ds-radius-sm, 0.375rem);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
 }
 .rp-share-banner__label { color: var(--ds-emerald-deep); font-weight: 600; }
 .rp-share-banner__url {
@@ -89,7 +89,7 @@
   border-radius: 999px;
   background: var(--majalis-panel, #fff);
   color: var(--majalis-ink-soft);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -112,7 +112,7 @@
   background: none;
   cursor: pointer;
   color: #dc2626;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -142,13 +142,13 @@
   gap: 0.15rem;
 }
 .quran-hub-stat__val {
-  font-size: 1.6rem;
+  font-size: var(--text-display);
   font-weight: 800;
   color: #FFFFFF;
-  line-height: 1;
+  line-height: 1.15;
 }
 .quran-hub-stat__lbl {
-  font-size: 0.78rem;
+  font-size: var(--text-body-sm);
   color: rgba(255,255,255,0.6);
 }
 
@@ -203,7 +203,7 @@
   color: var(--mj-brand);
 }
 .quran-hub-card__tag {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: rgba(255,255,255,0.85);
   background: rgba(255,255,255,0.18);
@@ -220,15 +220,16 @@
   background: #FFFFFF;
 }
 .quran-hub-card__title {
-  font-size: 1.05rem;
+  font-size: var(--text-h3);
   font-weight: 700;
   color: var(--elite-forest, var(--mj-brand-deep));
   margin: 0;
+  line-height: var(--lh-title, 1.35);
 }
 .quran-hub-card__desc {
-  font-size: 0.86rem;
+  font-size: var(--text-body-sm);
   color: var(--mj-ink-2);
-  line-height: 1.6;
+  line-height: var(--lh-body, 1.7);
   margin: 0;
   flex: 1;
 }

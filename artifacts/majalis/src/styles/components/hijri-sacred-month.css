@@ -78,7 +78,7 @@
 }
 .hmb-period-title {
   font-weight: 800;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--hmb-accent);
   letter-spacing: normal;
   flex: 1;
@@ -94,7 +94,7 @@
   flex-shrink: 0;
 }
 .hmb-countdown {
-  font-size: 0.6rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: #fff;
   background: var(--hmb-accent);
@@ -103,7 +103,7 @@
   white-space: nowrap;
 }
 .hmb-counter {
-  font-size: 0.6rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: color-mix(in srgb, var(--hmb-accent) 55%, transparent);
   white-space: nowrap;
@@ -147,7 +147,7 @@
   align-items: center;
   gap: 0.3rem;
   align-self: flex-start;
-  font-size: 0.61rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--hmb-accent);
   background: color-mix(in srgb, var(--hmb-accent) 10%, transparent);

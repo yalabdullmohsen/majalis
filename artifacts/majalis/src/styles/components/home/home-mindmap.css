@@ -46,7 +46,7 @@
   gap: 0.1rem;
 }
 .hmm-card__tag {
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-emerald, var(--mj-brand));
   background: rgba(31, 77, 58, 0.08);

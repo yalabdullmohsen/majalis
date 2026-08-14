@@ -24,7 +24,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   color: #fff;
   border-radius: var(--ds-radius-full);
   padding: .25rem .9rem;
-  font-size: .75rem;
+  font-size: var(--text-caption);
   margin-bottom: .6rem;
 }
 .hj-hero__kaaba { font-size: 3rem; line-height: 1; margin-bottom: .5rem; }
@@ -39,7 +39,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   max-width: 560px;
   margin: 0 auto 1.5rem;
 }
-.hj-talbiya__label { display: block; font-size: .7rem; opacity: .7; margin-bottom: .4rem; letter-spacing: normal; }
+.hj-talbiya__label { display: block; font-size: var(--text-caption); opacity: .7; margin-bottom: .4rem; letter-spacing: normal; }
 .hj-talbiya__text { font-size: 1.05rem; font-weight: 600; line-height: 1.95; color: #fff; margin: 0; }
 
 /* tabs */
@@ -61,14 +61,14 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   padding: .45rem .8rem .4rem;
   cursor: pointer;
   color: rgba(255,255,255,.8);
-  font-size: .78rem;
+  font-size: var(--text-caption);
   transition: background .18s;
   min-width: 5.2rem;
 }
 .hj-tab:hover { background: rgba(255,255,255,.22); color: #fff; }
 .hj-tab--active { background: #F9FAFB; color: var(--majalis-emerald, var(--mj-brand-deep)); font-weight: 700; }
 .hj-tab__icon { font-size: 1.1rem; line-height: 1; }
-.hj-tab__label { white-space: nowrap; font-size: .76rem; }
+.hj-tab__label { white-space: nowrap; font-size: var(--text-caption); }
 
 /* body */
 .hj-body { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem; }
@@ -104,7 +104,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
 .hj-stat-card__icon { font-size: 1.4rem; }
-.hj-stat-card__label { font-size: 0.8rem; color: var(--mj-ink-2); font-weight: 600; }
+.hj-stat-card__label { font-size: var(--text-caption); color: var(--mj-ink-2); font-weight: 600; }
 .hj-stat-card__value { font-size: .88rem; color: #111; font-weight: 600; line-height: 1.4; }
 
 .hj-hadith-box {
@@ -115,7 +115,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   margin-bottom: .5rem;
 }
 .hj-hadith-box__text { font-size: .93rem; line-height: 2; color: var(--mj-brand-deep); font-style: normal; margin: 0 0 .4rem; }
-.hj-hadith-box__ref { font-size: 0.8rem; color: var(--mj-brand); }
+.hj-hadith-box__ref { font-size: var(--text-caption); color: var(--mj-brand); }
 
 .hj-fadl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; margin-bottom: .5rem; }
 .hj-fadl-card {
@@ -130,7 +130,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 }
 .hj-fadl-card__icon { font-size: 1.4rem; }
 .hj-fadl-card__text { font-size: .84rem; line-height: 1.65; color: #1F2937; flex: 1; margin: 0; }
-.hj-fadl-card__ref { font-size: 0.8rem; color: var(--mj-ink-2); }
+.hj-fadl-card__ref { font-size: var(--text-caption); color: var(--mj-ink-2); }
 
 .hj-types-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
 .hj-type-card {
@@ -141,7 +141,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   box-shadow: 0 1px 3px rgba(0,0,0,.04);
 }
 .hj-type-card__name { display: block; font-size: .92rem; font-weight: 700; color: var(--majalis-emerald, var(--mj-brand-deep)); margin-bottom: .35rem; }
-.hj-type-card__desc { font-size: .8rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
+.hj-type-card__desc { font-size: var(--text-caption); color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 /* accordion cards */
 .hj-card {
@@ -175,13 +175,13 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-card__icon { font-size: var(--ds-text-2xl); flex-shrink: 0; }
 .hj-card__info { flex: 1; display: flex; flex-direction: column; gap: .1rem; align-items: flex-start; }
 .hj-card__title { font-size: .95rem; font-weight: 700; color: #111; }
-.hj-card__sub { font-size: .77rem; color: var(--mj-ink-2); }
+.hj-card__sub { font-size: var(--text-caption); color: var(--mj-ink-2); }
 .hj-card__badge {
   background: var(--mj-brand-soft);
   color: var(--majalis-emerald, var(--mj-brand-deep));
   border-radius: var(--ds-radius-full);
   padding: .18rem .6rem;
-  font-size: .72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -198,7 +198,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   margin: .5rem 0 0;
 }
 .hj-dalil__text { font-size: .92rem; line-height: 1.9; color: var(--mj-brand-deep); font-weight: 500; margin: 0 0 .3rem; }
-.hj-dalil__ref { font-size: .72rem; color: var(--mj-brand); font-style: normal; }
+.hj-dalil__ref { font-size: var(--text-caption); color: var(--mj-brand); font-style: normal; }
 
 .hj-detail-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .35rem; }
 .hj-detail-item {
@@ -208,7 +208,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   position: relative;
   line-height: 1.6;
 }
-.hj-detail-item::before { content: "◆"; position: absolute; inset-inline-end: 0; color: var(--majalis-emerald, var(--mj-brand-deep)); font-size: .5rem; top: .35rem; }
+.hj-detail-item::before { content: "◆"; position: absolute; inset-inline-end: 0; color: var(--majalis-emerald, var(--mj-brand-deep)); font-size: var(--text-caption); top: .35rem; }
 
 /* wajibat */
 .hj-wajib-card {
@@ -227,7 +227,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-wajib-card__title { font-size: .9rem; font-weight: 700; color: #111; }
 .hj-wajib-card__desc { font-size: .84rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
 .hj-wajib-card__penalty {
-  font-size: .75rem;
+  font-size: var(--text-caption);
   color: var(--mj-brand);
   background: rgba(23,61,53,.10);
   border-radius: var(--ds-radius-full);
@@ -267,7 +267,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-mashar-card__head { display: flex; align-items: center; gap: .75rem; }
 .hj-mashar-card__icon { font-size: 1.8rem; flex-shrink: 0; }
 .hj-mashar-card__name { display: block; font-size: var(--ds-text-base); font-weight: 700; color: #111; }
-.hj-mashar-card__day { display: block; font-size: .75rem; color: var(--majalis-emerald, var(--mj-brand-deep)); font-weight: 600; }
+.hj-mashar-card__day { display: block; font-size: var(--text-caption); color: var(--majalis-emerald, var(--mj-brand-deep)); font-weight: 600; }
 .hj-mashar-card__desc { font-size: .87rem; color: var(--mj-ink-2); line-height: 1.65; margin: 0; }
 .hj-mashar-dua {
   background: var(--mj-brand-soft);
@@ -275,7 +275,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   border-radius: .45rem;
   padding: .6rem .8rem;
 }
-.hj-mashar-dua__label { display: block; font-size: .68rem; color: var(--mj-brand); font-weight: 700; margin-bottom: .3rem; }
+.hj-mashar-dua__label { display: block; font-size: var(--text-caption); color: var(--mj-brand); font-weight: 700; margin-bottom: .3rem; }
 .hj-mashar-dua__text { font-size: .88rem; line-height: 1.8; color: var(--mj-brand-deep); font-weight: 500; margin: 0; }
 
 /* umra steps */
@@ -322,7 +322,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   box-shadow: 0 1px 2px rgba(0,0,0,.04);
 }
 .hj-mahzur-item__icon { font-size: 1.3rem; }
-.hj-mahzur-item__text { font-size: .72rem; color: var(--mj-ink-2); line-height: 1.3; }
+.hj-mahzur-item__text { font-size: var(--text-caption); color: var(--mj-ink-2); line-height: 1.3; }
 
 /* related */
 .hj-related { margin-top: 2.5rem; }
@@ -360,7 +360,7 @@ html.dark .hj-related__link {
   .hj-mahzurat-grid { grid-template-columns: repeat(2, 1fr); }
   .hj-related__grid { grid-template-columns: repeat(2, 1fr); }
   .hj-tab { min-width: 4.5rem; padding: .4rem .5rem; }
-  .hj-tab__label { font-size: 0.8rem; }
+  .hj-tab__label { font-size: var(--text-caption); }
 }
 
 /* ── نهاية §229 ─────────────────────────────────────────── */

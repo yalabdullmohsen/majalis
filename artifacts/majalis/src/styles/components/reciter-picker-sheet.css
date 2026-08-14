@@ -117,7 +117,7 @@
 }
 
 .reciter-picker-sheet__sub {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--color-mushaf-meta, #9a7b3c);
   white-space: nowrap;
   overflow: hidden;
@@ -212,7 +212,7 @@
 .mros-item__badge {
   align-self: flex-start;
   margin-top: 0.15rem;
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--color-mushaf-gold, #8B6914);
 }

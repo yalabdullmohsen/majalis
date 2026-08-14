@@ -17,13 +17,13 @@
 
 .lsw-featured__caveat {
   margin: 0.5rem 0 0;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   line-height: 1.5;
   color: var(--color-text-muted, #4B5563);
 }
 .lsw-featured__source {
   margin: 0.35rem 0 0.75rem;
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   color: var(--color-text-muted, var(--mj-muted));
 }
 
@@ -32,7 +32,7 @@
   display: inline-block;
   margin-top: 0.4rem;
   padding: 0.15rem 0.5rem;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   border-radius: 0.35rem;
   letter-spacing: 0;

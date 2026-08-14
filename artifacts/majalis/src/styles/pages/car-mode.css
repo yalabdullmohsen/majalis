@@ -55,7 +55,7 @@
   max-width: 600px;
 }
 .car-mode__speaker { font-size: 1rem; color: rgba(255,255,255,0.6); }
-.car-mode__counter { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+.car-mode__counter { font-size: var(--text-caption); color: rgba(255,255,255,0.3); }
 
 .car-mode__controls {
   display: flex;
@@ -111,9 +111,9 @@
 }
 .car-mode__playlist-item:hover { background: rgba(255,255,255,0.06); }
 .car-mode__playlist-item--active { background: rgba(42,122,79,0.2); color: #fff; }
-.car-mode__playlist-num { flex-shrink: 0; width: 24px; font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+.car-mode__playlist-num { flex-shrink: 0; width: 24px; font-size: var(--text-caption); color: rgba(255,255,255,0.3); }
 .car-mode__playlist-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.car-mode__playlist-speaker { flex-shrink: 0; font-size: 0.72rem; color: rgba(255,255,255,0.35); }
+.car-mode__playlist-speaker { flex-shrink: 0; font-size: var(--text-caption); color: rgba(255,255,255,0.35); }
 
 .car-mode__empty {
   flex: 1;

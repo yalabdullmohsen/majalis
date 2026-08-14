@@ -67,7 +67,7 @@
 }
 
 .mj-filter-chip__soon {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   color: inherit;
   opacity: 0.9;
@@ -193,7 +193,7 @@ html.dark .mj-filter-bar .ds-filter-toggle,
   border-radius: 999px;
   background: var(--mj-brand, #1f7a5a);
   color: #fff;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   display: inline-flex;
   align-items: center;

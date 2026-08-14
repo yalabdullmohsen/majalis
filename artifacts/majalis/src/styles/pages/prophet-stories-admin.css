@@ -28,16 +28,16 @@
 .ps-card.editing .ps-card-head:hover { background: #eff6ff; }
 .ps-name { font-size: 1.05rem; font-weight: 700; color: #1e293b; flex: 1; }
 .ps-badge {
-  font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem;
+  font-size: var(--text-caption); font-weight: 700; padding: 0.2rem 0.55rem;
   border-radius: 9999px; letter-spacing: normal;
 }
 .ps-badge.pending { background: rgba(23,61,53,0.08); color: var(--mj-brand); border: 1px solid rgba(24,54,42,0.3); }
 .ps-badge.done { background: #dcfce7; color: var(--mj-brand); border: 1px solid #bbf7d0; }
 .ps-badge.edit-mode { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
-.ps-toggle { font-size: 0.8rem; color: #94a3b8; }
+.ps-toggle { font-size: var(--text-caption); color: #94a3b8; }
 .ps-body { padding: 1.1rem 1.25rem; border-top: 1px solid #e2e8f0; }
 .ps-citations-label {
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  font-size: var(--text-caption); font-weight: 700; text-transform: uppercase;
   letter-spacing: normal; color: #64748b; margin-bottom: 0.6rem;
 }
 .ps-citations { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
@@ -51,7 +51,7 @@
 .ps-cit-note { color: #475569; }
 .ps-full-toggle {
   background: none; border: 1px solid #cbd5e1; border-radius: var(--ds-radius-sm);
-  padding: 0.35rem 0.75rem; font-size: 0.8rem; color: #475569;
+  padding: 0.35rem 0.75rem; font-size: var(--text-caption); color: #475569;
   cursor: pointer; font-family: inherit; margin-bottom: 0.75rem;
   transition: border-color 0.15s;
 }
@@ -87,7 +87,7 @@
 }
 .ps-edit-btn:hover:not(:disabled) { background: #dbeafe; }
 .ps-edit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.ps-approved-info { font-size: 0.8rem; color: var(--mj-brand); }
+.ps-approved-info { font-size: var(--text-caption); color: var(--mj-brand); }
 .ps-error { color: #dc2626; font-size: 0.8125rem; }
 .ps-loading { text-align: center; padding: var(--ds-space-12); color: #64748b; }
 .ps-empty { text-align: center; padding: var(--ds-space-12); color: #64748b; }
@@ -100,7 +100,7 @@
 /* ── Edit Form ── */
 .ps-edit-form { display: flex; flex-direction: column; gap: 1.1rem; }
 .ps-edit-section-label {
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  font-size: var(--text-caption); font-weight: 700; text-transform: uppercase;
   letter-spacing: normal; color: #64748b; margin-bottom: 0.5rem;
 }
 .ps-edit-cits { display: flex; flex-direction: column; gap: var(--ds-space-2); margin-bottom: 0.5rem; }
@@ -118,7 +118,7 @@
 .ps-edit-del-cit {
   background: none; border: 1px solid #fca5a5; border-radius: var(--ds-radius-sm);
   color: #dc2626; cursor: pointer; padding: 0.3rem 0.55rem;
-  font-size: 0.8rem; font-family: inherit; white-space: nowrap;
+  font-size: var(--text-caption); font-family: inherit; white-space: nowrap;
   flex-shrink: 0;
 }
 .ps-edit-del-cit:hover { background: #fee2e2; }

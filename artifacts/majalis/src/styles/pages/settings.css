@@ -92,7 +92,7 @@
   border: 1px solid rgba(23,61,53,0.25) !important;
   border-radius: var(--elite-r-sm, 8px) !important;
   color: var(--clr-primary, var(--mj-brand)) !important;
-  font-size: 0.8rem !important;
+  font-size: var(--text-caption) !important;
   font-weight: 600 !important;
   text-decoration: none !important;
   transition: background 0.15s !important;
@@ -146,7 +146,7 @@
 }
 
 .settings-field strong {
-  font-size: 0.8rem !important;
+  font-size: var(--text-caption) !important;
   color: var(--elite-forest, var(--mj-brand-deep)) !important;
 }
 
@@ -164,7 +164,7 @@
 
 /* ملاحظة نصية */
 .settings-note {
-  font-size: 0.78rem !important;
+  font-size: var(--text-caption) !important;
   color: var(--elite-ink-muted, var(--mj-ink-2)) !important;
   line-height: 1.6 !important;
   margin: 0.25rem 0 0 !important;
@@ -261,7 +261,7 @@
   display: block !important;
   margin-top: 0.2rem !important;
   font-style: normal !important;
-  font-size: 0.78rem !important;
+  font-size: var(--text-caption) !important;
   font-weight: 400 !important;
   color: var(--mj-muted, #5a6b60) !important;
   line-height: 1.45 !important;

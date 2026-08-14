@@ -13,7 +13,7 @@
   border-radius: 2rem;
   background: rgba(6,78,59,0.08);
   border: 1px solid rgba(6,78,59,0.2);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--ds-emerald-deep, #064e3b);
   font-weight: 600;
   text-decoration: none;
@@ -26,7 +26,7 @@
 .asp-quick-prompts { margin-top: 1rem; }
 .asp-quick-prompts__label {
   margin: 0 0 0.5rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft, #5c564c);
 }
 .asp-quick-prompts__grid {
@@ -39,7 +39,7 @@
   border-radius: 2rem;
   background: #fff;
   border: 1px solid var(--ds-line-color, #e5e1d9);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   cursor: pointer;
   color: var(--majalis-ink, #2c2412);
   transition: background 0.15s;

@@ -73,7 +73,7 @@ html[data-theme="dark"] .rai-header__sub { color: #8BABA3; }
   display: inline-block;
   vertical-align: middle;
   margin-inline-start: .6rem;
-  font-size: .62rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: .2rem .6rem;
   border-radius: var(--ds-radius-xl);
@@ -130,10 +130,10 @@ html[data-theme="dark"] .rai-setup__label { color: var(--mj-brand-soft); }
 html[data-theme="dark"] .rai-choice { background: #111714; color: var(--mj-brand-soft); border-color: rgba(94,196,154,.15); }
 .rai-choice--active { border-color: var(--rai-emerald); background: rgba(14,110,82,.08); font-weight: 700; }
 .rai-choice:disabled { opacity: .45; cursor: not-allowed; }
-.rai-choice__hint { display: block; font-size: .72rem; color: #6B7A74; margin-top: .2rem; }
+.rai-choice__hint { display: block; font-size: var(--text-caption); color: #6B7A74; margin-top: .2rem; }
 
 .rai-tajweed-disabled-note {
-  font-size: .78rem;
+  font-size: var(--text-caption);
   color: #8A6D1B;
   background: rgba(201,162,39,.1);
   border-radius: 10px;
@@ -269,7 +269,7 @@ html[data-theme="dark"] .rai-detecting__title { color: var(--mj-brand-soft); }
 
 .rai-page-indicator {
   text-align: center;
-  font-size: .8rem;
+  font-size: var(--text-caption);
   color: #6B7A74;
   margin: -.4rem 0 .8rem;
 }
@@ -336,7 +336,7 @@ html[data-theme="dark"] .rai-correction-card__teacher-note { color: #FCA5A5; }
   margin: 0 0 .35rem;
   font-family: var(--font-body);
 }
-.rai-correction-card__label { font-size: .8rem; color: var(--text-muted, var(--text-2, var(--mj-ink-2))); flex-shrink: 0; }
+.rai-correction-card__label { font-size: var(--text-caption); color: var(--text-muted, var(--text-2, var(--mj-ink-2))); flex-shrink: 0; }
 .rai-correction-card__heard,
 .rai-correction-card__correct {
   font-family: "Amiri Quran", "Scheherazade New", serif;
@@ -377,7 +377,7 @@ html[data-theme="dark"] .rai-correction-card__correct { color: #6EE7B7; }
 }
 html[data-theme="dark"] .rai-correction-card__dismiss { color: #E8DED4; border-color: rgba(255,255,255,.15); }
 
-.rai-error-count { font-size: .8rem; color: #8A6D1B; }
+.rai-error-count { font-size: var(--text-caption); color: #8A6D1B; }
 
 .rai-session__actions { display: flex; gap: .5rem; }
 .rai-icon-btn {
@@ -506,7 +506,7 @@ html[data-theme="dark"] .imr-word--cursor {
 html[data-theme="dark"] .rai-report__stat { background: #1A2120; border-color: rgba(94,196,154,.15); }
 .rai-report__stat-val { display: block; font-size: 1.3rem; font-weight: 800; color: var(--rai-emerald-deep); }
 html[data-theme="dark"] .rai-report__stat-val { color: var(--mj-brand-soft); }
-.rai-report__stat-lbl { font-size: .75rem; color: #6B7A74; }
+.rai-report__stat-lbl { font-size: var(--text-caption); color: #6B7A74; }
 .rai-report__stat--unclear { border-color: rgba(139,92,246,.3); }
 .rai-report__stat--unclear .rai-report__stat-val { color: var(--rai-unclear); }
 .rai-report__stat--needs-repeat { border-color: rgba(217,119,6,.3); }
@@ -532,7 +532,7 @@ html[data-theme="dark"] .rai-report__error-row { background: #1A2120; }
   border: 1px dashed rgba(201,162,39,.4);
 }
 html[data-theme="dark"] .rai-mutashabih-note { background: rgba(201,162,39,.1); }
-.rai-mutashabih-note__title { font-size: .8rem; color: #7A5E10; margin: 0 0 .4rem; }
+.rai-mutashabih-note__title { font-size: var(--text-caption); color: #7A5E10; margin: 0 0 .4rem; }
 html[data-theme="dark"] .rai-mutashabih-note__title { color: #E8CB6B; }
 .rai-mutashabih-note__diff { display: flex; flex-direction: column; gap: .3rem; }
 .rai-mutashabih-note__diff p {
@@ -544,10 +544,10 @@ html[data-theme="dark"] .rai-mutashabih-note__title { color: #E8CB6B; }
   padding: .4rem .6rem;
 }
 html[data-theme="dark"] .rai-mutashabih-note__diff p { background: #1A2120; color: var(--mj-brand-soft); }
-.rai-mutashabih-note__loc { font-family: var(--font-body); font-size: .7rem; color: #8A6D1B; }
+.rai-mutashabih-note__loc { font-family: var(--font-body); font-size: var(--text-caption); color: #8A6D1B; }
 
 .rai-report__disclaimer {
-  font-size: .78rem;
+  font-size: var(--text-caption);
   color: #6B7A74;
   background: rgba(14,110,82,.06);
   border-radius: 12px;
@@ -610,6 +610,6 @@ html[data-theme="dark"] .rai-mutashabih-note__diff p { background: #1A2120; colo
 }
 .rai-consent-screen__delete-btn:disabled { opacity: .6; cursor: not-allowed; }
 html[data-theme="dark"] .rai-consent-screen__delete-btn { color: #FCA5A5; border-color: #FCA5A5; }
-.rai-consent-screen__delete-status { margin: .5rem 0 0; font-family: var(--font-body); font-size: .8rem; }
+.rai-consent-screen__delete-status { margin: .5rem 0 0; font-family: var(--font-body); font-size: var(--text-caption); }
 .rai-consent-screen__delete-status--ok { color: var(--majalis-emerald, var(--mj-brand)); }
 .rai-consent-screen__delete-status--err { color: #B91C1C; }

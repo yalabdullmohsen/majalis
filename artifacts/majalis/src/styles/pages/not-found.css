@@ -84,7 +84,7 @@
 /* أقسام مقترحة */
 .nf2-suggestions { width: 100%; margin-bottom: 1.75rem; }
 .nf2-suggestions__label {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--clr-ink-soft, var(--mj-muted));
   text-transform: uppercase;

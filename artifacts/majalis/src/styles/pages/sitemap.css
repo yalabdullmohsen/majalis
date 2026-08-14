@@ -10,7 +10,7 @@
   text-align: center;
 }
 .sm-hero__eye {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: normal;
   color: rgba(255,255,255,0.55);
@@ -79,7 +79,7 @@
   color: var(--sm-emerald);
 }
 .sm-card__desc {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: #9CA3AF;
   line-height: 1.3;
 }

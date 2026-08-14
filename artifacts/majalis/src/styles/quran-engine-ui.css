@@ -168,7 +168,7 @@ html.dark .qe-abar {
 .qe-viewer__focus-hint {
   margin: 1rem 0 0;
   text-align: center;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--qe-muted);
   opacity: 0.85;
 }
@@ -248,7 +248,7 @@ html.dark .qe-abar {
 
 .qe-ayah-list--focus .qe-ayah__num {
   /* Keep marker subtle; do not inherit fixed mushaf size */
-  font-size: 12px;
+  font-size: var(--text-caption);
   line-height: 1.2;
   width: 1.5rem;
   height: 1.5rem;
@@ -579,7 +579,7 @@ body.qe-focus-mode {
   border-radius: 999px;
   background: color-mix(in srgb, var(--qe-emerald) 12%, transparent);
   color: var(--qe-emerald);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
 }
 
 .qe-ayah__text {
@@ -732,7 +732,7 @@ body.qe-focus-mode {
   border-radius: 0.65rem;
   padding: 0.45rem 0.2rem;
   font: inherit;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   cursor: pointer;
   min-height: 3rem;
   transition:
@@ -757,7 +757,7 @@ body.qe-focus-mode {
 
 .qe-abar__status {
   margin: 0.45rem 0 0;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--qe-muted);
 }
 
@@ -857,7 +857,7 @@ body.qe-focus-mode {
 
 .qe-dash__eyebrow {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--qe-emerald);
 }
@@ -890,7 +890,7 @@ body.qe-focus-mode {
 
 .qe-dash__card header p {
   margin: 0.2rem 0 0.75rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--qe-muted);
 }
 
@@ -1004,7 +1004,7 @@ body.qe-focus-mode {
 }
 
 .qe-dash__note span {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--qe-emerald);
 }
@@ -1047,7 +1047,7 @@ body.qe-focus-mode {
   border-radius: 999px;
   padding: 0.4rem 0.75rem;
   font: inherit;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   cursor: pointer;
   min-height: 2.35rem;
   transition:
@@ -1121,7 +1121,7 @@ body.qe-focus-mode {
   border-radius: 999px;
   padding: 0.3rem 0.65rem;
   font: inherit;
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   cursor: pointer;
 }
 
@@ -1136,7 +1136,7 @@ body.qe-focus-mode {
   background: transparent;
   color: var(--qe-emerald);
   font: inherit;
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   cursor: pointer;
   padding: 0.3rem 0.4rem;
@@ -1151,7 +1151,7 @@ body.qe-focus-mode {
 
   .qe-abar__btn {
     min-height: 3.15rem;
-    font-size: 0.68rem;
+    font-size: var(--text-caption);
     padding: 0.5rem 0.1rem;
   }
 
@@ -1173,7 +1173,7 @@ body.qe-focus-mode {
   }
 
   .qe-reciter-chip {
-    font-size: 0.76rem;
+    font-size: var(--text-caption);
     padding: 0.35rem 0.65rem;
   }
 }

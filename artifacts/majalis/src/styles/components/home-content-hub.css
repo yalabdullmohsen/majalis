@@ -89,7 +89,7 @@
 }
 
 .home-content-hub__desc {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   line-height: 1.45;
   color: var(--mj-ink-2, #4a5a53);
 }

@@ -18,7 +18,7 @@
   color: #FFFFFF;
   border-radius: var(--ds-radius-full);
   padding: .25rem .9rem;
-  font-size: .75rem;
+  font-size: var(--text-caption);
   margin-bottom: .6rem;
 }
 .th-hero__emoji { font-size: 2.8rem; margin-bottom: .4rem; color: #FFFFFF; }
@@ -38,7 +38,7 @@
 .th-ayah--body .th-ayah__text { color: var(--color-brand-deep, var(--mj-brand-deep)); }
 .th-ayah--body .th-ayah__ref { color: var(--color-brand, var(--mj-brand)); }
 .th-ayah__text { font-size: 1.05rem; font-weight: 600; line-height: 2; color: #FFFFFF; margin: 0 0 .35rem; }
-.th-ayah__ref { font-size: .72rem; color: #FFFFFF; font-style: normal; display: block; }
+.th-ayah__ref { font-size: var(--text-caption); color: #FFFFFF; font-style: normal; display: block; }
 
 .th-tabs {
   display: flex;
@@ -59,7 +59,7 @@
   padding: .5rem .9rem .4rem;
   cursor: pointer;
   color: #FFFFFF;
-  font-size: .78rem;
+  font-size: var(--text-caption);
   transition: background .18s;
   min-width: 5.5rem;
   min-height: 44px;
@@ -116,7 +116,7 @@
 }
 .th-fardh-card__icon { font-size: 1.2rem; }
 .th-fardh-card__title { font-size: .88rem; font-weight: 700; color: #111; }
-.th-fardh-card__desc { font-size: .8rem; color: #4B5563; line-height: 1.5; margin: 0; }
+.th-fardh-card__desc { font-size: var(--text-caption); color: #4B5563; line-height: 1.5; margin: 0; }
 
 /* sunnah */
 .th-sunnah-list { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: .4rem; }
@@ -145,7 +145,7 @@
 }
 .th-naqidh-card__icon { font-size: 1.3rem; flex-shrink: 0; }
 .th-naqidh-card__title { display: block; font-size: .85rem; font-weight: 700; color: #B91C1C; margin-bottom: .2rem; }
-.th-naqidh-card__desc { font-size: .78rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
+.th-naqidh-card__desc { font-size: var(--text-caption); color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 /* info box */
 .th-info-box--mt { margin-top: 1rem; }
@@ -177,7 +177,7 @@
 }
 .th-mujib-card__icon { font-size: 1.3rem; flex-shrink: 0; }
 .th-mujib-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
-.th-mujib-card__desc { font-size: .8rem; color: #4B5563; line-height: 1.5; margin: 0; }
+.th-mujib-card__desc { font-size: var(--text-caption); color: #4B5563; line-height: 1.5; margin: 0; }
 
 .th-faraidh-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
 .th-faridh-card {
@@ -191,7 +191,7 @@
 }
 .th-faridh-card__icon { font-size: 1.3rem; flex-shrink: 0; }
 .th-faridh-card__title { display: block; font-size: .88rem; font-weight: 700; color: var(--color-brand, var(--mj-brand)); margin-bottom: .2rem; }
-.th-faridh-card__desc { font-size: .8rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
+.th-faridh-card__desc { font-size: var(--text-caption); color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 .th-steps-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .4rem; }
 .th-step-item {
@@ -215,7 +215,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: .78rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   flex-shrink: 0;
 }
@@ -234,7 +234,7 @@
 }
 .th-ibaha-card__icon { font-size: 1.3rem; flex-shrink: 0; }
 .th-ibaha-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
-.th-ibaha-card__desc { font-size: .8rem; color: #4B5563; line-height: 1.5; margin: 0; }
+.th-ibaha-card__desc { font-size: var(--text-caption); color: #4B5563; line-height: 1.5; margin: 0; }
 
 .th-steps-timeline { display: flex; flex-direction: column; gap: 0; }
 .th-timeline-step {
@@ -288,7 +288,7 @@
 }
 .th-naj-card__icon { font-size: 1.3rem; flex-shrink: 0; }
 .th-naj-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
-.th-naj-card__desc { font-size: .8rem; color: #4B5563; line-height: 1.5; margin: 0; }
+.th-naj-card__desc { font-size: var(--text-caption); color: #4B5563; line-height: 1.5; margin: 0; }
 
 .th-water-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
 .th-water-card {
@@ -302,7 +302,7 @@
 .th-water-card--blue { background: #EFF6FF; border: 1px solid #93C5FD; }
 .th-water-card--red { background: #FFF1F2; border: 1px solid #FDA4AF; }
 .th-water-card__label { font-size: .85rem; font-weight: 700; color: #111; }
-.th-water-card__desc { font-size: .78rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
+.th-water-card__desc { font-size: var(--text-caption); color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 /* related */
 .th-related { margin-top: 2.5rem; }

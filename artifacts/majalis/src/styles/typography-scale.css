@@ -1,0 +1,86 @@
+/**
+ * سُلّم طباعي موحّد (+≈10%) — المصدر الوحيد لأحجام الواجهة خارج المصحف.
+ * يُحمَّل بعد design-system.css وقبل final-release حتى ترث الطبقات القديمة الرموز.
+ */
+:root {
+  /* القيم المستهدفة (جوال 390 → لوحي) */
+  --text-display: clamp(1.75rem, 5.2vw, 2.25rem);
+  --text-h1: clamp(1.5rem, 4.6vw, 1.875rem);
+  --text-h2: clamp(1.25rem, 3.9vw, 1.5rem);
+  --text-h3: clamp(1.125rem, 3.4vw, 1.25rem);
+  --text-body-lg: 1.125rem;
+  --text-body: 1.0625rem;
+  --text-body-sm: 0.9375rem;
+  --text-label: 0.875rem;
+  --text-caption: 0.8125rem; /* أدنى حجم واجهة مسموح */
+
+  --lh-title: 1.35;
+  --lh-body: 1.7;
+  --lh-prose: 1.85;
+
+  /* جسر السلالم القديمة → السُلّم الجديد */
+  --text-mj-display: var(--text-display);
+  --text-mj-h1: var(--text-h1);
+  --text-mj-h2: var(--text-h2);
+  --text-mj-body: var(--text-body);
+  --text-mj-small: var(--text-label);
+  --text-mj-tiny: var(--text-caption);
+  --text-mj-sacred: var(--text-h2);
+  --text-mj-btn: var(--text-label);
+
+  --mj-fs-display: var(--text-display);
+  --mj-fs-h1: var(--text-h1);
+  --mj-fs-h2: var(--text-h2);
+  --mj-fs-sacred: var(--text-h2);
+  --mj-fs-body: var(--text-body);
+  --mj-fs-btn: var(--text-label);
+  --mj-fs-small: var(--text-label);
+  --mj-fs-tiny: var(--text-caption);
+
+  --ds-text-2xs: var(--text-caption);
+  --ds-text-xs: var(--text-caption);
+  --ds-text-sm: var(--text-label);
+  --ds-text-base: var(--text-body);
+  --ds-text-md: var(--text-body-lg);
+  --ds-text-lg: var(--text-h3);
+  --ds-text-xl: var(--text-h2);
+  --ds-text-2xl: var(--text-h1);
+  --ds-text-3xl: var(--text-display);
+  --ds-line-prose: var(--lh-prose);
+}
+
+/* أصناف دلالية — استخدمها بدل أرقام متفرقة */
+.type-display { font-size: var(--text-display); line-height: var(--lh-title); }
+.type-h1 { font-size: var(--text-h1); line-height: var(--lh-title); }
+.type-h2 { font-size: var(--text-h2); line-height: var(--lh-title); }
+.type-h3 { font-size: var(--text-h3); line-height: var(--lh-title); }
+.type-body-lg { font-size: var(--text-body-lg); line-height: var(--lh-prose); }
+.type-body { font-size: var(--text-body); line-height: var(--lh-body); }
+.type-body-sm { font-size: var(--text-body-sm); line-height: var(--lh-body); }
+.type-label { font-size: var(--text-label); line-height: var(--lh-title); }
+.type-caption { font-size: var(--text-caption); line-height: var(--lh-title); }
+
+/* فقرات المحتوى العربي */
+.prose-ar,
+.knowledge-article,
+.prophet-lux-detail__body,
+.nation-article__body,
+.ps-detail__prose {
+  font-size: var(--text-body-lg);
+  line-height: var(--lh-prose);
+}
+
+/* حقول الإدخال — يمنع تكبير iOS التلقائي */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+textarea,
+select {
+  font-size: max(1rem, 16px);
+}
+
+/* شيتات سفلية عامة */
+[role="dialog"] .sheet-title,
+.app-bottom-sheet__title,
+.bottom-sheet__title {
+  font-size: var(--text-h2);
+  line-height: var(--lh-title);
+}

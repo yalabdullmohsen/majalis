@@ -84,7 +84,7 @@
 .sidebar-section-title {
   padding: 0 8px 8px;
   color: #66736d;
-  font-size: 12px;
+  font-size: var(--text-caption);
   font-weight: 800;
   margin: 0;
   letter-spacing: 0.02em;
@@ -159,7 +159,7 @@
 
 .sidebar-item-description {
   color: #66736d;
-  font-size: 12px;
+  font-size: var(--text-caption);
   line-height: 1.4;
   display: block;
   overflow: hidden;

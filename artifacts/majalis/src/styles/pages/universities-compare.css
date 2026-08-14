@@ -12,7 +12,7 @@
   background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
   border: 1px solid var(--majalis-emerald);
   border-radius: .75rem; padding: .5rem 1rem;
-  font-size: .75rem; color: var(--majalis-emerald);
+  font-size: var(--text-caption); color: var(--majalis-emerald);
   margin-bottom: 1rem;
 }
 .ucp-table-wrap {
@@ -24,22 +24,22 @@
 .ucp-table-row { border-bottom: 1px solid var(--majalis-line); }
 .ucp-table-row--even { background: var(--majalis-parchment); }
 .ucp-th-label {
-  padding: .75rem 1rem; text-align: end; font-size: .75rem; font-weight: 600;
+  padding: .75rem 1rem; text-align: end; font-size: var(--text-caption); font-weight: 600;
   color: var(--majalis-ink-soft); width: 8rem;
   position: sticky; inset-inline-end: 0;
   background: var(--majalis-panel);
 }
 .ucp-td-label {
-  padding: .75rem 1rem; font-size: .75rem; font-weight: 600;
+  padding: .75rem 1rem; font-size: var(--text-caption); font-weight: 600;
   color: var(--majalis-ink-soft);
   position: sticky; inset-inline-end: 0; background: inherit;
 }
 .ucp-td-val { padding: .75rem 1rem; font-size: .875rem; text-align: center; color: var(--majalis-ink-soft); }
 .ucp-uni-name { font-size: .875rem; font-weight: 700; color: var(--majalis-ink); line-height: 1.35; }
-.ucp-detail-link { font-size: .75rem; color: var(--majalis-emerald); }
+.ucp-detail-link { font-size: var(--text-caption); color: var(--majalis-emerald); }
 .ucp-detail-link:hover { text-decoration: underline; }
 .ucp-sep { color: var(--majalis-ink-soft); opacity: .5; }
-.ucp-danger-btn { font-size: .75rem; color: var(--majalis-danger, #dc2626); opacity: .7; background: none; border: none; cursor: pointer; transition: opacity .15s; }
+.ucp-danger-btn { font-size: var(--text-caption); color: var(--majalis-danger, #dc2626); opacity: .7; background: none; border: none; cursor: pointer; transition: opacity .15s; }
 .ucp-danger-btn:hover { opacity: 1; }
 .ucp-acc-badge { background-color: var(--acc-color, #888); }
 .ucp-apply-grid { display: grid; gap: .75rem; grid-template-columns: repeat(var(--col-count, 1), 1fr); }

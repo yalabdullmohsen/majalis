@@ -15,7 +15,7 @@
   background: rgba(255,255,255,.18);
   border-radius: var(--ds-radius-full);
   padding: .25rem .9rem;
-  font-size: .75rem;
+  font-size: var(--text-caption);
   margin-bottom: .6rem;
 }
 .jnz-hero__title { font-size: clamp(1.65rem, 4vw, 2.4rem); font-weight: 800; margin: 0 0 .5rem; color: #fff; }
@@ -30,7 +30,7 @@
   margin: 0 auto 1.5rem;
 }
 .jnz-ayah__text { font-size: 1.05rem; font-weight: 600; line-height: 1.9; color: #fff; margin: 0 0 .3rem; }
-.jnz-ayah__ref { font-size: .72rem; color: rgba(255,255,255,.75); font-style: normal; display: block; }
+.jnz-ayah__ref { font-size: var(--text-caption); color: rgba(255,255,255,.75); font-style: normal; display: block; }
 
 .jnz-tabs {
   display: flex;
@@ -50,14 +50,14 @@
   padding: .45rem .8rem .4rem;
   cursor: pointer;
   color: rgba(255,255,255,.8);
-  font-size: .78rem;
+  font-size: var(--text-caption);
   transition: background .18s;
   min-width: 5rem;
 }
 .jnz-tab:hover { background: rgba(255,255,255,.22); color: #fff; }
 .jnz-tab--active { background: #F9FAFB; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
 .jnz-tab__icon { font-size: 1.1rem; }
-.jnz-tab__label { white-space: nowrap; font-size: 0.8rem; }
+.jnz-tab__label { white-space: nowrap; font-size: var(--text-caption); }
 
 .jnz-body { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem; }
 .jnz-section { display: flex; flex-direction: column; gap: .85rem; }
@@ -155,7 +155,7 @@ html.dark .jnz-subtitle {
   margin: 0;
 }
 .jnz-dalil__text { font-size: .88rem; line-height: 1.85; color: var(--mj-brand-deep); font-weight: 500; margin: 0 0 .3rem; }
-.jnz-dalil__ref { font-size: .72rem; color: var(--mj-brand); font-style: normal; display: block; }
+.jnz-dalil__ref { font-size: var(--text-caption); color: var(--mj-brand); font-style: normal; display: block; }
 
 .jnz-arkan-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; }
 .jnz-rukn-card {
@@ -183,7 +183,7 @@ html.dark .jnz-subtitle {
   border: 2px solid var(--majalis-emerald, var(--mj-brand));
 }
 .jnz-rukn-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
-.jnz-rukn-card__desc { font-size: .79rem; color: #4B5563; line-height: 1.5; margin: 0; }
+.jnz-rukn-card__desc { font-size: var(--text-caption); color: #4B5563; line-height: 1.5; margin: 0; }
 
 .jnz-dua-box {
   background: var(--mj-brand-soft);
@@ -194,9 +194,9 @@ html.dark .jnz-subtitle {
   flex-direction: column;
   gap: .4rem;
 }
-.jnz-dua-box__label { font-size: .72rem; color: var(--mj-brand); font-weight: 700; }
+.jnz-dua-box__label { font-size: var(--text-caption); color: var(--mj-brand); font-weight: 700; }
 .jnz-dua-box__text { font-size: .95rem; line-height: 2; color: var(--mj-brand-deep); font-weight: 600; margin: 0; }
-.jnz-dua-box__ref { font-size: .72rem; color: var(--mj-brand); font-style: normal; }
+.jnz-dua-box__ref { font-size: var(--text-caption); color: var(--mj-brand); font-style: normal; }
 
 .jnz-dafn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
 .jnz-dafn-card {
@@ -211,7 +211,7 @@ html.dark .jnz-subtitle {
 }
 .jnz-dafn-card__icon { font-size: 1.4rem; flex-shrink: 0; }
 .jnz-dafn-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
-.jnz-dafn-card__desc { font-size: .8rem; color: #4B5563; line-height: 1.55; margin: 0; }
+.jnz-dafn-card__desc { font-size: var(--text-caption); color: #4B5563; line-height: 1.55; margin: 0; }
 
 .jnz-adab-card {
   background: #fff;
@@ -235,7 +235,7 @@ html.dark .jnz-subtitle {
   margin-top: .5rem;
 }
 .jnz-hadith-box__text { font-size: var(--ds-text-base); line-height: 1.9; color: var(--mj-brand-deep); font-style: normal; font-weight: 600; margin: 0 0 .35rem; }
-.jnz-hadith-box__ref { font-size: .72rem; color: var(--mj-brand); font-style: normal; display: block; }
+.jnz-hadith-box__ref { font-size: var(--text-caption); color: var(--mj-brand); font-style: normal; display: block; }
 
 .jnz-related { margin-top: 2.5rem; }
 .jnz-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-brand-deep, #111); margin: 0 0 .75rem; }
@@ -261,7 +261,7 @@ html.dark .jnz-related__title { color: var(--mj-brand-deep, #143F35); }
   .jnz-arkan-grid, .jnz-dafn-grid { grid-template-columns: 1fr; }
   .jnz-related__grid { grid-template-columns: repeat(2, 1fr); }
   .jnz-tab { min-width: 4.5rem; }
-  .jnz-tab__label { font-size: 0.8rem; }
+  .jnz-tab__label { font-size: var(--text-caption); }
 }
 
 /* ── نهاية 232 ─────────────────────────────────────────── */

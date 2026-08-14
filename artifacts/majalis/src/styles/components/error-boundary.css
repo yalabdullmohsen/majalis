@@ -38,7 +38,7 @@
 .error-boundary-page__dev {
   margin-top: 1.25rem;
   text-align: end;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
 }
 .error-boundary-page__dev summary { cursor: pointer; font-weight: 700; }

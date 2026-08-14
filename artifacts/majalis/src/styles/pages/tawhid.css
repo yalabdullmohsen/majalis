@@ -34,7 +34,7 @@
   line-height: 1.9;
   letter-spacing: 0;
 }
-.twh-hub-hero__ayah cite { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-style: normal; display: block; margin-top: 0.25rem; }
+.twh-hub-hero__ayah cite { font-size: var(--text-caption); color: rgba(255,255,255,0.65); font-style: normal; display: block; margin-top: 0.25rem; }
 
 .twh-hub-grid {
   display: grid;
@@ -115,7 +115,7 @@
   line-clamp: 3;
 }
 .twh-hub-card__badge {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: #FFFFFF;
   background: var(--twh-hub-clr, var(--mj-brand));
@@ -129,7 +129,7 @@
   position: absolute;
   top: 0.5rem;
   inset-inline-start: 0.75rem;
-  font-size: 0.62rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--twh-hub-clr, var(--mj-brand));
   letter-spacing: 0;
@@ -170,7 +170,7 @@ html[data-theme="dark"] .twh-hub-card__desc {
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: normal;
   text-transform: uppercase;
@@ -202,7 +202,7 @@ html[data-theme="dark"] .twh-hub-card__desc {
 
 /* Book level badges */
 .twh-book-level {
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.15rem 0.5rem;
   border-radius: var(--ds-radius-full);
@@ -245,7 +245,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .tawheed-hadith-badge__grade {
   font-weight: 700;
   color: var(--grade-color, var(--mj-brand));
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
 }
 .tawheed-hadith-badge--sahih { --grade-color: var(--majalis-emerald, var(--mj-brand)); }
 .tawheed-hadith-badge--hasan { --grade-color: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
@@ -267,7 +267,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 .twh-source-ref {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   font-family: inherit;
@@ -349,7 +349,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 .twh-asma-meaning {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft, #5D726A);
   line-height: 1.55;
   margin: 0;
@@ -379,14 +379,14 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 .twh-book-author {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   font-weight: 600;
   margin: 0 0 0.4rem;
 }
 
 .twh-book-desc {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft, #5D726A);
   line-height: 1.6;
   margin: 0;

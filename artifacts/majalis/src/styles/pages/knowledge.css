@@ -57,7 +57,7 @@
 }
 
 .knowledge-badge {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   opacity: 0.9;
 }
 

@@ -54,7 +54,7 @@
 
 .cond-export-note {
   margin: 0.25rem 0 0;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--msk-text-2, var(--mj-ink-2));
   line-height: 1.6;
 }

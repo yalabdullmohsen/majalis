@@ -14,7 +14,7 @@
 .qmp-today__head { display: flex; align-items: start; justify-content: space-between; gap: var(--ds-space-4); }
 .qmp-today__head h2 { margin: .2rem 0 .65rem; color: var(--color-text); font-size: clamp(1.2rem, 3vw, 1.6rem); }
 .qmp-today__head > strong { color: var(--color-primary); font-size: 1.4rem; }
-.qmp-kicker { color: var(--color-primary); font-weight: 700; font-size: .78rem; }
+.qmp-kicker { color: var(--color-primary); font-weight: 700; font-size: var(--text-caption); }
 .qmp-progress { height: .55rem; overflow: hidden; background: var(--color-surface-muted); border-radius: var(--ds-radius-full); }
 .qmp-progress span { display: block; height: 100%; background: var(--color-primary); transition: width .2s ease; }
 .qmp-assignment { display: flex; align-items: center; gap: .5rem; margin: 1.1rem 0 .5rem; color: var(--color-text); font-size: 1.05rem; }

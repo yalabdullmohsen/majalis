@@ -91,7 +91,7 @@
   max-width: 60rem;
   margin: 0 auto 0.5rem;
   padding-inline: 1rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   opacity: 0.7;
 }
 .nations-empty {
@@ -145,7 +145,7 @@
 .nation-card__icon { color: var(--nat-ink); flex-shrink: 0; margin-block-start: 0.15rem; }
 .nation-card__title-wrap { min-inline-size: 0; }
 .nation-card__title { margin: 0; font-size: 1.05rem; font-weight: 800; line-height: 1.4; }
-.nation-card__prophet { margin: 0.15rem 0 0; font-size: 0.8rem; opacity: 0.75; }
+.nation-card__prophet { margin: 0.15rem 0 0; font-size: var(--text-caption); opacity: 0.75; }
 .nation-card__summary {
   margin: 0;
   font-size: 0.87rem;
@@ -161,7 +161,7 @@
   padding: 0.25rem 0.6rem;
   border-radius: 999px;
   background: var(--nat-soft);
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -199,7 +199,7 @@
   margin-block-start: 0.4rem;
 }
 .nations-timeline__name { font-weight: 700; }
-.nations-timeline__era { font-size: 0.78rem; opacity: 0.7; line-height: 1.7; }
+.nations-timeline__era { font-size: var(--text-caption); opacity: 0.7; line-height: 1.7; }
 .nations-timeline__undated { margin-block-start: 1.5rem; }
 .nations-timeline__undated-title { font-size: 0.95rem; margin-block-end: 0.5rem; }
 .nations-timeline__undated-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
@@ -231,7 +231,7 @@
   border: 1px solid var(--nat-line);
   border-radius: 999px;
   background: transparent;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: inherit;
   cursor: pointer;
@@ -244,7 +244,7 @@
   border: 0;
   border-radius: 999px;
   background: transparent;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: inherit;
   cursor: pointer;
@@ -273,7 +273,7 @@
   border-radius: 0.7rem;
   background: var(--surface, #fff);
 }
-.nation-flow__label { display: block; font-size: 0.7rem; opacity: 0.65; margin-block-end: 0.2rem; }
+.nation-flow__label { display: block; font-size: var(--text-caption); opacity: 0.65; margin-block-end: 0.2rem; }
 .nation-flow__value { display: flex; align-items: center; gap: 0.3rem; font-size: 0.82rem; font-weight: 700; line-height: 1.6; }
 
 .nation-facts {
@@ -289,7 +289,7 @@
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   opacity: 0.7;
   margin-block-end: 0.25rem;
@@ -310,7 +310,7 @@
 .nation-toc__resume {
   display: inline-block;
   margin-block-start: 0.6rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--nat-ink);
 }
@@ -347,7 +347,7 @@
 }
 .nation-evidence__kind {
   display: inline-block;
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   padding: 0.1rem 0.5rem;
   border-radius: 999px;
@@ -356,7 +356,7 @@
   margin-block-end: 0.4rem;
 }
 .nation-evidence__text { margin: 0 0 0.35rem; font-size: 0.92rem; line-height: 2.1; }
-.nation-evidence__ref { font-size: 0.75rem; opacity: 0.75; font-style: normal; }
+.nation-evidence__ref { font-size: var(--text-caption); opacity: 0.75; font-style: normal; }
 .nation-evidence--hadith { border-inline-start-color: var(--mj-brand); }
 .nation-evidence--hadith .nation-evidence__kind { background: var(--mj-brand); }
 .nation-evidence--tafsir { border-inline-start-color: #1d4ed8; }
@@ -389,7 +389,7 @@
   background: var(--nat-soft);
 }
 .nation-ref__surah { font-weight: 800; font-size: 0.85rem; }
-.nation-ref__note { font-size: 0.78rem; opacity: 0.75; }
+.nation-ref__note { font-size: var(--text-caption); opacity: 0.75; }
 
 .nation-status-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
 .nation-status {
@@ -402,7 +402,7 @@
 }
 .nation-status__badge {
   justify-self: start;
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   padding: 0.1rem 0.5rem;
   border-radius: 999px;
@@ -410,7 +410,7 @@
   color: #fff;
 }
 .nation-status__claim { font-size: 0.88rem; font-weight: 700; line-height: 1.8; }
-.nation-status__note { font-size: 0.8rem; line-height: 1.9; opacity: 0.85; }
+.nation-status__note { font-size: var(--text-caption); line-height: 1.9; opacity: 0.85; }
 .nation-status--disputed { border-inline-start-color: #b45309; }
 .nation-status--disputed .nation-status__badge { background: #b45309; }
 .nation-status--unverified { border-inline-start-color: #9b1c1c; }

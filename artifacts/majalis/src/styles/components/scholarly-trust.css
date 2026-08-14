@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.79rem;
+  font-size: var(--text-caption);
   color: var(--clr-ink-soft, var(--mj-muted));
   margin: 0;
 }
@@ -41,7 +41,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--ds-space-1);
-  font-size: 0.73rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--mj-brand);
   background: rgba(23,61,53,.12);
@@ -52,7 +52,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--ds-space-1);
-  font-size: 0.73rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: #b45309;
   background: rgba(180,83,9,.1);
@@ -61,7 +61,7 @@
 }
 .stb-type,
 .stb-madhab {
-  font-size: 0.71rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--clr-ink-soft, var(--mj-muted));
   background: rgba(0,0,0,.06);
@@ -79,7 +79,7 @@
   display: flex;
   align-items: flex-start;
   gap: 0.4rem;
-  font-size: 0.81rem;
+  font-size: var(--text-caption);
   line-height: 1.5;
 }
 .stb-row__icon { color: var(--mj-brand); margin-top: 0.15rem; flex-shrink: 0; }
@@ -87,7 +87,7 @@
 .stb-row__value { color: var(--clr-ink, #1a1a1a); }
 
 .stb-khilaf {
-  font-size: 0.79rem;
+  font-size: var(--text-caption);
   color: #b45309;
   background: rgba(180,83,9,.08);
   border-radius: 0.45rem;
@@ -105,7 +105,7 @@
 }
 .stb-source-link,
 .stb-methodology-link {
-  font-size: 0.76rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--mj-brand);
   text-decoration: none;

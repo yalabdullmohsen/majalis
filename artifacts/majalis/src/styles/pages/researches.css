@@ -85,7 +85,7 @@
   text-align: center;
 }
 .sr-stat strong { display: block; font-size: 1.25rem; color: var(--emerald-500, var(--mj-brand-deep)); }
-.sr-stat span { font-size: 0.75rem; color: var(--color-text-muted, var(--mj-ink-2)); }
+.sr-stat span { font-size: var(--text-caption); color: var(--color-text-muted, var(--mj-ink-2)); }
 
 .sr-notice {
   margin-block-end: 1.25rem;
@@ -183,7 +183,7 @@
   flex-wrap: wrap;
   gap: 0.35rem 0.75rem;
   margin: 0;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--color-text-muted, var(--mj-ink-2));
 }
 .sr-card__abs {
@@ -201,7 +201,7 @@
   align-items: center;
   padding: 0.1rem 0.45rem;
   border-radius: 999px;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   background: var(--color-accent-soft-bg, #e6f2ec);
   color: var(--emerald-500, var(--mj-brand-deep));
@@ -238,7 +238,7 @@
   background: var(--color-surface, #fff);
   font-size: 0.82rem;
 }
-.sr-detail__cell strong { display: block; font-size: 0.72rem; color: var(--color-text-muted, var(--mj-ink-2)); margin-block-end: 0.15rem; }
+.sr-detail__cell strong { display: block; font-size: var(--text-caption); color: var(--color-text-muted, var(--mj-ink-2)); margin-block-end: 0.15rem; }
 .sr-prose { line-height: 1.75; font-size: 0.95rem; }
 .sr-cite-box {
   margin-block: 1rem;

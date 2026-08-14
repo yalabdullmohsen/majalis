@@ -76,7 +76,7 @@
 }
 
 .qmem-stat__lbl {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: rgba(255,255,255,0.6);
 }
 
@@ -128,7 +128,7 @@
 }
 
 .qmem-type-card__num {
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-emerald, var(--mj-brand));
   letter-spacing: normal;
@@ -141,7 +141,7 @@
 }
 
 .qmem-type-card__desc {
-  font-size: 0.76rem;
+  font-size: var(--text-caption);
   color: var(--ds-text-2, var(--mj-muted));
   line-height: 1.5;
 }
@@ -220,7 +220,7 @@
 }
 
 .qmem-progress__text {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--ds-text-2, var(--mj-muted));
   white-space: nowrap;
   font-weight: 600;
@@ -242,7 +242,7 @@
 }
 
 .qmem-card__type {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-emerald, var(--mj-brand));
   letter-spacing: normal;
@@ -455,7 +455,7 @@
 }
 
 .qmem-rating__label {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--ds-text-2, var(--mj-muted));
   font-weight: 600;
   margin-left: 0.5rem;
@@ -465,7 +465,7 @@
   padding: 0.35rem 0.75rem;
   border-radius: 8px;
   border: none;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   cursor: pointer;
   font-family: inherit;
@@ -576,12 +576,12 @@
   overflow: visible;
 }
 
-.qmem-review-item__meta { font-size: 0.72rem; color: var(--ds-text-2, var(--mj-muted)); }
+.qmem-review-item__meta { font-size: var(--text-caption); color: var(--ds-text-2, var(--mj-muted)); }
 
 .qmem-due-badge {
   padding: 0.15rem 0.5rem;
   border-radius: 20px;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   background: rgba(23,61,53,0.1);
   color: var(--majalis-emerald, var(--mj-brand));

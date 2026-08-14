@@ -268,7 +268,7 @@
   gap: var(--ds-space-3);
   margin: 1.25rem 0 0.875rem;
   color: var(--majalis-ink-muted, #A09A94);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
 }
 
 .login-oauth__divider::before,

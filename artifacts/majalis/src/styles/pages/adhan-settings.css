@@ -130,7 +130,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   font-weight: 600;
 }
 .ads-sunrise-tag {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 400;
   color: var(--msk-text-3);
   background: var(--msk-canvas-2);
@@ -144,11 +144,11 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   font-variant-numeric: tabular-nums;
 }
 
-.ads-adhan-desc { font-size: 0.78rem; color: var(--msk-text-2); margin: 0 0 0.75rem; line-height: 1.55; }
+.ads-adhan-desc { font-size: var(--text-caption); color: var(--msk-text-2); margin: 0 0 0.75rem; line-height: 1.55; }
 .ads-global-label { font-weight: 600; font-size: var(--ds-text-sm); color: var(--msk-text); line-height: 1.35; }
-.ads-global-desc { font-size: 0.8rem; color: var(--msk-text-2); margin-top: 0.1rem; line-height: 1.45; }
+.ads-global-desc { font-size: var(--text-caption); color: var(--msk-text-2); margin-top: 0.1rem; line-height: 1.45; }
 .ads-global-disabled {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--msk-gold, var(--mj-brand-deep));
   background: var(--msk-gold-dim);
   padding: 0.5rem 0.75rem;
@@ -159,12 +159,12 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
 .ads-muezzin-name { font-weight: 600; font-size: 0.9rem; color: var(--msk-text); }
 .ads-muezzin-origin { font-size: var(--ds-text-xs); color: var(--msk-text-2); margin-top: 0.15rem; }
 .ads-prayer-muezzin-override {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 500;
   color: var(--msk-text-3, var(--msk-text-2));
 }
 .ads-perm-badge {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   padding: 0.2rem 0.55rem;
   border-radius: 0.45rem;
@@ -228,7 +228,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   border: 1.5px solid var(--msk-border);
   background: var(--msk-canvas-2, transparent);
   color: var(--msk-text-2);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
@@ -284,7 +284,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
 }
 .ads-prayer-row__meta {
   display: block;
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   color: var(--msk-text-2);
   margin-top: 0.1rem;
   white-space: nowrap;
@@ -362,7 +362,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   border: 1.5px solid var(--msk-gold-border, color-mix(in srgb, var(--msk-gold, #1c5244) 35%, transparent));
   background: var(--msk-gold-dim, color-mix(in srgb, var(--msk-gold, #1c5244) 10%, transparent));
   color: var(--msk-gold, var(--mj-brand-deep, #1c5244));
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
@@ -375,7 +375,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   border: 1.5px solid var(--msk-border);
   background: transparent;
   color: var(--msk-text-2);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
@@ -470,5 +470,5 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   color: var(--msk-gold, var(--mj-brand));
 }
 .pasc-explainer__title { font-weight: 700; font-size: 0.85rem; margin: 0 0 0.2rem; color: var(--msk-text, #1A1A18); }
-.pasc-explainer__desc { font-size: 0.78rem; margin: 0 0 0.6rem; color: var(--msk-text-2, var(--mj-ink-2)); line-height: 1.6; }
+.pasc-explainer__desc { font-size: var(--text-caption); margin: 0 0 0.6rem; color: var(--msk-text-2, var(--mj-ink-2)); line-height: 1.6; }
 .pasc-explainer__actions { display: flex; gap: var(--ds-space-2, 0.5rem); }

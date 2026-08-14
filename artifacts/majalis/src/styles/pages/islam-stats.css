@@ -14,7 +14,7 @@
   display: inline-flex; align-items: center; gap: .4rem;
   background: rgba(31,77,58,.3); color: #7ED6A8;
   border: 1px solid rgba(126,214,168,.3); border-radius: var(--ds-radius-full);
-  padding: .25rem .9rem; font-size: .75rem; font-weight: 700;
+  padding: .25rem .9rem; font-size: var(--text-caption); font-weight: 700;
   margin-bottom: .9rem;
 }
 .is-hero__title { font-size: 2rem; font-weight: 900; margin: 0 0 .6rem; }
@@ -42,7 +42,7 @@
   flex: none; display: flex; align-items: center; gap: .4rem;
   justify-content: center; padding: .55rem .7rem;
   border: none; border-radius: .7rem; background: transparent;
-  color: #64748B; font-family: inherit; font-size: .8rem !important; font-weight: 600;
+  color: #64748B; font-family: inherit; font-size: var(--text-caption) !important; font-weight: 600;
   cursor: pointer; transition: background .15s, color .15s; white-space: nowrap;
 }
 .is-tab--active { background: var(--majalis-emerald,var(--mj-brand)); color: #fff; }
@@ -59,7 +59,7 @@
 }
 .is-stat-card__val { font-size: var(--ds-text-2xl); font-weight: 900; line-height: 1; color: var(--is-card-color, var(--mj-brand)); }
 .is-stat-card__lbl { font-size: .82rem; font-weight: 700; color: #1E293B; }
-.is-stat-card__sub { font-size: 0.8rem; color: #94A3B8; line-height: 1.4; }
+.is-stat-card__sub { font-size: var(--text-caption); color: #94A3B8; line-height: 1.4; }
 
 /* section title */
 .is-section-title {
@@ -76,11 +76,11 @@
   flex: 1; height: 10px; background: #E2E8F0; border-radius: var(--ds-radius-full); overflow: hidden;
 }
 .is-bar__fill { height: 100%; border-radius: var(--ds-radius-full); background: var(--is-bar-color, var(--mj-brand)); width: var(--is-bar-w, 0%); transition: width 0.8s ease; }
-.is-bar__val { width: 3rem; font-size: .78rem; font-weight: 700; color: #475569; flex-shrink: 0; }
+.is-bar__val { width: 3rem; font-size: var(--text-caption); font-weight: 700; color: #475569; flex-shrink: 0; }
 
 /* note */
 .is-note {
-  font-size: .78rem; color: #94A3B8; line-height: 1.5;
+  font-size: var(--text-caption); color: #94A3B8; line-height: 1.5;
   background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: .6rem;
   padding: .65rem .85rem;
 }
@@ -94,7 +94,7 @@
   font-family: var(--font-body);
   font-size: 1.45rem; line-height: 2; margin: 0 0 .5rem; color: #fff;
 }
-.is-quran-highlight__ref { font-size: .8rem; color: rgba(200,240,220,.65); margin: 0; }
+.is-quran-highlight__ref { font-size: var(--text-caption); color: rgba(200,240,220,.65); margin: 0; }
 
 /* timeline */
 .is-timeline { position: relative; padding-inline-end: 1.5rem; }
@@ -106,7 +106,7 @@
   display: flex; align-items: flex-start; gap: .75rem; margin-bottom: 1.1rem;
 }
 .is-timeline-item__year {
-  min-width: 4.5rem; font-size: .72rem; font-weight: 800; color: var(--mj-brand);
+  min-width: 4.5rem; font-size: var(--text-caption); font-weight: 800; color: var(--mj-brand);
   text-align: start; padding-top: .15rem; flex-shrink: 0;
 }
 .is-timeline-item__dot {
@@ -116,7 +116,7 @@
 }
 .is-timeline-item__content { flex: 1; }
 .is-timeline-item__event { font-size: .88rem; color: #1E293B; font-weight: 600; margin: 0; line-height: 1.5; }
-.is-timeline-item__note { font-size: .72rem; color: #94A3B8; margin: .2rem 0 0; }
+.is-timeline-item__note { font-size: var(--text-caption); color: #94A3B8; margin: .2rem 0 0; }
 
 /* science */
 .is-science-intro {
@@ -135,7 +135,7 @@
   box-shadow: 0 1px 6px rgba(0,0,0,.05);
 }
 .is-science-card__topic {
-  font-size: .75rem; font-weight: 800; color: var(--mj-brand);
+  font-size: var(--text-caption); font-weight: 800; color: var(--mj-brand);
   background: rgba(31,77,58,.1); padding: .25rem .7rem; border-radius: var(--ds-radius-full);
   align-self: flex-start; letter-spacing: normal;
 }
@@ -143,21 +143,21 @@
   font-family: var(--font-body);
   font-size: var(--ds-text-base); color: #0F172A; line-height: 1.8; margin: 0;
 }
-.is-science-card__ref { font-size: .72rem; color: #94A3B8; margin: 0; }
+.is-science-card__ref { font-size: var(--text-caption); color: #94A3B8; margin: 0; }
 .is-science-card__discovery {
   display: flex; flex-direction: column; gap: .2rem;
   background: var(--mj-brand-soft); border: 1px solid #D4E9DC; border-radius: .6rem;
   padding: .6rem .75rem;
 }
-.is-science-card__disc-label { font-size: .65rem; font-weight: 800; color: var(--mj-brand-deep); letter-spacing: normal; }
+.is-science-card__disc-label { font-size: var(--text-caption); font-weight: 800; color: var(--mj-brand-deep); letter-spacing: normal; }
 .is-science-card__disc-text { font-size: .82rem; color: #1E293B; font-weight: 600; }
-.is-science-card__disc-year { font-size: .72rem; color: var(--mj-ink-2); }
+.is-science-card__disc-year { font-size: var(--text-caption); color: var(--mj-ink-2); }
 
 @media (max-width: 640px) {
   .is-hero__title { font-size: var(--ds-text-2xl); }
   .is-tabs { gap: .2rem; }
-  .is-tab { font-size: .72rem; padding: .45rem .5rem; }
+  .is-tab { font-size: var(--text-caption); padding: .45rem .5rem; }
   .is-stats-grid { grid-template-columns: repeat(2, 1fr); }
   .is-science-grid { grid-template-columns: 1fr; }
-  .is-bar__label { width: 4rem; font-size: .75rem; }
+  .is-bar__label { width: 4rem; font-size: var(--text-caption); }
 }

@@ -32,7 +32,7 @@
 }
 .dii-path-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(14,110,82,.12); }
 .dii-path-card strong { color: var(--majalis-emerald-deep, var(--mj-brand-deep)); font-size: .95rem; }
-.dii-path-card span { font-size: .8rem; color: var(--majalis-ink-soft, #5A6660); }
+.dii-path-card span { font-size: var(--text-caption); color: var(--majalis-ink-soft, #5A6660); }
 
 .dii-categories-grid {
   display: grid;
@@ -54,7 +54,7 @@
   color: var(--majalis-emerald, #0E6E52);
 }
 .dii-category-card strong { color: var(--majalis-emerald-deep, var(--mj-brand-deep)); font-size: .92rem; }
-.dii-category-card span { font-size: .78rem; color: var(--majalis-ink-soft, #5A6660); line-height: 1.6; }
+.dii-category-card span { font-size: var(--text-caption); color: var(--majalis-ink-soft, #5A6660); line-height: 1.6; }
 
 .dii-journey { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .5rem; }
 .dii-journey-step {
@@ -70,7 +70,7 @@ html[data-theme="dark"] .dii-journey-step { background: rgba(255,255,255,.05); c
   display: inline-flex; align-items: center; justify-content: center;
   width: 1.8rem; height: 1.8rem; border-radius: 50%;
   background: var(--majalis-emerald, #0E6E52); color: #fff;
-  font-size: .8rem; font-weight: 700; flex-shrink: 0;
+  font-size: var(--text-caption); font-weight: 700; flex-shrink: 0;
 }
 
 .dii-contact-cta { padding: 1.25rem !important; text-align: center; }
@@ -84,7 +84,7 @@ html[data-theme="dark"] .dii-journey-step { background: rgba(255,255,255,.05); c
 .dii-evidence-list { list-style: none; margin: .5rem 0 0; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
 .dii-evidence-item { padding: .9rem !important; }
 .dii-evidence-item p { margin: .4rem 0 0; line-height: 1.9; font-family: var(--font-quran, inherit); }
-.dii-evidence-grading { font-size: .78rem !important; color: var(--majalis-ink-soft, #5A6660) !important; font-family: var(--font-body) !important; }
+.dii-evidence-grading { font-size: var(--text-caption) !important; color: var(--majalis-ink-soft, #5A6660) !important; font-family: var(--font-body) !important; }
 
 .dii-glossary { margin: .5rem 0 0; display: flex; flex-direction: column; gap: .5rem; }
 .dii-glossary dt { font-weight: 700; color: var(--majalis-emerald-deep, var(--mj-brand-deep)); }

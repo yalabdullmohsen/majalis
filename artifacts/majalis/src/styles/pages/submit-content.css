@@ -27,7 +27,7 @@
 }
 .scp-banner__emoji   { font-size: var(--ds-text-2xl); }
 .scp-banner__heading { margin: 0; font-weight: 700; font-size: 0.9rem; color: var(--majalis-emerald); }
-.scp-banner__desc    { margin: 0.15rem 0 0; font-size: 0.78rem; color: var(--majalis-ink-muted, #9BA3B5); }
+.scp-banner__desc    { margin: 0.15rem 0 0; font-size: var(--text-caption); color: var(--majalis-ink-muted, #9BA3B5); }
 .scp-feedback {
   padding: var(--ds-space-4);
   border-radius: var(--ds-radius);

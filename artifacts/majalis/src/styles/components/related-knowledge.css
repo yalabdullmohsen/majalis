@@ -18,7 +18,7 @@
   color: var(--clr-ink, #1a1a1a);
 }
 .rk-algo-badge {
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--mj-brand);
   background: rgba(23,61,53,.1);
@@ -69,7 +69,7 @@
   display: flex;
   align-items: center;
   gap: var(--ds-space-1);
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   color: var(--clr-ink-soft, var(--mj-muted));
   font-weight: 600;
 }
@@ -77,7 +77,7 @@
   display: flex;
   align-items: center;
   gap: 0.2rem;
-  font-size: 0.62rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--mj-brand);
 }
@@ -93,7 +93,7 @@
   -webkit-box-orient: vertical;
 }
 .rk-card__source {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   color: var(--clr-ink-soft, var(--mj-muted));
   margin-top: 0.15rem;
   overflow: hidden;
@@ -161,7 +161,7 @@ html[data-theme="dark"] .rk-card__title { color: var(--mj-brand-soft); }
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.67rem;
+  font-size: var(--text-caption);
   color: var(--clr-ink-soft, var(--mj-muted));
   margin-top: 0.1rem;
 }

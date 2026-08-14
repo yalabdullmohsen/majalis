@@ -63,7 +63,7 @@
 .lsw-option:hover { background: rgba(23,61,53,.07); }
 .lsw-option--active { background: rgba(23,61,53,.1); color: var(--mj-brand); font-weight: 700; }
 .lsw-option__dir-badge {
-  font-size: 0.58rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.08rem 0.3rem;
   border-radius: var(--ds-radius-full);
@@ -76,7 +76,7 @@
   flex: 1;
 }
 .lsw-option__label {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: var(--clr-ink-soft, var(--mj-muted));
 }
 .lsw-option__check {
@@ -93,7 +93,7 @@
   padding: 0.5rem 1rem;
   background: var(--mj-brand-deep);
   color: var(--mj-bg);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   text-align: center;
   animation: ob-slide-in 0.3s ease;

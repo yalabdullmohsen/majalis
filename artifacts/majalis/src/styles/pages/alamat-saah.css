@@ -15,7 +15,7 @@
 .as-hero__badge {
   display: inline-block; margin-bottom: .85rem;
   padding: .3rem .9rem; border-radius: var(--ds-radius-full);
-  background: rgba(255,255,255,.12); font-size: .8rem; letter-spacing: normal;
+  background: rgba(255,255,255,.12); font-size: var(--text-caption); letter-spacing: normal;
 }
 .as-hero__title { font-size: 2.1rem; font-weight: 800; margin: 0 0 .6rem; }
 .as-hero__sub { font-size: var(--ds-text-base); opacity: .82; margin: 0 0 1.2rem; line-height: 1.7; }
@@ -86,13 +86,13 @@
 .as-alama-card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; margin-bottom: .5rem; }
 .as-alama-card__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--clr-text-1); margin: 0; }
 .as-alama-card__status {
-  flex-shrink: 0; font-size: .78rem; font-weight: 600; padding: .2rem .65rem;
+  flex-shrink: 0; font-size: var(--text-caption); font-weight: 600; padding: .2rem .65rem;
   border-radius: var(--ds-radius-full); white-space: nowrap;
   background: var(--as-status-bg, rgba(0,0,0,.05));
   color: var(--as-status-color, #444);
 }
 .as-alama-card__desc { font-size: .9rem; line-height: 1.75; color: var(--clr-text-2); margin: 0 0 .45rem; }
-.as-alama-card__source { font-size: .8rem; color: var(--clr-primary); font-weight: 500; margin: 0; }
+.as-alama-card__source { font-size: var(--text-caption); color: var(--clr-primary); font-weight: 500; margin: 0; }
 
 /* Tahdhu card variant */
 .as-alama-card--tahdhu {
@@ -128,7 +128,7 @@
 }
 .as-kubra-title { font-size: var(--ds-text-base); font-weight: 700; color: var(--clr-text-1); margin: 0 0 .45rem; }
 .as-kubra-desc  { font-size: .88rem; line-height: 1.7; color: var(--clr-text-2); margin: 0 0 .45rem; }
-.as-kubra-ref   { font-size: .79rem; color: var(--clr-primary); font-weight: 500; margin: 0; }
+.as-kubra-ref   { font-size: var(--text-caption); color: var(--clr-primary); font-weight: 500; margin: 0; }
 
 /* Timeline */
 .as-timeline { display: flex; flex-direction: column; gap: 0; margin-bottom: 1.5rem; }

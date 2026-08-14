@@ -1097,7 +1097,8 @@ p, li {
 /* Design System v5 — Premium Light-First System */
 :root {
   /* ── Base ── */
-  --ds-base:   15px;
+  /* +10% تقريباً من 15px — يكبر كل rem دون تضخيم */
+  --ds-base:   16.5px;
 
   /* ── Spacing scale ── */
   --ds-space-0-5: 0.125rem;
@@ -1148,12 +1149,12 @@ p, li {
   /* ── Heading token — أسود بدل زمرد ── */
   --ds-heading: var(--ds-ink);
 
-  /* ── Typography scale ── */
-  --ds-text-2xs: 0.6875rem;
-  --ds-text-xs:  0.75rem;
+  /* ── Typography scale — يُكمَل/يُثبَّت في typography-scale.css ── */
+  --ds-text-2xs: 0.8125rem;
+  --ds-text-xs:  0.8125rem;
   --ds-text-sm:  0.875rem;
-  --ds-text-base:1rem;
-  --ds-text-md:  1.0625rem;
+  --ds-text-base:1.0625rem;
+  --ds-text-md:  1.125rem;
   --ds-text-lg:  1.125rem;
   --ds-text-xl:  1.25rem;
   --ds-text-2xl: 1.5rem;
@@ -1162,10 +1163,10 @@ p, li {
   /* ── Layout ── */
   --ds-max:         75rem;
   --ds-content-max: 44rem;
-  --ds-line:        1.65;
+  --ds-line:        1.7;
   /* ارتفاع سطر مريح خصيصًا للفقرات العربية الطويلة (نظام إيقاع المحتوى
      أدناه) — العربية تحتاج ارتفاعًا أعلى من --ds-line العام (تشكيل/مدّات). */
-  --ds-line-prose:  1.8;
+  --ds-line-prose:  1.85;
 
   /* ── Motion — Spring curves ── */
   --ds-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -1180,7 +1181,7 @@ body {
   background: var(--msk-canvas, var(--ds-parchment));
   color: var(--msk-text, var(--ds-ink));
   font-size: var(--ds-text-base);
-  line-height: 1.55;
+  line-height: 1.7;
 }
 
 .reading-text {
@@ -1349,7 +1350,7 @@ hr.decorative,
   gap: 0.75rem;
   margin-bottom: 0.75rem;
   color: var(--majalis-ink-soft);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
 }
 
 .login-oauth__divider::before,
@@ -1419,7 +1420,7 @@ hr.decorative,
   background: rgba(23,61,53, 0.12);
   color: var(--clr-primary, var(--mj-brand));
   border-radius: 999px;
-  font-size: 0.73rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   margin-bottom: 0.5rem;
   letter-spacing: normal;
@@ -1468,7 +1469,7 @@ hr.decorative,
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   color: var(--ds-emerald-deep, var(--mj-brand-deep));
   font-weight: 600;
   padding: 0.25rem 0.4rem;
@@ -1536,7 +1537,7 @@ hr.decorative,
 }
 
 .hcp-strip__label {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--ds-emerald-deep, var(--mj-brand-deep));
   display: flex;
@@ -1545,7 +1546,7 @@ hr.decorative,
 }
 
 .hcp-strip__link {
-  font-size: 0.73rem;
+  font-size: var(--text-caption);
   color: var(--clr-primary, var(--mj-brand));
   text-decoration: none;
   font-weight: 600;
@@ -1587,7 +1588,7 @@ hr.decorative,
 }
 
 .hcp-prayer-cell__time {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: #1f2937;
   direction: ltr;
@@ -1607,7 +1608,7 @@ hr.decorative,
 }
 
 .home-about__eyebrow {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: normal;
   color: var(--clr-primary, var(--mj-brand));
@@ -1656,13 +1657,13 @@ hr.decorative,
 }
 
 .hcp-strip__countdown {
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   font-weight: 500;
 }
 
 .hcp-strip__countdown-time {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--ds-emerald-deep, var(--mj-brand-deep));
   font-variant-numeric: tabular-nums;
@@ -1697,7 +1698,7 @@ hr.decorative,
 .hcp-since-pill__text {
   position: relative;
   z-index: 1;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   line-height: 1.35;
   color: inherit;
@@ -1723,7 +1724,7 @@ hr.decorative,
 
 .hcp-next-hint {
   margin-inline-start: 0.35rem;
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--text-2, #3e3a35);
   font-variant-numeric: tabular-nums;
@@ -1806,7 +1807,7 @@ hr.decorative,
 }
 
 .tc-ring-rounds {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-emerald, var(--mj-brand));
   letter-spacing: normal;
@@ -1826,14 +1827,14 @@ hr.decorative,
 }
 
 .tc-ring-total {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
 .tc-ring-hint {
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   margin-top: 0.15rem;
   line-height: 1;
@@ -1845,7 +1846,7 @@ hr.decorative,
 
 /* Keyboard hint below counter */
 .tc-keyboard-hint {
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   text-align: center;
   margin: 0.25rem 0 0.75rem;
@@ -1916,7 +1917,7 @@ hr.decorative,
   height: 1.3rem;
   padding: 0 0.25rem;
   border-radius: 99px;
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   background: rgba(255,255,255,0.25);
   color: inherit;
@@ -1954,7 +1955,7 @@ hr.decorative,
 }
 
 .push-prompt__text strong { font-size: 0.875rem; color: var(--ds-ink); }
-.push-prompt__text span   { font-size: 0.78rem;  color: var(--ds-ink-soft); }
+.push-prompt__text span   { font-size: var(--text-caption);  color: var(--ds-ink-soft); }
 
 .push-prompt__btn {
   flex-shrink: 0;
@@ -2026,7 +2027,7 @@ hr.decorative,
 }
 
 .user-stat-card__label {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--ds-ink-soft);
   font-weight: 600;
 }
@@ -2039,12 +2040,12 @@ hr.decorative,
 }
 
 .user-stat-card__sub {
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   color: var(--ds-ink-soft);
 }
 
 .user-stats-link {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--ds-emerald);
   text-decoration: none;
@@ -2172,7 +2173,7 @@ hr.decorative,
 
 .lsw-section { margin-bottom: 0; }
 .lsw-badge {
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
@@ -2207,7 +2208,7 @@ hr.decorative,
   align-items: center;
   line-height: 1;
   color: var(--majalis-ink-soft);
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
 }
 .lsw-featured__days strong { font-size: 1.8rem; font-weight: 800; color: var(--majalis-ink); line-height: 1; }
 .lsw-featured__suggestion { margin: 0; font-size: 0.85rem; color: var(--majalis-ink); }
@@ -2295,7 +2296,7 @@ hr.decorative,
 }
 .tawheed-type-card__subtitle {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--text-muted, #6b7280);
   font-weight: 600;
 }
@@ -2321,7 +2322,7 @@ hr.decorative,
 .tawheed-type-card__ayah cite {
   display: block;
   font-style: normal;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--majalis-emerald, var(--mj-brand));
   font-weight: 700;
   margin-top: 0.25rem;
@@ -2377,7 +2378,7 @@ hr.decorative,
   display: flex;
   gap: 0.35rem;
   align-items: center;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--text-muted, #6b7280);
   margin-bottom: 1.25rem;
   direction: rtl;
@@ -2420,7 +2421,7 @@ hr.decorative,
 .tawheed-page-header__ayah cite {
   display: block;
   font-style: normal;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: rgba(255,255,255,0.82);
   margin-top: 0.2rem;
   font-family: inherit;
@@ -2431,7 +2432,7 @@ hr.decorative,
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   line-height: 1.4;
   color: var(--text-muted, #6b7280);
   background: var(--bg-base, #f3f4f6);
@@ -2469,7 +2470,7 @@ hr.decorative,
   color: var(--majalis-emerald, var(--mj-brand));
 }
 .tawheed-related-card__desc {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   color: var(--text-muted, #6b7280);
 }
 
@@ -2972,7 +2973,7 @@ select:focus-visible {
   border: 1px solid var(--ds-line-color);
   border-radius: 999px;
   color: var(--majalis-ink-soft);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   cursor: pointer;
 }

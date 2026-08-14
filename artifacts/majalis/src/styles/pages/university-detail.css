@@ -5,7 +5,7 @@
 .udp-update-bar {
   background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
   border-bottom: 1px solid var(--majalis-emerald);
-  padding: .375rem 1rem; font-size: .75rem; color: var(--majalis-emerald); text-align: center;
+  padding: .375rem 1rem; font-size: var(--text-caption); color: var(--majalis-emerald); text-align: center;
 }
 .udp-prog-card { border: 1px solid var(--majalis-line); border-radius: .75rem; overflow: hidden; }
 .udp-prog-header-btn {
@@ -16,24 +16,24 @@
 }
 .udp-prog-header-btn:hover { background: var(--mn-surface-hover, rgba(31,77,58,.06)); }
 .udp-badge--emerald {
-  font-size: .75rem; background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
+  font-size: var(--text-caption); background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
   color: var(--majalis-emerald); padding: .125rem .5rem;
   border-radius: 9999px; font-weight: 500; display: inline-flex; align-items: center; gap: .25rem;
 }
 .udp-badge--neutral {
-  font-size: .75rem; background: var(--majalis-parchment-deep, #f0ece4);
+  font-size: var(--text-caption); background: var(--majalis-parchment-deep, #f0ece4);
   color: var(--majalis-ink-soft); padding: .125rem .5rem; border-radius: 9999px;
 }
 .udp-prog-name { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; }
-.udp-prog-dept { font-size: .75rem; color: var(--majalis-ink-soft); margin-top: .125rem; }
+.udp-prog-dept { font-size: var(--text-caption); color: var(--majalis-ink-soft); margin-top: .125rem; }
 .udp-chevron { color: var(--majalis-ink-soft); opacity: .6; flex-shrink: 0; margin-top: .25rem; }
 .udp-prog-body {
   border-top: 1px solid var(--majalis-line); padding: var(--ds-space-4); background: var(--majalis-parchment);
 }
-.udp-meta-label { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; margin-bottom: .125rem; }
+.udp-meta-label { font-size: var(--text-caption); color: var(--majalis-ink-soft); opacity: .6; margin-bottom: .125rem; }
 .udp-scholarship-text { color: var(--majalis-emerald); font-weight: 500; }
 .udp-section-subtitle {
-  font-size: .75rem; font-weight: 600; color: var(--majalis-ink-soft);
+  font-size: var(--text-caption); font-weight: 600; color: var(--majalis-ink-soft);
   margin-bottom: .5rem; text-transform: uppercase; letter-spacing: normal;
 }
 .udp-req-item { display: flex; gap: .5rem; font-size: .875rem; color: var(--majalis-ink-soft); }
@@ -42,10 +42,10 @@
 .udp-step-num {
   flex-shrink: 0; width: 1.5rem; height: 1.5rem;
   border-radius: 9999px; background: var(--majalis-emerald);
-  color: #fff; font-size: .75rem; font-weight: 700;
+  color: #fff; font-size: var(--text-caption); font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
-.udp-deadline-label { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; display: block; }
+.udp-deadline-label { font-size: var(--text-caption); color: var(--majalis-ink-soft); opacity: .6; display: block; }
 .udp-deadline-val { font-weight: 500; color: var(--majalis-emerald); display: flex; align-items: center; gap: .25rem; }
 .udp-website-btn {
   display: inline-flex; align-items: center; gap: .375rem;
@@ -81,7 +81,7 @@
 .udp-social-link:hover { border-color: var(--majalis-emerald); }
 .udp-disclaimer {
   background: var(--majalis-parchment-deep, #f0ece4); border-radius: .75rem;
-  padding: .75rem 1rem; font-size: .75rem; color: var(--majalis-ink-soft);
+  padding: .75rem 1rem; font-size: var(--text-caption); color: var(--majalis-ink-soft);
 }
 .udp-loading-text { font-size: .875rem; color: var(--majalis-ink-soft); opacity: .6; }
 .udp-not-found-title { font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-ink-soft); margin-bottom: .5rem; }
@@ -92,7 +92,7 @@
 
 /* ── نُقل إلى styles/pages/universities-admin.css ── */
 .is-summary { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius); padding: 0.75rem 1rem; font-size: var(--ds-text-sm); line-height: 1.65; color: #334155; margin-bottom: 0.9rem; }
-.is-full-toggle { background: none; border: 1px solid #cbd5e1; border-radius: var(--ds-radius-sm); padding: 0.35rem 0.75rem; font-size: 0.8rem; color: #475569; cursor: pointer; font-family: inherit; margin-bottom: 0.75rem; transition: border-color 0.15s; }
+.is-full-toggle { background: none; border: 1px solid #cbd5e1; border-radius: var(--ds-radius-sm); padding: 0.35rem 0.75rem; font-size: var(--text-caption); color: #475569; cursor: pointer; font-family: inherit; margin-bottom: 0.75rem; transition: border-color 0.15s; }
 .is-full-toggle:hover { border-color: #94a3b8; color: #1e293b; }
 .is-content { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius); padding: 1rem 1.1rem; font-size: var(--ds-text-sm); line-height: 1.7; color: #334155; white-space: pre-wrap; margin-bottom: 0.9rem; max-height: 380px; overflow-y: auto; }
 .is-lessons { margin-bottom: 0.9rem; }
@@ -104,9 +104,9 @@
 .is-btn.revoke { background: #fff; color: #dc2626; border: 1px solid #fca5a5; }
 .is-btn.revoke:hover { background: #fef2f2; }
 .is-btn.disabled { opacity: 0.45; cursor: not-allowed; }
-.is-verified-info { font-size: 0.7375rem; color: #64748b; padding: 0.3rem 0; }
+.is-verified-info { font-size: var(--text-caption); color: #64748b; padding: 0.3rem 0; }
 .is-sources { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; }
-.is-source { font-size: 0.8rem; color: #475569; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius-sm); padding: 0.3rem 0.6rem; }
+.is-source { font-size: var(--text-caption); color: #475569; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius-sm); padding: 0.3rem 0.6rem; }
 
 
 /* ============================================================

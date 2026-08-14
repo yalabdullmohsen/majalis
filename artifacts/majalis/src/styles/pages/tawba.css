@@ -28,7 +28,7 @@
   border: 1px solid rgba(255,255,255,.25);
   border-radius: 2rem;
   padding: .3rem .9rem;
-  font-size: .75rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   margin-bottom: .8rem;
   color: #fff;
@@ -45,7 +45,7 @@
   margin: 0 auto;
 }
 .tw-ayah__text { font-family: var(--font-quran,'Scheherazade New',serif); font-size: 1.1rem; line-height: 2.1; color: #fff; margin: 0 0 .3rem; }
-.tw-ayah__ref  { font-size: .72rem; opacity: .7; color: #fff; font-style: normal; }
+.tw-ayah__ref  { font-size: var(--text-caption); opacity: .7; color: #fff; font-style: normal; }
 
 
 /* tabs */
@@ -77,7 +77,7 @@
 }
 .tw-tab--active { border-bottom-color: #1a1a2e; color: #1a1a2e; font-weight: 700; }
 .tw-tab__icon  { font-size: .95rem; }
-.tw-tab__label { font-size: 0.8rem; }
+.tw-tab__label { font-size: var(--text-caption); }
 
 /* body */
 .tw-body    { padding: 1.25rem 1rem; }
@@ -115,7 +115,7 @@
   background: #EEF2FF;
   border-radius: .5rem;
   padding: .45rem .6rem;
-  font-size: .75rem;
+  font-size: var(--text-caption);
   color: #3730A3;
   line-height: 1.5;
 }
@@ -147,7 +147,7 @@
 .tw-nawaa-head { display: flex; gap: .75rem; align-items: flex-start; margin-bottom: .5rem; }
 .tw-nawaa-icon  { font-size: 1.3rem; flex-shrink: 0; }
 .tw-nawaa-title { display: block; font-weight: 700; font-size: .9rem; color: #111; margin-bottom: .2rem; }
-.tw-nawaa-hukm  { display: inline-block; padding: .15rem .5rem; border-radius: .35rem; font-size: .68rem; font-weight: 700; }
+.tw-nawaa-hukm  { display: inline-block; padding: .15rem .5rem; border-radius: .35rem; font-size: var(--text-caption); font-weight: 700; }
 .tw-nawaa-hukm--wajib    { background: var(--mj-danger-soft); color: var(--mj-danger-deep); }
 .tw-nawaa-hukm--mustahabb { background: #D4E9DC; color: var(--mj-brand-deep); }
 .tw-nawaa-desc  { font-size: .82rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
@@ -182,19 +182,19 @@
   cursor: pointer;
   font-family: inherit;
 }
-.tw-dhikr-num   { background: #1a1a2e; color: #fff; width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; flex-shrink: 0; }
-.tw-dhikr-times { flex: 1; font-size: .75rem; color: var(--mj-ink-2); text-align: end; }
-.tw-dhikr-chevron { font-size: .8rem; color: #9CA3AF; transition: transform .2s; margin-inline-end: auto; }
+.tw-dhikr-num   { background: #1a1a2e; color: #fff; width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--text-caption); font-weight: 800; flex-shrink: 0; }
+.tw-dhikr-times { flex: 1; font-size: var(--text-caption); color: var(--mj-ink-2); text-align: end; }
+.tw-dhikr-chevron { font-size: var(--text-caption); color: #9CA3AF; transition: transform .2s; margin-inline-end: auto; }
 .tw-dhikr-chevron--open { transform: rotate(180deg); }
 .tw-dhikr-arabic { font-family: var(--font-body); font-size: 1.05rem; line-height: 2; color: #111; padding: .5rem .9rem .7rem; margin: 0; border-top: 1px solid #F3F4F6; }
 .tw-dhikr-body  { padding: .5rem .9rem .75rem; border-top: 1px solid #F3F4F6; }
 .tw-dhikr-reward {
   display: flex; gap: .45rem; align-items: flex-start;
   background: var(--mj-brand-soft); border-radius: .5rem; padding: .45rem .65rem;
-  font-size: .78rem; color: var(--mj-brand-deep); line-height: 1.5; margin-bottom: .4rem;
+  font-size: var(--text-caption); color: var(--mj-brand-deep); line-height: 1.5; margin-bottom: .4rem;
 }
 .tw-dhikr-reward__icon { flex-shrink: 0; }
-.tw-dhikr-source { font-size: .7rem; color: #9CA3AF; }
+.tw-dhikr-source { font-size: var(--text-caption); color: #9CA3AF; }
 
 /* أوقات */
 .tw-afdhal-awqat { margin-top: 1.5rem; }
@@ -207,7 +207,7 @@
   padding: .65rem .8rem;
 }
 .tw-awqat-item__waqt { display: block; font-weight: 700; font-size: .82rem; color: #1a1a2e; margin-bottom: .2rem; }
-.tw-awqat-item__desc { font-size: .73rem; color: var(--mj-ink-2); line-height: 1.4; }
+.tw-awqat-item__desc { font-size: var(--text-caption); color: var(--mj-ink-2); line-height: 1.4; }
 
 /* موانع */
 .tw-mawani-list { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.5rem; }
@@ -243,7 +243,7 @@
 }
 .tw-athar-icon  { font-size: 1.6rem; display: block; margin-bottom: .4rem; }
 .tw-athar-title { font-size: .82rem; font-weight: 700; color: #111; display: block; margin-bottom: .3rem; }
-.tw-athar-desc  { font-size: .74rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
+.tw-athar-desc  { font-size: var(--text-caption); color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 .tw-hadith-box {
   background: linear-gradient(135deg,#1a1a2e,#16213e);
@@ -252,7 +252,7 @@
   margin: 1rem 0 0;
 }
 .tw-hadith-box__text { font-size: var(--ds-text-base); font-weight: 700; color: #fff; line-height: 1.8; margin: 0 0 .4rem; font-style: normal; }
-.tw-hadith-box__ref  { font-size: .72rem; color: rgba(255,255,255,.7); font-style: normal; }
+.tw-hadith-box__ref  { font-size: var(--text-caption); color: rgba(255,255,255,.7); font-style: normal; }
 
 /* related */
 .tw-related { margin-top: 2.5rem; }
@@ -289,7 +289,7 @@ html.dark .tw-related__link {
   .tw-related__grid { grid-template-columns: repeat(2, 1fr); }
   .tw-hero__title { font-size: 1.35rem; }
   .tw-tab { min-width: 4.5rem; }
-  .tw-tab__label { font-size: 0.8rem; }
+  .tw-tab__label { font-size: var(--text-caption); }
 }
 
 /* ── نهاية §234 ─────────────────────────────────────────── */

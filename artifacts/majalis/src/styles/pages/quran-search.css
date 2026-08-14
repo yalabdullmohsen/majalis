@@ -122,7 +122,7 @@
   background: var(--mj-brand-soft);
   color: var(--mj-brand-deep, var(--mj-brand));
   font-weight: 800;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   white-space: nowrap;
 }
 

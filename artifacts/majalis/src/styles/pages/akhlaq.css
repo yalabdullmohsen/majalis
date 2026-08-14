@@ -11,7 +11,7 @@
   margin-bottom: 1.5rem;
 }
 .akl-hero__eyebrow {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: normal;
   color: rgba(255,255,255,0.7);
@@ -35,7 +35,7 @@
 .akl-hero__source {
   display: block;
   font-family: inherit;
-  font-size: 0.76rem;
+  font-size: var(--text-caption);
   color: rgba(255,255,255,0.55);
   font-style: normal;
   margin-top: 0.25rem;
@@ -53,7 +53,7 @@
   background: rgba(255,255,255,0.12);
   border-radius: 2rem;
   padding: 0.25rem 0.75rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: rgba(255,255,255,0.9);
 }
 
@@ -145,7 +145,7 @@
   margin: 0;
 }
 .akl-card__cat {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: #497061;
   font-weight: 600;
 }
@@ -176,7 +176,7 @@
 .akl-block--scholar { background: rgba(124,58,237,0.04); border-inline-end: 3px solid var(--brand, var(--mj-brand)); }
 .akl-block__label {
   display: block;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--mj-brand);
   text-transform: uppercase;
@@ -199,7 +199,7 @@
   font-style: normal;
 }
 .akl-block__ref {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: #497061;
   font-weight: 600;
 }
@@ -213,7 +213,7 @@
   border: none;
 }
 .akl-block__scholar {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--brand, var(--mj-brand));
   font-weight: 700;
 }

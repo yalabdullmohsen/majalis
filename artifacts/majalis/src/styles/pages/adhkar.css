@@ -229,7 +229,7 @@
   display: inline-block;
   padding: 0.125rem 0.5rem;
   border-radius: 9999px;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
 }
 .adhkar-grade--sahih { background: #DCFCE7; color: var(--mj-brand-deep, #153025); }

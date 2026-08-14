@@ -9,7 +9,7 @@
 .jn-hero__badge {
   display: inline-block; background: rgba(255,255,255,.15); color: #fff;
   border: 1px solid rgba(255,255,255,.3); border-radius: var(--ds-radius-full);
-  padding: .3rem .9rem; font-size: .75rem; font-weight: 700; letter-spacing: normal;
+  padding: .3rem .9rem; font-size: var(--text-caption); font-weight: 700; letter-spacing: normal;
   margin-bottom: .9rem;
 }
 .jn-hero__title { font-size: 2rem; font-weight: 800; color: #fff; margin: 0 0 .5rem; }
@@ -23,7 +23,7 @@
 .jn-tabs::-webkit-scrollbar { display: none; }
 .jn-tab {
   white-space: nowrap; border: 1.5px solid var(--mj-hairline); background: #fff; color: #475569;
-  border-radius: var(--ds-radius-full); padding: .4rem .9rem; font-size: .8rem; font-weight: 700;
+  border-radius: var(--ds-radius-full); padding: .4rem .9rem; font-size: var(--text-caption); font-weight: 700;
   cursor: pointer; flex-shrink: 0; transition: all .15s ease;
 }
 .jn-tab:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
@@ -51,7 +51,7 @@
 }
 .jn-desc-card__title { font-size: .9rem; font-weight: 800; color: #0F172A; margin: 0; }
 .jn-desc-card__text { font-size: .86rem; color: #334155; line-height: 1.75; margin: 0; }
-.jn-desc-card__ref { font-size: 0.8rem; color: #94A3B8; margin: 0; }
+.jn-desc-card__ref { font-size: var(--text-caption); color: #94A3B8; margin: 0; }
 
 .jn-naar-warn {
   background: rgba(155,28,28,.07); border: 1px solid rgba(155,28,28,.2);
@@ -69,13 +69,13 @@
   padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .45rem;
 }
 .jn-sabab-num {
-  font-size: .7rem; font-weight: 900; color: #fff;
+  font-size: var(--text-caption); font-weight: 900; color: #fff;
   background: var(--mj-brand); border-radius: var(--ds-radius-full); width: 1.5rem; height: 1.5rem;
   display: flex; align-items: center; justify-content: center;
 }
 .jn-sabab-title { font-size: .9rem; font-weight: 800; color: #0F172A; margin: 0; }
 .jn-sabab-text { font-size: .83rem; color: #334155; line-height: 1.7; margin: 0; }
-.jn-ref { font-size: .72rem; color: #94A3B8; margin: 0; }
+.jn-ref { font-size: var(--text-caption); color: #94A3B8; margin: 0; }
 
 .jn-intro--naar { background: rgba(155,28,28,.05); border-right-color: #9B1C1C; }
 .jn-intro--naar p { color: #7F1D1D; }
@@ -92,7 +92,7 @@
   font-family: var(--font-body);
   font-size: 1.1rem; color: #0F172A; line-height: 1.9; margin: 0;
 }
-.jn-dua-source { font-size: .75rem; color: var(--mj-ink-2); margin: 0; }
+.jn-dua-source { font-size: var(--text-caption); color: var(--mj-ink-2); margin: 0; }
 
 .jn-related {
   max-width: 900px; margin: 2rem auto 0; padding: 1.5rem 1.25rem 0;

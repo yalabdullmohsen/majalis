@@ -20,7 +20,7 @@
   flex-wrap: wrap;
 }
 .lib-toolbar__label {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--clr-text-2, var(--mj-ink-2));
   font-weight: 500;
   margin-inline-end: 0.25rem;
@@ -33,7 +33,7 @@
   border-radius: var(--ds-radius-full);
   border: 1px solid var(--clr-border, rgba(23,61,53,0.12));
   background: transparent;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--clr-text-2, var(--mj-ink-2));
   cursor: pointer;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
@@ -170,7 +170,7 @@
   overflow: hidden;
 }
 .lib-card-cover__cat {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: rgba(255,255,255,0.68);
   text-align: center;
   line-height: 1.3;
@@ -181,7 +181,7 @@
   inset-inline-start: 6px;
   background: rgba(23,61,53,0.85);
   color: #FFFFFF;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   padding: 2px 6px;
   border-radius: 4px;
   backdrop-filter: blur(3px);
@@ -196,7 +196,7 @@
   flex: 1;
 }
 .lib-card-category {
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   text-transform: none;
   padding: 2px 8px;
@@ -220,7 +220,7 @@
   font-size: var(--ds-text-base);
 }
 .lib-card-author {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--clr-text-2, var(--mj-ink-2));
   margin: 0;
   display: -webkit-box;
@@ -229,7 +229,7 @@
   overflow: hidden;
 }
 .lib-card-desc {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--clr-text-2, var(--mj-ink-2));
   margin: 0;
   display: -webkit-box;
@@ -252,7 +252,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--clr-primary, var(--mj-brand));
   margin-top: auto;
@@ -342,7 +342,7 @@ html.dark .lrn-hub-gateway {
 }
 .lrn-hub-stat { display: flex; flex-direction: column; gap: .2rem; }
 .lrn-hub-stat strong { font-size: 1.4rem; font-weight: 800; color: var(--majalis-emerald-deep, var(--mj-brand)); line-height: 1; }
-.lrn-hub-stat span { font-size: .78rem; color: var(--majalis-ink-soft); }
+.lrn-hub-stat span { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 .lrn-hub-stat-divider { width: 1px; height: 2.5rem; background: var(--majalis-line, #e5e7eb); }
 
 .lrn-hub-search {
@@ -369,7 +369,7 @@ html.dark .lrn-hub-gateway {
 }
 .lrn-hub-card__title { font-weight: 700; font-size: var(--ds-text-base); margin-bottom: .35rem; color: var(--majalis-ink); }
 .lrn-hub-card__desc { font-size: .82rem; color: var(--majalis-ink-soft); line-height: 1.5; margin-bottom: .75rem; }
-.lrn-hub-card__meta { display: flex; gap: .4rem; flex-wrap: wrap; font-size: .72rem; }
+.lrn-hub-card__meta { display: flex; gap: .4rem; flex-wrap: wrap; font-size: var(--text-caption); }
 .lrn-hub-card__badge {
   display: inline-flex; align-items: center; gap: .25rem; padding: .15rem .55rem; border-radius: var(--ds-radius-full);
   background: var(--majalis-emerald-subtle, var(--mj-brand-soft)); color: var(--majalis-emerald-deep, var(--mj-brand)); font-weight: 600;
@@ -413,7 +413,7 @@ html.dark .lrn-hub-gateway {
 .lrn-empty, .lrn-empty-state { color: var(--majalis-ink-soft); text-align: center; padding: 2rem 1rem; font-size: .9rem; }
 
 /* صفحة تصنيف واحد */
-.lrn-breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: .3rem; font-size: .8rem; color: var(--majalis-ink-soft); margin-bottom: 1rem; }
+.lrn-breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: .3rem; font-size: var(--text-caption); color: var(--majalis-ink-soft); margin-bottom: 1rem; }
 .lrn-breadcrumb a { color: var(--majalis-emerald-deep, var(--mj-brand)); text-decoration: none; }
 .lrn-breadcrumb span { display: inline-flex; align-items: center; gap: .3rem; }
 .lrn-back-link { display: inline-block; margin-top: 1rem; color: var(--majalis-emerald-deep, var(--mj-brand)); text-decoration: none; }
@@ -431,7 +431,7 @@ html.dark .lrn-hub-gateway {
 .lrn-start-here__card:hover { border-color: var(--majalis-emerald, var(--mj-brand)); }
 .lrn-start-here__num {
   width: 26px; height: 26px; flex-shrink: 0; border-radius: 50%; background: var(--majalis-emerald-deep, var(--mj-brand)); color: #fff;
-  display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; font-size: var(--text-caption); font-weight: 800;
 }
 
 .lrn-subcat-grid { display: flex; flex-wrap: wrap; gap: .5rem; }
@@ -450,7 +450,7 @@ html.dark .lrn-hub-gateway {
 }
 .lrn-series-card:hover, .lrn-lesson-card:hover { border-color: var(--majalis-emerald, var(--mj-brand)); box-shadow: 0 2px 12px rgba(22,101,52,.08); }
 .lrn-series-card h3, .lrn-lesson-card h3 { font-size: .92rem; font-weight: 700; margin: 0 0 .3rem; color: var(--majalis-ink); }
-.lrn-series-card p, .lrn-lesson-card p { font-size: .8rem; color: var(--majalis-ink-soft); margin: 0; line-height: 1.5; }
+.lrn-series-card p, .lrn-lesson-card p { font-size: var(--text-caption); color: var(--majalis-ink-soft); margin: 0; line-height: 1.5; }
 
 /* صفحة سلسلة */
 .lrn-series-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .6rem; }
@@ -464,7 +464,7 @@ html.dark .lrn-hub-gateway {
 }
 .lrn-series-step__link { flex: 1; text-decoration: none; display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
 .lrn-series-step__title { font-weight: 700; font-size: .9rem; color: var(--majalis-ink); }
-.lrn-series-step__desc { font-size: .78rem; color: var(--majalis-ink-soft); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lrn-series-step__desc { font-size: var(--text-caption); color: var(--majalis-ink-soft); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .lrn-series-step__status { color: var(--majalis-emerald, var(--mj-brand)); flex-shrink: 0; }
 
 /* صفحة درس */
@@ -484,7 +484,7 @@ html.dark .lrn-hub-gateway {
 .lrn-lesson-report { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--majalis-line, #e5e7eb); }
 .lrn-lesson-report__btn {
   display: inline-flex; align-items: center; gap: .4rem; background: none; border: 1px solid var(--majalis-line, #e5e7eb);
-  border-radius: .5rem; padding: .5rem .9rem; font-size: .8rem; color: var(--majalis-ink-soft); cursor: pointer; font-family: inherit;
+  border-radius: .5rem; padding: .5rem .9rem; font-size: var(--text-caption); color: var(--majalis-ink-soft); cursor: pointer; font-family: inherit;
 }
 .lrn-lesson-report__btn:hover { border-color: var(--msk-red, #C1595A); color: var(--msk-red, #C1595A); }
 .lrn-lesson-report__sent { font-size: .85rem; color: var(--majalis-emerald-deep, var(--mj-brand)); }

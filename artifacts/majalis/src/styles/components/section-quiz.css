@@ -58,10 +58,10 @@
 .sq-reveal-btn:hover { background: var(--mj-brand); }
 
 .sq-answer { display: flex; gap: .5rem; align-items: flex-start; margin-bottom: .4rem; flex-wrap: wrap; }
-.sq-answer-label { font-size: .8rem; font-weight: 700; color: var(--ds-emerald, var(--mj-brand)); white-space: nowrap; padding-top: .05rem; }
+.sq-answer-label { font-size: var(--text-caption); font-weight: 700; color: var(--ds-emerald, var(--mj-brand)); white-space: nowrap; padding-top: .05rem; }
 .sq-answer-text { font-size: .9rem; color: var(--ds-ink, #1C1C1C); font-weight: 500; line-height: 1.5; }
 
-.sq-hint { font-size: .8rem; color: var(--ds-ink-soft, #5A5A5A); margin: .3rem 0 .6rem; font-style: normal; }
+.sq-hint { font-size: var(--text-caption); color: var(--ds-ink-soft, #5A5A5A); margin: .3rem 0 .6rem; font-style: normal; }
 
 .sq-score-btns { display: flex; gap: .6rem; margin-top: .7rem; flex-wrap: wrap; }
 .sq-btn {
@@ -74,7 +74,7 @@
 .sq-btn--wrong   { background: #fee2e2; color: #dc2626; border-color: #dc2626; }
 .sq-btn--wrong:hover { background: #fecaca; }
 
-.sq-score-badge { display: inline-block; font-size: .78rem; font-weight: 700; padding: .25rem .7rem; border-radius: var(--ds-radius-full); margin-top: .5rem; }
+.sq-score-badge { display: inline-block; font-size: var(--text-caption); font-weight: 700; padding: .25rem .7rem; border-radius: var(--ds-radius-full); margin-top: .5rem; }
 .sq-score-badge--correct { background: var(--color-success-bg); color: var(--color-success-fg); }
 .sq-score-badge--wrong   { background: #fee2e2; color: #dc2626; }
 

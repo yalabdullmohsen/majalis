@@ -31,7 +31,7 @@
 .rq-hero__badge {
   display: inline-block; margin-bottom: .85rem;
   padding: .3rem .9rem; border-radius: var(--ds-radius-full);
-  background: rgba(255,255,255,.12); font-size: .8rem;
+  background: rgba(255,255,255,.12); font-size: var(--text-caption);
 }
 .rq-hero__title { font-size: 2.1rem; font-weight: 800; margin: 0 0 .6rem; }
 .rq-hero__sub   { font-size: var(--ds-text-base); opacity: .82; margin: 0 0 1.2rem; line-height: 1.7; }
@@ -77,10 +77,10 @@
   background: #1c2e3a;
 }
 .rq-card__title { font-size: .95rem; font-weight: 700; color: var(--clr-text-1); flex: 1; }
-.rq-chevron { font-size: .7rem; color: var(--clr-text-2); flex-shrink: 0; }
+.rq-chevron { font-size: var(--text-caption); color: var(--clr-text-2); flex-shrink: 0; }
 .rq-card__body { padding: 1rem 1.25rem 1.25rem; border-top: 1px solid var(--clr-divider); }
 .rq-card__text  { font-size: .92rem; line-height: 1.8; color: var(--clr-text-1); margin: 0 0 .5rem; }
-.rq-card__source { font-size: .8rem; color: #1c2e3a; font-weight: 600; margin: 0; }
+.rq-card__source { font-size: var(--text-caption); color: #1c2e3a; font-weight: 600; margin: 0; }
 
 /* Aqwal grid */
 .rq-aqwal-grid {
@@ -103,7 +103,7 @@
 .rq-muhasaba-item { display: flex; gap: .9rem; align-items: flex-start; }
 .rq-muhasaba-num {
   width: 1.9rem; height: 1.9rem; flex-shrink: 0; border-radius: 50%;
-  background: #1c2e3a; color: #fff; font-size: .8rem; font-weight: 700;
+  background: #1c2e3a; color: #fff; font-size: var(--text-caption); font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
 .rq-muhasaba-text { font-size: .93rem; line-height: 1.7; color: var(--clr-text-1); margin: 0; }
@@ -122,7 +122,7 @@
 }
 .rq-musab-title  { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .5rem; }
 .rq-musab-text   { font-size: .9rem; line-height: 1.75; color: var(--clr-text-2); margin: 0 0 .4rem; }
-.rq-musab-source { font-size: .8rem; color: #1c2e3a; font-weight: 500; margin: 0; }
+.rq-musab-source { font-size: var(--text-caption); color: #1c2e3a; font-weight: 500; margin: 0; }
 
 /* Zuhd definition */
 .rq-zuhd-def { display: flex; flex-direction: column; gap: var(--ds-space-4); }

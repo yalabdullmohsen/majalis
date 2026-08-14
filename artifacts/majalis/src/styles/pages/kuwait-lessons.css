@@ -108,7 +108,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--color-success-fg);
   background: var(--color-success-bg);
@@ -124,7 +124,7 @@
   margin: 0 0 0.35rem;
 }
 .kuwait-lessons-feed-note {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--msk-text-2, var(--mj-ink-2));
   margin-bottom: 1rem;
 }
@@ -145,7 +145,7 @@
 .kuwait-lessons-attribution a { color: var(--majalis-emerald-deep); }
 .kuwait-lessons-sheikhs-section { margin-bottom: 2rem; }
 .kuwait-lessons-footer-note {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--msk-text-2, var(--mj-ink-2));
   padding: 0.75rem 1rem;
   border: 1px solid var(--msk-border, var(--mj-hairline));
@@ -212,7 +212,7 @@
   line-height: 1.4;
 }
 .sheikh-card__link {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--majalis-emerald-deep);
 }

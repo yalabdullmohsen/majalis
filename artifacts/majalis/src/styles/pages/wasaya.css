@@ -14,7 +14,7 @@
 .wn-hero__badge {
   display: inline-block; margin-bottom: .85rem;
   padding: .3rem .9rem; border-radius: var(--ds-radius-full);
-  background: rgba(255,255,255,.12); font-size: .8rem;
+  background: rgba(255,255,255,.12); font-size: var(--text-caption);
 }
 .wn-hero__title { font-size: 2.1rem; font-weight: 800; margin: 0 0 .6rem; }
 .wn-hero__sub   { font-size: var(--ds-text-base); opacity: .82; margin: 0 0 1.2rem; line-height: 1.7; }
@@ -106,18 +106,18 @@
 .wn-card__left { display: flex; align-items: center; gap: .75rem; flex: 1; }
 .wn-card__num {
   width: 1.8rem; height: 1.8rem; flex-shrink: 0; border-radius: 50%;
-  background: #78610a; color: #fff; font-size: .8rem; font-weight: 700;
+  background: #78610a; color: #fff; font-size: var(--text-caption); font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
 .wn-card__title { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); }
 .wn-card__right { display: flex; align-items: center; gap: .5rem; flex-shrink: 0; }
 .wn-card__cat {
-  font-size: .75rem; padding: .15rem .55rem; border-radius: var(--ds-radius-full);
+  font-size: var(--text-caption); padding: .15rem .55rem; border-radius: var(--ds-radius-full);
   font-weight: 600; white-space: nowrap;
   background: var(--wn-cat-bg, rgba(31,77,58,.1));
   color: var(--wn-cat-color, var(--mj-brand));
 }
-.wn-chevron { font-size: .7rem; color: var(--clr-text-2); }
+.wn-chevron { font-size: var(--text-caption); color: var(--clr-text-2); }
 .wn-card__body { padding: 1rem 1.25rem 1.25rem; border-top: 1px solid var(--clr-divider); }
 
 /* Hadith block */
@@ -127,7 +127,7 @@
   margin: 0 0 .6rem; font-style: normal;
 }
 .wn-hadith--sm { font-size: .9rem; margin: .4rem 0 .5rem; }
-.wn-source { font-size: .8rem; color: #78610a; font-weight: 600; margin: 0 0 .6rem; }
+.wn-source { font-size: var(--text-caption); color: #78610a; font-weight: 600; margin: 0 0 .6rem; }
 .wn-benefit {
   background: #fef9ec; border: 1px solid #e8d676; border-radius: .5rem;
   padding: .65rem .9rem; font-size: .87rem; line-height: 1.65; color: #5a490a;
@@ -167,10 +167,10 @@
 .wn-cat--tawhid   { --wn-cat-color: var(--brand, var(--mj-brand)); --wn-cat-bg: rgba(124,58,237,.1); }
 .wn-cat--muamalat { --wn-cat-color: var(--mj-brand); --wn-cat-bg: rgba(23,61,53,.10); }
 .wn-cat--hayah    { --wn-cat-color: var(--mj-brand); --wn-cat-bg: rgba(15,118,110,.1); }
-.wn-pick-cat   { font-size: .8rem; font-weight: 700; margin-bottom: .3rem; color: var(--wn-cat-color, var(--mj-brand)); }
+.wn-pick-cat   { font-size: var(--text-caption); font-weight: 700; margin-bottom: .3rem; color: var(--wn-cat-color, var(--mj-brand)); }
 .wn-pick-title { font-size: .93rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .4rem; }
 .wn-pick-text  { font-size: .85rem; line-height: 1.7; color: var(--clr-text-2); margin: 0 0 .4rem; }
-.wn-pick-source { font-size: .78rem; color: #78610a; font-weight: 600; }
+.wn-pick-source { font-size: var(--text-caption); color: #78610a; font-weight: 600; }
 
 /* Amal list */
 .wn-amal-list { display: flex; flex-direction: column; gap: .85rem; margin-bottom: 1.5rem; }

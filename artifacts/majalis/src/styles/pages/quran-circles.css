@@ -13,7 +13,7 @@
 .qc-hero__eyebrow {
   margin: 0;
   color: var(--majalis-emerald-deep, var(--mj-brand-deep));
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
 }
 
@@ -79,7 +79,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: #666;
 }
 
@@ -143,7 +143,7 @@
 }
 
 .qc-card__badges span {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   padding: 0.15rem 0.45rem;
   border-radius: 999px;

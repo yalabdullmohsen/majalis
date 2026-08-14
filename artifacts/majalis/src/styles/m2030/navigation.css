@@ -72,7 +72,7 @@ header.navbar-v3,
 }
 
 .top-section-bar__soon-badge {
-  font-size: 0.58rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.08rem 0.35rem;
   border-radius: var(--mj-r-pill);
@@ -114,12 +114,12 @@ header.navbar-v3,
 }
 
 .bottom-nav__tab-label {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 600;
 }
 
 .bottom-nav__tab.is-soon .bottom-nav__tab-label {
-  font-size: 0.62rem;
+  font-size: var(--text-caption);
 }
 
 .bottom-sheet {
@@ -136,7 +136,7 @@ header.navbar-v3,
 
 .bottom-sheet__section-label {
   color: var(--text-meta) !important;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   letter-spacing: 0.03em;
 }
 

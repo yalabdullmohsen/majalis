@@ -180,7 +180,7 @@ button.vault-item-card__title {
   border-radius: 999px;
   background: var(--ds-line-color);
   color: var(--majalis-ink-soft);
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   font-weight: 700;
 }
 .vault-tab--active .vault-tab__count {
@@ -213,15 +213,15 @@ button.vault-item-card__title {
   text-overflow: ellipsis;
 }
 .vault-item-card__type {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   background: var(--ds-emerald-soft);
   padding: 0.1rem 0.5rem;
   border-radius: 999px;
 }
 .vault-item-card__date-col { display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; }
-.vault-item-card__date { font-size: 0.75rem; color: var(--majalis-ink-soft); white-space: nowrap; }
-.vault-item-card__link { font-size: 0.75rem; color: var(--ds-emerald); text-decoration: none; }
+.vault-item-card__date { font-size: var(--text-caption); color: var(--majalis-ink-soft); white-space: nowrap; }
+.vault-item-card__link { font-size: var(--text-caption); color: var(--ds-emerald); text-decoration: none; }
 .vault-item-card__link:hover { text-decoration: underline; }
 
 /* Buttons */
@@ -250,7 +250,7 @@ button.vault-item-card__title {
   color: var(--majalis-ink-soft);
 }
 .vault-btn--ghost:hover { border-color: var(--ds-emerald); color: var(--ds-emerald); }
-.vault-btn--sm { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
+.vault-btn--sm { padding: 0.35rem 0.75rem; font-size: var(--text-caption); }
 
 /* Empty state */
 .vault-empty {
@@ -291,12 +291,12 @@ button.vault-item-card__title {
   justify-content: space-between;
   gap: 0.5rem;
 }
-.vault-note-card__date { font-size: 0.75rem; color: var(--majalis-ink-soft); }
+.vault-note-card__date { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 .vault-note-card__actions { display: flex; gap: 0.5rem; }
 .vault-note-card__action {
   background: none;
   border: none;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--ds-emerald);
   cursor: pointer;
   padding: 0.2rem 0.4rem;

@@ -77,7 +77,7 @@
   border: 1px solid var(--majalis-line, #e5e7eb);
   background: transparent;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft, var(--mj-ink-2));
   cursor: pointer;
   white-space: nowrap;
@@ -131,12 +131,12 @@
 
 .cat-admin__needs-list p {
   margin: 0.25rem 0 0;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft, var(--mj-ink-2));
 }
 
 .cat-admin__hint {
-  font-size: 0.75rem !important;
+  font-size: var(--text-caption) !important;
   color: #92400E !important;
 }
 
@@ -148,7 +148,7 @@
   gap: 0.5rem;
   margin-top: 1rem;
   padding: 0.65rem 0;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft, var(--mj-ink-2));
   border-top: 1px solid var(--majalis-line, #e5e7eb);
 }
@@ -219,7 +219,7 @@
   flex-wrap: wrap;
   gap: 0.3rem 0.5rem;
   align-items: center;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft, var(--mj-ink-2));
 }
 
@@ -245,7 +245,7 @@
 }
 
 .cat-status-chip > span[aria-hidden="true"] {
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   line-height: 1;
 }
 
@@ -369,7 +369,7 @@ html.dark .cat-node__menu {
 
   .cat-admin__stats {
     gap: 0.5rem 0.85rem;
-    font-size: 0.78rem;
+    font-size: var(--text-caption);
   }
 
   .cat-admin {

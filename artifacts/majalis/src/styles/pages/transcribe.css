@@ -38,7 +38,7 @@
   border-radius: 9999px;
   background: var(--majalis-emerald);
   padding: .125rem .5rem;
-  font-size: .75rem;
+  font-size: var(--text-caption);
   color: #fff;
 }
 .trp-root {

@@ -86,7 +86,7 @@
 
 .hus-block__title {
   margin: 0 0 0.35rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   opacity: 0.75;
 }
@@ -124,7 +124,7 @@
   border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 14%, transparent);
   background: transparent;
   font: inherit;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   cursor: pointer;
 }
 
@@ -184,7 +184,7 @@
 }
 
 .hus-hit span {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   opacity: 0.8;
   line-height: 1.45;
 }

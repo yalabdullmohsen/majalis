@@ -204,7 +204,7 @@
   justify-content: space-between;
   gap: var(--ds-space-4);
   color: rgba(250, 245, 234, 0.78);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   margin-bottom: 1rem;
 }
@@ -366,7 +366,7 @@
   border-radius: 999px;
   background: var(--majalis-parchment-deep);
   color: var(--majalis-brass-deep);
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   padding: 0.15rem 0.55rem;
 }
@@ -693,7 +693,7 @@
 }
 
 .home-quick-link span {
-  font-size: 0.73rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--majalis-brass-deep);
   line-height: 1.3;
@@ -772,7 +772,7 @@
 }
 
 .home-prayer-rank-ruling {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft, #6b7280);
   margin: 0;
 }
@@ -786,7 +786,7 @@
   background: rgba(154, 109, 26, 0.18);
   border: 1px solid rgba(154, 109, 26, 0.35);
   color: #f0c96b;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: normal;
   text-transform: uppercase;
@@ -807,7 +807,7 @@
 }
 
 .home-hero-stat-label {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: rgba(255, 255, 255, 0.70);
   letter-spacing: normal;
@@ -871,7 +871,7 @@
 }
 
 .home-daily-meta {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--msk-text-2, #5C5C56);
   margin: 0.2rem 0;
 }

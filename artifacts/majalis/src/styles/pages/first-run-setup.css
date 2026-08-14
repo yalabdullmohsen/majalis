@@ -90,7 +90,7 @@
 .frs-choice span {
   display: block;
   margin-top: 0.15rem;
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   color: var(--mj-muted, #5a6b60);
 }
 
@@ -120,7 +120,7 @@
   display: block;
   margin-top: 0.2rem;
   font-style: normal;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--mj-muted, #5a6b60);
 }
 
@@ -132,7 +132,7 @@
 
 .frs-toggle-hint {
   margin: 0.2rem 0 0;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--mj-muted, #5a6b60);
 }
 

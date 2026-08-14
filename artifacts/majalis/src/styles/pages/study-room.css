@@ -131,7 +131,7 @@
   border-radius: var(--ds-radius, 0.5rem);
 }
 .sr-stats__item strong { font-size: 1.4rem; font-weight: 800; color: var(--ds-emerald-deep); }
-.sr-stats__item span { font-size: 0.72rem; color: var(--majalis-ink-soft); text-align: center; }
+.sr-stats__item span { font-size: var(--text-caption); color: var(--majalis-ink-soft); text-align: center; }
 
 .sr-history__title {
   font-size: 0.85rem;
@@ -159,7 +159,7 @@
   min-width: 36px;
 }
 .sr-history__goal { flex: 1; color: var(--majalis-ink); }
-.sr-history__date { flex-shrink: 0; color: var(--majalis-ink-soft); font-size: 0.75rem; }
+.sr-history__date { flex-shrink: 0; color: var(--majalis-ink-soft); font-size: var(--text-caption); }
 .sr-login-hint {
   text-align: center;
   font-size: 0.88rem;

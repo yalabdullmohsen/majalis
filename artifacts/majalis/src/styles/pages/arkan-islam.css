@@ -59,7 +59,7 @@
 .arkan-hero__icon-btn:hover { background: rgba(255,255,255,0.2); }
 .arkan-hero__icon-btn.is-active { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.5); }
 .arkan-hero__icon-emoji { font-size: var(--ds-text-2xl); line-height: 1; }
-.arkan-hero__icon-num { font-size: 0.68rem; font-weight: 700; }
+.arkan-hero__icon-num { font-size: var(--text-caption); font-weight: 700; }
 
 /* List */
 .arkan-list {
@@ -95,7 +95,7 @@
 .arkan-card__emoji { font-size: 2rem; flex-shrink: 0; line-height: 1; }
 .arkan-card__info { flex: 1; text-align: end; }
 .arkan-card__num {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--mj-brand);
   font-weight: 700;
   text-transform: uppercase;
@@ -166,7 +166,7 @@
   letter-spacing: 0;
 }
 .arkan-dalil__ref {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: #497061;
   font-weight: 600;
 }
@@ -179,7 +179,7 @@
   gap: 0.2rem;
 }
 .arkan-detail__label {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--mj-brand-deep);
 }
@@ -211,7 +211,7 @@
   border: none;
 }
 .arkan-scholar__name {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--brand, var(--mj-brand));
   font-weight: 700;
 }

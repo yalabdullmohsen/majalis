@@ -11,7 +11,7 @@
 .dq-hero__badge {
   display: inline-block; background: rgba(255,255,255,.12);
   border: 1px solid rgba(255,255,255,.25); border-radius: 2rem;
-  padding: .3rem .9rem; font-size: .75rem; font-weight: 600; margin-bottom: .8rem; color: #fff;
+  padding: .3rem .9rem; font-size: var(--text-caption); font-weight: 600; margin-bottom: .8rem; color: #fff;
 }
 .dq-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: #fff; }
 .dq-hero__sub   { font-size: .9rem; opacity: .88; margin: 0 0 1.4rem; line-height: 1.6; color: #fff; }
@@ -20,7 +20,7 @@
   border-radius: .8rem; padding: 1rem 1.2rem; max-width: 540px; margin: 0 auto;
 }
 .dq-hero-ayah__text { font-family: var(--font-quran,"Scheherazade New",serif); font-size: 1.1rem; line-height: 2.1; color: #fff; margin: 0 0 .3rem; }
-.dq-hero-ayah__ref  { font-size: .72rem; opacity: .7; color: #fff; font-style: normal; }
+.dq-hero-ayah__ref  { font-size: var(--text-caption); opacity: .7; color: #fff; font-style: normal; }
 
 /* body */
 .dq-body { padding: 1.25rem 1rem; }
@@ -37,7 +37,7 @@
 .dq-cats { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .75rem; }
 .dq-cat-btn {
   padding: .35rem .8rem; border: 1.5px solid #DBEAFE; border-radius: 2rem;
-  background: #fff; font-size: .75rem; font-weight: 600; color: var(--mj-ink-2);
+  background: #fff; font-size: var(--text-caption); font-weight: 600; color: var(--mj-ink-2);
   cursor: pointer; font-family: inherit; transition: all .15s;
 }
 .dq-cat-btn--active { background: #1E40AF; border-color: #1E40AF; color: #fff; }
@@ -86,7 +86,7 @@
   border-inline-end: 3px solid #1E40AF; border-radius: .65rem;
   padding: .7rem .9rem; margin-bottom: .6rem;
 }
-.dq-context-box__label { display: block; font-size: .7rem; font-weight: 700; color: #1E40AF; margin-bottom: .3rem; }
+.dq-context-box__label { display: block; font-size: var(--text-caption); font-weight: 700; color: #1E40AF; margin-bottom: .3rem; }
 .dq-context-box__text  { font-size: .82rem; color: #1e3a5f; line-height: 1.65; margin: 0; }
 .dq-all-tags { display: flex; flex-wrap: wrap; gap: .3rem; }
 
@@ -107,7 +107,7 @@
   background: #fff; border: 1px solid #DBEAFE; border-radius: .6rem; padding: .55rem .7rem;
 }
 .dq-adab-item__icon { font-size: var(--ds-text-base); flex-shrink: 0; }
-.dq-adab-item__text { font-size: .78rem; color: var(--mj-ink-2); line-height: 1.5; }
+.dq-adab-item__text { font-size: var(--text-caption); color: var(--mj-ink-2); line-height: 1.5; }
 
 /* related */
 .dq-related { margin-top: 2.5rem; }

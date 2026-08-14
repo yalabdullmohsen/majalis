@@ -42,7 +42,7 @@
 .spc-channel-body   { padding: var(--ds-space-4); }
 .spc-channel-name   { font-weight: 700; font-size: 0.95rem; color: var(--majalis-ink, #EDE9DD); margin-bottom: 0.75rem; }
 .spc-channel-links  { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
-.spc-channel-link   { display: inline-block; padding: 0.3rem 0.75rem; background: rgba(255,255,255,0.07); color: var(--majalis-ink-soft, #C9C5B8); border-radius: var(--ds-radius-sm); font-size: 0.78rem; font-weight: 600; text-decoration: none; border: 1px solid rgba(255,255,255,0.12); transition: background 0.15s; }
+.spc-channel-link   { display: inline-block; padding: 0.3rem 0.75rem; background: rgba(255,255,255,0.07); color: var(--majalis-ink-soft, #C9C5B8); border-radius: var(--ds-radius-sm); font-size: var(--text-caption); font-weight: 600; text-decoration: none; border: 1px solid rgba(255,255,255,0.12); transition: background 0.15s; }
 .spc-channel-link:hover { background: rgba(255,255,255,0.12); }
 
 /* ── ScienceCard (sc-card-*) ─────────────────────────────────────────────────── */
@@ -54,7 +54,7 @@
 }
 
 .sc-card__title { font-weight: 700; color: var(--majalis-ink); font-size: var(--ds-text-base); line-height: 1.35; margin-bottom: .25rem; }
-.sc-card__desc  { font-size: .75rem; color: var(--majalis-ink-soft); line-height: 1.6; }
+.sc-card__desc  { font-size: var(--text-caption); color: var(--majalis-ink-soft); line-height: 1.6; }
 
 .sc-card:hover .sc-card__cta { color: var(--majalis-emerald); opacity: 1; }
 
@@ -79,8 +79,8 @@
 
 .streak-number--active { font-size: var(--ds-text-3xl); font-weight: 700; color: var(--majalis-emerald); }
 
-.streak-label--active { font-size: .75rem; color: var(--majalis-emerald); margin-top: .25rem; }
-.streak-label { font-size: .75rem; color: var(--majalis-ink-soft); margin-top: .25rem; }
+.streak-label--active { font-size: var(--text-caption); color: var(--majalis-emerald); margin-top: .25rem; }
+.streak-label { font-size: var(--text-caption); color: var(--majalis-ink-soft); margin-top: .25rem; }
 
 /* ── RelatedKnowledge/KRI → styles/components/related-knowledge.css ── */
 

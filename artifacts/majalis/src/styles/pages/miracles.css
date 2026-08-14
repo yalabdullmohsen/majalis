@@ -34,7 +34,7 @@
 .miracle-item__cat-badge {
   padding: 0.15rem 0.6rem;
   border-radius: var(--ds-radius-xl);
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   background: color-mix(in srgb, var(--mk-accent, var(--mj-ink-2)) 25%, transparent);
   color: var(--mk-accent, var(--mj-ink-2));
@@ -43,7 +43,7 @@
 .miracle-item__src-badge {
   padding: 0.15rem 0.6rem;
   border-radius: var(--ds-radius-xl);
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   background: rgba(255,255,255,0.15);
   color: #fff;
@@ -66,7 +66,7 @@
 .miracle-item__body { font-size: var(--ds-text-sm); line-height: 1.75; flex: 1; }
 
 .miracle-item__source {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   margin-top: auto;
   padding-top: 0.5rem;

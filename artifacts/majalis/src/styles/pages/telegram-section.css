@@ -29,11 +29,11 @@
 .tgm-btn:disabled   { cursor: not-allowed; background: var(--majalis-line); color: var(--majalis-ink-soft); }
 .tgm-btn--danger    { background: #dc2626; }
 .tgm-btn--secondary { background: var(--majalis-line); color: var(--majalis-ink); }
-.tgm-btn--small     { padding: 0.3rem 0.65rem; font-size: 0.78rem; }
+.tgm-btn--small     { padding: 0.3rem 0.65rem; font-size: var(--text-caption); }
 .tgm-badges-row     { display: flex; gap: var(--ds-space-3); flex-wrap: wrap; }
 .tgm-status-grid    { display: grid; gap: var(--ds-space-4); }
 .tgm-webhook-row    { display: flex; gap: var(--ds-space-2); margin-bottom: 0.75rem; }
-.tgm-webhook-input  { flex: 1; padding: 0.4rem 0.6rem; font-size: 0.8rem; border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); background: var(--majalis-parchment); color: var(--majalis-ink); font-family: monospace; }
+.tgm-webhook-input  { flex: 1; padding: 0.4rem 0.6rem; font-size: var(--text-caption); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); background: var(--majalis-parchment); color: var(--majalis-ink); font-family: monospace; }
 .tgm-btn-group      { display: flex; gap: var(--ds-space-2); }
 .tgm-ch-add-row     { display: flex; gap: var(--ds-space-2); }
 .tgm-ch-input       { flex: 1; padding: 0.4rem 0.6rem; font-size: var(--ds-text-sm); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); background: var(--majalis-parchment); color: var(--majalis-ink); }
@@ -47,7 +47,7 @@
 .tgm-ch-meta        { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); margin-top: 0.2rem; display: flex; gap: var(--ds-space-4); flex-wrap: wrap; }
 .tgm-ch-actions     { display: flex; gap: var(--ds-space-2); }
 .tgm-filters-row    { display: flex; gap: var(--ds-space-3); align-items: center; flex-wrap: wrap; }
-.tgm-filter-btn          { padding: 0.3rem 0.75rem; border-radius: var(--ds-radius-full); border: none; cursor: pointer; font-size: 0.8rem; font-weight: 600; background: var(--majalis-line); color: var(--majalis-ink); font-family: inherit; }
+.tgm-filter-btn          { padding: 0.3rem 0.75rem; border-radius: var(--ds-radius-full); border: none; cursor: pointer; font-size: var(--text-caption); font-weight: 600; background: var(--majalis-line); color: var(--majalis-ink); font-family: inherit; }
 .tgm-filter-btn--active  { background: var(--majalis-emerald-deep); color: #fff; }
 .tgm-lessons-list   { display: grid; gap: var(--ds-space-3); }
 .tgm-lesson-card             { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: 0.625rem; padding: 0.875rem 1rem; display: grid; gap: var(--ds-space-2); }
@@ -55,10 +55,10 @@
 .tgm-lesson-header  { display: flex; gap: var(--ds-space-3); align-items: flex-start; }
 .tgm-lesson-info    { flex: 1; min-width: 0; }
 .tgm-lesson-title   { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem; }
-.tgm-lesson-meta    { font-size: 0.78rem; color: var(--majalis-ink-soft); display: flex; gap: var(--ds-space-3); flex-wrap: wrap; }
-.tgm-quality-badge  { padding: 0.15rem 0.5rem; border-radius: var(--ds-radius-full); font-size: 0.72rem; font-weight: 700; flex-shrink: 0; background: var(--tgm-qb-bg); color: var(--tgm-qb-color); }
+.tgm-lesson-meta    { font-size: var(--text-caption); color: var(--majalis-ink-soft); display: flex; gap: var(--ds-space-3); flex-wrap: wrap; }
+.tgm-quality-badge  { padding: 0.15rem 0.5rem; border-radius: var(--ds-radius-full); font-size: var(--text-caption); font-weight: 700; flex-shrink: 0; background: var(--tgm-qb-bg); color: var(--tgm-qb-color); }
 .tgm-raw-source     { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); padding-inline-end: 1.5rem; }
-.tgm-expand-btn     { text-align: end; background: none; border: none; cursor: pointer; color: var(--majalis-emerald); font-size: 0.78rem; padding: 0 1.5rem; font-family: inherit; }
+.tgm-expand-btn     { text-align: end; background: none; border: none; cursor: pointer; color: var(--majalis-emerald); font-size: var(--text-caption); padding: 0 1.5rem; font-family: inherit; }
 .tgm-raw-pre        { font-size: var(--ds-text-xs); background: var(--majalis-parchment-deep); padding: var(--ds-space-2-5); border-radius: var(--ds-radius-sm); white-space: pre-wrap; word-break: break-word; margin: 0 0 0 1.5rem; max-height: 12rem; overflow: auto; direction: rtl; text-align: end; }
 .tgm-lesson-actions { display: flex; gap: var(--ds-space-2); padding-inline-end: 1.5rem; }
 .tgm-stats-grid     { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--ds-space-3); }
@@ -73,13 +73,13 @@
 .tgm-th--center     { text-align: center; }
 .tgm-td             { padding: 0.4rem 0.5rem; }
 .tgm-td--center     { text-align: center; }
-.tgm-ch-active-badge { font-size: 0.72rem; padding: 0.1rem 0.4rem; border-radius: var(--ds-radius-full); background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
-.tgm-ch-inactive-badge { font-size: 0.72rem; padding: 0.1rem 0.4rem; border-radius: var(--ds-radius-full); background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
+.tgm-ch-active-badge { font-size: var(--text-caption); padding: 0.1rem 0.4rem; border-radius: var(--ds-radius-full); background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
+.tgm-ch-inactive-badge { font-size: var(--text-caption); padding: 0.1rem 0.4rem; border-radius: var(--ds-radius-full); background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
 .tgm-grid-gap       { display: grid; gap: var(--ds-space-4); }
 .tgm-btn--auto      { margin-inline-end: auto; }
 .tgm-lesson-check   { margin-top: 3px; flex-shrink: 0; accent-color: var(--majalis-emerald); }
 .tgm-no-title       { color: var(--majalis-ink-soft); }
 .tgm-date-span      { margin-inline-end: 0.75rem; }
-.tgm-sheikh-empty   { color: var(--majalis-ink-soft); font-size: 0.8rem; }
+.tgm-sheikh-empty   { color: var(--majalis-ink-soft); font-size: var(--text-caption); }
 .tgm-tr             { border-bottom: 1px solid var(--majalis-line); }
 

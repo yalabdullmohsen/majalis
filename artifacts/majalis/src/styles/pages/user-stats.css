@@ -40,7 +40,7 @@
 .profile-identity__level-badge {
   display: inline-block;
   margin-top: 0.2rem;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.1rem 0.55rem;
   border-radius: 999px;
@@ -54,7 +54,7 @@
   color: var(--ds-emerald-deep);
   line-height: 1;
 }
-.profile-identity__streak-label { font-size: 0.72rem; color: var(--majalis-ink-soft); }
+.profile-identity__streak-label { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 
 /* ── شريط المستوى ───────────────────────────────────────────────── */
 .profile-level-bar {
@@ -71,7 +71,7 @@
   margin-bottom: 0.4rem;
 }
 .profile-level-bar__title { font-weight: 700; font-size: 0.9rem; }
-.profile-level-bar__xp { font-size: 0.72rem; color: var(--majalis-ink-soft); }
+.profile-level-bar__xp { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 .profile-level-bar__track {
   height: 8px;
   border-radius: 999px;
@@ -87,7 +87,7 @@
 .profile-level-bar__meta {
   display: flex;
   justify-content: space-between;
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
 }
 
@@ -122,12 +122,12 @@
 }
 .profile-stat-card__icon { font-size: 1.4rem; }
 .profile-stat-card__value { font-size: 1.35rem; font-weight: 800; color: var(--ds-emerald-deep); line-height: 1.1; }
-.profile-stat-card__label { font-size: 0.72rem; color: var(--majalis-ink-soft); font-weight: 600; }
-.profile-stat-card__sub { font-size: 0.65rem; color: var(--majalis-ink-soft); }
+.profile-stat-card__label { font-size: var(--text-caption); color: var(--majalis-ink-soft); font-weight: 600; }
+.profile-stat-card__sub { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 
 /* ── تحليل أداء الأسئلة ──────────────────────────────────────────── */
 .profile-quiz-perf-section { margin-bottom: 1.25rem; }
-.profile-quiz-perf__hint { font-size: 0.8rem; color: var(--majalis-ink-soft); margin: 0 0 0.5rem; }
+.profile-quiz-perf__hint { font-size: var(--text-caption); color: var(--majalis-ink-soft); margin: 0 0 0.5rem; }
 .profile-quiz-perf__hint--strong { margin-top: 0.75rem; }
 .profile-quiz-perf__list { display: flex; flex-direction: column; gap: 0.4rem; margin: 0 0 0.5rem; padding: 0; list-style: none; }
 .profile-quiz-perf__item {
@@ -142,14 +142,14 @@
 .profile-quiz-perf__item--weak { background: rgba(220, 38, 38, 0.06); border-color: rgba(220, 38, 38, 0.18); }
 .profile-quiz-perf__item--strong { background: rgba(23, 107, 87, 0.06); border-color: rgba(23, 107, 87, 0.18); }
 .profile-quiz-perf__cat { font-weight: 700; color: var(--majalis-ink); }
-.profile-quiz-perf__pct { font-size: 0.75rem; color: var(--majalis-ink-soft); }
+.profile-quiz-perf__pct { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 
 /* ── لوحة الشارات ───────────────────────────────────────────────── */
 .profile-badges-section { margin-bottom: 1.25rem; }
-.profile-badges-hint { font-size: 0.8rem; color: var(--majalis-ink-soft); margin: 0 0 0.75rem; }
+.profile-badges-hint { font-size: var(--text-caption); color: var(--majalis-ink-soft); margin: 0 0 0.75rem; }
 .profile-badges { display: flex; flex-direction: column; gap: 1rem; }
 .profile-badges__group-title {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-ink-soft);
   text-transform: uppercase;
@@ -182,9 +182,9 @@
   box-shadow: 0 2px 8px rgba(26, 107, 82, 0.12);
 }
 .profile-badge__icon { font-size: 1.5rem; line-height: 1; }
-.profile-badge__title { font-size: 0.62rem; font-weight: 700; color: var(--majalis-ink); line-height: 1.2; }
+.profile-badge__title { font-size: var(--text-caption); font-weight: 700; color: var(--majalis-ink); line-height: 1.2; }
 .profile-badge__locked {
-  font-size: 0.55rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   line-height: 1.2;
   display: none;
@@ -218,14 +218,14 @@
 }
 .profile-resume__meta { display: flex; gap: 0.4rem; align-items: center; }
 .profile-resume__type {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--majalis-ink-soft);
   background: var(--ds-line-color);
   padding: 0.1rem 0.4rem;
   border-radius: 999px;
 }
-.profile-resume__section { font-size: 0.68rem; color: var(--majalis-ink-soft); }
+.profile-resume__section { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 .profile-resume__track {
   height: 4px;
   border-radius: 999px;
@@ -234,12 +234,12 @@
   margin-top: 0.25rem;
 }
 .profile-resume__fill { height: 100%; background: var(--ds-emerald); border-radius: 999px; }
-.profile-resume__pct { font-size: 0.72rem; font-weight: 700; color: var(--ds-emerald-deep); flex-shrink: 0; }
+.profile-resume__pct { font-size: var(--text-caption); font-weight: 700; color: var(--ds-emerald-deep); flex-shrink: 0; }
 .profile-resume__del {
   background: none;
   border: none;
   color: var(--majalis-ink-soft);
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   cursor: pointer;
   padding: 0.25rem;
   border-radius: 0.25rem;
@@ -260,7 +260,7 @@
   border-radius: 999px;
   border: 1.5px solid var(--ds-line-color);
   background: var(--majalis-panel, #fff);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--majalis-ink);
   text-decoration: none;
@@ -340,7 +340,7 @@
 .home-resume__card-icon { font-size: 1.5rem; flex-shrink: 0; }
 .home-resume__card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.15rem; }
 .home-resume__card-type {
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--majalis-ink-soft);
   text-transform: uppercase;
@@ -354,7 +354,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.home-resume__card-section { font-size: 0.68rem; color: var(--majalis-ink-soft); }
+.home-resume__card-section { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 .home-resume__card-progress { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 .home-resume__card-track {
   width: 48px;
@@ -364,7 +364,7 @@
   overflow: hidden;
 }
 .home-resume__card-fill { height: 100%; background: var(--ds-emerald); border-radius: 999px; }
-.home-resume__card-pct { font-size: 0.68rem; font-weight: 700; color: var(--ds-emerald-deep); }
+.home-resume__card-pct { font-size: var(--text-caption); font-weight: 700; color: var(--ds-emerald-deep); }
 
 /* ══════════════════════════════════════════════════════════════════════
    المرحلة 2 — التعلّم الذكي: خطة التعلّم + البطاقات

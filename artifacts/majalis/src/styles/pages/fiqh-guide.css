@@ -22,7 +22,7 @@
   background: rgba(255, 255, 255, 0.14);
   border: 1px solid rgba(255, 255, 255, 0.22);
   color: #ecfdf5;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.28rem 0.9rem;
   border-radius: 999px;
@@ -142,7 +142,7 @@
 .fg-card__evidence strong {
   display: block;
   margin-bottom: 0.2rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--text-brand, var(--brand));
 }
 .fg-card__note {

@@ -34,7 +34,7 @@
 .fm-role-btn:hover { border-color: var(--ds-emerald); }
 .fm-role-btn__icon { font-size: 2.5rem; }
 .fm-role-btn__label { font-size: 1rem; font-weight: 800; color: var(--majalis-ink); }
-.fm-role-btn__sub { font-size: 0.78rem; color: var(--majalis-ink-soft); }
+.fm-role-btn__sub { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 
 .fm-section-head {
   display: flex;
@@ -59,7 +59,7 @@
 .fm-btn:hover { border-color: var(--ds-emerald); }
 .fm-btn--primary { background: var(--ds-emerald); color: #fff; border-color: var(--ds-emerald); }
 .fm-btn--primary:hover { background: var(--ds-emerald-deep); }
-.fm-btn--sm { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
+.fm-btn--sm { padding: 0.35rem 0.75rem; font-size: var(--text-caption); }
 .fm-btn--danger { border-color: #dc2626; color: #dc2626; }
 .fm-btn--danger:hover { background: #fee2e2; }
 .fm-btn:disabled { opacity: 0.45; cursor: not-allowed; }
@@ -76,7 +76,7 @@
   margin-bottom: 0.75rem;
 }
 .fm-invite-card__body { display: flex; align-items: center; gap: 0.75rem; }
-.fm-invite-card__label { font-size: 0.78rem; color: var(--majalis-ink-soft); }
+.fm-invite-card__label { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 .fm-invite-card__code {
   font-size: 1.5rem;
   font-weight: 900;
@@ -84,7 +84,7 @@
   color: var(--ds-emerald-deep);
   font-family: monospace;
 }
-.fm-invite-card__hint { font-size: 0.75rem; color: var(--majalis-ink-soft); }
+.fm-invite-card__hint { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 .fm-invite-card__actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
 
 .fm-child-card {
@@ -100,7 +100,7 @@
 .fm-child-card__avatar { font-size: 2rem; flex-shrink: 0; }
 .fm-child-card__info { flex: 1; }
 .fm-child-card__name { font-size: 0.95rem; font-weight: 700; color: var(--majalis-ink); display: block; margin-bottom: 0.3rem; }
-.fm-child-card__stats { display: flex; gap: 0.75rem; font-size: 0.8rem; color: var(--majalis-ink-soft); flex-wrap: wrap; }
+.fm-child-card__stats { display: flex; gap: 0.75rem; font-size: var(--text-caption); color: var(--majalis-ink-soft); flex-wrap: wrap; }
 
 .fm-child { }
 .fm-child__hint { font-size: 0.9rem; color: var(--majalis-ink-soft); margin-bottom: 1rem; }

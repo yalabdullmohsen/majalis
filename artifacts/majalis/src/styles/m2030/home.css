@@ -139,7 +139,7 @@
 
 .m2030-band__sub {
   margin: 0.1rem 0 0;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--text-muted);
 }
 
@@ -182,7 +182,7 @@
   border: 1px solid color-mix(in srgb, #F7FAF8 35%, transparent);
   display: grid;
   place-items: center;
-  font-size: 0.62rem;
+  font-size: var(--text-caption);
   color: color-mix(in srgb, #F7FAF8 78%, transparent);
 }
 
@@ -203,7 +203,7 @@
 
 .m2030-prayer__cta {
   margin: 0.35rem 0 0;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: color-mix(in srgb, #F7FAF8 88%, transparent);
   font-weight: 600;
 }
@@ -256,7 +256,7 @@
 }
 
 .m2030-tile__desc {
-  font-size: 0.74rem;
+  font-size: var(--text-caption);
   color: var(--text-meta);
 }
 
@@ -306,14 +306,14 @@ html.dark .m2030-feature__title {
 
 .m2030-feature__desc {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--text-muted);
   line-height: 1.5;
 }
 
 .m2030-feature__cta {
   margin-block-start: 0.15rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--brand);
 }
@@ -331,7 +331,7 @@ html.dark .m2030-feature__title {
   gap: 0.35rem;
   margin: 0.15rem auto 0;
   padding: 0.4rem 0.75rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--text);
   background: var(--surface);
   border: 1px solid var(--border-strong);

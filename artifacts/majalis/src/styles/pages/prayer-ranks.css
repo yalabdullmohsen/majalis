@@ -107,7 +107,7 @@
 }
 
 .prv-badge {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.15rem 0.45rem;
   border-radius: 0.3rem;
@@ -130,7 +130,7 @@
 
 .prv-virtue-narrator,
 .prv-virtue-source {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft, #5D726A);
 }
 

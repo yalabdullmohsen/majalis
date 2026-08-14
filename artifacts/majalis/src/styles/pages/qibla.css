@@ -84,7 +84,7 @@
 }
 
 .qibla-info-label {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--txt-muted, var(--mj-ink-2));
   text-align: center;
@@ -103,7 +103,7 @@
   align-items: center;
   gap: 0.2rem;
   margin: 0;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--txt-muted, var(--mj-ink-2));
   text-align: center;
   min-height: 2.6rem;
@@ -125,7 +125,7 @@
 }
 
 .qibla-hint {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--txt-muted, var(--mj-ink-2));
   text-align: center;
   max-width: 260px;

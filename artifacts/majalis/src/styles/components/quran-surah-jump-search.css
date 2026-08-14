@@ -208,7 +208,7 @@
 }
 
 .quran-surah-jump__meta-col span {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--mj-ink-2);
 }
 

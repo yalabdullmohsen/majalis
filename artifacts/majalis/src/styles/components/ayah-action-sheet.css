@@ -30,7 +30,7 @@
   margin-bottom: .5rem;
 }
 .ayah-sheet__meta {
-  font-size: .8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-ink-soft);
   margin: 0;
@@ -84,7 +84,7 @@
   background: color-mix(in srgb, var(--majalis-emerald-deep) 10%, transparent);
   color: var(--majalis-emerald-deep);
   font-family: inherit;
-  font-size: .8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   justify-content: center;
   cursor: pointer;
@@ -106,7 +106,7 @@
   border: 1px solid var(--majalis-line);
   background: var(--majalis-panel);
   color: var(--majalis-ink);
-  font-size: .72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   cursor: pointer;
 }
@@ -130,7 +130,7 @@
   border: none;
   background: transparent;
   color: var(--majalis-ink);
-  font-size: .72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   cursor: pointer;
 }
@@ -210,7 +210,7 @@
   padding: .25rem 0 .5rem;
 }
 .ayah-sheet__tafsir-status {
-  font-size: .8rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   margin: 0;
 }
@@ -265,7 +265,7 @@
   border: 1px solid var(--majalis-line);
   background: transparent;
   color: var(--majalis-ink-soft);
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
@@ -276,7 +276,7 @@
   color: var(--majalis-emerald-deep);
 }
 .ayah-sheet__tafsir-caution {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   line-height: 1.65;
   color: #9A5B1A;
   background: rgba(184, 148, 63, 0.12);
@@ -285,7 +285,7 @@
   margin: 0 0 0.5rem;
 }
 .ayah-sheet__tafsir-meta {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-emerald);
   margin: 0 0 0.35rem;
@@ -362,7 +362,7 @@
 .aas-reader__title span {
   display: block;
   margin-top: 0.1rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--aas-muted);
   font-weight: 600;
 }
@@ -435,7 +435,7 @@
   background: color-mix(in srgb, #fff 55%, var(--aas-cream));
   color: var(--aas-emerald);
   font: inherit;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
@@ -502,7 +502,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   background: color-mix(in srgb, var(--aas-emerald) 12%, transparent);
   color: var(--aas-emerald);
@@ -521,7 +521,7 @@
   white-space: nowrap;
 }
 .aas-reader__reciter-sub {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 500;
   opacity: 0.72;
   white-space: nowrap;
@@ -588,7 +588,7 @@
 }
 .aas-reader__edition-label em {
   font-style: normal;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--aas-muted);
 }
@@ -643,7 +643,7 @@
   color: var(--aas-emerald);
 }
 .aas-reader__edition-menu button span {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: var(--aas-muted);
 }
 .aas-reader__edition-menu button.is-active,
@@ -658,7 +658,7 @@
 
 .aas-reader__caution {
   margin: 0 1rem 0.55rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   line-height: 1.7;
   color: #7a4e14;
   background: rgba(184, 148, 63, 0.14);
@@ -858,7 +858,7 @@
   background: color-mix(in srgb, #fff 50%, var(--aas-cream));
   color: var(--aas-ink);
   font: inherit;
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   cursor: pointer;
   text-decoration: none;
@@ -1045,7 +1045,7 @@ html.dark .aas-reader__edition-menu,
   background: transparent;
   color: var(--color-mushaf-meta, #9a7b3c);
   font-family: inherit;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   text-align: center;
   cursor: pointer;
@@ -1071,7 +1071,7 @@ html.dark .aas-reader__edition-menu,
   background: transparent;
   color: var(--color-mushaf-ink, #1a1510);
   font-family: inherit;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   white-space: nowrap;
   cursor: pointer;
@@ -1166,7 +1166,7 @@ html.dark .aas-reader__edition-menu,
 
 .aas-v3__chip-meta em {
   font-style: normal;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   color: var(--color-mushaf-meta, #9a7b3c);
 }
 
@@ -1199,7 +1199,7 @@ html.dark .aas-reader__edition-menu,
 }
 
 .aas-v3__menu-row span {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   color: var(--color-mushaf-meta, #9a7b3c);
   font-weight: 500;
 }
@@ -1242,7 +1242,7 @@ html.dark .aas-reader__edition-menu,
 
 .aas-panel--v3.is-peek .aas-reader__author {
   margin-bottom: 0.35rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--color-mushaf-meta, #9a7b3c);
 }
@@ -1257,7 +1257,7 @@ html.dark .aas-reader__edition-menu,
 }
 
 .aas-panel--v3.is-expanded .aas-reader__author {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--color-mushaf-meta, #9a7b3c);
   margin-bottom: 0.5rem;
@@ -1328,7 +1328,7 @@ html.dark .aas-reader__edition-menu,
 
 @media (max-width: 360px) {
   .aas-v3__action {
-    font-size: 0.65rem;
+    font-size: var(--text-caption);
     min-height: 52px;
   }
 

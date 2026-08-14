@@ -247,7 +247,7 @@ export function AdminSiteEditBar() {
           gap: 0.4rem;
           padding: 0.55rem 0.9rem;
           border-radius: 999px;
-          font-size: 0.8rem;
+          font-size: var(--text-caption);
           font-weight: 700;
           border: none;
           cursor: pointer;
@@ -276,13 +276,13 @@ export function AdminSiteEditBar() {
           min-width: 170px;
         }
         .ase-bar__info {
-          font-size: 0.75rem;
+          font-size: var(--text-caption);
           color: #555;
           line-height: 1.5;
         }
         .ase-bar__info strong { color: var(--mj-brand-deep); }
         .ase-bar__clear {
-          font-size: 0.72rem;
+          font-size: var(--text-caption);
           color: #d32f2f;
           background: none;
           border: none;
@@ -338,7 +338,7 @@ export function AdminSiteEditBar() {
         .ase-dialog__tag {
           background: var(--mj-brand-deep);
           color: #fff;
-          font-size: 0.65rem;
+          font-size: var(--text-caption);
           font-weight: 700;
           padding: 0.2rem 0.5rem;
           border-radius: 999px;
@@ -374,7 +374,7 @@ export function AdminSiteEditBar() {
         }
         .ase-dialog__ta:focus { outline: 2px solid var(--mj-brand-deep); border-color: var(--mj-brand-deep); }
         .ase-dialog__hint {
-          font-size: 0.72rem;
+          font-size: var(--text-caption);
           color: #888;
           margin: 0;
           text-align: left;

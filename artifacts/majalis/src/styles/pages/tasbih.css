@@ -16,7 +16,7 @@
 
 .tasbih-stat span {
   color: var(--msk-text-2, var(--mj-ink-2));
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
 }
 
 .tasbih-stat strong {
@@ -227,7 +227,7 @@ html.dark .adhkar-tapper__tot {
 }
 
 .adhkar-tapper__hint {
-  font-size: 0.78rem; color: var(--txt-subdued, var(--mj-ink-2));
+  font-size: var(--text-caption); color: var(--txt-subdued, var(--mj-ink-2));
   margin: 0; text-align: center;
 }
 .adhkar-tapper__complete {

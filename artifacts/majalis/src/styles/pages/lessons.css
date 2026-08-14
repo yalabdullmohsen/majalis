@@ -181,7 +181,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--ds-space-1);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--mn-text-default);
 }
 
@@ -255,7 +255,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 0.75rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
 }
 
 .env-ok { color: var(--mj-brand); }
@@ -294,7 +294,7 @@
 .feature-status-badge--missing { background: #f1f5f9; color: #475569; }
 
 .admin-feature-status__notes {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--msk-text-2, var(--mj-ink-2));
   max-width: 14rem;
 }

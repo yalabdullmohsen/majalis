@@ -64,7 +64,7 @@
 .search-result-quran-link {
   display: inline-block;
   margin-top: 0.2rem;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: var(--clr-primary, var(--mj-brand));
   font-weight: 600;
 }

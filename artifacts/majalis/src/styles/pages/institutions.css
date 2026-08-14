@@ -50,10 +50,10 @@
   color: var(--majalis-ink);
   line-height: 1.3;
 }
-.inst-card__location { font-size: 0.78rem; color: var(--majalis-ink-soft); }
+.inst-card__location { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 .inst-card__type-badge {
   flex-shrink: 0;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
@@ -69,7 +69,7 @@
 }
 .inst-card__links { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.25rem; }
 .inst-card__link {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
   text-decoration: none;
@@ -81,7 +81,7 @@
 .inst-card__link--map { background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent); color: var(--majalis-emerald, var(--mj-brand)); }
 
 .inst-disclaimer {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   margin-top: 2rem;
   text-align: center;

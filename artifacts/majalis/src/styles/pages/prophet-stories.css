@@ -96,7 +96,7 @@
   margin: 0;
 }
 .prophets-lux-hero__note {
-  font-size: 0.76rem;
+  font-size: var(--text-caption);
   line-height: 1.75;
   color: var(--ps-on-emerald-soft);
   max-width: 520px;
@@ -234,7 +234,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   color: var(--prophet-color, var(--ps-emerald));
   font-weight: 700;
 }
@@ -254,7 +254,7 @@
 .prophet-lux-card__pbuh { font-size: var(--ds-text-xs); color: var(--ps-ink-soft); }
 .prophet-lux-card__quran {
   font-family: "Amiri Quran", "Amiri", serif;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--ps-emerald-bright);
   margin-bottom: 0.25rem;
 }
@@ -266,12 +266,12 @@
 }
 .prophet-lux-card__place {
   color: var(--ps-ink-soft);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   margin: 0 0 0.4rem;
 }
 .prophet-lux-card__bio {
   color: var(--ps-ink-soft);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   line-height: 1.6;
   margin: 0 0 0.75rem;
 }
@@ -318,7 +318,7 @@
   position: absolute;
   top: 0.4rem;
   inset-inline-end: 0.4rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.15rem 0.5rem;
   border-radius: var(--ds-radius-full);
@@ -428,7 +428,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   transition: all 0.2s;
 }
 .prophet-font-controls button:hover {
@@ -471,7 +471,7 @@
 }
 .prophet-detail-lux__hero-star { margin-bottom: 0.5rem; }
 .prophet-detail-lux__num-badge {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--mj-bg);
   background: rgba(255, 255, 255, 0.14);
   padding: 0.2rem 0.75rem;
@@ -481,7 +481,7 @@
 }
 .prophet-detail-lux__azm-badge {
   display: inline-block;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.2rem 0.7rem;
   border-radius: var(--ds-radius-full);
@@ -539,7 +539,7 @@
 }
 .prophet-fact-card__label {
   display: block;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: var(--ps-detail-muted);
   margin-bottom: 0.4rem;
   letter-spacing: normal;
@@ -645,7 +645,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   color: #fff;
   margin-top: 0.15rem;
   background: color-mix(in srgb, var(--prophet-color, var(--mj-brand-deep)) 55%, #2A8F6E);
@@ -719,7 +719,7 @@
   font-weight: 600;
 }
 .prophet-citation-card__ayahs {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--prophet-color-on-dark);
 }
 .prophet-citation-card__note {
@@ -850,7 +850,7 @@
   margin: 0 0 0.15rem;
 }
 .prophet-timeline__era {
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   color: #7A8480;
   margin: 0;
 }
@@ -1039,7 +1039,7 @@
   min-width: 0;
 }
 .prophets-seerah-bridge__eyebrow {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: normal;
   color: #C9E8D8;
@@ -1156,7 +1156,7 @@
   margin: 0;
 }
 .nb-azm-book {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--ps-emerald);
   background: color-mix(in srgb, var(--ps-emerald) 9%, transparent);
@@ -1175,7 +1175,7 @@
   color: #334155;
 }
 .nb-azm-mentions {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: #7A8480;
   margin-top: auto;
 }
@@ -1207,7 +1207,7 @@
   line-height: 1.55;
 }
 .nb-miracle-ref {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: #7A8480;
 }
 
@@ -1247,14 +1247,14 @@
 }
 .nb-table__azm {
   color: var(--ps-emerald);
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
 }
 .nb-table__count {
   font-weight: 700;
   color: var(--ps-emerald);
 }
 .nb-table-note {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   color: #7A8480;
   margin-top: 0.6rem;
   text-align: center;
@@ -1336,7 +1336,7 @@
   transition: width 0.5s ease;
 }
 .prophet-lux-card__meter-label {
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   color: #7A8480;
   white-space: nowrap;
 }
@@ -1388,7 +1388,7 @@
 }
 .prophet-detail-lux__keys-hint {
   margin: 0.75rem 0 0;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: rgba(250, 250, 248, 0.55);
   letter-spacing: 0.01em;
 }
@@ -1419,7 +1419,7 @@
   color: var(--ps-detail-soft, #D5DDD9);
   border-radius: 999px;
   padding: 0.35rem 0.85rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-family: var(--font-body);
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
@@ -1565,7 +1565,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--prophet-color);
   opacity: 0.85;
@@ -1598,7 +1598,7 @@
   align-items: center;
   gap: 0.15rem;
   margin-top: 0.35rem;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--prophet-accent, var(--prophet-color));
 }

@@ -26,9 +26,9 @@
   background: var(--ds-emerald-deep);
   border-color: var(--ds-emerald-deep);
 }
-.scholar-follow-btn--compact { padding: 0.3rem 0.7rem; font-size: 0.78rem; }
+.scholar-follow-btn--compact { padding: 0.3rem 0.7rem; font-size: var(--text-caption); }
 .scholar-follow-btn__count {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   opacity: 0.75;
   margin-inline-end: 0.2rem;
 }

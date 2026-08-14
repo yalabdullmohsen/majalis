@@ -41,7 +41,7 @@
   font-weight: 600 !important;
   font-size: 0.9rem !important;
 }
-.notif-row__sub { color: var(--elite-ink-soft, #4A5568) !important; font-size: 0.78rem !important; }
+.notif-row__sub { color: var(--elite-ink-soft, #4A5568) !important; font-size: var(--text-caption) !important; }
 /* .notif-card خلفية بيضاء ثابتة (#fff !important) — elite Cards dark غير محمّل.
    نص فاتح هنا = تباين ~1.2:1. يبقى الحبر الغامق في الوضعين. */
 html[data-theme="dark"] .notif-row__label,
@@ -75,7 +75,7 @@ html.dark .notif-row__label {
   text-align: center !important;
 }
 .notif-time__input:focus { border-color: var(--elite-forest, var(--mj-brand-deep)) !important; outline: none !important; box-shadow: 0 0 0 3px rgba(24,54,42,0.08) !important; }
-.notif-time__hint { color: #8a9a8e !important; font-size: 0.78rem !important; }
+.notif-time__hint { color: #8a9a8e !important; font-size: var(--text-caption) !important; }
 
 /* زر الاختبار */
 .notif-test-btn {
@@ -132,7 +132,7 @@ html.dark .notif-row__label {
 .nh-header__badge {
   background: rgba(255,255,255,0.2) !important;
   color: #fff !important;
-  font-size: 0.68rem !important;
+  font-size: var(--text-caption) !important;
   font-weight: 800 !important;
   min-width: 20px !important;
   height: 20px !important;
@@ -156,7 +156,7 @@ html.dark .notif-row__label {
   border: 1px solid rgba(255,255,255,0.28) !important;
   background: rgba(255,255,255,0.1) !important;
   color: rgba(255,255,255,0.88) !important;
-  font-size: 0.78rem !important;
+  font-size: var(--text-caption) !important;
   font-weight: 600 !important;
   cursor: pointer !important;
   transition: background 0.15s !important;
@@ -198,7 +198,7 @@ html.dark .notif-row__label {
   background: none !important;
   border: none !important;
   cursor: pointer !important;
-  font-size: 0.75rem !important;
+  font-size: var(--text-caption) !important;
   line-height: 1 !important;
   padding: 0.25rem !important;
 }
@@ -264,8 +264,8 @@ html.dark .notif-row__label {
   font-size: 0.875rem !important;
 }
 .nh-row--read .nh-row__title { color: var(--elite-ink-soft, #4A5568) !important; font-weight: 400 !important; }
-.nh-row__body-text { color: var(--elite-ink-soft, #4A5568) !important; font-size: 0.78rem !important; margin-top: 0.18rem !important; }
-.nh-row__meta { color: #8a9a8e !important; font-size: 0.7rem !important; margin-top: 0.22rem !important; }
+.nh-row__body-text { color: var(--elite-ink-soft, #4A5568) !important; font-size: var(--text-caption) !important; margin-top: 0.18rem !important; }
+.nh-row__meta { color: #8a9a8e !important; font-size: var(--text-caption) !important; margin-top: 0.22rem !important; }
 
 .nh-row__actions { opacity: 0 !important; transition: opacity 0.15s !important; display: flex !important; gap: 0.3rem !important; align-items: center !important; }
 .nh-row:hover .nh-row__actions { opacity: 1 !important; }
@@ -340,7 +340,7 @@ html.dark .notif-row__label {
   background: var(--mj-emerald-950, var(--mj-brand-deep));
   color: #fff;
   border-radius: 999px;
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
@@ -354,7 +354,7 @@ html.dark .notif-row__label {
   border: 1px solid color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 20%, transparent);
   background: #fff;
   color: var(--mj-emerald-text, var(--mj-brand-deep));
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
@@ -395,7 +395,7 @@ html.dark .notif-row__label {
   border: none;
   color: var(--majalis-ink-soft, var(--mj-ink-2));
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   padding: 0.4rem;
 }
 
@@ -426,7 +426,7 @@ html.dark .notif-row__label {
 /* ── رأس التجميع اليومي ── */
 .nh-day-group__label {
   padding: 0.6rem 1rem 0.3rem;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-ink-soft, var(--mj-ink-2));
   background: var(--mj-ivory-50, var(--mj-bg));
@@ -482,8 +482,8 @@ html.dark .notif-row__label {
 .nh-row__body { flex: 1; min-width: 0; }
 .nh-row__title { font-size: 0.875rem; font-weight: 700; color: var(--mj-emerald-text, var(--mj-brand-deep)); margin-bottom: 0.15rem; }
 .nh-row--read .nh-row__title { color: var(--majalis-ink-soft, var(--mj-ink-2)); font-weight: 500; }
-.nh-row__body-text { font-size: 0.78rem; color: var(--majalis-ink-soft, var(--mj-ink-2)); margin-bottom: 0.25rem; line-height: 1.6; }
-.nh-row__meta { font-size: 0.68rem; color: var(--majalis-ink-soft, var(--mj-ink-2)); font-variant-numeric: tabular-nums; }
+.nh-row__body-text { font-size: var(--text-caption); color: var(--majalis-ink-soft, var(--mj-ink-2)); margin-bottom: 0.25rem; line-height: 1.6; }
+.nh-row__meta { font-size: var(--text-caption); color: var(--majalis-ink-soft, var(--mj-ink-2)); font-variant-numeric: tabular-nums; }
 
 .nh-row__unread {
   width: 8px;
@@ -542,7 +542,7 @@ html.dark .notif-row__label {
   margin-bottom: 0.2rem;
 }
 .nh-empty__msg { color: var(--mj-emerald-text, var(--mj-brand-deep)); font-weight: 700; font-size: 0.9rem; margin: 0; }
-.nh-empty__sub { color: var(--majalis-ink-soft, var(--mj-ink-2)); font-size: 0.8rem; margin: 0; }
+.nh-empty__sub { color: var(--majalis-ink-soft, var(--mj-ink-2)); font-size: var(--text-caption); margin: 0; }
 /* ══ نهاية تاريخ الإشعارات ════════════════════════════════════════════════ */
 
 /* ── منقول من الطبقة الحرجة: notif-* settings ── */
@@ -586,7 +586,7 @@ html.dark .notif-row__label {
 .notif-row--disabled { opacity: 0.45; pointer-events: none; }
 .notif-row__text { display: flex; flex-direction: column; gap: 0.15rem; }
 .notif-row__label { font-size: 0.95rem; font-weight: 600; color: var(--majalis-ink); }
-.notif-row__sub { font-size: 0.78rem; color: var(--majalis-ink-soft); }
+.notif-row__sub { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 
 .notif-toggle {
   flex-shrink: 0;
@@ -627,7 +627,7 @@ html.dark .notif-row__label {
 }
 .notif-time__input:disabled { opacity: 0.45; }
 .notif-time__sep { font-size: 1.2rem; font-weight: 700; color: var(--majalis-ink-soft); }
-.notif-time__hint { font-size: 0.75rem; color: var(--majalis-ink-soft); margin-top: 0.25rem; }
+.notif-time__hint { font-size: var(--text-caption); color: var(--majalis-ink-soft); margin-top: 0.25rem; }
 
 .notif-test-btn {
   width: 100%;

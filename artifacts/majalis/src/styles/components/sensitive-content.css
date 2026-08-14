@@ -18,7 +18,7 @@
   margin: 0 0 0.35rem;
 }
 .scw-banner__text {
-  font-size: 0.81rem;
+  font-size: var(--text-caption);
   color: var(--clr-ink-soft, var(--mj-muted));
   line-height: 1.65;
   margin: 0 0 0.5rem;
@@ -27,7 +27,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--ds-space-1);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--mj-brand);
   text-decoration: none;

@@ -269,6 +269,8 @@
     "verify:json-schemas": "node --import tsx scripts/verify-json-schemas.mjs",
     "verify:hadith-integrity": "node scripts/verify-hadith-integrity-gate.mjs",
     "test:spacing-gate": "node scripts/verify-spacing-gate.mjs",
+    "test:typography": "node scripts/verify-typography-scale.mjs",
+    "lint:hard-font-px": "node scripts/lint-hard-font-px.mjs",
     "fetch:hadith-sahihayn": "node scripts/fetch-hadith-sahihayn.mjs",
     "verify:hadith-sahihayn": "node scripts/verify-hadith-sahihayn.mjs",
     "test:fawaid-curated-integrity": "node --import tsx src/lib/__tests__/fawaid-curated-integrity.test.ts",

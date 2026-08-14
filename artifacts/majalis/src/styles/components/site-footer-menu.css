@@ -137,7 +137,7 @@
 
 .site-footer-email {
   margin: 8px 0 0;
-  font-size: 12px;
+  font-size: var(--text-caption);
 }
 
 .site-footer-email a {

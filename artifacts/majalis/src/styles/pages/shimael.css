@@ -20,7 +20,7 @@
 .sh-hero__badge {
   display: inline-block; background: rgba(250,248,242,.18); color: var(--mj-bg);
   border: 1px solid rgba(250,248,242,.30); border-radius: var(--ds-radius-full);
-  padding: .25rem .9rem; font-size: .75rem; font-weight: 700; letter-spacing: normal;
+  padding: .25rem .9rem; font-size: var(--text-caption); font-weight: 700; letter-spacing: normal;
   margin-bottom: .9rem;
 }
 .sh-hero__title { font-size: 2rem; font-weight: 900; margin: 0 0 .3rem; line-height: 1.2; }
@@ -31,7 +31,7 @@
 }
 .sh-stat { display: flex; flex-direction: column; align-items: center; gap: .1rem; }
 .sh-stat__val { font-size: 1.2rem; font-weight: 900; color: var(--mj-bg); }
-.sh-stat__lbl { font-size: 0.8rem; color: rgba(250,248,242,.55); }
+.sh-stat__lbl { font-size: var(--text-caption); color: rgba(250,248,242,.55); }
 
 /* container */
 .sh-container { max-width: 860px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
@@ -46,7 +46,7 @@
 .sh-tab {
   flex: none; padding: .55rem .7rem;
   border: none; border-radius: .7rem; background: transparent;
-  color: var(--mj-ink-2); font-family: inherit; font-size: .8rem; font-weight: 600;
+  color: var(--mj-ink-2); font-family: inherit; font-size: var(--text-caption); font-weight: 600;
   cursor: pointer; transition: background .15s, color .15s; white-space: nowrap;
 }
 .sh-tab--active { background: var(--mj-brand); color: #fff; }
@@ -76,7 +76,7 @@
 .sh-bab__icon { font-size: 1.4rem; flex-shrink: 0; }
 .sh-bab__title { flex: 1; font-size: .95rem; font-weight: 700; color: var(--mj-brand-deep); }
 .sh-bab__count {
-  font-size: 0.8rem; color: var(--mj-brand); font-weight: 700;
+  font-size: var(--text-caption); color: var(--mj-brand); font-weight: 700;
   background: rgba(23,61,53,.1); padding: .2rem .65rem; border-radius: var(--ds-radius-full); flex-shrink: 0;
 }
 .sh-bab__chevron { color: #9CA3AF; flex-shrink: 0; display: flex; }
@@ -99,10 +99,10 @@
   display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
 }
 .sh-hadith__rawi {
-  font-size: .75rem; color: var(--mj-brand); font-weight: 700;
+  font-size: var(--text-caption); color: var(--mj-brand); font-weight: 700;
   background: rgba(23,61,53,.08); padding: .15rem .6rem; border-radius: var(--ds-radius-full);
 }
-.sh-hadith__src { font-size: .72rem; color: #9CA3AF; font-style: normal; }
+.sh-hadith__src { font-size: var(--text-caption); color: #9CA3AF; font-style: normal; }
 
 /* محبة */
 .sh-mahabbah-intro {
@@ -130,7 +130,7 @@
   width: 2rem; height: 2rem; border-radius: 50%;
   background: rgba(23,61,53,.12); color: var(--mj-brand);
   display: flex; align-items: center; justify-content: center;
-  font-size: .8rem; font-weight: 900; flex-shrink: 0;
+  font-size: var(--text-caption); font-weight: 900; flex-shrink: 0;
 }
 .sh-mahabbah-card__title { flex: 1; font-size: .95rem; font-weight: 700; color: var(--mj-brand-deep); }
 .sh-mahabbah-card__body {
@@ -149,18 +149,18 @@
 }
 .sh-salat-box__head {
   display: flex; align-items: center; justify-content: center; gap: .5rem;
-  font-size: .8rem; font-weight: 700; color: #7ED6A8;
+  font-size: var(--text-caption); font-weight: 700; color: #7ED6A8;
   text-transform: uppercase; letter-spacing: normal; margin-bottom: .9rem;
 }
 .sh-salat-box__text {
   font-family: var(--font-body); font-size: var(--ds-text-2xl);
   line-height: 2; margin: 0 0 .75rem; color: #fff;
 }
-.sh-salat-box__sub { font-size: .78rem; color: rgba(200,240,220,.6); margin: 0; }
+.sh-salat-box__sub { font-size: var(--text-caption); color: rgba(200,240,220,.6); margin: 0; }
 
 @media (max-width: 640px) {
   .sh-hero__title { font-size: var(--ds-text-2xl); }
   .sh-tabs { gap: .2rem; }
-  .sh-tab { font-size: 0.8rem; padding: .45rem .5rem; }
+  .sh-tab { font-size: var(--text-caption); padding: .45rem .5rem; }
   .sh-hadith__text { font-size: .95rem; }
 }

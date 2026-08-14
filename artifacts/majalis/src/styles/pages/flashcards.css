@@ -58,7 +58,7 @@
 
 /* ── العناوين ── */
 .fc-lead{font-family:var(--fc-face);font-size:26px;font-weight:700;margin:6px 0 4px}
-.fc-sub{font-size:12px;color:var(--fc-muted);margin:0 0 18px}
+.fc-sub{font-size: var(--text-caption);color:var(--fc-muted);margin:0 0 18px}
 
 /* ── صف الرزمة ── */
 .fc-deck-row{
@@ -70,15 +70,15 @@
 .fc-deck-row:hover{border-color:var(--fc-ok)}
 .fc-deck-row:focus-visible{outline:2px solid var(--fc-ok);outline-offset:2px}
 .fc-deck-row b{font-weight:500}
-.fc-deck-row em{font-style:normal;font-size:11.5px;color:var(--fc-muted);display:block;margin-top:2px}
+.fc-deck-row em{font-style:normal;font-size: var(--text-caption);color:var(--fc-muted);display:block;margin-top:2px}
 
-.fc-pill{font-family:var(--fc-num);font-size:10px;border-radius:var(--fc-r-pill);padding:4px 10px;flex:0 0 auto}
+.fc-pill{font-family:var(--fc-num);font-size: var(--text-caption);border-radius:var(--fc-r-pill);padding:4px 10px;flex:0 0 auto}
 .fc-pill--due{background:var(--fc-ok-soft);color:var(--fc-ok)}
 .fc-pill--late{background:var(--fc-hard-soft);color:var(--fc-hard)}
 .fc-pill--rest{background:var(--fc-surface-2);color:var(--fc-muted)}
 
 /* ── شريط الجلسة ── */
-.fc-sess{display:flex;justify-content:space-between;font-size:11.5px;color:var(--fc-muted);margin-bottom:9px}
+.fc-sess{display:flex;justify-content:space-between;font-size: var(--text-caption);color:var(--fc-muted);margin-bottom:9px}
 .fc-sess-bar{height:4px;background:var(--fc-surface-2);border-radius:var(--fc-r-pill);overflow:hidden;margin-bottom:18px}
 .fc-sess-bar i{display:block;height:100%;background:var(--fc-ok);transition:width var(--fc-out)}
 
@@ -108,13 +108,13 @@
 }
 .fc-face--back{transform:rotateY(180deg)}
 .fc-badge{
-  position:absolute;top:14px;inset-inline-end: 14px;font-family:var(--fc-num);font-size:9.5px;
+  position:absolute;top:14px;inset-inline-end: 14px;font-family:var(--fc-num);font-size: var(--text-caption);
   background:var(--fc-ok-soft);color:var(--fc-ok);border-radius:var(--fc-r-pill);padding:4px 10px
 }
 .fc-q{font-family:var(--fc-face);font-size:25px;line-height:2;margin:0}
 .fc-a{font-family:var(--fc-face);font-size:22px;line-height:2.1;margin:0}
-.fc-hint{font-size:11.5px;color:var(--fc-muted);margin:18px 0 0}
-.fc-src{position:absolute;bottom:14px;inset-inline:0;font-size:10.5px;color:var(--fc-muted)}
+.fc-hint{font-size: var(--text-caption);color:var(--fc-muted);margin:18px 0 0}
+.fc-src{position:absolute;bottom:14px;inset-inline:0;font-size: var(--text-caption);color:var(--fc-muted)}
 
 /* ── أزرار التقييم ── */
 .fc-rate{display:flex;gap:10px}
@@ -134,10 +134,10 @@
 /* ── النتيجة والحالة الفارغة ── */
 .fc-result{background:var(--fc-surface);border-radius:var(--fc-r-md);padding:24px;text-align:center;margin-bottom:12px}
 .fc-result b{display:block;font-family:var(--fc-num);font-weight:300;font-size:44px;color:var(--fc-ok);line-height:1}
-.fc-result span{font-size:12px;color:var(--fc-muted)}
+.fc-result span{font-size: var(--text-caption);color:var(--fc-muted)}
 .fc-row{display:flex;justify-content:space-between;align-items:center;background:var(--fc-surface);
   border-radius:var(--fc-r-sm);padding:13px 15px;margin-bottom:9px;font-size:13.5px}
-.fc-row i{font-style:normal;font-size:11.5px;color:var(--fc-muted)}
+.fc-row i{font-style:normal;font-size: var(--text-caption);color:var(--fc-muted)}
 .fc-row i.is-due{color:var(--fc-hard)}
 .fc-cta{border:0;width:100%;padding:15px;border-radius:var(--fc-r-md);background:var(--fc-ok);color:#fff;
   font-family:var(--fc-ui);font-size:13.5px;cursor:pointer;margin-top:auto}
@@ -145,4 +145,4 @@
 .fc-empty{text-align:center;padding:36px 20px;background:var(--fc-surface);border-radius:var(--fc-r-md);margin:auto 0}
 .fc-empty .fc-dot{width:10px;height:10px;border-radius:50%;background:var(--fc-ok);margin:0 auto 14px}
 .fc-empty b{display:block;font-family:var(--fc-face);font-size:19px;margin-bottom:6px}
-.fc-empty span{font-size:12.5px;color:var(--fc-muted);line-height:1.9}
+.fc-empty span{font-size: var(--text-caption);color:var(--fc-muted);line-height:1.9}

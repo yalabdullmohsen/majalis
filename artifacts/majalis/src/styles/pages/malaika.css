@@ -14,7 +14,7 @@
 .mk-hero__badge {
   display: inline-block; margin-bottom: .85rem;
   padding: .3rem .9rem; border-radius: var(--ds-radius-full);
-  background: rgba(255,255,255,.12); font-size: .8rem; letter-spacing: normal;
+  background: rgba(255,255,255,.12); font-size: var(--text-caption); letter-spacing: normal;
 }
 .mk-hero__title { font-size: 2.1rem; font-weight: 800; margin: 0 0 .6rem; }
 .mk-hero__sub   { font-size: var(--ds-text-base); opacity: .82; margin: 0 0 1.2rem; line-height: 1.7; }
@@ -87,12 +87,12 @@
 .mk-malak-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: .4rem; margin-bottom: .25rem; }
 .mk-malak-name { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0; }
 .mk-malak-badge {
-  font-size: .75rem; padding: .15rem .55rem; border-radius: var(--ds-radius-full);
+  font-size: var(--text-caption); padding: .15rem .55rem; border-radius: var(--ds-radius-full);
   background: #e8f0f8; color: #1a3a5c; font-weight: 600; white-space: nowrap;
 }
-.mk-malak-role   { font-size: .78rem; color: #1a3a5c; font-weight: 600; margin: 0 0 .4rem; }
+.mk-malak-role   { font-size: var(--text-caption); color: #1a3a5c; font-weight: 600; margin: 0 0 .4rem; }
 .mk-malak-detail { font-size: .86rem; line-height: 1.7; color: var(--clr-text-2); margin: 0 0 .4rem; }
-.mk-malak-ref    { font-size: .78rem; color: var(--clr-text-2); margin: 0; opacity: .75; }
+.mk-malak-ref    { font-size: var(--text-caption); color: var(--clr-text-2); margin: 0; opacity: .75; }
 
 /* Awsaf */
 .mk-awsaf-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
@@ -104,7 +104,7 @@
 .mk-wasf-icon  { color: #1a3a5c; font-size: 1.1rem; flex-shrink: 0; margin-top: .15rem; }
 .mk-wasf-title { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .35rem; }
 .mk-wasf-text  { font-size: .9rem; line-height: 1.75; color: var(--clr-text-2); margin: 0 0 .3rem; }
-.mk-wasf-ref   { font-size: .8rem; color: #1a3a5c; font-weight: 500; margin: 0; }
+.mk-wasf-ref   { font-size: var(--text-caption); color: #1a3a5c; font-weight: 500; margin: 0; }
 
 /* Fadail */
 .mk-fadail-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
@@ -116,7 +116,7 @@
 }
 .mk-fadl-title { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .45rem; }
 .mk-fadl-text  { font-size: .9rem; line-height: 1.75; color: var(--clr-text-2); margin: 0 0 .4rem; }
-.mk-fadl-ref   { font-size: .8rem; color: #1a3a5c; font-weight: 500; margin: 0; }
+.mk-fadl-ref   { font-size: var(--text-caption); color: #1a3a5c; font-weight: 500; margin: 0; }
 
 /* Amal grid */
 .mk-amal-grid {

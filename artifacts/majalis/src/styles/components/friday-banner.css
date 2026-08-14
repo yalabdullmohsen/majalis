@@ -50,7 +50,7 @@
   background: rgba(250,248,242,0.08);
   border: 1px solid rgba(250,248,242,0.18);
   color: rgba(250,248,242,0.75);
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   letter-spacing: normal;
   padding: 0.2rem 0.75rem;
@@ -75,7 +75,7 @@
 .frb-ref {
   display: block;
   font-family: var(--font-body, "IBM Plex Sans Arabic", sans-serif);
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: rgba(250,248,242,0.45);
   letter-spacing: normal;
 }

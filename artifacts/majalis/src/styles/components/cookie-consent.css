@@ -47,7 +47,7 @@
 .cookie-consent__text--compact {
   margin: 0;
   flex: 1;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   line-height: 1.45;
 }
 
@@ -59,7 +59,7 @@
 .cookie-consent__actions--compact .cookie-consent__btn {
   min-height: 34px;
   padding-inline: 0.85rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   border-radius: 12px;
   touch-action: manipulation;
 }

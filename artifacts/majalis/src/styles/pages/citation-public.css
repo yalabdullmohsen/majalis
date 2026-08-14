@@ -63,7 +63,7 @@
   text-decoration: none;
 }
 .cpp-nav__tagline {
-  font-size: .75rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   opacity: .6;
 }
@@ -173,7 +173,7 @@
 }
 .cpp-qr-img { width: 12rem; height: 12rem; display: block; margin: 0 auto; }
 .cpp-qr-url {
-  font-size: .75rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   opacity: .6;
   margin: 0;
@@ -184,7 +184,7 @@
 .cpp-context { text-align: center; }
 .cpp-footer {
   text-align: center;
-  font-size: .75rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   opacity: .6;
   padding-bottom: 1rem;

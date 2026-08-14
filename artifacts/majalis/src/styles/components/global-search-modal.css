@@ -85,7 +85,7 @@
   background: var(--majalis-parchment-deep);
   border-radius: 50%;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   flex-shrink: 0;
   display: flex;
@@ -113,7 +113,7 @@
   background: var(--gsm-chip-bg, var(--majalis-panel));
   color: var(--gsm-chip-color, var(--majalis-ink-soft));
   font-weight: var(--gsm-chip-fw, 500);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   cursor: pointer;
   font-family: inherit;
   min-height: 32px;
@@ -143,13 +143,13 @@
 }
 .gsm-section__label {
   margin: 0;
-  font-size: 0.73rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-ink-soft);
   letter-spacing: normal;
 }
 .gsm-clear-hist-btn {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: var(--majalis-emerald-deep);
   background: none;
   border: none;
@@ -241,7 +241,7 @@
 }
 .gsm-result-summary {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   line-height: 1.5;
   overflow: hidden;
@@ -253,7 +253,7 @@
   flex-shrink: 0;
   padding: 0.15rem 0.5rem;
   border-radius: 0.3rem;
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   white-space: nowrap;
   margin-top: 0.1rem;
@@ -281,7 +281,7 @@
   flex-shrink: 0;
   background: var(--majalis-parchment-deep);
 }
-.gsm-footer__hint { font-size: 0.7rem; color: var(--majalis-ink-soft); }
+.gsm-footer__hint { font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 .gsm-footer__all-btn {
   font-size: 0.82rem;
   color: var(--majalis-emerald-deep);

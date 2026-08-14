@@ -31,7 +31,7 @@
   margin-bottom: 0.75rem;
   padding: 0.2rem 0.7rem;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--brand-deep, var(--mj-brand-deep));
   background: color-mix(in srgb, var(--brand, var(--mj-brand)) 16%, transparent);
@@ -106,7 +106,7 @@
   margin: 0 0 0.2rem;
 }
 .kids-hub-card__desc {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--text-2);
   margin: 0;
   line-height: 1.5;

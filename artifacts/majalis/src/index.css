@@ -887,7 +887,7 @@ input, textarea, select { font-family: inherit; }
 .home-card-row {
   justify-content: space-between;
   color: var(--msk-text-2, #5C5C56);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   margin-bottom: 1rem;
 }
 
@@ -897,7 +897,7 @@ input, textarea, select { font-family: inherit; }
   align-items: center;
   border-radius: 999px;
   padding: 0.2rem 0.65rem;
-  font-size: 0.76rem;
+  font-size: var(--text-caption);
   font-weight: 800;
 }
 
@@ -1034,7 +1034,7 @@ input, textarea, select { font-family: inherit; }
   display: inline-flex;
   margin-bottom: 0.55rem;
   color: var(--majalis-brass-deep);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 800;
 }
 
@@ -1286,7 +1286,7 @@ input, textarea, select { font-family: inherit; }
 
 .prayer-status-label {
   color: var(--msk-text-2, #5C5C56);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 800;
 }
 
@@ -1488,7 +1488,7 @@ input, textarea, select { font-family: inherit; }
 
 .fiqh-filter-toggle span {
   color: var(--msk-text-2, #5C5C56);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
 }
 
 .fiqh-filter-panel {
@@ -1533,7 +1533,7 @@ input, textarea, select { font-family: inherit; }
 
 .prayer-status-card__label {
   color: var(--msk-text-2, #5C5C56);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
 }
 
 .fiqh-mobile-category-deck::-webkit-scrollbar,
@@ -1609,7 +1609,7 @@ input, textarea, select { font-family: inherit; }
   inset-inline-end: -2px;
   background: #dc2626;
   color: #fff;
-  font-size: 0.625rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   min-width: 18px;
   height: 18px;
@@ -1659,7 +1659,7 @@ input, textarea, select { font-family: inherit; }
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-family: inherit;
   color: var(--majalis-emerald);
   font-weight: 600;
@@ -1709,14 +1709,14 @@ input, textarea, select { font-family: inherit; }
 
 .notif-item__body {
   margin: 0.25rem 0 0;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--mn-text-default);
   line-height: 1.5;
 }
 
 .notif-item__date {
   margin: 0.35rem 0 0;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: var(--mn-text-default);
   opacity: 0.75;
 }
@@ -1863,7 +1863,7 @@ input, textarea, select { font-family: inherit; }
 
 .mj-menu-label {
   padding: 0.4rem 0.75rem 0.25rem;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   letter-spacing: normal;
   color: var(--majalis-brass-deep);
@@ -1948,7 +1948,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .search-results-count {
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-brass-deep);
   background: var(--majalis-parchment-deep);
@@ -2361,7 +2361,7 @@ html[data-reading-theme="night"] .content-surface--reading {
 }
 
 .content-action-bar__size {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   min-width: 2.6rem;
   text-align: center;
@@ -2535,7 +2535,7 @@ html[data-reading-theme="night"] .content-surface--reading {
 }
 
 .legal-license-status {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.15rem 0.55rem;
   border-radius: 0.4rem;
@@ -2760,7 +2760,7 @@ html[data-reading-theme="night"] .content-surface--reading {
 
 .home-more-card strong { color: var(--majalis-emerald-deep); font-size: 0.9rem; font-weight: 700; }
 
-.home-more-card span { font-size: 0.78rem; color: var(--msk-text-2); }
+.home-more-card span { font-size: var(--text-caption); color: var(--msk-text-2); }
 
 .home-occasions-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: var(--ds-space-3);
@@ -2774,7 +2774,7 @@ html[data-reading-theme="night"] .content-surface--reading {
 
 .home-occasion-card p { margin: 0; font-size: 0.88rem; color: var(--majalis-ink-soft); line-height: 1.65; }
 
-.home-occasion-card__meta { font-size: 0.78rem; font-weight: 700; color: var(--majalis-brass-deep); }
+.home-occasion-card__meta { font-size: var(--text-caption); font-weight: 700; color: var(--majalis-brass-deep); }
 
 .home-sheikhs-grid--v3 {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
@@ -2935,7 +2935,7 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
   border: 1px solid rgba(22,78,60,0.18);
   background: #fff;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--majalis-emerald-deep);
   font-family: inherit;
   font-weight: 600;
@@ -2948,7 +2948,7 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
 }
 
 .navbar-search-kbd {
-  font-size: 0.6rem;
+  font-size: var(--text-caption);
   opacity: 0.55;
   padding: 0.05rem 0.3rem;
   border: 1px solid var(--majalis-line);
@@ -3011,7 +3011,7 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
 }
 
 .navbar-admin-link {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-brass-deep);
   text-decoration: none;
@@ -3024,11 +3024,11 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
   text-align: right;
 }
 
-.navbar-auth { display: flex; align-items: center; gap: 0.45rem; font-size: 0.78rem; color: var(--majalis-ink-soft); }
+.navbar-auth { display: flex; align-items: center; gap: 0.45rem; font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 
 .navbar-auth--guest { flex-wrap: nowrap; }
 
-.navbar-user-link { color: var(--majalis-ink-soft); text-decoration: none; font-size: 0.78rem; }
+.navbar-user-link { color: var(--majalis-ink-soft); text-decoration: none; font-size: var(--text-caption); }
 
 .navbar-user-link:hover { color: var(--majalis-emerald-deep); text-decoration: underline; }
 
@@ -3036,7 +3036,7 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.25rem 0.55rem;
   border-radius: 0.35rem;
@@ -3267,7 +3267,7 @@ body.mobile-nav-body-lock {
   padding: 0.25rem 0.7rem;
   color: var(--majalis-emerald-deep);
   background: var(--majalis-sage);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 800;
 }
 
@@ -3316,7 +3316,7 @@ body.mobile-nav-body-lock {
 
 .quran-ayah-num {
   display: inline-flex; width: 1.6rem; height: 1.6rem; align-items: center; justify-content: center;
-  border-radius: 50%; background: var(--majalis-sage); font-size: 0.72rem; margin-left: 0.35rem;
+  border-radius: 50%; background: var(--majalis-sage); font-size: var(--text-caption); margin-left: 0.35rem;
 }
 
 .quran-page--night { background: #1a1a1a; color: #eee; }
@@ -3355,7 +3355,7 @@ body.mobile-nav-body-lock {
 
 .nawawi-num {
   display: inline-block; padding: 0.2rem 0.55rem; border-radius: 999px;
-  background: var(--majalis-sage); font-size: 0.78rem; font-weight: 800;
+  background: var(--majalis-sage); font-size: var(--text-caption); font-weight: 800;
 }
 
 .nawawi-text { line-height: 2; }
@@ -3495,7 +3495,7 @@ body.assistant-panel-open {
 }
 
 .assistant-panel__full-link {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-emerald-deep);
   text-decoration: none;
@@ -3513,7 +3513,7 @@ body.assistant-panel-open {
 
 .assistant-panel__eyebrow {
   margin: 0;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   color: var(--majalis-brass-deep);
 }
@@ -3540,7 +3540,7 @@ body.assistant-panel-open {
 .assistant-panel__intro {
   margin: 0;
   padding: 0.55rem 1rem 0.65rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   line-height: 1.65;
   color: var(--msk-text-2, #5C5C56);
   border-bottom: 1px solid var(--majalis-line);
@@ -3574,7 +3574,7 @@ body.assistant-panel-open {
 
 .assistant-message-label {
   display: block;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   color: var(--msk-text-2, #5C5C56);
   margin-bottom: 0.35rem;
@@ -3666,7 +3666,7 @@ body.assistant-panel-open {
   }
 
   .assistant-fab__label {
-    font-size: 0.78rem;
+    font-size: var(--text-caption);
   }
 
   .assistant-panel {
@@ -4205,7 +4205,7 @@ svg {
   .navbar-menu-btn {
     min-width: 3.85rem;
     width: 3.85rem;
-    font-size: 0.72rem;
+    font-size: var(--text-caption);
   }
 
 }
@@ -4219,7 +4219,7 @@ svg {
 
   .site-brand-name {
     max-width: 4.25rem;
-    font-size: 0.78rem;
+    font-size: var(--text-caption);
   }
 
 }
@@ -4231,13 +4231,13 @@ svg {
   .navbar-menu-btn--more {
     min-width: 3.35rem;
     width: 3.35rem;
-    font-size: 0.68rem;
+    font-size: var(--text-caption);
   }
 
   .navbar-login--mobile {
     max-width: 3.25rem;
     min-width: 2.5rem;
-    font-size: 0.65rem;
+    font-size: var(--text-caption);
   }
 
   .home-hero-lead--v3 {
@@ -4626,7 +4626,7 @@ body.has-assistant-fab .app-main {
   padding-top: 1.25rem;
   margin-top: 1.25rem !important;
   border-top: 1px solid var(--majalis-line);
-  font-size: 0.8rem !important;
+  font-size: var(--text-caption) !important;
   text-align: center;
 }
 
@@ -4909,7 +4909,7 @@ body.has-assistant-fab .app-main {
 }
 
 .ds-page-header__eyebrow {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: normal;
@@ -5100,7 +5100,7 @@ body.has-assistant-fab .app-main {
 
 .ruling-badge,
 .qa-ruling-badge {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.15rem 0.55rem;
   border-radius: 999px;
@@ -5310,7 +5310,7 @@ body.has-assistant-fab .app-main {
   align-items: center;
   padding: 0.18rem 0.6rem;
   border-radius: 999px;
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   background: var(--majalis-parchment-deep, #F0EBE0);
   color: var(--msk-text-2, #5C5C56);
@@ -5400,7 +5400,7 @@ body.has-assistant-fab .app-main {
 
 .share-btn--sm {
   padding: 0.3rem 0.7rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   gap: 0.3rem;
 }
 
@@ -5593,7 +5593,7 @@ button,
   padding: 0.4rem 1rem;
   background: var(--mj-brand-deep);
   color: #d1fae5;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-family: var(--font-primary);
   direction: rtl;
   position: sticky;
@@ -5617,7 +5617,7 @@ button,
     transform: translateX(-50%);
     background: rgba(31,77,58,0.92);
     color: #d1fae5;
-    font-size: 0.72rem;
+    font-size: var(--text-caption);
     padding: 2px 10px;
     border-radius: 999px;
     display: flex;
@@ -5695,7 +5695,7 @@ html[data-theme="dark"] .skeleton-base {
   display: inline-block;
   margin-inline-start: 0.35rem;
   padding: 0.1rem 0.45rem;
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   line-height: 1.4;
   color: #5c4a32;
   background: #f3ead7;

@@ -209,7 +209,7 @@
 }
 
 .lesson-unified-card__status {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   padding: 0.18rem 0.5rem;
   border-radius: 999px;
@@ -270,7 +270,7 @@
 }
 
 .lesson-unified-card__meta-label {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--msk-text-2, #5C5C56);
 }
@@ -351,7 +351,7 @@
 }
 
 .lesson-unified-card__flag {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
@@ -420,7 +420,7 @@
 .lesson-unified-card--compact .lesson-unified-card__btn {
   min-height: 34px;
   padding: 0.35rem 0.65rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
 }
 
 .lesson-unified-card--compact .lesson-unified-card__note,

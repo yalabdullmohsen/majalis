@@ -26,7 +26,7 @@
 .at-body { flex: 1; min-width: 0; }
 .at-label {
   margin: 0 0 0.2rem;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   color: #a7f3d0;
   font-weight: 600;
   text-transform: uppercase;
@@ -34,7 +34,7 @@
 }
 .at-title  { margin: 0 0 0.25rem; font-size: var(--ds-text-base); font-weight: 800; }
 .at-desc   { margin: 0; font-size: 0.82rem; color: #d4e9dc; line-height: 1.5; }
-.at-more   { margin: 0.4rem 0 0; font-size: 0.78rem; color: #a7f3d0; }
+.at-more   { margin: 0.4rem 0 0; font-size: var(--text-caption); color: #a7f3d0; }
 .at-close  {
   background: none;
   border: none;

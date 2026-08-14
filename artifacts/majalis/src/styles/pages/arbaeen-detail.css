@@ -29,7 +29,7 @@
   padding: 1rem 0 1.25rem;
 }
 .ahd-header__num {
-  font-size: .78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-ink-soft);
 }
@@ -43,7 +43,7 @@
   display: inline-block;
   padding: .2rem .7rem;
   border-radius: var(--ds-radius-full);
-  font-size: .72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
 }
 .ahd-level--new      { background: color-mix(in srgb, var(--majalis-ink-soft) 12%, transparent); color: var(--majalis-ink-soft); }
@@ -63,7 +63,7 @@
 }
 .ahd-source {
   text-align: center;
-  font-size: .8rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   margin: 0 0 1.5rem;
 }
@@ -106,7 +106,7 @@
   margin: 1.5rem 0;
 }
 .ahd-quiz__progress {
-  font-size: .75rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   margin: 0 0 .5rem;
 }

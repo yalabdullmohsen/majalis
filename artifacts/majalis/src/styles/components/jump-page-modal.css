@@ -51,7 +51,7 @@
 .mpv-jump-dialog__label {
   display: block;
   margin-bottom: 0.35rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: color-mix(in srgb, #1a2e24 75%, transparent);
 }

@@ -151,7 +151,7 @@
 .seerah-timeline__empty {
   margin: 0.75rem 0.5rem 0.5rem;
   padding: 0.65rem 0.75rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   line-height: 1.65;
   color: var(--majalis-muted, #5c6b64);
   background: var(--majalis-parchment);
@@ -160,7 +160,7 @@
 }
 .seerah-sources__note {
   margin: 0.75rem 0 0;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   line-height: 1.7;
   color: var(--majalis-muted, #5c6b64);
 }
@@ -228,7 +228,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   background: var(--majalis-parchment);
   border: 2px solid var(--majalis-line);
@@ -244,7 +244,7 @@
   text-align: end;
 }
 .seerah-timeline__title {
-  font-size: 0.79rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--majalis-ink-soft);
   line-height: 1.3;
@@ -255,7 +255,7 @@
 }
 .seerah-timeline__item--active .seerah-timeline__title { color: var(--majalis-ink); font-weight: 700; }
 .seerah-timeline__year {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: color-mix(in srgb, var(--majalis-ink-soft) 65%, transparent);
   white-space: nowrap;
 }
@@ -317,7 +317,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   margin-top: 0.1rem;
 }
 .seerah-panel__num {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: normal;
   margin-bottom: 0.2rem;
@@ -349,7 +349,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   margin-bottom: 1.25rem;
 }
 .seerah-panel__topic {
-  font-size: 0.79rem;
+  font-size: var(--text-caption);
   padding: 0.3rem 0.85rem;
   border-radius: 2rem;
   border: 1px solid;
@@ -361,7 +361,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   margin-bottom: 1.5rem;
 }
 .seerah-panel__events-title {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-emerald);
   text-transform: uppercase;
@@ -501,7 +501,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 }
 .seerah-prophets-banner__link {
   flex-shrink: 0;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-emerald);
   text-decoration: none;
@@ -596,7 +596,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--majalis-brass, var(--mj-brand));
   text-decoration: none;
   border: 1px solid rgba(23,61,53,0.25);

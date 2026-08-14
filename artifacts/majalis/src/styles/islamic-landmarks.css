@@ -72,7 +72,7 @@
 }
 
 .ilm-hero__stat-lbl {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   opacity: 0.7;
 }
 
@@ -267,7 +267,7 @@
   position: absolute;
   bottom: 8px;
   right: 10px;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: rgba(255,255,255,0.6);
   font-weight: 600;
 }
@@ -304,7 +304,7 @@
 .ilm-badge {
   padding: 0.2rem 0.5rem;
   border-radius: 6px;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   white-space: nowrap;
 }
@@ -323,7 +323,7 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--ds-text-2, var(--mj-muted));
 }
 
@@ -366,7 +366,7 @@
   border-radius: 4px;
   background: var(--ds-surface-2, #f3f4f6);
   color: var(--ds-text-2, var(--mj-muted));
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
 }
 

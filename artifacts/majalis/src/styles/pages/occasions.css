@@ -23,12 +23,12 @@
 }
 
 .occasions-filter__count {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--elite-ink-muted, var(--mj-ink-2));
 }
 
 .occasions-filter__sacred-note {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--elite-forest, var(--mj-brand-deep));
   font-weight: 600;
 }
@@ -63,7 +63,7 @@
 }
 
 .occasion-detail__month-badge {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--elite-forest, var(--mj-brand-deep));
   background: var(--elite-sage-2, var(--mj-brand-soft));
@@ -76,7 +76,7 @@
 }
 
 .occasion-detail__countdown {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--elite-ink-muted, var(--mj-ink-2));
   white-space: nowrap;
@@ -92,7 +92,7 @@
 }
 
 .occasion-detail__date {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--elite-ink-soft, #5D726A);
   margin: 0;
 }
@@ -128,7 +128,7 @@
 }
 
 .occasion-evidence {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--elite-ink-soft, #5D726A);
   border-inline-start: 2.5px solid var(--elite-forest, var(--mj-brand-deep));
   padding-inline-start: 0.65rem;

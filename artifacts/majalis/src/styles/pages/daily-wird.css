@@ -72,7 +72,7 @@
   border: 1px solid rgba(192,57,43,0.3);
   border-radius: var(--ds-radius);
   color: #C0392B !important;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   font-family: inherit;
   padding: 0.35rem 0.85rem;
@@ -101,7 +101,7 @@
 }
 
 .wird-stat span {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--elite-ink-muted, var(--mj-ink-2));
   text-transform: uppercase;
@@ -262,7 +262,7 @@
   min-width: 150px;
 }
 .khatma-stat span {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft, var(--mj-ink-2));
 }
 .khatma-stat strong {
@@ -301,7 +301,7 @@
 }
 .khatma-celebration p {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   opacity: 0.8;
 }
 .khatma-celebration svg {

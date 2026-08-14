@@ -14,7 +14,7 @@
 .up-country-chips { flex: 1; min-width: 0; overflow-x: auto; flex-wrap: nowrap; padding-bottom: .2rem; }
 .up-sheet-filters { display: flex; flex-direction: column; gap: .9rem; padding: 0.25rem 0 1rem; }
 
-.up-filter-label { font-size: .75rem; font-weight: 500; color: var(--majalis-ink-soft); }
+.up-filter-label { font-size: var(--text-caption); font-weight: 500; color: var(--majalis-ink-soft); }
 .up-filter-select {
   padding: .5rem .75rem; font-size: .875rem;
   border-radius: .75rem; border: 1px solid var(--majalis-line);

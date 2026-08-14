@@ -64,7 +64,7 @@
 }
 
 .admin-sidebar__title {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-emerald-deep);
   padding: 0 0.25rem 0.5rem;
@@ -73,14 +73,14 @@
 }
 
 .admin-sidebar__user {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--msk-text-2, var(--mj-ink-2));
   padding: 0 0.25rem;
 }
 
 .admin-sidebar__quick-link {
   display: block;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   padding: 0.35rem 0.5rem;
   border-radius: 0.4rem;
@@ -105,7 +105,7 @@
 }
 
 .admin-logout-btn {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--majalis-danger);
   background: transparent;
@@ -124,7 +124,7 @@
   display: block;
   width: 100%;
   text-align: end;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--mn-text-default);
   background: transparent;

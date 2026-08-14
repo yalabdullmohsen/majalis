@@ -4,7 +4,7 @@
 
 /* ─ Hero ─ */
 .pmp-hero { border-radius: var(--ds-radius-2xl); margin-bottom: 1.5rem; text-align: center; }
-.pmp-hero__eyebrow { font-size: 0.8rem; font-weight: 700; letter-spacing: normal; color: var(--mj-ink-2); margin-bottom: 0.5rem; text-transform: uppercase; }
+.pmp-hero__eyebrow { font-size: var(--text-caption); font-weight: 700; letter-spacing: normal; color: var(--mj-ink-2); margin-bottom: 0.5rem; text-transform: uppercase; }
 .pmp-hero__title   { font-size: clamp(1.6rem, 4vw, 2.25rem); font-weight: 800; color: var(--mj-bg); margin: 0 0 0.6rem; }
 .pmp-hero__subtitle { font-size: 0.95rem; color: #D6D5CE; max-width: 520px; margin: 0 auto; line-height: 1.7; }
 
@@ -35,7 +35,7 @@
 .pmp-cat-badge {
   padding: 0.15rem 0.6rem;
   border-radius: var(--ds-radius-xl);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   background: color-mix(in srgb, var(--pm-accent, #D6D5CE) 13%, transparent);
   color: var(--pm-accent, #D6D5CE);
   font-weight: 600;
@@ -45,9 +45,9 @@
 /* ─ Card body ─ */
 .pmp-card__body { padding: 0.875rem 1rem; flex: 1; display: flex; flex-direction: column; gap: 0.65rem; direction: rtl; }
 .pmp-hadith { border-inline-end: 3px solid var(--msk-gold); padding-inline-end: 0.65rem; margin: 0; font-size: 0.9rem; line-height: 1.8; color: var(--msk-text); font-weight: 600; }
-.pmp-hadith-source { font-size: 0.8rem; color: var(--msk-text-2); margin: 0; font-weight: 600; }
+.pmp-hadith-source { font-size: var(--text-caption); color: var(--msk-text-2); margin: 0; font-weight: 600; }
 .pmp-benefits { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-.pmp-benefit-badge { padding: 0.2rem 0.6rem; border-radius: var(--ds-radius-xl); font-size: 0.8rem; background: rgba(24,54,42,0.08); color: var(--msk-gold); font-weight: 600; border: 1px solid rgba(24,54,42,0.18); }
+.pmp-benefit-badge { padding: 0.2rem 0.6rem; border-radius: var(--ds-radius-xl); font-size: var(--text-caption); background: rgba(24,54,42,0.08); color: var(--msk-gold); font-weight: 600; border: 1px solid rgba(24,54,42,0.18); }
 .pmp-body-text { font-size: var(--ds-text-sm); line-height: 1.75; color: var(--msk-text); margin: 0; }
 .pmp-item-disclaimer { font-size: var(--ds-text-xs); color: var(--msk-text-2); margin: 0; font-style: normal; border-top: 1px solid var(--msk-border); padding-top: 0.5rem; }
 .pmp-toggle-btn { color: var(--msk-gold); background: none; border: none; cursor: pointer; font-size: 0.82rem; font-weight: 600; padding: 0.2rem 0; align-self: flex-start; font-family: inherit; }

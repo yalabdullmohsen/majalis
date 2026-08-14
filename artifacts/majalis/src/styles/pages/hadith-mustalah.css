@@ -19,7 +19,7 @@
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.25);
   color: #FFFFFF;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.25rem 0.85rem;
   border-radius: var(--ds-radius-full);
@@ -42,7 +42,7 @@
   min-width: 64px;
 }
 .hs-stat strong { font-size: 1.4rem; font-weight: 900; color: #FFFFFF; line-height: 1.1; }
-.hs-stat span { font-size: 0.72rem; color: rgba(255,255,255,0.78); margin-top: 0.15rem; }
+.hs-stat span { font-size: var(--text-caption); color: rgba(255,255,255,0.78); margin-top: 0.15rem; }
 
 /* شريط التحكم */
 .hs-controls { margin-bottom: 1.25rem; }
@@ -82,7 +82,7 @@
   border-radius: var(--ds-radius-full);
   border: 1.5px solid var(--mj-brand-soft);
   background: #FFFFFF;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--mj-brand-deep);
   cursor: pointer;
@@ -121,13 +121,13 @@
 }
 .hs-card__header:hover { background: rgba(31,77,58,0.04); }
 .hs-card__header-main { flex: 1; min-width: 0; }
-.hs-card__cat { font-size: 0.8rem; font-weight: 700; color: var(--mj-brand); text-transform: uppercase; letter-spacing: normal; margin-bottom: 0.18rem; }
+.hs-card__cat { font-size: var(--text-caption); font-weight: 700; color: var(--mj-brand); text-transform: uppercase; letter-spacing: normal; margin-bottom: 0.18rem; }
 .hs-card__term { font-size: 0.97rem; font-weight: 800; color: var(--mj-brand-deep); }
 
 /* شارة الحكم */
 .hs-grade {
   flex-shrink: 0;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.22rem 0.65rem;
   border-radius: var(--ds-radius-full);
@@ -151,7 +151,7 @@
 }
 .hs-card__example-label { font-weight: 700; color: var(--mj-brand); margin-inline-start: 0.3rem; }
 .hs-card__note {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--mj-brand);
   background: #F8FBF9;
   border: 1px solid var(--mj-brand-soft);

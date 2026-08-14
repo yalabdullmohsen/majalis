@@ -99,14 +99,14 @@
    getComputedStyle(color) تقول #FFFFFF بينما البكسل المرسوم أخفت.
    الحل: لون صريح من الرمز، وopacity يبقى 1. */
 .anb-toast__sub {
-  font-size: .78rem;
+  font-size: var(--text-caption);
   opacity: 1;
   margin: 0;
   line-height: 1.5;
 }
 .anb-toast--adhan .anb-toast__sub {
   color: var(--on-brand-secondary, rgba(255, 255, 255, 0.82));
-  font-size: .8rem;
+  font-size: var(--text-caption);
 }
 .anb-toast--reminder .anb-toast__sub {
   color: var(--text-2, #3e3a35);
@@ -170,7 +170,7 @@
 /* كان rgba(255,255,255,.75) لنص 10.4px ⇒ ~3.4:1 (يفشل 4.5:1).
    أبيض صريح كامل + خلفية أقوى قليلًا. */
 .anb-muted-tag {
-  font-size: .68rem;
+  font-size: var(--text-caption);
   padding: .15rem .45rem;
   border-radius: .3rem;
   background: var(--on-brand-quiet-bg, rgba(255,255,255,.14));

@@ -28,6 +28,7 @@ import "./styles/brand-v4.css";
 import "./styles/tokens.css";
 import "./index.css";
 import "./styles/design-system.css";
+import "./styles/typography-scale.css";
 import "./styles/components/instant-interaction.css";
 import "./styles/components/native-feel.css";
 import "./styles/components/chunk-recovery-toast.css";

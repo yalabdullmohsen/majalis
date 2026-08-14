@@ -113,7 +113,7 @@
   display: inline-block;
   border-radius: var(--radius-sm, 0.45rem);
   padding: 0.15em 0.65em;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -163,7 +163,7 @@
   box-sizing: border-box;
   border-radius: var(--radius-sm, 0.45rem);
   padding: 0.28em 0.65em;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   line-height: 1.45;
   white-space: normal;
@@ -230,7 +230,7 @@
   border: 1px solid var(--majalis-border, var(--msk-border, var(--mj-hairline)));
   border-radius: var(--radius-sm, 0.45rem);
   padding: 0.1em 0.55em;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: var(--msk-text-2, var(--mj-ink-2));
 }
 
@@ -428,7 +428,7 @@
 }
 .hadith-modal-btn:hover { opacity: 0.88; }
 .hadith-modal__footer p {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--msk-text-2, var(--mj-ink-2));
   margin: 0;
   text-align: center;
@@ -438,7 +438,7 @@
 .hadith-filters-panel { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .hadith-filter-section { display: flex; flex-direction: column; gap: 0.4rem; }
 .hadith-filter-label {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: normal;
@@ -475,7 +475,7 @@
 }
 
 .hadith-section-eyebrow {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: normal;
@@ -516,7 +516,7 @@
 }
 
 .story-card__topic {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--majalis-gold, var(--mj-brand-deep));
   font-weight: 600;
   margin: 0;
@@ -534,7 +534,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--ds-space-2);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   color: var(--msk-text-2, var(--mj-ink-2));
   margin-top: auto;
   padding-top: 0.5rem;
@@ -827,7 +827,7 @@
   gap: 0.5rem;
 }
 .hadith-access-bar__label {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--majalis-emerald, #166048);
 }
@@ -884,7 +884,7 @@
 }
 .hadith-hub-gate em {
   font-style: normal;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   color: var(--emerald-400, var(--mj-brand));
 }
@@ -947,7 +947,7 @@
   border: 1px solid var(--color-border, var(--mj-hairline));
   background: var(--color-surface, #fff);
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   cursor: pointer;
 }
 .hadith-access-bar__row--scope button.is-active {
@@ -965,7 +965,7 @@
 
 .hadith-modal__section-label {
   margin: 0 0 0.35rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   color: var(--majalis-emerald-deep, var(--mj-brand-deep));
 }
@@ -1026,7 +1026,7 @@
 }
 .hadith-badge,
 .hadith-grade {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
 }
 
 /* ── خانات الأقسام الثلاث ── */
@@ -1104,7 +1104,7 @@
 .page-shell .hsp .hsp__eyebrow,
 .hsp__eyebrow {
   margin: 0 0 0.2rem !important;
-  font-size: 0.72rem !important;
+  font-size: var(--text-caption) !important;
   font-weight: 800 !important;
   letter-spacing: 0.02em;
   color: rgba(255, 255, 255, 0.78) !important;
@@ -1123,7 +1123,7 @@
 .page-shell .hsp .hsp__sub,
 .hsp__sub {
   margin: 0.35rem 0 0 !important;
-  font-size: 0.8rem !important;
+  font-size: var(--text-caption) !important;
   line-height: 1.55 !important;
   color: rgba(255, 255, 255, 0.82) !important;
   max-width: 38rem;
@@ -1139,7 +1139,7 @@
   background: rgba(184, 150, 63, 0.18);
   border: 1px solid rgba(184, 150, 63, 0.42);
   color: #fff;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   text-decoration: none;
   transition: background 0.2s ease, border-color 0.2s ease;
@@ -1185,12 +1185,12 @@
   font-variant-numeric: tabular-nums;
 }
 .hsp-kpi__label {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   color: rgba(255, 255, 255, 0.92);
 }
 .hsp-kpi__hint {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   color: rgba(255, 255, 255, 0.68);
   line-height: 1.35;
 }
@@ -1204,7 +1204,7 @@
   border-radius: var(--radius-sm, 0.4rem);
   background: rgba(184, 150, 63, 0.18);
   border: 1px solid rgba(184, 150, 63, 0.35);
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   color: #fff;
 }
@@ -1266,7 +1266,7 @@
   color: #fff;
 }
 .hsp-ring__hole span {
-  font-size: 0.62rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: rgba(255, 255, 255, 0.72);
 }
@@ -1302,20 +1302,20 @@
 .hsp-dot.hsp-tone--sand { background: var(--hsp-sand); }
 .hsp-dot.hsp-tone--neutral { background: var(--hsp-mute); }
 .hsp-ring-legend__label {
-  font-size: 0.74rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   color: rgba(255, 255, 255, 0.92);
 }
 .hsp-ring-legend__meta {
   display: grid;
   justify-items: end;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   color: rgba(255, 255, 255, 0.88);
   font-variant-numeric: tabular-nums;
 }
 .hsp-ring-legend__meta small {
-  font-size: 0.64rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: rgba(255, 255, 255, 0.68);
 }
@@ -1352,9 +1352,9 @@
   gap: 0.5rem;
   align-items: baseline;
 }
-.hsp-bar__label { font-size: 0.78rem; font-weight: 800; color: rgba(255,255,255,0.92); }
+.hsp-bar__label { font-size: var(--text-caption); font-weight: 800; color: rgba(255,255,255,0.92); }
 .hsp-bar__value {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: rgba(255,255,255,0.78);
   text-align: start;
@@ -1417,12 +1417,12 @@
   color: #fff;
 }
 .hsp-coverage__item span {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   color: rgba(255, 255, 255, 0.92);
 }
 .hsp-coverage__item small {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   color: rgba(255, 255, 255, 0.68);
 }
 
@@ -1440,7 +1440,7 @@
   border-radius: var(--radius-sm, 0.45rem);
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: rgba(255, 255, 255, 0.9);
 }
@@ -1452,7 +1452,7 @@
   border-radius: var(--radius-md, 0.65rem);
   background: rgba(12, 33, 28, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 0.72rem !important;
+  font-size: var(--text-caption) !important;
   line-height: 1.55 !important;
   color: rgba(255, 255, 255, 0.78) !important;
 }

@@ -19,7 +19,7 @@
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.25);
   color: #FFFFFF;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.25rem 0.85rem;
   border-radius: var(--ds-radius-full);
@@ -39,7 +39,7 @@
   min-width: 72px;
 }
 .zk-hero__stat strong { font-size: 1.6rem; font-weight: 900; color: #FFFFFF; line-height: 1.1; }
-.zk-hero__stat span { font-size: 0.8rem; color: rgba(255,255,255,0.78); margin-top: 0.15rem; }
+.zk-hero__stat span { font-size: var(--text-caption); color: rgba(255,255,255,0.78); margin-top: 0.15rem; }
 
 /* المصارف الثمانية */
 .zk-mustahiq { margin-bottom: 1.75rem; }
@@ -76,7 +76,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   flex-shrink: 0;
 }
@@ -102,13 +102,13 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.76rem;
+  font-size: var(--text-caption);
   color: var(--mj-brand);
   margin-bottom: 1rem;
 }
 .zk-calc__fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.65rem; margin-bottom: 0.85rem; }
 .zk-calc__field { display: flex; flex-direction: column; gap: 0.3rem; }
-.zk-calc__field span { font-size: 0.78rem; font-weight: 700; color: var(--mj-brand-deep); }
+.zk-calc__field span { font-size: var(--text-caption); font-weight: 700; color: var(--mj-brand-deep); }
 .zk-calc__input {
   padding: 0.55rem 0.75rem;
   border: 1.5px solid var(--mj-brand-soft);
@@ -178,7 +178,7 @@
 .zk-card__icon { font-size: 1.8rem; flex-shrink: 0; line-height: 1; }
 .zk-card__header-text { flex: 1; min-width: 0; text-align: end; }
 .zk-card__title { font-size: 0.95rem; font-weight: 800; color: var(--mj-brand-deep); }
-.zk-card__rate { font-size: 0.78rem; color: var(--mj-brand); font-weight: 600; margin-top: 0.1rem; }
+.zk-card__rate { font-size: var(--text-caption); color: var(--mj-brand); font-weight: 600; margin-top: 0.1rem; }
 .zk-card__chevron { flex-shrink: 0; color: var(--mj-brand); }
 
 /* تفاصيل */
@@ -200,7 +200,7 @@
   background: rgba(31,77,58,0.08);
   border: 1px solid rgba(31,77,58,0.2);
   color: var(--mj-brand-deep);
-  font-size: 0.73rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   padding: 0.2rem 0.55rem;
   border-radius: var(--ds-radius-full);

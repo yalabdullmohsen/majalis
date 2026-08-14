@@ -44,7 +44,7 @@
 }
 .mzp-subtitle {
   margin: 0.3rem 0 0;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--msk-text-2, var(--majalis-ink-muted));
   line-height: 1.45;
 }
@@ -103,7 +103,7 @@
 
 .mzp-pattern-group { margin-bottom: 0.65rem; }
 .mzp-pattern-label {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--msk-text-2, var(--majalis-ink-muted));
   padding: 0.35rem 0.25rem 0.45rem;
@@ -142,7 +142,7 @@
   color: #fff !important;
   cursor: pointer;
   font: inherit !important;
-  font-size: 0.72rem !important;
+  font-size: var(--text-caption) !important;
   font-weight: 700 !important;
   display: inline-flex !important;
   align-items: center;
@@ -155,7 +155,7 @@
   line-height: 1.2;
 }
 .mzp-preview-btn__icon {
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   line-height: 1;
 }
 .mzp-preview-btn__label {
@@ -173,7 +173,7 @@
   margin-inline-start: 0.35rem;
   padding: 0.05rem 0.35rem;
   border-radius: 0.35rem;
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   vertical-align: middle;
   background: color-mix(in srgb, var(--msk-gold, #1c5244) 14%, transparent);
@@ -207,7 +207,7 @@
   max-width: 100%;
 }
 .mzp-origin {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: var(--msk-text-2, var(--majalis-ink-muted));
   display: flex;
   flex-wrap: wrap;
@@ -219,7 +219,7 @@
   align-items: center;
   padding: 0.08rem 0.4rem;
   border-radius: 0.4rem;
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   background: color-mix(in srgb, var(--msk-gold, #1c5244) 12%, transparent);
   color: var(--msk-gold, var(--majalis-emerald, var(--mj-brand-deep)));
@@ -245,7 +245,7 @@
   border-color: var(--msk-gold, var(--majalis-emerald));
   background: var(--msk-gold, var(--majalis-emerald, var(--mj-brand-deep)));
 }
-.mzp-check { font-size: 0.65rem; line-height: 1; }
+.mzp-check { font-size: var(--text-caption); line-height: 1; }
 
 .mzp-footer {
   flex-shrink: 0;

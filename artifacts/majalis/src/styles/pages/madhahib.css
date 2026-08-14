@@ -19,7 +19,7 @@
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.25);
   color: #FFFFFF;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.25rem 0.85rem;
   border-radius: var(--ds-radius-full);
@@ -48,7 +48,7 @@
 .mdb-hero__nav-btn:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.4); }
 .mdb-hero__nav-btn--active { background: rgba(255,255,255,0.3); border-color: #FFFFFF; box-shadow: 0 0 0 2px rgba(255,255,255,0.15); }
 .mdb-hero__nav-icon { font-size: var(--ds-text-2xl); line-height: 1; }
-.mdb-hero__nav-name { font-size: 0.8rem; font-weight: 700; color: #FFFFFF; }
+.mdb-hero__nav-name { font-size: var(--text-caption); font-weight: 700; color: #FFFFFF; }
 
 /* قائمة البطاقات */
 .mdb-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
@@ -81,7 +81,7 @@
 .mdb-card__header-left { display: flex; align-items: center; gap: 0.85rem; flex: 1; min-width: 0; }
 .mdb-card__icon { font-size: 2.2rem; flex-shrink: 0; line-height: 1; }
 .mdb-card__name { font-size: 1.05rem; font-weight: 900; color: var(--mj-brand-deep); }
-.mdb-card__founder { font-size: 0.8rem; color: var(--mj-brand-deep); margin-top: 0.15rem; }
+.mdb-card__founder { font-size: var(--text-caption); color: var(--mj-brand-deep); margin-top: 0.15rem; }
 .mdb-card__origin { font-size: var(--ds-text-xs); color: var(--mj-brand); margin-top: 0.1rem; }
 .mdb-card__spread { flex-shrink: 0; font-size: var(--ds-text-xs); color: #6B9E86; max-width: 120px; text-align: start; line-height: 1.4; }
 
@@ -91,7 +91,7 @@
 
 /* أقسام داخل البطاقة */
 .mdb-section { margin-bottom: 1rem; }
-.mdb-section__title { font-size: 0.78rem; font-weight: 800; color: var(--mj-brand); margin-bottom: 0.45rem; letter-spacing: normal; }
+.mdb-section__title { font-size: var(--text-caption); font-weight: 800; color: var(--mj-brand); margin-bottom: 0.45rem; letter-spacing: normal; }
 .mdb-section__body { font-size: 0.87rem; color: var(--mj-brand-deep); line-height: 1.7; }
 
 /* المصادر */
@@ -100,7 +100,7 @@
   background: rgba(31,77,58,0.08);
   border: 1px solid rgba(31,77,58,0.2);
   color: var(--mj-brand-deep);
-  font-size: 0.76rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   padding: 0.25rem 0.65rem;
   border-radius: var(--ds-radius-full);
@@ -115,7 +115,7 @@
   position: relative;
   line-height: 1.5;
 }
-.mdb-feature::before { content: "◆"; position: absolute; inset-inline-end: 0; font-size: 0.55rem; color: var(--mj-brand); top: 0.25rem; }
+.mdb-feature::before { content: "◆"; position: absolute; inset-inline-end: 0; font-size: var(--text-caption); color: var(--mj-brand); top: 0.25rem; }
 
 /* الكتب */
 .mdb-books { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--ds-space-2); }
@@ -128,7 +128,7 @@
   flex-direction: column;
 }
 .mdb-book__title { font-size: 0.83rem; font-weight: 700; color: var(--mj-brand-deep); }
-.mdb-book__author { font-size: 0.73rem; color: var(--mj-brand); margin-top: 0.15rem; }
+.mdb-book__author { font-size: var(--text-caption); color: var(--mj-brand); margin-top: 0.15rem; }
 
 /* العلماء */
 .mdb-scholars { display: flex; flex-wrap: wrap; gap: 0.4rem; }
@@ -136,7 +136,7 @@
   background: #FFFFFF;
   border: 1.5px solid var(--mj-brand-soft);
   color: var(--mj-brand-deep);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   padding: 0.28rem 0.7rem;
   border-radius: var(--ds-radius);
@@ -153,7 +153,7 @@
 }
 .mdb-quote blockquote { margin: 0; padding: 0; border: none; }
 .mdb-quote blockquote p { font-size: 0.9rem; color: #FFFFFF; font-style: normal; line-height: 1.65; margin: 0 0 0.3rem; }
-.mdb-quote blockquote footer { font-size: 0.78rem; color: rgba(255,255,255,0.75); font-weight: 700; }
+.mdb-quote blockquote footer { font-size: var(--text-caption); color: rgba(255,255,255,0.75); font-weight: 700; }
 
 /* تنبيه */
 .mdb-notice {

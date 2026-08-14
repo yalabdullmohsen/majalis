@@ -16,7 +16,7 @@
   gap: 0.4rem;
 }
 .hws__streak-badge {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   background: linear-gradient(135deg, #FF6B35, #FF8C42);
   color: #fff;
@@ -59,7 +59,7 @@
   border-width: 2.5px;
 }
 .hws__label {
-  font-size: 0.62rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--majalis-ink-soft);
 }
@@ -68,7 +68,7 @@
   font-weight: 800;
 }
 .hws__tip {
-  font-size: 0.76rem;
+  font-size: var(--text-caption);
   color: var(--majalis-ink-soft);
   text-align: center;
   margin: 0.25rem 0 0;

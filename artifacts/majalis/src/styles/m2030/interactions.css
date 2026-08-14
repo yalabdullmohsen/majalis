@@ -181,7 +181,7 @@ textarea {
   background: var(--surface-inverse) !important;
   color: var(--text-on-dark) !important;
   border: 1px solid color-mix(in srgb, var(--brand) 35%, transparent);
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   padding: 0.1rem 0.4rem;
   border-radius: var(--r-xs);
 }

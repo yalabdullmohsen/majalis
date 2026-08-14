@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: var(--clr-ink-soft, var(--mj-muted));
   margin-bottom: 1.2rem;
 }
@@ -41,7 +41,7 @@
   transition: width .4s ease;
 }
 .lqp2-progress__label {
-  font-size: 0.74rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--clr-ink-soft, var(--mj-muted));
   white-space: nowrap;
@@ -63,7 +63,7 @@
 }
 .lqp2-q-num {
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--mj-brand);
   background: rgba(23,61,53,.1);
@@ -121,7 +121,7 @@
   border-radius: 50%;
   background: rgba(23,61,53,.12);
   color: var(--mj-brand);
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -283,7 +283,7 @@
   border-radius: 50%;
   background: rgba(220,38,38,.1);
   color: #dc2626;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -370,7 +370,7 @@ html[data-theme="dark"] .lqp2-error-card { background: rgba(255,255,255,.04); bo
   gap: 0.05rem;
 }
 .lcp2-event__day { font-size: 1.3rem; font-weight: 800; color: var(--mj-brand); line-height: 1; }
-.lcp2-event__month { font-size: 0.65rem; font-weight: 700; color: var(--mj-brand); text-transform: uppercase; letter-spacing: normal; }
+.lcp2-event__month { font-size: var(--text-caption); font-weight: 700; color: var(--mj-brand); text-transform: uppercase; letter-spacing: normal; }
 
 /* محتوى */
 .lcp2-event__body { flex: 1; display: flex; flex-direction: column; gap: 0.4rem; }
@@ -379,7 +379,7 @@ html[data-theme="dark"] .lqp2-error-card { background: rgba(255,255,255,.04); bo
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--mj-brand);
   background: rgba(23,61,53,.1);
@@ -393,7 +393,7 @@ html[data-theme="dark"] .lqp2-error-card { background: rgba(255,255,255,.04); bo
   display: flex;
   align-items: center;
   gap: var(--ds-space-1);
-  font-size: 0.76rem;
+  font-size: var(--text-caption);
   color: var(--clr-ink-soft, var(--mj-muted));
 }
 
@@ -406,7 +406,7 @@ html[data-theme="dark"] .lqp2-error-card { background: rgba(255,255,255,.04); bo
   align-self: flex-start;
   padding: 0.4rem 0.85rem;
   border-radius: var(--ds-radius);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   cursor: pointer;
   border: 1.5px solid var(--mj-brand);

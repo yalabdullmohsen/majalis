@@ -64,7 +64,7 @@
 
 .thc-btn {
   font: inherit;
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   padding: 0.35rem 0.7rem;
   border-radius: 0.45rem;
   border: 1px solid transparent;

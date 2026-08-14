@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════
    UAP. UniversitiesAdminPage
    ══════════════════════════════════════════════ */
-.uap-label { display: block; font-size: .75rem; font-weight: 500; color: var(--majalis-ink-soft); margin-bottom: .25rem; }
+.uap-label { display: block; font-size: var(--text-caption); font-weight: 500; color: var(--majalis-ink-soft); margin-bottom: .25rem; }
 .uap-input {
   width: 100%; padding: .5rem .75rem; font-size: .875rem;
   border-radius: .75rem; border: 1px solid var(--majalis-line);
@@ -47,34 +47,34 @@
 .uap-add-link:hover { text-decoration: underline; }
 .uap-uni-card { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-xl); padding: var(--ds-space-4); }
 .uap-uni-name { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; }
-.uap-verified-badge { font-size: .75rem; background: var(--majalis-emerald-muted, rgba(31,77,58,.1)); color: var(--majalis-emerald); padding: .125rem .375rem; border-radius: .25rem; }
-.uap-unpublished-badge { font-size: .75rem; background: #fef2f2; color: var(--majalis-danger, #dc2626); padding: .125rem .375rem; border-radius: .25rem; }
-.uap-uni-meta { font-size: .75rem; color: var(--majalis-ink-soft); margin-top: .125rem; }
-.uap-uni-date { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .4; margin-top: .125rem; }
+.uap-verified-badge { font-size: var(--text-caption); background: var(--majalis-emerald-muted, rgba(31,77,58,.1)); color: var(--majalis-emerald); padding: .125rem .375rem; border-radius: .25rem; }
+.uap-unpublished-badge { font-size: var(--text-caption); background: #fef2f2; color: var(--majalis-danger, #dc2626); padding: .125rem .375rem; border-radius: .25rem; }
+.uap-uni-meta { font-size: var(--text-caption); color: var(--majalis-ink-soft); margin-top: .125rem; }
+.uap-uni-date { font-size: var(--text-caption); color: var(--majalis-ink-soft); opacity: .4; margin-top: .125rem; }
 .uap-view-btn {
-  padding: .375rem .625rem; font-size: .75rem;
+  padding: .375rem .625rem; font-size: var(--text-caption);
   background: var(--majalis-parchment-deep, #f0ece4); color: var(--majalis-ink-soft);
   border-radius: .5rem; border: none; cursor: pointer; text-decoration: none;
   transition: background .15s;
 }
 .uap-view-btn:hover { background: var(--majalis-line); }
 .uap-edit-btn {
-  padding: .375rem .625rem; font-size: .75rem;
+  padding: .375rem .625rem; font-size: var(--text-caption);
   background: var(--majalis-emerald-muted, rgba(31,77,58,.1)); color: var(--majalis-emerald);
   border-radius: .5rem; border: none; cursor: pointer;
   transition: opacity .15s;
 }
 .uap-edit-btn:hover { opacity: .8; }
 .uap-progs-list { padding-inline-end: .5rem; border-inline-end: 1px solid var(--majalis-line); }
-.uap-prog-item { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: var(--majalis-ink-soft); }
+.uap-prog-item { display: flex; align-items: center; gap: .5rem; font-size: var(--text-caption); color: var(--majalis-ink-soft); }
 .uap-prog-dot { color: var(--majalis-emerald); }
 .uap-deg-badge { background: var(--majalis-parchment-deep, #f0ece4); padding: .125rem .375rem; border-radius: .25rem; }
-.uap-add-prog-btn { font-size: .75rem; color: var(--majalis-emerald); background: none; border: none; cursor: pointer; }
+.uap-add-prog-btn { font-size: var(--text-caption); color: var(--majalis-emerald); background: none; border: none; cursor: pointer; }
 .uap-add-prog-btn:hover { text-decoration: underline; }
-.uap-note { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; }
+.uap-note { font-size: var(--text-caption); color: var(--majalis-ink-soft); opacity: .6; }
 .uap-reminder-card { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: .75rem; padding: var(--ds-space-4); }
 .uap-reminder-title { font-weight: 600; font-size: .875rem; color: var(--majalis-ink); }
-.uap-reminder-link { font-size: .75rem; color: var(--majalis-emerald); margin-top: .25rem; display: block; }
+.uap-reminder-link { font-size: var(--text-caption); color: var(--majalis-emerald); margin-top: .25rem; display: block; }
 .uap-reminder-link:hover { text-decoration: underline; }
 
 /* ── أنماط قصص الأنبياء نُقلت بالكامل إلى styles/pages/prophet-stories.css ── */
@@ -105,9 +105,9 @@
 .is-info { flex: 1; }
 .is-name { font-size: 0.975rem; font-weight: 700; color: #1e293b; }
 .is-meta { font-size: var(--ds-text-xs); color: #64748b; margin-top: 2px; }
-.is-badge { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 9999px; letter-spacing: normal; }
+.is-badge { font-size: var(--text-caption); font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 9999px; letter-spacing: normal; }
 .is-badge.pending { background: rgba(23,61,53,0.08); color: var(--mj-brand); border: 1px solid rgba(24,54,42,0.3); }
 .is-badge.done { background: #dcfce7; color: var(--mj-brand); border: 1px solid #bbf7d0; }
 .is-toggle { font-size: var(--ds-text-xs); color: #94a3b8; }
 .is-body { padding: 1.1rem 1.25rem; border-top: 1px solid #e2e8f0; }
-.is-section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: normal; color: #64748b; margin-bottom: 0.5rem; }
+.is-section-label { font-size: var(--text-caption); font-weight: 700; text-transform: uppercase; letter-spacing: normal; color: #64748b; margin-bottom: 0.5rem; }

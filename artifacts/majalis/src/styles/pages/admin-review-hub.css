@@ -108,7 +108,7 @@
   border-radius: 12px;
   background: #f59e0b;
   color: #fff;
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   font-weight: 700;
 }
 
@@ -388,7 +388,7 @@
   border-radius: 6px;
   background: #efebe9;
   color: var(--rh-brown);
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
 }
 
 .rh-flutter-card__ai {
@@ -422,7 +422,7 @@
 .rh-flutter-card__flag {
   margin: 0.65rem 0 0;
   color: var(--rh-rose);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
 }
 
 .rh-flutter-card__flag--muted {
@@ -468,7 +468,7 @@
 
 .rh-flutter-diff__label {
   margin: 0 0 0.35rem;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   opacity: 0.75;
 }
@@ -517,7 +517,7 @@
 }
 
 .rh-linear-audio__time {
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   color: var(--rh-muted);
   white-space: nowrap;
 }
@@ -525,7 +525,7 @@
 .rh-linear-audio__error {
   width: 100%;
   margin: 0.25rem 0 0;
-  font-size: 0.75rem;
+  font-size: var(--text-caption);
   color: var(--rh-rose);
 }
 

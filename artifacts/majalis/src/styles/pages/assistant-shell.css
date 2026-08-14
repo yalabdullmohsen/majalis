@@ -275,7 +275,7 @@ html[data-theme="dark"] .assistant-message-bubble {
   padding: 0.4rem 0.75rem;
   background: var(--majalis-parchment-deep);
   color: var(--majalis-emerald-deep);
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-family: inherit;
   cursor: pointer;
 }
@@ -349,7 +349,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 .assistant-message span {
   display: block;
   margin-bottom: 0.35rem;
-  font-size: 0.76rem;
+  font-size: var(--text-caption);
   font-weight: 800;
   color: var(--majalis-brass-deep);
 }

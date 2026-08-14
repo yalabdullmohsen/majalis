@@ -63,16 +63,32 @@
   --spacing-mj-8: 32px;
   --spacing-mj-12: 48px;
 
-  /* سلّم طباعة موحّد — 6 أحجام فقط */
-  --text-mj-display: 40px;
-  --text-mj-h1: 28px;
-  --text-mj-h2: 20px;
-  --text-mj-body: 16px;
-  --text-mj-small: 14px;
-  --text-mj-tiny: 12px;
-  /* أسماء توافقية (تُعاد إلى السلّم الستة) */
-  --text-mj-sacred: 20px;
-  --text-mj-btn: 14px;
+  /* سلّم طباعة موحّد (rem + clamp) — المصدر في typography-scale.css أيضاً */
+  --text-display: clamp(1.75rem, 5.2vw, 2.25rem);
+  --text-h1: clamp(1.5rem, 4.6vw, 1.875rem);
+  --text-h2: clamp(1.25rem, 3.9vw, 1.5rem);
+  --text-h3: clamp(1.125rem, 3.4vw, 1.25rem);
+  --text-body-lg: 1.125rem;
+  --text-body: 1.0625rem;
+  --text-body-sm: 0.9375rem;
+  --text-label: 0.875rem;
+  --text-caption: 0.8125rem;
+  --text-mj-display: var(--text-display);
+  --text-mj-h1: var(--text-h1);
+  --text-mj-h2: var(--text-h2);
+  --text-mj-body: var(--text-body);
+  --text-mj-small: var(--text-label);
+  --text-mj-tiny: var(--text-caption);
+  --text-mj-sacred: var(--text-h2);
+  --text-mj-btn: var(--text-label);
+  /* Tailwind text-* utilities → السُلّم */
+  --text-xs: var(--text-caption);
+  --text-sm: var(--text-label);
+  --text-base: var(--text-body);
+  --text-lg: var(--text-body-lg);
+  --text-xl: var(--text-h3);
+  --text-2xl: var(--text-h2);
+  --text-3xl: var(--text-h1);
 
   /* حواف الجهاز — المصدر الوحيد لـ safe-area (لا تكتب env() خارج هذا الملف) */
   --inset-top: env(safe-area-inset-top, 0px);
@@ -186,14 +202,14 @@
   --mj-face: var(--font-app);
   --mj-ui: var(--font-app);
   --mj-num: var(--font-app);
-  --mj-fs-display: 40px;
-  --mj-fs-h1: 28px;
-  --mj-fs-h2: 20px;
-  --mj-fs-sacred: 20px;
-  --mj-fs-body: 16px;
-  --mj-fs-btn: 14px;
-  --mj-fs-small: 14px;
-  --mj-fs-tiny: 12px;
+  --mj-fs-display: var(--text-display);
+  --mj-fs-h1: var(--text-h1);
+  --mj-fs-h2: var(--text-h2);
+  --mj-fs-sacred: var(--text-h2);
+  --mj-fs-body: var(--text-body);
+  --mj-fs-btn: var(--text-label);
+  --mj-fs-small: var(--text-label);
+  --mj-fs-tiny: var(--text-caption);
   --mj-lh-tight: 1.15;
   --mj-lh-title: 1.55;
   --mj-lh-card: 1.7;

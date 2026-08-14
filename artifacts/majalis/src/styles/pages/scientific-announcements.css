@@ -54,7 +54,7 @@
 }
 
 .sci-ann-card__badge {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
@@ -105,7 +105,7 @@
 }
 
 .sci-ann-card__meta-label {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--msk-text-2, var(--mj-ink-2));
 }
@@ -123,7 +123,7 @@
 }
 
 .sci-ann-card__tag {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   padding: 0.25rem 0.55rem;
   border-radius: 999px;

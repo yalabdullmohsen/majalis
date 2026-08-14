@@ -76,7 +76,7 @@
 }
 
 .qa-v2-category-card__desc {
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   color: var(--mn-text-default);
   line-height: 1.4;
 }

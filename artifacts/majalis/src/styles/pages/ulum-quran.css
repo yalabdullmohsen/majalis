@@ -16,7 +16,7 @@
   border: 1px solid rgba(255,255,255,.3);
   border-radius: 2rem;
   padding: .3rem .9rem;
-  font-size: .75rem; font-weight: 600;
+  font-size: var(--text-caption); font-weight: 600;
   margin-bottom: .8rem; color: #fff;
 }
 .uq-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: #fff; }
@@ -68,7 +68,7 @@
 .uq-dalil-box {
   display: flex; gap: .4rem; align-items: flex-start;
   background: #EEF2FF; border-radius: .5rem; padding: .45rem .65rem;
-  font-size: .75rem; color: #3730A3; line-height: 1.5;
+  font-size: var(--text-caption); color: #3730A3; line-height: 1.5;
 }
 .uq-dalil-box__icon { flex-shrink: 0; }
 
@@ -92,7 +92,7 @@
 .uq-jam-chevron--open { transform: rotate(180deg); }
 .uq-jam-body { margin: 0; padding: .5rem 1rem .9rem 1rem; border-top: 1px solid #F3F4F6; list-style: none; display: flex; flex-direction: column; gap: .4rem; }
 .uq-jam-item { display: flex; gap: .5rem; align-items: flex-start; font-size: .83rem; color: var(--mj-ink-2); line-height: 1.5; }
-.uq-jam-item::before { content: "●"; color: var(--majalis-emerald,var(--mj-brand)); font-size: .5rem; margin-top: .4rem; flex-shrink: 0; }
+.uq-jam-item::before { content: "●"; color: var(--majalis-emerald,var(--mj-brand)); font-size: var(--text-caption); margin-top: .4rem; flex-shrink: 0; }
 
 /* info box */
 .uq-info-box {
@@ -112,7 +112,7 @@
 .uq-tafsir-icon  { font-size: 1.4rem; flex-shrink: 0; }
 .uq-tafsir-title { font-weight: 700; font-size: .9rem; color: #111; display: block; margin-bottom: .25rem; }
 .uq-tafsir-desc  { font-size: .82rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .3rem; }
-.uq-tafsir-ex    { font-size: .74rem; color: var(--majalis-emerald,var(--mj-brand)); font-weight: 600; }
+.uq-tafsir-ex    { font-size: var(--text-caption); color: var(--majalis-emerald,var(--mj-brand)); font-weight: 600; }
 
 .uq-mufassirun { display: flex; flex-direction: column; gap: .5rem; }
 .uq-mufassir-row {
@@ -122,9 +122,9 @@
 }
 .uq-mufassir-info { display: flex; flex-direction: column; min-width: 8rem; }
 .uq-mufassir-name { font-weight: 700; font-size: .85rem; color: #111; }
-.uq-mufassir-era  { font-size: .72rem; color: #9CA3AF; }
+.uq-mufassir-era  { font-size: var(--text-caption); color: #9CA3AF; }
 .uq-mufassir-kitab { display: block; font-size: .83rem; font-weight: 600; color: var(--majalis-emerald,var(--mj-brand)); }
-.uq-mufassir-note  { display: block; font-size: .72rem; color: var(--mj-ink-2); }
+.uq-mufassir-note  { display: block; font-size: var(--text-caption); color: var(--mj-ink-2); }
 
 /* إعجاز */
 .uq-ijaz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.5rem; }
@@ -134,14 +134,14 @@
 }
 .uq-ijaz-icon  { font-size: 1.6rem; display: block; margin-bottom: .4rem; }
 .uq-ijaz-title { font-size: .8rem; font-weight: 700; color: #111; display: block; margin-bottom: .3rem; }
-.uq-ijaz-desc  { font-size: .73rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
+.uq-ijaz-desc  { font-size: var(--text-caption); color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 .uq-ijaz-ayah {
   background: linear-gradient(135deg, var(--mj-brand-deep), var(--majalis-emerald,var(--mj-brand)));
   border-radius: .8rem; padding: 1.1rem 1.3rem;
 }
 .uq-ijaz-ayah__text { font-family: var(--font-quran,"Scheherazade New",serif); font-size: 1.1rem; line-height: 2.1; color: #fff; margin: 0 0 .4rem; font-style: normal; }
-.uq-ijaz-ayah__ref  { font-size: .72rem; color: rgba(255,255,255,.75); font-style: normal; }
+.uq-ijaz-ayah__ref  { font-size: var(--text-caption); color: rgba(255,255,255,.75); font-style: normal; }
 
 /* محكم ومتشابه */
 .uq-mm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
@@ -149,9 +149,9 @@
 .uq-mm-title { font-size: .9rem; font-weight: 800; color: var(--majalis-emerald,var(--mj-brand)); margin: 0 0 .4rem; }
 .uq-mm-def   { font-size: .8rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .5rem; }
 .uq-mm-examples { display: flex; flex-direction: column; gap: .25rem; }
-.uq-mm-examples__label { font-size: .7rem; font-weight: 700; color: #9CA3AF; display: block; margin-bottom: .1rem; }
+.uq-mm-examples__label { font-size: var(--text-caption); font-weight: 700; color: #9CA3AF; display: block; margin-bottom: .1rem; }
 .uq-mm-examples__item  {
-  font-size: .75rem; background: #F0F7F4; border-radius: .4rem;
+  font-size: var(--text-caption); background: #F0F7F4; border-radius: .4rem;
   padding: .2rem .5rem; color: var(--mj-brand-deep); font-weight: 600; display: block;
 }
 
@@ -169,7 +169,7 @@
 }
 .uq-naskh-title { font-weight: 700; font-size: .88rem; color: #111; margin: 0 0 .25rem; display: block; }
 .uq-naskh-desc  { font-size: .82rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .3rem; display: block; }
-.uq-naskh-ex    { font-size: .74rem; color: var(--majalis-emerald,var(--mj-brand)); font-weight: 600; display: block; }
+.uq-naskh-ex    { font-size: var(--text-caption); color: var(--majalis-emerald,var(--mj-brand)); font-weight: 600; display: block; }
 
 /* related */
 .uq-related { margin-top: 2.5rem; }
@@ -222,7 +222,7 @@
   background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
   color: var(--mj-bg);
   border-radius: 50%;
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   font-family: var(--font-body, "IBM Plex Sans Arabic", sans-serif);
 }
@@ -234,13 +234,13 @@
   line-height: 1.35;
 }
 .uq-qiraat-card__imam {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   color: #4b5563;
   margin: 0;
 }
 .uq-qiraat-card__origin {
   margin-inline-end: auto;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   color: var(--mj-muted);
   white-space: nowrap;
   background: rgba(23,61,53,.07);
@@ -255,11 +255,11 @@
   flex-wrap: wrap;
 }
 .uq-qiraat-card__rawi-label {
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   color: var(--mj-muted);
 }
 .uq-qiraat-card__rawi {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--mj-brand-deep);
   background: rgba(21,48,37,.07);
@@ -268,7 +268,7 @@
 }
 .uq-qiraat-card__sep { color: #9ca3af; font-size: var(--ds-text-xs); }
 .uq-qiraat-card__note {
-  font-size: 0.76rem;
+  font-size: var(--text-caption);
   color: #4b5563;
   line-height: 1.55;
   margin: 0;
@@ -295,7 +295,7 @@
   margin: 0 0 0.35rem;
 }
 .uq-usul-card__desc {
-  font-size: 0.77rem;
+  font-size: var(--text-caption);
   color: var(--mj-ink-2);
   line-height: 1.65;
   margin: 0;

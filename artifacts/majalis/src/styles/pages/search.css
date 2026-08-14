@@ -30,7 +30,7 @@
   background: var(--elite-sage-2, #F4F4F1);
   border: 1px solid var(--elite-border-2, rgba(24,54,42,0.15));
   border-radius: var(--ds-radius-full);
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--elite-ink-soft, #5D726A);
   font-family: inherit;
@@ -54,7 +54,7 @@
 }
 
 .search-toolbar-link {
-  font-size: 0.8rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   color: var(--elite-forest, var(--mj-brand-deep));
   text-decoration: none;
@@ -65,7 +65,7 @@
 }
 
 .search-response-ms {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: var(--elite-ink-faint, var(--mj-ink-2));
   margin-inline-end: auto;
 }
@@ -244,7 +244,7 @@
 }
 
 .search-topic-chips__label {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--elite-ink-soft, #5D726A);
 }
@@ -255,7 +255,7 @@
   border: 1px solid rgba(24,54,42,0.15);
   border-radius: var(--ds-radius-full);
   color: var(--elite-forest, var(--mj-brand-deep));
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.15s;
@@ -293,7 +293,7 @@
 }
 
 .search-results-count {
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--elite-ink-faint, var(--mj-ink-2));
   background: var(--elite-sage-2, #F4F4F1);
@@ -364,7 +364,7 @@
 }
 
 .search-result-keywords {
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   color: var(--elite-ink-faint, #D6D5CE);
   line-height: 1.4;
 }
@@ -378,7 +378,7 @@
   display: inline-block;
   padding: 0.08rem 0.45rem;
   border-radius: var(--ds-radius-full);
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: normal;
   flex-shrink: 0;
@@ -430,12 +430,12 @@
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.73rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--clr-primary, var(--mj-brand));
 }
 .srch-history-clear {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   color: #888;
   background: none;
   border: none;
@@ -455,7 +455,7 @@
   align-items: center;
   gap: 0.3rem;
   padding: 0.28rem 0.7rem;
-  font-size: 0.76rem;
+  font-size: var(--text-caption);
   background: rgba(23,61,53,.09);
   border: 1px solid rgba(23,61,53,.2);
   border-radius: var(--ds-radius-xl);
@@ -474,7 +474,7 @@
   margin-top: 1.25rem;
 }
 .srch-quick-sections__title {
-  font-size: 0.78rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   color: var(--clr-primary, var(--mj-brand));
   margin-bottom: 0.5rem;

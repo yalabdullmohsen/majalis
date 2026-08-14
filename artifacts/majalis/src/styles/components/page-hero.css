@@ -53,7 +53,7 @@ html.dark .pattern-backdrop {
 }
 .page-hero-mj__eyebrow {
   margin: 0;
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: 0.12em;
   color: var(--mj-brand);
@@ -161,7 +161,7 @@ html.dark .pattern-backdrop {
   box-shadow: none;
 }
 .filter-chips__soon {
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   opacity: 0.75;
   flex-shrink: 0;

@@ -687,7 +687,7 @@ html[data-theme="dark"] .snr-mindmap-title { color: var(--mj-hairline) !importan
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.65rem;
+  font-size: var(--text-caption);
   flex-shrink: 0;
   transition: transform 200ms ease, background 150ms ease;
   color: var(--elite-green, var(--mj-brand-deep));
@@ -759,7 +759,7 @@ html[data-theme="dark"] .snr-mindmap-child-link {
   background: rgba(24,54,42,0.05);
 }
 
-.snr-mindmap-child-arrow { font-size: 0.7rem; opacity: 0.5; }
+.snr-mindmap-child-arrow { font-size: var(--text-caption); opacity: 0.5; }
 
 /* ── صفحة التفصيل ── */
 .snr-detail-page {
@@ -915,7 +915,7 @@ html[data-theme="dark"] .snr-evidence-text { color: var(--mj-hairline) !importan
   border-radius: 50%;
   background: var(--elite-green, var(--mj-brand-deep));
   color: #fff;
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   display: flex;
   align-items: center;
