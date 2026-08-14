@@ -88,11 +88,11 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 1.25rem 0.75rem;
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid rgba(0,0,0,0.08);
   border-radius: 1rem;
   text-decoration: none;
-  color: #1a1a1a;
+  color: var(--mj-ink);
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   transition: transform 0.12s, box-shadow 0.12s;
 }

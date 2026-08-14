@@ -2,7 +2,7 @@
    232 · JanazaPage · /janaza
    ══════════════════════════════════════════════════════════ */
 
-.jnz-page { min-height: 100svh; background: #F9FAFB; padding-bottom: 4rem; }
+.jnz-page { min-height: 100svh; background: var(--mj-bg); padding-bottom: 4rem; }
 
 .jnz-hero {
   background: linear-gradient(155deg, var(--mj-brand-deep) 0%, var(--mj-brand) 70%, var(--mj-brand-deep) 100%);
@@ -55,7 +55,7 @@
   min-width: 5rem;
 }
 .jnz-tab:hover { background: rgba(255,255,255,.22); color: #fff; }
-.jnz-tab--active { background: #F9FAFB; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
+.jnz-tab--active { background: var(--mj-bg); color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
 .jnz-tab__icon { font-size: 1.1rem; }
 .jnz-tab__label { white-space: nowrap; font-size: 0.8rem; }
 
@@ -93,7 +93,7 @@ html.dark .jnz-subtitle {
 .jnz-info__icon { font-size: 1.15rem; flex-shrink: 0; }
 .jnz-info p { margin: 0; }
 
-.jnz-steps { display: flex; flex-direction: column; gap: 0; background: #fff; border: 1px solid var(--mj-hairline); border-radius: .75rem; overflow: hidden; }
+.jnz-steps { display: flex; flex-direction: column; gap: 0; background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .75rem; overflow: hidden; }
 .jnz-step {
   display: flex;
   gap: var(--ds-space-4);
@@ -116,12 +116,12 @@ html.dark .jnz-subtitle {
   flex-shrink: 0;
 }
 .jnz-step__content { flex: 1; }
-.jnz-step__title { display: block; font-size: .9rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
+.jnz-step__title { display: block; font-size: .9rem; font-weight: 700; color: var(--mj-ink); margin-bottom: .2rem; }
 .jnz-step__desc { font-size: .84rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
 
 .jnz-notes { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .4rem; }
 .jnz-note {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .55rem;
   padding: .6rem .9rem;
@@ -134,7 +134,7 @@ html.dark .jnz-subtitle {
 .jnz-note::before { content: "•"; position: absolute; inset-inline-end: .7rem; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 900; font-size: 1.1rem; top: .45rem; }
 
 .jnz-takfin-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .75rem;
   padding: 1rem 1.1rem;
@@ -145,7 +145,7 @@ html.dark .jnz-subtitle {
 }
 .jnz-takfin-card__head { display: flex; align-items: center; gap: .65rem; }
 .jnz-takfin-card__icon { font-size: var(--ds-text-2xl); }
-.jnz-takfin-card__title { font-size: .95rem; font-weight: 700; color: #111; }
+.jnz-takfin-card__title { font-size: .95rem; font-weight: 700; color: var(--mj-ink); }
 .jnz-takfin-card__desc { font-size: .85rem; color: var(--mj-ink-2); line-height: 1.65; margin: 0; }
 .jnz-dalil {
   background: var(--mj-brand-soft);
@@ -159,7 +159,7 @@ html.dark .jnz-subtitle {
 
 .jnz-arkan-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; }
 .jnz-rukn-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .8rem .9rem;
@@ -182,7 +182,7 @@ html.dark .jnz-subtitle {
   flex-shrink: 0;
   border: 2px solid var(--majalis-emerald, var(--mj-brand));
 }
-.jnz-rukn-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
+.jnz-rukn-card__title { display: block; font-size: .88rem; font-weight: 700; color: var(--mj-ink); margin-bottom: .2rem; }
 .jnz-rukn-card__desc { font-size: .79rem; color: #4B5563; line-height: 1.5; margin: 0; }
 
 .jnz-dua-box {
@@ -200,7 +200,7 @@ html.dark .jnz-subtitle {
 
 .jnz-dafn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
 .jnz-dafn-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .85rem .9rem;
@@ -210,11 +210,11 @@ html.dark .jnz-subtitle {
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
 .jnz-dafn-card__icon { font-size: 1.4rem; flex-shrink: 0; }
-.jnz-dafn-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
+.jnz-dafn-card__title { display: block; font-size: .88rem; font-weight: 700; color: var(--mj-ink); margin-bottom: .2rem; }
 .jnz-dafn-card__desc { font-size: .8rem; color: #4B5563; line-height: 1.55; margin: 0; }
 
 .jnz-adab-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .7rem;
   padding: .9rem 1rem;
@@ -224,7 +224,7 @@ html.dark .jnz-subtitle {
   box-shadow: 0 1px 3px rgba(0,0,0,.04);
 }
 .jnz-adab-card__icon { font-size: var(--ds-text-2xl); flex-shrink: 0; }
-.jnz-adab-card__title { display: block; font-size: .9rem; font-weight: 700; color: #111; margin-bottom: .25rem; }
+.jnz-adab-card__title { display: block; font-size: .9rem; font-weight: 700; color: var(--mj-ink); margin-bottom: .25rem; }
 .jnz-adab-card__desc { font-size: .84rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
 
 .jnz-hadith-box {
@@ -244,7 +244,7 @@ html[data-theme="dark"] .jnz-related__title,
 html.dark .jnz-related__title { color: var(--mj-brand-deep, #143F35); }
 .jnz-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .jnz-related__link {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .6rem;
   padding: .6rem .7rem;

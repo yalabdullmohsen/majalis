@@ -183,23 +183,50 @@
 
 html[data-theme="dark"] .mpv-jump-dialog,
 html.dark .mpv-jump-dialog {
-  background: #1a1a1a;
-  color: #d1d1d1;
-  border-color: #333;
+  background: var(--surface-elevated, #222D29);
+  color: var(--text-primary, #ECF2EF);
+  border-color: var(--border-strong, #445651);
 }
 
 html[data-theme="dark"] .mpv-jump-dialog__title,
 html.dark .mpv-jump-dialog__title,
 html[data-theme="dark"] .mpv-jump-dialog__icon,
-html.dark .mpv-jump-dialog__icon,
+html.dark .mpv-jump-dialog__icon {
+  color: var(--text-primary, #ECF2EF);
+}
+
+html[data-theme="dark"] .mpv-jump-dialog__hint,
+html.dark .mpv-jump-dialog__hint,
+html[data-theme="dark"] .mpv-jump-dialog__meta,
+html.dark .mpv-jump-dialog__meta,
+html[data-theme="dark"] .mpv-jump-dialog__label,
+html.dark .mpv-jump-dialog__label,
 html[data-theme="dark"] .mpv-jump-dialog__cancel,
 html.dark .mpv-jump-dialog__cancel {
-  color: #9dceb8;
+  color: var(--text-secondary, #C2CFCA);
 }
 
 html[data-theme="dark"] .mpv-jump-dialog__input,
 html.dark .mpv-jump-dialog__input {
-  background: #262626;
-  color: #d1d1d1;
-  border-color: #444;
+  background: var(--surface, #1B2421);
+  color: var(--text-primary, #ECF2EF);
+  border-color: var(--border-strong, #445651);
+}
+
+html[data-theme="dark"] .mpv-jump-dialog__input::placeholder,
+html.dark .mpv-jump-dialog__input::placeholder {
+  color: var(--text-muted, #9FB0AB);
+}
+
+html[data-theme="dark"] .mpv-jump-dialog__submit,
+html.dark .mpv-jump-dialog__submit {
+  background: var(--accent, #5CC095);
+  color: var(--on-accent, #06231A);
+  border-color: var(--accent, #5CC095);
+}
+
+html[data-theme="dark"] .mpv-jump-dialog__submit:disabled,
+html.dark .mpv-jump-dialog__submit:disabled {
+  opacity: 0.55;
+  color: color-mix(in srgb, var(--on-accent, #06231A) 75%, transparent);
 }

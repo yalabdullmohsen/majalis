@@ -6,17 +6,61 @@
 /* ── رموز لونية محلية للصفحة ── */
 .prophets-lux-page,
 .prophet-detail-lux {
-  --ps-on-emerald: var(--mj-bg);
-  --ps-on-emerald-muted: rgba(250, 250, 248, 0.82);
-  --ps-on-emerald-soft: rgba(250, 250, 248, 0.62);
-  --ps-surface: #FFFFFF;
-  --ps-canvas: var(--msk-canvas, #FAF8F5);
-  --ps-ink: var(--majalis-ink, #1A1A18);
-  --ps-ink-soft: var(--majalis-ink-soft, #4A5560);
-  --ps-line: var(--msk-border, #E5E0D5);
+  /* فوق الزمرد الغامق — أبيض دائمًا (لا mj-bg الليلي الداكن) */
+  --ps-on-emerald: #FFFFFF;
+  --ps-on-emerald-muted: rgba(255, 255, 255, 0.88);
+  --ps-on-emerald-soft: rgba(255, 255, 255, 0.7);
+  --ps-surface: var(--mj-surface, #FFFFFF);
+  --ps-canvas: var(--mj-bg, var(--msk-canvas, #FAF8F5));
+  --ps-ink: var(--mj-ink, var(--majalis-ink, #1A1A18));
+  --ps-ink-soft: var(--mj-ink-2, var(--majalis-ink-soft, #4A5560));
+  --ps-line: var(--mj-hairline, var(--msk-border, #E5E0D5));
   --ps-emerald: var(--majalis-emerald, var(--mj-brand-deep));
-  --ps-emerald-bright: #1F6B56;
+  --ps-emerald-bright: var(--mj-brand, #1F6B56);
   --ps-brass: var(--majalis-brass, var(--mj-accent));
+}
+
+html[data-theme="dark"] .prophets-lux-page,
+html[data-theme="dark"] .prophet-detail-lux,
+html.dark .prophets-lux-page,
+html.dark .prophet-detail-lux {
+  --ps-on-emerald: #FFFFFF;
+  --ps-on-emerald-muted: rgba(236, 242, 239, 0.9);
+  --ps-on-emerald-soft: rgba(236, 242, 239, 0.72);
+  --ps-surface: var(--surface, #1B2421);
+  --ps-canvas: var(--bg, #131A18);
+  --ps-ink: var(--text-primary, #ECF2EF);
+  --ps-ink-soft: var(--text-secondary, #C2CFCA);
+  --ps-line: var(--border, #35443F);
+  --ps-emerald: #1A4A3A;
+  --ps-emerald-bright: var(--accent, #5CC095);
+}
+
+html[data-theme="dark"] .prophets-lux-tab--active,
+html.dark .prophets-lux-tab--active {
+  background: color-mix(in srgb, var(--ps-emerald-bright) 18%, transparent);
+  border-color: var(--ps-emerald-bright);
+  color: var(--ps-emerald-bright);
+}
+
+html[data-theme="dark"] .prophets-lux-tab:disabled,
+html.dark .prophets-lux-tab:disabled {
+  opacity: 0.55;
+  color: var(--text-muted, #9FB0AB);
+  border-color: var(--border, #35443F);
+}
+
+html[data-theme="dark"] .nb-table tr:hover td,
+html.dark .nb-table tr:hover td {
+  background: var(--surface-muted, #222D29);
+}
+html[data-theme="dark"] .nb-table__row--azm td,
+html.dark .nb-table__row--azm td {
+  background: color-mix(in srgb, var(--accent, #5CC095) 12%, var(--ps-surface));
+}
+html[data-theme="dark"] .nb-table__row--clickable:hover td,
+html.dark .nb-table__row--clickable:hover td {
+  background: color-mix(in srgb, var(--accent, #5CC095) 14%, var(--ps-surface));
 }
 
 /* ── Page Shell ── */

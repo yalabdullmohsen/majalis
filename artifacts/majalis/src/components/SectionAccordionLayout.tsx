@@ -90,8 +90,8 @@ function SectionCard({
 }) {
   return (
     <div
-      className="rounded-2xl border overflow-hidden bg-white dark:bg-gray-900 shadow-sm"
-      style={{ borderColor: open ? `${section.color}60` : "#e5e7eb" }}
+      className="rounded-2xl border overflow-hidden bg-[var(--mj-surface)] shadow-sm"
+      style={{ borderColor: open ? `${section.color}60` : "var(--mj-hairline)" }}
     >
       <button
         type="button"

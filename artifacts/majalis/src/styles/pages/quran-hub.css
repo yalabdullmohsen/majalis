@@ -174,7 +174,7 @@
 .quran-hub-card {
   display: flex;
   flex-direction: column;
-  background: #FFFFFF;
+  background: var(--mj-surface);
   border: 1px solid rgba(23,61,53,0.12);
   border-radius: var(--ds-radius-xl);
   overflow: hidden;
@@ -217,7 +217,7 @@
   flex-direction: column;
   gap: 0.4rem;
   flex: 1;
-  background: #FFFFFF;
+  background: var(--mj-surface);
 }
 .quran-hub-card__title {
   font-size: 1.05rem;

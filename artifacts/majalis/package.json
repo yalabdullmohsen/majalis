@@ -318,7 +318,8 @@
     "test:production-p0-regressions": "node --import tsx src/lib/__tests__/production-p0-regressions.test.ts",
     "test:lesson-roles": "node --import tsx src/lib/__tests__/lesson-role-validation.test.ts",
     "test:fiqh-council-completeness": "node --import tsx src/lib/__tests__/fiqh-council-completeness.test.ts",
-    "refresh:lessons-snapshot": "node --import tsx scripts/refresh-lessons-seed-snapshot.mjs"
+    "refresh:lessons-snapshot": "node --import tsx scripts/refresh-lessons-seed-snapshot.mjs",
+    "lint:design-tokens": "node scripts/lint-design-tokens.mjs"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

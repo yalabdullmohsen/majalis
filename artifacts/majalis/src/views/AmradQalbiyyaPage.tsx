@@ -168,7 +168,7 @@ export default function AmradQalbiyyaPage() {
           {DISEASES.map((d) => (
             <div
               key={d.id}
-              className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm"
+              className="rounded-2xl border overflow-hidden shadow-sm bg-[var(--mj-surface)] border-[var(--mj-hairline)]"
             >
               {/* رأس البطاقة */}
               <div
