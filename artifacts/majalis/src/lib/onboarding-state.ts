@@ -227,14 +227,14 @@ export function markStorageNoticeSeen(): boolean {
   return setFlag(ONBOARDING_KEYS.storageNoticeSeen);
 }
 
-/** أي شاشة تهيئة ما زالت مستحقة العرض؟ */
-export function isOnboardingPending(): boolean {
-  return !hasSeenOnboarding() || !hasCompletedPreferences() || !hasSeenReminderPrompt();
+/** أُلغي الدليل السريع / تهيئة أول دخول — لا تُعرض أبدًا. */
+export function shouldShowFirstRunFlow(): boolean {
+  return false;
 }
 
-/** اسم مستقر للبوابة — مرادف لـ isOnboardingPending. */
-export function shouldShowFirstRunFlow(): boolean {
-  return isOnboardingPending();
+/** متبقٍ للتوافق مع الاختبارات القديمة — دائمًا false بعد إلغاء الدليل. */
+export function isOnboardingPending(): boolean {
+  return false;
 }
 
 /** زر «إعادة عرض التهيئة» في الإعدادات — الطريق اليدوي الوحيد. */

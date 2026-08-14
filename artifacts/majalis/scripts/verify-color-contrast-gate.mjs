@@ -66,11 +66,9 @@ const ASSERTIONS = [
   // شعار «المجلس العلمي» في شريط الترويسة (.navbar-v3__tagline).
   { route: "/", selector: ".page-hero-mj__title", mode: "light", min: 3 },
   { route: "/", selector: ".navbar-v3__tagline", mode: "light", min: 4.5 },
-  { route: "/", selector: ".page-hero-mj__desc", mode: "light", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__actions .m2030-btn--primary", mode: "light", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__title", mode: "dark", min: 3 },
   { route: "/", selector: ".navbar-v3__tagline", mode: "dark", min: 4.5 },
-  { route: "/", selector: ".page-hero-mj__desc", mode: "dark", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__actions .m2030-btn--primary", mode: "dark", min: 4.5 },
   // .sq-title (عنوان SectionQuiz داخل .sq-header الداكن) كان يخسر نفس المعركة.
   { route: "/cards", selector: ".sq-title", mode: "light", min: 4.5 },

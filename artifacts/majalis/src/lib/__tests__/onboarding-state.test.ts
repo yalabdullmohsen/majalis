@@ -1,12 +1,11 @@
 /**
- * بوابة التشغيل الأول — الاختبارات الإلزامية الستة.
- * تُحاكي localStorage وdocument.cookie، وتُحاكي *فشل* localStorage الصامت
- * وهو السبب الجذري لتكرار النوافذ في WKWebView.
+ * بوابة التشغيل الأول — بعد إلغاء الدليل السريع:
+ * shouldShowFirstRunFlow / isOnboardingPending دائمًا false،
+ * مع بقاء رايات الخصوصية/الكوكي تعمل.
  */
 import assert from "node:assert/strict";
 import test, { beforeEach } from "node:test";
 
-/* ── محاكاة بيئة المتصفح قبل استيراد الوحدة ─────────────────────────── */
 type Store = Map<string, string>;
 let lsStore: Store = new Map();
 let lsThrows = false;
@@ -62,10 +61,10 @@ const {
   hasSeenStorageNotice,
   markStorageNoticeSeen,
   isOnboardingPending,
+  shouldShowFirstRunFlow,
   resetOnboardingForDisplay,
+  resetOnboardingForSettingsOnly,
   __resetOnboardingStateForTests,
-  ONBOARDING_MAJOR_VERSION,
-  ONBOARDING_KEYS,
 } = mod;
 
 beforeEach(() => {
@@ -73,50 +72,41 @@ beforeEach(() => {
   __resetOnboardingStateForTests();
 });
 
-/* ── ١) مستخدم جديد: تظهر التهيئة مرة واحدة ────────────────────────── */
-test("١ مستخدم جديد: التهيئة مستحقّة، وبعد الإنهاء لا تعود", () => {
+test("الدليل السريع ملغى — لا تهيئة مستحقة أبدًا", () => {
   initOnboardingState();
-  assert.equal(isOnboardingPending(), true, "مستخدم جديد ⇒ التهيئة مستحقّة");
-
-  markOnboardingSeen();
-  markPreferencesCompleted();
-  markReminderPromptSeen();
-
-  assert.equal(isOnboardingPending(), false, "بعد الإنهاء ⇒ غير مستحقّة");
+  assert.equal(isOnboardingPending(), false);
+  assert.equal(shouldShowFirstRunFlow(), false);
+  resetOnboardingForDisplay();
+  resetOnboardingForSettingsOnly();
+  assert.equal(isOnboardingPending(), false);
+  assert.equal(shouldShowFirstRunFlow(), false);
 });
 
-/* ── ٢) بعد «تخطّي»: لا تعود بعد reload ─────────────────────────────── */
-test("٢ «تخطّي» يُسجَّل ويصمد عبر reload", () => {
-  initOnboardingState();
-  markOnboardingSeen();
-  markPreferencesSkipped();
-  markReminderPromptSeen();
-
-  // reload = وحدة تُقرأ من جديد على نفس التخزين
-  initOnboardingState();
-  assert.equal(hasSeenOnboarding(), true);
-  assert.equal(hasCompletedPreferences(), true, "«تخطّي» يُعدّ إتمامًا للتفضيلات");
-  assert.equal(isOnboardingPending(), false, "لا تعود بعد reload");
-});
-
-/* ── ٣) بعد «إنهاء»: لا تعود بعد إغلاق وفتح التطبيق ─────────────────── */
-test("٣ «إنهاء» يصمد عبر إعادة تشغيل التطبيق", () => {
+test("رايات التفضيلات/الخصوصية ما زالت تُكتب وتُقرأ", () => {
   initOnboardingState();
   markOnboardingSeen();
   markPreferencesCompleted();
   markReminderPromptSeen();
   markStorageNoticeSeen();
-
-  // إعادة تشغيل: نفس التخزين، استدعاء init مرة أخرى (idempotent)
-  initOnboardingState();
-  initOnboardingState();
-
-  assert.equal(isOnboardingPending(), false);
-  assert.equal(hasSeenStorageNotice(), true, "شريط الخصوصية لا يعود");
+  assert.equal(hasSeenOnboarding(), true);
+  assert.equal(hasCompletedPreferences(), true);
+  assert.equal(hasSeenReminderPrompt(), true);
+  assert.equal(hasSeenStorageNotice(), true);
+  assert.equal(shouldShowFirstRunFlow(), false);
 });
 
-/* ── ٤) لا إذن إشعارات تلقائي ───────────────────────────────────────── */
-test("٤ الوحدة لا تطلب إذن إشعارات ولا تلمس Notification/Permissions", async () => {
+test("تخطّي التفضيلات يُسجَّل ويصمد عبر reload", () => {
+  initOnboardingState();
+  markOnboardingSeen();
+  markPreferencesSkipped();
+  markReminderPromptSeen();
+  initOnboardingState();
+  assert.equal(hasSeenOnboarding(), true);
+  assert.equal(hasCompletedPreferences(), true);
+  assert.equal(shouldShowFirstRunFlow(), false);
+});
+
+test("الوحدة لا تطلب إذن إشعارات", async () => {
   const { readFileSync } = await import("node:fs");
   const { resolve, dirname } = await import("node:path");
   const { fileURLToPath } = await import("node:url");
@@ -127,81 +117,21 @@ test("٤ الوحدة لا تطلب إذن إشعارات ولا تلمس Notifi
   assert.doesNotMatch(src, /requestPermission|Notification\s*\.|LocalNotifications|PushNotifications/);
 });
 
-/* ── ٥) تحديث الموقع لا يعيد التهيئة؛ الإصدار الكبير وحده يفعل ──────── */
-test("٥ نسخة جديدة لا تعيد التهيئة — الإصدار الكبير فقط", () => {
+test("إخفاق localStorage لا يمنع كتابة الكوكي للرايات", () => {
   initOnboardingState();
-  markOnboardingSeen();
-  markPreferencesCompleted();
-  markReminderPromptSeen();
-  assert.equal(isOnboardingPending(), false);
-
-  // نشر نسخة جديدة = init يُستدعى مرارًا؛ الرايات كما هي
-  for (let i = 0; i < 5; i++) initOnboardingState();
-  assert.equal(isOnboardingPending(), false, "reload/نشر لا يعيد التهيئة");
-
-  // تغيير مقصود للإصدار الكبير ⇒ تُعاد
-  const key = `majalis.onboarding.${ONBOARDING_KEYS.majorVersion}`;
-  lsStore.set(key, String(ONBOARDING_MAJOR_VERSION - 1));
-  (globalThis as unknown as { document: { cookie: string } }).document.cookie =
-    `${key}=; path=/; max-age=0`;
-  initOnboardingState();
-  assert.equal(isOnboardingPending(), true, "رفع الإصدار الكبير يعيد التهيئة");
-});
-
-/* ── ٦) iOS/Capacitor: فشل localStorage الصامت لا يكرّر النوافذ ─────── */
-test("٦ إخفاق localStorage لا يعيد النوافذ — الكوكي يحمل الحالة", () => {
-  initOnboardingState();
-  // WKWebView خصوصية/حصة ممتلئة: setItem وgetItem يرميان
   lsThrows = true;
-
   const durable = markOnboardingSeen();
   markPreferencesCompleted();
   markReminderPromptSeen();
-
-  assert.equal(durable, true, "الكتابة نزلت في طبقة دائمة (كوكي) رغم فشل localStorage");
-  assert.equal(hasSeenOnboarding(), true, "تُقرأ من الكوكي");
-  assert.equal(isOnboardingPending(), false, "لا تكرار للنوافذ بعد WKWebView reload");
-});
-
-/* ── إضافي: زر «إعادة عرض التهيئة» هو الطريق اليدوي الوحيد ─────────── */
-test("زر الإعدادات يعيد العرض عند الطلب فقط", () => {
-  initOnboardingState();
-  markOnboardingSeen();
-  markPreferencesCompleted();
-  markReminderPromptSeen();
-  assert.equal(isOnboardingPending(), false);
-
-  resetOnboardingForDisplay();
-  assert.equal(isOnboardingPending(), true, "بعد الطلب اليدوي تُعرض من جديد");
-
-  // ولا تُعاد تلقائيًا مرة أخرى بعد إتمامها
-  markOnboardingSeen();
-  markPreferencesCompleted();
-  markReminderPromptSeen();
-  initOnboardingState();
-  assert.equal(isOnboardingPending(), false);
-});
-
-test("resetOnboardingForSettingsOnly و shouldShowFirstRunFlow مرادفان مستقران", () => {
-  const {
-    shouldShowFirstRunFlow,
-    resetOnboardingForSettingsOnly,
-  } = mod;
-  initOnboardingState();
-  assert.equal(shouldShowFirstRunFlow(), true);
-  markOnboardingSeen();
-  markPreferencesCompleted();
-  markReminderPromptSeen();
+  assert.equal(durable, true);
+  assert.equal(hasSeenOnboarding(), true);
   assert.equal(shouldShowFirstRunFlow(), false);
-  resetOnboardingForSettingsOnly();
-  assert.equal(shouldShowFirstRunFlow(), true);
 });
 
-/* ── إضافي: الوسم idempotent ───────────────────────────────────────── */
-test("الوسم idempotent — تكراره لا يغيّر شيئًا", () => {
+test("الوسم idempotent", () => {
   initOnboardingState();
   assert.equal(markStorageNoticeSeen(), true);
   assert.equal(markStorageNoticeSeen(), true);
   assert.equal(hasSeenStorageNotice(), true);
-  assert.equal(hasSeenReminderPrompt(), false, "رايات مستقلة لا تتأثر ببعضها");
+  assert.equal(hasSeenReminderPrompt(), false);
 });

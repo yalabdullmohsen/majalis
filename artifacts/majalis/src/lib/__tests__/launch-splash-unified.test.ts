@@ -90,11 +90,6 @@ const icon1024 = readFileSync(resolve(root, "public/brand/icon-1024.png"));
 assert.equal(icon1024[25], 2, "icon-1024 color type = RGB (بلا شفافية)");
 
 const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8");
-assert.doesNotMatch(appSrc, /Onboarding|WelcomeScreen|IntroScreen|BrandReveal/, "لا بوابة ترحيب/كشف شعار");
-assert.match(appSrc, /AppFirstRunHost/, "تهيئة التشغيل الأول مربوطة بعد الإقلاع");
-
-const host = readFileSync(resolve(root, "src/components/AppFirstRunHost.tsx"), "utf8");
-assert.match(host, /FirstRunSetup/, "يحمّل الدخولية الثانية فقط");
-assert.doesNotMatch(host, /splash-logo|mj-brand-reveal|HOLD_MS/, "بلا شاشة شعار وسيطة");
+assert.doesNotMatch(appSrc, /Onboarding|WelcomeScreen|IntroScreen|BrandReveal|AppFirstRunHost|FirstRunSetup/, "لا بوابة ترحيب/دليل سريع");
 
 console.log("launch-splash-unified.test.ts: ok");
