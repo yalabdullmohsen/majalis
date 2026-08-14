@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   listSelectableMuezzins,
-  previewAdhan,
+  previewAdhanAsync,
   stopAdhan,
   type Muezzin,
 } from "@/lib/adhan-audio";
@@ -24,6 +24,7 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
   const [previewing, setPreviewing] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
   const [query, setQuery] = useState("");
+  const [previewError, setPreviewError] = useState<string | null>(null);
   const previewTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const progressTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -90,12 +91,12 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
       clearPreviewTimers();
       setPreviewing(null);
       setProgress(0);
+      setPreviewError(null);
       audioRef.current = null;
       return;
     }
     clearPreviewTimers();
-    const audio = previewAdhan(m);
-    audioRef.current = audio;
+    setPreviewError(null);
     setPreviewing(m.id);
     setProgress(0);
     const started = Date.now();
@@ -104,11 +105,26 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
       const pct = Math.min(100, ((Date.now() - started) / durationMs) * 100);
       setProgress(pct);
     }, 120);
-    audio.addEventListener("ended", () => {
-      clearPreviewTimers();
-      setPreviewing(null);
-      setProgress(0);
-    }, { once: true });
+    void previewAdhanAsync(m).then((result) => {
+      if (!result.ok) {
+        clearPreviewTimers();
+        setPreviewing(null);
+        setProgress(0);
+        setPreviewError(result.message);
+        audioRef.current = null;
+        return;
+      }
+      audioRef.current = result.audio;
+      result.audio.addEventListener(
+        "ended",
+        () => {
+          clearPreviewTimers();
+          setPreviewing(null);
+          setProgress(0);
+        },
+        { once: true },
+      );
+    });
     previewTimerRef.current = setTimeout(() => {
       setPreviewing((p) => (p === m.id ? null : p));
       setProgress(0);
@@ -145,7 +161,7 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
             {isPlaying ? "■" : "▶"}
           </span>
           <span className="mzp-preview-btn__label">
-            {isPlaying ? "إيقاف" : "استماع للتجربة"}
+            {isPlaying ? "إيقاف" : "تجربة الصوت"}
           </span>
         </button>
 
@@ -221,6 +237,11 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
             <div className="mzp-progress" aria-hidden="true">
               <div className="mzp-progress__bar" style={{ width: `${progress}%` }} />
             </div>
+          ) : null}
+          {previewError ? (
+            <p className="mzp-preview-error" role="alert">
+              {previewError}
+            </p>
           ) : null}
         </div>
 

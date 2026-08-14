@@ -16,11 +16,19 @@ import {
 } from "@/lib/prayer-local-notifications";
 import { areLiveActivitiesSupported } from "@/lib/plugins/prayer-live-activity";
 import {
+  PRAYER_CUSTOM_SOUNDS_ENABLED,
   PRAYER_SOUND_PROFILE_OPTIONS,
   type PrayerSoundProfile,
 } from "@/lib/prayer-notification-sounds";
 import { fireTestLocalNotification } from "@/lib/notifications/test-trigger";
 import { isNative } from "@/lib/capacitor-utils";
+import {
+  formatScheduleStatusAr,
+  loadPrayerScheduleStatus,
+  type PrayerScheduleStatus,
+} from "@/lib/prayer-schedule-status";
+import { invalidatePrayerNativeSchedule } from "@/lib/prayer-alert-scheduler";
+import { fetchPrayerTimes } from "@/lib/prayer-times";
 
 function MiniToggle({
   checked,
@@ -48,6 +56,13 @@ function MiniToggle({
   );
 }
 
+function permissionLabel(status: PermissionStatus): string {
+  if (status === "granted") return "الإشعارات مفعّلة";
+  if (status === "denied") return "الإشعارات مرفوضة";
+  if (status === "unsupported") return "الإشعارات غير مدعومة هنا";
+  return "تحتاج تفعيل";
+}
+
 /**
  * بطاقة إعدادات "تنبيه الصلاة القادمة": شريط داخل التطبيق + Live Activity +
  * إشعار قبل الصلاة/عند دخول الوقت. لا يُطلَب إذن الإشعارات هنا تلقائياً —
@@ -60,6 +75,10 @@ export function PrayerAlertSettingsCard() {
   const [liveActivitySupported, setLiveActivitySupported] = useState(false);
   const [testBusy, setTestBusy] = useState(false);
   const [testMsg, setTestMsg] = useState<string | null>(null);
+  const [scheduleStatus, setScheduleStatus] = useState<PrayerScheduleStatus | null>(() =>
+    loadPrayerScheduleStatus(),
+  );
+  const [rescheduleBusy, setRescheduleBusy] = useState(false);
 
   useEffect(() => {
     getNotificationPermissionStatus().then(setPermission);
@@ -73,7 +92,6 @@ export function PrayerAlertSettingsCard() {
   const openSystemSettings = async () => {
     try {
       if (isNative) {
-        // Cap App لا يوفّر openUrl — افتح إعدادات التطبيق عبر مخطط النظام
         window.location.href = "app-settings:";
         return;
       }
@@ -99,6 +117,27 @@ export function PrayerAlertSettingsCard() {
     setTestMsg("تعذّر إرسال الإشعار التجريبي على هذا الجهاز.");
   };
 
+  const runReschedule = async () => {
+    setRescheduleBusy(true);
+    setTestMsg(null);
+    try {
+      invalidatePrayerNativeSchedule();
+      const { startPrayerAlertScheduler } = await import("@/lib/prayer-alert-scheduler");
+      const payload = await fetchPrayerTimes();
+      await startPrayerAlertScheduler(payload, { forceNativeReschedule: true });
+      setScheduleStatus(loadPrayerScheduleStatus());
+      setTestMsg(
+        isNative
+          ? "أُعيدت جدولة الأذان للصلوات القادمة."
+          : "أُعيدت الجدولة (على الويب تعمل الإشعارات أثناء فتح الصفحة).",
+      );
+    } catch {
+      setTestMsg("تعذّرت إعادة جدولة الأذان. حاول مرة أخرى.");
+    } finally {
+      setRescheduleBusy(false);
+    }
+  };
+
   const handleEnableClick = () => {
     if (permission === "prompt" && !hasAskedNotificationPermission()) {
       setShowExplainer(true);
@@ -110,7 +149,6 @@ export function PrayerAlertSettingsCard() {
   const doRequestPermission = async () => {
     markNotificationPermissionAsked();
     await requestNotificationPermission();
-    // أعد الفحص الفعلي — الإلغاء/التأجيل ليس بالضرورة "denied".
     const status = await getNotificationPermissionStatus();
     setPermission(status);
     setShowExplainer(false);
@@ -118,6 +156,9 @@ export function PrayerAlertSettingsCard() {
 
   const alertsOn = prefs.alertsEnabled;
   const preMinutes = prefs.preAlertMinutes;
+  const soundLabel =
+    PRAYER_SOUND_PROFILE_OPTIONS.find((o) => o.id === prefs.soundProfile)?.label ??
+    prefs.soundProfile;
 
   return (
     <div className="ads-card">
@@ -128,7 +169,22 @@ export function PrayerAlertSettingsCard() {
       <div className="ads-card__body">
         <p className="ads-adhan-desc">
           إشعارات قصيرة قبل الصلاة وعند دخول الوقت، مع نصوص متنوعة وصوت مناسب لشاشة القفل.
+          على iOS يكون صوت الإشعار قصيرًا؛ الأذان الكامل يُسمَع داخل التطبيق بعد الفتح.
         </p>
+
+        <div className="ads-row-sep">
+          <div>
+            <div className="ads-global-label">حالة الأذان</div>
+            <div className="ads-global-desc">
+              {permissionLabel(permission)}
+              {" · "}
+              الصوت المختار: {soundLabel}
+              {PRAYER_CUSTOM_SOUNDS_ENABLED ? " (مخصّص)" : " (نظام)"}
+              {" · "}
+              {formatScheduleStatusAr(scheduleStatus)}
+            </div>
+          </div>
+        </div>
 
         {showExplainer && (
           <div className="pasc-explainer">
@@ -193,6 +249,25 @@ export function PrayerAlertSettingsCard() {
               onClick={() => void runTestNotification()}
             >
               {testBusy ? "جارٍ…" : "تجربة"}
+            </button>
+          </div>
+        )}
+
+        {alertsOn && (
+          <div className="ads-row-sep">
+            <div>
+              <div className="ads-global-label">إعادة جدولة الأذان</div>
+              <div className="ads-global-desc">
+                بعد تغيير المدينة أو طريقة الحساب أو عند يوم جديد
+              </div>
+            </div>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              disabled={rescheduleBusy}
+              onClick={() => void runReschedule()}
+            >
+              {rescheduleBusy ? "جارٍ…" : "إعادة جدولة"}
             </button>
           </div>
         )}
@@ -278,7 +353,7 @@ export function PrayerAlertSettingsCard() {
               <div className="ads-global-label">صوت الإشعار</div>
               <div className="ads-global-desc">
                 {PRAYER_SOUND_PROFILE_OPTIONS.find((o) => o.id === prefs.soundProfile)?.hint ??
-                  "صوت النظام حتى تُضاف ملفات مخصصة"}
+                  "صوت مخصّص قصير لشاشة القفل"}
               </div>
             </div>
             <select

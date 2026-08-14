@@ -28,6 +28,15 @@
 		D2B3C4D5E6F708192A3B4C5E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3C4D5E6F708192A3B4C5D /* NetworkService.swift */; };
 		E5F6071890AB12CD01A2B3C4 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6071890AB12CD01A2B3C5 /* KeychainStore.swift */; };
 		EFBF4693BAFB4F5B82254F8C /* PrayerLiveActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4816472931E4AB1A0DE1F42 /* PrayerLiveActivityPlugin.swift */; };
+		AD10BF01A1B2C3D4E5F6071890 /* prayer_quiet.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR01A1B2C3D4E5F6071890 /* prayer_quiet.caf */; };
+		AD10BF02A1B2C3D4E5F6071890 /* prayer_clear.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR02A1B2C3D4E5F6071890 /* prayer_clear.caf */; };
+		AD10BF03A1B2C3D4E5F6071890 /* prayer_soft.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR03A1B2C3D4E5F6071890 /* prayer_soft.caf */; };
+		AD10BF04A1B2C3D4E5F6071890 /* prayer_default.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR04A1B2C3D4E5F6071890 /* prayer_default.caf */; };
+		AD10BF05A1B2C3D4E5F6071890 /* prayer_makkah.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR05A1B2C3D4E5F6071890 /* prayer_makkah.caf */; };
+		AD10BF06A1B2C3D4E5F6071890 /* prayer_madinah.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR06A1B2C3D4E5F6071890 /* prayer_madinah.caf */; };
+		AD10BF07A1B2C3D4E5F6071890 /* prayer_egypt.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR07A1B2C3D4E5F6071890 /* prayer_egypt.caf */; };
+		AD10BF08A1B2C3D4E5F6071890 /* prayer_aqsa.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR08A1B2C3D4E5F6071890 /* prayer_aqsa.caf */; };
+		AD10BF09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +89,15 @@
 		E5F6071890AB12CD01A2B3C5 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		F40AA07210D9414E9C98BAD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4816472931E4AB1A0DE1F42 /* PrayerLiveActivityPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerLiveActivityPlugin.swift; sourceTree = "<group>"; };
+		AD10FR01A1B2C3D4E5F6071890 /* prayer_quiet.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_quiet.caf; path = Sounds/prayer_quiet.caf; sourceTree = "<group>"; };
+		AD10FR02A1B2C3D4E5F6071890 /* prayer_clear.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_clear.caf; path = Sounds/prayer_clear.caf; sourceTree = "<group>"; };
+		AD10FR03A1B2C3D4E5F6071890 /* prayer_soft.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_soft.caf; path = Sounds/prayer_soft.caf; sourceTree = "<group>"; };
+		AD10FR04A1B2C3D4E5F6071890 /* prayer_default.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_default.caf; path = Sounds/prayer_default.caf; sourceTree = "<group>"; };
+		AD10FR05A1B2C3D4E5F6071890 /* prayer_makkah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_makkah.caf; path = Sounds/prayer_makkah.caf; sourceTree = "<group>"; };
+		AD10FR06A1B2C3D4E5F6071890 /* prayer_madinah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_madinah.caf; path = Sounds/prayer_madinah.caf; sourceTree = "<group>"; };
+		AD10FR07A1B2C3D4E5F6071890 /* prayer_egypt.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_egypt.caf; path = Sounds/prayer_egypt.caf; sourceTree = "<group>"; };
+		AD10FR08A1B2C3D4E5F6071890 /* prayer_aqsa.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_aqsa.caf; path = Sounds/prayer_aqsa.caf; sourceTree = "<group>"; };
+		AD10FR09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_takbeerat.caf; path = Sounds/prayer_takbeerat.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +152,15 @@
 				4AC779234C02320DA7693A59 /* RecitationAudioCapturePlugin.swift */,
 				B2C3D4E5F6071890AB12CD02 /* MajlisPlaybackAudioPlugin.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
+				AD10FR01A1B2C3D4E5F6071890 /* prayer_quiet.caf */,
+				AD10FR02A1B2C3D4E5F6071890 /* prayer_clear.caf */,
+				AD10FR03A1B2C3D4E5F6071890 /* prayer_soft.caf */,
+				AD10FR04A1B2C3D4E5F6071890 /* prayer_default.caf */,
+				AD10FR05A1B2C3D4E5F6071890 /* prayer_makkah.caf */,
+				AD10FR06A1B2C3D4E5F6071890 /* prayer_madinah.caf */,
+				AD10FR07A1B2C3D4E5F6071890 /* prayer_egypt.caf */,
+				AD10FR08A1B2C3D4E5F6071890 /* prayer_aqsa.caf */,
+				AD10FR09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
 				504EC3131FED79650016851F /* Info.plist */,

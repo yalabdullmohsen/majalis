@@ -1097,7 +1097,7 @@ p, li {
 /* Design System v5 — Premium Light-First System */
 :root {
   /* ── Base ── */
-  --ds-base:   15px;
+  --ds-base:   16px;
 
   /* ── Spacing scale ── */
   --ds-space-0-5: 0.125rem;
@@ -1149,15 +1149,20 @@ p, li {
   --ds-heading: var(--ds-ink);
 
   /* ── Typography scale ── */
-  --ds-text-2xs: 0.6875rem;
-  --ds-text-xs:  0.75rem;
-  --ds-text-sm:  0.875rem;
-  --ds-text-base:1rem;
-  --ds-text-md:  1.0625rem;
-  --ds-text-lg:  1.125rem;
-  --ds-text-xl:  1.25rem;
-  --ds-text-2xl: 1.5rem;
+  --ds-text-2xs: 0.75rem;     /* 12px — نادر */
+  --ds-text-xs:  0.84375rem;  /* 13.5px */
+  --ds-text-sm:  0.9375rem;   /* 15px */
+  --ds-text-base:1.0625rem;   /* 17px */
+  --ds-text-md:  1.125rem;    /* 18px */
+  --ds-text-lg:  1.25rem;     /* 20px */
+  --ds-text-xl:  1.375rem;    /* 22px */
+  --ds-text-2xl: 1.5rem;      /* 24px */
   --ds-text-3xl: 1.875rem;
+
+  --ds-font-regular: var(--font-weight-regular, 400);
+  --ds-font-medium: var(--font-weight-medium, 500);
+  --ds-font-semibold: var(--font-weight-semibold, 600);
+  --ds-font-bold: var(--font-weight-bold, 700);
 
   /* ── Layout ── */
   --ds-max:         75rem;
