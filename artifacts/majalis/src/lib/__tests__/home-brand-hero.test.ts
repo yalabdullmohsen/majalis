@@ -29,6 +29,8 @@ assert(brand.includes("data-majlis-brand"), "علامة هوية");
 assert(/33dvh|33vh/.test(css), "ارتفاع نحو ثلث الشاشة");
 assert(css.includes("Aref Ruqaa"), "خط زخرفي للعنوان");
 assert(css.includes("home-brand-title__panel"), "لوحة زخرفية");
+assert(/background-color:\s*var\(--mj-bg\)/.test(css), "سطح هيرو صلب قابل لقياس التباين");
+assert(/::before/.test(css), "تدرّج الزخرفة على ::before لا على background");
 assert(/Aref\+Ruqaa|Aref%20Ruqaa/.test(html), "تحميل خط Aref Ruqaa");
 
 if (failed > 0) process.exit(1);
