@@ -34,16 +34,26 @@
   box-sizing: border-box;
   container-type: inline-size;
   box-shadow: 0 2px 18px rgba(14, 110, 82, .12);
-  outline: 2px solid var(--mf-gold, var(--brand-deep, var(--mj-brand-deep)));
+  outline: 2px solid var(--mf-gold, var(--brand-deep, var(--mj-brand-deep, #123F2E)));
   outline-offset: -8px;
 }
 .mf2-frame::before {
   content: "";
   position: absolute;
   inset: 4px;
-  border: 1px solid var(--mf-gold-soft, rgba(14, 110, 82, .45));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1F7A5A) 35%, var(--mf-gold-soft, rgba(14, 110, 82, .45)));
   border-radius: 4px;
   pointer-events: none;
+}
+.mf2-frame::after {
+  /* زخرفة هوية خفيفة في الزوايا — لا تغطي الحبر */
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid color-mix(in srgb, var(--color-mushaf-gold-soft, #C9B07A) 40%, transparent);
+  border-radius: 3px;
+  pointer-events: none;
+  opacity: 0.55;
 }
 html[data-theme="dark"] .mf2-frame {
   --mf2-page-bg: #0F172A;

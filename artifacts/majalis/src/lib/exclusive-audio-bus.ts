@@ -28,18 +28,23 @@ export function registerAudioStopper(owner: AudioBusOwner, stop: Stopper): () =>
 }
 
 async function stopKnownEngines(except: AudioBusOwner): Promise<void> {
-  /* أوقف المحرك العام دائماً — المستدعي يعيد التشغيل بعد claim إن لزم */
-  try {
-    const { getAudioEngine } = await import("@/core/audio/AudioEngine");
-    getAudioEngine().stop();
-  } catch {
-    /* ignore */
-  }
-  try {
-    const { hideMiniPlayer } = await import("@/lib/quran-mini-player");
-    hideMiniPlayer();
-  } catch {
-    /* ignore */
+  /**
+   * لا تُوقف AudioEngine عند ملك التلاوة — كان يُطلق releasePlaybackSession
+   * بشكل غير متزامن فيُلغي جلسة iOS أثناء play() فيُصمت الصوت.
+   */
+  if (except !== "tilawa") {
+    try {
+      const { getAudioEngine } = await import("@/core/audio/AudioEngine");
+      getAudioEngine().stop();
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { hideMiniPlayer } = await import("@/lib/quran-mini-player");
+      hideMiniPlayer();
+    } catch {
+      /* ignore */
+    }
   }
   if (except !== "majlis") {
     try {

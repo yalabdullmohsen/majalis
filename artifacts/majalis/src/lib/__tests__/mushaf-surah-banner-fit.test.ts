@@ -12,8 +12,9 @@ const css = readFileSync(resolve(__dirname, "../../styles/mushaf-v2.css"), "utf8
 
 assert.match(banner, /data-ornament="islamic-light"/);
 assert.match(banner, /SideOrnament/);
-assert.match(banner, /GeoStar/);
-assert.match(banner, /data-panel-width-pct="38"/);
+assert.match(banner, /PetalMedallion|GeoStar/);
+assert.match(banner, /data-majlis-banner="1"/);
+assert.match(banner, /data-panel-width-pct="36"/);
 assert.match(banner, /<svg[\s>]/);
 assert.match(banner, /scrollWidth/);
 assert.match(banner, /0\.92/, "اسم السورة يُصغَّر عند الحاجة");

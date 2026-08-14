@@ -1,6 +1,7 @@
 /**
- * شارة سورة إسلامية حديثة فاخرة وخفيفة:
- * إطار مزدوج ذهبي · نجمة هندسية ثمانية · لوحة عاجية وسطى — بلا ازدحام ارتفاع.
+ * شارة سورة — زخرفة المجلس العلمي:
+ * إطار زمردي/ذهبي مزدوج · ميدالية بتلات · نجمة ثمانية · لوحة عاجية.
+ * تبقى data-ornament="islamic-light" لبوابات الكثافة.
  */
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { MUSHAF_TYPESCALE } from "@/features/mushaf/typescale";
@@ -13,19 +14,67 @@ type Props = {
 };
 
 const PANEL_MARGIN_PX = 5;
-const PANEL_FRAC = 0.38;
-const OUTER_STROKE = 1.25;
-const INNER_STROKE = 0.7;
-const FRAME_GAP = 2.4;
+const PANEL_FRAC = 0.36;
+const OUTER_STROKE = 1.35;
+const INNER_STROKE = 0.75;
+const FRAME_GAP = 2.6;
 const FRAME_RADIUS = 4;
 const GOLD =
   "color-mix(in srgb, var(--color-mushaf-gold-strong, #A67C3D) 82%, #7a6240)";
 const GOLD_SOFT = "var(--color-mushaf-gold-soft, #C9B07A)";
 const IVORY = "var(--color-mushaf-panel, #FAF3E8)";
+const EMERALD =
+  "color-mix(in srgb, var(--mj-brand-deep, #123F2E) 72%, var(--color-mushaf-gold-strong, #A67C3D))";
 const ORNAMENT_LINE =
   "color-mix(in srgb, var(--color-mushaf-ornament-line, #FFFFFF) 55%, var(--color-mushaf-gold-soft, #C9B07A))";
 
-/** نجمة ثمانية هندسية خفيفة (Rub el Hizb مبسّط) */
+function PetalMedallion({ cx, cy, r }: { cx: number; cy: number; r: number }) {
+  const petals = 10;
+  const parts: string[] = [];
+  for (let i = 0; i < petals; i++) {
+    const a0 = (i / petals) * Math.PI * 2 - Math.PI / 2;
+    const a1 = ((i + 0.5) / petals) * Math.PI * 2 - Math.PI / 2;
+    const a2 = ((i + 1) / petals) * Math.PI * 2 - Math.PI / 2;
+    const valley = r * 0.72;
+    const tip = r;
+    const x0 = cx + Math.cos(a0) * valley;
+    const y0 = cy + Math.sin(a0) * valley;
+    const xt = cx + Math.cos(a1) * tip;
+    const yt = cy + Math.sin(a1) * tip;
+    const x2 = cx + Math.cos(a2) * valley;
+    const y2 = cy + Math.sin(a2) * valley;
+    if (i === 0) parts.push(`M${x0.toFixed(2)} ${y0.toFixed(2)}`);
+    parts.push(`Q${xt.toFixed(2)} ${yt.toFixed(2)} ${x2.toFixed(2)} ${y2.toFixed(2)}`);
+  }
+  parts.push("Z");
+  return (
+    <g aria-hidden="true" data-majlis-ornament="petal">
+      <circle
+        cx={cx}
+        cy={cy}
+        r={r * 1.05}
+        fill="color-mix(in srgb, var(--color-mushaf-ornament-mid, #EDE0C4) 50%, transparent)"
+      />
+      <path
+        d={parts.join(" ")}
+        fill="color-mix(in srgb, var(--mj-brand, #1F7A5A) 12%, var(--color-mushaf-ornament-bg, #D8C39C))"
+        stroke={ORNAMENT_LINE}
+        strokeWidth={0.85}
+      />
+      <circle
+        cx={cx}
+        cy={cy}
+        r={r * 0.48}
+        fill={IVORY}
+        stroke={GOLD_SOFT}
+        strokeWidth={0.8}
+      />
+      <circle cx={cx} cy={cy} r={r * 0.18} fill={EMERALD} opacity={0.9} />
+      <circle cx={cx} cy={cy} r={r * 0.07} fill={GOLD} />
+    </g>
+  );
+}
+
 function GeoStar({ cx, cy, r }: { cx: number; cy: number; r: number }) {
   const pts: string[] = [];
   for (let i = 0; i < 8; i++) {
@@ -34,15 +83,15 @@ function GeoStar({ cx, cy, r }: { cx: number; cy: number; r: number }) {
     pts.push(`${cx + Math.cos(a) * rr},${cy + Math.sin(a) * rr}`);
   }
   return (
-    <g aria-hidden="true">
+    <g aria-hidden="true" data-majlis-ornament="star">
       <polygon
         points={pts.join(" ")}
         fill="none"
         stroke={GOLD_SOFT}
-        strokeWidth={0.85}
+        strokeWidth={0.8}
         opacity={0.95}
       />
-      <circle cx={cx} cy={cy} r={r * 0.22} fill={GOLD} opacity={0.8} />
+      <circle cx={cx} cy={cy} r={r * 0.2} fill={EMERALD} opacity={0.85} />
     </g>
   );
 }
@@ -63,23 +112,25 @@ function SideOrnament({
   const cx = x + w / 2;
   const cy = y + h / 2;
   const transform = mirror ? `translate(${cx * 2}, 0) scale(-1, 1)` : undefined;
+  const medR = Math.min(w, h) * 0.32;
   return (
     <g transform={transform} aria-hidden="true" data-ornament-side="1">
       <path
-        d={`M ${x + 3} ${cy} Q ${cx} ${cy - h * 0.36} ${x + w - 3} ${cy}`}
+        d={`M ${x + 2} ${cy} Q ${cx - medR * 0.2} ${cy - h * 0.4} ${cx - medR * 0.85} ${cy}`}
         fill="none"
         stroke={ORNAMENT_LINE}
-        strokeWidth={0.9}
+        strokeWidth={0.85}
         strokeLinecap="round"
       />
       <path
-        d={`M ${x + 3} ${cy} Q ${cx} ${cy + h * 0.36} ${x + w - 3} ${cy}`}
+        d={`M ${x + 2} ${cy} Q ${cx - medR * 0.2} ${cy + h * 0.4} ${cx - medR * 0.85} ${cy}`}
         fill="none"
         stroke={ORNAMENT_LINE}
-        strokeWidth={0.9}
+        strokeWidth={0.85}
         strokeLinecap="round"
       />
-      <GeoStar cx={cx} cy={cy} r={Math.min(w, h) * 0.28} />
+      <PetalMedallion cx={cx} cy={cy} r={medR} />
+      <GeoStar cx={cx - medR * 0.02} cy={cy} r={medR * 0.38} />
     </g>
   );
 }
@@ -137,7 +188,8 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
       aria-label={`سورة ${aria}`}
       style={style}
       data-ornament="islamic-light"
-      data-panel-width-pct="38"
+      data-panel-width-pct="36"
+      data-majlis-banner="1"
     >
       <svg
         className="mf2-surah-banner__svg"
@@ -153,7 +205,7 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
           height={H - outerInset * 2}
           rx={FRAME_RADIUS}
           fill="var(--color-mushaf-ornament-mid, #EDE0C4)"
-          stroke={GOLD}
+          stroke={EMERALD}
           strokeWidth={OUTER_STROKE}
         />
         <rect
@@ -165,9 +217,8 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
           fill="none"
           stroke={GOLD_SOFT}
           strokeWidth={INNER_STROKE}
-          opacity={0.9}
+          opacity={0.95}
         />
-        {/* خط هندسي علوي/سفلي خفيف */}
         <line
           x1={innerInset + 8}
           y1={innerInset + 1.1}
@@ -175,7 +226,7 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
           y2={innerInset + 1.1}
           stroke={GOLD}
           strokeWidth={0.45}
-          opacity={0.35}
+          opacity={0.4}
         />
         <line
           x1={innerInset + 8}
@@ -184,7 +235,7 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
           y2={H - innerInset - 1.1}
           stroke={GOLD}
           strokeWidth={0.45}
-          opacity={0.35}
+          opacity={0.4}
         />
         <SideOrnament x={sidePad} y={innerInset} w={sideW} h={H - innerInset * 2} />
         <SideOrnament
@@ -201,8 +252,8 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
           height={panelH}
           rx="2.25"
           fill={IVORY}
-          stroke={GOLD}
-          strokeWidth={1.1}
+          stroke={EMERALD}
+          strokeWidth={1.15}
         />
         <rect
           x={panelX + 2}
@@ -213,7 +264,7 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
           fill="none"
           stroke={GOLD_SOFT}
           strokeWidth={0.6}
-          opacity={0.7}
+          opacity={0.75}
         />
       </svg>
       <span

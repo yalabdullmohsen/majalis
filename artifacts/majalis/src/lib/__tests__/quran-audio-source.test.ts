@@ -9,6 +9,7 @@ import {
   getAyahAudioUrl,
   getSurahAudioUrl,
   listAyahAudioUrls,
+  getGlobalAyahNumber,
   VALID_PLAYBACK_RATES,
 } from "../quran-audio";
 import {
@@ -72,15 +73,19 @@ assert.match(getSurahAudioUrl(1, "balilah"), /balilah\/001\.mp3$/);
 assert.equal(getAyahAudioUrl(1, 1, "balilah"), "");
 
 const husaryUrls = listAyahAudioUrls(1, 1, "husary");
-assert.ok(husaryUrls.length >= 2, "احتياط عفاسي بعد القارئ الأساسي");
+assert.ok(husaryUrls.length >= 2, "احتياط عفاسي/CDN بعد القارئ الأساسي");
 assert.match(husaryUrls[0]!, /Husary/);
-assert.match(husaryUrls[1]!, /Alafasy/);
-assert.deepEqual(listAyahAudioUrls(1, 1, "alafasy"), [getAyahAudioUrl(1, 1, "alafasy")]);
-assert.deepEqual(
-  listAyahAudioUrls(1, 1, "balilah"),
-  [getAyahAudioUrl(1, 1, "alafasy")],
-  "قارئ سورة-فقط: احتياط عفاسي للآية",
+assert.ok(
+  husaryUrls.some((u) => /Alafasy|islamic\.network/.test(u)),
+  "يجب وجود مرشّح احتياط",
 );
+assert.ok(listAyahAudioUrls(1, 1, "alafasy").length >= 1);
+assert.ok(
+  listAyahAudioUrls(1, 1, "balilah").some((u) => /Alafasy|islamic\.network/.test(u)),
+  "قارئ سورة-فقط: احتياط للصوت",
+);
+assert.equal(getGlobalAyahNumber(1, 1), 1);
+assert.equal(getGlobalAyahNumber(2, 1), 8);
 
 __setQuranAudioRemoteConfigForTests({
   disabledReciterIds: ["alafasy"],
