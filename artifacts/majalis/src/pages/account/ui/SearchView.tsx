@@ -825,7 +825,7 @@ export default function SearchPage() {
                     />
                   )} />
                   <Group title="الأسئلة والأجوبة" items={results.qa} render={(x) => (
-                    <ResultRow key={x.id} href={`/qa?id=${encodeURIComponent(x.id)}`} kind="qa" query={q} title={displayText(x.question)} meta={x.qa_categories?.name} />
+                    <ResultRow key={x.id} href={`/quiz?qa=${encodeURIComponent(x.id)}`} kind="qa" query={q} title={displayText(x.question)} meta={x.qa_categories?.name} />
                   )} />
                   <Group title="الأذكار" id="adhkar" items={results.adhkar} render={(a) => (
                     <ResultRow

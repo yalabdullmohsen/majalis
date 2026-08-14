@@ -176,7 +176,7 @@ export const CONTENT_REGISTRY: Record<CmsContentKind, ContentTableConfig> = {
     publishedField: "published_at",
     scheduledField: "scheduled_at",
     statusMap: { approved: "published", published: "published", pending: "draft", draft: "draft" },
-    publicRoute: (id) => (id ? `/qa?id=${encodeURIComponent(id)}` : `/qa`),
+    publicRoute: (id) => (id ? `/quiz?qa=${encodeURIComponent(id)}` : `/quiz`),
   },
   miracle: {
     table: "scientific_miracles",

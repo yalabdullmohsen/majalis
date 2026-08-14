@@ -116,7 +116,7 @@ export function routeForKind(kind, recordId) {
     lecture: `/lessons/${recordId}`,
     course: `/lessons/${recordId}`,
     miracle: `/miracles`,
-    qa: `/qa`,
+    qa: `/quiz`,
     news: `/updates`,
     announcement: `/updates`,
   };

@@ -22,7 +22,7 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
   { href: "/fawaid",         label: "الفوائد" },
   { href: "/stories",        label: "القصص الإسلامية" },
   { href: "/miracles",       label: "المعجزات" },
-  { href: "/qa",             label: "الأسئلة" },
+  { href: "/quiz",           label: "الأسئلة" },
   { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
   { href: "/updates",        label: "المستجدات" },
   { href: "/fiqh",           label: "الفقه الإسلامي" },
@@ -52,7 +52,8 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
 const REDIRECT_ROUTES: Array<{ href: string; redirectsTo: string }> = [
   { href: "/quran",                 redirectsTo: "/quran-hub" },
   { href: "/research",              redirectsTo: "/fiqh-council/research" },
-  { href: "/scholarly-research",    redirectsTo: "/qa" },
+  { href: "/scholarly-research",    redirectsTo: "/quiz" },
+  { href: "/qa",                    redirectsTo: "/quiz" },
   { href: "/learning-path",         redirectsTo: "/learning/paths" },
   { href: "/knowledge-map",         redirectsTo: "/knowledge-graph" },
   { href: "/features-in-progress",  redirectsTo: "/updates" },

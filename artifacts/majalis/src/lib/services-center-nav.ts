@@ -116,7 +116,7 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
       { id: "seerah", label: "السيرة النبوية", keywords: ["سيرة"], Icon: BookA, action: { kind: "link", href: "/seerah" } },
       { id: "tawhid", label: "العقيدة", keywords: ["توحيد", "عقيدة"], Icon: Landmark, action: { kind: "link", href: "/tawhid" } },
       { id: "scholars-books", label: "العلماء وكتبهم", keywords: ["مكتبة", "كتب"], Icon: Library, action: { kind: "link", href: "/scholars" } },
-      { id: "qa", label: "الأسئلة والأجوبة", keywords: ["أسئلة", "أجوبة", "qa"], Icon: HelpCircle, action: { kind: "link", href: "/qa" } },
+      { id: "qa", label: "الأسئلة والأجوبة", keywords: ["أسئلة", "أجوبة", "qa"], Icon: HelpCircle, action: { kind: "link", href: "/quiz" } },
       { id: "fawaid", label: "الفوائد", keywords: ["فائدة"], Icon: Star, action: { kind: "link", href: "/fawaid" } },
       { id: "topics", label: "المواضيع", keywords: ["موضوع"], Icon: BookMarked, action: { kind: "link", href: "/topics" } },
       { id: "learn", label: "تعلّم", keywords: ["مكتبة", "تعلم"], Icon: Library, action: { kind: "link", href: "/learn" } },

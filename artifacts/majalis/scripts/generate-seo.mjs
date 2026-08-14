@@ -100,7 +100,8 @@ const { PROPHETS } = await importSrc("src/lib/prophets-data.ts");
 const { SINS_TOPICS } = await importSrc("src/lib/sins-rights-data.ts");
 const { getAllSurahStories } = await importSrc("src/lib/surah-stories.ts");
 const { FIQH_ISSUES_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-issues-seed.ts");
-const { isPublicIssue } = await importSrc("src/lib/fiqh-council-trust.ts");
+const { isPublicIssue, isVerifiedPublicItem } = await importSrc("src/lib/fiqh-council-trust.ts");
+const { FIQH_COUNCIL_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-council-seed.ts");
 const { FIQH_ITEM_TYPE_LABELS } = await importSrc("src/lib/fiqh-council-types.ts");
 const { SCHOLARS } = await importSrc("src/lib/scholars-data.ts");
 const { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS } = await importSrc("src/lib/adhkar-seed.ts");
@@ -116,6 +117,34 @@ if (QURAN_SURAHS.length !== 114) {
 
 const SURAH_STORIES = getAllSurahStories();
 const PUBLIC_FIQH_ISSUES = FIQH_ISSUES_PUBLISHED_SEED.filter(isPublicIssue);
+const PUBLIC_FIQH_ITEMS = FIQH_COUNCIL_PUBLISHED_SEED.filter(isVerifiedPublicItem);
+
+function fiqhItemRichBody(row) {
+  const kind = fiqhItemKind(row);
+  const blocks = [];
+  if (row.summary) blocks.push(`<h2>الملخّص</h2>\n<p>${escapeHtml(row.summary)}</p>`);
+  if (row.ruling_text) blocks.push(`<h2>${kind === "بحث" ? "موقف المجمع" : "نص القرار"}</h2>\n<p>${escapeHtml(row.ruling_text)}</p>`);
+  if (row.content) {
+    const paras = String(row.content)
+      .split(/\n{2,}/)
+      .map((p) => p.trim())
+      .filter(Boolean)
+      .map((p) => `<p>${escapeHtml(p.replace(/\*\*/g, ""))}</p>`)
+      .join("\n");
+    if (paras) blocks.push(`<h2>التفاصيل</h2>\n${paras}`);
+  }
+  const meta = [
+    row.decision_number ? `رقم القرار: ${escapeHtml(row.decision_number)}` : "",
+    row.session_number ? `الدورة: ${escapeHtml(row.session_number)}` : "",
+    row.session_date ? `التاريخ: ${escapeHtml(row.session_date)}` : "",
+    row.council_name || row.source_name ? `المصدر: ${escapeHtml(row.council_name || row.source_name)}` : "",
+  ].filter(Boolean);
+  if (meta.length) blocks.push(`<h2>المرجع</h2>\n<ul>\n${meta.map((m) => `  <li>${m}</li>`).join("\n")}\n</ul>`);
+  if (row.source_url) {
+    blocks.push(`<p><a href="${escapeHtml(row.source_url)}" rel="noopener noreferrer">المصدر الرسمي</a></p>`);
+  }
+  return blocks.join("\n") || `<p>${escapeHtml(row.title)} — ${escapeHtml(kind)} موثّق من المجمع.</p>`;
+}
 
 // وسمُ مادّة المجمع يُشتقّ من حقل `type` في السجلّ نفسه لا يُثبَّت على «قرار»:
 // من الأربعة القائمة في fiqh-council-seed.ts اثنان type: "research" نصَّ المجمع
@@ -628,7 +657,7 @@ const DUAS_SEED = [
 const LIST_JSON_LD = {
   "/library": itemListJsonLdScript(LIBRARY_CATALOG.map((b) => ({ name: b.title, url: `/library/${b.id}` })), "المكتبة العلمية"),
   "/fiqh-council": itemListJsonLdScript(
-    (PLATFORM_SEED.fiqh_decisions || []).map((r) => ({ name: r.title, url: `/fiqh-council/${r.slug || r.id}` })),
+    PUBLIC_FIQH_ITEMS.map((r) => ({ name: r.title, url: `/fiqh-council/${r.slug || r.id}` })),
     "قرارات المجمع الفقهي",
   ),
   "/quiz": itemListJsonLdScript(
@@ -677,7 +706,49 @@ const LIST_JSON_LD = {
   ),
 };
 
+const UNIVERSITIES_CATALOG = JSON.parse(
+  await readFile(resolve(appRoot, "src/data/universities-catalog.json"), "utf8"),
+);
+const UNIVERSITY_ROWS = Array.isArray(UNIVERSITIES_CATALOG) ? UNIVERSITIES_CATALOG : [];
+
+function buildUniversitiesRichBody() {
+  const countryCounts = new Map();
+  for (const u of UNIVERSITY_ROWS) {
+    const c = String(u.country || "").trim();
+    if (!c) continue;
+    countryCounts.set(c, (countryCounts.get(c) || 0) + 1);
+  }
+  const topCountries = [...countryCounts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "ar"))
+    .slice(0, 8);
+  const sample = UNIVERSITY_ROWS.slice(0, 6);
+  return [
+    `<p>يضم الدليل حالياً <strong>${UNIVERSITY_ROWS.length}</strong> جامعة/كلية من بيانات موثّقة في الكتالوج.</p>`,
+    `<h2>الدول المتوفرة</h2>`,
+    `<ul>${topCountries.map(([c, n]) => `<li>${escapeHtml(c)} (${n})</li>`).join("")}</ul>`,
+    `<h2>عينة من الجامعات</h2>`,
+    `<ul>${sample
+      .map(
+        (u) =>
+          `<li><a href="${SITE_URL}/universities/${encodeURIComponent(u.slug)}">${escapeHtml(u.name_ar)}</a> — ${escapeHtml(u.country || "")}</li>`,
+      )
+      .join("")}</ul>`,
+    `<p><a href="${SITE_URL}/universities/compare">مقارنة الجامعات</a> · استخدم الفلاتر في الصفحة لاختيار الدولة عند التوفر.</p>`,
+  ].join("\n");
+}
+
 const RICH_BODY_MAP = {
+  "/universities": buildUniversitiesRichBody(),
+  "/universities/compare": `<p>أداة لمقارنة الجامعات الشرعية بناءً على الحقول المتوفرة في الكتالوج فقط (الاسم، الدولة، المدينة، البرامج الموثّقة، الموقع الرسمي عند وجوده).</p>
+<h2>ما يمكن مقارنته</h2>
+<ul>
+<li>الدولة والمدينة</li>
+<li>البرامج والتخصصات المسجّلة في الكتالوج</li>
+<li>الموقع الرسمي عند توفره</li>
+</ul>
+<p>اختر جامعتين أو أكثر من دليل الجامعات ثم افتح هذه الصفحة. لا تُعرض بيانات وهمية قبل الاختيار.</p>
+<p><a href="${SITE_URL}/universities">العودة إلى دليل الجامعات</a></p>`,
+
   "/lessons": linkList(
     "أبرز الدروس والدورات",
     lessonRows.slice(0, 15).map((r) => ({ name: r.title, url: `/lessons/${r.id}`, note: r.speaker_name })),
@@ -1064,7 +1135,7 @@ ${linkList("روابط ذات صلة", [
   "/fiqh-council": `<p>المجمع الفقهي الإسلامي: قرارات وفتاوى ومسائل معاصرة ونوازل، مع أدوات بحث ومقارنة وأرشيف.</p>
 ${linkList(
   "من مواد المجمع",
-  (PLATFORM_SEED.fiqh_decisions || []).slice(0, 12).map((r) => ({
+  PUBLIC_FIQH_ITEMS.slice(0, 12).map((r) => ({
     name: `${r.title} (${fiqhItemKind(r)})`,
     url: `/fiqh-council/${r.slug || r.id}`,
   })),
@@ -1447,7 +1518,7 @@ ${linkList("روابط ذات صلة", [
 </ul>
 <h2>ما الذي يبقى؟</h2>
 <ul>
-  <li>المحتوى العام (الدروس، المكتبة، القرآن، الفتاوى المنشورة) لأنه غير مملوك لحسابك الشخصي.</li>
+  <li>المحتوى العلمي العام المنشور غير المرتبط بملكية حسابك، مثل الدروس والمكتبة والقرآن والأحكام العامة.</li>
 </ul>
 <h2>المدة</h2>
 <p>الحذف فوري من جهة الخادم عند نجاح الطلب. قد تستغرق كاشات المتصفح أو الأجهزة المرتبطة دقائق حتى تنتهي الجلسات المحلية بعد تسجيل الخروج التلقائي.</p>
@@ -2029,16 +2100,26 @@ for (const row of lessonRows) {
 // ─────────────────────────────────────────────────────────────────────────────
 // ٣) محتوى المنصّة (قرارات، فتاوى، أحكام، دورات، كتب، جلسات)
 // ─────────────────────────────────────────────────────────────────────────────
-for (const row of PLATFORM_SEED.fiqh_decisions || []) {
+for (const row of PUBLIC_FIQH_ITEMS) {
+  const kind = fiqhItemKind(row);
+  const desc = clamp(
+    padDesc(row.summary || row.ruling_text || row.title, `${kind} من ${row.source_name || "مجمع الفقه الإسلامي الدولي"}`),
+    300,
+  );
   addPage(
     {
       path: `/fiqh-council/${row.slug || row.id}`,
       title: row.title,
-      description: padDesc(row.title, `${fiqhItemKind(row)} من مجمع الفقه الإسلامي الدولي`),
+      description: desc,
       ogType: "article",
       robots: "index, follow",
+      keywords: [row.title, kind, row.category, row.council_name || row.source_name, "المجمع الفقهي"].filter(Boolean),
     },
-    { parents: [{ name: "المجمع الفقهي الإسلامي", path: "/fiqh-council" }], priority: 0.7 },
+    {
+      parents: [{ name: "المجمع الفقهي الإسلامي", path: "/fiqh-council" }],
+      priority: 0.7,
+      richBody: fiqhItemRichBody(row),
+    },
   );
 }
 
@@ -2279,6 +2360,8 @@ for (const issue of PUBLIC_FIQH_ISSUES) {
       ],
       richBody: `<h2>ملخّص المسألة</h2>
 <p>${escapeHtml(issue.summary || issue.title)}</p>
+${issue.ruling_summary ? `<h2>الخلاصة</h2>\n<p>${escapeHtml(issue.ruling_summary)}</p>` : ""}
+${issue.evidence_summary ? `<h2>المستند</h2>\n<p>${escapeHtml(issue.evidence_summary)}</p>` : ""}
 ${issue.category ? `<p>التصنيف: ${escapeHtml(issue.category)}</p>` : ""}`,
       priority: 0.69,
       changefreq: "monthly",
@@ -2416,7 +2499,7 @@ Sitemap: ${SITE_URL}/sitemap.xml
 // حين تُضاف تواريخ حقيقية للسجلات يُشتق pubDate منها لكل عنصر.
 const FEED_DATE = new Date("2026-07-25T00:00:00Z").toUTCString();
 const rssItems = [
-  ...(PLATFORM_SEED.fiqh_decisions || []).slice(0, 6).map((row) => ({
+  ...(PUBLIC_FIQH_ITEMS || []).slice(0, 6).map((row) => ({
     title: `[${fiqhItemKind(row)} — مجمع فقهي] ${row.title}`,
     link: absoluteUrl(`/fiqh-council/${row.slug || row.id}`),
     description: `مادة من مجمع فقهي (${fiqhItemKind(row)}): ${row.title} — ${row.category || "المجمع الفقهي الإسلامي"}`,

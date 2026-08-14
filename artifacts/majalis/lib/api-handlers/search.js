@@ -128,7 +128,7 @@ async function searchQa(supabase, normQuery, limit) {
     title: r.question,
     summary: r.answer?.slice(0, 200) || "",
     meta: "",
-    href: "/qa",
+    href: r.id ? `/quiz?qa=${encodeURIComponent(r.id)}` : "/quiz",
   }));
 }
 

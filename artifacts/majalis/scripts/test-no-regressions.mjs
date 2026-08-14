@@ -80,12 +80,18 @@ if (fatwaFile) {
   }
 }
 
-// ── بقايا بيانات جامعة الأزهر المحذوفة ──────────────────────────────────────
-const AZHAR_CHECK_ROUTES = ["/universities", "/institutions"];
-for (const route of AZHAR_CHECK_ROUTES) {
-  const f = indexFiles.find((x) => routeOf(x) === route);
-  if (f && readFileSync(f, "utf8").includes("الأزهر")) {
-    failures.push(`مسار ${route} المُصيَّر مسبقًا ما زال يذكر "الأزهر" رغم حذفه من البيانات.`);
+// ── بقايا «الأزهر» في /institutions (محذوف من المعالم) ───────────────────────
+// دليل /universities يستمد من universities-catalog.json وقد يتضمن الأزهر عن قصد (#393).
+const uniCatalogText = readFileSync(resolve(appRoot, "src/data/universities-catalog.json"), "utf8");
+const catalogHasAzhar = uniCatalogText.includes("الأزهر");
+{
+  const institutionsFile = indexFiles.find((x) => routeOf(x) === "/institutions");
+  if (institutionsFile && readFileSync(institutionsFile, "utf8").includes("الأزهر")) {
+    failures.push('مسار /institutions المُصيَّر مسبقًا ما زال يذكر "الأزهر" رغم حذفه من بيانات المؤسسات.');
+  }
+  const universitiesFile = indexFiles.find((x) => routeOf(x) === "/universities");
+  if (!catalogHasAzhar && universitiesFile && readFileSync(universitiesFile, "utf8").includes("الأزهر")) {
+    failures.push('مسار /universities يذكر "الأزهر" رغم غيابه من universities-catalog.json.');
   }
 }
 

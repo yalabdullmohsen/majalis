@@ -137,10 +137,22 @@ function toDbRow(item) {
     // القيد — كان سيُسقِط seedRulingsFromFilesystem() (cron أسبوعي حقيقي
     // في production) صامتاً لأي حكم غير مراجَع بشرياً، أي معظم موسوعة
     // الأحكام. 'pending' هو أقرب قيمة صالحة بنفس المعنى.
+    // بوابة نشر: لا تُفرض status=approved على سجلات غير معتمدة.
+    // pending_review → pending (قيد CHECK)، وstatus يتبع الاعتماد فقط.
     verification_status:
-      item.verification_status === "pending_review" ? "pending" : item.verification_status || "approved",
-    status: "approved",
-    published_at: item.published_at || item.created_at || new Date().toISOString(),
+      item.verification_status === "pending_review"
+        ? "pending"
+        : item.verification_status === "needs_review"
+          ? "pending"
+          : item.verification_status || "pending",
+    status:
+      item.verification_status === "approved" || item.status === "approved" || item.status === "published"
+        ? "approved"
+        : "pending",
+    published_at:
+      item.verification_status === "approved" || item.status === "approved" || item.status === "published"
+        ? item.published_at || item.created_at || new Date().toISOString()
+        : null,
   };
 }
 

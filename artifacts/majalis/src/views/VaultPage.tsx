@@ -44,7 +44,7 @@ import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const SECTION_HREF: Record<ReadingSection, string> = {
   adhkar: "/adhkar",
-  qa: "/qa",
+  qa: "/quiz",
   fawaid: "/fawaid",
   hadith: "/hadith",
   rulings: "/rulings",

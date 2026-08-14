@@ -57,7 +57,7 @@ export function resolveContentUrl(item) {
     case "rulings":
       return id ? `/rulings/${id}` : "/rulings";
     case "qa":
-      return id ? `/qa?id=${encodeURIComponent(id)}` : "/qa";
+      return id ? `/quiz?qa=${encodeURIComponent(id)}` : "/quiz";
     case "fawaid":
     case "fawaid_item":
       return id ? `/fawaid#${encodeURIComponent(id)}` : "/fawaid";

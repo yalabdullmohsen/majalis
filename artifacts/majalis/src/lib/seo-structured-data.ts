@@ -1,5 +1,6 @@
 import seoData from "./seo-routes.json";
 import type { KuwaitLessonRecord } from "./kuwait-lessons";
+import { formatSheikhName, stripSheikhHonorifics } from "./sheikh-name";
 
 const SITE_URL = seoData.siteUrl;
 const SITE_NAME = seoData.siteName;
@@ -118,12 +119,13 @@ export function lessonJsonLd(lesson: KuwaitLessonRecord) {
 }
 
 export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
-  const sheikh = lesson.sheikhName.replace(/^الشيخ:\s*/u, "").trim();
+  const sheikhLabel = formatSheikhName(lesson.sheikhName);
+  const sheikhCore = stripSheikhHonorifics(lesson.sheikhName);
   const place = lesson.mosque || lesson.region || "";
   const schedule = [lesson.day, lesson.time, lesson.gregorianDate].filter(Boolean).join(" · ");
   const title = `${lesson.title} | ${SITE_NAME}`;
   const description = [
-    sheikh ? `الشيخ: ${sheikh}` : "",
+    sheikhLabel,
     place ? `المكان: ${place}` : "",
     schedule,
     lesson.category ? `التصنيف: ${lesson.category}` : "",
@@ -134,7 +136,7 @@ export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
 
   const keywords = [
     lesson.title,
-    sheikh,
+    sheikhCore,
     lesson.category,
     lesson.activityType,
     "دروس شرعية",

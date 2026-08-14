@@ -75,7 +75,7 @@ async function searchPlatformFallback(admin, query, limit) {
       title: q.question,
       summary: q.answer?.slice(0, 160),
       kind: "qa",
-      href: `/qa#${q.id}`,
+      href: `/quiz?qa=${encodeURIComponent(q.id)}`,
       rank: 4,
     }));
 

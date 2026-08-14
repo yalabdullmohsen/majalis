@@ -156,7 +156,6 @@ const NewMuslimDayDetailPage = lazy(() => import("@/views/NewMuslimDayDetailPage
 const DiscoverIslamContactPage = lazy(() => import("@/views/DiscoverIslamContactPage"));
 const KnowledgeSectionPage = lazy(() => import("@/views/KnowledgeSectionPage"));
 const AdhkarPage = lazy(() => import("@/pages/worship/AdhkarPage"));
-const QaPage = lazy(() => import("@/views/QaPage"));
 const QuizPage = lazy(() => import("@/pages/account/QuizPage"));
 const SubmitContentPage = lazy(() => import("@/views/SubmitContentPage"));
 const LoginPage = lazyWithRetry(() => import("@/pages/account/LoginPage"), "LoginPage");
@@ -616,7 +615,8 @@ function Router() {
       <Route path="/islamic-stories"><Redirect to="/stories" /></Route>
       <Route path="/adhkar/:slug"><SafeLazyRoute component={AdhkarPage} /></Route>
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
-      <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
+      <Route path="/qa"><Redirect to="/quiz" /></Route>
+      <Route path="/qa/:rest*"><Redirect to="/quiz" /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
       <Route path="/knowledge-graph"><SafeLazyRoute component={KnowledgeGraphPage} /></Route>
       <Route path="/knowledge-map"><Redirect to="/" /></Route>
@@ -718,7 +718,7 @@ function Router() {
       </Route>
       {/* عُطِّلت 2026-07-23: توجيه دائم إلى الأسئلة والأجوبة، وvercel.json يوجّه
           الطلبات المباشرة على مستوى الخادم بنفس الوجهة. */}
-      <Route path="/scholarly-research"><Redirect to="/qa" /></Route>
+      <Route path="/scholarly-research"><Redirect to="/quiz" /></Route>
       <Route path="/academic-research/submit"><SafeLazyRoute component={ResearchSubmitPage} /></Route>
       <Route path="/academic-research/assistant"><SafeLazyRoute component={ResearchAssistantPage} /></Route>
       <Route path="/academic-research/:id"><SafeLazyRoute component={ResearchDetailPage} /></Route>

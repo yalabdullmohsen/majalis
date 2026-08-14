@@ -101,7 +101,10 @@ function isMissingTableError(err: unknown) {
 }
 
 export async function getFiqhCouncilItems(opts?: FiqhCouncilListOptions) {
-  const seedItems = filterSeed([...FIQH_COUNCIL_PUBLISHED_SEED], opts);
+  const seedItems = filterSeed(
+    FIQH_COUNCIL_PUBLISHED_SEED.filter(isVerifiedPublicItem),
+    opts,
+  );
   if (!isConfigured) return { data: seedItems, usingSeed: true };
 
   try {
@@ -126,7 +129,7 @@ export async function getFiqhCouncilItems(opts?: FiqhCouncilListOptions) {
       throw error;
     }
 
-    let result = (data || []) as FiqhCouncilItem[];
+    let result = ((data || []) as FiqhCouncilItem[]).filter(isVerifiedPublicItem);
     if (opts?.search?.trim()) {
       result = filterSeed(result, { ...opts, status: "published" });
     }

@@ -26,7 +26,7 @@ function CatIcon({ name }: { name?: string }) {
 
 const FIQH_HUB_TABS = [
   { key: "rulings", label: "الأحكام الشرعية", href: "/rulings" },
-  { key: "qa",      label: "الأسئلة والأجوبة", href: "/qa" },
+  { key: "qa",      label: "الأسئلة والأجوبة", href: "/quiz" },
   { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },
 ] as const;
 type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];
@@ -326,7 +326,7 @@ export default function RulingsPage() {
       <ExploreAlsoNav
         title="استكشف أيضًا"
         links={[
-          { href: "/qa", label: "الأسئلة والأجوبة" },
+          { href: "/quiz", label: "الأسئلة والأجوبة" },
           { href: "/fiqh", label: "بوابة الفقه" },
           { href: "/fiqh-council", label: "المجمع الفقهي" },
           { href: "/lessons", label: "الدروس العلمية" },

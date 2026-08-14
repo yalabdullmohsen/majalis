@@ -8,6 +8,7 @@ import { CONTENT_CURRICULUM_ENABLED, isCurriculumRuling } from "./content-flags"
 import { supabase, isSupabaseConfigured } from "./supabase";
 import { logSupabaseError, formatSupabaseError } from "./supabase-config";
 import { isAllowedOnRulingsRoute } from "./rulings-content-type";
+import { isPubliclyPublishedRuling } from "./rulings-publication-gate";
 import { evaluateRulingRecord, type RulingResolveResult } from "./rulings-resolver";
 import { loadAllRulingsFromChunks, RULINGS_ENCYCLOPEDIA_SEED } from "./rulings-data-loader";
 
@@ -96,7 +97,7 @@ export async function getRulingsEncyclopedia(opts?: RulingListOptions): Promise<
     if (!CONTENT_CURRICULUM_ENABLED) {
       rows = rows.filter((r) => !isCurriculumRuling(r));
     }
-    rows = rows.filter((r) => isAllowedOnRulingsRoute(r));
+    rows = rows.filter((r) => isAllowedOnRulingsRoute(r) && isPubliclyPublishedRuling(r));
     const total = rows.length > 0 && rows[0].total_count != null ? Number(rows[0].total_count) : rows.length;
 
     return { data: rows, total: total || rows.length, page, limit, usingSeed: false };
@@ -110,12 +111,18 @@ async function findRulingInLocalSeed(id: string): Promise<ShariaRulingExtended |
   const fromInline = RULINGS_ENCYCLOPEDIA_SEED.find(
     (r) => r.id === id || r.external_key === id || r.slug === id,
   );
-  if (fromInline && isAllowedOnRulingsRoute(fromInline)) return fromInline;
+  if (
+    fromInline &&
+    isAllowedOnRulingsRoute(fromInline) &&
+    isPubliclyPublishedRuling(fromInline)
+  ) {
+    return fromInline;
+  }
 
   try {
     const all = await loadAllRulingsFromChunks();
     const hit = all.find((r) => r.id === id || r.external_key === id || r.slug === id);
-    if (hit && isAllowedOnRulingsRoute(hit)) return hit;
+    if (hit && isAllowedOnRulingsRoute(hit) && isPubliclyPublishedRuling(hit)) return hit;
   } catch {
     /* ignore */
   }
@@ -136,6 +143,7 @@ export async function resolveRulingByIdentifier(id: string): Promise<RulingResol
           .select("*")
           .eq("id", trimmed)
           .eq("status", "approved")
+          .eq("verification_status", "approved")
           .maybeSingle();
         if (byId.data) {
           const row = byId.data as ShariaRulingExtended;
@@ -150,6 +158,7 @@ export async function resolveRulingByIdentifier(id: string): Promise<RulingResol
           .select("*")
           .eq("external_key", trimmed)
           .eq("status", "approved")
+          .eq("verification_status", "approved")
           .maybeSingle();
         if (byKey.data) {
           const row = byKey.data as ShariaRulingExtended;
@@ -164,6 +173,7 @@ export async function resolveRulingByIdentifier(id: string): Promise<RulingResol
           .select("*")
           .eq("slug", trimmed)
           .eq("status", "approved")
+          .eq("verification_status", "approved")
           .maybeSingle();
         if (bySlug.data) {
           const row = bySlug.data as ShariaRulingExtended;

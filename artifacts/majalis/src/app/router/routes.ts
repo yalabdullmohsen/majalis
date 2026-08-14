@@ -266,7 +266,6 @@ const PATHS = [
   "/prophets",
   "/prophets/:slug",
   "/prophets/tree",
-  "/qa",
   "/qibla",
   "/quiz",
   "/quran",

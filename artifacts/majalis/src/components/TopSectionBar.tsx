@@ -148,8 +148,8 @@ export function isTabActive(location: string, href: string): boolean {
       location.startsWith("/mawarith/") ||
       location === "/fiqh-qawaid" ||
       location.startsWith("/fiqh-qawaid/") ||
-      location === "/qa" ||
-      location.startsWith("/qa/") ||
+      location === "/quiz" ||
+      location.startsWith("/quiz") ||
       location === "/tahara" ||
       location.startsWith("/tahara/") ||
       location === "/zakat" ||

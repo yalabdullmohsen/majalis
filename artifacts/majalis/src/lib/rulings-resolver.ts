@@ -10,8 +10,15 @@ import {
   type RulingContentType,
   type RulingIdentifierKind,
 } from "./rulings-content-type";
+import { isPubliclyPublishedRuling } from "./rulings-publication-gate";
 
-export type RulingResolveStatus = "found" | "notFound" | "removed" | "invalidType" | "wrongContentType";
+export type RulingResolveStatus =
+  | "found"
+  | "notFound"
+  | "removed"
+  | "invalidType"
+  | "wrongContentType"
+  | "unpublished";
 
 export type RulingResolveResult = {
   status: RulingResolveStatus;
@@ -32,6 +39,7 @@ function isRemovedStatus(row: ShariaRulingExtended): boolean {
 export function evaluateRulingRecord(
   identifier: string,
   row: ShariaRulingExtended | null | undefined,
+  opts?: { allowUnpublished?: boolean },
 ): RulingResolveResult {
   const kind = classifyRulingIdentifier(identifier);
   if (kind === "invalid") {
@@ -56,6 +64,15 @@ export function evaluateRulingRecord(
   if (isRemovedStatus(row)) {
     return { status: "removed", kind, identifier, contentType, data: row };
   }
+  if (!opts?.allowUnpublished && !isPubliclyPublishedRuling(row)) {
+    return {
+      status: "unpublished",
+      kind,
+      identifier,
+      contentType,
+      reason: `verification_status=${row.verification_status || "missing"}`,
+    };
+  }
   return { status: "found", kind, identifier, contentType, data: row };
 }
 
@@ -65,6 +82,8 @@ export function httpStatusForRulingResolve(status: RulingResolveStatus): number 
       return 200;
     case "removed":
       return 410;
+    case "unpublished":
+      return 404;
     case "invalidType":
     case "wrongContentType":
     case "notFound":

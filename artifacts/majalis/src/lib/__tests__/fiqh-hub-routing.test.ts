@@ -98,9 +98,10 @@ console.log("\n=== فقه — مسار الصفحة الموضوعية في App 
     "إعادة توجيه /fatwa/:id لا تسقط المعرّف",
   );
   assert(
-    appSrc.includes('path="/qa"') && appSrc.includes("QaPage") && !appSrc.includes('<Route path="/qa"><Redirect to="/quiz" />'),
-    "/qa يعرض صفحة الأسئلة والأجوبة المستقلة (QaPage) وليس تحويلًا إلى /quiz",
+    appSrc.includes('<Route path="/qa"><Redirect to="/quiz" />'),
+    "/qa يحوّل دائمًا إلى /quiz (لا صفحة شبه فارغة)",
   );
+  assert(!appSrc.includes("QaPage"), "QaPage لم يعد موصولًا كمسار عام");
 }
 
 console.log(`\n=== النتيجة: ${passed} نجاح، ${failed} فشل ===`);
