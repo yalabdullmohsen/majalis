@@ -126,9 +126,10 @@
   /* ══════════════════════════════════════════════════════════
      ٣) الطباعة — سُلَّم نسبي 1.2 (Minor Third)
      ══════════════════════════════════════════════════════════ */
-  /* خطوط الواجهة من theme.css (--mj-ui) — لا تنافس Scheherazade هنا */
-  --font-body:    var(--mj-ui);
-  --font-display: var(--mj-ui);
+  /* خطوط الواجهة من --font-app (theme.css) — لا تنافس المصحف هنا */
+  --font-body:    var(--font-app);
+  --font-display: var(--font-app);
+  --font-sans:    var(--font-app);
   --font-quran:   "Amiri Quran", "Scheherazade New", "Noto Naskh Arabic", serif;
 
   --fs-xs:   0.75rem;    /* 12px */

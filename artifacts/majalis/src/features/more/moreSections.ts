@@ -10,6 +10,7 @@ import {
   Building2,
   Compass,
   Heart,
+  Landmark,
   Library,
   Radio,
   Settings,
@@ -34,7 +35,7 @@ export type MoreSection = {
   keywords?: string[];
 };
 
-/** السبعة الرئيسية — الترتيب ملزم. */
+/** ثمانية أبواب (٢×٤) بلا يتيم — الأنبياء والأمم بطاقتان منفصلتان. */
 export const MORE_FEATURED_SECTIONS: MoreSection[] = [
   {
     id: "quiz",
@@ -47,14 +48,24 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     keywords: ["مسابقة", "اختبار", "quiz", "سين جيم"],
   },
   {
-    id: "prophets-nations",
-    title: "قصص الأنبياء والأمم السابقة",
-    subtitle: "الأنبياء · عاد وثمود وفرعون",
+    id: "prophets",
+    title: "قصص الأنبياء",
+    subtitle: "من آدم إلى محمد ﷺ",
     icon: BookOpen,
-    route: "/prophets",
+    route: "/prophets-stories",
     tier: "featured",
     order: 2,
-    keywords: ["أنبياء", "أمم", "قصص"],
+    keywords: ["أنبياء", "قصص", "آدم"],
+  },
+  {
+    id: "nations",
+    title: "الأمم السابقة",
+    subtitle: "عاد وثمود ومن قبلهم",
+    icon: Landmark,
+    route: "/nations",
+    tier: "featured",
+    order: 3,
+    keywords: ["أمم", "عاد", "ثمود", "فرعون"],
   },
   {
     id: "quran-people",
@@ -63,7 +74,7 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: Users,
     route: "/quran/people",
     tier: "featured",
-    order: 3,
+    order: 4,
     keywords: ["أعلام", "شخصيات", "الذين ذكروا"],
   },
   {
@@ -73,7 +84,7 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: Library,
     route: "/tafsir",
     tier: "featured",
-    order: 4,
+    order: 5,
     keywords: ["تفسير"],
   },
   {
@@ -83,7 +94,7 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: BookA,
     route: "/seerah",
     tier: "featured",
-    order: 5,
+    order: 6,
     keywords: ["سيرة"],
   },
   {
@@ -93,7 +104,7 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: Compass,
     route: "/discover-islam",
     tier: "featured",
-    order: 6,
+    order: 7,
     keywords: ["اكتشف", "دعوة", "مسلم جديد"],
   },
   {
@@ -103,12 +114,12 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: Building2,
     route: "/tarikh-islami",
     tier: "featured",
-    order: 7,
+    order: 8,
     keywords: ["تاريخ", "حضارة"],
   },
 ];
 
-/** مربعات أصغر تحت السبعة — بلا تكرار لعناصر الشريط السفلي (رئيسية/دروس/قرآن/صلاة). */
+/** مربعات أصغر تحت الأبواب المميزة — بلا تكرار لعناصر الشريط السفلي. */
 export const MORE_STANDARD_SECTIONS: MoreSection[] = [
   {
     id: "adhkar",

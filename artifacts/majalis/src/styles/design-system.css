@@ -2767,7 +2767,7 @@ h1, h2, h3 {
 .story-content,
 .lesson-content,
 .hadith-content {
-  font-family: var(--font-reading, "Noto Naskh Arabic", serif);
+  font-family: var(--font-app, var(--font-reading, "Amiri", "Noto Naskh Arabic", serif));
   font-size: clamp(1rem, 2.5vw, 1.0625rem);
   line-height: 1.9;
   color: var(--ds-ink);

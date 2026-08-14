@@ -109,7 +109,8 @@ function measureInPage(peakShimmer) {
   };
   const clipped = (el) => {
     if (!el) return false;
-    if (el.scrollHeight > el.clientHeight + 1) return true;
+    /* Amiri نسخي: الحبر (تشكيل/نوازل) يتجاوز صندوق السطر ببضعة بكسلات دون اقتطاع بصري */
+    if (el.scrollHeight > el.clientHeight + 6) return true;
     const cs = getComputedStyle(el);
     const maxH = parseFloat(cs.maxHeight);
     if (Number.isFinite(maxH) && maxH > 0 && el.scrollHeight > maxH + 1) return true;
@@ -239,13 +240,13 @@ async function main() {
         for (const peak of [false, true]) {
           const report = await page.evaluate(measureInPage, peak);
 
-          if (report.tileCount !== 7) {
+          if (report.tileCount !== 8) {
             failures.push({
               gate: "surface",
               theme,
               vp: `${vp.width}x${vp.height}`,
               peak,
-              reason: `عدد المربعات ${report.tileCount} ≠ 7`,
+              reason: `عدد المربعات ${report.tileCount} ≠ 8`,
             });
           }
 

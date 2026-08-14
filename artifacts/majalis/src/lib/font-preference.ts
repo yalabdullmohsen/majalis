@@ -2,16 +2,15 @@ export type FontPreference = "default" | "naskh";
 
 export const FONT_STORAGE_KEY = "majalis-font-preference-v2";
 
-/* ملاحظة: الخط الموحَّد للمنصة هو Alexandria (2026-07-18، تحديثًا لسياسة
-   IBM Plex Sans Arabic السابقة) لكلا الخيارين — أُبقي عليهما لتفادي كسر
-   الإعداد المحفوظ للمستخدمين الحاليين، لكنهما لم يعودا ينتجان فرقًا بصريًا فعليًا. */
+/* ملاحظة: الخط الموحَّد للمنصة هو --font-app (Amiri نسخي، مرجع صفحة التفسير).
+   الخياران محفوظان لتوافق الإعداد القديم ولا يفرّقان بصريًا. */
 export const FONT_OPTIONS: {
   id: FontPreference;
   label: string;
   description: string;
 }[] = [
-  { id: "naskh", label: "Alexandria", description: "خط المنصة الموحَّد (افتراضي)" },
-  { id: "default", label: "Alexandria", description: "خط المنصة الموحَّد" },
+  { id: "naskh", label: "نسخ", description: "خط المنصة الموحَّد (افتراضي)" },
+  { id: "default", label: "نسخ", description: "خط المنصة الموحَّد" },
 ];
 
 export function isFontPreference(value: string | null | undefined): value is FontPreference {

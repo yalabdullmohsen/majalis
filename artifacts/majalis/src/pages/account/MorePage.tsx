@@ -1,5 +1,5 @@
 /**
- * صفحة /more — سبعة مربعات كبيرة ثم أقسام أصغر ثم الحساب/الإعدادات.
+ * صفحة /more — أبواب مميزة ثم أقسام أصغر ثم الحساب/الإعدادات.
  */
 import { useEffect } from "react";
 import { Link } from "wouter";
@@ -43,7 +43,7 @@ export default function MorePage() {
   return (
     <ContentHubLayout title="المزيد" subtitle="أبواب العلم والخدمة">
       <section className="more-page-section" aria-labelledby="more-featured-heading">
-        <h2 id="more-featured-heading" className="more-page-section__title">
+        <h2 id="more-featured-heading" className="more-page-section__title sr-only">
           الأبواب الرئيسية
         </h2>
         <ul className="more-page-grid more-page-grid--featured">

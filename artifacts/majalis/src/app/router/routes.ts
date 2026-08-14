@@ -260,6 +260,8 @@ const PATHS = [
   "/profile",
   "/prophet-stories",
   "/prophet-stories/:slug",
+  "/prophets-stories",
+  "/prophets-stories/:slug",
   "/prophetic-medicine",
   "/prophets",
   "/prophets/:slug",

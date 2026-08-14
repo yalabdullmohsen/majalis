@@ -12,7 +12,7 @@ const css = readFileSync(resolve(root, "src/styles/components/more-bottom-sheet.
 const tsx = readFileSync(resolve(root, "src/components/MoreBottomSheet.tsx"), "utf8");
 const tokens = readFileSync(resolve(root, "src/styles/tokens.css"), "utf8");
 
-assert.match(tsx, /more-sheet-item--featured surface-brand/);
+assert.match(tsx, /group\.id === "hubs" \? " sr-only"/);
 assert.match(tsx, /on-brand-secondary/);
 assert.match(tokens, /\.surface-brand\s*,/);
 assert.match(tokens, /:root\s*\{[\s\S]*?--surface-brand-solid:/);

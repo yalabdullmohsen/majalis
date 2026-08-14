@@ -2,17 +2,9 @@
 /**
  * verify-font-consistency.mjs
  *
- * يمنع رجوع أي خط غير Alexandria ليصبح الخط الأساسي لواجهة المنصة (2026-07-19،
- * تحديثًا لسياسة Almarai السابقة بتاريخ 2026-07-18 — إعادة تصميم الهوية البصرية v3
- * اختارت Alexandria: خط عربي حديث بثراء أوزان وهدوء بصري يناسب طابع "فاخر هادئ").
- * يفحص كل font-family/fontFamily في src/ وlib/ ويرفض أي قيمة أولى ليست:
- *   - "Alexandria" / "IBM Plex Sans Arabic" (بديل احتياطي، ولا يزال يُستخدَم صراحةً
- *     في مسارات توليد الصور/PDF التي لا تقرأ متغيّرات CSS) / "Noto Sans Arabic" /
- *     system-ui / -apple-system / sans-serif
- *   - var(--font-...) أو var(--mj-font-...) (تُحلّ جميعها إلى Alexandria ما عدا --font-quran)
- *   - inherit
- *   - مكدّس monospace (كود/أرقام)
- *   - أحد خطوط الاستثناء القرآني/التراثي المعتمدة صراحةً (انظر QURAN_EXCEPTION_FONTS)
+ * الخط الموحَّد للواجهة هو --font-app (Amiri / Noto Naskh Arabic) —
+ * مرجع فقرات وعناوين بطاقات صفحة التفسير. المصحف (--font-quran / QPC/QCF)
+ * مستثنى. الرموز القديمة --font-display/--font-body/--font-sans aliases.
  *
  * Run: node scripts/verify-font-consistency.mjs
  */
@@ -21,6 +13,29 @@ import { globSync } from "node:fs";
 import { execSync } from "node:child_process";
 
 const ROOT = new URL("..", import.meta.url).pathname;
+
+const themeCss = readFileSync(ROOT + "src/app/styles/theme.css", "utf8");
+if (!/--font-app:\s*"Amiri"/.test(themeCss)) {
+  console.error("✗ --font-app يجب أن يُعرَّف في @theme كـ Amiri (مرجع التفسير)");
+  process.exit(1);
+}
+for (const alias of ["--font-display", "--font-body", "--font-sans", "--font-ui", "--mj-ui"]) {
+  const re = new RegExp(`${alias}:\\s*var\\(--font-app\\)`);
+  if (!re.test(themeCss)) {
+    console.error(`✗ ${alias} يجب أن يكون alias لـ --font-app`);
+    process.exit(1);
+  }
+}
+const indexHtml = readFileSync(ROOT + "index.html", "utf8");
+const primaryFontHref = indexHtml.match(/fonts\.googleapis\.com\/css2\?family=([^"'>\s]+)/)?.[1] || "";
+if (!/Amiri/.test(primaryFontHref) || !/Noto\+Naskh/.test(primaryFontHref)) {
+  console.error("✗ index.html يجب أن يحمّل Amiri و Noto Naskh كخط واجهة أساسي");
+  process.exit(1);
+}
+if (/family=Alexandria/.test(indexHtml) || /IBM\+Plex\+Sans\+Arabic/.test(primaryFontHref)) {
+  console.error("✗ احذف Alexandria / IBM Plex من تحميل خط الواجهة الأساسي");
+  process.exit(1);
+}
 
 // خطوط الاستثناء الوحيدة المسموح بها كقيمة أولى — الرسم القرآني العثماني
 // وما يتبعه مباشرة من نصوص تراثية (بالاسم الصريح المُدقَّق يدويًا، وليس أي
@@ -71,6 +86,7 @@ function isAllowed(rawValue) {
   const value = rawValue.trim();
   // بطاقات الحفظ (/memorize): متغيّرات --fc-* مستقلة (Amiri/Tajawal/Alexandria)
   if (/^var\(\s*--fc-/i.test(value)) return true;
+  if (/^var\(\s*--font-app\b/i.test(value)) return true;
   if (/^var\(\s*--mj-(face|ui|num)\b/i.test(value)) return true;
   if (/^var\(\s*--(mj-)?font-/i.test(value)) return true; // تُحلّ عبر :root إلى IBM Plex Sans Arabic (أو --font-quran المعتمد)
   const fallback = unwrapVar(value);
@@ -80,6 +96,7 @@ function isAllowed(rawValue) {
   if (UI_FONT_MARKERS.includes(first)) return true;
   if (MONOSPACE_MARKERS.includes(first)) return true;
   if (QURAN_EXCEPTION_FONTS.includes(first)) return true;
+  if (first.startsWith("qpc")) return true;
   return false;
 }
 
@@ -131,16 +148,16 @@ for (const relPath of listFiles()) {
 }
 
 if (violations.length > 0) {
-  console.error("\x1b[31m✗ فحص اتساق الخط فشل — عُثر على خط غير Alexandria:\x1b[0m\n");
+  console.error("\x1b[31m✗ فحص اتساق الخط فشل — عُثر على خط خارج --font-app / استثناء المصحف:\x1b[0m\n");
   for (const v of violations) {
     console.error(`  ${v.file}:${v.line}  →  font-family: ${v.value}`);
   }
   console.error(
-    "\n\x1b[33mالخط الموحَّد للمنصة هو Alexandria. إن كان هذا استثناءً قرآنيًا/تراثيًا حقيقيًا،" +
+    "\n\x1b[33mالخط الموحَّد للمنصة هو --font-app (Amiri). إن كان هذا استثناءً قرآنيًا/تراثيًا حقيقيًا،" +
     " أضف اسم الخط إلى QURAN_EXCEPTION_FONTS في scripts/verify-font-consistency.mjs بعد تدقيق يدوي" +
     " يؤكد أن العنصر يعرض نصًا قرآنيًا حرفيًا لا نصًا زخرفيًا مستعارًا.\x1b[0m\n"
   );
   process.exit(1);
 } else {
-  console.log(`\x1b[32m✓ فحص اتساق الخط: لا انحراف عن Alexandria (${listFiles().length} ملف مفحوص)\x1b[0m`);
+  console.log(`\x1b[32m✓ فحص اتساق الخط: --font-app (Amiri) بلا انحراف (${listFiles().length} ملف مفحوص)\x1b[0m`);
 }
