@@ -682,6 +682,18 @@ export function MushafPageV2({
         return bot;
       };
 
+      const shallowestAyahInkTop = () => {
+        let top = Infinity;
+        for (const el of container.querySelectorAll<HTMLElement>(
+          ".mf2-grid-slot--line .mf2-line, .mf2-line",
+        )) {
+          if (!container.contains(el)) continue;
+          const b = measureInkBounds(el);
+          if (b.top < top) top = b.top;
+        }
+        return top;
+      };
+
       const applyVerticalSize = (px: number) => {
         size = px;
         container.style.fontSize = `${px}px`;
@@ -694,6 +706,8 @@ export function MushafPageV2({
       {
         const crV = container.getBoundingClientRect();
         const limitBot = crV.bottom - 1.25;
+        /* مرآة لهامش الأسفل: الحبر لا يُسمح له بالخروج فوق contentBand */
+        const limitTop = crV.top + 1.25;
         const inkFits = (px: number) => {
           applyVerticalSize(px);
           for (const el of sizingEls) el.style.removeProperty("--mf2-word-gap");
@@ -701,7 +715,13 @@ export function MushafPageV2({
           for (const el of sizingEls) widest = Math.max(widest, measureLineContentWidth(el));
           if (widest > fitWidth + 0.75) return false;
           const bot = deepestAyahInkBottom();
-          return Number.isFinite(bot) && bot <= limitBot;
+          const top = shallowestAyahInkTop();
+          return (
+            Number.isFinite(bot) &&
+            bot <= limitBot &&
+            Number.isFinite(top) &&
+            top >= limitTop
+          );
         };
         /* بحث ثنائي: أكبر مقياس ≤ الأفقي يتّسع رأسيًا — بلا نمو يتجاوز الملاءمة الأفقية */
         {
@@ -748,14 +768,18 @@ export function MushafPageV2({
         container.dataset.mf2InkBotClear = (
           limitBot - deepestAyahInkBottom()
         ).toFixed(2);
+        container.dataset.mf2InkTopClear = (
+          shallowestAyahInkTop() - limitTop
+        ).toFixed(2);
         const inkClear = limitBot - deepestAyahInkBottom();
+        const inkTopClear = shallowestAyahInkTop() - limitTop;
         if (
           import.meta.env.DEV &&
-          Number.isFinite(inkClear) &&
-          inkClear < -1.5
+          ((Number.isFinite(inkClear) && inkClear < -1.5) ||
+            (Number.isFinite(inkTopClear) && inkTopClear < -1.5))
         ) {
           throw new Error(
-            `[mushaf] بتر حبر بعد الملاءمة: page=${layout.pageNumber} overflow=${(-inkClear).toFixed(1)}px — لا يُقصّ بصمت`,
+            `[mushaf] بتر حبر بعد الملاءمة: page=${layout.pageNumber} bot=${inkClear.toFixed(1)} top=${inkTopClear.toFixed(1)} — لا يُقصّ بصمت`,
           );
         }
       }

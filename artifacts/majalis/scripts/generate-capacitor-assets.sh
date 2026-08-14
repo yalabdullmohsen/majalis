@@ -69,7 +69,21 @@ try:
     from PIL import Image
 except ImportError:
     import subprocess, sys
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "--user", "pillow", "-q"])
+    # macOS/Linux CI: --user يفشل مع externally-managed-environment — جرّب بدون ثم --break-system-packages
+    cmds = [
+        [sys.executable, "-m", "pip", "install", "pillow", "-q"],
+        [sys.executable, "-m", "pip", "install", "--user", "pillow", "-q"],
+        [sys.executable, "-m", "pip", "install", "--break-system-packages", "pillow", "-q"],
+    ]
+    last = None
+    for cmd in cmds:
+        try:
+            subprocess.check_call(cmd)
+            break
+        except Exception as e:
+            last = e
+    else:
+        raise SystemExit(f"Pillow required but install failed: {last}") from last
     from PIL import Image
 SIZE = 2732
 # #002b21
