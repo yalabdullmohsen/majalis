@@ -132,6 +132,8 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/assistant",       Icon: Bot,         title: seoNavLabel("/assistant", "المساعد العلمي"),    desc: "إرشاد فوري بالذكاء الاصطناعي" },
       { href: "/occasions-lessons", Icon: CalendarDays, title: seoNavLabel("/occasions-lessons", "المناسبات والدروس"), desc: "التواريخ والمناسبات" },
       { href: "/islamic-directory", Icon: Landmark, title: seoNavLabel("/islamic-directory", "الدليل الإسلامي"), desc: "مؤسسات ومساجد ومشاهد" },
+      { href: "/universities", Icon: GraduationCap, title: seoNavLabel("/universities", "دليل الجامعات الشرعية"), desc: "جامعات وكليات الدراسات الشرعية حول العالم" },
+      { href: "/academic-research", Icon: Scroll, title: seoNavLabel("/academic-research", "رسائل الماجستير والدكتوراه"), desc: "مكتبة الأبحاث والرسائل الشرعية الموثّقة" },
       { href: "/scholars",        Icon: Users,       title: seoNavLabel("/scholars", "أعلام الإسلام"),                desc: "مئات العلماء عبر التاريخ بالتخصص والحقبة" },
     ],
   },

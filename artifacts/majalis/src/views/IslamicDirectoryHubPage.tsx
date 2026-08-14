@@ -1,4 +1,4 @@
-import { Landmark, MapPin } from "lucide-react";
+import { Landmark, MapPin, GraduationCap } from "lucide-react";
 import MergedSectionHubPage from "@/views/MergedSectionHubPage";
 
 export default function IslamicDirectoryHubPage() {
@@ -9,9 +9,15 @@ export default function IslamicDirectoryHubPage() {
       description="دليل المؤسسات الإسلامية والمساجد والمشاهد في قسم واحد."
       cards={[
         {
+          href: "/universities",
+          title: "دليل الجامعات والكليات الشرعية",
+          desc: "جامعات ومعاهد الدراسات الشرعية حول العالم مع المقارنة",
+          Icon: GraduationCap,
+        },
+        {
           href: "/institutions",
           title: "المؤسسات الإسلامية",
-          desc: "مساجد · مكتبات · مراكز · جامعات",
+          desc: "مساجد · مكتبات · مراكز",
           Icon: Landmark,
         },
         {

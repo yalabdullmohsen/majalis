@@ -23,7 +23,6 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/study-room",
   "/vault",
   "/cards",
-  "/universities",
   "/mind-map",
   "/mushaf/page",
   // التسميع ظاهر في مركز القرآن والمصحف وقوائم الاكتشاف
@@ -53,7 +52,6 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/library",
   "/updates",
   "/knowledge-graph",
-  "/academic-research",
   "/fiqh-council/fatwas",
   "/flashcards", // يظهر داخل حسابي فقط (رابط مباشر في الصفحة)
   "/occasions",
@@ -89,9 +87,9 @@ export const MERGED_PATH_REDIRECTS: Record<string, string> = {
   "/library": "/",
   "/updates": "/",
   "/knowledge-graph": "/",
-  "/academic-research": "/",
-  "/researches": "/",
-  "/sharia-research": "/",
+  "/researches": "/academic-research",
+  "/sharia-research": "/academic-research",
+  "/research": "/academic-research",
   "/fiqh-council/fatwas": "/fiqh",
 
   // اختصارات قديمة → البوابات المدمجة (ليست صفحات المحتوى النهائية)
@@ -107,7 +105,6 @@ export const MERGED_PATH_REDIRECTS: Record<string, string> = {
   "/latest": "/",
   "/fatwas": "/fiqh",
   "/explore": "/",
-  "/research": "/",
   "/news": "/",
   "/events": "/occasions-lessons",
   "/islamic-events": "/occasions-lessons",

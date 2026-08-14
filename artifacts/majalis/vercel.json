@@ -735,12 +735,12 @@
     },
     {
       "source": "/researches",
-      "destination": "/",
+      "destination": "/academic-research",
       "permanent": true
     },
     {
       "source": "/sharia-research",
-      "destination": "/",
+      "destination": "/academic-research",
       "permanent": true
     },
     {
@@ -1070,11 +1070,6 @@
       "permanent": true
     },
     {
-      "source": "/academic-research",
-      "destination": "/",
-      "permanent": true
-    },
-    {
       "source": "/quran-index",
       "destination": "/quran-knowledge",
       "permanent": true
@@ -1136,7 +1131,7 @@
     },
     {
       "source": "/research",
-      "destination": "/",
+      "destination": "/academic-research",
       "permanent": true
     },
     {
