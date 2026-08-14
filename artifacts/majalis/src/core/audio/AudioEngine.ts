@@ -97,6 +97,8 @@ export class AudioEngine {
   private loopDelayTimer: ReturnType<typeof setTimeout> | null = null;
   private interruptionBound = false;
   private interruptionCleanups: Array<() => void> = [];
+  /** يمنع حدث error القديم من مسار URL سابق من إفساد تشغيل ناجح */
+  private playGeneration = 0;
 
   static getInstance(): AudioEngine {
     if (!AudioEngine.instance) AudioEngine.instance = new AudioEngine();
@@ -142,12 +144,24 @@ export class AudioEngine {
       this.audio = new Audio();
       this.audio.preload = "auto";
       this.audio.playbackRate = this.playbackRate;
+      try {
+        this.audio.setAttribute("playsinline", "true");
+        (this.audio as HTMLAudioElement & { playsInline?: boolean }).playsInline = true;
+      } catch {
+        /* ignore */
+      }
       this.audio.addEventListener("playing", () => this.setPlayerState("playing"));
       this.audio.addEventListener("pause", () => {
         if (this.playerState !== "loading") this.setPlayerState("paused");
       });
       this.audio.addEventListener("waiting", () => this.setPlayerState("buffering"));
-      this.audio.addEventListener("error", () => this.setPlayerState("error"));
+      this.audio.addEventListener("error", () => {
+        if (this.playerState === "playing" || this.playerState === "loading") {
+          /* أثناء التبديل بين المرشّحين يُعالَج الخطأ في playAyah */
+          return;
+        }
+        this.setPlayerState("error", "تعذّر تحميل ملف التلاوة. أعد المحاولة أو غيّر القارئ.");
+      });
       this.audio.addEventListener("timeupdate", () => {
         const now = typeof performance !== "undefined" ? performance.now() : Date.now();
         if (now - this.lastTimeEmitMs < 200) return;
@@ -459,16 +473,50 @@ export class AudioEngine {
       );
       return;
     }
+    const gen = ++this.playGeneration;
     this.setPlayerState("loading");
     if (this.teachEnabled) this.teachPhase = "teacher";
 
     let lastErr: unknown = null;
     for (const url of urls) {
+      if (gen !== this.playGeneration) return;
       try {
+        el.pause();
         el.src = url;
         el.playbackRate = this.playbackRate;
         await this.activatePlaybackSession();
+        await new Promise<void>((resolve, reject) => {
+          let settled = false;
+          const finish = (fn: () => void) => {
+            if (settled) return;
+            settled = true;
+            cleanup();
+            fn();
+          };
+          const onReady = () => finish(() => resolve());
+          const onError = () => finish(() => reject(new Error("media_element_error")));
+          const cleanup = () => {
+            el.removeEventListener("canplay", onReady);
+            el.removeEventListener("loadeddata", onReady);
+            el.removeEventListener("error", onError);
+          };
+          el.addEventListener("canplay", onReady, { once: true });
+          el.addEventListener("loadeddata", onReady, { once: true });
+          el.addEventListener("error", onError, { once: true });
+          try {
+            el.load();
+          } catch (e) {
+            finish(() => reject(e));
+            return;
+          }
+          window.setTimeout(() => {
+            if (!settled && el.readyState >= 2) onReady();
+            else if (!settled) onError();
+          }, 8000);
+        });
+        if (gen !== this.playGeneration) return;
         await el.play();
+        if (gen !== this.playGeneration) return;
         this.setPlayerState("playing");
         void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
         return;
@@ -478,6 +526,7 @@ export class AudioEngine {
       }
     }
 
+    if (gen !== this.playGeneration) return;
     console.warn("[AudioEngine] playAyah:", lastErr);
     const name =
       lastErr && typeof lastErr === "object" && "name" in lastErr
