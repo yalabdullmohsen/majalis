@@ -8,6 +8,7 @@ import {
   getSelectableReciters,
   getAyahAudioUrl,
   getSurahAudioUrl,
+  listAyahAudioUrls,
   VALID_PLAYBACK_RATES,
 } from "../quran-audio";
 import {
@@ -69,6 +70,17 @@ assert.equal(
 assert.ok(canResolveAudioSource({ kind: "surah", surah: 1, reciterId: "balilah" }));
 assert.match(getSurahAudioUrl(1, "balilah"), /balilah\/001\.mp3$/);
 assert.equal(getAyahAudioUrl(1, 1, "balilah"), "");
+
+const husaryUrls = listAyahAudioUrls(1, 1, "husary");
+assert.ok(husaryUrls.length >= 2, "احتياط عفاسي بعد القارئ الأساسي");
+assert.match(husaryUrls[0]!, /Husary/);
+assert.match(husaryUrls[1]!, /Alafasy/);
+assert.deepEqual(listAyahAudioUrls(1, 1, "alafasy"), [getAyahAudioUrl(1, 1, "alafasy")]);
+assert.deepEqual(
+  listAyahAudioUrls(1, 1, "balilah"),
+  [getAyahAudioUrl(1, 1, "alafasy")],
+  "قارئ سورة-فقط: احتياط عفاسي للآية",
+);
 
 __setQuranAudioRemoteConfigForTests({
   disabledReciterIds: ["alafasy"],

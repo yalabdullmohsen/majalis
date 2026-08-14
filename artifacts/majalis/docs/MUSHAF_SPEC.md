@@ -88,7 +88,7 @@
 
 ### مقياس بصري
 
-`--mushaf-scale` × `MUSHAF_OPTICAL_FONT_SCALE` (**١٫٠**) — مسار ملاءمة واحد؛ سقف فجوة الكلمات **١٠px** (`MUSHAF_WORD_GAP_MAX_PX`) مع امتلاء أدنى **٠٫٩٤٥**.
+`--mushaf-scale` × `MUSHAF_OPTICAL_FONT_SCALE` (**١٫٠**) — مسار ملاءمة واحد؛ سقف فجوة الكلمات **٧px** (`MUSHAF_WORD_GAP_MAX_PX`) مع امتلاء أدنى **٠٫٩٦**.
 
 ### ألوان
 

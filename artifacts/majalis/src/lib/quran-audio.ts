@@ -379,6 +379,21 @@ export function getAyahAudioUrl(surah: number, ayah: number, reciterId: string):
   return `https://everyayah.com/data/${r.everyayahFolder}/${s}${a}.mp3`;
 }
 
+/**
+ * مرشّحو تشغيل الآية بالترتيب: القارئ المختار ثم عفاسي كاحتياط إن اختلف.
+ * لا يغيّر نص القرآن — روابط صوت فقط.
+ */
+export function listAyahAudioUrls(surah: number, ayah: number, reciterId: string): string[] {
+  const primary = getAyahAudioUrl(surah, ayah, reciterId);
+  const urls: string[] = [];
+  if (primary) urls.push(primary);
+  if (reciterId !== "alafasy") {
+    const fallback = getAyahAudioUrl(surah, ayah, "alafasy");
+    if (fallback && fallback !== primary) urls.push(fallback);
+  }
+  return urls;
+}
+
 /** Full-surah MP3 from mp3quran.net. */
 export function getSurahAudioUrl(surah: number, reciterId: string): string {
   const r = getReciter(reciterId);

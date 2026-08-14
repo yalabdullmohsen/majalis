@@ -48,8 +48,8 @@ if (!/MAX_WORD_GAP_PX\s*=\s*MUSHAF_WORD_GAP_MAX_PX/.test(pageV2) && !/MUSHAF_WOR
   failures.push({ gate: "static", reason: "سقف فجوة الكلمات غير مربوط بالإعداد المركزي" });
 }
 const mushafConfig = readFileSync(join(ROOT, "src/features/mushaf/config.ts"), "utf8");
-if (!/MUSHAF_WORD_GAP_MAX_PX\s*=\s*10/.test(mushafConfig)) {
-  failures.push({ gate: "static", reason: "MUSHAF_WORD_GAP_MAX_PX يجب أن يكون ١٠px" });
+if (!/MUSHAF_WORD_GAP_MAX_PX\s*=\s*7/.test(mushafConfig)) {
+  failures.push({ gate: "static", reason: "MUSHAF_WORD_GAP_MAX_PX يجب أن يكون ٧px" });
 }
 if (/isFatihaBasmala/.test(pageV2)) failures.push({ gate: "static", reason: "مسار استبدال ١:١ بـ BasmalaLine ما زال حيًا" });
 const basmalaSrc = readFileSync(basmalaPath, "utf8");

@@ -99,6 +99,9 @@ type Props = {
   isPlaying: boolean;
   onTogglePlay: () => void;
   canPlay?: boolean;
+  /** رسالة خطأ تشغيل التلاوة — لا تُترك صامتة */
+  audioError?: string | null;
+  audioLoading?: boolean;
   onPrev?: () => void;
   onNext?: () => void;
   onClose: () => void;
@@ -120,6 +123,8 @@ export function PageAyahActionSheet({
   isPlaying,
   onTogglePlay,
   canPlay = true,
+  audioError = null,
+  audioLoading = false,
   onPrev,
   onNext,
   onClose,
@@ -556,20 +561,35 @@ export function PageAyahActionSheet({
           <span>الآية {toArabicDigits(ayahNum)}</span>
         </header>
 
+        {audioError ? (
+          <p className="aas-v3__audio-error" role="alert">
+            {audioError}
+          </p>
+        ) : null}
+
         <hr className="aas-v3__section-sep" />
 
         <div className="aas-v3__actions-wrap">
           <div className="aas-v3__actions" role="toolbar" aria-label="إجراءات الآية">
             <button
               type="button"
-              className={`aas-v3__action${showAudioTools || isPlaying ? " is-on" : ""}`}
+              className={`aas-v3__action${showAudioTools || isPlaying || audioLoading ? " is-on" : ""}`}
               onClick={handleListen}
-              disabled={!canPlay}
-              aria-label={isPlaying ? "إيقاف التلاوة" : "استماع"}
+              disabled={!canPlay || audioLoading}
+              aria-label={
+                audioLoading ? "جاري التحميل" : isPlaying ? "إيقاف التلاوة" : "استماع"
+              }
               aria-pressed={showAudioTools || isPlaying}
+              aria-busy={audioLoading || undefined}
             >
-              {isPlaying ? <Pause size={24} aria-hidden="true" /> : <Play size={24} aria-hidden="true" />}
-              <span>استماع</span>
+              {audioLoading ? (
+                <RefreshCw size={24} aria-hidden="true" className="aas-v3__spin" />
+              ) : isPlaying ? (
+                <Pause size={24} aria-hidden="true" />
+              ) : (
+                <Play size={24} aria-hidden="true" />
+              )}
+              <span>{audioLoading ? "تحميل…" : "استماع"}</span>
             </button>
             <button
               type="button"

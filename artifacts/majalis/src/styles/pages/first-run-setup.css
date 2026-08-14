@@ -7,8 +7,20 @@
   align-items: flex-end;
   justify-content: center;
   padding: max(1rem, var(--inset-top, 0px)) 1rem max(1.25rem, var(--inset-bottom, 0px));
-  background: color-mix(in srgb, var(--mj-brand-deep, #0f2e1d) 42%, transparent);
-  backdrop-filter: blur(6px);
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 0%, color-mix(in srgb, #c9a96a 18%, transparent), transparent 55%),
+    repeating-linear-gradient(
+      45deg,
+      transparent 0 11px,
+      color-mix(in srgb, #c9a96a 7%, transparent) 11px 12px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0 11px,
+      color-mix(in srgb, #c9a96a 5%, transparent) 11px 12px
+    ),
+    color-mix(in srgb, var(--mj-brand-deep, #0f2e1d) 52%, #06150f);
+  backdrop-filter: blur(8px);
 }
 
 .frs-card {
@@ -16,11 +28,48 @@
   width: min(100%, 28rem);
   max-height: min(92dvh, 40rem);
   overflow: auto;
-  background: var(--mj-bg, #fff);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--mj-brand, #1f6b45) 6%, var(--mj-bg, #fff)) 0%,
+      var(--mj-bg, #fff) 28%
+    );
   color: var(--mj-brand-deep, #0f2e1d);
-  border-radius: 1.1rem 1.1rem 0.85rem 0.85rem;
-  padding: 1.25rem 1.15rem 1.15rem;
-  box-shadow: 0 -8px 32px rgba(15, 46, 29, 0.18);
+  border-radius: 1.15rem 1.15rem 0.9rem 0.9rem;
+  padding: 1.35rem 1.2rem 1.2rem;
+  box-shadow: 0 -10px 36px rgba(15, 46, 29, 0.22);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b45) 14%, transparent);
+}
+
+.frs-brand-mark {
+  display: flex;
+  justify-content: center;
+  margin: 0.15rem 0 0.85rem;
+}
+.frs-brand-mark img {
+  width: 64px;
+  height: 64px;
+  border-radius: 1rem;
+  object-fit: cover;
+  box-shadow: 0 6px 18px rgba(15, 46, 29, 0.18);
+}
+
+html[data-theme="dark"] .frs-card,
+html.dark .frs-card {
+  background: linear-gradient(180deg, #1a2420 0%, #141c19 40%);
+  color: #ecf2ef;
+  border-color: #35443f;
+}
+html[data-theme="dark"] .frs-lead,
+html.dark .frs-lead,
+html[data-theme="dark"] .frs-skip,
+html.dark .frs-skip {
+  color: #9fb0ab;
+}
+html[data-theme="dark"] .frs-guide li,
+html.dark .frs-guide li {
+  background: color-mix(in srgb, #5cc095 10%, transparent);
+  color: #ecf2ef;
 }
 
 .frs-skip {

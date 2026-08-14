@@ -61,13 +61,12 @@ export const MUSHAF_OPTICAL_FONT_SCALE = 1;
  * سقف فجوة الكلمات (px) بعد تكبير الخط — أقرب للمصحف المطبوع.
  * يُطبَّق عبر --mf2-word-gap فقط (لا word-spacing/letter-spacing على QPC).
  */
-export const MUSHAF_WORD_GAP_MAX_PX = 10;
+export const MUSHAF_WORD_GAP_MAX_PX = 7;
 
 /**
- * حد امتلاء السطر قبل إضافة فجوة — أقل من ٠٫٩٨ يقلّل المطّ الاصطناعي.
- * الخط يُكبَّر أولًا؛ الفجوة تُغلق الفارق الصغير فقط.
+ * حد امتلاء السطر قبل إضافة فجوة — أعلى = فجوة أقل/أندر (الخط يُكبَّر أولًا).
  */
-export const MUSHAF_MIN_LINE_FILL = 0.945;
+export const MUSHAF_MIN_LINE_FILL = 0.96;
 
 /** أقصى انحراف لفجوة الأسطر النسبية (±٥٪) */
 export const MUSHAF_GAP_DEV_MAX = 0.05;
