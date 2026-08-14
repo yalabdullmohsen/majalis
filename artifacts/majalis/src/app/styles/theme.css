@@ -251,9 +251,10 @@ html.dark,
   --mj-surface-3: #2A3733;
   --mj-hairline: #35443F;
   --mj-border-strong: #445651;
-  --mj-ink: #ECF2EF;
-  --mj-ink-2: #C2CFCA;
-  --mj-muted: #9FB0AB;
+  /* نص ليلي واضح — بلا رمادي باهت؛ الأساسي شبه أبيض */
+  --mj-ink: #F8FAFC;
+  --mj-ink-2: #E2E8F0;
+  --mj-muted: #C5D0CB;
   --mj-brand: #5CC095;
   --mj-brand-soft: #16261F;
   /* خلفية عميقة فقط — لا يُستخدم كلون نص (العناوين عبر --elite-forest / accent) */
@@ -267,6 +268,12 @@ html.dark,
   --mj-danger-deep: #F2B8C0;
   --mj-splash: #131A18;
 
+  /* نص فوق أسطح داكنة (أبطال/قصص/دروس) — صلب بلا opacity */
+  --on-dark-strong: #FFFFFF;
+  --on-dark-body: #F8FAFC;
+  --on-dark-secondary: #E8EEEC;
+  --color-on-dark: var(--on-dark-strong);
+
   /* رموز دلالية إلزامية — قيم ليلية صريحة */
   --bg-base: #131A18;
   --surface-1: #1B2421;
@@ -274,9 +281,9 @@ html.dark,
   --surface-3: #2A3733;
   --border-subtle: #35443F;
   --border-strong: #445651;
-  --txt-primary: #ECF2EF;
-  --txt-secondary: #C2CFCA;
-  --txt-muted: #9FB0AB;
+  --txt-primary: #F8FAFC;
+  --txt-secondary: #E2E8F0;
+  --txt-muted: #C5D0CB;
   --accent: #5CC095;
   --accent-strong: #7BD6AE;
   --on-accent: #06231A;
@@ -288,9 +295,9 @@ html.dark,
   --color-surface: #1B2421;
   --color-surface-2: #222D29;
   --color-hairline: #35443F;
-  --color-ink: #ECF2EF;
-  --color-ink-2: #C2CFCA;
-  --color-muted: #9FB0AB;
+  --color-ink: #F8FAFC;
+  --color-ink-2: #E2E8F0;
+  --color-muted: #C5D0CB;
   --color-brand: #5CC095;
   --color-brand-soft: #16261F;
   --color-brand-deep: #0E1C17;

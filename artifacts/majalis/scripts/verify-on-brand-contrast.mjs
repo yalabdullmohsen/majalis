@@ -51,6 +51,7 @@ const ON_BRAND_VARS = new Set([
   "--on-brand", "--on-brand-secondary", "--on-brand-tertiary",
   "--on-brand-disabled", "--on-brand-focus-ring",
   "--text-on-brand", "--text-on-dark",
+  "--on-dark-strong", "--on-dark-body", "--on-dark-secondary", "--color-on-dark",
 ]);
 
 /* ── أدوات لون ────────────────────────────────────────────────────── */
@@ -92,9 +93,15 @@ const VAR_HEX = {
   "--mj-ink": "#0e241e", "--text": "#121916", "--text-2": "#3e3a35",
   "--text-muted": "#57534c", "--text-title": "#0e241e",
   "--on-brand": "#ffffff", "--text-on-brand": "#fffefb",
+  "--on-brand-secondary": "#f8fafc",
+  "--on-brand-tertiary": "#e8eeec",
   "--text-on-dark": "#ffffff",
-  "--text-on-dark-secondary": "#f3f5f4",
+  "--text-on-dark-secondary": "#e8eeec",
   "--text-primary-inverse": "#ffffff",
+  "--on-dark-strong": "#ffffff",
+  "--on-dark-body": "#f8fafc",
+  "--on-dark-secondary": "#e8eeec",
+  "--color-on-dark": "#ffffff",
 };
 
 /** يستخرج أول لون قابل للحلّ من تصريح CSS، أو null. */

@@ -36,7 +36,7 @@
   justify-content: center;
   gap: var(--ds-space-8);
   font-size: 0.82rem;
-  color: rgba(255,255,255,0.6);
+  color: var(--on-dark-secondary, #E8EEEC);
   flex-wrap: wrap;
 }
 .sch-hero__stats strong { color: #FFFFFF; font-size: 1.2rem; display: block; }

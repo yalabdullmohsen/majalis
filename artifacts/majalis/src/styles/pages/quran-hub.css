@@ -149,7 +149,9 @@
 }
 .quran-hub-stat__lbl {
   font-size: 0.78rem;
-  color: rgba(255,255,255,0.6);
+  color: var(--on-dark-secondary, #E8EEEC);
+  opacity: 1;
+  font-weight: 500;
 }
 
 /* Sections grid */
@@ -317,7 +319,7 @@
 }
 .quran-hub-closing__ref {
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.65);
+  color: var(--on-dark-body, #F8FAFC);
 }
 
 .quran-hub-empty {

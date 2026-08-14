@@ -1133,9 +1133,11 @@ html.dark .nb-table__row--clickable:hover td {
 }
 .prophets-seerah-bridge__desc {
   font-size: 0.82rem;
-  color: rgba(250, 250, 248, 0.82);
+  color: var(--on-dark-body, var(--ps-text-body, #F8FAFC));
+  opacity: 1;
   line-height: 1.6;
   margin: 0;
+  font-weight: 500;
 }
 .prophets-seerah-bridge__arrow {
   flex-shrink: 0;
@@ -1466,8 +1468,10 @@ html.dark .nb-table__row--clickable:hover td {
 .prophet-detail-lux__keys-hint {
   margin: 0.75rem 0 0;
   font-size: 0.72rem;
-  color: rgba(250, 250, 248, 0.55);
+  color: var(--on-dark-secondary, #E8EEEC);
+  opacity: 1;
   letter-spacing: 0.01em;
+  font-weight: 500;
 }
 .prophet-detail-lux__azm-badge {
   background: color-mix(in srgb, var(--prophet-accent, var(--mj-accent)) 78%, var(--mj-brand-deep));

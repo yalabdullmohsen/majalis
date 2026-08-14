@@ -5,7 +5,7 @@
 /* ─ Hero ─ */
 .pmp-hero { border-radius: var(--ds-radius-2xl); margin-bottom: 1.5rem; text-align: center; }
 .pmp-hero__eyebrow { font-size: 0.8rem; font-weight: 700; letter-spacing: normal; color: var(--mj-ink-2); margin-bottom: 0.5rem; text-transform: uppercase; }
-.pmp-hero__title   { font-size: clamp(1.6rem, 4vw, 2.25rem); font-weight: 800; color: var(--mj-bg); margin: 0 0 0.6rem; }
+.pmp-hero__title   { font-size: clamp(1.6rem, 4vw, 2.25rem); font-weight: 800; color: var(--on-dark-strong, #FFFFFF); margin: 0 0 0.6rem; }
 .pmp-hero__subtitle { font-size: 0.95rem; color: #D6D5CE; max-width: 520px; margin: 0 auto; line-height: 1.7; }
 
 /* ─ Disclaimer ─ */
@@ -28,7 +28,7 @@
 .pmp-card__head { background: var(--pm-bg, var(--mj-brand-deep)); background-image: url("/star-pattern.svg"); background-size: 100px 100px; padding: 1rem 1rem 0.875rem; display: flex; align-items: center; gap: var(--ds-space-3); }
 .pmp-card__icon { font-size: 1.75rem; line-height: 1; flex-shrink: 0; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35)); }
 .pmp-card__head-info { flex: 1; }
-.pmp-card__name { font-weight: 800; font-size: var(--ds-text-base); color: var(--mj-bg); margin: 0 0 0.2rem; }
+.pmp-card__name { font-weight: 800; font-size: var(--ds-text-base); color: var(--on-dark-strong, #FFFFFF); margin: 0 0 0.2rem; }
 .pmp-card__badges { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 
 /* ─ Category badge (uses CSS vars from article) ─ */

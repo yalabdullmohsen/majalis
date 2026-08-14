@@ -18,20 +18,20 @@
 }
 .sh-hero__inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
 .sh-hero__badge {
-  display: inline-block; background: rgba(250,248,242,.18); color: var(--mj-bg);
+  display: inline-block; background: rgba(250,248,242,.18); color: var(--on-dark-strong, #FFFFFF);
   border: 1px solid rgba(250,248,242,.30); border-radius: var(--ds-radius-full);
   padding: .25rem .9rem; font-size: .75rem; font-weight: 700; letter-spacing: normal;
   margin-bottom: .9rem;
 }
 .sh-hero__title { font-size: 2rem; font-weight: 900; margin: 0 0 .3rem; line-height: 1.2; }
-.sh-hero__sallam { color: var(--mj-bg); font-size: 1.6rem; }
-.sh-hero__sub { font-size: .9rem; color: rgba(250,248,242,.7); margin: 0 0 1.75rem; line-height: 1.7; }
+.sh-hero__sallam { color: var(--on-dark-strong, #FFFFFF); font-size: 1.6rem; }
+.sh-hero__sub { font-size: .9rem; color: var(--on-dark-body, #F8FAFC); margin: 0 0 1.75rem; line-height: 1.7; }
 .sh-hero__stats {
   display: flex; justify-content: center; gap: var(--ds-space-5); flex-wrap: wrap;
 }
 .sh-stat { display: flex; flex-direction: column; align-items: center; gap: .1rem; }
-.sh-stat__val { font-size: 1.2rem; font-weight: 900; color: var(--mj-bg); }
-.sh-stat__lbl { font-size: 0.8rem; color: rgba(250,248,242,.55); }
+.sh-stat__val { font-size: 1.2rem; font-weight: 900; color: var(--on-dark-strong, #FFFFFF); }
+.sh-stat__lbl { font-size: 0.8rem; color: var(--on-dark-secondary, #E8EEEC); }
 
 /* container */
 .sh-container { max-width: 860px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
@@ -111,10 +111,10 @@
   border-radius: var(--ds-radius-2xl); padding: 2rem 1.5rem; color: #fff; text-align: center;
   margin-bottom: .5rem;
 }
-.sh-mahabbah-intro__icon { color: var(--mj-bg); opacity: .9; }
+.sh-mahabbah-intro__icon { color: var(--on-dark-strong, #FFFFFF); opacity: .9; }
 .sh-mahabbah-intro__title { font-size: var(--ds-text-2xl); font-weight: 900; margin: 0; }
 .sh-mahabbah-intro__text {
-  font-size: .88rem; color: rgba(250,248,242,.75); margin: 0; line-height: 1.7;
+  font-size: .88rem; color: var(--on-dark-body, #F8FAFC); margin: 0; line-height: 1.7;
   max-width: 560px;
 }
 

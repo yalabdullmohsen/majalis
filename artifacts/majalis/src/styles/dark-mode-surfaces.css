@@ -395,7 +395,8 @@ html[data-theme="dark"] .lesson-unified-card__meta,
 html[data-theme="dark"] .lesson-unified-card__desc,
 html.dark .lesson-unified-card__meta,
 html.dark .lesson-unified-card__desc {
-  color: var(--txt-secondary, #C2CFCA) !important;
+  color: var(--on-dark-secondary, var(--txt-secondary, #E2E8F0)) !important;
+  opacity: 1 !important;
 }
 
 /* نوافذ / حوارات عامة */
@@ -404,6 +405,214 @@ html.dark [role="dialog"],
 html[data-theme="dark"] .dialog-content,
 html.dark .dialog-content {
   background: var(--surface-elevated, #222D29);
-  color: var(--txt-primary, #ECF2EF);
+  color: var(--on-dark-body, var(--txt-primary, #F8FAFC));
   border-color: var(--border-strong, #445651);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   نص فوق أسطح داكنة — توكنات صلبة (لا --mj-bg ليلاً، لا rgba باهت)
+   ═══════════════════════════════════════════════════════════════ */
+html[data-theme="dark"],
+html.dark {
+  --ps-text-primary: var(--on-dark-strong, #FFFFFF);
+  --ps-text-body: var(--on-dark-body, #F8FAFC);
+  --ps-detail-soft: var(--on-dark-body, #F8FAFC);
+  --ps-detail-muted: var(--on-dark-secondary, #E8EEEC);
+}
+
+html[data-theme="dark"] :where(
+  .lpd2-hero,
+  .myl2-hero,
+  .sh-hero,
+  .pmp-hero,
+  .srp-hero,
+  .isp-hero,
+  .seerah-hero,
+  .frb-wrap,
+  .prophet-detail-lux,
+  .prophet-detail-lux__hero,
+  .quran-hub-hero,
+  .quran-hub-stats,
+  .surface-brand,
+  .th-hero,
+  .sw-hero
+),
+html.dark :where(
+  .lpd2-hero,
+  .myl2-hero,
+  .sh-hero,
+  .pmp-hero,
+  .srp-hero,
+  .isp-hero,
+  .seerah-hero,
+  .frb-wrap,
+  .prophet-detail-lux,
+  .prophet-detail-lux__hero,
+  .quran-hub-hero,
+  .quran-hub-stats,
+  .surface-brand,
+  .th-hero,
+  .sw-hero
+) {
+  color: var(--on-dark-strong, #FFFFFF) !important;
+}
+
+html[data-theme="dark"] :where(
+  .lpd2-hero,
+  .myl2-hero,
+  .sh-hero,
+  .pmp-hero,
+  .srp-hero,
+  .isp-hero,
+  .seerah-hero,
+  .prophet-detail-lux,
+  .prophet-detail-lux__hero,
+  .quran-hub-hero,
+  .quran-hub-stats,
+  .surface-brand,
+  .th-hero,
+  .sw-hero
+) :where(
+  h1, h2, h3,
+  [class$="__title"],
+  [class$="__name"],
+  [class$="__heading"]
+),
+html.dark :where(
+  .lpd2-hero,
+  .myl2-hero,
+  .sh-hero,
+  .pmp-hero,
+  .srp-hero,
+  .isp-hero,
+  .seerah-hero,
+  .prophet-detail-lux,
+  .prophet-detail-lux__hero,
+  .quran-hub-hero,
+  .quran-hub-stats,
+  .surface-brand,
+  .th-hero,
+  .sw-hero
+) :where(
+  h1, h2, h3,
+  [class$="__title"],
+  [class$="__name"],
+  [class$="__heading"]
+) {
+  color: var(--on-dark-strong, #FFFFFF) !important;
+  opacity: 1 !important;
+  font-weight: 700;
+}
+
+html[data-theme="dark"] :where(
+  .lpd2-hero,
+  .myl2-hero,
+  .sh-hero,
+  .pmp-hero,
+  .srp-hero,
+  .isp-hero,
+  .seerah-hero,
+  .prophet-detail-lux,
+  .prophet-section-lux,
+  .quran-hub-hero,
+  .quran-hub-stats,
+  .surface-brand,
+  .th-hero,
+  .sw-hero
+) :where(
+  p,
+  [class$="__sub"],
+  [class$="__desc"],
+  [class$="__text"],
+  [class$="__body"],
+  [class$="__lead"],
+  [class$="__meta"],
+  [class$="__lbl"],
+  [class*="breadcrumb"]
+),
+html.dark :where(
+  .lpd2-hero,
+  .myl2-hero,
+  .sh-hero,
+  .pmp-hero,
+  .srp-hero,
+  .isp-hero,
+  .seerah-hero,
+  .prophet-detail-lux,
+  .prophet-section-lux,
+  .quran-hub-hero,
+  .quran-hub-stats,
+  .surface-brand,
+  .th-hero,
+  .sw-hero
+) :where(
+  p,
+  [class$="__sub"],
+  [class$="__desc"],
+  [class$="__text"],
+  [class$="__body"],
+  [class$="__lead"],
+  [class$="__meta"],
+  [class$="__lbl"],
+  [class*="breadcrumb"]
+) {
+  color: var(--on-dark-body, #F8FAFC) !important;
+  opacity: 1 !important;
+  font-weight: 500;
+}
+
+/* أقسام القصص الطويلة — عنوان + متن صلبان */
+html[data-theme="dark"] .prophet-section-lux__title,
+html.dark .prophet-section-lux__title {
+  color: var(--on-dark-strong, #FFFFFF) !important;
+  opacity: 1 !important;
+  font-weight: 700 !important;
+}
+html[data-theme="dark"] .prophet-section-lux__text,
+html.dark .prophet-section-lux__text {
+  color: var(--on-dark-body, #F8FAFC) !important;
+  opacity: 1 !important;
+  font-weight: 500 !important;
+  line-height: 1.85;
+}
+
+/* Tailwind gray على النصوص المقروءة ليلاً */
+html[data-theme="dark"] .dark\:text-gray-400,
+html.dark .dark\:text-gray-400,
+html[data-theme="dark"] .text-gray-400,
+html.dark .text-gray-400 {
+  color: var(--on-dark-secondary, #E8EEEC) !important;
+}
+html[data-theme="dark"] .dark\:text-gray-300,
+html.dark .dark\:text-gray-300,
+html[data-theme="dark"] .text-gray-300,
+html.dark .text-gray-300 {
+  color: var(--on-dark-body, #F8FAFC) !important;
+}
+html[data-theme="dark"] .text-white\/40,
+html[data-theme="dark"] .text-white\/50,
+html[data-theme="dark"] .text-white\/60,
+html.dark .text-white\/40,
+html.dark .text-white\/50,
+html.dark .text-white\/60 {
+  color: var(--on-dark-secondary, #E8EEEC) !important;
+  opacity: 1 !important;
+}
+
+/* بطاقات/قوائم عامة ليلاً — نص أساسي واضح */
+html[data-theme="dark"] .hub-card__desc,
+html[data-theme="dark"] .quran-hub-card__desc,
+html.dark .hub-card__desc,
+html.dark .quran-hub-card__desc {
+  color: var(--on-dark-secondary, var(--txt-secondary, #E2E8F0)) !important;
+}
+html[data-theme="dark"] .hub-card,
+html.dark .hub-card,
+html[data-theme="dark"] .quran-hub-feature-item,
+html.dark .quran-hub-feature-item,
+html[data-theme="dark"] .quran-hub-card,
+html.dark .quran-hub-card,
+html[data-theme="dark"] .quran-hub-page,
+html.dark .quran-hub-page {
+  color: var(--on-dark-body, var(--txt-primary, #F8FAFC)) !important;
 }

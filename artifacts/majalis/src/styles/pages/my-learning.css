@@ -30,7 +30,7 @@
   border: 2px solid rgba(255,255,255,.32);
   display: flex; align-items: center; justify-content: center;
   font-size: 1.35rem; font-weight: 800;
-  color: var(--mj-bg); flex-shrink: 0;
+  color: var(--on-dark-strong, #FFFFFF); flex-shrink: 0;
   box-shadow: 0 0 0 4px rgba(255,255,255,.07);
 }
 
@@ -39,7 +39,7 @@
 .myl2-hero__name {
   margin: 0;
   font-size: 1.15rem; font-weight: 800;
-  color: var(--mj-bg); line-height: 1.2;
+  color: var(--on-dark-strong, #FFFFFF); line-height: 1.2;
 }
 
 .myl2-hero__email {
@@ -58,7 +58,7 @@
 }
 .myl2-badge--level {
   background: rgba(255,255,255,.14);
-  color: var(--mj-bg);
+  color: var(--on-dark-strong, #FFFFFF);
   border: 1px solid rgba(255,255,255,.22);
 }
 .myl2-badge--fire {
@@ -89,7 +89,7 @@
   display: flex; flex-direction: column; align-items: center; flex: 1;
   position: relative;
 }
-.myl2-qstat__n { font-size: 1.2rem; font-weight: 800; color: var(--mj-bg); line-height: 1; }
+.myl2-qstat__n { font-size: 1.2rem; font-weight: 800; color: var(--on-dark-strong, #FFFFFF); line-height: 1; }
 .myl2-qstat__l { font-size: 0.64rem; color: rgba(255,255,255,.45); margin-top: 0.12rem; }
 .myl2-qstat__sep {
   position: absolute; inset-inline-start: 0; top: 50%; transform: translateY(-50%);

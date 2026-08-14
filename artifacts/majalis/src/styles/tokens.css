@@ -29,8 +29,12 @@
 
   /* أبيض صريح — لا رمادي داكن ولا أسود مخفَّف فوق الأخضر إطلاقًا */
   --on-brand: #ffffff;
-  --on-brand-secondary: rgba(255, 255, 255, 0.82);
-  --on-brand-tertiary: rgba(255, 255, 255, 0.64);
+  /* ثانوي/ثالثي فوق الأخضر — بدون بهتان شديد (كان 0.64 يقرأ باهتًا) */
+  --on-brand-secondary: #F8FAFC;
+  --on-brand-tertiary: #E8EEEC;
+  --on-dark-strong: #FFFFFF;
+  --on-dark-body: #F8FAFC;
+  --on-dark-secondary: #E8EEEC;
 
   /* حالات التفاعل فوق الأخضر — شفافيات محدّدة، بلا انقلاب إلى داكن */
   --on-brand-hover-bg: rgba(255, 255, 255, 0.24);
@@ -68,8 +72,11 @@ html.dark {
   --on-brand: #06231A;
   --on-brand-secondary: #0E2A22;
   --on-brand-tertiary: #16352C;
-  --on-brand-wash: #ECF2EF;
-  --on-brand-wash-secondary: #C2CFCA;
+  --on-brand-wash: #F8FAFC;
+  --on-brand-wash-secondary: #E2E8F0;
+  --on-dark-strong: #FFFFFF;
+  --on-dark-body: #F8FAFC;
+  --on-dark-secondary: #E8EEEC;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
