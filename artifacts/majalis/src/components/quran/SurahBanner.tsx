@@ -1,8 +1,6 @@
 /**
- * شارة سورة رصينة متماثلة:
- * إطار ذهبي خارجي ٢px + داخلي ١px بفاصل ٤px · radius ٣px ·
- * كل جناح: ميدالية ١٢ بتلة + فرعان لولبيان فقط · سُمك ١٫٢px ·
- * أبيض بعتامة ٠٫٨٥ · الجناح الأيمن مرآة الأيسر · لوحة وسطى ٣٤٪.
+ * شارة سورة فاخرة هادئة (مرجع wing-refined):
+ * إطار ذهبي مزدوج · جناحان بميدالية بتلات + لوالب · لوحة عاجية وسطى.
  */
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { MUSHAF_TYPESCALE } from "@/features/mushaf/typescale";
@@ -16,18 +14,18 @@ type Props = {
 
 const PANEL_MARGIN_PX = 6;
 const PANEL_FRAC = 0.34;
-const STROKE = 1.2;
-const PANEL_STROKE = 1.5;
-const OUTER_STROKE = 2;
-const INNER_STROKE = 1;
-const FRAME_GAP = 4;
-const FRAME_RADIUS = 3;
-/** خط الزخرفة: أبيض بعتامة ٠٫٨٥ */
-const ORNAMENT_LINE = "color-mix(in srgb, #FFFFFF 85%, transparent)";
+const STROKE = 1.15;
+const PANEL_STROKE = 1.35;
+const OUTER_STROKE = 1.75;
+const INNER_STROKE = 0.9;
+const FRAME_GAP = 3.5;
+const FRAME_RADIUS = 4;
+const ORNAMENT_LINE =
+  "color-mix(in srgb, var(--color-mushaf-ornament-line, #FFFFFF) 78%, var(--color-mushaf-gold-soft, #C9B07A))";
 const GOLD_QUIET =
-  "color-mix(in srgb, var(--color-mushaf-gold-strong, #A67C3D) 82%, #8a7040)";
+  "color-mix(in srgb, var(--color-mushaf-gold-strong, #A67C3D) 78%, #7a6240)";
+const GOLD_SOFT = "var(--color-mushaf-gold-soft, #C9B07A)";
 
-/** ميدالية دائرية — ١٢ بتلة متساوية الزوايا */
 function PetalMedallion({ cx, cy, r }: { cx: number; cy: number; r: number }) {
   const petals = 12;
   const outer: string[] = [];
@@ -36,7 +34,7 @@ function PetalMedallion({ cx, cy, r }: { cx: number; cy: number; r: number }) {
     const a1 = ((i + 0.5) / petals) * Math.PI * 2 - Math.PI / 2;
     const a2 = ((i + 1) / petals) * Math.PI * 2 - Math.PI / 2;
     const tip = r;
-    const valley = r * 0.78;
+    const valley = r * 0.76;
     const x0 = cx + Math.cos(a0) * valley;
     const y0 = cy + Math.sin(a0) * valley;
     const xt = cx + Math.cos(a1) * tip;
@@ -49,24 +47,31 @@ function PetalMedallion({ cx, cy, r }: { cx: number; cy: number; r: number }) {
   outer.push("Z");
   return (
     <g aria-hidden="true" data-wing-part="medallion">
+      <circle
+        cx={cx}
+        cy={cy}
+        r={r * 1.08}
+        fill="color-mix(in srgb, var(--color-mushaf-ornament-mid, #EDE0C4) 55%, transparent)"
+        stroke="none"
+      />
       <path
         d={outer.join(" ")}
-        fill="none"
+        fill="color-mix(in srgb, var(--color-mushaf-ornament-bg, #D8C39C) 35%, transparent)"
         stroke={ORNAMENT_LINE}
         strokeWidth={STROKE}
       />
       <circle
         cx={cx}
         cy={cy}
-        r={r * 0.72}
+        r={r * 0.7}
         fill="var(--color-mushaf-ornament-mid, #EDE0C4)"
-        stroke={ORNAMENT_LINE}
-        strokeWidth={STROKE}
+        stroke={GOLD_SOFT}
+        strokeWidth={STROKE * 0.85}
       />
       <circle
         cx={cx}
         cy={cy}
-        r={r * 0.42}
+        r={r * 0.4}
         fill="none"
         stroke={ORNAMENT_LINE}
         strokeWidth={STROKE}
@@ -74,17 +79,16 @@ function PetalMedallion({ cx, cy, r }: { cx: number; cy: number; r: number }) {
       <circle
         cx={cx}
         cy={cy}
-        r={r * 0.22}
+        r={r * 0.2}
         fill="var(--color-mushaf-ornament-bg, #D8C39C)"
-        stroke={ORNAMENT_LINE}
-        strokeWidth={STROKE}
+        stroke={GOLD_QUIET}
+        strokeWidth={STROKE * 0.7}
       />
-      <circle cx={cx} cy={cy} r={r * 0.08} fill={ORNAMENT_LINE} />
+      <circle cx={cx} cy={cy} r={r * 0.07} fill={GOLD_QUIET} />
     </g>
   );
 }
 
-/** فرعان لولبيان متناظران فقط حول الميدالية */
 function TwinSpirals({
   cx,
   cy,
@@ -100,24 +104,24 @@ function TwinSpirals({
 }) {
   const leftEnd = wingX + 3;
   const rightEnd = wingX + wingW - 3;
-  const amp = medR * 0.85;
+  const amp = medR * 0.9;
   const left = [
     `M ${(cx - medR * 0.95).toFixed(2)} ${cy.toFixed(2)}`,
-    `C ${(cx - medR * 1.35).toFixed(2)} ${(cy - amp).toFixed(2)},`,
-    `${(leftEnd + (cx - leftEnd) * 0.35).toFixed(2)} ${(cy - amp * 0.35).toFixed(2)},`,
+    `C ${(cx - medR * 1.4).toFixed(2)} ${(cy - amp).toFixed(2)},`,
+    `${(leftEnd + (cx - leftEnd) * 0.32).toFixed(2)} ${(cy - amp * 0.4).toFixed(2)},`,
     `${leftEnd.toFixed(2)} ${cy.toFixed(2)}`,
-    `C ${(leftEnd + (cx - leftEnd) * 0.4).toFixed(2)} ${(cy + amp * 0.7).toFixed(2)},`,
-    `${(cx - medR * 1.15).toFixed(2)} ${(cy + amp * 0.55).toFixed(2)},`,
-    `${(cx - medR * 0.75).toFixed(2)} ${(cy + amp * 0.08).toFixed(2)}`,
+    `C ${(leftEnd + (cx - leftEnd) * 0.38).toFixed(2)} ${(cy + amp * 0.75).toFixed(2)},`,
+    `${(cx - medR * 1.18).toFixed(2)} ${(cy + amp * 0.55).toFixed(2)},`,
+    `${(cx - medR * 0.72).toFixed(2)} ${(cy + amp * 0.06).toFixed(2)}`,
   ].join(" ");
   const right = [
     `M ${(cx + medR * 0.95).toFixed(2)} ${cy.toFixed(2)}`,
-    `C ${(cx + medR * 1.35).toFixed(2)} ${(cy - amp).toFixed(2)},`,
-    `${(rightEnd - (rightEnd - cx) * 0.35).toFixed(2)} ${(cy - amp * 0.35).toFixed(2)},`,
+    `C ${(cx + medR * 1.4).toFixed(2)} ${(cy - amp).toFixed(2)},`,
+    `${(rightEnd - (rightEnd - cx) * 0.32).toFixed(2)} ${(cy - amp * 0.4).toFixed(2)},`,
     `${rightEnd.toFixed(2)} ${cy.toFixed(2)}`,
-    `C ${(rightEnd - (rightEnd - cx) * 0.4).toFixed(2)} ${(cy + amp * 0.7).toFixed(2)},`,
-    `${(cx + medR * 1.15).toFixed(2)} ${(cy + amp * 0.55).toFixed(2)},`,
-    `${(cx + medR * 0.75).toFixed(2)} ${(cy + amp * 0.08).toFixed(2)}`,
+    `C ${(rightEnd - (rightEnd - cx) * 0.38).toFixed(2)} ${(cy + amp * 0.75).toFixed(2)},`,
+    `${(cx + medR * 1.18).toFixed(2)} ${(cy + amp * 0.55).toFixed(2)},`,
+    `${(cx + medR * 0.72).toFixed(2)} ${(cy + amp * 0.06).toFixed(2)}`,
   ].join(" ");
   return (
     <g data-wing-part="spirals" aria-hidden="true">
@@ -143,6 +147,20 @@ function TwinSpirals({
   );
 }
 
+function CornerFinial({ x, y, dir }: { x: number; y: number; dir: 1 | -1 }) {
+  const s = 3.2 * dir;
+  return (
+    <g aria-hidden="true">
+      <path
+        d={`M ${x} ${y} l ${s} ${-Math.abs(s) * 0.35} l ${s * 0.15} ${Math.abs(s) * 0.7} Z`}
+        fill={GOLD_SOFT}
+        stroke={GOLD_QUIET}
+        strokeWidth={0.6}
+      />
+    </g>
+  );
+}
+
 function WingMotifs({
   wingX,
   wingW,
@@ -154,8 +172,7 @@ function WingMotifs({
   cy: number;
   wingH: number;
 }) {
-  /* نصف قطر أصغر قليلاً لإبقاء كثافة الجناح داخل ٢٠–٣٠٪ */
-  const medR = wingH * 0.36;
+  const medR = wingH * 0.34;
   const cx = wingX + wingW / 2;
   return (
     <g data-wing="1">
@@ -197,13 +214,13 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
   const H = 40;
   const panelW = W * PANEL_FRAC;
   const panelX = (W - panelW) / 2;
-  const panelY = 7;
-  const panelH = H - 14;
+  const panelY = 6.5;
+  const panelH = H - 13;
   const innerPad = OUTER_STROKE + FRAME_GAP + INNER_STROKE + 1;
   const wingH = H - innerPad * 2;
   const leftWingX = innerPad;
   const leftWingW = panelX - innerPad - 2;
-  const outerInset = 1;
+  const outerInset = 1.1;
   const innerInset = outerInset + OUTER_STROKE + FRAME_GAP;
 
   const setNameRef = (el: HTMLSpanElement | null) => {
@@ -233,13 +250,19 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
         aria-hidden="true"
         focusable="false"
       >
+        <defs>
+          <linearGradient id="mf2-banner-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="var(--color-mushaf-ornament-mid, #EDE0C4)" />
+            <stop offset="100%" stopColor="var(--color-mushaf-ornament-bg, #E3D2B4)" />
+          </linearGradient>
+        </defs>
         <rect
           x={outerInset}
           y={outerInset}
           width={W - outerInset * 2}
           height={H - outerInset * 2}
           rx={FRAME_RADIUS}
-          fill="var(--color-mushaf-ornament-bg, #E3D2B4)"
+          fill="url(#mf2-banner-fill)"
           stroke={GOLD_QUIET}
           strokeWidth={OUTER_STROKE}
         />
@@ -248,24 +271,42 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
           y={innerInset}
           width={W - innerInset * 2}
           height={H - innerInset * 2}
-          rx={FRAME_RADIUS}
+          rx={FRAME_RADIUS - 1}
           fill="none"
-          stroke={GOLD_QUIET}
+          stroke={GOLD_SOFT}
           strokeWidth={INNER_STROKE}
+          strokeOpacity={0.9}
         />
+        {/* نقاط ذهبية خفيفة على المحاور — زخرفة هادئة بلا ازدحام */}
+        {[panelX - 6, W - panelX + 6].map((px) => (
+          <circle key={px} cx={px} cy={H / 2} r={1.15} fill={GOLD_QUIET} opacity={0.75} />
+        ))}
         <WingMotifs wingX={leftWingX} wingW={leftWingW} cy={H / 2} wingH={wingH} />
         <g data-wing-mirror-copy="1" transform={`translate(${W}, 0) scale(-1, 1)`}>
           <WingMotifs wingX={leftWingX} wingW={leftWingW} cy={H / 2} wingH={wingH} />
         </g>
+        <CornerFinial x={outerInset + 2} y={outerInset + 2} dir={1} />
+        <CornerFinial x={W - outerInset - 2} y={outerInset + 2} dir={-1} />
         <rect
           x={panelX}
           y={panelY}
           width={panelW}
           height={panelH}
-          rx="0"
+          rx="2"
           fill="var(--color-mushaf-panel, #FAF3E8)"
           stroke={GOLD_QUIET}
           strokeWidth={PANEL_STROKE}
+        />
+        <rect
+          x={panelX + 2.5}
+          y={panelY + 2}
+          width={panelW - 5}
+          height={panelH - 4}
+          rx="1.5"
+          fill="none"
+          stroke={GOLD_SOFT}
+          strokeWidth={0.7}
+          opacity={0.7}
         />
       </svg>
       <span

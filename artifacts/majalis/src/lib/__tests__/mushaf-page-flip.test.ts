@@ -25,6 +25,7 @@ assert.match(hook, /SETTLE_MS\s*=\s*250/);
 assert.match(hook, /SNAP_BACK_MS\s*=\s*160/);
 assert.match(hook, /FLIP_EDGE_FRAC\s*=\s*0\.5/);
 assert.match(hook, /onCenterTap/);
+assert.match(hook, /onFlipStart/);
 assert.match(hook, /classifyTap/);
 assert.match(hook, /requestAnimationFrame/);
 assert.match(hook, /progressRef/);
@@ -33,8 +34,12 @@ assert.match(hook, /onNext/);
 assert.match(hook, /onPrev/);
 /* يمين = التالية · يسار = السابقة — نصف الشاشة */
 assert.match(hook, /rel >= w \/ 2 \? "next" : "prev"/);
+assert.match(hook, /onCenterTapRef/);
+assert.doesNotMatch(hook, /void opts\.onCenterTap/);
 
 assert.match(view, /useMushafPageFlip/);
+assert.match(view, /onCenterTap:\s*toggleChrome|onCenterTap:\s*\(\)\s*=>/);
+assert.match(view, /onFlipStart:\s*hideChrome/);
 assert.match(view, /MushafPageFlipStage/);
 assert.match(view, /flipDisabled/);
 assert.match(view, /neighborLayouts/);

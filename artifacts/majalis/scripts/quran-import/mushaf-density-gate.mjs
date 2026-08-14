@@ -44,7 +44,7 @@ if (!existsSync(basmalaPath)) failures.push({ gate: "static", reason: "BasmalaLi
 const pageV2 = readFileSync(join(ROOT, "src/components/quran/MushafPageV2.tsx"), "utf8");
 if (!/BasmalaLine/.test(pageV2)) failures.push({ gate: "static", reason: "MushafPageV2 بلا BasmalaLine" });
 if (/DRAWN_BASMALA_TEXT/.test(pageV2)) failures.push({ gate: "static", reason: "مسار بسملة Unicode ثانٍ ما زال حيًا" });
-if (!/MAX_WORD_GAP_PX\s*=\s*18/.test(pageV2)) failures.push({ gate: "static", reason: "سقف فجوة ١٨px مفقود" });
+if (!/MAX_WORD_GAP_PX\s*=\s*12/.test(pageV2)) failures.push({ gate: "static", reason: "سقف فجوة ١٢px مفقود" });
 if (/isFatihaBasmala/.test(pageV2)) failures.push({ gate: "static", reason: "مسار استبدال ١:١ بـ BasmalaLine ما زال حيًا" });
 const basmalaSrc = readFileSync(basmalaPath, "utf8");
 if (!/data-basmala-encoding="code_v2"/.test(basmalaSrc) || /BASMALA_QPC_WORDS = \["ﭑ"/.test(basmalaSrc)) {

@@ -1,7 +1,8 @@
 /**
  * تقليب صفحة مصحف (RTL) — انزلاق أفقي بسيط:
- * - عتبة ٢٥٪ / ٠٫٥px/ms · settle 250ms · ارتداد ١٦٠ms · نصف الشاشة للنقر
- * - يمين = التالية · يسار = السابقة
+ * - عتبة ٢٥٪ / ٠٫٥px/ms · settle 250ms · ارتداد ١٦٠ms
+ * - سحب يسار→يمين = التالية (SPEC)
+ * - نقر: يمين = التالية · يسار = السابقة · وسط = إظهار/إخفاء الشريط
  */
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 
@@ -37,11 +38,17 @@ export function useMushafPageFlip(opts: {
   onNext: () => void;
   onPrev: () => void;
   onCenterTap?: () => void;
+  /** يُستدعى عند بدء سحب أفقي ناجح (لإخفاء الشريط أثناء القراءة) */
+  onFlipStart?: () => void;
   disabled?: boolean;
   widthPx?: number;
 }) {
   const { onNext, onPrev, disabled = false } = opts;
-  void opts.onCenterTap;
+  const onCenterTapRef = useRef(opts.onCenterTap);
+  const onFlipStartRef = useRef(opts.onFlipStart);
+  onCenterTapRef.current = opts.onCenterTap;
+  onFlipStartRef.current = opts.onFlipStart;
+
   const startX = useRef<number | null>(null);
   const startY = useRef<number | null>(null);
   const startT = useRef(0);
@@ -55,6 +62,7 @@ export function useMushafPageFlip(opts: {
   const progressRef = useRef(0);
   const rafRef = useRef(0);
   const pendingProgress = useRef<number | null>(null);
+  const flipStartSent = useRef(false);
 
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState(false);
@@ -107,6 +115,7 @@ export function useMushafPageFlip(opts: {
     startY.current = null;
     pointerId.current = null;
     locked.current = null;
+    flipStartSent.current = false;
     pendingProgress.current = null;
     if (rafRef.current) {
       cancelAnimationFrame(rafRef.current);
@@ -122,6 +131,7 @@ export function useMushafPageFlip(opts: {
     setPeeling(false);
   }, []);
 
+  /** يمين = التالية · يسار = السابقة */
   const classifyTap = useCallback((clientX: number): "next" | "prev" => {
     const w = Math.max(160, widthRef.current);
     const rel = clientX - stageLeftRef.current;
@@ -134,7 +144,7 @@ export function useMushafPageFlip(opts: {
       if (disabled) return;
       if (e.button !== 0 && e.pointerType === "mouse") return;
       const target = e.target as HTMLElement | null;
-      if (target?.closest?.("button, a, [role='button'], [data-verse], .mfl-hit__ayah, .mf2-ayah-group, .aas-sheet, .aas-panel")) {
+      if (target?.closest?.("button, a, [role='button'], [data-verse], .mfl-hit__ayah, .mf2-ayah-group, .aas-sheet, .aas-panel, .mpv-toolbar")) {
         return;
       }
       const stage = e.currentTarget as HTMLElement;
@@ -149,6 +159,7 @@ export function useMushafPageFlip(opts: {
       lastT.current = startT.current;
       pointerId.current = e.pointerId;
       locked.current = null;
+      flipStartSent.current = false;
       setSettling(false);
       setPeeling(true);
       setActive(true);
@@ -174,8 +185,14 @@ export function useMushafPageFlip(opts: {
         if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
         locked.current = Math.abs(dy) > Math.abs(dx) * AXIS_LOCK ? "v" : "h";
         if (locked.current === "v") {
+          /* تمرير للأعلى القصير → إظهار الشريط */
+          if (dy < -28) onCenterTapRef.current?.();
           reset();
           return;
+        }
+        if (locked.current === "h" && !flipStartSent.current) {
+          flipStartSent.current = true;
+          onFlipStartRef.current?.();
         }
       }
       if (locked.current !== "h") return;
@@ -183,7 +200,6 @@ export function useMushafPageFlip(opts: {
       lastX.current = e.clientX;
       lastT.current = performance.now();
       const w = Math.max(160, widthRef.current);
-      /* بلا setState أثناء السحب — CSS فقط عبر rAF */
       setProgressVisual(dx / w, false);
     },
     [disabled, reducedMotion, reset, setProgressVisual],
@@ -201,8 +217,18 @@ export function useMushafPageFlip(opts: {
       const moved = Math.hypot(dx, dy);
 
       if (locked.current !== "h" && moved <= TAP_MAX_PX && dt <= TAP_MAX_MS) {
-        const zone = classifyTap(startX.current);
+        const tapX = startX.current;
+        const w = Math.max(160, widthRef.current);
+        const rel = tapX - stageLeftRef.current;
+        const centerBand = w * 0.22;
+        const mid = w / 2;
+        const isCenter = rel > mid - centerBand / 2 && rel < mid + centerBand / 2;
+        const zone = classifyTap(tapX);
         reset();
+        if (isCenter) {
+          onCenterTapRef.current?.();
+          return;
+        }
         if (zone === "next") onNext();
         else onPrev();
         return;
