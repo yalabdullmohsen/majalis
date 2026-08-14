@@ -31,8 +31,8 @@ export const MUSHAF_AYA_BANDS_PCT = {
 
 /** هوامش صفحة اختيارية للواجهة (لا تغيّر شبكة QPC المطلقة) */
 export const MUSHAF_PAGE_CHROME = {
-  /** يطابق MUSHAF_OPTICAL_FONT_SCALE — سقف آمن للبوابات ≤١٫٠٢ */
-  fontScaleBoost: 1.02,
+  /** يطابق MUSHAF_OPTICAL_FONT_SCALE — بلا تعزيز يُهدد ملاءمة SE */
+  fontScaleBoost: 1,
   chromeHideMs: 3200,
 } as const;
 

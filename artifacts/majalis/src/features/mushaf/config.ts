@@ -52,9 +52,9 @@ export const MUSHAF_FONT_DEV_MAX = 0.18;
 
 /**
  * مضاعف بصري على مقياس المصحف قبل الملاءمة.
- * ١٫٠٢ أقصى آمن (البوابات ترفض >١٫٠٢)؛ ١٫٠٤ كان يُسقط سطرًا على SE.
+ * يُبقى عند ١٫٠ — أي تعزيز >١ يُسقط أسطرًا على SE (٣٧٥×٦٦٧) في multi-viewport.
  */
-export const MUSHAF_OPTICAL_FONT_SCALE = 1.02;
+export const MUSHAF_OPTICAL_FONT_SCALE = 1;
 
 /**
  * سقف فجوة الكلمات (px) بعد تكبير الخط — أقرب للمصحف المطبوع.
