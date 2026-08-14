@@ -51,10 +51,11 @@ export const MUSHAF_BASELINE_GAP_PER_EM =
 export const MUSHAF_FONT_DEV_MAX = 0.18;
 
 /**
- * تعزيز بصري خفيف على مقياس المصحف (≈٤٪) — وضوح دون كسر شبكة QPC.
- * يُضرب في `--mushaf-scale` قبل الملاءمة؛ الحراس الأفقية/الرأسية تبقى.
+ * مضاعف بصري على مقياس المصحف قبل الملاءمة.
+ * يُبقى عند ١٫٠ حتى لا تُقصّ أسطر SE في بوابات multi-viewport
+ * (١٫٠٤ كان يُسقط سطرًا واحدًا على صفحات ضيقة رغم clipped=0).
  */
-export const MUSHAF_OPTICAL_FONT_SCALE = 1.04;
+export const MUSHAF_OPTICAL_FONT_SCALE = 1;
 
 /** أقصى انحراف لفجوة الأسطر النسبية (±٥٪) */
 export const MUSHAF_GAP_DEV_MAX = 0.05;
