@@ -145,44 +145,52 @@ html.dark,
 .dark {
   --bg: var(--mj-bg);
   --bg-elevated: var(--mj-surface);
+  --bg-base: var(--mj-bg);
   --surface: var(--mj-surface);
+  --surface-1: var(--mj-surface);
   --surface-2: var(--mj-surface-2);
-  --surface-3: var(--mj-surface-2);
+  --surface-3: var(--mj-surface-3, #2A3733);
   --surface-muted: var(--mj-surface-2);
   --surface-brand: var(--mj-brand-soft);
   --surface-brand-solid: var(--mj-brand);
   --surface-brand-strong: var(--mj-brand-deep);
-  --on-brand: var(--mj-on-brand, #ffffff);
-  --on-brand-secondary: color-mix(in srgb, var(--mj-on-brand, #ffffff) 82%, transparent);
+  --on-brand: #06231A;
+  --on-brand-secondary: #0E2A22;
+  --on-accent: #06231A;
   --surface-inverse: var(--mj-bg);
-  --surface-elevated: var(--mj-surface);
+  --surface-elevated: var(--mj-surface-2);
 
   --text-title: var(--mj-ink);
   --text: var(--mj-ink);
   --text-2: var(--mj-ink-2);
   --txt-primary: var(--mj-ink);
+  --txt-secondary: var(--mj-ink-2);
   --txt-subdued: var(--mj-ink-2);
+  --txt-muted: var(--mj-muted);
   --text-primary: var(--mj-ink);
   --text-muted: var(--mj-muted);
   --text-meta: var(--mj-muted);
-  --text-on-brand: var(--mj-on-brand);
-  /* نفس المعنى ليلًا: نص فاتح فوق الزمرد/الأسطح الداكنة الثابتة */
-  --text-on-dark: #F2F6F4;
+  --text-on-brand: #06231A;
+  --text-on-dark: #ECF2EF;
   --text-brand: var(--mj-brand);
-  --text-brand-deep: var(--mj-brand);
+  --text-brand-deep: var(--accent-strong, #7BD6AE);
 
   --border: var(--mj-hairline);
-  --border-strong: var(--mj-hairline);
-  --border-interactive: var(--mj-ink-2);
-  --border-brand: var(--mj-brand-soft);
+  --border-subtle: var(--mj-hairline);
+  --border-strong: var(--mj-border-strong, #445651);
+  --border-interactive: var(--mj-brand);
+  --border-brand: var(--mj-hairline);
 
   --brand: var(--mj-brand);
-  --brand-hover: var(--mj-brand);
+  --brand-hover: var(--accent-strong, #7BD6AE);
   --brand-active: var(--mj-brand);
   --brand-soft: var(--mj-brand-soft);
   --brand-deep: var(--mj-brand-deep);
-  --accent: var(--mj-accent);
-  --accent-soft: var(--mj-accent-soft);
+  --accent: var(--mj-brand);
+  --accent-soft: var(--mj-brand-soft);
+  --gold: var(--mj-accent);
+  --danger-bg: var(--mj-danger-soft);
+  --danger-txt: var(--mj-danger);
 
   --em-50: var(--mj-brand-soft);
   --em-100: var(--mj-brand-soft);
@@ -198,16 +206,18 @@ html.dark,
   --n-100: var(--mj-surface-2);
   --n-900: var(--mj-ink);
 
-  /* shadcn/color-bg من theme.css تتبع --mj-* في الوضع الليلي تلقائيًا */
   --color-background: var(--mj-bg);
   --color-border: var(--mj-hairline);
+  --color-primary-foreground: #06231A;
 
   --majalis-emerald: var(--mj-brand);
-  --majalis-emerald-deep: var(--mj-brand-deep);
+  --majalis-emerald-deep: var(--mj-brand);
   --majalis-parchment: var(--mj-bg);
   --msk-gold: var(--mj-brand);
   --msk-canvas: var(--mj-bg);
   --msk-text: var(--mj-ink);
+  --msk-text-2: var(--mj-ink-2);
+  --msk-text-3: var(--mj-muted);
 }
 
 /* تهدئة تدرّج الهيرو على الرئيسية — نص داكن على --mj-bg (لا أبيض على فاتح) */

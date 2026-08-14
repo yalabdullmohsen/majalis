@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════════════════ */
 
 /* page */
-.sw-page { min-height: 100svh; background: #F9FAFB; padding-bottom: 4rem; }
+.sw-page { min-height: 100svh; background: var(--mj-bg); padding-bottom: 4rem; }
 
 /* hero */
 .sw-hero {
@@ -72,7 +72,7 @@
   min-width: 5.5rem;
 }
 .sw-tab:hover { background: rgba(255,255,255,.22); color: #fff; }
-.sw-tab--active { background: #F9FAFB; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
+.sw-tab--active { background: var(--mj-surface); color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
 .sw-tab__icon { font-size: 1.1rem; line-height: 1; }
 .sw-tab__label { white-space: nowrap; }
 
@@ -81,11 +81,11 @@
 .sw-section { display: flex; flex-direction: column; gap: .75rem; }
 .sw-section__title { font-size: 1.05rem; font-weight: 700; color: var(--majalis-emerald, var(--mj-brand)); margin: 0 0 .5rem; padding-inline-end: .6rem; border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand)); }
 .sw-section__title--mt { margin-top: 2rem; }
-.sw-section__intro { background: #EFF6F3; border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand)); border-radius: .5rem; padding: .85rem 1rem; font-size: .9rem; line-height: 1.7; color: #1a1a1a; margin-bottom: .5rem; }
+.sw-section__intro { background: var(--mj-brand-soft); border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand)); border-radius: .5rem; padding: .85rem 1rem; font-size: .9rem; line-height: 1.7; color: var(--txt-primary, var(--mj-ink)); margin-bottom: .5rem; }
 
 /* accordion cards */
 .sw-card {
-  background: #fff;
+  background: var(--mj-surface);
   border-radius: .75rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.07);
   overflow: hidden;
@@ -107,11 +107,11 @@
 }
 .sw-card__icon { font-size: 1.6rem; flex-shrink: 0; }
 .sw-card__info { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: .1rem; }
-.sw-card__title { font-size: .95rem; font-weight: 700; color: #111; }
+.sw-card__title { font-size: .95rem; font-weight: 700; color: var(--txt-primary, var(--mj-ink)); }
 .sw-card__sub { font-size: .78rem; color: var(--mj-ink-2); }
-.sw-card__chevron { font-size: var(--ds-text-base); color: #9CA3AF; transition: transform .25s; margin-inline-end: auto; flex-shrink: 0; }
+.sw-card__chevron { font-size: var(--ds-text-base); color: var(--txt-muted, var(--mj-muted)); transition: transform .25s; margin-inline-end: auto; flex-shrink: 0; }
 .sw-card__chevron--open { transform: rotate(180deg); }
-.sw-card__body { padding: 0 1.1rem 1.1rem; border-top: 1px solid #F3F4F6; display: flex; flex-direction: column; gap: .75rem; }
+.sw-card__body { padding: 0 1.1rem 1.1rem; border-top: 1px solid var(--mj-hairline); display: flex; flex-direction: column; gap: .75rem; }
 .sw-card__desc { font-size: .88rem; line-height: 1.7; color: var(--mj-ink-2); margin: .5rem 0 0; }
 
 /* badges */
@@ -124,7 +124,7 @@
   white-space: nowrap;
   flex-shrink: 0;
 }
-.sw-badge--fard { background: #FEF2F2; color: #B91C1C; }
+.sw-badge--fard { background: var(--danger-bg, #FEF2F2); color: var(--danger-txt, #B91C1C); }
 .sw-badge--wajib { background: rgba(23,61,53,.10); color: var(--mj-brand); }
 /* --fard/--nafl خلفياتهما لونان فاتحان صلبان (لا شفافية) فيبقيان واضحين
    بصرف النظر عن الوضع؛ --wajib وحدها خلفيتها شفافة (10% من لون البطاقة
@@ -162,7 +162,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 /* conditions grid */
 .sw-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
 .sw-cond-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .85rem .9rem;
@@ -173,8 +173,8 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 .sw-cond-card--rukn { border-color: var(--majalis-emerald, var(--mj-brand)); background: var(--mj-brand-soft); }
 .sw-cond-card__icon { font-size: 1.4rem; flex-shrink: 0; }
-.sw-cond-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
-.sw-cond-card__body { font-size: .8rem; color: #4B5563; line-height: 1.5; margin: 0; }
+.sw-cond-card__title { display: block; font-size: .88rem; font-weight: 700; color: var(--txt-primary, var(--mj-ink)); margin-bottom: .2rem; }
+.sw-cond-card__body { font-size: .8rem; color: var(--txt-secondary, var(--mj-ink-2)); line-height: 1.5; margin: 0; }
 
 /* info box */
 .sw-info-box {
@@ -195,7 +195,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 
 /* muftirat */
 .sw-muf-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .7rem;
   padding: .9rem 1rem;
@@ -208,12 +208,12 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .sw-muf-card--detail { border-inline-end: 4px solid var(--mj-brand); }
 .sw-muf-card__icon { font-size: var(--ds-text-2xl); flex-shrink: 0; }
 .sw-muf-card__content { flex: 1; display: flex; flex-direction: column; gap: .4rem; }
-.sw-muf-card__title { font-size: .9rem; font-weight: 700; color: #111; }
+.sw-muf-card__title { font-size: .9rem; font-weight: 700; color: var(--txt-primary, var(--mj-ink)); }
 .sw-muf-card__desc { font-size: .84rem; color: var(--mj-ink-2); line-height: 1.65; margin: 0; }
 
 /* exemptions */
 .sw-ex-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .7rem;
   padding: 1rem 1.1rem;
@@ -225,7 +225,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .sw-ex-card__icon { font-size: 1.7rem; flex-shrink: 0; }
 .sw-ex-card__content { flex: 1; }
 .sw-ex-card__head { display: flex; align-items: center; gap: .6rem; margin-bottom: .35rem; flex-wrap: wrap; }
-.sw-ex-card__title { font-size: .95rem; font-weight: 700; color: #111; }
+.sw-ex-card__title { font-size: .95rem; font-weight: 700; color: var(--txt-primary, var(--mj-ink)); }
 .sw-ex-card__ruling {
   font-size: .75rem;
   padding: .18rem .6rem;
@@ -239,7 +239,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 /* virtues */
 .sw-virtues-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: var(--ds-space-4); }
 .sw-virtue-card {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .85rem;
   padding: 1.1rem 1rem;
@@ -255,10 +255,10 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 
 /* related */
 .sw-related { margin-top: 2.5rem; }
-.sw-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.sw-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--txt-primary, var(--mj-ink)); margin: 0 0 .75rem; }
 .sw-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .sw-related__link {
-  background: #fff;
+  background: var(--mj-surface);
   border: 1px solid var(--mj-hairline);
   border-radius: .6rem;
   padding: .6rem .7rem;

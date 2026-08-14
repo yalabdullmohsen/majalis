@@ -42,6 +42,7 @@ import "./styles/m2030/pages.css";
 import "./styles/m2030/interactions.css";
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
+import "./styles/dark-mode-surfaces.css";
 import "./styles/ios-edge.css";
 
 if (isNative) {

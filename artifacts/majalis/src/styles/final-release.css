@@ -1598,18 +1598,13 @@ body {
 }
 .ds-skeleton {
   border-radius: var(--radius-md, var(--r-md));
-  background: linear-gradient(
-    90deg,
-    var(--color-surface-muted) 0%,
-    color-mix(in srgb, var(--color-surface) 70%, var(--color-surface-muted)) 50%,
-    var(--color-surface-muted) 100%
-  );
-  background-size: 200% 100%;
-  animation: mj-skel 1.2s var(--ease, ease) infinite;
+  background: var(--mj-surface-3, var(--color-surface-muted, #2A3733));
+  background-image: none;
+  animation: mj-skel-brightness 1.2s var(--ease, ease) infinite;
 }
-@keyframes mj-skel {
-  0% { background-position: 100% 0; }
-  100% { background-position: -100% 0; }
+@keyframes mj-skel-brightness {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.1); }
 }
 .more-sheet-theme-toggle {
   display: flex;
