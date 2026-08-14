@@ -2841,8 +2841,8 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   margin: 0;
   text-align: center;
   text-decoration: none;
-  font-family: var(--font-body);
-  font-size: clamp(0.72rem, 2.8vw, 0.92rem);
+  font-family: "Aref Ruqaa", "Amiri", var(--font-app, var(--font-body));
+  font-size: clamp(0.78rem, 3vw, 1rem);
   font-weight: 700;
   line-height: 1.25;
   color: var(--majalis-emerald-deep, var(--mj-brand-deep, #145a42)) !important;

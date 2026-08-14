@@ -1,0 +1,119 @@
+/**
+ * زخرفة هوية المجلس في هيرو الرئيسية — ثلث أول الشاشة تقريبًا.
+ */
+
+.home-page-hero.page-hero-mj {
+  min-height: clamp(11.5rem, 33dvh, 20rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block:
+    calc(0.85rem + var(--inset-top, 0px))
+    1.1rem;
+  background:
+    radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--mj-brand, #1F7A5A) 16%, transparent), transparent 62%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--mj-brand-soft, #e7f2ec) 70%, var(--mj-bg, #f7f6f2)) 0%,
+      var(--mj-bg, #f7f6f2) 100%
+    ) !important;
+}
+
+.home-page-hero .pattern-backdrop {
+  opacity: 0.1;
+}
+
+html[data-theme="dark"] .home-page-hero .pattern-backdrop,
+html.dark .home-page-hero .pattern-backdrop {
+  opacity: 0.07;
+}
+
+.home-page-hero .page-hero-mj__content {
+  width: 100%;
+  max-width: 40rem;
+  margin-inline: auto;
+  align-items: center;
+  text-align: center;
+  gap: 0.55rem;
+}
+
+.home-brand-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.35rem, 2.2vw, 0.85rem);
+  width: min(100%, 36rem);
+  margin-inline: auto;
+}
+
+.home-brand-title__flourish {
+  flex: 0 0 auto;
+  width: clamp(2.1rem, 7vw, 3rem);
+  height: clamp(2.1rem, 7vw, 3rem);
+  color: var(--mj-brand-deep, #123F2E);
+}
+
+.home-brand-title__panel {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 66%;
+  display: grid;
+  place-items: center;
+  padding: 0.55rem 1rem;
+  border-radius: 0.55rem;
+  border: 1.5px solid color-mix(in srgb, var(--mj-brand-deep, #123F2E) 55%, var(--color-mushaf-gold-strong, #A67C3D));
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--mj-surface, #fff) 88%, var(--color-mushaf-panel, #FAF3E8)),
+      color-mix(in srgb, var(--mj-surface, #fff) 92%, transparent)
+    );
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--color-mushaf-gold-soft, #C9B07A) 55%, transparent),
+    0 10px 28px color-mix(in srgb, var(--mj-brand-deep, #123F2E) 8%, transparent);
+}
+
+.home-brand-title__text {
+  display: block;
+  font-family: "Aref Ruqaa", "Amiri", var(--font-app, serif);
+  font-weight: 700;
+  font-size: clamp(1.85rem, 7.2vw, 3.05rem);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: var(--mj-brand-deep, #123F2E) !important;
+  text-wrap: balance;
+}
+
+.home-page-hero .page-hero-mj__desc {
+  max-width: 26rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.home-page-hero .page-hero-mj__actions {
+  justify-content: center;
+  width: 100%;
+}
+
+html[data-theme="dark"] .home-brand-title__panel,
+html.dark .home-brand-title__panel,
+.quran-shell--night .home-brand-title__panel {
+  background: color-mix(in srgb, var(--mj-surface, #152019) 92%, #0d1511);
+  border-color: color-mix(in srgb, var(--mj-brand, #1F7A5A) 45%, var(--color-mushaf-gold-soft, #C9B07A));
+}
+
+html[data-theme="dark"] .home-brand-title__text,
+html.dark .home-brand-title__text {
+  color: color-mix(in srgb, var(--mj-ink, #e8efe9) 88%, var(--color-mushaf-gold-soft, #C9B07A)) !important;
+}
+
+@media (max-width: 380px) {
+  .home-brand-title__flourish {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  .home-brand-title__panel {
+    max-width: 72%;
+    padding: 0.45rem 0.7rem;
+  }
+}

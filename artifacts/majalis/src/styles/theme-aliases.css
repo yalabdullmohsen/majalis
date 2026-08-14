@@ -220,16 +220,13 @@ html.dark,
   --msk-text-3: var(--mj-muted);
 }
 
-/* تهدئة تدرّج الهيرو على الرئيسية — نص داكن على --mj-bg (لا أبيض على فاتح) */
+/* تهدئة تدرّج الهيرو على الرئيسية — نص داكن؛ الخلفية من home-brand-title.css */
 .m2030-hero,
 .m2030-hero.page-hero-mj,
 .home-page-hero {
-  background: var(--mj-bg) !important;
   color: var(--mj-ink) !important;
 }
-.m2030-hero .page-hero-mj__title,
 .m2030-hero .page-hero-mj__headline,
-.home-page-hero .page-hero-mj__title,
 .home-page-hero .page-hero-mj__headline {
   color: var(--mj-ink) !important;
 }

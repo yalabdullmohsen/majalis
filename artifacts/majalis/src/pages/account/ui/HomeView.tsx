@@ -17,6 +17,8 @@ import { FridayBanner } from "@/components/FridayBanner";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { toArabicDigits } from "@/lib/utils";
 import { PageHero } from "@/components/ui/PageHero";
+import { HomeBrandTitle } from "@/components/home/HomeBrandTitle";
+import "@/styles/components/home-brand-title.css";
 import { HomeCustomizeSheet } from "@/components/home/HomeCustomizeSheet";
 import { HomeRecentPagesBar } from "@/components/home/HomeRecentPagesBar";
 import { HomeExplorePlatform } from "@/components/home/HomeExplorePlatform";
@@ -141,7 +143,7 @@ export default function HomePage() {
 
       <PageHero
         className="m2030-hero home-page-hero"
-        title="المجلس العلمي"
+        title={<HomeBrandTitle />}
         description={dailyCtx.greeting}
         actions={
           <Link
