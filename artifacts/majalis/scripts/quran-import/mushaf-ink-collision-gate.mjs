@@ -327,10 +327,11 @@ try {
             reason: `فاصل بسملة افتتاح ${m.basmalaGap.toFixed(1)}px < 4`,
           });
         }
-      } else if (m.basmalaGap < 19.5) {
+      } else if (m.basmalaGap < 5.5) {
+        /* تكثيف S: ٦px بلا تقاطع يكفي؛ ٢٠px كانت تكسّر حبر→خرطوش عند الدفع */
         failures.push({
           page: n,
-          reason: `فاصل بسملة ${m.basmalaGap.toFixed(1)}px < 20`,
+          reason: `فاصل بسملة ${m.basmalaGap.toFixed(1)}px < 6`,
         });
       }
     }

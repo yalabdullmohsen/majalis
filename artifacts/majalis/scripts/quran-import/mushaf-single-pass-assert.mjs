@@ -326,11 +326,14 @@ for (const m of pages) {
           reason: `فاصل بسملة افتتاح ${m.basmalaGap.toFixed(1)}px < 4`,
         });
       }
-    } else if (m.basmalaGap < 19.5) {
+    } else if (m.basmalaGap < 5.5) {
+      /* بعد تكثيف S (sizeCapPitch) الفاصل الصندوقي الطبيعي ≈٦–١٠px بلا تقاطع حبر.
+       * عتبة ٢٠px كانت تتعارض مع هامش الخرطوش وتسبب دفعًا يكسر حبر→خرطوش.
+       * التقاطع الفعلي يُحجب أعلاه عبر inkOverlaps. */
       failures.push({
         gate: "ink-collision",
         page: n,
-        reason: `فاصل بسملة ${m.basmalaGap.toFixed(1)}px < 20`,
+        reason: `فاصل بسملة ${m.basmalaGap.toFixed(1)}px < 6`,
       });
     }
   }

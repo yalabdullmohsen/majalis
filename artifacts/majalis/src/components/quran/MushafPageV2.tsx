@@ -1136,119 +1136,51 @@ export function MushafPageV2({
             }
           }
         }
-        /*
-         * فاصل شارة→بسملة ≥ minBannerBasGap. إن ضيّق السطر التالي التحريك،
-         * ادفع كل الخانات التالية بنفس العجز (بدل القصّ الصامت الذي ترك ص٦٠٠ عند ٦٫٥px).
-         */
         let minGap = Infinity;
         for (const bannerEl of banners) {
-          const banSlotN = Number(bannerEl.getAttribute("data-grid-slot") || 0);
           const headerKey = [...headerBlockRefs.current.entries()].find(
             ([, el]) => el === bannerEl,
           )?.[0];
-          const pairedBasSlot =
-            banSlotN > 0
-              ? container.querySelector<HTMLElement>(
-                  `.mf2-grid-slot--basmala[data-grid-slot="${banSlotN + 1}"]`,
-                )
-              : null;
           const basEl =
-            (headerKey ? basmalaRefs.current.get(headerKey) : null) ||
-            pairedBasSlot?.querySelector<HTMLElement>(".mf2-bismillah") ||
-            bannerEl.parentElement?.querySelector<HTMLElement>(".mf2-bismillah");
+            (headerKey
+              ? basmalaRefs.current.get(headerKey)
+              : null) ||
+            bannerEl.parentElement?.querySelector<HTMLElement>(".mf2-bismillah") ||
+            container.querySelector<HTMLElement>(".mf2-grid-slot--basmala .mf2-bismillah");
           if (!basEl) continue;
           const banR = bannerEl.getBoundingClientRect();
           const inkTop = measureInkBounds(basEl).top;
           const gap = inkTop - banR.bottom;
+          minGap = Math.min(minGap, gap);
           if (gap < minBannerBasGap - 0.5) {
             const nudgePx = minBannerBasGap - gap;
             const nudgePct = (nudgePx / Math.max(1, cr.height)) * 100;
             const slot =
-              pairedBasSlot ||
               basEl.closest<HTMLElement>(".mf2-grid-slot--basmala") ||
               basEl.closest<HTMLElement>(".mf2-grid-slot--line");
             if (slot) {
               const topPct = parseFloat(slot.style.top);
               if (Number.isFinite(topPct)) {
-                const desiredTop = topPct + nudgePct;
-                let appliedTop = desiredTop;
+                let nextTop = topPct + nudgePct;
                 if (slot.classList.contains("mf2-grid-slot--basmala")) {
                   const basSlot = Number(slot.getAttribute("data-grid-slot") || 0);
-                  const nextLine =
-                    container.querySelector<HTMLElement>(
-                      `.mf2-grid-slot--line[data-grid-slot="${basSlot + 1}"]`,
-                    ) ||
-                    [...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--line")].find(
-                      (el) => Number(el.getAttribute("data-grid-slot") || 0) > basSlot,
-                    );
+                  const nextLine = container.querySelector<HTMLElement>(
+                    `.mf2-grid-slot--line[data-grid-slot="${basSlot + 1}"]`,
+                  ) || [...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--line")].find(
+                    (el) => Number(el.getAttribute("data-grid-slot") || 0) > basSlot,
+                  );
                   if (nextLine) {
                     const nextTopPct = parseFloat(nextLine.style.top);
-                    const nextH =
-                      parseFloat(nextLine.style.height) || MUSHAF_GRID.slotHeightPct;
+                    const nextH = parseFloat(nextLine.style.height) || MUSHAF_GRID.slotHeightPct;
                     const slotH = parseFloat(slot.style.height) || 5;
                     if (Number.isFinite(nextTopPct)) {
-                      const maxCenter =
-                        nextTopPct - nextH / 2 - slotH / 2 - 0.35;
-                      if (desiredTop > maxCenter + 0.05) {
-                        const deficitPct = desiredTop - maxCenter;
-                        for (const later of container.querySelectorAll<HTMLElement>(
-                          ".mf2-grid-slot--line, .mf2-grid-slot--banner, .mf2-grid-slot--basmala",
-                        )) {
-                          const s = Number(later.getAttribute("data-grid-slot") || 0);
-                          if (s <= basSlot) continue;
-                          const t = parseFloat(later.style.top);
-                          if (Number.isFinite(t)) {
-                            later.style.top = `${(t + deficitPct).toFixed(3)}%`;
-                          }
-                        }
-                      }
+                      const maxCenter = nextTopPct - nextH / 2 - slotH / 2 - 0.35;
+                      nextTop = Math.min(nextTop, maxCenter);
                     }
                   }
                 }
-                slot.style.top = `${appliedTop.toFixed(3)}%`;
+                slot.style.top = `${nextTop.toFixed(3)}%`;
               }
-            }
-          }
-          const gapAfter =
-            measureInkBounds(basEl).top - bannerEl.getBoundingClientRect().bottom;
-          minGap = Math.min(minGap, gapAfter);
-        }
-        /* إن بقي العجز بعد دفع الأسطر: صغّر الخط قليلاً وأعد قياس الفاصل */
-        if (Number.isFinite(minGap) && minGap < minBannerBasGap - 0.5) {
-          for (let guard = 0; guard < 8 && minGap < minBannerBasGap - 0.5; guard++) {
-            size = Math.max(MIN_FONT_PX, size * 0.972);
-            container.style.fontSize = `${size}px`;
-            minGap = Infinity;
-            for (const bannerEl of banners) {
-              const banSlotN = Number(bannerEl.getAttribute("data-grid-slot") || 0);
-              const pairedBasSlot =
-                banSlotN > 0
-                  ? container.querySelector<HTMLElement>(
-                      `.mf2-grid-slot--basmala[data-grid-slot="${banSlotN + 1}"]`,
-                    )
-                  : null;
-              const basEl =
-                pairedBasSlot?.querySelector<HTMLElement>(".mf2-bismillah") ||
-                bannerEl.parentElement?.querySelector<HTMLElement>(".mf2-bismillah");
-              if (!basEl) continue;
-              const gapNow =
-                measureInkBounds(basEl).top - bannerEl.getBoundingClientRect().bottom;
-              if (gapNow < minBannerBasGap - 0.5) {
-                const slot =
-                  pairedBasSlot ||
-                  basEl.closest<HTMLElement>(".mf2-grid-slot--basmala");
-                if (slot) {
-                  const topPct = parseFloat(slot.style.top);
-                  if (Number.isFinite(topPct)) {
-                    const addPct =
-                      ((minBannerBasGap - gapNow) / Math.max(1, cr.height)) * 100;
-                    slot.style.top = `${(topPct + addPct).toFixed(3)}%`;
-                  }
-                }
-              }
-              const gapAfter =
-                measureInkBounds(basEl).top - bannerEl.getBoundingClientRect().bottom;
-              minGap = Math.min(minGap, gapAfter);
             }
           }
         }
