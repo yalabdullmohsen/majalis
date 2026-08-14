@@ -7,8 +7,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { KNOWLEDGE, getAyah, loadQuran, wordCount } from "./lib.mjs";
 
-const TODAY = "2026-08-13";
-const MIN = 1200;
+const TODAY = "2026-08-14";
+const MIN = 1800;
 const MAX = 2500;
 
 /** نطاقات آيات موسّعة لكل نبي (سورة، من، إلى) — النص يُسحب من المصحف. */
@@ -40,7 +40,7 @@ const EXTENDED = {
   muhammad: [[33,40,40],[33,45,48],[48,1,3],[48,29,29],[9,128,129],[21,107,107],[53,1,18],[94,1,8]],
 };
 
-function ayahBlock(ranges, maxPerRange = 14) {
+function ayahBlock(ranges, maxPerRange = 20) {
   const evs = [];
   for (const [s, a, b] of ranges) {
     let n = 0;
@@ -70,7 +70,7 @@ function expandBody(item, evs) {
 
     `## أصل الدعوة\nأصل دعوة الرسل جميعاً التوحيد وعبادة الله وحده، ونهي أقوامهم عن الشرك والمعاصي. قال الله في سياق الرسل ما يدل على وحدة هذا الأصل. فقراءة قصة ${name} تُرجع القلب إلى إفراد الله بالعبادة قبل الاشتغال بتفاصيل الأخبار.`,
 
-    `## الآيات الواردة في قصته\nفيما يلي طائفة من الآيات المرتبطة بـ${name} كما في المصحف المحلي (رسم عثماني). تُقرأ في سياقها دون بتر مخلّ:\n\n${joinQuoted(evs.slice(0, 40))}`,
+    `## الآيات الواردة في قصته\nفيما يلي طائفة من الآيات المرتبطة بـ${name} كما في المصحف المحلي (رسم عثماني). تُقرأ في سياقها دون بتر مخلّ:\n\n${joinQuoted(evs.slice(0, 56))}`,
 
     `## أبرز المواقف والابتلاءات\nما ثبت من مواقفه هو ما نصّ عليه القرآن أو صحّ من السنة. والابتلاءات في قصص الأنبياء درس في الصبر والتوكل، لا مادة للتشكيك أو الغلو. وعند اختلاف المفسرين في تفصيلٍ غير منصوص يُذكر الخلاف ولا يُقدَّم قول شاذ على أنه إجماع.`,
 
@@ -88,9 +88,9 @@ function expandBody(item, evs) {
   let body = sections.join("\n\n");
 
   // إن نقص الحد: أضف بقية الآيات مع تعليق قصير لكل مجموعة
-  let idx = 40;
+  let idx = 56;
   while (wordCount(body) < MIN && idx < evs.length) {
-    const chunk = evs.slice(idx, idx + 8);
+    const chunk = evs.slice(idx, idx + 10);
     if (!chunk.length) break;
     body += `\n\n### مزيد من الآيات المرتبطة\n${joinQuoted(chunk)}\nهذه الآيات تُتمم الصورة القرآنية دون زيادة من غير دليل.`;
     idx += 8;
@@ -126,13 +126,13 @@ function main() {
     const item = JSON.parse(fs.readFileSync(p, "utf8"));
     const slug = item.meta?.slug || f.replace(/\.json$/, "");
     const ranges = EXTENDED[slug] || [[2, 30, 33]];
-    const evs = ayahBlock(ranges, 16);
+    const evs = ayahBlock(ranges, 22);
     if (!evs.length) {
       report.push({ slug, error: "no ayahs" });
       continue;
     }
     item.body = expandBody(item, evs);
-    item.evidences = evs.slice(0, 20);
+    item.evidences = evs.slice(0, 28);
     item.updated_at = TODAY;
     item.review_status = "verified";
     item.tags = Array.from(new Set([...(item.tags || []), "موسّع", "أنبياء"]));
@@ -147,7 +147,7 @@ function main() {
   if (fs.existsSync(manPath)) {
     const man = JSON.parse(fs.readFileSync(manPath, "utf8"));
     man.updated_at = TODAY;
-    man.round = "fill-round2-prophets";
+    man.round = "fill-round3-prophets";
     fs.writeFileSync(manPath, JSON.stringify(man, null, 2) + "\n");
   }
 

@@ -1,17 +1,17 @@
 {
   "version": 2,
-  "updated_at": "2026-08-13",
-  "round": "fill-round2",
+  "updated_at": "2026-08-14",
+  "round": "fill-round3",
   "totals": {
-    "all": 3622,
-    "verified": 2404,
-    "needs_review": 1218,
+    "all": 3634,
+    "verified": 2437,
+    "needs_review": 1197,
     "quiz": 2100,
     "prophets": 25,
     "nations": 16,
     "people": 101,
     "tafsir": 1171,
-    "discover": 178
+    "discover": 190
   },
   "sections": [
     "quiz",
