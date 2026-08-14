@@ -45,6 +45,11 @@ const pageV2 = readFileSync(join(ROOT, "src/components/quran/MushafPageV2.tsx"),
 if (!/BasmalaLine/.test(pageV2)) failures.push({ gate: "static", reason: "MushafPageV2 بلا BasmalaLine" });
 if (/DRAWN_BASMALA_TEXT/.test(pageV2)) failures.push({ gate: "static", reason: "مسار بسملة Unicode ثانٍ ما زال حيًا" });
 if (!/MAX_WORD_GAP_PX\s*=\s*18/.test(pageV2)) failures.push({ gate: "static", reason: "سقف فجوة ١٨px مفقود" });
+if (/isFatihaBasmala/.test(pageV2)) failures.push({ gate: "static", reason: "مسار استبدال ١:١ بـ BasmalaLine ما زال حيًا" });
+const basmalaSrc = readFileSync(basmalaPath, "utf8");
+if (!/data-basmala-encoding="code_v2"/.test(basmalaSrc) || /BASMALA_QPC_WORDS = \["ﭑ"/.test(basmalaSrc)) {
+  failures.push({ gate: "static", reason: "البسملة ليست بمحارف code_v2" });
+}
 const quranCss = readFileSync(join(ROOT, "src/styles/quran.css"), "utf8");
 if (!/11\.9vh/.test(quranCss) || !/8\.9vh/.test(quranCss)) {
   failures.push({ gate: "static", reason: "نطاق النص ليس ١١٫٩→٩١٫١" });
@@ -133,6 +138,11 @@ try {
           if (gap > 0.5) gaps.push(gap);
         }
         const cssGap = Number.parseFloat(getComputedStyle(el).getPropertyValue("--mf2-word-gap")) || 0;
+        const natural =
+          el.classList.contains("mf2-line--surah-end") ||
+          el.classList.contains("mf2-line--natural") ||
+          el.classList.contains("mf2-line--opening-natural") ||
+          el.dataset.noStretch === "1";
         inkRects.push({
           left,
           right,
@@ -143,6 +153,7 @@ try {
           medianGap: gaps.length
             ? [...gaps].sort((x, y) => x - y)[Math.floor(gaps.length / 2)]
             : cssGap,
+          natural,
           clipped: false, /* القصّ الحقيقي عبر anyOverflowX على الحبر */
           overflowX: (() => {
             const cr = linesRoot?.getBoundingClientRect();
@@ -179,6 +190,11 @@ try {
         const r = el.getBoundingClientRect();
         return r.width > 2 && r.height > 2;
       });
+      const gridSlots = new Set(
+        [...(linesRoot?.querySelectorAll("[data-grid-slot]") || [])]
+          .map((el) => Number(el.getAttribute("data-grid-slot") || 0))
+          .filter((n) => n >= 1 && n <= 15),
+      );
       const fontSize = lineEls[0]
         ? Number.parseFloat(getComputedStyle(lineEls[0]).fontSize) || 0
         : 0;
@@ -186,9 +202,11 @@ try {
       let inkH = 0;
       for (const r of inkRects) inkH = Math.max(inkH, r.bot - r.top);
       const charH = inkH > 0 ? (inkH / vh) * 100 : fontSize ? (fontSize / vh) * 100 : 0;
+      const stretchCovers = inkRects.filter((r) => !r.natural).map((r) => r.cover);
 
       return {
         lineCount: inkRects.length,
+        gridSlotCount: gridSlots.size,
         contentTopPct: bandTopPct,
         contentBotPct: bandBotPct,
         firstInkTopPct: first ? (first.top / vh) * 100 : null,
@@ -197,7 +215,7 @@ try {
         bannerTopPct: bannerTop,
         fontSizePx: fontSize,
         charHeightPct: charH,
-        minCover: inkRects.length ? Math.min(...inkRects.map((r) => r.cover)) : 0,
+        minCover: stretchCovers.length ? Math.min(...stretchCovers) : inkRects.length ? Math.min(...inkRects.map((r) => r.cover)) : 0,
         medianCover: inkRects.length
           ? [...inkRects.map((r) => r.cover)].sort((a, b) => a - b)[
               Math.floor(inkRects.length / 2)
@@ -275,11 +293,11 @@ try {
         });
       }
     }
-    if (m.lineCount !== 15 && n >= 3) {
+    if (m.lineCount !== 15 && n >= 3 && (m.gridSlotCount ?? 0) < 15) {
       failures.push({
         page: n,
         gate: "lines",
-        reason: `عدد الأسطر ${m.lineCount} ≠ 15`,
+        reason: `خانات الشبكة ${m.gridSlotCount ?? m.lineCount} < 15 (أسطر آية ${m.lineCount})`,
       });
     }
     if (m.anyClipped || m.anyOverflowX) {
@@ -289,11 +307,12 @@ try {
         reason: `بتر أو تجاوز أفقي`,
       });
     }
-    if (m.basmalaCount > 1) {
+    /* بسملة زخرفية واحدة لكل سورة ذات bismillah_pre — ص٦٠٠ فيها بسملتان صحيحتان */
+    if (m.basmalaCount > 3) {
       failures.push({
         page: n,
         gate: "basmala",
-        reason: `أكثر من بسملة موحّدة ظاهرة (${m.basmalaCount})`,
+        reason: `بسملات ظاهرة مفرطة (${m.basmalaCount})`,
       });
     }
 

@@ -21,9 +21,9 @@ const basmala = readFileSync(resolve(appRoot, "src/components/quran/BasmalaLine.
 
 assert.match(hook, /COMMIT_FRAC\s*=\s*0\.25/);
 assert.match(hook, /VELOCITY_PX_MS\s*=\s*0\.5/);
-assert.match(hook, /SETTLE_MS\s*=\s*320/);
+assert.match(hook, /SETTLE_MS\s*=\s*250/);
 assert.match(hook, /SNAP_BACK_MS\s*=\s*160/);
-assert.match(hook, /FLIP_EDGE_FRAC\s*=\s*0\.15/);
+assert.match(hook, /FLIP_EDGE_FRAC\s*=\s*0\.5/);
 assert.match(hook, /onCenterTap/);
 assert.match(hook, /classifyTap/);
 assert.match(hook, /requestAnimationFrame/);
@@ -31,9 +31,8 @@ assert.match(hook, /progressRef/);
 assert.match(hook, /prefers-reduced-motion/);
 assert.match(hook, /onNext/);
 assert.match(hook, /onPrev/);
-/* يمين = التالية · يسار = السابقة */
-assert.match(hook, /rel >= w - edge\) return "next"/);
-assert.match(hook, /rel <= edge\) return "prev"/);
+/* يمين = التالية · يسار = السابقة — نصف الشاشة */
+assert.match(hook, /rel >= w \/ 2 \? "next" : "prev"/);
 
 assert.match(view, /useMushafPageFlip/);
 assert.match(view, /MushafPageFlipStage/);
@@ -46,8 +45,6 @@ assert.doesNotMatch(view, /useMushafPageCurl|mpv-curl-stage/);
 assert.match(stage, /mpv-flip-stage/);
 assert.match(stage, /mpv-flip-underlay/);
 assert.match(stage, /mpv-flip-leaf/);
-assert.match(stage, /mpv-flip-leaf__curl/);
-assert.match(stage, /mpv-flip-shade/);
 assert.match(stage, /data-mushaf-active-leaf/);
 assert.match(stage, /data-page-state/);
 assert.match(stage, /data-page-state="active"/);
@@ -55,9 +52,10 @@ assert.match(stage, /visibility/);
 assert.match(stage, /mpv-flip-underlay__paper/);
 
 assert.match(css, /\.mpv-flip-leaf/);
-assert.match(css, /rotateY\(calc\(var\(--mpv-flip, 0\) \* -12deg\)\)/);
-assert.match(css, /perspective:\s*1600px/);
-assert.match(css, /320ms cubic-bezier\(0\.22,\s*0\.61,\s*0\.36,\s*1\)/);
+assert.match(css, /translate3d\(calc\(var\(--mpv-flip, 0\) \* 100%\), 0, 0\)/);
+assert.match(css, /transform 250ms ease-out/);
+assert.doesNotMatch(css, /rotateY/);
+assert.doesNotMatch(css, /perspective:\s*1600px/);
 assert.match(css, /contain:\s*layout/);
 assert.doesNotMatch(css, /\.mpv-flip-leaf\s*\{[^}]*contain:\s*layout paint/);
 assert.match(css, /mpv-flip-stage--flipping/);
@@ -68,6 +66,9 @@ assert.match(stage, /mpv-flip-stage--flipping/);
 assert.match(basmala, /BASMALA_QPC_WORDS/);
 assert.match(basmala, /mushafPageFontFamily\(1\)/);
 assert.match(basmala, /showNumber/);
+assert.match(basmala, /data-basmala-encoding="code_v2"/);
+assert.match(basmala, /BASMALA_QPC_WORDS = \["ﺧ"/);
+assert.doesNotMatch(basmala, /BASMALA_QPC_WORDS = \["ﭑ"/);
 
 assert.deepEqual(getMushafSpread(1, true), { left: null, right: 1, focus: 1, isSpread: false });
 assert.deepEqual(getMushafSpread(5, true), { left: 4, right: 5, focus: 5, isSpread: true });

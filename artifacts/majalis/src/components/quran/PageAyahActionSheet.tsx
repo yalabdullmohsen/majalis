@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, lazy, Suspense } from "react";
+import { useEffect, useMemo, useRef, useState, lazy, Suspense, type PointerEvent } from "react";
 import { useLocation } from "wouter";
 import {
   Copy,
@@ -19,7 +19,6 @@ import {
   Type,
   Languages,
   Share2,
-  MoreHorizontal,
   Save,
   Timer,
   RefreshCw,
@@ -81,6 +80,7 @@ const TAFSIR_COLLAPSE_CHARS = 280;
 const TAFSIR_BRIEF_MAX_PARAS = 4;
 
 type PanelMode = "none" | "tafsir" | "audio";
+type SheetStage = "peek" | "expanded";
 
 function tafsirParagraphs(text: string): string[] {
   const cleaned = text.replace(/\r\n/g, "\n").trim();
@@ -138,6 +138,7 @@ export function PageAyahActionSheet({
   const [copyMenuOpen, setCopyMenuOpen] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
   const [panelMode, setPanelMode] = useState<PanelMode>("tafsir");
+  const [sheetStage, setSheetStage] = useState<SheetStage>("peek");
   const [moreOpen, setMoreOpen] = useState(false);
   const [noteText, setNoteText] = useState(() => getNote(surahNum, ayahNum));
   const [noteSaved, setNoteSaved] = useState(false);
@@ -165,6 +166,8 @@ export function PageAyahActionSheet({
   const [translationError, setTranslationError] = useState(false);
   const editionMenuRef = useRef<HTMLDivElement | null>(null);
   const translationMenuRef = useRef<HTMLDivElement | null>(null);
+  const dragStartY = useRef<number | null>(null);
+  const dragStartStage = useRef<SheetStage>("peek");
 
   const showTafsirPanel = panelMode === "tafsir";
   const showAudioTools = panelMode === "audio";
@@ -188,6 +191,7 @@ export function PageAyahActionSheet({
     setSleepPickerOpen(false);
     setSpeedPickerOpen(false);
     setMoreOpen(false);
+    setSheetStage("peek");
     setTafsirText(null);
     setTafsirError(false);
     setTafsirExpanded(false);
@@ -483,8 +487,36 @@ export function PageAyahActionSheet({
     }
   };
 
+  const expandSheet = () => setSheetStage("expanded");
+
+  const handleDragPointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    dragStartY.current = e.clientY;
+    dragStartStage.current = sheetStage;
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const handleDragPointerUp = (e: PointerEvent<HTMLDivElement>) => {
+    if (dragStartY.current === null) return;
+    const delta = e.clientY - dragStartY.current;
+    const threshold = 48;
+    if (delta < -threshold) {
+      setSheetStage("expanded");
+    } else if (delta > threshold) {
+      if (dragStartStage.current === "expanded") setSheetStage("peek");
+      else onClose();
+    }
+    dragStartY.current = null;
+    e.currentTarget.releasePointerCapture(e.pointerId);
+  };
+
+  const handleDragPointerCancel = (e: PointerEvent<HTMLDivElement>) => {
+    dragStartY.current = null;
+    e.currentTarget.releasePointerCapture(e.pointerId);
+  };
+
   const selectPanel = (mode: PanelMode) => {
-    setPanelMode((prev) => (prev === mode ? "none" : mode));
+    expandSheet();
+    setPanelMode(mode);
     setMoreOpen(false);
     setCopyMenuOpen(false);
     setSpeedPickerOpen(false);
@@ -494,6 +526,7 @@ export function PageAyahActionSheet({
 
   const handleListen = () => {
     setPanelMode("audio");
+    expandSheet();
     setMoreOpen(false);
     setCopyMenuOpen(false);
     if (canPlay) onTogglePlay();
@@ -503,30 +536,30 @@ export function PageAyahActionSheet({
     /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
     <div className="aas-sheet aas-sheet--reader aas-sheet--v3" onClick={onClose} role="presentation">
       <div
-        className="aas-panel aas-panel--reader aas-panel--v3"
+        className={`aas-panel aas-panel--reader aas-panel--v3 ${sheetStage === "peek" ? "is-peek" : "is-expanded"}`}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-label={`سورة ${surahName} آية ${ayahNum}`}
       >
-        <div className="aas-panel__handle" aria-hidden="true" />
+        <div
+          className="aas-v3__drag-zone"
+          onPointerDown={handleDragPointerDown}
+          onPointerUp={handleDragPointerUp}
+          onPointerCancel={handleDragPointerCancel}
+        >
+          <div className="aas-panel__handle" aria-hidden="true" />
+        </div>
 
         <header className="aas-v3__header">
           <strong>سورة {surahName}</strong>
           <span>الآية {toArabicDigits(ayahNum)}</span>
         </header>
 
-        <div className="aas-v3__scroll">
+        <hr className="aas-v3__section-sep" />
+
+        <div className="aas-v3__actions-wrap">
           <div className="aas-v3__actions" role="toolbar" aria-label="إجراءات الآية">
-            <button
-              type="button"
-              className={`aas-v3__action${showTafsirPanel ? " is-on" : ""}`}
-              onClick={() => selectPanel("tafsir")}
-              aria-pressed={showTafsirPanel}
-            >
-              <BookOpen size={20} aria-hidden="true" />
-              <span>تفسير</span>
-            </button>
             <button
               type="button"
               className={`aas-v3__action${showAudioTools || isPlaying ? " is-on" : ""}`}
@@ -535,8 +568,17 @@ export function PageAyahActionSheet({
               aria-label={isPlaying ? "إيقاف التلاوة" : "استماع"}
               aria-pressed={showAudioTools || isPlaying}
             >
-              {isPlaying ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
+              {isPlaying ? <Pause size={24} aria-hidden="true" /> : <Play size={24} aria-hidden="true" />}
               <span>استماع</span>
+            </button>
+            <button
+              type="button"
+              className={`aas-v3__action${showTafsirPanel ? " is-on" : ""}`}
+              onClick={() => selectPanel("tafsir")}
+              aria-pressed={showTafsirPanel}
+            >
+              <BookOpen size={24} aria-hidden="true" />
+              <span>تفسير</span>
             </button>
             <button
               type="button"
@@ -547,36 +589,29 @@ export function PageAyahActionSheet({
               }}
               aria-expanded={copyMenuOpen}
             >
-              {copiedKind ? <Check size={20} aria-hidden="true" /> : <Copy size={20} aria-hidden="true" />}
+              {copiedKind ? <Check size={24} aria-hidden="true" /> : <Copy size={24} aria-hidden="true" />}
               <span>نسخ</span>
             </button>
             <button type="button" className="aas-v3__action" onClick={() => void handleShare()}>
-              <Share2 size={20} aria-hidden="true" />
+              <Share2 size={24} aria-hidden="true" />
               <span>مشاركة</span>
             </button>
-            <button
-              type="button"
-              className={`aas-v3__action${bookmarked ? " is-on" : ""}`}
-              onClick={toggleBookmark}
-              aria-pressed={bookmarked}
-            >
-              <Bookmark size={20} aria-hidden="true" fill={bookmarked ? "currentColor" : "none"} />
-              <span>إشارة</span>
-            </button>
-            <button
-              type="button"
-              className={`aas-v3__action${moreOpen ? " is-on" : ""}`}
-              onClick={() => {
-                setMoreOpen((v) => !v);
-                setCopyMenuOpen(false);
-              }}
-              aria-expanded={moreOpen}
-            >
-              <MoreHorizontal size={20} aria-hidden="true" />
-              <span>المزيد</span>
-            </button>
           </div>
+          <button
+            type="button"
+            className={`aas-v3__more-link${moreOpen ? " is-on" : ""}`}
+            onClick={() => {
+              setMoreOpen((v) => !v);
+              setCopyMenuOpen(false);
+              expandSheet();
+            }}
+            aria-expanded={moreOpen}
+          >
+            المزيد
+          </button>
+        </div>
 
+        <div className="aas-v3__scroll">
           {copyMenuOpen ? (
             <div className="aas-v3__inline-menu" role="group" aria-label="خيارات النسخ">
               <button type="button" className="aas-v3__chip" onClick={() => void handleCopy(false)}>
@@ -587,11 +622,44 @@ export function PageAyahActionSheet({
                 <Copy size={15} aria-hidden="true" />
                 نسخ بلا تشكيل
               </button>
+              {tafsirText ? (
+                <button type="button" className="aas-v3__chip" onClick={() => void handleCopyWithTafsir()}>
+                  <Copy size={15} aria-hidden="true" />
+                  نسخ مع التفسير
+                </button>
+              ) : null}
             </div>
           ) : null}
 
           {moreOpen ? (
             <div className="aas-v3__more" role="region" aria-label="إجراءات إضافية">
+              <button
+                type="button"
+                className={`aas-v3__chip${bookmarked ? " is-on" : ""}`}
+                onClick={toggleBookmark}
+                aria-pressed={bookmarked}
+              >
+                <Bookmark size={15} aria-hidden="true" fill={bookmarked ? "currentColor" : "none"} />
+                إشارة
+              </button>
+              <button
+                type="button"
+                className={`aas-v3__chip${showTranslation ? " is-on" : ""}`}
+                onClick={toggleTranslation}
+                aria-pressed={showTranslation}
+              >
+                <Languages size={15} aria-hidden="true" />
+                ترجمة
+              </button>
+              <button
+                type="button"
+                className="aas-v3__chip"
+                onClick={cycleFontScale}
+                aria-label={`حجم خط التفسير ${fontPercent}٪`}
+              >
+                <Type size={15} aria-hidden="true" />
+                حجم الخط {toArabicDigits(fontPercent)}٪
+              </button>
               <button
                 type="button"
                 className="aas-v3__chip"
@@ -606,7 +674,10 @@ export function PageAyahActionSheet({
               <button
                 type="button"
                 className={`aas-v3__chip${noteOpen ? " is-on" : ""}`}
-                onClick={() => setNoteOpen((v) => !v)}
+                onClick={() => {
+                  setNoteOpen((v) => !v);
+                  expandSheet();
+                }}
               >
                 <Save size={15} aria-hidden="true" />
                 حفظ ملاحظة
@@ -618,10 +689,43 @@ export function PageAyahActionSheet({
                 <Flag size={15} aria-hidden="true" />
                 إبلاغ عن خطأ
               </a>
+              {tafsirAudioAvailable ? (
+                <button
+                  type="button"
+                  className={`aas-v3__chip${tafsirAudioSheetOpen ? " is-on" : ""}`}
+                  onClick={() => handleListenTafsirAudio()}
+                  aria-label="استماع للتفسير"
+                >
+                  <Mic2 size={15} aria-hidden="true" />
+                  تفسير صوتي
+                </button>
+              ) : null}
+              {ayahPeople.length > 0 ? (
+                <button
+                  type="button"
+                  className="aas-v3__chip"
+                  onClick={() => {
+                    const first = ayahPeople[0];
+                    navigate(
+                      ayahPeople.length === 1
+                        ? `/quran/people/${first.slug}`
+                        : `/quran/people`,
+                    );
+                    onClose();
+                  }}
+                  aria-label="من ذُكر في هذه الآية"
+                >
+                  <Users size={15} aria-hidden="true" />
+                  مَن ذُكر؟
+                  {ayahPeople.length > 1
+                    ? ` (${toArabicDigits(ayahPeople.length)})`
+                    : ` · ${ayahPeople[0].nameAr}`}
+                </button>
+              ) : null}
             </div>
           ) : null}
 
-          {showAudioTools ? (
+          {showAudioTools && sheetStage === "expanded" ? (
             <div className="aas-v3__audio" role="toolbar" aria-label="خيارات التلاوة">
               {canPlay && onToggleRepeat ? (
                 <button
@@ -735,83 +839,32 @@ export function PageAyahActionSheet({
 
           {showTafsirPanel ? (
             <div className="aas-v3__tafsir">
-              <div className="aas-v3__tafsir-tools">
-                <div className="aas-v3__disclosure aas-v3__disclosure--grow" ref={editionMenuRef}>
-                  <button
-                    type="button"
-                    className={`aas-v3__chip aas-v3__chip--wide${reciterSheetOpen && optionsFocus === "tafsir" ? " is-on" : ""}`}
-                    onClick={() => {
-                      setOptionsFocus("tafsir");
-                      setReciterSheetOpen(true);
-                      setEditionMenuOpen(false);
-                      setTranslationMenuOpen(false);
-                    }}
-                    aria-expanded={reciterSheetOpen && optionsFocus === "tafsir"}
-                    aria-haspopup="dialog"
-                  >
-                    <BookOpen size={15} aria-hidden="true" />
-                    <span className="aas-v3__chip-meta">
-                      <em>التفسير</em>
-                      <strong>{currentEditionMeta?.label ?? "اختر تفسيرًا"}</strong>
-                    </span>
-                    <ChevronDown size={14} aria-hidden="true" />
-                  </button>
+              <hr className="aas-v3__section-sep" />
+              {sheetStage === "expanded" ? (
+                <div className="aas-v3__tafsir-tools">
+                  <div className="aas-v3__disclosure aas-v3__disclosure--grow" ref={editionMenuRef}>
+                    <button
+                      type="button"
+                      className={`aas-v3__chip aas-v3__chip--wide${reciterSheetOpen && optionsFocus === "tafsir" ? " is-on" : ""}`}
+                      onClick={() => {
+                        setOptionsFocus("tafsir");
+                        setReciterSheetOpen(true);
+                        setEditionMenuOpen(false);
+                        setTranslationMenuOpen(false);
+                      }}
+                      aria-expanded={reciterSheetOpen && optionsFocus === "tafsir"}
+                      aria-haspopup="dialog"
+                    >
+                      <BookOpen size={15} aria-hidden="true" />
+                      <span className="aas-v3__chip-meta">
+                        <em>التفسير</em>
+                        <strong>{currentEditionMeta?.label ?? "اختر تفسيرًا"}</strong>
+                      </span>
+                      <ChevronDown size={14} aria-hidden="true" />
+                    </button>
+                  </div>
                 </div>
-
-                <button
-                  type="button"
-                  className="aas-v3__chip"
-                  onClick={cycleFontScale}
-                  aria-label={`حجم خط التفسير ${fontPercent}٪`}
-                >
-                  <Type size={15} aria-hidden="true" />
-                  {toArabicDigits(fontPercent)}٪
-                </button>
-
-                <button
-                  type="button"
-                  className={`aas-v3__chip${showTranslation ? " is-on" : ""}`}
-                  onClick={toggleTranslation}
-                  aria-pressed={showTranslation}
-                >
-                  <Languages size={15} aria-hidden="true" />
-                  ترجمة
-                </button>
-
-                {tafsirAudioAvailable ? (
-                  <button
-                    type="button"
-                    className={`aas-v3__chip${tafsirAudioSheetOpen ? " is-on" : ""}`}
-                    onClick={() => handleListenTafsirAudio()}
-                    aria-label="استماع للتفسير"
-                  >
-                    <Mic2 size={15} aria-hidden="true" />
-                    تفسير صوتي
-                  </button>
-                ) : null}
-                {ayahPeople.length > 0 ? (
-                  <button
-                    type="button"
-                    className="aas-v3__chip"
-                    onClick={() => {
-                      const first = ayahPeople[0];
-                      navigate(
-                        ayahPeople.length === 1
-                          ? `/quran/people/${first.slug}`
-                          : `/quran/people`,
-                      );
-                      onClose();
-                    }}
-                    aria-label="من ذُكر في هذه الآية"
-                  >
-                    <Users size={15} aria-hidden="true" />
-                    مَن ذُكر؟
-                    {ayahPeople.length > 1
-                      ? ` (${toArabicDigits(ayahPeople.length)})`
-                      : ` · ${ayahPeople[0].nameAr}`}
-                  </button>
-                ) : null}
-              </div>
+              ) : null}
               {tafsirAudioMsg ? (
                 <p className="aas-reader__status" role="status">
                   {tafsirAudioMsg}
@@ -857,52 +910,44 @@ export function PageAyahActionSheet({
                       إعادة المحاولة
                     </button>
                   </div>
-                ) : visibleParagraphs.length > 0 ? (
+                ) : (sheetStage === "peek" ? paragraphs : visibleParagraphs).length > 0 ? (
                   <>
                     <div
-                      className={`aas-reader__prose${tafsirNeedsCollapse ? " is-collapsed" : ""}`}
+                      className={`aas-reader__prose${sheetStage === "expanded" && tafsirNeedsCollapse ? " is-collapsed" : ""}`}
                       key={tafsirEdition}
                     >
-                      {visibleParagraphs.map((p, i) => (
+                      {(sheetStage === "peek" ? paragraphs : visibleParagraphs).map((p, i) => (
                         <p key={`${i}-${p.slice(0, 24)}`}>{p}</p>
                       ))}
                     </div>
-                    <div className="aas-v3__tafsir-actions">
-                      {isBriefEdition ? (
-                        <button
-                          type="button"
-                          className="aas-reader__expand"
-                          onClick={openExtendedTafsir}
-                        >
-                          التفسير المطوّل
-                        </button>
-                      ) : (
-                        <button
-                          type="button"
-                          className="aas-reader__expand"
-                          onClick={returnToBriefTafsir}
-                        >
-                          العودة للمختصر
-                        </button>
-                      )}
-                      {tafsirText ? (
-                        <button
-                          type="button"
-                          className="aas-v3__chip"
-                          onClick={() => void handleCopyWithTafsir()}
-                        >
-                          <Copy size={15} aria-hidden="true" />
-                          نسخ مع التفسير
-                        </button>
-                      ) : null}
-                    </div>
+                    {sheetStage === "expanded" ? (
+                      <div className="aas-v3__tafsir-actions">
+                        {isBriefEdition ? (
+                          <button
+                            type="button"
+                            className="aas-reader__expand"
+                            onClick={openExtendedTafsir}
+                          >
+                            التفسير المطوّل
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="aas-reader__expand"
+                            onClick={returnToBriefTafsir}
+                          >
+                            العودة للمختصر
+                          </button>
+                        )}
+                      </div>
+                    ) : null}
                   </>
                 ) : (
                   <p className="aas-reader__status">لا يتوفر تفسير لهذه الآية في المصدر المختار.</p>
                 )}
               </section>
 
-              {showTranslation ? (
+              {showTranslation && sheetStage === "expanded" ? (
                 <div className="aas-reader__translation" ref={translationMenuRef}>
                   <div className="aas-v3__disclosure">
                     <button
@@ -958,7 +1003,7 @@ export function PageAyahActionSheet({
             </div>
           ) : null}
 
-          {noteOpen ? (
+          {noteOpen && sheetStage === "expanded" ? (
             <div className="aas-reader__note">
               <textarea
                 value={noteText}
@@ -976,7 +1021,9 @@ export function PageAyahActionSheet({
         </div>
 
         {(onPrev || onNext) ? (
-          <nav className="aas-v3__nav" aria-label="التنقّل بين الآيات">
+          <>
+            <hr className="aas-v3__section-sep" />
+            <nav className="aas-v3__nav" aria-label="التنقّل بين الآيات">
             {onPrev ? (
               <button type="button" className="aas-v3__nav-btn" onClick={onPrev}>
                 <ChevronRight size={18} aria-hidden="true" />
@@ -994,6 +1041,7 @@ export function PageAyahActionSheet({
               <span className="aas-v3__nav-spacer" />
             )}
           </nav>
+          </>
         ) : null}
 
         <MushafReaderOptionsSheet

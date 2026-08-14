@@ -1,6 +1,6 @@
 /**
- * لفّ ورقة مصحف (RTL) — مرجع آية:
- * - عتبة ٢٥٪ / ٠٫٥px/ms · settle 320ms · ارتداد ١٦٠ms · حافة ١٥٪
+ * تقليب صفحة مصحف (RTL) — انزلاق أفقي بسيط:
+ * - عتبة ٢٥٪ / ٠٫٥px/ms · settle 250ms · ارتداد ١٦٠ms · نصف الشاشة للنقر
  * - يمين = التالية · يسار = السابقة
  */
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
@@ -17,13 +17,13 @@ export type MushafFlipState = {
 const COMMIT_FRAC = 0.25;
 const VELOCITY_PX_MS = 0.5;
 const AXIS_LOCK = 1.2;
-const SETTLE_MS = 320;
+const SETTLE_MS = 250;
 const SNAP_BACK_MS = 160;
 const FADE_MS = 150;
 const TAP_MAX_MS = 320;
 const TAP_MAX_PX = 12;
-/** نسبة عرض منطقة النقر على الحافة — مرجع آية ١٥٪ */
-export const FLIP_EDGE_FRAC = 0.15;
+/** نصف الشاشة: يمين = التالية · يسار = السابقة */
+export const FLIP_EDGE_FRAC = 0.5;
 
 function applyFlipVars(el: HTMLElement | null, progress: number) {
   if (!el) return;
@@ -40,7 +40,8 @@ export function useMushafPageFlip(opts: {
   disabled?: boolean;
   widthPx?: number;
 }) {
-  const { onNext, onPrev, onCenterTap, disabled = false } = opts;
+  const { onNext, onPrev, disabled = false } = opts;
+  void opts.onCenterTap;
   const startX = useRef<number | null>(null);
   const startY = useRef<number | null>(null);
   const startT = useRef(0);
@@ -121,14 +122,11 @@ export function useMushafPageFlip(opts: {
     setPeeling(false);
   }, []);
 
-  const classifyTap = useCallback((clientX: number): "next" | "prev" | "center" => {
+  const classifyTap = useCallback((clientX: number): "next" | "prev" => {
     const w = Math.max(160, widthRef.current);
     const rel = clientX - stageLeftRef.current;
-    const edge = w * FLIP_EDGE_FRAC;
-    /* الحافة اليمنى = التالية · اليسرى = السابقة */
-    if (rel >= w - edge) return "next";
-    if (rel <= edge) return "prev";
-    return "center";
+    /* يمين = التالية · يسار = السابقة */
+    return rel >= w / 2 ? "next" : "prev";
   }, []);
 
   const onPointerDown = useCallback(
@@ -136,7 +134,7 @@ export function useMushafPageFlip(opts: {
       if (disabled) return;
       if (e.button !== 0 && e.pointerType === "mouse") return;
       const target = e.target as HTMLElement | null;
-      if (target?.closest?.("button, a, [role='button'], [data-verse], .mfl-hit__ayah, .mf2-ayah-group")) {
+      if (target?.closest?.("button, a, [role='button'], [data-verse], .mfl-hit__ayah, .mf2-ayah-group, .aas-sheet, .aas-panel")) {
         return;
       }
       const stage = e.currentTarget as HTMLElement;
@@ -206,8 +204,7 @@ export function useMushafPageFlip(opts: {
         const zone = classifyTap(startX.current);
         reset();
         if (zone === "next") onNext();
-        else if (zone === "prev") onPrev();
-        else onCenterTap?.();
+        else onPrev();
         return;
       }
 
@@ -258,7 +255,7 @@ export function useMushafPageFlip(opts: {
       setProgressVisual(0, true);
       window.setTimeout(() => reset(), SNAP_BACK_MS);
     },
-    [classifyTap, onCenterTap, onNext, onPrev, reducedMotion, reset, setProgressVisual],
+    [classifyTap, onNext, onPrev, reducedMotion, reset, setProgressVisual],
   );
 
   return {

@@ -38,6 +38,8 @@ function fontFamilyForPage(page: number): string {
 
 function pruneOutsideWindow(center: number): void {
   const keep = new Set(pagesInWindow(center, QPC_FONT_PREFETCH_RADIUS));
+  /* صفحة ١ دائمة: بسملة زخرفية موحّدة (code_v2 + qpc-page-1) على كل الصفحات */
+  keep.add(1);
   for (const page of [...loadedFonts.keys()]) {
     if (keep.has(page)) continue;
     const face = loadedFonts.get(page);
@@ -45,10 +47,10 @@ function pruneOutsideWindow(center: number): void {
     revokeQpcFontBlob(page);
     loadedFonts.delete(page);
   }
-  /* حارس إضافي إن تجاوز الحجم لأي سبب */
-  while (loadedFonts.size > QPC_FONT_MEMORY_WINDOW) {
-    const oldest = loadedFonts.keys().next().value;
-    if (oldest === undefined || oldest === center) break;
+  /* حارس إضافي إن تجاوز الحجم لأي سبب — لا تُفرِّغ صفحة ١ */
+  while (loadedFonts.size > QPC_FONT_MEMORY_WINDOW + 1) {
+    const oldest = [...loadedFonts.keys()].find((p) => p !== 1 && p !== center);
+    if (oldest === undefined) break;
     const face = loadedFonts.get(oldest);
     unloadFontFace(face, fontFamilyForPage(oldest));
     revokeQpcFontBlob(oldest);

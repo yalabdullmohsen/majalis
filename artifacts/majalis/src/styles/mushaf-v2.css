@@ -87,7 +87,17 @@ html[data-theme="dark"] .mf2-frame {
   width: 100%;
   height: 100%;
   min-height: 0;
-  max-height: none;
+  max-height: 100%;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mf2-grid-slot--banner .mf2-surah-header__cartouche,
+.mf2-grid-slot--banner .mf2-surah-banner {
+  max-height: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 .mf2-grid-slot--basmala .mf2-bismillah {
   width: 100%;
@@ -260,26 +270,31 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
   background: transparent;
   border-radius: 0;
 }
+/* تمييز دافئ خفيف خلف الكلمات فقط — بلا إطار وبلا إزاحة تخطيط (١٥٠ms) */
+.mf2-ayah-group .mf2-word {
+  transition: background-color 150ms ease;
+}
 .mf2-ayah-group--active .mf2-word {
   background-color: color-mix(
     in srgb,
-    var(--color-mushaf-gold, #8B6914) 10%,
-    transparent
+    var(--color-mushaf-gold, #B08D57) 14%,
+    var(--color-mushaf-paper, #FCF8F1)
   );
-  border-radius: 6px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition:
-    background-color 140ms ease,
-    box-shadow 140ms ease;
+  border-radius: 0.2em;
+  box-shadow: none;
+  /* ممنوع padding/margin/border — فرق تخطيط = صفر */
+  padding: 0;
+  margin-block: 0;
+  border: none;
 }
 .quran-shell--night .mf2-ayah-group--active .mf2-word,
 html[data-theme="dark"] .mf2-ayah-group--active .mf2-word {
   background-color: color-mix(
     in srgb,
-    var(--color-mushaf-gold, #C9B07A) 16%,
+    var(--color-mushaf-gold, #C9B07A) 18%,
     transparent
   );
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  box-shadow: none;
 }
 /* ⚠️ إصلاح جذري (2026-07-22): كل كلمة تُصيَّر كعنصر <span> منفصل (لتفعيل
    الملاءمة الدقيقة لحجم الخط لكل سطر، وربط النقر بالآية)، ونص الكلمة
@@ -513,7 +528,7 @@ html[data-theme="dark"] .mf2-surah-header__frame,
 
 .mf2-bismillah {
   /* بسملة موحّدة: محارف QPC صفحة ١ — نفس مقاس سطر الآية، بلا مسار Amiri بديل */
-  font-family: "qpc-page-1", var(--font-quran, serif);
+  font-family: "qpc-page-1", var(--font-quran, serif) !important;
   font-size: 1em;
   font-weight: 400;
   line-height: normal;
@@ -543,6 +558,10 @@ html[data-theme="dark"] .mf2-surah-header__frame,
 .mf2-bismillah__run {
   display: inline-block;
   white-space: nowrap;
+  font-family: "qpc-page-1", var(--font-quran, serif) !important;
+}
+.mf2-bismillah .mf2-word {
+  font-family: "qpc-page-1", var(--font-quran, serif) !important;
 }
 .mf2-bismillah.mf2-line {
   width: max-content;
