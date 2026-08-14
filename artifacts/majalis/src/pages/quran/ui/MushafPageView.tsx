@@ -907,7 +907,7 @@ export default function MushafPageView() {
             page={page}
             totalPages={TOTAL_PAGES}
             pulseKey={page}
-            visible={!selectedAyah}
+            visible={!selectedAyah && !flip.active && !flip.settling}
             onJump={openJumpModal}
           />
         </>

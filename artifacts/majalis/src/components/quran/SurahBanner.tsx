@@ -130,19 +130,14 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
         aria-hidden="true"
         focusable="false"
       >
-        <defs>
-          <linearGradient id="mf2-banner-fill-light" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--color-mushaf-ornament-mid, #F0E6D2)" />
-            <stop offset="100%" stopColor="var(--color-mushaf-ornament-bg, #E6D5B8)" />
-          </linearGradient>
-        </defs>
+        <defs />
         <rect
           x={outerInset}
           y={outerInset}
           width={W - outerInset * 2}
           height={H - outerInset * 2}
           rx={FRAME_RADIUS}
-          fill="url(#mf2-banner-fill-light)"
+          fill="var(--color-mushaf-ornament-mid, #EDE0C4)"
           stroke={GOLD}
           strokeWidth={OUTER_STROKE}
         />
