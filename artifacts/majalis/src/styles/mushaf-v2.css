@@ -275,10 +275,12 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
   transition: background-color 150ms ease;
 }
 .mf2-ayah-group--active .mf2-word {
+  /* لون الحبر موروث — يمنع وسم surface-without-color على خلفية فيها brand */
+  color: inherit;
   background-color: color-mix(
     in srgb,
     var(--color-mushaf-gold, #B08D57) 22%,
-    color-mix(in srgb, var(--mj-brand, #1F7A5A) 10%, var(--color-mushaf-paper, #FCF8F1))
+    var(--color-mushaf-paper, #FCF8F1)
   );
   border-radius: 0.2em;
   box-shadow: none;
@@ -289,10 +291,11 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
 }
 .quran-shell--night .mf2-ayah-group--active .mf2-word,
 html[data-theme="dark"] .mf2-ayah-group--active .mf2-word {
+  color: inherit;
   background-color: color-mix(
     in srgb,
     var(--color-mushaf-gold, #C9B07A) 28%,
-    color-mix(in srgb, var(--accent, #5CC095) 16%, transparent)
+    transparent
   );
   box-shadow: none;
 }
