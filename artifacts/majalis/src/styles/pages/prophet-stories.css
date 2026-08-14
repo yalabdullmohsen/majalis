@@ -1472,6 +1472,7 @@ html.dark .nb-table__row--clickable:hover td {
 .prophet-detail-lux__azm-badge {
   background: color-mix(in srgb, var(--prophet-accent, var(--mj-accent)) 78%, var(--mj-brand-deep));
   border-color: color-mix(in srgb, var(--prophet-accent, var(--mj-accent)) 55%, transparent);
+  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
 }
 
 /* فهرس أقسام لاصق */
@@ -1507,7 +1508,8 @@ html.dark .nb-table__row--clickable:hover td {
   transform: translateY(-1px);
 }
 .prophet-detail-toc__btn--active {
-  background: color-mix(in srgb, var(--prophet-color, var(--mj-brand-deep)) 55%, rgba(255, 255, 255, 0.12));
+  /* خلفية داكنة صلبة (#0B1A2E) — أبيض واضح؛ بلا color-mix بـhex فاتح يُضلّل البوابة */
+  background: #0B1A2E;
   border-color: var(--prophet-accent, var(--prophet-color-on-dark));
   color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
   font-weight: 700;
