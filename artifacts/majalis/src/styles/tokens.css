@@ -62,13 +62,14 @@
    الأسطح الغامقة تبقى غامقة والنص فوقها يبقى أبيض، فلا شيء يُقلب. */
 html[data-theme="dark"],
 html.dark {
-  --surface-brand-solid: var(--brand, #2e8b6f);
-  --surface-brand-strong: var(--brand-deep, #1a3e34);
-  /* الغسلة في الليلي غامقة أصلًا (brand-v4: --surface-brand: #173028)،
-     فالحبر فوقها يجب أن يكون فاتحًا لا غامقًا. */
-  --surface-brand-wash: #173028;
-  --on-brand-wash: var(--text-on-dark, #f1f5f3);
-  --on-brand-wash-secondary: rgba(241, 245, 243, 0.82);
+  --surface-brand-solid: var(--mj-brand, #5CC095);
+  --surface-brand-strong: var(--mj-brand-deep, #0E1C17);
+  --surface-brand-wash: #16261F;
+  --on-brand: #06231A;
+  --on-brand-secondary: #0E2A22;
+  --on-brand-tertiary: #16352C;
+  --on-brand-wash: #ECF2EF;
+  --on-brand-wash-secondary: #C2CFCA;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

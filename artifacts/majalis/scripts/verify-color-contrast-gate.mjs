@@ -153,6 +153,16 @@ const ASSERTIONS = [
   { route: "/tahara", selector: ".th-tab:not(.th-tab--active)", mode: "dark", min: 4.5 },
   { route: "/tahara", selector: ".th-tab--active", mode: "light", min: 4.5 },
   { route: "/tahara", selector: ".th-tab--active", mode: "dark", min: 4.5 },
+  // ليلي أفتح — بطاقات فرائض / سنن / صندوق آية / صيام / دروس
+  { route: "/tahara", selector: ".th-fardh-card__title", mode: "dark", min: 4.5 },
+  { route: "/tahara", selector: ".th-fardh-card__desc", mode: "dark", min: 4.5 },
+  { route: "/tahara", selector: ".th-sunnah-item", mode: "dark", min: 4.5 },
+  { route: "/tahara", selector: ".th-info-box", mode: "dark", min: 4.5 },
+  { route: "/sawm", selector: ".sw-card__title", mode: "dark", min: 4.5 },
+  { route: "/sawm", selector: ".sw-dalil__text", mode: "dark", min: 4.5 },
+  { route: "/sawm", selector: ".sw-badge--fard", mode: "dark", min: 4.5 },
+  { route: "/lessons", selector: ".lesson-unified-card__title", mode: "dark", min: 3 },
+  { route: "/lessons", selector: ".lesson-unified-card__btn--ghost", mode: "dark", min: 4.5 },
 ];
 
 /** مسارات عامة من seo-routes — فحص عنوان لكل مسار × وضعين (تغطية كاملة لا عيّنة). */
@@ -356,6 +366,8 @@ async function main() {
   const allRoutes = loadAllPublicRoutes();
   let routeChecks = 0;
   let routeSkipped = 0;
+  const darkTitleMins = [];
+  const WHITE_LEAK_ROUTES = new Set(["/tahara", "/sawm", "/lessons", "/more", "/quran-hub", "/"]);
   for (const route of allRoutes) {
     try {
       await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded", timeout: 12000 });
@@ -437,8 +449,43 @@ async function main() {
         if (result.error) {
           console.warn(`  ⚠ ${route} [${mode}] title — تعذّر القياس (${result.error})`);
         } else if (result.ratio < 3) {
-          // جرد كامل: يُبلَّغ دون إسقاط البوابة — ASSERTIONS تبقى صارمة للأعطال المُصلَحة
           console.warn(`  ⚠ ${route} [${mode}] title = ${result.ratio}:1 (هدف ≥3:1 للعناوين)`);
+        } else if (mode === "dark" && Number.isFinite(result.ratio)) {
+          darkTitleMins.push({ route, ratio: result.ratio });
+        }
+      }
+
+      if (WHITE_LEAK_ROUTES.has(route)) {
+        await page.evaluate(() => {
+          document.documentElement.dataset.theme = "dark";
+          document.documentElement.classList.add("dark");
+        });
+        await page.waitForTimeout(150);
+        const leaks = await page.evaluate(() => {
+          const out = [];
+          for (const el of document.querySelectorAll("body *")) {
+            if (el.closest("[data-mushaf], .mushaf-root, .qpc-page")) continue;
+            const cs = getComputedStyle(el);
+            const box = el.getBoundingClientRect();
+            if (box.width < 40 || box.height < 28) continue;
+            if (cs.visibility === "hidden" || cs.display === "none") continue;
+            const m = String(cs.backgroundColor || "").match(/rgba?\(([^)]+)\)/);
+            if (!m) continue;
+            const raw = m[1];
+            const parts = raw.includes(",")
+              ? raw.split(",").map((s) => parseFloat(s.trim()))
+              : raw.split("/")[0].trim().split(/\s+/).map((s) => parseFloat(s));
+            const rr = parts[0], gg = parts[1], bb = parts[2], aa = parts[3] ?? 1;
+            if (aa < 0.9) continue;
+            if (rr >= 192 && gg >= 192 && bb >= 192) {
+              const cls = (el.className && String(el.className).slice(0, 48)) || el.tagName;
+              out.push(`${cls}`);
+            }
+          }
+          return [...new Set(out)].slice(0, 6);
+        });
+        if (leaks.length) {
+          failures.push(`${route} [dark] تسرّب سطح فاتح ≥#C0C0C0: ${leaks.join(" · ")}`);
         }
       }
     } catch (e) {
@@ -449,11 +496,34 @@ async function main() {
   await browser.close();
   killServer();
 
+  // فحص مصدر صفحات الإصلاح: لا خلفية بيضاء صلبة
+  const hardFiles = [
+    "src/styles/pages/tahara.css",
+    "src/styles/pages/sawm.css",
+    "src/styles/pages/lessons.css",
+    "src/styles/pages/lessons-legacy.css",
+    "src/styles/dark-mode-surfaces.css",
+  ];
+  const hardBg = /(?:^|[;{\s])background(?:-color)?\s*:\s*#(?:fff|ffffff)\b/i;
+  for (const rel of hardFiles) {
+    const p = resolve(appRoot, rel);
+    try {
+      const stripped = readFileSync(p, "utf8").replace(/var\([^)]*#[0-9a-fA-F]{3,8}[^)]*\)/g, "var(--ok)");
+      if (hardBg.test(stripped)) failures.push(`مصدر صلب background #fff في ${rel}`);
+    } catch { /* missing ok */ }
+  }
+
   const totalChecks = ASSERTIONS.length + routeChecks;
   if (failures.length > 0) {
     console.error(`\n❌ بوابة انحدار تباين الألوان رسبت — ${failures.length}/${totalChecks} تأكيدًا فشل:\n`);
     for (const f of failures) console.error(`  - ${f}`);
     process.exit(1);
+  }
+
+  if (darkTitleMins.length) {
+    darkTitleMins.sort((a, b) => a.ratio - b.ratio);
+    const w = darkTitleMins[0];
+    console.log(`  أدنى تباين عنوان ليلي: ${w.route} = ${w.ratio}:1`);
   }
 
   console.log(

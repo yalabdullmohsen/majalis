@@ -141,6 +141,7 @@
   --mj-bg: #F2F4F3;
   --mj-surface: #FFFFFF;
   --mj-surface-2: #E9EDEB;
+  --mj-surface-3: #E3E8E6;
   --mj-hairline: #E3E8E6;
   --mj-ink: #16241E;
   --mj-ink-2: #4A5A53;
@@ -239,45 +240,66 @@
   --color-text: var(--mj-ink);
 }
 
-/* الوضع الليلي — ThemePreferenceProvider يضع data-theme و.dark معًا */
+/* الوضع الليلي — أفتح قليلًا، أسطح متمايزة، نصوص صريحة (بلا fallback نهاري) */
 html[data-theme="dark"],
 html.dark,
 [data-theme="dark"],
 .dark {
-  --mj-bg: #101614;
-  --mj-surface: #17201C;
-  --mj-surface-2: #1E2925;
-  --mj-hairline: #26332D;
-  --mj-ink: #E9EFEC;
-  --mj-ink-2: #B4C2BC;
-  --mj-muted: #8A9A93;
-  --mj-brand: #4FB48B;
-  --mj-brand-soft: #183329;
-  --mj-brand-deep: #0C1512;
-  --mj-on-brand: #0C1512;
-  --mj-accent: #D2A445;
-  --mj-accent-soft: #332A16;
-  --mj-danger: #F87171;
-  --mj-danger-soft: #3F1D1D;
-  --mj-danger-deep: #FECACA;
-  --mj-splash: #002b21;
-  --color-surface: #17201C;
-  --color-surface-2: #1E2925;
-  --color-hairline: #26332D;
-  --color-ink: #E9EFEC;
-  --color-ink-2: #B4C2BC;
-  --color-muted: #8A9A93;
-  --color-brand: #4FB48B;
-  --color-brand-soft: #183329;
-  --color-brand-deep: #0C1512;
-  --color-on-brand: #0C1512;
-  --color-accent: #D2A445;
-  --color-accent-soft: #332A16;
-  --color-danger: #F87171;
-  --color-danger-soft: #3F1D1D;
-  --color-danger-deep: #FECACA;
-  --color-splash: #101614;
-  /* مصحف ليلي — قيم صريحة */
+  --mj-bg: #131A18;
+  --mj-surface: #1B2421;
+  --mj-surface-2: #222D29;
+  --mj-surface-3: #2A3733;
+  --mj-hairline: #35443F;
+  --mj-border-strong: #445651;
+  --mj-ink: #ECF2EF;
+  --mj-ink-2: #C2CFCA;
+  --mj-muted: #9FB0AB;
+  --mj-brand: #5CC095;
+  --mj-brand-soft: #16261F;
+  --mj-brand-deep: #0E1C17;
+  --mj-on-brand: #06231A;
+  --mj-accent: #D9B871;
+  --mj-accent-soft: #2A3733;
+  --mj-danger: #F2B8C0;
+  --mj-danger-soft: #3A2226;
+  --mj-danger-deep: #F2B8C0;
+  --mj-splash: #131A18;
+
+  /* رموز دلالية إلزامية — قيم ليلية صريحة */
+  --bg-base: #131A18;
+  --surface-1: #1B2421;
+  --surface-2: #222D29;
+  --surface-3: #2A3733;
+  --border-subtle: #35443F;
+  --border-strong: #445651;
+  --txt-primary: #ECF2EF;
+  --txt-secondary: #C2CFCA;
+  --txt-muted: #9FB0AB;
+  --accent: #5CC095;
+  --accent-strong: #7BD6AE;
+  --on-accent: #06231A;
+  --gold: #D9B871;
+  --danger-bg: #3A2226;
+  --danger-txt: #F2B8C0;
+
+  --color-bg: #131A18;
+  --color-surface: #1B2421;
+  --color-surface-2: #222D29;
+  --color-hairline: #35443F;
+  --color-ink: #ECF2EF;
+  --color-ink-2: #C2CFCA;
+  --color-muted: #9FB0AB;
+  --color-brand: #5CC095;
+  --color-brand-soft: #16261F;
+  --color-brand-deep: #0E1C17;
+  --color-on-brand: #06231A;
+  --color-accent: #D9B871;
+  --color-accent-soft: #2A3733;
+  --color-danger: #F2B8C0;
+  --color-danger-soft: #3A2226;
+  --color-danger-deep: #F2B8C0;
+  --color-splash: #131A18;
+  /* مصحف ليلي — قيم صريحة (لا تُمس مواصفة الرسم؛ ألوان سطح فقط) */
   --color-mushaf-paper: #12100C;
   --color-mushaf-bg: #12100C;
   --color-mushaf-ink: #EDE6D8;
@@ -292,11 +314,11 @@ html.dark,
   --color-mushaf-numeral: #EDE6D8;
   --color-mushaf-badge-bg: #241F17;
   --color-mushaf-badge-border: #C9A96A;
-  --shadow-mj: 0 10px 26px -18px rgba(0, 0, 0, 0.7);
-  --mj-elev-1: 0 1px 3px rgba(0, 0, 0, 0.35);
-  --mj-elev-2: 0 6px 16px -6px rgba(0, 0, 0, 0.45);
-  --mj-elev-3: 0 14px 32px -12px rgba(0, 0, 0, 0.55);
-  --mj-sh: var(--mj-elev-2);
+  --shadow-mj: none;
+  --mj-elev-1: none;
+  --mj-elev-2: none;
+  --mj-elev-3: none;
+  --mj-sh: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

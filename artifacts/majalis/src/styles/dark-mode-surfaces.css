@@ -1,0 +1,205 @@
+/**
+ * الوضع الليلي — أسطح متمايزة ونصوص واضحة.
+ * يُحمَّل بعد theme-aliases. لا يمسّ المصحف.
+ */
+html[data-theme="dark"],
+html.dark {
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body,
+html.dark body {
+  background: var(--bg-base, var(--mj-bg));
+  color: var(--txt-primary, var(--mj-ink));
+}
+
+/* شريط الحالة / تنقّل سفلي — سطح-1 لا أسود صرف */
+html[data-theme="dark"] .bottom-nav,
+html[data-theme="dark"] .bottom-nav--v2,
+html.dark .bottom-nav,
+html.dark .bottom-nav--v2,
+html[data-theme="dark"] .navbar-v3,
+html.dark .navbar-v3 {
+  background: var(--surface-1, var(--mj-surface)) !important;
+  border-color: var(--border-subtle, var(--mj-hairline));
+}
+
+/* هياكل التحميل */
+html[data-theme="dark"] [class*="skeleton"],
+html.dark [class*="skeleton"],
+html[data-theme="dark"] .animate-pulse,
+html.dark .animate-pulse {
+  background-color: var(--surface-3, #2A3733) !important;
+  background-image: none !important;
+  color: transparent !important;
+  border-color: var(--border-subtle, #35443F) !important;
+  animation: dm-skel-pulse 1.2s ease-in-out infinite;
+}
+@keyframes dm-skel-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.12); }
+}
+
+/* صناديق الآية / الدليل — نص أساسي لا muted */
+html[data-theme="dark"] .th-ayah--body,
+html.dark .th-ayah--body,
+html[data-theme="dark"] .sw-dalil,
+html.dark .sw-dalil {
+  background: #16261F !important;
+  border: 1px solid var(--gold, #D9B871) !important;
+  border-inline-end-width: 1px !important;
+}
+html[data-theme="dark"] .th-ayah--body .th-ayah__text,
+html.dark .th-ayah--body .th-ayah__text,
+html[data-theme="dark"] .sw-dalil__text,
+html.dark .sw-dalil__text {
+  color: var(--txt-primary, #ECF2EF) !important;
+}
+html[data-theme="dark"] .th-ayah--body .th-ayah__ref,
+html.dark .th-ayah--body .th-ayah__ref,
+html[data-theme="dark"] .sw-dalil__ref,
+html.dark .sw-dalil__ref {
+  color: var(--gold, #D9B871) !important;
+}
+
+/* تسمية «الدليل:» وأشباهها */
+html[data-theme="dark"] .sw-dalil strong,
+html.dark .sw-dalil strong,
+html[data-theme="dark"] [class*="dalil"] strong,
+html.dark [class*="dalil"] strong {
+  color: var(--txt-secondary, #C2CFCA) !important;
+  background: var(--surface-3, #2A3733);
+  padding: 0.1em 0.35em;
+  border-radius: 0.25rem;
+}
+
+/* صفوف سنن الوضوء */
+html[data-theme="dark"] .th-sunnah-item,
+html.dark .th-sunnah-item {
+  background: var(--surface-2, #222D29) !important;
+  color: var(--txt-primary, #ECF2EF) !important;
+}
+html[data-theme="dark"] .th-sunnah-item::before,
+html.dark .th-sunnah-item::before {
+  color: var(--accent, #5CC095) !important;
+}
+
+/* شارة فرض ليلية */
+html[data-theme="dark"] .sw-badge--fard,
+html.dark .sw-badge--fard {
+  background: var(--danger-bg, #3A2226) !important;
+  color: var(--danger-txt, #F2B8C0) !important;
+}
+
+/* بطاقات الدروس — تمايز عن الخلفية + زر حفظ مرئي */
+html[data-theme="dark"] .lesson-unified-card,
+html.dark .lesson-unified-card {
+  background: var(--surface-1, #1B2421) !important;
+  border: 1px solid var(--border-subtle, #35443F) !important;
+}
+html[data-theme="dark"] .lesson-unified-card__header,
+html.dark .lesson-unified-card__header {
+  background: var(--surface-2, #222D29) !important;
+  border-color: var(--border-subtle, #35443F) !important;
+}
+html[data-theme="dark"] .lesson-unified-card__title,
+html.dark .lesson-unified-card__title {
+  color: var(--txt-primary, #ECF2EF) !important;
+}
+html[data-theme="dark"] .lesson-unified-card__btn--ghost,
+html[data-theme="dark"] .lesson-unified-card__btn:not(.lesson-unified-card__btn--primary),
+html.dark .lesson-unified-card__btn--ghost,
+html.dark .lesson-unified-card__btn:not(.lesson-unified-card__btn--primary) {
+  border: 1px solid var(--border-strong, #445651) !important;
+  color: var(--txt-primary, #ECF2EF) !important;
+  background: var(--surface-2, #222D29) !important;
+}
+
+/* أزرار ثانوية عامة */
+html[data-theme="dark"] .mj-btn--ghost,
+html.dark .mj-btn--ghost,
+html[data-theme="dark"] .m2030-btn--ghost,
+html.dark .m2030-btn--ghost {
+  border: 1px solid var(--border-subtle, #35443F) !important;
+  color: var(--txt-primary, #ECF2EF) !important;
+}
+
+/* مقدمات الأقسام — نص أساسي على سطح-3 ليلاً */
+html[data-theme="dark"] .th-section__intro,
+html.dark .th-section__intro,
+html[data-theme="dark"] .sw-section__intro,
+html.dark .sw-section__intro,
+html[data-theme="dark"] .th-info-box,
+html.dark .th-info-box {
+  background: var(--surface-3, #2A3733) !important;
+  color: var(--txt-primary, #ECF2EF) !important;
+  border-color: var(--border-subtle, #35443F) !important;
+}
+
+html[data-theme="dark"] .th-fardh-card,
+html.dark .th-fardh-card,
+html[data-theme="dark"] .th-naqidh-card,
+html.dark .th-naqidh-card,
+html[data-theme="dark"] .th-mujib-card,
+html.dark .th-mujib-card,
+html[data-theme="dark"] .sw-card,
+html.dark .sw-card,
+html[data-theme="dark"] .sw-cond-card,
+html.dark .sw-cond-card {
+  background: var(--surface-1, #1B2421) !important;
+  border-color: var(--border-subtle, #35443F) !important;
+  color: var(--txt-primary, #ECF2EF);
+}
+
+html[data-theme="dark"] .sw-card__title,
+html.dark .sw-card__title,
+html[data-theme="dark"] .sw-card__desc,
+html.dark .sw-card__desc,
+html[data-theme="dark"] .sw-cond-card__body,
+html.dark .sw-cond-card__body {
+  color: var(--txt-secondary, #C2CFCA) !important;
+}
+html[data-theme="dark"] .sw-card__title,
+html.dark .sw-card__title {
+  color: var(--txt-primary, #ECF2EF) !important;
+}
+
+html[data-theme="dark"] .sw-tab--active,
+html.dark .sw-tab--active,
+html[data-theme="dark"] .th-tab--active,
+html.dark .th-tab--active {
+  background: var(--surface-1, #1B2421) !important;
+  color: var(--accent, #5CC095) !important;
+}
+html[data-theme="dark"] .surface-brand,
+html.dark .surface-brand,
+html[data-theme="dark"] .th-hero,
+html.dark .th-hero,
+html[data-theme="dark"] .sw-hero,
+html.dark .sw-hero {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .th-hero :where(.th-hero__title, .th-hero__sub, .th-tab:not(.th-tab--active), .th-ayah__text, .th-ayah__ref),
+html.dark .th-hero :where(.th-hero__title, .th-hero__sub, .th-tab:not(.th-tab--active), .th-ayah__text, .th-ayah__ref),
+html[data-theme="dark"] .sw-hero :where(.sw-hero__title, .sw-hero__sub, .sw-tab:not(.sw-tab--active), .sw-dua__text),
+html.dark .sw-hero :where(.sw-hero__title, .sw-hero__sub, .sw-tab:not(.sw-tab--active), .sw-dua__text) {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .mj-btn--primary,
+html.dark .mj-btn--primary,
+html[data-theme="dark"] .m2030-btn--primary,
+html.dark .m2030-btn--primary,
+html[data-theme="dark"] .btn-primary,
+html.dark .btn-primary,
+html[data-theme="dark"] .lesson-unified-card__btn--primary,
+html.dark .lesson-unified-card__btn--primary,
+html[data-theme="dark"] .sq-header,
+html.dark .sq-header {
+  background: var(--accent, #5CC095) !important;
+  color: var(--on-accent, #06231A) !important;
+  border-color: var(--accent, #5CC095) !important;
+}
+html[data-theme="dark"] .sq-header :where(*),
+html.dark .sq-header :where(*) {
+  color: var(--on-accent, #06231A) !important;
+}

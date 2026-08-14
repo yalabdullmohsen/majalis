@@ -226,42 +226,40 @@
    ونصوص مخفّفة (#EDF2F0 لا أبيض نقي) لتقليل الوهج على OLED.
    ══════════════════════════════════════════════════════════════ */
 html[data-theme="dark"] {
-  --bg:              #0B1613;   /* أخضر فحمي مريح — ليس أسودًا صافيًا */
-  --bg-elevated:     #12201C;
-  --surface:         #15241F;
-  --surface-2:       #1A2C26;
-  --surface-3:       #213530;
-  --surface-muted:   #1A2C26;
-  --surface-brand:   #173028;
-  --surface-inverse: var(--n-50);
-  --surface-elevated: #1A2C26;
+  --bg:              #131A18;
+  --bg-elevated:     #1B2421;
+  --surface:         #1B2421;
+  --surface-2:       #222D29;
+  --surface-3:       #2A3733;
+  --surface-muted:   #222D29;
+  --surface-brand:   #16261F;
+  --surface-inverse: #ECF2EF;
+  --surface-elevated: #222D29;
 
-  --text-title:      #F2F6F4;
-  --text:            #EDF2F0;
-  --text-2:          #B5C7C0;
-  --text-muted:      #8FA59C;
-  --text-meta:       #7A9088;
-  --text-on-dark:    #F2F6F4;
-  --text-brand:      #7EBEA8;
-  --text-brand-deep: #A5D4C4;
+  --text-title:      #ECF2EF;
+  --text:            #ECF2EF;
+  --text-2:          #C2CFCA;
+  --text-muted:      #9FB0AB;
+  --text-meta:       #9FB0AB;
+  --text-on-dark:    #ECF2EF;
+  --text-brand:      #5CC095;
+  --text-brand-deep: #7BD6AE;
 
-  --border:             #243832;
-  --border-strong:      #315048;
-  --border-interactive: #4A7A69;
-  --border-brand:       #315048;
+  --border:             #35443F;
+  --border-strong:      #445651;
+  --border-interactive: #5CC095;
+  --border-brand:       #445651;
 
-  /* Primary واضح غير صارخ — يتحمل نصًا فاتحًا على الأزرار */
-  --brand:        #2E8B6F;
-  --brand-hover:  #37987A;
-  --brand-active: #267A61;
-  --brand-soft:   #173028;
-  --brand-deep:   #1A3E34;
-  --text-on-brand: #FFFEFB;
-  --accent:       var(--gold-300);
-  --accent-soft:  #2A241633;
-  --accent-deep:  var(--gold-200);
+  --brand:        #5CC095;
+  --brand-hover:  #7BD6AE;
+  --brand-active: #4AA882;
+  --brand-soft:   #16261F;
+  --brand-deep:   #0E1C17;
+  --text-on-brand: #06231A;
+  --accent:       #D9B871;
+  --accent-soft:  #2A3733;
+  --accent-deep:  #D9B871;
 
-  /* color-bg/primary/text/surface: من theme.css — لا تُعاد في الوضع الليلي هنا */
   --color-bg-soft:           var(--surface-2);
   --color-surface-elevated:  var(--bg-elevated);
   --color-primary-dark:      var(--brand-deep);
@@ -271,22 +269,22 @@ html[data-theme="dark"] {
   --color-warning-text:      var(--danger-fg);
   --color-success:           var(--ok-fg);
 
-  --danger:      #F87171;
-  --danger-fg:   #FCA5A5;
-  --danger-bg:   #3B1717;
-  --warn-fg:     #FCD34D;
-  --warn-bg:     #37270A;
-  --info-fg:     #7DD3FC;
-  --info-bg:     #0C2A3D;
-  --ok-fg:       #6EE7B7;
-  --ok-bg:       #0D3225;
+  --danger:      #F2B8C0;
+  --danger-fg:   #F2B8C0;
+  --danger-bg:   #3A2226;
+  --warn-fg:     #D9B871;
+  --warn-bg:     #2A3733;
+  --info-fg:     #7BD6AE;
+  --info-bg:     #16261F;
+  --ok-fg:       #7BD6AE;
+  --ok-bg:       #16261F;
 
-  --shadow-color: 158 60% 3%;
-  --e-1: 0 1px 2px hsl(var(--shadow-color) / 0.4);
-  --e-2: 0 2px 8px hsl(var(--shadow-color) / 0.45);
-  --e-3: 0 6px 18px hsl(var(--shadow-color) / 0.5);
-  --e-4: 0 12px 36px hsl(var(--shadow-color) / 0.6);
-  --e-brand: 0 4px 16px hsl(158 60% 4% / 0.6);
+  --shadow-color: 160 20% 6%;
+  --e-1: none;
+  --e-2: none;
+  --e-3: none;
+  --e-4: none;
+  --e-brand: none;
 }
 
 /* ══════════════════════════════════════════════════════════════

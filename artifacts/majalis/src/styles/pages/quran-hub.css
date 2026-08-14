@@ -285,20 +285,20 @@
   display: flex;
   align-items: center;
   gap: var(--ds-space-3);
-  background: #FFFFFF;
-  border: 1px solid rgba(23,61,53,0.1);
+  background: var(--mj-surface, #FFFFFF);
+  border: 1px solid var(--mj-hairline, rgba(23,61,53,0.1));
   border-radius: var(--ds-radius-lg);
   padding: 1rem 1.25rem;
-  color: var(--elite-ink, #1A1A18);
+  color: var(--txt-primary, var(--elite-ink, #1A1A18));
 }
 .quran-hub-feature-item__icon {
-  color: var(--mj-brand-deep);
+  color: var(--mj-brand);
   flex-shrink: 0;
 }
 .quran-hub-feature-item__text {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--txt-primary, var(--mj-ink));
 }
 
 /* Closing ayah */
