@@ -58,6 +58,27 @@
   color: var(--mj-muted, #5a6b60);
 }
 
+.frs-guide {
+  margin: 0 0 1.15rem;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.frs-guide li {
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, var(--mj-brand-deep, #0f2e1d) 6%, transparent);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--mj-brand-deep, #0f2e1d);
+}
+
+.frs-guide strong {
+  font-weight: 700;
+}
+
 .frs-label {
   margin: 0.75rem 0 0.4rem;
   font-size: 0.82rem;

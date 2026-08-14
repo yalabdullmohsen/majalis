@@ -443,7 +443,7 @@ export default function SettingsPage() {
           </button>
           {/* الطريق اليدوي الوحيد لإعادة عرض التهيئة — لا شيء آخر يعيدها */}
           <p className="settings-note">
-            تظهر شاشات التهيئة مرة واحدة فقط. اضغط أدناه لعرضها من جديد.
+            تظهر شاشات التهيئة ودليل أول دخول مرة واحدة فقط. اضغط أدناه لعرضها من جديد.
           </p>
           <button
             type="button"
@@ -453,7 +453,7 @@ export default function SettingsPage() {
               window.location.reload();
             }}
           >
-            إعادة عرض التهيئة
+            إعادة عرض التهيئة / دليل أول دخول
           </button>
         </LegalSection>
       )}

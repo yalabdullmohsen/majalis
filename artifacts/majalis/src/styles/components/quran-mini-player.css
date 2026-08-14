@@ -32,6 +32,31 @@
   background: color-mix(in srgb, var(--mj-on-brand, #fff) 35%, transparent);
 }
 
+.quran-mini-player__error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  background: color-mix(in srgb, #b91c1c 55%, transparent);
+  color: #fff;
+}
+
+.quran-mini-player__retry {
+  flex-shrink: 0;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, #fff 45%, transparent);
+  background: color-mix(in srgb, #fff 12%, transparent);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
 .quran-mini-player__bar {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) auto auto auto;

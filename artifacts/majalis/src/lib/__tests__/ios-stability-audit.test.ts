@@ -93,7 +93,7 @@ const slots: PrayerSlot[] = [
 const farBefore = computePrayerTicker(slots, new Date("2026-07-29T10:00:00+03:00"));
 check(farBefore?.mode === "upcoming", ">15m before prayer → upcoming");
 check(farBefore?.active.key === "dhuhr", "upcoming targets dhuhr");
-check(recommendedTickMs(farBefore!) === 30_000, "upcoming uses 30s tick");
+check(recommendedTickMs(farBefore!) === 1_000, "upcoming uses 1s tick (live seconds)");
 
 const last15 = computePrayerTicker(slots, new Date("2026-07-29T11:50:00+03:00"));
 check(last15?.mode === "countdown", "last 15m → countdown");

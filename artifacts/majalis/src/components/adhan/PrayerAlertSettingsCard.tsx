@@ -19,6 +19,8 @@ import {
   PRAYER_SOUND_PROFILE_OPTIONS,
   type PrayerSoundProfile,
 } from "@/lib/prayer-notification-sounds";
+import { fireTestLocalNotification } from "@/lib/notifications/test-trigger";
+import { isNative } from "@/lib/capacitor-utils";
 
 function MiniToggle({
   checked,
@@ -56,6 +58,8 @@ export function PrayerAlertSettingsCard() {
   const [permission, setPermission] = useState<PermissionStatus>("prompt");
   const [showExplainer, setShowExplainer] = useState(false);
   const [liveActivitySupported, setLiveActivitySupported] = useState(false);
+  const [testBusy, setTestBusy] = useState(false);
+  const [testMsg, setTestMsg] = useState<string | null>(null);
 
   useEffect(() => {
     getNotificationPermissionStatus().then(setPermission);
@@ -64,6 +68,35 @@ export function PrayerAlertSettingsCard() {
 
   const patch = (p: Partial<PrayerAlertPreferences>) => {
     setPrefs(patchPrayerAlertPrefs(p));
+  };
+
+  const openSystemSettings = async () => {
+    try {
+      if (isNative) {
+        // Cap App لا يوفّر openUrl — افتح إعدادات التطبيق عبر مخطط النظام
+        window.location.href = "app-settings:";
+        return;
+      }
+    } catch {
+      /* fall through */
+    }
+    setTestMsg("افتح إعدادات الجهاز ← المجلس العلمي ← الإشعارات.");
+  };
+
+  const runTestNotification = async () => {
+    setTestBusy(true);
+    setTestMsg(null);
+    const result = await fireTestLocalNotification();
+    setTestBusy(false);
+    if (result.ok) {
+      setTestMsg("سيصل إشعار تجريبي خلال ثانيتين تقريبًا.");
+      return;
+    }
+    if (result.reason === "permission") {
+      setTestMsg("يلزم تفعيل إذن الإشعارات أولًا.");
+      return;
+    }
+    setTestMsg("تعذّر إرسال الإشعار التجريبي على هذا الجهاز.");
   };
 
   const handleEnableClick = () => {
@@ -128,7 +161,7 @@ export function PrayerAlertSettingsCard() {
               <div className="ads-global-label">إذن الإشعارات</div>
               <div className="ads-global-desc">
                 {permission === "denied"
-                  ? "محجوب من إعدادات النظام — افتح الإعدادات ← المجلس العلمي ← الإشعارات"
+                  ? "محجوب من إعدادات النظام — افتح الإعدادات لتفعيله"
                   : "لم يُفعَّل بعد"}
               </div>
             </div>
@@ -137,8 +170,33 @@ export function PrayerAlertSettingsCard() {
                 تفعيل
               </button>
             )}
+            {permission === "denied" && (
+              <button type="button" className="ads-pill-btn" onClick={() => void openSystemSettings()}>
+                فتح الإعدادات
+              </button>
+            )}
           </div>
         )}
+
+        {alertsOn && (
+          <div className="ads-row-sep">
+            <div>
+              <div className="ads-global-label">تجربة إشعار الصلاة</div>
+              <div className="ads-global-desc">
+                يرسل تنبيهًا تجريبيًا خلال ~١٫٥ ثانية للتحقق من الصوت والبanner
+              </div>
+            </div>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              disabled={testBusy}
+              onClick={() => void runTestNotification()}
+            >
+              {testBusy ? "جارٍ…" : "تجربة"}
+            </button>
+          </div>
+        )}
+        {testMsg && <p className="ads-adhan-desc" role="status">{testMsg}</p>}
 
         <div className="ads-row-sep">
           <div>

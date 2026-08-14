@@ -35,6 +35,8 @@ export type AudioEngineSnapshot = {
   duration: number;
   /** وضع الحفظ النشط (نطاق آيات) إن وُجد */
   loopConfig: AyahLoopConfig | null;
+  /** رسالة مفهومة عند playerState === "error" */
+  errorMessage: string | null;
 };
 
 export type AyahChangePayload = {
@@ -81,6 +83,7 @@ export class AudioEngine {
   private surah: number | null = null;
   private ayah: number | null = null;
   private playerState: PlayerState = "idle";
+  private errorMessage: string | null = null;
   private teachPhase: TeachPhase = "idle";
   private repeatMode: RepeatMode = "off";
   private teachEnabled = false;
@@ -219,8 +222,9 @@ export class AudioEngine {
     }
   }
 
-  private setPlayerState(state: PlayerState): void {
+  private setPlayerState(state: PlayerState, errorMessage: string | null = null): void {
     this.playerState = state;
+    this.errorMessage = state === "error" ? errorMessage : null;
     this.emitSnapshot();
   }
 
@@ -283,6 +287,7 @@ export class AudioEngine {
       ayah: this.ayah,
       currentTime: this.audio?.currentTime ?? 0,
       duration: this.audio?.duration && Number.isFinite(this.audio.duration) ? this.audio.duration : 0,
+      errorMessage: this.errorMessage,
     };
   }
 
@@ -442,11 +447,18 @@ export class AudioEngine {
       el = this.ensureAudio();
     } catch (err) {
       console.warn("[AudioEngine] ensureAudio:", err);
-      this.setPlayerState("error");
+      this.setPlayerState("error", "تعذّر تهيئة مشغّل الصوت على هذا الجهاز.");
       return;
     }
 
     const url = getAyahAudioUrl(surah, ayah, this.reciterId);
+    if (!url) {
+      this.setPlayerState(
+        "error",
+        "هذا القارئ لا يدعم تلاوة الآية آيةً آية. اختر قارئًا آخر أو شغّل السورة كاملة.",
+      );
+      return;
+    }
     this.setPlayerState("loading");
     if (this.teachEnabled) this.teachPhase = "teacher";
 
@@ -459,7 +471,11 @@ export class AudioEngine {
       void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
     } catch (err) {
       console.warn("[AudioEngine] playAyah:", err);
-      this.setPlayerState("error");
+      const offline =
+        typeof navigator !== "undefined" && navigator.onLine === false
+          ? "تحقق من الاتصال بالشبكة ثم أعد المحاولة."
+          : "تعذّر تشغيل التلاوة. أعد المحاولة أو غيّر القارئ.";
+      this.setPlayerState("error", offline);
     }
   }
 
@@ -484,7 +500,7 @@ export class AudioEngine {
           this.setPlayerState("playing");
         } catch (err) {
           console.warn("[AudioEngine] resume:", err);
-          this.setPlayerState("error");
+          this.setPlayerState("error", "تعذّر استئناف التلاوة. أعد المحاولة.");
         }
       }
       return;

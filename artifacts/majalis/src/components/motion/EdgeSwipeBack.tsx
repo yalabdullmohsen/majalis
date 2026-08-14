@@ -4,7 +4,7 @@ import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { reducedMotionPreferred, skipNextRouteMotion } from "@/lib/spatial-nav";
 
-/** حافة يسار الشاشة (نمط Instagram) لبدء السحب التفاعلي. */
+/** حافة بداية الشاشة (يمين في RTL / يسار في LTR) لبدء السحب التفاعلي. */
 const EDGE_PX = 28;
 const LOCK_DX = 10;
 const MAX_DY_LOCK = 36;
@@ -13,7 +13,7 @@ const SCRIM_MAX = 0.38;
 const SPRING = "transform 320ms cubic-bezier(0.22, 1, 0.36, 1), opacity 280ms ease";
 
 /**
- * سحب تفاعلي من الحافة اليسرى للرجوع — يتبع الإصبع (transform فقط)،
+ * سحب تفاعلي من حافة البداية (RTL: يمين) للرجوع — يتبع الإصبع،
  * ثم يُكمل أو يُلغى بزنبرك. معطّل في المسارات الغامرة والشيتات.
  */
 export function EdgeSwipeBack() {
@@ -29,8 +29,19 @@ export function EdgeSwipeBack() {
     let tracking = false;
     let locked = false;
     let dx = 0;
+    let rtl = true;
     let scrim: HTMLDivElement | null = null;
     let main: HTMLElement | null = null;
+
+    const isRtl = () =>
+      (document.documentElement.getAttribute("dir") ||
+        getComputedStyle(document.documentElement).direction ||
+        "rtl") === "rtl";
+
+    const fromStartEdge = (clientX: number) => {
+      const w = Math.max(1, window.innerWidth);
+      return rtl ? clientX >= w - EDGE_PX : clientX <= EDGE_PX;
+    };
 
     const ensureScrim = () => {
       if (scrim) return scrim;
@@ -54,7 +65,9 @@ export function EdgeSwipeBack() {
         main.style.transition = "none";
         if (scrim) scrim.style.transition = "none";
       }
-      main.style.transform = `translate3d(${clamped}px, 0, 0)`;
+      /* في RTL الرجوع يدفع الصفحة نحو اليسار (سالب) */
+      const tx = rtl ? -clamped : clamped;
+      main.style.transform = `translate3d(${tx}px, 0, 0)`;
       main.style.willChange = "transform";
       main.classList.add("mj-edge-swiping");
       const s = ensureScrim();
@@ -97,7 +110,8 @@ export function EdgeSwipeBack() {
       if (document.body.classList.contains("app-sheet-open")) return;
       if (document.documentElement.classList.contains("chrome-immersive")) return;
       const t = e.touches[0];
-      if (t.clientX > EDGE_PX) return;
+      rtl = isRtl();
+      if (!fromStartEdge(t.clientX)) return;
       startX = t.clientX;
       startY = t.clientY;
       tracking = true;
@@ -109,7 +123,8 @@ export function EdgeSwipeBack() {
     const onMove = (e: TouchEvent) => {
       if (!tracking || !main || e.touches.length !== 1) return;
       const t = e.touches[0];
-      const rawDx = t.clientX - startX;
+      /* مسافة السحب باتجاه «فتح» الصفحة السابقة */
+      const rawDx = rtl ? startX - t.clientX : t.clientX - startX;
       const rawDy = Math.abs(t.clientY - startY);
 
       if (!locked) {
@@ -129,6 +144,7 @@ export function EdgeSwipeBack() {
 
     const finishCommit = () => {
       skipNextRouteMotion();
+      void import("@/lib/haptics").then((m) => m.haptics.selection()).catch(() => undefined);
       goBackOrFallback(location);
       window.setTimeout(() => {
         if (!main) return;
@@ -153,7 +169,8 @@ export function EdgeSwipeBack() {
       const ratio = dx / w;
       if (ratio >= COMMIT_RATIO || dx >= 120) {
         main.style.transition = SPRING;
-        main.style.transform = `translate3d(${w}px, 0, 0)`;
+        const exitTx = rtl ? -w : w;
+        main.style.transform = `translate3d(${exitTx}px, 0, 0)`;
         if (scrim) {
           scrim.style.transition = "opacity 240ms ease";
           scrim.style.opacity = "0";
