@@ -213,6 +213,36 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
     }
   }, [selectedVerseKey, versePreview]);
 
+  const onShare = useCallback(async () => {
+    if (!selectedVerseKey) return;
+    const parsed = parseVerseKey(selectedVerseKey);
+    const body = versePreview(selectedVerseKey);
+    const text = parsed
+      ? `${getSurahMeta(parsed.surah).name} ${parsed.ayah}\n${body}`
+      : body;
+    const url = `${window.location.origin}/mushaf?page=${page}`;
+    try {
+      if (typeof navigator.share === "function") {
+        await navigator.share({ title: "المصحف — المجلس العلمي", text, url });
+        setCopyStatus("تمت المشاركة");
+        return;
+      }
+      await navigator.clipboard.writeText(`${text}\n${url}`);
+      setCopyStatus("تم نسخ الآية لل مشاركة");
+    } catch {
+      setCopyStatus("تعذّرت المشاركة");
+    }
+  }, [page, selectedVerseKey, versePreview]);
+
+  useEffect(() => {
+    if (!actionsOpen || !selectedVerseKey) return;
+    const nodes = document.querySelectorAll<HTMLElement>(
+      `.mm-viewport [data-verse="${CSS.escape(selectedVerseKey)}"]`,
+    );
+    const last = nodes[nodes.length - 1];
+    last?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+  }, [actionsOpen, selectedVerseKey, page]);
+
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest(".mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-ayah-hit, .mm-page-edge")) {
       return;
@@ -304,11 +334,12 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
         open={
           !actionsOpen &&
           audioDockOpen &&
-          (chromeOpen || playerState === "playing" || playerState === "buffering")
+          (chromeOpen || playerState === "playing" || playerState === "buffering" || playerState === "error")
         }
         verseLabel={verseLabel}
         playerState={playerState}
         reciterId={reciterId}
+        audioError={audioError}
         onTogglePlay={() => void togglePlay()}
         onPrev={() => void audio.skipPrev()}
         onNext={() => void audio.skipNext()}
@@ -328,18 +359,18 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
       {actionsOpen && selectedVerseKey ? (
         <MushafAyahActions
           verseKey={selectedVerseKey}
+          ayahPreview={versePreview(selectedVerseKey)}
           copyStatus={copyStatus}
           audioError={audioError}
           playerState={playerState}
           reciterId={reciterId}
           onPlay={() => void playSelected()}
           onTogglePlay={() => void togglePlay()}
-          onPrev={() => void audio.skipPrev()}
-          onNext={() => void audio.skipNext()}
           onTafsir={() => {
             setTafsirOpen(true);
           }}
           onCopy={() => void onCopy()}
+          onShare={() => void onShare()}
           onReciterChange={(id) => void onReciterChange(id)}
           onClose={closeActions}
         />

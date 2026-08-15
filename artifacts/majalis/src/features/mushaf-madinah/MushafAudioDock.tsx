@@ -2,14 +2,17 @@ import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import type { PlayerState } from "@/core/audio/AudioEngine";
 import { getReciter } from "@/lib/quran-audio";
 
-/** قرّاء أولية ظاهرة في مشغّل المصحف */
+/** قرّاء ظاهرة في مشغّل المصحف — مصادر everyayah متاحة */
 export const MUSHAF_RECITER_IDS = [
-  "alafasy",
-  "abdulsamad",
   "husary",
   "minshawi",
-  "dosari",
+  "abdulsamad",
+  "sudais",
+  "shuraim",
   "maher",
+  "fares",
+  "dosari",
+  "alafasy",
 ] as const;
 
 type Props = {
@@ -17,6 +20,7 @@ type Props = {
   verseLabel: string;
   playerState: PlayerState;
   reciterId: string;
+  audioError?: string | null;
   onTogglePlay: () => void;
   onPrev: () => void;
   onNext: () => void;
@@ -29,12 +33,14 @@ export function MushafAudioDock({
   verseLabel,
   playerState,
   reciterId,
+  audioError = null,
   onTogglePlay,
   onPrev,
   onNext,
   onReciterChange,
 }: Props) {
   const playing = playerState === "playing" || playerState === "buffering" || playerState === "loading";
+  const loading = playerState === "loading" || playerState === "buffering";
   const reciters = MUSHAF_RECITER_IDS.map((id) => getReciter(id));
 
   return (
@@ -62,6 +68,16 @@ export function MushafAudioDock({
           </select>
         </label>
       </div>
+      {loading ? (
+        <p className="mm-audio-dock__status" role="status">
+          جاري تحميل التلاوة…
+        </p>
+      ) : null}
+      {audioError || playerState === "error" ? (
+        <p className="mm-audio-dock__status mm-audio-dock__status--err" role="status">
+          {audioError || "تعذّر تشغيل التلاوة. جرّب قارئاً آخر."}
+        </p>
+      ) : null}
       <div className="mm-audio-dock__controls">
         <button type="button" onClick={onPrev} aria-label="الآية السابقة">
           <SkipBack size={18} aria-hidden="true" />

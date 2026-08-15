@@ -450,9 +450,9 @@ html[data-theme="dark"] {
   --msk-gold-border:   rgba(92,196,154,.22);
   --msk-sky:           #64BEDA;
   --msk-sky-dim:       rgba(100,190,218,.12);
-  --msk-text:          #E8DED4;
-  --msk-text-2:        #A8BDB6;
-  --msk-text-3:        #A9BDB5;
+  --msk-text:          #F5F7F6;
+  --msk-text-2:        #D5E0DC;
+  --msk-text-3:        #C2D0CB;
   --msk-green:         #5CC49A;
   --msk-red:           #EF9898;
   --msk-red-dim:       rgba(239,152,152,.12);
@@ -464,10 +464,10 @@ html[data-theme="dark"] {
   --msk-shadow-lg:     0 12px 32px rgba(0,0,0,.55);
   --msk-shadow-gold:   0 0 24px rgba(92,196,154,.15);
 
-  --majalis-ink:           #E8DED4;
-  --majalis-ink-soft:      #A8BDB6;
-  --majalis-ink-muted:     #A9BDB5;
-  --majalis-charcoal:      #F0EBE4;
+  --majalis-ink:           #F5F7F6;
+  --majalis-ink-soft:      #D5E0DC;
+  --majalis-ink-muted:     #C2D0CB;
+  --majalis-charcoal:      #FFFFFF;
   --majalis-parchment:     #081A16;
   --majalis-parchment-deep:#12211C;
   --majalis-panel:         #12211C;
@@ -501,14 +501,14 @@ html[data-theme="dark"] {
   --clr-surface:     #12211C;
   --clr-border:      rgba(92,196,154,.12);
   --clr-divider:     rgba(255,255,255,.05);
-  --clr-text-1:      #E8DED4;
-  --clr-text-2:      #A8BDB6;
+  --clr-text-1:      #F5F7F6;
+  --clr-text-2:      #D5E0DC;
 
   --bg-card:   #12211C;
   --bg-base:   #081A16;
-  --text-base: #E8DED4;
-  --text-body: #A8BDB6;
-  --text-muted:#A9BDB5;
+  --text-base: #F5F7F6;
+  --text-body: #D5E0DC;
+  --text-muted:#C2D0CB;
 
   --v2-green:        #5CC49A;
   --v2-green-deep:   #4BA882;
@@ -516,9 +516,9 @@ html[data-theme="dark"] {
   --v2-green-mid:    rgba(92,196,154,.40);
   --v2-gold:         #5CC49A;
   --v2-gold-soft:    rgba(92,196,154,.08);
-  --v2-ink:          #E8DED4;
-  --v2-ink-2:        #A8BDB6;
-  --v2-ink-3:        #A9BDB5;
+  --v2-ink:          #F5F7F6;
+  --v2-ink-2:        #D5E0DC;
+  --v2-ink-3:        #C2D0CB;
   --v2-surface-0:    #12211C;
   --v2-surface-1:    #182C25;
   --v2-surface-2:    #1F3830;
@@ -541,7 +541,7 @@ html[data-theme="dark"] {
 
 html[data-theme="dark"] body {
   background-color: #081A16;
-  color: #EDF2F0;
+  color: #F7FAF9;
 }
 
 /* WCAG AA — focus-visible في الوضع الليلي */
