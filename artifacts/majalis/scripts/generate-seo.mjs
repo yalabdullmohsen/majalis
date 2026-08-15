@@ -2201,14 +2201,20 @@ for (const row of LIBRARY_CATALOG) {
       parents: [{ name: "المكتبة العلمية", path: "/library" }],
       priority: 0.7,
       richBody: `<h2>بيانات الكتاب</h2>
-<ul>
-  ${row.author ? `<li>المؤلف: ${escapeHtml(row.author)}</li>` : ""}
-  ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
-  ${row.type ? `<li>النوع: ${escapeHtml(row.type)}</li>` : ""}
-  ${row.parts_label ? `<li>الأجزاء: ${escapeHtml(row.parts_label)}</li>` : ""}
-  ${row.external_url ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">${escapeHtml(row.source_title || "قراءة المصدر")}</a></li>` : `<li>المصدر: لم يُضبط بعد</li>`}
-  ${row.contentStatus ? `<li>حالة المحتوى: ${escapeHtml(String(row.contentStatus))}</li>` : !row.external_url ? `<li>حالة المحتوى: needs_source</li>` : ""}
-</ul>
+<dl>
+  ${row.author ? `<div><dt>المؤلف:</dt><dd>${escapeHtml(row.author)}</dd></div>` : ""}
+  ${row.category ? `<div><dt>التصنيف:</dt><dd>${escapeHtml(row.category)}</dd></div>` : ""}
+  ${row.type ? `<div><dt>النوع:</dt><dd>${escapeHtml(row.type)}</dd></div>` : ""}
+  ${row.parts_label ? `<div><dt>الأجزاء:</dt><dd>${escapeHtml(row.parts_label)}</dd></div>` : ""}
+  ${row.external_url
+    ? `<div><dt>المصدر:</dt><dd><a href="${escapeHtml(row.external_url)}">${escapeHtml(row.source_title || "قراءة المصدر")}</a></dd></div>`
+    : `<div><dt>المصدر:</dt><dd>لم يُضبط بعد</dd></div>`}
+  ${row.contentStatus
+    ? `<div><dt>حالة المحتوى:</dt><dd>${escapeHtml(String(row.contentStatus))}</dd></div>`
+    : !row.external_url
+      ? `<div><dt>حالة المحتوى:</dt><dd>needs_source</dd></div>`
+      : ""}
+</dl>
 ${row.caution ? `<aside role="note"><strong>تنبيه علمي:</strong> ${escapeHtml(row.caution)}</aside>` : ""}
 ${linkList("كتب ذات صلة في نفس التصنيف", related)}
 ${linkList("روابط ذات صلة", [
@@ -2270,11 +2276,12 @@ ${s.key_works?.length ? `<h2>أبرز المؤلفات</h2>\n<ul>\n  ${s.key_wor
 
 // الأنبياء — ٢٥ نبياً من prophets-data.ts
 for (const p of PROPHETS) {
+  const prophetSummary = clamp(String(p.briefBio || "").replace(/\s+/g, " ").trim(), 155);
   addPage(
     {
       path: `/prophets/${p.slug}`,
       title: `قصة ${p.arabicName} عليه السلام`,
-      description: clamp(p.briefBio, 300),
+      description: prophetSummary || `نبذة مختصرة عن نبي الله ${p.arabicName} عليه السلام من القرآن الكريم.`,
       keywords: [p.arabicName, p.title, "قصص الأنبياء", "الأنبياء والرسل", ...(p.mainSurahs || [])].filter(Boolean),
       ogType: "article",
     },
@@ -2282,15 +2289,17 @@ for (const p of PROPHETS) {
       parents: [{ name: "قصص الأنبياء", path: "/prophets" }],
       richBody: `<h2>نبذة</h2>
 <p>${escapeHtml(p.briefBio)}</p>
-<ul>
-  <li>اللقب: ${escapeHtml(p.title)}</li>
-  ${p.quranTitle ? `<li>اللقب القرآني: ${escapeHtml(p.quranTitle)}</li>` : ""}
-  <li>القوم أو المكان: ${escapeHtml(p.peopleOrPlace)}</li>
-  <li>الحقبة: ${escapeHtml(p.era)}</li>
-  <li>أبرز السور: ${escapeHtml((p.mainSurahs || []).join("، "))}</li>
-</ul>
+<dl>
+  <div><dt>اللقب:</dt><dd>${escapeHtml(p.title)}</dd></div>
+  ${p.quranTitle ? `<div><dt>اللقب القرآني:</dt><dd>${escapeHtml(p.quranTitle)}</dd></div>` : ""}
+  <div><dt>القوم / البلد:</dt><dd>${escapeHtml(p.peopleOrPlace)}</dd></div>
+  <div><dt>الحقبة:</dt><dd>${escapeHtml(p.era)}</dd></div>
+  <div><dt>أبرز سورة:</dt><dd>${escapeHtml((p.mainSurahs || [])[0] || "—")}</dd></div>
+  <div><dt>مواضع في القرآن:</dt><dd>${escapeHtml((p.mainSurahs || []).join("، "))}</dd></div>
+</dl>
 ${p.keyAttributes?.length ? `<h2>أبرز صفاته</h2>\n<ul>\n  ${p.keyAttributes.map((a) => `<li>${escapeHtml(a)}</li>`).join("\n  ")}\n</ul>` : ""}
-${p.lessons?.length ? `<h2>الدروس والعبر</h2>\n<ul>\n  ${p.lessons.map((l) => `<li>${escapeHtml(l)}</li>`).join("\n  ")}\n</ul>` : ""}`,
+${p.lessons?.length ? `<h2>الدروس والعبر</h2>\n<ul>\n  ${p.lessons.map((l) => `<li>${escapeHtml(l)}</li>`).join("\n  ")}\n</ul>` : ""}
+<nav aria-label="تنقل قصص الأنبياء"></nav>`,
       priority: 0.74,
       changefreq: "monthly",
     },

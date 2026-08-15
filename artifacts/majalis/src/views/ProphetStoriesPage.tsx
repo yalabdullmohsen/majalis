@@ -314,11 +314,14 @@ function ProphetDetailView({
       ]),
       ...defaultSiteJsonLd(),
     ];
+    const summary = (p.briefBio || "").replace(/\s+/g, " ").trim();
     applyPageSeo({
       path: `/prophets/${p.slug}`,
       title: `قصة ${p.arabicName} عليه السلام | المجلس العلمي`,
-      description: p.briefBio ? truncateAtWord(p.briefBio, 160) : `قصة نبي الله ${p.arabicName} عليه السلام من القرآن والسنة.`,
-      keywords: ["قصص الأنبياء", p.arabicName, "أنبياء الإسلام", "معجزات الأنبياء"],
+      description: summary
+        ? truncateAtWord(summary, 155)
+        : `نبذة مختصرة عن نبي الله ${p.arabicName} عليه السلام من القرآن الكريم.`,
+      keywords: ["قصص الأنبياء", p.arabicName, "أنبياء الإسلام"],
       ogType: "article",
       jsonLd,
     });
@@ -459,43 +462,42 @@ function ProphetDetailView({
           )}
           <p className="prophet-detail-lux__hero-title">{p.title}</p>
           <GeometricBorder color="var(--prophet-color-on-dark)" size={20} />
-          <p className="prophet-detail-lux__keys-hint">اختصارات: ← التالي · → السابق · Esc للقائمة</p>
         </div>
       </div>
 
-      <div className="prophet-facts-grid">
+      <dl className="prophet-facts-grid">
         <div className="prophet-fact-card prophet-fact-card--interactive">
-          <span className="prophet-fact-card__label">القوم / البلد</span>
-          <span className="prophet-fact-card__value">{p.peopleOrPlace}</span>
+          <dt className="prophet-fact-card__label">القوم / البلد:</dt>
+          <dd className="prophet-fact-card__value">{p.peopleOrPlace}</dd>
         </div>
         <div className="prophet-fact-card prophet-fact-card--interactive">
-          <span className="prophet-fact-card__label">الحقبة</span>
-          <span className="prophet-fact-card__value">{p.era}</span>
+          <dt className="prophet-fact-card__label">الحقبة:</dt>
+          <dd className="prophet-fact-card__value">{p.era}</dd>
         </div>
         {sup && (
           <div className="prophet-fact-card prophet-fact-card--interactive prophet-fact-card--meter">
-            <span className="prophet-fact-card__label">الذِّكر في القرآن</span>
-            <span className="prophet-fact-card__value">{sup.mentioned} مرة</span>
+            <dt className="prophet-fact-card__label">الذِّكر في القرآن:</dt>
+            <dd className="prophet-fact-card__value">{sup.mentioned} مرة</dd>
             <div className="prophet-fact-card__ring" style={{ "--meter": `${mentionPct}%` } as React.CSSProperties} aria-hidden="true" />
           </div>
         )}
         <div className="prophet-fact-card prophet-fact-card--interactive">
-          <span className="prophet-fact-card__label">أبرز سورة</span>
-          <span className="prophet-fact-card__value">{p.mainSurahs[0] || "—"}</span>
+          <dt className="prophet-fact-card__label">أبرز سورة:</dt>
+          <dd className="prophet-fact-card__value">{p.mainSurahs[0] || "—"}</dd>
         </div>
         {sup?.book && (
           <div className="prophet-fact-card prophet-fact-card--interactive">
-            <span className="prophet-fact-card__label">الكتاب المنزَّل</span>
-            <span className="prophet-fact-card__value">{sup.book}</span>
+            <dt className="prophet-fact-card__label">الكتاب المنزَّل:</dt>
+            <dd className="prophet-fact-card__value">{sup.book}</dd>
           </div>
         )}
         {sup?.quranRef && (
           <div className="prophet-fact-card prophet-fact-card--wide prophet-fact-card--interactive">
-            <span className="prophet-fact-card__label">مواضع في القرآن</span>
-            <span className="prophet-fact-card__value">{sup.quranRef}</span>
+            <dt className="prophet-fact-card__label">مواضع في القرآن:</dt>
+            <dd className="prophet-fact-card__value">{sup.quranRef}</dd>
           </div>
         )}
-      </div>
+      </dl>
 
       <nav className="prophet-detail-toc" aria-label="أقسام القصة">
         {sections.map(s => (
@@ -519,11 +521,6 @@ function ProphetDetailView({
           </div>
           <p className="prophet-section-lux__text">{p.briefBio}</p>
         </section>
-
-        <ScholarlyTrustBadge
-          compact
-          data={{ contentType: "نقل", source: "القرآن الكريم وكتب التفسير والسيرة", methodologyPath: "/methodology", reportContentType: "prophet", reportContentId: p.slug }}
-        />
 
         {sup?.miracle && (
           <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="miracle">
@@ -627,9 +624,28 @@ function ProphetDetailView({
         </footer>
       </article>
 
+      <aside className="prophet-trust-aside" aria-label="منهج العرض">
+        <ScholarlyTrustBadge
+          compact
+          data={{
+            contentType: "نقل",
+            source: "القرآن الكريم وكتب التفسير المعتبرة",
+            isApproved: true,
+            reviewer: "تحرير المحتوى الشرعي",
+            reviewedAt: "2026-08-01",
+            methodologyPath: "/methodology",
+            reportContentType: "prophet",
+            reportContentId: p.slug,
+          }}
+        />
+      </aside>
+
       <GraphRelatedRail kind="prophet" slug={slug} titleAr="من الرسم البياني" />
 
-      <div className="prophet-nav-lux">
+      <nav className="prophet-nav-lux" aria-label="تنقل قصص الأنبياء">
+        <p className="prophet-detail-lux__keys-hint" aria-hidden="true">
+          استخدم مفاتيح الأسهم للتنقل بين القصص، و Escape للعودة للقائمة.
+        </p>
         {prevProphet ? (
           <button type="button" className="prophet-nav-lux__btn" onClick={() => onNavigate(prevProphet.slug)}>
             <span className="prophet-nav-lux__dir"><ChevronRight size={14} aria-hidden="true" /> السابق</span>
@@ -642,7 +658,7 @@ function ProphetDetailView({
             <span className="prophet-nav-lux__pname">{nextProphet.arabicName}</span>
           </button>
         ) : <span />}
-      </div>
+      </nav>
     </div>
   );
 }

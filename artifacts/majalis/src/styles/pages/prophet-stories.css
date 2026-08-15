@@ -594,24 +594,29 @@ html.dark .nb-table__row--clickable:hover td {
   border-radius: 12px;
   padding: 0.9rem 1rem;
   text-align: center;
+  margin: 0;
 }
 .prophet-fact-card--wide {
   grid-column: 1 / -1;
   text-align: start;
 }
-.prophet-fact-card__label {
+.prophet-fact-card__label,
+.prophet-fact-card dt.prophet-fact-card__label {
   display: block;
   font-size: 0.72rem;
   color: var(--ps-detail-muted);
   margin-bottom: 0.4rem;
   letter-spacing: normal;
+  font-weight: 500;
 }
-.prophet-fact-card__value {
+.prophet-fact-card__value,
+.prophet-fact-card dd.prophet-fact-card__value {
   display: block;
   font-size: 0.95rem;
   color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
   font-weight: 600;
   line-height: 1.4;
+  margin: 0;
 }
 
 /* ── Story ── */
@@ -809,11 +814,19 @@ html.dark .nb-table__row--clickable:hover td {
 /* ── Nav ── */
 .prophet-nav-lux {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: flex-start;
   padding: var(--ds-space-6);
   max-width: 820px;
   margin: 0 auto;
   gap: var(--ds-space-4);
+}
+.prophet-nav-lux > .prophet-detail-lux__keys-hint {
+  flex: 1 0 100%;
+  margin: 0 0 0.35rem;
+  text-align: center;
+  opacity: 0.75;
 }
 .prophet-nav-lux__btn {
   background: var(--ps-detail-card);
