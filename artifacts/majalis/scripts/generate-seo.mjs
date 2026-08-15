@@ -117,6 +117,12 @@ const { FIQH_ITEM_TYPE_LABELS } = await importSrc("src/lib/fiqh-council-types.ts
 const { SCHOLARS } = await importSrc("src/lib/scholars-data.ts");
 const { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS } = await importSrc("src/lib/adhkar-seed.ts");
 const { MUEZZINS } = await importSrc("src/lib/adhan-audio.ts");
+const { NATIONS } = await importSrc("src/lib/nations-seed.ts");
+
+const QURAN_PEOPLE_CATALOG = JSON.parse(
+  await readFile(resolve(appRoot, "public/data/quran-people/people.json"), "utf8"),
+);
+const QURAN_PEOPLE_PUBLISHED = (QURAN_PEOPLE_CATALOG.people || []).filter((p) => p.status === "published");
 
 const QURAN_MANIFEST = JSON.parse(
   await readFile(resolve(appRoot, "public/data/quran/manifest.json"), "utf8"),
@@ -690,6 +696,14 @@ const LIST_JSON_LD = {
     PROPHETS.map((p) => ({ name: `قصة نبي الله ${p.arabicName} عليه السلام`, url: `/prophets/${p.slug}` })),
     "قصص الأنبياء",
   ),
+  "/nations": itemListJsonLdScript(
+    NATIONS.map((n) => ({ name: n.name, url: `/nations/${n.slug}` })),
+    "الأمم السابقة",
+  ),
+  "/quran/people": itemListJsonLdScript(
+    QURAN_PEOPLE_PUBLISHED.map((p) => ({ name: p.nameAr, url: `/quran/people/${p.slug}` })),
+    "الذين ذكروا في القرآن",
+  ),
   "/scholars": itemListJsonLdScript(SCHOLARS.map((s) => ({ name: s.name, url: `/scholars/${s.id}` })), "أعلام العلماء المسلمين"),
   "/learning/paths": itemListJsonLdScript(
     LEARNING_PATHS.map((p) => ({ name: p.title, url: `/learning/paths/${p.slug}` })),
@@ -792,6 +806,16 @@ ${linkList("روابط ذات صلة", [
     "قصص الأنبياء",
     PROPHETS.map((p) => ({ name: `نبي الله ${p.arabicName} عليه السلام`, url: `/prophets/${p.slug}` })),
   ),
+  "/nations": `<p>موسوعة الأمم والأقوام المذكورين في القرآن — بالآيات، وما صح من السنة عند وجوده، مع تمييز ما ثبت مما لم يثبت.</p>
+${linkList(
+    "الأمم السابقة",
+    NATIONS.map((n) => ({ name: n.name, url: `/nations/${n.slug}` })),
+  )}`,
+  "/quran/people": `<p>فهرس من ذُكروا في القرآن بأسمائهم أو صفاتهم، مع مواضع الآيات والتنبيه المنهجي عند الخلاف.</p>
+${linkList(
+    "الذين ذكروا في القرآن",
+    QURAN_PEOPLE_PUBLISHED.map((p) => ({ name: p.nameAr, url: `/quran/people/${p.slug}` })),
+  )}`,
   "/learning/paths": `
 <p>رحلتك في طلب العلم، مسارات منظّمة من المبتدئ إلى المتقدم، كل مسار يضم دروساً وتقييمات وشهادة إتمام.</p>
 <p>مسارات تعليمية منظمة في العلوم الشرعية، فقه وعقيدة وقرآن وحديث وسيرة وأخلاق.</p>
@@ -2307,6 +2331,63 @@ for (const p of PROPHETS) {
 ${p.keyAttributes?.length ? `<h2>أبرز صفاته</h2>\n<ul>\n  ${p.keyAttributes.map((a) => `<li>${escapeHtml(a)}</li>`).join("\n  ")}\n</ul>` : ""}
 ${p.lessons?.length ? `<h2>الدروس والعبر</h2>\n<ul>\n  ${p.lessons.map((l) => `<li>${escapeHtml(l)}</li>`).join("\n  ")}\n</ul>` : ""}`,
       priority: 0.74,
+      changefreq: "monthly",
+    },
+  );
+}
+
+// الأمم السابقة — من nations-seed.ts
+for (const n of NATIONS) {
+  addPage(
+    {
+      path: `/nations/${n.slug}`,
+      title: `${n.name} — الأمم السابقة`,
+      description: clamp(padDesc(n.summary, `قصة ${n.name} في القرآن مع تمييز ما ثبت مما لم يثبت`), 300),
+      keywords: [n.name, ...n.aliases.slice(0, 4), "الأمم السابقة", "قصص القرآن"].filter(Boolean),
+      ogType: "article",
+    },
+    {
+      parents: [{ name: "الأمم السابقة", path: "/nations" }],
+      richBody: `<h2>ملخص</h2>
+<p>${escapeHtml(n.summary)}</p>
+<ul>
+  <li>المكان: ${escapeHtml(n.place)}</li>
+  <li>الحقبة: ${escapeHtml(n.era)}</li>
+  <li>العقوبة: ${escapeHtml(n.punishment.type)} — ${escapeHtml(n.punishment.description)}</li>
+  <li>الناجون والمؤمنون المذكورون: ${escapeHtml(n.survivors)}</li>
+</ul>
+${n.lessons?.length ? `<h2>الدروس</h2>\n<ul>\n  ${n.lessons.slice(0, 6).map((l) => `<li>${escapeHtml(String(l).slice(0, 220))}</li>`).join("\n  ")}\n</ul>` : ""}`,
+      priority: 0.73,
+      changefreq: "monthly",
+    },
+  );
+}
+
+// الذين ذكروا في القرآن — من public/data/quran-people/people.json
+for (const person of QURAN_PEOPLE_PUBLISHED) {
+  addPage(
+    {
+      path: `/quran/people/${person.slug}`,
+      title: `${person.nameAr} في القرآن`,
+      description: clamp(
+        padDesc(person.definition, `${person.nameAr} — ممن ذُكروا في القرآن الكريم`),
+        300,
+      ),
+      keywords: [person.nameAr, ...(person.aliases || []).slice(0, 3), "الذين ذكروا في القرآن"].filter(Boolean),
+      ogType: "article",
+    },
+    {
+      parents: [
+        { name: "مركز القرآن الكريم", path: "/quran-hub" },
+        { name: "الذين ذكروا في القرآن", path: "/quran/people" },
+      ],
+      richBody: `<h2>التعريف</h2>
+<p>${escapeHtml(person.definition)}</p>
+${person.cautionNote ? `<h2>تنبيه</h2>\n<p>${escapeHtml(person.cautionNote)}</p>` : ""}
+<h2>سبب الذكر</h2>
+<p>${escapeHtml(person.whyMentioned)}</p>
+${person.occurrences?.length ? `<h2>مواضع الذكر</h2>\n<ul>\n  ${person.occurrences.map((o) => `<li>سورة ${o.surah} · آية ${o.ayah}${o.note ? ` — ${escapeHtml(o.note)}` : ""}</li>`).join("\n  ")}\n</ul>` : ""}`,
+      priority: 0.72,
       changefreq: "monthly",
     },
   );

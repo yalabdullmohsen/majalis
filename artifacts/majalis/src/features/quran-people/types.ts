@@ -39,6 +39,8 @@ export type QuranPerson = {
   lessons: string[];
   occurrences: PersonOccurrence[];
   status: "published" | "needs_review";
+  /** تنبيه منهجي عند الخلاف أو عدم القطع (مثل ذو الكفل). */
+  cautionNote?: string;
   prophetSlug?: string;
   relatedLinks?: PersonRelatedLink[];
 };

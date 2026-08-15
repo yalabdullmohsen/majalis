@@ -195,8 +195,11 @@ export default function NationDetailPage() {
           </span>
         </li>
         <li className="nation-flow__step">
-          <span className="nation-flow__label">النجاة</span>
-          <span className="nation-flow__value">{nation.survivors.split("،")[0]}</span>
+          <span className="nation-flow__label">الناجون والمؤمنون</span>
+          <span className="nation-flow__value">
+            {nation.survivors.split(/[.:。]/)[0].slice(0, 48)}
+            {nation.survivors.length > 48 ? "…" : ""}
+          </span>
         </li>
       </ol>
 
@@ -205,7 +208,7 @@ export default function NationDetailPage() {
         <Fact label="الحقبة" value={nation.era} />
         <Fact label="سبب العقوبة" value={nation.sin} />
         <Fact label="وصف العقوبة" value={nation.punishment.description} />
-        <Fact label="من نجا" value={nation.survivors} />
+        <Fact label="الناجون والمؤمنون المذكورون" value={nation.survivors} />
         {nation.dawahMethod && <Fact label="أسلوب الدعوة" value={nation.dawahMethod} />}
         <Fact label="موقفهم من الدعوة" value={nation.response} />
         <Fact label="أبرز صفاتهم" value={nation.traits.join(" · ")} />
