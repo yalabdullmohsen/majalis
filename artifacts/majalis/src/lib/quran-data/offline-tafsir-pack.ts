@@ -3,13 +3,13 @@
  * وجلب مسبق لصفحة المصحف الحالية والمجاورتين.
  * النص منقول حرفياً من المصدر المعتمد (لا توليد ولا اختصار آلي).
  */
-import { MUSHAF_FEATURES } from "@/features/mushaf/config";
+import { QURAN_DATA_FEATURES } from "@/lib/quran-data/flags";
 import {
   DEFAULT_MUSHAF_TAFSIR_EDITION,
   getMushafTafsirEdition,
-} from "@/features/mushaf/tafsir-editions";
-import { fetchMushafAyahTafsir } from "@/features/mushaf/fetch-ayah-content";
-import { loadMushafPage } from "@/lib/mushaf-v2-data";
+} from "@/lib/quran-data/tafsir-editions";
+import { fetchMushafAyahTafsir } from "@/lib/quran-data/fetch-ayah-content";
+import { loadMushafPage } from "@/lib/quran-data/qpc-page-data";
 
 const PACK_META_KEY = "majalis-offline-tafsir-pack-v1";
 const BRIEF_EDITION = DEFAULT_MUSHAF_TAFSIR_EDITION;
@@ -25,7 +25,7 @@ function ayahId(surah: number, ayah: number): string {
 }
 
 export function isOfflineTafsirPacksEnabled(): boolean {
-  return MUSHAF_FEATURES.offlineTafsirPacks === true;
+  return QURAN_DATA_FEATURES.offlineTafsirPacks === true;
 }
 
 export function readOfflineTafsirPackMeta(): OfflineTafsirPackMeta | null {

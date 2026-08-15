@@ -208,7 +208,7 @@ export async function playTafsirAudioClip(
 
   let playUrl = clip.streamUrl || clip.url || "";
   try {
-    const { getOfflineTafsirObjectUrl } = await import("@/features/mushaf/tafsir-audio-offline");
+    const { getOfflineTafsirObjectUrl } = await import("@/lib/quran-data/tafsir-audio-offline");
     const offline = await getOfflineTafsirObjectUrl(clip.id);
     if (offline) playUrl = offline;
   } catch {

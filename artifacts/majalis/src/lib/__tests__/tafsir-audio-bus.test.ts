@@ -21,7 +21,7 @@ import {
   findTafsirAudioForAyah,
   displayScholarLabel,
   type TafsirAudioClip,
-} from "@/features/mushaf/tafsir-audio";
+} from "@/lib/quran-data/tafsir-audio";
 
 const stopped: string[] = [];
 registerAudioStopper("tilawa", () => {
@@ -76,7 +76,7 @@ const clips: TafsirAudioClip[] = [
 assert.ok(findTafsirAudioForAyah(clips, 1, 3));
 assert.equal(findTafsirAudioForAyah(clips, 2, 1), null);
 
-const { findTafsirAudioForSurah } = await import("@/features/mushaf/tafsir-audio");
+const { findTafsirAudioForSurah } = await import("@/lib/quran-data/tafsir-audio");
 assert.ok(findTafsirAudioForSurah(clips, 1));
 assert.equal(findTafsirAudioForSurah(clips, 99), null);
 assert.match(displayScholarLabel(clips[0]!), /غير موثّقة/);

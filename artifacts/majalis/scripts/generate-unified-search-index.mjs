@@ -18,7 +18,7 @@ const { ADHKAR_CATEGORIES, getAllAdhkarItems } = await import("../src/lib/adhkar
 const { ARBAEEN_NAWAWI } = await import("../src/lib/arbaeen-nawawi-seed.ts");
 const { NATIONS } = await import("../src/lib/nations-seed.ts");
 const { getAllSurahStories } = await import("../src/lib/surah-stories.ts");
-const { MUSHAF_TAFSIR_EDITIONS } = await import("../src/features/mushaf/tafsir-editions.ts");
+const { MUSHAF_TAFSIR_EDITIONS } = await import("../src/lib/quran-data/tafsir-editions.ts");
 
 /** @typedef {{ id: string, kind: string, titleAr: string, href: string, norm: string, meta?: string }} SearchDoc */
 

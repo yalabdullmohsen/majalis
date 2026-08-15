@@ -103,16 +103,8 @@ const mem = new Map<string, string>();
   assert.match(engine, /audioInterruption/);
   assert.match(engine, /oldDeviceUnavailable|reasonNum === 2/);
 
-  const follow = read("hooks/useMushafRecitationFollow.ts");
-  assert.match(follow, /ayahKeyToPage/);
-  assert.match(follow, /goToPage/);
-  assert.match(follow, /touchstart/);
-  assert.match(follow, /data-verse/);
-
-  const view = read("pages/quran/ui/MushafPageView.tsx");
-  assert.match(view, /useMushafRecitationFollow/);
-  assert.match(view, /toggleEnginePlayForAyah/);
-  assert.match(view, /showMiniPlayer/);
+  // واجهة المصحف أُزيلت — متابعة التلاوة تُختبر عبر المشغّل العام فقط
+  assert.match(read("lib/quran-mini-player.ts"), /stopAndUnload/);
 
   const stop = read("lib/quran-mini-player.ts");
   assert.match(stop, /stopAndUnload/);
@@ -120,10 +112,6 @@ const mem = new Map<string, string>();
   const plist = readFileSync(resolve(root, "ios/App/App/Info.plist"), "utf8");
   assert.match(plist, /UIBackgroundModes/);
   assert.match(plist, /<string>audio<\/string>/);
-
-  const halo = read("styles/mushaf-v2.css");
-  assert.match(halo, /mf2-ayah-group--active/);
-  assert.match(halo, /بلا padding يحرّك الأساس/);
 }
 
 console.log("recitation-player.test.ts: ok");

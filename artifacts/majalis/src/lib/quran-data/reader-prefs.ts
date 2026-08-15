@@ -5,11 +5,11 @@
 import {
   DEFAULT_MUSHAF_TAFSIR_EDITION,
   resolveMushafTafsirEditionId,
-} from "@/features/mushaf/tafsir-editions";
+} from "@/lib/quran-data/tafsir-editions";
 import {
   DEFAULT_MUSHAF_TRANSLATION_EDITION,
   resolveMushafTranslationEditionId,
-} from "@/features/mushaf/translation-editions";
+} from "@/lib/quran-data/translation-editions";
 
 export const TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
 export const TAFSIR_FONT_SCALE_KEY = "majalis-mushaf-tafsir-font-scale-v1";

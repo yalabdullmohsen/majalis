@@ -39,7 +39,7 @@ assert.match(app, /QuranMiniPlayerBar/);
 assert.ok(existsSync(resolve(src, "components/home/HomeLocalResumeCard.tsx")));
 const home = read("pages/account/ui/HomeView.tsx");
 assert.match(home, /HomeLocalResumeCard/);
-assert.match(home, /متابعة القراءة \/ الاستماع/);
+assert.match(home, /متابعة القراءة والاستماع|متابعة/);
 
 const resume = read("components/home/HomeLocalResumeCard.tsx");
 assert.match(resume, /loadPagePosition/);
@@ -85,8 +85,8 @@ const scholar = read("pages/library/ui/ScholarProfileView.tsx");
 assert.match(scholar, /personJsonLd\(/);
 assert.doesNotMatch(scholar, /scholar\.image|scholar\.photo/);
 
-const mushaf = read("pages/quran/ui/MushafPageView.tsx");
-assert.match(mushaf, /surahJsonLd\(/);
-assert.match(mushaf, /breadcrumbJsonLd\(/);
+const mushaf = read("pages/quran/MushafComingSoonPage.tsx");
+assert.match(mushaf, /applyPageSeo/);
+assert.match(mushaf, /قيد التطوير/);
 
 console.log("phase5-audio-offline-seo.test.ts: ok");

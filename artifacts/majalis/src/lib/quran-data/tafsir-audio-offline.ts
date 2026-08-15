@@ -5,7 +5,7 @@
 import {
   getTafsirDownloadCapBytes,
   type TafsirAudioClip,
-} from "@/features/mushaf/tafsir-audio";
+} from "@/lib/quran-data/tafsir-audio";
 
 const DB_NAME = "majalis-tafsir-audio";
 const DB_VERSION = 1;

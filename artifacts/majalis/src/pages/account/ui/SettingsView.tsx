@@ -32,7 +32,7 @@ import {
   MUSHAF_TAFSIR_EDITIONS,
   persistTafsirEdition,
   readStoredTafsirEdition,
-} from "@/features/mushaf";
+} from "@/lib/quran-data";
 import {
   readBackgroundPlaybackPref,
   restoreDefaultAppSettings,
@@ -428,7 +428,7 @@ export default function SettingsPage() {
           <p className="settings-note">إدارة التحميلات والمساحة دون اتصال من المصحف والأذان.</p>
           <div className="settings-legal-links">
             <Link href="/mushaf" className="settings-legal-link">
-              المصحف والتنزيلات الصوتية
+              التنزيلات الصوتية
             </Link>
             <Link href="/adhan-settings" className="settings-legal-link">
               أصوات الأذان المحمّلة

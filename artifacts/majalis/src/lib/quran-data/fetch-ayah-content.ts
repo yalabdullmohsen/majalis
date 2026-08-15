@@ -6,12 +6,12 @@
 import {
   getMushafTafsirEdition,
   type MushafTafsirEdition,
-} from "@/features/mushaf/tafsir-editions";
+} from "@/lib/quran-data/tafsir-editions";
 import {
   getMushafTranslationEdition,
   type MushafTranslationEdition,
-} from "@/features/mushaf/translation-editions";
-import { MUSHAF_FEATURES } from "@/features/mushaf/config";
+} from "@/lib/quran-data/translation-editions";
+import { QURAN_DATA_FEATURES } from "@/lib/quran-data/flags";
 
 const QURAN_COM = "https://api.quran.com/api/v4";
 const ALQURAN = "https://api.alquran.cloud/v1";
@@ -82,9 +82,9 @@ export async function fetchMushafAyahTafsir(
     return { text: sess, editionId: edition.id, fromCache: true };
   }
 
-  if (MUSHAF_FEATURES.offlineTafsirPacks) {
+  if (QURAN_DATA_FEATURES.offlineTafsirPacks) {
     try {
-      const { readOfflineTafsirAyah } = await import("@/features/mushaf/offline-tafsir-pack");
+      const { readOfflineTafsirAyah } = await import("@/lib/quran-data/offline-tafsir-pack");
       const offline = await readOfflineTafsirAyah(surah, ayah, edition.id);
       if (offline) {
         tafsirMemory.set(key, offline);
@@ -107,8 +107,8 @@ export async function fetchMushafAyahTafsir(
     if (!text) return null;
     tafsirMemory.set(key, text);
     writeTafsirSession(key, text);
-    if (MUSHAF_FEATURES.offlineTafsirPacks) {
-      void import("@/features/mushaf/offline-tafsir-pack").then(({ writeOfflineTafsirAyah }) =>
+    if (QURAN_DATA_FEATURES.offlineTafsirPacks) {
+      void import("@/lib/quran-data/offline-tafsir-pack").then(({ writeOfflineTafsirAyah }) =>
         writeOfflineTafsirAyah(surah, ayah, edition.id, text),
       );
     }

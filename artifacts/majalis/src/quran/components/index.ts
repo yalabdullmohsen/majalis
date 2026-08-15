@@ -12,10 +12,7 @@ export { default as HomeDashboard } from "@/components/HomeDashboard";
 
 export { SurahIndexFlatList } from "@/components/quran/SurahIndexFlatList";
 export { SurahList } from "@/components/quran/SurahList";
-export { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 export { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
-export { JumpPageModal } from "@/components/quran/JumpPageModal";
-export { MushafPageV2 } from "@/components/quran/MushafPageV2";
 export { QuranReaderPage } from "@/components/quran/QuranReaderPage";
 export type { QuranReaderPageProps } from "@/components/quran/QuranReaderPage";
 export { QuranVerseList } from "@/components/quran/QuranVerseList";
