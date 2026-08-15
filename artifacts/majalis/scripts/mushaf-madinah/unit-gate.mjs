@@ -31,8 +31,13 @@ const css = read("src/features/mushaf-madinah/mushaf-madinah.css");
 assert.match(css, /--mm-paper/);
 assert.match(css, /--mm-gold/);
 assert.match(css, /\.mm-page__body/);
+assert.match(css, /\.mm-ayah-bar/);
+assert.match(css, /rgba\(190,\s*157,\s*82,\s*0\.22\)/);
+assert.doesNotMatch(css, /\.mm-ayah-sheet__backdrop/);
 assert.doesNotMatch(css, /\.mm-page__frame\s*\{[^}]*border:\s*1px/);
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
+assert.match(css, /\.mm-page-edge/);
+assert.match(css, /#1c2430|#151c26/); // ليلي كحلي لا أسود قاتم على الورقة
 const ayahBlock = css.match(/\.mm-ayah-line\s*\{[^}]+\}/)?.[0] ?? "";
 assert.ok(ayahBlock.includes("letter-spacing: 0") || !/letter-spacing\s*:/.test(ayahBlock));
 assert.ok(ayahBlock.includes("word-spacing: 0") || !/word-spacing\s*:/.test(ayahBlock));
