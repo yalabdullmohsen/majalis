@@ -276,7 +276,7 @@
     "fetch:hadith-sahihayn": "node scripts/fetch-hadith-sahihayn.mjs",
     "verify:hadith-sahihayn": "node scripts/verify-hadith-sahihayn.mjs",
     "test:fawaid-curated-integrity": "node --import tsx src/lib/__tests__/fawaid-curated-integrity.test.ts",
-    "test:prophets-content": "node --import tsx src/lib/__tests__/prophets-content-quality.test.ts",
+    "test:prophets-content": "node --import tsx src/lib/__tests__/prophets-content-quality.test.ts && node --import tsx src/lib/__tests__/prophets-final-routes.test.ts",
     "test:religious-content": "node --import tsx src/lib/__tests__/religious-content-validator.test.ts && pnpm run test:prophets-content",
     "assets:generate": "bash scripts/generate-capacitor-assets.sh",
     "assets:generate:ios": "bash scripts/generate-capacitor-assets.sh --ios-only",
