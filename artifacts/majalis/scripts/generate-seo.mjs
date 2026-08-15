@@ -2187,6 +2187,7 @@ for (const row of LIBRARY_CATALOG) {
     .slice(0, 6)
     .map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author }));
   const desc = tidyDesc(row.description || row.title);
+  const hasSource = Boolean(String(row.external_url || "").trim());
   // body = ظاهر كامل؛ description = meta (قد تُقصّ لاحقاً دون لمس الظاهر)
   addPage(
     {
@@ -2195,18 +2196,23 @@ for (const row of LIBRARY_CATALOG) {
       description: clamp(padDesc(desc, `كتاب من المكتبة الشرعية في ${SITE_NAME}`), 160),
       body: desc,
       ogType: "book",
+      // بلا مصدر قراءة: لا فهرسة ولا sitemap (لا تُعرض كمادة موثّقة الرابط)
+      robots: hasSource ? "index, follow" : "noindex, follow",
     },
     {
       extraJsonLd: bookJsonLdScript({ ...row, description: desc }),
       parents: [{ name: "المكتبة العلمية", path: "/library" }],
-      priority: 0.7,
+      priority: hasSource ? 0.7 : 0.3,
+      sitemap: hasSource,
       richBody: `<h2>بيانات الكتاب</h2>
 <ul>
   ${row.author ? `<li>المؤلف: ${escapeHtml(row.author)}</li>` : ""}
   ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
   ${row.type ? `<li>النوع: ${escapeHtml(row.type)}</li>` : ""}
   ${row.parts_label ? `<li>الأجزاء: ${escapeHtml(row.parts_label)}</li>` : ""}
-  ${row.external_url ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">رابط القراءة</a></li>` : ""}
+  ${hasSource
+    ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">${escapeHtml(row.source_title || "فتح المصدر")}</a></li>`
+    : `<li>المصدر: قيد الإضافة</li>`}
 </ul>
 ${linkList("كتب ذات صلة في نفس التصنيف", related)}
 ${linkList("روابط ذات صلة", [

@@ -13,6 +13,11 @@ import { ContentMindMap } from "@/components/ContentMindMap";
 import { ScholarlyTrustBadge, type TrustData } from "@/components/ScholarlyTrustBadge";
 import { resolveAuthorScholarLink } from "@/lib/author-scholar-links";
 import { GraphRelatedRail } from "@/widgets/RelatedRail";
+import {
+  libraryHasReadableSource,
+  librarySourceLabel,
+  resolveLibraryContentStatus,
+} from "@/lib/library-catalog";
 import "@/styles/pages/library.css";
 
 export default function LibraryDetailPage({ params }: { params: { id: string } }) {
@@ -50,6 +55,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
     // params.id لا item.id — يطابق الرابط الفعلي في شريط العنوان دومًا
     // (راجع نفس الإصلاح في RulingDetailPage.tsx، 2026-07-25).
     const path = `/library/${params.id}`;
+    const hasSource = libraryHasReadableSource(item as Parameters<typeof libraryHasReadableSource>[0]);
     applyPageSeo({
       path,
       title: `${item.title} | المكتبة العلمية، المجلس العلمي`,
@@ -57,6 +63,8 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
       keywords: [...(item.keywords || []), item.category, item.author, "مكتبة", "كتب"],
       ogType: "book",
       canonicalPath: path,
+      // بلا مصدر قراءة: لا تُفهرَس كمادة موثّقة الرابط
+      robots: hasSource ? "index, follow" : "noindex, follow",
       jsonLd: [
         bookJsonLd({
           name: item.title,
@@ -77,6 +85,8 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
   if (!item) return <Empty text="الكتاب غير موجود." />;
 
   const readUrl = item.external_url || item.file_url;
+  const catalogStatus = resolveLibraryContentStatus(item as Parameters<typeof resolveLibraryContentStatus>[0]);
+  const sourceLabel = librarySourceLabel(item as Parameters<typeof librarySourceLabel>[0]);
   const metaParts = [item.category, item.type, item.parts_label].filter(Boolean);
 
   // حقول الحوكمة قد لا تكون في نوع LibraryItem بعد — تُقرأ كما هي ولا تُخترع.
@@ -142,26 +152,36 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
         <div className="library-detail-caution" role="note">
           <strong>تنبيه علمي:</strong> {item.caution}
           {item.notes ? <p className="library-detail-caution__notes">{item.notes}</p> : null}
-          {item.contentStatus ? (
+          {item.contentStatus || catalogStatus === "needs_source" ? (
             <p className="library-detail-caution__status">
               التصنيف:{" "}
-              {item.contentStatus === "recommended"
+              {catalogStatus === "recommended"
                 ? "موصى به"
-                : item.contentStatus === "useful_with_caution"
+                : catalogStatus === "useful_with_caution"
                   ? "نافع مع الحذر"
-                  : item.contentStatus === "reference_only"
+                  : catalogStatus === "reference_only"
                     ? "مرجع فقط"
-                    : "يحتاج مراجعة"}
+                    : catalogStatus === "needs_source"
+                      ? "يحتاج ضبط مصدر"
+                      : "يحتاج مراجعة"}
             </p>
           ) : null}
         </div>
+      ) : catalogStatus === "needs_source" ? (
+        <div className="library-detail-caution" role="note">
+          <strong>المصدر:</strong> قيد الإضافة — لا يُعرض هذا السجل ككتاب موثّق الرابط حتى يُضبط مصدر القراءة.
+        </div>
       ) : null}
-      {readUrl && (
+      {readUrl ? (
         <div className="library-detail-read">
           <a href={readUrl} target="_blank" rel="noreferrer" className="library-read-btn">
-            قراءة المصدر
+            {sourceLabel}
           </a>
         </div>
+      ) : (
+        <p className="library-detail-note" role="status">
+          {sourceLabel}
+        </p>
       )}
       <ContentMindMap
         title={item.title}

@@ -31,7 +31,8 @@ export type LibraryContentStatus =
   | "recommended"
   | "useful_with_caution"
   | "reference_only"
-  | "needs_review";
+  | "needs_review"
+  | "needs_source";
 
 export type LibraryBook = {
   id: string;
@@ -42,6 +43,8 @@ export type LibraryBook = {
   description: string;
   parts_label?: string;
   external_url?: string;
+  /** عنوان المصدر الظاهر للقارئ */
+  source_title?: string;
   status: "approved";
   /** تصنيف منهجي للمكتبة: موصى / بحذر / مرجع فقط / يحتاج مراجعة */
   contentStatus?: LibraryContentStatus;
@@ -52,6 +55,24 @@ export type LibraryBook = {
   /** تنبيه علمي يظهر في صفحة الكتاب؛ الكتب ذات التنبيه لا تُبرَز في الرئيسية. */
   caution?: string;
 };
+
+/** بلا رابط قراءة = needs_source ما لم يُضبط contentStatus صراحةً. */
+export function resolveLibraryContentStatus(book: LibraryBook): LibraryContentStatus {
+  if (book.contentStatus) return book.contentStatus;
+  if (!book.external_url?.trim()) return "needs_source";
+  return "recommended";
+}
+
+export function librarySourceLabel(book: LibraryBook): string {
+  if (book.external_url?.trim()) {
+    return book.source_title?.trim() || "فتح المصدر";
+  }
+  return "قيد الإضافة";
+}
+
+export function libraryHasReadableSource(book: LibraryBook): boolean {
+  return Boolean(book.external_url?.trim());
+}
 
 export const LIBRARY_CATALOG: LibraryBook[] = [
   {

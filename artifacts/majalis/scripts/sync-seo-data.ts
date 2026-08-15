@@ -16,9 +16,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
 const CHECK = process.argv.includes("--check");
 
-function readJson(p: string): any {
-  return JSON.parse(readFileSync(resolve(appRoot, p), "utf8"));
-}
 function serialize(v: unknown): string {
   return JSON.stringify(v, null, 2) + "\n";
 }
@@ -40,13 +37,6 @@ function writeOrCheck(relPath: string, nextContent: string, label: string) {
     writeFileSync(abs, nextContent, "utf8");
     console.log(`✓ حُدِّث: ${label} (${relPath})`);
   }
-}
-
-// حدّ آمن لطول وصف الميتا
-function clampDesc(s: string, max = 158): string {
-  const t = s.replace(/\s+/g, " ").trim();
-  if (t.length <= max) return t;
-  return t.slice(0, max - 1).replace(/[،,\s]+\S*$/, "") + "…";
 }
 
 // ── 1) مرآة فهرس المكتبة (كل الكتب) ───────────────────────────────────────
@@ -79,43 +69,8 @@ const scholarsSeo = SCHOLARS.map((s) => ({
 }));
 writeOrCheck("src/data/scholars-seo.json", serialize(scholarsSeo), "بيانات Person للعلماء");
 
-// ── 3) مسارات فهرسة العلماء داخل seo-routes.json (وصف فريد لكل عالِم) ──────
-const seoRoutes = readJson("src/lib/seo-routes.json");
-const nonScholarRoutes = seoRoutes.routes.filter(
-  (r: any) => !/^\/scholars\/[^/]+$/.test(r.path),
-);
-// موضع إدراج مسارات العلماء: مباشرة بعد فهرس /scholars إن وُجد، وإلا في النهاية
-const idxAfter = nonScholarRoutes.findIndex((r: any) => r.path === "/scholars");
-const scholarRoutes = SCHOLARS.map((s) => {
-  const works = (s.key_works || []).slice(0, 3);
-  const worksText = works.length ? ` من مؤلفاته: ${works.join("، ")}.` : "";
-  const description = clampDesc(`${s.bio}${worksText}`);
-  const keywords = [
-    s.name,
-    ...(s.specialty || []),
-    ...(s.madhhab ? [`المذهب ${s.madhhab}`] : []),
-    "المجلس العلمي",
-  ].slice(0, 6);
-  return {
-    path: `/scholars/${s.id}`,
-    title: `${s.name} — سيرته ومؤلفاته | المجلس العلمي`,
-    description,
-    keywords,
-    sitemap: true,
-    changefreq: "monthly",
-    priority: 0.75,
-  };
-});
-const nextRoutes =
-  idxAfter >= 0
-    ? [
-        ...nonScholarRoutes.slice(0, idxAfter + 1),
-        ...scholarRoutes,
-        ...nonScholarRoutes.slice(idxAfter + 1),
-      ]
-    : [...nonScholarRoutes, ...scholarRoutes];
-seoRoutes.routes = nextRoutes;
-writeOrCheck("src/lib/seo-routes.json", serialize(seoRoutes), "مسارات فهرسة العلماء");
+// مسارات /scholars/:id تُولَّد في generate-seo.mjs من SCHOLARS مباشرةً.
+// لا تُحقَن هنا في seo-routes.json لتفادي تكرار المسار (صفحة من routes + صفحة من الحلقة).
 
 if (CHECK && drift > 0) {
   console.error(`\n✗ ${drift} مرآة غير متزامنة — شغّل: pnpm run sync:seo-data`);
@@ -124,5 +79,5 @@ if (CHECK && drift > 0) {
 console.log(
   CHECK
     ? "✓ جميع مرايا SEO متزامنة"
-    : `✓ تمت المزامنة — ${libraryJson.length} كتابًا، ${scholarsList.length} عالِمًا (${scholarRoutes.length} مسارًا)`,
+    : `✓ تمت المزامنة — ${libraryJson.length} كتابًا، ${scholarsList.length} عالِمًا`,
 );

@@ -1,6 +1,28 @@
 /** حالة التحقق من صحة الترجمة. الافتراضي pending_review لكل السجلات التي لا مصدر لها ولا مراجِع. */
 export type VerificationStatus = "draft" | "pending_review" | "reviewed" | "verified";
 
+/** تصنيف دور العالم — أدق من حقل era العام («العلماء الكبار»). */
+export type ScholarRoleType =
+  | "imam"
+  | "muhaddith"
+  | "faqih"
+  | "mufassir"
+  | "usuli"
+  | "historian"
+  | "linguist"
+  | "philosopher"
+  | "daiyah"
+  | "contemporary_scholar"
+  | "public_figure"
+  | "needs_review";
+
+/** مستوى الحذر عند العرض كمرجع شرعي. */
+export type ScholarCautionLevel =
+  | "none"
+  | "needs_context"
+  | "disputed"
+  | "not_primary_reference";
+
 export type Scholar = {
   id: string;
   name: string;
@@ -18,7 +40,68 @@ export type Scholar = {
   verificationStatus: VerificationStatus;
   reviewedBy?: string;
   reviewedAt?: string;
+  /** دور أدق من era — اختياري؛ إن غاب يُشتق للعرض من specialty */
+  roleType?: ScholarRoleType;
+  /** حذر العرض كمرجع شرعي معتمد */
+  cautionLevel?: ScholarCautionLevel;
 };
+
+const ROLE_LABELS: Record<ScholarRoleType, string> = {
+  imam: "إمام",
+  muhaddith: "محدّث",
+  faqih: "فقيه",
+  mufassir: "مفسّر",
+  usuli: "أصولي",
+  historian: "مؤرخ",
+  linguist: "لغوي",
+  philosopher: "فيلسوف / متكلم",
+  daiyah: "داعية",
+  contemporary_scholar: "عالم معاصر",
+  public_figure: "شخصية عامة",
+  needs_review: "يحتاج مراجعة تصنيف",
+};
+
+const CAUTION_LABELS: Record<ScholarCautionLevel, string> = {
+  none: "",
+  needs_context: "يُعرض مع سياق علمي — ليس مرجعاً شرعياً وحيداً.",
+  disputed: "محل خلاف أو يحتاج قراءة ناقدة؛ لا يُعتمد وحده في الاستدلال.",
+  not_primary_reference: "ليس مرجعاً شرعياً أساسياً في هذه المنصة؛ للتعريف والسياق فقط.",
+};
+
+/** يستنتج roleType عند غيابه من التخصص — بلا اختراع ألقاب جديدة. */
+export function resolveScholarRoleType(s: Pick<Scholar, "roleType" | "specialty" | "era">): ScholarRoleType {
+  if (s.roleType) return s.roleType;
+  const sp = (s.specialty || []).join(" ");
+  if (/فلسفة/.test(sp)) return "philosopher";
+  if (/تاريخ/.test(sp) && !/فقه|حديث|تفسير/.test(sp)) return "historian";
+  if (/حديث/.test(sp)) return "muhaddith";
+  if (/تفسير/.test(sp)) return "mufassir";
+  if (/أصول/.test(sp)) return "usuli";
+  if (/فقه|فتوى/.test(sp)) return "faqih";
+  if (/دعوة/.test(sp)) return "daiyah";
+  if (/لغة|نحو/.test(sp)) return "linguist";
+  if (s.era === "المعاصرون") return "contemporary_scholar";
+  if (s.era === "الأئمة الأربعة") return "imam";
+  return "needs_review";
+}
+
+export function resolveScholarCautionLevel(
+  s: Pick<Scholar, "cautionLevel" | "roleType" | "specialty" | "era">,
+): ScholarCautionLevel {
+  if (s.cautionLevel) return s.cautionLevel;
+  const role = resolveScholarRoleType(s);
+  if (role === "philosopher" || role === "public_figure") return "not_primary_reference";
+  if (role === "historian") return "needs_context";
+  return "none";
+}
+
+export function scholarRoleLabel(s: Scholar): string {
+  return ROLE_LABELS[resolveScholarRoleType(s)];
+}
+
+export function scholarCautionLabel(s: Scholar): string {
+  return CAUTION_LABELS[resolveScholarCautionLevel(s)];
+}
 
 export const SCHOLARS: Scholar[] = [
   {
@@ -234,13 +317,15 @@ export const SCHOLARS: Scholar[] = [
     fullName: "يوسف بن عبد الله القرضاوي",
     era: "المعاصرون",
     specialty: ["فقه", "دعوة", "أصول"],
-    bio: "فقيه معاصر اشتُهر بكتابات في فقه الأولويات والوسطية. تخرّج في كلية أصول الدين بالأزهر، وله فتاوى وآراء معاصرة فيها مسائل اجتهادية وسياسية تحتاج مراجعة أهل العلم والمجامع. ومن أبرز مؤلفاته الحلال والحرام وفقه الزكاة؛ وعُرف في مصر وقطر.",
+    bio: "فقيه معاصر اشتُهر بكتابات في فقه الأولويات والوسطية. درس علوم الشريعة في مصر، وله فتاوى وآراء معاصرة فيها مسائل اجتهادية وسياسية تحتاج مراجعة أهل العلم والمجامع. ومن أبرز مؤلفاته الحلال والحرام وفقه الزكاة؛ وعُرف في مصر وقطر.",
     key_works: ["الحلال والحرام", "فقه الزكاة", "فقه الأولويات", "فتاوى معاصرة"],
     died: "١٤٤٤ هـ",
     region: "مصر / قطر",
     quote: "يُعرض فقهه كاجتهاد معاصر لا كقول ملزم لكل الأمة",
     sources: ["الموقع الرسمي للشيخ يوسف القرضاوي (al-qaradawi.net) — السيرة الذاتية", "ويكيبيديا العربية — تحقُّق تاريخ الوفاة: 30 صفر 1444هـ / 26 سبتمبر 2022م (تحقَّق عبر WebFetch 2026-07-19)"],
     verificationStatus: "reviewed",
+    roleType: "contemporary_scholar",
+    cautionLevel: "needs_context",
   },
 {
     id: "tirmidhi",
@@ -284,6 +369,8 @@ export const SCHOLARS: Scholar[] = [
     quote: "العلم بلا عمل جنون، والعمل بلا علم لا يكون",
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
+    roleType: "faqih",
+    cautionLevel: "needs_context",
   },
 {
     id: "ibn-kathir",
@@ -304,9 +391,9 @@ export const SCHOLARS: Scholar[] = [
     id: "ibn-khaldun",
     name: "ابن خلدون",
     fullName: "عبد الرحمن بن محمد بن خلدون",
-    era: "العلماء الكبار",
+    era: "مؤرخون",
     specialty: ["تاريخ", "فقه", "أصول"],
-    bio: "مؤسس علم الاجتماع والتاريخ الحضاري، صاحب المقدمة الشهيرة. تلقى العلم في تونس عن الفقيه الزيتوني ابن عرفة وتردد على مجالس كبار علماء جامع الزيتونة، كما أخذ عن شيوخ رافقوا موكب سلطان بني مرين عند استيلائه على تونس سنة 748هـ، وصار مرجعاً في التاريخ وعلم الاجتماع. وهو من أئمة المذهب مالكي.",
+    bio: "مؤرخ وعالم اجتماع حضاري، صاحب المقدمة الشهيرة. تلقى العلم في تونس عن الفقيه الزيتوني ابن عرفة وتردد على مجالس علماء جامع الزيتونة، كما أخذ عن شيوخ رافقوا موكب سلطان بني مرين عند استيلائه على تونس سنة 748هـ. يُستفاد منه في التاريخ والعمران لا كمرجع شرعي أساسي في الفتوى.",
     key_works: ["المقدمة", "العبر وديوان المبتدأ والخبر", "التعريف بابن خلدون"],
     died: "٨٠٨ هـ",
     region: "تونس / الأندلس / مصر",
@@ -314,6 +401,8 @@ export const SCHOLARS: Scholar[] = [
     quote: "التاريخ في ظاهره لا يزيد على الإخبار عن الأيام والدول، وفي باطنه نظر وتحقيق",
     sources: ["الأعلام — خير الدين الزركلي", "الإحاطة في أخبار غرناطة — لسان الدين بن الخطيب"],
     verificationStatus: "reviewed",
+    roleType: "historian",
+    cautionLevel: "not_primary_reference",
   },
 {
     id: "ibn-ashur",
@@ -329,6 +418,8 @@ export const SCHOLARS: Scholar[] = [
     quote: "الشريعة كلها مبنية على تحقيق مصالح العباد في العاجل والآجل",
     sources: ["موسوعة أعلام تونس — الرابطة المحمدية للعلماء", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
+    roleType: "mufassir",
+    cautionLevel: "none",
   },
 {
     id: "fawzan",
@@ -336,13 +427,15 @@ export const SCHOLARS: Scholar[] = [
     fullName: "صالح بن فوزان بن عبد الله الفوزان",
     era: "المعاصرون",
     specialty: ["فقه", "عقيدة", "فتوى"],
-    bio: "عضو هيئة كبار العلماء في المملكة العربية السعودية، من أبرز مراجع الفتوى المعاصرة في العقيدة والفقه. تلقى العلم عن ابن باز ومحمد الأمين الشنقيطي وعبد الرزاق عفيفي وعبد الله بن حميد، وعن مشايخ منتدَبين من الأزهر في الحديث والتفسير واللغة العربية، وصار مرجعاً في العقيدة والفتاوى المعاصرة. ومن أبرز مؤلفاته الملخص الفقهي.",
+    bio: "عضو هيئة كبار العلماء في المملكة العربية السعودية، من أبرز مراجع الفتوى المعاصرة في العقيدة والفقه. تلقى العلم عن ابن باز ومحمد الأمين الشنقيطي وعبد الرزاق عفيفي وعبد الله بن حميد، وعن مشايخ زائرين في الحديث والتفسير واللغة العربية. ومن أبرز مؤلفاته الملخص الفقهي.",
     key_works: ["الملخص الفقهي", "إعانة المستفيد بشرح كتاب التوحيد", "الأطعمة وأحكام الصيد والذبائح"],
     died: "حي (معاصر)",
     region: "المملكة العربية السعودية",
     quote: "العلم الشرعي فريضة، والجهل به خطر على الفرد والمجتمع",
     sources: ["الموقع الرسمي للشيخ صالح الفوزان (dralfawzann.com) — السيرة الذاتية", "الدرر السنية — dorar.net"],
     verificationStatus: "reviewed",
+    roleType: "contemporary_scholar",
+    cautionLevel: "none",
   },
 {
     id: "al-suyuti",
@@ -1024,9 +1117,9 @@ export const SCHOLARS: Scholar[] = [
     id: "ibn-rushd",
     name: "ابن رشد",
     fullName: "محمد بن أحمد بن محمد بن رشد القرطبي",
-    era: "العلماء الكبار",
+    era: "فقهاء الأندلس",
     specialty: ["فقه", "فلسفة", "طب"],
-    bio: "فقيه مالكي وطبيب وفيلسوف، اشتُهر بشروح أرسطو وبكتابه «بداية المجتهد» في الفقه المقارن. قدّمه ابن طفيل للخليفة الموحدي، وله مباحث فلسفية وكلامية تحتاج قراءة ناقدة على منهج أهل السنة. ومن أبرز مؤلفاته بداية المجتهد ونهاية المقتصد؛ وعُرف في قرطبة.",
+    bio: "فقيه مالكي وطبيب وفيلسوف، اشتُهر بشروح أرسطو وبكتابه «بداية المجتهد» في الفقه المقارن. قدّمه ابن طفيل للخليفة الموحدي، وله مباحث فلسفية وكلامية تحتاج قراءة ناقدة على منهج أهل السنة. يُستفاد من فقهه المقارن؛ ولا يُعرض كمذهب فلسفي معتمد في هذه المنصة.",
     key_works: ["بداية المجتهد ونهاية المقتصد", "تهافت التهافت", "الكليات في الطب"],
     died: "٥٩٥ هـ",
     region: "قرطبة، الأندلس",
@@ -1034,6 +1127,8 @@ export const SCHOLARS: Scholar[] = [
     quote: "الحق لا يضاده إلا الباطل",
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
+    roleType: "philosopher",
+    cautionLevel: "not_primary_reference",
   },
 {
     id: "ibn-hazm",

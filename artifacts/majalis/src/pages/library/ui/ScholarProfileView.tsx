@@ -4,7 +4,7 @@ import { ArrowRight, BookOpen, MapPin, Star, ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { personJsonLd } from "@/lib/seo-structured-data";
 import { ShareButtons } from "@/components/ContentActions";
-import { SCHOLARS, findScholarById } from "@/lib/scholars-data";
+import { SCHOLARS, findScholarById, scholarCautionLabel, scholarRoleLabel } from "@/lib/scholars-data";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ContentReportButton } from "@/components/ContentReportButton";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
@@ -221,6 +221,7 @@ export default function ScholarProfilePage() {
           <p className="sch-profile-hero__fullname">{scholar.fullName}</p>
           <div className="sch-profile-hero__meta">
             <span className="sch-tag" title="تصنيف ضمن طبقات العرض">التصنيف: {scholar.era}</span>
+            <span className="sch-tag" title="الدور العلمي">الدور: {scholarRoleLabel(scholar)}</span>
             {scholar.madhhab && <span className="sch-tag sch-tag--madhhab">{scholar.madhhab}</span>}
             {scholar.specialty.map(sp => (
               <span key={sp} className="sch-tag">{sp}</span>
@@ -234,6 +235,14 @@ export default function ScholarProfilePage() {
 
       {/* خط زمني */}
       <ScholarTimeline died={scholar.died} />
+
+      {scholarCautionLabel(scholar) ? (
+        <div className="stb-wrap stb-wrap--compact" role="note" dir="rtl">
+          <p className="stb-missing" style={{ fontSize: "0.85rem", color: "var(--clr-ink-soft)" }}>
+            <strong>تنبيه عرض:</strong> {scholarCautionLabel(scholar)}
+          </p>
+        </div>
+      ) : null}
 
       {/* ملاحظة مصادر الترجمة */}
       <div className="stb-wrap stb-wrap--compact stb-wrap--empty" role="note" dir="rtl">

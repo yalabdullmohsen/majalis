@@ -1,0 +1,695 @@
+{
+  "summary": {
+    "at": "2026-08-15T17:12:22.888Z",
+    "counts": {
+      "books": 173,
+      "booksWithSource": 11,
+      "booksNeedsSource": 162,
+      "scholars": 135,
+      "scholarsPending": 0,
+      "scholarsGenericEra": 71,
+      "fatwaPublic": 4,
+      "fiqhAll": 6,
+      "fiqhIssuesPublic": 33,
+      "rulingsTotal": 147,
+      "rulingsPublic": 0,
+      "rulingsPending": 147,
+      "qa": 0,
+      "quiz": 0
+    },
+    "contentCounts": {
+      "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
+      "books": 173,
+      "scholars": 135,
+      "fawaid": 616,
+      "quizQuestions": 0,
+      "mindMaps": 23,
+      "rulings": 147,
+      "courses": 63,
+      "miracles": 60,
+      "adhkar": 329,
+      "qa": 0,
+      "nations": 17
+    },
+    "workLinks": 391,
+    "workLinked": 95,
+    "findings": {
+      "total": 72,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 70,
+      "info": 2
+    }
+  },
+  "findings": [
+    {
+      "check": "empty_qa_seed",
+      "severity": "info",
+      "entity_type": "qa",
+      "entity_id": "/qa",
+      "detail": "SEED_QA فارغ؛ المسار /qa يحوّل إلى /quiz — لا فهرسة مستقلة مطلوبة",
+      "evidence": "qa-seed + App.tsx Redirect",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-taymiyya",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: mufassir)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-qayyim",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: faqih)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "nawawi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-hajar",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-kathir",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "al-suyuti",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "daraqutni",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "bayhaki",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-juzayy",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: mufassir)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "tabari",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-jawzi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-abd-al-barr",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "dhahabi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "izz-ibn-abd-al-salam",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-hibban",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-khuzayma",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "hakim",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-al-mundhir",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "khattabi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-hajar-haytami",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-muflih",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-hazm",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-asakir",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-nujaym",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-faris",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: faqih)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "zarkashi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-qudama",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "juwayny",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-salah",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "al-qarafi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "fakhr-razi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: mufassir)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "al-mizzi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-aqil",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "al-mundhiri",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-daqiq",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-battuta",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: historian)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "al-mawardi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-ata-allah-al-sakandari",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: needs_review)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "al-sakhawi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "al-ajurri",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-al-wazir",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "al-qurtubi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: mufassir)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "sarakhsi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "kasani",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "zamakhshari",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: mufassir)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-atiyya",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: mufassir)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "baydawi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: mufassir)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "munawi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "marghinani",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-al-athir",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: historian)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "abu-hayyan",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: mufassir)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "qadi-iyad",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "amidi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-abi-izz",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: faqih)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ramli",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "bahuti",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: faqih)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "hajjawi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: faqih)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "mardawi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ayni",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "khiraqi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: faqih)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "ibn-humam",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "khalil-ibn-ishaq",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: faqih)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "qastallani",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "zaylai",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: muhaddith)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "dardir",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: faqih)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "al-dusuki",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: faqih)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "al-hattab",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: faqih)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "al-kharashi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: faqih)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "baqillani",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: usuli)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "scholar_generic_era",
+      "severity": "low",
+      "entity_type": "scholar",
+      "entity_id": "al-sanusi",
+      "detail": "era=العلماء الكبار دون roleType صريح (المشتق: needs_review)",
+      "evidence": "scholars-data.ts",
+      "auto_fix_allowed": false
+    },
+    {
+      "check": "rulings_publication_gate",
+      "severity": "info",
+      "entity_type": "ruling",
+      "entity_id": "gate",
+      "detail": "أحكام عامة=0 · قيد مراجعة=147 · بوابة isPubliclyPublishedRuling فعّالة",
+      "evidence": "rulings-publication-gate.ts",
+      "auto_fix_allowed": false
+    }
+  ]
+}

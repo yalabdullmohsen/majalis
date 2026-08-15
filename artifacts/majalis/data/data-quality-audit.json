@@ -1,12 +1,12 @@
 {
-  "at": "2026-07-25T17:37:35.333Z",
+  "at": "2026-08-15T17:10:14.339Z",
   "counts": {
-    "qa": 360,
+    "qa": 0,
     "lessons": 0,
-    "sheikhs": 92,
-    "quiz": 1024,
-    "fawaid": 496,
-    "adhkar": 301
+    "sheikhs": 84,
+    "quiz": 0,
+    "fawaid": 616,
+    "adhkar": 329
   },
   "issues": {
     "qa": [],
@@ -14,9 +14,34 @@
     "sheikhs": [],
     "quiz": [],
     "fawaid": [],
-    "adhkar": []
+    "adhkar": [
+      {
+        "type": "duplicate_adhkar_text_same_category",
+        "id": "adh-361",
+        "otherId": "adh-4",
+        "key": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا "
+      },
+      {
+        "type": "duplicate_adhkar_text_same_category",
+        "id": "adh-363",
+        "otherId": "adh-21",
+        "key": "لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ"
+      },
+      {
+        "type": "duplicate_adhkar_text_same_category",
+        "id": "adh-364",
+        "otherId": "adh-65",
+        "key": "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ"
+      },
+      {
+        "type": "duplicate_adhkar_text_same_category",
+        "id": "adh-366",
+        "otherId": "adh-6",
+        "key": "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا"
+      }
+    ]
   },
   "summary": {
-    "totalIssues": 0
+    "totalIssues": 4
   }
 }
