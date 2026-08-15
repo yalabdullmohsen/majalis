@@ -36,7 +36,7 @@ const sidebarNav = readFileSync(join(root, "lib/sidebar-nav.ts"), "utf8");
 assert.match(sidebarNav, /getSidebarGroupsFromNavMap|SIDEBAR_NAV_GROUPS/);
 
 const navMap = readFileSync(join(root, "lib/nav-map.ts"), "utf8");
-assert.match(navMap, /\/mushaf/);
+assert.match(navMap, /\/quran-hub/);
 assert.match(navMap, /قرآن/);
 
 const servicesNav = readFileSync(join(root, "lib/services-center-nav.ts"), "utf8");

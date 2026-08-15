@@ -60,7 +60,7 @@ assert.match(bottomNav, /isImmersiveChromePath/);
 assert.equal(bottomNav.includes("isPrayerTimesPath"), false);
 
 const navMap = readFileSync(resolve(appRoot, "src/lib/nav-map.ts"), "utf8");
-assert.match(navMap, /href: "\/mushaf"/);
+assert.match(navMap, /href: "\/quran-hub"/);
 
 const navBar = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf8");
 assert.match(navBar, /isImmersiveChromePath\(location\) \|\| isPrayerTimesPath\(location\)\) return null/);
