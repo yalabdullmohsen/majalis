@@ -82,9 +82,14 @@ export async function getFiqhIssues(opts?: { category?: string; limit?: number }
   }
 }
 
+/**
+ * تفاصيل المسألة: تُعاد إن كانت منشورة في البذرة حتى لو لم تبلغ official_verified.
+ * القوائم العامة تبقى عبر isPublicIssue فقط؛ الصفحة تعرض تنبيه مراجعة + noindex عند الحاجة.
+ */
 export async function getFiqhIssueBySlug(slug: string) {
   const seedIssue = findFiqhIssueBySlug(slug);
-  const seedEnriched = seedIssue && isPublicIssue(seedIssue) ? enrichIssueFromSeed(seedIssue) : null;
+  const seedEnriched =
+    seedIssue && seedIssue.status === "published" ? enrichIssueFromSeed(seedIssue) : null;
 
   if (!isConfigured) {
     return { data: seedEnriched, usingSeed: true, error: null };
@@ -96,7 +101,6 @@ export async function getFiqhIssueBySlug(slug: string) {
       .select("*")
       .eq("slug", slug)
       .eq("status", "published")
-      .eq("documentation_level", "official_verified")
       .maybeSingle();
 
     if (error) {

@@ -92,14 +92,21 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
       item.summary ||
       item.body?.replace(/\*\*/g, "").slice(0, 160) ||
       item.title;
+    const reviewKey = `${item.verification_status ?? ""}|${item.status ?? ""}`;
+    const pending = /pending|draft/i.test(reviewKey) && !/approved|verified/i.test(String(item.verification_status ?? ""));
     applyPageSeo({
       path,
       title: `${item.title} | موسوعة الأحكام، المجلس العلمي`,
-      description,
+      description: pending
+        ? `قيد المراجعة العلمية: ${description}`
+        : description,
       keywords: [...(item.keywords || []), item.category, item.subcategory || "", "أحكام شرعية", "فقه"],
       ogType: "article",
       canonicalPath: path,
-      jsonLd: [
+      robots: pending ? "noindex, follow" : undefined,
+      jsonLd: pending
+        ? []
+        : [
         {
           "@context": "https://schema.org",
           "@type": "Article",

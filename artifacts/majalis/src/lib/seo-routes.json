@@ -1192,16 +1192,17 @@
     {
       "path": "/knowledge-graph",
       "title": "الرسم البياني المعرفي الإسلامي",
-      "description": "استكشف شبكة المعرفة الإسلامية التفاعلية التي تربط العلوم الشرعية ببعضها البعض.",
+      "description": "واجهة تجريبية لاستكشاف علاقات بين مفاهيم إسلامية — قيد الإعداد وليست توثيقاً نهائياً.",
       "keywords": [
         "خريطة المعرفة",
         "شبكة العلوم الشرعية",
         "العلوم الإسلامية",
         "الترابط العلمي"
       ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.7
+      "sitemap": false,
+      "robots": "noindex, follow",
+      "changefreq": "monthly",
+      "priority": 0.3
     },
     {
       "path": "/notification-settings",

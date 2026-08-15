@@ -2206,8 +2206,10 @@ for (const row of LIBRARY_CATALOG) {
   ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
   ${row.type ? `<li>النوع: ${escapeHtml(row.type)}</li>` : ""}
   ${row.parts_label ? `<li>الأجزاء: ${escapeHtml(row.parts_label)}</li>` : ""}
-  ${row.external_url ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">رابط القراءة</a></li>` : ""}
+  ${row.external_url ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">${escapeHtml(row.source_title || "قراءة المصدر")}</a></li>` : `<li>المصدر: لم يُضبط بعد</li>`}
+  ${row.contentStatus ? `<li>حالة المحتوى: ${escapeHtml(String(row.contentStatus))}</li>` : !row.external_url ? `<li>حالة المحتوى: needs_source</li>` : ""}
 </ul>
+${row.caution ? `<aside role="note"><strong>تنبيه علمي:</strong> ${escapeHtml(row.caution)}</aside>` : ""}
 ${linkList("كتب ذات صلة في نفس التصنيف", related)}
 ${linkList("روابط ذات صلة", [
   { name: "المكتبة العلمية", url: "/library" },
@@ -2400,7 +2402,7 @@ for (const t of TOPICS) {
     {
       path: `/topics/${t.slug}`,
       title: t.title,
-      description: `${t.title} — أدلة وأحكام وفتاوى ودروس وكتب ذات صلة، مجموعة من مصادر المجلس العلمي الموثقة.`,
+      description: `${t.title} — أدلة وأحكام وفتاوى ودروس وكتب ذات صلة من محتوى المجلس العلمي.`,
       keywords: [t.title, "مواضيع إسلامية", "أحكام شرعية"],
     },
     { parents: [{ name: "المواضيع الإسلامية", path: "/topics" }], priority: 0.66, changefreq: "monthly" },

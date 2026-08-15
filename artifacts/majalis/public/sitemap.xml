@@ -281,11 +281,6 @@
     <priority>0.82</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/knowledge-graph</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/institutions</loc>
     <changefreq>monthly</changefreq>
     <priority>0.72</priority>

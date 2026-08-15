@@ -13,6 +13,7 @@ import { ContentMindMap } from "@/components/ContentMindMap";
 import { ScholarlyTrustBadge, type TrustData } from "@/components/ScholarlyTrustBadge";
 import { resolveAuthorScholarLink } from "@/lib/author-scholar-links";
 import { GraphRelatedRail } from "@/widgets/RelatedRail";
+import { librarySourceLabel, resolveLibraryContentStatus } from "@/lib/library-catalog";
 import "@/styles/pages/library.css";
 
 export default function LibraryDetailPage({ params }: { params: { id: string } }) {
@@ -78,6 +79,8 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
 
   const readUrl = item.external_url || item.file_url;
   const metaParts = [item.category, item.type, item.parts_label].filter(Boolean);
+  const catalogStatus = resolveLibraryContentStatus(item as Parameters<typeof resolveLibraryContentStatus>[0]);
+  const sourceLabel = librarySourceLabel(item as Parameters<typeof librarySourceLabel>[0]);
 
   // حقول الحوكمة قد لا تكون في نوع LibraryItem بعد — تُقرأ كما هي ولا تُخترع.
   const meta = item as typeof item & {
@@ -142,26 +145,34 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
         <div className="library-detail-caution" role="note">
           <strong>تنبيه علمي:</strong> {item.caution}
           {item.notes ? <p className="library-detail-caution__notes">{item.notes}</p> : null}
-          {item.contentStatus ? (
-            <p className="library-detail-caution__status">
-              التصنيف:{" "}
-              {item.contentStatus === "recommended"
-                ? "موصى به"
-                : item.contentStatus === "useful_with_caution"
-                  ? "نافع مع الحذر"
-                  : item.contentStatus === "reference_only"
-                    ? "مرجع فقط"
+          <p className="library-detail-caution__status">
+            التصنيف:{" "}
+            {catalogStatus === "recommended"
+              ? "موصى به"
+              : catalogStatus === "useful_with_caution"
+                ? "نافع مع الحذر"
+                : catalogStatus === "reference_only"
+                  ? "مرجع فقط"
+                  : catalogStatus === "needs_source"
+                    ? "يحتاج ضبط مصدر"
                     : "يحتاج مراجعة"}
-            </p>
-          ) : null}
+          </p>
+        </div>
+      ) : catalogStatus === "needs_source" ? (
+        <div className="library-detail-caution" role="note">
+          <strong>المصدر:</strong> لم يُضبط بعد — لا يُعرض هذا السجل ككتاب موثّق الرابط حتى يُضبط مصدر القراءة.
         </div>
       ) : null}
-      {readUrl && (
+      {readUrl ? (
         <div className="library-detail-read">
           <a href={readUrl} target="_blank" rel="noreferrer" className="library-read-btn">
-            قراءة المصدر
+            {sourceLabel}
           </a>
         </div>
+      ) : (
+        <p className="library-detail-note" role="note">
+          {sourceLabel}
+        </p>
       )}
       <ContentMindMap
         title={item.title}

@@ -415,8 +415,8 @@
     "reviewedBy": null,
     "reviewedAt": null,
     "contentStatus": "useful_with_caution",
-    "notes": "كتاب نافع في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو التصحيح والتضعيف.",
-    "caution": "فيه أحاديث ضعيفة وموضوعة ومباحث صوفية؛ يُقرأ مع التمحيص."
+    "notes": "فيه أحاديث ضعيفة وموضوعة ومباحث صوفية نبّه عليها أهل العلم (كالعراقي وابن الجوزي والذهبي)؛ يُقرأ مع التمحيص لا كمرجع حديثي أو عقدي مطلق.",
+    "caution": "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية."
   },
   {
     "id": "book-risalah-qushayri",
@@ -432,7 +432,8 @@
     "verificationStatus": "pending_review",
     "sources": [],
     "reviewedBy": null,
-    "reviewedAt": null
+    "reviewedAt": null,
+    "caution": "فيه مباحث صوفية وأحوال تحتاج تمييزًا؛ يُقرأ تعريفًا تاريخيًا مع عرض ما خالف السنة على ميزان الكتاب والسنة، لا كمرجع عقدي مطلق."
   },
   {
     "id": "book-seerah-ibn-hisham",
@@ -576,7 +577,8 @@
     "verificationStatus": "pending_review",
     "sources": [],
     "reviewedBy": null,
-    "reviewedAt": null
+    "reviewedAt": null,
+    "contentStatus": "recommended"
   },
   {
     "id": "book-razi-tafsir",
@@ -594,8 +596,8 @@
     "reviewedBy": null,
     "reviewedAt": null,
     "contentStatus": "useful_with_caution",
-    "notes": "فيه استطرادات كلامية وفلسفية تحتاج مراجعة.",
-    "caution": "فيه استطرادات كلامية وفلسفية تحتاج مراجعة."
+    "notes": "كتاب نافع في مباحثه اللغوية، وفيه استطرادات كلامية وفلسفية تحتاج مراجعة؛ فلا يعتمد وحده في العقيدة.",
+    "caution": "يُستفاد من مباحثه اللغوية والعامة مع الحذر من الاستطرادات الكلامية والفلسفية التي قد تخالف منهج أهل السنة في مواضع."
   },
   {
     "id": "book-darimi",
@@ -741,8 +743,8 @@
     "reviewedBy": null,
     "reviewedAt": null,
     "contentStatus": "reference_only",
-    "notes": "مرجع تاريخي فيه روايات ضعيفة وإسرائيليات.",
-    "caution": "مرجع تاريخي فيه روايات ضعيفة وإسرائيليات."
+    "notes": "مرجع تاريخي واسع؛ فيه روايات ضعيفة وإسرائيليات، فلا يعتمد وحده دون كتب السيرة المحرَّرة.",
+    "caution": "فيه روايات ضعيفة وإسرائيليات وتفاصيل تحتاج تمحيصًا؛ لا يُعتمد عليه وحده دون كتب السيرة المحرَّرة."
   },
   {
     "id": "book-sirah-dahlawi",
@@ -1288,8 +1290,8 @@
     "reviewedBy": null,
     "reviewedAt": null,
     "contentStatus": "useful_with_caution",
-    "notes": "كتاب نافع في بابه، وفيه مواضع تحتاج مراجعة أهل العلم.",
-    "caution": "فيه روايات ومباحث تحتاج تمحيصًا؛ يُنتفع به مع الرجوع إلى الصحيح عند التعارض."
+    "notes": "كتاب نافع في بابه، وفيه مواضع وروايات تحتاج مراجعة أهل العلم، فلا يعتمد وحده في العقيدة أو التصحيح والتضعيف.",
+    "caution": "فيه روايات ومباحث تحتاج تمحيصًا؛ يُنتفع به في الشمائل مع الرجوع إلى الصحيح عند التعارض."
   },
   {
     "id": "book-kamil-ibn-athir",
@@ -1321,7 +1323,9 @@
     "verificationStatus": "pending_review",
     "sources": [],
     "reviewedBy": null,
-    "reviewedAt": null
+    "reviewedAt": null,
+    "contentStatus": "reference_only",
+    "caution": "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية. جمع روايات بأسانيدها فتحتاج دراسة قبل الاعتماد — لا سيّما الإسرائيليات وأخبار الفتن."
   },
   {
     "id": "book-luma-itiqad-ibn-qudama",
@@ -1492,12 +1496,14 @@
     "author": "أبو علي مسكويه",
     "authorId": "author-ibn-miskawayh",
     "category": "آداب",
-    "description": "كتاب فلسفي أخلاقي رائد يبحث في تهذيب النفس والفضائل والرذائل، يمزج بين الفكر الإسلامي والتراث الأخلاقي الفلسفي، من أبرز كتب الأخلاق في التراث الإسلامي.",
+    "description": "كتاب فلسفي أخلاقي يبحث في تهذيب النفس والفضائل والرذائل، يمزج بين الفكر الإسلامي والتراث الأخلاقي الفلسفي، من أبرز كتب الأخلاق في التراث الإسلامي.",
     "editions": [],
     "verificationStatus": "pending_review",
     "sources": [],
     "reviewedBy": null,
-    "reviewedAt": null
+    "reviewedAt": null,
+    "contentStatus": "useful_with_caution",
+    "caution": "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية."
   },
   {
     "id": "book-al-amali-ibn-sharaf",
@@ -2052,12 +2058,14 @@
     "author": "عبد الرحمن الأخضري",
     "authorId": "author-abd-al-rahman-al-akhdari",
     "category": "منطق وفلسفة",
-    "description": "منظومة تعليمية من 156 بيتاً في علم المنطق الصوري، نظمها الأخضري نظماً لكتاب «إيساغوجي»، اشتُهرت عند أهل العلم فكثرت شروحها وحواشيها (أبرزها شرح الدمنهوري وحاشية البيجوري)، ولا تزال متناً معتمداً في تدريس المنطق بالأزهر وغيره.",
+    "description": "منظومة تعليمية من 156 بيتاً في علم المنطق الصوري، نظمها الأخضري نظماً لكتاب «إيساغوجي»، اشتُهرت عند أهل العلم فكثرت شروحها وحواشيها، ولا تزال متناً متداولاً في بعض المعاهد الشرعية.",
     "editions": [],
     "verificationStatus": "pending_review",
     "sources": [],
     "reviewedBy": null,
-    "reviewedAt": null
+    "reviewedAt": null,
+    "contentStatus": "useful_with_caution",
+    "caution": "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية."
   },
   {
     "id": "book-asbab-nuzul-wahidi",
@@ -2073,7 +2081,8 @@
     "verificationStatus": "pending_review",
     "sources": [],
     "reviewedBy": null,
-    "reviewedAt": null
+    "reviewedAt": null,
+    "caution": "فيه روايات ضعيفة وواهية — إذ لم يكن المؤلف من المتخصصين في علل الحديث — فيُحتاج معه إلى تمييز الصحيح من الضعيف عند القراءة."
   },
   {
     "id": "book-minhaj-muslim-jazairi",
@@ -2425,7 +2434,8 @@
     "verificationStatus": "pending_review",
     "sources": [],
     "reviewedBy": null,
-    "reviewedAt": null
+    "reviewedAt": null,
+    "caution": "يُستفاد من جوانبه اللغوية والبلاغية مع التحفّظ من الاعتزاليات العقدية التي تعقّبها أهل السنة."
   },
   {
     "id": "book-tamhid-ibn-abd-al-barr",

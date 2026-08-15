@@ -31,7 +31,11 @@ export type LibraryContentStatus =
   | "recommended"
   | "useful_with_caution"
   | "reference_only"
-  | "needs_review";
+  | "needs_review"
+  | "needs_source";
+
+export const LIBRARY_CAUTION_NOTE =
+  "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية.";
 
 export type LibraryBook = {
   id: string;
@@ -42,9 +46,15 @@ export type LibraryBook = {
   description: string;
   parts_label?: string;
   external_url?: string;
+  /** عنوان المصدر الظاهر للقارئ */
+  source_title?: string;
+  /** نوع المصدر: موقع / مصحف / طبعة / مخطوط… */
+  source_type?: string;
   status: "approved";
-  /** تصنيف منهجي للمكتبة: موصى / بحذر / مرجع فقط / يحتاج مراجعة */
+  /** تصنيف منهجي للمكتبة */
   contentStatus?: LibraryContentStatus;
+  /** حالة توثيق المصدر */
+  verification_status?: "verified" | "needs_source" | "pending_review";
   /** ملاحظة مختصرة تظهر مع الكتاب */
   notes?: string;
   keywords: string[];
@@ -52,6 +62,21 @@ export type LibraryBook = {
   /** تنبيه علمي يظهر في صفحة الكتاب؛ الكتب ذات التنبيه لا تُبرَز في الرئيسية. */
   caution?: string;
 };
+
+/** حالة العرض الفعلية: بلا رابط قراءة = needs_source ما لم يُضبط خلاف ذلك. */
+export function resolveLibraryContentStatus(book: LibraryBook): LibraryContentStatus {
+  if (book.contentStatus) return book.contentStatus;
+  if (!book.external_url?.trim()) return "needs_source";
+  return "recommended";
+}
+
+export function librarySourceLabel(book: LibraryBook): string {
+  if (book.external_url?.trim()) {
+    return book.source_title?.trim() || "قراءة المصدر";
+  }
+  return "المصدر: لم يُضبط بعد";
+}
+
 
 export const LIBRARY_CATALOG: LibraryBook[] = [
   {
@@ -372,11 +397,11 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     parts_label: "4 أجزاء",
     status: "approved",
     contentStatus: "useful_with_caution",
-    notes: "كتاب نافع في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو التصحيح والتضعيف.",
+    caution:
+      "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية.",
+    notes: "فيه أحاديث ضعيفة وموضوعة ومباحث صوفية نبّه عليها أهل العلم (كالعراقي وابن الجوزي والذهبي)؛ يُقرأ مع التمحيص لا كمرجع حديثي أو عقدي مطلق.",
     keywords: ["إحياء علوم الدين", "الغزالي", "تزكية", "أخلاق", "سلوك"],
     sort_order: 220,
-    caution:
-      "فيه أحاديث ضعيفة وموضوعة ومباحث صوفية نبّه عليها أهل العلم (كالعراقي وابن الجوزي والذهبي)؛ يُقرأ مع التمحيص لا كمرجع حديثي أو عقدي مطلق.",
   },
   {
     id: "book-risalah-qushayri",
@@ -500,6 +525,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     parts_label: "20 جزءاً",
     external_url: "https://quran.ksu.edu.sa/tafseer/qurtubi/",
     status: "approved",
+    contentStatus: "recommended",
     keywords: ["القرطبي", "تفسير أحكام", "فقه القرآن"],
     sort_order: 42,
   },
@@ -516,11 +542,11 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     parts_label: "32 جزءاً",
     status: "approved",
     contentStatus: "useful_with_caution",
-    notes: "كتاب نافع في مباحثه اللغوية، وفيه استطرادات كلامية وفلسفية تحتاج مراجعة؛ فلا يعتمد وحده في العقيدة.",
+    caution:
+      "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية.",
+    notes: "يُستفاد من مباحثه اللغوية والعامة مع الحذر من الاستطرادات الكلامية والفلسفية التي قد تخالف منهج أهل السنة في مواضع.",
     keywords: ["الرازي", "مفاتيح الغيب", "تفسير عقلي", "التفسير الكبير"],
     sort_order: 45,
-    caution:
-      "يُستفاد من مباحثه اللغوية والعامة مع الحذر من الاستطرادات الكلامية والفلسفية التي قد تخالف منهج أهل السنة في مواضع.",
   },
   // ── حديث (إضافة) ───────────────────────────────────────────────────
   {
@@ -627,11 +653,11 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     parts_label: "3 أجزاء",
     status: "approved",
     contentStatus: "reference_only",
+    caution:
+      "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية.",
     notes: "مرجع تاريخي واسع؛ فيه روايات ضعيفة وإسرائيليات، فلا يعتمد وحده دون كتب السيرة المحرَّرة.",
     keywords: ["السيرة الحلبية", "سيرة", "النبي ﷺ"],
     sort_order: 59,
-    caution:
-      "فيه روايات ضعيفة وإسرائيليات وتفاصيل تحتاج تمحيصًا؛ لا يُعتمد عليه وحده دون كتب السيرة المحرَّرة.",
   },
   {
     id: "book-sirah-dahlawi",
@@ -1039,11 +1065,11 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     parts_label: "جزءان",
     status: "approved",
     contentStatus: "useful_with_caution",
-    notes: "كتاب نافع في بابه، وفيه مواضع وروايات تحتاج مراجعة أهل العلم، فلا يعتمد وحده في العقيدة أو التصحيح والتضعيف.",
+    caution:
+      "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية.",
+    notes: "فيه روايات ومباحث تحتاج تمحيصًا؛ يُنتفع به في الشمائل مع الرجوع إلى الصحيح عند التعارض.",
     keywords: ["الشفا", "القاضي عياض", "سيرة", "حقوق النبي", "شمائل"],
     sort_order: 110,
-    caution:
-      "فيه روايات ومباحث تحتاج تمحيصًا؛ يُنتفع به في الشمائل مع الرجوع إلى الصحيح عند التعارض.",
   },
   {
     id: "book-kamil-ibn-athir",
@@ -1066,10 +1092,11 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     description: "من أوسع المصادر التاريخية الإسلامية المبكرة، يبدأ من الخليقة حتى سنة 302هـ. جمع فيه الإمام الطبري روايات متعددة بأسانيدها من مصادر سابقة.",
     parts_label: "11 مجلداً",
     status: "approved",
+    contentStatus: "reference_only",
+    caution:
+      "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية. جمع روايات بأسانيدها فتحتاج دراسة قبل الاعتماد — لا سيّما الإسرائيليات وأخبار الفتن.",
     keywords: ["تاريخ الطبري", "الطبري", "تاريخ", "سيرة", "خلافة"],
     sort_order: 112,
-    caution:
-      "جمع فيه المؤلف الروايات بأسانيدها، فتحتاج إلى دراسة أسانيدها ومتونها قبل اعتمادها — لا سيّما الإسرائيليات وأخبار الفتن.",
   },
   {
     id: "book-luma-itiqad-ibn-qudama",
@@ -1195,8 +1222,10 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     author: "أبو علي مسكويه",
     type: "كتاب",
     category: "آداب",
-    description: "كتاب فلسفي أخلاقي رائد يبحث في تهذيب النفس والفضائل والرذائل، يمزج بين الفكر الإسلامي والتراث الأخلاقي الفلسفي، من أبرز كتب الأخلاق في التراث الإسلامي.",
+    description: "كتاب فلسفي أخلاقي يبحث في تهذيب النفس والفضائل والرذائل، يمزج بين الفكر الإسلامي والتراث الأخلاقي الفلسفي، من أبرز كتب الأخلاق في التراث الإسلامي.",
     status: "approved",
+    contentStatus: "useful_with_caution",
+    caution: "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية.",
     keywords: ["تهذيب الأخلاق", "مسكويه", "أخلاق", "فلسفة", "فضائل"],
     sort_order: 129,
   },
@@ -1601,8 +1630,10 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     author: "عبد الرحمن الأخضري",
     type: "متن",
     category: "منطق وفلسفة",
-    description: "منظومة تعليمية من 156 بيتاً في علم المنطق الصوري، نظمها الأخضري نظماً لكتاب «إيساغوجي»، اشتُهرت عند أهل العلم فكثرت شروحها وحواشيها (أبرزها شرح الدمنهوري وحاشية البيجوري)، ولا تزال متناً معتمداً في تدريس المنطق بالأزهر وغيره.",
+    description: "منظومة تعليمية من 156 بيتاً في علم المنطق الصوري، نظمها الأخضري نظماً لكتاب «إيساغوجي»، اشتُهرت عند أهل العلم فكثرت شروحها وحواشيها، ولا تزال متناً متداولاً في بعض المعاهد الشرعية.",
     status: "approved",
+    contentStatus: "useful_with_caution",
+    caution: "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية.",
     keywords: ["السلم المنورق", "الأخضري", "منطق", "متن", "إيساغوجي"],
     sort_order: 169,
   },

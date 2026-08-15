@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
-import { SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { ContentDetailLayout } from "@/components/platform/ContentDetailLayout";
 import { FiqhTimeline } from "@/components/fiqh-council/FiqhTimeline";
 import { getFiqhIssueBySlug } from "@/lib/fiqh-council-issues-service";
@@ -11,13 +11,15 @@ import {
   fiqhIssueHref,
   type FiqhCouncilIssue,
 } from "@/lib/fiqh-council-types";
-import { FIQH_DOCUMENTATION_LABELS } from "@/lib/fiqh-council-trust";
+import { FIQH_DOCUMENTATION_LABELS, isPublicIssue } from "@/lib/fiqh-council-trust";
 import { FIQH_RESEARCH_DISCLAIMER } from "@/lib/fiqh-citation";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { SourceBadge } from "@/components/content-trust/SourceBadge";
 import { ReviewMeta } from "@/components/content-trust/ReviewMeta";
 import { PublicationGate } from "@/components/content-trust/PublicationGate";
+import NotFound from "@/views/not-found";
+import "@/styles/pages/knowledge.css";
 
 function groupItemsByType(issue: FiqhCouncilIssue) {
   const items = issue.items || [];
@@ -54,37 +56,46 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
       return;
     }
     const path = fiqhIssueHref(issue.slug);
+    const publicReady = isPublicIssue(issue);
+    const needsReview =
+      !publicReady ||
+      issue.editorial_review_status === "unreviewed" ||
+      issue.documentation_level !== "official_verified";
     applyPageSeo({
       path,
       title: `${issue.title} | المسائل الفقهية، المجلس العلمي`,
-      description: issue.summary || issue.title,
+      description: needsReview
+        ? `قيد المراجعة العلمية: ${issue.summary || issue.title}`
+        : issue.summary || issue.title,
       keywords: [issue.category, "مسألة فقهية", "المجمع الفقهي"],
       ogType: "article",
       canonicalPath: path,
-      robots: issue.status === "published" ? "index, follow" : "noindex, nofollow",
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: issue.title,
-          description: issue.summary,
-          dateModified: issue.updated_at,
-          datePublished: issue.published_at,
-          inLanguage: "ar",
-          url: `https://www.majlisilm.com${path}`,
-        },
-        breadcrumbJsonLd([
-          { name: "الرئيسية", path: "/" },
-          { name: "المجمع الفقهي", path: "/fiqh-council" },
-          { name: "المسائل الفقهية", path: "/fiqh-council/issues" },
-          { name: issue.title, path },
-        ]),
-      ],
+      robots: needsReview || issue.status !== "published" ? "noindex, follow" : "index, follow",
+      jsonLd: needsReview
+        ? []
+        : [
+            {
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: issue.title,
+              description: issue.summary,
+              dateModified: issue.updated_at,
+              datePublished: issue.published_at,
+              inLanguage: "ar",
+              url: `https://www.majlisilm.com${path}`,
+            },
+            breadcrumbJsonLd([
+              { name: "الرئيسية", path: "/" },
+              { name: "المجمع الفقهي", path: "/fiqh-council" },
+              { name: "المسائل الفقهية", path: "/fiqh-council/issues" },
+              { name: issue.title, path },
+            ]),
+          ],
     });
   }, [issue, loading, params.slug]);
 
   if (loading) return <SkeletonCardGrid />;
-  if (!issue) return <Empty text="المسألة غير موجودة أو غير منشورة." />;
+  if (!issue) return <NotFound />;
 
   if (issue.publication_gate === "blocked") {
     return (
@@ -96,6 +107,10 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
   }
 
   const grouped = groupItemsByType(issue);
+  const needsReviewBanner =
+    !isPublicIssue(issue) ||
+    issue.editorial_review_status === "unreviewed" ||
+    issue.documentation_level !== "official_verified";
 
   const renderItemList = (title: string, list: typeof issue.items) => {
     if (!list?.length) return null;
@@ -119,6 +134,13 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
   return (
     <div className="page-shell narrow fiqh-council-page">
       <FiqhCouncilSubnav />
+
+      {needsReviewBanner ? (
+        <aside className="knowledge-review-banner" role="note">
+          هذه المادة قيد المراجعة العلمية ولا تعتمد كفتوى أو توثيق نهائي. يُرجع في التطبيق العملي لأهل
+          العلم والجهات الشرعية المعتمدة.
+        </aside>
+      ) : null}
 
       <ContentDetailLayout
         breadcrumbs={[
