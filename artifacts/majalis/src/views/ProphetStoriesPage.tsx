@@ -459,7 +459,7 @@ function ProphetDetailView({
           )}
           <p className="prophet-detail-lux__hero-title">{p.title}</p>
           <GeometricBorder color="var(--prophet-color-on-dark)" size={20} />
-          <p className="prophet-detail-lux__keys-hint">اختصارات: ← التالي · → السابق · Esc للقائمة</p>
+          <p className="prophet-detail-lux__keys-hint">اختصارات: السهم لليسار للتالي · السهم لليمين للسابق · Escape للقائمة</p>
         </div>
       </div>
 

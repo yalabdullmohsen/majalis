@@ -3,7 +3,7 @@ import type { Nation } from "../types";
 export const QAWM_IBRAHIM: Nation = {
   slug: "qawm-ibrahim",
   name: "قوم إبراهيم",
-  aliases: ["قوم إبراهيم", "النمرود", "عبدة الكواكب", "بابل", "نار إبراهيم"],
+  aliases: ["قوم إبراهيم", "عبدة الكواكب", "بابل", "نار إبراهيم"],
   prophet: { name: "إبراهيم عليه السلام", slug: "ibrahim" },
   prophetKnown: true,
   place: "غير محدد بدقة — لم يُعيَّن في نص صحيح، وذكر المفسرون أرض بابل ولا يُجزم به",

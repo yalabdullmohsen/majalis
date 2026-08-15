@@ -43,8 +43,8 @@ export const PROPHETS_LINEAGE: LineageNode = {
     {
       id: "idris",
       name: "إدريس",
-      era: "قبل نوح",
-      people: "يُذكر في الأخبار (بابل) بلا ثبوت قطعي",
+      era: "يُذكر قبل نوح في سياق التاريخ دون ترتيب قطعي من الوحي",
+      people: "يُذكر في بعض كتب التاريخ بلا ثبوت قطعي للمكان",
       generationsGap: 7,
       linkNote: "ذرية آدم — عدة أجيال؛ موضع قومه لم يُسمَّ في الوحي",
       slug: "idris",
@@ -53,7 +53,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
           id: "nuh",
           name: "نوح",
           era: "أطول الأنبياء دعوةً",
-          people: "العراق القديم",
+          people: "يُذكر في كتب التاريخ (العراق أو ما حوله) بلا جزم من الوحي",
           isUlulAzm: true,
           generationsGap: 3,
           linkNote: "من ذرية إدريس أو آدم",
@@ -66,7 +66,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
               people: "العراق القديم ثم الشام والحجاز (موضع النشأة يُذكر بلا جزم باسم «بابل»)",
               isUlulAzm: true,
               generationsGap: 10,
-              linkNote: "من ذرية سام بن نوح، عدة أجيال",
+              linkNote: "يُذكر في كتب التاريخ أنه من ذرية سام بن نوح عبر أجيال — بلا نص قرآني يفصّل النسب",
               slug: "ibrahim",
               children: [
                 {
@@ -102,7 +102,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
                   id: "ishaq",
                   name: "إسحاق",
                   era: "النبي المبشَّر به",
-                  people: "فلسطين وكنعان",
+                  people: "يُذكر في كتب التاريخ (بلاد الشام) بلا جزم من الوحي",
                   slug: "is-haq",
                   linkNote: "ابن إبراهيم من سارة",
                   children: [
@@ -147,7 +147,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
                               id: "ayyub",
                               name: "أيوب",
                               era: "الصابر الشاكر",
-                              people: "أرض حوران (الشام)",
+                              people: "يُذكر في بعض كتب التاريخ (حوران/الشام) بلا ثبوت قطعي",
                               slug: "ayyub",
                               children: [
                                 {
@@ -164,7 +164,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
                               id: "dawud",
                               name: "داود",
                               era: "النبي الملك",
-                              people: "فلسطين",
+                              people: "يُذكر مكان دعوته في كتب التاريخ (بلاد الشام) بلا جزم من الوحي",
                               slug: "dawud",
                               generationsGap: 5,
                               children: [
@@ -207,7 +207,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
                               id: "ilyas",
                               name: "إلياس",
                               era: "نبي بني إسرائيل",
-                              people: "فلسطين",
+                              people: "يُذكر مكان دعوته في كتب التاريخ بلا جزم من الوحي",
                               slug: "ilyas",
                               children: [
                                 {
@@ -239,7 +239,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
               id: "lut",
               name: "لوط",
               era: "نبي القرية الظالمة",
-              people: "الأردن وفلسطين",
+              people: "يُذكر موضع قومه في كتب التفسير والتاريخ بلا جزم قطعي من الوحي",
               slug: "lut",
               linkNote: "ابن أخي إبراهيم، معاصر له",
             },
@@ -250,7 +250,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
               people: "الأحقاف (جنوب الجزيرة)",
               slug: "hud",
               generationsGap: 5,
-              linkNote: "من ذرية سام بن نوح",
+              linkNote: "يُذكر في كتب التاريخ من ذرية سام بن نوح — بلا نص قرآني يفصّل النسب",
             },
             {
               id: "salih",
@@ -258,7 +258,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
               era: "نبي ثمود",
               people: "الحجر (شمال الحجاز)",
               slug: "salih",
-              linkNote: "من ذرية سام بن نوح",
+              linkNote: "يُذكر في كتب التاريخ من ذرية سام بن نوح — بلا نص قرآني يفصّل النسب",
             },
           ],
         },

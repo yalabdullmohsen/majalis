@@ -108,6 +108,8 @@ if (
 }
 
 const { PROPHETS } = await importSrc("src/lib/prophets-data.ts");
+const { NATIONS } = await importSrc("src/lib/nations-seed.ts");
+
 const { SINS_TOPICS } = await importSrc("src/lib/sins-rights-data.ts");
 const { getAllSurahStories } = await importSrc("src/lib/surah-stories.ts");
 const { FIQH_ISSUES_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-issues-seed.ts");
@@ -127,6 +129,12 @@ if (QURAN_SURAHS.length !== 114) {
 }
 
 const SURAH_STORIES = getAllSurahStories();
+
+const QURAN_PEOPLE_CATALOG = JSON.parse(
+  await readFile(resolve(appRoot, "public/data/quran-people/people.json"), "utf8"),
+);
+const QURAN_PEOPLE = (QURAN_PEOPLE_CATALOG.people || []).filter((p) => p.status === "published");
+
 const PUBLIC_FIQH_ISSUES = FIQH_ISSUES_PUBLISHED_SEED.filter(isPublicIssue);
 const PUBLIC_FIQH_ITEMS = FIQH_COUNCIL_PUBLISHED_SEED.filter(isVerifiedPublicItem);
 
@@ -819,7 +827,7 @@ ${linkList(
   ),
   "/fiqh": `<p>بوابة الفقه الإسلامي: أحكام العبادات والمعاملات، المذاهب الأربعة، القواعد الفقهية، وقرارات المجامع — مع إحالة المسائل المعاصرة إلى مصادرها المعتمدة.</p>
 ${linkList("أقسام الفقه", [
-  { name: "الأحكام الشرعية", url: "/rulings", note: "مسائل موثّقة بالأدلة" },
+  { name: "الأحكام الشرعية", url: "/rulings", note: "مسائل فقهية مع إحالات ومصادر يجري استكمال توثيقها" },
   { name: "المجمع الفقهي", url: "/fiqh-council", note: "قرارات وفتاوى مؤسسية" },
   { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
   { name: "النوازل المعاصرة", url: "/fiqh-council/nawazil" },
@@ -2199,6 +2207,17 @@ for (const row of PLATFORM_SEED.courses || []) {
   );
 }
 
+
+function librarySourceLabel(url) {
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, "");
+    if (host === "sunnah.com" || host.endsWith(".sunnah.com")) return "sunnah.com";
+    return host || null;
+  } catch {
+    return null;
+  }
+}
+
 for (const row of LIBRARY_CATALOG) {
   const related = LIBRARY_CATALOG.filter((b) => b.id !== row.id && b.category && b.category === row.category)
     .slice(0, 6)
@@ -2223,7 +2242,9 @@ for (const row of LIBRARY_CATALOG) {
   ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
   ${row.type ? `<li>النوع: ${escapeHtml(row.type)}</li>` : ""}
   ${row.parts_label ? `<li>الأجزاء: ${escapeHtml(row.parts_label)}</li>` : ""}
-  ${row.external_url ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">رابط القراءة</a></li>` : ""}
+  ${row.external_url && librarySourceLabel(row.external_url)
+    ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">${escapeHtml(librarySourceLabel(row.external_url))}</a></li>`
+    : `<li>المصدر قيد الإضافة</li>`}
 </ul>
 ${linkList("كتب ذات صلة في نفس التصنيف", related)}
 ${linkList("روابط ذات صلة", [
@@ -2307,6 +2328,82 @@ for (const p of PROPHETS) {
 ${p.keyAttributes?.length ? `<h2>أبرز صفاته</h2>\n<ul>\n  ${p.keyAttributes.map((a) => `<li>${escapeHtml(a)}</li>`).join("\n  ")}\n</ul>` : ""}
 ${p.lessons?.length ? `<h2>الدروس والعبر</h2>\n<ul>\n  ${p.lessons.map((l) => `<li>${escapeHtml(l)}</li>`).join("\n  ")}\n</ul>` : ""}`,
       priority: 0.74,
+      changefreq: "monthly",
+    },
+  );
+}
+
+
+// الأمم السابقة
+addPage(
+  {
+    path: "/nations",
+    title: "الأمم السابقة",
+    description: "موسوعة الأمم والأقوام المذكورين في القرآن: بالآيات، وما صح من السنة عند وجوده، مع تمييز ما ثبت مما لم يثبت.",
+    keywords: ["الأمم السابقة", "قصص الأقوام", "عاد", "ثمود", "قوم نوح"],
+    ogType: "website",
+  },
+  {
+    richBody: `<p>فهرس الأمم السابقة المذكورة في القرآن.</p>
+${linkList("الأمم", NATIONS.map((n) => ({ name: n.name, url: `/nations/${n.slug}`, note: n.summary?.slice(0, 80) })))}`,
+    priority: 0.78,
+  },
+);
+for (const n of NATIONS) {
+  addPage(
+    {
+      path: `/nations/${n.slug}`,
+      title: `${n.name} — الأمم السابقة`,
+      description: clamp(padDesc(n.summary || n.sin || n.name, `قصة ${n.name} في القرآن`), 300),
+      keywords: [n.name, ...(n.aliases || []), "الأمم السابقة", "قصص القرآن"],
+      ogType: "article",
+    },
+    {
+      parents: [{ name: "الأمم السابقة", path: "/nations" }],
+      richBody: `<p>${escapeHtml(n.summary || "")}</p>
+${n.lessons?.length ? `<h2>العبر</h2><ul>${n.lessons.map((l) => `<li>${escapeHtml(l)}</li>`).join("")}</ul>` : ""}`,
+      priority: 0.72,
+      changefreq: "monthly",
+    },
+  );
+}
+
+// الذين ذكروا في القرآن
+addPage(
+  {
+    path: "/quran/people",
+    title: "الذين ذكروا في القرآن",
+    description: "فهرس من ذُكروا في القرآن بأسمائهم، مع مواضع الآيات والربط بقصص الأنبياء دون توسع خارج النص.",
+    keywords: ["الذين ذكروا في القرآن", "شخصيات القرآن", "آزر", "مريم"],
+    ogType: "website",
+  },
+  {
+    richBody: `<p>فهرس المذكورين بالاسم في القرآن.</p>
+${linkList("الشخصيات", QURAN_PEOPLE.map((p) => ({ name: p.nameAr, url: `/quran/people/${p.slug}` })))}`,
+    priority: 0.78,
+  },
+);
+for (const person of QURAN_PEOPLE) {
+  const occ = (person.occurrences || [])
+    .map((o) => `<li>سورة ${o.surah} · آية ${o.ayah}${o.note ? ` — ${escapeHtml(o.note)}` : ""}</li>`)
+    .join("\n");
+  addPage(
+    {
+      path: `/quran/people/${person.slug}`,
+      title: `${person.nameAr} في القرآن`,
+      description: clamp(padDesc(person.definition || person.nameAr, `${person.nameAr} في القرآن — مواضع الذكر والعبرة دون توسع خارج النص.`), 300),
+      keywords: [person.nameAr, ...(person.aliases || []), "الذين ذكروا في القرآن"],
+      ogType: "article",
+    },
+    {
+      parents: [{ name: "الذين ذكروا في القرآن", path: "/quran/people" }],
+      richBody: `<p>${escapeHtml(person.definition || "")}</p>
+${person.cautionNote ? `<p><strong>تنبيه:</strong> ${escapeHtml(person.cautionNote)}</p>` : ""}
+<h2>مواضع الذكر</h2>
+<ul>
+${occ}
+</ul>`,
+      priority: 0.72,
       changefreq: "monthly",
     },
   );

@@ -64,6 +64,13 @@ export default function QuranPersonDetailView() {
           <p>{person.definition}</p>
         </section>
 
+        {person.cautionNote ? (
+          <section style={{ marginTop: "1.25rem" }} aria-label="تنبيه علمي">
+            <h2 style={{ fontSize: "1.1rem", marginBottom: "0.35rem" }}>تنبيه</h2>
+            <p>{person.cautionNote}</p>
+          </section>
+        ) : null}
+
         <section style={{ marginTop: "1.25rem" }}>
           <h2 style={{ fontSize: "1.1rem", marginBottom: "0.35rem" }}>سبب الذكر</h2>
           <p>{person.whyMentioned}</p>
