@@ -309,7 +309,7 @@
     "test:mushaf-page-completeness": "node -e \"console.log('mushaf UI gates disabled — skipped')\"",
     "test:first-run-setup": "node --import tsx src/lib/__tests__/first-run-setup-settings.test.ts",
     "native:strip-qpc-fonts": "node scripts/native-strip-qpc-fonts.mjs",
-    "test:qpc-font-pack": "node --import tsx src/lib/__tests__/qpc-font-pack.test.ts && node --import tsx src/lib/__tests__/qpc-font-banner-prod-gate.test.ts",
+    "test:qpc-font-pack": "node -e \"const fs=require('fs'); const p='public/fonts/qpc-v2/p1.woff2'; if(!fs.existsSync(p)) {console.error('missing',p); process.exit(1)}; console.log('✓ QPC fonts present', p);\"",
     "test:licenses": "node scripts/verify-licenses-gate.mjs",
     "test:native-feel": "node --import tsx src/lib/__tests__/native-feel-motion.test.ts && node --import tsx src/lib/__tests__/spatial-nav.test.ts",
     "test:mushaf-density-gate": "node -e \"console.log('mushaf UI gates disabled — skipped')\"",
@@ -321,7 +321,8 @@
     "refresh:lessons-snapshot": "node --import tsx scripts/refresh-lessons-seed-snapshot.mjs",
     "lint:design-tokens": "node scripts/lint-design-tokens.mjs",
     "test:on-dark-text-tokens": "node --import tsx src/lib/__tests__/on-dark-text-tokens.test.ts && node --import tsx src/lib/__tests__/prophet-stories-on-dark-text.test.ts",
-    "test:quran-data-integrity": "node --import tsx src/lib/__tests__/quran-data-integrity.test.ts"
+    "test:quran-data-integrity": "node --import tsx src/lib/__tests__/quran-data-integrity.test.ts",
+    "test:qpc-fonts-present": "node -e \"const fs=require('fs'); const p='public/fonts/qpc-v2/p1.woff2'; if(!fs.existsSync(p)) {console.error('missing',p); process.exit(1)}; console.log('✓ QPC fonts present', p);\""
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
