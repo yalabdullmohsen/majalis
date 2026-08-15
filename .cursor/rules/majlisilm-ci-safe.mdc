@@ -1,0 +1,49 @@
+---
+description: بروتوكول منع فشل GitHub CI قبل الدفع والدمج والنشر
+alwaysApply: true
+---
+
+# المجلس العلمي — CI-safe قبل الدمج
+
+## قبل أي تعديل
+1. ابدأ من جذر git الحقيقي فقط:
+   `cd "$(git rev-parse --show-toplevel)"` ثم `git status --short`
+2. لا تخمّن المسارات — تحقق بوجود الملفات (`test -f` / `test -d`) قبل قراءتها أو تعديلها.
+3. اقرأ ملفات التحكم ذات الصلة أولاً: `package.json`، `pnpm-workspace.yaml`، `.github/workflows/*`، سكربتات gates، وملفات Capacitor/iOS/Android عند التعديل الأصلي.
+4. لا تضعف الاختبارات ولا تحذف checks ولا تجعل الفحص optional لإخفاء خطأ — أصلح السبب الجذري.
+5. PR واحد بهدف واحد (UI / مصحف / أذان / SEO / iOS / بيانات) — لا خلط نطاقات.
+
+## zsh / glob
+لا تستخدم globs غير مقتبسة مثل `ios/App/App/Sounds/adhan-short*.caf`.
+استخدم `find … -name 'adhan-short*.caf'` أو اقتبس النمط.
+
+## iOS / Android
+- ابنِ الويب أولاً ثم `npx cap sync ios` (من حزمة majalis).
+- تحقق من وجود `project.pbxproj` / workspace قبل التعديل.
+- الأصوات/الموارد يجب أن تكون في Copy Bundle Resources فعلياً.
+
+## قبل الدفع (إلزامي)
+```bash
+corepack enable
+pnpm install --frozen-lockfile
+pnpm run verify:ci
+# أو مع تضييق: pnpm run verify:ci -- --changed
+# UI: --ui · native: --native · بلا مصحف: --no-mushaf
+```
+عند فشل أي أمر: **لا commit ولا push** — اقرأ الخطأ، أصلح، أعد نفس الأمر حتى ينجح.
+
+## بعد الدفع
+```bash
+gh pr checks --watch --fail-fast
+# عند الفشل:
+gh run view --log-failed
+```
+لا دمج ولا نشر إلا بعد نجاح على الأقل:
+- Verify build
+- repo-gates
+- build
+- static-checks
+- Color contrast إذا كان التعديل UI
+- بوابات iOS/Android إذا كان التعديل native
+
+`verify:pr` مسار أسرع جزئي؛ **`verify:ci` هو البوابة الإلزامية قبل الدفع**.

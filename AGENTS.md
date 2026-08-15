@@ -1,9 +1,15 @@
 # AGENTS.md
 
-## Throughput (إلزامي)
+## Throughput + CI-safe (إلزامي)
 
-قبل أي مهمة: اتبع `docs/AGENT_THROUGHPUT.md`. فهرس المسارات: `docs/REPO_INDEX.md`. قياس CI: `docs/CI_THROUGHPUT.md`.
-**ممنوع انتظار CI** — تحقق محلي ثم PR + auto-merge ثم المهمة التالية فورًا. الفحص المطلوب = **Verify build** فقط.
+قبل أي مهمة: اتبع `docs/AGENT_THROUGHPUT.md` وقاعدة `.cursor/rules/majlisilm-ci-safe.mdc`.
+فهرس المسارات: `docs/REPO_INDEX.md`. قياس CI: `docs/CI_THROUGHPUT.md`.
+
+**قبل الدفع:** من جذر git (`cd "$(git rev-parse --show-toplevel)"`) شغّل:
+`corepack enable && pnpm install --frozen-lockfile && pnpm run verify:ci`
+لا commit/push عند الفشل. لا تضعف الفحوصات.
+
+**بعد الدفع:** راقب الحرجة بـ `gh pr checks --watch --fail-fast`. الدمج بعد نجاح Verify build + repo-gates + build + static-checks (وContrast/UI أو native حسب نطاق الـPR).
 
 ## Cursor Cloud specific instructions
 
