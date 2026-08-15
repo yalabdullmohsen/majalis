@@ -97,4 +97,12 @@ for (const f of walk(path.join(root, "src"))) {
   assert.ok(yahyaTitle.includes("يحيى"));
 }
 
+// 7) مسارات ممثلة موجودة في prerender (وليست homepage)
+for (const route of ["topics", "rulings", "fiqh-council", "library", "scholars", "prophets/yahya"]) {
+  const html = findHtml(route);
+  const title = html.match(/<title>([^<]*)/)?.[1] || "";
+  assert.ok(title.length > 5, route);
+  assert.ok(!/undefined|null|TODO|placeholder/i.test(desc(html)), route);
+}
+
 console.log("site-data-evidence.spec OK");
