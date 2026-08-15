@@ -39,7 +39,7 @@ export function PageShell({
   "aria-labelledby": ariaLabelledBy,
 }: Props) {
   useEffect(() => {
-    ensureChromeMeta();
+    ensureChromeMeta(undefined, { skipThemeColor: true });
   }, []);
 
   const widthClass =

@@ -16,6 +16,7 @@ import { SafeAreaDebugOverlay } from "@/components/SafeAreaDebugOverlay";
 import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
+import { PageChromeSync } from "@/components/PageChromeSync";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
@@ -972,8 +973,9 @@ function AppShellInner() {
   });
 
   useEffect(() => {
-    ensureChromeMeta();
-  }, [location]);
+    // viewport / color-scheme فقط — ألوان الشريط عبر PageChromeSync
+    ensureChromeMeta(undefined, { skipThemeColor: true });
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("pts-immersive", onPrayer);
@@ -1007,6 +1009,7 @@ function AppShellInner() {
     >
       {/* دخولية جلسة واحدة — فوق الصدفة، لا تُعاد عند التنقل ولا عند الرجوع */}
       <MajalisLaunchScreen />
+      <PageChromeSync />
       <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />
       <a href="#main-content" className="skip-link mj-skip-link">{t("skip_to_content")}</a>
       <OfflineBanner />

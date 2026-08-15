@@ -1,6 +1,6 @@
 /**
- * تُطابق شريط الحالة الأصلي (iOS/Android) مع الوضع الفعلي.
- * overlaysWebView=false: الـWebView تحت الشريط — لا نكرّر inset-top في CSS.
+ * أدوات Capacitor — StatusBar يُدار مركزياً عبر apply-page-chrome (overlay + لون الصفحة).
+ * setupStatusBar يبقى للتوافق (إقلاع / استعادة بعد immersive) ويعيد مزامنة chrome الحالي.
  */
 import { Capacitor } from "@capacitor/core";
 
@@ -8,36 +8,20 @@ export const isNative = Capacitor.isNativePlatform();
 export const isAndroid = Capacitor.getPlatform() === "android";
 export const isIOS = Capacitor.getPlatform() === "ios";
 
-/** ألوان سطح التطبيق — تطابق theme-color / --mj-bg */
+/** ألوان سطح افتراضية — تطابق theme-color / --mj-bg */
 export const STATUS_BAR_BG_LIGHT = "#F2F4F3";
 export const STATUS_BAR_BG_DARK = "#101614";
 
+/**
+ * @deprecated تفضيل applyPageChrome / reapplyPageChromeFromLocation.
+ * يُبقي الاستدعاءات القديمة تعمل عبر إعادة مزامنة chrome حسب المسار والوضع.
+ */
 export async function setupStatusBar(theme: "light" | "dark" = "dark") {
-  if (!isNative) return;
-  const { StatusBar, Style } = await import("@capacitor/status-bar");
-
-  // استقرار: لا رسم تحت الساعة/البطارية — الـCSS لا يضيف inset-top على Capacitor
-  try {
-    await StatusBar.setOverlaysWebView({ overlay: false });
-  } catch {
-    /* منصّات قديمة — تجاهل */
-  }
-
-  try {
-    // Dark style = أيقونات داكنة (نهاري) · Light style = أيقونات فاتحة (ليلي)
-    await StatusBar.setStyle({ style: theme === "dark" ? Style.Light : Style.Dark });
-    await StatusBar.show();
-  } catch {
-    /* تجاهل */
-  }
-
-  try {
-    await StatusBar.setBackgroundColor({
-      color: theme === "dark" ? STATUS_BAR_BG_DARK : STATUS_BAR_BG_LIGHT,
-    });
-  } catch {
-    /* iOS قد لا يدعم setBackgroundColor — متوقَّع */
-  }
+  const { reapplyPageChromeFromLocation, bootstrapStatusBarOverlay } = await import(
+    "@/lib/apply-page-chrome"
+  );
+  await bootstrapStatusBarOverlay();
+  await reapplyPageChromeFromLocation(theme);
 }
 
 export async function setupKeyboard() {

@@ -24,8 +24,8 @@ const config: CapacitorConfig = {
       splashFullScreen: true,
     },
     StatusBar: {
-      // لا رسم تحت الساعة — الـWebView أسفل الشريط (بدون تكرار inset-top في CSS)
-      overlaysWebView: false,
+      // يمتد الـWebView تحت الساعة — لون المنطقة من CSS (--app-status-bg) حسب الصفحة
+      overlaysWebView: true,
       style: "DARK",
       backgroundColor: "#F2F4F3",
     },

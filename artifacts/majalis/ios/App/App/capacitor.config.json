@@ -19,7 +19,7 @@
 			"splashFullScreen": true
 		},
 		"StatusBar": {
-			"overlaysWebView": false,
+			"overlaysWebView": true,
 			"style": "DARK",
 			"backgroundColor": "#F2F4F3"
 		},

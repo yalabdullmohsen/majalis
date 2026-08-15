@@ -44,7 +44,15 @@ html[data-theme="dark"] {
   --shadow-soft: var(--e-2);
 }
 
-html { background: var(--mj-bg, var(--color-background)); }
+:root {
+  --app-status-bg: var(--mj-bg, #F2F4F3);
+  --app-status-fg-mode: dark;
+}
+
+html {
+  background: var(--app-status-bg, var(--mj-bg, var(--color-background)));
+  min-height: 100dvh;
+}
 body {
   min-width: 320px;
   overflow-x: clip;
