@@ -4,8 +4,9 @@
  * iOS: ملفات .caf في artifacts/majalis/ios/App/App/Sounds/ (Copy Bundle Resources).
  * Android: ملفات في artifacts/majalis/android/app/src/main/res/raw/ (الاسم بلا امتداد عند الإسناد).
  *
- * صوت الإشعار محدود ≈٣٠ث على iOS — هذه الملفات قصيرة (~٧–٨ث).
+ * صوت الإشعار محدود ≈٣٠ث على iOS — ملفات adhan-short-*.caf ≤10ث (IMA4).
  * الأذان الكامل داخل التطبيق عبر HTMLAudio + ملفات /audio/adhan/*.mp3.
+ * إشعار iOS: اسم الملف فقط (مثل adhan-short-makkah.caf) — بلا مسار /sounds/adhan.
  */
 import { Capacitor } from "@capacitor/core";
 import { DEFAULT_ALERT_SOUND } from "@/lib/notifications/channels";
