@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { CalendarDays, ChevronLeft, ChevronRight, HelpCircle, LayoutList, Sparkles } from "lucide-react";
 import { Link } from "wouter";
-import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
+import { PROPHETS, getProphet, resolveProphetSlug, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { prophetArticleJsonLd, breadcrumbJsonLd, defaultSiteJsonLd } from "@/lib/seo-structured-data";
@@ -270,7 +270,8 @@ function ProphetDetailView({
   onNavigate: (slug: string) => void;
 }) {
   const p = getProphet(slug);
-  const sup = SUPPLEMENT[slug];
+  const canonicalSlug = p?.slug ?? resolveProphetSlug(slug);
+  const sup = SUPPLEMENT[canonicalSlug];
   const [fontSize, setFontSize] = useState(16);
   const [dbStory, setDbStory] = useState<{ content: string; citations: Citation[] } | null>(null);
   const [dbLoading, setDbLoading] = useState(true);
@@ -291,6 +292,16 @@ function ProphetDetailView({
   ];
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [slug]);
+
+  useEffect(() => {
+    if (!p) return;
+    if (slug !== p.slug) {
+      const next = `/prophets/${p.slug}`;
+      if (window.location.pathname !== next) {
+        window.history.replaceState(null, "", next);
+      }
+    }
+  }, [slug, p]);
 
   useEffect(() => {
     if (!p) return;
@@ -319,14 +330,14 @@ function ProphetDetailView({
     supabase
       .from("prophet_stories")
       .select("content, citations")
-      .eq("slug", slug)
+      .eq("slug", canonicalSlug)
       .eq("is_approved", true)
       .maybeSingle()
       .then(({ data }) => {
         setDbStory(data ?? null);
         setDbLoading(false);
       });
-  }, [slug]);
+  }, [canonicalSlug]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -917,8 +928,8 @@ export default function ProphetStoriesPage() {
 
   useEffect(() => {
     const path = window.location.pathname;
-    const match = path.match(/\/(?:prophets|anbiya)\/([^/]+)$/);
-    if (match) setSelectedSlug(match[1]);
+    const match = path.match(/\/(?:prophets|prophet-stories|prophets-stories|anbiya)\/([^/]+)$/);
+    if (match) setSelectedSlug(resolveProphetSlug(match[1]));
   }, []);
 
   const results = searchProphets(search);
@@ -967,8 +978,6 @@ export default function ProphetStoriesPage() {
             <span>{PROPHETS.length} نبياً</span>
             <span>·</span>
             <span>٥ أولو العزم</span>
-            <span>·</span>
-            <span>١٢٤٫٠٠٠ نبي (حديث لا يصح سنده)</span>
           </div>
           <p className="prophets-lux-hero__note">
             هؤلاء الأنبياء والرسل الذين ذكرهم الله بأسمائهم في القرآن الكريم؛ وقد أخبر سبحانه أنه أرسل رسلاً آخرين لم يقصصهم علينا: ﴿وَرُسُلًا قَدْ قَصَصْنَاهُمْ عَلَيْكَ مِن قَبْلُ وَرُسُلًا لَّمْ نَقْصُصْهُمْ عَلَيْكَ﴾ [النساء: 164].
@@ -1112,7 +1121,7 @@ export default function ProphetStoriesPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="قصص الأنبياء — المجلس العلمي" url="https://www.majlisilm.com/prophet-stories" />
+        <ShareButtons title="قصص الأنبياء — المجلس العلمي" url="https://majlisilm.com/prophets" />
       </div>
     </div>
   );

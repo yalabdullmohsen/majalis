@@ -191,6 +191,26 @@
   ],
   "redirects": [
     {
+      "source": "/prophets/ishaq",
+      "destination": "/prophets/is-haq",
+      "permanent": true
+    },
+    {
+      "source": "/prophets/ishaaq",
+      "destination": "/prophets/is-haq",
+      "permanent": true
+    },
+    {
+      "source": "/prophets/alyasa",
+      "destination": "/prophets/al-yasa",
+      "permanent": true
+    },
+    {
+      "source": "/prophets/al-yasaa",
+      "destination": "/prophets/al-yasa",
+      "permanent": true
+    },
+    {
       "source": "/support",
       "destination": "/contact",
       "permanent": false
