@@ -74,3 +74,8 @@ Aliases في `PROPHET_SLUG_ALIASES` أيضاً:
 ## هل قصص الأنبياء جاهزة للنشر؟
 
 **نعم** — العدد 25 مكتمل، الروابط الرسمية تعمل، و`/prophets/zakariya` لم يعد يسقط بلا قصة (يُحوَّل 301 إلى `/prophets/zakariyya`).
+
+## PR والنشر
+
+- PR: https://github.com/yalabdullmohsen/majalis/pull/1147
+- الحالة عند كتابة التقرير: مفتوح مع auto-merge بعد Verify build؛ الدمج والنشر يتبعان نجاح البوابة.
