@@ -522,12 +522,16 @@ export class AudioEngine {
         return;
       } catch (err) {
         lastErr = err;
-        console.warn("[AudioEngine] playAyah candidate failed:", url, err);
+        if (import.meta.env.DEV) {
+          console.warn("[AudioEngine] playAyah candidate failed:", url, err);
+        }
       }
     }
 
     if (gen !== this.playGeneration) return;
-    console.warn("[AudioEngine] playAyah:", lastErr);
+    if (import.meta.env.DEV) {
+      console.warn("[AudioEngine] playAyah:", lastErr);
+    }
     const name =
       lastErr && typeof lastErr === "object" && "name" in lastErr
         ? String((lastErr as { name: string }).name)
