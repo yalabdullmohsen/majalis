@@ -81,5 +81,5 @@
 | `test:production-indexability` | OK |
 | `test:site-data-evidence` | OK |
 | `typecheck` | OK |
-| `lint` | (يُشغَّل مع الإغلاق) |
-| `build` | (يُشغَّل مع الإغلاق) |
+| `lint` | OK |
+| `build` | OK |
