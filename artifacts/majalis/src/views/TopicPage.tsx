@@ -58,14 +58,22 @@ export default function TopicPage() {
   const [relatedTopics, setRelatedTopics] = useState<Array<{ slug: string; title: string }>>([]);
 
   useEffect(() => {
+    const missing = !topic;
     applyPageSeo({
       path: `/topic/${topic?.slug || slug}`,
-      title: `${topic?.title || "موضوع"} | المجلس العلمي`,
-      description: `استعرض محتوى موضوع "${topic?.title || "الموضوع"}" من الدروس والفتاوى والأحاديث في المجلس العلمي.`,
-      keywords: [topic?.title || "موضوع", "محتوى إسلامي", "فتاوى", "دروس", "أحاديث"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: topic?.title || "موضوع إسلامي", url: `https://www.majlisilm.com/topic/${topic?.slug || ""}`, about: { "@type": "Thing", name: topic?.title || "الموضوعات الإسلامية" } }],
+      title: missing
+        ? "موضوع غير متاح | المجلس العلمي"
+        : `${topic?.title || "موضوع"} | المجلس العلمي`,
+      description: missing
+        ? "هذا الموضوع غير متاح حالياً في فهرس المجلس العلمي."
+        : `استعرض محتوى موضوع "${topic?.title}" من الدروس والفتاوى والأحاديث في المجلس العلمي.`,
+      keywords: missing ? ["موضوعات علمية"] : [topic?.title || "موضوع", "محتوى إسلامي", "فتاوى", "دروس", "أحاديث"],
+      robots: missing ? "noindex,follow" : undefined,
+      jsonLd: missing
+        ? []
+        : [{ "@context": "https://schema.org", "@type": "WebPage", name: topic?.title || "موضوع إسلامي", url: `https://majlisilm.com/topic/${topic?.slug || ""}`, about: { "@type": "Thing", name: topic?.title || "الموضوعات الإسلامية" } }],
     });
-  }, [topic?.title]);
+  }, [topic, slug]);
 
   useEffect(() => {
     if (!slug) return;
@@ -87,7 +95,8 @@ export default function TopicPage() {
   if (!topic) {
     return (
       <div className="page-shell narrow">
-        <h1>الموضوع غير موجود</h1>
+        <h1>موضوع غير متاح</h1>
+        <p>لم نتمكن من عرض محتوى لهذا الرابط. قد يكون الموضوع محذوفاً أو لم يُنشَر بعد.</p>
         <Link href="/topics">العودة للموضوعات</Link>
       </div>
     );

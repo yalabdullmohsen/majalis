@@ -141,6 +141,19 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
       {item.caution ? (
         <div className="library-detail-caution" role="note">
           <strong>تنبيه علمي:</strong> {item.caution}
+          {item.notes ? <p className="library-detail-caution__notes">{item.notes}</p> : null}
+          {item.contentStatus ? (
+            <p className="library-detail-caution__status">
+              التصنيف:{" "}
+              {item.contentStatus === "recommended"
+                ? "موصى به"
+                : item.contentStatus === "useful_with_caution"
+                  ? "نافع مع الحذر"
+                  : item.contentStatus === "reference_only"
+                    ? "مرجع فقط"
+                    : "يحتاج مراجعة"}
+            </p>
+          ) : null}
         </div>
       ) : null}
       {readUrl && (

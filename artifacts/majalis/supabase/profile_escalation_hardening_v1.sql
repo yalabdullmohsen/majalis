@@ -42,7 +42,7 @@ SET search_path TO 'public'
 AS $function$
 DECLARE
   owner_email TEXT;
-  protected_emails TEXT[] := ARRAY['yalabdullmohsen1@gmail.com'];
+  protected_emails TEXT[] := ARRAY['Majlisilm.app@gmail.com'];
   is_protected_row BOOLEAN;
 BEGIN
   SELECT lower(trim(u.email)) INTO owner_email
