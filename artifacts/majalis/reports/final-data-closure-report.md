@@ -69,3 +69,10 @@
 ## هل بقي P0؟
 
 **لا.**
+
+## النشر
+
+- الفرع: `fix/full-site-content-audit-20260815`
+- PR: https://github.com/yalabdullmohsen/majalis/pull/1154
+- التحقق المحلي (typecheck / lint / build / audits / test:remaining-site-fixes): ناجح
+- الدمج التلقائي إلى `main` يتابع بعد اكتمال بوابة CI على نفس الـPR
