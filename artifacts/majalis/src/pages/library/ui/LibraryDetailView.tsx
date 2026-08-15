@@ -160,7 +160,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
         </div>
       ) : catalogStatus === "needs_source" ? (
         <div className="library-detail-caution" role="note">
-          <strong>المصدر:</strong> لم يُضبط بعد — لا يُعرض هذا السجل ككتاب موثّق الرابط حتى يُضبط مصدر القراءة.
+          <strong>المصدر:</strong> قيد الإضافة — لا يُعرض هذا السجل ككتاب موثّق الرابط حتى يُضبط مصدر القراءة.
         </div>
       ) : null}
       {readUrl ? (

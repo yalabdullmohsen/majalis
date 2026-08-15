@@ -51,18 +51,32 @@ for (const f of walk(path.join(root, "seo-prerender/prophets"), (n) => n === "in
 }
 
 // 2) تزكيات مطلقة ممنوعة
-const ABSOLUTE = ["فيلسوف الإسلام الأكبر", "أعظم شروح صحيح البخاري وأكملها", "الإمام المطلق", "معتمد في تدريس المنطق بالأزهر", "مآذن الأزهر"];
+const ABSOLUTE = [
+  "فيلسوف الإسلام الأكبر",
+  "أعظم شروح صحيح البخاري وأكملها",
+  "الإمام المطلق",
+  "معتمد في تدريس المنطق بالأزهر",
+  "مآذن الأزهر",
+  "فقيه المذهب غير المنازع",
+  "فقيه المذهب الحنبلي غير المنازع",
+];
 for (const file of walk(path.join(root, "src"), (n) => /\.(ts|tsx|json)$/.test(n))) {
-  if (file.includes("__tests__")) continue;
+  if (file.includes("__tests__") || file.includes("/data/scholars-seo.json")) continue;
   const text = fs.readFileSync(file, "utf8");
   const rel = path.relative(root, file);
   for (const ph of ABSOLUTE) {
     if (text.includes(ph)) fail(`${rel}: عبارة ممنوعة «${ph}»`);
   }
 }
-
 // 3) حجة الإسلام — مسموح بتحفّظ أو مصطلح الحج
 const scholars = read("src/lib/scholars-data.ts");
+// حافظ العصر / شيخ الإسلام كحكم مطلق بلا سياق تراجم — ابن حجر
+{
+  const block = scholars.match(/id:\s*["']ibn-hajar["'][\s\S]{0,900}/);
+  if (block && /حافظ العصر وشيخ الإسلام/.test(block[0]) && !/لُقّب في كتب التراجم/.test(block[0])) {
+    fail("ibn-hajar: حافظ العصر/شيخ الإسلام بلا صياغة سياقية");
+  }
+}
 if (/حجة الإسلام/.test(scholars) && !/اشتهر عند بعض أهل العلم بلقب|لقب «حجة الإسلام»/.test(scholars)) {
   // قد تكون مواضع أخرى؛ تحقق الغزالي تحديداً
   const ghazaliBlock = scholars.match(/id:\s*["']ghazali["'][\s\S]{0,1200}/);

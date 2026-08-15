@@ -2187,6 +2187,7 @@ for (const row of LIBRARY_CATALOG) {
     .slice(0, 6)
     .map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author }));
   const desc = tidyDesc(row.description || row.title);
+  const hasSource = Boolean(String(row.external_url || "").trim());
   // body = ظاهر كامل؛ description = meta (قد تُقصّ لاحقاً دون لمس الظاهر)
   addPage(
     {
@@ -2195,23 +2196,25 @@ for (const row of LIBRARY_CATALOG) {
       description: clamp(padDesc(desc, `كتاب من المكتبة الشرعية في ${SITE_NAME}`), 160),
       body: desc,
       ogType: "book",
+      robots: hasSource ? "index, follow" : "noindex, follow",
     },
     {
       extraJsonLd: bookJsonLdScript({ ...row, description: desc }),
       parents: [{ name: "المكتبة العلمية", path: "/library" }],
-      priority: 0.7,
+      priority: hasSource ? 0.7 : 0.3,
+      sitemap: hasSource,
       richBody: `<h2>بيانات الكتاب</h2>
 <dl>
   ${row.author ? `<div><dt>المؤلف:</dt><dd>${escapeHtml(row.author)}</dd></div>` : ""}
   ${row.category ? `<div><dt>التصنيف:</dt><dd>${escapeHtml(row.category)}</dd></div>` : ""}
   ${row.type ? `<div><dt>النوع:</dt><dd>${escapeHtml(row.type)}</dd></div>` : ""}
   ${row.parts_label ? `<div><dt>الأجزاء:</dt><dd>${escapeHtml(row.parts_label)}</dd></div>` : ""}
-  ${row.external_url
-    ? `<div><dt>المصدر:</dt><dd><a href="${escapeHtml(row.external_url)}">${escapeHtml(row.source_title || "قراءة المصدر")}</a></dd></div>`
-    : `<div><dt>المصدر:</dt><dd>لم يُضبط بعد</dd></div>`}
+  ${hasSource
+    ? `<div><dt>المصدر:</dt><dd><a href="${escapeHtml(row.external_url)}">${escapeHtml(row.source_title || "فتح المصدر")}</a></dd></div>`
+    : `<div><dt>المصدر:</dt><dd>قيد الإضافة</dd></div>`}
   ${row.contentStatus
     ? `<div><dt>حالة المحتوى:</dt><dd>${escapeHtml(String(row.contentStatus))}</dd></div>`
-    : !row.external_url
+    : !hasSource
       ? `<div><dt>حالة المحتوى:</dt><dd>needs_source</dd></div>`
       : ""}
 </dl>

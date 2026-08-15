@@ -72,9 +72,9 @@ export function resolveLibraryContentStatus(book: LibraryBook): LibraryContentSt
 
 export function librarySourceLabel(book: LibraryBook): string {
   if (book.external_url?.trim()) {
-    return book.source_title?.trim() || "قراءة المصدر";
+    return book.source_title?.trim() || "فتح المصدر";
   }
-  return "المصدر: لم يُضبط بعد";
+  return "قيد الإضافة";
 }
 
 
