@@ -7,6 +7,7 @@ import {
   ADHAN_IOS_MAX_SEGMENTS,
   ADHAN_IOS_MULTI_SEGMENT_BUNDLED,
   ADHAN_IOS_SEGMENT_MAX_SEC,
+  ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC,
   adhanIosSoundName,
   buildAdhanIosSegmentPlan,
   defaultAdhanSegmentDurations,
@@ -15,6 +16,7 @@ import {
 
 assert.equal(ADHAN_IOS_MAX_SEGMENTS, 4);
 assert.ok(ADHAN_IOS_SEGMENT_MAX_SEC <= 28);
+assert.equal(ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC, 29);
 assert.equal(ADHAN_IOS_MULTI_SEGMENT_BUNDLED, true);
 
 assert.equal(
@@ -45,9 +47,9 @@ assert.ok(plan.every((p) => p.sound.startsWith("adhan-seq-makkah-")));
 assert.ok(plan[0].title?.includes("الفجر"));
 assert.equal(plan[1].title, null, "المقاطع التالية بلا عنوان متكرر");
 assert.equal(plan[0].atMs, start);
-assert.equal(plan[1].atMs, start + 28_000);
-assert.equal(plan[2].atMs, start + 56_000);
-assert.equal(plan[3].atMs, start + 84_000);
+assert.equal(plan[1].atMs, start + 29_000);
+assert.equal(plan[2].atMs, start + 58_000);
+assert.equal(plan[3].atMs, start + 87_000);
 
 const overlong = buildAdhanIosSegmentPlan({
   prayerKey: "dhuhr",
@@ -58,7 +60,10 @@ const overlong = buildAdhanIosSegmentPlan({
   durationsSec: [40, 40],
 });
 assert.ok(overlong.every((p) => p.sound === "adhan-short-egypt.caf"));
-assert.equal(overlong[1].atMs - overlong[0].atMs, ADHAN_IOS_SEGMENT_MAX_SEC * 1000);
+assert.equal(
+  overlong[1].atMs - overlong[0].atMs,
+  ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC * 1000,
+);
 
 assert.equal(defaultAdhanSegmentDurations().length, 4);
 

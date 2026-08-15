@@ -1,35 +1,31 @@
-# تقرير إكمال نظام الأذان iOS — 2026-08-15
+# تقرير إكمال نظام الأذان iOS — 2026-08-15 (تحديث)
 
 ## الخلاصة
 
-أُغلق مسار الأذان/الإشعارات بقيود iOS الحقيقية: أذان كامل داخل التطبيق، أصوات CAF قصيرة في Bundle، اختبار ١٥ ثانية، وإزالة وعود Critical Alerts.
+أذان كامل داخل التطبيق، إشعار قصير عند الإغلاق، أذان متتابع تجريبي بفاصل ٢٩ث، بلا وعود Critical Alerts.
 
 ## ما تم
 
 | بند | الحالة |
 |---|---|
-| `adhan-audio-service.ts` | تشغيل/إيقاف/اختبار/probe/جلسة صوت |
-| `public/audio/adhan/*-full.mp3` | جودة أعلى (~128kbps حيث توفر) |
-| `ios/App/App/Sounds/adhan-short-*.caf` | ٨ث تقريبًا + مسجّلة في pbxproj |
-| `adhan-seq-makkah-0N.caf` | ٤ مقاطع × ٢٨ث — تجريبي غير افتراضي |
-| تجاوز الصامت | معطّل + بطاقة معلومات (لا Critical Alerts) |
-| Live Activity | مخفي إن لم يُدعم الجهاز |
-| إعدادات مرتبة | موقع، أذان عام، صوت إشعار، تخصيص صلوات، اختبار، قيود iOS |
-| قرّاء التلاوة | موجودون في `quran-audio.ts` (ليس قسم الأذان) |
+| `adhan-audio-service.ts` | تشغيل/إيقاف/اختبار/probe |
+| `public/audio/adhan/*-full.mp3` | جودة حقيقية (~128kbps) |
+| `adhan-short-*.caf` + `adhan-seq-makkah-0N.caf` | في Bundle Resources |
+| Android `adhan_seq_makkah_0N.mp3` | مضافة |
+| جدولة المتتابع | ٠ / ٢٩ / ٥٨ / ٨٧ ثانية |
+| تجاوز الصامت | Disabled + «يتطلب موافقة Critical Alerts من Apple» |
+| أزرار الاختبار | كامل / إشعار ١٥ث / متتابع |
+| سجلات `[adhan-schedule]` | prayerName, prayerTime, mode, soundName, notificationId, segmentIndex |
 
-## التحقق
+## مسار Xcode
 
-- typecheck ✓
-- lint ✓
-- build ✓
-- اختبارات adhan (segments/offline/catalog/bundle/settings) ✓
-- `npx cap sync ios` نُفّذ
+افتح `artifacts/majalis/ios/App/App.xcodeproj` (لا يوجد `App.xcworkspace` منفصل).  
+Background Modes → Audio مفعّل في Info.plist.
 
-## ما لا يُنجز من الوكيل
+## التحقق المحلي
 
-- Signing / Archive / رفع TestFlight يحتاج حساب Apple على الجهاز المحلي.
-- التحقق السمعي النهائي على iPhone حقيقي.
+typecheck / lint / build / اختبارات adhan / `npx cap sync ios`
 
-## P0؟
+## يدوي على الجهاز
 
-لا — لا خيارات كاذبة لتجاوز الصامت.
+Archive → TestFlight: كامل، ١٥ث، متتابع، مفتوح/خلفية/مغلق، صامت ON/OFF، Focus ON/OFF.

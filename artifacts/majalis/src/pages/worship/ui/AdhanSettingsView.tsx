@@ -25,7 +25,7 @@ import {
   testFullAdhan,
   type AdhanStyleId,
 } from "@/lib/adhan-audio-service";
-import { fireTestLocalNotification, TEST_NOTIFICATION_DELAY_MS } from "@/lib/notifications/test-trigger";
+import { fireTestLocalNotification, fireTestSequentialAdhan, TEST_NOTIFICATION_DELAY_MS } from "@/lib/notifications/test-trigger";
 import { invalidatePrayerNativeSchedule } from "@/lib/prayer-alert-scheduler";
 import {
   ADHAN_PLAYBACK_MODES,
@@ -179,10 +179,10 @@ type PermissionState = "granted" | "denied" | "default" | "prompt" | "unsupporte
 
 function PermissionBadge({ value }: { value: PermissionState }) {
   const MAP: Record<PermissionState, { label: string; cls: string }> = {
-    granted: { label: "مفعّل ✓", cls: "ads-perm--ok" },
-    denied: { label: "محجوب ✕", cls: "ads-perm--err" },
-    default: { label: "لم يُطلب بعد", cls: "ads-perm--warn" },
-    prompt: { label: "لم يُطلب بعد", cls: "ads-perm--warn" },
+    granted: { label: "مسموح", cls: "ads-perm--ok" },
+    denied: { label: "مرفوض", cls: "ads-perm--err" },
+    default: { label: "غير محدد", cls: "ads-perm--warn" },
+    prompt: { label: "غير محدد", cls: "ads-perm--warn" },
     unsupported: { label: "غير مدعوم", cls: "ads-perm--muted" },
   };
   const { label, cls } = MAP[value];
@@ -586,9 +586,10 @@ export default function AdhanSettingsPage() {
             <div className="ads-field-gap">
               <div className="ads-row">
                 <div>
-                  <div className="ads-global-label">أذان كامل عبر إشعارات متتابعة</div>
+                  <div className="ads-global-label">أذان متتابع تجريبي</div>
                   <div className="ads-global-desc">
-                    تجريبي: قد لا يكتمل على iOS إذا كان الجهاز صامتًا أو Focus مفعّلًا أو قيّد النظام الإشعارات.
+                    قد لا يكون التشغيل متصلًا ١٠٠٪ على iOS بسبب قيود النظام والصامت والتركيز.
+                    المقاطع: عند الوقت ثم بعد ٢٩ث / ٥٨ث / ٨٧ث.
                   </div>
                 </div>
                 <Toggle
@@ -599,7 +600,7 @@ export default function AdhanSettingsPage() {
                     void invalidatePrayerNativeSchedule();
                   }}
                   id="ios-seq-toggle"
-                  label="أذان كامل عبر إشعارات متتابعة"
+                  label="أذان متتابع تجريبي"
                 />
               </div>
             </div>
@@ -716,7 +717,7 @@ export default function AdhanSettingsPage() {
             <div>
               <div className="ads-global-label">تجاوز الوضع الصامت</div>
               <div className="ads-global-desc">
-                غير متاح إلا بموافقة Apple Critical Alerts — لا نملك هذا الامتياز حاليًا.
+                يتطلب موافقة Critical Alerts من Apple — غير متوفر لهذا التطبيق.
               </div>
             </div>
             <Toggle
@@ -724,7 +725,7 @@ export default function AdhanSettingsPage() {
               onChange={() => undefined}
               disabled
               id="bypass-silent-toggle"
-              label="تجاوز الوضع الصامت غير متاح"
+              label="تجاوز الوضع الصامت — يتطلب موافقة Critical Alerts من Apple"
             />
           </div>
           {!CRITICAL_ALERTS_ENTITLEMENT_PRESENT ? (
@@ -816,7 +817,9 @@ export default function AdhanSettingsPage() {
         </div>
         <div className="ads-card__body">
           <p className="ads-adhan-desc">
-            اختبر الصوت داخل التطبيق، ثم اختبر إشعارًا حقيقيًا بعد ١٥ ثانية على الجهاز (TestFlight).
+            <strong>الصوت الكامل داخل التطبيق:</strong> يعمل من ملف MP3 عند فتح التطبيق.
+            {" "}
+            <strong>صوت الإشعار عند إغلاق التطبيق:</strong> ملفات CAF قصيرة (~٨ث) أو الأذان المتتابع التجريبي.
           </p>
           <div className="ads-prayer-muezzin-btns" style={{ marginTop: "0.5rem" }}>
             <button
@@ -837,7 +840,7 @@ export default function AdhanSettingsPage() {
                 });
               }}
             >
-              اختبار صوت الأذان
+              اختبار الأذان الكامل
             </button>
             <button
               type="button"
@@ -850,7 +853,7 @@ export default function AdhanSettingsPage() {
                   setTestBusy(false);
                   if (r.ok) {
                     setTestMsg(
-                      `سيصل إشعار بصوت CAF خلال ${Math.round((r.delayMs ?? TEST_NOTIFICATION_DELAY_MS) / 1000)} ثانية. أبقِ الشاشة مقفلة أو التطبيق في الخلفية للتحقق.`,
+                      `سيصل إشعار قصير بصوت CAF خلال ${Math.round((r.delayMs ?? TEST_NOTIFICATION_DELAY_MS) / 1000)} ثانية. جرّب الخلفية والمغلق والصامت.`,
                     );
                     return;
                   }
@@ -862,7 +865,34 @@ export default function AdhanSettingsPage() {
                 });
               }}
             >
-              اختبار إشعار بعد ١٥ ثانية
+              اختبار إشعار قصير بعد 15 ثانية
+            </button>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              disabled={testBusy || !(isNative && isIOS)}
+              onClick={() => {
+                setTestBusy(true);
+                setTestMsg(null);
+                void fireTestSequentialAdhan().then((r) => {
+                  setTestBusy(false);
+                  if (r.ok) {
+                    setTestMsg(
+                      "جُدولت ٤ مقاطع متتابعة (كل ٢٩ث). قد لا يكون التشغيل متصلًا ١٠٠٪ بسبب قيود iOS والصامت والتركيز.",
+                    );
+                    return;
+                  }
+                  setTestMsg(
+                    r.reason === "permission"
+                      ? "يلزم تفعيل إذن الإشعارات أولًا."
+                      : r.reason === "unsupported"
+                        ? "الاختبار المتتابع على جهاز iOS أصلي فقط."
+                        : "تعذّر جدولة الأذان المتتابع.",
+                  );
+                });
+              }}
+            >
+              اختبار الأذان المتتابع
             </button>
             <button
               type="button"
@@ -879,14 +909,14 @@ export default function AdhanSettingsPage() {
       <section className="ads-card" aria-labelledby="ads-ios-limits-head">
         <div className="ads-card__head" id="ads-ios-limits-head">
           <Bell size={15} strokeWidth={2} aria-hidden="true" />
-          <span>قيود iOS</span>
+          <span>الأذان المتتابع التجريبي وقيود iOS</span>
         </div>
         <div className="ads-card__body">
           <ul className="ads-adhan-desc" style={{ margin: 0, paddingInlineStart: "1.1rem", display: "grid", gap: "0.35rem" }}>
-            <li>لا يُشغَّل أذان كامل من إشعار محلي والتطبيق مغلق تمامًا.</li>
-            <li>صوت الإشعار من ملفات الحزمة القصيرة (حوالي ٨ ثوانٍ).</li>
+            <li>لا يُشغَّل أذان كامل من إشعار محلي والتطبيق مغلق تمامًا دون التجزئة التجريبية.</li>
+            <li>صوت الإشعار الافتراضي من ملفات الحزمة القصيرة (حوالي ٨ ثوانٍ).</li>
             <li>لا يمكن تجاوز زر الصامت أو Focus دون Critical Alerts من Apple.</li>
-            <li>الإشعارات المتتابعة تجريبية وغير مضمونة ١٠٠٪.</li>
+            <li>قد لا يكون التشغيل المتتابع متصلًا ١٠٠٪ على iOS بسبب قيود النظام والصامت والتركيز.</li>
           </ul>
         </div>
       </section>

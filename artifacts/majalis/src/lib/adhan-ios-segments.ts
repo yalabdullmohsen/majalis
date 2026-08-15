@@ -10,6 +10,8 @@ import { ADHAN_SHORT_MAX_SEC } from "./adhan-playback-modes";
 
 export const ADHAN_IOS_MAX_SEGMENTS = 4;
 export const ADHAN_IOS_SEGMENT_MAX_SEC = Math.min(28, ADHAN_SHORT_MAX_SEC);
+/** فاصل جدولة ثابت بين بداية المقاطع (ملف ≤28ث + هامش ١ث) */
+export const ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC = 29;
 
 /**
  * مقاطع الأذان الكامل المتعدّدة (`adhan-seq-makkah-0N.caf`) مضمّنة في الحزمة.
@@ -86,7 +88,6 @@ export function buildAdhanIosSegmentPlan(opts: {
   const dayKey = new Date(opts.startAtMs).toISOString().slice(0, 10);
   const base = chainIdBase(opts.prayerKey, dayKey);
   const kind = opts.isFajr ? "fajr" : "general";
-  let cursor = opts.startAtMs;
   const plan: AdhanIosSegmentPlan[] = [];
 
   for (let i = 0; i < clipped.length; i++) {
@@ -94,13 +95,12 @@ export function buildAdhanIosSegmentPlan(opts: {
     plan.push({
       id: base + i,
       sound: adhanIosSoundName(opts.recordingId, kind, i + 1),
-      atMs: cursor,
+      atMs: opts.startAtMs + i * ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC * 1000,
       title: isFirst ? `أذان ${opts.prayerName}` : null,
       body: isFirst ? "حيَّ على الصلاة" : null,
       prayerKey: opts.prayerKey,
       segmentIndex: i,
     });
-    cursor += clipped[i] * 1000;
   }
   return plan;
 }
@@ -160,6 +160,17 @@ export async function scheduleAdhanIosSegmentChain(
   await cancelAdhanIosSegmentChain();
   if (!isAdhanIosSegmentsAvailable()) {
     // ويب/اختبار: خزّن السلسلة فقط
+    for (const p of plan) {
+      console.info("[adhan-schedule]", {
+        prayerName: p.title ?? plan[0].title,
+        prayerKey: p.prayerKey,
+        prayerTime: new Date(p.atMs).toISOString(),
+        mode: plan.length > 1 ? "sequential" : "short",
+        soundName: p.sound,
+        notificationId: p.id,
+        segmentIndex: p.segmentIndex,
+      });
+    }
     writeChain({
       prayerKey: plan[0].prayerKey,
       ids: plan.map((p) => p.id),
@@ -182,6 +193,17 @@ export async function scheduleAdhanIosSegmentChain(
   }));
 
   await LocalNotifications.schedule({ notifications });
+  for (const p of plan) {
+    console.info("[adhan-schedule]", {
+      prayerName: p.title ?? plan[0].title,
+      prayerKey: p.prayerKey,
+      prayerTime: new Date(p.atMs).toISOString(),
+      mode: plan.length > 1 ? "sequential" : "short",
+      soundName: p.sound,
+      notificationId: p.id,
+      segmentIndex: p.segmentIndex,
+    });
+  }
   writeChain({
     prayerKey: plan[0].prayerKey,
     ids: plan.map((p) => p.id),

@@ -191,7 +191,10 @@ export function loadAdhanPrefs(): AdhanPreferences {
 }
 
 export function saveAdhanPrefs(prefs: AdhanPreferences): AdhanPreferences {
-  const safe = sanitizeFajrMuezzinPrefs(prefs);
+  const safe = sanitizeFajrMuezzinPrefs({
+    ...prefs,
+    bypassSilentMode: false,
+  });
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(safe));
   } catch { /* ignore quota errors */ }
@@ -201,7 +204,8 @@ export function saveAdhanPrefs(prefs: AdhanPreferences): AdhanPreferences {
 
 export function patchAdhanPrefs(patch: Partial<AdhanPreferences>): AdhanPreferences {
   const current = loadAdhanPrefs();
-  return saveAdhanPrefs({ ...current, ...patch });
+  // Critical Alerts غير متوفر — تجاهل أي محاولة لتفعيل تجاوز الصامت
+  return saveAdhanPrefs({ ...current, ...patch, bypassSilentMode: false });
 }
 
 export function patchPrayerPrefs(

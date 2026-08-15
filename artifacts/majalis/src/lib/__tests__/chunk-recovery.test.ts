@@ -77,7 +77,8 @@ assert.match(boundary, /componentDidCatch[\s\S]*?tryRecoverFromStaleChunk/);
 
 const main = readFileSync(join(root, "main.tsx"), "utf8");
 assert.match(main, /ChunkRecoveryToast/);
-assert.match(main, /chunk-recovery-toast\.css/);
+const toast = readFileSync(join(root, "components/ChunkRecoveryToast.tsx"), "utf8");
+assert.match(toast, /chunk-recovery-toast\.css/);
 
 assert.equal(typeof CHUNK_RECOVERING_EVENT, "string");
 

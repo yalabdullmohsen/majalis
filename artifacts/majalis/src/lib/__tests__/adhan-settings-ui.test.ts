@@ -32,6 +32,11 @@ assert.match(view, /ads-prayer-row/);
 assert.match(view, /rounded-full icon-only/);
 assert.equal(view.split("(افتراضي)").length - 1, 1, "وسم (افتراضي) مرة واحدة في الإعداد العام فقط");
 assert.equal(view.includes("النسبة الشخصية لا تُعرض إلا بعد التثبّت"), false);
+assert.match(view, /اختبار الأذان الكامل/);
+assert.match(view, /اختبار إشعار قصير بعد 15 ثانية/);
+assert.match(view, /اختبار الأذان المتتابع/);
+assert.match(view, /أذان متتابع تجريبي/);
+assert.match(view, /يتطلب موافقة Critical Alerts من Apple/);
 assert.match(view, /صيغة التشغيل:/);
 
 assert.match(picker, /mzp-search/);

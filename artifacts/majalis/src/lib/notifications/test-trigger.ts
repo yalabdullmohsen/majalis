@@ -81,7 +81,14 @@ export async function fireTestLocalNotification(
           },
         ],
       });
-      console.info("[notifications/test] scheduled", { delayMs: delay, sound });
+      console.info("[adhan-schedule]", {
+        prayerName: "اختبار",
+        prayerTime: new Date(Date.now() + delay).toISOString(),
+        mode: "short-test",
+        soundName: sound,
+        notificationId: TEST_NOTIFICATION_NATIVE_ID,
+        segmentIndex: 0,
+      });
       return { ok: true, platform, delayMs: delay };
     }
 
@@ -100,6 +107,65 @@ export async function fireTestLocalNotification(
     return { ok: true, platform, delayMs: delay };
   } catch (e) {
     console.error("[notifications/test] failed", e);
+    return { ok: false, reason: "error", platform };
+  }
+}
+
+export const TEST_SEQUENTIAL_BASE_ID = 99910;
+export const TEST_SEQUENTIAL_GAP_MS = 29_000;
+
+/**
+ * اختبار الأذان المتتابع: 4 إشعارات بفاصل 29ث (تجريبي — قيود iOS تنطبق).
+ */
+export async function fireTestSequentialAdhan(): Promise<
+  TestNotificationResult & { ids?: number[] }
+> {
+  const platform = isNative ? "native" : "web";
+  try {
+    if (!isNative) {
+      return { ok: false, reason: "unsupported", platform };
+    }
+    await ensureNotificationChannels();
+    const { LocalNotifications } = await import("@capacitor/local-notifications");
+    const perm = await LocalNotifications.checkPermissions();
+    if (perm.display !== "granted") {
+      return { ok: false, reason: "permission", platform };
+    }
+    const ids = [0, 1, 2, 3].map((i) => TEST_SEQUENTIAL_BASE_ID + i);
+    await LocalNotifications.cancel({
+      notifications: ids.map((id) => ({ id })),
+    });
+    const start = Date.now() + 3_000;
+    const notifications = ids.map((id, i) => {
+      const sound = `adhan-seq-makkah-0${i + 1}.caf`;
+      const at = new Date(start + i * TEST_SEQUENTIAL_GAP_MS);
+      console.info("[adhan-schedule]", {
+        prayerName: "اختبار متتابع",
+        prayerTime: at.toISOString(),
+        mode: "sequential-test",
+        soundName: sound,
+        notificationId: id,
+        segmentIndex: i,
+      });
+      return {
+        id,
+        title: i === 0 ? "اختبار الأذان المتتابع" : "",
+        body: i === 0 ? "مقطع تجريبي ١/٤ — قد ينقطع على الصامت أو Focus" : `مقطع ${i + 1}/٤`,
+        schedule: { at, allowWhileIdle: true },
+        sound,
+        channelId: CHANNEL_GENERAL,
+        interruptionLevel: "timeSensitive" as const,
+        extra: {
+          url: TEST_NOTIFICATION_URL,
+          kind: "adhan-seq-test",
+          segmentIndex: i,
+        },
+      };
+    });
+    await LocalNotifications.schedule({ notifications });
+    return { ok: true, platform, delayMs: 3_000, ids };
+  } catch (e) {
+    console.error("[notifications/test] sequential failed", e);
     return { ok: false, reason: "error", platform };
   }
 }
