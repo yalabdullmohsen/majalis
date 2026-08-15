@@ -38,6 +38,9 @@ assert.doesNotMatch(css, /\.mm-page__frame\s*\{[^}]*border:\s*1px/);
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
 assert.match(css, /\.mm-page-edge/);
 assert.match(css, /#1c2430|#151c26/); // ليلي كحلي لا أسود قاتم على الورقة
+assert.match(css, /\.mm-ayah-run__text\.is-selected/);
+assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*transparent/);
+assert.match(css, /\.mm-viewport\s+\.mm-page\s*\{[^}]*box-shadow:\s*none/);
 const ayahBlock = css.match(/\.mm-ayah-line\s*\{[^}]+\}/)?.[0] ?? "";
 assert.ok(ayahBlock.includes("letter-spacing: 0") || !/letter-spacing\s*:/.test(ayahBlock));
 assert.ok(ayahBlock.includes("word-spacing: 0") || !/word-spacing\s*:/.test(ayahBlock));
@@ -53,6 +56,8 @@ assert.match(viewport, /playAyah|togglePlay/);
 const line = read("src/features/mushaf-madinah/MushafAyahLine.tsx");
 assert.match(line, /onSelectVerse/);
 assert.match(line, /mm-ayah-hit/);
+assert.match(line, /mm-ayah-run/);
+assert.match(line, /groupRuns|WordRun/);
 
 const app = read("src/App.tsx");
 assert.match(app, /MushafReaderPage/);
