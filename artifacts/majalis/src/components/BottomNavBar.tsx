@@ -55,7 +55,7 @@ export function BottomNavBar() {
 
   return (
     <>
-      <nav className="bottom-nav bottom-nav--v2 bottom-nav--m2030 mj-nav-skin mj-chrome-stable" aria-label="التنقل السفلي">
+      <nav className="bottom-nav bottom-nav--v2 bottom-nav--m2030 mj-nav-skin mj-chrome-stable mj-chrome-scrollable" aria-label="التنقل السفلي">
         {BOTTOM_NAV_TABS.map(({ href, label, Icon }) => {
           const id = HREF_TO_ID[href];
           const active = !moreOpen && id === activeId;

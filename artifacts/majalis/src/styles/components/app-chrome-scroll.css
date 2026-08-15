@@ -1,0 +1,95 @@
+/**
+ * إخفاء كروم الجوال عند التمرير للأسفل — بدون display:none وبدون قفزة محتوى.
+ */
+
+:root {
+  --app-bg: var(--mj-bg, #f2f4f3);
+  /* --bottom-nav-height / --bottom-nav-total من theme + final-release — ثابتة عند الإخفاء */
+}
+
+html[data-theme="dark"],
+html.dark {
+  --app-bg: var(--mj-bg, #101614);
+}
+
+html,
+body,
+#root {
+  background: var(--app-bg);
+  min-height: 100%;
+}
+
+body {
+  overscroll-behavior-y: none;
+  background: var(--app-bg);
+}
+
+.app-shell {
+  background: var(--app-bg);
+  min-height: 100dvh;
+  min-height: 100svh;
+}
+
+/* إخفاء الكروم: transform فقط — المساحة المحجوزة للمحتوى تبقى ثابتة */
+@media (max-width: 879px) {
+  .navbar-v3.mj-chrome-scrollable {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-nav, 200);
+    transition: transform 180ms ease, opacity 180ms ease;
+    will-change: transform;
+    /* الخلفية تمتد تحت شريط الحالة — لا أبيض فوق */
+    background: var(--app-bg) !important;
+    background-image: none !important;
+  }
+
+  .bottom-nav.mj-chrome-scrollable,
+  .bottom-nav--v2.mj-chrome-scrollable {
+    transition: transform 180ms ease, opacity 180ms ease;
+    will-change: transform;
+    /* خلفية معتمة تطابق الصفحة حتى لا يظهر أبيض خلف Home Indicator */
+    background: var(--app-bg) !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .app-shell.app-chrome-hidden .navbar-v3.mj-chrome-scrollable {
+    transform: translateY(-100%);
+    opacity: 0.98;
+    pointer-events: none;
+  }
+
+  .app-shell.app-chrome-hidden .bottom-nav.mj-chrome-scrollable,
+  .app-shell.app-chrome-hidden .bottom-nav--v2.mj-chrome-scrollable {
+    transform: translateY(calc(100% + var(--inset-bottom, 0px)));
+    opacity: 0.98;
+    pointer-events: none;
+  }
+
+  /*
+   * padding السفلي ثابت عبر --content-pb / --bottom-nav-total في final-release.css
+   * — لا نغيّره عند الإخفاء حتى لا يقفز المحتوى.
+   */
+  .app-shell.app-chrome-hidden {
+    background: var(--app-bg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar-v3.mj-chrome-scrollable,
+  .bottom-nav.mj-chrome-scrollable,
+  .bottom-nav--v2.mj-chrome-scrollable {
+    transition: none;
+  }
+}
+
+/* سطح المكتب: لا إخفاء */
+@media (min-width: 880px) {
+  .app-shell.app-chrome-hidden .navbar-v3,
+  .app-shell.app-chrome-hidden .bottom-nav {
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+}
