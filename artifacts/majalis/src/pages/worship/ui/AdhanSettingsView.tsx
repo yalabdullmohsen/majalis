@@ -33,6 +33,14 @@ import {
 import { MuezzinPicker } from "@/components/adhan/MuezzinPicker";
 import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
 import {
+  getAdhanAudioDebugSnapshot,
+  probeAdhanAssetExists,
+  stopAdhanAudio,
+  testAdhanSound,
+} from "@/lib/adhan-audio-service";
+import { resolveAdhanStyleNotificationSound } from "@/lib/prayer-notification-sounds";
+import { listBundledAdhanSoundPaths } from "@/lib/adhan-offline-assets";
+import {
   KUWAIT_GOVERNORATES,
   getSelectedGovernorate,
   setSelectedGovernorate,
@@ -170,10 +178,10 @@ type PermissionState = "granted" | "denied" | "default" | "prompt" | "unsupporte
 
 function PermissionBadge({ value }: { value: PermissionState }) {
   const MAP: Record<PermissionState, { label: string; cls: string }> = {
-    granted: { label: "مفعّل ✓", cls: "ads-perm--ok" },
-    denied: { label: "محجوب ✕", cls: "ads-perm--err" },
-    default: { label: "لم يُطلب بعد", cls: "ads-perm--warn" },
-    prompt: { label: "لم يُطلب بعد", cls: "ads-perm--warn" },
+    granted: { label: "مسموح ✓", cls: "ads-perm--ok" },
+    denied: { label: "مرفوض ✕", cls: "ads-perm--err" },
+    default: { label: "غير محدد", cls: "ads-perm--warn" },
+    prompt: { label: "غير محدد", cls: "ads-perm--warn" },
     unsupported: { label: "غير مدعوم", cls: "ads-perm--muted" },
   };
   const { label, cls } = MAP[value];
@@ -360,6 +368,10 @@ export default function AdhanSettingsPage() {
   const { data: prayerData } = usePrayerCountdown(selectedGovId);
   const [diagnostics, setDiagnostics] = useState<NotificationDiagnostics | null>(null);
   const [diagnosticsOpen, setDiagnosticsOpen] = useState(false);
+  const [soundTestBusy, setSoundTestBusy] = useState(false);
+  const [soundTestMsg, setSoundTestMsg] = useState<string | null>(null);
+  const [debugOpen, setDebugOpen] = useState(false);
+  const [debugLines, setDebugLines] = useState<string[]>([]);
 
   useEffect(() => {
     if (!diagnosticsOpen) return;
@@ -367,6 +379,42 @@ export default function AdhanSettingsPage() {
     computeNotificationDiagnostics(prayerData ?? null).then((d) => { if (!cancelled) setDiagnostics(d); });
     return () => { cancelled = true; };
   }, [diagnosticsOpen, prayerData, prefs]);
+
+  const refreshDebug = async () => {
+    const snap = getAdhanAudioDebugSnapshot();
+    const muezzinId = prefs.defaultMuezzinId;
+    const muezzin = getMuezzin(muezzinId);
+    const paths = listBundledAdhanSoundPaths().slice(0, 6);
+    const exists: string[] = [];
+    for (const p of paths) {
+      const ok = await probeAdhanAssetExists(p);
+      exists.push(`${ok ? "✓" : "✗"} ${p}`);
+    }
+    let scheduled = "—";
+    try {
+      if (isNative) {
+        const { LocalNotifications } = await import("@capacitor/local-notifications");
+        const pending = await LocalNotifications.getPending();
+        scheduled = `${pending.notifications?.length ?? 0} مجدولة`;
+        console.info("[adhan-debug] pending", pending.notifications?.slice(0, 8));
+      }
+    } catch (e) {
+      scheduled = `خطأ: ${e instanceof Error ? e.message : String(e)}`;
+    }
+    const perm = await import("@/lib/prayer-local-notifications").then((m) =>
+      m.getNotificationPermissionStatus(),
+    );
+    setDebugLines([
+      `إذن الإشعارات: ${perm}`,
+      `المؤذن المختار: ${muezzin.name} (${muezzinId})`,
+      `صوت الإشعار القصير: ${resolveAdhanStyleNotificationSound(muezzinId)}`,
+      `ملف كامل: ${muezzin.audioUrl}`,
+      `تشغيل الآن: ${snap.playing ? "نعم" : "لا"}`,
+      `آخر خطأ صوت: ${snap.lastError || "—"}`,
+      `إشعارات مجدولة: ${scheduled}`,
+      ...exists,
+    ]);
+  };
 
   const sunriseTime =
     prayerData?.prayers.find((p: { key: string }) => p.key === "Sunrise")
@@ -730,6 +778,83 @@ export default function AdhanSettingsPage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      <section className="ads-card" aria-labelledby="ads-sound-test-head">
+        <div className="ads-card__head" id="ads-sound-test-head">
+          <Music size={15} strokeWidth={2} aria-hidden="true" />
+          <span>اختبار الصوت والتشخيص</span>
+        </div>
+        <div className="ads-card__body">
+          <p className="ads-adhan-desc">
+            يشغّل الأذان الكامل داخل التطبيق عبر جلسة AVAudioSession (playback).
+            لا يتجاوز الصامت أو Focus — ذلك يتطلب Critical Alerts من Apple.
+          </p>
+          <div className="ads-row-sep">
+            <div>
+              <div className="ads-global-label">اختبار الصوت</div>
+              <div className="ads-global-desc">
+                تشغيل فوري للمؤذن الافتراضي (~٢٠ث) مع عرض الخطأ إن فشل
+              </div>
+            </div>
+            <div className="ads-prayer-muezzin-btns">
+              <button
+                type="button"
+                className="ads-pill-btn"
+                disabled={soundTestBusy}
+                onClick={() => {
+                  setSoundTestBusy(true);
+                  setSoundTestMsg(null);
+                  void testAdhanSound(prefs.defaultMuezzinId, prefs.playbackMode || "full").then((r) => {
+                    setSoundTestBusy(false);
+                    setSoundTestMsg(r.ok ? "يعمل الصوت ✓" : `فشل: ${r.message}`);
+                  });
+                }}
+              >
+                {soundTestBusy ? "جارٍ…" : "اختبار الصوت"}
+              </button>
+              <button
+                type="button"
+                className="ads-pill-btn-ghost"
+                onClick={() => {
+                  stopAdhanAudio();
+                  setSoundTestMsg("توقّف الصوت");
+                }}
+              >
+                إيقاف
+              </button>
+            </div>
+          </div>
+          {soundTestMsg ? (
+            <p className="ads-adhan-desc" role="status">
+              {soundTestMsg}
+            </p>
+          ) : null}
+          <div className="ads-row-sep">
+            <div>
+              <div className="ads-global-label">لوحة تشخيص الأذان</div>
+              <div className="ads-global-desc">الإذن، الجدولة، المؤذن، ووجود الملفات</div>
+            </div>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              onClick={() => {
+                const next = !debugOpen;
+                setDebugOpen(next);
+                if (next) void refreshDebug();
+              }}
+            >
+              {debugOpen ? "إخفاء" : "عرض"}
+            </button>
+          </div>
+          {debugOpen ? (
+            <ul className="ads-adhan-desc" style={{ margin: 0, paddingInlineStart: "1.1rem" }}>
+              {debugLines.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       </section>
 

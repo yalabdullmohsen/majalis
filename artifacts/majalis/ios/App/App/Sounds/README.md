@@ -1,33 +1,24 @@
-# أصوات إشعارات الصلاة (iOS)
+# أصوات إشعار الأذان (iOS)
 
-الملفات التالية مضمّنة في الحزمة ومُضافة إلى Xcode → Copy Bundle Resources:
+ملفات CAF قصيرة (≤30 ثانية).
 
-| الملف | الاستخدام |
-|---|---|
-| `prayer_quiet.caf` | تنبيه قبل الصلاة (هادئ / قصير) |
-| `prayer_clear.caf` | دخول وقت الصلاة (أوضح) |
-| `prayer_soft.caf` | تذكير خفيف بعد الصلاة |
-| `prayer_makkah.caf` / `prayer_madinah.caf` / … | أنماط أذان قصيرة حسب التسجيل |
-| `prayer_default.caf` / `prayer_takbeerat.caf` | تنبيه تكبيرات |
+- **المصدر في المستودع:** `ios/App/App/Sounds/`
+- **روابط صلبة في جذر App** لنسخها إلى **جذر App Bundle** (مطلوب لـ `UNNotificationSound`)
 
-العلم في المصدر:
+يجب أن تظهر في Copy Bundle Resources (PBXResourcesBuildPhase).
 
-`PRAYER_CUSTOM_SOUNDS_ENABLED = true`
+## الأسماء المعتمدة (2026-08)
 
-في `src/lib/prayer-notification-sounds.ts`.
+| ملف | المؤذن / الأسلوب |
+|-----|------------------|
+| `adhan-short-makkah.caf` | أذان مكة |
+| `adhan-short-madinah.caf` | أذان المدينة |
+| `adhan-short-egypt.caf` | أذان مصري |
+| `adhan-short-aqsa.caf` | أذان الأقصى |
+| `adhan-short-takbeerat.caf` | تكبيرات فقط |
 
-## حدود iOS
+أسماء التوافق القديمة (`prayer_makkah.caf` …) تبقى في الحزمة.
 
-- صوت الإشعار ≤ ≈٣٠ ثانية؛ الملفات هنا ~٧–٨ث.
-- **لا يوجد أذان كامل موثوق عند إغلاق التطبيق** بدون مقاطع مرخّصة متعددة في الحزمة.
-- البديل الرسمي الحالي: إشعار قصير مخصّص + فتح التطبيق لتشغيل الأذان الكامل (HTMLAudio).
-- `ADHAN_IOS_MULTI_SEGMENT_BUNDLED = false` حتى تُضاف مقاطع `adhan_*_gen_sN.caf`.
+في كود Capacitor Local Notifications مرّر الاسم **بدون** مسار مجلد، مع امتداد `.caf`.
 
-## مقاطع الأذان الكامل (مستقبلاً)
-
-| الملف | المعنى |
-|---|---|
-| `adhan_<id>_gen_s1.caf` … `_s4.caf` | أذان عام، حتى ٤ مقاطع ≤٢٨ث |
-| `adhan_<id>_fajr_s1.caf` … `_s4.caf` | أذان فجر بالتثويب فقط |
-
-بعد إضافتها: فعّل `ADHAN_IOS_MULTI_SEGMENT_BUNDLED = true`.
+الأذان الكامل داخل التطبيق: `public/audio/adhan/adhan-*-full.mp3` (تشغيل عبر AudioService / AVAudioSession playback).

@@ -17,10 +17,12 @@ import {
 } from "@/lib/prayer-notification-copy";
 import {
   resolvePrayerNotificationSound,
+  resolveAdhanStyleNotificationSound,
   soundRoleForNotifKind,
   type PrayerSoundProfile,
 } from "@/lib/prayer-notification-sounds";
 import { POST_REMINDER_MINUTES } from "@/lib/prayer-alert-preferences";
+import { getEffectiveMuezzinId, loadAdhanPrefs } from "@/lib/adhan-preferences";
 
 const PRE_ALERT_ID_BASE = 9100; // نطاق ثابت لمعرّفات إشعارات "قبل الصلاة"
 const ENTER_ID_BASE = 9200; // نطاق ثابت لمعرّفات إشعارات "دخول الوقت"
@@ -62,9 +64,13 @@ export async function requestNotificationPermission(): Promise<boolean> {
   }
   try {
     const { LocalNotifications } = await import("@capacitor/local-notifications");
+    // iOS: requestPermissions يطلب alert + sound + badge معًا؛ النتيجة عبر `display`.
     const res = await LocalNotifications.requestPermissions();
     const granted = res.display === "granted";
-    console.info("[notifications/prayer] permission request →", res.display);
+    console.info("[notifications/prayer] permission request →", {
+      display: res.display,
+      options: "alert+sound+badge (iOS system prompt)",
+    });
     return granted;
   } catch (e) {
     console.warn("[notifications/prayer] requestPermissions failed", e);
@@ -86,8 +92,13 @@ type NativeNotif = {
 function safeSound(
   role: "quiet" | "clear" | "soft",
   profile: PrayerSoundProfile,
+  muezzinId?: string,
 ): string {
   try {
+    // عند دخول الوقت: اربط بصوت المؤذن القصير إن وُجد
+    if (role === "clear" && muezzinId) {
+      return resolveAdhanStyleNotificationSound(muezzinId);
+    }
     return resolvePrayerNotificationSound(role, profile) || DEFAULT_ALERT_SOUND;
   } catch {
     return DEFAULT_ALERT_SOUND;
@@ -119,6 +130,14 @@ export async function schedulePrayerNativeNotifications(opts: {
     await cancelPrayerNativeNotifications(opts.prayerKey);
 
     const profile: PrayerSoundProfile = opts.soundProfile ?? "auto";
+    const adhanPrefs = loadAdhanPrefs();
+    const prayerKeyNorm = opts.prayerKey.toLowerCase();
+    const muezzinId = getEffectiveMuezzinId(
+      adhanPrefs,
+      (["fajr", "dhuhr", "asr", "maghrib", "isha"].includes(prayerKeyNorm)
+        ? prayerKeyNorm
+        : "fajr") as "fajr" | "dhuhr" | "asr" | "maghrib" | "isha",
+    );
     const notifications: NativeNotif[] = [];
     const preAlertEpoch = opts.prayerTimeEpochMs - opts.preAlertMinutes * 60_000;
 
@@ -128,12 +147,14 @@ export async function schedulePrayerNativeNotifications(opts: {
         opts.prayerName,
         opts.preAlertMinutes,
       );
+      const sound = safeSound(soundRoleForNotifKind("pre"), profile, muezzinId);
+      const id = idFor(PRE_ALERT_ID_BASE, opts.prayerKey);
       notifications.push({
-        id: idFor(PRE_ALERT_ID_BASE, opts.prayerKey),
+        id,
         title: preCopy.title,
         body: preCopy.body,
         schedule: { at: new Date(preAlertEpoch), allowWhileIdle: true },
-        sound: safeSound(soundRoleForNotifKind("pre"), profile),
+        sound,
         channelId: CHANNEL_PRAYER,
         interruptionLevel: "timeSensitive",
         extra: {
@@ -142,16 +163,25 @@ export async function schedulePrayerNativeNotifications(opts: {
           prayerKey: opts.prayerKey,
         },
       });
+      console.info("[notifications/prayer] schedule", {
+        prayerName: opts.prayerName,
+        time: new Date(preAlertEpoch).toISOString(),
+        soundName: sound,
+        notificationId: id,
+        kind: "pre",
+      });
     }
 
     if (opts.enterAlertEnabled && opts.prayerTimeEpochMs > Date.now()) {
       const enterCopy = pickPrayerNotificationCopy("enter", opts.prayerName);
+      const sound = safeSound(soundRoleForNotifKind("enter"), profile, muezzinId);
+      const id = idFor(ENTER_ID_BASE, opts.prayerKey);
       notifications.push({
-        id: idFor(ENTER_ID_BASE, opts.prayerKey),
+        id,
         title: enterCopy.title,
         body: enterCopy.body,
         schedule: { at: new Date(opts.prayerTimeEpochMs), allowWhileIdle: true },
-        sound: safeSound(soundRoleForNotifKind("enter"), profile),
+        sound,
         channelId: CHANNEL_PRAYER,
         interruptionLevel: "timeSensitive",
         extra: {
@@ -160,17 +190,27 @@ export async function schedulePrayerNativeNotifications(opts: {
           prayerKey: opts.prayerKey,
         },
       });
+      console.info("[notifications/prayer] schedule", {
+        prayerName: opts.prayerName,
+        time: new Date(opts.prayerTimeEpochMs).toISOString(),
+        soundName: sound,
+        notificationId: id,
+        kind: "enter",
+        muezzinId,
+      });
     }
 
     const postEpoch = opts.prayerTimeEpochMs + POST_REMINDER_MINUTES * 60_000;
     if (opts.postReminderEnabled && postEpoch > Date.now()) {
       const postCopy = pickPrayerNotificationCopy("post-soft", opts.prayerName);
+      const sound = safeSound(soundRoleForNotifKind("post"), profile, muezzinId);
+      const id = idFor(POST_ID_BASE, opts.prayerKey);
       notifications.push({
-        id: idFor(POST_ID_BASE, opts.prayerKey),
+        id,
         title: postCopy.title,
         body: postCopy.body,
         schedule: { at: new Date(postEpoch), allowWhileIdle: true },
-        sound: safeSound(soundRoleForNotifKind("post"), profile),
+        sound,
         channelId: CHANNEL_PRAYER,
         interruptionLevel: "timeSensitive",
         extra: {
@@ -179,14 +219,21 @@ export async function schedulePrayerNativeNotifications(opts: {
           prayerKey: opts.prayerKey,
         },
       });
+      console.info("[notifications/prayer] schedule", {
+        prayerName: opts.prayerName,
+        time: new Date(postEpoch).toISOString(),
+        soundName: sound,
+        notificationId: id,
+        kind: "post",
+      });
     }
 
     if (notifications.length > 0) {
       await LocalNotifications.schedule({ notifications });
       console.info(
-        "[notifications/prayer] scheduled",
+        "[notifications/prayer] scheduled batch",
         opts.prayerKey,
-        notifications.map((n) => n.id),
+        notifications.map((n) => ({ id: n.id, sound: n.sound, at: n.schedule.at.toISOString() })),
       );
     }
   } catch (e) {

@@ -57,10 +57,10 @@ function MiniToggle({
 }
 
 function permissionLabel(status: PermissionStatus): string {
-  if (status === "granted") return "الإشعارات مفعّلة";
-  if (status === "denied") return "الإشعارات مرفوضة";
-  if (status === "unsupported") return "الإشعارات غير مدعومة هنا";
-  return "تحتاج تفعيل";
+  if (status === "granted") return "مسموح";
+  if (status === "denied") return "مرفوض";
+  if (status === "unsupported") return "غير مدعوم";
+  return "غير محدد";
 }
 
 /**
@@ -107,7 +107,11 @@ export function PrayerAlertSettingsCard() {
     const result = await fireTestLocalNotification();
     setTestBusy(false);
     if (result.ok) {
-      setTestMsg("سيصل إشعار تجريبي خلال ثانيتين تقريبًا.");
+      setTestMsg(
+        result.fireAtIso
+          ? `سيصل إشعار تجريبي خلال 15 ثانية تقريبًا (صوت: ${result.soundName || "افتراضي"}).`
+          : "أُرسل إشعار تجريبي.",
+      );
       return;
     }
     if (result.reason === "permission") {
@@ -168,8 +172,10 @@ export function PrayerAlertSettingsCard() {
       </div>
       <div className="ads-card__body">
         <p className="ads-adhan-desc">
-          إشعارات قصيرة قبل الصلاة وعند دخول الوقت، مع نصوص متنوعة وصوت مناسب لشاشة القفل.
-          على iOS يكون صوت الإشعار قصيرًا؛ الأذان الكامل يُسمَع داخل التطبيق بعد الفتح.
+          إشعارات قصيرة قبل الصلاة وعند دخول الوقت، مع صوت مناسب لشاشة القفل.
+          على iOS: صوت الإشعار قصير (≤٣٠ث) عند إغلاق التطبيق؛ الأذان الكامل يُسمَع
+          داخل التطبيق أو إذا بدأ التشغيل والتطبيق في الخلفية. وضع الصامت وFocus
+          لا يمكن تجاوزهما بدون Critical Alerts من Apple.
         </p>
 
         <div className="ads-row-sep">
@@ -237,9 +243,9 @@ export function PrayerAlertSettingsCard() {
         {alertsOn && (
           <div className="ads-row-sep">
             <div>
-              <div className="ads-global-label">تجربة إشعار الصلاة</div>
+              <div className="ads-global-label">اختبار إشعار بعد 15 ثانية</div>
               <div className="ads-global-desc">
-                يرسل تنبيهًا تجريبيًا خلال ~١٫٥ ثانية للتحقق من الصوت والبanner
+                اضغط ثم اقفل الشاشة أو ضع التطبيق بالخلفية للتحقق من صوت الإشعار القصير
               </div>
             </div>
             <button
@@ -248,7 +254,7 @@ export function PrayerAlertSettingsCard() {
               disabled={testBusy}
               onClick={() => void runTestNotification()}
             >
-              {testBusy ? "جارٍ…" : "تجربة"}
+              {testBusy ? "جارٍ…" : "اختبار 15ث"}
             </button>
           </div>
         )}

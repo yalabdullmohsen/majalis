@@ -5,10 +5,11 @@
  * Android: ملفات في artifacts/majalis/android/app/src/main/res/raw/ (الاسم بلا امتداد عند الإسناد).
  *
  * صوت الإشعار محدود ≈٣٠ث على iOS — هذه الملفات قصيرة (~٧–٨ث).
- * الأذان الكامل داخل التطبيق عبر HTMLAudio + ملفات /sounds/adhan/*.mp3.
+ * الأذان الكامل داخل التطبيق عبر HTMLAudio + ملفات /audio/adhan/*.mp3.
  */
 import { Capacitor } from "@capacitor/core";
 import { DEFAULT_ALERT_SOUND } from "@/lib/notifications/channels";
+import { notificationSoundForAdhanPack } from "@/lib/adhan-offline-assets";
 
 /** أسماء الملفات في حزمة iOS (مع الامتداد كما يطلب Capacitor على iOS). */
 export const PRAYER_SOUND_FILES = {
@@ -17,13 +18,13 @@ export const PRAYER_SOUND_FILES = {
   soft: "prayer_soft.caf",
 } as const;
 
-/** أصوات إضافية للمعاينة/التعيين حسب نمط الأذان (إشعار قصير). */
+/** أصوات إضافية للمعاينة/التعيين حسب نمط الأذان (إشعار قصير ≤٣٠ث). */
 export const PRAYER_ADHAN_STYLE_SOUNDS = {
-  makkah: "prayer_makkah.caf",
-  madinah: "prayer_madinah.caf",
-  egypt: "prayer_egypt.caf",
-  aqsa: "prayer_aqsa.caf",
-  takbeerat: "prayer_takbeerat.caf",
+  makkah: "adhan-short-makkah.caf",
+  madinah: "adhan-short-madinah.caf",
+  egypt: "adhan-short-egypt.caf",
+  aqsa: "adhan-short-aqsa.caf",
+  takbeerat: "adhan-short-takbeerat.caf",
   default: "prayer_default.caf",
 } as const;
 
@@ -63,16 +64,20 @@ export function soundRoleForNotifKind(
   return "quiet";
 }
 
-/** اسم الصوت المناسب للمنصّة (iOS: مع .caf — Android: بلا امتداد). */
+/** اسم الصوت المناسب للمنصّة (iOS: ملف .caf في جذر الـ Bundle — Android: بلا امتداد). */
 export function platformNotificationSoundName(iosFileWithExt: string): string {
   try {
     if (Capacitor.getPlatform() === "android") {
-      return iosFileWithExt.replace(/\.(caf|wav|aiff|mp3)$/i, "");
+      return iosFileWithExt.replace(/^Sounds\//, "").replace(/\.(caf|wav|aiff|mp3)$/i, "").replace(/-/g, "_");
+    }
+    if (Capacitor.getPlatform() === "ios") {
+      // UNNotificationSound(named:) يبحث في جذر الـ main bundle
+      return iosFileWithExt.replace(/^Sounds\//, "");
     }
   } catch {
     /* web / tests */
   }
-  return iosFileWithExt;
+  return iosFileWithExt.replace(/^Sounds\//, "");
 }
 
 /**
@@ -99,6 +104,8 @@ export function resolvePrayerNotificationSound(
 /** صوت إشعار قصير حسب معرّف تسجيل الأذان (fallback لـ clear). */
 export function resolveAdhanStyleNotificationSound(recordingId: string): string {
   if (!PRAYER_CUSTOM_SOUNDS_ENABLED) return DEFAULT_ALERT_SOUND;
+  const fromPack = notificationSoundForAdhanPack(recordingId);
+  if (fromPack) return platformNotificationSoundName(fromPack);
   const key = recordingId as keyof typeof PRAYER_ADHAN_STYLE_SOUNDS;
   const file =
     PRAYER_ADHAN_STYLE_SOUNDS[key] ?? PRAYER_ADHAN_STYLE_SOUNDS.default;
