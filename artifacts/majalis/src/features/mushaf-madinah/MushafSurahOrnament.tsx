@@ -2,7 +2,7 @@ type Props = {
   nameArabic: string;
 };
 
-/** زخرفة رأس سورة أصلية (إطار ذهبي + اسم) — ليست أصول تطبيق آية. */
+/** زخرفة رأس سورة — إطار ذهبي هادئ وواسع مع زخرفة يمين ويسار. */
 export function MushafSurahOrnament({ nameArabic }: Props) {
   const label = nameArabic.startsWith("سورة") ? nameArabic : `سُورَةُ ${nameArabic}`;
   return (
