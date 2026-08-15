@@ -22,6 +22,11 @@ import { mkdir, readFile, writeFile, unlink, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import {
+  isPrivateSeoPath,
+  ADMIN_DEFAULT_DESCRIPTION,
+  ADMIN_DEFAULT_ROBOTS,
+} from "./seo-path-class.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
@@ -2075,10 +2080,22 @@ ${linkList("روابط ذات صلة", [
 
 for (const route of seoConfig.routes) {
   if (route.path.includes(":")) continue; // لا يوجد الآن؛ حراسة احتياطية
-  addPage(route, {
+  const privateRoute = isPrivateSeoPath(route.path);
+  const effectiveRoute = privateRoute
+    ? {
+        ...route,
+        description:
+          String(route.description || "").trim().length >= 50
+            ? route.description
+            : ADMIN_DEFAULT_DESCRIPTION,
+        robots: ADMIN_DEFAULT_ROBOTS,
+        sitemap: false,
+      }
+    : route;
+  addPage(effectiveRoute, {
     extraJsonLd: LIST_JSON_LD[route.path] || "",
     richBody: RICH_BODY_MAP[route.path] || "",
-    sitemap: Boolean(route.sitemap),
+    sitemap: privateRoute ? false : Boolean(route.sitemap),
     priority: route.priority ?? 0.7,
     changefreq: route.changefreq ?? "weekly",
   });
@@ -2507,6 +2524,10 @@ Allow: /manifest.json
 Allow: /site.webmanifest
 Disallow: /admin
 Disallow: /admin/
+Disallow: /dashboard
+Disallow: /dashboard/
+Disallow: /internal
+Disallow: /internal/
 Disallow: /login
 Disallow: /register
 Disallow: /auth/

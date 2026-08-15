@@ -18,6 +18,10 @@
 import { readFile, readdir, stat } from "node:fs/promises";
 import { resolve, relative, join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  isPrivateSeoPath,
+  PUBLIC_DESC_MIN_P0,
+} from "./seo-path-class.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
@@ -31,12 +35,15 @@ const siteUrl = seoConfig.siteUrl;
 const TITLE_SUFFIX = siteConfig.titleSuffix;
 const SITE_NAME = siteConfig.siteName;
 
-// ── مسارات يجب أن تكون noindex
+// ── مسارات يجب أن تكون noindex (من الإعداد + كل مسارات admin/dashboard/internal)
 const NOINDEX_PATHS = new Set(
   seoConfig.routes
     .filter((r) => r.robots && r.robots.includes("noindex"))
-    .map((r) => r.path)
+    .map((r) => r.path),
 );
+for (const r of seoConfig.routes) {
+  if (isPrivateSeoPath(r.path)) NOINDEX_PATHS.add(r.path);
+}
 
 // ── خريطة path → title المتوقع، بمحاكاة pageTitle() في generate-seo.mjs
 // (عناوين seo-routes.json عارية؛ اللاحقة "| المجلس العلمي" تُضاف برمجياً إلا
@@ -76,31 +83,41 @@ function extractAll(html, pattern) {
 function checkPage(relPath, html, homepageBody) {
   const issues = [];
   const warns = [];
+  const infos = [];
   const path = "/" + relPath.replace(/\/index\.html$/, "").replace(/index\.html$/, "");
   const normalizedPath = path === "" ? "/" : path;
+  const privatePath = isPrivateSeoPath(normalizedPath);
   const expectedCanonical = siteUrl + (normalizedPath === "/" ? "" : normalizedPath);
 
   // 1. Title
   const title = extract(html, /<title[^>]*>([^<]+)<\/title>/i);
   const expectedTitle = EXPECTED_TITLES.get(normalizedPath);
-  if (expectedTitle && title !== expectedTitle) {
+  if (!privatePath && expectedTitle && title !== expectedTitle) {
     issues.push(`❌ [P0] ملف seo-prerender/ متجمد — العنوان "${title}" لا يطابق seo-routes.json الحالي "${expectedTitle}" (شغّل node scripts/generate-seo.mjs)`);
   }
   if (!title) {
-    issues.push("❌ [P0] لا يوجد <title>");
+    if (privatePath) infos.push("ℹ️ [admin] لا يوجد <title>");
+    else issues.push("❌ [P0] لا يوجد <title>");
   } else if (title.length < 10) {
-    issues.push(`❌ [P0] <title> قصير جداً: "${title}"`);
+    if (privatePath) infos.push(`ℹ️ [admin] <title> قصير: "${title}"`);
+    else issues.push(`❌ [P0] <title> قصير جداً: "${title}"`);
   } else if (title.length > 120) {
     warns.push(`⚠️ <title> طويل جداً (${title.length}): "${title.slice(0, 60)}..."`);
   }
 
-  // 2. Meta Description
+  // 2. Meta Description — P0 للصفحات العامة فقط
   const desc = extract(html, /<meta\s+name="description"\s+content="([^"]+)"/i)
              || extract(html, /<meta\s+content="([^"]+)"\s+name="description"/i);
   if (!desc) {
-    issues.push("❌ [P0] لا توجد <meta name=\"description\">");
-  } else if (desc.length < 50) {
-    warns.push(`⚠️ meta description قصيرة جداً (${desc.length})`);
+    if (privatePath) infos.push("ℹ️ [admin] لا توجد meta description");
+    else issues.push("❌ [P0] لا توجد <meta name=\"description\">");
+  } else if (privatePath) {
+    // صفحات admin/private: الطول لا يسبب فشل CI
+    if (desc.length < PUBLIC_DESC_MIN_P0) {
+      infos.push(`ℹ️ [admin] meta description قصيرة (${desc.length}) — مستثناة من P0`);
+    }
+  } else if (desc.length < PUBLIC_DESC_MIN_P0) {
+    issues.push(`❌ [P0] meta description قصيرة جداً (${desc.length})`);
   } else if (desc.length > 320) {
     warns.push(`⚠️ meta description طويلة جداً (${desc.length})`);
   }
@@ -109,47 +126,44 @@ function checkPage(relPath, html, homepageBody) {
   const canonical = extract(html, /<link\s+rel="canonical"\s+href="([^"]+)"/i)
                  || extract(html, /<link\s+href="([^"]+)"\s+rel="canonical"/i);
   if (!canonical) {
-    issues.push("❌ [P0] لا توجد <link rel=\"canonical\">");
-  } else if (canonical !== expectedCanonical && canonical !== expectedCanonical + "/") {
+    if (privatePath) infos.push("ℹ️ [admin] لا يوجد canonical");
+    else issues.push("❌ [P0] لا توجد <link rel=\"canonical\">");
+  } else if (!privatePath && canonical !== expectedCanonical && canonical !== expectedCanonical + "/") {
     warns.push(`⚠️ canonical مختلف: "${canonical}" ≠ "${expectedCanonical}"`);
   }
 
   // 4. H1
   const h1s = extractAll(html, /<h1[^>]*>([^<]+)<\/h1>/gi);
   if (h1s.length === 0) {
-    warns.push("⚠️ لا يوجد <h1>");
+    if (!privatePath) warns.push("⚠️ لا يوجد <h1>");
   } else if (h1s.length > 1) {
     warns.push(`⚠️ أكثر من <h1> في الصفحة (${h1s.length})`);
   }
   // H1 يجب ألا يحمل اسم العلامة التجارية — هذا خاص بـ<title> فقط.
-  // اكتُشف فعلياً في /courses وغيرها: ملف seo-prerender/ متجمد لم يُعَد توليده
-  // فبقي H1 يحمل "... | المجلس العلمي" كاملاً بدل اسم الصفحة وحده.
-  if (h1s.some((h) => h.includes("المجلس العلمي")) && normalizedPath !== "/") {
+  if (!privatePath && h1s.some((h) => h.includes("المجلس العلمي")) && normalizedPath !== "/") {
     issues.push(`❌ [P0] <h1> يحتوي اسم العلامة التجارية (يجب أن يكون في <title> فقط): "${h1s[0]}"`);
   }
 
-  // 5. Robots
+  // 5. Robots — admin/private يجب noindex دائماً
   const robotsMeta = extract(html, /<meta\s+name="robots"\s+content="([^"]+)"/i)
                   || extract(html, /<meta\s+content="([^"]+)"\s+name="robots"/i);
-  if (NOINDEX_PATHS.has(normalizedPath)) {
+  if (privatePath || NOINDEX_PATHS.has(normalizedPath)) {
     if (!robotsMeta || !robotsMeta.includes("noindex")) {
       issues.push(`❌ [P0] مسار محمي (${normalizedPath}) يجب أن يكون noindex، الحالي: "${robotsMeta}"`);
     }
-  } else {
-    if (robotsMeta && robotsMeta.includes("noindex")) {
-      warns.push(`⚠️ صفحة عامة تحمل noindex: "${normalizedPath}"`);
-    }
+  } else if (robotsMeta && robotsMeta.includes("noindex")) {
+    warns.push(`⚠️ صفحة عامة تحمل noindex: "${normalizedPath}"`);
   }
 
   // 6. JSON-LD
   const jsonLdBlocks = extractAll(html, /<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi);
-  if (jsonLdBlocks.length === 0 && !NOINDEX_PATHS.has(normalizedPath)) {
+  if (jsonLdBlocks.length === 0 && !privatePath && !NOINDEX_PATHS.has(normalizedPath)) {
     warns.push("⚠️ لا يوجد JSON-LD structured data");
   }
-  // فحص صحة JSON-LD
   for (const block of jsonLdBlocks) {
     try { JSON.parse(block); } catch {
-      issues.push("❌ [P0] JSON-LD غير صحيح (parse error)");
+      if (privatePath) infos.push("ℹ️ [admin] JSON-LD غير صحيح");
+      else issues.push("❌ [P0] JSON-LD غير صحيح (parse error)");
     }
   }
 
@@ -157,26 +171,28 @@ function checkPage(relPath, html, homepageBody) {
   const ogTitle = extract(html, /<meta\s+property="og:title"\s+content="([^"]+)"/i);
   const ogDesc  = extract(html, /<meta\s+property="og:description"\s+content="([^"]+)"/i);
   const ogUrl   = extract(html, /<meta\s+property="og:url"\s+content="([^"]+)"/i);
-  if (!ogTitle) warns.push("⚠️ لا يوجد og:title");
-  if (!ogDesc)  warns.push("⚠️ لا يوجد og:description");
-  if (!ogUrl)   warns.push("⚠️ لا يوجد og:url");
+  if (!privatePath) {
+    if (!ogTitle) warns.push("⚠️ لا يوجد og:title");
+    if (!ogDesc)  warns.push("⚠️ لا يوجد og:description");
+    if (!ogUrl)   warns.push("⚠️ لا يوجد og:url");
+  }
 
-  // 8. تكرار محتوى الرئيسية (فحص سريع — عنوان الرئيسية)
-  if (normalizedPath !== "/" && homepageBody) {
+  // 8. تكرار محتوى الرئيسية
+  if (!privatePath && normalizedPath !== "/" && homepageBody) {
     const homeTitle = extract(homepageBody, /<title[^>]*>([^<]+)<\/title>/i) || "";
     if (title && title === homeTitle && normalizedPath !== "/") {
       issues.push(`❌ [P0] عنوان الصفحة مطابق لعنوان الرئيسية: "${title}"`);
     }
   }
 
-  // 9. محتوى نصي كافٍ في body
+  // 9. محتوى نصي كافٍ
   const body = extract(html, /<body[^>]*>([\s\S]*?)<\/body>/i) ?? "";
   const textLength = body.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim().length;
-  if (textLength < 80) {
+  if (!privatePath && textLength < 80) {
     warns.push(`⚠️ محتوى نصي قليل جداً في الصفحة (${textLength} حرف)`);
   }
 
-  return { path: normalizedPath, issues, warns, title: title ?? "", h1: h1s[0] ?? "" };
+  return { path: normalizedPath, private: privatePath, issues, warns, infos, title: title ?? "", h1: h1s[0] ?? "" };
 }
 
 // ── التشغيل الرئيسي
@@ -197,6 +213,7 @@ try { homepageHtml = await readFile(homepagePath, "utf8"); } catch { /* ok */ }
 
 let totalIssues = 0;
 let totalWarns = 0;
+let totalInfos = 0;
 const results = [];
 
 for (const file of files) {
@@ -206,6 +223,7 @@ for (const file of files) {
   results.push(result);
   totalIssues += result.issues.length;
   totalWarns += result.warns.length;
+  totalInfos += (result.infos || []).length;
 }
 
 // ── تقرير المشكلات الحرجة
@@ -295,6 +313,7 @@ console.log("══════════════════════�
 console.log(`   الصفحات المفحوصة:  ${files.length}`);
 console.log(`   مشكلات P0:         ${totalIssues > 0 ? "❌ " : "✓ "}${totalIssues}`);
 console.log(`   تحذيرات:           ${totalWarns}`);
+console.log(`   معلومات (admin):   ${totalInfos}`);
 console.log(`   صفحات بلا مشكلة:  ${results.filter((r) => r.issues.length === 0 && r.warns.length === 0).length}`);
 console.log("");
 

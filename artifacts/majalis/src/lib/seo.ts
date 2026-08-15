@@ -1,6 +1,12 @@
 import { useEffect } from "react";
 import seoData from "./seo-routes.json";
 import {
+  ADMIN_DEFAULT_DESCRIPTION,
+  ADMIN_DEFAULT_ROBOTS,
+  ADMIN_DEFAULT_TITLE,
+  isPrivateSeoPath,
+} from "./seo-privacy";
+import {
   breadcrumbJsonLd,
   defaultSiteJsonLd,
   lessonJsonLd,
@@ -318,8 +324,20 @@ function breadcrumbForPath(normalized: string) {
 
 export function usePageSeo(path: string) {
   useEffect(() => {
-    const route = routeForPath(path);
     const normalized = normalizePath(path);
+    if (isPrivateSeoPath(normalized)) {
+      applyPageSeo({
+        path: normalized,
+        title: ADMIN_DEFAULT_TITLE,
+        description: ADMIN_DEFAULT_DESCRIPTION,
+        robots: ADMIN_DEFAULT_ROBOTS,
+        ogType: "website",
+        canonicalPath: normalized,
+        jsonLd: [],
+      });
+      return;
+    }
+    const route = routeForPath(path);
     const robots =
       route.path === "/404" && normalized !== "/404"
         ? "noindex, follow"

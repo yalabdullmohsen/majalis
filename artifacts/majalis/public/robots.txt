@@ -14,6 +14,10 @@ Allow: /manifest.json
 Allow: /site.webmanifest
 Disallow: /admin
 Disallow: /admin/
+Disallow: /dashboard
+Disallow: /dashboard/
+Disallow: /internal
+Disallow: /internal/
 Disallow: /login
 Disallow: /register
 Disallow: /auth/
