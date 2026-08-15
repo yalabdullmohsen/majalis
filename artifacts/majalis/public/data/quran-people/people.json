@@ -1,47 +1,1257 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-10",
+  "updatedAt": "2026-08-16",
   "notes": "دفعة ١: المذكورون بالاسم صراحة في القرآن. الأنبياء يرتبطون بـ /prophets/:slug دون إعادة سرد. المواد الوصفية في PEOPLE_REVIEW_QUEUE.",
   "people": [
-    {"slug":"adam","nameAr":"آدم","aliases":["آدم عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"adam","definition":"أبو البشر وأول الأنبياء، ذُكر باسمه في مواضع متعددة.","whyMentioned":"بيان خلق الإنسان والتوبة وعداوة الشيطان.","lessons":["التوبة والإنابة","عداوة الشيطان للإنسان"],"occurrences":[{"surah":2,"ayah":31,"note":"تعليم الأسماء"},{"surah":7,"ayah":19,"note":"إسكان الجنة"},{"surah":20,"ayah":115,"note":"عهد آدم"}],"status":"published"},
-    {"slug":"idris","nameAr":"إدريس","aliases":["إدريس عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"idris","definition":"نبي أثنى الله عليه بالصدق ورفعه مكاناً علياً.","whyMentioned":"الثناء على الصدق ورفعة المنزلة.","lessons":["الصدق","الاقتصار على ما ثبت في الوحي"],"occurrences":[{"surah":19,"ayah":56},{"surah":21,"ayah":85}],"status":"published"},
-    {"slug":"nuh","nameAr":"نوح","aliases":["نوح عليه السلام","نجي الله"],"category":"prophet","mentionType":"name","prophetSlug":"nuh","definition":"من أولي العزم؛ دعا قومه طويلاً ونجّاه الله من الطوفان.","whyMentioned":"الصبر على الدعوة وعاقبة التكذيب.","lessons":["الصبر على الدعوة","الشكر"],"occurrences":[{"surah":71,"ayah":1},{"surah":11,"ayah":25},{"surah":7,"ayah":59}],"status":"published"},
-    {"slug":"hud","nameAr":"هود","aliases":["هود عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"hud","definition":"رسول الله إلى عاد.","whyMentioned":"عاقبة الكبر وتكذيب الرسل.","lessons":["التوحيد","عاقبة التكذيب"],"occurrences":[{"surah":7,"ayah":65},{"surah":11,"ayah":50},{"surah":26,"ayah":123}],"status":"published"},
-    {"slug":"salih","nameAr":"صالح","aliases":["صالح عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"salih","definition":"رسول الله إلى ثمود.","whyMentioned":"آية الناقة وعاقبة عقرها.","lessons":["تعظيم آيات الله"],"occurrences":[{"surah":7,"ayah":73},{"surah":11,"ayah":61},{"surah":27,"ayah":45}],"status":"published"},
-    {"slug":"ibrahim","nameAr":"إبراهيم","aliases":["إبراهيم عليه السلام","أبو الأنبياء","خليل الله"],"category":"prophet","mentionType":"name","prophetSlug":"ibrahim","definition":"خليل الله وأبو الأنبياء؛ من أولي العزم.","whyMentioned":"التوحيد والحنيفية والإمامة.","lessons":["التوحيد","التوكل"],"occurrences":[{"surah":2,"ayah":124},{"surah":6,"ayah":74},{"surah":21,"ayah":51},{"surah":37,"ayah":83}],"status":"published"},
-    {"slug":"lut","nameAr":"لوط","aliases":["لوط عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"lut","definition":"نبي أُرسل إلى قومه فأنذرهم فأهلكهم الله.","whyMentioned":"إنكار المنكرات وعاقبة الفواحش.","lessons":["إنكار المنكر"],"occurrences":[{"surah":7,"ayah":80},{"surah":11,"ayah":77},{"surah":26,"ayah":160}],"status":"published"},
-    {"slug":"ismail","nameAr":"إسماعيل","aliases":["إسماعيل عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"ismail","definition":"ابن إبراهيم؛ صادق الوعد.","whyMentioned":"الصدق والصبر مع أبيه في البناء والذبح.","lessons":["صدق الوعد","بر الوالدين"],"occurrences":[{"surah":2,"ayah":125},{"surah":19,"ayah":54},{"surah":37,"ayah":102}],"status":"published"},
-    {"slug":"is-haq","nameAr":"إسحاق","aliases":["إسحاق عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"is-haq","definition":"ابن إبراهيم وأخو إسماعيل.","whyMentioned":"البشارة به وبذريته.","lessons":["فضل الله بالذرية الصالحة"],"occurrences":[{"surah":2,"ayah":133},{"surah":11,"ayah":71},{"surah":37,"ayah":112}],"status":"published"},
-    {"slug":"yaqub","nameAr":"يعقوب","aliases":["يعقوب عليه السلام","إسرائيل"],"category":"prophet","mentionType":"name","prophetSlug":"yaqub","definition":"إسرائيل؛ أبو يوسف والأسباط.","whyMentioned":"الصبر على فقد الولد والتوكل.","lessons":["الصبر الجميل"],"occurrences":[{"surah":2,"ayah":132},{"surah":12,"ayah":13},{"surah":19,"ayah":49}],"status":"published"},
-    {"slug":"yusuf","nameAr":"يوسف","aliases":["يوسف عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"yusuf","definition":"ابن يعقوب؛ قصته في سورة كاملة.","whyMentioned":"العفاف والصبر وحسن العاقبة.","lessons":["العفاف","الإحسان"],"occurrences":[{"surah":12,"ayah":4},{"surah":12,"ayah":21},{"surah":12,"ayah":90}],"status":"published"},
-    {"slug":"ayyub","nameAr":"أيوب","aliases":["أيوب عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"ayyub","definition":"نبي ابتُلي فصبر فكُشف عنه.","whyMentioned":"الصبر على البلاء.","lessons":["الصبر","الدعاء"],"occurrences":[{"surah":21,"ayah":83},{"surah":38,"ayah":41}],"status":"published"},
-    {"slug":"shuayb","nameAr":"شعيب","aliases":["شعيب عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"shuayb","definition":"رسول إلى مدين وأصحاب الأيكة.","whyMentioned":"عدل المعاملات وترك التطفيف.","lessons":["الأمانة في البيع"],"occurrences":[{"surah":7,"ayah":85},{"surah":11,"ayah":84},{"surah":26,"ayah":177}],"status":"published"},
-    {"slug":"musa","nameAr":"موسى","aliases":["موسى عليه السلام","كليم الله"],"category":"prophet","mentionType":"name","prophetSlug":"musa","definition":"كليم الله ومن أولي العزم؛ أكثر الأنبياء ذكراً في القرآن.","whyMentioned":"التوحيد ومواجهة الطغيان وتيه بني إسرائيل.","lessons":["التوكل","الصبر على قومه"],"occurrences":[{"surah":20,"ayah":9},{"surah":28,"ayah":3},{"surah":7,"ayah":103},{"surah":26,"ayah":10}],"status":"published"},
-    {"slug":"harun","nameAr":"هارون","aliases":["هارون عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"harun","definition":"أخو موسى ونبي معه.","whyMentioned":"المؤازرة في الدعوة.","lessons":["التعاون على الحق"],"occurrences":[{"surah":20,"ayah":30},{"surah":7,"ayah":142},{"surah":28,"ayah":34}],"status":"published"},
-    {"slug":"dhul-kifl","nameAr":"ذو الكفل","aliases":["ذو الكِفل","ذو الكفل عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"dhul-kifl","definition":"من الأنبياء الذين أثنى الله عليهم بالصبر.","whyMentioned":"الثناء على الصبر.","lessons":["الصبر"],"occurrences":[{"surah":21,"ayah":85},{"surah":38,"ayah":48}],"status":"published"},
-    {"slug":"dawud","nameAr":"داود","aliases":["داود عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"dawud","definition":"نبي وملك؛ أُوتي الزبور.","whyMentioned":"الحكم بالعدل والتسبيح.","lessons":["العدل","كثرة الذكر"],"occurrences":[{"surah":2,"ayah":251},{"surah":38,"ayah":17},{"surah":34,"ayah":10}],"status":"published"},
-    {"slug":"sulayman","nameAr":"سليمان","aliases":["سليمان عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"sulayman","definition":"ابن داود؛ أُوتي ملكاً عظيماً.","whyMentioned":"الشكر مع النعمة والحكم.","lessons":["الشكر","العدل"],"occurrences":[{"surah":27,"ayah":15},{"surah":38,"ayah":30},{"surah":34,"ayah":12}],"status":"published"},
-    {"slug":"ilyas","nameAr":"إلياس","aliases":["إلياس عليه السلام","إلياسين"],"category":"prophet","mentionType":"name","prophetSlug":"ilyas","definition":"نبي دعا قومه إلى ترك عبادة بعل.","whyMentioned":"التوحيد ونبذ الأوثان.","lessons":["التوحيد"],"occurrences":[{"surah":37,"ayah":123},{"surah":6,"ayah":85}],"status":"published"},
-    {"slug":"al-yasa","nameAr":"اليسع","aliases":["اليسع عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"al-yasa","definition":"نبي ذُكر مع الأخيار.","whyMentioned":"الثناء ضمن سلسلة الأنبياء.","lessons":["الاقتداء بالصالحين"],"occurrences":[{"surah":6,"ayah":86},{"surah":38,"ayah":48}],"status":"published"},
-    {"slug":"yunus","nameAr":"يونس","aliases":["يونس عليه السلام","ذو النون"],"category":"prophet","mentionType":"name","prophetSlug":"yunus","definition":"ذو النون؛ نادى في الظلمات فاستجاب الله له.","whyMentioned":"التوبة والذكر في الشدة.","lessons":["لا إله إلا أنت سبحانك"],"occurrences":[{"surah":37,"ayah":139},{"surah":21,"ayah":87},{"surah":10,"ayah":98}],"status":"published"},
-    {"slug":"zakariyya","nameAr":"زكريا","aliases":["زكريا عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"zakariyya","definition":"نبي بُشّر بيحيى على الكبر.","whyMentioned":"الدعاء والإجابة.","lessons":["حسن الظن بالله"],"occurrences":[{"surah":3,"ayah":37},{"surah":19,"ayah":2},{"surah":21,"ayah":89}],"status":"published"},
-    {"slug":"yahya","nameAr":"يحيى","aliases":["يحيى عليه السلام"],"category":"prophet","mentionType":"name","prophetSlug":"yahya","definition":"ابن زكريا؛ سيداً وحصوراً.","whyMentioned":"البر والتقوى من الصغر.","lessons":["بر الوالدين"],"occurrences":[{"surah":3,"ayah":39},{"surah":19,"ayah":7},{"surah":21,"ayah":90}],"status":"published"},
-    {"slug":"isa","nameAr":"عيسى","aliases":["عيسى عليه السلام","المسيح","ابن مريم"],"category":"prophet","mentionType":"name","prophetSlug":"isa","definition":"المسيح ابن مريم؛ من أولي العزم.","whyMentioned":"التوحيد ونفي الألوهية عنه وعن أمه.","lessons":["التوحيد","أدب العبودية"],"occurrences":[{"surah":3,"ayah":45},{"surah":5,"ayah":110},{"surah":19,"ayah":30},{"surah":61,"ayah":6}],"status":"published"},
-    {"slug":"muhammad","nameAr":"محمد","aliases":["محمد ﷺ","أحمد","النبي","الرسول"],"category":"prophet","mentionType":"name","prophetSlug":"muhammad","definition":"خاتم النبيين؛ ذُكر باسمه ووصفه في القرآن.","whyMentioned":"رسالته الخاتمة والأسوة.","lessons":["اتباع السنة","الرحمة للعالمين"],"occurrences":[{"surah":3,"ayah":144},{"surah":33,"ayah":40},{"surah":47,"ayah":2},{"surah":48,"ayah":29}],"status":"published"},
-    {"slug":"maryam","nameAr":"مريم","aliases":["مريم ابنة عمران","العذراء"],"category":"righteous","mentionType":"name","definition":"ابنة عمران وأم عيسى؛ صِدّيقة طهّرها الله واصطفاها.","whyMentioned":"العفاف والاصطفاء ومعجزة الولادة.","lessons":["العفاف","التوكل"],"occurrences":[{"surah":3,"ayah":42},{"surah":19,"ayah":16},{"surah":66,"ayah":12}],"status":"published","relatedLinks":[{"href":"/prophets/isa","label":"قصة عيسى عليه السلام"}]},
-    {"slug":"imran","nameAr":"عمران","aliases":["آل عمران"],"category":"righteous","mentionType":"name","definition":"والد مريم؛ اصطُفيت ذريته.","whyMentioned":"فضل آل عمران.","lessons":["صلاح الوالد ينفع الذرية"],"occurrences":[{"surah":3,"ayah":33},{"surah":3,"ayah":35}],"status":"published","relatedLinks":[{"href":"/quran/people/maryam","label":"مريم عليها السلام"}]},
-    {"slug":"firawn","nameAr":"فرعون","aliases":["فرعون موسى"],"category":"tyrant","mentionType":"name","definition":"طاغية مصر في زمن موسى؛ ضرب الله به المثل في التكبر.","whyMentioned":"عاقبة الطغيان وتكذيب الآيات.","lessons":["لا يغني الطغيان من الله شيئاً"],"occurrences":[{"surah":7,"ayah":103},{"surah":20,"ayah":24},{"surah":28,"ayah":4},{"surah":79,"ayah":17}],"status":"published","relatedLinks":[{"href":"/prophets/musa","label":"قصة موسى عليه السلام"},{"href":"/nations","label":"الأمم السابقة"}]},
-    {"slug":"haman","nameAr":"هامان","aliases":[],"category":"tyrant","mentionType":"name","definition":"وزير فرعون؛ ذُكر معه في التكبر والبناء.","whyMentioned":"معاونة الطغاة على الباطل.","lessons":["لا تُعن على الإثم"],"occurrences":[{"surah":28,"ayah":6},{"surah":28,"ayah":38},{"surah":40,"ayah":36}],"status":"published","relatedLinks":[{"href":"/quran/people/firawn","label":"فرعون"}]},
-    {"slug":"qarun","nameAr":"قارون","aliases":[],"category":"tyrant","mentionType":"name","definition":"من قوم موسى؛ بغى بكثرة ماله فخُسف به.","whyMentioned":"فتنة المال والكبر.","lessons":["زوال الدنيا","الشكر لا البطر"],"occurrences":[{"surah":28,"ayah":76},{"surah":29,"ayah":39},{"surah":40,"ayah":24}],"status":"published","relatedLinks":[{"href":"/prophets/musa","label":"قصة موسى عليه السلام"}]},
-    {"slug":"luqman","nameAr":"لقمان","aliases":["لقمان الحكيم"],"category":"righteous","mentionType":"name","definition":"عبد آتاه الله الحكمة؛ وصّى ابنه بالتوحيد وبر الوالدين.","whyMentioned":"الحكمة في التربية والتوحيد.","lessons":["التوحيد أولاً","بر الوالدين"],"occurrences":[{"surah":31,"ayah":12},{"surah":31,"ayah":13}],"status":"published"},
-    {"slug":"talut","nameAr":"طالوت","aliases":[],"category":"king","mentionType":"name","definition":"ملك بعثه الله على بني إسرائيل مع داود.","whyMentioned":"طاعة الأمير والابتلاء بالنهر.","lessons":["الطاعة في المعروف"],"occurrences":[{"surah":2,"ayah":247},{"surah":2,"ayah":249}],"status":"published","relatedLinks":[{"href":"/prophets/dawud","label":"داود عليه السلام"}]},
-    {"slug":"jalut","nameAr":"جالوت","aliases":[],"category":"tyrant","mentionType":"name","definition":"عدو بني إسرائيل؛ قتله داود بإذن الله.","whyMentioned":"نصر الله مع القلة.","lessons":["النصر من عند الله"],"occurrences":[{"surah":2,"ayah":249},{"surah":2,"ayah":251}],"status":"published","relatedLinks":[{"href":"/prophets/dawud","label":"داود عليه السلام"}]},
-    {"slug":"uzayr","nameAr":"عزير","aliases":["عزير"],"category":"figure","mentionType":"name","definition":"ذُكر في سياق قول بعض أهل الكتاب فيه؛ يُعرض ما ثبت في النص دون توسع إسرائيلي.","whyMentioned":"بيان ضلال نسبة البنوّة إلى غير الله.","lessons":["التوحيد ونفي الشرك"],"occurrences":[{"surah":9,"ayah":30}],"status":"published"},
-    {"slug":"dhul-qarnayn","nameAr":"ذو القرنين","aliases":["ذي القرنين"],"category":"righteous","mentionType":"name","definition":"ملك صالح مكّن الله له في الأرض؛ بنى السد دون يأجوج ومأجوج.","whyMentioned":"العدل مع التمكين.","lessons":["العدل","الشكر على التمكين"],"occurrences":[{"surah":18,"ayah":83},{"surah":18,"ayah":86},{"surah":18,"ayah":94}],"status":"published"},
-    {"slug":"zayd","nameAr":"زيد","aliases":["زيد بن حارثة"],"category":"companion","mentionType":"name","definition":"الصحابي زيد بن حارثة؛ ذُكر باسمه في القرآن.","whyMentioned":"حكم التبنّي ونسخه.","lessons":["اتباع حكم الله"],"occurrences":[{"surah":33,"ayah":37}],"status":"published"},
-    {"slug":"abu-lahab","nameAr":"أبو لهب","aliases":["لهب","مسّد"],"category":"tyrant","mentionType":"name","definition":"عم النبي ﷺ؛ ذُكر في سورة المسد.","whyMentioned":"عاقبة معاداة الدعوة.","lessons":["لا تغني القرابة مع الكفر"],"occurrences":[{"surah":111,"ayah":1}],"status":"published"},
-    {"slug":"iblis","nameAr":"إبليس","aliases":["الشيطان","العدو"],"category":"other","mentionType":"name","definition":"عدو بني آدم؛ استكبر عن السجود لآدم.","whyMentioned":"بيان عداوة الشيطان ووساوسه.","lessons":["الاستعاذة","عدم اتباع الهوى"],"occurrences":[{"surah":2,"ayah":34},{"surah":7,"ayah":11},{"surah":15,"ayah":31},{"surah":38,"ayah":74}],"status":"published","relatedLinks":[{"href":"/prophets/adam","label":"قصة آدم عليه السلام"}]},
-    {"slug":"harut","nameAr":"هاروت","aliases":[],"category":"other","mentionType":"name","definition":"مَلَك ذُكر مع ماروت في بابل في سياق فتنة السحر؛ يُلتزم بما ورد في الآية دون إسرائيليات.","whyMentioned":"التحذير من السحر والفتنة.","lessons":["اجتناب السحر"],"occurrences":[{"surah":2,"ayah":102}],"status":"published","relatedLinks":[{"href":"/quran/people/marut","label":"ماروت"}]},
-    {"slug":"marut","nameAr":"ماروت","aliases":[],"category":"other","mentionType":"name","definition":"مَلَك ذُكر مع هاروت في بابل؛ يُلتزم بالنص القرآني.","whyMentioned":"التحذير من السحر.","lessons":["اجتناب السحر"],"occurrences":[{"surah":2,"ayah":102}],"status":"published","relatedLinks":[{"href":"/quran/people/harut","label":"هاروت"}]}
+    {
+      "slug": "adam",
+      "nameAr": "آدم",
+      "aliases": [
+        "آدم عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "adam",
+      "definition": "أبو البشر وأول الأنبياء، ذُكر باسمه في مواضع متعددة.",
+      "whyMentioned": "بيان خلق الإنسان والتوبة وعداوة الشيطان.",
+      "lessons": [
+        "التوبة والإنابة",
+        "عداوة الشيطان للإنسان"
+      ],
+      "occurrences": [
+        {
+          "surah": 2,
+          "ayah": 31,
+          "note": "تعليم الأسماء"
+        },
+        {
+          "surah": 7,
+          "ayah": 19,
+          "note": "إسكان الجنة"
+        },
+        {
+          "surah": 20,
+          "ayah": 115,
+          "note": "عهد آدم"
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "idris",
+      "nameAr": "إدريس",
+      "aliases": [
+        "إدريس عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "idris",
+      "definition": "نبي أثنى الله عليه بالصدق ورفعه مكاناً علياً.",
+      "whyMentioned": "الثناء على الصدق ورفعة المنزلة.",
+      "lessons": [
+        "الصدق",
+        "الاقتصار على ما ثبت في الوحي"
+      ],
+      "occurrences": [
+        {
+          "surah": 19,
+          "ayah": 56
+        },
+        {
+          "surah": 21,
+          "ayah": 85
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "nuh",
+      "nameAr": "نوح",
+      "aliases": [
+        "نوح عليه السلام",
+        "نجي الله"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "nuh",
+      "definition": "من أولي العزم؛ دعا قومه طويلاً ونجّاه الله من الطوفان.",
+      "whyMentioned": "الصبر على الدعوة وعاقبة التكذيب.",
+      "lessons": [
+        "الصبر على الدعوة",
+        "الشكر"
+      ],
+      "occurrences": [
+        {
+          "surah": 71,
+          "ayah": 1
+        },
+        {
+          "surah": 11,
+          "ayah": 25
+        },
+        {
+          "surah": 7,
+          "ayah": 59
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "hud",
+      "nameAr": "هود",
+      "aliases": [
+        "هود عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "hud",
+      "definition": "رسول الله إلى عاد.",
+      "whyMentioned": "عاقبة الكبر وتكذيب الرسل.",
+      "lessons": [
+        "التوحيد",
+        "عاقبة التكذيب"
+      ],
+      "occurrences": [
+        {
+          "surah": 7,
+          "ayah": 65
+        },
+        {
+          "surah": 11,
+          "ayah": 50
+        },
+        {
+          "surah": 26,
+          "ayah": 123
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "salih",
+      "nameAr": "صالح",
+      "aliases": [
+        "صالح عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "salih",
+      "definition": "رسول الله إلى ثمود.",
+      "whyMentioned": "آية الناقة وعاقبة عقرها.",
+      "lessons": [
+        "تعظيم آيات الله"
+      ],
+      "occurrences": [
+        {
+          "surah": 7,
+          "ayah": 73
+        },
+        {
+          "surah": 11,
+          "ayah": 61
+        },
+        {
+          "surah": 27,
+          "ayah": 45
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "ibrahim",
+      "nameAr": "إبراهيم",
+      "aliases": [
+        "إبراهيم عليه السلام",
+        "أبو الأنبياء",
+        "خليل الله"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "ibrahim",
+      "definition": "خليل الله وأبو الأنبياء؛ من أولي العزم.",
+      "whyMentioned": "التوحيد والحنيفية والإمامة.",
+      "lessons": [
+        "التوحيد",
+        "التوكل"
+      ],
+      "occurrences": [
+        {
+          "surah": 2,
+          "ayah": 124
+        },
+        {
+          "surah": 6,
+          "ayah": 74
+        },
+        {
+          "surah": 21,
+          "ayah": 51
+        },
+        {
+          "surah": 37,
+          "ayah": 83
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "azar",
+      "nameAr": "آزر",
+      "aliases": [
+        "آزر أبي إبراهيم"
+      ],
+      "category": "figure",
+      "mentionType": "name",
+      "definition": "ذُكر في القرآن أباً لإبراهيم عليه السلام في الأنعام؛ واختلف المفسرون هل الاسم علمٌ عليه أم لقب أم غير ذلك، فيُعرض ما في النص دون جزم بالتفاصيل الزائدة.",
+      "whyMentioned": "سياق دعوة إبراهيم عليه السلام أباه إلى التوحيد.",
+      "lessons": [
+        "الدعوة إلى التوحيد",
+        "عدم متابعة الوالد على الشرك مع الإحسان"
+      ],
+      "occurrences": [
+        {
+          "surah": 6,
+          "ayah": 74
+        }
+      ],
+      "status": "published",
+      "relatedLinks": [
+        {
+          "href": "/prophets/ibrahim",
+          "label": "قصة إبراهيم عليه السلام"
+        }
+      ]
+    },
+    {
+      "slug": "lut",
+      "nameAr": "لوط",
+      "aliases": [
+        "لوط عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "lut",
+      "definition": "نبي أُرسل إلى قومه فأنذرهم فأهلكهم الله.",
+      "whyMentioned": "إنكار المنكرات وعاقبة الفواحش.",
+      "lessons": [
+        "إنكار المنكر"
+      ],
+      "occurrences": [
+        {
+          "surah": 7,
+          "ayah": 80
+        },
+        {
+          "surah": 11,
+          "ayah": 77
+        },
+        {
+          "surah": 26,
+          "ayah": 160
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "ismail",
+      "nameAr": "إسماعيل",
+      "aliases": [
+        "إسماعيل عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "ismail",
+      "definition": "ابن إبراهيم؛ صادق الوعد.",
+      "whyMentioned": "الصدق والصبر مع أبيه في البناء والذبح.",
+      "lessons": [
+        "صدق الوعد",
+        "بر الوالدين"
+      ],
+      "occurrences": [
+        {
+          "surah": 2,
+          "ayah": 125
+        },
+        {
+          "surah": 19,
+          "ayah": 54
+        },
+        {
+          "surah": 37,
+          "ayah": 102
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "is-haq",
+      "nameAr": "إسحاق",
+      "aliases": [
+        "إسحاق عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "is-haq",
+      "definition": "ابن إبراهيم وأخو إسماعيل.",
+      "whyMentioned": "البشارة به وبذريته.",
+      "lessons": [
+        "فضل الله بالذرية الصالحة"
+      ],
+      "occurrences": [
+        {
+          "surah": 2,
+          "ayah": 133
+        },
+        {
+          "surah": 11,
+          "ayah": 71
+        },
+        {
+          "surah": 37,
+          "ayah": 112
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "yaqub",
+      "nameAr": "يعقوب",
+      "aliases": [
+        "يعقوب عليه السلام",
+        "إسرائيل"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "yaqub",
+      "definition": "إسرائيل؛ أبو يوسف والأسباط.",
+      "whyMentioned": "الصبر على فقد الولد والتوكل.",
+      "lessons": [
+        "الصبر الجميل"
+      ],
+      "occurrences": [
+        {
+          "surah": 2,
+          "ayah": 132
+        },
+        {
+          "surah": 12,
+          "ayah": 13
+        },
+        {
+          "surah": 19,
+          "ayah": 49
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "yusuf",
+      "nameAr": "يوسف",
+      "aliases": [
+        "يوسف عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "yusuf",
+      "definition": "ابن يعقوب؛ قصته في سورة كاملة.",
+      "whyMentioned": "العفاف والصبر وحسن العاقبة.",
+      "lessons": [
+        "العفاف",
+        "الإحسان"
+      ],
+      "occurrences": [
+        {
+          "surah": 12,
+          "ayah": 4
+        },
+        {
+          "surah": 12,
+          "ayah": 21
+        },
+        {
+          "surah": 12,
+          "ayah": 90
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "ayyub",
+      "nameAr": "أيوب",
+      "aliases": [
+        "أيوب عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "ayyub",
+      "definition": "نبي ابتُلي فصبر فكُشف عنه.",
+      "whyMentioned": "الصبر على البلاء.",
+      "lessons": [
+        "الصبر",
+        "الدعاء"
+      ],
+      "occurrences": [
+        {
+          "surah": 21,
+          "ayah": 83
+        },
+        {
+          "surah": 38,
+          "ayah": 41
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "shuayb",
+      "nameAr": "شعيب",
+      "aliases": [
+        "شعيب عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "shuayb",
+      "definition": "رسول إلى مدين وأصحاب الأيكة.",
+      "whyMentioned": "عدل المعاملات وترك التطفيف.",
+      "lessons": [
+        "الأمانة في البيع"
+      ],
+      "occurrences": [
+        {
+          "surah": 7,
+          "ayah": 85
+        },
+        {
+          "surah": 11,
+          "ayah": 84
+        },
+        {
+          "surah": 26,
+          "ayah": 177
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "musa",
+      "nameAr": "موسى",
+      "aliases": [
+        "موسى عليه السلام",
+        "كليم الله"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "musa",
+      "definition": "كليم الله ومن أولي العزم؛ أكثر الأنبياء ذكراً في القرآن.",
+      "whyMentioned": "التوحيد ومواجهة الطغيان وتيه بني إسرائيل.",
+      "lessons": [
+        "التوكل",
+        "الصبر على قومه"
+      ],
+      "occurrences": [
+        {
+          "surah": 20,
+          "ayah": 9
+        },
+        {
+          "surah": 28,
+          "ayah": 3
+        },
+        {
+          "surah": 7,
+          "ayah": 103
+        },
+        {
+          "surah": 26,
+          "ayah": 10
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "harun",
+      "nameAr": "هارون",
+      "aliases": [
+        "هارون عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "harun",
+      "definition": "أخو موسى ونبي معه.",
+      "whyMentioned": "المؤازرة في الدعوة.",
+      "lessons": [
+        "التعاون على الحق"
+      ],
+      "occurrences": [
+        {
+          "surah": 20,
+          "ayah": 30
+        },
+        {
+          "surah": 7,
+          "ayah": 142
+        },
+        {
+          "surah": 28,
+          "ayah": 34
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "dhul-kifl",
+      "nameAr": "ذو الكفل",
+      "aliases": [
+        "ذو الكِفل",
+        "ذو الكفل عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "dhul-kifl",
+      "definition": "ذُكر في القرآن مع إسماعيل وإدريس وأُثني عليه بالصبر؛ قال جمهور المفسرين بنبوته، واختلف بعض أهل العلم، فيُعرض الثناء القرآني دون جزم بما زاد عن النص.",
+      "whyMentioned": "الثناء على الصبر ضمن سياق الأنبياء المذكورين؛ مع الاحتراز عند الخلاف في تعيين نبوته.",
+      "lessons": [
+        "الصبر"
+      ],
+      "occurrences": [
+        {
+          "surah": 21,
+          "ayah": 85
+        },
+        {
+          "surah": 38,
+          "ayah": 48
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "dawud",
+      "nameAr": "داود",
+      "aliases": [
+        "داود عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "dawud",
+      "definition": "نبي وملك؛ أُوتي الزبور.",
+      "whyMentioned": "الحكم بالعدل والتسبيح.",
+      "lessons": [
+        "العدل",
+        "كثرة الذكر"
+      ],
+      "occurrences": [
+        {
+          "surah": 2,
+          "ayah": 251
+        },
+        {
+          "surah": 38,
+          "ayah": 17
+        },
+        {
+          "surah": 34,
+          "ayah": 10
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "sulayman",
+      "nameAr": "سليمان",
+      "aliases": [
+        "سليمان عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "sulayman",
+      "definition": "ابن داود؛ أُوتي ملكاً عظيماً.",
+      "whyMentioned": "الشكر مع النعمة والحكم.",
+      "lessons": [
+        "الشكر",
+        "العدل"
+      ],
+      "occurrences": [
+        {
+          "surah": 27,
+          "ayah": 15
+        },
+        {
+          "surah": 38,
+          "ayah": 30
+        },
+        {
+          "surah": 34,
+          "ayah": 12
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "ilyas",
+      "nameAr": "إلياس",
+      "aliases": [
+        "إلياس عليه السلام",
+        "إلياسين"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "ilyas",
+      "definition": "نبي دعا قومه إلى ترك عبادة بعل.",
+      "whyMentioned": "التوحيد ونبذ الأوثان.",
+      "lessons": [
+        "التوحيد"
+      ],
+      "occurrences": [
+        {
+          "surah": 37,
+          "ayah": 123
+        },
+        {
+          "surah": 6,
+          "ayah": 85
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "al-yasa",
+      "nameAr": "اليسع",
+      "aliases": [
+        "اليسع عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "al-yasa",
+      "definition": "نبي ذُكر مع الأخيار.",
+      "whyMentioned": "الثناء ضمن سلسلة الأنبياء.",
+      "lessons": [
+        "الاقتداء بالصالحين"
+      ],
+      "occurrences": [
+        {
+          "surah": 6,
+          "ayah": 86
+        },
+        {
+          "surah": 38,
+          "ayah": 48
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "yunus",
+      "nameAr": "يونس",
+      "aliases": [
+        "يونس عليه السلام",
+        "ذو النون"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "yunus",
+      "definition": "ذو النون؛ نادى في الظلمات فاستجاب الله له.",
+      "whyMentioned": "التوبة والذكر في الشدة.",
+      "lessons": [
+        "لا إله إلا أنت سبحانك"
+      ],
+      "occurrences": [
+        {
+          "surah": 37,
+          "ayah": 139
+        },
+        {
+          "surah": 21,
+          "ayah": 87
+        },
+        {
+          "surah": 10,
+          "ayah": 98
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "zakariyya",
+      "nameAr": "زكريا",
+      "aliases": [
+        "زكريا عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "zakariyya",
+      "definition": "نبي بُشّر بيحيى على الكبر.",
+      "whyMentioned": "الدعاء والإجابة.",
+      "lessons": [
+        "حسن الظن بالله"
+      ],
+      "occurrences": [
+        {
+          "surah": 3,
+          "ayah": 37
+        },
+        {
+          "surah": 19,
+          "ayah": 2
+        },
+        {
+          "surah": 21,
+          "ayah": 89
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "yahya",
+      "nameAr": "يحيى",
+      "aliases": [
+        "يحيى عليه السلام"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "yahya",
+      "definition": "ابن زكريا؛ سيداً وحصوراً.",
+      "whyMentioned": "البر والتقوى من الصغر.",
+      "lessons": [
+        "بر الوالدين"
+      ],
+      "occurrences": [
+        {
+          "surah": 3,
+          "ayah": 39
+        },
+        {
+          "surah": 19,
+          "ayah": 7
+        },
+        {
+          "surah": 21,
+          "ayah": 90
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "isa",
+      "nameAr": "عيسى",
+      "aliases": [
+        "عيسى عليه السلام",
+        "المسيح",
+        "ابن مريم"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "isa",
+      "definition": "المسيح ابن مريم؛ من أولي العزم.",
+      "whyMentioned": "التوحيد ونفي الألوهية عنه وعن أمه.",
+      "lessons": [
+        "التوحيد",
+        "أدب العبودية"
+      ],
+      "occurrences": [
+        {
+          "surah": 3,
+          "ayah": 45
+        },
+        {
+          "surah": 5,
+          "ayah": 110
+        },
+        {
+          "surah": 19,
+          "ayah": 30
+        },
+        {
+          "surah": 61,
+          "ayah": 6
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "muhammad",
+      "nameAr": "محمد",
+      "aliases": [
+        "محمد ﷺ",
+        "أحمد",
+        "النبي",
+        "الرسول"
+      ],
+      "category": "prophet",
+      "mentionType": "name",
+      "prophetSlug": "muhammad",
+      "definition": "خاتم النبيين؛ ذُكر باسمه ووصفه في القرآن.",
+      "whyMentioned": "رسالته الخاتمة والأسوة.",
+      "lessons": [
+        "اتباع السنة",
+        "الرحمة للعالمين"
+      ],
+      "occurrences": [
+        {
+          "surah": 3,
+          "ayah": 144
+        },
+        {
+          "surah": 33,
+          "ayah": 40
+        },
+        {
+          "surah": 47,
+          "ayah": 2
+        },
+        {
+          "surah": 48,
+          "ayah": 29
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "maryam",
+      "nameAr": "مريم",
+      "aliases": [
+        "مريم ابنة عمران",
+        "العذراء"
+      ],
+      "category": "righteous",
+      "mentionType": "name",
+      "definition": "ابنة عمران وأم عيسى؛ صِدّيقة طهّرها الله واصطفاها.",
+      "whyMentioned": "العفاف والاصطفاء ومعجزة الولادة.",
+      "lessons": [
+        "العفاف",
+        "التوكل"
+      ],
+      "occurrences": [
+        {
+          "surah": 3,
+          "ayah": 42
+        },
+        {
+          "surah": 19,
+          "ayah": 16
+        },
+        {
+          "surah": 66,
+          "ayah": 12
+        }
+      ],
+      "status": "published",
+      "relatedLinks": [
+        {
+          "href": "/prophets/isa",
+          "label": "قصة عيسى عليه السلام"
+        }
+      ]
+    },
+    {
+      "slug": "imran",
+      "nameAr": "عمران",
+      "aliases": [
+        "آل عمران"
+      ],
+      "category": "righteous",
+      "mentionType": "name",
+      "definition": "والد مريم؛ اصطُفيت ذريته.",
+      "whyMentioned": "فضل آل عمران.",
+      "lessons": [
+        "صلاح الوالد ينفع الذرية"
+      ],
+      "occurrences": [
+        {
+          "surah": 3,
+          "ayah": 33
+        },
+        {
+          "surah": 3,
+          "ayah": 35
+        }
+      ],
+      "status": "published",
+      "relatedLinks": [
+        {
+          "href": "/quran/people/maryam",
+          "label": "مريم عليها السلام"
+        }
+      ]
+    },
+    {
+      "slug": "firawn",
+      "nameAr": "فرعون",
+      "aliases": [
+        "فرعون موسى"
+      ],
+      "category": "tyrant",
+      "mentionType": "name",
+      "definition": "طاغية مصر في زمن موسى؛ ضرب الله به المثل في التكبر.",
+      "whyMentioned": "عاقبة الطغيان وتكذيب الآيات.",
+      "lessons": [
+        "لا يغني الطغيان من الله شيئاً"
+      ],
+      "occurrences": [
+        {
+          "surah": 7,
+          "ayah": 103
+        },
+        {
+          "surah": 20,
+          "ayah": 24
+        },
+        {
+          "surah": 28,
+          "ayah": 4
+        },
+        {
+          "surah": 79,
+          "ayah": 17
+        }
+      ],
+      "status": "published",
+      "relatedLinks": [
+        {
+          "href": "/prophets/musa",
+          "label": "قصة موسى عليه السلام"
+        },
+        {
+          "href": "/nations",
+          "label": "الأمم السابقة"
+        }
+      ]
+    },
+    {
+      "slug": "haman",
+      "nameAr": "هامان",
+      "aliases": [],
+      "category": "tyrant",
+      "mentionType": "name",
+      "definition": "وزير فرعون؛ ذُكر معه في التكبر والبناء.",
+      "whyMentioned": "معاونة الطغاة على الباطل.",
+      "lessons": [
+        "لا تُعن على الإثم"
+      ],
+      "occurrences": [
+        {
+          "surah": 28,
+          "ayah": 6
+        },
+        {
+          "surah": 28,
+          "ayah": 38
+        },
+        {
+          "surah": 40,
+          "ayah": 36
+        }
+      ],
+      "status": "published",
+      "relatedLinks": [
+        {
+          "href": "/quran/people/firawn",
+          "label": "فرعون"
+        }
+      ]
+    },
+    {
+      "slug": "qarun",
+      "nameAr": "قارون",
+      "aliases": [],
+      "category": "tyrant",
+      "mentionType": "name",
+      "definition": "من قوم موسى؛ بغى بكثرة ماله فخُسف به.",
+      "whyMentioned": "فتنة المال والكبر.",
+      "lessons": [
+        "زوال الدنيا",
+        "الشكر لا البطر"
+      ],
+      "occurrences": [
+        {
+          "surah": 28,
+          "ayah": 76
+        },
+        {
+          "surah": 29,
+          "ayah": 39
+        },
+        {
+          "surah": 40,
+          "ayah": 24
+        }
+      ],
+      "status": "published",
+      "relatedLinks": [
+        {
+          "href": "/prophets/musa",
+          "label": "قصة موسى عليه السلام"
+        }
+      ]
+    },
+    {
+      "slug": "luqman",
+      "nameAr": "لقمان",
+      "aliases": [
+        "لقمان الحكيم"
+      ],
+      "category": "righteous",
+      "mentionType": "name",
+      "definition": "عبد آتاه الله الحكمة؛ وصّى ابنه بالتوحيد وبر الوالدين. لم يثبت بنص صحيح أنه نبي، فيُذكر بالحكمة لا بالجزم بالنبوة.",
+      "whyMentioned": "الحكمة في التربية والتوحيد.",
+      "lessons": [
+        "التوحيد أولاً",
+        "بر الوالدين"
+      ],
+      "occurrences": [
+        {
+          "surah": 31,
+          "ayah": 12
+        },
+        {
+          "surah": 31,
+          "ayah": 13
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "talut",
+      "nameAr": "طالوت",
+      "aliases": [],
+      "category": "king",
+      "mentionType": "name",
+      "definition": "ملك بعثه الله على بني إسرائيل مع داود.",
+      "whyMentioned": "طاعة الأمير والابتلاء بالنهر.",
+      "lessons": [
+        "الطاعة في المعروف"
+      ],
+      "occurrences": [
+        {
+          "surah": 2,
+          "ayah": 247
+        },
+        {
+          "surah": 2,
+          "ayah": 249
+        }
+      ],
+      "status": "published",
+      "relatedLinks": [
+        {
+          "href": "/prophets/dawud",
+          "label": "داود عليه السلام"
+        }
+      ]
+    },
+    {
+      "slug": "jalut",
+      "nameAr": "جالوت",
+      "aliases": [],
+      "category": "tyrant",
+      "mentionType": "name",
+      "definition": "عدو بني إسرائيل؛ قتله داود بإذن الله.",
+      "whyMentioned": "نصر الله مع القلة.",
+      "lessons": [
+        "النصر من عند الله"
+      ],
+      "occurrences": [
+        {
+          "surah": 2,
+          "ayah": 249
+        },
+        {
+          "surah": 2,
+          "ayah": 251
+        }
+      ],
+      "status": "published",
+      "relatedLinks": [
+        {
+          "href": "/prophets/dawud",
+          "label": "داود عليه السلام"
+        }
+      ]
+    },
+    {
+      "slug": "uzayr",
+      "nameAr": "عزير",
+      "aliases": [
+        "عزير"
+      ],
+      "category": "figure",
+      "mentionType": "name",
+      "definition": "ذُكر في سياق قول بعض أهل الكتاب فيه؛ يُعرض ما ثبت في النص دون تفاصيل غير ثابتة ولا توسع إسرائيلي.",
+      "whyMentioned": "بيان ضلال نسبة البنوّة إلى غير الله.",
+      "lessons": [
+        "التوحيد ونفي الشرك"
+      ],
+      "occurrences": [
+        {
+          "surah": 9,
+          "ayah": 30
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "dhul-qarnayn",
+      "nameAr": "ذو القرنين",
+      "aliases": [
+        "ذي القرنين"
+      ],
+      "category": "righteous",
+      "mentionType": "name",
+      "definition": "عبد مكّن الله له في الأرض وذكر بناء السد دون يأجوج ومأجوج. لا يُجزم بتعيينه بالإسكندر أو غيره؛ يُقتصر على ما ورد في الكهف.",
+      "whyMentioned": "العدل مع التمكين.",
+      "lessons": [
+        "العدل",
+        "الشكر على التمكين"
+      ],
+      "occurrences": [
+        {
+          "surah": 18,
+          "ayah": 83
+        },
+        {
+          "surah": 18,
+          "ayah": 86
+        },
+        {
+          "surah": 18,
+          "ayah": 94
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "zayd",
+      "nameAr": "زيد",
+      "aliases": [
+        "زيد بن حارثة"
+      ],
+      "category": "companion",
+      "mentionType": "name",
+      "definition": "الصحابي زيد بن حارثة؛ ذُكر باسمه في القرآن.",
+      "whyMentioned": "حكم التبنّي ونسخه.",
+      "lessons": [
+        "اتباع حكم الله"
+      ],
+      "occurrences": [
+        {
+          "surah": 33,
+          "ayah": 37
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "abu-lahab",
+      "nameAr": "أبو لهب",
+      "aliases": [
+        "لهب",
+        "مسّد"
+      ],
+      "category": "tyrant",
+      "mentionType": "name",
+      "definition": "عم النبي ﷺ؛ ذُكر في سورة المسد.",
+      "whyMentioned": "عاقبة معاداة الدعوة.",
+      "lessons": [
+        "لا تغني القرابة مع الكفر"
+      ],
+      "occurrences": [
+        {
+          "surah": 111,
+          "ayah": 1
+        }
+      ],
+      "status": "published"
+    },
+    {
+      "slug": "iblis",
+      "nameAr": "إبليس",
+      "aliases": [
+        "الشيطان",
+        "العدو"
+      ],
+      "category": "other",
+      "mentionType": "name",
+      "definition": "عدو بني آدم؛ استكبر عن السجود لآدم.",
+      "whyMentioned": "بيان عداوة الشيطان ووساوسه.",
+      "lessons": [
+        "الاستعاذة",
+        "عدم اتباع الهوى"
+      ],
+      "occurrences": [
+        {
+          "surah": 2,
+          "ayah": 34
+        },
+        {
+          "surah": 7,
+          "ayah": 11
+        },
+        {
+          "surah": 15,
+          "ayah": 31
+        },
+        {
+          "surah": 38,
+          "ayah": 74
+        }
+      ],
+      "status": "published",
+      "relatedLinks": [
+        {
+          "href": "/prophets/adam",
+          "label": "قصة آدم عليه السلام"
+        }
+      ]
+    },
+    {
+      "slug": "harut",
+      "nameAr": "هاروت",
+      "aliases": [],
+      "category": "other",
+      "mentionType": "name",
+      "definition": "مَلَك ذُكر مع ماروت في بابل في سياق فتنة السحر؛ يُلتزم بما ورد في الآية دون إسرائيليات.",
+      "whyMentioned": "التحذير من السحر والفتنة.",
+      "lessons": [
+        "اجتناب السحر"
+      ],
+      "occurrences": [
+        {
+          "surah": 2,
+          "ayah": 102
+        }
+      ],
+      "status": "published",
+      "relatedLinks": [
+        {
+          "href": "/quran/people/marut",
+          "label": "ماروت"
+        }
+      ]
+    },
+    {
+      "slug": "marut",
+      "nameAr": "ماروت",
+      "aliases": [],
+      "category": "other",
+      "mentionType": "name",
+      "definition": "مَلَك ذُكر مع هاروت في بابل؛ يُلتزم بالنص القرآني.",
+      "whyMentioned": "التحذير من السحر.",
+      "lessons": [
+        "اجتناب السحر"
+      ],
+      "occurrences": [
+        {
+          "surah": 2,
+          "ayah": 102
+        }
+      ],
+      "status": "published",
+      "relatedLinks": [
+        {
+          "href": "/quran/people/harut",
+          "label": "هاروت"
+        }
+      ]
+    }
   ]
 }
