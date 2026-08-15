@@ -17,9 +17,9 @@
   --color-on-brand: #FFFFFF;
   --color-accent: #B08A3E;
   --color-accent-soft: #F5EEDF;
-  /* مصحف نمط «آية» — عاجي أفتح، ذهب مرجعي، زخارف الشارة/الميدالية */
-  --color-mushaf-paper: #FCF8F1;
-  --color-mushaf-bg: #FCF8F1;
+  /* مصحف نمط «آية» / ورق المدينة */
+  --color-mushaf-paper: #FCF9F0;
+  --color-mushaf-bg: #E8E4D9;
   --color-mushaf-ink: #161513;
   --color-mushaf-gold: #B08D57;
   --color-mushaf-gold-strong: #A67C3D;

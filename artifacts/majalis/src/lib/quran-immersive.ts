@@ -21,8 +21,8 @@ export const IMMERSIVE_PAPER_BG = "#F5F5DC";
  * ورق قراءة المصحف المشترك مع تطبيق مصحفي (`MushafColors.paper`).
  * راجع UNIFIED_MUSHAF.md — لا يغيّر محرّك QPC، فقط سطح القراءة.
  */
-/** يطابق `--color-mushaf-paper` / `--color-mushaf-bg` في app/styles/theme.css */
-export const AYAH_MUSHAF_PAPER_BG = "#FCF8F1";
+/** يطابق `--color-mushaf-paper` في app/styles/theme.css (ورق المدينة) */
+export const AYAH_MUSHAF_PAPER_BG = "#FCF9F0";
 
 /** حبر شبه أسود — يطابق `--color-mushaf-ink`. */
 export const AYAH_MUSHAF_INK = "#161513";
