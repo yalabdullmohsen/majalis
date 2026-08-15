@@ -12,6 +12,7 @@ type Props = {
   ayahPreview?: string;
   copyStatus: string | null;
   audioError: string | null;
+  audioStatus?: string | null;
   playerState: PlayerState;
   reciterId: string;
   onPlay: () => void;
@@ -29,6 +30,7 @@ export function MushafAyahActions({
   ayahPreview = "",
   copyStatus,
   audioError,
+  audioStatus = null,
   playerState,
   reciterId,
   onPlay,
@@ -49,6 +51,7 @@ export function MushafAyahActions({
   const playing =
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const loading = playerState === "loading" || playerState === "buffering";
+  const playLabel = playing ? "إيقاف" : playerState === "paused" ? "استئناف" : "تشغيل";
   const reciters = useMemo(() => MUSHAF_RECITER_IDS.map((id) => getReciter(id)), []);
   const filtered = useMemo(() => {
     const q = readerQuery.trim();
@@ -56,6 +59,12 @@ export function MushafAyahActions({
     return reciters.filter((r) => r.nameAr.includes(q) || r.nameEn.toLowerCase().includes(q.toLowerCase()));
   }, [readerQuery, reciters]);
   const currentReciter = getReciter(reciterId);
+
+  const handlePlayClick = () => {
+    setReadersOpen(false);
+    if (playing || playerState === "paused") onTogglePlay();
+    else onPlay();
+  };
 
   return createPortal(
     <>
@@ -80,19 +89,28 @@ export function MushafAyahActions({
               <button
                 type="button"
                 className="mm-ayah-bar__play-main"
-                onClick={onTogglePlay}
-                aria-label={playing ? "إيقاف مؤقت" : "استئناف"}
+                onClick={handlePlayClick}
+                aria-label={playLabel}
               >
                 {playing ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
               </button>
               <span className="mm-ayah-bar__reciter-name">{currentReciter.nameAr}</span>
-              {loading ? <span className="mm-ayah-bar__loading">جاري تحميل التلاوة…</span> : null}
+              {loading ? <span className="mm-ayah-bar__loading">جاري تحميل التلاوة...</span> : null}
+              {!loading && playerState === "playing" ? (
+                <span className="mm-ayah-bar__loading">يتم تشغيل التلاوة</span>
+              ) : null}
             </div>
           ) : null}
 
+          {audioStatus && !audioError && playerState !== "error" ? (
+            <p className="mm-ayah-bar__status" role="status" data-testid="mushaf-audio-status">
+              {audioStatus}
+            </p>
+          ) : null}
+
           {audioError || playerState === "error" ? (
-            <p className="mm-ayah-bar__status mm-ayah-bar__status--err" role="status">
-              {audioError || "تعذّر تشغيل التلاوة. جرّب قارئاً آخر أو أعد المحاولة."}
+            <p className="mm-ayah-bar__status mm-ayah-bar__status--err" role="status" data-testid="mushaf-audio-error">
+              {audioError || "تعذر تحميل التلاوة، أعد المحاولة"}
             </p>
           ) : null}
           {copyStatus ? (
@@ -102,15 +120,9 @@ export function MushafAyahActions({
           ) : null}
 
           <div className="mm-ayah-bar__actions">
-            <button
-              type="button"
-              onClick={() => {
-                setReadersOpen(false);
-                onPlay();
-              }}
-            >
-              <Play size={16} aria-hidden="true" />
-              <span>تشغيل</span>
+            <button type="button" onClick={handlePlayClick} data-testid="mushaf-ayah-play">
+              {playing ? <Pause size={16} aria-hidden="true" /> : <Play size={16} aria-hidden="true" />}
+              <span>{playLabel}</span>
             </button>
             <button
               type="button"

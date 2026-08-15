@@ -60,3 +60,66 @@ test.describe("Quran — مركز القرآن", () => {
   });
 
 });
+
+test.describe("مصحف حقيقي /mushaf — تحديد آية وتلاوة", () => {
+  test("tap على آية لا يغيّر رقم الصفحة ويفتح شريط الآية", async ({ page }) => {
+    await page.goto("/mushaf?page=1");
+    await waitForContent(page);
+    const viewport = page.getByTestId("mushaf-viewport");
+    await expect(viewport).toBeVisible({ timeout: 20000 });
+    await expect(viewport).toHaveAttribute("data-page", "1");
+
+    const ayah = page.getByTestId("mushaf-ayah-hit").first();
+    await expect(ayah).toBeVisible({ timeout: 20000 });
+    await ayah.click({ force: true });
+
+    await expect(page.getByTestId("mushaf-ayah-actions")).toBeVisible({ timeout: 5000 });
+    await expect(viewport).toHaveAttribute("data-page", "1");
+    await expect(viewport).toHaveAttribute("data-ayah-bar", "1");
+  });
+
+  test("زر التشغيل يظهر ويُرسل نية play دون تغيير الصفحة", async ({ page }) => {
+    await page.goto("/mushaf?page=2");
+    await waitForContent(page);
+    const viewport = page.getByTestId("mushaf-viewport");
+    await expect(viewport).toBeVisible({ timeout: 20000 });
+
+    const ayah = page.getByTestId("mushaf-ayah-hit").first();
+    await expect(ayah).toBeVisible({ timeout: 20000 });
+    await ayah.click({ force: true });
+    await expect(page.getByTestId("mushaf-ayah-actions")).toBeVisible();
+
+    const play = page.getByTestId("mushaf-ayah-play");
+    await expect(play).toBeVisible();
+    await play.click();
+    // إما حالة تحميل/تشغيل أو خطأ واضح — لا صمت
+    await expect
+      .poll(async () => {
+        const status = await page.getByTestId("mushaf-audio-status").count();
+        const err = await page.getByTestId("mushaf-audio-error").count();
+        const transport = await page.locator(".mm-ayah-bar__transport").count();
+        return status + err + transport > 0;
+      }, { timeout: 8000 })
+      .toBe(true);
+    await expect(viewport).toHaveAttribute("data-page", "2");
+  });
+
+  test("swipe أفقي واضح يغيّر الصفحة", async ({ page }) => {
+    await page.goto("/mushaf?page=3");
+    await waitForContent(page);
+    const viewport = page.getByTestId("mushaf-viewport");
+    await expect(viewport).toBeVisible({ timeout: 20000 });
+    await expect(viewport).toHaveAttribute("data-page", "3");
+
+    const box = await viewport.boundingBox();
+    if (!box) return;
+    const y = box.y + box.height * 0.45;
+    const x0 = box.x + box.width * 0.7;
+    const x1 = box.x + box.width * 0.25;
+    await page.mouse.move(x0, y);
+    await page.mouse.down();
+    await page.mouse.move(x1, y, { steps: 12 });
+    await page.mouse.up();
+    await expect(viewport).toHaveAttribute("data-page", "4", { timeout: 5000 });
+  });
+});

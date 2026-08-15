@@ -1,3 +1,4 @@
+import { useRef, type KeyboardEvent, type MouseEvent, type PointerEvent as ReactPointerEvent } from "react";
 import type { QpcWord } from "@/lib/quran-data/qpc-page-data";
 import { MushafAyahNumber } from "./MushafAyahNumber";
 
@@ -14,6 +15,9 @@ type WordRun = {
   body: QpcWord[];
   end: QpcWord | null;
 };
+
+const TAP_SLOP_PX = 14;
+const LONG_PRESS_MS = 480;
 
 /** يجمع كلمات الآية المتتالية في مقطع واحد لتظليل متصل (بدون مربعات لكل كلمة). */
 function groupRuns(words: QpcWord[]): WordRun[] {
@@ -32,6 +36,14 @@ function groupRuns(words: QpcWord[]): WordRun[] {
   return runs;
 }
 
+type PressState = {
+  verseKey: string;
+  x: number;
+  y: number;
+  longTimer: number;
+  longFired: boolean;
+};
+
 /** سطر آيات من كلمات QPC — فواصل الآيات مضمّنة في السطر، والتحديد مقطع متصل. */
 export function MushafAyahLine({
   words,
@@ -41,6 +53,49 @@ export function MushafAyahLine({
   onSelectVerse,
 }: Props) {
   const runs = groupRuns(words);
+  const pressRef = useRef<PressState | null>(null);
+
+  const clearPress = () => {
+    const p = pressRef.current;
+    if (p) window.clearTimeout(p.longTimer);
+    pressRef.current = null;
+  };
+
+  const startPress = (verseKey: string, e: ReactPointerEvent<HTMLElement>) => {
+    e.stopPropagation();
+    clearPress();
+    const longTimer = window.setTimeout(() => {
+      const cur = pressRef.current;
+      if (!cur || cur.verseKey !== verseKey) return;
+      cur.longFired = true;
+      // long press = فتح أدوات الآية (تحديد + شريط)
+      onSelectVerse?.(verseKey);
+    }, LONG_PRESS_MS);
+    pressRef.current = {
+      verseKey,
+      x: e.clientX,
+      y: e.clientY,
+      longTimer,
+      longFired: false,
+    };
+  };
+
+  const endPress = (verseKey: string, e: ReactPointerEvent<HTMLElement>) => {
+    e.stopPropagation();
+    const p = pressRef.current;
+    if (!p || p.verseKey !== verseKey) {
+      clearPress();
+      return;
+    }
+    const dx = Math.abs(e.clientX - p.x);
+    const dy = Math.abs(e.clientY - p.y);
+    const longFired = p.longFired;
+    clearPress();
+    if (longFired) return;
+    if (dx > TAP_SLOP_PX || dy > TAP_SLOP_PX) return;
+    // tap = تحديد الآية (+ شريط الأدوات)
+    onSelectVerse?.(verseKey);
+  };
 
   return (
     <div
@@ -58,7 +113,30 @@ export function MushafAyahLine({
           .filter(Boolean)
           .join(" ");
 
-        const onActivate = () => onSelectVerse?.(run.verseKey);
+        const hitProps = {
+          role: "button" as const,
+          tabIndex: 0,
+          "data-verse": run.verseKey,
+          "aria-label": `آية ${run.verseKey}`,
+          "aria-pressed": selected,
+          onPointerDown: (e: ReactPointerEvent<HTMLElement>) => startPress(run.verseKey, e),
+          onPointerUp: (e: ReactPointerEvent<HTMLElement>) => endPress(run.verseKey, e),
+          onPointerCancel: (e: ReactPointerEvent<HTMLElement>) => {
+            e.stopPropagation();
+            clearPress();
+          },
+          onClick: (e: MouseEvent<HTMLElement>) => {
+            e.preventDefault();
+            e.stopPropagation();
+          },
+          onKeyDown: (e: KeyboardEvent<HTMLElement>) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              e.stopPropagation();
+              onSelectVerse?.(run.verseKey);
+            }
+          },
+        };
 
         return (
           <span
@@ -68,22 +146,9 @@ export function MushafAyahLine({
           >
             {run.body.length > 0 ? (
               <span
-                role="button"
-                tabIndex={0}
                 className={`mm-ayah-hit mm-ayah-run__text ${stateClass}`.trim()}
-                data-verse={run.verseKey}
-                aria-label={`آية ${run.verseKey}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onActivate();
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onActivate();
-                  }
-                }}
+                data-testid="mushaf-ayah-hit"
+                {...hitProps}
               >
                 {run.body.map((w) => (
                   <span
@@ -97,22 +162,9 @@ export function MushafAyahLine({
             ) : null}
             {run.end ? (
               <span
-                role="button"
-                tabIndex={0}
                 className={`mm-ayah-hit mm-ayah-hit--end ${stateClass}`.trim()}
-                data-verse={run.verseKey}
-                aria-label={`آية ${run.verseKey}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onActivate();
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onActivate();
-                  }
-                }}
+                data-testid="mushaf-ayah-hit"
+                {...hitProps}
               >
                 <MushafAyahNumber word={run.end} />
               </span>
