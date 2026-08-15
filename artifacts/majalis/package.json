@@ -14,6 +14,8 @@
     "check:data-freshness": "node --import tsx scripts/check-data-freshness.ts",
     "test:nations": "node --import tsx scripts/test-nations-integrity.mjs",
     "test:nations-quran-people-audit": "node --import tsx scripts/test-nations-quran-people-audit.mjs",
+    "audit:full-site-data": "node scripts/audit-full-site-content.mjs",
+    "audit:data-completeness": "node scripts/audit-data-completeness.mjs",
     "test:quran-quotes": "node scripts/test-quran-quotes-guard.mjs",
     "test:hadith-takhrij": "node scripts/test-hadith-takhrij-guard.mjs",
     "test:fiqh-timeline-provenance": "node --import tsx scripts/test-fiqh-timeline-provenance-guard.mjs",

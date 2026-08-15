@@ -159,10 +159,22 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
       {readUrl && (
         <div className="library-detail-read">
           <a href={readUrl} target="_blank" rel="noreferrer" className="library-read-btn">
-            قراءة المصدر
+            فتح رابط القراءة
           </a>
         </div>
       )}
+      {item.sourceReference ? (
+        <p className="library-detail-note" data-testid="library-source-ref">
+          المصدر: {item.sourceReference}
+        </p>
+      ) : (
+        <p className="library-detail-note" data-testid="library-source-pending">
+          المصدر قيد الإضافة
+        </p>
+      )}
+      {item.sourceStatus === "source_pending" ? (
+        <p className="library-detail-note">لا يُعرض هذا السجل كمصدر موثوق حتى يُثبت المرجع.</p>
+      ) : null}
       <ContentMindMap
         title={item.title}
         category={item.category}
