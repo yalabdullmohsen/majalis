@@ -257,6 +257,7 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
     <div
       className="mm-viewport"
       data-chrome={chromeOpen ? "1" : "0"}
+      data-ayah-bar={actionsOpen ? "1" : "0"}
       data-testid="mushaf-viewport"
       dir="rtl"
       onPointerDown={onPointerDown}

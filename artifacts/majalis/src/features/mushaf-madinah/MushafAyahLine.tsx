@@ -9,7 +9,30 @@ type Props = {
   onSelectVerse?: (verseKey: string) => void;
 };
 
-/** سطر آيات من كلمات QPC — فواصل الآيات مضمّنة في السطر (span لا button حتى لا يُكسر القياس). */
+type WordRun = {
+  verseKey: string;
+  body: QpcWord[];
+  end: QpcWord | null;
+};
+
+/** يجمع كلمات الآية المتتالية في مقطع واحد لتظليل متصل (بدون مربعات لكل كلمة). */
+function groupRuns(words: QpcWord[]): WordRun[] {
+  const ordered = [...words].sort((a, b) => a.id - b.id || a.position - b.position);
+  const runs: WordRun[] = [];
+  let current: WordRun | null = null;
+
+  for (const w of ordered) {
+    if (!current || current.verseKey !== w.verseKey) {
+      current = { verseKey: w.verseKey, body: [], end: null };
+      runs.push(current);
+    }
+    if (w.charType === "end") current.end = w;
+    else current.body.push(w);
+  }
+  return runs;
+}
+
+/** سطر آيات من كلمات QPC — فواصل الآيات مضمّنة في السطر، والتحديد مقطع متصل. */
 export function MushafAyahLine({
   words,
   centered = false,
@@ -17,16 +40,17 @@ export function MushafAyahLine({
   playingVerseKey = null,
   onSelectVerse,
 }: Props) {
-  const ordered = [...words].sort((a, b) => a.id - b.id || a.position - b.position);
+  const runs = groupRuns(words);
+
   return (
     <div
       className="mm-ayah-line"
       data-centered={centered ? "1" : "0"}
       dir="rtl"
     >
-      {ordered.map((w) => {
-        const selected = selectedVerseKey === w.verseKey;
-        const playing = playingVerseKey === w.verseKey;
+      {runs.map((run) => {
+        const selected = selectedVerseKey === run.verseKey;
+        const playing = playingVerseKey === run.verseKey;
         const stateClass = [
           selected ? "is-selected" : "",
           playing ? "is-playing" : "",
@@ -34,55 +58,65 @@ export function MushafAyahLine({
           .filter(Boolean)
           .join(" ");
 
-        const onActivate = () => onSelectVerse?.(w.verseKey);
-
-        if (w.charType === "end") {
-          return (
-            <span
-              key={`${w.verseKey}-${w.position}-${w.id}`}
-              role="button"
-              tabIndex={0}
-              className={`mm-ayah-hit mm-ayah-hit--end ${stateClass}`.trim()}
-              data-verse={w.verseKey}
-              aria-label={`آية ${w.verseKey}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                onActivate();
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  onActivate();
-                }
-              }}
-            >
-              <MushafAyahNumber word={w} />
-            </span>
-          );
-        }
+        const onActivate = () => onSelectVerse?.(run.verseKey);
 
         return (
           <span
-            key={`${w.verseKey}-${w.position}-${w.id}`}
-            role="button"
-            tabIndex={0}
-            className={`mm-ayah-hit mm-ayah-line__word ${stateClass}`.trim()}
-            data-verse={w.verseKey}
-            aria-label={`آية ${w.verseKey}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              onActivate();
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                e.stopPropagation();
-                onActivate();
-              }
-            }}
+            key={`${run.verseKey}-${run.body[0]?.id ?? run.end?.id ?? "x"}`}
+            className={`mm-ayah-run ${stateClass}`.trim()}
+            data-verse={run.verseKey}
           >
-            {w.glyphText}
+            {run.body.length > 0 ? (
+              <span
+                role="button"
+                tabIndex={0}
+                className={`mm-ayah-hit mm-ayah-run__text ${stateClass}`.trim()}
+                data-verse={run.verseKey}
+                aria-label={`آية ${run.verseKey}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onActivate();
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onActivate();
+                  }
+                }}
+              >
+                {run.body.map((w) => (
+                  <span
+                    key={`${w.verseKey}-${w.position}-${w.id}`}
+                    className="mm-ayah-line__word"
+                  >
+                    {w.glyphText}
+                  </span>
+                ))}
+              </span>
+            ) : null}
+            {run.end ? (
+              <span
+                role="button"
+                tabIndex={0}
+                className={`mm-ayah-hit mm-ayah-hit--end ${stateClass}`.trim()}
+                data-verse={run.verseKey}
+                aria-label={`آية ${run.verseKey}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onActivate();
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onActivate();
+                  }
+                }}
+              >
+                <MushafAyahNumber word={run.end} />
+              </span>
+            ) : null}
           </span>
         );
       })}
