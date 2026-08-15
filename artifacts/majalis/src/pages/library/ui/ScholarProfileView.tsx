@@ -243,6 +243,24 @@ export default function ScholarProfilePage() {
         </p>
       </div>
 
+      {scholar.caution ? (
+        <div
+          role="note"
+          dir="rtl"
+          style={{
+            margin: "0.75rem 0 0",
+            padding: "0.75rem 1rem",
+            borderRadius: "0.65rem",
+            border: "1px solid color-mix(in srgb, #b45309 30%, transparent)",
+            background: "color-mix(in srgb, #b45309 8%, transparent)",
+            fontSize: "0.88rem",
+            lineHeight: 1.75,
+          }}
+        >
+          {scholar.caution}
+        </div>
+      ) : null}
+
       {/* Bio */}
       <section className="sch-profile-section" aria-labelledby="bio-heading">
         <h2 id="bio-heading" className="sch-profile-section__title">نبذة تعريفية</h2>
