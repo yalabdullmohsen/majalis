@@ -16,13 +16,14 @@
     <meta name="theme-color" content="#F2F4F3" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F4F3" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101614" />
-    <!-- خلفية صامتة فقط — بلا صورة إقلاع ولا طبقة ويب وسيطة -->
+    <!-- خلفية صامتة تمنع الوميض؛ الدخولية الوحيدة = MajalisLaunchScreen بعد التركيب -->
     <style id="mj-splash-critical">
       html, body, #root {
         background-color: #002b21;
         margin: 0;
       }
     </style>
+    <link rel="preload" as="image" href="/icon-192.png" type="image/png" />
     <meta name="author" content="المجلس العلمي" />
     <link rel="canonical" href="https://majlisilm.com/" />
     <meta property="og:site_name" content="المجلس العلمي" />
@@ -171,8 +172,8 @@
         document.documentElement.dataset.theme = resolved;
         document.documentElement.classList.toggle("dark", resolved === "dark");
         document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
-        /* theme-color أثناء الإقلاع = لون شاشة الدخول (يمنع وميض الشريط) */
-        var splashBg = resolved === "dark" ? "#101614" : "#F2F4F3";
+        /* theme-color أثناء الإقلاع = خلفية الدخول الخضراء (يمنع وميض الشريط الأبيض) */
+        var splashBg = "#002b21";
         var _themeMeta = document.querySelector('meta[name="theme-color"]');
         if (_themeMeta) _themeMeta.setAttribute("content", splashBg);
         document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {

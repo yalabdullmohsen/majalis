@@ -1,6 +1,6 @@
 /**
- * إخفاء شاشة الإطلاق الأصلية (Capacitor) عند أول جاهزية للمسار.
- * لا توجد شاشة ويب وسيطة — الخلفية الخضراء في html/body تمنع الوميض فقط.
+ * إخفاء شاشة الإطلاق الأصلية (Capacitor) عند أول جاهزية للمسار / عند تركيب دخولية الويب.
+ * الخلفية الخضراء في html/body تمنع الوميض؛ MajalisLaunchScreen هي طبقة الوسيط الوحيدة.
  */
 import { Capacitor } from "@capacitor/core";
 
@@ -14,7 +14,7 @@ export async function hideAppSplash() {
   if (!Capacitor.isNativePlatform()) return;
   try {
     const { SplashScreen } = await import("@capacitor/splash-screen");
-    // بلا fade طويل — انتقال فوري تقريباً للمحتوى
+    // بلا fade طويل — انتقال فوري تقريباً للمحتوى / دخولية الويب المطابقة
     await SplashScreen.hide({ fadeOutDuration: 0 });
   } catch {
     /* منصّة بلا ملحق — تجاهل */
