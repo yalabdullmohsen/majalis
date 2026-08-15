@@ -43,7 +43,9 @@ export function MushafAyahActions({
   const [readerQuery, setReaderQuery] = useState("");
   const parsed = parseVerseKey(verseKey);
   const surahName = parsed ? getSurahMeta(parsed.surah).name : "";
-  const title = parsed ? `${surahName} · آية ${parsed.ayah}` : verseKey;
+  const title = parsed
+    ? `سورة ${parsed.surah} · آية ${parsed.ayah} — ${surahName}`
+    : verseKey;
   const playing =
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const loading = playerState === "loading" || playerState === "buffering";
@@ -65,6 +67,7 @@ export function MushafAyahActions({
           onClick={onClose}
         />
         <div className="mm-ayah-bar__panel">
+          <div className="mm-ayah-bar__handle" aria-hidden="true" />
           <div className="mm-ayah-bar__head">
             <p className="mm-ayah-bar__title">{title}</p>
             <button type="button" className="mm-ayah-bar__close" onClick={onClose} aria-label="إغلاق">
@@ -83,7 +86,7 @@ export function MushafAyahActions({
                 {playing ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
               </button>
               <span className="mm-ayah-bar__reciter-name">{currentReciter.nameAr}</span>
-              {loading ? <span className="mm-ayah-bar__loading">جاري التحميل…</span> : null}
+              {loading ? <span className="mm-ayah-bar__loading">جاري تحميل التلاوة…</span> : null}
             </div>
           ) : null}
 

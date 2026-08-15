@@ -348,6 +348,7 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
 
       <MushafControls
         open={chromeOpen && !actionsOpen}
+        exitAlwaysVisible={actionsOpen || chromeOpen}
         pageNumber={page}
         onExit={onExit}
         onIndex={onIndex}
