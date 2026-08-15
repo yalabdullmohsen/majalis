@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CHUNK_RECOVERING_EVENT } from "@/lib/chunk-recovery";
+import "@/styles/components/chunk-recovery-toast.css";
 
 /**
  * مؤشر خفيف أثناء استعادة chunks بعد نشر — لا يجمّد الواجهة برسالة خطأ صلبة.

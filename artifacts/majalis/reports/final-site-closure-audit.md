@@ -35,7 +35,7 @@
 | `pnpm run lint` | نجح |
 | `pnpm run build` | نجح |
 | `pnpm run test:seo` | نجح (0 P0 بعد إصلاح أوصاف قصيرة وh1 مزدوج) |
-| `pnpm test` | فشل عند `critical-css-gzip-gate` — CSS gzip ≈62.3KiB > 60KiB؛ **غير ناتج عن تعديلات هذا التدقيق** (لا مساس بملفات CSS) |
+| `pnpm test` | نجح بعد إخراج capacitor/ios-edge/chunk-recovery من CSS الحرج (gzip ≈59.97KiB ≤ 60KiB) |
 | `prophets-content-quality` | نجح — 25 نبيًا |
 
-**قرار الدمج:** وفق طلب المالك — لا دمج/نشر طالما فشلت بوابة ضمن `pnpm test`. يُفتح PR جاهز؛ إصلاح ميزانية CSS منفصل إن لزم.
+**قرار الدمج:** بعد نجاح `pnpm test` و`repo-gates`/Verify build يمكن الدمج التلقائي.

@@ -3,7 +3,7 @@
 | مقياس | مقيس (dist محلي) | الهدف | حالة |
 |--------|------------------|--------|------|
 | JS رئيسي `index-*.js` gzip | **~135 KB** | <250 KB ابتدائي | مقبول للقطعة الرئيسية؛ الحزمة الكلية فوق الهدف بسبب بذور محتوى كسولة |
-| CSS حرج `index-*.css` gzip | **~57 KB** | <60 KB | **محقّق** (بوابة `critical-css-gzip-gate`) |
+| CSS حرج `index-*.css` gzip | **~60 KB** | <60 KB | **محقّق** (بوابة `critical-css-gzip-gate`؛ capacitor/ios-edge خارج الحرج على الويب) |
 | أكبر قطعة كسولة | `fawaid-curated-seed` ~132 KB gzip | — | تُحمَّل عند الطلب |
 | LCP / TTI / INP / CLS @390×844 4G | لم تُقَس بـLighthouse في هذه الجلسة | <2.5s / <2.5s / <200ms / <0.1 | معلّق |
 | كاش `/` و`index.html` | `public, max-age=0, must-revalidate` | بلا `no-store` على العامة | **مُصلَح** |

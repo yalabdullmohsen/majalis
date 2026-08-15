@@ -33,12 +33,10 @@ import "./index.css";
 import "./styles/design-system.css";
 import "./styles/components/instant-interaction.css";
 import "./styles/components/native-feel.css";
-import "./styles/components/chunk-recovery-toast.css";
 import "./styles/final-release.css";
 import "./styles/brand-v4-components.css";
 import "./styles/brand-v4-contrast-fixes.css";
 import "./styles/a11y-release-gate.css";
-import "./styles/capacitor-native-ux.css";
 import "./styles/m2030/foundation.css";
 import "./styles/m2030/navigation.css";
 import "./styles/m2030/pages.css";
@@ -46,11 +44,13 @@ import "./styles/m2030/interactions.css";
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
 import "./styles/dark-mode-surfaces.css";
-import "./styles/ios-edge.css";
+// chunk-recovery / capacitor / ios-edge خارج CSS الحرج (gzip ≤60KiB)
 
 if (isNative) {
   document.documentElement.classList.add("capacitor-native");
   document.documentElement.dataset.platform = isAndroid ? "android" : isIOS ? "ios" : "native";
+  void import("./styles/capacitor-native-ux.css");
+  void import("./styles/ios-edge.css");
 }
 
 const queryClient = createAppQueryClient();
