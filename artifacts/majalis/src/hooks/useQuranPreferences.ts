@@ -47,9 +47,11 @@ const DEFAULTS: QuranPreferences = {
   showAyahNumbers: true,
   nightMode: false,
   readingTheme: "standard",
-  /* افتراضي ذهبي مدينة (2026-08-15): ورق/إطار مصحف المدينة على /mushaf.
-     «بلا إطار» وبقية الخيارات تبقى من الإعدادات. */
-  frameStyle: "gold-classic",
+  /* "none" افتراضيًا (2026-07-22، بطلب المالك): إلغاء شكل "الورقة"
+     (الإطار المزدوج + الزخارف الذهبية بالزوايا) لدمج صفحة المصحف بصريًا
+     مع خلفية التطبيق العادية بدل بطاقة منفصلة — الخيارات الأخرى (emerald/
+     gold-classic/paper/minimal) تبقى متاحة من الإعدادات لمن يفضّلها. */
+  frameStyle: "none",
   highlightStyle: "wash",
   pageMode: "precision",
 };

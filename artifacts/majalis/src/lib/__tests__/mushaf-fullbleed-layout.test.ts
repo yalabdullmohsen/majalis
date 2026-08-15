@@ -107,7 +107,7 @@ assert.match(
   "رأس من سلّم S",
 );
 
-assert.match(immersiveSrc, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#FCF9F0"/);
+assert.match(immersiveSrc, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#FCF8F1"/);
 
 const bodyInner = quranCss.match(
   /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[^}]+\}/,

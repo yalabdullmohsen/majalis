@@ -113,7 +113,7 @@ export default function MushafPageView() {
     prefs.readingTheme !== "high-contrast";
   const immersivePaper =
     prefs.readingTheme === "night" || siteDarkMushaf
-      ? "#0F172A"
+      ? "#1A1612"
       : prefs.readingTheme === "high-contrast"
         ? "#ffffff"
         : AYAH_MUSHAF_PAPER_BG;

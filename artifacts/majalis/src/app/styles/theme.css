@@ -17,15 +17,15 @@
   --color-on-brand: #FFFFFF;
   --color-accent: #B08A3E;
   --color-accent-soft: #F5EEDF;
-  /* مصحف نمط «آية» / ورق المدينة — عاجي أفتح، ذهب مرجعي */
-  --color-mushaf-paper: #FCF9F0;
-  --color-mushaf-bg: #E8E4D9;
-  --color-mushaf-ink: #2E231D;
-  --color-mushaf-gold: #B8944D;
+  /* مصحف نمط «آية» — عاجي أفتح، ذهب مرجعي، زخارف الشارة/الميدالية */
+  --color-mushaf-paper: #FCF8F1;
+  --color-mushaf-bg: #FCF8F1;
+  --color-mushaf-ink: #161513;
+  --color-mushaf-gold: #B08D57;
   --color-mushaf-gold-strong: #A67C3D;
   --color-mushaf-gold-soft: #C9B07A;
   --color-mushaf-gold-faint: color-mix(in srgb, #B08D57 20%, transparent);
-  /* نص الرأس/الذيل — ≥4.5:1 على #FCF9F0؛ الزخرفة تبقى --color-mushaf-gold */
+  /* نص الرأس/الذيل — ≥4.5:1 على #FCF8F1؛ الزخرفة تبقى --color-mushaf-gold */
   --color-mushaf-meta: #8F6A35;
   --color-mushaf-panel: #FAF3E8;
   --color-mushaf-ornament-bg: #E3D2B4;
@@ -308,15 +308,15 @@ html.dark,
   --color-danger-soft: #3A2226;
   --color-danger-deep: #F2B8C0;
   --color-splash: #131A18;
-  /* مصحف ليلي — قيم صريحة (لا تُمس مواصفة الرسم؛ ألوان سطح فقط) */
-  --color-mushaf-paper: #12100C;
-  --color-mushaf-bg: #12100C;
-  --color-mushaf-ink: #EDE6D8;
+  /* مصحف ليلي — ورق دافئ مقروء (سطح فقط؛ لا يمسّ رسم QPC) */
+  --color-mushaf-paper: #1A1612;
+  --color-mushaf-bg: #1A1612;
+  --color-mushaf-ink: #F8F4EC;
   --color-mushaf-gold: #C9A96A;
-  --color-mushaf-gold-strong: #C9A96A;
+  --color-mushaf-gold-strong: #D4B87A;
   --color-mushaf-gold-soft: #A89060;
-  --color-mushaf-meta: #C9A96A;
-  --color-mushaf-panel: #241F17;
+  --color-mushaf-meta: #E8D5A8;
+  --color-mushaf-panel: #2A241C;
   --color-mushaf-ornament-bg: #2A241C;
   --color-mushaf-ornament-line: #3D3428;
   --color-mushaf-ornament-mid: #3A3228;

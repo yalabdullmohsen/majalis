@@ -472,10 +472,11 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--color-mushaf-gold-soft, #C9B07A) 45%, transparent);
-  background: color-mix(in srgb, var(--color-mushaf-panel, #FAF3E8) 88%, transparent);
+  background: color-mix(in srgb, var(--color-mushaf-panel, #FAF3E8) 92%, #fff);
   color: var(--color-mushaf-ink, #161513);
   font-size: 0.8125rem;
-  font-weight: 600;
+  font-weight: 700;
+  opacity: 1;
   box-shadow: 0 4px 14px color-mix(in srgb, #000 10%, transparent);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -483,9 +484,10 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 }
 .quran-shell--night .mpv-exit-chip,
 html[data-theme="dark"] .mpv-exit-chip {
-  background: color-mix(in srgb, var(--color-mushaf-panel, #241F17) 92%, #000);
-  color: var(--color-mushaf-ink, #EDE6D8);
-  border-color: color-mix(in srgb, var(--color-mushaf-gold, #C9A96A) 40%, transparent);
+  background: #2A241C;
+  color: #F8F4EC;
+  border-color: #C9A96A;
+  opacity: 1;
 }
 @media (prefers-reduced-motion: reduce) {
   .mpv-exit-chip { transition: none; }
