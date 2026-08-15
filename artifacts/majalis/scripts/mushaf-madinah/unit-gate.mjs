@@ -32,24 +32,30 @@ assert.match(css, /--mm-paper/);
 assert.match(css, /--mm-gold/);
 assert.match(css, /\.mm-page__body/);
 assert.match(css, /\.mm-ayah-bar/);
-assert.match(css, /rgba\(190,\s*157,\s*82,\s*0\.22\)/);
+assert.match(css, /rgba\(190,\s*157,\s*82,\s*0\.2/);
 assert.doesNotMatch(css, /\.mm-ayah-sheet__backdrop/);
 assert.doesNotMatch(css, /\.mm-page__frame\s*\{[^}]*border:\s*1px/);
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
 assert.match(css, /\.mm-page-edge/);
-assert.match(css, /#1c2430|#151c26/); // ليلي كحلي لا أسود قاتم على الورقة
+assert.match(css, /#152018|#101812|#0e1410|#1c2430|#151c26/);
 assert.match(css, /\.mm-ayah-run__text\.is-selected/);
 assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*transparent/);
 assert.match(css, /\.mm-viewport\s+\.mm-page\s*\{[^}]*box-shadow:\s*none/);
 assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-qpc-size\)/);
 assert.match(css, /\.mm-reciter-sheet/);
 assert.match(css, /--mm-outer-pad:\s*0/);
+assert.match(css, /--mm-chrome-top-h/);
+assert.match(css, /--mm-chrome-bottom-h/);
+assert.match(css, /\.mm-ayah-bar__handle/);
+assert.match(css, /max-height:\s*min\(50dvh/);
 assert.doesNotMatch(css, /--mm-page-aspect/);
+assert.doesNotMatch(css, /background:\s*#000\b/);
 const ayahBlock = css.match(/\.mm-ayah-line\s*\{[^}]+\}/)?.[0] ?? "";
 assert.ok(ayahBlock.includes("letter-spacing: 0") || !/letter-spacing\s*:/.test(ayahBlock));
 assert.ok(ayahBlock.includes("word-spacing: 0") || !/word-spacing\s*:/.test(ayahBlock));
 assert.doesNotMatch(ayahBlock, /letter-spacing:\s*[1-9]/);
 assert.doesNotMatch(ayahBlock, /word-spacing:\s*[1-9]/);
+assert.match(ayahBlock, /bidi-override/);
 
 const viewport = read("src/features/mushaf-madinah/MushafViewport.tsx");
 assert.match(viewport, /MushafAyahActions/);
@@ -57,22 +63,35 @@ assert.match(viewport, /MushafTafsirSheet/);
 assert.match(viewport, /MushafAudioDock/);
 assert.match(viewport, /playAyah|togglePlay/);
 assert.match(viewport, /onShare|navigator\.share/);
+assert.match(viewport, /exitAlwaysVisible/);
+assert.match(viewport, /dx < 0\) go\(page \+ 1\)/);
+
+const controls = read("src/features/mushaf-madinah/MushafControls.tsx");
+assert.match(controls, /exitAlwaysVisible/);
+assert.match(controls, /data-exit/);
+assert.match(controls, /\{pageNumber\} \/ \{MUSHAF_PAGE_MAX\}/);
 
 const actions = read("src/features/mushaf-madinah/MushafAyahActions.tsx");
 assert.match(actions, /mm-reciter-sheet/);
 assert.match(actions, /مشاركة|onShare/);
 assert.match(actions, /husary|MUSHAF_RECITER_IDS/);
+assert.match(actions, /mm-ayah-bar__handle/);
+assert.match(actions, /جاري تحميل التلاوة/);
 
 const pageSrc = read("src/features/mushaf-madinah/MushafPage.tsx");
 assert.match(pageSrc, /inlineBasmala/);
 assert.match(pageSrc, /bismillahPre/);
 assert.match(pageSrc, /BASMALA/);
+assert.match(pageSrc, /targetStart = 1/);
+assert.doesNotMatch(pageSrc, /Math\.floor\(\(15 - span\) \/ 2\)/);
+assert.match(pageSrc, /mm-slot__banner--with-basmala/);
 
 const line = read("src/features/mushaf-madinah/MushafAyahLine.tsx");
 assert.match(line, /onSelectVerse/);
 assert.match(line, /mm-ayah-hit/);
 assert.match(line, /mm-ayah-run/);
 assert.match(line, /groupRuns|WordRun/);
+assert.match(line, /charType === "end"/);
 
 const app = read("src/App.tsx");
 assert.match(app, /MushafReaderPage/);
