@@ -85,8 +85,8 @@ const scholar = read("pages/library/ui/ScholarProfileView.tsx");
 assert.match(scholar, /personJsonLd\(/);
 assert.doesNotMatch(scholar, /scholar\.image|scholar\.photo/);
 
-const mushaf = read("pages/quran/MushafComingSoonPage.tsx");
+const mushaf = read("pages/quran/MushafReaderPage.tsx");
 assert.match(mushaf, /applyPageSeo/);
-assert.match(mushaf, /قيد التطوير/);
+assert.match(mushaf, /MushafViewport/);
 
 console.log("phase5-audio-offline-seo.test.ts: ok");

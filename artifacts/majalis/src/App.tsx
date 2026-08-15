@@ -126,7 +126,7 @@ const SurahIndexPage = lazy(() => import("@/pages/quran/SurahIndexPage"));
 const QuranSearchPage = lazy(() => import("@/pages/quran/QuranSearchPage"));
 const RevelationOrderPage = lazy(() => import("@/pages/quran/RevelationOrderPage"));
 const MakkiMadaniPage = lazy(() => import("@/pages/quran/MakkiMadaniPage"));
-const MushafComingSoonPage = lazy(() => import("@/pages/quran/MushafComingSoonPage"));
+const MushafReaderPage = lazy(() => import("@/pages/quran/MushafReaderPage"));
 const QuranHubPage = lazy(() => import("@/pages/quran/QuranHubPage"));
 const QuranPeoplePage = lazy(() => import("@/pages/quran/QuranPeoplePage"));
 const QuranPersonDetailPage = lazy(() => import("@/pages/quran/QuranPersonDetailPage"));
@@ -741,12 +741,12 @@ function Router() {
         </ErrorBoundary>
       </Route>
       <Route path="/quran"><Redirect to="/quran-hub" /></Route>
-      {/* المصحف الجديد قيد التطوير — لا قارئ قديم */}
-      <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
-      <Route path="/mushaf/page"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
-      <Route path="/mushaf/about-edition"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
-      <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
-      <Route path="/mushaf"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
+      {/* مصحف المدينة الجديد — بيانات QPC فقط، بلا PDF ولا واجهة قديمة */}
+      <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafReaderPage} /></Route>
+      <Route path="/mushaf/page"><SafeLazyRoute component={MushafReaderPage} /></Route>
+      <Route path="/mushaf/about-edition"><Redirect to="/mushaf?page=1" /></Route>
+      <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafReaderPage} /></Route>
+      <Route path="/mushaf"><SafeLazyRoute component={MushafReaderPage} /></Route>
       <Route path="/quran/mushaf"><Redirect to="/mushaf" /></Route>
       <Route path="/mushaf-v2-preview"><Redirect to="/mushaf" /></Route>
       <Route path="/demo-ayah-reader"><Redirect to="/mushaf" /></Route>
