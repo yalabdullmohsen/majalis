@@ -19,6 +19,15 @@ import {
 } from "@/lib/adhan-preferences";
 import { getMuezzin, hasFajrAdhan, stopAdhan } from "@/lib/adhan-audio";
 import {
+  ADHAN_FULL_AUDIO_PATHS,
+  CRITICAL_ALERTS_ENTITLEMENT_PRESENT,
+  probeAdhanAssetExists,
+  testFullAdhan,
+  type AdhanStyleId,
+} from "@/lib/adhan-audio-service";
+import { fireTestLocalNotification, TEST_NOTIFICATION_DELAY_MS } from "@/lib/notifications/test-trigger";
+import { invalidatePrayerNativeSchedule } from "@/lib/prayer-alert-scheduler";
+import {
   ADHAN_PLAYBACK_MODES,
   ADHAN_PLAYBACK_MODE_LABELS,
   type AdhanPlaybackMode,
@@ -360,13 +369,53 @@ export default function AdhanSettingsPage() {
   const { data: prayerData } = usePrayerCountdown(selectedGovId);
   const [diagnostics, setDiagnostics] = useState<NotificationDiagnostics | null>(null);
   const [diagnosticsOpen, setDiagnosticsOpen] = useState(false);
+  const [testBusy, setTestBusy] = useState(false);
+  const [testMsg, setTestMsg] = useState<string | null>(null);
+  const [diagExtra, setDiagExtra] = useState<{
+    scheduledCount: number | null;
+    fullMp3: boolean | null;
+    bundleSound: string;
+  }>({ scheduledCount: null, fullMp3: null, bundleSound: "adhan-short-makkah.caf" });
 
   useEffect(() => {
     if (!diagnosticsOpen) return;
     let cancelled = false;
     computeNotificationDiagnostics(prayerData ?? null).then((d) => { if (!cancelled) setDiagnostics(d); });
+    void (async () => {
+      const style = (prefs.defaultMuezzinId || "makkah") as keyof typeof ADHAN_FULL_AUDIO_PATHS;
+      const path =
+        style === "makkah" || style === "madinah" || style === "aqsa" || style === "egypt" || style === "turkey" || style === "kuwait"
+          ? ADHAN_FULL_AUDIO_PATHS[style]
+          : ADHAN_FULL_AUDIO_PATHS.makkah;
+      const probe = await probeAdhanAssetExists(path);
+      let scheduledCount: number | null = null;
+      try {
+        if (isNative) {
+          const { LocalNotifications } = await import("@capacitor/local-notifications");
+          const pending = await LocalNotifications.getPending();
+          scheduledCount = pending.notifications?.length ?? 0;
+        }
+      } catch {
+        scheduledCount = null;
+      }
+      if (!cancelled) {
+        const short =
+          style === "madinah" || style === "egypt" || style === "aqsa"
+            ? style
+            : "makkah";
+        setDiagExtra({
+          scheduledCount,
+          fullMp3: probe.exists,
+          bundleSound: `adhan-short-${short}.caf`,
+        });
+      }
+    })();
     return () => { cancelled = true; };
   }, [diagnosticsOpen, prayerData, prefs]);
+
+  useEffect(() => {
+    invalidatePrayerNativeSchedule();
+  }, [prefs.defaultMuezzinId, prefs.playbackMode, prefs.iosSequentialFullAdhan, selectedGovId]);
 
   const sunriseTime =
     prayerData?.prayers.find((p: { key: string }) => p.key === "Sunrise")
@@ -449,11 +498,11 @@ export default function AdhanSettingsPage() {
         </div>
       ) : null}
 
-      {/* الموقع */}
+      {/* الموقع والحساب */}
       <section className="ads-card" aria-labelledby="ads-loc-head">
         <div className="ads-card__head" id="ads-loc-head">
           <MapPin size={15} strokeWidth={2} aria-hidden="true" />
-          <span>الموقع</span>
+          <span>الموقع والحساب</span>
         </div>
         <div className="ads-card__body">
           <div className="ads-row-sep">
@@ -480,11 +529,11 @@ export default function AdhanSettingsPage() {
         </div>
       </section>
 
-      {/* الإعداد العام */}
+      {/* الأذان العام */}
       <section className="ads-card" aria-labelledby="ads-general-head">
         <div className="ads-card__head" id="ads-general-head">
           <Music size={15} strokeWidth={2} aria-hidden="true" />
-          <span>الإعداد العام</span>
+          <span>الأذان العام</span>
         </div>
         <div className="ads-card__body">
           <p className="ads-adhan-desc">
@@ -528,13 +577,33 @@ export default function AdhanSettingsPage() {
               ))}
             </div>
             <p className="ads-global-desc" style={{ marginTop: "0.45rem" }}>
-              الافتراضي «قصير» (تنبيه واحد). لا يُفعَّل الوضع الكامل تلقائيًا.
-              {isNative && isIOS && prefs.playbackMode === "full" ? (
-                <> على iOS يعني الوضع الكامل عدة إشعارات متتابعة (حتى ٤ مقاطع).</>
-              ) : null}
+              الافتراضي «قصير» (إشعار واحد بصوت CAF من الحزمة). الأذان الكامل يُسمع داخل التطبيق.
               {" "}«صامت مع إشعار» يُبقي التنبيه بلا صوت.
             </p>
           </div>
+
+          {isNative && isIOS ? (
+            <div className="ads-field-gap">
+              <div className="ads-row">
+                <div>
+                  <div className="ads-global-label">أذان كامل عبر إشعارات متتابعة</div>
+                  <div className="ads-global-desc">
+                    تجريبي: قد لا يكتمل على iOS إذا كان الجهاز صامتًا أو Focus مفعّلًا أو قيّد النظام الإشعارات.
+                  </div>
+                </div>
+                <Toggle
+                  checked={prefs.iosSequentialFullAdhan}
+                  onChange={(v) => {
+                    setPrefs(patchAdhanPrefs({ iosSequentialFullAdhan: v }));
+                    flashSaved();
+                    void invalidatePrayerNativeSchedule();
+                  }}
+                  id="ios-seq-toggle"
+                  label="أذان كامل عبر إشعارات متتابعة"
+                />
+              </div>
+            </div>
+          ) : null}
 
           <div className="ads-field-gap">
             <div className="ads-global-label">تنبيه مسبق</div>
@@ -646,18 +715,23 @@ export default function AdhanSettingsPage() {
           <div className="ads-row" style={{ marginTop: "0.55rem" }}>
             <div>
               <div className="ads-global-label">تجاوز الوضع الصامت</div>
-              <div className="ads-global-desc">خيار صريح — قد لا يعمل على كل الأجهزة</div>
+              <div className="ads-global-desc">
+                غير متاح إلا بموافقة Apple Critical Alerts — لا نملك هذا الامتياز حاليًا.
+              </div>
             </div>
             <Toggle
-              checked={prefs.bypassSilentMode}
-              onChange={(v) => {
-                setPrefs(patchAdhanPrefs({ bypassSilentMode: v }));
-                flashSaved();
-              }}
+              checked={false}
+              onChange={() => undefined}
+              disabled
               id="bypass-silent-toggle"
-              label="تجاوز الوضع الصامت"
+              label="تجاوز الوضع الصامت غير متاح"
             />
           </div>
+          {!CRITICAL_ALERTS_ENTITLEMENT_PRESENT ? (
+            <p className="ads-adhan-desc" style={{ marginTop: "0.35rem" }}>
+              زر الصامت وFocus يبقيان تحت سيطرة النظام. الأذان الكامل يعمل داخل التطبيق عند فتحه.
+            </p>
+          ) : null}
 
           <div className="ads-field-gap">
             <div className="ads-row">
@@ -688,7 +762,7 @@ export default function AdhanSettingsPage() {
       <section className="ads-card" aria-labelledby="ads-prayers-head">
         <div className="ads-card__head" id="ads-prayers-head">
           <Bell size={15} strokeWidth={2} aria-hidden="true" />
-          <span>الصلوات</span>
+          <span>تخصيص كل صلاة</span>
         </div>
         <div className="ads-card__body">
           <p className="ads-adhan-desc">اضغط الصف لتخصيص المؤذن أو التنبيه. المفتاح يفعّل/يعطّل الأذان.</p>
@@ -734,6 +808,88 @@ export default function AdhanSettingsPage() {
       </section>
 
       <PrayerAlertSettingsCard />
+
+      <section className="ads-card" aria-labelledby="ads-test-head">
+        <div className="ads-card__head" id="ads-test-head">
+          <Bell size={15} strokeWidth={2} aria-hidden="true" />
+          <span>اختبار وتشخيص</span>
+        </div>
+        <div className="ads-card__body">
+          <p className="ads-adhan-desc">
+            اختبر الصوت داخل التطبيق، ثم اختبر إشعارًا حقيقيًا بعد ١٥ ثانية على الجهاز (TestFlight).
+          </p>
+          <div className="ads-prayer-muezzin-btns" style={{ marginTop: "0.5rem" }}>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              disabled={testBusy}
+              onClick={() => {
+                setTestBusy(true);
+                setTestMsg(null);
+                const style = (prefs.defaultMuezzinId || "makkah") as AdhanStyleId;
+                void testFullAdhan(style).then((r) => {
+                  setTestBusy(false);
+                  setTestMsg(
+                    r.ok
+                      ? "يُشغَّل الأذان الكامل الآن داخل التطبيق."
+                      : `تعذّر التشغيل: ${r.message}`,
+                  );
+                });
+              }}
+            >
+              اختبار صوت الأذان
+            </button>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              disabled={testBusy}
+              onClick={() => {
+                setTestBusy(true);
+                setTestMsg(null);
+                void fireTestLocalNotification(TEST_NOTIFICATION_DELAY_MS).then((r) => {
+                  setTestBusy(false);
+                  if (r.ok) {
+                    setTestMsg(
+                      `سيصل إشعار بصوت CAF خلال ${Math.round((r.delayMs ?? TEST_NOTIFICATION_DELAY_MS) / 1000)} ثانية. أبقِ الشاشة مقفلة أو التطبيق في الخلفية للتحقق.`,
+                    );
+                    return;
+                  }
+                  setTestMsg(
+                    r.reason === "permission"
+                      ? "يلزم تفعيل إذن الإشعارات أولًا."
+                      : "تعذّر جدولة إشعار الاختبار.",
+                  );
+                });
+              }}
+            >
+              اختبار إشعار بعد ١٥ ثانية
+            </button>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              onClick={() => stopAdhan()}
+            >
+              إيقاف الصوت
+            </button>
+          </div>
+          {testMsg ? <p className="ads-adhan-desc" style={{ marginTop: "0.5rem" }}>{testMsg}</p> : null}
+        </div>
+      </section>
+
+      <section className="ads-card" aria-labelledby="ads-ios-limits-head">
+        <div className="ads-card__head" id="ads-ios-limits-head">
+          <Bell size={15} strokeWidth={2} aria-hidden="true" />
+          <span>قيود iOS</span>
+        </div>
+        <div className="ads-card__body">
+          <ul className="ads-adhan-desc" style={{ margin: 0, paddingInlineStart: "1.1rem", display: "grid", gap: "0.35rem" }}>
+            <li>لا يُشغَّل أذان كامل من إشعار محلي والتطبيق مغلق تمامًا.</li>
+            <li>صوت الإشعار من ملفات الحزمة القصيرة (حوالي ٨ ثوانٍ).</li>
+            <li>لا يمكن تجاوز زر الصامت أو Focus دون Critical Alerts من Apple.</li>
+            <li>الإشعارات المتتابعة تجريبية وغير مضمونة ١٠٠٪.</li>
+          </ul>
+        </div>
+      </section>
 
       <section className="ads-card" aria-labelledby="ads-friday-head">
         <div className="ads-card__head" id="ads-friday-head">
@@ -805,6 +961,26 @@ export default function AdhanSettingsPage() {
                 <div className="ads-row-sep">
                   <span className="ads-adhan-desc" style={{ margin: 0 }}>تنبيه هذه الصلاة</span>
                   <span>{diagnostics.nextPrayerEnabled ? "مفعّل ✓" : "معطّل ✕"}</span>
+                </div>
+                <div className="ads-row-sep">
+                  <span className="ads-adhan-desc" style={{ margin: 0 }}>نمط الأذان</span>
+                  <span>{prefs.defaultMuezzinId}</span>
+                </div>
+                <div className="ads-row-sep">
+                  <span className="ads-adhan-desc" style={{ margin: 0 }}>صوت الإشعار</span>
+                  <span>{diagExtra.bundleSound}</span>
+                </div>
+                <div className="ads-row-sep">
+                  <span className="ads-adhan-desc" style={{ margin: 0 }}>إشعارات مجدولة</span>
+                  <span>{diagExtra.scheduledCount == null ? "—" : diagExtra.scheduledCount}</span>
+                </div>
+                <div className="ads-row-sep">
+                  <span className="ads-adhan-desc" style={{ margin: 0 }}>ملف MP3 الكامل</span>
+                  <span>{diagExtra.fullMp3 == null ? "—" : diagExtra.fullMp3 ? "موجود ✓" : "غير موجود ✕"}</span>
+                </div>
+                <div className="ads-row-sep">
+                  <span className="ads-adhan-desc" style={{ margin: 0 }}>صوت CAF في الحزمة</span>
+                  <span>متوقع في Bundle: {diagExtra.bundleSound}</span>
                 </div>
                 {diagnostics.blockingReasons.length === 0 ? (
                   <p className="ads-adhan-desc" style={{ marginTop: ".5rem" }}>

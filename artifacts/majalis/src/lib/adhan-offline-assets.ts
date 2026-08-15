@@ -23,58 +23,86 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     id: "makkah",
     labelAr: "أذان مكة المكرمة",
     local: {
-      general: "/sounds/adhan/makkah-general.mp3",
-      fajr: "/sounds/adhan/makkah-fajr.mp3",
+      general: "/audio/adhan/adhan-makkah-full.mp3",
+      fajr: "/audio/adhan/adhan-makkah-fajr.mp3",
       short: "/sounds/adhan/takbeerat-short.mp3",
       takbir: "/sounds/adhan/takbeerat-short.mp3",
     },
     remote: {
-      general: `${CDN}/general/makkah-haram-01.mp3`,
+      general: `${CDN}/general/makkah-haram-02.mp3`,
       fajr: `${CDN}/fajr/makkah-fajr-01.mp3`,
-      short: `${CDN}/general/madinah-01.mp3`,
-      takbir: `${CDN}/general/madinah-01.mp3`,
+      short: `${CDN}/general/madinah-02.mp3`,
+      takbir: `${CDN}/general/madinah-02.mp3`,
     },
   },
   {
     id: "madinah",
     labelAr: "أذان المدينة المنورة",
     local: {
-      general: "/sounds/adhan/madinah-general.mp3",
+      general: "/audio/adhan/adhan-madinah-full.mp3",
       short: "/sounds/adhan/takbeerat-short.mp3",
       takbir: "/sounds/adhan/takbeerat-short.mp3",
     },
     remote: {
-      general: `${CDN}/general/madinah-01.mp3`,
-      short: `${CDN}/general/madinah-01.mp3`,
-      takbir: `${CDN}/general/madinah-01.mp3`,
+      general: `${CDN}/general/madinah-02.mp3`,
+      short: `${CDN}/general/madinah-02.mp3`,
+      takbir: `${CDN}/general/madinah-02.mp3`,
     },
   },
   {
     id: "egypt",
     labelAr: "الأذان المصري",
     local: {
-      general: "/sounds/adhan/egypt-general.mp3",
+      general: "/audio/adhan/adhan-egypt-full.mp3",
       short: "/sounds/adhan/takbeerat-short.mp3",
       takbir: "/sounds/adhan/takbeerat-short.mp3",
     },
     remote: {
-      general: `${CDN}/general/egypt-traditional-01.mp3`,
-      short: `${CDN}/general/madinah-01.mp3`,
-      takbir: `${CDN}/general/madinah-01.mp3`,
+      general: `${CDN}/general/egypt-traditional-02.mp3`,
+      short: `${CDN}/general/madinah-02.mp3`,
+      takbir: `${CDN}/general/madinah-02.mp3`,
     },
   },
   {
     id: "aqsa",
     labelAr: "أذان المسجد الأقصى",
     local: {
-      general: "/sounds/adhan/aqsa-general.mp3",
+      general: "/audio/adhan/adhan-aqsa-full.mp3",
       short: "/sounds/adhan/takbeerat-short.mp3",
       takbir: "/sounds/adhan/takbeerat-short.mp3",
     },
     remote: {
       general: `${CDN}/general/al-aqsa-jerusalem-02.mp3`,
-      short: `${CDN}/general/madinah-01.mp3`,
-      takbir: `${CDN}/general/madinah-01.mp3`,
+      short: `${CDN}/general/madinah-02.mp3`,
+      takbir: `${CDN}/general/madinah-02.mp3`,
+    },
+  },
+  {
+    id: "turkey",
+    labelAr: "الأذان التركي",
+    local: {
+      general: "/audio/adhan/adhan-turkey-full.mp3",
+      short: "/sounds/adhan/takbeerat-short.mp3",
+      takbir: "/sounds/adhan/takbeerat-short.mp3",
+    },
+    remote: {
+      general: `${CDN}/general/mustafa-ozcan-turkey-01.mp3`,
+      short: `${CDN}/general/madinah-02.mp3`,
+      takbir: `${CDN}/general/madinah-02.mp3`,
+    },
+  },
+  {
+    id: "kuwait",
+    labelAr: "أذان خليجي / كويتي",
+    local: {
+      general: "/audio/adhan/adhan-kuwait-full.mp3",
+      short: "/sounds/adhan/takbeerat-short.mp3",
+      takbir: "/sounds/adhan/takbeerat-short.mp3",
+    },
+    remote: {
+      general: `${CDN}/general/uae-01.mp3`,
+      short: `${CDN}/general/madinah-02.mp3`,
+      takbir: `${CDN}/general/madinah-02.mp3`,
     },
   },
   {
@@ -86,9 +114,9 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       general: "/sounds/adhan/takbeerat-short.mp3",
     },
     remote: {
-      short: `${CDN}/general/madinah-01.mp3`,
-      takbir: `${CDN}/general/madinah-01.mp3`,
-      general: `${CDN}/general/madinah-01.mp3`,
+      short: `${CDN}/general/madinah-02.mp3`,
+      takbir: `${CDN}/general/madinah-02.mp3`,
+      general: `${CDN}/general/madinah-02.mp3`,
     },
   },
 ];
@@ -99,6 +127,8 @@ export const OFFLINE_FEATURED_MUEZZIN_IDS = [
   "madinah",
   "egypt",
   "aqsa",
+  "turkey",
+  "kuwait",
   "takbeerat",
 ] as const;
 
@@ -128,7 +158,7 @@ export function resolveOfflineClipUrl(
  */
 export function preferLocalAdhanUrl(url: string): string {
   if (!url) return url;
-  if (url.startsWith("/sounds/adhan/")) return url;
+  if (url.startsWith("/sounds/adhan/") || url.startsWith("/audio/adhan/")) return url;
   for (const pack of OFFLINE_ADHAN_CORE_PACKS) {
     for (const kind of ["general", "fajr", "short", "takbir"] as const) {
       if (pack.remote[kind] === url && pack.local[kind]) {

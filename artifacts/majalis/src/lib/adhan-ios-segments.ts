@@ -12,15 +12,15 @@ export const ADHAN_IOS_MAX_SEGMENTS = 4;
 export const ADHAN_IOS_SEGMENT_MAX_SEC = Math.min(28, ADHAN_SHORT_MAX_SEC);
 
 /**
- * مقاطع الأذان الكامل المتعدّدة (`adhan_*_gen_sN.caf`) غير مضمّنة بعد في الحزمة.
- * عند false نجدول إشعارًا واحدًا بصوت قصير مخصّص بدل سلسلة ملفات مفقودة (صمت).
+ * مقاطع الأذان الكامل المتعدّدة (`adhan-seq-makkah-0N.caf`) مضمّنة في الحزمة.
+ * الوضع التجريبي فقط — غير افتراضي؛ قد يقطعها الصامت/Focus.
  */
-export const ADHAN_IOS_MULTI_SEGMENT_BUNDLED = false;
+export const ADHAN_IOS_MULTI_SEGMENT_BUNDLED = true;
 
 export type AdhanIosSegmentPlan = {
   /** معرّف الإشعار */
   id: number;
-  /** اسم ملف الصوت في الحزمة بدون مسار (مثل adhan_makkah_fajr_s1.caf) */
+  /** اسم ملف الصوت في الحزمة بدون مسار (مثل adhan-seq-makkah-01.caf) */
   sound: string;
   /** موعد الإطلاق */
   atMs: number;
@@ -50,10 +50,19 @@ function chainIdBase(prayerKey: string, dayKey: string): number {
 /** أسماء المقاطع المتوقعة في الحزمة لتسجيل معيّن */
 export function adhanIosSoundName(
   recordingId: string,
-  kind: "general" | "fajr",
+  _kind: "general" | "fajr",
   segmentIndex1Based: number,
 ): string {
-  return `adhan_${recordingId}_${kind === "fajr" ? "fajr" : "gen"}_s${segmentIndex1Based}.caf`;
+  if (recordingId === "makkah" || recordingId === "makki" || recordingId === "alharam") {
+    return `adhan-seq-makkah-0${segmentIndex1Based}.caf`;
+  }
+  const shortMap: Record<string, string> = {
+    madinah: "adhan-short-madinah.caf",
+    egypt: "adhan-short-egypt.caf",
+    aqsa: "adhan-short-aqsa.caf",
+    takbeerat: "adhan-short-takbeerat.caf",
+  };
+  return shortMap[recordingId] ?? "adhan-short-makkah.caf";
 }
 
 /**
@@ -190,7 +199,7 @@ export function defaultAdhanSegmentDurations(count = ADHAN_IOS_MAX_SEGMENTS): nu
 
 /**
  * جدولة أذان كامل على iOS من معرّف التسجيل.
- * الفجر يستخدم مقاطع التثويب فقط (`*_fajr_sN`).
+ * السلسلة المتتابعة اختيارية (iosSequentialFullAdhan) ولبكّة مكة فقط.
  */
 export async function scheduleIosFullAdhan(opts: {
   prayerKey: string;
@@ -200,8 +209,23 @@ export async function scheduleIosFullAdhan(opts: {
   startAtMs: number;
   durationsSec?: number[];
 }): Promise<{ ok: boolean; ids: number[] }> {
-  // بدون مقاطع مرخّصة في الحزمة: إشعار واحد بصوت قصير مضمّن (لا صمت من ملفات ناقصة).
-  if (!ADHAN_IOS_MULTI_SEGMENT_BUNDLED) {
+  let sequentialEnabled = false;
+  try {
+    const { loadAdhanPrefs } = await import("./adhan-preferences");
+    sequentialEnabled = Boolean(loadAdhanPrefs().iosSequentialFullAdhan);
+  } catch {
+    /* بيئة بلا localStorage — يبقى false */
+  }
+
+  const canChain =
+    ADHAN_IOS_MULTI_SEGMENT_BUNDLED &&
+    sequentialEnabled &&
+    (opts.recordingId === "makkah" ||
+      opts.recordingId === "makki" ||
+      opts.recordingId === "alharam");
+
+  // الافتراضي والآمن: إشعار واحد بصوت قصير مضمّن
+  if (!canChain) {
     const { resolveAdhanStyleNotificationSound } = await import(
       "./prayer-notification-sounds"
     );

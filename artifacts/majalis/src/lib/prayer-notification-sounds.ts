@@ -10,21 +10,24 @@
 import { Capacitor } from "@capacitor/core";
 import { DEFAULT_ALERT_SOUND } from "@/lib/notifications/channels";
 
-/** أسماء الملفات في حزمة iOS (مع الامتداد كما يطلب Capacitor على iOS). */
-export const PRAYER_SOUND_FILES = {
-  quiet: "prayer_quiet.caf",
-  clear: "prayer_clear.caf",
-  soft: "prayer_soft.caf",
-} as const;
-
 /** أصوات إضافية للمعاينة/التعيين حسب نمط الأذان (إشعار قصير). */
 export const PRAYER_ADHAN_STYLE_SOUNDS = {
-  makkah: "prayer_makkah.caf",
-  madinah: "prayer_madinah.caf",
-  egypt: "prayer_egypt.caf",
-  aqsa: "prayer_aqsa.caf",
-  takbeerat: "prayer_takbeerat.caf",
-  default: "prayer_default.caf",
+  makkah: "adhan-short-makkah.caf",
+  madinah: "adhan-short-madinah.caf",
+  egypt: "adhan-short-egypt.caf",
+  aqsa: "adhan-short-aqsa.caf",
+  turkey: "adhan-short-makkah.caf",
+  kuwait: "adhan-short-makkah.caf",
+  takbeerat: "adhan-short-takbeerat.caf",
+  default: "adhan-short-makkah.caf",
+  /** توافق أسماء الحزمة القديمة */
+  prayer_makkah: "prayer_makkah.caf",
+} as const;
+
+export const PRAYER_SOUND_FILES = {
+  quiet: "adhan-short-takbeerat.caf",
+  clear: "adhan-short-makkah.caf",
+  soft: "adhan-short-madinah.caf",
 } as const;
 
 export type PrayerSoundRole = keyof typeof PRAYER_SOUND_FILES;

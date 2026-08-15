@@ -1,0 +1,60 @@
+/**
+ * يتحقق أن ملفات CAF الجديدة مسجّلة في project.pbxproj وCopy Bundle Resources.
+ */
+import assert from "node:assert/strict";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
+const soundsDir = join(root, "ios/App/App/Sounds");
+const pbx = join(root, "ios/App/App.xcodeproj/project.pbxproj");
+
+assert.ok(existsSync(soundsDir), "Sounds dir");
+assert.ok(existsSync(pbx), "xcodeproj");
+
+const required = [
+  "adhan-short-makkah.caf",
+  "adhan-short-madinah.caf",
+  "adhan-short-aqsa.caf",
+  "adhan-short-egypt.caf",
+  "adhan-short-takbeerat.caf",
+  "adhan-seq-makkah-01.caf",
+  "adhan-seq-makkah-02.caf",
+  "adhan-seq-makkah-03.caf",
+  "adhan-seq-makkah-04.caf",
+];
+
+const pbxText = readFileSync(pbx, "utf8");
+const onDisk = new Set(readdirSync(soundsDir));
+
+for (const name of required) {
+  assert.ok(onDisk.has(name), `missing file ${name}`);
+  assert.ok(pbxText.includes(name), `pbxproj missing ${name}`);
+  assert.ok(
+    pbxText.includes(`${name} in Resources`),
+    `Copy Bundle Resources missing ${name}`,
+  );
+}
+
+const fullDir = join(root, "public/audio/adhan");
+for (const name of [
+  "adhan-makkah-full.mp3",
+  "adhan-madinah-full.mp3",
+  "adhan-aqsa-full.mp3",
+  "adhan-egypt-full.mp3",
+  "adhan-turkey-full.mp3",
+  "adhan-kuwait-full.mp3",
+]) {
+  assert.ok(existsSync(join(fullDir, name)), `missing full mp3 ${name}`);
+}
+
+assert.equal(
+  readFileSync(join(root, "ios/App/App/App.entitlements"), "utf8").includes(
+    "critical-alerts",
+  ),
+  false,
+  "يجب ألا يُعلن Critical Alerts دون امتياز فعلي",
+);
+
+console.log("adhan-ios-bundle-resources.test.ts: ok");

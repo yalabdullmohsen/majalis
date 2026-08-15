@@ -15,35 +15,38 @@ import {
 import { getMuezzin } from "../adhan-audio";
 
 assert.ok(OFFLINE_ADHAN_CORE_PACKS.length >= 5, "حزم مكة/المدينة/مصر/الأقصى/تكبيرات");
-assert.ok(resolveOfflineClipUrl("makkah", "general")?.startsWith("/sounds/"));
-assert.ok(resolveOfflineClipUrl("makkah", "fajr")?.startsWith("/sounds/"));
-assert.ok(resolveOfflineClipUrl("madinah", "general")?.startsWith("/sounds/"));
-assert.ok(resolveOfflineClipUrl("egypt", "general")?.startsWith("/sounds/"));
-assert.ok(resolveOfflineClipUrl("aqsa", "general")?.startsWith("/sounds/"));
+assert.ok(resolveOfflineClipUrl("makkah", "general")?.startsWith("/audio/adhan/"));
+assert.ok(resolveOfflineClipUrl("makkah", "fajr")?.startsWith("/audio/adhan/"));
+assert.ok(resolveOfflineClipUrl("madinah", "general")?.startsWith("/audio/adhan/"));
+assert.ok(resolveOfflineClipUrl("egypt", "general")?.startsWith("/audio/adhan/"));
+assert.ok(resolveOfflineClipUrl("aqsa", "general")?.startsWith("/audio/adhan/"));
 assert.ok(resolveOfflineClipUrl("takbeerat", "takbir")?.startsWith("/sounds/"));
 
 const aqsa = getMuezzin("aqsa");
 assert.equal(aqsa.audioAvailable, true, "الأقصى متاح للاختيار");
-assert.ok(aqsa.audioUrl.startsWith("/sounds/"), "الأقصى محلي أوفلاين");
+assert.ok(aqsa.audioUrl.startsWith("/audio/adhan/") || aqsa.audioUrl.startsWith("/sounds/"), "الأقصى محلي أوفلاين");
 assert.ok(aqsa.takbirUrl, "تكبيرات للأقصى");
 
 const egypt = getMuezzin("egypt");
-assert.ok(egypt.audioUrl.startsWith("/sounds/"), "مصر محلي أوفلاين");
+assert.ok(egypt.audioUrl.startsWith("/audio/adhan/") || egypt.audioUrl.startsWith("/sounds/"), "مصر محلي أوفلاين");
 
 const takbeerat = getMuezzin("takbeerat");
 assert.equal(takbeerat.audioAvailable, true, "التكبيرات متاحة");
 
 const makkah = getMuezzin("makkah");
-assert.ok(makkah.audioUrl.startsWith("/sounds/") || makkah.audioUrl.includes("makkah"));
+assert.ok(makkah.audioUrl.startsWith("/audio/adhan/") || makkah.audioUrl.includes("makkah"));
 assert.ok(makkah.fajrUrl?.includes("fajr"), "فجر مكة بالتثويب");
-assert.ok(makkah.fajrUrl?.startsWith("/sounds/"), "فجر مكة محلي أوفلاين");
+assert.ok(
+  makkah.fajrUrl?.startsWith("/audio/adhan/") || makkah.fajrUrl?.startsWith("/sounds/"),
+  "فجر مكة محلي أوفلاين",
+);
 assert.ok(makkah.shortUrl && makkah.takbirUrl, "مقاطع قصيرة لمكة");
 
 const here = dirname(fileURLToPath(import.meta.url));
-const sounds = resolve(here, "../../../public/sounds/adhan");
+const publicRoot = resolve(here, "../../../public");
 for (const rel of listBundledAdhanSoundPaths()) {
-  const name = rel.replace("/sounds/adhan/", "");
-  assert.ok(existsSync(resolve(sounds, name)), `ملف محلي موجود: ${name}`);
+  const abs = resolve(publicRoot, rel.replace(/^\//, ""));
+  assert.ok(existsSync(abs), `ملف محلي موجود: ${rel}`);
 }
 
 const remote = OFFLINE_ADHAN_CORE_PACKS[0]!.remote.general!;

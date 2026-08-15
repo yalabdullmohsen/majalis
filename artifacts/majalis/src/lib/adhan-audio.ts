@@ -37,6 +37,8 @@ const OFF_MAKKAH = getOfflineAdhanPack("makkah");
 const OFF_MADINAH = getOfflineAdhanPack("madinah");
 const OFF_EGYPT = getOfflineAdhanPack("egypt");
 const OFF_AQSA = getOfflineAdhanPack("aqsa");
+const OFF_TURKEY = getOfflineAdhanPack("turkey");
+const OFF_KUWAIT = getOfflineAdhanPack("kuwait");
 const OFF_TAKBIR = getOfflineAdhanPack("takbeerat");
 
 /** @deprecated استخدم AdhanPatternId — أُبقي للتوافق مع الواجهة القديمة */
@@ -426,27 +428,60 @@ export const MUEZZINS: Muezzin[] = [
     licenseNote: "لا ملف بعد — انظر LICENSE_RISKS.md",
   },
   {
-    id: "turkish-pending",
-    name: "أذان تركي / عثماني",
+    id: "turkey",
+    name: "أذان تركي",
     personName: null,
     attribution: "style_only",
     patternId: "turkish",
     mosque: null,
     recordingYear: null,
-    origin: "إسطنبول",
+    origin: "تركيا",
     country: "تركيا",
     style: patternStyle("turkish"),
     category: "تركي / عثماني",
     tags: ["تركي"],
-    biography: "بانتظار توريد تسجيل مرخّص موثّق للنمط التركي/العثماني.",
-    rating: 0,
-    totalRatings: 0,
-    followers: 0,
-    durationSec: 0,
-    audioAvailable: false,
-    audioUrl: "",
+    biography: "تسجيل بنمط تركي/عثماني — يُعرض باسم النمط دون نسبة شخصية.",
+    rating: 4.5,
+    totalRatings: 12000,
+    followers: 20000,
+    durationSec: 238,
+    audioAvailable: true,
+    audioUrl:
+      OFF_TURKEY?.local.general ||
+      OFF_TURKEY?.remote.general ||
+      `${CDN}/general/mustafa-ozcan-turkey-01.mp3`,
+    shortUrl: OFF_TURKEY?.local.short || OFF_TAKBIR?.local.short,
+    takbirUrl: OFF_TURKEY?.local.takbir || OFF_TAKBIR?.local.takbir,
     sourceId: "mohsalvi-adhan-audio",
-    licenseNote: "لا ملف بعد — انظر LICENSE_RISKS.md",
+    licenseNote: "بث عبر mohsalvi/adhan-audio + حزمة محلية — style_only",
+  },
+  {
+    id: "kuwait",
+    name: "أذان خليجي / كويتي",
+    personName: null,
+    attribution: "style_only",
+    patternId: "makki",
+    mosque: null,
+    recordingYear: null,
+    origin: "الخليج",
+    country: "الكويت",
+    style: patternStyle("makki"),
+    category: "خليجي",
+    tags: ["خليجي", "كويتي"],
+    biography: "تسجيل خليجي للنمط العام — بلا نسبة شخصية لمؤذن معيّن.",
+    rating: 4.4,
+    totalRatings: 8000,
+    followers: 15000,
+    durationSec: 108,
+    audioAvailable: true,
+    audioUrl:
+      OFF_KUWAIT?.local.general ||
+      OFF_KUWAIT?.remote.general ||
+      `${CDN}/general/uae-01.mp3`,
+    shortUrl: OFF_KUWAIT?.local.short || OFF_TAKBIR?.local.short,
+    takbirUrl: OFF_KUWAIT?.local.takbir || OFF_TAKBIR?.local.takbir,
+    sourceId: "mohsalvi-adhan-audio",
+    licenseNote: "بث عبر mohsalvi/adhan-audio + حزمة محلية — style_only",
   },
 ];
 

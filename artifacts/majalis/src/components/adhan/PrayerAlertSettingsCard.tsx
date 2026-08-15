@@ -107,7 +107,7 @@ export function PrayerAlertSettingsCard() {
     const result = await fireTestLocalNotification();
     setTestBusy(false);
     if (result.ok) {
-      setTestMsg("سيصل إشعار تجريبي خلال ثانيتين تقريبًا.");
+      setTestMsg("سيصل إشعار تجريبي خلال ١٥ ثانية تقريبًا — أبقِ التطبيق في الخلفية للتحقق من صوت CAF.");
       return;
     }
     if (result.reason === "permission") {
@@ -373,6 +373,7 @@ export function PrayerAlertSettingsCard() {
           </div>
         )}
 
+        {liveActivitySupported ? (
         <div className="ads-row-sep">
           <div>
             <div className="ads-global-label">
@@ -380,18 +381,16 @@ export function PrayerAlertSettingsCard() {
               Live Activity
             </div>
             <div className="ads-global-desc">
-              {liveActivitySupported
-                ? "عرض العدّ التنازلي في Dynamic Island وشاشة القفل"
-                : "غير مدعومة على هذا الجهاز — يُستخدَم الشريط والإشعار بدلاً منها"}
+              عرض العدّ التنازلي في Dynamic Island وشاشة القفل
             </div>
           </div>
           <MiniToggle
             checked={prefs.liveActivitiesEnabled && liveActivitySupported}
             onChange={(v) => patch({ liveActivitiesEnabled: v })}
             label="Live Activity"
-            disabled={!liveActivitySupported}
           />
         </div>
+        ) : null}
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ assert.match(css, /padding-bottom:\s*calc\(5\.5rem \+ var\(--inset-bottom/);
 assert.equal(/env\(safe-area/.test(css), false, "بلا env(safe-area) — استخدم --inset-*");
 assert.match(css, /prefers-reduced-motion/);
 
-assert.match(view, /الإعداد العام/);
+assert.match(view, /الأذان العام|الإعداد العام/);
 assert.match(view, /PrayerCustomizeSheet|ads-sheet/);
 assert.match(view, /ads-prayer-row/);
 assert.match(view, /rounded-full icon-only/);
