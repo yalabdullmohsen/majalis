@@ -211,6 +211,16 @@
       "permanent": true
     },
     {
+      "source": "/prophets/zakariya",
+      "destination": "/prophets/zakariyya",
+      "permanent": true
+    },
+    {
+      "source": "/prophets/zakaria",
+      "destination": "/prophets/zakariyya",
+      "permanent": true
+    },
+    {
       "source": "/support",
       "destination": "/contact",
       "permanent": false

@@ -68,16 +68,22 @@ const EXPECTED_SLUGS = [
 
 /** عبارات حشو آلي — أي ظهور في نصوص الأنبياء فشل */
 const FORBIDDEN_PHRASES = [
+  "تُربط سيرته",
   "تُربط سيرته بمقاصد القرآن",
   "ويُستفاد من قصته في بناء الإيمان والأخلاق",
+  "الصبر على مقتضاه",
   "الصبر على مقتضاه من تمام الانتفاع لا مجرد الاستحسان",
   "يُسأل الله التوفيق للعمل بما علم لا لمجرد معرفة القصة",
+  "يُستحضر المآل",
   "يُستحضر المآل الأخروي عند تنزيل الفائدة على الواقع",
   "يُترجم المعنى إلى طاعة ميسورة بحسب الحال",
   "دون غلو أو إسرائيليات كما دلّ الوحي بلا زيادة",
   "ويُقتدى به في بابه دون غلو أو إسرائيليات",
   "مما ثبت في القرآن أو السنة ويُقتدى به",
   "لم يتركه الشكوى لله",
+  "البلدفلسطين",
+  "Esc للقائمة",
+  "اختصارات:",
 ];
 
 function allText(p: ProphetRecord): string {
@@ -119,10 +125,15 @@ for (const p of PROPHETS) {
 
 assert.equal(resolveProphetSlug("ishaq"), "is-haq");
 assert.equal(resolveProphetSlug("alyasa"), "al-yasa");
+assert.equal(resolveProphetSlug("zakariya"), "zakariyya");
+assert.equal(resolveProphetSlug("zakaria"), "zakariyya");
 assert.equal(getProphet("ishaq")?.slug, "is-haq");
 assert.equal(getProphet("alyasa")?.slug, "al-yasa");
+assert.equal(getProphet("zakariya")?.slug, "zakariyya");
+assert.equal(getProphet("zakaria")?.slug, "zakariyya");
 assert.equal(getProphet("is-haq")?.arabicName, "إسحاق");
 assert.equal(getProphet("al-yasa")?.arabicName, "اليسع");
+assert.equal(getProphet("zakariyya")?.arabicName, "زكريا");
 
 const ayyub = getProphet("ayyub")!;
 assert.ok(ayyub.keyAttributes.some((a) => a.includes("شكواه إلى الله")));

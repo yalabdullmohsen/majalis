@@ -103,7 +103,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
                   name: "إسحاق",
                   era: "النبي المبشَّر به",
                   people: "فلسطين وكنعان",
-                  slug: "ishaq",
+                  slug: "is-haq",
                   linkNote: "ابن إبراهيم من سارة",
                   children: [
                     {
@@ -169,18 +169,18 @@ export const PROPHETS_LINEAGE: LineageNode = {
                               generationsGap: 5,
                               children: [
                                 {
-                                  id: "sulaiman",
+                                  id: "sulayman",
                                   name: "سليمان",
                                   era: "ملك الأنبياء",
-                                  people: "فلسطين والشام",
-                                  slug: "sulaiman",
+                                  people: "غير محدد بنص صريح",
+                                  slug: "sulayman",
                                 },
                                 {
-                                  id: "zakariya",
+                                  id: "zakariyya",
                                   name: "زكريا",
                                   era: "كافل مريم",
-                                  people: "فلسطين",
-                                  slug: "zakariya",
+                                  people: "غير محدد بنص صريح",
+                                  slug: "zakariyya",
                                   generationsGap: 15,
                                   children: [
                                     {
@@ -265,22 +265,22 @@ export const PROPHETS_LINEAGE: LineageNode = {
       ],
     },
     {
-      id: "shuaib",
+      id: "shuayb",
       name: "شعيب",
       era: "خطيب الأنبياء",
       people: "مدين (شمال الحجاز)",
-      slug: "shuaib",
+      slug: "shuayb",
       isAncestor: true,
       linkNote: "من ذرية إبراهيم عبر مدين",
     },
   ],
 };
 
-/** الأنبياء الـ25 بالترتيب القرآني */
+/** الأنبياء الـ25 بالترتيب القرآني (slugs رسمية) */
 export const QURAN_PROPHETS_ORDER = [
   "adam","idris","nuh","hud","salih","ibrahim","lut","ismail",
-  "ishaq","yaqub","yusuf","shuaib","musa","harun","dhul-kifl",
-  "ayyub","dawud","sulaiman","ilyas","alyasa","yunus","zakariya",
+  "is-haq","yaqub","yusuf","shuayb","musa","harun","dhul-kifl",
+  "ayyub","dawud","sulayman","ilyas","al-yasa","yunus","zakariyya",
   "yahya","isa","muhammad",
 ];
 
