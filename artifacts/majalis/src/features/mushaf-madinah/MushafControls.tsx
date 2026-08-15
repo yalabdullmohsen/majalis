@@ -1,5 +1,4 @@
 import { useEffect, useId, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
 
 type Props = {
@@ -12,6 +11,7 @@ type Props = {
   onGoto: (page: number) => void;
 };
 
+/** أدوات المصحف — شريط سفلي وخروج فقط؛ قلب الصفحة عبر الحواف/السحب بلا أزرار تغطي الآيات. */
 export function MushafControls({
   open,
   pageNumber,
@@ -37,25 +37,6 @@ export function MushafControls({
     <div className="mm-controls" data-open={open ? "1" : "0"} data-testid="mushaf-controls">
       <button type="button" className="mm-controls__exit" onClick={onExit} aria-label="خروج">
         × خروج
-      </button>
-
-      <button
-        type="button"
-        className="mm-controls__side mm-controls__side--next"
-        onClick={onNext}
-        disabled={pageNumber >= MUSHAF_PAGE_MAX}
-        aria-label="الصفحة التالية"
-      >
-        <ChevronLeft size={22} aria-hidden="true" />
-      </button>
-      <button
-        type="button"
-        className="mm-controls__side mm-controls__side--prev"
-        onClick={onPrev}
-        disabled={pageNumber <= MUSHAF_PAGE_MIN}
-        aria-label="الصفحة السابقة"
-      >
-        <ChevronRight size={22} aria-hidden="true" />
       </button>
 
       <div className="mm-controls__bar" role="toolbar" aria-label="أدوات المصحف">
