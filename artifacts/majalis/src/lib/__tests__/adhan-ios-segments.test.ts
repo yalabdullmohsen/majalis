@@ -1,5 +1,5 @@
 /**
- * مقاطع iOS للأذان الكامل — حد 4 مقاطع و≤28ث وفجر منفصل.
+ * مقاطع iOS للأذان الكامل — حد 4 مقاطع و≤28ث.
  * تشغيل: node --import tsx src/lib/__tests__/adhan-ios-segments.test.ts
  */
 import assert from "node:assert/strict";
@@ -7,6 +7,7 @@ import {
   ADHAN_IOS_MAX_SEGMENTS,
   ADHAN_IOS_MULTI_SEGMENT_BUNDLED,
   ADHAN_IOS_SEGMENT_MAX_SEC,
+  ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC,
   adhanIosSoundName,
   buildAdhanIosSegmentPlan,
   defaultAdhanSegmentDurations,
@@ -15,14 +16,20 @@ import {
 
 assert.equal(ADHAN_IOS_MAX_SEGMENTS, 4);
 assert.ok(ADHAN_IOS_SEGMENT_MAX_SEC <= 28);
+assert.equal(ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC, 29);
+assert.equal(ADHAN_IOS_MULTI_SEGMENT_BUNDLED, true);
 
 assert.equal(
   adhanIosSoundName("makkah", "fajr", 1),
-  "adhan_makkah_fajr_s1.caf",
+  "adhan-seq-makkah-01.caf",
 );
 assert.equal(
   adhanIosSoundName("makkah", "general", 2),
-  "adhan_makkah_gen_s2.caf",
+  "adhan-seq-makkah-02.caf",
+);
+assert.equal(
+  adhanIosSoundName("egypt", "general", 1),
+  "adhan-short-egypt.caf",
 );
 
 const start = Date.UTC(2026, 7, 9, 3, 0, 0);
@@ -36,13 +43,13 @@ const plan = buildAdhanIosSegmentPlan({
 });
 
 assert.equal(plan.length, 4, "حد أقصى 4 مقاطع");
-assert.ok(plan.every((p) => p.sound.includes("_fajr_")), "الفجر يستخدم مقاطع التثويب");
+assert.ok(plan.every((p) => p.sound.startsWith("adhan-seq-makkah-")));
 assert.ok(plan[0].title?.includes("الفجر"));
 assert.equal(plan[1].title, null, "المقاطع التالية بلا عنوان متكرر");
 assert.equal(plan[0].atMs, start);
-assert.equal(plan[1].atMs, start + 28_000);
-assert.equal(plan[2].atMs, start + 56_000);
-assert.equal(plan[3].atMs, start + 84_000);
+assert.equal(plan[1].atMs, start + 29_000);
+assert.equal(plan[2].atMs, start + 58_000);
+assert.equal(plan[3].atMs, start + 87_000);
 
 const overlong = buildAdhanIosSegmentPlan({
   prayerKey: "dhuhr",
@@ -52,25 +59,23 @@ const overlong = buildAdhanIosSegmentPlan({
   startAtMs: start,
   durationsSec: [40, 40],
 });
-assert.ok(overlong.every((p) => p.sound.includes("_gen_")));
-// المدد المقطوعة تُستخدم للفجوات حتى لو طُلب 40ث
-assert.equal(overlong[1].atMs - overlong[0].atMs, ADHAN_IOS_SEGMENT_MAX_SEC * 1000);
+assert.ok(overlong.every((p) => p.sound === "adhan-short-egypt.caf"));
+assert.equal(
+  overlong[1].atMs - overlong[0].atMs,
+  ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC * 1000,
+);
 
 assert.equal(defaultAdhanSegmentDurations().length, 4);
 
+// بدون تفعيل iosSequentialFullAdhan في prefs: إشعار واحد
 const scheduled = await scheduleIosFullAdhan({
   prayerKey: "isha",
   prayerName: "العشاء",
-  recordingId: "madinah",
+  recordingId: "makkah",
   isFajr: false,
   startAtMs: start,
 });
 assert.equal(scheduled.ok, true);
-if (ADHAN_IOS_MULTI_SEGMENT_BUNDLED) {
-  assert.equal(scheduled.ids.length, 4);
-} else {
-  // بدون مقاطع مرخّصة: إشعار واحد بصوت قصير مضمّن
-  assert.equal(scheduled.ids.length, 1);
-}
+assert.equal(scheduled.ids.length, 1, "الافتراضي إشعار قصير واحد");
 
 console.log("adhan-ios-segments.test.ts: ok");

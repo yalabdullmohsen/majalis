@@ -26,12 +26,17 @@ assert.match(css, /padding-bottom:\s*calc\(5\.5rem \+ var\(--inset-bottom/);
 assert.equal(/env\(safe-area/.test(css), false, "بلا env(safe-area) — استخدم --inset-*");
 assert.match(css, /prefers-reduced-motion/);
 
-assert.match(view, /الإعداد العام/);
+assert.match(view, /الأذان العام|الإعداد العام/);
 assert.match(view, /PrayerCustomizeSheet|ads-sheet/);
 assert.match(view, /ads-prayer-row/);
 assert.match(view, /rounded-full icon-only/);
 assert.equal(view.split("(افتراضي)").length - 1, 1, "وسم (افتراضي) مرة واحدة في الإعداد العام فقط");
 assert.equal(view.includes("النسبة الشخصية لا تُعرض إلا بعد التثبّت"), false);
+assert.match(view, /اختبار الأذان الكامل/);
+assert.match(view, /اختبار إشعار قصير بعد 15 ثانية/);
+assert.match(view, /اختبار الأذان المتتابع/);
+assert.match(view, /أذان متتابع تجريبي/);
+assert.match(view, /يتطلب موافقة Critical Alerts من Apple/);
 assert.match(view, /صيغة التشغيل:/);
 
 assert.match(picker, /mzp-search/);

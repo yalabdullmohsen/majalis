@@ -58,9 +58,9 @@ console.log("  ✓ preAlertKindForMinutes buckets");
 // ── أصوات: مفعّلة بعد تضمين ملفات الحزمة ──
 assert.equal(PRAYER_CUSTOM_SOUNDS_ENABLED, true);
 assert.equal(resolvePrayerNotificationSound("quiet", "system"), DEFAULT_ALERT_SOUND);
-assert.equal(resolvePrayerNotificationSound("quiet", "auto"), "prayer_quiet.caf");
-assert.equal(resolvePrayerNotificationSound("clear", "auto"), "prayer_clear.caf");
-assert.equal(resolvePrayerNotificationSound("soft", "clear"), "prayer_clear.caf");
+assert.equal(resolvePrayerNotificationSound("quiet", "auto"), "adhan-short-takbeerat.caf");
+assert.equal(resolvePrayerNotificationSound("clear", "auto"), "adhan-short-makkah.caf");
+assert.equal(resolvePrayerNotificationSound("soft", "clear"), "adhan-short-makkah.caf");
 assert.equal(soundRoleForNotifKind("pre"), "quiet");
 assert.equal(soundRoleForNotifKind("enter"), "clear");
 assert.equal(soundRoleForNotifKind("post"), "soft");

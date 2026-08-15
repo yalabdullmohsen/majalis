@@ -86,8 +86,16 @@ export type AdhanPreferences = {
   volume: number;
   /** اهتزاز مع التنبيه */
   vibrateEnabled: boolean;
-  /** تجاوز الوضع الصامت / عدم الإزعاج (صريح من المستخدم) */
+  /**
+   * تجاوز الوضع الصامت — غير مدعوم دون Critical Alerts من Apple.
+   * يُحفظ للتوافق ويُتجاهل دائمًا ما دام CRITICAL_ALERTS_ENTITLEMENT_PRESENT=false.
+   */
   bypassSilentMode: boolean;
+  /**
+   * تجريبي: أذان كامل عبر إشعارات متتابعة (مقاطع CAF).
+   * غير مضمون على iOS مع الصامت/Focus — الافتراضي false.
+   */
+  iosSequentialFullAdhan: boolean;
   prayers: Record<PrayerKey, PerPrayerPrefs>;
   fridayBannerEnabled: boolean;     // show Friday Jumuah banner
 };
@@ -125,6 +133,7 @@ function defaultPrefs(): AdhanPreferences {
     volume: 1,
     vibrateEnabled: true,
     bypassSilentMode: false,
+    iosSequentialFullAdhan: false,
     prayers,
     fridayBannerEnabled: true,
   };
@@ -169,7 +178,8 @@ export function loadAdhanPrefs(): AdhanPreferences {
           : base.iqamahDelayMinutes,
       volume: vol,
       vibrateEnabled: parsed.vibrateEnabled ?? base.vibrateEnabled,
-      bypassSilentMode: parsed.bypassSilentMode ?? base.bypassSilentMode,
+      bypassSilentMode: false, // Critical Alerts غير متوفر — لا نفعّل أبدًا من التخزين
+      iosSequentialFullAdhan: parsed.iosSequentialFullAdhan ?? base.iosSequentialFullAdhan,
       prayers: { ...base.prayers, ...parsed.prayers },
       fridayBannerEnabled: parsed.fridayBannerEnabled ?? base.fridayBannerEnabled,
     };
@@ -181,7 +191,10 @@ export function loadAdhanPrefs(): AdhanPreferences {
 }
 
 export function saveAdhanPrefs(prefs: AdhanPreferences): AdhanPreferences {
-  const safe = sanitizeFajrMuezzinPrefs(prefs);
+  const safe = sanitizeFajrMuezzinPrefs({
+    ...prefs,
+    bypassSilentMode: false,
+  });
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(safe));
   } catch { /* ignore quota errors */ }
@@ -191,7 +204,8 @@ export function saveAdhanPrefs(prefs: AdhanPreferences): AdhanPreferences {
 
 export function patchAdhanPrefs(patch: Partial<AdhanPreferences>): AdhanPreferences {
   const current = loadAdhanPrefs();
-  return saveAdhanPrefs({ ...current, ...patch });
+  // Critical Alerts غير متوفر — تجاهل أي محاولة لتفعيل تجاوز الصامت
+  return saveAdhanPrefs({ ...current, ...patch, bypassSilentMode: false });
 }
 
 export function patchPrayerPrefs(

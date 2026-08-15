@@ -10,17 +10,19 @@ import { ADHAN_SHORT_MAX_SEC } from "./adhan-playback-modes";
 
 export const ADHAN_IOS_MAX_SEGMENTS = 4;
 export const ADHAN_IOS_SEGMENT_MAX_SEC = Math.min(28, ADHAN_SHORT_MAX_SEC);
+/** فاصل جدولة ثابت بين بداية المقاطع (ملف ≤28ث + هامش ١ث) */
+export const ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC = 29;
 
 /**
- * مقاطع الأذان الكامل المتعدّدة (`adhan_*_gen_sN.caf`) غير مضمّنة بعد في الحزمة.
- * عند false نجدول إشعارًا واحدًا بصوت قصير مخصّص بدل سلسلة ملفات مفقودة (صمت).
+ * مقاطع الأذان الكامل المتعدّدة (`adhan-seq-makkah-0N.caf`) مضمّنة في الحزمة.
+ * الوضع التجريبي فقط — غير افتراضي؛ قد يقطعها الصامت/Focus.
  */
-export const ADHAN_IOS_MULTI_SEGMENT_BUNDLED = false;
+export const ADHAN_IOS_MULTI_SEGMENT_BUNDLED = true;
 
 export type AdhanIosSegmentPlan = {
   /** معرّف الإشعار */
   id: number;
-  /** اسم ملف الصوت في الحزمة بدون مسار (مثل adhan_makkah_fajr_s1.caf) */
+  /** اسم ملف الصوت في الحزمة بدون مسار (مثل adhan-seq-makkah-01.caf) */
   sound: string;
   /** موعد الإطلاق */
   atMs: number;
@@ -50,10 +52,19 @@ function chainIdBase(prayerKey: string, dayKey: string): number {
 /** أسماء المقاطع المتوقعة في الحزمة لتسجيل معيّن */
 export function adhanIosSoundName(
   recordingId: string,
-  kind: "general" | "fajr",
+  _kind: "general" | "fajr",
   segmentIndex1Based: number,
 ): string {
-  return `adhan_${recordingId}_${kind === "fajr" ? "fajr" : "gen"}_s${segmentIndex1Based}.caf`;
+  if (recordingId === "makkah" || recordingId === "makki" || recordingId === "alharam") {
+    return `adhan-seq-makkah-0${segmentIndex1Based}.caf`;
+  }
+  const shortMap: Record<string, string> = {
+    madinah: "adhan-short-madinah.caf",
+    egypt: "adhan-short-egypt.caf",
+    aqsa: "adhan-short-aqsa.caf",
+    takbeerat: "adhan-short-takbeerat.caf",
+  };
+  return shortMap[recordingId] ?? "adhan-short-makkah.caf";
 }
 
 /**
@@ -77,7 +88,6 @@ export function buildAdhanIosSegmentPlan(opts: {
   const dayKey = new Date(opts.startAtMs).toISOString().slice(0, 10);
   const base = chainIdBase(opts.prayerKey, dayKey);
   const kind = opts.isFajr ? "fajr" : "general";
-  let cursor = opts.startAtMs;
   const plan: AdhanIosSegmentPlan[] = [];
 
   for (let i = 0; i < clipped.length; i++) {
@@ -85,13 +95,12 @@ export function buildAdhanIosSegmentPlan(opts: {
     plan.push({
       id: base + i,
       sound: adhanIosSoundName(opts.recordingId, kind, i + 1),
-      atMs: cursor,
+      atMs: opts.startAtMs + i * ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC * 1000,
       title: isFirst ? `أذان ${opts.prayerName}` : null,
       body: isFirst ? "حيَّ على الصلاة" : null,
       prayerKey: opts.prayerKey,
       segmentIndex: i,
     });
-    cursor += clipped[i] * 1000;
   }
   return plan;
 }
@@ -151,6 +160,17 @@ export async function scheduleAdhanIosSegmentChain(
   await cancelAdhanIosSegmentChain();
   if (!isAdhanIosSegmentsAvailable()) {
     // ويب/اختبار: خزّن السلسلة فقط
+    for (const p of plan) {
+      console.info("[adhan-schedule]", {
+        prayerName: p.title ?? plan[0].title,
+        prayerKey: p.prayerKey,
+        prayerTime: new Date(p.atMs).toISOString(),
+        mode: plan.length > 1 ? "sequential" : "short",
+        soundName: p.sound,
+        notificationId: p.id,
+        segmentIndex: p.segmentIndex,
+      });
+    }
     writeChain({
       prayerKey: plan[0].prayerKey,
       ids: plan.map((p) => p.id),
@@ -173,6 +193,17 @@ export async function scheduleAdhanIosSegmentChain(
   }));
 
   await LocalNotifications.schedule({ notifications });
+  for (const p of plan) {
+    console.info("[adhan-schedule]", {
+      prayerName: p.title ?? plan[0].title,
+      prayerKey: p.prayerKey,
+      prayerTime: new Date(p.atMs).toISOString(),
+      mode: plan.length > 1 ? "sequential" : "short",
+      soundName: p.sound,
+      notificationId: p.id,
+      segmentIndex: p.segmentIndex,
+    });
+  }
   writeChain({
     prayerKey: plan[0].prayerKey,
     ids: plan.map((p) => p.id),
@@ -190,7 +221,7 @@ export function defaultAdhanSegmentDurations(count = ADHAN_IOS_MAX_SEGMENTS): nu
 
 /**
  * جدولة أذان كامل على iOS من معرّف التسجيل.
- * الفجر يستخدم مقاطع التثويب فقط (`*_fajr_sN`).
+ * السلسلة المتتابعة اختيارية (iosSequentialFullAdhan) ولبكّة مكة فقط.
  */
 export async function scheduleIosFullAdhan(opts: {
   prayerKey: string;
@@ -200,8 +231,23 @@ export async function scheduleIosFullAdhan(opts: {
   startAtMs: number;
   durationsSec?: number[];
 }): Promise<{ ok: boolean; ids: number[] }> {
-  // بدون مقاطع مرخّصة في الحزمة: إشعار واحد بصوت قصير مضمّن (لا صمت من ملفات ناقصة).
-  if (!ADHAN_IOS_MULTI_SEGMENT_BUNDLED) {
+  let sequentialEnabled = false;
+  try {
+    const { loadAdhanPrefs } = await import("./adhan-preferences");
+    sequentialEnabled = Boolean(loadAdhanPrefs().iosSequentialFullAdhan);
+  } catch {
+    /* بيئة بلا localStorage — يبقى false */
+  }
+
+  const canChain =
+    ADHAN_IOS_MULTI_SEGMENT_BUNDLED &&
+    sequentialEnabled &&
+    (opts.recordingId === "makkah" ||
+      opts.recordingId === "makki" ||
+      opts.recordingId === "alharam");
+
+  // الافتراضي والآمن: إشعار واحد بصوت قصير مضمّن
+  if (!canChain) {
     const { resolveAdhanStyleNotificationSound } = await import(
       "./prayer-notification-sounds"
     );

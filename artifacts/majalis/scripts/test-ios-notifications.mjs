@@ -103,7 +103,10 @@ ok(!/اقتربت صلاة \{\{name\}\} —/.test(copy), "copy templates avoid e
 
 const sounds = read("src/lib/prayer-notification-sounds.ts");
 ok(sounds.includes("PRAYER_CUSTOM_SOUNDS_ENABLED"), "custom sounds flag");
-ok(sounds.includes("prayer_quiet.caf"), "quiet sound filename");
+ok(
+  sounds.includes("prayer_quiet.caf") || sounds.includes("adhan-short-takbeerat.caf"),
+  "quiet sound filename",
+);
 ok(sounds.includes("DEFAULT_ALERT_SOUND"), "sound fallback to default");
 
 const quran = read("src/lib/quran-daily-reminder.ts");

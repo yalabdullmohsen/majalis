@@ -107,11 +107,7 @@ export function PrayerAlertSettingsCard() {
     const result = await fireTestLocalNotification();
     setTestBusy(false);
     if (result.ok) {
-      setTestMsg(
-        result.fireAtIso
-          ? `سيصل إشعار تجريبي خلال 15 ثانية تقريبًا (صوت: ${result.soundName || "افتراضي"}).`
-          : "أُرسل إشعار تجريبي.",
-      );
+      setTestMsg("سيصل إشعار تجريبي خلال ١٥ ثانية تقريبًا — أبقِ التطبيق في الخلفية للتحقق من صوت CAF.");
       return;
     }
     if (result.reason === "permission") {
@@ -174,8 +170,8 @@ export function PrayerAlertSettingsCard() {
         <p className="ads-adhan-desc">
           إشعارات قصيرة قبل الصلاة وعند دخول الوقت، مع صوت مناسب لشاشة القفل.
           على iOS: صوت الإشعار قصير (≤٣٠ث) عند إغلاق التطبيق؛ الأذان الكامل يُسمَع
-          داخل التطبيق أو إذا بدأ التشغيل والتطبيق في الخلفية. وضع الصامت وFocus
-          لا يمكن تجاوزهما بدون Critical Alerts من Apple.
+          داخل التطبيق أو إذا بدأ التشغيل والتطبيق في الخلفية. قد يُكتم الصوت في
+          الوضع الصامت أو Focus على iOS، ولا يمكن تجاوزه إلا بصلاحية Critical Alerts من Apple.
         </p>
 
         <div className="ads-row-sep">
@@ -379,6 +375,7 @@ export function PrayerAlertSettingsCard() {
           </div>
         )}
 
+        {liveActivitySupported ? (
         <div className="ads-row-sep">
           <div>
             <div className="ads-global-label">
@@ -386,18 +383,16 @@ export function PrayerAlertSettingsCard() {
               Live Activity
             </div>
             <div className="ads-global-desc">
-              {liveActivitySupported
-                ? "عرض العدّ التنازلي في Dynamic Island وشاشة القفل"
-                : "غير مدعومة على هذا الجهاز — يُستخدَم الشريط والإشعار بدلاً منها"}
+              عرض العدّ التنازلي في Dynamic Island وشاشة القفل
             </div>
           </div>
           <MiniToggle
             checked={prefs.liveActivitiesEnabled && liveActivitySupported}
             onChange={(v) => patch({ liveActivitiesEnabled: v })}
             label="Live Activity"
-            disabled={!liveActivitySupported}
           />
         </div>
+        ) : null}
       </div>
     </div>
   );

@@ -8,13 +8,35 @@
  */
 import {
   playAdhanUrlAsync,
-  stopAdhan,
+  stopAdhan as stopPlayback,
   isAdhanPlaying,
   type AdhanPlayResult,
 } from "@/lib/adhan-playback";
-import { getMuezzin } from "@/lib/adhan-audio";
+import { getMuezzin, stopAdhan as stopCatalogAdhan } from "@/lib/adhan-audio";
 import { resolveAdhanClip, type AdhanPlaybackMode } from "@/lib/adhan-playback-modes";
 import { isNative } from "@/lib/capacitor-utils";
+
+/** لا entitlement فعلي — لا نقدّم تجاوزًا للصامت/Focus. */
+export const CRITICAL_ALERTS_ENTITLEMENT_PRESENT = false;
+
+/** مسارات الأذان الكامل المضمّنة في الحزمة (بدون turkey/kuwait — خارج ميزانية الحجم). */
+export const ADHAN_FULL_AUDIO_PATHS = {
+  makkah: "/audio/adhan/adhan-makkah-full.mp3",
+  madinah: "/audio/adhan/adhan-madinah-full.mp3",
+  aqsa: "/audio/adhan/adhan-aqsa-full.mp3",
+  egypt: "/audio/adhan/adhan-egypt-full.mp3",
+  fajrMakkah: "/audio/adhan/adhan-makkah-fajr.mp3",
+} as const;
+
+export type AdhanStyleId =
+  | "makkah"
+  | "madinah"
+  | "aqsa"
+  | "egypt"
+  | "turkey"
+  | "kuwait"
+  | "takbeerat"
+  | "silent";
 
 export type AdhanAudioDebugSnapshot = {
   playing: boolean;
@@ -89,7 +111,13 @@ export async function testAdhanSound(
 }
 
 export function stopAdhanAudio(): void {
-  stopAdhan();
+  stopPlayback();
+  stopCatalogAdhan();
+}
+
+/** مرادف لواجهة الإعدادات — إيقاف كل مسارات التشغيل. */
+export function stopAdhan(): void {
+  stopAdhanAudio();
 }
 
 export function getAdhanAudioDebugSnapshot(): AdhanAudioDebugSnapshot {
@@ -108,7 +136,6 @@ export async function probeAdhanAssetExists(path: string): Promise<boolean> {
   try {
     const res = await fetch(path, { method: "HEAD", cache: "no-store" });
     if (res.ok) return true;
-    // بعض الخوادم ترفض HEAD — جرّب GET جزئي
     const get = await fetch(path, {
       method: "GET",
       headers: { Range: "bytes=0-1" },
@@ -119,4 +146,34 @@ export async function probeAdhanAssetExists(path: string): Promise<boolean> {
     console.warn("[AdhanAudioService] asset probe failed", path, e);
     return false;
   }
+}
+
+function resolveFullPathForStyle(style: AdhanStyleId): string | null {
+  if (style === "silent") return null;
+  if (style === "takbeerat") return "/sounds/adhan/takbeerat-short.mp3";
+  if (style === "makkah" || style === "madinah" || style === "aqsa" || style === "egypt") {
+    return ADHAN_FULL_AUDIO_PATHS[style];
+  }
+  // turkey/kuwait: لا ملفات كاملة في الحزمة — نعتمد كتالوج CDN عبر testAdhanSound
+  return null;
+}
+
+/** تشغيل الأذان الكامل لنمط معيّن داخل التطبيق. */
+export async function playFullAdhan(style: AdhanStyleId): Promise<AdhanPlayResult> {
+  if (style === "silent") {
+    return { ok: false, code: "missing_file", message: "silent style — no audio" };
+  }
+  const path = resolveFullPathForStyle(style);
+  if (path) {
+    const exists = await probeAdhanAssetExists(path);
+    if (exists) {
+      return playAdhanFull(path, { volume: 1, fadeIn: true });
+    }
+  }
+  return testAdhanSound(style === "takbeerat" ? "makkah" : style, "full");
+}
+
+export async function testFullAdhan(style: AdhanStyleId): Promise<AdhanPlayResult> {
+  console.info("[AdhanAudioService] testFullAdhan", style);
+  return playFullAdhan(style);
 }

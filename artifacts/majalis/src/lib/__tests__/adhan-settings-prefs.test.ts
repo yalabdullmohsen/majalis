@@ -36,7 +36,11 @@ assert.equal(base.volume, 1);
 
 const withVol = patchAdhanPrefs({ volume: 0.4, bypassSilentMode: true });
 assert.equal(withVol.volume, 0.4);
-assert.equal(withVol.bypassSilentMode, true);
+assert.equal(
+  withVol.bypassSilentMode,
+  false,
+  "تجاوز الصامت يبقى معطّلاً بلا Critical Alerts",
+);
 
 patchPrayerPrefs("isha", { deliveryMode: "full" });
 const prefs = loadAdhanPrefs();

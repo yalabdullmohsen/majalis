@@ -54,7 +54,7 @@ for (const m of MUEZZINS) {
     assert.ok(
       m.audioUrl.startsWith("https://") ||
         m.audioUrl.startsWith("/sounds/") ||
-        m.audioUrl.startsWith("/audio/"),
+        m.audioUrl.startsWith("/audio/adhan/"),
       `${m.id}: رابط صوت محلي أو CDN`,
     );
   } else {
