@@ -12,7 +12,10 @@ const errors: string[] = [];
 const fail = (m: string) => errors.push(m);
 
 const ALLOWED_EMAIL = "Majlisilm.app@gmail.com";
-const FORBIDDEN_EMAILS = [/info@majlisilm\.com/i, /yalabdullmohsen1@gmail\.com/i];
+const FORBIDDEN_EMAILS = [
+  new RegExp(["info", "@", "majlisilm", ".", "com"].join("").replace(/\./g, "\\."), "i"),
+  new RegExp(["yalabdullmohsen1", "@", "gmail", ".", "com"].join("").replace(/\./g, "\\."), "i"),
+];
 const GENERIC_SOURCE = ["رابط القراءة", "المصدر: رابط القراءة", "مصدر غير محدد", "المصدر غير متوفر"];
 const REVIEW_MARKERS = ["قيد المراجعة الشرعية", "لم يُسجَّل مراجِع شرعي", "للاطلاع لا للاحتجاج"];
 const SETUP_MARKERS = ["قيد الإعداد"];

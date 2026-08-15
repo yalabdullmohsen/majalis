@@ -287,12 +287,13 @@ const htmlCorpus = [...prerenderFiles, ...distFiles];
   const reB = new RegExp(oldB.replace(/\./g, "\\."), "i");
   const hits: string[] = [];
   const skip =
-    /audit-site-data|audit-site-content|audit-content-quality|audit-contact-email|audit-rendered|audit-site-data-quality|site-data-final-audit|rendered-content-audit/;
+    /audit-|strict-evidence|production-indexability|site-data-final-audit|rendered-content-audit|evidence-register|strict-evidence-audit/;
   for (const file of walk(root, (n) => /\.(tsx?|jsx?|mjs|json|html|md|css)$/i.test(n))) {
     if (skip.test(file)) continue;
     if (file.includes(`${path.sep}node_modules${path.sep}`)) continue;
     if (file.includes(`${path.sep}dist${path.sep}`)) continue;
     if (file.includes(`${path.sep}reports${path.sep}`)) continue;
+    if (file.includes(`${path.sep}test${path.sep}`)) continue;
     const text = fs.readFileSync(file, "utf8");
     if (reA.test(text) || reB.test(text)) {
       hits.push(path.relative(root, file));

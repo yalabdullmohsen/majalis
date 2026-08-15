@@ -1,85 +1,64 @@
-# التقرير النهائي — تدقيق بيانات الموقع (Evidence-Gated)
+# التقرير النهائي — تدقيق بيانات الموقع (STRICT_EVIDENCE_ONLY)
 
-تاريخ: 2026-08-15 (محدّث بعد فحص الويب الأخير)  
-الأساس: فرع `cursor/final-evidence-audit-20260815` + تقرير ما قبل الإصلاح `reports/pre-fix-evidence-audit.md`
+تاريخ: 2026-08-15  
+الفرع: `cursor/final-evidence-audit-20260815`  
+سجل الأدلة: `reports/evidence-register.md`  
+تقرير dist: `reports/strict-evidence-audit.md`
 
-## 1) ملخص القرار
+## قاعدة الجولة
 
-| السؤال | الجواب |
+لا تعديل إلا إذا ثبت في **الكود الحالي** أو **dist بعد build**.  
+نتائج Google = إشارة فحص فقط.
+
+---
+
+## جدول STRICT_EVIDENCE
+
+| الادعاء | الدليل من الفهرسة | الدليل من الكود | الدليل من dist | القرار | التعديل | هل أضيف اختبار؟ | هل يحتاج مراجعة شرعية؟ |
+|---|---|---|---|---|---|---|---|
+| `info@majlisilm.com` | إشارة Google سابقة | لا مطابقات في src/public/prerender | لا في dist | اترك | لا | نعم (`audit:strict-evidence` + spec) | لا |
+| `yalabdullmohsen1@gmail.com` | إشارة Google سابقة | لا | لا | اترك | لا | نعم | لا |
+| «رابط القراءة» كمصدر | curl إنتاج قديم | لا في المولّد/prerender الحالي | لا؛ book-qurtubi = فتح المصدر + URL | اترك (إصلاح سابق كافٍ) | لا جديد | نعم | لا |
+| «قراءة المصدر ←» في الفوائد | — | زر CTA مع `original_url` | حزم JS إن وُجدت | اترك | لا | — | لا |
+| قيد مراجعة مفهرس على كتب | إشارة | فقط `/methodology` كتوثيق | methodology فقط | اترك | لا | نعم (يفشل إن ظهر بلا noindex خارج methodology) | لا |
+| كتب بلا مصدر في sitemap | sitemap قديم | منطق noindex مطبّق | noindex + خارج sitemap | noindex مؤكَّد | لا جديد | نعم | نعم عند إضافة مصادر |
+| KG: قيد إعداد + توثيق كامل | إنتاج حي كان index | قيد إعداد بلا دعوى توثيق كامل | noindex في dist | اترك / noindex مؤكَّد | لا جديد | نعم | نعم قبل رفع الفهرسة |
+| «غير المنازع» / «فيلسوف الإسلام الأكبر» | قوائم فحص | لا للصيغ المطلقة المحظورة | لا | اترك | لا | نعم | لا |
+| ألقاب تراجم (حجة الإسلام بتحفّظ، شيخ الإسلام…) | — | سياق تاريخي | مطابق | اترك | لا | جزئي | لا |
+
+**ظهر في الفهرسة ولم يثبت في الكود/dist:** البريدان القديمان، و«رابط القراءة» على الإنتاج الحي القديم — تُرك كما هو، وينتظر إعادة زحف محركات البحث بعد نشر الفرع.
+
+---
+
+## تعديلات هذه الجولة (أدوات فقط — 0 تعديلات محتوى)
+
+| ملف | الغرض |
 |---|---|
-| هل الفرع الحالي صالح للفهرسة بعد الإصلاحات المثبتة؟ | **نعم** — بعد noindex لكتب بلا مصدر + بوابة production-indexability |
-| هل الإنتاج الحي (majlisilm.com) يطابق الفرع؟ | **لا بعد** — الحي ما زال يعرض «رابط القراءة» ويفهرس knowledge-graph وكتباً بلا مصدر حتى ينشر هذا الفرع |
-| يحتاج مراجعة شرعية بشرية؟ | كتب `needs_source`؛ مسائل `general_reasoning`؛ أي توسع قصصي خارج الوحي |
+| `reports/evidence-register.md` | سجل أدلة إلزامي E-001…E-012 |
+| `scripts/audit-strict-evidence.ts` | فحص dist + sitemap → JSON/MD |
+| `test/strict-evidence.spec.ts` | منع رجوع نصوص محظورة في dist |
+| `package.json` | `audit:strict-evidence` |
+| `scripts/audit-site-data.ts` | استثناء سكربتات/اختبارات التدقيق من C4 |
 
 ---
 
-## 2) فحص الويب الأخير
-
-### أ) ادعاءات ظهرت في الفهرسة/الويب وثبتت داخل المشروع أو المخرجات المبنية
-
-| الادعاء | الدليل | الإجراء |
-|---|---|---|
-| مصدر عام «رابط القراءة» على كتب في الإنتاج الحي | `curl` لـ `/library/book-qurtubi` أعاد «رابط القراءة»؛ المولّد المحلي كان يعرض «قراءة المصدر» ثم عُدّل | استبدال التسمية الافتراضية بـ«فتح المصدر» عند وجود رابط؛ وعند الغياب: `المصدر: قيد الإضافة` + **noindex** + خارج sitemap |
-| كتب بلا `external_url` داخل sitemap مفهرسة | 162 كتاباً بلا رابط في `LIBRARY_CATALOG`؛ كانت في `public/sitemap.xml` قبل التوليد | `robots: noindex` و`sitemap: false` في `generate-seo.mjs` — sitemap انخفض إلى **673** عنواناً |
-| `/knowledge-graph` مفهرس في الإنتاج | حي: `index, follow` + loc في sitemap | في الفرع مسبقاً: noindex + خارج sitemap + نص «قيد الإعداد» بلا دعوى «جميع العلاقات موثقة» — تُرك/أُكّد |
-| تزكية «فقيه المذهب غير المنازع» / «حافظ العصر وشيخ الإسلام» مطلقة | `scholars-data.ts` (ابن قدامة / ابن حجر) | تحييد بصيغة تراجم: «اشتهر في كتب التراجم…» / «لُقّب في كتب التراجم بـ…» |
-
-### ب) ادعاءات ظهرت في الفهرسة لكن لم تثبت في الكود الحالي للإنتاج من هذا المستودع
-
-| الادعاء | أين بُحث | القرار |
-|---|---|---|
-| `info@majlisilm.com` / `yalabdullmohsen1@gmail.com` في production من هذا الفرع | `src`، data، footer، metadata، JSON-LD، seo-prerender، sitemap؛ يظهران فقط داخل سكربتات الفحص كمحظورات | **لم يثبت أثره على الإنتاج** في الشجرة الحالية — لم يُعدَّل محتوى. الرسمي: `Majlisilm.app@gmail.com` في `site.config.json` |
-| صفحات كتب/فتاوى تعرض «قيد المراجعة الشرعية» مفهرسة في prerender | بحث `seo-prerender/**` — العبارة فقط في `/methodology` (توثيق المنهج) | **لم يثبت** على صفحات الكتب المفهرسة في المخرجات المبنية؛ شارة SPA وقت التشغيل ليست HTML مفهرساً — لا noindex جماعي للموقع |
-| تناقض «قيد الإعداد» + «جميع العلاقات موثقة» في الكود الحالي | `KnowledgeGraphPage.tsx` + prerender | **لم يثبت** التناقض في الفرع (النص تجريبي/قيد إعداد فقط) |
-
-### ج) ما تم تعديله
-
-- `scripts/generate-seo.mjs`: كتب بلا مصدر → noindex + خارج sitemap؛ تسمية المصدر.
-- `src/lib/library-catalog.ts` + `LibraryDetailView.tsx`: تسميات المصدر.
-- `src/lib/scholars-data.ts`: تحييد عبارتين مثبتتين.
-- مرايا: `scholars-seo.json` / `library-catalog.json` عبر sync الجزئي.
-- `scripts/audit-production-indexability.ts` + أمر `audit:production-indexability`.
-- `audit:final-content` يشمل البوابة الجديدة.
-- `test/production-indexability.spec.ts` + تعزيز `audit-islamic-content.ts`.
-
-### د) ما تُرك كما هو وسبب القرار
-
-- ألقاب تاريخية سياقية («شيخ الإسلام ابن تيمية»، «حجة الإسلام» بتحفّظ للغزالي، سيرة ابن رشد بلا «فيلسوف الإسلام الأكبر»).
-- منهجية المراجعة الشرعية في `/methodology` (مفهرسة عمداً كتوثيق).
-- عدم حذف صفحات الكتب الناقصة — تبقى للاطلاع مع noindex.
-- عدم لمس `seo-routes.json` عبر sync الكامل (يُدخل مسارات علماء مكررة مع حلقة SCHOLARS في المولّد).
-
-### هـ) صفحات أصبحت noindex / أُزيلت من sitemap
-
-- كل كتاب مكتبة بلا `external_url` (~162) بما فيها أمثلة: `/library/book-seerah-ibn-hisham`، `/library/book-qawaid-arbaa`، `/library/book-umdat`.
-- `/knowledge-graph` (مسبقاً ومؤكَّد).
-- كتب بمصدر حقيقي (مثل `/library/book-qurtubi`) تبقى **index** مع «فتح المصدر».
-
-### و) يحتاج مراجعة شرعية بشرية
-
-- إضافة مصادر قراءة موثوقة لكتب `needs_source` ثم إعادة فهرستها.
-- أي توسيع لعلاقات knowledge-graph قبل رفع noindex.
-- مسائل فقهية غير `reviewed`.
-
----
-
-## 3) الادعاءات العامة السابقة (ملخص)
-
-| الادعاء | الحالة |
-|---|---|
-| حشو الأنبياء / واجهة داخل article | لم يثبت — تُرك |
-| Home fallback | العدد 0 |
-| اعتماد أزهري مطلق | لم يثبت بالصيغ المحظورة |
-
----
-
-## 4) نتائج الأوامر (هذه الجولة)
+## نتائج الأوامر
 
 | الأمر | النتيجة |
 |---|---|
-| `audit:final-content` | OK (site-data + rendered + seo + islamic + **production-indexability**) |
-| `test:production-indexability` | OK |
-| `test:site-data-evidence` | OK |
+| `build` | OK |
+| `audit:strict-evidence` | OK (0 أخطاء، 1821 HTML، 734 أصل) |
+| `audit:final-content` | OK |
 | `typecheck` | OK |
 | `lint` | OK |
-| `build` | OK |
+| `test:strict-evidence` | OK |
+
+---
+
+## الخلاصة
+
+- لا بريد قديم في dist.
+- لا placeholder مصدر «رابط القراءة» في dist.
+- صفحات قيد الإعداد / كتب بلا مصدر: noindex وخارج sitemap.
+- لا تزكيات مطلقة محظورة بلا سياق في dist.
+- **لا إصلاح محتوى جديد** لأن STRICT_EVIDENCE لم يثبت خطأً جديداً في الكود/dist الحالي.
