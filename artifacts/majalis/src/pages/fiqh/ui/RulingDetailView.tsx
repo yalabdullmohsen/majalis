@@ -157,6 +157,10 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
     hasKhilaf: !!(item.scholar_opinions && item.scholar_opinions.length > 1),
   };
 
+  const reviewKey = `${item.verification_status ?? ""}|${item.status ?? ""}`;
+  const needsReviewBanner =
+    /pending|draft/i.test(reviewKey) && !/approved|verified|published/i.test(String(item.verification_status ?? ""));
+
   return (
     <ContentDetailLayout
       breadcrumbs={[
@@ -182,6 +186,23 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
         />
       }
     >
+      {needsReviewBanner ? (
+        <div
+          role="status"
+          style={{
+            marginBottom: "1rem",
+            padding: "0.75rem 1rem",
+            borderRadius: "0.65rem",
+            border: "1px solid color-mix(in srgb, #b45309 35%, transparent)",
+            background: "color-mix(in srgb, #b45309 10%, transparent)",
+            color: "inherit",
+            fontSize: "0.92rem",
+            lineHeight: 1.7,
+          }}
+        >
+          هذه المادة قيد المراجعة العلمية ولا تُعد فتوى شخصية. يُرجع في التطبيق العملي لأهل العلم والجهات الشرعية المعتمدة.
+        </div>
+      ) : null}
       <RulingDetailSections ruling={item} relations={relations} />
       <ScholarlyTrustBadge data={trustData} />
       <ContentTrustBox

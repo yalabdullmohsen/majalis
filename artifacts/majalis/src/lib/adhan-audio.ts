@@ -61,9 +61,6 @@ export type Muezzin = {
   category: string;
   tags: string[];
   biography: string;
-  rating: number;
-  totalRatings: number;
-  followers: number;
   durationSec: number;
   /** هل يتوفّر ملف صوت قابل للتشغيل؟ */
   audioAvailable: boolean;
@@ -105,9 +102,6 @@ export const MUEZZINS: Muezzin[] = [
     category: "حرم مكي",
     tags: ["مكي", "رسمي"],
     biography: "تسجيل بنمط الحرم المكي الشريف. يُعرض باسم النمط دون نسبة شخصية حتى التثبّت.",
-    rating: 4.95,
-    totalRatings: 380000,
-    followers: 720000,
     durationSec: 130,
     audioAvailable: true,
     audioUrl:
@@ -137,9 +131,6 @@ export const MUEZZINS: Muezzin[] = [
     category: "حرم مكي",
     tags: ["مكي", "كلاسيكي"],
     biography: "تسجيل كلاسيكي بنمط الحرم المكي. بلا نسبة شخصية موثّقة.",
-    rating: 4.85,
-    totalRatings: 142000,
-    followers: 310000,
     durationSec: 160,
     audioAvailable: true,
     audioUrl: `${CDN}/general/al-haram-01.mp3`,
@@ -160,9 +151,6 @@ export const MUEZZINS: Muezzin[] = [
     category: "حرم نبوي",
     tags: ["مدني", "رسمي"],
     biography: "تسجيل بنمط المسجد النبوي الشريف. يُعرض باسم النمط دون نسبة شخصية حتى التثبّت.",
-    rating: 4.92,
-    totalRatings: 295000,
-    followers: 580000,
     durationSec: 110,
     audioAvailable: true,
     audioUrl:
@@ -188,9 +176,6 @@ export const MUEZZINS: Muezzin[] = [
     category: "هادئ",
     tags: ["هادئ", "مصري", "أوفلاين"],
     biography: "تسجيل هادئ بالنمط المصري التقليدي (أوفلاين محلي). بلا نسبة شخصية موثّقة.",
-    rating: 4.8,
-    totalRatings: 165000,
-    followers: 270000,
     durationSec: 145,
     audioAvailable: true,
     audioUrl:
@@ -217,9 +202,6 @@ export const MUEZZINS: Muezzin[] = [
     tags: ["مصري"],
     biography:
       "ملف المصدر يحمل اسمًا شخصيًا في المسار، ولم تُتحقَّق النسبة مستقلًا — يُعرض باسم النمط فقط.",
-    rating: 4.88,
-    totalRatings: 198000,
-    followers: 390000,
     durationSec: 170,
     audioAvailable: true,
     audioUrl: `${CDN}/general/abdul-basit-abdul-samad-01.mp3`,
@@ -241,9 +223,6 @@ export const MUEZZINS: Muezzin[] = [
     tags: ["مكي", "معاصر"],
     biography:
       "تسجيل معاصر (مصدر CDN). النسبة الشخصية في اسم الملف غير موثّقة مستقلًا — يُعرض بلا اسم مؤذن.",
-    rating: 4.9,
-    totalRatings: 218000,
-    followers: 450000,
     durationSec: 195,
     audioAvailable: true,
     audioUrl: `${CDN}/general/mishary-alafasy-01.mp3`,
@@ -265,9 +244,6 @@ export const MUEZZINS: Muezzin[] = [
     category: "خليجي / قريب من المكي",
     tags: ["مكي", "معاصر"],
     biography: "تسجيل معاصر بلا نسبة شخصية موثّقة — يُعرض باسم وصفي للنمط.",
-    rating: 4.82,
-    totalRatings: 134000,
-    followers: 245000,
     durationSec: 150,
     audioAvailable: true,
     audioUrl: `${CDN}/general/nasser-al-qatami-01.mp3`,
@@ -288,9 +264,6 @@ export const MUEZZINS: Muezzin[] = [
     category: "حجازي / مكي",
     tags: ["مكي", "تقليدي"],
     biography: "تسجيل بنمط حجازي قريب من المكي. بلا نسبة شخصية موثّقة.",
-    rating: 4.75,
-    totalRatings: 89000,
-    followers: 165000,
     durationSec: 140,
     audioAvailable: true,
     audioUrl: `${CDN}/general/ahmad-al-nafees-01.mp3`,
@@ -311,9 +284,6 @@ export const MUEZZINS: Muezzin[] = [
     category: "سعودي / مكي",
     tags: ["مكي", "رسمي"],
     biography: "تسجيل بنمط سعودي رسمي. بلا نسبة شخصية موثّقة.",
-    rating: 4.78,
-    totalRatings: 102000,
-    followers: 188000,
     durationSec: 135,
     audioAvailable: true,
     audioUrl: `${CDN}/general/mansour-al-zahrani-01.mp3`,
@@ -336,9 +306,6 @@ export const MUEZZINS: Muezzin[] = [
     tags: ["الأقصى"],
     biography:
       "تسجيل بنمط المسجد الأقصى (أوفلاين محلي مضغوط). بلا نسبة شخصية موثّقة.",
-    rating: 4.7,
-    totalRatings: 12000,
-    followers: 28000,
     durationSec: 180,
     audioAvailable: true,
     audioUrl:
@@ -364,9 +331,6 @@ export const MUEZZINS: Muezzin[] = [
     category: "تنبيه قصير",
     tags: ["تكبير", "قصير", "تنبيه", "أوفلاين"],
     biography: "مقطع تكبيرات قصيرة أوفلاين للتنبيه السريع دون أذان كامل.",
-    rating: 4.5,
-    totalRatings: 8000,
-    followers: 12000,
     durationSec: 12,
     audioAvailable: true,
     audioUrl:
@@ -393,9 +357,6 @@ export const MUEZZINS: Muezzin[] = [
     category: "الأقصى",
     tags: ["الأقصى"],
     biography: "مدخل توافقي قديم — استخدم تسجيل «aqsa» المتاح.",
-    rating: 0,
-    totalRatings: 0,
-    followers: 0,
     durationSec: 0,
     audioAvailable: false,
     audioUrl: "",
@@ -416,9 +377,6 @@ export const MUEZZINS: Muezzin[] = [
     category: "شامي",
     tags: ["شامي"],
     biography: "بانتظار توريد تسجيل مرخّص موثّق للنمط الشامي.",
-    rating: 0,
-    totalRatings: 0,
-    followers: 0,
     durationSec: 0,
     audioAvailable: false,
     audioUrl: "",
@@ -439,9 +397,6 @@ export const MUEZZINS: Muezzin[] = [
     category: "تركي / عثماني",
     tags: ["تركي"],
     biography: "بانتظار توريد تسجيل مرخّص موثّق للنمط التركي/العثماني.",
-    rating: 0,
-    totalRatings: 0,
-    followers: 0,
     durationSec: 0,
     audioAvailable: false,
     audioUrl: "",

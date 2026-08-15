@@ -60,18 +60,19 @@ export default function TopicPage() {
   useEffect(() => {
     const missing = !topic;
     applyPageSeo({
-      path: `/topic/${topic?.slug || slug}`,
+      path: `/topics/${topic?.slug || slug}`,
       title: missing
         ? "موضوع غير متاح | المجلس العلمي"
         : `${topic?.title || "موضوع"} | المجلس العلمي`,
       description: missing
         ? "هذا الموضوع غير متاح حالياً في فهرس المجلس العلمي."
-        : `استعرض محتوى موضوع "${topic?.title}" من الدروس والفتاوى والأحاديث في المجلس العلمي.`,
+        : `استعرض محتوى موضوع «${topic?.title}» من الدروس والفتاوى والأحاديث في المجلس العلمي.`,
       keywords: missing ? ["موضوعات علمية"] : [topic?.title || "موضوع", "محتوى إسلامي", "فتاوى", "دروس", "أحاديث"],
       robots: missing ? "noindex,follow" : undefined,
+      canonicalPath: `/topics/${topic?.slug || slug}`,
       jsonLd: missing
         ? []
-        : [{ "@context": "https://schema.org", "@type": "WebPage", name: topic?.title || "موضوع إسلامي", url: `https://majlisilm.com/topic/${topic?.slug || ""}`, about: { "@type": "Thing", name: topic?.title || "الموضوعات الإسلامية" } }],
+        : [{ "@context": "https://schema.org", "@type": "WebPage", name: topic?.title || "موضوع إسلامي", url: `https://majlisilm.com/topics/${topic?.slug || ""}`, about: { "@type": "Thing", name: topic?.title || "الموضوعات الإسلامية" } }],
     });
   }, [topic, slug]);
 
