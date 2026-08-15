@@ -12,6 +12,8 @@ export const TITLE_SUFFIX = config.titleSuffix;
 /** بريد التواصل الرسمي الوحيد للمنصة كاملةً — لا تكتب بريدًا آخر يدويًا في أي مكوّن. */
 export const CONTACT_EMAIL = config.contactEmail;
 export const DEFAULT_IMAGE = config.defaultImage;
+export const LOGO_IMAGE = (config as { logoImage?: string }).logoImage ?? "/brand/official.png?v=20260815";
+export const ASSET_VERSION = (config as { assetVersion?: string }).assetVersion ?? "20260815";
 /** لون شريط الحالة / theme-color — سطح الصفحة نهاري (ليس لون العلامة). */
 export const BRAND_THEME_COLOR = (config as { themeColor?: string }).themeColor ?? "#F2F4F3";
 /** لون شريط الحالة — ليلي. */

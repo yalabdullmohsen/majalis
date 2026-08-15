@@ -2,7 +2,7 @@
   "$comment": "المصدر الوحيد لهوية المنصة. يُقرأ من التطبيق (src/lib/site-config.ts) ومن سكربتات البناء (scripts/*.mjs). لا تكتب اسم المنصة أو نطاقها أو بريدها يدويًا في أي ملف آخر.",
 
   "siteName": "المجلس العلمي",
-  "siteShortName": "المجلس",
+  "siteShortName": "المجلس العلمي",
   "siteDescription": "منصة علمية عربية للدروس الشرعية والدورات العلمية وطلب العلم.",
 
   "$domainNote": "النطاق المعتمد هو المجرّد (بلا www) منذ 2026-07-22 — الخادم يحوّل www إليه بـ308 (Vercel Primary Domain غُيِّر من طرف المالك مباشرة بعد حلقة إعادة توجيه لا نهائية كانت تُعطِّل كل مسار غير الرئيسية). للعودة لـwww: اعكس القيم هنا وفي لوحة Vercel معًا، ثم أعد البناء.",
@@ -22,7 +22,10 @@
   "forbiddenBrandNames": ["مجالس العلم", "منصة المجالس", "مجالس العلمية"],
   "forbiddenEmailDomains": ["gmail.com", "hotmail.com", "outlook.com", "yahoo.com"],
 
-  "defaultImage": "/majlisilm-og-2026.jpg",
+  "$brandAssetsNote": "مصدر الصور الرسمي الوحيد — لا majlisilm-og-2026 ولا شعارات قديمة في meta/manifest/JSON-LD.",
+  "assetVersion": "20260815",
+  "defaultImage": "/brand/official-og.png?v=20260815",
+  "logoImage": "/brand/official.png?v=20260815",
   "ogImageWidth": 1200,
   "ogImageHeight": 630,
 

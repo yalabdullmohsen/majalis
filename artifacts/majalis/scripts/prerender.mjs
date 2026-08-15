@@ -65,7 +65,10 @@ if (!fs.existsSync(DIST)) {
 const seoData = JSON.parse(fs.readFileSync(SEO_JSON, "utf8"));
 const routes = seoData.routes;
 const siteUrl = seoData.siteUrl;
-const defaultImage = `${siteUrl}/majlisilm-og-2026.jpg`;
+const defaultImagePath = String(seoData.defaultImage || "/brand/official-og.png?v=20260815");
+const defaultImage = /^https?:\/\//i.test(defaultImagePath)
+  ? defaultImagePath
+  : `${siteUrl}${defaultImagePath.startsWith("/") ? "" : "/"}${defaultImagePath}`;
 
 const baseHtml = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 

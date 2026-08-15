@@ -4,6 +4,8 @@ import { formatSheikhName, stripSheikhHonorifics } from "./sheikh-name";
 
 const SITE_URL = seoData.siteUrl;
 const SITE_NAME = seoData.siteName;
+const LOGO_PATH = seoData.logoImage || "/brand/official.png?v=20260815";
+const DEFAULT_IMAGE = seoData.defaultImage || "/brand/official-og.png?v=20260815";
 
 function absoluteUrl(path: string) {
   return new URL(path, SITE_URL).toString();
@@ -24,7 +26,8 @@ export function organizationJsonLd() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: absoluteUrl("/logo.png"),
+    logo: absoluteUrl(LOGO_PATH),
+    image: absoluteUrl(DEFAULT_IMAGE),
     description:
       "منصة علمية عربية تجمع الدروس الشرعية والدورات والقرآن والأذكار والفوائد في مكان واحد.",
     inLanguage: "ar",
@@ -38,13 +41,15 @@ export function websiteJsonLd() {
     "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
+    image: absoluteUrl(DEFAULT_IMAGE),
     inLanguage: "ar",
     description:
       "منصة علمية عربية للدروس الشرعية والدورات العلمية وطلب العلم — القرآن، السنة، الأذكار، والفوائد.",
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
-      logo: absoluteUrl("/logo.png"),
+      logo: absoluteUrl(LOGO_PATH),
+      url: SITE_URL,
     },
     potentialAction: {
       "@type": "SearchAction",

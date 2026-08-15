@@ -18,7 +18,7 @@ function read(rel: string) {
 // ── Manifest + iOS ──────────────────────────────────────────────────────────
 const manifest = JSON.parse(read("public/manifest.json"));
 assert.equal(manifest.name, "المجلس العلمي");
-assert.equal(manifest.short_name, "المجلس");
+assert.equal(manifest.short_name, "المجلس العلمي");
 assert.equal(manifest.lang, "ar");
 assert.equal(manifest.dir, "rtl");
 assert.equal(manifest.display, "standalone");

@@ -3,6 +3,15 @@
 
 User-agent: *
 Allow: /
+Allow: /brand/
+Allow: /icons/
+Allow: /favicon.ico
+Allow: /apple-touch-icon.png
+Allow: /icon-192.png
+Allow: /icon-512.png
+Allow: /manifest.webmanifest
+Allow: /manifest.json
+Allow: /site.webmanifest
 Disallow: /admin
 Disallow: /admin/
 Disallow: /login
