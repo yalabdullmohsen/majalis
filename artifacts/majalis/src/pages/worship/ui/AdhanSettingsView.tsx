@@ -17,11 +17,14 @@ import {
   type PrayerKey,
   type AdvanceMinutes,
 } from "@/lib/adhan-preferences";
-import { getMuezzin, hasFajrAdhan, stopAdhan } from "@/lib/adhan-audio";
+import { getMuezzin, hasFajrAdhan } from "@/lib/adhan-audio";
 import {
   ADHAN_FULL_AUDIO_PATHS,
-  CRITICAL_ALERTS_ENTITLEMENT_PRESENT,
+  getAdhanAudioDebugSnapshot,
   probeAdhanAssetExists,
+  stopAdhan,
+  stopAdhanAudio,
+  testAdhanSound,
   testFullAdhan,
   type AdhanStyleId,
 } from "@/lib/adhan-audio-service";
@@ -41,13 +44,6 @@ import {
 } from "@/lib/adhan-downloads";
 import { MuezzinPicker } from "@/components/adhan/MuezzinPicker";
 import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
-import {
-  getAdhanAudioDebugSnapshot,
-  probeAdhanAssetExists,
-  stopAdhanAudio,
-  testAdhanSound,
-} from "@/lib/adhan-audio-service";
-import { resolveAdhanStyleNotificationSound } from "@/lib/prayer-notification-sounds";
 import { listBundledAdhanSoundPaths } from "@/lib/adhan-offline-assets";
 import {
   KUWAIT_GOVERNORATES,
@@ -379,23 +375,60 @@ export default function AdhanSettingsPage() {
   const [diagnosticsOpen, setDiagnosticsOpen] = useState(false);
   const [testBusy, setTestBusy] = useState(false);
   const [testMsg, setTestMsg] = useState<string | null>(null);
+  const [soundTestBusy, setSoundTestBusy] = useState(false);
+  const [soundTestMsg, setSoundTestMsg] = useState<string | null>(null);
+  const [debugOpen, setDebugOpen] = useState(false);
+  const [debugLines, setDebugLines] = useState<string[]>([]);
   const [diagExtra, setDiagExtra] = useState<{
     scheduledCount: number | null;
     fullMp3: boolean | null;
     bundleSound: string;
   }>({ scheduledCount: null, fullMp3: null, bundleSound: "adhan-short-makkah.caf" });
 
+  const refreshDebug = async () => {
+    const snap = getAdhanAudioDebugSnapshot();
+    const muezzinId = prefs.defaultMuezzinId;
+    const muezzin = getMuezzin(muezzinId);
+    const paths = listBundledAdhanSoundPaths().slice(0, 6);
+    const exists: string[] = [];
+    for (const p of paths) {
+      const ok = await probeAdhanAssetExists(p);
+      exists.push(`${ok ? "✓" : "✗"} ${p}`);
+    }
+    let scheduled = "—";
+    try {
+      if (isNative) {
+        const { LocalNotifications } = await import("@capacitor/local-notifications");
+        const pending = await LocalNotifications.getPending();
+        scheduled = `${pending.notifications?.length ?? 0} مجدولة`;
+        console.info("[adhan-debug] pending", pending.notifications?.slice(0, 8));
+      }
+    } catch {
+      scheduled = "تعذّر قراءة الجدولة";
+    }
+    setDebugLines([
+      `مؤذن: ${muezzin.name} (${muezzinId})`,
+      `تشغيل: ${snap.playing ? "نعم" : "لا"}`,
+      `آخر مسار: ${snap.lastUrl ?? "—"}`,
+      `آخر خطأ: ${snap.lastError ?? "—"}`,
+      `جلسة أصلية: ${snap.nativeSession ? "نعم" : "لا"}`,
+      `جدولة: ${scheduled}`,
+      ...exists,
+    ]);
+  };
+
   useEffect(() => {
     if (!diagnosticsOpen) return;
     let cancelled = false;
     computeNotificationDiagnostics(prayerData ?? null).then((d) => { if (!cancelled) setDiagnostics(d); });
     void (async () => {
-      const style = (prefs.defaultMuezzinId || "makkah") as keyof typeof ADHAN_FULL_AUDIO_PATHS;
-      const path =
-        style === "makkah" || style === "madinah" || style === "aqsa" || style === "egypt" || style === "turkey" || style === "kuwait"
-          ? ADHAN_FULL_AUDIO_PATHS[style]
-          : ADHAN_FULL_AUDIO_PATHS.makkah;
-      const probe = await probeAdhanAssetExists(path);
+      const style = (prefs.defaultMuezzinId || "makkah") as string;
+      const pathKey =
+        style === "makkah" || style === "madinah" || style === "aqsa" || style === "egypt"
+          ? style
+          : "makkah";
+      const path = ADHAN_FULL_AUDIO_PATHS[pathKey];
+      const exists = await probeAdhanAssetExists(path);
       let scheduledCount: number | null = null;
       try {
         if (isNative) {
@@ -408,12 +441,12 @@ export default function AdhanSettingsPage() {
       }
       if (!cancelled) {
         const short =
-          style === "madinah" || style === "egypt" || style === "aqsa"
+          style === "madinah" || style === "egypt" || style === "aqsa" || style === "takbeerat"
             ? style
             : "makkah";
         setDiagExtra({
           scheduledCount,
-          fullMp3: probe.exists,
+          fullMp3: exists,
           bundleSound: `adhan-short-${short}.caf`,
         });
       }
@@ -721,26 +754,13 @@ export default function AdhanSettingsPage() {
             />
           </div>
 
-          <div className="ads-row" style={{ marginTop: "0.55rem" }}>
-            <div>
-              <div className="ads-global-label">تجاوز الوضع الصامت</div>
-              <div className="ads-global-desc">
-                يتطلب موافقة Critical Alerts من Apple — غير متوفر لهذا التطبيق.
-              </div>
-            </div>
-            <Toggle
-              checked={false}
-              onChange={() => undefined}
-              disabled
-              id="bypass-silent-toggle"
-              label="تجاوز الوضع الصامت — يتطلب موافقة Critical Alerts من Apple"
-            />
-          </div>
-          {!CRITICAL_ALERTS_ENTITLEMENT_PRESENT ? (
-            <p className="ads-adhan-desc" style={{ marginTop: "0.35rem" }}>
-              زر الصامت وFocus يبقيان تحت سيطرة النظام. الأذان الكامل يعمل داخل التطبيق عند فتحه.
+          <div className="ads-field-gap" style={{ marginTop: "0.55rem" }}>
+            <div className="ads-global-label">الوضع الصامت وFocus</div>
+            <p className="ads-adhan-desc" style={{ margin: "0.35rem 0 0" }}>
+              قد يُكتم الصوت في الوضع الصامت أو Focus على iOS، ولا يمكن تجاوزه إلا بصلاحية Critical Alerts من Apple.
+              يتطلب موافقة Critical Alerts من Apple — غير متوفر لهذا التطبيق. الأذان الكامل يعمل داخل التطبيق عند فتحه.
             </p>
-          ) : null}
+          </div>
 
           <div className="ads-field-gap">
             <div className="ads-row">
@@ -824,7 +844,7 @@ export default function AdhanSettingsPage() {
         <div className="ads-card__body">
           <p className="ads-adhan-desc">
             يشغّل الأذان الكامل داخل التطبيق عبر جلسة AVAudioSession (playback).
-            لا يتجاوز الصامت أو Focus — ذلك يتطلب Critical Alerts من Apple.
+            قد يُكتم الصوت في الوضع الصامت أو Focus على iOS، ولا يمكن تجاوزه إلا بصلاحية Critical Alerts من Apple.
           </p>
           <div className="ads-row-sep">
             <div>

@@ -40,6 +40,7 @@ export type TestNotificationResult = {
   reason?: "permission" | "unsupported" | "error";
   platform: "native" | "web";
   delayMs?: number;
+  soundName?: string;
 };
 
 /** يُجدوِل إشعارًا بعد delayMs (افتراضي 15ث) على الأصل. */
@@ -89,9 +90,10 @@ export async function fireTestLocalNotification(
         notificationId: TEST_NOTIFICATION_NATIVE_ID,
         segmentIndex: 0,
       });
-      return { ok: true, platform, delayMs: delay };
+      return { ok: true, platform, delayMs: delay, soundName: sound };
     }
 
+    const soundName = testNotificationSound();
     if (!("Notification" in window)) {
       return { ok: false, reason: "unsupported", platform, soundName };
     }
@@ -104,10 +106,15 @@ export async function fireTestLocalNotification(
         tag: "majalis-adhan-notif-test",
       });
     }, delay);
-    return { ok: true, platform, delayMs: delay };
+    return { ok: true, platform, delayMs: delay, soundName };
   } catch (e) {
     console.error("[notifications/test] failed", e);
-    return { ok: false, reason: "error", platform, soundName };
+    return {
+      ok: false,
+      reason: "error",
+      platform,
+      soundName: testNotificationSound(),
+    };
   }
 }
 

@@ -43,8 +43,7 @@ for (const name of [
   "adhan-madinah-full.mp3",
   "adhan-aqsa-full.mp3",
   "adhan-egypt-full.mp3",
-  "adhan-turkey-full.mp3",
-  "adhan-kuwait-full.mp3",
+  "adhan-makkah-fajr.mp3",
 ]) {
   assert.ok(existsSync(join(fullDir, name)), `missing full mp3 ${name}`);
 }
@@ -55,6 +54,7 @@ for (const name of [
   "adhan_short_madinah.mp3",
   "adhan_short_egypt.mp3",
   "adhan_short_aqsa.mp3",
+  "adhan_short_takbeerat.mp3",
   "adhan_seq_makkah_01.mp3",
   "adhan_seq_makkah_02.mp3",
   "adhan_seq_makkah_03.mp3",
