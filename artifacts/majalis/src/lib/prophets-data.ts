@@ -26,8 +26,13 @@ export const PROPHET_SLUG_ALIASES: Record<string, string> = {
   alyasa: "al-yasa",
   "al-yasaa": "al-yasa",
   elisha: "al-yasa",
-  "dhulkifl": "dhul-kifl",
+  dhulkifl: "dhul-kifl",
   "dhu-l-kifl": "dhul-kifl",
+  zakariya: "zakariyya",
+  zakaria: "zakariyya",
+  zechariah: "zakariyya",
+  sulaiman: "sulayman",
+  shuaib: "shuayb",
 };
 
 export function resolveProphetSlug(slug: string): string {

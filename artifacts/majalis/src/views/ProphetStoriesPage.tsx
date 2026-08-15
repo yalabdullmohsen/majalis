@@ -2,6 +2,12 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { CalendarDays, ChevronLeft, ChevronRight, HelpCircle, LayoutList, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { PROPHETS, getProphet, resolveProphetSlug, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
+import {
+  getExpandedProphetStory,
+  publishableParagraphs,
+  type ExpandedProphetStory,
+  type StoryParagraph,
+} from "@/lib/prophets-expanded";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { prophetArticleJsonLd, breadcrumbJsonLd, defaultSiteJsonLd } from "@/lib/seo-structured-data";
@@ -260,6 +266,58 @@ function ProphetCard({
 
 type DetailSection = { id: string; label: string };
 
+function ExpandedParas({ paras }: { paras: StoryParagraph[] }) {
+  const list = publishableParagraphs(paras);
+  if (!list.length) return null;
+  return (
+    <ul className="prophet-expanded-list">
+      {list.map((para, i) => (
+        <li key={`${para.sourceReliability}-${i}`} className="prophet-expanded-list__item">
+          <p className="prophet-section-lux__text">{para.text}</p>
+          {para.sourceNote ? (
+            <span className="prophet-expanded-list__source" data-reliability={para.sourceReliability}>
+              {para.sourceNote}
+            </span>
+          ) : null}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ExpandedStorySections({ story }: { story: ExpandedProphetStory }) {
+  const blocks: Array<{ id: string; title: string; paras: StoryParagraph[] }> = [
+    { id: "quran-mentions", title: "مواضع ذكره في القرآن", paras: story.quranMentions },
+    { id: "events", title: "أبرز الأحداث الثابتة", paras: story.establishedEvents },
+    { id: "sunnah", title: "ما ثبت في السنة", paras: story.sunnah },
+    { id: "tafsir", title: "ما يذكره أهل التفسير", paras: story.tafsir },
+    { id: "do-not-assert", title: "ما لا يصح الجزم به", paras: story.doNotAssert },
+    { id: "expanded-lessons", title: "الصفات والعبر", paras: story.attributesAndLessons },
+    { id: "references", title: "مراجع مختصرة", paras: story.references },
+  ];
+  return (
+    <>
+      {blocks.map((block) => {
+        const paras = publishableParagraphs(block.paras);
+        if (!paras.length) return null;
+        return (
+          <section
+            key={block.id}
+            className="prophet-section-lux prophet-section-lux--reveal"
+            data-ps-section={block.id}
+          >
+            <div className="prophet-section-lux__header">
+              <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
+              <h2 className="prophet-section-lux__title">{block.title}</h2>
+            </div>
+            <ExpandedParas paras={block.paras} />
+          </section>
+        );
+      })}
+    </>
+  );
+}
+
 function ProphetDetailView({
   slug,
   onBack,
@@ -271,6 +329,7 @@ function ProphetDetailView({
 }) {
   const p = getProphet(slug);
   const canonicalSlug = p?.slug ?? resolveProphetSlug(slug);
+  const expanded = getExpandedProphetStory(canonicalSlug);
   const sup = SUPPLEMENT[canonicalSlug];
   const [fontSize, setFontSize] = useState(16);
   const [dbStory, setDbStory] = useState<{ content: string; citations: Citation[] } | null>(null);
@@ -285,8 +344,18 @@ function ProphetDetailView({
     { id: "bio", label: "نبذة" },
     ...(sup?.miracle ? [{ id: "miracle", label: "المعجزة" }] : []),
     { id: "surahs", label: "السور" },
-    { id: "attrs", label: "الصفات" },
-    { id: "lessons", label: "العبر" },
+    ...(expanded ? [
+      { id: "quran-mentions", label: "القرآن" },
+      { id: "events", label: "الأحداث" },
+      ...(publishableParagraphs(expanded.sunnah).length ? [{ id: "sunnah", label: "السنة" }] : []),
+      { id: "tafsir", label: "التفسير" },
+      { id: "do-not-assert", label: "لا يُجزم" },
+      { id: "expanded-lessons", label: "العبر" },
+      { id: "references", label: "المراجع" },
+    ] : [
+      { id: "attrs", label: "الصفات" },
+      { id: "lessons", label: "العبر" },
+    ]),
     ...(!dbLoading && dbStory?.content ? [{ id: "story", label: "القصة" }] : []),
     ...(!dbLoading && dbStory?.citations?.length ? [{ id: "citations", label: "الاستشهادات" }] : []),
   ];
@@ -515,9 +584,9 @@ function ProphetDetailView({
         <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="bio">
           <div className="prophet-section-lux__header">
             <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
-            <h2 className="prophet-section-lux__title">نبذة تعريفية</h2>
+            <h2 className="prophet-section-lux__title">نبذة مختصرة</h2>
           </div>
-          <p className="prophet-section-lux__text">{p.briefBio}</p>
+          <p className="prophet-section-lux__text">{expanded?.brief ?? p.briefBio}</p>
         </section>
 
         <ScholarlyTrustBadge
@@ -549,8 +618,8 @@ function ProphetDetailView({
                 key={s}
                 type="button"
                 className="prophet-chip-lux prophet-chip-lux--interactive"
-                onClick={() => scrollToSection("citations")}
-                title="الانتقال إلى الاستشهادات إن وُجدت"
+                onClick={() => scrollToSection(expanded ? "quran-mentions" : "citations")}
+                title="الانتقال إلى مواضع الذكر"
               >
                 سورة {s}
               </button>
@@ -558,6 +627,10 @@ function ProphetDetailView({
           </div>
         </section>
 
+        {expanded ? <ExpandedStorySections story={expanded} /> : null}
+
+        {!expanded ? (
+          <>
         <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="attrs">
           <div className="prophet-section-lux__header">
             <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
@@ -587,6 +660,8 @@ function ProphetDetailView({
             ))}
           </div>
         </section>
+          </>
+        ) : null}
 
         {!dbLoading && dbStory?.content && (
           <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="story">
