@@ -292,7 +292,7 @@ export function FiqhCouncilHubPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "الهيئات والمنظمات الإسلامية",
-          description: "قرارات وفتاوى وتوصيات المجامع الفقهية وهيئات الإفتاء الإسلامية المعتمدة",
+          description: "قرارات وفتاوى وتوصيات المجامع الفقهية وهيئات الإفتاء الإسلامية، مع إثراء تدريجي حسب المصادر المتاحة",
           itemListElement: SUBNAV_LINKS.filter(l => l.href !== "/fiqh-council").map((l, i) => ({
             "@type": "ListItem",
             position: i + 1,

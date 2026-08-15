@@ -2248,11 +2248,11 @@ for (const row of LIBRARY_CATALOG) {
   ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
   ${row.type ? `<li>النوع: ${escapeHtml(row.type)}</li>` : ""}
   ${row.parts_label ? `<li>الأجزاء: ${escapeHtml(row.parts_label)}</li>` : ""}
-  ${row.sourceReference
-    ? `<li>المصدر: ${escapeHtml(row.sourceReference)}</li>`
-    : `<li>المصدر: قيد الإضافة</li>`}
+  ${row.sourceStatus === "source_pending" || !row.sourceReference
+    ? `<li>المصدر: قيد الإضافة</li>`
+    : `<li>المصدر: ${escapeHtml(row.sourceReference)}</li>`}
   ${row.external_url
-    ? `<li>رابط للقراءة: <a href="${escapeHtml(row.external_url)}">${escapeHtml(row.external_url)}</a></li>`
+    ? `<li>نص للقراءة: <a href="${escapeHtml(row.external_url)}">${escapeHtml(row.external_url)}</a></li>`
     : ""}
 </ul>
 ${row.sourceStatus === "source_pending" ? `<p>حالة المصدر: قيد الإضافة — لا يُعرض كمصدر موثوق حتى يُثبت المرجع.</p>` : ""}

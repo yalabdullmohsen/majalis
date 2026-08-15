@@ -159,17 +159,17 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
       {readUrl && (
         <div className="library-detail-read">
           <a href={readUrl} target="_blank" rel="noreferrer" className="library-read-btn">
-            فتح رابط القراءة
+            فتح النص للقراءة
           </a>
         </div>
       )}
-      {item.sourceReference ? (
-        <p className="library-detail-note" data-testid="library-source-ref">
-          المصدر: {item.sourceReference}
-        </p>
-      ) : (
+      {item.sourceStatus === "source_pending" || !item.sourceReference ? (
         <p className="library-detail-note" data-testid="library-source-pending">
           المصدر قيد الإضافة
+        </p>
+      ) : (
+        <p className="library-detail-note" data-testid="library-source-ref">
+          المصدر: {item.sourceReference}
         </p>
       )}
       {item.sourceStatus === "source_pending" ? (

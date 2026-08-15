@@ -331,7 +331,8 @@
     "test:quran-data-integrity": "node --import tsx src/lib/__tests__/quran-data-integrity.test.ts",
     "test:qpc-fonts-present": "node -e \"const fs=require('fs'); const p='public/fonts/qpc-v2/p1.woff2'; if(!fs.existsSync(p)) {console.error('missing',p); process.exit(1)}; console.log('✓ QPC fonts present', p);\"",
     "test:official-brand-seo": "node scripts/test-official-brand-seo.mjs",
-    "generate:official-brand": "node scripts/generate-official-brand-assets.mjs"
+    "generate:official-brand": "node scripts/generate-official-brand-assets.mjs",
+    "test:remaining-site-fixes": "node ./scripts/test-remaining-site-fixes.mjs"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

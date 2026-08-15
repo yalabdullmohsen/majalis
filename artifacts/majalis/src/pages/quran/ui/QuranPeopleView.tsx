@@ -72,7 +72,7 @@ export default function QuranPeopleView() {
     <div className="quran-hub-page qp-people" dir="rtl">
       <PageHero
         title={QURAN_PEOPLE_PAGE_TITLE}
-        description="أسماء صريحة موثّقة بمواضع الآيات — مع ربط لقصص الأنبياء دون إعادة سرد"
+        description="أسماء صريحة مرتبطة بمواضع الآيات — مع ربط لقصص الأنبياء دون إعادة سرد"
       />
       <div className="qp-people__body">
         <p className="qp-people__intro">

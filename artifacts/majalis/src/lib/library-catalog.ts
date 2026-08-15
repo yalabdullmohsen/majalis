@@ -33,7 +33,7 @@ export type LibraryContentStatus =
   | "reference_only"
   | "needs_review";
 
-/** حالة مصدر الكتاب المنهجي — لا تخلط مع رابط القراءة الخارجي. */
+/** حالة مصدر الكتاب المنهجي — لا تخلط مع رابط النص الخارجي. */
 export type LibrarySourceStatus = "verified" | "source_pending";
 
 export type LibraryBook = {
