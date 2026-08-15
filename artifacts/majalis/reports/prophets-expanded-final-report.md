@@ -330,5 +330,10 @@
 
 ## التحقق
 
-- `pnpm run test:prophets-content` (يشمل prophets-expanded-quality)
+- `pnpm run test:prophets-content` (يشمل prophets-final-routes + prophets-expanded-quality)
 - typecheck / lint / build
+
+## PR والنشر
+
+- PR: https://github.com/yalabdullmohsen/majalis/pull/1148
+- الحالة عند التقرير: مفتوح مع auto-merge بعد Verify build.
