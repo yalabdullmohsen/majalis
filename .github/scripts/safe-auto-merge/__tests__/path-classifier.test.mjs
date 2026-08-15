@@ -47,6 +47,7 @@ describe("path-classifier", () => {
     assert.equal(quiz.needBuild, true);
     assert.equal(quiz.needMushaf, false);
     assert.equal(quiz.needPostgres, false);
+  });
 
   it("quran data changes do not require mushaf UI gates (UI removed)", () => {
     const quranData = classifyChangedPaths([
