@@ -62,6 +62,16 @@ export default function MushafEditionInfoPage() {
         </ul>
       </LegalSection>
 
+      <LegalSection title="نموذج ورقي تجريبي">
+        <p>
+          لمعاينة مظهر الورق الذهبي بأسلوب مصحف المدينة على عيّنة سور قصيرة (النص من مصدر
+          العثماني نفسه في المستودع، دون تعديل):{" "}
+          <a href="/demo-ayah-reader/quran-app.html">فتح النموذج الورقي</a>
+          . المصحف الكامل المعتمد للتصفح يبقى على{" "}
+          <a href="/mushaf">/mushaf</a>.
+        </p>
+      </LegalSection>
+
       <LegalBackLink />
     </LegalPageLayout>
   );

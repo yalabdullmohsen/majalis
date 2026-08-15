@@ -2194,15 +2194,17 @@ body.has-immersive-mushaf .cookie-consent { display: none !important; }
    قارئ المصحف بنمط «آية» — خلفية ورقية، بلا بطاقات، رأس/تذييل عائم
    ═══════════════════════════════════════════════════════════════════════════ */
 .quran-shell--ayah {
-  --ayah-paper: var(--color-mushaf-paper, #F7F0E4);
-  --ayah-ink: var(--color-mushaf-ink, #14110E);
-  --ayah-meta: var(--color-mushaf-meta, #A89060);
+  /* ورق المدينة: عاجي فاتح على سطح مكتبي خفيف */
+  --ayah-desk: #E8E4D9;
+  --ayah-paper: var(--color-mushaf-paper, #FCF9F0);
+  --ayah-ink: var(--color-mushaf-ink, #2E231D);
+  --ayah-meta: var(--color-mushaf-meta, #8F6A35);
   --ayah-badge-border: var(--color-mushaf-gold-soft, #C9B07A);
-  --ayah-badge-ink: var(--color-mushaf-gold, #8B6914);
+  --ayah-badge-ink: var(--color-mushaf-gold, #B8944D);
   --ayah-badge-bg: var(--color-mushaf-badge-bg, #F3EBE0);
   --mf2-page-bg: var(--ayah-paper);
   --mf2-ink: var(--ayah-ink);
-  background: var(--ayah-paper);
+  background: var(--ayah-desk);
   color: var(--ayah-ink);
   user-select: none;
   -webkit-user-select: none;
@@ -2226,6 +2228,7 @@ body.has-immersive-mushaf .cookie-consent { display: none !important; }
   z-index: 10010;
 }
 .quran-shell--ayah.quran-shell--night {
+  --ayah-desk: #0B1220;
   --ayah-paper: #0F172A;
   --ayah-ink: #F9FAFB;
   --ayah-meta: #E5E7EB;
@@ -2236,6 +2239,7 @@ body.has-immersive-mushaf .cookie-consent { display: none !important; }
 /* مزامنة الوضع الداكن العام للموقع مع ورقة المصحف — كان html[data-theme=dark]
    يضيء --mf2-ink بينما تبقى ورقة آية عاجية، فيبهت النص أو يختفي. */
 html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-shell--high-contrast) {
+  --ayah-desk: #0B1220;
   --ayah-paper: #0F172A;
   --ayah-ink: #F9FAFB;
   --ayah-meta: #E5E7EB;
@@ -2244,6 +2248,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   --ayah-badge-bg: #1A202C;
 }
 .quran-shell--ayah.quran-shell--high-contrast {
+  --ayah-desk: #ffffff;
   --ayah-paper: #ffffff;
   --ayah-ink: #000000;
   --ayah-meta: #333333;
@@ -2252,6 +2257,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   --ayah-badge-bg: #ffffff;
 }
 .quran-shell--ayah.quran-shell--warm {
+  --ayah-desk: #E8E4D9;
   --ayah-paper: #FDFBF7;
   --ayah-ink: #2C2C2E;
 }
@@ -2867,6 +2873,9 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   flex: 1 1 auto;
   min-height: 0;
   height: 100%;
+  /* ورقة المدينة فوق سطح المكتب — الحبر يبقى على العاجي لا على الرمادي */
+  background: var(--ayah-paper, #FCF9F0);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-mushaf-gold, #B8944D) 18%, transparent);
 }
 .quran-shell--ayah.quran-shell--chrome-hidden .mpv-body.mpv-body--ayah {
   /* نفس نطاق الحبر مع/بدون شريط — ممنوع تصفير الحجز السفلي */

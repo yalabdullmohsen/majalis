@@ -21,20 +21,20 @@ export const IMMERSIVE_PAPER_BG = "#F5F5DC";
  * ورق قراءة المصحف المشترك مع تطبيق مصحفي (`MushafColors.paper`).
  * راجع UNIFIED_MUSHAF.md — لا يغيّر محرّك QPC، فقط سطح القراءة.
  */
-/** يطابق `--color-mushaf-paper` / `--color-mushaf-bg` في app/styles/theme.css */
-export const AYAH_MUSHAF_PAPER_BG = "#FCF8F1";
+/** يطابق `--color-mushaf-paper` في app/styles/theme.css (ورق المدينة) */
+export const AYAH_MUSHAF_PAPER_BG = "#FCF9F0";
 
 /** حبر شبه أسود — يطابق `--color-mushaf-ink`. */
-export const AYAH_MUSHAF_INK = "#161513";
+export const AYAH_MUSHAF_INK = "#2E231D";
 
 /**
- * ذهب نص الرأس/الذيل — أغمق من زخرفة `#B08D57` ليحقق ≥4.5:1 على الورق العاجي.
+ * ذهب نص الرأس/الذيل — أغمق من زخرفة `#B8944D` ليحقق ≥4.5:1 على الورق العاجي.
  * يطابق `--color-mushaf-meta`.
  */
 export const AYAH_MUSHAF_META = "#8F6A35";
 
 /** ذهب الزخارف — يطابق `--color-mushaf-gold`. */
-export const AYAH_MUSHAF_GOLD = "#B08D57";
+export const AYAH_MUSHAF_GOLD = "#B8944D";
 
 /** Flutter `Colors.black87` ≈ #000000 at 87% opacity on paper. */
 export const IMMERSIVE_INK = "rgba(0, 0, 0, 0.87)";
