@@ -41,6 +41,8 @@ export type QuranPerson = {
   status: "published" | "needs_review";
   prophetSlug?: string;
   relatedLinks?: PersonRelatedLink[];
+  /** تنبيه علمي عند وجود خلاف معتبر (مثل نبوة ذي الكفل) */
+  cautionNote?: string;
 };
 
 export type PeopleCatalog = {

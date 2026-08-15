@@ -156,13 +156,37 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
           ) : null}
         </div>
       ) : null}
-      {readUrl && (
+      {readUrl ? (
         <div className="library-detail-read">
           <a href={readUrl} target="_blank" rel="noreferrer" className="library-read-btn">
-            قراءة المصدر
+            فتح النص للقراءة
           </a>
         </div>
-      )}
+      ) : null}
+      {(() => {
+        const url = item.external_url || item.file_url || null;
+        let label: string | null = null;
+        if (url) {
+          try {
+            const host = new URL(url).hostname.replace(/^www\./, "");
+            label = host === "sunnah.com" || host.endsWith(".sunnah.com") ? "sunnah.com" : host;
+          } catch {
+            label = null;
+          }
+        }
+        return label ? (
+          <p className="library-detail-note" data-testid="library-source-ref">
+            المصدر:{" "}
+            <a href={url!} target="_blank" rel="noreferrer">
+              {label}
+            </a>
+          </p>
+        ) : (
+          <p className="library-detail-note" data-testid="library-source-pending">
+            المصدر قيد الإضافة
+          </p>
+        );
+      })()}
       <ContentMindMap
         title={item.title}
         category={item.category}
