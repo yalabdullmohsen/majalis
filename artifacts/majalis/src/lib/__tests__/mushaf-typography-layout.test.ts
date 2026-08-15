@@ -128,11 +128,11 @@ assert.match(pageComp, /data-mf2-bind|dataset\.mf2Bind/, "تشخيص قيد ال
 assert.match(pageComp, /mushafScale|scaleFactor|--mushaf-scale|useUnicodeSafe\s*=\s*false/, "مسار QPC موحّد عبر --mushaf-scale");
 
 // 4) رموز الألوان المرجعية
-assert.match(themeCss, /--color-mushaf-bg:\s*#FCF8F1/);
+assert.match(themeCss, /--color-mushaf-bg:\s*#E8E4D9/);
 assert.match(themeCss, /--color-mushaf-gold:\s*#B08D57/);
 assert.match(themeCss, /--color-mushaf-numeral:\s*#6B4E2A/);
 assert.match(themeCss, /--color-mushaf-panel:\s*#FAF3E8/);
-assert.match(immersiveLib, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#FCF8F1"/);
+assert.match(immersiveLib, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#FCF9F0"/);
 
 // 5) line-height عبر --mf2-lh
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?line-height:\s*normal/);
