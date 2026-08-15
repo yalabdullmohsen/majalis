@@ -22,7 +22,7 @@ const siteManifest = JSON.parse(readFileSync(resolve(root, "public/site.webmanif
 assert.equal(siteManifest.display, "standalone");
 assert.equal(siteManifest.orientation, "portrait-primary");
 assert.equal(siteManifest.name, "المجلس العلمي");
-assert.equal(siteManifest.short_name, "المجلس");
+assert.equal(siteManifest.short_name, "المجلس العلمي");
 assert.equal(siteManifest.start_url, "/");
 assert.equal(siteManifest.theme_color, "#F2F4F3");
 assert.equal(siteManifest.background_color, "#002b21");
@@ -32,7 +32,7 @@ assert.ok(existsSync(resolve(root, "public/manifest.json")));
 
 const jsonManifest = JSON.parse(readFileSync(resolve(root, "public/manifest.json"), "utf8"));
 assert.equal(jsonManifest.name, "المجلس العلمي");
-assert.equal(jsonManifest.short_name, "المجلس");
+assert.equal(jsonManifest.short_name, "المجلس العلمي");
 assert.equal(jsonManifest.start_url, "/");
 assert.equal(jsonManifest.display, "standalone");
 assert.equal(jsonManifest.theme_color, "#F2F4F3");
@@ -55,7 +55,7 @@ assert.equal(normalizePath("/lessons/?tab=1#x"), "/lessons");
 assert.equal(normalizePath("/"), "/");
 
 const seoRoutes = JSON.parse(readFileSync(resolve(root, "src/lib/seo-routes.json"), "utf8"));
-assert.equal(seoRoutes.defaultImage, "/majlisilm-og-2026.jpg");
+assert.ok(String(seoRoutes.defaultImage).includes("/brand/official-og.png"));
 
 // ── Phase 5/6: push API handler exists + no private key leak patterns in client
 assert.ok(existsSync(resolve(root, "lib/api-handlers/push-subscribe.js")));

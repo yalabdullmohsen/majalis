@@ -92,7 +92,7 @@
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0 --port ${PORT:-24216}",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint src lib --max-warnings 0",
-    "test:seo": "node scripts/test-seo.mjs",
+    "test:seo": "node scripts/test-seo.mjs && node scripts/test-official-brand-seo.mjs",
     "test:launch-splash-unified": "node --import tsx src/lib/__tests__/launch-splash-unified.test.ts",
     "test:app-first-run-host": "node --import tsx src/lib/__tests__/app-first-run-host.test.ts",
     "test:playwright-smoke": "playwright test tests/01-smoke.spec.ts tests/10-critical-acceptance.spec.ts --project=desktop",
@@ -322,7 +322,9 @@
     "lint:design-tokens": "node scripts/lint-design-tokens.mjs",
     "test:on-dark-text-tokens": "node --import tsx src/lib/__tests__/on-dark-text-tokens.test.ts && node --import tsx src/lib/__tests__/prophet-stories-on-dark-text.test.ts",
     "test:quran-data-integrity": "node --import tsx src/lib/__tests__/quran-data-integrity.test.ts",
-    "test:qpc-fonts-present": "node -e \"const fs=require('fs'); const p='public/fonts/qpc-v2/p1.woff2'; if(!fs.existsSync(p)) {console.error('missing',p); process.exit(1)}; console.log('✓ QPC fonts present', p);\""
+    "test:qpc-fonts-present": "node -e \"const fs=require('fs'); const p='public/fonts/qpc-v2/p1.woff2'; if(!fs.existsSync(p)) {console.error('missing',p); process.exit(1)}; console.log('✓ QPC fonts present', p);\"",
+    "test:official-brand-seo": "node scripts/test-official-brand-seo.mjs",
+    "generate:official-brand": "node scripts/generate-official-brand-assets.mjs"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

@@ -1,7 +1,7 @@
 {
   "id": "/",
   "name": "المجلس العلمي",
-  "short_name": "المجلس",
+  "short_name": "المجلس العلمي",
   "description": "تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم.",
   "lang": "ar",
   "dir": "rtl",
@@ -16,56 +16,38 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "/favicon-48.png",
+      "src": "/favicon.ico?v=20260815",
       "sizes": "48x48",
-      "type": "image/png",
+      "type": "image/x-icon",
       "purpose": "any"
     },
     {
-      "src": "/icon-96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/apple-touch-icon.png",
+      "src": "/apple-touch-icon.png?v=20260815",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icon-192.png",
+      "src": "/icon-192.png?v=20260815",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/icon-512.png?v=20260815",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/brand/icon-512-maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/brand/icon-1024.png",
+      "src": "/brand/official.png?v=20260815",
       "sizes": "1024x1024",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/brand/icon-1024-maskable.png",
-      "sizes": "1024x1024",
+      "src": "/brand/icon-512-maskable.png?v=20260815",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
@@ -76,28 +58,28 @@
       "short_name": "القرآن",
       "url": "/quran-hub",
       "description": "المصحف الرقمي الاحترافي",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/icon-192.png?v=20260815", "sizes": "192x192" }]
     },
     {
       "name": "الدروس العلمية",
       "short_name": "الدروس",
       "url": "/lessons",
       "description": "دروس ومحاضرات شرعية",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/icon-192.png?v=20260815", "sizes": "192x192" }]
     },
     {
       "name": "أوقات الصلاة",
       "short_name": "الصلاة",
       "url": "/prayer-times",
       "description": "مواقيت الصلاة الدقيقة",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/icon-192.png?v=20260815", "sizes": "192x192" }]
     },
     {
       "name": "الأذكار",
       "short_name": "الأذكار",
       "url": "/adhkar",
       "description": "أذكار الصباح والمساء",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/icon-192.png?v=20260815", "sizes": "192x192" }]
     }
   ]
 }

@@ -55,6 +55,8 @@ const SITE_URL = SITE.siteUrl;
 const SITE_NAME = SITE.siteName;
 const TITLE_SUFFIX = SITE.titleSuffix;
 const DEFAULT_IMAGE = SITE.defaultImage;
+const LOGO_IMAGE = SITE.logoImage || "/brand/official.png?v=20260815";
+const ASSET_VERSION = SITE.assetVersion || "20260815";
 const THEME_COLOR = SITE.themeColor || "#1F7A5A";
 const THEME_COLOR_DARK = SITE.themeColorDark || "#4FB48B";
 const OG_W = SITE.ogImageWidth || 1200;
@@ -89,9 +91,13 @@ const ENCYCLOPEDIA_RULINGS = await loadEncyclopediaRulingsForSeo(appRoot);
 const seoConfigPath = resolve(appRoot, "src/lib/seo-routes.json");
 const seoConfig = JSON.parse(await readFile(seoConfigPath, "utf8"));
 
-if (seoConfig.siteUrl !== SITE_URL || seoConfig.siteName !== SITE_NAME) {
+if (
+  seoConfig.siteUrl !== SITE_URL ||
+  seoConfig.siteName !== SITE_NAME ||
+  seoConfig.defaultImage !== DEFAULT_IMAGE
+) {
   console.error(
-    `❌ seo-routes.json يخالف site.config.json (siteUrl/siteName). صحّح seo-routes.json — site.config.json هو المصدر.`,
+    `❌ seo-routes.json يخالف site.config.json (siteUrl/siteName/defaultImage). صحّح seo-routes.json — site.config.json هو المصدر.`,
   );
   process.exit(1);
 }
@@ -344,7 +350,8 @@ function siteJsonLdScript() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: absoluteUrl("/logo.png"),
+    logo: absoluteUrl(LOGO_IMAGE),
+    image: absoluteUrl(DEFAULT_IMAGE),
     inLanguage: "ar",
   };
   const site = {
@@ -352,6 +359,7 @@ function siteJsonLdScript() {
     "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
+    image: absoluteUrl(DEFAULT_IMAGE),
     inLanguage: "ar",
     potentialAction: {
       "@type": "SearchAction",
@@ -475,10 +483,10 @@ function breadcrumbFor(route, parents = []) {
   return breadcrumbJsonLdScript(items);
 }
 
-const HEAD_ASSETS = `<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" href="/favicon.png" sizes="512x512" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+const HEAD_ASSETS = `<link rel="icon" href="/favicon.ico?v=${ASSET_VERSION}" sizes="any" />
+    <link rel="icon" type="image/png" href="/icon-512.png?v=${ASSET_VERSION}" sizes="512x512" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=${ASSET_VERSION}" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`;
 
@@ -556,7 +564,7 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
         "@type": "Organization",
         name: SITE_NAME,
         url: SITE_URL,
-        logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png") },
+        logo: { "@type": "ImageObject", url: absoluteUrl(LOGO_IMAGE) },
       },
     })}
     ${breadcrumbFor(route, parents)}
@@ -2454,32 +2462,49 @@ for (const page of pages) {
 // sitemap.xml — من نفس قائمة الصفحات، فلا يظهر فيها مسار غير مُصيَّر
 // ─────────────────────────────────────────────────────────────────────────────
 const sitemapPages = pages.filter((p) => p.sitemap && !(p.route.robots || "").includes("noindex"));
+const LASTMOD_TODAY = "2026-08-15";
+const LASTMOD_PATHS = new Set([
+  "/",
+  "/lessons",
+  "/quran-hub",
+  "/mushaf",
+  "/adhkar",
+  "/prayer-times",
+  "/fiqh",
+  "/search",
+  "/scholars",
+  "/library",
+]);
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemapPages
-  .map(
-    (p) =>
-      // بلا <lastmod> عمدًا. كان يُكتب فيه تاريخ البناء لكل الـ663 مسارًا،
-      // فيُبلّغ محركات البحث أن كل صفحات الموقع تغيّرت اليوم بعد كل نشر —
-      // وهو ادّعاء غير صحيح. وتجميده على تاريخ ثابت ادّعاء معاكس لا يقلّ
-      // خطأً («لا شيء يتغيّر أبدًا»). ولا يوجد في السجلات تاريخ تعديل حقيقي
-      // يمكن الاشتقاق منه (صفر من 99 عالِمًا يحمل reviewedAt، ولا حقل تاريخ
-      // في سجلات الكتب). وتوجيه Google صريح: حذف lastmod أفضل من قيمة غير
-      // دقيقة، لأن القيمة الموحّدة تدفعه لتجاهل الحقل كليًا.
-      // متى يعود: حين تحمل السجلات تاريخ تعديل فعليًا، يُشتق لكل مسار منه.
-      `  <url>\n    <loc>${escapeXml(absoluteUrl(p.route.path))}</loc>\n    <changefreq>${escapeXml(p.changefreq)}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`,
-  )
+  .map((p) => {
+    const loc = escapeXml(absoluteUrl(p.route.path));
+    const lastmod = LASTMOD_PATHS.has(p.route.path)
+      ? `\n    <lastmod>${LASTMOD_TODAY}</lastmod>`
+      : "";
+    return `  <url>\n    <loc>${loc}</loc>${lastmod}\n    <changefreq>${escapeXml(p.changefreq)}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`;
+  })
   .join("\n")}
 </urlset>
 `;
 
-// robots.txt — بلا توجيه Host: (يتجاهله Google، ويُربك بقية الزواحف عند تغيّر النطاق)
+// robots.txt — يسمح صراحة بأصول العلامة وملفات الأيقونات/الـmanifest
 const robots = `# ${SITE_URL}/robots.txt
 # ${SITE_NAME}
 
 User-agent: *
 Allow: /
+Allow: /brand/
+Allow: /icons/
+Allow: /favicon.ico
+Allow: /apple-touch-icon.png
+Allow: /icon-192.png
+Allow: /icon-512.png
+Allow: /manifest.webmanifest
+Allow: /manifest.json
+Allow: /site.webmanifest
 Disallow: /admin
 Disallow: /admin/
 Disallow: /login
