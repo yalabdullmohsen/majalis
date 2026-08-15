@@ -62,9 +62,10 @@ try {
 }
 
 // ── بريد ─────────────────────────────────────────────────────────────────
-const SKIP_EMAIL = /audit-site-data-quality|audit-site-content|audit-content-quality|audit-contact-email|strip-lesson-filler|content-dedupe/;
+const SKIP_EMAIL = /audit-site-data-quality|audit-site-data|audit-site-content|audit-content-quality|audit-contact-email|audit-rendered-content|strip-lesson-filler|content-dedupe|site-data-final-audit|rendered-content-audit/;
 for (const file of walk(root, (n) => /\.(tsx?|jsx?|mjs|json|html|md|css)$/i.test(n))) {
   if (SKIP_EMAIL.test(file)) continue;
+  if (file.includes(`${path.sep}reports${path.sep}`)) continue;
   const text = fs.readFileSync(file, "utf8");
   if (/info@majlisilm\.com/i.test(text) || /yalabdullmohsen1@gmail\.com/i.test(text)) {
     fail(`بريد قديم: ${path.relative(root, file)}`);

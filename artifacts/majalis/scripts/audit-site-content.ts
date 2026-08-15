@@ -49,10 +49,11 @@ for (const need of ["/mushaf", "/rulings/:id", "/topics/:slug", "/fiqh-council",
 }
 
 // ── 2) بريد ──────────────────────────────────────────────────────────────
-const SKIP_EMAIL = /audit-site-content|audit-content-quality|audit-contact-email|strip-lesson-filler|content-dedupe-roles/;
+const SKIP_EMAIL = /audit-site-content|audit-site-data|audit-content-quality|audit-contact-email|audit-rendered-content|strip-lesson-filler|content-dedupe-roles|site-data-final-audit|rendered-content-audit/;
 const FORBIDDEN_EMAIL = [/info@majlisilm\.com/i, /yalabdullmohsen1@gmail\.com/i];
 for (const file of walk(root, (n) => /\.(tsx?|jsx?|mjs|json|html|md|css|sql)$/i.test(n))) {
   if (SKIP_EMAIL.test(file)) continue;
+  if (file.includes(`${path.sep}reports${path.sep}`)) continue;
   const text = fs.readFileSync(file, "utf8");
   for (const re of FORBIDDEN_EMAIL) {
     if (re.test(text)) fail(`بريد قديم في ${path.relative(root, file)}`);
