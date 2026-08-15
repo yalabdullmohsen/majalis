@@ -77,8 +77,23 @@ article,
 html.capacitor-native,
 html.capacitor-native body {
   overscroll-behavior-y: none;
-  /* نفس لون الإطلاق — يمنع وميض أبيض بعد إخفاء Splash الأصلي */
-  background-color: var(--mj-splash-bg, #002b21);
+  /* سطح التطبيق بعد الإقلاع — لا شريط أخضر/أبيض غريب فوق الهيدر */
+  background-color: var(--mj-bg, #F2F4F3);
+}
+
+/*
+ * StatusBar.overlaysWebView = false → الـWebView يبدأ تحت الساعة/البطارية.
+ * إن بقي env(safe-area-inset-top) غير صفري نُصفّره هنا حتى لا يتضاعف فراغ الهيدر.
+ * الـhome indicator (الأسفل) والجوانب تبقى كما هي.
+ */
+html.capacitor-native {
+  --inset-top: 0px;
+  --header-h: var(--header-chrome, 56px);
+}
+
+html.capacitor-native[data-theme="dark"],
+html.capacitor-native.dark {
+  background-color: var(--mj-bg, #101614);
 }
 
 html.capacitor-native .scroll-y,

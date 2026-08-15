@@ -1,24 +1,17 @@
 /**
- * سُلّم طباعي موحّد للواجهة (خارج المصحف).
- * رسم المصحف (QPC) لا يتأثر — يستخدم --mushaf-font-scale فقط.
+ * سُلّم طباعي موحّد (خارج المصحف/QPC). المصدر: design-tokens.css.
  */
 :root {
-  --text-display: clamp(1.75rem, 5.2vw, 2.25rem);
-  --text-h1: clamp(1.375rem, 3.8vw, 1.625rem); /* 22–26px */
-  --text-h2: clamp(1.25rem, 3.2vw, 1.375rem); /* 20–22px */
-  --text-h3: 1.1875rem; /* ~19px */
-  --text-body-lg: 1.125rem;
+  --text-display: var(--font-2xl, 1.75rem);
+  --text-h1: var(--font-xl, 1.5rem);
+  --text-h2: var(--font-lg, 1.3125rem);
+  --text-h3: var(--font-md, 1.125rem);
+  --text-body-lg: var(--font-md, 1.125rem);
   --text-body: var(--font-base, 1.0625rem);
-  --text-body-sm: 0.9375rem; /* 15px */
-  --text-label: var(--font-sm, 0.9375rem);
+  --text-body-sm: var(--font-sm, 1rem);
+  --text-label: var(--font-sm, 1rem);
   --text-caption: var(--font-xs, 0.875rem);
-
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  --font-weight-extrabold: 800;
-
+  --text-nav: var(--font-xs, 0.875rem);
   --mj-fs-display: var(--text-display);
   --mj-fs-h1: var(--text-h1);
   --mj-fs-h2: var(--text-h2);
@@ -26,7 +19,6 @@
   --mj-fs-small: var(--text-label);
   --mj-fs-tiny: var(--text-caption);
   --mj-fs-btn: var(--text-label);
-
   --ds-text-2xs: var(--text-caption);
   --ds-text-xs: var(--text-caption);
   --ds-text-sm: var(--text-label);
@@ -38,46 +30,79 @@
 
 body {
   font-size: var(--text-body);
-  font-weight: var(--font-weight-regular, 400);
-  line-height: var(--lh-body, 1.7);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--lh-body, 1.75);
+  letter-spacing: 0;
 }
 
-h1,
-.mj-page-title,
-.page-title {
+h1, .mj-page-title, .page-title, .heading-page {
+  font-size: var(--text-h1);
   font-weight: var(--font-weight-extrabold, 800);
   line-height: var(--line-height-tight, 1.35);
+  letter-spacing: 0;
 }
 
-h2,
-.mj-section-title,
-.section-title {
+h2, .mj-section-title, .section-title, .heading-section {
+  font-size: var(--text-h2);
   font-weight: var(--font-weight-bold, 700);
+  letter-spacing: 0;
 }
 
-h3,
-.mj-card-title,
-.card-title {
-  font-weight: var(--font-weight-semibold, 600);
+h3, .mj-card-title, .card-title {
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-bold, 700);
+  letter-spacing: 0;
 }
 
-button,
-.mj-btn,
-.ads-pill-btn,
-.filter-chip,
-[role="tab"] {
+h4, h5, h6 {
   font-weight: var(--font-weight-semibold, 600);
+  letter-spacing: 0;
+}
+
+p, li, .prose, .text-readable {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--lh-prose, 1.85);
+  letter-spacing: 0;
+}
+
+.text-meta, .meta, .caption {
+  font-size: max(0.8125rem, var(--text-caption));
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--lh-ui, 1.6);
+  letter-spacing: 0;
+}
+
+button, .mj-btn, .ads-pill-btn, .filter-chip, [role="tab"], .nav-label {
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-semibold, 600);
+  letter-spacing: 0;
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
-textarea,
-select {
+textarea, select {
   font-size: max(1rem, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  letter-spacing: 0;
 }
 
 .bottom-nav__tab-label,
-.bottom-nav--v2 .bottom-nav__tab-label {
-  font-size: max(0.78125rem, var(--text-caption)) !important; /* ≥12.5px */
-  font-weight: var(--font-weight-medium, 500) !important;
-  line-height: 1.25 !important;
+.bottom-nav--v2 .bottom-nav__tab-label,
+.nav-label {
+  font-size: var(--text-nav) !important;
+  font-weight: var(--font-weight-semibold, 600) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+  white-space: nowrap;
 }
+
+.filter-chip, [role="tab"] {
+  min-height: 2.5rem;
+  padding-inline: 0.85rem;
+}
+
+.hub-card, .page-card, .mj-card {
+  line-height: var(--lh-body, 1.75);
+}
+
+/* المصحف/QPC: لا إعادة تعريف --mm-qpc-size هنا */
