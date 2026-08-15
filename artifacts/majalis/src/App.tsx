@@ -43,6 +43,7 @@ import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative } from "@/lib/capacitor-utils";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
+import { MajalisLaunchScreen } from "@/components/MajalisLaunchScreen";
 
 const lazy = lazyWithRetry;
 
@@ -1004,6 +1005,8 @@ function AppShellInner() {
       style={{ "--app-dir": dir } as React.CSSProperties}
       data-chrome-hidden={shouldHideChrome ? "true" : "false"}
     >
+      {/* دخولية جلسة واحدة — فوق الصدفة، لا تُعاد عند التنقل ولا عند الرجوع */}
+      <MajalisLaunchScreen />
       <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />
       <a href="#main-content" className="skip-link mj-skip-link">{t("skip_to_content")}</a>
       <OfflineBanner />
