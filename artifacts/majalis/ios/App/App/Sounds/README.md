@@ -1,33 +1,39 @@
-# أصوات إشعارات الصلاة (iOS)
+# أصوات إشعار الأذان (iOS / Capacitor)
 
-الملفات التالية مضمّنة في الحزمة ومُضافة إلى Xcode → Copy Bundle Resources:
+## مسار مشروع Xcode الصحيح
 
-| الملف | الاستخدام |
-|---|---|
-| `prayer_quiet.caf` | تنبيه قبل الصلاة (هادئ / قصير) |
-| `prayer_clear.caf` | دخول وقت الصلاة (أوضح) |
-| `prayer_soft.caf` | تذكير خفيف بعد الصلاة |
-| `prayer_makkah.caf` / `prayer_madinah.caf` / … | أنماط أذان قصيرة حسب التسجيل |
-| `prayer_default.caf` / `prayer_takbeerat.caf` | تنبيه تكبيرات |
+لا يوجد `ios/App/App.xcworkspace` مستقل.
 
-العلم في المصدر:
+| العنصر | المسار |
+|--------|--------|
+| Xcode project | `artifacts/majalis/ios/App/App.xcodeproj` |
+| workspace الداخلي | `artifacts/majalis/ios/App/App.xcodeproj/project.xcworkspace` |
+| مصادر التطبيق | `artifacts/majalis/ios/App/App/` |
+| أصوات الإشعار (مصدر) | `artifacts/majalis/ios/App/App/Sounds/` |
+| نسخ في جذر Bundle | `artifacts/majalis/ios/App/App/*.caf` (روابط صلبة) |
 
-`PRAYER_CUSTOM_SOUNDS_ENABLED = true`
+الفتح الصحيح:
+```bash
+cd artifacts/majalis && npx cap open ios
+# أو: open ios/App/App.xcodeproj
+```
 
-في `src/lib/prayer-notification-sounds.ts`.
+## ملفات CAF المطلوبة (≤30ث)
 
-## حدود iOS
+- `adhan-short-makkah.caf`
+- `adhan-short-madinah.caf`
+- `adhan-short-egypt.caf`
+- `adhan-short-aqsa.caf`
+- `adhan-short-takbeerat.caf`
 
-- صوت الإشعار ≤ ≈٣٠ ثانية؛ الملفات هنا ~٧–٨ث.
-- **لا يوجد أذان كامل موثوق عند إغلاق التطبيق** بدون مقاطع مرخّصة متعددة في الحزمة.
-- البديل الرسمي الحالي: إشعار قصير مخصّص + فتح التطبيق لتشغيل الأذان الكامل (HTMLAudio).
-- `ADHAN_IOS_MULTI_SEGMENT_BUNDLED = false` حتى تُضاف مقاطع `adhan_*_gen_sN.caf`.
+توليد من `public/audio/adhan/*.mp3` عبر `afconvert` (مقطع ≤10ث، IMA4).
 
-## مقاطع الأذان الكامل (مستقبلاً)
+في Local Notifications مرّر **اسم الملف فقط** مثل `adhan-short-makkah.caf` — بلا `/sounds/adhan/` وبلا مسار مجلد.
 
-| الملف | المعنى |
-|---|---|
-| `adhan_<id>_gen_s1.caf` … `_s4.caf` | أذان عام، حتى ٤ مقاطع ≤٢٨ث |
-| `adhan_<id>_fajr_s1.caf` … `_s4.caf` | أذان فجر بالتثويب فقط |
+يجب أن تظهر في **Copy Bundle Resources** (PBXResourcesBuildPhase).
 
-بعد إضافتها: فعّل `ADHAN_IOS_MULTI_SEGMENT_BUNDLED = true`.
+## حدود Apple
+
+- أذان كامل: داخل التطبيق أو استمرار بعد بدء التشغيل + Background Mode Audio.
+- التطبيق منتهٍ: صوت إشعار قصير فقط.
+- الصامت / Focus: لا تجاوز بدون Critical Alerts entitlement.

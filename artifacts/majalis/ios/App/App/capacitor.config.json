@@ -19,9 +19,9 @@
 			"splashFullScreen": true
 		},
 		"StatusBar": {
+			"overlaysWebView": false,
 			"style": "DARK",
-			"backgroundColor": "#002b21",
-			"overlaysWebView": false
+			"backgroundColor": "#F2F4F3"
 		},
 		"Keyboard": {
 			"resize": "body",
@@ -51,7 +51,7 @@
 	},
 	"ios": {
 		"contentInset": "never",
-		"backgroundColor": "#002b21",
+		"backgroundColor": "#F2F4F3",
 		"scrollEnabled": true
 	},
 	"packageClassList": [

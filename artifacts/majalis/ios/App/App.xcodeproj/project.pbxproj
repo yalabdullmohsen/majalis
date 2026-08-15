@@ -327,6 +327,20 @@
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
 				A1B2C3D4E5F6071890AB12CD /* PrivacyInfo.xcprivacy in Resources */,
+				AD10BF01A1B2C3D4E5F6071890 /* prayer_quiet.caf in Resources */,
+				AD10BF02A1B2C3D4E5F6071890 /* prayer_clear.caf in Resources */,
+				AD10BF03A1B2C3D4E5F6071890 /* prayer_soft.caf in Resources */,
+				AD10BF04A1B2C3D4E5F6071890 /* prayer_default.caf in Resources */,
+				AD10BF05A1B2C3D4E5F6071890 /* prayer_makkah.caf in Resources */,
+				AD10BF06A1B2C3D4E5F6071890 /* prayer_madinah.caf in Resources */,
+				AD10BF07A1B2C3D4E5F6071890 /* prayer_egypt.caf in Resources */,
+				AD10BF08A1B2C3D4E5F6071890 /* prayer_aqsa.caf in Resources */,
+				AD10BF09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf in Resources */,
+				ADSHBF01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf in Resources */,
+				ADSHBF02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf in Resources */,
+				ADSHBF03A1B2C3D4E5F6071890 /* adhan-short-egypt.caf in Resources */,
+				ADSHBF04A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf in Resources */,
+				ADSHBF05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

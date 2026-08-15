@@ -93,10 +93,10 @@ export async function fireTestLocalNotification(
     }
 
     if (!("Notification" in window)) {
-      return { ok: false, reason: "unsupported", platform };
+      return { ok: false, reason: "unsupported", platform, soundName };
     }
     if (Notification.permission !== "granted") {
-      return { ok: false, reason: "permission", platform };
+      return { ok: false, reason: "permission", platform, soundName };
     }
     window.setTimeout(() => {
       sendLocalNotification(TEST_NOTIFICATION_TITLE, {
@@ -107,7 +107,7 @@ export async function fireTestLocalNotification(
     return { ok: true, platform, delayMs: delay };
   } catch (e) {
     console.error("[notifications/test] failed", e);
-    return { ok: false, reason: "error", platform };
+    return { ok: false, reason: "error", platform, soundName };
   }
 }
 

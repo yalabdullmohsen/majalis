@@ -27,22 +27,24 @@
   --mm-frame: transparent;
   --mm-banner-fill: linear-gradient(180deg, #efe2b8 0%, #e0cb92 48%, #d4b870 100%);
   --mm-banner-name-bg: #fffdf8;
-  --mm-ayah-select: rgba(190, 157, 82, 0.22);
-  --mm-ayah-play: rgba(47, 111, 78, 0.16);
+  --mm-ayah-select: rgba(190, 157, 82, 0.2);
+  --mm-ayah-play: rgba(47, 111, 78, 0.14);
   --mm-outer-pad: 0;
-  --mm-inner-pad-x: clamp(0.7rem, 3.6vw, 1.25rem);
-  --mm-inner-pad-y: clamp(0.2rem, 1.2vw, 0.45rem);
-  --mm-header-h: clamp(1.35rem, 4.2vw, 1.75rem);
-  --mm-footer-h: clamp(1.55rem, 4.8vw, 2.05rem);
-  --mm-banner-h: clamp(3.1rem, 9.5vw, 3.9rem);
-  --mm-ayah-end: 1.02em;
-  --mm-page-max-w: min(100vw, 28rem);
-  --mm-qpc-size: clamp(1.38rem, 5.1vw, 1.92rem);
+  --mm-inner-pad-x: clamp(0.55rem, 2.8vw, 1.05rem);
+  --mm-inner-pad-y: clamp(0.12rem, 0.9vw, 0.35rem);
+  --mm-header-h: clamp(1.15rem, 3.6vw, 1.45rem);
+  --mm-footer-h: clamp(1.45rem, 4.4vw, 1.85rem);
+  --mm-banner-h: clamp(3.55rem, 11vw, 4.35rem);
+  --mm-ayah-end: 0.98em;
+  --mm-page-max-w: min(100%, 28rem);
+  --mm-qpc-size: clamp(1.48rem, 5.4vw, 2.05rem);
   --mm-line-gap: 0;
   --mm-chrome: color-mix(in srgb, var(--mm-paper) 94%, #fff);
   --mm-chrome-fg: var(--mm-ink);
   --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 28%, transparent);
-  --mm-ayah-bar-h: 6.25rem;
+  --mm-ayah-bar-h: 7.5rem;
+  --mm-chrome-top-h: 0px;
+  --mm-chrome-bottom-h: 0px;
 
   position: fixed;
   inset: 0;
@@ -56,30 +58,42 @@
   touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
+  /* safe-area مرة واحدة هنا فقط — عناصر absolute لا تعيد إضافة inset */
   padding-top: var(--inset-top, 0px);
   padding-bottom: var(--inset-bottom, 0px);
   padding-inline-start: var(--inset-inline-start, var(--inset-left, 0px));
   padding-inline-end: var(--inset-inline-end, var(--inset-right, 0px));
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+.mm-viewport[data-chrome="1"] {
+  --mm-chrome-top-h: 2.55rem;
+  --mm-chrome-bottom-h: 3.4rem;
+}
+
+.mm-viewport[data-ayah-bar="1"] {
+  --mm-chrome-bottom-h: var(--mm-ayah-bar-h);
+  --mm-chrome-top-h: 2.55rem;
 }
 
 html[data-theme="dark"] .mm-viewport,
 html.dark .mm-viewport {
-  --mm-paper: #1c2430;
-  --mm-paper-deep: #151c26;
-  --mm-outer-bg: #1c2430;
-  --mm-ink: #ffffff;
+  --mm-paper: #152018;
+  --mm-paper-deep: #101812;
+  --mm-outer-bg: #0e1410;
+  --mm-ink: #f7faf7;
   --mm-gold: #d4b870;
   --mm-gold-soft: #f0dfa8;
   --mm-gold-deep: #f5e6b8;
   --mm-header: #f5edd8;
   --mm-banner-fill: linear-gradient(180deg, #4a3f2c 0%, #342c1f 100%);
-  --mm-banner-name-bg: #243040;
-  --mm-ayah-select: rgba(212, 184, 112, 0.32);
-  --mm-ayah-play: rgba(94, 196, 154, 0.28);
-  --mm-chrome: color-mix(in srgb, #243040 90%, transparent);
-  --mm-chrome-fg: #ffffff;
-  --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 38%, transparent);
+  --mm-banner-name-bg: #1c2a22;
+  --mm-ayah-select: rgba(212, 184, 112, 0.34);
+  --mm-ayah-play: rgba(94, 196, 154, 0.3);
+  --mm-chrome: color-mix(in srgb, #1c2a22 92%, transparent);
+  --mm-chrome-fg: #f7faf7;
+  --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 42%, transparent);
   background: var(--mm-outer-bg);
 }
 
@@ -90,13 +104,21 @@ html.dark .mm-viewport {
 .mm-page-shell {
   width: min(100%, var(--mm-page-max-w));
   max-width: 100%;
-  height: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
   max-height: 100%;
   margin: 0 auto;
   position: relative;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+  /* مساحة محجوزة للأدوات — لا تغطي الآيات ولا رقم الصفحة */
+  padding-top: var(--mm-chrome-top-h);
+  padding-bottom: var(--mm-chrome-bottom-h);
+  box-sizing: border-box;
+  transition: padding 180ms ease;
 }
 
 .mm-viewport .mm-page {
@@ -112,12 +134,10 @@ html.dark .mm-viewport {
   grid-template-rows: var(--mm-header-h) minmax(0, 1fr) var(--mm-footer-h);
   padding: 0;
   border-radius: 0;
-  transition: padding-bottom 180ms ease;
 }
 
 .mm-viewport[data-ayah-bar="1"] .mm-page {
-  /* مساحة سفلية حتى لا يغطي شريط الآية آخر الأسطر */
-  padding-bottom: calc(var(--mm-ayah-bar-h) + 0.5rem);
+  padding-bottom: 0;
 }
 
 html[data-theme="dark"] .mm-viewport .mm-page,
@@ -184,24 +204,32 @@ html.dark .mm-viewport .mm-page {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.2rem;
+  gap: 0.35rem;
   min-height: 0;
+  padding-block: 0.1rem;
+}
+
+.mm-slot__banner--with-basmala {
+  gap: 0.45rem;
 }
 
 .mm-surah-ornament {
   width: min(100%, 99%);
-  height: min(100%, var(--mm-banner-h));
+  min-height: var(--mm-banner-h);
+  height: auto;
   margin-inline: auto;
   margin-block: 0.05rem;
   display: grid;
-  grid-template-columns: 2.1rem minmax(0, 1fr) 2.1rem;
+  grid-template-columns: 2.45rem minmax(0, 1fr) 2.45rem;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   background: var(--mm-banner-fill);
-  border: 1.5px solid color-mix(in srgb, var(--mm-gold-deep) 75%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, #fff 45%, transparent);
-  border-radius: 0.45rem;
-  padding: 0.4rem 0.65rem;
+  border: 1.75px solid color-mix(in srgb, var(--mm-gold-deep) 78%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, #fff 48%, transparent),
+    0 1px 0 color-mix(in srgb, var(--mm-gold-deep) 22%, transparent);
+  border-radius: 0.55rem;
+  padding: 0.55rem 0.75rem;
 }
 
 html[data-theme="dark"] .mm-surah-ornament,
@@ -210,8 +238,8 @@ html.dark .mm-surah-ornament {
 }
 
 .mm-surah-ornament__side {
-  width: 1.65rem;
-  height: 1.65rem;
+  width: 1.85rem;
+  height: 1.85rem;
   margin-inline: auto;
   background:
     radial-gradient(circle at 50% 50%, var(--mm-gold-deep) 0 22%, transparent 23% 100%),
@@ -222,18 +250,19 @@ html.dark .mm-surah-ornament {
 
 .mm-surah-ornament__name {
   background: var(--mm-banner-name-bg);
-  border: 1px solid color-mix(in srgb, var(--mm-gold-deep) 42%, #fff);
+  border: 1.25px solid color-mix(in srgb, var(--mm-gold-deep) 48%, #fff);
   color: var(--mm-gold-deep);
   text-align: center;
   font-family: "Amiri Quran", "KFGQPC Hafs Uthmanic", serif;
-  font-size: clamp(1.12rem, 4.4vw, 1.45rem);
+  font-size: clamp(1.22rem, 4.8vw, 1.62rem);
   font-weight: 700;
-  line-height: 1.35;
-  padding: 0.35rem 0.9rem;
+  line-height: 1.4;
+  padding: 0.45rem 1.05rem;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
+  text-overflow: clip;
   letter-spacing: 0.01em;
+  min-width: 0;
 }
 
 html[data-theme="dark"] .mm-surah-ornament__name,
@@ -242,7 +271,7 @@ html.dark .mm-surah-ornament__name {
   border-color: color-mix(in srgb, var(--mm-gold) 45%, transparent);
 }
 
-/* بسملة زخرفية = نفس مقاس/وزن/تمركز سطر آيات الفاتحة (بدون رقم آية) */
+/* بسملة زخرفية = نفس مقاس/وزن/تمركز سطر آيات الفاتحة */
 .mm-basmala {
   width: 100%;
   text-align: center;
@@ -250,11 +279,12 @@ html.dark .mm-surah-ornament__name {
   font-size: var(--mm-qpc-size);
   font-weight: 700;
   color: var(--mm-ink);
-  line-height: 1.18;
+  line-height: 1.22;
   letter-spacing: 0;
   word-spacing: 0;
-  margin: 0;
-  padding-block: 0.05em;
+  margin: 0.15em 0 0.2em;
+  padding-block: 0.12em;
+  overflow: visible;
 }
 
 .mm-ayah-line {
@@ -262,18 +292,19 @@ html.dark .mm-surah-ornament__name {
   display: block;
   text-align: center;
   direction: rtl;
-  unicode-bidi: bidi-override; /* ترتيب بصري = ترتيب الكلمات في البيانات (QPC) */
+  unicode-bidi: bidi-override; /* ترتيب بصري = ترتيب كلمات QPC */
   font-family: var(--mm-qpc-family), "Amiri Quran", serif;
   font-size: var(--mm-qpc-size);
-  line-height: 1.18;
+  line-height: 1.28;
   color: var(--mm-ink);
   letter-spacing: 0;
   word-spacing: 0;
   white-space: nowrap;
+  overflow: visible;
+  padding-block: 0.06em;
 }
 
 .mm-viewport .mm-page:not(.mm-page--opening) .mm-ayah-line {
-  /* QPC يضمّن المدّات داخل الحروف — لا justify حتى لا تُدفع فواصل الآيات للحافة */
   text-align: center;
 }
 
@@ -300,7 +331,7 @@ html.dark .mm-surah-ornament__name {
   -webkit-box-decoration-break: clone;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
-  unicode-bidi: isolate;
+  unicode-bidi: isolate; /* لا يعكس ترتيب حروف الـglyph داخل الكلمة */
 }
 
 .mm-ayah-hit:focus-visible {
@@ -308,19 +339,19 @@ html.dark .mm-surah-ornament__name {
   outline-offset: 1px;
 }
 
-/* مقطع آية متصل — تظليل واحد خلف النص، فاصل الآية خارج التظليل */
+/* مقطع آية متصل — تظليل خلف النص دون طمس الحركات أو رقم الآية */
 .mm-ayah-run {
   display: inline;
 }
 
 .mm-ayah-run__text {
   display: inline;
-  border-radius: 0.18em;
+  border-radius: 0.2em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-  padding-block: 0.08em;
-  margin-block: -0.08em;
-  padding-inline: 0.05em;
+  padding-block: 0.1em;
+  margin-block: -0.05em;
+  padding-inline: 0.04em;
   color: inherit;
   opacity: 1;
   mix-blend-mode: normal;
@@ -328,7 +359,7 @@ html.dark .mm-surah-ornament__name {
 
 .mm-ayah-run__text.is-selected {
   background: var(--mm-ayah-select);
-  box-shadow: 0 0 0 0.5px color-mix(in srgb, var(--mm-gold) 35%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mm-gold) 28%, transparent);
 }
 
 .mm-ayah-run__text.is-playing {
@@ -419,16 +450,21 @@ html.dark .mm-viewport .mm-page-footer__badge {
 }
 
 .mm-controls[data-open="0"] .mm-controls__bar,
-.mm-controls[data-open="0"] .mm-controls__exit,
 .mm-controls[data-open="0"] .mm-controls__side {
   opacity: 0;
   transform: translateY(-0.35rem);
   pointer-events: none;
 }
 
+.mm-controls[data-exit="0"] .mm-controls__exit {
+  opacity: 0;
+  transform: translateY(-0.35rem);
+  pointer-events: none;
+}
+
 .mm-controls[data-open="1"] .mm-controls__bar,
-.mm-controls[data-open="1"] .mm-controls__exit,
-.mm-controls[data-open="1"] .mm-controls__side {
+.mm-controls[data-open="1"] .mm-controls__side,
+.mm-controls[data-exit="1"] .mm-controls__exit {
   opacity: 1;
   transform: none;
   pointer-events: auto;
@@ -442,19 +478,22 @@ html.dark .mm-viewport .mm-page-footer__badge {
 
 .mm-controls__exit {
   position: absolute;
-  top: max(0.55rem, var(--inset-top, 0px));
-  inset-inline-start: max(0.55rem, var(--inset-inline-start, var(--inset-left, 0px)));
+  top: 0.45rem;
+  inset-inline-start: 0.55rem;
+  z-index: 6;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.35rem 0.7rem;
+  min-height: 2.05rem;
+  padding: 0.4rem 0.85rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--mm-gold) 40%, transparent);
-  background: color-mix(in srgb, var(--mm-paper) 92%, #fff);
+  background: color-mix(in srgb, var(--mm-paper) 94%, #fff);
   color: var(--mm-ink);
   font-family: "IBM Plex Sans Arabic", sans-serif;
-  font-size: 0.82rem;
-  box-shadow: 0 1px 6px color-mix(in srgb, #000 12%, transparent);
+  font-size: 0.84rem;
+  font-weight: 600;
+  box-shadow: 0 1px 8px color-mix(in srgb, #000 10%, transparent);
 }
 
 .mm-controls__side {
@@ -489,21 +528,22 @@ html.dark .mm-viewport .mm-page-footer__badge {
 .mm-controls__bar {
   position: absolute;
   left: 50%;
-  bottom: max(0.7rem, var(--inset-bottom, 0px));
+  bottom: 0.55rem;
   transform: translateX(-50%);
   width: min(22rem, calc(100% - 1.2rem));
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.35rem;
-  padding: 0.4rem 0.45rem;
-  border-radius: 0.85rem;
+  gap: 0.3rem;
+  padding: 0.32rem 0.4rem;
+  border-radius: 0.75rem;
   border: 1px solid var(--mm-chrome-border);
   background: var(--mm-chrome);
   color: var(--mm-chrome-fg);
   font-family: "IBM Plex Sans Arabic", sans-serif;
-  font-size: 0.78rem;
-  box-shadow: 0 4px 18px color-mix(in srgb, #5c4a28 12%, transparent);
+  font-size: 0.74rem;
+  box-shadow: 0 3px 14px color-mix(in srgb, #5c4a28 10%, transparent);
+  z-index: 6;
 }
 
 .mm-controls__btn {
@@ -569,7 +609,7 @@ html.dark .mm-viewport .mm-page-footer__badge {
 .mm-audio-dock {
   position: absolute;
   left: 50%;
-  bottom: calc(max(0.7rem, var(--inset-bottom, 0px)) + 3.35rem);
+  bottom: calc(var(--mm-chrome-bottom-h) + 0.35rem);
   transform: translateX(-50%);
   width: min(22rem, calc(100% - 1.2rem));
   z-index: 6;
@@ -583,7 +623,7 @@ html.dark .mm-viewport .mm-page-footer__badge {
   font-family: "IBM Plex Sans Arabic", sans-serif;
   font-size: 0.78rem;
   box-shadow: 0 4px 18px color-mix(in srgb, #5c4a28 12%, transparent);
-  transition: opacity 160ms ease, transform 160ms ease;
+  transition: opacity 160ms ease, transform 160ms ease, bottom 180ms ease;
   pointer-events: none;
   opacity: 0;
 }
@@ -641,7 +681,7 @@ html.dark .mm-viewport .mm-page-footer__badge {
   background: color-mix(in srgb, var(--mm-gold) 22%, transparent);
 }
 
-/* شريط الآية الفاتح — مضغوط (~12% شاشة)، بلا طبقة تعتيم */
+/* Bottom sheet للآية — فاتح، بدون طبقة سوداء، حتى نصف الشاشة */
 .mm-ayah-bar {
   position: fixed;
   inset: 0;
@@ -655,7 +695,7 @@ html.dark .mm-viewport .mm-page-footer__badge {
   position: absolute;
   inset: 0;
   border: 0;
-  background: transparent; /* لا تعتيم — القراءة تبقى واضحة */
+  background: transparent;
   cursor: pointer;
   pointer-events: auto;
 }
@@ -669,33 +709,43 @@ html.dark .mm-ayah-bar__dismiss {
   position: relative;
   pointer-events: auto;
   width: min(28rem, 100%);
-  max-height: none;
+  max-height: min(50dvh, 22rem);
   min-height: 0;
   margin-inline: auto;
   margin-bottom: 0;
-  background: color-mix(in srgb, var(--mm-paper) 97%, #fff);
+  background: color-mix(in srgb, var(--mm-paper) 98%, #fff);
   color: var(--mm-ink);
   border: 1px solid var(--mm-chrome-border);
   border-bottom: 0;
-  border-radius: 0.85rem 0.85rem 0 0;
-  padding: 0.45rem 0.65rem calc(0.45rem + var(--inset-bottom, 0px));
-  box-shadow: 0 -2px 16px color-mix(in srgb, #5c4a28 10%, transparent);
+  border-radius: 1rem 1rem 0 0;
+  padding: 0.35rem 0.75rem calc(0.55rem + var(--inset-bottom, 0px));
+  box-shadow: 0 -4px 20px color-mix(in srgb, #5c4a28 12%, transparent);
   font-family: "IBM Plex Sans Arabic", sans-serif;
   display: grid;
-  gap: 0.35rem;
-  overflow: visible;
+  gap: 0.4rem;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.mm-ayah-bar__handle {
+  width: 2.5rem;
+  height: 0.28rem;
+  margin: 0.15rem auto 0.1rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mm-ink) 18%, transparent);
 }
 
 .mm-ayah-bar__panel:has(.mm-ayah-bar__readers),
 .mm-ayah-bar__panel:has(.mm-ayah-bar__transport) {
-  max-height: none;
-  overflow: visible;
+  max-height: min(50dvh, 24rem);
+  overflow: auto;
 }
 
 html[data-theme="dark"] .mm-ayah-bar__panel,
 html.dark .mm-ayah-bar__panel {
-  background: color-mix(in srgb, #243040 94%, transparent);
-  box-shadow: 0 -4px 18px color-mix(in srgb, #0a1018 40%, transparent);
+  background: #1a2420;
+  color: #f7faf7;
+  box-shadow: 0 -4px 22px color-mix(in srgb, #000 45%, transparent);
 }
 
 .mm-ayah-bar__head {

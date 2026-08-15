@@ -5,7 +5,7 @@
  *  - لا يُعرض اسم مؤذن شخصي إلا عند attribution === "verified".
  *  - غير ذلك: الاسم المعروض = اسم النمط فقط («أذان الحرم المكي»…).
  *
- * المصدر: حزمة أوفلاين محلية خفيفة (`/sounds/adhan`) + CDN mohsalvi كاحتياط،
+ * المصدر: حزمة أوفلاين محلية (`/audio/adhan` مع توافق `/sounds/adhan`) + CDN mohsalvi كاحتياط،
  * مع كاش Cache API عبر adhan-downloads.
  * مفتاح التعطيل: `/data/adhan-audio-remote.json` عبر adhan-audio-remote-config.
  */

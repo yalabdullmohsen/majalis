@@ -42,6 +42,14 @@ import {
 import { MuezzinPicker } from "@/components/adhan/MuezzinPicker";
 import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
 import {
+  getAdhanAudioDebugSnapshot,
+  probeAdhanAssetExists,
+  stopAdhanAudio,
+  testAdhanSound,
+} from "@/lib/adhan-audio-service";
+import { resolveAdhanStyleNotificationSound } from "@/lib/prayer-notification-sounds";
+import { listBundledAdhanSoundPaths } from "@/lib/adhan-offline-assets";
+import {
   KUWAIT_GOVERNORATES,
   getSelectedGovernorate,
   setSelectedGovernorate,
@@ -805,6 +813,83 @@ export default function AdhanSettingsPage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      <section className="ads-card" aria-labelledby="ads-sound-test-head">
+        <div className="ads-card__head" id="ads-sound-test-head">
+          <Music size={15} strokeWidth={2} aria-hidden="true" />
+          <span>اختبار الصوت والتشخيص</span>
+        </div>
+        <div className="ads-card__body">
+          <p className="ads-adhan-desc">
+            يشغّل الأذان الكامل داخل التطبيق عبر جلسة AVAudioSession (playback).
+            لا يتجاوز الصامت أو Focus — ذلك يتطلب Critical Alerts من Apple.
+          </p>
+          <div className="ads-row-sep">
+            <div>
+              <div className="ads-global-label">اختبار الصوت</div>
+              <div className="ads-global-desc">
+                تشغيل فوري للمؤذن الافتراضي (~٢٠ث) مع عرض الخطأ إن فشل
+              </div>
+            </div>
+            <div className="ads-prayer-muezzin-btns">
+              <button
+                type="button"
+                className="ads-pill-btn"
+                disabled={soundTestBusy}
+                onClick={() => {
+                  setSoundTestBusy(true);
+                  setSoundTestMsg(null);
+                  void testAdhanSound(prefs.defaultMuezzinId, prefs.playbackMode || "full").then((r) => {
+                    setSoundTestBusy(false);
+                    setSoundTestMsg(r.ok ? "يعمل الصوت ✓" : `فشل: ${r.message}`);
+                  });
+                }}
+              >
+                {soundTestBusy ? "جارٍ…" : "اختبار الصوت"}
+              </button>
+              <button
+                type="button"
+                className="ads-pill-btn-ghost"
+                onClick={() => {
+                  stopAdhanAudio();
+                  setSoundTestMsg("توقّف الصوت");
+                }}
+              >
+                إيقاف
+              </button>
+            </div>
+          </div>
+          {soundTestMsg ? (
+            <p className="ads-adhan-desc" role="status">
+              {soundTestMsg}
+            </p>
+          ) : null}
+          <div className="ads-row-sep">
+            <div>
+              <div className="ads-global-label">لوحة تشخيص الأذان</div>
+              <div className="ads-global-desc">الإذن، الجدولة، المؤذن، ووجود الملفات</div>
+            </div>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              onClick={() => {
+                const next = !debugOpen;
+                setDebugOpen(next);
+                if (next) void refreshDebug();
+              }}
+            >
+              {debugOpen ? "إخفاء" : "عرض"}
+            </button>
+          </div>
+          {debugOpen ? (
+            <ul className="ads-adhan-desc" style={{ margin: 0, paddingInlineStart: "1.1rem" }}>
+              {debugLines.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       </section>
 

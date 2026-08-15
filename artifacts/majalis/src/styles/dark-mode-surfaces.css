@@ -339,7 +339,7 @@ html[data-theme="dark"] .bottom-nav__tab-label,
 html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab-label,
 html.dark .bottom-nav__tab-label,
 html.dark .bottom-nav--v2 .bottom-nav__tab-label {
-  font-size: var(--font-xs, 0.8125rem) !important;
+  font-size: var(--text-nav, var(--font-xs, 0.875rem)) !important;
   color: inherit !important;
 }
 

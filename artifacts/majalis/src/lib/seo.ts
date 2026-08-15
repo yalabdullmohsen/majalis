@@ -199,6 +199,36 @@ if (normalized.startsWith("/quran/surah-stories/")) {
     return requiredRoute("/prophets");
   }
 
+  if (normalized === "/nations") {
+    return requiredRoute("/nations");
+  }
+
+  if (normalized.startsWith("/nations/")) {
+    const nationSlug = decodeURIComponent(normalized.slice("/nations/".length));
+    return {
+      ...requiredRoute("/nations"),
+      path: normalized,
+      title: `الأمم السابقة: ${nationSlug} | المجلس العلمي`,
+      description: `قصة الأمة أو القوم «${nationSlug}» كما وردت في القرآن مع التمييز بين الثابت والمحتمل والمواقع التقريبية التي لا يُجزم بها.`,
+      ogType: "article",
+    };
+  }
+
+  if (normalized === "/quran/people") {
+    return requiredRoute("/quran/people");
+  }
+
+  if (normalized.startsWith("/quran/people/")) {
+    const personSlug = decodeURIComponent(normalized.slice("/quran/people/".length));
+    return {
+      ...requiredRoute("/quran/people"),
+      path: normalized,
+      title: `${personSlug} في القرآن | المجلس العلمي`,
+      description: `من ذكروا في القرآن: «${personSlug}» — مواضع الآيات والتعريف بما ثبت دون توسع في غير الثابت.`,
+      ogType: "article",
+    };
+  }
+
   if (normalized.startsWith("/prophets/")) {
     const prophetSlug = decodeURIComponent(normalized.slice("/prophets/".length));
     const PROPHET_NAMES: Record<string, string> = {

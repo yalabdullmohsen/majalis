@@ -44,7 +44,7 @@ export function MushafPage({
           return (
             <div key={slot} className="mm-slot" data-slot={slot}>
               {cell?.kind === "banner" ? (
-                <div className="mm-slot__banner">
+                <div className={`mm-slot__banner${cell.inlineBasmala ? " mm-slot__banner--with-basmala" : ""}`}>
                   <MushafSurahOrnament nameArabic={cell.nameArabic} />
                   {cell.inlineBasmala ? (
                     <div className="mm-basmala" dir="rtl" lang="ar" aria-hidden="true">
@@ -101,16 +101,16 @@ function buildSlots(layout: MushafPageLayout, opening: boolean): Map<number, Slo
   }
   if (!opening || raw.size === 0) return raw;
 
+  /* ص١–٢: ثبّت المحتوى من أعلى الشبكة — لا توسيط عمودي يترك فراغًا أبيض فوق الآيات */
   const keys = [...raw.keys()].sort((a, b) => a - b);
   const first = keys[0]!;
-  const last = keys[keys.length - 1]!;
-  const span = last - first + 1;
-  const targetStart = Math.max(1, Math.floor((15 - span) / 2) + 1);
+  const targetStart = 1;
   const delta = targetStart - first;
   if (delta === 0) return raw;
-  const centered = new Map<number, SlotCell>();
+  const pinned = new Map<number, SlotCell>();
   for (const [slot, cell] of raw) {
-    centered.set(slot + delta, cell);
+    const next = slot + delta;
+    if (next >= 1 && next <= 15) pinned.set(next, cell);
   }
-  return centered;
+  return pinned.size > 0 ? pinned : raw;
 }

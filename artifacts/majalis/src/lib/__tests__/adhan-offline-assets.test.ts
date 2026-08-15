@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import {
   OFFLINE_ADHAN_CORE_PACKS,
   listBundledAdhanSoundPaths,
+  notificationSoundForAdhanPack,
   preferLocalAdhanUrl,
   resolveOfflineClipUrl,
 } from "../adhan-offline-assets";

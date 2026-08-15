@@ -108,6 +108,7 @@ if (
 }
 
 const { PROPHETS } = await importSrc("src/lib/prophets-data.ts");
+const { NATIONS } = await importSrc("src/lib/nations-seed.ts");
 const { SINS_TOPICS } = await importSrc("src/lib/sins-rights-data.ts");
 const { getAllSurahStories } = await importSrc("src/lib/surah-stories.ts");
 const { FIQH_ISSUES_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-issues-seed.ts");
@@ -129,6 +130,13 @@ if (QURAN_SURAHS.length !== 114) {
 const SURAH_STORIES = getAllSurahStories();
 const PUBLIC_FIQH_ISSUES = FIQH_ISSUES_PUBLISHED_SEED.filter(isPublicIssue);
 const PUBLIC_FIQH_ITEMS = FIQH_COUNCIL_PUBLISHED_SEED.filter(isVerifiedPublicItem);
+const QURAN_PEOPLE_CATALOG = JSON.parse(
+  await readFile(resolve(appRoot, "public/data/quran-people/people.json"), "utf8"),
+);
+const QURAN_PEOPLE = (QURAN_PEOPLE_CATALOG.people || []).filter((p) => p.status === "published");
+if (!QURAN_PEOPLE.some((p) => p.slug === "azar" || p.nameAr === "آزر")) {
+  throw new Error("قائمة الذين ذكروا في القرآن تفتقد آزر (الأنعام 6:74)");
+}
 
 function fiqhItemRichBody(row) {
   const kind = fiqhItemKind(row);
@@ -284,6 +292,17 @@ function escapeHtml(value) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
+}
+
+/** اسم مصدر المكتبة من المضيف الفعلي — لا تُعرض تسمية عامة بدل اسم الموقع. */
+function librarySourceLabel(url) {
+  if (!url) return "المصدر قيد الإضافة";
+  try {
+    const host = new URL(String(url)).hostname.replace(/^www\./i, "");
+    return host || "المصدر قيد الإضافة";
+  } catch {
+    return "المصدر قيد الإضافة";
+  }
 }
 
 function jsonLdScript(payload) {
@@ -690,6 +709,14 @@ const LIST_JSON_LD = {
     PROPHETS.map((p) => ({ name: `قصة نبي الله ${p.arabicName} عليه السلام`, url: `/prophets/${p.slug}` })),
     "قصص الأنبياء",
   ),
+  "/nations": itemListJsonLdScript(
+    NATIONS.map((n) => ({ name: n.name, url: `/nations/${n.slug}` })),
+    "الأمم السابقة",
+  ),
+  "/quran/people": itemListJsonLdScript(
+    QURAN_PEOPLE.map((p) => ({ name: p.nameAr, url: `/quran/people/${p.slug}` })),
+    "الذين ذكروا في القرآن",
+  ),
   "/scholars": itemListJsonLdScript(SCHOLARS.map((s) => ({ name: s.name, url: `/scholars/${s.id}` })), "أعلام العلماء المسلمين"),
   "/learning/paths": itemListJsonLdScript(
     LEARNING_PATHS.map((p) => ({ name: p.title, url: `/learning/paths/${p.slug}` })),
@@ -792,6 +819,28 @@ ${linkList("روابط ذات صلة", [
     "قصص الأنبياء",
     PROPHETS.map((p) => ({ name: `نبي الله ${p.arabicName} عليه السلام`, url: `/prophets/${p.slug}` })),
   ),
+  "/nations": `<p>الأمم والأقوام المذكورون في القرآن: ما ثبت من دعوتهم وذنبهم وعاقبتهم، مع تمييز التفسير المحتمل والمواقع التقريبية التي لا يُجزم بها، ودون خلط بين الناجين من العذاب والمؤمنين المذكورين في القصة.</p>
+${linkList(
+  "من الأمم السابقة",
+  NATIONS.map((n) => ({ name: n.name, url: `/nations/${n.slug}`, note: n.prophet?.name })),
+)}
+${linkList("روابط ذات صلة", [
+  { name: "قصص الأنبياء", url: "/prophets" },
+  { name: "الذين ذكروا في القرآن", url: "/quran/people" },
+  { name: "قصص السور", url: "/quran/surah-stories" },
+  { name: "مركز القرآن", url: "/quran-hub" },
+])}`,
+  "/quran/people": `<p>فهرس من ذُكروا في القرآن بأسمائهم أو أوصافهم، مع مواضع الآيات والربط بقصص الأنبياء، والاقتصار على ما ثبت دون إسرائيليات مجزوم بها.</p>
+${linkList(
+  "من الذين ذكروا في القرآن",
+  QURAN_PEOPLE.slice(0, 40).map((p) => ({ name: p.nameAr, url: `/quran/people/${p.slug}` })),
+)}
+${linkList("روابط ذات صلة", [
+  { name: "قصص الأنبياء", url: "/prophets" },
+  { name: "الأمم السابقة", url: "/nations" },
+  { name: "المصحف", url: "/mushaf" },
+  { name: "مركز القرآن", url: "/quran-hub" },
+])}`,
   "/learning/paths": `
 <p>رحلتك في طلب العلم، مسارات منظّمة من المبتدئ إلى المتقدم، كل مسار يضم دروساً وتقييمات وشهادة إتمام.</p>
 <p>مسارات تعليمية منظمة في العلوم الشرعية، فقه وعقيدة وقرآن وحديث وسيرة وأخلاق.</p>
@@ -819,7 +868,7 @@ ${linkList(
   ),
   "/fiqh": `<p>بوابة الفقه الإسلامي: أحكام العبادات والمعاملات، المذاهب الأربعة، القواعد الفقهية، وقرارات المجامع — مع إحالة المسائل المعاصرة إلى مصادرها المعتمدة.</p>
 ${linkList("أقسام الفقه", [
-  { name: "الأحكام الشرعية", url: "/rulings", note: "مسائل موثّقة بالأدلة" },
+  { name: "الأحكام الشرعية", url: "/rulings", note: "مسائل فقهية مع إحالات ومصادر يجري استكمال توثيقها" },
   { name: "المجمع الفقهي", url: "/fiqh-council", note: "قرارات وفتاوى مؤسسية" },
   { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
   { name: "النوازل المعاصرة", url: "/fiqh-council/nawazil" },
@@ -2223,7 +2272,9 @@ for (const row of LIBRARY_CATALOG) {
   ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
   ${row.type ? `<li>النوع: ${escapeHtml(row.type)}</li>` : ""}
   ${row.parts_label ? `<li>الأجزاء: ${escapeHtml(row.parts_label)}</li>` : ""}
-  ${row.external_url ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">رابط القراءة</a></li>` : ""}
+  ${row.external_url
+    ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">${escapeHtml(librarySourceLabel(row.external_url))}</a></li>`
+    : "<li>المصدر قيد الإضافة</li>"}
 </ul>
 ${linkList("كتب ذات صلة في نفس التصنيف", related)}
 ${linkList("روابط ذات صلة", [
@@ -2307,6 +2358,61 @@ for (const p of PROPHETS) {
 ${p.keyAttributes?.length ? `<h2>أبرز صفاته</h2>\n<ul>\n  ${p.keyAttributes.map((a) => `<li>${escapeHtml(a)}</li>`).join("\n  ")}\n</ul>` : ""}
 ${p.lessons?.length ? `<h2>الدروس والعبر</h2>\n<ul>\n  ${p.lessons.map((l) => `<li>${escapeHtml(l)}</li>`).join("\n  ")}\n</ul>` : ""}`,
       priority: 0.74,
+      changefreq: "monthly",
+    },
+  );
+}
+
+// الأمم السابقة — من nations-seed.ts
+for (const n of NATIONS) {
+  const placeNote = n.approxLocation?.label
+    ? `الموقع المذكور للعرض: ${n.approxLocation.label} (تقريبي / لا يُجزم به).`
+    : "لم يُعيَّن موقع جغرافي قطعي في نص صحيح.";
+  addPage(
+    {
+      path: `/nations/${n.slug}`,
+      title: n.name,
+      description: clamp(
+        padDesc(n.summary || n.sin || n.name, `قصة ${n.name} في القرآن مع التمييز بين الثابت والمحتمل.`),
+        300,
+      ),
+      keywords: [n.name, ...(n.aliases || []), "الأمم السابقة", "قصص القرآن", n.prophet?.name].filter(Boolean),
+      ogType: "article",
+    },
+    {
+      parents: [{ name: "الأمم السابقة", path: "/nations" }],
+      richBody: `<h2>ملخص</h2>
+<p>${escapeHtml(n.summary || "")}</p>
+<ul>
+  ${n.prophet?.name ? `<li>النبي المرسل: ${escapeHtml(n.prophet.name)}</li>` : ""}
+  ${n.sin ? `<li>الذنب المذكور: ${escapeHtml(n.sin)}</li>` : ""}
+  ${n.punishment?.type ? `<li>نوع العذاب: ${escapeHtml(n.punishment.type)}</li>` : ""}
+  <li>${escapeHtml(placeNote)}</li>
+</ul>`,
+      priority: 0.72,
+      changefreq: "monthly",
+    },
+  );
+}
+
+// الذين ذكروا في القرآن — من people.json
+for (const person of QURAN_PEOPLE) {
+  const peopleSuffix = `${person.nameAr} في فهرس الذين ذكروا في القرآن، مع مواضع الآيات دون توسع في غير الثابت.`;
+  addPage(
+    {
+      path: `/quran/people/${person.slug}`,
+      title: `${person.nameAr} في القرآن`,
+      description: clamp(padDesc(person.definition, peopleSuffix), 300),
+      keywords: [person.nameAr, ...(person.aliases || []), "الذين ذكروا في القرآن", "أعلام القرآن"].filter(Boolean),
+      ogType: "article",
+    },
+    {
+      parents: [{ name: "الذين ذكروا في القرآن", path: "/quran/people" }],
+      richBody: `<h2>التعريف</h2>
+<p>${escapeHtml(person.definition)}</p>
+${person.whyMentioned ? `<h2>سبب الذكر</h2>\n<p>${escapeHtml(person.whyMentioned)}</p>` : ""}
+${person.lessons?.length ? `<h2>العبر</h2>\n<ul>\n  ${person.lessons.map((l) => `<li>${escapeHtml(l)}</li>`).join("\n  ")}\n</ul>` : ""}`,
+      priority: 0.7,
       changefreq: "monthly",
     },
   );

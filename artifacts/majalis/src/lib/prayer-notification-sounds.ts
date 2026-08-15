@@ -4,11 +4,13 @@
  * iOS: ملفات .caf في artifacts/majalis/ios/App/App/Sounds/ (Copy Bundle Resources).
  * Android: ملفات في artifacts/majalis/android/app/src/main/res/raw/ (الاسم بلا امتداد عند الإسناد).
  *
- * صوت الإشعار محدود ≈٣٠ث على iOS — هذه الملفات قصيرة (~٧–٨ث).
- * الأذان الكامل داخل التطبيق عبر HTMLAudio + ملفات /sounds/adhan/*.mp3.
+ * صوت الإشعار محدود ≈٣٠ث على iOS — ملفات adhan-short-*.caf ≤10ث (IMA4).
+ * الأذان الكامل داخل التطبيق عبر HTMLAudio + ملفات /audio/adhan/*.mp3.
+ * إشعار iOS: اسم الملف فقط (مثل adhan-short-makkah.caf) — بلا مسار /sounds/adhan.
  */
 import { Capacitor } from "@capacitor/core";
 import { DEFAULT_ALERT_SOUND } from "@/lib/notifications/channels";
+import { notificationSoundForAdhanPack } from "@/lib/adhan-offline-assets";
 
 /** أصوات إضافية للمعاينة/التعيين حسب نمط الأذان (إشعار قصير). */
 export const PRAYER_ADHAN_STYLE_SOUNDS = {
@@ -66,16 +68,20 @@ export function soundRoleForNotifKind(
   return "quiet";
 }
 
-/** اسم الصوت المناسب للمنصّة (iOS: مع .caf — Android: بلا امتداد). */
+/** اسم الصوت المناسب للمنصّة (iOS: ملف .caf في جذر الـ Bundle — Android: بلا امتداد). */
 export function platformNotificationSoundName(iosFileWithExt: string): string {
   try {
     if (Capacitor.getPlatform() === "android") {
-      return iosFileWithExt.replace(/\.(caf|wav|aiff|mp3)$/i, "");
+      return iosFileWithExt.replace(/^Sounds\//, "").replace(/\.(caf|wav|aiff|mp3)$/i, "").replace(/-/g, "_");
+    }
+    if (Capacitor.getPlatform() === "ios") {
+      // UNNotificationSound(named:) يبحث في جذر الـ main bundle
+      return iosFileWithExt.replace(/^Sounds\//, "");
     }
   } catch {
     /* web / tests */
   }
-  return iosFileWithExt;
+  return iosFileWithExt.replace(/^Sounds\//, "");
 }
 
 /**
@@ -102,6 +108,8 @@ export function resolvePrayerNotificationSound(
 /** صوت إشعار قصير حسب معرّف تسجيل الأذان (fallback لـ clear). */
 export function resolveAdhanStyleNotificationSound(recordingId: string): string {
   if (!PRAYER_CUSTOM_SOUNDS_ENABLED) return DEFAULT_ALERT_SOUND;
+  const fromPack = notificationSoundForAdhanPack(recordingId);
+  if (fromPack) return platformNotificationSoundName(fromPack);
   const key = recordingId as keyof typeof PRAYER_ADHAN_STYLE_SOUNDS;
   const file =
     PRAYER_ADHAN_STYLE_SOUNDS[key] ?? PRAYER_ADHAN_STYLE_SOUNDS.default;
