@@ -96,9 +96,14 @@ async function restoreNativeSystemUi(): Promise<void> {
   if (!isNative) return;
   try {
     const theme = resolveTheme(readThemePreference());
-    await setupStatusBar(theme);
+    const { reapplyPageChromeFromLocation } = await import("@/lib/apply-page-chrome");
+    await reapplyPageChromeFromLocation(theme);
   } catch {
-    /* ignore */
+    try {
+      await setupStatusBar(resolveTheme(readThemePreference()));
+    } catch {
+      /* ignore */
+    }
   }
 }
 

@@ -19,11 +19,10 @@ type Phase = "enter" | "exit";
 
 function restoreThemeColor(): void {
   try {
-    const dark = document.documentElement.classList.contains("dark")
-      || document.documentElement.dataset.theme === "dark";
-    const color = dark ? "#101614" : "#F2F4F3";
-    document.querySelectorAll('meta[name="theme-color"]').forEach((m) => {
-      m.setAttribute("content", color);
+    void import("@/lib/apply-page-chrome").then(({ reapplyPageChromeFromLocation }) => {
+      void import("@/lib/theme-preference").then(({ readThemePreference, resolveTheme }) => {
+        void reapplyPageChromeFromLocation(resolveTheme(readThemePreference()));
+      });
     });
   } catch {
     /* ignore */

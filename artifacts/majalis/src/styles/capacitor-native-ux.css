@@ -74,26 +74,26 @@ article,
 }
 
 /* Smooth momentum scrolling inside WebViews */
+/*
+ * StatusBar.overlaysWebView = true → المحتوى يمتد تحت الساعة/البطارية.
+ * --inset-top يبقى env(safe-area-inset-top) من theme.css (لا تصفير هنا).
+ * لون المنطقة العليا = --app-status-bg (PageChrome).
+ */
+html.capacitor-native {
+  --header-h: calc(var(--header-chrome, 56px) + var(--inset-top));
+  background-color: var(--app-status-bg, var(--mj-bg, #F2F4F3));
+  min-height: 100dvh;
+}
+
 html.capacitor-native,
 html.capacitor-native body {
   overscroll-behavior-y: none;
-  /* سطح التطبيق بعد الإقلاع — لا شريط أخضر/أبيض غريب فوق الهيدر */
-  background-color: var(--mj-bg, #F2F4F3);
-}
-
-/*
- * StatusBar.overlaysWebView = false → الـWebView يبدأ تحت الساعة/البطارية.
- * إن بقي env(safe-area-inset-top) غير صفري نُصفّره هنا حتى لا يتضاعف فراغ الهيدر.
- * الـhome indicator (الأسفل) والجوانب تبقى كما هي.
- */
-html.capacitor-native {
-  --inset-top: 0px;
-  --header-h: var(--header-chrome, 56px);
+  background-color: var(--app-status-bg, var(--mj-bg, #F2F4F3));
 }
 
 html.capacitor-native[data-theme="dark"],
 html.capacitor-native.dark {
-  background-color: var(--mj-bg, #101614);
+  background-color: var(--app-status-bg, var(--mj-bg, #101614));
 }
 
 html.capacitor-native .scroll-y,

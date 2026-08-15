@@ -50,8 +50,10 @@ void import("./styles/m2030/interactions.css");
 if (isNative) {
   document.documentElement.classList.add("capacitor-native");
   document.documentElement.dataset.platform = isAndroid ? "android" : isIOS ? "ios" : "native";
-  // overlaysWebView=false → لا تكرار لـ safe-area العلوي قبل تحميل CSS الديناميكي
-  document.documentElement.style.setProperty("--inset-top", "0px");
+  // overlay=true → أبقِ --inset-top من theme.css (env(safe-area-inset-top))
+  // لون افتراضي قبل React يمنع وميض أبيض
+  document.documentElement.style.setProperty("--app-status-bg", "#F2F4F3");
+  document.documentElement.style.setProperty("--app-status-fg-mode", "dark");
   void import("./styles/capacitor-native-ux.css");
   void import("./styles/ios-edge.css");
 }

@@ -6,7 +6,7 @@ import {
   writeThemePreference,
   type ThemePreference,
 } from "@/lib/theme-preference";
-import { setupStatusBar } from "@/lib/capacitor-utils";
+import { reapplyPageChromeFromLocation } from "@/lib/apply-page-chrome";
 
 type ThemePreferenceContextValue = {
   preference: ThemePreference;
@@ -27,10 +27,9 @@ export function ThemePreferenceProvider({ children }: { children: ReactNode }) {
     setResolvedTheme(resolveTheme(preference));
   }, [preference]);
 
-  // شريط الحالة الأصلي (iOS/Android) يتبع الوضع المُحلَّل فعليًا — لا يُهمَل على
-  // الويب (setupStatusBar تتأكد بنفسها). يشمل تبديل "تلقائي" حسب النظام أدناه.
+  // شريط الحالة يتبع PageChrome للمسار الحالي + الوضع المحلول
   useEffect(() => {
-    void setupStatusBar(resolvedTheme);
+    void reapplyPageChromeFromLocation(resolvedTheme);
   }, [resolvedTheme]);
 
   // Listen for system theme changes in "auto" mode
