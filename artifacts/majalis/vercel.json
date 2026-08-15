@@ -191,6 +191,11 @@
   ],
   "redirects": [
     {
+      "source": "/library/book-shamaild-tirmidhi",
+      "destination": "/library/book-shamaail-tirmidhi",
+      "permanent": true
+    },
+    {
       "source": "/prophets/ishaq",
       "destination": "/prophets/is-haq",
       "permanent": true

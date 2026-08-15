@@ -79,43 +79,20 @@ const scholarsSeo = SCHOLARS.map((s) => ({
 }));
 writeOrCheck("src/data/scholars-seo.json", serialize(scholarsSeo), "بيانات Person للعلماء");
 
-// ── 3) مسارات فهرسة العلماء داخل seo-routes.json (وصف فريد لكل عالِم) ──────
-const seoRoutes = readJson("src/lib/seo-routes.json");
-const nonScholarRoutes = seoRoutes.routes.filter(
-  (r: any) => !/^\/scholars\/[^/]+$/.test(r.path),
-);
-// موضع إدراج مسارات العلماء: مباشرة بعد فهرس /scholars إن وُجد، وإلا في النهاية
-const idxAfter = nonScholarRoutes.findIndex((r: any) => r.path === "/scholars");
-const scholarRoutes = SCHOLARS.map((s) => {
-  const works = (s.key_works || []).slice(0, 3);
-  const worksText = works.length ? ` من مؤلفاته: ${works.join("، ")}.` : "";
-  const description = clampDesc(`${s.bio}${worksText}`);
-  const keywords = [
-    s.name,
-    ...(s.specialty || []),
-    ...(s.madhhab ? [`المذهب ${s.madhhab}`] : []),
-    "المجلس العلمي",
-  ].slice(0, 6);
-  return {
-    path: `/scholars/${s.id}`,
-    title: `${s.name} — سيرته ومؤلفاته | المجلس العلمي`,
-    description,
-    keywords,
-    sitemap: true,
-    changefreq: "monthly",
-    priority: 0.75,
-  };
-});
-const nextRoutes =
-  idxAfter >= 0
-    ? [
-        ...nonScholarRoutes.slice(0, idxAfter + 1),
-        ...scholarRoutes,
-        ...nonScholarRoutes.slice(idxAfter + 1),
-      ]
-    : [...nonScholarRoutes, ...scholarRoutes];
-seoRoutes.routes = nextRoutes;
-writeOrCheck("src/lib/seo-routes.json", serialize(seoRoutes), "مسارات فهرسة العلماء");
+// ── 3) مسارات العلماء داخل seo-routes.json ───────────────────────────────
+// ملاحظة: generate-seo.mjs يولّد صفحات العلماء من SCHOLARS مباشرة.
+// إدراجها هنا يسبب «مسار مكرر» — نكتفي بمرايا JSON ولا نلمس seo-routes للعلماء.
+{
+  const seoRoutes = readJson("src/lib/seo-routes.json");
+  const scholarPaths = (seoRoutes.routes || []).filter((r: { path?: string }) =>
+    /^\/scholars\/[^/]+$/.test(String(r.path || "")),
+  );
+  if (scholarPaths.length && CHECK) {
+    console.warn(
+      `⚠ seo-routes.json يحتوي ${scholarPaths.length} مسار عالِم — يُفضَّل إبقاؤها خارج الملف لأن المولّد يولّدها ديناميكياً`,
+    );
+  }
+}
 
 if (CHECK && drift > 0) {
   console.error(`\n✗ ${drift} مرآة غير متزامنة — شغّل: pnpm run sync:seo-data`);
@@ -124,5 +101,5 @@ if (CHECK && drift > 0) {
 console.log(
   CHECK
     ? "✓ جميع مرايا SEO متزامنة"
-    : `✓ تمت المزامنة — ${libraryJson.length} كتابًا، ${scholarsList.length} عالِمًا (${scholarRoutes.length} مسارًا)`,
+    : `✓ تمت المزامنة — ${libraryJson.length} كتابًا، ${scholarsList.length} عالِمًا (مرايا JSON فقط؛ مسارات العلماء من المولّد)`,
 );

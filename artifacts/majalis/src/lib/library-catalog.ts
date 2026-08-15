@@ -37,6 +37,16 @@ export type LibraryContentStatus =
 export const LIBRARY_CAUTION_NOTE =
   "يُستفاد منه في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو الحديث أو الأخبار التاريخية.";
 
+/** معرّفات قديمة → الحالية (إبقاء الروابط المفهرسة عبر redirect + resolve) */
+export const LIBRARY_ID_ALIASES: Record<string, string> = {
+  "book-shamaild-tirmidhi": "book-shamaail-tirmidhi",
+};
+
+export function resolveLibraryBookId(id: string): string {
+  const key = decodeURIComponent(id).trim();
+  return LIBRARY_ID_ALIASES[key] ?? key;
+}
+
 export type LibraryBook = {
   id: string;
   title: string;
@@ -1806,7 +1816,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     sort_order: 184,
   },
   {
-    id: "book-shamaild-tirmidhi",
+    id: "book-shamaail-tirmidhi",
     title: "الشمائل المحمدية",
     author: "الإمام محمد بن عيسى الترمذي",
     type: "كتاب",

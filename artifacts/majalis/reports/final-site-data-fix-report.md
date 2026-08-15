@@ -42,16 +42,77 @@
 
 ---
 
+## تدقيق جودة البيانات
+
+تقرير مفصل: `reports/data-quality-audit.md` + `reports/data-quality-audit.json`  
+الأمر: `pnpm run audit:data-quality`
+
+### السجلات المفحوصة
+
+| النوع | العدد |
+|---|---|
+| prophets | 25 |
+| books | 173 |
+| scholars | 135 |
+| sins-and-rights | 26 |
+| surah stories | 114 |
+| fiqh issues | 64 |
+| adhkar | 329 |
+| lessons | 39 |
+
+### الأخطاء المؤكدة في مصدر البيانات
+
+| الشدة | العدد | ملاحظات |
+|---|---|---|
+| critical | 0 | بعد إصلاح slug الشمائل |
+| high | 0 | — |
+| medium | 162 | كلها `source_pending` لكتب بلا `external_url` — **auto_fix_allowed=false** |
+| schema_gap | 100 | حقول مثالية غير موجودة في النموذج الحالي — لا اختراع قيم |
+
+### ما أُصلح (مثبت في البيانات)
+
+| السجل | الخطأ | التعديل |
+|---|---|---|
+| `book-shamaild-tirmidhi` | typo في الـid مقابل عنوان «الشمائل» | أُعيد إلى `book-shamaail-tirmidhi` + alias + redirect 301 في `vercel.json` |
+
+### ما تُرك — لم يثبت في مصدر البيانات الحالي
+
+| الادعاء | السبب |
+|---|---|
+| عناوين «كتاب شرعي» / «قصة سورة» كعناوين سجلات | موجودة فقط كاحتياطي SPA في `seo.ts` — ليست حقول title في بيانات الكتب/القصص |
+| boilerplate أنبياء | لا مطابقات في `prophets-data.ts` |
+| بريد قديم داخل data records | لا |
+| «رابط القراءة» كـ source_title | لا |
+| duplicate slugs كتب/علماء | لا |
+| ذو الكفل كنبوة قطعية بلا خلاف | البيانات تعترف بالخلاف صراحة |
+
+### noindex / sitemap (بيانات → فهرسة)
+
+- 162 كتاباً `source_pending` تبقى noindex وخارج sitemap (منطق المولّد السابق).
+- `book-shamaail-tirmidhi` بلا مصدر → noindex أيضاً.
+
+### يحتاج مراجعة شرعية / إكمال مصادر
+
+- إضافة `external_url` موثوق لكتب `source_pending` ثم إعادة فهرستها.
+- توسيع مخطط الأنبياء (`status` / `reviewStatus` / `sources`) لاحقاً بمراجعة بشرية — لا auto-fix.
+
+### اختبارات
+
+- `test/data-quality.spec.ts` — يمنع رجوع العنوان العام، الـslug المكرر، shamaild، المصدر الوهمي، boilerplate الأنبياء، البريد القديم في السير.
+
+---
+
 ## نتائج الأوامر
 
 | الأمر | النتيجة |
 |---|---|
 | `build` | OK |
-| `audit:strict-evidence` | OK (0 أخطاء، 1821 HTML، 734 أصل) |
+| `audit:data-quality` | OK (بعد إصلاح الشمائل) |
+| `audit:strict-evidence` | OK |
 | `audit:final-content` | OK |
 | `typecheck` | OK |
 | `lint` | OK |
-| `test:strict-evidence` | OK |
+| `test:data-quality` | OK |
 
 ---
 
@@ -61,4 +122,5 @@
 - لا placeholder مصدر «رابط القراءة» في dist.
 - صفحات قيد الإعداد / كتب بلا مصدر: noindex وخارج sitemap.
 - لا تزكيات مطلقة محظورة بلا سياق في dist.
-- **لا إصلاح محتوى جديد** لأن STRICT_EVIDENCE لم يثبت خطأً جديداً في الكود/dist الحالي.
+- إصلاح بيانات مثبت واحد: slug الشمائل + redirect.
+- **162** كتاباً بانتظار مصدر حقيقي (medium، بلا تعديل تلقائي).

@@ -2,6 +2,7 @@ import { arabicMatchAny } from "./arabic-search";
 import {
   LIBRARY_CATALOG,
   LIBRARY_CATEGORIES,
+  resolveLibraryBookId,
   type LibraryBook,
   type LibraryCategory,
 } from "./library-catalog";
@@ -33,7 +34,8 @@ export function getLibraryCatalog(): LibraryItem[] {
 }
 
 export function getLibraryBookById(id: string): LibraryItem | null {
-  const book = LIBRARY_CATALOG.find((row) => row.id === id);
+  const resolved = resolveLibraryBookId(id);
+  const book = LIBRARY_CATALOG.find((row) => row.id === resolved);
   return book ? mapCatalogToItem(book) : null;
 }
 
