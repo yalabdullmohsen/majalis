@@ -52,7 +52,9 @@ for (const m of MUEZZINS) {
   }
   if (m.audioAvailable) {
     assert.ok(
-      m.audioUrl.startsWith("https://") || m.audioUrl.startsWith("/sounds/"),
+      m.audioUrl.startsWith("https://") ||
+        m.audioUrl.startsWith("/sounds/") ||
+        m.audioUrl.startsWith("/audio/"),
       `${m.id}: رابط صوت محلي أو CDN`,
     );
   } else {

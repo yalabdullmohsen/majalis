@@ -142,6 +142,15 @@ export async function playAdhanUrlAsync(
     return { ok: false, code: "missing_file", message: "ملف الصوت غير موجود." };
   }
   stopAdhan();
+  try {
+    const { ensureNativePlaybackAudioSession } = await import("@/lib/native-playback-audio");
+    await ensureNativePlaybackAudioSession({
+      title: "الأذان",
+      artist: "المجلس العلمي",
+    });
+  } catch (e) {
+    console.warn("[adhan] native playback session skipped:", e);
+  }
   const audio = new Audio();
   const targetVol = Math.min(1, Math.max(0, volume));
   const useFade = opts?.fadeIn !== false;

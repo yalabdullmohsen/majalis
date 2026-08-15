@@ -37,6 +37,11 @@
 		AD10BF07A1B2C3D4E5F6071890 /* prayer_egypt.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR07A1B2C3D4E5F6071890 /* prayer_egypt.caf */; };
 		AD10BF08A1B2C3D4E5F6071890 /* prayer_aqsa.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR08A1B2C3D4E5F6071890 /* prayer_aqsa.caf */; };
 		AD10BF09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf */; };
+		ADSHBF01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf in Resources */ = {isa = PBXBuildFile; fileRef = ADSHFR01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf */; };
+		ADSHBF02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf in Resources */ = {isa = PBXBuildFile; fileRef = ADSHFR02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf */; };
+		ADSHBF03A1B2C3D4E5F6071890 /* adhan-short-egypt.caf in Resources */ = {isa = PBXBuildFile; fileRef = ADSHFR03A1B2C3D4E5F6071890 /* adhan-short-egypt.caf */; };
+		ADSHBF04A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf in Resources */ = {isa = PBXBuildFile; fileRef = ADSHFR04A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf */; };
+		ADSHBF05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf in Resources */ = {isa = PBXBuildFile; fileRef = ADSHFR05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,15 +94,20 @@
 		E5F6071890AB12CD01A2B3C5 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		F40AA07210D9414E9C98BAD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4816472931E4AB1A0DE1F42 /* PrayerLiveActivityPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerLiveActivityPlugin.swift; sourceTree = "<group>"; };
-		AD10FR01A1B2C3D4E5F6071890 /* prayer_quiet.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_quiet.caf; path = Sounds/prayer_quiet.caf; sourceTree = "<group>"; };
-		AD10FR02A1B2C3D4E5F6071890 /* prayer_clear.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_clear.caf; path = Sounds/prayer_clear.caf; sourceTree = "<group>"; };
-		AD10FR03A1B2C3D4E5F6071890 /* prayer_soft.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_soft.caf; path = Sounds/prayer_soft.caf; sourceTree = "<group>"; };
-		AD10FR04A1B2C3D4E5F6071890 /* prayer_default.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_default.caf; path = Sounds/prayer_default.caf; sourceTree = "<group>"; };
-		AD10FR05A1B2C3D4E5F6071890 /* prayer_makkah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_makkah.caf; path = Sounds/prayer_makkah.caf; sourceTree = "<group>"; };
-		AD10FR06A1B2C3D4E5F6071890 /* prayer_madinah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_madinah.caf; path = Sounds/prayer_madinah.caf; sourceTree = "<group>"; };
-		AD10FR07A1B2C3D4E5F6071890 /* prayer_egypt.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_egypt.caf; path = Sounds/prayer_egypt.caf; sourceTree = "<group>"; };
-		AD10FR08A1B2C3D4E5F6071890 /* prayer_aqsa.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_aqsa.caf; path = Sounds/prayer_aqsa.caf; sourceTree = "<group>"; };
-		AD10FR09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_takbeerat.caf; path = Sounds/prayer_takbeerat.caf; sourceTree = "<group>"; };
+		AD10FR01A1B2C3D4E5F6071890 /* prayer_quiet.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_quiet.caf; path = prayer_quiet.caf; sourceTree = "<group>"; };
+		AD10FR02A1B2C3D4E5F6071890 /* prayer_clear.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_clear.caf; path = prayer_clear.caf; sourceTree = "<group>"; };
+		AD10FR03A1B2C3D4E5F6071890 /* prayer_soft.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_soft.caf; path = prayer_soft.caf; sourceTree = "<group>"; };
+		AD10FR04A1B2C3D4E5F6071890 /* prayer_default.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_default.caf; path = prayer_default.caf; sourceTree = "<group>"; };
+		AD10FR05A1B2C3D4E5F6071890 /* prayer_makkah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_makkah.caf; path = prayer_makkah.caf; sourceTree = "<group>"; };
+		AD10FR06A1B2C3D4E5F6071890 /* prayer_madinah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_madinah.caf; path = prayer_madinah.caf; sourceTree = "<group>"; };
+		AD10FR07A1B2C3D4E5F6071890 /* prayer_egypt.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_egypt.caf; path = prayer_egypt.caf; sourceTree = "<group>"; };
+		AD10FR08A1B2C3D4E5F6071890 /* prayer_aqsa.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_aqsa.caf; path = prayer_aqsa.caf; sourceTree = "<group>"; };
+		AD10FR09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_takbeerat.caf; path = prayer_takbeerat.caf; sourceTree = "<group>"; };
+		ADSHFR01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "adhan-short-makkah.caf"; path = adhan-short-makkah.caf; sourceTree = "<group>"; };
+		ADSHFR02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "adhan-short-madinah.caf"; path = adhan-short-madinah.caf; sourceTree = "<group>"; };
+		ADSHFR03A1B2C3D4E5F6071890 /* adhan-short-egypt.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "adhan-short-egypt.caf"; path = adhan-short-egypt.caf; sourceTree = "<group>"; };
+		ADSHFR04A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "adhan-short-aqsa.caf"; path = adhan-short-aqsa.caf; sourceTree = "<group>"; };
+		ADSHFR05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "adhan-short-takbeerat.caf"; path = adhan-short-takbeerat.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +171,11 @@
 				AD10FR07A1B2C3D4E5F6071890 /* prayer_egypt.caf */,
 				AD10FR08A1B2C3D4E5F6071890 /* prayer_aqsa.caf */,
 				AD10FR09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf */,
+				ADSHFR01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf */,
+				ADSHFR02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf */,
+				ADSHFR03A1B2C3D4E5F6071890 /* adhan-short-egypt.caf */,
+				ADSHFR04A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf */,
+				ADSHFR05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
 				504EC3131FED79650016851F /* Info.plist */,
@@ -300,6 +315,20 @@
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
 				A1B2C3D4E5F6071890AB12CD /* PrivacyInfo.xcprivacy in Resources */,
+				AD10BF01A1B2C3D4E5F6071890 /* prayer_quiet.caf in Resources */,
+				AD10BF02A1B2C3D4E5F6071890 /* prayer_clear.caf in Resources */,
+				AD10BF03A1B2C3D4E5F6071890 /* prayer_soft.caf in Resources */,
+				AD10BF04A1B2C3D4E5F6071890 /* prayer_default.caf in Resources */,
+				AD10BF05A1B2C3D4E5F6071890 /* prayer_makkah.caf in Resources */,
+				AD10BF06A1B2C3D4E5F6071890 /* prayer_madinah.caf in Resources */,
+				AD10BF07A1B2C3D4E5F6071890 /* prayer_egypt.caf in Resources */,
+				AD10BF08A1B2C3D4E5F6071890 /* prayer_aqsa.caf in Resources */,
+				AD10BF09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf in Resources */,
+				ADSHBF01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf in Resources */,
+				ADSHBF02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf in Resources */,
+				ADSHBF03A1B2C3D4E5F6071890 /* adhan-short-egypt.caf in Resources */,
+				ADSHBF04A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf in Resources */,
+				ADSHBF05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
