@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import "@/styles/components/safe-area-debug.css";
 
-const KEY = "majalis-safe-area-debug";
-
 /**
- * مفتاح مطوّر: ?safe-area-debug=1 أو localStorage majalis-safe-area-debug=1
- * يرسم مناطق الإنسِت بألوان شفافة.
+ * تشخيص فقط عبر ?safe-area-debug=1 في الرابط الحالي.
+ * لا يُحفَظ في localStorage حتى لا يبقى شريط أحمر دائمًا في الإنتاج.
  */
 export function SafeAreaDebugOverlay() {
   const [on, setOn] = useState(false);
@@ -13,13 +11,9 @@ export function SafeAreaDebugOverlay() {
   useEffect(() => {
     try {
       const q = new URLSearchParams(window.location.search).get("safe-area-debug");
-      if (q === "1" || q === "true") {
-        localStorage.setItem(KEY, "1");
-      }
-      if (q === "0" || q === "false") {
-        localStorage.removeItem(KEY);
-      }
-      setOn(localStorage.getItem(KEY) === "1");
+      setOn(q === "1" || q === "true");
+      // تنظيف بقايا المفتاح القديم إن وُجدت
+      localStorage.removeItem("majalis-safe-area-debug");
     } catch {
       setOn(false);
     }
