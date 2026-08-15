@@ -31,8 +31,6 @@ import "./styles/design-tokens.css";
 import "./styles/typography-scale.css";
 import "./index.css";
 import "./styles/design-system.css";
-import "./styles/components/instant-interaction.css";
-import "./styles/components/native-feel.css";
 import "./styles/final-release.css";
 import "./styles/brand-v4-components.css";
 import "./styles/brand-v4-contrast-fixes.css";
@@ -43,11 +41,17 @@ import "./styles/m2030/pages.css";
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
 import "./styles/dark-mode-surfaces.css";
+// تفاعلات غير حرجة للرسم الأول — خارج ميزانية CSS الحرج (gzip ≤60KiB)
+void import("./styles/components/instant-interaction.css");
+void import("./styles/components/native-feel.css");
+void import("./styles/m2030/interactions.css");
 // chunk-recovery / capacitor / ios-edge خارج CSS الحرج (gzip ≤60KiB)
 
 if (isNative) {
   document.documentElement.classList.add("capacitor-native");
   document.documentElement.dataset.platform = isAndroid ? "android" : isIOS ? "ios" : "native";
+  // overlaysWebView=false → لا تكرار لـ safe-area العلوي قبل تحميل CSS الديناميكي
+  document.documentElement.style.setProperty("--inset-top", "0px");
   void import("./styles/capacitor-native-ux.css");
   void import("./styles/ios-edge.css");
 }
