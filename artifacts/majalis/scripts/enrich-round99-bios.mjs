@@ -52,49 +52,20 @@ function hashStr(s) {
 }
 
 const PROPHET_BIO_ADDITIONS = [
-  " وتُربط سيرته بمقاصد القرآن من التوحيد والصبر والدعوة، مع الحذر مما لم يثبت سندًا في روايات الإسرائيليات.",
-  " ويُستفاد من قصته في بناء الإيمان والأخلاق، مع الاقتصار على ما ثبت في الوحي دون التوسع في روايات غير محررة.",
-  " والعبرة من سيرته في الاقتداء بالأخلاق والمواقف لا في تفاصيل لم تثبت، ويُسأل الله الهداية للعمل بما علم.",
-  " ويُقرأ في سياق التوحيد والرحمة والعدل، مع مراعاة أن التفاصيل الزائدة على الوحي لا تُبنى عليها عقيدة.",
+  // DISABLED 2026-08-15: لا تُعاد حقن عبارات الحشو في prophets-data.ts
 ];
 
 const PROPHET_LESSON_ADDITIONS = [
-  " ويُترجم المعنى إلى سلوك يومي يلزم النفس قبل خطاب غيره.",
-  " فالعبرة بما ثبت في الوحي لا بما زيد من القصص غير المحررة.",
-  " ويُستحضر المآل الأخروي عند تنزيل الفائدة على الواقع.",
-  " مع اجتناب الغلو والإسرائيليات في تفاصيل لم تثبت.",
-  " والصبر على مقتضاه من تمام الانتفاع لا مجرد الاستحسان.",
-  " ويُسأل الله التوفيق للعمل بما علم لا لمجرد معرفة القصة.",
+  // DISABLED 2026-08-15: الدروس يجب أن تبقى جملاً قصيرة طبيعية
 ];
 
-function expandProphetBio(bio, slug) {
-  if (bio.length >= PROPHET_BIO_MIN) return bio;
-  const idx = hashStr(slug) % PROPHET_BIO_ADDITIONS.length;
-  let out = bio;
-  for (let i = 0; i < PROPHET_BIO_ADDITIONS.length; i++) {
-    const add = PROPHET_BIO_ADDITIONS[(idx + i) % PROPHET_BIO_ADDITIONS.length];
-    if (!out.includes(add.trim())) out = out.trimEnd().replace(/\.$/, "") + add;
-    if (out.length >= PROPHET_BIO_MIN) break;
-  }
-  while (out.length < PROPHET_BIO_MIN) {
-    out += " ويُربط الدرس بمقاصد القرآن من التوحيد والصبر والدعوة والعدل.";
-  }
-  return out;
+function expandProphetBio(bio, _slug) {
+  // لا توسعة آلية — المحتوى يُراجع بشرياً
+  return bio;
 }
 
-function expandProphetLesson(lesson, slug, li) {
-  if (lesson.length >= PROPHET_LESSON_MIN) return lesson;
-  const idx = hashStr(slug + String(li)) % PROPHET_LESSON_ADDITIONS.length;
-  let out = lesson;
-  for (let i = 0; i < PROPHET_LESSON_ADDITIONS.length; i++) {
-    const add = PROPHET_LESSON_ADDITIONS[(idx + i) % PROPHET_LESSON_ADDITIONS.length];
-    if (!out.includes(add.trim())) out = out.trimEnd().replace(/\.$/, "") + add;
-    if (out.length >= PROPHET_LESSON_MIN) break;
-  }
-  while (out.length < PROPHET_LESSON_MIN) {
-    out += " ويُستحضر أن العبرة بالعمل لا بكثرة الكلام.";
-  }
-  return out;
+function expandProphetLesson(lesson, _slug, _li) {
+  return lesson;
 }
 
 function insertBeforeClosing(content, marker, block) {
