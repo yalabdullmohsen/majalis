@@ -37,12 +37,12 @@ assert.doesNotMatch(css, /\.mm-ayah-sheet__backdrop/);
 assert.doesNotMatch(css, /\.mm-page__frame\s*\{[^}]*border:\s*1px/);
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
 assert.match(css, /\.mm-page-edge/);
-assert.match(css, /#1c2430|#151c26/); // ليلي كحلي لا أسود قاتم على الورقة
+assert.match(css, /#121820|#0c1118|#1c2430|#151c26/); // ليلي كحلي لا أسود قاتم على الورقة
 assert.match(css, /\.mm-ayah-run__text\.is-selected/);
 assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*transparent/);
 assert.match(css, /\.mm-viewport\s+\.mm-page\s*\{[^}]*box-shadow:\s*none/);
 assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-qpc-size\)/);
-assert.match(css, /\.mm-reciter-sheet/);
+assert.match(css, /max-height:\s*50vh/);
 assert.match(css, /--mm-outer-pad:\s*0/);
 assert.doesNotMatch(css, /--mm-page-aspect/);
 const ayahBlock = css.match(/\.mm-ayah-line\s*\{[^}]+\}/)?.[0] ?? "";
@@ -53,15 +53,20 @@ assert.doesNotMatch(ayahBlock, /word-spacing:\s*[1-9]/);
 
 const viewport = read("src/features/mushaf-madinah/MushafViewport.tsx");
 assert.match(viewport, /MushafAyahActions/);
-assert.match(viewport, /MushafTafsirSheet/);
 assert.match(viewport, /MushafAudioDock/);
 assert.match(viewport, /playAyah|togglePlay/);
 assert.match(viewport, /onShare|navigator\.share/);
+assert.match(viewport, /elementFromPoint/);
+assert.match(viewport, /2000/);
+assert.doesNotMatch(viewport, /MushafTafsirSheet/);
 
 const actions = read("src/features/mushaf-madinah/MushafAyahActions.tsx");
-assert.match(actions, /mm-reciter-sheet/);
+assert.match(actions, /mm-ayah-bar/);
 assert.match(actions, /مشاركة|onShare/);
 assert.match(actions, /husary|MUSHAF_RECITER_IDS/);
+assert.match(actions, /tafsir|تفسير/);
+assert.match(actions, /إعادة المحاولة|mm-ayah-bar__retry/);
+assert.match(actions, /max-height|50vh|data-view/);
 
 const pageSrc = read("src/features/mushaf-madinah/MushafPage.tsx");
 assert.match(pageSrc, /inlineBasmala/);
@@ -73,6 +78,7 @@ assert.match(line, /onSelectVerse/);
 assert.match(line, /mm-ayah-hit/);
 assert.match(line, /mm-ayah-run/);
 assert.match(line, /groupRuns|WordRun/);
+assert.match(line, /data-word-id/);
 
 const app = read("src/App.tsx");
 assert.match(app, /MushafReaderPage/);

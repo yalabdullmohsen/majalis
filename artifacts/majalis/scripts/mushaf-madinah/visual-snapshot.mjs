@@ -12,8 +12,12 @@ import { chromium } from "playwright";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "../..");
 const outDir = resolve(root, "docs/mushaf-madinah/snapshots");
-const pages = [1, 2, 3, 4, 15, 598, 602];
-const viewport = { width: 390, height: 844 };
+const pages = [1, 2, 3, 4, 5, 15, 50, 604];
+const viewports = [
+  { width: 390, height: 844, label: "390x844" },
+  { width: 430, height: 932, label: "430x932" },
+];
+const viewport = viewports[0];
 const baseFromEnv = process.env.MUSHAF_GATE_BASE_URL || process.env.BASE_URL || "";
 
 mkdirSync(outDir, { recursive: true });
@@ -69,42 +73,53 @@ async function ensurePreview() {
 async function main() {
   const { base, stop } = await ensurePreview();
   const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({
-    viewport,
-    deviceScaleFactor: 2,
-    locale: "ar-SA",
-  });
-  const page = await context.newPage();
   const report = [];
 
   try {
-    for (const n of pages) {
-      const url = `${base}/mushaf?page=${n}`;
-      await page.goto(url, { waitUntil: "networkidle", timeout: 60_000 });
-      await page.waitForSelector('[data-testid="mushaf-page"]', { timeout: 45_000 });
-      // أخفِ الأدوات للقطة نظيفة
-      await page.evaluate(() => {
-        const el = document.querySelector('[data-testid="mushaf-controls"]');
-        if (el) el.setAttribute("data-open", "0");
+    for (const vp of viewports) {
+      const context = await browser.newContext({
+        viewport: { width: vp.width, height: vp.height },
+        deviceScaleFactor: 2,
+        locale: "ar-SA",
       });
-      await page.waitForTimeout(400);
-      const file = join(outDir, `page-${String(n).padStart(3, "0")}.png`);
-      await page.locator('[data-testid="mushaf-viewport"]').screenshot({ path: file });
-      const hasPdf = await page.evaluate(() => !!document.querySelector("embed[type='application/pdf'], iframe[src*='.pdf'], canvas.mm-pdf"));
-      const font = await page.evaluate(() => {
-        const line = document.querySelector(".mm-ayah-line");
-        return line ? getComputedStyle(line).fontFamily : "";
-      });
-      const lineSlots = await page.locator(".mm-slot .mm-ayah-line").count();
-      report.push({
-        page: n,
-        file: file.replace(root + "/", ""),
-        hasPdf,
-        fontFamily: font,
-        ayahLineCount: lineSlots,
-        ok: !hasPdf && /qpc-v2-p/i.test(font) && lineSlots > 0,
-      });
-      console.log(`✓ snapshot page ${n} → ${file}`);
+      const page = await context.newPage();
+      for (const n of pages) {
+        const url = `${base}/mushaf?page=${n}`;
+        await page.goto(url, { waitUntil: "networkidle", timeout: 60_000 });
+        await page.waitForSelector('[data-testid="mushaf-page"]', { timeout: 45_000 });
+        await page.evaluate(() => {
+          const el = document.querySelector('[data-testid="mushaf-controls"]');
+          if (el) el.setAttribute("data-open", "0");
+        });
+        await page.waitForTimeout(400);
+        const file = join(
+          outDir,
+          `page-${String(n).padStart(3, "0")}-${vp.label}.png`,
+        );
+        await page.locator('[data-testid="mushaf-viewport"]').screenshot({ path: file });
+        const hasPdf = await page.evaluate(
+          () =>
+            !!document.querySelector(
+              "embed[type='application/pdf'], iframe[src*='.pdf'], canvas.mm-pdf",
+            ),
+        );
+        const font = await page.evaluate(() => {
+          const line = document.querySelector(".mm-ayah-line");
+          return line ? getComputedStyle(line).fontFamily : "";
+        });
+        const lineSlots = await page.locator(".mm-slot .mm-ayah-line").count();
+        report.push({
+          page: n,
+          viewport: vp.label,
+          file: file.replace(root + "/", ""),
+          hasPdf,
+          fontFamily: font,
+          ayahLineCount: lineSlots,
+          ok: !hasPdf && /qpc-v2-p/i.test(font) && lineSlots > 0,
+        });
+        console.log(`✓ snapshot page ${n} @ ${vp.label} → ${file}`);
+      }
+      await context.close();
     }
   } finally {
     await browser.close();
@@ -112,7 +127,10 @@ async function main() {
   }
 
   const failed = report.filter((r) => !r.ok);
-  writeFileSync(join(outDir, "report.json"), JSON.stringify({ viewport, report }, null, 2));
+  writeFileSync(
+    join(outDir, "report.json"),
+    JSON.stringify({ viewports, pages, report }, null, 2),
+  );
   if (failed.length) {
     console.error("فشل التحقق البصري:", failed);
     process.exit(1);

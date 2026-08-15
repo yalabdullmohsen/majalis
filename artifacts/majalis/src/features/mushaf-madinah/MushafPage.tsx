@@ -105,7 +105,8 @@ function buildSlots(layout: MushafPageLayout, opening: boolean): Map<number, Slo
   const first = keys[0]!;
   const last = keys[keys.length - 1]!;
   const span = last - first + 1;
-  const targetStart = Math.max(1, Math.floor((15 - span) / 2) + 1);
+  /* افتتاحية: أقرب لأعلى الصفحة (لا فراغ أبيض كبير فوق البسملة) */
+  const targetStart = Math.max(1, Math.min(2, Math.floor((15 - span) / 6) + 1));
   const delta = targetStart - first;
   if (delta === 0) return raw;
   const centered = new Map<number, SlotCell>();

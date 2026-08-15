@@ -73,10 +73,15 @@ export function MushafAudioDock({
           جاري تحميل التلاوة…
         </p>
       ) : null}
-      {audioError || playerState === "error" ? (
-        <p className="mm-audio-dock__status mm-audio-dock__status--err" role="status">
-          {audioError || "تعذّر تشغيل التلاوة. جرّب قارئاً آخر."}
-        </p>
+        {audioError || playerState === "error" ? (
+        <div className="mm-audio-dock__error-row" role="status">
+          <p className="mm-audio-dock__status mm-audio-dock__status--err">
+            {audioError || "تعذّر تشغيل التلاوة. جرّب قارئاً آخر."}
+          </p>
+          <button type="button" className="mm-audio-dock__retry" onClick={onTogglePlay}>
+            إعادة المحاولة
+          </button>
+        </div>
       ) : null}
       <div className="mm-audio-dock__controls">
         <button type="button" onClick={onPrev} aria-label="الآية السابقة">

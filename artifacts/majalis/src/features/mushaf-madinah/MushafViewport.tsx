@@ -13,7 +13,6 @@ import { MushafAyahActions } from "./MushafAyahActions";
 import { MushafAudioDock } from "./MushafAudioDock";
 import { MushafControls } from "./MushafControls";
 import { MushafPage } from "./MushafPage";
-import { MushafTafsirSheet } from "./MushafTafsirSheet";
 import { findMushafPageForAyah, parseVerseKey } from "./mushaf-page-for-ayah";
 import { useQpcPageFont } from "./useQpcPageFont";
 import "./mushaf-madinah.css";
@@ -35,7 +34,6 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
   const [chromeOpen, setChromeOpen] = useState(true);
   const [selectedVerseKey, setSelectedVerseKey] = useState<string | null>(null);
   const [actionsOpen, setActionsOpen] = useState(false);
-  const [tafsirOpen, setTafsirOpen] = useState(false);
   const [copyStatus, setCopyStatus] = useState<string | null>(null);
   const [reciterId, setReciterId] = useState(() => loadReciterId());
   const [playerState, setPlayerState] = useState<PlayerState>("idle");
@@ -74,7 +72,7 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
   const bumpChrome = useCallback(() => {
     setChromeOpen(true);
     if (hideTimer.current) window.clearTimeout(hideTimer.current);
-    hideTimer.current = window.setTimeout(() => setChromeOpen(false), 2800);
+    hideTimer.current = window.setTimeout(() => setChromeOpen(false), 2000);
   }, []);
 
   useEffect(() => {
@@ -314,20 +312,46 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
         ) : null}
       </div>
 
-      {/* مناطق قلب الصفحة غير المرئية — لا تتعارض مع كلمات الآية */}
+      {/* مناطق قلب شفافة — إن وُجدت آية تحت نقطة اللمس لا تقلب الصفحة */}
       <button
         type="button"
         className="mm-page-edge mm-page-edge--next"
         aria-label="الصفحة التالية"
         disabled={page >= MUSHAF_PAGE_MAX}
-        onClick={() => go(page + 1)}
+        onClick={(e) => {
+          const edge = e.currentTarget;
+          edge.style.pointerEvents = "none";
+          const under = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null;
+          edge.style.pointerEvents = "";
+          const hit = under?.closest?.(".mm-ayah-hit, .mm-ayah-run, .mm-basmala, .mm-surah-ornament");
+          if (hit) {
+            const verse = (hit as HTMLElement).closest?.("[data-verse]") as HTMLElement | null;
+            const key = verse?.dataset?.verse;
+            if (key) onSelectVerse(key);
+            return;
+          }
+          go(page + 1);
+        }}
       />
       <button
         type="button"
         className="mm-page-edge mm-page-edge--prev"
         aria-label="الصفحة السابقة"
         disabled={page <= MUSHAF_PAGE_MIN}
-        onClick={() => go(page - 1)}
+        onClick={(e) => {
+          const edge = e.currentTarget;
+          edge.style.pointerEvents = "none";
+          const under = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null;
+          edge.style.pointerEvents = "";
+          const hit = under?.closest?.(".mm-ayah-hit, .mm-ayah-run, .mm-basmala, .mm-surah-ornament");
+          if (hit) {
+            const verse = (hit as HTMLElement).closest?.("[data-verse]") as HTMLElement | null;
+            const key = verse?.dataset?.verse;
+            if (key) onSelectVerse(key);
+            return;
+          }
+          go(page - 1);
+        }}
       />
 
       <MushafAudioDock
@@ -366,22 +390,12 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
           reciterId={reciterId}
           onPlay={() => void playSelected()}
           onTogglePlay={() => void togglePlay()}
-          onTafsir={() => {
-            setTafsirOpen(true);
-          }}
           onCopy={() => void onCopy()}
           onShare={() => void onShare()}
           onReciterChange={(id) => void onReciterChange(id)}
           onClose={closeActions}
         />
       ) : null}
-
-      <MushafTafsirSheet
-        open={tafsirOpen}
-        verseKey={selectedVerseKey}
-        ayahText={selectedVerseKey ? versePreview(selectedVerseKey) : ""}
-        onClose={() => setTafsirOpen(false)}
-      />
 
       <span className="sr-only" aria-live="polite">
         صفحة {page} من {MUSHAF_PAGE_MAX}

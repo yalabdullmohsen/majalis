@@ -89,6 +89,9 @@ export function MushafAyahLine({
                   <span
                     key={`${w.verseKey}-${w.position}-${w.id}`}
                     className="mm-ayah-line__word"
+                    data-word-id={w.id}
+                    data-verse={w.verseKey}
+                    data-word-pos={w.position}
                   >
                     {w.glyphText}
                   </span>
