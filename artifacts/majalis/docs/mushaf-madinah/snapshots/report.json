@@ -1,0 +1,56 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "report": [
+    {
+      "page": 1,
+      "file": "docs/mushaf-madinah/snapshots/page-001.png",
+      "hasPdf": false,
+      "fontFamily": "qpc-v2-p1, \"Amiri Quran\", serif",
+      "ayahLineCount": 7,
+      "ok": true
+    },
+    {
+      "page": 2,
+      "file": "docs/mushaf-madinah/snapshots/page-002.png",
+      "hasPdf": false,
+      "fontFamily": "qpc-v2-p2, \"Amiri Quran\", serif",
+      "ayahLineCount": 6,
+      "ok": true
+    },
+    {
+      "page": 3,
+      "file": "docs/mushaf-madinah/snapshots/page-003.png",
+      "hasPdf": false,
+      "fontFamily": "qpc-v2-p3, \"Amiri Quran\", serif",
+      "ayahLineCount": 15,
+      "ok": true
+    },
+    {
+      "page": 4,
+      "file": "docs/mushaf-madinah/snapshots/page-004.png",
+      "hasPdf": false,
+      "fontFamily": "qpc-v2-p4, \"Amiri Quran\", serif",
+      "ayahLineCount": 15,
+      "ok": true
+    },
+    {
+      "page": 598,
+      "file": "docs/mushaf-madinah/snapshots/page-598.png",
+      "hasPdf": false,
+      "fontFamily": "qpc-v2-p598, \"Amiri Quran\", serif",
+      "ayahLineCount": 11,
+      "ok": true
+    },
+    {
+      "page": 602,
+      "file": "docs/mushaf-madinah/snapshots/page-602.png",
+      "hasPdf": false,
+      "fontFamily": "qpc-v2-p602, \"Amiri Quran\", serif",
+      "ayahLineCount": 9,
+      "ok": true
+    }
+  ]
+}

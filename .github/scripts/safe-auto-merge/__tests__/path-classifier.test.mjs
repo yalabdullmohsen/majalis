@@ -49,26 +49,26 @@ describe("path-classifier", () => {
     assert.equal(quiz.needPostgres, false);
   });
 
-  it("quran data changes do not require mushaf UI gates (UI removed)", () => {
+  it("quran/mushaf paths enable mushaf UI gates", () => {
     const quranData = classifyChangedPaths([
       "artifacts/majalis/public/data/quran/pages.json",
     ]);
-    assert.equal(quranData.needMushaf, false);
-    assert.equal(quranData.outputs.need_mushaf, "false");
+    assert.equal(quranData.needMushaf, true);
+    assert.equal(quranData.outputs.need_mushaf, "true");
   });
 
-  it("mushaf UI paths no longer enable mushaf gates", () => {
+  it("mushaf UI paths enable mushaf gates", () => {
     const r = classifyChangedPaths([
-      "artifacts/majalis/src/lib/quran-data/index.ts",
+      "artifacts/majalis/src/features/mushaf-madinah/MushafPage.tsx",
       "artifacts/majalis/public/fonts/qpc-v2/p1.woff2",
     ]);
-    assert.equal(r.needMushaf, false);
+    assert.equal(r.needMushaf, true);
     assert.equal(r.needBuild, true);
-    assert.equal(r.requiredChecks.mushafMeasure, false);
-    assert.equal(r.requiredChecks.mushafGates, false);
-    assert.equal(r.requiredChecks.layoutBands, false);
-    assert.equal(r.requiredChecks.visualSnapshot, false);
-    assert.equal(r.outputs.need_mushaf, "false");
+    assert.equal(r.requiredChecks.mushafMeasure, true);
+    assert.equal(r.requiredChecks.mushafGates, true);
+    assert.equal(r.requiredChecks.layoutBands, true);
+    assert.equal(r.requiredChecks.visualSnapshot, true);
+    assert.equal(r.outputs.need_mushaf, "true");
   });
 
   it("supabase/sql remains manual review and not fast-merge", () => {

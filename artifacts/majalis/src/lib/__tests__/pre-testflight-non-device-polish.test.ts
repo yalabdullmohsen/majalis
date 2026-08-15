@@ -63,9 +63,10 @@ const updateSrc = read("src/views/UpdatePasswordPage.tsx");
 assert.match(updateSrc, /updatePassword/);
 assert.match(updateSrc, /new-password/);
 
-const mushafSrc = read("src/pages/quran/MushafComingSoonPage.tsx");
-assert.match(mushafSrc, /قيد التطوير/);
+const mushafSrc = read("src/pages/quran/MushafReaderPage.tsx");
+assert.match(mushafSrc, /MushafViewport/);
 assert.match(mushafSrc, /applyPageSeo/);
+assert.equal(isImmersiveChromePath("/mushaf"), true);
 
 const raiSrc = read("src/pages/quran/ui/RecitationTestView.tsx");
 assert.match(raiSrc, /goBackOrFallback\("\/quran\/recitation-test-ai"\)/);

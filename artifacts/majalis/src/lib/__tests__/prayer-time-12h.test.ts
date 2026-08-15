@@ -21,8 +21,8 @@ assert.match(page, /handleBack/);
 assert.match(page, /pts-back/);
 assert.doesNotMatch(page, /displayTime24/);
 
-const mushaf = readFileSync(join(root, "pages/quran/MushafComingSoonPage.tsx"), "utf8");
-assert.match(mushaf, /قيد التطوير/);
+const mushaf = readFileSync(join(root, "pages/quran/MushafReaderPage.tsx"), "utf8");
+assert.match(mushaf, /MushafViewport/);
 
 const more = readFileSync(join(root, "components/MoreBottomSheet.tsx"), "utf8");
 assert.match(more, /services-center-nav|filterServicesCenterGroups/);

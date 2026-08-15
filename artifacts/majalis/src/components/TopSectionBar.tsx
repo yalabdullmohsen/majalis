@@ -17,7 +17,7 @@ type SectionTab = {
 
 const PREFETCH_BY_HREF: Record<string, () => void> = {
   "/quran-hub": () => { void import("@/pages/quran/QuranHubPage"); },
-  "/mushaf": () => { void import("@/pages/quran/MushafComingSoonPage"); },
+  "/mushaf": () => { void import("@/pages/quran/MushafReaderPage"); },
   "/lessons": () => { void import("@/pages/lessons/LessonsPage"); },
   "/prayer-times": () => { void import("@/pages/worship/PrayerTimesPage"); },
   "/fiqh": () => { void import("@/pages/fiqh/FiqhPage"); },

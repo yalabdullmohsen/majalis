@@ -29,10 +29,10 @@ const QURAN_SECTIONS: QuranSection[] = [
   },
   {
     href: "/mushaf",
-    title: "المصحف الجديد",
-    desc: "المصحف الجديد قيد التطوير — بيانات القرآن محفوظة وستُعرض بتصميم مختلف بالكامل قريبًا",
+    title: "المصحف",
+    desc: "مصحف المدينة الرقمي — نص عثماني بخطوط QPC، ٦٠٤ صفحة",
     Icon: BookOpen,
-    tag: "قيد التطوير",
+    tag: "قراءة",
     featured: true,
   },
   {
@@ -213,14 +213,14 @@ export default function QuranHubPage() {
       <Link
         href="/mushaf"
         className="quran-hub-open-mushaf"
-        aria-label="المصحف الجديد قيد التطوير"
+        aria-label="فتح المصحف"
       >
         <span className="quran-hub-open-mushaf__icon" aria-hidden="true">
           <BookOpen size={28} strokeWidth={1.75} />
         </span>
         <span className="quran-hub-open-mushaf__text">
-          <span className="quran-hub-open-mushaf__title">المصحف الجديد</span>
-          <span className="quran-hub-open-mushaf__resume">قيد التطوير</span>
+          <span className="quran-hub-open-mushaf__title">المصحف</span>
+          <span className="quran-hub-open-mushaf__resume">مصحف المدينة — ٦٠٤ صفحة</span>
         </span>
       </Link>
 

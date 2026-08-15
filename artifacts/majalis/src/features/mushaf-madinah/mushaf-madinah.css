@@ -1,0 +1,416 @@
+/**
+ * مصحف المدينة — رموز بصرية من reference/mushaf-ayah-style (390×844).
+ * لا letter-spacing / word-spacing على نص القرآن.
+ */
+
+.mm-viewport .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mm-viewport {
+  --mm-paper: #f5efe0;
+  --mm-paper-deep: #efe6d2;
+  --mm-ink: #141414;
+  --mm-gold: #b5a36a;
+  --mm-gold-soft: #c4b07a;
+  --mm-gold-deep: #8f7d4a;
+  --mm-header: #8a7355;
+  --mm-frame: #c5b48a;
+  --mm-banner-fill: #d4c49a;
+  --mm-banner-name-bg: #fbf7ee;
+  --mm-outer-pad: clamp(0.55rem, 2.8vw, 1.1rem);
+  --mm-inner-pad-x: clamp(0.55rem, 3.2vw, 1.15rem);
+  --mm-inner-pad-y: clamp(0.45rem, 2.2vw, 0.85rem);
+  --mm-header-h: clamp(1.15rem, 3.6vw, 1.55rem);
+  --mm-footer-h: clamp(1.55rem, 5vw, 2.1rem);
+  --mm-banner-h: clamp(1.55rem, 5.2vw, 2.05rem);
+  --mm-ayah-end: 1.05em;
+  --mm-page-max-w: min(100vw - (2 * var(--mm-outer-pad)), 28rem);
+  --mm-page-aspect: 0.4621; /* 390 / 844 */
+  --mm-qpc-size: clamp(1.42rem, 5.4vw, 1.95rem);
+  --mm-line-gap: 0;
+
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(120% 80% at 50% 0%, #ebe2cf 0%, transparent 55%),
+    linear-gradient(180deg, var(--mm-paper-deep), var(--mm-paper));
+  color: var(--mm-ink);
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.mm-viewport[data-chrome="1"] {
+  cursor: default;
+}
+
+.mm-page-shell {
+  width: var(--mm-page-max-w);
+  aspect-ratio: var(--mm-page-aspect);
+  max-height: calc(100dvh - (2 * var(--mm-outer-pad)));
+  height: auto;
+  margin: var(--mm-outer-pad);
+  position: relative;
+}
+
+.mm-page {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: var(--mm-paper);
+  border: 1px solid var(--mm-frame);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--mm-gold-soft) 70%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--mm-gold-deep) 35%, transparent);
+  display: grid;
+  grid-template-rows: var(--mm-header-h) minmax(0, 1fr) var(--mm-footer-h);
+  padding: 0.2rem 0.15rem 0.1rem;
+}
+
+.mm-page__frame {
+  margin: 0 var(--mm-inner-pad-x);
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 75%, #fff);
+  outline: 1px solid color-mix(in srgb, var(--mm-gold-deep) 45%, transparent);
+  outline-offset: 2px;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: repeat(15, minmax(0, 1fr));
+  padding: 0.15rem 0.2rem;
+  position: relative;
+}
+
+.mm-page--opening .mm-page__frame {
+  /* الصفحات القصيرة: المحتوى متمركز بصريًا عبر خانات الشبكة من البيانات */
+}
+
+.mm-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0 var(--mm-inner-pad-x);
+  color: var(--mm-header);
+  font-family: "IBM Plex Sans Arabic", "Amiri Quran", serif;
+  font-size: clamp(0.62rem, 2.4vw, 0.78rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.mm-page-header__juz,
+.mm-page-header__surah {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 48%;
+}
+
+.mm-page-header__juz {
+  text-align: start;
+}
+
+.mm-page-header__surah {
+  text-align: end;
+}
+
+.mm-slot {
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.mm-surah-ornament {
+  width: 100%;
+  height: min(100%, var(--mm-banner-h));
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr) 1.1rem;
+  align-items: center;
+  gap: 0.2rem;
+  background: linear-gradient(180deg, var(--mm-banner-fill), color-mix(in srgb, var(--mm-gold) 55%, #e8dcb8));
+  border: 1px solid var(--mm-gold-deep);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #fff 45%, transparent);
+  border-radius: 0.1rem;
+  padding: 0.12rem 0.25rem;
+}
+
+.mm-surah-ornament__side {
+  width: 0.95rem;
+  height: 0.95rem;
+  margin-inline: auto;
+  background:
+    radial-gradient(circle at 50% 50%, var(--mm-gold-deep) 0 18%, transparent 19% 100%),
+    conic-gradient(from 22deg, transparent 0 20deg, var(--mm-gold-deep) 0 40deg, transparent 0 90deg);
+  opacity: 0.85;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.mm-surah-ornament__name {
+  background: var(--mm-banner-name-bg);
+  border: 1px solid color-mix(in srgb, var(--mm-gold-deep) 55%, #fff);
+  color: var(--mm-ink);
+  text-align: center;
+  font-family: "Amiri Quran", "KFGQPC Hafs Uthmanic", serif;
+  font-size: clamp(0.72rem, 2.9vw, 0.95rem);
+  line-height: 1.15;
+  padding: 0.08rem 0.35rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mm-basmala {
+  width: 100%;
+  text-align: center;
+  font-family: "Amiri Quran", "KFGQPC Hafs Uthmanic", serif;
+  font-size: calc(var(--mm-qpc-size) * 0.92);
+  color: var(--mm-ink);
+  line-height: 1;
+  letter-spacing: 0;
+  word-spacing: 0;
+}
+
+.mm-ayah-line {
+  width: 100%;
+  display: block;
+  text-align: center;
+  direction: rtl;
+  font-family: var(--mm-qpc-family), "Amiri Quran", serif;
+  font-size: var(--mm-qpc-size);
+  line-height: 1.05;
+  color: var(--mm-ink);
+  letter-spacing: 0;
+  word-spacing: 0;
+  white-space: nowrap;
+}
+
+.mm-page:not(.mm-page--opening) .mm-ayah-line {
+  text-align: justify;
+  text-align-last: justify;
+}
+
+.mm-page--opening .mm-ayah-line {
+  text-align: center;
+}
+
+.mm-ayah-line__word {
+  display: inline;
+  letter-spacing: 0;
+  word-spacing: 0;
+}
+
+.mm-ayah-number {
+  display: inline;
+  color: var(--mm-gold-deep);
+  font-size: var(--mm-ayah-end);
+  line-height: 1;
+}
+
+.mm-ayah-number__glyph {
+  letter-spacing: 0;
+}
+
+.mm-page-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--mm-inner-pad-x);
+}
+
+.mm-page-footer[data-side="odd"] {
+  justify-content: flex-start;
+}
+
+.mm-page-footer[data-side="even"] {
+  justify-content: flex-end;
+}
+
+.mm-page-footer__badge {
+  min-width: 2.1rem;
+  height: 1.35rem;
+  padding: 0 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mm-gold-deep);
+  font-family: "Amiri Quran", "IBM Plex Sans Arabic", serif;
+  font-size: 0.78rem;
+  border: 1px solid var(--mm-gold);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 20% 50%, color-mix(in srgb, var(--mm-gold) 35%, transparent), transparent 55%),
+    radial-gradient(circle at 80% 50%, color-mix(in srgb, var(--mm-gold) 35%, transparent), transparent 55%),
+    linear-gradient(180deg, #f8f2e4, #efe4cb);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #fff 50%, transparent);
+}
+
+.mm-controls {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.mm-controls[data-open="0"] .mm-controls__bar,
+.mm-controls[data-open="0"] .mm-controls__exit {
+  opacity: 0;
+  transform: translateY(-0.35rem);
+  pointer-events: none;
+}
+
+.mm-controls[data-open="1"] .mm-controls__bar,
+.mm-controls[data-open="1"] .mm-controls__exit {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.mm-controls__exit,
+.mm-controls__bar {
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.mm-controls__exit {
+  position: absolute;
+  top: max(0.55rem, var(--inset-top, 0px));
+  inset-inline-start: max(0.55rem, var(--inset-inline-start, var(--inset-left, 0px)));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 40%, #fff);
+  background: color-mix(in srgb, #fff 88%, var(--mm-paper));
+  color: var(--mm-ink);
+  font-family: "IBM Plex Sans Arabic", sans-serif;
+  font-size: 0.82rem;
+  box-shadow: 0 1px 6px color-mix(in srgb, #000 12%, transparent);
+}
+
+.mm-controls__bar {
+  position: absolute;
+  left: 50%;
+  bottom: max(0.7rem, var(--inset-bottom, 0px));
+  transform: translateX(-50%);
+  width: min(22rem, calc(100% - 1.2rem));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  padding: 0.4rem 0.45rem;
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, #1c1914 86%, transparent);
+  color: #f7f1e3;
+  font-family: "IBM Plex Sans Arabic", sans-serif;
+  font-size: 0.78rem;
+  box-shadow: 0 8px 24px color-mix(in srgb, #000 28%, transparent);
+}
+
+.mm-controls__btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0.35rem 0.45rem;
+  border-radius: 0.45rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.mm-controls__btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.mm-controls__btn:not(:disabled):active {
+  background: color-mix(in srgb, #fff 14%, transparent);
+}
+
+.mm-controls__page {
+  min-width: 4.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.mm-status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--mm-header);
+  font-family: "IBM Plex Sans Arabic", sans-serif;
+  font-size: 0.95rem;
+  background: color-mix(in srgb, var(--mm-paper) 88%, transparent);
+}
+
+.mm-goto {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  width: min(18rem, calc(100% - 2rem));
+  background: #fffdf7;
+  border: 1px solid var(--mm-gold);
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  display: grid;
+  gap: 0.55rem;
+  pointer-events: auto;
+  box-shadow: 0 12px 32px color-mix(in srgb, #000 20%, transparent);
+  font-family: "IBM Plex Sans Arabic", sans-serif;
+}
+
+.mm-goto input {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 55%, #ccc);
+  border-radius: 0.45rem;
+  padding: 0.45rem 0.55rem;
+  font: inherit;
+  text-align: center;
+  direction: ltr;
+}
+
+.mm-goto__actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.mm-goto__actions button {
+  flex: 1;
+  border: 0;
+  border-radius: 0.45rem;
+  padding: 0.45rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.mm-goto__actions button[data-primary="1"] {
+  background: var(--mm-gold-deep);
+  color: #fff;
+}
+
+.mm-goto__actions button[data-primary="0"] {
+  background: #efe8d8;
+  color: var(--mm-ink);
+}
+
+@media (min-width: 768px) {
+  .mm-viewport {
+    --mm-qpc-size: clamp(1.45rem, 2.4vw, 1.95rem);
+  }
+}

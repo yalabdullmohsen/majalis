@@ -1,0 +1,109 @@
+import { useEffect, useId, useState } from "react";
+import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
+
+type Props = {
+  open: boolean;
+  pageNumber: number;
+  onExit: () => void;
+  onIndex: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+  onGoto: (page: number) => void;
+};
+
+export function MushafControls({
+  open,
+  pageNumber,
+  onExit,
+  onIndex,
+  onPrev,
+  onNext,
+  onGoto,
+}: Props) {
+  const [gotoOpen, setGotoOpen] = useState(false);
+  const [draft, setDraft] = useState(String(pageNumber));
+  const titleId = useId();
+
+  useEffect(() => {
+    if (!open) setGotoOpen(false);
+  }, [open]);
+
+  useEffect(() => {
+    setDraft(String(pageNumber));
+  }, [pageNumber]);
+
+  return (
+    <div className="mm-controls" data-open={open ? "1" : "0"} data-testid="mushaf-controls">
+      <button type="button" className="mm-controls__exit" onClick={onExit} aria-label="خروج">
+        × خروج
+      </button>
+
+      <div className="mm-controls__bar" role="toolbar" aria-label="أدوات المصحف">
+        <button type="button" className="mm-controls__btn" onClick={onIndex}>
+          فهرس
+        </button>
+        <button
+          type="button"
+          className="mm-controls__btn"
+          onClick={onPrev}
+          disabled={pageNumber <= MUSHAF_PAGE_MIN}
+          aria-label="الصفحة السابقة"
+        >
+          السابق
+        </button>
+        <button
+          type="button"
+          className="mm-controls__btn mm-controls__page"
+          onClick={() => setGotoOpen(true)}
+          aria-label={`الصفحة ${pageNumber} — انتقال`}
+        >
+          {pageNumber} / {MUSHAF_PAGE_MAX}
+        </button>
+        <button
+          type="button"
+          className="mm-controls__btn"
+          onClick={onNext}
+          disabled={pageNumber >= MUSHAF_PAGE_MAX}
+          aria-label="الصفحة التالية"
+        >
+          التالي
+        </button>
+        <button type="button" className="mm-controls__btn" onClick={() => setGotoOpen(true)}>
+          بحث
+        </button>
+      </div>
+
+      {gotoOpen ? (
+        <form
+          className="mm-goto"
+          aria-labelledby={titleId}
+          onSubmit={(e) => {
+            e.preventDefault();
+            const n = Number.parseInt(draft, 10);
+            if (Number.isFinite(n)) {
+              onGoto(n);
+              setGotoOpen(false);
+            }
+          }}
+        >
+          <div id={titleId}>انتقل إلى صفحة (١–٦٠٤)</div>
+          <input
+            inputMode="numeric"
+            pattern="[0-9]*"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value.replace(/[^\d]/g, ""))}
+            aria-label="رقم الصفحة"
+          />
+          <div className="mm-goto__actions">
+            <button type="button" data-primary="0" onClick={() => setGotoOpen(false)}>
+              إلغاء
+            </button>
+            <button type="submit" data-primary="1">
+              انتقال
+            </button>
+          </div>
+        </form>
+      ) : null}
+    </div>
+  );
+}
