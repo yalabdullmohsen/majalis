@@ -122,12 +122,12 @@ body {
   position: relative;
   inset-block-start: auto;
   top: auto;
-  /* طبقة bleed: الخلفية تحت شريط الحالة؛ المحتوى بعد --inset-top */
+  /* على الويب/PWA: padding = safe-area. على Capacitor (overlay=false): --inset-top=0 */
   margin-block-start: 0;
   padding-block-start: var(--inset-top);
   z-index: var(--z-nav, 200);
   min-height: var(--header-h);
-  background: color-mix(in srgb, var(--mj-surface, var(--color-surface)) 88%, transparent);
+  background: var(--mj-surface, var(--color-surface, #F2F4F3));
   border: 0;
   border-block-end: 1px solid var(--mj-hairline, var(--color-border));
   box-shadow: none;

@@ -24,9 +24,10 @@ const config: CapacitorConfig = {
       splashFullScreen: true,
     },
     StatusBar: {
-      style: "DARK",
-      backgroundColor: "#002b21",
+      // لا رسم تحت الساعة — الـWebView أسفل الشريط (بدون تكرار inset-top في CSS)
       overlaysWebView: false,
+      style: "DARK",
+      backgroundColor: "#F2F4F3",
     },
     Keyboard: {
       resize: "body",
@@ -57,7 +58,7 @@ const config: CapacitorConfig = {
     // Safe areas are owned by the shared CSS shell via env(safe-area-inset-*).
     // UIKit adjustment here would apply a second inset around the WKWebView.
     contentInset: "never",
-    backgroundColor: "#002b21",
+    backgroundColor: "#F2F4F3",
     scrollEnabled: true,
   },
 };
