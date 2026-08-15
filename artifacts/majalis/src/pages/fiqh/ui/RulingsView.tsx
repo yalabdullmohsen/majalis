@@ -11,9 +11,11 @@ import { ShareButtons } from "@/components/ContentActions";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { PageShell } from "@/components/layout/PageShell";
+import { PublishStatusBanner } from "@/components/PublishStatusBanner";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
+import "@/styles/components/scholarly-trust.css";
 
 const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
   Landmark, Droplets, Banknote, Moon, MapPin, Handshake, Utensils, Shirt, Users,
@@ -107,18 +109,18 @@ export default function RulingsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/rulings",
-      title: "الأحكام الشرعية — قيد الإعداد | المجلس العلمي",
+      title: "الأحكام الشرعية — قيد الإكمال | المجلس العلمي",
       description:
-        "قسم الأحكام الشرعية قيد الإعداد. تُعرض المواد للعامة بعد اجتياز المراجعة الشرعية والاعتماد التحريري — وليست موسوعة معتمدة حالياً.",
-      keywords: ["أحكام شرعية", "فقه إسلامي", "قيد الإعداد"],
-      robots: "noindex, follow",
+        "صفحة قيد الإكمال لجمع الأحكام الشرعية، وسيُضاف المحتوى تدريجيًا بعد المراجعة. ليست موسوعة معتمدة حاليًا.",
+      keywords: ["أحكام شرعية", "فقه إسلامي", "قيد الإكمال"],
+      robots: "index, follow",
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "WebPage",
-          name: "الأحكام الشرعية — قيد الإعداد",
+          name: "الأحكام الشرعية — قيد الإكمال",
           url: "https://www.majlisilm.com/rulings",
-          description: "قسم الأحكام الشرعية قيد الإعداد حتى اعتماد المراجعة الشرعية.",
+          description: "صفحة قيد الإكمال لجمع الأحكام الشرعية مع بيان حالة المراجعة.",
           about: { "@type": "Thing", name: "الأحكام الشرعية في الفقه الإسلامي" },
           provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
         },
@@ -242,10 +244,11 @@ export default function RulingsPage() {
   return (
     <PageShell variant="narrow" className="content-hub-page rulings-encyclopedia-page">
       <PageHeader
-        eyebrow="موسوعة الفقه"
+        eyebrow="الفقه الإسلامي"
         title="الأحكام الشرعية"
-        subtitle="مكتبة علمية شاملة للأحكام، موثقة بالأدلة والمراجع."
+        subtitle="صفحة قيد الإكمال لجمع الأحكام الشرعية، وسيُضاف المحتوى تدريجيًا بعد المراجعة."
       />
+      <PublishStatusBanner status="partial" />
 
       <FiqhHubStrip current="rulings" />
 

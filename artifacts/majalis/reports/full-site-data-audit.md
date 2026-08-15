@@ -1,6 +1,6 @@
 # تدقيق بيانات الموقع الكامل
 
-التاريخ: 2026-08-15T17:18:32.541Z
+التاريخ: 2026-08-15T17:30:27.430Z
 
 ## أعداد
 
@@ -13,15 +13,17 @@
   "prophets": 25,
   "rulingsTotal": 147,
   "rulingsPublic": 0,
+  "rulingsVisible": 147,
   "rulingsPending": 147,
+  "rulingsBlocked": 0,
   "fiqhPublic": 4,
-  "fiqhIssuesPublic": 33,
+  "fiqhIssuesPublic": 64,
   "qa": 0,
   "quiz": 0,
   "adhkar": 329,
   "courses": 63,
   "surahStories": -1,
-  "sitemapUrls": 672
+  "sitemapUrls": 1014
 }
 ```
 

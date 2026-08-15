@@ -103,10 +103,22 @@ console.log("\n=== نتائج الـ resolver ===");
   const sample = RULINGS_ENCYCLOPEDIA_SEED.find((r) => (r.external_key || r.id || "").startsWith("ruling-"));
   assert(Boolean(sample), "sample ruling exists");
   if (sample) {
-    const blocked = evaluateRulingRecord(sample.external_key || sample.id, sample);
-    assert(blocked.status === "unpublished", "pending seed → unpublished");
-    assert(httpStatusForRulingResolve(blocked.status) === 404, "HTTP 404 unpublished");
+    const visible = evaluateRulingRecord(sample.external_key || sample.id, sample);
+    assert(visible.status === "found", "pending seed → found (مرئي مع تنبيه)");
+    assert(httpStatusForRulingResolve(visible.status) === 200, "HTTP 200 pending visible");
   }
+
+  const draft = evaluateRulingRecord("ruling-draft-sample", {
+    id: "ruling-draft-sample",
+    external_key: "ruling-draft-sample",
+    title: "مسودة",
+    body: "نص مسودة",
+    category: "الطهارة",
+    verification_status: "draft",
+    status: "draft",
+  });
+  assert(draft.status === "unpublished", "draft → unpublished");
+  assert(httpStatusForRulingResolve(draft.status) === 404, "HTTP 404 draft");
 
   const published = evaluateRulingRecord("ruling-approved-sample", {
     id: "ruling-approved-sample",

@@ -116,9 +116,15 @@ async function main() {
     }>;
   }>("src/lib/rulings-encyclopedia-seed.generated.ts");
 
-  const { isPubliclyPublishedRuling } = await importLib<{
+  const { isPubliclyPublishedRuling, isPubliclyVisibleRuling } = await importLib<{
     isPubliclyPublishedRuling: (r: unknown) => boolean;
+    isPubliclyVisibleRuling: (r: unknown) => boolean;
   }>("src/lib/rulings-publication-gate.ts");
+
+  const { classifyRuling, textClaimsVerification } = await importLib<{
+    classifyRuling: (r: unknown) => string;
+    textClaimsVerification: (t: string) => boolean;
+  }>("src/lib/publish-policy.ts");
 
   const { SEED_QA } = await importLib<{ SEED_QA: unknown[] }>("src/lib/qa-seed.ts");
   const { DEMO_QUIZ_QUESTIONS } = await importLib<{ DEMO_QUIZ_QUESTIONS: unknown[] }>(
@@ -150,6 +156,7 @@ async function main() {
     fiqhIssuesPublic: FIQH_ISSUES_PUBLISHED_SEED.filter((i) => isPublicIssue(i)).length,
     rulingsTotal: RULINGS_ENCYCLOPEDIA_SEED.length,
     rulingsPublic: RULINGS_ENCYCLOPEDIA_SEED.filter((r) => isPubliclyPublishedRuling(r)).length,
+    rulingsVisible: RULINGS_ENCYCLOPEDIA_SEED.filter((r) => isPubliclyVisibleRuling(r)).length,
     rulingsPending: RULINGS_ENCYCLOPEDIA_SEED.filter((r) => {
       const v = String(r.verification_status || "").toLowerCase();
       const s = String(r.status || "").toLowerCase();
@@ -161,53 +168,42 @@ async function main() {
         s === "needs_review"
       );
     }).length,
+    rulingsBlocked: RULINGS_ENCYCLOPEDIA_SEED.filter((r) => classifyRuling(r) === "blocked").length,
     qa: SEED_QA.length,
     quiz: DEMO_QUIZ_QUESTIONS.length,
   };
 
-  // ── 1) pending في sitemap ─────────────────────────────────────────────
+  // ── 1) blocked فقط ممنوع في sitemap (partial/pending مسموح) ───────────
   for (const r of RULINGS_ENCYCLOPEDIA_SEED) {
-    if (isPubliclyPublishedRuling(r)) continue;
+    if (classifyRuling(r) !== "blocked") continue;
     const pathId = r.external_key || r.slug || r.id;
     const loc = `/rulings/${pathId}`;
     if (sitemap.includes(loc)) {
       add({
-        check: "pending_in_sitemap",
+        check: "blocked_in_sitemap",
         severity: "critical",
         entity_type: "ruling",
         entity_id: String(pathId),
-        detail: "حكم pending/غير منشور موجود في sitemap",
-        evidence: "public/sitemap.xml + rulings-encyclopedia-seed",
+        detail: "حكم blocked موجود في sitemap",
+        evidence: "public/sitemap.xml + classifyRuling",
         auto_fix_allowed: true,
       });
     }
   }
 
-  // ── 2) كتب بلا مصدر في sitemap أو robots=index ────────────────────────
+  // ── 2) كتب بلا مصدر: ادعاء توثيق فقط (لا إخراج من sitemap) ────────────
   for (const b of LIBRARY_CATALOG) {
     if (libraryHasReadableSource(b)) continue;
-    const loc = `/library/${b.id}`;
-    if (sitemap.includes(`<loc>https://majlisilm.com${loc}</loc>`)) {
-      add({
-        check: "sourceless_book_in_sitemap",
-        severity: "critical",
-        entity_type: "library",
-        entity_id: b.id,
-        detail: "كتاب بلا external_url داخل sitemap",
-        evidence: "library-catalog + public/sitemap.xml",
-        auto_fix_allowed: true,
-      });
-    }
     const prerender = path.join(root, "seo-prerender/library", b.id, "index.html");
     if (exists(prerender)) {
       const html = readText(prerender);
-      if (/name="robots" content="index/.test(html)) {
+      if (textClaimsVerification(html) && !/قيد الإكمال|قيد الإضافة/.test(html)) {
         add({
-          check: "sourceless_book_indexable",
+          check: "sourceless_book_verification_claim",
           severity: "critical",
           entity_type: "library",
           entity_id: b.id,
-          detail: "كتاب بلا مصدر بقيمة robots=index في prerender",
+          detail: "كتاب بلا مصدر يدّعي توثيقًا بلا تنبيه",
           evidence: `seo-prerender/library/${b.id}/index.html`,
           auto_fix_allowed: true,
         });
@@ -520,7 +516,7 @@ async function main() {
     severity: "info",
     entity_type: "ruling",
     entity_id: "gate",
-    detail: `أحكام عامة=${counts.rulingsPublic} · قيد مراجعة=${counts.rulingsPending} · بوابة isPubliclyPublishedRuling فعّالة`,
+    detail: `أحكام معتمدة=${counts.rulingsPublic} · مرئية=${counts.rulingsVisible} · قيد مراجعة=${counts.rulingsPending} · blocked=${counts.rulingsBlocked}`,
     evidence: "rulings-publication-gate.ts",
     auto_fix_allowed: false,
   });

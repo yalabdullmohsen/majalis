@@ -1,5 +1,5 @@
 {
-  "at": "2026-08-15T17:18:32.541Z",
+  "at": "2026-08-15T17:30:27.430Z",
   "contentCounts": {
     "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
     "books": 173,
@@ -147,15 +147,17 @@
     "prophets": 25,
     "rulingsTotal": 147,
     "rulingsPublic": 0,
+    "rulingsVisible": 147,
     "rulingsPending": 147,
+    "rulingsBlocked": 0,
     "fiqhPublic": 4,
-    "fiqhIssuesPublic": 33,
+    "fiqhIssuesPublic": 64,
     "qa": 0,
     "quiz": 0,
     "adhkar": 329,
     "courses": 63,
     "surahStories": -1,
-    "sitemapUrls": 672
+    "sitemapUrls": 1014
   },
   "hubs": [
     {
@@ -267,16 +269,16 @@
       "hasPrerender": true,
       "robots": "index, follow",
       "inSitemap": true,
-      "textLen": 404,
+      "textLen": 411,
       "indexable": true
     },
     {
       "path": "/rulings",
       "hasPrerender": true,
-      "robots": "noindex, follow",
-      "inSitemap": false,
-      "textLen": 242,
-      "indexable": false
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 758,
+      "indexable": true
     },
     {
       "path": "/fiqh-council",
@@ -291,7 +293,7 @@
       "hasPrerender": true,
       "robots": "index, follow",
       "inSitemap": true,
-      "textLen": 882,
+      "textLen": 748,
       "indexable": true
     },
     {
@@ -345,10 +347,10 @@
     {
       "path": "/knowledge-graph",
       "hasPrerender": true,
-      "robots": "noindex, follow",
-      "inSitemap": false,
-      "textLen": 257,
-      "indexable": false
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 240,
+      "indexable": true
     },
     {
       "path": "/ulum-quran",

@@ -14,6 +14,9 @@ import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { GraphRelatedRail } from "@/widgets/RelatedRail";
 import NotFound from "@/views/not-found";
 import type { RulingResolveStatus } from "@/lib/rulings-resolver";
+import { PublishStatusBanner } from "@/components/PublishStatusBanner";
+import { publishStatusForRuling } from "@/lib/rulings-publication-gate";
+import "@/styles/components/scholarly-trust.css";
 
 export default function RulingDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<ShariaRulingExtended | null>(null);
@@ -88,23 +91,29 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
       return;
     }
     const path = `/rulings/${params.id}`;
+    const publishStatus = publishStatusForRuling(item);
     const description =
       item.summary ||
       item.body?.replace(/\*\*/g, "").slice(0, 160) ||
       item.title;
+    const metaDesc =
+      publishStatus === "pending_review"
+        ? `${description} — قيد المراجعة الشرعية، لا تُعد اعتمادًا نهائيًا.`
+        : description;
     applyPageSeo({
       path,
-      title: `${item.title} | موسوعة الأحكام، المجلس العلمي`,
-      description,
+      title: `${item.title} | الأحكام الشرعية، المجلس العلمي`,
+      description: metaDesc,
       keywords: [...(item.keywords || []), item.category, item.subcategory || "", "أحكام شرعية", "فقه"],
       ogType: "article",
       canonicalPath: path,
+      robots: "index, follow",
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "Article",
           headline: item.title,
-          description: item.summary || description,
+          description: metaDesc,
           articleBody: item.body,
           inLanguage: "ar",
         },
@@ -182,6 +191,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
         />
       }
     >
+      <PublishStatusBanner status={publishStatusForRuling(item)} />
       <RulingDetailSections ruling={item} relations={relations} />
       <ScholarlyTrustBadge data={trustData} />
       <ContentTrustBox

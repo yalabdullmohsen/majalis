@@ -822,7 +822,7 @@ ${linkList(
   ),
   "/fiqh": `<p>بوابة الفقه الإسلامي: أحكام العبادات والمعاملات، المذاهب الأربعة، القواعد الفقهية، وقرارات المجامع — مع إحالة المسائل المعاصرة إلى مصادرها المعتمدة.</p>
 ${linkList("أقسام الفقه", [
-  { name: "الأحكام الشرعية", url: "/rulings", note: "مسائل موثّقة بالأدلة" },
+  { name: "الأحكام الشرعية", url: "/rulings", note: "مسائل مع بيان حالة المراجعة" },
   { name: "المجمع الفقهي", url: "/fiqh-council", note: "قرارات وفتاوى مؤسسية" },
   { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
   { name: "النوازل المعاصرة", url: "/fiqh-council/nawazil" },
@@ -873,7 +873,7 @@ ${linkList("روابط ذات صلة", [
   "/rulings": (() => {
     const publicCount = ENCYCLOPEDIA_RULINGS.length;
     if (publicCount === 0) {
-      return `<p>قسم الأحكام الشرعية <strong>قيد الإعداد</strong> — لا تُعرض مواد للعامة حتى تجتاز المراجعة الشرعية والاعتماد التحريري.</p>
+      return `<aside role="note"><strong>قيد الإكمال</strong> — صفحة قيد الإكمال لجمع الأحكام الشرعية، وسيُضاف المحتوى تدريجيًا بعد المراجعة. ليست موسوعة معتمدة حاليًا.</aside>
 ${linkList("أقسام ذات صلة", [
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "المجمع الفقهي", url: "/fiqh-council" },
@@ -881,7 +881,8 @@ ${linkList("أقسام ذات صلة", [
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
 ])}`;
     }
-    return `<p>موسوعة الأحكام الشرعية: مسائل في العبادات والمعاملات والأسرة، مع ربط بالأدلة والمراجع المعتمدة قدر الإمكان.</p>
+    return `<aside role="note"><strong>تنبيه</strong> — بعض المواد قد تكون قيد المراجعة الشرعية ولا تُعد اعتمادًا نهائيًا.</aside>
+<p>مسائل في العبادات والمعاملات والأسرة، مع بيان حالة المراجعة عند كل مادة.</p>
 ${linkList(
   "من الأحكام المتاحة",
   ENCYCLOPEDIA_RULINGS.slice(0, 20).map((r) => ({
@@ -1864,7 +1865,7 @@ ${linkList("أقسام المجمع", [
   { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
   { name: "آخر المستجدات", url: "/updates" },
 ])}`,
-  "/knowledge-graph": `<p>خريطة المعرفة الشرعية <strong>قيد الإعداد</strong> — الواجهة التفاعلية تُفعَّل عند توفر بيانات الربط المعتمدة، ولا تُعرض حالياً كمرجع مكتمل.</p>
+  "/knowledge-graph": `<aside role="note"><strong>قيد الإكمال</strong> — صفحة قيد الإكمال لعرض شبكة المعرفة الشرعية. ليست مرجعًا مكتملًا ولا تدّعي توثيق كل العلاقات.</aside>
 ${linkList("روابط ذات صلة", [
   { name: "المسارات العلمية", url: "/learning/paths" },
   { name: "الفقه الإسلامي", url: "/fiqh" },
@@ -2094,20 +2095,31 @@ ${linkList("روابط ذات صلة", [
 
 for (const route of seoConfig.routes) {
   if (route.path.includes(":")) continue; // لا يوجد الآن؛ حراسة احتياطية
-  // صفحات ناقصة/فارغة للعامة: لا فهرسة ولا sitemap
-  if (route.path === "/rulings" && ENCYCLOPEDIA_RULINGS.length === 0) {
-    route.robots = "noindex, follow";
-    route.sitemap = false;
-    route.title = "الأحكام الشرعية — قيد الإعداد";
-    route.description =
-      "قسم الأحكام الشرعية قيد الإعداد. تُعرض المواد للعامة بعد اجتياز المراجعة الشرعية والاعتماد التحريري.";
+  // سياسة النشر: الصفحات الناقصة تبقى مفهرسة مع نص واضح — لا noindex تلقائي
+  if (route.path === "/rulings") {
+    const publicCount = ENCYCLOPEDIA_RULINGS.length;
+    if (publicCount === 0) {
+      route.title = "الأحكام الشرعية — قيد الإكمال";
+      route.description =
+        "صفحة قيد الإكمال لجمع الأحكام الشرعية، وسيُضاف المحتوى تدريجيًا بعد المراجعة. ليست موسوعة معتمدة حاليًا.";
+    } else {
+      route.title = "الأحكام الشرعية";
+      route.description =
+        "مسائل فقهية معروضة مع بيان حالة المراجعة. المواد قيد المراجعة لا تُعد اعتمادًا نهائيًا.";
+    }
+    route.robots = "index, follow";
+    route.sitemap = true;
   }
   if (route.path === "/knowledge-graph") {
-    route.robots = "noindex, follow";
-    route.sitemap = false;
-    route.title = "خريطة المعرفة — قيد الإعداد";
+    route.title = "خريطة المعرفة — قيد الإكمال";
     route.description =
-      "خريطة المعرفة الشرعية قيد الإعداد. لا تُعرض كمرجع مكتمل حتى تتوفر بيانات الربط المعتمدة.";
+      "صفحة قيد الإكمال لعرض شبكة المعرفة الشرعية. ليست مرجعًا مكتملًا ولا تدّعي توثيق كل العلاقات.";
+    route.robots = "index, follow";
+    route.sitemap = true;
+  }
+  if (route.path === "/quiz") {
+    route.description =
+      "صفحة قيد الإكمال لجمع الأسئلة والأجوبة الشرعية في لعبة سين جيم، وسيُضاف المحتوى تدريجيًا بعد المراجعة.";
   }
   addPage(route, {
     extraJsonLd: LIST_JSON_LD[route.path] || "",
@@ -2186,17 +2198,34 @@ for (const row of verifiedFiqhSessions) {
 for (const row of ENCYCLOPEDIA_RULINGS) {
   const pathId = row.external_key || row.id;
   const desc = tidyDesc(row.summary || row.body || row.title);
+  const verification = String(row.verification_status || "")
+    .trim()
+    .toLowerCase()
+    .replace(/-/g, "_");
+  const pending =
+    verification === "pending_review" ||
+    verification === "needs_review" ||
+    verification === "pending";
   addPage(
     {
       path: `/rulings/${pathId}`,
       title: row.title,
-      description: padDesc(desc, `حكم شرعي من موسوعة ${SITE_NAME}`),
+      description: padDesc(
+        pending
+          ? `${desc} — قيد المراجعة الشرعية، لا تُعد اعتمادًا نهائيًا.`
+          : desc,
+        pending
+          ? `مسألة فقهية قيد المراجعة في ${SITE_NAME}`
+          : `مسألة فقهية في ${SITE_NAME}`,
+      ),
       ogType: "article",
+      robots: "index, follow",
     },
     {
       parents: [{ name: "الأحكام الشرعية", path: "/rulings" }],
-      priority: 0.69,
+      priority: pending ? 0.55 : 0.69,
       richBody: rulingRichBody(row),
+      sitemap: true,
     },
   );
 }
@@ -2222,22 +2251,29 @@ for (const row of LIBRARY_CATALOG) {
     .map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author }));
   const desc = tidyDesc(row.description || row.title);
   const hasSource = Boolean(String(row.external_url || "").trim());
-  // body = ظاهر كامل؛ description = meta (قد تُقصّ لاحقاً دون لمس الظاهر)
+  // سياسة النشر: الكتب بلا مصدر = partial (index + sitemap) مع تنبيه، لا noindex
   addPage(
     {
       path: `/library/${row.id}`,
       title: row.title,
-      description: clamp(padDesc(desc, `كتاب من المكتبة الشرعية في ${SITE_NAME}`), 160),
+      description: clamp(
+        padDesc(
+          hasSource
+            ? desc
+            : `${desc} — هذه الصفحة قيد الإكمال، وسيُضاف مصدر القراءة عند توفره.`,
+          `كتاب من المكتبة الشرعية في ${SITE_NAME}`,
+        ),
+        160,
+      ),
       body: desc,
       ogType: "book",
-      // بلا مصدر قراءة: لا فهرسة ولا sitemap (لا تُعرض كمادة موثّقة الرابط)
-      robots: hasSource ? "index, follow" : "noindex, follow",
+      robots: "index, follow",
     },
     {
       extraJsonLd: bookJsonLdScript({ ...row, description: desc }),
       parents: [{ name: "المكتبة العلمية", path: "/library" }],
-      priority: hasSource ? 0.7 : 0.3,
-      sitemap: hasSource,
+      priority: hasSource ? 0.7 : 0.55,
+      sitemap: true,
       richBody: `<h2>بيانات الكتاب</h2>
 <ul>
   ${row.author ? `<li>المؤلف: ${escapeHtml(row.author)}</li>` : ""}
@@ -2248,6 +2284,7 @@ for (const row of LIBRARY_CATALOG) {
     ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">${escapeHtml(row.source_title || "فتح المصدر")}</a></li>`
     : `<li>المصدر: قيد الإضافة</li>`}
 </ul>
+${hasSource ? "" : `<aside role="note"><strong>قيد الإكمال</strong> — هذه الصفحة قيد الإكمال، وسيُضاف مصدر القراءة عند توفره. لا تُعرض كمادة موثّقة الرابط.</aside>`}
 ${linkList("كتب ذات صلة في نفس التصنيف", related)}
 ${linkList("روابط ذات صلة", [
   { name: "المكتبة العلمية", url: "/library" },

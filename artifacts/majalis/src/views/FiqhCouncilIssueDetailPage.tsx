@@ -18,6 +18,9 @@ import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { SourceBadge } from "@/components/content-trust/SourceBadge";
 import { ReviewMeta } from "@/components/content-trust/ReviewMeta";
 import { PublicationGate } from "@/components/content-trust/PublicationGate";
+import { PublishStatusBanner } from "@/components/PublishStatusBanner";
+import { classifyFiqhMaterial } from "@/lib/publish-policy";
+import "@/styles/components/scholarly-trust.css";
 
 function groupItemsByType(issue: FiqhCouncilIssue) {
   const items = issue.items || [];
@@ -54,10 +57,18 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
       return;
     }
     const path = fiqhIssueHref(issue.slug);
+    const publishStatus = classifyFiqhMaterial(issue);
+    const rawDesc = issue.summary || issue.title;
+    const description =
+      publishStatus === "incomplete" || publishStatus === "partial"
+        ? `${rawDesc} — هذه المادة مختصرة وقيد الإكمال، وسيُضاف نص القرار ومصدره عند اكتمال التوثيق.`
+        : publishStatus === "pending_review"
+          ? `${rawDesc} — قيد المراجعة الشرعية، لا تُعد اعتمادًا نهائيًا.`
+          : rawDesc;
     applyPageSeo({
       path,
       title: `${issue.title} | المسائل الفقهية، المجلس العلمي`,
-      description: issue.summary || issue.title,
+      description,
       keywords: [issue.category, "مسألة فقهية", "المجمع الفقهي"],
       ogType: "article",
       canonicalPath: path,
@@ -67,7 +78,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
           "@context": "https://schema.org",
           "@type": "Article",
           headline: issue.title,
-          description: issue.summary,
+          description,
           dateModified: issue.updated_at,
           datePublished: issue.published_at,
           inLanguage: "ar",
@@ -133,6 +144,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
         body={issue.description || ""}
         shareUrl={typeof window !== "undefined" ? window.location.href : undefined}
       >
+        <PublishStatusBanner status={classifyFiqhMaterial(issue)} />
         <section className="content-detail-evidence ui-card fiqh-detail-info-table">
           <h2>بيانات المسألة</h2>
           <table className="fiqh-info-table">

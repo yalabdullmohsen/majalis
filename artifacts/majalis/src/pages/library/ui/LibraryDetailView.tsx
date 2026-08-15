@@ -18,7 +18,10 @@ import {
   librarySourceLabel,
   resolveLibraryContentStatus,
 } from "@/lib/library-catalog";
+import { PublishStatusBanner } from "@/components/PublishStatusBanner";
+import { classifyLibraryBook } from "@/lib/publish-policy";
 import "@/styles/pages/library.css";
+import "@/styles/components/scholarly-trust.css";
 
 export default function LibraryDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<LibraryItem | null>(null);
@@ -59,12 +62,13 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
     applyPageSeo({
       path,
       title: `${item.title} | المكتبة العلمية، المجلس العلمي`,
-      description: item.description || item.title,
+      description: hasSource
+        ? item.description || item.title
+        : `${item.description || item.title} — هذه الصفحة قيد الإكمال، وسيُضاف مصدر القراءة عند توفره.`,
       keywords: [...(item.keywords || []), item.category, item.author, "مكتبة", "كتب"],
       ogType: "book",
       canonicalPath: path,
-      // بلا مصدر قراءة: لا تُفهرَس كمادة موثّقة الرابط
-      robots: hasSource ? "index, follow" : "noindex, follow",
+      robots: "index, follow",
       jsonLd: [
         bookJsonLd({
           name: item.title,
@@ -87,6 +91,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
   const readUrl = item.external_url || item.file_url;
   const catalogStatus = resolveLibraryContentStatus(item as Parameters<typeof resolveLibraryContentStatus>[0]);
   const sourceLabel = librarySourceLabel(item as Parameters<typeof librarySourceLabel>[0]);
+  const publishStatus = classifyLibraryBook(item as Parameters<typeof classifyLibraryBook>[0]);
   const metaParts = [item.category, item.type, item.parts_label].filter(Boolean);
 
   // حقول الحوكمة قد لا تكون في نوع LibraryItem بعد — تُقرأ كما هي ولا تُخترع.
@@ -148,6 +153,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
         ) : undefined
       }
     >
+      <PublishStatusBanner status={publishStatus} />
       {item.caution ? (
         <div className="library-detail-caution" role="note">
           <strong>تنبيه علمي:</strong> {item.caution}

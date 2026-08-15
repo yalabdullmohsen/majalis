@@ -1,25 +1,29 @@
 import { useEffect } from "react";
 import { IslamicQuizGame } from "@/components/quiz-game/IslamicQuizGame";
 import { ShareButtons } from "@/components/ContentActions";
+import { PublishStatusBanner } from "@/components/PublishStatusBanner";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/components/islamic-quiz-game.css";
 import "@/styles/pages/quiz.css";
+import "@/styles/components/scholarly-trust.css";
 
 export default function QuizPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/quiz",
-      title: "لعبة سين جيم – أسئلة وأجوبة | المجلس العلمي",
-      description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة.",
-      keywords: ["سين جيم", "مسابقة إسلامية", "اختبار معلومات", "أسئلة إسلامية", "تحدي قرآني", "مسابقة فقهية"],
+      title: "أسئلة وأجوبة — قيد الإكمال | المجلس العلمي",
+      description:
+        "صفحة قيد الإكمال لجمع الأسئلة والأجوبة الشرعية، وسيُضاف المحتوى تدريجيًا بعد المراجعة.",
+      keywords: ["أسئلة وأجوبة", "قيد الإكمال", "سين جيم", "أسئلة إسلامية"],
+      robots: "index, follow",
       jsonLd: [
         {
           "@context": "https://schema.org",
-          "@type": "Quiz",
-          name: "لعبة سين جيم – أسئلة وأجوبة",
+          "@type": "WebPage",
+          name: "أسئلة وأجوبة — قيد الإكمال",
           url: "https://www.majlisilm.com/quiz",
-          description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة",
-          educationalLevel: "متعدد المستويات",
+          description:
+            "صفحة قيد الإكمال لجمع الأسئلة والأجوبة الشرعية، وسيُضاف المحتوى تدريجيًا بعد المراجعة.",
           inLanguage: "ar",
           provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
         },
@@ -29,9 +33,10 @@ export default function QuizPage() {
 
   return (
     <>
+      <PublishStatusBanner status="incomplete" />
       <IslamicQuizGame />
       <div className="twh-share">
-        <ShareButtons title="لعبة سين جيم – أسئلة وأجوبة — المجلس العلمي" url="https://www.majlisilm.com/quiz" />
+        <ShareButtons title="أسئلة وأجوبة — المجلس العلمي" url="https://www.majlisilm.com/quiz" />
       </div>
     </>
   );

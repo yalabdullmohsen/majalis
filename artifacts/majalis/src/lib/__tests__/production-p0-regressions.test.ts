@@ -1,11 +1,14 @@
 /**
- * انحدار: لا تُفسَد إصلاحات الإنتاج المثبتة (2026-08-14).
+ * انحدار: لا تُفسَد إصلاحات الإنتاج المثبتة (2026-08-14) + سياسة النشر الجزئي (2026-08-15).
  * التشغيل: node --import tsx src/lib/__tests__/production-p0-regressions.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { isPubliclyPublishedRuling } from "../rulings-publication-gate";
+import {
+  isPubliclyPublishedRuling,
+  isPubliclyVisibleRuling,
+} from "../rulings-publication-gate";
 import { hrefQa } from "../content-href";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
@@ -41,21 +44,36 @@ assert(!fiqh.includes('href="/qa"'), "فقه لا يربط /qa");
 assert(hrefQa("x") === "/quiz?qa=x", "hrefQa");
 assert(!/loc>[^<]*\/qa</.test(sitemap), "sitemap بلا /qa");
 
-console.log("\n=== أحكام — بوابة نشر ===");
-assert(seoHelper.includes("isPubliclyPublishedRuling"), "SEO gated");
+console.log("\n=== أحكام — بوابة نشر (مرئي ≠ معتمد) ===");
+assert(seoHelper.includes("isPubliclyVisibleRuling"), "SEO gated by visible");
 assert(
   !isPubliclyPublishedRuling({
     title: "ت",
     body: "نص كافٍ",
     verification_status: "pending_review" as never,
   }),
-  "pending_review ليس عاماً",
+  "pending_review ليس معتمداً",
 );
-assert(!existsSync(resolve(root, "seo-prerender/rulings/ruling-child-custody")), "لا prerender حضانة معلّقة");
-assert(!sitemap.includes("/rulings/ruling-child-custody"), "sitemap بلا حضانة معلّقة");
+assert(
+  isPubliclyVisibleRuling({
+    title: "ت",
+    body: "نص كافٍ للعرض العام",
+    verification_status: "pending_review" as never,
+  }),
+  "pending_review مرئي للعامة",
+);
+assert(
+  !isPubliclyVisibleRuling({
+    title: "ت",
+    body: "نص",
+    verification_status: "draft" as never,
+  }),
+  "draft غير مرئي",
+);
 
 console.log("\n=== خريطة الأقسام ===");
 assert(siteMap.includes("أهم الأقسام") || true, "وصف خريطة الأقسام (إن وُجد)");
+void existsSync;
 
 console.log(`\nالنتيجة: ${passed}/${passed + failed}`);
 if (failed) process.exit(1);

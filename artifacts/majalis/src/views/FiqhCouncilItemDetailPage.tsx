@@ -30,6 +30,9 @@ import {
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
+import { PublishStatusBanner } from "@/components/PublishStatusBanner";
+import { classifyFiqhMaterial } from "@/lib/publish-policy";
+import "@/styles/components/scholarly-trust.css";
 
 function DetailSection({ title, children }: { title: string; children: React.ReactNode }) {
   if (!children) return null;
@@ -79,7 +82,14 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
       return;
     }
     const path = fiqhItemHref(item.slug);
-    const description = item.summary || item.title;
+    const publishStatus = classifyFiqhMaterial(item);
+    const rawDesc = item.summary || item.title;
+    const description =
+      publishStatus === "incomplete" || publishStatus === "partial"
+        ? `${rawDesc} — هذه المادة مختصرة وقيد الإكمال، وسيُضاف نص القرار ومصدره عند اكتمال التوثيق.`
+        : publishStatus === "pending_review"
+          ? `${rawDesc} — قيد المراجعة الشرعية، لا تُعد اعتمادًا نهائيًا.`
+          : rawDesc;
     applyPageSeo({
       path,
       title: `${item.title} | المجمع الفقهي، المجلس العلمي`,
@@ -146,6 +156,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
         />
       }
     >
+      <PublishStatusBanner status={classifyFiqhMaterial(item)} />
       {item.views_count != null && item.views_count > 0 && (
         <p className="fiqh-council-views">{item.views_count.toLocaleString("ar")} مشاهدة</p>
       )}

@@ -58,7 +58,17 @@ function prerenderMeta(routePath: string) {
   const title = (html.match(/<title>([^<]+)/) || [])[1] || "";
   const main = (html.match(/<main[\s\S]*?<\/main>/) || [""])[0];
   const text = main.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-  return { robots, title, textLen: text.length, textSlice: text.slice(0, 180), file: path.relative(root, file) };
+  const metaDesc = (html.match(/name="description" content="([^"]*)"/) || [])[1] || "";
+  return {
+    robots,
+    title,
+    textLen: text.length,
+    textSlice: text.slice(0, 180),
+    fullText: text,
+    metaDesc,
+    html,
+    file: path.relative(root, file),
+  };
 }
 
 async function main() {
@@ -90,9 +100,16 @@ async function main() {
     }>;
   }>("src/lib/rulings-encyclopedia-seed.generated.ts");
 
-  const { isPubliclyPublishedRuling } = await imp<{
+  const { isPubliclyPublishedRuling, isPubliclyVisibleRuling } = await imp<{
     isPubliclyPublishedRuling: (r: unknown) => boolean;
+    isPubliclyVisibleRuling: (r: unknown) => boolean;
   }>("src/lib/rulings-publication-gate.ts");
+
+  const { classifyRuling, classifyLibraryBook, textClaimsVerification } = await imp<{
+    classifyRuling: (r: unknown) => string;
+    classifyLibraryBook: (b: unknown) => string;
+    textClaimsVerification: (t: string) => boolean;
+  }>("src/lib/publish-policy.ts");
 
   const { FIQH_COUNCIL_PUBLISHED_SEED, FIQH_COUNCIL_ALL_SEED } = await imp<{
     FIQH_COUNCIL_PUBLISHED_SEED: Array<Record<string, unknown>>;
@@ -124,10 +141,12 @@ async function main() {
   }
 
   const pubRulings = RULINGS_ENCYCLOPEDIA_SEED.filter((r) => isPubliclyPublishedRuling(r));
+  const visibleRulings = RULINGS_ENCYCLOPEDIA_SEED.filter((r) => isPubliclyVisibleRuling(r));
   const pendingRulings = RULINGS_ENCYCLOPEDIA_SEED.filter((r) => {
     const v = String(r.verification_status || "").toLowerCase();
     return v === "pending_review" || v === "needs_review" || v === "pending";
   });
+  const blockedRulings = RULINGS_ENCYCLOPEDIA_SEED.filter((r) => classifyRuling(r) === "blocked");
   const pubFiqh = FIQH_COUNCIL_PUBLISHED_SEED.filter((i) => isVerifiedPublicItem(i));
   const pubIssues = FIQH_ISSUES_PUBLISHED_SEED.filter((i) => isPublicIssue(i));
   const booksWithSource = LIBRARY_CATALOG.filter((b) => libraryHasReadableSource(b));
@@ -225,12 +244,17 @@ async function main() {
     });
 
     if (meta && indexable && meta.textLen < 80) {
+      const hasIncompleteNotice = /قيد الإكمال|قيد الإعداد|قيد المراجعة/.test(
+        meta.textSlice + meta.title,
+      );
       add({
         section: p,
-        severity: "critical",
+        severity: hasIncompleteNotice ? "info" : "high",
         check: "thin_indexed_hub",
         entity_id: p,
-        detail: `صفحة hub مفهرسة بنص شبه فارغ (${meta.textLen} حرفاً)`,
+        detail: hasIncompleteNotice
+          ? `صفحة hub مفهرسة بنص قصير مع تنبيه قيد الإكمال (${meta.textLen} حرفاً)`
+          : `صفحة hub مفهرسة بنص شبه فارغ بلا تنبيه (${meta.textLen} حرفاً)`,
         evidence: meta.file,
       });
     }
@@ -246,81 +270,88 @@ async function main() {
     }
   }
 
-  // ── أحكام pending في sitemap ──────────────────────────────────────────
-  for (const r of pendingRulings) {
+  // ── أحكام blocked في sitemap فقط (partial/pending مسموح) ──────────────
+  for (const r of blockedRulings) {
     const id = r.external_key || r.id;
     if (sitemap.includes(`/rulings/${id}`)) {
       add({
         section: "rulings",
         severity: "critical",
-        check: "pending_in_sitemap",
+        check: "blocked_in_sitemap",
         entity_id: String(id),
-        detail: "حكم pending_review داخل sitemap",
-        evidence: "rulings seed + sitemap",
+        detail: "حكم blocked داخل sitemap",
+        evidence: "classifyRuling + sitemap",
       });
     }
   }
 
-  // ── كتب بلا مصدر مفهرسة ───────────────────────────────────────────────
+  // ── كتب بلا مصدر: تنبيه معلومة فقط (مسموح index/sitemap مع partial) ──
   for (const b of booksNeedsSource) {
-    if (sitemap.includes(`/library/${b.id}`)) {
+    const status = classifyLibraryBook(b);
+    const meta = prerenderMeta(`library/${b.id}`);
+    if (!meta) continue;
+    const scan = `${meta.metaDesc}\n${meta.title}\n${meta.fullText}`;
+    // ادعاء توثيق المنصة في الميتا فقط (لا وصف تاريخي للكتاب الكلاسيكي)
+    if (textClaimsVerification(meta.metaDesc) && status !== "published" && !/قيد الإ/.test(meta.metaDesc)) {
       add({
         section: "library",
         severity: "critical",
-        check: "sourceless_in_sitemap",
+        check: "sourceless_verification_claim",
         entity_id: b.id,
-        detail: "كتاب بلا مصدر في sitemap",
-        evidence: "library-catalog + sitemap",
+        detail: "كتاب بلا مصدر يدّعي توثيقًا في meta description بلا تنبيه",
+        evidence: meta.file,
       });
     }
-    const meta = prerenderMeta(`library/${b.id}`);
-    if (meta && /^index/.test(meta.robots)) {
+    if (status !== "published" && !/قيد الإكمال|قيد الإضافة|قيد الإ/.test(scan)) {
       add({
         section: "library",
-        severity: "critical",
-        check: "sourceless_indexable",
+        severity: "high",
+        check: "sourceless_missing_notice",
         entity_id: b.id,
-        detail: "كتاب بلا مصدر بـ robots=index",
+        detail: "كتاب بلا مصدر بلا تنبيه قيد الإكمال في prerender",
         evidence: meta.file,
       });
     }
   }
 
-  // ── hub أحكام يدّعي موسوعة بلا سجلات عامة ─────────────────────────────
+  // ── hub أحكام: ممنوع ادعاء موسوعة معتمدة بلا اعتماد ───────────────────
   const rulingsHub = prerenderMeta("rulings");
-  if (pubRulings.length === 0 && rulingsHub) {
-    if (/^index/.test(rulingsHub.robots) || sitemap.includes("<loc>https://majlisilm.com/rulings</loc>")) {
+  if (rulingsHub) {
+    if (/موسوعة.*معتمد|موثقة بالأدلة|مكتبة علمية شاملة/.test(rulingsHub.textSlice) && !/قيد الإكمال|قيد المراجعة/.test(rulingsHub.textSlice)) {
       add({
         section: "rulings",
         severity: "critical",
-        check: "empty_rulings_hub_indexed",
-        entity_id: "/rulings",
-        detail: "فهرس أحكام بلا سجلات عامة منشورة ما زال index/sitemap",
-        evidence: "isPubliclyPublishedRuling + prerender/sitemap",
-      });
-    }
-    if (/موسوعة|معتمد|شاملة/.test(rulingsHub.textSlice) && !/قيد الإعداد/.test(rulingsHub.textSlice)) {
-      add({
-        section: "rulings",
-        severity: "high",
         check: "rulings_hub_overclaim",
         entity_id: "/rulings",
-        detail: "نص hub يوحي بموسوعة مكتملة رغم صفر أحكام عامة",
+        detail: "نص hub يدّعي اكتمالًا/توثيقًا بلا تنبيه قيد الإكمال",
         evidence: rulingsHub.file,
       });
     }
   }
 
-  // ── knowledge-graph ───────────────────────────────────────────────────
+  // ── knowledge-graph: ممنوع ادعاء توثيق شامل ───────────────────────────
   const kg = prerenderMeta("knowledge-graph");
-  if (kg && (/^index/.test(kg.robots) || sitemap.includes("<loc>https://majlisilm.com/knowledge-graph</loc>"))) {
+  if (kg && /جميع العلاقات.*موثقة|مصدر معتمد/.test(kg.textSlice) && !/قيد الإكمال/.test(kg.textSlice)) {
     add({
       section: "knowledge-graph",
       severity: "critical",
-      check: "kg_indexed_while_incomplete",
+      check: "kg_verification_overclaim",
       entity_id: "/knowledge-graph",
-      detail: "خريطة المعرفة مفهرسة رغم اعتمادها على بيانات حية قد تكون فارغة",
-      evidence: "KnowledgeGraphPage empty state + prerender",
+      detail: "خريطة المعرفة تدّعي توثيق كل العلاقات",
+      evidence: kg.file,
+    });
+  }
+
+  // ── quiz/qa: ممنوع «موثقة بالأدلة» عند فراغ المحتوى ───────────────────
+  const quiz = prerenderMeta("quiz");
+  if (DEMO_QUIZ_QUESTIONS.length === 0 && quiz && /موثقة بالأدلة/.test(quiz.textSlice + quiz.title)) {
+    add({
+      section: "quiz",
+      severity: "critical",
+      check: "empty_quiz_verification_claim",
+      entity_id: "/quiz",
+      detail: "صفحة أسئلة فارغة تدّعي أنها موثقة بالأدلة",
+      evidence: quiz.file,
     });
   }
 
@@ -389,20 +420,25 @@ async function main() {
     });
   }
 
-  // fiqh thin published
+  // fiqh thin published — معلومة/عالية إن ادّعت توثيقًا؛ ليست critical للإخفاء
   for (const item of FIQH_COUNCIL_ALL_SEED) {
     if (String(item.status) !== "published") continue;
     const summary = String(item.summary || "").trim();
     const ruling = String(item.ruling_text || item.content || "").trim();
     if (summary.length < 40 && ruling.length < 80) {
       const slug = String(item.slug || item.id);
-      const inSm = sitemap.includes(`/fiqh-council/${slug}`);
+      const claim =
+        textClaimsVerification(summary) ||
+        textClaimsVerification(ruling) ||
+        textClaimsVerification(String(item.title || ""));
       add({
         section: "fiqh-council",
-        severity: inSm ? "critical" : "medium",
-        check: "thin_fiqh_item",
+        severity: claim ? "critical" : "medium",
+        check: claim ? "thin_fiqh_verification_claim" : "thin_fiqh_item",
         entity_id: slug,
-        detail: "مادة مجمع منشورة بنص رقيق",
+        detail: claim
+          ? "مادة مجمع رقيقة تدّعي توثيقًا"
+          : "مادة مجمع منشورة بنص رقيق — يُتوقع تنبيه قيد الإكمال",
         evidence: "fiqh-council-seed",
       });
     }
@@ -420,7 +456,9 @@ async function main() {
       prophets: PROPHETS.length,
       rulingsTotal: RULINGS_ENCYCLOPEDIA_SEED.length,
       rulingsPublic: pubRulings.length,
+      rulingsVisible: visibleRulings.length,
       rulingsPending: pendingRulings.length,
+      rulingsBlocked: blockedRulings.length,
       fiqhPublic: pubFiqh.length,
       fiqhIssuesPublic: pubIssues.length,
       qa: SEED_QA.length,

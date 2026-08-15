@@ -83,8 +83,8 @@ const seoHelper = readFileSync(resolve(appRoot, "scripts/generate-seo-rulings-he
 const seedJs = readFileSync(resolve(appRoot, "lib/rulings-db-seed.mjs"), "utf8");
 const failures = [];
 
-if (!/isPubliclyPublishedRuling/.test(seoHelper)) {
-  failures.push("SEO loader missing publication gate");
+if (!/isPubliclyVisibleRuling/.test(seoHelper)) {
+  failures.push("SEO loader missing visible publication gate");
 }
 if (/status:\s*"approved"\s*,/.test(seedJs) && !/verification_status === "approved"/.test(seedJs)) {
   failures.push("DB seed still hardcodes status approved without verification gate");
@@ -110,8 +110,8 @@ if (counts.publicEligible > 0) {
   console.log(`ℹ publicEligible=${counts.publicEligible}`);
 }
 if (pendingPrerender > 0) {
-  console.warn(
-    `⚠ ${pendingPrerender} prerender HTML ما زال يعرض pending_review — يلزم generate:seo لإزالته من الـartifacts`,
+  console.log(
+    `ℹ ${pendingPrerender} prerender HTML يعرض pending_review مع تنبيه — مسموح بسياسة النشر الجزئي`,
   );
 }
 

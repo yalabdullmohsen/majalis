@@ -8,7 +8,7 @@ import { CONTENT_CURRICULUM_ENABLED, isCurriculumRuling } from "./content-flags"
 import { supabase, isSupabaseConfigured } from "./supabase";
 import { logSupabaseError, formatSupabaseError } from "./supabase-config";
 import { isAllowedOnRulingsRoute } from "./rulings-content-type";
-import { isPubliclyPublishedRuling } from "./rulings-publication-gate";
+import { isPubliclyVisibleRuling } from "./rulings-publication-gate";
 import { evaluateRulingRecord, type RulingResolveResult } from "./rulings-resolver";
 import { loadAllRulingsFromChunks, RULINGS_ENCYCLOPEDIA_SEED } from "./rulings-data-loader";
 
@@ -97,7 +97,7 @@ export async function getRulingsEncyclopedia(opts?: RulingListOptions): Promise<
     if (!CONTENT_CURRICULUM_ENABLED) {
       rows = rows.filter((r) => !isCurriculumRuling(r));
     }
-    rows = rows.filter((r) => isAllowedOnRulingsRoute(r) && isPubliclyPublishedRuling(r));
+    rows = rows.filter((r) => isAllowedOnRulingsRoute(r) && isPubliclyVisibleRuling(r));
     const total = rows.length > 0 && rows[0].total_count != null ? Number(rows[0].total_count) : rows.length;
 
     return { data: rows, total: total || rows.length, page, limit, usingSeed: false };
@@ -114,7 +114,7 @@ async function findRulingInLocalSeed(id: string): Promise<ShariaRulingExtended |
   if (
     fromInline &&
     isAllowedOnRulingsRoute(fromInline) &&
-    isPubliclyPublishedRuling(fromInline)
+    isPubliclyVisibleRuling(fromInline)
   ) {
     return fromInline;
   }
@@ -122,7 +122,7 @@ async function findRulingInLocalSeed(id: string): Promise<ShariaRulingExtended |
   try {
     const all = await loadAllRulingsFromChunks();
     const hit = all.find((r) => r.id === id || r.external_key === id || r.slug === id);
-    if (hit && isAllowedOnRulingsRoute(hit) && isPubliclyPublishedRuling(hit)) return hit;
+    if (hit && isAllowedOnRulingsRoute(hit) && isPubliclyVisibleRuling(hit)) return hit;
   } catch {
     /* ignore */
   }

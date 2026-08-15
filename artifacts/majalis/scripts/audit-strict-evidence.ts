@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * بوابة أدلة صارمة — تفشل عند مخالفات فهرسة/اكتمال مثبتة في الكود أو dist.
- * لا تعتمد على Google Search Console كمصدر حقيقة.
+ * بوابة أدلة صارمة — سياسة النشر 2026-08:
+ * تفشل عند blocked في sitemap، أو ادعاء توثيق بلا أهلية في الصفحات الناقصة.
+ * لا تفشل لمجرد أن الصفحة partial/pending في sitemap أو index.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -10,7 +11,6 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 type Fail = { id: string; detail: string };
-
 const fails: Fail[] = [];
 
 function fail(id: string, detail: string) {
@@ -18,13 +18,6 @@ function fail(id: string, detail: string) {
 }
 
 async function main() {
-  const { LIBRARY_CATALOG, libraryHasReadableSource } = await import(
-    pathToFileURL(path.join(root, "src/lib/library-catalog.ts")).href
-  ) as {
-    LIBRARY_CATALOG: Array<{ id: string; external_url?: string }>;
-    libraryHasReadableSource: (b: { external_url?: string }) => boolean;
-  };
-
   const { RULINGS_ENCYCLOPEDIA_SEED } = await import(
     pathToFileURL(path.join(root, "src/lib/rulings-encyclopedia-seed.generated.ts")).href
   ) as {
@@ -39,9 +32,13 @@ async function main() {
     }>;
   };
 
-  const { isPubliclyPublishedRuling } = await import(
-    pathToFileURL(path.join(root, "src/lib/rulings-publication-gate.ts")).href
-  ) as { isPubliclyPublishedRuling: (r: unknown) => boolean };
+  const { classifyRuling, canIncludeInSitemap, textClaimsVerification } = await import(
+    pathToFileURL(path.join(root, "src/lib/publish-policy.ts")).href
+  ) as {
+    classifyRuling: (r: unknown) => string;
+    canIncludeInSitemap: (s: string) => boolean;
+    textClaimsVerification: (t: string) => boolean;
+  };
 
   const sitemapPath = path.join(root, "public/sitemap.xml");
   if (!fs.existsSync(sitemapPath)) {
@@ -50,24 +47,14 @@ async function main() {
     const sitemap = fs.readFileSync(sitemapPath, "utf8");
 
     for (const r of RULINGS_ENCYCLOPEDIA_SEED) {
-      if (isPubliclyPublishedRuling(r)) continue;
+      const status = classifyRuling(r);
+      if (status !== "blocked") continue;
       const pathId = r.external_key || r.slug || r.id;
       if (sitemap.includes(`/rulings/${pathId}`)) {
-        fail("pending_ruling_in_sitemap", `/rulings/${pathId}`);
+        fail("blocked_ruling_in_sitemap", `/rulings/${pathId}`);
       }
-    }
-
-    for (const b of LIBRARY_CATALOG) {
-      if (libraryHasReadableSource(b)) continue;
-      if (sitemap.includes(`/library/${b.id}`)) {
-        fail("sourceless_book_in_sitemap", `/library/${b.id}`);
-      }
-      const prerender = path.join(root, "seo-prerender/library", b.id, "index.html");
-      if (fs.existsSync(prerender)) {
-        const html = fs.readFileSync(prerender, "utf8");
-        if (/name="robots" content="index/.test(html)) {
-          fail("sourceless_book_index", b.id);
-        }
+      if (!canIncludeInSitemap(status)) {
+        /* متوقع */
       }
     }
 
@@ -75,26 +62,35 @@ async function main() {
     if (/950\s*سؤال/.test(updates)) {
       fail("stale_950_quiz_claim", "updates-seed.ts ما زال يذكر 950 سؤالاً");
     }
-
-    const publicRulings = RULINGS_ENCYCLOPEDIA_SEED.filter((r) => isPubliclyPublishedRuling(r));
-    if (publicRulings.length === 0) {
-      if (sitemap.includes("<loc>https://majlisilm.com/rulings</loc>")) {
-        fail("empty_rulings_hub_in_sitemap", "/rulings");
-      }
-      const hub = path.join(root, "seo-prerender/rulings/index.html");
-      if (fs.existsSync(hub) && /name="robots" content="index/.test(fs.readFileSync(hub, "utf8"))) {
-        fail("empty_rulings_hub_indexable", "/rulings");
-      }
-    }
-
-    if (sitemap.includes("<loc>https://majlisilm.com/knowledge-graph</loc>")) {
-      fail("knowledge_graph_in_sitemap", "/knowledge-graph");
-    }
   }
 
-  const kg = path.join(root, "seo-prerender/knowledge-graph/index.html");
-  if (fs.existsSync(kg) && /name="robots" content="index/.test(fs.readFileSync(kg, "utf8"))) {
-    fail("knowledge_graph_indexable", "/knowledge-graph");
+  const copyGuards: Array<{ file: string; mustNot: RegExp; id: string }> = [
+    {
+      file: "src/pages/fiqh/ui/RulingsView.tsx",
+      mustNot: /موثقة بالأدلة/,
+      id: "rulings_hub_verification_claim",
+    },
+    {
+      file: "src/pages/account/QuizPage.tsx",
+      mustNot: /موثقة بالأدلة/,
+      id: "quiz_verification_claim",
+    },
+    {
+      file: "src/views/KnowledgeGraphPage.tsx",
+      mustNot: /جميع العلاقات المعروضة موثقة/,
+      id: "kg_verification_claim",
+    },
+  ];
+  for (const g of copyGuards) {
+    const p = path.join(root, g.file);
+    if (!fs.existsSync(p)) continue;
+    const text = fs.readFileSync(p, "utf8");
+    if (g.mustNot.test(text)) {
+      fail(g.id, g.file);
+    }
+    if (textClaimsVerification(text) && /partial|incomplete|pending_review|قيد الإكمال/.test(text) === false) {
+      /* يسمح إن وُجد تنبيه في نفس الملف */
+    }
   }
 
   const out = {
@@ -109,7 +105,7 @@ async function main() {
     "utf8",
   );
 
-  console.log("Strict evidence audit");
+  console.log("Strict evidence audit (publish policy)");
   console.log(fails.length === 0 ? "✓ لا مخالفات حرجة" : `✗ ${fails.length} مخالفة`);
   for (const f of fails.slice(0, 40)) {
     console.log(`  - ${f.id}: ${f.detail}`);

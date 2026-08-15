@@ -1,6 +1,6 @@
 {
   "summary": {
-    "at": "2026-08-15T17:12:22.888Z",
+    "at": "2026-08-15T17:30:27.804Z",
     "counts": {
       "books": 173,
       "booksWithSource": 11,
@@ -10,10 +10,12 @@
       "scholarsGenericEra": 71,
       "fatwaPublic": 4,
       "fiqhAll": 6,
-      "fiqhIssuesPublic": 33,
+      "fiqhIssuesPublic": 64,
       "rulingsTotal": 147,
       "rulingsPublic": 0,
+      "rulingsVisible": 147,
       "rulingsPending": 147,
+      "rulingsBlocked": 0,
       "qa": 0,
       "quiz": 0
     },
@@ -687,7 +689,7 @@
       "severity": "info",
       "entity_type": "ruling",
       "entity_id": "gate",
-      "detail": "أحكام عامة=0 · قيد مراجعة=147 · بوابة isPubliclyPublishedRuling فعّالة",
+      "detail": "أحكام معتمدة=0 · مرئية=147 · قيد مراجعة=147 · blocked=0",
       "evidence": "rulings-publication-gate.ts",
       "auto_fix_allowed": false
     }

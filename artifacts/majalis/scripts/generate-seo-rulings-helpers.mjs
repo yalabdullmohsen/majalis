@@ -31,6 +31,25 @@ function evidenceListHtml(title, items) {
 
 export function rulingRichBody(row) {
   const parts = [];
+  const verification = String(row?.verification_status ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/-/g, "_");
+  const isPending =
+    verification === "pending_review" ||
+    verification === "needs_review" ||
+    verification === "pending" ||
+    ["pending_review", "needs_review", "pending"].includes(
+      String(row?.status ?? "")
+        .trim()
+        .toLowerCase()
+        .replace(/-/g, "_"),
+    );
+  if (isPending) {
+    parts.push(
+      `<aside role="note"><strong>قيد المراجعة الشرعية</strong> — هذه المادة تُعرض للفائدة العامة ولا تُعد اعتمادًا نهائيًا.</aside>`,
+    );
+  }
   if (row.summary) {
     parts.push(`<p><strong>تصوير المسألة:</strong> ${escapeHtml(row.summary)}</p>`);
   }
@@ -62,8 +81,8 @@ export function rulingRichBody(row) {
   return parts.filter(Boolean).join("\n");
 }
 
-/** مرآة خفيفة لبوابة النشر العامة — لا pending_review في sitemap/prerender */
-function isPubliclyPublishedRuling(row) {
+/** مرآة لسياسة العرض العامة — يسمح بـ pending_review ويستبعد blocked فقط */
+function isPubliclyVisibleRuling(row) {
   const title = String(row?.title ?? "").trim();
   const body = String(row?.body ?? "").trim();
   if (!title || !body) return false;
@@ -75,19 +94,10 @@ function isPubliclyPublishedRuling(row) {
     .trim()
     .toLowerCase()
     .replace(/-/g, "_");
-  const blocked = new Set([
-    "draft",
-    "pending",
-    "pending_review",
-    "needs_review",
-    "rejected",
-    "archived",
-    "",
-  ]);
-  if (blocked.has(verification)) return false;
-  if (verification !== "approved" && verification !== "published") return false;
-  if (status && blocked.has(status) && status !== "approved" && status !== "published") return false;
-  if (status && status !== "approved" && status !== "published") return false;
+  const blocked = new Set(["draft", "rejected", "archived", "removed", "deleted", ""]);
+  if (blocked.has(verification) && verification !== "") return false;
+  if (verification === "draft" || verification === "rejected" || verification === "archived") return false;
+  if (status && blocked.has(status)) return false;
   return true;
 }
 
@@ -107,7 +117,7 @@ export async function loadEncyclopediaRulingsForSeo(appRoot) {
       if (/[؟?]\s*$/u.test(title)) continue;
       if (/^(هل|كيف|متى|أين|لماذا|كم)\b/u.test(title)) continue;
       if (!row.body || !String(row.body).trim()) continue;
-      if (!isPubliclyPublishedRuling(row)) continue;
+      if (!isPubliclyVisibleRuling(row)) continue;
       out.push(row);
     }
   }

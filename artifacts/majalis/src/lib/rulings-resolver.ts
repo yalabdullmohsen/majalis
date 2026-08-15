@@ -10,7 +10,7 @@ import {
   type RulingContentType,
   type RulingIdentifierKind,
 } from "./rulings-content-type";
-import { isPubliclyPublishedRuling } from "./rulings-publication-gate";
+import { isPubliclyVisibleRuling } from "./rulings-publication-gate";
 
 export type RulingResolveStatus =
   | "found"
@@ -64,7 +64,7 @@ export function evaluateRulingRecord(
   if (isRemovedStatus(row)) {
     return { status: "removed", kind, identifier, contentType, data: row };
   }
-  if (!opts?.allowUnpublished && !isPubliclyPublishedRuling(row)) {
+  if (!opts?.allowUnpublished && !isPubliclyVisibleRuling(row)) {
     return {
       status: "unpublished",
       kind,

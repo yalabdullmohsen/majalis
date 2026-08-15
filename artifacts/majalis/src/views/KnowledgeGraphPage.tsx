@@ -23,6 +23,7 @@ import {
   type KnowledgeSourceType,
 } from "@/lib/supabase";
 import { ShareButtons } from "@/components/ContentActions";
+import { PublishStatusBanner } from "@/components/PublishStatusBanner";
 import { applyPageSeo } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site-config";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -30,6 +31,7 @@ import { Chip } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { useAuth } from "@/components/AuthProvider";
 import "@/styles/pages/knowledge-graph.css";
+import "@/styles/components/scholarly-trust.css";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -184,16 +186,16 @@ export default function KnowledgeGraphPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/knowledge-graph",
-      title: "خريطة المعرفة — قيد الإعداد | المجلس العلمي",
+      title: "خريطة المعرفة — قيد الإكمال | المجلس العلمي",
       description:
-        "خريطة المعرفة الشرعية قيد الإعداد. لا تُعرض كمرجع مكتمل حتى تتوفر بيانات الربط المعتمدة.",
-      keywords: ["خريطة المعرفة", "قيد الإعداد", "شبكة العلوم الشرعية"],
-      robots: "noindex, follow",
+        "صفحة قيد الإكمال لعرض شبكة المعرفة الشرعية. ليست مرجعًا مكتملًا ولا تدّعي توثيق كل العلاقات.",
+      keywords: ["خريطة المعرفة", "قيد الإكمال", "شبكة العلوم الشرعية"],
+      robots: "index, follow",
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "WebPage",
-          name: "خريطة المعرفة — قيد الإعداد",
+          name: "خريطة المعرفة — قيد الإكمال",
           url: absoluteUrl("/knowledge-graph"),
           about: { "@type": "Thing", name: "شبكة المعرفة الإسلامية" },
         },
@@ -320,6 +322,7 @@ export default function KnowledgeGraphPage() {
 
   return (
     <div dir="rtl" className="kng-page">
+      <PublishStatusBanner status="incomplete" />
 
       {/* Header */}
       <header className="sh-hero">
@@ -548,7 +551,7 @@ export default function KnowledgeGraphPage() {
           )}
 
           <p className="kng-note">
-            جميع العلاقات المعروضة موثقة بمصدر معتمد. يمكن إضافة علاقات من لوحة الإدارة.
+            العلاقات المعروضة قيد الإكمال وقد لا تكون مكتملة التوثيق. لا تُعد كل علاقة مصدرًا معتمدًا نهائيًا.
           </p>
         </div>
       )}

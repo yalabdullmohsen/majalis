@@ -59,11 +59,17 @@ export function isPublicDisplayableItem(item: FiqhCouncilItem): boolean {
 }
 
 /**
- * مسألة عامة فقط إن كانت منشورة وموثّقة رسميًا ولها مادّة كافية
- * (ملخص حكم + مستند) — لا تُعرض مسائل العنوان/سطر واحد فقط.
+ * مسألة مرئية للعامة: منشورة ولها عنوان.
+ * المسائل المختصرة تُعرض مع تنبيه «قيد الإكمال» — لا تُخفى.
  */
 export function isPublicIssue(issue: FiqhCouncilIssue): boolean {
   if (issue.status !== "published") return false;
+  return Boolean(String(issue.title ?? "").trim());
+}
+
+/** مسألة مكتملة التوثيق الرسمي (للادعاءات «موثّقة») */
+export function isFullyDocumentedIssue(issue: FiqhCouncilIssue): boolean {
+  if (!isPublicIssue(issue)) return false;
   if (issue.documentation_level !== "official_verified") return false;
   const ruling = String(issue.ruling_summary ?? "").trim();
   const evidence = String(issue.evidence_summary ?? "").trim();

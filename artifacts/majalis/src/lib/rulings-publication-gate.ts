@@ -1,32 +1,18 @@
 /**
  * بوابة نشر الأحكام للعامة — مصدر حقيقة واحد.
- * لا يُعرض للعامة إلا ما اجتاز الاعتماد التحريري صراحةً.
- * ممنوع اعتماد تلقائي؛ pending_review / pending / draft تبقى غير عامة.
+ *
+ * سياسة 2026-08: يُسمح بعرض pending_review للعامة مع تنبيه واضح
+ * (انظر publish-policy.ts). الاعتماد النهائي يبقى عبر isVerifiedApprovedRuling فقط.
  */
+
+import { classifyRuling, type PublishStatus } from "./publish-policy";
 
 export const RULING_PUBLIC_VERIFICATION = "approved" as const;
 
-/** حالات غير صالحة للنشر العام (تشمل مرادفات البذرة) */
-const NON_PUBLIC_VERIFICATION = new Set([
-  "draft",
-  "pending",
-  "pending_review",
-  "needs_review",
-  "rejected",
-  "archived",
-  "",
-]);
+/** حالات غير صالحة لأي عرض عام (blocked) */
+const BLOCKED_VERIFICATION = new Set(["draft", "rejected", "archived", ""]);
 
-const NON_PUBLIC_STATUS = new Set([
-  "draft",
-  "pending",
-  "pending_review",
-  "needs_review",
-  "rejected",
-  "archived",
-  "removed",
-  "deleted",
-]);
+const BLOCKED_STATUS = new Set(["draft", "rejected", "archived", "removed", "deleted"]);
 
 export type RulingPublicationLifecycle =
   | "draft"
@@ -44,17 +30,19 @@ function norm(v: unknown): string {
     .replace(/-/g, "_");
 }
 
-/**
- * Predicate عام: هل يجوز إظهار الحكم في listing / detail / sitemap / search؟
- * يتطلب verification_status=approved (أو مرادف صريح) وstatus ليس مسودة/معلقاً.
- * لا يحوّل pending_review إلى approved.
- */
-export function isPubliclyPublishedRuling(row: {
+export type RulingGateRow = {
   status?: string | null;
   verification_status?: string | null;
   title?: string | null;
   body?: string | null;
-} | null | undefined): boolean {
+  summary?: string | null;
+};
+
+/**
+ * اعتماد نهائي فقط — للمطالبات «موثّق / معتمد».
+ * لا يشمل pending_review.
+ */
+export function isVerifiedApprovedRuling(row: RulingGateRow | null | undefined): boolean {
   if (!row) return false;
   const title = String(row.title ?? "").trim();
   const body = String(row.body ?? "").trim();
@@ -63,17 +51,50 @@ export function isPubliclyPublishedRuling(row: {
   const verification = norm(row.verification_status);
   const status = norm(row.status);
 
-  if (NON_PUBLIC_VERIFICATION.has(verification)) return false;
+  if (
+    BLOCKED_VERIFICATION.has(verification) ||
+    verification === "pending" ||
+    verification === "pending_review" ||
+    verification === "needs_review"
+  ) {
+    return false;
+  }
   if (verification !== "approved" && verification !== "published") return false;
 
-  if (status && NON_PUBLIC_STATUS.has(status)) return false;
-  /* status فارغ مع verification=approved مقبول (بذرة قديمة نظيفة) */
+  if (
+    status &&
+    (BLOCKED_STATUS.has(status) ||
+      status === "pending" ||
+      status === "pending_review" ||
+      status === "needs_review")
+  ) {
+    return false;
+  }
   if (status && status !== "approved" && status !== "published") return false;
 
   return true;
 }
 
-/** تصنيف دورة الحياة للتدقيق — بلا طفرة على السجل */
+/**
+ * مرادف تاريخي للاعتماد النهائي — لا يعني «مرئي للعامة» بعد سياسة النشر الجديدة.
+ */
+export function isPubliclyPublishedRuling(row: RulingGateRow | null | undefined): boolean {
+  return isVerifiedApprovedRuling(row);
+}
+
+/**
+ * هل يجوز إظهار الحكم في listing / detail / sitemap؟
+ * يشمل pending_review بشرط عنوان+نص، ويستبعد blocked.
+ */
+export function isPubliclyVisibleRuling(row: RulingGateRow | null | undefined): boolean {
+  if (!row) return false;
+  return classifyRuling(row) !== "blocked";
+}
+
+export function publishStatusForRuling(row: RulingGateRow): PublishStatus {
+  return classifyRuling(row);
+}
+
 export function classifyRulingLifecycle(row: {
   status?: string | null;
   verification_status?: string | null;
@@ -125,6 +146,7 @@ export function auditRulingPublicationRows(
   incomplete: number;
   orphaned: number;
   publicEligible: number;
+  visibleEligible: number;
 } {
   const counts = {
     total: rows.length,
@@ -136,11 +158,13 @@ export function auditRulingPublicationRows(
     incomplete: 0,
     orphaned: 0,
     publicEligible: 0,
+    visibleEligible: 0,
   };
   for (const row of rows) {
     const life = classifyRulingLifecycle(row);
     counts[life] += 1;
-    if (isPubliclyPublishedRuling(row)) counts.publicEligible += 1;
+    if (isVerifiedApprovedRuling(row)) counts.publicEligible += 1;
+    if (isPubliclyVisibleRuling(row)) counts.visibleEligible += 1;
   }
   return counts;
 }
