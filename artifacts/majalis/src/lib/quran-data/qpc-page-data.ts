@@ -237,6 +237,9 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
       lineWords.get(w.lineNumber)!.push(w);
     }
   }
+  for (const [, words] of lineWords) {
+    words.sort((a, b) => a.id - b.id || a.position - b.position);
+  }
 
   // سور تبدأ فعليًا على هذه الصفحة (أول ظهور لآيتها الأولى هنا).
   const surahStartsOnPage = new Map<number, number>(); // surah -> أول line_number لآيتها الأولى

@@ -6,3 +6,7 @@ export { MushafAyahLine } from "./MushafAyahLine";
 export { MushafAyahNumber } from "./MushafAyahNumber";
 export { MushafPageFooter } from "./MushafPageFooter";
 export { MushafControls } from "./MushafControls";
+export { MushafAyahActions } from "./MushafAyahActions";
+export { MushafTafsirSheet } from "./MushafTafsirSheet";
+export { MushafAudioDock } from "./MushafAudioDock";
+export { findMushafPageForAyah, parseVerseKey } from "./mushaf-page-for-ayah";

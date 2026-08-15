@@ -37,6 +37,14 @@
       "ok": true
     },
     {
+      "page": 15,
+      "file": "docs/mushaf-madinah/snapshots/page-015.png",
+      "hasPdf": false,
+      "fontFamily": "qpc-v2-p15, \"Amiri Quran\", serif",
+      "ayahLineCount": 15,
+      "ok": true
+    },
+    {
       "page": 598,
       "file": "docs/mushaf-madinah/snapshots/page-598.png",
       "hasPdf": false,

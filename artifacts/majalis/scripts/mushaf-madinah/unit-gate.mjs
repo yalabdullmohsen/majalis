@@ -20,14 +20,34 @@ const comps = [
 ];
 for (const c of comps) assert.ok(existsSync(resolve(root, c)), c);
 
+const lineSrc = read("src/features/mushaf-madinah/MushafAyahLine.tsx");
+assert.match(lineSrc, /a\.id\s*-\s*b\.id/);
+assert.doesNotMatch(lineSrc, /\.sort\(\(a,\s*b\)\s*=>\s*a\.position\s*-\s*b\.position\)\s*;/);
+
+const dataSrc = read("src/lib/quran-data/qpc-page-data.ts");
+assert.match(dataSrc, /words\.sort\(\(a,\s*b\)\s*=>\s*a\.id/);
+
 const css = read("src/features/mushaf-madinah/mushaf-madinah.css");
 assert.match(css, /--mm-paper/);
 assert.match(css, /--mm-gold/);
+assert.match(css, /\.mm-page__body/);
+assert.doesNotMatch(css, /\.mm-page__frame\s*\{[^}]*border:\s*1px/);
+assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
 const ayahBlock = css.match(/\.mm-ayah-line\s*\{[^}]+\}/)?.[0] ?? "";
 assert.ok(ayahBlock.includes("letter-spacing: 0") || !/letter-spacing\s*:/.test(ayahBlock));
 assert.ok(ayahBlock.includes("word-spacing: 0") || !/word-spacing\s*:/.test(ayahBlock));
 assert.doesNotMatch(ayahBlock, /letter-spacing:\s*[1-9]/);
 assert.doesNotMatch(ayahBlock, /word-spacing:\s*[1-9]/);
+
+const viewport = read("src/features/mushaf-madinah/MushafViewport.tsx");
+assert.match(viewport, /MushafAyahActions/);
+assert.match(viewport, /MushafTafsirSheet/);
+assert.match(viewport, /MushafAudioDock/);
+assert.match(viewport, /playAyah|togglePlay/);
+
+const line = read("src/features/mushaf-madinah/MushafAyahLine.tsx");
+assert.match(line, /onSelectVerse/);
+assert.match(line, /mm-ayah-hit/);
 
 const app = read("src/App.tsx");
 assert.match(app, /MushafReaderPage/);

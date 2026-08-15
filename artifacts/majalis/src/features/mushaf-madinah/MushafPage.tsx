@@ -9,10 +9,19 @@ const BASMALA = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّ
 type Props = {
   layout: MushafPageLayout;
   fontFamily: string;
+  selectedVerseKey?: string | null;
+  playingVerseKey?: string | null;
+  onSelectVerse?: (verseKey: string) => void;
 };
 
 /** صفحة مصحف واحدة — شبكة ١٥ خانة من بيانات QPC. */
-export function MushafPage({ layout, fontFamily }: Props) {
+export function MushafPage({
+  layout,
+  fontFamily,
+  selectedVerseKey = null,
+  playingVerseKey = null,
+  onSelectVerse,
+}: Props) {
   const opening = layout.pageNumber === 1 || layout.pageNumber === 2;
   const slots = buildSlots(layout, opening);
 
@@ -28,7 +37,7 @@ export function MushafPage({ layout, fontFamily }: Props) {
         juzNumber={layout.juzNumber}
         surahNames={layout.surahsOnPage.map((s) => s.nameArabic)}
       />
-      <div className="mm-page__frame" data-testid="mushaf-page-frame">
+      <div className="mm-page__body" data-testid="mushaf-page-frame">
         {Array.from({ length: 15 }, (_, i) => {
           const slot = i + 1;
           const cell = slots.get(slot);
@@ -43,7 +52,13 @@ export function MushafPage({ layout, fontFamily }: Props) {
                 </div>
               ) : null}
               {cell?.kind === "line" ? (
-                <MushafAyahLine words={cell.words} centered={opening} />
+                <MushafAyahLine
+                  words={cell.words}
+                  centered={opening}
+                  selectedVerseKey={selectedVerseKey}
+                  playingVerseKey={playingVerseKey}
+                  onSelectVerse={onSelectVerse}
+                />
               ) : null}
             </div>
           );
@@ -73,7 +88,6 @@ function buildSlots(layout: MushafPageLayout, opening: boolean): Map<number, Slo
   }
   if (!opening || raw.size === 0) return raw;
 
-  // صفحتا الفاتحة/البقرة الأولى: وسّط كتلة المحتوى عموديًا داخل الـ١٥ خانة
   const keys = [...raw.keys()].sort((a, b) => a - b);
   const first = keys[0]!;
   const last = keys[keys.length - 1]!;

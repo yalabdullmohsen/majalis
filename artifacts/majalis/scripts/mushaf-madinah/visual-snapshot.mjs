@@ -12,7 +12,7 @@ import { chromium } from "playwright";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "../..");
 const outDir = resolve(root, "docs/mushaf-madinah/snapshots");
-const pages = [1, 2, 3, 4, 598, 602];
+const pages = [1, 2, 3, 4, 15, 598, 602];
 const viewport = { width: 390, height: 844 };
 const baseFromEnv = process.env.MUSHAF_GATE_BASE_URL || process.env.BASE_URL || "";
 
