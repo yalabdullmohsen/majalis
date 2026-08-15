@@ -50,6 +50,8 @@ void import("./styles/m2030/interactions.css");
 if (isNative) {
   document.documentElement.classList.add("capacitor-native");
   document.documentElement.dataset.platform = isAndroid ? "android" : isIOS ? "ios" : "native";
+  // overlaysWebView=false → لا تكرار لـ safe-area العلوي قبل تحميل CSS الديناميكي
+  document.documentElement.style.setProperty("--inset-top", "0px");
   void import("./styles/capacitor-native-ux.css");
   void import("./styles/ios-edge.css");
 }

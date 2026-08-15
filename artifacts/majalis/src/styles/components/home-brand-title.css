@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
   padding-block:
-    calc(0.75rem + var(--inset-top, 0px))
+    0.75rem
     0.85rem;
   background-color: var(--mj-bg) !important;
   background-image: none !important;
