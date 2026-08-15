@@ -114,12 +114,13 @@ header.navbar-v3,
 }
 
 .bottom-nav__tab-label {
-  font-size: 0.68rem;
+  font-size: var(--text-nav, 0.875rem);
   font-weight: 600;
+  letter-spacing: 0;
 }
 
 .bottom-nav__tab.is-soon .bottom-nav__tab-label {
-  font-size: 0.62rem;
+  font-size: max(0.8125rem, var(--text-caption, 0.875rem));
 }
 
 .bottom-sheet {
@@ -136,8 +137,8 @@ header.navbar-v3,
 
 .bottom-sheet__section-label {
   color: var(--text-meta) !important;
-  font-size: 0.72rem;
-  letter-spacing: 0.03em;
+  font-size: var(--text-caption, 0.875rem);
+  letter-spacing: 0;
 }
 
 .more-sheet-item {
