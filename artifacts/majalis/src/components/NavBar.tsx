@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
@@ -13,6 +13,7 @@ import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import "@/styles/components/dark-emerald-menus.css";
+import "@/styles/components/app-chrome-scroll.css";
 
 const HeaderTicker = lazy(() =>
   import("./HeaderTicker").then((m) => ({ default: m.HeaderTicker })),
@@ -45,7 +46,6 @@ export default function NavBar() {
   const [location, navigate] = useLocation();
   const isMobile = useIsMobileNav();
   const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
-  const [collapsed, setCollapsed] = useState(false);
 
   const isActive = (href: string) => {
     const path = href.split("?")[0] || href;
@@ -65,13 +65,6 @@ export default function NavBar() {
 
   useEffect(() => {
     void import("@/styles/components/design-redesign.css");
-  }, []);
-
-  useEffect(() => {
-    const onScroll = () => setCollapsed(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   // Bottom nav dispatches "sidenav-open" to open the drawer from outside
@@ -124,7 +117,7 @@ export default function NavBar() {
   return (
     <>
       <header
-        className={`navbar-v3 border-b mj-nav-skin mj-chrome-stable${isMenuOpen ? " navbar-v3--menu-open" : ""}${collapsed ? " is-collapsed" : ""}`}
+        className={`navbar-v3 border-b mj-nav-skin mj-chrome-stable mj-chrome-scrollable${isMenuOpen ? " navbar-v3--menu-open" : ""}`}
       >
         <div className="navbar-v3__inner">
           <div className="navbar-v3__start">

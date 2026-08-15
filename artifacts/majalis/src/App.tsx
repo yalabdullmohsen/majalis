@@ -17,6 +17,7 @@ import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
 import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
@@ -963,6 +964,9 @@ function AppShellInner() {
   const immersive = isImmersiveChromePath(location);
   const onPrayer = isPrayerTimesPath(location);
   const hideSiteChrome = immersive || onPrayer;
+  const { shouldHideChrome } = useScrollDirection({
+    forceShow: searchOpen || comingSoonOpen || hideSiteChrome,
+  });
 
   useEffect(() => {
     ensureChromeMeta();
@@ -994,8 +998,9 @@ function AppShellInner() {
 
   return (
     <div
-      className="app-shell"
+      className={`app-shell${shouldHideChrome ? " app-chrome-hidden" : ""}`}
       style={{ "--app-dir": dir } as React.CSSProperties}
+      data-chrome-hidden={shouldHideChrome ? "true" : "false"}
     >
       <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />
       <a href="#main-content" className="skip-link mj-skip-link">{t("skip_to_content")}</a>
