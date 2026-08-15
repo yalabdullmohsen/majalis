@@ -71,11 +71,30 @@ async function main() {
       }
     }
 
-    // أرقام تسويقية ثابتة ممنوعة في updates بعد الإصلاح
     const updates = fs.readFileSync(path.join(root, "src/lib/updates-seed.ts"), "utf8");
     if (/950\s*سؤال/.test(updates)) {
       fail("stale_950_quiz_claim", "updates-seed.ts ما زال يذكر 950 سؤالاً");
     }
+
+    const publicRulings = RULINGS_ENCYCLOPEDIA_SEED.filter((r) => isPubliclyPublishedRuling(r));
+    if (publicRulings.length === 0) {
+      if (sitemap.includes("<loc>https://majlisilm.com/rulings</loc>")) {
+        fail("empty_rulings_hub_in_sitemap", "/rulings");
+      }
+      const hub = path.join(root, "seo-prerender/rulings/index.html");
+      if (fs.existsSync(hub) && /name="robots" content="index/.test(fs.readFileSync(hub, "utf8"))) {
+        fail("empty_rulings_hub_indexable", "/rulings");
+      }
+    }
+
+    if (sitemap.includes("<loc>https://majlisilm.com/knowledge-graph</loc>")) {
+      fail("knowledge_graph_in_sitemap", "/knowledge-graph");
+    }
+  }
+
+  const kg = path.join(root, "seo-prerender/knowledge-graph/index.html");
+  if (fs.existsSync(kg) && /name="robots" content="index/.test(fs.readFileSync(kg, "utf8"))) {
+    fail("knowledge_graph_indexable", "/knowledge-graph");
   }
 
   const out = {

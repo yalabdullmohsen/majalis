@@ -682,7 +682,15 @@ const LIST_JSON_LD = {
   "/lessons": itemListJsonLdScript(lessonRows.slice(0, 30).map((r) => ({ name: r.title, url: `/lessons/${r.id}` })), "الدروس الشرعية"),
   "/adhkar": itemListJsonLdScript(FEATURED_ADHKAR.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })), "أقسام الأذكار"),
   "/prophets": itemListJsonLdScript(
-    PROPHETS.map((p) => ({ name: `قصة نبي الله ${p.arabicName} عليه السلام`, url: `/prophets/${p.slug}` })),
+    PROPHETS.map((p) => {
+      const disputed =
+        p.slug === "dhul-kifl" ||
+        (p.keyAttributes || []).some((a) => /خلاف/.test(a) && /نبوت/.test(a));
+      return {
+        name: disputed ? `${p.arabicName} — ذكر قرآني` : `قصة نبي الله ${p.arabicName} عليه السلام`,
+        url: `/prophets/${p.slug}`,
+      };
+    }),
     "قصص الأنبياء",
   ),
   "/scholars": itemListJsonLdScript(SCHOLARS.map((s) => ({ name: s.name, url: `/scholars/${s.id}` })), "أعلام العلماء المسلمين"),
@@ -862,7 +870,18 @@ ${linkList("روابط ذات صلة", [
   { name: "التوحيد والعقيدة", url: "/tawhid" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
 ])}`,
-  "/rulings": `<p>موسوعة الأحكام الشرعية: مسائل في العبادات والمعاملات والأسرة، مع ربط بالأدلة والمراجع المعتمدة قدر الإمكان.</p>
+  "/rulings": (() => {
+    const publicCount = ENCYCLOPEDIA_RULINGS.length;
+    if (publicCount === 0) {
+      return `<p>قسم الأحكام الشرعية <strong>قيد الإعداد</strong> — لا تُعرض مواد للعامة حتى تجتاز المراجعة الشرعية والاعتماد التحريري.</p>
+${linkList("أقسام ذات صلة", [
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
+])}`;
+    }
+    return `<p>موسوعة الأحكام الشرعية: مسائل في العبادات والمعاملات والأسرة، مع ربط بالأدلة والمراجع المعتمدة قدر الإمكان.</p>
 ${linkList(
   "من الأحكام المتاحة",
   ENCYCLOPEDIA_RULINGS.slice(0, 20).map((r) => ({
@@ -882,7 +901,8 @@ ${linkList("أقسام ذات صلة", [
   { name: "الزكاة", url: "/zakat" },
   { name: "الصيام", url: "/sawm" },
   { name: "الحج والعمرة", url: "/hajj" },
-])}`,
+])}`;
+  })(),
   "/hadith": `<p>مكتبة الأحاديث النبوية: صحيح وضعيف وموضوع، مع مداخل إلى كتب الرواية والأربعين النووية وعلوم الحديث.</p>
 ${linkList("أقسام الأحاديث", [
   { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
@@ -1844,8 +1864,7 @@ ${linkList("أقسام المجمع", [
   { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
   { name: "آخر المستجدات", url: "/updates" },
 ])}`,
-  "/knowledge-graph": `<h2>ما خريطة المعرفة؟</h2>
-<p>عرض بصري تفاعلي يربط بين مفاهيم العلوم الشرعية (كالفقه والعقيدة والحديث والتفسير) ويُظهر علاقاتها ببعضها، ليساعد طالب العلم على فهم كيف يتصل كل علم بغيره بدل دراسته منعزلاً.</p>
+  "/knowledge-graph": `<p>خريطة المعرفة الشرعية <strong>قيد الإعداد</strong> — الواجهة التفاعلية تُفعَّل عند توفر بيانات الربط المعتمدة، ولا تُعرض حالياً كمرجع مكتمل.</p>
 ${linkList("روابط ذات صلة", [
   { name: "المسارات العلمية", url: "/learning/paths" },
   { name: "الفقه الإسلامي", url: "/fiqh" },
@@ -2075,6 +2094,21 @@ ${linkList("روابط ذات صلة", [
 
 for (const route of seoConfig.routes) {
   if (route.path.includes(":")) continue; // لا يوجد الآن؛ حراسة احتياطية
+  // صفحات ناقصة/فارغة للعامة: لا فهرسة ولا sitemap
+  if (route.path === "/rulings" && ENCYCLOPEDIA_RULINGS.length === 0) {
+    route.robots = "noindex, follow";
+    route.sitemap = false;
+    route.title = "الأحكام الشرعية — قيد الإعداد";
+    route.description =
+      "قسم الأحكام الشرعية قيد الإعداد. تُعرض المواد للعامة بعد اجتياز المراجعة الشرعية والاعتماد التحريري.";
+  }
+  if (route.path === "/knowledge-graph") {
+    route.robots = "noindex, follow";
+    route.sitemap = false;
+    route.title = "خريطة المعرفة — قيد الإعداد";
+    route.description =
+      "خريطة المعرفة الشرعية قيد الإعداد. لا تُعرض كمرجع مكتمل حتى تتوفر بيانات الربط المعتمدة.";
+  }
   addPage(route, {
     extraJsonLd: LIST_JSON_LD[route.path] || "",
     richBody: RICH_BODY_MAP[route.path] || "",
@@ -2274,10 +2308,16 @@ ${s.key_works?.length ? `<h2>أبرز المؤلفات</h2>\n<ul>\n  ${s.key_wor
 
 // الأنبياء — ٢٥ نبياً من prophets-data.ts
 for (const p of PROPHETS) {
+  const disputedProphethood =
+    p.slug === "dhul-kifl" ||
+    (p.keyAttributes || []).some((a) => /خلاف/.test(a) && /نبوت/.test(a));
+  const pageTitle = disputedProphethood
+    ? `${p.arabicName} — ذكر قرآني (دون جزم بتفاصيل لم تثبت)`
+    : `قصة ${p.arabicName} عليه السلام`;
   addPage(
     {
       path: `/prophets/${p.slug}`,
-      title: `قصة ${p.arabicName} عليه السلام`,
+      title: pageTitle,
       description: clamp(p.briefBio, 300),
       keywords: [p.arabicName, p.title, "قصص الأنبياء", "الأنبياء والرسل", ...(p.mainSurahs || [])].filter(Boolean),
       ogType: "article",

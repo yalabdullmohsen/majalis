@@ -1,0 +1,362 @@
+{
+  "at": "2026-08-15T17:18:32.541Z",
+  "contentCounts": {
+    "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
+    "books": 173,
+    "scholars": 135,
+    "fawaid": 616,
+    "quizQuestions": 0,
+    "mindMaps": 23,
+    "rulings": 147,
+    "courses": 63,
+    "miracles": 60,
+    "adhkar": 329,
+    "qa": 0,
+    "nations": 17
+  },
+  "sections": {
+    "home": {
+      "kind": "static_hub",
+      "dataSource": "seo-routes + HomeView",
+      "recordCount": 1
+    },
+    "lessons": {
+      "kind": "seed",
+      "dataSource": "lessons-seed",
+      "recordCount": 0
+    },
+    "quran": {
+      "kind": "hub",
+      "dataSource": "quran-hub + mushaf assets",
+      "recordCount": null
+    },
+    "quran/surah-stories": {
+      "kind": "seed",
+      "dataSource": "surah-stories.ts",
+      "recordCount": -1
+    },
+    "adhkar": {
+      "kind": "seed",
+      "dataSource": "adhkar-seed",
+      "recordCount": 329
+    },
+    "dua": {
+      "kind": "hub",
+      "dataSource": "duas routes (/duas)",
+      "recordCount": null
+    },
+    "hadith": {
+      "kind": "hub+json",
+      "dataSource": "public/data/hadith + verified-hadith-local-seed",
+      "recordCount": null
+    },
+    "hadith/sahih": {
+      "kind": "json",
+      "dataSource": "public/data/hadith/{bukhari,muslim}.json",
+      "recordCount": null
+    },
+    "hadith/daif": {
+      "kind": "seed",
+      "dataSource": "verified-hadith fill daif",
+      "recordCount": null
+    },
+    "hadith/mawdu": {
+      "kind": "seed",
+      "dataSource": "verified-hadith fill mawdu",
+      "recordCount": null
+    },
+    "library": {
+      "kind": "catalog",
+      "dataSource": "library-catalog.ts",
+      "recordCount": 173
+    },
+    "scholars": {
+      "kind": "catalog",
+      "dataSource": "scholars-data.ts",
+      "recordCount": 135
+    },
+    "prophets": {
+      "kind": "seed",
+      "dataSource": "prophets-data.ts",
+      "recordCount": 25
+    },
+    "fiqh": {
+      "kind": "hub",
+      "dataSource": "fiqh pages + topics",
+      "recordCount": null
+    },
+    "rulings": {
+      "kind": "encyclopedia",
+      "dataSource": "rulings-encyclopedia-seed + publication gate",
+      "recordCount": 147,
+      "publicCount": 0,
+      "pendingCount": 147
+    },
+    "fatwa": {
+      "kind": "redirect/alias",
+      "dataSource": "/fatwa → /fiqh|/rulings (ملغى كقسم مستقل)",
+      "recordCount": 0
+    },
+    "fiqh-council": {
+      "kind": "seed",
+      "dataSource": "fiqh-council-seed",
+      "recordCount": 6,
+      "publicCount": 4
+    },
+    "qa": {
+      "kind": "redirect",
+      "dataSource": "/qa → /quiz · SEED_QA",
+      "recordCount": 0
+    },
+    "topics": {
+      "kind": "seed",
+      "dataSource": "topics data via generate-seo",
+      "recordCount": null
+    },
+    "sins-and-rights": {
+      "kind": "seed",
+      "dataSource": "sins-rights seed",
+      "recordCount": null
+    },
+    "islamic-glossary": {
+      "kind": "seed",
+      "dataSource": "glossary seed",
+      "recordCount": null
+    },
+    "prayer": {
+      "kind": "tool",
+      "dataSource": "/prayer-times (مواقيت)",
+      "recordCount": null
+    },
+    "search": {
+      "kind": "tool",
+      "dataSource": "SearchView · noindex",
+      "recordCount": null
+    },
+    "knowledge-graph": {
+      "kind": "live/supabase",
+      "dataSource": "KnowledgeGraphPage + kn APIs",
+      "recordCount": null
+    }
+  },
+  "counts": {
+    "books": 173,
+    "booksWithSource": 11,
+    "booksNeedsSource": 162,
+    "scholars": 135,
+    "prophets": 25,
+    "rulingsTotal": 147,
+    "rulingsPublic": 0,
+    "rulingsPending": 147,
+    "fiqhPublic": 4,
+    "fiqhIssuesPublic": 33,
+    "qa": 0,
+    "quiz": 0,
+    "adhkar": 329,
+    "courses": 63,
+    "surahStories": -1,
+    "sitemapUrls": 672
+  },
+  "hubs": [
+    {
+      "path": "/",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 416,
+      "indexable": true
+    },
+    {
+      "path": "/lessons",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 835,
+      "indexable": true
+    },
+    {
+      "path": "/quran-hub",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 323,
+      "indexable": true
+    },
+    {
+      "path": "/quran/surah-stories",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 394,
+      "indexable": true
+    },
+    {
+      "path": "/adhkar",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 424,
+      "indexable": true
+    },
+    {
+      "path": "/duas",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 525,
+      "indexable": true
+    },
+    {
+      "path": "/hadith",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 378,
+      "indexable": true
+    },
+    {
+      "path": "/hadith/sahih",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 292,
+      "indexable": true
+    },
+    {
+      "path": "/hadith/daif",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 247,
+      "indexable": true
+    },
+    {
+      "path": "/hadith/mawdu",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 233,
+      "indexable": true
+    },
+    {
+      "path": "/library",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 722,
+      "indexable": true
+    },
+    {
+      "path": "/scholars",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 748,
+      "indexable": true
+    },
+    {
+      "path": "/prophets",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 718,
+      "indexable": true
+    },
+    {
+      "path": "/fiqh",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 404,
+      "indexable": true
+    },
+    {
+      "path": "/rulings",
+      "hasPrerender": true,
+      "robots": "noindex, follow",
+      "inSitemap": false,
+      "textLen": 242,
+      "indexable": false
+    },
+    {
+      "path": "/fiqh-council",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 444,
+      "indexable": true
+    },
+    {
+      "path": "/fiqh-council/issues",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 882,
+      "indexable": true
+    },
+    {
+      "path": "/quiz",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 675,
+      "indexable": true
+    },
+    {
+      "path": "/topics",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 836,
+      "indexable": true
+    },
+    {
+      "path": "/sins-and-rights",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 383,
+      "indexable": true
+    },
+    {
+      "path": "/islamic-glossary",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 274,
+      "indexable": true
+    },
+    {
+      "path": "/prayer-times",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 216,
+      "indexable": true
+    },
+    {
+      "path": "/search",
+      "hasPrerender": true,
+      "robots": "noindex, follow",
+      "inSitemap": false,
+      "textLen": 113,
+      "indexable": false
+    },
+    {
+      "path": "/knowledge-graph",
+      "hasPrerender": true,
+      "robots": "noindex, follow",
+      "inSitemap": false,
+      "textLen": 257,
+      "indexable": false
+    },
+    {
+      "path": "/ulum-quran",
+      "hasPrerender": true,
+      "robots": "index, follow",
+      "inSitemap": true,
+      "textLen": 227,
+      "indexable": true
+    }
+  ]
+}

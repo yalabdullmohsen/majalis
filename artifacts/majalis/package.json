@@ -171,6 +171,7 @@
     "audit:content-quality": "node --import tsx scripts/audit-content-quality.mjs",
     "audit:data-quality": "node scripts/audit-data-quality.mjs",
     "audit:data-completeness": "node --import tsx scripts/audit-data-completeness.ts",
+    "audit:full-site-data": "node --import tsx scripts/audit-full-site-data.ts",
     "audit:strict-evidence": "node --import tsx scripts/audit-strict-evidence.ts",
     "audit:strip-lesson-filler": "node scripts/strip-lesson-filler.mjs",
     "audit:rulings-prerender": "node scripts/audit-rulings-prerender.mjs",

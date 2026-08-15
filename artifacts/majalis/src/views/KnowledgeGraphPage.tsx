@@ -184,10 +184,20 @@ export default function KnowledgeGraphPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/knowledge-graph",
-      title: "الرسم البياني المعرفي | المجلس العلمي",
-      description: "استكشف العلاقات بين المفاهيم الإسلامية، رسم بياني تفاعلي يربط العلماء والكتب والمسائل الفقهية. محتوى معتمد في منهج المجلس العلمي",
-      keywords: ["رسم بياني معرفي", "علاقات إسلامية", "استكشاف المعرفة", "خريطة علمية", "علم الشبكات"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الرسم البياني المعرفي الإسلامي", url: absoluteUrl("/knowledge-graph"), about: { "@type": "Thing", name: "شبكة المعرفة الإسلامية التفاعلية" } }],
+      title: "خريطة المعرفة — قيد الإعداد | المجلس العلمي",
+      description:
+        "خريطة المعرفة الشرعية قيد الإعداد. لا تُعرض كمرجع مكتمل حتى تتوفر بيانات الربط المعتمدة.",
+      keywords: ["خريطة المعرفة", "قيد الإعداد", "شبكة العلوم الشرعية"],
+      robots: "noindex, follow",
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "خريطة المعرفة — قيد الإعداد",
+          url: absoluteUrl("/knowledge-graph"),
+          about: { "@type": "Thing", name: "شبكة المعرفة الإسلامية" },
+        },
+      ],
     });
   }, []);
   const [source, setSource] = useState<DataSource>("new");

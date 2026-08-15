@@ -630,6 +630,19 @@ export function getProphet(slug: string): ProphetRecord | undefined {
   return PROPHETS.find((p) => p.slug === resolved);
 }
 
+/** خلاف معتبر في النبوة — لا يُجزم بـ«عليه السلام» في العنوان/البطاقة. */
+export function isDisputedProphethood(p: Pick<ProphetRecord, "slug" | "keyAttributes">): boolean {
+  if (p.slug === "dhul-kifl") return true;
+  return (p.keyAttributes || []).some((a) => /خلاف/.test(a) && /نبوت/.test(a));
+}
+
+export function prophetDisplayTitle(p: Pick<ProphetRecord, "slug" | "arabicName" | "keyAttributes">): string {
+  if (isDisputedProphethood(p)) {
+    return `${p.arabicName} — ذكر قرآني (دون جزم بتفاصيل لم تثبت)`;
+  }
+  return `قصة ${p.arabicName} عليه السلام`;
+}
+
 export function searchProphets(query: string): ProphetRecord[] {
   if (!query.trim()) return PROPHETS;
   return PROPHETS.filter((p) =>

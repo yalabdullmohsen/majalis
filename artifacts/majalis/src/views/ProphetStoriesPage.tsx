@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { CalendarDays, ChevronLeft, ChevronRight, HelpCircle, LayoutList, Sparkles } from "lucide-react";
 import { Link } from "wouter";
-import { PROPHETS, getProphet, resolveProphetSlug, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
+import { PROPHETS, getProphet, resolveProphetSlug, searchProphets, isDisputedProphethood, prophetDisplayTitle, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { prophetArticleJsonLd, breadcrumbJsonLd, defaultSiteJsonLd } from "@/lib/seo-structured-data";
@@ -207,7 +207,7 @@ function ProphetCard({
       onKeyDown={e => (e.key === "Enter" || e.key === " ") && onSelect()}
       tabIndex={0}
       role="button"
-      aria-label={`عرض قصة ${prophet.arabicName} عليه السلام`}
+      aria-label={`عرض قصة ${prophet.arabicName}${isDisputedProphethood(prophet) ? "" : " عليه السلام"}`}
     >
       <div className="prophet-lux-card__glow" aria-hidden="true" />
       <div className="prophet-lux-card__num">{prophet.id}</div>
@@ -219,7 +219,9 @@ function ProphetCard({
       <div className="prophet-lux-card__body">
         <h3 className="prophet-lux-card__name">
           {prophet.arabicName}
-          <span className="prophet-lux-card__pbuh"> عليه السلام</span>
+          {!isDisputedProphethood(prophet) && (
+            <span className="prophet-lux-card__pbuh"> عليه السلام</span>
+          )}
         </h3>
         {prophet.quranTitle && (
           <div className="prophet-lux-card__quran">﴿ {prophet.quranTitle} ﴾</div>
@@ -316,8 +318,12 @@ function ProphetDetailView({
     ];
     applyPageSeo({
       path: `/prophets/${p.slug}`,
-      title: `قصة ${p.arabicName} عليه السلام | المجلس العلمي`,
-      description: p.briefBio ? truncateAtWord(p.briefBio, 160) : `قصة نبي الله ${p.arabicName} عليه السلام من القرآن والسنة.`,
+      title: `${prophetDisplayTitle(p)} | المجلس العلمي`,
+      description: p.briefBio
+        ? truncateAtWord(p.briefBio, 160)
+        : isDisputedProphethood(p)
+          ? `${p.arabicName} — ذكر قرآني دون جزم بما لم يثبت.`
+          : `قصة نبي الله ${p.arabicName} عليه السلام من القرآن والسنة.`,
       keywords: ["قصص الأنبياء", p.arabicName, "أنبياء الإسلام", "معجزات الأنبياء"],
       ogType: "article",
       jsonLd,

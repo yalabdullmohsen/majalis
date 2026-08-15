@@ -251,11 +251,6 @@
     <priority>0.78</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/rulings</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.87</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/updates</loc>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
@@ -279,11 +274,6 @@
     <loc>https://majlisilm.com/tawhid</loc>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/knowledge-graph</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/institutions</loc>
