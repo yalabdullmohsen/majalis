@@ -53,7 +53,6 @@ const SRC = join(dirname(fileURLToPath(import.meta.url)), "../..");
   const critical = [
     "components/SearchSuggestions.tsx",
     "components/GlobalSearchModal.tsx",
-    "components/quran/JumpPageModal.tsx",
     "components/ui/mj.tsx",
   ];
   for (const rel of critical) {

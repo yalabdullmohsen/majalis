@@ -23,14 +23,14 @@ assert.equal(isPrayerTimesPath("/prayer-times"), true);
 assert.equal(isPrayerTimesPath("/prayer-times/"), true);
 assert.equal(isPrayerTimesPath("/fiqh"), false);
 
-assert.equal(isQuranImmersivePath("/mushaf"), true);
-assert.equal(isQuranImmersivePath("/mushaf/page/1"), true);
+assert.equal(isQuranImmersivePath("/mushaf"), false, "المصحف قيد التطوير — ليس غمريًا");
+assert.equal(isQuranImmersivePath("/mushaf/page/1"), false);
 assert.equal(isQuranImmersivePath("/quran-hub"), false, "مركز القرآن ليس غمريًا");
 assert.equal(isQuranImmersivePath("/fiqh"), false);
 
 assert.equal(isImmersiveChromePath("/prayer-times"), false, "الصلاة ليست غمرية كاملة — الشريط السفلي وشريط الأقسام ظاهران");
-assert.equal(isImmersiveChromePath("/mushaf"), true, "المصحف غمري");
-assert.equal(isImmersiveChromePath("/mushaf/2"), true);
+assert.equal(isImmersiveChromePath("/mushaf"), false, "صفحة قيد التطوير تظهر الشريط السفلي");
+assert.equal(isImmersiveChromePath("/mushaf/2"), false);
 assert.equal(isImmersiveChromePath("/quran-hub"), false, "مركز القرآن يظهر الشريط السفلي");
 assert.equal(isImmersiveChromePath("/quran/recitation-test-ai"), true);
 assert.equal(isImmersiveChromePath("/"), false);
@@ -48,8 +48,8 @@ assert.equal(topBar.includes("isPrayerTimesPath"), false, "TopSectionBar لا ي
 
 const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8");
 assert.match(appSrc, /quran-hub"><SafeLazyRoute component=\{QuranHubPage\}/);
-assert.match(appSrc, /MushafPageView/);
-assert.equal(appSrc.includes("MushafComingSoonPage"), false, "صفحة قريبًا لم تعد موصولة بالمصحف");
+assert.match(appSrc, /MushafComingSoonPage/);
+assert.equal(appSrc.includes("MushafPageView"), false, "قارئ المصحف القديم أُزيل");
 assert.match(appSrc, /isImmersiveChromePath/);
 assert.match(appSrc, /isPrayerTimesPath/);
 assert.match(appSrc, /hideSiteChrome/);
@@ -61,7 +61,6 @@ assert.equal(bottomNav.includes("isPrayerTimesPath"), false);
 
 const navMap = readFileSync(resolve(appRoot, "src/lib/nav-map.ts"), "utf8");
 assert.match(navMap, /href: "\/quran-hub"/);
-assert.equal(navMap.includes('href: "/mushaf"'), false, "تبويب قرآن يفتح مركز القرآن لا المصحف مباشرة");
 
 const navBar = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf8");
 assert.match(navBar, /isImmersiveChromePath\(location\) \|\| isPrayerTimesPath\(location\)\) return null/);
@@ -75,9 +74,8 @@ assert.equal(quranHub.includes("SectionQuiz"), false, "مركز القرآن ب�
 assert.match(quranHub, /التسميع/);
 assert.match(quranHub, /\/quran\/recitation-test-ai/);
 
-const mushafView = readFileSync(resolve(appRoot, "src/pages/quran/ui/MushafPageView.tsx"), "utf8");
-assert.match(mushafView, /recitation-test-ai\?surah=/);
-assert.match(mushafView, /navigate\("\/quran-hub"\)/);
+const mushafView = readFileSync(resolve(appRoot, "src/pages/quran/MushafComingSoonPage.tsx"), "utf8");
+assert.match(mushafView, /قيد التطوير/);
 
 const servicesNav = readFileSync(resolve(appRoot, "src/lib/services-center-nav.ts"), "utf8");
 assert.match(servicesNav, /href: "\/nations"/);

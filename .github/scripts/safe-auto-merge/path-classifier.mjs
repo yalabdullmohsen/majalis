@@ -215,7 +215,8 @@ function finalizeClassification(input) {
   const { kinds, byPath, hasUiCss, forceFull, paths } = input;
 
   const needPostgres = Boolean(kinds.risky || forceFull);
-  const needMushaf = Boolean(kinds.mushaf || forceFull);
+  // واجهة المصحف أُزيلت — لا تُشغَّل بوابات القياس/اللقطات حتى يعود القارئ الجديد
+  const needMushaf = false;
   const needFrontendBuild = Boolean(
     kinds.frontend || kinds.mushaf || kinds.risky || kinds.content || kinds.other || forceFull,
   );
@@ -289,7 +290,7 @@ function finalizeClassification(input) {
       lane,
       need_build: needBuild ? "true" : "false",
       need_fast_lane: needFastLane ? "true" : "false",
-      need_mushaf: needMushaf ? "true" : "false",
+      need_mushaf: "false", // mushaf UI removed — keep data only
       need_postgres: needPostgres ? "true" : "false",
       need_color_contrast: needColorContrast ? "true" : "false",
       need_preview_smoke: needPreviewSmoke ? "true" : "false",

@@ -19,7 +19,7 @@ const HREF_TO_ID: Record<string, BottomTabId> = {
 
 const TAB_PREFETCH: Record<string, () => Promise<unknown>> = {
   "/quran-hub": () => import("@/pages/quran/QuranHubPage"),
-  "/mushaf": () => import("@/pages/quran/ui/MushafPageView"),
+  "/mushaf": () => import("@/pages/quran/MushafComingSoonPage"),
   "/quran-knowledge": () => import("@/pages/quran/QuranKnowledgeHubPage"),
   "/lessons": () => import("@/pages/lessons/LessonsPage"),
   "/prayer-times": () => import("@/pages/worship/PrayerTimesPage"),

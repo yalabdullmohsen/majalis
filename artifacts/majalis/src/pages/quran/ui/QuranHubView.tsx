@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import {
   Layers, Circle, Star,
@@ -12,13 +12,6 @@ import { isComingSoonPath } from "@/lib/nav-visibility";
 import { HubCard } from "@/components/ui/HubCard";
 import { PageHero } from "@/components/ui/PageHero";
 import { QuranSurahJumpSearch } from "@/components/quran/QuranSurahJumpSearch";
-import {
-  getSurahMeta,
-  loadPagePosition,
-  loadReadingAyahKey,
-} from "@/lib/quran-api";
-import { mushafPageHref } from "@/lib/quran-surah-list";
-import { toArabicDigits } from "@/lib/utils";
 import "@/styles/pages/quran-hub.css";
 import "@/styles/pages/misc-page-legacy.css";
 
@@ -36,10 +29,10 @@ const QURAN_SECTIONS: QuranSection[] = [
   },
   {
     href: "/mushaf",
-    title: "المصحف الشريف",
-    desc: "صفحات مصحف حقيقية مطابقة لتقسيم مصحف المدينة، مع الاستماع والإشارات المرجعية والملاحظات؛ يُستفاد في التعلم والتدبر",
+    title: "المصحف الجديد",
+    desc: "المصحف الجديد قيد التطوير — بيانات القرآن محفوظة وستُعرض بتصميم مختلف بالكامل قريبًا",
     Icon: BookOpen,
-    tag: "٦٠٤ صفحة",
+    tag: "قيد التطوير",
     featured: true,
   },
   {
@@ -162,25 +155,6 @@ const FEATURES = [
   { Icon: BookMarked,    text: "استكشف قصص القرآن وعبر السور؛ من علوم القرآن الكريم وأدواته؛ يُستفاد في التعلم والتدبر — مرجع المجلس العلمي — مرجع تربوي معتمد في منهج المجلس العلمي. — مرجع تربوي معتمد " },
 ];
 
-function mushafResumeTarget(): { href: string; resumeLabel: string } {
-  const page = loadPagePosition();
-  if (page == null) {
-    return { href: mushafPageHref(1), resumeLabel: "ابدأ من الصفحة ١" };
-  }
-  const ayahKey = loadReadingAyahKey();
-  let surahHint = "";
-  if (ayahKey) {
-    const surah = Number(ayahKey.split(":")[0]);
-    if (surah >= 1 && surah <= 114) {
-      surahHint = `سورة ${getSurahMeta(surah).name} · `;
-    }
-  }
-  return {
-    href: mushafPageHref(page),
-    resumeLabel: `آخر موضع: ${surahHint}ص ${toArabicDigits(page)}`,
-  };
-}
-
 export default function QuranHubPage() {
   useEffect(() => {
     applyPageSeo({
@@ -207,12 +181,11 @@ export default function QuranHubPage() {
     });
   }, []);
 
-  const mushafTarget = useMemo(() => mushafResumeTarget(), []);
   const [tafsirAudioReady, setTafsirAudioReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    void import("@/features/mushaf/tafsir-audio").then(async ({ loadTafsirAudioCatalog }) => {
+    void import("@/lib/quran-data/tafsir-audio").then(async ({ loadTafsirAudioCatalog }) => {
       const clips = await loadTafsirAudioCatalog();
       if (!cancelled) setTafsirAudioReady(clips.some((c) => c.enabled && c.streamUrl));
     });
@@ -238,16 +211,16 @@ export default function QuranHubPage() {
       </PageHero>
 
       <Link
-        href={mushafTarget.href}
+        href="/mushaf"
         className="quran-hub-open-mushaf"
-        aria-label={`افتح المصحف — ${mushafTarget.resumeLabel}`}
+        aria-label="المصحف الجديد قيد التطوير"
       >
         <span className="quran-hub-open-mushaf__icon" aria-hidden="true">
           <BookOpen size={28} strokeWidth={1.75} />
         </span>
         <span className="quran-hub-open-mushaf__text">
-          <span className="quran-hub-open-mushaf__title">افتح المصحف</span>
-          <span className="quran-hub-open-mushaf__resume">{mushafTarget.resumeLabel}</span>
+          <span className="quran-hub-open-mushaf__title">المصحف الجديد</span>
+          <span className="quran-hub-open-mushaf__resume">قيد التطوير</span>
         </span>
       </Link>
 

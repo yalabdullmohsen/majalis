@@ -372,8 +372,8 @@ function dedupeById<T extends { id: string }>(items: T[]): T[] {
 export const MUFASSIRUN: MufassirEntry[] = dedupeById(_MUFASSIRUN_RAW);
 
 /** تفاسير الآية في قارئ المصحف — مرحلة ٢ (Quran.com، جلب كسول لكل آية) */
-export type { MushafTafsirEdition } from "@/features/mushaf/tafsir-editions";
-export { MUSHAF_TAFSIR_EDITIONS } from "@/features/mushaf/tafsir-editions";
+export type { MushafTafsirEdition } from "@/lib/quran-data/tafsir-editions";
+export { MUSHAF_TAFSIR_EDITIONS } from "@/lib/quran-data/tafsir-editions";
 
 export const BOOK_SPOTLIGHTS: BookSpotlight[] = [
   { id: "s-saadi", libraryId: "book-tafsir-al-saadi", title: "تيسير الكريم الرحمن", author: "السعدي", why: "أفضل مدخل ميسر لفهم معاني الآيات والهداية العملية دون إغراق.", level: "مبتدئ" },

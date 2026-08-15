@@ -11,7 +11,7 @@ import {
   legacyPageFirstAyahKey,
   legacyPageToCurrentPageNum,
   pageFirstAyahMushaf1,
-} from "@/lib/mushaf-ayah-page-index.generated";
+} from "@/lib/quran-data/ayah-page-index.generated";
 
 export const MY_BOOKMARKS_KEY = "myBookmarks";
 export const MY_BOOKMARKS_MIGRATED_KEY = "myBookmarks:ayah-migrated-v1";

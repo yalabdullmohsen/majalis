@@ -21,14 +21,8 @@ assert.match(page, /handleBack/);
 assert.match(page, /pts-back/);
 assert.doesNotMatch(page, /displayTime24/);
 
-const mushaf = readFileSync(join(root, "pages/quran/ui/MushafPageView.tsx"), "utf8");
-// وضع الامتلاء المنفصل أُزيل — الصفحة دائمًا بكامل الشاشة؛ لمسة تبدّل الأدوات فقط
-assert.equal(/pageFillMode/.test(mushaf), false, "بلا pageFillMode");
-assert.equal(/togglePageFillMode/.test(mushaf), false, "بلا togglePageFillMode");
-assert.equal(/quran-shell--page-fill/.test(mushaf), false, "بلا quran-shell--page-fill");
-assert.equal(/mpv-fill-enter/.test(mushaf), false, "بلا mpv-fill-enter");
-assert.match(mushaf, /quran-shell--ayah/);
-assert.match(mushaf, /setTextChromeVisible/);
+const mushaf = readFileSync(join(root, "pages/quran/MushafComingSoonPage.tsx"), "utf8");
+assert.match(mushaf, /قيد التطوير/);
 
 const more = readFileSync(join(root, "components/MoreBottomSheet.tsx"), "utf8");
 assert.match(more, /services-center-nav|filterServicesCenterGroups/);

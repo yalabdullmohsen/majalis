@@ -63,9 +63,9 @@ const updateSrc = read("src/views/UpdatePasswordPage.tsx");
 assert.match(updateSrc, /updatePassword/);
 assert.match(updateSrc, /new-password/);
 
-const mushafSrc = read("src/pages/quran/ui/MushafPageView.tsx");
-assert.match(mushafSrc, /إعادة المحاولة/);
-assert.match(mushafSrc, /goBackOrFallback\(location\)/);
+const mushafSrc = read("src/pages/quran/MushafComingSoonPage.tsx");
+assert.match(mushafSrc, /قيد التطوير/);
+assert.match(mushafSrc, /applyPageSeo/);
 
 const raiSrc = read("src/pages/quran/ui/RecitationTestView.tsx");
 assert.match(raiSrc, /goBackOrFallback\("\/quran\/recitation-test-ai"\)/);

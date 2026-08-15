@@ -6,7 +6,7 @@ import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preference
 import {
   DEFAULT_MUSHAF_TAFSIR_EDITION,
   persistTafsirEdition,
-} from "@/features/mushaf/reader-prefs";
+} from "@/lib/quran-data/reader-prefs";
 import {
   getSelectableReciters,
   savePlaybackRate,

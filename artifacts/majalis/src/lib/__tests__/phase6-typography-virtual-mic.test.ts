@@ -48,9 +48,7 @@ assert.ok(existsSync(resolve(root, "public/fonts/qpc-v2/p1.woff2")));
 const main = read("main.tsx");
 assert.match(main, /warmStaticQuranicFonts/);
 
-const mushafFont = read("hooks/useMushafPageFont.ts");
-assert.match(mushafFont, /display:\s*"block"/);
-assert.match(mushafFont, /MAX_LOADED\s*=\s*12/);
+assert.ok(existsSync(resolve(root, "public/fonts/qpc-v2/p1.woff2")), "خطوط QPC محفوظة كبيانات");
 
 // ── VirtualList wiring ──────────────────────────────────────────────────────
 assert.ok(existsSync(resolve(src, "components/VirtualList.tsx")));
@@ -82,7 +80,6 @@ assert.ok(["granted", "denied", "prompt", "unsupported"].includes(state));
 assert.equal(DEFAULT_PREFERENCES.readingTheme, "default");
 assert.match(read("lib/user-preferences.ts"), /ReadingThemeId/);
 assert.match(read("components/reading/ContentActionBar.tsx"), /cycleTheme|readingTheme/);
-assert.match(read("pages/quran/ui/MushafPageView.tsx"), /سيبيا/);
 assert.match(indexCss, /data-reading-theme="sepia"/);
 assert.match(indexCss, /data-reading-theme="night"/);
 
