@@ -24,7 +24,7 @@ export default function SurahStoriesPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "قصص سور القرآن الكريم",
-          description: "قصص وأسباب نزول ١١٤ سورة من سور القرآن الكريم؛ محتوى معتمد في منهج المجلس العلمي؛ ؛ يُعرض للتذكّر والاعتبار بما ثبت من القرآن والسنة الصحيحة",
+          description: "قصص وأسباب نزول ١١٤ سورة من سور القرآن الكريم؛ يُعرض للتعلّم والاطلاع. في المجلس العلمي؛ ؛ يُعرض للتذكّر والاعتبار بما ثبت من القرآن والسنة الصحيحة",
           numberOfItems: 114,
           itemListElement: allStories.slice(0, 20).map((s, i) => ({
             "@type": "ListItem",

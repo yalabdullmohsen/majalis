@@ -14,7 +14,7 @@ export default function DiscoverIslamDoubtsPage() {
     applyPageSeo({
       path: "/discover-islam/doubts",
       title: "ردود على الشبهات حول الإسلام | التعريف بالإسلام",
-      description: "ردود موثّقة وهادئة على أشهر الشبهات المثارة حول الإسلام، بصياغة الشبهة الحقيقية دون تحريف. محتوى معتمد في منهج المجلس العلمي",
+      description: "ردود موثّقة وهادئة على أشهر الشبهات المثارة حول الإسلام، بصياغة الشبهة الحقيقية دون تحريف. يُعرض للتعلّم والاطلاع. في المجلس العلمي",
     });
     getShubuhatByCategory().then(setItems);
   }, []);

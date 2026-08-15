@@ -1,0 +1,105 @@
+{
+  "at": "2026-08-15T17:34:59.575Z",
+  "publishable": true,
+  "summary": {
+    "total": 0,
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "info": 0
+  },
+  "counts": {
+    "books": 173,
+    "booksWithSource": 11,
+    "scholars": 135,
+    "rulingsTotal": 147,
+    "rulingsApproved": 0,
+    "rulingsVisible": 147,
+    "fiqhItems": 4,
+    "fiqhIssues": 64,
+    "courses": 63,
+    "quiz": 0,
+    "qa": 0,
+    "contentCounts": {
+      "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
+      "books": 173,
+      "scholars": 135,
+      "fawaid": 616,
+      "quizQuestions": 0,
+      "mindMaps": 23,
+      "rulings": 147,
+      "courses": 63,
+      "miracles": 60,
+      "adhkar": 329,
+      "qa": 0,
+      "nations": 17
+    }
+  },
+  "sections": {
+    "rulings": {
+      "records": 147,
+      "published": 0,
+      "partial": 0,
+      "pending_review": 147,
+      "incomplete": 0,
+      "blocked": 0
+    },
+    "library": {
+      "records": 173,
+      "published": 11,
+      "partial": 162,
+      "pending_review": 0,
+      "incomplete": 0,
+      "blocked": 0
+    },
+    "fiqh-council": {
+      "records": 4,
+      "published": 2,
+      "partial": 2,
+      "pending_review": 0,
+      "incomplete": 0,
+      "blocked": 0
+    },
+    "fiqh-council-issues": {
+      "records": 64,
+      "published": 0,
+      "partial": 63,
+      "pending_review": 0,
+      "incomplete": 1,
+      "blocked": 0
+    },
+    "scholars": {
+      "records": 135,
+      "published": 135,
+      "partial": 0,
+      "pending_review": 0,
+      "incomplete": 0,
+      "blocked": 0
+    },
+    "courses": {
+      "records": 63,
+      "published": 63,
+      "partial": 0,
+      "pending_review": 0,
+      "incomplete": 0,
+      "blocked": 0
+    },
+    "quiz": {
+      "records": 0,
+      "published": 0,
+      "partial": 0,
+      "pending_review": 0,
+      "incomplete": 1,
+      "blocked": 0
+    },
+    "qa": {
+      "records": 0,
+      "published": 0,
+      "partial": 1,
+      "pending_review": 0,
+      "incomplete": 0,
+      "blocked": 0
+    }
+  },
+  "findings": []
+}

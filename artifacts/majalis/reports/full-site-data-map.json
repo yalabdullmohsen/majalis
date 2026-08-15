@@ -1,5 +1,5 @@
 {
-  "at": "2026-08-15T17:30:27.430Z",
+  "at": "2026-08-15T17:34:28.047Z",
   "contentCounts": {
     "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
     "books": 173,

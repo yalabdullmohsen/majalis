@@ -333,7 +333,8 @@
     "test:qpc-fonts-present": "node -e \"const fs=require('fs'); const p='public/fonts/qpc-v2/p1.woff2'; if(!fs.existsSync(p)) {console.error('missing',p); process.exit(1)}; console.log('✓ QPC fonts present', p);\"",
     "test:official-brand-seo": "node scripts/test-official-brand-seo.mjs",
     "generate:official-brand": "node scripts/generate-official-brand-assets.mjs",
-    "test:publish-policy": "node --import tsx src/lib/__tests__/publish-policy.test.ts"
+    "test:publish-policy": "node --import tsx src/lib/__tests__/publish-policy.test.ts",
+    "audit:final-publication-data": "node --import tsx scripts/audit-final-publication-data.ts"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

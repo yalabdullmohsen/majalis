@@ -6,6 +6,8 @@ import { ShareButtons } from "@/components/ContentActions";
 import { getFiqhIssues } from "@/lib/fiqh-council-issues-service";
 import { FIQH_COUNCIL_CATEGORIES, fiqhIssueHref, type FiqhCouncilIssue } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
+import { PublishStatusBanner } from "@/components/PublishStatusBanner";
+import "@/styles/components/scholarly-trust.css";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 
@@ -18,8 +20,10 @@ export default function FiqhCouncilIssuesPage() {
     applyPageSeo({
       path: "/fiqh-council/issues",
       title: "المسائل الفقهية | المجمع الفقهي، المجلس العلمي",
-      description: "موسوعة المسائل الفقهية، ملفات جامعة تربط القرارات والفتاوى والبحوث والتوصيات والأدلة.",
-      keywords: ["المسائل الفقهية", "المجمع الفقهي", "قرارات فقهية", "فتاوى جماعية"],
+      description:
+        "ملفات مسائل فقهية تربط القرارات والفتاوى والبحوث عند توفرها. المواد قيد الإكمال أو المراجعة تُبيَّن بوضوح ولا تُعد مرجعًا نهائيًا بمفردها.",
+      keywords: ["المسائل الفقهية", "المجمع الفقهي", "قرارات فقهية", "فتاوى جماعية", "قيد الإكمال"],
+      robots: "index, follow",
       jsonLd: [
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },
@@ -40,12 +44,13 @@ export default function FiqhCouncilIssuesPage() {
   return (
     <div className="page-shell narrow content-hub-page fiqh-council-page">
       <PageHeader
-        eyebrow="موسوعة علمية"
+        eyebrow="المجمع الفقهي"
         title="المسائل الفقهية"
-        subtitle="كل مسألة ملف جامع يربط القرارات والفتاوى والبحوث والتوصيات والأدلة، لا فتوى منفردة."
+        subtitle="كل مسألة ملف يربط القرارات والفتاوى والبحوث عند توفر التوثيق. المواد المختصرة تُعرض مع تنبيه قيد الإكمال."
       />
 
       <FiqhCouncilSubnav />
+      <PublishStatusBanner status="partial" />
 
       <div className="content-hub-chips fci-chips-row" role="tablist" aria-label="تصفية مسائل مجلس الفقه">
         {["الكل", ...FIQH_COUNCIL_CATEGORIES].map((cat) => (

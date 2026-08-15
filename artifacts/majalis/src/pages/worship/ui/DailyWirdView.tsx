@@ -118,7 +118,7 @@ export default function DailyWirdPage() {
     applyPageSeo({
       path: "/daily-wird",
       title: "الورد اليومي من القرآن | المجلس العلمي",
-      description: "تتبّع وردك اليومي من القرآن الكريم، حدّد هدفك اليومي من الصفحات وتابع تقدمك نحو ختم القرآن. محتوى معتمد في منهج المجلس العلمي",
+      description: "تتبّع وردك اليومي من القرآن الكريم، حدّد هدفك اليومي من الصفحات وتابع تقدمك نحو ختم القرآن. يُعرض للتعلّم والاطلاع. في المجلس العلمي",
       keywords: ["ورد يومي", "ختم القرآن", "قراءة قرآن", "حفظ قرآن", "مصحف يومي"],
       jsonLd: [
         {
@@ -126,7 +126,7 @@ export default function DailyWirdPage() {
           "@type": "WebApplication",
           name: "الورد اليومي من القرآن الكريم",
           url: "https://www.majlisilm.com/daily-wird",
-          description: "تتبّع وردك اليومي من القرآن الكريم وتابع تقدمك نحو ختم القرآن؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "تتبّع وردك اليومي من القرآن الكريم وتابع تقدمك نحو ختم القرآن؛ يُعرض للتعلّم والاطلاع. في المجلس العلمي",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",
           offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },

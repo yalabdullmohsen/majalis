@@ -437,7 +437,7 @@ export default function SinsAndRightsPage() {
           "@context": "https://schema.org",
           "@type": "Article",
           headline: "الذنوب والحقوق — منظومة معرفية شرعية",
-          description: "شرح أنواع الذنوب والتمييز بين حقوق الله وحقوق العباد وشروط التوبة الصحيحة. محتوى معتمد في منهج المجلس العلمي",
+          description: "شرح أنواع الذنوب والتمييز بين حقوق الله وحقوق العباد وشروط التوبة الصحيحة. يُعرض للتعلّم والاطلاع. في المجلس العلمي",
           url: "https://www.majlisilm.com/sins-and-rights",
           inLanguage: "ar",
           publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },

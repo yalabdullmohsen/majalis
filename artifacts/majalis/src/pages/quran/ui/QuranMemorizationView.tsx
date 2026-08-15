@@ -361,13 +361,13 @@ export default function QuranMemorizationPage() {
       path: "/quran-memorization",
       title: "اختبارات الحفظ القرآني | المجلس العلمي",
       description:
-        "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة (Spaced Repetition). اختبر حفظك وتتبّع تقدمك سورةً سورة. محتوى معتمد في",
+        "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة (Spaced Repetition). اختبر حفظك وتتبّع تقدمك سورةً سورة. يُعرض للتعلّم والاطلاع. ",
       keywords: ["حفظ القرآن", "اختبار الحفظ", "مراجعة القرآن", "حفظ السور", "spaced repetition"],
       jsonLd: [{
         "@context": "https://schema.org",
         "@type": "LearningResource",
         name: "اختبارات الحفظ القرآني",
-        description: "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة. محتوى معتمد في منهج المجلس العلمي",
+        description: "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة. يُعرض للتعلّم والاطلاع. في المجلس العلمي",
         url: "https://www.majlisilm.com/quran-memorization",
         inLanguage: "ar",
         educationalLevel: "Beginner",

@@ -78,7 +78,7 @@ export default function CardsPage() {
     applyPageSeo({
       path: "/cards",
       title: "بطاقات الاقتباسات الإسلامية | المجلس العلمي",
-      description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة، اختر القالب والحجم وصدّر بجودة عالية. محتوى معتمد في منهج المجلس العلمي",
+      description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة، اختر القالب والحجم وصدّر بجودة عالية. يُعرض للتعلّم والاطلاع. في المجلس العلمي",
       keywords: ["بطاقات إسلامية", "اقتباسات إسلامية", "بطاقات دينية", "صور إسلامية", "بطاقات قرآنية"],
       jsonLd: [
         {
@@ -86,7 +86,7 @@ export default function CardsPage() {
           "@type": "WebApplication",
           name: "صانع البطاقات الإسلامية",
           url: "https://www.majlisilm.com/cards",
-          description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة؛ يُعرض للتعلّم والاطلاع. في المجلس العلمي",
           applicationCategory: "ReligiousApplication",
           operatingSystem: "Web",
           inLanguage: "ar",

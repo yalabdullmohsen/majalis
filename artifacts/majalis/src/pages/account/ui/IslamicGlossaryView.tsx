@@ -1432,7 +1432,7 @@ export default function IslamicGlossaryPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "المصطلحات الإسلامية",
-          description: "قاموس المصطلحات الإسلامية الشامل؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "قاموس المصطلحات الإسلامية الشامل؛ يُعرض للتعلّم والاطلاع. في المجلس العلمي",
           numberOfItems: TERMS.length,
           itemListElement: TERMS.slice(0, 20).map((t, i) => ({
             "@type": "ListItem",

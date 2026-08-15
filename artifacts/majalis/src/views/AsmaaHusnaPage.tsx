@@ -52,7 +52,7 @@ export default function AsmaaHusnaPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أسماء الله الحسنى",
-          description: "أسماء الله الحسنى مع المعنى والمصدر والتنبيه على ضعف السرد التفصيلي؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "أسماء الله الحسنى مع المعنى والمصدر والتنبيه على ضعف السرد التفصيلي؛ يُعرض للتعلّم والاطلاع. في المجلس العلمي",
           numberOfItems: ASMAA.length,
           itemListElement: ASMAA.map((a, i) => ({
             "@type": "ListItem",

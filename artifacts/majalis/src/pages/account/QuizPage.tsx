@@ -33,7 +33,7 @@ export default function QuizPage() {
 
   return (
     <>
-      <PublishStatusBanner status="incomplete" />
+      <PublishStatusBanner status="partial" />
       <IslamicQuizGame />
       <div className="twh-share">
         <ShareButtons title="أسئلة وأجوبة — المجلس العلمي" url="https://www.majlisilm.com/quiz" />

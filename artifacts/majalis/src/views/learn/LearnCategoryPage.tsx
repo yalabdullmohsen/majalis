@@ -28,7 +28,7 @@ export default function LearnCategoryPage() {
     applyPageSeo({
       path: `/learn/${detail.category.slug}`,
       title: `${detail.category.name} | أبواب العلم | المجلس العلمي`,
-      description: detail.category.description || `دروس وسلاسل في ${detail.category.name} — محتوى معتمد فقط.`,
+      description: detail.category.description || `دروس وسلاسل في ${detail.category.name} — يُعرض للتعلّم والاطلاع. `,
       keywords: [detail.category.name, "أبواب العلم", "دروس شرعية"],
     });
   }, [detail]);

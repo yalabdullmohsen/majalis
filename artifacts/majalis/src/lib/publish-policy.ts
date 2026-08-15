@@ -25,14 +25,16 @@ export const PUBLISH_STATUS_LABELS: Record<PublishStatus, string> = {
 /** عبارات توثيق ممنوعة بلا مصدر + مراجعة (ادعاءات المنصة، لا أوصاف الكتب الكلاسيكية) */
 export const VERIFICATION_CLAIM_PATTERNS = [
   /موثقة\s*بالأدلة|موثّقة\s*بالأدلة/,
-  /محتوى\s*معتمد(?:\s|$|[.،,])/,
+  /محتوى\s*معتمد/,
   /مادة\s*معتمدة/,
-  /فتوى\s*موثقة|فتوى\s*موثّقة/,
-  /قرار\s*موثق|قرار\s*موثّق/,
+  /فتوى\s*موثقة|فتوى\s*موثّقة|فتاوى\s*موثقة/,
+  /قرار\s*موثق|قرار\s*موثّق|قرارات\s*معتمدة/,
   /جميع\s*العلاقات\s*موثقة|جميع\s*العلاقات\s*موثّقة/,
   /مصدر\s*معتمد\s*(?:من|لدى)\s*المجلس/,
+  /مراجع\s*معتمدة/,
   /مكتبة\s*علمية\s*شاملة/,
   /موسوعة\s+الأحكام(?:\s+المعتمدة)?/,
+  /محتوى\s*مكتمل/,
 ];
 
 export function textClaimsVerification(text: string): boolean {
@@ -228,6 +230,12 @@ export function classifyFiqhMaterial(input: {
     return "pending_review";
   }
   if (isThinFiqhBody(input)) return "incomplete";
+  const rulingBlob = [input.ruling_text, input.ruling_summary, input.content, input.summary]
+    .map((s) => String(s || ""))
+    .join(" ");
+  if (/لم يصدر حكم قاطع|تأجيل البت|أوصى.*مزيد من البحث/.test(rulingBlob)) {
+    return "partial";
+  }
   if (
     input.documentation_level === "official_verified" &&
     hasUsableSource({ sourceUrl: input.source_url, sourceReference: input.source_name })

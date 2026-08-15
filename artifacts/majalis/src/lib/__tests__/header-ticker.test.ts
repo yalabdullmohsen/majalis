@@ -25,7 +25,7 @@ function assert(condition: boolean, label: string) {
   else { console.error(`  ✗ FAIL: ${label}`); failed++; }
 }
 
-console.log("\n=== محتوى معتمد بمصدر — نفس مصدر مجلس اليوم، بلا نظام موازٍ ===");
+console.log("\n=== يُعرض للتعلّم والاطلاع. بمصدر — نفس مصدر مجلس اليوم، بلا نظام موازٍ ===");
 {
   const dhikr = getDailyDhikr();
   assert(!!dhikr.text && dhikr.text.trim().length > 0, "getDailyDhikr() يُرجع نصًا غير فارغ");
