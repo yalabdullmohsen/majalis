@@ -110,6 +110,7 @@ html.dark .mm-viewport {
   max-height: 100%;
   margin: 0 auto;
   position: relative;
+  z-index: 5; /* فوق مناطق قلب الصفحة حتى لا يسرق النقر من الآيات */
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -332,6 +333,11 @@ html.dark .mm-surah-ornament__name {
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   unicode-bidi: isolate; /* لا يعكس ترتيب حروف الـglyph داخل الكلمة */
+  position: relative;
+  z-index: 2;
+  touch-action: manipulation;
+  scroll-margin-bottom: calc(var(--mm-ayah-bar-h) + 1.25rem);
+  scroll-margin-top: calc(var(--mm-chrome-top-h) + 0.75rem);
 }
 
 .mm-ayah-hit:focus-visible {
@@ -584,7 +590,7 @@ html.dark .mm-viewport .mm-page-footer__badge {
   background: transparent;
   opacity: 0;
   cursor: pointer;
-  z-index: 4;
+  z-index: 3; /* تحت mm-page-shell (5) — لا يسرق لمس الآيات */
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -604,6 +610,10 @@ html.dark .mm-viewport .mm-page-footer__badge {
   /* أثناء القراءة: منطقة لمس رفيعة فقط دون عناصر ظاهرة */
   width: 5%;
   max-width: 1.5rem;
+}
+
+.mm-viewport[data-ayah-bar="1"] .mm-page-edge {
+  pointer-events: none;
 }
 
 .mm-audio-dock {

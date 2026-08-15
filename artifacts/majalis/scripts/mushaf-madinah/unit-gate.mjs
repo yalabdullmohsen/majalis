@@ -65,6 +65,9 @@ assert.match(viewport, /playAyah|togglePlay/);
 assert.match(viewport, /onShare|navigator\.share/);
 assert.match(viewport, /exitAlwaysVisible/);
 assert.match(viewport, /dx < 0\) go\(page \+ 1\)/);
+assert.match(viewport, /SWIPE_MIN_PX\s*=\s*45/);
+assert.match(viewport, /suppressPageSyncRef/);
+assert.match(viewport, /اختر آية أولاً/);
 
 const controls = read("src/features/mushaf-madinah/MushafControls.tsx");
 assert.match(controls, /exitAlwaysVisible/);
@@ -77,6 +80,7 @@ assert.match(actions, /مشاركة|onShare/);
 assert.match(actions, /husary|MUSHAF_RECITER_IDS/);
 assert.match(actions, /mm-ayah-bar__handle/);
 assert.match(actions, /جاري تحميل التلاوة/);
+assert.match(actions, /mushaf-ayah-play/);
 
 const pageSrc = read("src/features/mushaf-madinah/MushafPage.tsx");
 assert.match(pageSrc, /inlineBasmala/);
@@ -92,6 +96,9 @@ assert.match(line, /mm-ayah-hit/);
 assert.match(line, /mm-ayah-run/);
 assert.match(line, /groupRuns|WordRun/);
 assert.match(line, /charType === "end"/);
+assert.match(line, /stopPropagation/);
+assert.match(line, /LONG_PRESS_MS/);
+assert.match(line, /data-testid="mushaf-ayah-hit"/);
 
 const app = read("src/App.tsx");
 assert.match(app, /MushafReaderPage/);

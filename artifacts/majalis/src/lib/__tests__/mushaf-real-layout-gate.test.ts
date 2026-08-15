@@ -14,6 +14,7 @@ const css = read("src/features/mushaf-madinah/mushaf-madinah.css");
 const page = read("src/features/mushaf-madinah/MushafPage.tsx");
 const viewport = read("src/features/mushaf-madinah/MushafViewport.tsx");
 const actions = read("src/features/mushaf-madinah/MushafAyahActions.tsx");
+const line = read("src/features/mushaf-madinah/MushafAyahLine.tsx");
 const reader = read("src/pages/quran/MushafReaderPage.tsx");
 const data = read("src/lib/quran-data/qpc-page-data.ts");
 
@@ -47,16 +48,36 @@ assert.match(data, /basmalaSlot/);
 assert.match(page, /needsVisualBasmala/);
 
 // فواصل الآيات inline
-assert.match(read("src/features/mushaf-madinah/MushafAyahLine.tsx"), /mm-ayah-hit--end/);
+assert.match(line, /mm-ayah-hit--end/);
 assert.match(css, /\.mm-ayah-number/);
 
 // Bottom sheet نصف الشاشة
 assert.match(css, /max-height:\s*min\(50dvh/);
 assert.match(actions, /mm-ayah-bar__handle/);
 
-// السحب بالاتجاه الصحيح (RTL: dx سالب → التالية)
+// السحب بالاتجاه الصحيح (RTL: dx سالب → التالية) + عتبة واضحة
 assert.match(viewport, /dx < 0\) go\(page \+ 1\)/);
 assert.match(viewport, /go\(page - 1\)/);
+assert.match(viewport, /SWIPE_MIN_PX\s*=\s*45/);
+assert.match(viewport, /suppressPageSyncRef/);
+assert.match(viewport, /اختر آية أولاً/);
+assert.match(viewport, /listAyahAudioUrls/);
+assert.match(viewport, /import\.meta\.env\.DEV/);
+
+// فصل لمس الآية عن قلب الصفحة
+assert.match(line, /stopPropagation/);
+assert.match(line, /LONG_PRESS_MS/);
+assert.match(line, /onPointerDown/);
+assert.match(line, /data-testid="mushaf-ayah-hit"/);
+
+assert.match(css, /فوق مناطق قلب الصفحة/);
+assert.match(css, /data-ayah-bar="1"\]\s*\.mm-page-edge/);
+assert.match(css, /scroll-margin-bottom/);
+
+assert.match(actions, /جاري تحميل التلاوة/);
+assert.match(actions, /تعذر تحميل التلاوة/);
+assert.match(actions, /mushaf-ayah-play/);
+assert.match(actions, /handlePlayClick|onTogglePlay/);
 
 // ليلي بتباين واضح
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
