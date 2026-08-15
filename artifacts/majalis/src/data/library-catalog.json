@@ -405,7 +405,7 @@
     "title": "إحياء علوم الدين",
     "canonicalTitle": "إحياء علوم الدين",
     "normalizedTitle": "احياء علوم دين",
-    "author": "حجة الإسلام أبو حامد الغزالي",
+    "author": "أبو حامد الغزالي",
     "authorId": "author-abu-hamid-al-ghazali",
     "category": "رقائق",
     "description": "موسوعة الغزالي في تزكية النفس والسلوك والأخلاق؛ من أجمع الكتب في باب الرقائق، ويُقرأ مع تمحيص الأحاديث والمباحث الصوفية كما نبّه أهل العلم.",
@@ -413,7 +413,10 @@
     "verificationStatus": "pending_review",
     "sources": [],
     "reviewedBy": null,
-    "reviewedAt": null
+    "reviewedAt": null,
+    "contentStatus": "useful_with_caution",
+    "notes": "كتاب نافع في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو التصحيح والتضعيف.",
+    "caution": "فيه أحاديث ضعيفة وموضوعة ومباحث صوفية؛ يُقرأ مع التمحيص."
   },
   {
     "id": "book-risalah-qushayri",
@@ -589,7 +592,10 @@
     "verificationStatus": "pending_review",
     "sources": [],
     "reviewedBy": null,
-    "reviewedAt": null
+    "reviewedAt": null,
+    "contentStatus": "useful_with_caution",
+    "notes": "فيه استطرادات كلامية وفلسفية تحتاج مراجعة.",
+    "caution": "فيه استطرادات كلامية وفلسفية تحتاج مراجعة."
   },
   {
     "id": "book-darimi",
@@ -733,7 +739,10 @@
     "verificationStatus": "pending_review",
     "sources": [],
     "reviewedBy": null,
-    "reviewedAt": null
+    "reviewedAt": null,
+    "contentStatus": "reference_only",
+    "notes": "مرجع تاريخي فيه روايات ضعيفة وإسرائيليات.",
+    "caution": "مرجع تاريخي فيه روايات ضعيفة وإسرائيليات."
   },
   {
     "id": "book-sirah-dahlawi",
@@ -1272,12 +1281,15 @@
     "author": "القاضي أبو الفضل عياض اليحصبي",
     "authorId": "author-al-qadi-iyad",
     "category": "سيرة",
-    "description": "موسوعة في حقوق النبي ﷺ وصفاته وأخلاقه ومعجزاته، تُعدّ من أنفع الكتب في محبة النبي والتعريف بشمائله. يحتوي على ما يجب اعتقاده في حق النبي وما يُوجب الردة.",
+    "description": "موسوعة في حقوق النبي ﷺ وصفاته وأخلاقه ومعجزاته؛ من أشهر كتب الشمائل، ويُقرأ مع تمييز ما ثبت وما زيد من الروايات.",
     "editions": [],
     "verificationStatus": "pending_review",
     "sources": [],
     "reviewedBy": null,
-    "reviewedAt": null
+    "reviewedAt": null,
+    "contentStatus": "useful_with_caution",
+    "notes": "كتاب نافع في بابه، وفيه مواضع تحتاج مراجعة أهل العلم.",
+    "caution": "فيه روايات ومباحث تحتاج تمحيصًا؛ يُنتفع به مع الرجوع إلى الصحيح عند التعارض."
   },
   {
     "id": "book-kamil-ibn-athir",

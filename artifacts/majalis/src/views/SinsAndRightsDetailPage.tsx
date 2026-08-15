@@ -22,7 +22,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
     if (!topic) {
       applyPageSeo({
         path: `/sins-and-rights/${params.slug}`,
-        title: "الموضوع غير موجود | المجلس العلمي",
+        title: "موضوع غير متاح | المجلس العلمي",
         description: "لم يُعثر على هذا الموضوع.",
         robots: "noindex, follow",
         jsonLd: [],
@@ -58,7 +58,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
   if (!topic) {
     return (
       <div className="snr-detail-page">
-        <Empty text="الموضوع غير موجود." />
+        <Empty text="هذا الموضوع غير متاح حالياً." />
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <Link href="/sins-and-rights" style={{ color: "var(--elite-green, var(--mj-brand-deep))", fontWeight: 600 }}>
             ← العودة إلى الذنوب والحقوق

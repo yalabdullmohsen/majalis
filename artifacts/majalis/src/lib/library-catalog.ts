@@ -27,6 +27,12 @@ export const LIBRARY_CATEGORIES = [
 
 export type LibraryCategory = (typeof LIBRARY_CATEGORIES)[number];
 
+export type LibraryContentStatus =
+  | "recommended"
+  | "useful_with_caution"
+  | "reference_only"
+  | "needs_review";
+
 export type LibraryBook = {
   id: string;
   title: string;
@@ -37,6 +43,10 @@ export type LibraryBook = {
   parts_label?: string;
   external_url?: string;
   status: "approved";
+  /** تصنيف منهجي للمكتبة: موصى / بحذر / مرجع فقط / يحتاج مراجعة */
+  contentStatus?: LibraryContentStatus;
+  /** ملاحظة مختصرة تظهر مع الكتاب */
+  notes?: string;
   keywords: string[];
   sort_order: number;
   /** تنبيه علمي يظهر في صفحة الكتاب؛ الكتب ذات التنبيه لا تُبرَز في الرئيسية. */
@@ -355,12 +365,14 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
   {
     id: "book-ihya",
     title: "إحياء علوم الدين",
-    author: "حجة الإسلام أبو حامد الغزالي",
+    author: "أبو حامد الغزالي",
     type: "كتاب",
     category: "رقائق",
     description: "موسوعة الغزالي في تزكية النفس والسلوك والأخلاق؛ من أجمع الكتب في باب الرقائق، ويُقرأ مع تمحيص الأحاديث والمباحث الصوفية كما نبّه أهل العلم.",
     parts_label: "4 أجزاء",
     status: "approved",
+    contentStatus: "useful_with_caution",
+    notes: "كتاب نافع في بابه، وفيه مواضع تحتاج مراجعة أهل العلم، فلا يعتمد وحده في مسائل العقيدة أو التصحيح والتضعيف.",
     keywords: ["إحياء علوم الدين", "الغزالي", "تزكية", "أخلاق", "سلوك"],
     sort_order: 220,
     caution:
@@ -503,6 +515,8 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     description: "تفسير عقلي كلامي موسّع يناقش الآيات من جوانب لغوية وكلامية وفلسفية؛ مرجع ضخم يُستفاد منه في المباحث اللغوية والعامة مع مراجعة مواضع الاستطراد.",
     parts_label: "32 جزءاً",
     status: "approved",
+    contentStatus: "useful_with_caution",
+    notes: "كتاب نافع في مباحثه اللغوية، وفيه استطرادات كلامية وفلسفية تحتاج مراجعة؛ فلا يعتمد وحده في العقيدة.",
     keywords: ["الرازي", "مفاتيح الغيب", "تفسير عقلي", "التفسير الكبير"],
     sort_order: 45,
     caution:
@@ -612,6 +626,8 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     description: "من أوسع كتب السيرة النبوية تفصيلاً؛ يجمع جوانب السيرة والمغازي والشمائل، ويحتاج قارئه إلى تمييز الروايات الواهية والإسرائيليات.",
     parts_label: "3 أجزاء",
     status: "approved",
+    contentStatus: "reference_only",
+    notes: "مرجع تاريخي واسع؛ فيه روايات ضعيفة وإسرائيليات، فلا يعتمد وحده دون كتب السيرة المحرَّرة.",
     keywords: ["السيرة الحلبية", "سيرة", "النبي ﷺ"],
     sort_order: 59,
     caution:
@@ -1019,11 +1035,15 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     author: "القاضي أبو الفضل عياض اليحصبي",
     type: "كتاب",
     category: "سيرة",
-    description: "موسوعة في حقوق النبي ﷺ وصفاته وأخلاقه ومعجزاته، تُعدّ من أنفع الكتب في محبة النبي والتعريف بشمائله. يحتوي على ما يجب اعتقاده في حق النبي وما يُوجب الردة.",
+    description: "موسوعة في حقوق النبي ﷺ وصفاته وأخلاقه ومعجزاته؛ من أشهر كتب الشمائل، ويُقرأ مع تمييز ما ثبت وما زيد من الروايات.",
     parts_label: "جزءان",
     status: "approved",
+    contentStatus: "useful_with_caution",
+    notes: "كتاب نافع في بابه، وفيه مواضع وروايات تحتاج مراجعة أهل العلم، فلا يعتمد وحده في العقيدة أو التصحيح والتضعيف.",
     keywords: ["الشفا", "القاضي عياض", "سيرة", "حقوق النبي", "شمائل"],
     sort_order: 110,
+    caution:
+      "فيه روايات ومباحث تحتاج تمحيصًا؛ يُنتفع به في الشمائل مع الرجوع إلى الصحيح عند التعارض.",
   },
   {
     id: "book-kamil-ibn-athir",
