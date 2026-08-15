@@ -128,6 +128,7 @@ const RevelationOrderPage = lazy(() => import("@/pages/quran/RevelationOrderPage
 const MakkiMadaniPage = lazy(() => import("@/pages/quran/MakkiMadaniPage"));
 const MushafPageView = lazy(() => import("@/pages/quran/ui/MushafPageView"));
 const MushafEditionInfoPage = lazy(() => import("@/pages/quran/MushafEditionInfoPage"));
+const QuranPage = lazy(() => import("@/components/QuranPage"));
 const QuranHubPage = lazy(() => import("@/pages/quran/QuranHubPage"));
 const QuranPeoplePage = lazy(() => import("@/pages/quran/QuranPeoplePage"));
 const QuranPersonDetailPage = lazy(() => import("@/pages/quran/QuranPersonDetailPage"));
@@ -741,8 +742,8 @@ function Router() {
           </Suspense>
         </ErrorBoundary>
       </Route>
-      <Route path="/quran"><Redirect to="/quran-hub" /></Route>
-      {/* المصحف متوقف مؤقتًا — كل مساراته تعرض صفحة «قريبًا» */}
+      <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
+      {/* المصحف الرسمي QPC على /mushaf — /quran صفحة قراءة بنمط ورق المدينة */}
       <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf/page"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf/about-edition"><SafeLazyRoute component={MushafEditionInfoPage} /></Route>

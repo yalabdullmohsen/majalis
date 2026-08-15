@@ -50,7 +50,6 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
 
 // مسارات الاختصار التي يجب أن تُعيد التوجيه بدلاً من الفشل
 const REDIRECT_ROUTES: Array<{ href: string; redirectsTo: string }> = [
-  { href: "/quran",                 redirectsTo: "/quran-hub" },
   { href: "/research",              redirectsTo: "/fiqh-council/research" },
   { href: "/scholarly-research",    redirectsTo: "/quiz" },
   { href: "/qa",                    redirectsTo: "/quiz" },

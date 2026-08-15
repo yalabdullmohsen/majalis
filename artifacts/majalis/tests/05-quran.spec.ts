@@ -1,19 +1,18 @@
 /**
  * Quran tests — hub page loads, section navigation, radio controls.
- * /quran اختصار لمركز القرآن، بينما /mushaf قارئ حي مستقل.
+ * /quran صفحة قراءة بنمط المدينة؛ /quran-hub المركز؛ /mushaf المصحف الرسمي.
  */
 import { test, expect } from "@playwright/test";
 import { waitForContent } from "./helpers";
 
 test.describe("Quran — مركز القرآن", () => {
-  test("/quran redirects to quran hub and loads with content", async ({ page }) => {
+  test("/quran loads Madinah-style page with Al-Fatiha", async ({ page }) => {
     await page.goto("/quran");
     await waitForContent(page);
     await page.waitForTimeout(800);
-    expect(page.url()).toContain("/quran-hub");
-    const body = await page.locator("body").innerText();
-    const hasContent = body.length > 10;
-    expect(hasContent, "مركز القرآن يجب أن يحمّل بمحتوى").toBe(true);
+    expect(page.url()).toMatch(/\/quran\/?$/);
+    await expect(page.locator(".qp-madinah__surah-title")).toContainText("الْفَاتِحَة");
+    await expect(page.locator(".qp-madinah__ayah")).toHaveCount(7);
   });
 
   test("clicking a section card navigates to its page", async ({ page }) => {
