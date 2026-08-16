@@ -1,12 +1,23 @@
 /* 69b — TawhidPage Hub & Flow Layout */
 .twh-hub-hero {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
   background: linear-gradient(135deg, var(--mj-brand) 0%, var(--mj-brand-deep) 100%);
-  border-radius: var(--ds-radius-2xl);
-  padding: 2.25rem 1.75rem;
+  border-radius: 0;
+  padding: 2.25rem max(1rem, var(--page-gutter, 1rem));
   margin-bottom: 2rem;
   color: #FFFFFF;
 }
-.twh-hub-hero__inner { max-width: 640px; }
+.twh-hub-hero__inner {
+  max-width: min(64rem, 100%);
+  margin-inline: auto;
+  width: 100%;
+}
+.page-shell:has(> .twh-hub-hero){max-width:none;width:100%;padding-inline:0}
+.page-shell:has(> .twh-hub-hero)>:not(.twh-hub-hero){
+  box-sizing:border-box;width:100%;max-width:min(56rem,100%);margin-inline:auto;padding-inline:var(--page-gutter)
+}
 .twh-hub-hero__title {
   font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 900;

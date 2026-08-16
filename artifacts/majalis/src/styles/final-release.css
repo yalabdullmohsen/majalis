@@ -67,11 +67,12 @@ body {
 .app-shell {
   min-height: 100svh;
   min-height: 100dvh;
-  /* سطح التطبيق الفاتح فوق الـbleed الأخضر — لا يترك شريطًا أبيض تحت الشريط السفلي */
   background: var(--mj-bg, var(--color-background, #F2F4F3));
   color: var(--color-text);
-  /* بلا هامش سالب — الـbody لم يعد يحجز الإنسِت السفلي */
-  margin-block-end: 0;
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 html[data-theme="dark"] #root,
@@ -89,14 +90,23 @@ html.dark .app-shell {
 }
 
 /* صفحات ذات بطل ممتد — بلا هامش مزدوج من .app-main */
+.app-main:has(.page-hero-mj--bleed),
 .app-main:has(.prophets-lux-page),
 .app-main:has(.prophet-detail-lux),
 .app-main:has(.quran-hub-page),
 .app-main:has(.nations-page),
 .app-main:has(.seerah-page),
-.app-main:has(.quran-people-page) {
-  padding-inline: 0;
+.app-main:has(.quran-people-page),
+.app-main:has(.seerah-hero),
+.app-main:has(.twh-hub-hero),
+.app-main:has(.fqh-hub-hero){padding-inline:0}
+
+/* غلاف مع PageHero ممتد: عرض كامل · حشو للنسل غير البطل */
+.page-shell:has(.page-hero-mj--bleed){max-width:none;width:100%;padding-inline:0}
+.page-shell:has(.page-hero-mj--bleed)>:not(.page-hero-mj){
+  box-sizing:border-box;width:100%;max-width:min(56rem,100%);margin-inline:auto;padding-inline:var(--page-gutter)
 }
+.page-shell.narrow:has(.page-hero-mj--bleed)>:not(.page-hero-mj){max-width:min(48rem,100%)}
 
 :where(h1, h2, h3, h4) {
   color: var(--color-text);

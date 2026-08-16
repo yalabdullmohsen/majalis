@@ -1,8 +1,11 @@
 /* 69c — FiqhPage Hub (fqh-hub-*) */
 .fqh-hub-hero {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
   background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 60%, var(--mj-brand-deep) 100%);
-  border-radius: var(--ds-radius-2xl);
-  padding: 2rem 1.75rem 1.75rem;
+  border-radius: 0;
+  padding: 2rem max(1rem, var(--page-gutter, 1rem)) 1.75rem;
   margin-bottom: 1.5rem;
   color: #FFFFFF;
   position: relative;
@@ -55,7 +58,11 @@
   box-sizing: border-box;
 }
 .fqh-hub-grid--overview {
-  margin-inline: var(--page-gutter, 1rem);
+  margin-inline: 0;
+}
+.page-shell:has(> .fqh-hub-hero){max-width:none;width:100%;padding-inline:0}
+.page-shell:has(> .fqh-hub-hero)>:not(.fqh-hub-hero){
+  box-sizing:border-box;width:100%;max-width:min(56rem,100%);margin-inline:auto;padding-inline:var(--page-gutter)
 }
 @media (min-width: 400px) {
   .fqh-hub-grid {
