@@ -8,7 +8,8 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 import { FEATURED } from "@/lib/home-feature-catalog";
-import { MORE_FEATURED_SECTIONS, MORE_SECTION_GROUPS } from "@/features/more/moreSections";
+import { MORE_FEATURED_SECTIONS, MORE_IA_GROUP_TITLES } from "@/features/more/moreSections";
+import { featuredSections } from "@/config/sections.registry";
 import {
   IA_FORBIDDEN_PUBLIC_LABELS,
   IA_HOME_PRIMARY,
@@ -35,25 +36,26 @@ assert.deepEqual(
   ["/quran-hub", "/lessons", "/prayer-times", "/fiqh"],
 );
 
-assert.deepEqual(
-  MORE_SECTION_GROUPS.map((g) => g.title),
-  ["الأقسام الأساسية", "أدوات مساعدة"],
-);
+assert.deepEqual(MORE_IA_GROUP_TITLES.length, 7);
+assert.equal(MORE_IA_GROUP_TITLES.at(-1), "الحساب والإعدادات");
 
-const moreTitles = MORE_FEATURED_SECTIONS.map((s) => s.title);
+assert.equal(MORE_FEATURED_SECTIONS.length, 6);
+assert.deepEqual(
+  MORE_FEATURED_SECTIONS.map((s) => s.title),
+  featuredSections().map((s) => s.label),
+);
 for (const required of [
-  "المكتبة",
-  "أعلام وتراجم",
+  "العقيدة",
+  "التفسير",
   "الحديث وعلومه",
-  "قصص الأنبياء",
-  "الأمم السابقة",
+  "الفقه والأحكام",
   "السيرة النبوية",
-  "سين جيم",
-  "الفوائد والبطاقات",
-  "البحث",
-  "الإعدادات",
+  "قصص الأنبياء",
 ]) {
-  assert.ok(moreTitles.includes(required), `المزيد يتضمن «${required}»`);
+  assert.ok(
+    MORE_FEATURED_SECTIONS.some((s) => s.title === required),
+    `المزيد المميّز يتضمن «${required}»`,
+  );
 }
 
 const SURFACES = [

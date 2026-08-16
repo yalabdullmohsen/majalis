@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { MORE_FEATURED_SECTIONS } from "@/features/more/moreSections";
+import "@/config/sections.registry";
 
 export type ServicesCenterAction =
   | { kind: "link"; href: string }
@@ -71,13 +72,13 @@ const FEATURED_HUB_ITEMS: ServicesCenterItem[] = MORE_FEATURED_SECTIONS.map((s) 
 export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
   {
     id: "hubs",
-    title: "المزيد",
+    title: "الأبواب المميّزة",
     layout: "featured",
     items: FEATURED_HUB_ITEMS,
   },
   {
     id: "features",
-    title: "أدوات سريعة",
+    title: "أدوات العبادة",
     layout: "quick",
     items: [
       { id: "tasbih", label: "التسبيح", keywords: ["مسبحة", "تسبيح"], Icon: HandHeart, action: { kind: "link", href: "/tasbih" } },
@@ -96,7 +97,7 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
   },
   {
     id: "content",
-    title: "محتوى إضافي",
+    title: "العلوم الشرعية",
     layout: "list",
     items: [
       { id: "seerah", label: "السيرة النبوية", keywords: ["سيرة"], Icon: BookA, action: { kind: "link", href: "/seerah" } },
@@ -114,7 +115,7 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
   },
   {
     id: "settings",
-    title: "الإعدادات والمساعدة",
+    title: "الحساب والإعدادات",
     layout: "list",
     items: [
       { id: "account", label: "حسابي", Icon: User, action: { kind: "link", href: "/my-learning" } },

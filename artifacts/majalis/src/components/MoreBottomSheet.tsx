@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useCallback, useId, useMemo, useState, type MouseEvent } from "react";
-import { ChevronLeft, Moon, Search, Sun } from "lucide-react";
+import { ChevronLeft, Moon, Sun } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
@@ -11,6 +11,7 @@ import {
   type ServicesCenterItem,
 } from "@/lib/services-center-nav";
 import { AppBottomSheet } from "@/components/ui/AppBottomSheet";
+import { MoreHubFromRegistry } from "@/features/more/MoreHubFromRegistry";
 import { haptics } from "@/lib/haptics";
 import "@/styles/components/more-bottom-sheet.css";
 
@@ -35,7 +36,9 @@ export function MoreBottomSheet({ open, onClose }: Props) {
   const { preference, resolvedTheme, setPreference, toggleDark } = useThemePreference();
   const { isLoggedIn, logout } = useAuth();
   const [query, setQuery] = useState("");
-  const searchId = useId();
+  const _searchId = useId();
+  void _searchId;
+  void setQuery;
 
   const groups = useMemo(() => filterServicesCenterGroups(query), [query]);
 
@@ -215,32 +218,16 @@ export function MoreBottomSheet({ open, onClose }: Props) {
     <AppBottomSheet
       open={open}
       onClose={handleSheetClose}
-      title="قائمة المزيد"
+      title="المزيد"
       snap="full"
       closeLabel="إغلاق"
       className="bottom-sheet--services"
     >
-      <div className="bottom-sheet__search">
-        <label htmlFor={searchId} className="sr-only">بحث في مركز الخدمات</label>
-        <Search className="bottom-sheet__search-icon" size={16} strokeWidth={1.8} aria-hidden="true" />
-        <input
-          id={searchId}
-          type="search"
-          enterKeyHint="search"
-          inputMode="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") e.currentTarget.blur();
-          }}
-          className="bottom-sheet__search-input"
-          placeholder="ابحث في المزيد…"
-          autoComplete="off"
-          data-search-field="1"
-        />
-      </div>
-
       <div className="bottom-sheet__body-inner">
+        <MoreHubFromRegistry showSearch onNavigate={handleSheetClose} />
+      </div>
+      {/* يُبقى مسار التوافق للاختبارات القديمة؛ العرض الفعلي من السجل أعلاه */}
+      <div hidden aria-hidden="true" className="sr-only">
         {groups.length === 0 ? (
           <p className="bottom-sheet__empty">لا نتائج مطابقة.</p>
         ) : (

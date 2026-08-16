@@ -45,6 +45,8 @@ const ENTRY_FILES = [
   // صفحة /more الحقيقية + مصدر الأقسام + خريطة الموقع + مركز علوم القرآن
   "pages/account/MorePage.tsx",
   "features/more/moreSections.ts",
+  "features/more/MoreHubFromRegistry.tsx",
+  "config/sections.registry.ts",
   "pages/account/ui/SiteMapView.tsx",
   "pages/quran/QuranKnowledgeHubPage.tsx",
   "pages/quran/ui/QuranHubView.tsx",

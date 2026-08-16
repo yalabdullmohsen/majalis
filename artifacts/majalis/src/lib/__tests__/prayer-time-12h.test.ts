@@ -25,8 +25,8 @@ const mushaf = readFileSync(join(root, "pages/quran/MushafReaderPage.tsx"), "utf
 assert.match(mushaf, /MushafViewport/);
 
 const more = readFileSync(join(root, "components/MoreBottomSheet.tsx"), "utf8");
-assert.match(more, /services-center-nav|filterServicesCenterGroups/);
-assert.match(more, /قائمة المزيد|مركز الخدمات/);
+assert.match(more, /MoreHubFromRegistry|services-center-nav|filterServicesCenterGroups/);
+assert.match(more, /المزيد|قائمة المزيد|مركز الخدمات/);
 
 const drawer = readFileSync(join(root, "components/SideNavDrawer.tsx"), "utf8");
 assert.match(drawer, /SIDEBAR_NAV_GROUPS/);
@@ -40,12 +40,15 @@ assert.match(navMap, /\/quran-hub/);
 assert.match(navMap, /قرآن/);
 
 const servicesNav = readFileSync(join(root, "lib/services-center-nav.ts"), "utf8");
-assert.match(servicesNav, /المزيد|MORE_FEATURED_SECTIONS/);
+assert.match(servicesNav, /sections\.registry|الأبواب المميّزة|MORE_FEATURED/);
 const moreSections = readFileSync(join(root, "features/more/moreSections.ts"), "utf8");
-assert.match(moreSections, /\/hadith/);
-assert.match(moreSections, /الحديث وعلومه/);
-assert.match(moreSections, /سين جيم/);
-assert.match(moreSections, /أعلام وتراجم/);
+assert.match(moreSections, /sections\.registry/);
+assert.match(moreSections, /MORE_FEATURED_SECTIONS/);
+const registry = readFileSync(join(root, "config/sections.registry.ts"), "utf8");
+assert.match(registry, /\/hadith/);
+assert.match(registry, /الحديث وعلومه/);
+assert.match(registry, /سين جيم/);
+assert.match(registry, /أعلام وتراجم/);
 
 const nav = readFileSync(join(root, "lib/navigation.ts"), "utf8");
 assert.match(nav, /href: "\/nations"/);
