@@ -1,70 +1,138 @@
-/**
- * بوابة: كتالوج «القرآن في أرقام».
- * تشغيل: node --import tsx src/lib/__tests__/quran-stats-catalog.test.ts
- */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import fs from "node:fs";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   assertQuranStatsCatalog,
   buildQuranStatsCatalog,
-} from "@/lib/quran-stats/catalog";
-import type { QuranComputedStats, QuranStat } from "@/lib/quran-stats/types";
-import { FORBIDDEN_STAT_SOURCES } from "@/lib/quran-stats/types";
+  isNumericCardValue,
+} from "../quran-stats/catalog";
+import { FORBIDDEN_STAT_SOURCES } from "../quran-stats/types";
+import type { QuranComputedStats, QuranStat } from "../quran-stats/types";
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
-const computed = JSON.parse(
-  readFileSync(resolve(root, "public/data/quran/stats.json"), "utf8"),
-) as QuranComputedStats;
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
+const statsPath = path.join(root, "public/data/quran/stats.json");
+const sampleComputed = JSON.parse(fs.readFileSync(statsPath, "utf8")) as QuranComputedStats;
 
-assert.equal(computed.totals.ayahs, 6236);
-assert.ok(computed.fingerprint?.length >= 16);
-
-const catalog = buildQuranStatsCatalog(computed);
-assertQuranStatsCatalog(catalog);
-
-const byKind = (k: QuranStat["kind"]) => catalog.filter((s) => s.kind === k);
-assert.ok(byKind("agreed").length >= 4, "متفق عليه");
-assert.ok(byKind("by-school").some((s) => s.id === "ayat-kufi" && s.value === 6236));
-assert.ok(byKind("disputed").every((s) => (s.variants?.length ?? 0) >= 2));
-assert.ok(byKind("computed").length >= 4);
-
-const ayat = catalog.find((s) => s.id === "ayat-kufi")!;
-assert.match(String(ayat.label) + (ayat.note ?? ""), /كوف/);
-
-for (const s of catalog) {
-  const blob = [s.source, s.note, ...(s.variants ?? []).map((v) => v.source)].join(" ");
-  for (const bad of FORBIDDEN_STAT_SOURCES) {
-    assert.equal(blob.toLowerCase().includes(bad.toLowerCase()), false, `${s.id} بلا ${bad}`);
-  }
+function validStat(overrides: Partial<QuranStat> = {}): QuranStat {
+  return {
+    id: "x",
+    label: "اختبار",
+    value: 1,
+    kind: "agreed",
+    group: "bunya",
+    source: "مصدر موثوق",
+    detail: "تفصيل كافٍ للاختبار.",
+    ...overrides,
+  };
 }
 
-assert.throws(() => {
-  assertQuranStatsCatalog([
-    {
-      id: "bad",
-      label: "x",
-      value: 1,
-      kind: "agreed",
-      source: "",
-    },
-  ]);
-});
+/** يملأ ≥٦٠ مع المجموعات الخمس حتى تصل فحوصات الحقول الفردية إلى الشرط */
+function padded(bad: QuranStat): QuranStat[] {
+  const filler: QuranStat[] = [];
+  const groups = ["bunya", "alfaz", "mawdoo", "suwar", "ajaib"] as const;
+  for (let i = 0; i < 60; i++) {
+    const g = groups[i % 5];
+    filler.push(
+      validStat({
+        id: `pad-${i}`,
+        group: g,
+        basis: g === "alfaz" || g === "mawdoo" ? "exact-form" : undefined,
+        method: g === "alfaz" || g === "mawdoo" ? "منهج اختبار" : undefined,
+      }),
+    );
+  }
+  return [bad, ...filler];
+}
 
-assert.throws(() => {
-  assertQuranStatsCatalog([
-    {
-      id: "bad-disputed",
-      label: "x",
-      value: "مختلف",
-      kind: "disputed",
-      source: "الداني",
-      variants: [{ value: "1", attribution: "a", source: "الداني" }],
-    },
-  ]);
-});
+const catalog = buildQuranStatsCatalog(sampleComputed);
+assert.ok(catalog.length >= 60, `عدد الإحصاءات ${catalog.length} < 60`);
+const groups = new Set(catalog.map((s) => s.group));
+for (const g of ["bunya", "alfaz", "mawdoo", "suwar", "ajaib"] as const) {
+  assert.ok(groups.has(g), `مجموعة ناقصة: ${g}`);
+}
+assert.doesNotThrow(() => assertQuranStatsCatalog(catalog));
 
-console.log(
-  `quran-stats-catalog.test.ts: ok · ${catalog.length} stats · agreed=${byKind("agreed").length} by-school=${byKind("by-school").length} disputed=${byKind("disputed").length} computed=${byKind("computed").length}`,
+assert.throws(
+  () => assertQuranStatsCatalog(padded(validStat({ id: "bad", source: "   " }))),
+  /مصدر|source/i,
 );
+
+assert.equal(isNumericCardValue("مختلف فيه"), false);
+assert.throws(
+  () => assertQuranStatsCatalog(padded(validStat({ id: "text-value", value: "مختلف فيه" }))),
+  /رقمية/,
+);
+
+assert.throws(
+  () =>
+    assertQuranStatsCatalog(
+      padded(
+        validStat({
+          id: "d",
+          kind: "disputed",
+          value: 10,
+          variants: [{ value: "١", attribution: "أ", source: "س" }],
+        }),
+      ),
+    ),
+  /variants/,
+);
+
+assert.throws(
+  () =>
+    assertQuranStatsCatalog(
+      padded(
+        validStat({
+          id: "topic",
+          kind: "computed",
+          group: "mawdoo",
+          basis: "topic",
+          method: "موضوع",
+          value: 3,
+          evidence: [],
+        }),
+      ),
+    ),
+  /evidence/,
+);
+
+for (const marker of FORBIDDEN_STAT_SOURCES.slice(0, 3)) {
+  assert.throws(
+    () =>
+      assertQuranStatsCatalog(
+        padded(
+          validStat({
+            id: `forbid-${marker}`,
+            source: `نقل من ${marker}`,
+          }),
+        ),
+      ),
+    /مصدر ممنوع/,
+  );
+}
+
+assert.throws(
+  () =>
+    assertQuranStatsCatalog(
+      padded(
+        validStat({
+          id: "tech",
+          detail: "من public/data/quran/uthmani",
+        }),
+      ),
+    ),
+  /تقني/,
+);
+
+assert.throws(
+  () =>
+    assertQuranStatsCatalog(
+      padded(validStat({ id: "nodesc", detail: undefined, note: undefined })),
+    ),
+  /بلا وصف/,
+);
+
+const byGroup: Record<string, number> = {};
+for (const s of catalog) byGroup[s.group] = (byGroup[s.group] ?? 0) + 1;
+console.log(`quran-stats-catalog.test.ts: ok (${catalog.length})`, byGroup);

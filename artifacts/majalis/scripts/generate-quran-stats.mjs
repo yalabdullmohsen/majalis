@@ -19,6 +19,23 @@ const ARABIC_LETTER = /[\u0621-\u064A\u0671]/g;
 const TASHKEEL = /[\u064B-\u065F\u0670\u06D6-\u06ED]/g;
 const BOM = /^\uFEFF/;
 
+/** أدوات ربط/جرّ/ضمائر شائعة — للعدّ المعجمي (استبعاد) */
+const STOPWORDS = new Set([
+  "من", "في", "على", "إلى", "الى", "عن", "مع", "ما", "لا", "إن", "ان", "أن", "ان",
+  "كان", "قد", "لم", "لن", "لو", "أو", "او", "أم", "ام", "بل", "ثم", "حتى",
+  "هذا", "هذه", "ذلك", "تلك", "هو", "هي", "هم", "هن", "أنا", "نحن", "أنت",
+  "الذي", "التي", "الذين", "اللاتي", "اللذين", "كل", "بعض", "غير", "بين",
+  "بعد", "قبل", "عند", "لدي", "له", "لها", "لهم", "لك", "لنا", "به", "بها",
+  "فيه", "فيها", "منه", "منها", "عليه", "عليها", "إليه", "اليها", "و", "ف", "ب", "ك", "ل",
+  "يا", "ألا", "اما", "أما", "إذ", "اذا", "إذا", "إنما", "انما", "كما", "بما",
+]);
+
+const TOPIC_FORMS = [
+  "الجنة", "جنة", "النار", "نار", "الملائكة", "ملك", "الشيطان", "شيطان",
+  "الآخرة", "اخرة", "الدنيا", "الصلاة", "صلاة", "الزكاة", "زكاة",
+  "الصبر", "صبر", "التقوى", "تقوى", "العلم", "علم", "الرسل", "نبي", "النبي",
+];
+
 function stripMarks(text) {
   return text.replace(BOM, "").replace(TASHKEEL, "");
 }
@@ -31,6 +48,9 @@ function wordsOf(text) {
     .replace(/\s+/g, " ")
     .trim();
   return cleaned ? cleaned.split(" ") : [];
+}
+function normalizeForm(w) {
+  return w.replace(/^ال/, "").replace(/ٱ/g, "ا");
 }
 
 function compute() {
@@ -53,6 +73,13 @@ function compute() {
   let medinan = 0;
   const sajda = [];
 
+  const allFreq = new Map();
+  const contentFreq = new Map();
+  const longestWordCandidates = [];
+  const topicCounts = Object.fromEntries(TOPIC_FORMS.map((t) => [t, 0]));
+  let allahCount = 0;
+  let rahmanCount = 0;
+
   for (const s of surahs) {
     const ayahs = s.ayahs;
     totalAyahs += ayahs.length;
@@ -67,6 +94,9 @@ function compute() {
 
     let surahWords = 0;
     let surahLetters = 0;
+    let pageStart = ayahs[0]?.page;
+    let juz = ayahs[0]?.juz;
+
     for (const a of ayahs) {
       let text = a.text.replace(BOM, "");
       if (s.number !== 1 && a.numberInSurah === 1) {
@@ -91,6 +121,36 @@ function compute() {
         shortestAyah = { surah: s.number, ayah: a.numberInSurah, len: L.length, text };
       }
       if (a.sajda) sajda.push({ surah: s.number, ayah: a.numberInSurah });
+
+      for (const word of w) {
+        const form = word;
+        const letters = lettersOnly(word).length;
+        allFreq.set(form, (allFreq.get(form) || 0) + 1);
+        const key = normalizeForm(form);
+        if (!STOPWORDS.has(key) && !STOPWORDS.has(form) && letters >= 2) {
+          contentFreq.set(form, (contentFreq.get(form) || 0) + 1);
+        }
+        if (letters >= 8) {
+          longestWordCandidates.push({
+            form,
+            count: 1,
+            letters,
+            surah: s.number,
+            ayah: a.numberInSurah,
+          });
+        }
+        if (/^الل[هھ]$/.test(key) || form.includes("الله") || form.includes("ٱلل")) {
+          allahCount++;
+        }
+        if (key.includes("رحمن") || form.includes("رَّحْمَٰن") || form.includes("الرحمن")) {
+          rahmanCount++;
+        }
+        for (const topic of TOPIC_FORMS) {
+          if (form.includes(topic) || key.includes(normalizeForm(topic))) {
+            topicCounts[topic]++;
+          }
+        }
+      }
     }
     perSurah.push({
       number: s.number,
@@ -99,8 +159,25 @@ function compute() {
       ayahs: ayahs.length,
       words: surahWords,
       letters: surahLetters,
+      pageStart,
+      juz,
     });
   }
+
+  const toTop = (map, n) =>
+    [...map.entries()]
+      .map(([form, count]) => ({ form, count, letters: lettersOnly(form).length }))
+      .sort((a, b) => b.count - a.count || b.letters - a.letters)
+      .slice(0, n);
+
+  const longestByForm = new Map();
+  for (const row of longestWordCandidates) {
+    const prev = longestByForm.get(row.form);
+    if (!prev || row.letters > prev.letters) longestByForm.set(row.form, row);
+  }
+  const longestWords = [...longestByForm.values()]
+    .sort((a, b) => b.letters - a.letters || a.form.localeCompare(b.form, "ar"))
+    .slice(0, 20);
 
   const payload = {
     generatedAt: new Date().toISOString(),
@@ -108,12 +185,14 @@ function compute() {
     sourcePath: "public/data/quran/surah-*.json",
     methodology: {
       arabic:
-        "حساب آلي من نص المصحف العثماني في المشروع: الآيات كما في الملفات؛ تُجرَّد التشكيل وعلامات الوقف قبل عدّ الحروف الهجائية؛ الكلمة = مقاطع مفصولة بمسافة بعد التجريد؛ بسملة غير الفاتحة إن دُمجت في أول آية لا تُضاعف كآية؛ الحروف المقطّعة تُحسب حروفًا.",
+        "حساب آلي من نص المصحف العثماني المعتمد في التطبيق: الآيات كما في الملفات؛ تُجرَّد التشكيل وعلامات الوقف قبل عدّ الحروف الهجائية؛ الكلمة = مقاطع مفصولة بمسافة بعد التجريد؛ بسملة غير الفاتحة إن دُمجت في أول آية لا تُضاعف كآية؛ الحروف المقطّعة تُحسب حروفًا.",
       basmalaExcludedFromExtraAyah: true,
       basmalaInFatihaCountedAsAyah: true,
       tashkeelStripped: true,
       stopMarksIgnored: true,
       disjointLettersCountedAsLetters: true,
+      wordFreqNote:
+        "التكرار الحرفي بعد التجريد؛ قائمة «معجمية» تستبعد أدوات الربط الشائعة. ليست بديلاً عن المعجم المفهرس لعبد الباقي.",
     },
     totals: {
       surahs: 114,
@@ -128,6 +207,14 @@ function compute() {
     extremes: { longestAyah, shortestAyah, longestSurah, shortestSurah },
     sajda,
     perSurah,
+    wordFreq: {
+      allTop: toTop(allFreq, 200),
+      contentTop: toTop(contentFreq, 200),
+      longestWords,
+      topicCounts,
+      allahCount,
+      rahmanCount,
+    },
   };
 
   const { fingerprint: _ignore, generatedAt: _ga, ...stableBase } = { ...payload, fingerprint: undefined };
@@ -152,11 +239,15 @@ if (checkOnly) {
     console.error("verify-quran-stats: FAILED — عدد الآيات المحسوب يجب أن يطابق العدّ الكوفي ٦٢٣٦ في هذه البيانات");
     process.exit(1);
   }
+  if (!existing.wordFreq?.allTop?.length || !existing.perSurah?.length) {
+    console.error("verify-quran-stats: FAILED — wordFreq/perSurah ناقص");
+    process.exit(1);
+  }
   console.log(`verify-quran-stats: OK fingerprint=${existing.fingerprint.slice(0, 12)}…`);
   process.exit(0);
 }
 
 fs.writeFileSync(outFile, `${JSON.stringify(computed, null, 2)}\n`);
 console.log(
-  `generate-quran-stats: OK ayahs=${computed.totals.ayahs} words=${computed.totals.words} letters=${computed.totals.letters} fp=${computed.fingerprint.slice(0, 12)}…`,
+  `generate-quran-stats: OK ayahs=${computed.totals.ayahs} words=${computed.totals.words} letters=${computed.totals.letters} topWords=${computed.wordFreq.allTop.length} fp=${computed.fingerprint.slice(0, 12)}…`,
 );

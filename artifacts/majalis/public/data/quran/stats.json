@@ -1,14 +1,15 @@
 {
-  "generatedAt": "2026-08-16T22:30:55.331Z",
+  "generatedAt": "2026-08-16T23:17:10.894Z",
   "mushaf": "1",
   "sourcePath": "public/data/quran/surah-*.json",
   "methodology": {
-    "arabic": "حساب آلي من نص المصحف العثماني في المشروع: الآيات كما في الملفات؛ تُجرَّد التشكيل وعلامات الوقف قبل عدّ الحروف الهجائية؛ الكلمة = مقاطع مفصولة بمسافة بعد التجريد؛ بسملة غير الفاتحة إن دُمجت في أول آية لا تُضاعف كآية؛ الحروف المقطّعة تُحسب حروفًا.",
+    "arabic": "حساب آلي من نص المصحف العثماني المعتمد في التطبيق: الآيات كما في الملفات؛ تُجرَّد التشكيل وعلامات الوقف قبل عدّ الحروف الهجائية؛ الكلمة = مقاطع مفصولة بمسافة بعد التجريد؛ بسملة غير الفاتحة إن دُمجت في أول آية لا تُضاعف كآية؛ الحروف المقطّعة تُحسب حروفًا.",
     "basmalaExcludedFromExtraAyah": true,
     "basmalaInFatihaCountedAsAyah": true,
     "tashkeelStripped": true,
     "stopMarksIgnored": true,
-    "disjointLettersCountedAsLetters": true
+    "disjointLettersCountedAsLetters": true,
+    "wordFreqNote": "التكرار الحرفي بعد التجريد؛ قائمة «معجمية» تستبعد أدوات الربط الشائعة. ليست بديلاً عن المعجم المفهرس لعبد الباقي."
   },
   "totals": {
     "surahs": 114,
@@ -113,7 +114,9 @@
       "revelationType": "Meccan",
       "ayahs": 7,
       "words": 29,
-      "letters": 139
+      "letters": 139,
+      "pageStart": 1,
+      "juz": 1
     },
     {
       "number": 2,
@@ -121,7 +124,9 @@
       "revelationType": "Medinan",
       "ayahs": 286,
       "words": 6116,
-      "letters": 25899
+      "letters": 25899,
+      "pageStart": 2,
+      "juz": 1
     },
     {
       "number": 3,
@@ -129,7 +134,9 @@
       "revelationType": "Medinan",
       "ayahs": 200,
       "words": 3481,
-      "letters": 14762
+      "letters": 14762,
+      "pageStart": 50,
+      "juz": 3
     },
     {
       "number": 4,
@@ -137,7 +144,9 @@
       "revelationType": "Medinan",
       "ayahs": 176,
       "words": 3747,
-      "letters": 16085
+      "letters": 16085,
+      "pageStart": 77,
+      "juz": 4
     },
     {
       "number": 5,
@@ -145,7 +154,9 @@
       "revelationType": "Medinan",
       "ayahs": 120,
       "words": 2804,
-      "letters": 12032
+      "letters": 12032,
+      "pageStart": 106,
+      "juz": 6
     },
     {
       "number": 6,
@@ -153,7 +164,9 @@
       "revelationType": "Meccan",
       "ayahs": 165,
       "words": 3050,
-      "letters": 12571
+      "letters": 12571,
+      "pageStart": 128,
+      "juz": 7
     },
     {
       "number": 7,
@@ -161,7 +174,9 @@
       "revelationType": "Meccan",
       "ayahs": 206,
       "words": 3320,
-      "letters": 14245
+      "letters": 14245,
+      "pageStart": 151,
+      "juz": 8
     },
     {
       "number": 8,
@@ -169,7 +184,9 @@
       "revelationType": "Medinan",
       "ayahs": 75,
       "words": 1233,
-      "letters": 5349
+      "letters": 5349,
+      "pageStart": 177,
+      "juz": 9
     },
     {
       "number": 9,
@@ -177,7 +194,9 @@
       "revelationType": "Medinan",
       "ayahs": 129,
       "words": 2498,
-      "letters": 10954
+      "letters": 10954,
+      "pageStart": 187,
+      "juz": 10
     },
     {
       "number": 10,
@@ -185,7 +204,9 @@
       "revelationType": "Meccan",
       "ayahs": 109,
       "words": 1833,
-      "letters": 7521
+      "letters": 7521,
+      "pageStart": 208,
+      "juz": 11
     },
     {
       "number": 11,
@@ -193,7 +214,9 @@
       "revelationType": "Meccan",
       "ayahs": 123,
       "words": 1917,
-      "letters": 7726
+      "letters": 7726,
+      "pageStart": 221,
+      "juz": 11
     },
     {
       "number": 12,
@@ -201,7 +224,9 @@
       "revelationType": "Meccan",
       "ayahs": 111,
       "words": 1777,
-      "letters": 7205
+      "letters": 7205,
+      "pageStart": 235,
+      "juz": 12
     },
     {
       "number": 13,
@@ -209,7 +234,9 @@
       "revelationType": "Medinan",
       "ayahs": 43,
       "words": 853,
-      "letters": 3500
+      "letters": 3500,
+      "pageStart": 249,
+      "juz": 13
     },
     {
       "number": 14,
@@ -217,7 +244,9 @@
       "revelationType": "Meccan",
       "ayahs": 52,
       "words": 830,
-      "letters": 3497
+      "letters": 3497,
+      "pageStart": 255,
+      "juz": 13
     },
     {
       "number": 15,
@@ -225,7 +254,9 @@
       "revelationType": "Meccan",
       "ayahs": 99,
       "words": 655,
-      "letters": 2829
+      "letters": 2829,
+      "pageStart": 262,
+      "juz": 14
     },
     {
       "number": 16,
@@ -233,7 +264,9 @@
       "revelationType": "Meccan",
       "ayahs": 128,
       "words": 1844,
-      "letters": 7723
+      "letters": 7723,
+      "pageStart": 267,
+      "juz": 14
     },
     {
       "number": 17,
@@ -241,7 +274,9 @@
       "revelationType": "Meccan",
       "ayahs": 111,
       "words": 1556,
-      "letters": 6565
+      "letters": 6565,
+      "pageStart": 282,
+      "juz": 15
     },
     {
       "number": 18,
@@ -249,7 +284,9 @@
       "revelationType": "Meccan",
       "ayahs": 110,
       "words": 1579,
-      "letters": 6488
+      "letters": 6488,
+      "pageStart": 293,
+      "juz": 15
     },
     {
       "number": 19,
@@ -257,7 +294,9 @@
       "revelationType": "Meccan",
       "ayahs": 98,
       "words": 961,
-      "letters": 3868
+      "letters": 3868,
+      "pageStart": 305,
+      "juz": 16
     },
     {
       "number": 20,
@@ -265,7 +304,9 @@
       "revelationType": "Meccan",
       "ayahs": 135,
       "words": 1335,
-      "letters": 5338
+      "letters": 5338,
+      "pageStart": 312,
+      "juz": 16
     },
     {
       "number": 21,
@@ -273,7 +314,9 @@
       "revelationType": "Meccan",
       "ayahs": 112,
       "words": 1169,
-      "letters": 4980
+      "letters": 4980,
+      "pageStart": 322,
+      "juz": 17
     },
     {
       "number": 22,
@@ -281,7 +324,9 @@
       "revelationType": "Medinan",
       "ayahs": 78,
       "words": 1274,
-      "letters": 5237
+      "letters": 5237,
+      "pageStart": 332,
+      "juz": 17
     },
     {
       "number": 23,
@@ -289,7 +334,9 @@
       "revelationType": "Meccan",
       "ayahs": 118,
       "words": 1050,
-      "letters": 4399
+      "letters": 4399,
+      "pageStart": 342,
+      "juz": 18
     },
     {
       "number": 24,
@@ -297,7 +344,9 @@
       "revelationType": "Medinan",
       "ayahs": 64,
       "words": 1316,
-      "letters": 5664
+      "letters": 5664,
+      "pageStart": 350,
+      "juz": 18
     },
     {
       "number": 25,
@@ -305,7 +354,9 @@
       "revelationType": "Meccan",
       "ayahs": 77,
       "words": 893,
-      "letters": 3825
+      "letters": 3825,
+      "pageStart": 359,
+      "juz": 18
     },
     {
       "number": 26,
@@ -313,7 +364,9 @@
       "revelationType": "Meccan",
       "ayahs": 227,
       "words": 1318,
-      "letters": 5573
+      "letters": 5573,
+      "pageStart": 367,
+      "juz": 19
     },
     {
       "number": 27,
@@ -321,7 +374,9 @@
       "revelationType": "Meccan",
       "ayahs": 93,
       "words": 1151,
-      "letters": 4747
+      "letters": 4747,
+      "pageStart": 377,
+      "juz": 19
     },
     {
       "number": 28,
@@ -329,7 +384,9 @@
       "revelationType": "Meccan",
       "ayahs": 88,
       "words": 1430,
-      "letters": 5861
+      "letters": 5861,
+      "pageStart": 385,
+      "juz": 20
     },
     {
       "number": 29,
@@ -337,7 +394,9 @@
       "revelationType": "Meccan",
       "ayahs": 69,
       "words": 976,
-      "letters": 4256
+      "letters": 4256,
+      "pageStart": 396,
+      "juz": 20
     },
     {
       "number": 30,
@@ -345,7 +404,9 @@
       "revelationType": "Meccan",
       "ayahs": 60,
       "words": 817,
-      "letters": 3434
+      "letters": 3434,
+      "pageStart": 404,
+      "juz": 21
     },
     {
       "number": 31,
@@ -353,7 +414,9 @@
       "revelationType": "Meccan",
       "ayahs": 34,
       "words": 546,
-      "letters": 2134
+      "letters": 2134,
+      "pageStart": 411,
+      "juz": 21
     },
     {
       "number": 32,
@@ -361,7 +424,9 @@
       "revelationType": "Meccan",
       "ayahs": 30,
       "words": 372,
-      "letters": 1542
+      "letters": 1542,
+      "pageStart": 415,
+      "juz": 21
     },
     {
       "number": 33,
@@ -369,7 +434,9 @@
       "revelationType": "Medinan",
       "ayahs": 73,
       "words": 1287,
-      "letters": 5675
+      "letters": 5675,
+      "pageStart": 418,
+      "juz": 21
     },
     {
       "number": 34,
@@ -377,7 +444,9 @@
       "revelationType": "Meccan",
       "ayahs": 54,
       "words": 883,
-      "letters": 3549
+      "letters": 3549,
+      "pageStart": 428,
+      "juz": 22
     },
     {
       "number": 35,
@@ -385,7 +454,9 @@
       "revelationType": "Meccan",
       "ayahs": 45,
       "words": 775,
-      "letters": 3184
+      "letters": 3184,
+      "pageStart": 434,
+      "juz": 22
     },
     {
       "number": 36,
@@ -393,7 +464,9 @@
       "revelationType": "Meccan",
       "ayahs": 83,
       "words": 725,
-      "letters": 3020
+      "letters": 3020,
+      "pageStart": 440,
+      "juz": 22
     },
     {
       "number": 37,
@@ -401,7 +474,9 @@
       "revelationType": "Meccan",
       "ayahs": 182,
       "words": 861,
-      "letters": 3828
+      "letters": 3828,
+      "pageStart": 446,
+      "juz": 23
     },
     {
       "number": 38,
@@ -409,7 +484,9 @@
       "revelationType": "Meccan",
       "ayahs": 88,
       "words": 733,
-      "letters": 3018
+      "letters": 3018,
+      "pageStart": 453,
+      "juz": 23
     },
     {
       "number": 39,
@@ -417,7 +494,9 @@
       "revelationType": "Meccan",
       "ayahs": 75,
       "words": 1172,
-      "letters": 4786
+      "letters": 4786,
+      "pageStart": 458,
+      "juz": 23
     },
     {
       "number": 40,
@@ -425,7 +504,9 @@
       "revelationType": "Meccan",
       "ayahs": 85,
       "words": 1219,
-      "letters": 5041
+      "letters": 5041,
+      "pageStart": 467,
+      "juz": 24
     },
     {
       "number": 41,
@@ -433,7 +514,9 @@
       "revelationType": "Meccan",
       "ayahs": 54,
       "words": 794,
-      "letters": 3336
+      "letters": 3336,
+      "pageStart": 477,
+      "juz": 24
     },
     {
       "number": 42,
@@ -441,7 +524,9 @@
       "revelationType": "Meccan",
       "ayahs": 53,
       "words": 860,
-      "letters": 3471
+      "letters": 3471,
+      "pageStart": 483,
+      "juz": 25
     },
     {
       "number": 43,
@@ -449,7 +534,9 @@
       "revelationType": "Meccan",
       "ayahs": 89,
       "words": 830,
-      "letters": 3553
+      "letters": 3553,
+      "pageStart": 489,
+      "juz": 25
     },
     {
       "number": 44,
@@ -457,7 +544,9 @@
       "revelationType": "Meccan",
       "ayahs": 59,
       "words": 346,
-      "letters": 1455
+      "letters": 1455,
+      "pageStart": 496,
+      "juz": 25
     },
     {
       "number": 45,
@@ -465,7 +554,9 @@
       "revelationType": "Meccan",
       "ayahs": 37,
       "words": 488,
-      "letters": 2050
+      "letters": 2050,
+      "pageStart": 499,
+      "juz": 25
     },
     {
       "number": 46,
@@ -473,7 +564,9 @@
       "revelationType": "Meccan",
       "ayahs": 35,
       "words": 643,
-      "letters": 2627
+      "letters": 2627,
+      "pageStart": 502,
+      "juz": 26
     },
     {
       "number": 47,
@@ -481,7 +574,9 @@
       "revelationType": "Medinan",
       "ayahs": 38,
       "words": 539,
-      "letters": 2389
+      "letters": 2389,
+      "pageStart": 507,
+      "juz": 26
     },
     {
       "number": 48,
@@ -489,7 +584,9 @@
       "revelationType": "Medinan",
       "ayahs": 29,
       "words": 560,
-      "letters": 2479
+      "letters": 2479,
+      "pageStart": 511,
+      "juz": 26
     },
     {
       "number": 49,
@@ -497,7 +594,9 @@
       "revelationType": "Medinan",
       "ayahs": 18,
       "words": 347,
-      "letters": 1508
+      "letters": 1508,
+      "pageStart": 515,
+      "juz": 26
     },
     {
       "number": 50,
@@ -505,7 +604,9 @@
       "revelationType": "Meccan",
       "ayahs": 45,
       "words": 373,
-      "letters": 1488
+      "letters": 1488,
+      "pageStart": 518,
+      "juz": 26
     },
     {
       "number": 51,
@@ -513,7 +614,9 @@
       "revelationType": "Meccan",
       "ayahs": 60,
       "words": 360,
-      "letters": 1523
+      "letters": 1523,
+      "pageStart": 520,
+      "juz": 26
     },
     {
       "number": 52,
@@ -521,7 +624,9 @@
       "revelationType": "Meccan",
       "ayahs": 49,
       "words": 312,
-      "letters": 1305
+      "letters": 1305,
+      "pageStart": 523,
+      "juz": 27
     },
     {
       "number": 53,
@@ -529,7 +634,9 @@
       "revelationType": "Meccan",
       "ayahs": 62,
       "words": 360,
-      "letters": 1422
+      "letters": 1422,
+      "pageStart": 526,
+      "juz": 27
     },
     {
       "number": 54,
@@ -537,7 +644,9 @@
       "revelationType": "Meccan",
       "ayahs": 55,
       "words": 342,
-      "letters": 1461
+      "letters": 1461,
+      "pageStart": 528,
+      "juz": 27
     },
     {
       "number": 55,
@@ -545,7 +654,9 @@
       "revelationType": "Medinan",
       "ayahs": 78,
       "words": 351,
-      "letters": 1657
+      "letters": 1657,
+      "pageStart": 531,
+      "juz": 27
     },
     {
       "number": 56,
@@ -553,7 +664,9 @@
       "revelationType": "Meccan",
       "ayahs": 96,
       "words": 379,
-      "letters": 1719
+      "letters": 1719,
+      "pageStart": 534,
+      "juz": 27
     },
     {
       "number": 57,
@@ -561,7 +674,9 @@
       "revelationType": "Medinan",
       "ayahs": 29,
       "words": 574,
-      "letters": 2505
+      "letters": 2505,
+      "pageStart": 537,
+      "juz": 27
     },
     {
       "number": 58,
@@ -569,7 +684,9 @@
       "revelationType": "Medinan",
       "ayahs": 22,
       "words": 472,
-      "letters": 2011
+      "letters": 2011,
+      "pageStart": 542,
+      "juz": 28
     },
     {
       "number": 59,
@@ -577,7 +694,9 @@
       "revelationType": "Medinan",
       "ayahs": 24,
       "words": 445,
-      "letters": 1931
+      "letters": 1931,
+      "pageStart": 545,
+      "juz": 28
     },
     {
       "number": 60,
@@ -585,7 +704,9 @@
       "revelationType": "Medinan",
       "ayahs": 13,
       "words": 348,
-      "letters": 1542
+      "letters": 1542,
+      "pageStart": 549,
+      "juz": 28
     },
     {
       "number": 61,
@@ -593,7 +714,9 @@
       "revelationType": "Medinan",
       "ayahs": 14,
       "words": 221,
-      "letters": 945
+      "letters": 945,
+      "pageStart": 551,
+      "juz": 28
     },
     {
       "number": 62,
@@ -601,7 +724,9 @@
       "revelationType": "Medinan",
       "ayahs": 11,
       "words": 175,
-      "letters": 755
+      "letters": 755,
+      "pageStart": 553,
+      "juz": 28
     },
     {
       "number": 63,
@@ -609,7 +734,9 @@
       "revelationType": "Medinan",
       "ayahs": 11,
       "words": 180,
-      "letters": 787
+      "letters": 787,
+      "pageStart": 554,
+      "juz": 28
     },
     {
       "number": 64,
@@ -617,7 +744,9 @@
       "revelationType": "Medinan",
       "ayahs": 18,
       "words": 241,
-      "letters": 1072
+      "letters": 1072,
+      "pageStart": 556,
+      "juz": 28
     },
     {
       "number": 65,
@@ -625,7 +754,9 @@
       "revelationType": "Medinan",
       "ayahs": 12,
       "words": 287,
-      "letters": 1184
+      "letters": 1184,
+      "pageStart": 558,
+      "juz": 28
     },
     {
       "number": 66,
@@ -633,7 +764,9 @@
       "revelationType": "Medinan",
       "ayahs": 12,
       "words": 249,
-      "letters": 1074
+      "letters": 1074,
+      "pageStart": 560,
+      "juz": 28
     },
     {
       "number": 67,
@@ -641,7 +774,9 @@
       "revelationType": "Meccan",
       "ayahs": 30,
       "words": 333,
-      "letters": 1330
+      "letters": 1330,
+      "pageStart": 562,
+      "juz": 29
     },
     {
       "number": 68,
@@ -649,7 +784,9 @@
       "revelationType": "Meccan",
       "ayahs": 52,
       "words": 300,
-      "letters": 1264
+      "letters": 1264,
+      "pageStart": 564,
+      "juz": 29
     },
     {
       "number": 69,
@@ -657,7 +794,9 @@
       "revelationType": "Meccan",
       "ayahs": 52,
       "words": 258,
-      "letters": 1113
+      "letters": 1113,
+      "pageStart": 566,
+      "juz": 29
     },
     {
       "number": 70,
@@ -665,7 +804,9 @@
       "revelationType": "Meccan",
       "ayahs": 44,
       "words": 217,
-      "letters": 951
+      "letters": 951,
+      "pageStart": 568,
+      "juz": 29
     },
     {
       "number": 71,
@@ -673,7 +814,9 @@
       "revelationType": "Meccan",
       "ayahs": 28,
       "words": 226,
-      "letters": 953
+      "letters": 953,
+      "pageStart": 570,
+      "juz": 29
     },
     {
       "number": 72,
@@ -681,7 +824,9 @@
       "revelationType": "Meccan",
       "ayahs": 28,
       "words": 285,
-      "letters": 1096
+      "letters": 1096,
+      "pageStart": 572,
+      "juz": 29
     },
     {
       "number": 73,
@@ -689,7 +834,9 @@
       "revelationType": "Meccan",
       "ayahs": 20,
       "words": 199,
-      "letters": 850
+      "letters": 850,
+      "pageStart": 574,
+      "juz": 29
     },
     {
       "number": 74,
@@ -697,7 +844,9 @@
       "revelationType": "Meccan",
       "ayahs": 56,
       "words": 255,
-      "letters": 1024
+      "letters": 1024,
+      "pageStart": 575,
+      "juz": 29
     },
     {
       "number": 75,
@@ -705,7 +854,9 @@
       "revelationType": "Meccan",
       "ayahs": 40,
       "words": 164,
-      "letters": 668
+      "letters": 668,
+      "pageStart": 577,
+      "juz": 29
     },
     {
       "number": 76,
@@ -713,7 +864,9 @@
       "revelationType": "Medinan",
       "ayahs": 31,
       "words": 243,
-      "letters": 1078
+      "letters": 1078,
+      "pageStart": 578,
+      "juz": 29
     },
     {
       "number": 77,
@@ -721,7 +874,9 @@
       "revelationType": "Meccan",
       "ayahs": 50,
       "words": 181,
-      "letters": 821
+      "letters": 821,
+      "pageStart": 580,
+      "juz": 29
     },
     {
       "number": 78,
@@ -729,7 +884,9 @@
       "revelationType": "Meccan",
       "ayahs": 40,
       "words": 173,
-      "letters": 778
+      "letters": 778,
+      "pageStart": 582,
+      "juz": 30
     },
     {
       "number": 79,
@@ -737,7 +894,9 @@
       "revelationType": "Meccan",
       "ayahs": 46,
       "words": 179,
-      "letters": 772
+      "letters": 772,
+      "pageStart": 583,
+      "juz": 30
     },
     {
       "number": 80,
@@ -745,7 +904,9 @@
       "revelationType": "Meccan",
       "ayahs": 42,
       "words": 133,
-      "letters": 546
+      "letters": 546,
+      "pageStart": 585,
+      "juz": 30
     },
     {
       "number": 81,
@@ -753,7 +914,9 @@
       "revelationType": "Meccan",
       "ayahs": 29,
       "words": 104,
-      "letters": 431
+      "letters": 431,
+      "pageStart": 586,
+      "juz": 30
     },
     {
       "number": 82,
@@ -761,7 +924,9 @@
       "revelationType": "Meccan",
       "ayahs": 19,
       "words": 80,
-      "letters": 329
+      "letters": 329,
+      "pageStart": 587,
+      "juz": 30
     },
     {
       "number": 83,
@@ -769,7 +934,9 @@
       "revelationType": "Meccan",
       "ayahs": 36,
       "words": 169,
-      "letters": 744
+      "letters": 744,
+      "pageStart": 587,
+      "juz": 30
     },
     {
       "number": 84,
@@ -777,7 +944,9 @@
       "revelationType": "Meccan",
       "ayahs": 25,
       "words": 107,
-      "letters": 440
+      "letters": 440,
+      "pageStart": 589,
+      "juz": 30
     },
     {
       "number": 85,
@@ -785,7 +954,9 @@
       "revelationType": "Meccan",
       "ayahs": 22,
       "words": 109,
-      "letters": 463
+      "letters": 463,
+      "pageStart": 590,
+      "juz": 30
     },
     {
       "number": 86,
@@ -793,7 +964,9 @@
       "revelationType": "Meccan",
       "ayahs": 17,
       "words": 61,
-      "letters": 252
+      "letters": 252,
+      "pageStart": 591,
+      "juz": 30
     },
     {
       "number": 87,
@@ -801,7 +974,9 @@
       "revelationType": "Meccan",
       "ayahs": 19,
       "words": 72,
-      "letters": 296
+      "letters": 296,
+      "pageStart": 591,
+      "juz": 30
     },
     {
       "number": 88,
@@ -809,7 +984,9 @@
       "revelationType": "Meccan",
       "ayahs": 26,
       "words": 92,
-      "letters": 380
+      "letters": 380,
+      "pageStart": 592,
+      "juz": 30
     },
     {
       "number": 89,
@@ -817,7 +994,9 @@
       "revelationType": "Meccan",
       "ayahs": 30,
       "words": 137,
-      "letters": 575
+      "letters": 575,
+      "pageStart": 593,
+      "juz": 30
     },
     {
       "number": 90,
@@ -825,7 +1004,9 @@
       "revelationType": "Meccan",
       "ayahs": 20,
       "words": 82,
-      "letters": 338
+      "letters": 338,
+      "pageStart": 594,
+      "juz": 30
     },
     {
       "number": 91,
@@ -833,7 +1014,9 @@
       "revelationType": "Meccan",
       "ayahs": 15,
       "words": 54,
-      "letters": 250
+      "letters": 250,
+      "pageStart": 595,
+      "juz": 30
     },
     {
       "number": 92,
@@ -841,7 +1024,9 @@
       "revelationType": "Meccan",
       "ayahs": 21,
       "words": 71,
-      "letters": 314
+      "letters": 314,
+      "pageStart": 595,
+      "juz": 30
     },
     {
       "number": 93,
@@ -849,7 +1034,9 @@
       "revelationType": "Meccan",
       "ayahs": 11,
       "words": 40,
-      "letters": 166
+      "letters": 166,
+      "pageStart": 596,
+      "juz": 30
     },
     {
       "number": 94,
@@ -857,7 +1044,9 @@
       "revelationType": "Meccan",
       "ayahs": 8,
       "words": 27,
-      "letters": 102
+      "letters": 102,
+      "pageStart": 596,
+      "juz": 30
     },
     {
       "number": 95,
@@ -865,7 +1054,9 @@
       "revelationType": "Meccan",
       "ayahs": 8,
       "words": 34,
-      "letters": 157
+      "letters": 157,
+      "pageStart": 597,
+      "juz": 30
     },
     {
       "number": 96,
@@ -873,7 +1064,9 @@
       "revelationType": "Meccan",
       "ayahs": 19,
       "words": 72,
-      "letters": 285
+      "letters": 285,
+      "pageStart": 597,
+      "juz": 30
     },
     {
       "number": 97,
@@ -881,7 +1074,9 @@
       "revelationType": "Meccan",
       "ayahs": 5,
       "words": 30,
-      "letters": 112
+      "letters": 112,
+      "pageStart": 598,
+      "juz": 30
     },
     {
       "number": 98,
@@ -889,7 +1084,9 @@
       "revelationType": "Medinan",
       "ayahs": 8,
       "words": 94,
-      "letters": 397
+      "letters": 397,
+      "pageStart": 598,
+      "juz": 30
     },
     {
       "number": 99,
@@ -897,7 +1094,9 @@
       "revelationType": "Medinan",
       "ayahs": 8,
       "words": 36,
-      "letters": 156
+      "letters": 156,
+      "pageStart": 599,
+      "juz": 30
     },
     {
       "number": 100,
@@ -905,7 +1104,9 @@
       "revelationType": "Meccan",
       "ayahs": 11,
       "words": 40,
-      "letters": 164
+      "letters": 164,
+      "pageStart": 599,
+      "juz": 30
     },
     {
       "number": 101,
@@ -913,7 +1114,9 @@
       "revelationType": "Meccan",
       "ayahs": 11,
       "words": 36,
-      "letters": 158
+      "letters": 158,
+      "pageStart": 600,
+      "juz": 30
     },
     {
       "number": 102,
@@ -921,7 +1124,9 @@
       "revelationType": "Meccan",
       "ayahs": 8,
       "words": 28,
-      "letters": 123
+      "letters": 123,
+      "pageStart": 600,
+      "juz": 30
     },
     {
       "number": 103,
@@ -929,7 +1134,9 @@
       "revelationType": "Meccan",
       "ayahs": 3,
       "words": 14,
-      "letters": 71
+      "letters": 71,
+      "pageStart": 601,
+      "juz": 30
     },
     {
       "number": 104,
@@ -937,7 +1144,9 @@
       "revelationType": "Meccan",
       "ayahs": 9,
       "words": 33,
-      "letters": 134
+      "letters": 134,
+      "pageStart": 601,
+      "juz": 30
     },
     {
       "number": 105,
@@ -945,7 +1154,9 @@
       "revelationType": "Meccan",
       "ayahs": 5,
       "words": 23,
-      "letters": 96
+      "letters": 96,
+      "pageStart": 601,
+      "juz": 30
     },
     {
       "number": 106,
@@ -953,7 +1164,9 @@
       "revelationType": "Meccan",
       "ayahs": 4,
       "words": 17,
-      "letters": 75
+      "letters": 75,
+      "pageStart": 602,
+      "juz": 30
     },
     {
       "number": 107,
@@ -961,7 +1174,9 @@
       "revelationType": "Meccan",
       "ayahs": 7,
       "words": 25,
-      "letters": 114
+      "letters": 114,
+      "pageStart": 602,
+      "juz": 30
     },
     {
       "number": 108,
@@ -969,7 +1184,9 @@
       "revelationType": "Meccan",
       "ayahs": 3,
       "words": 10,
-      "letters": 42
+      "letters": 42,
+      "pageStart": 602,
+      "juz": 30
     },
     {
       "number": 109,
@@ -977,7 +1194,9 @@
       "revelationType": "Meccan",
       "ayahs": 6,
       "words": 26,
-      "letters": 95
+      "letters": 95,
+      "pageStart": 603,
+      "juz": 30
     },
     {
       "number": 110,
@@ -985,7 +1204,9 @@
       "revelationType": "Medinan",
       "ayahs": 3,
       "words": 19,
-      "letters": 80
+      "letters": 80,
+      "pageStart": 603,
+      "juz": 30
     },
     {
       "number": 111,
@@ -993,7 +1214,9 @@
       "revelationType": "Meccan",
       "ayahs": 5,
       "words": 23,
-      "letters": 81
+      "letters": 81,
+      "pageStart": 603,
+      "juz": 30
     },
     {
       "number": 112,
@@ -1001,7 +1224,9 @@
       "revelationType": "Meccan",
       "ayahs": 4,
       "words": 15,
-      "letters": 47
+      "letters": 47,
+      "pageStart": 604,
+      "juz": 30
     },
     {
       "number": 113,
@@ -1009,7 +1234,9 @@
       "revelationType": "Meccan",
       "ayahs": 5,
       "words": 23,
-      "letters": 71
+      "letters": 71,
+      "pageStart": 604,
+      "juz": 30
     },
     {
       "number": 114,
@@ -1017,8 +1244,2186 @@
       "revelationType": "Meccan",
       "ayahs": 6,
       "words": 20,
-      "letters": 80
+      "letters": 80,
+      "pageStart": 604,
+      "juz": 30
     }
   ],
-  "fingerprint": "b5ba14c227e91aab07fa4aa02a775d853d01d963383d61d7d3101c9e08e6016e"
+  "wordFreq": {
+    "allTop": [
+      {
+        "form": "من",
+        "count": 2763,
+        "letters": 2
+      },
+      {
+        "form": "ٱلله",
+        "count": 2153,
+        "letters": 4
+      },
+      {
+        "form": "فى",
+        "count": 1185,
+        "letters": 2
+      },
+      {
+        "form": "ما",
+        "count": 1010,
+        "letters": 2
+      },
+      {
+        "form": "إن",
+        "count": 966,
+        "letters": 2
+      },
+      {
+        "form": "لا",
+        "count": 812,
+        "letters": 2
+      },
+      {
+        "form": "ٱلذين",
+        "count": 811,
+        "letters": 5
+      },
+      {
+        "form": "على",
+        "count": 686,
+        "letters": 3
+      },
+      {
+        "form": "إلا",
+        "count": 664,
+        "letters": 3
+      },
+      {
+        "form": "ولا",
+        "count": 658,
+        "letters": 3
+      },
+      {
+        "form": "وما",
+        "count": 646,
+        "letters": 3
+      },
+      {
+        "form": "أن",
+        "count": 638,
+        "letters": 2
+      },
+      {
+        "form": "إلى",
+        "count": 430,
+        "letters": 3
+      },
+      {
+        "form": "قال",
+        "count": 412,
+        "letters": 3
+      },
+      {
+        "form": "لهم",
+        "count": 373,
+        "letters": 3
+      },
+      {
+        "form": "ومن",
+        "count": 342,
+        "letters": 3
+      },
+      {
+        "form": "ثم",
+        "count": 340,
+        "letters": 2
+      },
+      {
+        "form": "لكم",
+        "count": 337,
+        "letters": 3
+      },
+      {
+        "form": "به",
+        "count": 327,
+        "letters": 2
+      },
+      {
+        "form": "كان",
+        "count": 323,
+        "letters": 3
+      },
+      {
+        "form": "قل",
+        "count": 298,
+        "letters": 2
+      },
+      {
+        "form": "بما",
+        "count": 296,
+        "letters": 3
+      },
+      {
+        "form": "ٱلأرض",
+        "count": 287,
+        "letters": 5
+      },
+      {
+        "form": "ذلك",
+        "count": 280,
+        "letters": 3
+      },
+      {
+        "form": "أو",
+        "count": 280,
+        "letters": 2
+      },
+      {
+        "form": "له",
+        "count": 275,
+        "letters": 2
+      },
+      {
+        "form": "ٱلذى",
+        "count": 268,
+        "letters": 4
+      },
+      {
+        "form": "هو",
+        "count": 265,
+        "letters": 2
+      },
+      {
+        "form": "ءامنوا",
+        "count": 263,
+        "letters": 6
+      },
+      {
+        "form": "هم",
+        "count": 261,
+        "letters": 2
+      },
+      {
+        "form": "وإن",
+        "count": 254,
+        "letters": 3
+      },
+      {
+        "form": "قالوا",
+        "count": 250,
+        "letters": 5
+      },
+      {
+        "form": "كل",
+        "count": 245,
+        "letters": 2
+      },
+      {
+        "form": "فيها",
+        "count": 241,
+        "letters": 4
+      },
+      {
+        "form": "وٱلله",
+        "count": 240,
+        "letters": 5
+      },
+      {
+        "form": "كانوا",
+        "count": 229,
+        "letters": 5
+      },
+      {
+        "form": "عن",
+        "count": 223,
+        "letters": 2
+      },
+      {
+        "form": "إذا",
+        "count": 221,
+        "letters": 3
+      },
+      {
+        "form": "ربك",
+        "count": 220,
+        "letters": 3
+      },
+      {
+        "form": "يوم",
+        "count": 217,
+        "letters": 3
+      },
+      {
+        "form": "عليهم",
+        "count": 215,
+        "letters": 5
+      },
+      {
+        "form": "شىء",
+        "count": 190,
+        "letters": 3
+      },
+      {
+        "form": "هذا",
+        "count": 190,
+        "letters": 3
+      },
+      {
+        "form": "كفروا",
+        "count": 189,
+        "letters": 5
+      },
+      {
+        "form": "كنتم",
+        "count": 188,
+        "letters": 4
+      },
+      {
+        "form": "ٱلسموت",
+        "count": 182,
+        "letters": 6
+      },
+      {
+        "form": "ٱلناس",
+        "count": 182,
+        "letters": 5
+      },
+      {
+        "form": "لم",
+        "count": 178,
+        "letters": 2
+      },
+      {
+        "form": "وهو",
+        "count": 171,
+        "letters": 3
+      },
+      {
+        "form": "فإن",
+        "count": 168,
+        "letters": 3
+      },
+      {
+        "form": "إذ",
+        "count": 165,
+        "letters": 2
+      },
+      {
+        "form": "وٱلذين",
+        "count": 164,
+        "letters": 6
+      },
+      {
+        "form": "عليكم",
+        "count": 164,
+        "letters": 5
+      },
+      {
+        "form": "ٱلكتب",
+        "count": 163,
+        "letters": 5
+      },
+      {
+        "form": "وٱلأرض",
+        "count": 157,
+        "letters": 6
+      },
+      {
+        "form": "إنا",
+        "count": 156,
+        "letters": 3
+      },
+      {
+        "form": "فلا",
+        "count": 156,
+        "letters": 3
+      },
+      {
+        "form": "منهم",
+        "count": 153,
+        "letters": 4
+      },
+      {
+        "form": "عذاب",
+        "count": 150,
+        "letters": 4
+      },
+      {
+        "form": "بعد",
+        "count": 147,
+        "letters": 3
+      },
+      {
+        "form": "إنه",
+        "count": 147,
+        "letters": 3
+      },
+      {
+        "form": "عليه",
+        "count": 146,
+        "letters": 4
+      },
+      {
+        "form": "يأيها",
+        "count": 142,
+        "letters": 5
+      },
+      {
+        "form": "حتى",
+        "count": 142,
+        "letters": 3
+      },
+      {
+        "form": "بٱلله",
+        "count": 139,
+        "letters": 5
+      },
+      {
+        "form": "وهم",
+        "count": 137,
+        "letters": 3
+      },
+      {
+        "form": "وإذا",
+        "count": 134,
+        "letters": 4
+      },
+      {
+        "form": "أولئك",
+        "count": 133,
+        "letters": 5
+      },
+      {
+        "form": "إنى",
+        "count": 131,
+        "letters": 3
+      },
+      {
+        "form": "أم",
+        "count": 130,
+        "letters": 2
+      },
+      {
+        "form": "ولقد",
+        "count": 129,
+        "letters": 4
+      },
+      {
+        "form": "رب",
+        "count": 128,
+        "letters": 2
+      },
+      {
+        "form": "فيه",
+        "count": 127,
+        "letters": 3
+      },
+      {
+        "form": "بل",
+        "count": 127,
+        "letters": 2
+      },
+      {
+        "form": "قد",
+        "count": 126,
+        "letters": 2
+      },
+      {
+        "form": "عند",
+        "count": 119,
+        "letters": 3
+      },
+      {
+        "form": "قبل",
+        "count": 118,
+        "letters": 3
+      },
+      {
+        "form": "يشاء",
+        "count": 116,
+        "letters": 4
+      },
+      {
+        "form": "لله",
+        "count": 116,
+        "letters": 3
+      },
+      {
+        "form": "خير",
+        "count": 116,
+        "letters": 3
+      },
+      {
+        "form": "ٱلدنيا",
+        "count": 115,
+        "letters": 6
+      },
+      {
+        "form": "إنما",
+        "count": 113,
+        "letters": 4
+      },
+      {
+        "form": "ولكن",
+        "count": 112,
+        "letters": 4
+      },
+      {
+        "form": "ربهم",
+        "count": 111,
+        "letters": 4
+      },
+      {
+        "form": "ولو",
+        "count": 111,
+        "letters": 3
+      },
+      {
+        "form": "مما",
+        "count": 111,
+        "letters": 3
+      },
+      {
+        "form": "ٱلسماء",
+        "count": 109,
+        "letters": 6
+      },
+      {
+        "form": "ٱلحق",
+        "count": 109,
+        "letters": 4
+      },
+      {
+        "form": "منكم",
+        "count": 107,
+        "letters": 4
+      },
+      {
+        "form": "عليم",
+        "count": 106,
+        "letters": 4
+      },
+      {
+        "form": "ربنا",
+        "count": 106,
+        "letters": 4
+      },
+      {
+        "form": "موسى",
+        "count": 105,
+        "letters": 4
+      },
+      {
+        "form": "ٱلنار",
+        "count": 102,
+        "letters": 5
+      },
+      {
+        "form": "ربكم",
+        "count": 102,
+        "letters": 4
+      },
+      {
+        "form": "فلما",
+        "count": 101,
+        "letters": 4
+      },
+      {
+        "form": "ألا",
+        "count": 99,
+        "letters": 3
+      },
+      {
+        "form": "أنزل",
+        "count": 95,
+        "letters": 4
+      },
+      {
+        "form": "لمن",
+        "count": 94,
+        "letters": 3
+      },
+      {
+        "form": "ربى",
+        "count": 94,
+        "letters": 3
+      },
+      {
+        "form": "خلق",
+        "count": 93,
+        "letters": 3
+      },
+      {
+        "form": "دون",
+        "count": 91,
+        "letters": 3
+      },
+      {
+        "form": "فمن",
+        "count": 90,
+        "letters": 3
+      },
+      {
+        "form": "منه",
+        "count": 88,
+        "letters": 3
+      },
+      {
+        "form": "سبيل",
+        "count": 87,
+        "letters": 4
+      },
+      {
+        "form": "فإذا",
+        "count": 87,
+        "letters": 4
+      },
+      {
+        "form": "يؤمنون",
+        "count": 86,
+        "letters": 6
+      },
+      {
+        "form": "منها",
+        "count": 86,
+        "letters": 4
+      },
+      {
+        "form": "كذلك",
+        "count": 86,
+        "letters": 4
+      },
+      {
+        "form": "فما",
+        "count": 86,
+        "letters": 3
+      },
+      {
+        "form": "ٱلعذاب",
+        "count": 85,
+        "letters": 6
+      },
+      {
+        "form": "وقال",
+        "count": 85,
+        "letters": 4
+      },
+      {
+        "form": "وكان",
+        "count": 84,
+        "letters": 4
+      },
+      {
+        "form": "مبين",
+        "count": 84,
+        "letters": 4
+      },
+      {
+        "form": "تعملون",
+        "count": 83,
+        "letters": 6
+      },
+      {
+        "form": "لنا",
+        "count": 83,
+        "letters": 3
+      },
+      {
+        "form": "يعلمون",
+        "count": 82,
+        "letters": 6
+      },
+      {
+        "form": "للذين",
+        "count": 80,
+        "letters": 5
+      },
+      {
+        "form": "بين",
+        "count": 80,
+        "letters": 3
+      },
+      {
+        "form": "بها",
+        "count": 79,
+        "letters": 3
+      },
+      {
+        "form": "قوم",
+        "count": 79,
+        "letters": 3
+      },
+      {
+        "form": "لو",
+        "count": 79,
+        "letters": 2
+      },
+      {
+        "form": "ٱلمؤمنين",
+        "count": 78,
+        "letters": 8
+      },
+      {
+        "form": "ألم",
+        "count": 78,
+        "letters": 3
+      },
+      {
+        "form": "إليك",
+        "count": 77,
+        "letters": 4
+      },
+      {
+        "form": "شيـا",
+        "count": 77,
+        "letters": 4
+      },
+      {
+        "form": "علم",
+        "count": 77,
+        "letters": 3
+      },
+      {
+        "form": "إليه",
+        "count": 76,
+        "letters": 4
+      },
+      {
+        "form": "أنتم",
+        "count": 76,
+        "letters": 4
+      },
+      {
+        "form": "عنهم",
+        "count": 75,
+        "letters": 4
+      },
+      {
+        "form": "بٱلحق",
+        "count": 74,
+        "letters": 5
+      },
+      {
+        "form": "لما",
+        "count": 74,
+        "letters": 3
+      },
+      {
+        "form": "ربه",
+        "count": 73,
+        "letters": 3
+      },
+      {
+        "form": "إله",
+        "count": 73,
+        "letters": 3
+      },
+      {
+        "form": "أنفسهم",
+        "count": 72,
+        "letters": 6
+      },
+      {
+        "form": "جهنم",
+        "count": 72,
+        "letters": 4
+      },
+      {
+        "form": "وإذ",
+        "count": 72,
+        "letters": 3
+      },
+      {
+        "form": "ٱلءاخرة",
+        "count": 71,
+        "letters": 7
+      },
+      {
+        "form": "ٱلقيمة",
+        "count": 71,
+        "letters": 6
+      },
+      {
+        "form": "يعلم",
+        "count": 71,
+        "letters": 4
+      },
+      {
+        "form": "لك",
+        "count": 71,
+        "letters": 2
+      },
+      {
+        "form": "غير",
+        "count": 69,
+        "letters": 3
+      },
+      {
+        "form": "وأن",
+        "count": 68,
+        "letters": 3
+      },
+      {
+        "form": "كتب",
+        "count": 67,
+        "letters": 3
+      },
+      {
+        "form": "هل",
+        "count": 67,
+        "letters": 2
+      },
+      {
+        "form": "ورسوله",
+        "count": 66,
+        "letters": 6
+      },
+      {
+        "form": "أنا",
+        "count": 66,
+        "letters": 3
+      },
+      {
+        "form": "قلوبهم",
+        "count": 65,
+        "letters": 6
+      },
+      {
+        "form": "فرعون",
+        "count": 65,
+        "letters": 5
+      },
+      {
+        "form": "يومئذ",
+        "count": 65,
+        "letters": 5
+      },
+      {
+        "form": "ٱلتى",
+        "count": 65,
+        "letters": 4
+      },
+      {
+        "form": "نحن",
+        "count": 65,
+        "letters": 3
+      },
+      {
+        "form": "ٱلظلمين",
+        "count": 64,
+        "letters": 7
+      },
+      {
+        "form": "ٱلعزيز",
+        "count": 64,
+        "letters": 6
+      },
+      {
+        "form": "ٱلشيطن",
+        "count": 63,
+        "letters": 6
+      },
+      {
+        "form": "ٱلحيوة",
+        "count": 63,
+        "letters": 6
+      },
+      {
+        "form": "إنهم",
+        "count": 63,
+        "letters": 4
+      },
+      {
+        "form": "كنا",
+        "count": 63,
+        "letters": 3
+      },
+      {
+        "form": "لى",
+        "count": 63,
+        "letters": 2
+      },
+      {
+        "form": "ٱلقوم",
+        "count": 62,
+        "letters": 5
+      },
+      {
+        "form": "أصحب",
+        "count": 62,
+        "letters": 4
+      },
+      {
+        "form": "جنت",
+        "count": 62,
+        "letters": 3
+      },
+      {
+        "form": "كيف",
+        "count": 62,
+        "letters": 3
+      },
+      {
+        "form": "ٱلعلمين",
+        "count": 61,
+        "letters": 7
+      },
+      {
+        "form": "ٱلصلحت",
+        "count": 61,
+        "letters": 6
+      },
+      {
+        "form": "وقالوا",
+        "count": 61,
+        "letters": 6
+      },
+      {
+        "form": "رحيم",
+        "count": 61,
+        "letters": 4
+      },
+      {
+        "form": "بعض",
+        "count": 61,
+        "letters": 3
+      },
+      {
+        "form": "لعلكم",
+        "count": 59,
+        "letters": 5
+      },
+      {
+        "form": "ٱليل",
+        "count": 59,
+        "letters": 4
+      },
+      {
+        "form": "كما",
+        "count": 59,
+        "letters": 3
+      },
+      {
+        "form": "لن",
+        "count": 59,
+        "letters": 2
+      },
+      {
+        "form": "ٱلصلوة",
+        "count": 58,
+        "letters": 6
+      },
+      {
+        "form": "ٱلإنسن",
+        "count": 58,
+        "letters": 6
+      },
+      {
+        "form": "بينهم",
+        "count": 58,
+        "letters": 5
+      },
+      {
+        "form": "مع",
+        "count": 58,
+        "letters": 2
+      },
+      {
+        "form": "بـايتنا",
+        "count": 57,
+        "letters": 7
+      },
+      {
+        "form": "عليك",
+        "count": 57,
+        "letters": 4
+      },
+      {
+        "form": "فقد",
+        "count": 57,
+        "letters": 3
+      },
+      {
+        "form": "جاء",
+        "count": 57,
+        "letters": 3
+      },
+      {
+        "form": "تعلمون",
+        "count": 56,
+        "letters": 6
+      },
+      {
+        "form": "يعملون",
+        "count": 56,
+        "letters": 6
+      },
+      {
+        "form": "ٱلجنة",
+        "count": 56,
+        "letters": 5
+      },
+      {
+        "form": "شاء",
+        "count": 56,
+        "letters": 3
+      },
+      {
+        "form": "قليلا",
+        "count": 55,
+        "letters": 5
+      },
+      {
+        "form": "أعلم",
+        "count": 55,
+        "letters": 4
+      },
+      {
+        "form": "أنت",
+        "count": 55,
+        "letters": 3
+      },
+      {
+        "form": "لقد",
+        "count": 54,
+        "letters": 3
+      },
+      {
+        "form": "وعملوا",
+        "count": 53,
+        "letters": 6
+      },
+      {
+        "form": "ٱلكفرين",
+        "count": 52,
+        "letters": 7
+      },
+      {
+        "form": "قبلهم",
+        "count": 52,
+        "letters": 5
+      },
+      {
+        "form": "أليم",
+        "count": 52,
+        "letters": 4
+      },
+      {
+        "form": "رسول",
+        "count": 52,
+        "letters": 4
+      },
+      {
+        "form": "ءايت",
+        "count": 52,
+        "letters": 4
+      },
+      {
+        "form": "غفور",
+        "count": 52,
+        "letters": 4
+      },
+      {
+        "form": "يقولون",
+        "count": 51,
+        "letters": 6
+      },
+      {
+        "form": "أرسلنا",
+        "count": 51,
+        "letters": 6
+      },
+      {
+        "form": "علينا",
+        "count": 51,
+        "letters": 5
+      },
+      {
+        "form": "للناس",
+        "count": 51,
+        "letters": 5
+      },
+      {
+        "form": "لقوم",
+        "count": 51,
+        "letters": 4
+      },
+      {
+        "form": "كنت",
+        "count": 51,
+        "letters": 3
+      }
+    ],
+    "contentTop": [
+      {
+        "form": "ٱلله",
+        "count": 2153,
+        "letters": 4
+      },
+      {
+        "form": "فى",
+        "count": 1185,
+        "letters": 2
+      },
+      {
+        "form": "إلا",
+        "count": 664,
+        "letters": 3
+      },
+      {
+        "form": "ولا",
+        "count": 658,
+        "letters": 3
+      },
+      {
+        "form": "وما",
+        "count": 646,
+        "letters": 3
+      },
+      {
+        "form": "قال",
+        "count": 412,
+        "letters": 3
+      },
+      {
+        "form": "ومن",
+        "count": 342,
+        "letters": 3
+      },
+      {
+        "form": "لكم",
+        "count": 337,
+        "letters": 3
+      },
+      {
+        "form": "قل",
+        "count": 298,
+        "letters": 2
+      },
+      {
+        "form": "ٱلأرض",
+        "count": 287,
+        "letters": 5
+      },
+      {
+        "form": "ٱلذى",
+        "count": 268,
+        "letters": 4
+      },
+      {
+        "form": "ءامنوا",
+        "count": 263,
+        "letters": 6
+      },
+      {
+        "form": "وإن",
+        "count": 254,
+        "letters": 3
+      },
+      {
+        "form": "قالوا",
+        "count": 250,
+        "letters": 5
+      },
+      {
+        "form": "وٱلله",
+        "count": 240,
+        "letters": 5
+      },
+      {
+        "form": "كانوا",
+        "count": 229,
+        "letters": 5
+      },
+      {
+        "form": "ربك",
+        "count": 220,
+        "letters": 3
+      },
+      {
+        "form": "يوم",
+        "count": 217,
+        "letters": 3
+      },
+      {
+        "form": "عليهم",
+        "count": 215,
+        "letters": 5
+      },
+      {
+        "form": "شىء",
+        "count": 190,
+        "letters": 3
+      },
+      {
+        "form": "كفروا",
+        "count": 189,
+        "letters": 5
+      },
+      {
+        "form": "كنتم",
+        "count": 188,
+        "letters": 4
+      },
+      {
+        "form": "ٱلسموت",
+        "count": 182,
+        "letters": 6
+      },
+      {
+        "form": "ٱلناس",
+        "count": 182,
+        "letters": 5
+      },
+      {
+        "form": "وهو",
+        "count": 171,
+        "letters": 3
+      },
+      {
+        "form": "فإن",
+        "count": 168,
+        "letters": 3
+      },
+      {
+        "form": "وٱلذين",
+        "count": 164,
+        "letters": 6
+      },
+      {
+        "form": "عليكم",
+        "count": 164,
+        "letters": 5
+      },
+      {
+        "form": "ٱلكتب",
+        "count": 163,
+        "letters": 5
+      },
+      {
+        "form": "وٱلأرض",
+        "count": 157,
+        "letters": 6
+      },
+      {
+        "form": "إنا",
+        "count": 156,
+        "letters": 3
+      },
+      {
+        "form": "فلا",
+        "count": 156,
+        "letters": 3
+      },
+      {
+        "form": "منهم",
+        "count": 153,
+        "letters": 4
+      },
+      {
+        "form": "عذاب",
+        "count": 150,
+        "letters": 4
+      },
+      {
+        "form": "إنه",
+        "count": 147,
+        "letters": 3
+      },
+      {
+        "form": "يأيها",
+        "count": 142,
+        "letters": 5
+      },
+      {
+        "form": "بٱلله",
+        "count": 139,
+        "letters": 5
+      },
+      {
+        "form": "وهم",
+        "count": 137,
+        "letters": 3
+      },
+      {
+        "form": "وإذا",
+        "count": 134,
+        "letters": 4
+      },
+      {
+        "form": "أولئك",
+        "count": 133,
+        "letters": 5
+      },
+      {
+        "form": "إنى",
+        "count": 131,
+        "letters": 3
+      },
+      {
+        "form": "ولقد",
+        "count": 129,
+        "letters": 4
+      },
+      {
+        "form": "رب",
+        "count": 128,
+        "letters": 2
+      },
+      {
+        "form": "يشاء",
+        "count": 116,
+        "letters": 4
+      },
+      {
+        "form": "لله",
+        "count": 116,
+        "letters": 3
+      },
+      {
+        "form": "خير",
+        "count": 116,
+        "letters": 3
+      },
+      {
+        "form": "ٱلدنيا",
+        "count": 115,
+        "letters": 6
+      },
+      {
+        "form": "ولكن",
+        "count": 112,
+        "letters": 4
+      },
+      {
+        "form": "ربهم",
+        "count": 111,
+        "letters": 4
+      },
+      {
+        "form": "ولو",
+        "count": 111,
+        "letters": 3
+      },
+      {
+        "form": "مما",
+        "count": 111,
+        "letters": 3
+      },
+      {
+        "form": "ٱلسماء",
+        "count": 109,
+        "letters": 6
+      },
+      {
+        "form": "ٱلحق",
+        "count": 109,
+        "letters": 4
+      },
+      {
+        "form": "منكم",
+        "count": 107,
+        "letters": 4
+      },
+      {
+        "form": "عليم",
+        "count": 106,
+        "letters": 4
+      },
+      {
+        "form": "ربنا",
+        "count": 106,
+        "letters": 4
+      },
+      {
+        "form": "موسى",
+        "count": 105,
+        "letters": 4
+      },
+      {
+        "form": "ٱلنار",
+        "count": 102,
+        "letters": 5
+      },
+      {
+        "form": "ربكم",
+        "count": 102,
+        "letters": 4
+      },
+      {
+        "form": "فلما",
+        "count": 101,
+        "letters": 4
+      },
+      {
+        "form": "أنزل",
+        "count": 95,
+        "letters": 4
+      },
+      {
+        "form": "لمن",
+        "count": 94,
+        "letters": 3
+      },
+      {
+        "form": "ربى",
+        "count": 94,
+        "letters": 3
+      },
+      {
+        "form": "خلق",
+        "count": 93,
+        "letters": 3
+      },
+      {
+        "form": "دون",
+        "count": 91,
+        "letters": 3
+      },
+      {
+        "form": "فمن",
+        "count": 90,
+        "letters": 3
+      },
+      {
+        "form": "سبيل",
+        "count": 87,
+        "letters": 4
+      },
+      {
+        "form": "فإذا",
+        "count": 87,
+        "letters": 4
+      },
+      {
+        "form": "يؤمنون",
+        "count": 86,
+        "letters": 6
+      },
+      {
+        "form": "كذلك",
+        "count": 86,
+        "letters": 4
+      },
+      {
+        "form": "فما",
+        "count": 86,
+        "letters": 3
+      },
+      {
+        "form": "ٱلعذاب",
+        "count": 85,
+        "letters": 6
+      },
+      {
+        "form": "وقال",
+        "count": 85,
+        "letters": 4
+      },
+      {
+        "form": "وكان",
+        "count": 84,
+        "letters": 4
+      },
+      {
+        "form": "مبين",
+        "count": 84,
+        "letters": 4
+      },
+      {
+        "form": "تعملون",
+        "count": 83,
+        "letters": 6
+      },
+      {
+        "form": "يعلمون",
+        "count": 82,
+        "letters": 6
+      },
+      {
+        "form": "للذين",
+        "count": 80,
+        "letters": 5
+      },
+      {
+        "form": "قوم",
+        "count": 79,
+        "letters": 3
+      },
+      {
+        "form": "ٱلمؤمنين",
+        "count": 78,
+        "letters": 8
+      },
+      {
+        "form": "ألم",
+        "count": 78,
+        "letters": 3
+      },
+      {
+        "form": "إليك",
+        "count": 77,
+        "letters": 4
+      },
+      {
+        "form": "شيـا",
+        "count": 77,
+        "letters": 4
+      },
+      {
+        "form": "علم",
+        "count": 77,
+        "letters": 3
+      },
+      {
+        "form": "أنتم",
+        "count": 76,
+        "letters": 4
+      },
+      {
+        "form": "عنهم",
+        "count": 75,
+        "letters": 4
+      },
+      {
+        "form": "بٱلحق",
+        "count": 74,
+        "letters": 5
+      },
+      {
+        "form": "لما",
+        "count": 74,
+        "letters": 3
+      },
+      {
+        "form": "ربه",
+        "count": 73,
+        "letters": 3
+      },
+      {
+        "form": "إله",
+        "count": 73,
+        "letters": 3
+      },
+      {
+        "form": "أنفسهم",
+        "count": 72,
+        "letters": 6
+      },
+      {
+        "form": "جهنم",
+        "count": 72,
+        "letters": 4
+      },
+      {
+        "form": "وإذ",
+        "count": 72,
+        "letters": 3
+      },
+      {
+        "form": "ٱلءاخرة",
+        "count": 71,
+        "letters": 7
+      },
+      {
+        "form": "ٱلقيمة",
+        "count": 71,
+        "letters": 6
+      },
+      {
+        "form": "يعلم",
+        "count": 71,
+        "letters": 4
+      },
+      {
+        "form": "وأن",
+        "count": 68,
+        "letters": 3
+      },
+      {
+        "form": "كتب",
+        "count": 67,
+        "letters": 3
+      },
+      {
+        "form": "هل",
+        "count": 67,
+        "letters": 2
+      },
+      {
+        "form": "ورسوله",
+        "count": 66,
+        "letters": 6
+      },
+      {
+        "form": "قلوبهم",
+        "count": 65,
+        "letters": 6
+      },
+      {
+        "form": "فرعون",
+        "count": 65,
+        "letters": 5
+      },
+      {
+        "form": "يومئذ",
+        "count": 65,
+        "letters": 5
+      },
+      {
+        "form": "ٱلتى",
+        "count": 65,
+        "letters": 4
+      },
+      {
+        "form": "ٱلظلمين",
+        "count": 64,
+        "letters": 7
+      },
+      {
+        "form": "ٱلعزيز",
+        "count": 64,
+        "letters": 6
+      },
+      {
+        "form": "ٱلشيطن",
+        "count": 63,
+        "letters": 6
+      },
+      {
+        "form": "ٱلحيوة",
+        "count": 63,
+        "letters": 6
+      },
+      {
+        "form": "إنهم",
+        "count": 63,
+        "letters": 4
+      },
+      {
+        "form": "كنا",
+        "count": 63,
+        "letters": 3
+      },
+      {
+        "form": "لى",
+        "count": 63,
+        "letters": 2
+      },
+      {
+        "form": "ٱلقوم",
+        "count": 62,
+        "letters": 5
+      },
+      {
+        "form": "أصحب",
+        "count": 62,
+        "letters": 4
+      },
+      {
+        "form": "جنت",
+        "count": 62,
+        "letters": 3
+      },
+      {
+        "form": "كيف",
+        "count": 62,
+        "letters": 3
+      },
+      {
+        "form": "ٱلعلمين",
+        "count": 61,
+        "letters": 7
+      },
+      {
+        "form": "ٱلصلحت",
+        "count": 61,
+        "letters": 6
+      },
+      {
+        "form": "وقالوا",
+        "count": 61,
+        "letters": 6
+      },
+      {
+        "form": "رحيم",
+        "count": 61,
+        "letters": 4
+      },
+      {
+        "form": "لعلكم",
+        "count": 59,
+        "letters": 5
+      },
+      {
+        "form": "ٱليل",
+        "count": 59,
+        "letters": 4
+      },
+      {
+        "form": "ٱلصلوة",
+        "count": 58,
+        "letters": 6
+      },
+      {
+        "form": "ٱلإنسن",
+        "count": 58,
+        "letters": 6
+      },
+      {
+        "form": "بينهم",
+        "count": 58,
+        "letters": 5
+      },
+      {
+        "form": "بـايتنا",
+        "count": 57,
+        "letters": 7
+      },
+      {
+        "form": "عليك",
+        "count": 57,
+        "letters": 4
+      },
+      {
+        "form": "فقد",
+        "count": 57,
+        "letters": 3
+      },
+      {
+        "form": "جاء",
+        "count": 57,
+        "letters": 3
+      },
+      {
+        "form": "تعلمون",
+        "count": 56,
+        "letters": 6
+      },
+      {
+        "form": "يعملون",
+        "count": 56,
+        "letters": 6
+      },
+      {
+        "form": "ٱلجنة",
+        "count": 56,
+        "letters": 5
+      },
+      {
+        "form": "شاء",
+        "count": 56,
+        "letters": 3
+      },
+      {
+        "form": "قليلا",
+        "count": 55,
+        "letters": 5
+      },
+      {
+        "form": "أعلم",
+        "count": 55,
+        "letters": 4
+      },
+      {
+        "form": "لقد",
+        "count": 54,
+        "letters": 3
+      },
+      {
+        "form": "وعملوا",
+        "count": 53,
+        "letters": 6
+      },
+      {
+        "form": "ٱلكفرين",
+        "count": 52,
+        "letters": 7
+      },
+      {
+        "form": "قبلهم",
+        "count": 52,
+        "letters": 5
+      },
+      {
+        "form": "أليم",
+        "count": 52,
+        "letters": 4
+      },
+      {
+        "form": "رسول",
+        "count": 52,
+        "letters": 4
+      },
+      {
+        "form": "ءايت",
+        "count": 52,
+        "letters": 4
+      },
+      {
+        "form": "غفور",
+        "count": 52,
+        "letters": 4
+      },
+      {
+        "form": "يقولون",
+        "count": 51,
+        "letters": 6
+      },
+      {
+        "form": "أرسلنا",
+        "count": 51,
+        "letters": 6
+      },
+      {
+        "form": "علينا",
+        "count": 51,
+        "letters": 5
+      },
+      {
+        "form": "للناس",
+        "count": 51,
+        "letters": 5
+      },
+      {
+        "form": "لقوم",
+        "count": 51,
+        "letters": 4
+      },
+      {
+        "form": "كنت",
+        "count": 51,
+        "letters": 3
+      },
+      {
+        "form": "إنك",
+        "count": 50,
+        "letters": 3
+      },
+      {
+        "form": "جميعا",
+        "count": 49,
+        "letters": 5
+      },
+      {
+        "form": "عظيم",
+        "count": 49,
+        "letters": 4
+      },
+      {
+        "form": "أمة",
+        "count": 49,
+        "letters": 3
+      },
+      {
+        "form": "تجرى",
+        "count": 48,
+        "letters": 4
+      },
+      {
+        "form": "ٱلدين",
+        "count": 47,
+        "letters": 5
+      },
+      {
+        "form": "ءاية",
+        "count": 47,
+        "letters": 4
+      },
+      {
+        "form": "نفس",
+        "count": 47,
+        "letters": 3
+      },
+      {
+        "form": "عما",
+        "count": 47,
+        "letters": 3
+      },
+      {
+        "form": "مثل",
+        "count": 47,
+        "letters": 3
+      },
+      {
+        "form": "ليس",
+        "count": 47,
+        "letters": 3
+      },
+      {
+        "form": "ولم",
+        "count": 47,
+        "letters": 3
+      },
+      {
+        "form": "هى",
+        "count": 47,
+        "letters": 2
+      },
+      {
+        "form": "فأولئك",
+        "count": 46,
+        "letters": 6
+      },
+      {
+        "form": "كثيرا",
+        "count": 46,
+        "letters": 5
+      },
+      {
+        "form": "ٱلرحمن",
+        "count": 45,
+        "letters": 6
+      },
+      {
+        "form": "ٱلرسول",
+        "count": 45,
+        "letters": 6
+      },
+      {
+        "form": "وأنتم",
+        "count": 45,
+        "letters": 5
+      },
+      {
+        "form": "أفلا",
+        "count": 45,
+        "letters": 4
+      },
+      {
+        "form": "جعل",
+        "count": 45,
+        "letters": 3
+      },
+      {
+        "form": "خلدين",
+        "count": 44,
+        "letters": 5
+      },
+      {
+        "form": "ذلكم",
+        "count": 44,
+        "letters": 4
+      },
+      {
+        "form": "ويوم",
+        "count": 44,
+        "letters": 4
+      },
+      {
+        "form": "يهدى",
+        "count": 44,
+        "letters": 4
+      },
+      {
+        "form": "ٱلقرءان",
+        "count": 43,
+        "letters": 7
+      },
+      {
+        "form": "ٱلأنهر",
+        "count": 43,
+        "letters": 6
+      },
+      {
+        "form": "إبرهيم",
+        "count": 43,
+        "letters": 6
+      },
+      {
+        "form": "كذبوا",
+        "count": 43,
+        "letters": 5
+      },
+      {
+        "form": "ولهم",
+        "count": 43,
+        "letters": 4
+      },
+      {
+        "form": "يقوم",
+        "count": 43,
+        "letters": 4
+      },
+      {
+        "form": "وقد",
+        "count": 43,
+        "letters": 3
+      },
+      {
+        "form": "أهل",
+        "count": 43,
+        "letters": 3
+      },
+      {
+        "form": "ٱلحكيم",
+        "count": 42,
+        "letters": 6
+      },
+      {
+        "form": "إسرءيل",
+        "count": 42,
+        "letters": 6
+      },
+      {
+        "form": "وٱتقوا",
+        "count": 42,
+        "letters": 6
+      },
+      {
+        "form": "ظلموا",
+        "count": 42,
+        "letters": 5
+      },
+      {
+        "form": "هؤلاء",
+        "count": 41,
+        "letters": 5
+      },
+      {
+        "form": "جاءهم",
+        "count": 41,
+        "letters": 5
+      },
+      {
+        "form": "لعلهم",
+        "count": 41,
+        "letters": 5
+      },
+      {
+        "form": "ٱليوم",
+        "count": 41,
+        "letters": 5
+      },
+      {
+        "form": "أنهم",
+        "count": 41,
+        "letters": 4
+      },
+      {
+        "form": "بغير",
+        "count": 41,
+        "letters": 4
+      },
+      {
+        "form": "بهم",
+        "count": 41,
+        "letters": 3
+      },
+      {
+        "form": "فهم",
+        "count": 41,
+        "letters": 3
+      },
+      {
+        "form": "أمر",
+        "count": 41,
+        "letters": 3
+      },
+      {
+        "form": "إليهم",
+        "count": 40,
+        "letters": 5
+      },
+      {
+        "form": "قوما",
+        "count": 40,
+        "letters": 4
+      },
+      {
+        "form": "وعلى",
+        "count": 39,
+        "letters": 4
+      },
+      {
+        "form": "يقول",
+        "count": 39,
+        "letters": 4
+      },
+      {
+        "form": "حكيم",
+        "count": 39,
+        "letters": 4
+      },
+      {
+        "form": "هدى",
+        "count": 39,
+        "letters": 3
+      },
+      {
+        "form": "يحب",
+        "count": 39,
+        "letters": 3
+      }
+    ],
+    "longestWords": [
+      {
+        "form": "وٱلمستضعفين",
+        "count": 1,
+        "letters": 11,
+        "surah": 4,
+        "ayah": 75
+      },
+      {
+        "form": "وٱلمستغفرين",
+        "count": 1,
+        "letters": 11,
+        "surah": 3,
+        "ayah": 17
+      },
+      {
+        "form": "أنلزمكموها",
+        "count": 1,
+        "letters": 10,
+        "surah": 11,
+        "ayah": 28
+      },
+      {
+        "form": "ٱعتزلتموهم",
+        "count": 1,
+        "letters": 10,
+        "surah": 18,
+        "ayah": 16
+      },
+      {
+        "form": "ٱقترفتموها",
+        "count": 1,
+        "letters": 10,
+        "surah": 9,
+        "ayah": 24
+      },
+      {
+        "form": "ٱلمستـخرين",
+        "count": 1,
+        "letters": 10,
+        "surah": 15,
+        "ayah": 24
+      },
+      {
+        "form": "ٱلمستضعفين",
+        "count": 1,
+        "letters": 10,
+        "surah": 4,
+        "ayah": 98
+      },
+      {
+        "form": "ٱلمستقدمين",
+        "count": 1,
+        "letters": 10,
+        "surah": 15,
+        "ayah": 24
+      },
+      {
+        "form": "ٱلمستكبرين",
+        "count": 1,
+        "letters": 10,
+        "surah": 16,
+        "ayah": 23
+      },
+      {
+        "form": "ٱلمستهزءين",
+        "count": 1,
+        "letters": 10,
+        "surah": 15,
+        "ayah": 95
+      },
+      {
+        "form": "فأسقينكموه",
+        "count": 1,
+        "letters": 10,
+        "surah": 15,
+        "ayah": 22
+      },
+      {
+        "form": "فٱتخذتموهم",
+        "count": 1,
+        "letters": 10,
+        "surah": 23,
+        "ayah": 110
+      },
+      {
+        "form": "فسينفقونها",
+        "count": 1,
+        "letters": 10,
+        "surah": 8,
+        "ayah": 36
+      },
+      {
+        "form": "فليستجيبوا",
+        "count": 1,
+        "letters": 10,
+        "surah": 2,
+        "ayah": 186
+      },
+      {
+        "form": "فليستـذنوا",
+        "count": 1,
+        "letters": 10,
+        "surah": 24,
+        "ayah": 59
+      },
+      {
+        "form": "ليستخلفنهم",
+        "count": 1,
+        "letters": 10,
+        "surah": 24,
+        "ayah": 55
+      },
+      {
+        "form": "وٱسترهبوهم",
+        "count": 1,
+        "letters": 10,
+        "surah": 7,
+        "ayah": 116
+      },
+      {
+        "form": "وٱستيقنتها",
+        "count": 1,
+        "letters": 10,
+        "surah": 27,
+        "ayah": 14
+      },
+      {
+        "form": "وٱلمتصدقين",
+        "count": 1,
+        "letters": 10,
+        "surah": 33,
+        "ayah": 35
+      },
+      {
+        "form": "وبٱلمؤمنين",
+        "count": 1,
+        "letters": 10,
+        "surah": 8,
+        "ayah": 62
+      }
+    ],
+    "topicCounts": {
+      "الجنة": 78,
+      "جنة": 78,
+      "النار": 146,
+      "نار": 146,
+      "الملائكة": 0,
+      "ملك": 144,
+      "الشيطان": 0,
+      "شيطان": 0,
+      "الآخرة": 0,
+      "اخرة": 115,
+      "الدنيا": 115,
+      "الصلاة": 0,
+      "صلاة": 0,
+      "الزكاة": 0,
+      "زكاة": 0,
+      "الصبر": 92,
+      "صبر": 92,
+      "التقوى": 17,
+      "تقوى": 17,
+      "العلم": 680,
+      "علم": 680,
+      "الرسل": 274,
+      "نبي": 37,
+      "النبي": 37
+    },
+    "allahCount": 2574,
+    "rahmanCount": 65
+  },
+  "fingerprint": "33ce3f4bb1e94add94072e4e2e1188fa3bc193473062d1a657cf159f16047e8d"
 }
