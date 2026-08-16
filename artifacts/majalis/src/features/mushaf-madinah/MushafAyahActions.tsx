@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { BookOpen, Bookmark, Copy, Mic2, Pause, Play, Share2, X } from "lucide-react";
+import { BookOpen, Bookmark, Copy, Mic2, Pause, Play, Share2, SkipBack, SkipForward, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import type { PlayerState } from "@/core/audio/AudioEngine";
 import { getReciter } from "@/lib/quran-audio";
@@ -17,6 +17,8 @@ type Props = {
   reciterId: string;
   onPlay: () => void;
   onTogglePlay: () => void;
+  onPrevAyah?: () => void;
+  onNextAyah?: () => void;
   onTafsir: () => void;
   onCopy: () => void;
   onShare: () => void;
@@ -36,6 +38,8 @@ export function MushafAyahActions({
   reciterId,
   onPlay,
   onTogglePlay,
+  onPrevAyah,
+  onNextAyah,
   onTafsir,
   onCopy,
   onShare,
@@ -47,9 +51,7 @@ export function MushafAyahActions({
   const [readerQuery, setReaderQuery] = useState("");
   const parsed = parseVerseKey(verseKey);
   const surahName = parsed ? getSurahMeta(parsed.surah).name : "";
-  const title = parsed
-    ? `سورة ${parsed.surah} · آية ${parsed.ayah} — ${surahName}`
-    : verseKey;
+  const title = parsed ? `${surahName} · آية ${parsed.ayah}` : verseKey;
   const playing =
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const loading = playerState === "loading" || playerState === "buffering";
@@ -90,11 +92,29 @@ export function MushafAyahActions({
             <div className="mm-ayah-bar__transport" role="group" aria-label="تحكم التلاوة">
               <button
                 type="button"
+                className="mm-ayah-bar__skip"
+                onClick={() => onPrevAyah?.()}
+                aria-label="الآية السابقة"
+                disabled={!onPrevAyah}
+              >
+                <SkipBack size={18} aria-hidden="true" />
+              </button>
+              <button
+                type="button"
                 className="mm-ayah-bar__play-main"
                 onClick={handlePlayClick}
                 aria-label={playLabel}
               >
                 {playing ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
+              </button>
+              <button
+                type="button"
+                className="mm-ayah-bar__skip"
+                onClick={() => onNextAyah?.()}
+                aria-label="الآية التالية"
+                disabled={!onNextAyah}
+              >
+                <SkipForward size={18} aria-hidden="true" />
               </button>
               <span className="mm-ayah-bar__reciter-name">{currentReciter.nameAr}</span>
               {loading ? <span className="mm-ayah-bar__loading">جاري تحميل التلاوة...</span> : null}

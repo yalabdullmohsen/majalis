@@ -73,11 +73,22 @@ assert.match(line, /data-testid="mushaf-ayah-hit"/);
 assert.match(css, /فوق مناطق قلب الصفحة/);
 assert.match(css, /data-ayah-bar="1"\]\s*\.mm-page-edge/);
 assert.match(css, /scroll-margin-bottom/);
+assert.match(css, /scrollbar-width:\s*none/);
+assert.match(css, /\.mm-page-edge--next\s*\{[^}]*inset-inline-end:\s*0/);
 
 assert.match(actions, /جاري تحميل التلاوة/);
 assert.match(actions, /تعذر تحميل التلاوة/);
 assert.match(actions, /mushaf-ayah-play/);
 assert.match(actions, /handlePlayClick|onTogglePlay/);
+assert.match(actions, /SkipBack|onPrevAyah/);
+assert.match(actions, /آية \$\{parsed\.ayah\}/);
+
+const dock = read("src/features/mushaf-madinah/MushafAudioDock.tsx");
+for (const id of ["alafasy", "abdulsamad", "husary", "minshawi", "ghamdi", "maher"]) {
+  assert.match(dock, new RegExp(`"${id}"`));
+}
+assert.match(read("src/features/mushaf-madinah/MushafSurahOrnament.tsx"), /mm-surah-ornament__motif/);
+assert.match(viewport, /addEventListener\("scroll"/);
 
 // ليلي بتباين واضح
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
@@ -88,5 +99,6 @@ assert.match(css, /rgba\(191,\s*159,\s*91,\s*0\.22\)/);
 // بلا توسيط عمودي يترك فراغًا أبيض
 assert.match(page, /targetStart = 1/);
 assert.doesNotMatch(page, /\(15 - span\) \/ 2/);
+assert.match(page, /النمل/);
 
 console.log("mushaf-real-layout-gate.test.ts: ok");
