@@ -52,10 +52,10 @@ void import("./styles/m2030/interactions.css");
 if (isNative) {
   document.documentElement.classList.add("capacitor-native");
   document.documentElement.dataset.platform = isAndroid ? "android" : isIOS ? "ios" : "native";
-  // overlay=true → أبقِ --inset-top من theme.css (env(safe-area-inset-top))
-  // لون افتراضي قبل React يمنع وميض أبيض
-  document.documentElement.style.setProperty("--app-status-bg", "#F2F4F3");
-  document.documentElement.style.setProperty("--app-status-fg-mode", "dark");
+  // أبقِ خلفية الإقلاع الداكنة (#002b21 من mj-splash-critical) حتى يركّب React
+  // ويضبط PageChrome — تجنّب شاشة فاتحة فارغة إذا تأخر التركيب.
+  document.documentElement.style.setProperty("--app-status-bg", "#002b21");
+  document.documentElement.style.setProperty("--app-status-fg-mode", "light");
   void import("./styles/capacitor-native-ux.css");
   void import("./styles/ios-edge.css");
 }
@@ -104,33 +104,43 @@ prefetchTopRoutesOnIdle();
 async function mount() {
   const started = performance.now();
 
-  // داخل Capacitor: ألغِ SW/CacheStorage القديمة قبل أول رسم حتى لا تُخدم أصول عتيقة.
-  await purgeNativeWebRuntimeCaches();
-  // Preferences → localStorage قبل رسم المكوّنات التي تقرأ التقدّم متزامنًا
-  await hydrateNativeStorage();
+  // بوابة التشغيل الأول قبل الرسم — متزامنة وسريعة (لا Preferences).
+  initOnboardingState();
+
   if (isNative) {
     installInAppNavigationGuard();
   }
 
-  // بوابة التشغيل الأول: ترحيل المفاتيح القديمة وتثبيت الإصدار الكبير قبل
-  // أول رسم — وإلا قرأت المكوّنات حالة غير مُرحَّلة فأعادت عرض التهيئة.
-  // idempotent: تكرار الاستدعاء بلا أثر.
-  initOnboardingState();
+  // مهم: لا ننتظر purge/hydrate قبل createRoot — كانت تعلّق شاشة بيضاء/فاتحة
+  // داخل Capacitor عندما يعلق جسر Preferences أو مسح الكاش.
+  const rootEl = document.getElementById("root");
+  if (!rootEl) {
+    console.error("[boot] #root missing — cannot mount");
+    return;
+  }
 
-  // Render immediately — do not block the shell on Supabase bootstrap.
-  createRoot(document.getElementById("root")!).render(
-    <>
-      <ChunkRecoveryToast />
-      <ErrorBoundary>
-        <QueryClientProvider client={queryClient}>
-          <App />
-        </QueryClientProvider>
-      </ErrorBoundary>
-    </>,
-  );
+  try {
+    createRoot(rootEl).render(
+      <>
+        <ChunkRecoveryToast />
+        <ErrorBoundary>
+          <QueryClientProvider client={queryClient}>
+            <App />
+          </QueryClientProvider>
+        </ErrorBoundary>
+      </>,
+    );
+  } catch (err) {
+    console.error("[boot] createRoot failed", err);
+    return;
+  }
 
-  // أخفِ شاشة الدخول عند أول عرض ناجح للمسار (سقف 2.5s)
+  // أخفِ شاشة الدخول عند أول عرض ناجح للمسار (سقف قصير)
   armSplashAutoHide();
+
+  // خلفيات غير حاجبة للإقلاع
+  void purgeNativeWebRuntimeCaches().catch(() => {});
+  void hydrateNativeStorage().catch(() => {});
 
   void bootstrapSupabaseFromServer()
     .then(() => resetSupabaseClient())
@@ -157,7 +167,9 @@ async function mount() {
   }, 8000);
 }
 
-void mount();
+void mount().catch((err) => {
+  console.error("[boot] mount failed", err);
+});
 
 // داخل تطبيق Capacitor الأصلي نمنع تسجيل SW تمامًا لتفادي أي بقايا كاش
 // من جلسات سابقة داخل WebView؛ تحديث iOS يعتمد على ملفات cap sync فقط.

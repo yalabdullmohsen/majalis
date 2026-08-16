@@ -4,8 +4,13 @@
  *
  * عند الإقلاع: hydrateNativeStorage() ينسخ Preferences → localStorage.
  * عند الكتابة: تُحدَّث localStorage فورًا ثم Preferences في الخلفية.
+ *
+ * مهم: لا يُنتظر hydrate قبل createRoot — مهلة قصيرة حتى لا تتجمّد شاشة الإقلاع
+ * إذا كان ملحق Preferences غير موجود في الـ binary أو علّق الجسر الأصلي.
  */
 import { Capacitor } from "@capacitor/core";
+
+const HYDRATE_BUDGET_MS = 900;
 
 const isNative = () => {
   try {
@@ -15,11 +20,35 @@ const isNative = () => {
   }
 };
 
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T | null> {
+  return new Promise((resolve) => {
+    let settled = false;
+    const t = window.setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      resolve(null);
+    }, ms);
+    promise
+      .then((value) => {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(t);
+        resolve(value);
+      })
+      .catch(() => {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(t);
+        resolve(null);
+      });
+  });
+}
+
 async function prefsApi() {
   if (!isNative()) return null;
   try {
-    const { Preferences } = await import("@capacitor/preferences");
-    return Preferences;
+    const mod = await withTimeout(import("@capacitor/preferences"), 400);
+    return mod?.Preferences ?? null;
   } catch {
     return null;
   }
@@ -88,46 +117,52 @@ async function removeFromPreferences(key: string): Promise<void> {
 /**
  * يستورد قيم Preferences إلى localStorage عند الإقلاع (لا يستبدل قيمة موجودة
  * أحدث في LS إلا إذا كانت فارغة).
+ * يفشل بهدوء خلال HYDRATE_BUDGET_MS — لا يعلّق واجهة الإقلاع.
  */
 export async function hydrateNativeStorage(
   keys: readonly string[] = NATIVE_PROGRESS_KEYS,
 ): Promise<void> {
-  const Preferences = await prefsApi();
-  if (!Preferences) return;
-  for (const key of keys) {
+  if (!isNative()) return;
+
+  const work = (async () => {
+    const Preferences = await prefsApi();
+    if (!Preferences) return;
+    for (const key of keys) {
+      try {
+        const { value } = await Preferences.get({ key });
+        if (value == null || value === "") continue;
+        const existing = storageGetSync(key);
+        if (existing == null || existing === "") {
+          try {
+            localStorage.setItem(key, value);
+          } catch {
+            /* ignore */
+          }
+        }
+      } catch {
+        /* ignore per key */
+      }
+    }
     try {
-      const { value } = await Preferences.get({ key });
-      if (value == null || value === "") continue;
-      const existing = storageGetSync(key);
-      if (existing == null || existing === "") {
-        try {
-          localStorage.setItem(key, value);
-        } catch {
-          /* ignore */
+      const { keys: all } = await Preferences.keys();
+      for (const key of all) {
+        if (!key.startsWith("adhkar_progress_")) continue;
+        const { value } = await Preferences.get({ key });
+        if (value == null) continue;
+        if (storageGetSync(key) == null) {
+          try {
+            localStorage.setItem(key, value);
+          } catch {
+            /* ignore */
+          }
         }
       }
     } catch {
-      /* ignore per key */
+      /* ignore */
     }
-  }
-  // مفاتيح الأذكار ديناميكية: adhkar_progress_*
-  try {
-    const { keys: all } = await Preferences.keys();
-    for (const key of all) {
-      if (!key.startsWith("adhkar_progress_")) continue;
-      const { value } = await Preferences.get({ key });
-      if (value == null) continue;
-      if (storageGetSync(key) == null) {
-        try {
-          localStorage.setItem(key, value);
-        } catch {
-          /* ignore */
-        }
-      }
-    }
-  } catch {
-    /* ignore */
-  }
+  })();
+
+  await withTimeout(work, HYDRATE_BUDGET_MS);
 }
 
 /** كتابة مفتاح أذكار مع مزامنة Preferences. */

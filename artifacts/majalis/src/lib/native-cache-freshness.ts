@@ -76,9 +76,18 @@ export async function purgeNativeWebRuntimeCaches(): Promise<void> {
     const fingerprint = resolveNativeBuildFingerprint();
     if (alreadyPurgedForBuild(fingerprint)) return;
 
-    await unregisterServiceWorkers();
-    await clearCacheStorage();
-    markPurgedForBuild(fingerprint);
+    const budget = new Promise<void>((resolve) => {
+      window.setTimeout(resolve, 700);
+    });
+
+    await Promise.race([
+      (async () => {
+        await unregisterServiceWorkers();
+        await clearCacheStorage();
+        markPurgedForBuild(fingerprint);
+      })(),
+      budget,
+    ]);
   } catch (err) {
     console.warn("[native-cache-freshness] purge failed", err);
   }
