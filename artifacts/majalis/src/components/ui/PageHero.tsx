@@ -14,6 +14,8 @@ type PageHeroProps = {
   actions?: ReactNode;
   showBack?: boolean;
   withPattern?: boolean;
+  /** بطل بعرض الشاشة الكامل وخلفية هوية عميقة (افتراضي للصفحات الداخلية) */
+  fullBleed?: boolean;
   className?: string;
   children?: ReactNode;
 };
@@ -30,6 +32,7 @@ export function PageHero({
   actions,
   showBack = false,
   withPattern = true,
+  fullBleed = true,
   className,
   children,
 }: PageHeroProps) {
@@ -38,7 +41,11 @@ export function PageHero({
   const titleId = useId();
 
   return (
-    <header className={cn("page-hero-mj", className)} dir="rtl" aria-labelledby={titleId}>
+    <header
+      className={cn("page-hero-mj", fullBleed && "page-hero-mj--bleed", className)}
+      dir="rtl"
+      aria-labelledby={titleId}
+    >
       {withPattern ? <PatternBackdrop /> : null}
       <div className="page-hero-mj__content">
         {showBack ? (

@@ -1517,6 +1517,10 @@ html[data-theme="dark"] .hsp {
   font-size: max(1.125rem, 18px);
   line-height: 1.85;
 }
+:is(html[data-theme="dark"], html.dark) :is(.hadith-card__text, .hadith-card__text--matn) {
+  color: var(--mj-ink, #e9efec) !important;
+  background: var(--mj-surface-2, #1b2421) !important;
+}
 
 .hadith-hub-sample {
   margin: 0 0 1.1rem;
