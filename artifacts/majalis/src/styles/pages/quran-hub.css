@@ -7,8 +7,13 @@
   color: var(--elite-ink, #1A1A18);
   /* ارتفاع الشريط السفلي (يشمل safe-area عبر --bottom-nav-total) + هامش إضافي */
   padding-bottom: calc(var(--bottom-nav-total, 5rem) + 2rem);
-  padding-inline: var(--page-gutter, 1rem) var(--page-gutter-end, var(--page-gutter, 1rem));
+  /* بطل ممتد بلا حشو جانبي على الحاوية — المحتوى التالي يستعيد الحشو */
+  padding-inline: 0;
   box-sizing: border-box;
+}
+.quran-hub-page > *:not(.page-hero-mj) {
+  box-sizing: border-box;
+  padding-inline: var(--page-gutter, 1rem);
 }
 
 /* بطاقة فتح المصحف — فوق البحث، لمسة واحدة تستأنف القراءة */
