@@ -1,0 +1,174 @@
+{
+  "generatedAt": "2026-08-16T06:51:25.182Z",
+  "counts": {
+    "total": 173,
+    "source_verified": 11,
+    "source_missing": 162,
+    "source_broken": 0,
+    "needs_review": 0
+  },
+  "sample_missing": [
+    {
+      "id": "book-umdat",
+      "title": "عمدة الأحكام"
+    },
+    {
+      "id": "book-zad",
+      "title": "زاد المعاد"
+    },
+    {
+      "id": "book-madarij",
+      "title": "مدارج السالكين بين منازل إياك نعبد وإياك نستعين"
+    },
+    {
+      "id": "book-tafsir-ibnkathir",
+      "title": "تفسير ابن كثير"
+    },
+    {
+      "id": "book-tafsir-tabari",
+      "title": "تفسير الطبري"
+    },
+    {
+      "id": "book-wasitiyyah",
+      "title": "العقيدة الواسطية"
+    },
+    {
+      "id": "book-tawhid",
+      "title": "كتاب التوحيد"
+    },
+    {
+      "id": "book-thalathah",
+      "title": "ثلاثة الأصول"
+    },
+    {
+      "id": "book-waraqat",
+      "title": "الورقات في أصول الفقه"
+    },
+    {
+      "id": "book-rawdah-nadhir",
+      "title": "روضة الناظر وجنة المناظر"
+    },
+    {
+      "id": "book-itqan",
+      "title": "الإتقان في علوم القرآن"
+    },
+    {
+      "id": "book-burhan",
+      "title": "البرهان في علوم القرآن"
+    },
+    {
+      "id": "book-tibyan",
+      "title": "التبيان في آداب حملة القرآن"
+    },
+    {
+      "id": "book-nukhbah",
+      "title": "نخبة الفكر في مصطلح أهل الأثر"
+    },
+    {
+      "id": "book-muqaddimah-ibn-salah",
+      "title": "مقدمة ابن الصلاح في علوم الحديث"
+    },
+    {
+      "id": "book-ihya",
+      "title": "إحياء علوم الدين"
+    },
+    {
+      "id": "book-risalah-qushayri",
+      "title": "الرسالة القشيرية"
+    },
+    {
+      "id": "book-seerah-ibn-hisham",
+      "title": "السيرة النبوية"
+    },
+    {
+      "id": "book-raheeq",
+      "title": "الرحيق المختوم"
+    },
+    {
+      "id": "book-mughni",
+      "title": "المغني"
+    },
+    {
+      "id": "book-fiqh-sunnah",
+      "title": "فقه السنة"
+    },
+    {
+      "id": "book-alfiyyah",
+      "title": "ألفية ابن مالك في النحو والصرف"
+    },
+    {
+      "id": "book-ajrumiyyah",
+      "title": "متن الآجرومية في النحو"
+    },
+    {
+      "id": "book-tahawiyyah",
+      "title": "العقيدة الطحاوية"
+    },
+    {
+      "id": "book-luma-safarini",
+      "title": "لوامع الأنوار البهية — شرح الدرة المضية"
+    },
+    {
+      "id": "book-razi-tafsir",
+      "title": "مفاتيح الغيب — تفسير الرازي"
+    },
+    {
+      "id": "book-darimi",
+      "title": "سنن الدارمي"
+    },
+    {
+      "id": "book-bulugh-maram",
+      "title": "بلوغ المرام من أدلة الأحكام"
+    },
+    {
+      "id": "book-majmoo",
+      "title": "المجموع شرح المهذب"
+    },
+    {
+      "id": "book-bidayat-mujtahid",
+      "title": "بداية المجتهد ونهاية المقتصد"
+    },
+    {
+      "id": "book-zaad-mustaqni",
+      "title": "زاد المستقنع في اختصار المقنع"
+    },
+    {
+      "id": "book-hashiyat-ibn-abidin",
+      "title": "رد المحتار على الدر المختار (حاشية ابن عابدين)"
+    },
+    {
+      "id": "book-tahawiyya-sharh",
+      "title": "شرح العقيدة الطحاوية"
+    },
+    {
+      "id": "book-fath-majeed",
+      "title": "فتح المجيد شرح كتاب التوحيد"
+    },
+    {
+      "id": "book-sirah-halabiyya",
+      "title": "إنسان العيون (السيرة الحلبية)"
+    },
+    {
+      "id": "book-sirah-dahlawi",
+      "title": "إزالة الخفاء عن خلافة الخلفاء"
+    },
+    {
+      "id": "book-tawbah-ibn-qudamah",
+      "title": "التوابين"
+    },
+    {
+      "id": "book-mukhtar-sagheer",
+      "title": "مختصر الروضة"
+    },
+    {
+      "id": "book-bayquniyya",
+      "title": "المنظومة البيقونية"
+    },
+    {
+      "id": "book-sarf-mutah",
+      "title": "متن مراح الأرواح في علم الصرف"
+    }
+  ],
+  "sample_broken": [],
+  "policy": "لا اختلاق مصادر. حقل رابط القراءة يُخفى في SEO عند الغياب؛ لا يُعرض «المصدر قيد الإضافة» للعامة."
+}
