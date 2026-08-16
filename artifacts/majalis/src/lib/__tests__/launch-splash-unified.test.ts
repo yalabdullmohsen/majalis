@@ -96,16 +96,19 @@ assert.ok(existsSync(resolve(root, "src/lib/launch-intro.ts")), "توقيتات 
 assert.ok(existsSync(resolve(root, "src/lib/launch-readiness.ts")), "جاهزية الإطلاق");
 
 const launchIntro = readFileSync(resolve(root, "src/lib/launch-intro.ts"), "utf8");
-assert.match(launchIntro, /LAUNCH_ENTER_MS\s*=\s*350/);
-assert.match(launchIntro, /LAUNCH_EXIT_MS\s*=\s*250/);
-assert.match(launchIntro, /LAUNCH_READY_CAP_MS\s*=\s*1_?200/);
-assert.match(launchIntro, /LAUNCH_MAX_MS\s*=\s*3_?000/);
+assert.match(launchIntro, /LAUNCH_ENTER_MS\s*=\s*420/);
+assert.match(launchIntro, /LAUNCH_EXIT_MS\s*=\s*280/);
+assert.match(launchIntro, /LAUNCH_MIN_MS\s*=\s*1_?200/);
+assert.match(launchIntro, /LAUNCH_TARGET_MS\s*=\s*1_?500/);
+assert.match(launchIntro, /LAUNCH_MAX_MS\s*=\s*1_?800/);
+assert.match(launchIntro, /منصة علمية شرعية موثوقة/);
 assert.doesNotMatch(launchIntro, /sessionStorage/, "لا بوابة جلسة تمنع الظهور كل إقلاع");
 assert.doesNotMatch(launchIntro, /onboardingVersion|firstLaunch/, "فصل عن Onboarding");
 
 const launchCss = readFileSync(resolve(root, "src/styles/launch-screen.css"), "utf8");
 assert.match(launchCss, /prefers-reduced-motion/, "reduced-motion يوقف الحركات");
 assert.match(launchCss, /--mj-launch-from/);
+assert.match(launchCss, /--mj-launch-ivory|--mj-launch-gold/);
 assert.match(launchCss, /100dvh/, "ارتفاع ديناميكي كامل");
 assert.match(launchCss, /--inset-top|--inset-bottom/, "safe-area عبر رموز --inset-*");
 assert.ok(!launchCss.includes("100" + "vh"), "بلا وحدة ارتفاع viewport قديمة");
@@ -119,7 +122,10 @@ assert.match(launchCss, /html\.dark/, "وضع داكن");
 const launchComp = readFileSync(resolve(root, "src/components/MajlisLaunchScreen.tsx"), "utf8");
 assert.match(launchComp, /hideAppSplash/);
 assert.match(launchComp, /المجلس العلمي/);
+assert.match(launchComp, /LAUNCH_TAGLINE/);
 assert.match(launchComp, /icon-192\.png/);
+assert.match(launchComp, /requestSkip|skipped/);
+assert.match(launchComp, /onPointerDown|onPointerUp/);
 assert.match(launchComp, /Style\.Light/, "StatusBar Light على خلفية داكنة");
 assert.match(launchComp, /bootstrapLaunchReadinessSync/);
 assert.match(launchComp, /LAUNCH_MAX_MS/);
@@ -127,9 +133,10 @@ assert.doesNotMatch(launchComp, /framer-motion|gsap|lottie/i, "بلا مكتبا
 assert.doesNotMatch(launchComp, /supabase|fetch\(|QueryClient/i, "لا انتظار بيانات خارجية");
 assert.doesNotMatch(
   launchComp,
-  /onboardingVersion|firstLaunch|ابدأ الآن|تخطي|اهتمام/,
+  /onboardingVersion|firstLaunch|ابدأ الآن|اهتمام/,
   "ليست Onboarding",
 );
+assert.doesNotMatch(launchComp, /setLocation|navigate\(|window\.location\s*=/, "لا تغيّر المسار");
 
 const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8");
 assert.match(appSrc, /MajlisLaunchScreen/, "App يركّب MajlisLaunchScreen");

@@ -1,15 +1,15 @@
 /**
- * MajlisLaunchScreen — شاشة تشغيل يومية (ليست Onboarding).
- * تظهر عند كل إقلاع، تختفي عند جاهزية التطبيق أو سقف 3ث.
+ * MajlisLaunchScreen — دخولية افتتاحية يومية قصيرة (ليست Onboarding).
+ * ١٫٢–١٫٨ث · تخطّي باللمس/السحب · لا تغيّر المسار (الروابط المباشرة تبقى كما هي).
  */
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { hideAppSplash } from "@/lib/splash-screen";
 import {
   LAUNCH_ENTER_MS,
   LAUNCH_EXIT_MS,
   LAUNCH_MAX_MS,
+  LAUNCH_TAGLINE,
   canDismissLaunch,
-  pickLaunchTagline,
 } from "@/lib/launch-intro";
 import {
   bootstrapLaunchReadinessSync,
@@ -21,7 +21,9 @@ import { isNative } from "@/lib/capacitor-utils";
 import "@/styles/launch-screen.css";
 
 const LOGO_SRC = "/icon-192.png";
+const LOGO_FALLBACK_SRC = "/brand/official.png";
 const LAUNCH_BG = "#002b21";
+const SKIP_SWIPE_PX = 48;
 
 type Phase = "enter" | "exit";
 
@@ -59,7 +61,6 @@ async function applyNativeLaunchStatusBar(): Promise<void> {
   try {
     const { StatusBar, Style } = await import("@capacitor/status-bar");
     await StatusBar.setOverlaysWebView({ overlay: true });
-    // خلفية داكنة → أيقونات فاتحة (Light content)
     await StatusBar.setStyle({ style: Style.Light });
     await StatusBar.setBackgroundColor({ color: LAUNCH_BG });
   } catch {
@@ -70,12 +71,38 @@ async function applyNativeLaunchStatusBar(): Promise<void> {
 export function MajlisLaunchScreen({ onComplete }: MajlisLaunchScreenProps = {}) {
   const [visible, setVisible] = useState(true);
   const [phase, setPhase] = useState<Phase>("enter");
-  const [tagline] = useState(() => pickLaunchTagline());
+  const [logoSrc, setLogoSrc] = useState(LOGO_SRC);
+  const [logoFailed, setLogoFailed] = useState(false);
   const finishedRef = useRef(false);
   const readyRef = useRef(isAppLaunchReady());
+  const skippedRef = useRef(false);
   const mountedAtRef = useRef(0);
+  const touchRef = useRef<{ x: number; y: number } | null>(null);
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
+
+  const finish = useCallback((reason: "ready" | "timeout" | "skip") => {
+    if (finishedRef.current) return;
+    finishedRef.current = true;
+    if (reason === "timeout" && import.meta.env.DEV && !readyRef.current) {
+      console.warn(
+        `[launch] سقف ${LAUNCH_MAX_MS}ms — دخول التطبيق مع fallback قبل اكتمال كل البوابات`,
+      );
+    }
+    setPhase("exit");
+    window.setTimeout(() => {
+      document.body.classList.remove("mj-launching");
+      restoreThemeColor();
+      setVisible(false);
+      onCompleteRef.current?.();
+    }, LAUNCH_EXIT_MS);
+  }, []);
+
+  const requestSkip = useCallback(() => {
+    if (finishedRef.current) return;
+    skippedRef.current = true;
+    finish("skip");
+  }, [finish]);
 
   useEffect(() => {
     if (!visible) return;
@@ -85,35 +112,18 @@ export function MajlisLaunchScreen({ onComplete }: MajlisLaunchScreenProps = {})
     document.body.classList.add("mj-launching");
     void hideAppSplash();
     void applyNativeLaunchStatusBar();
-
-    // بوابات متزامنة محلية فورًا
     bootstrapLaunchReadinessSync();
-
-    const finish = (reason: "ready" | "timeout") => {
-      if (finishedRef.current) return;
-      finishedRef.current = true;
-      if (
-        reason === "timeout" &&
-        import.meta.env.DEV &&
-        !readyRef.current
-      ) {
-        console.warn(
-          `[launch] سقف ${LAUNCH_MAX_MS}ms — دخول التطبيق مع fallback قبل اكتمال كل البوابات`,
-        );
-      }
-      setPhase("exit");
-      window.setTimeout(() => {
-        document.body.classList.remove("mj-launching");
-        restoreThemeColor();
-        setVisible(false);
-        onCompleteRef.current?.();
-      }, LAUNCH_EXIT_MS);
-    };
 
     const tryFinish = () => {
       const elapsed = performance.now() - mountedAtRef.current;
-      if (canDismissLaunch({ ready: readyRef.current, elapsedMs: elapsed })) {
-        finish(readyRef.current ? "ready" : "timeout");
+      if (
+        canDismissLaunch({
+          ready: readyRef.current,
+          elapsedMs: elapsed,
+          skipped: skippedRef.current,
+        })
+      ) {
+        finish(skippedRef.current ? "skip" : readyRef.current ? "ready" : "timeout");
       }
     };
 
@@ -122,7 +132,6 @@ export function MajlisLaunchScreen({ onComplete }: MajlisLaunchScreenProps = {})
       tryFinish();
     });
 
-    // إطاران بعد التركيب = المسارات الحرجة جاهزة للرسم
     let raf2 = 0;
     const raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => {
@@ -134,7 +143,6 @@ export function MajlisLaunchScreen({ onComplete }: MajlisLaunchScreenProps = {})
 
     const maxTimer = window.setTimeout(() => finish("timeout"), LAUNCH_MAX_MS);
     const enterTimer = window.setTimeout(tryFinish, LAUNCH_ENTER_MS);
-    // فحص دوري خفيف أثناء انتظار الجاهزية
     const poll = window.setInterval(tryFinish, 80);
 
     return () => {
@@ -146,7 +154,29 @@ export function MajlisLaunchScreen({ onComplete }: MajlisLaunchScreenProps = {})
       unsub();
       document.body.classList.remove("mj-launching");
     };
-  }, [visible]);
+  }, [visible, finish]);
+
+  const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    touchRef.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const onPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const start = touchRef.current;
+    touchRef.current = null;
+    if (!start) {
+      requestSkip();
+      return;
+    }
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    if (Math.abs(dx) >= SKIP_SWIPE_PX || Math.abs(dy) >= SKIP_SWIPE_PX) {
+      requestSkip();
+      return;
+    }
+    if (Math.abs(dx) < 14 && Math.abs(dy) < 14) {
+      requestSkip();
+    }
+  };
 
   if (!visible) return null;
 
@@ -157,22 +187,42 @@ export function MajlisLaunchScreen({ onComplete }: MajlisLaunchScreenProps = {})
       data-testid="majlis-launch-screen"
       role="presentation"
       aria-hidden="true"
+      dir="rtl"
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+      onPointerCancel={() => {
+        touchRef.current = null;
+      }}
     >
+      <div className="mj-launch-screen__glow" aria-hidden="true" />
       <div className="mj-launch-screen__pattern" aria-hidden="true" />
       <div className="mj-launch-screen__inner">
         <div className="mj-launch-screen__logo-wrap">
-          <img
-            className="mj-launch-screen__logo"
-            src={LOGO_SRC}
-            alt=""
-            width={88}
-            height={88}
-            decoding="async"
-            fetchPriority="high"
-          />
+          {logoFailed ? (
+            <span className="mj-launch-screen__mark" aria-hidden="true">
+              م
+            </span>
+          ) : (
+            <img
+              className="mj-launch-screen__logo"
+              src={logoSrc}
+              alt=""
+              width={96}
+              height={96}
+              decoding="async"
+              fetchPriority="high"
+              onError={() => {
+                if (logoSrc !== LOGO_FALLBACK_SRC) {
+                  setLogoSrc(LOGO_FALLBACK_SRC);
+                  return;
+                }
+                setLogoFailed(true);
+              }}
+            />
+          )}
         </div>
         <p className="mj-launch-screen__title">المجلس العلمي</p>
-        <p className="mj-launch-screen__tagline">{tagline}</p>
+        <p className="mj-launch-screen__tagline">{LAUNCH_TAGLINE}</p>
         <div className="mj-launch-screen__loader" aria-hidden="true" />
       </div>
     </div>
