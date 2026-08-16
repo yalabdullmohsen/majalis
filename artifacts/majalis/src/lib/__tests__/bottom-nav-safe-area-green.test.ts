@@ -27,12 +27,16 @@ const native = read("src/styles/capacitor-native-ux.css");
 assert.match(native, /html\.capacitor-native[\s\S]*--mj-splash,\s*#002b21/);
 
 const capTs = read("capacitor.config.ts");
-assert.match(capTs, /ios:\s*\{[\s\S]*backgroundColor:\s*"#002b21"/);
-assert.doesNotMatch(capTs, /ios:\s*\{[\s\S]*backgroundColor:\s*"#ffffff"/);
-assert.doesNotMatch(capTs, /ios:\s*\{[\s\S]*backgroundColor:\s*"#F2F4F3"/);
+assert.match(capTs, /ios:\s*\{[\s\S]*?backgroundColor:\s*"#002b21"/);
+assert.doesNotMatch(capTs, /ios:\s*\{[\s\S]*?backgroundColor:\s*"#ffffff"/);
+assert.doesNotMatch(capTs, /ios:\s*\{[\s\S]*?backgroundColor:\s*"#F2F4F3"/);
 
-const androidCap = read("android/app/src/main/assets/capacitor.config.json");
-assert.doesNotMatch(androidCap, /"#ffffff"/);
-assert.match(androidCap, /"backgroundColor":\s*"#002b21"/);
+const capJson = read("capacitor.config.json");
+assert.match(capJson, /"backgroundColor":\s*"#002b21"/);
+assert.doesNotMatch(capJson, /"backgroundColor":\s*"#ffffff"/);
+
+const iosCap = read("ios/App/App/capacitor.config.json");
+assert.match(iosCap, /"backgroundColor":\s*"#002b21"/);
+assert.doesNotMatch(iosCap, /"backgroundColor":\s*"#ffffff"/);
 
 console.log("bottom-nav-safe-area-green.test.ts: ok");
