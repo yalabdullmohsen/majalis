@@ -1,13 +1,15 @@
 /**
- * صفحة /more — أبواب مميزة ثم أقسام أصغر ثم الحساب/الإعدادات.
+ * صفحة /more — مركز الأقسام الثانوية حسب مجموعات IA.
  */
 import { useEffect } from "react";
 import { Link } from "wouter";
 import {
   MORE_ACCOUNT_SECTIONS,
-  MORE_FEATURED_SECTIONS,
+  MORE_SECTION_GROUPS,
   MORE_STANDARD_SECTIONS,
+  moreSectionsInGroup,
   type MoreSection,
+  type MoreSectionGroupId,
 } from "@/features/more/moreSections";
 import { applyPageSeo } from "@/lib/seo";
 import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
@@ -31,33 +33,57 @@ function MoreTile({ section, size }: { section: MoreSection; size: "lg" | "sm" }
   );
 }
 
+function GroupSection({
+  groupId,
+  title,
+  size,
+}: {
+  groupId: MoreSectionGroupId;
+  title: string;
+  size: "lg" | "sm";
+}) {
+  const items = moreSectionsInGroup(groupId);
+  if (items.length === 0) return null;
+  return (
+    <section className="more-page-section" aria-labelledby={`more-${groupId}-heading`}>
+      <h2 id={`more-${groupId}-heading`} className="more-page-section__title">
+        {title}
+      </h2>
+      <ul className={`more-page-grid more-page-grid--${size === "lg" ? "featured" : "standard"}`}>
+        {items.map((s) => (
+          <li key={s.id}>
+            <MoreTile section={s} size={size} />
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export default function MorePage() {
   useEffect(() => {
     applyPageSeo({
       title: "المزيد — المجلس العلمي",
-      description: "المزيد: أذكار، مكتبة، علماء، حديث، قصص الأنبياء، سين جيم، فوائد وبطاقات، بحث وإعدادات.",
+      description:
+        "المزيد: مكتبة، أعلام، حديث، قصص الأنبياء، سين جيم، فوائد وبطاقات، أذكار، بحث وإعدادات.",
       path: "/more",
     });
   }, []);
 
   return (
-    <ContentHubLayout title="المزيد" subtitle="أبواب العلم والخدمة">
-      <section className="more-page-section" aria-labelledby="more-featured-heading">
-        <h2 id="more-featured-heading" className="more-page-section__title sr-only">
-          الأبواب الرئيسية
-        </h2>
-        <ul className="more-page-grid more-page-grid--featured">
-          {MORE_FEATURED_SECTIONS.map((s) => (
-            <li key={s.id}>
-              <MoreTile section={s} size="lg" />
-            </li>
-          ))}
-        </ul>
-      </section>
+    <ContentHubLayout title="المزيد" subtitle="مركز الأقسام الثانوية">
+      {MORE_SECTION_GROUPS.map((g) => (
+        <GroupSection
+          key={g.id}
+          groupId={g.id}
+          title={g.title}
+          size={g.id === "science" || g.id === "learn" ? "lg" : "sm"}
+        />
+      ))}
 
-      <section className="more-page-section" aria-labelledby="more-standard-heading">
-        <h2 id="more-standard-heading" className="more-page-section__title">
-          أقسام أخرى
+      <section className="more-page-section" aria-labelledby="more-tools-heading">
+        <h2 id="more-tools-heading" className="more-page-section__title">
+          أدوات مساعدة للبحث
         </h2>
         <ul className="more-page-grid more-page-grid--standard">
           {MORE_STANDARD_SECTIONS.map((s) => (
@@ -70,7 +96,7 @@ export default function MorePage() {
 
       <section className="more-page-section" aria-labelledby="more-account-heading">
         <h2 id="more-account-heading" className="more-page-section__title">
-          الحساب والإعدادات
+          الحساب
         </h2>
         <ul className="more-page-grid more-page-grid--account">
           {MORE_ACCOUNT_SECTIONS.map((s) => (

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import seoData from "./seo-routes.json";
+import { IA_BREADCRUMB_PARENTS } from "./ia-final-structure";
 import {
   ADMIN_DEFAULT_DESCRIPTION,
   ADMIN_DEFAULT_ROBOTS,
@@ -338,6 +339,18 @@ export function applyPageSeo(options: PageSeoOptions) {
 
 function breadcrumbForPath(normalized: string) {
   if (normalized === "/") return null;
+  const hubParents = IA_BREADCRUMB_PARENTS[normalized];
+  if (hubParents?.length) {
+    const matched = routes.find((route) => route.path === normalized);
+    return breadcrumbJsonLd([
+      { name: "الرئيسية", path: "/" },
+      ...hubParents,
+      {
+        name: matched?.title.split(" | ")[0] || normalized.split("/").pop() || normalized,
+        path: normalized,
+      },
+    ]);
+  }
   const segments = normalized.split("/").filter(Boolean);
   const items = [{ name: "الرئيسية", path: "/" }];
   let current = "";

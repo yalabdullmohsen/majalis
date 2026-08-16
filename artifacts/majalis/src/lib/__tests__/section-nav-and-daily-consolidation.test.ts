@@ -128,7 +128,8 @@ console.log("\n=== nav-visibility تنظيف ===");
 
   const homeHrefs = FEATURE_CATS.flatMap((c) => c.items.map((i) => i.href));
   assert(!homeHrefs.includes("/flashcards"), "الكتالوج بلا بطاقات منفصلة");
-  assert(homeHrefs.includes("/quran-hub") && homeHrefs.includes("/memorization"), "البوابات في الكتالوج");
+  assert(homeHrefs.includes("/quran-hub"), "بوابة القرآن في الكتالوج");
+  assert(!homeHrefs.includes("/memorization"), "الحفظ تحت مركز القرآن لا كقسم عام");
   assert(homeHrefs.includes("/universities") && homeHrefs.includes("/academic-research"), "الجامعات والرسائل في الكتالوج");
   assert(filterNavItems([{ href: "/rulings" }, { href: "/mushaf" }]).map((i) => i.href).join(",") === "/mushaf",
     "filterNavItems يسقط الأحكام كقسم عام");

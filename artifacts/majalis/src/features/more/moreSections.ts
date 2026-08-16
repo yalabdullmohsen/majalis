@@ -1,11 +1,13 @@
 /**
- * مصدر واحد لأبواب «المزيد» — قائمة مختصرة بلا تكرار مع الشريط السفلي.
+ * مصدر واحد لأبواب «المزيد» — مجموعات بلا تكرار مع الشريط السفلي.
  */
 import type { LucideIcon } from "lucide-react";
 import {
   BookMarked,
   BookOpen,
+  Clock,
   CreditCard,
+  Heart,
   Library,
   ScrollText,
   Search,
@@ -16,6 +18,12 @@ import {
 
 export type MoreSectionTier = "featured" | "standard";
 
+export type MoreSectionGroupId =
+  | "science"
+  | "learn"
+  | "worship"
+  | "account";
+
 export type MoreSection = {
   id: string;
   title: string;
@@ -24,24 +32,22 @@ export type MoreSection = {
   route: string;
   tier: MoreSectionTier;
   order: number;
+  group: MoreSectionGroupId;
   badge?: string;
   keywords?: string[];
   /** إجراء خاص (بحث) بدل التنقّل */
   action?: "search";
 };
 
+export const MORE_SECTION_GROUPS: { id: MoreSectionGroupId; title: string }[] = [
+  { id: "science", title: "الأقسام العلمية" },
+  { id: "learn", title: "أدوات التعلم" },
+  { id: "worship", title: "العبادات" },
+  { id: "account", title: "الإعدادات والخدمات" },
+];
+
 /** القائمة المعتمدة داخل المزيد (مع الشريط السفلي: قرآن · دروس · صلاة · فقه). */
 export const MORE_FEATURED_SECTIONS: MoreSection[] = [
-  {
-    id: "adhkar",
-    title: "الأذكار",
-    subtitle: "أذكار اليوم والليل",
-    icon: BookMarked,
-    route: "/adhkar",
-    tier: "featured",
-    order: 1,
-    keywords: ["أذكار", "دعاء"],
-  },
   {
     id: "library",
     title: "المكتبة",
@@ -49,27 +55,30 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: Library,
     route: "/library",
     tier: "featured",
-    order: 2,
+    order: 1,
+    group: "science",
     keywords: ["مكتبة", "كتب"],
   },
   {
     id: "scholars",
-    title: "العلماء",
-    subtitle: "أعلام الإسلام",
+    title: "أعلام وتراجم",
+    subtitle: "علماء الإسلام",
     icon: Users,
     route: "/scholars",
     tier: "featured",
-    order: 3,
-    keywords: ["علماء", "أعلام"],
+    order: 2,
+    group: "science",
+    keywords: ["علماء", "أعلام", "تراجم"],
   },
   {
     id: "hadith",
-    title: "الحديث",
+    title: "الحديث وعلومه",
     subtitle: "صحيح وضعيف وكتب",
     icon: ScrollText,
     route: "/hadith",
     tier: "featured",
-    order: 4,
+    order: 3,
+    group: "science",
     keywords: ["حديث", "سنة"],
   },
   {
@@ -79,7 +88,8 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: BookOpen,
     route: "/prophets",
     tier: "featured",
-    order: 5,
+    order: 4,
+    group: "science",
     keywords: ["أنبياء", "قصص"],
   },
   {
@@ -89,7 +99,8 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: Star,
     route: "/quiz",
     tier: "featured",
-    order: 6,
+    order: 5,
+    group: "learn",
     keywords: ["مسابقة", "اختبار", "quiz", "سين جيم", "qa"],
   },
   {
@@ -99,7 +110,8 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: CreditCard,
     route: "/fawaid",
     tier: "featured",
-    order: 7,
+    order: 6,
+    group: "learn",
     keywords: ["فوائد", "بطاقات", "مراجعة", "flashcards"],
   },
   {
@@ -109,9 +121,43 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: Search,
     route: "/search",
     tier: "featured",
-    order: 8,
+    order: 7,
+    group: "learn",
     keywords: ["بحث"],
     action: "search",
+  },
+  {
+    id: "adhkar",
+    title: "الأذكار",
+    subtitle: "أذكار اليوم والليل",
+    icon: BookMarked,
+    route: "/adhkar",
+    tier: "featured",
+    order: 8,
+    group: "worship",
+    keywords: ["أذكار", "دعاء"],
+  },
+  {
+    id: "duas",
+    title: "الأدعية",
+    subtitle: "أدعية مأثورة",
+    icon: Heart,
+    route: "/duas",
+    tier: "featured",
+    order: 9,
+    group: "worship",
+    keywords: ["أدعية", "دعاء"],
+  },
+  {
+    id: "prayer",
+    title: "الصلاة",
+    subtitle: "مواقيت وقبلة",
+    icon: Clock,
+    route: "/prayer-times",
+    tier: "featured",
+    order: 10,
+    group: "worship",
+    keywords: ["صلاة", "مواقيت"],
   },
   {
     id: "settings",
@@ -120,52 +166,64 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: Settings,
     route: "/settings",
     tier: "featured",
-    order: 9,
+    order: 11,
+    group: "account",
     keywords: ["إعدادات"],
+  },
+  {
+    id: "favorites",
+    title: "المفضلة",
+    subtitle: "اقتباساتك المحفوظة",
+    icon: Heart,
+    route: "/my-citations",
+    tier: "featured",
+    order: 12,
+    group: "account",
+    keywords: ["مفضلة", "محفوظات"],
   },
 ];
 
-/** أدوات مساعدة ثانوية — ليست أبوابًا رئيسية. */
+/** أدوات مساعدة ثانوية — ليست أبوابًا رئيسية (بحث/مكتبة). */
 export const MORE_STANDARD_SECTIONS: MoreSection[] = [
   {
     id: "glossary",
     title: "المصطلحات",
+    subtitle: "أداة مساعدة للبحث",
     icon: BookMarked,
     route: "/islamic-glossary",
     tier: "standard",
     order: 20,
+    group: "learn",
     keywords: ["معجم", "مصطلحات"],
   },
   {
     id: "topics",
     title: "الموضوعات",
+    subtitle: "فهرس موضوعات",
     icon: BookOpen,
     route: "/topics",
     tier: "standard",
     order: 21,
+    group: "learn",
     keywords: ["مواضيع"],
-  },
-  {
-    id: "memorize",
-    title: "بطاقات المراجعة",
-    icon: CreditCard,
-    route: "/memorize",
-    tier: "standard",
-    order: 22,
-    keywords: ["بطاقات", "حفظ"],
   },
 ];
 
 export const MORE_ACCOUNT_SECTIONS: MoreSection[] = [
   {
     id: "account",
-    title: "الحساب",
+    title: "حسابي",
     icon: Users,
     route: "/my-learning",
     tier: "standard",
     order: 90,
+    group: "account",
   },
 ];
+
+export function moreSectionsInGroup(group: MoreSectionGroupId): MoreSection[] {
+  return MORE_FEATURED_SECTIONS.filter((s) => s.group === group).sort((a, b) => a.order - b.order);
+}
 
 export const MORE_FEATURED_TITLES = MORE_FEATURED_SECTIONS.map((s) => s.title);
 export const MORE_FEATURED_ROUTES = MORE_FEATURED_SECTIONS.map((s) => s.route);

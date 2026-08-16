@@ -1,8 +1,8 @@
 import { Link } from "wouter";
-import { FEATURED, FEATURE_CATS } from "@/lib/home-feature-catalog";
-import { isComingSoonPath } from "@/lib/nav-visibility";
+import { FEATURED } from "@/lib/home-feature-catalog";
 import "@/styles/components/surface-polish.css";
 
+/** استكشاف الرئيسية: ٦ أبواب فقط — بقية الأقسام عبر /more. */
 export function HomeExplorePlatform() {
   return (
     <section aria-labelledby="features-heading" className="hp-explore">
@@ -16,8 +16,8 @@ export function HomeExplorePlatform() {
         </h2>
       </div>
 
-      <p className="hp-explore__lead" style={{ color: '#524e4a', marginBottom: '1rem', lineHeight: 1.7 }}>
-        الأقسام الأساسية للمنصة — قرآن، حديث، فقه، حفظ، مناسبات، دليل، صلاة، وحسابك.
+      <p className="hp-explore__lead" style={{ color: "#524e4a", marginBottom: "1rem", lineHeight: 1.7 }}>
+        ستة أبواب واضحة — القرآن، الدروس، الصلاة، الفقه، الأذكار، والمزيد.
       </p>
 
       <div className="hp-explore__featured" aria-label="أهم الأقسام">
@@ -35,58 +35,9 @@ export function HomeExplorePlatform() {
         ))}
       </div>
 
-      {/* أقسام بالتصنيف — معاينة مختصرة (٤ عناصر) + رابط لعرض الكل */}
-      {FEATURE_CATS.map(cat => {
-        const PREVIEW_COUNT = 4;
-        const preview = cat.items.slice(0, PREVIEW_COUNT);
-        const remaining = cat.items.length - preview.length;
-        return (
-          <div key={cat.id} className="hp-explore-cat">
-            <div className="hp-explore-cat__head">
-              <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" className="hp-explore-cat__ornament">
-                <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="var(--mj-brand-deep)"/>
-                <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="var(--mj-brand-deep)" opacity="0.6"/>
-                <circle cx="14" cy="14" r="3" fill="#FAFAF8"/>
-              </svg>
-              <h3 className="hp-explore-cat__title">{cat.label}</h3>
-              <span className="hp-explore-cat__count">{cat.items.length} قسم</span>
-            </div>
-            <div className="hp-explore-cat__grid">
-              {preview.map(({ href, Icon: ItemIcon, title, desc }) => {
-                const soon = isComingSoonPath(href);
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    className={`hp-explore-item${soon ? " hp-explore-item--soon" : ""}`}
-                    aria-label={soon ? `${title} — قريبًا` : undefined}
-                  >
-                    <span className="hp-explore-item__icon">
-                      <ItemIcon size={14} strokeWidth={2} />
-                    </span>
-                    <div className="hp-explore-item__body">
-                      <strong className="hp-explore-item__title">
-                        {title}
-                        {soon ? <span className="nav-soon-badge">قريبًا</span> : null}
-                      </strong>
-                      <span className="hp-explore-item__desc">{desc}</span>
-                    </div>
-                  </Link>
-                );
-              })}
-              {remaining > 0 && (
-                <Link href="/sitemap" className="hp-explore-more">
-                  +{remaining} أقسام أخرى ←
-                </Link>
-              )}
-            </div>
-          </div>
-        );
-      })}
-
       <div className="hp-explore__footer">
-        <Link href="/sitemap" className="hp-explore__sitemap">
-          تصفّح كل أقسام المنصة ←
+        <Link href="/more" className="hp-explore__sitemap">
+          المزيد من العلوم ←
         </Link>
       </div>
     </section>

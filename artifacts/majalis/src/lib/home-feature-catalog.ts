@@ -14,7 +14,6 @@ import {
   Landmark,
   Layers,
   Lightbulb,
-  Mic2,
   Monitor,
   Moon,
   RotateCw,
@@ -43,17 +42,14 @@ export const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc:
 ];
 
 
-/* ── المميزات البارزة (4 بطاقات كبيرة) ── */
+/* ── المميزات البارزة — ٦ أبواب رئيسية فقط (مطابقة IA_HOME_PRIMARY) ── */
 export const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: string; cta: string }[] = [
-  { href: "/mushaf", Icon: BookOpen, title: seoNavLabel("/mushaf", "القرآن"), desc: "المصحف الشريف للقراءة والتلاوة", cta: "افتح المصحف" },
-  { href: "/quran-hub", Icon: BookMarked, title: seoNavLabel("/quran-hub", "مركز القرآن"), desc: "المصحف والتجويد والحفظ وعلوم القرآن", cta: "استكشف" },
-  { href: "/hadith", Icon: Scroll, title: seoNavLabel("/hadith", "الحديث وعلومه"), desc: "أحاديث موثقة ومسندة مع الشرح والتخريج", cta: "تصفح الحديث وعلومه" },
-  { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "بوابة الأحكام والمسائل الفقهية", cta: "ادخل الفقه" },
-  { href: "/memorization", Icon: Target, title: seoNavLabel("/memorization", "الحفظ والمراجعة"), desc: "اختبارات وخطط الحفظ والمراجعة", cta: "ابدأ الحفظ" },
-  { href: "/occasions-lessons", Icon: CalendarDays, title: seoNavLabel("/occasions-lessons", "المناسبات والدروس"), desc: "المناسبات الإسلامية وتقويم الدروس", cta: "عرض التقويم" },
-  { href: "/islamic-directory", Icon: Landmark, title: seoNavLabel("/islamic-directory", "الدليل الإسلامي"), desc: "المؤسسات والمساجد والمشاهد", cta: "تصفح الدليل" },
-  { href: "/prayer-times", Icon: Clock, title: seoNavLabel("/prayer-times", "الصلاة"), desc: "مواقيت الصلاة والقبلة", cta: "مواقيت الصلاة" },
-  { href: "/my-learning", Icon: Users, title: seoNavLabel("/my-learning", "حسابي"), desc: "تقدمك والبطاقات المراجعة", cta: "افتح حسابي" },
+  { href: "/quran-hub", Icon: BookMarked, title: seoNavLabel("/quran-hub", "القرآن الكريم"), desc: "المصحف والتجويد والحفظ وعلوم القرآن", cta: "افتح" },
+  { href: "/lessons", Icon: GraduationCap, title: seoNavLabel("/lessons", "الدروس والدورات"), desc: "دروس ودورات علمية منظمة", cta: "افتح" },
+  { href: "/prayer-times", Icon: Clock, title: seoNavLabel("/prayer-times", "مواقيت الصلاة"), desc: "المواقيت والقبلة والأذان", cta: "افتح" },
+  { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "الأحكام والقواعد والمجامع تحت باب واحد", cta: "افتح" },
+  { href: "/adhkar", Icon: RotateCw, title: seoNavLabel("/adhkar", "الأذكار اليومية"), desc: "أذكار الصباح والمساء وما بينهما", cta: "افتح" },
+  { href: "/more", Icon: Layers, title: seoNavLabel("/more", "المزيد من العلوم"), desc: "مكتبة وحديث وأعلام وسين جيم", cta: "افتح" },
 ];
 
 /* ── أقسام مصنّفة ── */
@@ -88,8 +84,6 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/arkan-iman",         Icon: Star,         title: seoNavLabel("/arkan-iman", "أركان الإيمان الستة"),     desc: "الأركان الستة مع الأدلة وأقوال العلماء" },
       { href: "/asma-husna",         Icon: Star,         title: seoNavLabel("/asma-husna", "الأسماء الحسنى"),    desc: "99 اسماً لله بمعانيها ومنافعها" },
       { href: "/akhlaq",             Icon: Heart,        title: seoNavLabel("/akhlaq", "مكارم الأخلاق"), desc: "مكارم الأخلاق مع الآيات والأحاديث" },
-      { href: "/hadith-science",      Icon: Scroll,       title: seoNavLabel("/hadith-science", "مصطلح الحديث"),      desc: "مصطلحات علوم الحديث والإسناد" },
-      { href: "/madhahib",            Icon: Scale,        title: seoNavLabel("/madhahib", "المذاهب الفقهية"),    desc: "المذاهب الأربعة مناهجاً ومصادراً وانتشاراً" },
       { href: "/zakat",               Icon: Scale,        title: seoNavLabel("/zakat", "الزكاة وأحكامها"),    desc: "دليل الزكاة مع حاسبة وأحكام الأنواع السبعة" },
       { href: "/sawm",                Icon: Moon,         title: seoNavLabel("/sawm", "الصيام وأحكامه"),      desc: "أنواع الصيام وشروطه ومفطراته وفضائل رمضان" },
       { href: "/hajj",                Icon: Landmark,     title: seoNavLabel("/hajj", "الحج والعمرة"),         desc: "أركان الحج وواجباته والمشاعر ومحظورات الإحرام" },
@@ -97,7 +91,6 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/janaza",              Icon: BookOpen,     title: seoNavLabel("/janaza", "أحكام الجنائز"),         desc: "الغسل والتكفين والصلاة والدفن والتعزية" },
       { href: "/mawarith",            Icon: Scale,        title: seoNavLabel("/mawarith", "المواريث والفرائض"),      desc: "حصص الورثة والعَصَبة والحجب والعَوْل والردّ" },
       { href: "/salah-guide",         Icon: Scroll,       title: seoNavLabel("/salah-guide", "دليل الصلاة الكامل"),     desc: "الشروط والأركان والخشوع والمبطلات وفضائل الصلاة" },
-      { href: "/fiqh-qawaid",         Icon: Scale,        title: seoNavLabel("/fiqh-qawaid", "القواعد الفقهية الكبرى"), desc: "القواعد الخمس الكبرى وفروعها وضوابطها وتطبيقاتها المعاصرة" },
     ],
   },
   {
@@ -111,7 +104,6 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/fawaid",       Icon: Lightbulb,   title: seoNavLabel("/fawaid", "الفوائد الدينية"),      desc: "فوائد علمية منتقاة" },
       { href: "/hikam-salaf",  Icon: BookOpen,    title: seoNavLabel("/hikam-salaf", "حكم السلف الصالح"),     desc: "أقوال الأئمة والصحابة والتابعين" },
       { href: "/fadail-aamal",      Icon: Star,      title: seoNavLabel("/fadail-aamal", "فضائل الأعمال"),         desc: "أحاديث في فضائل العبادات والأخلاق" },
-      { href: "/islamic-glossary",  Icon: BookOpen,       title: seoNavLabel("/islamic-glossary", "المصطلحات الإسلامية"),  desc: "قاموس شامل للمصطلحات في ستة علوم شرعية" },
       { href: "/adab-talab-ilm",   Icon: GraduationCap,  title: seoNavLabel("/adab-talab-ilm", "آداب طالب العلم"),      desc: "دليل طالب العلم من الفضل إلى الكتب المقررة" },
       { href: "/tawba",         Icon: RotateCw,    title: seoNavLabel("/tawba", "التوبة والاستغفار"),          desc: "شروط التوبة النصوح وأفضل صيغ الاستغفار" },
       { href: "/amr-bil-maruf", Icon: Scroll,      title: seoNavLabel("/amr-bil-maruf", "الأمر بالمعروف والنهي عن المنكر"), desc: "مراتبه الثلاث وشروطه وأحكامه الفقهية" },
@@ -142,8 +134,6 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     items: [
       { href: "/mushaf",               Icon: BookOpen,     title: seoNavLabel("/mushaf", "القرآن"), desc: "المصحف الشريف" },
       { href: "/quran-hub",      Icon: BookMarked,   title: seoNavLabel("/quran-hub", "مركز القرآن"), desc: "المصحف والتجويد والحفظ وعلوم القرآن" },
-      { href: "/memorization",         Icon: Target,       title: seoNavLabel("/memorization", "الحفظ والمراجعة"), desc: "اختبارات وخطط الحفظ" },
-      { href: "/quran/tajweed",        Icon: Mic2,         title: seoNavLabel("/quran/tajweed", "علم التجويد"),        desc: "أحكام التجويد الشاملة" },
       { href: "/tafsir",               Icon: BookOpen,     title: seoNavLabel("/tafsir", "علم التفسير"),            desc: "أنواع التفسير وأصوله وأشهر كتب المفسرين" },
       { href: "/quran-circles",        Icon: Users,        title: seoNavLabel("/quran-circles", "حلقات التحفيظ"),   desc: "دليل حلقات القرآن في الكويت والمنصات الموثوقة" },
     ],

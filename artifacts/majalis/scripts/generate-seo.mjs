@@ -27,6 +27,7 @@ import {
   ADMIN_DEFAULT_DESCRIPTION,
   ADMIN_DEFAULT_ROBOTS,
 } from "./seo-path-class.mjs";
+import { IA_BREADCRUMB_PARENTS, IA_REDIRECTS } from "../src/lib/ia-final-structure.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
@@ -495,6 +496,12 @@ function breadcrumbFor(route, parents = []) {
   const items = [{ name: "الرئيسية", path: "/" }];
   if (parents.length) {
     items.push(...parents);
+    items.push({ name: route.title, path: route.path });
+    return breadcrumbJsonLdScript(items);
+  }
+  const hubParents = IA_BREADCRUMB_PARENTS[route.path];
+  if (hubParents?.length) {
+    items.push(...hubParents);
     items.push({ name: route.title, path: route.path });
     return breadcrumbJsonLdScript(items);
   }
@@ -2562,7 +2569,12 @@ for (const page of pages) {
 // ─────────────────────────────────────────────────────────────────────────────
 // sitemap.xml — من نفس قائمة الصفحات، فلا يظهر فيها مسار غير مُصيَّر
 // ─────────────────────────────────────────────────────────────────────────────
-const sitemapPages = pages.filter((p) => p.sitemap && !(p.route.robots || "").includes("noindex"));
+const sitemapPages = pages.filter(
+  (p) =>
+    p.sitemap &&
+    !(p.route.robots || "").includes("noindex") &&
+    !IA_REDIRECTS[p.route.path],
+);
 const LASTMOD_TODAY = "2026-08-15";
 const LASTMOD_PATHS = new Set([
   "/",

@@ -32,7 +32,6 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/learning/calendar",
   "/prayer-countdown",
   "/annual-courses",
-  "/duas",
   "/prayer-ranks",
   "/sujood-sahw",
   "/sunnah-studies",
@@ -53,9 +52,13 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/islamic-glossary",
   "/rulings",
   "/fiqh-council",
+  "/fiqh-council/issues",
+  "/fiqh-council/nawazil",
+  "/fiqh-council/fatwas",
+  "/fiqh-qawaid",
+  "/madhahib",
   "/quran-knowledge", // تحت مركز القرآن
   "/knowledge-graph",
-  "/fiqh-council/fatwas",
   "/flashcards",
   "/occasions",
   "/calendar",
@@ -66,6 +69,15 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/quran/surah-stories",
   "/quran-memorization",
   "/quran/memorization-plans",
+  "/quran/tajweed",
+  "/hadith/sahih",
+  "/hadith/daif",
+  "/hadith/mawdu",
+  "/hadith/books",
+  "/hadith-science",
+  "/hadith/arbaeen",
+  "/arbaeen-nawawi",
+  "/memorization", // تحت مركز القرآن
 ]);
 
 /**
@@ -89,6 +101,8 @@ export const MERGED_PATH_REDIRECTS: Record<string, string> = {
   // أقسام محذوفة من الواجهة (صفحات عميقة تبقى؛ لا تحويل للرئيسية للمكتبة)
   "/start-here": "/lessons",
   "/knowledge-graph": "/learn",
+  "/courses": "/lessons",
+  "/qa": "/quiz",
   "/researches": "/academic-research",
   "/sharia-research": "/academic-research",
   "/research": "/academic-research",
