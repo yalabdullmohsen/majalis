@@ -345,7 +345,8 @@
     "test:fiqh-source-validation": "node --import tsx src/lib/__tests__/fiqh-council-source-validation.test.ts",
     "test:account-deletion-integrity": "node --import tsx src/lib/__tests__/account-deletion-integrity.test.ts",
     "test:recitation-capability-copy": "node --import tsx src/lib/__tests__/recitation-capability-copy.test.ts",
-    "test:round-integrity-p0": "pnpm run test:rulings-publication-gate && pnpm run test:rulings-index-empty && pnpm run test:library-sources-audit && pnpm run test:production-p0-regressions && pnpm run test:lesson-roles && pnpm run test:universities-ssr",
+    "test:home-hide-content-counts": "node --import tsx src/lib/__tests__/home-hide-content-counts.test.ts",
+    "test:round-integrity-p0": "pnpm run test:rulings-publication-gate && pnpm run test:rulings-index-empty && pnpm run test:library-sources-audit && pnpm run test:production-p0-regressions && pnpm run test:lesson-roles && pnpm run test:universities-ssr && pnpm run test:home-hide-content-counts",
     "test:round-integrity-p1": "pnpm run test:rulings-route-inventory && pnpm run test:fiqh-source-validation && pnpm run test:account-deletion-integrity && pnpm run test:recitation-capability-copy && pnpm run test:fiqh-council-completeness"
   },
   "devDependencies": {

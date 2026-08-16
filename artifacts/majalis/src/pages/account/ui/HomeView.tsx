@@ -27,7 +27,6 @@ import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
 import { HomeDailyWirdBand } from "@/components/home/DailyWirdCard";
 import { HomeMostReadBand } from "@/components/home/HomeMostReadBand";
-import { HomeLiveStatsStrip } from "@/components/home/HomeLiveStatsStrip";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { QUICK_LINKS } from "@/lib/home-feature-catalog";
 import {
@@ -159,8 +158,6 @@ export default function HomePage() {
       <SectionErrorBoundary name="HomeUniversalSearch">
         <HomeUniversalSearch />
       </SectionErrorBoundary>
-
-      <HomeLiveStatsStrip />
 
       <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
         <HomeStartHereSection />

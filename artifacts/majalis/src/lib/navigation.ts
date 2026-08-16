@@ -1,4 +1,3 @@
-import COUNTS from "@/data/content-counts.json";
 import { seoNavLabel } from "@/lib/seo-nav-labels";
 import { filterNavItems } from "@/lib/nav-visibility";
 
@@ -166,7 +165,7 @@ export const HOME_MORE_SECTIONS_RAW = [
   { href: "/learning/paths", title: seoNavLabel("/learning/paths", "المسارات العلمية"), description: "تعلم منظم من المبتدئ للمتقدم" },
   { href: "/my-learning", title: seoNavLabel("/my-learning", "حسابي"), description: "تقدمك وإنجازاتك" },
   { href: "/quiz", title: seoNavLabel("/quiz", "لعبة سين جيم"), description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
-  { href: "/scholars",     title: seoNavLabel("/scholars", "أعلام الإسلام"),        description: `${COUNTS.scholars} عالِمًا من الأئمة الأربعة حتى العلماء المعاصرين` },
+  { href: "/scholars",     title: seoNavLabel("/scholars", "أعلام الإسلام"),        description: "من الأئمة الأربعة حتى العلماء المعاصرين" },
   { href: "/asma-husna",  title: seoNavLabel("/asma-husna", "الأسماء الحسنى"),       description: "أسماء الله التسعة والتسعون — كل اسم بمعناه وآيته ومنفعته" },
   { href: "/akhlaq",     title: seoNavLabel("/akhlaq", "مكارم الأخلاق"),    description: "أخلاق إسلامية مع آيات وأحاديث وأقوال العلماء والتطبيق العملي" },
   { href: "/adhkar",     title: seoNavLabel("/adhkar", "الأذكار والأدعية"), description: "أذكار يومية وأدعية مأثورة مع المصدر قدر الإمكان" },
