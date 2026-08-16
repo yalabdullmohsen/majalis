@@ -12,8 +12,10 @@ import {
   BookOpenCheck,
   BookText,
   BookHeart,
+  BarChart3,
   Book,
   Bookmark,
+  BookCopy,
   Building2,
   Calendar,
   Church,
@@ -35,6 +37,7 @@ import {
   Home,
   Info,
   Landmark,
+  Languages,
   Layers,
   Library,
   ListTree,
@@ -47,10 +50,12 @@ import {
   Network,
   NotebookPen,
   Scale,
+  School,
   ScrollText,
   Search,
   Settings,
   Shield,
+  Shapes,
   Sun,
   Tags,
   Trash2,
@@ -58,6 +63,7 @@ import {
   Users,
   Volume2,
   Wand2,
+  Waypoints,
 } from "lucide-react";
 
 export type SectionGroup =
@@ -69,7 +75,10 @@ export type SectionGroup =
   | "learning"
   | "account";
 
-export type Surface = "bottomNav" | "home" | "moreHub" | "drawer" | "search" | "quranHub";
+export type Surface = "bottomNav" | "home" | "moreHub" | "drawer" | "search" | "quranHub" | "lessonsHub";
+
+/** أين يُعرض القسم أساساً — مكان واحد فقط كبطاقة هب */
+export type SectionHub = "quran" | "lessons" | "sections";
 
 export type SectionStatus = "live" | "beta" | "hidden";
 
@@ -88,6 +97,8 @@ export interface SectionDef {
   status: SectionStatus;
   keywords: string[];
   aliases?: string[];
+  /** مكان العرض الأساسي — لا تكرار بطاقات بين الهبات */
+  hub: SectionHub;
 }
 
 export const SECTION_GROUP_META: Record<
@@ -130,8 +141,30 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
 
 const NAV: Surface[] = ["moreHub", "drawer", "home", "search"];
 const ACCOUNT: Surface[] = ["moreHub", "drawer", "search"];
+const SEARCH_ONLY: Surface[] = ["search"];
 
-export const SECTIONS: readonly SectionDef[] = [
+/** أقسام مركز القرآن — تُعرض هناك فقط كبطاقات */
+const QURAN_HUB_IDS = new Set([
+  "open-mushaf",
+  "quran-tilawa",
+  "quran-surahs",
+  "quran-recitation",
+  "quran-search",
+  "tafsir",
+  "quran-figures",
+  "quran-asbab",
+  "quran-topics",
+  "quran-terms",
+  "ulum-quran",
+  "flashcards",
+  "quran-numbers",
+]);
+
+const LESSONS_HUB_IDS = new Set(["quran-circles"]);
+
+type SectionSeed = Omit<SectionDef, "hub"> & { hub?: SectionHub };
+
+const SECTION_SEEDS: SectionSeed[] = [
   // —— شريط سفلي ——
   {
     id: "home",
@@ -196,7 +229,7 @@ export const SECTIONS: readonly SectionDef[] = [
     aliases: ["المزيد"],
   },
 
-  // —— مركز القرآن (سطح quranHub) ——
+  // —— مركز القرآن (hub: quran) ——
   {
     id: "open-mushaf",
     label: "فتح المصحف",
@@ -205,22 +238,24 @@ export const SECTIONS: readonly SectionDef[] = [
     icon: Book,
     group: "sciences",
     order: 1,
-    surfaces: ["quranHub", "search"],
+    surfaces: SEARCH_ONLY,
     status: "live",
     keywords: ["مصحف", "فتح المصحف", "قراءة"],
     aliases: ["المصحف"],
+    hub: "quran",
   },
   {
     id: "quran-tilawa",
     label: "التلاوة والقرّاء",
-    subtitle: "استمع لتلاوات القرّاء",
-    route: "/quran-circles",
+    subtitle: "تجويد وأحكام التلاوة",
+    route: "/quran/tajweed",
     icon: Headphones,
     group: "sciences",
     order: 2,
-    surfaces: ["quranHub", "search"],
+    surfaces: SEARCH_ONLY,
     status: "live",
-    keywords: ["تلاوة", "قرّاء", "استماع"],
+    keywords: ["تلاوة", "قرّاء", "تجويد", "استماع"],
+    hub: "quran",
   },
   {
     id: "quran-surahs",
@@ -230,9 +265,10 @@ export const SECTIONS: readonly SectionDef[] = [
     icon: FileStack,
     group: "sciences",
     order: 3,
-    surfaces: ["quranHub", "search"],
+    surfaces: SEARCH_ONLY,
     status: "live",
     keywords: ["سور", "فهرس"],
+    hub: "quran",
   },
   {
     id: "quran-recitation",
@@ -242,9 +278,10 @@ export const SECTIONS: readonly SectionDef[] = [
     icon: Mic,
     group: "sciences",
     order: 4,
-    surfaces: ["quranHub", "search"],
+    surfaces: SEARCH_ONLY,
     status: "live",
     keywords: ["تسميع", "تلاوة", "اختبار"],
+    hub: "quran",
   },
   {
     id: "quran-search",
@@ -254,9 +291,91 @@ export const SECTIONS: readonly SectionDef[] = [
     icon: Search,
     group: "sciences",
     order: 5,
-    surfaces: ["quranHub", "search"],
+    surfaces: SEARCH_ONLY,
     status: "live",
     keywords: ["بحث", "آيات"],
+    hub: "quran",
+  },
+  {
+    id: "quran-asbab",
+    label: "أسباب النزول",
+    subtitle: "أسباب النزول ومحاور السور",
+    route: "/quran/surah-stories",
+    icon: Waypoints,
+    group: "sciences",
+    order: 6,
+    surfaces: SEARCH_ONLY,
+    status: "live",
+    keywords: ["أسباب نزول", "نزول"],
+    hub: "quran",
+  },
+  {
+    id: "quran-topics",
+    label: "موضوعات القرآن",
+    subtitle: "مداخل موضوعية لعلوم القرآن",
+    route: "/quran-knowledge",
+    icon: Shapes,
+    group: "sciences",
+    order: 7,
+    surfaces: SEARCH_ONLY,
+    status: "live",
+    keywords: ["موضوعات قرآن", "محاور"],
+    hub: "quran",
+  },
+  {
+    id: "quran-terms",
+    label: "المصطلحات القرآنية",
+    subtitle: "مصطلحات علوم القرآن والتجويد",
+    route: "/quran/terms",
+    icon: Languages,
+    group: "sciences",
+    order: 8,
+    surfaces: SEARCH_ONLY,
+    status: "live",
+    keywords: ["مصطلحات قرآن", "معجم قرآني"],
+    hub: "quran",
+  },
+  {
+    id: "ulum-quran",
+    label: "علوم القرآن",
+    subtitle: "المكي والمدني والرسم وعدّ الآي",
+    route: "/ulum-quran",
+    icon: BookCopy,
+    group: "sciences",
+    order: 9,
+    surfaces: SEARCH_ONLY,
+    status: "live",
+    keywords: ["علوم قرآن", "ناسخ", "منسوخ", "رسم", "عد الآي"],
+    aliases: ["علوم القرآن"],
+    hub: "quran",
+  },
+  {
+    id: "quran-numbers",
+    label: "القرآن في أرقام",
+    subtitle: "إحصاءات موثّقة من مصادر معتمدة",
+    route: "/quran-hub/numbers",
+    icon: BarChart3,
+    group: "sciences",
+    order: 10,
+    surfaces: SEARCH_ONLY,
+    status: "live",
+    keywords: ["إحصاءات", "عدد الآيات", "عدد السور", "كم آية", "كم كلمة"],
+    aliases: ["إحصائيات القرآن", "أرقام القرآن"],
+    hub: "quran",
+  },
+  {
+    id: "quran-circles",
+    label: "حلقات القرآن",
+    subtitle: "حلقات تحفيظ ودورات",
+    route: "/quran-circles",
+    icon: School,
+    group: "learning",
+    order: 5,
+    surfaces: SEARCH_ONLY,
+    status: "live",
+    keywords: ["حلقات", "تحفيظ", "دورات قرآن"],
+    aliases: ["حلقات التحفيظ", "دور التحفيظ"],
+    hub: "lessons",
   },
 
   // —— ١. العلوم الشرعية ——
@@ -277,14 +396,14 @@ export const SECTIONS: readonly SectionDef[] = [
     id: "quran-sciences",
     label: "القرآن وعلومه",
     subtitle: "علوم القرآن والتجويد",
-    route: "/quran",
+    route: "/quran-sciences-legacy",
     icon: BookMarked,
     group: "sciences",
     order: 20,
-    surfaces: NAV,
-    status: "live",
+    surfaces: SEARCH_ONLY,
+    status: "hidden",
     keywords: ["علوم قرآن", "تجويد"],
-    aliases: ["علوم القرآن"],
+    aliases: ["بوابة علوم القرآن"],
   },
   {
     id: "tafsir",
@@ -294,10 +413,10 @@ export const SECTIONS: readonly SectionDef[] = [
     icon: BookOpenCheck,
     group: "sciences",
     order: 30,
-    featured: true,
-    surfaces: ["moreHub", "drawer", "home", "search", "quranHub"],
+    surfaces: SEARCH_ONLY,
     status: "live",
     keywords: ["تفسير", "آيات"],
+    hub: "quran",
   },
   {
     id: "hadith",
@@ -388,6 +507,7 @@ export const SECTIONS: readonly SectionDef[] = [
     icon: Church,
     group: "stories",
     order: 20,
+    featured: true,
     surfaces: NAV,
     status: "live",
     keywords: ["أمم", "أقوام"],
@@ -400,10 +520,11 @@ export const SECTIONS: readonly SectionDef[] = [
     icon: Users,
     group: "stories",
     order: 30,
-    surfaces: NAV,
+    surfaces: SEARCH_ONLY,
     status: "live",
     keywords: ["أعلام قرآن", "شخصيات"],
     aliases: ["الذين ذكروا في القرآن"],
+    hub: "quran",
   },
   {
     id: "biographies",
@@ -601,11 +722,12 @@ export const SECTIONS: readonly SectionDef[] = [
     route: "/flashcards",
     icon: Bookmark,
     group: "learning",
-    order: 10,
-    surfaces: ["moreHub", "drawer", "home", "search", "quranHub"],
+    order: 11,
+    surfaces: SEARCH_ONLY,
     status: "live",
-    keywords: ["بطاقات", "حفظ", "مراجعة", "فوائد", "محفوظات"],
-    aliases: ["الفوائد والبطاقات", "بطاقات المراجعة", "المحفوظات"],
+    keywords: ["بطاقات", "حفظ", "مراجعة", "فوائد", "محفوظات", "حفظ قرآن"],
+    aliases: ["الفوائد والبطاقات", "بطاقات المراجعة", "المحفوظات", "بطاقات حفظ القرآن"],
+    hub: "quran",
   },
   {
     id: "qa",
@@ -805,14 +927,32 @@ export const SECTIONS: readonly SectionDef[] = [
     status: "live",
     keywords: ["حذف", "إلغاء حساب"],
   },
-] as const;
+];
+
+function resolveHub(s: SectionSeed): SectionHub {
+  if (s.hub) return s.hub;
+  if (QURAN_HUB_IDS.has(s.id)) return "quran";
+  if (LESSONS_HUB_IDS.has(s.id)) return "lessons";
+  return "sections";
+}
+
+export const SECTIONS: readonly SectionDef[] = SECTION_SEEDS.map((s) => ({
+  ...s,
+  hub: resolveHub(s),
+}));
 
 function visible(s: SectionDef): boolean {
   return s.status !== "hidden";
 }
 
 export function sectionsForSurface(surface: Surface): SectionDef[] {
-  return SECTIONS.filter((s) => visible(s) && s.surfaces.includes(surface)).sort(
+  return SECTIONS.filter((s) => {
+    if (!visible(s) || !s.surfaces.includes(surface)) return false;
+    if (surface === "moreHub" || surface === "drawer" || surface === "home") {
+      return s.hub === "sections";
+    }
+    return true;
+  }).sort(
     (a, b) =>
       SECTION_GROUP_META[a.group].order - SECTION_GROUP_META[b.group].order ||
       a.order - b.order,
@@ -823,13 +963,19 @@ export function sectionsByGroup(
   group: SectionGroup,
   surface: Surface = "moreHub",
 ): SectionDef[] {
-  return SECTIONS.filter(
-    (s) => visible(s) && s.group === group && s.surfaces.includes(surface) && s.order >= 0,
-  ).sort((a, b) => a.order - b.order);
+  return SECTIONS.filter((s) => {
+    if (!visible(s) || s.group !== group || !s.surfaces.includes(surface) || s.order < 0) {
+      return false;
+    }
+    if (surface === "moreHub" || surface === "drawer" || surface === "home") {
+      return s.hub === "sections";
+    }
+    return true;
+  }).sort((a, b) => a.order - b.order);
 }
 
 export function featuredSections(): SectionDef[] {
-  return SECTIONS.filter((s) => visible(s) && s.featured).sort(
+  return SECTIONS.filter((s) => visible(s) && s.featured && s.hub === "sections").sort(
     (a, b) =>
       SECTION_GROUP_META[a.group].order - SECTION_GROUP_META[b.group].order ||
       a.order - b.order,
@@ -844,7 +990,13 @@ export function bottomNavSections(): SectionDef[] {
 }
 
 export function quranHubSections(): SectionDef[] {
-  return SECTIONS.filter((s) => visible(s) && s.surfaces.includes("quranHub")).sort(
+  return SECTIONS.filter((s) => visible(s) && s.hub === "quran").sort(
+    (a, b) => a.order - b.order,
+  );
+}
+
+export function lessonsHubSections(): SectionDef[] {
+  return SECTIONS.filter((s) => visible(s) && s.hub === "lessons").sort(
     (a, b) => a.order - b.order,
   );
 }

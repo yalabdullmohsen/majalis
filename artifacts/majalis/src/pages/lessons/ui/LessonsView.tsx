@@ -5,6 +5,10 @@ import { ShareButtons } from "@/components/ContentActions";
 import { Link, useLocation } from "wouter";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { PageHeader, ErrorState, Empty } from "@/components/ui-common";
+import { SectionsCardGrid } from "@/components/sections";
+import { lessonsHubSections } from "@/config/sections.registry";
+import "@/components/sections/section-cards.css";
+import "@/styles/pages/quran-numbers.css";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
@@ -520,7 +524,10 @@ export default function LessonsPage({
 
   return (
     <div className="page-shell lessons-page-v2 lessons-page-v3 ds-page mj-page">
-      <PageHeader title="الدروس" subtitle="أقرب المواعيد أولًا" showBack={false} />
+      <PageHeader title="الدروس" showBack={false} />
+      <div className="lessons-hub-cards" data-lessons-hub="1">
+        <SectionsCardGrid sections={lessonsHubSections()} />
+      </div>
       <p className="lessons-v3-calendar-link">
         <Link href="/calendar" className="mj-link">تقويم الدروس</Link>
         {" · "}

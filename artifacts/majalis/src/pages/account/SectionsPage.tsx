@@ -19,7 +19,7 @@ export default function SectionsPage() {
   }, []);
 
   return (
-    <ContentHubLayout title="الأقسام" subtitle="كل الأقسام من مصدر واحد" className="more-page sections-page">
+    <ContentHubLayout title="الأقسام" className="more-page sections-page">
       <MoreHubFromRegistry showSearch />
     </ContentHubLayout>
   );

@@ -37,11 +37,11 @@ const titles = MORE_FEATURED_SECTIONS.map((s) => s.title);
 assert.equal(titles.length, 6);
 for (const t of [
   "العقيدة",
-  "التفسير",
   "الحديث وعلومه",
   "الفقه والأحكام",
   "السيرة النبوية",
   "قصص الأنبياء",
+  "الأمم السابقة",
 ]) {
   assert.ok(titles.includes(t), `المزيد يتضمن «${t}»`);
 }

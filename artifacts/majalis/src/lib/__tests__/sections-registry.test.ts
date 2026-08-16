@@ -9,6 +9,7 @@ import {
   featuredSections,
   bottomNavSections,
   quranHubSections,
+  lessonsHubSections,
   sectionsForSurface,
   SECTION_MERGE_REDIRECTS,
 } from "@/config/sections.registry";
@@ -23,7 +24,23 @@ assert.deepEqual(
 assert.equal(bottomNavSections()[0]?.label, "مركز القرآن");
 assert.equal(bottomNavSections()[4]?.label, "الأقسام");
 assert.ok(quranHubSections().some((s) => s.id === "open-mushaf" && s.label === "فتح المصحف"));
-assert.ok(quranHubSections().length >= 7);
+assert.ok(quranHubSections().some((s) => s.id === "quran-numbers"));
+assert.ok(quranHubSections().length >= 12);
+assert.ok(lessonsHubSections().some((s) => s.id === "quran-circles"));
+assert.equal(
+  quranHubSections().some((s) => s.id === "quran-circles"),
+  false,
+);
+for (const s of quranHubSections()) {
+  assert.equal(s.hub, "quran", s.id);
+}
+for (const s of lessonsHubSections()) {
+  assert.equal(s.hub, "lessons", s.id);
+}
+assert.equal(
+  featuredSections().every((s) => s.hub === "sections"),
+  true,
+);
 
 const ids = new Set(SECTIONS.map((s) => s.id));
 assert.equal(ids.size, SECTIONS.length);

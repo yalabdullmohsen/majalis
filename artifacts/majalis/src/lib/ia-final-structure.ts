@@ -87,6 +87,7 @@ export const IA_BREADCRUMB_PARENTS: Record<string, { name: string; path: string 
   "/quran/surah-stories": [{ name: "القرآن", path: "/quran-hub" }],
   "/quran/surahs": [{ name: "القرآن", path: "/quran-hub" }],
   "/quran/recitation-test-ai": [{ name: "القرآن", path: "/quran-hub" }],
+  "/quran-hub/numbers": [{ name: "القرآن", path: "/quran-hub" }],
   "/rulings": [{ name: "الفقه", path: "/fiqh" }],
   "/fiqh-council": [{ name: "الفقه", path: "/fiqh" }],
   "/fiqh-council/issues": [{ name: "الفقه", path: "/fiqh" }],

@@ -11,6 +11,10 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const checks = [
   { dir: path.join(root, "tests/snapshots/more-hub"), needed: ["more-hub-light.png", "more-hub-dark.png"] },
   { dir: path.join(root, "tests/snapshots/quran-hub"), needed: ["quran-hub-light.png", "quran-hub-dark.png"] },
+  {
+    dir: path.join(root, "tests/snapshots/quran-numbers"),
+    needed: ["quran-numbers-light.png", "quran-numbers-dark.png"],
+  },
 ];
 
 let failed = false;

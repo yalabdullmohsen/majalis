@@ -50,11 +50,11 @@ assert.deepEqual(
 );
 for (const required of [
   "العقيدة",
-  "التفسير",
   "الحديث وعلومه",
   "الفقه والأحكام",
   "السيرة النبوية",
   "قصص الأنبياء",
+  "الأمم السابقة",
 ]) {
   assert.ok(
     MORE_FEATURED_SECTIONS.some((s) => s.title === required),
