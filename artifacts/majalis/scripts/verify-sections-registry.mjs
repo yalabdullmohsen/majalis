@@ -117,26 +117,70 @@ const SPACING = new Set([8, 12, 16, 24]);
   }
 }
 
-// ── 5) تنقّل يدوي خارج السجل (بعد تبنّي الأسطح) ───────────────
+// ── 5) تنقّل يدوي خارج السجل + منع أيقونات/مصفوفات يدوية ─────
 {
-  const markers = [
+  const navSurfaces = [
     "src/features/more/MoreHubFromRegistry.tsx",
+    "src/features/more/moreSections.ts",
+    "src/pages/account/MorePage.tsx",
+    "src/components/MoreBottomSheet.tsx",
     "src/components/layout/DrawerFromRegistry.tsx",
+    "src/lib/sidebar-nav.ts",
   ];
-  const adopted = markers.some((m) => exists(m));
-  if (!adopted) {
-    warn("فحص التنقّل اليدوي مؤجّل حتى تبنّي المزيد/الدرج من السجل (PR3–4)");
-  } else {
-    const navFiles = [
-      "src/features/more/moreSections.ts",
-      "src/lib/services-center-nav.ts",
-    ];
-    for (const f of navFiles) {
-      if (!exists(f)) continue;
-      const src = read(f);
-      if (!src.includes("sections.registry")) {
-        fail(`${f}: يجب أن يستورد سجل الأقسام`);
+
+  const lucideValueImport =
+    /import\s*\{[^}]*\}\s*from\s*["']lucide-react["']/;
+  const manualNavArray =
+    /\{\s*id:\s*["'][^"']+["']\s*,\s*label:\s*["'][^"']+["'][\s\S]{0,120}Icon:\s*[A-Z]/;
+
+  for (const f of navSurfaces) {
+    if (!exists(f)) continue;
+    const src = read(f);
+    if (!src.includes("sections.registry") && !f.endsWith("MorePage.tsx") && !f.endsWith("MoreBottomSheet.tsx")) {
+      // MorePage/Sheet يستوردان MoreHubFromRegistry الذي يستورد السجل
+      if (!src.includes("MoreHubFromRegistry") && !src.includes("DrawerFromRegistry")) {
+        fail(`${f}: يجب أن يستورد سجل الأقسام أو مكوّناً مبنياً عليه`);
       }
+    }
+    if (lucideValueImport.test(src)) {
+      fail(`${f}: ممنوع استيراد أيقونات lucide مباشرة — الأيقونة من السجل فقط`);
+    }
+    if (manualNavArray.test(src)) {
+      fail(`${f}: مصفوفة تنقّل يدوية مكتشفة — المصدر الوحيد هو السجل`);
+    }
+  }
+
+  // كتالوج الخدمات: يجب الاشتقاق من السجل؛ أيقونات الجلسة فقط مسموحة
+  if (exists("src/lib/services-center-nav.ts")) {
+    const src = read("src/lib/services-center-nav.ts");
+    if (!src.includes("sections.registry")) {
+      fail("services-center-nav.ts: يجب أن يستورد سجل الأقسام");
+    }
+    if (!src.includes("SECTION_GROUP_ORDER") || !src.includes("sectionsByGroup")) {
+      fail("services-center-nav.ts: يجب بناء المجموعات عبر SECTION_GROUP_ORDER + sectionsByGroup");
+    }
+    const m = src.match(/import\s*\{([^}]*)\}\s*from\s*["']lucide-react["']/);
+    if (m) {
+      const names = m[1]
+        .split(",")
+        .map((s) => s.trim().split(/\s+as\s+/)[0])
+        .filter(Boolean);
+      const allowed = new Set(["LogOut", "Share2", "Star"]);
+      const bad = names.filter((n) => !allowed.has(n));
+      if (bad.length) {
+        fail(`services-center-nav.ts: أيقونات lucide غير مسموحة للأقسام: ${bad.join(", ")}`);
+      }
+    }
+    if (/href:\s*["']\/tasbih["']/.test(src) || /href:\s*["']\/memorize["']/.test(src)) {
+      fail("services-center-nav.ts: ما زال يحوي عناصر تنقّل يدوية بمسارات ثابتة");
+    }
+  }
+
+  // الدرج: أقسام من السجل؛ أيقونات الجلسة/الكروم مسموحة
+  if (exists("src/components/SideNavDrawer.tsx")) {
+    const src = read("src/components/SideNavDrawer.tsx");
+    if (!src.includes("DrawerFromRegistry") && !src.includes("sections.registry")) {
+      fail("SideNavDrawer.tsx: يجب أن يستخدم DrawerFromRegistry أو السجل");
     }
   }
 }
