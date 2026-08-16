@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** بوابة وحدات خفيفة للمصحف الجديد */
+/** بوابة وحدات للمصحف الموثّق — VerifiedMushafReader */
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
@@ -10,7 +10,10 @@ const read = (p) => readFileSync(resolve(root, p), "utf8");
 
 const comps = [
   "src/features/mushaf-madinah/MushafPage.tsx",
-  "src/features/mushaf-madinah/MushafViewport.tsx",
+  "src/features/mushaf-madinah/VerifiedMushafReader.tsx",
+  "src/features/mushaf-madinah/MushafPager.tsx",
+  "src/features/mushaf-madinah/AyahActionSheet.tsx",
+  "src/features/mushaf-madinah/MushafSearchSheet.tsx",
   "src/features/mushaf-madinah/MushafPageHeader.tsx",
   "src/features/mushaf-madinah/MushafSurahOrnament.tsx",
   "src/features/mushaf-madinah/MushafAyahLine.tsx",
@@ -32,7 +35,7 @@ assert.match(css, /--mm-paper/);
 assert.match(css, /--mm-gold/);
 assert.match(css, /\.mm-page__body/);
 assert.match(css, /\.mm-ayah-bar/);
-assert.match(css, /rgba\(191,\s*159,\s*91,\s*0\.22\)|rgba\(190,\s*157,\s*82,\s*0\.2/);
+assert.match(css, /rgba\(191,\s*159,\s*91,\s*0\.(1[0-9]|22)\)|rgba\(190,\s*157,\s*82,\s*0\.2/);
 assert.doesNotMatch(css, /\.mm-ayah-sheet__backdrop/);
 assert.doesNotMatch(css, /\.mm-page__frame\s*\{[^}]*border:\s*1px/);
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
@@ -48,7 +51,9 @@ assert.match(css, /--mm-chrome-top-h/);
 assert.match(css, /--mm-chrome-bottom-h/);
 assert.match(css, /\.mm-ayah-bar__handle/);
 assert.match(css, /max-height:\s*min\(50dvh/);
-assert.doesNotMatch(css, /--mm-page-aspect/);
+assert.match(css, /aspect-ratio:\s*0\.68\s*\/\s*1/);
+assert.match(css, /overflow-y:\s*hidden/);
+assert.match(css, /\.mushaf-page-frame|\.mushaf-shell/);
 assert.doesNotMatch(css, /background:\s*#000\b/);
 const ayahBlock = css.match(/\.mm-ayah-line\s*\{[^}]+\}/)?.[0] ?? "";
 assert.ok(ayahBlock.includes("letter-spacing: 0") || !/letter-spacing\s*:/.test(ayahBlock));
@@ -57,24 +62,33 @@ assert.doesNotMatch(ayahBlock, /letter-spacing:\s*[1-9]/);
 assert.doesNotMatch(ayahBlock, /word-spacing:\s*[1-9]/);
 assert.match(ayahBlock, /bidi-override/);
 
-const viewport = read("src/features/mushaf-madinah/MushafViewport.tsx");
-assert.match(viewport, /MushafAyahActions/);
+const viewport = read("src/features/mushaf-madinah/VerifiedMushafReader.tsx");
+assert.match(viewport, /AyahActionSheet|MushafAyahActions/);
 assert.match(viewport, /MushafTafsirSheet/);
 assert.match(viewport, /MushafAudioDock/);
+assert.match(viewport, /MushafPager/);
 assert.match(viewport, /playAyah|togglePlay/);
 assert.match(viewport, /onShare|navigator\.share/);
 assert.match(viewport, /exitAlwaysVisible/);
-assert.match(viewport, /dx < 0\) go\(page \+ 1\)/);
-assert.match(viewport, /SWIPE_MIN_PX\s*=\s*45/);
 assert.match(viewport, /suppressPageSyncRef/);
 assert.match(viewport, /اختر آية أولاً/);
+assert.match(viewport, /setActionsOpen\(false\)/);
+assert.match(viewport, /onPrevAyah|skipPrev/);
+assert.match(viewport, /addEventListener\("scroll"/);
+assert.match(viewport, /2500/);
+
+const pager = read("src/features/mushaf-madinah/MushafPager.tsx");
+assert.match(pager, /dx < 0\) go\(page \+ 1\)/);
+assert.match(pager, /SWIPE_MIN_PX\s*=\s*45/);
+assert.match(pager, /prefers-reduced-motion/);
 
 const controls = read("src/features/mushaf-madinah/MushafControls.tsx");
 assert.match(controls, /exitAlwaysVisible/);
 assert.match(controls, /data-exit/);
 assert.match(controls, /\{pageNumber\} \/ \{MUSHAF_PAGE_MAX\}/);
+assert.match(controls, /onSearch|بحث/);
 
-const actions = read("src/features/mushaf-madinah/MushafAyahActions.tsx");
+const actions = read("src/features/mushaf-madinah/AyahActionSheet.tsx");
 assert.match(actions, /mm-reciter-sheet/);
 assert.match(actions, /مشاركة|onShare/);
 assert.match(actions, /SkipBack|onPrevAyah/);
@@ -83,6 +97,7 @@ assert.match(actions, /mm-ayah-bar__handle/);
 assert.match(actions, /جاري تحميل التلاوة/);
 assert.match(actions, /mushaf-ayah-play/);
 assert.match(actions, /سورة|آية/);
+assert.match(actions, /التلاوة|التفسير/);
 
 const dock = read("src/features/mushaf-madinah/MushafAudioDock.tsx");
 assert.match(dock, /"alafasy"/);
@@ -98,9 +113,6 @@ assert.match(ornament, /mm-surah-ornament__motif/);
 assert.match(css, /inset-inline-end:\s*0/);
 assert.match(css, /scrollbar-width:\s*none/);
 assert.match(css, /\.mm-slot__banner--with-basmala\s+\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-qpc-size\)/);
-assert.match(viewport, /setActionsOpen\(false\)/);
-assert.match(viewport, /onPrevAyah|skipPrev/);
-assert.match(viewport, /scroll.*setActionsOpen|onScroll/);
 
 const pageSrc = read("src/features/mushaf-madinah/MushafPage.tsx");
 assert.match(pageSrc, /inlineBasmala/);
@@ -127,7 +139,7 @@ assert.doesNotMatch(app, /MushafComingSoonPage/);
 assert.doesNotMatch(app, /demo-ayah-reader(?!.*Redirect)/);
 
 const page = read("src/pages/quran/MushafReaderPage.tsx");
-assert.match(page, /MushafViewport/);
+assert.match(page, /VerifiedMushafReader|MushafViewport/);
 assert.doesNotMatch(page, /\.pdf/i);
 
 assert.ok(existsSync(resolve(root, "public/fonts/qpc-v2/p1.woff2")));

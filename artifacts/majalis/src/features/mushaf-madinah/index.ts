@@ -1,4 +1,7 @@
-export { MushafViewport } from "./MushafViewport";
+export { VerifiedMushafReader, MushafViewport } from "./VerifiedMushafReader";
+export { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
+export { AyahActionSheet, MushafAyahActions } from "./AyahActionSheet";
+export { MushafSearchSheet } from "./MushafSearchSheet";
 export { MushafPage } from "./MushafPage";
 export { MushafPageHeader } from "./MushafPageHeader";
 export { MushafSurahOrnament } from "./MushafSurahOrnament";
@@ -6,7 +9,6 @@ export { MushafAyahLine } from "./MushafAyahLine";
 export { MushafAyahNumber } from "./MushafAyahNumber";
 export { MushafPageFooter } from "./MushafPageFooter";
 export { MushafControls } from "./MushafControls";
-export { MushafAyahActions } from "./MushafAyahActions";
 export { MushafTafsirSheet } from "./MushafTafsirSheet";
 export { MushafAudioDock } from "./MushafAudioDock";
 export { findMushafPageForAyah, parseVerseKey } from "./mushaf-page-for-ayah";

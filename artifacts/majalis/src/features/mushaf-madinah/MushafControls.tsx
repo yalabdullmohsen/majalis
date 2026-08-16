@@ -11,6 +11,9 @@ type Props = {
   onPrev: () => void;
   onNext: () => void;
   onGoto: (page: number) => void;
+  onSearch?: () => void;
+  onToggleTheme?: () => void;
+  themeLabel?: string;
 };
 
 /** أدوات المصحف — شريط سفلي وخروج؛ قلب الصفحة عبر الحواف/السحب. */
@@ -23,6 +26,9 @@ export function MushafControls({
   onPrev,
   onNext,
   onGoto,
+  onSearch,
+  onToggleTheme,
+  themeLabel = "المصحف الورقي",
 }: Props) {
   const [gotoOpen, setGotoOpen] = useState(false);
   const [draft, setDraft] = useState(String(pageNumber));
@@ -86,10 +92,24 @@ export function MushafControls({
         >
           التالي
         </button>
-        <button type="button" className="mm-controls__btn" onClick={() => setGotoOpen(true)}>
+        <button
+          type="button"
+          className="mm-controls__btn"
+          onClick={() => (onSearch ? onSearch() : setGotoOpen(true))}
+        >
           بحث
         </button>
+        {onToggleTheme ? (
+          <button type="button" className="mm-controls__btn" onClick={onToggleTheme} aria-label="إعدادات المصحف">
+            إعدادات
+          </button>
+        ) : null}
       </div>
+      {open && onToggleTheme ? (
+        <p className="mm-controls__theme-hint" aria-live="polite">
+          {themeLabel}
+        </p>
+      ) : null}
 
       {gotoOpen ? (
         <form
