@@ -1518,19 +1518,9 @@ html[data-theme="dark"] .hsp {
   line-height: 1.85;
 }
 
-.hadith-hub-header { margin-bottom: 1rem; }
-.hadith-hub-header__title {
-  margin: 0 0 0.35rem;
-  font-size: clamp(1.45rem, 4vw, 1.85rem);
-  font-weight: 800;
-  color: var(--mj-ink, #122);
-}
-.hadith-hub-header__lead {
-  margin: 0;
-  color: var(--mj-ink-2, #5a5a55);
-  font-size: 0.95rem;
-  line-height: 1.65;
-  max-width: 36rem;
+.hadith-hub-sample {
+  margin: 0 0 1.1rem;
+  max-width: 40rem;
 }
 .hadith-hub-stats { margin-bottom: 1rem; }
 .hadith-hub-search {

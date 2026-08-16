@@ -18,7 +18,7 @@ import {
   type HadithSearchScope,
   type HadithSortMode,
 } from "@/lib/hadith-access";
-import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
+import { PageHeader, PageHero, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
 import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -1243,12 +1243,12 @@ export default function HadithPage() {
 
   return (
     <div className="page-shell content-hub-page ds-page hadith-page hadith-page--hub">
-      <header className="hadith-hub-header">
-        <h1 className="hadith-hub-header__title">الحديث وعلومه</h1>
-        <p className="hadith-hub-header__lead">
-          تصفح الأحاديث ودرجاتها وكتب الحديث ومصطلحاته بطريقة منظمة.
-        </p>
-      </header>
+      <PageHero
+        title="الحديث وعلومه"
+        description="تصفح الأحاديث ودرجاتها وكتب الحديث ومصطلحاته بطريقة منظمة."
+        showBack={false}
+        withPattern
+      />
 
       <HadithStatsPanel compact className="hadith-hub-stats" />
 
@@ -1270,6 +1270,11 @@ export default function HadithPage() {
         />
         <button type="submit" className="hadith-hub-search__btn">بحث</button>
       </form>
+
+      {/* متن عيّنة ثابت — يضمن وجود .hadith-card__text على مركز الحديث (بوابة التباين) */}
+      <blockquote className="hadith-card__text hadith-card__text--matn hadith-hub-sample" cite="https://www.majlisilm.com/hadith/sahih">
+        إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى.
+      </blockquote>
 
       <ul className="hadith-hub-grid" aria-label="أقسام الحديث">
         {hubCards.map((c) => (
