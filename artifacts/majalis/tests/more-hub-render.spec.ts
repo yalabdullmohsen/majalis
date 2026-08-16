@@ -104,11 +104,21 @@ test.describe("More hub render contract", () => {
       expect(firstCardBox?.height ?? 0).toBeGreaterThanOrEqual(44);
       expect(firstCardBox?.width ?? 0).toBeGreaterThanOrEqual(44);
 
-      // 10) لقطة مرجعية
+      // 5) صفر اقتطاع أفقي للعينة الأولى
+      const hubBox = await hub.boundingBox();
+      if (hubBox && firstCardBox) {
+        expect(firstCardBox.x).toBeGreaterThanOrEqual(hubBox.x - 1);
+        expect(firstCardBox.x + firstCardBox.width).toBeLessThanOrEqual(hubBox.x + hubBox.width + 1);
+      }
+
+      // 10) لقطة مرجعية + مقارنة Playwright
       fs.mkdirSync(snapDir, { recursive: true });
       const shot = path.join(snapDir, `more-hub-${theme}.png`);
       await hub.screenshot({ path: shot });
       expect(fs.existsSync(shot)).toBe(true);
+      await expect(hub).toHaveScreenshot(`more-hub-${theme}.png`, {
+        maxDiffPixelRatio: 0.04,
+      });
 
       void hubBg;
     });
