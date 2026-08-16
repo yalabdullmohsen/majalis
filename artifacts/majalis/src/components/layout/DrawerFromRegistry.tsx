@@ -10,6 +10,7 @@ import {
 } from "@/config/sections.registry";
 import { FeaturedSectionsGrid, SectionsRowList } from "@/components/sections";
 import { cn } from "@/lib/utils";
+import "@/components/sections/section-cards.css";
 
 type Props = {
   onNavigate?: () => void;

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, lazy, Suspense } from "react";
 import { Link, useLocation } from "wouter";
 import { LayoutGrid } from "lucide-react";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
@@ -6,7 +6,10 @@ import { isComingSoonPath } from "@/lib/nav-visibility";
 import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 import { getActiveTab, type BottomTabId } from "@/lib/get-active-tab";
 import { haptics } from "@/lib/haptics";
-import { MoreBottomSheet } from "./MoreBottomSheet";
+
+const MoreBottomSheet = lazy(() =>
+  import("./MoreBottomSheet").then((m) => ({ default: m.MoreBottomSheet })),
+);
 
 const HREF_TO_ID: Record<string, BottomTabId> = {
   "/mushaf": "quran",
@@ -108,7 +111,11 @@ export function BottomNavBar({ isHidden = false }: { isHidden?: boolean } = {}) 
         </button>
       </nav>
 
-      <MoreBottomSheet open={moreOpen} onClose={closeMore} />
+      {moreOpen ? (
+        <Suspense fallback={null}>
+          <MoreBottomSheet open={moreOpen} onClose={closeMore} />
+        </Suspense>
+      ) : null}
     </>
   );
 }
