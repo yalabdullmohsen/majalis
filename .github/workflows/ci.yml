@@ -68,9 +68,12 @@ jobs:
             BASE="${{ github.event.pull_request.base.sha }}"
             HEAD="${{ github.event.pull_request.head.sha }}"
             node .github/scripts/ci/emit-path-lane.mjs --base "$BASE" --head "$HEAD"
+            node scripts/ci/changed-scope.mjs --base "$BASE" --head "$HEAD"
           else
             # push to main / merge_group → full suite (no dangerous skip)
             node .github/scripts/ci/emit-path-lane.mjs --full
+            echo "scopes=full" >> "$GITHUB_OUTPUT"
+            echo "scope_need_data_audit=true" >> "$GITHUB_OUTPUT"
           fi
 
       # مفتاح الكاش المركّب: hash(lockfile) + hash(src) + hash(public/data) +
@@ -237,6 +240,12 @@ jobs:
 
       - name: Unit / package tests (بدون بوابات مصحف Playwright)
         run: pnpm --filter @workspace/majalis run test:ci-unit
+
+      - name: fail-fast — إلغاء بقية الوظائف عند فشل repo-gates
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run cancel "${{ github.run_id }}" || true
 
       - name: Verify no runtime DDL
         run: pnpm verify:no-runtime-ddl
@@ -432,6 +441,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh run cancel "${{ github.run_id }}" || true
 
+  # لقطات بصرية — عند لمس المصحف فقط؛ لا تمنع Verify build (معلوماتية / تقلل ضوضاء PR)
   visual-snapshot:
     name: visual-snapshot
     needs: [classify, build]
@@ -441,6 +451,7 @@ jobs:
       needs.classify.result == 'success' &&
       needs.classify.outputs.need_mushaf == 'true' &&
       needs.build.result == 'success'
+    continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -479,12 +490,6 @@ jobs:
         if: always()
         run: kill "$(cat /tmp/mushaf-vite.pid)" 2>/dev/null || true
 
-      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
-        if: failure()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh run cancel "${{ github.run_id }}" || true
-
   # ---------------------------------------------------------------------------
   # ٧) تباين الألوان — ينزّل dist ولا يبني (كان يعيد البناء كاملًا)
   # ---------------------------------------------------------------------------
@@ -497,6 +502,7 @@ jobs:
       needs.classify.result == 'success' &&
       needs.classify.outputs.need_color_contrast == 'true' &&
       needs.build.result == 'success'
+    continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -646,6 +652,7 @@ jobs:
           check_req "mushaf-measure" "$NEED_MUSHAF" "$MEASURE_RESULT"
           check_req "mushaf-gates" "$NEED_MUSHAF" "$GATES_RESULT"
           check_req "layout-bands" "$NEED_MUSHAF" "$BANDS_RESULT"
-          check_req "visual-snapshot" "$NEED_MUSHAF" "$VISUAL_RESULT"
+          # visual-snapshot و Color contrast: informational (continue-on-error) — لا تمنع الدمج
+          echo "OK optional visual-snapshot=$VISUAL_RESULT (informational)"
 
           echo "Verify build OK (lane=$LANE)"

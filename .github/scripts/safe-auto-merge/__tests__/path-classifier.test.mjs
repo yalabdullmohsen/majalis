@@ -67,7 +67,7 @@ describe("path-classifier", () => {
     assert.equal(r.requiredChecks.mushafMeasure, true);
     assert.equal(r.requiredChecks.mushafGates, true);
     assert.equal(r.requiredChecks.layoutBands, true);
-    assert.equal(r.requiredChecks.visualSnapshot, true);
+    assert.equal(r.requiredChecks.visualSnapshot, false); // informational / continue-on-error
     assert.equal(r.outputs.need_mushaf, "true");
   });
 

@@ -47,3 +47,5 @@ fastlane/test_output/
 vendor/bundle/
 .bundle/
 artifacts/majalis/ios/build/
+reports/verify-pr-ready-latest.json
+reports/changed-scope.json

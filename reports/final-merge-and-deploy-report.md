@@ -7,67 +7,44 @@
 
 | بند | القيمة |
 |---|---|
-| الفرع المحلي الحالي | `improve/feature-ux-phase2` |
-| آخر commit على الفرع | `cace3f599` (محتوى المرحلة 2) |
-| `main` بعد الدمج (squash) | `6aae794d7` — `feat: مرحلة 2 — ورد اليوم، متابعة، تحدي سين جيم، وaudit الميزات (#1172)` |
-| تغييرات غير مضافة | ملف غير متتبَّع فقط: `reports/verify-pr-ready-latest.json` (أثر محلي) |
-| تعارضات | لا |
-| Commit مطلوب | **لا توجد تغييرات تحتاج commit** |
+| الفرع | `chore/ci-quality-stabilization` |
+| آخر commit قبل الدفع | دمج `main` + حل تعارض `artifacts/majalis/package.json` |
+| تغييرات غير مضافة | لا (بعد commit التثبيت) |
+| تعارضات | حُلّت (كانت `CONFLICTING` مع `main`) |
+| Commit مطلوب | نعم — تثبيت البوابات بعد الدمج من `main` |
 
 ## PR والـCI
 
 | بند | الحالة |
 |---|---|
-| رابط PR | https://github.com/yalabdullmohsen/majalis/pull/1172 |
-| حالة PR | **MERGED** (squash في `2026-08-16T02:59:55Z`) |
-| Auto-merge | كان مفعّلاً؛ اكتمل الدمج يدويًا بعد نجاح required checks (Color contrast كان معلّقًا ثم نجح) |
-| Verify build | ✅ SUCCESS |
-| repo-gates | ✅ SUCCESS |
-| build / static-checks | ✅ SUCCESS |
-| Color contrast | ✅ SUCCESS |
+| رابط PR | https://github.com/yalabdullmohsen/majalis/pull/1168 |
+| حالة PR | جاهز للدمج بعد نجاح required checks + auto-merge |
+| ما سبق دمجه | #1172 ميزات · #1173 تقرير · الإنتاج كان على `be2a78ba` |
 
-## ما تم إصلاحه في هذه الجلسة النهائية
+## ما تم إصلاحه
 
-**لا شيء (P0 = 0).**  
-الفحص أظهر أن المرحلة 2 مدموجة ومنشورة أصلًا؛ لم يُفتح refactor ولم تُضف ميزات.
+| بند | التفصيل |
+|---|---|
+| تعارض الدمج | دمج `origin/main` في الفرع |
+| `package.json` | الإبقاء على `audit:*.ts` من main + `audit:data-completeness` / `audit:seo` من الفرع |
+| P0 كود منتج | لا — لا ميزات ولا refactor |
 
 ## أوامر التحقق ونتائجها
 
 | أمر | النتيجة |
 |---|---|
-| `pnpm run verify:pr` | ✅ نجحت (~152.7s): typecheck · lint · unit · build · mushaf gates |
-| فحوص HTTP للإنتاج | الرئيسية + الدروس + المصحف + المكتبة + العلماء + الأنبياء + الأذكار + الفقه + المزيد + quiz + search → **200** |
-| `/prophets/zakariya` | **308** → `/prophets/zakariyya` |
-| `/prophets/zakaria` | **308** (تحويل مماثل) |
+| `pnpm run verify:pr` | ✅ P0=0 · typecheck · lint · build · audits |
+| `audit:seo` | ✅ pages=969 · P0=0 |
+| `audit:data-completeness` | ✅ P0=0 |
 
-## النشر
+## النشر (بعد الدمج)
 
 | بند | الحالة |
 |---|---|
-| `version.json` | `6aae794d` @ `2026-08-16T03:01:13.525Z` · `ref: main` |
-| Auto Deploy | ✅ completed success — https://github.com/yalabdullmohsen/majalis/actions/runs/31923177909 |
-| الموقع | https://majlisilm.com — يعمل (HTTP 200، commit مطابق) |
-| رابط النشر (Vercel) | إنتاج Vercel على `main`؛ Preview للـPR كان `Vercel – majalis-majalis` |
-
-## فحص سريع للمسارات
-
-- الرئيسية ✅  
-- الدروس ✅  
-- القرآن/المصحف ✅  
-- المكتبة ✅  
-- العلماء ✅  
-- قصص الأنبياء ✅  
-- الأذكار ✅  
-- الفقه ✅  
-- المزيد ✅  
-- سين جيم `/quiz` ✅  
-- بحث `/search` ✅  
-
-## TestFlight / Capacitor
-
-**لا يحتاج رفع TestFlight.**  
-التغييرات ويب/SPA على Vercel؛ لا تعديل Bundle ID أو Capacitor أو توقيع iOS في هذه الدفعة. التطبيق الأصلي يعرض آخر نسخة ويب عبر التحديث التلقائي للمحتوى المنشور على `majlisilm.com`.
+| الموقع | https://majlisilm.com |
+| المسارات العامة | تُفحص بعد وصول commit الدمج إلى الإنتاج |
+| TestFlight | **لا** — تغييرات CI/بوابات فقط |
 
 ## الخلاصة
 
-المرحلة النهائية مكتملة: **P0 = 0 · PR مدموج · الإنتاج على `6aae794d` · الموقع يعمل.**
+**P0 = 0.** الفرع مُزامَن مع `main` وجاهز لـ auto-merge squash بعد نجاح Verify build / required checks.
