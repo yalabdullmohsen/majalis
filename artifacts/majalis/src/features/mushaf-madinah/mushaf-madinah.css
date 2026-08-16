@@ -28,24 +28,25 @@
   --mm-banner-fill: linear-gradient(180deg, #efe2b8 0%, #e0cb92 48%, #d4b870 100%);
   --mm-banner-name-bg: #fffdf8;
   /* highlight ذهبي خفيف جدًا — لا يغطي الحروف */
-  --mm-ayah-select: rgba(191, 159, 91, 0.12);
-  --mm-ayah-play: rgba(47, 111, 78, 0.10);
+  --mm-ayah-select: rgba(191, 159, 91, 0.10);
+  --mm-ayah-play: rgba(47, 111, 78, 0.09);
   --mm-outer-pad: 0;
-  --mm-inner-pad-x: clamp(0.55rem, 2.8vw, 1.05rem);
-  --mm-inner-pad-y: clamp(0.08rem, 0.7vw, 0.28rem);
+  --mm-inner-pad-x: clamp(0.7rem, 3.2vw, 1.25rem);
+  --mm-inner-pad-y: clamp(0.1rem, 0.8vw, 0.32rem);
   --mm-header-h: clamp(1.05rem, 3.2vw, 1.35rem);
   --mm-footer-h: clamp(1.35rem, 4.2vw, 1.75rem);
   /* ارتفاع لوحة السورة يلائم خانة شبكة واحدة — لا يتجاوزها على البسملة */
-  --mm-banner-h: clamp(2.45rem, 7.6vw, 3.15rem);
-  --mm-ayah-end: 0.92em;
-  --mm-page-max-w: min(100%, calc((100dvh - var(--inset-top, 0px) - var(--inset-bottom, 0px) - 24px) * 0.68));
-  --mm-qpc-size: clamp(1.55rem, 5.6vw, 2.12rem);
+  --mm-banner-h: clamp(2.55rem, 8vw, 3.35rem);
+  --mm-ayah-end: 0.88em;
+  /* عرض كامل آمن — بلا إطار 0.68 يقصّ النص على الجوال */
+  --mm-page-max-w: min(100%, 42rem);
+  --mm-qpc-size: clamp(1.18rem, 2.65svh + 0.35rem, 1.68rem);
   --mm-line-gap: 0;
   --mm-chrome: color-mix(in srgb, var(--mm-paper) 94%, #fff);
   --mm-chrome-fg: var(--mm-ink);
   --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 28%, transparent);
-  --mm-ayah-bar-h: 8.25rem;
-  /* مساحة علوية/سفلية ثابتة دائماً — النص لا يلامس الحواف ولا يُقصّ */
+  --mm-ayah-bar-h: 0px;
+  /* مساحة علوية/سفلية للأدوات — الشيت الخارجي لا يضغط الصفحة */
   --mm-chrome-top-h: 2.35rem;
   --mm-chrome-bottom-h: 1.65rem;
   --mushaf-bg: var(--mm-outer-bg);
@@ -53,13 +54,16 @@
   position: fixed;
   inset: 0;
   z-index: 40;
-  width: 100vw;
+  width: 100%;
+  max-width: 100%;
+  height: 100svh;
+  max-height: 100svh;
   height: 100dvh;
   max-height: 100dvh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: stretch;
   background: var(--mushaf-bg);
   color: var(--mm-ink);
   touch-action: pan-y;
@@ -71,7 +75,8 @@
   padding-inline-start: var(--inset-inline-start, var(--inset-left, 0px));
   padding-inline-end: var(--inset-inline-end, var(--inset-right, 0px));
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: hidden;
 }
 
 .mm-viewport[data-chrome="1"] {
@@ -80,7 +85,8 @@
 }
 
 .mm-viewport[data-ayah-bar="1"] {
-  --mm-chrome-bottom-h: var(--mm-ayah-bar-h);
+  /* الشيت portal ثابت — لا نقلّص صفحة المصحف ولا نغطّي النص */
+  --mm-chrome-bottom-h: 1.65rem;
   --mm-chrome-top-h: 2.65rem;
 }
 
@@ -121,24 +127,24 @@ html.dark .mm-viewport,
 
 .mm-page-shell,
 .mushaf-page-frame {
-  width: min(100vw, calc((100dvh - var(--inset-top, 0px) - var(--inset-bottom, 0px) - 24px) * 0.68));
-  max-width: 100%;
-  height: auto;
-  max-height: calc(100dvh - var(--inset-top, 0px) - var(--inset-bottom, 0px) - 24px);
-  aspect-ratio: 0.68 / 1;
-  flex: 0 1 auto;
+  width: 100%;
+  max-width: var(--mm-page-max-w);
+  height: 100%;
+  max-height: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
   min-height: 0;
   margin-inline: auto;
-  margin-block: auto;
+  margin-block: 0;
   position: relative;
   z-index: 5; /* فوق مناطق قلب الصفحة حتى لا يسرق النقر من الآيات */
-  overflow-x: hidden;
-  overflow-y: hidden; /* لا تمرير رأسي داخل صفحة المصحف — fit-to-screen */
+  overflow-x: clip; /* منع القص الأفقي المرئي — الخط يُضبط عبر fitMushafPageFont */
+  overflow-y: hidden;
   overscroll-behavior: none;
-  scrollbar-width: none; /* لا شريط تمرير ظاهر داخل المصحف */
-  /* مساحة محجوزة للأدوات — لا تغطي الآيات ولا رقم الصفحة */
+  scrollbar-width: none;
   padding-top: var(--mm-chrome-top-h);
   padding-bottom: var(--mm-chrome-bottom-h);
+  padding-inline: 0;
   box-sizing: border-box;
   display: flex;
   align-items: stretch;
@@ -160,7 +166,9 @@ html.dark .mm-viewport,
 
 .mm-viewport .mm-page {
   width: 100%;
-  min-height: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
   height: 100%;
   box-sizing: border-box;
   background: var(--mm-paper);
@@ -171,6 +179,8 @@ html.dark .mm-viewport,
   grid-template-rows: var(--mm-header-h) minmax(0, 1fr) var(--mm-footer-h);
   padding: 0;
   border-radius: 0;
+  overflow-x: clip;
+  overflow-y: hidden;
 }
 
 .mm-viewport[data-ayah-bar="1"] .mm-page {
@@ -255,7 +265,7 @@ html.dark .mm-viewport .mm-page {
 }
 
 .mm-surah-ornament {
-  width: 100%;
+  width: calc(100% - clamp(1.1rem, 5.5vw, 2.4rem));
   max-width: 100%;
   height: auto;
   max-height: 100%;
@@ -271,8 +281,8 @@ html.dark .mm-viewport .mm-page {
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, #fff 48%, transparent),
     0 1px 0 color-mix(in srgb, var(--mm-gold-deep) 22%, transparent);
-  border-radius: 0.55rem;
-  padding: 0.32rem clamp(0.4rem, 2.4vw, 0.85rem);
+  border-radius: 0.65rem;
+  padding: 0.38rem clamp(0.55rem, 3vw, 1.05rem);
   box-sizing: border-box;
 }
 
@@ -315,16 +325,16 @@ html.dark .mm-surah-ornament {
   color: var(--mm-gold-deep);
   text-align: center;
   font-family: "Amiri Quran", "KFGQPC Hafs Uthmanic", serif;
-  font-size: clamp(0.92rem, 3.5vw, 1.32rem);
+  font-size: clamp(1.02rem, 3.8vw, 1.45rem);
   font-weight: 700;
-  line-height: 1.25;
-  padding: 0.28rem clamp(0.45rem, 2.2vw, 0.9rem);
+  line-height: 1.3;
+  padding: 0.32rem clamp(0.55rem, 2.6vw, 1.05rem);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   letter-spacing: 0;
   min-width: 0;
-  border-radius: 0.35rem;
+  border-radius: 0.4rem;
 }
 
 html[data-theme="dark"] .mm-surah-ornament__name,
@@ -363,19 +373,21 @@ html.dark .mm-surah-ornament__side {
 
 .mm-ayah-line {
   width: 100%;
+  max-width: 100%;
   display: block;
   text-align: center;
   direction: rtl;
   unicode-bidi: bidi-override; /* ترتيب بصري = ترتيب كلمات QPC */
   font-family: var(--mm-qpc-family), "Amiri Quran", serif;
   font-size: var(--mm-qpc-size);
-  line-height: 1.28;
+  line-height: 1.32;
   color: var(--mm-ink);
   letter-spacing: 0;
   word-spacing: 0;
   white-space: nowrap;
   overflow: visible;
-  padding-block: 0.06em;
+  padding-block: 0.04em;
+  box-sizing: border-box;
 }
 
 .mm-viewport .mm-page:not(.mm-page--opening) .mm-ayah-line {
@@ -443,7 +455,7 @@ html.dark .mm-surah-ornament__side {
 }
 
 .mm-viewport[data-mushaf-theme="paper"] .mm-ayah-run__text.is-selected {
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
 }
 
 .mm-ayah-run__text.is-playing {
@@ -1014,9 +1026,9 @@ html.dark .mm-audio-dock__status--err {
   position: absolute;
   inset: 0;
   border: 0;
-  background: color-mix(in srgb, var(--mm-paper) 35%, transparent);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  background: color-mix(in srgb, var(--mm-paper) 55%, transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   pointer-events: auto;
   cursor: pointer;
 }
@@ -1222,12 +1234,12 @@ html.dark .app-sheet-overlay:has(.mm-tafsir) .app-sheet {
 
 /* شيت التفسير من داخل المصحف — scrim خفيف لا يطفئ الصفحة */
 .app-sheet-overlay:has(.mm-tafsir) .app-sheet-overlay__scrim {
-  background: color-mix(in srgb, #5c4a28 12%, transparent);
+  background: color-mix(in srgb, #5c4a28 8%, transparent);
 }
 
 html[data-theme="dark"] .app-sheet-overlay:has(.mm-tafsir) .app-sheet-overlay__scrim,
 html.dark .app-sheet-overlay:has(.mm-tafsir) .app-sheet-overlay__scrim {
-  background: color-mix(in srgb, #1c2430 45%, transparent);
+  background: color-mix(in srgb, #1c2430 28%, transparent);
 }
 
 .app-sheet-overlay:has(.mm-tafsir) .app-sheet {

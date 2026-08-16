@@ -1,8 +1,10 @@
+import { useRef } from "react";
 import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
 import { MushafAyahLine } from "./MushafAyahLine";
 import { MushafPageFooter } from "./MushafPageFooter";
 import { MushafPageHeader } from "./MushafPageHeader";
 import { MushafSurahOrnament } from "./MushafSurahOrnament";
+import { useMushafPageFontFit } from "./useMushafPageFontFit";
 
 const BASMALA = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
 
@@ -24,9 +26,12 @@ export function MushafPage({
 }: Props) {
   const opening = layout.pageNumber === 1 || layout.pageNumber === 2;
   const slots = buildSlots(layout, opening);
+  const pageRef = useRef<HTMLElement | null>(null);
+  useMushafPageFontFit(pageRef, true, layout.pageNumber, fontFamily, selectedVerseKey);
 
   return (
     <article
+      ref={pageRef}
       className={`mm-page${opening ? " mm-page--opening" : ""}`}
       data-page={layout.pageNumber}
       data-testid="mushaf-page"

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { BookOpen, Mic2, Pause, Play, SkipBack, SkipForward, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import type { PlayerState } from "@/core/audio/AudioEngine";
@@ -63,6 +63,7 @@ export function AyahActionSheet({
   const [tab, setTab] = useState<TabId>("tilawa");
   const [readersOpen, setReadersOpen] = useState(false);
   const [readerQuery, setReaderQuery] = useState("");
+  const dragY = useRef<number | null>(null);
   const parsed = parseVerseKey(verseKey);
   const surahName = parsed ? getSurahMeta(parsed.surah).name : "";
   const title = parsed ? `${surahName} · آية ${parsed.ayah}` : verseKey;
@@ -115,7 +116,25 @@ export function AyahActionSheet({
           aria-label="إغلاق شريط الآية"
           onClick={onClose}
         />
-        <div className="mm-ayah-bar__panel">
+        <div
+          className="mm-ayah-bar__panel"
+          onPointerDown={(e) => {
+            if ((e.target as HTMLElement).closest("button, input, select, a, textarea")) {
+              dragY.current = null;
+              return;
+            }
+            dragY.current = e.clientY;
+          }}
+          onPointerUp={(e) => {
+            const start = dragY.current;
+            dragY.current = null;
+            if (start == null) return;
+            if (e.clientY - start > 72) onClose();
+          }}
+          onPointerCancel={() => {
+            dragY.current = null;
+          }}
+        >
           <div className="mm-ayah-bar__handle" aria-hidden="true" />
           <div className="mm-ayah-bar__head">
             <p className="mm-ayah-bar__title">{title}</p>

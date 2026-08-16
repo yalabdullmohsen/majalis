@@ -56,7 +56,7 @@ function mushafAudioLog(
 
 /**
  * VerifiedMushafReader — غلاف المصحف الموثّق:
- * إطار ثابت fit-to-screen، قلب صفحة خفيف، إجراءات آية خارج النص، بيانات QPC بلا التفاف عشوائي.
+ * صفحة بعرض آمن كامل، ملاءمة خط QPC بلا قص، قلب صفحة RTL، أدوات آية خارج النص.
  */
 export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex }: Props) {
   const page = clampMushafPage(pageNumber);
@@ -468,7 +468,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
 
       <MushafControls
         open={chromeOpen && !actionsOpen}
-        exitAlwaysVisible={chromeOpen}
+        exitAlwaysVisible
         pageNumber={page}
         onExit={onExit}
         onIndex={onIndex}
