@@ -15,6 +15,14 @@ const checks = [
     dir: path.join(root, "tests/snapshots/quran-numbers"),
     needed: ["quran-numbers-light.png", "quran-numbers-dark.png"],
   },
+  {
+    dir: path.join(root, "tests/snapshots/quran-tajweed"),
+    needed: ["quran-tajweed-light.png", "quran-tajweed-dark.png"],
+  },
+  {
+    dir: path.join(root, "tests/snapshots/quran-qiraat"),
+    needed: ["quran-qiraat-light.png", "quran-qiraat-dark.png"],
+  },
 ];
 
 let failed = false;

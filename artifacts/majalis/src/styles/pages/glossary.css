@@ -1,29 +1,81 @@
 /* ══════════════════════════════════════════════════════════════════
    242 — IslamicGlossaryPage  (.gl-*)
    ══════════════════════════════════════════════════════════════════ */
-.gl-page { min-height: 100svh; background: #F8FAFC; }
+.gl-page {
+  min-height: 100svh;
+  background: #F8FAFC;
+  padding-bottom: calc(var(--assistant-fab-size, 3.35rem) + var(--assistant-fab-gap, 2rem) + 1.5rem);
+}
 
-/* Hero */
+/* Hero — نص أبيض فوق الأخضر (تباين ≥ 4.5:1) */
 .gl-hero {
-  background: linear-gradient(135deg, #0F172A 0%, var(--mj-brand-deep) 50%, var(--mj-brand) 100%);
-  padding: 3.5rem 1.5rem 2.5rem; text-align: center;
+  background: linear-gradient(135deg, #0B3D2E 0%, #155241 45%, #1F7A5A 100%);
+  padding: 3.5rem 1.5rem 2.5rem;
+  text-align: center;
 }
 .gl-hero__inner { max-width: 680px; margin: 0 auto; }
 .gl-hero__badge {
-  display: inline-block; background: rgba(255,255,255,.12); color: #fff;
-  border: 1px solid rgba(255,255,255,.25); border-radius: var(--ds-radius-full);
-  padding: .3rem .9rem; font-size: .75rem; font-weight: 700;
-  letter-spacing: normal; margin-bottom: .9rem;
+  display: inline-block;
+  background: rgba(255,255,255,.14);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: var(--ds-radius-full);
+  padding: .3rem .9rem;
+  font-size: .75rem;
+  font-weight: 700;
+  margin-bottom: .9rem;
 }
 .gl-hero__title {
-  font-size: 2rem; font-weight: 800; color: #fff; margin: 0 0 .6rem; line-height: 1.3;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 .6rem;
+  line-height: 1.3;
 }
-.gl-hero__sub { color: rgba(255,255,255,.8); font-size: .95rem; margin: 0 0 1rem; line-height: 1.7; }
+.gl-hero__sub {
+  color: #fff;
+  font-size: .95rem;
+  margin: 0 0 1rem;
+  line-height: 1.7;
+  opacity: 0.95;
+}
 .gl-hero__count {
-  display: inline-flex; align-items: center; gap: .45rem;
-  color: rgba(255,255,255,.9); font-size: .82rem;
-  background: rgba(255,255,255,.1); border-radius: var(--ds-radius-full); padding: .3rem .9rem;
-  margin-bottom: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  color: #fff;
+  font-size: .82rem;
+  background: rgba(255,255,255,.14);
+  border-radius: var(--ds-radius-full);
+  padding: .35rem 1rem;
+  margin-bottom: 1rem;
+  max-width: calc(100% - 5.5rem);
+}
+.gl-hero__count svg { color: #fff; flex-shrink: 0; }
+.gl-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 0;
+}
+.gl-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #fff;
+  color: #0B3D2E;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 14px;
+}
+.gl-hero__btn--ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.55);
 }
 
 /* Search */

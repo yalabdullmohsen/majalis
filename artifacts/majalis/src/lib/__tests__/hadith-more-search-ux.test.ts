@@ -47,7 +47,10 @@ for (const t of [
 }
 const secondary = MORE_STANDARD_SECTIONS.map((s) => s.title);
 assert.ok(secondary.includes("الأدعية"));
-assert.ok(secondary.includes("المصطلحات"));
+assert.ok(
+  secondary.includes("القاموس الإسلامي") || secondary.includes("المصطلحات"),
+  "المزيد يتضمن القاموس/المصطلحات",
+);
 assert.ok(secondary.includes("الموضوعات"));
 assert.equal(secondary.includes("البحث"), false, "لا بطاقة بحث في المزيد");
 

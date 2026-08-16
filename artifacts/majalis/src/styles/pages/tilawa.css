@@ -1,0 +1,67 @@
+/* التلاوة والقرّاء */
+.tl-page {
+  padding: 16px 16px calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 72px);
+  max-width: 720px;
+  margin: 0 auto;
+  color: var(--mj-ink, #16241e);
+}
+
+.tl-crumb {
+  font-size: 13px;
+  margin-bottom: 12px;
+  color: var(--mj-muted, #66766f);
+}
+
+.tl-crumb a,
+.tl-head a {
+  color: var(--mj-brand, #1f7a5a);
+  text-decoration: none;
+}
+
+.tl-head h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.5rem, 4vw, 1.85rem);
+  font-weight: 800;
+}
+
+.tl-head p {
+  margin: 0 0 16px;
+  line-height: 1.7;
+}
+
+.tl-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tl-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--mj-hairline, #e3e8e6);
+  background: var(--mj-surface, #fff);
+  color: inherit;
+  text-decoration: none;
+}
+
+.tl-card__n {
+  font-weight: 800;
+  color: var(--mj-brand, #1f7a5a);
+}
+
+.tl-card__name {
+  font-weight: 600;
+  flex: 1;
+}
+
+.tl-card__meta {
+  font-size: 12px;
+  color: var(--mj-muted, #66766f);
+}

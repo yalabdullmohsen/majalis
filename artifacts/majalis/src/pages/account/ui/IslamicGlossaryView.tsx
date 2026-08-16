@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "wouter";
-import { BookOpen, ChevronDown, ChevronUp, X } from "lucide-react";
+import { Link, useSearch } from "wouter";
+import { BookOpen, ChevronDown, ChevronUp } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { SearchField, Card, Badge } from "@/components/ui-common";
+import { Card, Badge } from "@/components/ui-common";
+import { formatArabicNumber } from "@/lib/numerals";
 import "@/styles/pages/glossary.css";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -1415,128 +1415,130 @@ const TERMS: GlossaryTerm[] = [
   },
 ];
 
-export default function IslamicGlossaryPage() {
-  const [activeCategory, setActiveCategory] = useState<Category>("all");
-  const [search, setSearch] = useState("");
+export type IslamicGlossaryProps = {
+  /** يقيّد العرض على تصنيف واحد (مثل علوم القرآن من مركز القرآن) */
+  lockedCategory?: Exclude<Category, "all">;
+};
+
+function parseCatParam(raw: string): Category | null {
+  const v = new URLSearchParams(raw.startsWith("?") ? raw.slice(1) : raw).get("cat");
+  if (!v) return null;
+  if (CATEGORIES.some((c) => c.id === v)) return v as Category;
+  return null;
+}
+
+export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryProps = {}) {
+  const searchStr = useSearch();
+  const urlCat = parseCatParam(searchStr);
+  const initial: Category = lockedCategory ?? (urlCat && urlCat !== "all" ? urlCat : "all");
+  const [activeCategory, setActiveCategory] = useState<Category>(initial);
   const [openTerm, setOpenTerm] = useState<number | null>(null);
   const [alpha, setAlpha] = useState<string>("");
 
   useEffect(() => {
+    if (lockedCategory) setActiveCategory(lockedCategory);
+    else if (urlCat) setActiveCategory(urlCat);
+  }, [lockedCategory, urlCat]);
+
+  useEffect(() => {
+    const quranOnly = lockedCategory === "quran" || activeCategory === "quran";
     applyPageSeo({
-      path: "/islamic-glossary",
-      title: "المصطلحات الإسلامية | المجلس العلمي",
-      description: "قاموس المصطلحات الإسلامية الشامل؛ في العقيدة والفقه وعلوم القرآن والحديث؛ قاموس شامل للمصطلحات الإسلامية",
-      keywords: ["مصطلحات إسلامية", "قاموس إسلامي", "مصطلحات فقهية", "مصطلحات الحديث", "علوم إسلامية"],
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "المصطلحات الإسلامية",
-          description: "قاموس المصطلحات الإسلامية الشامل؛ محتوى معتمد في منهج المجلس العلمي",
-          numberOfItems: TERMS.length,
-          itemListElement: TERMS.slice(0, 20).map((t, i) => ({
-            "@type": "ListItem",
-            position: i + 1,
-            name: `${t.term}: ${t.definition.slice(0, 60)}`,
-            url: `https://www.majlisilm.com/islamic-glossary#term-${t.id}`,
-          })),
-        },
-      ],
+      path: quranOnly && lockedCategory ? "/quran-hub/terms" : "/islamic-glossary",
+      title: lockedCategory === "quran"
+        ? "مصطلحات علوم القرآن | المجلس العلمي"
+        : "القاموس الإسلامي | المجلس العلمي",
+      description: lockedCategory === "quran"
+        ? "مصطلحات علوم القرآن من القاموس الإسلامي الموحّد."
+        : "قاموس المصطلحات الإسلامية في العقيدة والفقه وعلوم القرآن والحديث والسيرة والتزكية.",
+      keywords: ["مصطلحات إسلامية", "قاموس إسلامي", "علوم القرآن"],
     });
-  }, []);
+  }, [lockedCategory, activeCategory]);
 
   const filtered = useMemo(() => {
     let list = TERMS;
-    if (activeCategory !== "all") list = list.filter(t => t.category === activeCategory);
-    if (search.trim()) {
-      list = list.filter(t =>
-        arabicMatchAny([t.term, t.definition, t.detail ?? "", t.plural ?? ""], search),
-      );
-    }
-    if (alpha) list = list.filter(t => t.term.startsWith(alpha));
+    if (activeCategory !== "all") list = list.filter((t) => t.category === activeCategory);
+    if (alpha) list = list.filter((t) => t.term.startsWith(alpha));
     return list;
-  }, [activeCategory, search, alpha]);
+  }, [activeCategory, alpha]);
 
   const countByCat = useMemo(() => {
     const m: Record<string, number> = {};
-    TERMS.forEach(t => { m[t.category] = (m[t.category] ?? 0) + 1; });
+    TERMS.forEach((t) => {
+      m[t.category] = (m[t.category] ?? 0) + 1;
+    });
     m.all = TERMS.length;
     return m;
   }, []);
 
+  const cats = lockedCategory
+    ? CATEGORIES.filter((c) => c.id === lockedCategory)
+    : CATEGORIES;
+
+  const heroTitle = lockedCategory === "quran" ? "مصطلحات علوم القرآن" : "المصطلحات الإسلامية";
+  const heroEyebrow = lockedCategory === "quran" ? "مركز القرآن" : "القاموس الإسلامي";
+
   return (
-    <div className="gl-page mj-page" dir="rtl">
-      {/* ══ Hero ══ */}
-      <section className="gl-hero mj-page-head">
+    <div className="gl-page mj-page" dir="rtl" data-islamic-glossary="1">
+      <section className="gl-hero" aria-label="مقدمة القاموس">
         <div className="gl-hero__inner">
-          <p className="mj-eyebrow">القاموس الإسلامي</p>
-          <h1 className="gl-hero__title">المصطلحات الإسلامية</h1>
+          <p className="gl-hero__badge">{heroEyebrow}</p>
+          <h1 className="gl-hero__title">{heroTitle}</h1>
           <p className="gl-hero__sub">
-            تعريفات دقيقة موثّقة لأهم المصطلحات في العلوم الشرعية، مرجع لطالب العلم في رحلته العلمية
+            {lockedCategory === "quran"
+              ? "مصطلحات علوم القرآن من القاموس الإسلامي الموحّد — ليست نسخة ثانية من المحتوى."
+              : "تعريفات دقيقة موثّقة لأهم المصطلحات في العلوم الشرعية، مرجع لطالب العلم."}
           </p>
           <div className="gl-hero__count">
             <BookOpen size={16} aria-hidden="true" />
-            <span>{TERMS.length.toLocaleString("ar-EG")} مصطلحاً في ٦ علوم</span>
+            <span>
+              {formatArabicNumber(lockedCategory ? countByCat[lockedCategory] ?? 0 : TERMS.length)}{" "}
+              {lockedCategory === "quran" ? "مصطلحًا في علوم القرآن" : "مصطلحًا في ٦ علوم"}
+            </span>
           </div>
-          <p className="gl-hero__sub" style={{ marginBlockStart: "0.75rem" }}>
-            <Link href="/memorize" className="mj-btn mj-btn--soft">
+          <p className="gl-hero__actions">
+            <Link href="/flashcards" className="gl-hero__btn">
               راجِع بالبطاقات
             </Link>
+            {lockedCategory === "quran" ? (
+              <Link href="/islamic-glossary" className="gl-hero__btn gl-hero__btn--ghost">
+                القاموس الكامل
+              </Link>
+            ) : null}
           </p>
-          {/* بحث */}
-          <div className="gl-search">
-            <SearchField
-              placeholder="ابحث عن مصطلح…"
-              value={search}
-              onChange={e => { setSearch(e.target.value); setAlpha(""); }}
-              aria-label="بحث في المصطلحات"
-            />
-            {search && (
-              <button
-                type="button"
-                className="gl-search__clear"
-                onClick={() => setSearch("")}
-                aria-label="مسح"
-              >
-                <X size={14} />
-              </button>
-            )}
-          </div>
         </div>
       </section>
 
-
       <div className="gl-container">
-        {/* الفئات */}
         <div className="gl-cats" role="tablist" aria-label="تصنيفات المصطلحات الإسلامية">
-          {CATEGORIES.map(c => (
+          {cats.map((c) => (
             <button
               key={c.id}
               type="button"
               role="tab"
               className={`gl-cat${activeCategory === c.id ? " gl-cat--active" : ""}`}
-              onClick={() => { setActiveCategory(c.id); setAlpha(""); }}
+              onClick={() => {
+                setActiveCategory(c.id);
+                setAlpha("");
+              }}
               aria-selected={activeCategory === c.id}
             >
               {c.label}
-              <span className="gl-cat__count">{countByCat[c.id] ?? 0}</span>
+              <span className="gl-cat__count">{formatArabicNumber(countByCat[c.id] ?? 0)}</span>
             </button>
           ))}
         </div>
 
-        {/* نتائج */}
         <div className="gl-results-meta">
           {filtered.length === 0 ? (
-            <p className="gl-empty">لا توجد نتائج، جرّب بحثاً مختلفاً</p>
+            <p className="gl-empty">لا توجد نتائج</p>
           ) : (
-            <p className="gl-results-count">{filtered.length} مصطلح</p>
+            <p className="gl-results-count">{formatArabicNumber(filtered.length)} مصطلح</p>
           )}
         </div>
 
-        {/* قائمة المصطلحات */}
         <div className="gl-list">
-          {filtered.map(term => {
-            const cat = CATEGORIES.find(c => c.id === term.category)!;
+          {filtered.map((term) => {
+            const cat = CATEGORIES.find((c) => c.id === term.category)!;
             const isOpen = openTerm === term.id;
             return (
               <Card key={term.id} className={`gl-term${isOpen ? " gl-term--open" : ""}`} raised={isOpen}>
@@ -1545,7 +1547,9 @@ export default function IslamicGlossaryPage() {
                   onClick={() => setOpenTerm(isOpen ? null : term.id)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenTerm(isOpen ? null : term.id)}
+                  onKeyDown={(e) =>
+                    (e.key === "Enter" || e.key === " ") && setOpenTerm(isOpen ? null : term.id)
+                  }
                   aria-expanded={isOpen}
                 >
                   <div className="gl-term__title-wrap">
@@ -1567,23 +1571,6 @@ export default function IslamicGlossaryPage() {
                         <p>{term.detail}</p>
                       </div>
                     )}
-                    {term.related && term.related.length > 0 && (
-                      <div className="gl-term__related">
-                        <span className="gl-label">مصطلحات ذات صلة</span>
-                        <div className="gl-related-tags">
-                          {term.related.map((r, i) => (
-                            <button
-                              key={i}
-                              type="button"
-                              className="gl-related-tag"
-                              onClick={() => { setSearch(r); setOpenTerm(null); }}
-                            >
-                              {r}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                     {term.source && (
                       <div className="gl-term__source">
                         <BookOpen size={12} aria-hidden="true" />
@@ -1599,8 +1586,12 @@ export default function IslamicGlossaryPage() {
       </div>
 
       <SectionQuiz
-        categoryId={["quran", "fiqh", "aqeeda"]}
-        title="اختبر معلوماتك في مصطلحات الشريعة"
+        categoryId={lockedCategory === "quran" ? ["quran"] : ["quran", "fiqh", "aqeeda"]}
+        title={
+          lockedCategory === "quran"
+            ? "اختبر معلوماتك في مصطلحات علوم القرآن"
+            : "اختبر معلوماتك في مصطلحات الشريعة"
+        }
         count={4}
       />
 

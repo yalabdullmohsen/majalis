@@ -209,7 +209,7 @@ const APP_PAGES = [
   ["app:mushaf", "quran", "المصحف الشريف", "/mushaf", ["قرآن", "قراءة"]],
   ["app:quran-knowledge", "ulum", "القرآن وعلومه", "/quran-knowledge", ["علوم القرآن", "أسباب نزول"]],
   ["app:tafsir", "tafsir", "التفسير", "/tafsir", ["تفسير"]],
-  ["app:tajweed", "tajweed", "علم التجويد", "/quran/tajweed", ["تجويد", "أحكام"]],
+  ["app:tajweed", "tajweed", "علم التجويد", "/quran-hub/tajweed", ["تجويد", "أحكام"]],
   ["app:memorization", "hifz", "الحفظ والمراجعة", "/memorization", ["حفظ", "مراجعة", "خطط الحفظ"]],
   ["app:hadith", "hadith", "الحديث", "/hadith", ["سنة"]],
   ["app:fiqh", "fiqh", "الفقه والأحكام", "/fiqh", ["فقه", "أحكام"]],
@@ -242,6 +242,27 @@ const APP_PAGES = [
     "القرآن في أرقام",
     "/quran-hub/numbers",
     ["إحصاءات", "عدد الآيات", "معجم", "سور", "عدّ الآي"],
+  ],
+  [
+    "app:quran-tajweed",
+    "quran",
+    "التجويد",
+    "/quran-hub/tajweed",
+    ["تجويد", "أحكام النون", "المدود", "مخارج", "حفص", "الشاطبية"],
+  ],
+  [
+    "app:quran-qiraat",
+    "quran",
+    "القراءات العشر",
+    "/quran-hub/qiraat",
+    ["قراءات", "رواية", "ورش", "قالون", "شاطبية", "النشر"],
+  ],
+  [
+    "app:quran-tilawa",
+    "quran",
+    "التلاوة والقرّاء",
+    "/quran-hub/tilawa",
+    ["تلاوة", "قرّاء", "استماع"],
   ],
 ];
 
