@@ -11,30 +11,31 @@ import {
   MUSHAF_PAGE_MIN,
 } from "@/lib/quran-last-page";
 
-/** لا يُعدّ قلب صفحة إلا بسحب أفقي واضح */
+/** عتبة السحب — ٢٥٪ من العرض أو مسافة دنيا */
 export const SWIPE_MIN_PX = 45;
+const SWIPE_RATIO = 0.25;
+const FLICK_PX_PER_MS = 0.5;
+const SETTLE_MS = 320;
 
 type PagerProps = {
   page: number;
   onPageChange: (page: number) => void;
   disabled?: boolean;
-  /** يُستدعى عند لمسة قصيرة بلا سحب (تبديل الشريط) */
   onTapEmpty?: () => void;
-  /** عناصر يجب ألا تبدأ منها إيماءة القلب */
   ignoreSelector?: string;
   children: ReactNode;
   "data-testid"?: string;
 } & Omit<
   HTMLAttributes<HTMLDivElement>,
-  "onPointerDown" | "onPointerUp" | "onPointerCancel" | "children" | "data-testid"
+  "onPointerDown" | "onPointerUp" | "onPointerCancel" | "onPointerMove" | "children" | "data-testid"
 >;
 
 const DEFAULT_IGNORE =
-  ".mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-ayah-hit, .mm-ayah-run, .mm-page-edge, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet";
+  ".mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-ayah-hit, .mm-ayah-run, .mm-page-edge, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet, .mm-basmala--qpc";
 
 /**
- * قلب صفحة خفيف: سحب RTL + نقر الحواف.
- * swipe left (dx سالب) → التالية · swipe right → السابقة.
+ * قلب صفحة RTL: سحب لليمين = التالية · سحب لليسار = السابقة.
+ * الحافة اليمنى ١٥٪ = التالية · اليسرى = السابقة.
  */
 export function MushafPager({
   page,
@@ -48,6 +49,8 @@ export function MushafPager({
   ...rest
 }: PagerProps) {
   const touchRef = useRef<{ x: number; y: number; t: number } | null>(null);
+  const dragRef = useRef(0);
+  const shellRef = useRef<HTMLDivElement | null>(null);
   const reducedMotion =
     typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
@@ -58,6 +61,36 @@ export function MushafPager({
     },
     [onPageChange],
   );
+
+  const setDrag = (dx: number) => {
+    dragRef.current = dx;
+    const el = shellRef.current?.querySelector<HTMLElement>(".mm-page-shell");
+    if (!el) return;
+    if (reducedMotion) {
+      el.style.transform = "";
+      el.style.opacity = String(Math.max(0.55, 1 - Math.abs(dx) / (window.innerWidth || 390)));
+      return;
+    }
+    const w = window.innerWidth || 390;
+    const p = Math.max(-1, Math.min(1, dx / w));
+    el.style.transform = `translate3d(${dx * 0.92}px, 0, 0) rotateY(${p * -8}deg)`;
+    el.style.boxShadow = `${p * -12}px 0 28px color-mix(in srgb, #5c4a28 ${Math.abs(p) * 18}%, transparent)`;
+  };
+
+  const clearDrag = (animate: boolean) => {
+    const el = shellRef.current?.querySelector<HTMLElement>(".mm-page-shell");
+    if (!el) return;
+    if (animate) {
+      el.style.transition = `transform ${SETTLE_MS}ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity ${SETTLE_MS}ms ease, box-shadow ${SETTLE_MS}ms ease`;
+    }
+    el.style.transform = "";
+    el.style.opacity = "";
+    el.style.boxShadow = "";
+    window.setTimeout(() => {
+      if (el) el.style.transition = "";
+    }, SETTLE_MS + 40);
+    dragRef.current = 0;
+  };
 
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (disabled) {
@@ -70,6 +103,16 @@ export function MushafPager({
       return;
     }
     touchRef.current = { x: e.clientX, y: e.clientY, t: Date.now() };
+    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+  };
+
+  const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const start = touchRef.current;
+    if (!start || disabled) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    if (Math.abs(dx) < 8 || Math.abs(dx) < Math.abs(dy) * 1.1) return;
+    setDrag(dx);
   };
 
   const onPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
@@ -80,56 +123,91 @@ export function MushafPager({
       )
     ) {
       touchRef.current = null;
+      clearDrag(false);
       return;
     }
     const start = touchRef.current;
     touchRef.current = null;
-    if (!start || disabled) return;
+    if (!start || disabled) {
+      clearDrag(false);
+      return;
+    }
 
     const dx = e.clientX - start.x;
     const dy = e.clientY - start.y;
-    const dt = Date.now() - start.t;
-    if (Math.abs(dx) >= SWIPE_MIN_PX && Math.abs(dx) > Math.abs(dy) * 1.2 && dt < 800) {
-      // RTL: سحب الإصبع يمين→يسار (dx سالب) = الصفحة التالية
-      if (dx < 0) go(page + 1);
+    const dt = Math.max(1, Date.now() - start.t);
+    const w = window.innerWidth || 390;
+    const speed = Math.abs(dx) / dt;
+    const passRatio = Math.abs(dx) >= w * SWIPE_RATIO;
+    const passFlick = speed >= FLICK_PX_PER_MS && Math.abs(dx) >= SWIPE_MIN_PX;
+    const horizontal = Math.abs(dx) > Math.abs(dy) * 1.2;
+
+    if (horizontal && (passRatio || passFlick)) {
+      // RTL مصحف: سحب لليمين (dx>0) = التالية · لليسار = السابقة
+      clearDrag(true);
+      if (dx > 0) go(page + 1);
       else go(page - 1);
       return;
     }
+
     if (Math.abs(dx) < 12 && Math.abs(dy) < 12) {
-      if (t.closest(".mm-ayah-hit, .mm-ayah-run")) return;
+      if (t.closest(".mm-ayah-hit, .mm-ayah-run, .mm-basmala--qpc")) {
+        clearDrag(false);
+        return;
+      }
+      const rect = (shellRef.current ?? e.currentTarget).getBoundingClientRect();
+      const relX = (e.clientX - rect.left) / Math.max(1, rect.width);
+      // يمين الشاشة (في LTR coords = نهاية العرض) = التالية في المصحف
+      if (relX >= 0.85) {
+        clearDrag(false);
+        go(page + 1);
+        return;
+      }
+      if (relX <= 0.15) {
+        clearDrag(false);
+        go(page - 1);
+        return;
+      }
       onTapEmpty?.();
     }
+    clearDrag(true);
   };
 
   return (
     <div
-      {...rest}
+      ref={shellRef}
       className={className}
       data-testid={testId}
-      data-reduced-motion={reducedMotion ? "1" : "0"}
-      data-page={page}
       onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={() => {
         touchRef.current = null;
+        clearDrag(true);
       }}
+      {...rest}
     >
-      {children}
       <button
         type="button"
         className="mm-page-edge mm-page-edge--next"
         aria-label="الصفحة التالية"
         disabled={disabled || page >= MUSHAF_PAGE_MAX}
-        onClick={() => go(page + 1)}
+        onClick={(e) => {
+          e.stopPropagation();
+          go(page + 1);
+        }}
       />
       <button
         type="button"
         className="mm-page-edge mm-page-edge--prev"
         aria-label="الصفحة السابقة"
         disabled={disabled || page <= MUSHAF_PAGE_MIN}
-        onClick={() => go(page - 1)}
+        onClick={(e) => {
+          e.stopPropagation();
+          go(page - 1);
+        }}
       />
-      <span hidden data-min={MUSHAF_PAGE_MIN} data-swipe-min={SWIPE_MIN_PX} />
+      {children}
     </div>
   );
 }

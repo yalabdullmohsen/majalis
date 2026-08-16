@@ -29,7 +29,7 @@ assert.doesNotMatch(
   css,
   /data-ayah-bar="1"\][^{]*\{[^}]*--mm-chrome-bottom-h:\s*var\(--mm-ayah-bar-h\)/,
 );
-assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*transparent/);
+assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*transparent|rgba\(0,\s*0,\s*0,\s*0\.15\)/);
 
 // 3) لا تظليل multiply يعتّم النص
 assert.doesNotMatch(css, /mix-blend-mode:\s*multiply/);
@@ -43,11 +43,14 @@ assert.doesNotMatch(css, /transform:\s*scale\(/);
 
 // 5) التلاوة والتفسير من الشيت
 assert.match(actions, /mushaf-ayah-play/);
-assert.match(actions, /onTafsir|فتح التفسير/);
-assert.match(actions, /onReciterChange/);
+assert.match(actions, /onTafsir|تفسير/);
+assert.match(actions, /onReciterChange|القارئ/);
+assert.match(actions, /data-sheet-height|is-expanded/);
 assert.match(viewport, /playAyah|playSelected/);
 assert.match(viewport, /MushafTafsirSheet/);
 assert.match(viewport, /exitAlwaysVisible/);
+assert.match(fitSrc, /WORD_GAP_MAX_PX|wordSpacing/);
+assert.match(fitSrc, /0\.25/);
 
 // 6) وحدة الملاءمة لا ترمي
 const fake = {

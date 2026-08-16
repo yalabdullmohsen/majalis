@@ -1,12 +1,11 @@
 import { useRef } from "react";
 import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
 import { MushafAyahLine } from "./MushafAyahLine";
+import { MushafBasmala } from "./MushafBasmala";
 import { MushafPageFooter } from "./MushafPageFooter";
 import { MushafPageHeader } from "./MushafPageHeader";
 import { MushafSurahOrnament } from "./MushafSurahOrnament";
 import { useMushafPageFontFit } from "./useMushafPageFontFit";
-
-const BASMALA = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
 
 type Props = {
   layout: MushafPageLayout;
@@ -35,6 +34,7 @@ export function MushafPage({
       className={`mm-page${opening ? " mm-page--opening" : ""}`}
       data-page={layout.pageNumber}
       data-testid="mushaf-page"
+      data-opening={opening ? "1" : "0"}
       style={{ ["--mm-qpc-family" as string]: fontFamily }}
       aria-label={`صفحة المصحف ${layout.pageNumber}`}
     >
@@ -47,22 +47,14 @@ export function MushafPage({
           const slot = i + 1;
           const cell = slots.get(slot);
           return (
-            <div key={slot} className="mm-slot" data-slot={slot}>
+            <div key={slot} className="mm-slot" data-slot={slot} data-kind={cell?.kind ?? "empty"}>
               {cell?.kind === "banner" ? (
                 <div className={`mm-slot__banner${cell.inlineBasmala ? " mm-slot__banner--with-basmala" : ""}`}>
                   <MushafSurahOrnament nameArabic={cell.nameArabic} />
-                  {cell.inlineBasmala ? (
-                    <div className="mm-basmala" dir="rtl" lang="ar" aria-hidden="true">
-                      {BASMALA}
-                    </div>
-                  ) : null}
+                  {cell.inlineBasmala ? <MushafBasmala /> : null}
                 </div>
               ) : null}
-              {cell?.kind === "basmala" ? (
-                <div className="mm-basmala" dir="rtl" lang="ar" aria-hidden="true">
-                  {BASMALA}
-                </div>
-              ) : null}
+              {cell?.kind === "basmala" ? <MushafBasmala /> : null}
               {cell?.kind === "line" ? (
                 <MushafAyahLine
                   words={cell.words}
@@ -76,7 +68,7 @@ export function MushafPage({
           );
         })}
       </div>
-      <MushafPageFooter pageNumber={layout.pageNumber} />
+      <MushafPageFooter pageNumber={layout.pageNumber} hizbNumber={layout.hizbNumber} />
     </article>
   );
 }
