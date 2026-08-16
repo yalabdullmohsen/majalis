@@ -1,6 +1,6 @@
 /**
  * إخفاء شاشة الإطلاق الأصلية (Capacitor) عند أول جاهزية للمسار / عند تركيب دخولية الويب.
- * الخلفية الخضراء في html/body تمنع الوميض؛ MajalisLaunchScreen هي طبقة الوسيط الوحيدة.
+ * الخلفية الخضراء في html/body تمنع الوميض؛ MajlisLaunchScreen هي طبقة الوسيط الوحيدة.
  */
 import { Capacitor } from "@capacitor/core";
 

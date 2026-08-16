@@ -45,7 +45,7 @@ import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
-import { MajalisLaunchScreen } from "@/components/MajalisLaunchScreen";
+import { MajlisLaunchScreen } from "@/components/MajlisLaunchScreen";
 
 const lazy = lazyWithRetry;
 
@@ -966,6 +966,8 @@ function AppShellInner() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [comingSoonTitle, setComingSoonTitle] = useState("");
   const [comingSoonOpen, setComingSoonOpen] = useState(false);
+  /** شاشة التشغيل اليومية — منفصلة عن بوابة التشغيل الأول */
+  const [isLaunching, setIsLaunching] = useState(true);
   const [location] = useLocation();
   const immersive = isImmersiveChromePath(location);
   const onPrayer = isPrayerTimesPath(location);
@@ -1010,9 +1012,10 @@ function AppShellInner() {
       style={{ "--app-dir": dir } as React.CSSProperties}
       data-chrome-hidden={shouldHideChrome ? "true" : "false"}
       data-native-app={isNativeApp ? "true" : "false"}
+      data-launching={isLaunching ? "true" : "false"}
     >
-      {/* دخولية جلسة واحدة — فوق الصدفة، لا تُعاد عند التنقل ولا عند الرجوع */}
-      <MajalisLaunchScreen />
+      {/* شاشة تشغيل يومية — فوق الصدفة؛ ليست دليلًا تعريفيًا */}
+      <MajlisLaunchScreen onComplete={() => setIsLaunching(false)} />
       <PageChromeSync />
       <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />
       <a href="#main-content" className="skip-link mj-skip-link">{t("skip_to_content")}</a>
