@@ -105,6 +105,7 @@ export default defineConfig({
     target: "es2022",
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
+    sourcemap: false,
     cssMinify: true,
     cssCodeSplit: true,
     assetsInlineLimit: 4096,
