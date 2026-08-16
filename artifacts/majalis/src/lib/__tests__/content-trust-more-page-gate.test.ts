@@ -14,15 +14,16 @@ const sections = readFileSync(resolve(root, "src/features/more/moreSections.ts")
 assert.match(box, /ContentTrustBox/);
 assert.match(box, /لا تغني عن سؤال أهل العلم/);
 assert.match(box, /contentType/);
-assert.match(more, /MORE_SECTION_GROUPS|moreSectionsInGroup/);
+assert.match(more, /MORE_FEATURED_SECTIONS/);
 assert.match(more, /MORE_STANDARD_SECTIONS/);
 assert.match(more, /MORE_ACCOUNT_SECTIONS/);
 assert.match(more, /more-page-tile--\$\{size\}/);
-assert.match(more, /size=\{size\}/);
+assert.match(more, /size="lg"|size="sm"/);
+assert.match(more, /الأقسام الأساسية/);
 const moreCss = readFileSync(resolve(root, "src/styles/pages/more-page.css"), "utf8");
 assert.match(moreCss, /\.more-page-tile--lg/);
 assert.match(sections, /tier:\s*"standard"/);
-assert.equal(MORE_FEATURED_COUNT(sections), 12);
+assert.equal(MORE_FEATURED_COUNT(sections), 10);
 
 function MORE_FEATURED_COUNT(src: string): number {
   const m = src.match(/MORE_FEATURED_SECTIONS[^=]*=\s*\[([\s\S]*?)\];/);

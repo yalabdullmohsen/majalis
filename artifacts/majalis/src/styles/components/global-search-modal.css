@@ -1,10 +1,7 @@
 /* ── 163 — GlobalSearchModal (gsm-*) ───────────────────────────────────── */
 .gsm-overlay {
   position: fixed;
-  top: 0;
-  inset-inline-end: 0;
-  bottom: 0;
-  inset-inline-start: 0;
+  inset: 0;
   z-index: var(--z-overlay-search, 10060);
   display: flex;
   align-items: flex-start;
@@ -14,14 +11,21 @@
   backdrop-filter: blur(8px) saturate(160%);
   -webkit-backdrop-filter: blur(8px) saturate(160%);
   direction: rtl;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 .gsm-overlay--mobile {
   align-items: stretch;
-  padding-top: 0;
-  padding-top: var(--inset-top);
-  padding-bottom: var(--inset-bottom);
+  padding-top: var(--inset-top, 0px);
+  padding-bottom: calc(var(--inset-bottom, 0px) + 0.5rem);
   background: var(--majalis-parchment);
   flex-direction: column;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
 }
 .gsm-card {
   width: min(96vw, 46rem);
@@ -30,7 +34,7 @@
   box-shadow: 0 32px 80px rgba(0,0,0,0.32), 0 8px 24px rgba(0,0,0,0.18);
   border: 1px solid var(--majalis-line);
   overflow: hidden;
-  max-height: 82vh;
+  max-height: min(82dvh, calc(100dvh - 3rem));
   display: flex;
   flex-direction: column;
 }
@@ -41,6 +45,8 @@
   border: none;
   max-height: none;
   flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 .gsm-topbar {
   display: flex;
@@ -130,8 +136,11 @@
 }
 .gsm-results-area {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding-bottom: calc(1rem + var(--inset-bottom, 0px));
 }
 .gsm-empty-pad { padding: var(--ds-space-4); }
 .gsm-section { margin-bottom: 1.25rem; }
