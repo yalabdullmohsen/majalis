@@ -13,6 +13,8 @@ import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
 import { setupStatusBar, setupKeyboard, isAndroid, isIOS, isNative } from "./lib/capacitor-utils";
 import { purgeNativeWebRuntimeCaches } from "./lib/native-cache-freshness";
+import { hydrateNativeStorage } from "./lib/native-storage";
+import { installInAppNavigationGuard } from "./lib/in-app-navigation";
 import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
 import { refreshQuranAudioRemoteConfig } from "./lib/quran-audio-remote-config";
@@ -104,6 +106,11 @@ async function mount() {
 
   // داخل Capacitor: ألغِ SW/CacheStorage القديمة قبل أول رسم حتى لا تُخدم أصول عتيقة.
   await purgeNativeWebRuntimeCaches();
+  // Preferences → localStorage قبل رسم المكوّنات التي تقرأ التقدّم متزامنًا
+  await hydrateNativeStorage();
+  if (isNative) {
+    installInAppNavigationGuard();
+  }
 
   // بوابة التشغيل الأول: ترحيل المفاتيح القديمة وتثبيت الإصدار الكبير قبل
   // أول رسم — وإلا قرأت المكوّنات حالة غير مُرحَّلة فأعادت عرض التهيئة.

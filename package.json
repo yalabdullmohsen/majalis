@@ -35,7 +35,9 @@
     "ops:backlog-report": "node scripts/ops-backlog-report.mjs",
     "cap:sync:ios": "cap sync ios",
     "audit:public-site": "pnpm --filter @workspace/majalis run audit:public-site",
-    "audit:feature-readiness": "pnpm --filter @workspace/majalis run audit:feature-readiness"
+    "audit:feature-readiness": "pnpm --filter @workspace/majalis run audit:feature-readiness",
+    "audit:mobile-app": "pnpm --filter @workspace/majalis run audit:mobile-app",
+    "audit:product-upgrade": "pnpm --filter @workspace/majalis run audit:product-upgrade"
   },
   "private": true,
   "devDependencies": {

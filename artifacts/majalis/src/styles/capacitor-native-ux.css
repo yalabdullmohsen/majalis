@@ -112,3 +112,13 @@ html.capacitor-native .site-footer--global {
   min-height: 0 !important;
   overflow: hidden !important;
 }
+
+html.capacitor-native .app-shell--native {
+  min-height: 100dvh;
+  background: var(--mj-bg, var(--app-status-bg, #F2F4F3));
+}
+
+html.capacitor-native .dcq__choice,
+html.capacitor-native .lesson-unified-card__btn {
+  min-height: 44px;
+}

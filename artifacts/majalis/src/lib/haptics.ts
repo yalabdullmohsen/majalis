@@ -1,18 +1,11 @@
 /**
- * كتالوج اهتزاز لمسي موحّد — أنماط متدرجة لكل إجراء.
+ * كتالوج اهتزاز لمسي موحّد — Capacitor Haptics على الأصلي، Vibration API على الويب.
  * يحترم إعداد المستخدم ومفتاح الأذكار القديم للتوافق.
  */
 
-export type HapticKind = "selection" | "light" | "medium" | "success" | "warning" | "error";
+import { hapticNotify, hapticTap } from "@/lib/capacitor-utils";
 
-const PATTERNS: Record<HapticKind, number | number[]> = {
-  selection: 10,
-  light: 18,
-  medium: 28,
-  success: [30, 60, 30],
-  warning: [40, 40, 40],
-  error: [60, 40, 60],
-};
+export type HapticKind = "selection" | "light" | "medium" | "success" | "warning" | "error";
 
 const LEGACY_ADHKAR_KEY = "adhkar_haptics_enabled";
 
@@ -52,13 +45,26 @@ export function setHapticsEnabled(enabled: boolean): void {
 
 /** تشغيل نمط اهتزاز — لا يرمي؛ يتجاهل المنصات بلا دعم. */
 export function triggerHaptic(kind: HapticKind = "light"): void {
-  if (typeof navigator === "undefined") return;
   if (!isHapticsEnabled()) return;
-  if (typeof navigator.vibrate !== "function") return;
-  try {
-    navigator.vibrate(PATTERNS[kind]);
-  } catch {
-    /* ignore */
+  switch (kind) {
+    case "selection":
+    case "light":
+      void hapticTap("light");
+      break;
+    case "medium":
+      void hapticTap("medium");
+      break;
+    case "success":
+      void hapticNotify("success");
+      break;
+    case "warning":
+      void hapticNotify("warning");
+      break;
+    case "error":
+      void hapticNotify("error");
+      break;
+    default:
+      void hapticTap("light");
   }
 }
 

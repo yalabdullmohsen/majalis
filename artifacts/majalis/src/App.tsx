@@ -43,7 +43,7 @@ import { PwaInstallBanner } from "@/components/PwaInstallBanner";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
-import { isNative } from "@/lib/capacitor-utils";
+import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
 import { MajalisLaunchScreen } from "@/components/MajalisLaunchScreen";
 
@@ -1006,9 +1006,10 @@ function AppShellInner() {
 
   return (
     <div
-      className={`app-shell${shouldHideChrome ? " app-chrome-hidden" : ""}`}
+      className={`app-shell${shouldHideChrome ? " app-chrome-hidden" : ""}${isNativeApp ? " app-shell--native" : ""}`}
       style={{ "--app-dir": dir } as React.CSSProperties}
       data-chrome-hidden={shouldHideChrome ? "true" : "false"}
+      data-native-app={isNativeApp ? "true" : "false"}
     >
       {/* دخولية جلسة واحدة — فوق الصدفة، لا تُعاد عند التنقل ولا عند الرجوع */}
       <MajalisLaunchScreen />

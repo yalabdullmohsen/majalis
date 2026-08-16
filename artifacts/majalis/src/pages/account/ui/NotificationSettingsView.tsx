@@ -342,7 +342,7 @@ export default function NotificationSettingsPage() {
         <ToggleRow label="مراجعة البطاقات" sub="تذكير يومي عند وجود بطاقات مستحقة" checked={prefs.flashcardsReminder} onChange={v => update({ flashcardsReminder: v })} disabled={!canToggle} />
         <ToggleRow label="تابع من حيث توقفت" sub="تذكير بالدرس أو الكتاب الذي لم تُكمله" checked={prefs.resumeReminder} onChange={v => update({ resumeReminder: v })} disabled={!canToggle} />
         <ToggleRow
-          label="تنبيه الصلاة"
+          label="تنبيهات الصلاة"
           sub={
             isNative
               ? "تذكير داخل الصفحة؛ التنبيه الأصلي من صفحة إعدادات الأذان (نصوص وصوت متنوعان)"
@@ -353,7 +353,7 @@ export default function NotificationSettingsPage() {
           disabled={!canToggle}
         />
         <ToggleRow
-          label="ورد القرآن اليومي"
+          label="ورد اليوم"
           sub="تذكير يومي الساعة 5 مساءً (17:00) لقراءة الورد — ليس 5 صباحاً"
           checked={prefs.quranDailyReminder}
           onChange={(v) => {
@@ -368,6 +368,13 @@ export default function NotificationSettingsPage() {
               setPrefs(loadNotifPrefs());
             })();
           }}
+          disabled={!canToggle}
+        />
+        <ToggleRow
+          label="تذكير الأذكار"
+          sub="أذكار الصباح والمساء — يُفعَّل من هنا فقط، دون طلب إذن عند فتح التطبيق"
+          checked={prefs.adhkarReminder}
+          onChange={v => update({ adhkarReminder: v })}
           disabled={!canToggle}
         />
       </div>

@@ -22,7 +22,8 @@ export function clampMushafPage(page: number): number {
 export async function saveLastPage(pageNumber: number): Promise<void> {
   try {
     const page = clampMushafPage(pageNumber);
-    localStorage.setItem(LAST_PAGE_KEY, page.toString());
+    const { storageSetSync } = await import("@/lib/native-storage");
+    storageSetSync(LAST_PAGE_KEY, page.toString());
     // Background cloud resume for signed-in users (hybrid local→cloud)
     void (async () => {
       try {
@@ -62,7 +63,8 @@ export async function saveLastPage(pageNumber: number): Promise<void> {
  */
 export async function loadLastPage(): Promise<number | null> {
   try {
-    const savedPage = localStorage.getItem(LAST_PAGE_KEY);
+    const { storageGetSync } = await import("@/lib/native-storage");
+    const savedPage = storageGetSync(LAST_PAGE_KEY);
     if (savedPage === null) return null;
     const n = parseInt(savedPage, 10);
     if (!Number.isFinite(n)) return null;
@@ -76,7 +78,9 @@ export async function loadLastPage(): Promise<number | null> {
 /** Sync read for initial React state (avoids flash before async load). */
 export function loadLastPageSync(): number | null {
   try {
-    const savedPage = localStorage.getItem(LAST_PAGE_KEY);
+    // sync path — localStorage (Preferences تُزامَن عند الإقلاع عبر hydrateNativeStorage)
+    const savedPage =
+      typeof localStorage !== "undefined" ? localStorage.getItem(LAST_PAGE_KEY) : null;
     if (savedPage === null) return null;
     const n = parseInt(savedPage, 10);
     if (!Number.isFinite(n)) return null;

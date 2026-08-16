@@ -70,8 +70,8 @@ export function buildDailySmartSchedule(opts?: {
   const items: SmartNotifScheduleItem[] = [];
   const reminderMinute = prefs.reminderHour * 60 + prefs.reminderMinute;
 
-  // أذكار الصباح/المساء — تُفعَّل مع resumeReminder كتقريب غير مكسور للإعدادات الحالية
-  if (prefs.resumeReminder) {
+  // أذكار الصباح/المساء — تُفعَّل صراحة عبر adhkarReminder (لا طلب إذن تلقائي)
+  if (prefs.adhkarReminder) {
     items.push({
       id: "adhkar-morning",
       kind: "adhkar",

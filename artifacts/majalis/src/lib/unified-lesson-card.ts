@@ -252,13 +252,60 @@ export function buildCalendarIcsFromUnified(lesson: UnifiedLesson): string {
 }
 
 export function downloadUnifiedCalendar(lesson: UnifiedLesson) {
-  const blob = new Blob([buildCalendarIcsFromUnified(lesson)], {
+  const ics = buildCalendarIcsFromUnified(lesson);
+  const blob = new Blob([ics], {
     type: "text/calendar;charset=utf-8",
   });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `درس-${lesson.title}.ics`;
-  a.click();
-  URL.revokeObjectURL(url);
+  const filename = `درس-${lesson.title}.ics`;
+
+  // Capacitor / iOS: مشاركة ملف التقويم عبر ورقة النظام إن أمكن
+  void (async () => {
+    try {
+      const { isNative } = await import("@/lib/capacitor-utils");
+      if (isNative && typeof navigator !== "undefined" && typeof navigator.share === "function") {
+        const file = new File([blob], filename, { type: "text/calendar" });
+        if (navigator.canShare?.({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: lesson.title,
+            text: `${lesson.title} — ${lesson.sheikhName}`,
+          });
+          return;
+        }
+      }
+    } catch {
+      /* fallback أدناه */
+    }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  })();
+}
+
+/** فتح خرائط/بث خارج التطبيق عبر Browser على الأصلي. */
+export function openLessonExternalUrl(url: string): void {
+  void import("@/lib/capacitor-utils").then(({ openExternalUrl }) => {
+    void openExternalUrl(url, { confirmLeave: true });
+  });
+}
+
+export async function shareLesson(lesson: UnifiedLesson): Promise<void> {
+  const url = buildLessonShareUrl(lesson);
+  const text = `${lesson.title} — ${lesson.sheikhName}\n${url}`;
+  try {
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+      await navigator.share({ title: lesson.title, text, url });
+      return;
+    }
+  } catch {
+    /* fall through */
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    /* ignore */
+  }
 }
