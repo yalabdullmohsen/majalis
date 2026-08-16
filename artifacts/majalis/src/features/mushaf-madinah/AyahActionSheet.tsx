@@ -40,7 +40,8 @@ type Props = {
 };
 
 /**
- * شيت آية بمرحلتين: ٣٥٪ ملخص · ٩٠٪ موسّع.
+ * شيت آية معزول (portal + z-index 9999):
+ * مرحلة ١ = ٣٥٪ ملخص · مرحلة ٢ = ٨٥٪ تفسير كامل.
  * أربعة إجراءات أساسية + المزيد.
  */
 export function AyahActionSheet({
@@ -68,6 +69,8 @@ export function AyahActionSheet({
   const [readerQuery, setReaderQuery] = useState("");
   const [tafsirPreview, setTafsirPreview] = useState<string | null>(null);
   const [tafsirLoading, setTafsirLoading] = useState(false);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const closeRef = useRef<HTMLButtonElement | null>(null);
   const dragY = useRef<number | null>(null);
   const parsed = parseVerseKey(verseKey);
   const surahName = parsed ? getSurahMeta(parsed.surah).name : "";
@@ -85,6 +88,12 @@ export function AyahActionSheet({
   const currentReciter = getReciter(reciterId);
 
   useEffect(() => {
+    setExpanded(false);
+    setMoreOpen(false);
+    setReadersOpen(false);
+  }, [verseKey]);
+
+  useEffect(() => {
     if (!parsed) {
       setTafsirPreview(null);
       return;
@@ -95,7 +104,8 @@ export function AyahActionSheet({
       .then((res) => {
         if (!ac.signal.aborted) setTafsirPreview(res?.text?.trim() || null);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.warn("[AyahActionSheet] tafsir preview failed", err);
         if (!ac.signal.aborted) setTafsirPreview(null);
       })
       .finally(() => {
@@ -103,6 +113,46 @@ export function AyahActionSheet({
       });
     return () => ac.abort();
   }, [parsed?.surah, parsed?.ayah]);
+
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        if (readersOpen) {
+          setReadersOpen(false);
+          return;
+        }
+        if (expanded) {
+          setExpanded(false);
+          return;
+        }
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab" || !panelRef.current) return;
+      const focusables = panelRef.current.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0]!;
+      const last = focusables[focusables.length - 1]!;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [expanded, onClose, readersOpen]);
 
   const handlePlayClick = () => {
     setReadersOpen(false);
@@ -117,8 +167,9 @@ export function AyahActionSheet({
       <div
         className={`mm-ayah-bar ayah-action-sheet${expanded ? " is-expanded" : " is-collapsed"}`}
         data-testid="mushaf-ayah-actions"
-        data-sheet-height={expanded ? "90" : "35"}
-        role="region"
+        data-sheet-height={expanded ? "85" : "35"}
+        role="dialog"
+        aria-modal="true"
         aria-label="خيارات الآية"
       >
         <button
@@ -128,6 +179,7 @@ export function AyahActionSheet({
           onClick={onClose}
         />
         <div
+          ref={panelRef}
           className="mm-ayah-bar__panel"
           onPointerDown={(e) => {
             if ((e.target as HTMLElement).closest("button, input, select, a, textarea")) {
@@ -158,7 +210,13 @@ export function AyahActionSheet({
               <p className="mm-ayah-bar__surah">{surahName || "سورة"}</p>
               <p className="mm-ayah-bar__title">آية {parsed?.ayah ?? "—"}</p>
             </div>
-            <button type="button" className="mm-ayah-bar__close" onClick={onClose} aria-label="إغلاق">
+            <button
+              ref={closeRef}
+              type="button"
+              className="mm-ayah-bar__close"
+              onClick={onClose}
+              aria-label="إغلاق"
+            >
               <X size={16} aria-hidden="true" />
             </button>
           </div>
@@ -172,7 +230,6 @@ export function AyahActionSheet({
               type="button"
               onClick={() => {
                 setExpanded(true);
-                onTafsir();
               }}
             >
               <BookOpen size={18} aria-hidden="true" />
@@ -186,16 +243,17 @@ export function AyahActionSheet({
               <Share2 size={18} aria-hidden="true" />
               <span>مشاركة</span>
             </button>
-            <button
-              type="button"
-              className="ayah-action-sheet__more-btn"
-              aria-expanded={moreOpen}
-              onClick={() => setMoreOpen((v) => !v)}
-            >
-              <MoreHorizontal size={18} aria-hidden="true" />
-              <span>المزيد</span>
-            </button>
           </div>
+
+          <button
+            type="button"
+            className="ayah-action-sheet__more-btn"
+            aria-expanded={moreOpen}
+            onClick={() => setMoreOpen((v) => !v)}
+          >
+            <MoreHorizontal size={18} aria-hidden="true" />
+            <span>المزيد</span>
+          </button>
 
           {moreOpen ? (
             <div className="ayah-action-sheet__more" role="group" aria-label="المزيد">
@@ -251,6 +309,11 @@ export function AyahActionSheet({
             </p>
           ) : null}
           {loading ? <p className="mm-ayah-bar__loading">جاري تحميل التلاوة...</p> : null}
+          {ayahPreview && expanded ? (
+            <p className="ayah-action-sheet__ayah-preview" dir="rtl" lang="ar">
+              {ayahPreview}
+            </p>
+          ) : null}
 
           <div className="mm-ayah-bar__transport" role="group" aria-label="تنقل الآيات">
             <button

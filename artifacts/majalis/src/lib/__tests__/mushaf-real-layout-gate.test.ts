@@ -42,11 +42,20 @@ assert.match(css, /--mm-ref-text-start:\s*11\.9%/);
 assert.match(css, /--mm-ref-text-end:\s*91\.1%/);
 assert.match(css, /--mm-ref-cartouche-y:\s*94\.3%/);
 assert.match(css, /--mm-ref-open-banner-y:\s*27\.7%/);
+assert.match(css, /--mm-ref-open-p2-text-end:\s*91\.1%/);
+assert.match(css, /\.mm-page--opening\[data-page="2"\]\s+\.mm-page__body/);
 
+assert.match(css, /\.mm-ayah-bar\s*\{[^}]*z-index:\s*9999/);
 assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*rgba\(0,\s*0,\s*0,\s*0\.15\)/);
+assert.match(css, /backdrop-filter:\s*blur\(/);
 assert.match(css, /height:\s*35dvh/);
-assert.match(css, /height:\s*90dvh/);
+assert.match(css, /height:\s*85dvh/);
 assert.match(css, /border-radius:\s*24px\s+24px\s+0\s+0/);
+assert.match(css, /#f5e8c7|#F5E8C7/);
+assert.match(css, /\.mm-ayah-run__text\s*\{[^}]*padding:\s*0/);
+assert.match(css, /grid-template-columns:\s*repeat\(4,/);
+assert.match(css, /\[data-chrome="1"\]\s*\.mm-controls__bar/);
+assert.match(css, /100% - var\(--mm-ref-cartouche-y\)/);
 
 assert.match(css, /--mm-chrome-top-h/);
 assert.match(css, /--mm-chrome-bottom-h/);
@@ -71,6 +80,9 @@ assert.match(actions, /mm-ayah-bar__handle/);
 assert.match(actions, /data-sheet-height/);
 assert.match(actions, /is-expanded|setExpanded/);
 assert.match(actions, /المزيد/);
+assert.match(actions, /aria-modal="true"/);
+assert.match(actions, /createPortal/);
+assert.match(actions, /focusables|Tab/);
 
 // RTL: سحب لليمين (dx>0) = التالية
 assert.match(pager, /dx > 0\) go\(page \+ 1\)/);
