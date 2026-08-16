@@ -2,17 +2,18 @@ import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import type { PlayerState } from "@/core/audio/AudioEngine";
 import { getReciter } from "@/lib/quran-audio";
 
-/** قرّاء ظاهرة في مشغّل المصحف — مصادر everyayah متاحة */
+/** قرّاء ظاهرة في مشغّل المصحف — المطلوب أولاً ثم مصادر everyayah إضافية */
 export const MUSHAF_RECITER_IDS = [
+  "alafasy",
+  "abdulsamad",
   "husary",
   "minshawi",
-  "abdulsamad",
+  "ghamdi",
+  "maher",
   "sudais",
   "shuraim",
-  "maher",
   "fares",
   "dosari",
-  "alafasy",
 ] as const;
 
 type Props = {

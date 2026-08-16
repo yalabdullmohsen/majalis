@@ -369,6 +369,21 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
     last?.scrollIntoView({ block: "center", inline: "nearest", behavior: "smooth" });
   }, [actionsOpen, selectedVerseKey, page]);
 
+  /** إخفاء شريط الآية عند تمرير المصحف — يعود لوضع القراءة النظيف */
+  useEffect(() => {
+    if (!actionsOpen) return;
+    const shell = document.querySelector<HTMLElement>(".mm-viewport .mm-page-shell");
+    if (!shell) return;
+    let lastY = shell.scrollTop;
+    const onScroll = () => {
+      if (Math.abs(shell.scrollTop - lastY) < 8) return;
+      lastY = shell.scrollTop;
+      setActionsOpen(false);
+    };
+    shell.addEventListener("scroll", onScroll, { passive: true });
+    return () => shell.removeEventListener("scroll", onScroll);
+  }, [actionsOpen]);
+
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     const t = e.target as HTMLElement;
     if (t.closest(".mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-ayah-hit, .mm-ayah-run, .mm-page-edge, .mm-reciter-sheet")) {
@@ -515,6 +530,14 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
           reciterId={reciterId}
           onPlay={() => void playSelected()}
           onTogglePlay={() => void togglePlay()}
+          onPrevAyah={() => {
+            suppressPageSyncRef.current = false;
+            void audio.skipPrev();
+          }}
+          onNextAyah={() => {
+            suppressPageSyncRef.current = false;
+            void audio.skipNext();
+          }}
           onTafsir={() => {
             setTafsirOpen(true);
           }}

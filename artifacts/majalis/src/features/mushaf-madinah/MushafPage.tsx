@@ -85,7 +85,9 @@ function buildSlots(layout: MushafPageLayout, opening: boolean): Map<number, Slo
   const raw = new Map<number, SlotCell>();
   for (const row of layout.rows) {
     if (row.kind === "surah-header") {
-      /* التوبة: bismillahPre=false → لا بسملة. الفاتحة: البسملة آية QPC لا زخرفة. */
+      /* التوبة: bismillahPre=false → لا بسملة.
+       * الفاتحة: البسملة آية QPC (لا زخرفة منفصلة).
+       * النمل وغيرها: بسملة افتتاحية زخرفية فقط — آية 30 تبقى ضمن نص الآية دون خلط. */
       const needsVisualBasmala = row.surah.bismillahPre === true;
       raw.set(row.bannerSlot, {
         kind: "banner",
