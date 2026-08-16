@@ -46,3 +46,71 @@ test.describe("Navigation — التنقل", () => {
     expect(body.length).toBeGreaterThan(10);
   });
 });
+
+test.describe("Bottom nav auto-hide — إخفاء تلقائي", () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test("nav is visible at page top", async ({ page }) => {
+    await page.goto("/lessons");
+    await waitForContent(page);
+    const nav = page.locator("nav.bottom-nav, nav.bottom-nav--v2").first();
+    await expect(nav).toBeVisible();
+    await expect(nav).toHaveAttribute("data-hidden", "false");
+    await expect(nav).toHaveClass(/bottom-nav--visible/);
+  });
+
+  test("scroll down hides bottom nav; scroll up shows it", async ({ page }) => {
+    await page.goto("/lessons");
+    await waitForContent(page);
+    const nav = page.locator("nav.bottom-nav, nav.bottom-nav--v2").first();
+    await expect(nav).toBeVisible();
+
+    // محتوى طويل بما يكفي للتمرير
+    await page.evaluate(() => {
+      const main = document.querySelector("main.app-main") || document.body;
+      const filler = document.createElement("div");
+      filler.setAttribute("data-testid", "scroll-filler");
+      filler.style.height = "2400px";
+      filler.innerHTML = "<p id='last-readable'>فقرة أخيرة للقراءة دون تغطية</p>";
+      main.appendChild(filler);
+    });
+
+    await page.evaluate(() => window.scrollTo({ top: 600, behavior: "instant" as ScrollBehavior }));
+    await page.waitForTimeout(280);
+    await expect(nav).toHaveAttribute("data-hidden", "true");
+    await expect(nav).toHaveClass(/bottom-nav--hidden/);
+
+    await page.evaluate(() => window.scrollTo({ top: 200, behavior: "instant" as ScrollBehavior }));
+    await page.waitForTimeout(280);
+    await expect(nav).toHaveAttribute("data-hidden", "false");
+    await expect(nav).toHaveClass(/bottom-nav--visible/);
+  });
+
+  test("last paragraph is readable and not covered when nav visible", async ({ page }) => {
+    await page.goto("/lessons");
+    await waitForContent(page);
+
+    await page.evaluate(() => {
+      const main = document.querySelector("main.app-main") || document.body;
+      const p = document.createElement("p");
+      p.id = "last-readable";
+      p.textContent = "فقرة أخيرة للقراءة دون تغطية من القائمة السفلية";
+      p.style.margin = "0";
+      p.style.padding = "0.5rem 1rem";
+      main.appendChild(p);
+      window.scrollTo(0, document.documentElement.scrollHeight);
+    });
+    await page.waitForTimeout(200);
+
+    const overlap = await page.evaluate(() => {
+      const p = document.getElementById("last-readable");
+      const nav = document.querySelector("nav.bottom-nav, nav.bottom-nav--v2");
+      if (!p || !nav) return { ok: false, reason: "missing" };
+      const pr = p.getBoundingClientRect();
+      const nr = nav.getBoundingClientRect();
+      const covered = pr.bottom > nr.top + 2;
+      return { ok: !covered, prBottom: pr.bottom, nrTop: nr.top };
+    });
+    expect(overlap.ok, `آخر فقرة مغطاة: ${JSON.stringify(overlap)}`).toBe(true);
+  });
+});

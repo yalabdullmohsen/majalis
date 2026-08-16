@@ -34,7 +34,7 @@ assert.ok(!existsSync(resolve(srcRoot, "components/BrandReveal.tsx")), "BrandRev
 const app = readFileSync(resolve(srcRoot, "App.tsx"), "utf8");
 assert.match(app, /<NavBar\s*\/>/);
 assert.match(app, /<TopSectionBar\s*\/>/);
-assert.match(app, /<BottomNavBar\s*\/>/);
+assert.match(app, /<BottomNavBar\b/);
 const topCount = (app.match(/<TopSectionBar\b/g) || []).length;
 const bottomCount = (app.match(/<BottomNavBar\b/g) || []).length;
 assert.equal(topCount, 1, "شريط أقسام علوي واحد");

@@ -28,7 +28,7 @@ const TAB_PREFETCH: Record<string, () => Promise<unknown>> = {
 };
 
 /** شريط سفلي — مشتق من nav-map (مصدر واحد): قرآن · الدروس · الصلاة · فقه · المزيد */
-export function BottomNavBar() {
+export function BottomNavBar({ isHidden = false }: { isHidden?: boolean } = {}) {
   const [location] = useLocation();
   const [moreOpen, setMoreOpen] = useState(false);
   const prefetched = useRef(new Set<string>());
@@ -53,9 +53,15 @@ export function BottomNavBar() {
     void load();
   }
 
+  const visibilityClass = isHidden ? "bottom-nav--hidden" : "bottom-nav--visible";
+
   return (
     <>
-      <nav className="bottom-nav bottom-nav--v2 bottom-nav--m2030 mj-nav-skin mj-chrome-stable mj-chrome-scrollable" aria-label="التنقل السفلي">
+      <nav
+        className={`bottom-nav bottom-nav--v2 bottom-nav--m2030 mj-nav-skin mj-chrome-stable mj-chrome-scrollable ${visibilityClass}`}
+        aria-label="التنقل السفلي"
+        data-hidden={isHidden ? "true" : "false"}
+      >
         {BOTTOM_NAV_TABS.map(({ href, label, Icon }) => {
           const id = HREF_TO_ID[href];
           const active = !moreOpen && id === activeId;
