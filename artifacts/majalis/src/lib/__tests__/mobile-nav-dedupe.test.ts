@@ -26,6 +26,7 @@ const breakpoint = read("src/lib/nav-breakpoint.ts");
 const finalRelease = read("src/styles/final-release.css");
 const themeAliases = read("src/styles/theme-aliases.css");
 const moreSheetCss = read("src/styles/components/more-bottom-sheet.css");
+void moreSheetCss;
 
 test("TopSectionBar لا يُرسَم على مقاسات الشريط السفلي", () => {
   assert.match(topBar, /useIsMobileNav/, "TopSectionBar يقرأ نقطة الانقطاع الموحّدة");
@@ -116,12 +117,14 @@ test("شريط الأقسام المُلغى يُصفّر إزاحة sticky عل
   );
 });
 
-test("ورقة المزيد لا تغطّي الشريط السفلي", () => {
+test("صفحة الأقسام تحجز حشواً سفلياً فوق الشريط", () => {
+  const css = read("src/components/sections/section-cards.css");
   assert.match(
-    moreSheetCss,
-    /margin-block-end:\s*var\(--bottom-nav-total/,
-    "الورقة ترتفع بارتفاع الشريط السفلي على الجوال",
+    css,
+    /padding-bottom:\s*calc\(var\(--nav-h[^)]*\)\s*\+\s*var\(--inset-bottom[^)]*\)\s*\+\s*16px\)/,
+    "حشو سفلي = شريط + safe-area + 16px",
   );
+  assert.doesNotMatch(read("src/components/BottomNavBar.tsx"), /MoreBottomSheet/, "لا شيت في الشريط");
 });
 
 test("لا نص شرعي مقصوص بـellipsis في الشريط", () => {

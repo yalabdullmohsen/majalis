@@ -94,9 +94,15 @@ const SPACING = new Set([8, 12, 16, 24]);
     fail(`الأبواب المميّزة يجب أن تكون 6 وليس ${featured.length}`);
   }
   const bottom = bottomNavSections();
-  const expectedBottom = ["home", "quran", "prayer", "lessons", "more"];
+  const expectedBottom = ["quran", "lessons", "prayer", "fiqh", "sections"];
   if (bottom.map((s) => s.id).join(",") !== expectedBottom.join(",")) {
     fail(`الشريط السفلي المتوقع: ${expectedBottom.join(" · ")}`);
+  }
+  const bottomLabels = bottom.map((s) => s.navLabel ?? s.label);
+  if (bottomLabels[0] !== "مركز القرآن") fail("التبويب الأول يجب أن يكون «مركز القرآن»");
+  if (bottomLabels[4] !== "الأقسام") fail("التبويب الخامس يجب أن يكون «الأقسام»");
+  if (bottomLabels.some((l) => l === "المزيد" || l === "قرآن")) {
+    fail("تسميات قديمة (المزيد/قرآن) ما زالت في الشريط السفلي");
   }
   for (const g of SECTION_GROUP_ORDER) {
     if (!SECTION_GROUP_META[g]) fail(`SECTION_GROUP_META ناقص: ${g}`);
@@ -249,20 +255,23 @@ const SPACING = new Set([8, 12, 16, 24]);
       if (!SPACING.has(n)) fail(`تباعد خارج السلم 8/12/16/24: ${m[0]}`);
     }
 
-    // 9) نص أبيض فوق أخضر في Featured (CSS دلالية أو text-white)
+    // 9) نص أبيض مربوط بـ variant — ممنوع text-white مفرد
     if (exists("src/components/sections/FeaturedSectionCard.tsx")) {
       const feat = read("src/components/sections/FeaturedSectionCard.tsx");
       const featCss = exists("src/components/sections/section-cards.css")
         ? read("src/components/sections/section-cards.css")
         : "";
-      if (/text-black|text-foreground|text-muted|text-gray|text-zinc/.test(feat)) {
-        fail("نص غير أبيض فوق بطاقة Featured الخضراء");
+      if (/text-white/.test(feat)) {
+        fail("FeaturedSectionCard: ممنوع text-white مفرد — اللون داخل .card--featured فقط");
       }
-      if (!/text-white|section-card--featured/.test(feat)) {
-        fail("FeaturedSectionCard يجب أن يضع نصًا أبيض / صنف featured");
+      if (!/card--featured/.test(feat)) {
+        fail("FeaturedSectionCard يجب أن يستخدم card--featured");
       }
-      if (featCss && !/\.section-card--featured[\s\S]{0,400}color:\s*#fff|color:\s*#ffffff|color:\s*var\(--on-brand/i.test(featCss)) {
-        fail("section-cards.css: بطاقة featured بلا لون نص أبيض");
+      if (featCss && !/card--featured[\s\S]{0,800}color:\s*#ffffff/i.test(featCss)) {
+        fail("section-cards.css: .card--featured بلا لون نص أبيض مربوط");
+      }
+      if (featCss && !/card--featured[\s\S]{0,500}background-color:\s*#1f7a5a/i.test(featCss)) {
+        fail("section-cards.css: .card--featured بلا خلفية خضراء حرفية");
       }
     }
 
@@ -271,9 +280,7 @@ const SPACING = new Set([8, 12, 16, 24]);
       if (!exists(path.join("src/components/sections", f))) continue;
       const src = read(path.join("src/components/sections", f));
       if (!/aria-label/.test(src)) fail(`${f}: بلا aria-label`);
-      if (
-        !/min-h-\[44|min-h-11|h-11|size-11|min-h-\[2\.75rem\]|section-card|section-row/.test(src)
-      ) {
+      if (!/card--|min-h-\[44|min-h-11|section-card|section-row/.test(src)) {
         fail(`${f}: هدف لمس يُفترض ≥ 44px`);
       }
     }
@@ -285,12 +292,6 @@ const SPACING = new Set([8, 12, 16, 24]);
       if (/\{section\.label\}\s*\{section\.subtitle\}/.test(src)) {
         fail(`${f}: label و subtitle ملتصقان في JSX`);
       }
-      if (/`\$\{[^}]*label[^}]*\}\$\{[^}]*subtitle/.test(src) && !/aria-label/.test(src.slice(0, src.indexOf("`")))) {
-        // aria مسموح؛ دمج العرض ممنوع
-      }
-      if (!/section\.(label|subtitle)/.test(src) && f !== "SectionRow.tsx") {
-        fail(`${f}: يجب عرض label/subtitle منفصليْن`);
-      }
       if (f !== "SectionRow.tsx") {
         if (!/section\.label/.test(src) || !/section\.subtitle/.test(src)) {
           fail(`${f}: label و subtitle مطلوبان كعقدتين`);
@@ -298,14 +299,14 @@ const SPACING = new Set([8, 12, 16, 24]);
       }
     }
 
-    // 12) أنماط دلالية موجودة (لا اعتماد على Tailwind utility وحدها)
+    // 12) أنماط دلالية موجودة
     if (!exists("src/components/sections/section-cards.css")) {
       fail("section-cards.css مفقود — البطاقات تنهار بلا أنماط دلالية");
     } else {
       const css = read("src/components/sections/section-cards.css");
-      if (!/\.section-card\s*\{/.test(css)) fail("CSS: .section-card مفقود");
-      if (!/\.section-card--featured\s*\{/.test(css)) fail("CSS: .section-card--featured مفقود");
-      if (!/\.section-row\s*\{/.test(css)) fail("CSS: .section-row مفقود");
+      if (!/\.card\s*\{/.test(css)) fail("CSS: .card مفقود");
+      if (!/\.card--featured/.test(css)) fail("CSS: .card--featured مفقود");
+      if (!/\.card--compact/.test(css)) fail("CSS: .card--compact مفقود");
       if (!/border-radius:\s*16px/.test(css)) fail("CSS: border-radius 16px مفقود");
       if (!/min-height:\s*44px/.test(css)) fail("CSS: min-height 44px مفقود");
       if (/flex-direction:\s*column-reverse|flex-wrap:\s*wrap-reverse/.test(css)) {
@@ -313,7 +314,7 @@ const SPACING = new Set([8, 12, 16, 24]);
       }
     }
 
-    // 13) المزيد: ترتيب المجموعات بلا reverse + مكوّنات البطاقات
+    // 13) المزيد/الأقسام: ترتيب المجموعات بلا reverse
     if (exists("src/features/more/MoreHubFromRegistry.tsx")) {
       const hub = read("src/features/more/MoreHubFromRegistry.tsx");
       if (!/SECTION_GROUP_ORDER\.map/.test(hub)) {
@@ -325,16 +326,12 @@ const SPACING = new Set([8, 12, 16, 24]);
       if (!/FeaturedSectionsGrid/.test(hub) || !/SectionsCardGrid/.test(hub)) {
         fail("MoreHubFromRegistry: يجب استخدام شبكات البطاقات الموحّدة");
       }
-      if (!/more-hub__group-title/.test(hub)) {
-        fail("MoreHubFromRegistry: عنوان المجموعة بصنف more-hub__group-title");
-      }
     }
 
-    // 14) صفر ChevronRight في صفوف الأقسام
+    // 14) صفر ChevronRight في صفوف الأقسام (إن وُجد شيفرون)
     if (exists("src/components/sections/SectionRow.tsx")) {
       const row = read("src/components/sections/SectionRow.tsx");
       if (/ChevronRight/.test(row)) fail("SectionRow: استخدم ChevronLeft فقط (RTL)");
-      if (!/ChevronLeft/.test(row)) fail("SectionRow: ChevronLeft مطلوب");
     }
 
     // 15) تحويلات الدمج في App
@@ -342,10 +339,64 @@ const SPACING = new Set([8, 12, 16, 24]);
       const appSrc = read("src/App.tsx");
       for (const r of SECTION_MERGE_REDIRECTS) {
         const escaped = r.from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        const re = new RegExp(`path="${escaped}"[\\s\\S]{0,120}Redirect\\s+to="${r.to.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`);
+        const re = new RegExp(
+          `path="${escaped}"[\\s\\S]{0,120}Redirect\\s+to="${r.to.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`,
+        );
         if (!re.test(appSrc)) {
           fail(`تحويل دمج مفقود في App: ${r.from} → ${r.to}`);
         }
+      }
+    }
+
+    // 16) صفحة الأقسام بلا شيت/إغلاق + صفر text-white في البطاقات
+    {
+      const bottom = read("src/components/BottomNavBar.tsx");
+      if (/MoreBottomSheet/.test(bottom)) fail("BottomNavBar: يجب إزالة شيت المزيد");
+      if (/المزيد/.test(bottom)) fail("BottomNavBar: ممنوع ظهور «المزيد»");
+      if (!exists("src/pages/account/SectionsPage.tsx")) fail("SectionsPage مفقودة");
+      const sectionsPage = read("src/pages/account/SectionsPage.tsx");
+      if (/إغلاق|AppBottomSheet|MoreBottomSheet/.test(sectionsPage)) {
+        fail("SectionsPage: ممنوع زر إغلاق أو Bottom Sheet");
+      }
+      const cardsTsx =
+        read("src/components/sections/FeaturedSectionCard.tsx") +
+        read("src/components/sections/SectionCard.tsx") +
+        read("src/components/sections/SectionRow.tsx");
+      if (/text-white/.test(cardsTsx)) {
+        fail("ممنوع text-white في مكوّنات البطاقات — اللون من الـvariant فقط");
+      }
+    }
+
+    // 17) صفر ذكر لعدد صفحات المصحف في واجهة مركز القرآن
+    {
+      const hub = read("src/pages/quran/ui/QuranHubView.tsx");
+      if (/٦٠٤|604\s*صفح|صفح[^\n]{0,12}604/.test(hub)) {
+        fail("QuranHubView: ممنوع ذكر عدد صفحات المصحف");
+      }
+      if (!/quranHubSections|sections\.registry/.test(hub)) {
+        fail("QuranHubView: يجب البناء من سجل الأقسام");
+      }
+      if (/QURAN_SECTIONS\s*=/.test(hub)) {
+        fail("QuranHubView: مصفوفة يدوية ممنوعة");
+      }
+      const open = SECTIONS.find((s) => s.id === "open-mushaf");
+      if (!open || open.label !== "فتح المصحف") {
+        fail("مدخل open-mushaf يجب أن يحمل عنوان «فتح المصحف»");
+      }
+      if (/٦٠٤|604/.test(open.subtitle + open.label)) {
+        fail("بطاقة فتح المصحف: ممنوع ذكر عدد الصفحات");
+      }
+    }
+
+    // 18) aliases للتسميات القديمة
+    {
+      const quran = SECTIONS.find((s) => s.id === "quran");
+      const sections = SECTIONS.find((s) => s.id === "sections");
+      if (!quran?.aliases?.some((a) => a === "قرآن" || a === "القرآن")) {
+        fail("quran: aliases يجب أن تتضمن «قرآن»");
+      }
+      if (!sections?.aliases?.includes("المزيد")) {
+        fail("sections: aliases يجب أن تتضمن «المزيد»");
       }
     }
   }

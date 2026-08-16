@@ -1,11 +1,12 @@
 /**
- * بطاقات الأقسام الموحّدة — أنماط دلالية (لا تعتمد على أصناف Tailwind utility).
- * السبب الجذري لانهيار «المزيد»: utilities مثل flex/rounded-2xl غير مولَّدة في البناء.
+ * بطاقات الأقسام — أنماط دلالية موحّدة.
+ * قاعدة ملزمة: لون النص/الأيقونة مربوط بالخلفية داخل نفس الـvariant؛
+ * يُمنع لون حبر أبيض عبر منفعة منفصلة خارج .card--featured.
  */
 
-.section-card,
-.section-card--featured,
-.section-row {
+.card,
+.card--featured,
+.card--compact {
   box-sizing: border-box;
   margin: 0;
   font: inherit;
@@ -13,17 +14,19 @@
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
-.section-card:focus-visible,
-.section-card--featured:focus-visible,
-.section-row:focus-visible {
-  outline: 2px solid var(--mj-brand, var(--color-brand, #1f7a5a));
+.card:focus-visible,
+.card--featured:focus-visible,
+.card--compact:focus-visible {
+  outline: 2px solid var(--mj-brand, #1f7a5a);
   outline-offset: 2px;
 }
 
-/* —— بطاقة قياسية (شبكة عمودين) —— */
-.section-card {
+/* —— بطاقة قياسية —— */
+.card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -33,23 +36,24 @@
   min-height: 44px;
   padding: 16px;
   text-align: start;
-  color: var(--mj-ink, var(--color-ink, #16241e));
-  background: var(--mj-surface, var(--color-surface, #fff));
-  border: 1px solid var(--mj-hairline, var(--color-hairline, #e3e8e6));
+  color: var(--mj-ink, #16241e);
+  background-color: var(--mj-surface, #ffffff);
+  background-image: none;
+  border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 16px;
   box-shadow: 0 4px 14px -10px rgba(11, 32, 24, 0.35);
-  transition: background 120ms ease, transform 120ms ease;
+  transition: filter 120ms ease, transform 120ms ease;
 }
 
-.section-card:hover {
-  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 6%, var(--mj-surface, #fff));
+.card:hover {
+  filter: brightness(0.98);
 }
 
-.section-card:active {
+.card:active {
   transform: scale(0.98);
 }
 
-.section-card__icon-chip {
+.card__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -58,30 +62,30 @@
   height: 36px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 10%, transparent);
-  color: var(--mj-brand, var(--color-brand, #1f7a5a));
+  color: var(--mj-brand, #1f7a5a);
 }
 
-.section-card__icon-chip svg {
+.card__icon svg {
   width: 24px;
   height: 24px;
+  stroke: currentColor;
 }
 
-.section-card__label {
+.card__label {
   display: block;
   width: 100%;
   font-size: 17px;
   font-weight: 600;
   line-height: 1.25;
-  color: var(--mj-ink, var(--color-ink, #16241e));
+  color: inherit;
 }
 
-.section-card__subtitle {
+.card__subtitle {
   width: 100%;
   font-size: 13px;
   font-weight: 500;
   line-height: 1.35;
-  color: var(--mj-muted, var(--color-muted, #66766f));
-  opacity: 0.92;
+  color: var(--mj-muted, #66766f);
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -89,8 +93,10 @@
   overflow-wrap: anywhere;
 }
 
-/* —— بطاقة مميّزة —— */
-.section-card--featured {
+/* —— بطاقة مميّزة: خلفية + نص أبيض في نفس الـvariant فقط —— */
+button.card--featured,
+a.card--featured,
+.card--featured {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -103,20 +109,17 @@
   min-height: 44px;
   padding: 16px;
   text-align: start;
-  color: var(--on-brand, #ffffff);
-  border: 1px solid color-mix(in srgb, #ffffff 22%, transparent);
+  /* ألوان حرفية مربوطة — لا تعتمد على منفعة لون منفصلة ولا على سقوط متغيّر وحده */
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 16px;
-  background-color: var(--mj-brand, #1f7a5a);
-  background-image: linear-gradient(
-    145deg,
-    var(--mj-brand, #1f7a5a) 0%,
-    var(--mj-brand-deep, #14614a) 100%
-  );
-  box-shadow: 0 8px 22px -12px color-mix(in srgb, var(--mj-brand-deep, #14614a) 55%, transparent);
+  background-color: #1f7a5a;
+  background-image: linear-gradient(145deg, #1f7a5a 0%, #14614a 100%);
+  box-shadow: 0 8px 22px -12px rgba(20, 97, 74, 0.55);
   transition: filter 120ms ease, transform 120ms ease;
 }
 
-.section-card--featured::before {
+.card--featured::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -129,35 +132,32 @@
   background-size: 18px 18px, 22px 22px;
 }
 
-.section-card--featured > * {
+.card--featured > * {
   position: relative;
   z-index: 1;
+  color: #ffffff;
 }
 
-.section-card--featured:hover {
+.card--featured .card__icon {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.card--featured .card__label,
+.card--featured .card__subtitle {
+  color: #ffffff;
+}
+
+.card--featured:hover {
   filter: brightness(1.05);
 }
 
-.section-card--featured:active {
+.card--featured:active {
   transform: scale(0.98);
 }
 
-.section-card--featured .section-card__icon-chip {
-  background: color-mix(in srgb, #ffffff 16%, transparent);
-  color: #ffffff;
-}
-
-.section-card--featured .section-card__label,
-.section-card--featured .section-card__subtitle {
-  color: #ffffff;
-}
-
-.section-card--featured .section-card__subtitle {
-  opacity: 0.92;
-}
-
-/* —— صف قائمة —— */
-.section-row {
+/* —— بطاقة مضغوطة (الحساب) —— */
+.card--compact {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -166,192 +166,185 @@
   min-height: 44px;
   padding: 12px 16px;
   text-align: start;
-  color: var(--mj-ink, var(--color-ink, #16241e));
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--mj-hairline, var(--color-hairline, #e3e8e6));
+  color: var(--mj-ink, #16241e);
+  background-color: var(--mj-surface, #ffffff);
+  background-image: none;
+  border: 1px solid var(--mj-hairline, #e3e8e6);
+  border-radius: 16px;
 }
 
-.section-row:last-child,
-.section-row-list > *:last-child .section-row {
-  border-bottom: 0;
-}
-
-.section-row:hover {
-  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 6%, transparent);
-}
-
-.section-row__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.card--compact .card__icon {
   width: 36px;
   height: 36px;
   border-radius: 12px;
-  background: var(--mj-surface-2, var(--color-surface-2, #e9edeb));
-  color: var(--mj-brand, var(--color-brand, #1f7a5a));
 }
 
-.section-row__icon svg {
+.card--compact .card__icon svg {
   width: 20px;
   height: 20px;
 }
 
-.section-row__label {
+.card--compact .card__label {
   flex: 1 1 auto;
   min-width: 0;
   font-size: 16px;
-  font-weight: 600;
-  line-height: 1.3;
-  text-align: start;
 }
 
-.section-row__chevron {
-  flex-shrink: 0;
-  width: 18px;
-  height: 18px;
-  margin-inline-start: 8px;
-  opacity: 0.4;
-  color: var(--mj-ink-2, var(--color-ink-2, #4a5a53));
+.card--compact .card__subtitle {
+  display: none;
 }
 
 /* —— شبكات —— */
-.section-grid {
+.card-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   grid-auto-rows: 1fr;
 }
 
-.section-grid--featured {
+.card-grid--featured {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.card-grid--compact {
+  grid-template-columns: 1fr;
+  grid-auto-rows: auto;
+}
+
 @media (min-width: 420px) {
-  .section-grid--featured {
+  .card-grid--featured {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .card-grid--compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-.section-row-list {
-  overflow: hidden;
-  border: 1px solid var(--mj-hairline, var(--color-hairline, #e3e8e6));
-  border-radius: 16px;
-  background: var(--mj-surface, var(--color-surface, #fff));
-}
-
-/* —— هيكل المزيد —— */
-.more-hub {
+/* —— هيكل صفحة الأقسام —— */
+.sections-hub {
   display: flex;
   flex-direction: column;
   gap: 24px;
   width: 100%;
   min-width: 0;
+  padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 16px);
 }
 
-.more-hub__search {
+.sections-hub__search {
   width: 100%;
   min-height: 44px;
   padding: 12px 16px;
-  border: 1px solid var(--mj-hairline, var(--color-hairline, #e3e8e6));
+  border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 16px;
-  background: var(--mj-surface, var(--color-surface, #fff));
-  color: var(--mj-ink, var(--color-ink, #16241e));
+  background: var(--mj-surface, #fff);
+  color: var(--mj-ink, #16241e);
   font: inherit;
   font-size: 15px;
 }
 
-.more-hub__search:focus-visible {
+.sections-hub__search:focus-visible {
   outline: 2px solid var(--mj-brand, #1f7a5a);
   outline-offset: 1px;
 }
 
-.more-hub__empty {
+.sections-hub__empty {
   margin: 0;
   font-size: 15px;
-  color: var(--mj-muted, var(--color-muted, #66766f));
+  color: var(--mj-muted, #66766f);
 }
 
-.more-hub__group {
+.sections-hub__group {
   display: flex;
   flex-direction: column;
   gap: 12px;
   min-width: 0;
 }
 
-.more-hub__group-title {
+.sections-hub__group-title {
   margin: 0;
   padding: 0;
   font-size: 15px;
   font-weight: 600;
   line-height: 1.3;
-  color: var(--mj-muted, var(--color-muted, #66766f));
+  color: var(--mj-muted, #66766f);
 }
 
-.more-hub__group-title::after {
+.sections-hub__group-title::after {
   content: "";
   display: block;
   width: 24px;
   height: 2px;
   margin-block-start: 8px;
   border-radius: 999px;
-  background: var(--mj-brand, var(--color-brand, #1f7a5a));
+  background: var(--mj-brand, #1f7a5a);
 }
 
-.more-hub__featured {
+.sections-hub__featured {
   display: flex;
   flex-direction: column;
   gap: 12px;
   min-width: 0;
 }
 
-html[data-theme="dark"] .section-card,
-html.dark .section-card {
-  background: var(--mj-surface, #1a221f);
+.sections-hub .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+html[data-theme="dark"] .card,
+html.dark .card,
+html[data-theme="dark"] .card--compact,
+html.dark .card--compact {
+  background-color: var(--mj-surface, #1a221f);
   color: var(--mj-ink, #e8eeeb);
   border-color: var(--mj-hairline, #2a3531);
 }
 
-html[data-theme="dark"] .section-card__label,
-html.dark .section-card__label {
-  color: var(--mj-ink, #e8eeeb);
-}
-
-html[data-theme="dark"] .section-card__subtitle,
-html.dark .section-card__subtitle {
+html[data-theme="dark"] .card .card__subtitle,
+html.dark .card .card__subtitle {
   color: var(--mj-muted, #9aaba3);
 }
 
-html[data-theme="dark"] .section-card__icon-chip,
-html.dark .section-card__icon-chip {
+html[data-theme="dark"] .card .card__icon,
+html.dark .card .card__icon {
   background: color-mix(in srgb, var(--mj-brand, #4fb48b) 16%, transparent);
   color: var(--mj-brand, #4fb48b);
 }
 
-html[data-theme="dark"] .section-card--featured,
-html.dark .section-card--featured {
-  /* أخضر عميق ليلًا حتى يبقى النص الأبيض ≥ 4.5:1 (منع #4FB48B الفاتح) */
+/* featured ليلاً: نفس الربط الحرفي أبيض فوق أخضر عميق */
+html[data-theme="dark"] button.card--featured,
+html.dark button.card--featured,
+html[data-theme="dark"] .card--featured,
+html.dark .card--featured {
   background-color: #1f7a5a;
   background-image: linear-gradient(145deg, #1f7a5a 0%, #14614a 100%);
   color: #ffffff;
 }
 
-html[data-theme="dark"] .section-row-list,
-html.dark .section-row-list {
+html[data-theme="dark"] .card--featured > *,
+html.dark .card--featured > *,
+html[data-theme="dark"] .card--featured .card__label,
+html.dark .card--featured .card__label,
+html[data-theme="dark"] .card--featured .card__subtitle,
+html.dark .card--featured .card__subtitle,
+html[data-theme="dark"] .card--featured .card__icon,
+html.dark .card--featured .card__icon {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .sections-hub__search,
+html.dark .sections-hub__search {
   background: var(--mj-surface, #1a221f);
+  color: var(--mj-ink, #e8eeeb);
   border-color: var(--mj-hairline, #2a3531);
 }
 
-html[data-theme="dark"] .section-row,
-html.dark .section-row {
-  color: var(--mj-ink, #e8eeeb);
-  border-bottom-color: var(--mj-hairline, #2a3531);
-}
-
-html[data-theme="dark"] .more-hub__search,
-html.dark .more-hub__search {
-  background: var(--mj-surface, #1a221f);
-  color: var(--mj-ink, #e8eeeb);
-  border-color: var(--mj-hairline, #2a3531);
-}
+/* توافق أسماء قديمة أثناء الانتقال */
+.section-card { /* لا يُستخدم — أُبقي فارغًا عمدًا */ }

@@ -1,11 +1,9 @@
 /**
- * مصدر واحد لخريطة التنقّل (إطلاق المجلس العلمي).
- * يشتق منه: الشريط السفلي، مركز الخدمات، التذييل، والجانبية.
- *
- * التنقّل الموحّد: قرآن · الدروس · الصلاة · فقه · المزيد (+ بحث دائم في الهيدر)
+ * مصدر واحد لخريطة التنقّل — مشتق من سجل الأقسام.
+ * الشريط السفلي: مركز القرآن · الدروس · الصلاة · فقه · الأقسام
  */
 import type { LucideIcon } from "lucide-react";
-import { BookOpen, Clock, GraduationCap, Scale } from "lucide-react";
+import { bottomNavSections } from "@/config/sections.registry";
 import {
   SERVICES_CENTER_GROUPS,
   filterServicesCenterGroups,
@@ -19,21 +17,18 @@ export type BottomNavTab = {
   Icon: LucideIcon;
 };
 
-/** الشريط السفلي: أربع مساحات + «المزيد» منفصل في المكوّن */
-export const BOTTOM_NAV_TABS: BottomNavTab[] = [
-  { href: "/quran-hub", label: "قرآن", Icon: BookOpen },
-  { href: "/lessons", label: "الدروس", Icon: GraduationCap },
-  { href: "/prayer-times", label: "الصلاة", Icon: Clock },
-  { href: "/fiqh", label: "فقه", Icon: Scale },
-];
+/** الشريط السفلي من السجل فقط */
+export const BOTTOM_NAV_TABS: BottomNavTab[] = bottomNavSections().map((s) => ({
+  href: s.route,
+  label: s.navLabel ?? s.label,
+  Icon: s.icon,
+}));
 
-/** مجموعات مركز الخدمات بالترتيب المعتمد */
 export const NAV_SERVICE_GROUPS: ServicesCenterGroup[] = SERVICES_CENTER_GROUPS;
 
 export { filterServicesCenterGroups };
 export type { ServicesCenterGroup, ServicesCenterItem };
 
-/** روابط تذييل «عن المجلس» — مشتقة من مجموعة الإعدادات والمساعدة */
 export function getAboutFooterLinks(): Array<{ href: string; label: string }> {
   const about = SERVICES_CENTER_GROUPS.find((g) => g.id === "settings" || g.id === "about");
   if (!about) return [];
@@ -57,7 +52,6 @@ export function getAboutFooterLinks(): Array<{ href: string; label: string }> {
     }));
 }
 
-/** عناصر القائمة الجانبية — نفس كتالوج الخدمات بدون إجراءات غير-روابط */
 export function getSidebarGroupsFromNavMap(): Array<{
   id: string;
   title: string;

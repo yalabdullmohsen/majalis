@@ -25,6 +25,7 @@ const PUBLIC_SURFACES = [
   "src/lib/explore-links.ts",
   "src/pages/lessons/ui/LessonsView.tsx",
   "src/pages/account/ui/SiteMapView.tsx",
+  "src/pages/account/SectionsPage.tsx",
   "src/pages/account/MorePage.tsx",
   "src/features/more/moreSections.ts",
   "src/components/BottomNavBar.tsx",

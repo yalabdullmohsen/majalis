@@ -31,15 +31,17 @@ function assert(condition: boolean, label: string) {
 
 console.log("\n=== TopSectionBar — مساحات موحّدة ===");
 {
-  assert(SECTION_TABS.length === 4, `4 مساحات في الشريط العلوي (الفعلي: ${SECTION_TABS.length})`);
+  assert(SECTION_TABS.length === 5, `5 مساحات في الشريط العلوي (الفعلي: ${SECTION_TABS.length})`);
   const hrefs = SECTION_TABS.map((t) => t.href);
   const labels = SECTION_TABS.map((t) => t.label);
   assert(new Set(hrefs).size === hrefs.length, "لا تكرار في مسارات الأقسام");
-  assert(hrefs.includes("/quran-hub") && labels.includes("قرآن"), "مساحة قرآن → مركز القرآن");
+  assert(hrefs.includes("/quran-hub") && labels.includes("مركز القرآن"), "مساحة مركز القرآن");
   assert(hrefs.includes("/lessons") && labels.includes("الدروس"), "مساحة الدروس");
   assert(hrefs.includes("/prayer-times") && labels.includes("الصلاة"), "مساحة الصلاة");
-  assert(hrefs.includes("/fiqh") && labels.includes("فقه"), "مساحة فقه");
+  assert(hrefs.includes("/fiqh") && (labels.includes("فقه") || labels.includes("الفقه والأحكام")), "مساحة فقه");
+  assert(hrefs.includes("/sections") && labels.includes("الأقسام"), "مساحة الأقسام");
   assert(!hrefs.includes("/library"), "المكتبة خارج الشريط");
+  assert(!labels.includes("المزيد") && !labels.includes("قرآن"), "لا تسميات قديمة في الشريط");
 }
 
 console.log("\n=== isTabActive ===");
@@ -138,7 +140,8 @@ console.log("\n=== nav-visibility تنظيف ===");
 
 console.log("\n=== القوائم بلا أقسام محذوفة — عن المجلس في المصدر الموحّد ===");
 {
-  const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
+  const sectionsSrc = readFileSync(resolve(appRoot, "src/pages/account/SectionsPage.tsx"), "utf-8");
+  const moreHubSrc = readFileSync(resolve(appRoot, "src/features/more/MoreHubFromRegistry.tsx"), "utf-8");
   const sideSrc = readFileSync(resolve(appRoot, "src/components/SideNavDrawer.tsx"), "utf-8");
   const sidebarNavSrc = readFileSync(resolve(appRoot, "src/lib/sidebar-nav.ts"), "utf-8");
   const servicesNavSrc = readFileSync(resolve(appRoot, "src/lib/services-center-nav.ts"), "utf-8");
@@ -146,12 +149,14 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   const homeSrc = readFileSync(resolve(appRoot, "src/pages/account/ui/HomeView.tsx"), "utf-8");
   const footerSrc = readFileSync(resolve(appRoot, "src/components/SiteFooter.tsx"), "utf-8");
   const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8");
-  for (const src of [moreSrc, sideSrc, sidebarNavSrc]) {
+  for (const src of [moreHubSrc, sideSrc, sidebarNavSrc]) {
     assert(!src.includes('href: "/rulings"'), "لا أحكام كقسم رئيسي في القوائم الجامدة");
     assert(!src.includes('"/knowledge-graph"'), "لا استكشف المعرفة");
   }
   const moreSecSrc = readFileSync(resolve(appRoot, "src/features/more/moreSections.ts"), "utf-8");
-  assert(moreSecSrc.includes("sections.registry"), "المكتبة والحديث في المزيد");
+  assert(moreSecSrc.includes("sections.registry"), "المكتبة والحديث في الأقسام");
+  assert(sectionsSrc.includes("MoreHubFromRegistry") || sectionsSrc.includes("SectionsHubFromRegistry"), "صفحة الأقسام من السجل");
+  assert(!sectionsSrc.includes("إغلاق") && !sectionsSrc.includes("MoreBottomSheet"), "صفحة الأقسام بلا إغلاق/شيت");
   assert(
     SERVICES_CENTER_GROUPS.some((g) =>
       g.items.some(
@@ -185,7 +190,7 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   assert(footerNavSrc.includes("الريادة الإسلامية الرقمية"), "سطر الريادة في التذييل");
   assert(
     moreSecSrc.includes("sections.registry") && servicesNavSrc.includes("sections.registry"),
-    "مركز الخدمات/المزيد من السجل",
+    "مركز الخدمات/الأقسام من السجل",
   );
   const aboutOk =
     SERVICES_CENTER_GROUPS.some((g) => g.items.some((i) => i.label.includes("عن المجلس") || (i.action.kind === "link" && i.action.href === "/about")));
@@ -207,19 +212,23 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   assert(!HIDDEN_FROM_NAV_PATHS.has("/about"), "about ظاهر للاكتشاف عبر عن المجلس");
 }
 
-console.log("\n=== الشريط السفلي والمزيد ===");
+console.log("\n=== الشريط السفلي والأقسام ===");
 {
   const bottomSrc = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf-8");
   assert(bottomSrc.includes("BOTTOM_NAV_TABS"), "الشريط من nav-map");
+  assert(!bottomSrc.includes("MoreBottomSheet"), "لا شيت المزيد في الشريط");
+  assert(!bottomSrc.includes("المزيد"), "لا تسمية المزيد في الشريط");
   const navMapSrc = readFileSync(resolve(appRoot, "src/lib/nav-map.ts"), "utf-8");
-  assert(navMapSrc.includes('label: "قرآن"') && navMapSrc.includes('label: "الدروس"'), "تسميات قرآن والدروس");
-  assert(navMapSrc.includes('label: "الصلاة"') && navMapSrc.includes('label: "فقه"'), "تسميات الصلاة وفقه");
-  assert(navMapSrc.includes('"/quran-hub"') && navMapSrc.includes('"/prayer-times"') && navMapSrc.includes('"/fiqh"') && navMapSrc.includes('"/lessons"'), "مسارات المساحات الأربع");
+  assert(navMapSrc.includes("bottomNavSections"), "الشريط من سجل الأقسام");
+  const registrySrc = readFileSync(resolve(appRoot, "src/config/sections.registry.ts"), "utf-8");
+  assert(registrySrc.includes('route: "/quran-hub"') && registrySrc.includes("مركز القرآن"), "مسار مركز القرآن");
+  assert(registrySrc.includes('route: "/prayer-times"') && registrySrc.includes('route: "/fiqh"') && registrySrc.includes('route: "/lessons"') && registrySrc.includes('route: "/sections"'), "مسارات المساحات");
   assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
-  const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
-  assert(moreSrc.includes("MoreHubFromRegistry"), "المزيد من سجل الأقسام");
-  assert(moreSrc.includes("المزيد") || moreSrc.includes("إغلاق"), "المزيد قائمة منظمة");
-  assert(moreSrc.includes("showSearch"), "بحث داخل مركز الخدمات");
+  const sectionsSrc = readFileSync(resolve(appRoot, "src/pages/account/SectionsPage.tsx"), "utf-8");
+  assert(sectionsSrc.includes("MoreHubFromRegistry") || sectionsSrc.includes("SectionsHubFromRegistry"), "الأقسام من سجل الأقسام");
+  assert(sectionsSrc.includes("الأقسام"), "عنوان الأقسام");
+  const hubSrc = readFileSync(resolve(appRoot, "src/features/more/MoreHubFromRegistry.tsx"), "utf-8");
+  assert(hubSrc.includes("showSearch") || sectionsSrc.includes("showSearch"), "بحث داخل الأقسام");
 }
 
 console.log(`\n${"─".repeat(40)}`);

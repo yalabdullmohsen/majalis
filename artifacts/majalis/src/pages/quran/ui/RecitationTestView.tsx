@@ -528,7 +528,7 @@ function RecitationTestPageInner() {
           getSegmentsForRub(index, rubNumber);
         if (segments.length === 0) {
           const rangeErrorMsg = {
-            page: "رقم صفحة غير صالح (يجب أن يكون بين 1 و604).",
+            page: "رقم صفحة غير صالح ضمن نطاق المصحف.",
             juz: "رقم جزء غير صالح (يجب أن يكون بين 1 و30).",
             hizb: "رقم حزب غير صالح (يجب أن يكون بين 1 و60).",
             rub: "رقم ربع غير صالح (يجب أن يكون بين 1 و240).",
@@ -1429,7 +1429,7 @@ function RecitationTestPageInner() {
 
               {rangeMode === "page" && (
                 <label style={{ display: "block", marginTop: ".6rem" }}>
-                  <span className="rai-choice__hint">رقم الصفحة (1-604، ترقيم مصحف المدينة)</span>
+                  <span className="rai-choice__hint">رقم الصفحة (ترقيم مصحف المدينة)</span>
                   <input
                     type="number" min={1} max={604} value={pageNumber}
                     onChange={(e) => setPageNumber(Math.min(Math.max(Number(e.target.value) || 1, 1), 604))}

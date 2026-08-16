@@ -28,9 +28,10 @@ assert.match(hadithCss, /--bottom-nav-height/);
 assert.match(hadithCss, /hadith-hub-grid/);
 assert.match(hadithCss, /font-size:\s*max\(1\.125rem,\s*18px\)/);
 
-const more = read("src/pages/account/MorePage.tsx");
-assert.match(more, /MoreHubFromRegistry/);
+const more = read("src/pages/account/SectionsPage.tsx");
+assert.match(more, /MoreHubFromRegistry|SectionsHubFromRegistry/);
 assert.doesNotMatch(more, /onClose|button.*إغلاق|aria-label=["']إغلاق/);
+assert.match(more, /الأقسام/);
 
 const titles = MORE_FEATURED_SECTIONS.map((s) => s.title);
 assert.equal(titles.length, 6);

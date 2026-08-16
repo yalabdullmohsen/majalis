@@ -12,12 +12,14 @@ import {
   BookOpenCheck,
   BookText,
   BookHeart,
+  Book,
   Bookmark,
   Building2,
   Calendar,
   Church,
   Compass,
   Contact,
+  FileStack,
   FileText,
   Flame,
   FlaskConical,
@@ -26,6 +28,7 @@ import {
   GraduationCap,
   HandHeart,
   Hash,
+  Headphones,
   Heart,
   HelpCircle,
   History,
@@ -38,12 +41,14 @@ import {
   Lock,
   Map,
   MessageCircleQuestion,
+  Mic,
   MoonStar,
   Mountain,
   Network,
   NotebookPen,
   Scale,
   ScrollText,
+  Search,
   Settings,
   Shield,
   Sun,
@@ -64,13 +69,15 @@ export type SectionGroup =
   | "learning"
   | "account";
 
-export type Surface = "bottomNav" | "home" | "moreHub" | "drawer" | "search";
+export type Surface = "bottomNav" | "home" | "moreHub" | "drawer" | "search" | "quranHub";
 
 export type SectionStatus = "live" | "beta" | "hidden";
 
 export interface SectionDef {
   id: string;
   label: string;
+  /** تسمية مختصرة للشريط السفلي إن وُجدت */
+  navLabel?: string;
   subtitle: string;
   route: string;
   icon: LucideIcon;
@@ -118,6 +125,7 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/aqidah", to: "/tawhid", note: "عقيدة قديم → التوحيد/العقيدة" },
   { from: "/prayer", to: "/prayer-times", note: "صلاة مختصر → مواقيت الصلاة" },
   { from: "/adhkar", to: "/duas", note: "أذكار → الأدعية (مسار موحّد)" },
+  { from: "/more", to: "/sections", note: "المزيد → الأقسام" },
 ];
 
 const NAV: Surface[] = ["moreHub", "drawer", "home", "search"];
@@ -133,34 +141,22 @@ export const SECTIONS: readonly SectionDef[] = [
     icon: Home,
     group: "sciences",
     order: -10,
-    surfaces: ["bottomNav", "search"],
+    surfaces: ["search", "home"],
     status: "live",
     keywords: ["رئيسية", "home"],
   },
   {
     id: "quran",
-    label: "القرآن",
-    subtitle: "المصحف والتلاوة",
-    route: "/mushaf",
+    label: "مركز القرآن",
+    subtitle: "المصحف والتلاوة والتفسير",
+    route: "/quran-hub",
     icon: BookOpen,
     group: "sciences",
     order: -9,
     surfaces: ["bottomNav", "search"],
     status: "live",
-    keywords: ["مصحف", "قرآن", "quran"],
-    aliases: ["المصحف"],
-  },
-  {
-    id: "prayer",
-    label: "الصلاة",
-    subtitle: "مواقيت وأذان",
-    route: "/prayer-times",
-    icon: MoonStar,
-    group: "worship",
-    order: -8,
-    surfaces: ["bottomNav", "search"],
-    status: "live",
-    keywords: ["صلاة", "أذان", "مواقيت"],
+    keywords: ["مصحف", "قرآن", "quran", "مركز القرآن"],
+    aliases: ["القرآن", "قرآن", "المصحف"],
   },
   {
     id: "lessons",
@@ -169,22 +165,98 @@ export const SECTIONS: readonly SectionDef[] = [
     route: "/lessons",
     icon: GraduationCap,
     group: "learning",
-    order: -7,
+    order: -8,
     surfaces: ["bottomNav", "home", "search"],
     status: "live",
     keywords: ["دروس", "شروح"],
   },
   {
-    id: "more",
-    label: "المزيد",
-    subtitle: "كل الأقسام والأدوات",
-    route: "/more",
+    id: "prayer",
+    label: "الصلاة",
+    subtitle: "مواقيت وأذان",
+    route: "/prayer-times",
+    icon: MoonStar,
+    group: "worship",
+    order: -7,
+    surfaces: ["bottomNav", "search"],
+    status: "live",
+    keywords: ["صلاة", "أذان", "مواقيت"],
+  },
+  {
+    id: "sections",
+    label: "الأقسام",
+    subtitle: "كل أقسام المجلس العلمي",
+    route: "/sections",
     icon: Layers,
     group: "account",
-    order: -6,
+    order: -5,
     surfaces: ["bottomNav"],
     status: "live",
-    keywords: ["المزيد", "أقسام"],
+    keywords: ["أقسام", "sections"],
+    aliases: ["المزيد"],
+  },
+
+  // —— مركز القرآن (سطح quranHub) ——
+  {
+    id: "open-mushaf",
+    label: "فتح المصحف",
+    subtitle: "متابعة القراءة من آخر موضع محفوظ",
+    route: "/mushaf",
+    icon: Book,
+    group: "sciences",
+    order: 1,
+    surfaces: ["quranHub", "search"],
+    status: "live",
+    keywords: ["مصحف", "فتح المصحف", "قراءة"],
+    aliases: ["المصحف"],
+  },
+  {
+    id: "quran-tilawa",
+    label: "التلاوة والقرّاء",
+    subtitle: "استمع لتلاوات القرّاء",
+    route: "/quran-circles",
+    icon: Headphones,
+    group: "sciences",
+    order: 2,
+    surfaces: ["quranHub", "search"],
+    status: "live",
+    keywords: ["تلاوة", "قرّاء", "استماع"],
+  },
+  {
+    id: "quran-surahs",
+    label: "فهرس السور",
+    subtitle: "تصفّح سور القرآن الكريم",
+    route: "/quran/surahs",
+    icon: FileStack,
+    group: "sciences",
+    order: 3,
+    surfaces: ["quranHub", "search"],
+    status: "live",
+    keywords: ["سور", "فهرس"],
+  },
+  {
+    id: "quran-recitation",
+    label: "التسميع والقراءة",
+    subtitle: "اختبار التلاوة والتسميع",
+    route: "/quran/recitation-test-ai",
+    icon: Mic,
+    group: "sciences",
+    order: 4,
+    surfaces: ["quranHub", "search"],
+    status: "live",
+    keywords: ["تسميع", "تلاوة", "اختبار"],
+  },
+  {
+    id: "quran-search",
+    label: "البحث في القرآن",
+    subtitle: "ابحث في آيات المصحف",
+    route: "/quran/search",
+    icon: Search,
+    group: "sciences",
+    order: 5,
+    surfaces: ["quranHub", "search"],
+    status: "live",
+    keywords: ["بحث", "آيات"],
   },
 
   // —— ١. العلوم الشرعية ——
@@ -223,7 +295,7 @@ export const SECTIONS: readonly SectionDef[] = [
     group: "sciences",
     order: 30,
     featured: true,
-    surfaces: NAV,
+    surfaces: ["moreHub", "drawer", "home", "search", "quranHub"],
     status: "live",
     keywords: ["تفسير", "آيات"],
   },
@@ -244,13 +316,14 @@ export const SECTIONS: readonly SectionDef[] = [
   {
     id: "fiqh",
     label: "الفقه والأحكام",
+    navLabel: "فقه",
     subtitle: "أبواب الفقه والفتاوى",
     route: "/fiqh",
     icon: Scale,
     group: "sciences",
     order: 50,
     featured: true,
-    surfaces: NAV,
+    surfaces: ["bottomNav", "moreHub", "drawer", "home", "search"],
     status: "live",
     keywords: ["فقه", "أحكام", "فتاوى"],
     aliases: ["الفقه"],
@@ -529,7 +602,7 @@ export const SECTIONS: readonly SectionDef[] = [
     icon: Bookmark,
     group: "learning",
     order: 10,
-    surfaces: NAV,
+    surfaces: ["moreHub", "drawer", "home", "search", "quranHub"],
     status: "live",
     keywords: ["بطاقات", "حفظ", "مراجعة", "فوائد", "محفوظات"],
     aliases: ["الفوائد والبطاقات", "بطاقات المراجعة", "المحفوظات"],
@@ -764,10 +837,16 @@ export function featuredSections(): SectionDef[] {
 }
 
 export function bottomNavSections(): SectionDef[] {
-  const order = ["home", "quran", "prayer", "lessons", "more"];
+  const order = ["quran", "lessons", "prayer", "fiqh", "sections"];
   return order
-    .map((id) => SECTIONS.find((s) => s.id === id))
+    .map((id) => SECTIONS.find((s) => s.id === id && s.surfaces.includes("bottomNav")))
     .filter((s): s is SectionDef => Boolean(s));
+}
+
+export function quranHubSections(): SectionDef[] {
+  return SECTIONS.filter((s) => visible(s) && s.surfaces.includes("quranHub")).sort(
+    (a, b) => a.order - b.order,
+  );
 }
 
 export function getSectionById(id: string): SectionDef | undefined {

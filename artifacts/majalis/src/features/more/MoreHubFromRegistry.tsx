@@ -1,5 +1,5 @@
 /**
- * جسم «المزيد» من سجل الأقسام — صف مميّز ثم ٧ مجموعات بالترتيب.
+ * جسم صفحة «الأقسام» من سجل الأقسام — صف مميّز ثم ٧ مجموعات بالترتيب.
  */
 import { useMemo, useState } from "react";
 import {
@@ -29,7 +29,6 @@ function matchesQuery(s: SectionDef, q: string): boolean {
 
 type Props = {
   onNavigate?: () => void;
-  /** إظهار حقل بحث داخلي (للشيت) */
   showSearch?: boolean;
   className?: string;
 };
@@ -47,7 +46,6 @@ export function MoreHubFromRegistry({ onNavigate, showSearch = false, className 
     return SECTION_GROUP_ORDER.map((group) => {
       const meta = SECTION_GROUP_META[group];
       let items = sectionsByGroup(group, "moreHub").filter((s) => matchesQuery(s, q));
-      // المميّزة تظهر في الصف العلوي؛ لا تُكرَّر داخل شبكة المجموعة إلا إن لم يكن هناك صف مميّز (بحث ضيّق)
       if (!q) {
         items = items.filter((s) => !s.featured);
       }
@@ -58,19 +56,19 @@ export function MoreHubFromRegistry({ onNavigate, showSearch = false, className 
   const empty = featured.length === 0 && groups.every((g) => g.items.length === 0);
 
   return (
-    <div className={cn("more-hub", className)} data-more-hub="1" dir="rtl">
+    <div className={cn("sections-hub", className)} data-more-hub="1" data-sections-hub="1" dir="rtl">
       {showSearch ? (
         <div>
-          <label htmlFor="more-hub-search" className="sr-only">
+          <label htmlFor="sections-hub-search" className="sr-only">
             بحث في الأقسام
           </label>
           <input
-            id="more-hub-search"
+            id="sections-hub-search"
             type="search"
             enterKeyHint="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="more-hub__search"
+            className="sections-hub__search"
             placeholder="ابحث في الأقسام…"
             autoComplete="off"
             data-search-field="1"
@@ -79,11 +77,11 @@ export function MoreHubFromRegistry({ onNavigate, showSearch = false, className 
       ) : null}
 
       {empty ? (
-        <p className="more-hub__empty">لا نتائج مطابقة.</p>
+        <p className="sections-hub__empty">لا نتائج مطابقة.</p>
       ) : (
         <>
           {featured.length > 0 ? (
-            <section aria-label="الأبواب المميّزة" className="more-hub__featured" data-more-featured="1">
+            <section aria-label="الأبواب المميّزة" className="sections-hub__featured" data-more-featured="1">
               <FeaturedSectionsGrid sections={featured} onNavigate={onNavigate} />
             </section>
           ) : null}
@@ -119,14 +117,14 @@ function GroupBlock({
   items: SectionDef[];
   onNavigate?: () => void;
 }) {
-  const headingId = `more-group-${group}`;
+  const headingId = `sections-group-${group}`;
   return (
     <section
-      className="more-hub__group"
+      className="sections-hub__group"
       aria-labelledby={headingId}
       data-more-group={group}
     >
-      <h2 id={headingId} className="more-hub__group-title" data-more-group-title={group}>
+      <h2 id={headingId} className="sections-hub__group-title" data-more-group-title={group}>
         {title}
       </h2>
       {rowStyle ? (
@@ -137,3 +135,6 @@ function GroupBlock({
     </section>
   );
 }
+
+/** اسم توافق — صفحة الأقسام */
+export const SectionsHubFromRegistry = MoreHubFromRegistry;

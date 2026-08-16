@@ -54,7 +54,7 @@ assert.equal(
 
 assert.deepEqual(
   BOTTOM_NAV_TABS.map((t) => t.href),
-  ["/quran-hub", "/lessons", "/prayer-times", "/fiqh"],
+  ["/quran-hub", "/lessons", "/prayer-times", "/fiqh", "/sections"],
 );
 
 assert.equal(MORE_FEATURED_SECTIONS.length, 6);

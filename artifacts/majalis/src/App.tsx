@@ -214,7 +214,7 @@ const RulingDetailPage = lazy(() => import("@/pages/fiqh/RulingDetailPage"));
 const UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
 const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage"));
 const KnowledgeGraphPage = lazy(() => import("@/views/KnowledgeGraphPage"));
-const MorePage = lazy(() => import("@/pages/account/MorePage"));
+const SectionsPage = lazy(() => import("@/pages/account/SectionsPage"));
 const MindMapPage = lazy(() => import("@/views/MindMapPage"));
 const IslamicLandmarksPage = lazy(() => import("@/views/IslamicLandmarksPage"));
 const MutashabihatPage = lazy(() => import("@/views/MutashabihatPage"));
@@ -884,7 +884,8 @@ function Router() {
       <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
       <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>
       <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
-      <Route path="/more"><SafeLazyRoute component={MorePage} /></Route>
+      <Route path="/sections"><SafeLazyRoute component={SectionsPage} /></Route>
+      <Route path="/more"><Redirect to="/sections" /></Route>
       <Route path="/whats-new"><Redirect to="/" /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
       <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>
