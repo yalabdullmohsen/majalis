@@ -1,5 +1,5 @@
 /**
- * بوابة: لا شريط أبيض تحت الشريط السفلي — bleed أخضر + safe-area معتم.
+ * بوابة: الشريط السفلي يغطي Safe Area بخلفية بيضاء صلبة (لا تسرب أخضر من الجسم).
  * node --import tsx src/lib/__tests__/bottom-nav-safe-area-green.test.ts
  */
 import assert from "node:assert/strict";
@@ -15,9 +15,22 @@ assert.match(html, /viewport-fit=cover/);
 
 const finalCss = read("src/styles/final-release.css");
 assert.match(finalCss, /--mj-splash,\s*#002b21/);
-assert.match(finalCss, /padding-bottom:\s*var\(--inset-bottom\)/);
+assert.match(
+  finalCss,
+  /padding-bottom:\s*var\(--inset-bottom\)/,
+  "الشريط السفلي يستخدم var(--inset-bottom) لمنطقة الأمان",
+);
 assert.match(finalCss, /backdrop-filter:\s*none/);
-assert.match(finalCss, /linear-gradient\([\s\S]*--inset-bottom/);
+assert.match(
+  finalCss,
+  /\.bottom-nav[\s\S]*?background-color:\s*#ffffff\s*!important/,
+  "خلفية الشريط السفلي بيضاء صلبة",
+);
+assert.doesNotMatch(
+  finalCss,
+  /\.bottom-nav[\s\S]{0,800}?background-image:\s*linear-gradient\([\s\S]*?--mj-splash/,
+  "لا تدرّج أخضر تحت الشريط السفلي",
+);
 assert.match(finalCss, /#root,\s*\n\.app-shell/);
 
 const foundation = read("src/styles/m2030/foundation.css");

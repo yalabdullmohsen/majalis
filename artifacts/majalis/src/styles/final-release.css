@@ -744,18 +744,12 @@ html.dark .nav-soon-badge {
     min-height: 0 !important;
     max-height: none !important;
     padding-top: 0 !important;
+    /* Safe Area السفلي أبيض متصل مع الشريط — يمنع تسرب خلفية الجسم الخضراء */
     padding-bottom: var(--inset-bottom) !important;
     padding-inline: var(--gutter-inline-end) var(--gutter-inline-start) !important;
     margin: 0 !important;
-    /* تبويبات على السطح · شريط safe-area أخضر داكن (لا أبيض شفاف) */
-    background-color: var(--mj-splash, #002b21) !important;
-    background-image: linear-gradient(
-      to bottom,
-      var(--mj-surface, #ffffff) 0%,
-      var(--mj-surface, #ffffff) calc(100% - var(--inset-bottom, 0px)),
-      var(--mj-splash, #002b21) calc(100% - var(--inset-bottom, 0px)),
-      var(--mj-splash, #002b21) 100%
-    ) !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
     border-block-start: 1px solid var(--color-border) !important;
     border-top: 1px solid var(--color-border) !important;
     box-shadow: 0 -6px 20px rgb(23 61 53 / 6%) !important;
@@ -918,7 +912,8 @@ html.dark .nav-soon-badge {
 
 html[data-theme="dark"] .bottom-nav,
 html[data-theme="dark"] .bottom-nav--v2 {
-  background: color-mix(in srgb, var(--color-surface) 92%, transparent) !important;
+  background-color: var(--color-surface, #131A18) !important;
+  background-image: none !important;
   border-block-start-color: var(--color-border) !important;
   border-top-color: var(--color-border) !important;
   box-shadow: 0 -6px 20px rgb(0 0 0 / 22%) !important;
