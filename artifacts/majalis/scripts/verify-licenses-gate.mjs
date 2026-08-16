@@ -109,11 +109,26 @@ try {
     encoding: "utf8",
     maxBuffer: 40 * 1024 * 1024,
     stdio: ["ignore", "pipe", "pipe"],
+    timeout: 120_000,
   });
   licenseJson = JSON.parse(out);
 } catch (err) {
-  issues.push(`تعذّر pnpm licenses list: ${err instanceof Error ? err.message : String(err)}`);
-  licenseJson = null;
+  // إعادة محاولة واحدة — فشل عابر شائع على CI عند ضغط الذاكرة/القرص
+  try {
+    const out = execSync("pnpm licenses list --json", {
+      cwd: monorepoRoot,
+      encoding: "utf8",
+      maxBuffer: 40 * 1024 * 1024,
+      stdio: ["ignore", "pipe", "pipe"],
+      timeout: 120_000,
+    });
+    licenseJson = JSON.parse(out);
+  } catch (err2) {
+    issues.push(
+      `تعذّر pnpm licenses list: ${err2 instanceof Error ? err2.message : String(err2)} (أول محاولة: ${err instanceof Error ? err.message : String(err)})`,
+    );
+    licenseJson = null;
+  }
 }
 
 const forbiddenHits = [];
