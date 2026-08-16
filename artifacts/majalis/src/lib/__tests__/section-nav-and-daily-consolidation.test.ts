@@ -198,7 +198,10 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   assert(!servicesNavSrc.includes('label: "موسوعة الأحكام"'), "لا موسوعة أحكام في القائمة العامة");
   assert(!servicesNavSrc.includes('label: "المجامع الفقهية"'), "لا مجامع كقسم رئيسي");
   assert(navMapSrc.includes("BOTTOM_NAV_TABS") && navMapSrc.includes("SERVICES_CENTER_GROUPS"), "nav-map مصدر موحّد");
-  assert(sidebarNavSrc.includes("getSidebarGroupsFromNavMap"), "الجانبية تشتق من nav-map");
+  assert(
+    sidebarNavSrc.includes("sections.registry") || sidebarNavSrc.includes("getSidebarGroupsFromNavMap"),
+    "الجانبية تشتق من السجل أو nav-map",
+  );
   assert(sideSrc.includes("SIDEBAR_NAV_GROUPS") && sideSrc.includes("sidebar-panel"), "القائمة تستخدم التصميم الموحّد");
   assert(!sideSrc.includes("منصة علمية منظمة"), "لا وصف ترويجي في رأس القائمة");
   assert(!HIDDEN_FROM_NAV_PATHS.has("/about"), "about ظاهر للاكتشاف عبر عن المجلس");
