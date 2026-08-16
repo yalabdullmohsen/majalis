@@ -43,8 +43,9 @@ const servicesNav = readFileSync(join(root, "lib/services-center-nav.ts"), "utf8
 assert.match(servicesNav, /المزيد|MORE_FEATURED_SECTIONS/);
 const moreSections = readFileSync(join(root, "features/more/moreSections.ts"), "utf8");
 assert.match(moreSections, /\/hadith/);
-assert.match(moreSections, /الحديث/);
+assert.match(moreSections, /الحديث وعلومه/);
 assert.match(moreSections, /سين جيم/);
+assert.match(moreSections, /أعلام وتراجم/);
 
 const nav = readFileSync(join(root, "lib/navigation.ts"), "utf8");
 assert.match(nav, /href: "\/nations"/);

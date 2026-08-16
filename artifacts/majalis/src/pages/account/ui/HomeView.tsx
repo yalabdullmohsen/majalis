@@ -1,6 +1,14 @@
 import { Suspense, useEffect, useState } from "react";
 import { Link } from "wouter";
-import { BookMarked, BookOpen, GraduationCap, Scale, Scroll, Target, Wrench } from "lucide-react";
+import {
+  BookMarked,
+  BookOpen,
+  Clock,
+  GraduationCap,
+  LayoutGrid,
+  Scale,
+  Wrench,
+} from "lucide-react";
 import contentCounts from "@/data/content-counts.json";
 import { applyPageSeo } from "@/lib/seo";
 import { defaultSiteJsonLd } from "@/lib/seo-structured-data";
@@ -29,6 +37,7 @@ import { HomeDailyWirdBand } from "@/components/home/DailyWirdCard";
 import { HomeMostReadBand } from "@/components/home/HomeMostReadBand";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { QUICK_LINKS } from "@/lib/home-feature-catalog";
+import { IA_HOME_PRIMARY } from "@/lib/ia-final-structure";
 import {
   HOME_WIDGET_DEFS,
   getLocalHomepagePrefs,
@@ -81,14 +90,20 @@ const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
 
 const WIDGET_LABEL: Record<string, string> = Object.fromEntries(HOME_WIDGET_DEFS.map((w) => [w.id, w.label]));
 
-const FEATURED_CATS = [
-  { href: "/quran-knowledge", title: "القرآن وعلومه", desc: "فهرس وعلوم وأسباب نزول", cta: "استكشف", Icon: BookMarked },
-  { href: "/hadith", title: "الحديث وعلومه", desc: "مداخل وأحاديث مع بيان المصدر قدر الإمكان", cta: "تصفح", Icon: Scroll },
-  { href: "/fiqh", title: "الفقه والأحكام", desc: "مسائل وأحكام مرتّبة", cta: "ادخل", Icon: Scale },
-  { href: "/lessons", title: "الدروس العلمية", desc: "مسارات ودروس منظمة", cta: "افتح الدروس", Icon: GraduationCap },
-  { href: "/memorization", title: "الحفظ والمراجعة", desc: "خطط واختبارات", cta: "ابدأ", Icon: Target },
-  { href: "/adhkar", title: "الأذكار", desc: "أذكار الصباح والمساء", cta: "افتح الأذكار", Icon: BookOpen },
-] as const;
+const HOME_PRIMARY_ICONS = {
+  "/quran-hub": BookMarked,
+  "/lessons": GraduationCap,
+  "/prayer-times": Clock,
+  "/fiqh": Scale,
+  "/adhkar": BookOpen,
+  "/more": LayoutGrid,
+} as const;
+
+const FEATURED_CATS = IA_HOME_PRIMARY.map((item) => ({
+  ...item,
+  cta: "افتح",
+  Icon: HOME_PRIMARY_ICONS[item.href as keyof typeof HOME_PRIMARY_ICONS] ?? BookOpen,
+}));
 
 export default function HomePage() {
   const { isAdmin, user } = useAuth();

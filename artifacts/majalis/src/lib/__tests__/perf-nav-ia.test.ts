@@ -23,15 +23,18 @@ const hubLabels = SERVICES_CENTER_GROUPS[0]!.items.map((i) => i.label);
 assert.deepEqual(
   hubLabels,
   [
-    "الأذكار",
     "المكتبة",
-    "العلماء",
-    "الحديث",
+    "أعلام وتراجم",
+    "الحديث وعلومه",
     "قصص الأنبياء",
     "سين جيم",
     "الفوائد والبطاقات",
     "البحث",
+    "الأذكار",
+    "الأدعية",
+    "الصلاة",
     "الإعدادات",
+    "المفضلة",
   ],
   "ترتيب أبواب المزيد المعتمد",
 );
@@ -40,14 +43,17 @@ const hubHrefs = SERVICES_CENTER_GROUPS[0]!.items
   .filter((i) => i.action.kind === "link")
   .map((i) => (i.action as { href: string }).href);
 assert.deepEqual(hubHrefs, [
-  "/adhkar",
   "/library",
   "/scholars",
   "/hadith",
   "/prophets",
   "/quiz",
   "/fawaid",
+  "/adhkar",
+  "/duas",
+  "/prayer-times",
   "/settings",
+  "/my-citations",
 ]);
 
 const moreSections = readFileSync(resolve(root, "features/more/moreSections.ts"), "utf8");

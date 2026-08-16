@@ -262,6 +262,11 @@
       "permanent": true
     },
     {
+      "source": "/courses",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
       "source": "/learning",
       "destination": "/lessons",
       "permanent": true

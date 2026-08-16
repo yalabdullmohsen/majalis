@@ -19,6 +19,9 @@ const { ARBAEEN_NAWAWI } = await import("../src/lib/arbaeen-nawawi-seed.ts");
 const { NATIONS } = await import("../src/lib/nations-seed.ts");
 const { getAllSurahStories } = await import("../src/lib/surah-stories.ts");
 const { MUSHAF_TAFSIR_EDITIONS } = await import("../src/lib/quran-data/tafsir-editions.ts");
+const { IA_REDIRECTS } = await import("../src/lib/ia-final-structure.ts");
+
+const REDIRECT_HREFS = new Set(Object.keys(IA_REDIRECTS));
 
 /** @typedef {{ id: string, kind: string, titleAr: string, href: string, norm: string, meta?: string }} SearchDoc */
 
@@ -34,6 +37,8 @@ function push(d) {
 }
 
 function pushDoc(id, kind, titleAr, href, parts = [], meta) {
+  const clean = String(href || "").split("?")[0].split("#")[0];
+  if (REDIRECT_HREFS.has(clean) || clean === "/qa" || clean.startsWith("/qa/")) return;
   push({
     id,
     kind,
@@ -316,6 +321,23 @@ try {
   console.warn("knowledge index skipped:", e.message);
 }
 
+// ── أدوات مساعدة (ليست أبوابًا رئيسية) ─────────────────────────────────────
+pushDoc(
+  "tool:topics",
+  "tool",
+  "الموضوعات",
+  "/topics",
+  ["موضوعات", "فهرس", "بحث"],
+  "أداة بحث",
+);
+pushDoc(
+  "tool:glossary",
+  "tool",
+  "المصطلحات الإسلامية",
+  "/islamic-glossary",
+  ["معجم", "مصطلحات", "بحث"],
+  "أداة بحث",
+);
 
 const outDir = path.join(appRoot, "public/data/search");
 fs.mkdirSync(outDir, { recursive: true });
