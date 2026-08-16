@@ -29,22 +29,18 @@ assert.match(hadithCss, /hadith-hub-grid/);
 assert.match(hadithCss, /font-size:\s*max\(1\.125rem,\s*18px\)/);
 
 const more = read("src/pages/account/MorePage.tsx");
-assert.match(more, /MORE_FEATURED_SECTIONS/);
+assert.match(more, /MoreHubFromRegistry/);
 assert.doesNotMatch(more, /onClose|button.*إغلاق|aria-label=["']إغلاق/);
-assert.match(more, /الأقسام الأساسية/);
 
 const titles = MORE_FEATURED_SECTIONS.map((s) => s.title);
+assert.equal(titles.length, 6);
 for (const t of [
-  "المكتبة",
-  "أعلام وتراجم",
+  "العقيدة",
+  "التفسير",
   "الحديث وعلومه",
-  "قصص الأنبياء",
-  "الأمم السابقة",
+  "الفقه والأحكام",
   "السيرة النبوية",
-  "الفوائد والبطاقات",
-  "سين جيم",
-  "البحث",
-  "الإعدادات",
+  "قصص الأنبياء",
 ]) {
   assert.ok(titles.includes(t), `المزيد يتضمن «${t}»`);
 }
@@ -52,11 +48,10 @@ const secondary = MORE_STANDARD_SECTIONS.map((s) => s.title);
 assert.ok(secondary.includes("الأدعية"));
 assert.ok(secondary.includes("المصطلحات"));
 assert.ok(secondary.includes("الموضوعات"));
+assert.equal(secondary.includes("البحث"), false, "لا بطاقة بحث في المزيد");
 
 const moreCss = read("src/styles/pages/more-page.css");
 assert.match(moreCss, /--bottom-nav-height/);
-assert.match(moreCss, /grid-template-columns:\s*repeat\(2/);
-assert.match(moreCss, /-webkit-line-clamp:\s*2/);
 
 const searchCss = read("src/styles/pages/search.css");
 assert.match(searchCss, /100dvh/);

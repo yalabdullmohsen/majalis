@@ -6,6 +6,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { SERVICES_CENTER_GROUPS } from "@/lib/services-center-nav";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
@@ -18,13 +19,18 @@ const nativeCss = readFileSync(resolve(appRoot, "src/styles/capacitor-native-ux.
 assert.ok(appSrc.includes('from "@/lib/capacitor-utils"'), "يستورد isNative من capacitor-utils");
 assert.ok(appSrc.includes("{!hideSiteChrome && !isNative && <SiteFooter />}"), "التذييل مخفي على الأصلي");
 assert.match(nativeCss, /html\.capacitor-native \.site-footer/);
-assert.match(settingsSrc, /title="عن التطبيق"/);
-assert.match(settingsSrc, /href="\/privacy"/);
-assert.match(settingsSrc, /href="\/terms"/);
-assert.match(settingsSrc, /href="\/support"/);
-assert.match(servicesSrc, /title:\s*"(?:عن التطبيق|الإعدادات والمساعدة)"/);
-assert.match(servicesSrc, /href: "\/privacy"/);
-assert.match(servicesSrc, /href: "\/terms"/);
-assert.match(servicesSrc, /href: "\/support"/);
+assert.match(settingsSrc, /عن التطبيق/);
+assert.match(settingsSrc, /href="\/privacy"|to="\/privacy"|\/privacy/);
+assert.match(settingsSrc, /\/terms/);
+assert.match(settingsSrc, /\/support/);
+assert.match(servicesSrc, /sections\.registry/);
+const account = SERVICES_CENTER_GROUPS.find((g) => g.id === "account");
+assert.ok(account?.title.includes("الحساب") || account?.title.includes("إعدادات"));
+const hrefs = account!.items
+  .filter((i) => i.action.kind === "link")
+  .map((i) => (i.action as { href: string }).href);
+assert.ok(hrefs.includes("/privacy"));
+assert.ok(hrefs.includes("/terms"));
+assert.ok(hrefs.includes("/support"));
 
 console.log("native-hide-site-footer.test.ts: ok");

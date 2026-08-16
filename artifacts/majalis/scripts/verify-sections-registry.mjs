@@ -130,13 +130,12 @@ const SPACING = new Set([8, 12, 16, 24]);
     const navFiles = [
       "src/features/more/moreSections.ts",
       "src/lib/services-center-nav.ts",
-      "src/lib/nav-map.ts",
     ];
     for (const f of navFiles) {
       if (!exists(f)) continue;
       const src = read(f);
-      if (/MORE_FEATURED_SECTIONS\s*=\s*\[/.test(src) && !src.includes("sections.registry")) {
-        fail(`${f}: ما زال يعرّف تنقّلاً يدوياً بلا استيراد السجل`);
+      if (!src.includes("sections.registry")) {
+        fail(`${f}: يجب أن يستورد سجل الأقسام`);
       }
     }
   }

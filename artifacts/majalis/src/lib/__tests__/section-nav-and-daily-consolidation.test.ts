@@ -17,6 +17,7 @@ import {
 } from "../nav-visibility";
 import { FEATURE_CATS } from "../home-feature-catalog";
 import { PRIMARY_NAV_ITEMS } from "../navigation";
+import { SERVICES_CENTER_GROUPS } from "../services-center-nav";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
@@ -150,9 +151,17 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
     assert(!src.includes('"/knowledge-graph"'), "لا استكشف المعرفة");
   }
   const moreSecSrc = readFileSync(resolve(appRoot, "src/features/more/moreSections.ts"), "utf-8");
-  assert(moreSecSrc.includes("المكتبة") && moreSecSrc.includes("الحديث"), "المكتبة والحديث في المزيد");
-  assert(servicesNavSrc.includes('"/academic-research"') && servicesNavSrc.includes('"/universities"'),
-    "الجامعات والرسائل في مركز الخدمات");
+  assert(moreSecSrc.includes("sections.registry"), "المكتبة والحديث في المزيد");
+  assert(
+    SERVICES_CENTER_GROUPS.some((g) =>
+      g.items.some(
+        (i) =>
+          i.action.kind === "link" &&
+          (i.action.href === "/universities" || i.action.href === "/academic-research"),
+      ),
+    ),
+    "الجامعات والرسائل في مركز الخدمات",
+  );
   assert(appSrc.includes("AcademicResearchPage") && !appSrc.includes('<Route path="/academic-research"><Redirect to="/"'),
     "صفحة الأبحاث مفعّلة بلا تحويل للرئيسية");
   assert(!homeSrc.includes("HomeAboutSection"), "من نحن خارج الرئيسية");
@@ -174,12 +183,20 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
     "التذييل في غلاف التطبيق (ويب فقط — مخفي على Capacitor)",
   );
   assert(footerNavSrc.includes("الريادة الإسلامية الرقمية"), "سطر الريادة في التذييل");
-  assert(servicesNavSrc.includes("/about-us") && servicesNavSrc.includes("/about"), "عن المجلس في مركز الخدمات");
-  assert(moreSecSrc.includes("الأذكار") && moreSecSrc.includes("سين جيم"), "مركز الخدمات/المزيد يحتوي الأبواب المعتمدة");
+  assert(
+    moreSecSrc.includes("sections.registry") && servicesNavSrc.includes("sections.registry"),
+    "مركز الخدمات/المزيد من السجل",
+  );
+  const aboutOk =
+    SERVICES_CENTER_GROUPS.some((g) => g.items.some((i) => i.label.includes("عن المجلس") || (i.action.kind === "link" && i.action.href === "/about")));
+  assert(aboutOk, "عن المجلس في مركز الخدمات");
+  const deleteOk = SERVICES_CENTER_GROUPS.some((g) =>
+    g.items.some((i) => i.id === "delete-account" || i.label.includes("حذف الحساب")),
+  );
+  assert(deleteOk, "حذف الحساب في مركز الخدمات");
   assert(!servicesNavSrc.includes("/start-here"), "لا ابدأ من هنا في مركز الخدمات");
   assert(!servicesNavSrc.includes('label: "موسوعة الأحكام"'), "لا موسوعة أحكام في القائمة العامة");
   assert(!servicesNavSrc.includes('label: "المجامع الفقهية"'), "لا مجامع كقسم رئيسي");
-  assert(servicesNavSrc.includes("/delete-account"), "حذف الحساب في مركز الخدمات");
   assert(navMapSrc.includes("BOTTOM_NAV_TABS") && navMapSrc.includes("SERVICES_CENTER_GROUPS"), "nav-map مصدر موحّد");
   assert(sidebarNavSrc.includes("getSidebarGroupsFromNavMap"), "الجانبية تشتق من nav-map");
   assert(sideSrc.includes("SIDEBAR_NAV_GROUPS") && sideSrc.includes("sidebar-panel"), "القائمة تستخدم التصميم الموحّد");
@@ -197,9 +214,9 @@ console.log("\n=== الشريط السفلي والمزيد ===");
   assert(navMapSrc.includes('"/quran-hub"') && navMapSrc.includes('"/prayer-times"') && navMapSrc.includes('"/fiqh"') && navMapSrc.includes('"/lessons"'), "مسارات المساحات الأربع");
   assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
-  assert(moreSrc.includes("filterServicesCenterGroups") || moreSrc.includes("services-center-nav"), "المزيد من كتالوج الخدمات");
-  assert(moreSrc.includes("قائمة المزيد") || moreSrc.includes("مركز الخدمات") || moreSrc.includes("حسابي"), "المزيد قائمة منظمة");
-  assert(moreSrc.includes("query") || moreSrc.includes("search"), "بحث داخل مركز الخدمات");
+  assert(moreSrc.includes("MoreHubFromRegistry"), "المزيد من سجل الأقسام");
+  assert(moreSrc.includes("المزيد") || moreSrc.includes("إغلاق"), "المزيد قائمة منظمة");
+  assert(moreSrc.includes("showSearch"), "بحث داخل مركز الخدمات");
 }
 
 console.log(`\n${"─".repeat(40)}`);

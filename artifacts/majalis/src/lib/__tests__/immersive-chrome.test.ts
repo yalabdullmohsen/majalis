@@ -82,7 +82,7 @@ assert.match(mushafView, /MushafViewport/);
 assert.match(mushafView, /page=/);
 
 const servicesNav = readFileSync(resolve(appRoot, "src/lib/services-center-nav.ts"), "utf8");
-assert.match(servicesNav, /href: "\/nations"/);
+assert.match(servicesNav, /sections\.registry/);
 assert.match(navMap, /href: "\/quran-hub"/);
 assert.match(quranHub, /\/quran\/recitation-test-ai/);
 

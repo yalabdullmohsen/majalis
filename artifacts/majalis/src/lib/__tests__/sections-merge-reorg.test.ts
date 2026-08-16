@@ -57,20 +57,10 @@ assert.deepEqual(
   ["/quran-hub", "/lessons", "/prayer-times", "/fiqh"],
 );
 
+assert.equal(MORE_FEATURED_SECTIONS.length, 6);
 assert.deepEqual(
   MORE_FEATURED_SECTIONS.map((s) => s.title),
-  [
-    "المكتبة",
-    "أعلام وتراجم",
-    "الحديث وعلومه",
-    "قصص الأنبياء",
-    "الأمم السابقة",
-    "السيرة النبوية",
-    "الفوائد والبطاقات",
-    "سين جيم",
-    "البحث",
-    "الإعدادات",
-  ],
+  ["العقيدة", "التفسير", "الحديث وعلومه", "الفقه والأحكام", "السيرة النبوية", "قصص الأنبياء"],
 );
 
 const hubSrc = SERVICES_CENTER_GROUPS[0]!.items.map((i) => i.label).join("|");
@@ -78,6 +68,7 @@ assert.equal(hubSrc.includes("موسوعة الأحكام"), false);
 assert.equal(hubSrc.includes("المجامع"), false);
 assert.equal(hubSrc.includes("ابدأ من هنا"), false);
 assert.equal(hubSrc.includes("الأسئلة والأجوبة"), false);
+assert.equal(hubSrc.includes("البحث"), false);
 
 const fiqh = read("src/pages/fiqh/ui/FiqhView.tsx");
 assert.match(fiqh, /القواعد الفقهية/);

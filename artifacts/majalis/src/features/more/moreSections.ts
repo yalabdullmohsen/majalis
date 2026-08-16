@@ -1,24 +1,18 @@
 /**
- * مصدر واحد لأبواب «المزيد» — مجموعات بلا تكرار مع الشريط السفلي.
+ * توافق خلفي — أبواب «المزيد» تُشتق من سجل الأقسام SSOT.
+ * لا تُضَف عناصر يدويًا هنا.
  */
-import type { LucideIcon } from "lucide-react";
 import {
-  BookMarked,
-  BookOpen,
-  CreditCard,
-  Heart,
-  Landmark,
-  Library,
-  Moon,
-  ScrollText,
-  Search,
-  Settings,
-  Star,
-  Users,
-} from "lucide-react";
+  SECTIONS,
+  SECTION_GROUP_META,
+  SECTION_GROUP_ORDER,
+  featuredSections,
+  sectionsByGroup,
+  type SectionDef,
+} from "@/config/sections.registry";
+import type { LucideIcon } from "lucide-react";
 
 export type MoreSectionTier = "featured" | "standard";
-
 export type MoreSectionGroupId = "primary" | "secondary";
 
 export type MoreSection = {
@@ -35,201 +29,51 @@ export type MoreSection = {
   action?: "search";
 };
 
-export const MORE_SECTION_GROUPS: { id: MoreSectionGroupId; title: string }[] = [
-  { id: "primary", title: "الأقسام الأساسية" },
-  { id: "secondary", title: "أدوات مساعدة" },
-];
-
-/** الأقسام الأساسية داخل المزيد */
-export const MORE_FEATURED_SECTIONS: MoreSection[] = [
-  {
-    id: "library",
-    title: "المكتبة",
-    subtitle: "كتب ومصادر",
-    icon: Library,
-    route: "/library",
-    tier: "featured",
-    order: 1,
-    group: "primary",
-    keywords: ["مكتبة", "كتب"],
-  },
-  {
-    id: "scholars",
-    title: "أعلام وتراجم",
-    subtitle: "علماء الإسلام",
-    icon: Users,
-    route: "/scholars",
-    tier: "featured",
-    order: 2,
-    group: "primary",
-    keywords: ["علماء", "أعلام", "تراجم"],
-  },
-  {
-    id: "hadith",
-    title: "الحديث وعلومه",
-    subtitle: "صحيح وضعيف وكتب ومصطلح",
-    icon: ScrollText,
-    route: "/hadith",
-    tier: "featured",
-    order: 3,
-    group: "primary",
-    keywords: ["حديث", "سنة"],
-  },
-  {
-    id: "prophets",
-    title: "قصص الأنبياء",
-    subtitle: "من آدم إلى محمد ﷺ",
-    icon: BookOpen,
-    route: "/prophets",
-    tier: "featured",
-    order: 4,
-    group: "primary",
-    keywords: ["أنبياء", "قصص"],
-  },
-  {
-    id: "nations",
-    title: "الأمم السابقة",
-    subtitle: "عاد وثمود وأصحاب الأيكة وغيرهم",
-    icon: Landmark,
-    route: "/nations",
-    tier: "featured",
-    order: 5,
-    group: "primary",
-    keywords: ["أمم", "عاد", "ثمود"],
-  },
-  {
-    id: "seerah",
-    title: "السيرة النبوية",
-    subtitle: "من البعثة إلى الهجرة والغزوات",
-    icon: Moon,
-    route: "/seerah",
-    tier: "featured",
-    order: 6,
-    group: "primary",
-    keywords: ["سيرة", "غزوات"],
-  },
-  {
-    id: "fawaid-cards",
-    title: "الفوائد والبطاقات",
-    subtitle: "مراجعة وحفظ",
-    icon: CreditCard,
-    route: "/fawaid",
-    tier: "featured",
-    order: 7,
-    group: "primary",
-    keywords: ["فوائد", "بطاقات", "مراجعة", "flashcards"],
-  },
-  {
-    id: "quiz",
-    title: "سين جيم",
-    subtitle: "اختبر معلوماتك",
-    icon: Star,
-    route: "/quiz",
-    tier: "featured",
-    order: 8,
-    group: "primary",
-    keywords: ["مسابقة", "اختبار", "quiz", "سين جيم", "qa"],
-  },
-  {
-    id: "search",
-    title: "البحث",
-    subtitle: "ابحث في المحتوى",
-    icon: Search,
-    route: "/search",
-    tier: "featured",
-    order: 9,
-    group: "primary",
-    keywords: ["بحث"],
-    action: "search",
-  },
-  {
-    id: "settings",
-    title: "الإعدادات",
-    subtitle: "الحساب والمظهر",
-    icon: Settings,
-    route: "/settings",
-    tier: "featured",
-    order: 10,
-    group: "primary",
-    keywords: ["إعدادات"],
-  },
-];
-
-/** قسم ثانوي أسفل الصفحة */
-export const MORE_STANDARD_SECTIONS: MoreSection[] = [
-  {
-    id: "duas",
-    title: "الأدعية",
-    subtitle: "أدعية مأثورة",
-    icon: Heart,
-    route: "/duas",
-    tier: "standard",
-    order: 20,
-    group: "secondary",
-    keywords: ["أدعية", "دعاء"],
-  },
-  {
-    id: "adhkar",
-    title: "الأذكار",
-    subtitle: "أذكار اليوم والليل",
-    icon: BookMarked,
-    route: "/adhkar",
-    tier: "standard",
-    order: 21,
-    group: "secondary",
-    keywords: ["أذكار"],
-  },
-  {
-    id: "glossary",
-    title: "المصطلحات",
-    subtitle: "أداة مساعدة للبحث",
-    icon: BookMarked,
-    route: "/islamic-glossary",
-    tier: "standard",
-    order: 22,
-    group: "secondary",
-    keywords: ["معجم", "مصطلحات"],
-  },
-  {
-    id: "topics",
-    title: "الموضوعات",
-    subtitle: "فهرس موضوعات",
-    icon: BookOpen,
-    route: "/topics",
-    tier: "standard",
-    order: 23,
-    group: "secondary",
-    keywords: ["مواضيع"],
-  },
-  {
-    id: "favorites",
-    title: "المفضلة",
-    subtitle: "اقتباساتك المحفوظة",
-    icon: Heart,
-    route: "/my-citations",
-    tier: "standard",
-    order: 24,
-    group: "secondary",
-    keywords: ["مفضلة", "محفوظات"],
-  },
-];
-
-export const MORE_ACCOUNT_SECTIONS: MoreSection[] = [
-  {
-    id: "account",
-    title: "حسابي",
-    icon: Users,
-    route: "/my-learning",
-    tier: "standard",
-    order: 90,
-    group: "secondary",
-  },
-];
-
-export function moreSectionsInGroup(group: MoreSectionGroupId): MoreSection[] {
-  return MORE_FEATURED_SECTIONS.filter((s) => s.group === group).sort((a, b) => a.order - b.order);
+function toMore(s: SectionDef, tier: MoreSectionTier, group: MoreSectionGroupId): MoreSection {
+  return {
+    id: s.id,
+    title: s.label,
+    subtitle: s.subtitle,
+    icon: s.icon,
+    route: s.route,
+    tier,
+    order: s.order,
+    group,
+    keywords: [...s.keywords, ...(s.aliases ?? [])],
+  };
 }
 
-export const MORE_FEATURED_TITLES = MORE_FEATURED_SECTIONS.map((s) => s.title);
-export const MORE_FEATURED_ROUTES = MORE_FEATURED_SECTIONS.map((s) => s.route);
-export const MORE_QURAN_ULUM_ICON = BookMarked;
+/** الأبواب المميّزة (٦) — tier: "featured" */
+export const MORE_FEATURED_SECTIONS: MoreSection[] = featuredSections().map((s) =>
+  toMore(s, "featured", "primary"),
+);
+
+/** بقية أقسام المزيد (غير الحساب) */
+export const MORE_STANDARD_SECTIONS: MoreSection[] = SECTION_GROUP_ORDER.filter(
+  (g) => g !== "account",
+)
+  .flatMap((g) => sectionsByGroup(g, "moreHub").filter((s) => !s.featured))
+  .map((s) => toMore(s, "standard", "secondary"));
+
+/** مجموعة الحساب والإعدادات */
+export const MORE_ACCOUNT_SECTIONS: MoreSection[] = sectionsByGroup("account", "moreHub").map((s) =>
+  toMore(s, "standard", "secondary"),
+);
+
+export const MORE_SECTION_GROUPS: { id: MoreSectionGroupId; title: string }[] = [
+  { id: "primary", title: SECTION_GROUP_META.sciences.label },
+  { id: "secondary", title: "بقية الأقسام" },
+];
+
+/** عناوين المجموعات السبعة المعتمدة */
+export const MORE_IA_GROUP_TITLES = SECTION_GROUP_ORDER.map((g) => SECTION_GROUP_META[g].label);
+
+export function moreSectionsInGroup(group: MoreSectionGroupId): MoreSection[] {
+  if (group === "primary") return MORE_FEATURED_SECTIONS;
+  return [...MORE_STANDARD_SECTIONS, ...MORE_ACCOUNT_SECTIONS];
+}
+
+/** كل أقسام المزيد الحية من السجل */
+export function allMoreSectionsFromRegistry(): SectionDef[] {
+  return SECTIONS.filter((s) => s.status !== "hidden" && s.surfaces.includes("moreHub") && s.order >= 0);
+}
