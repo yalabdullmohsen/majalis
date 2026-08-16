@@ -10,6 +10,7 @@ import {
   OFFLINE_FEATURED_MUEZZIN_IDS,
   isOfflineFeaturedMuezzin,
 } from "@/lib/adhan-offline-assets";
+import { FEATURED_ADHAN_STYLE_IDS } from "@/lib/adhan-featured-styles";
 import "@/styles/components/muezzin-picker.css";
 
 type Props = {
@@ -45,7 +46,10 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
   const featured = useMemo(() => {
     if (query.trim()) return [] as Muezzin[];
     const byId = new Map(filtered.map((m) => [m.id, m]));
-    return OFFLINE_FEATURED_MUEZZIN_IDS.map((id) => byId.get(id)).filter(
+    const ordered = FEATURED_ADHAN_STYLE_IDS.length
+      ? FEATURED_ADHAN_STYLE_IDS
+      : OFFLINE_FEATURED_MUEZZIN_IDS;
+    return ordered.map((id) => byId.get(id)).filter(
       (m): m is Muezzin => Boolean(m),
     );
   }, [filtered, query]);

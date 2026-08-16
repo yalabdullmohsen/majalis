@@ -17,12 +17,11 @@ import {
   type PrayerKey,
   type AdvanceMinutes,
 } from "@/lib/adhan-preferences";
-import { getMuezzin, hasFajrAdhan } from "@/lib/adhan-audio";
+import { getMuezzin, hasFajrAdhan, previewAdhanAsync, stopAdhan } from "@/lib/adhan-audio";
 import {
   ADHAN_FULL_AUDIO_PATHS,
   getAdhanAudioDebugSnapshot,
   probeAdhanAssetExists,
-  stopAdhan,
   stopAdhanAudio,
   testAdhanSound,
   testFullAdhan,
@@ -46,15 +45,22 @@ import { MuezzinPicker } from "@/components/adhan/MuezzinPicker";
 import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
 import { listBundledAdhanSoundPaths } from "@/lib/adhan-offline-assets";
 import {
+  FEATURED_ADHAN_STYLE_IDS,
+  FEATURED_ADHAN_STYLE_LABELS,
+  type FeaturedAdhanStyleId,
+} from "@/lib/adhan-featured-styles";
+import {
   KUWAIT_GOVERNORATES,
   getSelectedGovernorate,
   setSelectedGovernorate,
+  fetchPrayerTimes,
 } from "@/lib/prayer-times";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { applyPageSeo } from "@/lib/seo";
 import { undismissFridayBanner } from "@/lib/friday-prayer";
 import { computeNotificationDiagnostics, type NotificationDiagnostics } from "@/lib/notification-diagnostics";
 import { isIOS, isNative } from "@/lib/capacitor-utils";
+import { loadNotifPrefs, saveNotifPrefs } from "@/lib/local-notifications";
 import "@/styles/pages/adhan-settings.css";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
@@ -221,6 +227,108 @@ function NotificationPermBadge() {
   return <PermissionBadge value={state} />;
 }
 
+function AudioPermBadge() {
+  const [state, setState] = useState<PermissionState>("default");
+  useEffect(() => {
+    // المتصفح لا يوفّر إذن صوت صريحًا — نعتبره جاهزًا بعد تفاعل المستخدم،
+    // وننبّه عند autoplay المحظور عبر رسائل التشغيل.
+    setState("granted");
+  }, []);
+  return <PermissionBadge value={state} />;
+}
+
+function FeaturedAdhanStyles({
+  selectedId,
+  volume,
+  onSelect,
+  onFlash,
+}: {
+  selectedId: string;
+  volume: number;
+  onSelect: (id: string) => void;
+  onFlash: () => void;
+}) {
+  const [previewing, setPreviewing] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const handlePreview = (id: FeaturedAdhanStyleId) => {
+    if (previewing === id) {
+      stopAdhan();
+      setPreviewing(null);
+      setError(null);
+      return;
+    }
+    setError(null);
+    setPreviewing(id);
+    const m = getMuezzin(id);
+    void previewAdhanAsync(m, volume).then((result) => {
+      if (!result.ok) {
+        setPreviewing(null);
+        setError(result.message || "تعذّر تشغيل الصوت. جرّب نوعًا آخر أو أعد التحميل.");
+        return;
+      }
+      result.audio.addEventListener(
+        "ended",
+        () => setPreviewing((p) => (p === id ? null : p)),
+        { once: true },
+      );
+    });
+  };
+
+  return (
+    <section className="ads-card" aria-labelledby="ads-styles-head">
+      <div className="ads-card__head" id="ads-styles-head">
+        <Music size={15} strokeWidth={2} aria-hidden="true" />
+        <span>أنواع الأذان</span>
+      </div>
+      <div className="ads-card__body">
+        <p className="ads-adhan-desc">
+          اختر نوع الأذان ثم جرّب الصوت فورًا. كل الأنواع لها احتياط محلي عند فشل الشبكة.
+        </p>
+        <div className="ads-style-grid" role="list">
+          {FEATURED_ADHAN_STYLE_IDS.map((id) => {
+            const selected = selectedId === id;
+            const playing = previewing === id;
+            return (
+              <div
+                key={id}
+                role="listitem"
+                className={`ads-style-card${selected ? " is-selected" : ""}`}
+              >
+                <button
+                  type="button"
+                  className="ads-style-card__select"
+                  aria-pressed={selected}
+                  onClick={() => {
+                    onSelect(id);
+                    onFlash();
+                  }}
+                >
+                  <span className="ads-style-card__name">{FEATURED_ADHAN_STYLE_LABELS[id]}</span>
+                  {selected ? <span className="ads-style-card__badge">مختار</span> : null}
+                </button>
+                <button
+                  type="button"
+                  className={`ads-style-card__preview${playing ? " is-playing" : ""}`}
+                  aria-label={playing ? `إيقاف تجربة ${FEATURED_ADHAN_STYLE_LABELS[id]}` : `تجربة الصوت — ${FEATURED_ADHAN_STYLE_LABELS[id]}`}
+                  onClick={() => handlePreview(id)}
+                >
+                  {playing ? "إيقاف" : "تجربة الصوت"}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+        {error ? (
+          <p className="ads-adhan-desc ads-audio-error" role="alert">
+            {error}
+          </p>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
 function commonAdvance(prefs: AdhanPreferences): AdvanceMinutes | null {
   const vals = PRAYER_KEYS.map((k) => prefs.prayers[k].advanceMinutes);
   const first = vals[0] ?? 0;
@@ -377,6 +485,10 @@ export default function AdhanSettingsPage() {
   const [testMsg, setTestMsg] = useState<string | null>(null);
   const [soundTestBusy, setSoundTestBusy] = useState(false);
   const [soundTestMsg, setSoundTestMsg] = useState<string | null>(null);
+  const [rescheduleBusy, setRescheduleBusy] = useState(false);
+  const [adhkarReminder, setAdhkarReminder] = useState(
+    () => loadNotifPrefs().adhkarReminder,
+  );
   const [debugOpen, setDebugOpen] = useState(false);
   const [debugLines, setDebugLines] = useState<string[]>([]);
   const [diagExtra, setDiagExtra] = useState<{
@@ -456,7 +568,17 @@ export default function AdhanSettingsPage() {
 
   useEffect(() => {
     invalidatePrayerNativeSchedule();
-  }, [prefs.defaultMuezzinId, prefs.playbackMode, prefs.iosSequentialFullAdhan, selectedGovId]);
+  }, [
+    prefs.defaultMuezzinId,
+    prefs.playbackMode,
+    prefs.iosSequentialFullAdhan,
+    prefs.globalEnabled,
+    prefs.iqamahEnabled,
+    prefs.iqamahDelayMinutes,
+    prefs.volume,
+    selectedGovId,
+    prefs.prayers,
+  ]);
 
   const sunriseTime =
     prayerData?.prayers.find((p: { key: string }) => p.key === "Sunrise")
@@ -525,6 +647,40 @@ export default function AdhanSettingsPage() {
     setSelectedGovId(id);
   }
 
+  async function runRescheduleAlerts() {
+    setRescheduleBusy(true);
+    setTestMsg(null);
+    try {
+      invalidatePrayerNativeSchedule();
+      const payload = await fetchPrayerTimes(selectedGovId);
+      const { startPrayerAlertScheduler } = await import("@/lib/prayer-alert-scheduler");
+      await startPrayerAlertScheduler(payload, { forceNativeReschedule: true });
+      await import("@/lib/adhan-scheduler").then((m) => m.startAdhanScheduler(payload));
+      setTestMsg(
+        isNative
+          ? "أُعيدت جدولة تنبيهات الأذان لليوم والغد."
+          : "أُعيدت الجدولة — على الويب تعمل أثناء فتح الصفحة.",
+      );
+      flashSaved();
+    } catch {
+      setTestMsg("تعذّرت إعادة جدولة التنبيهات. حاول مرة أخرى.");
+    } finally {
+      setRescheduleBusy(false);
+    }
+  }
+
+  function toggleAdhkarReminder(enabled: boolean) {
+    const next = { ...loadNotifPrefs(), adhkarReminder: enabled };
+    saveNotifPrefs(next);
+    setAdhkarReminder(enabled);
+    if (enabled) {
+      void import("@/lib/smart-local-notifications").then((m) => {
+        void m.syncSmartLocalNotifications().catch(() => undefined);
+      }).catch(() => undefined);
+    }
+    flashSaved();
+  }
+
   const defaultMuezzin = getMuezzin(prefs.defaultMuezzinId);
   const sharedAdvance = useMemo(() => commonAdvance(prefs), [prefs]);
 
@@ -569,6 +725,13 @@ export default function AdhanSettingsPage() {
           </div>
         </div>
       </section>
+
+      <FeaturedAdhanStyles
+        selectedId={prefs.defaultMuezzinId}
+        volume={prefs.volume ?? 1}
+        onSelect={setDefaultMuezzin}
+        onFlash={flashSaved}
+      />
 
       {/* الأذان العام */}
       <section className="ads-card" aria-labelledby="ads-general-head">
@@ -717,6 +880,21 @@ export default function AdhanSettingsPage() {
               </select>
             </div>
           ) : null}
+
+          <div className="ads-field-gap">
+            <div className="ads-row">
+              <div>
+                <div className="ads-global-label">تذكير أذكار الصباح والمساء</div>
+                <div className="ads-global-desc">اختياري — يُجدول مع الإشعارات الذكية</div>
+              </div>
+              <Toggle
+                checked={adhkarReminder}
+                onChange={toggleAdhkarReminder}
+                id="adhkar-reminder-toggle"
+                label="تذكير أذكار الصباح والمساء"
+              />
+            </div>
+          </div>
 
           <div className="ads-field-gap">
             <div className="ads-row">
@@ -939,6 +1117,26 @@ export default function AdhanSettingsPage() {
                   setTestBusy(false);
                   setTestMsg(
                     r.ok
+                      ? "يُشغَّل الأذان الآن داخل التطبيق."
+                      : `تعذّر التشغيل: ${r.message}`,
+                  );
+                });
+              }}
+            >
+              اختبار الأذان الآن
+            </button>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              disabled={testBusy}
+              onClick={() => {
+                setTestBusy(true);
+                setTestMsg(null);
+                const style = (prefs.defaultMuezzinId || "makkah") as AdhanStyleId;
+                void testFullAdhan(style).then((r) => {
+                  setTestBusy(false);
+                  setTestMsg(
+                    r.ok
                       ? "يُشغَّل الأذان الكامل الآن داخل التطبيق."
                       : `تعذّر التشغيل: ${r.message}`,
                   );
@@ -946,6 +1144,14 @@ export default function AdhanSettingsPage() {
               }}
             >
               اختبار الأذان الكامل
+            </button>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              disabled={rescheduleBusy}
+              onClick={() => void runRescheduleAlerts()}
+            >
+              {rescheduleBusy ? "جارٍ…" : "إعادة جدولة التنبيهات"}
             </button>
             <button
               type="button"
@@ -1063,9 +1269,13 @@ export default function AdhanSettingsPage() {
             <span className="ads-adhan-desc" style={{ margin: 0 }}>إذن الإشعارات</span>
             <NotificationPermBadge />
           </div>
-          <div className="ads-row">
+          <div className="ads-row-sep">
             <span className="ads-adhan-desc" style={{ margin: 0 }}>إذن الموقع الجغرافي</span>
             <LocationPermBadge />
+          </div>
+          <div className="ads-row">
+            <span className="ads-adhan-desc" style={{ margin: 0 }}>جاهزية الصوت</span>
+            <AudioPermBadge />
           </div>
         </div>
       </section>

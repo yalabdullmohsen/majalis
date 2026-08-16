@@ -125,6 +125,7 @@ export function PrayerAlertSettingsCard() {
       const { startPrayerAlertScheduler } = await import("@/lib/prayer-alert-scheduler");
       const payload = await fetchPrayerTimes();
       await startPrayerAlertScheduler(payload, { forceNativeReschedule: true });
+      await import("@/lib/adhan-scheduler").then((m) => m.startAdhanScheduler(payload));
       setScheduleStatus(loadPrayerScheduleStatus());
       setTestMsg(
         isNative

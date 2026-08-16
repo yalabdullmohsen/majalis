@@ -22,6 +22,9 @@ assert.ok(resolveOfflineClipUrl("madinah", "general")?.startsWith("/audio/adhan/
 assert.ok(resolveOfflineClipUrl("egypt", "general")?.startsWith("/audio/adhan/"));
 assert.ok(resolveOfflineClipUrl("aqsa", "general")?.startsWith("/audio/adhan/"));
 assert.ok(resolveOfflineClipUrl("takbeerat", "takbir")?.startsWith("/audio/adhan/"));
+assert.ok(resolveOfflineClipUrl("alharam", "general")?.startsWith("/audio/adhan/"));
+assert.ok(resolveOfflineClipUrl("turkey", "general")?.startsWith("/audio/adhan/"));
+assert.ok(resolveOfflineClipUrl("soft", "short")?.startsWith("/audio/adhan/"));
 
 assert.equal(notificationSoundForAdhanPack("makkah"), "adhan-short-makkah.caf");
 assert.equal(notificationSoundForAdhanPack("madinah"), "adhan-short-madinah.caf");

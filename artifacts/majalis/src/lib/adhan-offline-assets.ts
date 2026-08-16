@@ -98,15 +98,66 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     },
     notificationSound: "adhan-short-takbeerat.caf",
   },
+  {
+    id: "alharam",
+    labelAr: "أذان الحرم",
+    local: {
+      general: "/audio/adhan/adhan-makkah-full.mp3",
+      fajr: "/audio/adhan/adhan-makkah-fajr.mp3",
+      short: "/audio/adhan/adhan-takbeerat-short.mp3",
+      takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
+    },
+    remote: {
+      general: `${CDN}/general/al-haram-01.mp3`,
+      fajr: `${CDN}/fajr/makkah-fajr-01.mp3`,
+      short: `${CDN}/general/madinah-01.mp3`,
+      takbir: `${CDN}/general/madinah-01.mp3`,
+    },
+    notificationSound: "adhan-short-makkah.caf",
+  },
+  {
+    id: "turkey",
+    labelAr: "أذان تركي",
+    local: {
+      // لا ملف تركي كامل مرخّص في الحزمة بعد — معاينة محلية قصيرة + CDN عند الاتصال
+      general: "/audio/adhan/adhan-takbeerat-short.mp3",
+      short: "/audio/adhan/adhan-takbeerat-short.mp3",
+      takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
+    },
+    remote: {
+      general: `${CDN}/general/mustafa-ozcan-turkey-01.mp3`,
+      short: `${CDN}/general/madinah-01.mp3`,
+      takbir: `${CDN}/general/madinah-01.mp3`,
+    },
+    notificationSound: "adhan-short-takbeerat.caf",
+  },
+  {
+    id: "soft",
+    labelAr: "تنبيه لطيف بدون أذان",
+    local: {
+      general: "/audio/adhan/adhan-takbeerat-short.mp3",
+      short: "/audio/adhan/adhan-takbeerat-short.mp3",
+      takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
+    },
+    remote: {
+      general: `${CDN}/general/madinah-01.mp3`,
+      short: `${CDN}/general/madinah-01.mp3`,
+      takbir: `${CDN}/general/madinah-01.mp3`,
+    },
+    notificationSound: "adhan-short-takbeerat.caf",
+  },
 ];
 
 /** معرفات المؤذنين المضمّنة أوفلاين في الحزمة */
 export const OFFLINE_FEATURED_MUEZZIN_IDS = [
   "makkah",
   "madinah",
+  "alharam",
   "egypt",
   "aqsa",
+  "turkey",
   "takbeerat",
+  "soft",
 ] as const;
 
 const byId = new Map(OFFLINE_ADHAN_CORE_PACKS.map((p) => [p.id, p]));

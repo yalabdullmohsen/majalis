@@ -424,7 +424,6 @@ function IslamicReminderBootstrap() {
 
 function AdhanSchedulerBootstrap() {
   const { data } = usePrayerCountdown();
-  const started = useRef(false);
   useEffect(() => {
     if (!data) return;
     // مزامنة كاش أوقات الصلاة في lesson-time بالبيانات الحية الفعلية من كل
@@ -435,12 +434,17 @@ function AdhanSchedulerBootstrap() {
       if (slot.minutes != null) liveMinutes[slot.name] = slot.minutes;
     }
     setPrayerTimesCache(liveMinutes);
-    if (started.current) return;
-    started.current = true;
-    // ديناميكي: كتالوج الأذان لا يدخل حزمة الدخول
-    void import("@/lib/adhan-scheduler").then((m) =>
-      m.startAdhanScheduler(data).catch(() => {}),
-    );
+
+    const run = () => {
+      void import("@/lib/adhan-scheduler").then((m) =>
+        m.startAdhanScheduler(data).catch(() => {}),
+      );
+    };
+    run();
+
+    const onPrefs = () => run();
+    window.addEventListener("majalis:adhan-prefs-changed", onPrefs);
+    return () => window.removeEventListener("majalis:adhan-prefs-changed", onPrefs);
   }, [data]);
   return null;
 }
@@ -474,6 +478,7 @@ function PrayerAlertSchedulerBootstrap() {
     };
     document.addEventListener("visibilitychange", onVisible);
     window.addEventListener(PRAYER_ALERT_PREFS_CHANGED_EVENT, onPrefsChanged);
+    window.addEventListener("majalis:adhan-prefs-changed", onPrefsChanged);
 
     // iOS WKWebView: appStateChange أوثق من visibilitychange في بعض مسارات الخلفية→المقدمة.
     let removeAppState: (() => void) | undefined;
@@ -500,6 +505,7 @@ function PrayerAlertSchedulerBootstrap() {
     return () => {
       document.removeEventListener("visibilitychange", onVisible);
       window.removeEventListener(PRAYER_ALERT_PREFS_CHANGED_EVENT, onPrefsChanged);
+      window.removeEventListener("majalis:adhan-prefs-changed", onPrefsChanged);
       removeAppState?.();
     };
   }, [data]);

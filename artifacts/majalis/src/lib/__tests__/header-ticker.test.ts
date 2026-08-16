@@ -67,8 +67,13 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
 
   const sideNavSrc = readFileSync(resolve(appRoot, "src/components/SideNavDrawer.tsx"), "utf-8");
   const sidebarNavSrc = readFileSync(resolve(appRoot, "src/lib/sidebar-nav.ts"), "utf-8");
+  const navigationSrc = readFileSync(resolve(appRoot, "src/lib/navigation.ts"), "utf-8");
   assert(sideNavSrc.includes("SIDEBAR_NAV_GROUPS"), "القائمة الجانبية مربوطة بالمصدر الموحّد");
-  assert(sidebarNavSrc.includes("/my-learning") && sidebarNavSrc.includes("حسابي"), "حسابي في مصدر القائمة");
+  assert(
+    (sidebarNavSrc.includes("/my-learning") && sidebarNavSrc.includes("حسابي")) ||
+      (navigationSrc.includes("/my-learning") && navigationSrc.includes("حسابي")),
+    "حسابي في مصدر القائمة",
+  );
 
   const gsmSrc = readFileSync(resolve(appRoot, "src/components/GlobalSearchModal.tsx"), "utf-8");
   assert(gsmSrc.includes("/flashcards") || gsmSrc.includes("/my-learning"), "رابط مراجعة من البحث الشامل");
@@ -102,6 +107,9 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   assert(tickerSrc.includes("header-ticker--marquee"), "المكوّن يستخدم وضع الماركي المتحرّك");
   assert(tickerSrc.includes("Megaphone") || tickerSrc.includes("promo"), "يدعم عناصر ترويج الأقسام/المميزات");
   assert(tickerSrc.includes("header-ticker__source") && tickerSrc.includes("item.source"), "يعرض مصدر الحديث/الذكر مع النص");
+  assert(tickerSrc.includes("header-ticker__prayer"), "شريط الصلاة ثابت خارج الماركي");
+  assert(tickerSrc.includes("buildPrayerTickerCopy") || tickerSrc.includes("حان الآن"), "يعرض حان الآن عند دخول الوقت");
+  assert(tickerSrc.includes("usePrayerCountdown"), "العدّ من مصدر الصلاة الموحّد");
 }
 
 console.log(`\n${"─".repeat(40)}`);

@@ -40,6 +40,8 @@ const OFF_AQSA = getOfflineAdhanPack("aqsa");
 const OFF_TURKEY = getOfflineAdhanPack("turkey");
 const OFF_KUWAIT = getOfflineAdhanPack("kuwait");
 const OFF_TAKBIR = getOfflineAdhanPack("takbeerat");
+const OFF_ALHARAM = getOfflineAdhanPack("alharam");
+const OFF_SOFT = getOfflineAdhanPack("soft");
 
 /** @deprecated استخدم AdhanPatternId — أُبقي للتوافق مع الواجهة القديمة */
 export type MuezzinStyle = string;
@@ -95,7 +97,7 @@ function patternStyle(id: AdhanPatternId): string {
 export const MUEZZINS: Muezzin[] = [
   {
     id: "makkah",
-    name: "أذان الحرم المكي",
+    name: "أذان مكة",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -127,7 +129,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "alharam",
-    name: "أذان الحرم المكي (كلاسيكي)",
+    name: "أذان الحرم",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -137,20 +139,30 @@ export const MUEZZINS: Muezzin[] = [
     country: "السعودية",
     style: patternStyle("makki"),
     category: "حرم مكي",
-    tags: ["مكي", "كلاسيكي"],
-    biography: "تسجيل كلاسيكي بنمط الحرم المكي. بلا نسبة شخصية موثّقة.",
+    tags: ["مكي", "كلاسيكي", "حرم"],
+    biography: "تسجيل كلاسيكي بنمط الحرم المكي. محلي أولاً مع احتياط CDN.",
     rating: 4.85,
     totalRatings: 142000,
     followers: 310000,
     durationSec: 160,
     audioAvailable: true,
-    audioUrl: `${CDN}/general/al-haram-01.mp3`,
+    audioUrl:
+      OFF_ALHARAM?.local.general ||
+      OFF_ALHARAM?.remote.general ||
+      OFF_MAKKAH?.local.general ||
+      `${CDN}/general/al-haram-01.mp3`,
+    fajrUrl:
+      OFF_ALHARAM?.local.fajr ||
+      OFF_MAKKAH?.local.fajr ||
+      `${CDN}/fajr/makkah-fajr-01.mp3`,
+    shortUrl: OFF_ALHARAM?.local.short || OFF_TAKBIR?.local.short,
+    takbirUrl: OFF_ALHARAM?.local.takbir || OFF_TAKBIR?.local.takbir,
     sourceId: "mohsalvi-adhan-audio",
-    licenseNote: "بث عبر mohsalvi/adhan-audio — راجع CREDITS.md وLICENSE_RISKS.md",
+    licenseNote: "بث عبر mohsalvi/adhan-audio + حزمة أوفلاين محلية — راجع CREDITS.md",
   },
   {
     id: "madinah",
-    name: "أذان الحرم المدني",
+    name: "أذان المدينة",
     personName: null,
     attribution: "style_only",
     patternId: "madani",
@@ -178,7 +190,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "egypt",
-    name: "أذان هادئ",
+    name: "أذان مصري",
     personName: null,
     attribution: "style_only",
     patternId: "egyptian",
@@ -187,7 +199,7 @@ export const MUEZZINS: Muezzin[] = [
     origin: "القاهرة",
     country: "مصر",
     style: patternStyle("egyptian"),
-    category: "هادئ",
+    category: "مصري",
     tags: ["هادئ", "مصري", "أوفلاين"],
     biography: "تسجيل هادئ بالنمط المصري التقليدي (أوفلاين محلي). بلا نسبة شخصية موثّقة.",
     rating: 4.8,
@@ -354,7 +366,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "takbeerat",
-    name: "أذان قصير / تنبيه فقط",
+    name: "أذان مختصر",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -377,6 +389,34 @@ export const MUEZZINS: Muezzin[] = [
       `${CDN}/general/madinah-01.mp3`,
     shortUrl: OFF_TAKBIR?.local.short,
     takbirUrl: OFF_TAKBIR?.local.takbir,
+    sourceId: "mohsalvi-adhan-audio",
+    licenseNote: "حزمة أوفلاين محلية — راجع CREDITS.md",
+  },
+  {
+    id: "soft",
+    name: "تنبيه لطيف بدون أذان",
+    personName: null,
+    attribution: "style_only",
+    patternId: "makki",
+    mosque: null,
+    recordingYear: null,
+    origin: "تنبيه هادئ",
+    country: "—",
+    style: "تنبيه لطيف",
+    category: "تنبيه",
+    tags: ["لطيف", "بدون أذان", "قصير", "أوفلاين"],
+    biography: "تنبيه صوتي خفيف بدل الأذان الكامل — مناسب لوضع التركيز أو المكتب.",
+    rating: 4.4,
+    totalRatings: 5000,
+    followers: 9000,
+    durationSec: 8,
+    audioAvailable: true,
+    audioUrl:
+      OFF_SOFT?.local.general ||
+      OFF_TAKBIR?.local.general ||
+      `${CDN}/general/madinah-01.mp3`,
+    shortUrl: OFF_SOFT?.local.short || OFF_TAKBIR?.local.short,
+    takbirUrl: OFF_SOFT?.local.takbir || OFF_TAKBIR?.local.takbir,
     sourceId: "mohsalvi-adhan-audio",
     licenseNote: "حزمة أوفلاين محلية — راجع CREDITS.md",
   },
@@ -576,22 +616,27 @@ export function playIqamah(muezzin: Muezzin): HTMLAudioElement | null {
   return playAdhanUrl(clip.url, 1, { maxMs: clip.maxMs });
 }
 
-export function previewAdhan(muezzin: Muezzin): HTMLAudioElement {
+export function previewAdhan(muezzin: Muezzin, volume = 0.8): HTMLAudioElement {
   if (!muezzin.audioUrl) {
     throw new Error(`لا ملف معاينة للتسجيل: ${muezzin.id}`);
   }
-  const audio = playAdhanUrl(muezzin.audioUrl, 0.8, { maxMs: 15_000, fadeIn: true });
+  const vol = Math.min(1, Math.max(0, volume));
+  const audio = playAdhanUrl(muezzin.audioUrl, vol, { maxMs: 15_000, fadeIn: true });
   return audio;
 }
 
 /** معاينة مع نتيجة واضحة للواجهة (لا فشل صامت). */
-export async function previewAdhanAsync(muezzin: Muezzin): Promise<AdhanPlayResult> {
+export async function previewAdhanAsync(
+  muezzin: Muezzin,
+  volume = 0.8,
+): Promise<AdhanPlayResult> {
   if (!muezzin.audioUrl) {
     return {
       ok: false,
       code: "missing_file",
-      message: `لا ملف معاينة للتسجيل: ${muezzin.id}`,
+      message: `لا ملف معاينة للتسجيل: ${muezzin.id}. جرّب نوعًا آخر أو أعد التحميل.`,
     };
   }
-  return playAdhanUrlAsync(muezzin.audioUrl, 0.8, { maxMs: 15_000, fadeIn: true });
+  const vol = Math.min(1, Math.max(0, volume));
+  return playAdhanUrlAsync(muezzin.audioUrl, vol, { maxMs: 15_000, fadeIn: true });
 }

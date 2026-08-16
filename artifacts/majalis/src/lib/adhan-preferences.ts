@@ -190,6 +190,19 @@ export function loadAdhanPrefs(): AdhanPreferences {
   }
 }
 
+/** يُطلَق بعد كل حفظ لتفضيلات الأذان — يعيد جدولة المؤقّتات والإشعارات. */
+export const ADHAN_PREFS_CHANGED_EVENT = "majalis:adhan-prefs-changed";
+
+function emitAdhanPrefsChanged() {
+  try {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent(ADHAN_PREFS_CHANGED_EVENT));
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 export function saveAdhanPrefs(prefs: AdhanPreferences): AdhanPreferences {
   const safe = sanitizeFajrMuezzinPrefs({
     ...prefs,
@@ -199,6 +212,7 @@ export function saveAdhanPrefs(prefs: AdhanPreferences): AdhanPreferences {
     localStorage.setItem(STORE_KEY, JSON.stringify(safe));
   } catch { /* ignore quota errors */ }
   syncSelectedMuezzinId(safe.defaultMuezzinId);
+  emitAdhanPrefsChanged();
   return safe;
 }
 
