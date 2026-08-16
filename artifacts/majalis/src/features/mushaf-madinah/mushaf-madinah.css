@@ -17,19 +17,19 @@
 }
 
 .mm-viewport {
-  --mm-paper: #fbf7ef;
-  --mm-paper-deep: #f5f0e4;
-  --mm-outer-bg: #fbf7ef;
-  --mm-ink: #0a0a0a;
+  --mm-paper: #fbf7ee;
+  --mm-paper-deep: #faf8f0;
+  --mm-outer-bg: #fbf7ee;
+  --mm-ink: #2c241e;
   --mm-gold: #bf9f5b;
   --mm-gold-soft: #d4b870;
   --mm-gold-deep: #9a7d3c;
-  --mm-header: #5c4a28;
+  --mm-header: #8c827a;
   --mm-frame: transparent;
   --mm-banner-fill: linear-gradient(180deg, #efe2b8 0%, #e0cb92 48%, #d4b870 100%);
   --mm-banner-name-bg: #fffdf8;
-  /* highlight ذهبي خفيف جدًا — لا يغطي الحروف */
-  --mm-ayah-select: rgba(191, 159, 91, 0.10);
+  /* تظليل آية — ذهبي/كهرماني خفيف (مرجع تطبيق آية) */
+  --mm-ayah-select: color-mix(in srgb, #f3e5c8 70%, transparent);
   --mm-ayah-play: rgba(47, 111, 78, 0.09);
   --mm-outer-pad: 0;
   --mm-inner-pad-x: clamp(0.7rem, 3.2vw, 1.25rem);
@@ -124,10 +124,11 @@ html.dark .mm-viewport,
 }
 
 .mm-viewport[data-mushaf-theme="paper"] {
-  --mm-paper: #fbf7ef;
-  --mm-paper-deep: #f5f0e4;
-  --mm-outer-bg: #fbf7ef;
-  --mm-ink: #0a0a0a;
+  --mm-paper: #fbf7ee;
+  --mm-paper-deep: #faf8f0;
+  --mm-outer-bg: #fbf7ee;
+  --mm-ink: #2c241e;
+  --mm-header: #8c827a;
   --mushaf-bg: var(--mm-outer-bg);
   background: var(--mm-outer-bg);
 }
@@ -432,6 +433,23 @@ html.dark .mm-surah-ornament__name {
   font-family: "Amiri Quran", "KFGQPC Hafs Uthmanic Script HAFS", "KFGQPC Hafs Uthmanic", serif !important;
   font-feature-settings: "liga" 1, "calt" 1;
   white-space: nowrap;
+  padding-block: 0.35em 0.45em;
+}
+
+.mm-basmala__svg {
+  display: block;
+  width: min(100%, 36rem);
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+  overflow: visible;
+}
+
+.mm-basmala__svg-text {
+  fill: var(--mm-ink, #2c241e);
+  font-family: "Amiri Quran", "KFGQPC Hafs Uthmanic Script HAFS", "KFGQPC Hafs Uthmanic", serif;
+  font-size: 28px;
+  font-weight: 700;
 }
 
 .mm-basmala--qpc {
@@ -533,8 +551,8 @@ html.dark .mm-surah-ornament__name {
 
 .mm-ayah-run__text.is-selected {
   /* طبقة خلف الحروف فقط — لا تغيّر مقاييس السطر */
-  background-color: #f5e8c7;
-  box-shadow: 0 0 0 0.06em #f5e8c7;
+  background-color: color-mix(in srgb, #f3e5c8 70%, transparent);
+  box-shadow: 0 0 0 0.06em color-mix(in srgb, #f3e5c8 70%, transparent);
   border-radius: 0.18em;
 }
 
@@ -598,6 +616,8 @@ html.dark .mm-ayah-run__text.is-selected,
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  /* يسار الشاشة (مرجع آية) */
+  inset-inline-end: 0;
   font-family: "IBM Plex Sans Arabic", "Amiri Quran", serif;
   font-size: clamp(0.72rem, 2.4vw, 0.88rem);
   font-weight: 600;
@@ -610,18 +630,12 @@ html.dark .mm-ayah-run__text.is-selected,
   visibility: hidden;
 }
 
-.mm-viewport .mm-page-footer[data-side="odd"] .mm-page-footer__hizb {
-  inset-inline-start: 0;
-}
-
-.mm-viewport .mm-page-footer[data-side="even"] .mm-page-footer__hizb {
-  inset-inline-end: 0;
-}
-
 .mm-viewport .mm-page-footer__badge {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  /* يمين الشاشة (مرجع آية) */
+  inset-inline-start: 0;
   width: 13.1%;
   min-width: 2.8rem;
   height: auto;
@@ -637,14 +651,6 @@ html.dark .mm-ayah-run__text.is-selected,
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-}
-
-.mm-viewport .mm-page-footer[data-side="odd"] .mm-page-footer__badge {
-  inset-inline-end: 0;
-}
-
-.mm-viewport .mm-page-footer[data-side="even"] .mm-page-footer__badge {
-  inset-inline-start: 0;
 }
 
 .mm-viewport .mm-page-footer__cartouche {
@@ -1482,11 +1488,11 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   }
 }
 
-/* إجراءات شيت الآية — صف أساسي ٤ أزرار + المزيد */
+/* إجراءات شيت الآية — صف أساسي ٥ أزرار + المزيد */
 .ayah-action-sheet__primary {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.32rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.28rem;
 }
 
 .ayah-action-sheet__primary button {

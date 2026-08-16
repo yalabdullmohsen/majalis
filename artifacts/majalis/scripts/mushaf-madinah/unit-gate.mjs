@@ -85,7 +85,7 @@ assert.match(viewport, /2500/);
 const pager = read("src/features/mushaf-madinah/MushafPager.tsx");
 assert.match(pager, /dx > 0\) go\(page \+ 1\)/);
 assert.match(pager, /SWIPE_MIN_PX\s*=\s*45/);
-assert.match(pager, /SETTLE_MS\s*=\s*320/);
+assert.match(pager, /SETTLE_MS\s*=\s*380/);
 assert.match(pager, /prefers-reduced-motion/);
 
 const controls = read("src/features/mushaf-madinah/MushafControls.tsx");

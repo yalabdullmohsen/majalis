@@ -468,7 +468,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
 
       <MushafControls
         open={chromeOpen && !actionsOpen}
-        exitAlwaysVisible
+        exitAlwaysVisible={false}
         pageNumber={page}
         onExit={onExit}
         onIndex={onIndex}

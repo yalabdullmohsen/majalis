@@ -6,7 +6,7 @@ type Props = {
 export function MushafPageHeader({ juzNumber, surahNames }: Props) {
   const surahLabel = surahNames.length ? surahNames.join(" · ") : "—";
   return (
-    <header className="mm-page-header">
+    <header className="mm-page-header" data-testid="mushaf-page-header">
       <span className="mm-page-header__juz">الجزء {toArabicDigits(juzNumber)}</span>
       <span className="mm-page-header__surah">{surahLabel}</span>
     </header>

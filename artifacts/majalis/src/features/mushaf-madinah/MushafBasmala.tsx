@@ -17,7 +17,7 @@ type Props = {
 /**
  * مكوّن البسملة الوحيد.
  * - الفاتحة: محارف QPC من كلمات الصفحة + رقم ١.
- * - غيرها: نص عثماني متصل بخط عثماني Unicode فقط (لا خط qpc-page-N) حتى لا تتكسّر الحروف.
+ * - غيرها: خط عثماني داخل SVG موحّد (لا داخل spans الآيات).
  */
 export function MushafBasmala({
   words = null,
@@ -72,11 +72,28 @@ export function MushafBasmala({
       className="mm-basmala mm-basmala--uthmani"
       data-testid="mushaf-basmala"
       data-basmala="uthmani"
+      data-basmala-render="svg"
       dir="rtl"
       lang="ar"
       aria-hidden="true"
     >
-      {BASMALA_UTHMANI}
+      <svg
+        className="mm-basmala__svg"
+        viewBox="0 0 720 56"
+        preserveAspectRatio="xMidYMid meet"
+        role="img"
+        aria-label={BASMALA_UTHMANI}
+      >
+        <text
+          x="360"
+          y="38"
+          textAnchor="middle"
+          direction="rtl"
+          className="mm-basmala__svg-text"
+        >
+          {BASMALA_UTHMANI}
+        </text>
+      </svg>
     </div>
   );
 }

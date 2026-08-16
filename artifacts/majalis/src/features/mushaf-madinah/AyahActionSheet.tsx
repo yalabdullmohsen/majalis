@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  BookMarked,
   BookOpen,
   Copy,
   MoreHorizontal,
@@ -74,7 +75,7 @@ export function AyahActionSheet({
   const dragY = useRef<number | null>(null);
   const parsed = parseVerseKey(verseKey);
   const surahName = parsed ? getSurahMeta(parsed.surah).name : "";
-  const title = parsed ? `${surahName} · آية ${parsed.ayah}` : verseKey;
+  const title = parsed ? `${surahName} - آية ${toArabicDigits(parsed.ayah)}` : verseKey;
   const playing =
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const loading = playerState === "loading" || playerState === "buffering";
@@ -207,8 +208,7 @@ export function AyahActionSheet({
           <div className="mm-ayah-bar__handle" aria-hidden="true" />
           <div className="mm-ayah-bar__head">
             <div className="mm-ayah-bar__head-text">
-              <p className="mm-ayah-bar__surah">{surahName || "سورة"}</p>
-              <p className="mm-ayah-bar__title">آية {parsed?.ayah ?? "—"}</p>
+              <p className="mm-ayah-bar__title">{title}</p>
             </div>
             <button
               ref={closeRef}
@@ -243,6 +243,10 @@ export function AyahActionSheet({
               <Share2 size={18} aria-hidden="true" />
               <span>مشاركة</span>
             </button>
+            <button type="button" onClick={onBookmark}>
+              <BookMarked size={18} aria-hidden="true" />
+              <span>إشارة</span>
+            </button>
           </div>
 
           <button
@@ -257,9 +261,6 @@ export function AyahActionSheet({
 
           {moreOpen ? (
             <div className="ayah-action-sheet__more" role="group" aria-label="المزيد">
-              <button type="button" onClick={onBookmark}>
-                إشارة
-              </button>
               <button type="button" onClick={() => setReadersOpen(true)}>
                 القارئ · {currentReciter.nameAr}
               </button>
@@ -403,3 +404,7 @@ export function AyahActionSheet({
 
 /** توافق البوابات القديمة */
 export { AyahActionSheet as MushafAyahActions };
+
+function toArabicDigits(n: number): string {
+  return String(n).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[Number(d)]!);
+}

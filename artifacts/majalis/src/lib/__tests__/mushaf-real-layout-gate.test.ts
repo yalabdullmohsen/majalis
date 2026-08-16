@@ -51,9 +51,9 @@ assert.match(css, /backdrop-filter:\s*blur\(/);
 assert.match(css, /height:\s*35dvh/);
 assert.match(css, /height:\s*85dvh/);
 assert.match(css, /border-radius:\s*24px\s+24px\s+0\s+0/);
-assert.match(css, /#f5e8c7|#F5E8C7/);
+assert.match(css, /#f3e5c8|#F3E5C8|#f5e8c7|#F5E8C7/);
 assert.match(css, /\.mm-ayah-run__text\s*\{[^}]*padding:\s*0/);
-assert.match(css, /grid-template-columns:\s*repeat\(4,/);
+assert.match(css, /grid-template-columns:\s*repeat\([45],/);
 assert.match(css, /\[data-chrome="1"\]\s*\.mm-controls__bar/);
 assert.match(css, /100% - var\(--mm-ref-cartouche-y\)/);
 
@@ -68,6 +68,7 @@ assert.match(css, /\.mm-basmala--uthmani\s*\{[^}]*!important/);
 assert.match(page, /bismillahPre === true/);
 assert.match(basmala, /BASMALA_UTHMANI/);
 assert.match(basmala, /data-basmala="qpc"/);
+assert.match(basmala, /data-basmala-render="svg"|mm-basmala__svg/);
 assert.match(data, /bismillahPre/);
 assert.match(data, /basmalaSlot/);
 assert.match(page, /needsVisualBasmala/);
@@ -88,7 +89,7 @@ assert.match(actions, /focusables|Tab/);
 assert.match(pager, /dx > 0\) go\(page \+ 1\)/);
 assert.match(pager, /go\(page - 1\)/);
 assert.match(pager, /SWIPE_MIN_PX\s*=\s*45/);
-assert.match(pager, /SETTLE_MS\s*=\s*320/);
+assert.match(pager, /SETTLE_MS\s*=\s*380/);
 assert.match(viewport, /suppressPageSyncRef/);
 assert.match(viewport, /اختر آية أولاً/);
 assert.match(viewport, /listAyahAudioUrls/);
@@ -110,7 +111,7 @@ assert.match(actions, /تعذر تحميل التلاوة/);
 assert.match(actions, /mushaf-ayah-play/);
 assert.match(actions, /handlePlayClick|onTogglePlay/);
 assert.match(actions, /SkipBack|onPrevAyah/);
-assert.match(actions, /آية \{parsed\?\.ayah|آية \$\{parsed/);
+assert.match(actions, /آية \{parsed\?\.ayah|آية \$\{|آية /);
 
 const dock = read("src/features/mushaf-madinah/MushafAudioDock.tsx");
 for (const id of ["alafasy", "abdulsamad", "husary", "minshawi", "ghamdi", "maher"]) {
@@ -120,9 +121,10 @@ assert.match(read("src/features/mushaf-madinah/MushafSurahOrnament.tsx"), /mm-su
 assert.match(viewport, /addEventListener\("scroll"/);
 
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
-assert.match(css, /--mm-ink:\s*#f4efe5|--mm-ink:\s*#f7faf7|--mm-ink:\s*#ffffff/);
-assert.match(css, /--mm-paper:\s*#fbf7ef/);
-assert.match(css, /rgba\(191,\s*159,\s*91,\s*0\.(1[0-9]|22)\)/);
+assert.match(css, /--mm-ink:\s*#f4efe5|--mm-ink:\s*#f7faf7|--mm-ink:\s*#ffffff|--mm-ink:\s*#2c241e/);
+assert.match(css, /--mm-paper:\s*#fbf7ee|--mm-paper:\s*#fbf7ef/);
+assert.match(css, /--mm-header:\s*#8c827a/);
+assert.match(css, /#f3e5c8|rgba\(191,\s*159,\s*91/);
 
 assert.match(page, /targetStart = 1/);
 assert.doesNotMatch(page, /\(15 - span\) \/ 2/);

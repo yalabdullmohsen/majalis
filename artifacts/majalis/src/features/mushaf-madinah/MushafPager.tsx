@@ -15,7 +15,7 @@ import {
 export const SWIPE_MIN_PX = 45;
 const SWIPE_RATIO = 0.25;
 const FLICK_PX_PER_MS = 0.5;
-const SETTLE_MS = 320;
+const SETTLE_MS = 380;
 
 type PagerProps = {
   page: number;
@@ -73,8 +73,12 @@ export function MushafPager({
     }
     const w = window.innerWidth || 390;
     const p = Math.max(-1, Math.min(1, dx / w));
-    el.style.transform = `translate3d(${dx * 0.92}px, 0, 0) rotateY(${p * -8}deg)`;
-    el.style.boxShadow = `${p * -12}px 0 28px color-mix(in srgb, #5c4a28 ${Math.abs(p) * 18}%, transparent)`;
+    const depth = 1 - Math.abs(p) * 0.045;
+    el.style.transform = `translate3d(${dx * 0.94}px, 0, 0) scale(${depth}) rotateY(${p * -11}deg)`;
+    el.style.opacity = String(Math.max(0.72, 1 - Math.abs(p) * 0.22));
+    el.style.boxShadow = `${p * -14}px 0 32px color-mix(in srgb, #5c4a28 ${Math.abs(p) * 22}%, transparent)`;
+    el.style.transformOrigin = "50% 50%";
+    el.style.willChange = "transform, opacity";
   };
 
   const clearDrag = (animate: boolean) => {
@@ -86,6 +90,7 @@ export function MushafPager({
     el.style.transform = "";
     el.style.opacity = "";
     el.style.boxShadow = "";
+    el.style.willChange = "";
     window.setTimeout(() => {
       if (el) el.style.transition = "";
     }, SETTLE_MS + 40);
