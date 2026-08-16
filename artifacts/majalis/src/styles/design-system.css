@@ -909,24 +909,6 @@ p, li {
   background: var(--majalis-panel, #fff);
 }
 
-.search-topic-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-space-2);
-  align-items: center;
-  margin-bottom: var(--ds-space-3);
-}
-
-.search-topic-chip {
-  font-size: var(--ds-text-xs);
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
-  background: var(--ds-emerald-soft);
-  color: var(--ds-emerald-deep);
-  font-weight: 700;
-  text-decoration: none;
-}
-
 /* Surah stories */
 .quran-subnav {
   display: flex;

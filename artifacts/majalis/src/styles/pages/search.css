@@ -260,39 +260,6 @@
   color: var(--elite-forest, var(--mj-brand-deep));
 }
 
-/* رقاقات الموضوعات */
-.search-topic-chips {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-space-2);
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
-}
-
-.search-topic-chips__label {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--elite-ink-soft, #5D726A);
-}
-
-.search-topic-chip {
-  padding: 0.3rem 0.8rem;
-  background: var(--elite-sage-2, var(--mj-brand-soft));
-  border: 1px solid rgba(24,54,42,0.15);
-  border-radius: var(--ds-radius-full);
-  color: var(--elite-forest, var(--mj-brand-deep));
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.15s;
-}
-
-.search-topic-chip:hover {
-  background: var(--elite-forest, var(--mj-brand-deep));
-  border-color: transparent;
-  color: #fff;
-}
-
 /* مجموعات النتائج */
 .search-results-group {
   margin-bottom: 1.5rem;

@@ -290,7 +290,6 @@ export default function SearchPage() {
   const [results, setResults] = useState<SearchResults>(EMPTY);
   const [intelligentResults, setIntelligentResults] = useState<IntelligentSearchResult[]>([]);
   const [intelligentGroups, setIntelligentGroups] = useState<Record<string, IntelligentSearchResult[]>>({});
-  const [matchedTopics, setMatchedTopics] = useState<Array<{ slug: string; title: string }>>([]);
   const [fiqhResults, setFiqhResults] = useState<FiqhGlobalSearchRow[]>([]);
   const [fiqhQuery, setFiqhQuery] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -409,7 +408,6 @@ export default function SearchPage() {
 
       setIntelligentResults(intel.results || []);
       setIntelligentGroups(intel.groups || {});
-      setMatchedTopics(intel.topics || []);
       if (intel.response_ms != null) setResponseMs(intel.response_ms);
 
       if ((intel.results?.length || 0) > 0) {
@@ -771,17 +769,6 @@ export default function SearchPage() {
                   <span className="search-response-ms">{responseMs} ms</span>
                 )}
               </div>
-
-              {matchedTopics.length > 0 && (
-                <div className="search-topic-chips">
-                  <span className="search-topic-chips__label">موضوعات ذات صلة:</span>
-                  {matchedTopics.map((t) => (
-                    <Link key={t.slug} href={`/topics/${t.slug}`} className="search-topic-chip">
-                      {t.title}
-                    </Link>
-                  ))}
-                </div>
-              )}
 
               {appTotal > 0 ? (
                 Object.entries(appGroups).map(([kind, items]) => (
