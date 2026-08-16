@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Clock, Repeat2, ScrollText, Heart, BookOpen, Sparkles, Megaphone } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
+import { buildPrayerTickerCopy } from "@/lib/prayer-ticker-copy";
 import {
   buildTickerPool,
   pickNextBatch,
@@ -26,26 +27,28 @@ type TickerItem = {
   kind?: TickerKind;
 };
 
-/** عنصر الصلاة من مصدر العدّ الموحّد — ثوانٍ حية كل ثانية */
-function usePrayerTickerItem(): TickerItem | null {
+type PrayerSticky = {
+  label: string;
+  text: string;
+  isNow: boolean;
+  href: string;
+};
+
+/** شريط الصلاة الثابت — ثوانٍ حية كل ثانية، خارج مسار الماركي */
+function usePrayerSticky(): PrayerSticky | null {
   const { countdown: cd } = usePrayerCountdown();
 
   if (!cd?.next) return null;
-  const inGrace = cd.sinceSeconds != null;
-  if (inGrace && cd.sinceHms) {
-    return {
-      key: "prayer",
-      Icon: Clock,
-      label: `مضى على أذان ${cd.next.name}`,
-      text: cd.sinceHms,
-      href: "/prayer-times",
-    };
-  }
+  const copy = buildPrayerTickerCopy({
+    prayerName: cd.next.name,
+    remainingHms: cd.remainingHms,
+    sinceSeconds: cd.sinceSeconds,
+    sinceHms: cd.sinceHms,
+  });
   return {
-    key: "prayer",
-    Icon: Clock,
-    label: `المتبقي على صلاة ${cd.next.name}`,
-    text: cd.remainingHms,
+    label: copy.label,
+    text: copy.text,
+    isNow: copy.isNow,
     href: "/prayer-times",
   };
 }
@@ -136,9 +139,27 @@ function TickerEntry({ item }: { item: TickerItem & { kind?: TickerKind } }) {
   );
 }
 
+function PrayerStickyStrip({ prayer }: { prayer: PrayerSticky }) {
+  return (
+    <Link
+      href={prayer.href}
+      className={`header-ticker__prayer${prayer.isNow ? " header-ticker__prayer--now" : ""}`}
+      aria-live="polite"
+      aria-atomic="true"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <Clock size={13} strokeWidth={1.8} className="header-ticker__icon" aria-hidden="true" />
+      <span className="header-ticker__prayer-label">{prayer.label}</span>
+      <span className="header-ticker__prayer-time" data-testid="header-prayer-countdown">
+        {prayer.text}
+      </span>
+    </Link>
+  );
+}
+
 /** شريط إعلان علوي متحرّك مستمر (marquee) — أحاديث وأذكار ونبذ أقسام/مميزات. */
 export function HeaderTicker() {
-  const prayerItem = usePrayerTickerItem();
+  const prayer = usePrayerSticky();
   const contentItems = useRotatingContent();
   const reducedMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -146,8 +167,9 @@ export function HeaderTicker() {
   const [hoverPaused, setHoverPaused] = useState(false);
   const paused = stickyPaused || hoverPaused;
 
+  // الصلاة ثابتة خارج الماركي حتى تتحدّث الثواني بلا خروج/دخول
   const items = useMemo<TickerItem[]>(() => {
-    const mapped: TickerItem[] = contentItems
+    return contentItems
       .filter((c) => !!c.text?.trim())
       .map((c) => ({
         key: c.id,
@@ -158,8 +180,7 @@ export function HeaderTicker() {
         href: c.href,
         kind: c.kind,
       }));
-    return prayerItem ? [prayerItem, ...mapped] : mapped;
-  }, [prayerItem, contentItems]);
+  }, [contentItems]);
 
   // وضع تقليل الحركة: تناوب عنصر واحد بلا تمرير مستمر.
   useEffect(() => {
@@ -171,26 +192,6 @@ export function HeaderTicker() {
   useEffect(() => {
     if (activeIndex >= items.length) setActiveIndex(0);
   }, [activeIndex, items.length]);
-
-  // حالة fallback: لا شريط فارغ بحدود على الجوال. سطر واحد ثابت محايد —
-  // بلا نصّ شرعي (فالنص الشرعي لا يُعرض إلا كاملًا غير مقصوص).
-  if (items.length === 0) {
-    return (
-      <div className="header-ticker header-ticker--static header-ticker--fallback" role="status">
-        <div className="header-ticker__single-item">
-          <TickerEntry
-            item={{
-              key: "fallback",
-              Icon: Sparkles,
-              label: "مجالس العلم",
-              text: "تصفّح المصحف والدروس والفتاوى",
-              href: "/quran-hub",
-            }}
-          />
-        </div>
-      </div>
-    );
-  }
 
   const pauseHandlers = {
     tabIndex: 0,
@@ -209,49 +210,73 @@ export function HeaderTicker() {
     },
   };
 
-  if (reducedMotion) {
-    const activeItem = items[activeIndex % items.length];
+  // حالة fallback: لا شريط فارغ — صلاة ثابتة أو سطر محايد.
+  if (items.length === 0 && !prayer) {
     return (
-      <div
-        className={`header-ticker header-ticker--static${paused ? " header-ticker--paused" : ""}`}
-        role="status"
-        aria-live="polite"
-        aria-label="شريط معلومات"
-        {...pauseHandlers}
-      >
-        <div className="header-ticker__single-item" key={activeItem.key}>
-          <TickerEntry item={activeItem} />
+      <div className="header-ticker header-ticker--static header-ticker--fallback" role="status">
+        <div className="header-ticker__single-item">
+          <TickerEntry
+            item={{
+              key: "fallback",
+              Icon: Sparkles,
+              label: "مجالس العلم",
+              text: "تصفّح المصحف والدروس والفتاوى",
+              href: "/quran-hub",
+            }}
+          />
         </div>
       </div>
     );
   }
 
-  // مسار مزدوج لحلقة سلسة بلا قفزة (0 → 50%).
-  const loop = [...items, ...items];
+  if (reducedMotion) {
+    const activeItem = items.length > 0 ? items[activeIndex % items.length] : null;
+    return (
+      <div
+        className={`header-ticker header-ticker--static header-ticker--with-prayer${paused ? " header-ticker--paused" : ""}`}
+        role="status"
+        aria-live="polite"
+        aria-label="شريط معلومات"
+        {...pauseHandlers}
+      >
+        {prayer ? <PrayerStickyStrip prayer={prayer} /> : null}
+        {activeItem ? (
+          <div className="header-ticker__single-item" key={activeItem.key}>
+            <TickerEntry item={activeItem} />
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
+  const loop = items.length > 0 ? [...items, ...items] : [];
   const totalChars = items.reduce(
     (sum, it) => sum + it.text.length + (it.source?.length ?? 0) + it.label.length,
     0,
   );
-  const durationSec = marqueeDurationSec(items.length, totalChars);
+  const durationSec = marqueeDurationSec(Math.max(items.length, 1), totalChars);
 
   return (
     <div
-      className={`header-ticker header-ticker--marquee${paused ? " header-ticker--paused" : ""}`}
+      className={`header-ticker header-ticker--marquee header-ticker--with-prayer${paused ? " header-ticker--paused" : ""}`}
       role="status"
       aria-live="off"
       aria-label="شريط إعلانات متحرّك: أحاديث وأذكار وأقسام"
       {...pauseHandlers}
     >
-      <div className="header-ticker__viewport">
-        <div
-          className="header-ticker__track"
-          style={{ animationDuration: `${durationSec}s` }}
-        >
-          {loop.map((item, i) => (
-            <TickerEntry key={`${item.key}-${i}`} item={item} />
-          ))}
+      {prayer ? <PrayerStickyStrip prayer={prayer} /> : null}
+      {loop.length > 0 ? (
+        <div className="header-ticker__viewport">
+          <div
+            className="header-ticker__track"
+            style={{ animationDuration: `${durationSec}s` }}
+          >
+            {loop.map((item, i) => (
+              <TickerEntry key={`${item.key}-${i}`} item={item} />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }

@@ -472,3 +472,74 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
 .pasc-explainer__title { font-weight: 700; font-size: 0.85rem; margin: 0 0 0.2rem; color: var(--msk-text, #1A1A18); }
 .pasc-explainer__desc { font-size: 0.78rem; margin: 0 0 0.6rem; color: var(--msk-text-2, var(--mj-ink-2)); line-height: 1.6; }
 .pasc-explainer__actions { display: flex; gap: var(--ds-space-2, 0.5rem); }
+
+/* أنواع الأذان — بطاقات */
+.ads-style-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+}
+@media (min-width: 420px) {
+  .ads-style-grid { grid-template-columns: 1fr 1fr; }
+}
+.ads-style-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.7rem 0.75rem;
+  border-radius: var(--ds-radius-lg, 0.75rem);
+  border: 1px solid var(--msk-border);
+  background: var(--msk-canvas-2, #f7f6f2);
+}
+.ads-style-card.is-selected {
+  border-color: color-mix(in srgb, var(--msk-gold, #1c5244) 45%, var(--msk-border));
+  background: color-mix(in srgb, var(--msk-gold, #1c5244) 8%, transparent);
+}
+.ads-style-card__select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: start;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.ads-style-card__name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--msk-text);
+}
+.ads-style-card__badge {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--msk-gold, #1c5244) 16%, transparent);
+  color: var(--msk-gold, var(--mj-brand-deep));
+}
+.ads-style-card__preview {
+  min-height: 40px;
+  border-radius: 0.55rem;
+  border: 1px solid var(--msk-border);
+  background: var(--msk-canvas-1, #fff);
+  color: var(--msk-text);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ads-style-card__preview.is-playing {
+  border-color: color-mix(in srgb, var(--msk-gold, #1c5244) 40%, var(--msk-border));
+  color: var(--msk-gold, var(--mj-brand-deep));
+}
+.ads-audio-error {
+  color: var(--msk-text);
+  font-weight: 600;
+}

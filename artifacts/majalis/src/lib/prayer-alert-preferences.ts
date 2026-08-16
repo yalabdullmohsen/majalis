@@ -12,7 +12,7 @@ const STORE_KEY = "majalis-prayer-alert-prefs-v1";
 /** دقائق التنبيه المسبق الافتراضية. */
 export const PRE_ALERT_MINUTES = 15;
 
-export const PRE_ALERT_MINUTE_OPTIONS = [5, 10, 15] as const;
+export const PRE_ALERT_MINUTE_OPTIONS = [5, 10, 15, 30] as const;
 export type PreAlertMinutes = (typeof PRE_ALERT_MINUTE_OPTIONS)[number];
 
 /** دقائق بعد دخول الوقت لإشعار التذكير الخفيف. */
@@ -39,7 +39,7 @@ export type PrayerAlertPreferences = {
 };
 
 function isPreAlertMinutes(v: unknown): v is PreAlertMinutes {
-  return v === 5 || v === 10 || v === 15;
+  return v === 5 || v === 10 || v === 15 || v === 30;
 }
 
 function isSoundProfile(v: unknown): v is PrayerSoundProfile {
