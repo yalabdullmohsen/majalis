@@ -6,12 +6,15 @@ type Props = {
   section: SectionDef;
   className?: string;
   onNavigate?: () => void;
+  /** تجاوز المسار (مثل المصحف بآخر موضع) */
+  resolveRoute?: (section: SectionDef) => string;
 };
 
 /**
- * مربع كبير مميّز — الخلفية الخضراء المتدرّجة حصرية لهذا المكوّن.
+ * مربع مميّز — الخلفية الخضراء ولون الحبر في صنف variant واحد فقط (.card--featured).
+ * ممنوع تعيين لون الحبر أبيضًا عبر منفعة Tailwind منفصلة عن الخلفية.
  */
-export function FeaturedSectionCard({ section, className, onNavigate }: Props) {
+export function FeaturedSectionCard({ section, className, onNavigate, resolveRoute }: Props) {
   const [, setLocation] = useLocation();
   const Icon = section.icon;
   const aria = `${section.label} — ${section.subtitle}`;
@@ -23,17 +26,18 @@ export function FeaturedSectionCard({ section, className, onNavigate }: Props) {
       data-section-card="featured"
       data-section-id={section.id}
       aria-label={aria}
-      className={cn("section-card--featured", className)}
+      className={cn("card--featured", className)}
       onClick={() => {
-        setLocation(section.route);
+        setLocation(resolveRoute?.(section) ?? section.route);
+        window.scrollTo(0, 0);
         onNavigate?.();
       }}
     >
-      <span className="section-card__icon-chip" aria-hidden>
+      <span className="card__icon" aria-hidden>
         <Icon strokeWidth={1.75} aria-hidden />
       </span>
-      <span className="section-card__label text-white">{section.label}</span>
-      <span className="section-card__subtitle text-white">{section.subtitle}</span>
+      <span className="card__label">{section.label}</span>
+      <span className="card__subtitle">{section.subtitle}</span>
     </button>
   );
 }

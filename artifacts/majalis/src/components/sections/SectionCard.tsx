@@ -23,17 +23,18 @@ export function SectionCard({ section, className, onNavigate }: Props) {
       data-section-card="1"
       data-section-id={section.id}
       aria-label={aria}
-      className={cn("section-card", className)}
+      className={cn("card", className)}
       onClick={() => {
         setLocation(section.route);
+        window.scrollTo(0, 0);
         onNavigate?.();
       }}
     >
-      <span className="section-card__icon-chip" aria-hidden>
+      <span className="card__icon" aria-hidden>
         <Icon strokeWidth={1.75} aria-hidden />
       </span>
-      <span className="section-card__label">{section.label}</span>
-      <span className="section-card__subtitle">{section.subtitle}</span>
+      <span className="card__label">{section.label}</span>
+      <span className="card__subtitle">{section.subtitle}</span>
     </button>
   );
 }

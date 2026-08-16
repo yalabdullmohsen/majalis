@@ -61,7 +61,8 @@ assert.match(bottomNav, /isImmersiveChromePath/);
 assert.equal(bottomNav.includes("isPrayerTimesPath"), false);
 
 const navMap = readFileSync(resolve(appRoot, "src/lib/nav-map.ts"), "utf8");
-assert.match(navMap, /href: "\/quran-hub"/);
+assert.match(navMap, /bottomNavSections/);
+assert.match(readFileSync(resolve(appRoot, "src/config/sections.registry.ts"), "utf8"), /route: "\/quran-hub"/);
 
 const navBar = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf8");
 assert.match(navBar, /isImmersiveChromePath\(location\) \|\| isPrayerTimesPath\(location\)\) return null/);
@@ -72,10 +73,11 @@ assert.equal(prayerRanks.includes("SectionQuiz"), false, "مراتب الصلا�
 
 const quranHub = readFileSync(resolve(appRoot, "src/pages/quran/ui/QuranHubView.tsx"), "utf8");
 assert.equal(quranHub.includes("SectionQuiz"), false, "مركز القرآن بلا SectionQuiz");
-assert.match(quranHub, /التسميع/);
-assert.match(quranHub, /\/quran\/recitation-test-ai/);
-assert.match(quranHub, /\/mushaf/);
+assert.match(quranHub, /quranHubSections/);
+assert.match(quranHub, /فتح المصحف|open-mushaf/);
+assert.match(quranHub, /\/mushaf|loadLastPageSync/);
 assert.equal(quranHub.includes("قيد التطوير"), false);
+assert.equal(/٦٠٤|604\s*صفح/.test(quranHub), false, "بلا ذكر لعدد صفحات المصحف");
 
 const mushafView = readFileSync(resolve(appRoot, "src/pages/quran/MushafReaderPage.tsx"), "utf8");
 assert.match(mushafView, /MushafViewport/);
@@ -83,8 +85,8 @@ assert.match(mushafView, /page=/);
 
 const servicesNav = readFileSync(resolve(appRoot, "src/lib/services-center-nav.ts"), "utf8");
 assert.match(servicesNav, /sections\.registry/);
-assert.match(navMap, /href: "\/quran-hub"/);
-assert.match(quranHub, /\/quran\/recitation-test-ai/);
+assert.match(readFileSync(resolve(appRoot, "src/config/sections.registry.ts"), "utf8"), /quran\/recitation-test-ai/);
+assert.match(quranHub, /quranHubSections/);
 
 const globalBack = readFileSync(resolve(appRoot, "src/components/GlobalBackButton.tsx"), "utf8");
 assert.match(globalBack, /isImmersiveChromePath/);

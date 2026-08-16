@@ -46,7 +46,7 @@ function KhatmaRing({ pagesInKhatma, khatmasCompleted }: { pagesInKhatma: number
         </text>
       )}
       <text x="62" y={khatmasCompleted > 0 ? "70" : "66"} textAnchor="middle" fill="var(--majalis-ink-soft, rgba(23,61,53,.45))" fontSize="12" fontWeight="600" fontFamily="inherit">
-        {khatmasCompleted > 0 ? "ختمة كاملة" : "ص " + toAr(pagesInKhatma) + " / ٦٠٤"}
+        {khatmasCompleted > 0 ? "ختمة كاملة" : "ص " + toAr(pagesInKhatma)}
       </text>
       {khatmasCompleted > 0 && (
         <text x="62" y="85" textAnchor="middle" fill="var(--majalis-ink-soft)" fontSize="12" fontWeight="600" fontFamily="inherit">
@@ -304,7 +304,7 @@ export default function DailyWirdPage() {
           <div className="khatma-progress-stats">
             <div className="wird-stat khatma-stat">
               <span>صفحات الختمة الحالية</span>
-              <strong>{toAr(pagesInCurrentKhatma)} / ٦٠٤</strong>
+              <strong>{toAr(pagesInCurrentKhatma)}</strong>
             </div>
             <div className="wird-stat khatma-stat">
               <span>ختمات مكتملة</span>

@@ -1,283 +1,53 @@
-import { useEffect, useState } from "react";
-import { Link } from "wouter";
-import {
-  Layers, Circle, Star,
-  BookMarked, BookOpen, Headphones, GraduationCap,
-  Moon, Heart, Mic, History, CalendarCheck, Search, Users,
-  type LucideIcon,
-} from "lucide-react";
+/**
+ * مركز القرآن — بطاقات من سجل الأقسام (سطح quranHub) بلا مصفوفة يدوية.
+ */
+import { useEffect } from "react";
 import { applyPageSeo } from "@/lib/seo";
-import { ShareButtons } from "@/components/ContentActions";
-import { isComingSoonPath } from "@/lib/nav-visibility";
-import { HubCard } from "@/components/ui/HubCard";
-import { PageHero } from "@/components/ui/PageHero";
-import { QuranSurahJumpSearch } from "@/components/quran/QuranSurahJumpSearch";
+import { quranHubSections } from "@/config/sections.registry";
+import { FeaturedSectionCard, SectionCard } from "@/components/sections";
+import { loadLastPageSync } from "@/lib/quran-last-page";
+import "@/components/sections/section-cards.css";
 import "@/styles/pages/quran-hub.css";
-import "@/styles/pages/misc-page-legacy.css";
-
-import { SITE_URL } from "@/lib/site-config";
-type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; tag: string; featured?: boolean };
-
-/* ── بيانات أقسام القرآن ──────────────────────────────────── */
-const QURAN_SECTIONS: QuranSection[] = [
-  {
-    href: "/mushaf",
-    title: "المصحف",
-    desc: "مصحف المدينة الرقمي — نص عثماني بخطوط QPC، ٦٠٤ صفحة",
-    Icon: BookOpen,
-    tag: "قراءة",
-    featured: true,
-  },
-  {
-    href: "/quran/surahs",
-    title: "فهرس السور",
-    desc: "تصفّح السور الـ١١٤ كاملة: رقمها واسمها وعدد آياتها وتصنيفها، مع بحث ومفضلة",
-    Icon: BookMarked,
-    tag: "١١٤ سورة",
-    featured: true,
-  },
-  {
-    href: "/quran/tajweed",
-    title: "التجويد",
-    desc: "أحكام التجويد الشاملة مصنَّفة في أبواب رئيسية",
-    Icon: GraduationCap,
-    tag: "تجويد",
-    featured: true,
-  },
-  {
-    href: "/quran/surah-stories",
-    title: "قصص السور",
-    desc: "أسباب النزول ومحاور السور مع العبر والفوائد",
-    Icon: BookMarked,
-    tag: "قصص",
-    featured: true,
-  },
-  {
-    href: "/ulum-quran",
-    title: "علوم القرآن",
-    desc: "النزول والجمع والتفسير والإعجاز — بلا إعجاز عددي",
-    Icon: Layers,
-    tag: "علم",
-    featured: true,
-  },
-  {
-    href: "/quran/memorization-plans",
-    title: "خطط الحفظ",
-    desc: "خطط مرنة للحفظ والمراجعة مع حفظ تقدمك محليًا",
-    Icon: CalendarCheck,
-    tag: "حفظ",
-    featured: true,
-  },
-  {
-    href: "/quran-memorization",
-    title: "متابعة الحفظ",
-    desc: "لوحة متابعة الحفظ والمراجعة القرآنية",
-    Icon: CalendarCheck,
-    tag: "حفظ",
-  },
-  {
-    href: "/quran/recitation-test-ai",
-    title: "اختبار التلاوة والتسميع",
-    desc: "اختبر حفظك وتلاوتك لحظيًا",
-    Icon: Mic,
-    tag: "تسميع",
-    featured: true,
-  },
-  {
-    href: "/quran/search",
-    title: "بحث في الآيات",
-    desc: "ابحث بكلمة أو جملة وانتقل إلى موضع الآية في المصحف",
-    Icon: Search,
-    tag: "بحث",
-  },
-  {
-    href: "/quran/people",
-    title: "الذين ذكروا في القرآن",
-    desc: "من ذُكروا بأسمائهم مع مواضع الآيات — بلا إسرائيليات غير محرَّرة",
-    Icon: Users,
-    tag: "أسماء",
-  },
-  {
-    href: "/quran/makki-madani",
-    title: "المكي والمدني",
-    desc: "ضوابط التمييز بين المكي والمدني وخصائص كل منهما",
-    Icon: History,
-    tag: "علوم",
-  },
-  {
-    href: "/quran/revelation-order",
-    title: "ترتيب نزول القرآن",
-    desc: "خريطة زمنية للسور حسب تسلسل نزولها",
-    Icon: CalendarCheck,
-    tag: "ترتيب",
-  },
-  {
-    href: "/tafsir",
-    title: "علم التفسير",
-    desc: "أنواع التفسير وأصوله وأشهر كتب المفسرين",
-    Icon: BookOpen,
-    tag: "تفسير",
-  },
-  {
-    href: "/quran-circles",
-    title: "حلقات القرآن",
-    desc: "دليل حلقات التحفيظ في الكويت والمنصات الموثوقة",
-    Icon: Circle,
-    tag: "دليل",
-  },
-  {
-    href: "/daily-wird",
-    title: "الورد اليومي",
-    desc: "تتبع ورد قراءة القرآن اليومي",
-    Icon: Moon,
-    tag: "يومي",
-  },
-  {
-    href: "/duas-quran",
-    title: "أدعية القرآن الكريم",
-    desc: "أدعية قرآنية مصنَّفة بحسب المناسبة",
-    Icon: Star,
-    tag: "دعاء",
-  },
-];
-
-
-/* ── إحصائيات سريعة ───────────────────────────────────────── */
-const STATS = [
-  { label: "سورة", value: "١١٤" },
-  { label: "آية", value: "٦٢٣٦" },
-  { label: "صفحة", value: "٦٠٤" },
-  { label: "جزء", value: "٣٠" },
-];
-
-/* ── مميزات خاصة ─────────────────────────────────────────── */
-const FEATURES = [
-  { Icon: Layers,        text: "تصفح جميع السور مع ترتيب صفحاتها؛ من علوم القرآن الكريم وأدواته؛ يُستفاد في التعلم والتدبر — مرجع المجلس العلمي — مرجع تربوي معتمد في منهج المجلس العلمي. — مرجع تربوي مع" },
-  { Icon: Headphones,    text: "تلاوة وإذاعات القرآن بجودة عالية؛ من علوم القرآن الكريم وأدواته؛ يُستفاد في التعلم والتدبر — مرجع المجلس العلمي — مرجع تربوي معتمد في منهج المجلس العلمي. — مرجع تربوي مع" },
-  { Icon: Star,          text: "أسباب النزول والتفسير الميسَّر؛ من علوم القرآن الكريم وأدواته؛ يُستفاد في التعلم والتدبر — مرجع المجلس العلمي — مرجع تربوي معتمد في منهج المجلس العلمي. — مرجع تربوي معتم" },
-  { Icon: Heart,         text: "احفظ آياتك المفضلة وتتبع وردك اليومي؛ من علوم القرآن الكريم وأدواته؛ يُستفاد في التعلم والتدبر — مرجع المجلس العلمي — مرجع تربوي معتمد في منهج المجلس العلمي. — مرجع تربو" },
-  { Icon: GraduationCap, text: "تعلَّم أحكام التجويد خطوةً بخطوة؛ من علوم القرآن الكريم وأدواته؛ يُستفاد في التعلم والتدبر — مرجع المجلس العلمي — مرجع تربوي معتمد في منهج المجلس العلمي. — مرجع تربوي مع" },
-  { Icon: BookMarked,    text: "استكشف قصص القرآن وعبر السور؛ من علوم القرآن الكريم وأدواته؛ يُستفاد في التعلم والتدبر — مرجع المجلس العلمي — مرجع تربوي معتمد في منهج المجلس العلمي. — مرجع تربوي معتمد " },
-];
 
 export default function QuranHubPage() {
+  const sections = quranHubSections();
+  const openMushaf = sections.find((s) => s.id === "open-mushaf");
+  const rest = sections.filter((s) => s.id !== "open-mushaf");
+
   useEffect(() => {
     applyPageSeo({
       path: "/quran-hub",
-      title: "مركز القرآن الكريم | المجلس العلمي",
-      description: "مركز القرآن الكريم الشامل: تجويد، قصص السور، حلقات، وأكثر. يُستفاد في التعلم والتدبر",
-      keywords: ["القرآن الكريم", "تجويد", "قصص القرآن", "حلقات القرآن"],
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "أقسام مركز القرآن الكريم",
-          description: "خدمات القرآن الكريم في المجلس العلمي؛ يُستفاد في التعلم والتدبر",
-          numberOfItems: QURAN_SECTIONS.length,
-          itemListElement: QURAN_SECTIONS.map((s, i) => ({
-            "@type": "ListItem",
-            position: i + 1,
-            name: s.title,
-            description: s.desc,
-            url: `${SITE_URL}${s.href}`,
-          })),
-        },
-      ],
+      title: "مركز القرآن — المجلس العلمي",
+      description: "مركز القرآن: فتح المصحف، التلاوة، التفسير، التسميع، فهرس السور، والبحث.",
+      keywords: ["القرآن الكريم", "المصحف", "تفسير", "تلاوة"],
     });
-  }, []);
-
-  const [tafsirAudioReady, setTafsirAudioReady] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    void import("@/lib/quran-data/tafsir-audio").then(async ({ loadTafsirAudioCatalog }) => {
-      const clips = await loadTafsirAudioCatalog();
-      if (!cancelled) setTafsirAudioReady(clips.some((c) => c.enabled && c.streamUrl));
-    });
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   return (
-    <div className="quran-hub-page" dir="rtl">
-      <PageHero
-        title="القرآن الكريم"
-        description="كتاب الله العزيز، اقرأ، استمع، تعلّم، وتدبَّر"
-      >
-        <div className="hub-card-grid" style={{ marginBlockStart: "0.75rem" }} role="list">
-          {STATS.map((s) => (
-            <div key={s.label} className="mj-stat" role="listitem">
-              <strong>{s.value}</strong>
-              <span>{s.label}</span>
-            </div>
-          ))}
-        </div>
-      </PageHero>
-
-      <Link
-        href="/mushaf"
-        className="quran-hub-open-mushaf"
-        aria-label="فتح المصحف"
-      >
-        <span className="quran-hub-open-mushaf__icon" aria-hidden="true">
-          <BookOpen size={28} strokeWidth={1.75} />
-        </span>
-        <span className="quran-hub-open-mushaf__text">
-          <span className="quran-hub-open-mushaf__title">المصحف</span>
-          <span className="quran-hub-open-mushaf__resume">مصحف المدينة — ٦٠٤ صفحة</span>
-        </span>
-      </Link>
-
-      <section className="quran-hub-jump" aria-label="بحث السور والصفحات">
-        <QuranSurahJumpSearch />
-      </section>
-
-      {tafsirAudioReady ? (
-        <p style={{ textAlign: "center", margin: "0.5rem 1rem 0", fontSize: "0.95rem" }}>
-          <Link href="/tafsir">تفسير صوتي متاح — استمع من شيت الآية أو صفحة السورة</Link>
+    <div className="quran-hub-page sections-hub" dir="rtl" data-quran-hub="1">
+      <header className="quran-hub-page__head" style={{ padding: "16px 16px 8px" }}>
+        <h1 style={{ margin: 0, fontSize: 20, fontWeight: 800 }}>مركز القرآن</h1>
+        <p style={{ margin: "8px 0 0", fontSize: 15, color: "var(--mj-muted)" }}>
+          اقرأ، استمع، راجع، وابحث — من مصدر واحد
         </p>
+      </header>
+
+      {openMushaf ? (
+        <div style={{ padding: "8px 16px 16px" }}>
+          <FeaturedSectionCard
+            section={openMushaf}
+            resolveRoute={() => {
+              const page = loadLastPageSync();
+              return page && page > 1 ? `/mushaf?page=${page}` : "/mushaf";
+            }}
+          />
+        </div>
       ) : null}
 
-      <section className="quran-hub-sections">
-        <h2 className="quran-hub-sections__title">أقسام القرآن</h2>
-        <div className="hub-card-grid">
-          {QURAN_SECTIONS.map((s) => (
-            <HubCard
-              key={s.href}
-              href={s.href}
-              title={s.title}
-              description={s.desc}
-              Icon={s.Icon}
-              badge={s.tag}
-              soon={isComingSoonPath(s.href)}
-              featured={s.featured}
-            />
-          ))}
-        </div>
-      </section>
-
-      <section className="quran-hub-features">
-        <h2 className="quran-hub-features__title">ماذا يقدّم المجلس العلمي للقرآن؟</h2>
-        <div className="quran-hub-features__list">
-          {FEATURES.map((f, i) => (
-            <div key={i} className="quran-hub-feature-item">
-              <f.Icon size={22} className="quran-hub-feature-item__icon" />
-              <span className="quran-hub-feature-item__text">{f.text}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="quran-hub-closing">
-        <p className="quran-hub-closing__ayah mj-type-sacred">
-          ﴿ إِنَّ هَذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ ﴾
-        </p>
-        <span className="quran-hub-closing__ref">الإسراء: ٩</span>
-      </section>
-
-      <div className="twh-share">
-        <ShareButtons title="مركز القرآن الكريم — المجلس العلمي" url={`${SITE_URL}/quran-hub`} />
+      <div className="card-grid" style={{ padding: "0 16px 16px" }} data-sections-grid="quran-hub">
+        {rest.map((s) => (
+          <SectionCard key={s.id} section={s} />
+        ))}
       </div>
     </div>
   );

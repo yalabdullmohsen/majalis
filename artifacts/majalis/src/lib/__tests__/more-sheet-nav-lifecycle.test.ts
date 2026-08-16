@@ -1,6 +1,6 @@
 /**
- * بوابة انحدار: شيت «المزيد» لا يعيد ربط قفل الجسم/التاريخ عند كل تصيير،
- * والتنقّل السفلي يغلق الشيت فور تغيّر المسار — يمنع تجميد التبويبات.
+ * بوابة انحدار: شيت عام لا يعيد ربط قفل الجسم/التاريخ عند كل تصيير،
+ * والتنقّل السفلي صفحة أقسام كاملة بلا شيت «المزيد».
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -15,6 +15,7 @@ const sheet = read("src/components/ui/AppBottomSheet.tsx");
 const bottomNav = read("src/components/BottomNavBar.tsx");
 const navBar = read("src/components/NavBar.tsx");
 const home = read("src/pages/account/ui/HomeView.tsx");
+const sectionsPage = read("src/pages/account/SectionsPage.tsx");
 
 test("AppBottomSheet يحفظ onClose في ref ولا يعيد تشغيل الأثر بسببه", () => {
   assert.match(sheet, /onCloseRef/, "onClose في ref");
@@ -36,14 +37,12 @@ test("إغلاق الشيت يستبدل مدخل التاريخ بدل history.
   );
 });
 
-test("BottomNavBar يغلق المزيد عند تغيّر الموقع ويمرّر onClose مستقرًا", () => {
-  assert.match(bottomNav, /useCallback\(\(\)\s*=>\s*setMoreOpen\(false\)/, "closeMore مستقر");
-  assert.match(
-    bottomNav,
-    /useEffect\(\(\)\s*=>\s*\{\s*setMoreOpen\(false\);\s*\},\s*\[location\]\)/,
-    "إغلاق عند تغيّر location",
-  );
-  assert.match(bottomNav, /onClose=\{closeMore\}/, "تمرير closeMore مستقر لـ MoreBottomSheet");
+test("BottomNavBar بلا شيت المزيد — الأقسام تبويب صفحة كاملة", () => {
+  assert.doesNotMatch(bottomNav, /MoreBottomSheet|setMoreOpen|closeMore/, "لا منطق شيت المزيد");
+  assert.doesNotMatch(bottomNav, /المزيد/, "لا تسمية المزيد");
+  assert.match(bottomNav, /BOTTOM_NAV_TABS/, "التبويبات من السجل");
+  assert.match(sectionsPage, /الأقسام/, "صفحة الأقسام");
+  assert.doesNotMatch(sectionsPage, /إغلاق|MoreBottomSheet|AppBottomSheet/, "بلا زر إغلاق/شيت");
 });
 
 test("هيدر وبطل الرئيسية مبسّطان بلا شعار طويل مكرر", () => {

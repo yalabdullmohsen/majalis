@@ -33,7 +33,11 @@ assert.deepEqual(
 
 assert.deepEqual(
   BOTTOM_NAV_TABS.map((t) => t.href),
-  ["/quran-hub", "/lessons", "/prayer-times", "/fiqh"],
+  ["/quran-hub", "/lessons", "/prayer-times", "/fiqh", "/sections"],
+);
+assert.deepEqual(
+  BOTTOM_NAV_TABS.map((t) => t.label),
+  ["مركز القرآن", "الدروس", "الصلاة", "فقه", "الأقسام"],
 );
 
 assert.deepEqual(MORE_IA_GROUP_TITLES.length, 7);

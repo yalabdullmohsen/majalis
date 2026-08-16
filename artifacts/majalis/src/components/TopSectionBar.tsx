@@ -21,11 +21,11 @@ const PREFETCH_BY_HREF: Record<string, () => void> = {
   "/lessons": () => { void import("@/pages/lessons/LessonsPage"); },
   "/prayer-times": () => { void import("@/pages/worship/PrayerTimesPage"); },
   "/fiqh": () => { void import("@/pages/fiqh/FiqhPage"); },
+  "/sections": () => { void import("@/pages/account/SectionsPage"); },
 };
 
 /**
- * شريط الأقسام — نفس المساحات الأربع من nav-map (تنقّل موحّد).
- * المزيد والبحث دائمان في الهيدر / الشريط السفلي.
+ * شريط الأقسام — نفس تبويبات الشريط السفلي من nav-map (تنقّل موحّد).
  */
 export const SECTION_TABS: SectionTab[] = BOTTOM_NAV_TABS.map((tab) => ({
   href: tab.href,
@@ -145,6 +145,14 @@ export function isTabActive(location: string, href: string): boolean {
       location.startsWith("/sawm/") ||
       location === "/hajj" ||
       location.startsWith("/hajj/")
+    );
+  }
+  if (href === "/sections" || href === "/more") {
+    return (
+      location === "/sections" ||
+      location.startsWith("/sections/") ||
+      location === "/more" ||
+      location.startsWith("/more/")
     );
   }
   return location === href || location.startsWith(href + "/");

@@ -15,7 +15,7 @@ type Common = {
 
 export function FeaturedSectionsGrid({ sections, onNavigate, className }: Common) {
   return (
-    <div className={cn("section-grid section-grid--featured", className)} data-sections-grid="featured">
+    <div className={cn("card-grid card-grid--featured", className)} data-sections-grid="featured">
       {sections.map((s) => (
         <FeaturedSectionCard key={s.id} section={s} onNavigate={onNavigate} />
       ))}
@@ -25,7 +25,7 @@ export function FeaturedSectionsGrid({ sections, onNavigate, className }: Common
 
 export function SectionsCardGrid({ sections, onNavigate, className }: Common) {
   return (
-    <div className={cn("section-grid", className)} data-sections-grid="cards">
+    <div className={cn("card-grid", className)} data-sections-grid="cards">
       {sections.map((s) => (
         <SectionCard key={s.id} section={s} onNavigate={onNavigate} />
       ))}
@@ -35,7 +35,7 @@ export function SectionsCardGrid({ sections, onNavigate, className }: Common) {
 
 export function SectionsRowList({ sections, onNavigate, className }: Common) {
   return (
-    <div className={cn("section-row-list", className)} role="list" data-sections-grid="rows">
+    <div className={cn("card-grid card-grid--compact", className)} data-sections-grid="compact" role="list">
       {sections.map((s) => (
         <div key={s.id} role="listitem">
           <SectionRow section={s} onNavigate={onNavigate} />

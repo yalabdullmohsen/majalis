@@ -8,6 +8,7 @@ import {
   SECTION_GROUP_ORDER,
   featuredSections,
   bottomNavSections,
+  quranHubSections,
   sectionsForSurface,
   SECTION_MERGE_REDIRECTS,
 } from "@/config/sections.registry";
@@ -17,8 +18,12 @@ assert.equal(SECTION_GROUP_ORDER.at(-1), "account");
 assert.equal(featuredSections().length, 6);
 assert.deepEqual(
   bottomNavSections().map((s) => s.id),
-  ["home", "quran", "prayer", "lessons", "more"],
+  ["quran", "lessons", "prayer", "fiqh", "sections"],
 );
+assert.equal(bottomNavSections()[0]?.label, "مركز القرآن");
+assert.equal(bottomNavSections()[4]?.label, "الأقسام");
+assert.ok(quranHubSections().some((s) => s.id === "open-mushaf" && s.label === "فتح المصحف"));
+assert.ok(quranHubSections().length >= 7);
 
 const ids = new Set(SECTIONS.map((s) => s.id));
 assert.equal(ids.size, SECTIONS.length);
@@ -43,7 +48,9 @@ assert.deepEqual(
   shared,
 );
 
-assert.ok(SECTION_MERGE_REDIRECTS.length >= 5);
+assert.ok(SECTION_MERGE_REDIRECTS.some((r) => r.from === "/more" && r.to === "/sections"));
 assert.ok(SECTIONS.some((s) => s.id === "flashcards" && s.aliases?.includes("المحفوظات")));
+assert.ok(SECTIONS.some((s) => s.id === "sections" && s.aliases?.includes("المزيد")));
+assert.ok(SECTIONS.some((s) => s.id === "quran" && s.aliases?.includes("قرآن")));
 
 console.log(`sections-registry.test: OK (${SECTIONS.length} sections)`);

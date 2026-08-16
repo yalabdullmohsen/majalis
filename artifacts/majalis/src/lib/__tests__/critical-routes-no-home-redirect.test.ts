@@ -17,7 +17,7 @@ function routeBlock(path: string): string {
   return m[0];
 }
 
-for (const path of ["/library", "/updates", "/knowledge-graph", "/more"]) {
+for (const path of ["/library", "/updates", "/knowledge-graph", "/sections"]) {
   const block = routeBlock(path);
   assert.equal(
     /Redirect\s+to=["']\/["']/.test(block),
@@ -27,10 +27,14 @@ for (const path of ["/library", "/updates", "/knowledge-graph", "/more"]) {
   assert.match(block, /SafeLazyRoute|component=/, `${path} يجب أن يعرض صفحة`);
 }
 
+const moreBlock = routeBlock("/more");
+assert.equal(/Redirect\s+to=["']\/["']/.test(moreBlock), false, "/more لا يحوّل إلى /");
+assert.match(moreBlock, /Redirect\s+to=["']\/sections["']/, "/more → /sections دائمًا");
+
 assert.match(app, /path="\/prayer"[^>]*>\s*<Redirect\s+to="\/prayer-times"/);
 assert.match(app, /path="\/quran\/mushaf"[^>]*>\s*<Redirect\s+to="\/mushaf"/);
 assert.match(app, /LibraryPage/);
-assert.match(app, /MorePage/);
+assert.match(app, /SectionsPage/);
 assert.match(app, /UpdatesPage/);
 assert.match(app, /KnowledgeGraphPage/);
 
@@ -56,6 +60,7 @@ assert.match(
 );
 
 const seo = readFileSync(resolve(root, "src/lib/seo-routes.json"), "utf8");
-assert.match(seo, /"path"\s*:\s*"\/more"/, "/more يجب أن يكون في seo-routes للـprerender");
+assert.match(seo, /"path"\s*:\s*"\/sections"/, "/sections في seo-routes");
+assert.match(seo, /"path"\s*:\s*"\/more"/, "/more يبقى في seo-routes للـprerender/تحويل");
 
 console.log("critical-routes-no-home-redirect.test.ts: ok");
