@@ -137,12 +137,12 @@ const ASSERTIONS = [
   { route: "/janaza", selector: ".jnz-related__title", mode: "dark", min: 4.5 },
   // ── أذكار الوضع الليلي (2026-08): --txt-primary كان غير معرَّف → احتياطي
   // #1A1A18 على بطاقة داكنة (تباين ~1.05:1). نص الذكر ≥7:1 (قراءة طويلة).
-  { route: "/adhkar", selector: ".adhkar-focus-text", mode: "dark", min: 7 },
-  { route: "/adhkar", selector: ".adhkar-focus-btn--prev", mode: "dark", min: 4.5 },
-  { route: "/adhkar", selector: ".adhkar-focus-btn--details", mode: "dark", min: 4.5 },
-  { route: "/adhkar", selector: ".adhkar-focus-btn--next", mode: "dark", min: 4.5 },
-  { route: "/adhkar", selector: ".adhkar-focus-counter", mode: "dark", min: 4.5 },
-  { route: "/adhkar", selector: ".adhkar-focus-text", mode: "light", min: 7 },
+  { route: "/adhkar/morning", selector: ".adhkar-focus-text", mode: "dark", min: 7 },
+  { route: "/adhkar/morning", selector: ".adhkar-focus-btn--prev", mode: "dark", min: 4.5 },
+  { route: "/adhkar/morning", selector: ".adhkar-focus-btn--details", mode: "dark", min: 4.5 },
+  { route: "/adhkar/morning", selector: ".adhkar-focus-btn--next", mode: "dark", min: 4.5 },
+  { route: "/adhkar/morning", selector: ".adhkar-focus-counter", mode: "dark", min: 4.5 },
+  { route: "/adhkar/morning", selector: ".adhkar-focus-text", mode: "light", min: 7 },
   { route: "/hadith", selector: ".hadith-card__text", mode: "dark", min: 4.5 },
   // الطهارة: نص/تبويب أبيض فوق أخضر الهوية؛ التبويب النشط لوحة فاتحة
   { route: "/tahara", selector: ".th-hero__title", mode: "light", min: 4.5 },
