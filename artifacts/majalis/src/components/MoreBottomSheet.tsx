@@ -3,6 +3,7 @@
  */
 import { useCallback } from "react";
 import { AppBottomSheet } from "@/components/ui/AppBottomSheet";
+import { MoreSheetThemeToggle } from "@/components/more/MoreSheetThemeToggle";
 import { MoreHubFromRegistry } from "@/features/more/MoreHubFromRegistry";
 import "@/styles/components/more-bottom-sheet.css";
 
@@ -20,12 +21,13 @@ export function MoreBottomSheet({ open, onClose }: Props) {
     <AppBottomSheet
       open={open}
       onClose={handleSheetClose}
-      title="المزيد"
+      title="المجلس العلمي"
       snap="full"
       closeLabel="إغلاق"
-      className="bottom-sheet--services"
+      className="bottom-sheet--services more-hub-sheet"
+      headerExtra={<MoreSheetThemeToggle />}
     >
-      <div className="bottom-sheet__body-inner px-3 pb-6">
+      <div className="more-hub-sheet__body" data-more-sheet-body="1">
         <MoreHubFromRegistry showSearch onNavigate={handleSheetClose} />
       </div>
     </AppBottomSheet>

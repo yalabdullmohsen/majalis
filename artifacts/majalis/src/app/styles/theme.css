@@ -139,6 +139,7 @@
   --edge-deadzone: 20px;
 
   --mj-bg: #F2F4F3;
+  --mj-more-sheet: #F2F4F3;
   --mj-surface: #FFFFFF;
   --mj-surface-2: #E9EDEB;
   --mj-surface-3: #E3E8E6;
@@ -246,6 +247,7 @@ html.dark,
 [data-theme="dark"],
 .dark {
   --mj-bg: #131A18;
+  --mj-more-sheet: #101614;
   --mj-surface: #1B2421;
   --mj-surface-2: #222D29;
   --mj-surface-3: #2A3733;
@@ -255,7 +257,7 @@ html.dark,
   --mj-ink: #F8FAFC;
   --mj-ink-2: #E2E8F0;
   --mj-muted: #C5D0CB;
-  --mj-brand: #5CC095;
+  --mj-brand: #4FB48B;
   --mj-brand-soft: #16261F;
   /* خلفية عميقة فقط — لا يُستخدم كلون نص (العناوين عبر --elite-forest / accent) */
   --mj-brand-deep: #0E1C17;

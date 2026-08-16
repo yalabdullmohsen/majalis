@@ -3,7 +3,6 @@ import { Link, useLocation } from "wouter";
 import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
-import { SideNavDrawer } from "./SideNavDrawer";
 import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
@@ -17,6 +16,9 @@ import "@/styles/components/app-chrome-scroll.css";
 
 const HeaderTicker = lazy(() =>
   import("./HeaderTicker").then((m) => ({ default: m.HeaderTicker })),
+);
+const SideNavDrawer = lazy(() =>
+  import("./SideNavDrawer").then((m) => ({ default: m.SideNavDrawer })),
 );
 function PrayerChip() {
   const { countdown: cd } = usePrayerCountdown();
@@ -235,11 +237,11 @@ export default function NavBar() {
         )}
       </header>
 
-      <SideNavDrawer
-        open={isMenuOpen}
-        onClose={closeMenu}
-        onLogout={handleLogout}
-      />
+      {isMenuOpen ? (
+        <Suspense fallback={null}>
+          <SideNavDrawer open={isMenuOpen} onClose={closeMenu} onLogout={handleLogout} />
+        </Suspense>
+      ) : null}
     </>
   );
 }

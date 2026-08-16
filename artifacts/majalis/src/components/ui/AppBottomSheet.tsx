@@ -18,6 +18,8 @@ type Props = {
   snap?: "half" | "full";
   closeLabel?: string;
   footer?: ReactNode;
+  /** محتوى إضافي في الترويسة (مثل زر الوضع الليلي) */
+  headerExtra?: ReactNode;
   className?: string;
   /** يرفع الطبقة فوق شيتات أخرى (مثل شيت الآية z≈10020) */
   elevated?: boolean;
@@ -40,6 +42,7 @@ export function AppBottomSheet({
   snap = "full",
   closeLabel = "إغلاق",
   footer,
+  headerExtra,
   className = "",
   elevated = false,
   initialFocusRef,
@@ -52,6 +55,7 @@ export function AppBottomSheet({
   const edgeStartX = useRef<number | null>(null);
   const edgeStartY = useRef<number | null>(null);
   const historyPushed = useRef(false);
+  const pathAtOpen = useRef("");
   const [dragOffset, setDragOffset] = useState(0);
   const closingRef = useRef(false);
   const onCloseRef = useRef(onClose);
@@ -72,6 +76,7 @@ export function AppBottomSheet({
       return;
     }
     previouslyFocused.current = document.activeElement as HTMLElement | null;
+    pathAtOpen.current = `${window.location.pathname}${window.location.search}`;
     const prevOverflow = document.body.style.overflow;
     const prevPosition = document.body.style.position;
     const prevTop = document.body.style.top;
@@ -134,7 +139,9 @@ export function AppBottomSheet({
       document.body.style.top = prevTop;
       document.body.style.width = prevWidth;
       document.body.classList.remove("app-sheet-open", "filter-sheet-open");
-      window.scrollTo(0, prevScrollY);
+      const pathNow = `${window.location.pathname}${window.location.search}`;
+      // بعد تنقّل من الشيت: أعلى الصفحة الجديدة · وإلا استعادة موضع التمرير السابق
+      window.scrollTo(0, pathNow === pathAtOpen.current ? prevScrollY : 0);
       document.removeEventListener("keydown", onKey);
       window.removeEventListener("popstate", onPop);
       if (historyPushed.current) {
@@ -238,7 +245,10 @@ export function AppBottomSheet({
           onPointerUp={onHandlePointerUp}
           onPointerCancel={onHandlePointerUp}
         >
-          <h2 id={titleId} className="app-sheet__title">{title}</h2>
+          <h2 id={titleId} className="app-sheet__title">
+            {title}
+          </h2>
+          {headerExtra ? <div className="app-sheet__head-extra">{headerExtra}</div> : null}
         </header>
         <div className="app-sheet__body">{children}</div>
         {footer ? <div className="app-sheet__footer-slot">{footer}</div> : null}

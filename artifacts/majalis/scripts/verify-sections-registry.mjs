@@ -249,24 +249,103 @@ const SPACING = new Set([8, 12, 16, 24]);
       if (!SPACING.has(n)) fail(`تباعد خارج السلم 8/12/16/24: ${m[0]}`);
     }
 
-    // 9) نص غير أبيض فوق أخضر في Featured
+    // 9) نص أبيض فوق أخضر في Featured (CSS دلالية أو text-white)
     if (exists("src/components/sections/FeaturedSectionCard.tsx")) {
       const feat = read("src/components/sections/FeaturedSectionCard.tsx");
+      const featCss = exists("src/components/sections/section-cards.css")
+        ? read("src/components/sections/section-cards.css")
+        : "";
       if (/text-black|text-foreground|text-muted|text-gray|text-zinc/.test(feat)) {
         fail("نص غير أبيض فوق بطاقة Featured الخضراء");
       }
-      if (!/text-white/.test(feat)) {
-        fail("FeaturedSectionCard يجب أن يستخدم text-white");
+      if (!/text-white|section-card--featured/.test(feat)) {
+        fail("FeaturedSectionCard يجب أن يضع نصًا أبيض / صنف featured");
+      }
+      if (featCss && !/\.section-card--featured[\s\S]{0,400}color:\s*#fff|color:\s*#ffffff|color:\s*var\(--on-brand/i.test(featCss)) {
+        fail("section-cards.css: بطاقة featured بلا لون نص أبيض");
       }
     }
 
-    // 10) aria-label وهدف لمس
+    // 10) aria-label وهدف لمس ≥ 44
     for (const f of ["FeaturedSectionCard.tsx", "SectionCard.tsx", "SectionRow.tsx"]) {
       if (!exists(path.join("src/components/sections", f))) continue;
       const src = read(path.join("src/components/sections", f));
       if (!/aria-label/.test(src)) fail(`${f}: بلا aria-label`);
-      if (!/min-h-\[44|min-h-11|h-11|size-11|min-h-\[2\.75rem\]/.test(src)) {
+      if (
+        !/min-h-\[44|min-h-11|h-11|size-11|min-h-\[2\.75rem\]|section-card|section-row/.test(src)
+      ) {
         fail(`${f}: هدف لمس يُفترض ≥ 44px`);
+      }
+    }
+
+    // 11) فصل label/subtitle — ممنوع دمج نصّي في عقدة واحدة
+    for (const f of ["FeaturedSectionCard.tsx", "SectionCard.tsx", "SectionRow.tsx"]) {
+      if (!exists(path.join("src/components/sections", f))) continue;
+      const src = read(path.join("src/components/sections", f));
+      if (/\{section\.label\}\s*\{section\.subtitle\}/.test(src)) {
+        fail(`${f}: label و subtitle ملتصقان في JSX`);
+      }
+      if (/`\$\{[^}]*label[^}]*\}\$\{[^}]*subtitle/.test(src) && !/aria-label/.test(src.slice(0, src.indexOf("`")))) {
+        // aria مسموح؛ دمج العرض ممنوع
+      }
+      if (!/section\.(label|subtitle)/.test(src) && f !== "SectionRow.tsx") {
+        fail(`${f}: يجب عرض label/subtitle منفصليْن`);
+      }
+      if (f !== "SectionRow.tsx") {
+        if (!/section\.label/.test(src) || !/section\.subtitle/.test(src)) {
+          fail(`${f}: label و subtitle مطلوبان كعقدتين`);
+        }
+      }
+    }
+
+    // 12) أنماط دلالية موجودة (لا اعتماد على Tailwind utility وحدها)
+    if (!exists("src/components/sections/section-cards.css")) {
+      fail("section-cards.css مفقود — البطاقات تنهار بلا أنماط دلالية");
+    } else {
+      const css = read("src/components/sections/section-cards.css");
+      if (!/\.section-card\s*\{/.test(css)) fail("CSS: .section-card مفقود");
+      if (!/\.section-card--featured\s*\{/.test(css)) fail("CSS: .section-card--featured مفقود");
+      if (!/\.section-row\s*\{/.test(css)) fail("CSS: .section-row مفقود");
+      if (!/border-radius:\s*16px/.test(css)) fail("CSS: border-radius 16px مفقود");
+      if (!/min-height:\s*44px/.test(css)) fail("CSS: min-height 44px مفقود");
+      if (/flex-direction:\s*column-reverse|flex-wrap:\s*wrap-reverse/.test(css)) {
+        fail("CSS: reverse flex ممنوع في بطاقات الأقسام");
+      }
+    }
+
+    // 13) المزيد: ترتيب المجموعات بلا reverse + مكوّنات البطاقات
+    if (exists("src/features/more/MoreHubFromRegistry.tsx")) {
+      const hub = read("src/features/more/MoreHubFromRegistry.tsx");
+      if (!/SECTION_GROUP_ORDER\.map/.test(hub)) {
+        fail("MoreHubFromRegistry: يجب البناء عبر SECTION_GROUP_ORDER.map");
+      }
+      if (/\.reverse\(|flex-col-reverse|column-reverse/.test(hub)) {
+        fail("MoreHubFromRegistry: reverse ممنوع");
+      }
+      if (!/FeaturedSectionsGrid/.test(hub) || !/SectionsCardGrid/.test(hub)) {
+        fail("MoreHubFromRegistry: يجب استخدام شبكات البطاقات الموحّدة");
+      }
+      if (!/more-hub__group-title/.test(hub)) {
+        fail("MoreHubFromRegistry: عنوان المجموعة بصنف more-hub__group-title");
+      }
+    }
+
+    // 14) صفر ChevronRight في صفوف الأقسام
+    if (exists("src/components/sections/SectionRow.tsx")) {
+      const row = read("src/components/sections/SectionRow.tsx");
+      if (/ChevronRight/.test(row)) fail("SectionRow: استخدم ChevronLeft فقط (RTL)");
+      if (!/ChevronLeft/.test(row)) fail("SectionRow: ChevronLeft مطلوب");
+    }
+
+    // 15) تحويلات الدمج في App
+    {
+      const appSrc = read("src/App.tsx");
+      for (const r of SECTION_MERGE_REDIRECTS) {
+        const escaped = r.from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const re = new RegExp(`path="${escaped}"[\\s\\S]{0,120}Redirect\\s+to="${r.to.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`);
+        if (!re.test(appSrc)) {
+          fail(`تحويل دمج مفقود في App: ${r.from} → ${r.to}`);
+        }
       }
     }
   }

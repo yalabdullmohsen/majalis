@@ -17,6 +17,7 @@ import {
 } from "@/components/sections";
 import { normalizeForSearch } from "@/shared/arabic-normalize";
 import { cn } from "@/lib/utils";
+import "@/components/sections/section-cards.css";
 
 function matchesQuery(s: SectionDef, q: string): boolean {
   if (!q) return true;
@@ -57,9 +58,9 @@ export function MoreHubFromRegistry({ onNavigate, showSearch = false, className 
   const empty = featured.length === 0 && groups.every((g) => g.items.length === 0);
 
   return (
-    <div className={cn("flex flex-col gap-6", className)}>
+    <div className={cn("more-hub", className)} data-more-hub="1" dir="rtl">
       {showSearch ? (
-        <div className="px-1">
+        <div>
           <label htmlFor="more-hub-search" className="sr-only">
             بحث في الأقسام
           </label>
@@ -69,7 +70,7 @@ export function MoreHubFromRegistry({ onNavigate, showSearch = false, className 
             enterKeyHint="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="min-h-11 w-full rounded-2xl border border-border bg-card px-4 text-sm text-foreground"
+            className="more-hub__search"
             placeholder="ابحث في الأقسام…"
             autoComplete="off"
             data-search-field="1"
@@ -78,11 +79,11 @@ export function MoreHubFromRegistry({ onNavigate, showSearch = false, className 
       ) : null}
 
       {empty ? (
-        <p className="px-1 text-sm text-muted-foreground">لا نتائج مطابقة.</p>
+        <p className="more-hub__empty">لا نتائج مطابقة.</p>
       ) : (
         <>
           {featured.length > 0 ? (
-            <section aria-label="الأبواب المميّزة" className="flex flex-col gap-3">
+            <section aria-label="الأبواب المميّزة" className="more-hub__featured" data-more-featured="1">
               <FeaturedSectionsGrid sections={featured} onNavigate={onNavigate} />
             </section>
           ) : null}
@@ -120,8 +121,12 @@ function GroupBlock({
 }) {
   const headingId = `more-group-${group}`;
   return (
-    <section className="flex flex-col gap-3" aria-labelledby={headingId}>
-      <h2 id={headingId} className="px-1 text-sm font-semibold text-foreground">
+    <section
+      className="more-hub__group"
+      aria-labelledby={headingId}
+      data-more-group={group}
+    >
+      <h2 id={headingId} className="more-hub__group-title" data-more-group-title={group}>
         {title}
       </h2>
       {rowStyle ? (

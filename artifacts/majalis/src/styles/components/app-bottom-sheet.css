@@ -64,37 +64,56 @@
 
 .app-sheet__head {
   flex-shrink: 0;
-  padding: 0.35rem 1.1rem 0.55rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--mj-hairline, var(--border));
+  background: var(--mj-bg, var(--color-bg, #f2f4f3));
 }
 
 .app-sheet__title {
   margin: 0;
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 800;
   font-family: var(--font-display, inherit);
   color: var(--mj-ink, var(--text-title));
   text-align: center;
+  line-height: 1.25;
+}
+
+.app-sheet__head-extra {
+  position: absolute;
+  inset-inline-end: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
 }
 
 .app-sheet__body {
   flex: 1 1 auto;
   overflow: auto;
   overscroll-behavior: contain;
-  padding: 0.75rem 1.1rem;
+  padding: 12px 16px;
   -webkit-overflow-scrolling: touch;
+  background: var(--mj-bg, var(--color-bg, #f2f4f3));
 }
 
 .app-sheet__footer-slot {
   flex-shrink: 0;
-  padding: 0 1.1rem;
+  padding: 0 16px;
 }
 
 .app-sheet__footer {
   flex-shrink: 0;
-  padding: 0.65rem 1.1rem calc(0.65rem + var(--inset-bottom));
+  padding: 12px 16px calc(12px + var(--inset-bottom));
   border-top: 1px solid var(--mj-hairline, var(--border));
-  background: var(--mj-surface, var(--surface, #fff));
+  background: color-mix(in srgb, var(--mj-bg, #f2f4f3) 94%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .app-sheet__close {
