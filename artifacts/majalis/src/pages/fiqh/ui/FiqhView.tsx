@@ -141,7 +141,25 @@ export default function FiqhPage() {
 
   return (
     <div className="fqp-root page-shell" dir="rtl">
-      <PageHero title="الفقه والأحكام" />
+      <PageHero
+        title="الفقه والأحكام"
+        description="بوابة الفقه: أحكام شرعية، قواعد، مذاهب، نوازل، قرارات المجامع، وأحكام العبادات."
+      />
+
+      {/* بطاقات المحاور — ظاهرة دائمًا (لا تعتمد على تبويب) لتباين/اكتشاف الواجهة */}
+      <div className="hub-card-grid fqh-hub-grid fqh-hub-grid--overview">
+        {FIQH_HUB_TOPICS.filter((t) =>
+          ["tahara", "salah", "fiqh-qawaid", "madhahib", "rulings-encyclopedia", "fiqh-council"].includes(t.id),
+        ).map((t) => (
+          <HubCard
+            key={t.id}
+            href={t.href}
+            title={t.title}
+            description={t.desc}
+            icon={<SectionIcon name={t.emoji} size={22} />}
+          />
+        ))}
+      </div>
 
       {/* تبويبات الباب الرئيسي */}
       <div className="fqp-tabs-nav fqp-tabs-nav--bare">

@@ -180,7 +180,7 @@ export default function CarModePage() {
       {/* Header */}
       <div className="car-mode__header">
         <Link href="/" className="car-mode__exit">✕ خروج</Link>
-        <span className="car-mode__label">وضع السيارة</span>
+        <h1 className="car-mode__label">وضع السيارة</h1>
       </div>
 
       {/* Now playing */}

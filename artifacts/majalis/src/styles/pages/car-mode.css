@@ -27,7 +27,7 @@
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 0.5rem;
 }
-.car-mode__label { font-size: 1rem; font-weight: 700; color: #fff; }
+.car-mode__label { font-size: 1rem; font-weight: 700; color: #fff; margin: 0; }
 
 .car-mode__now-playing {
   flex: 1;
