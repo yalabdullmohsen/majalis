@@ -1,5 +1,5 @@
 /**
- * بوابة: إقلاع أصلي بلون صامت + دخولية ويب واحدة (MajalisLaunchScreen) بلا تكرار.
+ * بوابة: إقلاع أصلي بلون صامت + MajlisLaunchScreen يومية (ليست Onboarding).
  * تشغيل: node --import tsx src/lib/__tests__/launch-splash-unified.test.ts
  */
 import assert from "node:assert/strict";
@@ -15,7 +15,7 @@ assert.doesNotMatch(indexHtml, /id="mj-boot-splash"/, "لا شاشة ويب وس
 assert.doesNotMatch(indexHtml, /mj-boot-splash__logo/, "لا شعار ويب مكرر في HTML");
 assert.doesNotMatch(indexHtml, /apple-touch-startup-image/, "لا صور إقلاع PWA");
 assert.doesNotMatch(indexHtml, /splash-boot\.css/, "لا اعتماد على splash-boot.css");
-assert.match(indexHtml, /background-color:\s*#002b21/, "خلفية WebView خضراء داكنة");
+assert.match(indexHtml, /background-color:\s*#002b21/, "خلفية WebView خضراء داكنة — لا بيضاء");
 assert.match(indexHtml, /html,\s*body,\s*#root/, "خلفية inline على html/body/#root");
 assert.match(indexHtml, /preload[^>]+icon-192\.png/, "preload لشعار الدخولية");
 
@@ -38,7 +38,7 @@ assert.match(launch, /0\.16862745098039217/, "خلفية #002b21");
 const capTs = readFileSync(resolve(root, "capacitor.config.ts"), "utf8");
 assert.match(capTs, /launchShowDuration:\s*0/, "مدة إظهار Splash = 0");
 assert.match(capTs, /launchAutoHide:\s*true/, "إخفاء تلقائي");
-assert.match(capTs, /showSpinner:\s*false/, "بلا مؤشر تحميل");
+assert.match(capTs, /showSpinner:\s*false/, "بلا مؤشر تحميل أصلي");
 assert.match(capTs, /backgroundColor:\s*"#002b21"/, "لون خلفية مطابق للتطبيق");
 
 const styles = readFileSync(
@@ -82,51 +82,71 @@ assert.ok(!existsSync(resolve(root, "public/brand/apple-splash")), "لا apple-s
 assert.ok(!existsSync(resolve(root, "public/brand/splash-boot.css")), "لا splash-boot.css");
 assert.ok(!existsSync(resolve(root, "src/components/BrandReveal.tsx")), "BrandReveal محذوف");
 assert.ok(!existsSync(resolve(root, "src/styles/components/brand-reveal.css")), "brand-reveal.css محذوف");
+assert.ok(
+  !existsSync(resolve(root, "src/components/MajalisLaunchScreen.tsx")),
+  "الاسم القديم MajalisLaunchScreen أُزيل لصالح MajlisLaunchScreen",
+);
 
 assert.ok(
-  existsSync(resolve(root, "src/components/MajalisLaunchScreen.tsx")),
-  "دخولية ويب واحدة: MajalisLaunchScreen",
+  existsSync(resolve(root, "src/components/MajlisLaunchScreen.tsx")),
+  "دخولية ويب: MajlisLaunchScreen",
 );
-assert.ok(
-  existsSync(resolve(root, "src/styles/components/majalis-launch-screen.css")),
-  "أنماط الدخولية موجودة",
-);
-assert.ok(existsSync(resolve(root, "src/lib/launch-intro.ts")), "منطق جلسة الدخولية");
+assert.ok(existsSync(resolve(root, "src/styles/launch-screen.css")), "أنماط launch-screen.css");
+assert.ok(existsSync(resolve(root, "src/lib/launch-intro.ts")), "توقيتات الإطلاق");
+assert.ok(existsSync(resolve(root, "src/lib/launch-readiness.ts")), "جاهزية الإطلاق");
 
 const launchIntro = readFileSync(resolve(root, "src/lib/launch-intro.ts"), "utf8");
-assert.match(launchIntro, /LAUNCH_INTRO_MIN_MS\s*=\s*900/);
-assert.match(launchIntro, /LAUNCH_INTRO_MAX_MS\s*=\s*1400/);
-assert.match(launchIntro, /sessionStorage/);
+assert.match(launchIntro, /LAUNCH_ENTER_MS\s*=\s*350/);
+assert.match(launchIntro, /LAUNCH_EXIT_MS\s*=\s*250/);
+assert.match(launchIntro, /LAUNCH_READY_CAP_MS\s*=\s*1_?200/);
+assert.match(launchIntro, /LAUNCH_MAX_MS\s*=\s*3_?000/);
+assert.doesNotMatch(launchIntro, /sessionStorage/, "لا بوابة جلسة تمنع الظهور كل إقلاع");
+assert.doesNotMatch(launchIntro, /onboardingVersion|firstLaunch/, "فصل عن Onboarding");
 
-const launchCss = readFileSync(
-  resolve(root, "src/styles/components/majalis-launch-screen.css"),
-  "utf8",
-);
-assert.match(launchCss, /prefers-reduced-motion/);
+const launchCss = readFileSync(resolve(root, "src/styles/launch-screen.css"), "utf8");
+assert.match(launchCss, /prefers-reduced-motion/, "reduced-motion يوقف الحركات");
 assert.match(launchCss, /--mj-launch-from/);
-assert.match(launchCss, /--inset-(top|bottom)/);
+assert.match(launchCss, /100dvh/, "ارتفاع ديناميكي كامل");
+assert.match(launchCss, /--inset-top|--inset-bottom/, "safe-area عبر رموز --inset-*");
+assert.ok(!launchCss.includes("100" + "vh"), "بلا وحدة ارتفاع viewport قديمة");
+assert.doesNotMatch(launchCss, /env\(\s*safe-area-inset-/, "env(safe-area) فقط في theme.css");
+assert.match(launchCss, /body\.mj-launching/, "حالة إخفاء الكروم");
+assert.match(launchCss, /\.bottom-nav/, "إخفاء bottom nav أثناء الإطلاق");
+assert.match(launchCss, /\.navbar-v3/, "إخفاء top nav أثناء الإطلاق");
+assert.match(launchCss, /#002b21|var\(--mj-launch-from\)/, "لا خلفية بيضاء");
+assert.match(launchCss, /html\.dark/, "وضع داكن");
 
-const launchComp = readFileSync(resolve(root, "src/components/MajalisLaunchScreen.tsx"), "utf8");
+const launchComp = readFileSync(resolve(root, "src/components/MajlisLaunchScreen.tsx"), "utf8");
 assert.match(launchComp, /hideAppSplash/);
-assert.match(launchComp, /علم نافع، وتجربة مرتبة/);
+assert.match(launchComp, /المجلس العلمي/);
 assert.match(launchComp, /icon-192\.png/);
+assert.match(launchComp, /Style\.Light/, "StatusBar Light على خلفية داكنة");
+assert.match(launchComp, /bootstrapLaunchReadinessSync/);
+assert.match(launchComp, /LAUNCH_MAX_MS/);
 assert.doesNotMatch(launchComp, /framer-motion|gsap|lottie/i, "بلا مكتبات حركة");
 assert.doesNotMatch(launchComp, /supabase|fetch\(|QueryClient/i, "لا انتظار بيانات خارجية");
+assert.doesNotMatch(
+  launchComp,
+  /onboardingVersion|firstLaunch|ابدأ الآن|تخطي|اهتمام/,
+  "ليست Onboarding",
+);
 
+const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8");
+assert.match(appSrc, /MajlisLaunchScreen/, "App يركّب MajlisLaunchScreen");
+assert.match(appSrc, /isLaunching/, "حالة isLaunching في الصدفة");
+assert.match(appSrc, /data-launching/, "سمة data-launching");
+assert.doesNotMatch(
+  appSrc,
+  /Onboarding|WelcomeScreen|IntroScreen|BrandReveal|AppFirstRunHost|FirstRunSetup/,
+  "لا بوابة ترحيب/دليل سريع قديمة في التركيب",
+);
+
+const icon1024 = readFileSync(resolve(root, "public/brand/icon-1024.png"));
+assert.equal(icon1024[25], 2, "icon-1024 color type = RGB (بلا شفافية)");
 assert.ok(
   existsSync(
     resolve(root, "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png"),
   ),
-);
-const icon1024 = readFileSync(resolve(root, "public/brand/icon-1024.png"));
-assert.equal(icon1024[25], 2, "icon-1024 color type = RGB (بلا شفافية)");
-
-const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8");
-assert.match(appSrc, /MajalisLaunchScreen/, "App يركّب الدخولية الواحدة");
-assert.doesNotMatch(
-  appSrc,
-  /Onboarding|WelcomeScreen|IntroScreen|BrandReveal|AppFirstRunHost|FirstRunSetup/,
-  "لا بوابة ترحيب/دليل سريع قديمة",
 );
 
 console.log("launch-splash-unified.test.ts: ok");

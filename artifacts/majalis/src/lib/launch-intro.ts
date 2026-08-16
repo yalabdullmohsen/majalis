@@ -1,47 +1,51 @@
 /**
- * دخولية الجلسة الواحدة — تظهر عند فتح التطبيق فقط، لا عند التنقل الداخلي.
- * لا تعتمد على API / Supabase.
+ * توقيتات شاشة التشغيل اليومية (Launch) — منفصلة تمامًا عن Onboarding.
+ * تظهر عند كل إقلاع WebView/صفحة، لا عند التنقّل الداخلي في الـSPA.
  */
 
-export const LAUNCH_INTRO_SESSION_KEY = "mj-launch-intro-shown";
+/** مدة دخول الشعار (fade + scale) */
+export const LAUNCH_ENTER_MS = 350;
+/** مدة خروج التلاشي */
+export const LAUNCH_EXIT_MS = 250;
+/**
+ * سقف الظهور عندما التطبيق جاهز — لا نُبقي الشاشة أطول من هذا بعد الجاهزية+الدخول.
+ * (الحد الأدنى الفعلي = LAUNCH_ENTER_MS)
+ */
+export const LAUNCH_READY_CAP_MS = 1_200;
+/** سقف مطلق مع fallback إن تأخرت الجاهزية */
+export const LAUNCH_MAX_MS = 3_000;
 
-/** الحد الأدنى لظهور العلامة التجارية (ms) */
-export const LAUNCH_INTRO_MIN_MS = 900;
-/** السقف الأقصى — لا يؤخّر فتح التطبيق أكثر من ذلك */
-export const LAUNCH_INTRO_MAX_MS = 1400;
-/** مدة تلاشي الخروج */
-export const LAUNCH_INTRO_FADE_MS = 280;
+/** توافق مع الاختبارات القديمة */
+export const LAUNCH_INTRO_MIN_MS = LAUNCH_ENTER_MS;
+export const LAUNCH_INTRO_MAX_MS = LAUNCH_MAX_MS;
+export const LAUNCH_INTRO_FADE_MS = LAUNCH_EXIT_MS;
 
-let sessionMarked = false;
+export const LAUNCH_TAGLINES = [
+  "علمٌ نافع وتجربة هادئة",
+  "بوابتك للعلم والعبادة",
+] as const;
 
-export function hasSeenLaunchIntroThisSession(): boolean {
-  if (sessionMarked) return true;
-  try {
-    return sessionStorage.getItem(LAUNCH_INTRO_SESSION_KEY) === "1";
-  } catch {
-    return false;
-  }
+export function pickLaunchTagline(seed = Date.now()): string {
+  return LAUNCH_TAGLINES[Math.abs(seed) % LAUNCH_TAGLINES.length]!;
 }
 
-export function markLaunchIntroSeen(): void {
-  sessionMarked = true;
-  try {
-    sessionStorage.setItem(LAUNCH_INTRO_SESSION_KEY, "1");
-  } catch {
-    /* private mode — يكفي العلم في الذاكرة */
-  }
+/**
+ * هل يُسمح بالخروج؟
+ * - جاهز + مضى زمن الدخول → نعم (ولا نتجاوز READY_CAP عمليًا لأنها ≥ ENTER)
+ * - وصلنا للسقف المطلق → نعم (fallback)
+ */
+export function canDismissLaunch(opts: {
+  ready: boolean;
+  elapsedMs: number;
+}): boolean {
+  const { ready, elapsedMs } = opts;
+  if (elapsedMs >= LAUNCH_MAX_MS) return true;
+  if (ready && elapsedMs >= LAUNCH_ENTER_MS) return true;
+  if (ready && elapsedMs >= LAUNCH_READY_CAP_MS) return true;
+  return false;
 }
 
-/** للاختبارات فقط */
+/** للاختبارات — لا بوابة جلسة؛ كل إقلاع صفحة جديد يعرض الشاشة */
 export function __resetLaunchIntroForTests(): void {
-  sessionMarked = false;
-  try {
-    sessionStorage.removeItem(LAUNCH_INTRO_SESSION_KEY);
-  } catch {
-    /* ignore */
-  }
-}
-
-export function shouldShowLaunchIntro(): boolean {
-  return !hasSeenLaunchIntroThisSession();
+  /* لا حالة جلسة بعد إعادة التصميم */
 }

@@ -93,7 +93,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint src lib --max-warnings 0",
     "test:seo": "node scripts/test-seo.mjs && node scripts/test-official-brand-seo.mjs && node --import tsx src/lib/__tests__/seo-admin-privacy.test.ts",
-    "test:launch-splash-unified": "node --import tsx src/lib/__tests__/launch-splash-unified.test.ts && node --import tsx src/lib/__tests__/launch-intro.test.ts && node --import tsx src/lib/__tests__/boot-mount-order-gate.test.ts",
+    "test:launch-splash-unified": "node --import tsx src/lib/__tests__/launch-splash-unified.test.ts && node --import tsx src/lib/__tests__/launch-intro.test.ts && node --import tsx src/lib/__tests__/launch-readiness.test.ts && node --import tsx src/lib/__tests__/boot-mount-order-gate.test.ts",
     "test:typography-readable": "node --import tsx src/lib/__tests__/typography-readable-gate.test.ts",
     "test:app-first-run-host": "node --import tsx src/lib/__tests__/app-first-run-host.test.ts",
     "test:playwright-smoke": "playwright test tests/01-smoke.spec.ts tests/10-critical-acceptance.spec.ts --project=desktop",

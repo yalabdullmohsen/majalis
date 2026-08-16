@@ -1,0 +1,200 @@
+/**
+ * شاشة تشغيل المجلس العلمي — يومية، فخمة، بلا انتظار شبكة.
+ * خلفية داكنة ثابتة تمنع الشاشة البيضاء؛ safe-area كاملة.
+ */
+
+:root {
+  --mj-launch-from: #002b21;
+  --mj-launch-mid: #0a3d32;
+  --mj-launch-to: #134a3c;
+  --mj-launch-glow: rgba(92, 192, 149, 0.2);
+  --mj-launch-title: #f7faf8;
+  --mj-launch-sub: rgba(245, 240, 232, 0.84);
+  --mj-launch-loader: rgba(245, 240, 232, 0.55);
+  --mj-launch-pattern: rgba(245, 240, 232, 0.045);
+}
+
+html.dark {
+  --mj-launch-from: #002b21;
+  --mj-launch-mid: #061f1a;
+  --mj-launch-to: #0d2e26;
+  --mj-launch-glow: rgba(92, 192, 149, 0.14);
+  --mj-launch-pattern: rgba(245, 240, 232, 0.035);
+}
+
+/* أثناء التشغيل: امنع التمرير وأخفِ الكروم خلف الطبقة */
+body.mj-launching {
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+body.mj-launching .navbar-v3,
+body.mj-launching .bottom-nav,
+body.mj-launching .top-section-bar {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.mj-launch-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99990;
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  min-height: 100dvh;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: max(1.25rem, var(--inset-top, 0px));
+  padding-right: max(1.25rem, var(--inset-right, 0px));
+  padding-bottom: max(1.25rem, var(--inset-bottom, 0px));
+  padding-left: max(1.25rem, var(--inset-left, 0px));
+  /* امتداد خلف الشريط/المؤشر — لا شريط أبيض */
+  background-color: var(--mj-launch-from);
+  background-image:
+    radial-gradient(ellipse 72% 58% at 50% 40%, var(--mj-launch-glow), transparent 64%),
+    linear-gradient(165deg, var(--mj-launch-from) 0%, var(--mj-launch-mid) 48%, var(--mj-launch-to) 100%);
+  color: var(--mj-launch-title);
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 250ms ease;
+  will-change: opacity;
+}
+
+.mj-launch-screen__pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 1;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='%23f5f0e8' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M60 4 L112 34 L112 70 L60 100 L8 70 L8 34 Z'/%3E%3Cpath d='M60 22 L94 42 L94 62 L60 82 L26 62 L26 42 Z'/%3E%3Cpath d='M60 4 V100 M8 34 L112 70 M112 34 L8 70'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 120px 104px;
+  background-repeat: repeat;
+  animation: mj-launch-shimmer 2.4s ease-in-out infinite alternate;
+}
+
+.mj-launch-screen[data-phase="exit"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mj-launch-screen__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  max-width: 18rem;
+  padding-inline: 1.25rem;
+}
+
+.mj-launch-screen__logo-wrap {
+  position: relative;
+  width: 5.5rem;
+  height: 5.5rem;
+  display: grid;
+  place-items: center;
+  animation: mj-launch-enter 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mj-launch-screen__logo-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -16%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--mj-launch-glow) 0%, transparent 72%);
+  opacity: 0.9;
+}
+
+.mj-launch-screen__logo {
+  position: relative;
+  width: 5.5rem;
+  height: 5.5rem;
+  object-fit: contain;
+  border-radius: 1.15rem;
+}
+
+.mj-launch-screen__title {
+  margin: 0;
+  font-family: var(--font-app, "Amiri", "Noto Naskh Arabic", serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--mj-launch-title);
+  animation: mj-launch-enter 350ms cubic-bezier(0.22, 1, 0.36, 1) 60ms both;
+}
+
+.mj-launch-screen__tagline {
+  margin: 0;
+  font-family: var(--font-app, "Amiri", "Noto Naskh Arabic", serif);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--mj-launch-sub);
+  animation: mj-launch-enter 350ms cubic-bezier(0.22, 1, 0.36, 1) 110ms both;
+}
+
+.mj-launch-screen__loader {
+  margin-top: 0.55rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  border-top-color: var(--mj-launch-loader);
+  border-right-color: var(--mj-launch-loader);
+  animation: mj-launch-spin 0.85s linear infinite;
+  opacity: 0.85;
+}
+
+@keyframes mj-launch-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes mj-launch-shimmer {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes mj-launch-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mj-launch-screen,
+  .mj-launch-screen__logo-wrap,
+  .mj-launch-screen__title,
+  .mj-launch-screen__tagline,
+  .mj-launch-screen__pattern,
+  .mj-launch-screen__loader {
+    animation: none;
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .mj-launch-screen[data-phase="exit"] {
+    opacity: 0;
+  }
+
+  .mj-launch-screen__loader {
+    opacity: 0.5;
+    border-color: var(--mj-launch-loader);
+  }
+}
