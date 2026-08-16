@@ -5,6 +5,8 @@
 import { Capacitor } from "@capacitor/core";
 
 export const isNative = Capacitor.isNativePlatform();
+/** اسم صريح لواجهة التطبيق — مطابق لـ Capacitor.isNativePlatform() */
+export const isNativeApp = isNative;
 export const isAndroid = Capacitor.getPlatform() === "android";
 export const isIOS = Capacitor.getPlatform() === "ios";
 
@@ -30,10 +32,17 @@ export async function setupKeyboard() {
   await Keyboard.setResizeMode({ mode: KeyboardResize.Body });
 }
 
-export async function openExternalUrl(url: string) {
+export async function openExternalUrl(
+  url: string,
+  opts?: { confirmLeave?: boolean },
+) {
   if (!isNative) {
     window.open(url, "_blank", "noopener,noreferrer");
     return;
+  }
+  if (opts?.confirmLeave) {
+    const ok = window.confirm("سيُفتح رابط خارج التطبيق. المتابعة؟");
+    if (!ok) return;
   }
   const { Browser } = await import("@capacitor/browser");
   await Browser.open({ url, presentationStyle: "popover" });

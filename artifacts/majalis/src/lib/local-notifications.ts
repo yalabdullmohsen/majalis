@@ -13,6 +13,8 @@ export type NotifPrefs = {
   prayerReminder: boolean;       // قبل الصلاة بـ 10 دقائق
   /** تذكير ورد القرآن اليومي الساعة 5 مساءً (RN scheduleDailyReminder). */
   quranDailyReminder: boolean;
+  /** تذكير أذكار الصباح/المساء — يُفعَّل من الإعدادات فقط (لا طلب إذن عند الإطلاق). */
+  adhkarReminder: boolean;
   reminderHour: number;          // الساعة المفضلة للتذكير (0-23)
   reminderMinute: number;
 };
@@ -23,6 +25,7 @@ const DEFAULTS: NotifPrefs = {
   resumeReminder: true,
   prayerReminder: false,
   quranDailyReminder: true,
+  adhkarReminder: false,
   reminderHour: 8,
   reminderMinute: 0,
 };
@@ -38,6 +41,9 @@ export function loadNotifPrefs(): NotifPrefs {
 
 export function saveNotifPrefs(prefs: NotifPrefs): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+  void import("@/lib/native-storage").then(({ storageSetSync }) => {
+    storageSetSync(STORAGE_KEY, JSON.stringify(prefs));
+  });
 }
 
 export async function requestPermission(): Promise<NotificationPermission> {

@@ -59,6 +59,7 @@ function sourceLabel(q: QuizQuestion): string {
 }
 
 const SCORE_KEY = "majalis-daily-challenge-score-v1";
+const BEST_KEY = "majalis-daily-challenge-best-v1";
 
 function loadDayScore(): number {
   try {
@@ -72,8 +73,24 @@ function loadDayScore(): number {
 function saveDayScore(n: number) {
   try {
     localStorage.setItem(`${SCORE_KEY}:${getDayIndex()}`, String(n));
+    void import("@/lib/native-storage").then(({ storageSetSync }) => {
+      storageSetSync(`${SCORE_KEY}:${getDayIndex()}`, String(n));
+      const best = Number(localStorage.getItem(BEST_KEY) || 0);
+      if (n > best) {
+        localStorage.setItem(BEST_KEY, String(n));
+        storageSetSync(BEST_KEY, String(n));
+      }
+    });
   } catch {
     /* ignore */
+  }
+}
+
+function loadBestScore(): number {
+  try {
+    return Number(localStorage.getItem(BEST_KEY) || 0) || 0;
+  } catch {
+    return 0;
   }
 }
 
@@ -83,6 +100,7 @@ export function DailyChallengeQuiz() {
   const [round, setRound] = useState(0);
   const [picked, setPicked] = useState<string | null>(null);
   const [score, setScore] = useState(() => loadDayScore());
+  const [best, setBest] = useState(() => loadBestScore());
 
   const points = LEVELS.find((l) => l.id === level)?.points ?? 200;
 
@@ -117,6 +135,7 @@ export function DailyChallengeQuiz() {
         setScore((s) => {
           const next = s + Math.round(points / 100);
           saveDayScore(next);
+          setBest((b) => Math.max(b, next));
           return next;
         });
       }
@@ -138,6 +157,12 @@ export function DailyChallengeQuiz() {
         </div>
         <p className="dcq__score" aria-live="polite">
           النقاط اليوم: <strong>{toArabicDigits(score)}</strong>
+          {best > 0 ? (
+            <>
+              {" "}
+              · أفضل يوم: <strong>{toArabicDigits(best)}</strong>
+            </>
+          ) : null}
         </p>
       </header>
 

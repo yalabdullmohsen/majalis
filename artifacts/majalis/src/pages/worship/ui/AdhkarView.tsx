@@ -106,6 +106,9 @@ function ssSave(cat: string, currentIndex: number, tapCount: number) {
     const payload = JSON.stringify({ currentIndex, tapCount });
     localStorage.setItem(ssKey(cat), payload);
     sessionStorage.removeItem(ssKey(cat));
+    void import("@/lib/native-storage").then(({ setAdhkarProgress }) => {
+      setAdhkarProgress(ssKey(cat), payload);
+    });
   } catch { /* */ }
 }
 

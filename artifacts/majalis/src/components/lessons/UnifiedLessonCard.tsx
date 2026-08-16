@@ -6,7 +6,9 @@ import {
   buildLessonCopyText,
   buildLessonShareUrl,
   downloadUnifiedCalendar,
+  openLessonExternalUrl,
   prominenceClass,
+  shareLesson,
   type UnifiedLesson,
 } from "@/lib/unified-lesson-card";
 import { cleanDisplayText } from "@/lib/display-text";
@@ -230,19 +232,34 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
               <button
                 type="button"
                 className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
+                onClick={() => void shareLesson(lesson)}
+              >
+                مشاركة
+              </button>
+              <button
+                type="button"
+                className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
                 onClick={() => downloadUnifiedCalendar(lesson)}
               >
                 إضافة للتقويم
               </button>
               {lesson.streamUrl && (
-                <a href={lesson.streamUrl} target="_blank" rel="noopener noreferrer" className="lesson-unified-card__btn lesson-unified-card__btn--ghost">
+                <button
+                  type="button"
+                  className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
+                  onClick={() => openLessonExternalUrl(lesson.streamUrl!)}
+                >
                   رابط البث
-                </a>
+                </button>
               )}
               {lesson.mapsUrl && (
-                <a href={lesson.mapsUrl} target="_blank" rel="noopener noreferrer" className="lesson-unified-card__btn lesson-unified-card__btn--ghost">
+                <button
+                  type="button"
+                  className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
+                  onClick={() => openLessonExternalUrl(lesson.mapsUrl!)}
+                >
                   الموقع
-                </a>
+                </button>
               )}
             </>
           )}

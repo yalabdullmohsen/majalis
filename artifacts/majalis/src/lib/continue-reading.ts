@@ -2,6 +2,7 @@
  * تتبع «أكمل من حيث توقفت» للأقسام العامة (لا admin/auth/search).
  */
 import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
+import { storageSetSync } from "@/lib/native-storage";
 
 export const CONTINUE_READING_LS_KEY = "majalis-continue-reading-v1";
 
@@ -51,6 +52,11 @@ function readStore(): ContinueStore {
 function writeStore(store: ContinueStore) {
   if (typeof window === "undefined") return;
   writeLocalJson(CONTINUE_READING_LS_KEY, store);
+  try {
+    storageSetSync(CONTINUE_READING_LS_KEY, JSON.stringify(store));
+  } catch {
+    /* ignore */
+  }
 }
 
 export function resolveContinueSection(path: string): ContinueSection | null {

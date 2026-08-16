@@ -60,6 +60,7 @@
 		"HapticsPlugin",
 		"KeyboardPlugin",
 		"LocalNotificationsPlugin",
+		"PreferencesPlugin",
 		"PushNotificationsPlugin",
 		"SplashScreenPlugin",
 		"StatusBarPlugin"

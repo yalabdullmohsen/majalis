@@ -29,8 +29,14 @@ function readDone(): boolean {
 
 function writeDone(done: boolean) {
   try {
-    if (done) localStorage.setItem(doneStorageKey(), "1");
-    else localStorage.removeItem(doneStorageKey());
+    const key = doneStorageKey();
+    if (done) {
+      localStorage.setItem(key, "1");
+      void import("@/lib/native-storage").then(({ storageSetSync }) => storageSetSync(key, "1"));
+    } else {
+      localStorage.removeItem(key);
+      void import("@/lib/native-storage").then(({ storageRemoveSync }) => storageRemoveSync(key));
+    }
   } catch {
     /* ignore */
   }

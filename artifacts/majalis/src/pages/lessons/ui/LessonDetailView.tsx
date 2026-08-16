@@ -16,6 +16,8 @@ import {
   downloadUnifiedCalendar,
   fromDbLesson,
   fromKuwaitLesson,
+  openLessonExternalUrl,
+  shareLesson,
 } from "@/lib/unified-lesson-card";
 import { cleanDisplayText } from "@/lib/display-text";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
@@ -399,24 +401,43 @@ export default function LessonDetailPage({
           <button
             type="button"
             className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
+            onClick={() => void shareLesson(unified)}
+          >
+            مشاركة
+          </button>
+          <button
+            type="button"
+            className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
             onClick={() => downloadUnifiedCalendar(unified)}
           >
             إضافة للتقويم
           </button>
           {unified.streamUrl && (
-            <a href={unified.streamUrl} target="_blank" rel="noopener noreferrer" className="lesson-unified-card__btn lesson-unified-card__btn--ghost">
+            <button
+              type="button"
+              className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
+              onClick={() => openLessonExternalUrl(unified.streamUrl!)}
+            >
               رابط البث
-            </a>
+            </button>
           )}
           {unified.mapsUrl && (
-            <a href={unified.mapsUrl} target="_blank" rel="noopener noreferrer" className="lesson-unified-card__btn lesson-unified-card__btn--ghost">
-              فتح في Google Maps
-            </a>
+            <button
+              type="button"
+              className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
+              onClick={() => openLessonExternalUrl(unified.mapsUrl!)}
+            >
+              الاتجاه للمسجد
+            </button>
           )}
           {unified.siteUrl && (
-            <a href={unified.siteUrl} target="_blank" rel="noopener noreferrer" className="lesson-unified-card__btn lesson-unified-card__btn--ghost">
+            <button
+              type="button"
+              className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
+              onClick={() => openLessonExternalUrl(unified.siteUrl!)}
+            >
               رابط الموقع
-            </a>
+            </button>
           )}
           {!isDemoId(unified.id) && !unified.id.startsWith("kw-") && (
             <ContentActions contentType="lesson" contentId={unified.id} />

@@ -335,7 +335,9 @@
     "audit:public-site": "node --import tsx scripts/audit-public-site.ts",
     "audit:data-completeness": "node scripts/audit-data-completeness.mjs",
     "audit:seo": "node scripts/audit-seo.mjs",
-    "audit:feature-readiness": "node --import tsx scripts/audit-feature-readiness.ts"
+    "audit:feature-readiness": "node --import tsx scripts/audit-feature-readiness.ts",
+    "audit:mobile-app": "node --import tsx scripts/audit-mobile-app-readiness.ts",
+    "audit:product-upgrade": "node --import tsx scripts/audit-product-upgrade.ts"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
@@ -413,6 +415,7 @@
     "@capacitor/ios": "^8.4.1",
     "@capacitor/keyboard": "^8.0.5",
     "@capacitor/local-notifications": "^8.2.0",
+    "@capacitor/preferences": "^8.0.1",
     "@capacitor/push-notifications": "^8.1.2",
     "@capacitor/splash-screen": "^8.0.1",
     "@capacitor/status-bar": "^8.0.2",
