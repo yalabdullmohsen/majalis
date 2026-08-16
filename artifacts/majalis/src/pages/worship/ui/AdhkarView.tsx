@@ -93,16 +93,20 @@ function DhikrSheet({ item, onClose }: { item: AdhkarItem; onClose: () => void }
   );
 }
 
-/* ── مساعدات sessionStorage للتقدم ── */
+/* ── مساعدات localStorage للتقدم عبر الجلسات ── */
 function ssKey(cat: string) { return `adhkar_progress_${cat}`; }
 function ssGet(cat: string): { currentIndex: number; tapCount: number } | null {
   try {
-    const v = sessionStorage.getItem(ssKey(cat));
-    return v ? JSON.parse(v) : null;
+    const raw = localStorage.getItem(ssKey(cat)) ?? sessionStorage.getItem(ssKey(cat));
+    return raw ? JSON.parse(raw) : null;
   } catch { return null; }
 }
 function ssSave(cat: string, currentIndex: number, tapCount: number) {
-  try { sessionStorage.setItem(ssKey(cat), JSON.stringify({ currentIndex, tapCount })); } catch { /* */ }
+  try {
+    const payload = JSON.stringify({ currentIndex, tapCount });
+    localStorage.setItem(ssKey(cat), payload);
+    sessionStorage.removeItem(ssKey(cat));
+  } catch { /* */ }
 }
 
 /* ── اهتزاز عبر الكتالوج الموحّد ── */

@@ -338,3 +338,115 @@ html.dark .m2030-feature__title {
   .m2030-hero__pattern,
   .m2030-hero__glow { animation: none !important; }
 }
+
+/* ورد اليوم · الأكثر قراءة · إحصاءات حية */
+.home-daily-wird__grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .home-daily-wird__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.home-daily-wird__card {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.85rem 0.95rem;
+}
+.home-daily-wird__card-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--mj-brand-deep, var(--brand));
+}
+.home-daily-wird__text {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+.home-daily-wird__meta {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--text-muted, var(--muted));
+}
+.home-daily-wird__cta {
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: var(--mj-brand, var(--brand));
+  text-decoration: none;
+}
+.home-most-read {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.home-most-read__item {
+  padding: 0.45rem 0.75rem;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--text);
+}
+.home-most-read__note,
+.home-live-stats__note {
+  margin: 0.45rem 0 0;
+  font-size: 0.72rem;
+  color: var(--text-muted, var(--muted));
+}
+.home-today-suggest {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.95rem 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+.home-today-suggest__title {
+  font-size: 1rem;
+}
+.home-today-suggest__desc {
+  font-size: 0.84rem;
+  color: var(--text-muted, var(--muted));
+}
+.home-live-stats {
+  padding: 0.35rem var(--m2030-pad, 1rem) 0.15rem;
+}
+.home-live-stats__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.home-live-stats__item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--r-sm, 0.5rem);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.8rem;
+}
+.home-live-stats__item strong {
+  font-size: 0.95rem;
+  color: var(--mj-brand-deep, var(--brand));
+}
+.lib-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-block-end: 0.35rem;
+}
+.lib-card-caution-text {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  color: #92400e;
+  line-height: 1.45;
+}

@@ -521,6 +521,11 @@ export default function LessonsPage({
   return (
     <div className="page-shell lessons-page-v2 lessons-page-v3 ds-page mj-page">
       <PageHeader title="الدروس" subtitle="أقرب المواعيد أولًا" showBack={false} />
+      <p className="lessons-v3-calendar-link">
+        <Link href="/calendar" className="mj-link">تقويم الدروس</Link>
+        {" · "}
+        <Link href="/lessons/archive" className="mj-link">الأرشيف</Link>
+      </p>
 
       <div className="lessons-v3-sticky">
         <FilterBar
