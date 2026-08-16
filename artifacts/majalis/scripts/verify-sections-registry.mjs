@@ -165,6 +165,7 @@ const SPACING = new Set([8, 12, 16, 24]);
       "FeaturedSectionCard.tsx",
       "SectionCard.tsx",
       "SectionRow.tsx",
+      "SectionsGrids.tsx",
       "index.ts",
       "index.tsx",
     ]);
