@@ -3,7 +3,7 @@
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-basmala-gate.test.ts
  */
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -18,12 +18,28 @@ const chapters = JSON.parse(
   pages: [number, number];
 }>;
 const pageSrc = readFileSync(resolve(root, "src/features/mushaf-madinah/MushafPage.tsx"), "utf8");
+const basmalaSrc = readFileSync(resolve(root, "src/features/mushaf-madinah/MushafBasmala.tsx"), "utf8");
 const dataSrc = readFileSync(resolve(root, "src/lib/quran-data/qpc-page-data.ts"), "utf8");
 
 assert.match(pageSrc, /needsVisualBasmala/);
 assert.match(pageSrc, /bismillahPre === true/);
-assert.match(pageSrc, /BASMALA/);
+assert.match(pageSrc, /MushafBasmala/);
+assert.match(basmalaSrc, /BASMALA_UTHMANI/);
+assert.match(basmalaSrc, /بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ/);
+assert.match(basmalaSrc, /data-basmala="uthmani"/);
+assert.match(basmalaSrc, /data-basmala="qpc"/);
+assert.match(
+  readFileSync(resolve(root, "src/features/mushaf-madinah/mushaf-madinah.css"), "utf8"),
+  /\.mm-basmala--uthmani\s*\{[^}]*Amiri Quran[^}]*!important/,
+);
 assert.match(dataSrc, /basmalaSlot/);
+
+// مكوّن بسملة واحد فقط في شجرة المصحف
+const mushafDir = resolve(root, "src/features/mushaf-madinah");
+const basmalaFiles = readdirSync(mushafDir).filter(
+  (f) => /basmala/i.test(f) && /\.(tsx|ts|jsx|js)$/.test(f),
+);
+assert.deepEqual(basmalaFiles, ["MushafBasmala.tsx"], `مكوّنات بسملة: ${basmalaFiles.join(",")}`);
 
 function chapter(id: number) {
   const c = chapters.find((x) => x.id === id);
@@ -45,6 +61,12 @@ for (const c of CASES) {
   assert.equal(ch.pages[0], c.page, `${c.label}: صفحة البداية`);
   const file = resolve(pagesDir, `page-${String(c.page).padStart(3, "0")}.json`);
   assert.ok(existsSync(file), `${c.label}: ملف الصفحة ${c.page}`);
+}
+
+// صفحات تحقق إلزامية للبسملة
+for (const n of [1, 2, 600, 602]) {
+  const file = resolve(pagesDir, `page-${String(n).padStart(3, "0")}.json`);
+  assert.ok(existsSync(file), `صفحة تحقق ${n}`);
 }
 
 console.log("mushaf-basmala-gate.test.ts: ok");

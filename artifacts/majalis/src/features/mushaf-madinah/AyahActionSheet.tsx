@@ -1,13 +1,23 @@
-import { useMemo, useRef, useState } from "react";
-import { BookOpen, Mic2, Pause, Play, SkipBack, SkipForward, X } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  BookOpen,
+  Copy,
+  MoreHorizontal,
+  Pause,
+  Play,
+  Share2,
+  SkipBack,
+  SkipForward,
+  X,
+} from "lucide-react";
 import { createPortal } from "react-dom";
 import type { PlayerState } from "@/core/audio/AudioEngine";
 import { getReciter } from "@/lib/quran-audio";
 import { getSurahMeta } from "@/lib/quran-api";
+import { fetchMushafAyahTafsir } from "@/lib/quran-data/fetch-ayah-content";
+import { DEFAULT_MUSHAF_TAFSIR_EDITION } from "@/lib/quran-data/tafsir-editions";
 import { MUSHAF_RECITER_IDS } from "./MushafAudioDock";
 import { parseVerseKey } from "./mushaf-page-for-ayah";
-
-type TabId = "tilawa" | "tafsir" | "copy" | "share" | "save";
 
 type Props = {
   verseKey: string;
@@ -29,17 +39,9 @@ type Props = {
   onClose: () => void;
 };
 
-const TABS: Array<{ id: TabId; label: string }> = [
-  { id: "tilawa", label: "التلاوة" },
-  { id: "tafsir", label: "التفسير" },
-  { id: "copy", label: "نسخ" },
-  { id: "share", label: "مشاركة" },
-  { id: "save", label: "حفظ" },
-];
-
 /**
- * Bottom sheet خارج نص المصحف — تبويبات التلاوة/التفسير/نسخ/مشاركة/حفظ.
- * لا يغيّر الصفحة ولا يشغّل صوتًا تلقائيًا.
+ * شيت آية بمرحلتين: ٣٥٪ ملخص · ٩٠٪ موسّع.
+ * أربعة إجراءات أساسية + المزيد.
  */
 export function AyahActionSheet({
   verseKey,
@@ -60,9 +62,12 @@ export function AyahActionSheet({
   onReciterChange,
   onClose,
 }: Props) {
-  const [tab, setTab] = useState<TabId>("tilawa");
+  const [expanded, setExpanded] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [readersOpen, setReadersOpen] = useState(false);
   const [readerQuery, setReaderQuery] = useState("");
+  const [tafsirPreview, setTafsirPreview] = useState<string | null>(null);
+  const [tafsirLoading, setTafsirLoading] = useState(false);
   const dragY = useRef<number | null>(null);
   const parsed = parseVerseKey(verseKey);
   const surahName = parsed ? getSurahMeta(parsed.surah).name : "";
@@ -70,7 +75,7 @@ export function AyahActionSheet({
   const playing =
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const loading = playerState === "loading" || playerState === "buffering";
-  const playLabel = playing ? "إيقاف" : playerState === "paused" ? "استئناف" : "تشغيل";
+  const playLabel = playing ? "إيقاف" : playerState === "paused" ? "استئناف" : "استماع";
   const reciters = useMemo(() => MUSHAF_RECITER_IDS.map((id) => getReciter(id)), []);
   const filtered = useMemo(() => {
     const q = readerQuery.trim();
@@ -79,34 +84,40 @@ export function AyahActionSheet({
   }, [readerQuery, reciters]);
   const currentReciter = getReciter(reciterId);
 
+  useEffect(() => {
+    if (!parsed) {
+      setTafsirPreview(null);
+      return;
+    }
+    const ac = new AbortController();
+    setTafsirLoading(true);
+    fetchMushafAyahTafsir(parsed.surah, parsed.ayah, DEFAULT_MUSHAF_TAFSIR_EDITION, ac.signal)
+      .then((res) => {
+        if (!ac.signal.aborted) setTafsirPreview(res?.text?.trim() || null);
+      })
+      .catch(() => {
+        if (!ac.signal.aborted) setTafsirPreview(null);
+      })
+      .finally(() => {
+        if (!ac.signal.aborted) setTafsirLoading(false);
+      });
+    return () => ac.abort();
+  }, [parsed?.surah, parsed?.ayah]);
+
   const handlePlayClick = () => {
     setReadersOpen(false);
     if (playing || playerState === "paused") onTogglePlay();
     else onPlay();
   };
 
-  const selectTab = (id: TabId) => {
-    setTab(id);
-    if (id === "tafsir") {
-      setReadersOpen(false);
-      onTafsir();
-    } else if (id === "copy") {
-      setReadersOpen(false);
-      onCopy();
-    } else if (id === "share") {
-      setReadersOpen(false);
-      onShare();
-    } else if (id === "save") {
-      setReadersOpen(false);
-      onBookmark();
-    }
-  };
+  const previewLines = (tafsirPreview || "").split(/\n+/).filter(Boolean).slice(0, 2).join("\n");
 
   return createPortal(
     <>
       <div
-        className="mm-ayah-bar ayah-action-sheet"
+        className={`mm-ayah-bar ayah-action-sheet${expanded ? " is-expanded" : " is-collapsed"}`}
         data-testid="mushaf-ayah-actions"
+        data-sheet-height={expanded ? "90" : "35"}
         role="region"
         aria-label="خيارات الآية"
       >
@@ -129,7 +140,13 @@ export function AyahActionSheet({
             const start = dragY.current;
             dragY.current = null;
             if (start == null) return;
-            if (e.clientY - start > 72) onClose();
+            const dy = e.clientY - start;
+            if (dy > 72) {
+              if (expanded) setExpanded(false);
+              else onClose();
+              return;
+            }
+            if (dy < -48) setExpanded(true);
           }}
           onPointerCancel={() => {
             dragY.current = null;
@@ -137,108 +154,92 @@ export function AyahActionSheet({
         >
           <div className="mm-ayah-bar__handle" aria-hidden="true" />
           <div className="mm-ayah-bar__head">
-            <p className="mm-ayah-bar__title">{title}</p>
+            <div className="mm-ayah-bar__head-text">
+              <p className="mm-ayah-bar__surah">{surahName || "سورة"}</p>
+              <p className="mm-ayah-bar__title">آية {parsed?.ayah ?? "—"}</p>
+            </div>
             <button type="button" className="mm-ayah-bar__close" onClick={onClose} aria-label="إغلاق">
               <X size={16} aria-hidden="true" />
             </button>
           </div>
 
-          <div className="ayah-action-sheet__tabs" role="tablist" aria-label="إجراءات الآية">
-            {TABS.map((t) => (
-              <button
-                key={t.id}
-                type="button"
-                role="tab"
-                aria-selected={tab === t.id}
-                className={tab === t.id ? "is-active" : undefined}
-                onClick={() => selectTab(t.id)}
-              >
-                {t.label}
-              </button>
-            ))}
+          <div className="ayah-action-sheet__primary" role="group" aria-label="إجراءات أساسية">
+            <button type="button" onClick={handlePlayClick} data-testid="mushaf-ayah-play">
+              {playing ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}
+              <span>{playLabel}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setExpanded(true);
+                onTafsir();
+              }}
+            >
+              <BookOpen size={18} aria-hidden="true" />
+              <span>تفسير</span>
+            </button>
+            <button type="button" onClick={onCopy}>
+              <Copy size={18} aria-hidden="true" />
+              <span>نسخ</span>
+            </button>
+            <button type="button" onClick={onShare}>
+              <Share2 size={18} aria-hidden="true" />
+              <span>مشاركة</span>
+            </button>
+            <button
+              type="button"
+              className="ayah-action-sheet__more-btn"
+              aria-expanded={moreOpen}
+              onClick={() => setMoreOpen((v) => !v)}
+            >
+              <MoreHorizontal size={18} aria-hidden="true" />
+              <span>المزيد</span>
+            </button>
           </div>
 
-          {tab === "tilawa" ? (
-            <>
-              <div className="mm-ayah-bar__transport" role="group" aria-label="تحكم التلاوة">
-                <button
-                  type="button"
-                  className="mm-ayah-bar__skip"
-                  onClick={() => onPrevAyah?.()}
-                  aria-label="الآية السابقة"
-                  disabled={!onPrevAyah}
-                >
-                  <SkipBack size={18} aria-hidden="true" />
-                </button>
-                <button
-                  type="button"
-                  className="mm-ayah-bar__play-main"
-                  onClick={handlePlayClick}
-                  aria-label={playLabel}
-                  data-testid="mushaf-ayah-play"
-                >
-                  {playing ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
-                </button>
-                <button
-                  type="button"
-                  className="mm-ayah-bar__skip"
-                  onClick={() => onNextAyah?.()}
-                  aria-label="الآية التالية"
-                  disabled={!onNextAyah}
-                >
-                  <SkipForward size={18} aria-hidden="true" />
-                </button>
-                <span className="mm-ayah-bar__reciter-name">{currentReciter.nameAr}</span>
-                {loading ? <span className="mm-ayah-bar__loading">جاري تحميل التلاوة...</span> : null}
-                {!loading && playerState === "playing" ? (
-                  <span className="mm-ayah-bar__loading">يتم تشغيل التلاوة</span>
-                ) : null}
-              </div>
-
-              <div className="mm-ayah-bar__actions">
-                <button type="button" onClick={handlePlayClick} data-testid="mushaf-ayah-play-inline">
-                  {playing ? <Pause size={16} aria-hidden="true" /> : <Play size={16} aria-hidden="true" />}
-                  <span>{playLabel}</span>
-                </button>
-                <button type="button" aria-expanded={readersOpen} onClick={() => setReadersOpen(true)}>
-                  <Mic2 size={16} aria-hidden="true" />
-                  <span>القارئ</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setReadersOpen(false);
-                    onPlay();
-                  }}
-                >
-                  <Play size={16} aria-hidden="true" />
-                  <span>من هذه الآية</span>
-                </button>
-              </div>
-            </>
-          ) : null}
-
-          {tab === "tafsir" ? (
-            <div className="mm-ayah-bar__actions">
+          {moreOpen ? (
+            <div className="ayah-action-sheet__more" role="group" aria-label="المزيد">
+              <button type="button" onClick={onBookmark}>
+                إشارة
+              </button>
+              <button type="button" onClick={() => setReadersOpen(true)}>
+                القارئ · {currentReciter.nameAr}
+              </button>
               <button
                 type="button"
                 onClick={() => {
-                  setReadersOpen(false);
+                  setExpanded(true);
                   onTafsir();
                 }}
               >
-                <BookOpen size={16} aria-hidden="true" />
-                <span>فتح التفسير</span>
+                ترجمة / تفسير موسّع
               </button>
             </div>
           ) : null}
+
+          <div className="ayah-action-sheet__tafsir">
+            <p className="ayah-action-sheet__tafsir-source">تفسير الميسّر</p>
+            {tafsirLoading ? (
+              <p className="mm-ayah-bar__status">جاري تحميل التفسير…</p>
+            ) : previewLines ? (
+              <p className="ayah-action-sheet__preview" dir="rtl" lang="ar">
+                {expanded ? tafsirPreview : previewLines}
+              </p>
+            ) : (
+              <p className="mm-ayah-bar__status">لا يتوفر مقتطف تفسير حالياً.</p>
+            )}
+            {!expanded ? (
+              <button type="button" className="ayah-action-sheet__expand" onClick={() => setExpanded(true)}>
+                اسحب للأعلى أو اضغط للتوسيع
+              </button>
+            ) : null}
+          </div>
 
           {audioStatus && !audioError && playerState !== "error" ? (
             <p className="mm-ayah-bar__status" role="status" data-testid="mushaf-audio-status">
               {audioStatus}
             </p>
           ) : null}
-
           {audioError || playerState === "error" ? (
             <p className="mm-ayah-bar__status mm-ayah-bar__status--err" role="status" data-testid="mushaf-audio-error">
               {audioError || "تعذر تحميل التلاوة، أعد المحاولة"}
@@ -249,13 +250,30 @@ export function AyahActionSheet({
               {copyStatus}
             </p>
           ) : null}
+          {loading ? <p className="mm-ayah-bar__loading">جاري تحميل التلاوة...</p> : null}
 
-          {ayahPreview && tab === "tilawa" ? (
-            <p className="ayah-action-sheet__preview" dir="rtl" lang="ar">
-              {ayahPreview.slice(0, 120)}
-              {ayahPreview.length > 120 ? "…" : ""}
-            </p>
-          ) : null}
+          <div className="mm-ayah-bar__transport" role="group" aria-label="تنقل الآيات">
+            <button
+              type="button"
+              className="mm-ayah-bar__skip"
+              onClick={() => onPrevAyah?.()}
+              aria-label="الآية السابقة"
+              disabled={!onPrevAyah}
+            >
+              <SkipBack size={18} aria-hidden="true" />
+              <span>السابقة</span>
+            </button>
+            <button
+              type="button"
+              className="mm-ayah-bar__skip"
+              onClick={() => onNextAyah?.()}
+              aria-label="الآية التالية"
+              disabled={!onNextAyah}
+            >
+              <SkipForward size={18} aria-hidden="true" />
+              <span>التالية</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -310,11 +328,6 @@ export function AyahActionSheet({
                     </li>
                   ))}
                 </ul>
-                {filtered.length === 0 ? (
-                  <p className="mm-ayah-bar__status" role="status">
-                    لا نتائج لهذا البحث.
-                  </p>
-                ) : null}
               </div>
             </div>,
             document.body,
