@@ -36,6 +36,7 @@ import { PrayerCountdownBanner } from "@/components/prayer/PrayerCountdownBanner
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
 import { recordRecentPage } from "@/lib/recent-pages";
+import { trackContinueReading } from "@/lib/continue-reading";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
 import { PwaInstallBanner } from "@/components/PwaInstallBanner";
@@ -354,6 +355,7 @@ function SeoManager() {
     const timer = window.setTimeout(() => {
       const rawTitle = document.title.split(" | ")[0]?.trim();
       recordRecentPage(location, rawTitle);
+      trackContinueReading({ route: location, title: rawTitle || location });
     }, 400);
     return () => {
       window.clearTimeout(timer);

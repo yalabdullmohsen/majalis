@@ -1,0 +1,119 @@
+.dcq {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.85rem clamp(0.75rem, 3vw, 1.25rem) 1.25rem;
+  max-width: 42rem;
+  margin-inline: auto;
+}
+.dcq__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.dcq__title {
+  margin: 0;
+  font-size: 1.15rem;
+}
+.dcq__sub {
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+  color: var(--text-muted, var(--muted));
+}
+.dcq__score {
+  margin: 0;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+.dcq__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.dcq__chip {
+  min-height: 44px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.dcq__chip.is-active {
+  border-color: var(--mj-brand, var(--brand));
+  background: color-mix(in srgb, var(--mj-brand, var(--brand)) 12%, transparent);
+  font-weight: 700;
+}
+.dcq__card {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.95rem 1rem;
+}
+.dcq__question {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  font-weight: 650;
+}
+.dcq__choices {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+.dcq__choice {
+  width: 100%;
+  min-height: 44px;
+  text-align: start;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+.dcq__choice:disabled {
+  cursor: default;
+}
+.dcq__choice.is-correct {
+  border-color: #15803d;
+  background: color-mix(in srgb, #15803d 12%, transparent);
+}
+.dcq__choice.is-wrong {
+  border-color: #b91c1c;
+  background: color-mix(in srgb, #b91c1c 10%, transparent);
+}
+.dcq__feedback {
+  display: grid;
+  gap: 0.4rem;
+}
+.dcq__ok { margin: 0; color: #15803d; font-weight: 700; }
+.dcq__bad { margin: 0; color: #b91c1c; font-weight: 700; }
+.dcq__explain, .dcq__source {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--text-muted, var(--muted));
+}
+.dcq__next {
+  min-height: 44px;
+  justify-self: start;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.55rem;
+  border: 0;
+  background: var(--mj-brand, var(--brand));
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+.dcq__empty {
+  margin: 0;
+  padding: 1rem;
+  color: var(--text-muted, var(--muted));
+}
+@media (prefers-reduced-motion: reduce) {
+  .dcq__choice, .dcq__chip, .dcq__next { transition: none; }
+}

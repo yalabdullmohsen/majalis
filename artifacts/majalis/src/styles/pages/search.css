@@ -387,6 +387,25 @@
   border: 1px solid rgba(24,54,42,0.15);
 }
 
+.search-status-badge {
+  display: inline-block;
+  padding: 0.08rem 0.45rem;
+  border-radius: var(--ds-radius-full);
+  font-size: 0.65rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.search-status-badge--partial {
+  background: #FFF7ED;
+  color: #9A3412;
+  border: 1px solid rgba(154, 52, 18, 0.2);
+}
+.search-status-badge--review {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid rgba(29, 78, 216, 0.2);
+}
+
 .search-kind-badge--lesson      { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
 .search-kind-badge--fatwa       { background: rgba(23,61,53,.10); color: var(--mj-brand); border-color: rgba(23,61,53,.2); }
 .search-kind-badge--ruling      { background: rgba(23,61,53,.10); color: var(--mj-brand); border-color: rgba(23,61,53,.2); }

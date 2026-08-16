@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { GAME_CATEGORIES } from "@/data/islamicQuizData";
 
-export type QuizAttemptSource = "section_quiz" | "team_game";
+export type QuizAttemptSource = "section_quiz" | "team_game" | "daily_challenge";
 
 /** يُسجَّل بصمت — فشل التسجيل لا يجب أن يُعطّل تجربة الاختبار نفسها. */
 export async function recordQuizAttempt(

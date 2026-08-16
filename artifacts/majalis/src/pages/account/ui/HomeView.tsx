@@ -25,7 +25,7 @@ import { HomeContentHub } from "@/components/home/HomeContentHub";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
-import { HomeDailyWirdBand } from "@/components/home/HomeDailyWirdBand";
+import { HomeDailyWirdBand } from "@/components/home/DailyWirdCard";
 import { HomeMostReadBand } from "@/components/home/HomeMostReadBand";
 import { HomeLiveStatsStrip } from "@/components/home/HomeLiveStatsStrip";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
