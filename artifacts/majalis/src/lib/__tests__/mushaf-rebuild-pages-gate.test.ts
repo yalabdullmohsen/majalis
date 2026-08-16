@@ -29,19 +29,26 @@ for (const n of PAGES) {
   assert.ok(Array.isArray(raw.lines) ? raw.lines.length > 0 : true, `محتوى الصفحة ${n}`);
 }
 
-// قواعد الإطار — لا قص يمين/يسار/أسفل، وسط الشاشة، بلا scroll رأسي
-assert.match(css, /aspect-ratio:\s*0\.68\s*\/\s*1/);
+// قواعد الإطار — عرض كامل آمن بلا قص، بلا aspect-ratio 0.68
+assert.doesNotMatch(css, /aspect-ratio:\s*0\.68/);
 assert.match(css, /overflow-y:\s*hidden/);
-assert.match(css, /overflow-x:\s*hidden/);
+assert.match(css, /overflow-x:\s*(hidden|clip)/);
 assert.match(css, /margin-inline:\s*auto/);
-assert.match(css, /100dvh/);
+assert.match(css, /100svh|100dvh/);
 assert.match(css, /var\(--inset-top/);
 assert.match(css, /var\(--inset-bottom/);
+assert.match(css, /--mm-page-max-w:\s*min\(100%/);
 assert.match(css, /\.mm-page-footer|MushafPageFooter/);
 assert.match(pageComp, /MushafPageFooter|pageNumber/);
+assert.match(pageComp, /useMushafPageFontFit/);
 assert.match(viewport, /mushaf-page-frame|mm-page-shell/);
 assert.match(viewport, /MushafControls/);
+assert.match(viewport, /exitAlwaysVisible/);
 assert.match(viewport, /2500/);
 assert.doesNotMatch(viewport, /scrollIntoView/);
+assert.doesNotMatch(
+  css,
+  /\.mm-viewport\[data-ayah-bar="1"\][^{]*\{[^}]*--mm-chrome-bottom-h:\s*var\(--mm-ayah-bar-h\)/,
+);
 
 console.log("mushaf-rebuild-pages-gate.test.ts: ok", PAGES.join(","));

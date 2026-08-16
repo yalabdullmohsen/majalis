@@ -24,10 +24,14 @@ assert.doesNotMatch(reader, /\.pdf/i);
 assert.doesNotMatch(reader, /demo-ayah/);
 
 // لا overflow أفقي متعمّد + لا تمرير رأسي يقص الصفحة
-assert.match(css, /overflow-x:\s*hidden/);
+assert.match(css, /overflow-x:\s*(hidden|clip)/);
 assert.match(css, /overflow-y:\s*hidden/);
 assert.doesNotMatch(css, /\.mm-page-shell\s*\{[^}]*overflow-x:\s*scroll/);
-assert.match(css, /aspect-ratio:\s*0\.68\s*\/\s*1/);
+assert.doesNotMatch(css, /aspect-ratio:\s*0\.68/);
+assert.match(css, /100svh|100dvh/);
+assert.match(css, /--mm-page-max-w:\s*min\(100%/);
+assert.match(page, /useMushafPageFontFit/);
+assert.match(viewport, /exitAlwaysVisible/);
 
 // لا شريط أسود يغطي الآيات
 assert.doesNotMatch(css, /\.mm-ayah-bar__panel\s*\{[^}]*background:\s*#000/);
