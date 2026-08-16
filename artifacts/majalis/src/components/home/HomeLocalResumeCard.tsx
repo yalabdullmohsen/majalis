@@ -1,31 +1,38 @@
 /**
- * بطاقة متابعة محلية (بلا تسجيل دخول) — مصحف / استماع من localStorage.
+ * بطاقة متابعة محلية — مصحف / دروس / أنبياء / أذكار / مكتبة.
  */
 import { useMemo } from "react";
 import { Link } from "wouter";
 import { BookOpen, Headphones } from "lucide-react";
 import { getSurahMeta, loadPagePosition, loadReadingAyahKey } from "@/lib/quran-api";
 import { loadAudioResumeState } from "@/lib/quran-audio-resume";
-import { getReadingProgress } from "@/lib/reading-progress";
-import { getRecentPages } from "@/lib/recent-pages";
+import { getContinueReadingEntries, type ContinueSection } from "@/lib/continue-reading";
 import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/components/home-local-resume.css";
 
 type ResumeItem = {
   id: string;
-  kind: "mushaf" | "listen" | "adhkar" | "book";
+  kind: ContinueSection | "listen";
   href: string;
   title: string;
   meta: string;
 };
 
+const SECTION_TITLE: Record<ContinueSection, string> = {
+  mushaf: "أكمل المصحف",
+  lessons: "أكمل الدرس",
+  prophets: "أكمل قصة النبي",
+  adhkar: "أكمل الأذكار",
+  library: "أكمل الكتاب",
+};
+
 function buildItems(): ResumeItem[] {
   const items: ResumeItem[] = [];
+  const seen = new Set<string>();
   const page = loadPagePosition();
   const ayahKey = loadReadingAyahKey();
   const audio = loadAudioResumeState();
-  const adhkar = getReadingProgress("adhkar");
 
   if (page != null && page >= 1) {
     const surahHint = (() => {
@@ -34,15 +41,17 @@ function buildItems(): ResumeItem[] {
       if (!s || s < 1 || s > 114) return "";
       return getSurahMeta(s).name.replace(/^سُورَةُ\s*/u, "");
     })();
+    const href = ayahKey ? `/mushaf/page/${page}?ayah=${ayahKey}` : `/mushaf/page/${page}`;
     items.push({
-      id: "mushaf",
+      id: "mushaf-pos",
       kind: "mushaf",
-      href: ayahKey ? `/mushaf/page/${page}?ayah=${ayahKey}` : `/mushaf/page/${page}`,
-      title: "متابعة القراءة",
+      href,
+      title: "أكمل من حيث توقفت — المصحف",
       meta: surahHint
         ? `${surahHint} · ص ${toArabicDigits(page)}`
         : `المصحف · ص ${toArabicDigits(page)}`,
     });
+    seen.add("mushaf");
   }
 
   if (audio && audio.surah >= 1 && audio.ayah >= 1) {
@@ -52,36 +61,26 @@ function buildItems(): ResumeItem[] {
       id: "listen",
       kind: "listen",
       href: `/mushaf/page/${p}?ayah=${audio.surah}:${audio.ayah}`,
-      title: "متابعة الاستماع",
+      title: "أكمل الاستماع",
       meta: `${name} · آية ${toArabicDigits(audio.ayah)}`,
     });
   }
 
-  if (adhkar?.id) {
-    const slugOk = !adhkar.id.startsWith("scroll-");
+  for (const entry of getContinueReadingEntries(8)) {
+    if (seen.has(entry.section)) continue;
+    // تجنّب تكرار المصحف إن وُجد موضع أدق أعلاه
+    if (entry.section === "mushaf" && seen.has("mushaf")) continue;
+    seen.add(entry.section);
     items.push({
-      id: "adhkar",
-      kind: "adhkar",
-      href: slugOk ? `/adhkar/${encodeURIComponent(adhkar.id)}` : "/adhkar",
-      title: "متابعة الأذكار",
-      meta: adhkar.title || "الأذكار",
+      id: `cont-${entry.section}`,
+      kind: entry.section,
+      href: entry.route,
+      title: `أكمل من حيث توقفت — ${SECTION_TITLE[entry.section].replace(/^أكمل\s*/, "")}`,
+      meta: entry.title,
     });
   }
 
-  const recentBook = getRecentPages(8).find(
-    (p) => p.href.startsWith("/library/") && p.href !== "/library",
-  );
-  if (recentBook) {
-    items.push({
-      id: "book",
-      kind: "book",
-      href: recentBook.href,
-      title: "متابعة قراءة الكتاب",
-      meta: recentBook.label || "المكتبة",
-    });
-  }
-
-  return items.slice(0, 3);
+  return items.slice(0, 5);
 }
 
 export function HomeLocalResumeCard() {
@@ -90,8 +89,8 @@ export function HomeLocalResumeCard() {
   if (items.length === 0) return null;
 
   return (
-    <div className="hlr" dir="rtl" aria-label="متابعة القراءة والاستماع">
-      <p className="hlr__eyebrow">متابعة القراءة / الاستماع</p>
+    <div className="hlr" dir="rtl" aria-label="أكمل من حيث توقفت">
+      <p className="hlr__eyebrow">أكمل من حيث توقفت</p>
       <ul className="hlr__list">
         {items.map((item) => {
           const Icon = item.kind === "listen" ? Headphones : BookOpen;

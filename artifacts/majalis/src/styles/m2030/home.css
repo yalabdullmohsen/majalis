@@ -450,3 +450,57 @@ html.dark .m2030-feature__title {
   color: #92400e;
   line-height: 1.45;
 }
+
+.daily-wird-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+.daily-wird-card__done-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 44px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+.daily-wird-card__done-btn.is-done {
+  border-color: #15803d;
+  background: color-mix(in srgb, #15803d 12%, transparent);
+  color: #166534;
+}
+.daily-wird-card--done .home-daily-wird__card {
+  opacity: 0.92;
+}
+.search-status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.4rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+.search-status-badge--partial {
+  background: color-mix(in srgb, #b45309 14%, transparent);
+  color: #92400e;
+}
+.search-status-badge--review {
+  background: color-mix(in srgb, #1d4ed8 12%, transparent);
+  color: #1e3a8a;
+}
+@media (max-width: 879px) {
+  .bottom-nav__tab,
+  .dcq__choice,
+  .dcq__chip,
+  .daily-wird-card__done-btn {
+    min-height: 44px;
+  }
+}

@@ -4,6 +4,8 @@ export interface QuizQuestion {
   a: string;
   hint: string;
   pending?: boolean;
+  /** مصدر مختصر إن وُجد — وإلا تُعرض «قيد إضافة المصدر» في الواجهة */
+  source?: string;
 }
 
 export interface GameCategory {

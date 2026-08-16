@@ -31,7 +31,8 @@
     "test:safe-auto-merge": "node --test .github/scripts/safe-auto-merge/__tests__/*.test.mjs && node --test scripts/__tests__/verify-ci-script.test.mjs",
     "ops:backlog-report": "node scripts/ops-backlog-report.mjs",
     "cap:sync:ios": "cap sync ios",
-    "audit:public-site": "pnpm --filter @workspace/majalis run audit:public-site"
+    "audit:public-site": "pnpm --filter @workspace/majalis run audit:public-site",
+    "audit:feature-readiness": "pnpm --filter @workspace/majalis run audit:feature-readiness"
   },
   "private": true,
   "devDependencies": {

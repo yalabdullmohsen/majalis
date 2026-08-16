@@ -131,6 +131,26 @@ function KindBadge({ kind }: { kind: string }) {
   return <span className={`search-kind-badge search-kind-badge--${kind.replace("_", "-")}`}>{label}</span>;
 }
 
+function StatusBadge({ status, partial }: { status?: string | null; partial?: boolean }) {
+  if (partial || status === "partial" || status === "draft") {
+    return <span className="search-status-badge search-status-badge--partial">قيد الإكمال</span>;
+  }
+  if (status === "pending_review" || status === "pending" || status === "needs_review") {
+    return <span className="search-status-badge search-status-badge--review">قيد المراجعة</span>;
+  }
+  return null;
+}
+
+function isBlockedOrAdminHref(href?: string | null): boolean {
+  if (!href) return false;
+  return /^\/(admin|dashboard|internal|login|register|auth)(\/|$)/i.test(href);
+}
+
+function statusMetaLabel(status?: string | null, hasSource?: boolean): string | null {
+  if (status === "verified" && hasSource) return "موثّق بمصدر";
+  return null;
+}
+
 function Group({ title, items, render, id }: { title: string; items: any[]; render: (i: any) => React.ReactNode; id?: string }) {
   if (items.length === 0) return null;
   return (
@@ -152,7 +172,10 @@ function Group({ title, items, render, id }: { title: string; items: any[]; rend
 }
 
 function IntelligentResultRow({ item, query }: { item: IntelligentSearchResult; query: string }) {
+  if (isBlockedOrAdminHref(item.href)) return null;
   const title = displayText(item.title);
+  const status = item.verification_status;
+  const metaLabel = statusMetaLabel(status, Boolean(item.source_name));
   return (
     <Link
       href={item.href}
@@ -164,11 +187,10 @@ function IntelligentResultRow({ item, query }: { item: IntelligentSearchResult; 
           <div className="search-result-title-row">
             <span className="search-result-title">{highlightText(title, query)}</span>
             <KindBadge kind={item.kind} />
+            <StatusBadge status={status} partial={(item as { partial?: boolean }).partial} />
           </div>
           <span className="search-result-meta">
-            {[item.source_name, item.verification_status === "verified" ? "✓ موثق" : null]
-              .filter(Boolean)
-              .join(" · ")}
+            {[item.source_name, metaLabel].filter(Boolean).join(" · ")}
           </span>
           {item.keywords && item.keywords.length > 0 && (
             <span className="search-result-keywords">
