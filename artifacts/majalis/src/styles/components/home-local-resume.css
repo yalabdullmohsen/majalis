@@ -53,17 +53,33 @@
   flex-direction: column;
   gap: 0.1rem;
   min-width: 0;
+  flex: 1;
+}
+
+.hlr__section {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--mj-brand, #0f3d2e);
+  opacity: 0.9;
 }
 
 .hlr__body strong {
   font-size: 0.95rem;
   font-weight: 600;
-}
-
-.hlr__body span {
-  font-size: 0.82rem;
-  opacity: 0.8;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.hlr__cta {
+  flex-shrink: 0;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--mj-brand, #0f3d2e) 16%, transparent);
+  color: var(--mj-brand, #0f3d2e);
 }

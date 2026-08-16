@@ -1,5 +1,5 @@
 /**
- * تحدي يومي تفاعلي لسين جيم — سؤال واحد، 4 اختيارات، نقاط، مصدر إن وُجد.
+ * تحدي يومي تفاعلي لسين جيم — سؤال واحد لليوم، 4 اختيارات، شرح، حفظ محلي.
  */
 import { useCallback, useMemo, useState } from "react";
 import {
@@ -15,6 +15,12 @@ import { toArabicDigits } from "@/lib/utils";
 import "@/styles/components/daily-challenge-quiz.css";
 
 type LevelId = "easy" | "medium" | "hard";
+
+type DayAnswer = {
+  choice: string;
+  categoryId: string;
+  level: LevelId;
+};
 
 const LEVELS: { id: LevelId; label: string; points: PointValue }[] = [
   { id: "easy", label: "سهل", points: 200 },
@@ -60,6 +66,7 @@ function sourceLabel(q: QuizQuestion): string {
 
 const SCORE_KEY = "majalis-daily-challenge-score-v1";
 const BEST_KEY = "majalis-daily-challenge-best-v1";
+const ANSWERED_KEY = "majalis-daily-challenge-answered-v1";
 
 function loadDayScore(): number {
   try {
@@ -73,14 +80,8 @@ function loadDayScore(): number {
 function saveDayScore(n: number) {
   try {
     localStorage.setItem(`${SCORE_KEY}:${getDayIndex()}`, String(n));
-    void import("@/lib/native-storage").then(({ storageSetSync }) => {
-      storageSetSync(`${SCORE_KEY}:${getDayIndex()}`, String(n));
-      const best = Number(localStorage.getItem(BEST_KEY) || 0);
-      if (n > best) {
-        localStorage.setItem(BEST_KEY, String(n));
-        storageSetSync(BEST_KEY, String(n));
-      }
-    });
+    const best = Number(localStorage.getItem(BEST_KEY) || 0);
+    if (n > best) localStorage.setItem(BEST_KEY, String(n));
   } catch {
     /* ignore */
   }
@@ -94,13 +95,43 @@ function loadBestScore(): number {
   }
 }
 
+function loadDayAnswer(): DayAnswer | null {
+  try {
+    const raw = localStorage.getItem(`${ANSWERED_KEY}:${getDayIndex()}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as DayAnswer;
+    if (!parsed?.choice || !parsed.categoryId || !parsed.level) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function saveDayAnswer(answer: DayAnswer) {
+  try {
+    localStorage.setItem(`${ANSWERED_KEY}:${getDayIndex()}`, JSON.stringify(answer));
+  } catch {
+    /* ignore */
+  }
+}
+
+function explainFor(q: QuizQuestion, ok: boolean): string {
+  const hint = q.hint?.trim();
+  if (hint) return hint;
+  const src = (q as QuizQuestion & { source?: string }).source?.trim();
+  if (ok && src) return `الإجابة الصحيحة وفق المصدر: ${src}`;
+  if (ok) return "أحسنت — الإجابة صحيحة.";
+  return `الإجابة الصحيحة: ${q.a}`;
+}
+
 export function DailyChallengeQuiz() {
-  const [categoryId, setCategoryId] = useState(CATEGORY_PICK[0]?.id ?? "quran");
-  const [level, setLevel] = useState<LevelId>("easy");
-  const [round, setRound] = useState(0);
-  const [picked, setPicked] = useState<string | null>(null);
+  const saved = useMemo(() => loadDayAnswer(), []);
+  const [categoryId, setCategoryId] = useState(saved?.categoryId ?? CATEGORY_PICK[0]?.id ?? "quran");
+  const [level, setLevel] = useState<LevelId>(saved?.level ?? "easy");
+  const [picked, setPicked] = useState<string | null>(saved?.choice ?? null);
   const [score, setScore] = useState(() => loadDayScore());
   const [best, setBest] = useState(() => loadBestScore());
+  const locked = picked != null;
 
   const points = LEVELS.find((l) => l.id === level)?.points ?? 200;
 
@@ -112,14 +143,14 @@ export function DailyChallengeQuiz() {
 
   const question = useMemo(() => {
     if (pool.length === 0) return null;
-    const list = seededShuffle(pool, daySeed(round + categoryId.length));
+    const list = seededShuffle(pool, daySeed(categoryId.length));
     return list[0] ?? null;
-  }, [pool, round, categoryId]);
+  }, [pool, categoryId]);
 
   const choices = useMemo(() => {
     if (!question) return [];
-    return buildChoices(question, pool, daySeed(round * 13 + points));
-  }, [question, pool, round, points]);
+    return buildChoices(question, pool, daySeed(13 + points));
+  }, [question, pool, points]);
 
   const answered = picked != null;
   const correct = answered && question ? picked === question.a : false;
@@ -128,32 +159,28 @@ export function DailyChallengeQuiz() {
     (choice: string) => {
       if (picked || !question) return;
       setPicked(choice);
+      saveDayAnswer({ choice, categoryId, level });
       const ok = choice === question.a;
       void hapticNotify(ok ? "success" : "error");
       void recordQuizAttempt(categoryId, question.id, ok, "daily_challenge");
       if (ok) {
         setScore((s) => {
-          const next = s + Math.round(points / 100);
+          const next = Math.max(s, Math.round(points / 100));
           saveDayScore(next);
           setBest((b) => Math.max(b, next));
           return next;
         });
       }
     },
-    [picked, question, categoryId, points],
+    [picked, question, categoryId, level, points],
   );
-
-  const nextQuestion = () => {
-    setPicked(null);
-    setRound((r) => r + 1);
-  };
 
   return (
     <section className="dcq" dir="rtl" aria-label="التحدي اليومي" data-testid="daily-challenge-quiz">
       <header className="dcq__head">
         <div>
           <h2 className="dcq__title">التحدي اليومي</h2>
-          <p className="dcq__sub">سؤال واحد · أربعة اختيارات · نقاط فورية</p>
+          <p className="dcq__sub">سؤال واحد لليوم · أربعة اختيارات · نقاط فورية</p>
         </div>
         <p className="dcq__score" aria-live="polite">
           النقاط اليوم: <strong>{toArabicDigits(score)}</strong>
@@ -172,11 +199,8 @@ export function DailyChallengeQuiz() {
             key={c.id}
             type="button"
             className={`dcq__chip${categoryId === c.id ? " is-active" : ""}`}
-            onClick={() => {
-              setCategoryId(c.id);
-              setPicked(null);
-              setRound((r) => r + 1);
-            }}
+            disabled={locked}
+            onClick={() => setCategoryId(c.id)}
           >
             {c.name}
           </button>
@@ -189,11 +213,8 @@ export function DailyChallengeQuiz() {
             key={l.id}
             type="button"
             className={`dcq__chip${level === l.id ? " is-active" : ""}`}
-            onClick={() => {
-              setLevel(l.id);
-              setPicked(null);
-              setRound((r) => r + 1);
-            }}
+            disabled={locked}
+            onClick={() => setLevel(l.id)}
           >
             {l.label}
           </button>
@@ -232,11 +253,9 @@ export function DailyChallengeQuiz() {
               <p className={correct ? "dcq__ok" : "dcq__bad"}>
                 {correct ? "إجابة صحيحة" : "إجابة غير صحيحة"}
               </p>
-              {question.hint ? <p className="dcq__explain">{question.hint}</p> : null}
+              <p className="dcq__explain">{explainFor(question, correct)}</p>
               <p className="dcq__source">{sourceLabel(question)}</p>
-              <button type="button" className="dcq__next" onClick={nextQuestion}>
-                السؤال التالي
-              </button>
+              <p className="dcq__done-note">سؤال اليوم اكتمل — عُد غدًا لسؤال جديد.</p>
             </div>
           )}
         </article>

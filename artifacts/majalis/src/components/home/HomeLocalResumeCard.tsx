@@ -1,5 +1,5 @@
 /**
- * بطاقة متابعة محلية — مصحف / دروس / أنبياء / أذكار / مكتبة.
+ * بطاقة متابعة محلية — مصحف / دروس / أنبياء / أذكار / مكتبة / علماء.
  */
 import { useMemo } from "react";
 import { Link } from "wouter";
@@ -15,16 +15,18 @@ type ResumeItem = {
   id: string;
   kind: ContinueSection | "listen";
   href: string;
+  sectionLabel: string;
   title: string;
-  meta: string;
 };
 
-const SECTION_TITLE: Record<ContinueSection, string> = {
-  mushaf: "أكمل المصحف",
-  lessons: "أكمل الدرس",
-  prophets: "أكمل قصة النبي",
-  adhkar: "أكمل الأذكار",
-  library: "أكمل الكتاب",
+const SECTION_LABEL: Record<ContinueSection | "listen", string> = {
+  mushaf: "القرآن",
+  lessons: "الدروس",
+  prophets: "قصص الأنبياء",
+  adhkar: "الأذكار",
+  library: "المكتبة",
+  scholars: "العلماء",
+  listen: "الاستماع",
 };
 
 function buildItems(): ResumeItem[] {
@@ -46,10 +48,10 @@ function buildItems(): ResumeItem[] {
       id: "mushaf-pos",
       kind: "mushaf",
       href,
-      title: "أكمل من حيث توقفت — المصحف",
-      meta: surahHint
+      sectionLabel: SECTION_LABEL.mushaf,
+      title: surahHint
         ? `${surahHint} · ص ${toArabicDigits(page)}`
-        : `المصحف · ص ${toArabicDigits(page)}`,
+        : `صفحة ${toArabicDigits(page)}`,
     });
     seen.add("mushaf");
   }
@@ -61,22 +63,21 @@ function buildItems(): ResumeItem[] {
       id: "listen",
       kind: "listen",
       href: `/mushaf/page/${p}?ayah=${audio.surah}:${audio.ayah}`,
-      title: "أكمل الاستماع",
-      meta: `${name} · آية ${toArabicDigits(audio.ayah)}`,
+      sectionLabel: SECTION_LABEL.listen,
+      title: `${name} · آية ${toArabicDigits(audio.ayah)}`,
     });
   }
 
   for (const entry of getContinueReadingEntries(8)) {
     if (seen.has(entry.section)) continue;
-    // تجنّب تكرار المصحف إن وُجد موضع أدق أعلاه
     if (entry.section === "mushaf" && seen.has("mushaf")) continue;
     seen.add(entry.section);
     items.push({
       id: `cont-${entry.section}`,
       kind: entry.section,
       href: entry.route,
-      title: `أكمل من حيث توقفت — ${SECTION_TITLE[entry.section].replace(/^أكمل\s*/, "")}`,
-      meta: entry.title,
+      sectionLabel: SECTION_LABEL[entry.section],
+      title: entry.title,
     });
   }
 
@@ -89,8 +90,7 @@ export function HomeLocalResumeCard() {
   if (items.length === 0) return null;
 
   return (
-    <div className="hlr" dir="rtl" aria-label="أكمل من حيث توقفت">
-      <p className="hlr__eyebrow">أكمل من حيث توقفت</p>
+    <div className="hlr" dir="rtl" aria-label="أكمل من حيث توقفت" data-testid="continue-where-left">
       <ul className="hlr__list">
         {items.map((item) => {
           const Icon = item.kind === "listen" ? Headphones : BookOpen;
@@ -101,9 +101,10 @@ export function HomeLocalResumeCard() {
                   <Icon size={18} />
                 </span>
                 <span className="hlr__body">
+                  <span className="hlr__section">{item.sectionLabel}</span>
                   <strong>{item.title}</strong>
-                  <span>{item.meta}</span>
                 </span>
+                <span className="hlr__cta">متابعة</span>
               </Link>
             </li>
           );
