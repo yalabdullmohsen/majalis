@@ -1017,7 +1017,7 @@ function AppShellInner() {
       data-native-app={isNativeApp ? "true" : "false"}
       data-launching={isLaunching ? "true" : "false"}
     >
-      {/* شاشة تشغيل يومية — فوق الصدفة؛ ليست دليلًا تعريفيًا */}
+      {/* دخولية افتتاحية يومية قصيرة — فوق الصدفة؛ ليست دليلًا تعريفيًا ولا تغيّر المسار */}
       <MajlisLaunchScreen onComplete={() => setIsLaunching(false)} />
       <PageChromeSync />
       <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />

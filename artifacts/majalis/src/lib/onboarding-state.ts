@@ -134,6 +134,8 @@ function storedMajorVersion(): number | null {
  * النوافذ عند reload أو نشر جديد، فقط عند رفع ONBOARDING_MAJOR_VERSION.
  */
 export function initOnboardingState(): void {
+  purgeLegacyFirstRunArtifacts();
+
   const stored = storedMajorVersion();
 
   if (stored === null) {
@@ -168,6 +170,35 @@ export function initOnboardingState(): void {
       clearOnboardingFlags();
     }
     writeRaw(ONBOARDING_KEYS.majorVersion, String(ONBOARDING_MAJOR_VERSION));
+  }
+}
+
+/**
+ * يزيل مفاتيح الدليل السريع / الترحيب القديم التي قد تُفهم خطأً كبوابة عرض.
+ * لا يُعاد فتح أي دليل — shouldShowFirstRunFlow دائمًا false.
+ */
+function purgeLegacyFirstRunArtifacts(): void {
+  const keys = [
+    "majalis-quick-guide-v1",
+    "majalis-quick-guide-seen",
+    "majlis-quick-guide-v1",
+    "majalis-welcome-v1",
+    "majalis-intro-seen",
+    "majalis-boot-guide",
+    "show-onboarding",
+    "force-onboarding",
+  ];
+  for (const key of keys) {
+    try {
+      localStorage.removeItem(key);
+    } catch {
+      /* ignore */
+    }
+    try {
+      sessionStorage.removeItem(key);
+    } catch {
+      /* ignore */
+    }
   }
 }
 
