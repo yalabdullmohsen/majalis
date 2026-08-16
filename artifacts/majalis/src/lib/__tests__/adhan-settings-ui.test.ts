@@ -45,6 +45,11 @@ assert.match(view, /يتطلب موافقة Critical Alerts من Apple/);
 assert.match(view, /صيغة التشغيل:/);
 assert.match(css, /\.ads-style-grid/);
 assert.match(css, /\.ads-style-card/);
+assert.match(css, /\.ads-style-card__preview\.is-loading/);
+assert.match(view, /playAdhanPreview/);
+assert.match(view, /نسخ تقرير التشخيص/);
+assert.match(view, /إعادة ضبط إعدادات الأذان/);
+assert.match(view, /تجاوز الصامت\/Focus \(معطّل\)/);
 
 assert.match(picker, /mzp-search/);
 assert.match(picker, /mzp-progress/);

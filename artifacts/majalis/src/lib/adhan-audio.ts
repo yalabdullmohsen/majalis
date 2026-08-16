@@ -20,7 +20,6 @@ import {
 import {
   isAdhanPlaying as playbackIsPlaying,
   playAdhanUrl,
-  playAdhanUrlAsync,
   stopAdhan as playbackStop,
   type AdhanPlayResult,
 } from "./adhan-playback";
@@ -625,18 +624,11 @@ export function previewAdhan(muezzin: Muezzin, volume = 0.8): HTMLAudioElement {
   return audio;
 }
 
-/** معاينة مع نتيجة واضحة للواجهة (لا فشل صامت). */
+/** معاينة مع نتيجة واضحة للواجهة — عبر الخدمة المركزية. */
 export async function previewAdhanAsync(
   muezzin: Muezzin,
   volume = 0.8,
 ): Promise<AdhanPlayResult> {
-  if (!muezzin.audioUrl) {
-    return {
-      ok: false,
-      code: "missing_file",
-      message: `لا ملف معاينة للتسجيل: ${muezzin.id}. جرّب نوعًا آخر أو أعد التحميل.`,
-    };
-  }
-  const vol = Math.min(1, Math.max(0, volume));
-  return playAdhanUrlAsync(muezzin.audioUrl, vol, { maxMs: 15_000, fadeIn: true });
+  const { playAdhanPreview } = await import("@/lib/adhan-audio-service");
+  return playAdhanPreview(muezzin.id, "full", volume);
 }

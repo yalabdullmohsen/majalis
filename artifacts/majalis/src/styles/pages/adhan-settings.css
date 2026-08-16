@@ -539,7 +539,36 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   border-color: color-mix(in srgb, var(--msk-gold, #1c5244) 40%, var(--msk-border));
   color: var(--msk-gold, var(--mj-brand-deep));
 }
+.ads-style-card__preview.is-loading {
+  opacity: 0.75;
+  cursor: wait;
+}
+.ads-style-card__preview.is-failed {
+  border-color: color-mix(in srgb, #b45309 35%, var(--msk-border));
+}
 .ads-audio-error {
   color: var(--msk-text);
   font-weight: 600;
+}
+.ads-diag-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.ads-diag-status[data-state="ready"] { color: var(--msk-gold, var(--mj-brand-deep)); }
+.ads-diag-status[data-state="loading"] { color: var(--msk-text-muted, #5a6b63); }
+.ads-diag-status[data-state="playing"] { color: var(--msk-gold, var(--mj-brand-deep)); }
+.ads-diag-status[data-state="failed"] { color: #9a3412; }
+.ads-diag-mono {
+  font-size: 0.72rem;
+  line-height: 1.45;
+  word-break: break-word;
+  white-space: pre-wrap;
+  margin: 0.35rem 0 0;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--msk-border);
+  background: var(--msk-canvas-1, #fff);
 }

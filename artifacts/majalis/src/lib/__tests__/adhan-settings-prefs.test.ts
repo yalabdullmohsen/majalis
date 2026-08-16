@@ -33,6 +33,8 @@ assert.equal(base.playbackMode, "short", "الافتراضي قصير لا كا�
 assert.equal(base.bypassSilentMode, false);
 assert.equal(base.vibrateEnabled, true);
 assert.equal(base.volume, 1);
+assert.equal(base.lastTestedMuezzinId, null);
+assert.equal(base.lastTestSuccessAt, null);
 
 const withVol = patchAdhanPrefs({ volume: 0.4, bypassSilentMode: true });
 assert.equal(withVol.volume, 0.4);

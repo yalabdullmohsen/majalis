@@ -50,8 +50,8 @@ public class MajlisPlaybackAudioPlugin: CAPPlugin, CAPBridgedPlugin {
             let session = AVAudioSession.sharedInstance()
             try session.setCategory(
                 .playback,
-                mode: .spokenAudio,
-                options: [.allowAirPlay, .allowBluetoothA2DP]
+                mode: .default,
+                options: [.allowAirPlay, .allowBluetoothA2DP, .duckOthers]
             )
             try session.setActive(true, options: [])
             mode = "playback"

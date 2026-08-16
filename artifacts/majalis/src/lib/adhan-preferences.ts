@@ -98,6 +98,14 @@ export type AdhanPreferences = {
   iosSequentialFullAdhan: boolean;
   prayers: Record<PrayerKey, PerPrayerPrefs>;
   fridayBannerEnabled: boolean;     // show Friday Jumuah banner
+  /** آخر نوع صوت تم اختباره */
+  lastTestedMuezzinId: string | null;
+  /** وقت آخر اختبار صوت ناجح (ISO) */
+  lastTestSuccessAt: string | null;
+  /** وقت آخر فشل اختبار صوت (ISO) */
+  lastTestFailureAt: string | null;
+  /** سبب آخر فشل اختبار صوت */
+  lastTestFailureReason: string | null;
 };
 
 export function isAdhanDeliveryMode(v: unknown): v is AdhanDeliveryMode {
@@ -136,6 +144,10 @@ function defaultPrefs(): AdhanPreferences {
     iosSequentialFullAdhan: false,
     prayers,
     fridayBannerEnabled: true,
+    lastTestedMuezzinId: null,
+    lastTestSuccessAt: null,
+    lastTestFailureAt: null,
+    lastTestFailureReason: null,
   };
 }
 
@@ -182,6 +194,14 @@ export function loadAdhanPrefs(): AdhanPreferences {
       iosSequentialFullAdhan: parsed.iosSequentialFullAdhan ?? base.iosSequentialFullAdhan,
       prayers: { ...base.prayers, ...parsed.prayers },
       fridayBannerEnabled: parsed.fridayBannerEnabled ?? base.fridayBannerEnabled,
+      lastTestedMuezzinId:
+        typeof parsed.lastTestedMuezzinId === "string" ? parsed.lastTestedMuezzinId : null,
+      lastTestSuccessAt:
+        typeof parsed.lastTestSuccessAt === "string" ? parsed.lastTestSuccessAt : null,
+      lastTestFailureAt:
+        typeof parsed.lastTestFailureAt === "string" ? parsed.lastTestFailureAt : null,
+      lastTestFailureReason:
+        typeof parsed.lastTestFailureReason === "string" ? parsed.lastTestFailureReason : null,
     };
     syncSelectedMuezzinId(merged.defaultMuezzinId);
     return sanitizeFajrMuezzinPrefs(merged);

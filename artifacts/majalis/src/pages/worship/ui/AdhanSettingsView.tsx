@@ -17,14 +17,17 @@ import {
   type PrayerKey,
   type AdvanceMinutes,
 } from "@/lib/adhan-preferences";
-import { getMuezzin, hasFajrAdhan, previewAdhanAsync, stopAdhan } from "@/lib/adhan-audio";
+import { getMuezzin, hasFajrAdhan, stopAdhan } from "@/lib/adhan-audio";
 import {
-  ADHAN_FULL_AUDIO_PATHS,
+  CRITICAL_ALERTS_ENTITLEMENT_PRESENT,
   getAdhanAudioDebugSnapshot,
+  getAudioDiagnostics,
+  playAdhanPreview,
+  preloadAdhanSounds,
   probeAdhanAssetExists,
-  stopAdhanAudio,
-  testAdhanSound,
+  stopAdhanPreview,
   testFullAdhan,
+  validateAudioAssets,
   type AdhanStyleId,
 } from "@/lib/adhan-audio-service";
 import { fireTestLocalNotification, fireTestSequentialAdhan, TEST_NOTIFICATION_DELAY_MS } from "@/lib/notifications/test-trigger";
@@ -240,36 +243,50 @@ function AudioPermBadge() {
 function FeaturedAdhanStyles({
   selectedId,
   volume,
+  playbackMode,
   onSelect,
   onFlash,
 }: {
   selectedId: string;
   volume: number;
+  playbackMode: AdhanPlaybackMode;
   onSelect: (id: string) => void;
   onFlash: () => void;
 }) {
   const [previewing, setPreviewing] = useState<string | null>(null);
+  const [loadingId, setLoadingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<"ready" | "loading" | "playing" | "stopped" | "failed">("ready");
 
   const handlePreview = (id: FeaturedAdhanStyleId) => {
-    if (previewing === id) {
-      stopAdhan();
+    if (previewing === id || loadingId === id) {
+      stopAdhanPreview();
       setPreviewing(null);
+      setLoadingId(null);
+      setStatus("stopped");
       setError(null);
       return;
     }
     setError(null);
-    setPreviewing(id);
-    const m = getMuezzin(id);
-    void previewAdhanAsync(m, volume).then((result) => {
+    setLoadingId(id);
+    setStatus("loading");
+    setPreviewing(null);
+    void playAdhanPreview(id, playbackMode === "silent" ? "full" : playbackMode, volume).then((result) => {
+      setLoadingId(null);
       if (!result.ok) {
         setPreviewing(null);
+        setStatus("failed");
         setError(result.message || "تعذّر تشغيل الصوت. جرّب نوعًا آخر أو أعد التحميل.");
         return;
       }
+      setPreviewing(id);
+      setStatus("playing");
       result.audio.addEventListener(
         "ended",
-        () => setPreviewing((p) => (p === id ? null : p)),
+        () => {
+          setPreviewing((p) => (p === id ? null : p));
+          setStatus("ready");
+        },
         { once: true },
       );
     });
@@ -283,12 +300,23 @@ function FeaturedAdhanStyles({
       </div>
       <div className="ads-card__body">
         <p className="ads-adhan-desc">
-          اختر نوع الأذان ثم جرّب الصوت فورًا. كل الأنواع لها احتياط محلي عند فشل الشبكة.
+          اختر نوع الأذان ثم جرّب الصوت فورًا. الحالة:{" "}
+          {status === "ready"
+            ? "جاهز"
+            : status === "loading"
+              ? "جار التحميل"
+              : status === "playing"
+                ? "جار التشغيل"
+                : status === "stopped"
+                  ? "متوقف"
+                  : "فشل"}
+          . الأذان الكامل مضمون داخل التطبيق؛ إشعارات النظام تخضع لقيود iOS.
         </p>
         <div className="ads-style-grid" role="list">
           {FEATURED_ADHAN_STYLE_IDS.map((id) => {
             const selected = selectedId === id;
             const playing = previewing === id;
+            const loading = loadingId === id;
             return (
               <div
                 key={id}
@@ -309,11 +337,16 @@ function FeaturedAdhanStyles({
                 </button>
                 <button
                   type="button"
-                  className={`ads-style-card__preview${playing ? " is-playing" : ""}`}
-                  aria-label={playing ? `إيقاف تجربة ${FEATURED_ADHAN_STYLE_LABELS[id]}` : `تجربة الصوت — ${FEATURED_ADHAN_STYLE_LABELS[id]}`}
+                  className={`ads-style-card__preview${playing ? " is-playing" : ""}${loading ? " is-loading" : ""}`}
+                  aria-label={
+                    playing
+                      ? `إيقاف تجربة ${FEATURED_ADHAN_STYLE_LABELS[id]}`
+                      : `تجربة الصوت — ${FEATURED_ADHAN_STYLE_LABELS[id]}`
+                  }
+                  disabled={loading && !playing}
                   onClick={() => handlePreview(id)}
                 >
-                  {playing ? "إيقاف" : "تجربة الصوت"}
+                  {loading ? "جاري التحميل..." : playing ? "إيقاف" : "تجربة الصوت"}
                 </button>
               </div>
             );
@@ -495,7 +528,8 @@ export default function AdhanSettingsPage() {
     scheduledCount: number | null;
     fullMp3: boolean | null;
     bundleSound: string;
-  }>({ scheduledCount: null, fullMp3: null, bundleSound: "adhan-short-makkah.caf" });
+    audioDiag: ReturnType<typeof getAudioDiagnostics> | null;
+  }>({ scheduledCount: null, fullMp3: null, bundleSound: "adhan-short-makkah.caf", audioDiag: null });
 
   const refreshDebug = async () => {
     const snap = getAdhanAudioDebugSnapshot();
@@ -515,51 +549,63 @@ export default function AdhanSettingsPage() {
         scheduled = `${pending.notifications?.length ?? 0} مجدولة`;
         console.info("[adhan-debug] pending", pending.notifications?.slice(0, 8));
       }
-    } catch {
+    } catch (e) {
+      console.warn("[adhan-debug] pending notifications", e);
       scheduled = "تعذّر قراءة الجدولة";
     }
+    const audioDiag = getAudioDiagnostics();
     setDebugLines([
+      `المنصة: ${audioDiag.platform}`,
       `مؤذن: ${muezzin.name} (${muezzinId})`,
       `تشغيل: ${snap.playing ? "نعم" : "لا"}`,
+      `صيغة آخر تشغيل: ${audioDiag.lastPlaybackMode ?? "—"}`,
+      `جلسة أصلية: ${snap.nativeSession ? "نعم" : "لا"} (${audioDiag.nativeSessionMode})`,
+      `Critical Alerts: ${CRITICAL_ALERTS_ENTITLEMENT_PRESENT ? "متوفر" : "غير متوفر"}`,
       `آخر مسار: ${snap.lastUrl ?? "—"}`,
       `آخر خطأ: ${snap.lastError ?? "—"}`,
-      `جلسة أصلية: ${snap.nativeSession ? "نعم" : "لا"}`,
+      `آخر نجاح: ${audioDiag.lastSuccessAt ?? "—"}`,
+      `آخر فشل: ${audioDiag.lastFailureAt ?? "—"}`,
+      `وضع صامت: ${audioDiag.silentModeNote}`,
       `جدولة: ${scheduled}`,
       ...exists,
+      ...audioDiag.attemptLog.slice(0, 6).map((l) => `محاولة: ${l}`),
     ]);
   };
+
+  useEffect(() => {
+    void preloadAdhanSounds();
+  }, []);
 
   useEffect(() => {
     if (!diagnosticsOpen) return;
     let cancelled = false;
     computeNotificationDiagnostics(prayerData ?? null).then((d) => { if (!cancelled) setDiagnostics(d); });
     void (async () => {
-      const style = (prefs.defaultMuezzinId || "makkah") as string;
-      const pathKey =
-        style === "makkah" || style === "madinah" || style === "aqsa" || style === "egypt"
-          ? style
-          : "makkah";
-      const path = ADHAN_FULL_AUDIO_PATHS[pathKey];
-      const exists = await probeAdhanAssetExists(path);
+      const assets = await validateAudioAssets();
+      const audioDiag = getAudioDiagnostics();
       let scheduledCount: number | null = null;
       try {
         if (isNative) {
-          const { LocalNotifications } = await import("@capacitor/local-notifications");
-          const pending = await LocalNotifications.getPending();
-          scheduledCount = pending.notifications?.length ?? 0;
+          const { listScheduledPrayerNotifications } = await import("@/lib/prayer-notification-service");
+          const pending = await listScheduledPrayerNotifications();
+          scheduledCount = pending.length;
         }
-      } catch {
+      } catch (e) {
+        console.warn("[adhan-settings] list scheduled failed", e);
         scheduledCount = null;
       }
       if (!cancelled) {
+        const style = (prefs.defaultMuezzinId || "makkah") as string;
         const short =
           style === "madinah" || style === "egypt" || style === "aqsa" || style === "takbeerat"
             ? style
             : "makkah";
+        const fullOk = assets.some((a) => a.playable && a.filePath.includes(style === "alharam" ? "haram" : style));
         setDiagExtra({
           scheduledCount,
-          fullMp3: exists,
+          fullMp3: fullOk || assets.some((a) => a.playable),
           bundleSound: `adhan-short-${short}.caf`,
+          audioDiag,
         });
       }
     })();
@@ -729,6 +775,7 @@ export default function AdhanSettingsPage() {
       <FeaturedAdhanStyles
         selectedId={prefs.defaultMuezzinId}
         volume={prefs.volume ?? 1}
+        playbackMode={prefs.playbackMode || "full"}
         onSelect={setDefaultMuezzin}
         onFlash={flashSaved}
       />
@@ -935,9 +982,22 @@ export default function AdhanSettingsPage() {
           <div className="ads-field-gap" style={{ marginTop: "0.55rem" }}>
             <div className="ads-global-label">الوضع الصامت وFocus</div>
             <p className="ads-adhan-desc" style={{ margin: "0.35rem 0 0" }}>
-              قد يُكتم الصوت في الوضع الصامت أو Focus على iOS، ولا يمكن تجاوزه إلا بصلاحية Critical Alerts من Apple.
-              يتطلب موافقة Critical Alerts من Apple — غير متوفر لهذا التطبيق. الأذان الكامل يعمل داخل التطبيق عند فتحه.
+              {CRITICAL_ALERTS_ENTITLEMENT_PRESENT
+                ? "يمكن طلب Critical Alerts لتجاوز بعض قيود الصامت/Focus عند توفر الامتياز من Apple."
+                : "قد يُكتم الصوت في الوضع الصامت أو Focus على iOS، ولا يمكن تجاوزه إلا بصلاحية Critical Alerts من Apple. يتطلب موافقة Critical Alerts من Apple — غير متوفر لهذا التطبيق. الأذان الكامل يعمل داخل التطبيق عند فتحه."}
             </p>
+            {!CRITICAL_ALERTS_ENTITLEMENT_PRESENT ? (
+              <button
+                type="button"
+                className="ads-pill-btn-ghost"
+                disabled
+                aria-disabled="true"
+                title="يتطلب موافقة Apple لصلاحية Critical Alerts"
+                style={{ marginTop: "0.45rem", opacity: 0.55 }}
+              >
+                تجاوز الصامت/Focus (معطّل)
+              </button>
+            ) : null}
           </div>
 
           <div className="ads-field-gap">
@@ -1039,19 +1099,45 @@ export default function AdhanSettingsPage() {
                 onClick={() => {
                   setSoundTestBusy(true);
                   setSoundTestMsg(null);
-                  void testAdhanSound(prefs.defaultMuezzinId, prefs.playbackMode || "full").then((r) => {
+                  const mode = prefs.playbackMode || "full";
+                  if (mode === "silent") {
                     setSoundTestBusy(false);
-                    setSoundTestMsg(r.ok ? "يعمل الصوت ✓" : `فشل: ${r.message}`);
+                    setSoundTestMsg("صيغة صامتة — لا صوت داخل التطبيق. استخدم تجربة صوت بنمط كامل/قصير.");
+                    return;
+                  }
+                  void playAdhanPreview(prefs.defaultMuezzinId, mode, prefs.volume ?? 0.9).then((r) => {
+                    setSoundTestBusy(false);
+                    const now = new Date().toISOString();
+                    if (r.ok) {
+                      setSoundTestMsg("يعمل الصوت ✓");
+                      setPrefs(
+                        patchAdhanPrefs({
+                          lastTestedMuezzinId: prefs.defaultMuezzinId,
+                          lastTestSuccessAt: now,
+                          lastTestFailureAt: null,
+                          lastTestFailureReason: null,
+                        }),
+                      );
+                    } else {
+                      setSoundTestMsg(`فشل: ${r.message}`);
+                      setPrefs(
+                        patchAdhanPrefs({
+                          lastTestedMuezzinId: prefs.defaultMuezzinId,
+                          lastTestFailureAt: now,
+                          lastTestFailureReason: r.message,
+                        }),
+                      );
+                    }
                   });
                 }}
               >
-                {soundTestBusy ? "جارٍ…" : "اختبار الصوت"}
+                {soundTestBusy ? "جاري التحميل..." : "اختبار الصوت"}
               </button>
               <button
                 type="button"
                 className="ads-pill-btn-ghost"
                 onClick={() => {
-                  stopAdhanAudio();
+                  stopAdhanPreview();
                   setSoundTestMsg("توقّف الصوت");
                 }}
               >
@@ -1082,11 +1168,59 @@ export default function AdhanSettingsPage() {
             </button>
           </div>
           {debugOpen ? (
-            <ul className="ads-adhan-desc" style={{ margin: 0, paddingInlineStart: "1.1rem" }}>
-              {debugLines.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
+            <div>
+              <ul className="ads-adhan-desc" style={{ margin: 0, paddingInlineStart: "1.1rem" }}>
+                {debugLines.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+              <div className="ads-prayer-muezzin-btns" style={{ marginTop: "0.55rem" }}>
+                <button
+                  type="button"
+                  className="ads-pill-btn"
+                  onClick={() => {
+                    const report = [
+                      ...debugLines,
+                      `prefs.lastTest=${prefs.lastTestedMuezzinId ?? "—"}`,
+                      `prefs.lastOk=${prefs.lastTestSuccessAt ?? "—"}`,
+                      `prefs.lastFail=${prefs.lastTestFailureAt ?? "—"} ${prefs.lastTestFailureReason ?? ""}`,
+                    ].join("\n");
+                    void navigator.clipboard?.writeText(report).then(
+                      () => setSoundTestMsg("تم نسخ تقرير التشخيص"),
+                      (err) => {
+                        console.warn("[adhan-debug] clipboard failed", err);
+                        setSoundTestMsg("تعذّر نسخ التقرير");
+                      },
+                    );
+                  }}
+                >
+                  نسخ تقرير التشخيص
+                </button>
+                <button
+                  type="button"
+                  className="ads-pill-btn-ghost"
+                  onClick={() => {
+                    stopAdhanPreview();
+                    const next = patchAdhanPrefs({
+                      defaultMuezzinId: "makkah",
+                      playbackMode: "short",
+                      volume: 1,
+                      iosSequentialFullAdhan: false,
+                      lastTestedMuezzinId: null,
+                      lastTestSuccessAt: null,
+                      lastTestFailureAt: null,
+                      lastTestFailureReason: null,
+                    });
+                    setPrefs(next);
+                    setSoundTestMsg("أُعيد ضبط إعدادات الأذان إلى الافتراضي");
+                    flashSaved();
+                    void refreshDebug();
+                  }}
+                >
+                  إعادة ضبط إعدادات الأذان
+                </button>
+              </div>
+            </div>
           ) : null}
         </div>
       </section>
@@ -1320,13 +1454,32 @@ export default function AdhanSettingsPage() {
                   <span>{diagExtra.scheduledCount == null ? "—" : diagExtra.scheduledCount}</span>
                 </div>
                 <div className="ads-row-sep">
-                  <span className="ads-adhan-desc" style={{ margin: 0 }}>ملف MP3 الكامل</span>
+                  <span className="ads-adhan-desc" style={{ margin: 0 }}>ملف الصوت الكامل</span>
                   <span>{diagExtra.fullMp3 == null ? "—" : diagExtra.fullMp3 ? "موجود ✓" : "غير موجود ✕"}</span>
                 </div>
                 <div className="ads-row-sep">
                   <span className="ads-adhan-desc" style={{ margin: 0 }}>صوت CAF في الحزمة</span>
                   <span>متوقع في Bundle: {diagExtra.bundleSound}</span>
                 </div>
+                {diagExtra.audioDiag ? (
+                  <>
+                    <div className="ads-row-sep">
+                      <span className="ads-adhan-desc" style={{ margin: 0 }}>منصة التشغيل</span>
+                      <span>{diagExtra.audioDiag.platform}</span>
+                    </div>
+                    <div className="ads-row-sep">
+                      <span className="ads-adhan-desc" style={{ margin: 0 }}>جلسة الصوت</span>
+                      <span>{diagExtra.audioDiag.nativeSessionMode}</span>
+                    </div>
+                    <div className="ads-row-sep">
+                      <span className="ads-adhan-desc" style={{ margin: 0 }}>آخر خطأ صوت</span>
+                      <span>{diagExtra.audioDiag.lastError ?? "—"}</span>
+                    </div>
+                    <p className="ads-adhan-desc ads-diag-mono" role="note">
+                      {diagExtra.audioDiag.silentModeNote}
+                    </p>
+                  </>
+                ) : null}
                 {diagnostics.blockingReasons.length === 0 ? (
                   <p className="ads-adhan-desc" style={{ marginTop: ".5rem" }}>
                     لا يوجد سبب ظاهر يمنع وصول التنبيهات — كل الإعدادات سليمة.

@@ -35,12 +35,18 @@ const soundsBytes = assertDirBudget(soundsDir, "sounds/adhan");
 const audioBytes = assertDirBudget(audioDir, "audio/adhan");
 
 const requiredFull = [
-  "adhan-makkah-full.mp3",
-  "adhan-madinah-full.mp3",
-  "adhan-egypt-full.mp3",
+  "adhan-makkah-full.m4a",
+  "adhan-madinah-full.m4a",
+  "adhan-egypt-full.m4a",
+  "adhan-haram-full.m4a",
+  "adhan-soft-alert.m4a",
+  "adhan-aqsa-full.mp3",
+  "adhan-takbeerat-short.mp3",
 ];
 for (const name of requiredFull) {
   assert.ok(existsSync(join(audioDir, name)), `مطلوب: audio/adhan/${name}`);
+  const st = statSync(join(audioDir, name));
+  assert.ok(st.size > 1000, `ملف فارغ أو تالف: ${name}`);
 }
 
 console.log(
