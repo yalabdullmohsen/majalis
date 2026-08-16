@@ -1,0 +1,1024 @@
+{
+  "generatedAt": "2026-08-16T22:30:55.331Z",
+  "mushaf": "1",
+  "sourcePath": "public/data/quran/surah-*.json",
+  "methodology": {
+    "arabic": "حساب آلي من نص المصحف العثماني في المشروع: الآيات كما في الملفات؛ تُجرَّد التشكيل وعلامات الوقف قبل عدّ الحروف الهجائية؛ الكلمة = مقاطع مفصولة بمسافة بعد التجريد؛ بسملة غير الفاتحة إن دُمجت في أول آية لا تُضاعف كآية؛ الحروف المقطّعة تُحسب حروفًا.",
+    "basmalaExcludedFromExtraAyah": true,
+    "basmalaInFatihaCountedAsAyah": true,
+    "tashkeelStripped": true,
+    "stopMarksIgnored": true,
+    "disjointLettersCountedAsLetters": true
+  },
+  "totals": {
+    "surahs": 114,
+    "ayahs": 6236,
+    "words": 77430,
+    "letters": 326160,
+    "basmalaOccurrencesDetected": 113,
+    "meccanSurahs": 86,
+    "medinanSurahs": 28,
+    "sajdaMarksInData": 15
+  },
+  "extremes": {
+    "longestAyah": {
+      "surah": 2,
+      "ayah": 282,
+      "len": 549,
+      "text": "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓا۟ إِذَا تَدَايَنتُم بِدَيْنٍ إِلَىٰٓ أَجَلٍۢ مُّسَمًّۭى فَٱكْتُبُوهُ ۚ وَلْيَكْتُب بَّي"
+    },
+    "shortestAyah": {
+      "surah": 20,
+      "ayah": 1,
+      "len": 2,
+      "text": "طه"
+    },
+    "longestSurah": {
+      "number": 2,
+      "ayahs": 286,
+      "name": "سُورَةُ البَقَرَةِ"
+    },
+    "shortestSurah": {
+      "number": 103,
+      "ayahs": 3,
+      "name": "سُورَةُ العَصۡرِ"
+    }
+  },
+  "sajda": [
+    {
+      "surah": 7,
+      "ayah": 206
+    },
+    {
+      "surah": 13,
+      "ayah": 15
+    },
+    {
+      "surah": 16,
+      "ayah": 50
+    },
+    {
+      "surah": 17,
+      "ayah": 109
+    },
+    {
+      "surah": 19,
+      "ayah": 58
+    },
+    {
+      "surah": 22,
+      "ayah": 18
+    },
+    {
+      "surah": 22,
+      "ayah": 77
+    },
+    {
+      "surah": 25,
+      "ayah": 60
+    },
+    {
+      "surah": 27,
+      "ayah": 26
+    },
+    {
+      "surah": 32,
+      "ayah": 15
+    },
+    {
+      "surah": 38,
+      "ayah": 24
+    },
+    {
+      "surah": 41,
+      "ayah": 38
+    },
+    {
+      "surah": 53,
+      "ayah": 62
+    },
+    {
+      "surah": 84,
+      "ayah": 21
+    },
+    {
+      "surah": 96,
+      "ayah": 19
+    }
+  ],
+  "perSurah": [
+    {
+      "number": 1,
+      "name": "سُورَةُ ٱلْفَاتِحَةِ",
+      "revelationType": "Meccan",
+      "ayahs": 7,
+      "words": 29,
+      "letters": 139
+    },
+    {
+      "number": 2,
+      "name": "سُورَةُ البَقَرَةِ",
+      "revelationType": "Medinan",
+      "ayahs": 286,
+      "words": 6116,
+      "letters": 25899
+    },
+    {
+      "number": 3,
+      "name": "سُورَةُ آلِ عِمۡرَانَ",
+      "revelationType": "Medinan",
+      "ayahs": 200,
+      "words": 3481,
+      "letters": 14762
+    },
+    {
+      "number": 4,
+      "name": "سُورَةُ النِّسَاءِ",
+      "revelationType": "Medinan",
+      "ayahs": 176,
+      "words": 3747,
+      "letters": 16085
+    },
+    {
+      "number": 5,
+      "name": "سُورَةُ المَائـِدَةِ",
+      "revelationType": "Medinan",
+      "ayahs": 120,
+      "words": 2804,
+      "letters": 12032
+    },
+    {
+      "number": 6,
+      "name": "سُورَةُ الأَنۡعَامِ",
+      "revelationType": "Meccan",
+      "ayahs": 165,
+      "words": 3050,
+      "letters": 12571
+    },
+    {
+      "number": 7,
+      "name": "سُورَةُ الأَعۡرَافِ",
+      "revelationType": "Meccan",
+      "ayahs": 206,
+      "words": 3320,
+      "letters": 14245
+    },
+    {
+      "number": 8,
+      "name": "سُورَةُ الأَنفَالِ",
+      "revelationType": "Medinan",
+      "ayahs": 75,
+      "words": 1233,
+      "letters": 5349
+    },
+    {
+      "number": 9,
+      "name": "سُورَةُ التَّوۡبَةِ",
+      "revelationType": "Medinan",
+      "ayahs": 129,
+      "words": 2498,
+      "letters": 10954
+    },
+    {
+      "number": 10,
+      "name": "سُورَةُ يُونُسَ",
+      "revelationType": "Meccan",
+      "ayahs": 109,
+      "words": 1833,
+      "letters": 7521
+    },
+    {
+      "number": 11,
+      "name": "سُورَةُ هُودٍ",
+      "revelationType": "Meccan",
+      "ayahs": 123,
+      "words": 1917,
+      "letters": 7726
+    },
+    {
+      "number": 12,
+      "name": "سُورَةُ يُوسُفَ",
+      "revelationType": "Meccan",
+      "ayahs": 111,
+      "words": 1777,
+      "letters": 7205
+    },
+    {
+      "number": 13,
+      "name": "سُورَةُ الرَّعۡدِ",
+      "revelationType": "Medinan",
+      "ayahs": 43,
+      "words": 853,
+      "letters": 3500
+    },
+    {
+      "number": 14,
+      "name": "سُورَةُ إِبۡرَاهِيمَ",
+      "revelationType": "Meccan",
+      "ayahs": 52,
+      "words": 830,
+      "letters": 3497
+    },
+    {
+      "number": 15,
+      "name": "سُورَةُ الحِجۡرِ",
+      "revelationType": "Meccan",
+      "ayahs": 99,
+      "words": 655,
+      "letters": 2829
+    },
+    {
+      "number": 16,
+      "name": "سُورَةُ النَّحۡلِ",
+      "revelationType": "Meccan",
+      "ayahs": 128,
+      "words": 1844,
+      "letters": 7723
+    },
+    {
+      "number": 17,
+      "name": "سُورَةُ الإِسۡرَاءِ",
+      "revelationType": "Meccan",
+      "ayahs": 111,
+      "words": 1556,
+      "letters": 6565
+    },
+    {
+      "number": 18,
+      "name": "سُورَةُ الكَهۡفِ",
+      "revelationType": "Meccan",
+      "ayahs": 110,
+      "words": 1579,
+      "letters": 6488
+    },
+    {
+      "number": 19,
+      "name": "سُورَةُ مَرۡيَمَ",
+      "revelationType": "Meccan",
+      "ayahs": 98,
+      "words": 961,
+      "letters": 3868
+    },
+    {
+      "number": 20,
+      "name": "سُورَةُ طه",
+      "revelationType": "Meccan",
+      "ayahs": 135,
+      "words": 1335,
+      "letters": 5338
+    },
+    {
+      "number": 21,
+      "name": "سُورَةُ الأَنبِيَاءِ",
+      "revelationType": "Meccan",
+      "ayahs": 112,
+      "words": 1169,
+      "letters": 4980
+    },
+    {
+      "number": 22,
+      "name": "سُورَةُ الحَجِّ",
+      "revelationType": "Medinan",
+      "ayahs": 78,
+      "words": 1274,
+      "letters": 5237
+    },
+    {
+      "number": 23,
+      "name": "سُورَةُ المُؤۡمِنُونَ",
+      "revelationType": "Meccan",
+      "ayahs": 118,
+      "words": 1050,
+      "letters": 4399
+    },
+    {
+      "number": 24,
+      "name": "سُورَةُ النُّورِ",
+      "revelationType": "Medinan",
+      "ayahs": 64,
+      "words": 1316,
+      "letters": 5664
+    },
+    {
+      "number": 25,
+      "name": "سُورَةُ الفُرۡقَانِ",
+      "revelationType": "Meccan",
+      "ayahs": 77,
+      "words": 893,
+      "letters": 3825
+    },
+    {
+      "number": 26,
+      "name": "سُورَةُ الشُّعَرَاءِ",
+      "revelationType": "Meccan",
+      "ayahs": 227,
+      "words": 1318,
+      "letters": 5573
+    },
+    {
+      "number": 27,
+      "name": "سُورَةُ النَّمۡلِ",
+      "revelationType": "Meccan",
+      "ayahs": 93,
+      "words": 1151,
+      "letters": 4747
+    },
+    {
+      "number": 28,
+      "name": "سُورَةُ القَصَصِ",
+      "revelationType": "Meccan",
+      "ayahs": 88,
+      "words": 1430,
+      "letters": 5861
+    },
+    {
+      "number": 29,
+      "name": "سُورَةُ العَنكَبُوتِ",
+      "revelationType": "Meccan",
+      "ayahs": 69,
+      "words": 976,
+      "letters": 4256
+    },
+    {
+      "number": 30,
+      "name": "سُورَةُ الرُّومِ",
+      "revelationType": "Meccan",
+      "ayahs": 60,
+      "words": 817,
+      "letters": 3434
+    },
+    {
+      "number": 31,
+      "name": "سُورَةُ لُقۡمَانَ",
+      "revelationType": "Meccan",
+      "ayahs": 34,
+      "words": 546,
+      "letters": 2134
+    },
+    {
+      "number": 32,
+      "name": "سُورَةُ السَّجۡدَةِ",
+      "revelationType": "Meccan",
+      "ayahs": 30,
+      "words": 372,
+      "letters": 1542
+    },
+    {
+      "number": 33,
+      "name": "سُورَةُ الأَحۡزَابِ",
+      "revelationType": "Medinan",
+      "ayahs": 73,
+      "words": 1287,
+      "letters": 5675
+    },
+    {
+      "number": 34,
+      "name": "سُورَةُ سَبَإٍ",
+      "revelationType": "Meccan",
+      "ayahs": 54,
+      "words": 883,
+      "letters": 3549
+    },
+    {
+      "number": 35,
+      "name": "سُورَةُ فَاطِرٍ",
+      "revelationType": "Meccan",
+      "ayahs": 45,
+      "words": 775,
+      "letters": 3184
+    },
+    {
+      "number": 36,
+      "name": "سُورَةُ يسٓ",
+      "revelationType": "Meccan",
+      "ayahs": 83,
+      "words": 725,
+      "letters": 3020
+    },
+    {
+      "number": 37,
+      "name": "سُورَةُ الصَّافَّاتِ",
+      "revelationType": "Meccan",
+      "ayahs": 182,
+      "words": 861,
+      "letters": 3828
+    },
+    {
+      "number": 38,
+      "name": "سُورَةُ صٓ",
+      "revelationType": "Meccan",
+      "ayahs": 88,
+      "words": 733,
+      "letters": 3018
+    },
+    {
+      "number": 39,
+      "name": "سُورَةُ الزُّمَرِ",
+      "revelationType": "Meccan",
+      "ayahs": 75,
+      "words": 1172,
+      "letters": 4786
+    },
+    {
+      "number": 40,
+      "name": "سُورَةُ غَافِرٍ",
+      "revelationType": "Meccan",
+      "ayahs": 85,
+      "words": 1219,
+      "letters": 5041
+    },
+    {
+      "number": 41,
+      "name": "سُورَةُ فُصِّلَتۡ",
+      "revelationType": "Meccan",
+      "ayahs": 54,
+      "words": 794,
+      "letters": 3336
+    },
+    {
+      "number": 42,
+      "name": "سُورَةُ الشُّورَىٰ",
+      "revelationType": "Meccan",
+      "ayahs": 53,
+      "words": 860,
+      "letters": 3471
+    },
+    {
+      "number": 43,
+      "name": "سُورَةُ الزُّخۡرُفِ",
+      "revelationType": "Meccan",
+      "ayahs": 89,
+      "words": 830,
+      "letters": 3553
+    },
+    {
+      "number": 44,
+      "name": "سُورَةُ الدُّخَانِ",
+      "revelationType": "Meccan",
+      "ayahs": 59,
+      "words": 346,
+      "letters": 1455
+    },
+    {
+      "number": 45,
+      "name": "سُورَةُ الجَاثِيَةِ",
+      "revelationType": "Meccan",
+      "ayahs": 37,
+      "words": 488,
+      "letters": 2050
+    },
+    {
+      "number": 46,
+      "name": "سُورَةُ الأَحۡقَافِ",
+      "revelationType": "Meccan",
+      "ayahs": 35,
+      "words": 643,
+      "letters": 2627
+    },
+    {
+      "number": 47,
+      "name": "سُورَةُ مُحَمَّدٍ",
+      "revelationType": "Medinan",
+      "ayahs": 38,
+      "words": 539,
+      "letters": 2389
+    },
+    {
+      "number": 48,
+      "name": "سُورَةُ الفَتۡحِ",
+      "revelationType": "Medinan",
+      "ayahs": 29,
+      "words": 560,
+      "letters": 2479
+    },
+    {
+      "number": 49,
+      "name": "سُورَةُ الحُجُرَاتِ",
+      "revelationType": "Medinan",
+      "ayahs": 18,
+      "words": 347,
+      "letters": 1508
+    },
+    {
+      "number": 50,
+      "name": "سُورَةُ قٓ",
+      "revelationType": "Meccan",
+      "ayahs": 45,
+      "words": 373,
+      "letters": 1488
+    },
+    {
+      "number": 51,
+      "name": "سُورَةُ الذَّارِيَاتِ",
+      "revelationType": "Meccan",
+      "ayahs": 60,
+      "words": 360,
+      "letters": 1523
+    },
+    {
+      "number": 52,
+      "name": "سُورَةُ الطُّورِ",
+      "revelationType": "Meccan",
+      "ayahs": 49,
+      "words": 312,
+      "letters": 1305
+    },
+    {
+      "number": 53,
+      "name": "سُورَةُ النَّجۡمِ",
+      "revelationType": "Meccan",
+      "ayahs": 62,
+      "words": 360,
+      "letters": 1422
+    },
+    {
+      "number": 54,
+      "name": "سُورَةُ القَمَرِ",
+      "revelationType": "Meccan",
+      "ayahs": 55,
+      "words": 342,
+      "letters": 1461
+    },
+    {
+      "number": 55,
+      "name": "سُورَةُ الرَّحۡمَٰن",
+      "revelationType": "Medinan",
+      "ayahs": 78,
+      "words": 351,
+      "letters": 1657
+    },
+    {
+      "number": 56,
+      "name": "سُورَةُ الوَاقِعَةِ",
+      "revelationType": "Meccan",
+      "ayahs": 96,
+      "words": 379,
+      "letters": 1719
+    },
+    {
+      "number": 57,
+      "name": "سُورَةُ الحَدِيدِ",
+      "revelationType": "Medinan",
+      "ayahs": 29,
+      "words": 574,
+      "letters": 2505
+    },
+    {
+      "number": 58,
+      "name": "سُورَةُ المُجَادلَةِ",
+      "revelationType": "Medinan",
+      "ayahs": 22,
+      "words": 472,
+      "letters": 2011
+    },
+    {
+      "number": 59,
+      "name": "سُورَةُ الحَشۡرِ",
+      "revelationType": "Medinan",
+      "ayahs": 24,
+      "words": 445,
+      "letters": 1931
+    },
+    {
+      "number": 60,
+      "name": "سُورَةُ المُمۡتَحنَةِ",
+      "revelationType": "Medinan",
+      "ayahs": 13,
+      "words": 348,
+      "letters": 1542
+    },
+    {
+      "number": 61,
+      "name": "سُورَةُ الصَّفِّ",
+      "revelationType": "Medinan",
+      "ayahs": 14,
+      "words": 221,
+      "letters": 945
+    },
+    {
+      "number": 62,
+      "name": "سُورَةُ الجُمُعَةِ",
+      "revelationType": "Medinan",
+      "ayahs": 11,
+      "words": 175,
+      "letters": 755
+    },
+    {
+      "number": 63,
+      "name": "سُورَةُ المُنَافِقُونَ",
+      "revelationType": "Medinan",
+      "ayahs": 11,
+      "words": 180,
+      "letters": 787
+    },
+    {
+      "number": 64,
+      "name": "سُورَةُ التَّغَابُنِ",
+      "revelationType": "Medinan",
+      "ayahs": 18,
+      "words": 241,
+      "letters": 1072
+    },
+    {
+      "number": 65,
+      "name": "سُورَةُ الطَّلَاقِ",
+      "revelationType": "Medinan",
+      "ayahs": 12,
+      "words": 287,
+      "letters": 1184
+    },
+    {
+      "number": 66,
+      "name": "سُورَةُ التَّحۡرِيمِ",
+      "revelationType": "Medinan",
+      "ayahs": 12,
+      "words": 249,
+      "letters": 1074
+    },
+    {
+      "number": 67,
+      "name": "سُورَةُ المُلۡكِ",
+      "revelationType": "Meccan",
+      "ayahs": 30,
+      "words": 333,
+      "letters": 1330
+    },
+    {
+      "number": 68,
+      "name": "سُورَةُ القَلَمِ",
+      "revelationType": "Meccan",
+      "ayahs": 52,
+      "words": 300,
+      "letters": 1264
+    },
+    {
+      "number": 69,
+      "name": "سُورَةُ الحَاقَّةِ",
+      "revelationType": "Meccan",
+      "ayahs": 52,
+      "words": 258,
+      "letters": 1113
+    },
+    {
+      "number": 70,
+      "name": "سُورَةُ المَعَارِجِ",
+      "revelationType": "Meccan",
+      "ayahs": 44,
+      "words": 217,
+      "letters": 951
+    },
+    {
+      "number": 71,
+      "name": "سُورَةُ نُوحٍ",
+      "revelationType": "Meccan",
+      "ayahs": 28,
+      "words": 226,
+      "letters": 953
+    },
+    {
+      "number": 72,
+      "name": "سُورَةُ الجِنِّ",
+      "revelationType": "Meccan",
+      "ayahs": 28,
+      "words": 285,
+      "letters": 1096
+    },
+    {
+      "number": 73,
+      "name": "سُورَةُ المُزَّمِّلِ",
+      "revelationType": "Meccan",
+      "ayahs": 20,
+      "words": 199,
+      "letters": 850
+    },
+    {
+      "number": 74,
+      "name": "سُورَةُ المُدَّثِّرِ",
+      "revelationType": "Meccan",
+      "ayahs": 56,
+      "words": 255,
+      "letters": 1024
+    },
+    {
+      "number": 75,
+      "name": "سُورَةُ القِيَامَةِ",
+      "revelationType": "Meccan",
+      "ayahs": 40,
+      "words": 164,
+      "letters": 668
+    },
+    {
+      "number": 76,
+      "name": "سُورَةُ الإِنسَانِ",
+      "revelationType": "Medinan",
+      "ayahs": 31,
+      "words": 243,
+      "letters": 1078
+    },
+    {
+      "number": 77,
+      "name": "سُورَةُ المُرۡسَلَاتِ",
+      "revelationType": "Meccan",
+      "ayahs": 50,
+      "words": 181,
+      "letters": 821
+    },
+    {
+      "number": 78,
+      "name": "سُورَةُ النَّبَإِ",
+      "revelationType": "Meccan",
+      "ayahs": 40,
+      "words": 173,
+      "letters": 778
+    },
+    {
+      "number": 79,
+      "name": "سُورَةُ النَّازِعَاتِ",
+      "revelationType": "Meccan",
+      "ayahs": 46,
+      "words": 179,
+      "letters": 772
+    },
+    {
+      "number": 80,
+      "name": "سُورَةُ عَبَسَ",
+      "revelationType": "Meccan",
+      "ayahs": 42,
+      "words": 133,
+      "letters": 546
+    },
+    {
+      "number": 81,
+      "name": "سُورَةُ التَّكۡوِيرِ",
+      "revelationType": "Meccan",
+      "ayahs": 29,
+      "words": 104,
+      "letters": 431
+    },
+    {
+      "number": 82,
+      "name": "سُورَةُ الانفِطَارِ",
+      "revelationType": "Meccan",
+      "ayahs": 19,
+      "words": 80,
+      "letters": 329
+    },
+    {
+      "number": 83,
+      "name": "سُورَةُ المُطَفِّفِينَ",
+      "revelationType": "Meccan",
+      "ayahs": 36,
+      "words": 169,
+      "letters": 744
+    },
+    {
+      "number": 84,
+      "name": "سُورَةُ الانشِقَاقِ",
+      "revelationType": "Meccan",
+      "ayahs": 25,
+      "words": 107,
+      "letters": 440
+    },
+    {
+      "number": 85,
+      "name": "سُورَةُ البُرُوجِ",
+      "revelationType": "Meccan",
+      "ayahs": 22,
+      "words": 109,
+      "letters": 463
+    },
+    {
+      "number": 86,
+      "name": "سُورَةُ الطَّارِقِ",
+      "revelationType": "Meccan",
+      "ayahs": 17,
+      "words": 61,
+      "letters": 252
+    },
+    {
+      "number": 87,
+      "name": "سُورَةُ الأَعۡلَىٰ",
+      "revelationType": "Meccan",
+      "ayahs": 19,
+      "words": 72,
+      "letters": 296
+    },
+    {
+      "number": 88,
+      "name": "سُورَةُ الغَاشِيَةِ",
+      "revelationType": "Meccan",
+      "ayahs": 26,
+      "words": 92,
+      "letters": 380
+    },
+    {
+      "number": 89,
+      "name": "سُورَةُ الفَجۡرِ",
+      "revelationType": "Meccan",
+      "ayahs": 30,
+      "words": 137,
+      "letters": 575
+    },
+    {
+      "number": 90,
+      "name": "سُورَةُ البَلَدِ",
+      "revelationType": "Meccan",
+      "ayahs": 20,
+      "words": 82,
+      "letters": 338
+    },
+    {
+      "number": 91,
+      "name": "سُورَةُ الشَّمۡسِ",
+      "revelationType": "Meccan",
+      "ayahs": 15,
+      "words": 54,
+      "letters": 250
+    },
+    {
+      "number": 92,
+      "name": "سُورَةُ اللَّيۡلِ",
+      "revelationType": "Meccan",
+      "ayahs": 21,
+      "words": 71,
+      "letters": 314
+    },
+    {
+      "number": 93,
+      "name": "سُورَةُ الضُّحَىٰ",
+      "revelationType": "Meccan",
+      "ayahs": 11,
+      "words": 40,
+      "letters": 166
+    },
+    {
+      "number": 94,
+      "name": "سُورَةُ الشَّرۡحِ",
+      "revelationType": "Meccan",
+      "ayahs": 8,
+      "words": 27,
+      "letters": 102
+    },
+    {
+      "number": 95,
+      "name": "سُورَةُ التِّينِ",
+      "revelationType": "Meccan",
+      "ayahs": 8,
+      "words": 34,
+      "letters": 157
+    },
+    {
+      "number": 96,
+      "name": "سُورَةُ العَلَقِ",
+      "revelationType": "Meccan",
+      "ayahs": 19,
+      "words": 72,
+      "letters": 285
+    },
+    {
+      "number": 97,
+      "name": "سُورَةُ القَدۡرِ",
+      "revelationType": "Meccan",
+      "ayahs": 5,
+      "words": 30,
+      "letters": 112
+    },
+    {
+      "number": 98,
+      "name": "سُورَةُ البَيِّنَةِ",
+      "revelationType": "Medinan",
+      "ayahs": 8,
+      "words": 94,
+      "letters": 397
+    },
+    {
+      "number": 99,
+      "name": "سُورَةُ الزَّلۡزَلَةِ",
+      "revelationType": "Medinan",
+      "ayahs": 8,
+      "words": 36,
+      "letters": 156
+    },
+    {
+      "number": 100,
+      "name": "سُورَةُ العَادِيَاتِ",
+      "revelationType": "Meccan",
+      "ayahs": 11,
+      "words": 40,
+      "letters": 164
+    },
+    {
+      "number": 101,
+      "name": "سُورَةُ القَارِعَةِ",
+      "revelationType": "Meccan",
+      "ayahs": 11,
+      "words": 36,
+      "letters": 158
+    },
+    {
+      "number": 102,
+      "name": "سُورَةُ التَّكَاثُرِ",
+      "revelationType": "Meccan",
+      "ayahs": 8,
+      "words": 28,
+      "letters": 123
+    },
+    {
+      "number": 103,
+      "name": "سُورَةُ العَصۡرِ",
+      "revelationType": "Meccan",
+      "ayahs": 3,
+      "words": 14,
+      "letters": 71
+    },
+    {
+      "number": 104,
+      "name": "سُورَةُ الهُمَزَةِ",
+      "revelationType": "Meccan",
+      "ayahs": 9,
+      "words": 33,
+      "letters": 134
+    },
+    {
+      "number": 105,
+      "name": "سُورَةُ الفِيلِ",
+      "revelationType": "Meccan",
+      "ayahs": 5,
+      "words": 23,
+      "letters": 96
+    },
+    {
+      "number": 106,
+      "name": "سُورَةُ قُرَيۡشٍ",
+      "revelationType": "Meccan",
+      "ayahs": 4,
+      "words": 17,
+      "letters": 75
+    },
+    {
+      "number": 107,
+      "name": "سُورَةُ المَاعُونِ",
+      "revelationType": "Meccan",
+      "ayahs": 7,
+      "words": 25,
+      "letters": 114
+    },
+    {
+      "number": 108,
+      "name": "سُورَةُ الكَوۡثَرِ",
+      "revelationType": "Meccan",
+      "ayahs": 3,
+      "words": 10,
+      "letters": 42
+    },
+    {
+      "number": 109,
+      "name": "سُورَةُ الكَافِرُونَ",
+      "revelationType": "Meccan",
+      "ayahs": 6,
+      "words": 26,
+      "letters": 95
+    },
+    {
+      "number": 110,
+      "name": "سُورَةُ النَّصۡرِ",
+      "revelationType": "Medinan",
+      "ayahs": 3,
+      "words": 19,
+      "letters": 80
+    },
+    {
+      "number": 111,
+      "name": "سُورَةُ المَسَدِ",
+      "revelationType": "Meccan",
+      "ayahs": 5,
+      "words": 23,
+      "letters": 81
+    },
+    {
+      "number": 112,
+      "name": "سُورَةُ الإِخۡلَاصِ",
+      "revelationType": "Meccan",
+      "ayahs": 4,
+      "words": 15,
+      "letters": 47
+    },
+    {
+      "number": 113,
+      "name": "سُورَةُ الفَلَقِ",
+      "revelationType": "Meccan",
+      "ayahs": 5,
+      "words": 23,
+      "letters": 71
+    },
+    {
+      "number": 114,
+      "name": "سُورَةُ النَّاسِ",
+      "revelationType": "Meccan",
+      "ayahs": 6,
+      "words": 20,
+      "letters": 80
+    }
+  ],
+  "fingerprint": "b5ba14c227e91aab07fa4aa02a775d853d01d963383d61d7d3101c9e08e6016e"
+}

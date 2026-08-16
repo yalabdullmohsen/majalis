@@ -1,0 +1,146 @@
+/* القرآن في أرقام + رأس مركز القرآن النظيف */
+.quran-hub-page__head--title-only {
+  padding: 20px 16px 12px;
+}
+
+.quran-hub-page__title {
+  margin: 0;
+  font-size: clamp(1.75rem, 5vw, 2.15rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--mj-ink, #16241e);
+  letter-spacing: -0.01em;
+}
+
+.quran-hub-page__title::after {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 3px;
+  margin-block-start: 10px;
+  border-radius: 999px;
+  background: var(--mj-brand, #1f7a5a);
+}
+
+.quran-numbers-page {
+  padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 16px);
+}
+
+.quran-numbers-page__method-link {
+  margin: 0 16px 16px;
+  font-size: 13px;
+  color: var(--mj-muted, #66766f);
+}
+
+.quran-numbers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0 16px 16px;
+  grid-auto-rows: 1fr;
+}
+
+.quran-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 16px;
+  text-align: start;
+  cursor: pointer;
+  appearance: none;
+  border: 1px solid var(--mj-hairline, #e3e8e6);
+  border-radius: 16px;
+  background: var(--mj-surface, #fff);
+  color: var(--mj-ink, #16241e);
+  font: inherit;
+}
+
+.quran-stat-card__kind {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mj-brand, #1f7a5a);
+  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 12%, transparent);
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+.quran-stat-card__value {
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: inherit;
+}
+
+.quran-stat-card__label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: inherit;
+}
+
+.quran-stat-card__source {
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--mj-muted, #66766f);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.quran-stat-sheet {
+  padding: 8px 4px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quran-stat-sheet__value {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.quran-stat-sheet__kind {
+  margin: 0;
+  font-size: 13px;
+  color: var(--mj-brand, #1f7a5a);
+  font-weight: 700;
+}
+
+.quran-stat-sheet h3 {
+  margin: 12px 0 0;
+  font-size: 14px;
+}
+
+.quran-stat-sheet p,
+.quran-stat-sheet li {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--mj-ink, #16241e);
+}
+
+.quran-stat-sheet__src {
+  font-size: 12px;
+  color: var(--mj-muted, #66766f);
+}
+
+.lessons-hub-cards {
+  padding: 0 0 12px;
+}
+
+html[data-theme="dark"] .quran-hub-page__title,
+html.dark .quran-hub-page__title {
+  color: var(--mj-ink, #e8eeeb);
+}
+
+html[data-theme="dark"] .quran-stat-card,
+html.dark .quran-stat-card {
+  background: var(--mj-surface, #1a221f);
+  color: var(--mj-ink, #e8eeeb);
+  border-color: var(--mj-hairline, #2a3531);
+}

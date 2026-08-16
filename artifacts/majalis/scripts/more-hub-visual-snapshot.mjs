@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * لقطات مرجعية لـ /sections و /quran-hub (390×844) — نهاري وليلي.
+ * لقطات مرجعية لـ /sections و /quran-hub و /quran-hub/numbers (390×844) — نهاري وليلي.
  * تشغيل:
  *   MORE_HUB_GATE_BASE_URL=http://127.0.0.1:24216 node scripts/more-hub-visual-snapshot.mjs
  *   UPDATE_SNAPSHOTS=1 … لإعادة كتابة المرجعيات
@@ -22,6 +22,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 const outDirSections = resolve(root, "tests/snapshots/more-hub");
 const outDirQuran = resolve(root, "tests/snapshots/quran-hub");
+const outDirNumbers = resolve(root, "tests/snapshots/quran-numbers");
 const viewport = { width: 390, height: 844 };
 const baseFromEnv = process.env.MORE_HUB_GATE_BASE_URL || process.env.MUSHAF_GATE_BASE_URL || process.env.BASE_URL || "";
 const update = process.env.UPDATE_SNAPSHOTS === "1";
@@ -29,6 +30,7 @@ const themes = ["light", "dark"];
 
 mkdirSync(outDirSections, { recursive: true });
 mkdirSync(outDirQuran, { recursive: true });
+mkdirSync(outDirNumbers, { recursive: true });
 
 function contentType(file) {
   const e = extname(file).toLowerCase();
@@ -96,6 +98,34 @@ function assertBaseline(dir, name, theme, buf) {
   console.log(`  · ${name}/${theme}: ok (حجم ${buf.length} ≈ مرجعية ${prev.length})`);
 }
 
+async function waitFonts(page) {
+  await page.evaluate(async () => {
+    try {
+      await Promise.race([
+        document.fonts?.ready ?? Promise.resolve(),
+        new Promise((r) => setTimeout(r, 1500)),
+      ]);
+    } catch {
+      /* ignore */
+    }
+  });
+}
+
+async function shotHub(page, hub, outDir, name, theme) {
+  const box = await hub.boundingBox();
+  if (!box) throw new Error(`${name}/${theme}: لا صندوق للعنصر`);
+  const buf = await page.screenshot({
+    type: "png",
+    clip: {
+      x: Math.max(0, box.x),
+      y: Math.max(0, box.y),
+      width: Math.min(box.width, viewport.width),
+      height: Math.min(box.height, viewport.height * 2),
+    },
+  });
+  assertBaseline(outDir, name, theme, buf);
+}
+
 async function capture(page, base, pathName, selector, outDir, name, theme) {
   await page.goto(`${base}${pathName}`, { waitUntil: "domcontentloaded", timeout: 60_000 });
   await page.waitForSelector(selector, { timeout: 20_000 });
@@ -122,33 +152,34 @@ async function capture(page, base, pathName, selector, outDir, name, theme) {
   });
   if (!(styles.radius >= 12)) throw new Error(`${name}/${theme}: border-radius < 12`);
   if (styles.bg === "rgba(0, 0, 0, 0)") throw new Error(`${name}/${theme}: خلفية بطاقة شفافة`);
-  // أبيض على أبيض ≈ تباين 1
   if (styles.color === styles.bg) throw new Error(`${name}/${theme}: لون النص = لون الخلفية`);
 
-  // تجنّب تعليق لقطات Playwright على تحميل خطوط ويب لا نهائية
-  await page.evaluate(async () => {
-    try {
-      await Promise.race([
-        document.fonts?.ready ?? Promise.resolve(),
-        new Promise((r) => setTimeout(r, 1500)),
-      ]);
-    } catch {
-      /* ignore */
-    }
-  });
+  await waitFonts(page);
+  await shotHub(page, hub, outDir, name, theme);
+}
 
-  const box = await hub.boundingBox();
-  if (!box) throw new Error(`${name}/${theme}: لا صندوق للعنصر`);
-  const buf = await page.screenshot({
-    type: "png",
-    clip: {
-      x: Math.max(0, box.x),
-      y: Math.max(0, box.y),
-      width: Math.min(box.width, viewport.width),
-      height: Math.min(box.height, viewport.height * 2),
-    },
-  });
-  assertBaseline(outDir, name, theme, buf);
+async function captureNumbers(page, base, theme) {
+  const name = "quran-numbers";
+  await page.goto(`${base}/quran-hub/numbers`, { waitUntil: "domcontentloaded", timeout: 60_000 });
+  await page.waitForSelector("[data-quran-numbers='1']", { timeout: 20_000 });
+  await page.waitForSelector("[data-stat-id]", { timeout: 20_000 });
+  const hub = page.locator("[data-quran-numbers='1']");
+  await hub.waitFor({ state: "visible" });
+
+  const title = ((await hub.locator(".quran-hub-page__title").innerText()) || "").trim();
+  if (title !== "القرآن في أرقام") throw new Error(`${name}/${theme}: عنوان خاطئ`);
+
+  const cards = await hub.locator("[data-stat-id]").count();
+  if (cards < 8) throw new Error(`${name}/${theme}: بطاقات إحصاء قليلة (${cards})`);
+
+  const sources = await hub.locator(".quran-stat-card__source").allTextContents();
+  const joined = sources.join("\n");
+  if (/الإعجاز العددي|التناسق الرقمي|numericmiracle|harunyahya|miraclequran/i.test(joined)) {
+    throw new Error(`${name}/${theme}: مصدر ممنوع في بطاقة إحصاء`);
+  }
+
+  await waitFonts(page);
+  await shotHub(page, hub, outDirNumbers, name, theme);
 }
 
 async function main() {
@@ -168,6 +199,7 @@ async function main() {
       }, theme);
       await capture(page, base, "/sections", "[data-sections-hub='1']", outDirSections, "more-hub", theme);
       await capture(page, base, "/quran-hub", "[data-quran-hub='1']", outDirQuran, "quran-hub", theme);
+      await captureNumbers(page, base, theme);
       await page.close();
     }
     console.log("more-hub-visual-snapshot: OK");

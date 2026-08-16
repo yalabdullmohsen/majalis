@@ -20,20 +20,20 @@ test.describe("Quran — مركز القرآن", () => {
     await page.goto("/quran-hub");
     await waitForContent(page);
     await page.waitForTimeout(600);
-    const card = page.locator(".quran-hub-card").first();
-    if (await card.count() > 0) {
+    const card = page.locator("[data-quran-hub='1'] [data-section-card]").first();
+    if ((await card.count()) > 0) {
       await card.click();
       await waitForContent(page);
       const url = page.url();
-      expect(url).not.toContain("/quran-hub");
+      expect(url).not.toMatch(/\/quran-hub\/?$/);
     }
   });
 
   test("quran hub has explorable sections grid", async ({ page }) => {
     await page.goto("/quran-hub");
     await waitForContent(page);
-    const cards = page.locator(".quran-hub-card");
-    const hasCards = await cards.count() > 0;
+    const cards = page.locator("[data-quran-hub='1'] [data-section-card]");
+    const hasCards = (await cards.count()) > 0;
     const hasList = await page.locator("body").innerText().then((t) => t.length > 50);
     expect(hasCards || hasList).toBe(true);
   });

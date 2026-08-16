@@ -187,5 +187,31 @@ test.describe("Sections page render contract", () => {
         maxDiffPixelRatio: 0.08,
       });
     });
+
+    test(`القرآن في أرقام — ${theme}`, async ({ page }) => {
+      await page.addInitScript((t) => {
+        localStorage.setItem("majalis-theme", t);
+      }, theme);
+
+      await page.goto("/quran-hub/numbers", { waitUntil: "domcontentloaded" });
+      await page.waitForSelector("[data-quran-numbers='1']", { timeout: 15_000 });
+      await page.waitForSelector("[data-stat-id]", { timeout: 15_000 });
+
+      const pageRoot = page.locator("[data-quran-numbers='1']");
+      await expect(pageRoot.getByRole("heading", { name: "القرآن في أرقام" })).toBeVisible();
+      await expect(pageRoot.getByText(/لا تُعرض أرقام من مواقع الإعجاز العددي/)).toBeVisible();
+      expect(await pageRoot.locator("[data-stat-id]").count()).toBeGreaterThanOrEqual(8);
+      const sources = await pageRoot.locator(".quran-stat-card__source").allTextContents();
+      expect(sources.some((s) => /الإعجاز العددي|التناسق الرقمي|numericmiracle|harunyahya/i.test(s))).toBe(
+        false,
+      );
+
+      const nSnapDir = path.join(__dirname, "snapshots", "quran-numbers");
+      fs.mkdirSync(nSnapDir, { recursive: true });
+      await pageRoot.screenshot({ path: path.join(nSnapDir, `quran-numbers-${theme}.png`) });
+      await expect(pageRoot).toHaveScreenshot(`quran-numbers-${theme}.png`, {
+        maxDiffPixelRatio: 0.08,
+      });
+    });
   }
 });

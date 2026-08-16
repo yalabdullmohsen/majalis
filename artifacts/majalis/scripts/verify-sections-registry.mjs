@@ -38,6 +38,8 @@ const {
   featuredSections,
   bottomNavSections,
   sectionsForSurface,
+  quranHubSections,
+  lessonsHubSections,
 } = await import("../src/config/sections.registry.ts");
 
 const SPACING = new Set([8, 12, 16, 24]);
@@ -397,6 +399,39 @@ const SPACING = new Set([8, 12, 16, 24]);
       }
       if (!sections?.aliases?.includes("المزيد")) {
         fail("sections: aliases يجب أن تتضمن «المزيد»");
+      }
+    }
+
+    // 19) hub واحد لكل قسم — صفر تكرار بطاقات بين الهبات
+    {
+      const hubs = new Set(["quran", "lessons", "sections"]);
+      for (const s of SECTIONS) {
+        if (!hubs.has(s.hub)) fail(`hub غير صالح: ${s.id}=${s.hub}`);
+      }
+      const quranIds = SECTIONS.filter((s) => s.status !== "hidden" && s.hub === "quran").map((s) => s.id);
+      const lessonsIds = SECTIONS.filter((s) => s.status !== "hidden" && s.hub === "lessons").map((s) => s.id);
+      if (!quranIds.includes("open-mushaf") || !quranIds.includes("quran-numbers")) {
+        fail("مركز القرآن يجب أن يتضمن فتح المصحف والقرآن في أرقام");
+      }
+      if (!lessonsIds.includes("quran-circles")) {
+        fail("حلقات القرآن يجب أن تكون hub=lessons");
+      }
+      if (quranIds.includes("quran-circles")) {
+        fail("حلقات القرآن لا تُعرض في مركز القرآن");
+      }
+    }
+
+    // 20) رأس مركز القرآن بلا وصف تسويقي
+    {
+      const hub = read("src/pages/quran/ui/QuranHubView.tsx");
+      if (/اقرأ|استمع|راجع|وابحث|من مصدر واحد/.test(hub)) {
+        fail("QuranHubView: ممنوع سطر وصفي تحت العنوان");
+      }
+      if (!/quran-hub-page__title|title-only/.test(hub)) {
+        fail("QuranHubView: عنوان مميّز مطلوب");
+      }
+      if (!/quranHubSections/.test(hub)) {
+        fail("QuranHubView: التوزيع عبر hub من السجل");
       }
     }
   }
