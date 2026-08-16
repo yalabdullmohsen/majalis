@@ -73,3 +73,11 @@
 .an-expand-btn { font-size: var(--ds-text-xs); padding: 0.25rem 0.65rem; border-radius: var(--ds-radius-full); border: 1px solid #d1d5db; background: transparent; color: var(--mj-muted); cursor: pointer; transition: background 0.15s; }
 .an-expand-btn:hover { background: #f3f4f6; }
 
+:is(html[data-theme="dark"], html.dark) .an-hero .an-hero__title {
+  color: var(--mj-ink, #e9efec) !important;
+}
+:is(html[data-theme="dark"], html.dark) .an-hero :is(.an-hero__sub, .an-hero__eyebrow) {
+  color: var(--mj-ink-2, #c2cfca) !important;
+}
+
+

@@ -127,8 +127,8 @@ html[data-theme="dark"] .fqh-hub-card__desc {
    ══════════════════════════════════════════════ */
 .fqp-root { min-height: 100svh; background: var(--majalis-parchment); direction: rtl; overflow-x: hidden; max-width: 100%; box-sizing: border-box; }
 .fqp-root .page-hero-mj {
-  padding: 0.5rem 0.85rem 0.65rem;
-  margin-bottom: 0.5rem;
+  /* الحشو الأفقي/الرأسي يُدار عبر قاعدة full-bleed في page-hero.css */
+  margin-bottom: 0.75rem;
 }
 .fqp-root .hub-card-grid {
   margin-top: 0;

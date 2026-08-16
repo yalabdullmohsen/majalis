@@ -159,6 +159,7 @@ export default function HomePage() {
 
       <PageHero
         className="m2030-hero home-page-hero"
+        fullBleed={false}
         title={dailyCtx.greeting}
         actions={
           <Link

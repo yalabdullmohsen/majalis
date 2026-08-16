@@ -33,6 +33,40 @@ html.dark .pattern-backdrop {
   padding: clamp(0.85rem, 3.5vw, 1.35rem);
   padding-block-end: 1.15rem;
 }
+
+/* Full-bleed أخضر عميق — بلا 100vw؛ الصنف يُضاف من المكوّن */
+.page-hero-mj--bleed {
+  --ph-bs: calc(var(--page-gutter, 1rem) + var(--gutter-inline-start, 0px));
+  --ph-be: calc(var(--page-gutter, 1rem) + var(--gutter-inline-end, 0px));
+  width: auto;
+  max-width: none;
+  box-sizing: border-box;
+  margin-inline: calc(-1 * var(--ph-bs)) calc(-1 * var(--ph-be));
+  margin-block-start: calc(-1 * clamp(1rem, 3vw, 1.75rem));
+  padding-block: 1.5rem 2rem;
+  padding-inline: max(1rem, var(--ph-bs)) max(1rem, var(--ph-be));
+  border-radius: 0;
+  background: #143f35;
+  color: #fff;
+}
+.page-hero-mj--bleed .pattern-backdrop {
+  color: #fff;
+  opacity: 0.07;
+}
+.page-hero-mj--bleed .page-hero-mj__content {
+  max-width: min(40rem, 100%);
+  width: 100%;
+}
+.page-hero-mj--bleed .page-hero-mj__eyebrow {
+  color: #a7f3d0;
+}
+.page-hero-mj--bleed :is(.page-hero-mj__title, .page-hero-mj__headline) {
+  color: #fff !important;
+}
+.page-hero-mj--bleed .page-hero-mj__desc {
+  color: #e8eeec !important;
+}
+
 .page-hero-mj__content {
   position: relative;
   z-index: 1;
