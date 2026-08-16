@@ -133,10 +133,48 @@ export function getNativeAudioMode(): NativeAudioMode {
   return activeMode;
 }
 
+let foregroundHookInstalled = false;
+
+/**
+ * إعادة تفعيل AVAudioSession عند العودة للمقدمة إذا كانت جلسة التشغيل نشطة.
+ * لا يفعّل الجلسة عند الإقلاع البارد.
+ */
+export function installNativePlaybackForegroundResume(): void {
+  if (foregroundHookInstalled || typeof document === "undefined") return;
+  foregroundHookInstalled = true;
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState !== "visible") return;
+    if (activeMode !== "playback") return;
+    void ensureNativePlaybackAudioSession().catch((err: unknown) => {
+      console.warn("[native-playback-audio] foreground resume failed:", err);
+    });
+  });
+  if (isIOS) {
+    void getPlugin().then((plugin) => {
+      if (!plugin?.addListener) return;
+      void plugin.addListener("audioInterruption", (data) => {
+        if (data.type === "ended" && data.shouldResume && activeMode === "playback") {
+          void ensureNativePlaybackAudioSession().catch((err: unknown) => {
+            console.warn("[native-playback-audio] interruption resume failed:", err);
+          });
+        }
+      });
+      void plugin.addListener("audioRouteChange", () => {
+        if (activeMode === "playback") {
+          void ensureNativePlaybackAudioSession().catch((err: unknown) => {
+            console.warn("[native-playback-audio] route-change resume failed:", err);
+          });
+        }
+      });
+    });
+  }
+}
+
 /** Test helper — reset module state without touching the native session. */
 export function __resetNativeAudioSessionStateForTests(): void {
   activeMode = "inactive";
   playbackRefCount = 0;
   pluginPromise = null;
   androidPluginPromise = null;
+  foregroundHookInstalled = false;
 }

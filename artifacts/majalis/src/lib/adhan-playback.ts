@@ -149,7 +149,17 @@ export async function playAdhanUrlAsync(
       artist: "المجلس العلمي",
     });
   } catch (e) {
-    console.warn("[adhan] native playback session skipped:", e);
+    const msg = e instanceof Error ? e.message : String(e);
+    console.warn("[adhan] native playback session failed:", msg);
+    const { isIOS, isNative } = await import("@/lib/capacitor-utils");
+    if (isNative && isIOS) {
+      const message =
+        msg.includes("recording")
+          ? "جلسة الصوت مشغولة بالتسجيل — أوقف التلاوة/الكلام ثم أعد المحاولة."
+          : "فشل تفعيل جلسة الصوت (AVAudioSession playback).";
+      emitPlayError("unknown", message, url);
+      return { ok: false, code: "unknown", message };
+    }
   }
   const audio = new Audio();
   const targetVol = Math.min(1, Math.max(0, volume));

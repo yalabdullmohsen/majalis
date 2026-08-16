@@ -39,13 +39,15 @@ for (const name of required) {
 
 const fullDir = join(root, "public/audio/adhan");
 for (const name of [
-  "adhan-makkah-full.mp3",
-  "adhan-madinah-full.mp3",
+  "adhan-makkah-full.m4a",
+  "adhan-madinah-full.m4a",
   "adhan-aqsa-full.mp3",
-  "adhan-egypt-full.mp3",
+  "adhan-egypt-full.m4a",
+  "adhan-haram-full.m4a",
+  "adhan-soft-alert.m4a",
   "adhan-makkah-fajr.mp3",
 ]) {
-  assert.ok(existsSync(join(fullDir, name)), `missing full mp3 ${name}`);
+  assert.ok(existsSync(join(fullDir, name)), `missing full audio ${name}`);
 }
 
 const androidRaw = join(root, "android/app/src/main/res/raw");
