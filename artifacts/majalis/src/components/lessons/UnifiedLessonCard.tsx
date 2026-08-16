@@ -14,6 +14,7 @@ import {
   computeNextOccurrenceMs,
   formatLessonAppointmentLine,
   formatRelativeTimeDetailed,
+  hasConfirmedLessonSchedule,
   isLessonInProgress,
 } from "@/lib/lesson-time";
 import { FavoriteButton } from "@/components/FavoriteButton";
@@ -47,13 +48,21 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const scheduleTime = lesson.scheduleTime || lesson.time;
-  const [statusLabel, setStatusLabel] = useState(lesson.statusLabel);
+  const scheduleConfirmed = hasConfirmedLessonSchedule(lesson.day || "", scheduleTime || "");
+  const [statusLabel, setStatusLabel] = useState(
+    scheduleConfirmed ? lesson.statusLabel : "الوقت قيد التأكيد",
+  );
   const [nowLive, setNowLive] = useState(() => isLessonInProgress(lesson.day, scheduleTime));
 
   useEffect(() => {
     if (lesson.featuredHomeStatus) {
       setNowLive(lesson.featuredHomeStatus === "مستمر");
       setStatusLabel(lesson.featuredHomeStatus);
+      return;
+    }
+    if (!scheduleConfirmed) {
+      setNowLive(false);
+      setStatusLabel("الوقت قيد التأكيد");
       return;
     }
     function refresh() {
@@ -66,7 +75,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     const earlyTimer = window.setTimeout(refresh, 5_000);
     const timer = window.setInterval(refresh, 60_000);
     return () => { window.clearTimeout(earlyTimer); window.clearInterval(timer); };
-  }, [lesson.day, scheduleTime, lesson.featuredHomeStatus]);
+  }, [lesson.day, scheduleTime, lesson.featuredHomeStatus, scheduleConfirmed]);
 
   const handleCopy = useCallback(async () => {
     try {
@@ -98,11 +107,15 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     time: scheduleTime,
     gregorianDate: lesson.gregorianDate,
     hijriDate: lesson.hijriDate,
+    uncertain: !scheduleConfirmed,
   });
+  const timeChip = scheduleConfirmed
+    ? (appointmentLine || lesson.day || lesson.time)
+    : "الوقت قيد التأكيد";
   const placeLine = [lesson.mosque, lesson.region].filter(Boolean).join(" — ");
   const compactMeta = [
     lesson.activityType || lesson.category,
-    appointmentLine || lesson.day || lesson.time,
+    timeChip,
     placeLine,
     lesson.hasLiveStream ? "بث مباشر" : "",
   ].filter(Boolean).slice(0, 4);
@@ -159,7 +172,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
 
         <div className={`lesson-unified-card__meta${compact ? " lesson-unified-card__meta--compact" : ""}`}>
           {!compact && <MetaCell label="نوع النشاط" value={lesson.activityType} />}
-          {!compact && <MetaCell label="الموعد" value={appointmentLine || undefined} />}
+          {!compact && <MetaCell label="الموعد" value={appointmentLine || "الوقت قيد التأكيد"} />}
           {!compact && <MetaCell label="المكان" value={lesson.mosque} />}
           {!compact && <MetaCell label="المنطقة" value={lesson.region} />}
           {!compact && <MetaCell label="المحافظة" value={lesson.governorate} />}
@@ -181,6 +194,13 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           {compact && (
             <>
               <FavoriteButton contentType="lesson" contentId={lesson.id} compact className="lesson-unified-card__btn lesson-unified-card__btn--ghost" />
+              <button
+                type="button"
+                className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
+                onClick={() => downloadUnifiedCalendar(lesson)}
+              >
+                أضف للتقويم
+              </button>
               {showRegister && onToggleRegister && (
                 <button
                   type="button"

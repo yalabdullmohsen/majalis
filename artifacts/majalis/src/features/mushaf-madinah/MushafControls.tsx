@@ -73,6 +73,7 @@ export function MushafControls({
           className="mm-controls__btn mm-controls__page"
           onClick={() => setGotoOpen(true)}
           aria-label={`الصفحة ${pageNumber} — انتقال`}
+          dir="ltr"
         >
           {pageNumber} / {MUSHAF_PAGE_MAX}
         </button>

@@ -18,7 +18,7 @@ import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
 import { PageChromeSync } from "@/components/PageChromeSync";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
-import { useScrollDirection } from "@/hooks/useScrollDirection";
+import { useAutoHideBottomNav } from "@/hooks/useAutoHideBottomNav";
 import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
@@ -36,6 +36,7 @@ import { PrayerCountdownBanner } from "@/components/prayer/PrayerCountdownBanner
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
 import { recordRecentPage } from "@/lib/recent-pages";
+import { trackContinueReading } from "@/lib/continue-reading";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
 import { PwaInstallBanner } from "@/components/PwaInstallBanner";
@@ -354,6 +355,7 @@ function SeoManager() {
     const timer = window.setTimeout(() => {
       const rawTitle = document.title.split(" | ")[0]?.trim();
       recordRecentPage(location, rawTitle);
+      trackContinueReading({ route: location, title: rawTitle || location });
     }, 400);
     return () => {
       window.clearTimeout(timer);
@@ -968,8 +970,9 @@ function AppShellInner() {
   const immersive = isImmersiveChromePath(location);
   const onPrayer = isPrayerTimesPath(location);
   const hideSiteChrome = immersive || onPrayer;
-  const { shouldHideChrome } = useScrollDirection({
+  const { isHidden: shouldHideChrome } = useAutoHideBottomNav({
     forceShow: searchOpen || comingSoonOpen || hideSiteChrome,
+    routeKey: location,
   });
 
   useEffect(() => {
@@ -1056,7 +1059,7 @@ function AppShellInner() {
       {!hideSiteChrome && <ScrollToTop />}
       <GlobalBackButton />
       {!hideSiteChrome && <PwaInstallBanner />}
-      <BottomNavBar />
+      <BottomNavBar isHidden={shouldHideChrome} />
       <Suspense fallback={null}>
         <QuranMiniPlayerBar />
       </Suspense>

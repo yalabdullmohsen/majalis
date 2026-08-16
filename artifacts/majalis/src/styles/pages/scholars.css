@@ -171,6 +171,16 @@
   color: #5b21b6;
   border-color: rgba(100,50,200,0.12);
 }
+.sch-tag--role {
+  background: color-mix(in srgb, var(--mj-brand) 14%, transparent);
+  color: var(--mj-brand-deep);
+  font-weight: 700;
+}
+.sch-tag--caution {
+  background: color-mix(in srgb, #b45309 12%, transparent);
+  color: #92400e;
+  border-color: color-mix(in srgb, #b45309 22%, transparent);
+}
 .sch-card__right {
   display: flex;
   flex-direction: column;

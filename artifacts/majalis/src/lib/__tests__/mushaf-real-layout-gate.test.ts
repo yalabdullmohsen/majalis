@@ -81,7 +81,9 @@ assert.match(actions, /handlePlayClick|onTogglePlay/);
 
 // ليلي بتباين واضح
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
-assert.match(css, /--mm-ink:\s*#f7faf7|--mm-ink:\s*#ffffff/);
+assert.match(css, /--mm-ink:\s*#f4efe5|--mm-ink:\s*#f7faf7|--mm-ink:\s*#ffffff/);
+assert.match(css, /--mm-paper:\s*#fbf7ef/);
+assert.match(css, /rgba\(191,\s*159,\s*91,\s*0\.22\)/);
 
 // بلا توسيط عمودي يترك فراغًا أبيض
 assert.match(page, /targetStart = 1/);

@@ -33,7 +33,7 @@ const SURFACE_DARK_APP = "#131A18";
 /** زمرد مواقيت الصلاة — يطابق --em-950 */
 export const PRAYER_STATUS_HEX = "#091814";
 /** ورق المصحف */
-export const MUSHAF_PAPER_HEX = "#FCF9F0";
+export const MUSHAF_PAPER_HEX = "#FBF7EF";
 
 type ChromePair = { light: PageChromeDef; dark: PageChromeDef };
 
@@ -67,12 +67,12 @@ export const PAGE_CHROME: Record<PageChromeKey, ChromePair> = {
   quran: pair(SURFACE_LIGHT, "dark", SURFACE_DARK_APP, "light"),
   mushaf: {
     light: {
-      statusBarColor: "var(--color-mushaf-paper, #FCF9F0)",
+      statusBarColor: "var(--color-mushaf-paper, #FBF7EF)",
       statusBarColorHex: MUSHAF_PAPER_HEX,
       statusBarStyle: "dark",
     },
     dark: {
-      statusBarColor: "var(--color-mushaf-paper, #FCF9F0)",
+      statusBarColor: "var(--color-mushaf-paper, #FBF7EF)",
       statusBarColorHex: MUSHAF_PAPER_HEX,
       statusBarStyle: "dark",
     },

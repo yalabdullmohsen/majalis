@@ -25,6 +25,9 @@ import { HomeContentHub } from "@/components/home/HomeContentHub";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
+import { HomeDailyWirdBand } from "@/components/home/DailyWirdCard";
+import { HomeMostReadBand } from "@/components/home/HomeMostReadBand";
+import { HomeLiveStatsStrip } from "@/components/home/HomeLiveStatsStrip";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { QUICK_LINKS } from "@/lib/home-feature-catalog";
 import {
@@ -81,7 +84,7 @@ const WIDGET_LABEL: Record<string, string> = Object.fromEntries(HOME_WIDGET_DEFS
 
 const FEATURED_CATS = [
   { href: "/quran-knowledge", title: "القرآن وعلومه", desc: "فهرس وعلوم وأسباب نزول", cta: "استكشف", Icon: BookMarked },
-  { href: "/hadith", title: "الحديث وعلومه", desc: "أحاديث موثقة مع الشرح", cta: "تصفح", Icon: Scroll },
+  { href: "/hadith", title: "الحديث وعلومه", desc: "مداخل وأحاديث مع بيان المصدر قدر الإمكان", cta: "تصفح", Icon: Scroll },
   { href: "/fiqh", title: "الفقه والأحكام", desc: "مسائل وأحكام مرتّبة", cta: "ادخل", Icon: Scale },
   { href: "/lessons", title: "الدروس العلمية", desc: "مسارات ودروس منظمة", cta: "افتح الدروس", Icon: GraduationCap },
   { href: "/memorization", title: "الحفظ والمراجعة", desc: "خطط واختبارات", cta: "ابدأ", Icon: Target },
@@ -157,10 +160,18 @@ export default function HomePage() {
         <HomeUniversalSearch />
       </SectionErrorBoundary>
 
+      <HomeLiveStatsStrip />
+
+      <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
+        <HomeStartHereSection />
+      </section>
+
+      <HomeDailyWirdBand />
+
       {visibleWidgets.includes("lessons") && (
         <section className="m2030-band m2030-band--sage" aria-label="دروس اليوم">
           <div className="m2030-band__head">
-            <h2 className="m2030-band__title">دروس اليوم</h2>
+            <h2 className="m2030-band__title">آخر الدروس</h2>
             <Link href="/lessons" className="m2030-band__link">كل الدروس</Link>
           </div>
           <SafeHomeSection name="lessons">
@@ -172,7 +183,7 @@ export default function HomePage() {
 
       <section className="m2030-band" aria-label="متابعة القراءة والاستماع">
         <div className="m2030-band__head">
-          <h2 className="m2030-band__title">متابعة</h2>
+          <h2 className="m2030-band__title">أكمل من حيث توقفت</h2>
         </div>
         <div className="m2030-panel mj-card mj-card--raised">
           <SafeHomeSection name="local-resume">
@@ -183,6 +194,8 @@ export default function HomePage() {
           </SafeHomeSection>
         </div>
       </section>
+
+      <HomeMostReadBand />
 
       <section className="m2030-band m2030-band--sage" aria-label="إجراءات سريعة">
         <div className="m2030-band__head">
@@ -203,10 +216,6 @@ export default function HomePage() {
 
       <section className="m2030-band" aria-label="محتوى أساسي">
         <HomeContentHub />
-      </section>
-
-      <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
-        <HomeStartHereSection />
       </section>
 
       <section className="m2030-band" aria-label="أقسام علمية">

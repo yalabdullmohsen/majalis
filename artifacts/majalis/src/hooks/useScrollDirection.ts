@@ -1,6 +1,6 @@
 /**
  * اتجاه التمرير لإخفاء/إظهار كروم التنقّل (هيدر + شريط سفلي) على الجوال.
- * لا يحدّث state في كل بكسل — عبر rAF + عتبة 8px.
+ * لا يحدّث state في كل بكسل — عبر rAF + عتبة 10px.
  */
 import { useEffect, useState } from "react";
 
@@ -11,7 +11,7 @@ export type ScrollDirectionState = {
 };
 
 const TOP_SHOW_PX = 24;
-const DELTA_PX = 8;
+const DELTA_PX = 10;
 
 export function resolveShouldHideChrome(input: {
   scrollY: number;

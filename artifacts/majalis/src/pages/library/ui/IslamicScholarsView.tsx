@@ -6,6 +6,13 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SCHOLARS } from "@/lib/scholars-data";
+import {
+  inferScholarCautionLevel,
+  inferScholarRoleType,
+  SCHOLAR_ROLE_FILTERS,
+  scholarCautionLabel,
+  type ScholarRoleType,
+} from "@/lib/scholar-roles";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
 import { ActiveFilters, FilterBar, SegmentedFilter } from "@/components/filters";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -14,10 +21,12 @@ import "@/styles/pages/scholars.css";
 import { SITE_URL } from "@/lib/site-config";
 const ERAS = ["الكل", "الأئمة الأربعة", "المحدثون", "العلماء الكبار", "المجددون", "المعاصرون"];
 const SPECIALTIES = ["الكل", "فقه", "حديث", "عقيدة", "تفسير", "أصول", "مقاصد", "لغة", "سيرة", "رجال"];
+const ROLE_ITEMS = SCHOLAR_ROLE_FILTERS.map((r) => ({ id: r, label: r }));
 
 export default function IslamicScholarsPage() {
   const [era, setEra] = useState("الكل");
   const [specialty, setSpecialty] = useState("الكل");
+  const [roleType, setRoleType] = useState<ScholarRoleType | "الكل">("الكل");
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebouncedValue(query, 250);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -26,13 +35,13 @@ export default function IslamicScholarsPage() {
     applyPageSeo({
       path: "/scholars",
       title: "أعلام الإسلام، العلماء والمحدثون والفقهاء | المجلس العلمي",
-      description: "سِيَر أبرز علماء الإسلام عبر القرون، الأئمة الأربعة، المحدثون، العلماء المعاصرون؛ محتوى معتمد في منهج المجلس العلمي؛ — مرج",
+      description: "سِيَر أبرز علماء الإسلام عبر القرون: الأئمة الأربعة، المحدثون، الفقهاء، والمعاصرون — مع تمييز الدور والتنبيه المنهجي عند الحاجة.",
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أعلام الإسلام عبر القرون",
-          description: "سِيَر أبرز علماء الإسلام: الأئمة الأربعة والمحدثون والفقهاء والمعاصرون؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "سِيَر علماء الإسلام مع تمييز التخصص والدور",
           numberOfItems: SCHOLARS.length,
           itemListElement: SCHOLARS.slice(0, 20).map((s, i) => ({
             "@type": "ListItem",
@@ -50,16 +59,20 @@ export default function IslamicScholarsPage() {
       SCHOLARS.filter((s) => {
         const matchEra = era === "الكل" || s.era === era;
         const matchSpec = specialty === "الكل" || s.specialty.includes(specialty);
+        const matchRole = roleType === "الكل" || inferScholarRoleType(s) === roleType;
         const matchQ = arabicMatchAny([s.name, s.fullName, s.bio, ...s.specialty], debouncedQuery);
-        return matchEra && matchSpec && matchQ;
+        return matchEra && matchSpec && matchRole && matchQ;
       }),
-    [era, specialty, debouncedQuery],
+    [era, specialty, roleType, debouncedQuery],
   );
 
   const activeItems = [
     ...(era !== "الكل" ? [{ id: "era", label: era, onRemove: () => setEra("الكل") }] : []),
     ...(specialty !== "الكل"
       ? [{ id: "spec", label: specialty, onRemove: () => setSpecialty("الكل") }]
+      : []),
+    ...(roleType !== "الكل"
+      ? [{ id: "role", label: roleType, onRemove: () => setRoleType("الكل") }]
       : []),
     ...(debouncedQuery.trim()
       ? [{ id: "q", label: `بحث: ${debouncedQuery.trim()}`, onRemove: () => setQuery("") }]
@@ -94,6 +107,7 @@ export default function IslamicScholarsPage() {
               ? () => {
                   setEra("الكل");
                   setSpecialty("الكل");
+                  setRoleType("الكل");
                   setQuery("");
                 }
               : undefined
@@ -106,6 +120,13 @@ export default function IslamicScholarsPage() {
             value={era}
             onChange={setEra}
             items={ERAS.map((e) => ({ id: e, label: e }))}
+          />
+          <p className="sch-filter-label">الدور</p>
+          <SegmentedFilter
+            ariaLabel="تصفية حسب الدور"
+            value={roleType}
+            onChange={(v) => setRoleType(v as ScholarRoleType | "الكل")}
+            items={ROLE_ITEMS}
           />
           <p className="sch-filter-label">التخصص</p>
           <SegmentedFilter
@@ -122,6 +143,8 @@ export default function IslamicScholarsPage() {
       <div className="sch-grid">
         {filtered.map(s => {
           const isOpen = expanded === s.id;
+          const role = inferScholarRoleType(s);
+          const caution = scholarCautionLabel(inferScholarCautionLevel(s));
           return (
             <article key={s.id} className={["sch-card", isOpen ? "sch-card--open" : ""].join(" ")}>
               <div className="sch-card__header" role="button" tabIndex={0}
@@ -135,10 +158,12 @@ export default function IslamicScholarsPage() {
                   <h2 className="sch-card__name">{s.name}</h2>
                   <p className="sch-card__fullname">{s.fullName}</p>
                   <div className="sch-card__tags">
+                    <span className="sch-tag sch-tag--role">{role}</span>
                     {s.specialty.map(sp => (
                       <span key={sp} className="sch-tag">{sp}</span>
                     ))}
                     {s.madhhab && <span className="sch-tag sch-tag--madhhab">{s.madhhab}</span>}
+                    {caution && <span className="sch-tag sch-tag--caution">{caution}</span>}
                   </div>
                 </div>
                 <div className="sch-card__right">
@@ -196,7 +221,7 @@ export default function IslamicScholarsPage() {
         <div className="sch-empty">
           <BookOpen size={40} />
           <p>لا توجد نتائج للبحث عن «{query}»</p>
-          <button type="button" onClick={() => { setQuery(""); setEra("الكل"); setSpecialty("الكل"); }}>
+          <button type="button" onClick={() => { setQuery(""); setEra("الكل"); setSpecialty("الكل"); setRoleType("الكل"); }}>
             مسح التصفية
           </button>
         </div>

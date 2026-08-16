@@ -337,6 +337,29 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
     }
   }, [page, selectedVerseKey, versePreview]);
 
+  const onBookmark = useCallback(async () => {
+    if (!selectedVerseKey) return;
+    const parsed = parseVerseKey(selectedVerseKey);
+    const label = parsed
+      ? `${getSurahMeta(parsed.surah).name} · آية ${parsed.ayah}`
+      : `آية ${selectedVerseKey}`;
+    try {
+      const { getMyBookmarks, saveBookmarks } = await import("@/lib/quran-my-bookmarks");
+      const list = getMyBookmarks().filter((b) => b.ayahKey !== selectedVerseKey);
+      const next = {
+        id: Date.now(),
+        ayahKey: selectedVerseKey,
+        page,
+        label,
+        date: new Date().toLocaleDateString("ar"),
+      };
+      await saveBookmarks([next, ...list]);
+      setCopyStatus("تم حفظ العلامة");
+    } catch {
+      setCopyStatus("تعذّر حفظ العلامة");
+    }
+  }, [page, selectedVerseKey]);
+
   useEffect(() => {
     if (!actionsOpen || !selectedVerseKey) return;
     const nodes = document.querySelectorAll<HTMLElement>(
@@ -472,7 +495,7 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
 
       <MushafControls
         open={chromeOpen && !actionsOpen}
-        exitAlwaysVisible={actionsOpen || chromeOpen}
+        exitAlwaysVisible={chromeOpen}
         pageNumber={page}
         onExit={onExit}
         onIndex={onIndex}
@@ -497,6 +520,7 @@ export function MushafViewport({ pageNumber, onPageChange, onExit, onIndex }: Pr
           }}
           onCopy={() => void onCopy()}
           onShare={() => void onShare()}
+          onBookmark={() => void onBookmark()}
           onReciterChange={(id) => void onReciterChange(id)}
           onClose={closeActions}
         />

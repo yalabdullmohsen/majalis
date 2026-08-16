@@ -190,7 +190,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
     return {
       ...requiredRoute("/fiqh-council"),
       title: "مقالة علمية | المجلس العلمي",
-      description: "مقالة شرعية موثقة من المجلس العلمي.",
+      description: "مقالة شرعية من المجلس العلمي — يُراجع المصدر في صفحة المقال عند توافره.",
       ogType: "article",
     };
   }
