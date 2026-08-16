@@ -306,7 +306,7 @@ export default function PrayerTimesPage() {
             onClick={handleBack}
             aria-label="رجوع إلى الصفحة السابقة"
           >
-            <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
+            <ArrowRight size={18} strokeWidth={2.5} aria-hidden="true" />
             <span>رجوع</span>
           </button>
           <button

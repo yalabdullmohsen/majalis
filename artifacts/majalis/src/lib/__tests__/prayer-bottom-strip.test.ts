@@ -28,4 +28,20 @@ assert.match(
   "html/body موحّدان تحت الشريط",
 );
 
+assert.match(
+  css,
+  /\.pts-screen(?:\.pts-screen)?--with-nav[\s\S]*?padding-block-start:\s*calc\(\s*var\(--inset-top/,
+  "safe-area العلوي على شاشة الصلاة مع الشريط السفلي",
+);
+assert.match(
+  css,
+  /\.pts-hero\s*\{[\s\S]*?border-radius:\s*1\.15rem/,
+  "بطاقة البطل بزوايا مستديرة",
+);
+assert.doesNotMatch(
+  css,
+  /\.pts-screen\s*\{[^}]*margin-block-start:\s*calc\(\s*-1\s*\*\s*var\(--inset-top\)/,
+  "لا سحب سالب تحت النوتش",
+);
+
 console.log("prayer-bottom-strip.test.ts: ok");
