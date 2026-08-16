@@ -4,7 +4,7 @@
 
 html {
   /* تحتية معتمة أولاً حتى تقيس بوابة التباين خلفية صلبة تحت الزخرفة */
-  background-color: var(--mj-bg, #F2F4F3);
+  background-color: var(--mj-splash, #002b21);
   background-image:
     radial-gradient(ellipse 70% 40% at 100% 0%, color-mix(in srgb, var(--em-500) 6%, transparent), transparent 55%);
   color: var(--text);
@@ -12,11 +12,12 @@ html {
 
 html[data-theme="dark"],
 html.dark {
-  background-color: var(--mj-bg, #101614);
+  background-color: var(--mj-splash, #002b21);
 }
 
 body {
-  background-color: var(--mj-bg, #F2F4F3) !important;
+  /* bleed أخضر داكن تحت الشريط السفلي؛ المحتوى يغطيه #root/.app-shell */
+  background-color: var(--mj-splash, #002b21) !important;
   background-image: none !important;
   color: var(--text) !important;
   font-family: var(--font-body) !important;
@@ -24,14 +25,21 @@ body {
 
 html[data-theme="dark"] body,
 html.dark body {
-  background-color: var(--mj-bg, #101614) !important;
+  background-color: var(--mj-splash, #002b21) !important;
 }
 
 #root,
 .app-shell,
 .majlisilm-app {
-  background-color: transparent;
+  background-color: var(--mj-bg, #F2F4F3);
   color: var(--text);
+}
+
+html[data-theme="dark"] #root,
+html[data-theme="dark"] .app-shell,
+html.dark #root,
+html.dark .app-shell {
+  background-color: var(--mj-bg, #101614);
 }
 
 h1, h2, h3, .ds-section__title {
