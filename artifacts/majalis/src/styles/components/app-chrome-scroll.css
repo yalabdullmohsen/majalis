@@ -1,10 +1,12 @@
 /**
- * إخفاء كروم الجوال عند التمرير للأسفل — بدون display:none وبدون قفزة محتوى.
+ * إخفاء كروم الجوال عند التمرير للأسفل — transform فقط دون إخفاء عبر display.
+ * أصناف: .bottom-nav--hidden / .bottom-nav--visible و .app-chrome-hidden
  */
 
 :root {
   --app-bg: var(--mj-bg, #f2f4f3);
-  /* --bottom-nav-height / --bottom-nav-total من theme + final-release — ثابتة عند الإخفاء */
+  /* 100% ارتفاع الشريط + safe-area حتى يختفي تمامًا تحت الشاشة */
+  --bottom-nav-hide-shift: calc(100% + var(--inset-bottom, 0px));
 }
 
 html[data-theme="dark"],
@@ -30,47 +32,55 @@ body {
   min-height: 100svh;
 }
 
-/* إخفاء الكروم: transform فقط — المساحة المحجوزة للمحتوى تبقى ثابتة */
 @media (max-width: 879px) {
   .navbar-v3.mj-chrome-scrollable {
     position: sticky;
     top: 0;
     z-index: var(--z-nav, 200);
-    transition: transform 180ms ease, opacity 180ms ease;
+    transition: transform 220ms ease, opacity 220ms ease;
     will-change: transform;
-    /* الخلفية تمتد تحت شريط الحالة — لا أبيض فوق */
     background: var(--app-bg) !important;
     background-image: none !important;
   }
 
   .bottom-nav.mj-chrome-scrollable,
-  .bottom-nav--v2.mj-chrome-scrollable {
-    transition: transform 180ms ease, opacity 180ms ease;
+  .bottom-nav--v2.mj-chrome-scrollable,
+  .bottom-nav.bottom-nav--visible,
+  .bottom-nav.bottom-nav--hidden {
+    transition: transform 220ms ease, opacity 220ms ease;
     will-change: transform;
-    /* خلفية معتمة تطابق الصفحة حتى لا يظهر أبيض خلف Home Indicator */
-    background: var(--app-bg) !important;
-    background-image: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+    pointer-events: auto;
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* إخفاء عبر الصنف على القائمة أو على الصدفة */
+  .bottom-nav.bottom-nav--hidden,
+  .app-shell.app-chrome-hidden .bottom-nav.mj-chrome-scrollable,
+  .app-shell.app-chrome-hidden .bottom-nav--v2.mj-chrome-scrollable {
+    transform: translateY(var(--bottom-nav-hide-shift)) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
 
   .app-shell.app-chrome-hidden .navbar-v3.mj-chrome-scrollable {
     transform: translateY(-100%);
-    opacity: 0.98;
-    pointer-events: none;
-  }
-
-  .app-shell.app-chrome-hidden .bottom-nav.mj-chrome-scrollable,
-  .app-shell.app-chrome-hidden .bottom-nav--v2.mj-chrome-scrollable {
-    transform: translateY(calc(100% + var(--inset-bottom, 0px)));
-    opacity: 0.98;
+    opacity: 0;
     pointer-events: none;
   }
 
   /*
-   * padding السفلي ثابت عبر --content-pb / --bottom-nav-total في final-release.css
-   * — لا نغيّره عند الإخفاء حتى لا يقفز المحتوى.
+   * عند الإخفاء: قلّل حشو المحتوى السفلي حتى لا يبقى فراغ كبير،
+   * مع انتقال ناعم — القائمة تبقى في التدفق البصري عبر transform فقط.
    */
+  .app-main {
+    transition: padding-block-end 220ms ease;
+  }
+
+  .app-shell.app-chrome-hidden .app-main {
+    padding-block-end: calc(0.85rem + var(--inset-bottom, 0px)) !important;
+  }
+
   .app-shell.app-chrome-hidden {
     background: var(--app-bg);
   }
@@ -79,17 +89,24 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .navbar-v3.mj-chrome-scrollable,
   .bottom-nav.mj-chrome-scrollable,
-  .bottom-nav--v2.mj-chrome-scrollable {
-    transition: none;
+  .bottom-nav--v2.mj-chrome-scrollable,
+  .bottom-nav.bottom-nav--visible,
+  .bottom-nav.bottom-nav--hidden,
+  .app-main {
+    transition-duration: 0.01ms !important;
   }
 }
 
-/* سطح المكتب: لا إخفاء */
 @media (min-width: 880px) {
   .app-shell.app-chrome-hidden .navbar-v3,
-  .app-shell.app-chrome-hidden .bottom-nav {
+  .app-shell.app-chrome-hidden .bottom-nav,
+  .bottom-nav.bottom-nav--hidden {
     transform: none !important;
     opacity: 1 !important;
     pointer-events: auto !important;
+  }
+
+  .app-shell.app-chrome-hidden .app-main {
+    padding-block-end: 2rem !important;
   }
 }

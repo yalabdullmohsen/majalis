@@ -18,7 +18,7 @@ import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
 import { PageChromeSync } from "@/components/PageChromeSync";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
-import { useScrollDirection } from "@/hooks/useScrollDirection";
+import { useAutoHideBottomNav } from "@/hooks/useAutoHideBottomNav";
 import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
@@ -968,8 +968,9 @@ function AppShellInner() {
   const immersive = isImmersiveChromePath(location);
   const onPrayer = isPrayerTimesPath(location);
   const hideSiteChrome = immersive || onPrayer;
-  const { shouldHideChrome } = useScrollDirection({
+  const { isHidden: shouldHideChrome } = useAutoHideBottomNav({
     forceShow: searchOpen || comingSoonOpen || hideSiteChrome,
+    routeKey: location,
   });
 
   useEffect(() => {
@@ -1056,7 +1057,7 @@ function AppShellInner() {
       {!hideSiteChrome && <ScrollToTop />}
       <GlobalBackButton />
       {!hideSiteChrome && <PwaInstallBanner />}
-      <BottomNavBar />
+      <BottomNavBar isHidden={shouldHideChrome} />
       <Suspense fallback={null}>
         <QuranMiniPlayerBar />
       </Suspense>
