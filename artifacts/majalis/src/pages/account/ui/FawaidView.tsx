@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { useEffect, useMemo, useState } from "react";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
@@ -216,6 +217,9 @@ export default function FawaidPage({
         </div>
       )}
 
+      <p className="fawaid-cards-link" style={{marginBlock:"1rem"}}>
+        <Link href="/memorize">بطاقات المراجعة ←</Link>
+      </p>
       <RelatedKnowledge kind="fawaid" title="فوائد ذات صلة" />
 
       {isLoggedIn && (

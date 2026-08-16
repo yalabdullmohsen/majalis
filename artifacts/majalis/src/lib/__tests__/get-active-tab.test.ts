@@ -18,11 +18,12 @@ const cases: Array<{ path: string; expect: ReturnType<typeof getActiveTab> }> = 
   { path: "/lessons/kw-example", expect: "lessons" },
   { path: "/lessons", expect: "lessons" },
   { path: "/fiqh", expect: "fiqh" },
-  { path: "/quiz", expect: "fiqh" },
-  { path: "/qa", expect: "fiqh" }, /* legacy redirect → نفس تبويب /quiz */
-  { path: "/scholars/ibn-taymiyyah", expect: "lessons" },
+  { path: "/quiz", expect: "more" },
+  { path: "/qa", expect: "more" }, /* legacy → /quiz تحت المزيد */
+  { path: "/scholars/ibn-taymiyyah", expect: "more" },
   { path: "/library", expect: "more" },
-  { path: "/start-here", expect: "more" },
+  { path: "/start-here", expect: "lessons" },
+  { path: "/hadith", expect: "more" },
   { path: "/duas", expect: "prayer" },
   { path: "/qibla", expect: "prayer" },
 ];

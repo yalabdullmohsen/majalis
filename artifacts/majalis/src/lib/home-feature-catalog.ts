@@ -46,7 +46,7 @@ export const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc:
 /* ── المميزات البارزة (4 بطاقات كبيرة) ── */
 export const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: string; cta: string }[] = [
   { href: "/mushaf", Icon: BookOpen, title: seoNavLabel("/mushaf", "القرآن"), desc: "المصحف الشريف للقراءة والتلاوة", cta: "افتح المصحف" },
-  { href: "/quran-knowledge", Icon: BookMarked, title: seoNavLabel("/quran-knowledge", "القرآن وعلومه"), desc: "فهرس وعلوم وأسباب نزول وقصص", cta: "استكشف" },
+  { href: "/quran-hub", Icon: BookMarked, title: seoNavLabel("/quran-hub", "مركز القرآن"), desc: "المصحف والتجويد والحفظ وعلوم القرآن", cta: "استكشف" },
   { href: "/hadith", Icon: Scroll, title: seoNavLabel("/hadith", "الحديث وعلومه"), desc: "أحاديث موثقة ومسندة مع الشرح والتخريج", cta: "تصفح الحديث وعلومه" },
   { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "بوابة الأحكام والمسائل الفقهية", cta: "ادخل الفقه" },
   { href: "/memorization", Icon: Target, title: seoNavLabel("/memorization", "الحفظ والمراجعة"), desc: "اختبارات وخطط الحفظ والمراجعة", cta: "ابدأ الحفظ" },
@@ -141,7 +141,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     label: "القرآن الكريم",
     items: [
       { href: "/mushaf",               Icon: BookOpen,     title: seoNavLabel("/mushaf", "القرآن"), desc: "المصحف الشريف" },
-      { href: "/quran-knowledge",      Icon: BookMarked,   title: seoNavLabel("/quran-knowledge", "القرآن وعلومه"), desc: "فهرس وعلوم وأسباب وقصص" },
+      { href: "/quran-hub",      Icon: BookMarked,   title: seoNavLabel("/quran-hub", "مركز القرآن"), desc: "المصحف والتجويد والحفظ وعلوم القرآن" },
       { href: "/memorization",         Icon: Target,       title: seoNavLabel("/memorization", "الحفظ والمراجعة"), desc: "اختبارات وخطط الحفظ" },
       { href: "/quran/tajweed",        Icon: Mic2,         title: seoNavLabel("/quran/tajweed", "علم التجويد"),        desc: "أحكام التجويد الشاملة" },
       { href: "/tafsir",               Icon: BookOpen,     title: seoNavLabel("/tafsir", "علم التفسير"),            desc: "أنواع التفسير وأصوله وأشهر كتب المفسرين" },

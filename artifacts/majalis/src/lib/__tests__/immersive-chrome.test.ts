@@ -83,8 +83,8 @@ assert.match(mushafView, /page=/);
 
 const servicesNav = readFileSync(resolve(appRoot, "src/lib/services-center-nav.ts"), "utf8");
 assert.match(servicesNav, /href: "\/nations"/);
-assert.match(servicesNav, /href: "\/quran-hub"/);
-assert.match(servicesNav, /href: "\/quran\/recitation-test-ai"/);
+assert.match(navMap, /href: "\/quran-hub"/);
+assert.match(quranHub, /\/quran\/recitation-test-ai/);
 
 const globalBack = readFileSync(resolve(appRoot, "src/components/GlobalBackButton.tsx"), "utf8");
 assert.match(globalBack, /isImmersiveChromePath/);

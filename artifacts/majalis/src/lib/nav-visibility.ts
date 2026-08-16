@@ -48,12 +48,15 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/maqasid-sharia",
   "/dalail-nubuwwah",
 
-  // ── تنظيف الأقسام (2026-08) — محذوفة أو مدمجة تحت بوابات (الصفحات تبقى للروابط العميقة)
-  "/library",
-  "/updates",
+  "/start-here",
+  "/topics",
+  "/islamic-glossary",
+  "/rulings",
+  "/fiqh-council",
+  "/quran-knowledge", // تحت مركز القرآن
   "/knowledge-graph",
   "/fiqh-council/fatwas",
-  "/flashcards", // يظهر داخل حسابي فقط (رابط مباشر في الصفحة)
+  "/flashcards",
   "/occasions",
   "/calendar",
   "/institutions",
@@ -83,10 +86,9 @@ export const MERGED_PATH_REDIRECTS: Record<string, string> = {
   "/prayer-countdown": "/prayer-times",
   "/annual-courses": "/lessons?tab=courses",
 
-  // أقسام محذوفة من الواجهة
-  "/library": "/",
-  "/updates": "/",
-  "/knowledge-graph": "/",
+  // أقسام محذوفة من الواجهة (صفحات عميقة تبقى؛ لا تحويل للرئيسية للمكتبة)
+  "/start-here": "/lessons",
+  "/knowledge-graph": "/learn",
   "/researches": "/academic-research",
   "/sharia-research": "/academic-research",
   "/research": "/academic-research",

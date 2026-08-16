@@ -22,7 +22,7 @@ assert.match(more, /size="lg"/);
 const moreCss = readFileSync(resolve(root, "src/styles/pages/more-page.css"), "utf8");
 assert.match(moreCss, /\.more-page-tile--lg/);
 assert.match(sections, /tier:\s*"standard"/);
-assert.equal(MORE_FEATURED_COUNT(sections), 8);
+assert.equal(MORE_FEATURED_COUNT(sections), 9);
 
 function MORE_FEATURED_COUNT(src: string): number {
   const m = src.match(/MORE_FEATURED_SECTIONS[^=]*=\s*\[([\s\S]*?)\];/);

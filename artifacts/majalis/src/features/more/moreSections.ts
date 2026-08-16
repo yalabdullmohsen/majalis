@@ -1,23 +1,16 @@
 /**
- * مصدر واحد لأبواب «المزيد» المميزة.
- * الصفحة/الورقة تشتق العرض من هنا — ممنوع تكرار العناوين داخل JSX.
+ * مصدر واحد لأبواب «المزيد» — قائمة مختصرة بلا تكرار مع الشريط السفلي.
  */
 import type { LucideIcon } from "lucide-react";
 import {
-  BookA,
   BookMarked,
   BookOpen,
-  Building2,
-  Compass,
-  Heart,
-  Landmark,
+  CreditCard,
   Library,
-  Radio,
+  ScrollText,
+  Search,
   Settings,
   Star,
-  Download,
-  User,
-  Scale,
   Users,
 } from "lucide-react";
 
@@ -33,157 +26,133 @@ export type MoreSection = {
   order: number;
   badge?: string;
   keywords?: string[];
+  /** إجراء خاص (بحث) بدل التنقّل */
+  action?: "search";
 };
 
-/** ثمانية أبواب (٢×٤) بلا يتيم — الأنبياء والأمم بطاقتان منفصلتان. */
+/** القائمة المعتمدة داخل المزيد (مع الشريط السفلي: قرآن · دروس · صلاة · فقه). */
 export const MORE_FEATURED_SECTIONS: MoreSection[] = [
   {
-    id: "quiz",
-    title: "سين جيم",
-    subtitle: "مسابقة أسئلة وأجوبة",
-    icon: Star,
-    route: "/quiz",
+    id: "adhkar",
+    title: "الأذكار",
+    subtitle: "أذكار اليوم والليل",
+    icon: BookMarked,
+    route: "/adhkar",
     tier: "featured",
     order: 1,
-    keywords: ["مسابقة", "اختبار", "quiz", "سين جيم"],
+    keywords: ["أذكار", "دعاء"],
+  },
+  {
+    id: "library",
+    title: "المكتبة",
+    subtitle: "كتب ومصادر",
+    icon: Library,
+    route: "/library",
+    tier: "featured",
+    order: 2,
+    keywords: ["مكتبة", "كتب"],
+  },
+  {
+    id: "scholars",
+    title: "العلماء",
+    subtitle: "أعلام الإسلام",
+    icon: Users,
+    route: "/scholars",
+    tier: "featured",
+    order: 3,
+    keywords: ["علماء", "أعلام"],
+  },
+  {
+    id: "hadith",
+    title: "الحديث",
+    subtitle: "صحيح وضعيف وكتب",
+    icon: ScrollText,
+    route: "/hadith",
+    tier: "featured",
+    order: 4,
+    keywords: ["حديث", "سنة"],
   },
   {
     id: "prophets",
     title: "قصص الأنبياء",
     subtitle: "من آدم إلى محمد ﷺ",
     icon: BookOpen,
-    route: "/prophets-stories",
-    tier: "featured",
-    order: 2,
-    keywords: ["أنبياء", "قصص", "آدم"],
-  },
-  {
-    id: "nations",
-    title: "الأمم السابقة",
-    subtitle: "عاد وثمود ومن قبلهم",
-    icon: Landmark,
-    route: "/nations",
-    tier: "featured",
-    order: 3,
-    keywords: ["أمم", "عاد", "ثمود", "فرعون"],
-  },
-  {
-    id: "quran-people",
-    title: "الذين ذكروا في القرآن",
-    subtitle: "أعلام وشخصيات قرآنية",
-    icon: Users,
-    route: "/quran/people",
-    tier: "featured",
-    order: 4,
-    keywords: ["أعلام", "شخصيات", "الذين ذكروا"],
-  },
-  {
-    id: "tafsir",
-    title: "التفسير",
-    subtitle: "أنواع التفسير وأصوله",
-    icon: Library,
-    route: "/tafsir",
+    route: "/prophets",
     tier: "featured",
     order: 5,
-    keywords: ["تفسير"],
+    keywords: ["أنبياء", "قصص"],
   },
   {
-    id: "seerah",
-    title: "السيرة النبوية",
-    subtitle: "من المولد إلى الوفاة ﷺ",
-    icon: BookA,
-    route: "/seerah",
+    id: "quiz",
+    title: "سين جيم",
+    subtitle: "مسابقة أسئلة تفاعلية",
+    icon: Star,
+    route: "/quiz",
     tier: "featured",
     order: 6,
-    keywords: ["سيرة"],
+    keywords: ["مسابقة", "اختبار", "quiz", "سين جيم", "qa"],
   },
   {
-    id: "discover-islam",
-    title: "اكتشف الإسلام",
-    subtitle: "للمسلم الجديد والدعوة",
-    icon: Compass,
-    route: "/discover-islam",
+    id: "fawaid-cards",
+    title: "الفوائد والبطاقات",
+    subtitle: "فوائد ومراجعة سريعة",
+    icon: CreditCard,
+    route: "/fawaid",
     tier: "featured",
     order: 7,
-    keywords: ["اكتشف", "دعوة", "مسلم جديد"],
+    keywords: ["فوائد", "بطاقات", "مراجعة", "flashcards"],
   },
   {
-    id: "tarikh-islami",
-    title: "التاريخ الإسلامي",
-    subtitle: "الحضارة ومفاصل الأمة",
-    icon: Building2,
-    route: "/tarikh-islami",
+    id: "search",
+    title: "البحث",
+    subtitle: "ابحث في المحتوى",
+    icon: Search,
+    route: "/search",
     tier: "featured",
     order: 8,
-    keywords: ["تاريخ", "حضارة"],
+    keywords: ["بحث"],
+    action: "search",
+  },
+  {
+    id: "settings",
+    title: "الإعدادات",
+    subtitle: "الحساب والمظهر",
+    icon: Settings,
+    route: "/settings",
+    tier: "featured",
+    order: 9,
+    keywords: ["إعدادات"],
   },
 ];
 
-/** مربعات أصغر تحت الأبواب المميزة — بلا تكرار لعناصر الشريط السفلي. */
+/** أدوات مساعدة ثانوية — ليست أبوابًا رئيسية. */
 export const MORE_STANDARD_SECTIONS: MoreSection[] = [
   {
-    id: "adhkar",
-    title: "الأذكار",
+    id: "glossary",
+    title: "المصطلحات",
     icon: BookMarked,
-    route: "/adhkar",
+    route: "/islamic-glossary",
     tier: "standard",
-    order: 10,
+    order: 20,
+    keywords: ["معجم", "مصطلحات"],
   },
   {
-    id: "duas",
-    title: "الأدعية",
-    icon: Heart,
-    route: "/duas",
+    id: "topics",
+    title: "الموضوعات",
+    icon: BookOpen,
+    route: "/topics",
     tier: "standard",
-    order: 11,
+    order: 21,
+    keywords: ["مواضيع"],
   },
   {
-    id: "library",
-    title: "المكتبة",
-    icon: Library,
-    route: "/library",
+    id: "memorize",
+    title: "بطاقات المراجعة",
+    icon: CreditCard,
+    route: "/memorize",
     tier: "standard",
-    order: 12,
-  },
-  {
-    id: "broadcast",
-    title: "البث",
-    icon: Radio,
-    route: "/updates",
-    tier: "standard",
-    order: 13,
-  },
-  {
-    id: "fatwas",
-    title: "الفتاوى",
-    icon: Scale,
-    route: "/rulings",
-    tier: "standard",
-    order: 14,
-  },
-  {
-    id: "favorites",
-    title: "المفضلة",
-    icon: Star,
-    route: "/my-citations",
-    tier: "standard",
-    order: 15,
-  },
-  {
-    id: "downloads",
-    title: "التنزيلات",
-    icon: Download,
-    route: "/vault",
-    tier: "standard",
-    order: 16,
-  },
-  {
-    id: "knowledge-graph",
-    title: "الرسم المعرفي",
-    icon: Compass,
-    route: "/knowledge-graph",
-    tier: "standard",
-    order: 17,
+    order: 22,
+    keywords: ["بطاقات", "حفظ"],
   },
 ];
 
@@ -191,26 +160,13 @@ export const MORE_ACCOUNT_SECTIONS: MoreSection[] = [
   {
     id: "account",
     title: "الحساب",
-    icon: User,
+    icon: Users,
     route: "/my-learning",
     tier: "standard",
     order: 90,
   },
-  {
-    id: "settings",
-    title: "الإعدادات",
-    icon: Settings,
-    route: "/settings",
-    tier: "standard",
-    order: 91,
-  },
 ];
 
-/** العناوين بالترتيب — بوابة انحدار. */
 export const MORE_FEATURED_TITLES = MORE_FEATURED_SECTIONS.map((s) => s.title);
-
-/** المسارات المميزة — يجب أن تكون مسجّلة في App.tsx. */
 export const MORE_FEATURED_ROUTES = MORE_FEATURED_SECTIONS.map((s) => s.route);
-
-/** أيقونة اختيارية للتفسير ضمن علوم القرآن إن لزم الربط. */
 export const MORE_QURAN_ULUM_ICON = BookMarked;
