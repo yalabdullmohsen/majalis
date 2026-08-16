@@ -275,9 +275,15 @@ ok(
   mainTsx.includes("purgeNativeWebRuntimeCaches"),
   "main.tsx imports/calls purgeNativeWebRuntimeCaches",
 );
+// لا await قبل createRoot — الانتظار كان يعلّق شاشة بيضاء على Capacitor.
 ok(
-  /await\s+purgeNativeWebRuntimeCaches\s*\(/.test(mainTsx),
-  "main.tsx awaits purgeNativeWebRuntimeCaches before mount",
+  /void\s+purgeNativeWebRuntimeCaches\s*\(/.test(mainTsx) ||
+    /purgeNativeWebRuntimeCaches\s*\([^)]*\)\s*\.catch\s*\(/.test(mainTsx),
+  "main.tsx runs purgeNativeWebRuntimeCaches non-blocking (no await before mount)",
+);
+ok(
+  !/await\s+purgeNativeWebRuntimeCaches\s*\(/.test(mainTsx),
+  "main.tsx must not await purgeNativeWebRuntimeCaches before mount",
 );
 
 const prepareIos = readFileSync(join(root, "scripts", "prepare-ios.sh"), "utf8");
