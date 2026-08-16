@@ -70,10 +70,10 @@ assert.match(prophetsPage, /ما ثبت في القرآن/);
 assert.match(prophetsPage, /ما لا يصح الجزم به/);
 
 // 7) quran selection لا يغيّر route عند الآية — onSelectVerse محلي
-const mushafVp = read("src/features/mushaf-madinah/MushafViewport.tsx");
+const mushafVp = read("src/features/mushaf-madinah/VerifiedMushafReader.tsx");
 assert.match(mushafVp, /onSelectVerse|setSelected/);
-const ayahBar = read("src/features/mushaf-madinah/MushafAyahActions.tsx");
-assert.match(ayahBar, /نسخ|مشاركة|تفسير|تشغيل|حفظ|bookmark|Bookmark/i);
+const ayahBar = read("src/features/mushaf-madinah/AyahActionSheet.tsx");
+assert.match(ayahBar, /نسخ|مشاركة|تفسير|تشغيل|حفظ|bookmark|Bookmark|onBookmark|onShare/i);
 
 // 8) mobile nav hide/show
 const autoHide = read("src/hooks/useAutoHideBottomNav.ts");

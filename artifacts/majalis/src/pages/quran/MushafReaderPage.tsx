@@ -10,7 +10,7 @@ import {
 import { SURAH_START_PAGES } from "@/lib/quran-api";
 
 /**
- * مسار المصحف الحقيقي `/mushaf` — بيانات QPC + خط الصفحة، بلا PDF ولا واجهة قديمة.
+ * مسار المصحف الحقيقي `/mushaf` — VerifiedMushafReader عبر alias MushafViewport، بلا PDF.
  */
 export default function MushafReaderPage() {
   const [, setLocation] = useLocation();

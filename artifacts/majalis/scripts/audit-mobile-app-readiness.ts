@@ -78,7 +78,7 @@ assertMatch(read("src/lib/quran-last-page.ts"), /storageSetSync|native-storage/,
 assertMatch(read("src/lib/continue-reading.ts"), /storageSetSync/, "متابعة القراءة تُزامَن");
 
 // 7) اختيار الآية لا يغيّر route
-const mushafVp = read("src/features/mushaf-madinah/MushafViewport.tsx");
+const mushafVp = read("src/features/mushaf-madinah/VerifiedMushafReader.tsx");
 assertMatch(mushafVp, /onSelectVerse|setSelected/, "اختيار الآية محلي");
 assertNoMatch(mushafVp, /setLocation\([^)]*ayah|navigate\([^)]*ayah/i, "لا تنقل route عند الآية");
 
