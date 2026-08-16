@@ -16,6 +16,7 @@ import {
   Star,
   Users,
 } from "lucide-react";
+import { featuredSections, SECTION_GROUP_ORDER, SECTION_GROUP_META } from "@/config/sections.registry";
 
 export type MoreSectionTier = "featured" | "standard";
 
@@ -41,119 +42,20 @@ export const MORE_SECTION_GROUPS: { id: MoreSectionGroupId; title: string }[] = 
 ];
 
 /** الأقسام الأساسية داخل المزيد */
-export const MORE_FEATURED_SECTIONS: MoreSection[] = [
-  {
-    id: "library",
-    title: "المكتبة",
-    subtitle: "كتب ومصادر",
-    icon: Library,
-    route: "/library",
-    tier: "featured",
-    order: 1,
-    group: "primary",
-    keywords: ["مكتبة", "كتب"],
-  },
-  {
-    id: "scholars",
-    title: "أعلام وتراجم",
-    subtitle: "علماء الإسلام",
-    icon: Users,
-    route: "/scholars",
-    tier: "featured",
-    order: 2,
-    group: "primary",
-    keywords: ["علماء", "أعلام", "تراجم"],
-  },
-  {
-    id: "hadith",
-    title: "الحديث وعلومه",
-    subtitle: "صحيح وضعيف وكتب ومصطلح",
-    icon: ScrollText,
-    route: "/hadith",
-    tier: "featured",
-    order: 3,
-    group: "primary",
-    keywords: ["حديث", "سنة"],
-  },
-  {
-    id: "prophets",
-    title: "قصص الأنبياء",
-    subtitle: "من آدم إلى محمد ﷺ",
-    icon: BookOpen,
-    route: "/prophets",
-    tier: "featured",
-    order: 4,
-    group: "primary",
-    keywords: ["أنبياء", "قصص"],
-  },
-  {
-    id: "nations",
-    title: "الأمم السابقة",
-    subtitle: "عاد وثمود وأصحاب الأيكة وغيرهم",
-    icon: Landmark,
-    route: "/nations",
-    tier: "featured",
-    order: 5,
-    group: "primary",
-    keywords: ["أمم", "عاد", "ثمود"],
-  },
-  {
-    id: "seerah",
-    title: "السيرة النبوية",
-    subtitle: "من البعثة إلى الهجرة والغزوات",
-    icon: Moon,
-    route: "/seerah",
-    tier: "featured",
-    order: 6,
-    group: "primary",
-    keywords: ["سيرة", "غزوات"],
-  },
-  {
-    id: "fawaid-cards",
-    title: "الفوائد والبطاقات",
-    subtitle: "مراجعة وحفظ",
-    icon: CreditCard,
-    route: "/fawaid",
-    tier: "featured",
-    order: 7,
-    group: "primary",
-    keywords: ["فوائد", "بطاقات", "مراجعة", "flashcards"],
-  },
-  {
-    id: "quiz",
-    title: "سين جيم",
-    subtitle: "اختبر معلوماتك",
-    icon: Star,
-    route: "/quiz",
-    tier: "featured",
-    order: 8,
-    group: "primary",
-    keywords: ["مسابقة", "اختبار", "quiz", "سين جيم", "qa"],
-  },
-  {
-    id: "search",
-    title: "البحث",
-    subtitle: "ابحث في المحتوى",
-    icon: Search,
-    route: "/search",
-    tier: "featured",
-    order: 9,
-    group: "primary",
-    keywords: ["بحث"],
-    action: "search",
-  },
-  {
-    id: "settings",
-    title: "الإعدادات",
-    subtitle: "الحساب والمظهر",
-    icon: Settings,
-    route: "/settings",
-    tier: "featured",
-    order: 10,
-    group: "primary",
-    keywords: ["إعدادات"],
-  },
-];
+export const MORE_FEATURED_SECTIONS: MoreSection[] = featuredSections().map((s) => ({
+  id: s.id,
+  title: s.label,
+  subtitle: s.subtitle,
+  icon: s.icon,
+  route: s.route,
+  tier: "featured" as const,
+  order: s.order,
+  group: "primary" as const,
+  keywords: [...s.keywords, ...(s.aliases ?? [])],
+}));
+
+export const MORE_IA_GROUP_TITLES = SECTION_GROUP_ORDER.map((g) => SECTION_GROUP_META[g].label);
+
 
 /** قسم ثانوي أسفل الصفحة */
 export const MORE_STANDARD_SECTIONS: MoreSection[] = [
