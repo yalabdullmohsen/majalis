@@ -81,7 +81,7 @@ export function DailyWirdCard() {
             aria-pressed={done}
           >
             <Check size={16} aria-hidden="true" />
-            {done ? "أُنجز اليوم" : "تم اليوم"}
+            {done ? "أُنجز" : "تم"}
           </button>
           <Link href="/daily-wird" className="m2030-band__link">
             الورد الكامل

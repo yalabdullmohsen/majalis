@@ -109,6 +109,11 @@
   font-weight: 700;
   cursor: pointer;
 }
+.dcq__done-note {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted, var(--muted));
+}
 .dcq__empty {
   margin: 0;
   padding: 1rem;

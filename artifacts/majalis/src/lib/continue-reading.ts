@@ -11,7 +11,8 @@ export type ContinueSection =
   | "lessons"
   | "prophets"
   | "adhkar"
-  | "library";
+  | "library"
+  | "scholars";
 
 export type ContinueReadingEntry = {
   route: string;
@@ -28,6 +29,7 @@ const SECTION_PREFIX: Array<{ section: ContinueSection; test: (path: string) => 
   { section: "prophets", test: (p) => p === "/prophets" || p.startsWith("/prophets/") },
   { section: "adhkar", test: (p) => p === "/adhkar" || p.startsWith("/adhkar/") },
   { section: "library", test: (p) => p === "/library" || p.startsWith("/library/") },
+  { section: "scholars", test: (p) => p === "/scholars" || p.startsWith("/scholars/") },
 ];
 
 const SKIP =
@@ -82,6 +84,7 @@ export function trackContinueReading(input: {
     route === "/prophets" ||
     route === "/adhkar" ||
     route === "/library" ||
+    route === "/scholars" ||
     route === "/mushaf"
   ) {
     // المصحف الرئيسي مقبول كموقع قراءة

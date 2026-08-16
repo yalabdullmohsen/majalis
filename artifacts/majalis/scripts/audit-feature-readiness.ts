@@ -25,7 +25,7 @@ function fail(msg: string) {
 // 1) DailyWirdCard — حديث بمصدر + آية برقم
 assert.ok(existsSync(resolve(root, "src/components/home/DailyWirdCard.tsx")), "DailyWirdCard موجود");
 const wird = read("src/components/home/DailyWirdCard.tsx");
-assert.match(wird, /تم اليوم/);
+assert.match(wird, /تم/);
 assert.match(wird, /localStorage/);
 assert.match(wird, /ayahNumber|ayahRef/);
 assert.match(wird, /hadith\.source/);
@@ -87,6 +87,7 @@ assert.equal(resolveContinueSection("/admin/dashboard"), null);
 assert.equal(resolveContinueSection("/search?q=x"), null);
 assert.equal(resolveContinueSection("/lessons/abc"), "lessons");
 assert.equal(resolveContinueSection("/prophets/nuh"), "prophets");
+assert.equal(resolveContinueSection("/scholars/ibn-taymiyyah"), "scholars");
 
 if (errors.length) {
   console.error("audit:feature-readiness FAILED");

@@ -340,3 +340,31 @@ html.dark .adhkar-grade--other {
   background: var(--mj-surface-2, #1E2925);
   color: var(--mj-ink-2, #B4C2BC);
 }
+
+.adhkar-once {
+  display: flex;
+  justify-content: center;
+  margin-block: 0.5rem;
+}
+
+.adhkar-focus-btn--done,
+.adhkar-focus-btn--reset {
+  min-height: 44px;
+  min-width: 7rem;
+}
+
+.adhkar-focus-btn--done.is-done {
+  opacity: 0.9;
+}
+
+.adhkar-focus-nav--reset {
+  justify-content: center;
+  margin-top: 0.35rem;
+}
+
+.adhkar-focus-btn--ghost {
+  background: transparent;
+  border: 1px dashed color-mix(in srgb, var(--mj-brand, #0f3d2e) 35%, transparent);
+  color: var(--mj-ink-muted, #5a6b63);
+  font-size: 0.85rem;
+}

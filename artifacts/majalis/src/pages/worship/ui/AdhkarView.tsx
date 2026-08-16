@@ -360,6 +360,18 @@ export default function AdhkarPage() {
                     )}
                   </div>
                 </button>
+                {done && (
+                  <button
+                    type="button"
+                    className="adhkar-focus-btn adhkar-focus-btn--reset"
+                    onClick={() => {
+                      resetCounter();
+                      ssSave(category, currentIndex, 0);
+                    }}
+                  >
+                    إعادة ضبط
+                  </button>
+                )}
                 {!done && (
                   <p className="adhkar-tapper__hint">اضغط للعدّ</p>
                 )}
@@ -368,8 +380,25 @@ export default function AdhkarPage() {
                 )}
               </div>
             ) : (
-              /* ذكر مرة واحدة، لا داعي للعداد */
-              <p className="adhkar-focus-count">مرة واحدة</p>
+              /* ذكر مرة واحدة — زر تم واضح */
+              <div className="adhkar-once">
+                <button
+                  type="button"
+                  className={`adhkar-focus-btn adhkar-focus-btn--done${done ? " is-done" : ""}`}
+                  onClick={() => {
+                    if (done) {
+                      resetCounter();
+                      ssSave(category, currentIndex, 0);
+                      return;
+                    }
+                    setDone(true);
+                    setTapCount(1);
+                    hapticsComplete();
+                  }}
+                >
+                  {done ? "أُنجز — إعادة ضبط" : "تم"}
+                </button>
+              </div>
             )}
           </div>
 
@@ -397,6 +426,20 @@ export default function AdhkarPage() {
               disabled={currentIndex === total - 1}
               aria-label="الذكر التالي"
             >التالي →</button>
+          </div>
+
+          <div className="adhkar-focus-nav adhkar-focus-nav--reset">
+            <button
+              type="button"
+              className="adhkar-focus-btn adhkar-focus-btn--ghost"
+              onClick={() => {
+                setCurrentIndex(0);
+                resetCounter();
+                ssSave(category, 0, 0);
+              }}
+            >
+              إعادة ضبط التقدّم
+            </button>
           </div>
 
           {/* شريط تقدم الأذكار */}
