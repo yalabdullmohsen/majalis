@@ -67,6 +67,7 @@ const counts = {
   total: rows.length,
   draft: 0,
   needs_review: 0,
+  pending_review: 0,
   approved: 0,
   published: 0,
   archived: 0,
@@ -75,7 +76,11 @@ const counts = {
   publicEligible: 0,
 };
 for (const row of rows) {
-  counts[classify(row)] += 1;
+  const life = classify(row);
+  counts[life] += 1;
+  const rawV = String(row?.verification_status ?? "").toLowerCase().replace(/-/g, "_");
+  const rawS = String(row?.status ?? "").toLowerCase().replace(/-/g, "_");
+  if (rawV === "pending_review" || rawS === "pending_review") counts.pending_review += 1;
   if (isPublic(row)) counts.publicEligible += 1;
 }
 

@@ -18,11 +18,18 @@ function hasDuplicateHonorific(label: string): boolean {
 }
 
 console.log("=== تكرار الألقاب ===");
-for (const raw of ["الشيخ أسامة الشطي", "الشيخ: الشيخ أسامة", "د.: د. مطلق", "الأستاذ: الأستاذ أحمد"]) {
+for (const raw of [
+  "الشيخ أسامة الشطي",
+  "الشيخ: الشيخ أسامة",
+  "د.: د. مطلق",
+  "الأستاذ: الأستاذ أحمد",
+  "القارئ: القارئ محمود",
+]) {
   const formatted = formatSheikhName(raw);
   assert.equal(hasDuplicateHonorific(formatted), false, `formatSheikhName(${raw}) → ${formatted}`);
 }
 assert.equal(hasDuplicateHonorific("الشيخ: الشيخ أسامة"), true, "الكاشف يلتقط التكرار الخام");
+assert.equal(hasDuplicateHonorific("القارئ: القارئ محمود"), true, "الكاشف يلتقط تكرار القارئ");
 
 console.log("=== بذرة الدروس: المحاضر ≠ المنظم في دورة الأجراح ===");
 const rows = await buildLessonsSeed();

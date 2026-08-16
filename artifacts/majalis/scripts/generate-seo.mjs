@@ -294,14 +294,14 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;");
 }
 
-/** اسم مصدر المكتبة من المضيف الفعلي — لا تُعرض تسمية عامة بدل اسم الموقع. */
+/** تسمية مصدر القراءة/التحميل من المضيف — يُرجع null إن لم يتوفر رابط صالح. */
 function librarySourceLabel(url) {
-  if (!url) return "المصدر قيد الإضافة";
+  if (!url) return null;
   try {
     const host = new URL(String(url)).hostname.replace(/^www\./i, "");
-    return host || "المصدر قيد الإضافة";
+    return host || null;
   } catch {
-    return "المصدر قيد الإضافة";
+    return null;
   }
 }
 
@@ -320,9 +320,17 @@ function dedupeLessons(rows) {
 }
 
 function lessonDescription(row) {
-  const sheikh = row.speaker_name || "";
+  const rawSheikh = String(row.speaker_name || "").trim();
+  // لا تُسبق بـ«الشيخ:» إن كان الاسم يحمل لقبًا أصلًا — يمنع «الشيخ: الشيخ …»
+  const sheikhAlreadyTitled =
+    /^(?:الشيخة?|الدكتور(?:ة)?|الأستاذ(?:ة)?|القارئ|د\.)\b/u.test(rawSheikh);
+  const sheikhBit = rawSheikh
+    ? sheikhAlreadyTitled
+      ? rawSheikh
+      : `الشيخ: ${rawSheikh}`
+    : "";
   const place = row.mosque || row.region || "";
-  const base = [sheikh ? `الشيخ: ${sheikh}` : "", place ? `المكان: ${place}` : "", row.schedule || ""]
+  const base = [sheikhBit, place ? `المكان: ${place}` : "", row.schedule || ""]
     .filter(Boolean)
     .join(" — ")
     .slice(0, 160);
@@ -917,13 +925,17 @@ ${linkList("روابط ذات صلة", [
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
 ])}`,
   "/rulings": `<p>موسوعة الأحكام الشرعية: مسائل في العبادات والمعاملات والأسرة، مع ربط بالأدلة والمراجع المعتمدة قدر الإمكان.</p>
-${linkList(
-  "من الأحكام المتاحة",
-  ENCYCLOPEDIA_RULINGS.slice(0, 20).map((r) => ({
-    name: r.title,
-    url: `/rulings/${r.external_key || r.id}`,
-  })),
-)}
+${
+  ENCYCLOPEDIA_RULINGS.length
+    ? linkList(
+        "من الأحكام المتاحة",
+        ENCYCLOPEDIA_RULINGS.slice(0, 20).map((r) => ({
+          name: r.title,
+          url: `/rulings/${r.external_key || r.id}`,
+        })),
+      )
+    : `<p role="status">يجري حاليًا استكمال المراجعة العلمية لمواد الموسوعة، وستظهر الأحكام المعتمدة تباعًا.</p>`
+}
 ${linkList("أقسام ذات صلة", [
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "المجمع الفقهي", url: "/fiqh-council" },
@@ -1503,6 +1515,11 @@ ${linkList("روابط ذات صلة", [
   { name: "من نحن", url: "/about" },
 ])}`,
   "/contact": `<p>تواصل مع فريق المجلس العلمي للاستفسارات والاقتراحات والإبلاغ عن ملاحظات على المحتوى أو التقنية.</p>
+<h2>قنوات التواصل</h2>
+<ul>
+  <li>البريد الإلكتروني الرسمي: <a href="mailto:${escapeHtml(SITE.contactEmail)}">${escapeHtml(SITE.contactEmail)}</a></li>
+</ul>
+<p>للاستفسارات العامة، وتصحيح المحتوى العلمي، والملاحظات التقنية، والاقتراحات والشراكات — راسلنا على البريد أعلاه مع موضوع واضح.</p>
 ${linkList("روابط ذات صلة", [
   { name: "من نحن", url: "/about" },
   { name: "منهجيتنا", url: "/methodology" },
@@ -2272,9 +2289,11 @@ for (const row of LIBRARY_CATALOG) {
   ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
   ${row.type ? `<li>النوع: ${escapeHtml(row.type)}</li>` : ""}
   ${row.parts_label ? `<li>الأجزاء: ${escapeHtml(row.parts_label)}</li>` : ""}
-  ${row.external_url
-    ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">${escapeHtml(librarySourceLabel(row.external_url))}</a></li>`
-    : "<li>المصدر قيد الإضافة</li>"}
+  ${(() => {
+    const label = librarySourceLabel(row.external_url);
+    if (!label || !row.external_url) return "";
+    return `<li>رابط قراءة/مرجع رقمي: <a href="${escapeHtml(row.external_url)}" rel="noopener noreferrer">${escapeHtml(label)}</a></li>`;
+  })()}
 </ul>
 ${linkList("كتب ذات صلة في نفس التصنيف", related)}
 ${linkList("روابط ذات صلة", [
