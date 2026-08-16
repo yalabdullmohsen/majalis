@@ -1,0 +1,89 @@
+name: PR Quality Verify Report
+
+# تعليق قصير بعد تدقيقات P0 + رفع artifact للتقرير الكامل.
+# لا يدمج — مكمل لـ pr-safe-merge-report.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pr-quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  quality:
+    if: github.repository == 'yalabdullmohsen/majalis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/setup-workspace
+
+      - name: Scope classify
+        run: node scripts/ci/changed-scope.mjs --json > reports/changed-scope.json || mkdir -p reports && node scripts/ci/changed-scope.mjs --json > reports/changed-scope.json
+
+      - name: Audits (P0-only fail)
+        working-directory: artifacts/majalis
+        run: |
+          set -euo pipefail
+          pnpm run audit:public-site
+          pnpm run audit:data-completeness
+          pnpm run audit:seo
+          pnpm run audit:feature-readiness
+
+      - name: Write short summary
+        id: summary
+        run: |
+          set -euo pipefail
+          mkdir -p reports
+          SCOPES=$(node -e "try{const j=require('./reports/changed-scope.json');console.log((j.scopes||[]).join(', '))}catch{console.log('—')}")
+          {
+            echo "## جودة PR (verify audits)"
+            echo ""
+            echo "- **يمكن الدمج من جهة التدقيق؟** نعم (P0=0 محليًا في هذه الخطوة)"
+            echo "- **scopes:** $SCOPES"
+            echo "- **/admin/*:** مستثناة من P0 لطول meta description · مطلوب noindex"
+            echo "- التقرير الكامل: artifact \`pr-quality-report\`"
+          } | tee reports/pr-quality-summary.md
+          {
+            echo "body<<EOF"
+            cat reports/pr-quality-summary.md
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Upload full report artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: pr-quality-report
+          path: |
+            reports/pr-quality-summary.md
+            reports/changed-scope.json
+          retention-days: 7
+          if-no-files-found: warn
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          BODY_FILE=reports/pr-quality-summary.md
+          # حدّث تعليقًا سابقًا إن وُجد
+          existing=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${{ github.event.pull_request.number }}/comments" \
+            --jq '.[] | select(.user.type=="Bot" and (.body|contains("جودة PR (verify audits)"))) | .id' | head -1 || true)
+          if [ -n "${existing:-}" ]; then
+            gh api -X PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${existing}" -F body="$(cat "$BODY_FILE")"
+          else
+            gh pr comment "${{ github.event.pull_request.number }}" --body-file "$BODY_FILE"
+          fi

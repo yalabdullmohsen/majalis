@@ -260,7 +260,7 @@ function finalizeClassification(input) {
     mushafMeasure: needMushaf,
     mushafGates: needMushaf,
     layoutBands: needMushaf,
-    visualSnapshot: needMushaf,
+    visualSnapshot: false,
     fastLane: needFastLane,
     postgres: needPostgres,
     colorContrast: false,
