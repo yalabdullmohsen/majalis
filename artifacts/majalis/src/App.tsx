@@ -294,12 +294,8 @@ const ContentProductionDashboardPage = lazyWithRetry(
   "ContentProductionDashboardPage",
 );
 const FeatureStatusPage = lazyWithRetry(() => import("@/views/admin/FeatureStatusPage"), "FeatureStatusPage");
-const LearningPathsPage = lazy(() => import("@/views/learning/LearningPathsPage"));
-const LearningPathDetailPage = lazy(() => import("@/views/learning/LearningPathDetailPage"));
 const StartHerePage = lazy(() => import("@/views/StartHerePage"));
 const MyLearningPage = lazy(() => import("@/pages/lessons/MyLearningPage"));
-const LearningQuizPage = lazy(() => import("@/views/learning/LearningQuizPage"));
-const CertificateVerifyPage = lazy(() => import("@/views/learning/CertificateVerifyPage"));
 const LearnHubPage = lazy(() => import("@/views/learn/LearnHubPage"));
 const LearnCategoryPage = lazy(() => import("@/views/learn/LearnCategoryPage"));
 const LearnSeriesPage = lazy(() => import("@/views/learn/LearnSeriesPage"));
@@ -687,7 +683,7 @@ function Router() {
       <Route path="/my-submissions"><SafeLazyRoute component={MySubmissionsPage} /></Route>
       <Route path="/stats"><SafeLazyRoute component={UserStatsPage} /></Route>
       <Route path="/profile"><SafeLazyRoute component={UserStatsPage} /></Route>
-      <Route path="/learning-plan"><Redirect to="/learning/paths" /></Route>
+      <Route path="/learning-plan"><Redirect to="/lessons" /></Route>
       <Route path="/reading-plans"><SafeLazyRoute component={ReadingPlansPage} /></Route>
       <Route path="/flashcards"><SafeLazyRoute component={FlashCardsPage} /></Route>
       <Route path="/memorize"><SafeLazyRoute component={MemorizePage} /></Route>
@@ -703,21 +699,29 @@ function Router() {
       <Route path="/institutions"><SafeLazyRoute component={InstitutionsPage} /></Route>
       <Route path="/auth/callback"><SafeLazyRoute component={AuthCallbackPage} /></Route>
       <Route path="/auth/update-password"><SafeLazyRoute component={UpdatePasswordPage} /></Route>
-      <Route path="/learning/paths/:slug"><SafeLazyRoute component={LearningPathDetailPage} /></Route>
-      <Route path="/learning/paths"><SafeLazyRoute component={LearningPathsPage} /></Route>
+      {/* مسارات التعلم أُلغيت — تحويل دائم إلى الدروس */}
+      <Route path="/learning/paths/:slug"><Redirect to="/lessons" /></Route>
+      <Route path="/learning/paths"><Redirect to="/lessons" /></Route>
       <Route path="/learn/series/:slug"><SafeLazyRoute component={LearnSeriesPage} /></Route>
       <Route path="/learn/lesson/:id"><SafeLazyRoute component={LearnLessonPage} /></Route>
       <Route path="/learn/:slug"><SafeLazyRoute component={LearnCategoryPage} /></Route>
       <Route path="/learn"><SafeLazyRoute component={LearnHubPage} /></Route>
-      <Route path="/learning/quiz/:slug"><SafeLazyRoute component={LearningQuizPage} /></Route>
+      <Route path="/learning/quiz/:slug"><Redirect to="/quiz" /></Route>
       <Route path="/learning/quiz"><Redirect to="/quiz" /></Route>
       <Route path="/learning/calendar"><Redirect to="/calendar" /></Route>
-      <Route path="/learning/certificates"><SafeLazyRoute component={CertificateVerifyPage} /></Route>
-      <Route path="/learning/certificates/:code"><SafeLazyRoute component={CertificateVerifyPage} /></Route>
+      <Route path="/learning/certificates/:code"><Redirect to="/lessons" /></Route>
+      <Route path="/learning/certificates"><Redirect to="/lessons" /></Route>
       <Route path="/my-learning"><SafeLazyRoute component={MyLearningPage} /></Route>
       <Route path="/my-citations"><SafeLazyRoute component={MyCitationsPage} /></Route>
       <Route path="/c/:slug"><SafeLazyRoute component={CitationPublicPage} /></Route>
-      <Route path="/learning"><Redirect to="/learning/paths" /></Route>
+      <Route path="/learning"><Redirect to="/lessons" /></Route>
+      <Route path="/learning-paths"><Redirect to="/lessons" /></Route>
+      <Route path="/tracks"><Redirect to="/lessons" /></Route>
+      <Route path="/study-paths"><Redirect to="/lessons" /></Route>
+      <Route path="/pathways"><Redirect to="/lessons" /></Route>
+      <Route path="/lessons/paths"><Redirect to="/lessons" /></Route>
+      <Route path="/courses/paths"><Redirect to="/lessons" /></Route>
+
       <Route path="/assistant">
         <ErrorBoundary>
           <Suspense fallback={<LazyRouteFallback />}>
@@ -736,9 +740,9 @@ function Router() {
       <Route path="/sharia-research"><Redirect to="/academic-research" /></Route>
       <Route path="/research"><Redirect to="/academic-research" /></Route>
       <Route path="/learning-path/dashboard"><Redirect to="/my-learning" /></Route>
-      <Route path="/learning-path/book/:bookId"><Redirect to="/learning/paths" /></Route>
-      <Route path="/learning-path/:scienceSlug"><Redirect to="/learning/paths" /></Route>
-      <Route path="/learning-path"><Redirect to="/learning/paths" /></Route>
+      <Route path="/learning-path/book/:bookId"><Redirect to="/lessons" /></Route>
+      <Route path="/learning-path/:scienceSlug"><Redirect to="/lessons" /></Route>
+      <Route path="/learning-path"><Redirect to="/lessons" /></Route>
       <Route path="/start-here"><SafeLazyRoute component={StartHerePage} /></Route>
       <Route path="/universities/compare"><SafeLazyRoute component={UniversitiesComparePage} /></Route>
       <Route path="/universities/:slug"><SafeLazyRoute component={UniversityDetailPage} /></Route>
@@ -848,7 +852,7 @@ function Router() {
       <Route path="/arabic-language"><SafeLazyRoute component={ArabicLanguagePage} /></Route>
       <Route path="/maqasid-sharia"><SafeLazyRoute component={MaqasidShariaPage} /></Route>
       <Route path="/dalail-nubuwwah"><SafeLazyRoute component={DalailNubuwwahPage} /></Route>
-      <Route path="/masarat"><Redirect to="/learning/paths" /></Route>
+      <Route path="/masarat"><Redirect to="/lessons" /></Route>
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
       <Route path="/annual-courses"><Redirect to="/lessons?tab=courses" /></Route>

@@ -302,7 +302,6 @@ export default function IslamicStoriesPage() {
             { href: "/quran/surah-stories", label: "قصص سور القرآن" },
             { href: "/nations", label: "الأمم السابقة" },
             { href: "/seerah", label: "السيرة النبوية" },
-            { href: "/learning/paths", label: "مسارات التعلم" },
           ]}
         />
       </div>
@@ -400,7 +399,6 @@ export default function IslamicStoriesPage() {
               { href: "/quran/surah-stories", label: "قصص سور القرآن" },
               { href: "/nations", label: "الأمم السابقة" },
               { href: "/seerah", label: "السيرة النبوية" },
-              { href: "/learning/paths", label: "مسارات التعلم" },
             ]}
           />
           <SectionQuiz

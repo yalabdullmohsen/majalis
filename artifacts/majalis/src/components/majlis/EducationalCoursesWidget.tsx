@@ -19,7 +19,7 @@ export function EducationalCoursesWidget({
 
   return (
     <div className={`edu-courses${className ? ` ${className}` : ""}`} dir="rtl">
-      <h2 className="edu-courses__title">المسارات العلمية النشطة</h2>
+      <h2 className="edu-courses__title">الدورات النشطة</h2>
       <ul className="edu-courses__list">
         {Object.entries(courseProgress).map(([title, value]) => (
           <li key={title} className="edu-courses__card">

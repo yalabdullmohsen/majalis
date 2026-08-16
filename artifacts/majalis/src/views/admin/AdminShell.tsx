@@ -6,7 +6,7 @@ import {
   AlertTriangle, BookOpen, Bot, Brain, Building2, CalendarClock, CheckCircle2, Compass, Dna, FolderTree,
   FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Heart, Image, Landmark,
   LayoutDashboard, Library, Lightbulb, MessageCircle, MessageSquare,
-  Network, PlayCircle, Radio, RefreshCw, Route, Scale, School, Search,
+  Network, PlayCircle, Radio, RefreshCw, Scale, School, Search,
   Send, Settings, Settings2, ShieldCheck, Sparkles,
   Target, Unlock, User, Users,
 } from "lucide-react";
@@ -50,7 +50,6 @@ export type AdminSection =
   | "prophet-stories"
   | "islamic-stories"
   | "image-import"
-  | "learning-paths"
   | "categories"
   | "week-day-facts"
   | "religious-calendar-review"
@@ -96,7 +95,6 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "rulings",        label: "الأحكام الشرعية",  Icon: Landmark },
       { key: "annual-courses", label: "الدورات العلمية",  Icon: GraduationCap },
       { key: "dawah",          label: "التعريف بالإسلام", Icon: Compass },
-      { key: "learning-paths", label: "المسارات العلمية", Icon: Route },
       { key: "week-day-facts", label: "أيام الأسبوع",     Icon: CalendarClock },
       { key: "arbaeen-love",   label: "الأربعون في محبة رب العالمين", Icon: Heart },
       { key: "researches",     label: "الأبحاث الشرعية", Icon: BookOpen },

@@ -2,13 +2,6 @@ import { Link } from "wouter";
 
 const START_STEPS = [
   {
-    num: "١",
-    title: "اختر مستواك",
-    desc: "مبتدئ، متوسط أو متقدم، نصمم لك مسار العلم المناسب",
-    href: "/learning/paths",
-    cta: "المسارات العلمية",
-  },
-  {
     num: "٢",
     title: "ابدأ بالأذكار اليومية",
     desc: "أذكار الصباح والمساء وما بينهما، عبادة يومية مستدامة",
@@ -37,13 +30,13 @@ export function HomeStartHereSection() {
       <div className="hsh-header">
         <span className="hsh-eyebrow">للزائر الجديد</span>
         <h2 className="hsh-title">ابدأ من هنا</h2>
-        <p className="hsh-lead">مسار واضح للمبتدئ، ثم المسارات العلمية حسب مستواك.</p>
+        <p className="hsh-lead">مسار واضح للمبتدئ، ثم الدروس والدورات حسب مستواك.</p>
         <div className="hsh-actions">
           <Link href="/start-here" className="hsh-actions__primary">
             دليل ابدأ من هنا
           </Link>
-          <Link href="/learning/paths" className="hsh-actions__secondary">
-            المسارات العلمية
+          <Link href="/lessons" className="hsh-actions__secondary">
+            الدروس والدورات
           </Link>
         </div>
       </div>

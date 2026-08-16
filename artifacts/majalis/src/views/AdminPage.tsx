@@ -78,10 +78,6 @@ const DawahSection = lazyWithRetry(
   () => import("@/views/admin/DawahSection").then((m) => ({ default: m.DawahSection })),
   "DawahSection",
 );
-const LearningPathsSection = lazyWithRetry(
-  () => import("@/views/admin/LearningPathsSection").then((m) => ({ default: m.LearningPathsSection })),
-  "LearningPathsSection",
-);
 const CategoriesSection = lazyWithRetry(
   () => import("@/views/admin/CategoriesSection").then((m) => ({ default: m.CategoriesSection })),
   "CategoriesSection",
@@ -266,7 +262,6 @@ export default function AdminPage() {
       {section === "rulings" && <RulingsSection />}
       {section === "annual-courses" && <AnnualCoursesSection />}
       {section === "dawah" && <DawahSection />}
-      {section === "learning-paths" && <LearningPathsSection />}
       {section === "week-day-facts" && <WeekDayFactsSection />}
       {section === "religious-calendar-review" && <ReligiousCalendarReviewSection />}
       {section === "arbaeen-love" && <ArbaeenLoveSection />}

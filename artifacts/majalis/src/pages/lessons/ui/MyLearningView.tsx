@@ -5,7 +5,7 @@ import { truncateAtWord } from "@/lib/utils";
 import {
   ArrowLeft, BookMarked, BookOpen, Brain, ChevronLeft,
   Clock, CreditCard, Flame, GraduationCap, Medal, PlayCircle,
-  Scroll, Sparkles, Star, Target, Trophy, User,
+  Scroll, Sparkles, Star, Trophy, User,
 } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { useRecentProgress } from "@/hooks/useRecentProgress";
@@ -15,7 +15,6 @@ import {
   fetchLearningNotes,
 } from "@/lib/digital-learning-service";
 import {
-  fetchUserEnrollmentsWithProgress,
   fetchUserCertificatesList,
   fetchRealUserLearningStats,
   type UserCertificateSummary,
@@ -69,7 +68,6 @@ export default function MyLearningPage() {
   const { items: resumeItems, loading: resumeLoading } = useRecentProgress(3);
 
   const [stats,        setStats]        = useState<RealUserLearningStats | null>(null);
-  const [enrollments,  setEnrollments]  = useState<Awaited<ReturnType<typeof fetchUserEnrollmentsWithProgress>>>([]);
   const [certificates, setCertificates] = useState<UserCertificateSummary[]>([]);
   const [library,      setLibrary]      = useState<Array<{ title: string; content_url?: string; content_id?: string }>>([]);
   const [notes,        setNotes]        = useState<Array<{ title?: string; body?: string }>>([]);
@@ -89,21 +87,18 @@ export default function MyLearningPage() {
     if (!user?.id) { setLoading(false); return; }
     Promise.all([
       fetchRealUserLearningStats(user.id),
-      fetchUserEnrollmentsWithProgress(user.id),
       fetchUserCertificatesList(user.id),
       fetchPersonalLibrary(),
       fetchLearningNotes(),
     ])
-      .then(([s, en, c, l, n]) => {
+      .then(([s, c, l, n]) => {
         setStats(s ?? null);
-        setEnrollments(en);
         setCertificates(c);
         setLibrary(l ?? []);
         setNotes(n ?? []);
       })
       .catch(() => {
         setStats(null);
-        setEnrollments([]);
         setCertificates([]);
         setLibrary([]);
         setNotes([]);
@@ -152,9 +147,9 @@ export default function MyLearningPage() {
           <div className="myl2-hero__nums" aria-label="إحصائيات سريعة">
             {([
               { val: stats.completed_lessons,  lbl: "درس" },
-              { val: stats.completed_paths,    lbl: "مسار" },
               { val: library.length,           lbl: "كتاب" },
               { val: stats.achievements_count, lbl: "إنجاز" },
+              { val: notes.length,             lbl: "ملاحظة" },
             ]).map(({ val, lbl }, i, arr) => (
               <span key={lbl} className="myl2-qstat">
                 <strong className="myl2-qstat__n">{val}</strong>
@@ -216,7 +211,6 @@ export default function MyLearningPage() {
             </div>
             <div className="myl2-stats-grid">
               <StatCard icon={GraduationCap} value={stats.completed_lessons} label="دروس مكتملة" />
-              <StatCard icon={Target}        value={stats.completed_paths}    label="مسارات" />
               <StatCard icon={BookOpen}      value={library.length}           label="كتب محفوظة" />
               <StatCard icon={Brain}         value={stats.quiz_attempts}      label="اختبارات" />
               <StatCard icon={Medal}         value={stats.achievements_count} label="إنجازات" />
@@ -224,44 +218,6 @@ export default function MyLearningPage() {
             </div>
           </section>
         )}
-
-        {/* مساراتي */}
-        <section className="myl2-card" aria-labelledby="myl2-paths-hd">
-          <div className="myl2-card__head">
-            <h2 className="myl2-card__title" id="myl2-paths-hd">
-              <Target size={16} aria-hidden="true" />
-              مساراتي
-            </h2>
-            <Link href="/learning/paths" className="myl2-card__more">
-              المسارات <ArrowLeft size={12} aria-hidden="true" />
-            </Link>
-          </div>
-
-          {loading ? (
-            <div className="myl2-skeletons">
-              <div className="myl2-skel" aria-hidden="true" />
-              <div className="myl2-skel" aria-hidden="true" />
-            </div>
-          ) : enrollments.length > 0 ? (
-            <div className="myl2-paths-list">
-              {enrollments.map((e) => (
-                <Link key={e.pathSlug} href={`/learning/paths/${e.pathSlug}`} className="myl2-path-item">
-                  <div className="myl2-path-item__row">
-                    <span className="myl2-path-item__name">{e.pathTitle}</span>
-                    <span className="myl2-path-item__pct">{e.progressPct}%</span>
-                  </div>
-                  <ProgressBar pct={e.progressPct} />
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="myl2-empty">
-              <GraduationCap size={34} strokeWidth={1} aria-hidden="true" />
-              <p>لم تسجّل في مسار بعد</p>
-              <Link href="/learning/paths" className="myl2-empty__cta">ابدأ مساراً</Link>
-            </div>
-          )}
-        </section>
 
         {/* الشهادات */}
         {!loading && certificates.length > 0 && (

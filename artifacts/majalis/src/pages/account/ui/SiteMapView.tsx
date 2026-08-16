@@ -129,7 +129,6 @@ const SECTIONS = [
       { href: "/quiz",             label: "لعبة سين جيم – أسئلة وأجوبة",   desc: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
       { href: "/my-learning",      label: "حسابي",                desc: "التقدم والبطاقات المراجعة" },
       { href: "/assistant",        label: "المساعد الذكي",        desc: "استفسر عن أي مسألة" },
-                  { href: "/learning/paths",   label: "مسارات التعلم",        desc: "مسارات علمية منظمة بالمستويات" },
       { href: "/topics",           label: "الموضوعات الشرعية",    desc: "محتوى مجمّع حسب الموضوع" },
             { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
       { href: "/fawaid",           label: "الفوائد العلمية",      desc: "فوائد ومنقولات موثقة" },
@@ -232,7 +231,7 @@ export default function SiteMapPage() {
       <div className="twh-share">
         <ShareButtons title="دليل أقسام المجلس العلمي" url="https://www.majlisilm.com/sitemap" />
       </div>
-      <RelatedKnowledge kind="book" query="أقسام المجلس" title="مواد ومسارات للبدء" limit={6} />
+      <RelatedKnowledge kind="book" query="أقسام المجلس" title="مواد للبدء" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
       </div>

@@ -53,17 +53,14 @@ const LABEL_MAP: Record<string, string> = {
   "/start-here":                    "ابدأ من هنا",
   "/adab-talab-ilm":                "آداب طلب العلم",
 
-  // ─── التعلم والمسارات ─────────────────────────────────────────────
+  // ─── التعلم (تحويلات قديمة تبقى للتسمية إن وُجدت في السجل) ─────────
   "/learning":                      "التعلم",
-  "/learning/paths":                "مسارات التعلم",
-  "/learning/quiz":                 "اختبار المسار",
+  "/learning/quiz":                 "اختبار",
   "/learning/calendar":             "تقويم التعلم",
   "/learning/certificates":         "الشهادات",
   "/my-learning":                   "تعلمي",
-  "/learning-plan":                 "مسارات التعلم",
   "/knowledge-map":                 "الرئيسية",
   "/knowledge-graph":               "الرئيسية",
-  "/masarat":                       "مسارات التعلم",
   "/mind-map":                      "الخرائط الذهنية",
   "/flashcards":                    "بطاقات المراجعة",
   "/cards":                         "البطاقات",

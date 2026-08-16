@@ -398,7 +398,7 @@ export const MIND_MAPS: MindMap[] = [
             { id: "im-1", label: "حفظ الأربعين النووية", href: "/arbaeen-nawawi" },
             { id: "im-2", label: "تعلم التجويد", href: "/quran/tajweed" },
             { id: "im-3", label: "دراسة العقيدة", href: "/tawhid" },
-            { id: "im-4", label: "أصول الفقه والقواعد", href: "/learning/paths/usool-fiqh" },
+            { id: "im-4", label: "أصول الفقه والقواعد", href: "/lessons" },
           ],
         },
         {
@@ -417,7 +417,6 @@ export const MIND_MAPS: MindMap[] = [
           children: [
             { id: "tl-1", label: "المسابقة التعليمية", href: "/quiz" },
             { id: "tl-2", label: "بطاقات المراجعة", href: "/flashcards" },
-            { id: "tl-3", label: "المسارات العلمية", href: "/learning/paths" },
             { id: "tl-4", label: "القرآن وعلومه", href: "/quran-knowledge" },
           ],
         },

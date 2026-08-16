@@ -7,21 +7,21 @@ import "@/styles/pages/methodology.css";
 
 const LEVELS = [
   {
-    href: "/learning/paths",
+    href: "/tawhid",
     title: "مبتدئ",
     desc: "عقيدة مختصرة، أركان الإسلام، أذكار يومية، ودليل الصلاة — أساس ثابت قبل التوسّع.",
     Icon: Route,
   },
   {
-    href: "/learning/paths",
+    href: "/lessons",
     title: "متوسط",
-    desc: "مسارات فقه وحديث وسيرة منظّمة، مع كتب مصاحبة ومدة متوقعة لكل مسار.",
+    desc: "دروس ودورات في الفقه والحديث والسيرة، مع كتب مصاحبة وجدول أسبوعي.",
     Icon: BookOpen,
   },
   {
-    href: "/learning/paths",
+    href: "/adab-talab-ilm",
     title: "متقدم",
-    desc: "أصول الفقه، مصطلح الحديث، ومسارات أعمق لمن أتمّ التأسيس.",
+    desc: "دليل طالب العلم وأصول أعمق لمن أتمّ التأسيس ويريد ترتيب الطلب.",
     Icon: GraduationCap,
   },
 ] as const;
@@ -41,7 +41,7 @@ export default function StartHerePage() {
       path: "/start-here",
       title: "ابدأ من هنا — دليل المبتدئ",
       description:
-        "مسار تعريفي للمبتدئ في المجلس العلمي: عقيدة، صلاة، أذكار، سيرة، ثم المسارات العلمية حسب مستواك.",
+        "مسار تعريفي للمبتدئ في المجلس العلمي: عقيدة، صلاة، أذكار، سيرة، ثم الدروس والدورات حسب مستواك.",
     });
   }, []);
 
@@ -64,7 +64,7 @@ export default function StartHerePage() {
               <strong style={{ display: "block", marginBlock: "0.35rem" }}>{title}</strong>
               <p style={{ margin: 0, fontSize: "0.9rem", opacity: 0.85 }}>{desc}</p>
               <span style={{ display: "inline-block", marginBlockStart: "0.5rem", fontWeight: 700 }}>
-                المسارات العلمية ←
+                ابدأ من هنا ←
               </span>
             </Link>
           ))}
@@ -83,8 +83,8 @@ export default function StartHerePage() {
       </section>
 
       <p style={{ marginBlock: "1.5rem" }}>
-        <Link href="/learning/paths" className="btn-primary">
-          استعرض كل المسارات العلمية
+        <Link href="/lessons" className="btn-primary">
+          استعرض الدروس والدورات
         </Link>
       </p>
     </PageShell>

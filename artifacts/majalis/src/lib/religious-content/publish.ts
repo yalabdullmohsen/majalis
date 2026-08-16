@@ -116,7 +116,7 @@ export function getPublishableLearningSeasons(yearHint = 1448): LearningSeasonCa
     3: { start: "2026-09-25", end: "2026-10-24", href: "/seerah" },
     7: { start: "2026-12-30", end: "2027-01-28", href: "/adhkar" },
     8: { start: "2027-01-29", end: "2027-02-27", href: "/quran-hub" },
-    9: { start: "2027-02-28", end: "2027-03-29", href: "/learning/paths" },
+    9: { start: "2027-02-28", end: "2027-03-29", href: "/lessons" },
     12: { start: "2027-05-18", end: "2027-05-27", href: "/adhkar" },
   };
 

@@ -108,7 +108,6 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
       { id: "quran-people", label: "الذين ذكروا في القرآن", keywords: ["أعلام", "شخصيات", "فرعون", "مريم", "أشخاص", "الذين ذكروا"], Icon: Users, action: { kind: "link", href: "/quran/people" } },
       { id: "nations", label: "الأمم السابقة", keywords: ["أمم", "عاد", "ثمود", "فرعون"], Icon: Landmark, action: { kind: "link", href: "/nations" } },
       { id: "start-here", label: "ابدأ من هنا", keywords: ["مبتدئ", "ابدأ", "دليل"], Icon: Route, action: { kind: "link", href: "/start-here" } },
-      { id: "learning-paths", label: "المسارات العلمية", keywords: ["مسار", "تعلم", "منهج"], Icon: GraduationCap, action: { kind: "link", href: "/learning/paths" } },
       { id: "quran-hub", label: "مركز القرآن", keywords: ["قرآن", "مصحف", "تسميع", "تجويد"], Icon: BookMarked, action: { kind: "link", href: "/quran-hub" } },
       { id: "quran-knowledge", label: "القرآن وعلومه", keywords: ["علوم قرآن"], Icon: BookOpen, action: { kind: "link", href: "/quran-knowledge" } },
       { id: "tafsir", label: "التفسير", keywords: ["تفسير"], Icon: Library, action: { kind: "link", href: "/tafsir" } },

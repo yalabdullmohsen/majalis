@@ -428,7 +428,7 @@ export const STUDY_PATH: StudyStep[] = [
     step: 6,
     title: "مسار تعلّم منظّم",
     body: "اتبع مساراً مرحلياً مع تمارين ومراجعة؛ لا تكتفِ بالقراءة العابرة.",
-    href: "/learning/paths/tafseer",
+    href: "/lessons",
     hrefLabel: "مسار التفسير",
   },
 ];

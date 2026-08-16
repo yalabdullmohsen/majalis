@@ -222,22 +222,9 @@
       "priority": 0.82
     },
     {
-      "path": "/learning/paths",
-      "title": "المسارات العلمية",
-      "description": "مسارات تعليمية منظمة من المبتدئ للمتقدم في العلوم الشرعية.",
-      "keywords": [
-        "مسارات علمية",
-        "تعلم الإسلام",
-        "تعليم ديني"
-      ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.78
-    },
-    {
       "path": "/my-learning",
       "title": "حسابي",
-      "description": "تابع تقدّمك وإنجازاتك في المسارات العلمية داخل المجلس العلمي، مع ملخص للدروس المكتملة والمتبقية.",
+      "description": "تابع تقدّمك وإنجازاتك في الدروس والدورات داخل المجلس العلمي، مع ملخص للدروس المكتملة والمتبقية.",
       "keywords": [
         "تعلم",
         "تقدم دراسي"
@@ -1193,22 +1180,6 @@
       "sitemap": true,
       "changefreq": "weekly",
       "priority": 0.86
-    },
-    {
-      "path": "/learning-plan",
-      "title": "خطة التعلم",
-      "description": "ضع خطة تعلم شخصية منظمة لطلب العلم الشرعي وتتبع تقدمك في حفظ القرآن والأحاديث ودراسة العلوم الشرعية.",
-      "keywords": [
-        "خطة التعلم",
-        "جدول الدراسة",
-        "طلب العلم",
-        "التعلم المنظم",
-        "دراسة الشريعة"
-      ],
-      "sitemap": false,
-      "changefreq": "monthly",
-      "priority": 0.72,
-      "robots": "noindex, follow"
     },
     {
       "path": "/tawhid",
@@ -2245,34 +2216,6 @@
       "robots": "noindex, follow"
     },
     {
-      "path": "/learning/calendar",
-      "title": "التقويم العلمي",
-      "description": "تقويم الأحداث والدروس والدورات الإسلامية القادمة، تابع المواعيد العلمية لعلماء الكويت.",
-      "keywords": [
-        "تقويم دروس",
-        "دورات إسلامية",
-        "مواعيد علمية",
-        "أحداث شرعية"
-      ],
-      "sitemap": false,
-      "changefreq": "daily",
-      "priority": 0.75,
-      "robots": "noindex, follow"
-    },
-    {
-      "path": "/learning/quiz",
-      "title": "اختبار المسارات العلمية",
-      "description": "اختبر مستواك في العلوم الإسلامية عبر أسئلة تفاعلية مصنّفة حسب المسار والمستوى.",
-      "keywords": [
-        "اختبار إسلامي",
-        "مسار تعليمي",
-        "تقييم المستوى الشرعي"
-      ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.72
-    },
-    {
       "path": "/prayer-countdown",
       "title": "عداد الصلاة القادمة",
       "description": "عداد تنازلي لوقت الصلاة القادمة في الكويت، اعرف الوقت المتبقي حتى الأذان.",
@@ -2523,21 +2466,6 @@
       "keywords": [],
       "sitemap": false,
       "robots": "noindex, nofollow"
-    },
-    {
-      "path": "/learning",
-      "title": "المسارات العلمية",
-      "description": "اكتشف مسارات التعلم الشرعي المنظّمة على منصة المجلس العلمي من العقيدة والفقه والتفسير وعلوم الحديث.",
-      "keywords": [
-        "مسارات تعلم",
-        "طلب العلم",
-        "منهج دراسي إسلامي",
-        "المجلس العلمي"
-      ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": "0.75",
-      "robots": "index, follow"
     },
     {
       "path": "/profile",

@@ -34,7 +34,6 @@ export const SITE_FOOTER_GROUPS: FooterGroup[] = [
     title: "ابدأ",
     links: [
       { href: "/start-here", label: "ابدأ من هنا" },
-      { href: "/learning/paths", label: "المسارات العلمية" },
       { href: "/islamic-glossary", label: "المعجم الشرعي" },
       { href: "/search", label: "البحث" },
     ],

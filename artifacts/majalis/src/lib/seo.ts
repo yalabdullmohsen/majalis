@@ -153,9 +153,9 @@ function routeForPath(path: string) {
     };
   }
 
-  if (normalized.startsWith("/learning/paths/")) {
+  if (normalized.startsWith("/lessons/")) {
     return {
-      ...requiredRoute("/learning/paths"),
+      ...requiredRoute("/lessons"),
       title: "مسار التعلم | المجلس العلمي",
       description: "مسار تعلم مفصّل — المراحل والكتب والاختبارات وشهادة الإتمام.",
     };

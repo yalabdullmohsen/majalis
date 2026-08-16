@@ -231,14 +231,6 @@ const SECTION_CATALOG: SectionCard[] = [
     dataManaged: "نتائج التحليل المنطقي، سلاسل الاستدلال، الثغرات المعرفية",
     affectsPublic: false,
   },
-  {
-    key: "learning-paths", Icon: GraduationCap, label: "المسارات العلمية", group: "التحليل والذكاء",
-    description: "إدارة شجرة المسارات العلمية: مسار ← مرحلة ← مقرر ← وحدة ← عنصر",
-    whatItDoes: "تحرير كامل شجرة المسارات، ترتيب العناصر، وإدارة التقييمات والأسئلة مع اعتماد صريح لكل سؤال قبل نشره.",
-    whenToUse: "لإضافة مسار أو مقرر جديد، أو مراجعة واعتماد أسئلة تقييم قبل نشرها للمتعلمين.",
-    dataManaged: "learning_paths، path_stages، courses، course_units، learning_items، course_books، التقييمات وأسئلتها",
-    affectsPublic: true,
-  },
   // ── المجتمع ──────────────────────────────────────────────────────────
   {
     key: "users", Icon: Users, label: "المستخدمون", group: "المجتمع والإدارة",

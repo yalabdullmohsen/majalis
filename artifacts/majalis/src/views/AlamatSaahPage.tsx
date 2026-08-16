@@ -523,7 +523,7 @@ export default function AlamatSaahPage() {
             { href: "/arkan-iman", label: "أركان الإيمان" },
             { href: "/janna-naar", label: "الجنة والنار" },
             { href: "/malaika", label: "الملائكة" },
-            { href: "/learning/paths/aqeedah", label: "مسار العقيدة" },
+            { href: "/lessons", label: "مسار العقيدة" },
           ].map((l) => (
             <a key={l.href} href={l.href} className="as-related__link">{l.label}</a>
           ))}
