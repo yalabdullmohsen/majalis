@@ -58,7 +58,8 @@ const config: CapacitorConfig = {
     // Safe areas are owned by the shared CSS shell via env(safe-area-inset-*).
     // UIKit adjustment here would apply a second inset around the WKWebView.
     contentInset: "never",
-    backgroundColor: "#F2F4F3",
+    // أخضر الإقلاع — أي فجوة تحت الشريط السفلي/Home Indicator لا تظهر بيضاء
+    backgroundColor: "#002b21",
     scrollEnabled: true,
   },
 };

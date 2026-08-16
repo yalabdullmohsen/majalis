@@ -83,7 +83,14 @@ header.navbar-v3,
 
   .bottom-nav,
   .bottom-nav--v2 {
-    background: var(--app-bg, var(--surface)) !important;
+    background-color: var(--mj-splash, #002b21) !important;
+    background-image: linear-gradient(
+      to bottom,
+      var(--app-bg, var(--surface)) 0%,
+      var(--app-bg, var(--surface)) calc(100% - var(--inset-bottom, 0px)),
+      var(--mj-splash, #002b21) calc(100% - var(--inset-bottom, 0px)),
+      var(--mj-splash, #002b21) 100%
+    ) !important;
     border-top: 1px solid var(--border) !important;
     box-shadow: none !important;
     backdrop-filter: none !important;

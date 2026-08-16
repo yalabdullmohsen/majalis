@@ -249,7 +249,8 @@ html.dark,
 
 .bottom-nav--m2030,
 .bottom-nav {
-  background: var(--mj-surface) !important;
+  /* السطح للتبويبات؛ شريط safe-area يُرسم في final-release كتدرج أخضر */
+  background-color: var(--mj-surface) !important;
   border-top-color: var(--mj-hairline) !important;
 }
 .bottom-nav__tab.is-active,
