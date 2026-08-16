@@ -151,14 +151,15 @@ html.dark .mm-viewport,
   overflow-y: hidden;
   overscroll-behavior: none;
   scrollbar-width: none;
-  padding-top: var(--mm-chrome-top-h);
-  padding-bottom: var(--mm-chrome-bottom-h);
+  /* صفر حشو — النطاقات مرجع الشاشة؛ الأدوات فوق الصفحة بلا تقليص */
+  padding-top: 0;
+  padding-bottom: 0;
   padding-inline: 0;
   box-sizing: border-box;
   display: flex;
   align-items: stretch;
   justify-content: center;
-  transition: padding 180ms ease;
+  transition: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -222,10 +223,26 @@ html.dark .mm-viewport,
   z-index: 1;
 }
 
-/* ص١–٢: شارة عند ٢٧٫٧٪ · نهاية كتلة ٧٤٫٨٪ */
+/* ص١–٢: شارة عند ٢٧٫٧٪ · نهاية كتلة ٧٤٫٨٪ — محتوى مرصوص بلا خانات فارغة تضغط الحبر */
 .mm-viewport .mm-page--opening .mm-page__body {
   top: var(--mm-ref-open-banner-y);
   bottom: calc(100% - var(--mm-ref-open-text-end));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 0.15rem;
+  grid-template-rows: none;
+}
+
+.mm-viewport .mm-page--opening .mm-slot[data-kind="empty"] {
+  display: none;
+}
+
+.mm-viewport .mm-page--opening .mm-slot {
+  flex: 0 0 auto;
+  min-height: 0;
+  height: auto;
 }
 
 .mm-viewport[data-ayah-bar="1"] .mm-page {
@@ -652,7 +669,7 @@ html.dark .mm-viewport .mm-page-footer__badge {
 
 .mm-controls__exit {
   position: absolute;
-  top: 0.35rem;
+  top: max(0.35rem, var(--inset-top, 0px));
   inset-inline-start: 0.45rem;
   z-index: 8;
   display: inline-flex;

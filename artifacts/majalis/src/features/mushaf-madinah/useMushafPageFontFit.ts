@@ -17,13 +17,30 @@ function bodyOverflows(body: HTMLElement | null): boolean {
   return !!body && body.scrollHeight > body.clientHeight + 2;
 }
 
+/** كشف تراكب الحبر خارج خانة السطر (overflow المرئي لا يزيد scrollHeight). */
+function slotInkOverflows(pageEl: HTMLElement): boolean {
+  for (const slot of pageEl.querySelectorAll<HTMLElement>(".mm-slot")) {
+    const kind = slot.getAttribute("data-kind");
+    if (!kind || kind === "empty") continue;
+    const slotBox = slot.getBoundingClientRect();
+    if (slotBox.height < 2) continue;
+    for (const ink of slot.querySelectorAll<HTMLElement>(
+      ".mm-ayah-line, .mm-basmala, .mm-surah-ornament",
+    )) {
+      const box = ink.getBoundingClientRect();
+      if (box.bottom > slotBox.bottom + 1.5 || box.top < slotBox.top - 1.5) return true;
+    }
+  }
+  return false;
+}
+
 /**
  * بعد أقصى مقياس آمن: أغلق فجوة السطر بـ word-spacing فقط (سقف ١٨px).
  * ممنوع letter-spacing — يفك اتصال الحروف العربية.
  */
 function stretchLines(pageEl: HTMLElement): void {
   for (const line of pageEl.querySelectorAll<HTMLElement>(".mm-ayah-line")) {
-    if (line.classList.contains("mm-ayah-line--centered") || line.dataset.centered === "1") {
+    if (line.dataset.centered === "1") {
       line.style.removeProperty("word-spacing");
       continue;
     }
@@ -59,7 +76,9 @@ export function fitMushafPageFont(pageEl: HTMLElement, opts: FitOpts = {}): numb
     for (const line of pageEl.querySelectorAll<HTMLElement>(".mm-ayah-line, .mm-basmala")) {
       if (lineOverflows(line)) return true;
     }
-    return bodyOverflows(body);
+    if (bodyOverflows(body)) return true;
+    if (slotInkOverflows(pageEl)) return true;
+    return false;
   };
 
   let lo: number;
@@ -92,7 +111,8 @@ export function fitMushafPageFont(pageEl: HTMLElement, opts: FitOpts = {}): numb
 
   const stillOverflow =
     [...pageEl.querySelectorAll<HTMLElement>(".mm-ayah-line, .mm-basmala")].some(lineOverflows) ||
-    bodyOverflows(body);
+    bodyOverflows(body) ||
+    slotInkOverflows(pageEl);
 
   if (stillOverflow) {
     const detail = {

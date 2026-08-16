@@ -33,9 +33,9 @@ assert.match(css, /100svh|100dvh/);
 assert.match(css, /--mm-page-max-w:\s*min\(100%/);
 assert.match(page, /useMushafPageFontFit/);
 assert.match(viewport, /exitAlwaysVisible/);
-assert.match(fit, /STEP\s*=\s*0\.25/);
-assert.match(fit, /WORD_GAP_MAX_PX\s*=\s*18/);
-assert.match(fit, /wordSpacing|word-spacing/);
+assert.match(fit, /slotInkOverflows/);
+assert.match(css, /\.mm-page--opening\s+\.mm-slot\[data-kind="empty"\]/);
+assert.match(css, /\.mm-page-shell[^{]*\{[^}]*padding-top:\s*0/);
 
 assert.match(css, /--mm-ref-header-y:\s*8\.3%/);
 assert.match(css, /--mm-ref-text-start:\s*11\.9%/);
@@ -50,8 +50,8 @@ assert.match(css, /border-radius:\s*24px\s+24px\s+0\s+0/);
 
 assert.match(css, /--mm-chrome-top-h/);
 assert.match(css, /--mm-chrome-bottom-h/);
-assert.match(css, /\.mm-page-shell[^{]*\{[^}]*padding-top:\s*var\(--mm-chrome-top-h\)/);
-assert.match(css, /\.mm-page-shell[^{]*\{[^}]*padding-bottom:\s*var\(--mm-chrome-bottom-h\)/);
+assert.match(css, /\.mm-page-shell[^{]*\{[^}]*padding-top:\s*0/);
+assert.match(css, /\.mm-page-shell[^{]*\{[^}]*padding-bottom:\s*0/);
 
 assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-qpc-size\)/);
 assert.match(css, /\.mm-basmala\s*\{[^}]*text-align:\s*center/);
