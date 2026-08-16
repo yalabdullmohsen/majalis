@@ -45,8 +45,11 @@ export default defineConfig({
     "import.meta.env.VITE_VERCEL_GIT_COMMIT_SHA": JSON.stringify(process.env.VERCEL_GIT_COMMIT_SHA || ""),
   },
   esbuild: {
+    // es2022 لا esnext — أوثق لـ iOS WebView / Capacitor
     target: "es2022",
     legalComments: "none",
+    // تخفيف حزمة الإنتاج بإسقاط السجلات وdebugger (التطوير يبقى كما هو)
+    drop: process.env.NODE_ENV === "production" ? ["console", "debugger"] : [],
   },
   plugins: [
     {
@@ -106,6 +109,7 @@ export default defineConfig({
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
     sourcemap: false,
+    minify: "esbuild",
     cssMinify: true,
     cssCodeSplit: true,
     assetsInlineLimit: 4096,
