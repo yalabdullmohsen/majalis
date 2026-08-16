@@ -6,7 +6,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
-import { LIBRARY_CATEGORIES } from "@/lib/library-catalog";
+import { LIBRARY_CATEGORIES, type LibraryContentStatus } from "@/lib/library-catalog";
 import { getLibraryCatalog } from "@/lib/library-service";
 import { Chip, SearchField, Badge } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
@@ -19,6 +19,25 @@ import "@/styles/pages/library.css";
 
 type SortKey = "title" | "author" | "newest";
 type ViewMode = "grid" | "list";
+type StatusFilter = "الكل" | LibraryContentStatus | "has_caution";
+
+const STATUS_CHIPS: { id: StatusFilter; label: string }[] = [
+  { id: "الكل", label: "كل الحالات" },
+  { id: "recommended", label: "موصى" },
+  { id: "useful_with_caution", label: "مفيد بحذر" },
+  { id: "reference_only", label: "مرجع فقط" },
+  { id: "needs_review", label: "يحتاج مراجعة" },
+  { id: "has_caution", label: "فيه تنبيه" },
+];
+
+function statusLabel(status?: LibraryContentStatus): string | null {
+  if (!status) return null;
+  if (status === "recommended") return "مكتمل/موصى";
+  if (status === "useful_with_caution") return "مفيد بحذر";
+  if (status === "reference_only") return "مرجع فقط";
+  if (status === "needs_review") return "يحتاج مراجعة";
+  return null;
+}
 
 function BookCoverPlaceholder({ title, category }: { title: string; category?: string }) {
   return (
@@ -32,13 +51,13 @@ function BookCoverPlaceholder({ title, category }: { title: string; category?: s
 
 function BookCard({ item, view }: { item: any; view: ViewMode }) {
   const hasCover = !!item.cover_url;
+  const statusText = statusLabel(item.contentStatus);
   return (
     <Link
       href={`/library/${item.id}`}
       className={`lib-card lib-card--${view} ui-card ui-card--clickable mj-card mj-card--link`}
       aria-label={`${item.title}${item.author || item.author_name ? ` — ${item.author || item.author_name}` : ""}`}
     >
-      {/* غلاف الكتاب */}
       <div className="lib-card-cover-wrap">
         {hasCover ? (
           <img
@@ -58,17 +77,27 @@ function BookCard({ item, view }: { item: any; view: ViewMode }) {
         )}
       </div>
 
-      {/* محتوى البطاقة */}
       <div className="lib-card-body">
-        {item.category && (
-          <Badge tone="brand" className="lib-card-category">{item.category}</Badge>
-        )}
+        <div className="lib-card-badges">
+          {item.category && (
+            <Badge tone="brand" className="lib-card-category">{item.category}</Badge>
+          )}
+          {statusText && (
+            <Badge tone="neutral" className="lib-card-status">{statusText}</Badge>
+          )}
+          {item.caution && (
+            <Badge tone="accent" className="lib-card-caution">تنبيه منهجي</Badge>
+          )}
+        </div>
         <h3 className="lib-card-title">{item.title}</h3>
         {(item.author || item.author_name) && (
           <p className="lib-card-author">{item.author || item.author_name}</p>
         )}
         {view === "list" && item.description && (
           <p className="lib-card-desc">{item.description}</p>
+        )}
+        {item.caution && (
+          <p className="lib-card-caution-text">{item.caution}</p>
         )}
         <span className="lib-card-cta">
           <BookOpen size={13} aria-hidden="true" />
@@ -89,6 +118,7 @@ export default function LibraryPage({
   const [loading, setLoading] = useState(!initialItems);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [category, setCategory] = usePersistedState("filters:/library:category", "الكل");
+  const [statusFilter, setStatusFilter] = usePersistedState<StatusFilter>("filters:/library:status", "الكل");
   const [search, setSearch] = usePersistedState("filters:/library:search", "");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [sortKey, setSortKey] = usePersistedState<SortKey>("filters:/library:sortKey", "newest");
@@ -164,6 +194,11 @@ export default function LibraryPage({
         ),
       );
     }
+    if (statusFilter === "has_caution") {
+      list = list.filter((it) => Boolean(it.caution) || it.contentStatus === "useful_with_caution");
+    } else if (statusFilter !== "الكل") {
+      list = list.filter((it) => it.contentStatus === statusFilter);
+    }
     list = [...list].sort((a, b) => {
       let cmp = 0;
       if (sortKey === "title")  cmp = (a.title ?? "").localeCompare(b.title ?? "", "ar");
@@ -172,7 +207,7 @@ export default function LibraryPage({
       return sortAsc ? cmp : -cmp;
     });
     return list;
-  }, [items, search, sortKey, sortAsc]);
+  }, [items, search, sortKey, sortAsc, statusFilter]);
 
   const SORT_OPTIONS: { key: SortKey; label: string }[] = [
     { key: "newest", label: "الأحدث" },
@@ -195,6 +230,13 @@ export default function LibraryPage({
           </Chip>
         ))}
       </div>
+      <div className="page-chip-row library-status-chips" role="group" aria-label="حالة الكتاب">
+        {STATUS_CHIPS.map((c) => (
+          <Chip key={c.id} active={statusFilter === c.id} onClick={() => setStatusFilter(c.id)}>
+            {c.label}
+          </Chip>
+        ))}
+      </div>
     </>
   );
 
@@ -203,7 +245,7 @@ export default function LibraryPage({
       className="content-hub library-hub"
       eyebrow="الأرشيف العلمي"
       title="المكتبة العلمية"
-      subtitle="كتب أساسية في الحديث والتفسير والعقيدة والفقه، مرتبة وموثقة."
+      subtitle="كتب أساسية في الحديث والتفسير والعقيدة والفقه، مرتبة للتصفح. التنبيهات المنهجية تظهر عند الحاجة."
       stats={isAdmin ? [{ label: "كتاب", value: filtered.length }] : []}
       filters={filtersPanel}
       filtersOpen={filtersOpen}
