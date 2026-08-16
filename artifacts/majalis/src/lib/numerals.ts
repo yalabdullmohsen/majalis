@@ -16,6 +16,9 @@ export function toArabicIndicDigits(input: string | number): string {
   return String(input).replace(/[0-9]/g, (d) => ARABIC_INDIC_DIGITS[Number(d)]);
 }
 
+/** مُنسّق موحّد لأرقام واجهة «القرآن في أرقام» — عربي-هندي فقط. */
+export const formatArabicNumber = toArabicIndicDigits;
+
 /**
  * رقم صفحة المصحف للعرض — تحويل محارف مباشِر بلا toLocaleString
  * (تجنب فواصل التجميع/العشري العربية مثل «١٫١» بدل «١١»).

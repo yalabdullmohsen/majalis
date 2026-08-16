@@ -236,6 +236,13 @@ const APP_PAGES = [
   ["app:ibtillaat", "prophet", "ابتلاءات الأنبياء", "/prophets", ["ابتلاء", "أنبياء"]],
   ["app:tafsir-audio", "tafsir-audio", "التفسير الصوتي", "/tafsir", ["تفسير صوتي", "استماع تفسير"]],
   ["app:quran-hub", "quran", "مركز القرآن", "/quran-hub", ["مركز", "قرآن"]],
+  [
+    "app:quran-numbers",
+    "quran",
+    "القرآن في أرقام",
+    "/quran-hub/numbers",
+    ["إحصاءات", "عدد الآيات", "معجم", "سور", "عدّ الآي"],
+  ],
 ];
 
 for (const [id, kind, title, href, parts] of APP_PAGES) {
