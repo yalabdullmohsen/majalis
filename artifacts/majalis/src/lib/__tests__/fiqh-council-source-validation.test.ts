@@ -9,6 +9,7 @@ import { isVerifiedPublicItem } from "../fiqh-council-trust.ts";
 
 const items = FIQH_COUNCIL_PUBLISHED_SEED.filter(isVerifiedPublicItem);
 assert.equal(items.length, 4, "أربع مواد منشورة موثّقة");
+const liveHttp = process.env.MAJLIS_AUDIT_LIVE === "1" || process.env.CI !== "true";
 
 function stripHtml(html: string): string {
   return html
@@ -42,21 +43,22 @@ for (const item of items) {
   assert.ok((item.summary || "").length > 40, `${item.slug}: ملخص`);
   assert.ok((item.ruling_text || item.content || "").length > 40, `${item.slug}: نص حكم/محتوى`);
 
-  const { status, text } = await fetchOfficial(item.source_url!);
-  assert.equal(status, 200, `${item.slug}: HTTP المصدر ${status}`);
+  if (liveHttp) {
+    const { status, text } = await fetchOfficial(item.source_url!);
+    assert.equal(status, 200, `${item.slug}: HTTP المصدر ${status}`);
 
-  const decisionCore = String(item.decision_number).split("(")[0].trim();
-  if (!text.includes(decisionCore)) {
-    notes.push(`رقم القرار ${decisionCore} غير ظاهر في نص الصفحة الرسمية`);
-  }
-  // عيّنات حرفية من المحتوى المخزَّن يجب أن تظهر في المصدر أو تكون مقتبسة بوضوح
-  const quotes = [...String(item.content || "").matchAll(/«([^»]{12,80})»/g)].map((m) => m[1]);
-  let quoteHits = 0;
-  for (const q of quotes.slice(0, 3)) {
-    if (text.includes(q.slice(0, 24)) || text.includes(q)) quoteHits += 1;
-  }
-  if (quotes.length > 0 && quoteHits === 0) {
-    notes.push("لم تُعثر اقتباسات القرار في نص الصفحة الرسمية (قد يتغيّر HTML)");
+    const decisionCore = String(item.decision_number).split("(")[0].trim();
+    if (!text.includes(decisionCore)) {
+      notes.push(`رقم القرار ${decisionCore} غير ظاهر في نص الصفحة الرسمية`);
+    }
+    const quotes = [...String(item.content || "").matchAll(/«([^»]{12,80})»/g)].map((m) => m[1]);
+    let quoteHits = 0;
+    for (const q of quotes.slice(0, 3)) {
+      if (text.includes(q.slice(0, 24)) || text.includes(q)) quoteHits += 1;
+    }
+    if (quotes.length > 0 && quoteHits === 0) {
+      notes.push("لم تُعثر اقتباسات القرار في نص الصفحة الرسمية (قد يتغيّر HTML)");
+    }
   }
 
   const ok = notes.length === 0;

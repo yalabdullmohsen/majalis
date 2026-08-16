@@ -39,35 +39,42 @@ assert.match(privacy, /التسجيلات الصوتية: لا تُخزَّن ع
 assert.match(privacy, /الموقع الجغرافي/);
 assert.match(privacy, /سجل الاستخدام المرتبط بالحساب: يُحذف مع حذف الحساب/);
 
-const base = process.env.MAJLIS_AUDIT_BASE_URL || "https://majlisilm.com";
-const noAuth = await fetch(`${base}/api/account/delete`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-});
-assert.equal(noAuth.status, 401, "بدون JWT → 401");
+const liveHttp = process.env.MAJLIS_AUDIT_LIVE === "1" || process.env.CI !== "true";
+const proven = [
+  "deleteUser via Admin API (code)",
+  "JWT required",
+  "local clear + logout on success (code)",
+  "rate limit wired (code)",
+  "privacy claims present in PrivacyPage (text)",
+];
 
-const badAuth = await fetch(`${base}/api/account/delete`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json", Authorization: "Bearer invalid-token" },
-});
-assert.equal(badAuth.status, 401, "JWT باطل → 401");
-const badBody = await badAuth.json().catch(() => ({}));
-assert.equal(badBody.ok, false);
+if (liveHttp) {
+  const base = process.env.MAJLIS_AUDIT_BASE_URL || "https://majlisilm.com";
+  const noAuth = await fetch(`${base}/api/account/delete`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  });
+  assert.equal(noAuth.status, 401, "بدون JWT → 401");
 
-const getMethod = await fetch(`${base}/api/account/delete`, { method: "GET" });
-assert.equal(getMethod.status, 405, "GET → 405");
+  const badAuth = await fetch(`${base}/api/account/delete`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: "Bearer invalid-token" },
+  });
+  assert.equal(badAuth.status, 401, "JWT باطل → 401");
+  const badBody = await badAuth.json().catch(() => ({}));
+  assert.equal(badBody.ok, false);
+
+  const getMethod = await fetch(`${base}/api/account/delete`, { method: "GET" });
+  assert.equal(getMethod.status, 405, "GET → 405");
+  proven.push("failure paths 401/405 (live HTTP)");
+} else {
+  proven.push("live HTTP skipped in CI (set MAJLIS_AUDIT_LIVE=1)");
+}
 
 console.log(
   JSON.stringify(
     {
-      proven: [
-        "deleteUser via Admin API (code)",
-        "JWT required",
-        "local clear + logout on success (code)",
-        "failure paths 401/405 (live HTTP)",
-        "rate limit wired (code)",
-        "privacy claims present in PrivacyPage (text)",
-      ],
+      proven,
       notProvenWithoutTestAccount: [
         "CASCADE delete of bookmarks/progress/achievements/profile rows in live DB",
         "active sessions invalidation beyond Auth user delete",
