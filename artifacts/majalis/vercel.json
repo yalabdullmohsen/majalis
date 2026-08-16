@@ -950,6 +950,16 @@
       "permanent": true
     },
     {
+      "source": "/topics",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/topics/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/learning/quiz",
       "destination": "/quiz",
       "permanent": true
@@ -1328,10 +1338,6 @@
     },
     {
       "source": "/about-us",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/topics/:path*",
       "destination": "/index.html"
     },
     {

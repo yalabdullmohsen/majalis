@@ -51,7 +51,8 @@ for (const t of [
 const secondary = MORE_STANDARD_SECTIONS.map((s) => s.title);
 assert.ok(secondary.includes("الأدعية"));
 assert.ok(secondary.includes("المصطلحات"));
-assert.ok(secondary.includes("الموضوعات"));
+assert.equal(secondary.includes("الموضوعات"), false, "الموضوعات العلمية أُزيلت من المزيد");
+assert.ok(secondary.includes("المفضلة"));
 
 const moreCss = read("src/styles/pages/more-page.css");
 assert.match(moreCss, /--bottom-nav-height/);

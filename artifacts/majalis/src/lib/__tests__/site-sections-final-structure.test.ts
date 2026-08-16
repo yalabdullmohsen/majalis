@@ -14,6 +14,7 @@ import {
   IA_HOME_PRIMARY,
   IA_NESTED_ONLY_PATHS,
   IA_REDIRECTS,
+  IA_REMOVED_TO_HOME,
   IA_BREADCRUMB_PARENTS,
 } from "@/lib/ia-final-structure";
 import { HIDDEN_FROM_NAV_PATHS } from "@/lib/nav-visibility";
@@ -98,6 +99,22 @@ for (const [from, to] of Object.entries(IA_REDIRECTS)) {
   assert.equal(new RegExp(`path="${esc}"[^>]*>\\s*<Redirect\\s+to=["']\\/["']`).test(app), false);
 }
 
+{
+  for (const [from, to] of Object.entries(IA_REMOVED_TO_HOME)) {
+    const esc = from.replace(/\//g, "\\/");
+    assert.match(app, new RegExp(`path="${esc}"[^>]*>\\s*<Redirect\\s+to="${to.replace(/\//g, "\\/")}"`));
+  }
+  const vercelRm = read("vercel.json");
+  for (const source of Object.keys(IA_REMOVED_TO_HOME)) {
+    assert.ok(
+      new RegExp(
+        `"source"\\s*:\\s*"${source.replace(/\//g, "\\/")}"[\\s\\S]{0,180}"destination"\\s*:\\s*"\\/"`,
+      ).test(vercelRm),
+      `vercel يحيل ${source} → /`,
+    );
+  }
+}
+
 const vercel = read("vercel.json");
 for (const source of Object.keys(IA_REDIRECTS)) {
   if (source === "/learning/paths") continue; // covered with /learning/paths entry
@@ -148,6 +165,10 @@ for (const doc of searchIdx.docs) {
   assert.equal(href === "/qa" || href.startsWith("/qa/"), false);
 }
 const toolTopics = searchIdx.docs.find((d: { id: string }) => d.id === "tool:topics");
-assert.ok(toolTopics?.meta === "أداة بحث");
+assert.equal(toolTopics, undefined, "tool:topics أُزيل مع قسم الموضوعات العلمية");
+assert.ok(
+  !searchIdx.docs.some((d: { href?: string }) => String(d.href || "").startsWith("/topics")),
+  "فهرس البحث بلا /topics",
+);
 
 console.log("site-sections-final-structure.test.ts: ok");

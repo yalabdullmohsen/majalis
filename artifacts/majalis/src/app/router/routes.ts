@@ -346,8 +346,6 @@ const PATHS = [
   "/teachers",
   "/teachers/:slug",
   "/terms",
-  "/topics",
-  "/topics/:slug",
   "/transcribe",
   "/udhiya",
   "/ulum-quran",

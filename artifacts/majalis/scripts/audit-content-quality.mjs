@@ -102,11 +102,6 @@ if (!/لا يُنسب الموضوع/.test(hadithView) && !/بيان وضعه/.t
   fail("HadithView: يلزم تحذير عن الموضوع");
 }
 
-const topicPage = fs.readFileSync(path.join(root, "src/views/TopicPage.tsx"), "utf8");
-if (/غير متاح|غير موجود/.test(topicPage) && !/noindex/.test(topicPage)) {
-  fail("TopicPage: صفحة الفراغ يجب noindex");
-}
-
 if (warnings.length) console.log(`تحذيرات:\n- ${warnings.join("\n- ")}\n`);
 if (errors.length) {
   console.error(`audit:content FAILED (${errors.length})\n- ${errors.join("\n- ")}`);

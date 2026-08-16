@@ -61,7 +61,7 @@ export function SearchAnalyticsSection() {
         صفحات الاستكشاف:{" "}
         <Link href="/search">البحث</Link>
         {" · "}
-        <Link href="/topics/tahara">الموضوعات</Link>
+        <Link href="/islamic-glossary">المصطلحات</Link>
       </p>
     </div>
   );

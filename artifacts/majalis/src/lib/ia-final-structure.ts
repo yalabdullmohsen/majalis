@@ -32,6 +32,11 @@ export const IA_REDIRECTS: Record<string, string> = {
   "/courses": "/lessons",
 };
 
+/** مسارات أُلغيت بالكامل وتُحوَّل للرئيسية (ليست ضمن IA_REDIRECTS العام). */
+export const IA_REMOVED_TO_HOME: Record<string, string> = {
+  "/topics": "/",
+};
+
 /** عناوين ممنوعة في الأسطح العامة (رئيسية / المزيد / تذييل / وصول سريع). */
 export const IA_FORBIDDEN_PUBLIC_LABELS = [
   "المسارات العلمية",
@@ -45,7 +50,6 @@ export const IA_FORBIDDEN_PUBLIC_LABELS = [
  * (تُخفى من القوائم العامة عبر HIDDEN_FROM_NAV).
  */
 export const IA_NESTED_ONLY_PATHS = [
-  "/topics",
   "/islamic-glossary",
   "/ulum-quran",
   "/quran-studies",
@@ -93,6 +97,5 @@ export const IA_BREADCRUMB_PARENTS: Record<string, { name: string; path: string 
   "/fiqh-council/nawazil": [{ name: "الفقه", path: "/fiqh" }],
   "/fiqh-qawaid": [{ name: "الفقه", path: "/fiqh" }],
   "/madhahib": [{ name: "الفقه", path: "/fiqh" }],
-  "/topics": [{ name: "المكتبة", path: "/library" }],
   "/islamic-glossary": [{ name: "المكتبة", path: "/library" }],
 };

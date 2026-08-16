@@ -137,12 +137,13 @@ function routeForPath(path: string) {
     };
   }
 
-  if (normalized.startsWith("/topics/")) {
-    const slug = decodeURIComponent(normalized.slice("/topics/".length));
+  if (normalized.startsWith("/topics/") || normalized === "/topics") {
     return {
-      ...requiredRoute("/topics"),
-      title: `موضوع: ${slug} | المجلس العلمي`,
-      description: `موضوع ${slug} — مقالات وروابط ومحتوى ذو صلة من المجلس العلمي.`,
+      path: "/",
+      title: "المجلس العلمي",
+      description: "منصة علمية عربية للدروس الشرعية والعلوم الإسلامية.",
+      keywords: [],
+      robots: "noindex, follow",
     };
   }
 

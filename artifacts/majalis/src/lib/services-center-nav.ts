@@ -91,7 +91,6 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
       { id: "favorites", label: "المحفوظات", keywords: ["مفضلة", "حفظ"], Icon: Heart, action: { kind: "link", href: "/my-citations" } },
       { id: "alerts", label: "التنبيهات", keywords: ["إشعار", "تنبيه"], Icon: Bell, action: { kind: "link", href: "/notification-settings" } },
       { id: "glossary", label: "المصطلحات", keywords: ["مصطلحات", "glossary", "معجم"], Icon: BookMarked, action: { kind: "link", href: "/islamic-glossary" } },
-      { id: "topics", label: "الموضوعات", keywords: ["موضوع", "مواضيع"], Icon: BookOpen, action: { kind: "link", href: "/topics" } },
     ],
   },
   {

@@ -192,7 +192,6 @@ async function extractSlugTitlePairs(relFile, constName, min) {
   return unique;
 }
 
-const TOPICS = await extractSlugTitlePairs("src/views/TopicsIndexPage.tsx", "STATIC_TOPICS", 40);
 
 const { DURUS_IMANIYYA } = await importSrc("src/lib/durus-imaniyya-data.ts");
 const { DURUS_MUTANAWWIA } = await importSrc("src/lib/durus-mutanawwia-data.ts");
@@ -732,7 +731,6 @@ const LIST_JSON_LD = {
     "الذين ذكروا في القرآن",
   ),
   "/scholars": itemListJsonLdScript(SCHOLARS.map((s) => ({ name: s.name, url: `/scholars/${s.id}` })), "أعلام العلماء المسلمين"),
-  "/topics": itemListJsonLdScript(TOPICS.map((t) => ({ name: t.title, url: `/topics/${t.slug}` })), "المواضيع الإسلامية"),
   "/quran/surah-stories": itemListJsonLdScript(
     SURAH_STORIES.map((s) => ({ name: `سورة ${s.name}`, url: `/quran/surah-stories/${s.number}` })),
     "قصص سور القرآن",
@@ -851,7 +849,6 @@ ${linkList("روابط ذات صلة", [
   { name: "المصحف", url: "/mushaf" },
   { name: "مركز القرآن", url: "/quran-hub" },
 ])}`,
-  "/topics": linkList("المواضيع الإسلامية", TOPICS.map((t) => ({ name: t.title, url: `/topics/${t.slug}` }))),
   "/quran/surah-stories": linkList(
     "قصص السور",
     SURAH_STORIES.slice(0, 30).map((s) => ({ name: `سورة ${s.name}`, url: `/quran/surah-stories/${s.number}` })),
@@ -912,7 +909,6 @@ ${linkList("علوم الحديث وروابطه", [
 ])}`,
   "/islamic-glossary": `<p>معجم مبسّط لمصطلحات العلوم الشرعية: فقه، حديث، عقيدة، وأصول — لتعريف الطالب بالمفردات الشائعة قبل التوسّع في الأبواب.</p>
 ${linkList("روابط ذات صلة", [
-  { name: "المواضيع الإسلامية", url: "/topics" },
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
   { name: "المذاهب الأربعة", url: "/madhahib" },
   { name: "علوم الحديث", url: "/hadith-science" },
@@ -975,7 +971,6 @@ ${linkList(
   ].map((c) => ({ name: c, url: `/fawaid?cat=${encodeURIComponent(c)}` })),
 )}
 ${linkList("روابط ذات صلة", [
-  { name: "المواضيع الإسلامية", url: "/topics" },
   { name: "الأذكار", url: "/adhkar" },
   { name: "الأحاديث النبوية", url: "/hadith" },
   { name: "الأحكام الشرعية", url: "/rulings" },
@@ -1060,7 +1055,6 @@ ${linkList("روابط ذات صلة", [
   { name: "صفة الجنة والنار", url: "/janna-naar" },
   { name: "التوبة والاستغفار", url: "/tawba" },
   { name: "المعجم الشرعي", url: "/islamic-glossary" },
-  { name: "المواضيع الإسلامية", url: "/topics" },
 ])}`,
   "/adab-talab-ilm": `<p>آداب طالب العلم: الإخلاص، التدرّج، احترام الشيوخ، ومنهجية الطلب — مدخل قبل المسارات والدروس.</p>
 ${linkList("روابط ذات صلة", [
@@ -1182,7 +1176,6 @@ ${linkList("روابط ذات صلة", [
   { name: "الصيام", url: "/sawm" },
   { name: "الأذكار", url: "/adhkar" },
   { name: "فضائل الأعمال", url: "/fadail-aamal" },
-  { name: "المواضيع الإسلامية", url: "/topics" },
 ])}`,
   "/madhahib": `<p>المذاهب الأربعة: أصولها وأبرز أئمتها وكتبها، مدخل للمقارنة الفقهية قبل التوسع في المسائل.</p>
 ${linkList("روابط ذات صلة", [
@@ -1370,7 +1363,6 @@ ${linkList("روابط ذات صلة", [
   { name: "السيرة النبوية", url: "/seerah" },
   { name: "دليل المؤسسات", url: "/institutions" },
   { name: "قصص الأنبياء", url: "/prophets" },
-  { name: "المواضيع الإسلامية", url: "/topics" },
 ])}`,
   "/prayer-ranks": `<p>مراتب الناس في الصلاة: من الإخلاص والخشوع إلى الغفلة، للتذكير والرقائق لا للتشهير.</p>
 ${linkList("روابط ذات صلة", [
@@ -1947,7 +1939,6 @@ ${linkList("محاور دروس موسّعة", [
       { name: "الفكر والواقع", url: "/fikr-waqia" },
       { name: "الأسرة والمجتمع", url: "/usra-mujtama" },
       { name: "الفوائد", url: "/fawaid" },
-      { name: "المواضيع الإسلامية", url: "/topics" },
     ],
   ),
   "/iman-topics": darsHubBody(
@@ -2502,18 +2493,6 @@ ${issue.category ? `<p>التصنيف: ${escapeHtml(issue.category)}</p>` : ""}`
 }
 
 
-// المواضيع — من STATIC_TOPICS في TopicsIndexPage
-for (const t of TOPICS) {
-  addPage(
-    {
-      path: `/topics/${t.slug}`,
-      title: t.title,
-      description: `${t.title} — أدلة وأحكام وفتاوى ودروس وكتب ذات صلة، مجموعة من مصادر المجلس العلمي الموثقة.`,
-      keywords: [t.title, "مواضيع إسلامية", "أحكام شرعية"],
-    },
-    { parents: [{ name: "المواضيع الإسلامية", path: "/topics" }], priority: 0.66, changefreq: "monthly" },
-  );
-}
 
 // أقسام الأذكار — `/adhkar/:slug` (مصدر واحد: adhkar-seed.ts)
 for (const c of FEATURED_ADHKAR) {
@@ -2702,7 +2681,7 @@ console.log(
     `✓ ${SITE_URL}`,
     `  صفحات مُصيَّرة: ${pages.length}  (منها في sitemap: ${sitemapPages.length})`,
     `  علماء: ${SCHOLARS.length} · أنبياء: ${PROPHETS.length} · قصص سور: ${SURAH_STORIES.length} · ذنوب وحقوق: ${SINS_TOPICS.length}`,
-    `  مسائل فقهية: ${PUBLIC_FIQH_ISSUES.length} · مواضيع: ${TOPICS.length} · مؤذنون: ${MUEZZINS.length}`,
+    `  مسائل فقهية: ${PUBLIC_FIQH_ISSUES.length} · مؤذنون: ${MUEZZINS.length}`,
     `  دروس: ${lessonRows.length} · كتب: ${LIBRARY_CATALOG.length}`,
   ].join("\n"),
 );

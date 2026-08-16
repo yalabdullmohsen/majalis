@@ -191,17 +191,6 @@ export const MORE_STANDARD_SECTIONS: MoreSection[] = [
     keywords: ["معجم", "مصطلحات"],
   },
   {
-    id: "topics",
-    title: "الموضوعات",
-    subtitle: "فهرس موضوعات",
-    icon: BookOpen,
-    route: "/topics",
-    tier: "standard",
-    order: 23,
-    group: "secondary",
-    keywords: ["مواضيع"],
-  },
-  {
     id: "favorites",
     title: "المفضلة",
     subtitle: "اقتباساتك المحفوظة",

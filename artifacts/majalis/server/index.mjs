@@ -320,7 +320,7 @@ function resolveStaticHtml(urlPath) {
 }
 
 const SPA_PREFIXES = [
-  "/search", "/topics", "/mushaf", "/learning", "/learn", "/universities",
+  "/search", "/mushaf", "/learning", "/learn", "/universities",
   "/discover-islam", "/quran", "/nations", "/prophets", "/prophet-stories",
   "/sins-and-rights", "/arbaeen-nawawi", "/annual-courses",
   "/scientific-announcements", "/c", "/hadith",

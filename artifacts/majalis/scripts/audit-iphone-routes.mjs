@@ -31,7 +31,7 @@ const BATCHES = {
     "/privacy", "/terms", "/methodology",
   ],
   sections: [
-    "/tawhid", "/fiqh", "/seerah", "/topics", "/calendar", "/occasions",
+    "/tawhid", "/fiqh", "/seerah", "/calendar", "/occasions",
     "/miracles", "/prophetic-medicine", "/quran-circles", "/fawaid",
     "/hadith/books", "/hadith/books-and-rulings", "/hadith/sahih",
     "/hadith/daif", "/hadith/mawdu", "/stories", "/nations", "/prophets",

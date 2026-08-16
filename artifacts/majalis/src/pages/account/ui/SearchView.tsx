@@ -587,7 +587,6 @@ export default function SearchPage() {
           {showFilters ? "إخفاء الفلاتر" : "بحث متقدم"}
           {hasActiveFilter && <span className="search-adv-dot" aria-hidden="true" />}
         </button>
-        <Link href="/topics" className="search-toolbar-link">الموضوعات العلمية ←</Link>
         {responseMs !== null && q.trim() && (
           <span className="search-response-ms">{responseMs} ms</span>
         )}

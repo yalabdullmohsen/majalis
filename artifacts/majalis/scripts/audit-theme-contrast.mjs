@@ -22,7 +22,7 @@
 import { chromium } from "playwright";
 const B = process.env.BASE_URL || "http://127.0.0.1:4403";
 const ROUTES=["/","/quran-hub","/lessons","/library","/scholars","/qa","/adhkar","/rulings",
- "/prayer-times","/seerah","/learning/paths","/topics","/about","/login","/search","/fiqh-council",
+ "/prayer-times","/seerah","/learning/paths","/about","/login","/search","/fiqh-council",
  "/prophet-stories","/quiz","/mushaf","/my-learning","/hadith","/fawaid","/miracles","/sitemap",
  "/register","/stats","/calendar","/adhan-settings","/tasbeeh-counter","/asmaa-husna",
  "/islamic-stories","/glossary","/madhahib","/sahabah","/tawhid","/zakat","/sawm","/janaza",
