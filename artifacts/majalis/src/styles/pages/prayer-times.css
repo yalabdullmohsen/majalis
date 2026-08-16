@@ -59,55 +59,71 @@ html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
   background: color-mix(in srgb, var(--gold-400, #D2B063) 18%, transparent) !important;
 }
 
+/* وضوح الشريط السفلي على شاشة الصلاة دون تكبير مبالغ */
+html.pts-immersive .bottom-nav__tab {
+  min-height: 3.15rem !important;
+  gap: 0.28rem !important;
+}
+html.pts-immersive .bottom-nav__tab-label {
+  font-size: 0.8125rem !important;
+  font-weight: 700 !important;
+  color: inherit !important;
+}
+html.pts-immersive .bottom-nav__tab svg {
+  width: 1.35rem !important;
+  height: 1.35rem !important;
+}
+html.pts-immersive .bottom-nav {
+  padding-block-end: max(0.35rem, var(--inset-bottom, 0px)) !important;
+}
+
+.pts-screen.pts-screen--with-nav,
 .pts-screen--with-nav {
-  /* مع شريط الأقسام العلوي + الشريط السفلي: لا سحب تحت النوتش */
+  /* على الجوال TopSectionBar مخفي — الشاشة نفسها تملك safe-area العلوي */
   margin-block-start: 0 !important;
   margin-inline: 0 !important;
-  padding-block-start: 0.85rem !important;
-  padding-bottom: calc(var(--bottom-nav-total, 4.5rem) + 16px) !important;
+  padding-block-start: calc(var(--inset-top, 0px) + 0.75rem) !important;
+  padding-bottom: calc(
+    var(--bottom-nav-total, 4.5rem) + var(--inset-bottom, 0px) + 1rem
+  ) !important;
   box-sizing: border-box;
 }
 
 .pts-screen {
   /* مربوط بهوية v4 — لا باليتة موازية */
-  --pts-bg-0: var(--em-950, #081A16);
-  --pts-bg-1: var(--em-800, var(--mj-brand-deep));
-  --pts-bg-2: var(--em-700, #195345);
-  /* ذهب فاتح ثابت للنص على الخلفية الزمردية — لا --gold-300/=mj-accent الداكن
-     (#B08A3E ≈ 3.7:1 على #123F2E؛ #E3CB8C يمرّ ≥4.5:1 لبوابة التباين). */
+  --pts-bg-0: #081A16;
+  --pts-bg-1: #0E2A22;
+  --pts-bg-2: #195345;
   --pts-gold: #E3CB8C;
   --pts-gold-soft: color-mix(in srgb, #D2B063 28%, transparent);
-  --pts-gold-line: color-mix(in srgb, #D2B063 40%, transparent);
-  /* أبيض صلب — لا --n-50/--mj-bg/--mj-ink (تنقلب سوداء حسب السمة) */
+  --pts-gold-line: color-mix(in srgb, #D2B063 45%, transparent);
   --pts-white: #FAFAF8;
-  --pts-muted: rgba(250, 250, 248, 0.78);
-  --pts-row: rgba(250, 250, 248, 0.06);
-  --pts-row-active: color-mix(in srgb, var(--gold-400, #D2B063) 18%, transparent);
+  /* ثانوي مقروء ≥4.5:1 تقريباً على الزمرد العميق */
+  --pts-muted: rgba(250, 250, 248, 0.82);
+  --pts-row: rgba(250, 250, 248, 0.07);
+  --pts-row-active: color-mix(in srgb, #D2B063 22%, rgba(20, 70, 55, 0.55));
 
   direction: rtl;
-  /* ملء الشاشة كاملة — NavBar مخفي على هذا المسار، فلا نخصم ارتفاع هيدر.
-     الهامش السالب يلغي padding الآمن على html/body الذي كان يظهر شريطًا أبيض
-     فوق الخلفية الخضراء (السبب الجذري لفراغ الرأس الأبيض). */
   min-height: 100dvh;
   width: 100%;
   max-width: none;
   margin: 0;
-  margin-block-start: calc(-1 * var(--inset-top));
-  margin-inline: calc(-1 * var(--inset-left)) calc(-1 * var(--inset-right));
+  /* لا نسحب تحت النوتش بمقدار سالب — الخلفية عبر html.pts-immersive + PageChrome */
+  margin-block-start: 0;
+  margin-inline: 0;
   color: var(--pts-white);
-  /* لون صلب تحت التدرّج — قياس التباين وfallback عند تعطيل الصور */
   background-color: var(--pts-bg-1);
   background-image:
     radial-gradient(ellipse 90% 55% at 70% 8%, rgba(212, 196, 160, 0.08), transparent 55%),
     linear-gradient(180deg, var(--pts-bg-1) 0%, var(--pts-bg-0) 48%, #0A221C 100%);
   padding:
-    max(0.85rem, var(--inset-top))
-    max(1.1rem, var(--inset-right))
-    calc(var(--bottom-nav-h, 64px) + 1.25rem + var(--inset-bottom))
-    max(1.1rem, var(--inset-left));
+    calc(var(--inset-top, 0px) + 0.75rem)
+    max(1.1rem, var(--inset-right, 0px))
+    calc(var(--bottom-nav-h, 64px) + 1.25rem + var(--inset-bottom, 0px))
+    max(1.1rem, var(--inset-left, 0px));
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 0.9rem;
   position: relative;
   overflow-x: hidden;
   box-sizing: border-box;
@@ -136,31 +152,38 @@ html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
 .pts-header {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 0.35rem;
+  align-items: stretch;
+  gap: 0.55rem;
+  padding-inline: 0.1rem;
 }
 .pts-header__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.65rem;
+  gap: 0.75rem;
   width: 100%;
+  min-height: 2.75rem;
 }
 .pts-back {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  justify-content: center;
+  gap: 0.4rem;
   margin: 0;
-  padding: 0.4rem 0.7rem;
+  min-height: 2.5rem;
+  padding: 0.45rem 0.9rem;
   border-radius: 999px;
   border: 1px solid var(--pts-gold-line);
-  background: rgba(250, 250, 248, 0.06);
+  background: rgba(250, 250, 248, 0.1);
   color: var(--pts-white);
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-family: var(--font-face, var(--font-body), "Amiri", serif);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   cursor: pointer;
   flex-shrink: 0;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 .pts-back:hover {
   background: var(--pts-gold-soft);
@@ -171,7 +194,7 @@ html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
 }
 .pts-title {
   margin: 0;
-  font-family: var(--font-body);
+  font-family: var(--font-face, var(--font-body), "Amiri", serif);
   font-size: clamp(1.85rem, 6vw, 2.35rem);
   font-weight: 800;
   color: var(--pts-white);
@@ -192,35 +215,41 @@ html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
 .pts-location {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
   margin-inline-start: auto;
-  padding: 0;
-  border: none;
-  background: transparent;
+  max-width: min(58vw, 14rem);
+  min-height: 2.5rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(227, 203, 140, 0.35);
+  background: rgba(250, 250, 248, 0.08);
   color: var(--pts-gold);
-  font-size: 0.9rem;
-  font-weight: 600;
-  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: var(--font-face, var(--font-body), "Amiri", serif);
   cursor: pointer;
-  transition: opacity 0.15s;
+  transition: opacity 0.15s, background 0.15s;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .pts-location:hover {
-  opacity: 0.85;
+  opacity: 0.92;
+  background: var(--pts-gold-soft);
 }
 .pts-dates {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.45rem;
   align-items: center;
-  font-size: 0.78rem;
-  /* لون صلب مقروء فوق الزمرد (بدل color-mix الشفاف) — ≥4.5:1 */
-  color: #C8D4CE;
-  background-color: var(--pts-bg-1);
-  border-radius: 0.35rem;
-  padding: 0.1rem 0.15rem;
+  justify-content: flex-start;
+  font-family: var(--font-face, var(--font-body), "Amiri", serif);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #D5E0DA;
+  line-height: 1.35;
 }
-.pts-dates__sep { opacity: 0.5; }
+.pts-dates__sep { opacity: 0.55; color: var(--pts-gold); }
 
 /* ── محافظات + طريقة الحساب ── */
 .pts-gov-panel {
@@ -277,28 +306,36 @@ html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
   color: var(--pts-white);
 }
 
-/* ── بطل العدّاد + ظلّ المسجد ── */
+/* ── بطل العدّاد + بطاقة احترافية + ظلّ المسجد ── */
 .pts-hero {
   position: relative;
-  min-height: 168px;
+  min-height: 11.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1rem 0.75rem 1.15rem;
+  padding: 1.35rem 1rem 1.45rem;
   overflow: hidden;
-  border-radius: 0;
+  border-radius: 1.15rem;
+  border: 1px solid var(--pts-gold-line);
+  /* لون صلب تحت التدرّج — لازم لقياس التباين (لا background-image بلا solid) */
+  background-color: #12362C;
+  background-image:
+    linear-gradient(165deg, rgba(25, 83, 69, 0.55) 0%, rgba(8, 26, 22, 0.72) 100%);
+  color: var(--pts-white);
+  box-shadow: 0 10px 28px -18px rgba(0, 0, 0, 0.55);
 }
 .pts-mosque {
   position: absolute;
-  inset-inline: 0;
-  bottom: -8px;
-  width: 100%;
+  inset-inline: 8%;
+  bottom: -10px;
+  width: 84%;
   height: auto;
-  max-height: 180px;
+  max-height: 160px;
   color: var(--pts-gold);
   pointer-events: none;
   z-index: 0;
+  opacity: 0.22;
 }
 .pts-hero__content {
   position: relative;
@@ -306,40 +343,43 @@ html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
+  width: 100%;
 }
 .pts-hero__label {
   margin: 0;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: rgba(250, 250, 248, 0.78);
+  font-family: var(--font-face, var(--font-body), "Amiri", serif);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--pts-muted);
   letter-spacing: 0.02em;
 }
 .pts-hero__name {
   margin: 0;
-  font-family: var(--font-body);
-  font-size: clamp(1.85rem, 7vw, 2.55rem);
+  font-family: var(--font-face, var(--font-body), "Amiri", serif);
+  font-size: clamp(1.75rem, 6.5vw, 2.35rem);
   font-weight: 800;
   color: var(--pts-white);
   line-height: 1.25;
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
 }
 .pts-hero__countdown {
-  margin-top: 0.25rem;
-  font-family: var(--font-body);
-  font-size: clamp(2.15rem, 9vw, 3rem);
+  margin-top: 0.35rem;
+  font-family: var(--font-face, var(--font-body), "Amiri", serif);
+  font-size: clamp(2.2rem, 9vw, 3.05rem);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   color: var(--pts-white);
   line-height: 1.05;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 .pts-hero__hint {
-  margin: 0.35rem 0 0;
-  font-size: 0.72rem;
+  margin: 0.4rem 0 0;
+  font-size: 0.78rem;
+  font-weight: 600;
   color: var(--pts-muted);
-  max-width: 16rem;
+  max-width: 17rem;
   line-height: 1.45;
 }
 .pts-hero__actions {
@@ -373,13 +413,13 @@ html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* ── قائمة المواقيت (صفوف عمودية كالصورة) ── */
+/* ── قائمة المواقيت ── */
 .pts-list {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.45rem;
   width: 100%;
-  margin-top: 0.25rem;
+  margin-top: 0.15rem;
 }
 .pts-row {
   display: flex;
@@ -387,69 +427,76 @@ html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
   justify-content: space-between;
   gap: 1rem;
   width: 100%;
-  padding: 0.8rem 1rem;
-  border: none;
-  border-radius: 12px;
-  background: transparent;
+  min-height: 3.35rem;
+  padding: 0.85rem 1.05rem;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: var(--pts-row);
   color: var(--pts-white);
-  font-family: inherit;
+  font-family: var(--font-face, var(--font-body), "Amiri", serif);
   cursor: pointer;
-  transition: background 0.18s ease, transform 0.15s ease;
+  transition: background 0.18s ease, border-color 0.18s ease;
   text-align: start;
 }
 .pts-row:hover {
-  background: var(--pts-row);
+  background: rgba(250, 250, 248, 0.1);
 }
 .pts-row--next {
   background: var(--pts-row-active);
-  box-shadow: inset 0 0 0 1px var(--pts-gold-line);
+  border-color: var(--pts-gold-line);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #E3CB8C 35%, transparent);
 }
 .pts-row--next:hover {
-  background: rgba(212, 196, 160, 0.24);
+  background: color-mix(in srgb, #D2B063 28%, rgba(20, 70, 55, 0.5));
 }
 .pts-row--pinned:not(.pts-row--next) {
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
 }
 .pts-row--past {
-  opacity: 0.48;
+  opacity: 0.72;
 }
 .pts-row--past .pts-row__time {
   text-decoration: line-through;
   text-decoration-thickness: 1px;
+  text-decoration-color: rgba(250, 250, 248, 0.45);
 }
 .pts-row__meta {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.15rem;
+  gap: 0.2rem;
   min-width: 0;
 }
 .pts-row__name {
-  font-size: 1.02rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--pts-white);
+  line-height: 1.25;
 }
 .pts-row--next .pts-row__name {
-  font-weight: 700;
+  font-weight: 800;
 }
 .pts-row__status {
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--pts-muted);
+  line-height: 1.3;
 }
 .pts-row--next .pts-row__status {
   color: var(--pts-gold);
 }
 .pts-row__time {
-  font-size: 1.02rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
-  color: rgba(250, 250, 248, 0.88);
+  color: rgba(250, 250, 248, 0.92);
   direction: ltr;
   unicode-bidi: isolate;
   flex-shrink: 0;
+  min-width: 4.75rem;
+  text-align: end;
 }
 .pts-row--next .pts-row__time {
   color: var(--pts-gold);
@@ -574,21 +621,24 @@ html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
 .pts-screen,
 .pts-screen .pts-back,
 .pts-screen .pts-title,
-.pts-screen .pts-hero__label,
 .pts-screen .pts-hero__name,
 .pts-screen .pts-hero__countdown,
-.pts-screen .pts-hero__hint,
 .pts-screen .pts-row,
 .pts-screen .pts-row__name,
-.pts-screen .pts-row__status,
-.pts-screen .pts-row__time,
-.pts-screen .pts-dates,
 .pts-screen .pts-gov__chip,
 .pts-screen .pts-more > summary,
 .pts-screen .pts-retry,
 .pts-screen .pts-skeleton,
 .pts-screen .pts-error {
   color: var(--pts-white) !important;
+}
+.pts-screen .pts-dates {
+  color: #D5E0DA !important;
+}
+.pts-screen .pts-hero__label,
+.pts-screen .pts-hero__hint,
+.pts-screen .pts-row__status {
+  color: var(--pts-muted) !important;
 }
 .pts-screen .pts-location,
 .pts-screen .pts-hero__reset,
@@ -597,18 +647,16 @@ html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
 .pts-screen .pts-dock__icon,
 .pts-screen .pts-row--next .pts-row__name,
 .pts-screen .pts-row--next .pts-row__status,
-.pts-screen .pts-row--next .pts-row__time {
+.pts-screen .pts-row--next .pts-row__time,
+.pts-screen .pts-dates__sep {
   color: var(--pts-gold) !important;
 }
-.pts-screen .pts-hero__label,
-.pts-screen .pts-hero__hint,
-.pts-screen .pts-row__status,
 .pts-screen .pts-gov__chip:not(.pts-gov__chip--active),
 .pts-screen .pts-skeleton {
   color: var(--pts-muted) !important;
 }
 .pts-screen .pts-row__time {
-  color: rgba(250, 250, 248, 0.88) !important;
+  color: rgba(250, 250, 248, 0.92) !important;
 }
 .pts-screen .pts-gov__chip--active {
   color: var(--pts-white) !important;

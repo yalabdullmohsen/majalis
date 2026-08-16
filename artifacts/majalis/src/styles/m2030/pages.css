@@ -11,19 +11,20 @@ html.pts-immersive body {
   --pts-bg-0: var(--em-950);
   --pts-bg-1: var(--em-900);
   --pts-bg-2: var(--em-800);
-  --pts-gold: var(--gold-400);
+  --pts-gold: #E3CB8C;
   --pts-gold-soft: color-mix(in srgb, var(--em-400) 20%, transparent);
-  --pts-gold-line: color-mix(in srgb, var(--em-400) 38%, transparent);
+  --pts-gold-line: color-mix(in srgb, #D2B063 45%, transparent);
   /* أبيض ثابت فوق الزمرد — لا يعتمد على --text-on-dark بعد أن أُسيء ربطه بـ --mj-ink */
   --pts-white: #FAFAF8;
-  --pts-muted: rgba(250, 250, 248, 0.78);
-  --pts-row: rgba(250, 250, 248, 0.05);
-  --pts-row-active: color-mix(in srgb, var(--em-400) 14%, transparent);
+  --pts-muted: rgba(250, 250, 248, 0.82);
+  --pts-row: rgba(250, 250, 248, 0.07);
+  --pts-row-active: color-mix(in srgb, #D2B063 22%, rgba(20, 70, 55, 0.55));
   background-image:
     radial-gradient(ellipse 80% 40% at 80% 0%, color-mix(in srgb, var(--em-400) 12%, transparent), transparent 55%),
     linear-gradient(180deg, var(--em-900) 0%, var(--em-950) 55%, #0A1A16 100%) !important;
-  gap: 0.65rem !important;
-  padding-block-start: max(0.65rem, var(--inset-top)) !important;
+  gap: 0.9rem !important;
+  /* لا تتجاوز safe-area — .pts-screen--with-nav يملك الحشو العلوي */
+  padding-block-start: unset !important;
 }
 
 .pts-screen::before {
