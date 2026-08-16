@@ -5,10 +5,11 @@ import type { LucideIcon } from "lucide-react";
 import {
   BookMarked,
   BookOpen,
-  Clock,
   CreditCard,
   Heart,
+  Landmark,
   Library,
+  Moon,
   ScrollText,
   Search,
   Settings,
@@ -18,11 +19,7 @@ import {
 
 export type MoreSectionTier = "featured" | "standard";
 
-export type MoreSectionGroupId =
-  | "science"
-  | "learn"
-  | "worship"
-  | "account";
+export type MoreSectionGroupId = "primary" | "secondary";
 
 export type MoreSection = {
   id: string;
@@ -35,18 +32,15 @@ export type MoreSection = {
   group: MoreSectionGroupId;
   badge?: string;
   keywords?: string[];
-  /** إجراء خاص (بحث) بدل التنقّل */
   action?: "search";
 };
 
 export const MORE_SECTION_GROUPS: { id: MoreSectionGroupId; title: string }[] = [
-  { id: "science", title: "الأقسام العلمية" },
-  { id: "learn", title: "أدوات التعلم" },
-  { id: "worship", title: "العبادات" },
-  { id: "account", title: "الإعدادات والخدمات" },
+  { id: "primary", title: "الأقسام الأساسية" },
+  { id: "secondary", title: "أدوات مساعدة" },
 ];
 
-/** القائمة المعتمدة داخل المزيد (مع الشريط السفلي: قرآن · دروس · صلاة · فقه). */
+/** الأقسام الأساسية داخل المزيد */
 export const MORE_FEATURED_SECTIONS: MoreSection[] = [
   {
     id: "library",
@@ -56,7 +50,7 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     route: "/library",
     tier: "featured",
     order: 1,
-    group: "science",
+    group: "primary",
     keywords: ["مكتبة", "كتب"],
   },
   {
@@ -67,18 +61,18 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     route: "/scholars",
     tier: "featured",
     order: 2,
-    group: "science",
+    group: "primary",
     keywords: ["علماء", "أعلام", "تراجم"],
   },
   {
     id: "hadith",
     title: "الحديث وعلومه",
-    subtitle: "صحيح وضعيف وكتب",
+    subtitle: "صحيح وضعيف وكتب ومصطلح",
     icon: ScrollText,
     route: "/hadith",
     tier: "featured",
     order: 3,
-    group: "science",
+    group: "primary",
     keywords: ["حديث", "سنة"],
   },
   {
@@ -89,30 +83,52 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     route: "/prophets",
     tier: "featured",
     order: 4,
-    group: "science",
+    group: "primary",
     keywords: ["أنبياء", "قصص"],
   },
   {
-    id: "quiz",
-    title: "سين جيم",
-    subtitle: "مسابقة أسئلة تفاعلية",
-    icon: Star,
-    route: "/quiz",
+    id: "nations",
+    title: "الأمم السابقة",
+    subtitle: "عاد وثمود وأصحاب الأيكة وغيرهم",
+    icon: Landmark,
+    route: "/nations",
     tier: "featured",
     order: 5,
-    group: "learn",
-    keywords: ["مسابقة", "اختبار", "quiz", "سين جيم", "qa"],
+    group: "primary",
+    keywords: ["أمم", "عاد", "ثمود"],
+  },
+  {
+    id: "seerah",
+    title: "السيرة النبوية",
+    subtitle: "من البعثة إلى الهجرة والغزوات",
+    icon: Moon,
+    route: "/seerah",
+    tier: "featured",
+    order: 6,
+    group: "primary",
+    keywords: ["سيرة", "غزوات"],
   },
   {
     id: "fawaid-cards",
     title: "الفوائد والبطاقات",
-    subtitle: "فوائد ومراجعة سريعة",
+    subtitle: "مراجعة وحفظ",
     icon: CreditCard,
     route: "/fawaid",
     tier: "featured",
-    order: 6,
-    group: "learn",
+    order: 7,
+    group: "primary",
     keywords: ["فوائد", "بطاقات", "مراجعة", "flashcards"],
+  },
+  {
+    id: "quiz",
+    title: "سين جيم",
+    subtitle: "اختبر معلوماتك",
+    icon: Star,
+    route: "/quiz",
+    tier: "featured",
+    order: 8,
+    group: "primary",
+    keywords: ["مسابقة", "اختبار", "quiz", "سين جيم", "qa"],
   },
   {
     id: "search",
@@ -121,43 +137,10 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: Search,
     route: "/search",
     tier: "featured",
-    order: 7,
-    group: "learn",
+    order: 9,
+    group: "primary",
     keywords: ["بحث"],
     action: "search",
-  },
-  {
-    id: "adhkar",
-    title: "الأذكار",
-    subtitle: "أذكار اليوم والليل",
-    icon: BookMarked,
-    route: "/adhkar",
-    tier: "featured",
-    order: 8,
-    group: "worship",
-    keywords: ["أذكار", "دعاء"],
-  },
-  {
-    id: "duas",
-    title: "الأدعية",
-    subtitle: "أدعية مأثورة",
-    icon: Heart,
-    route: "/duas",
-    tier: "featured",
-    order: 9,
-    group: "worship",
-    keywords: ["أدعية", "دعاء"],
-  },
-  {
-    id: "prayer",
-    title: "الصلاة",
-    subtitle: "مواقيت وقبلة",
-    icon: Clock,
-    route: "/prayer-times",
-    tier: "featured",
-    order: 10,
-    group: "worship",
-    keywords: ["صلاة", "مواقيت"],
   },
   {
     id: "settings",
@@ -166,25 +149,36 @@ export const MORE_FEATURED_SECTIONS: MoreSection[] = [
     icon: Settings,
     route: "/settings",
     tier: "featured",
-    order: 11,
-    group: "account",
+    order: 10,
+    group: "primary",
     keywords: ["إعدادات"],
-  },
-  {
-    id: "favorites",
-    title: "المفضلة",
-    subtitle: "اقتباساتك المحفوظة",
-    icon: Heart,
-    route: "/my-citations",
-    tier: "featured",
-    order: 12,
-    group: "account",
-    keywords: ["مفضلة", "محفوظات"],
   },
 ];
 
-/** أدوات مساعدة ثانوية — ليست أبوابًا رئيسية (بحث/مكتبة). */
+/** قسم ثانوي أسفل الصفحة */
 export const MORE_STANDARD_SECTIONS: MoreSection[] = [
+  {
+    id: "duas",
+    title: "الأدعية",
+    subtitle: "أدعية مأثورة",
+    icon: Heart,
+    route: "/duas",
+    tier: "standard",
+    order: 20,
+    group: "secondary",
+    keywords: ["أدعية", "دعاء"],
+  },
+  {
+    id: "adhkar",
+    title: "الأذكار",
+    subtitle: "أذكار اليوم والليل",
+    icon: BookMarked,
+    route: "/adhkar",
+    tier: "standard",
+    order: 21,
+    group: "secondary",
+    keywords: ["أذكار"],
+  },
   {
     id: "glossary",
     title: "المصطلحات",
@@ -192,8 +186,8 @@ export const MORE_STANDARD_SECTIONS: MoreSection[] = [
     icon: BookMarked,
     route: "/islamic-glossary",
     tier: "standard",
-    order: 20,
-    group: "learn",
+    order: 22,
+    group: "secondary",
     keywords: ["معجم", "مصطلحات"],
   },
   {
@@ -203,9 +197,20 @@ export const MORE_STANDARD_SECTIONS: MoreSection[] = [
     icon: BookOpen,
     route: "/topics",
     tier: "standard",
-    order: 21,
-    group: "learn",
+    order: 23,
+    group: "secondary",
     keywords: ["مواضيع"],
+  },
+  {
+    id: "favorites",
+    title: "المفضلة",
+    subtitle: "اقتباساتك المحفوظة",
+    icon: Heart,
+    route: "/my-citations",
+    tier: "standard",
+    order: 24,
+    group: "secondary",
+    keywords: ["مفضلة", "محفوظات"],
   },
 ];
 
@@ -217,7 +222,7 @@ export const MORE_ACCOUNT_SECTIONS: MoreSection[] = [
     route: "/my-learning",
     tier: "standard",
     order: 90,
-    group: "account",
+    group: "secondary",
   },
 ];
 

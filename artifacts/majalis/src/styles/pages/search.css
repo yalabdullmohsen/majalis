@@ -2,15 +2,41 @@
 /* ══════════════════════════════════════════════
    46. Search Page — البحث العلمي
    ══════════════════════════════════════════════ */
+
+.search-page.page-shell,
+.page-shell.search-page {
+  min-height: 100dvh;
+  min-height: 100svh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding-top: max(0.75rem, var(--inset-top, 0px));
+  padding-bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px);
+  box-sizing: border-box;
+}
+
+.search-page .search-page-form {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: color-mix(in srgb, var(--mj-bg, #f7f6f2) 92%, transparent);
+  backdrop-filter: blur(8px);
+  padding-block: 0.35rem 0.55rem;
+  margin-inline: -0.15rem;
+  padding-inline: 0.15rem;
+}
+
 .search-page-form {
   display: flex;
   gap: var(--ds-space-2);
   margin-bottom: 0.75rem;
+  align-items: stretch;
 }
 
 .search-page-submit {
   flex-shrink: 0;
   white-space: nowrap;
+  min-height: 44px;
 }
 
 /* شريط الأدوات */

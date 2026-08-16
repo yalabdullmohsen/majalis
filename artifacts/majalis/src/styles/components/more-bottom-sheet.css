@@ -15,6 +15,25 @@
       calc(100dvh - var(--inset-top, 0px) - var(--bottom-nav-total, 64px) - 0.75rem)
     );
     padding-bottom: 0 !important;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .bottom-sheet--services .bottom-sheet__head {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--mj-surface) !important;
+    flex-shrink: 0;
+  }
+  .bottom-sheet--services .bottom-sheet__body,
+  .app-sheet.bottom-sheet--services .app-sheet__body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+    min-height: 0;
+    padding-bottom: calc(1rem + var(--inset-bottom, 0px));
   }
   .app-sheet.bottom-sheet--services .app-sheet__footer {
     padding: 0.5rem 1.1rem;

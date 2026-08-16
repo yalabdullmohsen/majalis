@@ -37,7 +37,7 @@ assert.deepEqual(
 
 assert.deepEqual(
   MORE_SECTION_GROUPS.map((g) => g.title),
-  ["الأقسام العلمية", "أدوات التعلم", "العبادات", "الإعدادات والخدمات"],
+  ["الأقسام الأساسية", "أدوات مساعدة"],
 );
 
 const moreTitles = MORE_FEATURED_SECTIONS.map((s) => s.title);
@@ -46,10 +46,11 @@ for (const required of [
   "أعلام وتراجم",
   "الحديث وعلومه",
   "قصص الأنبياء",
+  "الأمم السابقة",
+  "السيرة النبوية",
   "سين جيم",
   "الفوائد والبطاقات",
   "البحث",
-  "الأذكار",
   "الإعدادات",
 ]) {
   assert.ok(moreTitles.includes(required), `المزيد يتضمن «${required}»`);

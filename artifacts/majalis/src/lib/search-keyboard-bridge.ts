@@ -21,7 +21,15 @@ function enhanceSearchInput(el: HTMLInputElement): void {
 
 function onFocusIn(event: FocusEvent): void {
   const el = event.target;
-  if (isSearchLikeTarget(el)) enhanceSearchInput(el);
+  if (!isSearchLikeTarget(el)) return;
+  enhanceSearchInput(el);
+  window.requestAnimationFrame(() => {
+    try {
+      el.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+    } catch {
+      /* تجاهل */
+    }
+  });
 }
 
 function onKeyDown(event: KeyboardEvent): void {
