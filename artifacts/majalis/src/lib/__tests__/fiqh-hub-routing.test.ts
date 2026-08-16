@@ -70,7 +70,7 @@ console.log("\n=== فقه — لا إسقاط للدروس على /rulings با�
   }
 
   const usul = getFiqhHubTopic("usul-fiqh");
-  assert(Boolean(usul?.relatedGuides?.some((g) => g.href === "/learning/paths/usool-fiqh")),
+  assert(Boolean(usul?.relatedGuides?.some((g) => g.href === "/lessons")),
     "أصول الفقه يرتبط بمسار usool-fiqh");
   assert(Boolean(usul?.relatedGuides?.some((g) => g.href === "/fiqh-qawaid")),
     "أصول الفقه يرتبط بالقواعد الفقهية");

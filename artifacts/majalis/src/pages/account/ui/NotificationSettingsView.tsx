@@ -506,7 +506,7 @@ export default function NotificationSettingsPage() {
 
       <nav className="profile-quick-links nsp-quick-links" aria-label="روابط">
         <Link href="/flashcards" className="profile-quick-link">البطاقات</Link>
-        <Link href="/learning/paths" className="profile-quick-link">المسارات العلمية</Link>
+        <Link href="/lessons" className="profile-quick-link">الدروس والدورات</Link>
         <Link href="/settings" className="profile-quick-link">الإعدادات</Link>
       </nav>
     </div>

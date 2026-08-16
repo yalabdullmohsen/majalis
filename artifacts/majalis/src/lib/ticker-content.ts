@@ -49,7 +49,7 @@ export const SECTION_PROMOS: Omit<TickerContentItem, "kind">[] = [
   { id: "promo:quran", label: "قسم", text: "مركز القرآن — مصحف وتلاوة وأدوات التعلّم", href: "/mushaf" },
   { id: "promo:quran-knowledge", label: "قسم", text: "القرآن وعلومه — فهرس وعلوم وأسباب نزول وقصص", href: "/quran-knowledge" },
   { id: "promo:scholars", label: "قسم", text: "العلماء — تراجم وأعلام ومدارس علمية", href: "/scholars" },
-  { id: "promo:learn", label: "قسم", text: "تعلّم — مسارات ودروس واختبارات منظّمة", href: "/learn" },
+  { id: "promo:learn", label: "قسم", text: "تعلّم — دروس ودورات واختبارات منظّمة", href: "/learn" },
 ];
 
 function normalizeText(text: string): string {

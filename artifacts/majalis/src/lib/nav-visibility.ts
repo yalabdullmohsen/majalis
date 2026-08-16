@@ -71,8 +71,8 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
  */
 export const MERGED_PATH_REDIRECTS: Record<string, string> = {
   "/knowledge-map": "/",
-  "/learning-plan": "/learning/paths",
-  "/masarat": "/learning/paths",
+  "/learning-plan": "/lessons",
+  "/masarat": "/lessons",
   "/family-mode": "/family",
   "/learning/quiz": "/quiz",
   "/mushaf-v2-preview": "/mushaf",

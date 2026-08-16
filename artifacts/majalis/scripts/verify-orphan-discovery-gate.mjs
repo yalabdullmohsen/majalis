@@ -28,7 +28,7 @@ const MUST_DISCOVER = [
   "/terms",
   "/sources",
   "/start-here",
-  "/learning/paths",
+  "/lessons",
   "/account-deletion",
 ];
 

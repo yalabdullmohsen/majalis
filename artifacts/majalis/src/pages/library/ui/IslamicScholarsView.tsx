@@ -242,9 +242,6 @@ export default function IslamicScholarsPage() {
         <Link href="/lessons" className="sch-related-link">
           <BookOpen size={16} /> دروس المشايخ <ChevronLeft size={14} />
         </Link>
-        <Link href="/learning/paths" className="sch-related-link">
-          <Star size={16} /> المسارات العلمية <ChevronLeft size={14} />
-        </Link>
         <Link href="/hadith" className="sch-related-link">
           <BookOpen size={16} /> الحديث وعلومه <ChevronLeft size={14} />
         </Link>

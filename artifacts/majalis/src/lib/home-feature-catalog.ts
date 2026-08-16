@@ -14,7 +14,6 @@ import {
   Landmark,
   Layers,
   Lightbulb,
-  Map,
   Mic2,
   Monitor,
   Moon,
@@ -126,7 +125,6 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     Icon: Wrench,
     label: "أدوات التعلم",
     items: [
-      { href: "/learning/paths",  Icon: Map,         title: seoNavLabel("/learning/paths", "المسارات العلمية"),  desc: "مسار من المبتدئ إلى المتقدم" },
       { href: "/my-learning",     Icon: Layers,      title: seoNavLabel("/my-learning", "حسابي"),   desc: "تقدمك والبطاقات المراجعة" },
       { href: "/quiz",            Icon: Target,      title: seoNavLabel("/quiz", "لعبة سين جيم"),   desc: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
       { href: "/assistant",       Icon: Bot,         title: seoNavLabel("/assistant", "المساعد العلمي"),    desc: "إرشاد فوري بالذكاء الاصطناعي" },

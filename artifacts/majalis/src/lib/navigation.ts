@@ -162,7 +162,6 @@ export const HOME_MORE_SECTIONS_RAW = [
   { href: "/occasions-lessons", title: seoNavLabel("/occasions-lessons", "المناسبات والدروس"), description: "مناسبات وتقويم دروس" },
   { href: "/assistant", title: seoNavLabel("/assistant", "المساعد العلمي"), description: "إرشاد داخل التطبيق" },
   { href: "/islamic-directory", title: seoNavLabel("/islamic-directory", "الدليل الإسلامي"), description: "مؤسسات ومساجد ومشاهد" },
-  { href: "/learning/paths", title: seoNavLabel("/learning/paths", "المسارات العلمية"), description: "تعلم منظم من المبتدئ للمتقدم" },
   { href: "/my-learning", title: seoNavLabel("/my-learning", "حسابي"), description: "تقدمك وإنجازاتك" },
   { href: "/quiz", title: seoNavLabel("/quiz", "لعبة سين جيم"), description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
   { href: "/scholars",     title: seoNavLabel("/scholars", "أعلام الإسلام"),        description: "من الأئمة الأربعة حتى العلماء المعاصرين" },

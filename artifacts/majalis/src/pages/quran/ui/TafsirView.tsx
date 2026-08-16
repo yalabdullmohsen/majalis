@@ -225,7 +225,7 @@ export default function TafsirPage() {
           <strong>علوم القرآن</strong>
           <span>النزول والجمع والإعجاز</span>
         </Link>
-        <Link href="/learning/paths/tafseer" className="tf-cta__link">
+        <Link href="/lessons" className="tf-cta__link">
           <strong>مسار التفسير</strong>
           <span>تعلّم منظّم مرحلي</span>
         </Link>
@@ -300,7 +300,7 @@ export default function TafsirPage() {
           </h2>
         </div>
         <p className="tf-section-lead">
-          ترتيب عملي من التلاوة إلى التعمّق — يكمّل مسار «التفسير» في مسارات التعلم.
+          ترتيب عملي من التلاوة إلى التعمّق في علم التفسير.
         </p>
         <div className="tf-path-grid">
           {STUDY_PATH.map((step) => (
@@ -498,7 +498,7 @@ export default function TafsirPage() {
             { href: "/quran/surah-stories", label: "قصص السور" },
             { href: "/duas-quran", label: "أدعية القرآن" },
             { href: "/hadith-science", label: "علوم الحديث" },
-            { href: "/learning/paths/tafseer", label: "مسار التفسير" },
+            { href: "/lessons", label: "مسار التفسير" },
             { href: "/library?cat=تفسير", label: "مكتبة التفسير" },
           ].map(({ href, label }) => (
             <Link key={href} href={href} className="tf-related__link">

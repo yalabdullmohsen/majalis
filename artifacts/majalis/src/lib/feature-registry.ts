@@ -75,11 +75,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── التعلم — بوابة إلى الفقه والأحكام والسيرة والعقيدة وقصص الأنبياء والأمم
-  { id: "learn",         label: "تعلّم",             path: "/learn",        group: "تعلم",          status: "disabled",     inSideNav: false, inBottomNav: false },
-  { id: "learning-paths",label: "المسارات العلمية", path: "/learning/paths",group: "تعلم",     status: "active",       inSideNav: false, inBottomNav: false },
-  { id: "my-learning",  label: "لوحتي التعليمية",  path: "/my-learning",  group: "تعلم",          status: "requires-auth",inSideNav: false, inBottomNav: false },
-  { id: "learning-plan",label: "خطة التعلم",       path: "/learning-plan",group: "تعلم",          status: "disabled",     inSideNav: false, inBottomNav: false },
-
+  { id: "learn",         label: "تعلّم",             path: "/learn",        group: "تعلم",          status: "disabled",     inSideNav: false, inBottomNav: false },  { id: "my-learning",  label: "لوحتي التعليمية",  path: "/my-learning",  group: "تعلم",          status: "requires-auth",inSideNav: false, inBottomNav: false },
   // ── التطبيق والقانونية ────────────────────────────────────────
   { id: "about",        label: "من نحن",             path: "/about",        group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "contact",      label: "تواصل معنا",          path: "/contact",      group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },

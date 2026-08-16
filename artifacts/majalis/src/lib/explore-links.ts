@@ -7,7 +7,7 @@ import type { ExploreAlsoLink } from "@/lib/explore-link-types";
 export const ACCORDION_EXPLORE_LINKS = {
   maqasid: [
     { href: "/fiqh/topics/usul-fiqh", label: "أصول الفقه" },
-    { href: "/learning/paths/usool-fiqh", label: "مسار أصول الفقه" },
+    { href: "/lessons", label: "مسار أصول الفقه" },
     { href: "/fiqh-qawaid", label: "القواعد الفقهية" },
     { href: "/fiqh", label: "بوابة الفقه" },
     { href: "/rulings", label: "موسوعة الأحكام" },
@@ -17,7 +17,6 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/asma-husna", label: "أسماء الله الحسنى" },
     { href: "/arkan", label: "أركان الإسلام والإيمان" },
     { href: "/malaika", label: "الملائكة" },
-    { href: "/learning/paths", label: "المسارات العلمية" },
   ],
   usra: [
     { href: "/fiqh/topics/muamalat", label: "فقه المعاملات" },
@@ -30,7 +29,6 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/quran-knowledge", label: "القرآن وعلومه" },
     { href: "/adab-talab-ilm", label: "آداب طالب العلم" },
     { href: "/quran-knowledge", label: "القرآن وعلومه" },
-    { href: "/learning/paths", label: "المسارات العلمية" },
     { href: "/islamic-glossary", label: "المصطلحات الشرعية" },
   ],
   tazkiya: [
@@ -59,7 +57,6 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/iman-topics", label: "موضوعات الإيمان" },
     { href: "/kids", label: "قسم الأطفال" },
     { href: "/lessons", label: "الدروس العلمية" },
-    { href: "/learning/paths", label: "المسارات العلمية" },
   ],
   mawsuaat: [
     { href: "/fawaid", label: "الفوائد" },
@@ -71,7 +68,6 @@ export const ACCORDION_EXPLORE_LINKS = {
   durusMutanawwia: [
     { href: "/lessons", label: "الدروس العلمية" },
     { href: "/learn", label: "مركز التعلّم" },
-    { href: "/learning/paths", label: "المسارات العلمية" },
     { href: "/quiz", label: "المسابقة" },
     { href: "/islamic-directory", label: "الدليل الإسلامي" },
   ],
@@ -103,7 +99,6 @@ export const PAGE_EXPLORE_LINKS = {
     { href: "/quran-knowledge", label: "القرآن وعلومه" },
     { href: "/lessons", label: "الدروس العلمية" },
     { href: "/madhahib", label: "المذاهب الأربعة" },
-    { href: "/learning/paths", label: "المسارات العلمية" },
     { href: "/memorization", label: "الحفظ والمراجعة" },
   ],
   asmaHusna: [
@@ -114,7 +109,6 @@ export const PAGE_EXPLORE_LINKS = {
     { href: "/quran-hub", label: "مركز القرآن" },
   ],
   adabTalabIlm: [
-    { href: "/learning/paths", label: "المسارات العلمية" },
     { href: "/tawhid", label: "التوحيد" },
     { href: "/fiqh", label: "بوابة الفقه" },
     { href: "/quran-knowledge", label: "القرآن وعلومه" },

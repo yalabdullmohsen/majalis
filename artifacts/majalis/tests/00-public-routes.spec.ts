@@ -54,7 +54,9 @@ const REDIRECT_ROUTES: Array<{ href: string; redirectsTo: string }> = [
   { href: "/research",              redirectsTo: "/fiqh-council/research" },
   { href: "/scholarly-research",    redirectsTo: "/quiz" },
   { href: "/qa",                    redirectsTo: "/quiz" },
-  { href: "/learning-path",         redirectsTo: "/learning/paths" },
+  { href: "/learning-path",         redirectsTo: "/lessons" },
+  { href: "/learning-paths",        redirectsTo: "/lessons" },
+  { href: "/learning/paths",        redirectsTo: "/lessons" },
   { href: "/knowledge-map",         redirectsTo: "/knowledge-graph" },
   { href: "/features-in-progress",  redirectsTo: "/updates" },
 ];

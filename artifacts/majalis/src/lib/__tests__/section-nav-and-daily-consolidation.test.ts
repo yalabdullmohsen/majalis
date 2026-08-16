@@ -89,7 +89,7 @@ console.log("\n=== vercel redirects للتنظيف ===");
     ["/memorization-tests", "/memorization"],
     ["/islamic-institutions", "/islamic-directory"],
     ["/reviewed-cards", "/my-learning"],
-    ["/learning-plan", "/learning/paths"],
+    ["/learning-plan", "/lessons"],
     ["/quran-studies", "/quran-knowledge"],
   ];
   for (const [source, destination] of expect) {
@@ -154,7 +154,7 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   const footerNavSrc = readFileSync(resolve(appRoot, "src/lib/site-footer-nav.ts"), "utf-8");
   assert(footerSrc.includes("SITE_FOOTER_GROUPS") || footerSrc.includes("site-footer-nav"), "التذييل من مصدر المجموعات");
   assert(footerNavSrc.includes("/about-us") && footerNavSrc.includes("/privacy"), "تذييل عن المجلس");
-  assert(footerNavSrc.includes("/start-here") && footerNavSrc.includes("/learning/paths"), "تذييل ابدأ/مسارات");
+  assert(footerNavSrc.includes("/start-here") && footerNavSrc.includes("/lessons"), "تذييل ابدأ/مسارات");
   assert(footerNavSrc.includes("SITE_FOOTER_GROUPS") && footerNavSrc.includes("الأقسام"), "تذييل رباعي المجموعات");
   for (const title of ["الأقسام", "ابدأ", "الثقة", "قانوني"]) {
     assert(footerNavSrc.includes(`title: "${title}"`), `مجموعة التذييل: ${title}`);
@@ -170,7 +170,7 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   );
   assert(footerNavSrc.includes("الريادة الإسلامية الرقمية"), "سطر الريادة في التذييل");
   assert(servicesNavSrc.includes("/about-us") && servicesNavSrc.includes("/about"), "عن المجلس في مركز الخدمات");
-  assert(servicesNavSrc.includes("/start-here") && servicesNavSrc.includes("/learning/paths"), "ابدأ/مسارات في مركز الخدمات");
+  assert(servicesNavSrc.includes("/start-here") && servicesNavSrc.includes("/lessons"), "ابدأ/مسارات في مركز الخدمات");
   assert(servicesNavSrc.includes("/delete-account"), "حذف الحساب في مركز الخدمات");
   assert(navMapSrc.includes("BOTTOM_NAV_TABS") && navMapSrc.includes("SERVICES_CENTER_GROUPS"), "nav-map مصدر موحّد");
   assert(sidebarNavSrc.includes("getSidebarGroupsFromNavMap"), "الجانبية تشتق من nav-map");

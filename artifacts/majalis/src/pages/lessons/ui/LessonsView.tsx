@@ -669,7 +669,6 @@ export default function LessonsPage({
       <ExploreAlsoNav
         title="استكشف أيضًا"
         links={[
-          { href: "/learning/paths", label: "مسارات التعلم" },
           { href: "/scholars", label: "العلماء" },
           { href: "/quran-knowledge", label: "القرآن وعلومه" },
           { href: "/hadith", label: "الحديث وعلومه" },

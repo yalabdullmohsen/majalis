@@ -16,7 +16,7 @@ const cases: Array<{ path: string; expect: ReturnType<typeof getActiveTab> }> = 
   { path: "/mushaf", expect: "quran" },
   { path: "/lessons", expect: "lessons" },
   { path: "/lessons/kw-example", expect: "lessons" },
-  { path: "/learning/paths", expect: "lessons" },
+  { path: "/lessons", expect: "lessons" },
   { path: "/fiqh", expect: "fiqh" },
   { path: "/quiz", expect: "fiqh" },
   { path: "/qa", expect: "fiqh" }, /* legacy redirect → نفس تبويب /quiz */

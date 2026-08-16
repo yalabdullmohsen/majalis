@@ -191,7 +191,6 @@ async function extractSlugTitlePairs(relFile, constName, min) {
   return unique;
 }
 
-const { LEARNING_PATHS_INDEX: LEARNING_PATHS } = await importSrc("src/data/learning-paths-index.ts");
 const TOPICS = await extractSlugTitlePairs("src/views/TopicsIndexPage.tsx", "STATIC_TOPICS", 40);
 
 const { DURUS_IMANIYYA } = await importSrc("src/lib/durus-imaniyya-data.ts");
@@ -726,10 +725,6 @@ const LIST_JSON_LD = {
     "الذين ذكروا في القرآن",
   ),
   "/scholars": itemListJsonLdScript(SCHOLARS.map((s) => ({ name: s.name, url: `/scholars/${s.id}` })), "أعلام العلماء المسلمين"),
-  "/learning/paths": itemListJsonLdScript(
-    LEARNING_PATHS.map((p) => ({ name: p.title, url: `/learning/paths/${p.slug}` })),
-    "المسارات العلمية",
-  ),
   "/topics": itemListJsonLdScript(TOPICS.map((t) => ({ name: t.title, url: `/topics/${t.slug}` })), "المواضيع الإسلامية"),
   "/quran/surah-stories": itemListJsonLdScript(
     SURAH_STORIES.map((s) => ({ name: `سورة ${s.name}`, url: `/quran/surah-stories/${s.number}` })),
@@ -849,13 +844,6 @@ ${linkList("روابط ذات صلة", [
   { name: "المصحف", url: "/mushaf" },
   { name: "مركز القرآن", url: "/quran-hub" },
 ])}`,
-  "/learning/paths": `
-<p>رحلتك في طلب العلم، مسارات منظّمة من المبتدئ إلى المتقدم، كل مسار يضم دروساً وتقييمات وشهادة إتمام.</p>
-<p>مسارات تعليمية منظمة في العلوم الشرعية، فقه وعقيدة وقرآن وحديث وسيرة وأخلاق.</p>
-${linkList(
-    "المسارات العلمية المتاحة",
-    LEARNING_PATHS.map((p) => ({ name: p.title, url: `/learning/paths/${p.slug}` })),
-  )}`,
   "/topics": linkList("المواضيع الإسلامية", TOPICS.map((t) => ({ name: t.title, url: `/topics/${t.slug}` }))),
   "/quran/surah-stories": linkList(
     "قصص السور",
@@ -1018,7 +1006,7 @@ ${linkList(
 )}
 ${linkList("روابط ذات صلة", [
   { name: "الدروس الشرعية", url: "/lessons" },
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
 ])}`,
   "/tahara": `<p>أحكام الطهارة: الوضوء والغسل والتيمم وإزالة النجاسة — مدخل عملي قبل أبواب الصلاة والعبادات.</p>
@@ -1069,7 +1057,7 @@ ${linkList("روابط ذات صلة", [
 ])}`,
   "/adab-talab-ilm": `<p>آداب طالب العلم: الإخلاص، التدرّج، احترام الشيوخ، ومنهجية الطلب — مدخل قبل المسارات والدروس.</p>
 ${linkList("روابط ذات صلة", [
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
   { name: "الدروس الشرعية", url: "/lessons" },
   { name: "المكتبة العلمية", url: "/library" },
   { name: "أعلام العلماء", url: "/scholars" },
@@ -1388,8 +1376,8 @@ ${linkList("روابط ذات صلة", [
 <h2>اختر مستواك</h2>
 <ul>
   <li><strong>مبتدئ:</strong> عقيدة مختصرة، أركان الإسلام، أذكار يومية، ودليل الصلاة.</li>
-  <li><strong>متوسط:</strong> مسارات فقه وحديث وسيرة منظّمة مع كتب مصاحبة.</li>
-  <li><strong>متقدم:</strong> أصول الفقه ومصطلح الحديث ومسارات أعمق بعد التأسيس.</li>
+  <li><strong>متوسط:</strong> دروس ودورات في الفقه والحديث والسيرة مع كتب مصاحبة.</li>
+  <li><strong>متقدم:</strong> أصول الفقه ومصطلح الحديث بعد التأسيس.</li>
 </ul>
 ${linkList("خطوات مقترحة", [
   { name: "التوحيد والعقيدة", url: "/tawhid" },
@@ -1397,19 +1385,8 @@ ${linkList("خطوات مقترحة", [
   { name: "دليل الصلاة", url: "/salah-guide" },
   { name: "الأذكار اليومية", url: "/adhkar" },
   { name: "السيرة النبوية", url: "/seerah" },
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
-])}`,
-  "/learning": `<p>المسارات العلمية المنظّمة من المبتدئ إلى المتقدم — هذا المدخل يوجّه إلى فهرس المسارات والدروس.</p>
-${linkList(
-  "المسارات المتاحة",
-  LEARNING_PATHS.slice(0, 12).map((p) => ({ name: p.title, url: `/learning/paths/${p.slug}` })),
-)}
-${linkList("روابط ذات صلة", [
-  { name: "فهرس المسارات", url: "/learning/paths" },
-  { name: "الدروس الشرعية", url: "/lessons" },
-  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
-  { name: "ابدأ من هنا", url: "/start-here" },
 ])}`,
   "/methodology": `<p>هذه الصفحة تصف ما يفعله النظام فعلاً: لا وسم «موثّق» بلا مراجعة بشرية ومصدر خارجي، ووسم صريح للمحتوى قيد المراجعة أو المولَّد آلياً. آخر تحديث للمضمون: 2026-08-06.</p>
 <h2>لماذا هذه الصفحة؟</h2>
@@ -1487,14 +1464,14 @@ ${linkList("روابط ذات صلة", [
 ${linkList("تعرّف أكثر", [
   { name: "منهجيتنا في التوثيق", url: "/methodology" },
   { name: "ابدأ من هنا", url: "/start-here" },
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
   { name: "المكتبة العلمية", url: "/library" },
   { name: "تواصل معنا", url: "/contact" },
   { name: "سياسة الخصوصية", url: "/privacy" },
 ])}`,
   "/institutions": `<p>دليل المؤسسات الإسلامية والتعليم الشرعي — مداخل للتعرّف لا بديل عن التحقق المباشر من كل جهة.</p>
 ${linkList("روابط ذات صلة", [
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
   { name: "الدروس الشرعية", url: "/lessons" },
   { name: "المشاهد الإسلامية", url: "/islamic-landmarks" },
   { name: "أعلام العلماء", url: "/scholars" },
@@ -1511,7 +1488,7 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "الدروس الشرعية", url: "/lessons" },
   { name: "المكتبة العلمية", url: "/library" },
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
   { name: "من نحن", url: "/about" },
 ])}`,
   "/contact": `<p>تواصل مع فريق المجلس العلمي للاستفسارات والاقتراحات والإبلاغ عن ملاحظات على المحتوى أو التقنية.</p>
@@ -1643,7 +1620,7 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "الدروس الشرعية", url: "/lessons" },
   { name: "الدورات العلمية", url: "/annual-courses" },
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
   { name: "آخر المستجدات", url: "/updates" },
 ])}`,
   "/quiz": (() => {
@@ -1671,7 +1648,7 @@ ${linkList("روابط ذات صلة", [
   { name: "البطاقات التعليمية", url: "/flashcards" },
   { name: "الفوائد", url: "/fawaid" },
   { name: "ابدأ من هنا", url: "/start-here" },
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
 ])}`;
   })(),
   "/flashcards": `<p>بطاقات تعليمية تفاعلية لمراجعة المفاهيم الشرعية وتثبيتها، مع ربط بالمسارات والاختبارات.</p>
@@ -1679,7 +1656,7 @@ ${linkList("روابط ذات صلة", [
   { name: "لعبة سين جيم", url: "/quiz" },
   { name: "الفوائد", url: "/fawaid" },
   { name: "المعجم الشرعي", url: "/islamic-glossary" },
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
 ])}`,
   "/assistant": `<p>المساعد العلمي يرشدك داخل المنصة إلى الدروس والكتب والفوائد دون إفتاء مستقل — مع إحالة للأقسام الموثّقة.</p>
@@ -1694,7 +1671,7 @@ ${linkList("روابط ذات صلة", [
   "/mind-map": `<p>خرائط ذهنية لربط مفاهيم العلوم الشرعية بصريًا — مدخل موازٍ لخريطة المعرفة والمسارات.</p>
 ${linkList("روابط ذات صلة", [
   { name: "خريطة المعرفة", url: "/knowledge-graph" },
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
   { name: "المعجم الشرعي", url: "/islamic-glossary" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "التوحيد والعقيدة", url: "/tawhid" },
@@ -1708,7 +1685,7 @@ ${linkList("محاور أساسية", [
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "الأحاديث النبوية", url: "/hadith" },
   { name: "أعلام العلماء", url: "/scholars" },
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
 ])}
 ${linkList("أدوات", [
   { name: "مواقيت الصلاة", url: "/prayer-times" },
@@ -1803,18 +1780,16 @@ ${linkList("روابط ذات صلة", [
   { name: "قصص السور", url: "/quran/surah-stories" },
   { name: "القصص الإسلامية", url: "/stories" },
 ])}`,
-  "/learning/calendar": `<p>التقويم العلمي لمواعيد المسارات والدروس — لتنظيم الطلب مع فهرس المسارات والدورات.</p>
+  "/learning/calendar": `<p>التقويم العلمي لمواعيد الدروس والدورات.</p>
 ${linkList("روابط ذات صلة", [
-  { name: "المسارات العلمية", url: "/learning/paths" },
   { name: "تقويم الدروس", url: "/calendar" },
   { name: "الدروس الشرعية", url: "/lessons" },
   { name: "الدورات العلمية", url: "/annual-courses" },
-  { name: "اختبار المسارات", url: "/learning/quiz" },
+  { name: "المسابقة", url: "/quiz" },
 ])}`,
-  "/learning/quiz": `<p>اختبارات مرتبطة بالمسارات العلمية لقياس التقدّم، مع إحالة إلى المسارات والدروس.</p>
+  "/learning/quiz": `<p>اختبارات تفاعلية لقياس التقدّم — تُحوَّل إلى المسابقة والدروس.</p>
 ${linkList("روابط ذات صلة", [
-  { name: "المسارات العلمية", url: "/learning/paths" },
-  { name: "التقويم العلمي", url: "/learning/calendar" },
+  { name: "الدروس والدورات", url: "/lessons" },
   { name: "لعبة سين جيم", url: "/quiz" },
   { name: "البطاقات التعليمية", url: "/flashcards" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
@@ -1918,7 +1893,7 @@ ${linkList("أقسام المجمع", [
   "/knowledge-graph": `<h2>ما خريطة المعرفة؟</h2>
 <p>عرض بصري تفاعلي يربط بين مفاهيم العلوم الشرعية (كالفقه والعقيدة والحديث والتفسير) ويُظهر علاقاتها ببعضها، ليساعد طالب العلم على فهم كيف يتصل كل علم بغيره بدل دراسته منعزلاً.</p>
 ${linkList("روابط ذات صلة", [
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
   { name: "الفقه الإسلامي", url: "/fiqh" },
   { name: "أعلام العلماء المسلمين", url: "/scholars" },
 ])}`,
@@ -1931,7 +1906,7 @@ ${linkList("ابدأ من هنا", [
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "الأحاديث النبوية", url: "/hadith" },
   { name: "التوحيد والعقيدة", url: "/tawhid" },
-  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس والدورات", url: "/lessons" },
   { name: "أعلام العلماء", url: "/scholars" },
   { name: "موسوعة الأذكار", url: "/adhkar" },
 ])}
@@ -2519,22 +2494,6 @@ ${issue.category ? `<p>التصنيف: ${escapeHtml(issue.category)}</p>` : ""}`
   );
 }
 
-// المسارات العلمية — من src/data/learning-paths-index.ts (مرآة SEO لجدول learning_paths)
-for (const p of LEARNING_PATHS) {
-  addPage(
-    {
-      path: `/learning/paths/${p.slug}`,
-      title: p.title,
-      description: clamp(padDesc(p.description, "مسار تعلّم شرعي منظّم — كتب ودروس واختبارات وشهادة إتمام"), 300),
-      keywords: [p.title, "مسارات التعلم", "طلب العلم", "دراسة شرعية"],
-    },
-    {
-      parents: [{ name: "المسارات العلمية", path: "/learning/paths" }],
-      priority: 0.7,
-      changefreq: "monthly",
-    },
-  );
-}
 
 // المواضيع — من STATIC_TOPICS في TopicsIndexPage
 for (const t of TOPICS) {
@@ -2731,7 +2690,7 @@ console.log(
     `✓ ${SITE_URL}`,
     `  صفحات مُصيَّرة: ${pages.length}  (منها في sitemap: ${sitemapPages.length})`,
     `  علماء: ${SCHOLARS.length} · أنبياء: ${PROPHETS.length} · قصص سور: ${SURAH_STORIES.length} · ذنوب وحقوق: ${SINS_TOPICS.length}`,
-    `  مسائل فقهية: ${PUBLIC_FIQH_ISSUES.length} · مسارات: ${LEARNING_PATHS.length} · مواضيع: ${TOPICS.length} · مؤذنون: ${MUEZZINS.length}`,
+    `  مسائل فقهية: ${PUBLIC_FIQH_ISSUES.length} · مواضيع: ${TOPICS.length} · مؤذنون: ${MUEZZINS.length}`,
     `  دروس: ${lessonRows.length} · كتب: ${LIBRARY_CATALOG.length}`,
   ].join("\n"),
 );

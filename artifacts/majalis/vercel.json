@@ -192,6 +192,81 @@
   ],
   "redirects": [
     {
+      "source": "/learning-paths/:path*",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/learning-paths",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/learning/quiz/:slug",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
+      "source": "/learning/certificates/:code",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/learning/certificates",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/courses/paths/:path*",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/courses/paths",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/lessons/paths/:path*",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/lessons/paths",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/pathways",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/study-paths",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/tracks",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/learning",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/learning/paths/:slug",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/learning/paths",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
       "source": "/prophets/ishaq",
       "destination": "/prophets/is-haq",
       "permanent": true
@@ -831,27 +906,27 @@
     },
     {
       "source": "/learning-path/book/:bookId",
-      "destination": "/learning/paths",
+      "destination": "/lessons",
       "permanent": true
     },
     {
       "source": "/learning-path/:scienceSlug",
-      "destination": "/learning/paths",
+      "destination": "/lessons",
       "permanent": true
     },
     {
       "source": "/learning-path",
-      "destination": "/learning/paths",
+      "destination": "/lessons",
       "permanent": true
     },
     {
       "source": "/learning-plan",
-      "destination": "/learning/paths",
+      "destination": "/lessons",
       "permanent": true
     },
     {
       "source": "/masarat",
-      "destination": "/learning/paths",
+      "destination": "/lessons",
       "permanent": true
     },
     {
@@ -892,11 +967,6 @@
     {
       "source": "/anbiya",
       "destination": "/prophets",
-      "permanent": true
-    },
-    {
-      "source": "/start-here",
-      "destination": "/learning/paths",
       "permanent": true
     },
     {
@@ -1251,10 +1321,6 @@
     },
     {
       "source": "/mushaf/:path*",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/learning/:path*",
       "destination": "/index.html"
     },
     {

@@ -285,7 +285,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     kind: "topic",
     rulingsCategory: "طلب العلم والدعوة",
     relatedGuides: [
-      { href: "/learning/paths/usool-fiqh", label: "مسار أصول الفقه" },
+      { href: "/lessons", label: "مسار أصول الفقه" },
       { href: "/fiqh-qawaid", label: "القواعد الفقهية" },
       { href: "/madhahib", label: "المذاهب الأربعة" },
       { href: "/maqasid-sharia", label: "مقاصد الشريعة" },
