@@ -16,11 +16,11 @@ export const SITE_FOOTER_GROUPS: FooterGroup[] = [
     id: "sections",
     title: "الأقسام",
     links: [
-      { href: "/quran-knowledge", label: "القرآن" },
+      { href: "/quran-hub", label: "القرآن" },
       { href: "/lessons", label: "الدروس" },
       { href: "/teachers", label: "المشايخ" },
       { href: "/lessons/archive", label: "أرشيف الدروس" },
-      { href: "/learn", label: "المكتبة" },
+      { href: "/library", label: "المكتبة" },
       { href: "/scholars", label: "العلماء" },
       { href: "/universities", label: "الجامعات الشرعية" },
       { href: "/academic-research", label: "الرسائل والأبحاث" },
@@ -33,9 +33,9 @@ export const SITE_FOOTER_GROUPS: FooterGroup[] = [
     id: "start",
     title: "ابدأ",
     links: [
-      { href: "/start-here", label: "ابدأ من هنا" },
-      { href: "/islamic-glossary", label: "المعجم الشرعي" },
+      { href: "/lessons", label: "الدروس" },
       { href: "/search", label: "البحث" },
+      { href: "/quiz", label: "سين جيم" },
     ],
   },
   {

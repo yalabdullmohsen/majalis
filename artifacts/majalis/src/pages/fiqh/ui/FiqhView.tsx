@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Banknote, BookOpen, Building2, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, Library, MapPin, MessageCircle, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
+import { Banknote, BookOpen, Building2, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, Library, MapPin, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import type { LucideIcon } from "lucide-react";
 import { Link, useSearch } from "wouter";
@@ -9,15 +9,14 @@ import { ShareButtons } from "@/components/ContentActions";
 import { getRulingsEncyclopedia } from "@/lib/rulings-service";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
 import { SkeletonCardGrid, Empty, ErrorState, PageHero, HubCard } from "@/components/ui-common";
-import { getQaQuestions } from "@/lib/supabase";
-import { QA_CATEGORIES, loadSeedQa } from "@/lib/qa-seed";
+import { loadSeedQa } from "@/lib/qa-seed";
 import { RequestManager } from "@/lib/request-manager";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/fiqh-hub.css";
 
-type Tab = "rulings" | "qa" | "council";
+type Tab = "rulings" | "qawaid" | "madhahib" | "nawazil" | "council" | "ibadat";
 
 const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
   Landmark, Droplets, Banknote, Moon, MapPin, Handshake, Utensils, Shirt, Users,
@@ -29,10 +28,15 @@ function CatIcon({ name }: { name?: string }) {
 }
 
 const TABS: { key: Tab; label: string; Icon: LucideIcon }[] = [
-  { key: "rulings", label: "الأحكام الشرعية",  Icon: BookOpen },
-  { key: "qa",      label: "الأسئلة والأجوبة", Icon: MessageCircle },
-  { key: "council", label: "المجمع الفقهي",     Icon: Building2 },
+  { key: "rulings", label: "الأحكام الشرعية", Icon: BookOpen },
+  { key: "qawaid", label: "القواعد الفقهية", Icon: Scale },
+  { key: "madhahib", label: "المذاهب الأربعة", Icon: GraduationCap },
+  { key: "nawazil", label: "النوازل المعاصرة", Icon: FlaskConical },
+  { key: "council", label: "قرارات المجامع", Icon: Building2 },
+  { key: "ibadat", label: "العبادات", Icon: Moon },
 ];
+
+const IBADAT_IDS = new Set(["tahara", "salah", "zakat", "sawm", "hajj"]);
 
 const COUNCIL_SECTIONS = [
   { href: "/fiqh-council",             label: "رئيسية المجمع",     desc: "بوابة المجمع الفقهي: قرارات معتمدة وفتاوى موثّقة وتوثيق جلساته وأبحاثه، مع فهرس موضوعي يسهّل الرجوع إلى المسائل المدروسة." },
@@ -45,6 +49,10 @@ const COUNCIL_SECTIONS = [
   { href: "/fiqh-council/research",   label: "البحوث الفقهية",    desc: "البحوث الفقهية المعمّقة: دراسات تمهّد للقرار، تجمع الأدلة والخلاف والترجيح قبل إصدار الفتوى." },
   { href: "/fiqh-council/compare",    label: "المقارنة الفقهية",  desc: "أداة المقارنة الفقهية: قارن بين قرارات المجامع وفتاوى الهيئات في مسألة واحدة لمعرفة الخلاف والاتفاق." },
 ];
+
+const NAWAZIL_LINKS = COUNCIL_SECTIONS.filter((s) =>
+  ["/fiqh-council/nawazil", "/fiqh-council/issues", "/fiqh-council/compare"].includes(s.href),
+);
 
 const RULINGS_CATEGORIES = RULINGS_CATEGORY_TREE.slice(0, 8);
 
@@ -59,9 +67,7 @@ export default function FiqhPage() {
 
   const [activeTab, setActiveTab] = useState<Tab>(initialTab);
   const [rulings, setRulings]     = useState<ShariaRulingExtended[]>([]);
-  const [qaItems, setQaItems]     = useState<any[]>([]);
   const [loadingR, setLoadingR]   = useState(false);
-  const [loadingQ, setLoadingQ]   = useState(false);
   const [rulingsError, setRulingsError] = useState<string | null>(null);
   const [rulingsRetry, setRulingsRetry] = useState(0);
 
@@ -85,9 +91,9 @@ export default function FiqhPage() {
         : undefined;
       applyPageSeo({
         path: "/fiqh",
-        title: "الفقه الإسلامي، أحكام وأسئلة | المجلس العلمي",
-        description: "مرجع شامل في الفقه الإسلامي: أحكام شرعية موثقة، أسئلة وأجوبة، وقرارات المجمع الفقهي. يغطّي أبواب العبادات والمعاملات والنوازل مرجع موثّق لطالب العلم والباحث.",
-        keywords: ["فقه إسلامي", "أحكام شرعية", "الفقه الحنفي", "القواعد الفقهية", "المجمع الفقهي", "أسئلة شرعية"],
+        title: "الفقه الإسلامي | المجلس العلمي",
+        description: "بوابة الفقه: أحكام شرعية، قواعد، مذاهب، نوازل، قرارات المجامع، وأحكام العبادات.",
+        keywords: ["فقه إسلامي", "أحكام شرعية", "القواعد الفقهية", "المذاهب الأربعة", "المجمع الفقهي"],
         ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
       });
     });
@@ -132,43 +138,12 @@ export default function FiqhPage() {
     };
   }, [activeTab, rulingsRetry]);
 
-  useEffect(() => {
-    if (activeTab === "qa" && qaItems.length === 0) {
-      setLoadingQ(true);
-      RequestManager.run("fiqh:qa-preview", () =>
-        getQaQuestions({ search: "" }),
-      )
-        .then(({ data }) => setQaItems(Array.isArray(data) ? data.slice(0, 8) : []))
-        .catch(async () => {
-          const seed = await loadSeedQa();
-          setQaItems(seed.slice(0, 8));
-        })
-        .finally(() => setLoadingQ(false));
-    }
-  }, [activeTab]);
 
   return (
     <div className="fqp-root page-shell" dir="rtl">
       <PageHero title="الفقه والأحكام" />
 
-      <section aria-label="أقسام الفقه والأحكام">
-        <div className="hub-card-grid fqh-hub-grid">
-          {FIQH_HUB_TOPICS.map((t) => (
-            <HubCard
-              key={t.id}
-              href={t.href}
-              title={t.title}
-              description={t.desc}
-              icon={<SectionIcon name={t.emoji} size={22} />}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* فاصل */}
-      <hr className="fiqh-section-divider" />
-
-      {/* Tabs، للمحتوى الديناميكي */}
+      {/* تبويبات الباب الرئيسي */}
       <div className="fqp-tabs-nav fqp-tabs-nav--bare">
         <div className="fqp-tabs-scroll" role="tablist" aria-label="أقسام الفقه">
           {TABS.map((t) => (
@@ -245,51 +220,62 @@ export default function FiqhPage() {
           </div>
         )}
 
-        {/* تبويب الأسئلة والأجوبة */}
-        {activeTab === "qa" && (
-          <div role="tabpanel" id="fqp-panel-qa" aria-labelledby="fqp-tab-qa">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="fqp-section-title"><MessageCircle size={20} />الأسئلة والأجوبة الشرعية</h2>
-              <Link href="/quiz"><span className="fqp-see-all">عرض الكل ←</span></Link>
+        {/* تبويب القواعد */}
+        {activeTab === "qawaid" && (
+          <div role="tabpanel" id="fqp-panel-qawaid" aria-labelledby="fqp-tab-qawaid">
+            <h2 className="fqp-section-title mb-4"><Scale size={20} />القواعد الفقهية</h2>
+            <div className="hub-card-grid fqh-hub-grid">
+              {FIQH_HUB_TOPICS.filter((t) => t.id === "fiqh-qawaid").map((t) => (
+                <HubCard key={t.id} href={t.href} title={t.title} description={t.desc} icon={<SectionIcon name={t.emoji} size={22} />} />
+              ))}
             </div>
+            <div className="mt-6 text-center">
+              <Link href="/fiqh-qawaid"><span className="inline-block px-8 py-3 text-white rounded-xl font-medium fqp-cta-btn">فتح القواعد الفقهية</span></Link>
+            </div>
+          </div>
+        )}
 
-            <div className="flex flex-wrap gap-2 mb-6">
-              {QA_CATEGORIES.slice(0, 8).map((cat) => (
-                <Link key={cat.id} href={`/quiz?cat=${cat.slug}`}>
-                  <span className="fqp-cat-chip">{cat.name}</span>
+        {activeTab === "madhahib" && (
+          <div role="tabpanel" id="fqp-panel-madhahib" aria-labelledby="fqp-tab-madhahib">
+            <h2 className="fqp-section-title mb-4"><GraduationCap size={20} />المذاهب الأربعة</h2>
+            <div className="hub-card-grid fqh-hub-grid">
+              {FIQH_HUB_TOPICS.filter((t) => t.id === "madhahib").map((t) => (
+                <HubCard key={t.id} href={t.href} title={t.title} description={t.desc} icon={<SectionIcon name={t.emoji} size={22} />} />
+              ))}
+            </div>
+            <div className="mt-6 text-center">
+              <Link href="/madhahib"><span className="inline-block px-8 py-3 text-white rounded-xl font-medium fqp-cta-btn">فتح المذاهب الأربعة</span></Link>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "nawazil" && (
+          <div role="tabpanel" id="fqp-panel-nawazil" aria-labelledby="fqp-tab-nawazil">
+            <h2 className="fqp-section-title mb-4"><FlaskConical size={20} />النوازل المعاصرة</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+              {NAWAZIL_LINKS.map((s) => (
+                <Link key={s.href} href={s.href}>
+                  <div className="fqp-card fqp-card--hover-border flex items-start gap-3">
+                    <div className="flex-1 min-w-0">
+                      <p className="fqp-council-label">{s.label}</p>
+                      <p className="fqp-council-desc">{s.desc}</p>
+                    </div>
+                    <span className="fqp-arrow">←</span>
+                  </div>
                 </Link>
               ))}
             </div>
+          </div>
+        )}
 
-            {loadingQ ? (
-              <SkeletonCardGrid count={6} />
-            ) : qaItems.length === 0 ? (
-              <Empty text="لا توجد أسئلة بعد" />
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {qaItems.map((item: any) => (
-                  <Link key={item.id} href={`/quiz?qa=${encodeURIComponent(item.id)}`}>
-                    <div className="fqp-card h-full">
-                      <p className="fqp-card__title fqp-card__title--mb2 line-clamp-2 leading-snug">
-                        {item.question}
-                      </p>
-                      {(item.qa_categories?.name || item.category_name) && (
-                        <span className="fqp-cat-badge">
-                          {item.qa_categories?.name ?? item.category_name}
-                        </span>
-                      )}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-
-            <div className="mt-8 text-center">
-              <Link href="/quiz">
-                <span className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer fqp-cta-btn">
-                  استعرض جميع الأسئلة والأجوبة
-                </span>
-              </Link>
+        {activeTab === "ibadat" && (
+          <div role="tabpanel" id="fqp-panel-ibadat" aria-labelledby="fqp-tab-ibadat">
+            <h2 className="fqp-section-title mb-4"><Moon size={20} />العبادات</h2>
+            <p className="fqp-section-desc mb-4">طهارة، صلاة، زكاة، صيام، حج</p>
+            <div className="hub-card-grid fqh-hub-grid">
+              {FIQH_HUB_TOPICS.filter((t) => IBADAT_IDS.has(t.id)).map((t) => (
+                <HubCard key={t.id} href={t.href} title={t.title} description={t.desc} icon={<SectionIcon name={t.emoji} size={22} />} />
+              ))}
             </div>
           </div>
         )}
@@ -298,7 +284,7 @@ export default function FiqhPage() {
         {activeTab === "council" && (
           <div role="tabpanel" id="fqp-panel-council" aria-labelledby="fqp-tab-council">
             <div className="mb-6">
-              <h2 className="fqp-section-title mb-2"><Landmark size={20} />المجمع الفقهي الإسلامي</h2>
+              <h2 className="fqp-section-title mb-2"><Landmark size={20} />قرارات المجامع</h2>
               <p className="fqp-section-desc">
                 قرارات وبيانات وفتاوى المجامع الفقهية المعتمدة، موثقة بمصادرها
               </p>

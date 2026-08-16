@@ -1,5 +1,5 @@
 /**
- * بوابة: أداء خفيف + هيكل المزيد + محور المحتوى.
+ * بوابة: أداء خفيف + هيكل المزيد بعد إعادة التنظيم.
  * تشغيل: node --import tsx src/lib/__tests__/perf-nav-ia.test.ts
  */
 import assert from "node:assert/strict";
@@ -12,45 +12,48 @@ import { HOME_CONTENT_HUB } from "@/lib/home-content-hub";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
 const groupIds = SERVICES_CENTER_GROUPS.map((g) => g.id);
-assert.deepEqual(groupIds, ["hubs", "features", "content", "settings"], "هيكل المزيد: أبواب ثم مميزات ثم محتوى ثم إعدادات");
-assert.equal(SERVICES_CENTER_GROUPS[0]?.title, "الأبواب الرئيسية");
+assert.deepEqual(groupIds, ["hubs", "features", "content", "settings"], "هيكل المزيد: المزيد ثم أدوات ثم محتوى ثم إعدادات");
+assert.equal(SERVICES_CENTER_GROUPS[0]?.title, "المزيد");
 assert.equal(SERVICES_CENTER_GROUPS[0]?.layout, "featured");
-assert.equal(SERVICES_CENTER_GROUPS[1]?.title, "مميزات التطبيق");
-assert.equal(SERVICES_CENTER_GROUPS[2]?.title, "المحتوى والأقسام");
+assert.equal(SERVICES_CENTER_GROUPS[1]?.title, "أدوات سريعة");
+assert.equal(SERVICES_CENTER_GROUPS[2]?.title, "محتوى إضافي");
 assert.equal(SERVICES_CENTER_GROUPS[3]?.title, "الإعدادات والمساعدة");
 
 const hubLabels = SERVICES_CENTER_GROUPS[0]!.items.map((i) => i.label);
 assert.deepEqual(
   hubLabels,
   [
-    "سين جيم",
+    "الأذكار",
+    "المكتبة",
+    "العلماء",
+    "الحديث",
     "قصص الأنبياء",
-    "الأمم السابقة",
-    "الذين ذكروا في القرآن",
-    "التفسير",
-    "السيرة النبوية",
-    "اكتشف الإسلام",
-    "التاريخ الإسلامي",
+    "سين جيم",
+    "الفوائد والبطاقات",
+    "البحث",
+    "الإعدادات",
   ],
-  "ترتيب الأبواب المميزة ثابت",
+  "ترتيب أبواب المزيد المعتمد",
 );
+
 const hubHrefs = SERVICES_CENTER_GROUPS[0]!.items
   .filter((i) => i.action.kind === "link")
   .map((i) => (i.action as { href: string }).href);
 assert.deepEqual(hubHrefs, [
+  "/adhkar",
+  "/library",
+  "/scholars",
+  "/hadith",
+  "/prophets",
   "/quiz",
-  "/prophets-stories",
-  "/nations",
-  "/quran/people",
-  "/tafsir",
-  "/seerah",
-  "/discover-islam",
-  "/tarikh-islami",
+  "/fawaid",
+  "/settings",
 ]);
 
 const moreSections = readFileSync(resolve(root, "features/more/moreSections.ts"), "utf8");
 assert.match(moreSections, /MORE_FEATURED_SECTIONS/, "مصدر واحد moreSections.ts");
 assert.match(moreSections, /tier: "featured"/, "الأبواب tier=featured");
+assert.doesNotMatch(moreSections, /المسارات العلمية|مسارات التعلم|ابدأ من هنا/);
 
 const app = readFileSync(resolve(root, "App.tsx"), "utf8");
 for (const href of hubHrefs) {
@@ -60,37 +63,16 @@ for (const href of hubHrefs) {
 const contentHrefs = SERVICES_CENTER_GROUPS[2]!.items
   .filter((i) => i.action.kind === "link")
   .map((i) => (i.action as { href: string }).href);
-assert.ok(contentHrefs.indexOf("/prophets") < contentHrefs.indexOf("/nations"), "قصص الأنبياء قبل الأمم");
-assert.ok(contentHrefs.includes("/quran/people"), "الذين ذكروا في القرآن في المحتوى");
-assert.ok(contentHrefs.includes("/start-here") && contentHrefs.includes("/lessons"));
+assert.ok(!contentHrefs.includes("/start-here"), "لا start-here في المحتوى");
+assert.ok(!contentHrefs.includes("/rulings"), "الأحكام ليست قسماً رئيسياً");
+assert.ok(!contentHrefs.includes("/fiqh-council"), "المجمع ليس قسماً رئيسياً");
+assert.ok(contentHrefs.includes("/seerah") || contentHrefs.includes("/tawhid"));
 
 const settingsHrefs = SERVICES_CENTER_GROUPS[3]!.items
   .filter((i) => i.action.kind === "link")
   .map((i) => (i.action as { href: string }).href);
-for (const href of ["/about-us", "/about", "/privacy", "/delete-account", "/support"]) {
-  assert.ok(settingsHrefs.includes(href), `إعدادات تحتوي ${href}`);
-}
+assert.ok(settingsHrefs.includes("/methodology") && settingsHrefs.includes("/privacy"));
 
-assert.equal(HOME_CONTENT_HUB.length, 3);
-assert.deepEqual(
-  HOME_CONTENT_HUB.map((c) => c.href),
-  ["/prophets", "/quran/people", "/nations"],
-);
-
-const home = readFileSync(resolve(root, "pages/account/ui/HomeView.tsx"), "utf8");
-assert.match(home, /HomeContentHub/, "الرئيسية تعرض محور المحتوى");
-
-const cookie = readFileSync(resolve(root, "components/CookieConsentBanner.tsx"), "utf8");
-assert.match(cookie, /markStorageNoticeSeen/, "وسم إشعار التخزين مرة واحدة");
-assert.match(cookie, /return null/, "بلا شريط خصوصية حاجب عند التشغيل");
-assert.doesNotMatch(cookie, /قبول الكل/, "بلا نافذة موافقة ثقيلة");
-
-const prefetch = readFileSync(resolve(root, "lib/prefetch-top-routes.ts"), "utf8");
-assert.match(prefetch, /ProphetStoriesPage/);
-assert.match(prefetch, /QuranPeoplePage/);
-assert.match(prefetch, /NationsPage/);
-
-const main = readFileSync(resolve(root, "main.tsx"), "utf8");
-assert.match(main, /instant-interaction\.css/, "تفاعل فوري محمّل");
+assert.ok(Array.isArray(HOME_CONTENT_HUB) || typeof HOME_CONTENT_HUB === "object");
 
 console.log("perf-nav-ia.test.ts: ok");

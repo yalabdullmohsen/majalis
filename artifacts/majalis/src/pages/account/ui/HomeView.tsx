@@ -109,7 +109,7 @@ export default function HomePage() {
       setIsFirstVisit(true);
     }
   }, []);
-  const continueHref = lastVisited?.href ?? (isFirstVisit ? "/start-here" : "/lessons");
+  const continueHref = lastVisited?.href ?? "/lessons";
 
   const [homePrefs, setHomePrefs] = useState<HomepagePrefs>(() => getLocalHomepagePrefs());
   const [customizeOpen, setCustomizeOpen] = useState(false);
@@ -147,10 +147,10 @@ export default function HomePage() {
         title={dailyCtx.greeting}
         actions={
           <Link
-            href={isFirstVisit ? "/start-here" : continueHref}
+            href={continueHref}
             className="mj-btn m2030-btn m2030-btn--primary"
           >
-            {isFirstVisit ? "ابدأ من هنا" : "تابع التصفح"}
+            {isFirstVisit ? "ابدأ بالدروس" : "تابع التصفح"}
           </Link>
         }
       />

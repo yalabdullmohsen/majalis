@@ -40,8 +40,11 @@ assert.match(navMap, /\/quran-hub/);
 assert.match(navMap, /قرآن/);
 
 const servicesNav = readFileSync(join(root, "lib/services-center-nav.ts"), "utf8");
-assert.match(servicesNav, /\/quran-knowledge/);
-assert.match(servicesNav, /القرآن وعلومه/);
+assert.match(servicesNav, /المزيد|MORE_FEATURED_SECTIONS/);
+const moreSections = readFileSync(join(root, "features/more/moreSections.ts"), "utf8");
+assert.match(moreSections, /\/hadith/);
+assert.match(moreSections, /الحديث/);
+assert.match(moreSections, /سين جيم/);
 
 const nav = readFileSync(join(root, "lib/navigation.ts"), "utf8");
 assert.match(nav, /href: "\/nations"/);

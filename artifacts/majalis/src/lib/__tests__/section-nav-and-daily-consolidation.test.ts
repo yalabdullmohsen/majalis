@@ -48,10 +48,11 @@ console.log("\n=== isTabActive ===");
   assert(isTabActive("/ulum-quran", "/quran-hub") === true, "علوم القرآن تحت قرآن");
   assert(isTabActive("/quran/surah-stories", "/quran-hub") === true, "قصص السور تحت قرآن");
   assert(isTabActive("/mushaf", "/quran-knowledge") === true, "توافق مسارات المعرفة");
-  assert(isTabActive("/hadith", "/lessons") === true, "الحديث تحت الدروس");
+  assert(isTabActive("/hadith", "/lessons") === false, "الحديث تحت المزيد لا الدروس");
   assert(isTabActive("/adhkar", "/prayer-times") === true, "الأذكار تحت الصلاة");
-  assert(isTabActive("/quiz", "/fiqh") === true, "لعبة سين جيم تحت فقه");
-  assert(isTabActive("/qa", "/fiqh") === true, "مسار /qa القديم يُحسب تحت فقه أثناء التحويل");
+  assert(isTabActive("/quiz", "/fiqh") === false, "سين جيم تحت المزيد لا فقه");
+  assert(isTabActive("/qa", "/fiqh") === false, "مسار /qa لا يُحسب تحت فقه");
+  assert(isTabActive("/quiz", "/quran-hub") === false, "سين جيم ليس تحت قرآن");
   assert(isTabActive("/library/book-1", "/quran-knowledge") === false, "مسار كتاب لا يفعّل قرآن");
 }
 
@@ -111,24 +112,26 @@ console.log("\n=== PRIMARY_NAV ===");
 
 console.log("\n=== nav-visibility تنظيف ===");
 {
-  for (const p of ["/library", "/updates", "/knowledge-graph", "/flashcards", "/ulum-quran", "/occasions", "/institutions"]) {
-    assert(HIDDEN_FROM_NAV_PATHS.has(p), `${p} مخفي من الاكتشاف`);
+  for (const p of ["/flashcards", "/ulum-quran", "/occasions", "/institutions", "/rulings", "/fiqh-council"]) {
+    assert(HIDDEN_FROM_NAV_PATHS.has(p), `${p} مخفي من الاكتشاف العام`);
   }
-  assert(resolveMergedPath("/library") === "/", "library → /");
+  assert(!HIDDEN_FROM_NAV_PATHS.has("/library"), "المكتبة ظاهرة في المزيد");
+  assert(resolveMergedPath("/library") === "/library", "library لا تُحوَّل للرئيسية");
   assert(resolveMergedPath("/quran-index") === "/quran-knowledge", "quran-index → hub");
   assert(resolveMergedPath("/reviewed-cards") === "/my-learning", "reviewed-cards → حسابي");
   assert(resolveMergedPath("/researches") === "/academic-research", "researches → academic-research");
+  assert(resolveMergedPath("/start-here") === "/lessons", "start-here → lessons");
   assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 10, "جدول التوجيه غير فارغ");
   assert(isComingSoonPath("/kids"), "الأطفال قريبًا");
   assert(!isComingSoonPath("/mushaf"), "المصحف لم يعد قريبًا");
   assert(!isComingSoonPath("/mushaf/1"), "مسارات المصحف الفرعية مفتوحة");
 
   const homeHrefs = FEATURE_CATS.flatMap((c) => c.items.map((i) => i.href));
-  assert(!homeHrefs.includes("/library") && !homeHrefs.includes("/flashcards"), "الكتالوج بلا مكتبة/بطاقات منفصلة");
-  assert(homeHrefs.includes("/quran-knowledge") && homeHrefs.includes("/memorization"), "البوابات في الكتالوج");
+  assert(!homeHrefs.includes("/flashcards"), "الكتالوج بلا بطاقات منفصلة");
+  assert(homeHrefs.includes("/quran-hub") && homeHrefs.includes("/memorization"), "البوابات في الكتالوج");
   assert(homeHrefs.includes("/universities") && homeHrefs.includes("/academic-research"), "الجامعات والرسائل في الكتالوج");
-  assert(filterNavItems([{ href: "/library" }, { href: "/mushaf" }]).map((i) => i.href).join(",") === "/mushaf",
-    "filterNavItems يسقط المكتبة");
+  assert(filterNavItems([{ href: "/rulings" }, { href: "/mushaf" }]).map((i) => i.href).join(",") === "/mushaf",
+    "filterNavItems يسقط الأحكام كقسم عام");
 }
 
 console.log("\n=== القوائم بلا أقسام محذوفة — عن المجلس في المصدر الموحّد ===");
@@ -142,10 +145,11 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   const footerSrc = readFileSync(resolve(appRoot, "src/components/SiteFooter.tsx"), "utf-8");
   const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8");
   for (const src of [moreSrc, sideSrc, sidebarNavSrc]) {
-    assert(!src.includes('href: "/library"') && !src.includes('"/library"'), "لا رابط مكتبة قديم /library");
-    assert(!src.includes('"/updates"'), "لا آخر المستجدات");
+    assert(!src.includes('href: "/rulings"'), "لا أحكام كقسم رئيسي في القوائم الجامدة");
     assert(!src.includes('"/knowledge-graph"'), "لا استكشف المعرفة");
   }
+  const moreSecSrc = readFileSync(resolve(appRoot, "src/features/more/moreSections.ts"), "utf-8");
+  assert(moreSecSrc.includes("المكتبة") && moreSecSrc.includes("الحديث"), "المكتبة والحديث في المزيد");
   assert(servicesNavSrc.includes('"/academic-research"') && servicesNavSrc.includes('"/universities"'),
     "الجامعات والرسائل في مركز الخدمات");
   assert(appSrc.includes("AcademicResearchPage") && !appSrc.includes('<Route path="/academic-research"><Redirect to="/"'),
@@ -154,7 +158,7 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   const footerNavSrc = readFileSync(resolve(appRoot, "src/lib/site-footer-nav.ts"), "utf-8");
   assert(footerSrc.includes("SITE_FOOTER_GROUPS") || footerSrc.includes("site-footer-nav"), "التذييل من مصدر المجموعات");
   assert(footerNavSrc.includes("/about-us") && footerNavSrc.includes("/privacy"), "تذييل عن المجلس");
-  assert(footerNavSrc.includes("/start-here") && footerNavSrc.includes("/lessons"), "تذييل ابدأ/مسارات");
+  assert(footerNavSrc.includes("/lessons") && footerNavSrc.includes("/quiz"), "تذييل دروس/سين جيم");
   assert(footerNavSrc.includes("SITE_FOOTER_GROUPS") && footerNavSrc.includes("الأقسام"), "تذييل رباعي المجموعات");
   for (const title of ["الأقسام", "ابدأ", "الثقة", "قانوني"]) {
     assert(footerNavSrc.includes(`title: "${title}"`), `مجموعة التذييل: ${title}`);
@@ -170,7 +174,10 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   );
   assert(footerNavSrc.includes("الريادة الإسلامية الرقمية"), "سطر الريادة في التذييل");
   assert(servicesNavSrc.includes("/about-us") && servicesNavSrc.includes("/about"), "عن المجلس في مركز الخدمات");
-  assert(servicesNavSrc.includes("/start-here") && servicesNavSrc.includes("/lessons"), "ابدأ/مسارات في مركز الخدمات");
+  assert(moreSecSrc.includes("الأذكار") && moreSecSrc.includes("سين جيم"), "مركز الخدمات/المزيد يحتوي الأبواب المعتمدة");
+  assert(!servicesNavSrc.includes("/start-here"), "لا ابدأ من هنا في مركز الخدمات");
+  assert(!servicesNavSrc.includes('label: "موسوعة الأحكام"'), "لا موسوعة أحكام في القائمة العامة");
+  assert(!servicesNavSrc.includes('label: "المجامع الفقهية"'), "لا مجامع كقسم رئيسي");
   assert(servicesNavSrc.includes("/delete-account"), "حذف الحساب في مركز الخدمات");
   assert(navMapSrc.includes("BOTTOM_NAV_TABS") && navMapSrc.includes("SERVICES_CENTER_GROUPS"), "nav-map مصدر موحّد");
   assert(sidebarNavSrc.includes("getSidebarGroupsFromNavMap"), "الجانبية تشتق من nav-map");

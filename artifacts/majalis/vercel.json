@@ -192,6 +192,16 @@
   ],
   "redirects": [
     {
+      "source": "/start-here/:path*",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/start-here",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
       "source": "/learning-paths/:path*",
       "destination": "/lessons",
       "permanent": true

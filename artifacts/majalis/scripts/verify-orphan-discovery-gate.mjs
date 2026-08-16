@@ -27,7 +27,6 @@ const MUST_DISCOVER = [
   "/contact",
   "/terms",
   "/sources",
-  "/start-here",
   "/lessons",
   "/account-deletion",
 ];
@@ -48,6 +47,9 @@ const ENTRY_FILES = [
   "features/more/moreSections.ts",
   "pages/account/ui/SiteMapView.tsx",
   "pages/quran/QuranKnowledgeHubPage.tsx",
+  "pages/quran/ui/QuranHubView.tsx",
+  "pages/fiqh/ui/FiqhView.tsx",
+  "pages/hadith/ui/HadithView.tsx",
 ];
 
 const ALLOWLIST_PATH = join(appRoot, "scripts/orphan-discovery-allowlist.json");

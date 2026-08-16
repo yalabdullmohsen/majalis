@@ -96,18 +96,7 @@ export function isTabActive(location: string, href: string): boolean {
       location === "/learn" ||
       location.startsWith("/learn/") ||
       location.startsWith("/learning/") ||
-      location === "/hadith" ||
-      location.startsWith("/hadith/") ||
-      location === "/hadith-science" ||
-      location.startsWith("/hadith-science/") ||
-      location === "/fawaid" ||
-      location.startsWith("/fawaid/") ||
-      location === "/seerah" ||
-      location.startsWith("/seerah/") ||
-      location === "/prophets" ||
-      location.startsWith("/prophets/") ||
-      location === "/scholars" ||
-      location.startsWith("/scholars/") ||
+      location === "/start-here" ||
       location === "/my-learning" ||
       location.startsWith("/my-learning/") ||
       location === "/occasions-lessons" ||
@@ -148,11 +137,6 @@ export function isTabActive(location: string, href: string): boolean {
       location.startsWith("/mawarith/") ||
       location === "/fiqh-qawaid" ||
       location.startsWith("/fiqh-qawaid/") ||
-      location === "/quiz" ||
-      location.startsWith("/quiz") ||
-      /* مسار /qa ملغى ويُحوَّل إلى /quiz — يُبقى في التبويب لتفادي وميض «المزيد» أثناء التحويل */
-      location === "/qa" ||
-      location.startsWith("/qa/") ||
       location === "/tahara" ||
       location.startsWith("/tahara/") ||
       location === "/zakat" ||
