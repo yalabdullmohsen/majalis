@@ -34,7 +34,7 @@ import {
 } from "lucide-react";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { MORE_FEATURED_SECTIONS } from "@/features/more/moreSections";
-import { SECTION_GROUP_META, SECTION_GROUP_ORDER, sectionsByGroup } from "@/config/sections.registry";
+import "@/config/sections.registry";
 
 export type ServicesCenterAction =
   | { kind: "link"; href: string }

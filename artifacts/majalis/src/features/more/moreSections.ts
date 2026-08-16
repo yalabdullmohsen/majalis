@@ -2,20 +2,7 @@
  * مصدر واحد لأبواب «المزيد» — مجموعات بلا تكرار مع الشريط السفلي.
  */
 import type { LucideIcon } from "lucide-react";
-import {
-  BookMarked,
-  BookOpen,
-  CreditCard,
-  Heart,
-  Landmark,
-  Library,
-  Moon,
-  ScrollText,
-  Search,
-  Settings,
-  Star,
-  Users,
-} from "lucide-react";
+import { BookMarked, BookOpen, Heart, Users } from "lucide-react";
 import { featuredSections, SECTION_GROUP_ORDER, SECTION_GROUP_META } from "@/config/sections.registry";
 
 export type MoreSectionTier = "featured" | "standard";
