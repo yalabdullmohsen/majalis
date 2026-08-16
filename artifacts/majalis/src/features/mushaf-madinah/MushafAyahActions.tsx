@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { BookOpen, Copy, Mic2, Pause, Play, Share2, X } from "lucide-react";
+import { BookOpen, Bookmark, Copy, Mic2, Pause, Play, Share2, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import type { PlayerState } from "@/core/audio/AudioEngine";
 import { getReciter } from "@/lib/quran-audio";
@@ -20,6 +20,7 @@ type Props = {
   onTafsir: () => void;
   onCopy: () => void;
   onShare: () => void;
+  onBookmark: () => void;
   onReciterChange: (id: string) => void;
   onClose: () => void;
 };
@@ -38,6 +39,7 @@ export function MushafAyahActions({
   onTafsir,
   onCopy,
   onShare,
+  onBookmark,
   onReciterChange,
   onClose,
 }: Props) {
@@ -161,6 +163,17 @@ export function MushafAyahActions({
             >
               <Share2 size={16} aria-hidden="true" />
               <span>مشاركة</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setReadersOpen(false);
+                onBookmark();
+              }}
+              data-testid="mushaf-ayah-bookmark"
+            >
+              <Bookmark size={16} aria-hidden="true" />
+              <span>علامة</span>
             </button>
             <button type="button" onClick={onClose}>
               <X size={16} aria-hidden="true" />

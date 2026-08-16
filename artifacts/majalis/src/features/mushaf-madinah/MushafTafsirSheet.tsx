@@ -49,8 +49,8 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
     fetchMushafAyahTafsir(parsed.surah, parsed.ayah, editionId, ac.signal)
       .then((res) => {
         if (ac.signal.aborted) return;
-        if (!res?.text) {
-          setError("تعذّر جلب التفسير لهذه الآية. تحقّق من الاتصال ثم أعد المحاولة.");
+          if (!res?.text) {
+          setError("لا يوجد تفسير لهذه الآية حاليًا");
           setText(null);
         } else {
           setText(res.text);
@@ -58,7 +58,7 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
       })
       .catch(() => {
         if (!ac.signal.aborted) {
-          setError("تعذّر جلب التفسير. حاول لاحقًا.");
+          setError("لا يوجد تفسير لهذه الآية حاليًا");
         }
       })
       .finally(() => {
