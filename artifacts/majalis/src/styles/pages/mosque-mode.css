@@ -106,3 +106,28 @@
   padding: 1rem;
 }
 
+:is(html[data-theme="dark"], html.dark) .mosque-mode {
+  background: var(--mj-bg, #131a18);
+  color: var(--mj-ink, #e9efec);
+}
+:is(html[data-theme="dark"], html.dark) .mosque-mode__header {
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+:is(html[data-theme="dark"], html.dark) .mosque-mode__label {
+  color: #fff !important;
+}
+:is(html[data-theme="dark"], html.dark) .mosque-mode__exit {
+  color: var(--mj-ink-2, #c2cfca);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+:is(html[data-theme="dark"], html.dark) .mosque-mode__link {
+  background: var(--mj-surface, #1b2421);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--mj-ink, #e9efec);
+  box-shadow: none;
+}
+:is(html[data-theme="dark"], html.dark) .mosque-mode__link-label {
+  color: var(--elite-forest, #7bd6ae);
+}
+
+

@@ -115,6 +115,10 @@
 .car-mode__playlist-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .car-mode__playlist-speaker { flex-shrink: 0; font-size: 0.72rem; color: rgba(255,255,255,0.35); }
 
+.car-mode :is(.page-status-shell__title, .car-mode__label, .car-mode__title, h1, h2) {
+  color: #fff !important;
+}
+
 .car-mode__empty {
   flex: 1;
   display: flex;
