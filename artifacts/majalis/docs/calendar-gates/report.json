@@ -1,0 +1,30 @@
+{
+  "viewport": "390x844",
+  "rows": [
+    {
+      "view": "month",
+      "cells": 42,
+      "maxOverlapPx": 0,
+      "horizOverflow": false,
+      "linkBlueCount": 0,
+      "cardHeight": 4078
+    },
+    {
+      "view": "week",
+      "cells": 7,
+      "maxOverlapPx": 0,
+      "horizOverflow": false,
+      "linkBlueCount": 0,
+      "cardHeight": 307
+    },
+    {
+      "view": "day",
+      "cells": 0,
+      "maxOverlapPx": 0,
+      "horizOverflow": false,
+      "linkBlueCount": 0,
+      "cardHeight": 588
+    }
+  ],
+  "failures": []
+}

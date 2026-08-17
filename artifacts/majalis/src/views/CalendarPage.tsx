@@ -7,81 +7,38 @@ import {
   addMonths,
   eachDayOfInterval,
   endOfMonth,
-  endOfWeek,
   format,
   isSameDay,
   isSameMonth,
   startOfMonth,
-  startOfWeek,
   subMonths,
 } from "date-fns";
 import { arSA } from "date-fns/locale";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
-import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-import { resolveLessonDetailsHref } from "@/lib/unified-lesson-card";
-import { PageHeader, SkeletonCardGrid, ErrorState } from "@/components/ui-common";
+import { PageHeader, ErrorState } from "@/components/ui-common";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
-import { gregorianToHijri } from "@/lib/hijri-utils";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { CalendarDayCell } from "@/components/calendar/CalendarDayCell";
+import {
+  buildMonthGrid,
+  buildWeekDays,
+  CALENDAR_WEEKDAY_LABELS,
+  hijriMonthYearLabel,
+} from "@/lib/calendar-dates";
+import {
+  eventsForDate,
+  eventsFromLessons,
+  type CalendarEvent,
+} from "@/lib/calendar-events";
 
 type ViewMode = "month" | "week" | "day";
 
-type CalendarEvent = {
-  id: string;
-  title: string;
-  sheikh: string;
-  mosque: string;
-  time: string;
-  day: string;
-  date?: string;
-  recurring?: boolean;
-  description?: string;
-  href: string;
-};
-
-const DAY_MAP: Record<string, number> = {
-  الأحد: 0,
-  الاثنين: 1,
-  الثلاثاء: 2,
-  الأربعاء: 3,
-  الخميس: 4,
-  الجمعة: 5,
-  السبت: 6,
-};
-
-function eventsFromLessons(lessons: KuwaitLessonRecord[]): CalendarEvent[] {
-  return lessons.map((l) => ({
-    id: l.id,
-    title: l.title,
-    sheikh: l.sheikhName,
-    mosque: l.mosque,
-    time: l.time,
-    day: l.day,
-    date: l.startDate || undefined,
-    description: l.note,
-    href: resolveLessonDetailsHref(l) || "/lessons",
-    recurring: l.recurring !== false && !l.startDate,
-  }));
-}
-
-function eventsForDate(date: Date, events: CalendarEvent[]): CalendarEvent[] {
-  const weekday = date.getDay();
-  const dateStr = format(date, "yyyy-MM-dd");
-  return events.filter((e) => {
-    if (e.date && e.recurring === false) {
-      return e.date === dateStr;
-    }
-    if (e.recurring !== false && e.day) {
-      return DAY_MAP[e.day] === weekday;
-    }
-    return false;
-  });
-}
-
 function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => void }) {
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     document.addEventListener("keydown", handler);
     document.body.classList.add("filter-sheet-open");
     const prev = document.body.style.overflow;
@@ -94,12 +51,15 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
   }, [onClose]);
 
   return (
-    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل كامل
-    // بلوحة المفاتيح.
-     
     <div className="cal-modal-backdrop" onClick={onClose} role="presentation">
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
-      <div className="cal-modal ui-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="cal-modal-title">
+      <div
+        className="cal-modal ui-card"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cal-modal-title"
+      >
         <h3 id="cal-modal-title">{event.title}</h3>
         <dl className="cal-modal-meta">
           <div><dt>الشيخ</dt><dd>{event.sheikh}</dd></div>
@@ -107,7 +67,7 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
           <div><dt>اليوم</dt><dd>{event.day}</dd></div>
           <div><dt>الوقت</dt><dd>{event.time}</dd></div>
         </dl>
-        {event.description && <p className="cal-modal-desc">{event.description}</p>}
+        {event.description ? <p className="cal-modal-desc">{event.description}</p> : null}
         <div className="cal-modal-actions">
           <Link href={event.href} className="ui-card-btn">التفاصيل</Link>
           <button type="button" className="ui-card-btn ui-card-btn--ghost" onClick={onClose}>إغلاق</button>
@@ -115,11 +75,6 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
       </div>
     </div>
   );
-}
-
-function hijriDayNum(date: Date): string {
-  const h = gregorianToHijri(date);
-  return h ? String(h.day) : "";
 }
 
 function toIcsDate(date: Date, time?: string): string {
@@ -143,7 +98,7 @@ function generateIcs(monthEvents: { date: Date; ev: CalendarEvent }[], monthLabe
   ];
   for (const { date, ev } of monthEvents) {
     const dtstart = toIcsDate(date, ev.time);
-    const dtend   = toIcsDate(date, ev.time ? ev.time.replace(/\d+/, (h) => String(Number(h) + 1)) : undefined);
+    const dtend = toIcsDate(date, ev.time ? ev.time.replace(/\d+/, (h) => String(Number(h) + 1)) : undefined);
     const uid = `${ev.id}-${format(date, "yyyyMMdd")}@majlisilm.com`;
     lines.push(
       "BEGIN:VEVENT",
@@ -171,6 +126,23 @@ function downloadIcs(content: string, filename: string) {
   URL.revokeObjectURL(url);
 }
 
+function CalendarGridSkeleton() {
+  return (
+    <div className="cal-month ui-card" aria-busy="true" aria-label="جاري تحميل التقويم">
+      <div className="cal-weekdays">
+        {CALENDAR_WEEKDAY_LABELS.map((d) => (
+          <span key={d}>{d}</span>
+        ))}
+      </div>
+      <div className="cal-grid cal-grid--skeleton">
+        {Array.from({ length: 42 }, (_, i) => (
+          <div key={i} className="cal-cell cal-cell--month cal-cell--skeleton" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function CalendarPage() {
   const today = new Date();
   const [view, setView] = useState<ViewMode>("month");
@@ -184,7 +156,7 @@ export default function CalendarPage() {
 
   function handleIcsExport() {
     const monthStart = startOfMonth(cursor);
-    const monthEnd   = endOfMonth(cursor);
+    const monthEnd = endOfMonth(cursor);
     const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
     const monthEvents: { date: Date; ev: CalendarEvent }[] = [];
     for (const day of days) {
@@ -218,20 +190,13 @@ export default function CalendarPage() {
       .finally(() => setLoading(false));
   }, [retryTick]);
 
-  const monthStart = startOfMonth(cursor);
-  const monthEnd = endOfMonth(cursor);
-  const gridStart = startOfWeek(monthStart, { weekStartsOn: 6 });
-  const gridEnd = endOfWeek(monthEnd, { weekStartsOn: 6 });
-  const monthDays = eachDayOfInterval({ start: gridStart, end: gridEnd });
-
-  const weekStart = startOfWeek(selected, { weekStartsOn: 6 });
-  const weekDays = eachDayOfInterval({
-    start: weekStart,
-    end: endOfWeek(weekStart, { weekStartsOn: 6 }),
-  });
-
-  const selectedEvents = eventsForDate(selected, events);
+  const monthDays = buildMonthGrid(cursor);
+  const weekDays = buildWeekDays(selected);
   const isViewingCurrentMonth = isSameMonth(cursor, today);
+  const hijriLabel = hijriMonthYearLabel(cursor);
+  const monthHasEvents = eachDayOfInterval({ start: startOfMonth(cursor), end: endOfMonth(cursor) }).some(
+    (d) => eventsForDate(d, events).length > 0,
+  );
 
   function goToday() {
     setCursor(today);
@@ -250,13 +215,16 @@ export default function CalendarPage() {
       <div className="cal-toolbar ui-card">
         <div className="cal-nav">
           <button type="button" className="cal-nav-btn" onClick={() => setCursor(subMonths(cursor, 1))} aria-label="الشهر السابق">‹</button>
-          <strong>{format(cursor, "MMMM yyyy", { locale: arSA })}</strong>
+          <div className="cal-nav-label">
+            <strong>{format(cursor, "MMMM yyyy", { locale: arSA })}</strong>
+            {hijriLabel ? <span className="cal-nav-hijri">{hijriLabel}</span> : null}
+          </div>
           <button type="button" className="cal-nav-btn" onClick={() => setCursor(addMonths(cursor, 1))} aria-label="الشهر التالي">›</button>
-          {!isViewingCurrentMonth && (
+          {!isViewingCurrentMonth ? (
             <button type="button" className="cal-today-btn" onClick={goToday} aria-label="انتقل لليوم">
               اليوم
             </button>
-          )}
+          ) : null}
         </div>
         <div className="cal-view-tabs">
           {(["month", "week", "day"] as ViewMode[]).map((v) => (
@@ -282,54 +250,39 @@ export default function CalendarPage() {
       </div>
 
       {loading ? (
-        <SkeletonCardGrid count={12} />
+        <CalendarGridSkeleton />
       ) : loadError ? (
         <ErrorState text="تعذّر تحميل مواعيد الدروس. يرجى المحاولة مرة أخرى." onRetry={() => setRetryTick((n) => n + 1)} />
       ) : (
         <>
           {view === "month" && (
             <div className="cal-month ui-card">
+              {!monthHasEvents ? (
+                <p className="cal-empty cal-empty--banner">لا دروس في هذا الشهر.</p>
+              ) : null}
               <div className="cal-weekdays">
-                {["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"].map((d) => (
+                {CALENDAR_WEEKDAY_LABELS.map((d) => (
                   <span key={d}>{d}</span>
                 ))}
               </div>
               <div className="cal-grid">
                 {monthDays.map((day) => {
                   const dayEvents = eventsForDate(day, events);
-                  const isSelected = isSameDay(day, selected);
-                  const isToday   = isSameDay(day, today);
-                  const inMonth   = isSameMonth(day, cursor);
-                  const hDay      = hijriDayNum(day);
-                  const shown     = dayEvents.slice(0, 2);
-                  const extra     = dayEvents.length - shown.length;
                   return (
-                    <button
+                    <CalendarDayCell
                       key={day.toISOString()}
-                      type="button"
-                      className={[
-                        "cal-cell",
-                        isSelected ? "is-selected" : "",
-                        isToday    ? "is-today"    : "",
-                        !inMonth   ? "is-outside"  : "",
-                        dayEvents.length > 0 ? "has-events" : "",
-                      ].filter(Boolean).join(" ")}
-                      onClick={() => { setSelected(day); setView("day"); }}
-                      aria-label={`${format(day, "d MMMM", { locale: arSA })}${dayEvents.length > 0 ? `، ${dayEvents.length} درس` : ""}`}
-                    >
-                      <div className="cal-cell-head">
-                        <span className="cal-cell-num">{format(day, "d")}</span>
-                        {hDay && <span className="cal-cell-hijri">{hDay}</span>}
-                      </div>
-                      {shown.map((ev) => (
-                        <span key={ev.id} className="cal-cell-event" title={ev.title}>
-                          {ev.title}
-                        </span>
-                      ))}
-                      {extra > 0 && (
-                        <span className="cal-cell-more">+{extra}</span>
-                      )}
-                    </button>
+                      date={day}
+                      events={dayEvents}
+                      density="month"
+                      inMonth={isSameMonth(day, cursor)}
+                      isSelected={isSameDay(day, selected)}
+                      isToday={isSameDay(day, today)}
+                      onSelectDay={() => {
+                        setSelected(day);
+                        setView("day");
+                      }}
+                      onEventClick={setModalEvent}
+                    />
                   );
                 })}
               </div>
@@ -338,56 +291,47 @@ export default function CalendarPage() {
 
           {view === "week" && (
             <div className="cal-week ui-card">
-              {weekDays.map((day) => {
-                const dayEvents = eventsForDate(day, events);
-                return (
+              <div className="cal-week-grid">
+                {weekDays.map((day) => (
                   <div key={day.toISOString()} className="cal-week-col">
                     <button
                       type="button"
-                      className={`cal-week-head${isSameDay(day, selected) ? " is-selected" : ""}`}
+                      className={`cal-week-head${isSameDay(day, selected) ? " is-selected" : ""}${isSameDay(day, today) ? " is-today" : ""}`}
                       onClick={() => setSelected(day)}
                     >
-                      {format(day, "EEEE d", { locale: arSA })}
+                      {format(day, "EEE d", { locale: arSA })}
                     </button>
-                    <div className="cal-week-events">
-                      {dayEvents.length === 0 ? (
-                        <p className="cal-empty">لا دروس</p>
-                      ) : (
-                        dayEvents.map((ev) => (
-                          <button key={ev.id} type="button" className="cal-event-chip" onClick={() => setModalEvent(ev)}>
-                            {ev.title}
-                          </button>
-                        ))
-                      )}
-                    </div>
+                    <CalendarDayCell
+                      date={day}
+                      events={eventsForDate(day, events)}
+                      density="week"
+                      isSelected={isSameDay(day, selected)}
+                      isToday={isSameDay(day, today)}
+                      onSelectDay={() => setSelected(day)}
+                      onEventClick={setModalEvent}
+                    />
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
           )}
 
           {view === "day" && (
             <div className="cal-day ui-card">
-              <h3>{format(selected, "EEEE d MMMM yyyy", { locale: arSA })}</h3>
-              {selectedEvents.length === 0 ? (
-                <p className="cal-empty">لا توجد دروس في هذا اليوم.</p>
-              ) : (
-                <div className="cal-day-list">
-                  {selectedEvents.map((ev) => (
-                    <button key={ev.id} type="button" className="cal-day-item" onClick={() => setModalEvent(ev)}>
-                      <strong>{ev.title}</strong>
-                      <span>{ev.sheikh} · {ev.mosque}</span>
-                      <span>{ev.time}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
+              <CalendarDayCell
+                date={selected}
+                events={eventsForDate(selected, events)}
+                density="day"
+                isToday={isSameDay(selected, today)}
+                onSelectDay={() => {}}
+                onEventClick={setModalEvent}
+              />
             </div>
           )}
         </>
       )}
 
-      {modalEvent && <EventModal event={modalEvent} onClose={() => setModalEvent(null)} />}
+      {modalEvent ? <EventModal event={modalEvent} onClose={() => setModalEvent(null)} /> : null}
 
       <div className="twh-share">
         <ShareButtons aria-label="التقويم الهجري والمناسبات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/calendar" />
