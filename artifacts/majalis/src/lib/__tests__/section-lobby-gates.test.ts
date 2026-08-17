@@ -50,7 +50,7 @@ assert.match(back, /section-lobby-chrome/);
 
 const css = read("src/components/lobby/section-lobby.css");
 assert.match(css, /font-size:\s*24px/);
-assert.match(css, /font-size:\s*17px/);
+assert.match(css, /font-size:\s*16px/);
 assert.match(css, /font-size:\s*15px/);
 assert.match(css, /font-size:\s*13px/);
 assert.match(css, /gap:\s*8px/);

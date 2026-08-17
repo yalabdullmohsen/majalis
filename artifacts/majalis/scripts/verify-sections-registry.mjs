@@ -215,6 +215,7 @@ const SPACING = new Set([8, 12, 16, 24]);
     const allowed = new Set([
       "FeaturedSectionCard.tsx",
       "SectionCard.tsx",
+      "SectionCardShared.tsx",
       "SectionRow.tsx",
       "SectionsGrids.tsx",
       "index.ts",

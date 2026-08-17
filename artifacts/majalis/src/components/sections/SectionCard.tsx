@@ -2,11 +2,17 @@ import { useLocation } from "wouter";
 import type { SectionDef } from "@/config/sections.registry";
 import { prefetchRoute } from "@/lib/prefetch-route";
 import { cn } from "@/lib/utils";
+import {
+  readSectionProgress,
+  SectionCardFrame,
+  useSectionCardPress,
+} from "@/components/sections/SectionCardShared";
 
 type Props = {
   section: SectionDef;
   className?: string;
   onNavigate?: () => void;
+  count?: string;
 };
 
 function go(href: string, setLocation: (h: string) => void) {
@@ -21,12 +27,22 @@ function go(href: string, setLocation: (h: string) => void) {
 }
 
 /**
- * بطاقة متوسطة محايدة (شبكة عمودين) — بلا تدرّج أخضر.
+ * بطاقة متوسطة محايدة (شبكة عمودين) — صف واحد مضغوط.
  */
-export function SectionCard({ section, className, onNavigate }: Props) {
+export function SectionCard({ section, className, onNavigate, count }: Props) {
   const [, setLocation] = useLocation();
   const Icon = section.icon;
   const aria = `${section.label} — ${section.subtitle}`;
+  const press = useSectionCardPress({
+    id: section.id,
+    label: section.label,
+    route: section.route,
+    onPrefetch: () => prefetchRoute(section.route),
+    onOpen: () => {
+      go(section.route, setLocation);
+      onNavigate?.();
+    },
+  });
 
   return (
     <button
@@ -36,17 +52,21 @@ export function SectionCard({ section, className, onNavigate }: Props) {
       data-section-id={section.id}
       aria-label={aria}
       className={cn("card", className)}
-      onPointerDown={() => prefetchRoute(section.route)}
-      onClick={() => {
-        go(section.route, setLocation);
-        onNavigate?.();
-      }}
+      onPointerDown={press.onPointerDown}
+      onPointerUp={press.onPointerUp}
+      onPointerCancel={press.onPointerCancel}
+      onClick={press.onClick}
     >
-      <span className="card__icon" aria-hidden>
-        <Icon strokeWidth={1.75} aria-hidden />
-      </span>
-      <span className="card__label">{section.label}</span>
-      <span className="card__subtitle">{section.subtitle}</span>
+      <SectionCardFrame
+        icon={<Icon strokeWidth={1.75} aria-hidden />}
+        label={section.label}
+        subtitle={section.subtitle}
+        count={count}
+        progress={readSectionProgress(section.id)}
+        menuOpen={press.menuOpen}
+        onCloseMenu={press.closeMenu}
+        actions={press.actions}
+      />
     </button>
   );
 }

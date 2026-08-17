@@ -27,14 +27,16 @@
 
 /* —— بطاقة قياسية —— */
 .card {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   width: 100%;
   height: 100%;
-  min-height: 44px;
-  padding: 16px;
+  min-height: 96px;
+  max-height: 112px;
+  padding: 14px;
   text-align: start;
   color: var(--on-surface, var(--mj-ink, #16241e));
   background-color: var(--mj-surface, #ffffff);
@@ -42,15 +44,21 @@
   border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 16px;
   box-shadow: 0 4px 14px -10px rgba(11, 32, 24, 0.35);
-  transition: filter 120ms ease, transform 120ms ease;
+  transition: transform 120ms ease;
 }
 
-.card:hover {
-  filter: brightness(0.98);
+@media (hover: hover) {
+  .card:hover {
+    filter: brightness(0.98);
+  }
 }
 
 .card:active {
   transform: scale(0.98);
+}
+
+.card:active .card__chevron {
+  transform: translateX(-4px);
 }
 
 .card__icon {
@@ -66,18 +74,31 @@
 }
 
 .card__icon svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   stroke: currentColor;
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .card__label {
   display: block;
   width: 100%;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1.25;
   color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card__subtitle {
@@ -89,8 +110,53 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
   overflow-wrap: anywhere;
+}
+
+.card__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.card__count {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--chip-bg, var(--mj-brand-soft, #e4f0ea));
+  color: var(--chip-fg, var(--mj-brand-deep, #123f2e));
+}
+
+.card__chevron {
+  display: block;
+  flex-shrink: 0;
+  color: inherit;
+  opacity: 0.55;
+  transition: transform 120ms ease;
+}
+
+.card__progress {
+  position: absolute;
+  inset-inline: 14px;
+  bottom: 0;
+  height: 3px;
+  border-radius: 999px 999px 0 0;
+  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 18%, transparent);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.card__progress-fill {
+  display: block;
+  height: 100%;
+  background: var(--mj-brand, #1f7a5a);
 }
 
 /* —— بطاقة مميّزة: خلفية + نص أبيض في نفس الـvariant فقط —— */
@@ -101,13 +167,14 @@ a.card--featured,
   isolation: isolate;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   width: 100%;
   height: 100%;
-  min-height: 44px;
-  padding: 16px;
+  min-height: 96px;
+  max-height: 112px;
+  padding: 14px;
   text-align: start;
   /* ألوان حرفية مربوطة — لا تعتمد على منفعة لون منفصلة ولا على سقوط متغيّر وحده */
   color: #ffffff;
@@ -116,7 +183,7 @@ a.card--featured,
   background-color: #1f7a5a;
   background-image: linear-gradient(145deg, #1f7a5a 0%, #14614a 100%);
   box-shadow: 0 8px 22px -12px rgba(20, 97, 74, 0.55);
-  transition: filter 120ms ease, transform 120ms ease;
+  transition: transform 120ms ease;
 }
 
 .card--featured::before {
@@ -132,7 +199,7 @@ a.card--featured,
   background-size: 18px 18px, 22px 22px;
 }
 
-.card--featured > * {
+.card--featured > *:not(.card__progress) {
   position: relative;
   z-index: 1;
   color: #ffffff;
@@ -144,16 +211,24 @@ a.card--featured,
 }
 
 .card--featured .card__label,
-.card--featured .card__subtitle {
+.card--featured .card__subtitle,
+.card--featured .card__count,
+.card--featured .card__chevron {
   color: #ffffff;
 }
 
-.card--featured:hover {
-  filter: brightness(1.05);
+@media (hover: hover) {
+  .card--featured:hover {
+    filter: brightness(1.05);
+  }
 }
 
 .card--featured:active {
   transform: scale(0.98);
+}
+
+.card--featured:active .card__chevron {
+  transform: translateX(-4px);
 }
 
 /* —— بطاقة مضغوطة (الحساب) —— */
@@ -198,7 +273,7 @@ a.card--featured,
 .card-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
   grid-auto-rows: 1fr;
 }
 
@@ -344,6 +419,77 @@ html.dark .sections-hub__search {
   background: var(--mj-surface, #1a221f);
   color: var(--mj-ink, #e8eeeb);
   border-color: var(--mj-hairline, #2a3531);
+}
+
+html[data-theme="dark"] .card--featured .card__count,
+html.dark .card--featured .card__count,
+html[data-theme="dark"] .card--featured .card__chevron,
+html.dark .card--featured .card__chevron {
+  color: #ffffff;
+}
+
+.card-quick-root {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+}
+
+.card-quick-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgb(0 0 0 / 0.4);
+  cursor: pointer;
+}
+
+.card-quick {
+  position: absolute;
+  inset-inline: 16px;
+  bottom: calc(var(--bottom-nav-total, 4.5rem) + 16px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  border-radius: 16px;
+  background: var(--surface, var(--mj-surface, #fff));
+  box-shadow: 0 -8px 32px rgb(0 0 0 / 0.18);
+}
+
+.card-quick__item {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--on-surface, var(--mj-ink, #16241e));
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .card-quick__item:hover {
+    background: var(--mj-brand-soft, #e4f0ea);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card--featured,
+  .card__chevron {
+    transition: none;
+  }
+  .card:active,
+  .card--featured:active {
+    transform: none;
+  }
+  .card:active .card__chevron,
+  .card--featured:active .card__chevron {
+    transform: none;
+  }
 }
 
 /* توافق أسماء قديمة أثناء الانتقال */

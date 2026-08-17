@@ -13,6 +13,7 @@ const featured = readFileSync(
   "utf8",
 );
 const card = readFileSync(resolve(root, "src/components/sections/SectionCard.tsx"), "utf8");
+const shared = readFileSync(resolve(root, "src/components/sections/SectionCardShared.tsx"), "utf8");
 const css = readFileSync(resolve(root, "src/components/sections/section-cards.css"), "utf8");
 const tokens = readFileSync(resolve(root, "src/styles/tokens.css"), "utf8");
 const bottom = readFileSync(resolve(root, "src/components/BottomNavBar.tsx"), "utf8");
@@ -29,10 +30,23 @@ assert.doesNotMatch(card, /card--featured|linear-gradient/);
 assert.match(tokens, /--on-brand:\s*#ffffff/);
 assert.match(featured, /aria-label/);
 assert.match(card, /aria-label/);
-assert.match(card, /card__label/);
-assert.match(card, /card__subtitle/);
-assert.doesNotMatch(card, /\{section\.label\}\s*\{section\.subtitle\}/);
+assert.match(shared, /card__label/);
+assert.match(shared, /card__subtitle/);
+assert.doesNotMatch(shared, /\{section\.label\}\s*\{section\.subtitle\}/);
 assert.doesNotMatch(bottom, /MoreBottomSheet/);
 assert.doesNotMatch(bottom, /المزيد/);
+
+assert.match(css, /min-height:\s*96px/);
+assert.match(css, /max-height:\s*112px/);
+assert.match(css, /padding:\s*14px/);
+assert.match(css, /-webkit-line-clamp:\s*1/);
+assert.match(css, /@media \(hover:\s*hover\)/);
+assert.match(css, /prefers-reduced-motion:\s*reduce/);
+assert.doesNotMatch(css, /^\.card:hover/m);
+assert.doesNotMatch(css, /^\.card--featured:hover/m);
+assert.match(card, /useSectionCardPress/);
+assert.match(featured, /useSectionCardPress/);
+assert.match(shared, /إضافة إلى المحفوظات/);
+assert.match(shared, /مشاركة/);
 
 console.log("more-hub-tile-colors.test.ts: ok");

@@ -2,6 +2,11 @@ import { useLocation } from "wouter";
 import type { SectionDef } from "@/config/sections.registry";
 import { prefetchRoute } from "@/lib/prefetch-route";
 import { cn } from "@/lib/utils";
+import {
+  readSectionProgress,
+  SectionCardFrame,
+  useSectionCardPress,
+} from "@/components/sections/SectionCardShared";
 
 type Props = {
   section: SectionDef;
@@ -9,16 +14,36 @@ type Props = {
   onNavigate?: () => void;
   /** تجاوز المسار (مثل المصحف بآخر موضع) */
   resolveRoute?: (section: SectionDef) => string;
+  count?: string;
 };
 
 /**
  * مربع مميّز — الخلفية الخضراء ولون الحبر في صنف variant واحد فقط (.card--featured).
  * ممنوع تعيين لون الحبر أبيضًا عبر منفعة Tailwind منفصلة عن الخلفية.
  */
-export function FeaturedSectionCard({ section, className, onNavigate, resolveRoute }: Props) {
+export function FeaturedSectionCard({ section, className, onNavigate, resolveRoute, count }: Props) {
   const [, setLocation] = useLocation();
   const Icon = section.icon;
   const aria = `${section.label} — ${section.subtitle}`;
+  const href = () => resolveRoute?.(section) ?? section.route;
+  const press = useSectionCardPress({
+    id: section.id,
+    label: section.label,
+    route: href(),
+    onPrefetch: () => prefetchRoute(href()),
+    onOpen: () => {
+      const next = href();
+      const [path, hash] = next.split("#");
+      if (path) setLocation(path);
+      window.scrollTo(0, 0);
+      if (hash) {
+        window.setTimeout(() => {
+          document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 40);
+      }
+      onNavigate?.();
+    },
+  });
 
   return (
     <button
@@ -28,25 +53,21 @@ export function FeaturedSectionCard({ section, className, onNavigate, resolveRou
       data-section-id={section.id}
       aria-label={aria}
       className={cn("card--featured", className)}
-      onPointerDown={() => prefetchRoute(resolveRoute?.(section) ?? section.route)}
-      onClick={() => {
-        const href = resolveRoute?.(section) ?? section.route;
-        const [path, hash] = href.split("#");
-        if (path) setLocation(path);
-        window.scrollTo(0, 0);
-        if (hash) {
-          window.setTimeout(() => {
-            document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, 40);
-        }
-        onNavigate?.();
-      }}
+      onPointerDown={press.onPointerDown}
+      onPointerUp={press.onPointerUp}
+      onPointerCancel={press.onPointerCancel}
+      onClick={press.onClick}
     >
-      <span className="card__icon" aria-hidden>
-        <Icon strokeWidth={1.75} aria-hidden />
-      </span>
-      <span className="card__label">{section.label}</span>
-      <span className="card__subtitle">{section.subtitle}</span>
+      <SectionCardFrame
+        icon={<Icon strokeWidth={1.75} aria-hidden />}
+        label={section.label}
+        subtitle={section.subtitle}
+        count={count}
+        progress={readSectionProgress(section.id)}
+        menuOpen={press.menuOpen}
+        onCloseMenu={press.closeMenu}
+        actions={press.actions}
+      />
     </button>
   );
 }
