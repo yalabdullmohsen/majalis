@@ -1,241 +1,205 @@
-import { useEffect, useState } from "react";
-import { Building2, FlaskConical, GraduationCap, Landmark, Moon, Scale } from "lucide-react";
-import { SectionIcon } from "@/components/ui/SectionIcon";
+import { useEffect, useMemo, useState } from "react";
+import {
+  BookOpen,
+  Building2,
+  FlaskConical,
+  Gavel,
+  GraduationCap,
+  Landmark,
+  Scale,
+  ScrollText,
+  Search,
+  Shield,
+  Users,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { Link, useSearch } from "wouter";
+import { Link } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { PageHero, HubCard } from "@/components/ui-common";
-import { loadSeedQa } from "@/lib/qa-seed";
+import { PageHero } from "@/components/ui-common";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import {
+  FIQH_CATEGORY_LABELS,
+  FIQH_CATEGORY_ORDER,
+  FIQH_SUPPORTING_TOPICS,
+  fiqhBookCounts,
+  publishedBooks,
+  searchFiqhLessons,
+  type FiqhBookCategory,
+  type FiqhLessonLevel,
+} from "@/lib/fiqh-books";
 import "@/styles/pages/fiqh-hub.css";
 
-type Tab = "qawaid" | "madhahib" | "nawazil" | "council" | "ibadat";
-
-const TABS: { key: Tab; label: string; Icon: LucideIcon }[] = [
-  { key: "qawaid", label: "القواعد الفقهية", Icon: Scale },
-  { key: "madhahib", label: "المذاهب الأربعة", Icon: GraduationCap },
-  { key: "nawazil", label: "النوازل المعاصرة", Icon: FlaskConical },
-  { key: "council", label: "قرارات المجامع", Icon: Building2 },
-  { key: "ibadat", label: "العبادات", Icon: Moon },
+const GROUP_CHIPS: { id: FiqhBookCategory | "supporting"; label: string; Icon: LucideIcon }[] = [
+  { id: "ibadat", label: "العبادات", Icon: BookOpen },
+  { id: "muamalat", label: "المعاملات", Icon: Scale },
+  { id: "usrah", label: "الأسرة", Icon: Users },
+  { id: "jinayat", label: "الجنايات والحدود", Icon: Shield },
+  { id: "qada", label: "القضاء", Icon: Gavel },
+  { id: "supporting", label: "المباحث المساندة", Icon: Landmark },
 ];
 
-const IBADAT_IDS = new Set(["tahara", "salah", "zakat", "sawm", "hajj"]);
+const SUPPORT_ICONS: Record<string, LucideIcon> = {
+  usul: ScrollText,
+  qawaid: Scale,
+  madhahib: GraduationCap,
+  nawazil: FlaskConical,
+  majami: Building2,
+  fatawa: ScrollText,
+};
 
-const COUNCIL_SECTIONS = [
-  { href: "/fiqh-council",             label: "رئيسية المجمع",     desc: "بوابة المجمع الفقهي: قرارات معتمدة وفتاوى موثّقة وتوثيق جلساته وأبحاثه، مع فهرس موضوعي يسهّل الرجوع إلى المسائل المدروسة." },
-  { href: "/fiqh-council/issues",      label: "المسائل الفقهية",   desc: "المسائل الفقهية التي ناقشها المجمع أو أُحيلت إليه: عرضٌ للسؤال والخلاف والأدلة قبل صدور القرار النهائي." },
-  { href: "/fiqh-council/resolutions", label: "القرارات",          desc: "قرارات هيئات الإفتاء والمجامع الفقهية المعتمدة، مرتّبة بحسب الموضوع مع ذكر المجلس والتاريخ والحكم المختار." },
-  { href: "/fiqh-council/fatwas",      label: "فتاوى المجمع",      desc: "فتاوى المجمع الفقهي موثّقة بأسانيدها ومراجعها، مع بيان المذهب أو القول الراجح والأدلة المعتمدة عليه." },
-  { href: "/fiqh-council/live",        label: "البيانات الحية",    desc: "البيانات الحية لآخر جلسات المجمع ونشاطاته: جدول الاجتماعات والمسائل المدرجة والبيانات الصادرة عنها." },
-  { href: "/fiqh-council/index",       label: "الفهرس الموضوعي",  desc: "الفهرس الموضوعي للمجمع: تصفّح القرارات والفتاوى حسب أبواب الفقه من العبادات إلى المعاملات والنوازل." },
-  { href: "/fiqh-council/nawazil",     label: "النوازل المعاصرة",  desc: "النوازل المعاصرة التي يعالجها المجمع: مسائل العصر من تقنية وطب واقتصاد، بضوابط شرعية معتمدة." },
-  { href: "/fiqh-council/research",   label: "البحوث الفقهية",    desc: "البحوث الفقهية المعمّقة: دراسات تمهّد للقرار، تجمع الأدلة والخلاف والترجيح قبل إصدار الفتوى." },
-  { href: "/fiqh-council/compare",    label: "المقارنة الفقهية",  desc: "أداة المقارنة الفقهية: قارن بين قرارات المجامع وفتاوى الهيئات في مسألة واحدة لمعرفة الخلاف والاتفاق." },
-];
-
-const NAWAZIL_LINKS = COUNCIL_SECTIONS.filter((s) =>
-  ["/fiqh-council/nawazil", "/fiqh-council/issues", "/fiqh-council/compare"].includes(s.href),
-);
-
-// ─── أقسام الفقه والأحكام ────────────────────────────────────────────────────
-
-import { FIQH_HUB_TOPICS } from "@/lib/fiqh-hub-topics";
-
-const VALID_TABS = new Set<Tab>(TABS.map((t) => t.key));
+const LEVELS: FiqhLessonLevel[] = ["مبتدئ", "متوسط", "متقدم"];
+const MADHAHIB = ["حنفي", "مالكي", "شافعي", "حنبلي"];
 
 export default function FiqhPage() {
-  const search = useSearch();
-  const params = new URLSearchParams(search);
-  const tabParam = params.get("tab") as Tab | null;
-  const initialTab: Tab = tabParam && VALID_TABS.has(tabParam) ? tabParam : "qawaid";
-
-  const [activeTab, setActiveTab] = useState<Tab>(initialTab);
+  const books = useMemo(() => publishedBooks(), []);
+  const [query, setQuery] = useState("");
+  const [bookId, setBookId] = useState("");
+  const [level, setLevel] = useState<FiqhLessonLevel | "">("");
+  const [madhhab, setMadhhab] = useState("");
 
   usePageView("fiqh", null);
 
   useEffect(() => {
-    let cancelled = false;
-    void loadSeedQa().then((seed) => {
-      if (cancelled) return;
-      const topQa = seed.filter((q) => q.answer).slice(0, 5);
-      const faqSchema = topQa.length
-        ? {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: topQa.map((q) => ({
-              "@type": "Question",
-              name: q.question,
-              acceptedAnswer: { "@type": "Answer", text: q.answer },
-            })),
-          }
-        : undefined;
-      applyPageSeo({
-        path: "/fiqh",
-        title: "الفقه الإسلامي | المجلس العلمي",
-        description: "بوابة الفقه: قواعد فقهية، مذاهب، نوازل، قرارات المجامع، وأحكام العبادات.",
-        keywords: ["فقه إسلامي", "القواعد الفقهية", "المذاهب الأربعة", "المجمع الفقهي"],
-        ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
-      });
+    applyPageSeo({
+      path: "/fiqh",
+      title: "الفقه الإسلامي | المجلس العلمي",
+      description: "كتب الفقه وأبوابها ومسائلها: عبادات ومعاملات وأسرة وجنايات وقضاء، مع مباحث مساندة.",
+      keywords: ["فقه إسلامي", "كتب الفقه", "مسائل فقهية", "المجلس العلمي"],
     });
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
+  const results = useMemo(
+    () => searchFiqhLessons(query, { bookId: bookId || undefined, level, madhhab }),
+    [query, bookId, level, madhhab],
+  );
+  const searching = Boolean(query.trim() || bookId || level || madhhab);
 
   return (
-    <div className="fqp-root page-shell" dir="rtl">
-      <PageHero
-        title="الفقه والأحكام"
-        description="بوابة الفقه: قواعد فقهية، مذاهب، نوازل، قرارات المجامع، وأحكام العبادات."
-      />
+    <div className="fqp-root page-shell fiqh-hub" dir="rtl">
+      <PageHero title="الفقه" />
 
-      {/* بطاقات المحاور — ظاهرة دائمًا (لا تعتمد على تبويب) لتباين/اكتشاف الواجهة */}
-      <div className="hub-card-grid fqh-hub-grid fqh-hub-grid--overview">
-        {FIQH_HUB_TOPICS.filter((t) =>
-          ["tahara", "salah", "fiqh-qawaid", "madhahib", "fiqh-council"].includes(t.id),
-        ).map((t) => (
-          <HubCard
-            key={t.id}
-            href={t.href}
-            title={t.title}
-            description={t.desc}
-            icon={<SectionIcon name={t.emoji} size={22} />}
-          />
+      <nav className="fiqh-chip-strip" aria-label="مجموعات الفقه" role="navigation">
+        {GROUP_CHIPS.map((chip) => (
+          <a key={chip.id} className="fiqh-chip" href={`#fiqh-${chip.id}`}>
+            <chip.Icon size={15} strokeWidth={1.8} aria-hidden="true" />
+            <span className="fiqh-chip__label">{chip.label}</span>
+          </a>
         ))}
-      </div>
+      </nav>
 
-      {/* تبويبات الباب الرئيسي */}
-      <div className="fqp-tabs-nav fqp-tabs-nav--bare">
-        <div className="fqp-tabs-scroll" role="tablist" aria-label="أقسام الفقه">
-          {TABS.map((t) => (
-            <button
-              key={t.key}
-              id={`fqp-tab-${t.key}`}
-              type="button"
-              role="tab"
-              onClick={() => setActiveTab(t.key)}
-              className={`fqp-tab${activeTab === t.key ? "fqp-tab--active" : ""}`}
-              aria-selected={activeTab === t.key}
-              aria-controls={`fqp-panel-${t.key}`}
+      <form className="fiqh-search" role="search" onSubmit={(e) => e.preventDefault()}>
+        <label className="fiqh-search__field">
+          <Search size={16} aria-hidden="true" />
+          <span className="sr-only">بحث في الفقه</span>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="ابحث في الكتب والأبواب والمسائل…"
+            aria-label="بحث في أسماء الدروس والأبواب والكتب"
+          />
+        </label>
+        <div className="fiqh-search__filters">
+          <label>
+            <span className="sr-only">الكتاب</span>
+            <select value={bookId} onChange={(e) => setBookId(e.target.value)} aria-label="تصفية حسب الكتاب">
+              <option value="">كل الكتب</option>
+              {books.map((b) => (
+                <option key={b.id} value={b.id}>{b.title}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span className="sr-only">المستوى</span>
+            <select
+              value={level}
+              onChange={(e) => setLevel(e.target.value as FiqhLessonLevel | "")}
+              aria-label="تصفية حسب المستوى"
             >
-              <t.Icon size={15} strokeWidth={1.8} aria-hidden="true" />
-              {t.label}
-            </button>
-          ))}
+              <option value="">كل المستويات</option>
+              {LEVELS.map((lv) => (
+                <option key={lv} value={lv}>{lv}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span className="sr-only">المذهب</span>
+            <select value={madhhab} onChange={(e) => setMadhhab(e.target.value)} aria-label="تصفية حسب المذهب">
+              <option value="">كل المذاهب</option>
+              {MADHAHIB.map((m) => (
+                <option key={m} value={m}>{m}</option>
+              ))}
+            </select>
+          </label>
         </div>
-      </div>
+      </form>
 
-      <div className="fqp-tab-content">
-
-        {/* تبويب القواعد */}
-        {activeTab === "qawaid" && (
-          <div role="tabpanel" id="fqp-panel-qawaid" aria-labelledby="fqp-tab-qawaid">
-            <h2 className="fqp-section-title mb-4"><Scale size={20} />القواعد الفقهية</h2>
-            <div className="hub-card-grid fqh-hub-grid">
-              {FIQH_HUB_TOPICS.filter((t) => t.id === "fiqh-qawaid").map((t) => (
-                <HubCard key={t.id} href={t.href} title={t.title} description={t.desc} icon={<SectionIcon name={t.emoji} size={22} />} />
+      {searching ? (
+        <section className="fiqh-results" aria-live="polite">
+          <h2 className="fiqh-group__title">نتائج البحث</h2>
+          {results.length === 0 ? (
+            <p className="fiqh-results__empty">لا نتائج مطابقة في المسائل المنشورة.</p>
+          ) : (
+            <ul className="fiqh-results__list">
+              {results.map((hit) => (
+                <li key={hit.lesson.id}>
+                  <Link href={hit.href} className="fiqh-result">
+                    <span className="fiqh-result__title">{hit.lesson.title}</span>
+                    <span className="fiqh-result__path">{hit.path}</span>
+                  </Link>
+                </li>
               ))}
-            </div>
-            <div className="mt-6 text-center">
-              <Link href="/fiqh-qawaid"><span className="inline-block px-8 py-3 text-white rounded-xl font-medium fqp-cta-btn">فتح القواعد الفقهية</span></Link>
-            </div>
-          </div>
-        )}
+            </ul>
+          )}
+        </section>
+      ) : null}
 
-        {activeTab === "madhahib" && (
-          <div role="tabpanel" id="fqp-panel-madhahib" aria-labelledby="fqp-tab-madhahib">
-            <h2 className="fqp-section-title mb-4"><GraduationCap size={20} />المذاهب الأربعة</h2>
-            <div className="hub-card-grid fqh-hub-grid">
-              {FIQH_HUB_TOPICS.filter((t) => t.id === "madhahib").map((t) => (
-                <HubCard key={t.id} href={t.href} title={t.title} description={t.desc} icon={<SectionIcon name={t.emoji} size={22} />} />
-              ))}
+      {FIQH_CATEGORY_ORDER.map((cat) => {
+        const group = books.filter((b) => b.category === cat);
+        if (group.length === 0) return null;
+        return (
+          <section key={cat} id={`fiqh-${cat}`} className="fiqh-group">
+            <h2 className="fiqh-group__title">{FIQH_CATEGORY_LABELS[cat]}</h2>
+            <div className="fiqh-book-grid">
+              {group.map((book) => {
+                const counts = fiqhBookCounts(book);
+                return (
+                  <Link key={book.id} href={`/fiqh/books/${book.id}`} className="fiqh-book-card">
+                    <h3 className="fiqh-book-card__title">{book.title}</h3>
+                    <p className="fiqh-book-card__meta">
+                      {counts.chapters} أبواب · {counts.lessons} مسائل
+                    </p>
+                  </Link>
+                );
+              })}
             </div>
-            <div className="mt-6 text-center">
-              <Link href="/madhahib"><span className="inline-block px-8 py-3 text-white rounded-xl font-medium fqp-cta-btn">فتح المذاهب الأربعة</span></Link>
-            </div>
-          </div>
-        )}
+          </section>
+        );
+      })}
 
-        {activeTab === "nawazil" && (
-          <div role="tabpanel" id="fqp-panel-nawazil" aria-labelledby="fqp-tab-nawazil">
-            <h2 className="fqp-section-title mb-4"><FlaskConical size={20} />النوازل المعاصرة</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-              {NAWAZIL_LINKS.map((s) => (
-                <Link key={s.href} href={s.href}>
-                  <div className="fqp-card fqp-card--hover-border flex items-start gap-3">
-                    <div className="flex-1 min-w-0">
-                      <p className="fqp-council-label">{s.label}</p>
-                      <p className="fqp-council-desc">{s.desc}</p>
-                    </div>
-                    <span className="fqp-arrow">←</span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {activeTab === "ibadat" && (
-          <div role="tabpanel" id="fqp-panel-ibadat" aria-labelledby="fqp-tab-ibadat">
-            <h2 className="fqp-section-title mb-4"><Moon size={20} />العبادات</h2>
-            <p className="fqp-section-desc mb-4">طهارة، صلاة، زكاة، صيام، حج</p>
-            <div className="hub-card-grid fqh-hub-grid">
-              {FIQH_HUB_TOPICS.filter((t) => IBADAT_IDS.has(t.id)).map((t) => (
-                <HubCard key={t.id} href={t.href} title={t.title} description={t.desc} icon={<SectionIcon name={t.emoji} size={22} />} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* تبويب المجمع الفقهي */}
-        {activeTab === "council" && (
-          <div role="tabpanel" id="fqp-panel-council" aria-labelledby="fqp-tab-council">
-            <div className="mb-6">
-              <h2 className="fqp-section-title mb-2"><Landmark size={20} />قرارات المجامع</h2>
-              <p className="fqp-section-desc">
-                قرارات وبيانات وفتاوى المجامع الفقهية المعتمدة، موثقة بمصادرها
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-              {COUNCIL_SECTIONS.map((s) => (
-                <Link key={s.href} href={s.href}>
-                  <div className="fqp-card fqp-card--hover-border flex items-start gap-3">
-                    <div className="flex-1 min-w-0">
-                      <p className="fqp-council-label">{s.label}</p>
-                      <p className="fqp-council-desc">{s.desc}</p>
-                    </div>
-                    <span className="fqp-arrow">←</span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-            <div className="text-center">
-              <Link href="/fiqh-council">
-                <span className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer fqp-cta-btn">
-                  دخول المجمع الفقهي
-                </span>
+      <section id="fiqh-supporting" className="fiqh-group fiqh-group--supporting">
+        <h2 className="fiqh-group__title">المباحث المساندة</h2>
+        <div className="fiqh-book-grid">
+          {FIQH_SUPPORTING_TOPICS.map((t) => {
+            const Icon = SUPPORT_ICONS[t.id] ?? Landmark;
+            return (
+              <Link key={t.id} href={t.href} className="fiqh-book-card">
+                <h3 className="fiqh-book-card__title">
+                  <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
+                  {t.title}
+                </h3>
+                <p className="fiqh-book-card__meta">{t.desc}</p>
               </Link>
-            </div>
-          </div>
-        )}
+            );
+          })}
+        </div>
+      </section>
 
-      <RelatedKnowledge kind="fatwa" query="الفقه الإسلامي" title="معرفة ذات صلة بالفقه" limit={6} />
-      <SectionQuiz
-        categoryId="fiqh"
-        title="اختبر معلوماتك في الفقه الإسلامي"
-        count={4}
-      />
-
-      <div className="twh-share">
+      <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
+      <div className="twh-share fiqh-fab-clearance">
         <ShareButtons title="الفقه الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/fiqh" />
-      </div>
-
       </div>
     </div>
   );

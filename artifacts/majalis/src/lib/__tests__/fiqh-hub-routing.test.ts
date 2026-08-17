@@ -1,5 +1,5 @@
 /**
- * يمنع تكرار عطل توجيه بطاقات الفقه إلى موسوعة الأحكام المؤرشفة.
+ * يمنع رجوع عطل توجيه الفقه إلى موسوعة /rulings أو دمج الدروس العامة.
  * التشغيل: npx tsx src/lib/__tests__/fiqh-hub-routing.test.ts
  */
 import { readFileSync } from "node:fs";
@@ -28,70 +28,50 @@ function assert(condition: boolean, label: string) {
   }
 }
 
-console.log("\n=== فقه — معرفات ومسارات فريدة ===");
+console.log("\n=== فقه — معرفات فريدة ولا /rulings ===");
 {
   const ids = FIQH_HUB_TOPICS.map((t) => t.id);
-  assert(new Set(ids).size === ids.length, "كل بطاقة لها id فريد");
+  assert(new Set(ids).size === ids.length, "كل بطاقة توافق لها id فريد");
+  assert(!ids.includes("qa"), "لا بطاقة أسئلة/أحكام غير موثَّقة");
   const hrefs = FIQH_HUB_TOPICS.map((t) => t.href);
   assert(hrefs.every((h) => h.startsWith("/") && h.length > 1), "كل href مسار مطلق صالح");
   for (const t of FIQH_HUB_TOPICS) {
     assert(Boolean(t.title.trim()), `عنوان غير فارغ: ${t.id}`);
     assert(Boolean(t.desc.trim()), `وصف غير فارغ: ${t.id}`);
+    assert(!isRulingsEncyclopediaHref(t.href), `${t.id} ليس /rulings`);
   }
-}
-
-console.log("\n=== فقه — لا إسقاط للدروس على /rulings بالخطأ ===");
-{
   const violations = assertFiqhHubCardHrefsSafe();
-  assert(violations.length === 0, `لا بطاقة توجّه إلى /rulings (المخالفات: ${violations.join(" | ") || "لا شيء"})`);
-
-  const encyclopedia = FIQH_HUB_TOPICS.filter((t) => t.kind === "encyclopedia");
-  assert(encyclopedia.length === 0, "لا بطاقة موسوعة في الشبكة");
+  assert(violations.length === 0, `لا بطاقة توجّه إلى /rulings`);
+  assert(FIQH_HUB_TOPICS.filter((t) => t.kind === "encyclopedia").length === 0, "لا بطاقة موسوعة");
   assert(FIQH_ENCYCLOPEDIA_HREF === "/fiqh", "FIQH_ENCYCLOPEDIA_HREF → /fiqh");
-
-  const topicCards = FIQH_HUB_TOPICS.filter((t) => t.kind === "topic");
-  assert(topicCards.length >= 6, `أبواب موضوعية كافية (الفعلي: ${topicCards.length})`);
-  for (const t of topicCards) {
-    assert(
-      t.href === `/fiqh/topics/${t.id}`,
-      `بطاقة ${t.id}: الرابط يطابق /fiqh/topics/${t.id} (الفعلي: ${t.href})`,
-    );
-    assert(!isRulingsEncyclopediaHref(t.href), `${t.id} ليس مسار موسوعة`);
-    assert(Boolean(t.rulingsCategory), `${t.id} مرتبط بتصنيف أحكام للعرض الداخلي`);
-  }
-
-  for (const id of ["muamalat", "atima", "medical", "islamic-finance", "hudud", "patients", "financing", "minorities", "tech-fiqh", "usul-fiqh"]) {
-    const t = getFiqhHubTopic(id);
-    assert(Boolean(t), `الموضوع ${id} موجود`);
-    assert(t!.href === `/fiqh/topics/${id}`, `${id} يفتح صفحته لا الموسوعة`);
-    assert(!t!.href.includes("/rulings"), `${id} لا يحتوي /rulings في رابط البطاقة`);
-  }
-
-  const usul = getFiqhHubTopic("usul-fiqh");
-  assert(Boolean(usul?.relatedGuides?.some((g) => g.href === "/lessons")),
-    "أصول الفقه يرتبط بمسار usool-fiqh");
-  assert(Boolean(usul?.relatedGuides?.some((g) => g.href === "/fiqh-qawaid")),
-    "أصول الفقه يرتبط بالقواعد الفقهية");
 }
 
-console.log("\n=== فقه — تطابق رابط البطاقة مع بيانات الدرس في FiqhPage ===");
+console.log("\n=== فقه — الأصول لا تُدمج في الدروس العامة ===");
+{
+  const usul = getFiqhHubTopic("usul-fiqh");
+  assert(Boolean(usul), "موضوع أصول الفقه موجود");
+  assert(usul!.href === "/fiqh/usul", "أصول الفقه → /fiqh/usul");
+  assert(!(usul?.relatedGuides ?? []).some((g) => g.href === "/lessons"), "أصول الفقه لا يشير إلى /lessons");
+  assert((usul?.relatedGuides ?? []).some((g) => g.href === "/fiqh-qawaid"), "أصول الفقه يرتبط بالقواعد");
+}
+
+console.log("\n=== فقه — صفحة المحور من books.json ===");
 {
   const pageSrc = readFileSync(resolve(srcRoot, "pages/fiqh/ui/FiqhView.tsx"), "utf8");
-  assert(pageSrc.includes('from "@/lib/fiqh-hub-topics"') || pageSrc.includes("from '@/lib/fiqh-hub-topics'"),
-    "FiqhPage يستورد FIQH_HUB_TOPICS من المصدر المركزي");
-  assert(pageSrc.includes("FIQH_HUB_TOPICS"), "FiqhPage يعرض FIQH_HUB_TOPICS");
-  assert(!pageSrc.includes("href: `/rulings?category="),
-    "لا مسارات أحكام مكتوبة يدويًا داخل تعريف بطاقات الشبكة");
-  assert(pageSrc.includes("key={t.id}"), "مفتاح البطاقة هو id الفريد لا العنوان فقط");
-  assert(!pageSrc.includes('href="/rulings"'), "لا روابط مباشرة إلى /rulings في FiqhPage");
+  assert(pageSrc.includes("@/lib/fiqh-books"), "FiqhPage يستورد fiqh-books");
+  assert(pageSrc.includes("publishedBooks"), "FiqhPage يعرض الكتب المنشورة");
+  assert(!pageSrc.includes("href: `/rulings?category="), "لا مسارات أحكام يدوية");
+  assert(!pageSrc.includes('href="/rulings"'), "لا روابط /rulings");
   assert(!pageSrc.includes('"rulings"'), "لا تبويب الأحكام الشرعية");
+  assert(!pageSrc.includes("الأحكام الشرعية"), "لا بطاقة الأحكام الشرعية");
 }
 
-console.log("\n=== فقه — مسار الصفحة الموضوعية في App ===");
+console.log("\n=== فقه — المسارات في App ===");
 {
   const appSrc = readFileSync(resolve(srcRoot, "App.tsx"), "utf8");
-  assert(appSrc.includes('path="/fiqh/topics/:topicId"'), "مسار /fiqh/topics/:topicId مسجّل");
-  assert(appSrc.includes("FiqhTopicPage"), "FiqhTopicPage موصول بالمسار");
+  assert(appSrc.includes('path="/fiqh/books/:bookId"'), "مسار الكتاب");
+  assert(appSrc.includes("FiqhBookPage"), "FiqhBookPage موصول");
+  assert(appSrc.includes('path="/fiqh/topics/:topicId"'), "مسار قديم /fiqh/topics يبقى للتحويل");
   assert(
     appSrc.includes('<Route path="/fatwa/:id"><Redirect to="/fiqh" />'),
     "إعادة توجيه /fatwa/:id إلى /fiqh",
@@ -102,7 +82,7 @@ console.log("\n=== فقه — مسار الصفحة الموضوعية في App 
   );
   assert(
     appSrc.includes('<Route path="/qa"><Redirect to="/quiz" />'),
-    "/qa يحوّل دائمًا إلى /quiz (لا صفحة شبه فارغة)",
+    "/qa يحوّل إلى /quiz",
   );
   assert(!appSrc.includes("QaPage"), "QaPage لم يعد موصولًا كمسار عام");
 }
