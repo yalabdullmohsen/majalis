@@ -144,16 +144,19 @@ export default function LoginPage() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-card__header">
-          <img
-            src="/brand/splash-logo.png"
-            alt="المجلس العلمي"
-            className="login-logo"
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            width="512"
-            height="728"
-          />
+          <picture>
+            <source srcSet="/brand/splash-logo.webp" type="image/webp" />
+            <img
+              src="/brand/splash-logo.png"
+              alt="المجلس العلمي"
+              className="login-logo"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              width={512}
+              height={728}
+            />
+          </picture>
           <p className="login-card__brand">المجلس العلمي</p>
           <p className="login-card__tagline">علم نافع · محتوى موثوق</p>
           <h1 className="login-card__title">

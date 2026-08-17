@@ -17,7 +17,14 @@ assert.doesNotMatch(indexHtml, /apple-touch-startup-image/, "لا صور إقل�
 assert.doesNotMatch(indexHtml, /splash-boot\.css/, "لا اعتماد على splash-boot.css");
 assert.match(indexHtml, /background-color:\s*#002b21/, "خلفية WebView خضراء داكنة — لا بيضاء");
 assert.match(indexHtml, /html,\s*body,\s*#root/, "خلفية inline على html/body/#root");
-assert.match(indexHtml, /preload[^>]+icon-192\.png/, "preload لشعار الدخولية");
+assert.match(indexHtml, /preload[^>]+icon-192\.webp/, "preload WebP لشعار الدخولية (LCP)");
+assert.match(indexHtml, /media="print"\s+onload=/, "خطوط Google غير حرجة تُحمَّل غير متزامن");
+{
+  const preconnects = [...indexHtml.matchAll(/rel="preconnect"/g)];
+  assert.ok(preconnects.length <= 2, `preconnect ≤ ٢ (الفعلي: ${preconnects.length})`);
+  assert.match(indexHtml, /fonts\.gstatic\.com/, "preconnect للخطوط");
+  assert.match(indexHtml, /supabase\.co/, "preconnect لـ Supabase");
+}
 
 const splashTs = readFileSync(resolve(root, "src/lib/splash-screen.ts"), "utf8");
 assert.doesNotMatch(splashTs, /mj-boot-splash/, "splash-screen لا يمس طبقة ويب قديمة");
@@ -124,6 +131,9 @@ assert.match(launchComp, /hideAppSplash/);
 assert.match(launchComp, /المجلس العلمي/);
 assert.match(launchComp, /LAUNCH_TAGLINE/);
 assert.match(launchComp, /icon-192\.png/);
+assert.match(launchComp, /icon-192\.webp/, "مصدر WebP لـ LCP");
+assert.match(launchComp, /loading="eager"/, "LCP eager");
+assert.match(launchComp, /decoding="async"/);
 assert.match(launchComp, /requestSkip|skipped/);
 assert.match(launchComp, /onPointerDown|onPointerUp/);
 assert.match(launchComp, /Style\.Light/, "StatusBar Light على خلفية داكنة");

@@ -1,4 +1,6 @@
 import {
+  lazy,
+  Suspense,
   useCallback,
   useEffect,
   useMemo,
@@ -15,15 +17,23 @@ import {
   saveLastPage,
 } from "@/lib/quran-last-page";
 import { AyahActionSheet } from "./AyahActionSheet";
-import { MushafAudioDock } from "./MushafAudioDock";
 import { MushafControls } from "./MushafControls";
 import { MushafPage } from "./MushafPage";
 import { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
-import { MushafSearchSheet } from "./MushafSearchSheet";
-import { MushafTafsirSheet } from "./MushafTafsirSheet";
 import { findMushafPageForAyah, parseVerseKey } from "./mushaf-page-for-ayah";
 import { useQpcPageFont } from "./useQpcPageFont";
 import "./mushaf-madinah.css";
+
+/** شيتات ثقيلة — خارج الحزمة الأولية للمصحف */
+const MushafTafsirSheet = lazy(() =>
+  import("./MushafTafsirSheet").then((m) => ({ default: m.MushafTafsirSheet })),
+);
+const MushafAudioDock = lazy(() =>
+  import("./MushafAudioDock").then((m) => ({ default: m.MushafAudioDock })),
+);
+const MushafSearchSheet = lazy(() =>
+  import("./MushafSearchSheet").then((m) => ({ default: m.MushafSearchSheet })),
+);
 
 type Props = {
   pageNumber: number;
@@ -444,27 +454,29 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         ) : null}
       </div>
 
-      <MushafAudioDock
-        open={
-          !actionsOpen &&
-          audioDockOpen &&
-          (chromeOpen || playerState === "playing" || playerState === "buffering" || playerState === "error")
-        }
-        verseLabel={verseLabel}
-        playerState={playerState}
-        reciterId={reciterId}
-        audioError={audioError}
-        onTogglePlay={() => void togglePlay()}
-        onPrev={() => {
-          suppressPageSyncRef.current = false;
-          void audio.skipPrev();
-        }}
-        onNext={() => {
-          suppressPageSyncRef.current = false;
-          void audio.skipNext();
-        }}
-        onReciterChange={(id) => void onReciterChange(id)}
-      />
+      <Suspense fallback={null}>
+        <MushafAudioDock
+          open={
+            !actionsOpen &&
+            audioDockOpen &&
+            (chromeOpen || playerState === "playing" || playerState === "buffering" || playerState === "error")
+          }
+          verseLabel={verseLabel}
+          playerState={playerState}
+          reciterId={reciterId}
+          audioError={audioError}
+          onTogglePlay={() => void togglePlay()}
+          onPrev={() => {
+            suppressPageSyncRef.current = false;
+            void audio.skipPrev();
+          }}
+          onNext={() => {
+            suppressPageSyncRef.current = false;
+            void audio.skipNext();
+          }}
+          onReciterChange={(id) => void onReciterChange(id)}
+        />
+      </Suspense>
 
       <MushafControls
         open={chromeOpen && !actionsOpen}
@@ -510,24 +522,32 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         />
       ) : null}
 
-      <MushafTafsirSheet
-        open={tafsirOpen}
-        verseKey={selectedVerseKey}
-        ayahText={selectedVerseKey ? versePreview(selectedVerseKey) : ""}
-        onClose={() => setTafsirOpen(false)}
-      />
+      {tafsirOpen ? (
+        <Suspense fallback={null}>
+          <MushafTafsirSheet
+            open={tafsirOpen}
+            verseKey={selectedVerseKey}
+            ayahText={selectedVerseKey ? versePreview(selectedVerseKey) : ""}
+            onClose={() => setTafsirOpen(false)}
+          />
+        </Suspense>
+      ) : null}
 
-      <MushafSearchSheet
-        open={searchOpen}
-        onClose={() => setSearchOpen(false)}
-        onGotoPage={(n, verseKey) => {
-          go(n);
-          if (verseKey) {
-            setSelectedVerseKey(verseKey);
-            setActionsOpen(true);
-          }
-        }}
-      />
+      {searchOpen ? (
+        <Suspense fallback={null}>
+          <MushafSearchSheet
+            open={searchOpen}
+            onClose={() => setSearchOpen(false)}
+            onGotoPage={(n, verseKey) => {
+              go(n);
+              if (verseKey) {
+                setSelectedVerseKey(verseKey);
+                setActionsOpen(true);
+              }
+            }}
+          />
+        </Suspense>
+      ) : null}
 
       <span className="sr-only" aria-live="polite">
         صفحة {page} من {MUSHAF_PAGE_MAX}

@@ -21,7 +21,9 @@ import { isNative } from "@/lib/capacitor-utils";
 import "@/styles/launch-screen.css";
 
 const LOGO_SRC = "/icon-192.png";
+const LOGO_WEBP_SRC = "/icon-192.webp";
 const LOGO_FALLBACK_SRC = "/brand/official.png";
+const LOGO_FALLBACK_WEBP_SRC = "/brand/official.webp";
 const LAUNCH_BG = "#002b21";
 const SKIP_SWIPE_PX = 48;
 
@@ -203,22 +205,29 @@ export function MajlisLaunchScreen({ onComplete }: MajlisLaunchScreenProps = {})
               م
             </span>
           ) : (
-            <img
-              className="mj-launch-screen__logo"
-              src={logoSrc}
-              alt=""
-              width={96}
-              height={96}
-              decoding="async"
-              fetchPriority="high"
-              onError={() => {
-                if (logoSrc !== LOGO_FALLBACK_SRC) {
-                  setLogoSrc(LOGO_FALLBACK_SRC);
-                  return;
-                }
-                setLogoFailed(true);
-              }}
-            />
+            <picture>
+              <source
+                srcSet={logoSrc === LOGO_FALLBACK_SRC ? LOGO_FALLBACK_WEBP_SRC : LOGO_WEBP_SRC}
+                type="image/webp"
+              />
+              <img
+                className="mj-launch-screen__logo"
+                src={logoSrc}
+                alt=""
+                width={96}
+                height={96}
+                decoding="async"
+                loading="eager"
+                fetchPriority="high"
+                onError={() => {
+                  if (logoSrc !== LOGO_FALLBACK_SRC) {
+                    setLogoSrc(LOGO_FALLBACK_SRC);
+                    return;
+                  }
+                  setLogoFailed(true);
+                }}
+              />
+            </picture>
           )}
         </div>
         <p className="mj-launch-screen__title">المجلس العلمي</p>
