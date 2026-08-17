@@ -10,31 +10,8 @@ type Props = {
   onSelectVerse?: (verseKey: string) => void;
 };
 
-type WordRun = {
-  verseKey: string;
-  body: QpcWord[];
-  end: QpcWord | null;
-};
-
 const TAP_SLOP_PX = 14;
 const LONG_PRESS_MS = 480;
-
-/** يجمع كلمات الآية المتتالية في مقطع واحد لتظليل متصل (بدون مربعات لكل كلمة). */
-function groupRuns(words: QpcWord[]): WordRun[] {
-  const ordered = [...words].sort((a, b) => a.id - b.id || a.position - b.position);
-  const runs: WordRun[] = [];
-  let current: WordRun | null = null;
-
-  for (const w of ordered) {
-    if (!current || current.verseKey !== w.verseKey) {
-      current = { verseKey: w.verseKey, body: [], end: null };
-      runs.push(current);
-    }
-    if (w.charType === "end") current.end = w;
-    else current.body.push(w);
-  }
-  return runs;
-}
 
 type PressState = {
   verseKey: string;
@@ -44,7 +21,7 @@ type PressState = {
   longFired: boolean;
 };
 
-/** سطر آيات من كلمات QPC — فواصل الآيات مضمّنة في السطر، والتحديد مقطع متصل. */
+/** سطر آيات — كل كلمة عنصر flex يملأ العرض كالمصحف الورقي. */
 export function MushafAyahLine({
   words,
   centered = false,
@@ -52,7 +29,7 @@ export function MushafAyahLine({
   playingVerseKey = null,
   onSelectVerse,
 }: Props) {
-  const runs = groupRuns(words);
+  const ordered = [...words].sort((a, b) => a.id - b.id || a.position - b.position);
   const pressRef = useRef<PressState | null>(null);
 
   const clearPress = () => {
@@ -68,7 +45,6 @@ export function MushafAyahLine({
       const cur = pressRef.current;
       if (!cur || cur.verseKey !== verseKey) return;
       cur.longFired = true;
-      // long press = فتح أدوات الآية (تحديد + شريط)
       onSelectVerse?.(verseKey);
     }, LONG_PRESS_MS);
     pressRef.current = {
@@ -93,82 +69,54 @@ export function MushafAyahLine({
     clearPress();
     if (longFired) return;
     if (dx > TAP_SLOP_PX || dy > TAP_SLOP_PX) return;
-    // tap = تحديد الآية (+ شريط الأدوات)
     onSelectVerse?.(verseKey);
   };
 
   return (
     <div
       className="mm-ayah-line"
-      data-centered={centered ? "1" : "0"}
+      data-centered={centered ? "true" : "false"}
       dir="rtl"
     >
-      {runs.map((run) => {
-        const selected = selectedVerseKey === run.verseKey;
-        const playing = playingVerseKey === run.verseKey;
-        const stateClass = [
-          selected ? "is-selected" : "",
-          playing ? "is-playing" : "",
-        ]
+      {ordered.map((w) => {
+        const selected = selectedVerseKey === w.verseKey;
+        const playing = playingVerseKey === w.verseKey;
+        const isEnd = w.charType === "end";
+        const stateClass = [selected ? "is-selected" : "", playing ? "is-playing" : ""]
           .filter(Boolean)
           .join(" ");
 
-        const hitProps = {
-          role: "button" as const,
-          tabIndex: 0,
-          "data-verse": run.verseKey,
-          "aria-label": `آية ${run.verseKey}`,
-          "aria-pressed": selected,
-          onPointerDown: (e: ReactPointerEvent<HTMLElement>) => startPress(run.verseKey, e),
-          onPointerUp: (e: ReactPointerEvent<HTMLElement>) => endPress(run.verseKey, e),
-          onPointerCancel: (e: ReactPointerEvent<HTMLElement>) => {
-            e.stopPropagation();
-            clearPress();
-          },
-          onClick: (e: MouseEvent<HTMLElement>) => {
-            e.preventDefault();
-            e.stopPropagation();
-          },
-          onKeyDown: (e: KeyboardEvent<HTMLElement>) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              e.stopPropagation();
-              onSelectVerse?.(run.verseKey);
-            }
-          },
-        };
-
         return (
           <span
-            key={`${run.verseKey}-${run.body[0]?.id ?? run.end?.id ?? "x"}`}
-            className={`mm-ayah-run ${stateClass}`.trim()}
-            data-verse={run.verseKey}
+            key={`${w.verseKey}-${w.position}-${w.id}`}
+            className={`mm-ayah-line__word mm-ayah-hit ${isEnd ? "mm-ayah-hit--end" : ""} ${stateClass}`.trim()}
+            data-type={w.charType}
+            data-key={w.verseKey}
+            data-verse={w.verseKey}
+            data-testid="mushaf-ayah-hit"
+            role="button"
+            tabIndex={0}
+            aria-label={`آية ${w.verseKey}`}
+            aria-pressed={selected}
+            onPointerDown={(e: ReactPointerEvent<HTMLElement>) => startPress(w.verseKey, e)}
+            onPointerUp={(e: ReactPointerEvent<HTMLElement>) => endPress(w.verseKey, e)}
+            onPointerCancel={(e: ReactPointerEvent<HTMLElement>) => {
+              e.stopPropagation();
+              clearPress();
+            }}
+            onClick={(e: MouseEvent<HTMLElement>) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            onKeyDown={(e: KeyboardEvent<HTMLElement>) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                e.stopPropagation();
+                onSelectVerse?.(w.verseKey);
+              }
+            }}
           >
-            {run.body.length > 0 ? (
-              <span
-                className={`mm-ayah-hit mm-ayah-run__text ${stateClass}`.trim()}
-                data-testid="mushaf-ayah-hit"
-                {...hitProps}
-              >
-                {run.body.map((w) => (
-                  <span
-                    key={`${w.verseKey}-${w.position}-${w.id}`}
-                    className="mm-ayah-line__word"
-                  >
-                    {w.glyphText}
-                  </span>
-                ))}
-              </span>
-            ) : null}
-            {run.end ? (
-              <span
-                className={`mm-ayah-hit mm-ayah-hit--end ${stateClass}`.trim()}
-                data-testid="mushaf-ayah-hit"
-                {...hitProps}
-              >
-                <MushafAyahNumber word={run.end} />
-              </span>
-            ) : null}
+            {isEnd ? <MushafAyahNumber word={w} /> : w.glyphText}
           </span>
         );
       })}

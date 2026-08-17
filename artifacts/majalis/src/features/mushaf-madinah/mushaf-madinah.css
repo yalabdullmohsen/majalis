@@ -1,7 +1,7 @@
 /**
  * مصحف المدينة — رموز بصرية من reference/mushaf-ayah-style (390×844).
  * لا letter-spacing على نص القرآن (حروف QPC PUA).
- * word-spacing يُضبط فقط عبر fitMushafPageFont بعد التكبير (سقف ١٥px).
+ * توزيع السطر: flex + space-between (كالمصحف الورقي). حجم الخط من canvas.
  */
 
 .mm-viewport .sr-only {
@@ -234,8 +234,9 @@ html.dark .mm-viewport,
   position: relative;
   padding: 0;
   border-radius: 0;
-  overflow-x: visible;
-  overflow-y: visible; /* لا بتر رأسي صامت للحبر */
+  overflow-x: clip;
+  overflow-y: visible; /* clip أفقي لا يُزاوج overflow-y إلى auto */
+  contain: layout paint;
 }
 
 .mm-viewport .mm-page-header {
@@ -463,7 +464,10 @@ html.dark .mm-surah-ornament__name {
 .mm-ayah-line {
   width: 100%;
   max-width: 100%;
-  display: block;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: baseline;
   text-align: center;
   direction: rtl;
   unicode-bidi: bidi-override; /* ترتيب بصري = ترتيب كلمات QPC */
@@ -474,9 +478,15 @@ html.dark .mm-surah-ornament__name {
   letter-spacing: 0;
   word-spacing: 0;
   white-space: nowrap;
-  overflow: visible;
+  overflow-x: clip;
+  overflow-y: visible;
   padding-block: 0.04em;
   box-sizing: border-box;
+}
+
+.mm-ayah-line[data-centered="true"] {
+  justify-content: center;
+  gap: 0.35em;
 }
 
 .mm-viewport .mm-page:not(.mm-page--opening) .mm-ayah-line {
@@ -545,25 +555,31 @@ html.dark .mm-surah-ornament__name {
   transition: background-color 150ms ease, box-shadow 150ms ease;
 }
 
-.mm-ayah-run__text.is-selected {
+.mm-ayah-run__text.is-selected,
+.mm-ayah-line__word.is-selected {
   /* طبقة خلف الحروف فقط — لا تغيّر مقاييس السطر */
   background-color: #f5e8c7;
   box-shadow: 0 0 0 0.06em #f5e8c7;
   border-radius: 0.18em;
 }
 
-.mm-viewport[data-mushaf-theme="paper"] .mm-ayah-run__text.is-selected {
+.mm-viewport[data-mushaf-theme="paper"] .mm-ayah-run__text.is-selected,
+.mm-viewport[data-mushaf-theme="paper"] .mm-ayah-line__word.is-selected {
   mix-blend-mode: normal;
 }
 
 html[data-theme="dark"] .mm-ayah-run__text.is-selected,
 html.dark .mm-ayah-run__text.is-selected,
-.mm-viewport[data-mushaf-theme="night"] .mm-ayah-run__text.is-selected {
+.mm-viewport[data-mushaf-theme="night"] .mm-ayah-run__text.is-selected,
+html[data-theme="dark"] .mm-ayah-line__word.is-selected,
+html.dark .mm-ayah-line__word.is-selected,
+.mm-viewport[data-mushaf-theme="night"] .mm-ayah-line__word.is-selected {
   background-color: color-mix(in srgb, var(--mm-ayah-select) 100%, transparent);
   box-shadow: 0 0 0 0.06em color-mix(in srgb, var(--mm-ayah-select) 100%, transparent);
 }
 
-.mm-ayah-run__text.is-playing {
+.mm-ayah-run__text.is-playing,
+.mm-ayah-line__word.is-playing {
   background-color: var(--mm-ayah-play);
   box-shadow: 0 0 0 0.06em var(--mm-ayah-play);
 }
@@ -578,7 +594,8 @@ html.dark .mm-ayah-run__text.is-selected,
 }
 
 .mm-ayah-line__word {
-  display: inline;
+  display: inline-block;
+  flex: 0 0 auto;
   letter-spacing: 0;
   word-spacing: 0;
 }

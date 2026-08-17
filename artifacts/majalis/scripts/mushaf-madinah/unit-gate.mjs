@@ -136,15 +136,14 @@ assert.match(pageSrc, /mm-slot__banner--with-basmala/);
 assert.match(pageSrc, /النمل/);
 assert.ok(existsSync(resolve(root, "src/features/mushaf-madinah/MushafBasmala.tsx")));
 assert.match(read("src/features/mushaf-madinah/MushafBasmala.tsx"), /BASMALA_UTHMANI/);
-assert.match(read("src/features/mushaf-madinah/useMushafPageFontFit.ts"), /MUSHAF_WORD_GAP_MAX_PX/);
+assert.match(read("src/features/mushaf-madinah/useMushafPageFontFit.ts"), /fitPageFontSize/);
 assert.match(read("src/features/mushaf-madinah/useMushafPageFontFit.ts"), /document\.fonts\.ready/);
 assert.match(read("src/features/mushaf-madinah/MushafPage.tsx"), /hizbStartingOnPage/);
 
 const line = read("src/features/mushaf-madinah/MushafAyahLine.tsx");
 assert.match(line, /onSelectVerse/);
 assert.match(line, /mm-ayah-hit/);
-assert.match(line, /mm-ayah-run/);
-assert.match(line, /groupRuns|WordRun/);
+assert.match(line, /data-type=\{w\.charType\}/);
 assert.match(line, /charType === "end"/);
 assert.match(line, /stopPropagation/);
 assert.match(line, /LONG_PRESS_MS/);

@@ -67,7 +67,7 @@ export function MushafPage({
                 ) : (
                   <MushafAyahLine
                     words={cell.words}
-                    centered={opening}
+                    centered={opening || isLastSurahLine(cell.words, layout)}
                     selectedVerseKey={selectedVerseKey}
                     playingVerseKey={playingVerseKey}
                     onSelectVerse={onSelectVerse}
@@ -87,6 +87,21 @@ type SlotCell =
   | { kind: "banner"; nameArabic: string; inlineBasmala?: boolean }
   | { kind: "basmala" }
   | { kind: "line"; words: QpcWord[] };
+
+/** آخر سطر سورة (غير ممتلئ في الورقي) يُوسَّط — إن ختم الآية الأخيرة من السورة. */
+function isLastSurahLine(words: QpcWord[], layout: MushafPageLayout): boolean {
+  if (words.length === 0) return false;
+  const last = words.reduce((a, b) => (a.id >= b.id ? a : b));
+  if (last.charType !== "end") return false;
+  const colon = last.verseKey.indexOf(":");
+  if (colon < 0) return false;
+  const surah = Number(last.verseKey.slice(0, colon));
+  const ayah = Number(last.verseKey.slice(colon + 1));
+  const chapter =
+    layout.surahsOnPage.find((s) => s.id === surah) ||
+    layout.surahsStartingOnPage.find((s) => s.id === surah);
+  return !!chapter && ayah === chapter.versesCount;
+}
 
 function buildSlots(layout: MushafPageLayout, opening: boolean): Map<number, SlotCell> {
   const raw = new Map<number, SlotCell>();
