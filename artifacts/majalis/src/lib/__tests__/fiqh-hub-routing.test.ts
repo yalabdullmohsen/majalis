@@ -58,8 +58,10 @@ console.log("\n=== فقه — الأصول لا تُدمج في الدروس ا�
 console.log("\n=== فقه — صفحة المحور من books.json ===");
 {
   const pageSrc = readFileSync(resolve(srcRoot, "pages/fiqh/ui/FiqhView.tsx"), "utf8");
-  assert(pageSrc.includes("@/lib/fiqh-books"), "FiqhPage يستورد fiqh-books");
-  assert(pageSrc.includes("publishedBooks"), "FiqhPage يعرض الكتب المنشورة");
+  const lobbySrc = readFileSync(resolve(srcRoot, "config/section-lobbies.ts"), "utf8");
+  assert(pageSrc.includes("getLobby") && pageSrc.includes("SectionLobby"), "FiqhPage من SectionLobby والسجل");
+  assert(lobbySrc.includes("publishedBooks"), "السجل يعرض الكتب المنشورة");
+  assert(lobbySrc.includes("@/lib/fiqh-books"), "السجل يستورد fiqh-books");
   assert(!pageSrc.includes("href: `/rulings?category="), "لا مسارات أحكام يدوية");
   assert(!pageSrc.includes('href="/rulings"'), "لا روابط /rulings");
   assert(!pageSrc.includes('"rulings"'), "لا تبويب الأحكام الشرعية");

@@ -75,10 +75,10 @@ const ASSERTIONS = [
   // .twh-hub-card__current-tag اكتسب خلفية داكنة بالخطأ (يطابق [class*="-card"]
   // اسميًا رغم أنه شارة صغيرة لا حاوية)، فتطابق لون نصه الخاص تقريبًا.
   { route: "/tawhid", selector: ".twh-hub-card__current-tag", mode: "dark", min: 3 },
-  { route: "/quran-knowledge", selector: ".hub-card__title", mode: "light", min: 3 },
-  { route: "/quran-knowledge", selector: ".hub-card__desc", mode: "light", min: 4.5 },
-  { route: "/quran-knowledge", selector: ".hub-card__title", mode: "dark", min: 3 },
-  { route: "/fiqh", selector: ".fiqh-book-card__title", mode: "light", min: 3 },
+  { route: "/quran-knowledge", selector: ".section-lobby .card__label", mode: "light", min: 3 },
+  { route: "/quran-knowledge", selector: ".section-lobby .card__subtitle", mode: "light", min: 4.5 },
+  { route: "/quran-knowledge", selector: ".section-lobby .card__label", mode: "dark", min: 3 },
+  { route: "/fiqh", selector: ".section-lobby__title", mode: "light", min: 3 },
   { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "light", min: 4.5 },
   { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "dark", min: 4.5 },
   { route: "/quran/surah-stories/1", selector: ".sq-header", mode: "light", min: 4.5 },
@@ -102,8 +102,8 @@ const ASSERTIONS = [
   // وغيرها).
   { route: "/lessons", selector: ".lessons-v2-section__title", mode: "light", min: 4.5 },
   { route: "/lessons", selector: ".lessons-past-section__title", mode: "light", min: 4.5 },
-  { route: "/lessons", selector: ".page-hero-mj__title", mode: "light", min: 3 },
-  { route: "/lessons", selector: ".page-hero-mj__title", mode: "dark", min: 3 },
+  { route: "/lessons", selector: ".section-lobby__title", mode: "light", min: 3 },
+  { route: "/lessons", selector: ".section-lobby__title", mode: "dark", min: 3 },
   { route: "/lessons", selector: ".card__label", mode: "light", min: 4.5 },
   { route: "/lessons", selector: ".card__label", mode: "dark", min: 4.5 },
   { route: "/quran-hub/numbers", selector: ".quran-hub-page__title", mode: "light", min: 3 },
@@ -114,8 +114,8 @@ const ASSERTIONS = [
   { route: "/quran-hub/numbers", selector: ".quran-stat-card__value", mode: "dark", min: 3 },
   { route: "/hadith", selector: ".page-hero-mj__title", mode: "light", min: 3 },
   { route: "/hadith", selector: ".page-hero-mj__desc", mode: "light", min: 4.5 },
-  { route: "/fiqh", selector: ".page-hero-mj__title", mode: "light", min: 3 },
-  { route: "/quran-knowledge", selector: ".page-hero-mj__title", mode: "light", min: 3 },
+  { route: "/fiqh", selector: ".section-lobby__title", mode: "light", min: 3 },
+  { route: "/quran-knowledge", selector: ".section-lobby__title", mode: "light", min: 3 },
   // ── تدقيق تباين آلي حي إضافي (2026-07-21، 154 مسارًا عامًا، خارج /admin):
   // اثنان من العطلين المنهجيين الأوسع أثرًا.
   // 1) --txt-muted/--msk-text-3 (#929995) كانت مُحسَبة أصلًا مقابل أبيض
@@ -123,12 +123,12 @@ const ASSERTIONS = [
   // (#F7F4ED العاجية) — 48+ عنصر نص خافت بتباين ~2.5:1 فقط. اللون الجديد
   // #5E655F (5.5:1 مقابل #F7F4ED) عُمِّم عبر src/ كاملة (نفس القيمة
   // القديمة كانت مكرَّرة حرفيًا 150+ مرة).
-  // صفحة الصلاة أعادت البناء إلى pts-* (لا .pt-date-greg). التأكيد على
-  // .pts-dates فوق الخلفية الزمردية الصلبة لـ .pts-screen.
+  // صفحة الصلاة أعادت البناء إلى pts-* ثم إلى SectionLobby (لا .pts-hero داخل الشاشة).
+  // التأكيد على .pts-dates فوق سطح اللوبي الفاتح، واسم الصلاة في البطاقة المميّزة.
   { route: "/prayer-times", selector: ".pts-dates", mode: "light", min: 4.5 },
-  { route: "/prayer-times", selector: ".pts-hero__name", mode: "light", min: 4.5 },
+  { route: "/prayer-times", selector: ".section-lobby .card--featured .card__label", mode: "light", min: 4.5 },
   { route: "/prayer-times", selector: ".pts-row__name", mode: "light", min: 4.5 },
-  { route: "/prayer-times", selector: ".pts-hero__name", mode: "dark", min: 4.5 },
+  { route: "/prayer-times", selector: ".section-lobby .card--featured .card__label", mode: "dark", min: 4.5 },
   { route: "/prayer-times", selector: ".pts-row__name", mode: "dark", min: 4.5 },
   // 2) نفس نمط "كل <a> أخضر فاتح في الوضع الليلي" الموثَّق أعلاه — 32
   // رابطًا إضافيًا لم يكونا مستثنَيَين (نص شبه غير مرئي فوق خلفيات بيضاء
@@ -174,7 +174,7 @@ const ASSERTIONS = [
   { route: "/prophets/adam", selector: ".prophet-detail-lux__name", mode: "dark", min: 4.5 },
   { route: "/prophets/adam", selector: ".prophet-lesson-card__text", mode: "dark", min: 4.5 },
   { route: "/quran/people", selector: ".qp-people__intro", mode: "dark", min: 4.5 },
-  { route: "/quran-knowledge", selector: ".hub-card__title", mode: "dark", min: 4.5 },
+  { route: "/quran-knowledge", selector: ".section-lobby .card__label", mode: "dark", min: 4.5 },
   { route: "/janaza", selector: ".jnz-step__title", mode: "dark", min: 4.5 },
 ];
 
@@ -194,6 +194,7 @@ function loadAllPublicRoutes() {
 
 const TITLE_SELECTORS = [
   "h1",
+  ".section-lobby__title",
   ".page-hero-mj__title",
   ".pts-hero__name",
   ".ds-page-header__title",
@@ -281,6 +282,42 @@ const RATIO_FN = `(selector) => {
   return { ratio: Math.round(contrast(blended, bg) * 100) / 100, color: cs.color, bg: \`rgb(\${bg.r},\${bg.g},\${bg.b})\` };
 }`;
 
+function cssToHex(cssColor) {
+  const m = String(cssColor || "").match(/rgba?\(([^)]+)\)/);
+  if (!m) return "";
+  const body = m[1].trim();
+  const parts = body.includes(",")
+    ? body.split(",").map((s) => parseFloat(s.trim()))
+    : body.split("/")[0].trim().split(/\s+/).map((s) => parseFloat(s));
+  const [r, g, b] = parts;
+  if (![r, g, b].every(Number.isFinite)) return "";
+  const hex = [r, g, b].map((n) => Math.round(n).toString(16).padStart(2, "0")).join("");
+  return `#${hex.toUpperCase()}`;
+}
+
+function violationRow({ route, selector, mode, fg, bg, ratio, required, reason }) {
+  return {
+    path: route,
+    selector,
+    mode: mode || "—",
+    fg: fg || "—",
+    bg: bg || "—",
+    ratio: ratio || "—",
+    required: required || "—",
+    reason,
+  };
+}
+
+function printViolationTable(rows) {
+  console.error("\n| المسار | المحدّد | لون النص | لون الخلفية | المقاس | المطلوب |");
+  console.error("|---|---|---|---|---|---|");
+  for (const r of rows) {
+    console.error(
+      `| ${r.path} [${r.mode}] | \`${r.selector}\` | ${r.fg} | ${r.bg} | ${r.ratio} | ${r.required} |`,
+    );
+  }
+}
+
 function waitForServer(url, timeoutMs = 30000) {
   const start = Date.now();
   return new Promise((res, rej) => {
@@ -342,7 +379,7 @@ async function main() {
   for (const a of ASSERTIONS) {
     try {
       if (lastRoute !== a.route) {
-        await page.goto(`${baseUrl}${a.route}`, { waitUntil: "networkidle", timeout: 15000 });
+        await page.goto(`${baseUrl}${a.route}`, { waitUntil: "domcontentloaded", timeout: 30000 });
         await page.waitForTimeout(400);
         lastRoute = a.route;
       }
@@ -363,14 +400,30 @@ async function main() {
       await page.waitForSelector(a.selector, { timeout: 4000 }).catch(() => {});
       const result = await page.evaluate(`(${RATIO_FN})(${JSON.stringify(a.selector)})`);
       if (result.error === "NOT_FOUND") {
-        failures.push(`${a.route} [${a.mode}] ${a.selector} — العنصر غير موجود في الصفحة (تغيّر بنيوي؟ راجع يدويًا)`);
+        failures.push(violationRow({
+          route: a.route, selector: a.selector, mode: a.mode,
+          required: `${a.min}:1`, reason: "NOT_FOUND",
+        }));
       } else if (result.error) {
-        failures.push(`${a.route} [${a.mode}] ${a.selector} — تعذّر قياس اللون (${result.error})`);
+        failures.push(violationRow({
+          route: a.route, selector: a.selector, mode: a.mode,
+          fg: result.color, bg: result.bg, required: `${a.min}:1`, reason: result.error,
+        }));
       } else if (result.ratio < a.min) {
-        failures.push(`${a.route} [${a.mode}] ${a.selector} — ${result.color} على ${result.bg} = ${result.ratio}:1 (يلزم ${a.min}:1) — رجوع عطل تباين مُصلَح سابقًا!`);
+        failures.push(violationRow({
+          route: a.route, selector: a.selector, mode: a.mode,
+          fg: `${result.color} ${cssToHex(result.color)}`.trim(),
+          bg: `${result.bg} ${cssToHex(result.bg)}`.trim(),
+          ratio: `${result.ratio}:1`,
+          required: `${a.min}:1`,
+          reason: "LOW_CONTRAST",
+        }));
       }
     } catch (e) {
-      failures.push(`${a.route} [${a.mode}] ${a.selector} — خطأ فحص: ${String(e).slice(0, 150)}`);
+      failures.push(violationRow({
+        route: a.route, selector: a.selector, mode: a.mode,
+        required: `${a.min}:1`, reason: `ERROR ${String(e).slice(0, 120)}`,
+      }));
     }
   }
 
@@ -498,11 +551,17 @@ async function main() {
           return [...new Set(out)].slice(0, 6);
         });
         if (leaks.length) {
-          failures.push(`${route} [dark] تسرّب سطح فاتح ≥#C0C0C0: ${leaks.join(" · ")}`);
+          failures.push(violationRow({
+            route, selector: "body *", mode: "dark",
+            bg: "≥#C0C0C0", required: "سطح داكن",
+            reason: `WHITE_LEAK ${leaks.join(" · ")}`,
+          }));
         }
       }
     } catch (e) {
-      failures.push(`${route} — خطأ زيارة: ${String(e).slice(0, 120)}`);
+      failures.push(violationRow({
+        route, selector: "—", reason: `ERROR ${String(e).slice(0, 120)}`,
+      }));
     }
   }
 
@@ -522,14 +581,25 @@ async function main() {
     const p = resolve(appRoot, rel);
     try {
       const stripped = readFileSync(p, "utf8").replace(/var\([^)]*#[0-9a-fA-F]{3,8}[^)]*\)/g, "var(--ok)");
-      if (hardBg.test(stripped)) failures.push(`مصدر صلب background #fff في ${rel}`);
+      if (hardBg.test(stripped)) {
+        failures.push(violationRow({
+          route: rel, selector: "background", fg: "—", bg: "#FFFFFF",
+          reason: "HARD_WHITE_BG",
+        }));
+      }
     } catch { /* missing ok */ }
   }
 
   const totalChecks = ASSERTIONS.length + routeChecks;
   if (failures.length > 0) {
     console.error(`\n❌ بوابة انحدار تباين الألوان رسبت — ${failures.length}/${totalChecks} تأكيدًا فشل:\n`);
-    for (const f of failures) console.error(`  - ${f}`);
+    printViolationTable(failures);
+    console.error("");
+    for (const f of failures) {
+      console.error(
+        `  - ${f.path} [${f.mode}] ${f.selector} — نص ${f.fg} على ${f.bg} = ${f.ratio} (يلزم ${f.required}) — ${f.reason}`,
+      );
+    }
     process.exit(1);
   }
 
