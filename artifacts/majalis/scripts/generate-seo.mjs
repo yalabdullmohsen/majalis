@@ -904,7 +904,7 @@ ${linkList("علوم الحديث وروابطه", [
 ])}`,
   "/islamic-glossary": `<p>معجم مبسّط لمصطلحات العلوم الشرعية: فقه، حديث، عقيدة، وأصول — لتعريف الطالب بالمفردات الشائعة قبل التوسّع في الأبواب.</p>
 ${linkList("روابط ذات صلة", [
-  { name: "المواضيع الإسلامية", url: "/topics" },
+  { name: "الأقسام", url: "/sections" },
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
   { name: "المذاهب الأربعة", url: "/madhahib" },
   { name: "علوم الحديث", url: "/hadith-science" },
@@ -957,7 +957,7 @@ ${linkList(
   ].map((c) => ({ name: c, url: `/fawaid?cat=${encodeURIComponent(c)}` })),
 )}
 ${linkList("روابط ذات صلة", [
-  { name: "المواضيع الإسلامية", url: "/topics" },
+  { name: "الأقسام", url: "/sections" },
   { name: "الأذكار", url: "/adhkar" },
   { name: "الأحاديث النبوية", url: "/hadith" },
   { name: "بوابة الفقه", url: "/fiqh" },
@@ -1042,7 +1042,7 @@ ${linkList("روابط ذات صلة", [
   { name: "صفة الجنة والنار", url: "/janna-naar" },
   { name: "التوبة والاستغفار", url: "/tawba" },
   { name: "المعجم الشرعي", url: "/islamic-glossary" },
-  { name: "المواضيع الإسلامية", url: "/topics" },
+  { name: "الأقسام", url: "/sections" },
 ])}`,
   "/adab-talab-ilm": `<p>آداب طالب العلم: الإخلاص، التدرّج، احترام الشيوخ، ومنهجية الطلب — مدخل قبل المسارات والدروس.</p>
 ${linkList("روابط ذات صلة", [
@@ -1164,7 +1164,7 @@ ${linkList("روابط ذات صلة", [
   { name: "الصيام", url: "/sawm" },
   { name: "الأذكار", url: "/adhkar" },
   { name: "فضائل الأعمال", url: "/fadail-aamal" },
-  { name: "المواضيع الإسلامية", url: "/topics" },
+  { name: "الأقسام", url: "/sections" },
 ])}`,
   "/madhahib": `<p>المذاهب الأربعة: أصولها وأبرز أئمتها وكتبها، مدخل للمقارنة الفقهية قبل التوسع في المسائل.</p>
 ${linkList("روابط ذات صلة", [
@@ -1352,7 +1352,7 @@ ${linkList("روابط ذات صلة", [
   { name: "السيرة النبوية", url: "/seerah" },
   { name: "دليل المؤسسات", url: "/institutions" },
   { name: "قصص الأنبياء", url: "/prophets" },
-  { name: "المواضيع الإسلامية", url: "/topics" },
+  { name: "الأقسام", url: "/sections" },
 ])}`,
   "/prayer-ranks": `<p>مراتب الناس في الصلاة: من الإخلاص والخشوع إلى الغفلة، للتذكير والرقائق لا للتشهير.</p>
 ${linkList("روابط ذات صلة", [
@@ -1948,7 +1948,7 @@ ${linkList("محاور دروس موسّعة", [
       { name: "الفكر والواقع", url: "/fikr-waqia" },
       { name: "الأسرة والمجتمع", url: "/usra-mujtama" },
       { name: "الفوائد", url: "/fawaid" },
-      { name: "المواضيع الإسلامية", url: "/topics" },
+      { name: "الأقسام", url: "/sections" },
     ],
   ),
   "/iman-topics": darsHubBody(

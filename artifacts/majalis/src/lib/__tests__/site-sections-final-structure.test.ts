@@ -155,6 +155,11 @@ for (const doc of searchIdx.docs) {
   assert.equal(href === "/qa" || href.startsWith("/qa/"), false);
 }
 const toolTopics = searchIdx.docs.find((d: { id: string }) => d.id === "tool:topics");
-assert.ok(toolTopics?.meta === "أداة بحث");
+assert.equal(toolTopics, undefined, "فهرس البحث بلا قسم الموضوعات");
+assert.equal(
+  searchIdx.docs.some((d: { href?: string }) => String(d.href || "").split("?")[0] === "/topics"),
+  false,
+  "لا وثيقة /topics في الفهرس",
+);
 
 console.log("site-sections-final-structure.test.ts: ok");

@@ -152,15 +152,6 @@ function routeForPath(routes: SeoRoute[], path: string) {
     };
   }
 
-  if (normalized.startsWith("/topics/")) {
-    const slug = decodeURIComponent(normalized.slice("/topics/".length));
-    return {
-      ...requiredRoute(routes, "/topics"),
-      title: `موضوع: ${slug} | المجلس العلمي`,
-      description: `موضوع ${slug} — مقالات وروابط ومحتوى ذو صلة من المجلس العلمي.`,
-    };
-  }
-
   if (normalized.startsWith("/universities/") && normalized !== "/universities/compare") {
     return {
       ...requiredRoute(routes, "/universities"),

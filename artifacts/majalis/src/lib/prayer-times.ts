@@ -224,11 +224,11 @@ export function epochAtZoneMinutes(
 }
 
 /** @deprecated use dateKeyInZone — kept for Kuwait callers */
-function kuwaitDateKey(date = new Date()) {
+function kuwaitDateKey(date = new Date(Date.now())) {
   return dateKeyInZone("Asia/Kuwait", date);
 }
 
-function kuwaitDateParam(date = new Date()) {
+function kuwaitDateParam(date = new Date(Date.now())) {
   const parts = kuwaitDateKey(date).split("-");
   return `${parts[2]}-${parts[1]}-${parts[0]}`;
 }
