@@ -63,12 +63,9 @@ assert.equal(second.reloaded, false, "prevents reload loop");
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const homeSrc = readFileSync(join(root, "pages/account/ui/HomeView.tsx"), "utf8");
-assert.match(homeSrc, /import \{\s*HomeUpcomingLessons\s*\} from "@\/components\/home\/HomeUpcomingLessons"/);
-assert.match(homeSrc, /import \{\s*HomeUpcomingCourses\s*\} from "@\/components\/home\/HomeUpcomingCourses"/);
-assert.doesNotMatch(
-  homeSrc,
-  /HomeUpcomingLessons\s*=\s*lazy/,
-);
+assert.match(homeSrc, /import\("@\/components\/home\/HomeUpcomingLessons"\)/);
+assert.match(homeSrc, /import\("@\/components\/home\/HomeUpcomingCourses"\)/);
+assert.match(homeSrc, /HomeUpcomingLessons\s*=\s*lazyWithRetry/);
 assert.match(homeSrc, /lazyWithRetry/);
 
 const boundary = readFileSync(join(root, "components/ErrorBoundary.tsx"), "utf8");

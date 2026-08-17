@@ -1,11 +1,11 @@
-import seoData from "./seo-routes.json";
+import { SEO_SITE } from "./seo-nav-labels";
 import type { KuwaitLessonRecord } from "./kuwait-lessons";
 import { formatSheikhName, stripSheikhHonorifics } from "./sheikh-name";
 
-const SITE_URL = seoData.siteUrl;
-const SITE_NAME = seoData.siteName;
-const LOGO_PATH = seoData.logoImage || "/brand/official.png?v=20260815";
-const DEFAULT_IMAGE = seoData.defaultImage || "/brand/official-og.png?v=20260815";
+const SITE_URL = SEO_SITE.siteUrl;
+const SITE_NAME = SEO_SITE.siteName;
+const LOGO_PATH = SEO_SITE.logoImage || "/brand/official.png?v=20260815";
+const DEFAULT_IMAGE = SEO_SITE.defaultImage || "/brand/official-og.png?v=20260815";
 
 function absoluteUrl(path: string) {
   return new URL(path, SITE_URL).toString();
@@ -79,7 +79,7 @@ function lessonEventType(lesson: KuwaitLessonRecord) {
 
 export function lessonJsonLd(lesson: KuwaitLessonRecord) {
   const path = `/lessons/${lesson.id}`;
-  const image = lesson.sheikhImage || lesson.lessonImage || seoData.defaultImage;
+  const image = lesson.sheikhImage || lesson.lessonImage || DEFAULT_IMAGE;
   const type = lessonEventType(lesson);
 
   const base: Record<string, unknown> = {
@@ -153,7 +153,7 @@ export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
     ...(lesson.keywords || []),
   ].filter(Boolean);
 
-  const image = lesson.sheikhImage || lesson.lessonImage || seoData.defaultImage;
+  const image = lesson.sheikhImage || lesson.lessonImage || DEFAULT_IMAGE;
 
   return {
     title,
@@ -250,9 +250,9 @@ export function prophetArticleJsonLd(prophet: {
     description: prophet.description || `قصة نبي الله ${prophet.name} عليه السلام من المصادر الموثوقة.`,
     url: absoluteUrl(url),
     inLanguage: "ar",
-    image: prophet.image ? absoluteUrl(prophet.image) : absoluteUrl(seoData.defaultImage),
+    image: prophet.image ? absoluteUrl(prophet.image) : absoluteUrl(DEFAULT_IMAGE),
     author: { "@type": "Organization", name: SITE_NAME },
-    publisher: { "@type": "Organization", name: SITE_NAME, logo: absoluteUrl(seoData.defaultImage) },
+    publisher: { "@type": "Organization", name: SITE_NAME, logo: absoluteUrl(DEFAULT_IMAGE) },
     about: { "@type": "Person", name: prophet.name, description: `نبي الله ${prophet.name} عليه السلام` },
   };
 }
@@ -303,7 +303,7 @@ export function islamicStoryJsonLd(story: {
     url: absoluteUrl(url),
     inLanguage: "ar",
     author: { "@type": "Organization", name: SITE_NAME },
-    publisher: { "@type": "Organization", name: SITE_NAME, logo: absoluteUrl(seoData.defaultImage) },
+    publisher: { "@type": "Organization", name: SITE_NAME, logo: absoluteUrl(DEFAULT_IMAGE) },
     genre: story.category || "قصة إسلامية",
   };
 }

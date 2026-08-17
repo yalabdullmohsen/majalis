@@ -1,0 +1,15 @@
+{
+  "updatedAt": "2026-08-17T16:56:00.000Z",
+  "source": "PSI mobile exam-7",
+  "commit": "4fca70dc",
+  "median": {
+    "performance": 58,
+    "lcpMs": 6300,
+    "tbtMs": 560,
+    "fcpMs": 2700,
+    "cls": 0.033,
+    "siMs": 3400,
+    "a11y": 91,
+    "bestPractices": 96
+  }
+}

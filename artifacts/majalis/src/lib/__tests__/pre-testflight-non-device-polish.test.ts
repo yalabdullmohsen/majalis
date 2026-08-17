@@ -44,7 +44,8 @@ assert.match(navSrc, /canUseHistoryBack|spaPushes/);
 assert.match(navSrc, /normalizeNavPath/);
 
 const appSrc = read("src/App.tsx");
-assert.match(appSrc, /SafeLazyRoute component=\{HomePage\}/);
+assert.match(appSrc, /HomeLazyRoute|SafeLazyRoute component=\{HomePage\}/);
+assert.match(appSrc, /const HomePage = lazy/);
 assert.match(appSrc, /auth\/update-password/);
 assert.match(appSrc, /!hideSiteChrome && <AdhanNotificationBar/);
 assert.match(appSrc, /!hideSiteChrome && <PrayerRespectBanner/);

@@ -548,6 +548,17 @@ function NativeNotificationsBootstrap() {
   return null;
 }
 
+function HomeLazyRoute() {
+  // بلا هيكل تحميل — يُحسّن LCP؛ الـchunk يُسخَّن من main بعد أول إطار
+  return (
+    <ErrorBoundary>
+      <Suspense fallback={null}>
+        <HomePage />
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
 function SafeLazyRoute({ component: Component }: { component: ComponentType<any> }) {
   // useParams يُعيد params المسار الحالي (مثل { id } أو { slug })
   // ويُمرَّر كـ prop "params" لجميع صفحات التفاصيل
@@ -577,7 +588,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/">
-        <SafeLazyRoute component={HomePage} />
+        <HomeLazyRoute />
       </Route>
       <Route path="/quran-engine/viewer"><SafeLazyRoute component={QuranEnginePage} /></Route>
       <Route path="/quran-engine"><SafeLazyRoute component={QuranEnginePage} /></Route>

@@ -1,16 +1,10 @@
 /**
- * تسميات التنقّل المشتقّة من seo-routes.json — المرجع الوحيد لاسم المسار.
- * إن تجاوز عنوان SEO 25 حرفاً يُستثنى اسم التنقّل الحالي (انظر docs/content-fix-report.md).
- * مسارات المرساة (#) لا ترث عنوان الأب — يبقى fallback كما هو.
+ * تسميات التنقّل المشتقّة من seo-routes.json — ملف نحيف (~10KB) بلا أوصاف/كلمات مفتاحية.
+ * يُحدَّث عبر: node scripts/generate-seo-nav-labels.mjs
  */
-import seoRoutes from "./seo-routes.json";
+import navData from "./seo-nav-labels.json";
 
-const byPath: Record<string, string> = {};
-for (const r of seoRoutes.routes) {
-  const p = r.path.replace(/\/$/, "") || "/";
-  const core = r.title.split(/\s*[—\-–|]\s*/)[0].trim();
-  byPath[p] = core;
-}
+const byPath = navData.labels as Record<string, string>;
 
 /** استثناءات صريحة: عنوان SEO أطول من 25 حرفاً — اسم التنقّل المعتمد */
 export const SEO_NAV_EXCEPTIONS: Record<string, string> = {
@@ -30,3 +24,13 @@ export function seoNavLabel(path: string, fallback: string): string {
 }
 
 export const SEO_NAV_LABELS = byPath;
+
+/** بيانات موقع مشتركة بلا مصفوفة المسارات الضخمة */
+export const SEO_SITE = {
+  siteUrl: navData.siteUrl as string,
+  siteName: navData.siteName as string,
+  defaultImage: (navData.defaultImage as string) || "/brand/official-og.png?v=20260815",
+  logoImage: (navData.logoImage as string) || "/brand/official.png?v=20260815",
+  ogImageWidth: (navData.ogImageWidth as number) || 1200,
+  ogImageHeight: (navData.ogImageHeight as number) || 630,
+};

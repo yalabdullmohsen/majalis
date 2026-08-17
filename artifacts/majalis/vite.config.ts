@@ -113,6 +113,14 @@ export default defineConfig({
     chunkSizeWarningLimit: 600,
     modulePreload: {
       polyfill: true,
+      resolveDependencies(_filename, deps) {
+        // لا تُحمّل supabase/icons/charts في modulepreload للإقلاع — تُجلب عند الطلب
+        return deps.filter(
+          (d) =>
+            !/\/(supabase|icons|charts|adhan|animation|maps|html-export)-/.test(d) &&
+            !/seo-routes/.test(d),
+        );
+      },
     },
     rollupOptions: {
       output: {

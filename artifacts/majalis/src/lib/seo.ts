@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import seoData from "./seo-routes.json";
 import { IA_BREADCRUMB_PARENTS } from "./ia-final-structure";
 import {
   ADMIN_DEFAULT_DESCRIPTION,
@@ -14,6 +13,7 @@ import {
   lessonSeoMeta,
   webPageJsonLd,
 } from "./seo-structured-data";
+import { SEO_SITE } from "./seo-nav-labels";
 import type { KuwaitLessonRecord } from "./kuwait-lessons";
 
 type SeoRoute = {
@@ -37,10 +37,25 @@ export type PageSeoOptions = {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 };
 
-const routes = seoData.routes as SeoRoute[];
 const JSON_LD_ID = "majalis-json-ld";
 
-function requiredRoute(path: string) {
+/** seo-routes.json (~85KB) — يُحمَّل عند الحاجة فقط، لا في حزمة الإقلاع */
+let routesCache: SeoRoute[] | null = null;
+let routesLoad: Promise<SeoRoute[]> | null = null;
+
+function ensureRoutes(): Promise<SeoRoute[]> {
+  if (routesCache) return Promise.resolve(routesCache);
+  if (!routesLoad) {
+    routesLoad = import("./seo-routes.json").then((m) => {
+      const data = m.default as { routes: SeoRoute[] };
+      routesCache = data.routes;
+      return routesCache;
+    });
+  }
+  return routesLoad;
+}
+
+function requiredRoute(routes: SeoRoute[], path: string) {
   const route = routes.find((item) => item.path === path);
   if (!route) {
     throw new Error(`Missing SEO route for ${path}`);
@@ -49,7 +64,7 @@ function requiredRoute(path: string) {
 }
 
 function absoluteUrl(path: string) {
-  return new URL(path, seoData.siteUrl).toString();
+  return new URL(path, SEO_SITE.siteUrl).toString();
 }
 
 export function normalizePath(path: string) {
@@ -60,7 +75,7 @@ export function normalizePath(path: string) {
   return cleanPath;
 }
 
-function routeForPath(path: string) {
+function routeForPath(routes: SeoRoute[], path: string) {
   const normalized = normalizePath(path);
   const exact = routes.find((route) => route.path === normalized);
   if (exact) return exact;
@@ -68,7 +83,7 @@ function routeForPath(path: string) {
   if (normalized.startsWith("/search/")) {
     const term = decodeURIComponent(normalized.slice("/search/".length));
     return {
-      ...requiredRoute("/search"),
+      ...requiredRoute(routes, "/search"),
       title: `نتائج البحث: ${term} | المجلس العلمي`,
       description: `نتائج البحث عن «${term}» في الدروس والمكتبة والفوائد داخل المجلس العلمي.`,
       robots: "noindex, follow",
@@ -76,13 +91,13 @@ function routeForPath(path: string) {
   }
 
   if (normalized === "/sheikhs") {
-    return requiredRoute("/sheikhs");
+    return requiredRoute(routes, "/sheikhs");
   }
 
   if (normalized.startsWith("/sheikhs/")) {
     const name = decodeURIComponent(normalized.slice("/sheikhs/".length));
     return {
-      ...requiredRoute("/sheikhs"),
+      ...requiredRoute(routes, "/sheikhs"),
       title: `${name} | المجلس العلمي`,
       description: `ملف الشيخ ${name} — سيرة وإجازات ودروس مرتبطة على المجلس العلمي.`,
     };
@@ -90,7 +105,7 @@ function routeForPath(path: string) {
 
   if (normalized.startsWith("/lessons/")) {
     return {
-      ...requiredRoute("/lessons"),
+      ...requiredRoute(routes, "/lessons"),
       title: "تفاصيل الدرس | المجلس العلمي",
       description: "تفاصيل الدرس الشرعي — الشيخ، المكان، الجدول، والوصف داخل المجلس العلمي.",
     };
@@ -98,7 +113,7 @@ function routeForPath(path: string) {
 
   if (normalized.startsWith("/scientific-announcements/")) {
     return {
-      ...requiredRoute("/lessons"),
+      ...requiredRoute(routes, "/lessons"),
       title: "تفاصيل الإعلان العلمي | المجلس العلمي",
       description: "تفاصيل إعلان درس علمي — الشيخ، المتن، الموعد، المكان، والروابط.",
     };
@@ -106,7 +121,7 @@ function routeForPath(path: string) {
 
   if (normalized.startsWith("/fiqh-council/")) {
     return {
-      ...requiredRoute("/fiqh-council"),
+      ...requiredRoute(routes, "/fiqh-council"),
       title: "قرار المجمع الفقهي | المجلس العلمي",
       description: "تفاصيل قرار أو بحث أو توصية من المجمع الفقهي الإسلامي.",
     };
@@ -114,7 +129,7 @@ function routeForPath(path: string) {
 
   if (normalized.startsWith("/rulings/")) {
     return {
-      ...requiredRoute("/fiqh"),
+      ...requiredRoute(routes, "/fiqh"),
       title: "الفقه الإسلامي | المجلس العلمي",
       description: "بوابة الفقه: قواعد فقهية، مذاهب، نوازل، قرارات المجامع، وأحكام العبادات.",
     };
@@ -122,7 +137,7 @@ function routeForPath(path: string) {
 
   if (normalized.startsWith("/annual-courses/")) {
     return {
-      ...requiredRoute("/annual-courses"),
+      ...requiredRoute(routes, "/annual-courses"),
       title: "دورة علمية | المجلس العلمي",
       description: "تفاصيل دورة علمية — الجدول والمشايخ والتسجيل.",
     };
@@ -130,7 +145,7 @@ function routeForPath(path: string) {
 
   if (normalized.startsWith("/library/")) {
     return {
-      ...requiredRoute("/library"),
+      ...requiredRoute(routes, "/library"),
       title: "كتاب شرعي | المجلس العلمي",
       description: "تفاصيل الكتاب — المؤلف، التصنيف، ملخص المحتوى، وروابط التحميل.",
       ogType: "book",
@@ -140,7 +155,7 @@ function routeForPath(path: string) {
   if (normalized.startsWith("/topics/")) {
     const slug = decodeURIComponent(normalized.slice("/topics/".length));
     return {
-      ...requiredRoute("/topics"),
+      ...requiredRoute(routes, "/topics"),
       title: `موضوع: ${slug} | المجلس العلمي`,
       description: `موضوع ${slug} — مقالات وروابط ومحتوى ذو صلة من المجلس العلمي.`,
     };
@@ -148,7 +163,7 @@ function routeForPath(path: string) {
 
   if (normalized.startsWith("/universities/") && normalized !== "/universities/compare") {
     return {
-      ...requiredRoute("/universities"),
+      ...requiredRoute(routes, "/universities"),
       title: "جامعة إسلامية | المجلس العلمي",
       description: "ملف الجامعة — التخصصات، شروط القبول، معلومات التواصل.",
     };
@@ -156,7 +171,7 @@ function routeForPath(path: string) {
 
   if (normalized.startsWith("/lessons/")) {
     return {
-      ...requiredRoute("/lessons"),
+      ...requiredRoute(routes, "/lessons"),
       title: "مسار التعلم | المجلس العلمي",
       description: "مسار تعلم مفصّل — المراحل والكتب والاختبارات وشهادة الإتمام.",
     };
@@ -164,7 +179,7 @@ function routeForPath(path: string) {
 
   if (normalized.startsWith("/learning/quiz/")) {
     return {
-      ...requiredRoute("/learning/quiz"),
+      ...requiredRoute(routes, "/learning/quiz"),
       title: "اختبار علمي | المجلس العلمي",
       description: "اختبار في مسار التعلم — أسئلة متدرجة الصعوبة لتقييم مستواك.",
     };
@@ -172,7 +187,7 @@ function routeForPath(path: string) {
 
   if (normalized.startsWith("/learning/certificates/")) {
     return {
-      ...requiredRoute("/learning"),
+      ...requiredRoute(routes, "/learning"),
       title: "التحقق من الشهادة | المجلس العلمي",
       description: "التحقق من صحة شهادة إتمام مسار التعلم الشرعي.",
     };
@@ -180,7 +195,7 @@ function routeForPath(path: string) {
 
 if (normalized.startsWith("/quran/surah-stories/")) {
     return {
-      ...requiredRoute("/quran/surah-stories"),
+      ...requiredRoute(routes, "/quran/surah-stories"),
       title: "قصة سورة | المجلس العلمي",
       description: "تفاصيل سورة قرآنية — سبب النزول، المحاور، والفوائد.",
       ogType: "article",
@@ -189,7 +204,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
 
   if (normalized.startsWith("/c/")) {
     return {
-      ...requiredRoute("/fiqh-council"),
+      ...requiredRoute(routes, "/fiqh-council"),
       title: "مقالة علمية | المجلس العلمي",
       description: "مقالة شرعية من المجلس العلمي — يُراجع المصدر في صفحة المقال عند توافره.",
       ogType: "article",
@@ -197,17 +212,17 @@ if (normalized.startsWith("/quran/surah-stories/")) {
   }
 
   if (normalized === "/prophets") {
-    return requiredRoute("/prophets");
+    return requiredRoute(routes, "/prophets");
   }
 
   if (normalized === "/nations") {
-    return requiredRoute("/nations");
+    return requiredRoute(routes, "/nations");
   }
 
   if (normalized.startsWith("/nations/")) {
     const nationSlug = decodeURIComponent(normalized.slice("/nations/".length));
     return {
-      ...requiredRoute("/nations"),
+      ...requiredRoute(routes, "/nations"),
       path: normalized,
       title: `الأمم السابقة: ${nationSlug} | المجلس العلمي`,
       description: `قصة الأمة أو القوم «${nationSlug}» كما وردت في القرآن مع التمييز بين الثابت والمحتمل والمواقع التقريبية التي لا يُجزم بها.`,
@@ -216,13 +231,13 @@ if (normalized.startsWith("/quran/surah-stories/")) {
   }
 
   if (normalized === "/quran/people") {
-    return requiredRoute("/quran/people");
+    return requiredRoute(routes, "/quran/people");
   }
 
   if (normalized.startsWith("/quran/people/")) {
     const personSlug = decodeURIComponent(normalized.slice("/quran/people/".length));
     return {
-      ...requiredRoute("/quran/people"),
+      ...requiredRoute(routes, "/quran/people"),
       path: normalized,
       title: `${personSlug} في القرآن | المجلس العلمي`,
       description: `من ذكروا في القرآن: «${personSlug}» — مواضع الآيات والتعريف بما ثبت دون توسع في غير الثابت.`,
@@ -243,7 +258,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
     };
     const arabicName = PROPHET_NAMES[prophetSlug] || prophetSlug;
     return {
-      ...requiredRoute("/prophets"),
+      ...requiredRoute(routes, "/prophets"),
       path: normalized,
       title: `قصة ${arabicName} عليه السلام | المجلس العلمي`,
       description: `قصة نبي الله ${arabicName} عليه السلام — نبذة تعريفية وأبرز صفاته ومعجزاته والدروس المستخلصة من المصادر الموثوقة.`,
@@ -251,7 +266,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
     };
   }
 
-  return requiredRoute("/404");
+  return requiredRoute(routes, "/404");
 }
 
 function upsertMeta(attribute: "name" | "property", key: string, content: string) {
@@ -292,7 +307,7 @@ export function applyPageSeo(options: PageSeoOptions) {
   const canonicalPath = normalizePath(options.canonicalPath || normalized);
   const canonical = absoluteUrl(canonicalPath);
   // Prefer explicit page image → route default → branded OG share card
-  const imagePath = options.image || seoData.defaultImage || "/brand/official-og.png?v=20260815";
+  const imagePath = options.image || SEO_SITE.defaultImage;
   const image = /^https?:\/\//i.test(imagePath) ? imagePath : absoluteUrl(imagePath);
   const robots = options.robots || "index, follow";
   const ogType = options.ogType || "website";
@@ -309,9 +324,9 @@ export function applyPageSeo(options: PageSeoOptions) {
   // theme-color ديناميكي (فاتح/داكن) مُدار حصريًا عبر src/lib/theme-preference.ts
   // (applyThemePreference) — لا تكتبه هنا بقيمة ثابتة، فذلك كان يُلغي التزامن مع
   // الوضع الفعلي عند كل تنقّل بين الصفحات (2026-07-18).
-  upsertMeta("name", "author", seoData.siteName);
+  upsertMeta("name", "author", SEO_SITE.siteName);
 
-  upsertMeta("property", "og:site_name", seoData.siteName);
+  upsertMeta("property", "og:site_name", SEO_SITE.siteName);
   upsertMeta("property", "og:locale", "ar_KW");
   upsertMeta("property", "og:type", ogType);
   upsertMeta("property", "og:title", options.title);
@@ -319,8 +334,8 @@ export function applyPageSeo(options: PageSeoOptions) {
   upsertMeta("property", "og:url", canonical);
   upsertMeta("property", "og:image", image);
   upsertMeta("property", "og:image:alt", options.title);
-  upsertMeta("property", "og:image:width", String(seoData.ogImageWidth || 1200));
-  upsertMeta("property", "og:image:height", String(seoData.ogImageHeight || 630));
+  upsertMeta("property", "og:image:width", String(SEO_SITE.ogImageWidth));
+  upsertMeta("property", "og:image:height", String(SEO_SITE.ogImageHeight));
 
   upsertMeta("name", "twitter:card", "summary_large_image");
   upsertMeta("name", "twitter:title", options.title);
@@ -337,7 +352,7 @@ export function applyPageSeo(options: PageSeoOptions) {
   }
 }
 
-function breadcrumbForPath(normalized: string) {
+function breadcrumbForPath(routes: SeoRoute[], normalized: string) {
   if (normalized === "/") return null;
   const hubParents = IA_BREADCRUMB_PARENTS[normalized];
   if (hubParents?.length) {
@@ -367,6 +382,7 @@ function breadcrumbForPath(normalized: string) {
 
 export function usePageSeo(path: string) {
   useEffect(() => {
+    let cancelled = false;
     const normalized = normalizePath(path);
     if (isPrivateSeoPath(normalized)) {
       applyPageSeo({
@@ -380,27 +396,33 @@ export function usePageSeo(path: string) {
       });
       return;
     }
-    const route = routeForPath(path);
-    const robots =
-      route.path === "/404" && normalized !== "/404"
-        ? "noindex, follow"
-        : route.robots || "index, follow";
-    const breadcrumbs = breadcrumbForPath(normalized);
-    const pageSchema = webPageJsonLd(route.title, route.description, normalized);
-    const jsonLd =
-      normalized === "/"
-        ? defaultSiteJsonLd()
-        : [pageSchema, ...(breadcrumbs ? [breadcrumbs] : []), ...defaultSiteJsonLd()];
+    void ensureRoutes().then((routes) => {
+      if (cancelled) return;
+      const route = routeForPath(routes, path);
+      const robots =
+        route.path === "/404" && normalized !== "/404"
+          ? "noindex, follow"
+          : route.robots || "index, follow";
+      const breadcrumbs = breadcrumbForPath(routes, normalized);
+      const pageSchema = webPageJsonLd(route.title, route.description, normalized);
+      const jsonLd =
+        normalized === "/"
+          ? defaultSiteJsonLd()
+          : [pageSchema, ...(breadcrumbs ? [breadcrumbs] : []), ...defaultSiteJsonLd()];
 
-    applyPageSeo({
-      path: normalized,
-      title: route.title,
-      description: route.description,
-      robots,
-      ogType: route.ogType || "website",
-      canonicalPath: normalized,
-      jsonLd,
+      applyPageSeo({
+        path: normalized,
+        title: route.title,
+        description: route.description,
+        robots,
+        ogType: route.ogType || "website",
+        canonicalPath: normalized,
+        jsonLd,
+      });
     });
+    return () => {
+      cancelled = true;
+    };
   }, [path]);
 }
 
