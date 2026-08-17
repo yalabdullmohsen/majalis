@@ -42,3 +42,10 @@ export const MUSHAF_BASMALA_SIZE_PX = 22;
 
 export const MUSHAF_AYAH_COUNT = 6236;
 export const MUSHAF_WORD_COUNT = 83665;
+
+/** شيت الآية: مطوي / نصف / كامل */
+export const MUSHAF_AYAH_SHEET_COLLAPSED_PX = 120;
+export const MUSHAF_AYAH_SHEET_HALF_DVH = 50;
+export const MUSHAF_AYAH_SHEET_FULL_DVH = 90;
+/** حد لمس WCAG — أزرار الشيت والمصغّر */
+export const MUSHAF_TOUCH_MIN_PX = 44;
