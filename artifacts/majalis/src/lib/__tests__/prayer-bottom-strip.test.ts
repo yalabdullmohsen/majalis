@@ -25,13 +25,13 @@ assert.match(
 );
 assert.match(
   css,
-  /html\.pts-immersive,\s*\nhtml\.pts-immersive body \{/,
-  "html/body تحت pts-immersive إن وُجد الصنف",
+  /html\.pts-immersive,\s*\nhtml\.pts-immersive body,/,
+  "html/body/#root تحت pts-immersive بنفس الزمرد",
 );
-assert.doesNotMatch(
+assert.match(
   css,
-  /html\.pts-immersive #root/,
-  "لوبي الصلاة لا يطلي #root — يشارك --surface-app",
+  /html\.pts-immersive #root[\s\S]*?background-color:\s*var\(--em-950/,
+  "غمر الصلاة يطلي #root بنفس زمرد الشريط — إصلاح الشريط الأبيض #1230",
 );
 assert.match(
   css,
@@ -60,10 +60,10 @@ assert.doesNotMatch(
   "لا سحب سالب تحت النوتش",
 );
 
-assert.doesNotMatch(
+assert.match(
   app,
   /classList\.toggle\(\s*["']pts-immersive["']/,
-  "لا غمر زمردي على html/#root في لوبي الصلاة",
+  "صفحة الصلاة السابقة تعيد غمر pts-immersive على html",
 );
 assert.match(app, /classList\.remove\(\s*["']pts-immersive["']/);
 

@@ -38,10 +38,10 @@ function paint(w, h, rgb) {
 }
 
 const css = readFileSync(resolve(root, "src/styles/pages/prayer-times.css"), "utf8");
-assert.doesNotMatch(
+assert.match(
   css,
-  /html\.pts-immersive #root/,
-  "لوبي الصلاة لا يطلي #root بلون ثالث — يشارك --surface-app",
+  /html\.pts-immersive #root[\s\S]*?background-color:\s*var\(--em-950/,
+  "غمر الصلاة يطلي #root بـ --em-950 حتى لا يظهر شريط فاتح تحت التبويبات",
 );
 assert.match(css, /min-height:\s*100svh[\s\S]*min-height:\s*100dvh/);
 

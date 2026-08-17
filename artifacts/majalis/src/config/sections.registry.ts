@@ -102,6 +102,11 @@ export interface SectionDef {
   aliases?: string[];
   /** مكان العرض الأساسي — لا تكرار بطاقات بين الهبات */
   hub: SectionHub;
+  /**
+   * تخطيط صفحة جذر التبويب.
+   * `lobby` = القالب الموحّد (SectionLobby). `legacy` = مستثنى صراحةً دون حذف القالب.
+   */
+  layout?: "legacy" | "lobby";
 }
 
 export const SECTION_GROUP_META: Record<
@@ -219,6 +224,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     surfaces: ["bottomNav", "search"],
     status: "live",
     keywords: ["صلاة", "أذان", "مواقيت"],
+    layout: "legacy",
   },
   {
     id: "sections",

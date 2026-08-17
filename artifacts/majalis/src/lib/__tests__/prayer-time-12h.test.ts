@@ -17,8 +17,9 @@ assert.equal(formatTime12("23:59"), "١١:٥٩ م");
 const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const page = readFileSync(join(root, "pages/worship/ui/PrayerTimesView.tsx"), "utf8");
 assert.match(page, /displayTime12/);
-assert.match(page, /SectionLobby/);
-assert.doesNotMatch(page, /pts-back/);
+assert.match(page, /pts-screen/);
+assert.match(page, /pts-back/);
+assert.doesNotMatch(page, /SectionLobby/);
 assert.doesNotMatch(page, /displayTime24/);
 
 const mushaf = readFileSync(join(root, "pages/quran/MushafReaderPage.tsx"), "utf8");

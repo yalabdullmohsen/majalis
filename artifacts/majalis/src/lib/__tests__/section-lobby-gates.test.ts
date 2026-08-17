@@ -7,6 +7,7 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getLobby, LOBBY_IDS, isTabRootPath } from "@/config/section-lobbies";
+import { getSectionById } from "@/config/sections.registry";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
@@ -24,11 +25,18 @@ for (const [id, rel] of PAGES) {
   const src = read(rel);
   if (id === "sections") {
     assert.match(src, /MoreHubFromRegistry/, `${id}: من السجل`);
+  } else if (id === "prayer") {
+    assert.doesNotMatch(src, /SectionLobby/, `${id}: تخطيط legacy — ليست SectionLobby`);
+    assert.match(src, /pts-screen/, `${id}: شاشة الصلاة السابقة`);
+    assert.equal(getSectionById("prayer")?.layout, "legacy", "الصلاة معلّمة layout: legacy في السجل");
   } else {
     assert.match(src, /SectionLobby/, `${id}: يستعمل SectionLobby`);
+    assert.notEqual(getSectionById(id)?.layout, "legacy", `${id}: على القالب الموحّد`);
   }
   assert.doesNotMatch(src, /<PageHero/, `${id}: بلا PageHero`);
-  assert.doesNotMatch(src, /showBack\s*=\s*true/, `${id}: بلا زر رجوع`);
+  if (id !== "prayer") {
+    assert.doesNotMatch(src, /showBack\s*=\s*true/, `${id}: بلا زر رجوع`);
+  }
   assert.doesNotMatch(src, /type=["']search["']/, `${id}: بلا حقل بحث محلي`);
   assert.doesNotMatch(src, /ابحث في الأقسام/, `${id}: بلا بحث أقسام مكرر`);
 }

@@ -1056,8 +1056,8 @@ function AppShellInner() {
   }, []);
 
   useEffect(() => {
-    // لوبي الصلاة يشارك --surface-app مع التبويبات؛ لا غمر زمردي على html/#root
-    document.documentElement.classList.remove("pts-immersive");
+    // صفحة الصلاة تخطيط legacy: غمر زمردي على html حتى يتوحّد الشريط مع --em-950 (#1230)
+    document.documentElement.classList.toggle("pts-immersive", onPrayer);
     document.documentElement.classList.toggle("chrome-immersive", immersive);
     return () => {
       document.documentElement.classList.remove("pts-immersive");
