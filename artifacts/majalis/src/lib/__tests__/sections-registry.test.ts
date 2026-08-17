@@ -66,6 +66,10 @@ assert.deepEqual(
   drawer.filter((id) => more.includes(id)),
   shared,
 );
+assert.ok(drawer.includes("sections"));
+assert.ok(drawer.includes("account"));
+assert.equal(drawer.includes("tafsir"), false);
+assert.ok(drawer.length <= 12);
 
 assert.ok(SECTION_MERGE_REDIRECTS.some((r) => r.from === "/more" && r.to === "/sections"));
 assert.ok(SECTIONS.some((s) => s.id === "flashcards" && s.aliases?.includes("المحفوظات")));

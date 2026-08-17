@@ -141,8 +141,10 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/more", to: "/sections", note: "المزيد → الأقسام" },
 ];
 
-const NAV: Surface[] = ["moreHub", "drawer", "home", "search"];
-const ACCOUNT: Surface[] = ["moreHub", "drawer", "search"];
+const NAV: Surface[] = ["moreHub", "home", "search"];
+const ACCOUNT: Surface[] = ["moreHub", "search"];
+/** الحساب/الإعدادات في الدرج — بلا تكرار أقسام المحتوى */
+const ACCOUNT_DRAWER: Surface[] = ["moreHub", "drawer", "search"];
 const SEARCH_ONLY: Surface[] = ["search"];
 
 /** أقسام مركز القرآن — تُعرض هناك فقط كبطاقات */
@@ -225,7 +227,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     icon: Layers,
     group: "account",
     order: -5,
-    surfaces: ["bottomNav"],
+    surfaces: ["bottomNav", "drawer"],
     status: "live",
     keywords: ["أقسام", "sections"],
     aliases: ["المزيد"],
@@ -518,7 +520,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     group: "sciences",
     order: 50,
     featured: true,
-    surfaces: ["bottomNav", "moreHub", "drawer", "home", "search"],
+    surfaces: ["bottomNav", "moreHub", "home", "search"],
     status: "live",
     keywords: ["فقه", "أحكام", "فتاوى"],
     aliases: ["الفقه"],
@@ -837,7 +839,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     icon: User,
     group: "account",
     order: 10,
-    surfaces: ACCOUNT,
+    surfaces: ACCOUNT_DRAWER,
     status: "live",
     keywords: ["حساب", "ملف"],
   },
@@ -849,7 +851,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     icon: Settings,
     group: "account",
     order: 20,
-    surfaces: ACCOUNT,
+    surfaces: ACCOUNT_DRAWER,
     status: "live",
     keywords: ["إعدادات", "مظهر", "ثيم"],
     aliases: ["المظهر"],
@@ -862,7 +864,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     icon: Volume2,
     group: "account",
     order: 30,
-    surfaces: ACCOUNT,
+    surfaces: ACCOUNT_DRAWER,
     status: "live",
     keywords: ["أذان", "تنبيه صلاة"],
   },
@@ -874,7 +876,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     icon: Bell,
     group: "account",
     order: 40,
-    surfaces: ACCOUNT,
+    surfaces: ACCOUNT_DRAWER,
     status: "live",
     keywords: ["إشعارات", "تنبيهات"],
   },
@@ -886,7 +888,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     icon: HelpCircle,
     group: "account",
     order: 50,
-    surfaces: ACCOUNT,
+    surfaces: ACCOUNT_DRAWER,
     status: "live",
     keywords: ["دعم", "تواصل"],
     aliases: ["تواصل معنا"],
@@ -899,7 +901,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     icon: Info,
     group: "account",
     order: 60,
-    surfaces: ACCOUNT,
+    surfaces: ACCOUNT_DRAWER,
     status: "live",
     keywords: ["حول", "من نحن"],
     aliases: ["حول التطبيق", "من نحن"],
@@ -948,7 +950,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     icon: Lock,
     group: "account",
     order: 100,
-    surfaces: ACCOUNT,
+    surfaces: ACCOUNT_DRAWER,
     status: "live",
     keywords: ["خصوصية", "بيانات"],
     aliases: ["سياسة الخصوصية", "مركز الخصوصية"],
@@ -961,7 +963,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     icon: Landmark,
     group: "account",
     order: 110,
-    surfaces: ACCOUNT,
+    surfaces: ACCOUNT_DRAWER,
     status: "live",
     keywords: ["شروط", "أحكام"],
   },

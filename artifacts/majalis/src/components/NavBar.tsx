@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from "react";
+import { useCallback, useEffect, useState, lazy, Suspense } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
@@ -48,6 +48,11 @@ export default function NavBar() {
   const [location, navigate] = useLocation();
   const isMobile = useIsMobileNav();
   const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
+  const [drawerMounted, setDrawerMounted] = useState(false);
+
+  useEffect(() => {
+    if (isMenuOpen) setDrawerMounted(true);
+  }, [isMenuOpen]);
 
   const isActive = (href: string) => {
     const path = href.split("?")[0] || href;
@@ -76,11 +81,11 @@ export default function NavBar() {
     return () => window.removeEventListener("sidenav-open", handler);
   }, [openMenu]);
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     closeAll();
     await logout();
     navigate("/login");
-  };
+  }, [closeAll, logout, navigate]);
 
   const openSearch = () => {
     closeAll();
@@ -237,7 +242,7 @@ export default function NavBar() {
         )}
       </header>
 
-      {isMenuOpen ? (
+      {drawerMounted ? (
         <Suspense fallback={null}>
           <SideNavDrawer open={isMenuOpen} onClose={closeMenu} onLogout={handleLogout} />
         </Suspense>

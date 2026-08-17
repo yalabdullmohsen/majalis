@@ -1,58 +1,58 @@
 /**
- * القائمة الجانبية من سجل الأقسام — نفس ترتيب شيت المزيد.
+ * صفوف الدرج من سجل الأقسام — أيقونة + عنوان، بلا بطاقات متدرّجة.
  */
-import {
-  SECTION_GROUP_META,
-  SECTION_GROUP_ORDER,
-  featuredSections,
-  sectionsByGroup,
-  type SectionDef,
-} from "@/config/sections.registry";
-import { FeaturedSectionsGrid, SectionsRowList } from "@/components/sections";
-import { cn } from "@/lib/utils";
-import "@/components/sections/section-cards.css";
+import { memo, useMemo } from "react";
+import { Link, useLocation } from "wouter";
+import { SIDEBAR_NAV_GROUPS } from "@/lib/sidebar-nav";
+import { isNavHrefActive } from "@/lib/nav-active";
 
 type Props = {
   onNavigate?: () => void;
   className?: string;
 };
 
-export function DrawerFromRegistry({ onNavigate, className }: Props) {
-  const featured = featuredSections();
+export const DrawerFromRegistry = memo(function DrawerFromRegistry({
+  onNavigate,
+  className,
+}: Props) {
+  const groups = useMemo(() => SIDEBAR_NAV_GROUPS, []);
+  const [pathname] = useLocation();
 
   return (
-    <div className={cn("flex flex-col gap-6 p-4", className)}>
-      {featured.length > 0 ? (
-        <section aria-label="الأبواب المميّزة" className="flex flex-col gap-3">
-          <FeaturedSectionsGrid sections={featured} onNavigate={onNavigate} />
+    <div className={className}>
+      {groups.map((group) => (
+        <section
+          key={group.id}
+          className="sidebar-section"
+          aria-label={group.title || undefined}
+        >
+          {group.title ? (
+            <h2 className="sidebar-section-title">{group.title}</h2>
+          ) : null}
+          <nav aria-label={group.title || "تنقّل الدرج"}>
+            {group.items.map((item) => {
+              const active = isNavHrefActive(pathname, item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={onNavigate}
+                  className={`sidebar-item${active ? " active" : ""}`}
+                  aria-current={active ? "page" : undefined}
+                  aria-label={item.label}
+                >
+                  <span className="sidebar-item-icon" aria-hidden="true">
+                    <item.Icon size={18} strokeWidth={1.8} />
+                  </span>
+                  <span className="sidebar-item-text">
+                    <span className="sidebar-item-title">{item.label}</span>
+                  </span>
+                </Link>
+              );
+            })}
+          </nav>
         </section>
-      ) : null}
-
-      {SECTION_GROUP_ORDER.map((group) => {
-        const meta = SECTION_GROUP_META[group];
-        const items = sectionsByGroup(group, "drawer").filter((s) => !s.featured);
-        if (items.length === 0) return null;
-        return (
-          <Group key={group} title={meta.label} items={items} onNavigate={onNavigate} />
-        );
-      })}
+      ))}
     </div>
   );
-}
-
-function Group({
-  title,
-  items,
-  onNavigate,
-}: {
-  title: string;
-  items: SectionDef[];
-  onNavigate?: () => void;
-}) {
-  return (
-    <section className="flex flex-col gap-3" aria-label={title}>
-      <h2 className="text-sm font-semibold text-foreground">{title}</h2>
-      <SectionsRowList sections={items} onNavigate={onNavigate} />
-    </section>
-  );
-}
+});
