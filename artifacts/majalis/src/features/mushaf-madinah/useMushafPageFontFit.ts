@@ -1,13 +1,10 @@
 import { useLayoutEffect, type RefObject } from "react";
-import { MUSHAF_WORD_GAP_MAX_PX } from "./layout-bands";
-
-const MIN_PX = 12;
-const STEP = 0.25;
-
-type FitOpts = {
-  /** صفحات الافتتاح تستخدم نطاقاً رأسياً أضيق */
-  opening?: boolean;
-};
+import {
+  fitPageFontSize,
+  getCachedFontSize,
+  mushafFitCacheKey,
+  setCachedFontSize,
+} from "./fitPageFontSize";
 
 function lineOverflows(line: HTMLElement): boolean {
   return line.scrollWidth > line.clientWidth + 1;
@@ -37,6 +34,7 @@ function slotInkOverflows(pageEl: HTMLElement): boolean {
 /**
  * قيد أ: أعرض سطر مرسوم ≤ العرض المتاح (overflowX === 0).
  * قيد ب: مجموع ارتفاعات الأسطر ≤ نطاق المحتوى.
+ * فحص لاحق واحد بعد ملاءمة القماش — ليس بحثًا ثنائيًا على DOM.
  */
 function overflowsConstraints(pageEl: HTMLElement, body: HTMLElement | null): boolean {
   for (const line of pageEl.querySelectorAll<HTMLElement>(".mm-ayah-line, .mm-basmala")) {
@@ -47,91 +45,62 @@ function overflowsConstraints(pageEl: HTMLElement, body: HTMLElement | null): bo
   return false;
 }
 
-/**
- * بعد أقصى مقياس آمن: أغلق فجوة السطر بـ word-spacing فقط (سقف ١٥px).
- * ممنوع letter-spacing — يفك اتصال الحروف العربية.
- */
-function stretchLines(pageEl: HTMLElement): void {
-  for (const line of pageEl.querySelectorAll<HTMLElement>(".mm-ayah-line")) {
-    if (line.dataset.centered === "1") {
-      line.style.removeProperty("word-spacing");
-      continue;
-    }
-    line.style.removeProperty("word-spacing");
-    const slack = line.clientWidth - line.scrollWidth;
-    if (slack <= 2) continue;
-    const words = line.querySelectorAll(".mm-ayah-line__word, .mm-ayah-hit--end");
-    const gaps = Math.max(1, words.length - 1);
-    const perGap = Math.min(MUSHAF_WORD_GAP_MAX_PX, slack / gaps);
-    if (perGap > 0.25) line.style.wordSpacing = `${perGap.toFixed(2)}px`;
+function collectLineStrings(pageEl: HTMLElement): string[] {
+  return [...pageEl.querySelectorAll<HTMLElement>(".mm-ayah-line, .mm-basmala")]
+    .map((el) => (el.textContent ?? "").replace(/\s+/g, ""))
+    .filter(Boolean);
+}
+
+function readFamily(pageEl: HTMLElement, fallback: string): string {
+  try {
+    const fromVar = pageEl.style?.getPropertyValue?.("--mm-qpc-family")?.trim().replace(/['"]/g, "");
+    if (fromVar) return fromVar;
+  } catch {
+    /* عنصر اختبار بلا style كامل */
   }
+  try {
+    const computed = getComputedStyle(pageEl).getPropertyValue("--mm-qpc-family").trim().replace(/['"]/g, "");
+    if (computed) return computed;
+  } catch {
+    /* عنصر غير موصول */
+  }
+  return fallback;
 }
 
 /**
- * ملاءمة مقياس خط الصفحة ببحث ثنائي بدقة 0.25px.
- * يمنع التجاوز الأفقي والبتر الرأسي دون transform/scale على الحاوية.
- * بلا فرع برقم صفحة — القيدان أ+ب على كل الصفحات.
+ * ملاءمة مقياس خط الصفحة ببحث ثنائي على canvas (لا على DOM).
+ * يمنع التجاوز الأفقي دون transform/scale على الحاوية.
  */
-export function fitMushafPageFont(pageEl: HTMLElement, _opts: FitOpts = {}): number {
-  pageEl.style.removeProperty("--mm-qpc-size");
-  for (const line of pageEl.querySelectorAll<HTMLElement>(".mm-ayah-line, .mm-basmala")) {
-    line.style.removeProperty("word-spacing");
-  }
-  const probe =
-    pageEl.querySelector<HTMLElement>(".mm-ayah-line") ||
-    pageEl.querySelector<HTMLElement>(".mm-basmala");
-  const cssSize = probe ? parseFloat(getComputedStyle(probe).fontSize) || 20 : 20;
+export function fitMushafPageFont(
+  pageEl: HTMLElement,
+  opts: { family?: string; pageNumber?: number } = {},
+): number {
   const body = pageEl.querySelector<HTMLElement>(".mm-page__body");
-  const loBound = MIN_PX;
-  const hiBound = Math.max(cssSize + 8, 42);
+  const containerPx = Math.round(body?.clientWidth || pageEl.clientWidth || 0);
+  const lines = collectLineStrings(pageEl);
+  const family = opts.family || readFamily(pageEl, "qpc-v2");
+  const pageNumber = opts.pageNumber ?? Number(pageEl.getAttribute?.("data-page") || 0);
 
-  const overflows = (size: number): boolean => {
-    pageEl.style.setProperty("--mm-qpc-size", `${size}px`);
-    return overflowsConstraints(pageEl, body);
-  };
-
-  let lo: number;
-  let hi: number;
-  if (overflows(cssSize)) {
-    lo = loBound;
-    hi = cssSize;
-  } else {
-    let grow = cssSize;
-    while (grow + STEP <= hiBound && !overflows(grow + STEP)) {
-      grow += STEP;
-    }
-    lo = grow;
-    hi = Math.min(hiBound, grow + STEP);
+  if (!containerPx || lines.length === 0) {
+    pageEl.style.setProperty("--mm-qpc-size", "12px");
+    return 12;
   }
 
-  let best = lo;
-  while (hi - lo > STEP / 2) {
-    const mid = Math.round(((lo + hi) / 2) * 4) / 4;
-    if (overflows(mid)) {
-      hi = mid - STEP;
-    } else {
-      best = mid;
-      lo = mid + STEP;
-    }
-  }
-  while (best > loBound && overflows(best)) best -= STEP;
-  pageEl.style.setProperty("--mm-qpc-size", `${best}px`);
-  stretchLines(pageEl);
+  const key = mushafFitCacheKey(pageNumber, containerPx, family);
+  const cached = getCachedFontSize(key);
+  const size = cached ?? fitPageFontSize(lines, containerPx, family);
+  if (cached == null) setCachedFontSize(key, size);
+  pageEl.style.setProperty("--mm-qpc-size", `${size}px`);
 
-  const stillOverflow = overflowsConstraints(pageEl, body);
-
-  if (stillOverflow) {
-    const detail = {
-      scrollHeight: body?.scrollHeight,
-      clientHeight: body?.clientHeight,
-    };
-    if (import.meta.env.DEV) {
-      throw new Error(`[mushaf] ink overflow after fit ${JSON.stringify(detail)}`);
-    }
-    console.error("[mushaf] ink overflow after fit", detail);
+  if (overflowsConstraints(pageEl, body) && import.meta.env.DEV) {
+    console.error("[mushaf] ink overflow after canvas fit", {
+      pageNumber,
+      size,
+      containerPx,
+    });
   }
 
-  return best;
+  return size;
 }
 
 async function waitPageFont(fontFamily: string): Promise<void> {
@@ -155,29 +124,42 @@ export function useMushafPageFontFit(
     if (!ready) return;
     const el = pageRef.current;
     if (!el) return;
-    const opening = pageNumber === 1 || pageNumber === 2;
     let cancelled = false;
-    const run = () => {
+    let lastWidth = -1;
+
+    const run = (force: boolean) => {
       if (cancelled) return;
       const node = pageRef.current;
       if (!node) return;
+      const body = node.querySelector<HTMLElement>(".mm-page__body");
+      const width = Math.round(body?.clientWidth || node.clientWidth || 0);
+      if (!force && width === lastWidth) return;
+      lastWidth = width;
       void waitPageFont(fontFamily).then(() => {
         if (cancelled || !pageRef.current) return;
         try {
-          fitMushafPageFont(pageRef.current, { opening });
+          fitMushafPageFont(pageRef.current, { family: fontFamily, pageNumber });
         } catch (err) {
           if (import.meta.env.DEV) console.error(err);
         }
       });
     };
-    run();
-    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(run) : null;
+
+    run(true);
+    const ro =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => run(false))
+        : null;
     ro?.observe(el);
-    window.addEventListener("orientationchange", run);
+    const onOrient = () => {
+      lastWidth = -1;
+      run(true);
+    };
+    window.addEventListener("orientationchange", onOrient);
     return () => {
       cancelled = true;
       ro?.disconnect();
-      window.removeEventListener("orientationchange", run);
+      window.removeEventListener("orientationchange", onOrient);
     };
   }, [ready, pageRef, pageNumber, fontFamily, selectedVerseKey]);
 }
