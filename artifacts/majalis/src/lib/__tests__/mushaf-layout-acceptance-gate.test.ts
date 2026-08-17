@@ -49,8 +49,8 @@ assert.match(actions, /data-sheet-height|is-expanded/);
 assert.match(viewport, /playAyah|playSelected/);
 assert.match(viewport, /MushafTafsirSheet/);
 assert.doesNotMatch(viewport, /exitAlwaysVisible/);
-assert.match(fitSrc, /fitPageFontSize|canvas/);
-assert.match(fitSrc, /ResizeObserver/);
+assert.match(fitSrc, /document\.fonts\.check/);
+assert.match(fitSrc, /loadingdone/);
 
 // 6) وحدة الملاءمة لا ترمي
 const fake = {

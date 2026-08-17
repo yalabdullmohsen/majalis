@@ -12,7 +12,7 @@ import { chromium } from "playwright";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "../..");
 const outDir = resolve(root, "docs/mushaf-madinah/snapshots");
-const pages = [1, 2, 3, 4, 7, 283, 600, 603];
+const pages = [1, 2, 3, 4, 5, 7, 48, 283, 600, 603];
 const viewport = { width: 390, height: 844 };
 const baseFromEnv = process.env.MUSHAF_GATE_BASE_URL || process.env.BASE_URL || "";
 
@@ -88,6 +88,39 @@ async function main() {
         if (el) el.setAttribute("data-open", "0");
       });
       await page.waitForTimeout(400);
+      const paint = await page.evaluate(() => {
+        const current = document.querySelector('[data-pane="current"]');
+        const pageEl = current?.querySelector('[data-testid="mushaf-page"]');
+        const line =
+          current?.querySelector(".mm-ayah-line") || current?.querySelector(".mm-basmala");
+        const familyRaw = pageEl
+          ? getComputedStyle(pageEl).getPropertyValue("--mm-qpc-family").trim()
+          : "";
+        const family = familyRaw.replace(/^["']+|["']+$/g, "");
+        const fontCheck = family
+          ? document.fonts.check(`16px "${family}"`) || document.fonts.check(`16px ${family}`)
+          : false;
+        const fontSize = line ? parseFloat(getComputedStyle(line).fontSize) : 0;
+        const pageOverflow = !!pageEl && pageEl.scrollWidth > pageEl.clientWidth + 1;
+        const lineOverflow = pageEl
+          ? [...pageEl.querySelectorAll(".mm-ayah-line, .mm-basmala")].some(
+              (el) => el.scrollWidth > el.clientWidth + 1,
+            )
+          : true;
+        const ink = pageEl ? [...pageEl.querySelectorAll(".mm-slot")] : [];
+        let overlap = false;
+        for (const slot of ink) {
+          const kind = slot.getAttribute("data-kind");
+          if (kind !== "line") continue;
+          const slotBox = slot.getBoundingClientRect();
+          if (slotBox.height < 2) continue;
+          for (const glyph of slot.querySelectorAll(".mm-ayah-line, .mm-basmala")) {
+            const box = glyph.getBoundingClientRect();
+            if (box.bottom > slotBox.bottom + 1.5 || box.top < slotBox.top - 1.5) overlap = true;
+          }
+        }
+        return { fontCheck, fontSize, pageOverflow, lineOverflow, overlap, family };
+      });
       const file = join(outDir, `page-${String(n).padStart(3, "0")}.png`);
       await page.locator('[data-testid="mushaf-viewport"]').screenshot({ path: file });
       const hasPdf = await page.evaluate(() => !!document.querySelector("embed[type='application/pdf'], iframe[src*='.pdf'], canvas.mm-pdf"));
@@ -104,7 +137,17 @@ async function main() {
         hasPdf,
         fontFamily: font,
         ayahLineCount: lineSlots,
-        ok: !hasPdf && /qpc-v2-p/i.test(font) && lineSlots > 0,
+        ...paint,
+        ok:
+          !hasPdf &&
+          /qpc-v2-p/i.test(font) &&
+          lineSlots > 0 &&
+          paint.fontCheck === true &&
+          paint.fontSize >= 12 &&
+          paint.fontSize <= 34 &&
+          paint.pageOverflow === false &&
+          paint.lineOverflow === false &&
+          paint.overlap === false,
       });
       console.log(`✓ snapshot page ${n} → ${file}`);
     }
