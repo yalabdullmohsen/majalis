@@ -161,7 +161,20 @@ export function HeaderTicker() {
       }));
   }, [contentItems]);
 
+  const [marqueeEnabled, setMarqueeEnabled] = useState(false);
   const preferRotate = reducedMotion || useRotateFallback;
+
+  /** ماركي بعد أول رسم — لا حركة على عنصر LCP */
+  useEffect(() => {
+    if (reducedMotion) return;
+    const enable = () => setMarqueeEnabled(true);
+    if (typeof requestIdleCallback === "function") {
+      const id = requestIdleCallback(enable, { timeout: 1800 });
+      return () => cancelIdleCallback(id);
+    }
+    const t = window.setTimeout(enable, 400);
+    return () => window.clearTimeout(t);
+  }, [reducedMotion]);
 
   useEffect(() => {
     if (!preferRotate || items.length === 0 || paused) return;
@@ -251,7 +264,7 @@ export function HeaderTicker() {
 
   return (
     <div
-      className={`header-ticker header-ticker--marquee header-ticker--with-prayer${paused ? " header-ticker--paused" : ""}`}
+      className={`header-ticker${marqueeEnabled ? " header-ticker--marquee" : ""} header-ticker--with-prayer${paused ? " header-ticker--paused" : ""}`}
       aria-live="off"
       {...pauseHandlers}
     >

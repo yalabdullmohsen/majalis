@@ -51,5 +51,8 @@ assert.doesNotMatch(
   /import \{[^}]*bootstrapSupabaseFromServer[^}]*\} from "\.\/lib\/supabase-bootstrap"/,
   "must not statically import supabase-bootstrap on boot",
 );
+assert.match(main, /void import\("\.\/styles\/design-system\.css"\)/, "design-system deferred from critical CSS");
+assert.match(main, /void import\("\.\/styles\/brand-v4-components\.css"\)/, "brand-v4-components deferred");
+assert.doesNotMatch(main, /^import "\.\/styles\/design-system\.css";/m, "no static design-system on boot");
 
 console.log("phase7-performance: ok");

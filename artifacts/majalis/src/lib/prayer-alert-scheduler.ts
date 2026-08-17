@@ -25,17 +25,9 @@ import {
 import { dateISOInZone } from "./prayer-notification-ids";
 import { startPrayerLiveActivity, markPrayerLiveActivityEntered, endPrayerLiveActivity } from "./plugins/prayer-live-activity";
 import type { PrayerSoundProfile } from "./prayer-notification-sounds";
+import { PRAYER_ALERT_EVENT_NAME, type PrayerAlertEvent } from "./prayer-alert-events";
 
-export type PrayerAlertEvent = {
-  type: "pre-alert" | "entered";
-  prayerKey: string;
-  prayerName: string;
-  prayerTimeEpochMs: number;
-  preAlertMinutes: number;
-};
-
-/** يُطلَق على window عند دخول نافذة الـ15 دقيقة، وعند دخول وقت الصلاة فعلياً. */
-export const PRAYER_ALERT_EVENT_NAME = "majalis:prayer-alert";
+export { PRAYER_ALERT_EVENT_NAME, type PrayerAlertEvent } from "./prayer-alert-events";
 
 const KEY_TO_ARABIC: Record<string, string> = {
   Fajr: "الفجر",

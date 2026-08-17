@@ -33,9 +33,7 @@ import "./styles/tokens.css";
 import "./styles/design-tokens.css";
 import "./styles/typography-scale.css";
 import "./index.css";
-import "./styles/design-system.css";
 import "./styles/final-release.css";
-import "./styles/brand-v4-components.css";
 import "./styles/brand-v4-contrast-fixes.css";
 import "./styles/a11y-release-gate.css";
 import "./styles/m2030/foundation.css";
@@ -44,6 +42,10 @@ import "./styles/m2030/pages.css";
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
 import "./styles/dark-mode-surfaces.css";
+// طبقات مظهر غير حرجة للرسم الأول — فصل أول دفعة بلا حذف (gzip ≤60KiB)
+void import("./styles/design-system.css").then(() => {
+  void import("./styles/brand-v4-components.css");
+});
 // تفاعلات غير حرجة للرسم الأول — خارج ميزانية CSS الحرج (gzip ≤60KiB)
 void import("./styles/components/instant-interaction.css");
 void import("./styles/components/native-feel.css");

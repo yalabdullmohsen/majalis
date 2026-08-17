@@ -418,6 +418,8 @@ html.dark .nav-soon-badge {
   width: max-content;
   min-height: 100%;
   gap: 0;
+}
+.header-ticker--marquee .header-ticker__track {
   animation-name: header-ticker-marquee;
   animation-timing-function: linear;
   animation-iteration-count: infinite;

@@ -126,4 +126,14 @@ JS الابتدائي = `index` + `vendor` + `query` + `supabase-CWJnfID4` + `ic
 
 `artifacts/majalis/scripts/perf-baseline.json` + `node scripts/perf-regression-gate.mjs` (تفشل عند انحدار TBT/LCP).
 
+## المرحلة 5 — فصل CSS + دخولية مركّبة + TBT (`fix/perf-tbt-lcp-css-split`)
+
+**ما تغيّر**
+
+1. **CSS غير مستخدم / حظر العرض:** `design-system.css` و`brand-v4-components.css` صارا `void import()` بعد الرسم (بلا حذف). بقيت `index.css` + `final-release.css` + تصحيحات التباين + `m2030/pages.css` + الوضع الليلي في المسار الحرج لتفادي وميض تباين أو بطاقات.
+2. **LCP:** الدخولية ترسم الرمز فورًا (`opacity: 1`) بلا `stroke-dashoffset` وبلا `filter: blur`. الخروج فقط `opacity`+`transform`. شريط الماركي يبقى ثابتًا حتى `requestIdleCallback`.
+3. **TBT:** `prayer-alert-scheduler` لم يعد استيرادًا ثابتًا من `App.tsx`. حدث الشريط في `prayer-alert-events.ts` حتى لا تسحب `PrayerRespectBanner` جدولة الإشعارات إلى حزمة الإقلاع.
+
+**قياس بعد النشر:** وسيط ٣ تشغيلات — يُسجَّل بعد `version.json` الجديد. الأساس للانحدار يبقى فحص PSI السابع (LCP 6.3 ث / TBT 560 مل.ث).
+
 

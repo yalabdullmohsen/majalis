@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { VolumeX, X } from "lucide-react";
-import { PRAYER_ALERT_EVENT_NAME, type PrayerAlertEvent } from "@/lib/prayer-alert-scheduler";
+import { PRAYER_ALERT_EVENT_NAME, type PrayerAlertEvent } from "@/lib/prayer-alert-events";
 import {
   loadPrayerAlertPrefs,
   hasShownRespectReminder,

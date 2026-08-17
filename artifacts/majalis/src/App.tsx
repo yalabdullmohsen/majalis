@@ -26,11 +26,6 @@ import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
 import { PrayerRespectBanner } from "@/components/adhan/PrayerRespectBanner";
-import {
-  startPrayerAlertScheduler,
-  recheckPrayerAlertWindow,
-  invalidatePrayerNativeSchedule,
-} from "@/lib/prayer-alert-scheduler";
 import { PRAYER_ALERT_PREFS_CHANGED_EVENT } from "@/lib/prayer-alert-preferences";
 import { PrayerCountdownBanner } from "@/components/prayer/PrayerCountdownBanner";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
@@ -457,15 +452,26 @@ function AdhanSchedulerBootstrap() {
  */
 function PrayerAlertSchedulerBootstrap() {
   const { data } = usePrayerCountdown();
+
   useEffect(() => {
     if (!data) return;
-    startPrayerAlertScheduler(data).catch(() => {});
+    let cancelled = false;
+    void import("@/lib/prayer-alert-scheduler").then((mod) => {
+      if (cancelled) return;
+      mod.startPrayerAlertScheduler(data).catch(() => {});
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [data]);
 
   useEffect(() => {
+    const loadScheduler = () => import("@/lib/prayer-alert-scheduler");
     const rescheduleOnForeground = () => {
       // force: يعيد جدولة الإشعار الأصلي بعد الخلفية/إعادة التشغيل بلا تكرار خاطئ.
-      void recheckPrayerAlertWindow(data, { force: true });
+      void loadScheduler().then((mod) => {
+        void mod.recheckPrayerAlertWindow(data, { force: true });
+      });
       void import("@/lib/quran-daily-reminder").then(({ ensureQuranDailyReminderScheduled }) => {
         void ensureQuranDailyReminderScheduled();
       });
@@ -474,8 +480,10 @@ function PrayerAlertSchedulerBootstrap() {
       if (document.visibilityState === "visible") rescheduleOnForeground();
     };
     const onPrefsChanged = () => {
-      invalidatePrayerNativeSchedule();
-      void recheckPrayerAlertWindow(data, { force: true });
+      void loadScheduler().then((mod) => {
+        mod.invalidatePrayerNativeSchedule();
+        void mod.recheckPrayerAlertWindow(data, { force: true });
+      });
     };
     let lastTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     let lastDateKey = new Intl.DateTimeFormat("en-CA", {
@@ -495,8 +503,10 @@ function PrayerAlertSchedulerBootstrap() {
       if (tz !== lastTz || dateKey !== lastDateKey) {
         lastTz = tz;
         lastDateKey = dateKey;
-        invalidatePrayerNativeSchedule();
-        void recheckPrayerAlertWindow(data, { force: true });
+        void loadScheduler().then((mod) => {
+          mod.invalidatePrayerNativeSchedule();
+          void mod.recheckPrayerAlertWindow(data, { force: true });
+        });
       }
     };
     const clockId = window.setInterval(onClockTick, 60_000);

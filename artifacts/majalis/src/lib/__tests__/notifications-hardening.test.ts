@@ -126,6 +126,8 @@ console.log("  ✓ channel + test trigger constants");
   assert.match(app, /NativeNotificationsBootstrap/, "App boots native notifications");
   assert.match(app, /force:\s*true/, "visibility recheck forces reschedule");
   assert.match(app, /appStateChange/, "Capacitor appStateChange resume path");
+  assert.match(app, /import\("@\/lib\/prayer-alert-scheduler"\)/, "scheduler loaded after first paint");
+  assert.doesNotMatch(app, /from ["']@\/lib\/prayer-alert-scheduler["']/, "no static scheduler on boot");
 
   const quranSrc = read("src/lib/quran-daily-reminder.ts");
   assert.match(quranSrc, /cancelNativeQuranReminder/, "cancel without flipping prefs");
