@@ -47,6 +47,7 @@ export default defineConfig({
   esbuild: {
     target: "es2022",
     legalComments: "none",
+    drop: process.env.NODE_ENV === "production" ? ["console", "debugger"] : [],
   },
   plugins: [
     {
@@ -105,7 +106,7 @@ export default defineConfig({
     target: "es2022",
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
-    sourcemap: false,
+    sourcemap: "hidden",
     cssMinify: true,
     cssCodeSplit: true,
     assetsInlineLimit: 4096,

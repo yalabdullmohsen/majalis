@@ -51,6 +51,11 @@ for (const rule of drawerIndexRules) {
 }
 
 assert.match(navBar, /drawerMounted/, "lazy mount بعد أول فتح");
+assert.match(
+  navBar,
+  /aria-controls=\{drawerMounted \? ["']main-navigation-drawer["'] : undefined\}/,
+  "aria-controls فقط بعد وجود الدرج في الشجرة",
+);
 assert.match(lockSrc, /lockedScrollY|scrollY/, "حفظ موضع التمرير");
 assert.match(lockSrc, /overflow = "hidden"/, "قفل تمرير body");
 assert.match(lockSrc, /scrollTo/, "استعادة التمرير");

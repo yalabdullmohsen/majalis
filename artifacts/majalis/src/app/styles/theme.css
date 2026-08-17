@@ -12,7 +12,7 @@
   --color-hairline: #E3E8E6;
   --color-ink: #16241E;
   --color-ink-2: #4A5A53;
-  --color-muted: #66766F;
+  --color-muted: #5E6E67;
   --color-brand: #1F7A5A;
   --color-brand-soft: #E4F0EA;
   --color-brand-deep: #123F2E;
@@ -28,6 +28,7 @@
    * --chip-fg|#0F4A36|#E4F0EA|4.5
    * --on-brand|#FFFFFF|#1F7A5A|4.5
    * --on-brand-muted|#E8F3EE|#1F7A5A|4.5
+   * --color-muted|#5E6E67|#F2F4F3|4.5
    * CONTRAST_PAIRS_END
    */
   --on-surface: #16241E;           /* على #FFFFFF 16.09:1 · على #F2F4F3 14.56:1 */
@@ -175,7 +176,7 @@
   --mj-hairline: #E3E8E6;
   --mj-ink: #16241E;
   --mj-ink-2: #4A5A53;
-  --mj-muted: #66766F;
+  --mj-muted: #5E6E67;
   --mj-brand: #1F7A5A;
   --mj-brand-soft: #E4F0EA;
   --mj-brand-deep: #123F2E;
