@@ -91,6 +91,36 @@ async function main() {
         const line =
           current?.querySelector(".mm-ayah-line") || current?.querySelector(".mm-basmala");
         const rect = frame?.getBoundingClientRect();
+        const pageEl = rootEl;
+        const familyRaw = pageEl
+          ? getComputedStyle(pageEl).getPropertyValue("--mm-qpc-family").trim()
+          : "";
+        const family = familyRaw.replace(/^["']+|["']+$/g, "");
+        const fontCheck = family
+          ? document.fonts.check(`16px "${family}"`) || document.fonts.check(`16px ${family}`)
+          : false;
+        const fontSize = line ? parseFloat(getComputedStyle(line).fontSize) : 0;
+        const pageOverflow =
+          !!pageEl && pageEl.scrollWidth > pageEl.clientWidth + 1;
+        const lineOverflow = pageEl
+          ? [...pageEl.querySelectorAll(".mm-ayah-line, .mm-basmala")].some(
+              (el) => el.scrollWidth > el.clientWidth + 1,
+            )
+          : true;
+        const ink = pageEl
+          ? [...pageEl.querySelectorAll(".mm-slot")]
+          : [];
+        let overlap = false;
+        for (const slot of ink) {
+          const kind = slot.getAttribute("data-kind");
+          if (kind !== "line") continue;
+          const slotBox = slot.getBoundingClientRect();
+          if (slotBox.height < 2) continue;
+          for (const glyph of slot.querySelectorAll(".mm-ayah-line, .mm-basmala")) {
+            const box = glyph.getBoundingClientRect();
+            if (box.bottom > slotBox.bottom + 1.5 || box.top < slotBox.top - 1.5) overlap = true;
+          }
+        }
         return {
           pageAttr: rootEl?.getAttribute("data-page"),
           slots: current?.querySelectorAll(".mm-slot").length ?? 0,
@@ -100,6 +130,11 @@ async function main() {
           frameWidth: rect?.width ?? 0,
           frameHeight: rect?.height ?? 0,
           hasPdf: !!document.querySelector("embed[type='application/pdf'], iframe[src*='.pdf']"),
+          fontCheck,
+          fontSize,
+          pageOverflow,
+          lineOverflow,
+          overlap,
         };
       });
       measurements.push({
@@ -109,7 +144,13 @@ async function main() {
           (n <= 2 ? m.slots > 0 && m.slots <= 15 : m.slots === 15) &&
           !m.hasPdf &&
           /qpc-v2-p/i.test(m.fontFamily) &&
-          String(m.pageAttr) === String(n),
+          String(m.pageAttr) === String(n) &&
+          m.fontCheck === true &&
+          m.fontSize >= 12 &&
+          m.fontSize <= 34 &&
+          m.pageOverflow === false &&
+          m.lineOverflow === false &&
+          m.overlap === false,
       });
       console.log("measured", n, measurements.at(-1).ok ? "ok" : "FAIL", m.fontFamily);
     }

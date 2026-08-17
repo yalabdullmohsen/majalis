@@ -60,7 +60,7 @@ assert.match(css, /--mm-ref-open-banner-y:\s*27\.7%/);
 assert.match(css, /--mm-ref-open-text-end:\s*74\.8%/);
 assert.doesNotMatch(css, /--mm-ref-open-p2-text-end/);
 assert.doesNotMatch(css, /\[data-page="2"\]/);
-assert.match(css, /--mm-basmala-size:\s*22px/);
+assert.match(css, /--mm-basmala-size:\s*var\(--mm-qpc-size\)/);
 assert.match(css, /opacity:\s*1/);
 assert.match(css, /border-radius:\s*20px\s+20px\s+0\s+0/);
 assert.match(css, /gap:\s*6px/);
@@ -99,8 +99,8 @@ assert.equal(hizbStarts, 60, `صفحات بداية الأحزاب: ${hizbStarts
 assert.equal(totalAyahs, 6236, `آيات: ${totalAyahs}`);
 assert.equal(totalWords, 83665, `كلمات: ${totalWords}`);
 
-const snapPages = [1, 2, 3, 4, 7, 283, 600, 603];
-assert.match(read("scripts/mushaf-madinah/visual-snapshot.mjs"), /1,\s*2,\s*3,\s*4/);
+const snapPages = [1, 2, 3, 4, 5, 7, 48, 283, 600, 603];
+assert.match(read("scripts/mushaf-madinah/visual-snapshot.mjs"), /1,\s*2,\s*3,\s*4,\s*5,\s*7,\s*48/);
 for (const n of snapPages) {
   assert.ok(existsSync(resolve(pagesDir, `page-${String(n).padStart(3, "0")}.json`)));
 }

@@ -41,8 +41,8 @@
   --mm-ayah-end: 1.12em;
   --mm-page-max-w: min(100%, 42rem);
   /* مقياس ابتدائي ≈٤٫٣٪ ارتفاع — يُضبط ببحث ثنائي 0.25px بعد fonts.ready */
-  --mm-qpc-size: clamp(1.35rem, 4.3vh, 2.25rem);
-  --mm-basmala-size: 22px;
+  --mm-qpc-size: clamp(12px, 4.3vh, 34px);
+  --mm-basmala-size: var(--mm-qpc-size);
   --mm-line-gap: 0;
   --mm-chrome: color-mix(in srgb, var(--mm-paper) 94%, #fff);
   --mm-chrome-fg: var(--mm-ink);
@@ -146,7 +146,7 @@ html.dark .mm-viewport,
   margin-block: 0;
   position: relative;
   z-index: 5; /* فوق مناطق قلب الصفحة حتى لا يسرق النقر من الآيات */
-  overflow-x: visible;
+  overflow-x: clip;
   overflow-y: hidden;
   overscroll-behavior: none;
   scrollbar-width: none;
@@ -313,7 +313,8 @@ html.dark .mm-viewport .mm-page {
   display: grid;
   grid-template-rows: repeat(15, minmax(0, 1fr));
   padding: 0;
-  overflow: visible;
+  overflow-x: clip;
+  overflow-y: clip;
   box-sizing: border-box;
 }
 
@@ -355,6 +356,7 @@ html.dark .mm-viewport .mm-page {
   align-items: center;
   justify-content: center;
   width: 100%;
+  overflow-x: clip;
 }
 
 .mm-slot__banner {
@@ -447,12 +449,13 @@ html.dark .mm-surah-ornament__name {
   font-size: var(--mm-basmala-size);
   font-weight: 700;
   color: var(--mm-ink);
-  line-height: 1.32;
+  line-height: 1.75;
   letter-spacing: 0;
   word-spacing: 0;
   margin: 0;
   padding-block: 0.04em;
-  overflow: visible;
+  overflow-x: clip;
+  overflow-y: visible;
   flex: 0 0 auto;
   box-sizing: border-box;
 }
@@ -487,7 +490,7 @@ html.dark .mm-surah-ornament__name {
   unicode-bidi: bidi-override; /* ترتيب بصري = ترتيب كلمات QPC */
   font-family: var(--mm-qpc-family), "Amiri Quran", serif;
   font-size: var(--mm-qpc-size);
-  line-height: 1.32;
+  line-height: 1.75;
   color: var(--mm-ink);
   letter-spacing: 0;
   word-spacing: 0;

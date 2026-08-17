@@ -138,6 +138,7 @@ assert.ok(existsSync(resolve(root, "src/features/mushaf-madinah/MushafBasmala.ts
 assert.match(read("src/features/mushaf-madinah/MushafBasmala.tsx"), /BASMALA_UTHMANI/);
 assert.match(read("src/features/mushaf-madinah/useMushafPageFontFit.ts"), /fitPageFontSize/);
 assert.match(read("src/features/mushaf-madinah/useMushafPageFontFit.ts"), /document\.fonts\.ready/);
+assert.match(read("src/features/mushaf-madinah/useMushafPageFontFit.ts"), /document\.fonts\.check/);
 assert.match(read("src/features/mushaf-madinah/MushafPage.tsx"), /hizbStartingOnPage/);
 
 const line = read("src/features/mushaf-madinah/MushafAyahLine.tsx");

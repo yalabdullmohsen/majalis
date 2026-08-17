@@ -30,7 +30,14 @@ if (!all.length) {
 const bad = all.filter((m) => {
   const pageNo = Number(m.page ?? m.pageAttr);
   const slotsOk = pageNo <= 2 ? m.slots > 0 && m.slots <= 15 : m.slots === 15;
-  return !m.ok || !slotsOk || m.hasPdf || !/qpc-v2-p/i.test(m.fontFamily || "");
+  const paintFail =
+    "fontCheck" in m &&
+    (m.fontCheck === false ||
+      !(m.fontSize >= 12 && m.fontSize <= 34) ||
+      m.pageOverflow ||
+      m.lineOverflow ||
+      m.overlap);
+  return !m.ok || !slotsOk || m.hasPdf || !/qpc-v2-p/i.test(m.fontFamily || "") || paintFail;
 });
 if (bad.length) {
   console.error("فشل assert:", bad.slice(0, 8));

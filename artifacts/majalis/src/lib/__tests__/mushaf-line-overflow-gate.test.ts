@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { fitPageFontSize } from "../../features/mushaf-madinah/fitPageFontSize";
+import { fitPageFontSize, MUSHAF_FIT_LINE_RATIO, MUSHAF_FIT_MAX_PX } from "../../features/mushaf-madinah/fitPageFontSize";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const pagesDir = resolve(root, "public/data/quran-v2/pages");
@@ -48,8 +48,24 @@ function measure(fontPx: number, text: string): number {
 }
 
 assert.equal(fitPageFontSize([], 300, "qpc", measure), 12);
-assert.equal(fitPageFontSize(["ا"], 300, "qpc", measure), 40);
-assert.ok(fitPageFontSize(["أ".repeat(80)], 200, "qpc", measure) < 40);
+assert.equal(fitPageFontSize(["ا"], 300, "qpc", measure), 34);
+assert.ok(fitPageFontSize(["أ".repeat(80)], 200, "qpc", measure) < 34);
+
+{
+  const tall = fitPageFontSize(["ا"], 400, "qpc", measure, { blockHeightPx: 525, lineCount: 15 });
+  assert.ok(tall <= Math.floor(525 / 15 / 1.75), `قيد الارتفاع: ${tall}`);
+  assert.ok(tall >= 12 && tall <= 34, `داخل الحدود: ${tall}`);
+}
+
+assert.match(fitFn, /mushaf-fitPageFontSize-v2/);
+assert.match(fitFn, /MUSHAF_FIT_MAX_PX = 34/);
+assert.match(fitFn, /MUSHAF_FIT_LINE_RATIO = 1.75/);
+assert.match(fitFn, /assertMushafPageFontReady/);
+assert.match(fitFn, /normalizeMushafFontFamily/);
+assert.match(fitSrc, /document\.fonts\.check/);
+assert.match(fitSrc, /loadingdone/);
+assert.match(fitSrc, /shrinkUntilFit/);
+assert.doesNotMatch(fitSrc, /opening \? 56/);
 
 let pages = 0;
 let checks = 0;
@@ -70,15 +86,25 @@ for (let n = 1; n <= 604; n++) {
   }
   const lines = [...byLine.values()].map((glyphs) => glyphs.join(""));
   assert.ok(lines.length > 0, `صفحة ${n}: بلا أسطر`);
+  const lineCount = n <= 2 ? lines.length : 15;
+  const heightRatio = n <= 2 ? 0.748 - 0.277 : 0.911 - 0.119;
 
   for (const vw of VIEWPORTS) {
     const containerPx = Math.floor(vw * INK_RATIO);
-    const size = fitPageFontSize(lines, containerPx, `qpc-page-${n}`, measure);
+    const blockHeightPx = Math.floor(844 * heightRatio);
+    const size = fitPageFontSize(lines, containerPx, `qpc-v2-p${n}`, measure, {
+      blockHeightPx,
+      lineCount,
+    });
     const widest = Math.max(...lines.map((l) => measure(size, l)));
-    // page.scrollWidth <= page.clientWidth — بعد الملاءمة أعرض سطر ≤ الحاوية
     assert.ok(
       widest <= containerPx,
       `فيض أفقي صفحة ${n} @${vw}px: widest=${widest.toFixed(2)} container=${containerPx} size=${size}`,
+    );
+    assert.ok(size <= MUSHAF_FIT_MAX_PX, `سقف الحجم صفحة ${n}: ${size}`);
+    assert.ok(
+      size * MUSHAF_FIT_LINE_RATIO * lineCount <= blockHeightPx + 1,
+      `فيض عمودي صفحة ${n}: size=${size} lines=${lineCount} block=${blockHeightPx}`,
     );
     checks += 1;
   }

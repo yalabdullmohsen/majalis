@@ -9,11 +9,15 @@ function fontFamilyName(pageNumber: number): string {
 async function waitUntilReady(pageNumber: number): Promise<void> {
   if (typeof document === "undefined" || !document.fonts) return;
   const family = fontFamilyName(pageNumber);
+  const spec = `16px "${family}"`;
   try {
-    await document.fonts.load(`1em "${family}"`);
+    await document.fonts.load(spec);
     await document.fonts.ready;
   } catch {
-    /* الخط الاحتياطي — الملاءمة تعمل بعد ذلك على المقاييس المتاحة */
+    /* يُعاد الفحص أدناه */
+  }
+  if (!document.fonts.check(spec) && !document.fonts.check(`16px ${family}`)) {
+    throw new Error(`الخط ${family} لم يُحمَّل`);
   }
 }
 
@@ -31,12 +35,16 @@ function loadFace(pageNumber: number): Promise<void> {
     .load()
     .then(async (loadedFace) => {
       document.fonts.add(loadedFace);
-      loaded.add(pageNumber);
       await waitUntilReady(pageNumber);
+      loaded.add(pageNumber);
     })
     .catch(async () => {
-      loaded.add(pageNumber);
-      await waitUntilReady(pageNumber);
+      try {
+        await waitUntilReady(pageNumber);
+        loaded.add(pageNumber);
+      } catch {
+        /* لا نعلن الجاهزية بخط احتياطي — القياس عندها ينفجر */
+      }
     });
 }
 
