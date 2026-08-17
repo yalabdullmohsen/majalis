@@ -1,5 +1,4 @@
 import type { QpcWord } from "@/lib/quran-data/qpc-page-data";
-import { MushafAyahNumber } from "./MushafAyahNumber";
 
 /** نص عثماني قياسي للبسملة الزخرفية — بلا رقم آية */
 export const BASMALA_UTHMANI = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
@@ -7,7 +6,7 @@ export const BASMALA_UTHMANI = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰ
 type Props = {
   /** كلمات QPC من صفحة الفاتحة (آية ١) — تُرسم بخط الصفحة */
   words?: QpcWord[] | null;
-  /** هل تُعرض ميدالية الرقم (الفاتحة فقط) */
+  /** هل يُعرض رقم الآية (الفاتحة فقط) — محرف الخط لا زخرفة */
   numbered?: boolean;
   selected?: boolean;
   playing?: boolean;
@@ -51,7 +50,7 @@ export function MushafBasmala({
             : undefined
         }
       >
-        <span className={`mm-ayah-run__text ${state}`.trim()}>
+            <span className={`mm-ayah-run__text ${state}`.trim()}>
           {body.map((w) => (
             <span key={w.id} className="mm-ayah-line__word">
               {w.glyphText}
@@ -59,8 +58,12 @@ export function MushafBasmala({
           ))}
         </span>
         {numbered && end ? (
-          <span className="mm-ayah-hit mm-ayah-hit--end">
-            <MushafAyahNumber word={end} />
+          <span
+            className="mm-ayah-hit mm-ayah-hit--end mm-ayah-line__word"
+            data-type="end"
+            data-key={end.verseKey}
+          >
+            {end.glyphText}
           </span>
         ) : null}
       </div>
