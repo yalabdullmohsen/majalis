@@ -92,12 +92,12 @@ function isPubliclyPublishedRuling(row) {
 }
 
 export async function loadEncyclopediaRulingsForSeo(appRoot) {
-  const manifestPath = resolve(appRoot, "public/data/rulings-encyclopedia/manifest.json");
+  const manifestPath = resolve(appRoot, "content/archive/rulings-encyclopedia/data/manifest.json");
   if (!existsSync(manifestPath)) return [];
   const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
   const out = [];
   for (const chunk of manifest.chunks || []) {
-    const file = resolve(appRoot, "public/data/rulings-encyclopedia", chunk.file);
+    const file = resolve(appRoot, "content/archive/rulings-encyclopedia/data", chunk.file);
     if (!existsSync(file)) continue;
     const rows = JSON.parse(await readFile(file, "utf8"));
     for (const row of rows) {

@@ -256,11 +256,6 @@
     <priority>0.78</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/rulings</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.87</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/updates</loc>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>

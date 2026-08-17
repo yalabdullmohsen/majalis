@@ -20,9 +20,14 @@ const { DEMO_QUIZ_QUESTIONS } = await import("../src/lib/quiz-seed.js");
 const { MIND_MAPS } = await import("../src/lib/mind-maps-data.js");
 
 const { LIBRARY_CATALOG } = await import("../src/lib/library-catalog.js");
-const rulingsManifest = JSON.parse(
-  await readFile(resolve(appRoot, "public/data/rulings-encyclopedia/manifest.json"), "utf8"),
-) as { total: number };
+const rulingsArchiveManifest = resolve(appRoot, "content/archive/rulings-encyclopedia/data/manifest.json");
+let rulingsTotal = 0;
+try {
+  const rulingsManifest = JSON.parse(await readFile(rulingsArchiveManifest, "utf8")) as { total: number };
+  rulingsTotal = 0; // أُزيلت من الواجهة العامة — العدد المؤرشف لا يُعرض
+} catch {
+  rulingsTotal = 0;
+}
 const { ANNUAL_COURSES_SEED } = await import("../src/lib/annual-courses-seed.js");
 const { MIRACLES_SEED } = await import("../src/lib/miracles-seed.js");
 const { ADHKAR_ITEMS } = await import("../src/lib/adhkar-seed.js");
@@ -37,7 +42,7 @@ const counts = {
   fawaid: SEED_FAWAID.length,
   quizQuestions: DEMO_QUIZ_QUESTIONS.length,
   mindMaps: MIND_MAPS.length,
-  rulings: rulingsManifest.total,
+  rulings: rulingsTotal,
   courses: ANNUAL_COURSES_SEED.length,
   miracles: MIRACLES_SEED.filter((m) => m.status === "approved" && m.verification_status === "verified")
     .length,

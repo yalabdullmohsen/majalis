@@ -33,8 +33,8 @@ export function hrefTeachers(slug?: string | null): string {
   return t ? `/teachers/${encodeURIComponent(decodeURIComponent(t))}` : "/teachers";
 }
 
-export function hrefRulings(id?: string | null): string {
-  return pathWithId("/rulings", id);
+export function hrefRulings(_id?: string | null): string {
+  return "/fiqh";
 }
 
 export function hrefQa(id?: string | null): string {
@@ -92,12 +92,9 @@ export function hrefQuranHub(): string {
   return "/quran-hub";
 }
 
-/** فلتر موسوعة الأحكام حسب التصنيف (لصفحات أبواب الفقه). */
-export function hrefRulingsFilter(category?: string, subcategory?: string): string {
-  if (!category) return "/rulings";
-  const q = new URLSearchParams({ category });
-  if (subcategory) q.set("subcategory", subcategory);
-  return `/rulings?${q.toString()}`;
+/** @deprecated موسوعة الأحكام أُرشفت — يُعاد التوجيه إلى بوابة الفقه */
+export function hrefRulingsFilter(_category?: string, _subcategory?: string): string {
+  return "/fiqh";
 }
 
 /** أنواع التوصيات الذكية */

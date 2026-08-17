@@ -900,11 +900,6 @@ export default function SearchPage() {
                       />
                     )} />
                   )}
-                  <Group title="الأحكام الشرعية" items={results.rulings || []} render={(r) => (
-                    <ResultRow key={r.id} href={`/rulings/${r.id}`} kind="ruling" query={q}
-                      title={displayText(r.title)} meta={r.searchMeta || r.category}
-                    />
-                  )} />
                   <Group title="الدورات العلمية" items={results.courses || []} render={(c) => (
                     <ResultRow key={c.id} href={`/annual-courses/${c.id}`} kind="course" query={q}
                       title={displayText(c.title)} meta={c.searchMeta || c.course_type}

@@ -1,41 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "wouter";
-import { BookOpen, Scale } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
 import { ShareButtons } from "@/components/ContentActions";
 import { getFiqhHubTopic } from "@/lib/fiqh-hub-topics";
-import { getRulingsEncyclopedia } from "@/lib/rulings-service";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
+import { getRulingsEncyclopedia } from "@/lib/rulings-service";
 import { RequestManager } from "@/lib/request-manager";
 import { SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
-import { hrefRulings, hrefRulingsFilter } from "@/lib/content-href";
 import "@/styles/pages/fiqh-hub.css";
 import "@/styles/pages/fiqh-guide.css";
-
-async function filterSeed(
-  category?: string,
-  subcategory?: string,
-  limit = 12,
-): Promise<ShariaRulingExtended[]> {
-  const { RULINGS_ENCYCLOPEDIA_SEED } = await import("@/lib/rulings-encyclopedia-seed.generated");
-  let rows = RULINGS_ENCYCLOPEDIA_SEED as ShariaRulingExtended[];
-  if (category) {
-    rows = rows.filter((r) => r.category === category);
-  }
-  if (subcategory) {
-    rows = rows.filter(
-      (r) =>
-        r.subcategory === subcategory ||
-        (Array.isArray(r.subcategories) && r.subcategories.includes(subcategory)) ||
-        (Array.isArray(r.keywords) && r.keywords.includes(subcategory)),
-    );
-  }
-  return rows.slice(0, limit);
-}
 
 export default function FiqhTopicPage() {
   const params = useParams<{ topicId: string }>();
@@ -79,26 +56,19 @@ export default function FiqhTopicPage() {
         }),
       { timeoutMs: 15_000 },
     )
-      .then(async (result) => {
+      .then((result) => {
         if (cancelled) return;
-        if (result.data.length > 0) {
-          setItems(result.data);
-          setError(null);
-          return;
-        }
-        const seed = await filterSeed(topic.rulingsCategory, topic.rulingsSubcategory);
-        if (cancelled) return;
-        setItems(seed);
-        if (result.dbError && result.dbError !== "empty" && seed.length === 0) {
+        setItems(result.data);
+        if (result.dbError && result.dbError !== "empty" && result.data.length === 0) {
           setError(result.dbError);
+        } else {
+          setError(null);
         }
       })
-      .catch(async (err) => {
+      .catch((err) => {
         if (cancelled) return;
-        const seed = await filterSeed(topic.rulingsCategory, topic.rulingsSubcategory);
-        if (cancelled) return;
-        setItems(seed);
-        if (seed.length === 0) setError(String((err as Error)?.message || err));
+        setItems([]);
+        setError(String((err as Error)?.message || err));
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -149,20 +119,9 @@ export default function FiqhTopicPage() {
       )}
 
       <section aria-labelledby="fiqh-topic-rulings-heading" className="fqh-topic-rulings">
-        <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
-          <h2 id="fiqh-topic-rulings-heading" className="fqp-section-title">
-            <Scale size={18} aria-hidden="true" />
-            مسائل من هذا الباب
-          </h2>
-          {topic.rulingsCategory && (
-            <Link
-              href={hrefRulingsFilter(topic.rulingsCategory, topic.rulingsSubcategory)}
-              className="fqp-see-all"
-            >
-              فتح الفلتر في الموسوعة ←
-            </Link>
-          )}
-        </div>
+        <h2 id="fiqh-topic-rulings-heading" className="fqp-section-title mb-4">
+          مسائل من هذا الباب
+        </h2>
 
         {loading && <SkeletonCardGrid count={6} />}
         {!loading && error && items.length === 0 && (
@@ -171,21 +130,18 @@ export default function FiqhTopicPage() {
         {!loading && !error && items.length === 0 && (
           <Empty
             title="لا مسائل معروضة حاليًا"
-            text="يمكنك الرجوع إلى بوابة الفقه أو فتح موسوعة الأحكام من الرابط أعلاه."
+            text="راجع الأدلة المرتبطة أعلاه أو بوابة الفقه وقرارات المجمع الفقهي."
           />
         )}
         {!loading && items.length > 0 && (
           <div className="fqh-hub-grid">
             {items.map((item) => (
-              <Link key={item.id} href={hrefRulings(item.id)} className="fqh-hub-card fqh-topic-ruling-card">
-                <span className="fqh-hub-card__emoji" aria-hidden="true">
-                  <BookOpen size={22} />
-                </span>
+              <div key={item.id} className="fqh-hub-card fqh-topic-ruling-card">
                 <p className="fqh-hub-card__title">{item.title}</p>
                 <p className="fqh-hub-card__desc">
                   {item.summary || item.body?.slice(0, 140) || item.category}
                 </p>
-              </Link>
+              </div>
             ))}
           </div>
         )}

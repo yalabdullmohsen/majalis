@@ -1,11 +1,9 @@
 /**
  * بطاقات بوابة «الفقه والأحكام» — مصدر واحد للحقيقة.
  *
- * سياسة المسارات (2026-07-27):
- * - كل بطاقة لها `id` فريد ومسار `href` واضح لا يضيع الهوية.
- * - بطاقة «الأحكام الشرعية» وحدها تشير إلى موسوعة `/rulings`.
- * - أي باب فقهي آخر كان يُرمى إلى `/rulings?category=…` يحصل على مسار
- *   مستقل `/fiqh/topics/:id` حتى لا يُفتح غلاف الموسوعة بدل صفحة الباب.
+ * سياسة المسارات (2026-08-17):
+ * - أُزيلت بطاقة موسوعة الأحكام `/rulings` (محتوى pending_review فقط).
+ * - كل باب فقهي له مسار مستقل `/fiqh/topics/:id` أو دليل مخصص.
  */
 
 export type FiqhHubTopicKind =
@@ -31,8 +29,8 @@ export type FiqhHubTopic = {
   relatedGuides?: { href: string; label: string }[];
 };
 
-/** المسار الوحيد المسموح للموسوعة العامة من شبكة البطاقات */
-export const FIQH_ENCYCLOPEDIA_HREF = "/rulings";
+/** @deprecated موسوعة الأحكام أُرشفت — إعادة التوجيه إلى بوابة الفقه */
+export const FIQH_ENCYCLOPEDIA_HREF = "/fiqh";
 
 export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   {
@@ -207,15 +205,6 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     kind: "council",
   },
   {
-    id: "rulings-encyclopedia",
-    emoji: "📋",
-    title: "الأحكام الشرعية",
-    desc: "موسوعة الأحكام الشرعية: مسائل فقهية مع إحالات ومصادر يجري استكمال توثيقها.",
-    href: FIQH_ENCYCLOPEDIA_HREF,
-    color: "var(--mj-brand)",
-    kind: "encyclopedia",
-  },
-  {
     id: "muamalat",
     emoji: "🤝",
     title: "المعاملات",
@@ -311,7 +300,6 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     rulingsCategory: "القضاء والحدود",
     relatedGuides: [
       { href: "/fiqh-council", label: "المجمع الفقهي" },
-      { href: "/rulings", label: "موسوعة الأحكام" },
     ],
   },
   {
@@ -326,7 +314,6 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     relatedGuides: [
       { href: "/fiqh-council", label: "المجمع الفقهي" },
       { href: "/fiqh-council/nawazil", label: "النوازل" },
-      { href: "/rulings", label: "موسوعة الأحكام" },
     ],
   },
   {
@@ -382,27 +369,28 @@ export function getFiqhHubTopic(id: string): FiqhHubTopic | undefined {
   return FIQH_HUB_TOPICS.find((t) => t.id === id);
 }
 
-/** هل المسار يشير إلى موسوعة الأحكام العامة (بما فيها فلاتر الفئة)؟ */
+/** هل المسار يشير إلى موسوعة الأحكام المؤرشفة؟ (للتوافق مع الروابط القديمة) */
 export function isRulingsEncyclopediaHref(href: string): boolean {
   return href === "/rulings" || href.startsWith("/rulings?") || href.startsWith("/rulings/");
 }
 
 /**
- * البطاقات المسموح لها بالإشارة إلى موسوعة الأحكام فقط:
- * - بطاقة الموسوعة نفسها → `/rulings`
- * - روابط «موسوعة الأحكام» داخل relatedGuides في صفحات المواضيع (ليست بطاقات شبكة)
+ * البطاقات لا يجوز أن تشير إلى /rulings — الموسوعة أُزيلت من الواجهة العامة.
  */
 export function assertFiqhHubCardHrefsSafe(topics: FiqhHubTopic[] = FIQH_HUB_TOPICS): string[] {
   const violations: string[] = [];
   for (const t of topics) {
     if (t.kind === "encyclopedia") {
-      if (t.href !== FIQH_ENCYCLOPEDIA_HREF) {
-        violations.push(`${t.id}: encyclopedia must be exactly ${FIQH_ENCYCLOPEDIA_HREF}`);
-      }
+      violations.push(`${t.id}: encyclopedia cards removed from hub`);
       continue;
     }
     if (isRulingsEncyclopediaHref(t.href)) {
-      violations.push(`${t.id} («${t.title}») يوجّه إلى موسوعة الأحكام بالخطأ: ${t.href}`);
+      violations.push(`${t.id} («${t.title}») يوجّه إلى موسوعة الأحكام المؤرشفة: ${t.href}`);
+    }
+    for (const g of t.relatedGuides ?? []) {
+      if (isRulingsEncyclopediaHref(g.href)) {
+        violations.push(`${t.id}: relatedGuide «${g.label}» → ${g.href}`);
+      }
     }
   }
   return violations;

@@ -214,8 +214,6 @@ const FiqhCouncilItemDetailPage = lazy(() => import("@/views/FiqhCouncilItemDeta
 const FiqhPage = lazy(() => import("@/pages/fiqh/FiqhPage"));
 const FiqhTopicPage = lazy(() => import("@/pages/fiqh/FiqhTopicPage"));
 const SeerahPage = lazy(() => import("@/views/SeerahPage"));
-const RulingsPage = lazy(() => import("@/pages/fiqh/RulingsPage"));
-const RulingDetailPage = lazy(() => import("@/pages/fiqh/RulingDetailPage"));
 const UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
 const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage"));
 const KnowledgeGraphPage = lazy(() => import("@/views/KnowledgeGraphPage"));
@@ -888,12 +886,10 @@ function Router() {
       <Route path="/fiqh-council/archive"><SafeLazyRoute component={FiqhCouncilArchivePage} /></Route>
       <Route path="/fiqh-council/:slug"><SafeLazyRoute component={FiqhCouncilItemDetailPage} /></Route>
       <Route path="/fiqh-council"><SafeLazyRoute component={FiqhCouncilPage} /></Route>
-      <Route path="/fatwa/:id">
-        {(params) => <Redirect to={`/rulings/${params.id}`} />}
-      </Route>
+      <Route path="/fatwa/:id"><Redirect to="/fiqh" /></Route>
       <Route path="/fatwa"><Redirect to="/fiqh" /></Route>
-      <Route path="/rulings/:id"><SafeLazyRoute component={RulingDetailPage} /></Route>
-      <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
+      <Route path="/rulings/:id"><Redirect to="/fiqh" /></Route>
+      <Route path="/rulings"><Redirect to="/fiqh" /></Route>
       <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>
       <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
       <Route path="/sections"><SafeLazyRoute component={SectionsPage} /></Route>

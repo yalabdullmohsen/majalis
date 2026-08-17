@@ -114,9 +114,9 @@ function routeForPath(path: string) {
 
   if (normalized.startsWith("/rulings/")) {
     return {
-      ...requiredRoute("/rulings"),
-      title: "حكم شرعي | المجلس العلمي",
-      description: "تفاصيل حكم شرعي مع الأدلة والمراجع.",
+      ...requiredRoute("/fiqh"),
+      title: "الفقه الإسلامي | المجلس العلمي",
+      description: "بوابة الفقه: قواعد فقهية، مذاهب، نوازل، قرارات المجامع، وأحكام العبادات.",
     };
   }
 

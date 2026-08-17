@@ -13,7 +13,7 @@
   "functions": {
     "api/index.js": {
       "maxDuration": 60,
-      "includeFiles": "{lib/**,supabase/**,data/**,src/data/universities-catalog.json,public/data/rulings-encyclopedia/**,dist/index.html}"
+      "includeFiles": "{lib/**,supabase/**,data/**,src/data/universities-catalog.json,dist/index.html}"
     }
   },
   "crons": [
@@ -876,11 +876,21 @@
     },
     {
       "source": "/fatwa/:id",
-      "destination": "/rulings/:id",
+      "destination": "/fiqh",
       "permanent": true
     },
     {
       "source": "/fatwa",
+      "destination": "/fiqh",
+      "permanent": true
+    },
+    {
+      "source": "/rulings/:path*",
+      "destination": "/fiqh",
+      "permanent": true
+    },
+    {
+      "source": "/rulings",
       "destination": "/fiqh",
       "permanent": true
     },

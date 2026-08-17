@@ -19,7 +19,7 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const APP_ROOT = resolve(HERE, "..");
-const DATA_DIR = resolve(APP_ROOT, "public/data/rulings-encyclopedia");
+const DATA_DIR = resolve(APP_ROOT, "content/archive/rulings-encyclopedia/data");
 
 function esc(s) {
   if (s === undefined || s === null) return "NULL";
