@@ -229,7 +229,6 @@ export default function LessonsPage({
   const debouncedSearch = useDebouncedValue(searchDraft, 250);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [tab, setTab] = useTabFromUrl();
-  const [, setLocation] = useLocation();
   const { isAdmin } = useAuth();
 
   useEffect(() => {
