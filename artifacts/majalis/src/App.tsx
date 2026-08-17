@@ -999,7 +999,7 @@ function AppShellInner() {
   const [location] = useLocation();
   const immersive = isImmersiveChromePath(location);
   const onPrayer = isPrayerTimesPath(location);
-  const hideSiteChrome = immersive || onPrayer;
+  const hideSiteChrome = immersive;
   const { isHidden: shouldHideChrome } = useAutoHideBottomNav({
     forceShow: searchOpen || comingSoonOpen || hideSiteChrome,
     routeKey: location,
@@ -1063,7 +1063,7 @@ function AppShellInner() {
       <NavBar />
       <TopSectionBar />
       {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
-      {!hideSiteChrome && <PrayerCountdownBanner />}
+      {!hideSiteChrome && !onPrayer && <PrayerCountdownBanner />}
       {!hideSiteChrome && <AdhanNotificationBar />}
       {!hideSiteChrome && (
         <SectionErrorBoundary name="AdhanActiveOverlay">

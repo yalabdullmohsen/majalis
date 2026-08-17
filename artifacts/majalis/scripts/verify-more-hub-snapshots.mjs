@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * بوابة ثابتة: وجود لقطات /sections و /quran-hub المرجعية (نهاري/ليلي).
+ * بوابة ثابتة: وجود لقطات اللوبيات الخمسة + أرقام القرآن (نهاري/ليلي).
  * التشغيل: node scripts/verify-more-hub-snapshots.mjs
  */
 import fs from "node:fs";
@@ -22,6 +22,18 @@ const checks = [
   {
     dir: path.join(root, "tests/snapshots/quran-qiraat"),
     needed: ["quran-qiraat-light.png", "quran-qiraat-dark.png"],
+  },
+  {
+    dir: path.join(root, "tests/snapshots/lessons-lobby"),
+    needed: ["lessons-lobby-light.png", "lessons-lobby-dark.png"],
+  },
+  {
+    dir: path.join(root, "tests/snapshots/prayer-lobby"),
+    needed: ["prayer-lobby-light.png", "prayer-lobby-dark.png"],
+  },
+  {
+    dir: path.join(root, "tests/snapshots/fiqh-lobby"),
+    needed: ["fiqh-lobby-light.png", "fiqh-lobby-dark.png"],
   },
 ];
 

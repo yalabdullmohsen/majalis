@@ -1,11 +1,9 @@
 /**
- * صفحة /sections — الأقسام صفحة كاملة (لا شيت سفلي).
+ * صفحة /sections — لوبي موحّد بلا لافتة وبلا بحث محلي.
  */
 import { useEffect } from "react";
 import { applyPageSeo } from "@/lib/seo";
-import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
 import { MoreHubFromRegistry } from "@/features/more/MoreHubFromRegistry";
-import "@/styles/pages/more-page.css";
 import "@/components/sections/section-cards.css";
 
 export default function SectionsPage() {
@@ -18,9 +16,5 @@ export default function SectionsPage() {
     });
   }, []);
 
-  return (
-    <ContentHubLayout title="الأقسام" className="more-page sections-page">
-      <MoreHubFromRegistry showSearch />
-    </ContentHubLayout>
-  );
+  return <MoreHubFromRegistry />;
 }

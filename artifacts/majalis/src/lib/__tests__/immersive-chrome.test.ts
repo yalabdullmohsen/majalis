@@ -65,8 +65,7 @@ assert.match(navMap, /bottomNavSections/);
 assert.match(readFileSync(resolve(appRoot, "src/config/sections.registry.ts"), "utf8"), /route: "\/quran-hub"/);
 
 const navBar = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf8");
-assert.match(navBar, /isImmersiveChromePath\(location\) \|\| isPrayerTimesPath\(location\)\) return null/);
-assert.match(navBar, /isPrayerTimesPath/);
+assert.match(navBar, /isImmersiveChromePath\(location\)\) return null/);
 
 const prayerRanks = readFileSync(resolve(appRoot, "src/pages/worship/ui/PrayerRanksView.tsx"), "utf8");
 assert.equal(prayerRanks.includes("SectionQuiz"), false, "مراتب الصلاة بلا SectionQuiz");

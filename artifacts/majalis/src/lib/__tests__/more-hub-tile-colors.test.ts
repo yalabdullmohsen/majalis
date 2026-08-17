@@ -17,10 +17,10 @@ const css = readFileSync(resolve(root, "src/components/sections/section-cards.cs
 const tokens = readFileSync(resolve(root, "src/styles/tokens.css"), "utf8");
 const bottom = readFileSync(resolve(root, "src/components/BottomNavBar.tsx"), "utf8");
 
-assert.match(hub, /FeaturedSectionsGrid/);
-assert.match(hub, /SectionsCardGrid/);
-assert.match(hub, /SECTION_GROUP_ORDER/);
+assert.match(hub, /SectionLobby/);
 assert.match(featured, /card--featured/);
+assert.doesNotMatch(hub, /card--featured/);
+assert.doesNotMatch(hub, /FeaturedSectionsGrid/);
 assert.doesNotMatch(featured, /text-white/);
 assert.match(css, /\.card--featured\s*\{|button\.card--featured/);
 assert.match(css, /background-color:\s*#1f7a5a/);

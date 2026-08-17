@@ -7,12 +7,8 @@
 /* عند فتح صفحة المواقيت (NavBar مخفي): لوّن منطقة safe-area على html/body
    بنفس الزمرد حتى لا يظهر شريط أبيض فوق الشاشة الخضراء. */
 html.pts-immersive,
-html.pts-immersive body,
-html.pts-immersive #root,
-html.pts-immersive .app-shell,
-html.pts-immersive .app-main,
-html.pts-immersive .majlisilm-app {
-  /* يوحَّد مع أسفل تدرّج .pts-screen — #root كان --app-bg (#F2F4F3) فيكشف شريطاً فاتحاً */
+html.pts-immersive body {
+  /* يوحَّد مع أسفل تدرّج .pts-screen ويهزم m2030 em-950 إن اختلف */
   background-color: var(--em-950, var(--mj-brand-deep, #081A16)) !important;
   background-image: none !important;
 }
@@ -108,7 +104,6 @@ html.pts-immersive .bottom-nav {
   --pts-row-active: color-mix(in srgb, #D2B063 22%, rgba(20, 70, 55, 0.55));
 
   direction: rtl;
-  min-height: 100svh;
   min-height: 100dvh;
   width: 100%;
   max-width: none;
@@ -242,6 +237,50 @@ html.pts-immersive .bottom-nav {
   opacity: 0.92;
   background: var(--pts-gold-soft);
 }
+.pts-lobby-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  color: var(--on-surface, var(--mj-ink, #16241e));
+}
+.pts-lobby-body .pts-dates {
+  color: var(--on-surface-muted, var(--mj-ink-2, #4a5a53));
+}
+.pts-lobby-body .pts-dates__sep {
+  opacity: 1;
+  color: var(--on-surface-muted, var(--mj-ink-2, #4a5a53));
+}
+.pts-lobby-body .pts-location {
+  color: var(--brand-on-white, var(--mj-brand-deep, #123f2e));
+  border-color: var(--mj-hairline, #e3e8e6);
+  background: var(--mj-surface, #fff);
+}
+.pts-lobby-body .pts-method__label {
+  color: var(--on-surface-muted, var(--mj-ink-2, #4a5a53));
+}
+.pts-lobby-body .pts-method__select {
+  color: var(--on-surface, var(--mj-ink, #16241e));
+  background: var(--mj-surface, #fff);
+  border-color: var(--mj-hairline, #e3e8e6);
+}
+.pts-lobby-body .pts-row,
+.pts-lobby-body .pts-row__name,
+.pts-lobby-body .pts-row__time {
+  color: var(--on-surface, var(--mj-ink, #16241e));
+}
+.pts-lobby-body .pts-row {
+  background: var(--mj-surface, #fff);
+  border-color: var(--mj-hairline, #e3e8e6);
+}
+.pts-lobby-body .pts-row__status {
+  color: var(--on-surface-muted, var(--mj-ink-2, #4a5a53));
+}
+.pts-lobby-body .pts-row--next .pts-row__name,
+.pts-lobby-body .pts-row--next .pts-row__status,
+.pts-lobby-body .pts-row--next .pts-row__time {
+  color: var(--brand-on-white, var(--mj-brand-deep, #123f2e));
+}
 .pts-dates {
   display: flex;
   flex-wrap: wrap;
@@ -251,7 +290,7 @@ html.pts-immersive .bottom-nav {
   font-family: var(--font-face, var(--font-body), "Amiri", serif);
   font-size: 0.84rem;
   font-weight: 600;
-  color: #D5E0DA;
+  color: var(--on-surface-muted, var(--mj-ink-2, #4a5a53));
   line-height: 1.35;
 }
 .pts-dates__sep { opacity: 0.55; color: var(--pts-gold); }
@@ -590,10 +629,11 @@ html.pts-immersive .bottom-nav {
 }
 .pts-more > summary::-webkit-details-marker { display: none; }
 .pts-sheet-close {
-  /* في تدفق العمود لا sticky — الحشو السفلي لـ .pts-screen يطلي الفجوة حتى الشريط */
-  margin-block-start: auto;
-  padding: 0.75rem 0 0;
-  background-color: var(--pts-bg-0, #081A16);
+  position: sticky;
+  bottom: 0;
+  padding: 0.75rem 1rem calc(0.75rem + var(--inset-bottom));
+  background: linear-gradient(to top, var(--pts-bg, #0E241E) 70%, transparent);
+  margin-block-start: 0.5rem;
 }
 .pts-sheet-close__btn {
   width: 100%;
@@ -637,7 +677,7 @@ html.pts-immersive .bottom-nav {
   color: var(--pts-white) !important;
 }
 .pts-screen .pts-dates {
-  color: #D5E0DA !important;
+  color: var(--on-brand-muted, #e8f3ee) !important;
 }
 .pts-screen .pts-hero__label,
 .pts-screen .pts-hero__hint,

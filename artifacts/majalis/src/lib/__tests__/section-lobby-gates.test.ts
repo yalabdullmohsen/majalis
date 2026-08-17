@@ -14,7 +14,9 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 const PAGES = [
   ["quran", "src/pages/quran/ui/QuranHubView.tsx"],
   ["lessons", "src/pages/lessons/ui/LessonsView.tsx"],
+  ["prayer", "src/pages/worship/ui/PrayerTimesView.tsx"],
   ["fiqh", "src/pages/fiqh/ui/FiqhView.tsx"],
+  ["sections", "src/pages/account/SectionsPage.tsx"],
 ] as const;
 
 console.log("=== SectionLobby على جذور التبويبات ===");
@@ -30,6 +32,11 @@ for (const [id, rel] of PAGES) {
   assert.doesNotMatch(src, /type=["']search["']/, `${id}: بلا حقل بحث محلي`);
   assert.doesNotMatch(src, /ابحث في الأقسام/, `${id}: بلا بحث أقسام مكرر`);
 }
+
+const more = read("src/features/more/MoreHubFromRegistry.tsx");
+assert.match(more, /SectionLobby/);
+assert.match(more, /getLobby\("sections"\)/);
+assert.doesNotMatch(more, /sections-hub__search/);
 
 const merged = read("src/views/MergedSectionHubPage.tsx");
 assert.match(merged, /SectionLobby/);
