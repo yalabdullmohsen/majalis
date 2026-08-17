@@ -46,7 +46,7 @@ assert.doesNotMatch(css, /--mm-ref-open-p2-text-end/);
 assert.doesNotMatch(css, /\.mm-page--opening\[data-page="2"\]/);
 
 assert.match(css, /\.mm-ayah-bar\s*\{[^}]*z-index:\s*9999/);
-assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*rgba\(0,\s*0,\s*0,\s*0\.45\)/);
+assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*rgba\(0,\s*0,\s*0,\s*0\.40\)/);
 assert.doesNotMatch(css, /backdrop-filter:\s*blur\(/);
 assert.match(css, /height:\s*120px/);
 assert.match(css, /height:\s*50dvh/);

@@ -632,9 +632,6 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           onSpeed={(rate) => {
             audio.setPlaybackRate(rate);
           }}
-          onTafsir={() => {
-            setTafsirOpen(true);
-          }}
           onCopy={() => void onCopy()}
           onShare={() => void onShare()}
           onBookmark={() => void onBookmark()}

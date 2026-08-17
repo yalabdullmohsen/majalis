@@ -10,7 +10,6 @@ import {
   Share2,
   SkipBack,
   SkipForward,
-  Sparkles,
   X,
 } from "lucide-react";
 import { createPortal } from "react-dom";
@@ -28,7 +27,7 @@ import { MUSHAF_RECITER_IDS } from "./MushafAudioDock";
 import { parseVerseKey, type RecitationRange } from "./mushaf-page-for-ayah";
 
 type SheetHeight = "collapsed" | "half" | "full";
-type SheetTab = "tafsir" | "tilawa" | "meanings" | "tajweed";
+type SheetTab = "tafsir" | "tilawa" | "meanings";
 
 type Props = {
   verseKey: string;
@@ -48,7 +47,6 @@ type Props = {
   onPlayRange: (range: RecitationRange, repeatCount: number) => void;
   onSeek: (seconds: number) => void;
   onSpeed: (rate: number) => void;
-  onTafsir: () => void;
   onCopy: () => void;
   onShare: () => void;
   onBookmark: () => void;
@@ -65,7 +63,7 @@ const HEIGHT_ATTR: Record<SheetHeight, string> = {
 /**
  * شيت آية معزول (portal + z-index 9999):
  * مطوي ≈١٢٠px · نصف ≈٥٠dvh · كامل ≈٩٠dvh.
- * تبويبات: تفسير · تلاوة · معاني · تجويد.
+ * تبويبات: تفسير · تلاوة · معاني الكلمات.
  */
 export function AyahActionSheet({
   verseKey,
@@ -85,7 +83,6 @@ export function AyahActionSheet({
   onPlayRange,
   onSeek,
   onSpeed,
-  onTafsir,
   onCopy,
   onShare,
   onBookmark,
@@ -120,7 +117,6 @@ export function AyahActionSheet({
   const edition = MUSHAF_TAFSIR_EDITIONS.find((e) => e.id === editionId) ?? MUSHAF_TAFSIR_EDITIONS[0]!;
   const expanded = height !== "collapsed";
   const meaningsOn = QURAN_DATA_FEATURES.ayahMeaningsTab;
-  const tajweedOn = QURAN_DATA_FEATURES.ayahTajweedTab;
 
   useEffect(() => {
     setHeight("collapsed");
@@ -233,13 +229,14 @@ export function AyahActionSheet({
       >
         <button
           type="button"
-          className="mm-ayah-bar__dismiss"
+          className="mm-ayah-bar__dismiss ayah-sheet__scrim"
           aria-label="إغلاق شريط الآية"
+          hidden={readersOpen}
           onClick={onClose}
         />
         <div
           ref={panelRef}
-          className="mm-ayah-bar__panel"
+          className="mm-ayah-bar__panel ayah-sheet"
           onPointerDown={(e) => {
             if ((e.target as HTMLElement).closest("button, input, select, a, textarea")) {
               dragY.current = null;
@@ -273,9 +270,9 @@ export function AyahActionSheet({
               type="button"
               className="mm-ayah-bar__close"
               onClick={onClose}
-              aria-label="إغلاق"
             >
               <X size={18} aria-hidden="true" />
+              <span>إغلاق</span>
             </button>
           </div>
 
@@ -313,18 +310,7 @@ export function AyahActionSheet({
               onClick={() => meaningsOn && selectTab("meanings")}
             >
               <Languages size={18} aria-hidden="true" />
-              <span>معاني</span>
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={tab === "tajweed"}
-              aria-disabled={!tajweedOn}
-              disabled={!tajweedOn}
-              onClick={() => tajweedOn && selectTab("tajweed")}
-            >
-              <Sparkles size={18} aria-hidden="true" />
-              <span>تجويد</span>
+              <span>معاني الكلمات</span>
             </button>
           </div>
 
@@ -350,7 +336,6 @@ export function AyahActionSheet({
                       ))}
                     </select>
                   </label>
-                  <p className="ayah-action-sheet__tafsir-source">{edition.label}</p>
                 </div>
                 {tafsirLoading ? (
                   <p className="mm-ayah-bar__status">جاري تحميل التفسير…</p>
@@ -361,6 +346,7 @@ export function AyahActionSheet({
                 ) : (
                   <p className="mm-ayah-bar__status">لا يتوفر تفسير حالياً.</p>
                 )}
+                <p className="ayah-action-sheet__tafsir-source">{edition.label}</p>
                 {expanded ? (
                   <div className="ayah-action-sheet__tafsir-actions" role="group" aria-label="إجراءات الآية">
                     <button type="button" onClick={onCopy}>
@@ -374,10 +360,6 @@ export function AyahActionSheet({
                     <button type="button" onClick={onBookmark}>
                       <Bookmark size={18} aria-hidden="true" />
                       <span>إشارة</span>
-                    </button>
-                    <button type="button" onClick={onTafsir}>
-                      <BookOpen size={18} aria-hidden="true" />
-                      <span>موسّع</span>
                     </button>
                   </div>
                 ) : null}
@@ -462,37 +444,33 @@ export function AyahActionSheet({
                 >
                   تشغيل النطاق
                 </button>
-                <div className="mm-ayah-bar__transport" role="group" aria-label="تنقل الآيات">
-                  <button
-                    type="button"
-                    className="mm-ayah-bar__skip"
-                    onClick={() => onPrevAyah?.()}
-                    aria-label="الآية السابقة"
-                    disabled={!onPrevAyah}
-                  >
-                    <SkipBack size={18} aria-hidden="true" />
-                    <span>السابقة</span>
-                  </button>
-                  <button
-                    type="button"
-                    className="mm-ayah-bar__skip"
-                    onClick={() => onNextAyah?.()}
-                    aria-label="الآية التالية"
-                    disabled={!onNextAyah}
-                  >
-                    <SkipForward size={18} aria-hidden="true" />
-                    <span>التالية</span>
-                  </button>
-                </div>
               </div>
             ) : null}
 
             {tab === "meanings" ? (
               <p className="mm-ayah-bar__status">معاني المفردات غير متاحة حتى يُعتمد مصدر موثّق.</p>
             ) : null}
-            {tab === "tajweed" ? (
-              <p className="mm-ayah-bar__status">أحكام التجويد غير متاحة حتى يُعتمد مصدر موثّق.</p>
-            ) : null}
+          </div>
+
+          <div className="mm-ayah-bar__transport ayah-sheet__nav" role="group" aria-label="تنقل الآيات">
+            <button
+              type="button"
+              className="mm-ayah-bar__skip"
+              onClick={() => onPrevAyah?.()}
+              disabled={!onPrevAyah}
+            >
+              <SkipBack size={18} aria-hidden="true" />
+              <span>الآية السابقة</span>
+            </button>
+            <button
+              type="button"
+              className="mm-ayah-bar__skip"
+              onClick={() => onNextAyah?.()}
+              disabled={!onNextAyah}
+            >
+              <SkipForward size={18} aria-hidden="true" />
+              <span>الآية التالية</span>
+            </button>
           </div>
 
           {audioStatus && !audioError && playerState !== "error" ? (
@@ -519,7 +497,7 @@ export function AyahActionSheet({
             <div className="mm-reciter-sheet" role="dialog" aria-modal="true" aria-label="اختيار القارئ">
               <button
                 type="button"
-                className="mm-reciter-sheet__scrim"
+                className="mm-reciter-sheet__scrim ayah-sheet__scrim"
                 aria-label="إغلاق قائمة القراء"
                 onClick={() => setReadersOpen(false)}
               />
@@ -530,9 +508,9 @@ export function AyahActionSheet({
                     type="button"
                     className="mm-ayah-bar__close"
                     onClick={() => setReadersOpen(false)}
-                    aria-label="إغلاق"
                   >
                     <X size={18} aria-hidden="true" />
+                    <span>إغلاق</span>
                   </button>
                 </div>
                 <label className="mm-reciter-sheet__search">

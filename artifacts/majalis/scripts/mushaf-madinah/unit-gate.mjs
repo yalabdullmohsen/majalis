@@ -42,7 +42,7 @@ assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
 assert.match(css, /\.mm-page-edge/);
 assert.match(css, /#152018|#101812|#0e1410|#1c2430|#151c26|#101820|#0f1720|#0c1218/);
 assert.match(css, /\.mm-ayah-run__text\.is-selected/);
-assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*rgba\(0,\s*0,\s*0,\s*0\.45\)/);
+assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*rgba\(0,\s*0,\s*0,\s*0\.40\)/);
 assert.match(css, /\.mm-viewport\s+\.mm-page\s*\{[^}]*box-shadow:\s*none/);
 assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-basmala-size\)/);
 assert.match(css, /\.mm-reciter-sheet/);
