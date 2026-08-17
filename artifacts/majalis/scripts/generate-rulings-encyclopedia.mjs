@@ -11,7 +11,8 @@ import { CONTENT_CURRICULUM_ENABLED } from "../lib/content-flags.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
-const OUT_DIR = path.resolve(ROOT, "public/data/rulings-encyclopedia");
+const OUT_DIR = path.resolve(ROOT, "content/archive/rulings-encyclopedia/data");
+const SEED_ARCHIVE = path.resolve(ROOT, "content/archive/rulings-encyclopedia/seeds");
 const CHUNKS_DIR = path.resolve(OUT_DIR, "chunks");
 
 // طابع وقت ثابت للسجلات التي لا يحمل مصدرها أي تاريخ. ثابت مقصود (لا new Date())
@@ -360,7 +361,7 @@ function fromFawaidSeed() {
 }
 
 function fromRulingsSeed() {
-  const items = parseSeedArray(path.resolve(ROOT, "src/lib/rulings-seed.ts"), "RULINGS_SEED");
+  const items = parseSeedArray(path.resolve(SEED_ARCHIVE, "rulings-seed.ts"), "RULINGS_SEED");
   const out = [];
   for (const r of items) {
     const base = makeRuling({
@@ -507,10 +508,13 @@ function main() {
       return rulingKey(a).localeCompare(rulingKey(b), "en");
     })
     .slice(0, 200);
-  const seedOut = path.resolve(ROOT, "src/lib/rulings-encyclopedia-seed.generated.ts");
+  const seedOut = path.resolve(SEED_ARCHIVE, "rulings-encyclopedia-seed.generated.ts");
+  const stubOut = path.resolve(ROOT, "src/lib/rulings-encyclopedia-seed.generated.ts");
+  const seedBody = `// AUTO-GENERATED — run: pnpm --filter @workspace/majalis run generate:rulings\n// حوكمة: كل سجل هنا "pending_review" ما لم يحمل reviewed_by + reviewed_at + مصدرًا خارجيًا.\n/* eslint-disable */\nimport type { ShariaRulingExtended } from "../../../src/lib/rulings-types";\n\nexport const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = ${JSON.stringify(top, null, 2)} as unknown as ShariaRulingExtended[];\n\nexport const RULINGS_ENCYCLOPEDIA_TOTAL = ${all.length};\n`;
+  fs.writeFileSync(seedOut, seedBody);
   fs.writeFileSync(
-    seedOut,
-    `// AUTO-GENERATED — run: pnpm --filter @workspace/majalis run generate:rulings\n// حوكمة: كل سجل هنا "pending_review" ما لم يحمل reviewed_by + reviewed_at + مصدرًا خارجيًا.\n/* eslint-disable */\nimport type { ShariaRulingExtended } from "./rulings-types";\n\nexport const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = ${JSON.stringify(top, null, 2)} as unknown as ShariaRulingExtended[];\n\nexport const RULINGS_ENCYCLOPEDIA_TOTAL = ${all.length};\n`,
+    stubOut,
+    `// ARCHIVED — البيانات في content/archive/rulings-encyclopedia/seeds/\n/* eslint-disable */\nimport type { ShariaRulingExtended } from "./rulings-types";\n\nexport const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [];\n\nexport const RULINGS_ENCYCLOPEDIA_TOTAL = ${all.length};\n`,
   );
 
   console.log(`Generated ${all.length} rulings in ${manifest.chunks.length} chunks`);

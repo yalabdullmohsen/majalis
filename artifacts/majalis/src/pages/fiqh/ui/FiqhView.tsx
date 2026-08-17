@@ -1,34 +1,20 @@
 import { useEffect, useState } from "react";
-import { Banknote, BookOpen, Building2, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, Library, MapPin, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
+import { Building2, FlaskConical, GraduationCap, Landmark, Moon, Scale } from "lucide-react";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import type { LucideIcon } from "lucide-react";
 import { Link, useSearch } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { getRulingsEncyclopedia } from "@/lib/rulings-service";
-import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
-import { SkeletonCardGrid, Empty, ErrorState, PageHero, HubCard } from "@/components/ui-common";
+import { PageHero, HubCard } from "@/components/ui-common";
 import { loadSeedQa } from "@/lib/qa-seed";
-import { RequestManager } from "@/lib/request-manager";
-import type { ShariaRulingExtended } from "@/lib/rulings-types";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/fiqh-hub.css";
 
-type Tab = "rulings" | "qawaid" | "madhahib" | "nawazil" | "council" | "ibadat";
-
-const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
-  Landmark, Droplets, Banknote, Moon, MapPin, Handshake, Utensils, Shirt, Users,
-  ScrollText, Scale, FileSignature, Shield, Heart, BookOpen, GraduationCap, FlaskConical, Flame,
-};
-function CatIcon({ name }: { name?: string }) {
-  const I: LucideIcon = (name ? RULINGS_ICON_MAP[name] : undefined) ?? BookOpen;
-  return <I size={20} />;
-}
+type Tab = "qawaid" | "madhahib" | "nawazil" | "council" | "ibadat";
 
 const TABS: { key: Tab; label: string; Icon: LucideIcon }[] = [
-  { key: "rulings", label: "الأحكام الشرعية", Icon: BookOpen },
   { key: "qawaid", label: "القواعد الفقهية", Icon: Scale },
   { key: "madhahib", label: "المذاهب الأربعة", Icon: GraduationCap },
   { key: "nawazil", label: "النوازل المعاصرة", Icon: FlaskConical },
@@ -54,22 +40,19 @@ const NAWAZIL_LINKS = COUNCIL_SECTIONS.filter((s) =>
   ["/fiqh-council/nawazil", "/fiqh-council/issues", "/fiqh-council/compare"].includes(s.href),
 );
 
-const RULINGS_CATEGORIES = RULINGS_CATEGORY_TREE.slice(0, 8);
-
 // ─── أقسام الفقه والأحكام ────────────────────────────────────────────────────
 
 import { FIQH_HUB_TOPICS } from "@/lib/fiqh-hub-topics";
 
+const VALID_TABS = new Set<Tab>(TABS.map((t) => t.key));
+
 export default function FiqhPage() {
   const search = useSearch();
   const params = new URLSearchParams(search);
-  const initialTab = (params.get("tab") as Tab) || "rulings";
+  const tabParam = params.get("tab") as Tab | null;
+  const initialTab: Tab = tabParam && VALID_TABS.has(tabParam) ? tabParam : "qawaid";
 
   const [activeTab, setActiveTab] = useState<Tab>(initialTab);
-  const [rulings, setRulings]     = useState<ShariaRulingExtended[]>([]);
-  const [loadingR, setLoadingR]   = useState(false);
-  const [rulingsError, setRulingsError] = useState<string | null>(null);
-  const [rulingsRetry, setRulingsRetry] = useState(0);
 
   usePageView("fiqh", null);
 
@@ -92,8 +75,8 @@ export default function FiqhPage() {
       applyPageSeo({
         path: "/fiqh",
         title: "الفقه الإسلامي | المجلس العلمي",
-        description: "بوابة الفقه: أحكام شرعية، قواعد، مذاهب، نوازل، قرارات المجامع، وأحكام العبادات.",
-        keywords: ["فقه إسلامي", "أحكام شرعية", "القواعد الفقهية", "المذاهب الأربعة", "المجمع الفقهي"],
+        description: "بوابة الفقه: قواعد فقهية، مذاهب، نوازل، قرارات المجامع، وأحكام العبادات.",
+        keywords: ["فقه إسلامي", "القواعد الفقهية", "المذاهب الأربعة", "المجمع الفقهي"],
         ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
       });
     });
@@ -102,54 +85,18 @@ export default function FiqhPage() {
     };
   }, []);
 
-  useEffect(() => {
-    if (activeTab !== "rulings") return;
-    if (rulings.length > 0 && !rulingsError && rulingsRetry === 0) return;
-
-    let cancelled = false;
-    setLoadingR(true);
-    setRulingsError(null);
-    RequestManager.run(
-      "fiqh:rulings-preview",
-      () => getRulingsEncyclopedia({ page: 1, limit: 12, category: "الكل" }),
-      { timeoutMs: 15_000 },
-    )
-      .then((result) => {
-        if (cancelled) return;
-        if (result.dbError && result.dbError !== "empty" && !result.needsSeed) {
-          setRulings([]);
-          setRulingsError(result.dbError);
-          return;
-        }
-        setRulings(result.data);
-        setRulingsError(null);
-      })
-      .catch((err) => {
-        if (cancelled) return;
-        setRulings([]);
-        setRulingsError(String((err as Error)?.message || err));
-      })
-      .finally(() => {
-        if (!cancelled) setLoadingR(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [activeTab, rulingsRetry]);
-
 
   return (
     <div className="fqp-root page-shell" dir="rtl">
       <PageHero
         title="الفقه والأحكام"
-        description="بوابة الفقه: أحكام شرعية، قواعد، مذاهب، نوازل، قرارات المجامع، وأحكام العبادات."
+        description="بوابة الفقه: قواعد فقهية، مذاهب، نوازل، قرارات المجامع، وأحكام العبادات."
       />
 
       {/* بطاقات المحاور — ظاهرة دائمًا (لا تعتمد على تبويب) لتباين/اكتشاف الواجهة */}
       <div className="hub-card-grid fqh-hub-grid fqh-hub-grid--overview">
         {FIQH_HUB_TOPICS.filter((t) =>
-          ["tahara", "salah", "fiqh-qawaid", "madhahib", "rulings-encyclopedia", "fiqh-council"].includes(t.id),
+          ["tahara", "salah", "fiqh-qawaid", "madhahib", "fiqh-council"].includes(t.id),
         ).map((t) => (
           <HubCard
             key={t.id}
@@ -183,60 +130,6 @@ export default function FiqhPage() {
       </div>
 
       <div className="fqp-tab-content">
-
-        {/* تبويب الأحكام الشرعية */}
-        {activeTab === "rulings" && (
-          <div role="tabpanel" id="fqp-panel-rulings" aria-labelledby="fqp-tab-rulings">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="fqp-section-title"><Library size={20} />الأحكام الشرعية</h2>
-              <Link href="/rulings"><span className="fqp-see-all">عرض الكل ←</span></Link>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-              {RULINGS_CATEGORIES.map((cat) => (
-                <Link key={cat.slug} href={`/rulings?category=${encodeURIComponent(cat.name)}`}>
-                  <div className="fqp-card fqp-card--center fqp-card--hover-border">
-                    <div className="fqp-card__icon"><CatIcon name={cat.icon} /></div>
-                    <div className="fqp-card__title">{cat.name}</div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-            {loadingR ? (
-              <SkeletonCardGrid count={6} />
-            ) : rulingsError ? (
-              <ErrorState
-                text="تعذّر تحميل الأحكام الشرعية حاليًا. يرجى المحاولة مرة أخرى."
-                onRetry={() => {
-                  setRulings([]);
-                  setRulingsRetry((n) => n + 1);
-                }}
-              />
-            ) : rulings.length === 0 ? (
-              <Empty text="لا توجد أحكام بعد" />
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {rulings.slice(0, 8).map((r) => (
-                  <Link key={r.id} href={`/rulings/${r.external_key || r.id}`}>
-                    <div className="fqp-card">
-                      <h3 className="fqp-card__title line-clamp-2 mb-1">{r.title}</h3>
-                      {r.category && <span className="fqp-cat-badge">{r.category}</span>}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-
-            <div className="mt-8 text-center">
-              <Link href="/rulings">
-                <span className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer fqp-cta-btn">
-                  استعرض موسوعة الأحكام
-                </span>
-              </Link>
-            </div>
-          </div>
-        )}
 
         {/* تبويب القواعد */}
         {activeTab === "qawaid" && (

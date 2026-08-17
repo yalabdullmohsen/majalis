@@ -710,13 +710,6 @@ const LIST_JSON_LD = {
     (PLATFORM_SEED.qa_items || []).slice(0, 24).map((r) => ({ name: r.question, url: `/quiz` })),
     "أسئلة لعبة سين جيم",
   ),
-  "/rulings": itemListJsonLdScript(
-    ENCYCLOPEDIA_RULINGS.slice(0, 40).map((r) => ({
-      name: r.title,
-      url: `/rulings/${r.external_key || r.id}`,
-    })),
-    "الأحكام الشرعية",
-  ),
   "/lessons": itemListJsonLdScript(lessonRows.slice(0, 30).map((r) => ({ name: r.title, url: `/lessons/${r.id}` })), "الدروس الشرعية"),
   "/adhkar": itemListJsonLdScript(FEATURED_ADHKAR.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })), "أقسام الأذكار"),
   "/prophets": itemListJsonLdScript(
@@ -871,7 +864,6 @@ ${linkList("روابط ذات صلة", [
   ),
   "/fiqh": `<p>بوابة الفقه الإسلامي: أحكام العبادات والمعاملات، المذاهب الأربعة، القواعد الفقهية، وقرارات المجامع — مع إحالة المسائل المعاصرة إلى مصادرها المعتمدة.</p>
 ${linkList("أقسام الفقه", [
-  { name: "الأحكام الشرعية", url: "/rulings", note: "مسائل فقهية مع إحالات ومصادر يجري استكمال توثيقها" },
   { name: "المجمع الفقهي", url: "/fiqh-council", note: "قرارات وفتاوى مؤسسية" },
   { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
   { name: "النوازل المعاصرة", url: "/fiqh-council/nawazil" },
@@ -919,18 +911,8 @@ ${linkList("روابط ذات صلة", [
   { name: "التوحيد والعقيدة", url: "/tawhid" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
 ])}`,
-  "/rulings": `<p>موسوعة الأحكام الشرعية: مسائل في العبادات والمعاملات والأسرة، مع ربط بالأدلة والمراجع المعتمدة قدر الإمكان.</p>
-${
-  ENCYCLOPEDIA_RULINGS.length
-    ? linkList(
-        "من الأحكام المتاحة",
-        ENCYCLOPEDIA_RULINGS.slice(0, 20).map((r) => ({
-          name: r.title,
-          url: `/rulings/${r.external_key || r.id}`,
-        })),
-      )
-    : `<p role="status">يجري حاليًا استكمال المراجعة العلمية لمواد الموسوعة، وستظهر الأحكام المعتمدة تباعًا.</p>`
-}
+  "/rulings": `<p>أُعيد توجيه هذا المسار إلى <a href="${escapeHtml(absoluteUrl("/fiqh"))}">بوابة الفقه</a>. موسوعة الأحكام الشرعية مؤرشفة حتى اكتمال المراجعة العلمية.</p>
+<meta http-equiv="refresh" content="0;url=${escapeHtml(absoluteUrl("/fiqh"))}" />
 ${linkList("أقسام ذات صلة", [
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "المجمع الفقهي", url: "/fiqh-council" },
@@ -978,7 +960,7 @@ ${linkList("روابط ذات صلة", [
   { name: "المواضيع الإسلامية", url: "/topics" },
   { name: "الأذكار", url: "/adhkar" },
   { name: "الأحاديث النبوية", url: "/hadith" },
-  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
 ])}`,
   "/duas": `<p>أدعية شرعية مختارة من الكتاب والسنة: أدعية الصباح والمساء والصلاة والسفر والكرب والنوم، مع إحالة إلى الأذكار والسنن اليومية.</p>
@@ -1019,7 +1001,7 @@ ${linkList("روابط ذات صلة", [
   "/tahara": `<p>أحكام الطهارة: الوضوء والغسل والتيمم وإزالة النجاسة — مدخل عملي قبل أبواب الصلاة والعبادات.</p>
 ${linkList("روابط ذات صلة", [
   { name: "دليل الصلاة", url: "/salah-guide" },
-  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "الزكاة", url: "/zakat" },
   { name: "الصيام", url: "/sawm" },
@@ -1031,7 +1013,7 @@ ${linkList("روابط ذات صلة", [
   { name: "الطهارة", url: "/tahara" },
   { name: "الصيام", url: "/sawm" },
   { name: "الحج والعمرة", url: "/hajj" },
-  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "المجمع الفقهي", url: "/fiqh-council" },
 ])}`,
@@ -1039,7 +1021,7 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "الزكاة", url: "/zakat" },
   { name: "الحج والعمرة", url: "/hajj" },
-  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "الأذكار", url: "/adhkar" },
   { name: "فضائل الأعمال", url: "/fadail-aamal" },
   { name: "بوابة الفقه", url: "/fiqh" },
@@ -1049,7 +1031,7 @@ ${linkList("روابط ذات صلة", [
   { name: "الطهارة", url: "/tahara" },
   { name: "الزكاة", url: "/zakat" },
   { name: "الصيام", url: "/sawm" },
-  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "المناسبات الإسلامية", url: "/occasions" },
 ])}`,
@@ -1101,7 +1083,7 @@ ${linkList("روابط ذات صلة", [
   "/janaza": `<p>أحكام الجنائز: تغسيل الميت وتكفينه والصلاة عليه والدفن والتعزية — مرتبطة بباب الطهارة والفقه.</p>
 ${linkList("روابط ذات صلة", [
   { name: "الطهارة", url: "/tahara" },
-  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "التوبة والاستغفار", url: "/tawba" },
   { name: "صفة الجنة والنار", url: "/janna-naar" },
@@ -1188,7 +1170,7 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
-  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "أعلام العلماء", url: "/scholars" },
   { name: "الفقه على المذاهب الأربعة (المكتبة)", url: "/library/book-al-fiqh-ala-madhahib-al-arba" },
   { name: "المعجم الشرعي", url: "/islamic-glossary" },
@@ -1197,7 +1179,7 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "المذاهب الأربعة", url: "/madhahib" },
   { name: "بوابة الفقه", url: "/fiqh" },
-  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "المجمع الفقهي", url: "/fiqh-council" },
   { name: "المعجم الشرعي", url: "/islamic-glossary" },
 ])}`,
@@ -1247,7 +1229,7 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "الطهارة", url: "/tahara" },
   { name: "مراتب الناس في الصلاة", url: "/prayer-ranks" },
-  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "الأذكار", url: "/adhkar" },
   { name: "أركان الإسلام", url: "/arkan" },
@@ -1321,7 +1303,7 @@ ${linkList("روابط ذات صلة", [
   "/mawarith": `<p>علم المواريث والفرائض: أصول قسمة التركات وأنصبة الورثة، ضمن أبواب الفقه والمعاملات.</p>
 ${linkList("روابط ذات صلة", [
   { name: "بوابة الفقه", url: "/fiqh" },
-  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
   { name: "المذاهب الأربعة", url: "/madhahib" },
 ])}`,
@@ -2083,7 +2065,7 @@ ${linkList("روابط ذات صلة", [
       { name: "بوابة الفقه", url: "/fiqh" },
       { name: "المجمع الفقهي", url: "/fiqh-council" },
       { name: "المذاهب الأربعة", url: "/madhahib" },
-      { name: "الأحكام الشرعية", url: "/rulings" },
+      { name: "بوابة الفقه", url: "/fiqh" },
     ],
   ),
   "/dalail-nubuwwah": darsHubBody(
@@ -2146,7 +2128,8 @@ ${linkList("روابط ذات صلة", [
 };
 
 for (const route of seoConfig.routes) {
-  if (route.path.includes(":")) continue; // لا يوجد الآن؛ حراسة احتياطية
+  if (route.path.includes(":")) continue;
+  if (route.path === "/rulings") continue; // يُضاف يدويًا أدناه كإعادة توجيه
   const privateRoute = isPrivateSeoPath(route.path);
   const effectiveRoute = privateRoute
     ? {
@@ -2166,6 +2149,21 @@ for (const route of seoConfig.routes) {
     priority: route.priority ?? 0.7,
     changefreq: route.changefreq ?? "weekly",
   });
+}
+
+// /rulings — إعادة توجيه SEO (لا sitemap؛ الواجهة تُحوّل إلى /fiqh)
+{
+  const rulingsRoute = seoConfig.routes.find((r) => r.path === "/rulings");
+  if (rulingsRoute) {
+    addPage(
+      { ...rulingsRoute, sitemap: false, robots: "noindex, follow" },
+      {
+        richBody: RICH_BODY_MAP["/rulings"] || "",
+        sitemap: false,
+        priority: 0.3,
+      },
+    );
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -2216,7 +2214,7 @@ for (const row of PUBLIC_FIQH_ITEMS) {
 }
 
 // ملاحظة: قسم "/fatwa" المستقل أُلغي بالكامل من التطبيق (راجع commit 3a995462)؛
-// المسارات /fatwa و/fatwa/:id تُحوَّل الآن إلى /fiqh و/rulings على التوالي.
+// المسارات /fatwa و/fatwa/:id و/rulings تُحوَّل إلى /fiqh.
 // لا تُولَّد صفحات ثابتة لهذا المسار كي لا تبقى صفحات SEO يتيمة تُفهرَس ثم تُحيل فوراً.
 // الفتاوى المؤسسية الموثقة بقيت عمداً تحت /fiqh-council/fatwas ولها توليد منفصل أعلاه.
 
@@ -2233,23 +2231,7 @@ for (const row of verifiedFiqhSessions) {
   );
 }
 
-for (const row of ENCYCLOPEDIA_RULINGS) {
-  const pathId = row.external_key || row.id;
-  const desc = tidyDesc(row.summary || row.body || row.title);
-  addPage(
-    {
-      path: `/rulings/${pathId}`,
-      title: row.title,
-      description: padDesc(desc, `حكم شرعي من موسوعة ${SITE_NAME}`),
-      ogType: "article",
-    },
-    {
-      parents: [{ name: "الأحكام الشرعية", path: "/rulings" }],
-      priority: 0.69,
-      richBody: rulingRichBody(row),
-    },
-  );
-}
+// موسوعة الأحكام مؤرشفة — لا تُولَّد صفحات /rulings/:id في sitemap.
 
 for (const row of PLATFORM_SEED.courses || []) {
   addPage(
@@ -2665,12 +2647,6 @@ const rssItems = [
     link: absoluteUrl(`/fiqh-council/${row.slug || row.id}`),
     description: `مادة من مجمع فقهي (${fiqhItemKind(row)}): ${row.title} — ${row.category || "المجمع الفقهي الإسلامي"}`,
     category: "مواد المجامع الفقهية",
-  })),
-  ...(ENCYCLOPEDIA_RULINGS || []).slice(0, 4).map((row) => ({
-    title: `[حكم شرعي] ${row.title}`,
-    link: absoluteUrl(`/rulings/${row.external_key || row.id}`),
-    description: tidyDesc(row.summary || row.body || row.title),
-    category: "أحكام شرعية",
   })),
   ...(PLATFORM_SEED.courses || []).slice(0, 3).map((row) => ({
     title: `[دورة علمية] ${row.title || row.name || "دورة شرعية"}`,

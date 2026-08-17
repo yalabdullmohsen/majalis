@@ -38,10 +38,7 @@ console.log("\n=== content-href الموحّد ===");
   assert(hrefScholars("s1") === "/scholars/s1", "hrefScholars");
   assert(hrefFawaid("f1") === "/fawaid#f1", "hrefFawaid");
   assert(hrefQa("q1") === "/quiz?qa=q1", "hrefQa → quiz");
-  assert(
-    hrefRulingsFilter("الأسرة") === `/rulings?category=${encodeURIComponent("الأسرة")}`,
-    "hrefRulingsFilter",
-  );
+  assert(hrefRulingsFilter("الأسرة") === "/fiqh", "hrefRulingsFilter → fiqh (archived)");
   assert(KNOWLEDGE_RELATED_HREF.question("q") === "/quiz?qa=q", "KNOWLEDGE_RELATED_HREF.question → quiz");
 }
 

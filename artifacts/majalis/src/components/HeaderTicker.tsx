@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Repeat2, ScrollText, Heart, BookOpen, Sparkles, Megaphone } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -112,15 +112,40 @@ function TickerEntry({ item }: { item: TickerItem & { kind?: TickerKind } }) {
   );
 }
 
+/**
+ * إيقاف مؤقت أثناء التفاعل فقط — بلا تبديل دائم عند نقر الروابط
+ * (كان onClick على الحاوية يجمّد الأنيميشن بعد أول نقرة).
+ */
+function useTransientPause() {
+  const [paused, setPaused] = useState(false);
+  const handlers = useMemo(
+    () => ({
+      onMouseEnter: () => setPaused(true),
+      onMouseLeave: () => setPaused(false),
+      onFocusCapture: () => setPaused(true),
+      onBlurCapture: () => setPaused(false),
+      onPointerDown: () => setPaused(true),
+      onPointerUp: () => setPaused(false),
+      onPointerCancel: () => setPaused(false),
+      onTouchStart: () => setPaused(true),
+      onTouchEnd: () => setPaused(false),
+      onTouchCancel: () => setPaused(false),
+    }),
+    [],
+  );
+  return { paused, handlers };
+}
+
 /** شريط إعلان علوي متحرّك مستمر (marquee) — أحاديث وأذكار ونبذ أقسام/مميزات.
  * عدّاد الصلاة مكوّن ابن مستقل — لا اشتراك ثوانٍ هنا حتى لا يُعاد رسم الماركي. */
 export function HeaderTicker() {
   const contentItems = useRotatingContent();
   const reducedMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [stickyPaused, setStickyPaused] = useState(false);
-  const [hoverPaused, setHoverPaused] = useState(false);
-  const paused = stickyPaused || hoverPaused;
+  const { paused, handlers: pauseHandlers } = useTransientPause();
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [useRotateFallback, setUseRotateFallback] = useState(false);
 
   const items = useMemo<TickerItem[]>(() => {
     return contentItems
@@ -136,34 +161,49 @@ export function HeaderTicker() {
       }));
   }, [contentItems]);
 
+  const preferRotate = reducedMotion || useRotateFallback;
+
   useEffect(() => {
-    if (!reducedMotion || items.length === 0 || paused) return;
+    if (!preferRotate || items.length === 0 || paused) return;
     const t = setInterval(() => setActiveIndex((i) => (i + 1) % items.length), 6000);
     return () => clearInterval(t);
-  }, [reducedMotion, items.length, paused]);
+  }, [preferRotate, items.length, paused]);
 
   useEffect(() => {
     if (activeIndex >= items.length) setActiveIndex(0);
   }, [activeIndex, items.length]);
 
-  const pauseHandlers = {
-    tabIndex: 0 as const,
-    role: "button" as const,
-    "aria-pressed": stickyPaused,
-    "aria-label": stickyPaused ? "استئناف الشريط المتحرك" : "إيقاف الشريط المتحرك مؤقتًا",
-    title: stickyPaused ? "استئناف الشريط" : "إيقاف الشريط",
-    onClick: () => setStickyPaused((p) => !p),
-    onMouseEnter: () => setHoverPaused(true),
-    onMouseLeave: () => setHoverPaused(false),
-    onFocusCapture: () => setHoverPaused(true),
-    onBlurCapture: () => setHoverPaused(false),
-    onKeyDown: (e: KeyboardEvent) => {
-      if (e.key === " " || e.key === "Enter") {
-        e.preventDefault();
-        setStickyPaused((p) => !p);
+  /** إن كان عرض المحتوى ≤ الحاوية فلا مسافة للماركي → تدوير كل ٦ ثوانٍ */
+  useEffect(() => {
+    if (reducedMotion || items.length === 0) return;
+    const measure = () => {
+      const vp = viewportRef.current;
+      const track = trackRef.current;
+      if (!vp || !track) return;
+      const contentWidth = track.scrollWidth / 2;
+      setUseRotateFallback(contentWidth <= vp.clientWidth + 8);
+    };
+    measure();
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(measure) : null;
+    if (viewportRef.current && ro) ro.observe(viewportRef.current);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [reducedMotion, items]);
+
+  /** استئناف صريح عند العودة للتبويب — لا تبقى حالة لمس عالقة */
+  useEffect(() => {
+    const onVisible = () => {
+      if (document.visibilityState === "visible") {
+        /* pointer handlers يصفّرون الإيقاف؛ إعادة قياس بعد العودة */
+        setUseRotateFallback((v) => v);
       }
-    },
-  };
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+  }, []);
 
   if (items.length === 0) {
     return (
@@ -184,7 +224,7 @@ export function HeaderTicker() {
     );
   }
 
-  if (reducedMotion) {
+  if (preferRotate) {
     const activeItem = items[activeIndex % items.length];
     return (
       <div
@@ -216,8 +256,9 @@ export function HeaderTicker() {
       {...pauseHandlers}
     >
       <PrayerCountdownChip />
-      <div className="header-ticker__viewport">
+      <div className="header-ticker__viewport" ref={viewportRef}>
         <div
+          ref={trackRef}
           className="header-ticker__track"
           style={{ animationDuration: `${durationSec}s` }}
         >

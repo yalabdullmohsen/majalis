@@ -10,7 +10,7 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/lessons", label: "مسار أصول الفقه" },
     { href: "/fiqh-qawaid", label: "القواعد الفقهية" },
     { href: "/fiqh", label: "بوابة الفقه" },
-    { href: "/rulings", label: "موسوعة الأحكام" },
+    { href: "/fiqh", label: "بوابة الفقه" },
   ],
   iman: [
     { href: "/tawhid", label: "التوحيد" },
@@ -22,7 +22,7 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/fiqh/topics/muamalat", label: "فقه المعاملات" },
     { href: "/mawarith", label: "حاسبة المواريث" },
     { href: "/akhlaq", label: "الأخلاق" },
-    { href: "/rulings?category=" + encodeURIComponent("الأسرة"), label: "أحكام الأسرة" },
+    { href: "/nikah", label: "أحكام الأسرة" },
     { href: "/fiqh", label: "بوابة الفقه" },
   ],
   arabic: [
@@ -61,7 +61,7 @@ export const ACCORDION_EXPLORE_LINKS = {
   mawsuaat: [
     { href: "/fawaid", label: "الفوائد" },
     { href: "/quiz", label: "الأسئلة والأجوبة" },
-    { href: "/rulings", label: "موسوعة الأحكام" },
+    { href: "/fiqh", label: "بوابة الفقه" },
     { href: "/daily-wird", label: "الورد اليومي" },
     { href: "/topics", label: "فهرس الموضوعات" },
   ],

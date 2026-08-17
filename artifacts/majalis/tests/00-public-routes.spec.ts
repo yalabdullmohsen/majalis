@@ -27,7 +27,6 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
   { href: "/updates",        label: "المستجدات" },
   { href: "/fiqh",           label: "الفقه الإسلامي" },
   { href: "/fiqh-council",   label: "المجمع الفقهي" },
-  { href: "/rulings",        label: "الأحكام الشرعية" },
   { href: "/seerah",         label: "السيرة النبوية" },
   { href: "/scholars",       label: "أعلام الإسلام" },
   { href: "/knowledge-graph",label: "استكشف المعرفة" },

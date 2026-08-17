@@ -140,8 +140,11 @@ for (const r of results) {
   if (CRITICAL.includes(r.path) && r.path === "/qa" && !(r.redirects > 0 || (r.finalUrl || "").includes("/quiz"))) {
     failures.push("/qa did not redirect toward /quiz");
   }
-  if (r.path === "/rulings" && r.status === 200 && !/يجري حاليًا استكمال المراجعة العلمية/.test(JSON.stringify(r))) {
-    /* body not stored fully — re-check below */
+  if (r.path === "/rulings" && r.status === 200 && !/الفقه/.test(r.title || "")) {
+    failures.push("/rulings did not redirect to fiqh hub");
+  }
+  if (r.path === "/rulings" && [301, 302, 307, 308].includes(r.status)) {
+    /* expected redirect */
   }
   if (r.sourcePlaceholder) failures.push(`${r.path}: المصدر قيد الإضافة`);
   if (r.pendingLeak) failures.push(`${r.path}: pending_review leak`);
@@ -149,10 +152,16 @@ for (const r of results) {
 }
 
 const rulings = results.find((r) => r.path === "/rulings");
-if (rulings?.status === 200) {
-  const html = await (await fetch(`${baseUrl}/rulings`)).text();
-  if (!/يجري حاليًا استكمال المراجعة العلمية/.test(html)) {
-    failures.push("/rulings missing honest empty state");
+if (rulings) {
+  const redirected =
+    (rulings.redirects || 0) > 0 ||
+    [301, 302, 307, 308].includes(rulings.status) ||
+    (rulings.finalUrl || "").includes("/fiqh");
+  if (!redirected && rulings.status === 200) {
+    const html = await (await fetch(`${baseUrl}/rulings`)).text();
+    if (!/الفقه|fiqh/i.test(html)) {
+      failures.push("/rulings did not redirect to fiqh");
+    }
   }
 }
 

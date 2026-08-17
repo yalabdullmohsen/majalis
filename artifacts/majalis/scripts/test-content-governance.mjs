@@ -46,7 +46,7 @@ const APPROVED_STATES = new Set(["approved", "verified", "published"]);
 
 function checkRulingsData() {
   const TEST = "rulings-data";
-  const chunksDir = path.resolve(ROOT, "public/data/rulings-encyclopedia/chunks");
+  const chunksDir = path.resolve(ROOT, "content/archive/rulings-encyclopedia/data/chunks");
   const records = [];
 
   if (fs.existsSync(chunksDir)) {
@@ -55,7 +55,7 @@ function checkRulingsData() {
       for (const item of items) records.push({ source: `chunks/${file}`, item });
     }
   } else {
-    warn("لم يُعثر على public/data/rulings-encyclopedia/chunks — شغّل: node scripts/generate-rulings-encyclopedia.mjs");
+    warn("لم يُعثر على content/archive/rulings-encyclopedia/data/chunks — شغّل: node scripts/generate-rulings-encyclopedia.mjs");
   }
 
   // البذرة المولَّدة (تُستورد في التطبيق مباشرة)

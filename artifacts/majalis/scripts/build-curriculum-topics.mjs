@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const OUT = path.resolve(__dirname, "../data/rulings-encyclopedia/curriculum-topics.json");
+const OUT = path.resolve(__dirname, "../content/archive/rulings-encyclopedia/source/curriculum-topics.json");
 
 /** Each topic MUST include references — no invented fatwas without source attribution */
 const TOPIC_TEMPLATES = [

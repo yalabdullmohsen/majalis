@@ -20,7 +20,7 @@ function filterCurriculum(items) {
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = join(__dirname, "../public/data/rulings-encyclopedia");
+const DATA_DIR = join(__dirname, "../content/archive/rulings-encyclopedia/data");
 const PUBLIC_DATA_PATH = "/data/rulings-encyclopedia";
 
 function resolvePublicBaseUrl() {

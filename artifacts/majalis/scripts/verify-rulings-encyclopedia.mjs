@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
-const MANIFEST = path.resolve(ROOT, "public/data/rulings-encyclopedia/manifest.json");
+const MANIFEST = path.resolve(ROOT, "content/archive/rulings-encyclopedia/data/manifest.json");
 
 function main() {
   if (!fs.existsSync(MANIFEST)) {
@@ -24,7 +24,7 @@ function main() {
   }
 
   for (const chunk of manifest.chunks) {
-    const file = path.resolve(ROOT, "public/data/rulings-encyclopedia", chunk.file);
+    const file = path.resolve(ROOT, "content/archive/rulings-encyclopedia/data", chunk.file);
     if (!fs.existsSync(file)) {
       console.error(`FAIL: missing chunk ${chunk.file}`);
       errors++;
