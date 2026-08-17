@@ -24,7 +24,7 @@
 - `pnpm run typecheck` / `pnpm run build` — يستبعدان pitch/promo/mockup/mobile/api-server.
 - ويب: `PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run dev|build|typecheck|lint`
 - بوابة PR محلية: `pnpm run verify:pr`
-- CI موحّد: `.github/workflows/ci.yml` → الفحص المطلوب **Verify build**
+- CI موحّد: `.github/workflows/ci.yml` → **Verify build** + **ci-required** (Skipped في بوابة إلزامية = فشل)
 - إعداد مساحة CI: `.github/actions/setup-workspace`
 
 ## مداخل التطبيق
@@ -55,7 +55,7 @@
 
 | ملف | متى |
 |---|---|
-| `ci.yml` | PR/push main — المطلوب Verify build |
+| `ci.yml` | PR/push main — المطلوب Verify build + ci-required |
 | `auto-merge-to-main.yml` | تفعيل squash بعد Verify |
 | `auto-deploy.yml` | بعد main |
 | `vercel-check.yml` | يدوي فقط (بعد throughput) |

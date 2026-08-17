@@ -441,7 +441,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh run cancel "${{ github.run_id }}" || true
 
-  # لقطات بصرية — عند لمس المصحف فقط؛ لا تمنع Verify build (معلوماتية / تقلل ضوضاء PR)
+  # لقطات بصرية — مع كل بناء ناجح (لا تُتخطّى لأن المصحف لم يُلمس)
   visual-snapshot:
     name: visual-snapshot
     needs: [classify, build]
@@ -449,9 +449,7 @@ jobs:
       always() &&
       !cancelled() &&
       needs.classify.result == 'success' &&
-      needs.classify.outputs.need_mushaf == 'true' &&
       needs.build.result == 'success'
-    continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -482,9 +480,21 @@ jobs:
           echo "preview لم يبدأ"; tail -50 /tmp/mushaf-vite.log; exit 1
 
       - name: Visual snapshot gates (عيّنة قابلة لإعادة الإنتاج)
+        id: snapshot
         env:
           MUSHAF_GATE_BASE_URL: http://127.0.0.1:24216
-        run: pnpm --filter @workspace/majalis run test:mushaf-visual-snapshot
+        run: pnpm --filter @workspace/majalis run test:visual
+
+      - name: visual-snapshot must not skip
+        if: always() && !cancelled()
+        env:
+          SNAPSHOT_OUTCOME: ${{ steps.snapshot.outcome }}
+        run: |
+          set -euo pipefail
+          if [ "$SNAPSHOT_OUTCOME" != "success" ]; then
+            echo "visual-snapshot outcome=$SNAPSHOT_OUTCOME (Skipped/failure = fail)"
+            exit 1
+          fi
 
       - name: Stop preview
         if: always()
@@ -500,9 +510,7 @@ jobs:
       always() &&
       !cancelled() &&
       needs.classify.result == 'success' &&
-      needs.classify.outputs.need_color_contrast == 'true' &&
       needs.build.result == 'success'
-    continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -518,10 +526,29 @@ jobs:
           path: artifacts/majalis/dist
 
       - name: Color contrast gate
+        id: contrast
         run: pnpm --filter @workspace/majalis run test:color-contrast-gate
 
       - name: On-brand contrast gate (لا أسود على الأخضر)
+        id: onbrand
+        if: always() && !cancelled()
         run: pnpm --filter @workspace/majalis run test:on-brand-contrast
+
+      - name: Contrast gates must not skip
+        if: always() && !cancelled()
+        env:
+          CONTRAST_OUTCOME: ${{ steps.contrast.outcome }}
+          ONBRAND_OUTCOME: ${{ steps.onbrand.outcome }}
+        run: |
+          set -euo pipefail
+          if [ "$CONTRAST_OUTCOME" != "success" ]; then
+            echo "Color contrast gate outcome=$CONTRAST_OUTCOME (Skipped/failure = fail)"
+            exit 1
+          fi
+          if [ "$ONBRAND_OUTCOME" != "success" ]; then
+            echo "On-brand contrast gate outcome=$ONBRAND_OUTCOME (Skipped/failure = fail)"
+            exit 1
+          fi
 
   postgres-integration:
     name: postgres-integration
@@ -577,6 +604,7 @@ jobs:
       - mushaf-gates
       - layout-bands
       - visual-snapshot
+      - color-contrast
     if: always() && !cancelled()
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -596,6 +624,7 @@ jobs:
           GATES_RESULT: ${{ needs.mushaf-gates.result }}
           BANDS_RESULT: ${{ needs.layout-bands.result }}
           VISUAL_RESULT: ${{ needs.visual-snapshot.result }}
+          COLOR_RESULT: ${{ needs.color-contrast.result }}
         run: |
           set -euo pipefail
           {
@@ -612,6 +641,7 @@ jobs:
             echo "| mushaf-gates | $GATES_RESULT |"
             echo "| layout-bands | $BANDS_RESULT |"
             echo "| visual-snapshot | $VISUAL_RESULT |"
+            echo "| color-contrast | $COLOR_RESULT |"
             echo ""
             echo "بناء واحد فقط (وظيفة \`build\`) — كل البوابات تنزّل dist."
             echo "مسار PR: ٦ صفحات مرجعية × 390×844 على ٤ shards. الكامل ليلاً."
@@ -652,7 +682,71 @@ jobs:
           check_req "mushaf-measure" "$NEED_MUSHAF" "$MEASURE_RESULT"
           check_req "mushaf-gates" "$NEED_MUSHAF" "$GATES_RESULT"
           check_req "layout-bands" "$NEED_MUSHAF" "$BANDS_RESULT"
-          # visual-snapshot و Color contrast: informational (continue-on-error) — لا تمنع الدمج
-          echo "OK optional visual-snapshot=$VISUAL_RESULT (informational)"
+          check_req "visual-snapshot" "$NEED_BUILD" "$VISUAL_RESULT"
+          check_req "color-contrast" "$NEED_BUILD" "$COLOR_RESULT"
 
           echo "Verify build OK (lane=$LANE)"
+
+  # ---------------------------------------------------------------------------
+  # ٩) المجمّع المطلوب لحماية الفرع — Skipped في بوابة إلزامية = فشل.
+  #    يبقى «Verify build» للتوافق؛ ci-required هو الفحص الإضافي الصريح.
+  # ---------------------------------------------------------------------------
+  ci-required:
+    name: ci-required
+    needs:
+      - classify
+      - verify
+      - color-contrast
+      - visual-snapshot
+    if: always() && !cancelled()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Required gates — Skipped is failure
+        env:
+          NEED_BUILD: ${{ needs.classify.outputs.need_build }}
+          CLASSIFY_RESULT: ${{ needs.classify.result }}
+          VERIFY_RESULT: ${{ needs.verify.result }}
+          COLOR_RESULT: ${{ needs.color-contrast.result }}
+          VISUAL_RESULT: ${{ needs.visual-snapshot.result }}
+        run: |
+          set -euo pipefail
+          {
+            echo "## ci-required"
+            echo "| Job | Result | Required when |"
+            echo "|-----|--------|----------------|"
+            echo "| classify | $CLASSIFY_RESULT | always |"
+            echo "| Verify build | $VERIFY_RESULT | always |"
+            echo "| color-contrast | $COLOR_RESULT | need_build=$NEED_BUILD |"
+            echo "| visual-snapshot | $VISUAL_RESULT | need_build=$NEED_BUILD |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$CLASSIFY_RESULT" != "success" ]; then
+            echo "classify not success: $CLASSIFY_RESULT"
+            exit 1
+          fi
+          if [ "$VERIFY_RESULT" != "success" ]; then
+            echo "Verify build not success: $VERIFY_RESULT (skipped/cancelled/failure = fail)"
+            exit 1
+          fi
+
+          check_req() {
+            local name="$1" need="$2" result="$3"
+            if [ "$need" = "true" ]; then
+              if [ "$result" = "success" ]; then
+                echo "OK required $name=$result"
+                return 0
+              fi
+              echo "required job '$name' not success: $result (Skipped = fail)"
+              exit 1
+            fi
+            if [ "$result" = "failure" ]; then
+              echo "optional job '$name' failed unexpectedly: $result"
+              exit 1
+            fi
+            echo "OK optional $name=$result"
+          }
+
+          check_req "color-contrast" "$NEED_BUILD" "$COLOR_RESULT"
+          check_req "visual-snapshot" "$NEED_BUILD" "$VISUAL_RESULT"
+          echo "ci-required OK"
