@@ -184,18 +184,16 @@ export default function PrayerTimesPage() {
   // لا شاشة تحميل تعترض — الهيكل يظهر دائماً؛ البيانات من الكاش/محلي فوراً
   if (!countdown?.next) {
     return (
-      <SectionLobby lobbyId="prayer" title={lobby.title} primary={lobby.primary} groups={lobby.groups}>
-        <p className="pts-error" role="alert">تعذّر تجهيز المواقيت محلياً. جرّب اختيار موقع آخر.</p>
-        <button type="button" className="pts-retry" onClick={reload} aria-label="إعادة محاولة تحميل المواقيت">
-          إعادة المحاولة
-        </button>
-        <PrayerLocationPicker
-          onChanged={() => {
-            setLocToken((n) => n + 1);
-            reload();
-          }}
-        />
-      </SectionLobby>
+      <SectionLobby
+        lobbyId="prayer"
+        title={lobby.title}
+        subtitle={lobby.subtitle}
+        primary={lobby.primary}
+        groups={lobby.groups}
+        status="error"
+        errorMessage="تعذّر تجهيز المواقيت محلياً. جرّب اختيار موقع آخر."
+        onRetry={reload}
+      />
     );
   }
 
@@ -244,7 +242,7 @@ export default function PrayerTimesPage() {
     : undefined;
 
   return (
-    <SectionLobby lobbyId="prayer" title={lobby.title} primary={primary} groups={lobby.groups}>
+    <SectionLobby lobbyId="prayer" title={lobby.title} subtitle={lobby.subtitle} primary={primary} groups={lobby.groups}>
       <div id="mawaqeet" className="pts-lobby-body">
         <div className="pts-dates">
           {hijriStr && <span>{hijriStr}</span>}

@@ -75,7 +75,8 @@ assert.match(raiSrc, /aria-label="رجوع"/);
 
 const prayerSrc = read("src/pages/worship/ui/PrayerTimesView.tsx");
 assert.match(prayerSrc, /reload/);
-assert.match(prayerSrc, /pts-retry/);
+assert.match(prayerSrc, /status="error"/);
+assert.match(prayerSrc, /onRetry=\{reload\}/);
 
 const globalBack = read("src/components/GlobalBackButton.tsx");
 /* زر الرجوع ظاهر دائمًا (بلا بوابة تمرير) — أوضح للخروج من الأقسام */

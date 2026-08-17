@@ -40,6 +40,7 @@ export default function QuranHubPage() {
     <SectionLobby
       lobbyId="quran"
       title={lobby.title}
+      subtitle={lobby.subtitle}
       primary={primary}
       groups={lobby.groups}
     />

@@ -17,6 +17,7 @@ export function MoreHubFromRegistry(_props: Props) {
     <SectionLobby
       lobbyId="sections"
       title={lobby.title}
+      subtitle={lobby.subtitle}
       groups={lobby.groups}
     />
   );

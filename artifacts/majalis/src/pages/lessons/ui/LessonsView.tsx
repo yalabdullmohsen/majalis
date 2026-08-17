@@ -526,6 +526,7 @@ export default function LessonsPage({
     <SectionLobby
       lobbyId="lessons"
       title={lobby.title}
+      subtitle={lobby.subtitle}
       primary={primary}
       className="lessons-page-v2 lessons-page-v3 ds-page mj-page"
       chips={lobby.chips?.map((c) => ({

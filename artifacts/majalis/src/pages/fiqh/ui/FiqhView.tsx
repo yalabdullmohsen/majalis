@@ -25,6 +25,7 @@ export default function FiqhPage() {
     <SectionLobby
       lobbyId="fiqh"
       title={lobby.title}
+      subtitle={lobby.subtitle}
       chips={lobby.chips}
       groups={lobby.groups}
     >

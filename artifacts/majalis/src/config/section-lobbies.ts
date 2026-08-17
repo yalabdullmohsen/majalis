@@ -59,6 +59,8 @@ export type LobbyPrimary = LobbyItem & {
 export type LobbySpec = {
   id: LobbyId;
   title: string;
+  /** سطر وصف واحد ≤ 12 كلمة — لا فقرة */
+  subtitle: string;
   path: string;
   primary?: LobbyPrimary;
   chips?: LobbyChip[];
@@ -165,6 +167,7 @@ export function getLobby(id: LobbyId): LobbySpec {
     return {
       id,
       title: "مركز القرآن",
+      subtitle: "تلاوة وتفسير وحفظ من موضع واحد",
       path: "/quran-hub",
       primary: { ...must("open-mushaf"), dynamic: true },
       groups: QURAN_GROUPS.map((g) => ({
@@ -179,6 +182,7 @@ export function getLobby(id: LobbyId): LobbySpec {
     return {
       id,
       title: "الدروس",
+      subtitle: "حلقات ودروس وفق الجدول اليومي",
       path: "/lessons",
       primary: item({
         id: "next-lesson",
@@ -205,6 +209,7 @@ export function getLobby(id: LobbyId): LobbySpec {
     return {
       id,
       title: "الصلاة",
+      subtitle: "مواقيت اليوم مع الأذكار والقبلة",
       path: "/prayer-times",
       primary: item({
         id: "next-prayer",
@@ -238,6 +243,7 @@ export function getLobby(id: LobbyId): LobbySpec {
     return {
       id,
       title: "الفقه",
+      subtitle: "كتب الفقه على أبوابها المعتمدة",
       path: "/fiqh",
       chips: FIQH_CATEGORY_ORDER.map((cat) => ({
         id: cat,
@@ -261,6 +267,7 @@ export function getLobby(id: LobbyId): LobbySpec {
   return {
     id: "sections",
     title: "الأقسام",
+    subtitle: "بقية علوم المنصة من مكان واحد",
     path: "/sections",
     groups: SECTION_GROUP_ORDER.map((group) => {
       const meta = SECTION_GROUP_META[group];

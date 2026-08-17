@@ -26,6 +26,9 @@ for (const [id, rel] of PAGES) {
     assert.match(src, /MoreHubFromRegistry/, `${id}: من السجل`);
   } else {
     assert.match(src, /SectionLobby/, `${id}: يستعمل SectionLobby`);
+    if (id !== "sections") {
+      assert.match(src, /subtitle=\{lobby\.subtitle\}/, `${id}: وصف من السجل`);
+    }
   }
   assert.doesNotMatch(src, /<PageHero/, `${id}: بلا PageHero`);
   assert.doesNotMatch(src, /showBack\s*=\s*true/, `${id}: بلا زر رجوع`);
@@ -36,6 +39,7 @@ for (const [id, rel] of PAGES) {
 const more = read("src/features/more/MoreHubFromRegistry.tsx");
 assert.match(more, /SectionLobby/);
 assert.match(more, /getLobby\("sections"\)/);
+assert.match(more, /subtitle=\{lobby\.subtitle\}/);
 assert.doesNotMatch(more, /sections-hub__search/);
 
 const merged = read("src/views/MergedSectionHubPage.tsx");
@@ -50,6 +54,7 @@ assert.match(back, /section-lobby-chrome/);
 
 const css = read("src/components/lobby/section-lobby.css");
 assert.match(css, /font-size:\s*24px/);
+assert.match(css, /font-weight:\s*700/);
 assert.match(css, /font-size:\s*17px/);
 assert.match(css, /font-size:\s*15px/);
 assert.match(css, /font-size:\s*13px/);
@@ -61,6 +66,9 @@ assert.match(css, /white-space:\s*nowrap/);
 assert.match(css, /overflow-x:\s*auto/);
 assert.match(css, /scroll-snap-type:\s*x/);
 assert.match(css, /grid-auto-rows:\s*1fr/);
+assert.match(css, /min-height:\s*36px/);
+assert.match(css, /section-lobby__skeleton/);
+assert.match(css, /section-lobby__state/);
 assert.match(css, /section-lobby__grid--solo/);
 assert.match(css, /assistant-fab-size/);
 assert.match(css, /section-lobby__shot/);
@@ -71,12 +79,16 @@ assert.match(lobbyCmp, /FeaturedSectionCard/);
 assert.match(lobbyCmp, /SectionCard/);
 assert.match(lobbyCmp, /chip-label/);
 assert.match(lobbyCmp, /data-lobby-shot/);
+assert.match(lobbyCmp, /status === "loading"/);
+assert.match(lobbyCmp, /status === "empty"/);
+assert.match(lobbyCmp, /status === "error"/);
 assert.doesNotMatch(lobbyCmp, /page-hero-mj/);
 assert.doesNotMatch(lobbyCmp, /رجوع/);
 
 console.log("=== محتوى السجل ===");
 const quran = getLobby("quran");
 assert.equal(quran.primary?.id, "open-mushaf");
+assert.ok(quran.subtitle.split(/\s+/).filter(Boolean).length <= 12);
 assert.equal(quran.groups.length, 4);
 assert.ok(quran.groups.every((g) => g.items.length >= 1));
 assert.equal(quran.groups.find((g) => g.id === "numbers")?.items.length, 1);
@@ -108,7 +120,10 @@ assert.equal(isTabRootPath("/mushaf"), false);
 
 const greenCount = (spec: ReturnType<typeof getLobby>) => (spec.primary ? 1 : 0);
 for (const id of LOBBY_IDS) {
-  assert.ok(greenCount(getLobby(id)) <= 1, `${id}: بطاقة خضراء واحدة كحد أقصى`);
+  const spec = getLobby(id);
+  assert.ok(greenCount(spec) <= 1, `${id}: بطاقة خضراء واحدة كحد أقصى`);
+  assert.ok(spec.subtitle.length > 0, `${id}: سطر وصف`);
+  assert.ok(spec.subtitle.split(/\s+/).filter(Boolean).length <= 12, `${id}: الوصف ≤ 12 كلمة`);
 }
 
 console.log("section-lobby-gates.test.ts: ok");
