@@ -11,6 +11,8 @@ import {
 
 const greenChecks = [
   { name: "Verify build", state: "pass" },
+  { name: "ci-required", state: "pass" },
+  { name: "Color contrast (Playwright)", state: "pass" },
   { name: "preview-smoke", state: "pass" },
   { name: "lint-typecheck-build", state: "pass" },
   { name: "Vercel – majalis-majalis", state: "SUCCESS" },
@@ -224,7 +226,7 @@ describe("safe-auto-merge eligibility", () => {
     );
   });
 
-  it("does not block on Color contrast (informational; Verify build only)", () => {
+  it("blocks on Color contrast fail when the build lane is required", () => {
     const r = evaluateEligibility(
       base({
         labels: ["safe:ui"],
@@ -240,8 +242,8 @@ describe("safe-auto-merge eligibility", () => {
         ],
       }),
     );
-    assert.equal(r.eligible, true, r.blockers.join("; "));
-    assert.ok(!r.blockers.some((b) => /Color contrast/i.test(b)));
+    assert.equal(r.eligible, false, r.blockers.join("; "));
+    assert.ok(r.blockers.some((b) => /Color contrast/i.test(b)));
   });
 
   it("does not require postgres or color contrast for docs-only Fast Lane", () => {

@@ -9,7 +9,7 @@
 2. بعد نجاح المحلي: ادفع → افتح/حدّث PR Ready → فعّل auto-merge squash.
 3. **راقب الفحوصات الحرجة فقط** عبر `gh pr checks --watch --fail-fast` (Verify build + repo-gates + build + static-checks). لا تُبقَ الوكيل معلّقًا على فحوصات غير مطلوبة للدمج إن نجحت الحرجة.
 4. عند فشل CI: `gh run view --log-failed` → أصلح محليًا → `verify:ci` → ادفع commit جديد — **لا تعطّل الفحص**.
-5. الفحص المطلوب لحماية `main` = **Verify build**؛ عمليًا لا تُدمَج المهمة إلا بخضرة Verify build وrepo-gates وbuild وstatic-checks.
+5. الفحص المطلوب لحماية `main` = **Verify build** و**ci-required**؛ عمليًا لا تُدمَج المهمة إلا بخضرتهما مع repo-gates وbuild وstatic-checks وColor contrast / visual-snapshot عند وجود بناء.
 6. فروع متراكمة من رأس الفرع السابق عند الحاجة؛ لا تنتظر دمج السابق لبدء عمل مستقل.
 7. دفعة = مرحلة كاملة (٥–١٥ إصلاحًا متجانسًا) ضمن ≤٤٠ ملفًا و≤٤٠٠ سطر حذف؛ PR بهدف واحد (لا خلط أذان+مصحف+SEO).
 8. خيط بلا إغلاق خلال محاولتين أو ١٥د → `docs/DECISIONS_PENDING.md` واقفز.

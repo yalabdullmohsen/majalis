@@ -269,16 +269,11 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
       bannerSlot = 3;
       if (chapter.bismillahPre) basmalaSlot = 4;
     } else {
-      /* الصفحات العادية: الشارة والبسملة في خانتين مستقلتين من فجوة
-       * line_number قبل أول آية. إن كانت الفجوة خانة واحدة فقط (gap===1)
-       * تُرسم البسملة داخل خانة الشارة (لا خانة مستقلة في البيانات) —
-       * يُعالَج العرض في MushafPageV2 دون مشاركة خط أساس مع أول آية. */
+      /* الصفحات العادية: الشارة ثم البسملة — سطران مستقلان دائماً.
+       * عند gap===1 تُدرَج البسملة كسطر إضافي غير مُمثَّل في line_number
+       * فتُزاح أسطر الآيات التالية +١ خانة شبكة. */
       bannerSlot = Math.max(1, prevUsed + 1);
-      if (chapter.bismillahPre && gap >= 2) {
-        basmalaSlot = bannerSlot + 1;
-      } else {
-        basmalaSlot = null;
-      }
+      basmalaSlot = chapter.bismillahPre ? bannerSlot + 1 : null;
     }
     headers.push({ kind: "surah-header", surah: chapter, spanRows, bannerSlot, basmalaSlot });
   }
@@ -295,15 +290,37 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
       });
     });
   } else {
+    const basmalaInsertBefore = new Map<number, number>();
+    for (const [surahNum, firstLine] of headerStartLines) {
+      const chapter = chapters.get(surahNum);
+      if (!chapter?.bismillahPre) continue;
+      const prevUsed = usedLines.filter((ln) => ln < firstLine).pop() ?? 0;
+      const gap = firstLine - prevUsed - 1;
+      if (gap === 1) basmalaInsertBefore.set(firstLine, 1);
+    }
+    const bySlot = new Map<number, QpcWord[]>();
     for (let ln = 1; ln <= maxLine; ln++) {
-      if (lineWords.has(ln)) {
-        lineRows.push({
-          kind: "line",
-          lineNumber: ln,
-          gridSlot: ln,
-          words: lineWords.get(ln)!,
-        });
+      if (!lineWords.has(ln)) continue;
+      let insert = 0;
+      for (const [firstLine, offset] of basmalaInsertBefore) {
+        if (ln >= firstLine) insert += offset;
       }
+      const gridSlot = Math.min(ln + insert, 15);
+      const words = lineWords.get(ln)!;
+      if (bySlot.has(gridSlot)) {
+        bySlot.get(gridSlot)!.push(...words);
+      } else {
+        bySlot.set(gridSlot, [...words]);
+      }
+    }
+    for (const [gridSlot, words] of bySlot) {
+      words.sort((a, b) => a.id - b.id || a.position - b.position);
+      lineRows.push({
+        kind: "line",
+        lineNumber: words[0]!.lineNumber,
+        gridSlot,
+        words,
+      });
     }
   }
 

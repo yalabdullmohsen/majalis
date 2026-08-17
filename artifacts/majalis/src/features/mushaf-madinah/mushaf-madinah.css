@@ -364,106 +364,71 @@ html.dark .mm-viewport .mm-page {
   height: 100%;
   max-height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.2rem;
   min-height: 0;
   padding-block: 0;
-  overflow: visible;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
-.mm-slot__banner--with-basmala {
-  gap: 0.22rem;
-  justify-content: space-evenly;
-}
-
-.mm-surah-ornament {
-  position: relative;
+/* إطار اسم السورة — شريط بسيط بعرض كتلة النص (مصحف المدينة) */
+.mm-surah-frame {
   width: 100%;
   max-width: 100%;
-  height: auto;
-  max-height: 100%;
-  min-height: 2.2rem;
-  margin-inline: auto;
-  display: grid;
-  place-items: center;
-  box-sizing: border-box;
-}
-
-.mm-surah-ornament__svg {
-  width: 100%;
-  height: auto;
-  max-height: 100%;
-  display: block;
-}
-
-.mm-surah-ornament__name {
-  position: absolute;
-  inset-inline: 22%;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: 0;
-  color: var(--mm-gold-deep);
-  text-align: center;
-  font-family: "Amiri Quran", "KFGQPC Hafs Uthmanic", serif;
-  font-size: clamp(1.02rem, 3.6vw, 1.42rem);
-  font-weight: 700;
-  line-height: 1.25;
-  padding: 0.15rem 0.35rem;
-  white-space: nowrap;
-  overflow: visible;
-  letter-spacing: 0;
-  min-width: 0;
-  pointer-events: none;
-}
-
-.mm-slot__banner:not(.mm-slot__banner--with-basmala) .mm-surah-ornament {
-  height: min(100%, var(--mm-banner-h));
-  max-height: 100%;
-}
-
-.mm-slot__banner--with-basmala .mm-surah-ornament {
-  flex: 0 1 auto;
-  max-height: 48%;
-  min-height: 1.85rem;
-}
-
-html[data-theme="dark"] .mm-surah-ornament__name,
-html.dark .mm-surah-ornament__name {
-  color: var(--mm-gold-soft);
-}
-
-.mm-surah-ornament__motif {
-  width: 100%;
   height: 100%;
-  display: block;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin-inline: auto;
+  padding-inline: 0.35rem;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 72%, transparent);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--mm-paper) 88%, var(--mm-gold) 12%);
 }
 
-/* بسملة — مسار عثماني معزول عن خط QPC PUA (يمنع تكسر الحروف) */
+.mm-surah-frame__name {
+  color: var(--mm-ink);
+  text-align: center;
+  font-family: var(--mm-qpc-family), "Amiri Quran", serif;
+  font-size: calc(var(--mm-qpc-size) * 0.85);
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
+  letter-spacing: 0;
+  overflow-x: clip;
+}
+
+html[data-theme="dark"] .mm-surah-frame,
+html.dark .mm-surah-frame {
+  background: color-mix(in srgb, var(--mm-paper-deep) 92%, var(--mm-gold) 8%);
+  border-color: color-mix(in srgb, var(--mm-gold-soft) 55%, transparent);
+}
+
+html[data-theme="dark"] .mm-surah-frame__name,
+html.dark .mm-surah-frame__name {
+  color: var(--mm-ink);
+}
+
+/* بسملة — نفس خط ومقاس أسطر الصفحة QPC V2 (var مباشرة — لا --mm-basmala-size المحلول على viewport) */
 .mm-basmala {
   width: 100%;
   max-width: 100%;
   text-align: center;
-  font-size: var(--mm-basmala-size);
-  font-weight: 700;
+  font-size: var(--mm-qpc-size);
+  font-weight: 400;
   color: var(--mm-ink);
   line-height: 1.75;
   letter-spacing: 0;
   word-spacing: 0;
   margin: 0;
-  padding-block: 0.04em;
+  padding-block: 0;
   overflow-x: clip;
   overflow-y: visible;
   flex: 0 0 auto;
   box-sizing: border-box;
-}
-
-.mm-basmala--uthmani {
-  font-family: "Amiri Quran", "KFGQPC Hafs Uthmanic Script HAFS", "KFGQPC Hafs Uthmanic", serif !important;
-  font-feature-settings: "liga" 1, "calt" 1;
-  white-space: nowrap;
 }
 
 .mm-basmala--qpc {
@@ -471,11 +436,6 @@ html.dark .mm-surah-ornament__name {
   unicode-bidi: bidi-override;
   direction: rtl;
   white-space: nowrap;
-}
-
-.mm-slot__banner--with-basmala .mm-basmala {
-  font-size: var(--mm-basmala-size);
-  max-height: none;
 }
 
 .mm-ayah-line {

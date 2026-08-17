@@ -27,11 +27,11 @@ function pageOverflows(pageEl: HTMLElement): boolean {
 function slotInkOverflows(pageEl: HTMLElement): boolean {
   for (const slot of pageEl.querySelectorAll<HTMLElement>(".mm-slot")) {
     const kind = slot.getAttribute("data-kind");
-    if (kind !== "line") continue;
+    if (kind === "empty") continue;
     const slotBox = slot.getBoundingClientRect();
     if (slotBox.height < 2) continue;
     for (const ink of slot.querySelectorAll<HTMLElement>(
-      ".mm-ayah-line, .mm-basmala",
+      ".mm-ayah-line, .mm-basmala, .mm-surah-frame",
     )) {
       const box = ink.getBoundingClientRect();
       if (box.bottom > slotBox.bottom + 1.5 || box.top < slotBox.top - 1.5) return true;

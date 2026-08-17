@@ -66,11 +66,12 @@ assert.match(css, /--mm-chrome-bottom-h/);
 assert.match(css, /\.mm-page-shell[^{]*\{[^}]*padding-top:\s*0/);
 assert.match(css, /\.mm-page-shell[^{]*\{[^}]*padding-bottom:\s*0/);
 
-assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-basmala-size\)/);
+assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-qpc-size\)/);
 assert.match(css, /\.mm-basmala\s*\{[^}]*text-align:\s*center/);
-assert.match(css, /\.mm-basmala--uthmani\s*\{[^}]*!important/);
+assert.match(css, /\.mm-basmala--qpc[\s\S]*--mm-qpc-family/);
+assert.doesNotMatch(css, /\.mm-basmala--uthmani/);
 assert.match(page, /bismillahPre === true/);
-assert.match(basmala, /BASMALA_UTHMANI/);
+assert.match(basmala, /BASMALA_QPC_WORDS/);
 assert.match(basmala, /data-basmala="qpc"/);
 assert.match(data, /bismillahPre/);
 assert.match(data, /basmalaSlot/);
@@ -126,7 +127,7 @@ const dock = read("src/features/mushaf-madinah/MushafAudioDock.tsx");
 for (const id of ["alafasy", "abdulsamad", "husary", "minshawi", "ghamdi", "maher"]) {
   assert.match(dock, new RegExp(`"${id}"`));
 }
-assert.match(read("src/features/mushaf-madinah/MushafSurahOrnament.tsx"), /mm-surah-ornament__motif/);
+assert.match(read("src/features/mushaf-madinah/MushafSurahOrnament.tsx"), /mm-surah-frame/);
 assert.match(viewport, /addEventListener\("scroll"/);
 
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
@@ -136,6 +137,7 @@ assert.match(css, /rgba\(191,\s*159,\s*91,\s*0\.(1[0-9]|22)\)/);
 
 assert.match(page, /filledSlots|mm-page__body--opening/);
 assert.doesNotMatch(page, /\(15 - span\) \/ 2/);
+assert.doesNotMatch(page, /inlineBasmala/);
 assert.match(page, /النمل/);
 
 assert.match(css, /width:\s*13\.1%/);
