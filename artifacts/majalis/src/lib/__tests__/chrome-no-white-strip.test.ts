@@ -38,7 +38,11 @@ function paint(w, h, rgb) {
 }
 
 const css = readFileSync(resolve(root, "src/styles/pages/prayer-times.css"), "utf8");
-assert.match(css, /html\.pts-immersive #root/);
+assert.doesNotMatch(
+  css,
+  /html\.pts-immersive #root/,
+  "لوبي الصلاة لا يطلي #root بلون ثالث — يشارك --surface-app",
+);
 assert.match(css, /min-height:\s*100svh[\s\S]*min-height:\s*100dvh/);
 
 const chrome = readFileSync(resolve(root, "src/styles/components/app-chrome-scroll.css"), "utf8");

@@ -8,7 +8,7 @@ import { useThemePreference } from "./ThemePreferenceProvider";
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { useIsMobileNav } from "@/hooks/useIsMobileNav";
 import { isNavHrefActive } from "@/lib/nav-active";
-import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
+import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { getActiveTab } from "@/lib/get-active-tab";
 import { LOBBY_SEARCH_FILTER } from "@/config/section-lobby-chrome";
@@ -167,10 +167,8 @@ export default function NavBar() {
     </div>
   );
 
-  // مسارات غامرة (مصحف/تلاوة) لها شريطها الخاص.
-  // صفحة الصلاة: تُخفى الترويسة (بحث، وضع ليلي، حساب، شريط الأخبار) بالكامل
-  // مع بقاء شريط الأقسام العلوي والشريط السفلي للتنقّل.
-  if (isImmersiveChromePath(location) || isPrayerTimesPath(location)) return null;
+  // مسارات غامرة (مصحف/تلاوة) لها شريطها الخاص. لوبي الصلاة يظهر الترويسة.
+  if (isImmersiveChromePath(location)) return null;
 
   return (
     <>

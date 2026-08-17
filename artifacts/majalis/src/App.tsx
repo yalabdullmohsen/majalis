@@ -999,7 +999,7 @@ function AppShellInner() {
   const [location] = useLocation();
   const immersive = isImmersiveChromePath(location);
   const onPrayer = isPrayerTimesPath(location);
-  const hideSiteChrome = immersive || onPrayer;
+  const hideSiteChrome = immersive;
   const { isHidden: shouldHideChrome } = useAutoHideBottomNav({
     forceShow: searchOpen || comingSoonOpen || hideSiteChrome,
     routeKey: location,
@@ -1011,7 +1011,8 @@ function AppShellInner() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("pts-immersive", onPrayer);
+    // لوبي الصلاة يشارك --surface-app مع التبويبات؛ لا غمر زمردي على html/#root
+    document.documentElement.classList.remove("pts-immersive");
     document.documentElement.classList.toggle("chrome-immersive", immersive);
     return () => {
       document.documentElement.classList.remove("pts-immersive");
@@ -1063,7 +1064,7 @@ function AppShellInner() {
       <NavBar />
       <TopSectionBar />
       {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
-      {!hideSiteChrome && <PrayerCountdownBanner />}
+      {!hideSiteChrome && !onPrayer && <PrayerCountdownBanner />}
       {!hideSiteChrome && <AdhanNotificationBar />}
       {!hideSiteChrome && (
         <SectionErrorBoundary name="AdhanActiveOverlay">

@@ -178,6 +178,7 @@
     "test:perf-nav-ia": "node --import tsx src/lib/__tests__/perf-nav-ia.test.ts",
     "test:fiqh-hub-routing": "node --import tsx src/lib/__tests__/fiqh-hub-routing.test.ts",
     "test:fiqh-books-gates": "node --import tsx src/lib/__tests__/fiqh-books-gates.test.ts",
+    "test:section-lobby-gates": "node --import tsx src/lib/__tests__/section-lobby-gates.test.ts",
     "test:site-interlink": "node --import tsx src/lib/__tests__/site-interlink.test.ts",
     "test:quiz-game-reducer": "node --import tsx src/components/quiz-game/__tests__/game-reducer.test.ts",
     "test:scholarly-content-guard": "node --import tsx src/lib/__tests__/scholarly-content-guard.test.ts",
