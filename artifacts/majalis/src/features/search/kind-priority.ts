@@ -34,6 +34,7 @@ export const KIND_PRIORITY: Record<string, number> = {
   memorization: 14,
   settings: 15,
   app: 15,
+  section: 14,
   occasion: 16,
   fawaid: 16,
   miracle: 17,

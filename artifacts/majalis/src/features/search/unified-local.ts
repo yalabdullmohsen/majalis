@@ -46,7 +46,13 @@ export async function loadUnifiedSearchIndex(): Promise<IndexPayload> {
   if (cache) return cache;
   const { fetchStaticJsonCached } = await import("@/lib/static-json-cache");
   const empty: IndexPayload = { version: 0, docs: [] };
-  const json = await fetchStaticJsonCached<IndexPayload>("/data/search/index.json", empty);
+  const base =
+    typeof import.meta !== "undefined" && import.meta.env?.BASE_URL
+      ? String(import.meta.env.BASE_URL)
+      : "/";
+  const prefix = base.endsWith("/") ? base : `${base}/`;
+  const url = `${prefix}data/search/index.json`.replace(/([^:]\/)\/+/g, "$1");
+  const json = await fetchStaticJsonCached<IndexPayload>(url, empty);
   if (!Array.isArray(json.docs) || json.docs.length === 0) {
     throw new Error("search index unavailable");
   }

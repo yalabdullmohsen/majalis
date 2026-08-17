@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { getAllSurahStories, getSurahStory, searchSurahStories } from "@/lib/surah-stories";
+import { getAllSurahStories, getSurahStory } from "@/lib/surah-stories";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { truncateAtWord } from "@/lib/utils";
+import { OpenGlobalSearchButton } from "@/components/OpenGlobalSearchButton";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 
 export default function SurahStoriesPage() {
-  const [search, setSearch] = useState("");
-
   useEffect(() => {
     const allStories = getAllSurahStories();
     applyPageSeo({
@@ -36,7 +35,7 @@ export default function SurahStoriesPage() {
       ],
     });
   }, []);
-  const stories = search.trim() ? searchSurahStories(search) : getAllSurahStories();
+  const stories = getAllSurahStories();
 
   return (
     <div className="page-shell surah-stories-page ds-page">
@@ -57,12 +56,9 @@ export default function SurahStoriesPage() {
         <Link href="/quran/surah-stories" className="quran-subnav__link is-active">قصص القرآن</Link>
       </nav>
 
-      <input
+      <OpenGlobalSearchButton
         className="quran-search ui-card"
-        placeholder="ابحث في السور..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        aria-label="بحث في قصص القرآن"
+        label="بحث شامل في السور والأقسام"
       />
 
       <div className="surah-stories-grid">

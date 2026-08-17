@@ -1056,6 +1056,32 @@ function AppShellInner() {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
+    const run = () => {
+      if (cancelled) return;
+      void import("@/features/search/unified-local")
+        .then((m) => m.loadUnifiedSearchIndex())
+        .catch(() => undefined);
+    };
+    const idle = window as unknown as {
+      requestIdleCallback?: (cb: () => void) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    if (idle.requestIdleCallback) {
+      const id = idle.requestIdleCallback(run);
+      return () => {
+        cancelled = true;
+        idle.cancelIdleCallback?.(id);
+      };
+    }
+    const tid = globalThis.setTimeout(run, 1);
+    return () => {
+      cancelled = true;
+      globalThis.clearTimeout(tid);
+    };
+  }, []);
+
+  useEffect(() => {
     // لوبي الصلاة يشارك --surface-app مع التبويبات؛ لا غمر زمردي على html/#root
     document.documentElement.classList.remove("pts-immersive");
     document.documentElement.classList.toggle("chrome-immersive", immersive);

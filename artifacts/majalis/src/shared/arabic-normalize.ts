@@ -112,6 +112,8 @@ export function normalizeArabic(text: string): string {
 
 /** اسم صريح لنقطة الدخول المشتركة — مرادف لـ normalizeArabic. */
 export const normalizeForSearch = normalizeArabic;
+/** الاسم المطلوب في مواصفات البحث المتساهل. */
+export const normalizeAr = normalizeArabic;
 
 /** Clear normalize memo (tests / memory pressure). */
 export function clearNormalizeArabicCache(): void {

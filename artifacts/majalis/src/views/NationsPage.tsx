@@ -13,6 +13,7 @@ import {
   type Nation,
   type PunishmentType,
 } from "@/lib/nations-seed";
+import { OpenGlobalSearchButton } from "@/components/OpenGlobalSearchButton";
 import { PunishmentIcon } from "@/components/nations/PunishmentIcon";
 import "@/styles/nations.css";
 
@@ -20,7 +21,6 @@ type Stance = "all" | "believed" | "rejected";
 type View = "grid" | "timeline";
 
 export default function NationsPage() {
-  const [search, setSearch] = useState("");
   const [prophet, setProphet] = useState("الكل");
   const [punishment, setPunishment] = useState<PunishmentType | "الكل">("الكل");
   const [stance, setStance] = useState<Stance>("all");
@@ -29,8 +29,8 @@ export default function NationsPage() {
 
   const options = useMemo(() => getNationFilterOptions(), []);
   const results = useMemo(
-    () => filterNations({ search, prophet, punishment, stance, tag }),
-    [search, prophet, punishment, stance, tag],
+    () => filterNations({ search: "", prophet, punishment, stance, tag }),
+    [prophet, punishment, stance, tag],
   );
   const timeline = useMemo(() => getNationsTimeline(), []);
 
@@ -58,10 +58,9 @@ export default function NationsPage() {
   }, []);
 
   const hasFilters =
-    search.trim() !== "" || prophet !== "الكل" || punishment !== "الكل" || stance !== "all" || tag !== "الكل";
+    prophet !== "الكل" || punishment !== "الكل" || stance !== "all" || tag !== "الكل";
 
   const resetFilters = () => {
-    setSearch("");
     setProphet("الكل");
     setPunishment("الكل");
     setStance("all");
@@ -77,17 +76,10 @@ export default function NationsPage() {
       />
 
       <div className="nations-toolbar">
-        <label className="nations-search" htmlFor="nations-search-input">
-          <span className="sr-only">ابحث في الأمم السابقة</span>
-          <input
-            id="nations-search-input"
-            type="search"
-            className="nations-search__input"
-            placeholder="ابحث: عاد، قوم هود، الأحقاف، الطوفان…"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </label>
+        <OpenGlobalSearchButton
+          className="nations-search__input"
+          label="بحث شامل في الأمم والأقسام"
+        />
 
         <div className="nations-view-switch" role="tablist" aria-label="طريقة العرض">
           <button

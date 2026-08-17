@@ -13,6 +13,7 @@ import { parseQuickNav } from "@/features/search/quick-nav";
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { scoreTolerantMatch, type TolerantMatch } from "@/features/search/tolerant-match";
 import { searchHadithCorpus } from "@/lib/hadith-corpus";
+import { expandSearchTerms } from "@/lib/search-synonyms";
 
 export type AppSearchResult = {
   id: string;
@@ -33,6 +34,13 @@ export type AppSearchResponse = {
   /** أقرب ٣ بدائل عند انعدام النتائج */
   suggestions?: string[];
   responseMs: number;
+  debug?: {
+    normalizedQuery: string;
+    docs: number;
+    candidatesBefore: number;
+    candidatesAfter: number;
+    synonymPass: boolean;
+  };
 };
 
 const KIND_ALIASES: Record<string, string> = {
@@ -113,6 +121,7 @@ export async function runAppSearch(
 ): Promise<AppSearchResponse> {
   const t0 = performance.now();
   const query = rawQuery.trim();
+  const normalizedQuery = normalizeArabic(query);
   if (!query) {
     return { results: [], groups: {}, counts: {}, responseMs: 0 };
   }
@@ -140,6 +149,26 @@ export async function runAppSearch(
       : searchUnifiedIndex(docs, query, limit);
 
   let results = flattenGroups(grouped);
+  const candidatesBefore = results.length;
+  let synonymPass = false;
+  if (results.length === 0) {
+    const extra = expandSearchTerms(query).filter(
+      (t) => normalizeArabic(t) !== normalizedQuery && t.trim().length >= 2,
+    );
+    for (const term of extra.slice(0, 8)) {
+      if (opts.signal?.aborted) throw new DOMException("Aborted", "AbortError");
+      const more =
+        docs.length > 2_500
+          ? await searchUnifiedIndexAsync(docs, term, limit, opts.signal)
+          : searchUnifiedIndex(docs, term, limit);
+      const flat = flattenGroups(more);
+      if (flat.length) {
+        results = flat;
+        synonymPass = true;
+        break;
+      }
+    }
+  }
   if (opts.kind && opts.kind !== "all") {
     const want = KIND_ALIASES[opts.kind] ?? opts.kind;
     results = results.filter((r) => r.kind === want || r.kind === opts.kind);
@@ -185,5 +214,12 @@ export async function runAppSearch(
     suggestion: suggestions[0] ?? null,
     suggestions,
     responseMs: performance.now() - t0,
+    debug: {
+      normalizedQuery,
+      docs: docs.length,
+      candidatesBefore,
+      candidatesAfter: results.length,
+      synonymPass,
+    },
   };
 }

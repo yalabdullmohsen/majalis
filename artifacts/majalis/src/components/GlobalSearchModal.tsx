@@ -60,6 +60,7 @@ const KIND_META: Record<string, { label: string; Icon: LucideIcon; color: string
   hifz:          { label: "حفظ",       Icon: Layers,        color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   settings:      { label: "إعدادات",   Icon: Wrench,        color: "#5B21B6" },
   app:           { label: "صفحة",      Icon: Layers,        color: "#1E40AF" },
+  section:       { label: "قسم",       Icon: Layers,        color: "var(--majalis-emerald, var(--mj-brand-deep))" },
 };
 
 const FILTER_CHIPS: { key: string; label: string }[] = [
@@ -77,7 +78,7 @@ const FILTER_CHIPS: { key: string; label: string }[] = [
   { key: "settings", label: "إعدادات" },
 ];
 
-const DEBOUNCE_MS = 120;
+const DEBOUNCE_MS = 200;
 
 // ── مساعدات ─────────────────────────────────────────────────────────────────
 
@@ -186,6 +187,8 @@ export function GlobalSearchModal({ onClose }: Props) {
   const [results, setResults]       = useState<AppSearchResult[]>([]);
   const [groupCounts, setGroupCounts] = useState<Record<string, number>>({});
   const [suggestion, setSuggestion] = useState<string | null>(null);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [debugInfo, setDebugInfo] = useState<string | null>(null);
   const [loading, setLoading]       = useState(false);
   const [error, setError]           = useState(false);
   const [history, setHistory]       = useState<string[]>(() => getSearchHistory());
@@ -227,6 +230,8 @@ export function GlobalSearchModal({ onClose }: Props) {
         setResults([]);
         setGroupCounts({});
         setSuggestion(null);
+        setSuggestions([]);
+        setDebugInfo(null);
         setLoading(false);
         setError(false);
         return;
@@ -252,6 +257,17 @@ export function GlobalSearchModal({ onClose }: Props) {
         setResults(res.results);
         setGroupCounts(res.counts);
         setSuggestion(res.suggestion ?? null);
+        setSuggestions(res.suggestions ?? []);
+        if (typeof window !== "undefined" && /(?:^|[?&])searchDebug=1(?:&|$)/.test(window.location.search)) {
+          const d = res.debug;
+          setDebugInfo(
+            d
+              ? `norm=${d.normalizedQuery} · docs=${d.docs} · قبل=${d.candidatesBefore} · بعد=${d.candidatesAfter} · مرادف=${d.synonymPass ? "نعم" : "لا"} · ${res.responseMs.toFixed(0)}ms`
+              : `${res.responseMs.toFixed(0)}ms`,
+          );
+        } else {
+          setDebugInfo(null);
+        }
       } catch (err: unknown) {
         if ((err as Error)?.name !== "AbortError" && (err as DOMException)?.name !== "AbortError") {
           setError(true);
@@ -374,6 +390,12 @@ export function GlobalSearchModal({ onClose }: Props) {
 
           {loading && <span className="gsm-loading-dot">○</span>}
         </div>
+
+        {debugInfo && (
+          <p className="gsm-section__label" data-search-debug="1" style={{ padding: "6px 12px", margin: 0 }}>
+            تشخيص: {debugInfo}
+          </p>
+        )}
 
         {/* ── فلاتر النوع ────────────────────────────────────────────── */}
         <div className="gsm-filters" role="tablist" aria-label="تصفية نتائج البحث">
@@ -507,27 +529,38 @@ export function GlobalSearchModal({ onClose }: Props) {
             <div className="gsm-empty-state">
               <p className="gsm-state-icon"><Search size={32} strokeWidth={1.5} aria-hidden="true" /></p>
               <p className="gsm-state-title">لا نتائج لـ «{query.trim()}».</p>
-              <button type="button" className="gsm-retry-btn" onClick={() => setQuery("")}>
-                مسح البحث
-              </button>
-              {suggestion && (
-                <p className="gsm-state-hint">
-                  هل تقصد{" "}
-                  <button type="button" className="gsm-pill" onClick={() => handleQuickQuery(suggestion)}>
-                    {suggestion}
-                  </button>
-                  ؟
-                </p>
+              {suggestions.length > 0 && (
+                <p className="gsm-state-hint">أقرب اقتراحات:</p>
               )}
               <div className="gsm-pills gsm-pills--center">
-                {POPULAR_QUERIES.slice(0, 4).map((q) => (
+                {(suggestions.length ? suggestions : suggestion ? [suggestion] : []).slice(0, 3).map((s) => (
                   <button
-                    key={q}
+                    key={s}
                     type="button"
-                    onClick={() => handleQuickQuery(q)}
                     className="gsm-pill"
+                    onClick={() => handleQuickQuery(s)}
                   >
-                    {q}
+                    {s}
+                  </button>
+                ))}
+              </div>
+              <p className="gsm-section__label">أقسام شائعة</p>
+              <div className="gsm-quicklinks">
+                {[
+                  { href: "/tawhid", label: "العقيدة" },
+                  { href: "/fiqh", label: "الفقه" },
+                  { href: "/hadith", label: "الحديث" },
+                  { href: "/seerah", label: "السيرة" },
+                  { href: "/adhkar", label: "الأذكار" },
+                  { href: "/mushaf", label: "المصحف" },
+                ].map((l) => (
+                  <button
+                    key={l.href}
+                    type="button"
+                    onClick={() => { onClose(); navigate(l.href); }}
+                    className="gsm-quicklink-btn"
+                  >
+                    {l.label}
                   </button>
                 ))}
               </div>

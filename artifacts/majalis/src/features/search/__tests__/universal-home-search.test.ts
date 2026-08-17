@@ -75,7 +75,7 @@ await runUniversalSearch("الصلاة");
   assert.match(comp, /hidden=\{hidden\}/);
   assert.match(comp, /loadUnifiedSearchIndex/);
   const gsm = read("components/GlobalSearchModal.tsx");
-  assert.match(gsm, /DEBOUNCE_MS = 120/);
+  assert.match(gsm, /DEBOUNCE_MS = 200/);
   // لا استيراد ساكن للفهرس من الرئيسية
   assert.doesNotMatch(home, /from ["']@\/features\/search\/unified-local["']/);
 }

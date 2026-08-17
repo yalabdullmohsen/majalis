@@ -20,6 +20,7 @@ const { NATIONS } = await import("../src/lib/nations-seed.ts");
 const { getAllSurahStories } = await import("../src/lib/surah-stories.ts");
 const { MUSHAF_TAFSIR_EDITIONS } = await import("../src/lib/quran-data/tafsir-editions.ts");
 const { IA_REDIRECTS } = await import("../src/lib/ia-final-structure.ts");
+const { collectNavSearchDocs } = await import("../src/search/build-index.ts");
 
 const REDIRECT_HREFS = new Set(Object.keys(IA_REDIRECTS));
 
@@ -36,9 +37,9 @@ function push(d) {
   docs.push(d);
 }
 
-function pushDoc(id, kind, titleAr, href, parts = [], meta) {
+function pushDoc(id, kind, titleAr, href, parts = [], meta, opts = {}) {
   const clean = String(href || "").split("?")[0].split("#")[0];
-  if (REDIRECT_HREFS.has(clean) || clean === "/qa" || clean.startsWith("/qa/")) return;
+  if (!opts.allowRedirect && (REDIRECT_HREFS.has(clean) || clean === "/qa" || clean.startsWith("/qa/"))) return;
   push({
     id,
     kind,
@@ -268,6 +269,19 @@ const APP_PAGES = [
 
 for (const [id, kind, title, href, parts] of APP_PAGES) {
   pushDoc(id, kind, title, href, parts, "صفحة");
+}
+
+// ── سجل الأقسام + التنقّل العام + كتب/أبواب/مسائل الفقه ──────────────
+for (const seed of collectNavSearchDocs()) {
+  pushDoc(
+    seed.id,
+    seed.type,
+    seed.title,
+    seed.route,
+    [...seed.keywords, seed.subtitle, seed.body, seed.sectionPath].filter(Boolean),
+    seed.subtitle || "قسم",
+    { allowRedirect: true },
+  );
 }
 
 // ── الذين ذكروا في القرآن (دفعة الأسماء الصريحة) ─────────────────────────────

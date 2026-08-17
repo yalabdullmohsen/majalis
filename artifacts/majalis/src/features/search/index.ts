@@ -7,6 +7,7 @@ export {
 export {
   normalizeArabic,
   normalizeForSearch,
+  normalizeAr,
   toWesternDigits,
   normalizedIncludes,
 } from "@/shared/arabic-normalize";
