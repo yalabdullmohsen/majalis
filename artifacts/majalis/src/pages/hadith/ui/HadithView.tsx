@@ -27,7 +27,6 @@ import { CitationActionBar } from "@/components/citation/CitationActionBar";
 import { IsnadAttributionBar } from "@/components/IsnadAttributionBar";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { HadithStatsPanel } from "@/components/hadith/HadithStatsPanel";
 import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
 import { fetchSahihaynLocal } from "@/lib/sahihayn-local";
 import { loadLocalVerifiedHadith } from "@/lib/verified-hadith-local-seed";
@@ -1249,8 +1248,6 @@ export default function HadithPage() {
         showBack={false}
         withPattern
       />
-
-      <HadithStatsPanel compact className="hadith-hub-stats" />
 
       <form
         className="hadith-hub-search"

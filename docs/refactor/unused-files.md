@@ -240,7 +240,6 @@
 - `src/lib/fiqh-guides/index.ts`
 - `src/lib/font-ready.ts`
 - `src/lib/global-reference-service.ts`
-- `src/lib/hadith-stats.ts`
 - `src/lib/homepage-layout.ts`
 - `src/lib/inheritance/__tests__/engine.test.ts`
 - `src/lib/islamic-intelligence-service.ts`
