@@ -1,16 +1,11 @@
 /**
- * بوابة إحصائيات الحديث + عيّنة المعرّفات والبحث.
+ * بوابة: إحصاءات الصحيحان محذوفة + عيّنة المعرّفات والبحث.
  * تشغيل: node --import tsx src/lib/__tests__/hadith-corpus-stats-gate.test.ts
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  buildHadithStatsSnapshot,
-  HADITH_STAT_CARDS,
-  HADITH_STATS_SOURCE,
-} from "../hadith-stats";
 import {
   formatHadithId,
   getHadithFromMemory,
@@ -20,28 +15,26 @@ import {
 } from "../hadith-corpus";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
+const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
-console.log("=== إحصائيات منقولة بلا نسب مبهمة ===");
-const snap = buildHadithStatsSnapshot();
-assert.ok(snap.kpis.length >= 4, "بطاقات KPI كافية");
-for (const kpi of snap.kpis) {
-  assert.ok(kpi.numberingSystem || kpi.hint, `${kpi.id}: نظام ترقيم أو تلميح`);
-  assert.ok(kpi.sourceLine, `${kpi.id}: مصدر`);
-  if (kpi.namedRatio) {
-    assert.ok(kpi.namedRatio.label.includes("نسبة") || kpi.namedRatio.label.length > 8, "نسبة مسمّاة");
-    assert.ok(kpi.namedRatio.whole > 0, "مقام النسبة");
-  }
-}
-assert.equal(HADITH_STATS_SOURCE.bukhari, 7563);
-assert.equal(HADITH_STATS_SOURCE.muslim, 3033);
-assert.ok(!JSON.stringify(snap).includes("14940"), "لا جمع مرآة مضلّل");
-assert.ok(
-  HADITH_STAT_CARDS.every((c) => c.source?.book && c.numberingSystem),
-  "كل بطاقة لها مصدر وترقيم",
-);
+console.log("=== صفر لوحة إحصاءات الحديث ===");
+assert.equal(existsSync(resolve(root, "src/components/hadith/HadithStatsPanel.tsx")), false);
+assert.equal(existsSync(resolve(root, "src/lib/hadith-stats.ts")), false);
+assert.equal(existsSync(resolve(root, "content/hadith-stats")), false);
 
-const panelSrc = readFileSync(resolve(root, "src/components/hadith/HadithStatsPanel.tsx"), "utf8");
-assert.ok(!panelSrc.includes("formatHadithPct(kpi.value, kpi.pctOf)"), "لا شارة pctOf مبهمة");
+const view = read("src/pages/hadith/ui/HadithView.tsx");
+assert.doesNotMatch(view, /HadithStatsPanel/);
+assert.doesNotMatch(view, /الصحيحان بالأرقام المنقولة/);
+assert.doesNotMatch(view, /hadith-hub-stats/);
+
+const css = read("src/styles/pages/hadith.css");
+assert.doesNotMatch(css, /\.hsp\s*\{/);
+assert.doesNotMatch(css, /hadith-hub-stats/);
+assert.doesNotMatch(css, /الصحيحان بالأرقام/);
+
+const cdn = read("src/lib/hadith-cdn-service.ts");
+assert.doesNotMatch(cdn, /hadith-stats\/sahihayn/);
+assert.doesNotMatch(cdn, /HadithStatsPanel/);
 
 console.log("=== معرّفات ثابتة + عيّنة ٥٠ ===");
 assert.deepEqual(parseHadithId("bukhari:1"), { book: "bukhari", number: 1 });
@@ -66,16 +59,16 @@ assert.ok(matnHit.length >= 1, "بحث جزء المتن");
 const narratorHit = searchHadithCorpus("عمر");
 assert.ok(narratorHit.length >= 1, "بحث الراوي");
 
-const tickerSrc = readFileSync(resolve(root, "src/components/HeaderTicker.tsx"), "utf8");
+const tickerSrc = read("src/components/HeaderTicker.tsx");
 assert.ok(!tickerSrc.includes("setStickyPaused"), "لا إيقاف دائم بنقرة على الشريط");
 assert.ok(tickerSrc.includes("useTransientPause") || tickerSrc.includes("onPointerDown"), "إيقاف مؤقت بالتفاعل");
 assert.ok(tickerSrc.includes("useRotateFallback") || tickerSrc.includes("scrollWidth"), "بديل عند ضيق المحتوى");
 
-const license = readFileSync(resolve(root, "content/hadith-corpus/LICENSE_RISKS.md"), "utf8");
+const license = read("content/hadith-corpus/LICENSE_RISKS.md");
 assert.ok(license.includes("MIT") || license.includes("مرآة"), "ترخيص موثّق");
 assert.ok(
-  readFileSync(resolve(root, "content/hadith-corpus/HADITH_IMPORT_QUEUE.md"), "utf8").includes("الأحمد") ||
-    readFileSync(resolve(root, "content/hadith-corpus/HADITH_IMPORT_QUEUE.md"), "utf8").includes("أحمد"),
+  read("content/hadith-corpus/HADITH_IMPORT_QUEUE.md").includes("الأحمد") ||
+    read("content/hadith-corpus/HADITH_IMPORT_QUEUE.md").includes("أحمد"),
   "طابور الكتب التسعة",
 );
 

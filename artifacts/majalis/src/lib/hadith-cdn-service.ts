@@ -68,8 +68,7 @@ export interface CdnCollectionMeta {
 }
 
 export const HADITH_COLLECTIONS: CdnCollectionMeta[] = [
-  // totalHadiths هنا = عدّ مرآة التحميل فقط — ليس إحصاءً مطبوعًا للواجهة.
-  // الأرقام الكلاسيكية المعتمدة للعرض: content/hadith-stats/sahihayn.json
+  // totalHadiths هنا = عدّ مرآة التحميل للكتالوج فقط — ليست بطاقة إحصاءات واجهة.
   { id: "mutafaq",      name: "الصحيحان",           arabicName: "صحيح البخاري + صحيح مسلم (مرآة)", authenticityClass: "sahih", totalHadiths: 7563 + 3033 },
   { id: "ara-bukhari",  name: "صحيح البخاري",       arabicName: "الإمام محمد بن إسماعيل البخاري", authenticityClass: "sahih", totalHadiths: 7563 },
   { id: "ara-muslim",   name: "صحيح مسلم",          arabicName: "الإمام مسلم بن الحجاج",          authenticityClass: "sahih", totalHadiths: 3033 },
