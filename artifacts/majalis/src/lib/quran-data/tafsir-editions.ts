@@ -91,3 +91,21 @@ export function resolveMushafTafsirEditionId(raw: string | null | undefined): st
 export function getMushafTafsirEdition(id: string): MushafTafsirEdition | undefined {
   return MUSHAF_TAFSIR_EDITIONS.find((e) => e.id === id);
 }
+
+const TAFSIR_PREF_KEY = "majlisilm.mushaf.tafsir-edition";
+
+export function loadMushafTafsirEdition(): string {
+  try {
+    return resolveMushafTafsirEditionId(localStorage.getItem(TAFSIR_PREF_KEY));
+  } catch {
+    return DEFAULT_MUSHAF_TAFSIR_EDITION;
+  }
+}
+
+export function saveMushafTafsirEdition(id: string): void {
+  try {
+    localStorage.setItem(TAFSIR_PREF_KEY, resolveMushafTafsirEditionId(id));
+  } catch {
+    /* ignore */
+  }
+}

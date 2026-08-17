@@ -1,0 +1,16 @@
+{
+  "viewport": { "width": 390, "height": 844 },
+  "threshold": { "maxBaselineGapDevPx": 2.5, "fontSizePx": 2 },
+  "pages": {
+    "1": { "opening": true, "minLineSlots": 5, "maxLineSlots": 8 },
+    "2": { "opening": true, "minLineSlots": 5, "maxLineSlots": 8 },
+    "3": { "opening": false, "minLineSlots": 8, "maxLineSlots": 15, "domSlots": 15, "maxBaselineGapDevPx": 2.5 },
+    "4": { "opening": false, "minLineSlots": 8, "maxLineSlots": 15, "domSlots": 15, "maxBaselineGapDevPx": 2.5 },
+    "5": { "opening": false, "minLineSlots": 8, "maxLineSlots": 15, "domSlots": 15, "maxBaselineGapDevPx": 2.5 },
+    "7": { "opening": false, "minLineSlots": 8, "maxLineSlots": 15, "domSlots": 15, "maxBaselineGapDevPx": 2.5 },
+    "48": { "opening": false, "minLineSlots": 8, "maxLineSlots": 15, "domSlots": 15, "maxBaselineGapDevPx": 2.5 },
+    "283": { "opening": false, "minLineSlots": 8, "maxLineSlots": 15, "domSlots": 15, "maxBaselineGapDevPx": 2.5 },
+    "600": { "opening": false, "minLineSlots": 8, "maxLineSlots": 15, "domSlots": 15, "maxBaselineGapDevPx": 2.5 },
+    "603": { "opening": false, "minLineSlots": 8, "maxLineSlots": 15, "domSlots": 15, "maxBaselineGapDevPx": 2.5 }
+  }
+}

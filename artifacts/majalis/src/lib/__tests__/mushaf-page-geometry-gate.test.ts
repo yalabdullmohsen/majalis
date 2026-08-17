@@ -19,13 +19,23 @@ assert.match(page, /Array\.from\(\{ length: 15 \}/);
 assert.match(page, /filledSlots/);
 assert.match(page, /mm-page__body--opening/);
 assert.match(css, /mm-page__body--opening/);
+assert.match(css, /justify-content:\s*center/);
+assert.match(css, /grid-template-rows:\s*repeat\(15,\s*minmax\(0,\s*1fr\)\)/);
 assert.match(css, /--mm-ref-open-banner-y:\s*27\.7%/);
 assert.match(bands, /MUSHAF_LINES_NORMAL = 15/);
 assert.match(bands, /MUSHAF_HIZB_START_PAGES = 60/);
+assert.match(bands, /MUSHAF_TOUCH_MIN_PX = 44/);
+assert.match(bands, /MUSHAF_AYAH_SHEET_COLLAPSED_PX = 120/);
 assert.match(footer, /hizbStartingOnPage/);
 assert.match(ornament, /data-ornament="islamic-light"/);
 assert.doesNotMatch(ornament, /url\(.*bsml/i);
 assert.match(spec, /QCF_BSML/);
+
+const snap = readFileSync(resolve(root, "scripts/mushaf-madinah/visual-snapshot.mjs"), "utf8");
+assert.match(snap, /geometry-baseline/);
+assert.match(snap, /baselineDev/);
+assert.match(snap, /heightFit/);
+assert.ok(existsSync(resolve(root, "docs/mushaf-madinah/snapshots/geometry-baseline.json")));
 
 type RawWord = { line_number: number };
 type RawVerse = { words: RawWord[]; hizb_number?: number };

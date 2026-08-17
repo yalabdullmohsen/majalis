@@ -9,18 +9,25 @@ import {
 } from "react";
 import { getAudioEngine, type PlayerState } from "@/core/audio/AudioEngine";
 import { getSurahMeta } from "@/lib/quran-api";
-import { listAyahAudioUrls, loadReciterId, saveReciterId } from "@/lib/quran-audio";
+import { getReciter, listAyahAudioUrls, loadReciterId, saveReciterId } from "@/lib/quran-audio";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/quran-data/qpc-page-data";
 import {
   clampMushafPage,
   MUSHAF_PAGE_MAX,
   saveLastPage,
 } from "@/lib/quran-last-page";
+import { useMediaSession } from "@/hooks/useMediaSession";
 import { AyahActionSheet } from "./AyahActionSheet";
 import { MushafControls } from "./MushafControls";
 import { MushafPage } from "./MushafPage";
 import { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
-import { findMushafPageForAyah, parseVerseKey } from "./mushaf-page-for-ayah";
+import {
+  findMushafPageForAyah,
+  parseVerseKey,
+  resolveRecitationLoop,
+  uniqueVerseKeysFromRows,
+  type RecitationRange,
+} from "./mushaf-page-for-ayah";
 import { useQpcPageFont } from "./useQpcPageFont";
 import { MUSHAF_CHROME_HIDE_MS } from "./layout-bands";
 import "./mushaf-madinah.css";
@@ -85,6 +92,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   const [audioDockOpen, setAudioDockOpen] = useState(false);
   const [audioError, setAudioError] = useState<string | null>(null);
   const [audioStatus, setAudioStatus] = useState<string | null>(null);
+  const [audioTime, setAudioTime] = useState({ currentTime: 0, duration: 0, playbackRate: 1 });
   const [theme, setTheme] = useState<MushafTheme>(() => loadTheme());
 
   const { fontFamily, ready: fontReady } = useQpcPageFont(page);
@@ -160,6 +168,11 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     const unSnap = audio.onSnapshot((snap) => {
       setPlayerState(snap.playerState);
       setReciterId(snap.reciterId);
+      setAudioTime({
+        currentTime: snap.currentTime,
+        duration: snap.duration,
+        playbackRate: snap.playbackRate,
+      });
       if (snap.playerState === "error") {
         const msg = snap.errorMessage || "تعذر تحميل التلاوة، أعد المحاولة";
         setAudioError(msg);
@@ -253,8 +266,57 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   );
 
   const closeActions = useCallback(() => {
+    const key = selectedVerseKey;
     setActionsOpen(false);
-  }, []);
+    if (!key) return;
+    requestAnimationFrame(() => {
+      const pane = document.querySelector('[data-pane="current"]');
+      pane
+        ?.querySelector<HTMLElement>(`[data-testid="mushaf-ayah-hit"][data-verse="${key}"]`)
+        ?.focus();
+    });
+  }, [selectedVerseKey]);
+
+  const pageVerseKeys = useMemo(
+    () => (layout ? uniqueVerseKeysFromRows(layout.rows) : []),
+    [layout],
+  );
+
+  const playRange = useCallback(
+    async (range: RecitationRange, repeatCount: number) => {
+      const key = selectedVerseKey ?? playingVerseKey;
+      if (!key) {
+        setAudioError("اختر آية أولاً");
+        return;
+      }
+      const parsed = parseVerseKey(key);
+      if (!parsed) {
+        setAudioError("اختر آية أولاً");
+        return;
+      }
+      const loop = resolveRecitationLoop(
+        range,
+        parsed,
+        pageVerseKeys,
+        getSurahMeta(parsed.surah).ayahs,
+      );
+      const repeat = repeatCount <= 0 ? Number.POSITIVE_INFINITY : repeatCount;
+      setAudioError(null);
+      setAudioDockOpen(true);
+      bumpChrome();
+      suppressPageSyncRef.current = true;
+      audio.setLoopConfig(loop.surah, {
+        startAyah: loop.startAyah,
+        endAyah: loop.endAyah,
+        repeatCount: repeat,
+        delayMs: 0,
+      });
+      const start = range === "page" || range === "surah" ? loop.startAyah : parsed.ayah;
+      setAudioStatus("جاري تحميل التلاوة...");
+      await audio.playAyah(loop.surah, start, reciterId);
+    },
+    [audio, bumpChrome, pageVerseKeys, playingVerseKey, reciterId, selectedVerseKey],
+  );
 
   const playSelected = useCallback(async () => {
     if (!selectedVerseKey) {
@@ -420,11 +482,11 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     const onScroll = () => {
       if (Math.abs(shell.scrollTop - lastY) < 8) return;
       lastY = shell.scrollTop;
-      setActionsOpen(false);
+      closeActions();
     };
     shell.addEventListener("scroll", onScroll, { passive: true });
     return () => shell.removeEventListener("scroll", onScroll);
-  }, [actionsOpen]);
+  }, [actionsOpen, closeActions]);
 
   const verseLabel = useMemo(() => {
     const key = playingVerseKey ?? selectedVerseKey;
@@ -433,6 +495,29 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     if (!parsed) return key;
     return `${getSurahMeta(parsed.surah).name} · ${parsed.ayah}`;
   }, [playingVerseKey, selectedVerseKey]);
+
+  const mediaPlaying =
+    playerState === "playing" || playerState === "buffering" || playerState === "loading";
+  useMediaSession(
+    playingVerseKey || playerState === "paused" || mediaPlaying
+      ? {
+          title: verseLabel,
+          artist: getReciter(reciterId).nameAr,
+          playing: mediaPlaying,
+          onPlay: () => void togglePlay(),
+          onPause: () => audio.pause(),
+          onStop: () => audio.stop(),
+          onNext: () => {
+            suppressPageSyncRef.current = false;
+            void audio.skipNext();
+          },
+          onPrevious: () => {
+            suppressPageSyncRef.current = false;
+            void audio.skipPrev();
+          },
+        }
+      : null,
+  );
 
   const edgesDisabled = actionsOpen || tafsirOpen || searchOpen;
 
@@ -444,7 +529,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       onNavigateStart={() => setChromeOpen(false)}
       onTapEmpty={() => {
         if (actionsOpen) {
-          setActionsOpen(false);
+          closeActions();
           return;
         }
         setChromeOpen((v) => !v);
@@ -529,6 +614,9 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           audioStatus={audioStatus}
           playerState={playerState}
           reciterId={reciterId}
+          currentTime={audioTime.currentTime}
+          duration={audioTime.duration}
+          playbackRate={audioTime.playbackRate}
           onPlay={() => void playSelected()}
           onTogglePlay={() => void togglePlay()}
           onPrevAyah={() => {
@@ -538,6 +626,11 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           onNextAyah={() => {
             suppressPageSyncRef.current = false;
             void audio.skipNext();
+          }}
+          onPlayRange={(range, repeat) => void playRange(range, repeat)}
+          onSeek={(seconds) => audio.seek(seconds)}
+          onSpeed={(rate) => {
+            audio.setPlaybackRate(rate);
           }}
           onTafsir={() => {
             setTafsirOpen(true);

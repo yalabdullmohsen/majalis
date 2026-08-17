@@ -4,7 +4,7 @@
  * تشغيل: MUSHAF_GATE_BASE_URL=http://127.0.0.1:24216 node scripts/mushaf-madinah/visual-snapshot.mjs
  */
 import { createServer } from "node:http";
-import { createReadStream, existsSync, mkdirSync, writeFileSync, statSync } from "node:fs";
+import { createReadStream, existsSync, mkdirSync, writeFileSync, statSync, readFileSync } from "node:fs";
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
@@ -119,7 +119,40 @@ async function main() {
             if (box.bottom > slotBox.bottom + 1.5 || box.top < slotBox.top - 1.5) overlap = true;
           }
         }
-        return { fontCheck, fontSize, pageOverflow, lineOverflow, overlap, family };
+        const body = pageEl?.querySelector(".mm-page__body");
+        const slots = body ? [...body.querySelectorAll(".mm-slot")] : [];
+        const lineSlots = slots.filter((el) => el.getAttribute("data-kind") === "line");
+        const slotHeights = slots.map((el) => el.getBoundingClientRect().height);
+        const avgH = slotHeights.length
+          ? slotHeights.reduce((a, b) => a + b, 0) / slotHeights.length
+          : 0;
+        const baselineDev = slotHeights.length
+          ? Math.max(...slotHeights.map((h) => Math.abs(h - avgH)))
+          : 0;
+        const lineTops = lineSlots.map((el) => el.getBoundingClientRect().top).sort((a, b) => a - b);
+        const gaps = [];
+        for (let i = 1; i < lineTops.length; i++) gaps.push(lineTops[i] - lineTops[i - 1]);
+        const avgGap = gaps.length ? gaps.reduce((a, b) => a + b, 0) / gaps.length : 0;
+        const gapDev = gaps.length ? Math.max(...gaps.map((g) => Math.abs(g - avgGap))) : 0;
+        const lineSum = lineSlots.reduce((s, el) => s + el.getBoundingClientRect().height, 0);
+        const bodyH = body ? body.getBoundingClientRect().height : 0;
+        const opening = pageEl?.getAttribute("data-opening") === "1";
+        return {
+          fontCheck,
+          fontSize,
+          pageOverflow,
+          lineOverflow,
+          overlap,
+          family,
+          opening,
+          domSlots: slots.length,
+          lineSlots: lineSlots.length,
+          baselineDev,
+          gapDev,
+          lineSum,
+          bodyH,
+          heightFit: lineSum <= bodyH + 2,
+        };
       });
       const file = join(outDir, `page-${String(n).padStart(3, "0")}.png`);
       await page.locator('[data-testid="mushaf-viewport"]').screenshot({ path: file });
@@ -147,7 +180,11 @@ async function main() {
           paint.fontSize <= 34 &&
           paint.pageOverflow === false &&
           paint.lineOverflow === false &&
-          paint.overlap === false,
+          paint.overlap === false &&
+          paint.heightFit === true &&
+          (paint.opening
+            ? paint.domSlots >= 4 && paint.domSlots <= 10
+            : paint.domSlots === 15 && paint.baselineDev <= 2.5),
       });
       console.log(`✓ snapshot page ${n} → ${file}`);
     }
@@ -158,8 +195,42 @@ async function main() {
 
   const failed = report.filter((r) => !r.ok);
   writeFileSync(join(outDir, "report.json"), JSON.stringify({ viewport, report }, null, 2));
-  if (failed.length) {
-    console.error("فشل التحقق البصري:", failed);
+
+  const baselinePath = join(outDir, "geometry-baseline.json");
+  if (!existsSync(baselinePath)) {
+    console.error("مرجع الهندسة مفقود:", baselinePath);
+    process.exit(1);
+  }
+  const baseline = JSON.parse(readFileSync(baselinePath, "utf8"));
+  const geometryFailed = [];
+  for (const row of report) {
+    const expected = baseline.pages?.[String(row.page)];
+    if (!expected) {
+      geometryFailed.push({ page: row.page, reason: "missing-baseline" });
+      continue;
+    }
+    if (Boolean(expected.opening) !== Boolean(row.opening)) {
+      geometryFailed.push({ page: row.page, reason: "opening-mismatch" });
+    }
+    if (row.lineSlots < expected.minLineSlots || row.lineSlots > expected.maxLineSlots) {
+      geometryFailed.push({
+        page: row.page,
+        reason: "line-slots",
+        got: row.lineSlots,
+        min: expected.minLineSlots,
+        max: expected.maxLineSlots,
+      });
+    }
+    if (!expected.opening && row.domSlots !== 15) {
+      geometryFailed.push({ page: row.page, reason: "dom-slots", got: row.domSlots });
+    }
+    const maxDev = expected.maxBaselineGapDevPx ?? 2.5;
+    if (!expected.opening && row.baselineDev > maxDev) {
+      geometryFailed.push({ page: row.page, reason: "baseline", got: row.baselineDev, max: maxDev });
+    }
+  }
+  if (failed.length || geometryFailed.length) {
+    console.error("فشل التحقق البصري:", { failed, geometryFailed });
     process.exit(1);
   }
   console.log("✓ mushaf visual-snapshot ok", pages.join(","));

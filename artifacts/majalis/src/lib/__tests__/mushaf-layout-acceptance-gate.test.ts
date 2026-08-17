@@ -29,7 +29,7 @@ assert.doesNotMatch(
   css,
   /data-ayah-bar="1"\][^{]*\{[^}]*--mm-chrome-bottom-h:\s*var\(--mm-ayah-bar-h\)/,
 );
-assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*transparent|rgba\(0,\s*0,\s*0,\s*0\.55\)/);
+assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*transparent|rgba\(0,\s*0,\s*0,\s*0\.45\)/);
 
 // 3) لا تظليل multiply يعتّم النص
 assert.doesNotMatch(css, /mix-blend-mode:\s*multiply/);
@@ -48,6 +48,7 @@ assert.match(actions, /onReciterChange|القارئ/);
 assert.match(actions, /data-sheet-height|is-expanded/);
 assert.match(viewport, /playAyah|playSelected/);
 assert.match(viewport, /MushafTafsirSheet/);
+assert.match(viewport, /useMediaSession/);
 assert.doesNotMatch(viewport, /exitAlwaysVisible/);
 assert.match(fitSrc, /document\.fonts\.check/);
 assert.match(fitSrc, /loadingdone/);
