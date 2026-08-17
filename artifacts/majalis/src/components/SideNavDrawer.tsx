@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { LogIn, LogOut, Settings, UserPlus, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
@@ -15,19 +15,72 @@ type DrawerProps = {
   onLogout?: () => void;
 };
 
-export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+export const SideNavDrawer = memo(function SideNavDrawer({
+  open,
+  onClose,
+  onLogout,
+}: DrawerProps) {
   const [pathname] = useLocation();
   const { isAdmin, isLoggedIn, user } = useAuth();
-
+  const panelRef = useRef<HTMLElement | null>(null);
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     if (open) {
       previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
-    } else {
-      previouslyFocusedRef.current?.focus?.();
-      previouslyFocusedRef.current = null;
+      const closeBtn = panelRef.current?.querySelector<HTMLElement>(".sidebar-close");
+      window.requestAnimationFrame(() => closeBtn?.focus({ preventScroll: true }));
+      return;
     }
+    previouslyFocusedRef.current?.focus?.({ preventScroll: true });
+    previouslyFocusedRef.current = null;
   }, [open]);
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+    panel.style.willChange = "transform";
+    const clear = () => {
+      panel.style.willChange = "auto";
+    };
+    panel.addEventListener("transitionend", clear);
+    const t = window.setTimeout(clear, 280);
+    return () => {
+      window.clearTimeout(t);
+      panel.removeEventListener("transitionend", clear);
+      panel.style.willChange = "auto";
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab" || !panelRef.current) return;
+      const nodes = [...panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
+        (n) => !n.hasAttribute("disabled") && n.getAttribute("aria-hidden") !== "true",
+      );
+      if (nodes.length === 0) return;
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
 
   const { swipeHandlers } = usePageSwipe({
     onPrev: onClose,
@@ -36,31 +89,42 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
     disabled: !open,
   });
 
-  if (!open || typeof document === "undefined") return null;
-
   const isActive = (href: string) => isNavHrefActive(pathname, href);
+  const handleLogout = useCallback(() => {
+    onClose();
+    onLogout?.();
+  }, [onClose, onLogout]);
+
+  if (typeof document === "undefined") return null;
 
   const drawer = (
-    <div className="mobile-nav-layer mobile-nav-layer--drawer" role="presentation">
+    <div
+      id="drawer-root"
+      data-open={open ? "true" : "false"}
+      aria-hidden={open ? undefined : true}
+      inert={!open}
+    >
       <button
         type="button"
-        className="mobile-nav-backdrop sidebar-backdrop"
+        className="drawer-scrim"
+        tabIndex={open ? 0 : -1}
         aria-label="إغلاق القائمة"
         onClick={onClose}
       />
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
       <aside
+        ref={panelRef}
         id="main-navigation-drawer"
-        className="sidebar-panel side-nav-drawer--v2"
+        className="drawer-panel sidebar-panel side-nav-drawer--v2"
         role="dialog"
-        aria-modal="true"
+        aria-modal={open ? "true" : undefined}
         aria-label="القائمة الجانبية"
         onClick={(e) => e.stopPropagation()}
         {...swipeHandlers}
       >
         <header className="sidebar-header">
           <div className="sidebar-brand">
-            <p className="sidebar-title">المجلس العلمي</p>
+            <p className="sidebar-title">القائمة</p>
           </div>
           <button type="button" onClick={onClose} aria-label="إغلاق القائمة" className="sidebar-close">
             <X size={20} strokeWidth={2} aria-hidden="true" />
@@ -124,10 +188,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
                   <button
                     type="button"
                     className="sidebar-item sidebar-item--danger"
-                    onClick={() => {
-                      onClose();
-                      onLogout?.();
-                    }}
+                    onClick={handleLogout}
                     aria-label="تسجيل الخروج"
                   >
                     <span className="sidebar-item-icon" aria-hidden="true">
@@ -142,7 +203,6 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
             </nav>
           </section>
 
-          {/* توافق اختبارات: SIDEBAR_NAV_GROUPS من السجل */}
           <div hidden aria-hidden="true">
             {SIDEBAR_NAV_GROUPS.map((g) => g.id).join(",")}
           </div>
@@ -152,6 +212,6 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
   );
 
   return createPortal(drawer, document.body);
-}
+});
 
 export default SideNavDrawer;

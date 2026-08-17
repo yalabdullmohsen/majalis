@@ -1,48 +1,85 @@
-/* القائمة الجانبية — هوية المجلس العلمي (RTL) */
-.sidebar-backdrop {
+/* القائمة الجانبية — تعتيم بسيط + لوحة siblings تحت #drawer-root. بلا filter. */
+#drawer-root {
+  /* بلا position/filter حتى يبقى position:fixed للأبناء نسبةً إلى نافذة العرض */
+}
+
+#drawer-root[data-open="false"] {
+  visibility: hidden;
+  content-visibility: hidden;
+  pointer-events: none;
+}
+
+#drawer-root[data-open="true"] {
+  visibility: visible;
+  content-visibility: visible;
+  pointer-events: auto;
+}
+
+.drawer-scrim {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: var(--z-overlay-drawer, 10040);
   border: 0;
   padding: 0;
   margin: 0;
   cursor: pointer;
-  background: rgba(0, 0, 0, 0.32);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 160ms cubic-bezier(0.32, 0.72, 0, 1);
+  -webkit-tap-highlight-color: transparent;
+  filter: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
+#drawer-root[data-open="true"] .drawer-scrim {
+  opacity: 1;
+  transition-duration: 200ms;
+}
+
+.drawer-panel,
 .sidebar-panel {
   position: fixed;
-  top: 0;
+  inset-block: 0;
   inset-inline-end: 0;
-  z-index: 101;
+  top: auto;
+  right: auto;
+  z-index: calc(var(--z-overlay-drawer, 10040) + 1);
   width: min(86vw, 360px);
   height: 100dvh;
   max-height: 100dvh;
   background: #fbfbf8;
+  color: #1d1d1b;
   border-inline-start: 1px solid rgba(18, 54, 42, 0.14);
-  box-shadow: -18px 0 45px rgba(0, 0, 0, 0.12);
   direction: rtl;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
-  padding: calc(var(--inset-top) + 16px) 14px
-    calc(var(--inset-bottom) + 18px);
+  padding: calc(var(--inset-top) + 12px) 14px calc(var(--inset-bottom) + 16px);
   display: flex;
   flex-direction: column;
   gap: 4px;
+  transform: translateX(100%);
+  transition: transform 160ms cubic-bezier(0.32, 0.72, 0, 1);
+  filter: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+#drawer-root[data-open="true"] .drawer-panel {
+  transform: translateX(0);
+  transition-duration: 200ms;
 }
 
 .sidebar-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px;
-  border-radius: 22px;
-  background: linear-gradient(135deg, #12362a, #0f4a31);
-  color: #fff;
+  padding: 8px 4px 12px;
+  background: transparent;
+  color: #12362a;
   flex-shrink: 0;
+  border-bottom: 1px solid rgba(18, 54, 42, 0.12);
 }
 
 .sidebar-brand {
@@ -53,7 +90,7 @@
 }
 
 .sidebar-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
   line-height: 1.4;
   margin: 0;
@@ -64,8 +101,8 @@
   height: 40px;
   border: 0;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.14);
-  color: #fff;
+  background: #eef5f1;
+  color: #12362a;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -74,7 +111,7 @@
 }
 
 .sidebar-close:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: #e2ece7;
 }
 
 .sidebar-section {
@@ -83,29 +120,24 @@
 
 .sidebar-section-title {
   padding: 0 8px 8px;
-  color: #66736d;
+  color: #3d4a45;
   font-size: 12px;
   font-weight: 800;
   margin: 0;
-  letter-spacing: 0.02em;
 }
 
 .sidebar-item {
   width: 100%;
-  min-height: 56px;
+  min-height: 48px;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 12px;
-  border-radius: 18px;
+  padding: 8px 12px;
+  border-radius: 12px;
   color: #1d1d1b;
   text-decoration: none;
   background: transparent;
   border: 1px solid transparent;
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    transform 160ms ease;
   box-sizing: border-box;
   cursor: pointer;
   font: inherit;
@@ -116,10 +148,6 @@
   background: #eef5f1;
 }
 
-.sidebar-item:active {
-  transform: scale(0.98);
-}
-
 .sidebar-item.active {
   background: #e8f0ec;
   border-color: rgba(18, 54, 42, 0.18);
@@ -127,9 +155,9 @@
 }
 
 .sidebar-item-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   background: #ffffff;
   border: 1px solid rgba(18, 54, 42, 0.12);
   display: inline-flex;
@@ -151,26 +179,16 @@
 }
 
 .sidebar-item-title {
-  font-weight: 800;
+  font-weight: 700;
   font-size: 15px;
   line-height: 1.4;
   display: block;
 }
 
-.sidebar-item-description {
-  color: #66736d;
-  font-size: 12px;
-  line-height: 1.4;
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .sidebar-user-chip {
   margin: 8px 4px 0;
   padding: 10px 12px;
-  border-radius: 16px;
+  border-radius: 12px;
   background: #eef5f1;
   color: #12362a;
   font-size: 13px;
@@ -190,38 +208,31 @@
 }
 
 @media (min-width: 768px) {
+  .drawer-panel,
   .sidebar-panel {
     width: 360px;
   }
 }
 
-/* تجاوز أنماط .side-nav-drawer--v2 القديمة داخل index.css دون كسر طبقة القفل */
-.mobile-nav-layer--drawer .sidebar-panel.side-nav-drawer--v2 {
-  width: min(86vw, 360px);
-  max-width: 360px;
-  height: 100dvh;
-  max-height: 100dvh;
-  background: #fbfbf8;
-  border-inline-start: 1px solid rgba(18, 54, 42, 0.14);
-  box-shadow: -18px 0 45px rgba(0, 0, 0, 0.12);
-  padding: calc(var(--inset-top) + 16px) 14px
-    calc(var(--inset-bottom) + 18px);
-  animation: sidebar-panel-in 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-html[data-theme="dark"] .mobile-nav-layer--drawer .sidebar-panel.side-nav-drawer--v2 {
-  background: #12211c;
-  border-left-color: rgba(237, 242, 240, 0.12);
-}
-
+html[data-theme="dark"] .drawer-panel,
 html[data-theme="dark"] .sidebar-panel {
   background: #12211c;
-  border-left-color: rgba(237, 242, 240, 0.12);
-  box-shadow: -18px 0 45px rgba(0, 0, 0, 0.45);
+  color: #edf2f0;
+  border-inline-start-color: rgba(237, 242, 240, 0.12);
+}
+
+html[data-theme="dark"] .sidebar-header {
+  color: #edf2f0;
+  border-bottom-color: rgba(237, 242, 240, 0.12);
+}
+
+html[data-theme="dark"] .sidebar-close {
+  background: rgba(237, 242, 240, 0.08);
+  color: #edf2f0;
 }
 
 html[data-theme="dark"] .sidebar-section-title {
-  color: #9aaba4;
+  color: #c5d4ce;
 }
 
 html[data-theme="dark"] .sidebar-item {
@@ -249,30 +260,22 @@ html[data-theme="dark"] .sidebar-item.active .sidebar-item-icon {
   color: #fff;
 }
 
-html[data-theme="dark"] .sidebar-item-description {
-  color: #9aaba4;
-}
-
 html[data-theme="dark"] .sidebar-user-chip {
   background: rgba(15, 74, 49, 0.35);
   color: #edf2f0;
 }
 
-@keyframes sidebar-panel-in {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-.sidebar-panel {
-  animation: sidebar-panel-in 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
 @media (prefers-reduced-motion: reduce) {
+  .drawer-scrim,
+  .drawer-panel,
   .sidebar-panel {
-    animation: none;
+    transition: opacity 160ms ease;
+    transform: none;
+  }
+  #drawer-root[data-open="false"] .drawer-panel {
+    opacity: 0;
+  }
+  #drawer-root[data-open="true"] .drawer-panel {
+    opacity: 1;
   }
 }

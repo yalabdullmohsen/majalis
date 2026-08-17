@@ -3192,8 +3192,6 @@ body.mobile-nav-body-lock {
 
 .mobile-nav-backdrop {
   background: rgba(10, 18, 14, 0.52);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
 }
 
 /* ── حركة فتح ناعمة (٢٢٠مل.ث) — الدرج ينزلق من اليمين، الخلفية تتلاشى ── */
@@ -3202,12 +3200,9 @@ body.mobile-nav-body-lock {
 
 @keyframes side-nav-drawer-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
 
-.mobile-nav-layer--drawer .mobile-nav-backdrop {
-  animation: side-nav-backdrop-in 220ms ease-out both;
-}
-
+.mobile-nav-layer--drawer .mobile-nav-backdrop,
 .mobile-nav-layer--drawer .side-nav-drawer--v2 {
-  animation: side-nav-drawer-in 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
