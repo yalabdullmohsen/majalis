@@ -83,17 +83,19 @@ async function main() {
   try {
     for (const n of pages) {
       await page.goto(`${base}/mushaf?page=${n}`, { waitUntil: "networkidle", timeout: 60_000 });
-      await page.waitForSelector('[data-testid="mushaf-page"]', { timeout: 45_000 });
+      await page.waitForSelector('[data-pane="current"] [data-testid="mushaf-page"]', { timeout: 45_000 });
       const m = await page.evaluate(() => {
-        const rootEl = document.querySelector('[data-testid="mushaf-page"]');
-        const frame = document.querySelector('[data-testid="mushaf-page-frame"]');
-        const line = document.querySelector(".mm-ayah-line");
+        const current = document.querySelector('[data-pane="current"]');
+        const rootEl = current?.querySelector('[data-testid="mushaf-page"]');
+        const frame = current?.querySelector('[data-testid="mushaf-page-frame"]');
+        const line =
+          current?.querySelector(".mm-ayah-line") || current?.querySelector(".mm-basmala");
         const rect = frame?.getBoundingClientRect();
         return {
           pageAttr: rootEl?.getAttribute("data-page"),
-          slots: document.querySelectorAll(".mm-slot").length,
-          ayahLines: document.querySelectorAll(".mm-ayah-line").length,
-          banners: document.querySelectorAll(".mm-surah-ornament").length,
+          slots: current?.querySelectorAll(".mm-slot").length ?? 0,
+          ayahLines: current?.querySelectorAll(".mm-ayah-line").length ?? 0,
+          banners: current?.querySelectorAll(".mm-surah-ornament").length ?? 0,
           fontFamily: line ? getComputedStyle(line).fontFamily : "",
           frameWidth: rect?.width ?? 0,
           frameHeight: rect?.height ?? 0,
@@ -103,7 +105,7 @@ async function main() {
       measurements.push({
         page: n,
         ...m,
-        ok: m.slots === 15 && !m.hasPdf && /qpc-v2-p/i.test(m.fontFamily),
+        ok: m.slots === 15 && !m.hasPdf && /qpc-v2-p/i.test(m.fontFamily) && String(m.pageAttr) === String(n),
       });
       console.log("measured", n, measurements.at(-1).ok ? "ok" : "FAIL", m.fontFamily);
     }

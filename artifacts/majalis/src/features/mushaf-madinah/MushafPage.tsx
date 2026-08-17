@@ -56,19 +56,29 @@ export function MushafPage({
               ) : null}
               {cell?.kind === "basmala" ? <MushafBasmala /> : null}
               {cell?.kind === "line" ? (
-                <MushafAyahLine
-                  words={cell.words}
-                  centered={opening}
-                  selectedVerseKey={selectedVerseKey}
-                  playingVerseKey={playingVerseKey}
-                  onSelectVerse={onSelectVerse}
-                />
+                cell.words.length > 0 && cell.words.every((w) => w.verseKey === "1:1") ? (
+                  <MushafBasmala
+                    words={cell.words}
+                    numbered
+                    selected={selectedVerseKey === "1:1"}
+                    playing={playingVerseKey === "1:1"}
+                    onSelect={onSelectVerse ? () => onSelectVerse("1:1") : undefined}
+                  />
+                ) : (
+                  <MushafAyahLine
+                    words={cell.words}
+                    centered={opening}
+                    selectedVerseKey={selectedVerseKey}
+                    playingVerseKey={playingVerseKey}
+                    onSelectVerse={onSelectVerse}
+                  />
+                )
               ) : null}
             </div>
           );
         })}
       </div>
-      <MushafPageFooter pageNumber={layout.pageNumber} hizbNumber={layout.hizbNumber} />
+      <MushafPageFooter pageNumber={layout.pageNumber} hizbStartingOnPage={layout.hizbStartingOnPage} />
     </article>
   );
 }

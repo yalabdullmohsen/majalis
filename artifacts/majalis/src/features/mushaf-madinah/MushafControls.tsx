@@ -3,8 +3,6 @@ import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
 
 type Props = {
   open: boolean;
-  /** إظهار زر الخروج حتى مع شريط الآية */
-  exitAlwaysVisible?: boolean;
   pageNumber: number;
   onExit: () => void;
   onIndex: () => void;
@@ -19,7 +17,6 @@ type Props = {
 /** أدوات المصحف — شريط سفلي وخروج؛ قلب الصفحة عبر الحواف/السحب. */
 export function MushafControls({
   open,
-  exitAlwaysVisible = false,
   pageNumber,
   onExit,
   onIndex,
@@ -42,7 +39,7 @@ export function MushafControls({
     setDraft(String(pageNumber));
   }, [pageNumber]);
 
-  const showExit = open || exitAlwaysVisible;
+  const showExit = open;
 
   return (
     <div

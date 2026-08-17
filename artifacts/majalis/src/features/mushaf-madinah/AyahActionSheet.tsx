@@ -168,6 +168,8 @@ export function AyahActionSheet({
         className={`mm-ayah-bar ayah-action-sheet${expanded ? " is-expanded" : " is-collapsed"}`}
         data-testid="mushaf-ayah-actions"
         data-sheet-height={expanded ? "85" : "35"}
+        data-opacity="1"
+        style={{ opacity: 1 }}
         role="dialog"
         aria-modal="true"
         aria-label="خيارات الآية"

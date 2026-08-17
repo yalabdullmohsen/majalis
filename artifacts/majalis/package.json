@@ -318,7 +318,7 @@
     "test:mushaf-single-pass:measure": "node scripts/mushaf-madinah/measure.mjs",
     "test:mushaf-single-pass:assert": "node scripts/mushaf-madinah/assert.mjs",
     "test:mushaf-single-pass": "pnpm run test:mushaf-single-pass:measure && MUSHAF_SINGLE_PASS_IN_DIR=artifacts/mushaf-single-pass pnpm run test:mushaf-single-pass:assert",
-    "test:mushaf-gates:unit": "node scripts/mushaf-madinah/unit-gate.mjs && node --import tsx src/lib/__tests__/mushaf-real-layout-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-basmala-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-rebuild-pages-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-layout-acceptance-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-604-integrity-gate.test.ts",
+    "test:mushaf-gates:unit": "node scripts/mushaf-madinah/unit-gate.mjs && node scripts/mushaf-madinah/r24-gate.mjs && node --import tsx src/lib/__tests__/mushaf-real-layout-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-basmala-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-rebuild-pages-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-layout-acceptance-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-604-integrity-gate.test.ts",
     "test:mushaf-page-completeness": "node -e \"console.log('mushaf UI gates disabled — skipped')\"",
     "test:first-run-setup": "node --import tsx src/lib/__tests__/first-run-setup-settings.test.ts",
     "native:strip-qpc-fonts": "node scripts/native-strip-qpc-fonts.mjs",

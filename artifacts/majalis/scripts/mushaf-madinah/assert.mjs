@@ -6,7 +6,10 @@ import { readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const dir = process.env.MUSHAF_SINGLE_PASS_IN_DIR || resolve("artifacts/mushaf-single-pass");
-const files = readdirSync(dir).filter((f) => f.endsWith(".json"));
+const outFile = process.env.MUSHAF_SINGLE_PASS_OUT;
+const files = outFile
+  ? [outFile]
+  : readdirSync(dir).filter((f) => /^measurements(-local|-shard-\d+)?\.json$/.test(f));
 if (!files.length) {
   console.error("لا ملفات قياسات في", dir);
   process.exit(1);
@@ -14,7 +17,8 @@ if (!files.length) {
 
 const all = [];
 for (const f of files) {
-  const raw = JSON.parse(readFileSync(resolve(dir, f), "utf8"));
+  const p = f.startsWith("/") || f.includes("artifacts/") ? resolve(f) : resolve(dir, f);
+  const raw = JSON.parse(readFileSync(p, "utf8"));
   all.push(...(raw.measurements || []));
 }
 

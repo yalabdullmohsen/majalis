@@ -43,8 +43,8 @@ assert.match(pageComp, /MushafPageFooter|pageNumber/);
 assert.match(pageComp, /useMushafPageFontFit/);
 assert.match(viewport, /mushaf-page-frame|mm-page-shell/);
 assert.match(viewport, /MushafControls/);
-assert.match(viewport, /exitAlwaysVisible/);
-assert.match(viewport, /2500/);
+assert.doesNotMatch(viewport, /exitAlwaysVisible/);
+assert.match(viewport, /MUSHAF_CHROME_HIDE_MS|3200/);
 assert.doesNotMatch(viewport, /scrollIntoView/);
 assert.doesNotMatch(
   css,
