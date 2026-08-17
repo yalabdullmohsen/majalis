@@ -230,6 +230,7 @@
     "test:no-mock-asr-guard": "node scripts/__tests__/verify-no-mock-asr-in-app.test.mjs",
     "test:brand-identity": "node scripts/test-brand-identity-gate.mjs && node scripts/verify-brand-green-hex.mjs",
     "test:color-contrast-gate": "node scripts/verify-color-contrast-gate.mjs",
+    "test:scroll-top": "node scripts/verify-scroll-top-gate.mjs",
     "test:contrast": "node scripts/verify-color-contrast-gate.mjs",
     "test:on-brand-contrast": "node scripts/verify-on-brand-contrast.mjs",
     "test:more-hub-contrast": "node scripts/test-more-hub-contrast-gate.mjs",

@@ -3379,6 +3379,11 @@ body.mobile-nav-body-lock {
   padding-bottom: 0;
 }
 
+/* مراسي #id تحت الترويسة المثبّتة — لا تُخفى خلف الشريط. */
+.app-main [id] {
+  scroll-margin-top: calc(var(--header-height, 3rem) + var(--inset-top, 0px));
+}
+
 body.has-assistant-fab .app-main {
   padding-bottom: calc(var(--assistant-fab-size) + var(--assistant-fab-gap) + 0.5rem);
 }

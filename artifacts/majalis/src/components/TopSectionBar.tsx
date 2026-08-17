@@ -167,7 +167,11 @@ export function TopSectionBar() {
 
   useEffect(() => {
     if (isMobileNav) return;
-    activeRef.current?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    const container = scrollRef.current;
+    const active = activeRef.current;
+    if (!container || !active) return;
+    const left = active.offsetLeft - (container.clientWidth - active.offsetWidth) / 2;
+    container.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
   }, [location, isMobileNav]);
 
   if (isImmersiveChromePath(location)) return null;

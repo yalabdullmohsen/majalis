@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
+import { Suspense, useEffect, useRef, useState, type ComponentType } from "react";
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
 import { AuthProvider, useAuth } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
@@ -11,6 +11,7 @@ import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { TopSectionBar } from "@/components/TopSectionBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { ScrollToTopOnRouteChange } from "@/components/ScrollToTopOnRouteChange";
 import { GlobalBackButton } from "@/components/GlobalBackButton";
 import { SafeAreaDebugOverlay } from "@/components/SafeAreaDebugOverlay";
 import { ComingSoonDialog } from "@/components/ComingSoonDialog";
@@ -36,7 +37,6 @@ import { OfflineBanner } from "@/components/OfflineBanner";
 import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
 import { PwaInstallBanner } from "@/components/PwaInstallBanner";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
-import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
@@ -355,49 +355,6 @@ function SeoManager() {
       });
     };
   }, [location]);
-  return null;
-}
-
-/** مواضع تمرير في الذاكرة — مفتاحها المسار؛ تُستعاد عند الرجوع فقط. */
-const scrollPosByPath = new Map<string, number>();
-
-/**
- * مسار جديد (push/link) → أعلى الصفحة فورًا قبل الرسم (useLayoutEffect).
- * رجوع (popstate) فقط → استعادة الموضع المحفوظ لذلك المسار.
- * عُطّل استرجاع المتصفح الافتراضي وسلوك شريط الأقسام الذي كان يُبقي
- * المستخدم في أسفل القوائم الطويلة عند الدخول للأقسام.
- */
-function ScrollResetOnNav() {
-  const [location] = useLocation();
-  const isPopRef = useRef(false);
-  const lastLocationRef = useRef(location);
-
-  useEffect(() => {
-    if (typeof history !== "undefined" && "scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
-    }
-    const onPopState = () => { isPopRef.current = true; };
-    window.addEventListener("popstate", onPopState);
-    return () => window.removeEventListener("popstate", onPopState);
-  }, []);
-
-  useLayoutEffect(() => {
-    const leavingLocation = lastLocationRef.current;
-    const isPop = isPopRef.current;
-    recordNavigationVisit(location, isPop ? "pop" : "push");
-    if (leavingLocation !== location) {
-      scrollPosByPath.set(leavingLocation, window.scrollY);
-    }
-    lastLocationRef.current = location;
-    isPopRef.current = false;
-
-    if (isPop) {
-      window.scrollTo(0, scrollPosByPath.get(location) ?? 0);
-      return;
-    }
-    window.scrollTo(0, 0);
-  }, [location]);
-
   return null;
 }
 
@@ -1097,7 +1054,7 @@ function AppShellInner() {
       <UpdateAvailableBanner />
       <NavProgressBar />
       <SeoManager />
-      <ScrollResetOnNav />
+      <ScrollToTopOnRouteChange />
       <RouteEnterMotion />
       <EdgeSwipeBack />
       <IslamicReminderBootstrap />
