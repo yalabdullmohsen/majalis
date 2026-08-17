@@ -20,6 +20,12 @@ export default function MushafReaderPage() {
   const pageNumber = useMemo(() => resolvePage(params, search), [params, search]);
 
   useEffect(() => {
+    void import("@/lib/font-ready").then((m) => {
+      void m.warmStaticQuranicFonts(["Amiri Quran", "KFGQPC Hafs Uthmanic"]);
+    });
+  }, []);
+
+  useEffect(() => {
     applyPageSeo({
       path: `/mushaf?page=${pageNumber}`,
       title: `المصحف — صفحة ${pageNumber} | المجلس العلمي`,

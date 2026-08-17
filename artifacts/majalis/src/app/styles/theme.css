@@ -41,7 +41,7 @@
   --color-splash: #0E1A15;
 
   /* مرجع الإنتاج: فقرات/عناوين بطاقات /tafsir (.tf-intro + .tf-card__term) = Amiri نَسخي */
-  --font-app: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-app: "Amiri", "Noto Naskh Arabic", "MajlisFallback", "Traditional Arabic", serif;
   --font-face: var(--font-app);
   --font-ui: var(--font-app);
   --font-num: var(--font-app);
@@ -184,7 +184,7 @@
   --mj-s6: 24px;
   --mj-s8: 32px;
   --mj-s12: 48px;
-  --font-app: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-app: "Amiri", "Noto Naskh Arabic", "MajlisFallback", "Traditional Arabic", serif;
   --mj-face: var(--font-app);
   --mj-ui: var(--font-app);
   --mj-num: var(--font-app);

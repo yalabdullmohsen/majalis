@@ -27,13 +27,17 @@ for (const alias of ["--font-display", "--font-body", "--font-sans", "--font-ui"
   }
 }
 const indexHtml = readFileSync(ROOT + "index.html", "utf8");
-const primaryFontHref = indexHtml.match(/fonts\.googleapis\.com\/css2\?family=([^"'>\s]+)/)?.[1] || "";
-if (!/Amiri/.test(primaryFontHref) || !/Noto\+Naskh/.test(primaryFontHref)) {
-  console.error("✗ index.html يجب أن يحمّل Amiri و Noto Naskh كخط واجهة أساسي");
+if (/fonts\.googleapis\.com|fonts\.gstatic\.com/.test(indexHtml)) {
+  console.error("✗ أزل Google Fonts من index.html — الخطوط محلية في /fonts/ui/");
   process.exit(1);
 }
-if (/family=Alexandria/.test(indexHtml) || /IBM\+Plex\+Sans\+Arabic/.test(primaryFontHref)) {
-  console.error("✗ احذف Alexandria / IBM Plex من تحميل خط الواجهة الأساسي");
+if (!/\/fonts\/ui\/amiri-400-ar\.woff2/.test(indexHtml)) {
+  console.error("✗ index.html يجب أن يحمّل مسبقاً Amiri المحلي كخط واجهة أساسي");
+  process.exit(1);
+}
+const fontsUi = readFileSync(ROOT + "src/styles/fonts-ui.css", "utf8");
+if (!/"Amiri"/.test(fontsUi) || !/"Noto Naskh Arabic"/.test(fontsUi)) {
+  console.error("✗ fonts-ui.css يجب أن يعرّف Amiri و Noto Naskh محليًا");
   process.exit(1);
 }
 
@@ -41,9 +45,10 @@ if (/family=Alexandria/.test(indexHtml) || /IBM\+Plex\+Sans\+Arabic/.test(primar
 // وما يتبعه مباشرة من نصوص تراثية (بالاسم الصريح المُدقَّق يدويًا، وليس أي
 // نص يستخدم الخط لأسباب زخرفية فقط — راجع تقرير 2026-07-13).
 const QURAN_EXCEPTION_FONTS = [
-  "amiri quran", "amiri", "scheherazade", "kfgqpc", "uthmanic", "hafs",
+  "amiri quran", "amiri", "scheherazade", "scheherazade new", "kfgqpc", "uthmanic", "hafs",
   "kfgqpc hafs uthmanic",
   "aref ruqaa", "noto naskh arabic",
+  "majlisfallback",
   // قياس عرض أسطر QCF V2 في measure-mushaf-line-deviation.mjs (خطوط p{n}.woff2)
   "qpc",
 ];

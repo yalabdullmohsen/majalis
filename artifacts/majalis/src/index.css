@@ -6,18 +6,16 @@
    بطء/انقطاع الشبكة، هذا يعني سقوطًا فعليًا لخط بديل لا يدعم رموز الرسم
    العثماني (كالحروف المقطّعة "الٓمٓ") بشكل صحيح — نص قرآني مشوَّه ولو
    للحظة. الحل: نفس ملف الخط بالضبط (Amiri Quran العادي، النطاق العربي)
-   مُستضاف محليًا في public/fonts/amiri-quran/، مع preload في index.html
-   وfont-display:swap. مُعرَّف هنا (لا في quran.css) لأنه يُستخدَم من
-   ملفات غير مرتبطة بالمصحف مباشرة (elite-2026.css، majalis-v2.css...). */
+   مُستضاف محليًا في public/fonts/amiri-quran/ مع font-display:swap.
+   لا preload عام — التحميل عند استخدام العائلة أو عند دخول /mushaf.
+   مُعرَّف هنا لأنه يُستخدَم من صفحات قرآنية خارج مسار المصحف. */
 
 @font-face {
   font-family: "Amiri Quran";
   font-style: normal;
   font-weight: 400;
-  /* swap + preload في index.html: يظهر النص فورًا بخط نظام ثم يستبدل —
-     أفضل من block الذي كان يؤخّر الرسم على الشبكات البطيئة. خطوط QPC
-     للصفحة تبقى display:block داخل useMushafPageFont.
-     size-adjust يقلّل CLS عند استبدال احتياطي النظام بـ Amiri. */
+  /* swap: يظهر النص فورًا بخط نظام ثم يستبدل.
+     خطوط QPC للصفحة تبقى display:block داخل useQpcPageFont. */
   font-display: swap;
   size-adjust: 100%;
   ascent-override: 90%;

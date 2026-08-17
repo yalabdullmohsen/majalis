@@ -104,41 +104,14 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- أقصى preconnect حرجين فقط (Lighthouse) — الباقي dns-prefetch أو تسخين ديناميكي -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- preconnect حرج واحد فقط (Lighthouse ≤٢) — خطوط الواجهة محلية -->
     <link rel="preconnect" href="https://ngmvmlulzacrlicuagyp.supabase.co" />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://api.alquran.cloud" />
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <link rel="dns-prefetch" href="https://everyayah.com" />
     <link rel="dns-prefetch" href="https://server8.mp3quran.net" />
-    <!-- خط الواجهة الموحَّد: Amiri / Noto Naskh (مرجع صفحة التفسير). Amiri Quran محلي للمصحف فقط. -->
-    <link rel="preload" href="/fonts/amiri-quran/AmiriQuran-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap" media="print" onload="this.media='all'" />
-    <script>
-      (function () {
-        var href = "https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap";
-        function loadDecorFonts() {
-          if (document.getElementById("majalis-decor-fonts")) return;
-          var l = document.createElement("link");
-          l.id = "majalis-decor-fonts";
-          l.rel = "stylesheet";
-          l.href = href;
-          document.head.appendChild(l);
-        }
-        if ("requestIdleCallback" in window) {
-          requestIdleCallback(loadDecorFonts, { timeout: 4000 });
-        } else {
-          window.addEventListener("load", function () { setTimeout(loadDecorFonts, 1); }, { once: true });
-        }
-        ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (evt) {
-          window.addEventListener(evt, loadDecorFonts, { once: true, passive: true });
-        });
-      })();
-    </script>
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet" />
-    </noscript>
+    <!-- خط الشاشة الأولى فقط — Amiri 400 عربي. خطوط المصحف تُحمَّل داخل /mushaf -->
+    <link rel="preload" href="/fonts/ui/amiri-400-ar.woff2" as="font" type="font/woff2" crossorigin />
 
     <script type="application/ld+json">
       {

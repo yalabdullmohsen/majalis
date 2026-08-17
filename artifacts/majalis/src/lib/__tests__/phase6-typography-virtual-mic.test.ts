@@ -41,12 +41,16 @@ assert.match(indexCss, /size-adjust/);
 assert.match(indexCss, /ascent-override/);
 
 const html = readFileSync(resolve(root, "index.html"), "utf8");
-assert.match(html, /fonts\/amiri-quran\/AmiriQuran-Regular\.woff2/);
+assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/);
+assert.match(html, /fonts\/ui\/amiri-400-ar\.woff2/);
 assert.ok(existsSync(resolve(root, "public/fonts/amiri-quran/AmiriQuran-Regular.woff2")));
 assert.ok(existsSync(resolve(root, "public/fonts/qpc-v2/p1.woff2")));
+assert.ok(existsSync(resolve(root, "public/fonts/ui/amiri-400-ar.woff2")));
 
 const main = read("main.tsx");
-assert.match(main, /warmStaticQuranicFonts/);
+assert.doesNotMatch(main, /warmStaticQuranicFonts/, "لا تسخين خطوط مصحف على كل صفحة");
+assert.match(read("pages/quran/MushafReaderPage.tsx"), /warmStaticQuranicFonts/);
+assert.match(read("styles/fonts-ui.css"), /\/fonts\/ui\/amiri-400-ar\.woff2/);
 
 assert.ok(existsSync(resolve(root, "public/fonts/qpc-v2/p1.woff2")), "خطوط QPC محفوظة كبيانات");
 
