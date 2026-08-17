@@ -137,6 +137,10 @@ async function mount() {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       window.dispatchEvent(new Event("mj:app-painted"));
+      // تسخين chunk الرئيسية فور الرسم — بدون إدخاله في حزمة الإقلاع (ميزانية gzip)
+      if (location.pathname === "/" || location.pathname === "" || /\/$/.test(location.pathname)) {
+        void import("@/pages/account/HomePage");
+      }
     });
   });
 

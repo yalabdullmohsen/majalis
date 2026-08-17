@@ -30,8 +30,6 @@ import { HomeCustomizeSheet } from "@/components/home/HomeCustomizeSheet";
 import { HomeRecentPagesBar } from "@/components/home/HomeRecentPagesBar";
 import { HomeExplorePlatform } from "@/components/home/HomeExplorePlatform";
 import { HomeContentHub } from "@/components/home/HomeContentHub";
-import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
-import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
 import { HomeDailyWirdBand } from "@/components/home/DailyWirdCard";
 import { HomeMostReadBand } from "@/components/home/HomeMostReadBand";
@@ -48,6 +46,15 @@ import {
 } from "@/lib/homepage-layout";
 import "@/styles/m2030/home.css";
 import "@/styles/pages/home-legacy.css";
+
+const HomeUpcomingLessons = lazyWithRetry(
+  () => import("@/components/home/HomeUpcomingLessons").then((m) => ({ default: m.HomeUpcomingLessons })),
+  "HomeUpcomingLessons",
+);
+const HomeUpcomingCourses = lazyWithRetry(
+  () => import("@/components/home/HomeUpcomingCourses").then((m) => ({ default: m.HomeUpcomingCourses })),
+  "HomeUpcomingCourses",
+);
 
 const HomeCompactPrayer = lazyWithRetry(() => import("@/components/home/HomeCompactPrayer").then((m) => ({ default: m.HomeCompactPrayer })), "HomeCompactPrayer");
 const HomeDailyBenefits = lazyWithRetry(() => import("@/components/home/HomeDailyBenefits").then((m) => ({ default: m.HomeDailyBenefits })), "HomeDailyBenefits");
@@ -182,7 +189,7 @@ export default function HomePage() {
       <HomeDailyWirdBand />
 
       {visibleWidgets.includes("lessons") && (
-        <section className="m2030-band m2030-band--sage" aria-label="دروس اليوم">
+        <section className="m2030-band m2030-band--sage m2030-band--defer" aria-label="دروس اليوم">
           <div className="m2030-band__head">
             <h2 className="m2030-band__title">آخر الدروس</h2>
             <Link href="/lessons" className="m2030-band__link">كل الدروس</Link>

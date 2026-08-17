@@ -17,6 +17,12 @@ assert.match(vite, /esbuild:\s*\{[\s\S]*target:\s*"es2022"/, "esbuild target es2
 assert.match(vite, /build:\s*\{[\s\S]*target:\s*"es2022"/, "build target es2022");
 assert.match(vite, /legalComments:\s*"none"/, "strip legal comments from bundles");
 assert.match(vite, /sourcemap:\s*"hidden"/, "source maps hidden — no sourceMappingURL in JS");
+assert.match(vite, /resolveDependencies/, "modulePreload filters heavy chunks from boot");
+assert.match(
+  readFileSync(join(root, "package.json"), "utf8"),
+  /strip:sourcemaps/,
+  "post-build strips .map files for Best Practices",
+);
 assert.match(vite, /drop:\s*process\.env\.NODE_ENV === "production" \? \["console", "debugger"\]/, "drop console in production");
 assert.match(vite, /assetsInlineLimit:\s*4096/, "inline small assets");
 assert.match(vite, /cssCodeSplit:\s*true/, "CSS code splitting enabled");

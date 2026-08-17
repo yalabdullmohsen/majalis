@@ -74,7 +74,7 @@
     "smoke:production-loading": "node scripts/smoke-production-loading.mjs",
     "bootstrap:platform": "node scripts/run-platform-bootstrap.mjs",
     "bootstrap:platform:status": "node scripts/run-platform-bootstrap.mjs status",
-    "build": "pnpm run test:content-guard && pnpm run test:lesson-card-posters && pnpm run generate:counts && pnpm run generate:search-index && pnpm run generate:rulings && pnpm run generate:seo && pnpm run verify:meta-consistency && pnpm run verify:ios-edge && pnpm run verify:hadith-integrity && pnpm run verify:seo-prerender && pnpm run verify:body-meta-gate && pnpm run verify:methodology-prerender && pnpm run verify:related-dedupe && pnpm run verify:spacing-gate && pnpm run verify:head-shell-gate && pnpm run verify:pageshell-gate && pnpm run verify:orphan-discovery && pnpm run verify:no-autofocus && pnpm run generate:quran-pages && vite build --config vite.config.ts && node scripts/test-critical-css-budget.mjs && node scripts/generate-version.mjs && node scripts/verify-deploy-cache-versioning.mjs && node scripts/prerender.mjs && node scripts/post-build-seo.mjs && pnpm run test:dynamic-404 && node scripts/test-no-regressions.mjs",
+    "build": "pnpm run test:content-guard && pnpm run test:lesson-card-posters && pnpm run generate:counts && pnpm run generate:search-index && pnpm run generate:rulings && pnpm run generate:seo && pnpm run generate:seo-nav-labels && pnpm run verify:meta-consistency && pnpm run verify:ios-edge && pnpm run verify:hadith-integrity && pnpm run verify:seo-prerender && pnpm run verify:body-meta-gate && pnpm run verify:methodology-prerender && pnpm run verify:related-dedupe && pnpm run verify:spacing-gate && pnpm run verify:head-shell-gate && pnpm run verify:pageshell-gate && pnpm run verify:orphan-discovery && pnpm run verify:no-autofocus && pnpm run generate:quran-pages && vite build --config vite.config.ts && pnpm run strip:sourcemaps && node scripts/test-critical-css-budget.mjs && node scripts/generate-version.mjs && node scripts/verify-deploy-cache-versioning.mjs && node scripts/prerender.mjs && node scripts/post-build-seo.mjs && pnpm run test:dynamic-404 && node scripts/test-no-regressions.mjs",
     "test:dynamic-404": "node --import tsx scripts/test-dynamic-404-safety.mjs",
     "test:content-guard": "node scripts/content-guard.mjs",
     "test:content-schema": "node scripts/content-gates/test-content-schema.mjs",
@@ -339,7 +339,7 @@
     "refresh:lessons-snapshot": "node --import tsx scripts/refresh-lessons-seed-snapshot.mjs",
     "lint:design-tokens": "node scripts/lint-design-tokens.mjs",
     "test:on-dark-text-tokens": "node --import tsx src/lib/__tests__/on-dark-text-tokens.test.ts && node --import tsx src/lib/__tests__/prophet-stories-on-dark-text.test.ts",
-    "test:topic-page-shell": "node --import tsx src/lib/__tests__/arabic-count.test.ts && node --import tsx src/lib/__tests__/topic-themes-contrast.test.ts && node --import tsx src/lib/__tests__/topic-page-shell-gate.test.ts",
+    "test:topic-page-shell": "node --import tsx src/lib/__tests__/arabic-count.test.ts && node --import tsx src/lib/__tests__/topic-themes-contrast.test.ts && node --import tsx src/lib/__tests__/topic-page-shell-gate.test.ts && node --import tsx src/lib/__tests__/a11y-bp-boot-gate.test.ts",
     "test:quran-data-integrity": "node --import tsx src/lib/__tests__/quran-data-integrity.test.ts",
     "test:qpc-fonts-present": "node -e \"const fs=require('fs'); const p='public/fonts/qpc-v2/p1.woff2'; if(!fs.existsSync(p)) {console.error('missing',p); process.exit(1)}; console.log('✓ QPC fonts present', p);\"",
     "test:official-brand-seo": "node scripts/test-official-brand-seo.mjs",
@@ -367,7 +367,9 @@
     "test:sections-registry": "node --import tsx src/lib/__tests__/sections-registry.test.ts",
     "generate:quran-stats": "node -e \"console.error('أُلغي توليد الإحصاءات الآلي — المحتوى في content/quran-stats فقط'); process.exit(1)\"",
     "verify:quran-stats": "node --import tsx scripts/verify-quran-stats.mjs",
-    "test:quran-stats-catalog": "node --import tsx src/lib/__tests__/quran-stats-catalog.test.ts"
+    "test:quran-stats-catalog": "node --import tsx src/lib/__tests__/quran-stats-catalog.test.ts",
+    "generate:seo-nav-labels": "node scripts/generate-seo-nav-labels.mjs",
+    "strip:sourcemaps": "node scripts/strip-sourcemaps.mjs"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

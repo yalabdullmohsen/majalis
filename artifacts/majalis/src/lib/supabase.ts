@@ -37,7 +37,6 @@ const LESSON_LIST_COLUMNS = [
   "slug",
   "created_at",
   "updated_at",
-  "poster_url",
   "audio_url",
   "video_url",
 ].join(",");

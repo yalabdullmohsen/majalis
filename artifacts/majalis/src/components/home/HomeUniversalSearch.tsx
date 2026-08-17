@@ -135,7 +135,7 @@ export function HomeUniversalSearch() {
           autoComplete="off"
           enterKeyHint="search"
           aria-autocomplete="list"
-          aria-controls={listId}
+          aria-controls={showIdle || showResults ? listId : undefined}
           onFocus={() => {
             setFocused(true);
             void import("@/features/search/unified-local").then((m) =>

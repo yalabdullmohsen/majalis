@@ -127,9 +127,16 @@
 
 .m2030-band__link {
   font-size: 0.82rem;
-  color: var(--brand);
+  /* نص على سطح فاتح: --brand (#1F7A5A) = 4.46:1 — استخدم --brand-on-white (#146C4E) ≥ 4.5:1 */
+  color: var(--brand-on-white);
   text-decoration: none;
   font-weight: 600;
+}
+
+/* تحت الطيّ: لا تؤجّل رسم عنصر LCP — فقط الشرائط الثانوية */
+.m2030-band--defer {
+  content-visibility: auto;
+  contain-intrinsic-size: 320px;
 }
 
 .m2030-prayer {
