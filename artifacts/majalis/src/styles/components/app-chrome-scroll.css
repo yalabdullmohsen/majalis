@@ -4,14 +4,14 @@
  */
 
 :root {
-  --app-bg: var(--mj-bg, #f2f4f3);
+  --app-bg: var(--surface-app, var(--mj-bg));
   /* 100% ارتفاع الشريط + safe-area حتى يختفي تمامًا تحت الشاشة */
   --bottom-nav-hide-shift: calc(100% + var(--inset-bottom, 0px));
 }
 
 html[data-theme="dark"],
 html.dark {
-  --app-bg: var(--mj-bg, #101614);
+  --app-bg: var(--surface-app, var(--mj-bg));
 }
 
 html:not(.pts-immersive),

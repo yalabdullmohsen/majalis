@@ -1,5 +1,5 @@
 /**
- * بوابة: الشريط السفلي يغطي Safe Area بخلفية بيضاء صلبة (لا تسرب أخضر من الجسم).
+ * بوابة: الشريط السفلي يطابق لون الصفحة (--surface-app) لا أبيض مستقل ولا تسرب أخضر.
  * node --import tsx src/lib/__tests__/bottom-nav-safe-area-green.test.ts
  */
 import assert from "node:assert/strict";
@@ -23,8 +23,13 @@ assert.match(
 assert.match(finalCss, /backdrop-filter:\s*none/);
 assert.match(
   finalCss,
-  /\.bottom-nav[\s\S]*?background-color:\s*#ffffff\s*!important/,
-  "خلفية الشريط السفلي بيضاء صلبة",
+  /\.bottom-nav[\s\S]*?background-color:\s*var\(--surface-app/,
+  "خلفية الشريط السفلي تطابق --surface-app",
+);
+assert.doesNotMatch(
+  finalCss,
+  /\.bottom-nav[\s\S]{0,400}?background-color:\s*#ffffff\s*!important/,
+  "الشريط السفلي لا يفرض أبيض مستقل",
 );
 assert.doesNotMatch(
   finalCss,

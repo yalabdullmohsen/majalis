@@ -4,6 +4,8 @@
  */
 
 @theme {
+  /* سطح التطبيق الواحد — الأسطح المتلاصقة ترجع إليه لا إلى هكس مستقل */
+  --surface-app: #F2F4F3;
   --color-bg: #F2F4F3;
   --color-surface: #FFFFFF;
   --color-surface-2: #E9EDEB;
@@ -138,9 +140,16 @@
   --keyboard-inset: 0px;
   --edge-deadzone: 20px;
 
-  --mj-bg: #F2F4F3;
-  --mj-more-sheet: #F2F4F3;
+  --surface-app: #F2F4F3;
+  --mj-bg: var(--surface-app);
+  --mj-more-sheet: var(--surface-app);
   --mj-surface: #FFFFFF;
+  --on-green: var(--mj-brand);
+  --on-surface: var(--mj-ink);
+  --on-surface-muted: var(--mj-ink-2);
+  --on-dark-strong: #FFFFFF;
+  --on-dark-body: #F8FAFC;
+  --on-dark-secondary: #E8EEEC;
   --mj-surface-2: #E9EDEB;
   --mj-surface-3: #E3E8E6;
   --mj-hairline: #E3E8E6;
@@ -246,8 +255,9 @@ html[data-theme="dark"],
 html.dark,
 [data-theme="dark"],
 .dark {
-  --mj-bg: #131A18;
-  --mj-more-sheet: #101614;
+  --surface-app: #131A18;
+  --mj-bg: var(--surface-app);
+  --mj-more-sheet: var(--surface-app);
   --mj-surface: #1B2421;
   --mj-surface-2: #222D29;
   --mj-surface-3: #2A3733;
@@ -293,7 +303,7 @@ html.dark,
   --danger-bg: #3A2226;
   --danger-txt: #F2B8C0;
 
-  --color-bg: #131A18;
+  --color-bg: var(--surface-app);
   --color-surface: #1B2421;
   --color-surface-2: #222D29;
   --color-hairline: #35443F;
@@ -330,6 +340,24 @@ html.dark,
   --mj-elev-2: none;
   --mj-elev-3: none;
   --mj-sh: none;
+  --on-green: var(--on-dark-strong);
+  --on-surface: var(--mj-ink);
+  --on-surface-muted: var(--mj-ink-2);
+}
+
+/* نص فوق أخضر/داكن: يعيد رموز النص دون لمس لون الصفحة */
+[data-on-dark],
+.on-dark {
+  --mj-ink: var(--on-dark-strong);
+  --mj-ink-2: var(--on-dark-body);
+  --mj-muted: var(--on-dark-secondary);
+  --on-surface: var(--on-dark-strong);
+  --on-surface-muted: var(--on-dark-secondary);
+  --on-green: var(--on-dark-strong);
+  --color-ink: var(--on-dark-strong);
+  --text-primary: var(--on-dark-strong);
+  --foreground: var(--on-dark-strong);
+  color: var(--on-dark-strong);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -403,7 +431,7 @@ body {
   font-size: var(--mj-fs-body);
   line-height: var(--mj-lh-body);
   color: var(--mj-ink);
-  background: var(--mj-bg);
+  background: var(--surface-app);
   overflow-x: clip;
 }
 

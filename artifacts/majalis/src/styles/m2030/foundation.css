@@ -37,7 +37,7 @@ html.dark body {
 #root,
 .app-shell,
 .majlisilm-app {
-  background-color: var(--mj-bg, #F2F4F3);
+  background-color: var(--surface-app, var(--mj-bg));
   color: var(--text);
 }
 
@@ -45,7 +45,7 @@ html[data-theme="dark"] #root,
 html[data-theme="dark"] .app-shell,
 html.dark #root,
 html.dark .app-shell {
-  background-color: var(--mj-bg, #101614);
+  background-color: var(--surface-app, var(--mj-bg));
 }
 
 h1, h2, h3, .ds-section__title {
