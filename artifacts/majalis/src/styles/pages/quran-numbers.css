@@ -23,7 +23,8 @@
 }
 
 .quran-numbers-page {
-  padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 16px);
+  /* شريط سفلي + زر المساعد العائم — بلا تراكب على البطاقات */
+  padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 5.5rem);
 }
 
 .quran-numbers-intro {

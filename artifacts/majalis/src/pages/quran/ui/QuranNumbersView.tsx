@@ -1,20 +1,16 @@
 /**
- * صفحة /quran-hub/numbers — القرآن في أرقام (قسم مرجعي موثّق).
+ * صفحة /quran-hub/numbers — القرآن في أرقام (محتوى محرَّر من مصادر مطبوعة فقط).
  */
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { useEffect } from "react";
 import {
-  assertQuranStatsCatalog,
   buildQuranStatsCatalog,
+  formatStatSourceFull,
+  formatStatSourceLine,
 } from "@/lib/quran-stats/catalog";
-import type {
-  QuranComputedStats,
-  QuranStat,
-  QuranStatGroup,
-  SurahStatRow,
-  WordFreqRow,
-} from "@/lib/quran-stats/types";
+import type { QuranStat, QuranStatGroup } from "@/lib/quran-stats/types";
 import {
   QURAN_STAT_BASIS_LABEL,
   QURAN_STAT_GROUP_LABEL,
@@ -30,11 +26,12 @@ import "@/styles/pages/quran-numbers.css";
 
 const GROUPS: QuranStatGroup[] = ["bunya", "alfaz", "mawdoo", "suwar", "ajaib"];
 
+const CATALOG = buildQuranStatsCatalog();
+
 function displayValue(value: number | string): string {
   return formatArabicNumber(value);
 }
 
-/** بحث القسم بمحرك التسامح نفسه المستخدم في runAppSearch */
 function matchesSectionQuery(blob: string, query: string): boolean {
   const q = query.trim();
   if (!q) return true;
@@ -50,88 +47,34 @@ function mushafHref(surah: number, ayah: number): string {
 }
 
 export default function QuranNumbersPage() {
-  const [stats, setStats] = useState<QuranStat[]>([]);
-  const [computed, setComputed] = useState<QuranComputedStats | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [active, setActive] = useState<QuranStat | null>(null);
   const [group, setGroup] = useState<QuranStatGroup | "all">("bunya");
   const [query, setQuery] = useState("");
-  const [freqMode, setFreqMode] = useState<"content" | "all">("content");
-  const [freqQ, setFreqQ] = useState("");
   const [shareStatus, setShareStatus] = useState<string | null>(null);
-  const [surahSort, setSurahSort] = useState<"number" | "ayahs" | "words">("number");
-  const [surahQ, setSurahQ] = useState("");
 
   useEffect(() => {
     applyPageSeo({
       path: "/quran-hub/numbers",
       title: "القرآن في أرقام — المجلس العلمي",
       description:
-        "إحصاءات قرآنية موثّقة: بنية المصحف، معجم الألفاظ، الموضوعات، السور، ولطائف ب مصادر معتمدة.",
+        "إحصاءات قرآنية موثّقة من مصادر مطبوعة: بنية المصحف، المعجم المفهرس، وعدّ الآي، بلا اشتقاق رقمي من نص المصحف.",
       keywords: ["إحصاءات", "عدد الآيات", "المعجم المفهرس", "عدّ الآي"],
     });
   }, []);
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch("/data/quran/stats.json", { cache: "force-cache" });
-        if (!res.ok) throw new Error("تعذّر تحميل الإحصاءات المحسوبة");
-        const data = (await res.json()) as QuranComputedStats;
-        const catalog = buildQuranStatsCatalog(data);
-        assertQuranStatsCatalog(catalog);
-        if (!cancelled) {
-          setComputed(data);
-          setStats(catalog);
-        }
-      } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : "خطأ");
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
   const filtered = useMemo(() => {
-    return stats.filter((s) => {
+    return CATALOG.filter((s) => {
       if (group !== "all" && s.group !== group) return false;
-      const blob = `${s.label} ${s.note ?? ""} ${s.detail ?? ""} ${s.source} ${displayValue(s.value)}`;
+      const blob = `${s.label} ${s.note ?? ""} ${s.detail ?? ""} ${formatStatSourceLine(s.source)} ${displayValue(s.value)}`;
       return matchesSectionQuery(blob, query);
     });
-  }, [stats, group, query]);
-
-  const freqRows: WordFreqRow[] = useMemo(() => {
-    if (!computed?.wordFreq) return [];
-    const rows =
-      freqMode === "content" ? computed.wordFreq.contentTop : computed.wordFreq.allTop;
-    return rows.filter((r) => matchesSectionQuery(`${r.form} ${r.count}`, freqQ)).slice(0, 200);
-  }, [computed, freqMode, freqQ]);
-
-  const longestWords = useMemo(
-    () => computed?.wordFreq?.longestWords ?? [],
-    [computed],
-  );
-
-  const surahRows: SurahStatRow[] = useMemo(() => {
-    const rows = [...(computed?.perSurah ?? [])];
-    const filteredRows = rows.filter((r) =>
-      matchesSectionQuery(`${r.name} ${r.number} ${r.ayahs} ${r.words}`, surahQ),
-    );
-    filteredRows.sort((a, b) => {
-      if (surahSort === "ayahs") return b.ayahs - a.ayahs;
-      if (surahSort === "words") return b.words - a.words;
-      return a.number - b.number;
-    });
-    return filteredRows;
-  }, [computed, surahSort, surahQ]);
+  }, [group, query]);
 
   const onShare = useCallback(async (stat: QuranStat) => {
     const text = [
       `${stat.label}: ${displayValue(stat.value)}`,
       QURAN_STAT_KIND_LABEL[stat.kind],
-      `المصدر: ${stat.source}`,
+      `المصدر: ${formatStatSourceFull(stat.source)}`,
       stat.note ? `بيان: ${stat.note}` : "",
       "— المجلس العلمي",
     ]
@@ -177,8 +120,9 @@ export default function QuranNumbersPage() {
           النص. مصحف المدينة برواية حفص يعتمد <strong>العدّ الكوفي</strong> (٦٢٣٦ آية).
         </p>
         <p>
-          أما عدّ الألفاظ فالمرجع الأصل <strong>المعجم المفهرس</strong> لعبد الباقي؛ والحساب الآلي في
-          هذا القسم يُعرض للمقارنة مع بيان منهجيته، دون إخفاء الخلاف أو إيهام القطع.
+          أما عدّ الألفاظ فالمرجع الأصل <strong>المعجم المفهرس لألفاظ القرآن الكريم</strong> لمحمد
+          فؤاد عبد الباقي، مع التفريق بين اللفظ والمادة والموضوع. لا يُعرض في هذا القسم أي رقم مشتق
+          آليًا من نص المصحف.
         </p>
       </section>
 
@@ -224,8 +168,6 @@ export default function QuranNumbersPage() {
         </div>
       </div>
 
-      {error ? <p className="sections-hub__empty">{error}</p> : null}
-
       <div className="quran-numbers-grid" data-sections-grid="quran-numbers">
         {filtered.map((s) => (
           <button
@@ -246,157 +188,13 @@ export default function QuranNumbersPage() {
             <span className="quran-stat-card__value">{displayValue(s.value)}</span>
             <span className="quran-stat-card__label">{s.label}</span>
             {s.note ? <span className="quran-stat-card__note">{s.note}</span> : null}
-            <span className="quran-stat-card__source">{s.source}</span>
+            <span className="quran-stat-card__source">{formatStatSourceLine(s.source)}</span>
           </button>
         ))}
       </div>
 
-      {(group === "alfaz" || group === "all") && (freqRows.length > 0 || longestWords.length > 0) ? (
-        <>
-          <section className="quran-numbers-table-wrap" aria-label="معجم التكرار">
-            <h2>أكثر الألفاظ تكرارًا</h2>
-            <div className="quran-numbers-freq-modes">
-              <button
-                type="button"
-                data-active={freqMode === "content" ? "1" : "0"}
-                onClick={() => setFreqMode("content")}
-              >
-                ألفاظ معجمية
-              </button>
-              <button
-                type="button"
-                data-active={freqMode === "all" ? "1" : "0"}
-                onClick={() => setFreqMode("all")}
-              >
-                كل الألفاظ
-              </button>
-            </div>
-            <label className="quran-numbers-search">
-              <span className="sr-only">بحث في معجم التكرار</span>
-              <input
-                type="search"
-                value={freqQ}
-                onChange={(e) => setFreqQ(e.target.value)}
-                placeholder="ابحث عن لفظ…"
-                aria-label="بحث في معجم التكرار"
-              />
-            </label>
-            <p className="quran-numbers-table-note">
-              حساب آلي بعد التجريد (صيغة حرفية أو استبعاد أدوات للوضع المعجمي). المرجع الأصل
-              للمواضع: المعجم المفهرس لعبد الباقي. تبديل الجذر الكامل يحتاج معجم جذور مستقل.
-            </p>
-            <div className="quran-numbers-table-scroll">
-              <table className="quran-numbers-table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>اللفظ</th>
-                    <th>التكرار</th>
-                    <th>حروف</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {freqRows.map((row, i) => (
-                    <tr key={`${row.form}-${i}`}>
-                      <td>{displayValue(i + 1)}</td>
-                      <td>{row.form}</td>
-                      <td>{displayValue(row.count)}</td>
-                      <td>{displayValue(row.letters)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          {longestWords.length > 0 ? (
-            <section className="quran-numbers-table-wrap" aria-label="أطول الكلمات">
-              <h2>أطول الكلمات بالرسم العثماني</h2>
-              <p className="quran-numbers-table-note">
-                أعلى ٢٠ كلمة بعدد الحروف بعد التجريد (بلا تشكيل ولا علامات وقف) — نتيجة محسوبة لا
-                منقولة.
-              </p>
-              <div className="quran-numbers-table-scroll">
-                <table className="quran-numbers-table">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>الكلمة</th>
-                      <th>حروف</th>
-                      <th>الموضع</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {longestWords.map((row, i) => (
-                      <tr key={`${row.form}-${row.surah}-${row.ayah}`}>
-                        <td>{displayValue(i + 1)}</td>
-                        <td>{row.form}</td>
-                        <td>{displayValue(row.letters)}</td>
-                        <td>
-                          <Link href={mushafHref(row.surah, row.ayah)}>
-                            {displayValue(row.surah)}:{displayValue(row.ayah)}
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </section>
-          ) : null}
-        </>
-      ) : null}
-
-      {(group === "suwar" || group === "all") && surahRows.length > 0 ? (
-        <section className="quran-numbers-table-wrap" aria-label="جدول السور">
-          <h2>جدول السور</h2>
-          <div className="quran-numbers-surah-controls">
-            <input
-              type="search"
-              value={surahQ}
-              onChange={(e) => setSurahQ(e.target.value)}
-              placeholder="ابحث عن سورة…"
-              aria-label="بحث في السور"
-            />
-            <select
-              value={surahSort}
-              onChange={(e) => setSurahSort(e.target.value as typeof surahSort)}
-              aria-label="ترتيب السور"
-            >
-              <option value="number">الترتيب</option>
-              <option value="ayahs">عدد الآيات</option>
-              <option value="words">عدد الكلمات</option>
-            </select>
-          </div>
-          <div className="quran-numbers-table-scroll">
-            <table className="quran-numbers-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>السورة</th>
-                  <th>مكية/مدنية</th>
-                  <th>آيات</th>
-                  <th>كلمات</th>
-                  <th>صفحة</th>
-                </tr>
-              </thead>
-              <tbody>
-                {surahRows.map((r) => (
-                  <tr key={r.number}>
-                    <td>{displayValue(r.number)}</td>
-                    <td>
-                      <Link href={`/mushaf?page=${r.pageStart ?? 1}`}>{r.name.replace(/^سُورَةُ\s*/u, "")}</Link>
-                    </td>
-                    <td>{r.revelationType === "Meccan" ? "مكية" : "مدنية"}</td>
-                    <td>{displayValue(r.ayahs)}</td>
-                    <td>{displayValue(r.words)}</td>
-                    <td>{r.pageStart != null ? displayValue(r.pageStart) : "—"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+      {filtered.length === 0 ? (
+        <p className="sections-hub__empty">لا نتائج مطابقة في البطاقات المعتمدة.</p>
       ) : null}
 
       <AppBottomSheet
@@ -412,7 +210,7 @@ export default function QuranNumbersPage() {
               {active.basis ? ` · ${QURAN_STAT_BASIS_LABEL[active.basis]}` : ""}
             </p>
             <h3>المصدر</h3>
-            <p>{active.source}</p>
+            <p>{formatStatSourceFull(active.source)}</p>
             {active.method ? (
               <>
                 <h3>منهجية العدّ</h3>

@@ -358,8 +358,8 @@
     "test:site-sections-final-structure": "node --import tsx src/lib/__tests__/site-sections-final-structure.test.ts",
     "test:hadith-more-search-ux": "node --import tsx src/lib/__tests__/hadith-more-search-ux.test.ts",
     "test:sections-registry": "node --import tsx src/lib/__tests__/sections-registry.test.ts",
-    "generate:quran-stats": "node scripts/generate-quran-stats.mjs",
-    "verify:quran-stats": "node scripts/generate-quran-stats.mjs --check",
+    "generate:quran-stats": "node -e \"console.error('أُلغي توليد الإحصاءات الآلي — المحتوى في content/quran-stats فقط'); process.exit(1)\"",
+    "verify:quran-stats": "node --import tsx scripts/verify-quran-stats.mjs",
     "test:quran-stats-catalog": "node --import tsx src/lib/__tests__/quran-stats-catalog.test.ts"
   },
   "devDependencies": {

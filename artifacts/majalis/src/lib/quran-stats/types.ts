@@ -1,10 +1,11 @@
 /**
- * إحصاءات القرآن — أنواع موثّقة (لا رقم بلا مصدر).
+ * إحصاءات القرآن — أنواع محرَّرة يدويًا من مصادر مطبوعة فقط.
+ * ممنوع أي اشتقاق رقمي من نص المصحف لعرضه في هذا القسم.
  */
-export type QuranStatKind = "agreed" | "by-school" | "disputed" | "computed";
+export type QuranStatKind = "agreed" | "by-school" | "disputed";
 
-/** أساس العدّ — إلزامي لمداخل الألفاظ/الموضوعات اللفظية */
-export type CountBasis = "exact-form" | "root" | "lemma" | "topic";
+/** أساس العدّ: لفظ بصيغته | مادة/جذر بكل اشتقاقاته | موضوع بمرادفاته */
+export type CountBasis = "lafz" | "madda" | "mawdoo";
 
 export type QuranStatGroup = "bunya" | "alfaz" | "mawdoo" | "suwar" | "ajaib";
 
@@ -20,19 +21,26 @@ export type QuranStatEvidence = {
   excerpt?: string;
 };
 
+export type QuranStatSource = {
+  book: string;
+  author: string;
+  /** مادة المعجم أو الجزء/الصفحة — إلزامي */
+  ref: string;
+};
+
 export type QuranStat = {
   id: string;
+  /** مفتاح موضوع لمنع تكرار رقمين لشيء واحد */
+  topicKey?: string;
   label: string;
-  /** رقم أو نطاق رقمي قصير للبطاقة — ممنوع النص الوصفي */
   value: number | string;
   note?: string;
   kind: QuranStatKind;
+  /** إلزامي لمجموعات الألفاظ والموضوعات */
   basis?: CountBasis;
+  /** بيان منهج العدّ المعروض في الشيت */
   method?: string;
-  /** مصدر يُعرض للمستخدم — بلا مسارات ملفات */
-  source: string;
-  /** مسار تقني داخلي — لا يُعرض */
-  technicalSource?: string;
+  source: QuranStatSource;
   variants?: QuranStatVariant[];
   evidence?: QuranStatEvidence[];
   detail?: string;
@@ -43,7 +51,6 @@ export const QURAN_STAT_KIND_LABEL: Record<QuranStatKind, string> = {
   agreed: "متفق عليه",
   "by-school": "بحسب العدّ",
   disputed: "مختلف فيه",
-  computed: "حساب آلي",
 };
 
 export const QURAN_STAT_GROUP_LABEL: Record<QuranStatGroup, string> = {
@@ -55,10 +62,9 @@ export const QURAN_STAT_GROUP_LABEL: Record<QuranStatGroup, string> = {
 };
 
 export const QURAN_STAT_BASIS_LABEL: Record<CountBasis, string> = {
-  "exact-form": "الصيغة الحرفية",
-  root: "تقريب الجذر",
-  lemma: "المادة المعجمية",
-  topic: "موضوع (لا لفظ)",
+  lafz: "لفظ (صيغة محدّدة)",
+  madda: "مادة / جذر",
+  mawdoo: "موضوع",
 };
 
 /** مصادر ممنوعة — تفشل البوابة عند ورودها */
@@ -75,8 +81,11 @@ export const FORBIDDEN_STAT_SOURCES = [
   "wikipedia.org",
 ] as const;
 
-/** مسارات/مصطلحات تقنية ممنوعة في النص المعروض للمستخدم */
+/** مصطلحات تقنية ممنوعة في واجهة المستخدم */
 export const FORBIDDEN_USER_FACING_TECH = [
+  "في البيانات",
+  "المكتشفة",
+  "حسب بيانات التطبيق",
   "public/data",
   "surah-*.json",
   "mushaf=1",
@@ -85,50 +94,11 @@ export const FORBIDDEN_USER_FACING_TECH = [
   "stats.json",
 ] as const;
 
-export type WordFreqRow = {
-  form: string;
-  count: number;
-  letters: number;
-};
+/** سطر مصدر مختصر للبطاقة */
+export function formatStatSourceLine(source: QuranStatSource): string {
+  return `${source.book} — ${source.ref}`;
+}
 
-export type SurahStatRow = {
-  number: number;
-  name: string;
-  revelationType: string;
-  ayahs: number;
-  words: number;
-  letters: number;
-  pageStart?: number;
-  juz?: number;
-};
-
-export type QuranComputedStats = {
-  fingerprint: string;
-  methodology: { arabic: string };
-  totals: {
-    surahs: number;
-    ayahs: number;
-    words: number;
-    letters: number;
-    basmalaOccurrencesDetected?: number;
-    meccanSurahs: number;
-    medinanSurahs: number;
-    sajdaMarksInData: number;
-  };
-  extremes: {
-    longestAyah: { surah: number; ayah: number; len: number; text?: string };
-    shortestAyah: { surah: number; ayah: number; len: number; text?: string };
-    longestSurah: { number: number; ayahs: number; name: string };
-    shortestSurah: { number: number; ayahs: number; name: string };
-  };
-  perSurah?: SurahStatRow[];
-  wordFreq?: {
-    allTop: WordFreqRow[];
-    contentTop: WordFreqRow[];
-    longestWords: Array<WordFreqRow & { surah: number; ayah: number }>;
-    topicCounts: Record<string, number>;
-    allahCount: number;
-    rahmanCount: number;
-  };
-  sajda?: Array<{ surah: number; ayah: number }>;
-};
+export function formatStatSourceFull(source: QuranStatSource): string {
+  return `${source.book} — ${source.author} — ${source.ref}`;
+}
