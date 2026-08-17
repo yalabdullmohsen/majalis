@@ -52,6 +52,7 @@ const ENTRY_FILES = [
   "pages/quran/QuranKnowledgeHubPage.tsx",
   "pages/quran/ui/QuranHubView.tsx",
   "pages/fiqh/ui/FiqhView.tsx",
+  "lib/fiqh-books.ts",
   "pages/hadith/ui/HadithView.tsx",
 ];
 

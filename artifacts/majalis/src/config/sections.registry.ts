@@ -529,7 +529,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     id: "usul-fiqh",
     label: "أصول الفقه",
     subtitle: "قواعد الاستنباط والأدلة",
-    route: "/fiqh-qawaid",
+    route: "/fiqh/usul",
     icon: Network,
     group: "sciences",
     order: 60,

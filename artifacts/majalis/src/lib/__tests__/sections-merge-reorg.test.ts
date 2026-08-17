@@ -70,7 +70,7 @@ assert.equal(hubSrc.includes("ابدأ من هنا"), false);
 assert.equal(hubSrc.includes("الأسئلة والأجوبة"), false);
 assert.equal(hubSrc.includes("البحث"), false);
 
-const fiqh = read("src/pages/fiqh/ui/FiqhView.tsx");
+const fiqh = read("src/pages/fiqh/ui/FiqhView.tsx") + read("src/lib/fiqh-books.ts");
 assert.match(fiqh, /القواعد الفقهية/);
 assert.match(fiqh, /المذاهب الأربعة/);
 assert.match(fiqh, /النوازل المعاصرة/);

@@ -6,10 +6,9 @@ import type { ExploreAlsoLink } from "@/lib/explore-link-types";
  */
 export const ACCORDION_EXPLORE_LINKS = {
   maqasid: [
-    { href: "/fiqh/topics/usul-fiqh", label: "أصول الفقه" },
-    { href: "/lessons", label: "مسار أصول الفقه" },
+    { href: "/fiqh/usul", label: "أصول الفقه" },
     { href: "/fiqh-qawaid", label: "القواعد الفقهية" },
-    { href: "/fiqh", label: "بوابة الفقه" },
+    { href: "/madhahib", label: "المذاهب الأربعة" },
     { href: "/fiqh", label: "بوابة الفقه" },
   ],
   iman: [
@@ -19,7 +18,7 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/malaika", label: "الملائكة" },
   ],
   usra: [
-    { href: "/fiqh/topics/muamalat", label: "فقه المعاملات" },
+    { href: "/fiqh/books/buyu", label: "كتاب البيوع" },
     { href: "/mawarith", label: "حاسبة المواريث" },
     { href: "/akhlaq", label: "الأخلاق" },
     { href: "/nikah", label: "أحكام الأسرة" },
@@ -39,9 +38,9 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/adab-talab-ilm", label: "آداب طالب العلم" },
   ],
   fikr: [
-    { href: "/fiqh/topics/tech-fiqh", label: "فقه التقنية" },
+    { href: "/fiqh", label: "فقه التقنية" },
     { href: "/fiqh-council/nawazil", label: "النوازل المعاصرة" },
-    { href: "/fiqh/topics/minorities", label: "فقه الأقليات" },
+    { href: "/fiqh-council", label: "فقه الأقليات" },
     { href: "/quiz", label: "الأسئلة والأجوبة" },
     { href: "/discover-islam", label: "تعرّف على الإسلام" },
   ],
@@ -113,6 +112,6 @@ export const PAGE_EXPLORE_LINKS = {
     { href: "/fiqh", label: "بوابة الفقه" },
     { href: "/quran-knowledge", label: "القرآن وعلومه" },
     { href: "/lessons", label: "الدروس العلمية" },
-    { href: "/fiqh/topics/usul-fiqh", label: "أصول الفقه" },
+    { href: "/fiqh/usul", label: "أصول الفقه" },
   ],
 } as const satisfies Record<string, readonly ExploreAlsoLink[]>;

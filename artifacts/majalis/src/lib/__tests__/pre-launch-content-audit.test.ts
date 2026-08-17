@@ -28,10 +28,13 @@ function read(rel: string) {
 console.log("\n=== عبارات توثيق محظورة في الواجهة العامة ===");
 {
   const fiqh = read("src/lib/fiqh-hub-topics.ts");
+  const fiqhView = read("src/pages/fiqh/ui/FiqhView.tsx");
   const seoGen = read("scripts/generate-seo.mjs");
   assert(!/موثّقة بالأدلة/.test(fiqh), "fiqh-hub-topics بلا «موثّقة بالأدلة»");
   assert(!/مسائل موثّقة بالأدلة/.test(seoGen), "generate-seo بلا «مسائل موثّقة بالأدلة»");
-  assert(/يجري استكمال توثيقها/.test(fiqh), "صيغة الاحتراز الفقهي موجودة في fiqh-hub");
+  assert(!/يجري استكمال توثيقها/.test(fiqh), "fiqh-hub-topics بلا «يجري استكمال توثيقها»");
+  assert(!/يجري استكمال توثيقها/.test(fiqhView), "واجهة الفقه بلا بطاقة «يجري استكمال توثيقها»");
+  assert(!/قيد المراجعة/.test(fiqhView), "واجهة الفقه بلا «قيد المراجعة»");
   assert(!/رابط القراءة/.test(seoGen), "generate-seo بلا «رابط القراءة»");
   assert(!/>رابط القراءة</.test(seoGen) && !/">رابط القراءة</.test(seoGen), "لا تسمية مصدر عامة في قالب المكتبة");
   assert(/librarySourceLabel/.test(seoGen), "مولّد SEO يستخدم تسمية مصدر المكتبة");

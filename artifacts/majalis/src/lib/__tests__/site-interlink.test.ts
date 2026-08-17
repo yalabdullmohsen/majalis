@@ -75,7 +75,7 @@ console.log("\n=== explore-links المركزي ===");
 {
   assert(ACCORDION_EXPLORE_LINKS.maqasid.length >= 4, "مقاصد: روابط كافية");
   assert(PAGE_EXPLORE_LINKS.scholar.length >= 4, "عالِم: روابط كافية");
-  assert(PAGE_EXPLORE_LINKS.adabTalabIlm.some((l) => l.href === "/fiqh/topics/usul-fiqh"),
+  assert(PAGE_EXPLORE_LINKS.adabTalabIlm.some((l) => l.href === "/fiqh/usul"),
     "آداب طالب العلم ترتبط بأصول الفقه");
 }
 
@@ -86,9 +86,9 @@ console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related =
   assert(scholar.includes("PAGE_EXPLORE_LINKS"), "ملف العالِم يستورد PAGE_EXPLORE_LINKS");
 
   const topic = readFileSync(resolve(srcRoot, "pages/fiqh/ui/FiqhTopicView.tsx"), "utf8");
-  assert(topic.includes("RelatedKnowledge"), "صفحة باب الفقه تركّب RelatedKnowledge");
-  assert(topic.includes("hrefRulingsFilter"), "صفحة الباب تستخدم hrefRulingsFilter");
-  assert(!topic.includes("style={{ marginTop"), "لا هوامش مضمنة في صفحة الباب");
+  assert(topic.includes("Redirect"), "صفحة الباب القديمة تحوّل إلى مسار الكتاب/المساند");
+  assert(topic.includes("/fiqh/usul"), "أصول الفقه يحوّل إلى /fiqh/usul");
+  assert(!topic.includes("getRulingsEncyclopedia"), "لا موسوعة أحكام في صفحة الباب");
 
   const home = readFileSync(resolve(srcRoot, "components/home/HomeStartHereSection.tsx"), "utf8");
   assert(home.includes('href: "/adab-talab-ilm"'), "ابدأ من هنا → دليل طالب العلم");
