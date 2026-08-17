@@ -60,4 +60,22 @@ export default tseslint.config(
       ...jsxA11y.flatConfigs.recommended.rules,
     },
   },
+  {
+    files: [
+      "src/components/layout/**/*.{ts,tsx}",
+      "src/components/ui/sheet.tsx",
+      "src/components/ui/drawer.tsx",
+      "src/components/ui/dialog.tsx",
+      "src/components/ui/alert-dialog.tsx",
+    ],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "Literal[value=/bg-white|bg-background|#fff|#ffffff/i]",
+          message: "استخدم رموز @theme (--mj-surface / --mj-bg) لا bg-white أو bg-background",
+        },
+      ],
+    },
+  },
 );

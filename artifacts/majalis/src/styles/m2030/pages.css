@@ -3,7 +3,10 @@
  */
 
 html.pts-immersive,
-html.pts-immersive body {
+html.pts-immersive body,
+html.pts-immersive #root,
+html.pts-immersive .app-shell,
+html.pts-immersive .app-main {
   background-color: var(--em-950) !important;
 }
 

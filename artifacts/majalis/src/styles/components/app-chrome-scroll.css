@@ -14,22 +14,28 @@ html.dark {
   --app-bg: var(--mj-bg, #101614);
 }
 
-html,
-body,
-#root {
+html:not(.pts-immersive),
+html:not(.pts-immersive) body,
+html:not(.pts-immersive) #root {
   background: var(--app-bg);
   min-height: 100%;
 }
 
+html:not(.pts-immersive) .app-shell {
+  background: var(--app-bg);
+}
+
 body {
   overscroll-behavior-y: none;
+}
+
+html:not(.pts-immersive) body {
   background: var(--app-bg);
 }
 
 .app-shell {
-  background: var(--app-bg);
-  min-height: 100dvh;
   min-height: 100svh;
+  min-height: 100dvh;
 }
 
 @media (max-width: 879px) {
@@ -81,7 +87,7 @@ body {
     padding-block-end: calc(0.85rem + var(--inset-bottom, 0px)) !important;
   }
 
-  .app-shell.app-chrome-hidden {
+  html:not(.pts-immersive) .app-shell.app-chrome-hidden {
     background: var(--app-bg);
   }
 }

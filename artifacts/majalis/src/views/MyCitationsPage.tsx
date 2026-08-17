@@ -153,7 +153,7 @@ export default function MyCitationsPage() {
 
   if (authLoading) {
     return (
-      <div dir="rtl" className="min-h-screen flex items-center justify-center">
+      <div dir="rtl" className="min-h-dvh flex items-center justify-center">
         <Spinner className="size-10 icon-emerald" aria-label="تجهيز المحتوى" />
       </div>
     );
@@ -161,7 +161,7 @@ export default function MyCitationsPage() {
 
   if (!isLoggedIn) {
     return (
-      <div dir="rtl" className="min-h-screen flex flex-col items-center justify-center gap-6 p-6 text-center">
+      <div dir="rtl" className="min-h-dvh flex flex-col items-center justify-center gap-6 p-6 text-center">
         <h1 className="mcp-page-title">مكتبة الاقتباسات</h1>
         <p className="mcp-page-desc">يرجى تسجيل الدخول للوصول لمكتبتك الشخصية</p>
         <Link href="/login" className="px-6 py-3 citation-btn citation-btn--primary font-medium">
