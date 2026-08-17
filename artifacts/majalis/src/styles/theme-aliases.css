@@ -336,9 +336,9 @@ html.dark .navbar-v3 .navbar-brand__mark {
    ويُقصّ النص رأسيًا. */
 .header-ticker,
 .navbar-ticker-row .header-ticker {
-  height: var(--ticker-h, 3.5rem) !important;
-  min-height: var(--ticker-h, 3.5rem) !important;
-  max-height: var(--ticker-h, 3.5rem) !important;
+  height: var(--ticker-h, 2.25rem) !important;
+  min-height: var(--ticker-h, 2.25rem) !important;
+  max-height: var(--ticker-h, 2.25rem) !important;
   border: 1px solid var(--mj-hairline) !important;
   border-radius: var(--mj-r-sm) !important;
   background: var(--mj-surface) !important;
@@ -346,10 +346,14 @@ html.dark .navbar-v3 .navbar-brand__mark {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  padding-block: 0.35rem !important;
-  padding-inline: 1rem !important;
+  padding-block: 0 !important;
+  padding-inline: 0.5rem !important;
   box-sizing: border-box !important;
   overflow: hidden !important;
+}
+.header-ticker.header-ticker--with-prayer {
+  /* منطقة لمس الشريحة قد تتجاوز ٣٦px رأسيًا — لا تقصّها */
+  overflow: visible !important;
 }
 .header-ticker__viewport {
   height: 100% !important;

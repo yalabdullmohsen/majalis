@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { Link } from "wouter";
-import { Clock, Repeat2, ScrollText, Heart, BookOpen, Sparkles, Megaphone } from "lucide-react";
+import { Repeat2, ScrollText, Heart, BookOpen, Sparkles, Megaphone } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
-import { buildPrayerTickerCopy } from "@/lib/prayer-ticker-copy";
+import { PrayerCountdownChip } from "@/components/prayer/PrayerCountdownChip";
 import {
   buildTickerPool,
   pickNextBatch,
@@ -26,32 +25,6 @@ type TickerItem = {
   href: string;
   kind?: TickerKind;
 };
-
-type PrayerSticky = {
-  label: string;
-  text: string;
-  isNow: boolean;
-  href: string;
-};
-
-/** شريط الصلاة الثابت — ثوانٍ حية كل ثانية، خارج مسار الماركي */
-function usePrayerSticky(): PrayerSticky | null {
-  const { countdown: cd } = usePrayerCountdown();
-
-  if (!cd?.next) return null;
-  const copy = buildPrayerTickerCopy({
-    prayerName: cd.next.name,
-    remainingHms: cd.remainingHms,
-    sinceSeconds: cd.sinceSeconds,
-    sinceHms: cd.sinceHms,
-  });
-  return {
-    label: copy.label,
-    text: copy.text,
-    isNow: copy.isNow,
-    href: "/prayer-times",
-  };
-}
 
 function useReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
@@ -139,27 +112,9 @@ function TickerEntry({ item }: { item: TickerItem & { kind?: TickerKind } }) {
   );
 }
 
-function PrayerStickyStrip({ prayer }: { prayer: PrayerSticky }) {
-  return (
-    <Link
-      href={prayer.href}
-      className={`header-ticker__prayer${prayer.isNow ? " header-ticker__prayer--now" : ""}`}
-      aria-live="polite"
-      aria-atomic="true"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <Clock size={13} strokeWidth={1.8} className="header-ticker__icon" aria-hidden="true" />
-      <span className="header-ticker__prayer-label">{prayer.label}</span>
-      <span className="header-ticker__prayer-time" data-testid="header-prayer-countdown">
-        {prayer.text}
-      </span>
-    </Link>
-  );
-}
-
-/** شريط إعلان علوي متحرّك مستمر (marquee) — أحاديث وأذكار ونبذ أقسام/مميزات. */
+/** شريط إعلان علوي متحرّك مستمر (marquee) — أحاديث وأذكار ونبذ أقسام/مميزات.
+ * عدّاد الصلاة مكوّن ابن مستقل — لا اشتراك ثوانٍ هنا حتى لا يُعاد رسم الماركي. */
 export function HeaderTicker() {
-  const prayer = usePrayerSticky();
   const contentItems = useRotatingContent();
   const reducedMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -167,7 +122,6 @@ export function HeaderTicker() {
   const [hoverPaused, setHoverPaused] = useState(false);
   const paused = stickyPaused || hoverPaused;
 
-  // الصلاة ثابتة خارج الماركي حتى تتحدّث الثواني بلا خروج/دخول
   const items = useMemo<TickerItem[]>(() => {
     return contentItems
       .filter((c) => !!c.text?.trim())
@@ -182,7 +136,6 @@ export function HeaderTicker() {
       }));
   }, [contentItems]);
 
-  // وضع تقليل الحركة: تناوب عنصر واحد بلا تمرير مستمر.
   useEffect(() => {
     if (!reducedMotion || items.length === 0 || paused) return;
     const t = setInterval(() => setActiveIndex((i) => (i + 1) % items.length), 6000);
@@ -210,10 +163,10 @@ export function HeaderTicker() {
     },
   };
 
-  // حالة fallback: لا شريط فارغ — صلاة ثابتة أو سطر محايد.
-  if (items.length === 0 && !prayer) {
+  if (items.length === 0) {
     return (
-      <div className="header-ticker header-ticker--static header-ticker--fallback" role="status">
+      <div className="header-ticker header-ticker--static header-ticker--with-prayer header-ticker--fallback" role="status">
+        <PrayerCountdownChip />
         <div className="header-ticker__single-item">
           <TickerEntry
             item={{
@@ -230,7 +183,7 @@ export function HeaderTicker() {
   }
 
   if (reducedMotion) {
-    const activeItem = items.length > 0 ? items[activeIndex % items.length] : null;
+    const activeItem = items[activeIndex % items.length];
     return (
       <div
         className={`header-ticker header-ticker--static header-ticker--with-prayer${paused ? " header-ticker--paused" : ""}`}
@@ -239,7 +192,7 @@ export function HeaderTicker() {
         aria-label="شريط معلومات"
         {...pauseHandlers}
       >
-        {prayer ? <PrayerStickyStrip prayer={prayer} /> : null}
+        <PrayerCountdownChip />
         {activeItem ? (
           <div className="header-ticker__single-item" key={activeItem.key}>
             <TickerEntry item={activeItem} />
@@ -249,7 +202,7 @@ export function HeaderTicker() {
     );
   }
 
-  const loop = items.length > 0 ? [...items, ...items] : [];
+  const loop = [...items, ...items];
   const totalChars = items.reduce(
     (sum, it) => sum + it.text.length + (it.source?.length ?? 0) + it.label.length,
     0,
@@ -264,19 +217,17 @@ export function HeaderTicker() {
       aria-label="شريط إعلانات متحرّك: أحاديث وأذكار وأقسام"
       {...pauseHandlers}
     >
-      {prayer ? <PrayerStickyStrip prayer={prayer} /> : null}
-      {loop.length > 0 ? (
-        <div className="header-ticker__viewport">
-          <div
-            className="header-ticker__track"
-            style={{ animationDuration: `${durationSec}s` }}
-          >
-            {loop.map((item, i) => (
-              <TickerEntry key={`${item.key}-${i}`} item={item} />
-            ))}
-          </div>
+      <PrayerCountdownChip />
+      <div className="header-ticker__viewport">
+        <div
+          className="header-ticker__track"
+          style={{ animationDuration: `${durationSec}s` }}
+        >
+          {loop.map((item, i) => (
+            <TickerEntry key={`${item.key}-${i}`} item={item} />
+          ))}
         </div>
-      ) : null}
+      </div>
     </div>
   );
 }

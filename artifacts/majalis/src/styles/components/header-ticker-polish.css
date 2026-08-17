@@ -4,55 +4,26 @@
 .header-ticker--static .header-ticker__item{white-space:normal;flex-wrap:wrap;max-width:100%;overflow-wrap:anywhere}
 .header-ticker--static .header-ticker__text{white-space:normal}
 
-/* شريط الصلاة الثابت — خارج الماركي حتى تتحدّث الثواني مباشرة */
+/* صف الشريط + شريحة الصلاة: الشريحة ≤٣٠٪ والباقي للماركي بلا تقاطع */
 .header-ticker--with-prayer{
-  gap:.45rem;
-  justify-content:flex-start;
-}
-.header-ticker__prayer{
-  flex:0 0 auto;
-  display:inline-flex;
-  align-items:center;
   gap:.35rem;
-  max-width:min(52vw,16.5rem);
-  padding:.2rem .55rem;
-  border-radius:999px;
-  background:color-mix(in srgb,var(--color-primary,#12362a) 10%,transparent);
-  color:var(--color-primary,#12362a);
-  text-decoration:none;
-  white-space:nowrap;
-  overflow:hidden;
-}
-.header-ticker__prayer-label{
-  font-size:.68rem;
-  font-weight:800;
-  line-height:1.2;
-  flex-shrink:1;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.header-ticker__prayer-time{
-  font-variant-numeric:tabular-nums;
-  font-feature-settings:"tnum" 1;
-  font-size:.78rem;
-  font-weight:800;
-  letter-spacing:.01em;
-  flex-shrink:0;
-  font-family:var(--font-mono,ui-monospace,SFMono-Regular,Menlo,monospace);
-}
-.header-ticker__prayer--now{
-  background:color-mix(in srgb,var(--mj-brand-deep,#1c5244) 18%,transparent);
-}
-.header-ticker__prayer--now .header-ticker__prayer-time{
-  max-width:9.5rem;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  justify-content:flex-start;
+  align-items:center;
+  overflow:visible;
 }
 .header-ticker--with-prayer .header-ticker__viewport{
   flex:1 1 auto;
   min-width:0;
+  /* قصّ أفقي للماركي فقط — لا يمسّ الشريحة */
+  overflow:hidden;
+  align-self:stretch;
 }
-@media (max-width:420px){
-  .header-ticker__prayer{max-width:58vw}
-  .header-ticker__prayer-label{display:none}
+.header-ticker--with-prayer .header-ticker__single-item{
+  flex:1 1 auto;
+  min-width:0;
+}
+
+/* توافق أسماء قديمة — الشريحة الجديدة في prayer-countdown-chip.css */
+.header-ticker__prayer{
+  display:none;
 }
