@@ -62,7 +62,7 @@ html {
   overflow-x: hidden;
   overscroll-behavior-y: contain;
   /* bleed أخضر داكن — يمنع شريطًا أبيض تحت الشريط السفلي / Home Indicator */
-  background-color: var(--mj-splash, #002b21);
+  background-color: var(--mj-splash, #0E1A15);
   /* احتياط ارتفاع iOS — svh أولاً ثم fill-available */
   min-height: 100%;
   min-height: 100svh;
@@ -71,14 +71,14 @@ html {
 
 html[data-theme="dark"],
 html.dark {
-  background-color: var(--mj-splash, #002b21);
+  background-color: var(--mj-splash, #0E1A15);
 }
 
 body {
   min-height: 100%;
   min-height: 100svh;
   min-height: -webkit-fill-available;
-  background-color: var(--mj-splash, #002b21);
+  background-color: var(--mj-splash, #0E1A15);
 }
 
 :root {

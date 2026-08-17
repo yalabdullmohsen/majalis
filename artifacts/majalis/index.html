@@ -3,6 +3,74 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0E1A15" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F4F3" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101614" />
+    <style id="mj-splash-critical">
+      html, body, #root {
+        background-color: #0E1A15;
+        margin: 0;
+        min-height: 100dvh;
+      }
+      :root {
+        --app-status-bg: #0E1A15;
+        --app-status-fg-mode: light;
+      }
+      #mj-silent-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483000;
+        background: radial-gradient(circle at 50% 46%, #14332A 0%, #0E1A15 72%);
+        pointer-events: none;
+      }
+      #mj-silent-splash__mark {
+        position: absolute;
+        left: 50%;
+        top: 46%;
+        width: 22vmin;
+        height: 22vmin;
+        transform: translate(-50%, -50%);
+      }
+      .mj-silent-splash__glow {
+        fill: #C9A227;
+        fill-opacity: 0.08;
+        filter: blur(18px);
+        opacity: 0;
+        animation: mj-ss-glow 200ms 700ms ease-out forwards;
+      }
+      .mj-silent-splash__path {
+        stroke-dasharray: 200;
+        stroke-dashoffset: 200;
+        animation: mj-ss-draw 700ms cubic-bezier(.22, 1, .36, 1) forwards;
+      }
+      #mj-silent-splash.mj-silent-splash--out #mj-silent-splash__mark {
+        animation: mj-ss-exit 300ms ease-out forwards;
+      }
+      @keyframes mj-ss-draw {
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes mj-ss-glow {
+        to { opacity: 1; }
+      }
+      @keyframes mj-ss-exit {
+        to { opacity: 0; transform: translate(-50%, calc(-50% - 8px)); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .mj-silent-splash__path {
+          stroke-dashoffset: 0;
+          animation: none;
+        }
+        .mj-silent-splash__glow {
+          opacity: 1;
+          animation: none;
+        }
+        #mj-silent-splash.mj-silent-splash--out #mj-silent-splash__mark {
+          animation: none;
+          opacity: 0;
+        }
+      }
+    </style>
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="المجلس العلمي" />
@@ -12,24 +80,6 @@
     <title>المجلس العلمي | دروس شرعية ودورات علمية</title>
     <meta name="description" content="تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
     <meta name="robots" content="index, follow" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#F2F4F3" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F4F3" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101614" />
-    <!-- خلفية صامتة تمنع الوميض؛ الدخولية الوحيدة = MajalisLaunchScreen بعد التركيب -->
-    <style id="mj-splash-critical">
-      html, body, #root {
-        background-color: #002b21;
-        margin: 0;
-        min-height: 100dvh;
-      }
-      :root {
-        --app-status-bg: #002b21;
-        --app-status-fg-mode: light;
-      }
-    </style>
-    <!-- LCP: WebP أولاً؛ PNG يبقى احتياطًا لقرّاء قديمة -->
-    <link rel="preload" as="image" href="/icon-192.webp" type="image/webp" />
     <meta name="author" content="المجلس العلمي" />
     <link rel="canonical" href="https://majlisilm.com/" />
     <meta property="og:site_name" content="المجلس العلمي" />
@@ -147,6 +197,53 @@
     </script>
   </head>
   <body>
+    <div id="mj-silent-splash" aria-hidden="true">
+      <div id="mj-silent-splash__mark">
+        <svg viewBox="0 0 100 100" width="100%" height="100%">
+          <circle class="mj-silent-splash__glow" cx="50" cy="50" r="38" />
+          <g fill="none" stroke="#C9A227" stroke-width="1.75" stroke-linejoin="miter">
+            <rect class="mj-silent-splash__path" x="25" y="25" width="50" height="50" />
+            <rect class="mj-silent-splash__path" x="25" y="25" width="50" height="50" transform="rotate(45 50 50)" />
+          </g>
+        </svg>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var el = document.getElementById("mj-silent-splash");
+        if (!el) return;
+        var KEY = "mj.silent-splash.session";
+        var done = false;
+        function dismiss(immediate) {
+          if (immediate) {
+            if (!el.parentNode) return;
+            done = true;
+            try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
+            el.remove();
+            return;
+          }
+          if (done) return;
+          done = true;
+          try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
+          el.classList.add("mj-silent-splash--out");
+          window.setTimeout(function () { if (el.parentNode) el.remove(); }, 300);
+        }
+        try {
+          if (sessionStorage.getItem(KEY) === "1") {
+            dismiss(true);
+            return;
+          }
+        } catch (e) {}
+        var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.addEventListener("mj:app-painted", function () { dismiss(true); }, { once: true });
+        if (reduced) {
+          window.setTimeout(function () { dismiss(true); }, 300);
+        } else {
+          window.setTimeout(function () { dismiss(false); }, 900);
+          window.setTimeout(function () { dismiss(true); }, 1200);
+        }
+      })();
+    </script>
     <script>
       try {
         /* مِشكاة: تطبيق الوضع (ليل/نهار) فوراً لمنع الوميض */
@@ -171,8 +268,8 @@
         document.documentElement.dataset.theme = resolved;
         document.documentElement.classList.toggle("dark", resolved === "dark");
         document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
-        /* theme-color أثناء الإقلاع = خلفية الدخول الخضراء (يمنع وميض الشريط الأبيض) */
-        var splashBg = "#002b21";
+        /* theme-color أثناء الإقلاع = خلفية الدخول (يمنع وميض الشريط الأبيض) */
+        var splashBg = "#0E1A15";
         var _themeMeta = document.querySelector('meta[name="theme-color"]');
         if (_themeMeta) _themeMeta.setAttribute("content", splashBg);
         document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {

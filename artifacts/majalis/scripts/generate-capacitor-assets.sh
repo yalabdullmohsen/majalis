@@ -86,23 +86,23 @@ except ImportError:
         raise SystemExit(f"Pillow required but install failed: {last}") from last
     from PIL import Image
 SIZE = 2732
-# #002b21
-canvas = Image.new("RGB", (SIZE, SIZE), (0, 43, 33))
+# #0E1A15
+canvas = Image.new("RGB", (SIZE, SIZE), (14, 26, 21))
 canvas.save(out_path, "PNG", optimize=True)
-print(f"wrote solid splash {out_path} (#002b21 {SIZE}x{SIZE})")
+print(f"wrote solid splash {out_path} (#0E1A15 {SIZE}x{SIZE})")
 PY
 
 echo "Source assets ready in $ASSETS_DIR"
 echo "  logo.png / icon-only.png ← $SRC"
-echo "  splash.png ← solid #002b21 (no legacy artwork)"
+echo "  splash.png ← solid #0E1A15 (no legacy artwork)"
 
 echo "Generating platform assets: ${PLATFORM_FLAGS[*]}"
 pnpm exec capacitor-assets generate \
   "${PLATFORM_FLAGS[@]}" \
-  --iconBackgroundColor "#002b21" \
-  --iconBackgroundColorDark "#002b21" \
-  --splashBackgroundColor "#002b21" \
-  --splashBackgroundColorDark "#002b21"
+  --iconBackgroundColor "#0E1A15" \
+  --iconBackgroundColorDark "#0E1A15" \
+  --splashBackgroundColor "#0E1A15" \
+  --splashBackgroundColorDark "#0E1A15"
 
 # أعد فرض drawable لوني بعد أي مخرجات capacitor-assets قد تعيد PNG
 SPLASH_XML="$ROOT/android/app/src/main/res/drawable/splash.xml"
@@ -121,11 +121,25 @@ EOF
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
-    <path android:fillColor="#002b21" android:pathData="M0,0h108v108h-108z" />
+    <path android:fillColor="#0E1A15" android:pathData="M0,0h108v108h-108z" />
+    <path android:fillColor="#C9A227" android:fillAlpha="0.08" android:pathData="M54,54m-28,0a28,28 0,1 1,56 0a28,28 0,1 1,-56 0" />
+    <group android:pivotX="54" android:pivotY="54">
+        <path android:fillColor="@android:color/transparent" android:strokeColor="#C9A227" android:strokeWidth="1.75" android:pathData="M33,33 L75,33 L75,75 L33,75 Z" />
+    </group>
+    <group android:pivotX="54" android:pivotY="54" android:rotation="45">
+        <path android:fillColor="@android:color/transparent" android:strokeColor="#C9A227" android:strokeWidth="1.75" android:pathData="M33,33 L75,33 L75,75 L33,75 Z" />
+    </group>
 </vector>
 EOF
   echo "Restored color-only Android splash drawables"
 fi
+
+# capacitor-assets يعيد Splash.imageset وsplash-2732 — احذفها فوراً
+rm -rf "$ROOT/ios/App/App/Assets.xcassets/Splash.imageset"
+find "$ROOT/ios" -iname '*splash-2732*' -delete 2>/dev/null || true
+find "$ROOT/ios" -iname 'Default@*' -delete 2>/dev/null || true
+rm -f "$ROOT/assets/splash.png"
+python3 "$ROOT/scripts/generate-silent-splash-assets.py"
 
 echo "Done. Sync native projects if needed:"
 echo "  pnpm exec cap sync ios"

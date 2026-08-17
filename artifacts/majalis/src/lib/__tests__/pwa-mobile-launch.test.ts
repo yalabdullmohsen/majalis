@@ -25,7 +25,7 @@ assert.equal(siteManifest.name, "المجلس العلمي");
 assert.equal(siteManifest.short_name, "المجلس العلمي");
 assert.equal(siteManifest.start_url, "/");
 assert.equal(siteManifest.theme_color, "#F2F4F3");
-assert.equal(siteManifest.background_color, "#002b21");
+assert.equal(siteManifest.background_color, "#0E1A15");
 assert.ok(siteManifest.icons.some((i: { src: string }) => i.src.includes("icon-512")));
 assert.ok(existsSync(resolve(root, "public/manifest.webmanifest")));
 assert.ok(existsSync(resolve(root, "public/manifest.json")));
@@ -36,7 +36,7 @@ assert.equal(jsonManifest.short_name, "المجلس العلمي");
 assert.equal(jsonManifest.start_url, "/");
 assert.equal(jsonManifest.display, "standalone");
 assert.equal(jsonManifest.theme_color, "#F2F4F3");
-assert.equal(jsonManifest.background_color, "#002b21");
+assert.equal(jsonManifest.background_color, "#0E1A15");
 assert.ok(existsSync(resolve(root, "public/sw.js")));
 assert.ok(existsSync(resolve(root, "public/offline.html")));
 

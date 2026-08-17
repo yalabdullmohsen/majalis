@@ -1,18 +1,22 @@
-# استبدال صورة شاشة الإقلاع (iOS)
+# الدخولية الصامتة
 
-شاشة الإطلاق الأصلية في iOS لا تُلغى بالكامل؛ الحد الأقصى خلفية لونية صامتة. عند الحاجة لصورة مجدّدًا:
+دخولية واحدة في المشروع: رمز هندسي ذهبي على خلفية `#0E1A15`، بلا نص.
 
-## ثلاث خطوات
+## المصدر المعتمد
 
-1. ضع الصورة الجديدة في الموضع الوحيد المعتمد:
-   `artifacts/majalis/assets/splash.png`
-   بمقاس **2732×2732** بكسل (مربع، جاهز لـ Capacitor Assets).
+1. الويب: SVG مضمّن في `index.html` (`#mj-silent-splash`) مع أنماط في `<style id="mj-splash-critical">`. ليست مكوّن React.
+2. iOS: `LaunchScreen.storyboard` (لون خلفية واحد + `LaunchMark` @1x/2x/3x). القصة ثابتة نظامياً.
+3. Android 12+: `splash_background` + `drawable/splash_icon.xml`.
+4. PWA: `manifest.background_color` = `#0E1A15`.
 
-2. من مجلد `artifacts/majalis` شغّل:
-   ```bash
-   npx @capacitor/assets generate --ios
-   ```
+## توليد أصول الرمز
 
-3. راجع `ios/App/App/Assets.xcassets/Splash.imageset` و`LaunchScreen.storyboard` (إن أعاد التوليد صورة)، ثم `npx cap sync ios` وارفع `CFBundleVersion`.
+```bash
+python3 scripts/generate-silent-splash-assets.py
+```
 
-لا تضع صورة الإقلاع في مواضع أخرى يدويًا — هذا المسار هو المصدر الوحيد للتوليد.
+لا تستخدم `@capacitor/assets generate` لشاشة الإقلاع — يعيد `Splash.imageset` و`splash-2732`. سكربت `assets:generate` يحذف تلك المخرجات بعد التشغيل ويعيد `LaunchMark`.
+
+`pnpm run assets:splash` مقفل عمداً.
+
+بعد أي تعديل أصلي ارفع `CFBundleVersion` (حالياً 40).

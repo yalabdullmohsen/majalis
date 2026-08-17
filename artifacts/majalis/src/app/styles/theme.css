@@ -38,7 +38,7 @@
   --color-danger: #DC2626;
   --color-danger-soft: #FEE2E2;
   --color-danger-deep: #991B1B;
-  --color-splash: #002b21;
+  --color-splash: #0E1A15;
 
   /* مرجع الإنتاج: فقرات/عناوين بطاقات /tafsir (.tf-intro + .tf-card__term) = Amiri نَسخي */
   --font-app: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
@@ -162,7 +162,7 @@
   --mj-danger: #DC2626;
   --mj-danger-soft: #FEE2E2;
   --mj-danger-deep: #991B1B;
-  --mj-splash: #002b21;
+  --mj-splash: #0E1A15;
   --color-surface-raised: var(--mj-surface);
   --color-brand-strong: var(--mj-brand-deep);
   --text-primary: var(--mj-ink);

@@ -14,7 +14,7 @@ const html = read("index.html");
 assert.match(html, /viewport-fit=cover/);
 
 const finalCss = read("src/styles/final-release.css");
-assert.match(finalCss, /--mj-splash,\s*#002b21/);
+assert.match(finalCss, /--mj-splash,\s*#0E1A15/);
 assert.match(
   finalCss,
   /padding-bottom:\s*var\(--inset-bottom\)/,
@@ -34,22 +34,22 @@ assert.doesNotMatch(
 assert.match(finalCss, /#root,\s*\n\.app-shell/);
 
 const foundation = read("src/styles/m2030/foundation.css");
-assert.match(foundation, /background-color:\s*var\(--mj-splash,\s*#002b21\)/);
+assert.match(foundation, /background-color:\s*var\(--mj-splash,\s*#0E1A15\)/);
 
 const native = read("src/styles/capacitor-native-ux.css");
-assert.match(native, /html\.capacitor-native[\s\S]*--mj-splash,\s*#002b21/);
+assert.match(native, /html\.capacitor-native[\s\S]*--mj-splash,\s*#0E1A15/);
 
 const capTs = read("capacitor.config.ts");
-assert.match(capTs, /ios:\s*\{[\s\S]*?backgroundColor:\s*"#002b21"/);
+assert.match(capTs, /ios:\s*\{[\s\S]*?backgroundColor:\s*"#0E1A15"/);
 assert.doesNotMatch(capTs, /ios:\s*\{[\s\S]*?backgroundColor:\s*"#ffffff"/);
 assert.doesNotMatch(capTs, /ios:\s*\{[\s\S]*?backgroundColor:\s*"#F2F4F3"/);
 
 const capJson = read("capacitor.config.json");
-assert.match(capJson, /"backgroundColor":\s*"#002b21"/);
+assert.match(capJson, /"backgroundColor":\s*"#0E1A15"/);
 assert.doesNotMatch(capJson, /"backgroundColor":\s*"#ffffff"/);
 
 const iosCap = read("ios/App/App/capacitor.config.json");
-assert.match(iosCap, /"backgroundColor":\s*"#002b21"/);
+assert.match(iosCap, /"backgroundColor":\s*"#0E1A15"/);
 assert.doesNotMatch(iosCap, /"backgroundColor":\s*"#ffffff"/);
 
 console.log("bottom-nav-safe-area-green.test.ts: ok");

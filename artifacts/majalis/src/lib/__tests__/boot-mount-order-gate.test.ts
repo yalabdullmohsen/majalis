@@ -31,7 +31,7 @@ assert.doesNotMatch(
 );
 
 // الخلفية قبل React تبقى داكنة (ليست فاتحة تسبب شاشة بيضاء)
-assert.match(main, /#002b21/);
+assert.match(main, /#0E1A15/);
 assert.doesNotMatch(
   main.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, ""),
   /setProperty\(\s*["']--app-status-bg["']\s*,\s*["']#F2F4F3["']/,
