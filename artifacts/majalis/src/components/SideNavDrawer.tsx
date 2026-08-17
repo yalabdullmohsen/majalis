@@ -47,7 +47,7 @@ export const SideNavDrawer = memo(function SideNavDrawer({
       panel.style.willChange = "auto";
     };
     panel.addEventListener("transitionend", clear);
-    const t = window.setTimeout(clear, 280);
+    const t = window.setTimeout(clear, 240);
     return () => {
       window.clearTimeout(t);
       panel.removeEventListener("transitionend", clear);
@@ -83,6 +83,7 @@ export const SideNavDrawer = memo(function SideNavDrawer({
   }, [open, onClose]);
 
   const { swipeHandlers } = usePageSwipe({
+    /* RTL: السحب نحو اليمين (خارج الشاشة من الحافة اليمنى) يغلق الدرج */
     onPrev: onClose,
     onNext: () => {},
     threshold: 70,
@@ -117,7 +118,7 @@ export const SideNavDrawer = memo(function SideNavDrawer({
         id="main-navigation-drawer"
         className="drawer-panel sidebar-panel side-nav-drawer--v2"
         role="dialog"
-        aria-modal={open ? "true" : undefined}
+        aria-modal={open ? true : undefined}
         aria-label="القائمة الجانبية"
         onClick={(e) => e.stopPropagation()}
         {...swipeHandlers}

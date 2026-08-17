@@ -3127,8 +3127,8 @@ body.navbar-more-open .navbar-v3 { z-index: 60; }
 
 .mobile-nav-layer--drawer .side-nav-drawer--v2 {
   position: absolute;
-  top: 0;
-  right: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   z-index: 1;
 }
 

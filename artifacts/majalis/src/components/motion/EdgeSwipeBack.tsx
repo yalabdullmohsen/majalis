@@ -108,6 +108,7 @@ export function EdgeSwipeBack() {
     const onStart = (e: TouchEvent) => {
       if (e.touches.length !== 1) return;
       if (document.body.classList.contains("app-sheet-open")) return;
+      if (document.body.classList.contains("mobile-nav-body-lock")) return;
       if (document.documentElement.classList.contains("chrome-immersive")) return;
       const t = e.touches[0];
       rtl = isRtl();

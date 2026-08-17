@@ -81,6 +81,49 @@ export default function NavBar() {
     return () => window.removeEventListener("sidenav-open", handler);
   }, [openMenu]);
 
+  /* فتح الدرج بسحب الحافة اليمنى (RTL) — على الرئيسية فقط حتى لا يتعارض مع الرجوع */
+  useEffect(() => {
+    if (isMenuOpen || isImmersiveChromePath(location)) return;
+    const path = location.replace(/\/+$/, "") || "/";
+    if (path !== "/") return;
+    const EDGE = 28;
+    const THRESHOLD = 56;
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+    const isRtl = () => (document.documentElement.dir || "rtl") === "rtl";
+    const onStart = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+      if (document.body.classList.contains("mobile-nav-body-lock")) return;
+      if (document.body.classList.contains("app-sheet-open")) return;
+      const t = e.touches[0];
+      const w = window.innerWidth;
+      const fromEnd = isRtl() ? t.clientX >= w - EDGE : t.clientX <= EDGE;
+      if (!fromEnd) return;
+      startX = t.clientX;
+      startY = t.clientY;
+      tracking = true;
+    };
+    const onEnd = (e: TouchEvent) => {
+      if (!tracking) return;
+      tracking = false;
+      const t = e.changedTouches[0];
+      if (!t) return;
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      if (Math.abs(dy) > Math.abs(dx)) return;
+      if (isRtl() ? dx <= -THRESHOLD : dx >= THRESHOLD) openMenu();
+    };
+    window.addEventListener("touchstart", onStart, { passive: true });
+    window.addEventListener("touchend", onEnd, { passive: true });
+    window.addEventListener("touchcancel", onEnd, { passive: true });
+    return () => {
+      window.removeEventListener("touchstart", onStart);
+      window.removeEventListener("touchend", onEnd);
+      window.removeEventListener("touchcancel", onEnd);
+    };
+  }, [isMenuOpen, location, openMenu]);
+
   const handleLogout = useCallback(async () => {
     closeAll();
     await logout();
