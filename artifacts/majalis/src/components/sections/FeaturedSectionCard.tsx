@@ -1,5 +1,6 @@
 import { useLocation } from "wouter";
 import type { SectionDef } from "@/config/sections.registry";
+import { prefetchRoute } from "@/lib/prefetch-route";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -27,9 +28,17 @@ export function FeaturedSectionCard({ section, className, onNavigate, resolveRou
       data-section-id={section.id}
       aria-label={aria}
       className={cn("card--featured", className)}
+      onPointerDown={() => prefetchRoute(resolveRoute?.(section) ?? section.route)}
       onClick={() => {
-        setLocation(resolveRoute?.(section) ?? section.route);
+        const href = resolveRoute?.(section) ?? section.route;
+        const [path, hash] = href.split("#");
+        if (path) setLocation(path);
         window.scrollTo(0, 0);
+        if (hash) {
+          window.setTimeout(() => {
+            document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 40);
+        }
         onNavigate?.();
       }}
     >
