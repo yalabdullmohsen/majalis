@@ -5,7 +5,7 @@
 
 header.navbar-v3,
 .navbar-v3 {
-  background: var(--app-bg, var(--surface)) !important;
+  background: var(--surface-app, var(--app-bg)) !important;
   background-image: none !important;
   border-bottom: 1px solid var(--border) !important;
   box-shadow: none !important;
@@ -30,7 +30,7 @@ header.navbar-v3,
 }
 
 .top-section-bar {
-  background: var(--surface) !important;
+  background: var(--surface-app, var(--app-bg)) !important;
   border-bottom: 1px solid var(--border) !important;
   backdrop-filter: none !important;
   padding-block: 0.35rem !important;
@@ -86,8 +86,8 @@ header.navbar-v3,
     background-color: var(--mj-splash, #0E1A15) !important;
     background-image: linear-gradient(
       to bottom,
-      var(--app-bg, var(--surface)) 0%,
-      var(--app-bg, var(--surface)) calc(100% - var(--inset-bottom, 0px)),
+      var(--surface-app, var(--app-bg)) 0%,
+      var(--surface-app, var(--app-bg)) calc(100% - var(--inset-bottom, 0px)),
       var(--mj-splash, #0E1A15) calc(100% - var(--inset-bottom, 0px)),
       var(--mj-splash, #0E1A15) 100%
     ) !important;

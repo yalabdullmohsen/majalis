@@ -44,7 +44,7 @@ html[data-theme="dark"] {
 }
 
 :root {
-  --app-status-bg: var(--mj-bg, #F2F4F3);
+  --app-status-bg: var(--surface-app, var(--mj-bg));
   --app-status-fg-mode: dark;
 }
 
@@ -66,7 +66,7 @@ body {
 .app-shell {
   min-height: 100svh;
   min-height: 100dvh;
-  background: var(--mj-bg, var(--color-background, #F2F4F3));
+  background: var(--surface-app, var(--mj-bg));
   color: var(--color-text);
   margin: 0;
   padding: 0;
@@ -78,7 +78,7 @@ html[data-theme="dark"] #root,
 html[data-theme="dark"] .app-shell,
 html.dark #root,
 html.dark .app-shell {
-  background: var(--mj-bg, #101614);
+  background: var(--surface-app, var(--mj-bg));
 }
 
 .app-main {
@@ -753,11 +753,11 @@ html.dark .nav-soon-badge {
     min-height: 0 !important;
     max-height: none !important;
     padding-top: 0 !important;
-    /* Safe Area السفلي أبيض متصل مع الشريط — يمنع تسرب خلفية الجسم الخضراء */
+    /* Safe Area السفلي بلون الصفحة --surface-app — درزة واحدة لا أبيض مستقل */
     padding-bottom: var(--inset-bottom) !important;
     padding-inline: var(--gutter-inline-end) var(--gutter-inline-start) !important;
     margin: 0 !important;
-    background-color: #ffffff !important;
+    background-color: var(--surface-app, var(--mj-bg)) !important;
     background-image: none !important;
     border-block-start: 1px solid var(--color-border) !important;
     border-top: 1px solid var(--color-border) !important;
@@ -921,7 +921,7 @@ html.dark .nav-soon-badge {
 
 html[data-theme="dark"] .bottom-nav,
 html[data-theme="dark"] .bottom-nav--v2 {
-  background-color: var(--color-surface, #131A18) !important;
+  background-color: var(--surface-app, var(--mj-bg)) !important;
   background-image: none !important;
   border-block-start-color: var(--color-border) !important;
   border-top-color: var(--color-border) !important;

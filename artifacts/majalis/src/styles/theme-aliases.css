@@ -6,7 +6,7 @@
 
 :root {
   /* أسطح ونصوص */
-  --bg: var(--mj-bg);
+  --bg: var(--surface-app, var(--mj-bg));
   --bg-elevated: var(--mj-surface);
   --surface: var(--mj-surface);
   --surface-2: var(--mj-surface-2);
@@ -149,7 +149,7 @@ html[data-theme="dark"],
 html.dark,
 [data-theme="dark"],
 .dark {
-  --bg: var(--mj-bg);
+  --bg: var(--surface-app, var(--mj-bg));
   --bg-elevated: var(--mj-surface);
   --bg-base: var(--mj-bg);
   --surface: var(--mj-surface);

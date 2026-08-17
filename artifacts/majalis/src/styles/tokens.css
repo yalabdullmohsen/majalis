@@ -51,7 +51,7 @@
   --on-brand-wash-secondary: var(--em-700, #174a3a);
 
   /* ── بقية الأزواج الدلالية ─────────────────────────────────────────── */
-  --surface-page: var(--bg);
+  --surface-page: var(--surface-app, var(--mj-bg, var(--bg)));
   --on-page: var(--text);
   --surface-card: var(--surface);
   --on-card: var(--text);

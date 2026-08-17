@@ -16,7 +16,7 @@
     var(--bottom-nav-total, var(--nav-h, 64px)) + var(--assistant-fab-size, 3.35rem) + 16px
   );
   color: var(--on-surface, var(--mj-ink, #16241e));
-  background: var(--mj-bg, var(--elite-white, #f7f4ed));
+  background: var(--surface-app, var(--mj-bg));
 }
 
 .section-lobby__shot {
@@ -150,7 +150,7 @@
 
 html[data-theme="dark"] .section-lobby,
 html.dark .section-lobby {
-  background: var(--mj-bg, #101614);
+  background: var(--surface-app, var(--mj-bg));
   color: var(--on-surface, var(--mj-ink, #e8eeeb));
 }
 
