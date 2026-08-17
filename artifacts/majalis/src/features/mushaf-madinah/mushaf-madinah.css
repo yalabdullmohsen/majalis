@@ -441,13 +441,21 @@ html.dark .mm-surah-ornament__name {
   display: block;
 }
 
-/* بسملة — مسار عثماني معزول عن خط QPC PUA (يمنع تكسر الحروف) */
+/* بسملة — نفس مكوّن السطر وخط الصفحة وحجمه */
+.mm-ayah-line[data-line-type="basmallah"] {
+  justify-content: center;
+  text-align: center;
+  font-size: var(--mm-qpc-size);
+  font-family: var(--mm-qpc-family), "Amiri Quran", serif;
+  font-weight: 400;
+}
+
 .mm-basmala {
   width: 100%;
   max-width: 100%;
   text-align: center;
-  font-size: var(--mm-basmala-size);
-  font-weight: 700;
+  font-size: var(--mm-qpc-size);
+  font-family: var(--mm-qpc-family), "Amiri Quran", serif;
   color: var(--mm-ink);
   line-height: 1.75;
   letter-spacing: 0;
@@ -460,21 +468,8 @@ html.dark .mm-surah-ornament__name {
   box-sizing: border-box;
 }
 
-.mm-basmala--uthmani {
-  font-family: "Amiri Quran", "KFGQPC Hafs Uthmanic Script HAFS", "KFGQPC Hafs Uthmanic", serif !important;
-  font-feature-settings: "liga" 1, "calt" 1;
-  white-space: nowrap;
-}
-
-.mm-basmala--qpc {
-  font-family: var(--mm-qpc-family), "Amiri Quran", serif;
-  unicode-bidi: bidi-override;
-  direction: rtl;
-  white-space: nowrap;
-}
-
-.mm-slot__banner--with-basmala .mm-basmala {
-  font-size: var(--mm-basmala-size);
+.mm-slot__banner--with-basmala .mm-ayah-line[data-line-type="basmallah"] {
+  font-size: var(--mm-qpc-size);
   max-height: none;
 }
 

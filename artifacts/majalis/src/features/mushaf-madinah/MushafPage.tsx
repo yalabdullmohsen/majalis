@@ -1,8 +1,7 @@
 import { useRef } from "react";
 import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
 import { MushafAyahHighlight } from "./MushafAyahHighlight";
-import { MushafAyahLine } from "./MushafAyahLine";
-import { MushafBasmala } from "./MushafBasmala";
+import { decorativeBasmalaWords, MushafAyahLine } from "./MushafAyahLine";
 import { MushafPageFooter } from "./MushafPageFooter";
 import { MushafPageHeader } from "./MushafPageHeader";
 import { MushafSurahOrnament } from "./MushafSurahOrnament";
@@ -55,28 +54,31 @@ export function MushafPage({
               {cell?.kind === "banner" ? (
                 <div className={`mm-slot__banner${cell.inlineBasmala ? " mm-slot__banner--with-basmala" : ""}`}>
                   <MushafSurahOrnament nameArabic={cell.nameArabic} />
-                  {cell.inlineBasmala ? <MushafBasmala /> : null}
+                  {cell.inlineBasmala ? (
+                    <MushafAyahLine words={decorativeBasmalaWords()} centered lineType="basmallah" />
+                  ) : null}
                 </div>
               ) : null}
-              {cell?.kind === "basmala" ? <MushafBasmala /> : null}
+              {cell?.kind === "basmala" ? (
+                <MushafAyahLine words={decorativeBasmalaWords()} centered lineType="basmallah" />
+              ) : null}
               {cell?.kind === "line" ? (
-                cell.words.length > 0 && cell.words.every((w) => w.verseKey === "1:1") ? (
-                  <MushafBasmala
-                    words={cell.words}
-                    numbered
-                    selected={selectedVerseKey === "1:1"}
-                    playing={playingVerseKey === "1:1"}
-                    onSelect={onSelectVerse ? () => onSelectVerse("1:1") : undefined}
-                  />
-                ) : (
-                  <MushafAyahLine
-                    words={cell.words}
-                    centered={opening || isLastSurahLine(cell.words, layout)}
-                    selectedVerseKey={selectedVerseKey}
-                    playingVerseKey={playingVerseKey}
-                    onSelectVerse={onSelectVerse}
-                  />
-                )
+                <MushafAyahLine
+                  words={cell.words}
+                  centered={
+                    opening ||
+                    isLastSurahLine(cell.words, layout) ||
+                    (cell.words.length > 0 && cell.words.every((w) => w.verseKey === "1:1"))
+                  }
+                  lineType={
+                    cell.words.length > 0 && cell.words.every((w) => w.verseKey === "1:1")
+                      ? "basmallah"
+                      : "ayah"
+                  }
+                  selectedVerseKey={selectedVerseKey}
+                  playingVerseKey={playingVerseKey}
+                  onSelectVerse={onSelectVerse}
+                />
               ) : null}
             </div>
           );

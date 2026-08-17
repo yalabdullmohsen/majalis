@@ -29,7 +29,7 @@ type RawVerse = {
 assert.match(css, /--mm-ref-text-start:\s*11\.9%/);
 assert.match(css, /--mm-ref-text-end:\s*91\.1%/);
 assert.match(fit, /fitPageFontSize/);
-assert.match(pageComp, /MushafBasmala/);
+assert.match(pageComp, /decorativeBasmalaWords|lineType/);
 assert.doesNotMatch(css, /\.mm-ayah-line\s*\{[^}]*overflow:\s*hidden/);
 assert.doesNotMatch(css, /\.mm-basmala\s*\{[^}]*overflow:\s*hidden/);
 

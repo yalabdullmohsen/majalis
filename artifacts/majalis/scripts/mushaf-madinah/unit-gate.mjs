@@ -45,7 +45,7 @@ assert.match(css, /#152018|#101812|#0e1410|#1c2430|#151c26|#101820|#0f1720|#0c12
 assert.match(css, /\.mm-ayah-run__text\.is-selected/);
 assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*rgba\(0,\s*0,\s*0,\s*0\.40\)/);
 assert.match(css, /\.mm-viewport\s+\.mm-page\s*\{[^}]*box-shadow:\s*none/);
-assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-basmala-size\)/);
+assert.match(css, /\.mm-ayah-line\[data-line-type="basmallah"\][^}]*font-size:\s*var\(--mm-qpc-size\)/);
 assert.match(css, /\.mm-reciter-sheet/);
 assert.match(css, /--mm-outer-pad:\s*0/);
 assert.match(css, /--mm-chrome-top-h/);
@@ -128,18 +128,19 @@ assert.match(ornament, /mm-surah-ornament__motif/);
 
 assert.match(css, /inset-inline-end:\s*0/);
 assert.match(css, /scrollbar-width:\s*none/);
-assert.match(css, /\.mm-slot__banner--with-basmala\s+\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-basmala-size\)/);
+assert.match(css, /\.mm-slot__banner--with-basmala[^{]*\[data-line-type="basmallah"\]/);
 
 const pageSrc = read("src/features/mushaf-madinah/MushafPage.tsx");
 assert.match(pageSrc, /inlineBasmala/);
 assert.match(pageSrc, /bismillahPre/);
-assert.match(pageSrc, /MushafBasmala/);
+assert.match(pageSrc, /decorativeBasmalaWords/);
+assert.match(pageSrc, /lineType/);
+assert.doesNotMatch(pageSrc, /MushafBasmala/);
+assert.ok(!existsSync(resolve(root, "src/features/mushaf-madinah/MushafBasmala.tsx")));
 assert.match(pageSrc, /filledSlots|mm-page__body--opening/);
 assert.doesNotMatch(pageSrc, /Math\.floor\(\(15 - span\) \/ 2\)/);
 assert.match(pageSrc, /mm-slot__banner--with-basmala/);
 assert.match(pageSrc, /النمل/);
-assert.ok(existsSync(resolve(root, "src/features/mushaf-madinah/MushafBasmala.tsx")));
-assert.match(read("src/features/mushaf-madinah/MushafBasmala.tsx"), /BASMALA_UTHMANI/);
 assert.match(read("src/features/mushaf-madinah/useMushafPageFontFit.ts"), /fitPageFontSize/);
 assert.match(read("src/features/mushaf-madinah/useMushafPageFontFit.ts"), /document\.fonts\.ready/);
 assert.match(read("src/features/mushaf-madinah/useMushafPageFontFit.ts"), /document\.fonts\.check/);
@@ -152,7 +153,7 @@ assert.match(line, /data-type=\{w\.charType\}/);
 assert.match(line, /charType === "end"/);
 assert.match(line, /stopPropagation/);
 assert.match(line, /LONG_PRESS_MS/);
-assert.match(line, /data-testid="mushaf-ayah-hit"/);
+assert.match(line, /mushaf-ayah-hit/);
 
 const app = read("src/App.tsx");
 assert.match(app, /MushafReaderPage/);

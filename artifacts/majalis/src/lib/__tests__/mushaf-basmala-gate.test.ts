@@ -1,5 +1,5 @@
 /**
- * بوابة البسملة — صفحات الفاتحة/البقرة/التوبة/الكهف/مريم.
+ * بوابة البسملة — مسار السطر نفسه بخط الصفحة، عشر سور + الفاتحة.
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-basmala-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -18,28 +18,31 @@ const chapters = JSON.parse(
   pages: [number, number];
 }>;
 const pageSrc = readFileSync(resolve(root, "src/features/mushaf-madinah/MushafPage.tsx"), "utf8");
-const basmalaSrc = readFileSync(resolve(root, "src/features/mushaf-madinah/MushafBasmala.tsx"), "utf8");
+const lineSrc = readFileSync(resolve(root, "src/features/mushaf-madinah/MushafAyahLine.tsx"), "utf8");
+const css = readFileSync(resolve(root, "src/features/mushaf-madinah/mushaf-madinah.css"), "utf8");
 const dataSrc = readFileSync(resolve(root, "src/lib/quran-data/qpc-page-data.ts"), "utf8");
 
 assert.match(pageSrc, /needsVisualBasmala/);
 assert.match(pageSrc, /bismillahPre === true/);
-assert.match(pageSrc, /MushafBasmala/);
-assert.match(basmalaSrc, /BASMALA_UTHMANI/);
-assert.match(basmalaSrc, /بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ/);
-assert.match(basmalaSrc, /data-basmala="uthmani"/);
-assert.match(basmalaSrc, /data-basmala="qpc"/);
-assert.match(
-  readFileSync(resolve(root, "src/features/mushaf-madinah/mushaf-madinah.css"), "utf8"),
-  /\.mm-basmala--uthmani\s*\{[^}]*Amiri Quran[^}]*!important/,
-);
+assert.match(pageSrc, /decorativeBasmalaWords/);
+assert.match(pageSrc, /lineType/);
+assert.doesNotMatch(pageSrc, /MushafBasmala/);
+assert.match(lineSrc, /BASMALA_UTHMANI/);
+assert.match(lineSrc, /بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ/);
+assert.match(lineSrc, /data-line-type/);
+assert.match(lineSrc, /basmallah/);
+assert.match(css, /\[data-line-type="basmallah"\]/);
+assert.match(css, /font-size:\s*var\(--mm-qpc-size\)/);
+assert.doesNotMatch(css, /mm-basmala--uthmani/);
+assert.doesNotMatch(css, /Amiri Quran[^;]*!important/);
 assert.match(dataSrc, /basmalaSlot/);
 
-// مكوّن بسملة واحد فقط في شجرة المصحف
 const mushafDir = resolve(root, "src/features/mushaf-madinah");
 const basmalaFiles = readdirSync(mushafDir).filter(
   (f) => /basmala/i.test(f) && /\.(tsx|ts|jsx|js)$/.test(f),
 );
-assert.deepEqual(basmalaFiles, ["MushafBasmala.tsx"], `مكوّنات بسملة: ${basmalaFiles.join(",")}`);
+assert.deepEqual(basmalaFiles, [], `مكوّنات بسملة منفصلة: ${basmalaFiles.join(",")}`);
+assert.equal(existsSync(resolve(mushafDir, "MushafBasmala.tsx")), false);
 
 function chapter(id: number) {
   const c = chapters.find((x) => x.id === id);
@@ -63,7 +66,19 @@ for (const c of CASES) {
   assert.ok(existsSync(file), `${c.label}: ملف الصفحة ${c.page}`);
 }
 
-// صفحات تحقق إلزامية للبسملة
+/** عشر سور ذات بسملة افتتاحية: نفس مكوّن السطر ونفس حجم/عائلة الخط */
+const TEN = [2, 3, 4, 5, 6, 7, 8, 10, 18, 19];
+for (const id of TEN) {
+  const ch = chapter(id);
+  assert.equal(ch.bismillah_pre, true, `سورة ${id} لها بسملة افتتاحية`);
+}
+assert.match(lineSrc, /mm-ayah-line/);
+assert.match(css, /\.mm-ayah-line\s*\{[^}]*--mm-qpc-family/);
+assert.match(css, /\.mm-ayah-line\[data-line-type="basmallah"\][^}]*--mm-qpc-family/);
+assert.match(css, /\.mm-ayah-line\[data-line-type="basmallah"\][^}]*--mm-qpc-size/);
+assert.match(css, /\.mm-ayah-line\s*\{[^}]*--mm-qpc-size/);
+assert.match(pageSrc, /centered/);
+
 for (const n of [1, 2, 600, 602]) {
   const file = resolve(pagesDir, `page-${String(n).padStart(3, "0")}.json`);
   assert.ok(existsSync(file), `صفحة تحقق ${n}`);

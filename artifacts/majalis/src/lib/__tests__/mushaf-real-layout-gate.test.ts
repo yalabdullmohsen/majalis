@@ -12,7 +12,6 @@ const read = (p: string) => readFileSync(resolve(root, p), "utf8");
 
 const css = read("src/features/mushaf-madinah/mushaf-madinah.css");
 const page = read("src/features/mushaf-madinah/MushafPage.tsx");
-const basmala = read("src/features/mushaf-madinah/MushafBasmala.tsx");
 const viewport = read("src/features/mushaf-madinah/VerifiedMushafReader.tsx");
 const pager = read("src/features/mushaf-madinah/MushafPager.tsx");
 const actions = read("src/features/mushaf-madinah/AyahActionSheet.tsx");
@@ -68,12 +67,15 @@ assert.match(css, /--mm-chrome-bottom-h/);
 assert.match(css, /\.mm-page-shell[^{]*\{[^}]*padding-top:\s*0/);
 assert.match(css, /\.mm-page-shell[^{]*\{[^}]*padding-bottom:\s*0/);
 
-assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-basmala-size\)/);
+assert.match(css, /\[data-line-type="basmallah"\]/);
+assert.match(css, /\.mm-ayah-line\[data-line-type="basmallah"\][^}]*font-size:\s*var\(--mm-qpc-size\)/);
 assert.match(css, /\.mm-basmala\s*\{[^}]*text-align:\s*center/);
-assert.match(css, /\.mm-basmala--uthmani\s*\{[^}]*!important/);
+assert.doesNotMatch(css, /mm-basmala--uthmani/);
 assert.match(page, /bismillahPre === true/);
-assert.match(basmala, /BASMALA_UTHMANI/);
-assert.match(basmala, /data-basmala="qpc"/);
+assert.match(line, /BASMALA_UTHMANI/);
+assert.match(line, /data-line-type/);
+assert.match(page, /lineType="basmallah"|lineType=\{/);
+assert.doesNotMatch(page, /MushafBasmala/);
 assert.match(data, /bismillahPre/);
 assert.match(data, /basmalaSlot/);
 assert.match(page, /needsVisualBasmala/);
@@ -109,7 +111,7 @@ assert.match(viewport, /import\.meta\.env\.DEV/);
 assert.match(line, /stopPropagation/);
 assert.match(line, /LONG_PRESS_MS/);
 assert.match(line, /onPointerDown/);
-assert.match(line, /data-testid="mushaf-ayah-hit"/);
+assert.match(line, /mushaf-ayah-hit/);
 
 assert.match(css, /فوق مناطق قلب الصفحة/);
 assert.match(css, /data-ayah-bar="1"\]\s*\.mm-page-edge/);
