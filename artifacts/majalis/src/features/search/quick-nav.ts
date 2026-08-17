@@ -14,11 +14,17 @@ export function parseQuickNav(raw: string): QuickNavResult | null {
   const q = toWesternDigits(raw.trim());
   if (!q) return null;
 
+  const idRef = q.match(/^(bukhari|muslim|abudawud|tirmidhi|nasai|ibnmajah|malik|ahmad|darimi|mawdu|daif)\s*:\s*(\d{1,5})$/i);
+  if (idRef) {
+    const id = `${idRef[1].toLowerCase()}:${idRef[2]}`;
+    return { href: `/hadith/${id}`, titleAr: id };
+  }
+
   const bukhari = q.match(/^(?:صحيح\s+)?البخاري\s+(\d{1,5})$/u);
   if (bukhari) {
     const num = bukhari[1];
     return {
-      href: `/hadith#bukhari-${num}`,
+      href: `/hadith/bukhari:${num}`,
       titleAr: `صحيح البخاري ${num}`,
     };
   }
@@ -27,7 +33,7 @@ export function parseQuickNav(raw: string): QuickNavResult | null {
   if (muslim) {
     const num = muslim[1];
     return {
-      href: `/hadith#muslim-${num}`,
+      href: `/hadith/muslim:${num}`,
       titleAr: `صحيح مسلم ${num}`,
     };
   }

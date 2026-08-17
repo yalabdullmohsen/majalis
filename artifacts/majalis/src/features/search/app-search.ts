@@ -12,6 +12,7 @@ import { kindPriority } from "@/features/search/kind-priority";
 import { parseQuickNav } from "@/features/search/quick-nav";
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { scoreTolerantMatch, type TolerantMatch } from "@/features/search/tolerant-match";
+import { searchHadithCorpus } from "@/lib/hadith-corpus";
 
 export type AppSearchResult = {
   id: string;
@@ -151,6 +152,20 @@ export async function runAppSearch(
     } else {
       results = [quickHit, ...results.filter((r) => r.href !== quickHit.href)];
     }
+  }
+
+  const corpusHits = searchHadithCorpus(query, 12).map((h) => ({
+    id: `corpus:${h.id}`,
+    kind: "hadith",
+    title: h.isMawdu ? `⚠ موضوع — ${h.id}` : h.id,
+    href: h.href,
+    summary: h.isMawdu
+      ? `حديث موضوع لا يصحّ · ${h.matnPreview}`
+      : [h.narrator, h.matnPreview].filter(Boolean).join(" · "),
+  }));
+  if (corpusHits.length) {
+    const seenHref = new Set(results.map((r) => r.href));
+    results = [...corpusHits.filter((h) => !seenHref.has(h.href)), ...results];
   }
 
   const groups: Record<string, AppSearchResult[]> = {};

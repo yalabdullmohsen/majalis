@@ -1194,19 +1194,33 @@
   color: rgba(255, 255, 255, 0.68);
   line-height: 1.35;
 }
+.hsp__subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+.hsp-kpi__source {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.62rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.62);
+}
 .hsp-kpi__pct {
-  position: absolute;
-  top: 0.45rem;
-  inset-inline-end: 0.5rem;
-  min-width: 2.4rem;
-  text-align: center;
-  padding: 0.1rem 0.35rem;
+  position: static;
+  display: block;
+  margin-top: 0.4rem;
+  width: fit-content;
+  max-width: 100%;
+  text-align: start;
+  padding: 0.15rem 0.4rem;
   border-radius: var(--radius-sm, 0.4rem);
   background: rgba(184, 150, 63, 0.18);
   border: 1px solid rgba(184, 150, 63, 0.35);
-  font-size: 0.65rem;
-  font-weight: 800;
+  font-size: 0.62rem;
+  font-weight: 700;
   color: #fff;
+  line-height: 1.35;
 }
 .hsp-kpi.hsp-tone--sahih,
 .hsp-kpi.hsp-tone--emerald { box-shadow: inset 0 0 0 1px rgba(52, 120, 95, 0.45); }
@@ -1600,4 +1614,34 @@ html[data-theme="dark"] .hsp {
 @media (max-width: 680px) {
   .hadith-page .ds-filters-panel--desktop { display: none !important; }
   .hadith-access-bar--fold { display: none; }
+}
+
+/* صفحة حديث بالمعرّف الثابت */
+.hadith-by-id { max-width: 42rem; margin-inline: auto; padding: 1rem 1.1rem 2rem; }
+.hadith-by-id__nav { font-size: 0.85rem; margin-bottom: 0.75rem; color: var(--mj-muted, #5a6b64); }
+.hadith-by-id__id { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.hadith-id-chip {
+  font: inherit; font-weight: 800; font-size: 1.15rem;
+  background: var(--color-primary-soft, #e8f0ec); color: var(--color-primary, #12362a);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 25%, transparent);
+  border-radius: 0.55rem; padding: 0.25rem 0.65rem; cursor: pointer;
+}
+.hadith-id-copied { font-size: 0.75rem; color: var(--color-primary, #12362a); }
+.hadith-by-id__meta { color: var(--mj-muted, #5a6b64); font-size: 0.85rem; margin: 0.35rem 0 0.9rem; }
+.hadith-by-id__matn {
+  font-size: 1.12rem; line-height: 1.9; padding: 1rem 0;
+  border-block: 1px solid var(--mj-hairline, var(--color-border));
+}
+.hadith-by-id__grade { margin-top: 1rem; font-size: 0.92rem; }
+.hadith-by-id__grade-src { color: var(--mj-muted, #5a6b64); font-size: 0.82rem; }
+.hadith-by-id__ungraded { color: #8a6a2b; }
+.hadith-mawdu-banner {
+  background: #fff0f0; color: #8a2a2a; border: 1px solid #e0a0a0;
+  border-radius: 0.65rem; padding: 0.75rem 0.9rem; margin-bottom: 1rem;
+}
+.hadith-mawdu-banner strong { display: block; margin-bottom: 0.25rem; }
+.hadith-by-id--mawdu .hadith-by-id__matn { opacity: 0.92; }
+.hadith-id-copy {
+  margin-top: 1rem; padding: 0.45rem 0.9rem; border-radius: 0.55rem;
+  border: 1px solid var(--color-border); background: var(--mj-surface); cursor: pointer;
 }

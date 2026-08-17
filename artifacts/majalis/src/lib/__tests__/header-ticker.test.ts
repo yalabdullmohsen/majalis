@@ -117,6 +117,11 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
     !tickerSrc.includes("usePrayerCountdown"),
     "العدّ ليس في HeaderTicker — عزل إعادة الرسم كل ثانية",
   );
+  assert(!tickerSrc.includes("setStickyPaused"), "لا stickyPaused — كان يجمّد الماركي بعد نقر الروابط");
+  assert(
+    tickerSrc.includes("onPointerDown") || tickerSrc.includes("onTouchStart"),
+    "إيقاف مؤقت أثناء اللمس فقط",
+  );
 
   const chipSrc = readFileSync(
     resolve(appRoot, "src/components/prayer/PrayerCountdownChip.tsx"),

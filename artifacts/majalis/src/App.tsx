@@ -115,6 +115,7 @@ const LibraryDetailPage = lazy(() => import("@/pages/library/LibraryDetailPage")
 const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
 const PropheticMedicinePage = lazy(() => import("@/views/PropheticMedicinePage"));
 const HadithPage = lazy(() => import("@/pages/hadith/HadithPage"));
+const HadithByIdPage = lazy(() => import("@/pages/hadith/HadithByIdPage"));
 const HadithSahihPage = lazy(() => import("@/pages/hadith/HadithSahihPage"));
 const HadithDaifPage = lazy(() => import("@/pages/hadith/HadithDaifPage"));
 const HadithMawduPage = lazy(() => import("@/pages/hadith/HadithMawduPage"));
@@ -603,6 +604,15 @@ function Router() {
       <Route path="/hadith/sahih"><SafeLazyRoute component={HadithSahihPage} /></Route>
       <Route path="/hadith/daif"><SafeLazyRoute component={HadithDaifPage} /></Route>
       <Route path="/hadith/mawdu"><SafeLazyRoute component={HadithMawduPage} /></Route>
+      <Route path="/hadith/:id">
+        {(params) =>
+          params.id && params.id.includes(":") ? (
+            <SafeLazyRoute component={HadithByIdPage} />
+          ) : (
+            <Redirect to="/hadith" />
+          )
+        }
+      </Route>
       <Route path="/hadith"><SafeLazyRoute component={HadithPage} /></Route>
       <Route path="/stories"><SafeLazyRoute component={IslamicStoriesPage} /></Route>
       <Route path="/nations/:slug"><SafeLazyRoute component={NationDetailPage} /></Route>
