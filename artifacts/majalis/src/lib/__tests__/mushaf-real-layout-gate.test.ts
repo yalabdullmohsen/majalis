@@ -51,7 +51,8 @@ assert.match(css, /backdrop-filter:\s*blur\(/);
 assert.match(css, /height:\s*35dvh/);
 assert.match(css, /height:\s*85dvh/);
 assert.match(css, /border-radius:\s*20px\s+20px\s+0\s+0/);
-assert.match(css, /#f5e8c7|#F5E8C7/);
+assert.match(css, /ayah-active/);
+assert.match(css, /var\(--mm-gold\) 12%/);
 assert.match(css, /\.mm-ayah-run__text\s*\{[^}]*padding:\s*0/);
 assert.match(css, /grid-template-columns:\s*repeat\(4,/);
 assert.match(css, /\[data-chrome="1"\]\s*\.mm-controls__bar/);
@@ -74,7 +75,8 @@ assert.match(page, /needsVisualBasmala/);
 
 assert.match(line, /mm-ayah-hit--end/);
 assert.match(css, /\.mm-ayah-number/);
-assert.match(css, /transition:\s*background-color\s+150ms/);
+assert.match(css, /\[data-type="end"\]/);
+assert.doesNotMatch(css, /transition:\s*background-color\s+150ms/);
 
 assert.match(actions, /mm-ayah-bar__handle/);
 assert.match(actions, /data-sheet-height/);
@@ -126,7 +128,7 @@ assert.match(css, /--mm-ink:\s*#f4efe5|--mm-ink:\s*#f7faf7|--mm-ink:\s*#ffffff/)
 assert.match(css, /--mm-paper:\s*#fbf7ef/);
 assert.match(css, /rgba\(191,\s*159,\s*91,\s*0\.(1[0-9]|22)\)/);
 
-assert.match(page, /targetStart = 1/);
+assert.match(page, /filledSlots|mm-page__body--opening/);
 assert.doesNotMatch(page, /\(15 - span\) \/ 2/);
 assert.match(page, /النمل/);
 

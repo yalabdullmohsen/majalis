@@ -269,15 +269,29 @@ html.dark .mm-viewport,
   pointer-events: none;
 }
 
-/* ص١ وص٢: هندسة واحدة — شارة ٢٧٫٧٪ · نهاية كتلة ٧٤٫٨٪ */
-.mm-viewport .mm-page--opening .mm-page__body {
+/* ص١ وص٢: هندسة واحدة — شارة ٢٧٫٧٪ · نهاية كتلة ٧٤٫٨٪ · كتلة موسّطة بلا خانات فارغة */
+.mm-viewport .mm-page--opening .mm-page__body,
+.mm-viewport .mm-page--opening .mm-page__body--opening {
   top: var(--mm-ref-open-banner-y);
   bottom: calc(100% - var(--mm-ref-open-text-end));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 0.2em;
+  grid-template-rows: none;
+}
+
+.mm-viewport .mm-page--opening .mm-slot {
+  flex: 0 0 auto;
+  height: auto;
+  min-height: 0;
 }
 
 .mm-viewport .mm-page--opening .mm-slot[data-kind="empty"] {
   visibility: hidden;
   pointer-events: none;
+  display: none;
 }
 
 .mm-viewport[data-ayah-bar="1"] .mm-page {
@@ -552,15 +566,14 @@ html.dark .mm-surah-ornament__name {
   background: transparent;
   background-clip: padding-box;
   box-shadow: none;
-  transition: background-color 150ms ease, box-shadow 150ms ease;
 }
 
 .mm-ayah-run__text.is-selected,
-.mm-ayah-line__word.is-selected {
-  /* طبقة خلف الحروف فقط — لا تغيّر مقاييس السطر */
-  background-color: #f5e8c7;
-  box-shadow: 0 0 0 0.06em #f5e8c7;
-  border-radius: 0.18em;
+.mm-ayah-line__word.is-selected,
+.ayah-active.mm-ayah-line__word {
+  background: color-mix(in srgb, var(--mm-gold) 12%, transparent);
+  border-radius: 3px;
+  box-shadow: none;
 }
 
 .mm-viewport[data-mushaf-theme="paper"] .mm-ayah-run__text.is-selected,
@@ -574,14 +587,14 @@ html.dark .mm-ayah-run__text.is-selected,
 html[data-theme="dark"] .mm-ayah-line__word.is-selected,
 html.dark .mm-ayah-line__word.is-selected,
 .mm-viewport[data-mushaf-theme="night"] .mm-ayah-line__word.is-selected {
-  background-color: color-mix(in srgb, var(--mm-ayah-select) 100%, transparent);
-  box-shadow: 0 0 0 0.06em color-mix(in srgb, var(--mm-ayah-select) 100%, transparent);
+  background: color-mix(in srgb, var(--mm-gold) 12%, transparent);
+  box-shadow: none;
 }
 
 .mm-ayah-run__text.is-playing,
 .mm-ayah-line__word.is-playing {
-  background-color: var(--mm-ayah-play);
-  box-shadow: 0 0 0 0.06em var(--mm-ayah-play);
+  background: color-mix(in srgb, var(--mm-ayah-play) 100%, transparent);
+  box-shadow: none;
 }
 
 .mm-ayah-hit--end.is-selected,
@@ -600,32 +613,32 @@ html.dark .mm-ayah-line__word.is-selected,
   word-spacing: 0;
 }
 
-.mm-ayah-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--mm-gold-deep);
-  font-size: var(--mm-ayah-end);
-  line-height: 1;
-  padding-inline: 0.02em;
-  vertical-align: middle;
+.mm-ayah-number,
+.mm-ayah-line__word[data-type="end"],
+.mm-ayah-hit--end {
+  display: inline-block;
+  background: none;
+  background-image: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  transform: none;
+  font-size: inherit;
+  line-height: inherit;
+  border-radius: 0;
+  width: auto;
+  height: auto;
+  box-shadow: none;
+  color: inherit;
+  vertical-align: baseline;
   white-space: nowrap;
-  width: 1.35em;
-  height: 1.55em;
-  margin-inline: 0.06em;
-  border-radius: 50% / 42%;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mm-gold-deep) 55%, transparent);
-  background: color-mix(in srgb, var(--mm-gold-soft) 22%, transparent);
 }
 
 .mm-ayah-number__glyph {
   letter-spacing: 0;
-  display: inline-block;
-  font-size: 1.22em;
-}
-
-.mm-ayah-hit--end {
-  padding-inline: 0.04em;
+  display: inline;
+  font-size: inherit;
+  transform: none;
 }
 
 .mm-viewport .mm-page-footer {

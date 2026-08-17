@@ -4,11 +4,11 @@ type Props = {
   word: QpcWord;
 };
 
-/** رقم الآية كحرف QPC مضمّن في السطر (زخرفة ذهبية عبر اللون). */
+/** رقم الآية كمحرف QPC من خط الصفحة — بلا زخرفة أو تحجيم. */
 export function MushafAyahNumber({ word }: Props) {
   return (
-    <span className="mm-ayah-number" data-ayah={word.verseKey} aria-hidden="true">
-      <span className="mm-ayah-number__glyph">{word.glyphText}</span>
+    <span className="mm-ayah-number" data-type="end" data-ayah={word.verseKey} aria-hidden="true">
+      {word.glyphText}
     </span>
   );
 }

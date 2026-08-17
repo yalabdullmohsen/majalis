@@ -61,10 +61,12 @@ export function fitPageFontSize(
   containerPx: number,
   family: string,
   measure: MeasureTextFn = defaultMeasure,
+  maxPx = MAX_PX,
 ): number {
   if (containerPx <= 0 || lines.length === 0) return MIN_PX;
+  const cap = Math.max(MIN_PX, maxPx);
   let lo = MIN_PX;
-  let hi = MAX_PX;
+  let hi = cap;
   let best = MIN_PX;
   while (lo <= hi) {
     const mid = (lo + hi) >> 1;

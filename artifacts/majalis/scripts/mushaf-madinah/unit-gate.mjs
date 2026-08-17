@@ -130,7 +130,7 @@ const pageSrc = read("src/features/mushaf-madinah/MushafPage.tsx");
 assert.match(pageSrc, /inlineBasmala/);
 assert.match(pageSrc, /bismillahPre/);
 assert.match(pageSrc, /MushafBasmala/);
-assert.match(pageSrc, /targetStart = 1/);
+assert.match(pageSrc, /filledSlots|mm-page__body--opening/);
 assert.doesNotMatch(pageSrc, /Math\.floor\(\(15 - span\) \/ 2\)/);
 assert.match(pageSrc, /mm-slot__banner--with-basmala/);
 assert.match(pageSrc, /النمل/);

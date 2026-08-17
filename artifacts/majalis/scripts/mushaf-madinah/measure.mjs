@@ -105,7 +105,11 @@ async function main() {
       measurements.push({
         page: n,
         ...m,
-        ok: m.slots === 15 && !m.hasPdf && /qpc-v2-p/i.test(m.fontFamily) && String(m.pageAttr) === String(n),
+        ok:
+          (n <= 2 ? m.slots > 0 && m.slots <= 15 : m.slots === 15) &&
+          !m.hasPdf &&
+          /qpc-v2-p/i.test(m.fontFamily) &&
+          String(m.pageAttr) === String(n),
       });
       console.log("measured", n, measurements.at(-1).ok ? "ok" : "FAIL", m.fontFamily);
     }

@@ -1,6 +1,5 @@
 import { useRef, type KeyboardEvent, type MouseEvent, type PointerEvent as ReactPointerEvent } from "react";
 import type { QpcWord } from "@/lib/quran-data/qpc-page-data";
-import { MushafAyahNumber } from "./MushafAyahNumber";
 
 type Props = {
   words: QpcWord[];
@@ -82,7 +81,10 @@ export function MushafAyahLine({
         const selected = selectedVerseKey === w.verseKey;
         const playing = playingVerseKey === w.verseKey;
         const isEnd = w.charType === "end";
-        const stateClass = [selected ? "is-selected" : "", playing ? "is-playing" : ""]
+        const stateClass = [
+          selected ? "is-selected ayah-active" : "",
+          playing ? "is-playing" : "",
+        ]
           .filter(Boolean)
           .join(" ");
 
@@ -116,7 +118,7 @@ export function MushafAyahLine({
               }
             }}
           >
-            {isEnd ? <MushafAyahNumber word={w} /> : w.glyphText}
+            {w.glyphText}
           </span>
         );
       })}
