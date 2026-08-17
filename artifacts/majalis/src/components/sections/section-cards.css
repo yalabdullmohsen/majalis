@@ -36,7 +36,7 @@
   min-height: 44px;
   padding: 16px;
   text-align: start;
-  color: var(--mj-ink, #16241e);
+  color: var(--on-surface, var(--mj-ink, #16241e));
   background-color: var(--mj-surface, #ffffff);
   background-image: none;
   border: 1px solid var(--mj-hairline, #e3e8e6);
@@ -61,8 +61,8 @@
   width: 36px;
   height: 36px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 10%, transparent);
-  color: var(--mj-brand, #1f7a5a);
+  background: var(--chip-bg, var(--mj-brand-soft, #e4f0ea));
+  color: var(--chip-fg, var(--mj-brand-deep, #123f2e));
 }
 
 .card__icon svg {
@@ -85,7 +85,7 @@
   font-size: 13px;
   font-weight: 500;
   line-height: 1.35;
-  color: var(--mj-muted, #66766f);
+  color: var(--on-surface-muted, var(--mj-ink-2, #4a5a53));
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -166,7 +166,7 @@ a.card--featured,
   min-height: 44px;
   padding: 12px 16px;
   text-align: start;
-  color: var(--mj-ink, #16241e);
+  color: var(--on-surface, var(--mj-ink, #16241e));
   background-color: var(--mj-surface, #ffffff);
   background-image: none;
   border: 1px solid var(--mj-hairline, #e3e8e6);
@@ -250,7 +250,7 @@ a.card--featured,
 .sections-hub__empty {
   margin: 0;
   font-size: 15px;
-  color: var(--mj-muted, #66766f);
+  color: var(--on-surface-muted, var(--mj-ink-2, #4a5a53));
 }
 
 .sections-hub__group {
@@ -266,7 +266,7 @@ a.card--featured,
   font-size: 15px;
   font-weight: 600;
   line-height: 1.3;
-  color: var(--mj-muted, #66766f);
+  color: var(--on-surface-muted, var(--mj-ink-2, #4a5a53));
 }
 
 .sections-hub__group-title::after {
@@ -303,19 +303,19 @@ html.dark .card,
 html[data-theme="dark"] .card--compact,
 html.dark .card--compact {
   background-color: var(--mj-surface, #1a221f);
-  color: var(--mj-ink, #e8eeeb);
+  color: var(--on-surface, var(--mj-ink, #e8eeeb));
   border-color: var(--mj-hairline, #2a3531);
 }
 
 html[data-theme="dark"] .card .card__subtitle,
 html.dark .card .card__subtitle {
-  color: var(--mj-muted, #9aaba3);
+  color: var(--on-surface-muted, var(--mj-ink-2, #c5d0cb));
 }
 
 html[data-theme="dark"] .card .card__icon,
 html.dark .card .card__icon {
-  background: color-mix(in srgb, var(--mj-brand, #4fb48b) 16%, transparent);
-  color: var(--mj-brand, #4fb48b);
+  background: var(--chip-bg, #16261f);
+  color: var(--chip-fg, #b8e0cc);
 }
 
 /* featured ليلاً: نفس الربط الحرفي أبيض فوق أخضر عميق */

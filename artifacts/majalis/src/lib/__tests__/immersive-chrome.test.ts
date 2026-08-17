@@ -73,7 +73,7 @@ assert.equal(prayerRanks.includes("SectionQuiz"), false, "مراتب الصلا�
 
 const quranHub = readFileSync(resolve(appRoot, "src/pages/quran/ui/QuranHubView.tsx"), "utf8");
 assert.equal(quranHub.includes("SectionQuiz"), false, "مركز القرآن بلا SectionQuiz");
-assert.match(quranHub, /quranHubSections/);
+assert.match(quranHub, /SectionLobby/);
 assert.match(quranHub, /فتح المصحف|open-mushaf/);
 assert.match(quranHub, /\/mushaf|loadLastPageSync/);
 assert.equal(quranHub.includes("قيد التطوير"), false);
@@ -86,7 +86,7 @@ assert.match(mushafView, /page=/);
 const servicesNav = readFileSync(resolve(appRoot, "src/lib/services-center-nav.ts"), "utf8");
 assert.match(servicesNav, /sections\.registry/);
 assert.match(readFileSync(resolve(appRoot, "src/config/sections.registry.ts"), "utf8"), /quran\/recitation-test-ai/);
-assert.match(quranHub, /quranHubSections/);
+assert.match(quranHub, /SectionLobby/);
 
 const globalBack = readFileSync(resolve(appRoot, "src/components/GlobalBackButton.tsx"), "utf8");
 assert.match(globalBack, /isImmersiveChromePath/);

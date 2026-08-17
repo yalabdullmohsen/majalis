@@ -17,6 +17,26 @@
   --color-brand-soft: #E4F0EA;
   --color-brand-deep: #123F2E;
   --color-on-brand: #FFFFFF;
+  /* أزواج تباين معتمدة (WCAG AA) — القيم من لوحة العلامة لا لون جديد.
+   * CONTRAST_PAIRS_BEGIN
+   * --on-surface|#16241E|#FFFFFF|4.5
+   * --on-surface|#16241E|#F2F4F3|4.5
+   * --on-surface-muted|#4A5A53|#FFFFFF|4.5
+   * --on-surface-muted|#4A5A53|#F2F4F3|4.5
+   * --brand-on-white|#146C4E|#FFFFFF|4.5
+   * --brand-on-white|#146C4E|#F2F4F3|4.5
+   * --chip-fg|#0F4A36|#E4F0EA|4.5
+   * --on-brand|#FFFFFF|#1F7A5A|4.5
+   * --on-brand-muted|#E8F3EE|#1F7A5A|4.5
+   * CONTRAST_PAIRS_END
+   */
+  --on-surface: #16241E;           /* على #FFFFFF 16.09:1 · على #F2F4F3 14.56:1 */
+  --on-surface-muted: #4A5A53;     /* على #FFFFFF 7.30:1 · على #F2F4F3 6.60:1 */
+  --brand-on-white: #146C4E;       /* أخضر أغمق للنص على الأبيض 6.39:1 */
+  --chip-bg: #E4F0EA;
+  --chip-fg: #0F4A36;              /* على --chip-bg 8.74:1 */
+  --on-brand: #FFFFFF;             /* على #1F7A5A 5.26:1 */
+  --on-brand-muted: #E8F3EE;       /* على #1F7A5A 4.63:1 — نص ثانوي فوق زمرد */
   --color-accent: #B08A3E;
   --color-accent-soft: #F5EEDF;
   /* مصحف نمط «آية» / ورق المدينة */
@@ -43,7 +63,7 @@
   --color-splash: #0E1A15;
 
   /* مرجع الإنتاج: فقرات/عناوين بطاقات /tafsir (.tf-intro + .tf-card__term) = Amiri نَسخي */
-  --font-app: "Amiri", "Noto Naskh Arabic", "MajlisFallback", "Traditional Arabic", serif;
+  --font-app: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
   --font-face: var(--font-app);
   --font-ui: var(--font-app);
   --font-num: var(--font-app);
@@ -160,6 +180,13 @@
   --mj-brand-soft: #E4F0EA;
   --mj-brand-deep: #123F2E;
   --mj-on-brand: #FFFFFF;
+  --on-surface: #16241E;
+  --on-surface-muted: #4A5A53;
+  --brand-on-white: #146C4E;
+  --chip-bg: #E4F0EA;
+  --chip-fg: #0F4A36;
+  --on-brand: #FFFFFF;
+  --on-brand-muted: #E8F3EE;
   --mj-accent: #B08A3E;
   --mj-accent-soft: #F5EEDF;
   --mushaf-paper: var(--color-mushaf-paper, #F7F0E4);
@@ -193,7 +220,7 @@
   --mj-s6: 24px;
   --mj-s8: 32px;
   --mj-s12: 48px;
-  --font-app: "Amiri", "Noto Naskh Arabic", "MajlisFallback", "Traditional Arabic", serif;
+  --font-app: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
   --mj-face: var(--font-app);
   --mj-ui: var(--font-app);
   --mj-num: var(--font-app);
@@ -269,6 +296,12 @@ html.dark,
   --mj-muted: #C5D0CB;
   --mj-brand: #4FB48B;
   --mj-brand-soft: #16261F;
+  --on-surface: #F8FAFC;
+  --on-surface-muted: #C5D0CB;
+  --brand-on-white: #7BD6AE;
+  --chip-bg: #16261F;
+  --chip-fg: #B8E0CC;
+  /* --on-brand-muted يبقى فاتحًا: الأسطح الزمردية الصلبة (#1F7A5A) لا تُقلَب ليلاً */
   /* خلفية عميقة فقط — لا يُستخدم كلون نص (العناوين عبر --elite-forest / accent) */
   --mj-brand-deep: #0E1C17;
   --elite-forest: #8FD4B0;

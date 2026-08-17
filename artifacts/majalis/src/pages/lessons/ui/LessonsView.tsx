@@ -4,11 +4,15 @@ import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { Link, useLocation } from "wouter";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { PageHeader, ErrorState, Empty } from "@/components/ui-common";
-import { SectionsCardGrid } from "@/components/sections";
-import { lessonsHubSections } from "@/config/sections.registry";
-import "@/components/sections/section-cards.css";
-import "@/styles/pages/quran-numbers.css";
+import { ErrorState, Empty } from "@/components/ui-common";
+import { SectionLobby } from "@/components/lobby/SectionLobby";
+import { getLobby } from "@/config/section-lobbies";
+import {
+  ActiveFilters,
+  FilterSheet,
+  FilterToggle,
+  type ActiveFilterItem,
+} from "@/components/filters";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
@@ -17,7 +21,6 @@ import { supabase } from "@/lib/supabase";
 import { safeLocationReload } from "@/lib/safe-reload";
 import {
   DEFAULT_KUWAIT_FILTERS,
-  buildSearchSuggestions,
   extractFilterOptions,
   filterFeaturedHomeLessons,
   filterKuwaitLessons,
@@ -32,18 +35,12 @@ import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import "@/styles/pages/lessons.css";
 import "@/styles/pages/lessons-legacy.css";
+import "@/components/sections/section-cards.css";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { formatSheikhName } from "@/lib/sheikh-name";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import {
-  ActiveFilters,
-  FilterBar,
-  FilterSheet,
-  SegmentedFilter,
-  type ActiveFilterItem,
-} from "@/components/filters";
 
 import { SITE_URL } from "@/lib/site-config";
 type TabId = "all" | "men" | "women" | "courses" | "makkah" | "madinah";
@@ -233,8 +230,6 @@ export default function LessonsPage({
   });
   const [searchDraft, setSearchDraft] = useState(() => filters.search);
   const debouncedSearch = useDebouncedValue(searchDraft, 250);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [myReg, setMyReg] = useState<string[]>([]);
   const [tab, setTab] = useTabFromUrl();
@@ -355,14 +350,6 @@ export default function LessonsPage({
     () => filtered.filter((l) => !featuredIds.has(l.id)),
     [filtered, featuredIds],
   );
-
-  useEffect(() => {
-    if (!searchDraft.trim()) {
-      setSuggestions([]);
-      return;
-    }
-    setSuggestions(buildSearchSuggestions([...tabLessons, ...archivedLessons], searchDraft));
-  }, [searchDraft, tabLessons, archivedLessons]);
 
   const setFilter = <K extends keyof KuwaitLessonFilters>(key: K, value: KuwaitLessonFilters[K]) => {
     startTransition(() => {
@@ -522,58 +509,46 @@ export default function LessonsPage({
     </div>
   );
 
+  const lobby = useMemo(() => getLobby("lessons"), []);
+  const nearest = featuredSections.upcoming[0];
+  const primary = lobby.primary
+    ? {
+        ...lobby.primary,
+        subtitle: nearest
+          ? [nearest.title, nearest.mosque].filter(Boolean).join(" — ")
+          : loading
+            ? "\u00a0"
+            : "لا درس قريب اليوم",
+      }
+    : undefined;
+
   return (
-    <div className="page-shell lessons-page-v2 lessons-page-v3 ds-page mj-page">
-      <PageHeader title="الدروس" showBack={false} />
-      <div className="lessons-hub-cards" data-lessons-hub="1">
-        <SectionsCardGrid sections={lessonsHubSections()} />
-      </div>
-      <p className="lessons-v3-calendar-link">
-        <Link href="/calendar" className="mj-link">تقويم الدروس</Link>
-        {" · "}
-        <Link href="/lessons/archive" className="mj-link">الأرشيف</Link>
-      </p>
-
-      <div className="lessons-v3-sticky">
-        <FilterBar
-          searchValue={searchDraft}
-          onSearchChange={setSearchDraft}
-          searchPlaceholder="ابحث عن درس أو شيخ أو مسجد…"
-          searchAriaLabel="بحث في الدروس"
-          suggestions={suggestions}
-          showSuggestions={showSuggestions}
-          onSuggestionsOpenChange={setShowSuggestions}
-          onSuggestionPick={(item) => {
-            setSearchDraft(item);
-            setFilter("search", item);
-          }}
-          activeCount={activeFilterCount}
-          onOpenFilters={() => setFiltersOpen(true)}
-          filtersOpen={filtersOpen}
-          filterToggleLabel="تصفية"
-          onClearAll={activeFilterCount > 0 ? clearAllFilters : undefined}
-          listboxId="lessons-search-listbox"
-        />
-
-        <SegmentedFilter
-          ariaLabel="تبويبات الدروس"
-          value={tab}
-          onChange={(id) => setTab(id as TabId)}
-          className="lessons-v3-tabs filter-chips"
-          items={(Object.keys(TAB_LABELS) as TabId[]).map((tabId) => ({
-            id: tabId,
-            label: TAB_LABELS[tabId],
-            soon: TAB_COMING_SOON[tabId],
-          }))}
-        />
-
-        <ActiveFilters
-          items={activeFilterItems}
-          onClearAll={clearAllFilters}
-          resultCount={activeFilterCount > 0 && !loading ? filtered.length : null}
-        />
-      </div>
-
+    <SectionLobby
+      lobbyId="lessons"
+      title={lobby.title}
+      primary={primary}
+      className="lessons-page-v2 lessons-page-v3 ds-page mj-page"
+      chips={lobby.chips?.map((c) => ({
+        ...c,
+        active: tab === c.id,
+        onSelect: () => setTab(c.id as TabId),
+      }))}
+      groups={lobby.groups}
+      filterSlot={
+        <div className="lessons-v3-sticky">
+          <FilterToggle
+            onClick={() => setFiltersOpen(true)}
+            label="تصفية"
+            expanded={filtersOpen}
+          />
+          <ActiveFilters
+            items={activeFilterItems}
+            onClearAll={clearAllFilters}
+            resultCount={activeFilterCount > 0 && !loading ? filtered.length : null}
+          />
+        </div>
+      }
+    >
       <div className="lessons-v2-layout lessons-v3-layout">
         <main className="lessons-v2-main">
           {loadError && !loading ? (
@@ -685,6 +660,6 @@ export default function LessonsPage({
       <div className="lessons-v3-footer-pad">
         <SectionQuiz categoryId={["hadith", "fiqh"]} aria-label="اختبر معلوماتك في الدروس الشرعية" count={4} />
       </div>
-    </div>
+    </SectionLobby>
   );
 }

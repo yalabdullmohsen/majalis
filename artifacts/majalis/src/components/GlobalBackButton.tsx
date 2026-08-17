@@ -2,7 +2,8 @@ import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { useLocation } from "wouter";
-import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
+import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isTabRootPath } from "@/config/section-lobby-chrome";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { haptics } from "@/lib/haptics";
 
@@ -16,7 +17,7 @@ export function GlobalBackButton() {
   const [nudge, setNudge] = useState(false);
 
   if (location === "/") return null;
-  if (isImmersiveChromePath(location) || isPrayerTimesPath(location)) return null;
+  if (isImmersiveChromePath(location) || isTabRootPath(location)) return null;
   const path = location.replace(/\/+$/, "") || "/";
   if (path === "/prophets" || path.startsWith("/prophets/") || path.startsWith("/prophet-stories") || path.startsWith("/prophets-stories")) {
     return null;

@@ -1,19 +1,17 @@
 /**
- * مركز القرآن — بطاقات من سجل الأقسام عبر hub: 'quran' فقط.
+ * مركز القرآن — لوبي موحّد من سجل الأقسام.
  */
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
-import { quranHubSections } from "@/config/sections.registry";
-import { FeaturedSectionCard, SectionCard } from "@/components/sections";
+import { SectionLobby } from "@/components/lobby/SectionLobby";
+import { getLobby } from "@/config/section-lobbies";
 import { loadLastPageSync } from "@/lib/quran-last-page";
 import "@/components/sections/section-cards.css";
-import "@/styles/pages/quran-hub.css";
-import "@/styles/pages/quran-numbers.css";
 
 export default function QuranHubPage() {
-  const sections = quranHubSections();
-  const openMushaf = sections.find((s) => s.id === "open-mushaf");
-  const rest = sections.filter((s) => s.id !== "open-mushaf");
+  const lobby = useMemo(() => getLobby("quran"), []);
+  const [resume, setResume] = useState({ href: "/mushaf", subtitle: lobby.primary?.subtitle ?? "" });
+  // primary: open-mushaf — فتح المصحف من سجل الأقسام
 
   useEffect(() => {
     applyPageSeo({
@@ -24,29 +22,26 @@ export default function QuranHubPage() {
     });
   }, []);
 
+  useEffect(() => {
+    const page = loadLastPageSync();
+    if (page && page > 1) {
+      setResume({
+        href: `/mushaf?page=${page}`,
+        subtitle: lobby.primary?.subtitle ?? "",
+      });
+    }
+  }, [lobby.primary?.subtitle]);
+
+  const primary = lobby.primary
+    ? { ...lobby.primary, route: resume.href, subtitle: resume.subtitle || lobby.primary.subtitle }
+    : undefined;
+
   return (
-    <div className="quran-hub-page sections-hub" dir="rtl" data-quran-hub="1">
-      <header className="quran-hub-page__head quran-hub-page__head--title-only">
-        <h1 className="quran-hub-page__title">مركز القرآن</h1>
-      </header>
-
-      {openMushaf ? (
-        <div style={{ padding: "8px 16px 16px" }}>
-          <FeaturedSectionCard
-            section={openMushaf}
-            resolveRoute={() => {
-              const page = loadLastPageSync();
-              return page && page > 1 ? `/mushaf?page=${page}` : "/mushaf";
-            }}
-          />
-        </div>
-      ) : null}
-
-      <div className="card-grid" style={{ padding: "0 16px 16px" }} data-sections-grid="quran-hub">
-        {rest.map((s) => (
-          <SectionCard key={s.id} section={s} />
-        ))}
-      </div>
-    </div>
+    <SectionLobby
+      lobbyId="quran"
+      title={lobby.title}
+      primary={primary}
+      groups={lobby.groups}
+    />
   );
 }

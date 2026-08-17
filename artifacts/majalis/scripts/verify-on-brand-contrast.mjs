@@ -49,6 +49,7 @@ const MIN_LUMA_HEX = "#e5e5e5";
 
 const ON_BRAND_VARS = new Set([
   "--on-brand", "--on-brand-secondary", "--on-brand-tertiary",
+  "--on-brand-muted", "--mj-on-brand",
   "--on-brand-disabled", "--on-brand-focus-ring",
   "--text-on-brand", "--text-on-dark",
   "--on-dark-strong", "--on-dark-body", "--on-dark-secondary", "--color-on-dark",

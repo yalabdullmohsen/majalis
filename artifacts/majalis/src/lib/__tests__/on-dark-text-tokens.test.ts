@@ -2,6 +2,7 @@
  * بوابة: توكنات النص على الداكن صلبة وواضحة.
  * node --import tsx src/lib/__tests__/on-dark-text-tokens.test.ts
  */
+import "./theme-contrast-pairs.test.ts";
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
