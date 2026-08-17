@@ -477,6 +477,29 @@ function PrayerAlertSchedulerBootstrap() {
       invalidatePrayerNativeSchedule();
       void recheckPrayerAlertWindow(data, { force: true });
     };
+    let lastTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    let lastDateKey = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Kuwait",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(new Date());
+    const onClockTick = () => {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const dateKey = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Kuwait",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(new Date());
+      if (tz !== lastTz || dateKey !== lastDateKey) {
+        lastTz = tz;
+        lastDateKey = dateKey;
+        invalidatePrayerNativeSchedule();
+        void recheckPrayerAlertWindow(data, { force: true });
+      }
+    };
+    const clockId = window.setInterval(onClockTick, 60_000);
     document.addEventListener("visibilitychange", onVisible);
     window.addEventListener(PRAYER_ALERT_PREFS_CHANGED_EVENT, onPrefsChanged);
     window.addEventListener("majalis:adhan-prefs-changed", onPrefsChanged);
@@ -504,6 +527,7 @@ function PrayerAlertSchedulerBootstrap() {
     });
 
     return () => {
+      window.clearInterval(clockId);
       document.removeEventListener("visibilitychange", onVisible);
       window.removeEventListener(PRAYER_ALERT_PREFS_CHANGED_EVENT, onPrefsChanged);
       window.removeEventListener("majalis:adhan-prefs-changed", onPrefsChanged);

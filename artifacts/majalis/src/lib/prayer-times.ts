@@ -1,4 +1,3 @@
-import { requestFetch } from "@/lib/request-manager";
 import { toArabicIndicDigits } from "@/lib/numerals";
 import {
   getPrayerCalcMethod,
@@ -143,8 +142,6 @@ export type PrayerStatus = {
 
 const OBLIGATORY_KEYS = new Set(["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]);
 
-const KUWAIT_METHOD = 9;
-
 const PRAYER_META = [
   { key: "Fajr", name: "الفجر", obligatory: true },
   { key: "Sunrise", name: "الشروق", obligatory: false },
@@ -170,6 +167,60 @@ function dateKeyInZone(timeZone: string, date = new Date()) {
       day: "2-digit",
     }).format(date);
   }
+}
+
+/**
+ * تاريخ تقويمي صريح لمنطقة IANA — لتمريره إلى adhan-js دون غموض
+ * `new Date("YYYY-MM-DD …")` أو مكوّنات الجهاز المحلي.
+ * الظهر المحلي التقريبي: منتصف الليل في المنطقة + 12 ساعة عبر إزاحة معروفة للكويت،
+ * ولغيرها نستخدم أجزاء Intl ثم UTC بمقياس تقريبي آمن عبر Date.UTC عند الظهر UTC.
+ */
+export function calendarNoonInZone(timeZone: string, date = new Date()): Date {
+  const key = dateKeyInZone(timeZone, date);
+  const [y, m, d] = key.split("-").map(Number);
+  if (timeZone === "Asia/Kuwait") {
+    // الكويت UTC+3 ثابت — ظهر محلي = 09:00 UTC
+    return new Date(Date.UTC(y, m - 1, d, 9, 0, 0));
+  }
+  // مناطق أخرى: ابنِ لحظة ظهر تقريبية بمسح إزاحة من عيّنة Intl عند UTC noon
+  const probe = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(probe);
+  const zh = Number(parts.find((p) => p.type === "hour")?.value ?? 12);
+  const zm = Number(parts.find((p) => p.type === "minute")?.value ?? 0);
+  const zoneMinutesAtUtcNoon = zh * 60 + zm;
+  const offsetMin = zoneMinutesAtUtcNoon - 12 * 60;
+  return new Date(Date.UTC(y, m - 1, d, 12, 0, 0) - offsetMin * 60_000);
+}
+
+/** لحظة مطلقة لدقيقة من اليوم (0–1439) في منطقة IANA. */
+export function epochAtZoneMinutes(
+  timeZone: string,
+  minutesOfDay: number,
+  date = new Date(),
+): number {
+  const key = dateKeyInZone(timeZone, date);
+  const [y, m, d] = key.split("-").map(Number);
+  if (timeZone === "Asia/Kuwait") {
+    // منتصف ليل الكويت = 21:00 UTC لليوم السابق (UTC+3 ثابت)
+    const dayStartUtc = Date.UTC(y, m - 1, d, 0, 0, 0) - 3 * 3600_000;
+    return dayStartUtc + minutesOfDay * 60_000;
+  }
+  const noon = calendarNoonInZone(timeZone, date);
+  const noonParts = new Intl.DateTimeFormat("en-GB", {
+    timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(noon);
+  const nh = Number(noonParts.find((p) => p.type === "hour")?.value ?? 12);
+  const nm = Number(noonParts.find((p) => p.type === "minute")?.value ?? 0);
+  const noonMinutes = nh * 60 + nm;
+  return noon.getTime() + (minutesOfDay - noonMinutes) * 60_000;
 }
 
 /** @deprecated use dateKeyInZone — kept for Kuwait callers */
@@ -256,7 +307,9 @@ export async function computePrayerTimesForDate(
   const adhan = await import("adhan");
   const coordinates = new adhan.Coordinates(lat, lon);
   const params = resolveAdhanParams(adhan, methodId, { latitude: lat, longitude: lon });
-  const pt = new adhan.PrayerTimes(coordinates, date, params);
+  // مرساة ظهر تقويمي في المنطقة — لا تعتمد على تفسير الجهاز لـ Date المحلي.
+  const noon = calendarNoonInZone(timeZone, date);
+  const pt = new adhan.PrayerTimes(coordinates, noon, params);
   const timings: Record<string, string> = {
     Fajr: toZoneTime(pt.fajr, timeZone),
     Sunrise: toZoneTime(pt.sunrise, timeZone),
@@ -271,8 +324,8 @@ export async function computePrayerTimesForDate(
     year: "numeric",
     month: "long",
     day: "numeric",
-  }).format(date);
-  const gKey = dateKeyInZone(timeZone, date);
+  }).format(noon);
+  const gKey = dateKeyInZone(timeZone, noon);
   const [y, m, d] = gKey.split("-");
   return {
     ...buildPayload(
@@ -286,6 +339,39 @@ export async function computePrayerTimesForDate(
   };
 }
 
+/**
+ * المصدر الوحيد لمواقيت الصلاة في التطبيق.
+ * العدّاد والإمساكية والمجدول يستهلكون هذه الدالة (عبر fetchPrayerTimes / annual).
+ */
+export async function getPrayerTimes(
+  dateISO: string,
+  location?: { lat: number; lon: number; label?: string; timeZone?: string } | string,
+  methodId: PrayerCalcMethodId = getPrayerCalcMethod(),
+): Promise<PrayerTimesPayload> {
+  let lat: number;
+  let lon: number;
+  let cityName: string;
+  let timeZone: string;
+  if (typeof location === "string" || location == null) {
+    const loc = resolveLocationForFetch(
+      typeof location === "string" ? location : undefined,
+    );
+    lat = loc.lat;
+    lon = loc.lon;
+    cityName = loc.label;
+    timeZone = loc.timeZone;
+  } else {
+    lat = location.lat;
+    lon = location.lon;
+    cityName = location.label ?? "موقع مخصص";
+    timeZone = location.timeZone ?? "Asia/Kuwait";
+  }
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(dateISO)
+    ? calendarNoonInZone(timeZone, new Date(`${dateISO}T12:00:00+03:00`))
+    : calendarNoonInZone(timeZone, new Date(dateISO));
+  return computePrayerTimesForDate(lat, lon, cityName, timeZone, date, methodId);
+}
+
 async function computePrayerTimesLocal(
   lat: number,
   lon: number,
@@ -293,7 +379,14 @@ async function computePrayerTimesLocal(
   methodId: PrayerCalcMethodId = getPrayerCalcMethod(),
   timeZone = "Asia/Kuwait",
 ): Promise<PrayerTimesPayload> {
-  return computePrayerTimesForDate(lat, lon, cityName, timeZone, new Date(), methodId);
+  return computePrayerTimesForDate(
+    lat,
+    lon,
+    cityName,
+    timeZone,
+    calendarNoonInZone(timeZone),
+    methodId,
+  );
 }
 
 export function staticPrayerFallback(cityName = "الكويت – محافظة العاصمة"): PrayerTimesPayload {
@@ -314,35 +407,6 @@ export function staticPrayerFallback(cityName = "الكويت – محافظة �
     source: "تقديري (بدون اتصال)",
     stale: true,
   };
-}
-
-async function fetchAlAdhanDirect(
-  lat: number,
-  lon: number,
-  cityName: string,
-): Promise<PrayerTimesPayload> {
-  const dateParam = kuwaitDateParam();
-  // school=0: حساب العصر على مذهب الشافعية (ظل الشيء مساوٍ لطوله) — المعتمد لدى الأوقاف الكويتية
-  // timezonestring: صريح لمنع أي خطأ في التوقيت
-  const url =
-    `https://api.aladhan.com/v1/timings/${dateParam}` +
-    `?latitude=${lat}&longitude=${lon}&method=${KUWAIT_METHOD}&school=0&timezonestring=Asia%2FKuwait`;
-
-  const response = await requestFetch(url, {
-    headers: { Accept: "application/json" },
-    signal: AbortSignal.timeout(12_000),
-  });
-
-  if (!response.ok) {
-    throw new Error(`AlAdhan responded with ${response.status}`);
-  }
-
-  const json = await response.json();
-  if (json?.code !== 200 || !json?.data?.timings) {
-    throw new Error("Invalid AlAdhan payload");
-  }
-
-  return buildPayload(json.data.timings, json.data.meta, json.data.date, cityName);
 }
 
 function zoneNowMinutes(timeZone = "Asia/Kuwait"): number {
@@ -570,63 +634,24 @@ export async function fetchPrayerTimes(governorateId?: string): Promise<PrayerTi
   return fallback;
 }
 
-/** تحديث خلفي اختياري من الشبكة دون حجب الواجهة. */
+/**
+ * تحديث خلفي من المصدر الوحيد (adhan-js) فقط.
+ * لا يستبدل الكاش بمصادر شبكة (Supabase / API / AlAdhan) — كانت تسبب العطل (ب).
+ */
 export async function refreshPrayerTimesInBackground(governorateId?: string): Promise<void> {
-  const gov = governorateId
-    ? (KUWAIT_GOVERNORATES.find((g) => g.id === governorateId) ?? KUWAIT_GOVERNORATES[0])
-    : getSelectedGovernorate();
-  const cityName = `الكويت – محافظة ${gov.name}`;
-  const dateKey = kuwaitDateKey();
-  const isCapital = gov.id === "capital";
-
   try {
-    if (isCapital) {
-      try {
-        const { getPrayerTimesFromDb } = await import("./supabase");
-        const row = await getPrayerTimesFromDb(dateKey);
-        if (row) {
-          const timings: Record<string, string> = {
-            Fajr: row.fajr,
-            Sunrise: row.sunrise,
-            Dhuhr: row.dhuhr,
-            Asr: row.asr,
-            Maghrib: row.maghrib,
-            Isha: row.isha,
-          };
-          const payload = {
-            ...buildPayload(timings, { timezone: "Asia/Kuwait" }, {
-              gregorian: { date: kuwaitDateParam() },
-            }, cityName),
-            source: "مواقيت محدّثة",
-          };
-          putPrayerCacheDay(gov.id, dateKey, payload);
-          return;
-        }
-      } catch {
-        /* fall through */
-      }
-
-      try {
-        const response = await requestFetch("/api/prayer-times", {
-          headers: { Accept: "application/json" },
-          signal: AbortSignal.timeout(5_000),
-        });
-        const data = (await response.json()) as PrayerTimesPayload & { message?: string };
-        if (response.ok && data.ok) {
-          putPrayerCacheDay(gov.id, dateKey, { ...data, city: cityName });
-          return;
-        }
-      } catch {
-        /* fall through */
-      }
-    }
-
-    try {
-      const remote = await fetchAlAdhanDirect(gov.lat, gov.lon, cityName);
-      putPrayerCacheDay(gov.id, dateKey, remote);
-    } catch {
-      /* keep local cache */
-    }
+    const loc = resolveLocationForFetch(governorateId);
+    const dateKey = dateKeyInZone(loc.timeZone);
+    const payload = await computePrayerTimesForDate(
+      loc.lat,
+      loc.lon,
+      loc.label,
+      loc.timeZone,
+      calendarNoonInZone(loc.timeZone),
+      getPrayerCalcMethod(),
+    );
+    putPrayerCacheDay(prayerLocationCacheId(loc), dateKey, payload);
+    void warmPrayerCacheAhead(loc, 2);
   } catch {
     /* ignore background errors */
   }
@@ -655,8 +680,8 @@ export async function warmPrayerCacheAhead(
     const methodId = getPrayerCalcMethod();
     const methodLabel = prayerCalcMethodLabel(methodId);
     for (let i = 0; i < days; i++) {
-      const d = new Date();
-      d.setDate(d.getDate() + i);
+      const base = calendarNoonInZone(loc.timeZone);
+      const d = new Date(base.getTime() + i * 24 * 3600_000);
       const dateKey = dateKeyInZone(loc.timeZone, d);
       const existing = readPrayerCache();
       if (

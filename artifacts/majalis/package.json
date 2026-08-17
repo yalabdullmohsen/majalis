@@ -132,6 +132,8 @@
     "test:chrome-no-white-strip": "node --import tsx src/lib/__tests__/chrome-no-white-strip.test.ts && node scripts/verify-no-white-chrome.mjs",
     "test:ios-gates": "node scripts/test-ios-capacitor-gates.mjs",
     "test:ios-notifications": "node scripts/test-ios-notifications.mjs",
+    "diagnose:prayer-times": "node --import tsx scripts/diagnose-prayer-times.mjs",
+    "test:prayer-notif-timing": "node --import tsx src/lib/__tests__/prayer-notif-timing.test.ts",
     "test:ios-stability": "node --import tsx src/lib/__tests__/ios-stability-audit.test.ts",
     "test:adhan-catalog": "node --import tsx src/lib/__tests__/adhan-catalog.test.ts && pnpm run test:tafsir-audio",
     "test:tafsir-audio": "node --import tsx src/lib/__tests__/tafsir-audio-bus.test.ts",

@@ -9,4 +9,6 @@ export type AdhanEvent = {
   minutesBefore?: number;
   /** مدينة/موقع العرض في الإشعار — اختياري */
   cityName?: string;
+  /** وقت الصلاة المعروض في النص (١٢ ساعة) — لكشف أي انحراف */
+  prayerTimeLabel?: string;
 };

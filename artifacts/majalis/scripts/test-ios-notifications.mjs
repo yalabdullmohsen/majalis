@@ -90,10 +90,11 @@ ok(settings.includes("notifDebug"), "hidden developer debug flag");
 
 const prayer = read("src/lib/prayer-local-notifications.ts");
 ok(prayer.includes("DEFAULT_ALERT_SOUND"), "prayer sound fallback import");
-ok(prayer.includes("pickPrayerNotificationCopy"), "prayer varied copy");
+ok(prayer.includes("buildScheduledPrayerNotificationCopy"), "prayer scheduled copy with clock");
 ok(prayer.includes("resolvePrayerNotificationSound") || prayer.includes("safeSound"), "prayer sound resolve");
 ok(prayer.includes("CHANNEL_PRAYER"), "prayer channel");
 ok(prayer.includes("allowWhileIdle"), "prayer allowWhileIdle");
+ok(prayer.includes("hashPrayerNotificationId"), "predictable ids");
 ok(!prayer.includes("— متبقي"), "no em-dash after prayer name");
 
 const copy = read("src/lib/prayer-notification-copy.ts");
@@ -154,6 +155,7 @@ console.log("\n--- unit suite ---\n");
 for (const unitFile of [
   "src/lib/__tests__/notifications-hardening.test.ts",
   "src/lib/__tests__/prayer-notification-copy-sounds.test.ts",
+  "src/lib/__tests__/prayer-notif-timing.test.ts",
 ]) {
   const unit = spawnSync(
     process.execPath,

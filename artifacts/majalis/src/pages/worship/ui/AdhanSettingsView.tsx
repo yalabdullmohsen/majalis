@@ -761,6 +761,10 @@ export default function AdhanSettingsPage() {
               ))}
             </select>
           </div>
+          <p className="ads-muted" style={{ marginTop: 8, fontSize: "0.85rem", lineHeight: 1.5 }}>
+            مرجع المواقيت: طريقة وزارة الأوقاف — الكويت (زاوية الفجر/العشاء المعتمدة)،
+            المنطقة الزمنية Asia/Kuwait. يُضبط التفصيل من شاشة مواقيت الصلاة.
+          </p>
           <div className="ads-row">
             <div className="ads-sunrise-inner">
               <Sunrise size={16} strokeWidth={2} color="var(--mj-brand-deep)" aria-hidden="true" />

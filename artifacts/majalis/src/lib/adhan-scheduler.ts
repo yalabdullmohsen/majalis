@@ -91,11 +91,11 @@ function showBrowserNotification(event: AdhanEvent) {
   if (event.type === "adhan") return;
   if (!("Notification" in window) || Notification.permission !== "granted") return;
   const title = event.type === "advance"
-    ? `اقتربت الصلاة`
-    : `حان وقت الصلاة`;
+    ? `استعد للصلاة`
+    : `أذان ${event.prayerName}`;
   const body = event.type === "advance"
-    ? `باقي ${event.minutesBefore} دقيقة على صلاة ${event.prayerName}`
-    : `حان وقت صلاة ${event.prayerName}`;
+    ? `${event.prayerName}${event.prayerTimeLabel ? ` ${event.prayerTimeLabel}` : ""} · بعد ${event.minutesBefore} دقيقة`
+    : `${event.prayerTimeLabel ?? "حان وقت الصلاة"}`;
 
   try {
     new Notification(title, {
@@ -167,6 +167,8 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) 
   const t1 = setTimeout(() => {
     // مؤقّت متأخّر (نوم/خلفية): لا تُشغّل أذاناً فات وقته بأكثر من المسموح
     if (Date.now() - adhanTargetEpoch > STALE_TOLERANCE_MS) return;
+    // حارس أوسع: لا أذان بعد أكثر من 5 دقائق من الوقت المستهدف
+    if (Date.now() - adhanTargetEpoch > 5 * 60_000) return;
     const fresh = loadAdhanPrefs();
     if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
     const mode = getEffectivePlaybackMode(fresh, key);
@@ -181,6 +183,7 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) 
         prayerKey: key,
         prayerName: slot.name,
         cityName,
+        prayerTimeLabel: slot.time,
       });
       return;
     }
@@ -197,6 +200,7 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) 
       prayerKey: key,
       prayerName: slot.name,
       cityName,
+      prayerTimeLabel: slot.time,
     });
   }, adhanDelay);
   _timers.push(t1);
@@ -211,22 +215,28 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) 
   );
 
   // ── Advance reminder timer ──
+  // لا تلفّ التنبيه المسبق إلى +24س عند advDelay<0 — ذلك يُسقط تنبيه اليوم داخل النافذة.
   const advMin = prayerPrefs.advanceMinutes;
   if (advMin > 0) {
-    let advDelay = slotMs - nowMs - advMin * 60_000;
-    if (advDelay < 0) advDelay += 24 * 3600_000;
-    if (advDelay < 24 * 3600_000) {
+    const prayerDelayFromNow =
+      slotMs - nowMs < 0 ? slotMs - nowMs + 24 * 3600_000 : slotMs - nowMs;
+    const advDelay = prayerDelayFromNow - advMin * 60_000;
+    if (advDelay > 0 && advDelay < 24 * 3600_000) {
       const advTargetEpoch = Date.now() + advDelay;
+      const prayerTargetEpoch = Date.now() + prayerDelayFromNow;
       const t2 = setTimeout(() => {
-        if (Date.now() - advTargetEpoch > STALE_TOLERANCE_MS) return; // تذكير متأخّر — تجاهله
+        if (Date.now() - advTargetEpoch > STALE_TOLERANCE_MS) return;
+        if (Date.now() >= prayerTargetEpoch) return; // حارس: لا pre بعد دخول الوقت
         const fresh = loadAdhanPrefs();
         if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
         if (fresh.prayers[key].advanceMinutes === 0) return;
+        const mins = fresh.prayers[key].advanceMinutes;
         dispatchAdhanEvent({
           type: "advance",
           prayerKey: key,
           prayerName: slot.name,
-          minutesBefore: fresh.prayers[key].advanceMinutes,
+          minutesBefore: mins,
+          prayerTimeLabel: slot.time,
         });
       }, advDelay);
       _timers.push(t2);
