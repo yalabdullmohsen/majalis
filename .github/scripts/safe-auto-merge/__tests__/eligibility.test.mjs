@@ -211,6 +211,24 @@ describe("safe-auto-merge eligibility", () => {
     assert.equal(r.eligible, true);
   });
 
+  it("blocks mushaf UI paths from auto-merge", () => {
+    const r = evaluateEligibility(
+      base({
+        labels: ["code-safe"],
+        title: "fix: mushaf",
+        files: [
+          {
+            path: "artifacts/majalis/src/features/mushaf-madinah/MushafPage.tsx",
+            additions: 4,
+            deletions: 1,
+          },
+        ],
+      }),
+    );
+    assert.equal(r.eligible, false);
+    assert.ok(r.blockers.some((b) => /mushaf/i.test(b)));
+  });
+
   it("blocks risky:manual-review and blocked:danger-path labels", () => {
     assert.ok(
       evaluateEligibility(base({ labels: ["safe:ui", "risky:manual-review"] })).blockers.some((b) =>

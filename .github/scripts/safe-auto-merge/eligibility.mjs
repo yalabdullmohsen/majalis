@@ -276,6 +276,9 @@ export function evaluateEligibility(input = {}) {
         .join(", ")}`,
     );
   }
+  if (pathLane.lane === "mushaf") {
+    hardBlockers.push("mushaf/Quran UI change → مراجعة يدوية ولا يدخل الدمج التلقائي");
+  }
   if (authHits.length) {
     hardBlockers.push(
       `auth/security/RLS change detected: ${authHits
@@ -323,8 +326,8 @@ export function evaluateEligibility(input = {}) {
 
   const suggestedAddLabels = [];
   const suggestedRemoveLabels = [];
-  if (dangerousFiles.length || hasMigration || hasIos || hasCicd || authHits.length || nonContentFiles.length) {
-    if (dangerousFiles.length || hasMigration || hasIos || hasCicd || authHits.length) {
+  if (dangerousFiles.length || hasMigration || hasIos || hasCicd || authHits.length || pathLane.lane === "mushaf") {
+    if (dangerousFiles.length || hasMigration || hasIos || hasCicd || authHits.length || pathLane.lane === "mushaf") {
       suggestedAddLabels.push(BLOCKED_DANGER_PATH_LABEL, RISKY_MANUAL_REVIEW_LABEL);
     }
   } else if (!labels.includes(RISKY_MANUAL_REVIEW_LABEL)) {

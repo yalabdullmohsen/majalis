@@ -69,6 +69,8 @@ describe("path-classifier", () => {
     assert.equal(r.requiredChecks.layoutBands, true);
     assert.equal(r.requiredChecks.visualSnapshot, false); // informational / continue-on-error
     assert.equal(r.outputs.need_mushaf, "true");
+    assert.equal(r.manualReview, true);
+    assert.equal(r.lane, "mushaf");
   });
 
   it("supabase/sql remains manual review and not fast-merge", () => {

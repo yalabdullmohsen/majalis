@@ -21,7 +21,7 @@ PR **Ready** (غير Draft) إلى `main` عندما:
    - `CONTINUATION_PLAN.md`
 10. **Vercel Preview ignored/skipped** لا يمنع تدقيق المحتوى الآمن
 11. إذا كانت الفحوصات **pending**: النظام ينتظر (لا يُعطّل Auto-merge نهائيًا)
-12. **Fast Lane:** توثيق/سياسة فقط → بدون build/مصحف/postgres؛ المصحف يبقى بكامل بواباته عند لمس ملفات المصحف/القرآن؛ SQL/iOS/workflows تبقى مراجعة يدوية
+12. **Fast Lane:** توثيق/سياسة فقط → بدون build/مصحف/postgres؛ المصحف يبقى بكامل بواباته عند لمس ملفات المصحف/القرآن **ولا يُدمج تلقائيًا** (مراجعة يدوية)؛ SQL/iOS/workflows تبقى مراجعة يدوية
 
 بعد الدمج (squash): **Vercel ينشر Production من `main` تلقائيًا** عبر مشروع **`majalis-majalis`** (المشروع القديم `majalis` إن وُجد يُعامل كـ legacy).
 
@@ -46,6 +46,7 @@ Aliases قديمة ما زالت مقبولة للتصنيف: `content-safe`, `u
 أي تغيير في:
 
 - `.github/workflows/**`
+- `artifacts/majalis/src/features/mushaf-madinah/**` ومسارات المصحف/القرآن/QPC (مراجعة يدوية — تثبيت الحالة المرجعية)
 - `supabase/**` و `artifacts/majalis/supabase/**`
 - `artifacts/majalis/ios/**` و `capacitor.config.ts`
 - `artifacts/majalis/api/**`

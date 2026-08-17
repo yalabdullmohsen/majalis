@@ -252,7 +252,7 @@ function finalizeClassification(input) {
   else if (paths.length === 0) lane = "full";
   else lane = "frontend";
 
-  const manualReview = Boolean(kinds.risky);
+  const manualReview = Boolean(kinds.risky || kinds.mushaf);
 
   const requiredChecks = {
     verifyBuild: true,

@@ -1,0 +1,219 @@
+{
+  "refCommit": "20357d9ab2c01fff23fa44ed89e28c253c0773a4",
+  "refTag": "mushaf-good-20357d9ab",
+  "viewportHeight": 844,
+  "pages": [
+    1,
+    2,
+    3,
+    5,
+    12,
+    50,
+    255,
+    400,
+    604
+  ],
+  "widths": [
+    320,
+    390,
+    430
+  ],
+  "tolerance": {
+    "fontSizePx": 0.51,
+    "widestLinePx": 2,
+    "blockHeightPx": 2,
+    "lineCount": 0,
+    "fingerprintMad": 6
+  },
+  "cells": {
+    "1@320": {
+      "fontSize": 34,
+      "widestLinePx": 310,
+      "blockHeightPx": 397.53125,
+      "lineCount": 7,
+      "family": "qpc-v2-p1"
+    },
+    "2@320": {
+      "fontSize": 34,
+      "widestLinePx": 310,
+      "blockHeightPx": 397.53125,
+      "lineCount": 6,
+      "family": "qpc-v2-p2"
+    },
+    "3@320": {
+      "fontSize": 19,
+      "widestLinePx": 310,
+      "blockHeightPx": 668.46875,
+      "lineCount": 15,
+      "family": "qpc-v2-p3"
+    },
+    "5@320": {
+      "fontSize": 19,
+      "widestLinePx": 310,
+      "blockHeightPx": 668.46875,
+      "lineCount": 15,
+      "family": "qpc-v2-p5"
+    },
+    "12@320": {
+      "fontSize": 19,
+      "widestLinePx": 310,
+      "blockHeightPx": 668.46875,
+      "lineCount": 15,
+      "family": "qpc-v2-p12"
+    },
+    "50@320": {
+      "fontSize": 34,
+      "widestLinePx": 310,
+      "blockHeightPx": 668.46875,
+      "lineCount": 13,
+      "family": "qpc-v2-p50"
+    },
+    "255@320": {
+      "fontSize": 19,
+      "widestLinePx": 310,
+      "blockHeightPx": 668.46875,
+      "lineCount": 13,
+      "family": "qpc-v2-p255"
+    },
+    "400@320": {
+      "fontSize": 19,
+      "widestLinePx": 310,
+      "blockHeightPx": 668.46875,
+      "lineCount": 15,
+      "family": "qpc-v2-p400"
+    },
+    "604@320": {
+      "fontSize": 34,
+      "widestLinePx": 310,
+      "blockHeightPx": 668.46875,
+      "lineCount": 9,
+      "family": "qpc-v2-p604"
+    },
+    "1@390": {
+      "fontSize": 34,
+      "widestLinePx": 378,
+      "blockHeightPx": 397.53125,
+      "lineCount": 7,
+      "family": "qpc-v2-p1"
+    },
+    "2@390": {
+      "fontSize": 34,
+      "widestLinePx": 378,
+      "blockHeightPx": 397.53125,
+      "lineCount": 6,
+      "family": "qpc-v2-p2"
+    },
+    "3@390": {
+      "fontSize": 24,
+      "widestLinePx": 378,
+      "blockHeightPx": 668.46875,
+      "lineCount": 15,
+      "family": "qpc-v2-p3"
+    },
+    "5@390": {
+      "fontSize": 24,
+      "widestLinePx": 382,
+      "blockHeightPx": 668.46875,
+      "lineCount": 15,
+      "family": "qpc-v2-p5"
+    },
+    "12@390": {
+      "fontSize": 23,
+      "widestLinePx": 378,
+      "blockHeightPx": 668.46875,
+      "lineCount": 15,
+      "family": "qpc-v2-p12"
+    },
+    "50@390": {
+      "fontSize": 34,
+      "widestLinePx": 378,
+      "blockHeightPx": 668.46875,
+      "lineCount": 13,
+      "family": "qpc-v2-p50"
+    },
+    "255@390": {
+      "fontSize": 24,
+      "widestLinePx": 378,
+      "blockHeightPx": 668.46875,
+      "lineCount": 13,
+      "family": "qpc-v2-p255"
+    },
+    "400@390": {
+      "fontSize": 24,
+      "widestLinePx": 378,
+      "blockHeightPx": 668.46875,
+      "lineCount": 15,
+      "family": "qpc-v2-p400"
+    },
+    "604@390": {
+      "fontSize": 34,
+      "widestLinePx": 378,
+      "blockHeightPx": 668.46875,
+      "lineCount": 9,
+      "family": "qpc-v2-p604"
+    },
+    "1@430": {
+      "fontSize": 34,
+      "widestLinePx": 417,
+      "blockHeightPx": 397.53125,
+      "lineCount": 7,
+      "family": "qpc-v2-p1"
+    },
+    "2@430": {
+      "fontSize": 34,
+      "widestLinePx": 417,
+      "blockHeightPx": 397.53125,
+      "lineCount": 6,
+      "family": "qpc-v2-p2"
+    },
+    "3@430": {
+      "fontSize": 25,
+      "widestLinePx": 417,
+      "blockHeightPx": 668.46875,
+      "lineCount": 15,
+      "family": "qpc-v2-p3"
+    },
+    "5@430": {
+      "fontSize": 25,
+      "widestLinePx": 417,
+      "blockHeightPx": 668.46875,
+      "lineCount": 15,
+      "family": "qpc-v2-p5"
+    },
+    "12@430": {
+      "fontSize": 25,
+      "widestLinePx": 417,
+      "blockHeightPx": 668.46875,
+      "lineCount": 15,
+      "family": "qpc-v2-p12"
+    },
+    "50@430": {
+      "fontSize": 34,
+      "widestLinePx": 417,
+      "blockHeightPx": 668.46875,
+      "lineCount": 13,
+      "family": "qpc-v2-p50"
+    },
+    "255@430": {
+      "fontSize": 25,
+      "widestLinePx": 417,
+      "blockHeightPx": 668.46875,
+      "lineCount": 13,
+      "family": "qpc-v2-p255"
+    },
+    "400@430": {
+      "fontSize": 25,
+      "widestLinePx": 417,
+      "blockHeightPx": 668.46875,
+      "lineCount": 15,
+      "family": "qpc-v2-p400"
+    },
+    "604@430": {
+      "fontSize": 34,
+      "widestLinePx": 417,
+      "blockHeightPx": 668.46875,
+      "lineCount": 9,
+      "family": "qpc-v2-p604"
+    }
+  }
+}
