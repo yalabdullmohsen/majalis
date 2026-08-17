@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
+import { MushafAyahHighlight } from "./MushafAyahHighlight";
 import { MushafAyahLine } from "./MushafAyahLine";
 import { MushafBasmala } from "./MushafBasmala";
 import { MushafPageFooter } from "./MushafPageFooter";
@@ -38,6 +39,7 @@ export function MushafPage({
       style={{ ["--mm-qpc-family" as string]: fontFamily }}
       aria-label={`صفحة المصحف ${layout.pageNumber}`}
     >
+      <MushafAyahHighlight pageRef={pageRef} verseKey={selectedVerseKey} />
       <MushafPageHeader
         juzNumber={layout.juzNumber}
         surahNames={layout.surahsOnPage.map((s) => s.nameArabic)}

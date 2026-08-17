@@ -17,6 +17,7 @@ const comps = [
   "src/features/mushaf-madinah/MushafPageHeader.tsx",
   "src/features/mushaf-madinah/MushafSurahOrnament.tsx",
   "src/features/mushaf-madinah/MushafAyahLine.tsx",
+  "src/features/mushaf-madinah/MushafAyahHighlight.tsx",
   "src/features/mushaf-madinah/MushafAyahNumber.tsx",
   "src/features/mushaf-madinah/MushafPageFooter.tsx",
   "src/features/mushaf-madinah/MushafControls.tsx",
