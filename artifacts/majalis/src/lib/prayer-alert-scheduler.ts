@@ -8,14 +8,21 @@
  * Live Activity وشريط التطبيق يُفعَّلان بمؤقّتات JS للصلاة التالية فقط.
  */
 import {
+  calendarNoonInZone,
+  epochAtZoneMinutes,
   type PrayerSlot,
   type PrayerTimesPayload,
 } from "./prayer-times";
+import { getActivePrayerLocation } from "./prayer-location-prefs";
 import { loadPrayerAlertPrefs, LIVE_ACTIVITY_LINGER_MINUTES } from "./prayer-alert-preferences";
 import {
   cancelAllPrayerNativeNotifications,
+  MAX_NATIVE_PRAYER_NOTIFS,
+  purgePastPrayerNativeNotifications,
   schedulePrayerNativeNotifications,
+  verifyPendingAgainstExpected,
 } from "./prayer-local-notifications";
+import { dateISOInZone } from "./prayer-notification-ids";
 import { startPrayerLiveActivity, markPrayerLiveActivityEntered, endPrayerLiveActivity } from "./plugins/prayer-live-activity";
 import type { PrayerSoundProfile } from "./prayer-notification-sounds";
 
@@ -41,6 +48,8 @@ const KEY_TO_ARABIC: Record<string, string> = {
 const _timers: ReturnType<typeof setTimeout>[] = [];
 /** توقيع آخر جدولة أصلية — يمنع التكرار دون حجب إعادة الجدولة عند تغيّر الوقت/التفضيلات. */
 let _lastScheduleSig: string | null = null;
+let _lastTimeZone: string | null = null;
+let _lastDateISO: string | null = null;
 let _liveActivityActiveForKey: string | null = null;
 
 function clearAllTimers() {
@@ -75,18 +84,19 @@ export function invalidatePrayerNativeSchedule(): void {
   _lastScheduleSig = null;
 }
 
-function kuwaitNowMs(): number {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kuwait",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  }).formatToParts(new Date());
-  const h = Number(parts.find((p) => p.type === "hour")?.value ?? 0);
-  const m = Number(parts.find((p) => p.type === "minute")?.value ?? 0);
-  const s = Number(parts.find((p) => p.type === "second")?.value ?? 0);
-  return (h * 3600 + m * 60 + s) * 1000;
+/**
+ * لحظة مطلقة لوقت صلاة في منطقة الموقع النشط.
+ * ما فات يلتفّ لليوم التالي عبر تاريخ المنطقة لا عبر Date.now()+delay الغامض.
+ */
+export function epochForSlot(slot: PrayerSlot, timeZone?: string): number {
+  const tz = timeZone || getActivePrayerLocation().timeZone || "Asia/Kuwait";
+  if (slot.minutes == null) return Date.now();
+  let epoch = epochAtZoneMinutes(tz, slot.minutes);
+  if (epoch <= Date.now()) {
+    const tomorrowNoon = new Date(calendarNoonInZone(tz).getTime() + 24 * 3600_000);
+    epoch = epochAtZoneMinutes(tz, slot.minutes, tomorrowNoon);
+  }
+  return epoch;
 }
 
 /**
@@ -95,25 +105,30 @@ function kuwaitNowMs(): number {
  */
 export function listNativePrayerScheduleSlots(
   prayers: PrayerSlot[],
-): Array<{ slot: PrayerSlot; epoch: number }> {
+  timeZone?: string,
+): Array<{ slot: PrayerSlot; epoch: number; dateISO: string }> {
+  const tz = timeZone || getActivePrayerLocation().timeZone || "Asia/Kuwait";
   const obligatory = prayers.filter((p) => p.obligatory && p.minutes != null);
   return obligatory
-    .map((slot) => ({ slot, epoch: epochForSlot(slot) }))
+    .map((slot) => {
+      const epoch = epochForSlot(slot, tz);
+      return {
+        slot,
+        epoch,
+        dateISO: dateISOInZone(tz, new Date(epoch)),
+      };
+    })
     .sort((a, b) => a.epoch - b.epoch);
 }
 
 /** أقرب صلاة قادمة لم يحن وقتها بعد (تتجاهل ما فات، تلتفّ لليوم التالي إن لزم). */
-function findNextUpcoming(prayers: PrayerSlot[]): PrayerSlot | null {
-  const slots = listNativePrayerScheduleSlots(prayers);
+export function findNextUpcomingPrayer(prayers: PrayerSlot[], timeZone?: string): PrayerSlot | null {
+  const slots = listNativePrayerScheduleSlots(prayers, timeZone);
   return slots[0]?.slot ?? null;
 }
 
-function epochForSlot(slot: PrayerSlot): number {
-  const nowMs = kuwaitNowMs();
-  const slotMs = (slot.minutes as number) * 60_000;
-  let delay = slotMs - nowMs;
-  if (delay < 0) delay += 24 * 3600_000;
-  return Date.now() + delay;
+function findNextUpcoming(prayers: PrayerSlot[]): PrayerSlot | null {
+  return findNextUpcomingPrayer(prayers);
 }
 
 function dispatchAlert(event: PrayerAlertEvent) {
@@ -123,7 +138,7 @@ function dispatchAlert(event: PrayerAlertEvent) {
 async function fireLiveActivityStart(slot: PrayerSlot, prayerEpoch: number, locationLabel?: string) {
   const prefs = loadPrayerAlertPrefs();
   if (!prefs.liveActivitiesEnabled) return;
-  if (_liveActivityActiveForKey === slot.key) return; // نشاط واحد كحد أقصى، لا تكرار لنفس الصلاة
+  if (_liveActivityActiveForKey === slot.key) return;
   const started = await startPrayerLiveActivity({
     prayerKey: slot.key.toLowerCase(),
     prayerName: KEY_TO_ARABIC[slot.key] ?? slot.name,
@@ -137,7 +152,6 @@ async function fireLiveActivityEnter() {
   const prefs = loadPrayerAlertPrefs();
   if (!prefs.liveActivitiesEnabled) return;
   await markPrayerLiveActivityEntered();
-  // أنهِ النشاط تلقائياً بعد مهلة قصيرة من دخول الوقت.
   const t = setTimeout(() => {
     endPrayerLiveActivity();
     _liveActivityActiveForKey = null;
@@ -146,27 +160,49 @@ async function fireLiveActivityEnter() {
 }
 
 async function rescheduleAllNativePrayers(
-  slots: Array<{ slot: PrayerSlot; epoch: number }>,
+  slots: Array<{ slot: PrayerSlot; epoch: number; dateISO: string }>,
   prefs: ReturnType<typeof loadPrayerAlertPrefs>,
 ): Promise<void> {
   const anyAlert =
     prefs.alertsEnabled &&
     (prefs.preAlertEnabled || prefs.enterAlertEnabled || prefs.postReminderEnabled);
-  if (!anyAlert) {
-    await cancelAllPrayerNativeNotifications();
-    return;
-  }
-  for (const { slot, epoch } of slots) {
-    await schedulePrayerNativeNotifications({
+
+  // قبل كل جدولة: إلغاء الكل ثم إعادة البناء
+  await cancelAllPrayerNativeNotifications();
+  await purgePastPrayerNativeNotifications();
+
+  if (!anyAlert) return;
+
+  const expected: Array<{ prayerKey: string; atMs: number; kind: string }> = [];
+  let budget = MAX_NATIVE_PRAYER_NOTIFS;
+
+  for (const { slot, epoch, dateISO } of slots) {
+    if (budget <= 0) break;
+    const scheduled = await schedulePrayerNativeNotifications({
       prayerKey: slot.key.toLowerCase(),
       prayerName: KEY_TO_ARABIC[slot.key] ?? slot.name,
       prayerTimeEpochMs: epoch,
+      prayerMinutesOfDay: slot.minutes ?? undefined,
+      dateISO,
       preAlertEnabled: prefs.alertsEnabled && prefs.preAlertEnabled,
       enterAlertEnabled: prefs.alertsEnabled && prefs.enterAlertEnabled,
       postReminderEnabled: prefs.alertsEnabled && prefs.postReminderEnabled,
       preAlertMinutes: prefs.preAlertMinutes,
       soundProfile: prefs.soundProfile,
     });
+    budget -= scheduled.length;
+    for (const s of scheduled) {
+      expected.push({
+        prayerKey: slot.key.toLowerCase(),
+        atMs: s.atMs,
+        kind: s.kind,
+      });
+    }
+  }
+
+  const verify = await verifyPendingAgainstExpected(expected);
+  if (!verify.ok) {
+    console.error("[prayer-alert] post-schedule drift", verify.diffs);
   }
 }
 
@@ -179,7 +215,18 @@ export async function startPrayerAlertScheduler(
   opts?: { forceNativeReschedule?: boolean },
 ): Promise<void> {
   clearAllTimers();
-  const slots = listNativePrayerScheduleSlots(payload.prayers);
+  const tz = payload.timezone || getActivePrayerLocation().timeZone || "Asia/Kuwait";
+  const todayISO = dateISOInZone(tz);
+  if (_lastTimeZone && _lastTimeZone !== tz) {
+    opts = { ...opts, forceNativeReschedule: true };
+  }
+  if (_lastDateISO && _lastDateISO !== todayISO) {
+    opts = { ...opts, forceNativeReschedule: true };
+  }
+  _lastTimeZone = tz;
+  _lastDateISO = todayISO;
+
+  const slots = listNativePrayerScheduleSlots(payload.prayers, tz);
   if (!slots.length) return;
 
   const prefs = loadPrayerAlertPrefs();
@@ -189,8 +236,10 @@ export async function startPrayerAlertScheduler(
     (prefs.preAlertEnabled || prefs.enterAlertEnabled || prefs.postReminderEnabled);
   const batchSig = !anyAlert
     ? "disabled"
-    : slots
-        .map(({ slot, epoch }) =>
+    : [
+        tz,
+        todayISO,
+        ...slots.map(({ slot, epoch }) =>
           buildPrayerScheduleSignature({
             prayerKey: slot.key,
             prayerTimeEpochMs: epoch,
@@ -200,8 +249,8 @@ export async function startPrayerAlertScheduler(
             postReminderEnabled: prefs.alertsEnabled && prefs.postReminderEnabled,
             soundProfile: prefs.soundProfile,
           }),
-        )
-        .join(";");
+        ),
+      ].join(";");
 
   if (opts?.forceNativeReschedule || batchSig !== _lastScheduleSig) {
     _lastScheduleSig = batchSig;
@@ -213,6 +262,7 @@ export async function startPrayerAlertScheduler(
         atIso: new Date().toISOString(),
         prayerCount: slots.length,
         soundProfile: prefs.soundProfile,
+        note: `${tz}|${todayISO}|${payload.method}`,
       });
     } catch (e) {
       const { savePrayerScheduleStatus } = await import("./prayer-schedule-status");
@@ -230,7 +280,7 @@ export async function startPrayerAlertScheduler(
   const next = findNextUpcoming(payload.prayers);
   if (!next) return;
 
-  const prayerEpoch = epochForSlot(next);
+  const prayerEpoch = epochForSlot(next, tz);
   const prayerName = KEY_TO_ARABIC[next.key] ?? next.name;
   const prayerKey = next.key.toLowerCase();
 
@@ -247,11 +297,11 @@ export async function startPrayerAlertScheduler(
 
   const preOn = prefs.alertsEnabled && prefs.preAlertEnabled;
   if (preAlertDelay <= 0 && enterDelay > 0) {
-    // التطبيق فُتح بالفعل داخل نافذة التنبيه المسبق — فعّل فوراً بدل انتظار مؤقّت سالب.
     if (preOn) dispatchAlert(fireEvent);
     void fireLiveActivityStart(next, prayerEpoch, payload.city);
   } else if (preAlertDelay > 0) {
     const t = setTimeout(() => {
+      if (Date.now() >= prayerEpoch) return; // حارس: لا pre بعد دخول الوقت
       if (preOn) dispatchAlert(fireEvent);
       void fireLiveActivityStart(next, prayerEpoch, payload.city);
     }, preAlertDelay);
@@ -260,9 +310,10 @@ export async function startPrayerAlertScheduler(
 
   if (enterDelay > 0) {
     const t = setTimeout(() => {
+      if (Date.now() - prayerEpoch > 5 * 60_000) return; // حارس: لا enter متأخر >5د
       dispatchAlert({ ...fireEvent, type: "entered" });
       void fireLiveActivityEnter();
-      _lastScheduleSig = null; // اسمح بجدولة الصلاة التالية عند إعادة التشغيل
+      _lastScheduleSig = null;
       import("./prayer-times").then(({ fetchPrayerTimes }) => {
         fetchPrayerTimes().then((p) => startPrayerAlertScheduler(p));
       });

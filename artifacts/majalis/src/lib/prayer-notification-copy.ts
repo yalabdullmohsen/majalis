@@ -1,6 +1,7 @@
 /**
- * نصوص إشعارات الصلاة: عنوان مختصر لشاشة القفل + جسم طبيعي بلا شرطة طويلة (—).
- * الاختيار دوري مع تجنّب تكرار آخر نص لنفس الحالة.
+ * نصوص إشعارات الصلاة.
+ * للتنبيهات المجدوَلة: النص يُشتق من الوقت الفعلي عند الجدولة (يحمل ساعة الصلاة).
+ * القوالب الدورية تبقى للمسارات القديمة/الاختبارات دون ادعاء «ربع ساعة» كاذب.
  */
 
 export type PrayerNotifKind =
@@ -30,7 +31,7 @@ const TEMPLATES: Record<PrayerNotifKind, Template[]> = {
     { title: "اقتربت الصلاة", body: "اقترب وقت صلاة {{name}}، استعد للصلاة" },
     { title: "تذكير بالصلاة", body: "صلاة {{name}} بعد {{mins}} دقيقة" },
     { title: "اقتربت الصلاة", body: "اقتربت صلاة {{name}}، متبقي {{mins}} دقيقة" },
-    { title: "استعد للصلاة", body: "باقي ربع ساعة على صلاة {{name}}" },
+    { title: "استعد للصلاة", body: "متبقي {{mins}} دقيقة على صلاة {{name}}" },
   ],
   "pre-10": [
     { title: "اقتربت الصلاة", body: "باقي {{mins}} دقائق على صلاة {{name}}" },
@@ -101,6 +102,38 @@ export function preAlertKindForMinutes(minutes: number): "pre-15" | "pre-10" | "
   if (minutes <= 5) return "pre-5";
   if (minutes <= 10) return "pre-10";
   return "pre-15";
+}
+
+/**
+ * نص مجدول يحمل وقت الصلاة صراحةً — أي انحراف مستقبلي يظهر فورًا للمستخدم.
+ * العنوان: استعد للصلاة / أذان …
+ * الجسم: المغرب ٦:٢٧ م · بعد ١٥ دقيقة
+ */
+export function buildScheduledPrayerNotificationCopy(opts: {
+  kind: "pre" | "enter" | "post";
+  prayerName: string;
+  prayerTimeLabel: string;
+  minutesBefore?: number;
+}): PrayerNotifCopy {
+  const name = opts.prayerName;
+  const clock = opts.prayerTimeLabel;
+  if (opts.kind === "pre") {
+    const mins = Math.max(1, Math.round(opts.minutesBefore ?? 15));
+    return {
+      title: "استعد للصلاة",
+      body: `${name} ${clock} · بعد ${mins} دقيقة`,
+    };
+  }
+  if (opts.kind === "enter") {
+    return {
+      title: `أذان ${name}`,
+      body: `${clock}`,
+    };
+  }
+  return {
+    title: "تذكير خفيف",
+    body: `هل أديت صلاة ${name}؟ (${clock})`,
+  };
 }
 
 /**

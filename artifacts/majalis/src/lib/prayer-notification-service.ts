@@ -8,6 +8,7 @@ import {
   cancelAllPrayerNativeNotifications,
   type PermissionStatus,
 } from "@/lib/prayer-local-notifications";
+import { dateISOInZone } from "@/lib/prayer-notification-ids";
 import type { AdhanPreferences } from "@/lib/adhan-preferences";
 import { loadAdhanPrefs } from "@/lib/adhan-preferences";
 import { isNative } from "@/lib/capacitor-utils";
@@ -48,10 +49,13 @@ export async function schedulePrayerNotifications(
     for (const key of ["fajr", "dhuhr", "asr", "maghrib", "isha"] as const) {
       const prayerPrefs = prefs.prayers[key];
       if (!prayerPrefs?.enabled) continue;
+      const at = prayerTimes[key];
+      const dateISO = dateISOInZone("Asia/Kuwait", prayerTimes.date ?? at);
       await schedulePrayerNativeNotifications({
         prayerKey: key,
         prayerName: PRAYER_AR[key],
-        prayerTimeEpochMs: prayerTimes[key].getTime(),
+        prayerTimeEpochMs: at.getTime(),
+        dateISO,
         preAlertEnabled: (prayerPrefs.advanceMinutes ?? 0) > 0,
         enterAlertEnabled: true,
         preAlertMinutes: prayerPrefs.advanceMinutes ?? 0,
