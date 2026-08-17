@@ -6,7 +6,7 @@
 ## ما تم التحقق منه
 
 - كل بطاقة لها `source.book` و`source.author` و`source.ref` غير فارغة.
-- الأرقام من مصادر مطبوعة كلاسيكية (مصحف المدينة، الداني، السيوطي، عبد الباقي) دون حساب آلي.
+- الأرقام من مصادر مطبوعة كلاسيكية (مصحف المدينة، الداني، السيوطي، عبد الباقي) بلا اشتقاق رقمي من نص المصحف.
 - لا توجد قيم صفرية؛ ولا أرقام لاتينية في `label` أو `note` أو `detail`.
 - المداخل `disputed` تحتوي `variants` ≥ ٢؛ ومداخل `mawdoo` تحتوي `evidence` ≥ ١.
 - لا تكرار لـ`topicKey` بقيم مختلفة.
@@ -70,9 +70,9 @@
 
 | id | topicKey |
 |---|---|
-| jannah-lafz | jannah |
+| jannah-madda | jannah |
 | jannah-names | jannah-names |
-| nar-lafz | nar |
+| nar-madda | nar |
 | nar-names | nar-names |
 | akhira-lafz | akhira |
 | qiyama-madda | qiyama |
