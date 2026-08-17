@@ -23,7 +23,15 @@
 
 Playwright (`tests/chrome-no-white-strip.spec.ts`): نسبة البكسل شبه الأبيض على `/prayer-times` فقط — الصفحات الفاتحة تملك شريطاً سفلياً أبيض عمداً (`bottom-nav-safe-area-green`). بقية المسارات تفحص أن الشريط ملاصق لأسفل الإطار (لا فجوة). البوابة في CI: `test:status-bar-safe-area` (ضمن `test:ci-unit`).
 
-### ما عُالج
+## المهمة ٢ — الدرج من اليمين RTL (2026-08-17)
+
+السبب: `.drawer-panel` كان `inset-inline-end: 0` + `right: auto` — في RTL الـ inline-end هو اليسار. أُصلح إلى `inset-inline-start: 0` مع `html[dir="rtl"] { transform: translateX(100%) }` عند الإخفاء.
+
+إيماءة الفتح من الحافة اليمنى على `/` فقط (لا تتعارض مع سحب الرجوع في الصفحات المتفرّعة). الإغلاق بسحب نحو اليمين. المدة 200ms. بلا `left`/`right` في CSS الدرج.
+
+---
+
+### ما عُالج (المهمة ١)
 
 1. طلاء `#root` / `.app-shell` / `.app-main` تحت `html.pts-immersive`.
 2. استثناء `.pts-immersive` من خلفية `--app-bg` في `app-chrome-scroll.css`.

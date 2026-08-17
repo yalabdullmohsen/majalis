@@ -32,7 +32,12 @@ assert.doesNotMatch(drawerTsx, /FeaturedSectionsGrid|section-cards/, "بلا ب�
 assert.match(registrySrc, /sidebar-item/, "صفوف أيقونة+عنوان");
 assert.doesNotMatch(registrySrc, /FeaturedSectionsGrid/, "لا شبكة مميّزة في الدرج");
 
-assert.match(drawerCss, /translateX/, "الحركة على transform");
+assert.match(drawerCss, /inset-inline-start:\s*0/, "الدرج من الحافة المنطقية للبداية (يمين في RTL)");
+assert.doesNotMatch(drawerCss, /inset-inline-end:\s*0/, "لا تثبيت على inline-end (يسار في RTL)");
+assert.doesNotMatch(drawerCss, /(?:^|\n)\s*(?:left|right)\s*:/, "صفر left/right فيزيائية في CSS الدرج");
+assert.match(drawerCss, /html\[dir="rtl"\] \.drawer-panel/, "حركة RTL عبر dir لا إشارة يدوية وحدها");
+assert.match(drawerCss, /transition:\s*transform 200ms/, "مدة الحركة 200ms");
+assert.match(navBar, /touchstart/, "إيماءة فتح من الحافة");
 assert.match(drawerCss, /opacity/, "التعتيم على opacity");
 assert.doesNotMatch(drawerCss, /transition:[^;]*(width|right|left|filter|box-shadow)/, "لا تحريك width/right/filter");
 assert.doesNotMatch(drawerCss, /backdrop-filter:\s*blur/, "لا backdrop-filter على الدرج");

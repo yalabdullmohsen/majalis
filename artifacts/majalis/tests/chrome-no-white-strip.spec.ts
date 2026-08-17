@@ -66,4 +66,17 @@ test.describe("لا شريط أبيض فوق التنقّل السفلي", () =>
     await assertNavFlushToBottom(page, "prayer sheet close nav flush");
     await assertBottomNotWhite(page, "prayer sheet close");
   });
+
+  test("الدرج مفتوح من اليمين", async ({ page }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(400);
+    await page.locator(".navbar-menu-btn--drawer").click();
+    await expect(page.locator("#drawer-root[data-open='true'] .drawer-panel")).toBeVisible();
+    const box = await page.locator("#drawer-root[data-open='true'] .drawer-panel").boundingBox();
+    expect(box).toBeTruthy();
+    if (box) {
+      expect(box.x + box.width).toBeGreaterThan(VIEW.width - 8);
+    }
+    await assertNavFlushToBottom(page, "drawer open nav flush");
+  });
 });
