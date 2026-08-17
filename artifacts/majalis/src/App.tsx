@@ -1011,7 +1011,8 @@ function AppShellInner() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("pts-immersive", onPrayer);
+    // لوبي الصلاة يشارك --surface-app مع التبويبات؛ لا غمر زمردي على html/#root
+    document.documentElement.classList.remove("pts-immersive");
     document.documentElement.classList.toggle("chrome-immersive", immersive);
     return () => {
       document.documentElement.classList.remove("pts-immersive");
