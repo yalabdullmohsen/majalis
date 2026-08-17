@@ -29,10 +29,9 @@
   --bottom-nav-total: var(--nav-h, calc(var(--bottom-nav-height) + var(--inset-bottom)));
   --top-section-bar-h: 3.5rem;
   --sticky-below-chrome: calc(var(--header-h, calc(56px + var(--inset-top))) + var(--top-section-bar-h));
-  /* ارتفاع الشريط المتحرك — أعرض رأسيًا لاستيعاب النص + badge بلا قصّ،
-     مع توسيط المحتوى عبر flex داخل .header-ticker. */
-  --ticker-h: 3.5rem;
-  --ticker-row-pad-block: 0.4rem;
+  /* ارتفاع الشريط المتحرك ≤ ٣٦px (٢٫٢٥rem) + توسيط flex؛ safe-area منفصل في صف الهيدر */
+  --ticker-h: 2.25rem;
+  --ticker-row-pad-block: 0;
   --page-gutter: var(--gutter-inline-start, max(16px, var(--inset-right)));
   --page-width: var(--content-max, 70rem);
   --motion-fast: var(--dur-fast, 140ms);
@@ -1733,5 +1732,5 @@ header.navbar-v3,
   .navbar-theme-toggle.navbar-search-toggle{display:none!important}
   .navbar-v3__search-row{width:100%;box-sizing:border-box;padding:.45rem max(16px,var(--gutter-inline-start,16px)) .35rem max(16px,var(--gutter-inline-end,16px));border-block-start:1px solid var(--mj-hairline,var(--color-border));background:var(--mj-bg,var(--color-background))}
   .navbar-v3__search-btn{width:100%;min-height:44px;display:flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border:1px solid var(--mj-hairline,var(--color-border));border-radius:var(--mj-r-pill,999px);background:var(--mj-surface,var(--color-surface));color:var(--mj-muted,var(--color-text-muted));text-align:start}
-  .navbar-ticker-row .header-ticker{width:100%;min-width:0;border-radius:0;min-height:var(--ticker-h);height:var(--ticker-h);max-height:var(--ticker-h);display:flex;align-items:center;justify-content:center;padding-block:.35rem;padding-inline:1rem}
+  .navbar-ticker-row .header-ticker{width:100%;min-width:0;border-radius:0;min-height:var(--ticker-h);height:var(--ticker-h);max-height:var(--ticker-h);display:flex;align-items:center;justify-content:center;padding-block:0;padding-inline:.5rem}
 }

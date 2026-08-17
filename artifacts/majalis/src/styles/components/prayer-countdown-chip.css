@@ -1,0 +1,189 @@
+/* شريحة عدّاد الصلاة — ارتفاع بصري ٢٢–٢٤px، أقصى ٣٠٪ من الشريط، منطقة لمس ≥٤٤px */
+
+.prayer-countdown-chip__hit {
+  flex: 0 1 auto;
+  max-width: 30%;
+  min-width: 44px;
+  min-height: 44px;
+  height: 44px;
+  margin-block: calc((44px - var(--ticker-h, 2.25rem)) / -2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: inherit;
+  color: inherit;
+}
+
+.prayer-countdown-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  max-width: 100%;
+  height: 24px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1c5244) 28%, transparent);
+  /* نهارًا: أخضر صلب كافٍ لنص أبيض بتباين ≥ ٤.٥:١ (١٢٪ وحدها لا تكفي) */
+  background: var(--mj-brand-deep, #12362a);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  box-sizing: border-box;
+}
+
+.prayer-countdown-chip__dot {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 0 color-mix(in srgb, #fff 55%, transparent);
+  animation: prayer-chip-pulse 1.6s ease-out infinite;
+}
+
+.prayer-countdown-chip__body {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.prayer-countdown-chip__name {
+  font-weight: 800;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prayer-countdown-chip__time {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  /* عرض ثابت تقريبي لـ دد:ثث / س:دد — يمنع تذبذب العرض */
+  min-width: 3.2ch;
+  text-align: start;
+}
+
+.prayer-countdown-chip__now-text {
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prayer-countdown-chip--urgent {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--mj-brand, #1c5244) 35%, transparent),
+    0 0 10px color-mix(in srgb, var(--mj-brand, #1c5244) 22%, transparent);
+}
+
+.prayer-countdown-chip--now {
+  background: color-mix(in srgb, var(--mj-brand, #1c5244) 22%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, #1c5244) 40%, transparent);
+}
+
+/* ليلاً: خلفية خضراء فاتحة أوضح والنص أبيض للتباين ≥ ٤.٥:١ */
+html[data-theme="dark"] .prayer-countdown-chip {
+  /* أخضر فاتح نسبيًا مع تباين أبيض ≥ ٤.٥:١ */
+  background: #247a5c;
+  border-color: color-mix(in srgb, #6bc4a0 45%, transparent);
+  color: #fff;
+}
+
+html[data-theme="dark"] .prayer-countdown-chip__dot {
+  background: #fff;
+}
+
+html[data-theme="dark"] .prayer-countdown-chip--urgent {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #6bc4a0 50%, transparent),
+    0 0 12px color-mix(in srgb, #247a5c 40%, transparent);
+}
+
+html[data-theme="dark"] .prayer-countdown-chip--now {
+  background: #1c6b50;
+}
+
+@keyframes prayer-chip-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, #fff 50%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 5px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prayer-countdown-chip__dot {
+    animation: none;
+  }
+}
+
+/* شيت المواقيت المختصر */
+.prayer-chip-sheet__list {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.prayer-chip-sheet__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 0.25rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--mj-hairline, #d5ddd8) 80%, transparent);
+}
+
+.prayer-chip-sheet__row:last-child {
+  border-bottom: none;
+}
+
+.prayer-chip-sheet__name {
+  font-weight: 700;
+  color: var(--mj-ink, #1a2e28);
+}
+
+.prayer-chip-sheet__time {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-weight: 700;
+  color: var(--mj-brand, #1c5244);
+}
+
+.prayer-chip-sheet__meta,
+.prayer-chip-sheet__empty {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--mj-muted, #5a6f68);
+}
+
+html[data-theme="dark"] .prayer-chip-sheet__name {
+  color: var(--mj-ink, #e8f0ec);
+}
+
+html[data-theme="dark"] .prayer-chip-sheet__time {
+  color: #8fd4b5;
+}

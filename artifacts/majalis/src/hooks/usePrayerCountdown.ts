@@ -10,9 +10,7 @@ import {
 } from "@/lib/prayer-times";
 import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
-
-/** عدّاد الثواني يُحدَّث كل ثانية دائمًا — صفحة الصلاة والشريط يعرضان HMS كاملًا. */
-const TICK_MS = 1_000;
+import { subscribeSecondTick } from "@/lib/second-tick";
 
 function syncLessonCache(payload: PrayerTimesPayload) {
   const cache: Record<string, number> = {};
@@ -84,56 +82,12 @@ export function usePrayerCountdown(governorateId?: string) {
       return;
     }
 
-    let timer: number | undefined;
-    let cancelled = false;
-
-    const schedule = () => {
-      if (cancelled) return;
-      /* دائمًا من Date.now عبر computePrayerCountdown — لا تراكم عدّاد قديم */
-      const cd = computePrayerCountdown(data.prayers, activeTz(data));
-      setCountdown(cd);
-      timer = window.setTimeout(schedule, TICK_MS);
-    };
-
-    schedule();
-
-    const resyncNow = () => {
-      if (timer != null) window.clearTimeout(timer);
-      schedule();
-    };
-
-    const onVisible = () => {
-      if (document.visibilityState !== "visible") return;
-      resyncNow();
-    };
-    document.addEventListener("visibilitychange", onVisible);
-
-    let removeAppListener: (() => void) | undefined;
-    void import("@capacitor/app")
-      .then(({ App }) =>
-        App.addListener("appStateChange", ({ isActive }) => {
-          if (isActive) resyncNow();
-        }),
-      )
-      .then((handle) => {
-        if (cancelled) {
-          void handle.remove();
-          return;
-        }
-        removeAppListener = () => {
-          void handle.remove();
-        };
-      })
-      .catch(() => {
-        /* ويب / بلا Capacitor */
-      });
-
-    return () => {
-      cancelled = true;
-      if (timer != null) window.clearTimeout(timer);
-      document.removeEventListener("visibilitychange", onVisible);
-      removeAppListener?.();
-    };
+    const prayers = data.prayers;
+    const tz = activeTz(data);
+    /* كل نبضة: فرق الهدف عن Date.now عبر computePrayerCountdown — لا تراكم */
+    return subscribeSecondTick(() => {
+      setCountdown(computePrayerCountdown(prayers, tz));
+    });
   }, [data]);
 
   return { data, countdown, loading, reload };

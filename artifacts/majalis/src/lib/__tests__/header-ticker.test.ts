@@ -107,9 +107,23 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   assert(tickerSrc.includes("header-ticker--marquee"), "المكوّن يستخدم وضع الماركي المتحرّك");
   assert(tickerSrc.includes("Megaphone") || tickerSrc.includes("promo"), "يدعم عناصر ترويج الأقسام/المميزات");
   assert(tickerSrc.includes("header-ticker__source") && tickerSrc.includes("item.source"), "يعرض مصدر الحديث/الذكر مع النص");
-  assert(tickerSrc.includes("header-ticker__prayer"), "شريط الصلاة ثابت خارج الماركي");
-  assert(tickerSrc.includes("buildPrayerTickerCopy") || tickerSrc.includes("حان الآن"), "يعرض حان الآن عند دخول الوقت");
-  assert(tickerSrc.includes("usePrayerCountdown"), "العدّ من مصدر الصلاة الموحّد");
+  assert(tickerSrc.includes("PrayerCountdownChip"), "شريحة الصلاة مكوّن مستقل خارج اشتراك الأب");
+  assert(
+    tickerSrc.includes("حان وقت") ||
+      readFileSync(resolve(appRoot, "src/lib/prayer-ticker-copy.ts"), "utf-8").includes("حان وقت"),
+    "يعرض حان وقت عند دخول الوقت",
+  );
+  assert(
+    !tickerSrc.includes("usePrayerCountdown"),
+    "العدّ ليس في HeaderTicker — عزل إعادة الرسم كل ثانية",
+  );
+
+  const chipSrc = readFileSync(
+    resolve(appRoot, "src/components/prayer/PrayerCountdownChip.tsx"),
+    "utf-8",
+  );
+  assert(chipSrc.includes("usePrayerCountdown"), "العدّ من مصدر الصلاة الموحّد داخل الشريحة");
+  assert(chipSrc.includes("memo"), "الشريحة مغلّفة بـ memo");
 }
 
 console.log(`\n${"─".repeat(40)}`);

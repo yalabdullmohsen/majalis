@@ -1,9 +1,14 @@
 /**
- * نص شريط الصلاة — نافذة «حان الآن» والعدّ التنازلي.
+ * نص شريط الصلاة — نافذة «حان وقت» والعدّ المدمج.
  * تشغيل: node --import tsx src/lib/__tests__/prayer-ticker-copy.test.ts
  */
 import assert from "node:assert/strict";
-import { buildPrayerTickerCopy } from "../prayer-ticker-copy";
+import {
+  buildPrayerChipCopy,
+  buildPrayerTickerCopy,
+  formatChipDuration,
+  PRAYER_CHIP_NOW_WINDOW_SEC,
+} from "../prayer-ticker-copy";
 
 {
   const now = buildPrayerTickerCopy({
@@ -13,14 +18,14 @@ import { buildPrayerTickerCopy } from "../prayer-ticker-copy";
     sinceHms: "٠٠:٠٠:١٢",
   });
   assert.equal(now.isNow, true);
-  assert.match(now.text, /حان الآن وقت صلاة الظهر/);
+  assert.match(now.text, /حان وقت الظهر/);
 }
 
 {
   const since = buildPrayerTickerCopy({
     prayerName: "العصر",
     remainingHms: "٠٠:٠٠:٠٠",
-    sinceSeconds: 120,
+    sinceSeconds: PRAYER_CHIP_NOW_WINDOW_SEC,
     sinceHms: "٠٠:٠٢:٠٠",
   });
   assert.equal(since.isNow, false);
@@ -36,8 +41,19 @@ import { buildPrayerTickerCopy } from "../prayer-ticker-copy";
     sinceHms: null,
   });
   assert.equal(rem.isNow, false);
-  assert.match(rem.label, /المتبقي على صلاة المغرب/);
+  assert.equal(rem.label, "المغرب");
   assert.equal(rem.text, "٠١:٠٢:٠٣");
+}
+
+{
+  assert.equal(formatChipDuration(4500), "١:١٥");
+  const chip = buildPrayerChipCopy({
+    prayerName: "المغرب",
+    remainingSeconds: 2712,
+    sinceSeconds: null,
+  });
+  assert.equal(chip.text, "المغرب ٤٥:١٢");
+  assert.equal(chip.urgent, false);
 }
 
 console.log("prayer-ticker-copy.test.ts: ok");
