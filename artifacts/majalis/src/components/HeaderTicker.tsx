@@ -147,8 +147,10 @@ export function HeaderTicker() {
   }, [activeIndex, items.length]);
 
   const pauseHandlers = {
-    tabIndex: 0,
+    tabIndex: 0 as const,
+    role: "button" as const,
     "aria-pressed": stickyPaused,
+    "aria-label": stickyPaused ? "استئناف الشريط المتحرك" : "إيقاف الشريط المتحرك مؤقتًا",
     title: stickyPaused ? "استئناف الشريط" : "إيقاف الشريط",
     onClick: () => setStickyPaused((p) => !p),
     onMouseEnter: () => setHoverPaused(true),
@@ -187,9 +189,7 @@ export function HeaderTicker() {
     return (
       <div
         className={`header-ticker header-ticker--static header-ticker--with-prayer${paused ? " header-ticker--paused" : ""}`}
-        role="status"
         aria-live="polite"
-        aria-label="شريط معلومات"
         {...pauseHandlers}
       >
         <PrayerCountdownChip />
@@ -212,9 +212,7 @@ export function HeaderTicker() {
   return (
     <div
       className={`header-ticker header-ticker--marquee header-ticker--with-prayer${paused ? " header-ticker--paused" : ""}`}
-      role="status"
       aria-live="off"
-      aria-label="شريط إعلانات متحرّك: أحاديث وأذكار وأقسام"
       {...pauseHandlers}
     >
       <PrayerCountdownChip />

@@ -111,7 +111,18 @@ export default function RegisterPage() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-card__header">
-          <img src="/logo.png" alt="المجلس العلمي" className="login-logo" loading="eager" decoding="async" width="512" height="512" />
+          <picture>
+            <source srcSet="/brand/official.webp" type="image/webp" />
+            <img
+              src="/brand/official.png"
+              alt="المجلس العلمي"
+              className="login-logo"
+              loading="eager"
+              decoding="async"
+              width={512}
+              height={512}
+            />
+          </picture>
           <p className="login-card__brand">المجلس العلمي</p>
           <p className="login-card__tagline">علم نافع، ومحتوى موثوق</p>
           <h1 className="login-card__title">إنشاء حساب</h1>
