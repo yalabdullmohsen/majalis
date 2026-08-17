@@ -1,20 +1,24 @@
 type Props = {
   pageNumber: number;
-  hizbNumber?: number | null;
+  /** يُعرض وصف الحزب فقط إذا ابتدأ حزب في هذه الصفحة */
+  hizbStartingOnPage?: number | null;
 };
 
-/** خرطوش رقم الصفحة — مصمت بإطار مزدوج؛ فردي يمين / زوجي يسار. */
-export function MushafPageFooter({ pageNumber, hizbNumber = null }: Props) {
-  const side = pageNumber % 2 === 1 ? "odd" : "even";
+/**
+ * ذيل الصفحة — قاعدة المرجع:
+ * إن ابتدأ حزب: الوصف يساراً والخرطوش يميناً.
+ * وإلا: الخرطوش يساراً ولا وصف حزب.
+ */
+export function MushafPageFooter({ pageNumber, hizbStartingOnPage = null }: Props) {
+  const hizbStart = hizbStartingOnPage != null && hizbStartingOnPage > 0;
+  const side = hizbStart ? "hizb-start" : "default";
   return (
     <footer className="mm-page-footer" data-side={side} data-testid="mushaf-page-footer">
-      {hizbNumber != null && hizbNumber > 0 ? (
-        <span className="mm-page-footer__hizb" aria-label={`الحزب ${hizbNumber}`}>
-          الحزب {toArabicDigits(hizbNumber)}
+      {hizbStart ? (
+        <span className="mm-page-footer__hizb" aria-label={`الحزب ${hizbStartingOnPage}`}>
+          الحزب {toArabicDigits(hizbStartingOnPage!)}
         </span>
-      ) : (
-        <span className="mm-page-footer__hizb mm-page-footer__hizb--spacer" aria-hidden="true" />
-      )}
+      ) : null}
       <span className="mm-page-footer__badge" aria-label={`صفحة ${pageNumber}`}>
         <svg className="mm-page-footer__cartouche" viewBox="0 0 96 36" aria-hidden="true">
           <path

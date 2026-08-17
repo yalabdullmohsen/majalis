@@ -12,7 +12,7 @@ import { chromium } from "playwright";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "../..");
 const outDir = resolve(root, "docs/mushaf-madinah/snapshots");
-const pages = [1, 2, 3, 4, 15, 598, 602];
+const pages = [1, 2, 3, 4, 7, 283, 600, 603];
 const viewport = { width: 390, height: 844 };
 const baseFromEnv = process.env.MUSHAF_GATE_BASE_URL || process.env.BASE_URL || "";
 
@@ -81,7 +81,7 @@ async function main() {
     for (const n of pages) {
       const url = `${base}/mushaf?page=${n}`;
       await page.goto(url, { waitUntil: "networkidle", timeout: 60_000 });
-      await page.waitForSelector('[data-testid="mushaf-page"]', { timeout: 45_000 });
+      await page.waitForSelector('[data-pane="current"] [data-testid="mushaf-page"]', { timeout: 45_000 });
       // أخفِ الأدوات للقطة نظيفة
       await page.evaluate(() => {
         const el = document.querySelector('[data-testid="mushaf-controls"]');
@@ -92,10 +92,12 @@ async function main() {
       await page.locator('[data-testid="mushaf-viewport"]').screenshot({ path: file });
       const hasPdf = await page.evaluate(() => !!document.querySelector("embed[type='application/pdf'], iframe[src*='.pdf'], canvas.mm-pdf"));
       const font = await page.evaluate(() => {
-        const line = document.querySelector(".mm-ayah-line");
+        const current = document.querySelector('[data-pane="current"]');
+        const line =
+          current?.querySelector(".mm-ayah-line") || current?.querySelector(".mm-basmala");
         return line ? getComputedStyle(line).fontFamily : "";
       });
-      const lineSlots = await page.locator(".mm-slot .mm-ayah-line").count();
+      const lineSlots = await page.locator('[data-pane="current"] .mm-slot .mm-ayah-line').count();
       report.push({
         page: n,
         file: file.replace(root + "/", ""),

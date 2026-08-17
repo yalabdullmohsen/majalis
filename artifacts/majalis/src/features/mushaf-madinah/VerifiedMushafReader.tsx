@@ -22,6 +22,7 @@ import { MushafPage } from "./MushafPage";
 import { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
 import { findMushafPageForAyah, parseVerseKey } from "./mushaf-page-for-ayah";
 import { useQpcPageFont } from "./useQpcPageFont";
+import { MUSHAF_CHROME_HIDE_MS } from "./layout-bands";
 import "./mushaf-madinah.css";
 
 /** شيتات ثقيلة — خارج الحزمة الأولية للمصحف */
@@ -72,7 +73,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   const page = clampMushafPage(pageNumber);
   const [layout, setLayout] = useState<MushafPageLayout | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [chromeOpen, setChromeOpen] = useState(true);
+  const [chromeOpen, setChromeOpen] = useState(false);
   const [selectedVerseKey, setSelectedVerseKey] = useState<string | null>(null);
   const [actionsOpen, setActionsOpen] = useState(false);
   const [tafsirOpen, setTafsirOpen] = useState(false);
@@ -138,15 +139,15 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   const bumpChrome = useCallback(() => {
     setChromeOpen(true);
     if (hideTimer.current) window.clearTimeout(hideTimer.current);
-    hideTimer.current = window.setTimeout(() => setChromeOpen(false), 2500);
+    hideTimer.current = window.setTimeout(() => setChromeOpen(false), MUSHAF_CHROME_HIDE_MS);
   }, []);
 
   useEffect(() => {
-    bumpChrome();
+    setChromeOpen(false);
     return () => {
       if (hideTimer.current) window.clearTimeout(hideTimer.current);
     };
-  }, [page, bumpChrome]);
+  }, [page]);
 
   useEffect(() => {
     audio.setReciter(loadReciterId());
@@ -358,13 +359,32 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     try {
       if (typeof navigator.share === "function") {
         await navigator.share({ title: "المصحف — المجلس العلمي", text, url });
-        setCopyStatus("تمت المشاركة");
+        setCopyStatus("تم النسخ");
         return;
       }
       await navigator.clipboard.writeText(`${text}\n${url}`);
-      setCopyStatus("تم نسخ الآية لل مشاركة");
-    } catch {
-      setCopyStatus("تعذّرت المشاركة");
+      setCopyStatus("تم النسخ");
+    } catch (err) {
+      const name = err instanceof Error ? err.name : "";
+      if (name === "AbortError") return;
+      try {
+        await navigator.clipboard.writeText(`${text}\n${url}`);
+        setCopyStatus("تم النسخ");
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = `${text}\n${url}`;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.insetInlineStart = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand("copy");
+        } finally {
+          document.body.removeChild(ta);
+        }
+        setCopyStatus("تم النسخ");
+      }
     }
   }, [page, selectedVerseKey, versePreview]);
 
@@ -421,6 +441,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       page={page}
       onPageChange={go}
       disabled={edgesDisabled}
+      onNavigateStart={() => setChromeOpen(false)}
       onTapEmpty={() => {
         if (actionsOpen) {
           setActionsOpen(false);
@@ -435,24 +456,32 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       data-mushaf-theme={theme}
       data-testid="mushaf-viewport"
       dir="rtl"
+      nextPage={
+        page < MUSHAF_PAGE_MAX ? <PrefetchedMushafPage pageNumber={page + 1} /> : undefined
+      }
+      prevPage={
+        page > 1 ? <PrefetchedMushafPage pageNumber={page - 1} /> : undefined
+      }
+      pageSlot={
+        <div className="mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
+          {error ? <div className="mm-status">{error}</div> : null}
+          {!error && (!layout || !fontReady) ? (
+            <div className="mm-status" role="status">
+              جاري تحميل الصفحة…
+            </div>
+          ) : null}
+          {layout && fontReady ? (
+            <MushafPage
+              layout={layout}
+              fontFamily={fontFamily}
+              selectedVerseKey={selectedVerseKey}
+              playingVerseKey={playingVerseKey}
+              onSelectVerse={onSelectVerse}
+            />
+          ) : null}
+        </div>
+      }
     >
-      <div className="mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
-        {error ? <div className="mm-status">{error}</div> : null}
-        {!error && (!layout || !fontReady) ? (
-          <div className="mm-status" role="status">
-            جاري تحميل الصفحة…
-          </div>
-        ) : null}
-        {layout && fontReady ? (
-          <MushafPage
-            layout={layout}
-            fontFamily={fontFamily}
-            selectedVerseKey={selectedVerseKey}
-            playingVerseKey={playingVerseKey}
-            onSelectVerse={onSelectVerse}
-          />
-        ) : null}
-      </div>
 
       <Suspense fallback={null}>
         <MushafAudioDock
@@ -480,7 +509,6 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
 
       <MushafControls
         open={chromeOpen && !actionsOpen}
-        exitAlwaysVisible
         pageNumber={page}
         onExit={onExit}
         onIndex={onIndex}
@@ -554,6 +582,30 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       </span>
       <span hidden data-min={1} data-swipe-min={SWIPE_MIN_PX} />
     </MushafPager>
+  );
+}
+
+/** صفحة مجاورة محمّلة مسبقاً (خطاً ونصاً) بلا وميض عند السحب. */
+function PrefetchedMushafPage({ pageNumber }: { pageNumber: number }) {
+  const { fontFamily, ready } = useQpcPageFont(pageNumber);
+  const [layout, setLayout] = useState<MushafPageLayout | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    loadMushafPage(pageNumber)
+      .then((data) => {
+        if (!cancelled) setLayout(data);
+      })
+      .catch(() => {
+        if (!cancelled) setLayout(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [pageNumber]);
+  return (
+    <div className="mm-page-shell mushaf-page-frame" aria-hidden="true">
+      {layout && ready ? <MushafPage layout={layout} fontFamily={fontFamily} /> : null}
+    </div>
   );
 }
 

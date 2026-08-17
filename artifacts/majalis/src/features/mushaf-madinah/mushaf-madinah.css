@@ -1,7 +1,7 @@
 /**
  * مصحف المدينة — رموز بصرية من reference/mushaf-ayah-style (390×844).
  * لا letter-spacing على نص القرآن (حروف QPC PUA).
- * word-spacing يُضبط فقط عبر fitMushafPageFont بعد التكبير (سقف ١٨px).
+ * word-spacing يُضبط فقط عبر fitMushafPageFont بعد التكبير (سقف ١٥px).
  */
 
 .mm-viewport .sr-only {
@@ -24,10 +24,10 @@
   --mm-gold: #bf9f5b;
   --mm-gold-soft: #d4b870;
   --mm-gold-deep: #9a7d3c;
-  --mm-header: #5c4a28;
+  --mm-header: #c4a574;
   --mm-frame: transparent;
-  --mm-banner-fill: linear-gradient(180deg, #efe2b8 0%, #e0cb92 48%, #d4b870 100%);
-  --mm-banner-name-bg: #fffdf8;
+  --mm-banner-fill: linear-gradient(180deg, #e8d7a8 0%, #dcc48a 48%, #c9a85e 100%);
+  --mm-banner-name-bg: #f3e6c4;
   /* highlight ذهبي خفيف جدًا — لا يغطي الحروف */
   --mm-ayah-select: rgba(191, 159, 91, 0.10);
   --mm-ayah-play: rgba(47, 111, 78, 0.09);
@@ -38,17 +38,20 @@
   --mm-footer-h: clamp(2.1rem, 5.2vh, 2.75rem);
   /* ارتفاع لوحة السورة يلائم خانة شبكة واحدة */
   --mm-banner-h: clamp(2.55rem, 8vw, 3.35rem);
-  --mm-ayah-end: 0.88em;
+  --mm-ayah-end: 1.12em;
   --mm-page-max-w: min(100%, 42rem);
-  /* مقياس ابتدائي — يُضبط ببحث ثنائي 0.25px */
-  --mm-qpc-size: clamp(1.22rem, 2.85svh + 0.4rem, 1.78rem);
+  /* مقياس ابتدائي ≈٤٫٣٪ ارتفاع — يُضبط ببحث ثنائي 0.25px بعد fonts.ready */
+  --mm-qpc-size: clamp(1.35rem, 4.3vh, 2.25rem);
+  --mm-basmala-size: 22px;
   --mm-line-gap: 0;
   --mm-chrome: color-mix(in srgb, var(--mm-paper) 94%, #fff);
   --mm-chrome-fg: var(--mm-ink);
   --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 28%, transparent);
   --mm-ayah-bar-h: 0px;
-  --mm-chrome-top-h: 2.35rem;
-  --mm-chrome-bottom-h: 1.65rem;
+  --mm-chrome-top-h: 0px;
+  --mm-chrome-bottom-h: 0px;
+  --mm-toolbar-band: 4.5%;
+  --mm-footer-below: calc(100% - var(--mm-ref-cartouche-y));
   /* نطاقات المرجع «آية» */
   --mm-ref-header-y: 8.3%;
   --mm-ref-text-start: 11.9%;
@@ -58,8 +61,6 @@
   --mm-ref-ink-x-end: 98.4%;
   --mm-ref-open-banner-y: 27.7%;
   --mm-ref-open-text-end: 74.8%;
-  /* ص٢: من الشارة إلى نهاية متن المرجع */
-  --mm-ref-open-p2-text-end: 91.1%;
   --mushaf-bg: var(--mm-outer-bg);
 
   position: fixed;
@@ -77,7 +78,7 @@
   justify-content: stretch;
   background: var(--mushaf-bg);
   color: var(--mm-ink);
-  touch-action: pan-y;
+  touch-action: none;
   user-select: none;
   -webkit-user-select: none;
   /* safe-area مرة واحدة هنا فقط — عناصر absolute لا تعيد إضافة inset */
@@ -90,15 +91,11 @@
   overflow-y: hidden;
 }
 
-.mm-viewport[data-chrome="1"] {
-  --mm-chrome-top-h: 2.65rem;
-  --mm-chrome-bottom-h: 4.35rem;
-}
-
+.mm-viewport[data-chrome="1"],
 .mm-viewport[data-ayah-bar="1"] {
-  /* الشيت portal ثابت — لا نقلّص صفحة المصحف ولا نغطّي النص */
-  --mm-chrome-bottom-h: 1.65rem;
-  --mm-chrome-top-h: 2.65rem;
+  /* ظهور الأدوات لا يغيّر نطاقات الصفحة — baselineShift === 0 */
+  --mm-chrome-top-h: 0px;
+  --mm-chrome-bottom-h: 0px;
 }
 
 html[data-theme="dark"] .mm-viewport,
@@ -111,7 +108,7 @@ html.dark .mm-viewport,
   --mm-gold: #d4b870;
   --mm-gold-soft: #f0dfa8;
   --mm-gold-deep: #e8d49a;
-  --mm-header: #f5edd8;
+  --mm-header: #e8d4a8;
   --mm-banner-fill: linear-gradient(180deg, #3d3426 0%, #2a241c 100%);
   --mm-banner-name-bg: #152028;
   --mm-ayah-select: rgba(191, 159, 91, 0.18);
@@ -149,7 +146,7 @@ html.dark .mm-viewport,
   margin-block: 0;
   position: relative;
   z-index: 5; /* فوق مناطق قلب الصفحة حتى لا يسرق النقر من الآيات */
-  overflow-x: clip; /* منع القص الأفقي المرئي — الخط يُضبط عبر fitMushafPageFont */
+  overflow-x: visible;
   overflow-y: hidden;
   overscroll-behavior: none;
   scrollbar-width: none;
@@ -162,6 +159,50 @@ html.dark .mm-viewport,
   align-items: stretch;
   justify-content: center;
   transition: none;
+}
+
+.mm-pager-scroller {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-snap-stop: always;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  direction: ltr;
+}
+
+.mm-pager-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.mm-pager__sheet {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+}
+
+.mm-pager__sheet .mm-page-shell,
+.mm-pager__sheet .mushaf-page-frame {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-pager-scroller {
+    scroll-snap-type: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -193,7 +234,7 @@ html.dark .mm-viewport,
   position: relative;
   padding: 0;
   border-radius: 0;
-  overflow-x: clip;
+  overflow-x: visible;
   overflow-y: visible; /* لا بتر رأسي صامت للحبر */
 }
 
@@ -206,6 +247,7 @@ html.dark .mm-viewport,
   align-items: flex-end;
   padding-bottom: 0.15rem;
   z-index: 1;
+  overflow: visible;
 }
 
 .mm-viewport .mm-page__body,
@@ -226,43 +268,15 @@ html.dark .mm-viewport,
   pointer-events: none;
 }
 
-/* ص١: شارة ٢٧٫٧٪ · نهاية كتلة ٧٤٫٨٪ — بلا خانات فارغة تضغط الحبر */
+/* ص١ وص٢: هندسة واحدة — شارة ٢٧٫٧٪ · نهاية كتلة ٧٤٫٨٪ */
 .mm-viewport .mm-page--opening .mm-page__body {
   top: var(--mm-ref-open-banner-y);
   bottom: calc(100% - var(--mm-ref-open-text-end));
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  gap: 0.15rem;
-  grid-template-rows: none;
-}
-
-/* ص٢: إعادة توزيع رأسي ٢٧٫٧٪ → ٩١٫١٪ لملء الفراغ السفلي */
-.mm-viewport .mm-page--opening[data-page="2"] .mm-page__body {
-  bottom: calc(100% - var(--mm-ref-open-p2-text-end));
-  justify-content: space-between;
-  gap: 0.35rem;
-  padding-block: 0.2rem 0.35rem;
-  box-sizing: border-box;
-}
-
-.mm-viewport .mm-page--opening[data-page="2"] .mm-slot[data-kind="line"] {
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  min-height: 0;
-  line-height: 1.55;
 }
 
 .mm-viewport .mm-page--opening .mm-slot[data-kind="empty"] {
-  display: none;
-}
-
-.mm-viewport .mm-page--opening .mm-slot {
-  flex: 0 0 auto;
-  min-height: 0;
-  height: auto;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .mm-viewport[data-ayah-bar="1"] .mm-page {
@@ -305,9 +319,10 @@ html.dark .mm-viewport .mm-page {
 .mm-viewport .mm-page-header__juz,
 .mm-viewport .mm-page-header__surah {
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 48%;
+  overflow: visible;
+  text-overflow: clip;
+  max-width: none;
+  flex: 0 1 auto;
   color: var(--mm-header);
 }
 
@@ -368,7 +383,7 @@ html.dark .mm-viewport .mm-page {
 
 .mm-surah-ornament__name {
   position: absolute;
-  inset-inline: 24%;
+  inset-inline: 22%;
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
@@ -381,8 +396,7 @@ html.dark .mm-viewport .mm-page {
   line-height: 1.25;
   padding: 0.15rem 0.35rem;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
   letter-spacing: 0;
   min-width: 0;
   pointer-events: none;
@@ -415,7 +429,7 @@ html.dark .mm-surah-ornament__name {
   width: 100%;
   max-width: 100%;
   text-align: center;
-  font-size: var(--mm-qpc-size);
+  font-size: var(--mm-basmala-size);
   font-weight: 700;
   color: var(--mm-ink);
   line-height: 1.32;
@@ -442,7 +456,7 @@ html.dark .mm-surah-ornament__name {
 }
 
 .mm-slot__banner--with-basmala .mm-basmala {
-  font-size: var(--mm-qpc-size);
+  font-size: var(--mm-basmala-size);
   max-height: none;
 }
 
@@ -570,18 +584,27 @@ html.dark .mm-ayah-run__text.is-selected,
 }
 
 .mm-ayah-number {
-  display: inline;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--mm-gold-deep);
   font-size: var(--mm-ayah-end);
   line-height: 1;
-  padding-inline: 0.06em;
-  vertical-align: baseline;
+  padding-inline: 0.02em;
+  vertical-align: middle;
   white-space: nowrap;
+  width: 1.35em;
+  height: 1.55em;
+  margin-inline: 0.06em;
+  border-radius: 50% / 42%;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mm-gold-deep) 55%, transparent);
+  background: color-mix(in srgb, var(--mm-gold-soft) 22%, transparent);
 }
 
 .mm-ayah-number__glyph {
   letter-spacing: 0;
-  display: inline;
+  display: inline-block;
+  font-size: 1.22em;
 }
 
 .mm-ayah-hit--end {
@@ -606,16 +629,19 @@ html.dark .mm-ayah-run__text.is-selected,
   line-height: 1;
 }
 
-.mm-viewport .mm-page-footer__hizb--spacer {
-  visibility: hidden;
+.mm-viewport .mm-page-footer[data-side="hizb-start"] .mm-page-footer__hizb {
+  left: 0;
+  right: auto;
 }
 
-.mm-viewport .mm-page-footer[data-side="odd"] .mm-page-footer__hizb {
-  inset-inline-start: 0;
+.mm-viewport .mm-page-footer[data-side="hizb-start"] .mm-page-footer__badge {
+  right: 0;
+  left: auto;
 }
 
-.mm-viewport .mm-page-footer[data-side="even"] .mm-page-footer__hizb {
-  inset-inline-end: 0;
+.mm-viewport .mm-page-footer[data-side="default"] .mm-page-footer__badge {
+  left: 0;
+  right: auto;
 }
 
 .mm-viewport .mm-page-footer__badge {
@@ -637,14 +663,6 @@ html.dark .mm-ayah-run__text.is-selected,
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-}
-
-.mm-viewport .mm-page-footer[data-side="odd"] .mm-page-footer__badge {
-  inset-inline-end: 0;
-}
-
-.mm-viewport .mm-page-footer[data-side="even"] .mm-page-footer__badge {
-  inset-inline-start: 0;
 }
 
 .mm-viewport .mm-page-footer__cartouche {
@@ -672,7 +690,7 @@ html.dark .mm-viewport .mm-page-footer__badge {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 5;
+  z-index: 8;
 }
 
 .mm-controls[data-open="0"] .mm-controls__bar,
@@ -756,12 +774,8 @@ html.dark .mm-viewport .mm-page-footer__badge {
 .mm-controls__bar {
   position: absolute;
   left: 50%;
-  /* تحت الكرتوش أو فوقه بوضوح — لا تداخل مع ٩٤٫٣٪ */
-  bottom: max(
-    0.55rem,
-    calc(var(--inset-bottom, 0px) + 0.25rem),
-    calc((100% - var(--mm-ref-cartouche-y)) + 3.35%)
-  );
+  /* نطاق الأدوات تحت الذيل — صفر تقاطع مع الحبر/الخرطوش */
+  bottom: max(0.35rem, var(--inset-bottom, 0px));
   transform: translateX(-50%);
   width: min(24rem, calc(100% - 0.6rem));
   max-width: calc(100% - 0.6rem);
@@ -785,10 +799,7 @@ html.dark .mm-viewport .mm-page-footer__badge {
 
 /* عند إظهار الأدوات: ارفع الشريط فوق نطاق الكرتوش بالكامل */
 .mm-viewport[data-chrome="1"] .mm-controls__bar {
-  bottom: max(
-    calc(var(--inset-bottom, 0px) + 0.4rem),
-    calc((100% - var(--mm-ref-cartouche-y)) + 5.9%)
-  );
+  bottom: max(0.35rem, var(--inset-bottom, 0px));
 }
 
 .mm-controls__page {
@@ -839,7 +850,7 @@ html.dark .mm-viewport .mm-page-footer__badge {
   background: transparent;
   opacity: 0;
   cursor: pointer;
-  z-index: 3; /* تحت mm-page-shell (5) — لا يسرق لمس الآيات */
+  z-index: 6; /* فوق الشريط الأفقي — لمس الحافة ١٥٪ */
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -862,9 +873,8 @@ html.dark .mm-viewport .mm-page-footer__badge {
 }
 
 .mm-viewport[data-chrome="0"] .mm-page-edge {
-  /* أثناء القراءة: منطقة لمس رفيعة فقط دون عناصر ظاهرة */
-  width: 5%;
-  max-width: 1.5rem;
+  width: 15%;
+  max-width: none;
 }
 
 .mm-viewport[data-ayah-bar="1"] .mm-page-edge {
@@ -946,7 +956,7 @@ html.dark .mm-viewport .mm-page-footer__badge {
   background: color-mix(in srgb, var(--mm-gold) 22%, transparent);
 }
 
-/* Bottom sheet للآية — معزول عن لوحة النص · z=9999 · مرحلتان ٣٥٪ / ٨٥٪ · تعتيم ١٥٪ + blur */
+/* Bottom sheet للآية — معزول عن لوحة النص · z=9999 · معتم تماماً */
 .mm-ayah-bar {
   position: fixed;
   inset: 0;
@@ -955,22 +965,27 @@ html.dark .mm-viewport .mm-page-footer__badge {
   align-items: end;
   pointer-events: none;
   isolation: isolate;
+  opacity: 1;
+}
+
+.ayah-action-sheet {
+  opacity: 1;
 }
 
 .mm-ayah-bar__dismiss {
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   cursor: pointer;
   pointer-events: auto;
 }
 
 html[data-theme="dark"] .mm-ayah-bar__dismiss,
 html.dark .mm-ayah-bar__dismiss {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.72);
 }
 
 .mm-ayah-bar__panel {
@@ -985,9 +1000,10 @@ html.dark .mm-ayah-bar__dismiss {
   margin-bottom: 0;
   background: var(--mm-paper);
   color: var(--mm-ink);
+  opacity: 1;
   border: 0;
   border-bottom: 0;
-  border-radius: 24px 24px 0 0;
+  border-radius: 20px 20px 0 0;
   padding: 0.4rem 0.85rem calc(0.55rem + var(--inset-bottom, 0px));
   box-shadow: 0 -6px 24px color-mix(in srgb, #5c4a28 12%, transparent);
   font-family: "IBM Plex Sans Arabic", sans-serif;
@@ -1493,7 +1509,7 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   appearance: none;
   border: 0;
   border-radius: 0.55rem;
-  background: color-mix(in srgb, var(--mm-paper-deep) 70%, #fff);
+  background: var(--mm-paper-deep);
   color: var(--mm-ink);
   font: inherit;
   font-size: 0.72rem;
@@ -1501,7 +1517,8 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   padding: 0.45rem 0.2rem;
   display: grid;
   justify-items: center;
-  gap: 0.2rem;
+  align-content: center;
+  gap: 6px;
   cursor: pointer;
   min-height: 2.75rem;
 }

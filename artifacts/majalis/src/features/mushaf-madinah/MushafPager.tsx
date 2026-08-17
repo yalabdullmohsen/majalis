@@ -1,5 +1,6 @@
 import {
   useCallback,
+  useEffect,
   useRef,
   type HTMLAttributes,
   type PointerEvent as ReactPointerEvent,
@@ -10,20 +11,28 @@ import {
   MUSHAF_PAGE_MAX,
   MUSHAF_PAGE_MIN,
 } from "@/lib/quran-last-page";
+import { MUSHAF_SETTLE_MS } from "./layout-bands";
 
 /** عتبة السحب — ٢٥٪ من العرض أو مسافة دنيا */
 export const SWIPE_MIN_PX = 45;
+export const SETTLE_MS = 250;
+if (SETTLE_MS !== MUSHAF_SETTLE_MS) {
+  throw new Error("SETTLE_MS must match layout-bands");
+}
 const SWIPE_RATIO = 0.25;
 const FLICK_PX_PER_MS = 0.5;
-const SETTLE_MS = 320;
 
 type PagerProps = {
   page: number;
   onPageChange: (page: number) => void;
   disabled?: boolean;
   onTapEmpty?: () => void;
+  onNavigateStart?: () => void;
   ignoreSelector?: string;
-  children: ReactNode;
+  pageSlot: ReactNode;
+  prevPage?: ReactNode;
+  nextPage?: ReactNode;
+  children?: ReactNode;
   "data-testid"?: string;
 } & Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -33,64 +42,105 @@ type PagerProps = {
 const DEFAULT_IGNORE =
   ".mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-ayah-hit, .mm-ayah-run, .mm-page-edge, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet, .mm-basmala--qpc";
 
+function prefersReducedMotion(): boolean {
+  return typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
+}
+
 /**
- * قلب صفحة RTL: سحب لليمين = التالية · سحب لليسار = السابقة.
- * الحافة اليمنى ١٥٪ = التالية · اليسرى = السابقة.
+ * قلب صفحة RTL: شريط أفقي مع scroll-snap، سحب لليمين = التالية.
+ * بلا لف ثلاثي الأبعاد. إكمال الانتقال ≤ 250ms.
  */
 export function MushafPager({
   page,
   onPageChange,
   disabled = false,
   onTapEmpty,
+  onNavigateStart,
   ignoreSelector = DEFAULT_IGNORE,
+  pageSlot,
+  prevPage,
+  nextPage,
   children,
   className,
   "data-testid": testId = "mushaf-pager",
   ...rest
 }: PagerProps) {
   const touchRef = useRef<{ x: number; y: number; t: number } | null>(null);
-  const dragRef = useRef(0);
+  const panning = useRef(false);
+  const locking = useRef(false);
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
   const shellRef = useRef<HTMLDivElement | null>(null);
-  const reducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
 
   const go = useCallback(
     (next: number) => {
-      onPageChange(clampMushafPage(next));
+      const clamped = clampMushafPage(next);
+      if (clamped === page) return;
+      onNavigateStart?.();
+      onPageChange(clamped);
     },
-    [onPageChange],
+    [onNavigateStart, onPageChange, page],
   );
 
-  const setDrag = (dx: number) => {
-    dragRef.current = dx;
-    const el = shellRef.current?.querySelector<HTMLElement>(".mm-page-shell");
+  const snapToIndex = useCallback((index: 0 | 1 | 2, animate: boolean) => {
+    const el = scrollerRef.current;
     if (!el) return;
-    if (reducedMotion) {
-      el.style.transform = "";
-      el.style.opacity = String(Math.max(0.55, 1 - Math.abs(dx) / (window.innerWidth || 390)));
+    const w = el.clientWidth || 1;
+    const from = el.scrollLeft;
+    const to = index * w;
+    if (!animate || prefersReducedMotion() || Math.abs(to - from) < 1) {
+      el.scrollLeft = to;
       return;
     }
-    const w = window.innerWidth || 390;
-    const p = Math.max(-1, Math.min(1, dx / w));
-    el.style.transform = `translate3d(${dx * 0.92}px, 0, 0) rotateY(${p * -8}deg)`;
-    el.style.boxShadow = `${p * -12}px 0 28px color-mix(in srgb, #5c4a28 ${Math.abs(p) * 18}%, transparent)`;
-  };
+    const t0 = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - t0) / SETTLE_MS);
+      const eased = 1 - (1 - p) ** 3;
+      el.scrollLeft = from + (to - from) * eased;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, []);
 
-  const clearDrag = (animate: boolean) => {
-    const el = shellRef.current?.querySelector<HTMLElement>(".mm-page-shell");
-    if (!el) return;
-    if (animate) {
-      el.style.transition = `transform ${SETTLE_MS}ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity ${SETTLE_MS}ms ease, box-shadow ${SETTLE_MS}ms ease`;
-    }
-    el.style.transform = "";
-    el.style.opacity = "";
-    el.style.boxShadow = "";
-    window.setTimeout(() => {
-      if (el) el.style.transition = "";
+  useEffect(() => {
+    locking.current = true;
+    snapToIndex(1, false);
+    const id = window.setTimeout(() => {
+      locking.current = false;
     }, SETTLE_MS + 40);
-    dragRef.current = 0;
-  };
+    return () => window.clearTimeout(id);
+  }, [page, snapToIndex]);
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const onResize = () => {
+      locking.current = true;
+      snapToIndex(1, false);
+      window.setTimeout(() => {
+        locking.current = false;
+      }, 40);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [snapToIndex]);
+
+  const commitFromScroll = useCallback(() => {
+    const el = scrollerRef.current;
+    if (!el || locking.current || disabled) return;
+    const w = el.clientWidth || 1;
+    const i = Math.round(el.scrollLeft / w);
+    if (i === 0 && page < MUSHAF_PAGE_MAX) {
+      locking.current = true;
+      go(page + 1);
+      return;
+    }
+    if (i === 2 && page > MUSHAF_PAGE_MIN) {
+      locking.current = true;
+      go(page - 1);
+      return;
+    }
+    snapToIndex(1, true);
+  }, [disabled, go, page, snapToIndex]);
 
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (disabled) {
@@ -102,8 +152,8 @@ export function MushafPager({
       touchRef.current = null;
       return;
     }
+    panning.current = false;
     touchRef.current = { x: e.clientX, y: e.clientY, t: Date.now() };
-    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
   };
 
   const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
@@ -111,8 +161,10 @@ export function MushafPager({
     if (!start || disabled) return;
     const dx = e.clientX - start.x;
     const dy = e.clientY - start.y;
-    if (Math.abs(dx) < 8 || Math.abs(dx) < Math.abs(dy) * 1.1) return;
-    setDrag(dx);
+    if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy) * 1.05) {
+      panning.current = true;
+      onNavigateStart?.();
+    }
   };
 
   const onPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
@@ -123,15 +175,11 @@ export function MushafPager({
       )
     ) {
       touchRef.current = null;
-      clearDrag(false);
       return;
     }
     const start = touchRef.current;
     touchRef.current = null;
-    if (!start || disabled) {
-      clearDrag(false);
-      return;
-    }
+    if (!start || disabled) return;
 
     const dx = e.clientX - start.x;
     const dy = e.clientY - start.y;
@@ -144,33 +192,35 @@ export function MushafPager({
 
     if (horizontal && (passRatio || passFlick)) {
       // RTL مصحف: سحب لليمين (dx>0) = التالية · لليسار = السابقة
-      clearDrag(true);
-      if (dx > 0) go(page + 1);
-      else go(page - 1);
+      if (dx > 0) {
+        snapToIndex(0, true);
+        window.setTimeout(() => go(page + 1), SETTLE_MS);
+      } else {
+        snapToIndex(2, true);
+        window.setTimeout(() => go(page - 1), SETTLE_MS);
+      }
+      return;
+    }
+
+    if (panning.current) {
+      commitFromScroll();
       return;
     }
 
     if (Math.abs(dx) < 12 && Math.abs(dy) < 12) {
-      if (t.closest(".mm-ayah-hit, .mm-ayah-run, .mm-basmala--qpc")) {
-        clearDrag(false);
-        return;
-      }
+      if (t.closest(".mm-ayah-hit, .mm-ayah-run, .mm-basmala--qpc")) return;
       const rect = (shellRef.current ?? e.currentTarget).getBoundingClientRect();
       const relX = (e.clientX - rect.left) / Math.max(1, rect.width);
-      // يمين الشاشة (في LTR coords = نهاية العرض) = التالية في المصحف
       if (relX >= 0.85) {
-        clearDrag(false);
         go(page + 1);
         return;
       }
       if (relX <= 0.15) {
-        clearDrag(false);
         go(page - 1);
         return;
       }
       onTapEmpty?.();
     }
-    clearDrag(true);
   };
 
   return (
@@ -183,10 +233,28 @@ export function MushafPager({
       onPointerUp={onPointerUp}
       onPointerCancel={() => {
         touchRef.current = null;
-        clearDrag(true);
+        commitFromScroll();
       }}
       {...rest}
     >
+      <div
+        ref={scrollerRef}
+        className="mm-pager-scroller"
+        data-snap="x"
+        onScroll={() => {
+          if (panning.current) onNavigateStart?.();
+        }}
+      >
+        <div className="mm-pager__sheet" data-pane="next">
+          {nextPage ?? <div className="mm-page-shell" aria-hidden="true" />}
+        </div>
+        <div className="mm-pager__sheet" data-pane="current">
+          {pageSlot}
+        </div>
+        <div className="mm-pager__sheet" data-pane="prev">
+          {prevPage ?? <div className="mm-page-shell" aria-hidden="true" />}
+        </div>
+      </div>
       <button
         type="button"
         className="mm-page-edge mm-page-edge--next"

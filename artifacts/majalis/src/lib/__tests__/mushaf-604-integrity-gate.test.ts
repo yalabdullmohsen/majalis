@@ -35,6 +35,7 @@ assert.doesNotMatch(css, /\.mm-basmala\s*\{[^}]*overflow:\s*hidden/);
 
 let totalAyahs = 0;
 let totalLines = 0;
+let totalWords = 0;
 
 for (let n = 1; n <= 604; n++) {
   const file = resolve(pagesDir, `page-${String(n).padStart(3, "0")}.json`);
@@ -57,6 +58,7 @@ for (let n = 1; n <= 604; n++) {
       assert.ok(typeof w.code_v2 === "string" && w.code_v2.length > 0, `صفحة ${n}: كلمة بلا glyph`);
       lineNums.add(w.line_number);
       wordCount += 1;
+      totalWords += 1;
     }
   }
 
@@ -69,6 +71,7 @@ for (let n = 1; n <= 604; n++) {
 }
 
 assert.equal(totalAyahs, 6236, `إجمالي الآيات المتوقع ٦٢٣٦، وُجد ${totalAyahs}`);
+assert.equal(totalWords, 83665, `إجمالي الكلمات المتوقع ٨٣٦٦٥، وُجد ${totalWords}`);
 assert.ok(totalLines >= 6000, `إجمالي الأسطر منخفض: ${totalLines}`);
 
 // صفحة ١: البسملة آية ١ كاملة
