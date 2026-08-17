@@ -59,11 +59,11 @@ jobs:
           WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
         run: |
           set -euo pipefail
-          # هل فشل job «Verify build» تحديدًا في هذا التشغيل؟
+          # هل فشل الفحص المطلوب «Verify build» أو المجمّع «ci-required»؟
           verify_failed=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${WORKFLOW_RUN_ID}/jobs" \
-            --jq '[.jobs[] | select(.name=="Verify build" and .conclusion=="failure")] | length' || echo "0")
+            --jq '[.jobs[] | select((.name=="Verify build" or .name=="ci-required") and .conclusion=="failure")] | length' || echo "0")
           if [ "${verify_failed}" = "0" ]; then
-            echo "skip: CI failed but required check Verify build did not fail — keep auto-merge"
+            echo "skip: CI failed but required checks Verify build/ci-required did not fail — keep auto-merge"
             exit 0
           fi
           nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \

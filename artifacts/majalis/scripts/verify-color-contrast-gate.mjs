@@ -9,7 +9,7 @@
  */
 import { chromium } from "playwright";
 import { spawn } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -126,9 +126,9 @@ const ASSERTIONS = [
   // صفحة الصلاة أعادت البناء إلى pts-* ثم إلى SectionLobby (لا .pts-hero داخل الشاشة).
   // التأكيد على .pts-dates فوق سطح اللوبي الفاتح، واسم الصلاة في البطاقة المميّزة.
   { route: "/prayer-times", selector: ".pts-dates", mode: "light", min: 4.5 },
-  { route: "/prayer-times", selector: ".section-lobby .card--featured .card__label", mode: "light", min: 4.5 },
+  { route: "/prayer-times", selector: ".section-lobby .card--featured .card__label || .pts-hero__name", mode: "light", min: 4.5 },
   { route: "/prayer-times", selector: ".pts-row__name", mode: "light", min: 4.5 },
-  { route: "/prayer-times", selector: ".section-lobby .card--featured .card__label", mode: "dark", min: 4.5 },
+  { route: "/prayer-times", selector: ".section-lobby .card--featured .card__label || .pts-hero__name", mode: "dark", min: 4.5 },
   { route: "/prayer-times", selector: ".pts-row__name", mode: "dark", min: 4.5 },
   // 2) نفس نمط "كل <a> أخضر فاتح في الوضع الليلي" الموثَّق أعلاه — 32
   // رابطًا إضافيًا لم يكونا مستثنَيَين (نص شبه غير مرئي فوق خلفيات بيضاء
@@ -295,6 +295,37 @@ function cssToHex(cssColor) {
   return `#${hex.toUpperCase()}`;
 }
 
+function assertionSelectors(a) {
+  if (Array.isArray(a.selectors) && a.selectors.length) return a.selectors;
+  return String(a.selector || "")
+    .split("||")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function violationKey(v) {
+  return `${v.path}|${v.mode}|${v.selector}`;
+}
+
+function loadContrastBaseline() {
+  const file = resolve(appRoot, "docs/contrast-baseline.json");
+  if (!existsSync(file)) {
+    return { listed: 0, known: new Set() };
+  }
+  const raw = JSON.parse(readFileSync(file, "utf8"));
+  const now = Date.now();
+  const listed = Array.isArray(raw.violations) ? raw.violations : [];
+  const known = new Set(
+    listed
+      .filter((v) => {
+        const exp = Date.parse(v.expires || "");
+        return Number.isFinite(exp) && exp > now;
+      })
+      .map((v) => violationKey({ path: v.path, mode: v.mode, selector: v.selector })),
+  );
+  return { listed: listed.length, known };
+}
+
 function violationRow({ route, selector, mode, fg, bg, ratio, required, reason }) {
   return {
     path: route,
@@ -309,11 +340,11 @@ function violationRow({ route, selector, mode, fg, bg, ratio, required, reason }
 }
 
 function printViolationTable(rows) {
-  console.error("\n| المسار | المحدّد | لون النص | لون الخلفية | المقاس | المطلوب |");
-  console.error("|---|---|---|---|---|---|");
+  console.error("\n| المسار | المحدّد | لون النص | لون الخلفية | المقاس | المطلوب | السبب |");
+  console.error("|---|---|---|---|---|---|---|");
   for (const r of rows) {
     console.error(
-      `| ${r.path} [${r.mode}] | \`${r.selector}\` | ${r.fg} | ${r.bg} | ${r.ratio} | ${r.required} |`,
+      `| ${r.path} [${r.mode}] | \`${r.selector}\` | ${r.fg} | ${r.bg} | ${r.ratio} | ${r.required} | ${r.reason} |`,
     );
   }
 }
@@ -397,21 +428,30 @@ async function main() {
       // للوحدات عند أول طلب)، فيُبلَّغ خطأً بأن العنصر "غير موجود" رغم أنه
       // يظهر فعليًا بعد فاصل بسيط. لا يغيّر هذا نتيجة أي تأكيد آخر — مجرد
       // انتظار إضافي آمن قبل القياس.
-      await page.waitForSelector(a.selector, { timeout: 4000 }).catch(() => {});
-      const result = await page.evaluate(`(${RATIO_FN})(${JSON.stringify(a.selector)})`);
+      const selectors = assertionSelectors(a);
+      let result = { error: "NOT_FOUND" };
+      let used = selectors[0] || a.selector;
+      for (const sel of selectors) {
+        await page.waitForSelector(sel, { timeout: 4000 }).catch(() => {});
+        result = await page.evaluate(`(${RATIO_FN})(${JSON.stringify(sel)})`);
+        if (result.error !== "NOT_FOUND") {
+          used = sel;
+          break;
+        }
+      }
       if (result.error === "NOT_FOUND") {
         failures.push(violationRow({
-          route: a.route, selector: a.selector, mode: a.mode,
+          route: a.route, selector: selectors.join(" || "), mode: a.mode,
           required: `${a.min}:1`, reason: "NOT_FOUND",
         }));
       } else if (result.error) {
         failures.push(violationRow({
-          route: a.route, selector: a.selector, mode: a.mode,
+          route: a.route, selector: used, mode: a.mode,
           fg: result.color, bg: result.bg, required: `${a.min}:1`, reason: result.error,
         }));
       } else if (result.ratio < a.min) {
         failures.push(violationRow({
-          route: a.route, selector: a.selector, mode: a.mode,
+          route: a.route, selector: used, mode: a.mode,
           fg: `${result.color} ${cssToHex(result.color)}`.trim(),
           bg: `${result.bg} ${cssToHex(result.bg)}`.trim(),
           ratio: `${result.ratio}:1`,
@@ -591,14 +631,21 @@ async function main() {
   }
 
   const totalChecks = ASSERTIONS.length + routeChecks;
-  if (failures.length > 0) {
+  const baseline = loadContrastBaseline();
+  const novel = failures.filter((f) => !baseline.known.has(violationKey(f)));
+  const countGrew = failures.length > baseline.listed;
+  if (novel.length > 0 || countGrew) {
+    const report = novel.length ? novel : failures;
     console.error(`\n❌ بوابة انحدار تباين الألوان رسبت — ${failures.length}/${totalChecks} تأكيدًا فشل:\n`);
-    printViolationTable(failures);
+    printViolationTable(report);
     console.error("");
-    for (const f of failures) {
+    for (const f of report) {
       console.error(
         `  - ${f.path} [${f.mode}] ${f.selector} — نص ${f.fg} على ${f.bg} = ${f.ratio} (يلزم ${f.required}) — ${f.reason}`,
       );
+    }
+    if (countGrew) {
+      console.error(`  العدد ${failures.length} تجاوز خط الأساس ${baseline.listed}.`);
     }
     process.exit(1);
   }
@@ -614,7 +661,15 @@ async function main() {
   );
 }
 
-main().catch((e) => {
-  console.error("❌ خطأ غير متوقع في بوابة تباين الألوان:", e);
-  process.exit(1);
-});
+export { assertionSelectors, loadContrastBaseline, violationKey };
+
+const isDirectRun =
+  Boolean(process.argv[1]) &&
+  resolve(fileURLToPath(import.meta.url)) === resolve(process.argv[1]);
+
+if (isDirectRun) {
+  main().catch((e) => {
+    console.error("❌ خطأ غير متوقع في بوابة تباين الألوان:", e);
+    process.exit(1);
+  });
+}

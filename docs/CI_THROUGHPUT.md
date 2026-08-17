@@ -18,9 +18,10 @@
 
 ## حماية `main` (مُثبَّت)
 
-- Ruleset **Protect main** (`19782052`): الفحص المطلوب الوحيد = `Verify build`.
+- Ruleset **Protect main** (`19782052`): الفحوصات المطلوبة = `Verify build` و`ci-required` (Skipped في بوابة إلزامية = فشل).
 - `allow_auto_merge=true` · `delete_branch_on_merge=true`.
 - **2026-08-13:** `strict_required_status_checks_policy` → `false` (لا يُجبر تحديث الفرع من main قبل كل دمج — يقلّل إعادة تشغيلات CI على الفروع المتراكمة).
+- **2026-08-17:** `Color contrast` و`visual-snapshot` ضمن `needs` لـ Verify build عند `need_build`؛ `ci-required` يجمع البوابات ويرفض `Skipped`.
 
 ## ما طُبِّق في `fix/ci-throughput`
 
@@ -40,6 +41,7 @@
 
 ## ملاحظات
 
-- Color contrast / postgres / preview-smoke **ليست** ضمن `needs` لـ Verify build (إعلامية).
+- Color contrast و visual-snapshot ضمن `needs` لـ Verify build عندما `need_build=true` (Skipped = فشل).
+- المجمّع `ci-required` يفشل إن تُخطّيت بوابة إلزامية.
 - بوابات المصحف داخل CI تُفعَّل بـ path-lane عند تغيير مسارات المصحف فقط؛ الكامل ليلاً.
 - كاش التبعيات موجود في `.github/actions/setup-workspace` (pnpm store + node_modules + vite + tsbuildinfo + Playwright).

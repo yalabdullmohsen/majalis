@@ -2,9 +2,9 @@
 
 Required status checks on `main` (do not skip):
 
-1. `Verify build` — tsc -b, typecheck, lint 0, full tests, deterministic build, `git diff --exit-code`, migration verify (static)
-2. `postgres-integration` — always on PRs/pushes via CI
-3. `preview-smoke` — Ready PRs must resolve a Vercel Preview for the same head SHA
+1. `Verify build` — يجمع المسارات: tsc/lint/test/build + بوابات المستودع + Color contrast + visual-snapshot عند الحاجة
+2. `ci-required` — مجمّع صريح: أي `Skipped` في بوابة إلزامية = فشل (الفحص المطلوب لحماية الفرع مع Verify build)
+3. `postgres-integration` — عند المسارات الخطرة / `--full`
 4. `xcodebuild-simulator` — when iOS/Capacitor paths change (`ios-native-macos.yml`)
 5. `iOS static gates + unit tests` — when Capacitor paths change (`ios-capacitor-gates.yml`)
 

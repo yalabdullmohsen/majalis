@@ -232,10 +232,9 @@ function finalizeClassification(input) {
 
   const needBuild = needFrontendBuild;
   const needPolicyTests = Boolean(kinds.policy);
-  const needColorContrast = Boolean(
-    forceFull || kinds.risky || kinds.mushaf || (kinds.frontend && hasUiCss),
-  );
-  // Verify build وحده شرط الدمج — هذه تبقى إعلامية/متوقفة تلقائيًا (CI_THROUGHPUT).
+  // مع كل بناء واجهة: البوابة تفحص التطبيق كله، فلا تُتخطّى لأن الملف ليس CSS.
+  const needColorContrast = needBuild;
+  // Verify build وحده كان شرط الدمج؛ Color contrast و visual-snapshot صارا إلزاميين مع كل بناء.
   const needPreviewSmoke = false;
   const needVercelCheck = false;
 
@@ -260,10 +259,10 @@ function finalizeClassification(input) {
     mushafMeasure: needMushaf,
     mushafGates: needMushaf,
     layoutBands: needMushaf,
-    visualSnapshot: false,
+    visualSnapshot: needBuild,
     fastLane: needFastLane,
     postgres: needPostgres,
-    colorContrast: false,
+    colorContrast: needBuild,
     previewSmoke: needPreviewSmoke,
     vercelCheck: needVercelCheck,
   };

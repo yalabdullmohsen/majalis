@@ -67,7 +67,7 @@ describe("path-classifier", () => {
     assert.equal(r.requiredChecks.mushafMeasure, true);
     assert.equal(r.requiredChecks.mushafGates, true);
     assert.equal(r.requiredChecks.layoutBands, true);
-    assert.equal(r.requiredChecks.visualSnapshot, false); // informational / continue-on-error
+    assert.equal(r.requiredChecks.visualSnapshot, true);
     assert.equal(r.outputs.need_mushaf, "true");
   });
 
@@ -100,14 +100,16 @@ describe("path-classifier", () => {
     assert.equal(r.needFastLane, false);
   });
 
-  it("frontend requires build; color contrast only with UI/CSS", () => {
+  it("frontend requires build and color contrast on every UI lane", () => {
     const tsOnly = classifyChangedPaths([
       "artifacts/majalis/src/lib/format-date.ts",
     ]);
     assert.equal(tsOnly.lane, "frontend");
     assert.equal(tsOnly.needBuild, true);
     assert.equal(tsOnly.needMushaf, false);
-    assert.equal(tsOnly.needColorContrast, false);
+    assert.equal(tsOnly.needColorContrast, true);
+    assert.equal(tsOnly.requiredChecks.colorContrast, true);
+    assert.equal(tsOnly.requiredChecks.visualSnapshot, true);
     assert.equal(tsOnly.needPreviewSmoke, false);
 
     const css = classifyChangedPaths([
@@ -115,7 +117,7 @@ describe("path-classifier", () => {
       "artifacts/majalis/src/components/NavBar.tsx",
     ]);
     assert.equal(css.needColorContrast, true);
-    assert.equal(css.requiredChecks.colorContrast, false);
+    assert.equal(css.requiredChecks.colorContrast, true);
     assert.equal(css.needVercelCheck, false);
   });
 
