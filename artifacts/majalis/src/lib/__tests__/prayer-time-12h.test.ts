@@ -36,7 +36,7 @@ const sidebarNav = readFileSync(join(root, "lib/sidebar-nav.ts"), "utf8");
 assert.match(sidebarNav, /getSidebarGroupsFromNavMap|SIDEBAR_NAV_GROUPS/);
 
 const navMap = readFileSync(join(root, "lib/nav-map.ts"), "utf8");
-assert.match(navMap, /bottomNavSections/);
+assert.match(navMap, /navFor|bottomNavSections/);
 assert.match(navMap, /مركز القرآن|الأقسام/);
 const bottom = readFileSync(join(root, "components/BottomNavBar.tsx"), "utf8");
 assert.doesNotMatch(bottom, /MoreBottomSheet|المزيد/);

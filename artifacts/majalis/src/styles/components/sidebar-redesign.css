@@ -187,6 +187,14 @@ html[dir="rtl"] .sidebar-panel {
   display: block;
 }
 
+.sidebar-item-sub {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3d4a45;
+  line-height: 1.35;
+}
+
 .sidebar-user-chip {
   margin: 8px 4px 0;
   padding: 10px 12px;
@@ -239,6 +247,10 @@ html[data-theme="dark"] .sidebar-section-title {
 
 html[data-theme="dark"] .sidebar-item {
   color: #edf2f0;
+}
+
+html[data-theme="dark"] .sidebar-item-sub {
+  color: #c5d4ce;
 }
 
 html[data-theme="dark"] .sidebar-item:hover {

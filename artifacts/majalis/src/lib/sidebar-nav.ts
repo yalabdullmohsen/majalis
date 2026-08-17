@@ -1,8 +1,8 @@
 /**
- * القائمة الجانبية — حساب وإعدادات + مدخل واحد لصفحة الأقسام.
- * أقسام المحتوى تُفتح من `/sections` فقط (لا تكرار).
+ * القائمة الجانبية — من `config/navigation` + صفوف الحساب من السجل.
  */
 import type { LucideIcon } from "lucide-react";
+import { navFor } from "@/config/navigation";
 import {
   SECTION_GROUP_META,
   sectionsForSurface,
@@ -22,38 +22,43 @@ export type SidebarNavGroup = {
   items: SidebarNavItem[];
 };
 
-function toItem(s: {
-  id: string;
-  route: string;
-  label: string;
-  subtitle: string;
-  icon: LucideIcon;
-}): SidebarNavItem {
-  return {
+const browseItems: SidebarNavItem[] = navFor("drawer").map((e) => ({
+  href: e.href,
+  label: e.label,
+  Icon: e.icon,
+}));
+
+const browseHrefs = new Set(browseItems.map((i) => i.href));
+
+const accountItems = sectionsForSurface("drawer")
+  .filter((s) => s.id !== "sections" && !browseHrefs.has(s.route))
+  .map((s) => ({
     href: s.route,
     label: s.label,
     description: s.subtitle,
     Icon: s.icon,
-  };
-}
-
-const drawerSections = sectionsForSurface("drawer");
+  }));
 
 export const SIDEBAR_NAV_GROUPS: SidebarNavGroup[] = [
   {
     id: "browse",
     title: "",
-    items: filterNavItems(drawerSections.filter((s) => s.id === "sections").map(toItem)),
+    items: filterNavItems(browseItems),
   },
   {
     id: "account",
     title: SECTION_GROUP_META.account.label,
-    items: filterNavItems(drawerSections.filter((s) => s.id !== "sections").map(toItem)),
+    items: filterNavItems(accountItems),
   },
 ].filter((group) => group.items.length > 0);
 
 export const MORE_SHEET_ITEMS: SidebarNavItem[] = filterNavItems(
-  sectionsForSurface("moreHub").slice(0, 8).map(toItem),
+  sectionsForSurface("moreHub").slice(0, 8).map((s) => ({
+    href: s.route,
+    label: s.label,
+    description: s.subtitle,
+    Icon: s.icon,
+  })),
 );
 
 export const SIDEBAR_FLAT_HREFS: string[] = SIDEBAR_NAV_GROUPS.flatMap((g) =>

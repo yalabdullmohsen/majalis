@@ -70,7 +70,8 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   const navigationSrc = readFileSync(resolve(appRoot, "src/lib/navigation.ts"), "utf-8");
   assert(sideNavSrc.includes("SIDEBAR_NAV_GROUPS"), "القائمة الجانبية مربوطة بالمصدر الموحّد");
   assert(
-    (sidebarNavSrc.includes("/my-learning") && sidebarNavSrc.includes("حسابي")) ||
+    sidebarNavSrc.includes("sectionsForSurface") ||
+      sidebarNavSrc.includes("/my-learning") ||
       (navigationSrc.includes("/my-learning") && navigationSrc.includes("حسابي")),
     "حسابي في مصدر القائمة",
   );

@@ -6,7 +6,6 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { sectionsForSurface } from "@/config/sections.registry";
 import { SIDEBAR_NAV_GROUPS } from "@/lib/sidebar-nav";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
@@ -61,29 +60,18 @@ assert.match(lockSrc, /overflow = "hidden"/, "قفل تمرير body");
 assert.match(lockSrc, /scrollTo/, "استعادة التمرير");
 assert.match(lockSrc, /#drawer-root/, "لا حذف drawer-root عند التطهير");
 
-const drawerIds = sectionsForSurface("drawer").map((s) => s.id);
-const allowed = new Set([
-  "sections",
-  "account",
-  "settings",
-  "athan-settings",
-  "notifications",
-  "support",
-  "about",
-  "privacy",
-  "terms",
-]);
-for (const id of drawerIds) {
-  assert.ok(allowed.has(id), `عنصر درج غير مسموح: ${id}`);
+const drawerHrefs = SIDEBAR_NAV_GROUPS.flatMap((g) => g.items.map((i) => i.href));
+for (const href of ["/mushaf", "/quran-hub", "/lessons", "/fiqh", "/sections", "/prayer-times", "/qibla", "/tasbih", "/settings"]) {
+  assert.ok(drawerHrefs.includes(href), `الدرج يشمل ${href}`);
 }
-assert.ok(drawerIds.includes("sections"), "مدخل صفحة الأقسام في الدرج");
-assert.ok(drawerIds.includes("account"), "حسابي في الدرج");
-assert.equal(
-  drawerIds.some((id) => ["tafsir", "fiqh", "lessons", "hadith", "seerah"].includes(id)),
-  false,
-  "لا أقسام محتوى مكررة في الدرج",
+assert.ok(
+  drawerHrefs.some((h) => h === "/duas" || h === "/adhkar"),
+  "الأذكار في الدرج",
 );
-assert.ok(drawerIds.length < 40, `عدد صفوف الدرج ${drawerIds.length} < 40`);
+assert.match(registrySrc, /متابعة القراءة/, "متابعة القراءة في الدرج");
+assert.match(registrySrc, /loadLastPageSync/, "متابعة من التخزين المحلي");
+assert.doesNotMatch(registrySrc, /warmStaticQuranicFonts|qpc-page/, "لا تحميل خطوط المصحف من الدرج");
+assert.ok(drawerHrefs.length < 40, `عدد صفوف الدرج ${drawerHrefs.length} < 40`);
 assert.ok(
   SIDEBAR_NAV_GROUPS.every((g) => g.items.every((i) => i.href && i.label)),
   "مجموعات الدرج مكتملة",
@@ -92,4 +80,4 @@ assert.ok(
 assert.ok(existsSync(resolve(root, "public/brand/drawer-open-390x844.png")), "لقطة 390×844");
 assert.ok(existsSync(resolve(root, "public/brand/drawer-open-390x844-dark.png")), "لقطة الوضع الليلي");
 
-console.log(`side-nav-drawer-gate.test.ts: ok (${drawerIds.length} صفوف)`);
+console.log(`side-nav-drawer-gate.test.ts: ok (${drawerHrefs.length} صفوف)`);
