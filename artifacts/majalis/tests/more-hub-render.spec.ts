@@ -213,5 +213,37 @@ test.describe("Sections page render contract", () => {
         maxDiffPixelRatio: 0.08,
       });
     });
+
+    test(`التجويد — ${theme}`, async ({ page }) => {
+      await page.addInitScript((t) => {
+        localStorage.setItem("majalis-theme", t);
+      }, theme);
+      await page.goto("/quran-hub/tajweed", { waitUntil: "domcontentloaded" });
+      await page.waitForSelector("[data-quran-tajweed='1']", { timeout: 15_000 });
+      const root = page.locator("[data-quran-tajweed='1']");
+      await expect(root.getByRole("heading", { name: /التجويد|مدخل/ })).toBeVisible();
+      const tDir = path.join(__dirname, "snapshots", "quran-tajweed");
+      fs.mkdirSync(tDir, { recursive: true });
+      await root.screenshot({ path: path.join(tDir, `quran-tajweed-${theme}.png`) });
+      await expect(root).toHaveScreenshot(`quran-tajweed-${theme}.png`, {
+        maxDiffPixelRatio: 0.08,
+      });
+    });
+
+    test(`القراءات العشر — ${theme}`, async ({ page }) => {
+      await page.addInitScript((t) => {
+        localStorage.setItem("majalis-theme", t);
+      }, theme);
+      await page.goto("/quran-hub/qiraat", { waitUntil: "domcontentloaded" });
+      await page.waitForSelector("[data-quran-qiraat='1']", { timeout: 15_000 });
+      const root = page.locator("[data-quran-qiraat='1']");
+      await expect(root.getByRole("heading", { name: "القراءات العشر" })).toBeVisible();
+      const qDir = path.join(__dirname, "snapshots", "quran-qiraat");
+      fs.mkdirSync(qDir, { recursive: true });
+      await root.screenshot({ path: path.join(qDir, `quran-qiraat-${theme}.png`) });
+      await expect(root).toHaveScreenshot(`quran-qiraat-${theme}.png`, {
+        maxDiffPixelRatio: 0.08,
+      });
+    });
   }
 });

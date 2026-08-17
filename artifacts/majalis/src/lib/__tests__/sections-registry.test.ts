@@ -25,6 +25,8 @@ assert.equal(bottomNavSections()[0]?.label, "مركز القرآن");
 assert.equal(bottomNavSections()[4]?.label, "الأقسام");
 assert.ok(quranHubSections().some((s) => s.id === "open-mushaf" && s.label === "فتح المصحف"));
 assert.ok(quranHubSections().some((s) => s.id === "quran-numbers"));
+assert.ok(quranHubSections().some((s) => s.id === "quran-tajweed"));
+assert.ok(quranHubSections().some((s) => s.id === "quran-qiraat"));
 assert.ok(quranHubSections().length >= 12);
 assert.ok(lessonsHubSections().some((s) => s.id === "quran-circles"));
 assert.equal(

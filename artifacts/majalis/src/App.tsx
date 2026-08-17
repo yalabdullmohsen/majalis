@@ -135,6 +135,10 @@ const QuranPersonDetailPage = lazy(() => import("@/pages/quran/QuranPersonDetail
 const RecitationTestPage = lazy(() => import("@/pages/quran/RecitationTestPage"));
 const SurahStoriesPage = lazy(() => import("@/pages/quran/SurahStoriesPage"));
 const QuranTajweedPage = lazy(() => import("@/pages/quran/QuranTajweedPage"));
+const TajweedChapterPage = lazy(() => import("@/pages/quran/TajweedChapterPage"));
+const QuranQiraatPage = lazy(() => import("@/pages/quran/QuranQiraatPage"));
+const QuranTilawaPage = lazy(() => import("@/pages/quran/QuranTilawaPage"));
+const QuranUlumTermsPage = lazy(() => import("@/pages/quran/QuranUlumTermsPage"));
 const SurahStoryDetailRoute = lazy(() =>
   import("@/pages/quran/SurahStoriesPage").then(m => ({
     default: ({ params }: { params?: Record<string, string> }) => {
@@ -768,8 +772,13 @@ function Router() {
       <Route path="/mushaf-v2-preview"><Redirect to="/mushaf" /></Route>
       <Route path="/demo-ayah-reader"><Redirect to="/mushaf" /></Route>
       <Route path="/quran-hub/numbers"><SafeLazyRoute component={QuranNumbersPage} /></Route>
+      <Route path="/quran-hub/tajweed/:chapter"><SafeLazyRoute component={TajweedChapterPage} /></Route>
+      <Route path="/quran-hub/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
+      <Route path="/quran-hub/qiraat"><SafeLazyRoute component={QuranQiraatPage} /></Route>
+      <Route path="/quran-hub/tilawa"><SafeLazyRoute component={QuranTilawaPage} /></Route>
+      <Route path="/quran-hub/terms"><SafeLazyRoute component={QuranUlumTermsPage} /></Route>
       <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
-      <Route path="/quran/terms"><Redirect to="/islamic-glossary" /></Route>
+      <Route path="/quran/terms"><Redirect to="/quran-hub/terms" /></Route>
       <Route path="/quran-knowledge"><SafeLazyRoute component={QuranKnowledgeHubPage} /></Route>
       <Route path="/memorization"><SafeLazyRoute component={MemorizationHubPage} /></Route>
       <Route path="/occasions-lessons"><SafeLazyRoute component={OccasionsLessonsHubPage} /></Route>
@@ -804,9 +813,9 @@ function Router() {
       <Route path="/quran/makki-madani"><SafeLazyRoute component={MakkiMadaniPage} /></Route>
       <Route path="/quran-memorization"><SafeLazyRoute component={QuranMemorizationPage} /></Route>
       <Route path="/quran/memorization-plans"><SafeLazyRoute component={QuranMemorizationPlansPage} /></Route>
-      <Route path="/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
+      <Route path="/tajweed"><Redirect to="/quran-hub/tajweed" /></Route>
       <Route path="/surah-stories"><Redirect to="/quran/surah-stories" /></Route>
-      <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
+      <Route path="/quran/tajweed"><Redirect to="/quran-hub/tajweed" /></Route>
       {/* الفقه الإسلامي الموحّد + السيرة النبوية */}
       <Route path="/tawhid"><SafeLazyRoute component={TawhidPage} /></Route>
       <Route path="/aqidah"><Redirect to="/tawhid" /></Route>

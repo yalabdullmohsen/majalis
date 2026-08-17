@@ -889,7 +889,7 @@ ${linkList("خدمات القرآن", [
   { name: "المصحف الرقمي", url: "/mushaf" },
   { name: "بحث في الآيات", url: "/quran/search" },
   { name: "فهرس السور", url: "/quran/surahs" },
-  { name: "أحكام التجويد", url: "/quran/tajweed" },
+  { name: "أحكام التجويد", url: "/quran-hub/tajweed" },
   { name: "قصص السور", url: "/quran/surah-stories" },
   { name: "مكّي ومدني", url: "/quran/makki-madani" },
   { name: "ترتيب النزول", url: "/quran/revelation-order" },
@@ -1123,7 +1123,7 @@ ${linkList("روابط ذات صلة", [
 ])}`,
   "/tajweed": `<p>علم التجويد: مخارج الحروف والصفات وأحكام النون والميم والمدود — لتجويد التلاوة مع خدمات القرآن.</p>
 ${linkList("روابط ذات صلة", [
-  { name: "أحكام التجويد (قسم القرآن)", url: "/quran/tajweed" },
+  { name: "أحكام التجويد (قسم القرآن)", url: "/quran-hub/tajweed" },
   { name: "المصحف الرقمي", url: "/mushaf" },
   { name: "فهرس السور", url: "/quran/surahs" },
   { name: "مركز القرآن", url: "/quran-hub" },
@@ -1329,7 +1329,7 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "مركز القرآن", url: "/quran-hub" },
   { name: "فهرس السور", url: "/quran/surahs" },
-  { name: "أحكام التجويد", url: "/quran/tajweed" },
+  { name: "أحكام التجويد", url: "/quran-hub/tajweed" },
   { name: "خطط الحفظ", url: "/quran/memorization-plans" },
   { name: "أدعية القرآن", url: "/duas-quran" },
   { name: "علوم القرآن", url: "/ulum-quran" },
@@ -1363,7 +1363,7 @@ ${linkList("روابط ذات صلة", [
   { name: "المصحف الرقمي", url: "/mushaf" },
   { name: "خطط الحفظ", url: "/quran/memorization-plans" },
   { name: "اختبارات الحفظ", url: "/quran-memorization" },
-  { name: "أحكام التجويد", url: "/quran/tajweed" },
+  { name: "أحكام التجويد", url: "/quran-hub/tajweed" },
 ])}`,
   "/islamic-landmarks": `<p>المشاهد الإسلامية والمساجد التاريخية: تعريف موجز بأماكن لها أثر في السيرة وحضارة المسلمين.</p>
 ${linkList("روابط ذات صلة", [
@@ -1745,14 +1745,33 @@ ${linkList("روابط ذات صلة", [
   { name: "علوم الحديث", url: "/hadith-science" },
   { name: "المكتبة العلمية", url: "/library" },
 ])}`,
-  "/quran/tajweed": `<p>أحكام التجويد: مخارج وصفات ومدود ونون وميم — لضبط التلاوة مع المصحف وخطط الحفظ.</p>
+  "/quran-hub/tajweed": `<p>أحكام التجويد: مخارج وصفات ومدود ونون وميم — لضبط التلاوة مع المصحف وخطط الحفظ.</p>
 ${linkList("خدمات القرآن", [
   { name: "مركز القرآن", url: "/quran-hub" },
-  { name: "علم التجويد (صفحة عامة)", url: "/tajweed" },
+  { name: "القراءات العشر", url: "/quran-hub/qiraat" },
   { name: "المصحف الرقمي", url: "/mushaf" },
   { name: "خطط الحفظ", url: "/quran/memorization-plans" },
   { name: "مكّي ومدني", url: "/quran/makki-madani" },
   { name: "اختبار التلاوة", url: "/quran/recitation-test-ai" },
+])}`,
+  "/quran-hub/qiraat": `<p>القراءات العشر ورواتها وأصول القبول — وصف موثّق دون تغيير نص مصحف حفص في التطبيق.</p>
+${linkList("خدمات القرآن", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "التجويد", url: "/quran-hub/tajweed" },
+  { name: "علوم القرآن", url: "/ulum-quran" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+])}`,
+  "/quran-hub/tilawa": `<p>التلاوة والقرّاء: استماع عبر مصحف المدينة برواية حفص.</p>
+${linkList("خدمات القرآن", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "التجويد", url: "/quran-hub/tajweed" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+])}`,
+  "/quran-hub/terms": `<p>مصطلحات علوم القرآن من القاموس الإسلامي الموحّد (فلتر تصنيف).</p>
+${linkList("روابط", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "القاموس الإسلامي", url: "/islamic-glossary" },
+  { name: "علوم القرآن", url: "/ulum-quran" },
 ])}`,
   "/quran/makki-madani": `<p>تصنيف السور المكية والمدنية وأثره في التفسير وفهم السياق، ضمن علوم القرآن.</p>
 ${linkList("خدمات القرآن", [
@@ -1776,7 +1795,7 @@ ${linkList("خدمات القرآن", [
   { name: "المصحف الرقمي", url: "/mushaf" },
   { name: "اختبارات الحفظ", url: "/quran-memorization" },
   { name: "الآيات المتشابهات", url: "/mutashabihat" },
-  { name: "أحكام التجويد", url: "/quran/tajweed" },
+  { name: "أحكام التجويد", url: "/quran-hub/tajweed" },
   { name: "الورد اليومي", url: "/daily-wird" },
 ])}`,
   "/prophets/tree": `<p>شجرة أنساب الأنبياء عليهم السلام عرضًا تفاعليًا للعلاقات والنسب، مع ربط بقصص الأنبياء والسيرة.</p>
