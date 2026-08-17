@@ -39,6 +39,7 @@ import "./styles/a11y-release-gate.css";
 import "./styles/m2030/foundation.css";
 import "./styles/m2030/navigation.css";
 import "./styles/m2030/pages.css";
+import "./styles/pages/calendar.css";
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
 import "./styles/dark-mode-surfaces.css";
