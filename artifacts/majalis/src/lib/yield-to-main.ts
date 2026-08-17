@@ -64,3 +64,12 @@ export async function runAfterInteraction<T>(task: () => Promise<T> | T): Promis
   await afterNextPaint();
   return task();
 }
+
+/** عمل غير مرئي بعد الرسم — تسجيل SW / تسخين.origin */
+export function scheduleOnIdle(cb: () => void, timeout = 2000): void {
+  if (typeof requestIdleCallback === "function") {
+    requestIdleCallback(() => cb(), { timeout });
+    return;
+  }
+  setTimeout(cb, 1);
+}
