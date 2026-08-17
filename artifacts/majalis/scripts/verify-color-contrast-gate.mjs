@@ -78,7 +78,7 @@ const ASSERTIONS = [
   { route: "/quran-knowledge", selector: ".hub-card__title", mode: "light", min: 3 },
   { route: "/quran-knowledge", selector: ".hub-card__desc", mode: "light", min: 4.5 },
   { route: "/quran-knowledge", selector: ".hub-card__title", mode: "dark", min: 3 },
-  { route: "/fiqh", selector: ".hub-card__title", mode: "light", min: 3 },
+  { route: "/fiqh", selector: ".fiqh-book-card__title", mode: "light", min: 3 },
   { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "light", min: 4.5 },
   { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "dark", min: 4.5 },
   { route: "/quran/surah-stories/1", selector: ".sq-header", mode: "light", min: 4.5 },
