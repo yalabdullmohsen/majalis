@@ -165,8 +165,8 @@ const ASSERTIONS = [
   { route: "/sawm", selector: ".sw-card__title", mode: "dark", min: 4.5 },
   { route: "/sawm", selector: ".sw-dalil__text", mode: "dark", min: 4.5 },
   { route: "/sawm", selector: ".sw-badge--fard", mode: "dark", min: 4.5 },
-  { route: "/lessons", selector: ".lesson-unified-card__title", mode: "dark", min: 3 },
-  { route: "/lessons", selector: ".lesson-unified-card__btn--ghost", mode: "dark", min: 4.5 },
+  { route: "/lessons", selector: ".lesson-compact-row__title", mode: "dark", min: 3 },
+  { route: "/lessons", selector: ".lesson-compact-row__meta", mode: "dark", min: 4.5 },
   // توحيد ليلي/طباعة 2026-08-14
   { route: "/prophets", selector: ".prophets-lux-hero__title", mode: "dark", min: 4.5 },
   { route: "/prophets", selector: ".prophets-lux-tab--active", mode: "dark", min: 3 },

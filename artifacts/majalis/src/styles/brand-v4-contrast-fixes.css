@@ -291,7 +291,7 @@ html[data-theme="dark"] :is(.cal-cell-hijri, .cal-cell-more) {
 
 /* خلفيتها بقيت فاتحة في الوضع الداكن (لم تحصل على سطح داكن قط). */
 html[data-theme="dark"] :is(
-  .hmb-body, .isp-tag, .prophets-lux-tab, .rq-tab,
+  .isp-tag, .prophets-lux-tab, .rq-tab,
   .zk-calc__field, .qzg-mode-btn
 ) {
   color: var(--n-800) !important;
@@ -349,11 +349,6 @@ html[data-theme="dark"] .cal-cell-event.cal-cell-event {
 }
 html[data-theme="dark"] .cal-cell-num.cal-cell-num {
   color: var(--text) !important;
-}
-
-/* بطاقة الحديث في التقويم: خلفيتها فاتحة في الوضع الداكن. */
-html[data-theme="dark"] .hmb-body.hmb-body {
-  color: var(--n-800) !important;
 }
 
 /* آخر ثلاثة مواضع مقيسة. */

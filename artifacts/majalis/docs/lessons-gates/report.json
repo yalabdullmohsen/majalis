@@ -1,0 +1,19 @@
+{
+  "viewport": "390x844",
+  "metrics": {
+    "viewportH": 844,
+    "quickBarHeightPx": 50,
+    "firstLessonTopPx": 294,
+    "listTopRatio": 0.3186833530805687,
+    "firstLessonAboveFold": true,
+    "firstLessonTopRatio": 0.3478598933649289,
+    "visibleInTwoScreens": 21,
+    "maxVerticalGapPx": 8,
+    "emptyCardDetected": false,
+    "lessonCount": 68,
+    "hasQuickBar": true,
+    "hasChips": true,
+    "hasTitle": true
+  },
+  "failures": []
+}
