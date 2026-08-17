@@ -34,7 +34,8 @@
 
 **ما تغيّر**
 
-- إزالة `fonts.googleapis.com` و`fonts.gstatic.com` من `index.html` ومن CSP.
+- إزالة `fonts.googleapis.com` و`fonts.gstatic.com` من `index.html`.
+- تضييق CSP في `vercel.json` مؤجَّل (مسار خطر للدمج التلقائي).
 - قالب `generate-seo.mjs` (صفحات prerender) يُحدَّث في دفعة لاحقة حتى لا يُفتح PR بـ ٩٥٤ ملف HTML مولَّد.
 - استضافة Amiri / Noto Naskh / Aref Ruqaa / Scheherazade New محليًا (`public/fonts/ui/*.woff2`، SIL OFL) مع تقسيم unicode-range عربي/لاتيني.
 - preload واحد: `/fonts/ui/amiri-400-ar.woff2`.
