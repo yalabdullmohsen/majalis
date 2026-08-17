@@ -44,7 +44,7 @@ assert.match(css, /#152018|#101812|#0e1410|#1c2430|#151c26|#101820|#0f1720|#0c12
 assert.match(css, /\.mm-ayah-run__text\.is-selected/);
 assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*rgba\(0,\s*0,\s*0,\s*0\.45\)/);
 assert.match(css, /\.mm-viewport\s+\.mm-page\s*\{[^}]*box-shadow:\s*none/);
-assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-basmala-size\)/);
+assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-qpc-size\)/);
 assert.match(css, /\.mm-reciter-sheet/);
 assert.match(css, /--mm-outer-pad:\s*0/);
 assert.match(css, /--mm-chrome-top-h/);
@@ -123,22 +123,22 @@ assert.match(dock, /"ghamdi"/);
 assert.match(dock, /"maher"/);
 
 const ornament = read("src/features/mushaf-madinah/MushafSurahOrnament.tsx");
-assert.match(ornament, /mm-surah-ornament__motif/);
+assert.match(ornament, /mm-surah-frame/);
+assert.doesNotMatch(ornament, /<svg/i);
 
+assert.match(css, /\.mm-surah-frame\s*\{[^}]*border:\s*1px/);
 assert.match(css, /inset-inline-end:\s*0/);
 assert.match(css, /scrollbar-width:\s*none/);
-assert.match(css, /\.mm-slot__banner--with-basmala\s+\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-basmala-size\)/);
 
 const pageSrc = read("src/features/mushaf-madinah/MushafPage.tsx");
-assert.match(pageSrc, /inlineBasmala/);
 assert.match(pageSrc, /bismillahPre/);
 assert.match(pageSrc, /MushafBasmala/);
 assert.match(pageSrc, /filledSlots|mm-page__body--opening/);
-assert.doesNotMatch(pageSrc, /Math\.floor\(\(15 - span\) \/ 2\)/);
-assert.match(pageSrc, /mm-slot__banner--with-basmala/);
+assert.doesNotMatch(pageSrc, /inlineBasmala/);
+assert.doesNotMatch(pageSrc, /mm-slot__banner--with-basmala/);
 assert.match(pageSrc, /النمل/);
 assert.ok(existsSync(resolve(root, "src/features/mushaf-madinah/MushafBasmala.tsx")));
-assert.match(read("src/features/mushaf-madinah/MushafBasmala.tsx"), /BASMALA_UTHMANI/);
+assert.match(read("src/features/mushaf-madinah/MushafBasmala.tsx"), /BASMALA_QPC_WORDS/);
 assert.match(read("src/features/mushaf-madinah/useMushafPageFontFit.ts"), /fitPageFontSize/);
 assert.match(read("src/features/mushaf-madinah/useMushafPageFontFit.ts"), /document\.fonts\.ready/);
 assert.match(read("src/features/mushaf-madinah/useMushafPageFontFit.ts"), /document\.fonts\.check/);

@@ -151,7 +151,7 @@ const PRAYER_META = [
   { key: "Isha", name: "العشاء", obligatory: true },
 ];
 
-function dateKeyInZone(timeZone: string, date = new Date()) {
+function dateKeyInZone(timeZone: string, date = new Date(Date.now())) {
   try {
     return new Intl.DateTimeFormat("en-CA", {
       timeZone,
@@ -175,7 +175,7 @@ function dateKeyInZone(timeZone: string, date = new Date()) {
  * الظهر المحلي التقريبي: منتصف الليل في المنطقة + 12 ساعة عبر إزاحة معروفة للكويت،
  * ولغيرها نستخدم أجزاء Intl ثم UTC بمقياس تقريبي آمن عبر Date.UTC عند الظهر UTC.
  */
-export function calendarNoonInZone(timeZone: string, date = new Date()): Date {
+export function calendarNoonInZone(timeZone: string, date = new Date(Date.now())): Date {
   const key = dateKeyInZone(timeZone, date);
   const [y, m, d] = key.split("-").map(Number);
   if (timeZone === "Asia/Kuwait") {
@@ -201,7 +201,7 @@ export function calendarNoonInZone(timeZone: string, date = new Date()): Date {
 export function epochAtZoneMinutes(
   timeZone: string,
   minutesOfDay: number,
-  date = new Date(),
+  date = new Date(Date.now()),
 ): number {
   const key = dateKeyInZone(timeZone, date);
   const [y, m, d] = key.split("-").map(Number);

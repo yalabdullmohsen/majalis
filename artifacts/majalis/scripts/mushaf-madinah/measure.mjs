@@ -113,10 +113,12 @@ async function main() {
         let overlap = false;
         for (const slot of ink) {
           const kind = slot.getAttribute("data-kind");
-          if (kind !== "line") continue;
+          if (kind === "empty") continue;
           const slotBox = slot.getBoundingClientRect();
           if (slotBox.height < 2) continue;
-          for (const glyph of slot.querySelectorAll(".mm-ayah-line, .mm-basmala")) {
+          for (const glyph of slot.querySelectorAll(
+            ".mm-ayah-line, .mm-basmala, .mm-surah-frame",
+          )) {
             const box = glyph.getBoundingClientRect();
             if (box.bottom > slotBox.bottom + 1.5 || box.top < slotBox.top - 1.5) overlap = true;
           }
@@ -125,7 +127,7 @@ async function main() {
           pageAttr: rootEl?.getAttribute("data-page"),
           slots: current?.querySelectorAll(".mm-slot").length ?? 0,
           ayahLines: current?.querySelectorAll(".mm-ayah-line").length ?? 0,
-          banners: current?.querySelectorAll(".mm-surah-ornament").length ?? 0,
+          banners: current?.querySelectorAll(".mm-surah-frame").length ?? 0,
           fontFamily: line ? getComputedStyle(line).fontFamily : "",
           frameWidth: rect?.width ?? 0,
           frameHeight: rect?.height ?? 0,

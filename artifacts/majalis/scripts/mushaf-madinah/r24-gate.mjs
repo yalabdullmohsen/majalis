@@ -66,7 +66,9 @@ assert.match(css, /border-radius:\s*20px\s+20px\s+0\s+0/);
 assert.match(css, /gap:\s*6px/);
 assert.match(css, /baselineShift/);
 
-assert.match(ornament, /data-ornament="islamic-light"/);
+assert.match(ornament, /mm-surah-frame/);
+assert.doesNotMatch(ornament, /<svg/i);
+assert.doesNotMatch(ornament, /data-ornament/);
 assert.doesNotMatch(ornament, /سُورَةُ \$\{/);
 assert.match(actions, /data-opacity="1"/);
 

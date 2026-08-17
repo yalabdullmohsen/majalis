@@ -51,9 +51,8 @@ export function MushafPage({
           return (
             <div key={slot} className="mm-slot" data-slot={slot} data-kind={cell?.kind ?? "empty"}>
               {cell?.kind === "banner" ? (
-                <div className={`mm-slot__banner${cell.inlineBasmala ? " mm-slot__banner--with-basmala" : ""}`}>
+                <div className="mm-slot__banner">
                   <MushafSurahOrnament nameArabic={cell.nameArabic} />
-                  {cell.inlineBasmala ? <MushafBasmala /> : null}
                 </div>
               ) : null}
               {cell?.kind === "basmala" ? <MushafBasmala /> : null}
@@ -86,7 +85,7 @@ export function MushafPage({
 }
 
 type SlotCell =
-  | { kind: "banner"; nameArabic: string; inlineBasmala?: boolean }
+  | { kind: "banner"; nameArabic: string }
   | { kind: "basmala" }
   | { kind: "line"; words: QpcWord[] };
 
@@ -111,12 +110,11 @@ function buildSlots(layout: MushafPageLayout): Map<number, SlotCell> {
     if (row.kind === "surah-header") {
       /* التوبة: bismillahPre=false → لا بسملة.
        * الفاتحة: البسملة آية QPC (لا زخرفة منفصلة).
-       * النمل وغيرها: بسملة افتتاحية زخرفية فقط — آية 30 تبقى ضمن نص الآية دون خلط. */
+       * النمل وغيرها: بسملة افتتاحية زخرفية — آية 30 تبقى ضمن نص الآية دون خلط. */
       const needsVisualBasmala = row.surah.bismillahPre === true;
       raw.set(row.bannerSlot, {
         kind: "banner",
         nameArabic: row.surah.nameArabic,
-        inlineBasmala: needsVisualBasmala && row.basmalaSlot == null,
       });
       if (needsVisualBasmala && row.basmalaSlot != null) {
         raw.set(row.basmalaSlot, { kind: "basmala" });

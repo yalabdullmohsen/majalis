@@ -27,8 +27,9 @@ assert.match(bands, /MUSHAF_HIZB_START_PAGES = 60/);
 assert.match(bands, /MUSHAF_TOUCH_MIN_PX = 44/);
 assert.match(bands, /MUSHAF_AYAH_SHEET_COLLAPSED_PX = 120/);
 assert.match(footer, /hizbStartingOnPage/);
-assert.match(ornament, /data-ornament="islamic-light"/);
-assert.doesNotMatch(ornament, /url\(.*bsml/i);
+assert.match(ornament, /mm-surah-frame/);
+assert.doesNotMatch(ornament, /<svg/i);
+assert.doesNotMatch(ornament, /data-ornament/);
 assert.match(spec, /QCF_BSML/);
 
 const snap = readFileSync(resolve(root, "scripts/mushaf-madinah/visual-snapshot.mjs"), "utf8");

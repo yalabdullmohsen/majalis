@@ -1,5 +1,5 @@
 /**
- * بوابة البسملة — صفحات الفاتحة/البقرة/التوبة/الكهف/مريم.
+ * بوابة البسملة — صفحات الفاتحة/البقرة/التوبة/الكهف/مريم + QPC V2.
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-basmala-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -20,21 +20,25 @@ const chapters = JSON.parse(
 const pageSrc = readFileSync(resolve(root, "src/features/mushaf-madinah/MushafPage.tsx"), "utf8");
 const basmalaSrc = readFileSync(resolve(root, "src/features/mushaf-madinah/MushafBasmala.tsx"), "utf8");
 const dataSrc = readFileSync(resolve(root, "src/lib/quran-data/qpc-page-data.ts"), "utf8");
+const css = readFileSync(resolve(root, "src/features/mushaf-madinah/mushaf-madinah.css"), "utf8");
+const qpcWords = readFileSync(resolve(root, "src/lib/quran-data/basmala-qpc-words.ts"), "utf8");
 
 assert.match(pageSrc, /needsVisualBasmala/);
 assert.match(pageSrc, /bismillahPre === true/);
 assert.match(pageSrc, /MushafBasmala/);
-assert.match(basmalaSrc, /BASMALA_UTHMANI/);
-assert.match(basmalaSrc, /بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ/);
-assert.match(basmalaSrc, /data-basmala="uthmani"/);
+assert.doesNotMatch(pageSrc, /inlineBasmala/);
+assert.doesNotMatch(pageSrc, /with-basmala/);
+assert.match(basmalaSrc, /BASMALA_QPC_WORDS/);
 assert.match(basmalaSrc, /data-basmala="qpc"/);
-assert.match(
-  readFileSync(resolve(root, "src/features/mushaf-madinah/mushaf-madinah.css"), "utf8"),
-  /\.mm-basmala--uthmani\s*\{[^}]*Amiri Quran[^}]*!important/,
-);
+assert.doesNotMatch(basmalaSrc, /BASMALA_UTHMANI/);
+assert.doesNotMatch(basmalaSrc, /uthmani/);
+assert.match(qpcWords, /glyphText/);
 assert.match(dataSrc, /basmalaSlot/);
+assert.match(dataSrc, /chapter\.bismillahPre \? bannerSlot \+ 1/);
+assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-qpc-size\)/);
+assert.match(css, /\.mm-basmala\s*\{[^}]*font-weight:\s*400/);
+assert.doesNotMatch(css, /\.mm-basmala--uthmani/);
 
-// مكوّن بسملة واحد فقط في شجرة المصحف
 const mushafDir = resolve(root, "src/features/mushaf-madinah");
 const basmalaFiles = readdirSync(mushafDir).filter(
   (f) => /basmala/i.test(f) && /\.(tsx|ts|jsx|js)$/.test(f),
@@ -63,10 +67,8 @@ for (const c of CASES) {
   assert.ok(existsSync(file), `${c.label}: ملف الصفحة ${c.page}`);
 }
 
-// صفحات تحقق إلزامية للبسملة
-for (const n of [1, 2, 600, 602]) {
-  const file = resolve(pagesDir, `page-${String(n).padStart(3, "0")}.json`);
-  assert.ok(existsSync(file), `صفحة تحقق ${n}`);
+for (const n of [1, 2, 440, 453, 600, 602]) {
+  assert.ok(existsSync(resolve(pagesDir, `page-${String(n).padStart(3, "0")}.json`)), `صفحة ${n}`);
 }
 
 console.log("mushaf-basmala-gate.test.ts: ok");
