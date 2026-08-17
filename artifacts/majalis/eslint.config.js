@@ -78,4 +78,16 @@ export default tseslint.config(
       ],
     },
   },
+  {
+    files: ["src/components/topic/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "JSXAttribute[name.name='className'] Literal[value=/text-(black|gray|slate|zinc)-/]",
+          message: "داخل TopicPage/.on-dark: لا تستخدم text-black أو text-gray-* أو text-slate-* — استخدم رموز --on-dark",
+        },
+      ],
+    },
+  },
 );

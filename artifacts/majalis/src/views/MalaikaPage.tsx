@@ -1,9 +1,11 @@
 import { useEffect, useState, useMemo } from "react";
+import { useSearch } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/malaika.css";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { TopicPage } from "@/components/topic/TopicPage";
 
 /* ══════════════════════════════════════════════════════════════════
    §247، الملائكة في الإسلام  (.mk-*)
@@ -288,21 +290,39 @@ const AMAL_ITEMS: { title: string; text: string }[] = [
 ];
 
 export default function MalaikaPage() {
-  const [activeTab, setActiveTab] = useState<Tab>("aqida");
-  const [search, setSearch] = useState("");
+  const search = useSearch();
+  const [activeTab, setActiveTab] = useState<Tab>(() => {
+    try {
+      const q = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
+      const t = q.get("tab");
+      if (t && TABS.some((x) => x.id === t)) return t as Tab;
+    } catch { /* ignore */ }
+    return "aqida";
+  });
+  const [searchQ, setSearch] = useState("");
+
+  useEffect(() => {
+    try {
+      const q = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
+      const t = q.get("tab");
+      if (t && TABS.some((x) => x.id === t)) {
+        setActiveTab((prev) => (prev === t ? prev : (t as Tab)));
+      }
+    } catch { /* ignore */ }
+  }, [search]);
 
   const filteredMalaika = useMemo(() =>
-    search.trim() ? MALAIKA.filter(m => arabicMatchAny([m.name, m.arabicTitle ?? "", m.role, m.detail], search)) : MALAIKA,
-  [search]);
+    searchQ.trim() ? MALAIKA.filter(m => arabicMatchAny([m.name, m.arabicTitle ?? "", m.role, m.detail], searchQ)) : MALAIKA,
+  [searchQ]);
   const filteredAwsaf = useMemo(() =>
-    search.trim() ? AWSAF.filter(w => arabicMatchAny([w.title, w.text, w.ayah ?? ""], search)) : AWSAF,
-  [search]);
+    searchQ.trim() ? AWSAF.filter(w => arabicMatchAny([w.title, w.text, w.ayah ?? ""], searchQ)) : AWSAF,
+  [searchQ]);
   const filteredFadail = useMemo(() =>
-    search.trim() ? FADAIL.filter(f => arabicMatchAny([f.title, f.text, f.ref ?? ""], search)) : FADAIL,
-  [search]);
+    searchQ.trim() ? FADAIL.filter(f => arabicMatchAny([f.title, f.text, f.ref ?? ""], searchQ)) : FADAIL,
+  [searchQ]);
   const filteredAmal = useMemo(() =>
-    search.trim() ? AMAL_ITEMS.filter(a => arabicMatchAny([a.title, a.text], search)) : AMAL_ITEMS,
-  [search]);
+    searchQ.trim() ? AMAL_ITEMS.filter(a => arabicMatchAny([a.title, a.text], searchQ)) : AMAL_ITEMS,
+  [searchQ]);
 
   useEffect(() => {
     applyPageSeo({
@@ -329,42 +349,30 @@ export default function MalaikaPage() {
   }, []);
 
   return (
-    <div className="mk-page" dir="rtl">
-      {/* Hero */}
-      <section className="mk-hero">
-        <div className="mk-hero__inner">
-          <div className="mk-hero__badge">ركن الإيمان الثاني</div>
-          <h1 className="mk-hero__title">الملائكة في الإسلام</h1>
-          <p className="mk-hero__sub">
-            أسماؤهم ومهامهم وصفاتهم وفضائلهم من الأدلة الصحيحة
-          </p>
-          <div className="mk-hero__ayah">
-            ﴿آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ﴾
-            <span>، البقرة: ٢٨٥</span>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Tabs */}
-      <div className="mk-tabs" role="tablist" aria-label="أقسام الملائكة">
-        {TABS.map(t => (
-          <button
-            key={t.id}
-            id={`mlk-tab-${t.id}`}
-            type="button"
-            role="tab"
-            className={`mk-tab${activeTab === t.id ? " mk-tab--active" : ""}`}
-            onClick={() => setActiveTab(t.id)}
-            aria-selected={activeTab === t.id}
-              aria-controls={`mlk-panel-${t.id}`}
-          >{t.label}</button>
-        ))}
-      </div>
+    <TopicPage
+      themeId="malaika"
+      breadcrumb={[
+        { label: "الرئيسية", href: "/" },
+        { label: "العقيدة والتوحيد", href: "/tawhid" },
+        { label: "الملائكة" },
+      ]}
+      eyebrow="ركن الإيمان الثاني"
+      title="الملائكة في الإسلام"
+      subtitle="أسماؤهم ومهامهم وصفاتهم وفضائلهم من الأدلة الصحيحة"
+      quote={{
+        text: "﴿آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ﴾",
+        ref: "البقرة: ٢٨٥",
+        type: "ayah",
+      }}
+      tabs={TABS}
+      activeTab={activeTab}
+      onTabChange={(id) => setActiveTab(id as Tab)}
+    >
+    <div className="mk-page mk-page--embedded" dir="rtl">
 
       {activeTab !== "aqida" && (
         <div className="mk-search-wrap">
-          <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+          <input type="search" value={searchQ} onChange={e => setSearch(e.target.value)}
             placeholder="ابحث في الملائكة..." className="page-search-input mk-search-input"
             aria-label="بحث في الملائكة" />
         </div>
@@ -374,7 +382,7 @@ export default function MalaikaPage() {
 
         {/* العقيدة */}
         {activeTab === "aqida" && (
-          <div role="tabpanel" id="mlk-panel-aqida" aria-labelledby="mlk-tab-aqida">
+          <div>
             <div className="mk-intro">
               <p>الإيمان بالملائكة ركن ثانٍ من أركان الإيمان الستة، وهو واجب بالكتاب والسنة والإجماع. جاء الأمر به في أكثر من موضع في القرآن مقروناً بالإيمان بالله.</p>
             </div>
@@ -394,7 +402,7 @@ export default function MalaikaPage() {
 
         {/* الأسماء والمهام */}
         {activeTab === "asma" && (
-          <div role="tabpanel" id="mlk-panel-asma" aria-labelledby="mlk-tab-asma">
+          <div>
             <div className="mk-intro">
               <p>من الملائكة من عرَّفنا الله باسمه ومهمته، ومنهم من لا نعلم عنهم إلا عمومهم. نؤمن بالجميع ونعرف الخصائص التالية:</p>
             </div>
@@ -419,7 +427,7 @@ export default function MalaikaPage() {
 
         {/* الصفات */}
         {activeTab === "awsaf" && (
-          <div role="tabpanel" id="mlk-panel-awsaf" aria-labelledby="mlk-tab-awsaf">
+          <div>
             <div className="mk-intro">
               <p>الملائكة عالَم غيبي لا يدرك بالحواس، وكل ما نعرفه عنهم جاء من الوحي. ومن صفاتهم الثابتة:</p>
             </div>
@@ -440,7 +448,7 @@ export default function MalaikaPage() {
 
         {/* الفضائل */}
         {activeTab === "fadail" && (
-          <div role="tabpanel" id="mlk-panel-fadail" aria-labelledby="mlk-tab-fadail">
+          <div>
             <div className="mk-intro">
               <p>للملائكة حضور ومشهد مع المؤمنين في أفضل أحوالهم، في الذكر والعلم والصلاة والصوم. هذه اللمسات الغيبية دافع للمراقبة والإخلاص.</p>
             </div>
@@ -458,7 +466,7 @@ export default function MalaikaPage() {
 
         {/* التعامل مع البشر */}
         {activeTab === "amal" && (
-          <div role="tabpanel" id="mlk-panel-amal" aria-labelledby="mlk-tab-amal">
+          <div>
             <div className="mk-intro">
               <p>للملائكة تعاملات مع بني آدم في مواقف دقيقة لا تدركها الأعين عادةً. هي محطات تذكِّرنا بالغيب القريب منا في كل لحظة.</p>
             </div>
@@ -483,5 +491,6 @@ export default function MalaikaPage() {
 
       </div>
     </div>
+    </TopicPage>
   );
 }

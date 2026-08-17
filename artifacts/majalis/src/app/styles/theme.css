@@ -382,6 +382,9 @@ html.dark,
 /* نص فوق أخضر/داكن: يعيد رموز النص دون لمس لون الصفحة */
 [data-on-dark],
 .on-dark {
+  --on-dark: var(--on-dark-strong);
+  --on-dark-muted: var(--on-dark-secondary);
+  --on-dark-accent: var(--on-dark-body);
   --mj-ink: var(--on-dark-strong);
   --mj-ink-2: var(--on-dark-body);
   --mj-muted: var(--on-dark-secondary);
@@ -390,7 +393,13 @@ html.dark,
   --on-green: var(--on-dark-strong);
   --color-ink: var(--on-dark-strong);
   --text-primary: var(--on-dark-strong);
+  --text: var(--on-dark-strong);
+  --text-2: var(--on-dark-body);
+  --text-muted: var(--on-dark-secondary);
+  --text-title: var(--on-dark-strong);
+  --text-accent: var(--on-dark-accent);
   --foreground: var(--on-dark-strong);
+  --muted-foreground: var(--on-dark-secondary);
   color: var(--on-dark-strong);
 }
 

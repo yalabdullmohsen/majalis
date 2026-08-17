@@ -1,9 +1,12 @@
 import { useEffect, useState, useMemo } from "react";
+import { useSearch } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/janna-naar.css";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { TopicPage } from "@/components/topic/TopicPage";
+import type { TopicThemeId } from "@/config/topic-themes";
 
 /* ══════════════════════════════════════════════════════════════════
    §245، صفة الجنة والنار  (.jn-*)
@@ -152,27 +155,63 @@ const DUAS_LIST: Dua[] = [
   { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ رِضَاكَ وَالجَنَّةَ وَأَعُوذُ بِكَ مِنْ سَخَطِكَ وَالنَّارِ، وهو دليلٌ صحيح يُستحضر للعمل والاستعداد للآخرة لا للتشاؤم.", source: "رواه أبو داود وابن ماجه، صحيح" },
 ];
 
-const TABS: { id: Tab; label: string; color: string }[] = [
-  { id: "janna",       label: "صفة الجنة",       color: "var(--mj-brand-deep)" },
-  { id: "naar",        label: "صفة النار",        color: "#9B1C1C" },
-  { id: "asbab-janna", label: "أسباب الجنة",      color: "#1a3a5c" },
-  { id: "asbab-naar",  label: "أسباب النار",      color: "#7F1D1D" },
-  { id: "duas",        label: "أدعية الآخرة",     color: "#312E81" },
+const TABS: { id: Tab; label: string }[] = [
+  { id: "janna",       label: "صفة الجنة" },
+  { id: "naar",        label: "صفة النار" },
+  { id: "asbab-janna", label: "أسباب الجنة" },
+  { id: "asbab-naar",  label: "أسباب النار" },
+  { id: "duas",        label: "أدعية الآخرة" },
 ];
 
+function themeForTab(tab: Tab): TopicThemeId {
+  if (tab === "naar" || tab === "asbab-naar") return "nar";
+  return "jannah";
+}
+
+function titleForTab(tab: Tab): string {
+  if (tab === "naar") return "صفة جهنم";
+  if (tab === "asbab-janna") return "أسباب دخول الجنة";
+  if (tab === "asbab-naar") return "أسباب دخول النار";
+  if (tab === "duas") return "أدعية الآخرة";
+  return "صفة الجنة";
+}
+
+function subForTab(tab: Tab): string {
+  if (tab === "naar") return "نار الله الموقدة التي تطَّلع على الأفئدة، أعاذنا الله وإياكم منها";
+  if (tab === "asbab-janna") return "الأعمال التي تُقرِّب إلى جنة عرضها السموات والأرض";
+  if (tab === "asbab-naar") return "الكبائر والمخالفات التي حذَّر منها الوحي لأنها طريق إلى النار";
+  if (tab === "duas") return "أدعية مأثورة لطلب الجنة والاستعاذة من النار";
+  return "جنة عرضها السموات والأرض أُعدَّت للمتقين";
+}
+
+function readInitialTab(search: string): Tab {
+  try {
+    const q = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
+    const t = q.get("tab");
+    if (t && TABS.some((x) => x.id === t)) return t as Tab;
+  } catch { /* ignore */ }
+  return "janna";
+}
+
 export default function JannaNaarPage() {
-  const [activeTab, setActiveTab] = useState<Tab>("janna");
-  const [search, setSearch] = useState("");
+  const search = useSearch();
+  const [activeTab, setActiveTab] = useState<Tab>(() => readInitialTab(search));
+  const [searchQ, setSearch] = useState("");
+
+  useEffect(() => {
+    const fromUrl = readInitialTab(search);
+    setActiveTab((prev) => (prev === fromUrl ? prev : fromUrl));
+  }, [search]);
 
   const filteredAsbabJanna = useMemo(() =>
-    search.trim() ? ASBAB_JANNA.filter(i => arabicMatchAny([i.title, i.text, i.ref ?? ""], search)) : ASBAB_JANNA,
-  [search]);
+    searchQ.trim() ? ASBAB_JANNA.filter(i => arabicMatchAny([i.title, i.text, i.ref ?? ""], searchQ)) : ASBAB_JANNA,
+  [searchQ]);
   const filteredAsbabNaar = useMemo(() =>
-    search.trim() ? ASBAB_NAAR.filter(i => arabicMatchAny([i.title, i.text, i.ref ?? ""], search)) : ASBAB_NAAR,
-  [search]);
+    searchQ.trim() ? ASBAB_NAAR.filter(i => arabicMatchAny([i.title, i.text, i.ref ?? ""], searchQ)) : ASBAB_NAAR,
+  [searchQ]);
   const filteredDuas = useMemo(() =>
-    search.trim() ? DUAS_LIST.filter(d => arabicMatchAny([d.text, d.source], search)) : DUAS_LIST,
-  [search]);
+    searchQ.trim() ? DUAS_LIST.filter(d => arabicMatchAny([d.text, d.source], searchQ)) : DUAS_LIST,
+  [searchQ]);
 
   useEffect(() => {
     applyPageSeo({
@@ -198,48 +237,33 @@ export default function JannaNaarPage() {
   }, []);
 
   return (
-    <div className="jn-page" dir="rtl">
-      {/* Hero */}
-      <section className={`jn-hero${activeTab === "naar" ? " jn-hero--naar" : ""}`}>
-        <div className="jn-hero__inner">
-          <div className="jn-hero__badge">الدار الآخرة</div>
-          <h1 className="jn-hero__title">
-            {activeTab === "naar" ? "صفة جهنم" : activeTab === "asbab-janna" ? "أسباب دخول الجنة" : activeTab === "asbab-naar" ? "أسباب دخول النار" : activeTab === "duas" ? "أدعية الآخرة" : "صفة الجنة"}
-          </h1>
-          <p className="jn-hero__sub">
-            {activeTab === "naar"
-              ? "نار الله الموقدة التي تطَّلع على الأفئدة، أعاذنا الله وإياكم منها"
-              : activeTab === "asbab-janna"
-              ? "الأعمال التي تُقرِّب إلى جنة عرضها السموات والأرض"
-              : activeTab === "asbab-naar"
-              ? "الكبائر والمخالفات التي حذَّر منها الوحي لأنها طريق إلى النار"
-              : activeTab === "duas"
-              ? "أدعية مأثورة لطلب الجنة والاستعاذة من النار"
-              : "جنة عرضها السموات والأرض أُعدَّت للمتقين، ﴿فِيهَا مَا تَشْتَهِيهِ الْأَنفُسُ وَتَلَذُّ الْأَعْيُنُ﴾"}
-          </p>
-        </div>
-      </section>
-
-      {/* Tabs */}
-      <div className="jn-tabs" role="tablist" aria-label="الجنة والنار">
-        {TABS.map(t => (
-          <button
-            key={t.id}
-            role="tab"
-            type="button"
-            className={`jn-tab jn-tab--${t.id}${activeTab === t.id ? " jn-tab--active" : ""}`}
-            onClick={() => setActiveTab(t.id)}
-            aria-selected={activeTab === t.id}
-              aria-controls={`jnn-panel-${t.id}`}
-          >{t.label}</button>
-        ))}
-      </div>
-
-      <div className="jn-container">
+    <TopicPage
+      themeId={themeForTab(activeTab)}
+      breadcrumb={[
+        { label: "الرئيسية", href: "/" },
+        { label: "العقيدة والتوحيد", href: "/tawhid" },
+        { label: "الدار الآخرة" },
+      ]}
+      eyebrow="الدار الآخرة"
+      title={titleForTab(activeTab)}
+      subtitle={subForTab(activeTab)}
+      quote={
+        activeTab === "naar" || activeTab === "asbab-naar"
+          ? { text: "﴿وَاتَّقُوا النَّارَ الَّتِي أُعِدَّتْ لِلْكَافِرِينَ﴾", ref: "آل عمران: ١٣١", type: "ayah" }
+          : activeTab === "janna"
+            ? { text: "﴿فِيهَا مَا تَشْتَهِيهِ الْأَنفُسُ وَتَلَذُّ الْأَعْيُنُ﴾", ref: "الزخرف: ٧١", type: "ayah" }
+            : undefined
+      }
+      tabs={TABS}
+      activeTab={activeTab}
+      onTabChange={(id) => setActiveTab(id as Tab)}
+    >
+      <div className="jn-page jn-page--embedded" dir="rtl">
+        <div className="jn-container">
 
         {/* صفة الجنة */}
         {activeTab === "janna" && (
-          <div role="tabpanel" id="jnn-panel-janna" aria-labelledby="jnn-tab-janna" className="jn-sections">
+          <div className="jn-sections">
             <Section title="أبواب الجنة" cards={JANNA_ABWAB} tabId={activeTab} />
             <Section title="أنهار الجنة" cards={JANNA_ANHAR} tabId={activeTab} />
             <Section title="درجات الجنة" cards={JANNA_DARAJAT} tabId={activeTab} />
@@ -249,10 +273,7 @@ export default function JannaNaarPage() {
 
         {/* صفة النار */}
         {activeTab === "naar" && (
-          <div role="tabpanel" id="jnn-panel-naar" aria-labelledby="jnn-tab-naar" className="jn-sections">
-            <div className="jn-naar-warn">
-              ﴿وَاتَّقُوا النَّارَ الَّتِي أُعِدَّتْ لِلْكَافِرِينَ﴾، آل عمران: ١٣١
-            </div>
+          <div className="jn-sections">
             <Section title="أبواب النار وطبقاتها" cards={NAAR_ABWAB} tabId={activeTab} />
             <Section title="أحوال أهل النار" cards={NAAR_ATHQAL} tabId={activeTab} />
           </div>
@@ -265,7 +286,7 @@ export default function JannaNaarPage() {
               <p>جمع العلماء أسباب دخول الجنة من الكتاب والسنة وهي كثيرة، وأبرزها على الإطلاق التوحيد والإيمان.</p>
             </div>
             <div className="jn-search-wrap">
-              <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+              <input type="search" value={searchQ} onChange={e => setSearch(e.target.value)}
                 placeholder="ابحث في الأسباب..." className="page-search-input jn-search-input"
                 aria-label="بحث في أسباب دخول الجنة" />
             </div>
@@ -289,7 +310,7 @@ export default function JannaNaarPage() {
               <p>﴿وَاتَّقُوا النَّارَ الَّتِي أُعِدَّتْ لِلْكَافِرِينَ﴾، ذكر العلماء من الكتاب والسنة أسباباً كثيرة تُوقع في النار، هي في الحقيقة أعمال ومخالفات حذَّرنا منها الوحي.</p>
             </div>
             <div className="jn-search-wrap">
-              <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+              <input type="search" value={searchQ} onChange={e => setSearch(e.target.value)}
                 placeholder="ابحث في الأسباب..." className="page-search-input jn-search-input"
                 aria-label="بحث في أسباب دخول النار" />
             </div>
@@ -308,7 +329,7 @@ export default function JannaNaarPage() {
 
         {/* الأدعية */}
         {activeTab === "duas" && (
-          <div role="tabpanel" id="jnn-panel-duas" aria-labelledby="jnn-tab-duas">
+          <div>
             <div className="jn-intro">
               <p>من أعظم ما يتقرَّب به العبد إلى الله دعاؤه بالجنة والاستعاذة من النار. قال ﷺ: «من سأل الله الجنة ثلاث مرات قالت الجنة: اللهم أدخله الجنة» — رواه الترمذي (2572) والنسائي، وصححه الألباني.</p>
             </div>
@@ -331,7 +352,8 @@ export default function JannaNaarPage() {
       <div className="px-4 pb-6 mt-6">
         <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة" count={4} />
       </div>
-    </div>
+      </div>
+    </TopicPage>
   );
 }
 

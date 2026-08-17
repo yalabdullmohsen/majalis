@@ -3,11 +3,15 @@
   width: 100%;
   max-width: none;
   box-sizing: border-box;
-  background: linear-gradient(135deg, var(--mj-brand) 0%, var(--mj-brand-deep) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--topic-hero-from, var(--mj-brand)) 0%,
+    var(--topic-hero-to, var(--mj-brand-deep)) 100%
+  );
   border-radius: 0;
   padding: 2.25rem max(1rem, var(--page-gutter, 1rem));
   margin-bottom: 2rem;
-  color: #FFFFFF;
+  color: var(--topic-on-hero, var(--on-dark-strong, #FFFFFF));
 }
 .twh-hub-hero__inner {
   max-width: min(64rem, 100%);
@@ -21,7 +25,7 @@
 .twh-hub-hero__title {
   font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 900;
-  color: #FFFFFF;
+  color: var(--topic-on-hero, var(--on-dark-strong, #FFFFFF));
   margin: 0.35rem 0 0.5rem;
   font-family: var(--font-display, serif);
   line-height: 1.4;
@@ -29,7 +33,7 @@
 }
 .twh-hub-hero__sub {
   font-size: clamp(0.875rem, 3vw, 1rem);
-  color: rgba(255,255,255,0.85);
+  color: var(--topic-on-hero-muted, var(--on-dark-secondary, #E8EEEC));
   margin: 0 0 1rem;
   line-height: 1.9;
   letter-spacing: 0;
@@ -37,7 +41,8 @@
 .twh-hub-hero__ayah {
   font-size: clamp(1rem, 3.4vw, 1.15rem);
   font-family: var(--font-quran, "Amiri Quran", serif);
-  color: rgba(255,255,255,0.95);
+  color: var(--topic-on-hero, var(--on-dark-strong, #FFFFFF));
+
   border-inline-end: 3px solid rgba(255,255,255,0.4);
   padding-inline-end: 0.85rem;
   margin: 0;
