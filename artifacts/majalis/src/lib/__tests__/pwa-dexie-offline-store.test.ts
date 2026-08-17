@@ -23,7 +23,7 @@ assert.equal(manifest.lang, "ar");
 assert.equal(manifest.dir, "rtl");
 assert.equal(manifest.display, "standalone");
 assert.equal(manifest.theme_color, "#F2F4F3");
-assert.equal(manifest.background_color, "#002b21");
+assert.equal(manifest.background_color, "#0E1A15");
 assert.ok(manifest.icons.some((i: { sizes: string }) => i.sizes.includes("192")));
 assert.ok(manifest.icons.some((i: { sizes: string }) => i.sizes.includes("512")));
 

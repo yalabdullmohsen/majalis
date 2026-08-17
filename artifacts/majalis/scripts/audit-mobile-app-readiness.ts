@@ -45,11 +45,11 @@ assertNoMatch(
 // 3) خلفية الإقلاع الأصلي = أخضر splash (لا أبيض) حتى يضبط PageChrome الصفحة
 assertMatch(
   read("src/main.tsx"),
-  /--app-status-bg["']?\s*,\s*["']#002b21/,
+  /--app-status-bg["']?\s*,\s*["']#0E1A15/,
   "لون status عند الإقلاع الأصلي أخضر splash لا أبيض",
 );
 assertMatch(read("capacitor.config.ts"), /StatusBar:\s*\{[^}]*backgroundColor:\s*["']#F2F4F3/s, "StatusBar فاتح للصفحات العامة");
-assertMatch(read("capacitor.config.ts"), /ios:\s*\{[\s\S]*?backgroundColor:\s*["']#002b21/, "ios.backgroundColor أخضر لمنع فجوة بيضاء");
+assertMatch(read("capacitor.config.ts"), /ios:\s*\{[\s\S]*?backgroundColor:\s*["']#0E1A15/, "ios.backgroundColor أخضر لمنع فجوة بيضاء");
 assertMatch(read("capacitor.config.ts"), /overlaysWebView:\s*true/, "StatusBar overlaysWebView");
 
 // 4) احتواء الروابط الداخلية

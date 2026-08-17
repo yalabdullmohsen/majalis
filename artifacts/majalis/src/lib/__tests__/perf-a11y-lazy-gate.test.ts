@@ -35,7 +35,7 @@ console.log("\n=== index.html: preconnect ≤٢ + خطوط غير متزامنة
   const count = [...html.matchAll(/rel="preconnect"/g)].length;
   assert.ok(count <= 2, `preconnect ≤ ٢ (الفعلي ${count})`);
   assert.match(html, /media="print"[^>]*onload=/, "CSS خطوط غير حرج غير متزامن");
-  assert.match(html, /icon-192\.webp/, "preload/LCP WebP");
+  assert.match(html, /id="mj-silent-splash"/, "دخولية HTML صامتة");
 }
 
 console.log("\n=== LCP أصول WebP موجودة ===");
@@ -43,11 +43,7 @@ console.log("\n=== LCP أصول WebP موجودة ===");
   assert.ok(existsSync(resolve(root, "public/icon-192.webp")), "icon-192.webp");
   assert.ok(existsSync(resolve(root, "public/brand/splash-logo.webp")), "splash-logo.webp");
   assert.ok(existsSync(resolve(root, "public/brand/official.webp")), "official.webp");
-  const launch = read("src/components/MajlisLaunchScreen.tsx");
-  assert.match(launch, /width=\{96\}/);
-  assert.match(launch, /height=\{96\}/);
-  assert.match(launch, /loading="eager"/);
-  assert.match(launch, /decoding="async"/);
+  assert.ok(!existsSync(resolve(root, "src/components/MajlisLaunchScreen.tsx")), "لا مكوّن React للدخولية");
 }
 
 console.log("\n=== معالم دلالية ===");

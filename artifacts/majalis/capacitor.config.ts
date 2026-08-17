@@ -16,7 +16,7 @@ const config: CapacitorConfig = {
     SplashScreen: {
       launchShowDuration: 0,
       launchAutoHide: true,
-      backgroundColor: "#002b21",
+      backgroundColor: "#0E1A15",
       showSpinner: false,
       androidSplashResourceName: "splash",
       androidScaleType: "CENTER_CROP",
@@ -59,7 +59,7 @@ const config: CapacitorConfig = {
     // UIKit adjustment here would apply a second inset around the WKWebView.
     contentInset: "never",
     // أخضر الإقلاع — أي فجوة تحت الشريط السفلي/Home Indicator لا تظهر بيضاء
-    backgroundColor: "#002b21",
+    backgroundColor: "#0E1A15",
     scrollEnabled: true,
   },
 };

@@ -17,8 +17,8 @@ assert.match(html, /width=device-width, initial-scale=1, viewport-fit=cover/);
 const cap = read("capacitor.config.ts");
 assert.match(cap, /overlaysWebView:\s*true/);
 assert.match(cap, /StatusBar:\s*\{[^}]*backgroundColor:\s*"#F2F4F3"/s);
-assert.doesNotMatch(cap, /StatusBar:\s*\{[^}]*backgroundColor:\s*"#002b21"/s);
-assert.match(cap, /ios:\s*\{[\s\S]*?backgroundColor:\s*"#002b21"/);
+assert.doesNotMatch(cap, /StatusBar:\s*\{[^}]*backgroundColor:\s*"#0E1A15"/s);
+assert.match(cap, /ios:\s*\{[\s\S]*?backgroundColor:\s*"#0E1A15"/);
 
 const utils = read("src/lib/capacitor-utils.ts");
 assert.match(utils, /STATUS_BAR_BG_LIGHT\s*=\s*"#F2F4F3"/);

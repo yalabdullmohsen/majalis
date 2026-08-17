@@ -50,13 +50,13 @@ html[data-theme="dark"] {
 
 html {
   /* تحتية زمردية داكنة — أي فجوة تحت الكروم/السجل تظهر خضراء لا بيضاء */
-  background: var(--mj-splash, #002b21);
+  background: var(--mj-splash, #0E1A15);
   min-height: 100dvh;
 }
 body {
   min-width: 320px;
   overflow-x: clip;
-  background: var(--mj-splash, #002b21);
+  background: var(--mj-splash, #0E1A15);
   color: var(--mj-ink, var(--color-text));
   font-family: var(--font-app, var(--font-body, "Amiri", "Noto Naskh Arabic", serif));
   line-height: 1.85;

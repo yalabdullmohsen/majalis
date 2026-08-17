@@ -44,7 +44,10 @@ if (navExpected.length < 5) {
 
 const indexHtml = read("index.html");
 if (!indexHtml.includes(`content="${theme}"`)) {
-  issues.push(`index.html: theme-color الافتراضي يجب أن يطابق ${theme}`);
+  issues.push(`index.html: theme-color السطح يجب أن يطابق ${theme}`);
+}
+if (!indexHtml.includes('content="#0E1A15"')) {
+  issues.push("index.html: theme-color الإقلاع يجب #0E1A15 مع خلفية html");
 }
 if (!indexHtml.includes(`content="${themeDark}"`)) {
   issues.push(`index.html: theme-color dark يجب أن يطابق ${themeDark}`);
@@ -82,6 +85,7 @@ for (const rel of ["public/manifest.json", "public/manifest.webmanifest", "publi
   if (m.name !== "المجلس العلمي") issues.push(`${rel}: name خاطئ`);
   if (m.short_name !== shortName) issues.push(`${rel}: short_name يجب «${shortName}»`);
   if (m.theme_color !== theme) issues.push(`${rel}: theme_color يجب ${theme}`);
+  if (m.background_color !== "#0E1A15") issues.push(`${rel}: background_color يجب #0E1A15 (دخولية)`);
   const iconSrcs = (m.icons || []).map((i) => String(i.src || ""));
   if (iconSrcs.some((s) => /majlisilm-og-2026|favicon\.svg/.test(s))) {
     issues.push(`${rel}: أيقونة قديمة في icons`);

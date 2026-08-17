@@ -52,9 +52,8 @@ void import("./styles/m2030/interactions.css");
 if (isNative) {
   document.documentElement.classList.add("capacitor-native");
   document.documentElement.dataset.platform = isAndroid ? "android" : isIOS ? "ios" : "native";
-  // أبقِ خلفية الإقلاع الداكنة (#002b21 من mj-splash-critical) حتى يركّب React
-  // ويضبط PageChrome — تجنّب شاشة فاتحة فارغة إذا تأخر التركيب.
-  document.documentElement.style.setProperty("--app-status-bg", "#002b21");
+  // أبقِ خلفية الإقلاع حتى يركّب React ويضبط PageChrome.
+  document.documentElement.style.setProperty("--app-status-bg", "#0E1A15");
   document.documentElement.style.setProperty("--app-status-fg-mode", "light");
   void import("./styles/capacitor-native-ux.css");
   void import("./styles/ios-edge.css");
@@ -135,8 +134,13 @@ async function mount() {
     return;
   }
 
-  // أخفِ شاشة الدخول عند أول عرض ناجح للمسار (سقف قصير)
+  // أخفِ الإطلاق الأصلي عند أول إطار؛ أبلغ دخولية HTML أن التطبيق رُسم.
   armSplashAutoHide();
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new Event("mj:app-painted"));
+    });
+  });
 
   // خلفيات غير حاجبة للإقلاع
   void purgeNativeWebRuntimeCaches().catch(() => {});

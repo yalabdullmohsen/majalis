@@ -1,4 +1,6 @@
-# إعادة تصميم شاشة التشغيل اليومية — MajlisLaunchScreen
+# إعادة تصميم شاشة التشغيل اليومية — ملغى 2026-08-17
+
+> **ملغى.** `MajlisLaunchScreen` حُذف. الدخولية الحالية SVG صامت في `index.html`. راجع `artifacts/majalis/docs/SPLASH_REPLACEMENT.md`.
 
 تاريخ: 2026-08-16  
 الفرع: `feat/majlis-launch-screen`
