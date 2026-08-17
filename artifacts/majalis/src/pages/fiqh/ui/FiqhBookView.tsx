@@ -4,6 +4,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
 import { Empty } from "@/components/ui-common";
 import { getVisibleFiqhBook, publishedChapters, publishedLessonsInChapter } from "@/lib/fiqh-books";
+import { formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
 
 export default function FiqhBookPage() {
@@ -57,7 +58,7 @@ export default function FiqhBookPage() {
               >
                 <span className="fiqh-chapter__num">{i + 1}</span>
                 <span className="fiqh-chapter__title">{ch.title}</span>
-                <span className="fiqh-chapter__count">{lessons.length} مسائل</span>
+                <span className="fiqh-chapter__count">{formatMasailCount(lessons.length)}</span>
               </button>
               {open ? (
                 <ul className="fiqh-lesson-list">

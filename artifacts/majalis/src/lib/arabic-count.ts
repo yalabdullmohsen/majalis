@@ -1,0 +1,48 @@
+/**
+ * جمع عربي للعدّادات المعروضة في الواجهة (مسائل، أبواب، …).
+ * لا يُستخدم لتوليد محتوى شرعي — عرض أعداد فقط.
+ */
+
+export type ArabicCountNoun = {
+  zero: string;
+  one: string;
+  two: string;
+  few: string; // 3–10
+  many: string; // 11+
+};
+
+export const NOUN_MASAIL: ArabicCountNoun = {
+  zero: "لا مسائل",
+  one: "مسألة",
+  two: "مسألتان",
+  few: "مسائل",
+  many: "مسألة",
+};
+
+export const NOUN_ABWAB: ArabicCountNoun = {
+  zero: "لا أبواب",
+  one: "باب",
+  two: "بابان",
+  few: "أبواب",
+  many: "باباً",
+};
+
+/**
+ * 0 → zero · 1 → one · 2 → two · 3–10 → N + few · 11+ → N + many
+ */
+export function arabicCountLabel(n: number, noun: ArabicCountNoun): string {
+  const count = Math.max(0, Math.floor(Number.isFinite(n) ? n : 0));
+  if (count === 0) return noun.zero;
+  if (count === 1) return noun.one;
+  if (count === 2) return noun.two;
+  if (count >= 3 && count <= 10) return `${count} ${noun.few}`;
+  return `${count} ${noun.many}`;
+}
+
+export function formatMasailCount(n: number): string {
+  return arabicCountLabel(n, NOUN_MASAIL);
+}
+
+export function formatAbwabCount(n: number): string {
+  return arabicCountLabel(n, NOUN_ABWAB);
+}

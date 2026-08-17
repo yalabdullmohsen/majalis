@@ -7,6 +7,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { HubCard } from "@/components/ui/HubCard";
+import { topicThemeCssVars, getTopicTheme } from "@/config/topic-themes";
 import "@/styles/pages/tawhid.css";
 import "@/styles/pages/misc-page-legacy.css";
 
@@ -398,8 +399,12 @@ export default function TawhidPage() {
         <span aria-current="page">العقيدة والتوحيد</span>
       </nav>
 
-      {/* رأس القسم */}
-      <header className="twh-hub-hero">
+      {/* رأس القسم — سمة العقيدة + on-dark */}
+      <header
+        className="twh-hub-hero on-dark"
+        data-on-dark
+        style={topicThemeCssVars(getTopicTheme("aqeedah"))}
+      >
         <div className="twh-hub-hero__inner">
           <p className="home-eyebrow">عقيدة أهل السنة والجماعة</p>
           <h1 className="twh-hub-hero__title">العقيدة والتوحيد</h1>

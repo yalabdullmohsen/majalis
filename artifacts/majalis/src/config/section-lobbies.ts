@@ -21,6 +21,7 @@ import {
   publishedBooks,
   type FiqhBookCategory,
 } from "@/lib/fiqh-books";
+import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
 import {
   SECTION_GROUP_META,
   SECTION_GROUP_ORDER,
@@ -129,7 +130,7 @@ function fiqhBookItems(cat: FiqhBookCategory): LobbyItem[] {
       return item({
         id: `fiqh-book-${b.id}`,
         label: b.title,
-        subtitle: `${counts.chapters} أبواب · ${counts.lessons} مسائل`,
+        subtitle: `${formatAbwabCount(counts.chapters)} · ${formatMasailCount(counts.lessons)}`,
         route: `/fiqh/books/${b.id}`,
         icon: BookOpen,
       });
