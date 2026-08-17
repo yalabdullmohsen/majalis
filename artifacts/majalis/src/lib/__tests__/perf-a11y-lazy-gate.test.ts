@@ -29,12 +29,13 @@ console.log("\n=== Lazy: تفسير / صوت / بحث المصحف ===");
   assert.match(app, /lazyWithRetry\([\s\S]*QuranMiniPlayerBar/, "QuranMiniPlayerBar lazy");
 }
 
-console.log("\n=== index.html: preconnect ≤٢ + خطوط غير متزامنة ===");
+console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");
 {
   const html = read("index.html");
   const count = [...html.matchAll(/rel="preconnect"/g)].length;
   assert.ok(count <= 2, `preconnect ≤ ٢ (الفعلي ${count})`);
-  assert.match(html, /media="print"[^>]*onload=/, "CSS خطوط غير حرج غير متزامن");
+  assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/, "لا Google Fonts في الإقلاع");
+  assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/amiri-400-ar\.woff2/, "preload خط الشاشة الأولى فقط");
   assert.match(html, /id="mj-silent-splash"/, "دخولية HTML صامتة");
 }
 

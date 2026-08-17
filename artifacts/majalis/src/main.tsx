@@ -21,6 +21,8 @@ import { refreshQuranAudioRemoteConfig } from "./lib/quran-audio-remote-config";
 import { armSplashAutoHide } from "./lib/splash-screen";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 import { initOnboardingState } from "./lib/onboarding-state";
+// خطوط الواجهة المحلية قبل أي طبقة تستخدم --font-app
+import "./styles/fonts-ui.css";
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
 import "./app/styles/theme.css";
 // page-hero / filters / hub-card تُحمَّل مع مكوّناتها (خارج CSS الحرج)
@@ -68,9 +70,6 @@ initFinalPolish();
 // Idle preconnect for audio/text CDNs — LCP/INP handshake savings without blocking mount.
 if (typeof requestIdleCallback === "function") {
   requestIdleCallback(() => {
-    void import("./lib/font-ready").then((m) => {
-      void m.warmStaticQuranicFonts(["Amiri Quran", "KFGQPC Hafs Uthmanic"]);
-    });
     prewarmAudioCdns();
     prewarmTextApis();
     prewarmSupabaseOrigin();
