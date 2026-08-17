@@ -5,6 +5,7 @@ import {
   type TolerantMatch,
 } from "@/features/search/tolerant-match";
 import { kindPriority } from "@/features/search/kind-priority";
+import { yieldToMain } from "@/lib/yield-to-main";
 
 export type UnifiedSearchDoc = {
   id: string;
@@ -154,7 +155,7 @@ export async function searchUnifiedIndexAsync(
         _m: m,
       });
     }
-    await new Promise<void>((r) => setTimeout(r, 0));
+    await yieldToMain();
   }
 
   scored.sort((a, b) => {

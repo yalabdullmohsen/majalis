@@ -37,5 +37,11 @@ assert.match(queryClient, /mutations:[\s\S]*retry:\s*false/, "mutations must not
 assert.match(queryClient, /networkMode:\s*"online"/, "queries respect online mode (no offline spam)");
 assert.match(prewarm, /prewarmSupabaseOrigin/, "runtime Supabase origin prewarm");
 assert.match(main, /prewarmSupabaseOrigin\(\)/, "main mounts Supabase prewarm on idle");
+assert.match(main, /import\("\.\/lib\/supabase-bootstrap"\)/, "Supabase bootstrap is dynamic");
+assert.doesNotMatch(
+  main,
+  /import \{[^}]*bootstrapSupabaseFromServer[^}]*\} from "\.\/lib\/supabase-bootstrap"/,
+  "must not statically import supabase-bootstrap on boot",
+);
 
 console.log("phase7-performance: ok");

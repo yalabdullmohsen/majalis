@@ -7,10 +7,8 @@ import { applyFontPreference, readFontPreference } from "./lib/font-preference";
 import { readThemePreference, resolveTheme } from "./lib/theme-preference";
 import { initClientErrorReporting } from "./lib/error-report";
 import { resetMobileNavBodyLock } from "./lib/mobile-nav-body-lock";
-import { bootstrapSupabaseFromServer, resetSupabaseClient } from "./lib/supabase-bootstrap";
 import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
-import { registerProductionServiceWorker } from "./lib/service-worker";
 import { setupStatusBar, setupKeyboard, isAndroid, isIOS, isNative } from "./lib/capacitor-utils";
 import { purgeNativeWebRuntimeCaches } from "./lib/native-cache-freshness";
 import { hydrateNativeStorage } from "./lib/native-storage";
@@ -21,6 +19,7 @@ import { refreshQuranAudioRemoteConfig } from "./lib/quran-audio-remote-config";
 import { armSplashAutoHide } from "./lib/splash-screen";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 import { initOnboardingState } from "./lib/onboarding-state";
+import { scheduleOnIdle } from "./lib/yield-to-main";
 // خطوط الواجهة المحلية قبل أي طبقة تستخدم --font-app
 import "./styles/fonts-ui.css";
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
@@ -145,8 +144,8 @@ async function mount() {
   void purgeNativeWebRuntimeCaches().catch(() => {});
   void hydrateNativeStorage().catch(() => {});
 
-  void bootstrapSupabaseFromServer()
-    .then(() => resetSupabaseClient())
+  void import("./lib/supabase-bootstrap")
+    .then((m) => m.bootstrapSupabaseFromServer().then(() => m.resetSupabaseClient()))
     .catch(() => {});
 
   const renderMs = Math.round(performance.now() - started);
@@ -177,7 +176,11 @@ void mount().catch((err) => {
 // داخل تطبيق Capacitor الأصلي نمنع تسجيل SW تمامًا لتفادي أي بقايا كاش
 // من جلسات سابقة داخل WebView؛ تحديث iOS يعتمد على ملفات cap sync فقط.
 if (!isNative) {
-  registerProductionServiceWorker();
+  const registerSw = () => {
+    void import("./lib/service-worker").then((m) => m.registerProductionServiceWorker());
+  };
+  if (document.readyState === "complete") scheduleOnIdle(registerSw);
+  else window.addEventListener("load", () => scheduleOnIdle(registerSw), { once: true });
 }
 
 // إعداد Capacitor Native (يُهمَل تلقائياً على الويب) — بلون/نمط الوضع الفعلي
