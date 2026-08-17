@@ -63,5 +63,6 @@ for (const line of rows) {
 
 assert.equal(tokenHex("--chip-bg"), "#E4F0EA");
 assert.equal(tokenHex("--on-brand-muted"), "#E8F3EE");
+assert.equal(tokenHex("--color-muted"), "#5E6E67");
 
 console.log("theme-contrast-pairs.test.ts: ok");

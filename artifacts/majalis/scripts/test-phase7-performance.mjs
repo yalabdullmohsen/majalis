@@ -16,6 +16,8 @@ const main = readFileSync(join(root, "src/main.tsx"), "utf8");
 assert.match(vite, /esbuild:\s*\{[\s\S]*target:\s*"es2022"/, "esbuild target es2022");
 assert.match(vite, /build:\s*\{[\s\S]*target:\s*"es2022"/, "build target es2022");
 assert.match(vite, /legalComments:\s*"none"/, "strip legal comments from bundles");
+assert.match(vite, /sourcemap:\s*"hidden"/, "source maps hidden — no sourceMappingURL in JS");
+assert.match(vite, /drop:\s*process\.env\.NODE_ENV === "production" \? \["console", "debugger"\]/, "drop console in production");
 assert.match(vite, /assetsInlineLimit:\s*4096/, "inline small assets");
 assert.match(vite, /cssCodeSplit:\s*true/, "CSS code splitting enabled");
 assert.match(vite, /plugins:\s*\[/, "Vite plugins array must remain (react/tailwind/api)");

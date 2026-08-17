@@ -183,7 +183,7 @@ export default function NavBar() {
               className={`navbar-menu-btn navbar-menu-btn--drawer${isMenuOpen ? " navbar-menu-btn--open" : ""}`}
               onClick={toggleMenu}
               aria-expanded={isMenuOpen}
-              aria-controls="main-navigation-drawer"
+              aria-controls={drawerMounted ? "main-navigation-drawer" : undefined}
               aria-label={isMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
             >
               <span className="navbar-menu-btn__geo" aria-hidden="true" />
