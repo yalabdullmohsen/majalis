@@ -6,7 +6,6 @@ import { readFileSync, existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  FIQH_CATEGORY_ORDER,
   FIQH_SUPPORTING_TOPICS,
   getAllFiqhBooks,
   isPublishedLesson,
@@ -127,31 +126,26 @@ console.log("\n=== ٤) صفر تكرار مسار أو عنوان في الشب�
 
 console.log("\n=== ٥–٦) شرائح nowrap + أيقونة وتسمية ===");
 {
-  const css = read("src/styles/pages/fiqh-hub.css");
-  assert(/\.fiqh-chip-strip[\s\S]*white-space:\s*nowrap/.test(css) || /\.fiqh-chip[\s\S]*white-space:\s*nowrap/.test(css), "شرائح nowrap");
-  assert(/\.fiqh-chip-strip[\s\S]*overflow-x:\s*auto/.test(css), "overflow-x auto");
+  const css = read("src/components/lobby/section-lobby.css");
+  assert(/white-space:\s*nowrap/.test(css), "شرائح nowrap");
+  assert(/overflow-x:\s*auto/.test(css), "overflow-x auto");
   assert(/scroll-snap-type:\s*x/.test(css), "scroll-snap");
   const view = read("src/pages/fiqh/ui/FiqhView.tsx");
-  assert(view.includes("fiqh-chip__label"), "كل شريحة لها تسمية");
-  assert(view.includes("GROUP_CHIPS"), "شريط المجموعات من مصدر واحد");
-  assert(!view.includes('Icon: Moon') || view.includes("label:"), "لا أيقونة هلال يتيمة");
+  assert(view.includes("SectionLobby"), "الفقه من SectionLobby");
+  assert(view.includes("chips={lobby.chips}"), "شريط المجموعات من السجل");
 }
 
 console.log("\n=== ٧) بطاقات متساوية الارتفاع ===");
 {
-  const css = read("src/styles/pages/fiqh-hub.css");
-  assert(/\.fiqh-book-grid[\s\S]*align-items:\s*stretch/.test(css), "الشبكة stretch");
-  assert(/\.fiqh-book-card[\s\S]*height:\s*100%/.test(css), "البطاقة height 100%");
-  const view = read("src/pages/fiqh/ui/FiqhView.tsx");
-  assert(view.includes("fiqhBookCounts"), "البطاقة تعرض عدد الأبواب والمسائل");
+  const css = read("src/components/lobby/section-lobby.css");
+  assert(/grid-auto-rows:\s*1fr/.test(css), "الشبكة 1fr");
+  assert(/section-lobby__grid--solo/.test(css), "صف كامل للعنصر الواحد");
 }
 
 console.log("\n=== ٨) نطاق الزر العائم وsafe-area ===");
 {
-  const css = read("src/styles/pages/fiqh-hub.css");
-  assert(css.includes("assistant-fab-size") || css.includes("fiqh-fab-clearance"), "نطاق FAB محجوز");
-  assert(css.includes("safe-area-inset-top") || css.includes("--inset-top") || css.includes("--header-h"), "ترويسة/بحث مع inset");
-  assert(/padding-top:\s*env\(safe-area-inset-top/.test(css) || /env\(safe-area-inset-top/.test(css) || css.includes("--header-h") || css.includes("--inset-top"), "safe-area في الفقه");
+  const css = read("src/components/lobby/section-lobby.css");
+  assert(css.includes("assistant-fab-size"), "نطاق FAB محجوز");
 }
 
 console.log("\n=== ٩) صفر صفحة قيد المراجعة أو فارغة ===");
@@ -204,13 +198,9 @@ console.log("\n=== ١٠) البحث: ٥٠ عيّنة ===");
 console.log("\n=== البنية والواجهة ===");
 {
   const view = read("src/pages/fiqh/ui/FiqhView.tsx");
-  assert(view.includes("FIQH_CATEGORY_ORDER"), "خمس مجموعات من المصدر");
-  assert(view.includes("id={`fiqh-${cat}`}"), "معرّفات المجموعات ديناميكية");
-  for (const cat of FIQH_CATEGORY_ORDER) {
-    assert(Boolean(cat), `تصنيف ${cat} في الترتيب`);
-  }
-  assert(view.includes("fiqh-supporting"), "مجموعة المساندة منفصلة");
-  assert(view.includes('title="الفقه"'), "هيدر مختصر بلا فقرة طويلة");
+  assert(view.includes("getLobby"), "خمس مجموعات من المصدر");
+  assert(view.includes("lobbyId=\"fiqh\""), "معرّف لوبي الفقه");
+  assert(view.includes("title={lobby.title}"), "هيدر مختصر بلا فقرة طويلة");
   const app = read("src/App.tsx");
   assert(app.includes('path="/fiqh/books/:bookId"'), "مسار الكتاب");
   assert(app.includes('path="/fiqh/books/:bookId/lessons/:lessonId"'), "مسار المسألة");

@@ -319,14 +319,14 @@ const SPACING = new Set([8, 12, 16, 24]);
     // 13) المزيد/الأقسام: ترتيب المجموعات بلا reverse
     if (exists("src/features/more/MoreHubFromRegistry.tsx")) {
       const hub = read("src/features/more/MoreHubFromRegistry.tsx");
-      if (!/SECTION_GROUP_ORDER\.map/.test(hub)) {
-        fail("MoreHubFromRegistry: يجب البناء عبر SECTION_GROUP_ORDER.map");
+      if (!/SectionLobby|getLobby/.test(hub) && !/SECTION_GROUP_ORDER\.map/.test(hub)) {
+        fail("MoreHubFromRegistry: يجب البناء عبر SectionLobby من السجل");
       }
       if (/\.reverse\(|flex-col-reverse|column-reverse/.test(hub)) {
         fail("MoreHubFromRegistry: reverse ممنوع");
       }
-      if (!/FeaturedSectionsGrid/.test(hub) || !/SectionsCardGrid/.test(hub)) {
-        fail("MoreHubFromRegistry: يجب استخدام شبكات البطاقات الموحّدة");
+      if (!/SectionLobby/.test(hub)) {
+        fail("MoreHubFromRegistry: يجب استخدام SectionLobby");
       }
     }
 
@@ -375,7 +375,7 @@ const SPACING = new Set([8, 12, 16, 24]);
       if (/٦٠٤|604\s*صفح|صفح[^\n]{0,12}604/.test(hub)) {
         fail("QuranHubView: ممنوع ذكر عدد صفحات المصحف");
       }
-      if (!/quranHubSections|sections\.registry/.test(hub)) {
+      if (!/quranHubSections|getLobby|sections\.registry|section-lobbies/.test(hub)) {
         fail("QuranHubView: يجب البناء من سجل الأقسام");
       }
       if (/QURAN_SECTIONS\s*=/.test(hub)) {
@@ -427,10 +427,10 @@ const SPACING = new Set([8, 12, 16, 24]);
       if (/اقرأ|استمع|راجع|وابحث|من مصدر واحد/.test(hub)) {
         fail("QuranHubView: ممنوع سطر وصفي تحت العنوان");
       }
-      if (!/quran-hub-page__title|title-only/.test(hub)) {
+      if (!/quran-hub-page__title|title-only|section-lobby__title|SectionLobby/.test(hub)) {
         fail("QuranHubView: عنوان مميّز مطلوب");
       }
-      if (!/quranHubSections/.test(hub)) {
+      if (!/quranHubSections|getLobby/.test(hub)) {
         fail("QuranHubView: التوزيع عبر hub من السجل");
       }
     }

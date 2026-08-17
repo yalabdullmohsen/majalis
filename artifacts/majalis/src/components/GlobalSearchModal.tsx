@@ -176,7 +176,13 @@ type Props = { onClose: () => void };
 
 export function GlobalSearchModal({ onClose }: Props) {
   const [query, setQuery]           = useState("");
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [activeFilter, setActiveFilter] = useState(() => {
+    try {
+      return sessionStorage.getItem("gsm-initial-filter") || "all";
+    } catch {
+      return "all";
+    }
+  });
   const [results, setResults]       = useState<AppSearchResult[]>([]);
   const [groupCounts, setGroupCounts] = useState<Record<string, number>>({});
   const [suggestion, setSuggestion] = useState<string | null>(null);

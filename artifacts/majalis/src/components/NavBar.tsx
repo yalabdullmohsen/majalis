@@ -8,8 +8,10 @@ import { useThemePreference } from "./ThemePreferenceProvider";
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { useIsMobileNav } from "@/hooks/useIsMobileNav";
 import { isNavHrefActive } from "@/lib/nav-active";
-import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
+import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
+import { getActiveTab } from "@/lib/get-active-tab";
+import { LOBBY_SEARCH_FILTER } from "@/config/section-lobby-chrome";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import "@/styles/components/dark-emerald-menus.css";
 import "@/styles/components/app-chrome-scroll.css";
@@ -89,7 +91,13 @@ export default function NavBar() {
 
   const openSearch = () => {
     closeAll();
-    window.dispatchEvent(new CustomEvent("global-search-open"));
+    const filter = LOBBY_SEARCH_FILTER[getActiveTab(location)] ?? "all";
+    try {
+      sessionStorage.setItem("gsm-initial-filter", filter);
+    } catch {
+      /* ignore */
+    }
+    window.dispatchEvent(new CustomEvent("global-search-open", { detail: { filter } }));
   };
 
   // Desktop only: full auth bar
@@ -117,9 +125,7 @@ export default function NavBar() {
   );
 
   // مسارات غامرة (مصحف/تلاوة) لها شريطها الخاص.
-  // صفحة الصلاة: تُخفى الترويسة (بحث، وضع ليلي، حساب، شريط الأخبار) بالكامل
-  // مع بقاء شريط الأقسام العلوي والشريط السفلي للتنقّل.
-  if (isImmersiveChromePath(location) || isPrayerTimesPath(location)) return null;
+  if (isImmersiveChromePath(location)) return null;
 
   return (
     <>

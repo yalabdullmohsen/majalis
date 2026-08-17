@@ -78,7 +78,7 @@ const ASSERTIONS = [
   { route: "/quran-knowledge", selector: ".hub-card__title", mode: "light", min: 3 },
   { route: "/quran-knowledge", selector: ".hub-card__desc", mode: "light", min: 4.5 },
   { route: "/quran-knowledge", selector: ".hub-card__title", mode: "dark", min: 3 },
-  { route: "/fiqh", selector: ".fiqh-book-card__title", mode: "light", min: 3 },
+  { route: "/fiqh", selector: ".section-lobby__title", mode: "light", min: 3 },
   { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "light", min: 4.5 },
   { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "dark", min: 4.5 },
   { route: "/quran/surah-stories/1", selector: ".sq-header", mode: "light", min: 4.5 },
@@ -114,7 +114,7 @@ const ASSERTIONS = [
   { route: "/quran-hub/numbers", selector: ".quran-stat-card__value", mode: "dark", min: 3 },
   { route: "/hadith", selector: ".page-hero-mj__title", mode: "light", min: 3 },
   { route: "/hadith", selector: ".page-hero-mj__desc", mode: "light", min: 4.5 },
-  { route: "/fiqh", selector: ".page-hero-mj__title", mode: "light", min: 3 },
+  { route: "/fiqh", selector: ".section-lobby__title", mode: "light", min: 3 },
   { route: "/quran-knowledge", selector: ".page-hero-mj__title", mode: "light", min: 3 },
   // ── تدقيق تباين آلي حي إضافي (2026-07-21، 154 مسارًا عامًا، خارج /admin):
   // اثنان من العطلين المنهجيين الأوسع أثرًا.

@@ -23,7 +23,7 @@ const VIEWPORTS = [320, 375, 390, 430];
 console.log("\n=== قواعد CSS الحرجة لصفحات الأقسام ===");
 {
   const hubCard = readFileSync(resolve(root, "src/styles/components/hub-card.css"), "utf8");
-  const fiqh = readFileSync(resolve(root, "src/styles/pages/fiqh-hub.css"), "utf8");
+  const lobbyCss = readFileSync(resolve(root, "src/components/lobby/section-lobby.css"), "utf8");
   const finalCss = readFileSync(resolve(root, "src/styles/final-release.css"), "utf8");
   const indexCss = readFileSync(resolve(root, "src/index.css"), "utf8");
 
@@ -37,7 +37,7 @@ console.log("\n=== قواعد CSS الحرجة لصفحات الأقسام ===")
     "إبطال الكتل الداكنة الفارغة",
   );
   assert(hubCard.includes("color: var(--mj-ink-2)"), "وصف البطاقة بتباين كافٍ");
-  assert(fiqh.includes("scroll-snap-type"), "تبويبات الفقه: scroll-snap");
+  assert(lobbyCss.includes("scroll-snap-type"), "تبويبات اللوبي: scroll-snap");
   assert(finalCss.includes("scroll-snap-type: x proximity"), "شريط الأقسام: scroll-snap");
 
   for (const w of VIEWPORTS) {
@@ -56,9 +56,9 @@ console.log("\n=== بنية المكوّنات ===");
 
   assert(hubCardTsx.includes("hub-card__title"), "HubCard يعرّف العنوان");
   assert(tawhidPage.includes("HubCard"), "TawhidPage يرحّل إلى HubCard");
-  assert(fiqhPage.includes("HubCard"), "FiqhPage يرحّل إلى HubCard");
-  assert(quranHub.includes("HubCard"), "QuranHubPage يرحّل إلى HubCard");
-  assert(merged.includes("HubCard"), "MergedSectionHubPage يرحّل إلى HubCard");
+  assert(fiqhPage.includes("SectionLobby"), "FiqhPage يرحّل إلى SectionLobby");
+  assert(quranHub.includes("SectionLobby"), "QuranHubPage يرحّل إلى SectionLobby");
+  assert(merged.includes("SectionLobby"), "MergedSectionHubPage يرحّل إلى SectionLobby");
   assert(topBar.includes('aria-label="أقسام رئيسية"'), "TopSectionBar موجود");
   assert(existsSync(resolve(root, "scripts/strip-enrichment-boilerplate.mjs")), "سكربت التنظيف/التقرير موجود");
 }

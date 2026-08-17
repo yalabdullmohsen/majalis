@@ -228,7 +228,7 @@ console.log("\n=== الشريط السفلي والأقسام ===");
   assert(sectionsSrc.includes("MoreHubFromRegistry") || sectionsSrc.includes("SectionsHubFromRegistry"), "الأقسام من سجل الأقسام");
   assert(sectionsSrc.includes("الأقسام"), "عنوان الأقسام");
   const hubSrc = readFileSync(resolve(appRoot, "src/features/more/MoreHubFromRegistry.tsx"), "utf-8");
-  assert(hubSrc.includes("showSearch") || sectionsSrc.includes("showSearch"), "بحث داخل الأقسام");
+  assert(!hubSrc.includes("sections-hub__search"), "بلا بحث محلي مكرر مع الشريط العام");
 }
 
 console.log(`\n${"─".repeat(40)}`);

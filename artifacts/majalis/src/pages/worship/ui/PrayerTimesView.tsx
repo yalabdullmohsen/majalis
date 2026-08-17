@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
-import { Link, useLocation } from "wouter";
-import { ArrowRight, Bell, Compass, HandHeart, MapPin, CircleDot } from "lucide-react";
+import { MapPin } from "lucide-react";
+import { SectionLobby } from "@/components/lobby/SectionLobby";
+import { getLobby } from "@/config/section-lobbies";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import {
   formatTime12,
@@ -22,9 +23,9 @@ import {
 import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
 import { PrayerLocationPicker } from "@/components/prayer/PrayerLocationPicker";
 import { PrayerAnnualTimetable } from "@/components/prayer/PrayerAnnualTimetable";
-import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/pages/prayer-times.css";
+import "@/components/sections/section-cards.css";
 
 const PRAYER_AR: Record<string, string> = {
   Fajr: "الفجر",
@@ -105,47 +106,6 @@ function displayTime12(p: PrayerSlot): string {
   const raw = (p.time24 || labeled).trim();
   return raw ? formatTime12(raw) : "—";
 }
-
-function MosqueSilhouette() {
-  return (
-    <svg
-      className="pts-mosque"
-      viewBox="0 0 360 220"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M180 28c-28 22-42 48-42 78v14h84v-14c0-30-14-56-42-78Z"
-        fill="currentColor"
-        opacity="0.14"
-      />
-      <path d="M180 18v22" stroke="currentColor" strokeWidth="3" strokeLinecap="round" opacity="0.22" />
-      <circle cx="180" cy="14" r="4" fill="currentColor" opacity="0.28" />
-      <rect x="118" y="112" width="124" height="88" rx="6" fill="currentColor" opacity="0.12" />
-      <path
-        d="M130 112v-18c0-10 8-22 18-30 6 8 12 18 12 30v18H130Z"
-        fill="currentColor"
-        opacity="0.16"
-      />
-      <path
-        d="M200 112v-18c0-10 8-22 18-30 6 8 12 18 12 30v18H200Z"
-        fill="currentColor"
-        opacity="0.16"
-      />
-      <rect x="68" y="78" width="22" height="122" rx="4" fill="currentColor" opacity="0.13" />
-      <path d="M79 42c-10 10-14 22-14 34v10h28V76c0-12-4-24-14-34Z" fill="currentColor" opacity="0.16" />
-      <path d="M79 34v12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" opacity="0.25" />
-      <circle cx="79" cy="30" r="3.2" fill="currentColor" opacity="0.3" />
-      <rect x="270" y="98" width="18" height="102" rx="3" fill="currentColor" opacity="0.11" />
-      <path d="M279 68c-8 8-11 17-11 28v8h22v-8c0-11-3-20-11-28Z" fill="currentColor" opacity="0.14" />
-      <rect x="152" y="148" width="56" height="52" rx="4" fill="currentColor" opacity="0.1" />
-      <path d="M152 148h56v-10c-8 6-20 10-28 10s-20-4-28-10v10Z" fill="currentColor" opacity="0.14" />
-      <path d="M40 200h280" stroke="currentColor" strokeWidth="2" opacity="0.1" />
-    </svg>
-  );
-}
-
 /** حالة مختصرة لكل صف في قائمة المواقيت */
 function rowStatusLabel(
   key: string,
@@ -162,7 +122,6 @@ function rowStatusLabel(
 }
 
 export default function PrayerTimesPage() {
-  const [location, navigate] = useLocation();
   const [locLabel, setLocLabel] = useState(() => getActivePrayerLocation().label);
   const [locToken, setLocToken] = useState(0);
   const [govOpen, setGovOpen] = useState(false);
@@ -170,15 +129,7 @@ export default function PrayerTimesPage() {
   const [madhab, setMadhab] = useState<PrayerMadhabId>(() => getPrayerMadhab());
   const [highLat, setHighLat] = useState<HighLatitudeRuleId>(() => getHighLatitudeRule());
 
-  function handleBack() {
-    const current = normalizeNavPath(location);
-    const previous = getPreviousInternalRoute(current);
-    if (previous && previous !== current) {
-      goBackOrFallback(current, "/");
-      return;
-    }
-    navigate("/");
-  }
+  const lobby = getLobby("prayer");
 
   useEffect(() => {
     applyPageSeo({
@@ -233,19 +184,7 @@ export default function PrayerTimesPage() {
   // لا شاشة تحميل تعترض — الهيكل يظهر دائماً؛ البيانات من الكاش/محلي فوراً
   if (!countdown?.next) {
     return (
-      <div className="pts-screen pts-screen--with-nav" dir="rtl">
-        <header className="pts-header">
-          <button
-            type="button"
-            className="pts-back"
-            onClick={handleBack}
-            aria-label="رجوع"
-          >
-            <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
-            <span>رجوع</span>
-          </button>
-        </header>
-        <h1 className="pts-title">الصلاة</h1>
+      <SectionLobby lobbyId="prayer" title={lobby.title} primary={lobby.primary} groups={lobby.groups}>
         <p className="pts-error" role="alert">تعذّر تجهيز المواقيت محلياً. جرّب اختيار موقع آخر.</p>
         <button type="button" className="pts-retry" onClick={reload} aria-label="إعادة محاولة تحميل المواقيت">
           إعادة المحاولة
@@ -256,7 +195,7 @@ export default function PrayerTimesPage() {
             reload();
           }}
         />
-      </div>
+      </SectionLobby>
     );
   }
 
@@ -296,184 +235,134 @@ export default function PrayerTimesPage() {
   const hijriStr = formatHijri(data?.date?.hijri ?? null);
   const gregStr = zoneDateReadable(timeZone);
 
+  const primary = lobby.primary
+    ? {
+        ...lobby.primary,
+        label: heroLabel,
+        subtitle: `${displayKey === "Sunrise" ? displayName : `صلاة ${displayName}`} · ${displayHms}`,
+      }
+    : undefined;
+
   return (
-    <div className="pts-screen pts-screen--with-nav" dir="rtl">
-      <header className="pts-header">
-        <div className="pts-header__top">
-          <button
-            type="button"
-            className="pts-back"
-            onClick={handleBack}
-            aria-label="رجوع إلى الصفحة السابقة"
-          >
-            <ArrowRight size={18} strokeWidth={2.5} aria-hidden="true" />
-            <span>رجوع</span>
-          </button>
-          <button
-            type="button"
-            className="pts-location"
-            onClick={() => setGovOpen((v) => !v)}
-            aria-expanded={govOpen}
-            aria-controls="pts-gov-panel"
-          >
-            <MapPin size={15} strokeWidth={2} aria-hidden="true" />
-            <span>{locLabel}</span>
-          </button>
-        </div>
+    <SectionLobby lobbyId="prayer" title={lobby.title} primary={primary} groups={lobby.groups}>
+      <div id="mawaqeet" className="pts-lobby-body">
         <div className="pts-dates">
           {hijriStr && <span>{hijriStr}</span>}
           <span className="pts-dates__sep" aria-hidden="true">·</span>
           <span>{gregStr}</span>
         </div>
-        <h1 className="pts-title sr-only">مواقيت الصلاة</h1>
-      </header>
-
-      {govOpen && (
-        <div id="pts-gov-panel" className="pts-gov-panel" role="region" aria-label="إعدادات الموقع والحساب">
-          <PrayerLocationPicker
-            onChanged={(next) => {
-              setLocLabel(next.label);
-              setLocToken((n) => n + 1);
-              setPinnedKey(null);
-              reload();
-            }}
-          />
-          <label className="pts-method" htmlFor="pts-calc-method">
-            <span className="pts-method__label">طريقة الحساب</span>
-            <select
-              id="pts-calc-method"
-              className="pts-method__select"
-              value={calcMethod}
-              onChange={(e) => handleCalcMethod(e.target.value as PrayerCalcMethodId)}
-              dir="rtl"
-            >
-              {PRAYER_CALC_METHODS.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.labelAr}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="pts-method" htmlFor="pts-madhab">
-            <span className="pts-method__label">مذهب العصر</span>
-            <select
-              id="pts-madhab"
-              className="pts-method__select"
-              value={madhab}
-              onChange={(e) => handleMadhab(e.target.value as PrayerMadhabId)}
-              dir="rtl"
-            >
-              <option value="Shafi">شافعي / مالكي / حنبلي</option>
-              <option value="Hanafi">حنفي</option>
-            </select>
-          </label>
-          <label className="pts-method" htmlFor="pts-highlat">
-            <span className="pts-method__label">مناطق خطوط العرض العالية</span>
-            <select
-              id="pts-highlat"
-              className="pts-method__select"
-              value={highLat}
-              onChange={(e) => handleHighLat(e.target.value as HighLatitudeRuleId)}
-              dir="rtl"
-            >
-              <option value="auto">تلقائي موصى به</option>
-              <option value="MiddleOfTheNight">منتصف الليل</option>
-              <option value="SeventhOfTheNight">سُبع الليل</option>
-              <option value="TwilightAngle">زاوية الشفق</option>
-            </select>
-          </label>
-        </div>
-      )}
-
-      <section className="pts-hero" aria-label="العداد التنازلي">
-        <MosqueSilhouette />
-        <div className="pts-hero__content">
-          <p className="pts-hero__label">{heroLabel}</p>
-          <h2 className="pts-hero__name" key={displayKey}>
-            {displayKey === "Sunrise" ? displayName : `صلاة ${displayName}`}
-          </h2>
-          <div
-            className="pts-hero__countdown"
-            dir="ltr"
-            aria-live="polite"
-            aria-atomic="true"
-            aria-label={`الوقت: ${displayHms}`}
-            key={displayHms}
-          >
-            {displayHms}
-          </div>
-          {inGrace && !pinnedKey && (
-            <p className="pts-hero__hint">حتى مرور ٣٥ دقيقة ثم الانتقال للصلاة التالية</p>
-          )}
-          {pinnedKey && pinnedKey !== countdown.next.key && (
-            <div className="pts-hero__actions">
-              {isTomorrow && <span className="pts-badge">غداً</span>}
-              <button type="button" className="pts-hero__reset" onClick={() => setPinnedKey(null)}>
-                العودة للصلاة القادمة
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {prayers.length > 0 && (
-        <nav className="pts-list" aria-label="صلوات اليوم">
-          {prayers.map((p) => {
-            const next = isNext(p.key);
-            const pinned = isPinned(p.key);
-            const past = isPast(p);
-            const status = rowStatusLabel(p.key, countdown.next?.key, inGrace, ranKey, past);
-            return (
-              <button
-                key={p.key}
-                type="button"
-                className={[
-                  "pts-row",
-                  next || (inGrace && p.key === ranKey) ? "pts-row--next" : "",
-                  pinned && !next ? "pts-row--pinned" : "",
-                  past ? "pts-row--past" : "",
-                ].filter(Boolean).join(" ")}
-                onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
-                aria-pressed={pinned}
-                aria-label={`${PRAYER_AR[p.key] ?? p.name}، ${displayTime12(p)}، ${status}`}
-              >
-                <span className="pts-row__meta">
-                  <span className="pts-row__name">{PRAYER_AR[p.key] ?? p.name}</span>
-                  <span className="pts-row__status">{status}</span>
-                </span>
-                <span className="pts-row__time" dir="ltr">{displayTime12(p)}</span>
-              </button>
-            );
-          })}
-        </nav>
-      )}
-
-      <PrayerAnnualTimetable />
-
-      <nav className="pts-dock" aria-label="أدوات الصلاة">
-        <Link href="/adhkar" className="pts-dock__item">
-          <span className="pts-dock__icon"><HandHeart size={20} strokeWidth={1.7} /></span>
-          <span>الأذكار</span>
-        </Link>
-        <Link href="/tasbih" className="pts-dock__item">
-          <span className="pts-dock__icon"><CircleDot size={20} strokeWidth={1.7} /></span>
-          <span>التسبيح</span>
-        </Link>
-        <Link href="/qibla" className="pts-dock__item">
-          <span className="pts-dock__icon"><Compass size={20} strokeWidth={1.7} /></span>
-          <span>القبلة</span>
-        </Link>
-        <Link href="/adhan-settings" className="pts-dock__item">
-          <span className="pts-dock__icon"><Bell size={20} strokeWidth={1.7} /></span>
-          <span>تنبيهات الأذان</span>
-        </Link>
-      </nav>
-
-      <div className="pts-sheet-close">
-        <button type="button" className="pts-sheet-close__btn" onClick={handleBack}>
-          إغلاق
+        <button
+          type="button"
+          className="pts-location"
+          onClick={() => setGovOpen((v) => !v)}
+          aria-expanded={govOpen}
+          aria-controls="pts-gov-panel"
+        >
+          <MapPin size={15} strokeWidth={2} aria-hidden="true" />
+          <span>{locLabel}</span>
         </button>
+
+        {govOpen && (
+          <div id="pts-gov-panel" className="pts-gov-panel" role="region" aria-label="إعدادات الموقع والحساب">
+            <PrayerLocationPicker
+              onChanged={(next) => {
+                setLocLabel(next.label);
+                setLocToken((n) => n + 1);
+                setPinnedKey(null);
+                reload();
+              }}
+            />
+            <label className="pts-method" htmlFor="pts-calc-method">
+              <span className="pts-method__label">طريقة الحساب</span>
+              <select
+                id="pts-calc-method"
+                className="pts-method__select"
+                value={calcMethod}
+                onChange={(e) => handleCalcMethod(e.target.value as PrayerCalcMethodId)}
+                dir="rtl"
+              >
+                {PRAYER_CALC_METHODS.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.labelAr}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="pts-method" htmlFor="pts-madhab">
+              <span className="pts-method__label">مذهب العصر</span>
+              <select
+                id="pts-madhab"
+                className="pts-method__select"
+                value={madhab}
+                onChange={(e) => handleMadhab(e.target.value as PrayerMadhabId)}
+                dir="rtl"
+              >
+                <option value="Shafi">شافعي / مالكي / حنبلي</option>
+                <option value="Hanafi">حنفي</option>
+              </select>
+            </label>
+            <label className="pts-method" htmlFor="pts-highlat">
+              <span className="pts-method__label">مناطق خطوط العرض العالية</span>
+              <select
+                id="pts-highlat"
+                className="pts-method__select"
+                value={highLat}
+                onChange={(e) => handleHighLat(e.target.value as HighLatitudeRuleId)}
+                dir="rtl"
+              >
+                <option value="auto">تلقائي موصى به</option>
+                <option value="MiddleOfTheNight">منتصف الليل</option>
+                <option value="SeventhOfTheNight">سُبع الليل</option>
+                <option value="TwilightAngle">زاوية الشفق</option>
+              </select>
+            </label>
+          </div>
+        )}
+
+        {pinnedKey && pinnedKey !== countdown.next.key && (
+          <div className="pts-hero__actions">
+            {isTomorrow && <span className="pts-badge">غداً</span>}
+            <button type="button" className="pts-hero__reset" onClick={() => setPinnedKey(null)}>
+              العودة للصلاة القادمة
+            </button>
+          </div>
+        )}
+
+        {prayers.length > 0 && (
+          <nav className="pts-list" aria-label="صلوات اليوم">
+            {prayers.map((p) => {
+              const next = isNext(p.key);
+              const pinned = isPinned(p.key);
+              const past = isPast(p);
+              const status = rowStatusLabel(p.key, countdown.next?.key, inGrace, ranKey, past);
+              return (
+                <button
+                  key={p.key}
+                  type="button"
+                  className={[
+                    "pts-row",
+                    next || (inGrace && p.key === ranKey) ? "pts-row--next" : "",
+                    pinned && !next ? "pts-row--pinned" : "",
+                    past ? "pts-row--past" : "",
+                  ].filter(Boolean).join(" ")}
+                  onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
+                  aria-pressed={pinned}
+                  aria-label={`${PRAYER_AR[p.key] ?? p.name}، ${displayTime12(p)}، ${status}`}
+                >
+                  <span className="pts-row__meta">
+                    <span className="pts-row__name">{PRAYER_AR[p.key] ?? p.name}</span>
+                    <span className="pts-row__status">{status}</span>
+                  </span>
+                  <span className="pts-row__time" dir="ltr">{displayTime12(p)}</span>
+                </button>
+              );
+            })}
+          </nav>
+        )}
+
+        <PrayerAnnualTimetable />
+        <p className="sr-only">تنبيهات الأذان من إعدادات الأذان</p>
       </div>
-    </div>
+    </SectionLobby>
   );
 }
