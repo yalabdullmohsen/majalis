@@ -128,7 +128,7 @@ assert.match(css, /--mm-ink:\s*#f4efe5|--mm-ink:\s*#f7faf7|--mm-ink:\s*#ffffff/)
 assert.match(css, /--mm-paper:\s*#fbf7ef/);
 assert.match(css, /rgba\(191,\s*159,\s*91,\s*0\.(1[0-9]|22)\)/);
 
-assert.match(page, /targetStart = 1/);
+assert.match(page, /filledSlots|mm-page__body--opening/);
 assert.doesNotMatch(page, /\(15 - span\) \/ 2/);
 assert.match(page, /النمل/);
 

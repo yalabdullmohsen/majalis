@@ -27,7 +27,11 @@ if (!all.length) {
   process.exit(1);
 }
 
-const bad = all.filter((m) => !m.ok || m.slots !== 15 || m.hasPdf || !/qpc-v2-p/i.test(m.fontFamily || ""));
+const bad = all.filter((m) => {
+  const pageNo = Number(m.page ?? m.pageAttr);
+  const slotsOk = pageNo <= 2 ? m.slots > 0 && m.slots <= 15 : m.slots === 15;
+  return !m.ok || !slotsOk || m.hasPdf || !/qpc-v2-p/i.test(m.fontFamily || "");
+});
 if (bad.length) {
   console.error("فشل assert:", bad.slice(0, 8));
   process.exit(1);

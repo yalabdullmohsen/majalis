@@ -88,7 +88,8 @@ export function fitMushafPageFont(
 
   const key = mushafFitCacheKey(pageNumber, containerPx, family);
   const cached = getCachedFontSize(key);
-  const size = cached ?? fitPageFontSize(lines, containerPx, family);
+  const opening = pageNumber === 1 || pageNumber === 2;
+  const size = cached ?? fitPageFontSize(lines, containerPx, family, undefined, opening ? 56 : 40);
   if (cached == null) setCachedFontSize(key, size);
   pageEl.style.setProperty("--mm-qpc-size", `${size}px`);
 

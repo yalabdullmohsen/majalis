@@ -24,7 +24,7 @@ export function MushafPage({
   onSelectVerse,
 }: Props) {
   const opening = layout.pageNumber === 1 || layout.pageNumber === 2;
-  const slots = buildSlots(layout, opening);
+  const slots = buildSlots(layout);
   const pageRef = useRef<HTMLElement | null>(null);
   useMushafPageFontFit(pageRef, true, layout.pageNumber, fontFamily, selectedVerseKey);
 
@@ -42,9 +42,11 @@ export function MushafPage({
         juzNumber={layout.juzNumber}
         surahNames={layout.surahsOnPage.map((s) => s.nameArabic)}
       />
-      <div className="mm-page__body" data-testid="mushaf-page-frame">
-        {Array.from({ length: 15 }, (_, i) => {
-          const slot = i + 1;
+      <div
+        className={`mm-page__body${opening ? " mm-page__body--opening" : ""}`}
+        data-testid="mushaf-page-frame"
+      >
+        {(opening ? filledSlots(slots) : Array.from({ length: 15 }, (_, i) => i + 1)).map((slot) => {
           const cell = slots.get(slot);
           return (
             <div key={slot} className="mm-slot" data-slot={slot} data-kind={cell?.kind ?? "empty"}>
@@ -103,7 +105,7 @@ function isLastSurahLine(words: QpcWord[], layout: MushafPageLayout): boolean {
   return !!chapter && ayah === chapter.versesCount;
 }
 
-function buildSlots(layout: MushafPageLayout, opening: boolean): Map<number, SlotCell> {
+function buildSlots(layout: MushafPageLayout): Map<number, SlotCell> {
   const raw = new Map<number, SlotCell>();
   for (const row of layout.rows) {
     if (row.kind === "surah-header") {
@@ -123,18 +125,9 @@ function buildSlots(layout: MushafPageLayout, opening: boolean): Map<number, Slo
       raw.set(row.gridSlot, { kind: "line", words: row.words });
     }
   }
-  if (!opening || raw.size === 0) return raw;
+  return raw;
+}
 
-  /* ص١–٢: ثبّت المحتوى من أعلى الشبكة — لا توسيط عمودي يترك فراغًا أبيض فوق الآيات */
-  const keys = [...raw.keys()].sort((a, b) => a - b);
-  const first = keys[0]!;
-  const targetStart = 1;
-  const delta = targetStart - first;
-  if (delta === 0) return raw;
-  const pinned = new Map<number, SlotCell>();
-  for (const [slot, cell] of raw) {
-    const next = slot + delta;
-    if (next >= 1 && next <= 15) pinned.set(next, cell);
-  }
-  return pinned.size > 0 ? pinned : raw;
+function filledSlots(slots: Map<number, SlotCell>): number[] {
+  return [...slots.keys()].sort((a, b) => a - b);
 }

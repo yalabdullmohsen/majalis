@@ -269,15 +269,29 @@ html.dark .mm-viewport,
   pointer-events: none;
 }
 
-/* ص١ وص٢: هندسة واحدة — شارة ٢٧٫٧٪ · نهاية كتلة ٧٤٫٨٪ */
-.mm-viewport .mm-page--opening .mm-page__body {
+/* ص١ وص٢: هندسة واحدة — شارة ٢٧٫٧٪ · نهاية كتلة ٧٤٫٨٪ · كتلة موسّطة بلا خانات فارغة */
+.mm-viewport .mm-page--opening .mm-page__body,
+.mm-viewport .mm-page--opening .mm-page__body--opening {
   top: var(--mm-ref-open-banner-y);
   bottom: calc(100% - var(--mm-ref-open-text-end));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 0.2em;
+  grid-template-rows: none;
+}
+
+.mm-viewport .mm-page--opening .mm-slot {
+  flex: 0 0 auto;
+  height: auto;
+  min-height: 0;
 }
 
 .mm-viewport .mm-page--opening .mm-slot[data-kind="empty"] {
   visibility: hidden;
   pointer-events: none;
+  display: none;
 }
 
 .mm-viewport[data-ayah-bar="1"] .mm-page {
