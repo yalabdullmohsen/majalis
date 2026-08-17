@@ -1,5 +1,6 @@
 import { useLocation } from "wouter";
 import type { SectionDef } from "@/config/sections.registry";
+import { prefetchRoute } from "@/lib/prefetch-route";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -7,6 +8,17 @@ type Props = {
   className?: string;
   onNavigate?: () => void;
 };
+
+function go(href: string, setLocation: (h: string) => void) {
+  const [path, hash] = href.split("#");
+  if (path) setLocation(path);
+  window.scrollTo(0, 0);
+  if (hash) {
+    window.setTimeout(() => {
+      document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 40);
+  }
+}
 
 /**
  * بطاقة متوسطة محايدة (شبكة عمودين) — بلا تدرّج أخضر.
@@ -24,9 +36,9 @@ export function SectionCard({ section, className, onNavigate }: Props) {
       data-section-id={section.id}
       aria-label={aria}
       className={cn("card", className)}
+      onPointerDown={() => prefetchRoute(section.route)}
       onClick={() => {
-        setLocation(section.route);
-        window.scrollTo(0, 0);
+        go(section.route, setLocation);
         onNavigate?.();
       }}
     >

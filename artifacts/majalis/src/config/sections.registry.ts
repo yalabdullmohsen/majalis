@@ -19,6 +19,7 @@ import {
   BookCopy,
   Building2,
   Calendar,
+  Clock,
   Church,
   Compass,
   Contact,
@@ -164,7 +165,7 @@ const QURAN_HUB_IDS = new Set([
   "quran-ulum-terms",
 ]);
 
-const LESSONS_HUB_IDS = new Set(["quran-circles"]);
+const LESSONS_HUB_IDS = new Set(["quran-circles", "lessons-archive"]);
 
 type SectionSeed = Omit<SectionDef, "hub"> & { hub?: SectionHub };
 
@@ -440,6 +441,19 @@ const SECTION_SEEDS: SectionSeed[] = [
     status: "live",
     keywords: ["حلقات", "تحفيظ", "دورات قرآن"],
     aliases: ["حلقات التحفيظ", "دور التحفيظ"],
+    hub: "lessons",
+  },
+  {
+    id: "lessons-archive",
+    label: "الأرشيف",
+    subtitle: "الدروس السابقة المسجّلة",
+    route: "/lessons/archive",
+    icon: Clock,
+    group: "learning",
+    order: 6,
+    surfaces: SEARCH_ONLY,
+    status: "live",
+    keywords: ["أرشيف دروس", "دروس سابقة"],
     hub: "lessons",
   },
   {
