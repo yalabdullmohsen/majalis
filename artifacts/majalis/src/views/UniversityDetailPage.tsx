@@ -318,7 +318,7 @@ export default function UniversityDetailPage() {
 
   if (loading) {
     return (
-      <div dir="rtl" className="flex items-center justify-center min-h-screen">
+      <div dir="rtl" className="flex items-center justify-center min-h-dvh">
         <div className="text-center space-y-3">
           <Spinner className="size-10 icon-emerald" aria-label="تجهيز المحتوى" />
           <p className="udp-loading-text"></p>
@@ -329,7 +329,7 @@ export default function UniversityDetailPage() {
 
   if (notFound || !university) {
     return (
-      <div dir="rtl" className="flex items-center justify-center min-h-screen text-center">
+      <div dir="rtl" className="flex items-center justify-center min-h-dvh text-center">
         <div>
           <Landmark size={48} strokeWidth={1.3} className="mx-auto mb-4" aria-hidden="true" />
           <p className="udp-not-found-title">الجامعة غير موجودة</p>

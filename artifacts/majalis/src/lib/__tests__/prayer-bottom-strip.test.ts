@@ -24,8 +24,23 @@ assert.match(
 );
 assert.match(
   css,
-  /html\.pts-immersive,\s*\nhtml\.pts-immersive body\s*\{[\s\S]*?background-color:\s*var\(--em-950/,
-  "html/body موحّدان تحت الشريط",
+  /html\.pts-immersive,\s*\nhtml\.pts-immersive body,\s*\nhtml\.pts-immersive #root/,
+  "html/body/#root موحّدان تحت الشريط",
+);
+assert.match(
+  css,
+  /html\.pts-immersive #root[\s\S]*?background-color:\s*var\(--em-950/,
+  "#root مطلي بزمرد الصلاة لا --app-bg",
+);
+assert.match(
+  css,
+  /\.pts-sheet-close[\s\S]*?background-color:\s*var\(--pts-bg-0/,
+  "زر الإغلاق يطلي الحاوية لا هامشاً شفافاً",
+);
+assert.doesNotMatch(
+  css,
+  /\.pts-sheet-close[\s\S]{0,200}position:\s*sticky/,
+  "لا sticky يسحب الزر فوق فجوة #root",
 );
 
 assert.match(

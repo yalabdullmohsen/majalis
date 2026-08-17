@@ -47,9 +47,12 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  min-height: 100svh;
+  min-height: 100dvh;
   -webkit-text-size-adjust: 100%;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
   overscroll-behavior-y: contain;
   box-sizing: border-box;
 }

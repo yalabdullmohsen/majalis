@@ -8,6 +8,9 @@ html {
   background-image:
     radial-gradient(ellipse 70% 40% at 100% 0%, color-mix(in srgb, var(--em-500) 6%, transparent), transparent 55%);
   color: var(--text);
+  min-height: 100svh;
+  min-height: 100dvh;
+  overscroll-behavior: none;
 }
 
 html[data-theme="dark"],
@@ -21,6 +24,9 @@ body {
   background-image: none !important;
   color: var(--text) !important;
   font-family: var(--font-body) !important;
+  min-height: 100svh;
+  min-height: 100dvh;
+  overscroll-behavior: none;
 }
 
 html[data-theme="dark"] body,
