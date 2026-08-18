@@ -15,7 +15,7 @@ type Props = {
  * مربع مميّز — الخلفية الخضراء ولون الحبر في صنف variant واحد فقط (.card--featured).
  * ممنوع تعيين لون الحبر أبيضًا عبر منفعة Tailwind منفصلة عن الخلفية.
  */
-export function FeaturedSectionCard({ section, className, onNavigate, resolveRoute }: Props) {
+export function HeroActionCard({ section, className, onNavigate, resolveRoute }: Props) {
   const [, setLocation] = useLocation();
   const Icon = section.icon;
   const aria = `${section.label} — ${section.subtitle}`;
@@ -25,9 +25,10 @@ export function FeaturedSectionCard({ section, className, onNavigate, resolveRou
       type="button"
       dir="rtl"
       data-section-card="featured"
+      data-hero-action="1"
       data-section-id={section.id}
       aria-label={aria}
-      className={cn("card--featured", className)}
+      className={cn("card--featured hero-action-card", className)}
       onPointerDown={() => prefetchRoute(resolveRoute?.(section) ?? section.route)}
       onClick={() => {
         const href = resolveRoute?.(section) ?? section.route;
@@ -50,3 +51,6 @@ export function FeaturedSectionCard({ section, className, onNavigate, resolveRou
     </button>
   );
 }
+
+/** اسم سابق — نفس مكوّن البطاقة البطلة الموسّطة */
+export const FeaturedSectionCard = HeroActionCard;

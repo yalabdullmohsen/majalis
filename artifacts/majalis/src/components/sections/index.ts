@@ -1,4 +1,4 @@
-export { FeaturedSectionCard } from "./FeaturedSectionCard";
+export { FeaturedSectionCard, HeroActionCard } from "./FeaturedSectionCard";
 export { SectionCard } from "./SectionCard";
 export { SectionRow } from "./SectionRow";
 export {

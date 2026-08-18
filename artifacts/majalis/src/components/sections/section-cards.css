@@ -100,15 +100,15 @@ a.card--featured,
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: grid;
+  justify-items: center;
+  align-content: center;
   gap: 8px;
   width: 100%;
   height: 100%;
   min-height: 44px;
-  padding: 16px;
-  text-align: start;
+  padding: 1.1rem 0.85rem 1.15rem;
+  text-align: center;
   /* ألوان حرفية مربوطة — لا تعتمد على منفعة لون منفصلة ولا على سقوط متغيّر وحده */
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.22);
@@ -146,6 +146,21 @@ a.card--featured,
 .card--featured .card__label,
 .card--featured .card__subtitle {
   color: #ffffff;
+  text-align: center;
+}
+
+.card--featured .card__label {
+  font-size: clamp(20px, 5.5vw, 28px);
+  font-weight: 700;
+  line-height: 1.25;
+  overflow: visible;
+}
+
+.card--featured .card__subtitle {
+  font-size: calc(0.6 * clamp(20px, 5.5vw, 28px));
+  font-weight: 500;
+  line-height: 1.35;
+  max-height: calc(2 * 0.6 * clamp(20px, 5.5vw, 28px) * 1.35);
 }
 
 .card--featured:hover {

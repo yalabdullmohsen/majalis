@@ -66,7 +66,7 @@ assert.match(css, /section-lobby__shot/);
 assert.doesNotMatch(css, /env\(safe-area-inset/);
 
 const lobbyCmp = read("src/components/lobby/SectionLobby.tsx");
-assert.match(lobbyCmp, /FeaturedSectionCard/);
+assert.match(lobbyCmp, /FeaturedSectionCard|HeroActionCard/);
 assert.match(lobbyCmp, /SectionCard/);
 assert.match(lobbyCmp, /chip-label/);
 assert.match(lobbyCmp, /data-lobby-shot/);
