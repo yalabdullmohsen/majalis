@@ -61,9 +61,10 @@ export function RouteEnterMotion() {
 
     const cls = MOTION_CLASSES[kind];
     clearMotion(main);
-    void main.offsetWidth;
-    main.classList.add(cls);
-    document.documentElement.dataset.navMotion = kind;
+    const raf = window.requestAnimationFrame(() => {
+      main.classList.add(cls);
+      document.documentElement.dataset.navMotion = kind;
+    });
 
     const ms = NAV_MOTION_MS[kind] + 40;
     const t = window.setTimeout(() => {
@@ -74,6 +75,7 @@ export function RouteEnterMotion() {
     }, ms);
 
     return () => {
+      window.cancelAnimationFrame(raf);
       window.clearTimeout(t);
     };
   }, [location]);

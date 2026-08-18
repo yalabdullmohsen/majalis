@@ -108,6 +108,10 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   assert(tickerSrc.includes("Megaphone") || tickerSrc.includes("promo"), "يدعم عناصر ترويج الأقسام/المميزات");
   assert(tickerSrc.includes("header-ticker__source") && tickerSrc.includes("item.source"), "يعرض مصدر الحديث/الذكر مع النص");
   assert(tickerSrc.includes("PrayerCountdownChip"), "شريحة الصلاة مكوّن مستقل خارج اشتراك الأب");
+  assert(!/offsetHeight|getBoundingClientRect/.test(tickerSrc), "ارتفاع الشريط من CSS لا من قياس JS");
+  assert(!/useLayoutEffect/.test(tickerSrc), "لا useLayoutEffect يقيس ثم يكتب");
+  assert(tickerSrc.includes("ResizeObserver"), "عرض الماركي عبر ResizeObserver بعد التخطيط");
+  assert(!/measure\(\);\s*const ro/.test(tickerSrc), "لا قياس متزامن قبل ResizeObserver");
   assert(
     tickerSrc.includes("حان وقت") ||
       readFileSync(resolve(appRoot, "src/lib/prayer-ticker-copy.ts"), "utf-8").includes("حان وقت"),

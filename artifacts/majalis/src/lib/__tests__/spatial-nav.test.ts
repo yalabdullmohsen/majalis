@@ -46,6 +46,8 @@ assert.match(edge, /COMMIT_RATIO/);
 const route = read("src/components/motion/RouteEnterMotion.tsx");
 assert.match(route, /classifyNavMotion/);
 assert.match(route, /mj-route-push/);
+assert.doesNotMatch(route, /offsetWidth|offsetHeight|getBoundingClientRect/, "لا إعادة تدفّق لإعادة تشغيل الحركة");
+assert.match(route, /requestAnimationFrame/, "إعادة تشغيل الصف عبر إطار لا قراءة تخطيط");
 
 const pkg = read("package.json");
 assert.equal(/framer-motion/.test(pkg), false, "لا framer-motion");
