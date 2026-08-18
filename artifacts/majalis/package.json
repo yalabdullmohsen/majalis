@@ -192,7 +192,11 @@
     "test:calendar-gates": "pnpm run test:calendar-dates && pnpm run test:calendar-render",
     "test:reminder-banner-removed": "node --import tsx src/lib/__tests__/reminder-banner-removed-gate.test.ts",
     "test:scroll-top": "node scripts/scroll-top-gate.mjs",
+<<<<<<< HEAD
     "test:ui-layout-gates": "pnpm run test:calendar-gates && pnpm run test:scroll-top && pnpm run test:section-back-button",
+=======
+    "test:ui-layout-gates": "pnpm run test:calendar-gates && pnpm run test:scroll-top",
+>>>>>>> origin/main
     "test:site-interlink": "node --import tsx src/lib/__tests__/site-interlink.test.ts",
     "test:quiz-game-reducer": "node --import tsx src/components/quiz-game/__tests__/game-reducer.test.ts",
     "test:scholarly-content-guard": "node --import tsx src/lib/__tests__/scholarly-content-guard.test.ts",
