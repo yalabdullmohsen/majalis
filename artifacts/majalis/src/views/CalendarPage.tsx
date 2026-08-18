@@ -16,7 +16,6 @@ import {
 import { arSA } from "date-fns/locale";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import { PageHeader, ErrorState } from "@/components/ui-common";
-import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { CalendarDayCell } from "@/components/calendar/CalendarDayCell";
@@ -205,7 +204,6 @@ export default function CalendarPage() {
 
   return (
     <div className="page-shell calendar-page">
-      <HijriSacredMonthBanner />
       <PageHeader
         eyebrow="المناسبات والدروس"
         title="تقويم الدروس"
