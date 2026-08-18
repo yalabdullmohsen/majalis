@@ -12,9 +12,9 @@
  *   الخيار (ب) «نصف أرقام PSI» مرفوض: LHCI يقيس LCP ≈7.1ث بينما PSI 4.7ث،
  *   فنصف الهدف (2750ms) سيفشل البوابة دائماً. الفجوة ليست نقص throttling.
  *
- * عتبات حمراء بعد تحصين فحص 10:
+ * عتبات حمراء بعد تحصين فحص 10 + شدّ TBT بعد فحص 11:
  *   warn:  أداء ≥ 0.75
- *   error: CLS ≤ 0.030 · TBT ≤ 900ms · LCP ≤ 8000ms · DOM ≤ 1200
+ *   error: CLS ≤ 0.030 · TBT ≤ 850ms · LCP ≤ 8000ms · DOM ≤ 1200
  *          a11y=1 · BP=1 · SEO=1
  *          حظر عرض ≤ 300ms (بعد تحويل index-*.css إلى غير حاجب)
  *   warn:  forced-reflow · unused-css/js (مللي ثانية لا KiB)
@@ -65,7 +65,7 @@ module.exports = {
         "categories:best-practices": ["error", { minScore: 1 }],
         "categories:seo": ["error", { minScore: 1 }],
         "largest-contentful-paint": ["error", { maxNumericValue: 8000 }],
-        "total-blocking-time": ["error", { maxNumericValue: 900 }],
+        "total-blocking-time": ["error", { maxNumericValue: 850 }],
         "cumulative-layout-shift": ["error", { maxNumericValue: 0.03 }],
         "dom-size": ["error", { maxNumericValue: 1200 }],
         "render-blocking-resources": ["error", { maxNumericValue: 300 }],
