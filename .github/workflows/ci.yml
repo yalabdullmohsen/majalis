@@ -628,12 +628,6 @@ jobs:
         if: always()
         run: kill "$(cat /tmp/lhci-vite.pid)" 2>/dev/null || true
 
-      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
-        if: failure()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh run cancel "${{ github.run_id }}" || true
-
   postgres-integration:
     name: postgres-integration
     needs: [classify]

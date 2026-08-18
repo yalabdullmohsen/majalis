@@ -52,7 +52,7 @@
     "verify:content-production": "node scripts/verify-content-production.mjs",
     "verify:reading-ux": "node scripts/verify-reading-ux.mjs",
     "lighthouse:reading-ux": "node scripts/lighthouse-reading-ux.mjs",
-    "lighthouse:ci": "npx --yes @lhci/cli@0.14.4 autorun --config=./lighthouserc.cjs",
+    "lighthouse:ci": "npx --yes @lhci/cli@0.15.1 autorun --config=./lighthouserc.cjs",
     "verify:production-complete": "node scripts/verify-production-complete.mjs --production",
     "test:assistant-suggested": "node scripts/test-assistant-suggested.mjs",
     "test:sheikhs-dedup": "node scripts/test-sheikhs-dedup.mjs && node --import tsx src/lib/__tests__/sheikhs-dedup.test.ts",

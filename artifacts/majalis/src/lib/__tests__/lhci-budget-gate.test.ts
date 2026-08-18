@@ -31,6 +31,7 @@ assert.match(budget, /"budget":\s*150/, "JS موثّق ≤150KiB (غير ملز�
 assert.match(vite, /sourcemap:\s*"hidden"/, "sourcemap مخفي");
 assert.match(pkg, /strip:sourcemaps/, "حذف الخرائط بعد البناء");
 assert.match(pkg, /"lighthouse:ci"/, "أمر قياس");
+assert.match(pkg, /@lhci\/cli@0\.15\./, "إصدار LHCI منشور على npm");
 
 assert.match(ci, /name: LHCI home \(mobile\)/, "وظيفة LHCI في ci.yml");
 assert.match(ci, /lhci-home/, "معرّف الوظيفة lhci-home");
