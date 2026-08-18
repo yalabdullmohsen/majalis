@@ -14,7 +14,6 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 const PAGES = [
   ["quran", "src/pages/quran/ui/QuranHubView.tsx"],
   ["lessons", "src/pages/lessons/ui/LessonsView.tsx"],
-  ["prayer", "src/pages/worship/ui/PrayerTimesView.tsx"],
   ["fiqh", "src/pages/fiqh/ui/FiqhView.tsx"],
   ["sections", "src/pages/account/SectionsPage.tsx"],
 ] as const;
