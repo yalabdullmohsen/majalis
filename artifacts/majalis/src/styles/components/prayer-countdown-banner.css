@@ -23,12 +23,21 @@
 }
 
 .pcb-wrap {
+  position: fixed;
+  inset-inline: 0;
+  top: var(--header-h, calc(56px + var(--inset-top, 0px)));
+  z-index: 900;
   direction: rtl;
   padding: 0.55rem 0.75rem 0.15rem;
   padding-inline-start: max(0.75rem, var(--inset-left));
   padding-inline-end: max(0.75rem, var(--inset-right));
   box-sizing: border-box;
+  pointer-events: none;
   animation: pcb-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.pcb-card {
+  pointer-events: auto;
 }
 
 .pcb-wrap--out {

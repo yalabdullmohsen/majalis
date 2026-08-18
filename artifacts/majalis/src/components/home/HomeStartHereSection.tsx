@@ -1,42 +1,21 @@
 import { Link } from "wouter";
+import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "./home-start-here-data";
 
-const START_STEPS = [
-  {
-    num: "١",
-    title: "ابدأ بالأذكار اليومية",
-    desc: "أذكار الصباح والمساء وما بينهما، عبادة يومية مستدامة",
-    href: "/adhkar",
-    cta: "أذكار اليوم",
-  },
-  {
-    num: "٢",
-    title: "تابع درساً قريباً",
-    desc: "دروس علمية أسبوعية من علماء الكويت، مجانية ومفتوحة",
-    href: "/lessons",
-    cta: "الدروس القادمة",
-  },
-  {
-    num: "٣",
-    title: "دليل طالب العلم المبتدئ",
-    desc: "٩ محطات علمية مرتبة من العقيدة إلى التوسع، بروابط مباشرة لكل محطة",
-    href: "/adab-talab-ilm",
-    cta: "دليل طالب العلم",
-  },
-];
+const START_STEPS = HOME_START_HERE_STEPS;
 
 export function HomeStartHereSection() {
   return (
     <section aria-label="ابدأ من هنا" className="home-start-here">
       <div className="hsh-header">
-        <span className="hsh-eyebrow">للزائر الجديد</span>
-        <h2 className="hsh-title">ابدأ من هنا</h2>
-        <p className="hsh-lead">خطوات واضحة للمبتدئ، ثم الدروس والدورات حسب مستواك.</p>
+        <span className="hsh-eyebrow">{HOME_START_HERE_COPY.eyebrow}</span>
+        <h2 className="hsh-title">{HOME_START_HERE_COPY.title}</h2>
+        <p className="hsh-lead">{HOME_START_HERE_COPY.lead}</p>
         <div className="hsh-actions">
           <Link href="/lessons" className="hsh-actions__primary">
-            الدروس والدورات
+            {HOME_START_HERE_COPY.primaryCta}
           </Link>
           <Link href="/adab-talab-ilm" className="hsh-actions__secondary">
-            دليل طالب العلم
+            {HOME_START_HERE_COPY.secondaryCta}
           </Link>
         </div>
       </div>
