@@ -16,6 +16,16 @@
   isolation: isolate;
   overflow: hidden;
   color: var(--mj-ink);
+  min-height: 11rem;
+}
+
+.mj-home-lcp-ph {
+  min-height: 24rem;
+}
+
+.daily-wird-card,
+[data-testid="daily-wird-card"] {
+  min-height: 9rem;
 }
 
 /* هيرو الرئيسية: عنوان هوية + تحية + زر */

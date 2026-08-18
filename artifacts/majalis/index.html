@@ -13,30 +13,6 @@
         margin: 0;
         min-height: 100dvh;
       }
-      #mj-lcp-chrome {
-        position: absolute;
-        top: 56px;
-        left: 0;
-        right: 0;
-        z-index: 2;
-        padding: 8px 16px;
-        color: #16241e;
-        text-align: center;
-        pointer-events: none;
-      }
-      .mj-lcp-nav-ph { display: none; }
-      #mj-lcp-title {
-        margin: 0 auto;
-        max-width: 40rem;
-        font-family: "Amiri", "MajlisFallback", "Times New Roman", serif;
-        font-size: clamp(1.85rem, 6.5vw, 2.55rem);
-        font-weight: 700;
-        line-height: 1.25;
-        color: #16241e;
-      }
-      html.mj-lcp-adopted #mj-lcp-chrome {
-        display: none;
-      }
     </style>
     <style id="mj-splash-critical">
       html.capacitor-native, html.capacitor-native body, html.capacitor-native #root {
@@ -271,19 +247,6 @@
           el.remove();
         });
       } catch (error) {}
-    </script>
-    <div id="mj-lcp-chrome">
-      <div class="mj-lcp-nav-ph" aria-hidden="true"></div>
-      <h1 id="mj-lcp-title" class="mj-lcp-title">المجلس العلمي</h1>
-    </div>
-    <script>
-      (function () {
-        var p = location.pathname;
-        if (p !== "/" && p !== "") {
-          var chrome = document.getElementById("mj-lcp-chrome");
-          if (chrome) chrome.remove();
-        }
-      })();
     </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

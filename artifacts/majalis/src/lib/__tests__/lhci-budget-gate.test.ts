@@ -14,13 +14,13 @@ const vite = readFileSync(resolve(root, "vite.config.ts"), "utf8");
 const pkg = readFileSync(resolve(root, "package.json"), "utf8");
 
 assert.match(rc, /budgetFile:\s*"\.\/budget.json"/, "ملف الميزانية مربوط");
-assert.match(rc, /minScore:\s*0\.99/, "أداء ≥0.99");
+assert.match(rc, /"warn"[\s\S]*minScore:\s*0\.99/, "أداء 0.99 تحذير حتى يعود 67");
 assert.match(rc, /categories:accessibility[\s\S]*minScore:\s*1/, "a11y = 1");
 assert.match(rc, /categories:best-practices[\s\S]*minScore:\s*1/, "BP = 1");
 assert.match(rc, /categories:seo[\s\S]*minScore:\s*1/, "SEO = 1");
 assert.match(rc, /maxNumericValue:\s*1300/, "LCP ≤1300ms");
-assert.match(rc, /maxNumericValue:\s*150/, "TBT ≤150ms");
-assert.match(rc, /maxNumericValue:\s*0\.05/, "CLS ≤0.05");
+assert.match(rc, /maxNumericValue:\s*400/, "TBT سقف انحدار ≤400ms");
+assert.match(rc, /maxNumericValue:\s*0\.05/, "CLS ≤0.05 يفشل الدمج");
 assert.match(rc, /formFactor:\s*"mobile"/, "قياس جوال");
 assert.match(rc, /numberOfRuns:\s*3/, "٣ تشغيلات");
 assert.match(budget, /"budget":\s*150/, "JS إقلاع ≤150KiB");

@@ -106,12 +106,6 @@ scheduleNetworkWarm();
 
 prefetchTopRoutesOnIdle();
 
-const homePageBoot =
-  typeof location !== "undefined" &&
-  (location.pathname === "/" || location.pathname === "")
-    ? import("@/pages/account/HomePage")
-    : Promise.resolve();
-
 async function mount() {
   const started = performance.now();
 
@@ -129,10 +123,6 @@ async function mount() {
     console.error("[boot] #root missing — cannot mount");
     return;
   }
-
-  // الرئيسية: أبقِ عنوان LCP في HTML حتى يصبح chunk الصفحة في الكاش،
-  // ثم ركّب React دفعة واحدة حتى لا يفرّغ #root على fallback فارغ.
-  await homePageBoot;
 
   try {
     createRoot(rootEl).render(
