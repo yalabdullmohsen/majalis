@@ -75,9 +75,9 @@ const ASSERTIONS = [
   // .twh-hub-card__current-tag اكتسب خلفية داكنة بالخطأ (يطابق [class*="-card"]
   // اسميًا رغم أنه شارة صغيرة لا حاوية)، فتطابق لون نصه الخاص تقريبًا.
   { route: "/tawhid", selector: ".twh-hub-card__current-tag", mode: "dark", min: 3 },
-  { route: "/quran-knowledge", selector: ".section-lobby .card__label", mode: "light", min: 3 },
-  { route: "/quran-knowledge", selector: ".section-lobby .card__subtitle", mode: "light", min: 4.5 },
-  { route: "/quran-knowledge", selector: ".section-lobby .card__label", mode: "dark", min: 3 },
+  { route: "/quran-knowledge", selector: ".hub-card__title", mode: "light", min: 3 },
+  { route: "/quran-knowledge", selector: ".hub-card__desc", mode: "light", min: 4.5 },
+  { route: "/quran-knowledge", selector: ".hub-card__title", mode: "dark", min: 3 },
   { route: "/fiqh", selector: ".section-lobby__title", mode: "light", min: 3 },
   { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "light", min: 4.5 },
   { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "dark", min: 4.5 },
@@ -112,10 +112,10 @@ const ASSERTIONS = [
   { route: "/quran-hub/numbers", selector: ".quran-stat-card__label", mode: "dark", min: 4.5 },
   { route: "/quran-hub/numbers", selector: ".quran-stat-card__value", mode: "light", min: 3 },
   { route: "/quran-hub/numbers", selector: ".quran-stat-card__value", mode: "dark", min: 3 },
-  { route: "/hadith", selector: ".page-hero-mj__title", mode: "light", min: 3 },
-  { route: "/hadith", selector: ".page-hero-mj__desc", mode: "light", min: 4.5 },
+  { route: "/hadith", selector: ".topic-page__title", mode: "light", min: 3 },
+  { route: "/hadith", selector: ".topic-page__sub", mode: "light", min: 4.5 },
   { route: "/fiqh", selector: ".section-lobby__title", mode: "light", min: 3 },
-  { route: "/quran-knowledge", selector: ".section-lobby__title", mode: "light", min: 3 },
+  { route: "/quran-knowledge", selector: ".topic-page__title", mode: "light", min: 3 },
   // ── تدقيق تباين آلي حي إضافي (2026-07-21، 154 مسارًا عامًا، خارج /admin):
   // اثنان من العطلين المنهجيين الأوسع أثرًا.
   // 1) --txt-muted/--msk-text-3 (#929995) كانت مُحسَبة أصلًا مقابل أبيض
@@ -148,7 +148,7 @@ const ASSERTIONS = [
   { route: "/adhkar/morning", selector: ".adhkar-focus-btn--next", mode: "dark", min: 4.5 },
   { route: "/adhkar/morning", selector: ".adhkar-focus-counter", mode: "dark", min: 4.5 },
   { route: "/adhkar/morning", selector: ".adhkar-focus-text", mode: "light", min: 7 },
-  { route: "/hadith", selector: ".hadith-card__text", mode: "dark", min: 4.5 },
+  { route: "/hadith", selector: ".hub-card__title", mode: "dark", min: 4.5 },
   // الطهارة: نص/تبويب أبيض فوق أخضر الهوية؛ التبويب النشط لوحة فاتحة
   { route: "/tahara", selector: ".th-hero__title", mode: "light", min: 4.5 },
   { route: "/tahara", selector: ".th-hero__title", mode: "dark", min: 4.5 },
@@ -171,7 +171,7 @@ const ASSERTIONS = [
   { route: "/prophets/adam", selector: ".prophet-detail-lux__name", mode: "dark", min: 4.5 },
   { route: "/prophets/adam", selector: ".prophet-lesson-card__text", mode: "dark", min: 4.5 },
   { route: "/quran/people", selector: ".qp-people__intro", mode: "dark", min: 4.5 },
-  { route: "/quran-knowledge", selector: ".section-lobby .card__label", mode: "dark", min: 4.5 },
+  { route: "/quran-knowledge", selector: ".hub-card__title", mode: "dark", min: 4.5 },
   { route: "/janaza", selector: ".jnz-step__title", mode: "dark", min: 4.5 },
 ];
 
@@ -192,6 +192,7 @@ function loadAllPublicRoutes() {
 const TITLE_SELECTORS = [
   "h1",
   ".section-lobby__title",
+  ".topic-page__title",
   ".page-hero-mj__title",
   ".pts-hero__name",
   ".ds-page-header__title",

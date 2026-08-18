@@ -121,4 +121,22 @@ for (const [label, rel] of HUB_PAGES) {
 const prayer = read("src/pages/worship/ui/PrayerTimesView.tsx");
 assert.doesNotMatch(prayer, /SectionTemplatePage/, "الصلاة مستثناة من قالب العقيدة");
 
+{
+  const contrast = read("scripts/verify-color-contrast-gate.mjs");
+  assert.match(contrast, /route: "\/hadith"[\s\S]*topic-page__title/, "تباين الحديث على لافتة القالب");
+  assert.match(contrast, /route: "\/hadith"[\s\S]*hub-card__title/, "تباين بطاقات الحديث HubCard");
+  assert.match(contrast, /route: "\/quran-knowledge"[\s\S]*topic-page__title/, "تباين علوم القرآن على لافتة القالب");
+  assert.match(contrast, /route: "\/quran-knowledge"[\s\S]*hub-card__title/, "تباين بطاقات علوم القرآن HubCard");
+  assert.doesNotMatch(
+    contrast,
+    /route: "\/hadith", selector: "\.page-hero-mj/,
+    "لا محدّد بطل قديم على /hadith",
+  );
+  assert.doesNotMatch(
+    contrast,
+    /route: "\/quran-knowledge", selector: "\.section-lobby/,
+    "لا محدّد لوبي قديم على /quran-knowledge",
+  );
+}
+
 console.log("section-template-gate.test.ts: ok");
