@@ -559,10 +559,9 @@ function NativeNotificationsBootstrap() {
 }
 
 function HomeLazyRoute() {
-  // بلا هيكل تحميل — يُحسّن LCP؛ الـchunk يُسخَّن من main بعد أول إطار
   return (
     <ErrorBoundary>
-      <Suspense fallback={null}>
+      <Suspense fallback={<div className="mj-home-lcp-ph" style={{ minHeight: "12rem" }} aria-hidden="true" />}>
         <HomePage />
       </Suspense>
     </ErrorBoundary>

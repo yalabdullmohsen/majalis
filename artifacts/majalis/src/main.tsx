@@ -39,7 +39,7 @@ import "./styles/a11y-release-gate.css";
 import "./styles/m2030/foundation.css";
 import "./styles/m2030/navigation.css";
 import "./styles/m2030/pages.css";
-import "./styles/pages/calendar.css";
+// calendar.css يُحمَّل مع صفحة التقويم فقط — ليس في مسار رسم الرئيسية
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
 import "./styles/dark-mode-surfaces.css";
@@ -69,23 +69,9 @@ resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
 initClientErrorReporting();
 initFinalPolish();
-// Idle preconnect for audio/text CDNs — LCP/INP handshake savings without blocking mount.
-if (typeof requestIdleCallback === "function") {
-  requestIdleCallback(() => {
-    prewarmAudioCdns();
-    prewarmTextApis();
-    prewarmSupabaseOrigin();
-    void refreshQuranAudioRemoteConfig();
-    // ديناميكي: لا يُثقِل حزمة الدخول (سقف gzip)
-    void import("./lib/adhan-audio-remote-config").then((m) =>
-      m.refreshAdhanAudioRemoteConfig(),
-    );
-    void import("./lib/tafsir-audio-remote-config").then((m) =>
-      m.refreshTafsirAudioRemoteConfig(),
-    );
-  }, { timeout: 3_000 });
-} else {
-  setTimeout(() => {
+
+function scheduleNetworkWarm() {
+  const run = () => {
     prewarmAudioCdns();
     prewarmTextApis();
     prewarmSupabaseOrigin();
@@ -96,10 +82,20 @@ if (typeof requestIdleCallback === "function") {
     void import("./lib/tafsir-audio-remote-config").then((m) =>
       m.refreshTafsirAudioRemoteConfig(),
     );
-  }, 1);
+  };
+  const start = () => window.setTimeout(() => scheduleOnIdle(run), 10_000);
+  if (document.readyState === "complete") start();
+  else window.addEventListener("load", start, { once: true });
 }
+scheduleNetworkWarm();
 
 prefetchTopRoutesOnIdle();
+
+const homePageBoot =
+  typeof location !== "undefined" &&
+  (location.pathname === "/" || location.pathname === "")
+    ? import("@/pages/account/HomePage")
+    : Promise.resolve();
 
 async function mount() {
   const started = performance.now();
@@ -118,6 +114,10 @@ async function mount() {
     console.error("[boot] #root missing — cannot mount");
     return;
   }
+
+  // الرئيسية: أبقِ عنوان LCP في HTML حتى يصبح chunk الصفحة في الكاش،
+  // ثم ركّب React دفعة واحدة حتى لا يفرّغ #root على fallback فارغ.
+  await homePageBoot;
 
   try {
     createRoot(rootEl).render(

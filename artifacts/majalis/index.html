@@ -7,11 +7,36 @@
     <meta name="theme-color" content="#0E1A15" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F4F3" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101614" />
-    <style id="mj-splash-critical">
+    <style id="mj-lcp-critical">
       html, body, #root {
-        background-color: #0E1A15;
+        background-color: #F2F4F3;
         margin: 0;
         min-height: 100dvh;
+      }
+      #mj-lcp-chrome {
+        padding: 0 16px 8px;
+        color: #16241e;
+        text-align: center;
+      }
+      .mj-lcp-nav-ph {
+        height: 56px;
+      }
+      #mj-lcp-title {
+        margin: 0.65rem auto 0;
+        max-width: 40rem;
+        font-family: "Amiri", "MajlisFallback", "Times New Roman", serif;
+        font-size: clamp(1.35rem, 4.5vw, 1.85rem);
+        font-weight: 700;
+        line-height: 1.35;
+        color: #16241e;
+      }
+      html.mj-lcp-adopted #mj-lcp-chrome {
+        display: none;
+      }
+    </style>
+    <style id="mj-splash-critical">
+      html.capacitor-native, html.capacitor-native body, html.capacitor-native #root {
+        background-color: #0E1A15;
       }
       :root {
         --app-status-bg: #0E1A15;
@@ -83,12 +108,8 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- preconnect حرج واحد فقط (Lighthouse ≤٢) — خطوط الواجهة محلية -->
+    <!-- preconnect واحد فقط (Lighthouse ≤٢) — الخطوط محلية؛ أصول الصوت بعد التفاعل -->
     <link rel="preconnect" href="https://ngmvmlulzacrlicuagyp.supabase.co" />
-    <link rel="dns-prefetch" href="https://api.alquran.cloud" />
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-    <link rel="dns-prefetch" href="https://everyayah.com" />
-    <link rel="dns-prefetch" href="https://server8.mp3quran.net" />
     <!-- خط الشاشة الأولى فقط — Amiri 400 عربي. خطوط المصحف تُحمَّل داخل /mushaf -->
     <link rel="preload" href="/fonts/ui/amiri-400-ar.woff2" as="font" type="font/woff2" crossorigin />
 
@@ -186,6 +207,11 @@
             return;
           }
         } catch (e) {}
+        var native = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+        if (!native) {
+          dismiss(true);
+          return;
+        }
         var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         window.addEventListener("mj:app-painted", function () { dismiss(true); }, { once: true });
         if (reduced) {
@@ -221,12 +247,13 @@
         document.documentElement.classList.toggle("dark", resolved === "dark");
         document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
         /* theme-color أثناء الإقلاع = خلفية الدخول (يمنع وميض الشريط الأبيض) */
-        var splashBg = "#0E1A15";
-        var _themeMeta = document.querySelector('meta[name="theme-color"]');
-        if (_themeMeta) _themeMeta.setAttribute("content", splashBg);
-        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
-          m.setAttribute("content", splashBg);
-        });
+        var splashNative = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+        if (splashNative) {
+          var splashBg = "#0E1A15";
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+            m.setAttribute("content", splashBg);
+          });
+        }
 
         var storedFont = localStorage.getItem("majalis-font-preference-v2");
         document.documentElement.dataset.font =
@@ -240,6 +267,19 @@
           el.remove();
         });
       } catch (error) {}
+    </script>
+    <div id="mj-lcp-chrome">
+      <div class="mj-lcp-nav-ph" aria-hidden="true"></div>
+      <h1 id="mj-lcp-title" class="mj-lcp-title">المجلس العلمي</h1>
+    </div>
+    <script>
+      (function () {
+        var p = location.pathname;
+        if (p !== "/" && p !== "") {
+          var chrome = document.getElementById("mj-lcp-chrome");
+          if (chrome) chrome.remove();
+        }
+      })();
     </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

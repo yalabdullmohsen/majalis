@@ -87,8 +87,13 @@ function extractBody(html) {
  */
 function extractSpaAssets(spaHead) {
   const scriptTags = [...spaHead.matchAll(/<script[^>]*>[\s\S]*?<\/script>/gi)].map(m => m[0]);
-  const moduleTags = [...spaHead.matchAll(/<link[^>]+(?:modulepreload|stylesheet)[^>]*\/?>/gi)].map(m => m[0]);
-  return [...moduleTags, ...scriptTags].join("\n  ");
+  const moduleTags = [...spaHead.matchAll(/<link[^>]+(?:modulepreload|stylesheet|preload)[^>]*\/?>/gi)]
+    .map((m) => m[0])
+    .filter((tag) => !/rel=["']preconnect["']/i.test(tag));
+  const preconnects = [...spaHead.matchAll(/<link[^>]+rel=["']preconnect["'][^>]*\/?>/gi)]
+    .map((m) => m[0])
+    .slice(0, 2);
+  return [...preconnects, ...moduleTags, ...scriptTags].join("\n  ");
 }
 
 /** استخرج meta + title + JSON-LD من ملف prerender */
@@ -124,11 +129,8 @@ function buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody) {
     <meta name="color-scheme" content="light dark" />
     ${seoTags}
     <style>
-      /* shell مرئي بدون JS (للزواحف غير المُنفِّذة) — root مخفي */
-      #root{display:none}
-      /* بعد إضافة js-ready: shell مخفي، root مرئي */
+      #root{min-height:40vh}
       .js-ready #seo-shell{display:none!important}
-      .js-ready #root{display:block!important}
     </style>
     <script>(function(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove();})()</script>
     ${spaAssets}

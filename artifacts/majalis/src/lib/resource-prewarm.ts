@@ -28,7 +28,7 @@ function ensureHead(): HTMLHeadElement | null {
  * Idempotent preconnect (+ dns-prefetch) for an absolute origin.
  * Safe to call repeatedly from hooks / interaction handlers.
  */
-export function preconnectOrigin(origin: string, { crossOrigin = true }: { crossOrigin?: boolean } = {}): void {
+export function preconnectOrigin(origin: string, _opts: { crossOrigin?: boolean } = {}): void {
   const head = ensureHead();
   if (!head || !origin) return;
   let url: URL;
@@ -41,13 +41,7 @@ export function preconnectOrigin(origin: string, { crossOrigin = true }: { cross
   if (warmed.has(key)) return;
   warmed.add(key);
 
-  if (!head.querySelector(`link[rel="preconnect"][href="${key}"]`)) {
-    const link = document.createElement("link");
-    link.rel = "preconnect";
-    link.href = key;
-    if (crossOrigin) link.crossOrigin = "anonymous";
-    head.appendChild(link);
-  }
+  // لا preconnect بعد الإقلاع — HTML يسمح بواحد فقط (Supabase). الباقي dns-prefetch.
   if (!head.querySelector(`link[rel="dns-prefetch"][href="${key}"]`)) {
     const dns = document.createElement("link");
     dns.rel = "dns-prefetch";

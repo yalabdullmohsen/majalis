@@ -164,7 +164,7 @@ async function main() {
     preconnectOrigin(AUDIO_CDN_ORIGINS[0]);
     preconnectOrigin(AUDIO_CDN_ORIGINS[0]);
     prewarmAudioCdns();
-    assert(created.filter((c) => c.startsWith("preconnect:")).length >= 1, "preconnect link created");
+    assert(created.filter((c) => c.startsWith("dns-prefetch:")).length >= 1, "dns-prefetch link created");
     assert(created.filter((c) => c.includes("everyayah.com")).length >= 1, "everyayah warmed");
 
     clearPrewarmState();

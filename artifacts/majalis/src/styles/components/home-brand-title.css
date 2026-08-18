@@ -55,6 +55,10 @@ html.dark .home-page-hero .pattern-backdrop {
   gap: 0.65rem;
 }
 
+.home-page-hero .page-hero-mj__title-slot {
+  width: 100%;
+}
+
 .home-page-hero .page-hero-mj__title {
   color: var(--mj-ink) !important;
   font-size: clamp(1.35rem, 4.5vw, 1.85rem);
