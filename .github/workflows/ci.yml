@@ -553,6 +553,81 @@ jobs:
             exit 1
           fi
 
+  # بوابة انحدار Lighthouse على بناء الإنتاج (dist) — عتبات واقعية لا حلم 100.
+  # إلزامية مع كل بناء: Verify build وci-required ينتظرانها.
+  lhci-home:
+    name: LHCI home (mobile)
+    needs: [classify, build]
+    if: |
+      always() &&
+      !cancelled() &&
+      needs.classify.result == 'success' &&
+      needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
+        with:
+          playwright: "true"
+
+      - name: Download majalis dist (بلا إعادة بناء)
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: majalis-dist
+          path: artifacts/majalis/dist
+
+      - name: Start preview
+        working-directory: artifacts/majalis
+        run: |
+          set -euo pipefail
+          pnpm exec vite preview --config vite.config.ts --host 127.0.0.1 --port 24216 > /tmp/lhci-vite.log 2>&1 &
+          echo $! > /tmp/lhci-vite.pid
+          for i in $(seq 1 60); do
+            if curl -sf -o /dev/null "http://127.0.0.1:24216/"; then
+              echo "preview جاهز"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "preview لم يبدأ"; tail -50 /tmp/lhci-vite.log; exit 1
+
+      - name: LHCI home mobile (3 runs, regression thresholds)
+        id: lhci
+        working-directory: artifacts/majalis
+        env:
+          LHCI_URL: http://127.0.0.1:24216/
+        run: |
+          set -euo pipefail
+          export CHROME_PATH
+          CHROME_PATH="$(node --input-type=module -e "import { chromium } from 'playwright'; console.log(chromium.executablePath())")"
+          test -x "$CHROME_PATH"
+          pnpm run lighthouse:ci
+
+      - name: Upload LHCI reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: lhci-home-reports
+          path: artifacts/majalis/lhci-reports
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: LHCI must not skip
+        if: always() && !cancelled()
+        env:
+          LHCI_OUTCOME: ${{ steps.lhci.outcome }}
+        run: |
+          set -euo pipefail
+          if [ "$LHCI_OUTCOME" != "success" ]; then
+            echo "LHCI home outcome=$LHCI_OUTCOME (Skipped/failure = fail)"
+            exit 1
+          fi
+
+      - name: Stop preview
+        if: always()
+        run: kill "$(cat /tmp/lhci-vite.pid)" 2>/dev/null || true
+
   postgres-integration:
     name: postgres-integration
     needs: [classify]
@@ -608,6 +683,7 @@ jobs:
       - layout-bands
       - visual-snapshot
       - color-contrast
+      - lhci-home
     if: always() && !cancelled()
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -628,6 +704,7 @@ jobs:
           BANDS_RESULT: ${{ needs.layout-bands.result }}
           VISUAL_RESULT: ${{ needs.visual-snapshot.result }}
           COLOR_RESULT: ${{ needs.color-contrast.result }}
+          LHCI_RESULT: ${{ needs.lhci-home.result }}
         run: |
           set -euo pipefail
           {
@@ -645,6 +722,7 @@ jobs:
             echo "| layout-bands | $BANDS_RESULT |"
             echo "| visual-snapshot | $VISUAL_RESULT |"
             echo "| color-contrast | $COLOR_RESULT |"
+            echo "| lhci-home | $LHCI_RESULT |"
             echo ""
             echo "بناء واحد فقط (وظيفة \`build\`) — كل البوابات تنزّل dist."
             echo "مسار PR: ٦ صفحات مرجعية × 390×844 على ٤ shards. الكامل ليلاً."
@@ -687,6 +765,7 @@ jobs:
           check_req "layout-bands" "$NEED_MUSHAF" "$BANDS_RESULT"
           check_req "visual-snapshot" "$NEED_BUILD" "$VISUAL_RESULT"
           check_req "color-contrast" "$NEED_BUILD" "$COLOR_RESULT"
+          check_req "lhci-home" "$NEED_BUILD" "$LHCI_RESULT"
 
           echo "Verify build OK (lane=$LANE)"
 
@@ -701,6 +780,7 @@ jobs:
       - verify
       - color-contrast
       - visual-snapshot
+      - lhci-home
     if: always() && !cancelled()
     runs-on: ubuntu-latest
     timeout-minutes: 2
@@ -712,6 +792,7 @@ jobs:
           VERIFY_RESULT: ${{ needs.verify.result }}
           COLOR_RESULT: ${{ needs.color-contrast.result }}
           VISUAL_RESULT: ${{ needs.visual-snapshot.result }}
+          LHCI_RESULT: ${{ needs.lhci-home.result }}
         run: |
           set -euo pipefail
           {
@@ -722,6 +803,7 @@ jobs:
             echo "| Verify build | $VERIFY_RESULT | always |"
             echo "| color-contrast | $COLOR_RESULT | need_build=$NEED_BUILD |"
             echo "| visual-snapshot | $VISUAL_RESULT | need_build=$NEED_BUILD |"
+            echo "| lhci-home | $LHCI_RESULT | need_build=$NEED_BUILD |"
           } >> "$GITHUB_STEP_SUMMARY"
 
           if [ "$CLASSIFY_RESULT" != "success" ]; then
@@ -752,4 +834,5 @@ jobs:
 
           check_req "color-contrast" "$NEED_BUILD" "$COLOR_RESULT"
           check_req "visual-snapshot" "$NEED_BUILD" "$VISUAL_RESULT"
+          check_req "lhci-home" "$NEED_BUILD" "$LHCI_RESULT"
           echo "ci-required OK"
