@@ -24,18 +24,22 @@ const buildId = process.env.VERCEL_DEPLOYMENT_ID || process.env.BUILD_ID || "loc
  * Vendor chunk matcher — must NOT use a bare `includes("react")`.
  * That incorrectly pulls `react-hook-form`, `@radix-ui/react-*`, etc. into the
  * long-lived `vendor` chunk and defeats route-level code splitting.
+ *
+ * Splitting react / react-dom / wouter yields separate parse tasks (TBT)
+ * instead of one ~190KiB vendor eval on boot.
  */
-function isReactCoreModule(id: string): boolean {
-  return (
+function vendorChunkName(id: string): string | undefined {
+  if (
     id.includes("/react-dom/") ||
     id.includes("/react-dom\\") ||
-    id.includes("/react/") ||
-    id.includes("/react\\") ||
     id.includes("/scheduler/") ||
-    id.includes("/scheduler\\") ||
-    id.includes("/wouter/") ||
-    id.includes("/wouter\\")
-  );
+    id.includes("/scheduler\\")
+  ) {
+    return "react-dom";
+  }
+  if (id.includes("/wouter/") || id.includes("/wouter\\")) return "wouter";
+  if (id.includes("/react/") || id.includes("/react\\")) return "react";
+  return undefined;
 }
 
 export default defineConfig({
@@ -149,7 +153,8 @@ export default defineConfig({
           if (id.includes("recharts") || id.includes("d3-") || id.includes("victory")) return "charts";
           if (id.includes("adhan")) return "adhan";
           if (id.includes("@tanstack")) return "query";
-          if (isReactCoreModule(id)) return "vendor";
+          const vendor = vendorChunkName(id);
+          if (vendor) return vendor;
           if (id.includes("zod") || id.includes("react-hook-form") || id.includes("@hookform")) return "forms";
           if (id.includes("framer-motion") || id.includes("motion")) return "animation";
           if (id.includes("cmdk") || id.includes("vaul")) return "ui-extra";

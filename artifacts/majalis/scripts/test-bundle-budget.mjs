@@ -68,6 +68,27 @@ if (css) {
 }
 
 const entryBuf = readFileSync(join(assetsDir, entry.f), "utf8");
+assert.doesNotMatch(
+  entryBuf,
+  /from\s*["']\.\/supabase-/,
+  "entry must not statically import the supabase chunk (TBT)",
+);
+console.log("  ✓ entry does not statically import supabase-*");
+
+const reactDomChunk = rows.find((r) => /^react-dom-.*\.js$/.test(r.f));
+const reactChunk = rows.find((r) => /^react-.*\.js$/.test(r.f) && !r.f.startsWith("react-dom"));
+assert.ok(reactDomChunk, "react-dom-*.js chunk missing after vendor split");
+assert.ok(reactChunk, "react-*.js chunk missing after vendor split");
+console.log(
+  `  ✓ vendor split: ${reactChunk.f} gzip=${(reactChunk.gz / 1024).toFixed(1)} KiB · ${reactDomChunk.f} gzip=${(reactDomChunk.gz / 1024).toFixed(1)} KiB`,
+);
+const legacyVendor = rows.filter((r) => /^vendor-.*\.js$/.test(r.f));
+assert.equal(
+  legacyVendor.length,
+  0,
+  `legacy vendor-*.js must be split: ${legacyVendor.map((r) => r.f).join(", ")}`,
+);
+
 for (const banned of [
   "SEED_FAWAID",
   "ADHKAR_ITEMS",

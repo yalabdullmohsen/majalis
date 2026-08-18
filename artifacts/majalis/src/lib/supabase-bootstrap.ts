@@ -4,50 +4,22 @@
  */
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { getSupabaseAnonKeyEnv, getSupabaseUrlEnv } from "./supabase-env";
+import {
+  getEffectiveSupabaseAnonKey,
+  getEffectiveSupabaseUrl,
+  isEffectiveSupabaseConfigured,
+  setRuntimeSupabaseConfig,
+} from "./supabase-env";
 import { RequestManager, REQUEST_TIMEOUT_MS } from "./request-manager";
 
-let runtimeUrl = "";
-let runtimeKey = "";
+export {
+  getEffectiveSupabaseAnonKey,
+  getEffectiveSupabaseUrl,
+  isEffectiveSupabaseConfigured,
+  setRuntimeSupabaseConfig,
+} from "./supabase-env";
+
 let bootstrapPromise: Promise<boolean> | null = null;
-
-function normalizeSupabaseUrl(raw: string): string {
-  const v = (raw || "").trim();
-  try {
-    return new URL(v).origin;
-  } catch {
-    return v.replace(/\/+$/, "");
-  }
-}
-
-function isValidConfig(url: string, key: string): boolean {
-  if (!url.startsWith("http") || key.length <= 20) return false;
-  if (/placeholder|_supabase/i.test(url) || /placeholder/i.test(key)) return false;
-  try {
-    const host = new URL(url).host;
-    const ref = host.split(".")[0] || "";
-    return host.endsWith(".supabase.co") && /^[a-z0-9-]+$/i.test(ref) && ref.length >= 8;
-  } catch {
-    return false;
-  }
-}
-
-export function getEffectiveSupabaseUrl(): string {
-  return normalizeSupabaseUrl(getSupabaseUrlEnv() || runtimeUrl);
-}
-
-export function getEffectiveSupabaseAnonKey(): string {
-  return getSupabaseAnonKeyEnv() || runtimeKey;
-}
-
-export function isEffectiveSupabaseConfigured(): boolean {
-  return isValidConfig(getEffectiveSupabaseUrl(), getEffectiveSupabaseAnonKey());
-}
-
-export function setRuntimeSupabaseConfig(url: string, key: string) {
-  runtimeUrl = normalizeSupabaseUrl(url);
-  runtimeKey = key.trim();
-}
 
 export async function bootstrapSupabaseFromServer(): Promise<boolean> {
   if (isEffectiveSupabaseConfigured()) return true;

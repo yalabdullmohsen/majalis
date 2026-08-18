@@ -38,7 +38,7 @@ function sanitizeClientMessage(message: string): string {
 import {
   getEffectiveSupabaseAnonKey,
   getEffectiveSupabaseUrl,
-} from "./supabase-bootstrap";
+} from "./supabase-env";
 
 export function isSupabaseConfigured(): boolean {
   const url = getEffectiveSupabaseUrl();
@@ -55,7 +55,7 @@ export function isSupabaseConfigured(): boolean {
 }
 
 /** Re-export for modules that check bootstrap state */
-export { isEffectiveSupabaseConfigured } from "./supabase-bootstrap";
+export { isEffectiveSupabaseConfigured } from "./supabase-env";
 
 export function logSupabaseError(scope: string, error: unknown, extra?: Record<string, unknown>) {
   console.error(`[majalis:${scope}]`, error, extra ?? "");

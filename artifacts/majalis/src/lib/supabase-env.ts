@@ -34,3 +34,45 @@ export function getSupabaseUrlEnv(): string {
 export function getSupabaseAnonKeyEnv(): string {
   return pickEnv("VITE_SUPABASE_ANON_KEY", "NEXT_PUBLIC_SUPABASE_ANON_KEY", "SUPABASE_ANON_KEY");
 }
+
+function normalizeSupabaseUrl(raw: string): string {
+  const v = (raw || "").trim();
+  try {
+    return new URL(v).origin;
+  } catch {
+    return v.replace(/\/+$/, "");
+  }
+}
+
+function isValidConfig(url: string, key: string): boolean {
+  if (!url.startsWith("http") || key.length <= 20) return false;
+  if (/placeholder|_supabase/i.test(url) || /placeholder/i.test(key)) return false;
+  try {
+    const host = new URL(url).host;
+    const ref = host.split(".")[0] || "";
+    return host.endsWith(".supabase.co") && /^[a-z0-9-]+$/i.test(ref) && ref.length >= 8;
+  } catch {
+    return false;
+  }
+}
+
+/** قيم /api/public-config بعد الإقلاع — بلا createClient حتى لا تدخل supabase-js حزمة الإقلاع. */
+let runtimeUrl = "";
+let runtimeKey = "";
+
+export function setRuntimeSupabaseConfig(url: string, key: string) {
+  runtimeUrl = normalizeSupabaseUrl(url);
+  runtimeKey = key.trim();
+}
+
+export function getEffectiveSupabaseUrl(): string {
+  return normalizeSupabaseUrl(getSupabaseUrlEnv() || runtimeUrl);
+}
+
+export function getEffectiveSupabaseAnonKey(): string {
+  return getSupabaseAnonKeyEnv() || runtimeKey;
+}
+
+export function isEffectiveSupabaseConfigured(): boolean {
+  return isValidConfig(getEffectiveSupabaseUrl(), getEffectiveSupabaseAnonKey());
+}

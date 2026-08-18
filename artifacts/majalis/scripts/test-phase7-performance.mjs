@@ -28,7 +28,9 @@ assert.match(vite, /assetsInlineLimit:\s*4096/, "inline small assets");
 assert.match(vite, /cssCodeSplit:\s*true/, "CSS code splitting enabled");
 assert.match(vite, /plugins:\s*\[/, "Vite plugins array must remain (react/tailwind/api)");
 assert.match(vite, /resolve:\s*\{[\s\S]*dedupe:\s*\["react",\s*"react-dom"\]/, "react dedupe");
-assert.match(vite, /isReactCoreModule|\/react-dom/, "precise react vendor matcher");
+assert.match(vite, /vendorChunkName|isReactCoreModule|\/react-dom/, "precise react vendor matcher");
+assert.match(vite, /return "react-dom"/, "react-dom split from react for TBT");
+assert.match(vite, /return "react"/, "react core own chunk");
 assert.doesNotMatch(
   vite,
   /if \(id\.includes\("react"\) \|\| id\.includes\("wouter"\)/,
