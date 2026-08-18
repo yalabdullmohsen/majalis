@@ -427,8 +427,8 @@ html.dark .nav-soon-badge {
 }
 
 @keyframes header-ticker-marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(50%, 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -569,7 +569,7 @@ html.dark .nav-soon-badge {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft);
 }
-.hsh-steps { gap: .75rem; }
+.hsh-steps { gap: .75rem; content-visibility: auto; contain-intrinsic-size: auto 12rem; }
 .hsh-step { min-height: 0; border-radius: var(--radius-md); border-color: var(--color-border); box-shadow: none; }
 
 /* Lesson cards intentionally have no media slot. */

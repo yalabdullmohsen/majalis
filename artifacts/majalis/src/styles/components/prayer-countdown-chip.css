@@ -51,7 +51,7 @@
   height: 6px;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 0 0 0 color-mix(in srgb, #fff 55%, transparent);
+  will-change: transform, opacity;
   animation: prayer-chip-pulse 1.6s ease-out infinite;
 }
 
@@ -121,14 +121,13 @@ html[data-theme="dark"] .prayer-countdown-chip--now {
 }
 
 @keyframes prayer-chip-pulse {
-  0% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, #fff 50%, transparent);
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
   }
   70% {
-    box-shadow: 0 0 0 5px transparent;
-  }
-  100% {
-    box-shadow: 0 0 0 0 transparent;
+    transform: scale(1.45);
+    opacity: 0.35;
   }
 }
 

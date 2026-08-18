@@ -16,5 +16,6 @@ assert.match(src, /LessonsPage/);
 assert.match(src, /PrayerTimesPage/);
 assert.match(src, /QuranKnowledgeHubPage/);
 assert.match(src, /requestIdleCallback/);
+assert.match(src, /10_000/);
 assert.match(main, /prefetchTopRoutesOnIdle/);
 console.log("  ✓ prefetch-top-routes على الخمول");

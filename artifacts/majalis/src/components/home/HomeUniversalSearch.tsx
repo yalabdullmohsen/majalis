@@ -10,17 +10,22 @@ import {
   addSearchHistory,
   getSearchHistory,
 } from "@/lib/search-history";
-import {
-  UNIVERSAL_DEBOUNCE_MS,
-  UNIVERSAL_SECTION_LABELS,
-  UNIVERSAL_SECTION_ORDER,
-  enrichWithVerseHits,
-  runUniversalSearch,
-  type UniversalHit,
-  type UniversalSectionId,
-  type UniversalSearchResponse,
+import type {
+  UniversalHit,
+  UniversalSectionId,
+  UniversalSearchResponse,
 } from "@/features/search/universal-home-search";
 import "@/styles/components/home-universal-search.css";
+
+const UNIVERSAL_DEBOUNCE_MS = 120;
+const UNIVERSAL_SECTION_ORDER = ["quran", "book", "scholar", "adhkar", "quiz"] as const;
+const UNIVERSAL_SECTION_LABELS: Record<(typeof UNIVERSAL_SECTION_ORDER)[number], string> = {
+  quran: "آيات القرآن",
+  book: "الكتب",
+  scholar: "العلماء",
+  adhkar: "الأذكار",
+  quiz: "أسئلة المسابقة",
+};
 
 const FOCUS_SUGGESTIONS = [
   "البقرة ٢٥٥",
@@ -86,6 +91,9 @@ export function HomeUniversalSearch() {
         const { loadUnifiedSearchIndex } = await import("@/features/search/unified-local");
         await loadUnifiedSearchIndex();
         if (ac.signal.aborted) return;
+        const { runUniversalSearch, enrichWithVerseHits } = await import(
+          "@/features/search/universal-home-search"
+        );
         let res = await runUniversalSearch(debounced, { signal: ac.signal });
         if (ac.signal.aborted) return;
         startTransition(() => setPayload(res));
