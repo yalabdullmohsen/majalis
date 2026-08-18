@@ -1,0 +1,57 @@
+/**
+ * حجز الشاشة الأولى فقط — يُضمَّن في HTML. الباقي غير حاجب.
+ * لا !important. الارتفاع من الرموز نفسها المستخدمة بعد التحميل.
+ */
+@font-face {
+  font-family: "Amiri";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/ui/amiri-400-ar.woff2") format("woff2");
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+0660-0669;
+}
+
+:root {
+  --ticker-h: 2.25rem;
+  --ticker-row-pad-block: 0;
+}
+
+body {
+  font-family: "Amiri", "Noto Naskh Arabic", serif;
+}
+
+.header-ticker {
+  height: var(--ticker-h);
+  min-height: var(--ticker-h);
+  max-height: var(--ticker-h);
+  box-sizing: border-box;
+}
+
+.navbar-ticker-row {
+  min-height: var(--ticker-h);
+}
+
+.m2030-hero.page-hero-mj,
+.home-page-hero.page-hero-mj {
+  min-height: 11rem;
+}
+
+.mj-home-lcp-ph {
+  contain: layout style;
+}
+
+.mj-home-lcp-ph__start-here {
+  min-height: 37.8rem;
+}
+
+.mj-home-lcp-ph__daily-band {
+  min-height: 47rem;
+}
+
+.mj-home-below-fold-ph {
+  min-height: 28rem;
+}
+
+.mj-home-lcp-ph__search .hus-field {
+  min-height: 48px;
+}

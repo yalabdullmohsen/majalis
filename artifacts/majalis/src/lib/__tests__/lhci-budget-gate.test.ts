@@ -18,14 +18,41 @@ const ci = readFileSync(resolve(repo, ".github/workflows/ci.yml"), "utf8");
 assert.match(rc, /LHCI_URL/, "عنوان القياس قابل للضبط");
 assert.match(rc, /formFactor:\s*"mobile"/, "قياس جوال");
 assert.match(rc, /numberOfRuns:\s*3/, "٣ تشغيلات");
+assert.match(rc, /throttlingMethod:\s*"simulate"/, "simulate كـ PSI");
+assert.match(rc, /rttMs:\s*150/, "PSI RTT 150ms");
+assert.match(rc, /throughputKbps:\s*1638\.4/, "PSI throughput Slow 4G");
+assert.match(rc, /cpuSlowdownMultiplier:\s*4/, "PSI CPU ×4");
 assert.match(rc, /"warn"[\s\S]*minScore:\s*0\.75/, "أداء 0.75 تحذير — ليس 0.99 حلماً");
 assert.doesNotMatch(rc, /minScore:\s*0\.99/, "لا عتبة أداء حلم 0.99 تُفشل أو تُضلّل");
 assert.match(rc, /categories:accessibility[\s\S]*minScore:\s*1/, "a11y = 1 خطأ");
 assert.match(rc, /categories:best-practices[\s\S]*minScore:\s*1/, "BP = 1 خطأ");
 assert.match(rc, /categories:seo[\s\S]*minScore:\s*1/, "SEO = 1 خطأ");
-assert.match(rc, /largest-contentful-paint[\s\S]*maxNumericValue:\s*8000/, "LCP ≤8000ms خطأ — عتبة CI بعد قياس 7.1ث");
+assert.match(
+  rc,
+  /largest-contentful-paint[\s\S]*maxNumericValue:\s*8000/,
+  "LCP ≤8000ms خطأ — عتبة CI؛ هدف إعلان PSI 5500 بعد انخفاض وسيط LHCI",
+);
+assert.doesNotMatch(
+  rc,
+  /largest-contentful-paint[\s\S]*maxNumericValue:\s*5500/,
+  "لا تُفرض LCP 5500 على LHCI قبل أن يقيس CI أقل من 5500 (الواقع ≈7.1ث)",
+);
 assert.match(rc, /total-blocking-time[\s\S]*maxNumericValue:\s*900/, "TBT ≤900ms خطأ");
-assert.match(rc, /cumulative-layout-shift[\s\S]*maxNumericValue:\s*0\.08/, "CLS ≤0.08 خطأ");
+assert.match(
+  rc,
+  /cumulative-layout-shift[\s\S]*maxNumericValue:\s*0\.03/,
+  "CLS ≤0.030 خطأ — تحصين فحص PSI 10 (0.017)",
+);
+assert.doesNotMatch(rc, /maxNumericValue:\s*0\.08/, "عتبة CLS 0.08 أوسع من الواقع بعد التعافي");
+assert.match(rc, /"dom-size"[\s\S]*maxNumericValue:\s*1200/, "DOM ≤1200 خطأ");
+assert.match(
+  rc,
+  /render-blocking-resources[\s\S]*maxNumericValue:\s*300/,
+  "حظر عرض ≤300ms خطأ — بعد تحويل index-*.css إلى غير حاجب",
+);
+assert.match(rc, /"unused-css-rules"/, "تأكيد unused-css خام (warn؛ numericValue بالمللي ثانية)");
+assert.match(rc, /"unused-javascript"/, "تأكيد unused-js خام (warn؛ numericValue بالمللي ثانية)");
+assert.match(rc, /"forced-reflow-insight"/, "تأكيد إعادة التدفق الإلزامية (warn حتى الإصلاح)");
 assert.doesNotMatch(rc, /budgetFile/, "ميزانية الموارد ليست خطأ دمج في هذه الدفعة");
 assert.match(budget, /"budget":\s*150/, "JS موثّق ≤150KiB (غير ملزم بعد)");
 assert.match(vite, /sourcemap:\s*"hidden"/, "sourcemap مخفي");
