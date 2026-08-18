@@ -496,3 +496,58 @@ JS غير مستخدم: supabase 44KiB + index 35KiB.
 | PSI فحص 10 (قبل، مرجعي) | 52 | 4.7ث | 1100 | 0.017 | 3.7ث |
 | PSI بعد النشر | لم يُقَس بعد | | | | |
 
+## تقسيم vendor / TBT — `perf/tbt-vendor-split`
+
+مقياس واحد: TBT. لا خلط مع صدفة LCP. الهدف المعلن بعد PSI: **≤ 600ms** (لا وعد بدرجة 100). عتبة LHCI الحمراء تبقى 900 حتى يثبت PSI.
+
+### أكبر 10 وحدات JS (بناء محلي، gzip level 9 — غير مرجعي)
+
+قبل (حزمة `vendor` موحّدة + `createClient` ساكن في الإقلاع):
+
+| # | الملف | خام | gzip |
+|---|---|---:|---:|
+| 1 | `fawaid-curated-seed-*` | 1345 | 132 |
+| 2 | `index-*` | 393 | 120 |
+| 3 | `prophetic-medicine-seed-*` | 670 | 93 |
+| 4 | `fawaid-seed-*` | 461 | 63 |
+| 5 | **`vendor-*`** | 187 | 59 |
+| 6 | **`supabase-*`** (استيراد ساكن من `index`) | 203 | 52 |
+| 7 | `nations-seed-*` | 242 | 44 |
+| 8 | `IslamicGlossaryPage-*` | 247 | 42 |
+| 9 | `maps-*` | 146 | 42 |
+| 10 | `icons-*` | 70 | 22 |
+
+البذور والمسارات الكسولة ليست على مسار الإقلاع. عنق TBT: `index` + `vendor` + `supabase` الساكن.
+
+### السبب الجذري
+
+`AdminRouteGuard` → `auth-messages` → `supabase-config` → `supabase-bootstrap` → `import { createClient } from "@supabase/supabase-js"`. الاستيراد أعلى الملف يجعل أي استخدام لـ `getEffectiveSupabaseUrl` يسحب مكتبة العميل كاملة إلى `index` رغم أن `AuthProvider` يحمّل العميل ديناميكيًا.
+
+فرض `manualChunks` على مسارات `src/` ممنوع (يسحب commons إلى الإقلاع).
+
+### ما تغيّر
+
+1. نقل حالة URL/المفتاح الفعّال إلى `supabase-env.ts` — بلا `createClient`.
+2. `supabase-config.ts` يستورد من `supabase-env` لا من `bootstrap`.
+3. تقسيم `vendor`: `react` · `react-dom` (+ scheduler) · `wouter` — مهام تحليل منفصلة.
+4. بوابة: `index` لا `from "./supabase-"` · لا حزمة `vendor-*`.
+
+### بعد البناء المحلي (غير مرجعي)
+
+استيراد `index` الساكن: `react` + `react-dom` + `query` + `wouter` + `icons` — **بدون supabase**.
+
+| | gzip |
+|---|---:|
+| `react-*` | 3.3 KiB |
+| `react-dom-*` | 54.2 KiB |
+| `index-*` | 120.8 KiB |
+| `supabase-*` (ديناميكي الآن) | 52.3 KiB |
+
+`icons` ما زال ساكنًا (شريط التنقّل + `sections.registry`) — خارج هذا الـPR.
+
+| | أداء | LCP | TBT | CLS | FCP |
+|---|---:|---:|---:|---:|---:|
+| PSI فحص 10 (قبل، مرجعي) | 52 | 4.7ث | 1100 | 0.017 | 3.7ث |
+| PSI بعد النشر | لم يُقَس بعد | | | | |
+
+عند نزول TBT على PSI تحت 900: خفّض العتبة الحمراء في `lighthouserc.cjs` في نفس الـPR. لا تُفتح صدفة LCP v2 قبل TBT ≤ 600 وCLS ≤ 0.03.

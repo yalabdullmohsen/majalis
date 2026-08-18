@@ -41,6 +41,19 @@ assert.doesNotMatch(
   "لا bootstrap Supabase قبل createRoot",
 );
 
+const supabaseConfig = read("src/lib/supabase-config.ts");
+assert.doesNotMatch(
+  supabaseConfig,
+  /supabase-bootstrap/,
+  "supabase-config لا يستورد bootstrap حتى لا يدخل createClient حزمة الإقلاع",
+);
+assert.match(supabaseConfig, /from ["']\.\/supabase-env["']/, "فحص الإعداد عبر supabase-env بلا عميل JS");
+
+const vite = read("vite.config.ts");
+assert.match(vite, /return "react-dom"/, "react-dom حزمة مستقلة");
+assert.match(vite, /return "react"/, "react حزمة مستقلة");
+assert.doesNotMatch(vite, /if \(isReactCoreModule\(id\)\) return "vendor"/, "لا حزمة vendor موحّدة");
+
 const tickerCss = read("src/styles/final-release.css");
 assert.match(tickerCss, /translate3d\(0, 0, 0\)/, "الماركي مركّب");
 const pulseCss = read("src/styles/components/prayer-countdown-chip.css");
