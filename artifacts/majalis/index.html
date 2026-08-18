@@ -270,14 +270,14 @@
     </script>
     <div id="mj-lcp-chrome">
       <div class="mj-lcp-nav-ph" aria-hidden="true"></div>
-      <h1 id="mj-lcp-title" class="mj-lcp-title page-hero-mj__title">المجلس العلمي</h1>
+      <h1 id="mj-lcp-title" class="mj-lcp-title">المجلس العلمي</h1>
     </div>
     <script>
       (function () {
         var p = location.pathname;
         if (p !== "/" && p !== "") {
           var chrome = document.getElementById("mj-lcp-chrome");
-          if (chrome) chrome.hidden = true;
+          if (chrome) chrome.remove();
         }
       })();
     </script>

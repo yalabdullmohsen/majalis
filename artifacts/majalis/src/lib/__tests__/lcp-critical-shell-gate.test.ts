@@ -18,7 +18,8 @@ assert.match(html, /id="mj-lcp-chrome"/, "صدفة LCP خارج #root");
 assert.match(html, /id="mj-lcp-title"/, "عنوان LCP بمعرّف ثابت");
 assert.match(html, />المجلس العلمي</, "نص العنوان ثابت في HTML");
 assert.match(html, /id="mj-lcp-critical"/, "CSS حرجة مضمّنة للصدفة");
-assert.doesNotMatch(html, /<div id="root">[\s\S]*mj-lcp-title/, "العنوان ليس داخل #root");
+assert.doesNotMatch(html, /mj-lcp-title page-hero-mj__title/, "صنف الهيرو يُضاف بعد النقل فقط");
+assert.match(html, /chrome\.remove\(\)/, "صدفة LCP تُحذف خارج الرئيسية");
 assert.doesNotMatch(html, /dns-prefetch/, "لا dns-prefetch في الإقلاع");
 {
   const n = [...html.matchAll(/rel="preconnect"/g)].length;

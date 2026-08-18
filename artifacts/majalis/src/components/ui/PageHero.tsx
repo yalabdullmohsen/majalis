@@ -51,13 +51,15 @@ export function PageHero({
     const slot = titleSlotRef.current;
     if (!titleEl || !slot) return;
     if (titleEl.parentElement !== slot) slot.appendChild(titleEl);
+    titleEl.classList.add("page-hero-mj__title");
     document.documentElement.classList.add("mj-lcp-adopted");
     return () => {
       document.documentElement.classList.remove("mj-lcp-adopted");
       const chrome = document.getElementById("mj-lcp-chrome");
       if (chrome && titleEl.parentElement !== chrome) {
+        titleEl.classList.remove("page-hero-mj__title");
         chrome.appendChild(titleEl);
-        chrome.hidden = true;
+        chrome.remove();
       }
     };
   }, [titleDomId]);
