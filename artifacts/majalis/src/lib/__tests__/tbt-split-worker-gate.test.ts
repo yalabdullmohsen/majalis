@@ -33,4 +33,8 @@ assert.match(tickerCss, /translate3d\(0, 0, 0\)/, "الماركي مركّب");
 const pulseCss = read("src/styles/components/prayer-countdown-chip.css");
 assert.doesNotMatch(pulseCss, /@keyframes prayer-chip-pulse[\s\S]*box-shadow/, "نبض الشريحة بلا box-shadow");
 
+const dsCss = read("src/styles/design-system.css");
+assert.doesNotMatch(dsCss, /@keyframes ds-shimmer[\s\S]*background-position/, "هيكل ds بلا background-position");
+assert.match(dsCss, /@keyframes ds-shimmer[\s\S]*translate3d/, "هيكل ds مركّب");
+
 console.log("tbt-split-worker-gate.test.ts: ok");

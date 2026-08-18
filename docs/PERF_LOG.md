@@ -164,4 +164,44 @@ JS الابتدائي = `index` + `vendor` + `query` + `supabase-CWJnfID4` + `ic
 
 **ملاحظة:** أرقام CLI المحلية أسوأ من PSI الفحص الثامن (أداء 67 / LCP 8.6 / TBT 270 / CLS 0.002). لا تُخلط الأداتان. PSI بعد #1263 **لم يُقَس** (حصة API مستنفدة).
 
+## المرحلة 7 — TBT منشور (`perf/tbt-split-worker` · #1264)
+
+**إنتاج:** `version.json` → `d1e7844` (`builtAt` 2026-08-18T06:07:08Z).
+
+**قياس وسيط ٣ تشغيلات بعد هذا الـcommit:** يُسجَّل مع قياس الدفعة التالية (تباين + CSS) على الإنتاج نفسه بعد الدمج — لا رقم بلا قياس.
+
+## المرحلة 8 — a11y تباين 96→100 (`a11y/contrast-100`)
+
+**سبب 96 (Lighthouse ر1 بعد #1263):** `color-contrast` فقط.
+
+| العنصر | المقاس | المطلوب | الألوان |
+|---|---:|---:|---|
+| `.home-section-link` | 4.49:1 | 4.5:1 | `#1F7A5A` على `#E4F0EA` |
+| `.lesson-unified-card__status` | 4.00:1 | 4.5:1 | `#1F7A5A` على `#D8E3E0` |
+
+**ما تغيّر (رموز لا ترقيع هكس)**
+
+- `--text-brand` و`--msk-gold` النهاريان → `--brand-on-white` (`#146C4E`) — 5.46:1 على `#E4F0EA`.
+- زوج CONTRAST_PAIRS: `--brand-on-white` على `#E4F0EA`.
+- شارة الحالة → `--chip-fg` / `--chip-bg` (8.74:1).
+- `--mj-muted` الليلي يبقى `#C5D0CB`. ملء `--mj-brand` `#1F7A5A` لم يُغمَّق.
+
+## المرحلة 9 — CSS مؤجّل + حركة مركّبة (`perf/css-decompose` ضمن نفس الدفعة)
+
+- `design-system` / `brand-v4-components` / interactions بعد `load`+idle (كانت `void import` فوريًا).
+- `m2030/pages.css` بقي في المسار الحرج لتفادي وميض بطاقات الدروس.
+- هياكل `ds-shimmer` / `skeleton-sweep` / `skeleton-shimmer` / `mj-skel-brightness` بحركة `transform`/`opacity` لا `background-position` ولا `filter`.
+- سقف gzip الحرج ما زال 60KiB (الهدف 20KiB يحتاج تقسيم `index.css` — لم يُنفَّذ هنا حتى لا يُكسر الشكل).
+- `vercel.json`: رؤوس `/assets` و`/fonts` immutable موجودة أصلًا — لا تعديل (مسار خطر إن أُضيفت سياسة جديدة).
+- preconnect ≤2 و`sourcemap: "hidden"` + `strip:sourcemaps` موجودة أصلًا.
+
+## المرحلة 10 — LHCI + ميزانية (`chore/lighthouse-ci-budget`)
+
+- `artifacts/majalis/lighthouserc.cjs` + `budget.json` + `pnpm lighthouse:ci` (محلي/يدوي على الإنتاج).
+- التأكيدات: أداء ≥0.99 · a11y=1 · BP=1 · SEO=1 · LCP≤1300ms · TBT≤150ms · CLS≤0.05 · JS≤150KiB · CSS≤20KiB · طلبات≤25.
+- **لا وظيفة GitHub مطلوبة للدمج:** `.github/workflows/**` مسار خطر للدمج التلقائي. تشغيل `lighthouse:ci` الآن سيفشل حتى يصل الإنتاج للعتبة — هذا متوقَّع وليس بوابة Verify build.
+
+**قياس إنتاج بعد نشر هذه الدفعة:** وسيط ٣ تشغيلات — يُسجَّل هنا بعد `version.json` الجديد. لا إعلان 100 قبل القياس.
+
+
 

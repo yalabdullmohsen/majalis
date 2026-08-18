@@ -5107,20 +5107,23 @@ body.has-assistant-fab .app-main {
 
 .page-skeleton,
 .ui-skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--majalis-parchment-deep, #F0EBE0) 25%,
-    var(--majalis-parchment, #F9F6EF) 50%,
-    var(--majalis-parchment-deep, #F0EBE0) 75%
-  );
-  background-size: 200% 100%;
-  animation: skeleton-sweep 1.6s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+  background: var(--majalis-parchment-deep, #F0EBE0);
   border-radius: var(--ds-radius);
+}
+.page-skeleton::after,
+.ui-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, var(--majalis-parchment, #F9F6EF) 50%, transparent 100%);
+  transform: translate3d(-100%, 0, 0);
+  animation: skeleton-sweep 1.6s ease-in-out infinite;
 }
 
 @keyframes skeleton-sweep {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  to { transform: translate3d(100%, 0, 0); }
 }
 
 /* ── Dark mode ── */
@@ -5569,15 +5572,22 @@ button,
 /* ── أنيميشن Skeleton ── */
 
 @keyframes skeleton-shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position:  200% 0; }
+  to { transform: translate3d(100%, 0, 0); }
 }
 
 .skeleton-base {
-  background: linear-gradient(90deg, #f0f4f2 25%, #e4ede8 50%, #f0f4f2 75%);
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.5s infinite;
+  position: relative;
+  overflow: hidden;
+  background: #f0f4f2;
   border-radius: var(--ds-radius);
+}
+.skeleton-base::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, #e4ede8 50%, transparent 100%);
+  transform: translate3d(-100%, 0, 0);
+  animation: skeleton-shimmer 1.5s infinite;
 }
 
 /* ── OfflineBanner ── */
