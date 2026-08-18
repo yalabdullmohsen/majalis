@@ -35,6 +35,9 @@ if (typeof med.tbtMs === "number" && med.tbtMs > b.tbtMs) {
 if (typeof med.lcpMs === "number" && med.lcpMs > b.lcpMs) {
   fails.push(`LCP انحدار: ${med.lcpMs} > أساس ${b.lcpMs}`);
 }
+if (typeof med.cls === "number" && med.cls > Math.max(b.cls ?? 0, 0.05)) {
+  fails.push(`CLS انحدار: ${med.cls} > سقف ${Math.max(b.cls ?? 0, 0.05)}`);
+}
 
 if (fails.length) {
   console.error("perf-regression-gate FAILED:");

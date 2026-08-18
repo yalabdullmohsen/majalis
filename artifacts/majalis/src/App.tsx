@@ -570,7 +570,7 @@ function NativeNotificationsBootstrap() {
 function HomeLazyRoute() {
   return (
     <ErrorBoundary>
-      <Suspense fallback={<div className="mj-home-lcp-ph" style={{ minHeight: "12rem" }} aria-hidden="true" />}>
+      <Suspense fallback={<div className="mj-home-lcp-ph" aria-hidden="true" />}>
         <HomePage />
       </Suspense>
     </ErrorBoundary>

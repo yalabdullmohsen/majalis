@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { useId, useLayoutEffect, useRef, useState } from "react";
+import { useId, useState } from "react";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { cn } from "@/lib/utils";
 import { PatternBackdrop } from "./PatternBackdrop";
@@ -18,8 +18,6 @@ type PageHeroProps = {
   fullBleed?: boolean;
   className?: string;
   children?: ReactNode;
-  /** انقل عنصر LCP الثابت (نفس العقدة) إلى مكان العنوان — بلا h1 ثانٍ. */
-  titleDomId?: string;
 };
 
 /**
@@ -37,38 +35,16 @@ export function PageHero({
   fullBleed = true,
   className,
   children,
-  titleDomId,
 }: PageHeroProps) {
   const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
   const [nudge, setNudge] = useState(false);
   const titleId = useId();
-  const labelledBy = titleDomId || titleId;
-  const titleSlotRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    if (!titleDomId) return;
-    const titleEl = document.getElementById(titleDomId);
-    const slot = titleSlotRef.current;
-    if (!titleEl || !slot) return;
-    if (titleEl.parentElement !== slot) slot.appendChild(titleEl);
-    titleEl.classList.add("page-hero-mj__title");
-    document.documentElement.classList.add("mj-lcp-adopted");
-    return () => {
-      document.documentElement.classList.remove("mj-lcp-adopted");
-      const chrome = document.getElementById("mj-lcp-chrome");
-      if (chrome && titleEl.parentElement !== chrome) {
-        titleEl.classList.remove("page-hero-mj__title");
-        chrome.appendChild(titleEl);
-        chrome.remove();
-      }
-    };
-  }, [titleDomId]);
 
   return (
     <header
       className={cn("page-hero-mj", fullBleed && "page-hero-mj--bleed", className)}
       dir="rtl"
-      aria-labelledby={labelledBy}
+      aria-labelledby={titleId}
     >
       {withPattern ? <PatternBackdrop /> : null}
       <div className="page-hero-mj__content">
@@ -87,11 +63,7 @@ export function PageHero({
           </button>
         ) : null}
         {eyebrow ? <p className="page-hero-mj__eyebrow">{eyebrow}</p> : null}
-        {titleDomId ? (
-          <div ref={titleSlotRef} className="page-hero-mj__title-slot" />
-        ) : (
-          <h1 id={titleId} className="page-hero-mj__title">{title}</h1>
-        )}
+        <h1 id={titleId} className="page-hero-mj__title">{title}</h1>
         {headline ? <p className="page-hero-mj__headline">{headline}</p> : null}
         {description ? <p className="page-hero-mj__desc">{description}</p> : null}
         {actions ? <div className="page-hero-mj__actions">{actions}</div> : null}

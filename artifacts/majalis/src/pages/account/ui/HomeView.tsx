@@ -169,7 +169,6 @@ export default function HomePage() {
         fullBleed={false}
         eyebrow={dailyCtx.greeting}
         title="المجلس العلمي"
-        titleDomId="mj-lcp-title"
         actions={
           <Link
             href={continueHref}

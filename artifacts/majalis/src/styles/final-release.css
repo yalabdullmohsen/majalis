@@ -569,7 +569,7 @@ html.dark .nav-soon-badge {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft);
 }
-.hsh-steps { gap: .75rem; content-visibility: auto; contain-intrinsic-size: auto 12rem; }
+.hsh-steps { gap: .75rem; }
 .hsh-step { min-height: 0; border-radius: var(--radius-md); border-color: var(--color-border); box-shadow: none; }
 
 /* Lesson cards intentionally have no media slot. */
