@@ -29,7 +29,7 @@ function statusFor(lesson: KuwaitLessonRecord, featuredHome?: boolean): string {
   const rel = formatRelativeTimeDetailed(ms, lesson.time);
   if (/غدا|غدًا/u.test(rel)) return "غداً";
   if (/اليوم|الآن/u.test(rel)) return "اليوم";
-  if (lesson.archived) return "منتهٍ";
+  if (lesson.archivedAt) return "منتهٍ";
   return rel || "قريب";
 }
 
