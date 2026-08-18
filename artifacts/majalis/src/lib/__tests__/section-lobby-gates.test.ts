@@ -71,7 +71,9 @@ assert.match(lobbyCmp, /SectionCard/);
 assert.match(lobbyCmp, /chip-label/);
 assert.match(lobbyCmp, /data-lobby-shot/);
 assert.doesNotMatch(lobbyCmp, /page-hero-mj/);
-assert.doesNotMatch(lobbyCmp, /رجوع/);
+assert.match(lobbyCmp, /data-section-back/);
+assert.match(lobbyCmp, /رجوع/);
+assert.match(lobbyCmp, /goBackOrFallback/);
 
 console.log("=== محتوى السجل ===");
 const quran = getLobby("quran");

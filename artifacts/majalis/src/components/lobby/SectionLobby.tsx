@@ -1,8 +1,12 @@
 import type { ReactNode } from "react";
+import { ArrowRight } from "lucide-react";
+import { useLocation } from "wouter";
+import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { FeaturedSectionCard } from "@/components/sections/FeaturedSectionCard";
 import { SectionCard } from "@/components/sections/SectionCard";
 import type { LobbyChip, LobbyGroup, LobbyId, LobbyItem, LobbyPrimary } from "@/config/section-lobbies";
 import type { SectionDef } from "@/config/sections.registry";
+import { goBackOrFallback } from "@/lib/navigation-back";
 import { cn } from "@/lib/utils";
 import "./section-lobby.css";
 
@@ -50,6 +54,7 @@ export function SectionLobby({
   children,
   className,
 }: Props) {
+  const [location] = useLocation();
   return (
     <div
       className={cn("section-lobby", className)}
@@ -62,6 +67,16 @@ export function SectionLobby({
     >
       <div className="section-lobby__shot" data-lobby-shot="1">
         <header className="section-lobby__head">
+          <button
+            type="button"
+            className="section-lobby__back"
+            data-section-back="1"
+            aria-label="رجوع"
+            onClick={() => goBackOrFallback(location)}
+          >
+            <DirectionalIcon icon={ArrowRight} size={18} strokeWidth={2.2} />
+            <span>رجوع</span>
+          </button>
           <h1
             className={cn(
               "section-lobby__title",

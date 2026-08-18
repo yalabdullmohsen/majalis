@@ -34,6 +34,28 @@
   min-width: 0;
 }
 
+.section-lobby__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.4rem 0.85rem;
+  margin: 0;
+  border-radius: 999px;
+  border: 1px solid var(--mj-hairline, var(--color-border));
+  background: var(--mj-surface, var(--color-surface));
+  color: var(--mj-ink, var(--color-text));
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  touch-action: manipulation;
+  appearance: none;
+}
+
 .section-lobby__title,
 .section-lobby .quran-hub-page__title {
   margin: 0;
