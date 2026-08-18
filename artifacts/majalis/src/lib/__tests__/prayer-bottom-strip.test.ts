@@ -10,7 +10,6 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
 const css = readFileSync(resolve(appRoot, "src/styles/pages/prayer-times.css"), "utf8");
-const app = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8");
 
 assert.match(
   css,
@@ -25,13 +24,13 @@ assert.match(
 );
 assert.match(
   css,
-  /html\.pts-immersive,\s*\nhtml\.pts-immersive body \{/,
-  "html/body تحت pts-immersive إن وُجد الصنف",
+  /html\.pts-immersive,\s*\nhtml\.pts-immersive body,\s*\nhtml\.pts-immersive #root/,
+  "html/body/#root موحّدان تحت الشريط",
 );
-assert.doesNotMatch(
+assert.match(
   css,
-  /html\.pts-immersive #root/,
-  "لوبي الصلاة لا يطلي #root — يشارك --surface-app",
+  /html\.pts-immersive #root[\s\S]*?background-color:\s*var\(--em-950/,
+  "#root مطلي بزمرد الصلاة لا --app-bg",
 );
 assert.match(
   css,
@@ -59,12 +58,5 @@ assert.doesNotMatch(
   /\.pts-screen\s*\{[^}]*margin-block-start:\s*calc\(\s*-1\s*\*\s*var\(--inset-top\)/,
   "لا سحب سالب تحت النوتش",
 );
-
-assert.doesNotMatch(
-  app,
-  /classList\.toggle\(\s*["']pts-immersive["']/,
-  "لا غمر زمردي على html/#root في لوبي الصلاة",
-);
-assert.match(app, /classList\.remove\(\s*["']pts-immersive["']/);
 
 console.log("prayer-bottom-strip.test.ts: ok");
