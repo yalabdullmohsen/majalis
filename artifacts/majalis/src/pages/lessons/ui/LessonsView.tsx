@@ -10,13 +10,11 @@ import { getLobby } from "@/config/section-lobbies";
 import {
   ActiveFilters,
   FilterSheet,
-  FilterToggle,
   type ActiveFilterItem,
 } from "@/components/filters";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
-import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
-import { computeNextOccurrenceMs } from "@/lib/lesson-time";
+import { CompactLessonRow, LessonsQuickBar } from "@/components/lessons/LessonsCompactChrome";
 import { supabase } from "@/lib/supabase";
 import { safeLocationReload } from "@/lib/safe-reload";
 import {
@@ -32,14 +30,13 @@ import {
 import { getUnifiedLessonsSplit } from "@/lib/lessons-service";
 import { RequestManager } from "@/lib/request-manager";
 import { regionsForGovernorate } from "@/lib/kuwait-regions";
-import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import "@/styles/pages/lessons.css";
 import "@/styles/pages/lessons-legacy.css";
 import "@/components/sections/section-cards.css";
-import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { formatSheikhName } from "@/lib/sheikh-name";
+import { computeNextOccurrenceMs } from "@/lib/lesson-time";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
 import { SITE_URL } from "@/lib/site-config";
@@ -231,10 +228,8 @@ export default function LessonsPage({
   const [searchDraft, setSearchDraft] = useState(() => filters.search);
   const debouncedSearch = useDebouncedValue(searchDraft, 250);
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [myReg, setMyReg] = useState<string[]>([]);
   const [tab, setTab] = useTabFromUrl();
-  const [, navigateTo] = useLocation();
-  const { user, isLoggedIn, isAdmin } = useAuth();
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     setFilters((prev) => (prev.search === debouncedSearch ? prev : { ...prev, search: debouncedSearch }));
@@ -295,12 +290,6 @@ export default function LessonsPage({
       .finally(() => setLoading(false));
   }, [initialActive]);
 
-  useEffect(() => {
-    if (isLoggedIn && user?.id) {
-      getMyRegistrations(user.id).then(setMyReg).catch(() => setMyReg([]));
-    }
-  }, [isLoggedIn, user]);
-
   const tabLessons = useMemo(() => filterByTab(activeLessons, tab), [activeLessons, tab]);
   const options = useMemo(() => extractFilterOptions(tabLessons), [tabLessons]);
   const regionOptions = useMemo(() => {
@@ -350,6 +339,36 @@ export default function LessonsPage({
     () => filtered.filter((l) => !featuredIds.has(l.id)),
     [filtered, featuredIds],
   );
+
+  const compactDisplayList = useMemo(() => {
+    if (!showFeatured) return filtered;
+    const seen = new Set<string>();
+    const merged: KuwaitLessonRecord[] = [];
+    for (const lesson of [
+      ...featuredSections.upcoming,
+      ...featuredSections.featured,
+      ...mainList,
+    ]) {
+      if (seen.has(lesson.id)) continue;
+      seen.add(lesson.id);
+      merged.push(lesson);
+    }
+    return merged.length > 0 ? merged : filtered;
+  }, [showFeatured, featuredSections, mainList, filtered]);
+
+  const compactFeaturedIds = useMemo(
+    () => new Set(featuredSections.upcoming.map((l) => l.id)),
+    [featuredSections.upcoming],
+  );
+
+  const listSectionTitle =
+    tab === "courses"
+      ? "الدورات"
+      : tab === "women"
+        ? "دروس نسائية"
+        : tab === "men"
+          ? "دروس رجالية"
+          : "الأقرب موعداً";
 
   const setFilter = <K extends keyof KuwaitLessonFilters>(key: K, value: KuwaitLessonFilters[K]) => {
     startTransition(() => {
@@ -439,24 +458,6 @@ export default function LessonsPage({
     return items;
   }, [filters]);
 
-  const toggleReg = async (lessonId: string) => {
-    if (!isLoggedIn || !user) {
-      navigateTo(`/login?next=${encodeURIComponent(window.location.pathname)}`);
-      return;
-    }
-    try {
-      if (myReg.includes(lessonId)) {
-        setMyReg(myReg.filter((id) => id !== lessonId));
-        await unregisterFromLesson(user.id, lessonId);
-      } else {
-        setMyReg([...myReg, lessonId]);
-        await registerForLesson(user.id, lessonId);
-      }
-    } catch {
-      /* silent */
-    }
-  };
-
   const handleAdminDelete = useCallback(async (lessonId: string) => {
     if (!isAdmin) return;
     if (!window.confirm("هل أنت متأكد من حذف هذا الدرس؟")) return;
@@ -470,16 +471,18 @@ export default function LessonsPage({
     }
   }, [isAdmin]);
 
-  const renderGrid = (lessons: KuwaitLessonRecord[], prefix = "", featuredHome = false) => (
-    <div className="page-card-grid lesson-unified-grid">
+  const renderGrid = (
+    lessons: KuwaitLessonRecord[],
+    prefix = "",
+    featuredHome = false,
+    featuredIdsOverride?: Set<string>,
+  ) => (
+    <div className="lesson-compact-list">
       {lessons.map((lesson) => (
         <div key={`${prefix}${lesson.id}`} className={isAdmin ? "lesson-card-admin-wrap" : ""}>
-          <UnifiedLessonCard
-            lesson={fromKuwaitLesson(lesson, prefix.startsWith("archived"), { featuredHome })}
-            compact
-            showRegister={isLoggedIn && !lesson.id.startsWith("kw-")}
-            registered={myReg.includes(lesson.id)}
-            onToggleRegister={() => toggleReg(lesson.id)}
+          <CompactLessonRow
+            lesson={lesson}
+            featuredHome={featuredHome || featuredIdsOverride?.has(lesson.id)}
           />
           {isAdmin && (
             <div className="lesson-admin-toolbar">
@@ -510,36 +513,24 @@ export default function LessonsPage({
   );
 
   const lobby = useMemo(() => getLobby("lessons"), []);
-  const nearest = featuredSections.upcoming[0];
-  const primary = lobby.primary
-    ? {
-        ...lobby.primary,
-        subtitle: nearest
-          ? [nearest.title, nearest.mosque].filter(Boolean).join(" — ")
-          : loading
-            ? "\u00a0"
-            : "لا درس قريب اليوم",
-      }
-    : undefined;
 
   return (
     <SectionLobby
       lobbyId="lessons"
       title={lobby.title}
-      primary={primary}
-      className="lessons-page-v2 lessons-page-v3 ds-page mj-page"
+      className="lessons-page-v2 lessons-page-v3 lessons-page-compact ds-page mj-page"
       chips={lobby.chips?.map((c) => ({
         ...c,
         active: tab === c.id,
         onSelect: () => setTab(c.id as TabId),
       }))}
-      groups={lobby.groups}
+      groups={[]}
       filterSlot={
-        <div className="lessons-v3-sticky">
-          <FilterToggle
-            onClick={() => setFiltersOpen(true)}
-            label="تصفية"
-            expanded={filtersOpen}
+        <div className="lessons-compact-head">
+          <LessonsQuickBar
+            onFilter={() => setFiltersOpen(true)}
+            filterExpanded={filtersOpen}
+            activeFilterCount={activeFilterCount}
           />
           <ActiveFilters
             items={activeFilterItems}
@@ -568,42 +559,14 @@ export default function LessonsPage({
                   text={`لم تُوثَّق بعدُ دروس ${TAB_LABELS[tab]} من مصدر معتمد. تصفّح تبويب «الكل» للمتاح الآن.`}
                 />
               ) : (
-                <>
-                  {showFeatured && featuredSections.upcoming.length > 0 && (
-                    <section className="lessons-v2-section">
-                      <h2 className="lessons-v2-section__title">
-                        {featuredSections.upcoming.some((l) => getFeaturedHomeStatusLabel(l) === "مستمر")
-                          ? "دروس اليوم"
-                          : "الأقرب موعدًا"}
-                      </h2>
-                      {renderGrid(featuredSections.upcoming, "", true)}
-                    </section>
+                <section className="lessons-v2-section lessons-v2-section--main" aria-label={listSectionTitle}>
+                  <h2 className="lessons-v2-section__title">{listSectionTitle}</h2>
+                  {compactDisplayList.length === 0 ? (
+                    <Empty text="لا توجد دروس مطابقة — جرّب مسح الفلاتر أو توسيع البحث." />
+                  ) : (
+                    renderGrid(compactDisplayList, "", showFeatured, compactFeaturedIds)
                   )}
-
-                  {showFeatured && featuredSections.featured.length > 0 && (
-                    <section className="lessons-v2-section">
-                      <h2 className="lessons-v2-section__title">بث مباشر</h2>
-                      {renderGrid(featuredSections.featured, "feat-", true)}
-                    </section>
-                  )}
-
-                  <section className="lessons-v2-section">
-                    <h2 className="lessons-v2-section__title">
-                      {tab === "courses"
-                        ? "الدورات"
-                        : tab === "women"
-                          ? "دروس نسائية"
-                          : tab === "men"
-                            ? "دروس رجالية"
-                            : "كل الدروس"}
-                    </h2>
-                    {mainList.length === 0 ? (
-                      <Empty text="لا توجد دروس مطابقة — جرّب مسح الفلاتر أو توسيع البحث." />
-                    ) : (
-                      renderGrid(mainList)
-                    )}
-                  </section>
-                </>
+                </section>
               )}
 
               {!loading && !loadError ? (

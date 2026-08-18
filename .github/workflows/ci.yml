@@ -464,6 +464,9 @@ jobs:
           name: majalis-dist
           path: artifacts/majalis/dist
 
+      - name: UI layout gates (calendar + lessons above-fold)
+        run: pnpm --filter @workspace/majalis run test:ui-layout-gates
+
       - name: Start preview
         working-directory: artifacts/majalis
         run: |

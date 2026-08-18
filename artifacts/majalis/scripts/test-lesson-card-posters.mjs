@@ -13,12 +13,12 @@ const failures = [];
 if (/<img\b|SheikhAvatar|lessonImage|posterUrl|qrCodeUrl|__poster|__media|__qr|__top/.test(card)) {
   failures.push("UnifiedLessonCard must not contain an image or an image slot");
 }
-for (const [name, source] of [
-  ["LessonsPage", lessonsPage],
-  ["HomeUpcomingLessons", homeLessons],
-  ["HomeUpcomingCourses", homeCourses],
+for (const [name, source, pattern] of [
+  ["LessonsPage", lessonsPage, /CompactLessonRow|UnifiedLessonCard/],
+  ["HomeUpcomingLessons", homeLessons, /UnifiedLessonCard/],
+  ["HomeUpcomingCourses", homeCourses, /UnifiedLessonCard/],
 ]) {
-  if (!/UnifiedLessonCard/.test(source)) failures.push(`${name} must use UnifiedLessonCard`);
+  if (!pattern.test(source)) failures.push(`${name} must use compact or unified lesson card`);
 }
 if (!/lesson\.image_url|lesson\.poster_image_url/.test(detailPage)) {
   failures.push("LessonDetailPage must retain lesson content imagery");
