@@ -32,7 +32,9 @@
 
 .topic-page__hero {
   width: 100%;
-  background: linear-gradient(
+  /* لون صلب أولاً — بوابة التباين ترفض background-image بلا background-color */
+  background-color: var(--topic-hero-from);
+  background-image: linear-gradient(
     145deg,
     var(--topic-hero-from) 0%,
     var(--topic-hero-to) 100%
