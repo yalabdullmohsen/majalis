@@ -16,7 +16,7 @@
  *   warn:  أداء ≥ 0.75
  *   error: CLS ≤ 0.030 · TBT ≤ 900ms · LCP ≤ 8000ms · DOM ≤ 1200
  *          a11y=1 · BP=1 · SEO=1
- *          حظر عرض ≤ 1800ms (سقف انحدار؛ الهدف 300ms بعد إصلاح المسار الحاجب)
+ *          حظر عرض ≤ 300ms (بعد تحويل index-*.css إلى غير حاجب)
  *   warn:  forced-reflow · unused-css/js (مللي ثانية لا KiB)
  * هدف إعلان PSI لـ LCP = 5500ms — لا يُفرض على LHCI قبل أن ينخفض وسيط CI تحت 5500
  * (وسيط LHCI الحالي ≈7120ms؛ 5500 ستفشل Verify build).
@@ -68,8 +68,7 @@ module.exports = {
         "total-blocking-time": ["error", { maxNumericValue: 900 }],
         "cumulative-layout-shift": ["error", { maxNumericValue: 0.03 }],
         "dom-size": ["error", { maxNumericValue: 1200 }],
-        // سقف انحدار أحمر فوق انفجار فحص 10 (1610ms). الهدف 300 يتحول لـerror في PR الحظر.
-        "render-blocking-resources": ["error", { maxNumericValue: 1800 }],
+        "render-blocking-resources": ["error", { maxNumericValue: 300 }],
         // numericValue = overallSavingsMs لا KiB. الهدف المعلن: CSS≤20KiB · JS≤40KiB.
         "unused-css-rules": ["warn", { maxNumericValue: 80 }],
         "unused-javascript": ["warn", { maxNumericValue: 200 }],

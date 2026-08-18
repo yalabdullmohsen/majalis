@@ -5,6 +5,7 @@ import path from "path";
 import { visualizer } from "rollup-plugin-visualizer";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { majalisApiPlugin } from "./server/vite-plugin-api.mjs";
+import { deferEntryCssPlugin } from "./scripts/defer-entry-css.mjs";
 
 const rawPort = process.env.PORT || "5000";
 
@@ -69,6 +70,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     majalisApiPlugin(),
+    deferEntryCssPlugin(),
     runtimeErrorOverlay(),
     ...(process.env.ANALYZE === "1" ? [visualizer({ open: false, filename: "dist/bundle-stats.html", gzipSize: true, brotliSize: true })] : []),
     ...(process.env.NODE_ENV !== "production" &&
