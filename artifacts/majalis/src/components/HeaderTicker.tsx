@@ -186,22 +186,30 @@ export function HeaderTicker() {
     if (activeIndex >= items.length) setActiveIndex(0);
   }, [activeIndex, items.length]);
 
-  /** إن كان عرض المحتوى ≤ الحاوية فلا مسافة للماركي → تدوير كل ٦ ثوانٍ */
+  /** إن كان عرض المحتوى ≤ الحاوية فلا مسافة للماركي → تدوير كل ٦ ثوانٍ.
+   *  القياس داخل ResizeObserver / rAF فقط — لا قراءة تخطيط متزامنة ثم setState. */
   useEffect(() => {
     if (reducedMotion || items.length === 0) return;
+    const vp = viewportRef.current;
+    const track = trackRef.current;
+    if (!vp || !track) return;
+
     const measure = () => {
-      const vp = viewportRef.current;
-      const track = trackRef.current;
-      if (!vp || !track) return;
       const contentWidth = track.scrollWidth / 2;
       setUseRotateFallback(contentWidth <= vp.clientWidth + 8);
     };
-    measure();
-    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(measure) : null;
-    if (viewportRef.current && ro) ro.observe(viewportRef.current);
+
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(measure);
+      ro.observe(vp);
+      ro.observe(track);
+      return () => ro.disconnect();
+    }
+
+    const id = window.requestAnimationFrame(measure);
     window.addEventListener("resize", measure);
     return () => {
-      ro?.disconnect();
+      window.cancelAnimationFrame(id);
       window.removeEventListener("resize", measure);
     };
   }, [reducedMotion, items]);

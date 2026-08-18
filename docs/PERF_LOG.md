@@ -471,3 +471,28 @@ JS غير مستخدم: supabase 44KiB + index 35KiB.
 
 هدف هذه الدفعة: حظر عرض ≤200ms وFCP ≤2.1ث على PSI. a11y/BP/SEO تبقى 100. CLS يجب ألا يتجاوز 0.030 (الحجز ثابت CSS لا قياس JS).
 
+## إعادة التدفق الإلزامية — `fix/forced-reflow-reserve-css`
+
+فرضية «حجز المساحة يقيس `offsetHeight` ثم يكتب»: **مرفوضة لـ HeaderTicker**. الارتفاع محجوز بـ `--ticker-h` في CSS (`final-release.css` + `#mj-cls-reserve`). لا `useLayoutEffect` ولا `offsetHeight` في `HeaderTicker.tsx`.
+
+### مواضع من تدقيق LHCI (بناء درزة الصلاة، حزمة مصغّرة — غير مرجعي)
+
+| المصدر | المدة | ملاحظة |
+|---|---:|---|
+| `vendor-*.js` col 2448 | 40ms | React — خارج نطاق هذا الـPR |
+| `[unattributed]` | 61ms | — |
+| `index-*.js` col 153952 | 40ms | مرشّح: `void main.offsetWidth` في `RouteEnterMotion.tsx` |
+| `index-*.js` col 165691 | 0.14ms | — |
+
+### ما تغيّر (ملف/سطر قبل الإصلاح)
+
+1. `RouteEnterMotion.tsx` — `void main.offsetWidth` لإعادة تشغيل CSS animation. استُبدل بـ `requestAnimationFrame` (كتابة بعد إطار، بلا قراءة تخطيط).
+2. `HeaderTicker.tsx` — `measure()` متزامن داخل `useEffect` يقرأ `scrollWidth`/`clientWidth` ثم `setState`. القياس أصبح داخل `ResizeObserver` فقط (أو rAF إن غاب RO).
+
+حجز الارتفاع يبقى CSS ثابتًا. `forced-reflow-insight` يبقى **warn** في LHCI حتى يثبت PSI اختفاء التحذير.
+
+| | أداء | LCP | TBT | CLS | FCP |
+|---|---:|---:|---:|---:|---:|
+| PSI فحص 10 (قبل، مرجعي) | 52 | 4.7ث | 1100 | 0.017 | 3.7ث |
+| PSI بعد النشر | لم يُقَس بعد | | | | |
+
