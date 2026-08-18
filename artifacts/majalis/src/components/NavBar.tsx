@@ -43,6 +43,8 @@ function tabCls(active: boolean, extra = "") {
   return `nav-tab${active ? " nav-tab--active" : ""}${extra ? " " + extra : ""}`;
 }
 
+const TICKER_FALLBACK = <div className="header-ticker header-ticker--empty" aria-hidden="true" />;
+
 export default function NavBar() {
   const { isAdmin, isLoggedIn, user, logout } = useAuth();
   const { t } = useLanguage();
@@ -248,7 +250,11 @@ export default function NavBar() {
                 <Search size={17} strokeWidth={1.8} aria-hidden="true" />
               </button>
             )}
-            {!isMobile && !isImmersiveChromePath(location) && <Suspense fallback={null}><HeaderTicker /></Suspense>}
+            {!isMobile && !isImmersiveChromePath(location) && (
+              <Suspense fallback={TICKER_FALLBACK}>
+                <HeaderTicker />
+              </Suspense>
+            )}
             {!isMobile && desktopAuthLinks}
 
             {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
@@ -286,7 +292,9 @@ export default function NavBar() {
         {/* صف مستقل تحت أزرار الهيدر — يمنع تداخل التيكر مع القائمة/البحث/الحساب */}
         {isMobile && !isImmersiveChromePath(location) && (
           <div className="navbar-ticker-row" aria-label="شريط تنبيهات ومقتطفات">
-            <Suspense fallback={null}><HeaderTicker /></Suspense>
+            <Suspense fallback={TICKER_FALLBACK}>
+              <HeaderTicker />
+            </Suspense>
           </div>
         )}
       </header>

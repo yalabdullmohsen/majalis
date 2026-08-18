@@ -36,7 +36,14 @@ assert.doesNotMatch(prewarm, /link\.rel = "preconnect"/, "prewarm لا يضيف 
 assert.doesNotMatch(mainSrc, /styles\/pages\/calendar\.css/, "تقويم خارج حزمة الإقلاع");
 assert.doesNotMatch(mainSrc, /homePageBoot|await homePageBoot/, "لا انتظار Home قبل createRoot");
 assert.match(app, /mj-home-lcp-ph/, "هيكل ارتفاع محجوز أثناء lazy الرئيسية");
-assert.match(homeCss, /\.mj-home-lcp-ph\s*\{[\s\S]*min-height:\s*24rem/, "الهيكل 24rem");
+assert.match(app, /function HomeInitialShell/, "fallback مطابق للجزء المرئي من الرئيسية");
+assert.match(app, /className="home-start-here mj-home-lcp-ph__start-here"/, "fallback يطابق DOM ابدأ من هنا");
+assert.match(app, /className="hsh-actions__primary"/, "fallback يستخدم نفس أزرار ابدأ من هنا");
+assert.match(app, /className="hus mj-home-lcp-ph__search"/, "fallback يطابق شريط البحث");
+assert.match(homeCss, /contain:\s*layout style/, "حاوية fallback بلا min-height مبالغ");
+assert.match(app, /HOME_START_HERE_STEPS/, "fallback يReuse نفس نصوص ابدأ من هنا");
+assert.match(homeCss, /\.mj-home-lcp-ph__start-here\s*\{[\s\S]*min-height:\s*37\.8rem/, "ارتفاع ابدأ من هنا محجوز");
+assert.doesNotMatch(homeCss, /\.mj-home-lcp-ph\s*\{[\s\S]*min-height:\s*88rem/, "لا min-height مبالغ فيه على الحاوية");
 assert.doesNotMatch(finalCss, /\.hsh-steps[^}]*content-visibility/, "ابدأ من هنا فوق الطية بلا content-visibility");
 assert.doesNotMatch(html, /fonts\.googleapis\.com/, "لا Google Fonts في إقلاع /");
 assert.match(

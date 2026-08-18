@@ -271,11 +271,29 @@ JS الابتدائي = `index` + `vendor` + `query` + `supabase-CWJnfID4` + `ic
 
 CLS: 0.170 (#1263) → **0.042**. المتبقي: `main#main-content` ≈0.037 (Home كسول يملأ الرئيسي بعد الشريط). لا عنصر >0.005 عدا `main`. TBT/LCP لم يعودا إلى فحص 8 (PSI 270مل.ث / 8.6ث). لا إعلان درجة 67 — أداة CLI ≠ PSI.
 
+## المرحلة 11 — حجز مساحة CLS (`fix/cls-reserve-space`)
 
+**ما تغيّر**
 
+1. **HeaderTicker:** `Suspense fallback={null}` → `<div className="header-ticker header-ticker--empty" />` (يحجز 8rem قبل lazy).
+2. **PrayerCountdownBanner:** `.pcb-wrap { position: fixed }` — لا يدفع `main` عند الظهور.
+3. **HomeInitialShell:** هيكل مطابق لـ`HomeView` فوق الطية (هيرو · بحث · ابدأ من هنا · ورد اليوم) مع نصوص مشتركة من `home-start-here-data.ts` و`<Link>` بدل `<span>` للأزرار.
+4. **CSS:** `contain: layout style` على `.mj-home-lcp-ph` (لا `min-height: 88rem`) · ارتفاعات محجوزة لكل قسم.
 
+**قياس محلي Lighthouse CLI 13.4 (جوال، simulate) — وسيط ٣ تشغيلات — preview بعد build — ليس PSI**
 
+| | ر1 | ر2 | ر3 | **وسيط** |
+|---|---|---|---|---|
+| الأداء | 0.56 | 0.57 | 0.62 | **0.57** |
+| CLS | 0.024 | 0.024 | 0.023 | **0.024** |
+| TBT (مل.ث) | 30 | 550 | 470 | **470** |
+| LCP (ث) | 8.6 | 8.1 | 8.2 | **8.2** |
+| FCP (ث) | 5.6 | 2.6 | 2.6 | **2.6** |
 
+**Playwright PerformanceObserver (iPhone 13، 3.5ث، 3 تشغيلات):** CLS **0.000** (لا عناصر مُزيحة >0).
 
+**مقارنة CLS:** 0.162 (فحص 9 PSI) → 0.042 (#1267 revert) → **0.024** (هذا PR). الهدف ≤0.01 **لم يُبلَغ** في LH؛ المتبقي ~0.02 يُنسب غالبًا لتبديل الخط/محتوى ورد اليوم الديناميكي.
+
+**إنتاج بعد النشر:** يُسجَّل وسيط PSI هنا.
 
 

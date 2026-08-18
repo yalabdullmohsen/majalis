@@ -20,7 +20,157 @@
 }
 
 .mj-home-lcp-ph {
-  min-height: 24rem;
+  contain: layout style;
+}
+
+.mj-home-lcp-ph .page-hero-mj__content {
+  width: 100%;
+  max-width: 40rem;
+  margin-inline: auto;
+  align-items: center;
+  text-align: center;
+}
+
+.mj-home-lcp-ph__eyebrow {
+  width: 7rem;
+  height: 0.9rem;
+  margin-inline: auto;
+}
+
+.mj-home-lcp-ph__title {
+  width: min(18rem, 82%);
+  height: 2.9rem;
+  margin-inline: auto;
+}
+
+.mj-home-lcp-ph__hero-eyebrow {
+  min-height: 1.05rem;
+  visibility: hidden;
+}
+
+.mj-home-lcp-ph__hero-cta {
+  min-width: 9.5rem;
+  min-height: 2.65rem;
+  visibility: hidden;
+}
+
+.mj-home-lcp-ph__search .hus-field {
+  min-height: 48px;
+}
+
+.mj-home-lcp-ph__search-ph {
+  display: block;
+  min-height: 44px;
+  margin: 0;
+}
+
+.mj-home-lcp-ph__start-here {
+  min-height: 37.8rem;
+}
+
+.mj-home-lcp-ph__kicker,
+.mj-home-lcp-ph__section-title,
+.mj-home-lcp-ph__lead,
+.mj-home-lcp-ph__action,
+.mj-home-lcp-ph__step-title,
+.mj-home-lcp-ph__step-desc,
+.mj-home-lcp-ph__step-cta {
+  color: transparent !important;
+}
+
+.mj-home-lcp-ph__lead {
+  width: min(22rem, 96%);
+  min-height: 1.7rem;
+  margin: 0 0 0.75rem;
+}
+
+.mj-home-lcp-ph__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 8.75rem;
+  min-height: 2.65rem;
+  border-radius: var(--mj-r-pill);
+}
+
+.mj-home-lcp-ph__step-title {
+  display: block;
+  width: 78%;
+  min-height: 1rem;
+  margin-block-end: 0.55rem;
+}
+
+.mj-home-lcp-ph__step-desc {
+  width: 100%;
+  min-height: 3.4rem;
+  margin-block-end: 0.65rem;
+}
+
+.mj-home-lcp-ph__step-cta {
+  display: inline-block;
+  width: 6.5rem;
+  min-height: 0.9rem;
+}
+
+.mj-home-lcp-ph__daily-band {
+  min-height: 47rem;
+}
+
+.mj-home-lcp-ph__daily-card {
+  min-height: 16.5rem;
+}
+
+.mj-home-lcp-ph__daily-head {
+  width: 4.75rem;
+  height: 1rem;
+}
+
+.mj-home-lcp-ph__daily-done,
+.mj-home-lcp-ph__daily-link {
+  visibility: hidden;
+}
+
+.mj-home-lcp-ph__daily-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+}
+
+.mj-home-lcp-ph__daily-label {
+  display: inline-block;
+  min-width: 2.5rem;
+  min-height: 1rem;
+  visibility: hidden;
+}
+
+.mj-home-lcp-ph__daily-line {
+  width: 100%;
+  height: 1rem;
+}
+
+.mj-home-lcp-ph__daily-meta {
+  width: 70%;
+  height: 0.85rem;
+}
+
+.mj-home-lcp-ph__daily-cta {
+  width: 5.5rem;
+  height: 0.9rem;
+}
+
+@media (min-width: 720px) {
+  .mj-home-lcp-ph__start-here {
+    min-height: 24rem;
+  }
+
+  .mj-home-lcp-ph__start-here .hsh-step {
+    min-height: 6rem;
+  }
+
+  .mj-home-lcp-ph__daily-band {
+    min-height: 28rem;
+  }
 }
 
 .daily-wird-card,

@@ -109,6 +109,19 @@ test("صف الشريط لا يقصّ الشريط رأسيًا", () => {
   assert.match(css, /overflow-y:\s*visible/, "التجاوز الرأسي مسموح");
 });
 
+test("موضع الشريط المتحرك محجوز قبل lazy", () => {
+  assert.match(
+    navBar,
+    /const TICKER_FALLBACK = <div className="header-ticker header-ticker--empty"/,
+    "fallback ثابت الارتفاع يمنع هبوط main بعد تحميل HeaderTicker",
+  );
+  assert.match(
+    navBar,
+    /<Suspense fallback=\{TICKER_FALLBACK\}>[\s\S]*<HeaderTicker \/>[\s\S]*<\/Suspense>/,
+    "HeaderTicker لا يبدأ بفجوة صفرية ثم يحقن ارتفاعه لاحقًا",
+  );
+});
+
 test("شريط الأقسام المُلغى يُصفّر إزاحة sticky على الجوال", () => {
   assert.match(
     finalRelease,
