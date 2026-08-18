@@ -145,20 +145,15 @@ async function mount() {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       window.dispatchEvent(new Event("mj:app-painted"));
-      // تسخين chunk الرئيسية فور الرسم — بدون إدخاله في حزمة الإقلاع (ميزانية gzip)
-      if (location.pathname === "/" || location.pathname === "" || /\/$/.test(location.pathname)) {
-        void import("@/pages/account/HomePage");
-      }
     });
   });
 
-  // خلفيات غير حاجبة للإقلاع
-  void purgeNativeWebRuntimeCaches().catch(() => {});
-  void hydrateNativeStorage().catch(() => {});
-
-  void import("./lib/supabase-bootstrap")
-    .then((m) => m.bootstrapSupabaseFromServer().then(() => m.resetSupabaseClient()))
-    .catch(() => {});
+  // خلفيات غير حاجبة للإقلاع — بعد الرسم + خمول (لا تنافس TBT)
+  const afterPaint = () => {
+    void purgeNativeWebRuntimeCaches().catch(() => {});
+    void hydrateNativeStorage().catch(() => {});
+  };
+  scheduleOnIdle(afterPaint, 2500);
 
   const renderMs = Math.round(performance.now() - started);
   if (renderMs > PERF_SLOW_MS) {
@@ -195,10 +190,13 @@ if (!isNative) {
   else window.addEventListener("load", () => scheduleOnIdle(registerSw), { once: true });
 }
 
-// إعداد Capacitor Native (يُهمَل تلقائياً على الويب) — بلون/نمط الوضع الفعلي
-// عند الإقلاع، لا قيمة ثابتة (ThemePreferenceProvider يُعيد المزامنة عند أي تبديل لاحق).
-void setupStatusBar(resolveTheme(readThemePreference()));
-void setupKeyboard();
+// إعداد Capacitor Native (يُهمَل تلقائياً على الويب) — بعد الرسم حتى لا يحجب TBT
+if (isNative) {
+  scheduleOnIdle(() => {
+    void setupStatusBar(resolveTheme(readThemePreference()));
+    void setupKeyboard();
+  }, 1500);
+}
 
 // معالجة زر الرجوع في Android
 if (isAndroid) {

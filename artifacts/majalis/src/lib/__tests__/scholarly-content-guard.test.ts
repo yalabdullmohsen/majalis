@@ -48,6 +48,7 @@ console.log("\n=== عدد الأنبياء — لا صياغة توهم أن ك�
 {
   const filesWithProphetCount = [
     "src/pages/account/ui/HomeView.tsx",
+    "src/pages/account/ui/HomeBelowFold.tsx",
     "src/components/SideNavDrawer.tsx",
     "src/pages/account/ui/SiteMapView.tsx",
     "src/components/home/HomeInterestingTopics.tsx",

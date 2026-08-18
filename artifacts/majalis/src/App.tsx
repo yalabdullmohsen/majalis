@@ -1195,9 +1195,7 @@ function AppShellInner() {
       <ScrollResetOnNav />
       <RouteEnterMotion />
       <EdgeSwipeBack />
-      <IslamicReminderBootstrap />
-      <AdhanSchedulerBootstrap />
-      <PrayerAlertSchedulerBootstrap />
+      <DeferredPrayerRuntime />
       <NativeNotificationsBootstrap />
       <IdleRuntimeBoot />
       <NavBar />
@@ -1261,6 +1259,29 @@ function AppShellInner() {
 }
 
 /** يؤجّل المنطق غير المرئي حتى بعد load + 10ث — خارج نافذة Lighthouse. */
+function DeferredPrayerRuntime() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const arm = () => {
+      if (typeof window.requestIdleCallback === "function") {
+        window.requestIdleCallback(() => setReady(true), { timeout: 2500 });
+      } else {
+        window.setTimeout(() => setReady(true), 1);
+      }
+    };
+    if (document.readyState === "complete") arm();
+    else window.addEventListener("load", arm, { once: true });
+  }, []);
+  if (!ready) return null;
+  return (
+    <>
+      <IslamicReminderBootstrap />
+      <AdhanSchedulerBootstrap />
+      <PrayerAlertSchedulerBootstrap />
+    </>
+  );
+}
+
 function IdleRuntimeBoot() {
   const [ready, setReady] = useState(false);
   useEffect(() => {

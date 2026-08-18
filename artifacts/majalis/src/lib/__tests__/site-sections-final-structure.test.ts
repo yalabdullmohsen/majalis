@@ -66,6 +66,7 @@ const SURFACES = [
   "src/features/more/moreSections.ts",
   "src/lib/site-footer-nav.ts",
   "src/pages/account/ui/HomeView.tsx",
+  "src/pages/account/ui/HomeBelowFold.tsx",
   "src/lib/home-feature-catalog.ts",
   "src/components/home/HomeExplorePlatform.tsx",
   "src/components/home/HomeStartHereSection.tsx",
@@ -79,7 +80,7 @@ for (const rel of SURFACES) {
   assert.equal(src.includes("المسارات العلمية"), false);
 }
 
-const home = read("src/pages/account/ui/HomeView.tsx");
+const home = read("src/pages/account/ui/HomeView.tsx") + read("src/pages/account/ui/HomeBelowFold.tsx");
 assert.match(home, /IA_HOME_PRIMARY/);
 assert.equal(home.includes("/quran-knowledge"), false, "لا بوابة قرآن قديمة في الرئيسية");
 assert.equal(home.includes("المسارات العلمية"), false);

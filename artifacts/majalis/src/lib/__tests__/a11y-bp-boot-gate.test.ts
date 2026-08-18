@@ -14,7 +14,8 @@ const supabase = readFileSync(resolve(root, "src/lib/supabase.ts"), "utf8");
 const seo = readFileSync(resolve(root, "src/lib/seo.ts"), "utf8");
 const seoStruct = readFileSync(resolve(root, "src/lib/seo-structured-data.ts"), "utf8");
 const app = readFileSync(resolve(root, "src/App.tsx"), "utf8");
-const homeView = readFileSync(resolve(root, "src/pages/account/ui/HomeView.tsx"), "utf8");
+const homeView = readFileSync(resolve(root, "src/pages/account/ui/HomeView.tsx"), "utf8")
+  + readFileSync(resolve(root, "src/pages/account/ui/HomeBelowFold.tsx"), "utf8");
 const pkg = readFileSync(resolve(root, "package.json"), "utf8");
 
 assert.match(hus, /aria-controls=\{showIdle \|\| showResults \? listId : undefined\}/, "aria-controls فقط عند وجود اللوحة");

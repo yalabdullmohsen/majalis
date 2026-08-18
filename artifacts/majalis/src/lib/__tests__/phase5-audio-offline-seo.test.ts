@@ -37,14 +37,15 @@ assert.match(app, /QuranMiniPlayerBar/);
 
 // ── Local resume on home ────────────────────────────────────────────────────
 assert.ok(existsSync(resolve(src, "components/home/HomeLocalResumeCard.tsx")));
-const home = read("pages/account/ui/HomeView.tsx");
+const home = read("pages/account/ui/HomeView.tsx") + read("pages/account/ui/HomeBelowFold.tsx");
 assert.match(home, /HomeLocalResumeCard/);
 assert.match(home, /متابعة القراءة والاستماع|متابعة/);
 
 const resume = read("components/home/HomeLocalResumeCard.tsx");
 assert.match(resume, /loadPagePosition/);
 assert.match(resume, /loadAudioResumeState/);
-assert.match(resume, /getReadingProgress\("adhkar"\)/);
+assert.match(resume, /getContinueReadingEntries/);
+assert.match(resume, /adhkar:/);
 
 // ── PWA / SWR ───────────────────────────────────────────────────────────────
 const sw = readFileSync(resolve(root, "public/sw.js"), "utf8");

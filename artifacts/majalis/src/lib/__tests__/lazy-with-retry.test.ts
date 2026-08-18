@@ -62,7 +62,8 @@ const second = await simulateLazyFactory(true);
 assert.equal(second.reloaded, false, "prevents reload loop");
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
-const homeSrc = readFileSync(join(root, "pages/account/ui/HomeView.tsx"), "utf8");
+const homeSrc = readFileSync(join(root, "pages/account/ui/HomeView.tsx"), "utf8")
+  + readFileSync(join(root, "pages/account/ui/HomeBelowFold.tsx"), "utf8");
 assert.match(homeSrc, /import\("@\/components\/home\/HomeUpcomingLessons"\)/);
 assert.match(homeSrc, /import\("@\/components\/home\/HomeUpcomingCourses"\)/);
 assert.match(homeSrc, /HomeUpcomingLessons\s*=\s*lazyWithRetry/);
