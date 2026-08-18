@@ -15,18 +15,12 @@ export type ScrollSnapshot = {
 };
 
 export function scrollDocumentToTop(): void {
-  const instant = { top: 0, left: 0, behavior: "instant" as const };
-  window.scrollTo(instant);
+  window.scrollTo(0, 0);
   document.documentElement.scrollTop = 0;
   document.body.scrollTop = 0;
   for (const sel of ROOT_SELECTORS) {
-    document.querySelectorAll(sel).forEach((node) => {
-      if (!(node instanceof HTMLElement)) return;
-      if (node.scrollHeight > node.clientHeight + 1) {
-        node.scrollTo(instant);
-        node.scrollTop = 0;
-      }
-    });
+    const el = document.querySelector(sel);
+    if (el instanceof HTMLElement) el.scrollTop = 0;
   }
 }
 

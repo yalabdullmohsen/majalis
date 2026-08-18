@@ -33,6 +33,8 @@ assert.doesNotMatch(
 );
 
 assert.match(helper, /ROOT_SELECTORS/);
+assert.doesNotMatch(helper, /scrollHeight/, "لا قراءة scrollHeight — تجنّب إعادة تدفّق قسرية");
+assert.match(appSrc, /leavingLocation === location/);
 assert.match(gate, /\/fiqh\/books\//);
 assert.ok((gate.match(/"[/][^"]+"/g) ?? []).length >= 30, "بوابة ≥ ٣٠ مسارًا");
 
