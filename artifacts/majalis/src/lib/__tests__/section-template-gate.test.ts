@@ -110,6 +110,14 @@ for (const [label, rel] of HUB_PAGES) {
   assert.doesNotMatch(hub, /autoFocus/, `${label}: بلا autoFocus`);
 }
 
+{
+  const tarikh = read("src/views/TarikhIslamiPage.tsx");
+  assert.match(tarikh, /SectionTemplatePage/, "التاريخ: غلاف قالب العقيدة");
+  assert.match(tarikh, /TopicCard/, "التاريخ: بطاقات كالعقيدة لا أكورديون");
+  assert.match(tarikh, /tabs=\{TABS\}/, "التاريخ: شرائح موضوعية");
+  assert.doesNotMatch(tarikh, /SectionAccordionLayout/, "التاريخ: بلا أكورديون قديم");
+}
+
 const prayer = read("src/pages/worship/ui/PrayerTimesView.tsx");
 assert.doesNotMatch(prayer, /SectionTemplatePage/, "الصلاة مستثناة من قالب العقيدة");
 

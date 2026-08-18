@@ -611,7 +611,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "islamic-history",
     label: "التاريخ الإسلامي",
-    subtitle: "دول وأحداث وحضارة",
+    subtitle: "عصور ومدن ومؤسسات وحضارة",
     route: "/tarikh-islami",
     icon: History,
     group: "sciences",
