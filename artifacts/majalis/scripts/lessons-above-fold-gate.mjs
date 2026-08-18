@@ -56,6 +56,7 @@ async function main() {
   const page = await (await browser.newContext({ viewport: { width: vw, height: vh }, locale: "ar-KW" })).newPage();
 
   await page.goto(`${base}/lessons`, { waitUntil: "networkidle", timeout: 60_000 });
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForSelector(".lessons-page-compact", { timeout: 30_000 });
   const routeError = await page.locator("h1").filter({ hasText: "تعذّر عرض هذه الصفحة" }).count();
   if (routeError > 0) {
@@ -71,16 +72,16 @@ async function main() {
     const quickBar = document.querySelector(".lessons-quick-bar");
     const firstLesson = document.querySelector(".lesson-compact-row");
     const chips = document.querySelector(".section-lobby__chips");
-    const title = document.querySelector(".section-lobby__title");
+    const shot = document.querySelector(".section-lobby__shot");
     const rows = [...document.querySelectorAll(".lesson-compact-row")];
 
     const quickH = quickBar?.getBoundingClientRect().height ?? 0;
     const firstTop = firstLesson?.getBoundingClientRect().top ?? vhPx;
+    const shotTop = shot?.getBoundingClientRect().top ?? 0;
     const listTop = document.querySelector(".lessons-v2-section--main, .lessons-v2-section")
       ?.getBoundingClientRect().top ?? firstTop;
 
     let gapMax = 0;
-    const shot = document.querySelector(".section-lobby__shot");
     if (shot) {
       const kids = [...shot.children].filter((el) => el.getBoundingClientRect().height > 0);
       for (let i = 1; i < kids.length; i++) {
@@ -97,21 +98,23 @@ async function main() {
     }
 
     const twoScreens = rows.filter((r) => r.getBoundingClientRect().top < vhPx * 2).length;
+    const contentOffsetRatio = shotTop > 0 ? (firstTop - shotTop) / vhPx : firstTop / vhPx;
 
     return {
       viewportH: vhPx,
       quickBarHeightPx: Math.round(quickH),
       firstLessonTopPx: Math.round(firstTop),
+      shotTopPx: Math.round(shotTop),
       listTopRatio: listTop / vhPx,
       firstLessonAboveFold: firstTop < vhPx,
       firstLessonTopRatio: firstTop / vhPx,
+      contentOffsetRatio,
       visibleInTwoScreens: twoScreens,
       maxVerticalGapPx: Math.round(gapMax),
       emptyCardDetected: emptyCard,
       lessonCount: rows.length,
       hasQuickBar: !!quickBar,
       hasChips: !!chips,
-      hasTitle: !!title,
     };
   });
 
@@ -119,7 +122,9 @@ async function main() {
 
   const failures = [];
   if (!metrics.firstLessonAboveFold) failures.push("first lesson not above fold");
-  if (metrics.firstLessonTopRatio > 0.4) failures.push(`first lesson top ${(metrics.firstLessonTopRatio * 100).toFixed(1)}% > 40%`);
+  if (metrics.contentOffsetRatio > 0.16) {
+    failures.push(`content offset ${(metrics.contentOffsetRatio * 100).toFixed(1)}% > 16%`);
+  }
   if (metrics.quickBarHeightPx > 56) failures.push(`quick bar ${metrics.quickBarHeightPx}px > 56px`);
   if (metrics.maxVerticalGapPx > 12) failures.push(`vertical gap ${metrics.maxVerticalGapPx}px > 12px`);
   if (metrics.emptyCardDetected) failures.push("empty card height > 2x content");

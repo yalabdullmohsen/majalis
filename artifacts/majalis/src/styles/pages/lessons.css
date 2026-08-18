@@ -474,12 +474,12 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 
 /* ── صفحة الدروس المكثّفة (2026) ── */
 .lessons-page-compact.section-lobby {
-  gap: 12px;
-  padding-top: 8px;
+  gap: 4px;
+  padding-top: 4px;
 }
 
 .lessons-page-compact .section-lobby__shot {
-  gap: 8px;
+  gap: 6px;
 }
 
 @media (max-width: 960px) {
@@ -494,6 +494,34 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
     white-space: nowrap;
     border: 0;
   }
+
+  .lessons-page-compact .lessons-v2-section__title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .lessons-page-compact .section-lobby__chip {
+    min-height: 32px;
+    padding: 4px 10px;
+  }
+
+  .lessons-page-compact .lessons-quick-bar__chip {
+    height: 36px;
+  }
+}
+
+.lessons-compact-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
 }
 
 .lessons-page-compact .section-lobby__chips {
@@ -503,13 +531,6 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 .lessons-page-compact .section-lobby__chip {
   min-height: 36px;
   padding: 6px 12px;
-}
-
-.lessons-compact-head {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 0;
 }
 
 .lessons-quick-bar {

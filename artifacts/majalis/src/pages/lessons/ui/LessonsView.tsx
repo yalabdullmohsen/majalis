@@ -559,7 +559,7 @@ export default function LessonsPage({
                   text={`لم تُوثَّق بعدُ دروس ${TAB_LABELS[tab]} من مصدر معتمد. تصفّح تبويب «الكل» للمتاح الآن.`}
                 />
               ) : (
-                <section className="lessons-v2-section lessons-v2-section--main">
+                <section className="lessons-v2-section lessons-v2-section--main" aria-label={listSectionTitle}>
                   <h2 className="lessons-v2-section__title">{listSectionTitle}</h2>
                   {compactDisplayList.length === 0 ? (
                     <Empty text="لا توجد دروس مطابقة — جرّب مسح الفلاتر أو توسيع البحث." />
