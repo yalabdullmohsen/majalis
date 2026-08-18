@@ -324,23 +324,32 @@ article {
 }
 
 .ds-skeleton {
-  background: linear-gradient(90deg, var(--ds-parchment-deep) 25%, #fff 50%, var(--ds-parchment-deep) 75%);
-  background-size: 200% 100%;
-  animation: ds-shimmer 1.2s infinite linear;
+  position: relative;
+  overflow: hidden;
+  background: var(--ds-parchment-deep);
   border-radius: var(--ds-radius-sm);
-  /* يحترم تفضيل تقليل الحركة */
+}
+.ds-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, #fff 50%, transparent 100%);
+  transform: translate3d(-100%, 0, 0);
+  animation: ds-shimmer 1.2s infinite linear;
 }
 .ds-skeleton--line { width: var(--sk-w, 100%); height: var(--sk-h, 0.75rem); }
 
 @keyframes ds-shimmer {
-  from { background-position: 200% 0; }
-  to   { background-position: -200% 0; }
+  to { transform: translate3d(100%, 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ds-skeleton {
-    animation: none;
     background: var(--ds-parchment-deep);
+  }
+  .ds-skeleton::after {
+    animation: none;
+    content: none;
   }
 }
 
@@ -2581,16 +2590,7 @@ h1, h2, h3 {
   outline: none;
 }
 
-/* ── 7. الهيكل العظمي (Skeleton) ── */
-.ds-skeleton {
-  background: linear-gradient(90deg,
-    var(--ds-parchment-deep) 25%,
-    color-mix(in srgb, var(--ds-parchment-deep) 60%, white) 50%,
-    var(--ds-parchment-deep) 75%
-  );
-  background-size: 200% 100%;
-  animation: ds-shimmer 1.4s ease-in-out infinite;
-}
+/* ── 7. الهيكل العظمي (Skeleton) — الحركة في القاعدة أعلاه (transform) ── */
 
 /* ── 8. شريط التنقل السفلي — الألوان فقط؛ الأبعاد في final-release.css ── */
 @media (max-width: 879px) {

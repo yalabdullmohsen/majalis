@@ -213,9 +213,9 @@
   font-weight: 600;
   padding: 0.18rem 0.5rem;
   border-radius: 999px;
-  background: rgba(31,77,58,0.10);
-  color: var(--majalis-emerald, var(--mj-brand-deep));
-  border: 1px solid rgba(31,77,58,0.15);
+  background: var(--chip-bg, var(--mj-brand-soft, #E4F0EA));
+  color: var(--chip-fg, var(--brand-on-white, #0F4A36));
+  border: 1px solid color-mix(in srgb, var(--brand-on-white, #146C4E) 22%, transparent);
   white-space: nowrap;
 }
 

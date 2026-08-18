@@ -35,7 +35,8 @@
   --text-on-dark: var(--on-dark-strong);
   --text-on-dark-secondary: var(--on-dark-secondary);
   --text-primary-inverse: var(--on-dark-strong);
-  --text-brand: var(--mj-brand);
+  /* نص العلامة على سطح فاتح: --mj-brand (#1F7A5A) = 4.49:1 على --brand-soft — استخدم --brand-on-white */
+  --text-brand: var(--brand-on-white);
   --text-brand-deep: var(--mj-brand-deep);
   /* أسماء قديمة خاطئة شائعة — كانت تسقط لاحتياطي نهاري ثابت */
   --txt-primary: var(--mj-ink);
@@ -134,7 +135,7 @@
   --majalis-panel: var(--mj-surface);
   --ds-emerald: var(--mj-brand);
   --ds-emerald-deep: var(--mj-brand-deep);
-  --msk-gold: var(--mj-brand);
+  --msk-gold: var(--brand-on-white);
   --msk-gold-dim: var(--mj-brand-soft);
   --msk-canvas: var(--mj-bg);
   --msk-canvas-1: var(--mj-surface);

@@ -43,14 +43,23 @@ import "./styles/m2030/pages.css";
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
 import "./styles/dark-mode-surfaces.css";
-// طبقات مظهر غير حرجة للرسم الأول — فصل أول دفعة بلا حذف (gzip ≤60KiB)
-void import("./styles/design-system.css").then(() => {
-  void import("./styles/brand-v4-components.css");
-});
-// تفاعلات غير حرجة للرسم الأول — خارج ميزانية CSS الحرج (gzip ≤60KiB)
-void import("./styles/components/instant-interaction.css");
-void import("./styles/components/native-feel.css");
-void import("./styles/m2030/interactions.css");
+// طبقات مظهر غير حرجة — بعد load + idle حتى لا تنافس LCP (كانت void import فوريًا)
+function loadNonCriticalCss() {
+  void import("./styles/design-system.css").then(() => {
+    void import("./styles/brand-v4-components.css");
+  });
+  void import("./styles/components/instant-interaction.css");
+  void import("./styles/components/native-feel.css");
+  void import("./styles/m2030/interactions.css");
+}
+function scheduleNonCriticalCss() {
+  scheduleOnIdle(loadNonCriticalCss, 2500);
+}
+if (document.readyState === "complete") {
+  scheduleNonCriticalCss();
+} else {
+  window.addEventListener("load", scheduleNonCriticalCss, { once: true });
+}
 // chunk-recovery / capacitor / ios-edge خارج CSS الحرج (gzip ≤60KiB)
 
 if (isNative) {
