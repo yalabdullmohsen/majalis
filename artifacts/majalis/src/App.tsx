@@ -400,9 +400,11 @@ function ScrollResetOnNav() {
     const leavingLocation = lastLocationRef.current;
     const isPop = isPopRef.current;
     recordNavigationVisit(location, isPop ? "pop" : "push");
-    if (leavingLocation !== location) {
-      scrollPosByPath.set(leavingLocation, captureScrollSnapshot());
+    if (leavingLocation === location) {
+      isPopRef.current = false;
+      return;
     }
+    scrollPosByPath.set(leavingLocation, captureScrollSnapshot());
     lastLocationRef.current = location;
     isPopRef.current = false;
 
