@@ -152,6 +152,9 @@ async function mount() {
   const afterPaint = () => {
     void purgeNativeWebRuntimeCaches().catch(() => {});
     void hydrateNativeStorage().catch(() => {});
+    void import("./lib/supabase-bootstrap")
+      .then((m) => m.bootstrapSupabaseFromServer().then(() => m.resetSupabaseClient()))
+      .catch(() => {});
   };
   scheduleOnIdle(afterPaint, 2500);
 
