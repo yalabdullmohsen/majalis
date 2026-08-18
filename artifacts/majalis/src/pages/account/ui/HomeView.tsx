@@ -167,7 +167,9 @@ export default function HomePage() {
       <PageHero
         className="m2030-hero home-page-hero"
         fullBleed={false}
-        title={dailyCtx.greeting}
+        eyebrow={dailyCtx.greeting}
+        title="المجلس العلمي"
+        titleDomId="mj-lcp-title"
         actions={
           <Link
             href={continueHref}
