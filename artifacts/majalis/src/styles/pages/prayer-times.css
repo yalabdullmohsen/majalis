@@ -86,9 +86,9 @@ html.pts-immersive .bottom-nav {
   /* على الجوال TopSectionBar مخفي — الشاشة نفسها تملك safe-area العلوي */
   margin-block-start: 0 !important;
   margin-inline: 0 !important;
-  padding-block-start: calc(var(--inset-top, 0px) + 0.75rem) !important;
+  padding-block-start: max(12px, var(--inset-top, 0px)) !important;
   padding-bottom: calc(
-    var(--bottom-nav-total, 4.5rem) + var(--inset-bottom, 0px) + 1rem
+    var(--bottom-nav-total, 4.5rem) + max(12px, var(--inset-bottom, 0px))
   ) !important;
   box-sizing: border-box;
 }
@@ -118,14 +118,12 @@ html.pts-immersive .bottom-nav {
   margin-inline: 0;
   color: var(--pts-white);
   background-color: var(--pts-bg-1);
-  background-image:
-    radial-gradient(ellipse 90% 55% at 70% 8%, rgba(212, 196, 160, 0.08), transparent 55%),
-    linear-gradient(180deg, var(--pts-bg-1) 0%, var(--pts-bg-0) 48%, #0A221C 100%);
+  background-image: none;
   padding:
-    calc(var(--inset-top, 0px) + 0.75rem)
-    max(1.1rem, var(--inset-right, 0px))
-    calc(var(--bottom-nav-h, 64px) + 1.25rem + var(--inset-bottom, 0px))
-    max(1.1rem, var(--inset-left, 0px));
+    max(12px, var(--inset-top, 0px))
+    max(1.1rem, var(--inset-right, 0px), 12px)
+    max(12px, var(--inset-bottom, 0px))
+    max(1.1rem, var(--inset-left, 0px), 12px);
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
@@ -590,10 +588,10 @@ html.pts-immersive .bottom-nav {
 }
 .pts-more > summary::-webkit-details-marker { display: none; }
 .pts-sheet-close {
-  /* في تدفق العمود لا sticky — الحشو السفلي لـ .pts-screen يطلي الفجوة حتى الشريط */
   margin-block-start: auto;
-  padding: 0.75rem 0 0;
-  background-color: var(--pts-bg-0, #081A16);
+  padding: 0.75rem 0 max(12px, var(--inset-bottom, 0px));
+  background-color: inherit;
+  background-image: none;
 }
 .pts-sheet-close__btn {
   width: 100%;

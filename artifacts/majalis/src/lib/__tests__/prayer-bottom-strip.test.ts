@@ -34,8 +34,8 @@ assert.match(
 );
 assert.match(
   css,
-  /\.pts-sheet-close[\s\S]*?background-color:\s*var\(--pts-bg-0/,
-  "زر الإغلاق يطلي الحاوية لا هامشاً شفافاً",
+  /\.pts-sheet-close[\s\S]*?background-color:\s*inherit/,
+  "زر الإغلاق يرث خلفية الشاشة — بلا درزة --pts-bg-0",
 );
 assert.doesNotMatch(
   css,
@@ -45,8 +45,8 @@ assert.doesNotMatch(
 
 assert.match(
   css,
-  /\.pts-screen(?:\.pts-screen)?--with-nav[\s\S]*?padding-block-start:\s*calc\(\s*var\(--inset-top/,
-  "safe-area العلوي على شاشة الصلاة مع الشريط السفلي",
+  /\.pts-screen(?:\.pts-screen)?--with-nav[\s\S]*?padding-block-start:\s*max\(\s*12px,\s*var\(--inset-top/,
+  "safe-area العلوي عبر --inset-top (≥12px) على شاشة الصلاة",
 );
 assert.match(
   css,
@@ -58,5 +58,14 @@ assert.doesNotMatch(
   /\.pts-screen\s*\{[^}]*margin-block-start:\s*calc\(\s*-1\s*\*\s*var\(--inset-top\)/,
   "لا سحب سالب تحت النوتش",
 );
+
+assert.doesNotMatch(
+  css,
+  /\.pts-screen\s*\{[^}]*linear-gradient/,
+  "خلفية الشاشة لون واحد متصل بلا تدرّج مقطوع",
+);
+assert.match(css, /var\(--inset-top/);
+assert.match(css, /var\(--inset-bottom/);
+assert.doesNotMatch(css, /env\(\s*safe-area-inset/);
 
 console.log("prayer-bottom-strip.test.ts: ok");
