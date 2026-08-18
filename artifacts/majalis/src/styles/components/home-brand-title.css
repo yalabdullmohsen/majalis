@@ -61,9 +61,9 @@ html.dark .home-page-hero .pattern-backdrop {
 
 .home-page-hero .page-hero-mj__title {
   color: var(--mj-ink) !important;
-  font-size: clamp(1.35rem, 4.5vw, 1.85rem);
+  font-size: clamp(1.85rem, 6.5vw, 2.55rem);
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.25;
   margin: 0;
 }
 

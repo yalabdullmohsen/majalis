@@ -14,20 +14,24 @@
         min-height: 100dvh;
       }
       #mj-lcp-chrome {
-        padding: 0 16px 8px;
+        position: absolute;
+        top: 56px;
+        left: 0;
+        right: 0;
+        z-index: 2;
+        padding: 8px 16px;
         color: #16241e;
         text-align: center;
+        pointer-events: none;
       }
-      .mj-lcp-nav-ph {
-        height: 56px;
-      }
+      .mj-lcp-nav-ph { display: none; }
       #mj-lcp-title {
-        margin: 0.65rem auto 0;
+        margin: 0 auto;
         max-width: 40rem;
         font-family: "Amiri", "MajlisFallback", "Times New Roman", serif;
-        font-size: clamp(1.35rem, 4.5vw, 1.85rem);
+        font-size: clamp(1.85rem, 6.5vw, 2.55rem);
         font-weight: 700;
-        line-height: 1.35;
+        line-height: 1.25;
         color: #16241e;
       }
       html.mj-lcp-adopted #mj-lcp-chrome {

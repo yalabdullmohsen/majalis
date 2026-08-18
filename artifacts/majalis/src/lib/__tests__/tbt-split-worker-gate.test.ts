@@ -30,5 +30,7 @@ assert.match(app, /lazyWithRetry\([\s\S]*PrayerCountdownBanner/, "شريط ال�
 
 const tickerCss = read("src/styles/final-release.css");
 assert.match(tickerCss, /translate3d\(0, 0, 0\)/, "الماركي مركّب");
+const pulseCss = read("src/styles/components/prayer-countdown-chip.css");
+assert.doesNotMatch(pulseCss, /@keyframes prayer-chip-pulse[\s\S]*box-shadow/, "نبض الشريحة بلا box-shadow");
 
 console.log("tbt-split-worker-gate.test.ts: ok");
