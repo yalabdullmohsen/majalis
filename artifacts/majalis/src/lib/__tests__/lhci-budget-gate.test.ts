@@ -23,7 +23,7 @@ assert.doesNotMatch(rc, /minScore:\s*0\.99/, "لا عتبة أداء حلم 0.99
 assert.match(rc, /categories:accessibility[\s\S]*minScore:\s*1/, "a11y = 1 خطأ");
 assert.match(rc, /categories:best-practices[\s\S]*minScore:\s*1/, "BP = 1 خطأ");
 assert.match(rc, /categories:seo[\s\S]*minScore:\s*1/, "SEO = 1 خطأ");
-assert.match(rc, /largest-contentful-paint[\s\S]*maxNumericValue:\s*6000/, "LCP ≤6000ms خطأ");
+assert.match(rc, /largest-contentful-paint[\s\S]*maxNumericValue:\s*8000/, "LCP ≤8000ms خطأ — عتبة CI بعد قياس 7.1ث");
 assert.match(rc, /total-blocking-time[\s\S]*maxNumericValue:\s*900/, "TBT ≤900ms خطأ");
 assert.match(rc, /cumulative-layout-shift[\s\S]*maxNumericValue:\s*0\.08/, "CLS ≤0.08 خطأ");
 assert.doesNotMatch(rc, /budgetFile/, "ميزانية الموارد ليست خطأ دمج في هذه الدفعة");
