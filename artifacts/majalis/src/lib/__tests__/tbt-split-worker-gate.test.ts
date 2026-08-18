@@ -26,7 +26,20 @@ assert.match(unified, /search-index\.worker/, "فهرس البحث عبر Worker
 
 const app = read("src/App.tsx");
 assert.match(app, /IdleRuntimeBoot/, "منطق المنصة بعد الخمول");
+assert.match(app, /DeferredPrayerRuntime/, "جدولة الصلاة بعد load+idle");
 assert.match(app, /lazyWithRetry\([\s\S]*PrayerCountdownBanner/, "شريط الصلاة خارج حزمة الإقلاع");
+
+const homeView = read("src/pages/account/ui/HomeView.tsx");
+assert.match(homeView, /HomeBelowFold/, "جزيرة تحت الطية كسولة");
+assert.match(homeView, /IntersectionObserver/, "ترطيب تحت الطية عند الظهور");
+
+const mainSrc = read("src/main.tsx");
+assert.doesNotMatch(mainSrc, /import\("@\/pages\/account\/HomePage"\)/, "لا تسخين مزدوج لـ HomePage قبل الرسم");
+assert.doesNotMatch(
+  mainSrc.slice(0, mainSrc.indexOf("createRoot(")),
+  /supabase-bootstrap/,
+  "لا bootstrap Supabase قبل createRoot",
+);
 
 const tickerCss = read("src/styles/final-release.css");
 assert.match(tickerCss, /translate3d\(0, 0, 0\)/, "الماركي مركّب");

@@ -146,7 +146,8 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   const sidebarNavSrc = readFileSync(resolve(appRoot, "src/lib/sidebar-nav.ts"), "utf-8");
   const servicesNavSrc = readFileSync(resolve(appRoot, "src/lib/services-center-nav.ts"), "utf-8");
   const navMapSrc = readFileSync(resolve(appRoot, "src/lib/nav-map.ts"), "utf-8");
-  const homeSrc = readFileSync(resolve(appRoot, "src/pages/account/ui/HomeView.tsx"), "utf-8");
+  const homeSrc = readFileSync(resolve(appRoot, "src/pages/account/ui/HomeView.tsx"), "utf-8")
+    + readFileSync(resolve(appRoot, "src/pages/account/ui/HomeBelowFold.tsx"), "utf-8");
   const footerSrc = readFileSync(resolve(appRoot, "src/components/SiteFooter.tsx"), "utf-8");
   const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8");
   for (const src of [moreHubSrc, sideSrc, sidebarNavSrc]) {

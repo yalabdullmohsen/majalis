@@ -16,7 +16,8 @@ assert.match(vercel, /"source":\s*"\/assets\/\(\.\*\)"/);
 assert.match(vercel, /max-age=31536000,\s*immutable/);
 assert.match(vercel, /no-cache, no-store, must-revalidate/);
 
-const home = readFileSync(join(root, "src/pages/account/ui/HomeView.tsx"), "utf8");
+const home = readFileSync(join(root, "src/pages/account/ui/HomeView.tsx"), "utf8")
+  + readFileSync(join(root, "src/pages/account/ui/HomeBelowFold.tsx"), "utf8");
 assert.match(home, /HomeUpcomingLessons/);
 assert.match(home, /import\("@\/components\/home\/HomeUpcomingLessons"\)/);
 assert.match(home, /lazyWithRetry/);

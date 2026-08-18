@@ -23,6 +23,10 @@
   contain: layout style;
 }
 
+.mj-home-below-fold-ph {
+  min-height: 28rem;
+}
+
 .mj-home-lcp-ph .page-hero-mj__content {
   width: 100%;
   max-width: 40rem;

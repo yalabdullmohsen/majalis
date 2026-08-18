@@ -24,6 +24,7 @@ const SURFACES = [
   "src/lib/site-footer-nav.ts",
   "src/components/home/HomeStartHereSection.tsx",
   "src/pages/account/ui/HomeView.tsx",
+  "src/pages/account/ui/HomeBelowFold.tsx",
   "src/pages/fiqh/ui/FiqhView.tsx",
 ];
 
