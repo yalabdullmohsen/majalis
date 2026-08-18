@@ -28,6 +28,12 @@ import { PRAYER_ALERT_PREFS_CHANGED_EVENT } from "@/lib/prayer-alert-preferences
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
 import { recordRecentPage } from "@/lib/recent-pages";
+import {
+  captureScrollSnapshot,
+  restoreScrollSnapshot,
+  scrollDocumentToTop,
+  type ScrollSnapshot,
+} from "@/lib/scroll-document-top";
 import { trackContinueReading } from "@/lib/continue-reading";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
@@ -369,13 +375,12 @@ function SeoManager() {
 }
 
 /** مواضع تمرير في الذاكرة — مفتاحها المسار؛ تُستعاد عند الرجوع فقط. */
-const scrollPosByPath = new Map<string, number>();
+const scrollPosByPath = new Map<string, ScrollSnapshot>();
 
 /**
- * مسار جديد (push/link) → أعلى الصفحة فورًا قبل الرسم (useLayoutEffect).
+ * مسار جديد (push/link) → أعلى الصفحة فورًا قبل الرسم (useLayoutEffect)
+ * على النافذة وحاويات التمرير الداخلية (.app-shell / main).
  * رجوع (popstate) فقط → استعادة الموضع المحفوظ لذلك المسار.
- * عُطّل استرجاع المتصفح الافتراضي وسلوك شريط الأقسام الذي كان يُبقي
- * المستخدم في أسفل القوائم الطويلة عند الدخول للأقسام.
  */
 function ScrollResetOnNav() {
   const [location] = useLocation();
@@ -395,17 +400,19 @@ function ScrollResetOnNav() {
     const leavingLocation = lastLocationRef.current;
     const isPop = isPopRef.current;
     recordNavigationVisit(location, isPop ? "pop" : "push");
-    if (leavingLocation !== location) {
-      scrollPosByPath.set(leavingLocation, window.scrollY);
+    if (leavingLocation === location) {
+      isPopRef.current = false;
+      return;
     }
+    scrollPosByPath.set(leavingLocation, captureScrollSnapshot());
     lastLocationRef.current = location;
     isPopRef.current = false;
 
     if (isPop) {
-      window.scrollTo(0, scrollPosByPath.get(location) ?? 0);
+      restoreScrollSnapshot(scrollPosByPath.get(location));
       return;
     }
-    window.scrollTo(0, 0);
+    scrollDocumentToTop();
   }, [location]);
 
   return null;
@@ -1212,7 +1219,7 @@ function AppShellInner() {
         </SectionErrorBoundary>
       )}
       {!hideSiteChrome && <Suspense fallback={null}><PrayerRespectBanner /></Suspense>}
-      <main id="main-content" className="app-main" tabIndex={-1}>
+      <main id="main-content" className="app-main" tabIndex={-1} data-scroll-root="1">
         <Router />
       </main>
       {/* تذييل الموقع للويب فقط — داخل التطبيق الأصلي يُخفى (App Store: الروابط القانونية في الإعدادات) */}

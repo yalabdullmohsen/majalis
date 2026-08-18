@@ -7,14 +7,18 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
-const appSrc = readFileSync(
-  join(dirname(fileURLToPath(import.meta.url)), "../../App.tsx"),
-  "utf8",
-);
+const dir = dirname(fileURLToPath(import.meta.url));
+const appSrc = readFileSync(join(dir, "../../App.tsx"), "utf8");
+const helper = readFileSync(join(dir, "../scroll-document-top.ts"), "utf8");
+const gate = readFileSync(join(dir, "../../../scripts/scroll-top-gate.mjs"), "utf8");
 
 assert.match(appSrc, /function ScrollResetOnNav/);
 assert.match(appSrc, /useLayoutEffect/);
 assert.match(appSrc, /scrollPosByPath/);
+assert.match(appSrc, /scrollDocumentToTop/);
+assert.match(appSrc, /data-scroll-root/);
+assert.match(appSrc, /captureScrollSnapshot/);
+assert.match(appSrc, /restoreScrollSnapshot/);
 assert.match(appSrc, /scrollRestoration\s*=\s*["']manual["']/);
 assert.match(appSrc, /isPop/);
 assert.doesNotMatch(
@@ -27,5 +31,11 @@ assert.doesNotMatch(
   /scroll-pos:/,
   "المواضع في خريطة ذاكرة لا sessionStorage",
 );
+
+assert.match(helper, /ROOT_SELECTORS/);
+assert.doesNotMatch(helper, /scrollHeight/, "لا قراءة scrollHeight — تجنّب إعادة تدفّق قسرية");
+assert.match(appSrc, /leavingLocation === location/);
+assert.match(gate, /\/fiqh\/books\//);
+assert.ok((gate.match(/"[/][^"]+"/g) ?? []).length >= 30, "بوابة ≥ ٣٠ مسارًا");
 
 console.log("scroll-reset-on-nav.test.ts: ok");
