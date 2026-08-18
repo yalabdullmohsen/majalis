@@ -3,7 +3,7 @@
  * node --import tsx src/lib/__tests__/arabic-count.test.ts
  */
 import assert from "node:assert/strict";
-import { formatAbwabCount, formatMasailCount } from "../arabic-count";
+import { formatAbwabCount, formatMasailCount, pluralAr, NOUN_DURUS, NOUN_HALAQAT } from "../arabic-count";
 
 assert.equal(formatMasailCount(0), "لا مسائل");
 assert.equal(formatMasailCount(1), "مسألة");
@@ -18,6 +18,9 @@ assert.equal(formatAbwabCount(1), "باب");
 assert.equal(formatAbwabCount(2), "بابان");
 assert.equal(formatAbwabCount(5), "5 أبواب");
 assert.equal(formatAbwabCount(12), "12 باباً");
+
+assert.equal(pluralAr(12, NOUN_HALAQAT), "12 حلقة");
+assert.equal(pluralAr(34, NOUN_DURUS), "34 درساً");
 
 assert.notEqual(formatMasailCount(1), "1 مسائل");
 assert.ok(!`${formatMasailCount(1)}`.includes("1 مسائل"));

@@ -534,6 +534,7 @@ export default function LessonsPage({
         onSelect: () => setTab(c.id as TabId),
       }))}
       groups={lobby.groups}
+      quad={lobby.quad}
       filterSlot={
         <div className="lessons-v3-sticky">
           <FilterToggle

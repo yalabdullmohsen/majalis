@@ -4,7 +4,8 @@ import { useLocation } from "wouter";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { FeaturedSectionCard } from "@/components/sections/FeaturedSectionCard";
 import { SectionCard } from "@/components/sections/SectionCard";
-import type { LobbyChip, LobbyGroup, LobbyId, LobbyItem, LobbyPrimary } from "@/config/section-lobbies";
+import { QuickActionsQuad } from "@/components/lobby/QuickActionsQuad";
+import type { LobbyChip, LobbyGroup, LobbyId, LobbyItem, LobbyPrimary, LobbyQuadItem } from "@/config/section-lobbies";
 import type { SectionDef } from "@/config/sections.registry";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { cn } from "@/lib/utils";
@@ -18,6 +19,7 @@ type Props = {
   primary?: LobbyPrimary;
   chips?: Array<LobbyChip & { href?: string; active?: boolean; onSelect?: () => void }>;
   groups: LobbyGroup[];
+  quad?: [LobbyQuadItem, LobbyQuadItem, LobbyQuadItem, LobbyQuadItem];
   /** ورقة تصفية فقط — بلا حقل بحث */
   filterSlot?: ReactNode;
   children?: ReactNode;
@@ -50,6 +52,7 @@ export function SectionLobby({
   primary,
   chips,
   groups,
+  quad,
   filterSlot,
   children,
   className,
@@ -123,6 +126,8 @@ export function SectionLobby({
         ) : null}
 
         {filterSlot}
+
+        {quad ? <QuickActionsQuad items={quad} /> : null}
 
         {groups.map((group) => {
           if (group.items.length === 0) return null;

@@ -85,8 +85,10 @@ assert.equal(quran.groups.find((g) => g.id === "numbers")?.items.length, 1);
 const lessons = getLobby("lessons");
 assert.ok(lessons.primary);
 assert.deepEqual(lessons.chips?.map((c) => c.id), ["all", "men", "women", "courses"]);
-assert.equal(lessons.groups.length, 3);
-assert.ok(lessons.groups.every((g) => g.items.length === 1));
+assert.equal(lessons.quad?.length, 4);
+assert.deepEqual(lessons.quad?.map((q) => q.id), ["lessons", "quran-circles", "hijri-calendar", "lessons-archive"]);
+assert.ok(lessons.quad?.[0]?.accent && lessons.quad?.[1]?.accent);
+assert.equal(lessons.groups.length, 0);
 
 const prayer = getLobby("prayer");
 assert.ok(prayer.primary);
