@@ -45,8 +45,8 @@ assert.doesNotMatch(
 
 assert.match(
   css,
-  /\.pts-screen(?:\.pts-screen)?--with-nav[\s\S]*?padding-block-start:\s*max\(\s*12px,\s*env\(safe-area-inset-top/,
-  "safe-area العلوي على شاشة الصلاة مع الشريط السفلي",
+  /\.pts-screen(?:\.pts-screen)?--with-nav[\s\S]*?padding-block-start:\s*max\(\s*12px,\s*var\(--inset-top/,
+  "safe-area العلوي عبر --inset-top (≥12px) على شاشة الصلاة",
 );
 assert.match(
   css,
@@ -64,7 +64,8 @@ assert.doesNotMatch(
   /\.pts-screen\s*\{[^}]*linear-gradient/,
   "خلفية الشاشة لون واحد متصل بلا تدرّج مقطوع",
 );
-assert.match(css, /env\(safe-area-inset-top/);
-assert.match(css, /env\(safe-area-inset-bottom/);
+assert.match(css, /var\(--inset-top/);
+assert.match(css, /var\(--inset-bottom/);
+assert.doesNotMatch(css, /env\(\s*safe-area-inset/);
 
 console.log("prayer-bottom-strip.test.ts: ok");

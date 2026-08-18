@@ -106,8 +106,9 @@ assert.equal(hits.length, 0, `كروم التخطيط يجب أن يطابق --s
     /\.pts-sheet-close\s*\{[\s\S]*?background-color:\s*var\(--pts-bg-0/,
     "الصلاة: إغلاق لا يستخدم لوناً أغمق من الشاشة",
   );
-  assert.match(pts, /env\(safe-area-inset-top/);
-  assert.match(pts, /env\(safe-area-inset-bottom/);
+  assert.match(pts, /var\(--inset-top/);
+  assert.match(pts, /var\(--inset-bottom/);
+  assert.doesNotMatch(pts, /env\(\s*safe-area-inset/);
 }
 
 console.log(
