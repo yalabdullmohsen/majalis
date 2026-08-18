@@ -47,8 +47,8 @@ assert.doesNotMatch(rc, /maxNumericValue:\s*0\.08/, "عتبة CLS 0.08 أوسع 
 assert.match(rc, /"dom-size"[\s\S]*maxNumericValue:\s*1200/, "DOM ≤1200 خطأ");
 assert.match(
   rc,
-  /render-blocking-resources[\s\S]*maxNumericValue:\s*1800/,
-  "حظر عرض ≤1800ms خطأ — سقف انحدار فوق 1610؛ الهدف 300 في PR الإصلاح",
+  /render-blocking-resources[\s\S]*maxNumericValue:\s*300/,
+  "حظر عرض ≤300ms خطأ — بعد تحويل index-*.css إلى غير حاجب",
 );
 assert.match(rc, /"unused-css-rules"/, "تأكيد unused-css خام (warn؛ numericValue بالمللي ثانية)");
 assert.match(rc, /"unused-javascript"/, "تأكيد unused-js خام (warn؛ numericValue بالمللي ثانية)");
