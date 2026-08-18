@@ -46,3 +46,32 @@ export function formatMasailCount(n: number): string {
 export function formatAbwabCount(n: number): string {
   return arabicCountLabel(n, NOUN_ABWAB);
 }
+
+/** جمع عربي عام للعدّادات الظاهرة (دروس، حلقات، …). */
+export function pluralAr(n: number, noun: ArabicCountNoun): string {
+  return arabicCountLabel(n, noun);
+}
+
+export const NOUN_DURUS: ArabicCountNoun = {
+  zero: "لا دروس",
+  one: "درس",
+  two: "درسان",
+  few: "دروس",
+  many: "درساً",
+};
+
+export const NOUN_HALAQAT: ArabicCountNoun = {
+  zero: "لا حلقات",
+  one: "حلقة",
+  two: "حلقتان",
+  few: "حلقات",
+  many: "حلقة",
+};
+
+export const NOUN_MUNASABAT: ArabicCountNoun = {
+  zero: "لا مناسبات",
+  one: "مناسبة",
+  two: "مناسبتان",
+  few: "مناسبات",
+  many: "مناسبة",
+};

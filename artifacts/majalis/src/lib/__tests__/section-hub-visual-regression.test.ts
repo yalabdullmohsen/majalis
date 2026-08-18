@@ -27,7 +27,7 @@ console.log("\n=== قواعد CSS الحرجة لصفحات الأقسام ===")
   const finalCss = readFileSync(resolve(root, "src/styles/final-release.css"), "utf8");
   const indexCss = readFileSync(resolve(root, "src/index.css"), "utf8");
 
-  assert(indexCss.includes("overflow-x: hidden"), "html/body يمنع التمرير الأفقي");
+  assert(indexCss.includes("overflow-x: clip") || indexCss.includes("overflow-x: hidden"), "html/body يمنع التمرير الأفقي");
   assert(hubCard.includes(".hub-card-grid"), "شبكة HubCard موحّدة");
   assert(hubCard.includes("repeat(2, minmax(0, 1fr))"), "عمودان على الجوال");
   assert(hubCard.includes("background: var(--mj-surface)"), "بطاقة بسطح فاتح");
@@ -58,7 +58,7 @@ console.log("\n=== بنية المكوّنات ===");
   assert(tawhidPage.includes("HubCard"), "TawhidPage يرحّل إلى HubCard");
   assert(fiqhPage.includes("SectionLobby"), "FiqhPage يرحّل إلى SectionLobby");
   assert(quranHub.includes("SectionLobby"), "QuranHubPage يرحّل إلى SectionLobby");
-  assert(merged.includes("SectionLobby"), "MergedSectionHubPage يرحّل إلى SectionLobby");
+  assert(merged.includes("TopicPage"), "MergedSectionHubPage يرحّل إلى TopicPage");
   assert(topBar.includes('aria-label="أقسام رئيسية"'), "TopSectionBar موجود");
   assert(existsSync(resolve(root, "scripts/strip-enrichment-boilerplate.mjs")), "سكربت التنظيف/التقرير موجود");
 }

@@ -7,13 +7,11 @@ import {
   ChevronLeft,
   GraduationCap,
   History,
-  Search,
   ShieldCheck,
-  X,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { LIBRARY_CATALOG } from "@/lib/library-catalog";
 import {
   BOOK_SPOTLIGHTS,
@@ -102,7 +100,6 @@ const ALL_CARDS = buildCards();
 const TAFSIR_BOOKS = LIBRARY_CATALOG.filter((b) => b.category === "تفسير");
 
 export default function TafsirPage() {
-  const [query, setQuery] = useState("");
   const [category, setCategory] = useState<TafsirCategory>("الكل");
   const [openId, setOpenId] = useState<string | null>(null);
 
@@ -144,15 +141,9 @@ export default function TafsirPage() {
   const filtered = useMemo(() => {
     return ALL_CARDS.filter((card) => {
       if (category !== "الكل" && card.category !== category) return false;
-      if (!query.trim()) return true;
-      return arabicMatchAny(
-        [card.title, card.body, card.example, card.note, card.meta, card.rank, card.source].filter(
-          Boolean,
-        ) as string[],
-        query,
-      );
+      return true;
     });
-  }, [category, query]);
+  }, [category]);
 
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { الكل: ALL_CARDS.length };
@@ -164,15 +155,15 @@ export default function TafsirPage() {
   }, []);
 
   return (
+    <SectionTemplatePage
+      route="/tafsir"
+      eyebrow="القرآن الكريم · أشرف العلوم موضوعًا"
+      title="علم التفسير"
+      subtitle="بيان معاني كلام الله على منهج أهل السنة: بالمأثور ثم بالرأي المنضبط، مع تاريخ العلم، شروط المفسّر، المصطلحات، أشهر الكتب، ومسار دراسة مرتّب."
+      groupTitle="أقسام علم التفسير"
+    >
     <main className="tf-page" dir="rtl">
-      <section className="tf-hero">
-        <span className="tf-hero__badge">القرآن الكريم · أشرف العلوم موضوعًا</span>
-        <h1 className="tf-hero__title">علم التفسير</h1>
-        <p className="tf-hero__sub">
-          بيان معاني كلام الله على منهج أهل السنة: بالمأثور ثم بالرأي المنضبط، مع تاريخ العلم،
-          شروط المفسّر، المصطلحات، أشهر الكتب، ومسار دراسة مرتّب.
-        </p>
-        <div className="tf-stats">
+      <section className="tf-stats" aria-label="إحصاءات القسم">
           <div className="tf-stat">
             <strong>{toArabicDigits(TAFSIR_STAGES.length)}</strong>
             <span>مراحل تاريخ</span>
@@ -197,7 +188,6 @@ export default function TafsirPage() {
             <strong>{toArabicDigits(TAFSIR_BOOKS.length)}</strong>
             <span>كتابًا</span>
           </div>
-        </div>
       </section>
 
       <section className="tf-intro-block" aria-labelledby="tf-def-title">
@@ -320,27 +310,6 @@ export default function TafsirPage() {
       </section>
 
       <div className="tf-controls">
-        <div className="tf-search-wrap">
-          <Search size={16} className="tf-search-icon" aria-hidden="true" />
-          <input
-            className="tf-search"
-            type="search"
-            placeholder="ابحث في التاريخ والأنواع والأصول والمصطلحات والمفسرين…"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            aria-label="بحث في علم التفسير"
-          />
-          {query ? (
-            <button
-              type="button"
-              className="tf-search-clear"
-              onClick={() => setQuery("")}
-              aria-label="مسح البحث"
-            >
-              <X size={14} />
-            </button>
-          ) : null}
-        </div>
         <div className="tf-cats" role="tablist" aria-label="تصفية حسب الباب">
           {TAFSIR_CATEGORIES.map((cat) => (
             <button
@@ -510,5 +479,6 @@ export default function TafsirPage() {
       <div className="px-4 pb-6 mt-4">
       </div>
     </main>
+    </SectionTemplatePage>
   );
 }

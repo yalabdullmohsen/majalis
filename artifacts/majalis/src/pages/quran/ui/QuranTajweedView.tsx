@@ -5,6 +5,7 @@
 import { useEffect } from "react";
 import { Link, useParams } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import {
   TAJWEED_CHAPTERS,
   TAJWEED_COLORING_FLAG,
@@ -104,15 +105,15 @@ export default function QuranTajweedHubView() {
   }, []);
 
   return (
+    <SectionTemplatePage
+      route="/quran-hub/tajweed"
+      title={TAJWEED_HUB_INTRO.title}
+      subtitle={TAJWEED_HUB_INTRO.paragraphs[0]}
+      groupTitle="أبواب التجويد"
+    >
     <div className="tj-page" dir="rtl" data-quran-tajweed="1">
-      <nav className="tj-crumb" aria-label="مسار">
-        <Link href="/quran-hub">مركز القرآن</Link>
-        <span aria-hidden="true"> · </span>
-        <span>التجويد</span>
-      </nav>
       <header className="tj-hub-head">
-        <h1>{TAJWEED_HUB_INTRO.title}</h1>
-        {TAJWEED_HUB_INTRO.paragraphs.map((p) => (
+        {TAJWEED_HUB_INTRO.paragraphs.slice(1).map((p) => (
           <p key={p.slice(0, 20)}>{p}</p>
         ))}
         <p className="tj-source">
@@ -138,5 +139,6 @@ export default function QuranTajweedHubView() {
         ))}
       </ol>
     </div>
+    </SectionTemplatePage>
   );
 }

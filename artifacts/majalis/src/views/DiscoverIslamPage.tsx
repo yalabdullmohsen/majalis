@@ -18,7 +18,7 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
-import { PageHeader } from "@/components/ui-common";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { applyPageSeo } from "@/lib/seo";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LANG_META } from "@/lib/language-preference";
@@ -100,12 +100,14 @@ export default function DiscoverIslamPage() {
   }, []);
 
   return (
+    <SectionTemplatePage
+      route="/discover-islam"
+      eyebrow="بوابة التعريف بالإسلام"
+      title="تعرّف إلى الإسلام من مصادره"
+      subtitle="خطاب عقلاني وواضح، مبني على الأدلة، يحترم عقلك وحريتك في السؤال — بلا ضغط، بلا استعجال."
+      groupTitle="مسارات التعرف"
+    >
     <div className="page-shell narrow content-hub-page dii-page">
-      <PageHeader
-        eyebrow="بوابة التعريف بالإسلام"
-        title="تعرّف إلى الإسلام من مصادره"
-        subtitle="خطاب عقلاني وواضح، مبني على الأدلة، يحترم عقلك وحريتك في السؤال — بلا ضغط، بلا استعجال."
-      />
 
       <div className="dii-lang-row">
         <span className="dii-lang-label">اختر لغتك:</span>
@@ -216,5 +218,6 @@ export default function DiscoverIslamPage() {
         <Link href="/discover-islam/contact" className="asp-run-btn">ابدأ التواصل السري</Link>
       </section>
     </div>
+    </SectionTemplatePage>
   );
 }

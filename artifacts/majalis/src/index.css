@@ -60,7 +60,7 @@ html, body {
 html {
   font-size: 16px;
   text-size-adjust: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
   overscroll-behavior-y: contain;
   /* bleed أخضر داكن — يمنع شريطًا أبيض تحت الشريط السفلي / Home Indicator */
   background-color: var(--mj-splash, #0E1A15);

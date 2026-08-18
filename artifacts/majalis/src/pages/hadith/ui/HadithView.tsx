@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { AlertTriangle, Star } from "lucide-react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { truncateAtWord } from "@/lib/utils";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
@@ -18,7 +18,9 @@ import {
   type HadithSearchScope,
   type HadithSortMode,
 } from "@/lib/hadith-access";
-import { PageHeader, PageHero, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
+import { HubCard } from "@/components/ui/HubCard";
 import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -1195,8 +1197,6 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
 
 export default function HadithPage() {
   useReadingScrollMemory("hadith");
-  const [, navigate] = useLocation();
-  const [hubQuery, setHubQuery] = useState("");
   useEffect(() => {
     applyPageSeo({
       path: "/hadith",
@@ -1231,75 +1231,39 @@ export default function HadithPage() {
     { href: "/arbaeen-nawawi", title: "الأربعون النووية", desc: "أربعون حديثًا مع الشرح", tone: "arbaeen" },
   ] as const;
 
-  const goSearch = () => {
-    const q = hubQuery.trim();
-    if (!q) {
-      navigate("/hadith/sahih");
-      return;
-    }
-    navigate(`/hadith/sahih?q=${encodeURIComponent(q)}`);
-  };
-
   return (
-    <div className="page-shell content-hub-page ds-page hadith-page hadith-page--hub">
-      <PageHero
-        title="الحديث وعلومه"
-        description="تصفح الأحاديث ودرجاتها وكتب الحديث ومصطلحاته بطريقة منظمة."
-        showBack={false}
-        withPattern
-      />
-
-      <form
-        className="hadith-hub-search"
-        onSubmit={(e) => {
-          e.preventDefault();
-          goSearch();
-        }}
-        role="search"
-      >
-        <label className="sr-only" htmlFor="hadith-hub-q">ابحث في متن الحديث أو المصدر</label>
-        <input
-          id="hadith-hub-q"
-          value={hubQuery}
-          onChange={(e) => setHubQuery(e.target.value)}
-          placeholder="ابحث في متن الحديث أو المصدر..."
-          className="hadith-hub-search__input"
+    <SectionTemplatePage
+      route="/hadith"
+      eyebrow="علوم الحديث النبوي"
+      title="الحديث وعلومه"
+      subtitle="تصفح الأحاديث ودرجاتها وكتب الحديث ومصطلحاته بطريقة منظمة."
+      groupTitle="أقسام الحديث وعلومه"
+    >
+      <div className="hadith-page hadith-page--hub">
+        <div className="hub-card-grid">
+          {hubCards.map((c) => (
+            <HubCard
+              key={c.href}
+              href={c.href}
+              title={c.title}
+              description={c.desc}
+            />
+          ))}
+        </div>
+        <ExploreAlsoNav
+          title="استكشف أيضًا"
+          links={[
+            { href: "/memorize", label: "بطاقات الحفظ" },
+            { href: "/scholars", label: "أعلام وتراجم" },
+            { href: "/quiz", label: "سين جيم" },
+          ]}
         />
-        <button type="submit" className="hadith-hub-search__btn">بحث</button>
-      </form>
-
-      {/* متن عيّنة ثابت — يضمن وجود .hadith-card__text على مركز الحديث (بوابة التباين) */}
-      <blockquote className="hadith-card__text hadith-card__text--matn hadith-hub-sample" cite="https://www.majlisilm.com/hadith/sahih">
-        إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى.
-      </blockquote>
-
-      <ul className="hadith-hub-grid" aria-label="أقسام الحديث">
-        {hubCards.map((c) => (
-          <li key={c.href}>
-            <Link href={c.href} className={`hadith-hub-card hadith-hub-card--${c.tone}`}>
-              <strong className="hadith-hub-card__title">{c.title}</strong>
-              <span className="hadith-hub-card__desc">{c.desc}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-
-      <ExploreAlsoNav
-        title="استكشف أيضًا"
-        links={[
-          { href: "/memorize", label: "بطاقات الحفظ" },
-          { href: "/scholars", label: "أعلام وتراجم" },
-          { href: "/quiz", label: "سين جيم" },
-        ]}
-      />
-
-      <div className="px-4 pb-6">
         <SectionQuiz
           categoryId="hadith"
           aria-label="اختبر معلوماتك في علوم الحديث"
           count={4}
         />
       </div>
-    </div>
+    </SectionTemplatePage>
   );
 }

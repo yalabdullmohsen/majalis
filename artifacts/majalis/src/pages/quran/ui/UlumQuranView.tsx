@@ -1,8 +1,8 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import "@/styles/pages/ulum-quran.css";
 
 
@@ -228,48 +228,21 @@ export default function UlumQuranPage() {
 
   const [tab, setTab] = useState<UQTab>("nuzul");
   const [openJam, setOpenJam] = useState<number | null>(null);
-  const [search, setSearch] = useState("");
-  const filteredNuzulFacts = useMemo(() =>
-    search.trim() ? NUZUL_FACTS.filter(f => arabicMatchAny([f.label, f.value], search)) : NUZUL_FACTS,
-  [search]);
-  const filteredNuzulTypes = useMemo(() =>
-    search.trim() ? NUZUL_TYPES.filter(n => arabicMatchAny([n.title, n.desc, n.dalil ?? ""], search)) : NUZUL_TYPES,
-  [search]);
-  const filteredTafsirTypes = useMemo(() =>
-    search.trim() ? TAFSIR_TYPES.filter(t => arabicMatchAny([t.title, t.desc, t.ex], search)) : TAFSIR_TYPES,
-  [search]);
-  const filteredMufassirun = useMemo(() =>
-    search.trim() ? MUFASSIRUN.filter(m => arabicMatchAny([m.name, m.kitab, m.era, m.note], search)) : MUFASSIRUN,
-  [search]);
-  const filteredIjaz = useMemo(() =>
-    search.trim() ? IJAZ_TYPES.filter(j => arabicMatchAny([j.title, j.desc], search)) : IJAZ_TYPES,
-  [search]);
+  const filteredNuzulFacts = NUZUL_FACTS;
+  const filteredNuzulTypes = NUZUL_TYPES;
+  const filteredTafsirTypes = TAFSIR_TYPES;
+  const filteredMufassirun = MUFASSIRUN;
+  const filteredIjaz = IJAZ_TYPES;
 
   return (
+    <SectionTemplatePage
+      route="/ulum-quran"
+      eyebrow="علوم القرآن"
+      title="علوم القرآن الكريم"
+      subtitle="مقدمة شاملة في علوم القرآن: من النزول والجمع إلى الإعجاز والتفسير والأحكام"
+      groupTitle="أبواب علوم القرآن"
+    >
     <main className="uq-page" dir="rtl">
-      {/* hero */}
-      <section className="uq-hero">
-        <div className="uq-hero__badge">علوم القرآن</div>
-        <h1 className="uq-hero__title">علوم القرآن الكريم</h1>
-        <p className="uq-hero__sub">
-          مقدمة شاملة في علوم القرآن: من النزول والجمع إلى الإعجاز والتفسير والأحكام
-        </p>
-        <div className="uq-stats-row">
-          {[
-            { num: "114", label: "سورة" },
-            { num: "6236", label: "آية" },
-            { num: "30", label: "جزءاً" },
-            { num: "23", label: "سنة نزول" },
-          ].map((s) => (
-            <div key={s.label} className="uq-stat">
-              <span className="uq-stat__num">{s.num}</span>
-              <span className="uq-stat__label">{s.label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* tabs */}
       <div className="uq-tabs-bar" role="tablist" aria-label="أقسام علوم القرآن">
         {TABS.map((t) => (
           <button
@@ -293,16 +266,6 @@ export default function UlumQuranPage() {
         {/* ── النزول ── */}
         {tab === "nuzul" && (
           <div role="tabpanel" id="ulq-panel-nuzul" aria-labelledby="ulq-tab-nuzul" className="uq-section">
-            <div className="uq-search-wrap">
-              <input
-                type="search"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                placeholder="ابحث في حقائق النزول..."
-                className="page-search-input uq-search-input"
-                aria-label="بحث في علوم النزول"
-              />
-            </div>
             <div className="uq-facts-grid">
               {filteredNuzulFacts.map((f) => (
                 <div key={f.label} className="uq-fact-item">
@@ -372,16 +335,6 @@ export default function UlumQuranPage() {
         {/* ── التفسير ── */}
         {tab === "tafsir" && (
           <div role="tabpanel" id="ulq-panel-tafsir" aria-labelledby="ulq-tab-tafsir" className="uq-section">
-            <div className="uq-search-wrap">
-              <input
-                type="search"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                placeholder="ابحث في أنواع التفسير والمفسّرين..."
-                className="page-search-input uq-search-input"
-                aria-label="بحث في التفسير"
-              />
-            </div>
             <div className="uq-tafsir-types">
               {filteredTafsirTypes.map((t) => (
                 <div key={t.title} className="uq-tafsir-card">
@@ -416,16 +369,6 @@ export default function UlumQuranPage() {
         {/* ── الإعجاز ── */}
         {tab === "ijaz" && (
           <div role="tabpanel" id="ulq-panel-ijaz" aria-labelledby="ulq-tab-ijaz" className="uq-section">
-            <div className="uq-search-wrap">
-              <input
-                type="search"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                placeholder="ابحث في أنواع الإعجاز القرآني..."
-                className="page-search-input uq-search-input"
-                aria-label="بحث في الإعجاز القرآني"
-              />
-            </div>
             <div className="uq-ijaz-grid">
               {filteredIjaz.map((j) => (
                 <div key={j.title} className="uq-ijaz-card">
@@ -577,5 +520,6 @@ export default function UlumQuranPage() {
       <div className="px-4 pb-6 mt-4">
       </div>
     </main>
+    </SectionTemplatePage>
   );
 }

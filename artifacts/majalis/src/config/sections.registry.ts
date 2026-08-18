@@ -102,6 +102,47 @@ export interface SectionDef {
   aliases?: string[];
   /** مكان العرض الأساسي — لا تكرار بطاقات بين الهبات */
   hub: SectionHub;
+  /** لون العلامة — يُحقَن على الحاوية كـ --section-accent */
+  accent?: string;
+}
+
+/** لون العلامة الافتراضي لكل مجموعة أقسام */
+export const SECTION_GROUP_ACCENT: Record<SectionGroup, string> = {
+  sciences: "#1F7A5A",
+  stories: "#8B6914",
+  dawah: "#4A5590",
+  library: "#8B6914",
+  worship: "#2A7A6E",
+  learning: "#3D5A80",
+  account: "#1F7A5A",
+};
+
+/** تجاوزات لونية تطابق سمات TopicPage */
+const SECTION_ACCENT_BY_ID: Record<string, string> = {
+  hadith: "#6B7340",
+  seerah: "#8B6914",
+  "islamic-history": "#8B6914",
+  tafsir: "#2A7A6E",
+  "quran-tajweed": "#2A7A6E",
+  "quran-qiraat": "#2A7A6E",
+  "ulum-quran": "#2A7A6E",
+  "quran-asbab": "#2A7A6E",
+  "quran-figures": "#2A7A6E",
+  nations: "#8B6914",
+  library: "#8B6914",
+  research: "#8B6914",
+  glossary: "#8B6914",
+  universities: "#8B6914",
+  "discover-islam": "#4A5590",
+  fiqh: "#4A5590",
+};
+
+export function resolveSectionAccent(s: {
+  id: string;
+  group: SectionGroup;
+  accent?: string;
+}): string {
+  return s.accent ?? SECTION_ACCENT_BY_ID[s.id] ?? SECTION_GROUP_ACCENT[s.group];
 }
 
 export const SECTION_GROUP_META: Record<
@@ -167,7 +208,10 @@ const QURAN_HUB_IDS = new Set([
 
 const LESSONS_HUB_IDS = new Set(["quran-circles", "lessons-archive"]);
 
-type SectionSeed = Omit<SectionDef, "hub"> & { hub?: SectionHub };
+type SectionSeed = Omit<SectionDef, "hub" | "accent"> & {
+  hub?: SectionHub;
+  accent?: string;
+};
 
 const SECTION_SEEDS: SectionSeed[] = [
   // —— شريط سفلي ——
@@ -567,7 +611,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "islamic-history",
     label: "التاريخ الإسلامي",
-    subtitle: "دول وأحداث وحضارة",
+    subtitle: "عصور ومدن ومؤسسات وحضارة",
     route: "/tarikh-islami",
     icon: History,
     group: "sciences",
@@ -1005,6 +1049,7 @@ function resolveHub(s: SectionSeed): SectionHub {
 export const SECTIONS: readonly SectionDef[] = SECTION_SEEDS.map((s) => ({
   ...s,
   hub: resolveHub(s),
+  accent: resolveSectionAccent(s),
 }));
 
 function visible(s: SectionDef): boolean {
@@ -1077,6 +1122,13 @@ export function getSectionByRoute(route: string): SectionDef | undefined {
     const r = s.route.replace(/\/$/, "") || "/";
     return r === clean;
   });
+}
+
+/** --section-accent لمسار قسم؛ يرجع لون المجموعة إن لم يُسجَّل المسار */
+export function getSectionAccent(route: string): string {
+  const sec = getSectionByRoute(route);
+  if (sec) return resolveSectionAccent(sec);
+  return SECTION_GROUP_ACCENT.sciences;
 }
 
 export function searchSectionsIndex(): Array<{

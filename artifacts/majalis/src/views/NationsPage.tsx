@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { PageHeader } from "@/components/ui-common";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { ShareButtons } from "@/components/ContentActions";
@@ -20,7 +20,6 @@ type Stance = "all" | "believed" | "rejected";
 type View = "grid" | "timeline";
 
 export default function NationsPage() {
-  const [search, setSearch] = useState("");
   const [prophet, setProphet] = useState("الكل");
   const [punishment, setPunishment] = useState<PunishmentType | "الكل">("الكل");
   const [stance, setStance] = useState<Stance>("all");
@@ -29,8 +28,8 @@ export default function NationsPage() {
 
   const options = useMemo(() => getNationFilterOptions(), []);
   const results = useMemo(
-    () => filterNations({ search, prophet, punishment, stance, tag }),
-    [search, prophet, punishment, stance, tag],
+    () => filterNations({ search: "", prophet, punishment, stance, tag }),
+    [prophet, punishment, stance, tag],
   );
   const timeline = useMemo(() => getNationsTimeline(), []);
 
@@ -58,10 +57,9 @@ export default function NationsPage() {
   }, []);
 
   const hasFilters =
-    search.trim() !== "" || prophet !== "الكل" || punishment !== "الكل" || stance !== "all" || tag !== "الكل";
+    prophet !== "الكل" || punishment !== "الكل" || stance !== "all" || tag !== "الكل";
 
   const resetFilters = () => {
-    setSearch("");
     setProphet("الكل");
     setPunishment("الكل");
     setStance("all");
@@ -69,26 +67,15 @@ export default function NationsPage() {
   };
 
   return (
+    <SectionTemplatePage
+      route="/nations"
+      eyebrow="قصص القرآن"
+      title="الأمم السابقة"
+      subtitle={`${NATIONS.length} أمة وقوماً — بالآيات والأحاديث الصحيحة، مع تمييز ما ثبت مما لم يثبت`}
+      groupTitle="أقسام الأمم السابقة"
+    >
     <div className="page-shell nations-page" dir="rtl">
-      <PageHeader
-        eyebrow="قصص القرآن"
-        title="الأمم السابقة"
-        subtitle={`${NATIONS.length} أمة وقوماً — بالآيات والأحاديث الصحيحة، مع تمييز ما ثبت مما لم يثبت`}
-      />
-
       <div className="nations-toolbar">
-        <label className="nations-search" htmlFor="nations-search-input">
-          <span className="sr-only">ابحث في الأمم السابقة</span>
-          <input
-            id="nations-search-input"
-            type="search"
-            className="nations-search__input"
-            placeholder="ابحث: عاد، قوم هود، الأحقاف، الطوفان…"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </label>
-
         <div className="nations-view-switch" role="tablist" aria-label="طريقة العرض">
           <button
             type="button"
@@ -191,6 +178,7 @@ export default function NationsPage() {
         <ShareButtons title="الأمم السابقة — المجلس العلمي" url="https://www.majlisilm.com/nations" />
       </div>
     </div>
+    </SectionTemplatePage>
   );
 }
 

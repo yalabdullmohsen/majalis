@@ -38,8 +38,8 @@ assert.match(more, /getLobby\("sections"\)/);
 assert.doesNotMatch(more, /sections-hub__search/);
 
 const merged = read("src/views/MergedSectionHubPage.tsx");
-assert.match(merged, /SectionLobby/);
-assert.match(merged, /lobbyId="hub"/);
+assert.match(merged, /TopicPage/);
+assert.match(merged, /lobbyId="hub"|groupTitle/);
 assert.doesNotMatch(merged, /<PageHero/);
 assert.doesNotMatch(merged, /lobbyId="sections"/);
 
@@ -66,12 +66,14 @@ assert.match(css, /section-lobby__shot/);
 assert.doesNotMatch(css, /env\(safe-area-inset/);
 
 const lobbyCmp = read("src/components/lobby/SectionLobby.tsx");
-assert.match(lobbyCmp, /FeaturedSectionCard/);
+assert.match(lobbyCmp, /FeaturedSectionCard|HeroActionCard/);
 assert.match(lobbyCmp, /SectionCard/);
 assert.match(lobbyCmp, /chip-label/);
 assert.match(lobbyCmp, /data-lobby-shot/);
 assert.doesNotMatch(lobbyCmp, /page-hero-mj/);
-assert.doesNotMatch(lobbyCmp, /رجوع/);
+assert.match(lobbyCmp, /data-section-back/);
+assert.match(lobbyCmp, /رجوع/);
+assert.match(lobbyCmp, /goBackOrFallback/);
 
 console.log("=== محتوى السجل ===");
 const quran = getLobby("quran");
@@ -83,8 +85,10 @@ assert.equal(quran.groups.find((g) => g.id === "numbers")?.items.length, 1);
 const lessons = getLobby("lessons");
 assert.ok(lessons.primary);
 assert.deepEqual(lessons.chips?.map((c) => c.id), ["all", "men", "women", "courses"]);
-assert.equal(lessons.groups.length, 3);
-assert.ok(lessons.groups.every((g) => g.items.length === 1));
+assert.equal(lessons.quad?.length, 4);
+assert.deepEqual(lessons.quad?.map((q) => q.id), ["lessons", "quran-circles", "hijri-calendar", "lessons-archive"]);
+assert.ok(lessons.quad?.[0]?.accent && lessons.quad?.[1]?.accent);
+assert.equal(lessons.groups.length, 0);
 
 const prayer = getLobby("prayer");
 assert.ok(prayer.primary);

@@ -4,6 +4,7 @@ import { BookOpen, ChevronDown, ChevronUp } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { Card, Badge } from "@/components/ui-common";
 import { formatArabicNumber } from "@/lib/numerals";
 import "@/styles/pages/glossary.css";
@@ -1478,35 +1479,28 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
   const heroEyebrow = lockedCategory === "quran" ? "مركز القرآن" : "القاموس الإسلامي";
 
   return (
+    <SectionTemplatePage
+      route="/islamic-glossary"
+      eyebrow={heroEyebrow}
+      title={heroTitle}
+      subtitle={
+        lockedCategory === "quran"
+          ? "مصطلحات علوم القرآن من القاموس الإسلامي الموحّد — ليست نسخة ثانية من المحتوى."
+          : "تعريفات دقيقة موثّقة لأهم المصطلحات في العلوم الشرعية، مرجع لطالب العلم."
+      }
+      groupTitle="أقسام المصطلحات"
+    >
     <div className="gl-page mj-page" dir="rtl" data-islamic-glossary="1">
-      <section className="gl-hero" aria-label="مقدمة القاموس">
-        <div className="gl-hero__inner">
-          <p className="gl-hero__badge">{heroEyebrow}</p>
-          <h1 className="gl-hero__title">{heroTitle}</h1>
-          <p className="gl-hero__sub">
-            {lockedCategory === "quran"
-              ? "مصطلحات علوم القرآن من القاموس الإسلامي الموحّد — ليست نسخة ثانية من المحتوى."
-              : "تعريفات دقيقة موثّقة لأهم المصطلحات في العلوم الشرعية، مرجع لطالب العلم."}
-          </p>
-          <div className="gl-hero__count">
-            <BookOpen size={16} aria-hidden="true" />
-            <span>
-              {formatArabicNumber(lockedCategory ? countByCat[lockedCategory] ?? 0 : TERMS.length)}{" "}
-              {lockedCategory === "quran" ? "مصطلحًا في علوم القرآن" : "مصطلحًا في ٦ علوم"}
-            </span>
-          </div>
-          <p className="gl-hero__actions">
-            <Link href="/flashcards" className="gl-hero__btn">
-              راجِع بالبطاقات
-            </Link>
-            {lockedCategory === "quran" ? (
-              <Link href="/islamic-glossary" className="gl-hero__btn gl-hero__btn--ghost">
-                القاموس الكامل
-              </Link>
-            ) : null}
-          </p>
-        </div>
-      </section>
+      <p className="gl-hero__actions">
+        <Link href="/flashcards" className="gl-hero__btn">
+          راجِع بالبطاقات
+        </Link>
+        {lockedCategory === "quran" ? (
+          <Link href="/islamic-glossary" className="gl-hero__btn gl-hero__btn--ghost">
+            القاموس الكامل
+          </Link>
+        ) : null}
+      </p>
 
       <div className="gl-container">
         <div className="gl-cats" role="tablist" aria-label="تصنيفات المصطلحات الإسلامية">
@@ -1599,5 +1593,6 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
         <ShareButtons title="المعجم الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/islamic-glossary" />
       </div>
     </div>
+    </SectionTemplatePage>
   );
 }
