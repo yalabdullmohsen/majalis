@@ -176,6 +176,7 @@ export function topicThemeCssVars(theme: TopicTheme): Record<string, string> {
     "--topic-hero-from": theme.heroFrom,
     "--topic-hero-to": theme.heroTo,
     "--topic-accent": theme.accent,
+    "--section-accent": theme.accent,
     "--topic-on-hero": theme.onHero,
     "--topic-on-hero-muted": theme.onHeroMuted,
     "--topic-on-hero-accent": theme.onHeroAccent,

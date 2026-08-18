@@ -18,7 +18,12 @@ const tokens = readFileSync(resolve(root, "src/styles/tokens.css"), "utf8");
 const bottom = readFileSync(resolve(root, "src/components/BottomNavBar.tsx"), "utf8");
 
 assert.match(hub, /SectionLobby/);
-assert.match(featured, /card--featured/);
+assert.match(featured, /function HeroActionCard/);
+assert.match(featured, /data-hero-action="1"/);
+assert.match(css, /justify-items:\s*center/);
+assert.match(css, /clamp\(20px,\s*5\.5vw,\s*28px\)/);
+assert.match(css, /font-weight:\s*700/);
+assert.doesNotMatch(css, /\.card--featured[\s\S]{0,400}text-align:\s*(left|right)/);
 assert.doesNotMatch(hub, /card--featured/);
 assert.doesNotMatch(hub, /FeaturedSectionsGrid/);
 assert.doesNotMatch(featured, /text-white/);

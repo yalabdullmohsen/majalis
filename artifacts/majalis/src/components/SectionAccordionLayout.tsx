@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { PageHeader } from "@/components/ui-common";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { ExploreAlsoNav, type ExploreAlsoLink } from "@/components/ExploreAlsoNav";
 import type { DarsSection } from "@/lib/dars-types";
 
@@ -9,7 +10,8 @@ type Props = {
   sections: DarsSection[];
   stat3Label?: string;
   stat3Value?: number;
-  /** روابط تربط الصفحة ببقية المنصة — تمنع نهاية مسدودة */
+  /** مسار القسم — إن وُجد يُستخدم قالب العقيدة */
+  route?: string;
   relatedLinks?: ExploreAlsoLink[];
   relatedTitle?: string;
 };
@@ -20,6 +22,7 @@ export function SectionAccordionLayout({
   sections,
   stat3Label,
   stat3Value,
+  route,
   relatedLinks,
   relatedTitle,
 }: Props) {
@@ -27,14 +30,8 @@ export function SectionAccordionLayout({
   const totalLessons = sections.reduce((s, sec) => s + sec.lessons.length, 0);
   const avg = Math.round(totalLessons / sections.length);
 
-  return (
-    <div className="page-shell" dir="rtl">
-      <PageHeader
-        eyebrow={eyebrow}
-        title={title}
-        subtitle={`فهرس دراسي — ${sections.length} بابًا · ${totalLessons} موضوعًا (ملخصات ومتون موجزة للتعلّم الذاتي)`}
-      />
-
+  const body = (
+    <>
       <div className="max-w-3xl mx-auto px-4 mb-8">
         <div className="grid grid-cols-3 gap-3">
           <StatBox value={sections.length} label="باب" color="#16a34a" />
@@ -63,6 +60,31 @@ export function SectionAccordionLayout({
           <ExploreAlsoNav title={relatedTitle ?? "استكشف أيضًا"} links={relatedLinks} />
         </div>
       )}
+    </>
+  );
+
+  if (route) {
+    return (
+      <SectionTemplatePage
+        route={route}
+        eyebrow={eyebrow}
+        title={title}
+        subtitle={`فهرس دراسي — ${sections.length} بابًا · ${totalLessons} موضوعًا (ملخصات ومتون موجزة للتعلّم الذاتي)`}
+        groupTitle={`أقسام ${title}`}
+      >
+        {body}
+      </SectionTemplatePage>
+    );
+  }
+
+  return (
+    <div className="page-shell" dir="rtl">
+      <PageHeader
+        eyebrow={eyebrow}
+        title={title}
+        subtitle={`فهرس دراسي — ${sections.length} بابًا · ${totalLessons} موضوعًا (ملخصات ومتون موجزة للتعلّم الذاتي)`}
+      />
+      {body}
     </div>
   );
 }

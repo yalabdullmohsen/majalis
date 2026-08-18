@@ -4,6 +4,7 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import {
   MUSHAF_TEXT_IS_HAFS_ONLY,
   QIRAAT_ASHARA,
@@ -37,23 +38,16 @@ export default function QuranQiraatView() {
   }, []);
 
   return (
+    <SectionTemplatePage
+      route="/quran-hub/qiraat"
+      title="القراءات العشر"
+      subtitle={`نص المصحف في التطبيق رواية حفص عن عاصم فقط${MUSHAF_TEXT_IS_HAFS_ONLY ? " — لا يُستبدل بنص قراءة أخرى داخل المصحف." : "."}`}
+      groupTitle="أبواب القراءات"
+    >
     <div className="qr-page" dir="rtl" data-quran-qiraat="1">
-      <nav className="qr-crumb" aria-label="مسار">
-        <Link href="/quran-hub">مركز القرآن</Link>
-        <span aria-hidden="true"> · </span>
-        <span>القراءات العشر</span>
-      </nav>
-
-      <header className="qr-head">
-        <h1>القراءات العشر</h1>
-        <p>
-          نص المصحف في التطبيق رواية <strong>حفص عن عاصم</strong> فقط
-          {MUSHAF_TEXT_IS_HAFS_ONLY ? " — لا يُستبدل بنص قراءة أخرى داخل المصحف." : "."}
-        </p>
-        <p className="qr-note" role="note">
-          أوجه القراءات تُعرض وصفًا («قرأ فلان كذا») مع المصدر، ولا تُحقن في صفحة المصحف.
-        </p>
-      </header>
+      <p className="qr-note" role="note">
+        أوجه القراءات تُعرض وصفًا («قرأ فلان كذا») مع المصدر، ولا تُحقن في صفحة المصحف.
+      </p>
 
       {QIRAAT_SECTIONS.map((sec) => (
         <section key={sec.id} className="qr-section" id={sec.id}>
@@ -122,5 +116,6 @@ export default function QuranQiraatView() {
         </p>
       </section>
     </div>
+    </SectionTemplatePage>
   );
 }

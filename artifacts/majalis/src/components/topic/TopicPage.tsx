@@ -17,6 +17,8 @@ import {
   topicThemeCssVars,
   type TopicThemeId,
 } from "@/config/topic-themes";
+import { getSectionAccent } from "@/config/sections.registry";
+import { sectionTemplateChrome } from "@/config/section-template";
 import { HubCard } from "@/components/ui/HubCard";
 import "@/styles/components/topic-page.css";
 
@@ -48,6 +50,8 @@ export type TopicPageStatus = "ready" | "loading" | "empty" | "error";
 
 export type TopicPageProps = {
   themeId: TopicThemeId;
+  /** مسار القسم — يحقن --section-accent من sections.registry */
+  sectionRoute?: string;
   breadcrumb: TopicBreadcrumbItem[];
   eyebrow?: string;
   title: string;
@@ -59,6 +63,8 @@ export type TopicPageProps = {
   /** مزامنة ?tab= في الرابط */
   syncTabParam?: boolean;
   relatedTopics?: TopicRelatedItem[];
+  /** عنوان مجموعة البطاقات تحت اللافتة — مثل «أقسام العقيدة والتوحيد» */
+  groupTitle?: string;
   status?: TopicPageStatus;
   onRetry?: () => void;
   children?: ReactNode;
@@ -75,6 +81,7 @@ function readTabFromSearch(search: string): string | null {
 
 export function TopicPage({
   themeId,
+  sectionRoute,
   breadcrumb,
   eyebrow,
   title,
@@ -85,6 +92,7 @@ export function TopicPage({
   onTabChange,
   syncTabParam = true,
   relatedTopics,
+  groupTitle,
   status = "ready",
   onRetry,
   children,
@@ -148,13 +156,21 @@ export function TopicPage({
     btn?.focus();
   };
 
+  const sectionAccent = sectionRoute ? getSectionAccent(sectionRoute) : theme.accent;
   const heroStyle = {
     ...topicThemeCssVars(theme),
+    "--section-accent": sectionAccent,
   } as CSSProperties;
 
   return (
-    <div className="topic-page" dir="rtl" data-topic-theme={theme.id}>
-      <nav className="topic-page__crumb" aria-label="مسار التنقل">
+    <div
+      className="topic-page"
+      dir="rtl"
+      data-topic-theme={theme.id}
+      data-section-template="1"
+      style={{ "--section-accent": sectionAccent } as CSSProperties}
+    >
+      <nav className="topic-page__crumb" aria-label="مسار التنقل" data-section-crumb="1">
         {breadcrumb.map((item, i) => {
           const last = i === breadcrumb.length - 1;
           return (
@@ -170,19 +186,25 @@ export function TopicPage({
         })}
       </nav>
 
-      <header className="topic-page__hero on-dark" data-on-dark style={heroStyle}>
+      <header className="topic-page__hero on-dark" data-on-dark data-section-hero="1" style={heroStyle}>
         <div className="topic-page__hero-inner">
-          {eyebrow ? <p className="topic-page__eyebrow">{eyebrow}</p> : null}
-          <h1 className="topic-page__title">{title}</h1>
-          {subtitle ? <p className="topic-page__sub">{subtitle}</p> : null}
+          {eyebrow ? <p className="topic-page__eyebrow" data-section-eyebrow="1">{eyebrow}</p> : null}
+          <h1 className="topic-page__title" data-section-title="1">{title}</h1>
+          {subtitle ? <p className="topic-page__sub" data-section-sub="1">{subtitle}</p> : null}
           {quote ? (
-            <blockquote className="topic-page__quote">
+            <blockquote className="topic-page__quote" data-section-quote="1">
               <p className="topic-page__quote-text">{quote.text}</p>
               <cite className="topic-page__quote-ref">{quote.ref}</cite>
             </blockquote>
           ) : null}
         </div>
       </header>
+
+      {groupTitle ? (
+        <h2 className="topic-page__group-title" data-section-group-title="1">
+          {groupTitle}
+        </h2>
+      ) : null}
 
       {tabs && tabs.length > 0 ? (
         <div className="topic-page__tabs-wrap">
@@ -318,5 +340,34 @@ export function TopicCard({
         </footer>
       ) : null}
     </article>
+  );
+}
+
+/** غلاف قسم: يحقن تشريح العقيدة التسعة من section-template.ts */
+export function SectionTemplatePage({
+  route,
+  children,
+  eyebrow,
+  title,
+  subtitle,
+  quote,
+  groupTitle,
+  themeId,
+  breadcrumb,
+  ...rest
+}: { route: string; children?: ReactNode } & Partial<TopicPageProps>) {
+  const chrome = sectionTemplateChrome(route, {
+    eyebrow,
+    title,
+    subtitle,
+    quote,
+    groupTitle,
+    themeId,
+    breadcrumb,
+  });
+  return (
+    <TopicPage {...chrome} {...rest}>
+      {children}
+    </TopicPage>
   );
 }

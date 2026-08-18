@@ -2,8 +2,9 @@ import { useEffect, useMemo } from "react";
 import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { SectionLobby } from "@/components/lobby/SectionLobby";
-import type { LobbyItem } from "@/config/section-lobbies";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
+import { HubCard } from "@/components/ui/HubCard";
+import { sectionTemplateChrome } from "@/config/section-template";
 import "@/components/sections/section-cards.css";
 
 export type HubCardItem = {
@@ -18,10 +19,12 @@ type Props = {
   title: string;
   description: string;
   cards: HubCardItem[];
+  eyebrow?: string;
+  quote?: { text: string; ref: string };
 };
 
-/** صفحة تجميع أقسام مدمجة — لوبي موحّد دون لافتة أو وصف ظاهر. */
-export default function MergedSectionHubPage({ path, title, description, cards }: Props) {
+/** صفحة تجميع أقسام — تشريح العقيدة التسعة من SectionTemplatePage. */
+export default function MergedSectionHubPage({ path, title, description, cards, eyebrow, quote }: Props) {
   useEffect(() => {
     applyPageSeo({
       path,
@@ -31,25 +34,39 @@ export default function MergedSectionHubPage({ path, title, description, cards }
     });
   }, [path, title, description]);
 
-  const items: LobbyItem[] = useMemo(
+  const chrome = useMemo(
     () =>
-      cards.map((c) => ({
-        id: c.href,
-        label: c.title,
-        subtitle: c.desc,
-        route: c.href,
-        icon: c.Icon,
-      })),
-    [cards],
+      sectionTemplateChrome(path, {
+        title,
+        subtitle: description,
+        eyebrow: eyebrow ?? title,
+        quote,
+        groupTitle: `أقسام ${title}`,
+      }),
+    [path, title, description, eyebrow, quote],
   );
 
   return (
-    <SectionLobby
-      lobbyId="hub"
-      title={title}
-      groups={[{ id: "main", title: title, items }]}
+    <SectionTemplatePage
+      route={path}
+      title={chrome.title}
+      subtitle={chrome.subtitle}
+      eyebrow={chrome.eyebrow}
+      quote={chrome.quote}
+      groupTitle={chrome.groupTitle}
     >
+      <div className="hub-card-grid">
+        {cards.map((c) => (
+          <HubCard
+            key={c.href}
+            href={c.href}
+            title={c.title}
+            description={c.desc}
+            Icon={c.Icon}
+          />
+        ))}
+      </div>
       <ShareButtons title={`${title} — المجلس العلمي`} url={`https://www.majlisilm.com${path}`} />
-    </SectionLobby>
+    </SectionTemplatePage>
   );
 }
