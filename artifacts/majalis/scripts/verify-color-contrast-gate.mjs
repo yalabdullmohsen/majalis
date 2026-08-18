@@ -104,8 +104,8 @@ const ASSERTIONS = [
   { route: "/lessons", selector: ".lessons-past-section__title", mode: "light", min: 4.5 },
   { route: "/lessons", selector: ".section-lobby__title", mode: "light", min: 3 },
   { route: "/lessons", selector: ".section-lobby__title", mode: "dark", min: 3 },
-  { route: "/lessons", selector: ".lesson-compact-row__title", mode: "light", min: 4.5 },
-  { route: "/lessons", selector: ".lesson-compact-row__meta", mode: "light", min: 4.5 },
+  { route: "/lessons", selector: ".lesson-unified-card__title", mode: "dark", min: 3 },
+  { route: "/lessons", selector: ".lesson-unified-card__btn--ghost", mode: "dark", min: 4.5 },
   { route: "/quran-hub/numbers", selector: ".quran-hub-page__title", mode: "light", min: 3 },
   { route: "/quran-hub/numbers", selector: ".quran-hub-page__title", mode: "dark", min: 3 },
   { route: "/quran-hub/numbers", selector: ".quran-stat-card__label", mode: "light", min: 4.5 },
@@ -123,12 +123,11 @@ const ASSERTIONS = [
   // (#F7F4ED العاجية) — 48+ عنصر نص خافت بتباين ~2.5:1 فقط. اللون الجديد
   // #5E655F (5.5:1 مقابل #F7F4ED) عُمِّم عبر src/ كاملة (نفس القيمة
   // القديمة كانت مكرَّرة حرفيًا 150+ مرة).
-  // صفحة الصلاة أعادت البناء إلى pts-* ثم إلى SectionLobby (لا .pts-hero داخل الشاشة).
-  // التأكيد على .pts-dates فوق سطح اللوبي الفاتح، واسم الصلاة في البطاقة المميّزة.
+  // صفحة الصلاة — الشاشة الزمردية pts-* (عداد + قائمة الصلوات).
   { route: "/prayer-times", selector: ".pts-dates", mode: "light", min: 4.5 },
-  { route: "/prayer-times", selector: ".section-lobby .card--featured .card__label || .pts-hero__name", mode: "light", min: 4.5 },
+  { route: "/prayer-times", selector: ".pts-hero__name", mode: "light", min: 4.5 },
   { route: "/prayer-times", selector: ".pts-row__name", mode: "light", min: 4.5 },
-  { route: "/prayer-times", selector: ".section-lobby .card--featured .card__label || .pts-hero__name", mode: "dark", min: 4.5 },
+  { route: "/prayer-times", selector: ".pts-hero__name", mode: "dark", min: 4.5 },
   { route: "/prayer-times", selector: ".pts-row__name", mode: "dark", min: 4.5 },
   // 2) نفس نمط "كل <a> أخضر فاتح في الوضع الليلي" الموثَّق أعلاه — 32
   // رابطًا إضافيًا لم يكونا مستثنَيَين (نص شبه غير مرئي فوق خلفيات بيضاء
@@ -165,8 +164,6 @@ const ASSERTIONS = [
   { route: "/sawm", selector: ".sw-card__title", mode: "dark", min: 4.5 },
   { route: "/sawm", selector: ".sw-dalil__text", mode: "dark", min: 4.5 },
   { route: "/sawm", selector: ".sw-badge--fard", mode: "dark", min: 4.5 },
-  { route: "/lessons", selector: ".lesson-compact-row__title", mode: "dark", min: 3 },
-  { route: "/lessons", selector: ".lesson-compact-row__meta", mode: "dark", min: 4.5 },
   // توحيد ليلي/طباعة 2026-08-14
   { route: "/prophets", selector: ".prophets-lux-hero__title", mode: "dark", min: 4.5 },
   { route: "/prophets", selector: ".prophets-lux-tab--active", mode: "dark", min: 3 },

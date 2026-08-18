@@ -21,7 +21,7 @@ assert.match(filtersCss, /\.mj-filter-chip\s*\{[\s\S]*?min-height:\s*44px/);
 assert.match(filtersCss, /\.mj-filter-chip\.is-active\s*\{[\s\S]*?color:\s*#fff/);
 assert.match(lessonsCss, /\.lessons-page-v3/);
 assert.match(lessonsView, /all:\s*"الكل"/);
-assert.match(lessonsView, /LessonsQuickBar|CompactLessonRow/);
+assert.match(lessonsView, /SectionLobby|FilterToggle/);
 assert.match(lessonsView, /useDebouncedValue/);
 
 console.log("lessons-filter-chips-layout.test.ts: ok");
