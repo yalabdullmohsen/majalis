@@ -68,7 +68,13 @@ const queryClient = createAppQueryClient();
 resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
 initClientErrorReporting();
-initFinalPolish();
+
+const bootFinalPolish = () => initFinalPolish();
+if (typeof requestIdleCallback === "function") {
+  requestIdleCallback(bootFinalPolish, { timeout: 4_000 });
+} else {
+  setTimeout(bootFinalPolish, 1);
+}
 
 function scheduleNetworkWarm() {
   const run = () => {

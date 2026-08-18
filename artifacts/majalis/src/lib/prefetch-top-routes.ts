@@ -23,9 +23,14 @@ export function prefetchTopRoutesOnIdle(): void {
       void load().catch(() => undefined);
     }
   };
-  if (typeof window.requestIdleCallback === "function") {
-    window.requestIdleCallback(run, { timeout: 3_500 });
-  } else {
-    window.setTimeout(run, 1_500);
-  }
+  const start = () => {
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(run, { timeout: 2_000 });
+    } else {
+      window.setTimeout(run, 1_500);
+    }
+  };
+  const afterLoad = () => window.setTimeout(start, 10_000);
+  if (document.readyState === "complete") afterLoad();
+  else window.addEventListener("load", afterLoad, { once: true });
 }

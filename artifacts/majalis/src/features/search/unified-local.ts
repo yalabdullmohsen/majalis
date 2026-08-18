@@ -44,14 +44,61 @@ export function clearUnifiedSearchIndexCache(): void {
 
 export async function loadUnifiedSearchIndex(): Promise<IndexPayload> {
   if (cache) return cache;
-  const { fetchStaticJsonCached } = await import("@/lib/static-json-cache");
   const empty: IndexPayload = { version: 0, docs: [] };
-  const json = await fetchStaticJsonCached<IndexPayload>("/data/search/index.json", empty);
+  const url = "/data/search/index.json";
+  const fromWorker = await loadIndexViaWorker(url);
+  if (fromWorker) {
+    cache = fromWorker;
+    return cache;
+  }
+  const { fetchStaticJsonCached } = await import("@/lib/static-json-cache");
+  const json = await fetchStaticJsonCached<IndexPayload>(url, empty);
   if (!Array.isArray(json.docs) || json.docs.length === 0) {
     throw new Error("search index unavailable");
   }
   cache = json;
   return cache;
+}
+
+function loadIndexViaWorker(url: string): Promise<IndexPayload | null> {
+  if (typeof window === "undefined" || typeof Worker === "undefined") {
+    return Promise.resolve(null);
+  }
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = (value: IndexPayload | null) => {
+      if (settled) return;
+      settled = true;
+      resolve(value);
+    };
+    try {
+      const worker = new Worker(new URL("./search-index.worker.ts", import.meta.url), {
+        type: "module",
+      });
+      const timer = window.setTimeout(() => {
+        worker.terminate();
+        finish(null);
+      }, 8_000);
+      worker.onmessage = (event: MessageEvent<{ ok?: boolean; json?: IndexPayload }>) => {
+        window.clearTimeout(timer);
+        worker.terminate();
+        const payload = event.data?.json;
+        if (event.data?.ok && payload && Array.isArray(payload.docs) && payload.docs.length > 0) {
+          finish(payload);
+          return;
+        }
+        finish(null);
+      };
+      worker.onerror = () => {
+        window.clearTimeout(timer);
+        worker.terminate();
+        finish(null);
+      };
+      worker.postMessage({ url });
+    } catch {
+      finish(null);
+    }
+  });
 }
 
 const SYNC_SCAN_BUDGET = 2_500;

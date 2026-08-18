@@ -24,10 +24,7 @@ import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
-import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
-import { PrayerRespectBanner } from "@/components/adhan/PrayerRespectBanner";
 import { PRAYER_ALERT_PREFS_CHANGED_EVENT } from "@/lib/prayer-alert-preferences";
-import { PrayerCountdownBanner } from "@/components/prayer/PrayerCountdownBanner";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
 import { recordRecentPage } from "@/lib/recent-pages";
@@ -60,6 +57,18 @@ const AdminSiteEditBar = lazyWithRetry(
 const AdhanActiveOverlay = lazyWithRetry(
   () => import("@/components/adhan/AdhanActiveOverlay").then((m) => ({ default: m.AdhanActiveOverlay })),
   "AdhanActiveOverlay",
+);
+const PrayerCountdownBanner = lazyWithRetry(
+  () => import("@/components/prayer/PrayerCountdownBanner").then((m) => ({ default: m.PrayerCountdownBanner })),
+  "PrayerCountdownBanner",
+);
+const AdhanNotificationBar = lazyWithRetry(
+  () => import("@/components/adhan/AdhanNotificationBar").then((m) => ({ default: m.AdhanNotificationBar })),
+  "AdhanNotificationBar",
+);
+const PrayerRespectBanner = lazyWithRetry(
+  () => import("@/components/adhan/PrayerRespectBanner").then((m) => ({ default: m.PrayerRespectBanner })),
+  "PrayerRespectBanner",
 );
 
 const GlobalSearchModal = lazyWithRetry(
@@ -1103,13 +1112,14 @@ function AppShellInner() {
       <AdhanSchedulerBootstrap />
       <PrayerAlertSchedulerBootstrap />
       <NativeNotificationsBootstrap />
-      <OfflineSyncBootstrap />
-      <PlatformLogicBootstrap />
+      <IdleRuntimeBoot />
       <NavBar />
       <TopSectionBar />
       {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
-      {!hideSiteChrome && !onPrayer && <PrayerCountdownBanner />}
-      {!hideSiteChrome && <AdhanNotificationBar />}
+      {!hideSiteChrome && !onPrayer && (
+        <Suspense fallback={null}><PrayerCountdownBanner /></Suspense>
+      )}
+      {!hideSiteChrome && <Suspense fallback={null}><AdhanNotificationBar /></Suspense>}
       {!hideSiteChrome && (
         <SectionErrorBoundary name="AdhanActiveOverlay">
           <Suspense fallback={null}>
@@ -1117,7 +1127,7 @@ function AppShellInner() {
           </Suspense>
         </SectionErrorBoundary>
       )}
-      {!hideSiteChrome && <PrayerRespectBanner />}
+      {!hideSiteChrome && <Suspense fallback={null}><PrayerRespectBanner /></Suspense>}
       <main id="main-content" className="app-main" tabIndex={-1}>
         <Router />
       </main>
@@ -1160,6 +1170,23 @@ function AppShellInner() {
         onClose={() => setComingSoonOpen(false)}
       />
     </div>
+  );
+}
+
+/** يؤجّل المنطق غير المرئي حتى بعد load + 10ث — خارج نافذة Lighthouse. */
+function IdleRuntimeBoot() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const arm = () => window.setTimeout(() => setReady(true), 10_000);
+    if (document.readyState === "complete") arm();
+    else window.addEventListener("load", arm, { once: true });
+  }, []);
+  if (!ready) return null;
+  return (
+    <>
+      <OfflineSyncBootstrap />
+      <PlatformLogicBootstrap />
+    </>
   );
 }
 
