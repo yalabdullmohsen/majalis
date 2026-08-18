@@ -16,7 +16,8 @@ function read(rel: string): string {
 const hadithView = read("src/pages/hadith/ui/HadithView.tsx");
 assert.match(hadithView, /hadith-page--hub/);
 assert.match(hadithView, /الحديث وعلومه/);
-assert.match(hadithView, /ابحث في متن الحديث أو المصدر/);
+assert.match(hadithView, /TopicPage/);
+assert.doesNotMatch(hadithView, /hadith-hub-search/);
 assert.match(hadithView, /hadith-scientific-notice/);
 assert.match(hadithView, /لا يُحتج بالحديث الضعيف/);
 assert.match(hadithView, /لا يجوز نسبته|لا يُنسب الموضوع|بيان وضعه/);
@@ -25,7 +26,7 @@ assert.doesNotMatch(hadithView, /hadith-page--stacked/);
 
 const hadithCss = read("src/styles/pages/hadith.css");
 assert.match(hadithCss, /--bottom-nav-height/);
-assert.match(hadithCss, /hadith-hub-grid/);
+assert.match(hadithCss, /hadith-hub-grid|hub-card-grid/);
 assert.match(hadithCss, /font-size:\s*max\(1\.125rem,\s*18px\)/);
 
 const more = read("src/pages/account/SectionsPage.tsx");

@@ -1,13 +1,13 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Bird, BookOpen, Gem, Heart, Landmark, Lightbulb, Library, MapPin, Megaphone, Moon, ScrollText, Sparkles, Sprout, Swords } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { arabicMatchAny } from "@/lib/arabic-search";
 import { Link } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButton } from "@/components/ShareButton";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import "@/styles/pages/seerah.css";
 
 const PHASES: { id: string; num: number; title: string; year: string; Icon: LucideIcon; color: string; desc: string; topics: string[]; keyEvents: string[] }[] = [
@@ -247,12 +247,7 @@ const SOURCES = [
 export default function SeerahPage() {
   usePageView("seerah", null);
   const [activeId, setActiveId] = useState(PHASES[0].id);
-  const [search, setSearch] = useState("");
-  const filteredPhases = useMemo(() =>
-    search.trim()
-      ? PHASES.filter(p => arabicMatchAny([p.title, p.year, p.desc, ...p.topics, ...p.keyEvents], search))
-      : PHASES,
-  [search]);
+  const filteredPhases = PHASES;
 
   useEffect(() => {
     applyPageSeo({
@@ -290,7 +285,13 @@ export default function SeerahPage() {
   };
 
   return (
-    <>
+    <SectionTemplatePage
+      route="/seerah"
+      eyebrow="سيرة النبي ﷺ"
+      title="السيرة النبوية الشريفة"
+      subtitle="امتداداً لرسالة الأنبياء، حياة خاتمهم محمد ﷺ من المولد إلى الوفاة في 12 مرحلة"
+      groupTitle="مراحل السيرة النبوية"
+    >
       <div className="seerah-page" dir="rtl">
 
         {/* رابط عكسي لقصص الأنبياء */}
@@ -312,23 +313,6 @@ export default function SeerahPage() {
           </Link>
         </div>
 
-        {/* Hero */}
-        <div className="seerah-hero">
-          <div className="seerah-hero__badge"><BookOpen size={14} className="inline ms-1" /> سيرة النبي ﷺ</div>
-          <h1 className="seerah-hero__title">السيرة النبوية الشريفة</h1>
-          <p className="seerah-hero__sub">
-            امتداداً لرسالة الأنبياء، حياة خاتمهم محمد ﷺ من المولد إلى الوفاة في 12 مرحلة
-          </p>
-          <Link
-            href="/prophets/muhammad"
-            className="seerah-full-cta"
-            aria-label="الاطلاع على السيرة النبوية بالكامل في قصص الأنبياء، خاتم الأنبياء محمد ﷺ"
-          >
-            <span className="seerah-full-cta__label">الاطلاع على السيرة النبوية بالكامل</span>
-            <span className="seerah-full-cta__arrow" aria-hidden="true">←</span>
-          </Link>
-        </div>
-
         {/* Notice */}
         <div className="seerah-notice">
           <strong><Lightbulb size={14} className="inline ms-1" /> منهج القسم:</strong> نعتمد المصادر المحرَّرة (ابن هشام بعد التمحيص، وابن سعد، وزاد المعاد، وما وافق الصحيحين والسنن). نميّز بين الثابت والمشهور والمراسيل، ونتجنّب الإسرائيليات والجزم بما لم يثبت، ولا نُشرع احتفالاً بالمولد أو عبادةً بلا دليل.
@@ -339,16 +323,6 @@ export default function SeerahPage() {
 
           {/* Sidebar، قائمة المراحل */}
           <nav className="seerah-timeline" aria-label="مراحل السيرة النبوية">
-            <div className="sr-search-wrap">
-              <input
-                type="search"
-                className="ds-input sr-search-input"
-                placeholder="ابحث في السيرة..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                aria-label="بحث في مراحل السيرة النبوية"
-              />
-            </div>
             <div className="seerah-timeline__line" aria-hidden="true" />
             {filteredPhases.length === 0 ? (
               <p className="seerah-timeline__empty" role="status">
@@ -485,6 +459,6 @@ export default function SeerahPage() {
       </div>
 
       <AdminQuickEdit section="prophet-stories" />
-    </>
+    </SectionTemplatePage>
   );
 }

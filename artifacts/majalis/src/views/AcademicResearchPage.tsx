@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, useTransition, type ReactNode } from "rea
 import { Link, useLocation } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import {
   RESEARCH_CATEGORIES,
   RESEARCH_KIND_LABELS,
@@ -86,20 +87,21 @@ export default function AcademicResearchPage() {
   };
 
   return (
+    <SectionTemplatePage
+      route="/academic-research"
+      title="الأبحاث الشرعية"
+      subtitle="مكتبة أكاديمية متخصصة في جمع وتنظيم الأبحاث والدراسات الشرعية الموثقة، مع حفظ حقوق الباحثين والجهات العلمية."
+      groupTitle="أقسام الأبحاث"
+    >
     <div className="sr-page">
-      <header className="sr-hero">
-        <h1 className="sr-hero__title">الأبحاث الشرعية</h1>
-        <p className="sr-hero__sub">
-          مكتبة أكاديمية متخصصة في جمع وتنظيم الأبحاث والدراسات الشرعية الموثقة، مع حفظ حقوق الباحثين والجهات العلمية.
-        </p>
-        <div className="sr-hero__actions">
+      <div className="sr-hero__actions">
           <input
             className="sr-search"
             value={q}
             onChange={(e) => onSearch(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && runSearch()}
-            placeholder="بحث متقدم: عنوان، باحث، موضوع، جامعة، كلمات مفتاحية…"
-            aria-label="بحث في الأبحاث الشرعية"
+            placeholder="صفِّ حسب العنوان أو الباحث أو الجامعة…"
+            aria-label="تصفية الأبحاث الشرعية"
             list="sr-suggest"
           />
           <datalist id="sr-suggest">
@@ -117,7 +119,6 @@ export default function AcademicResearchPage() {
             <Sparkles size={16} aria-hidden /> مساعدة الباحث
           </Link>
         </div>
-      </header>
 
       <p className="sr-notice" role="note">
         <Shield size={14} aria-hidden style={{ display: "inline", verticalAlign: "middle" }} /> {RIGHTS_DISCLAIMER}{" "}
@@ -236,6 +237,7 @@ export default function AcademicResearchPage() {
 
       <ShareButtons title="الأبحاث الشرعية — المجلس العلمي" url="https://www.majlisilm.com/academic-research" />
     </div>
+    </SectionTemplatePage>
   );
 }
 

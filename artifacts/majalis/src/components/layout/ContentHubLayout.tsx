@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { PageShell } from "./PageShell";
 import { PageHeader } from "@/components/ui-common";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { FilterBottomSheet, FilterToggle } from "./FilterBottomSheet";
 import { useNumerals } from "@/hooks/useNumerals";
 
@@ -22,6 +23,8 @@ type Props = {
   loading?: boolean;
   empty?: ReactNode;
   className?: string;
+  /** مسار القسم — يفعّل قالب العقيدة بدل PageHeader */
+  sectionRoute?: string;
 };
 
 export function ContentHubLayout({
@@ -38,12 +41,11 @@ export function ContentHubLayout({
   onFiltersOpenChange,
   toolbar,
   className = "",
+  sectionRoute,
 }: Props) {
   const fmt = useNumerals();
-  return (
-    <PageShell className={`content-hub ${className}`.trim()}>
-      <PageHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
-
+  const inner = (
+    <>
       {stats && stats.length > 0 && (
         <div className="mj-stats ds-stats-row" role="list">
           {stats.map((s) => (
@@ -89,6 +91,27 @@ export function ContentHubLayout({
           )}
         </>
       )}
+    </>
+  );
+
+  if (sectionRoute) {
+    return (
+      <SectionTemplatePage
+        route={sectionRoute}
+        eyebrow={eyebrow}
+        title={title}
+        subtitle={subtitle}
+        groupTitle={`أقسام ${title}`}
+      >
+        {inner}
+      </SectionTemplatePage>
+    );
+  }
+
+  return (
+    <PageShell className={`content-hub ${className}`.trim()}>
+      <PageHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
+      {inner}
     </PageShell>
   );
 }

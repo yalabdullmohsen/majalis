@@ -25,6 +25,7 @@ export default function TarikhIslamiPage() {
         </div>
       </div>
       <SectionAccordionLayout
+        route="/tarikh-islami"
         eyebrow="السيرة والتاريخ"
         title="التاريخ الإسلامي والحضارة"
         sections={TARIKH_ISLAMI}

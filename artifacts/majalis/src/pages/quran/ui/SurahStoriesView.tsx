@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { getAllSurahStories, getSurahStory, searchSurahStories } from "@/lib/surah-stories";
+import { getAllSurahStories, getSurahStory } from "@/lib/surah-stories";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { truncateAtWord } from "@/lib/utils";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 
 export default function SurahStoriesPage() {
-  const [search, setSearch] = useState("");
-
   useEffect(() => {
     const allStories = getAllSurahStories();
     applyPageSeo({
@@ -36,15 +35,17 @@ export default function SurahStoriesPage() {
       ],
     });
   }, []);
-  const stories = search.trim() ? searchSurahStories(search) : getAllSurahStories();
+  const stories = getAllSurahStories();
 
   return (
+    <SectionTemplatePage
+      route="/quran/surah-stories"
+      eyebrow="القرآن وعلومه"
+      title="قصص القرآن"
+      subtitle="سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة: ١١٤ سورة."
+      groupTitle="سور القرآن"
+    >
     <div className="page-shell surah-stories-page ds-page">
-      <PageHeader
-        eyebrow="القرآن وعلومه"
-        title="قصص القرآن"
-        subtitle="سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة: ١١٤ سورة."
-      />
 
       <aside className="ui-card quran-method-note" role="note" aria-label="تنبيه منهجي" style={{ maxWidth: 720, margin: "0 auto 1.25rem", padding: "0.9rem 1.1rem", lineHeight: 1.7 }}>
         <strong>منهج القسم:</strong> نقتصر على ما ثبت في القرآن والسنة الصحيحة في القصص والفضائل.
@@ -56,14 +57,6 @@ export default function SurahStoriesPage() {
         <Link href="/quran/tajweed" className="quran-subnav__link">التجويد</Link>
         <Link href="/quran/surah-stories" className="quran-subnav__link is-active">قصص القرآن</Link>
       </nav>
-
-      <input
-        className="quran-search ui-card"
-        placeholder="ابحث في السور..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        aria-label="بحث في قصص القرآن"
-      />
 
       <div className="surah-stories-grid">
         {stories.map((s) => (
@@ -86,6 +79,7 @@ export default function SurahStoriesPage() {
         ]}
       />
     </div>
+    </SectionTemplatePage>
   );
 }
 

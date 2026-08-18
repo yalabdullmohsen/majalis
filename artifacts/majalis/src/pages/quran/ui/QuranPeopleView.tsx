@@ -1,9 +1,8 @@
-import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
-import { PageHero } from "@/components/ui/PageHero";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { toArabicDigits } from "@/lib/utils";
-import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   loadQuranPeople,
   PERSON_CATEGORY_LABEL,
@@ -25,8 +24,6 @@ function nameGlyph(nameAr: string): string {
 export default function QuranPeopleView() {
   const [people, setPeople] = useState<QuranPerson[]>([]);
   const [loading, setLoading] = useState(true);
-  const [q, setQ] = useState("");
-  const deferredQ = useDeferredValue(q);
   const [category, setCategory] = useState<PersonCategory | "all">("all");
   const [mention, setMention] = useState<"all" | "name" | "description">("all");
   const [sort, setSort] = useState<SortMode>("alpha");
@@ -53,12 +50,6 @@ export default function QuranPeopleView() {
     let list = people;
     if (category !== "all") list = list.filter((p) => p.category === category);
     if (mention !== "all") list = list.filter((p) => p.mentionType === mention);
-    if (deferredQ.trim()) {
-      const needle = deferredQ.trim();
-      list = list.filter((p) =>
-        arabicMatchAny([p.nameAr, ...(p.aliases ?? []), p.definition], needle),
-      );
-    }
     const sorted = [...list];
     if (sort === "mentions") {
       sorted.sort((a, b) => b.occurrences.length - a.occurrences.length || a.nameAr.localeCompare(b.nameAr, "ar"));
@@ -66,14 +57,16 @@ export default function QuranPeopleView() {
       sorted.sort((a, b) => a.nameAr.localeCompare(b.nameAr, "ar"));
     }
     return sorted;
-  }, [people, category, mention, deferredQ, sort]);
+  }, [people, category, mention, sort]);
 
   return (
+    <SectionTemplatePage
+      route="/quran/people"
+      title={QURAN_PEOPLE_PAGE_TITLE}
+      subtitle="أسماء صريحة موثّقة بمواضع الآيات — مع ربط لقصص الأنبياء دون إعادة سرد"
+      groupTitle="المذكورون في القرآن"
+    >
     <div className="quran-hub-page qp-people" dir="rtl">
-      <PageHero
-        title={QURAN_PEOPLE_PAGE_TITLE}
-        description="أسماء صريحة موثّقة بمواضع الآيات — مع ربط لقصص الأنبياء دون إعادة سرد"
-      />
       <div className="qp-people__body">
         <p className="qp-people__intro">
           الدفعة الحالية: المذكورون بالاسم. ما ذُكر بالوصف فقط مدرج في طابور مراجعة ولا يُعرض كحقيقة قطعية.
@@ -83,19 +76,6 @@ export default function QuranPeopleView() {
           <Link href="/nations">الأمم السابقة</Link></p>
 
         <div className="qp-people__toolbar">
-          <label>
-            <span className="sr-only">بحث</span>
-            <input
-              className="qp-people__search"
-              type="search"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="ابحث باسم أو لقب…"
-              autoComplete="off"
-              enterKeyHint="search"
-            />
-          </label>
-
           <div className="qp-people__filters">
             <select
               value={category}
@@ -170,5 +150,6 @@ export default function QuranPeopleView() {
         )}
       </div>
     </div>
+    </SectionTemplatePage>
   );
 }

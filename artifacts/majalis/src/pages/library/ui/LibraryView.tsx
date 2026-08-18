@@ -243,6 +243,7 @@ export default function LibraryPage({
   return (
     <ContentHubLayout
       className="content-hub library-hub"
+      sectionRoute="/library"
       eyebrow="الأرشيف العلمي"
       title="المكتبة العلمية"
       subtitle="كتب أساسية في الحديث والتفسير والعقيدة والفقه، مرتبة للتصفح. التنبيهات المنهجية تظهر عند الحاجة."

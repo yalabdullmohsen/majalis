@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { AlertTriangle, GraduationCap, Landmark, Search } from "lucide-react";
+import { AlertTriangle, Landmark, Search } from "lucide-react";
 import { CompareProvider } from "@/components/universities/CompareContext";
 import { CompareBar } from "@/components/universities/CompareBar";
 import { UniversityCard } from "@/components/universities/UniversityCard";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { usePersistedState } from "@/hooks/usePersistedState";
@@ -156,21 +157,14 @@ function UniversitiesContent() {
   }
 
   return (
+    <SectionTemplatePage
+      route="/universities"
+      title="دليل الجامعات والكليات الشرعية"
+      subtitle="موسوعة شاملة للجامعات التي تُقدّم دراسات شرعية حول العالم. ابحث وقارن وصل لرابط التقديم الرسمي مباشرة."
+      groupTitle="أقسام الدليل"
+    >
     <div dir="rtl" className="up-root">
-      {/* Header */}
-      <div className="text-white py-10 px-4 ldb-hero">
-        <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2">
-            <GraduationCap size={22} strokeWidth={1.5} aria-hidden="true" />
-            دليل الجامعات والكليات الشرعية
-          </h1>
-          <p className="text-white/85 text-sm max-w-xl mx-auto leading-relaxed">
-            موسوعة شاملة للجامعات التي تُقدّم دراسات شرعية حول العالم.
-            ابحث وقارن وصل لرابط التقديم الرسمي مباشرة.
-          </p>
-
-          {/* بحث */}
-          <form onSubmit={handleSearch} className="mt-6 flex gap-2 max-w-md mx-auto">
+      <form onSubmit={handleSearch} className="mt-4 flex gap-2 max-w-md mx-auto px-4">
             <input
               type="text"
               value={searchInput}
@@ -184,8 +178,6 @@ function UniversitiesContent() {
               بحث
             </button>
           </form>
-        </div>
-      </div>
 
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         {/* تنبيه موثوقية البيانات */}
@@ -307,6 +299,7 @@ function UniversitiesContent() {
         </div>
       </FilterBottomSheet>
     </div>
+    </SectionTemplatePage>
   );
 }
 

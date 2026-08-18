@@ -38,8 +38,8 @@ assert.match(more, /getLobby\("sections"\)/);
 assert.doesNotMatch(more, /sections-hub__search/);
 
 const merged = read("src/views/MergedSectionHubPage.tsx");
-assert.match(merged, /SectionLobby/);
-assert.match(merged, /lobbyId="hub"/);
+assert.match(merged, /TopicPage/);
+assert.match(merged, /lobbyId="hub"|groupTitle/);
 assert.doesNotMatch(merged, /<PageHero/);
 assert.doesNotMatch(merged, /lobbyId="sections"/);
 
