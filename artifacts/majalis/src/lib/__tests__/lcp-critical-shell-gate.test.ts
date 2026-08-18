@@ -30,6 +30,7 @@ assert.match(html, /if \(!native\) \{\s*dismiss\(true\);/, "الويب بلا د
 
 assert.match(home, /title="المجلس العلمي"/, "React يطابق نص LCP");
 assert.match(home, /titleDomId="mj-lcp-title"/, "نفس عقدة العنوان تُنقَل للهيرو");
+assert.match(readFileSync(resolve(root, "src/components/ui/PageHero.tsx"), "utf8"), /classList\.add\("page-hero-mj__title"\)/, "صنف الهيرو عند التبنّي");
 assert.doesNotMatch(prewarm, /link\.rel = "preconnect"/, "prewarm لا يضيف preconnect");
 assert.doesNotMatch(mainSrc, /styles\/pages\/calendar\.css/, "تقويم خارج حزمة الإقلاع");
 assert.match(mainSrc, /await homePageBoot/, "التركيب ينتظر chunk الرئيسية");
