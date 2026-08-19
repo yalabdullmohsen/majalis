@@ -40,6 +40,7 @@ export function AppFeatureTourGate() {
     const onPaint = () => {
       paintAtRef.current = performance.now();
     };
+    window.addEventListener("app:first-paint", onPaint, { once: true });
     window.addEventListener("mj:app-painted", onPaint, { once: true });
 
     const onStorageReady = () => {
@@ -59,6 +60,7 @@ export function AppFeatureTourGate() {
     }, 3200);
 
     return () => {
+      window.removeEventListener("app:first-paint", onPaint);
       window.removeEventListener("mj:app-painted", onPaint);
       window.removeEventListener("mj:feature-tour-storage-ready", onStorageReady);
       window.removeEventListener(FEATURE_TOUR_REPLAY_EVENT, onReplay);

@@ -22,9 +22,10 @@ try {
   // /sw-version.js missing or failed to load — keep the fallback above.
 }
 
-const OFFLINE_CACHE = `majalis-offline-${SW_BUILD_ID}`;
-const DATA_CACHE    = `majalis-data-${SW_BUILD_ID}`;
-const VERSION_CACHE = "majalis-version";
+const OFFLINE_CACHE = `majlisilm-v${SW_BUILD_ID}-offline`;
+const DATA_CACHE    = `majlisilm-v${SW_BUILD_ID}-data`;
+const CACHE_PREFIX  = `majlisilm-v${SW_BUILD_ID}`;
+const VERSION_CACHE = `majlisilm-v${SW_BUILD_ID}-meta`;
 const FETCH_TIMEOUT = 8000;
 
 // External API routes served cache-first (Quran API data, prayer times)
@@ -98,7 +99,7 @@ self.addEventListener("activate", (event) => {
       const keys = await caches.keys();
       await Promise.all(
         keys
-          .filter((k) => k !== OFFLINE_CACHE && k !== DATA_CACHE && k !== VERSION_CACHE)
+          .filter((k) => !k.startsWith(CACHE_PREFIX))
           .map((k) => caches.delete(k)),
       );
 
@@ -114,7 +115,12 @@ self.addEventListener("activate", (event) => {
       // كانت ستُصبح نشطة على كل نشر تقريبًا (وتيرة نشر عالية جدًا)، فتُقاطع
       // المستخدمين قسرًا أثناء الاستخدام. أُزيلت لصالح شريط "تحديث متاح"
       // الجديد (اختياري، بضغطة المستخدم فقط) — راجع UpdateAvailableBanner.
-      void isUpdate;
+      if (isUpdate) {
+        const clients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+        for (const client of clients) {
+          client.postMessage({ type: "SW_UPDATED_RELOAD_ONCE" });
+        }
+      }
     })(),
   );
 });
@@ -388,7 +394,7 @@ self.addEventListener("message", (event) => {
           const keys = await caches.keys();
           await Promise.all(
             keys
-              .filter((k) => k.startsWith("majalis-offline-") || k === OFFLINE_CACHE)
+              .filter((k) => k.startsWith("majlisilm-v") || k === OFFLINE_CACHE)
               .map((k) => caches.delete(k)),
           );
         } catch (_) {
