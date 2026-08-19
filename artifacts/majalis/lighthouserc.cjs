@@ -3,24 +3,19 @@
  * المرجع الرسمي للإعلان = PSI على الإنتاج بعد تأكيد SHA.
  * هذا الملف يقيس بناء CI (أو LHCI_URL) ويمنع الدمج عند الانحدار.
  *
- * خط أساس PSI فحص 10 (2026-08-18 ≈14:05، جوال، majlisilm.com):
- *   أداء 52 · CLS 0.017 · LCP 4.7ث · TBT 1100مل.ث · FCP 3.7ث · حظر عرض 1610مل.ث
- *   a11y = BP = SEO = 100
+ * خط أساس PSI فحص 12 (2026-08-19، جوال، majlisilm.com):
+ *   أداء 70 · CLS 0.006 · LCP 5.7ث · TBT 330مل.ث · FCP 2.0ث · SI 2.0ث
+ *   a11y = BP = SEO = 100 · حظر عرض PASSED · forced-reflow PASSED
  *
  * معايرة LHCI↔PSI — الخيار (أ):
  *   throttling أدناه = إعدادات PSI للجوال (Slow 4G simulate).
- *   الخيار (ب) «نصف أرقام PSI» مرفوض: LHCI يقيس LCP ≈7.1ث بينما PSI 4.7ث،
- *   فنصف الهدف (2750ms) سيفشل البوابة دائماً. الفجوة ليست نقص throttling.
  *
- * عتبات حمراء بعد تحصين فحص 10 + شدّ TBT بعد فحص 11:
+ * عتبات حمراء v3 — تثبيت مكاسب فحص 12:
  *   warn:  أداء ≥ 0.75
- *   error: CLS ≤ 0.030 · TBT ≤ 850ms · LCP ≤ 8000ms · DOM ≤ 1200
- *          a11y=1 · BP=1 · SEO=1
- *          حظر عرض ≤ 300ms (بعد تحويل index-*.css إلى غير حاجب)
- *   warn:  forced-reflow · unused-css/js (مللي ثانية لا KiB)
- * هدف إعلان PSI لـ LCP = 5500ms — لا يُفرض على LHCI قبل أن ينخفض وسيط CI تحت 5500
- * (وسيط LHCI الحالي ≈7120ms؛ 5500 ستفشل Verify build).
- * بعد كل تحسّن مثبت بـPSI تُخفَّض العتبة في نفس الـPR.
+ *   error: CLS ≤ 0.020 · TBT ≤ 400ms · FCP ≤ 2200ms · SI ≤ 2500ms · LCP ≤ 6000ms
+ *          DOM ≤ 1200 · a11y=1 · BP=1 · SEO=1
+ *          حظر عرض ≤ 200ms · forced-reflow warn
+ *   LCP ≤ 2500ms — يُخفَّض في perf/lcp-static-shell-v2 بعد PSI
  */
 const collectUrl = (process.env.LHCI_URL || "http://127.0.0.1:24216/").replace(/\/?$/, "/");
 const chromePath = process.env.CHROME_PATH || undefined;
@@ -57,20 +52,18 @@ module.exports = {
       },
     },
     assert: {
-      // ميزانية JS/CSS بالبايت تبقى في budget.json للتوثيق —
-      // تدقيق unused-*-rules يعرّض numericValue بالمللي ثانية (توفير محتمل) لا بالبايت.
       assertions: {
         "categories:performance": ["warn", { minScore: 0.75 }],
         "categories:accessibility": ["error", { minScore: 1 }],
         "categories:best-practices": ["error", { minScore: 1 }],
         "categories:seo": ["error", { minScore: 1 }],
-        "largest-contentful-paint": ["error", { maxNumericValue: 8000 }],
-        "total-blocking-time": ["error", { maxNumericValue: 850 }],
-        // مواصفة هذا الدفعة: CLS يجب ألا يتجاوز “الوضع الحالي” (انجرف إلى ~0.048).
-        "cumulative-layout-shift": ["error", { maxNumericValue: 0.048 }],
+        "largest-contentful-paint": ["error", { maxNumericValue: 6000 }],
+        "total-blocking-time": ["error", { maxNumericValue: 400 }],
+        "first-contentful-paint": ["error", { maxNumericValue: 2200 }],
+        "speed-index": ["error", { maxNumericValue: 2500 }],
+        "cumulative-layout-shift": ["error", { maxNumericValue: 0.02 }],
         "dom-size": ["error", { maxNumericValue: 1200 }],
-        "render-blocking-resources": ["error", { maxNumericValue: 300 }],
-        // numericValue = overallSavingsMs لا KiB. الهدف المعلن: CSS≤20KiB · JS≤40KiB.
+        "render-blocking-resources": ["error", { maxNumericValue: 200 }],
         "unused-css-rules": ["warn", { maxNumericValue: 80 }],
         "unused-javascript": ["warn", { maxNumericValue: 200 }],
         "forced-reflow-insight": ["warn", { minScore: 1 }],
