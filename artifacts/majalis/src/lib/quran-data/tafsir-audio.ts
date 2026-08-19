@@ -45,9 +45,28 @@ type CatalogPayload = {
 
 const RESUME_KEY = "majalis-tafsir-audio-resume-v1";
 const RATE_KEY = "mj-tafsir-playback-rate-v1";
+const MAP_URL = "/data/tafsir-audio-map.json";
 const MAX_DOWNLOAD_BYTES = 80 * 1024 * 1024; // 80 MB سقف تنزيل اختياري
 
+type TafsirAudioMapSegment = {
+  ayah: number;
+  startSec: number;
+};
+
+type TafsirAudioMapEntry = {
+  clipId: string;
+  surah: number;
+  segments: TafsirAudioMapSegment[];
+};
+
+type TafsirAudioMapPayload = {
+  version: number;
+  maps: TafsirAudioMapEntry[];
+};
+
 let catalogCache: TafsirAudioClip[] | null = null;
+let mapCache: TafsirAudioMapEntry[] | null = null;
+let mapPromise: Promise<TafsirAudioMapEntry[]> | null = null;
 let busRegistered = false;
 
 function ensureBusStopper(): void {
@@ -63,6 +82,40 @@ function ensureBusStopper(): void {
     hideMiniPlayer();
     releaseAudio("tafsir");
   });
+}
+
+export async function loadTafsirAudioMap(): Promise<TafsirAudioMapEntry[]> {
+  if (mapCache) return mapCache;
+  if (mapPromise) return mapPromise;
+  mapPromise = (async () => {
+    try {
+      const res = await fetch(MAP_URL, { credentials: "omit" });
+      if (!res.ok) {
+        mapCache = [];
+        return mapCache;
+      }
+      const json = (await res.json()) as TafsirAudioMapPayload;
+      mapCache = Array.isArray(json.maps) ? json.maps : [];
+      return mapCache;
+    } catch {
+      mapCache = [];
+      return mapCache;
+    }
+  })();
+  return mapPromise;
+}
+
+/** موضع البداية (ثوانٍ) لآية داخل مقطع تفسير صوتي — null إن لم تُعرَّف. */
+export async function getTafsirAyahStartSec(
+  clipId: string,
+  surah: number,
+  ayah: number,
+): Promise<number | null> {
+  const maps = await loadTafsirAudioMap();
+  const entry = maps.find((m) => m.clipId === clipId && m.surah === surah);
+  if (!entry) return null;
+  const seg = entry.segments.find((s) => s.ayah === ayah);
+  return seg ? seg.startSec : null;
 }
 
 export async function loadTafsirAudioCatalog(): Promise<TafsirAudioClip[]> {
@@ -204,6 +257,9 @@ export async function playTafsirAudioClip(
   if (opts?.resume) {
     const r = readTafsirResume();
     if (r?.clipId === clip.id) startAt = r.currentTime;
+  } else if (typeof opts?.ayah === "number") {
+    const ayahStart = await getTafsirAyahStartSec(clip.id, clip.surah, opts.ayah);
+    if (ayahStart != null) startAt = ayahStart;
   }
 
   let playUrl = clip.streamUrl || clip.url || "";
@@ -290,4 +346,6 @@ export async function stopTafsirAudio(): Promise<void> {
 /** للاختبارات */
 export function __resetTafsirAudioCatalogForTests(): void {
   catalogCache = null;
+  mapCache = null;
+  mapPromise = null;
 }

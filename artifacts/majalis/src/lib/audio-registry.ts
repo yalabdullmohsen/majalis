@@ -94,6 +94,17 @@ export function getVerifiedRecitersSyncFallback(): QuranReciter[] {
   return fallbackVerifiedReciters();
 }
 
+/** يُعيد id قارئ مُحقَّق QA أو أول قارئ افتراضي. */
+export function clampToVerifiedReciterId(id: string): string {
+  const list = getVerifiedRecitersSyncFallback();
+  if (list.some((r) => r.id === id)) return id;
+  return list[0]?.id ?? "alafasy";
+}
+
+export function isVerifiedReciterId(id: string): boolean {
+  return getVerifiedRecitersSyncFallback().some((r) => r.id === id);
+}
+
 export function __resetAudioRegistryForTests(): void {
   registryPromise = null;
   verifiedRecitersCache = null;

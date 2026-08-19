@@ -503,7 +503,11 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       ? {
           title: verseLabel,
           artist: getReciter(reciterId).nameAr,
+          album: "تلاوة القرآن — المجلس العلمي",
           playing: mediaPlaying,
+          position: audioTime.currentTime,
+          duration: audioTime.duration,
+          playbackRate: audioTime.playbackRate,
           onPlay: () => void togglePlay(),
           onPause: () => audio.pause(),
           onStop: () => audio.stop(),

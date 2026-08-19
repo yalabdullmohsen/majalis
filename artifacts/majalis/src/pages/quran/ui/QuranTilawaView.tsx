@@ -4,12 +4,13 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
-import { getReciter } from "@/lib/quran-audio";
-import { MUSHAF_RECITER_IDS } from "@/features/mushaf-madinah/MushafAudioDock";
+import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
 import { formatArabicNumber } from "@/lib/numerals";
 import "@/styles/pages/tilawa.css";
 
 export default function QuranTilawaView() {
+  const reciters = useVerifiedReciters();
+
   useEffect(() => {
     applyPageSeo({
       path: "/quran-hub/tilawa",
@@ -18,8 +19,6 @@ export default function QuranTilawaView() {
       keywords: ["تلاوة", "قرّاء", "استماع", "حفص"],
     });
   }, []);
-
-  const reciters = MUSHAF_RECITER_IDS.map((id) => getReciter(id));
 
   return (
     <div className="tl-page" dir="rtl" data-quran-tilawa="1">
