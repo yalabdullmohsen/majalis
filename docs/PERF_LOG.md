@@ -612,7 +612,7 @@ JS غير مستخدم: supabase 44KiB + index 35KiB.
 | **LCP** | 4.7ث | 5.7ث | **5.7ث** | **4/25** |
 | a11y / BP / SEO | — | — | **100 / 100 / 100** | — |
 
-- اختفى تحذيرا **حظر العرض** و**إعادة التدflow الإلزامية**.
+- اختفى تحذيرا **حظر العرض** و**إعادة التدفق الإلزامية**.
 - العمل الرئيسي: 3.6ث → **2.3ث**.
 - **الحساب الحاسم:** الناقص 30 نقطة — **21 في LCP** و8 في TBT. أي دفعة لا تمسّ LCP = دفعة ضائعة.
 
@@ -633,3 +633,18 @@ JS غير مستخدم: supabase 44KiB + index 35KiB.
 - صدفة ثابتة **داخل `#root`** بمطابقة بكسل + بوابة CLS ≤ 0.02.
 - الويب: لا دخولية حاجبة؛ iOS: LaunchScreen أصلية.
 - الهدف: LCP ≤ 2500ms · فارق FCP–LCP ≤ 600ms.
+
+### `perf/lcp-static-shell-v2` — ما تغيّر
+
+1. **صدفة HTML داخل `#root`** (`#mj-home-lcp-static`) — نص `p.hsh-step__desc` الحقيقي + hero قبل أي JS.
+2. **React يركّب في `#mj-app-mount`** — لا يمسح الصدفة حتى `scheduleRemoveHomeLcpStaticShell()` بعد رسم `.m2030-home`.
+3. **الويب: لا دخولية حاجبة** — `if (!native) dismiss(true)` في `index.html`؛ iOS يبقي LaunchScreen.
+4. **خط:** `preload` Amiri 400 ar + `ascent-override`/`MajlisAmiriFallback` في `#mj-cls-reserve`.
+5. **بوابة CLS:** LHCI `≤ 0.02` في نفس PR (`chore/lock-thresholds-v3`).
+
+| | LCP | CLS | FCP | TBT |
+|---|---:|---:|---:|---:|
+| PSI فحص 12 (قبل) | 5.7ث | 0.006 | 2.0ث | 330 |
+| PSI بعد v2 | **لم يُقَس بعد** | | | |
+
+**عنصر LCP المرشّح (فحص 12):** `p.hsh-step__desc` — «دروس علمية أسبوعية من علماء الكويت…» — تأخير رسم ~3.7ث (FCP 2.0 → LCP 5.7).
