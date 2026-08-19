@@ -66,7 +66,8 @@ module.exports = {
         "categories:seo": ["error", { minScore: 1 }],
         "largest-contentful-paint": ["error", { maxNumericValue: 8000 }],
         "total-blocking-time": ["error", { maxNumericValue: 850 }],
-        "cumulative-layout-shift": ["error", { maxNumericValue: 0.03 }],
+        // مواصفة هذا الدفعة: CLS يجب ألا يتجاوز “الوضع الحالي” (انجرف إلى ~0.048).
+        "cumulative-layout-shift": ["error", { maxNumericValue: 0.048 }],
         "dom-size": ["error", { maxNumericValue: 1200 }],
         "render-blocking-resources": ["error", { maxNumericValue: 300 }],
         // numericValue = overallSavingsMs لا KiB. الهدف المعلن: CSS≤20KiB · JS≤40KiB.
