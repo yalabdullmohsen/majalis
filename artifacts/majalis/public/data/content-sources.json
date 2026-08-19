@@ -1,0 +1,105 @@
+{
+  "updatedAt": "2026-08-19T00:00:00.000Z",
+  "closingLine": "جزى الله القائمين على هذه المصادر خيراً",
+  "sections": [
+    {
+      "id": "quran-text",
+      "titleAr": "نص القرآن والخطوط",
+      "items": [
+        {
+          "id": "qpc-v2-fonts",
+          "name": "خطوط QPC V2",
+          "org": "مجمع الملك فهد / QUL",
+          "url": "https://qul.tarteel.ai",
+          "permission": "استعمال عرض — توزيع متجر قيد التأكيد",
+          "accessedAt": "2026-08-19"
+        },
+        {
+          "id": "tanzil-hafs",
+          "name": "نص حفص (Tanzil)",
+          "org": "Tanzil / AlQuran Cloud",
+          "url": "https://tanzil.net",
+          "permission": "إعادة التوزيع الكامل قد تتطلب موافقة",
+          "accessedAt": "2026-08-19"
+        },
+        {
+          "id": "quran-com-layout",
+          "name": "تخطيط صفحات QPC",
+          "org": "Quran.com / QUL",
+          "url": "https://api.quran.com",
+          "permission": "واجهات API للتخطيط",
+          "accessedAt": "2026-08-19"
+        },
+        {
+          "id": "amiri-quran-ofl",
+          "name": "Amiri Quran (OFL)",
+          "org": "SIL Open Font License",
+          "url": "https://fonts.google.com/amiri",
+          "permission": "ممنوح — OFL",
+          "accessedAt": "2026-08-19"
+        }
+      ]
+    },
+    {
+      "id": "recitations",
+      "titleAr": "التلاوات",
+      "items": [
+        {
+          "id": "everyayah",
+          "name": "everyayah.com",
+          "org": "EveryAyah",
+          "url": "https://everyayah.com",
+          "permission": "بث آية بآية — لا ملفات في الحزمة",
+          "accessedAt": "2026-08-19"
+        },
+        {
+          "id": "mp3quran",
+          "name": "mp3quran.net",
+          "org": "MP3Quran",
+          "url": "https://mp3quran.net",
+          "permission": "تنزيل اختياري للسور",
+          "accessedAt": "2026-08-19"
+        }
+      ]
+    },
+    {
+      "id": "adhan",
+      "titleAr": "الأذان",
+      "items": [
+        {
+          "id": "mohsalvi-adhan",
+          "name": "mohsalvi/adhan-audio",
+          "org": "jsDelivr CDN",
+          "url": "https://cdn.jsdelivr.net/gh/mohsalvi/adhan-audio@main",
+          "permission": "تسجيلات عامة — مراجعة README قبل تجاري",
+          "accessedAt": "2026-08-19"
+        }
+      ]
+    },
+    {
+      "id": "tafsir-text",
+      "titleAr": "التفاسير نصاً",
+      "registryRef": "public/data/tafsir/tafsir-registry.json"
+    },
+    {
+      "id": "tafsir-audio",
+      "titleAr": "التفاسير صوتاً",
+      "items": [],
+      "note": "لا مقاطع مرخّصة بعد — الكتalog فارغ"
+    },
+    {
+      "id": "prayer-times",
+      "titleAr": "بيانات المواقيت",
+      "items": [
+        {
+          "id": "aladhan",
+          "name": "AlAdhan API",
+          "org": "Islamic Network",
+          "url": "https://aladhan.com",
+          "permission": "حساب مواقيت — API مجاني",
+          "accessedAt": "2026-08-19"
+        }
+      ]
+    }
+  ]
+}

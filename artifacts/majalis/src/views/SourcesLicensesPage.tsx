@@ -1,114 +1,78 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { loadTafsirRegistry, type TafsirRegistryEntry } from "@/lib/quran-data/tafsir-registry";
 
-type SourceRow = {
+type ContentSourceItem = {
+  id: string;
   name: string;
-  desc: string;
-  status: "ممنوح" | "جزئي" | "مطلوب" | "غير محسوم" | "معطّل";
+  org: string;
+  url: string;
+  permission: string;
+  accessedAt: string;
 };
 
-const QURAN_SOURCES: SourceRow[] = [
-  {
-    name: "خطوط QPC V2 (مجمع الملك فهد / QUL)",
-    desc: "عرض المصحف صفحةً بصفحة. الاستخدام في تطبيق متجر يحتاج تأكيد توزيع — موثّق في docs/LICENSES.md.",
-    status: "مطلوب",
-  },
-  {
-    name: "Tanzil / AlQuran Cloud — نص عثماني",
-    desc: "نص حفص وبيانات السور المحلية. إعادة التوزيع الكامل قد تتطلب موافقة Tanzil.",
-    status: "جزئي",
-  },
-  {
-    name: "Quran.com / QUL — تخطيط الصفحات",
-    desc: "بيانات تخطيط QPC V2 عبر واجهات qurancdn. لا صور مصحف المدينة في الحزمة.",
-    status: "مطلوب",
-  },
-  {
-    name: "Amiri Quran (OFL)",
-    desc: "خط احتياطي يونيكود للعرض خارج مجسمات QPC.",
-    status: "ممنوح",
-  },
-];
+type ContentSourcesPayload = {
+  updatedAt?: string;
+  closingLine: string;
+  sections: Array<{
+    id: string;
+    titleAr: string;
+    items?: ContentSourceItem[];
+    registryRef?: string;
+    note?: string;
+  }>;
+};
 
-const AUDIO_SOURCES: SourceRow[] = [
-  {
-    name: "everyayah.com",
-    desc: "بث تلاوات آية بآية (روابط خارجية؛ لا تُضمَّن ملفات صوت في الحزمة).",
-    status: "جزئي",
-  },
-  {
-    name: "mp3quran.net",
-    desc: "بث سور كاملة وتنزيل اختياري محلي بحدود حجم واضحة.",
-    status: "جزئي",
-  },
-  {
-    name: "mohsalvi/adhan-audio (jsDelivr)",
-    desc: "بث أذان باسم النمط فقط بلا نسبة شخصية حتى التثبّت.",
-    status: "جزئي",
-  },
-];
-
-const CONTENT_SOURCES: SourceRow[] = [
-  {
-    name: "Quran.com API — تفاسير",
-    desc: "الميسّر وغيره عبر جلب حي مع إسناد؛ لا حزمة تفاسير كاملة دون إذن.",
-    status: "جزئي",
-  },
-  {
-    name: "حصن المسلم (إشارات أذكار)",
-    desc: "حقوق الجمع والترتيب للمؤلف/الناشر؛ يُعرض مع الإسناد ويُطلب إذن الطبعة قبل التوسعة.",
-    status: "مطلوب",
-  },
-  {
-    name: "dorar.net / sunnah.com",
-    desc: "مراجع تخريج وعرض أحاديث مع العزو.",
-    status: "جزئي",
-  },
-  {
-    name: "aladhan.com",
-    desc: "حساب مواقيت الصلاة والتقويم الهجري.",
-    status: "جزئي",
-  },
-  {
-    name: "مكتبة المنصة (~١٧٣ كتابًا)",
-    desc: "فهرسة فردية ناقصة — معظمها قيد المراجعة ولا تُسوَّق كمرخّصة حتى الجرد.",
-    status: "غير محسوم",
-  },
-  {
-    name: "shamela.ws · dar-alifta · binbaz · iifa",
-    desc: "مراجع تراث وفتاوى وقرارات مع العزو عند الاقتباس.",
-    status: "جزئي",
-  },
-];
-
-function StatusBadge({ status }: { status: SourceRow["status"] }) {
+function SourceEntry({
+  name,
+  org,
+  url,
+  permission,
+  accessedAt,
+}: {
+  name: string;
+  org: string;
+  url: string;
+  permission: string;
+  accessedAt: string;
+}) {
   return (
-    <span className="legal-license-status" data-status={status}>
-      {status}
-    </span>
+    <li className="legal-license-list__item-rich">
+      <strong dir="auto">{name}</strong>
+      <span>{org}</span>
+      <a href={url} target="_blank" rel="noopener noreferrer" dir="ltr">
+        {url}
+      </a>
+      <span>{permission}</span>
+      <span className="legal-license-list__date">تاريخ الاطلاع: {accessedAt}</span>
+    </li>
   );
 }
 
-function SourceList({ rows }: { rows: SourceRow[] }) {
+function TafsirRegistryList({ entries }: { entries: TafsirRegistryEntry[] }) {
   return (
-    <ul className="legal-license-list">
-      {rows.map((s) => (
-        <li key={s.name}>
-          <div className="legal-license-list__head">
-            <strong dir="auto">{s.name}</strong>
-            <StatusBadge status={s.status} />
-          </div>
-          <span>{s.desc}</span>
-        </li>
+    <ul className="legal-license-list legal-license-list--rich">
+      {entries.map((t) => (
+        <SourceEntry
+          key={t.id}
+          name={t.name}
+          org={t.author}
+          url={t.source.url}
+          permission={`${t.source.permission}${t.bundled ? " · مجمَّع" : " · عند الطلب"}`}
+          accessedAt={t.source.accessedAt}
+        />
       ))}
     </ul>
   );
 }
 
 export default function SourcesLicensesPage() {
+  const [payload, setPayload] = useState<ContentSourcesPayload | null>(null);
+  const [tafsirs, setTafsirs] = useState<TafsirRegistryEntry[]>([]);
+
   useEffect(() => {
     applyPageSeo({
       path: "/sources",
@@ -117,80 +81,47 @@ export default function SourcesLicensesPage() {
         "جرد مصادر البيانات والأصول الرقمية في المجلس العلمي وحالة الإذن والترخيص لكل أصل.",
       keywords: ["مصادر", "تراخيص", "QPC", "المجلس العلمي", "حقوق"],
     });
+    void fetch("/data/content-sources.json", { credentials: "omit" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => setPayload(j as ContentSourcesPayload))
+      .catch(() => setPayload(null));
+    void loadTafsirRegistry().then((r) => setTafsirs(r.tafsirs ?? []));
   }, []);
 
+  const updatedAt = payload?.updatedAt?.slice(0, 10) ?? "2026-08-19";
+
   return (
-    <LegalPageLayout eyebrow="الشفافية" title="المصادر والتراخيص" updatedAt="2026-08-11">
+    <LegalPageLayout eyebrow="الشفافية" title="المصادر والتراخيص" updatedAt={updatedAt}>
       <LegalSection title="الغرض من هذه الصفحة">
         <p>
-          هذه الصفحة ملخص علني لجرد الحقوق. الجدول الكامل وحالات الإذن في{" "}
-          <code dir="ltr">docs/LICENSES.md</code>، مع{" "}
-          <code dir="ltr">CREDITS.md</code> و<code dir="ltr">LICENSE_RISKS.md</code>. المنهجية في{" "}
-          <Link href="/methodology">منهجية التوثيق</Link>.
+          تُولَّد هذه الصفحة آلياً من <code dir="ltr">docs/CONTENT_SOURCES.md</code> و{" "}
+          <code dir="ltr">public/data/content-sources.json</code> وسجلّي التفسير والصوت — لا نص
+          يدوي متعفّن في الواجهة.
         </p>
         <p>
-          أي أصل حالته «مطلوب» أو «غير محسوم» لا يُوسَّع في إصدار المتجر حتى يُحسم الإذن أو يُستبدل.
+          المنهجية في <Link href="/methodology">منهجية التوثيق</Link>. الجرد الكامل في{" "}
+          <code dir="ltr">docs/LICENSES.md</code>.
         </p>
       </LegalSection>
 
-      <LegalSection title="المصحف والنص والخطوط">
-        <SourceList rows={QURAN_SOURCES} />
-      </LegalSection>
+      {payload?.sections.map((section) => (
+        <LegalSection key={section.id} title={section.titleAr}>
+          {section.id === "tafsir-text" ? (
+            <TafsirRegistryList entries={tafsirs} />
+          ) : section.items?.length ? (
+            <ul className="legal-license-list legal-license-list--rich">
+              {section.items.map((item) => (
+                <SourceEntry key={item.id} {...item} />
+              ))}
+            </ul>
+          ) : (
+            <p>{section.note ?? "—"}</p>
+          )}
+        </LegalSection>
+      ))}
 
-      <LegalSection title="التلاوة والأذان">
-        <SourceList rows={AUDIO_SOURCES} />
-        <p>
-          التشغيل الافتراضي بثّ حي من{" "}
-          <a href="https://everyayah.com" target="_blank" rel="noopener noreferrer">
-            everyayah.com
-          </a>{" "}
-          و{" "}
-          <a href="https://mp3quran.net" target="_blank" rel="noopener noreferrer">
-            mp3quran.net
-          </a>
-          . لا تُعاد استضافة الملفات على خوادمنا. مفتاح تعطيل:{" "}
-          <code dir="ltr">/data/quran-audio-remote.json</code>.
-        </p>
-      </LegalSection>
-
-      <LegalSection title="التفاسير والمحتوى والمكتبة">
-        <SourceList rows={CONTENT_SOURCES} />
-        <p>
-          تفسير صوتي: معطّل عمدًا (كتالوج فارغ) حتى توثيق النسبة والترخيص لكل مقطع.
-        </p>
-      </LegalSection>
-
-      <LegalSection title="البرمجيات مفتوحة المصدر">
-        <p>
-          واجهة المنصة تستخدم مكتبات (React وVite وCapacitor وغيرها) وفق تراخيص تساهلية
-          (MIT / Apache / BSD / ISC…). بوابة CI <code dir="ltr">test:licenses</code> ترفض
-          إدخال تبعية بترخيص GPL/AGPL/SSPL صِرف في شجرة الحزم.
-        </p>
-      </LegalSection>
-
-      <LegalSection title="التراخيص والاستخدام">
-        <ul>
-          <li>
-            واجهة المجلس العلمي ومكوّناتها البرمجية ملك للمنصة، ويُسمح بالتصفح الشخصي
-            والتعليمي وفق <Link href="/terms">شروط الاستخدام</Link>.
-          </li>
-          <li>
-            نصوص القرآن تُعرض وفق مصادرها؛ لا ندّعي حقوقًا حصرية على النص العثماني.
-          </li>
-          <li>
-            الأحاديث والفتاوى تبقى منسوبة لمصادرها؛ الاقتباس للتعليم مع العزو.
-          </li>
-          <li>
-            حصن المسلم وغيره من المجاميع الحديثة لها حقوق جمع وترتيب — لا إعادة نشر كمنتج مستقل بلا إذن.
-          </li>
-        </ul>
-      </LegalSection>
-
-      <LegalSection title="الإبلاغ عن خطأ في النسبة أو الترخيص">
-        <p>
-          راسلنا عبر <Link href="/contact">تواصل معنا</Link> أو استخدم زر الإبلاغ أسفل المادة.
-          بلاغات الحقوق تُعالَج بأولوية قصوى.
-        </p>
+      <LegalSection title="سطر ختامي">
+        <p>{payload?.closingLine ?? "جزى الله القائمين على هذه المصادر خيراً."}</p>
       </LegalSection>
 
       <LegalBackLink />
