@@ -7,7 +7,8 @@ import { getAudioEngine, type RepeatMode } from "@/core/audio/AudioEngine";
 import { getTafseerService } from "@/core/tafseer/TafseerService";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { getSurahMeta } from "@/lib/quran-api";
-import { getFeaturedReciters, getReciter, RECITERS, saveReciterId } from "@/lib/quran-audio";
+import { getReciter, saveReciterId } from "@/lib/quran-audio";
+import { getVerifiedReciters, getVerifiedRecitersSyncFallback } from "@/lib/audio-registry";
 import { shareAyahAsText } from "@/lib/share-ayah";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran-engine-ui.css";
@@ -51,6 +52,19 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
   const [statusWarn, setStatusWarn] = useState(false);
   const [reciterOpen, setReciterOpen] = useState(false);
   const [showAllReciters, setShowAllReciters] = useState(false);
+  const [verifiedReciters, setVerifiedReciters] = useState(() => getVerifiedRecitersSyncFallback());
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const list = await getVerifiedReciters();
+      if (cancelled) return;
+      setVerifiedReciters(list);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     return audio.onSnapshot((snap) => {
@@ -81,11 +95,25 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
     audio.setReciter(currentReciter);
   }, [ayah, db, audio, currentReciter]);
 
+  useEffect(() => {
+    if (!verifiedReciters.length) return;
+    const ok = verifiedReciters.some((r) => r.id === currentReciter);
+    if (ok) return;
+
+    // فرض أن “الصوت المعروض” يعتمد QA من السجل.
+    const next = verifiedReciters[0]!;
+    setReciter(next.id);
+    saveReciterId(next.id);
+    audio.setReciter(next.id);
+    setStatusWarn(false);
+    setStatus(`القارئ: ${next.nameAr}`);
+  }, [verifiedReciters, currentReciter, setReciter, audio]);
+
   if (!ayah) return null;
 
   const surahName = getSurahMeta(ayah.surah).name;
   const activeReciter = getReciter(currentReciter);
-  const listedReciters = showAllReciters ? RECITERS : getFeaturedReciters();
+  const listedReciters = showAllReciters ? verifiedReciters : verifiedReciters.slice(0, 3);
 
   const pickReciter = (id: string) => {
     setReciter(id);
@@ -233,7 +261,9 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
             className="qe-abar__reciter-more"
             onClick={() => setShowAllReciters((v) => !v)}
           >
-            {showAllReciters ? "أشهر القراء فقط" : `جميع القراء (${toArabicDigits(RECITERS.length)})`}
+            {showAllReciters
+              ? "أشهر القراء فقط"
+              : `جميع القراء المعتمدين (${toArabicDigits(verifiedReciters.length)})`}
           </button>
         </div>
       ) : null}
