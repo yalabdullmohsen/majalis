@@ -19,6 +19,7 @@ const required = [
   "adhan-short-aqsa.caf",
   "adhan-short-egypt.caf",
   "adhan-short-takbeerat.caf",
+  "adhan-short-makkah-fajr.caf",
   "adhan-seq-makkah-01.caf",
   "adhan-seq-makkah-02.caf",
   "adhan-seq-makkah-03.caf",
