@@ -30,10 +30,10 @@
 | ملف محلي | مصدر CDN | الاستخدام |
 |---|---|---|
 | `adhan-makkah-full.m4a` | `general/makkah-haram-02.mp3` | تشغيل داخل التطبيق (~28ث) |
-| `adhan-madinah-full.m4a` | `general/madinah-02.mp3` |同上 |
-| `adhan-egypt-full.m4a` | `general/egypt-traditional-02.mp3` |同上 |
-| `adhan-haram-full.m4a` | `general/al-haram-01.mp3` |同上 |
-| `adhan-aqsa-full.mp3` | `general/al-aqsa-jerusalem-02.mp3` |同上 |
+| `adhan-madinah-full.m4a` | `general/madinah-02.mp3` | تشغيل داخل التطبيق (~28ث) |
+| `adhan-egypt-full.m4a` | `general/egypt-traditional-02.mp3` | تشغيل داخل التطبيق (~28ث) |
+| `adhan-haram-full.m4a` | `general/al-haram-01.mp3` | تشغيل داخل التطبيق (~28ث) |
+| `adhan-aqsa-full.mp3` | `general/al-aqsa-jerusalem-02.mp3` | تشغيل داخل التطبيق (~28ث) |
 | `adhan-makkah-fajr.mp3` | `fajr/makkah-fajr-01.mp3` | فجر — تثويب |
 | `adhan-takbeerat-short.mp3` | `general/madinah-02.mp3` (مقطع قصير) | تكبيرات |
 | `ios/.../adhan-short-*.caf` | مقاطع ≤~12ث من المصادر أعلاه | **نغمة إشعار iOS ≤30ث** |
@@ -55,5 +55,5 @@
 ## التفسير الصوتي
 
 - الكتالوج: `public/data/tafsir-audio-catalog.json` — **فارغ حتى توثيق الترخيص**
-- **واجهة المستخدم مخفية** (لا معطّلة) حتى توثيق `attributionVerified` في الكتalog
+- **واجهة المستخدم مخفية** (لا معطّلة) حتى توثيق `attributionVerified` في الكتالوج
 - خريطة seek: `public/data/tafsir-audio-map.json`
