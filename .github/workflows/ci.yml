@@ -8,11 +8,11 @@ on:
   merge_group:
     types: [checks_requested]
 
-# إلغاء التشغيلات المتجاوَزة لنفس المرجع (تسريع طوابير PR).
-# ملاحظة: merge_group لا يُلغى — كل دفعة merge queue يجب أن تكمل.
+# إلغاء التشغيلات المتجاوَزة لنفس المرجع — مُعطَّل على PRs لتجنب «خضرة/حمرة كاذبة».
+# merge_group لا يُلغى — كل دفعة merge queue يجب أن تكمل.
 concurrency:
   group: ci-${{ github.event_name == 'merge_group' && github.run_id || github.ref }}
-  cancel-in-progress: ${{ github.event_name != 'merge_group' }}
+  cancel-in-progress: false
 
 permissions:
   contents: read
