@@ -129,6 +129,37 @@ function pushAttempt(msg: string) {
   if (attemptLog.length > 40) attemptLog.length = 40;
 }
 
+function syncAdhanMediaSessionPlaying(): void {
+  if (typeof navigator === "undefined" || !("mediaSession" in navigator)) return;
+  try {
+    const muezzin = lastMuezzinId ? getMuezzin(lastMuezzinId) : null;
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: "الأذان",
+      artist: muezzin?.name ?? "المجلس العلمي",
+      album: "Majlis — Adhan",
+    });
+    navigator.mediaSession.playbackState = "playing";
+
+    // غالبًا iOS لا يضمن pause لنغمة الأذان داخل WKWebView، فنستخدم stop كإجراء واحد.
+    navigator.mediaSession.setActionHandler("pause", () => stopAdhanPreview());
+    navigator.mediaSession.setActionHandler("stop", () => stopAdhanPreview());
+  } catch {
+    /* ignore */
+  }
+}
+
+function clearAdhanMediaSession(): void {
+  if (typeof navigator === "undefined" || !("mediaSession" in navigator)) return;
+  try {
+    navigator.mediaSession.playbackState = "none";
+    navigator.mediaSession.metadata = null;
+    navigator.mediaSession.setActionHandler("pause", null);
+    navigator.mediaSession.setActionHandler("stop", null);
+  } catch {
+    /* ignore */
+  }
+}
+
 async function ensurePlaybackSession(): Promise<{ ok: boolean; message?: string }> {
   if (!isNative) return { ok: true };
   try {
@@ -177,6 +208,7 @@ export async function playAdhanFull(
     };
   }
   pushAttempt(`play ${url}`);
+  syncAdhanMediaSessionPlaying();
   const vol = Math.min(1, Math.max(0, opts?.volume ?? 1));
   if (vol <= 0) {
     const message = "مستوى الصوت في الإعدادات صفر — ارفع شريط الصوت ثم أعد التجربة.";
@@ -294,6 +326,7 @@ export function stopAdhanPreview(): void {
   stopPlayback();
   stopCatalogAdhan();
   pushAttempt("stop");
+  clearAdhanMediaSession();
 }
 
 export function stopAdhanAudio(): void {
