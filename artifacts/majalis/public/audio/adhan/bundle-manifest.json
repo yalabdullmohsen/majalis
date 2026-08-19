@@ -1,0 +1,275 @@
+{
+  "generatedAt": "2026-08-19T17:11:52.366Z",
+  "files": [
+    {
+      "path": "public/audio/adhan/adhan-aqsa-full.mp3",
+      "bytes": 460000,
+      "durationSec": 57.468,
+      "sha256": "455f7c15be028145"
+    },
+    {
+      "path": "public/audio/adhan/adhan-egypt-full.m4a",
+      "bytes": 121208,
+      "durationSec": 28.734694,
+      "sha256": "fbd27ad3ca49e2fc"
+    },
+    {
+      "path": "public/audio/adhan/adhan-haram-full.m4a",
+      "bytes": 241794,
+      "durationSec": 28.786939,
+      "sha256": "3abe7f5f3753a383"
+    },
+    {
+      "path": "public/audio/adhan/adhan-madinah-full.m4a",
+      "bytes": 121951,
+      "durationSec": 28.734694,
+      "sha256": "00e064fad1ab418f"
+    },
+    {
+      "path": "public/audio/adhan/adhan-makkah-fajr.mp3",
+      "bytes": 909184,
+      "durationSec": 227.088,
+      "sha256": "77936bd3f9110273"
+    },
+    {
+      "path": "public/audio/adhan/adhan-makkah-full.m4a",
+      "bytes": 121139,
+      "durationSec": 28.734694,
+      "sha256": "67805d88ebd10dd4"
+    },
+    {
+      "path": "public/audio/adhan/adhan-soft-alert.m4a",
+      "bytes": 121705,
+      "durationSec": 28.734694,
+      "sha256": "15c7df1ce74e091d"
+    },
+    {
+      "path": "public/audio/adhan/adhan-takbeerat-short.mp3",
+      "bytes": 180000,
+      "durationSec": 11.25,
+      "sha256": "da73f9e42b7fed16"
+    },
+    {
+      "path": "ios/App/App/Sounds/adhan-seq-makkah-01.caf",
+      "bytes": 340730,
+      "durationSec": 28.734694,
+      "sha256": "9b2f471a6fdc7e3c"
+    },
+    {
+      "path": "ios/App/App/Sounds/adhan-seq-makkah-02.caf",
+      "bytes": 340730,
+      "durationSec": 28.734694,
+      "sha256": "0028be13e96f5517"
+    },
+    {
+      "path": "ios/App/App/Sounds/adhan-seq-makkah-03.caf",
+      "bytes": 340730,
+      "durationSec": 28.734694,
+      "sha256": "7bc637d542f068ae"
+    },
+    {
+      "path": "ios/App/App/Sounds/adhan-seq-makkah-04.caf",
+      "bytes": 340730,
+      "durationSec": 28.734694,
+      "sha256": "df5ae22d006fb29a"
+    },
+    {
+      "path": "ios/App/App/Sounds/adhan-short-aqsa.caf",
+      "bytes": 267290,
+      "durationSec": 22.465306,
+      "sha256": "c3effe4718ef3304"
+    },
+    {
+      "path": "ios/App/App/Sounds/adhan-short-egypt.caf",
+      "bytes": 135710,
+      "durationSec": 11.232653,
+      "sha256": "a287c17c0c6f25b0"
+    },
+    {
+      "path": "ios/App/App/Sounds/adhan-short-madinah.caf",
+      "bytes": 135710,
+      "durationSec": 11.232653,
+      "sha256": "e07c0124ccf05fd4"
+    },
+    {
+      "path": "ios/App/App/Sounds/adhan-short-makkah-fajr.caf",
+      "bytes": 384794,
+      "durationSec": 44.784,
+      "sha256": "be1ee5ae49cb0b05"
+    },
+    {
+      "path": "ios/App/App/Sounds/adhan-short-makkah.caf",
+      "bytes": 135710,
+      "durationSec": 11.232653,
+      "sha256": "bf06a608488c9c36"
+    },
+    {
+      "path": "ios/App/App/Sounds/adhan-short-takbeerat.caf",
+      "bytes": 135710,
+      "durationSec": 11.232653,
+      "sha256": "e07c0124ccf05fd4"
+    },
+    {
+      "path": "ios/App/App/Sounds/prayer_aqsa.caf",
+      "bytes": 97834,
+      "durationSec": 8,
+      "sha256": "ca44383394be976a"
+    },
+    {
+      "path": "ios/App/App/Sounds/prayer_clear.caf",
+      "bytes": 97834,
+      "durationSec": 8,
+      "sha256": "d142eb2c8cc337ee"
+    },
+    {
+      "path": "ios/App/App/Sounds/prayer_default.caf",
+      "bytes": 97834,
+      "durationSec": 8,
+      "sha256": "d142eb2c8cc337ee"
+    },
+    {
+      "path": "ios/App/App/Sounds/prayer_egypt.caf",
+      "bytes": 97834,
+      "durationSec": 8,
+      "sha256": "85e4b2bcb6e7da72"
+    },
+    {
+      "path": "ios/App/App/Sounds/prayer_madinah.caf",
+      "bytes": 97834,
+      "durationSec": 8,
+      "sha256": "bbc909f86788969f"
+    },
+    {
+      "path": "ios/App/App/Sounds/prayer_makkah.caf",
+      "bytes": 97834,
+      "durationSec": 8,
+      "sha256": "d142eb2c8cc337ee"
+    },
+    {
+      "path": "ios/App/App/Sounds/prayer_quiet.caf",
+      "bytes": 74408,
+      "durationSec": 6,
+      "sha256": "ed433a4b1b969260"
+    },
+    {
+      "path": "ios/App/App/Sounds/prayer_soft.caf",
+      "bytes": 97834,
+      "durationSec": 8,
+      "sha256": "bbc909f86788969f"
+    },
+    {
+      "path": "ios/App/App/Sounds/prayer_takbeerat.caf",
+      "bytes": 74408,
+      "durationSec": 6,
+      "sha256": "ed433a4b1b969260"
+    },
+    {
+      "path": "android/app/src/main/res/raw/adhan_seq_makkah_01.mp3",
+      "bytes": 460000,
+      "durationSec": 28.75,
+      "sha256": "51df20417df733ee"
+    },
+    {
+      "path": "android/app/src/main/res/raw/adhan_seq_makkah_02.mp3",
+      "bytes": 460000,
+      "durationSec": 28.746938,
+      "sha256": "162d08380575ce12"
+    },
+    {
+      "path": "android/app/src/main/res/raw/adhan_seq_makkah_03.mp3",
+      "bytes": 460000,
+      "durationSec": 28.743937,
+      "sha256": "e5708281a519ca99"
+    },
+    {
+      "path": "android/app/src/main/res/raw/adhan_seq_makkah_04.mp3",
+      "bytes": 460000,
+      "durationSec": 28.740875,
+      "sha256": "04595d787d6f89eb"
+    },
+    {
+      "path": "android/app/src/main/res/raw/adhan_short_aqsa.mp3",
+      "bytes": 180000,
+      "durationSec": 22.468,
+      "sha256": "7f42df5c3d50355b"
+    },
+    {
+      "path": "android/app/src/main/res/raw/adhan_short_egypt.mp3",
+      "bytes": 180000,
+      "durationSec": 11.25,
+      "sha256": "ce910173610857cc"
+    },
+    {
+      "path": "android/app/src/main/res/raw/adhan_short_madinah.mp3",
+      "bytes": 180000,
+      "durationSec": 11.25,
+      "sha256": "da73f9e42b7fed16"
+    },
+    {
+      "path": "android/app/src/main/res/raw/adhan_short_makkah.mp3",
+      "bytes": 180000,
+      "durationSec": 11.25,
+      "sha256": "87566af0f48f3163"
+    },
+    {
+      "path": "android/app/src/main/res/raw/adhan_short_takbeerat.mp3",
+      "bytes": 180000,
+      "durationSec": 11.25,
+      "sha256": "da73f9e42b7fed16"
+    },
+    {
+      "path": "android/app/src/main/res/raw/prayer_aqsa.mp3",
+      "bytes": 72738,
+      "durationSec": 12.068571,
+      "sha256": "14cde65b9c0aa0c4"
+    },
+    {
+      "path": "android/app/src/main/res/raw/prayer_clear.mp3",
+      "bytes": 72738,
+      "durationSec": 12.068571,
+      "sha256": "14cde65b9c0aa0c4"
+    },
+    {
+      "path": "android/app/src/main/res/raw/prayer_default.mp3",
+      "bytes": 72738,
+      "durationSec": 12.068571,
+      "sha256": "14cde65b9c0aa0c4"
+    },
+    {
+      "path": "android/app/src/main/res/raw/prayer_egypt.mp3",
+      "bytes": 72738,
+      "durationSec": 12.068571,
+      "sha256": "14cde65b9c0aa0c4"
+    },
+    {
+      "path": "android/app/src/main/res/raw/prayer_madinah.mp3",
+      "bytes": 72738,
+      "durationSec": 12.068571,
+      "sha256": "14cde65b9c0aa0c4"
+    },
+    {
+      "path": "android/app/src/main/res/raw/prayer_makkah.mp3",
+      "bytes": 72738,
+      "durationSec": 12.068571,
+      "sha256": "14cde65b9c0aa0c4"
+    },
+    {
+      "path": "android/app/src/main/res/raw/prayer_quiet.mp3",
+      "bytes": 72738,
+      "durationSec": 12.068571,
+      "sha256": "14cde65b9c0aa0c4"
+    },
+    {
+      "path": "android/app/src/main/res/raw/prayer_soft.mp3",
+      "bytes": 72738,
+      "durationSec": 12.068571,
+      "sha256": "14cde65b9c0aa0c4"
+    },
+    {
+      "path": "android/app/src/main/res/raw/prayer_takbeerat.mp3",
+      "bytes": 72738,
+      "durationSec": 12.068571,
+      "sha256": "14cde65b9c0aa0c4"
+    }
+  ]
+}
