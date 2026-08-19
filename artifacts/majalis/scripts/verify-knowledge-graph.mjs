@@ -44,6 +44,52 @@ for (const k of nodes.keys()) {
   if (!mentioned.has(k)) errors.push(`orphan node ${k}`);
 }
 
+// ──────────────────────────────────────────────────────────────
+// Stage-1 coverage guardrails (anti "green lie")
+// ──────────────────────────────────────────────────────────────
+// fail if the graph doesn't represent the core hierarchy:
+// section · bab · masalah
+const REQUIRED_KINDS = ["section", "bab", "masalah"];
+const kindCounts = new Map();
+for (const n of doc.nodes || []) kindCounts.set(n.kind, (kindCounts.get(n.kind) || 0) + 1);
+for (const kind of REQUIRED_KINDS) {
+  const c = kindCounts.get(kind) || 0;
+  if (c === 0) errors.push(`stage1 coverage missing: kind="${kind}" count=0`);
+}
+
+function normRouteSlug(routePath) {
+  const clean = (routePath || "").split("?")[0].replace(/\/$/, "");
+  if (!clean) return "/";
+  return clean.startsWith("/") ? clean : `/${clean}`;
+}
+
+// sections.registry.ts: every section route must have a kind="section" node
+const sectionsRegistryPath = path.resolve(__dirname, "../src/config/sections.registry.ts");
+let registrySrc = "";
+try {
+  registrySrc = fs.readFileSync(sectionsRegistryPath, "utf8");
+} catch {
+  errors.push(`stage1 coverage: failed to read sections.registry.ts (${sectionsRegistryPath})`);
+}
+const routeRe = /\broute:\s*"([^"]+)"/g;
+const registryRoutes = new Set();
+for (const m of registrySrc.matchAll(routeRe)) {
+  if (!m?.[1]) continue;
+  registryRoutes.add(normRouteSlug(m[1]));
+}
+
+const sectionNodes = new Set(
+  (doc.nodes || [])
+    .filter((n) => n.kind === "section")
+    .map((n) => normRouteSlug(n.slug)),
+);
+
+for (const r of registryRoutes) {
+  if (!sectionNodes.has(r)) {
+    errors.push(`stage1 coverage missing section node for route="${r}"`);
+  }
+}
+
 if (errors.length) {
   console.error("verify-knowledge-graph: FAILED");
   for (const e of errors) console.error(" -", e);
