@@ -255,6 +255,8 @@
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
         try { window.__mjSplashStart = start; } catch (e) {}
 
+        var native = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+
         function dismiss(immediate) {
           if (done) return;
           done = true;
@@ -275,6 +277,11 @@
             return;
           }
         } catch (e) {}
+
+        if (!native) {
+          dismiss(true);
+          return;
+        }
 
         // Hard fallback (React will coordinate hide after mj:app-painted).
         // Start exit a bit earlier to absorb event-loop jitter and guarantee
@@ -328,7 +335,46 @@
         });
       } catch (error) {}
     </script>
-    <div id="root"></div>
+    <div id="root">
+      <div id="mj-home-lcp-static" class="m2030-home mj-home-lcp-static" dir="rtl" aria-hidden="true">
+        <header class="page-hero-mj m2030-hero home-page-hero" dir="rtl">
+          <div class="page-hero-mj__content">
+            <p class="page-hero-mj__eyebrow">&nbsp;</p>
+            <h1 class="page-hero-mj__title">المجلس العلمي</h1>
+          </div>
+        </header>
+        <section class="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
+          <section aria-label="ابدأ من هنا" class="home-start-here mj-home-lcp-static__start-here">
+            <div class="hsh-header">
+              <span class="hsh-eyebrow">للزائر الجديد</span>
+              <h2 class="hsh-title">ابدأ من هنا</h2>
+              <p class="hsh-lead">خطوات واضحة للمبتدئ، ثم الدروس والدورات حسب مستواك.</p>
+            </div>
+            <ol class="hsh-steps">
+              <li class="hsh-step">
+                <div class="hsh-step__body">
+                  <strong class="hsh-step__title">ابدأ بالأذكار اليومية</strong>
+                  <p class="hsh-step__desc">أذكار الصباح والمساء وما بينهما، عبادة يومية مستدامة</p>
+                </div>
+              </li>
+              <li class="hsh-step">
+                <div class="hsh-step__body">
+                  <strong class="hsh-step__title">تابع درساً قريباً</strong>
+                  <p class="hsh-step__desc">دروس علمية أسبوعية من علماء الكويت، مجانية ومفتوحة</p>
+                </div>
+              </li>
+              <li class="hsh-step">
+                <div class="hsh-step__body">
+                  <strong class="hsh-step__title">دليل طالب العلم المبتدئ</strong>
+                  <p class="hsh-step__desc">٩ محطات علمية مرتبة من العقيدة إلى التوسع، بروابط مباشرة لكل محطة</p>
+                </div>
+              </li>
+            </ol>
+          </section>
+        </section>
+      </div>
+      <div id="mj-app-mount"></div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
     <!-- محتوى للزواحف (noscript) — يضمن فهرسة محركات البحث للمحتوى الأساسي -->
     <noscript>
