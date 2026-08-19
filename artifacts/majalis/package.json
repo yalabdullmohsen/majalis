@@ -144,6 +144,8 @@
     "diagnose:prayer-times": "node --import tsx scripts/diagnose-prayer-times.mjs",
     "test:prayer-notif-timing": "node --import tsx src/lib/__tests__/prayer-notif-timing.test.ts",
     "test:ios-stability": "node --import tsx src/lib/__tests__/ios-stability-audit.test.ts",
+    "audit:audio": "node scripts/audit-audio.mjs",
+    "audit:audio:quick": "AUDIT_AUDIO_QUICK=1 AUDIT_AUDIO_SAMPLE_LIMIT=5 node scripts/audit-audio.mjs",
     "test:adhan-catalog": "node --import tsx src/lib/__tests__/adhan-catalog.test.ts && pnpm run test:tafsir-audio",
     "test:tafsir-audio": "node --import tsx src/lib/__tests__/tafsir-audio-bus.test.ts",
     "test:adhan-fajr-thasweeb": "node --import tsx src/lib/__tests__/adhan-fajr-thasweeb.test.ts",

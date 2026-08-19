@@ -1,20 +1,10 @@
 import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import type { PlayerState } from "@/core/audio/AudioEngine";
-import { getReciter } from "@/lib/quran-audio";
+import { DEFAULT_VERIFIED_RECITER_IDS } from "@/lib/audio-registry";
+import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
 
-/** قرّاء ظاهرة في مشغّل المصحف — المطلوب أولاً ثم مصادر everyayah إضافية */
-export const MUSHAF_RECITER_IDS = [
-  "alafasy",
-  "abdulsamad",
-  "husary",
-  "minshawi",
-  "ghamdi",
-  "maher",
-  "sudais",
-  "shuraim",
-  "fares",
-  "dosari",
-] as const;
+/** @deprecated استخدم useVerifiedReciters — يُبقى للاختبارات والتوافق */
+export const MUSHAF_RECITER_IDS = DEFAULT_VERIFIED_RECITER_IDS;
 
 type Props = {
   open: boolean;
@@ -42,7 +32,7 @@ export function MushafAudioDock({
 }: Props) {
   const playing = playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const loading = playerState === "loading" || playerState === "buffering";
-  const reciters = MUSHAF_RECITER_IDS.map((id) => getReciter(id));
+  const reciters = useVerifiedReciters();
 
   return (
     <div

@@ -76,7 +76,13 @@ function prevAyah(surah: number, ayah: number): { surah: number; ayah: number } 
 export class AudioEngine {
   private static instance: AudioEngine | null = null;
 
+  /** عنصران للتبديل — يقلّل الفجوة بين الآيات (double-buffer). */
+  private slotA: HTMLAudioElement | null = null;
+  private slotB: HTMLAudioElement | null = null;
+  private activeSlot: "a" | "b" = "a";
+  /** مرادف للعنصر النشط — للتوافق مع getSound(). */
   private audio: HTMLAudioElement | null = null;
+  private preloadKey: string | null = null;
   private reciterId = "alafasy";
   private playbackRate = 1;
   private rateHydrated = false;
@@ -131,46 +137,141 @@ export class AudioEngine {
     }
   }
 
-  /**
-   * Lazily create the shared `HTMLAudioElement` and wire media events.
-   * @throws if `Audio` is unavailable (SSR / non-browser). Callers should catch.
-   */
-  private ensureAudio(): HTMLAudioElement {
+  private preloadKeyFor(surah: number, ayah: number, reciterId: string): string {
+    return `${reciterId}:${surah}:${ayah}`;
+  }
+
+  private getActiveEl(): HTMLAudioElement {
     this.hydrateRate();
     if (typeof Audio === "undefined") {
       throw new Error("HTMLAudioElement unavailable");
     }
-    if (!this.audio) {
-      this.audio = new Audio();
-      this.audio.preload = "auto";
-      this.audio.playbackRate = this.playbackRate;
-      try {
-        this.audio.setAttribute("playsinline", "true");
-        (this.audio as HTMLAudioElement & { playsInline?: boolean }).playsInline = true;
-      } catch {
-        /* ignore */
-      }
-      this.audio.addEventListener("playing", () => this.setPlayerState("playing"));
-      this.audio.addEventListener("pause", () => {
-        if (this.playerState !== "loading") this.setPlayerState("paused");
-      });
-      this.audio.addEventListener("waiting", () => this.setPlayerState("buffering"));
-      this.audio.addEventListener("error", () => {
-        if (this.playerState === "playing" || this.playerState === "loading") {
-          /* أثناء التبديل بين المرشّحين يُعالَج الخطأ في playAyah */
-          return;
-        }
-        this.setPlayerState("error", "تعذّر تحميل ملف التلاوة. أعد المحاولة أو غيّر القارئ.");
-      });
-      this.audio.addEventListener("timeupdate", () => {
-        const now = typeof performance !== "undefined" ? performance.now() : Date.now();
-        if (now - this.lastTimeEmitMs < 200) return;
-        this.lastTimeEmitMs = now;
-        this.emitSnapshot();
-      });
-      this.audio.addEventListener("ended", () => void this.onEnded());
+    if (!this.slotA) {
+      this.slotA = this.createAudioSlot();
+      this.slotB = this.createAudioSlot();
+      this.audio = this.getActiveElRef();
     }
-    return this.audio;
+    return this.getActiveElRef();
+  }
+
+  private getActiveElRef(): HTMLAudioElement {
+    return this.activeSlot === "a" ? this.slotA! : this.slotB!;
+  }
+
+  private getIdleElRef(): HTMLAudioElement {
+    return this.activeSlot === "a" ? this.slotB! : this.slotA!;
+  }
+
+  private swapActiveSlot(): void {
+    this.activeSlot = this.activeSlot === "a" ? "b" : "a";
+    this.audio = this.getActiveElRef();
+  }
+
+  private createAudioSlot(): HTMLAudioElement {
+    const el = new Audio();
+    el.preload = "auto";
+    el.playbackRate = this.playbackRate;
+    try {
+      el.setAttribute("playsinline", "true");
+      (el as HTMLAudioElement & { playsInline?: boolean }).playsInline = true;
+    } catch {
+      /* ignore */
+    }
+    el.addEventListener("playing", () => {
+      if (el !== this.getActiveElRef()) return;
+      this.setPlayerState("playing");
+    });
+    el.addEventListener("pause", () => {
+      if (el !== this.getActiveElRef()) return;
+      if (this.playerState !== "loading") this.setPlayerState("paused");
+    });
+    el.addEventListener("waiting", () => {
+      if (el !== this.getActiveElRef()) return;
+      this.setPlayerState("buffering");
+    });
+    el.addEventListener("error", () => {
+      if (el !== this.getActiveElRef()) return;
+      if (this.playerState === "playing" || this.playerState === "loading") {
+        return;
+      }
+      this.setPlayerState("error", "تعذّر تحميل ملف التلاوة. أعد المحاولة أو غيّر القارئ.");
+    });
+    el.addEventListener("timeupdate", () => {
+      if (el !== this.getActiveElRef()) return;
+      const now = typeof performance !== "undefined" ? performance.now() : Date.now();
+      if (now - this.lastTimeEmitMs < 200) return;
+      this.lastTimeEmitMs = now;
+      this.emitSnapshot();
+    });
+    el.addEventListener("ended", () => {
+      if (el !== this.getActiveElRef()) return;
+      void this.onEnded();
+    });
+    return el;
+  }
+
+  /** يحمّل الآية التالية مسبقاً في العنصر الخامل لتقليل الفجوة. */
+  private preloadNextAyah(surah: number, ayah: number, gen: number): void {
+    const next = nextAyah(surah, ayah);
+    if (!next || !this.slotB) {
+      this.preloadKey = null;
+      return;
+    }
+    const urls = listAyahAudioUrls(next.surah, next.ayah, this.reciterId);
+    if (!urls.length) {
+      this.preloadKey = null;
+      return;
+    }
+    const key = this.preloadKeyFor(next.surah, next.ayah, this.reciterId);
+    const idle = this.getIdleElRef();
+    this.preloadKey = key;
+    try {
+      idle.pause();
+      idle.src = urls[0]!;
+      idle.playbackRate = this.playbackRate;
+      idle.load();
+    } catch {
+      this.preloadKey = null;
+    }
+    void gen;
+  }
+
+  /** تشغيل من العنصر المُحمَّل مسبقاً إن وُجد — يُعيد true عند النجاح. */
+  private async tryPlayFromPreload(
+    surah: number,
+    ayah: number,
+    gen: number,
+  ): Promise<boolean> {
+    const key = this.preloadKeyFor(surah, ayah, this.reciterId);
+    if (this.preloadKey !== key || !this.slotB) return false;
+    const idle = this.getIdleElRef();
+    if (idle.readyState < 2) return false;
+    if (gen !== this.playGeneration) return false;
+    try {
+      this.getActiveElRef().pause();
+      this.swapActiveSlot();
+      this.preloadKey = null;
+      const el = this.getActiveElRef();
+      el.playbackRate = this.playbackRate;
+      await this.activatePlaybackSession();
+      await el.play();
+      if (gen !== this.playGeneration) return false;
+      this.setPlayerState("playing");
+      this.preloadNextAyah(surah, ayah, gen);
+      return true;
+    } catch {
+      this.swapActiveSlot();
+      this.preloadKey = null;
+      return false;
+    }
+  }
+
+  /**
+   * Lazily create the shared audio slots and wire media events.
+   * @throws if `Audio` is unavailable (SSR / non-browser). Callers should catch.
+   */
+  private ensureAudio(): HTMLAudioElement {
+    return this.getActiveEl();
   }
 
   private async activatePlaybackSession(): Promise<void> {
@@ -477,6 +578,11 @@ export class AudioEngine {
     this.setPlayerState("loading");
     if (this.teachEnabled) this.teachPhase = "teacher";
 
+    if (await this.tryPlayFromPreload(surah, ayah, gen)) {
+      void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
+      return;
+    }
+
     let lastErr: unknown = null;
     for (const url of urls) {
       if (gen !== this.playGeneration) return;
@@ -518,6 +624,7 @@ export class AudioEngine {
         await el.play();
         if (gen !== this.playGeneration) return;
         this.setPlayerState("playing");
+        this.preloadNextAyah(surah, ayah, gen);
         void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
         return;
       } catch (err) {
@@ -650,8 +757,9 @@ export class AudioEngine {
    */
   stopAndUnload(): void {
     this.clearLoopConfig();
-    const el = this.audio;
-    if (el) {
+    this.preloadKey = null;
+    for (const el of [this.slotA, this.slotB]) {
+      if (!el) continue;
       try {
         el.pause();
         el.removeAttribute("src");
@@ -660,7 +768,10 @@ export class AudioEngine {
         /* ignore */
       }
     }
+    this.slotA = null;
+    this.slotB = null;
     this.audio = null;
+    this.activeSlot = "a";
     this.surah = null;
     this.ayah = null;
     this.teachPhase = "idle";
