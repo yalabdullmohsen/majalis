@@ -29,31 +29,41 @@ assert.match(rc, /categories:best-practices[\s\S]*minScore:\s*1/, "BP = 1 خطأ
 assert.match(rc, /categories:seo[\s\S]*minScore:\s*1/, "SEO = 1 خطأ");
 assert.match(
   rc,
+  /largest-contentful-paint[\s\S]*maxNumericValue:\s*6000/,
+  "LCP ≤6000ms خطأ — تثبيت فحص 12؛ يُخفَّض بعد perf/lcp-static-shell-v2",
+);
+assert.doesNotMatch(
+  rc,
   /largest-contentful-paint[\s\S]*maxNumericValue:\s*8000/,
-  "LCP ≤8000ms خطأ — عتبة CI؛ هدف إعلان PSI 5500 بعد انخفاض وسيط LHCI",
+  "لا LCP 8000 — فحص 12 أثبت 5.7ث",
 );
+assert.match(rc, /total-blocking-time[\s\S]*maxNumericValue:\s*400/, "TBT ≤400ms خطأ — فحص 12 (330)");
 assert.doesNotMatch(
   rc,
-  /largest-contentful-paint[\s\S]*maxNumericValue:\s*5500/,
-  "لا تُفرض LCP 5500 على LHCI قبل أن يقيس CI أقل من 5500 (الواقع ≈7.1ث)",
-);
-assert.match(rc, /total-blocking-time[\s\S]*maxNumericValue:\s*850/, "TBT ≤850ms خطأ — تحصين PSI 11 (810)");
-assert.doesNotMatch(
-  rc,
-  /total-blocking-time[\s\S]*maxNumericValue:\s*900/,
-  "عتبة TBT 900 أوسع من الواقع بعد فحص 11",
+  /total-blocking-time[\s\S]*maxNumericValue:\s*850/,
+  "عتبة TBT 850 أوسع من الواقع بعد فحص 12",
 );
 assert.match(
   rc,
-  /cumulative-layout-shift[\s\S]*maxNumericValue:\s*0\.03/,
-  "CLS ≤0.030 خطأ — تحصين فحص PSI 10 (0.017)",
+  /first-contentful-paint[\s\S]*maxNumericValue:\s*2200/,
+  "FCP ≤2200ms خطأ — فحص 12 (2000)",
 );
-assert.doesNotMatch(rc, /maxNumericValue:\s*0\.08/, "عتبة CLS 0.08 أوسع من الواقع بعد التعافي");
+assert.match(
+  rc,
+  /speed-index[\s\S]*maxNumericValue:\s*2500/,
+  "SI ≤2500ms خطأ — فحص 12 (2000)",
+);
+assert.match(
+  rc,
+  /cumulative-layout-shift[\s\S]*maxNumericValue:\s*0\.02/,
+  "CLS ≤0.020 خطأ — فحص 12 (0.006) مع هامش",
+);
+assert.doesNotMatch(rc, /maxNumericValue:\s*0\.048/, "لا CLS 0.048 — فحص 12 عند 0.006");
 assert.match(rc, /"dom-size"[\s\S]*maxNumericValue:\s*1200/, "DOM ≤1200 خطأ");
 assert.match(
   rc,
-  /render-blocking-resources[\s\S]*maxNumericValue:\s*300/,
-  "حظر عرض ≤300ms خطأ — بعد تحويل index-*.css إلى غير حاجب",
+  /render-blocking-resources[\s\S]*maxNumericValue:\s*200/,
+  "حظر عرض ≤200ms خطأ — فحص 12 PASSED",
 );
 assert.match(rc, /"unused-css-rules"/, "تأكيد unused-css خام (warn؛ numericValue بالمللي ثانية)");
 assert.match(rc, /"unused-javascript"/, "تأكيد unused-js خام (warn؛ numericValue بالمللي ثانية)");
