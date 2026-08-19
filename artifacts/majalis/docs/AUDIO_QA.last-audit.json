@@ -1,20 +1,18 @@
 {
-  "updatedAt": "2026-08-19T17:07:54.757Z",
-  "quick": true,
+  "updatedAt": "2026-08-19T17:28:51.590Z",
+  "mode": "stratified",
   "ffprobeOk": true,
   "ffmpegOk": true,
+  "stratifiedCount": 200,
   "results": [
     {
       "reciterId": "husary",
       "okCompleteness": true,
-      "completenessChecked": 50,
+      "completenessChecked": 200,
       "missingCount": 0,
       "missingSample": [],
-      "sampleLimit": 5,
       "avgIntegratedLufs": null,
-      "ffprobeOk": true,
-      "ffmpegOk": true,
-      "quick": true,
+      "mode": "stratified",
       "sampleReport": [
         {
           "surah": 1,
@@ -55,20 +53,217 @@
           "probe": null,
           "clip": null,
           "lufs": null
+        },
+        {
+          "surah": 1,
+          "ayah": 6,
+          "url": "https://everyayah.com/data/Husary_128kbps/001006.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 1,
+          "ayah": 7,
+          "url": "https://everyayah.com/data/Husary_128kbps/001007.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 108,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Husary_128kbps/108001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 108,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Husary_128kbps/108002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 108,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Husary_128kbps/108003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Husary_128kbps/109001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Husary_128kbps/109002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Husary_128kbps/109003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 4,
+          "url": "https://everyayah.com/data/Husary_128kbps/109004.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 5,
+          "url": "https://everyayah.com/data/Husary_128kbps/109005.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 6,
+          "url": "https://everyayah.com/data/Husary_128kbps/109006.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 110,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Husary_128kbps/110001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 110,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Husary_128kbps/110002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 110,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Husary_128kbps/110003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Husary_128kbps/111001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Husary_128kbps/111002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Husary_128kbps/111003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 4,
+          "url": "https://everyayah.com/data/Husary_128kbps/111004.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 5,
+          "url": "https://everyayah.com/data/Husary_128kbps/111005.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 112,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Husary_128kbps/112001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 112,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Husary_128kbps/112002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 112,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Husary_128kbps/112003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 112,
+          "ayah": 4,
+          "url": "https://everyayah.com/data/Husary_128kbps/112004.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 113,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Husary_128kbps/113001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 113,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Husary_128kbps/113002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
         }
       ]
     },
     {
       "reciterId": "minshawi",
       "okCompleteness": true,
-      "completenessChecked": 50,
+      "completenessChecked": 200,
       "missingCount": 0,
       "missingSample": [],
-      "sampleLimit": 5,
       "avgIntegratedLufs": null,
-      "ffprobeOk": true,
-      "ffmpegOk": true,
-      "quick": true,
+      "mode": "stratified",
       "sampleReport": [
         {
           "surah": 1,
@@ -109,20 +304,217 @@
           "probe": null,
           "clip": null,
           "lufs": null
+        },
+        {
+          "surah": 1,
+          "ayah": 6,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/001006.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 1,
+          "ayah": 7,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/001007.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 108,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/108001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 108,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/108002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 108,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/108003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/109001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/109002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/109003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 4,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/109004.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 5,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/109005.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 6,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/109006.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 110,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/110001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 110,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/110002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 110,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/110003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/111001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/111002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/111003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 4,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/111004.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 5,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/111005.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 112,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/112001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 112,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/112002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 112,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/112003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 112,
+          "ayah": 4,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/112004.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 113,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/113001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 113,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/113002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
         }
       ]
     },
     {
       "reciterId": "alafasy",
       "okCompleteness": true,
-      "completenessChecked": 50,
+      "completenessChecked": 200,
       "missingCount": 0,
       "missingSample": [],
-      "sampleLimit": 5,
       "avgIntegratedLufs": null,
-      "ffprobeOk": true,
-      "ffmpegOk": true,
-      "quick": true,
+      "mode": "stratified",
       "sampleReport": [
         {
           "surah": 1,
@@ -160,6 +552,206 @@
           "surah": 1,
           "ayah": 5,
           "url": "https://everyayah.com/data/Alafasy_128kbps/001005.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 1,
+          "ayah": 6,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/001006.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 1,
+          "ayah": 7,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/001007.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 108,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/108001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 108,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/108002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 108,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/108003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/109001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/109002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/109003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 4,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/109004.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 5,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/109005.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 109,
+          "ayah": 6,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/109006.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 110,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/110001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 110,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/110002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 110,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/110003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/111001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/111002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/111003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 4,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/111004.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 111,
+          "ayah": 5,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/111005.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 112,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/112001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 112,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/112002.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 112,
+          "ayah": 3,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/112003.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 112,
+          "ayah": 4,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/112004.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 113,
+          "ayah": 1,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/113001.mp3",
+          "probe": null,
+          "clip": null,
+          "lufs": null
+        },
+        {
+          "surah": 113,
+          "ayah": 2,
+          "url": "https://everyayah.com/data/Alafasy_128kbps/113002.mp3",
           "probe": null,
           "clip": null,
           "lufs": null

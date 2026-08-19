@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T17:11:52.366Z",
+  "generatedAt": "2026-08-19T17:28:18.872Z",
   "files": [
     {
       "path": "public/audio/adhan/adhan-aqsa-full.mp3",
@@ -11,19 +11,19 @@
       "path": "public/audio/adhan/adhan-egypt-full.m4a",
       "bytes": 121208,
       "durationSec": 28.734694,
-      "sha256": "fbd27ad3ca49e2fc"
+      "sha256": "c7a4aaf47ede3699"
     },
     {
       "path": "public/audio/adhan/adhan-haram-full.m4a",
       "bytes": 241794,
       "durationSec": 28.786939,
-      "sha256": "3abe7f5f3753a383"
+      "sha256": "36d32f1f336c5d8e"
     },
     {
       "path": "public/audio/adhan/adhan-madinah-full.m4a",
       "bytes": 121951,
       "durationSec": 28.734694,
-      "sha256": "00e064fad1ab418f"
+      "sha256": "33955d210d659498"
     },
     {
       "path": "public/audio/adhan/adhan-makkah-fajr.mp3",
@@ -35,13 +35,13 @@
       "path": "public/audio/adhan/adhan-makkah-full.m4a",
       "bytes": 121139,
       "durationSec": 28.734694,
-      "sha256": "67805d88ebd10dd4"
+      "sha256": "a830aa4c7ee92d4c"
     },
     {
       "path": "public/audio/adhan/adhan-soft-alert.m4a",
       "bytes": 121705,
       "durationSec": 28.734694,
-      "sha256": "15c7df1ce74e091d"
+      "sha256": "e93cfc3d6ba19c4a"
     },
     {
       "path": "public/audio/adhan/adhan-takbeerat-short.mp3",
@@ -93,9 +93,9 @@
     },
     {
       "path": "ios/App/App/Sounds/adhan-short-makkah-fajr.caf",
-      "bytes": 384794,
-      "durationSec": 44.784,
-      "sha256": "be1ee5ae49cb0b05"
+      "bytes": 203948,
+      "durationSec": 23.508,
+      "sha256": "7f79f52d11df87d1"
     },
     {
       "path": "ios/App/App/Sounds/adhan-short-makkah.caf",

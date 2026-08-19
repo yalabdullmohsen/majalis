@@ -40,6 +40,8 @@ const ANDROID_RAW = join(ROOT, "android/app/src/main/res/raw");
 
 /** ≈10ث @128kbps — مقاطع إشعار قصيرة */
 const SHORT_BYTES = 180_000;
+/** فجر: MP3 متغير المعدل — 180KB ≈45ث؛ نستخدم 95KB ≈24ث */
+const FAJR_SHORT_BYTES = 95_000;
 /** ≈28ث @128kbps — مقاطع كاملة ضمن الحزمة / سلسلة iOS */
 const CLIP_BYTES = 460_000;
 
@@ -172,13 +174,18 @@ async function main() {
     ["egypt", "adhan-short-egypt.caf", 0],
     ["aqsa", "adhan-short-aqsa.caf", 0],
     ["takbir", "adhan-short-takbeerat.caf", 0],
-    ["fajr", "adhan-short-makkah-fajr.caf", 0],
+    ["fajr", "adhan-short-makkah-fajr.caf", 0, FAJR_SHORT_BYTES],
   ];
-  for (const [key, name, offset] of shortCaf) {
+  for (const row of shortCaf) {
+    const [key, name, offset = 0, len = SHORT_BYTES] = row;
     const clip = join(tmp, `short-${key}.mp3`);
-    sliceMp3(src[key], clip, offset, SHORT_BYTES);
+    sliceMp3(src[key], clip, offset, len);
     toCaf(clip, join(IOS_SOUNDS, name));
     linkOrCopyCaf(name);
+    const dur = probeDuration(join(IOS_SOUNDS, name));
+    if (dur != null && dur > 30.05) {
+      throw new Error(`${name}: duration ${dur.toFixed(2)}s exceeds iOS notification limit (30s)`);
+    }
   }
 
   // ── iOS sequential full adhan (4×28s) — makkah only ──
