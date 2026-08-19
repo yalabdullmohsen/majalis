@@ -6,6 +6,7 @@ import {
   getAyahAudioUrl,
   getReciter,
   getSurahAudioUrl,
+  listAyahAudioUrls,
   type QuranReciter,
 } from "@/lib/quran-audio";
 import {
@@ -80,8 +81,11 @@ export function resolveAudioSource(source: AudioSource): ResolvedAudioUrl | null
   };
 }
 
-/** قائمة URLs للتجربة بالترتيب (أساسي ثم مرايا). */
+/** قائمة URLs للتجربة بالترتيب — موحّدة مع listAyahAudioUrls (everyayah + islamic.network). */
 export function audioSourceUrlQueue(source: AudioSource): string[] {
+  if (source.kind === "ayah") {
+    return listAyahAudioUrls(source.surah, source.ayah, source.reciterId);
+  }
   const resolved = resolveAudioSource(source);
   if (!resolved) return [];
   return [resolved.primary, ...resolved.mirrors];

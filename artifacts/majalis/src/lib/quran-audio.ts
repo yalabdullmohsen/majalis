@@ -10,6 +10,10 @@
  */
 
 import {
+  clampToVerifiedReciterId,
+  getVerifiedRecitersSyncFallback,
+} from "@/lib/audio-registry";
+import {
   isAudioSourceDisabled,
   isReciterDisabled,
   refreshQuranAudioRemoteConfig,
@@ -470,11 +474,11 @@ const RECITER_KEY = "mj-quran-reciter-v3";
 export function loadReciterId(): string {
   try {
     const stored = localStorage.getItem(RECITER_KEY);
-    const ayahList = getSelectableReciters("ayah");
-    if (stored && ayahList.some((r) => r.id === stored)) return stored;
-    return ayahList[0]?.id ?? "alafasy";
+    const verified = getVerifiedRecitersSyncFallback();
+    if (stored && verified.some((r) => r.id === stored)) return stored;
+    return verified[0]?.id ?? "alafasy";
   } catch {
-    return "alafasy";
+    return clampToVerifiedReciterId("alafasy");
   }
 }
 
@@ -490,9 +494,10 @@ export function saveReciterId(id: string) {
 export async function ensureValidReciterPreference(): Promise<string> {
   await refreshQuranAudioRemoteConfig();
   const id = loadReciterId();
-  const ok = getSelectableReciters("ayah").some((r) => r.id === id);
+  const verified = getVerifiedRecitersSyncFallback();
+  const ok = verified.some((r) => r.id === id);
   if (!ok) {
-    const fallback = getSelectableReciters("ayah")[0]?.id ?? "alafasy";
+    const fallback = verified[0]?.id ?? "alafasy";
     saveReciterId(fallback);
     return fallback;
   }
