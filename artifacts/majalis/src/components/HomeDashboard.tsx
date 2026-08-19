@@ -6,7 +6,8 @@ import { BookOpen, Bookmark, Flame, Mic2, Moon, Play, Sun } from "lucide-react";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { getSurahMeta } from "@/lib/quran-api";
-import { getFeaturedReciters, getReciter, RECITERS, saveReciterId } from "@/lib/quran-audio";
+import { getReciter, saveReciterId } from "@/lib/quran-audio";
+import { getVerifiedReciters, getVerifiedRecitersSyncFallback } from "@/lib/audio-registry";
 import { toArabicDigits } from "@/lib/utils";
 import type { BookmarkRecord, ReadingProgress } from "@/core/quran/DatabaseManager";
 import "@/styles/quran-engine-ui.css";
@@ -35,6 +36,7 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
   const [pagesToday, setPagesToday] = useState(0);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [showAllReciters, setShowAllReciters] = useState(false);
+  const [verifiedReciters, setVerifiedReciters] = useState(() => getVerifiedRecitersSyncFallback());
 
   useEffect(() => {
     let cancelled = false;
@@ -64,6 +66,18 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
     };
   }, [db, loadLastReadingProgress]);
 
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const list = await getVerifiedReciters();
+      if (cancelled) return;
+      setVerifiedReciters(list);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const surah = progress?.lastSurah ?? currentSurah;
   const ayah = progress?.lastAyah ?? currentAyah;
   const page = progress?.lastPage ?? currentPage;
@@ -72,7 +86,7 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
   const pct = Math.min(100, Math.round((pagesToday / target) * 100));
   const isDark = resolvedTheme === "dark";
   const activeReciter = getReciter(currentReciter);
-  const listedReciters = showAllReciters ? RECITERS : getFeaturedReciters();
+  const listedReciters = showAllReciters ? verifiedReciters : verifiedReciters.slice(0, 3);
 
   const continueReading = () => {
     setActiveVerse({ surah, ayah, page }, { persist: true });
@@ -162,7 +176,7 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
         >
           {showAllReciters
             ? "عرض أشهر القراء فقط"
-            : `عرض جميع القراء (${toArabicDigits(RECITERS.length)})`}
+            : `عرض جميع القراء المعتمدين (${toArabicDigits(verifiedReciters.length)})`}
         </button>
       </section>
 
