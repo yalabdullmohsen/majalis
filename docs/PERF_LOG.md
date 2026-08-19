@@ -674,3 +674,16 @@ JS غير مستخدم: supabase 44KiB + index 35KiB.
 - بوابة `cls-home-gate.test.ts`
 
 **LCP:** `inject-home-chunk-preload.mjs` — modulepreload لحزمة HomePage بعد البناء.
+
+### CI `32313078420` (`175f4886a`) — بعد إسقاط الصدفة
+
+| القياس | قبل (صدفة) | بعد | حد v3 |
+|---|---:|---:|---:|
+| CLS | 0.054–0.102 | **0.0176** | ≤0.020 ✅ |
+| LCP | 7128ms | **5212–5780ms** | ≤6000 ✅ |
+| FCP | — | 4082–4415ms | ≤2200 ❌ |
+| SI | — | 4082–4415ms | ≤2500 ❌ |
+
+**FCP/SI:** main الشاهد أيضاً ~4100ms — فجوة LHCI↔PSI (PSI فحص 12: 2.0ث). بذرة FCP HTML → CLS **0.358** (run `32313670686`) — **مُلغاة**.
+
+**مهمة محجوزة:** `perf/fcp-si-lhci-calibration` — معايرة FCP/SI لبيئة المعاينة أو قياس PSI post-deploy فقط.
