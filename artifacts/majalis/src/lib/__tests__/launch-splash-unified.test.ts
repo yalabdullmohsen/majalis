@@ -18,11 +18,15 @@ assert.doesNotMatch(indexHtml, /stroke-dashoffset/, "بلا dashoffset غير م
 assert.doesNotMatch(indexHtml, /mj-ss-draw|mj-ss-glow/, "بلا رسم/توهج متأخر يخفي الرمز عند أول إطار");
 assert.match(indexHtml, /cubic-bezier\(\.22,\s*1,\s*\.36,\s*1\)/, "منحنى خروج مركّب");
 assert.match(indexHtml, /prefers-reduced-motion:\s*reduce/, "مسار بلا حركة رسم");
-assert.match(indexHtml, /dismiss\(false\); \}, 900\)/, "خروج متحرك عند 900ms");
-assert.match(indexHtml, /dismiss\(true\); \}, 1200\)/, "سقف مطلق 1200ms");
-assert.match(indexHtml, /dismiss\(true\); \}, 300\)/, "مسار reduced-motion 300ms");
+assert.match(indexHtml, /__mjDismissSplash/, "دخولية تعرض دالة dismiss للطبقة الحاكمة");
+assert.match(indexHtml, /MIN_MS\s*=\s*900/, "حد أدنى 900ms موجود");
+assert.match(indexHtml, /MAX_MS\s*=\s*1500/, "حد أقصى 1500ms موجود");
 assert.match(indexHtml, /mj\.silent-splash\.session/, "جلسة: إقلاع بارد فقط");
-assert.match(indexHtml, new RegExp(`background-color:\\s*${BG}`), "خلفية html/body");
+assert.match(
+  indexHtml,
+  new RegExp(`background-color:\\s*(${BG}|var\\(--mj-splash-bg\\))`),
+  "خلفية html/body",
+);
 assert.match(indexHtml, new RegExp(`theme-color" content="${BG}"`), "theme-color الإقلاع مطابق للخلفية");
 assert.doesNotMatch(indexHtml, /apple-touch-startup-image/, "لا صور إقلاع PWA");
 assert.doesNotMatch(indexHtml, /splash-boot\.css/, "لا splash-boot.css");
@@ -35,12 +39,8 @@ assert.doesNotMatch(indexHtml, /preload[^>]+icon-192\.webp/, "لا preload شع�
 
 const splashChunk = indexHtml.match(/<div id="mj-silent-splash"[\s\S]*?<\/div>\s*<\/div>/);
 assert.ok(splashChunk, "قطعة الدخولية قابلة للعزل");
-assert.equal(
-  splashChunk[0].replace(/<[^>]+>/g, "").replace(/\s+/g, "").length,
-  0,
-  "صفر عقدة نصية داخل الدخولية",
-);
-assert.doesNotMatch(splashChunk[0], /المجلس|جارٍ|تحميل|Majlis|Splash|©|v\d/);
+assert.match(splashChunk[0], /mj-silent-splash__title/, "عنوان دخولية موجود");
+assert.match(splashChunk[0], /mj-silent-splash__progress/, "مؤشر تقدّم موجود");
 
 const splashTs = readFileSync(resolve(root, "src/lib/splash-screen.ts"), "utf8");
 assert.match(splashTs, /SplashScreen\.hide/, "يخفي الإطلاق الأصلي");
