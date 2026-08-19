@@ -594,6 +594,13 @@ JS غير مستخدم: supabase 44KiB + index 35KiB.
 | | أداء | LCP | TBT | CLS | FCP |
 |---|---:|---:|---:|---:|---:|
 | PSI فحص 11 (قبل، مرجعي) | 61 | 5.0ث | 810 | **0.045** | 1.9ث |
-| PSI بعد النشر | لم يُقَس بعد | | | | |
+| PSI فحص 12 (بعد #1284) | 69 | 5.4ث | **360** | 0.048 | 1.9ث |
 
-هدف هذه الدفعة: CLS ≤0.030 على PSI. لا تُفتح صدفة LCP v2 قبل TBT ≤600 وCLS ≤0.03.
+حجز الكروم حسّن TBT/الدرجة؛ CLS لم ينزل تحت 0.03 — يحتاج تشخيص Layout shift culprits. TBT ≤600 ✓.
+
+## فحص 12 (PSI جوال · 2026-08-19 ≈ 10:58 GMT+3) — بعد #1284
+
+- SHA: `538a47643206ada3942618df95931250d4bfa1d3` · التقرير: `https://pagespeed.web.dev/analysis/https-majlisilm-com/x60yu5e8ej?form_factor=mobile`
+- أداء **69** · TBT **360** · CLS **0.048** · LCP 5.4ث · FCP 1.9ث · a11y/BP/SEO 100
+
+لا صدفة LCP v2: CLS ≰ 0.03. عتبة LHCI TBT → **650ms** في #1285.

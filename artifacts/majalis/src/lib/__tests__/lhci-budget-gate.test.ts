@@ -37,11 +37,11 @@ assert.doesNotMatch(
   /largest-contentful-paint[\s\S]*maxNumericValue:\s*5500/,
   "لا تُفرض LCP 5500 على LHCI قبل أن يقيس CI أقل من 5500 (الواقع ≈7.1ث)",
 );
-assert.match(rc, /total-blocking-time[\s\S]*maxNumericValue:\s*850/, "TBT ≤850ms خطأ — تحصين PSI 11 (810)");
+assert.match(rc, /total-blocking-time[\s\S]*maxNumericValue:\s*650/, "TBT ≤650ms خطأ — تحصين PSI 12 (360)");
 assert.doesNotMatch(
   rc,
-  /total-blocking-time[\s\S]*maxNumericValue:\s*900/,
-  "عتبة TBT 900 أوسع من الواقع بعد فحص 11",
+  /total-blocking-time[\s\S]*maxNumericValue:\s*850/,
+  "عتبة TBT 850 أوسع من الواقع بعد فحص 12",
 );
 assert.match(
   rc,
