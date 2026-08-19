@@ -91,6 +91,10 @@ const CrossDeviceResumeToast = lazyWithRetry(
   () => import("@/components/CrossDeviceResumeToast").then((m) => ({ default: m.CrossDeviceResumeToast })),
   "CrossDeviceResumeToast",
 );
+const AppFeatureTourGate = lazyWithRetry(
+  () => import("@/components/onboarding/AppFeatureTourGate").then((m) => ({ default: m.AppFeatureTourGate })),
+  "AppFeatureTourGate",
+);
 const AchievementToast = lazyWithRetry(
   () => import("@/components/AchievementToast").then((m) => ({ default: m.AchievementToast })),
   "AchievementToast",
@@ -202,6 +206,7 @@ const ArabicLanguagePage = lazy(() => import("@/views/ArabicLanguagePage"));
 const MaqasidShariaPage = lazy(() => import("@/views/MaqasidShariaPage"));
 const DalailNubuwwahPage = lazy(() => import("@/views/DalailNubuwwahPage"));
 const SettingsPage = lazy(() => import("@/pages/account/SettingsPage"));
+const FeatureTourPage = lazy(() => import("@/pages/account/FeatureTourPage"));
 const AccountDeletionPage = lazy(() => import("@/pages/account/AccountDeletionPage"));
 const AnnualCourseDetailPage = lazy(() => import("@/pages/lessons/AnnualCourseDetailPage"));
 const FiqhCouncilResolutionsPage = lazy(() => import("@/views/FiqhCouncilResolutionsPage"));
@@ -724,6 +729,7 @@ function Router() {
       <Route path="/support"><SafeLazyRoute component={ContactPage} /></Route>
       <Route path="/contact"><Redirect to="/support" /></Route>
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
+      <Route path="/feature-tour"><SafeLazyRoute component={FeatureTourPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/topics/:slug"><SafeLazyRoute component={TopicPage} /></Route>
@@ -1247,6 +1253,9 @@ function AppShellInner() {
       )}
       <Suspense fallback={null}>
         <CrossDeviceResumeToast />
+      </Suspense>
+      <Suspense fallback={null}>
+        <AppFeatureTourGate />
       </Suspense>
       {searchOpen && (
         <SectionErrorBoundary name="GlobalSearchModal">
