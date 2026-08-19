@@ -233,6 +233,7 @@
     "test:mushaf-line-grid": "node scripts/mushaf-madinah/line-grid-gate.mjs",
     "test:mushaf-basmala": "node scripts/mushaf-madinah/mushaf-basmala-all-114-gate.mjs",
     "test:mushaf-no-duplicate-line": "node scripts/mushaf-madinah/mushaf-no-duplicate-first-line-gate.mjs",
+    "test:mushaf-justify": "node scripts/mushaf-madinah/mushaf-justify-page-77-gate.mjs",
     "test:mushaf-surah-frame": "node --import tsx src/lib/__tests__/mushaf-surah-frame-gate.test.ts",
     "test:mushaf-visual-gates": "node scripts/mushaf-madinah/visual-gates.mjs",
     "test:mushaf-gates": "pnpm run test:mushaf-gates:unit",

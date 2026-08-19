@@ -443,7 +443,7 @@ html.dark .mm-surah-frame__name {
   max-width: 100%;
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: baseline;
   text-align: center;
   direction: rtl;
@@ -459,6 +459,10 @@ html.dark .mm-surah-frame__name {
   overflow-y: visible;
   padding-block: 0.04em;
   box-sizing: border-box;
+}
+
+.mm-ayah-line[data-fill="true"] {
+  justify-content: space-between;
 }
 
 .mm-ayah-line[data-centered="true"] {
