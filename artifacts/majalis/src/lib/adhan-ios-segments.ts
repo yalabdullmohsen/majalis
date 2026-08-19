@@ -52,10 +52,14 @@ function chainIdBase(prayerKey: string, dayKey: string): number {
 /** أسماء المقاطع المتوقعة في الحزمة لتسجيل معيّن */
 export function adhanIosSoundName(
   recordingId: string,
-  _kind: "general" | "fajr",
+  kind: "general" | "fajr",
   segmentIndex1Based: number,
 ): string {
   if (recordingId === "makkah" || recordingId === "makki" || recordingId === "alharam") {
+    if (kind === "fajr") {
+      // ملف فجري مخصّص إن وُجد في Bundle (≤28ث لكل مقطع).
+      return `adhan-seq-makkah-fajr-0${segmentIndex1Based}.caf`;
+    }
     return `adhan-seq-makkah-0${segmentIndex1Based}.caf`;
   }
   const shortMap: Record<string, string> = {
@@ -251,12 +255,15 @@ export async function scheduleIosFullAdhan(opts: {
     const { resolveAdhanStyleNotificationSound } = await import(
       "./prayer-notification-sounds"
     );
+    const isMakkahStyle = opts.recordingId === "makkah" || opts.recordingId === "makki" || opts.recordingId === "alharam";
     const dayKey = new Date(opts.startAtMs).toISOString().slice(0, 10);
     const id = chainIdBase(opts.prayerKey, dayKey);
+    const sound =
+      opts.isFajr && isMakkahStyle ? "adhan-short-makkah-fajr.caf" : resolveAdhanStyleNotificationSound(opts.recordingId);
     const plan: AdhanIosSegmentPlan[] = [
       {
         id,
-        sound: resolveAdhanStyleNotificationSound(opts.recordingId),
+        sound,
         atMs: opts.startAtMs,
         title: `أذان ${opts.prayerName}`,
         body: "حيَّ على الصلاة — افتح التطبيق لسماع الأذان الكامل",
