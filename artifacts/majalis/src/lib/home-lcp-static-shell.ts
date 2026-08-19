@@ -1,48 +1,7 @@
 /**
- * صدفة LCP ثابتة داخل #root — تُزال بعد رسم React بلا إزاحة.
- * PSI فحص 12: LCP = p.hsh-step__desc (~5.7ث تأخير رسم).
+ * تشخيص PSI — يطبع مرشّح LCP في console (Safari Web Inspector).
+ * صدفة HTML الثابتة أُسقطت (A-4): كانت ترفع CLS 0.05+ بلا تحسين LCP.
  */
-const STATIC_SHELL_ID = "mj-home-lcp-static";
-
-export function isHomeLcpStaticShellPresent(): boolean {
-  return typeof document !== "undefined" && !!document.getElementById(STATIC_SHELL_ID);
-}
-
-/** يُستدعى من HomeLazyRoute بعد mount — يزيل الصدفة عند رسم .m2030-home الحقيقي. */
-export function scheduleRemoveHomeLcpStaticShell(): void {
-  if (typeof window === "undefined") return;
-  const path = window.location.pathname;
-  if (path !== "/" && path !== "") return;
-
-  const shell = document.getElementById(STATIC_SHELL_ID);
-  if (!shell) return;
-
-  let attempts = 0;
-  const maxAttempts = 180;
-
-  const tryRemove = () => {
-    attempts += 1;
-    const el = document.getElementById(STATIC_SHELL_ID);
-    if (!el) return;
-
-    const painted = document.querySelector("#main-content .m2030-home");
-    if (!painted && attempts < maxAttempts) {
-      requestAnimationFrame(tryRemove);
-      return;
-    }
-
-    el.classList.add("mj-home-lcp-static--out");
-    window.setTimeout(() => {
-      el.remove();
-    }, 280);
-  };
-
-  requestAnimationFrame(() => {
-    requestAnimationFrame(tryRemove);
-  });
-}
-
-/** تشخيص PSI — يطبع مرشّح LCP في console (Safari Web Inspector). */
 export function logLcpCandidateHint(): void {
   if (typeof window === "undefined" || import.meta.env.PROD) return;
   try {

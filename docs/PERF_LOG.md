@@ -648,3 +648,29 @@ JS غير مستخدم: supabase 44KiB + index 35KiB.
 | PSI بعد v2 | **لم يُقَس بعد** | | | |
 
 **عنصر LCP المرشّح (فحص 12):** `p.hsh-step__desc` — «دروس علمية أسبوعية من علماء الكويت…» — تأخير رسم ~3.7ث (FCP 2.0 → LCP 5.7).
+
+---
+
+## الجولة الختامية A-1/A-4 (2026-08-20)
+
+### أ-1 — LHCI شاهد main (`ef431e46d`) vs #1286 (`a22983dbb`) · run `32307284830` / `32309146074`
+
+| القياس | main (شاهد) | #1286 | الفرق |
+|---|---:|---:|---:|
+| **CLS** (وسيط 3 جولات) | **0.0212** | **0.1020** | +0.081 |
+| **LCP** (وسيط) | **7056ms** | **7139ms** | +83ms |
+
+**تصنيف:** CLS = **منطقي** (صدفة `#mj-home-lcp-static` + `#mj-app-mount` → إزاحة 0.016). LCP = **بيئي/خط أساس** (main أيضاً ~7.1ث؛ عنصر LCP الفعلي = `p.hsh-lead` في React لا الصدفة).
+
+**layout-shifts #1286:** aref-ruqaa 0.030 · `#mj-app-mount` 0.016 · main-content 0.004.
+
+### أ-4 — قرار: **إسقاط الصدفة**
+
+بعد جولتَي تحليل (شاهد + تقرير Lighthouse): الصدفة ترفع CLS بلا تحسين LCP. **مهمة محجوزة:** `perf/lcp-static-shell-v3-hydrate` — ترطيب React داخل `#root` بلا mount منفصل.
+
+**إصلاح CLS بدل الصدفة:**
+- حجز `min-height` لـ`.hsh-steps` / `.hsh-step` في CSS الحرج
+- `font-display: optional` لـ Aref Ruqaa (مصدر 0.030 CLS)
+- بوابة `cls-home-gate.test.ts`
+
+**LCP:** `inject-home-chunk-preload.mjs` — modulepreload لحزمة HomePage بعد البناء.

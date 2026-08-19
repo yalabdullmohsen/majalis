@@ -44,7 +44,6 @@ import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
-import { scheduleRemoveHomeLcpStaticShell } from "@/lib/home-lcp-static-shell";
 
 const lazy = lazyWithRetry;
 
@@ -668,10 +667,6 @@ function HomeInitialShell() {
 }
 
 function HomeLazyRoute() {
-  useEffect(() => {
-    scheduleRemoveHomeLcpStaticShell();
-  }, []);
-
   return (
     <ErrorBoundary>
       <Suspense fallback={<HomeInitialShell />}>

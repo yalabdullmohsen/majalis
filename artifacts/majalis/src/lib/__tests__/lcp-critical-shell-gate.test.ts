@@ -1,12 +1,12 @@
 /**
- * بوابة: صدفة LCP v2 داخل #root — لا خارج #root (كانت CLS 0.16).
+ * بوابة: لا صدفة LCP خارج #root — كانت تزيح التصميم (CLS 0.16).
+ * صدفة HTML v2 أُسقطت (A-4 2026-08-20): CLS 0.05+ بلا تحسين LCP.
  * تشغيل: node --import tsx src/lib/__tests__/lcp-critical-shell-gate.test.ts
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { HOME_START_HERE_STEPS } from "../../components/home/home-start-here-data.ts";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const html = readFileSync(resolve(root, "index.html"), "utf8");
@@ -19,17 +19,14 @@ const app = readFileSync(resolve(root, "src/App.tsx"), "utf8");
 const homeCss = readFileSync(resolve(root, "src/styles/m2030/home.css"), "utf8");
 const finalCss = readFileSync(resolve(root, "src/styles/final-release.css"), "utf8");
 const critical = readFileSync(resolve(root, "src/styles/critical-first-paint.css"), "utf8");
-const shellLib = readFileSync(resolve(root, "src/lib/home-lcp-static-shell.ts"), "utf8");
+const lhci = readFileSync(resolve(root, "lighthouserc.cjs"), "utf8");
 
 assert.doesNotMatch(html, /id="mj-lcp-chrome"/, "لا صدفة عنوان خارج #root");
 assert.doesNotMatch(html, /id="mj-lcp-title"/, "لا نقل عقدة h1");
 assert.match(html, /id="mj-lcp-critical"/, "خلفية html/body/#root فقط");
-assert.match(html, /id="mj-home-lcp-static"/, "صدفة LCP v2 داخل #root");
-assert.match(html, /id="mj-app-mount"/, "React يركّب في #mj-app-mount");
-assert.match(html, /class="hsh-step__desc"/, "نص LCP المرشّح في HTML");
-for (const step of HOME_START_HERE_STEPS) {
-  assert.match(html, new RegExp(step.desc.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `HTML يطابق desc خطوة ${step.num}`);
-}
+assert.doesNotMatch(html, /id="mj-home-lcp-static"/, "لا صدفة HTML ثابتة (A-4)");
+assert.doesNotMatch(html, /id="mj-app-mount"/, "React يركّب في #root مباشرة");
+assert.match(html, /<div id="root"><\/div>/, "#root فارغ قبل JS");
 assert.doesNotMatch(html, /dns-prefetch/, "لا dns-prefetch في الإقلاع");
 {
   const n = [...html.matchAll(/rel="preconnect"/g)].length;
@@ -44,12 +41,11 @@ assert.doesNotMatch(hero, /titleDomId/, "PageHero بلا نقل عقدة");
 assert.doesNotMatch(prewarm, /link\.rel = "preconnect"/, "prewarm لا يضيف preconnect");
 assert.doesNotMatch(mainSrc, /styles\/pages\/calendar\.css/, "تقويم خارج حزمة الإقلاع");
 assert.doesNotMatch(mainSrc, /homePageBoot|await homePageBoot/, "لا انتظار Home قبل createRoot");
-assert.match(mainSrc, /mj-app-mount/, "createRoot على #mj-app-mount");
+assert.doesNotMatch(mainSrc, /mj-app-mount/, "createRoot على #root");
 assert.match(app, /mj-home-lcp-ph/, "هيكل ارتفاع محجوز أثناء lazy الرئيسية");
 assert.match(app, /function HomeInitialShell/, "fallback مطابق للجزء المرئي من الرئيسية");
-assert.match(app, /scheduleRemoveHomeLcpStaticShell/, "إزالة الصدفة بعد الرسم");
-assert.match(shellLib, /mj-home-lcp-static--out/, "تلاشي بلا إزاحة");
-assert.match(critical, /mj-home-lcp-static/, "أنماط الصدفة في CSS الحرج");
+assert.doesNotMatch(app, /scheduleRemoveHomeLcpStaticShell/, "لا إزالة صدفة HTML");
+assert.match(critical, /\.hsh-steps\s*\{[\s\S]*min-height:\s*22rem/, "حجز CLS لشبكة hsh-steps");
 assert.match(critical, /ascent-override/, "size-adjust/override للخط الاحتياطي");
 assert.match(app, /className="home-start-here mj-home-lcp-ph__start-here"/, "fallback يطابق DOM ابدأ من هنا");
 assert.match(app, /className="hsh-actions__primary"/, "fallback يستخدم نفس أزرار ابدأ من هنا");
@@ -60,6 +56,7 @@ assert.match(homeCss, /\.mj-home-lcp-ph__start-here\s*\{[\s\S]*min-height:\s*37\
 assert.doesNotMatch(homeCss, /\.mj-home-lcp-ph\s*\{[\s\S]*min-height:\s*88rem/, "لا min-height مبالغ فيه على الحاوية");
 assert.doesNotMatch(finalCss, /\.hsh-steps[^}]*content-visibility/, "ابدأ من هنا فوق الطية بلا content-visibility");
 assert.doesNotMatch(html, /fonts\.googleapis\.com/, "لا Google Fonts في إقلاع /");
+assert.match(lhci, /maxNumericValue: 0\.02/, "عتبة CLS ≤0.020");
 assert.match(
   postBuild,
   /rel="canonical"\|rel="alternate"\|hreflang/,

@@ -121,7 +121,7 @@ async function mount() {
 
   // مهم: لا ننتظر purge/hydrate قبل createRoot — كانت تعلّق شاشة بيضاء/فاتحة
   // داخل Capacitor عندما يعلق جسر Preferences أو مسح الكاش.
-  const rootEl = document.getElementById("mj-app-mount") ?? document.getElementById("root");
+  const rootEl = document.getElementById("root");
   if (!rootEl) {
     console.error("[boot] #root missing — cannot mount");
     return;

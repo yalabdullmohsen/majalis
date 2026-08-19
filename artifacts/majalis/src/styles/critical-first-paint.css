@@ -142,103 +142,32 @@ body {
   }
 }
 
-/* صدفة LCP v2 — داخل #root، نص حقيقي قبل JS */
-#mj-app-mount {
-  position: relative;
-  z-index: 2;
-}
-
-#mj-home-lcp-static {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-  box-sizing: border-box;
-  padding-top: calc(var(--header-h) + var(--ticker-h));
-  padding-bottom: var(--nav-h);
-  padding-inline: var(--gutter-inline-start) var(--gutter-inline-end);
-  background: #f2f4f3;
-  color: #1a1a18;
-  contain: layout style;
-}
-
-#mj-home-lcp-static.mj-home-lcp-static--out {
-  opacity: 0;
-  transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.mj-home-lcp-static .page-hero-mj__content {
-  max-width: 40rem;
-  margin-inline: auto;
-  text-align: center;
-}
-
-.mj-home-lcp-static .page-hero-mj__title {
-  margin: 0;
-  font-family: "Amiri", "MajlisAmiriFallback", "Noto Naskh Arabic", serif;
-  font-size: clamp(1.65rem, 6.2vw, 2.55rem);
-  font-weight: 700;
-  line-height: 1.2;
-  color: #1a1a18;
-}
-
-.mj-home-lcp-static .hsh-title {
-  margin: 0 0 0.35rem;
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #143f35;
-}
-
-.mj-home-lcp-static .hsh-lead {
-  margin: 0 0 0.75rem;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  color: #555;
-}
-
-.mj-home-lcp-static .hsh-steps {
-  list-style: none;
-  margin: 0.75rem 0 0;
-  padding: 0;
+/* CLS: حجز شبكة hsh-steps — كان يُسبب 0.012–0.013 إزاحة عند الرسم */
+.hsh-steps {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 0.75rem;
+  min-height: 22rem;
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
 }
 
-.mj-home-lcp-static .hsh-step {
-  display: flex;
-  gap: 0.75rem;
-  align-items: flex-start;
-  background: #fff;
-  border: 1px solid #e4ede9;
-  border-radius: 0.875rem;
-  padding: 0.875rem;
-  min-height: 5.5rem;
+.hsh-step {
+  min-height: 6.25rem;
   box-sizing: border-box;
 }
 
-.mj-home-lcp-static .hsh-step__title {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 800;
-  color: #1a1a18;
-  margin-bottom: 0.25rem;
-}
-
-.mj-home-lcp-static .hsh-step__desc {
-  font-size: 0.78rem;
-  color: #555;
-  line-height: 1.45;
-  margin: 0 0 0.5rem;
-}
-
-.mj-home-lcp-static__start-here {
-  min-height: 37.8rem;
+.home-start-here {
+  min-height: 28rem;
 }
 
 @media (min-width: 720px) {
-  .mj-home-lcp-static__start-here {
-    min-height: 24rem;
+  .hsh-steps {
+    min-height: 14rem;
+  }
+
+  .home-start-here {
+    min-height: 20rem;
   }
 }
