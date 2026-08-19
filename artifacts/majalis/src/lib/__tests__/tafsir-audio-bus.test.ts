@@ -94,4 +94,9 @@ assert.ok(Array.isArray(remote.disabledClipIds));
 assert.ok(Array.isArray(catalog.clips));
 assert.equal(catalog.clips.length, 0, "لا مقاطع بلا ترخيص");
 
+const map = JSON.parse(
+  readFileSync(resolve(here, "../../../public/data/tafsir-audio-map.json"), "utf8"),
+);
+assert.ok(Array.isArray(map.maps), "tafsir-audio-map.json maps array");
+
 console.log("tafsir-audio-bus.test.ts: ok");

@@ -144,6 +144,32 @@ function runClippingProbe(url) {
   return { maxVolumeDb };
 }
 
+function runLufsProbe(url) {
+  const r = spawnSync(
+    "ffmpeg",
+    [
+      "-hide_banner",
+      "-nostats",
+      "-i",
+      url,
+      "-af",
+      "ebur128=peak=true",
+      "-f",
+      "null",
+      "-",
+    ],
+    { encoding: "utf8", maxBuffer: 10 * 1024 * 1024 },
+  );
+  if (r.status !== 0) return null;
+  const text = `${r.stdout}\n${r.stderr}`;
+  const integrated = text.match(/I:\s*([+-]?\d+(?:\.\d+)?)\s*LUFS/i);
+  const truePeak = text.match(/Peak:\s*([+-]?\d+(?:\.\d+)?)\s*dBFS/i);
+  return {
+    integratedLufs: integrated ? Number(integrated[1]) : null,
+    truePeakDbfs: truePeak ? Number(truePeak[1]) : null,
+  };
+}
+
 function expectedTotalAyahsFromCounts() {
   return SURAH_AYAH_COUNTS.reduce((a, b) => a + b, 0);
 }
@@ -161,11 +187,15 @@ async function main() {
 
   const ffprobeOk = hasBin("ffprobe");
   const ffmpegOk = hasBin("ffmpeg");
-  console.log(`[audit-audio] ffprobe=${ffprobeOk} ffmpeg=${ffmpegOk}`);
+  const quick = process.env.AUDIT_AUDIO_QUICK === "1";
+  console.log(`[audit-audio] ffprobe=${ffprobeOk} ffmpeg=${ffmpegOk} quick=${quick}`);
 
   // Concurrency tuned for CI: adjust via env
   const headConcurrency = Number(process.env.AUDIT_AUDIO_HEAD_CONCURRENCY ?? 12);
   const sampleLimit = Number(process.env.AUDIT_AUDIO_SAMPLE_LIMIT ?? 30);
+  const completenessLimit = quick
+    ? Number(process.env.AUDIT_AUDIO_COMPLETENESS_LIMIT ?? 50)
+    : EXPECTED_TOTAL_AYAHS;
 
   const results = [];
   for (const rec of verifiedReciters) {
@@ -182,16 +212,14 @@ async function main() {
       const cnt = SURAH_AYAH_COUNTS[surah - 1];
       for (let ayah = 1; ayah <= cnt; ayah++) {
         pairs.push({ surah, ayah });
+        if (pairs.length >= completenessLimit) break;
       }
-    }
-
-    if (pairs.length !== EXPECTED_TOTAL_AYAHS) {
-      throw new Error(`[audit-audio] Internal error: pairs length=${pairs.length}`);
+      if (pairs.length >= completenessLimit) break;
     }
 
     // 1) completeness via HEAD
     const missing = [];
-    const headChecks = await poolMap(
+    await poolMap(
       pairs,
       headConcurrency,
       async ({ surah, ayah }) => {
@@ -211,28 +239,76 @@ async function main() {
         const url = everyAyahUrl(folder, surah, ayah);
         const probe = runFfprobe(url);
         const clip = runClippingProbe(url);
-        return { surah, ayah, url, probe, clip };
+        const lufs = runLufsProbe(url);
+        return { surah, ayah, url, probe, clip, lufs };
       });
     }
+
+    const lufsValues = sampleReport
+      .map((s) => s.lufs?.integratedLufs)
+      .filter((v) => typeof v === "number" && Number.isFinite(v));
+    const avgLufs =
+      lufsValues.length > 0 ? lufsValues.reduce((a, b) => a + b, 0) / lufsValues.length : null;
 
     results.push({
       reciterId: rec.id,
       okCompleteness,
+      completenessChecked: pairs.length,
       missingCount: missing.length,
+      missingSample: missing.slice(0, 10),
       sampleLimit,
+      avgIntegratedLufs: avgLufs,
       ffprobeOk,
       ffmpegOk,
+      quick,
       sampleReport,
     });
 
     console.log(
-      `[audit-audio] ${rec.id}: completeness=${okCompleteness} missing=${missing.length}/${EXPECTED_TOTAL_AYAHS}`,
+      `[audit-audio] ${rec.id}: completeness=${okCompleteness} missing=${missing.length}/${pairs.length}` +
+        (avgLufs != null ? ` avgLufs=${avgLufs.toFixed(1)}` : ""),
     );
   }
 
   const outPath = await resolveProjectPath("docs/AUDIO_QA.last-audit.json");
   await fs.mkdir(path.dirname(outPath), { recursive: true });
-  await fs.writeFile(outPath, JSON.stringify({ updatedAt: new Date().toISOString(), results }, null, 2), "utf8");
+  const payload = {
+    updatedAt: new Date().toISOString(),
+    quick,
+    ffprobeOk,
+    ffmpegOk,
+    results,
+  };
+  await fs.writeFile(outPath, JSON.stringify(payload, null, 2), "utf8");
+
+  // Update markdown summary
+  const mdPath = await resolveProjectPath("docs/AUDIO_QA.md");
+  const mdRows = results
+    .map((r) => {
+      const status = r.okCompleteness ? "pass" : "fail";
+      const lufs =
+        r.avgIntegratedLufs != null ? `${r.avgIntegratedLufs.toFixed(1)} LUFS (sample)` : "n/a";
+      return `| \`${r.reciterId}\` | EveryAyah (128kbps) | ${r.completenessChecked} checked | ${status} | avg ${lufs} |`;
+    })
+    .join("\n");
+  const md = `# جودة الصوت (Audio QA)
+
+هذا المستند يلخّص نتيجة فحص الجودة لملفات صوت التلاوة المعروضة للمستخدم.
+
+## مصدر الفحص
+- السكربت: \`scripts/audit-audio.mjs\` (\`pnpm run audit:audio\`)
+- يقرأ \`public/data/audio/audio-registry.json\`
+- يخرج نتيجة آخر تشغيل في: \`docs/AUDIO_QA.last-audit.json\`
+
+## جدول QA
+
+| reciterId | المصدر | expected files | status | ملاحظات |
+|---|---|---:|---|---|
+${mdRows}
+
+> آخر تحديث: ${payload.updatedAt}${quick ? " (وضع quick — فحص جزئي)" : ""}
+`;
+  await fs.writeFile(mdPath, md, "utf8");
 
   const allOk = results.every((r) => r.okCompleteness);
   if (!allOk) {

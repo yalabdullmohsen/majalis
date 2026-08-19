@@ -33,7 +33,7 @@ import {
   MUSHAF_TAFSIR_EDITIONS,
   saveMushafTafsirEdition,
 } from "@/lib/quran-data/tafsir-editions";
-import { MUSHAF_RECITER_IDS } from "./MushafAudioDock";
+import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
 import { parseVerseKey, type RecitationRange } from "./mushaf-page-for-ayah";
 
 type SheetHeight = "collapsed" | "half" | "full";
@@ -123,7 +123,7 @@ export function AyahActionSheet({
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const loading = playerState === "loading" || playerState === "buffering";
   const playLabel = playing ? "إيقاف" : playerState === "paused" ? "استئناف" : "استماع";
-  const reciters = useMemo(() => MUSHAF_RECITER_IDS.map((id) => getReciter(id)), []);
+  const reciters = useVerifiedReciters();
   const filtered = useMemo(() => {
     const q = readerQuery.trim();
     if (!q) return reciters;

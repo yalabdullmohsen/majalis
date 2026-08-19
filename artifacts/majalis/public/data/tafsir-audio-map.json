@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-19",
+  "notes": "خريطة seek للتفسير الصوتي — تربط clipId + surah + ayah بموضع البداية (ثوانٍ) داخل المقطع. تُملأ عند توفر مقاطع موثّقة في tafsir-audio-catalog.json.",
+  "schemaExample": {
+    "clipId": "example-disabled",
+    "surah": 1,
+    "segments": [
+      { "ayah": 1, "startSec": 0 },
+      { "ayah": 2, "startSec": 12.5 }
+    ]
+  },
+  "maps": []
+}

@@ -104,7 +104,7 @@ const actions = read("src/features/mushaf-madinah/AyahActionSheet.tsx");
 assert.match(actions, /mm-reciter-sheet/);
 assert.match(actions, /مشاركة|onShare/);
 assert.match(actions, /SkipBack|onPrevAyah/);
-assert.match(actions, /ghamdi|MUSHAF_RECITER_IDS/);
+assert.match(actions, /useVerifiedReciters/);
 assert.match(actions, /mm-ayah-bar__handle/);
 assert.match(actions, /جاري تحميل التلاوة/);
 assert.match(actions, /mushaf-ayah-play/);
@@ -115,12 +115,11 @@ assert.doesNotMatch(actions, /المزيد/);
 assert.match(actions, /data-sheet-height/);
 
 const dock = read("src/features/mushaf-madinah/MushafAudioDock.tsx");
-assert.match(dock, /"alafasy"/);
-assert.match(dock, /"abdulsamad"/);
-assert.match(dock, /"husary"/);
-assert.match(dock, /"minshawi"/);
-assert.match(dock, /"ghamdi"/);
-assert.match(dock, /"maher"/);
+assert.match(dock, /useVerifiedReciters/);
+assert.match(dock, /DEFAULT_VERIFIED_RECITER_IDS/);
+assert.match(read("src/lib/audio-registry.ts"), /"alafasy"/);
+assert.match(read("src/lib/audio-registry.ts"), /"husary"/);
+assert.match(read("src/lib/audio-registry.ts"), /"minshawi"/);
 
 const ornament = read("src/features/mushaf-madinah/MushafSurahOrnament.tsx");
 assert.match(ornament, /mm-surah-frame/);
