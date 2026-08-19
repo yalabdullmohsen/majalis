@@ -118,6 +118,22 @@ export async function getTafsirAyahStartSec(
   return seg ? seg.startSec : null;
 }
 
+/** يُظهر واجهة التفسير الصوتي فقط عند وجود مقاطع مرخّصة في الكتالوج. */
+export function hasLicensedTafsirAudioCatalog(clips: TafsirAudioClip[]): boolean {
+  return clips.some(
+    (c) =>
+      c.enabled &&
+      c.streamUrl &&
+      c.attributionVerified &&
+      !isTafsirClipDisabled(c.id, c.scholarId, c.sourceId),
+  );
+}
+
+export async function isTafsirAudioUiEnabled(): Promise<boolean> {
+  const clips = await loadTafsirAudioCatalog();
+  return hasLicensedTafsirAudioCatalog(clips);
+}
+
 export async function loadTafsirAudioCatalog(): Promise<TafsirAudioClip[]> {
   if (catalogCache) return catalogCache;
   await refreshTafsirAudioRemoteConfig();
