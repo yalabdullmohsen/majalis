@@ -56,10 +56,6 @@ export function adhanIosSoundName(
   segmentIndex1Based: number,
 ): string {
   if (recordingId === "makkah" || recordingId === "makki" || recordingId === "alharam") {
-    if (kind === "fajr") {
-      // ملف فجري مخصّص إن وُجد في Bundle (≤28ث لكل مقطع).
-      return `adhan-seq-makkah-fajr-0${segmentIndex1Based}.caf`;
-    }
     return `adhan-seq-makkah-0${segmentIndex1Based}.caf`;
   }
   const shortMap: Record<string, string> = {
