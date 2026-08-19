@@ -24,6 +24,7 @@
 		B2C3D4E5F6071890AB12CD01 /* MajlisPlaybackAudioPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6071890AB12CD02 /* MajlisPlaybackAudioPlugin.swift */; };
 		B40A70BD645B44F885C91A9B /* PrayerActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1C0E442F343FCA02B3616 /* PrayerActivityAttributes.swift */; };
 		B93F28F3C55EC1A0108A8118 /* RecitationAudioCapturePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC779234C02320DA7693A59 /* RecitationAudioCapturePlugin.swift */; };
+		C1D2E3F4A5B6071890AB12CD01 /* MajlisOfflineAudioPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F4A5B6071890AB12CD02 /* MajlisOfflineAudioPlugin.swift */; };
 		C1A2B3C4D5E6F708192A3B4D /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A2B3C4D5E6F708192A3B4C /* AppConfig.swift */; };
 		D2B3C4D5E6F708192A3B4C5E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3C4D5E6F708192A3B4C5D /* NetworkService.swift */; };
 		E5F6071890AB12CD01A2B3C4 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6071890AB12CD01A2B3C5 /* KeychainStore.swift */; };
@@ -45,7 +46,7 @@
 		AD11BF06A1B2C3D4E5F6071890 /* adhan-seq-makkah-01.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR06A1B2C3D4E5F6071890 /* adhan-seq-makkah-01.caf */; };
 		AD11BF07A1B2C3D4E5F6071890 /* adhan-seq-makkah-02.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR07A1B2C3D4E5F6071890 /* adhan-seq-makkah-02.caf */; };
 		AD11BF08A1B2C3D4E5F6071890 /* adhan-seq-makkah-03.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR08A1B2C3D4E5F6071890 /* adhan-seq-makkah-03.caf */; };
-		AD11BF09A1B2C3D4E5F6071890 /* adhan-seq-makkah-04.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR09A1B2C3D4E5F6071890 /* adhan-seq-makkah-04.caf */; };
+		AD11BF10A1B2C3D4E5F6071890 /* adhan-short-makkah-fajr.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR10A1B2C3D4E5F6071890 /* adhan-short-makkah-fajr.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		9A3C1D4E5F6A7B8C9D0E1F20 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		A1B2C3D4E5F6071890AB12CE /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B2C3D4E5F6071890AB12CD02 /* MajlisPlaybackAudioPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MajlisPlaybackAudioPlugin.swift; sourceTree = "<group>"; };
+		C1D2E3F4A5B6071890AB12CD02 /* MajlisOfflineAudioPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MajlisOfflineAudioPlugin.swift; sourceTree = "<group>"; };
 		C1A2B3C4D5E6F708192A3B4C /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		D2B3C4D5E6F708192A3B4C5D /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		E12854653020F96E000D949D /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
@@ -107,15 +109,16 @@
 		AD10FR07A1B2C3D4E5F6071890 /* prayer_egypt.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_egypt.caf; path = Sounds/prayer_egypt.caf; sourceTree = "<group>"; };
 		AD10FR08A1B2C3D4E5F6071890 /* prayer_aqsa.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_aqsa.caf; path = Sounds/prayer_aqsa.caf; sourceTree = "<group>"; };
 		AD10FR09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = prayer_takbeerat.caf; path = Sounds/prayer_takbeerat.caf; sourceTree = "<group>"; };
-		AD11FR01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-short-makkah.caf; path = Sounds/adhan-short-makkah.caf; sourceTree = "<group>"; };
-		AD11FR02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-short-madinah.caf; path = Sounds/adhan-short-madinah.caf; sourceTree = "<group>"; };
-		AD11FR03A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-short-aqsa.caf; path = Sounds/adhan-short-aqsa.caf; sourceTree = "<group>"; };
-		AD11FR04A1B2C3D4E5F6071890 /* adhan-short-egypt.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-short-egypt.caf; path = Sounds/adhan-short-egypt.caf; sourceTree = "<group>"; };
-		AD11FR05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-short-takbeerat.caf; path = Sounds/adhan-short-takbeerat.caf; sourceTree = "<group>"; };
-		AD11FR06A1B2C3D4E5F6071890 /* adhan-seq-makkah-01.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-seq-makkah-01.caf; path = Sounds/adhan-seq-makkah-01.caf; sourceTree = "<group>"; };
-		AD11FR07A1B2C3D4E5F6071890 /* adhan-seq-makkah-02.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-seq-makkah-02.caf; path = Sounds/adhan-seq-makkah-02.caf; sourceTree = "<group>"; };
-		AD11FR08A1B2C3D4E5F6071890 /* adhan-seq-makkah-03.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-seq-makkah-03.caf; path = Sounds/adhan-seq-makkah-03.caf; sourceTree = "<group>"; };
-		AD11FR09A1B2C3D4E5F6071890 /* adhan-seq-makkah-04.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-seq-makkah-04.caf; path = Sounds/adhan-seq-makkah-04.caf; sourceTree = "<group>"; };
+		AD11FR01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-short-makkah.caf; path = adhan-short-makkah.caf; sourceTree = "<group>"; };
+		AD11FR02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-short-madinah.caf; path = adhan-short-madinah.caf; sourceTree = "<group>"; };
+		AD11FR03A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-short-aqsa.caf; path = adhan-short-aqsa.caf; sourceTree = "<group>"; };
+		AD11FR04A1B2C3D4E5F6071890 /* adhan-short-egypt.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-short-egypt.caf; path = adhan-short-egypt.caf; sourceTree = "<group>"; };
+		AD11FR05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-short-takbeerat.caf; path = adhan-short-takbeerat.caf; sourceTree = "<group>"; };
+		AD11FR06A1B2C3D4E5F6071890 /* adhan-seq-makkah-01.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-seq-makkah-01.caf; path = adhan-seq-makkah-01.caf; sourceTree = "<group>"; };
+		AD11FR07A1B2C3D4E5F6071890 /* adhan-seq-makkah-02.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-seq-makkah-02.caf; path = adhan-seq-makkah-02.caf; sourceTree = "<group>"; };
+		AD11FR08A1B2C3D4E5F6071890 /* adhan-seq-makkah-03.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-seq-makkah-03.caf; path = adhan-seq-makkah-03.caf; sourceTree = "<group>"; };
+		AD11FR09A1B2C3D4E5F6071890 /* adhan-seq-makkah-04.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-seq-makkah-04.caf; path = adhan-seq-makkah-04.caf; sourceTree = "<group>"; };
+		AD11FR10A1B2C3D4E5F6071890 /* adhan-short-makkah-fajr.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-short-makkah-fajr.caf; path = adhan-short-makkah-fajr.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +172,7 @@
 				4B2E7A1C9F0D4E5A8B3C6D7E /* MajlisSpeechRecognitionPlugin.swift */,
 				4AC779234C02320DA7693A59 /* RecitationAudioCapturePlugin.swift */,
 				B2C3D4E5F6071890AB12CD02 /* MajlisPlaybackAudioPlugin.swift */,
+				C1D2E3F4A5B6071890AB12CD02 /* MajlisOfflineAudioPlugin.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
 				AD10FR01A1B2C3D4E5F6071890 /* prayer_quiet.caf */,
 				AD10FR02A1B2C3D4E5F6071890 /* prayer_clear.caf */,
@@ -188,6 +192,7 @@
 				AD11FR07A1B2C3D4E5F6071890 /* adhan-seq-makkah-02.caf */,
 				AD11FR08A1B2C3D4E5F6071890 /* adhan-seq-makkah-03.caf */,
 				AD11FR09A1B2C3D4E5F6071890 /* adhan-seq-makkah-04.caf */,
+				AD11FR10A1B2C3D4E5F6071890 /* adhan-short-makkah-fajr.caf */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
 				504EC3131FED79650016851F /* Info.plist */,
@@ -336,11 +341,16 @@
 				AD10BF07A1B2C3D4E5F6071890 /* prayer_egypt.caf in Resources */,
 				AD10BF08A1B2C3D4E5F6071890 /* prayer_aqsa.caf in Resources */,
 				AD10BF09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf in Resources */,
-				ADSHBF01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf in Resources */,
-				ADSHBF02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf in Resources */,
-				ADSHBF03A1B2C3D4E5F6071890 /* adhan-short-egypt.caf in Resources */,
-				ADSHBF04A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf in Resources */,
-				ADSHBF05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf in Resources */,
+				AD11BF01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf in Resources */,
+				AD11BF02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf in Resources */,
+				AD11BF03A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf in Resources */,
+				AD11BF04A1B2C3D4E5F6071890 /* adhan-short-egypt.caf in Resources */,
+				AD11BF05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf in Resources */,
+				AD11BF06A1B2C3D4E5F6071890 /* adhan-seq-makkah-01.caf in Resources */,
+				AD11BF07A1B2C3D4E5F6071890 /* adhan-seq-makkah-02.caf in Resources */,
+				AD11BF08A1B2C3D4E5F6071890 /* adhan-seq-makkah-03.caf in Resources */,
+				AD11BF09A1B2C3D4E5F6071890 /* adhan-seq-makkah-04.caf in Resources */,
+				AD11BF10A1B2C3D4E5F6071890 /* adhan-short-makkah-fajr.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +377,7 @@
 				7C1D8E2F3A4B5C6D7E8F9A0B /* MajlisSpeechRecognitionPlugin.swift in Sources */,
 				B93F28F3C55EC1A0108A8118 /* RecitationAudioCapturePlugin.swift in Sources */,
 				B2C3D4E5F6071890AB12CD01 /* MajlisPlaybackAudioPlugin.swift in Sources */,
+				C1D2E3F4A5B6071890AB12CD01 /* MajlisOfflineAudioPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

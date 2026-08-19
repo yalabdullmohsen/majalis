@@ -1,15 +1,16 @@
 /**
- * تنزيل تلاوة السور كاملة لكل قارئ على حدة، للاستماع دون اتصال — تخزين
- * محلي عبر IndexedDB (Blob لكل سورة)، بلا أي مكتبة خارجية. مصدر الملفات
- * mp3quran.net عبر getSurahAudioUrl() الموجودة أصلًا في quran-audio.ts —
- * نفس المصدر الموثوق المستخدم للتشغيل الحي، لا جهة جديدة.
+ * تنزيل تلاوة السور كاملة لكل قارئ على حدة، للاستماع دون اتصال.
+ * - iOS أصلي: Application Support عبر MajlisOfflineAudio (مُستثنى من iCloud)
+ * - ويب/أندرويد: IndexedDB (Blob لكل سورة)
  *
- * هذا مسار مستقل عن useAyahPlayer (تشغيل آية-بآية عبر everyayah.com):
- * ملفات mp3quran.net كاملة السورة بلا طوابع توقيت لكل آية، فلا يمكن ربطها
- * بتظليل آية واحدة أثناء التشغيل — الاستماع دون اتصال هنا يعني تشغيل
- * السورة كاملة (getOfflineSurahUrl)، لا خطوة آية-بآية.
+ * مصدر الملفات mp3quran.net عبر getSurahAudioUrl().
  */
 import { RECITERS, getSurahAudioUrl } from "@/lib/quran-audio";
+import {
+  blobToBase64,
+  getNativeOfflineAudioPlugin,
+  nativeOfflinePlaybackUrl,
+} from "@/lib/native-offline-audio";
 
 const DB_NAME = "majalis-quran-audio";
 const DB_VERSION = 1;
@@ -56,7 +57,18 @@ function keyFor(reciterId: string, surah: number): string {
   return `${reciterId}:${surah}`;
 }
 
+async function nativePluginReady() {
+  const plugin = await getNativeOfflineAudioPlugin();
+  return plugin;
+}
+
 async function putBlob(reciterId: string, surah: number, blob: Blob): Promise<void> {
+  const native = await nativePluginReady();
+  if (native) {
+    const dataBase64 = await blobToBase64(blob);
+    await native.writeSurah({ reciterId, surah, dataBase64 });
+    return;
+  }
   const { withIdbRecovery } = await import("@/lib/idb-self-heal");
   const { logDiagnostic } = await import("@/lib/diagnostics");
   await withIdbRecovery(async () => {
@@ -74,6 +86,18 @@ async function putBlob(reciterId: string, surah: number, blob: Blob): Promise<vo
 }
 
 async function getBlob(reciterId: string, surah: number): Promise<Blob | null> {
+  const native = await nativePluginReady();
+  if (native) {
+    const { url } = await native.getSurahPlaybackUrl({ reciterId, surah });
+    if (!url) return null;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) return null;
+      return await res.blob();
+    } catch {
+      return null;
+    }
+  }
   const db = await openDb();
   const blob = await new Promise<Blob | null>((resolve, reject) => {
     const tx = db.transaction(STORE, "readonly");
@@ -86,6 +110,11 @@ async function getBlob(reciterId: string, surah: number): Promise<Blob | null> {
 }
 
 async function deleteBlob(reciterId: string, surah: number): Promise<void> {
+  const native = await nativePluginReady();
+  if (native) {
+    await native.deleteSurah({ reciterId, surah });
+    return;
+  }
   const db = await openDb();
   await new Promise<void>((resolve, reject) => {
     const tx = db.transaction(STORE, "readwrite");
@@ -97,6 +126,11 @@ async function deleteBlob(reciterId: string, surah: number): Promise<void> {
 }
 
 async function listKeysForReciter(reciterId: string): Promise<{ surah: number; size: number }[]> {
+  const native = await nativePluginReady();
+  if (native) {
+    const { surahs } = await native.listReciterSurahs({ reciterId });
+    return surahs.map((s) => ({ surah: s.surah, size: s.bytes }));
+  }
   const db = await openDb();
   const out: { surah: number; size: number }[] = [];
   try {
@@ -190,12 +224,21 @@ export async function downloadReciter(
 }
 
 export async function deleteReciterDownloads(reciterId: string): Promise<void> {
+  const native = await nativePluginReady();
+  if (native) {
+    await native.deleteReciter({ reciterId });
+    return;
+  }
   const entries = await listKeysForReciter(reciterId);
   await Promise.all(entries.map((e) => deleteBlob(reciterId, e.surah)));
 }
 
 /** يحذف قاعدة IndexedDB للتلاوات المحمّلة بالكامل (حذف حساب / مسح بيانات). */
 export async function clearAllOfflineAudioDownloads(): Promise<void> {
+  const native = await nativePluginReady();
+  if (native) {
+    await Promise.all(RECITERS.map((r) => native.deleteReciter({ reciterId: r.id })));
+  }
   if (typeof indexedDB === "undefined") return;
   await new Promise<void>((resolve) => {
     const req = indexedDB.deleteDatabase(DB_NAME);
@@ -205,17 +248,31 @@ export async function clearAllOfflineAudioDownloads(): Promise<void> {
   });
 }
 
-/** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null (يُستخدَم عندها الرابط الحي كالمعتاد). استدعِ URL.revokeObjectURL على النتيجة عند انتهاء الاستخدام. */
+/** رابط تشغيل محلي — Object URL (IDB) أو convertFileSrc (iOS native). */
 export async function getOfflineSurahUrl(reciterId: string, surah: number): Promise<string | null> {
+  const native = await nativePluginReady();
+  if (native) {
+    const { url } = await native.getSurahPlaybackUrl({ reciterId, surah });
+    if (!url) return null;
+    return nativeOfflinePlaybackUrl(url);
+  }
   const blob = await getBlob(reciterId, surah);
   return blob ? URL.createObjectURL(blob) : null;
 }
 
 export async function estimateStorageUsage(): Promise<{ usage: number; quota: number } | null> {
   try {
-    if (!navigator.storage?.estimate) return null;
+    const native = await nativePluginReady();
+    let nativeBytes = 0;
+    if (native) {
+      const usage = await native.getStorageUsage();
+      nativeBytes = usage.bytes ?? 0;
+    }
+    if (!navigator.storage?.estimate) {
+      return nativeBytes > 0 ? { usage: nativeBytes, quota: MAX_OFFLINE_AUDIO_BYTES } : null;
+    }
     const { usage = 0, quota = 0 } = await navigator.storage.estimate();
-    return { usage, quota };
+    return { usage: Math.max(usage, nativeBytes), quota: quota || MAX_OFFLINE_AUDIO_BYTES };
   } catch {
     return null;
   }
