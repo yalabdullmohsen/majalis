@@ -14,10 +14,25 @@
 :root {
   --ticker-h: 2.25rem;
   --ticker-row-pad-block: 0;
+  --gutter-inline-start: max(var(--inset-right, 0px), 16px);
+  --gutter-inline-end: max(var(--inset-left, 0px), 16px);
+  --header-chrome: 56px;
+  --header-h: calc(var(--header-chrome) + var(--inset-top, 0px));
+  --bottom-nav-h: 3.25rem;
+  --bottom-nav-height: 3.25rem;
+  --nav-h: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px));
+  --bottom-nav-total: var(--nav-h);
+  --content-pb: calc(var(--bottom-nav-total) + 0.85rem);
 }
 
 body {
   font-family: "Amiri", "Noto Naskh Arabic", serif;
+}
+
+.navbar-v3 {
+  min-height: var(--header-h);
+  padding-block-start: var(--inset-top, 0px);
+  box-sizing: border-box;
 }
 
 .header-ticker {
@@ -28,12 +43,50 @@ body {
 }
 
 .navbar-ticker-row {
-  min-height: var(--ticker-h);
+  min-height: calc(var(--ticker-h) + (var(--ticker-row-pad-block) * 2));
+  box-sizing: border-box;
+}
+
+#main-content.app-main {
+  min-height: calc(100dvh - var(--header-h));
+  padding-block-end: var(--content-pb);
+  padding-inline: var(--gutter-inline-start) var(--gutter-inline-end);
+  box-sizing: border-box;
 }
 
 .m2030-hero.page-hero-mj,
 .home-page-hero.page-hero-mj {
   min-height: 11rem;
+}
+
+.m2030-home {
+  padding-block-end: calc(var(--bottom-nav-h) + 1.1rem);
+}
+
+.bottom-nav,
+.bottom-nav--v2 {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  padding-bottom: var(--inset-bottom, 0px);
+  min-height: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px));
+  z-index: 200;
+}
+
+.bottom-nav__tab {
+  flex: 1 1 0;
+  min-height: max(44px, 48px);
+  height: var(--bottom-nav-height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .mj-home-lcp-ph {
@@ -54,4 +107,25 @@ body {
 
 .mj-home-lcp-ph__search .hus-field {
   min-height: 48px;
+}
+
+@media (min-width: 880px) {
+  #main-content.app-main {
+    padding-block-end: 2rem;
+  }
+
+  .bottom-nav,
+  .bottom-nav--v2 {
+    display: none;
+  }
+}
+
+@media (min-width: 720px) {
+  .mj-home-lcp-ph__start-here {
+    min-height: 24rem;
+  }
+
+  .mj-home-lcp-ph__daily-band {
+    min-height: 28rem;
+  }
 }

@@ -13,6 +13,12 @@
         margin: 0;
         min-height: 100dvh;
       }
+      :root {
+        --inset-top: env(safe-area-inset-top, 0px);
+        --inset-bottom: env(safe-area-inset-bottom, 0px);
+        --inset-right: env(safe-area-inset-right, 0px);
+        --inset-left: env(safe-area-inset-left, 0px);
+      }
     </style>
     <style id="mj-splash-critical">
       html.capacitor-native, html.capacitor-native body, html.capacitor-native #root {

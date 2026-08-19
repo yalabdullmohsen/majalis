@@ -575,3 +575,25 @@ JS غير مستخدم: supabase 44KiB + index 35KiB.
 تشخيص (لا يدخل الدرجة مباشرة): تنفيذ JS 2.0ث · عمل الخيط الرئيسي 4.0ث · JS غير مستخدم ≈78KiB · CSS غير مستخدم ≈36KiB · 6 مهام طويلة.
 
 **الخلاصة:** FCP وTBT والدرجة تحسّنوا بعد دفعات الحظر/التدفق/vendor. CLS انحدر إلى 0.045 — يُعالج قبل صدفة LCP. عتبة LHCI لـ TBT صارت 850ms. الهدف التالي: TBT ≤ 600 وCLS ≤ 0.03 ثم فقط صدفة LCP v2.
+
+## انحدار CLS — `fix/cls-deferred-shell`
+
+مقياس واحد: CLS. لا صدفة LCP. فرضية: تحميل `index-*.css` المؤجّل (#1280) يطبّق padding/main/bottom-nav بعد الرسم الأول بلا حجز في `#mj-cls-reserve` — يزيح `#main-content` والشريط السفلي.
+
+### السبب الجذري (تشخيص)
+
+- `#mj-cls-reserve` كان يحجز الشريط والهيرو والرئيسية فقط (~788 بايت).
+- عند `onload` لـ `index-*.css`: `.app-main` يأخذ `padding-block-end` + `padding-inline`، و`.bottom-nav` يصبح `position:fixed` — غير موجودين في الحجز.
+- PSI 11: CLS **0.045** (فحص 10: 0.017) · INSIGHTS: Layout shift culprits.
+
+### ما تغيّر
+
+- توسيع `critical-first-paint.css`: رموز `--header-h` / `--bottom-nav-total` / `--content-pb` + حجز `.navbar-v3` · `#main-content.app-main` · `.bottom-nav` (يطابق `final-release.css` جوال ≤879px).
+- الميزانية المضمّنة ما زالت ≤14KiB.
+
+| | أداء | LCP | TBT | CLS | FCP |
+|---|---:|---:|---:|---:|---:|
+| PSI فحص 11 (قبل، مرجعي) | 61 | 5.0ث | 810 | **0.045** | 1.9ث |
+| PSI بعد النشر | لم يُقَس بعد | | | | |
+
+هدف هذه الدفعة: CLS ≤0.030 على PSI. لا تُفتح صدفة LCP v2 قبل TBT ≤600 وCLS ≤0.03.
