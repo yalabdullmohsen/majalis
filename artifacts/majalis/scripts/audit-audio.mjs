@@ -1,15 +1,13 @@
 /**
- * audit-audio.mjs
+ * audit-audio.mjs — تدقيق EveryAyah للقرّاء المُحقَّقين في audio-registry.json
  *
- * تدقيق جودة ملفات صوت التلاوة (EveryAyah) المعرّفة في:
- *   public/data/audio/audio-registry.json
+ * أوضاع التشغيل (AUDIT_AUDIO_MODE):
+ *   stratified — 200 ملف/قارئ (سور/آيات طويلة وقصيرة) — بوابة قبل الكامل
+ *   full       — 6236 HEAD لكل قارئ ناجح في stratified
+ *   quick      — 50 ملف (legacy AUDIT_AUDIO_QUICK=1)
  *
- * ملاحظة واقعية:
- * - هذا السكربت “قابل للتشغيل” حتى في بيئات لا تتوفر فيها ffmpeg/ffprobe،
- *   لكنه عند غياب الأدوات سيُصدر نتيجة جزئية (completeness only).
- * - القياسات التفصيلية (noise/SNR/LUFS/duration-expected) تحتاج عينات طويلة
- *   وخوارزميات أكثر تعقيدًا؛ هنا نغطي الجزء الأكثر ثباتًا: bitrate/sample_rate
- *   + clipping عبر volumedetect + completeness عبر HEAD.
+ *   pnpm run audit:audio:stratified
+ *   pnpm run audit:audio:full
  */
 
 import fs from "node:fs/promises";
@@ -27,6 +25,46 @@ const SURAH_AYAH_COUNTS = [
 const EXPECTED_TOTAL_AYAHS = 6236;
 const EVERYAYAH_URL_PREFIX = "https://everyayah.com/data/";
 
+const FOLDER_BY_RECITER_ID = {
+  husary: "Husary_128kbps",
+  minshawi: "Minshawy_Murattal_128kbps",
+  alafasy: "Alafasy_128kbps",
+};
+
+/** سور قصيرة — كل الآيات */
+const SHORT_SURAHS = [1, 108, 109, 110, 111, 112, 113, 114];
+/** سور طويلة — عيّنة متباعدة */
+const LONG_SURAHS = [2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 18, 19, 36, 55, 56, 67, 78];
+/** آيات طويلة/معروفة */
+const LONG_AYAH_LANDMARKS = [
+  [2, 255],
+  [2, 282],
+  [2, 1],
+  [2, 286],
+  [3, 1],
+  [3, 200],
+  [4, 1],
+  [4, 176],
+  [5, 1],
+  [5, 120],
+  [7, 1],
+  [7, 206],
+  [12, 1],
+  [12, 111],
+  [18, 1],
+  [18, 110],
+  [19, 1],
+  [19, 98],
+  [20, 1],
+  [20, 135],
+  [36, 1],
+  [36, 83],
+  [67, 1],
+  [78, 1],
+  [114, 1],
+  [114, 6],
+];
+
 function hasBin(bin) {
   try {
     const r = spawnSync(bin, ["-version"], { stdio: "ignore" });
@@ -36,22 +74,20 @@ function hasBin(bin) {
   }
 }
 
-function fileExists(p) {
-  return fs
-    .access(p)
-    .then(() => true)
-    .catch(() => false);
+async function fileExists(p) {
+  try {
+    await fs.access(p);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 async function resolveProjectPath(relative) {
-  // run from artifacts/majalis (recommended)
   const p1 = path.resolve(process.cwd(), relative);
   if (await fileExists(p1)) return p1;
-
-  // run from repo root
   const p2 = path.resolve(process.cwd(), "artifacts/majalis", relative);
   if (await fileExists(p2)) return p2;
-
   return p1;
 }
 
@@ -63,11 +99,68 @@ function everyAyahUrl(folder, surah, ayah) {
   return `${EVERYAYAH_URL_PREFIX}${folder}/${pad3(surah)}${pad3(ayah)}.mp3`;
 }
 
-const FOLDER_BY_RECITER_ID = {
-  husary: "Husary_128kbps",
-  minshawi: "Minshawy_Murattal_128kbps",
-  alafasy: "Alafasy_128kbps",
-};
+function ayahCount(surah) {
+  return SURAH_AYAH_COUNTS[surah - 1];
+}
+
+/**
+ * عيّنة طبقية ~200: سور قصيرة (كل الآيات) + سور طويلة (متباعدة) + آيات landmark.
+ */
+export function buildStratifiedPairs(targetCount = 200) {
+  const seen = new Set();
+  const out = [];
+  const add = (surah, ayah) => {
+    const max = ayahCount(surah);
+    if (ayah < 1 || ayah > max) return;
+    const k = `${surah}:${ayah}`;
+    if (seen.has(k)) return;
+    seen.add(k);
+    out.push({ surah, ayah });
+  };
+
+  for (const surah of SHORT_SURAHS) {
+    for (let ayah = 1; ayah <= ayahCount(surah); ayah++) add(surah, ayah);
+  }
+
+  for (const [surah, ayah] of LONG_AYAH_LANDMARKS) add(surah, ayah);
+
+  for (const surah of LONG_SURAHS) {
+    const cnt = ayahCount(surah);
+    const steps = Math.max(6, Math.ceil((targetCount - out.length) / LONG_SURAHS.length));
+    for (let i = 1; i <= steps; i++) {
+      add(surah, Math.max(1, Math.min(cnt, Math.round((cnt * i) / (steps + 1)))));
+    }
+    add(surah, 1);
+    add(surah, cnt);
+    add(surah, Math.ceil(cnt / 2));
+  }
+
+  // أول/آخر آية لكل جزء (30)
+  const juzStarts = [1, 142, 253, 92, 106, 128, 151, 177, 87, 109, 123, 111, 52, 99, 1, 1, 1, 74, 97, 1, 11, 1, 1, 21, 1, 20, 1, 1, 1, 1];
+  const juzSurahs = [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10];
+  for (let j = 0; j < 30; j++) add(juzSurahs[j], juzStarts[j]);
+
+  if (out.length < targetCount) {
+    for (let surah = 1; surah <= 114 && out.length < targetCount; surah++) {
+      const cnt = ayahCount(surah);
+      for (let ayah = 1; ayah <= cnt && out.length < targetCount; ayah += Math.max(1, Math.floor(cnt / 12))) {
+        add(surah, ayah);
+      }
+    }
+  }
+
+  return out.slice(0, targetCount);
+}
+
+function buildAllPairs() {
+  const pairs = [];
+  for (let surah = 1; surah <= 114; surah++) {
+    for (let ayah = 1; ayah <= ayahCount(surah); ayah++) {
+      pairs.push({ surah, ayah });
+    }
+  }
+  return pairs;
+}
 
 async function headOk(url, timeoutMs = 9000) {
   const ctrl = new AbortController();
@@ -96,41 +189,27 @@ async function poolMap(items, concurrency, worker) {
   return results;
 }
 
-function parseFfprobeJson(out) {
+function runFfprobe(url) {
+  const r = spawnSync(
+    "ffprobe",
+    ["-v", "error", "-select_streams", "a:0", "-show_entries", "stream=bit_rate,sample_rate", "-of", "json", url],
+    { encoding: "utf8" },
+  );
+  if (r.status !== 0) return null;
   try {
-    return JSON.parse(out);
+    const json = JSON.parse(r.stdout);
+    const stream = json?.streams?.[0];
+    if (!stream) return null;
+    return {
+      bitrateKbps: stream.bit_rate ? Number(stream.bit_rate) / 1000 : null,
+      sampleRateHz: stream.sample_rate ? Number(stream.sample_rate) : null,
+    };
   } catch {
     return null;
   }
 }
 
-function runFfprobe(url) {
-  const r = spawnSync(
-    "ffprobe",
-    [
-      "-v",
-      "error",
-      "-select_streams",
-      "a:0",
-      "-show_entries",
-      "stream=bit_rate,sample_rate",
-      "-of",
-      "json",
-      url,
-    ],
-    { encoding: "utf8" },
-  );
-  if (r.status !== 0) return null;
-  const json = parseFfprobeJson(r.stdout);
-  const stream = json?.streams?.[0];
-  if (!stream) return null;
-  const bitrate = stream.bit_rate ? Number(stream.bit_rate) / 1000 : null;
-  const sampleRate = stream.sample_rate ? Number(stream.sample_rate) : null;
-  return { bitrateKbps: bitrate, sampleRateHz: sampleRate };
-}
-
 function runClippingProbe(url) {
-  // volumedetect prints something like: "max_volume: -0.1 dB"
   const r = spawnSync(
     "ffmpeg",
     ["-hide_banner", "-nostats", "-i", url, "-af", "volumedetect", "-vn", "-sn", "-dn", "-f", "null", "-"],
@@ -139,25 +218,13 @@ function runClippingProbe(url) {
   if (r.status !== 0) return null;
   const text = `${r.stdout}\n${r.stderr}`;
   const m = text.match(/max_volume:\s*([+-]?\d+(?:\.\d+)?)\s*dB/i);
-  if (!m) return null;
-  const maxVolumeDb = Number(m[1]);
-  return { maxVolumeDb };
+  return m ? { maxVolumeDb: Number(m[1]) } : null;
 }
 
 function runLufsProbe(url) {
   const r = spawnSync(
     "ffmpeg",
-    [
-      "-hide_banner",
-      "-nostats",
-      "-i",
-      url,
-      "-af",
-      "ebur128=peak=true",
-      "-f",
-      "null",
-      "-",
-    ],
+    ["-hide_banner", "-nostats", "-i", url, "-af", "ebur128=peak=true", "-f", "null", "-"],
     { encoding: "utf8", maxBuffer: 10 * 1024 * 1024 },
   );
   if (r.status !== 0) return null;
@@ -170,152 +237,190 @@ function runLufsProbe(url) {
   };
 }
 
-function expectedTotalAyahsFromCounts() {
-  return SURAH_AYAH_COUNTS.reduce((a, b) => a + b, 0);
+async function readStratifiedGate() {
+  const gatePath = await resolveProjectPath("docs/AUDIO_QA.stratified-gate.json");
+  try {
+    const raw = await fs.readFile(gatePath, "utf8");
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
 }
 
-async function main() {
-  const registryPath = await resolveProjectPath("public/data/audio/audio-registry.json");
-  const registryRaw = await fs.readFile(registryPath, "utf8");
-  const registry = JSON.parse(registryRaw);
-  const verifiedReciters = (registry?.reciters ?? []).filter((r) => r?.verified && typeof r.id === "string");
+async function writeStratifiedGate(payload) {
+  const gatePath = await resolveProjectPath("docs/AUDIO_QA.stratified-gate.json");
+  await fs.mkdir(path.dirname(gatePath), { recursive: true });
+  await fs.writeFile(gatePath, JSON.stringify(payload, null, 2), "utf8");
+}
 
-  const expected = expectedTotalAyahsFromCounts();
-  if (expected !== EXPECTED_TOTAL_AYAHS) {
-    console.warn(`[audit-audio] WARNING: SURAH_AYAH_COUNTS sum=${expected} (expected ${EXPECTED_TOTAL_AYAHS})`);
+async function auditReciter(rec, opts) {
+  const folder = FOLDER_BY_RECITER_ID[rec.id];
+  if (!folder) {
+    return { reciterId: rec.id, ok: false, skipped: true, reason: "missing folder mapping" };
   }
 
-  const ffprobeOk = hasBin("ffprobe");
-  const ffmpegOk = hasBin("ffmpeg");
-  const quick = process.env.AUDIT_AUDIO_QUICK === "1";
-  console.log(`[audit-audio] ffprobe=${ffprobeOk} ffmpeg=${ffmpegOk} quick=${quick}`);
+  console.log(`[audit-audio] Reciter ${rec.id} (${rec.name ?? "?"}) mode=${opts.mode} n=${opts.pairs.length}`);
 
-  // Concurrency tuned for CI: adjust via env
-  const headConcurrency = Number(process.env.AUDIT_AUDIO_HEAD_CONCURRENCY ?? 12);
-  const sampleLimit = Number(process.env.AUDIT_AUDIO_SAMPLE_LIMIT ?? 30);
-  const completenessLimit = quick
-    ? Number(process.env.AUDIT_AUDIO_COMPLETENESS_LIMIT ?? 50)
-    : EXPECTED_TOTAL_AYAHS;
+  const missing = [];
+  await poolMap(opts.pairs, opts.headConcurrency, async ({ surah, ayah }) => {
+    const url = everyAyahUrl(folder, surah, ayah);
+    const ok = await headOk(url);
+    if (!ok) missing.push({ surah, ayah });
+    return ok;
+  });
 
-  const results = [];
-  for (const rec of verifiedReciters) {
-    const folder = FOLDER_BY_RECITER_ID[rec.id];
-    if (!folder) {
-      results.push({ reciterId: rec.id, ok: false, reason: "missing folder mapping", folder });
-      continue;
-    }
-
-    console.log(`[audit-audio] Reciter ${rec.id} (${rec.name ?? "?"})`);
-
-    const pairs = [];
-    for (let surah = 1; surah <= 114; surah++) {
-      const cnt = SURAH_AYAH_COUNTS[surah - 1];
-      for (let ayah = 1; ayah <= cnt; ayah++) {
-        pairs.push({ surah, ayah });
-        if (pairs.length >= completenessLimit) break;
-      }
-      if (pairs.length >= completenessLimit) break;
-    }
-
-    // 1) completeness via HEAD
-    const missing = [];
-    await poolMap(
-      pairs,
-      headConcurrency,
-      async ({ surah, ayah }) => {
-        const url = everyAyahUrl(folder, surah, ayah);
-        const ok = await headOk(url);
-        if (!ok) missing.push({ surah, ayah });
-        return ok;
-      },
-    );
-    const okCompleteness = missing.length === 0;
-
-    // 2) quality sampling
-    const sample = pairs.slice(0, sampleLimit);
-    let sampleReport = [];
-    if (ffprobeOk && ffmpegOk) {
-      sampleReport = await poolMap(sample, 4, async ({ surah, ayah }) => {
-        const url = everyAyahUrl(folder, surah, ayah);
-        const probe = runFfprobe(url);
-        const clip = runClippingProbe(url);
-        const lufs = runLufsProbe(url);
-        return { surah, ayah, url, probe, clip, lufs };
-      });
-    }
-
-    const lufsValues = sampleReport
-      .map((s) => s.lufs?.integratedLufs)
-      .filter((v) => typeof v === "number" && Number.isFinite(v));
-    const avgLufs =
-      lufsValues.length > 0 ? lufsValues.reduce((a, b) => a + b, 0) / lufsValues.length : null;
-
-    results.push({
-      reciterId: rec.id,
-      okCompleteness,
-      completenessChecked: pairs.length,
-      missingCount: missing.length,
-      missingSample: missing.slice(0, 10),
-      sampleLimit,
-      avgIntegratedLufs: avgLufs,
-      ffprobeOk,
-      ffmpegOk,
-      quick,
-      sampleReport,
+  const okCompleteness = missing.length === 0;
+  const qualitySample = opts.pairs.slice(0, Math.min(opts.sampleLimit, opts.pairs.length));
+  let sampleReport = [];
+  if (opts.ffprobeOk && opts.ffmpegOk && qualitySample.length > 0) {
+    sampleReport = await poolMap(qualitySample, 4, async ({ surah, ayah }) => {
+      const url = everyAyahUrl(folder, surah, ayah);
+      return {
+        surah,
+        ayah,
+        url,
+        probe: runFfprobe(url),
+        clip: runClippingProbe(url),
+        lufs: runLufsProbe(url),
+      };
     });
-
-    console.log(
-      `[audit-audio] ${rec.id}: completeness=${okCompleteness} missing=${missing.length}/${pairs.length}` +
-        (avgLufs != null ? ` avgLufs=${avgLufs.toFixed(1)}` : ""),
-    );
   }
 
+  const lufsValues = sampleReport
+    .map((s) => s.lufs?.integratedLufs)
+    .filter((v) => typeof v === "number" && Number.isFinite(v));
+  const avgLufs =
+    lufsValues.length > 0 ? lufsValues.reduce((a, b) => a + b, 0) / lufsValues.length : null;
+
+  return {
+    reciterId: rec.id,
+    okCompleteness,
+    completenessChecked: opts.pairs.length,
+    missingCount: missing.length,
+    missingSample: missing.slice(0, 20),
+    avgIntegratedLufs: avgLufs,
+    mode: opts.mode,
+    sampleReport,
+  };
+}
+
+async function writeReports(payload, results) {
   const outPath = await resolveProjectPath("docs/AUDIO_QA.last-audit.json");
   await fs.mkdir(path.dirname(outPath), { recursive: true });
-  const payload = {
-    updatedAt: new Date().toISOString(),
-    quick,
-    ffprobeOk,
-    ffmpegOk,
-    results,
-  };
-  await fs.writeFile(outPath, JSON.stringify(payload, null, 2), "utf8");
+  await fs.writeFile(outPath, JSON.stringify({ ...payload, results }, null, 2), "utf8");
 
-  // Update markdown summary
   const mdPath = await resolveProjectPath("docs/AUDIO_QA.md");
   const mdRows = results
     .map((r) => {
-      const status = r.okCompleteness ? "pass" : "fail";
+      const status = r.skipped ? "skip" : r.okCompleteness ? "pass" : "fail";
       const lufs =
-        r.avgIntegratedLufs != null ? `${r.avgIntegratedLufs.toFixed(1)} LUFS (sample)` : "n/a";
-      return `| \`${r.reciterId}\` | EveryAyah (128kbps) | ${r.completenessChecked} checked | ${status} | avg ${lufs} |`;
+        r.avgIntegratedLufs != null ? `${r.avgIntegratedLufs.toFixed(1)} LUFS` : "n/a";
+      return `| \`${r.reciterId}\` | EveryAyah 128 | ${r.completenessChecked ?? 0} | ${status} | ${lufs} | ${r.mode ?? "?"} |`;
     })
     .join("\n");
   const md = `# جودة الصوت (Audio QA)
 
-هذا المستند يلخّص نتيجة فحص الجودة لملفات صوت التلاوة المعروضة للمستخدم.
-
 ## مصدر الفحص
-- السكربت: \`scripts/audit-audio.mjs\` (\`pnpm run audit:audio\`)
-- يقرأ \`public/data/audio/audio-registry.json\`
-- يخرج نتيجة آخر تشغيل في: \`docs/AUDIO_QA.last-audit.json\`
+- \`pnpm run audit:audio:stratified\` — 200 ملف/قارئ (بوابة)
+- \`pnpm run audit:audio:full\` — 6236 ملف (ليلاً)
+- النتيجة: \`docs/AUDIO_QA.last-audit.json\`
 
 ## جدول QA
 
-| reciterId | المصدر | expected files | status | ملاحظات |
-|---|---|---:|---|---|
+| reciterId | المصدر | checked | status | LUFS | mode |
+|---|---|---:|---|---|---|
 ${mdRows}
 
-> آخر تحديث: ${payload.updatedAt}${quick ? " (وضع quick — فحص جزئي)" : ""}
+> آخر تحديث: ${payload.updatedAt} — mode=${payload.mode}
 `;
   await fs.writeFile(mdPath, md, "utf8");
+}
 
-  const allOk = results.every((r) => r.okCompleteness);
-  if (!allOk) {
-    console.error("[audit-audio] FAILED: completeness missing files detected");
-    process.exit(2);
+async function main() {
+  const mode =
+    process.env.AUDIT_AUDIO_MODE ??
+    (process.env.AUDIT_AUDIO_QUICK === "1" ? "quick" : "stratified");
+
+  const registryPath = await resolveProjectPath("public/data/audio/audio-registry.json");
+  const registry = JSON.parse(await fs.readFile(registryPath, "utf8"));
+  let verifiedReciters = (registry?.reciters ?? []).filter((r) => r?.verified && typeof r.id === "string");
+
+  const ffprobeOk = hasBin("ffprobe");
+  const ffmpegOk = hasBin("ffmpeg");
+  const headConcurrency = Number(process.env.AUDIT_AUDIO_HEAD_CONCURRENCY ?? 12);
+  const sampleLimit = Number(process.env.AUDIT_AUDIO_SAMPLE_LIMIT ?? 30);
+  const stratifiedCount = Number(process.env.AUDIT_AUDIO_STRATIFIED_COUNT ?? 200);
+
+  console.log(`[audit-audio] mode=${mode} ffprobe=${ffprobeOk} ffmpeg=${ffmpegOk}`);
+
+  if (mode === "full") {
+    const gate = await readStratifiedGate();
+    if (gate?.passedReciterIds?.length) {
+      const allowed = new Set(gate.passedReciterIds);
+      verifiedReciters = verifiedReciters.filter((r) => allowed.has(r.id));
+      console.log(`[audit-audio] full run limited to stratified-pass: ${[...allowed].join(", ")}`);
+    } else {
+      console.warn("[audit-audio] WARNING: no stratified gate — running full for all verified reciters");
+    }
+  }
+
+  const results = [];
+  for (const rec of verifiedReciters) {
+    let pairs;
+    if (mode === "full") pairs = buildAllPairs();
+    else if (mode === "quick") {
+      pairs = buildAllPairs().slice(0, Number(process.env.AUDIT_AUDIO_COMPLETENESS_LIMIT ?? 50));
+    } else {
+      pairs = buildStratifiedPairs(stratifiedCount);
+    }
+
+    const result = await auditReciter(rec, {
+      mode,
+      pairs,
+      headConcurrency,
+      sampleLimit,
+      ffprobeOk,
+      ffmpegOk,
+    });
+    results.push(result);
+
+    console.log(
+      `[audit-audio] ${rec.id}: ${result.okCompleteness ? "PASS" : "FAIL"} missing=${result.missingCount}/${result.completenessChecked}`,
+    );
+  }
+
+  const payload = {
+    updatedAt: new Date().toISOString(),
+    mode,
+    ffprobeOk,
+    ffmpegOk,
+    stratifiedCount: mode === "stratified" ? stratifiedCount : undefined,
+  };
+
+  await writeReports(payload, results);
+
+  if (mode === "stratified") {
+    const passedReciterIds = results.filter((r) => r.okCompleteness && !r.skipped).map((r) => r.reciterId);
+    const failedReciterIds = results.filter((r) => !r.okCompleteness && !r.skipped).map((r) => r.reciterId);
+    await writeStratifiedGate({
+      updatedAt: payload.updatedAt,
+      passedReciterIds,
+      failedReciterIds,
+      passed: failedReciterIds.length === 0,
+    });
+    if (failedReciterIds.length > 0) {
+      console.error(`[audit-audio] STRATIFIED FAILED for: ${failedReciterIds.join(", ")}`);
+      console.error("[audit-audio] Do NOT run full audit for failed reciters.");
+      process.exit(2);
+    }
+    console.log(`[audit-audio] STRATIFIED OK — safe to run: pnpm run audit:audio:full`);
+  } else {
+    const anyFail = results.some((r) => !r.okCompleteness && !r.skipped);
+    if (anyFail) {
+      console.error("[audit-audio] FAILED");
+      process.exit(2);
+    }
   }
 }
 
 await main();
-

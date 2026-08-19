@@ -1,45 +1,72 @@
-# قائمة اختبار الصوت على جهاز حقيقي
+# قائمة اختبار الصوت — **ثلاث نقاط حاسمة (لا تُؤجَّل)**
 
-> استخدم هذه القائمة بعد `pnpm run generate:adhan-bundle` و `pnpm run audit:audio:quick` (أو الكامل).
+## 1. الخلفية: HTML5 كافٍ أم AVQueuePlayer ضرورة؟
 
-## تلاوة القرآن
+**لا تُقرّر قبل هذا الاختبار بالضبط:**
 
-| # | السينario | iOS | Android | ملاحظات |
-|---|-----------|-----|---------|---------|
-| 1 | تشغيل آية → السورة كاملة | ☐ | ☐ | تحقق من gapless بين الآيات |
-| 2 | شاشة القفل — اسم السورة/القارئ | ☐ | ☐ | Media Session |
-| 3 | أزرار التحكم (تالي/سابق/إيقاف) | ☐ | ☐ | من شاشة القفل |
-| 4 | مقاطعة مكالمة → استئناف | ☐ | ☐ | |
-| 5 | نزع سماعات → إيقاف | ☐ | ☐ | iOS route change |
-| 6 | تغيير القارئ — 3 قرّاء QA فقط | ☐ | ☐ | حصري، منشawi، عفاسي |
-| 7 | تنزيل قارئ من الإعدادات | ☐ | ☐ | |
-| 8 | وضع الطيران + تشغيل | ☐ | ☐ | iOS: Application Support |
-| 9 | iCloud — التنزيلات غير مُنسخة | ☐ | n/a | `isExcludedFromBackup` |
+1. شغّل تلاوة آية-بآية من المصحف
+2. **اقفل الشاشة** → انتظر **60 ثانية** → هل ما زالت التلاوة تعمل؟
+3. **أخرج التطبيق للخلفية** (Home) → هل استمرّت؟
 
-## الأذان
+| النتيجة | الإجراء |
+|---------|---------|
+| توقّف خلال 60ث أو عند الخلفية | **AVQueuePlayer/Swift ضرورة** — WKWebView يُعلّق HTML5 ما لم تُضبط `AVAudioSession(.playback)` + `UIBackgroundModes: audio` بشكل أصلي مستمر |
+| استمرّت 60ث+ في الخلفية | HTML5 + Media Session **قد يكفي** — وثّق الجهاز/iOS version |
 
-| # | السينario | iOS | Android | ملاحظات |
-|---|-----------|-----|---------|---------|
-| 10 | إشعار صلاة — صوت ≤30ث | ☐ | ☐ | `adhan-short-*.caf` |
-| 11 | Fajr — صوت مختلف | ☐ | ☐ | `adhan-short-makkah-fajr.caf` |
-| 12 | فتح التطبيق → أذان كامل | ☐ | ☐ | `/audio/adhan/*.m4a` |
-| 13 | وضع صامت / Focus | ☐ | ☐ | لا تجاوز (بدون Critical Alerts) |
-| 14 | سلسلة iOS (اختياري) | ☐ | n/a | إعداد «أذان متتابع» + مكة |
+**التحقق التقني الحالي:**
+- `Info.plist`: `UIBackgroundModes` → `audio`
+- `MajlisPlaybackAudioPlugin.swift`: `enablePlayback()` → `.playback`
+- يُستدعى من `AudioEngine.activatePlaybackSession()` عند التشغيل
 
-## تفسير صوتي + onboarding
+---
 
-| # | السينario | iOS | Android |
-|---|-----------|-----|---------|
-| 15 | تفسير صوتي seek للآية | ☐ | ☐ | عند توفر مقاطع في الكتالوج |
-| 16 | جولة المزايا — مرة واحدة | ☐ | ☐ |
-| 17 | إعادة الجولة من الإعدادات | ☐ | ☐ |
+## 2. الفجوة بين الآيات — **≤ 120 ms**
 
-## أوامر QA محلية
+الهدف رقمي لا انطباعي.
+
+**قياس (Safari Web Inspector → Console على iPhone):**
+
+```javascript
+(() => {
+  const gaps = [];
+  let lastEnd = 0;
+  const eng = window.__MAJALIS_AUDIO_ENGINE__;
+  if (!eng) { console.warn("افتح /mushaf وشغّل آية أولاً"); return; }
+  eng.onAyahChange(({ surah, ayah }) => {
+    const now = performance.now();
+    if (lastEnd) gaps.push({ gapMs: now - lastEnd, surah, ayah });
+    lastEnd = now;
+  });
+  eng.getSound()?.addEventListener("ended", () => { lastEnd = performance.now(); });
+  window.__MAJALIS_GAP_PROBE__ = gaps;
+  console.log("gap probe armed");
+})();
+```
+
+| gapMs | الحكم |
+|------:|-------|
+| ≤ 120 | pass |
+| 121–250 | تحسين preload |
+| > 250 | fail |
+
+---
+
+## 3. ملفات `.caf` — **≤ 30 ثانية**
 
 ```bash
-pnpm run generate:adhan-bundle    # توليد أصوات الأذان
-pnpm run audit:audio:quick        # فحص سريع EveryAyah
-pnpm run audit:audio              # فحص كامل 6236×3 (طويل)
-pnpm run test:adhan-bundle-sounds
-node --import tsx src/lib/__tests__/native-offline-audio-gate.test.ts
+pnpm run verify:adhan-caf-durations
+```
+
+**اختبار إشعار حقيقي:** بعد **إعادة تشغيل الجهاز** → أذان تجريبي → سماع النغمة (لا صمت).
+
+---
+
+## أوامر QA
+
+```bash
+pnpm run audit:audio:stratified
+pnpm run audit:audio:full
+pnpm run generate:adhan-bundle
+pnpm run verify:adhan-caf-durations
+npx cap open ios
 ```

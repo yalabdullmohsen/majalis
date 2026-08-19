@@ -23,6 +23,7 @@ import { fetchMushafAyahTafsir } from "@/lib/quran-data/fetch-ayah-content";
 import {
   displayScholarLabel,
   findTafsirAudioForAyah,
+  isTafsirAudioUiEnabled,
   loadTafsirAudioCatalog,
   playTafsirAudioClip,
   stopTafsirAudio,
@@ -108,6 +109,7 @@ export function AyahActionSheet({
   const [editionId, setEditionId] = useState(loadMushafTafsirEdition);
   const [tafsirText, setTafsirText] = useState<string | null>(null);
   const [tafsirLoading, setTafsirLoading] = useState(false);
+  const [tafsirAudioUiEnabled, setTafsirAudioUiEnabled] = useState(false);
   const [tafsirAudioClip, setTafsirAudioClip] = useState<TafsirAudioClip | null>(null);
   const [tafsirAudioLoading, setTafsirAudioLoading] = useState(false);
   const [tafsirAudioError, setTafsirAudioError] = useState<string | null>(null);
@@ -168,7 +170,17 @@ export function AyahActionSheet({
 
   useEffect(() => {
     let cancelled = false;
-    if (!parsed) {
+    void isTafsirAudioUiEnabled().then((on) => {
+      if (!cancelled) setTafsirAudioUiEnabled(on);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!tafsirAudioUiEnabled || !parsed) {
       setTafsirAudioClip(null);
       setTafsirAudioError(null);
       setTafsirAudioLoading(false);
@@ -200,7 +212,7 @@ export function AyahActionSheet({
     return () => {
       cancelled = true;
     };
-  }, [parsed?.surah, parsed?.ayah]);
+  }, [tafsirAudioUiEnabled, parsed?.surah, parsed?.ayah]);
 
   useEffect(() => {
     if (tab !== "tafsir-audio") setTafsirAudioActiveClipId(null);
@@ -351,7 +363,7 @@ export function AyahActionSheet({
               <BookOpen size={18} aria-hidden="true" />
               <span>تفسير</span>
             </button>
-            {tafsirAudioAvailable ? (
+            {tafsirAudioUiEnabled && tafsirAudioAvailable ? (
               <button
                 type="button"
                 role="tab"
