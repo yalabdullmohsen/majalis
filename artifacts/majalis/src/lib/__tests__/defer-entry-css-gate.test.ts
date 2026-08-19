@@ -25,6 +25,9 @@ assert.match(pkg, /"test:defer-entry-css"/, "أمر البوابة موجود");
 
 const critical = readCriticalCss();
 assert.match(critical, /--ticker-h/, "حجز الشريط من الرمز");
+assert.match(critical, /--content-pb/, "حجز padding-block-end للمحتوى");
+assert.match(critical, /#main-content\.app-main/, "حجز كروم main قبل CSS المؤجّل");
+assert.match(critical, /\.bottom-nav/, "حجز شريط التنقّل السفلي ثابت");
 assert.match(critical, /mj-home-lcp-ph__start-here/, "حجز ابدأ من هنا");
 assert.ok(
   Buffer.byteLength(critical, "utf8") <= INLINE_CSS_BUDGET,
