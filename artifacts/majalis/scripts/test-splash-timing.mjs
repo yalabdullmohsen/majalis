@@ -1,10 +1,8 @@
 #!/usr/bin/env node
 /**
- * بوابة: توقيت دخولية `#mj-silent-splash`
+ * بوابة: الويب بلا دخولية تحجب — الأصلي يُختبر على جهاز/محاكي.
  *
- * تفشل إن:
- * - مدة ظهور الدخولية < 900ms أو > 1500ms (قياس من window.__mjSplashStart حتى إزالة العنصر)
- * - ظهرت مرة ثانية بعد تنقل داخلي داخل نفس الجلسة.
+ * تشغيل: node scripts/test-splash-timing.mjs
  */
 import { createServer } from "node:http";
 import { createReadStream, existsSync, statSync } from "node:fs";
@@ -67,33 +65,30 @@ async function main() {
   const page = await context.newPage();
 
   try {
-    await page.goto(`${base}/`, { waitUntil: "load", timeout: 60_000 });
+    await page.goto(`${base}/`, { waitUntil: "domcontentloaded", timeout: 60_000 });
 
-    const splashStart = await page.evaluate(() => window.__mjSplashStart);
-    assert.ok(typeof splashStart === "number", "window.__mjSplashStart موجود");
+    const webSplash = await page.evaluate(() =>
+      Boolean(document.querySelector("#mj-silent-splash, #mj-boot-splash")),
+    );
+    assert.equal(webSplash, false, "web: no blocking splash layer");
 
-    await page.waitForFunction(() => !document.querySelector("#mj-silent-splash"), null, { timeout: 4000 });
-    const elapsed = await page.evaluate((s) => performance.now() - s, splashStart);
+    const hasRoot = await page.evaluate(() => Boolean(document.querySelector("#root")));
+    assert.ok(hasRoot, "web: #root visible immediately");
 
-    assert.ok(elapsed >= 900 && elapsed <= 1500, `توقيت الدخولية خارج النطاق: ${elapsed}ms`);
-
-    // تنقل داخلي (بدون reload) عبر وستر
-    const href = "/lessons";
-    await page.click(`a[href="${href}"]`).catch(() => null);
-    // إن فشل click بسبب اختلاف الصفحة، نُجبر على تغيير مسار داخل نفس الجلسة
-    if ((await page.evaluate((h) => window.location.pathname, href)) !== href) {
-      await page.evaluate((h) => { history.pushState({}, "", h); }, href);
-    }
-    await page.waitForTimeout(500);
-
-    const stillThere = await page.evaluate(() => Boolean(document.querySelector("#mj-silent-splash")));
-    assert.equal(stillThere, false, "الدخولـية لا يجب أن تعود بعد التنقل الداخلي");
+    await page.evaluate(() => {
+      history.pushState({}, "", "/lessons");
+    });
+    await page.waitForTimeout(300);
+    const splashAgain = await page.evaluate(() =>
+      Boolean(document.querySelector("#mj-silent-splash")),
+    );
+    assert.equal(splashAgain, false, "web: splash must not return on SPA nav");
   } finally {
     await browser.close();
     await stop();
   }
 
-  console.log("test-splash-timing: ok");
+  console.log("test-splash-timing: ok (web — native timing: device/simulator + splash-timing-gate.test.ts)");
 }
 
 main().catch((e) => {
@@ -101,4 +96,3 @@ main().catch((e) => {
   console.error(e);
   process.exit(1);
 });
-

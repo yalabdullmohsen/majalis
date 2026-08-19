@@ -36,7 +36,7 @@ console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");
   assert.ok(count <= 2, `preconnect ≤ ٢ (الفعلي ${count})`);
   assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/, "لا Google Fonts في الإقلاع");
   assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/amiri-400-ar\.woff2/, "preload خط الشاشة الأولى فقط");
-  assert.match(html, /id="mj-silent-splash"/, "دخولية HTML صامتة");
+  assert.doesNotMatch(html, /id="mj-silent-splash"/, "لا دخولية ويب تحجب المحتوى");
 }
 
 console.log("\n=== LCP أصول WebP موجودة ===");

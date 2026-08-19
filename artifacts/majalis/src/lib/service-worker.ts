@@ -17,20 +17,40 @@ export async function purgeStaleServiceWorkers(): Promise<void> {
   }
 }
 
-const SW_UPDATE_CHECK_INTERVAL_MS = 60 * 1000; // فحص فعلي للسكربت كل دقيقة أثناء الاستخدام
+const SW_UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
+const SW_RELOAD_GUARD_KEY = "mj.sw-reload-once.v1";
+
+function armControlledSwReload(): void {
+  if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
+
+  const reloadOnce = () => {
+    try {
+      if (sessionStorage.getItem(SW_RELOAD_GUARD_KEY) === "1") return;
+      sessionStorage.setItem(SW_RELOAD_GUARD_KEY, "1");
+    } catch {
+      /* proceed */
+    }
+    window.location.reload();
+  };
+
+  navigator.serviceWorker.addEventListener("message", (event) => {
+    if (event.data?.type === "SW_UPDATED_RELOAD_ONCE") reloadOnce();
+  });
+
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    reloadOnce();
+  });
+}
 
 export function registerProductionServiceWorker(): void {
   if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
   if (!import.meta.env.PROD) return;
 
-  // skipWaiting + clients.claim في sw.js. لا نُعيد التحميل قسرًا عند
-  // controllerchange — شيت التحديث (UpdateAvailableBanner + version.json)
-  // يدعو المستخدم لتأكيد التحديث بهدوء وفق بوابة الإطلاق.
+  armControlledSwReload();
+
   window.addEventListener("load", () => {
     void purgeStaleServiceWorkers().then(() => {
       navigator.serviceWorker.register("/sw.js").then((registration) => {
-        // Safari/iOS قد يؤخر registration.update() ساعات — نفرض فحصًا متكررًا
-        // وعند العودة للمقدمة حتى يكتشف sw.js الجديد بسرعة.
         const forceCheck = () => { void registration.update().catch(() => undefined); };
         forceCheck();
         window.setInterval(forceCheck, SW_UPDATE_CHECK_INTERVAL_MS);

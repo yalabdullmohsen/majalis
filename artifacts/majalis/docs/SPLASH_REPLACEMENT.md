@@ -1,22 +1,44 @@
-# الدخولية الصامتة
+# الدخولية الموحّدة — أصلي فقط
 
-دخولية واحدة في المشروع: رمز هندسي ذهبي على خلفية `#0E1A15`، بلا نص.
+## القاعدة الحاكمة
 
-## المصدر المعتمد
+**لا طبقة دخولية ويب تحجب المحتوى.** الويب يفتح `#root` فوراً (LCP/CLS غير متأثرين).
 
-1. الويب: SVG مضمّن في `index.html` (`#mj-silent-splash`) مع أنماط في `<style id="mj-splash-critical">`. ليست مكوّن React.
-2. iOS: `LaunchScreen.storyboard` (لون خلفية واحد + `LaunchMark` @1x/2x/3x). القصة ثابتة نظامياً.
-3. Android 12+: `splash_background` + `drawable/splash_icon.xml`.
-4. PWA: `manifest.background_color` = `#0E1A15`.
+## الطبقات
 
-## توليد أصول الرمز
+1. **iOS `LaunchScreen.storyboard` + Android `Theme.SplashScreen`**
+   - خلفية `#0E1A15` + الشعار + «المجلس العلمي» + سطر تعريفي + مؤشر تقدّم
+2. **Capacitor `SplashScreen`** — `launchAutoHide: false`
+   - يُخفى برمجياً فقط عبر `src/lib/splash-screen.ts`
+
+## سياسة التوقيت (أصلي)
+
+| ثابت | قيمة |
+|---|---|
+| minVisible | 900ms |
+| maxVisible | 1500ms |
+| fadeOut | 250ms |
+
+- **«التطبيق جاهز»** = حدث `app:first-paint` (يُطلَق من `main.tsx` بعد أول rAF×2)
+- **جلسة واحدة** — `sessionStorage mj.native-splash.session.v1`
+- **لا عودة** من الخلفية أو التنقل الداخلي
+
+## Service Worker (ويب/PWA)
+
+- كاش: `majlisilm-v{BUILD_SHA}-offline|data|meta`
+- `index.html` / navigations: network-first — لا cache-first
+- `activate`: يحذف كل الكاشات خارج البادئة الحالية
+- إعادة تحميل واحدة عند `SW_UPDATED_RELOAD_ONCE`
+
+## البوابات
 
 ```bash
-python3 scripts/generate-silent-splash-assets.py
+pnpm run test:launch-splash-unified   # static + splash-timing-gate
+pnpm run test:flash-gates             # Playwright post-build
+pnpm run test:feature-tour-gate       # جولة المزايا
 ```
 
-لا تستخدم `@capacitor/assets generate` لشاشة الإقلاع — يعيد `Splash.imageset` و`splash-2732`. سكربت `assets:generate` يحذف تلك المخرجات بعد التشغيل ويعيد `LaunchMark`.
+## جولة المزايا
 
-`pnpm run assets:splash` مقفل عمداً.
-
-بعد أي تعديل أصلي ارفع `CFBundleVersion` (حالياً 40).
+- **منفَّذة** — `AppFeatureTour` + `onboarding.completed.v1` في Preferences
+- سبع شرائح · إذن الإشعارات في الأخيرة · «جولة المزايا» في الإعدادات

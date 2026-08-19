@@ -34,11 +34,14 @@ if (!/importScripts\(["']\/sw-version\.js["']\)/.test(swJs)) {
 if (/majalis-shell-v\d+["'`]/.test(swJs) || /majalis-data-v\d+["'`]/.test(swJs)) {
   failures.push("sw.js: عاد رقم كاش يدوي ثابت (مثل v18) بدل SW_BUILD_ID الديناميكي");
 }
-if (!/OFFLINE_CACHE\s*=\s*`majalis-offline-\$\{SW_BUILD_ID\}`/.test(swJs)) {
+if (!/OFFLINE_CACHE\s*=\s*`majlisilm-v\$\{SW_BUILD_ID\}-offline`/.test(swJs)) {
   failures.push("sw.js: OFFLINE_CACHE غير مبني فعليًا من SW_BUILD_ID");
 }
-if (!/DATA_CACHE\s*=\s*`majalis-data-\$\{SW_BUILD_ID\}`/.test(swJs)) {
+if (!/DATA_CACHE\s*=\s*`majlisilm-v\$\{SW_BUILD_ID\}-data`/.test(swJs)) {
   failures.push("sw.js: DATA_CACHE غير مبني فعليًا من SW_BUILD_ID");
+}
+if (!/CACHE_PREFIX\s*=\s*`majlisilm-v\$\{SW_BUILD_ID\}`/.test(swJs)) {
+  failures.push("sw.js: CACHE_PREFIX غير مبني فعليًا من SW_BUILD_ID");
 }
 if (/SHELL_ROUTES|cache\.addAll\(\[?["']\//.test(swJs)) {
   failures.push("sw.js: لا يجوز تخزين shell routes أو صفحات التنقل مسبقًا");
