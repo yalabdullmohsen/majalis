@@ -21,6 +21,7 @@ import { armSplashAutoHide } from "./lib/splash-screen";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 import { initOnboardingState } from "./lib/onboarding-state";
 import { scheduleOnIdle } from "./lib/yield-to-main";
+import { logLcpCandidateHint } from "./lib/home-lcp-static-shell";
 // خطوط الواجهة المحلية قبل أي طبقة تستخدم --font-app
 import "./styles/fonts-ui.css";
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
@@ -78,6 +79,7 @@ const queryClient = createAppQueryClient();
 resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
 initClientErrorReporting();
+logLcpCandidateHint();
 
 const bootFinalPolish = () => initFinalPolish();
 if (typeof requestIdleCallback === "function") {
@@ -119,7 +121,7 @@ async function mount() {
 
   // مهم: لا ننتظر purge/hydrate قبل createRoot — كانت تعلّق شاشة بيضاء/فاتحة
   // داخل Capacitor عندما يعلق جسر Preferences أو مسح الكاش.
-  const rootEl = document.getElementById("root");
+  const rootEl = document.getElementById("mj-app-mount") ?? document.getElementById("root");
   if (!rootEl) {
     console.error("[boot] #root missing — cannot mount");
     return;
