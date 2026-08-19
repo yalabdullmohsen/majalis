@@ -38,6 +38,7 @@ import {
   restoreDefaultAppSettings,
   writeBackgroundPlaybackPref,
 } from "@/lib/restore-default-settings";
+import { requestFeatureTourReplay } from "@/lib/feature-tour-state";
 import "@/styles/pages/settings.css";
 
 function ToggleRow({
@@ -135,7 +136,7 @@ export default function SettingsPage() {
       title: "البيانات والخصوصية",
       keywords: "خصوصية تصدير حذف بيانات",
     },
-    { id: "about", title: "عن التطبيق", keywords: "حول سياسة شروط دعم مصادر" },
+    { id: "about", title: "عن التطبيق", keywords: "حول سياسة شروط دعم مصادر جولة مزايا" },
   ];
 
   const q = query.trim().toLowerCase();
@@ -533,6 +534,18 @@ export default function SettingsPage() {
 
       {visible(sections[6]!) && (
         <LegalSection title={sections[6]!.title}>
+          <p className="settings-note">
+            أعد مشاهدة جولة المزايا لتتعرّف على المصحف والصلاة والأذكار والبحث والتنبيهات.
+          </p>
+          <div className="settings-actions">
+            <button
+              type="button"
+              className="page-action-btn page-action-btn--secondary"
+              onClick={() => requestFeatureTourReplay()}
+            >
+              جولة المزايا
+            </button>
+          </div>
           <div className="settings-legal-links">
             <Link href="/about" className="settings-legal-link">
               حول التطبيق
