@@ -48,6 +48,7 @@ jobs:
         run: |
           cd ../..
           pnpm install --frozen-lockfile
+          pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
           pnpm --filter @workspace/majalis run build
           cd artifacts/majalis
           pnpm exec cap sync ios
