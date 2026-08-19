@@ -25,6 +25,9 @@ const SURAH_AYAH_COUNTS = [
 const EXPECTED_TOTAL_AYAHS = 6236;
 const EVERYAYAH_URL_PREFIX = "https://everyayah.com/data/";
 
+/** قرّاء EveryAyah المرشّحون للفحص — verified يُحدَّث بعد PASS فقط */
+const AUDIT_CANDIDATE_IDS = ["husary", "minshawi", "alafasy"];
+
 const FOLDER_BY_RECITER_ID = {
   husary: "Husary_128kbps",
   minshawi: "Minshawy_Murattal_128kbps",
@@ -162,17 +165,32 @@ function buildAllPairs() {
   return pairs;
 }
 
-async function headOk(url, timeoutMs = 9000) {
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), timeoutMs);
-  try {
-    const res = await fetch(url, { method: "HEAD", signal: ctrl.signal });
-    return res.ok;
-  } catch {
-    return false;
-  } finally {
-    clearTimeout(t);
+async function headOk(url, timeoutMs = 9000, retries = 3) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, { method: "HEAD", signal: ctrl.signal });
+      if (res.ok) return true;
+      // بعض CDNs ترفض HEAD عابراً — Range GET كاحتياط
+      if (res.status === 405 || res.status === 403 || res.status === 429) {
+        const getRes = await fetch(url, {
+          method: "GET",
+          headers: { Range: "bytes=0-0" },
+          signal: ctrl.signal,
+        });
+        if (getRes.ok || getRes.status === 206) return true;
+      }
+    } catch {
+      /* retry */
+    } finally {
+      clearTimeout(t);
+    }
+    if (attempt < retries) {
+      await new Promise((r) => setTimeout(r, 400 * 2 ** attempt));
+    }
   }
+  return false;
 }
 
 async function poolMap(items, concurrency, worker) {
@@ -253,6 +271,126 @@ async function writeStratifiedGate(payload) {
   await fs.writeFile(gatePath, JSON.stringify(payload, null, 2), "utf8");
 }
 
+async function writeFullAuditGate(payload) {
+  const gatePath = await resolveProjectPath("docs/AUDIO_QA.full-audit-gate.json");
+  await fs.mkdir(path.dirname(gatePath), { recursive: true });
+  await fs.writeFile(gatePath, JSON.stringify(payload, null, 2), "utf8");
+}
+
+async function syncAudioRegistry(results, updatedAt, auditedIds) {
+  const registryPath = await resolveProjectPath("public/data/audio/audio-registry.json");
+  const registry = JSON.parse(await fs.readFile(registryPath, "utf8"));
+  const passedIds = new Set(
+    results.filter((r) => r.okCompleteness && !r.skipped).map((r) => r.reciterId),
+  );
+  const audited = new Set(auditedIds ?? results.map((r) => r.reciterId));
+
+  for (const rec of registry.reciters ?? []) {
+    if (!audited.has(rec.id)) continue;
+    const passed = passedIds.has(rec.id);
+    rec.verified = passed;
+    rec.filesPresent = passed ? EXPECTED_TOTAL_AYAHS : 0;
+    if (passed) {
+      rec.qaPassedAt = updatedAt;
+      rec.folder = FOLDER_BY_RECITER_ID[rec.id] ?? rec.folder;
+    } else {
+      delete rec.qaPassedAt;
+    }
+  }
+  registry.updatedAt = updatedAt.slice(0, 10);
+  await fs.writeFile(registryPath, JSON.stringify(registry, null, 2), "utf8");
+  const allVerified = (registry.reciters ?? []).filter((r) => r.verified).map((r) => r.id);
+  console.log(`[audit-audio] registry synced — verified: ${allVerified.join(", ") || "(none)"}`);
+}
+
+async function writeAudioSourcesMd(results, updatedAt) {
+  const mdPath = await resolveProjectPath("docs/AUDIO_SOURCES.md");
+  const reciterMeta = {
+    husary: { name: "محمود خليل الحصري", folder: "Husary_128kbps" },
+    minshawi: { name: "محمد صديق المنشاوي", folder: "Minshawy_Murattal_128kbps" },
+    alafasy: { name: "مشاري راشد العفاسي", folder: "Alafasy_128kbps" },
+  };
+  const qaById = new Map(results.map((r) => [r.reciterId, r]));
+
+  const rows = Object.entries(reciterMeta)
+    .map(([id, meta]) => {
+      const qa = qaById.get(id);
+      const passed = qa?.okCompleteness && !qa?.skipped;
+      const status = passed ? "✅ PASS" : qa ? "❌ FAIL" : "—";
+      const checked = qa?.completenessChecked ?? 0;
+      const missing = qa?.missingCount ?? "—";
+      return `| \`${id}\` | ${meta.name} | 128 | \`${meta.folder}\` | ${status} | ${checked} | ${missing} | ${updatedAt.slice(0, 10)} |`;
+    })
+    .join("\n");
+
+  const passedList = results
+    .filter((r) => r.okCompleteness && !r.skipped)
+    .map((r) => r.reciterId);
+
+  const md = `# مصادر الصوت (تلاوة / أذان / تفسير صوتي)
+
+## تلاوة القرآن (Ayah-level) — EveryAyah
+
+| reciterId | القارئ | kbps | reciter_folder | QA | checked | missing | آخر فحص |
+|---|---|---:|---|---|---:|---:|---|
+${rows}
+
+- **النمط:** \`https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3\`
+- **السماح:** بث آية بآية — لا ملفات صوتية في حزمة التطبيق
+- **القرّاء المعروضون في التطبيق:** ${passedList.length ? passedList.map((id) => `\`${id}\``).join("، ") : "*(لا أحد — لم يجتز الفحص الكامل)*"}
+- **QA:** \`pnpm run audit:audio:stratified\` ثم \`pnpm run audit:audio:full\`
+- **بوابة:** \`docs/AUDIO_QA.full-audit-gate.json\`
+
+### احتياط Islamic Network CDN
+- \`https://cdn.islamic.network/quran/audio/128/{edition}/{ayahNumber}.mp3\`
+
+## تلاوة (Surah-level)
+- \`mp3quran.net\` — تنزيل دون اتصال عبر \`quran-audio-downloads.ts\`
+
+---
+
+## الأذان — مصدر CDN والنسبة
+
+### المستودع
+- **GitHub/CDN:** [mohsalvi/adhan-audio](https://github.com/mohsalvi/adhan-audio)
+- **CDN base:** \`https://cdn.jsdelivr.net/gh/mohsalvi/adhan-audio@main\`
+
+### الملفات المُنزَّلة (عبر \`pnpm run generate:adhan-bundle\`)
+
+| ملف محلي | مصدر CDN | الاستخدام |
+|---|---|---|
+| \`adhan-makkah-full.m4a\` | \`general/makkah-haram-02.mp3\` | تشغيل داخل التطبيق (~28ث) |
+| \`adhan-madinah-full.m4a\` | \`general/madinah-02.mp3\` | تشغيل داخل التطبيق (~28ث) |
+| \`adhan-egypt-full.m4a\` | \`general/egypt-traditional-02.mp3\` | تشغيل داخل التطبيق (~28ث) |
+| \`adhan-haram-full.m4a\` | \`general/al-haram-01.mp3\` | تشغيل داخل التطبيق (~28ث) |
+| \`adhan-aqsa-full.mp3\` | \`general/al-aqsa-jerusalem-02.mp3\` | تشغيل داخل التطبيق (~28ث) |
+| \`adhan-makkah-fajr.mp3\` | \`fajr/makkah-fajr-01.mp3\` | فجر — تثويب |
+| \`adhan-takbeerat-short.mp3\` | \`general/madinah-02.mp3\` (مقطع قصير) | تكبيرات |
+| \`ios/.../adhan-short-*.caf\` | مقاطع ≤~12ث من المصادر أعلاه | **نغمة إشعار iOS ≤30ث** |
+| \`ios/.../adhan-seq-makkah-0N.caf\` | \`makkah-haram-02.mp3\` (4×~28ث) | سلسلة إشعارات تجريبية |
+| \`android/res/raw/adhan_*.mp3\` | mirrors للـ CAF | Android notifications |
+
+### الترخيص والنسبة
+- **الترخيص:** تسجيلات أذان عامة منشورة في مستودع \`mohsalvi/adhan-audio\` — **يجب مراجعة README/TR LICENSE في ذلك المستودع قبل الإصدار التجاري.**
+- **نص النسبة في التطبيق:** «أذان — تسجيلات عامة منشورة عبر mohsalvi/adhan-audio (jsDelivr CDN).»
+- **CREDITS:** يُحدَّث في \`CREDITS.md\` عند اعتماد نسخة نهائية.
+- **توليد الحزمة:** \`node scripts/adhan-audio/generate-adhan-bundle.mjs\` — يتحقق أن كل \`.caf\` إشعار **≤30 ثانية** (\`afinfo\`).
+
+### فجر منفصل
+- إشعار iOS: \`adhan-short-makkah-fajr.caf\` (من \`fajr/makkah-fajr-01.mp3\`)
+- تشغيل كامل داخل التطبيق: \`adhan-makkah-fajr.mp3\`
+
+---
+
+## التفسير الصوتي
+
+- الكتالوج: \`public/data/tafsir-audio-catalog.json\` — **فارغ حتى توثيق الترخيص**
+- **واجهة المستخدم مخفية** (لا معطّلة) حتى توثيق \`attributionVerified\` في الكتالوج
+- خريطة seek: \`public/data/tafsir-audio-map.json\`
+`;
+  await fs.writeFile(mdPath, md, "utf8");
+}
+
 async function auditReciter(rec, opts) {
   const folder = FOLDER_BY_RECITER_ID[rec.id];
   if (!folder) {
@@ -268,6 +406,20 @@ async function auditReciter(rec, opts) {
     if (!ok) missing.push({ surah, ayah });
     return ok;
   });
+
+  // جولة ثانية للملفات الناقصة — transient/rate-limit
+  if (missing.length > 0 && missing.length <= 64) {
+    console.log(`[audit-audio] ${rec.id}: retrying ${missing.length} missing…`);
+    const stillMissing = [];
+    for (const { surah, ayah } of missing) {
+      const url = everyAyahUrl(folder, surah, ayah);
+      await new Promise((r) => setTimeout(r, 250));
+      const ok = await headOk(url, 12000, 5);
+      if (!ok) stillMissing.push({ surah, ayah });
+    }
+    missing.length = 0;
+    missing.push(...stillMissing);
+  }
 
   const okCompleteness = missing.length === 0;
   const qualitySample = opts.pairs.slice(0, Math.min(opts.sampleLimit, opts.pairs.length));
@@ -304,13 +456,26 @@ async function auditReciter(rec, opts) {
   };
 }
 
-async function writeReports(payload, results) {
+async function writeReports(payload, results, auditedIds) {
   const outPath = await resolveProjectPath("docs/AUDIO_QA.last-audit.json");
   await fs.mkdir(path.dirname(outPath), { recursive: true });
-  await fs.writeFile(outPath, JSON.stringify({ ...payload, results }, null, 2), "utf8");
+
+  let mergedResults = results;
+  const audited = new Set(auditedIds ?? results.map((r) => r.reciterId));
+  if (audited.size < results.length || audited.size > 0) {
+    try {
+      const prev = JSON.parse(await fs.readFile(outPath, "utf8"));
+      const kept = (prev.results ?? []).filter((r) => !audited.has(r.reciterId));
+      mergedResults = [...kept, ...results];
+    } catch {
+      mergedResults = results;
+    }
+  }
+
+  await fs.writeFile(outPath, JSON.stringify({ ...payload, results: mergedResults }, null, 2), "utf8");
 
   const mdPath = await resolveProjectPath("docs/AUDIO_QA.md");
-  const mdRows = results
+  const mdRows = mergedResults
     .map((r) => {
       const status = r.skipped ? "skip" : r.okCompleteness ? "pass" : "fail";
       const lufs =
@@ -334,6 +499,7 @@ ${mdRows}
 > آخر تحديث: ${payload.updatedAt} — mode=${payload.mode}
 `;
   await fs.writeFile(mdPath, md, "utf8");
+  return mergedResults;
 }
 
 async function main() {
@@ -343,11 +509,25 @@ async function main() {
 
   const registryPath = await resolveProjectPath("public/data/audio/audio-registry.json");
   const registry = JSON.parse(await fs.readFile(registryPath, "utf8"));
-  let verifiedReciters = (registry?.reciters ?? []).filter((r) => r?.verified && typeof r.id === "string");
+  let recitersToAudit = (registry?.reciters ?? []).filter(
+    (r) => AUDIT_CANDIDATE_IDS.includes(r.id) && typeof r.id === "string",
+  );
+  if (recitersToAudit.length === 0) {
+    recitersToAudit = AUDIT_CANDIDATE_IDS.map((id) => ({ id, name: id }));
+  }
+
+  const reciterFilter = process.env.AUDIT_AUDIO_RECITER_IDS?.split(",").map((s) => s.trim()).filter(Boolean);
+  if (reciterFilter?.length) {
+    const allowed = new Set(reciterFilter);
+    recitersToAudit = recitersToAudit.filter((r) => allowed.has(r.id));
+    console.log(`[audit-audio] limited to: ${reciterFilter.join(", ")}`);
+  }
 
   const ffprobeOk = hasBin("ffprobe");
   const ffmpegOk = hasBin("ffmpeg");
-  const headConcurrency = Number(process.env.AUDIT_AUDIO_HEAD_CONCURRENCY ?? 12);
+  const headConcurrency = Number(
+    process.env.AUDIT_AUDIO_HEAD_CONCURRENCY ?? (mode === "full" ? 6 : 12),
+  );
   const sampleLimit = Number(process.env.AUDIT_AUDIO_SAMPLE_LIMIT ?? 30);
   const stratifiedCount = Number(process.env.AUDIT_AUDIO_STRATIFIED_COUNT ?? 200);
 
@@ -357,15 +537,15 @@ async function main() {
     const gate = await readStratifiedGate();
     if (gate?.passedReciterIds?.length) {
       const allowed = new Set(gate.passedReciterIds);
-      verifiedReciters = verifiedReciters.filter((r) => allowed.has(r.id));
+      recitersToAudit = recitersToAudit.filter((r) => allowed.has(r.id));
       console.log(`[audit-audio] full run limited to stratified-pass: ${[...allowed].join(", ")}`);
     } else {
-      console.warn("[audit-audio] WARNING: no stratified gate — running full for all verified reciters");
+      console.warn("[audit-audio] WARNING: no stratified gate — running full for all candidates");
     }
   }
 
   const results = [];
-  for (const rec of verifiedReciters) {
+  for (const rec of recitersToAudit) {
     let pairs;
     if (mode === "full") pairs = buildAllPairs();
     else if (mode === "quick") {
@@ -397,7 +577,36 @@ async function main() {
     stratifiedCount: mode === "stratified" ? stratifiedCount : undefined,
   };
 
-  await writeReports(payload, results);
+  const mergedResults = await writeReports(payload, results, recitersToAudit.map((r) => r.id));
+  await writeAudioSourcesMd(mergedResults, payload.updatedAt);
+
+  if (mode === "full") {
+    const passedReciterIds = results.filter((r) => r.okCompleteness && !r.skipped).map((r) => r.reciterId);
+    const failedReciterIds = results.filter((r) => !r.okCompleteness && !r.skipped).map((r) => r.reciterId);
+    const prevGate = JSON.parse(
+      await fs.readFile(await resolveProjectPath("docs/AUDIO_QA.full-audit-gate.json"), "utf8").catch(() => "{}"),
+    );
+    const auditedSet = new Set(recitersToAudit.map((r) => r.id));
+    const mergedPassed = [
+      ...(prevGate.passedReciterIds ?? []).filter((id) => !auditedSet.has(id)),
+      ...passedReciterIds,
+    ];
+    const mergedFailed = [
+      ...(prevGate.failedReciterIds ?? []).filter((id) => !auditedSet.has(id)),
+      ...failedReciterIds,
+    ].filter((id) => !mergedPassed.includes(id));
+    await writeFullAuditGate({
+      updatedAt: payload.updatedAt,
+      passedReciterIds: mergedPassed,
+      failedReciterIds: mergedFailed,
+      passed: mergedFailed.length === 0 && mergedPassed.length > 0,
+    });
+    await syncAudioRegistry(
+      results,
+      payload.updatedAt,
+      recitersToAudit.map((r) => r.id),
+    );
+  }
 
   if (mode === "stratified") {
     const passedReciterIds = results.filter((r) => r.okCompleteness && !r.skipped).map((r) => r.reciterId);
@@ -415,7 +624,7 @@ async function main() {
     }
     console.log(`[audit-audio] STRATIFIED OK — safe to run: pnpm run audit:audio:full`);
   } else {
-    const anyFail = results.some((r) => !r.okCompleteness && !r.skipped);
+    const anyFail = mergedResults.some((r) => !r.okCompleteness && !r.skipped);
     if (anyFail) {
       console.error("[audit-audio] FAILED");
       process.exit(2);

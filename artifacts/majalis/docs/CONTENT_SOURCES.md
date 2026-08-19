@@ -23,7 +23,8 @@
 | everyayah.com | EveryAyah | https://everyayah.com | بث آية بآية — لا ملفات في الحزمة | 2026-08-19 |
 | mp3quran.net | MP3Quran | https://mp3quran.net | تنزيل اختياري للسور | 2026-08-19 |
 
----
+**قرّاء مُحقَّقون (QA):** يُعرضون من `public/data/audio/audio-registry.json` (`verified=true` فقط) — انظر `docs/AUDIO_SOURCES.md`.
+
 
 ## الأذان
 

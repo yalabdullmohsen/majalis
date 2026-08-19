@@ -43,6 +43,7 @@
     {
       "id": "recitations",
       "titleAr": "التلاوات",
+      "registryRef": "public/data/audio/audio-registry.json",
       "items": [
         {
           "id": "everyayah",

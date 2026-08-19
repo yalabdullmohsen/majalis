@@ -1,11 +1,8 @@
 /**
  * Audio registry loader
  *
- * الهدف: قائمة القرّاء “المعروضة للمستخدم” تبنى من `public/data/audio/audio-registry.json`
- * بعد QA (verified=true) بدل الاعتماد على RECITERS ثابت.
- *
- * ملاحظة: RECITERS تبقى مصدر URL generation (everyayah/mp3quran) والتوافق مع باقي كود
- * تشغيل الآية-بآية.
+ * قائمة القرّاء المعروضة تُبنى من `public/data/audio/audio-registry.json`
+ * بعد QA (verified=true فقط) — لا fallback ثابت يتجاوز الفحص.
  */
 import type { QuranReciter } from "@/lib/quran-audio";
 import { RECITERS } from "@/lib/quran-audio";
@@ -18,6 +15,10 @@ export type AudioRegistryReciter = {
   bitrate?: number | null;
   source?: string;
   verified?: boolean;
+  folder?: string;
+  urlPattern?: string;
+  filesPresent?: number;
+  qaPassedAt?: string;
 };
 
 export type AudioRegistry = {
@@ -30,25 +31,30 @@ export type AudioRegistry = {
 
 const REGISTRY_URL = "/data/audio/audio-registry.json";
 
-// البداية المطلوبة: 3 قرّاء ممتازين (كلهم EveryAyah 128+ في هذا السجل).
-export const DEFAULT_VERIFIED_RECITER_IDS = ["husary", "minshawi", "alafasy"] as const;
+/** ترتيب مفضّل عند العرض — لا يُفعّل قرّاءً لم يجتزوا QA. */
+export const PREFERRED_RECITER_ORDER = ["husary", "minshawi", "alafasy"] as const;
 
-function fallbackVerifiedReciters(): QuranReciter[] {
-  const order = new Set<string>(DEFAULT_VERIFIED_RECITER_IDS as readonly string[]);
-  // Preserve order defined in DEFAULT_VERIFIED_RECITER_IDS.
+function sortByPreferredOrder(reciters: QuranReciter[]): QuranReciter[] {
+  const rank = new Map(PREFERRED_RECITER_ORDER.map((id, i) => [id, i]));
+  return [...reciters].sort((a, b) => {
+    const ra = rank.get(a.id as (typeof PREFERRED_RECITER_ORDER)[number]) ?? 999;
+    const rb = rank.get(b.id as (typeof PREFERRED_RECITER_ORDER)[number]) ?? 999;
+    return ra - rb;
+  });
+}
+
+function mapVerifiedReciters(registry: AudioRegistry): QuranReciter[] {
   const byId = new Map(RECITERS.map((r) => [r.id, r] as const));
-  const out: QuranReciter[] = [];
-  for (const id of DEFAULT_VERIFIED_RECITER_IDS) {
-    const r = byId.get(id);
-    if (r) out.push(r);
-  }
-  // If for some reason mapping failed, degrade gracefully.
-  if (out.length > 0) return out;
-  return RECITERS.filter((r) => order.has(r.id));
+  const verified = registry.reciters
+    .filter((r) => Boolean(r.verified) && typeof r.id === "string")
+    .map((r) => byId.get(r.id))
+    .filter((x): x is QuranReciter => Boolean(x));
+  return sortByPreferredOrder(verified);
 }
 
 let registryPromise: Promise<AudioRegistry | null> | null = null;
 let verifiedRecitersCache: QuranReciter[] | null = null;
+let verifiedRegistryEntriesCache: AudioRegistryReciter[] | null = null;
 
 export async function loadAudioRegistry(): Promise<AudioRegistry | null> {
   if (registryPromise) return registryPromise;
@@ -71,34 +77,44 @@ export async function getVerifiedReciters(): Promise<QuranReciter[]> {
 
   const registry = await loadAudioRegistry();
   if (!registry) {
-    verifiedRecitersCache = fallbackVerifiedReciters();
+    verifiedRecitersCache = [];
     return verifiedRecitersCache;
   }
 
-  // verified=true only.
-  const byId = new Map(RECITERS.map((r) => [r.id, r] as const));
-  const verified = registry.reciters
-    .filter((r) => Boolean(r.verified) && typeof r.id === "string")
-    .map((r) => byId.get(r.id))
-    .filter((x): x is QuranReciter => Boolean(x));
-
-  verifiedRecitersCache = verified.length > 0 ? verified : fallbackVerifiedReciters();
+  verifiedRecitersCache = mapVerifiedReciters(registry);
   return verifiedRecitersCache;
 }
 
-/**
- * Sync fallback for initial render (before the registry fetch completes).
- * UI will update once `getVerifiedReciters()` resolves.
- */
-export function getVerifiedRecitersSyncFallback(): QuranReciter[] {
-  return fallbackVerifiedReciters();
+/** مداخل السجل المُحقَّقة QA — لشاشة المصادر. */
+export async function getVerifiedAudioRegistryEntries(): Promise<AudioRegistryReciter[]> {
+  if (verifiedRegistryEntriesCache) return verifiedRegistryEntriesCache;
+  const registry = await loadAudioRegistry();
+  if (!registry) {
+    verifiedRegistryEntriesCache = [];
+    return verifiedRegistryEntriesCache;
+  }
+  const order = new Map(PREFERRED_RECITER_ORDER.map((id, i) => [id, i]));
+  verifiedRegistryEntriesCache = registry.reciters
+    .filter((r) => Boolean(r.verified) && typeof r.id === "string")
+    .sort((a, b) => (order.get(a.id) ?? 999) - (order.get(b.id) ?? 999));
+  return verifiedRegistryEntriesCache;
 }
 
-/** يُعيد id قارئ مُحقَّق QA أو أول قارئ افتراضي. */
+/**
+ * Sync fallback قبل اكتمال fetch — فارغ حتى لا نعرض قرّاءً لم يجتزوا QA.
+ */
+export function getVerifiedRecitersSyncFallback(): QuranReciter[] {
+  return verifiedRecitersCache ?? [];
+}
+
+/** @deprecated استخدم PREFERRED_RECITER_ORDER */
+export const DEFAULT_VERIFIED_RECITER_IDS = PREFERRED_RECITER_ORDER;
+
+/** يُعيد id قارئ مُحقَّق QA أو أول قارئ متاح. */
 export function clampToVerifiedReciterId(id: string): string {
   const list = getVerifiedRecitersSyncFallback();
   if (list.some((r) => r.id === id)) return id;
-  return list[0]?.id ?? "alafasy";
+  return list[0]?.id ?? id;
 }
 
 export function isVerifiedReciterId(id: string): boolean {
@@ -108,5 +124,5 @@ export function isVerifiedReciterId(id: string): boolean {
 export function __resetAudioRegistryForTests(): void {
   registryPromise = null;
   verifiedRecitersCache = null;
+  verifiedRegistryEntriesCache = null;
 }
-

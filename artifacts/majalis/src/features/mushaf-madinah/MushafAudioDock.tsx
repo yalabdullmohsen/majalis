@@ -1,10 +1,10 @@
 import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import type { PlayerState } from "@/core/audio/AudioEngine";
-import { DEFAULT_VERIFIED_RECITER_IDS } from "@/lib/audio-registry";
+import { PREFERRED_RECITER_ORDER } from "@/lib/audio-registry";
 import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
 
 /** @deprecated استخدم useVerifiedReciters — يُبقى للاختبارات والتوافق */
-export const MUSHAF_RECITER_IDS = DEFAULT_VERIFIED_RECITER_IDS;
+export const MUSHAF_RECITER_IDS = PREFERRED_RECITER_ORDER;
 
 type Props = {
   open: boolean;

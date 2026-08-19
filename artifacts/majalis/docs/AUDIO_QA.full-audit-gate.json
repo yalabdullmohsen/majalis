@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-08-19T18:03:43.817Z",
+  "updatedAt": "2026-08-19T18:40:56.307Z",
   "passedReciterIds": [
+    "alafasy",
     "husary",
-    "minshawi",
-    "alafasy"
+    "minshawi"
   ],
   "failedReciterIds": [],
   "passed": true

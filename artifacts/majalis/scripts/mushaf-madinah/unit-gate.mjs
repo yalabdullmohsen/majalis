@@ -116,10 +116,8 @@ assert.match(actions, /data-sheet-height/);
 
 const dock = read("src/features/mushaf-madinah/MushafAudioDock.tsx");
 assert.match(dock, /useVerifiedReciters/);
-assert.match(dock, /DEFAULT_VERIFIED_RECITER_IDS/);
-assert.match(read("src/lib/audio-registry.ts"), /"alafasy"/);
-assert.match(read("src/lib/audio-registry.ts"), /"husary"/);
-assert.match(read("src/lib/audio-registry.ts"), /"minshawi"/);
+assert.match(dock, /PREFERRED_RECITER_ORDER/);
+assert.match(read("src/lib/audio-registry.ts"), /PREFERRED_RECITER_ORDER/);
 
 const ornament = read("src/features/mushaf-madinah/MushafSurahOrnament.tsx");
 assert.match(ornament, /mm-surah-frame/);
