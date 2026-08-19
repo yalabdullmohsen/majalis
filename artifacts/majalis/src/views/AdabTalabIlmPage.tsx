@@ -755,7 +755,7 @@ export default function AdabTalabIlmPage() {
       </div>
 
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
+        <SectionQuiz route="/adab-talab-ilm" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
       </div>
     </div>
   );

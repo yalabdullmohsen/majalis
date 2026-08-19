@@ -491,7 +491,7 @@ export default function ScholarlyResearchPage() {
         <ShareButtons title="الباحث الشرعي — المجلس العلمي" url="https://www.majlisilm.com/scholarly-research" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["hadith", "fiqh"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+        <SectionQuiz route="/research" title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );

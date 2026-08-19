@@ -727,7 +727,7 @@ export default function ShimaelPage() {
       </div>
       <RelatedKnowledge kind="hadith" query="الشمائل المحمدية" title="أحاديث ومعارف ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="sira" title="اختبر معلوماتك في السيرة النبوية" count={4} />
+        <SectionQuiz sectionId="seerah" title="اختبر معلوماتك في السيرة النبوية" count={4} />
       </div>
       </div>
     </div>

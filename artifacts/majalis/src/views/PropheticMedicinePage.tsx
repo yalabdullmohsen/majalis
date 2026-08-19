@@ -212,7 +212,7 @@ export default function PropheticMedicinePage() {
       </FilterBottomSheet>
       <RelatedKnowledge kind="hadith" query="الطب النبوي" title="أحاديث ومواد في الطب النبوي" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الطب النبوي" count={4} />
+        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الطب النبوي" count={4} />
       </div>
     </div>
   );

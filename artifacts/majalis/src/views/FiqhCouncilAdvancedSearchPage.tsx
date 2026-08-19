@@ -169,7 +169,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
         <ShareButtons title="البحث المتقدم في المجمع الفقهي — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/search" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
+        <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
       </div>
     </div>
   );

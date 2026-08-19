@@ -510,7 +510,7 @@ export default function IslamStatsPage() {
         <ShareButtons title="الإسلام في أرقام — المجلس العلمي" url="https://www.majlisilm.com/islam-stats" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["tarikh", "aqeeda"]} title="اختبر معلوماتك في الإسلام والتاريخ" count={4} />
+        <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في الإسلام والتاريخ" count={4} />
       </div>
     </div>
   );

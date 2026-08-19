@@ -23,7 +23,7 @@ export default function FiqhCouncilResolutionsPage() {
         showTypeFilter={false}
       />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الأحكام الفقهية" count={4} />
+        <SectionQuiz route="/fiqh-council/resolutions" title="اختبر معلوماتك في الأحكام الفقهية" count={4} />
       </div>
     </>
   );

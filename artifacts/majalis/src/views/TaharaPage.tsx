@@ -456,7 +456,7 @@ export default function TaharaPage() {
         </nav>
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه" count={4} />
+        <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه" count={4} />
       </div>
     </main>
   );

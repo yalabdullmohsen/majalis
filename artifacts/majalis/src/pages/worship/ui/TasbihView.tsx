@@ -251,7 +251,7 @@ export default function TasbihPage() {
         <ShareButtons title="التسبيح الرقمي — المجلس العلمي" url={`${SITE_URL}/tasbih`} />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأذكار والأخلاق" count={4} />
+        <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأذكار والأخلاق" count={4} />
       </div>
     </PageShell>
   );

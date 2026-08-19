@@ -457,7 +457,7 @@ export default function AdhkarPage() {
         <DhikrSheet item={current} onClose={() => setShowSheet(false)} />
       )}
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
+        <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
       </div>
     </PageShell>
   );

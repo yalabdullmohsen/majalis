@@ -147,7 +147,7 @@ export default function TopicPage() {
       </div>
       <RelatedKnowledge kind="lesson" query="موضوع علمي" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في هذا الموضوع" count={4} />
+        <SectionQuiz route="/topics" title="اختبر معلوماتك في هذا الموضوع" count={4} />
       </div>
     </div>
   );

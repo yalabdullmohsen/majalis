@@ -1151,11 +1151,7 @@ export default function ProphetStoriesPage() {
         )}
       </div>
 
-      <SectionQuiz
-        categoryId={["anbiya", "sira"]}
-        title="اختبر معلوماتك في قصص الأنبياء"
-        count={4}
-      />
+      <SectionQuiz sectionId="prophets" title="اختبر معلوماتك في قصص الأنبياء" count={4} />
 
       <div className="twh-share">
         <ShareButtons title="قصص الأنبياء — المجلس العلمي" url="https://majlisilm.com/prophets" />

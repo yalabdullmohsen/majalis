@@ -658,7 +658,7 @@ export default function LessonsPage({
         ]}
       />
       <div className="lessons-v3-footer-pad">
-        <SectionQuiz categoryId={["hadith", "fiqh"]} aria-label="اختبر معلوماتك في الدروس الشرعية" count={4} />
+        <SectionQuiz route="/lessons" aria-label="اختبر معلوماتك في الدروس الشرعية" count={4} />
       </div>
     </SectionLobby>
   );

@@ -510,7 +510,7 @@ export default function LessonDetailPage({
         </SectionErrorBoundary>
       )}
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["fiqh","aqeeda","hadith","quran"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+        <SectionQuiz route="/lessons" title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );

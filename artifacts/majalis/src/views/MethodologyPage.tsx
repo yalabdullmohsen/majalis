@@ -291,7 +291,7 @@ export default function MethodologyPage() {
       </section>
 
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة والمنهج" count={4} />
+        <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والمنهج" count={4} />
       </div>
       <div className="mtd-back">
         <Link href="/" className="uc-back">

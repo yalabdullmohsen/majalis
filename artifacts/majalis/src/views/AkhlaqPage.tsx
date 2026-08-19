@@ -1130,11 +1130,7 @@ export default function AkhlaqPage() {
         <p className="akl-empty">لا يوجد خلق مطابق للبحث.</p>
       )}
 
-      <SectionQuiz
-        categoryId="akhlaq"
-        title="اختبر معلوماتك في الأخلاق والصحابة"
-        count={4}
-      />
+      <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأخلاق والصحابة" count={4} />
 
       <div className="twh-share">
         <ShareButtons title="الأخلاق الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/akhlaq" />

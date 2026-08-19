@@ -1029,7 +1029,7 @@ export default function SunanYawmiyyaPage() {
       </section>
       <RelatedKnowledge kind="hadith" query="السنن اليومية" title="سنن وأحاديث ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["fiqh", "akhlaq"]} title="اختبر معلوماتك في السنن والفقه" count={4} />
+        <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في السنن والفقه" count={4} />
       </div>
     </main>
   );

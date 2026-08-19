@@ -1258,11 +1258,7 @@ export default function HadithPage() {
             { href: "/quiz", label: "سين جيم" },
           ]}
         />
-        <SectionQuiz
-          categoryId="hadith"
-          aria-label="اختبر معلوماتك في علوم الحديث"
-          count={4}
-        />
+        <SectionQuiz sectionId="hadith" aria-label="اختبر معلوماتك في علوم الحديث" count={4} />
       </div>
     </SectionTemplatePage>
   );

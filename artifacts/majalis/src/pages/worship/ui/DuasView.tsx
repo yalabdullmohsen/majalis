@@ -1148,11 +1148,7 @@ export default function DuasPage() {
         </div>
       )}
 
-      <SectionQuiz
-        categoryId="hadith"
-        title="اختبر معلوماتك في الحديث الشريف"
-        count={4}
-      />
+      <SectionQuiz route="/duas" title="اختبر معلوماتك في الحديث الشريف" count={4} />
 
       <div className="twh-share">
         <ShareButtons title="الأدعية الشرعية — المجلس العلمي" url="https://www.majlisilm.com/duas" />

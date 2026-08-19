@@ -327,7 +327,7 @@ export default function ResearcherProfilePage() {
         <ShareButtons title="ملف الباحث الشرعي — المجلس العلمي" url="https://www.majlisilm.com/researcher-profile" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+        <SectionQuiz route="/research" title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );

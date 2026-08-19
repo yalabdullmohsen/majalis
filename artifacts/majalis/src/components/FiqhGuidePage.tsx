@@ -116,7 +116,7 @@ export function FiqhGuidePage({ section }: Props) {
 
       <div style={{ marginTop: "1.75rem" }}>
         <SectionQuiz
-          categoryId={section.quizCategoryId}
+          sectionId={section.quizSectionId ?? "fiqh"}
           title={`اختبر معلوماتك في ${section.title}`}
           count={4}
         />

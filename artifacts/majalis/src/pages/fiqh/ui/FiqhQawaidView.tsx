@@ -690,7 +690,7 @@ export default function FiqhQawaidPage() {
       </div>
       <RelatedKnowledge kind="fatwa" query="القواعد الفقهية" title="معرفة ذات صلة بالقواعد الفقهية" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه والقواعد" count={4} />
+        <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه والقواعد" count={4} />
       </div>
     </div>
   );

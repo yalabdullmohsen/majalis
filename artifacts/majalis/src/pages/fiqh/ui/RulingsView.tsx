@@ -340,7 +340,7 @@ export default function RulingsPage() {
         ]}
       />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الأحكام الشرعية" count={4} />
+        <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الأحكام الشرعية" count={4} />
       </div>
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}

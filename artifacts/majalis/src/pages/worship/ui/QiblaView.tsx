@@ -392,7 +392,7 @@ export default function QiblaPage() {
         <ShareButtons title="اتجاه القبلة — المجلس العلمي" url="https://www.majlisilm.com/qibla" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أحكام القبلة والصلاة" count={4} />
+        <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في أحكام القبلة والصلاة" count={4} />
       </div>
     </div>
   );

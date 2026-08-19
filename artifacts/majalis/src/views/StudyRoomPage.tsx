@@ -318,7 +318,7 @@ export default function StudyRoomPage() {
         <ShareButtons title="غرفة الدراسة — المجلس العلمي" url="https://www.majlisilm.com/study-room" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["quran", "hadith"]} title="اختبر معلوماتك أثناء الدراسة" count={4} />
+        <SectionQuiz route="/study-room" title="اختبر معلوماتك أثناء الدراسة" count={4} />
       </div>
     </div>
   );

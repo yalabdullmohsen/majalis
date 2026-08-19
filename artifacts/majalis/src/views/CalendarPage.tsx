@@ -335,7 +335,7 @@ export default function CalendarPage() {
         <ShareButtons aria-label="التقويم الهجري والمناسبات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/calendar" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="tarikh" aria-label="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+        <SectionQuiz sectionId="islamic-history" aria-label="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
       </div>
     </div>
   );

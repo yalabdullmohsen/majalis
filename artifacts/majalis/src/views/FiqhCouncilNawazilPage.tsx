@@ -124,7 +124,7 @@ export default function FiqhCouncilNawazilPage() {
         <ShareButtons title="نوازل فقهية معاصرة — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/nawazil" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في النوازل الفقهية" count={4} />
+        <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في النوازل الفقهية" count={4} />
       </div>
     </div>
   );

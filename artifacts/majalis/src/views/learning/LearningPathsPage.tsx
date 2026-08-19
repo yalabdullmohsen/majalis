@@ -256,7 +256,7 @@ export default function LearningPathsPage() {
       </div>
       <RelatedKnowledge kind="lesson" query="مسارات التعلم" title="دروس ومسارات ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["fiqh", "aqeeda", "akhlaq"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
+        <SectionQuiz route="/learning-paths" title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
       </div>
     </div>
   );

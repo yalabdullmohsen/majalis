@@ -795,7 +795,7 @@ export default function WasayaNabawiyyaPage() {
       </div>
       <RelatedKnowledge kind="hadith" query="الوصايا النبوية" title="أحاديث ووصايا ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />
+        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />
       </div>
     </div>
   );

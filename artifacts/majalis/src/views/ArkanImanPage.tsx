@@ -330,7 +330,7 @@ export default function ArkanImanPage() {
       </div>
       <RelatedKnowledge kind="lesson" query="أركان الإيمان" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة" count={4} />
+        <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة" count={4} />
       </div>
     </main>
   );

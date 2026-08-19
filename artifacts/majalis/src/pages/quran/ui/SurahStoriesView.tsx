@@ -184,7 +184,7 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
           <ShareButtons title={`${story.name} — قصص سور القرآن | المجلس العلمي`} url={`https://www.majlisilm.com/quran/surah-stories/${story.number}`} />
         </div>
         <div className="px-4 pb-6 mt-4">
-          <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
+          <SectionQuiz sectionId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
         </div>
       </article>
 

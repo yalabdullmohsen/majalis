@@ -141,7 +141,7 @@ export default function TarikhIslamiPage() {
       ) : null}
 
       {activeTab === "tarikh" ? (
-        <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+        <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
       ) : null}
 
       <ShareButtons

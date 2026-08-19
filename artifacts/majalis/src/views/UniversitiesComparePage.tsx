@@ -159,7 +159,7 @@ function CompareContent() {
         <ShareButtons title="مقارنة الجامعات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/universities/compare" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في الفقه والتاريخ" count={4} />
+        <SectionQuiz route="/universities" title="اختبر معلوماتك في الفقه والتاريخ" count={4} />
       </div>
     </div>
   );

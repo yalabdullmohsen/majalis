@@ -401,11 +401,7 @@ export default function IslamicStoriesPage() {
               { href: "/seerah", label: "السيرة النبوية" },
             ]}
           />
-          <SectionQuiz
-            categoryId={["tarikh", "sira", "akhlaq"]}
-            title="اختبر معلوماتك في التاريخ الإسلامي"
-            count={4}
-          />
+          <SectionQuiz sectionId="prophets" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
         </>
       )}
     </div>

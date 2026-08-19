@@ -297,7 +297,7 @@ export default function MindMapPage() {
         <ShareButtons title="الخرائط الذهنية الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/mind-map" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+        <SectionQuiz route="/mind-map" title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );

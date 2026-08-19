@@ -338,7 +338,7 @@ export default function MadhahibPage() {
       </section>
       <RelatedKnowledge kind="fatwa" query="المذاهب الفقهية" title="معرفة ذات صلة بالمذاهب" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في المذاهب الفقهية" count={4} />
+        <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في المذاهب الفقهية" count={4} />
       </div>
     </main>
   );

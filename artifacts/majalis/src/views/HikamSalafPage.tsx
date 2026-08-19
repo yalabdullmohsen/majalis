@@ -1642,7 +1642,7 @@ export default function HikamSalafPage() {
       </section>
       <RelatedKnowledge kind="fawaid" query="حكم السلف" title="حكم وفوائد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["akhlaq", "tarikh"]} title="اختبر معلوماتك في الحكم والتاريخ" count={4} />
+        <SectionQuiz route="/hikam-salaf" title="اختبر معلوماتك في الحكم والتاريخ" count={4} />
       </div>
     </main>
   );

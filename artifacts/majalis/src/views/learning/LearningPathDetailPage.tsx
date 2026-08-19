@@ -443,7 +443,7 @@ export default function LearningPathDetailPage() {
         <ShareButtons title="تفاصيل المسار التعليمي — المجلس العلمي" url={`https://www.majlisilm.com/learning/paths/${slug}`} />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+        <SectionQuiz route="/learning-paths" title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );
