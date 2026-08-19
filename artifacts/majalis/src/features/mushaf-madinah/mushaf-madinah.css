@@ -1584,6 +1584,79 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   border-radius: 0.4rem;
 }
 
+.ayah-action-sheet__tafsir-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.45rem;
+}
+
+.ayah-action-sheet__tafsir-chip {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 35%, #ccc);
+  border-radius: 999px;
+  background: var(--mm-paper);
+  color: var(--mm-ink);
+  font: inherit;
+  font-size: 0.72rem;
+  min-height: 44px;
+  padding: 0.35rem 0.65rem;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+
+.ayah-action-sheet__tafsir-chip.is-active {
+  border-color: var(--mm-gold);
+  background: color-mix(in srgb, var(--mm-gold) 12%, var(--mm-paper));
+}
+
+.ayah-action-sheet__tafsir-chip-level {
+  font-size: 0.62rem;
+  opacity: 0.72;
+}
+
+.ayah-action-sheet__tafsir-font {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 0.45rem;
+}
+
+.ayah-action-sheet__font-btn {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 30%, #ccc);
+  border-radius: 0.45rem;
+  background: var(--mm-paper-deep);
+  min-width: 44px;
+  min-height: 44px;
+  font: inherit;
+  font-weight: 700;
+}
+
+.ayah-action-sheet__font-btn.is-active {
+  border-color: var(--mm-gold);
+}
+
+.ayah-action-sheet__tafsir-attribution {
+  margin: 0.5rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--mm-ink) 55%, transparent);
+}
+
+.ayah-action-sheet__sources-link {
+  color: var(--mm-gold);
+  text-decoration: underline;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.ayah-action-sheet__tafsir-text {
+  contain: layout style;
+}
+
 .ayah-action-sheet__tafsir {
   min-height: 0;
   overflow: auto;

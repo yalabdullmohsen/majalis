@@ -70,26 +70,41 @@ export const MUSHAF_TAFSIR_EDITIONS: MushafTafsirEdition[] = [
   },
 ];
 
-export const DEFAULT_MUSHAF_TAFSIR_EDITION = MUSHAF_TAFSIR_EDITIONS[0]!.id;
+export const DEFAULT_MUSHAF_TAFSIR_EDITION = "muyassar";
 export const DEFAULT_EXTENDED_TAFSIR_EDITION =
   MUSHAF_TAFSIR_EDITIONS.find((e) => e.id === "ar-tafsir-ibn-kathir")?.id ??
   MUSHAF_TAFSIR_EDITIONS[1]!.id;
 
-/** مفاتيح تفضيل قديمة (AlQuran Cloud) → معرفات مرحلة ٢ */
+/** مفاتيح تفضيل قديمة → معرفات السجل v1 */
 const LEGACY_TAFSIR_IDS: Record<string, string> = {
-  "ar.muyassar": "ar-tafsir-muyassar",
-  "ar.baghawi": "ar-tafsir-al-baghawi",
+  "ar-tafsir-muyassar": "muyassar",
+  "ar-tafseer-al-saddi": "saadi",
+  "ar-tafsir-ibn-kathir": "ibn-kathir",
+  "ar-tafsir-al-baghawi": "baghawi",
+  "ar-tafsir-al-tabari": "tabari",
+  "ar.muyassar": "muyassar",
+  "ar.baghawi": "baghawi",
 };
 
 export function resolveMushafTafsirEditionId(raw: string | null | undefined): string {
-  if (!raw) return DEFAULT_MUSHAF_TAFSIR_EDITION;
-  const mapped = LEGACY_TAFSIR_IDS[raw] ?? raw;
-  if (MUSHAF_TAFSIR_EDITIONS.some((e) => e.id === mapped)) return mapped;
-  return DEFAULT_MUSHAF_TAFSIR_EDITION;
+  if (!raw) return "muyassar";
+  return LEGACY_TAFSIR_IDS[raw] ?? raw;
 }
 
+const REGISTRY_ID_TO_QCOM: Record<string, string> = {
+  muyassar: "ar-tafsir-muyassar",
+  saadi: "ar-tafseer-al-saddi",
+  "ibn-kathir": "ar-tafsir-ibn-kathir",
+  baghawi: "ar-tafsir-al-baghawi",
+  tabari: "ar-tafsir-al-tabari",
+};
+
 export function getMushafTafsirEdition(id: string): MushafTafsirEdition | undefined {
-  return MUSHAF_TAFSIR_EDITIONS.find((e) => e.id === id);
+  const resolved = resolveMushafTafsirEditionId(id);
+  const direct = MUSHAF_TAFSIR_EDITIONS.find((e) => e.id === id || e.id === resolved);
+  if (direct) return direct;
+  const slug = REGISTRY_ID_TO_QCOM[resolved];
+  return slug ? MUSHAF_TAFSIR_EDITIONS.find((e) => e.quranComSlug === slug) : undefined;
 }
 
 const TAFSIR_PREF_KEY = "majlisilm.mushaf.tafsir-edition";
@@ -103,8 +118,10 @@ export function loadMushafTafsirEdition(): string {
 }
 
 export function saveMushafTafsirEdition(id: string): void {
+  const resolved = resolveMushafTafsirEditionId(id);
   try {
-    localStorage.setItem(TAFSIR_PREF_KEY, resolveMushafTafsirEditionId(id));
+    localStorage.setItem(TAFSIR_PREF_KEY, resolved);
+    localStorage.setItem("majalis-mushaf-tafsir-edition-v1", resolved);
   } catch {
     /* ignore */
   }
