@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Download, Trash2 } from "lucide-react";
 import { getSelectableReciters } from "@/lib/quran-audio";
+import { getVerifiedReciters, getVerifiedRecitersSyncFallback } from "@/lib/audio-registry";
 import {
   getAllDownloadStatuses,
   downloadReciter,
@@ -26,6 +27,7 @@ export function ReciterDownloadManager() {
   const [storage, setStorage] = useState<{ usage: number; quota: number } | null>(null);
   const [quotaMsg, setQuotaMsg] = useState<string | null>(null);
   const cancelRef = useRef(false);
+  const [verifiedReciters, setVerifiedReciters] = useState(() => getVerifiedRecitersSyncFallback());
 
   const refresh = async () => {
     setStatuses(await getAllDownloadStatuses());
@@ -33,6 +35,18 @@ export function ReciterDownloadManager() {
   };
 
   useEffect(() => { void refresh(); }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const list = await getVerifiedReciters();
+      if (cancelled) return;
+      setVerifiedReciters(list);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleDownload = async (reciterId: string) => {
     cancelRef.current = false;
@@ -61,6 +75,11 @@ export function ReciterDownloadManager() {
     await refresh();
   };
 
+  const verifiedIdSet = new Set(verifiedReciters.map((r) => r.id));
+  const selectable = getSelectableReciters("surah");
+  const filteredSelectable = selectable.filter((r) => verifiedIdSet.has(r.id));
+  const visibleReciters = filteredSelectable.length > 0 ? filteredSelectable : selectable;
+
   return (
     <div className="mpv-settings-group">
       <span className="mpv-settings-group__label">
@@ -79,7 +98,7 @@ export function ReciterDownloadManager() {
         </p>
       ) : null}
       <div className="rdm-list">
-        {getSelectableReciters("surah").map((r) => {
+        {visibleReciters.map((r) => {
           const status = statuses.find((s) => s.reciterId === r.id);
           const isDownloading = activeDownload?.reciterId === r.id;
           const percent = isDownloading ? Math.round((activeDownload!.done / activeDownload!.total) * 100) : 0;
