@@ -171,3 +171,12 @@ body {
     min-height: 20rem;
   }
 }
+
+/* بذرة FCP — تُزال عند mount React؛ FCP يُسجَّل قبل JS */
+.mj-fcp-seed {
+  margin: calc(var(--header-h) + var(--ticker-h) + 12rem) var(--gutter-inline-end) 0 var(--gutter-inline-start);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #555;
+  font-family: "Amiri", "MajlisAmiriFallback", "Noto Naskh Arabic", serif;
+}

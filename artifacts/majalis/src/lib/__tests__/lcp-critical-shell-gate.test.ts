@@ -26,7 +26,7 @@ assert.doesNotMatch(html, /id="mj-lcp-title"/, "لا نقل عقدة h1");
 assert.match(html, /id="mj-lcp-critical"/, "خلفية html/body/#root فقط");
 assert.doesNotMatch(html, /id="mj-home-lcp-static"/, "لا صدفة HTML ثابتة (A-4)");
 assert.doesNotMatch(html, /id="mj-app-mount"/, "React يركّب في #root مباشرة");
-assert.match(html, /<div id="root"><\/div>/, "#root فارغ قبل JS");
+assert.match(html, /id="mj-fcp-seed"/, "بذرة FCP minimal قبل JS");
 assert.doesNotMatch(html, /dns-prefetch/, "لا dns-prefetch في الإقلاع");
 {
   const n = [...html.matchAll(/rel="preconnect"/g)].length;
