@@ -161,7 +161,7 @@ async function main() {
   sliceMp3(src.aqsa, join(tmp, "aqsa.mp3"), 0, CLIP_BYTES);
   copyMp3(join(tmp, "aqsa.mp3"), join(PUBLIC, "adhan-aqsa-full.mp3"));
 
-  sliceMp3(src.fajr, join(tmp, "fajr.mp3"), 0, CLIP_BYTES * 2);
+  sliceMp3(src.fajr, join(tmp, "fajr.mp3"), 0, CLIP_BYTES);
   copyMp3(join(tmp, "fajr.mp3"), join(PUBLIC, "adhan-makkah-fajr.mp3"));
 
   sliceMp3(src.takbir, join(tmp, "tak.mp3"), 0, SHORT_BYTES);
