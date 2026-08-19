@@ -81,12 +81,8 @@ export function MushafAyahLine({
         const selected = selectedVerseKey === w.verseKey;
         const playing = playingVerseKey === w.verseKey;
         const isEnd = w.charType === "end";
-        const stateClass = [
-          selected ? "is-selected ayah-active" : "",
-          playing ? "is-playing" : "",
-        ]
-          .filter(Boolean)
-          .join(" ");
+        // إبراز الآية على مستوى الكل (ayah-active) دون إبراز-كلمة افتراضي (is-selected).
+        const stateClass = [selected ? "ayah-active" : "", playing ? "is-playing" : ""].filter(Boolean).join(" ");
 
         return (
           <span
@@ -95,6 +91,7 @@ export function MushafAyahLine({
             data-type={w.charType}
             data-key={w.verseKey}
             data-verse={w.verseKey}
+            data-ayah={w.verseKey}
             data-testid="mushaf-ayah-hit"
             role="button"
             tabIndex={0}
