@@ -11,6 +11,7 @@ import {
   SkipBack,
   SkipForward,
   Sparkles,
+  Volume2,
   X,
 } from "lucide-react";
 import { createPortal } from "react-dom";
@@ -20,6 +21,14 @@ import { getSurahMeta } from "@/lib/quran-api";
 import { QURAN_DATA_FEATURES } from "@/lib/quran-data/flags";
 import { fetchMushafAyahTafsir } from "@/lib/quran-data/fetch-ayah-content";
 import {
+  displayScholarLabel,
+  findTafsirAudioForAyah,
+  loadTafsirAudioCatalog,
+  playTafsirAudioClip,
+  stopTafsirAudio,
+  type TafsirAudioClip,
+} from "@/lib/quran-data/tafsir-audio";
+import {
   loadMushafTafsirEdition,
   MUSHAF_TAFSIR_EDITIONS,
   saveMushafTafsirEdition,
@@ -28,7 +37,7 @@ import { MUSHAF_RECITER_IDS } from "./MushafAudioDock";
 import { parseVerseKey, type RecitationRange } from "./mushaf-page-for-ayah";
 
 type SheetHeight = "collapsed" | "half" | "full";
-type SheetTab = "tafsir" | "tilawa" | "meanings" | "tajweed";
+type SheetTab = "tafsir" | "tafsir-audio" | "tilawa" | "meanings" | "tajweed";
 
 type Props = {
   verseKey: string;
@@ -99,6 +108,10 @@ export function AyahActionSheet({
   const [editionId, setEditionId] = useState(loadMushafTafsirEdition);
   const [tafsirText, setTafsirText] = useState<string | null>(null);
   const [tafsirLoading, setTafsirLoading] = useState(false);
+  const [tafsirAudioClip, setTafsirAudioClip] = useState<TafsirAudioClip | null>(null);
+  const [tafsirAudioLoading, setTafsirAudioLoading] = useState(false);
+  const [tafsirAudioError, setTafsirAudioError] = useState<string | null>(null);
+  const [tafsirAudioActiveClipId, setTafsirAudioActiveClipId] = useState<string | null>(null);
   const [range, setRange] = useState<RecitationRange>("ayah");
   const [repeatCount, setRepeatCount] = useState(1);
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -119,6 +132,8 @@ export function AyahActionSheet({
   const currentReciter = getReciter(reciterId);
   const edition = MUSHAF_TAFSIR_EDITIONS.find((e) => e.id === editionId) ?? MUSHAF_TAFSIR_EDITIONS[0]!;
   const expanded = height !== "collapsed";
+  const tafsirAudioAvailable = Boolean(tafsirAudioClip?.enabled && tafsirAudioClip?.streamUrl);
+  const tafsirAudioPlaying = Boolean(tafsirAudioAvailable && playing && tafsirAudioActiveClipId === tafsirAudioClip?.id);
   const meaningsOn = QURAN_DATA_FEATURES.ayahMeaningsTab;
   const tajweedOn = QURAN_DATA_FEATURES.ayahTajweedTab;
 
@@ -127,6 +142,7 @@ export function AyahActionSheet({
     setTab("tafsir");
     setReadersOpen(false);
     setRange("ayah");
+    setTafsirAudioActiveClipId(null);
   }, [verseKey]);
 
   useEffect(() => {
@@ -149,6 +165,46 @@ export function AyahActionSheet({
       });
     return () => ac.abort();
   }, [parsed?.surah, parsed?.ayah, editionId]);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!parsed) {
+      setTafsirAudioClip(null);
+      setTafsirAudioError(null);
+      setTafsirAudioLoading(false);
+      setTafsirAudioActiveClipId(null);
+      return;
+    }
+
+    setTafsirAudioLoading(true);
+    setTafsirAudioError(null);
+    setTafsirAudioClip(null);
+
+    void loadTafsirAudioCatalog()
+      .then((clips) => {
+        if (cancelled) return;
+        const clip = findTafsirAudioForAyah(clips, parsed.surah, parsed.ayah);
+        setTafsirAudioClip(clip);
+        setTafsirAudioError(clip?.enabled && clip.streamUrl ? null : "التفسير الصوتي غير متاح لهذه الآية");
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setTafsirAudioClip(null);
+        setTafsirAudioError("تعذّر تحميل كتالوج التفسير الصوتي");
+      })
+      .finally(() => {
+        if (cancelled) return;
+        setTafsirAudioLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [parsed?.surah, parsed?.ayah]);
+
+  useEffect(() => {
+    if (tab !== "tafsir-audio") setTafsirAudioActiveClipId(null);
+  }, [tab]);
 
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
@@ -295,6 +351,17 @@ export function AyahActionSheet({
               <BookOpen size={18} aria-hidden="true" />
               <span>تفسير</span>
             </button>
+            {tafsirAudioAvailable ? (
+              <button
+                type="button"
+                role="tab"
+                aria-selected={tab === "tafsir-audio"}
+                onClick={() => selectTab("tafsir-audio")}
+              >
+                <Volume2 size={18} aria-hidden="true" />
+                <span>تفسير صوتي</span>
+              </button>
+            ) : null}
             <button
               type="button"
               role="tab"
@@ -381,6 +448,61 @@ export function AyahActionSheet({
                     </button>
                   </div>
                 ) : null}
+              </div>
+            ) : null}
+
+            {tab === "tafsir-audio" ? (
+              <div className="ayah-action-sheet__tafsir-audio">
+                {tafsirAudioLoading ? (
+                  <p className="mm-ayah-bar__status">جاري تحميل التفسير الصوتي…</p>
+                ) : tafsirAudioClip ? (
+                  <>
+                    <div className="ayah-action-sheet__primary" role="group" aria-label="تشغيل التفسير الصوتي">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!tafsirAudioClip) return;
+                          // إيقاف إذا كان نفس المقطع يعمل
+                          if (tafsirAudioPlaying) {
+                            void stopTafsirAudio().finally(() => setTafsirAudioActiveClipId(null));
+                            return;
+                          }
+
+                          setTafsirAudioError(null);
+                          setTafsirAudioActiveClipId(tafsirAudioClip.id);
+                          void playTafsirAudioClip(tafsirAudioClip, { ayah: parsed?.ayah, resume: true }).then(
+                            (r) => {
+                              if (!r.ok) {
+                                setTafsirAudioActiveClipId(null);
+                                setTafsirAudioError(r.reason || "تعذّر تشغيل التفسير الصوتي");
+                              }
+                            },
+                          );
+                        }}
+                      >
+                        {tafsirAudioPlaying ? (
+                          <Pause size={18} aria-hidden="true" />
+                        ) : (
+                          <Play size={18} aria-hidden="true" />
+                        )}
+                        <span>{tafsirAudioPlaying ? "إيقاف" : "تشغيل"}</span>
+                      </button>
+                    </div>
+
+                    {expanded ? (
+                      <div className="ayah-action-sheet__tafsir-audio-meta" role="group" aria-label="بيانات المقطع">
+                        <p className="mm-ayah-bar__status">
+                          {tafsirAudioClip.titleAr} — {displayScholarLabel(tafsirAudioClip)}
+                        </p>
+                        {tafsirAudioError ? (
+                          <p className="mm-ayah-bar__status mm-ayah-bar__status--err">{tafsirAudioError}</p>
+                        ) : null}
+                      </div>
+                    ) : null}
+                  </>
+                ) : (
+                  <p className="mm-ayah-bar__status">{tafsirAudioError ?? "التفسير الصوتي غير متاح لهذه الآية."}</p>
+                )}
               </div>
             ) : null}
 
