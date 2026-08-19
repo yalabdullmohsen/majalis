@@ -7,6 +7,8 @@ import {
   getMushafTafsirEdition,
   type MushafTafsirEdition,
 } from "@/lib/quran-data/tafsir-editions";
+import { readBundledTafsirAyah } from "@/lib/quran-data/bundled-tafsir";
+import { getTafsirById, loadTafsirRegistry, resolveRegistryTafsirId } from "@/lib/quran-data/tafsir-registry";
 import {
   getMushafTranslationEdition,
   type MushafTranslationEdition,
@@ -70,16 +72,43 @@ export async function fetchMushafAyahTafsir(
   editionId: string,
   signal?: AbortSignal,
 ): Promise<AyahContentResult | null> {
-  const edition: MushafTafsirEdition | undefined = getMushafTafsirEdition(editionId);
+  const resolvedId = resolveRegistryTafsirId(editionId);
+  const registry = await loadTafsirRegistry();
+  const regEntry = getTafsirById(registry.tafsirs ?? [], resolvedId);
+
+  const edition: MushafTafsirEdition | undefined =
+    getMushafTafsirEdition(editionId) ??
+    getMushafTafsirEdition(resolvedId) ??
+    (regEntry
+      ? {
+          id: regEntry.id,
+          label: regEntry.name,
+          author: regEntry.author,
+          level: regEntry.level,
+          quranComSlug: regEntry.quranComSlug,
+          sourceNoteAr: regEntry.source.name,
+        }
+      : undefined);
   if (!edition) return null;
 
-  const key = `t:${edition.quranComSlug}:${verseKey(surah, ayah)}`;
+  const slug = edition.quranComSlug;
+  const key = `t:${slug}:${verseKey(surah, ayah)}`;
   const mem = tafsirMemory.get(key);
   if (mem) return { text: mem, editionId: edition.id, fromCache: true };
   const sess = readTafsirSession(key);
   if (sess) {
     tafsirMemory.set(key, sess);
     return { text: sess, editionId: edition.id, fromCache: true };
+  }
+
+  if (regEntry?.bundled) {
+    const bundled = await readBundledTafsirAyah(surah, ayah, regEntry.id);
+    if (bundled) {
+      tafsirMemory.set(key, bundled);
+      writeTafsirSession(key, bundled);
+      return { text: bundled, editionId: edition.id, fromCache: true };
+    }
+    /* آية ناقصة في الحزمة — تابع للشبكة */
   }
 
   if (QURAN_DATA_FEATURES.offlineTafsirPacks) {
