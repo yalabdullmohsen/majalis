@@ -2,14 +2,17 @@
 
 ## تلاوة القرآن (Ayah-level) — EveryAyah
 
-| reciterId | القارئ | جودة | reciter_folder |
-|---|---|---:|---|
-| `husary` | محمود خليل الحصري | 128 | `Husary_128kbps` |
-| `minshawi` | محمد صديق المنشاوي | 128 | `Minshawy_Murattal_128kbps` |
-| `alafasy` | مشاري راشد العفاسي | 128 | `Alafasy_128kbps` |
+| reciterId | القارئ | kbps | reciter_folder | QA | checked | missing | آخر فحص |
+|---|---|---:|---|---|---:|---:|---|
+| `husary` | محمود خليل الحصري | 128 | `Husary_128kbps` | ✅ PASS | 6236 | 0 | 2026-08-19 |
+| `minshawi` | محمد صديق المنشاوي | 128 | `Minshawy_Murattal_128kbps` | ✅ PASS | 6236 | 0 | 2026-08-19 |
+| `alafasy` | مشاري راشد العفاسي | 128 | `Alafasy_128kbps` | ✅ PASS | 6236 | 0 | 2026-08-19 |
 
-- النمط: `https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3`
-- QA: `pnpm run audit:audio:stratified` ثم `pnpm run audit:audio:full`
+- **النمط:** `https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3`
+- **السماح:** بث آية بآية — لا ملفات صوتية في حزمة التطبيق
+- **القرّاء المعروضون في التطبيق:** `alafasy`، `husary`، `minshawi`
+- **QA:** `pnpm run audit:audio:stratified` ثم `pnpm run audit:audio:full`
+- **بوابة:** `docs/AUDIO_QA.full-audit-gate.json`
 
 ### احتياط Islamic Network CDN
 - `https://cdn.islamic.network/quran/audio/128/{edition}/{ayahNumber}.mp3`

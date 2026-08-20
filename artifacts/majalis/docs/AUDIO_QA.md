@@ -9,8 +9,8 @@
 
 | reciterId | المصدر | checked | status | LUFS | mode |
 |---|---|---:|---|---|---|
-| `husary` | EveryAyah 128 | 200 | pass | n/a | stratified |
-| `minshawi` | EveryAyah 128 | 200 | pass | n/a | stratified |
-| `alafasy` | EveryAyah 128 | 200 | pass | n/a | stratified |
+| `alafasy` | EveryAyah 128 | 6236 | pass | n/a | full |
+| `husary` | EveryAyah 128 | 6236 | pass | n/a | full |
+| `minshawi` | EveryAyah 128 | 6236 | pass | n/a | full |
 
-> آخر تحديث: 2026-08-19T17:28:51.590Z — mode=stratified
+> آخر تحديث: 2026-08-19T18:40:56.307Z — mode=full

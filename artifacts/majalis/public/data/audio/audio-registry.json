@@ -1,7 +1,7 @@
 {
   "version": 1,
   "updatedAt": "2026-08-19",
-  "notes": "سجل الصوت — يُستخدم لبناء قائمة القرّاء المعروضة بعد QA. على مستوى البداية: نُفعل 3 قرّاء فقط (128+ / EveryAyah).",
+  "notes": "سجل الصوت — verified=true فقط بعد audit:audio:full PASS. القائمة المعروضة = verified فقط.",
   "reciters": [
     {
       "id": "husary",
@@ -9,10 +9,12 @@
       "style": "مرتل",
       "granularity": "ayah",
       "bitrate": 128,
+      "folder": "Husary_128kbps",
       "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
       "source": "everyayah",
       "verified": true,
-      "filesPresent": 6236
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-08-19T18:40:56.307Z"
     },
     {
       "id": "minshawi",
@@ -20,10 +22,12 @@
       "style": "مرتل",
       "granularity": "ayah",
       "bitrate": 128,
+      "folder": "Minshawy_Murattal_128kbps",
       "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
       "source": "everyayah",
       "verified": true,
-      "filesPresent": 6236
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-08-19T18:40:56.307Z"
     },
     {
       "id": "alafasy",
@@ -31,10 +35,12 @@
       "style": "مرتل",
       "granularity": "ayah",
       "bitrate": 128,
+      "folder": "Alafasy_128kbps",
       "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
       "source": "everyayah",
       "verified": true,
-      "filesPresent": 6236
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-08-19T18:25:21.316Z"
     },
     {
       "id": "abdulsamad",
@@ -42,10 +48,11 @@
       "style": "مرتل",
       "granularity": "ayah",
       "bitrate": 192,
+      "folder": "Abdul_Basit_Murattal_192kbps",
       "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
       "source": "everyayah",
       "verified": false,
-      "filesPresent": 6236
+      "filesPresent": 0
     }
   ],
   "adhan": [
@@ -75,4 +82,3 @@
     "clips": []
   }
 }
-
