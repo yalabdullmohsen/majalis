@@ -67,6 +67,20 @@ for (const c of CASES) {
   assert.ok(existsSync(file), `${c.label}: ملف الصفحة ${c.page}`);
 }
 
+/* ١١٣ سورة لها بسملة بصرية (كل السور عدا التوبة) — الفاتحة آية مرقّمة */
+const withPre = chapters.filter((c) => c.bismillah_pre === true);
+const withoutPre = chapters.filter((c) => c.bismillah_pre === false);
+assert.equal(withPre.length, 112, `bismillah_pre=true يجب ١١٢ (الفعلي ${withPre.length})`);
+assert.equal(withoutPre.length, 2, "الفاتحة + التوبة فقط بلا bismillah_pre");
+assert.deepEqual(
+  withoutPre.map((c) => c.id).sort((a, b) => a - b),
+  [1, 9],
+  "المستثنيان: ١ و٩",
+);
+const naml = chapter(27);
+assert.equal(naml.bismillah_pre, true, "النمل: بسملة مطلعية + ٢٧:٣٠ داخل النص");
+assert.match(pageSrc, /النمل|27/, "تعليق النمل في MushafPage");
+
 for (const n of [1, 2, 440, 453, 600, 602]) {
   assert.ok(existsSync(resolve(pagesDir, `page-${String(n).padStart(3, "0")}.json`)), `صفحة ${n}`);
 }

@@ -5,15 +5,22 @@ type Props = {
 };
 
 /**
- * ذيل الصفحة — قاعدة المرجع:
- * إن ابتدأ حزب: الوصف يساراً والخرطوش يميناً.
- * وإلا: الخرطوش يساراً ولا وصف حزب.
+ * ذيل الصفحة — كلاسيكي هادئ:
+ * - رقم الصفحة في خرطوش بسيط (بلا ميداليات).
+ * - الحافة المتناوبة: فردية يمين · زوجية يسار.
+ * - وصف الحزب فقط في صفحة ابتدائه.
  */
 export function MushafPageFooter({ pageNumber, hizbStartingOnPage = null }: Props) {
   const hizbStart = hizbStartingOnPage != null && hizbStartingOnPage > 0;
+  const parity = pageNumber % 2 === 0 ? "even" : "odd";
   const side = hizbStart ? "hizb-start" : "default";
   return (
-    <footer className="mm-page-footer" data-side={side} data-testid="mushaf-page-footer">
+    <footer
+      className="mm-page-footer"
+      data-side={side}
+      data-parity={parity}
+      data-testid="mushaf-page-footer"
+    >
       {hizbStart ? (
         <span className="mm-page-footer__hizb" aria-label={`الحزب ${hizbStartingOnPage}`}>
           الحزب {toArabicDigits(hizbStartingOnPage!)}
@@ -21,20 +28,17 @@ export function MushafPageFooter({ pageNumber, hizbStartingOnPage = null }: Prop
       ) : null}
       <span className="mm-page-footer__badge" aria-label={`صفحة ${pageNumber}`}>
         <svg className="mm-page-footer__cartouche" viewBox="0 0 96 36" aria-hidden="true">
-          <path
-            d="M10 18c0-8 6-14 14-14h48c8 0 14 6 14 14s-6 14-14 14H24c-8 0-14-6-14-14Z"
+          <rect
+            x="8"
+            y="6"
+            width="80"
+            height="24"
+            rx="3"
+            ry="3"
             fill="var(--mm-banner-name-bg, #fffdf8)"
             stroke="var(--mm-gold-deep, #9a7d3c)"
-            strokeWidth="2"
+            strokeWidth="1.5"
           />
-          <path
-            d="M14 18c0-6 4.5-10.5 10.5-10.5h47c6 0 10.5 4.5 10.5 10.5S77.5 28.5 71.5 28.5h-47C18.5 28.5 14 24 14 18Z"
-            fill="none"
-            stroke="var(--mm-gold, #bf9f5b)"
-            strokeWidth="1"
-          />
-          <circle cx="12" cy="18" r="4.5" fill="var(--mm-banner-name-bg, #fffdf8)" stroke="var(--mm-gold-deep, #9a7d3c)" strokeWidth="1.2" />
-          <circle cx="84" cy="18" r="4.5" fill="var(--mm-banner-name-bg, #fffdf8)" stroke="var(--mm-gold-deep, #9a7d3c)" strokeWidth="1.2" />
         </svg>
         <span className="mm-page-footer__num">{toArabicDigits(pageNumber)}</span>
       </span>

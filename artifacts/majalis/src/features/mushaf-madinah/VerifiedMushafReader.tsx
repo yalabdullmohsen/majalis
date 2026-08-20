@@ -76,7 +76,7 @@ function mushafAudioLog(
  * VerifiedMushafReader — غلاف المصحف الموثّق:
  * صفحة بعرض آمن كامل، ملاءمة خط QPC بلا قص، قلب صفحة RTL، أدوات آية خارج النص.
  */
-export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex }: Props) {
+export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit, onIndex: _onIndex }: Props) {
   const page = clampMushafPage(pageNumber);
   const [layout, setLayout] = useState<MushafPageLayout | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -85,6 +85,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   const [actionsOpen, setActionsOpen] = useState(false);
   const [tafsirOpen, setTafsirOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [indexOpen, setIndexOpen] = useState(false);
   const [copyStatus, setCopyStatus] = useState<string | null>(null);
   const [reciterId, setReciterId] = useState(() => loadReciterId());
   const [playerState, setPlayerState] = useState<PlayerState>("idle");
@@ -534,7 +535,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       : null,
   );
 
-  const edgesDisabled = actionsOpen || tafsirOpen || searchOpen;
+  const edgesDisabled = actionsOpen || tafsirOpen || searchOpen || indexOpen;
 
   return (
     <MushafPager
@@ -610,12 +611,17 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       <MushafControls
         open={chromeOpen && !actionsOpen}
         pageNumber={page}
-        onExit={onExit}
-        onIndex={onIndex}
+        onIndex={() => {
+          setIndexOpen(true);
+          setChromeOpen(false);
+        }}
         onPrev={() => go(page - 1)}
         onNext={() => go(page + 1)}
         onGoto={go}
-        onSearch={() => setSearchOpen(true)}
+        onSearch={() => {
+          setSearchOpen(true);
+          setChromeOpen(false);
+        }}
         onToggleTheme={() => setTheme((t) => (t === "paper" ? "night" : "paper"))}
         themeLabel={theme === "paper" ? "المصحف الورقي" : "ليلي هادئ"}
       />
@@ -669,11 +675,15 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         </Suspense>
       ) : null}
 
-      {searchOpen ? (
+      {searchOpen || indexOpen ? (
         <Suspense fallback={null}>
           <MushafSearchSheet
-            open={searchOpen}
-            onClose={() => setSearchOpen(false)}
+            open={searchOpen || indexOpen}
+            mode={indexOpen ? "index" : "search"}
+            onClose={() => {
+              setSearchOpen(false);
+              setIndexOpen(false);
+            }}
             onGotoPage={(n, verseKey) => {
               go(n);
               if (verseKey) {

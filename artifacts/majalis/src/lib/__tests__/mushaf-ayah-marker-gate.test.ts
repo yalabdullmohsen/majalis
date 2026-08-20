@@ -35,7 +35,15 @@ assert.doesNotMatch(css, /border-radius:\s*50%\s*\/\s*42%/);
 assert.doesNotMatch(css, /height:\s*1\.55em/);
 assert.doesNotMatch(css, /font-size:\s*1\.22em/);
 assert.doesNotMatch(css, /ayah-marker|ayahBadge|verse-marker|end-marker/);
+assert.match(css, /--mm-ayah-mark\s*:/);
+assert.match(css, /\[data-type="end"\][^}]*color:\s*var\(--mm-ayah-mark\)|\.mm-ayah-hit--end[^}]*color:\s*var\(--mm-ayah-mark\)/);
 assert.match(css, /ayah-active/);
 assert.doesNotMatch(css, /transition:\s*background-color\s+150ms/);
+
+/* تظليل متصل بلا غلاف run يكسر space-between بين الكلمات */
+assert.match(line, /ayah-active\.mm-ayah-line__word|ayah-active/);
+assert.match(css, /\.ayah-active\.mm-ayah-line__word/);
+assert.match(css, /box-shadow:[\s\S]*?0\.22em/);
+assert.doesNotMatch(line, /border-radius:\s*3px/);
 
 console.log("mushaf-ayah-marker-gate.test.ts: ok");

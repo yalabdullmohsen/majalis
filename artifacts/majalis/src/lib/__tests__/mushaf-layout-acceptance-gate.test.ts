@@ -29,7 +29,7 @@ assert.doesNotMatch(
   css,
   /data-ayah-bar="1"\][^{]*\{[^}]*--mm-chrome-bottom-h:\s*var\(--mm-ayah-bar-h\)/,
 );
-assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*transparent|rgba\(0,\s*0,\s*0,\s*0\.45\)/);
+assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*transparent|rgba\(0,\s*0,\s*0,\s*0\.28\)/);
 
 // 3) لا تظليل multiply يعتّم النص
 assert.doesNotMatch(css, /mix-blend-mode:\s*multiply/);

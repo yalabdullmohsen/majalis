@@ -42,7 +42,7 @@ assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
 assert.match(css, /\.mm-page-edge/);
 assert.match(css, /#152018|#101812|#0e1410|#1c2430|#151c26|#101820|#0f1720|#0c1218/);
 assert.match(css, /\.mm-ayah-run__text\.is-selected/);
-assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*rgba\(0,\s*0,\s*0,\s*0\.45\)/);
+assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*rgba\(0,\s*0,\s*0,\s*0\.28\)/);
 assert.match(css, /\.mm-viewport\s+\.mm-page\s*\{[^}]*box-shadow:\s*none/);
 assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-qpc-size\)/);
 assert.match(css, /\.mm-reciter-sheet/);
@@ -50,7 +50,7 @@ assert.match(css, /--mm-outer-pad:\s*0/);
 assert.match(css, /--mm-chrome-top-h/);
 assert.match(css, /--mm-chrome-bottom-h/);
 assert.match(css, /\.mm-ayah-bar__handle/);
-assert.match(css, /height:\s*120px/);
+assert.match(css, /height:\s*140px/);
 assert.match(css, /height:\s*50dvh/);
 assert.match(css, /height:\s*90dvh/);
 assert.match(css, /z-index:\s*9999/);
@@ -96,9 +96,12 @@ assert.doesNotMatch(pager, /rotateY/);
 
 const controls = read("src/features/mushaf-madinah/MushafControls.tsx");
 assert.doesNotMatch(controls, /exitAlwaysVisible/);
-assert.match(controls, /data-exit/);
+assert.doesNotMatch(controls, /× خروج|mm-controls__exit|data-exit/, "بلا زر خروج زائد");
 assert.match(controls, /\{pageNumber\} \/ \{MUSHAF_PAGE_MAX\}/);
 assert.match(controls, /onSearch|بحث/);
+assert.match(controls, /فهرس/);
+
+assert.match(pager, /ArrowRight|ArrowLeft/, "أسهم لوحة المفاتيح");
 
 const actions = read("src/features/mushaf-madinah/AyahActionSheet.tsx");
 assert.match(actions, /mm-reciter-sheet/);

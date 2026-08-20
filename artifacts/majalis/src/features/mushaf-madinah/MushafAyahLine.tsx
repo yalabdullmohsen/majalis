@@ -20,7 +20,10 @@ type PressState = {
   longFired: boolean;
 };
 
-/** سطر آيات — كل كلمة عنصر flex يملأ العرض كالمصحف الورقي. */
+/**
+ * سطر آيات — كل كلمة عنصر flex مباشر (space-between كالمصحف الورقي).
+ * التظليل المتصل عبر CSS على .ayah-active (خلفية + ظل يملأ فراغات الضبط).
+ */
 export function MushafAyahLine({
   words,
   centered = false,
@@ -72,17 +75,14 @@ export function MushafAyahLine({
   };
 
   return (
-    <div
-      className="mm-ayah-line"
-      data-centered={centered ? "true" : "false"}
-      dir="rtl"
-    >
+    <div className="mm-ayah-line" data-centered={centered ? "true" : "false"} dir="rtl">
       {ordered.map((w) => {
         const selected = selectedVerseKey === w.verseKey;
         const playing = playingVerseKey === w.verseKey;
         const isEnd = w.charType === "end";
-        // إبراز الآية على مستوى الكل (ayah-active) دون إبراز-كلمة افتراضي (is-selected).
-        const stateClass = [selected ? "ayah-active" : "", playing ? "is-playing" : ""].filter(Boolean).join(" ");
+        const stateClass = [selected ? "ayah-active" : "", playing ? "is-playing" : ""]
+          .filter(Boolean)
+          .join(" ");
 
         return (
           <span
