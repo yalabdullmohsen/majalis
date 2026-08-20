@@ -1,35 +1,5 @@
 {
-  "createdAt": "2026-08-20T07:12:50.027Z",
-  "files": [
-    "01-fatiha-p1.png",
-    "02-baqarah-p2.png",
-    "03-imran-p50.png",
-    "04-nisa-p77.png",
-    "05-kahf-p293.png",
-    "06-yasin-p440.png",
-    "07-saffat-p446.png",
-    "08-sad-p453.png",
-    "09-nas-p604.png",
-    "10-tawbah-p187-no-basmala.png",
-    "11-naml-p377.png",
-    "12-naml-p378.png",
-    "13-frame-p1-day.png",
-    "14-frame-p2-day.png",
-    "15-frame-p50-day.png",
-    "16-frame-p77-day.png",
-    "17-frame-p1-night.png",
-    "18-frame-p2-night.png",
-    "19-odd-p3.png",
-    "20-even-p4.png",
-    "21-marks-p2-day.png",
-    "22-marks-p2-night.png",
-    "23-ayah-panel-day.png",
-    "24-ayah-panel-night.png",
-    "25-index-sheet.png",
-    "26-nav-p10.png",
-    "27-nav-p11.png",
-    "28-nav-p12.png",
-    "29-nav-back-p11.png",
-    "30-hizb-p62.png"
-  ]
+  "createdAt": "2026-08-20T07:24:41.105Z",
+  "outDir": "/Users/alabdullmohsen/majlis-app/artifacts/majalis/artifacts/mushaf-classic-round",
+  "count": 29
 }

@@ -466,6 +466,12 @@ html.dark .mm-surah-frame__name {
   box-sizing: border-box;
 }
 
+/* عند فشل قياس الفجوة: لا تباعد منفلت كلمةً كلمة */
+.mm-ayah-line[data-fill="false"] {
+  justify-content: flex-start;
+}
+
+/* space-between فقط عند data-fill=true وبعد بوابة فجوة الكلمات */
 .mm-ayah-line[data-fill="true"] {
   justify-content: space-between;
 }
@@ -515,43 +521,26 @@ html.dark .mm-surah-frame__name {
   outline-offset: 1px;
 }
 
-/* مقطع آية متصل — تظليل خلف النص بلا إزاحة تخطيط (zero layout shift) */
-.mm-ayah-run {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: baseline;
-  position: relative;
-  z-index: 1;
-  gap: 0;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
+/*
+ * تظليل آية متصل: خلفية على كل كلمة + ظل يملأ فراغات space-between
+ * (بلا صناديق منفصلة ظاهرة، وبلا غلاف run يكسر ضبط الأسطر).
+ * .mm-ayah-run__text يُستخدم في البسملة فقط.
+ */
 .mm-ayah-run__text {
-  display: inline-flex;
-  align-items: baseline;
-  position: relative;
-  z-index: 1;
-  border-radius: 0.2em;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-  padding: 0.02em 0.06em;
+  padding: 0;
   margin: 0;
   color: inherit;
-  opacity: 1;
-  mix-blend-mode: normal;
   background: transparent;
-  background-clip: padding-box;
-  box-shadow: none;
 }
 
 .mm-ayah-run__text.is-selected,
-.mm-ayah-run.ayah-active .mm-ayah-run__text,
-.ayah-active.mm-ayah-run .mm-ayah-run__text {
-  background: color-mix(in srgb, var(--mm-gold) 14%, transparent);
-  border-radius: 0.2em;
-  box-shadow: none;
+.ayah-active.mm-ayah-line__word {
+  background: color-mix(in srgb, var(--mm-gold) 12%, transparent);
+  border-radius: 0;
+  /* يمدّ اللون في فجوات الضبط حتى يبدو شريطاً واحداً */
+  box-shadow:
+    0.22em 0 0 color-mix(in srgb, var(--mm-gold) 12%, transparent),
+    -0.22em 0 0 color-mix(in srgb, var(--mm-gold) 12%, transparent);
 }
 
 .mm-ayah-line__word.is-selected {
@@ -561,24 +550,27 @@ html.dark .mm-surah-frame__name {
 }
 
 .mm-viewport[data-mushaf-theme="paper"] .mm-ayah-run__text.is-selected,
-.mm-viewport[data-mushaf-theme="paper"] .mm-ayah-run.ayah-active .mm-ayah-run__text {
+.mm-viewport[data-mushaf-theme="paper"] .ayah-active.mm-ayah-line__word {
   mix-blend-mode: normal;
 }
 
 html[data-theme="dark"] .mm-ayah-run__text.is-selected,
 html.dark .mm-ayah-run__text.is-selected,
 .mm-viewport[data-mushaf-theme="night"] .mm-ayah-run__text.is-selected,
-html[data-theme="dark"] .mm-ayah-run.ayah-active .mm-ayah-run__text,
-html.dark .mm-ayah-run.ayah-active .mm-ayah-run__text,
-.mm-viewport[data-mushaf-theme="night"] .mm-ayah-run.ayah-active .mm-ayah-run__text {
+html[data-theme="dark"] .ayah-active.mm-ayah-line__word,
+html.dark .ayah-active.mm-ayah-line__word,
+.mm-viewport[data-mushaf-theme="night"] .ayah-active.mm-ayah-line__word {
   background: color-mix(in srgb, var(--mm-gold) 16%, transparent);
-  box-shadow: none;
+  box-shadow:
+    0.22em 0 0 color-mix(in srgb, var(--mm-gold) 16%, transparent),
+    -0.22em 0 0 color-mix(in srgb, var(--mm-gold) 16%, transparent);
 }
 
-.mm-ayah-run__text.is-playing,
 .mm-ayah-line__word.is-playing {
   background: color-mix(in srgb, var(--mm-ayah-play) 100%, transparent);
-  box-shadow: none;
+  box-shadow:
+    0.22em 0 0 color-mix(in srgb, var(--mm-ayah-play) 100%, transparent),
+    -0.22em 0 0 color-mix(in srgb, var(--mm-ayah-play) 100%, transparent);
 }
 
 .mm-ayah-hit--end.is-selected,

@@ -20,24 +20,10 @@ type PressState = {
   longFired: boolean;
 };
 
-type VerseRun = { verseKey: string; words: QpcWord[] };
-
-/** يجمع كلمات الآية المتتالية في مقطع واحد — تظليل متصل بلا صناديق لكل كلمة. */
-function groupVerseRuns(words: QpcWord[]): VerseRun[] {
-  const ordered = [...words].sort((a, b) => a.id - b.id || a.position - b.position);
-  const runs: VerseRun[] = [];
-  for (const w of ordered) {
-    const last = runs[runs.length - 1];
-    if (last && last.verseKey === w.verseKey) {
-      last.words.push(w);
-    } else {
-      runs.push({ verseKey: w.verseKey, words: [w] });
-    }
-  }
-  return runs;
-}
-
-/** سطر آيات — مقاطع آية متصلة (flex) كالمصحف الورقي. */
+/**
+ * سطر آيات — كل كلمة عنصر flex مباشر (space-between كالمصحف الورقي).
+ * التظليل المتصل عبر CSS على .ayah-active (خلفية + ظل يملأ فراغات الضبط).
+ */
 export function MushafAyahLine({
   words,
   centered = false,
@@ -45,7 +31,7 @@ export function MushafAyahLine({
   playingVerseKey = null,
   onSelectVerse,
 }: Props) {
-  const runs = groupVerseRuns(words);
+  const ordered = [...words].sort((a, b) => a.id - b.id || a.position - b.position);
   const pressRef = useRef<PressState | null>(null);
 
   const clearPress = () => {
@@ -90,27 +76,29 @@ export function MushafAyahLine({
 
   return (
     <div className="mm-ayah-line" data-centered={centered ? "true" : "false"} dir="rtl">
-      {runs.map((run) => {
-        const selected = selectedVerseKey === run.verseKey;
-        const playing = playingVerseKey === run.verseKey;
-        const stateClass = [
-          selected ? "ayah-active" : "",
-          playing ? "is-playing" : "",
-        ]
+      {ordered.map((w) => {
+        const selected = selectedVerseKey === w.verseKey;
+        const playing = playingVerseKey === w.verseKey;
+        const isEnd = w.charType === "end";
+        const stateClass = [selected ? "ayah-active" : "", playing ? "is-playing" : ""]
           .filter(Boolean)
           .join(" ");
 
         return (
           <span
-            key={`${run.verseKey}-${run.words[0]!.id}`}
-            className={`mm-ayah-run ${stateClass}`.trim()}
-            data-verse-run={run.verseKey}
+            key={`${w.verseKey}-${w.position}-${w.id}`}
+            className={`mm-ayah-line__word mm-ayah-hit ${isEnd ? "mm-ayah-hit--end" : ""} ${stateClass}`.trim()}
+            data-type={w.charType}
+            data-key={w.verseKey}
+            data-verse={w.verseKey}
+            data-ayah={w.verseKey}
+            data-testid="mushaf-ayah-hit"
             role="button"
             tabIndex={0}
-            aria-label={`آية ${run.verseKey}`}
+            aria-label={`آية ${w.verseKey}`}
             aria-pressed={selected}
-            onPointerDown={(e: ReactPointerEvent<HTMLElement>) => startPress(run.verseKey, e)}
-            onPointerUp={(e: ReactPointerEvent<HTMLElement>) => endPress(run.verseKey, e)}
+            onPointerDown={(e: ReactPointerEvent<HTMLElement>) => startPress(w.verseKey, e)}
+            onPointerUp={(e: ReactPointerEvent<HTMLElement>) => endPress(w.verseKey, e)}
             onPointerCancel={(e: ReactPointerEvent<HTMLElement>) => {
               e.stopPropagation();
               clearPress();
@@ -123,28 +111,11 @@ export function MushafAyahLine({
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
                 e.stopPropagation();
-                onSelectVerse?.(run.verseKey);
+                onSelectVerse?.(w.verseKey);
               }
             }}
           >
-            <span className={`mm-ayah-run__text ${stateClass}`.trim()}>
-              {run.words.map((w) => {
-                const isEnd = w.charType === "end";
-                return (
-                  <span
-                    key={`${w.verseKey}-${w.position}-${w.id}`}
-                    className={`mm-ayah-line__word mm-ayah-hit ${isEnd ? "mm-ayah-hit--end" : ""}`.trim()}
-                    data-type={w.charType}
-                    data-key={w.verseKey}
-                    data-verse={w.verseKey}
-                    data-ayah={w.verseKey}
-                    data-testid="mushaf-ayah-hit"
-                  >
-                    {w.glyphText}
-                  </span>
-                );
-              })}
-            </span>
+            {w.glyphText}
           </span>
         );
       })}

@@ -40,7 +40,10 @@ assert.match(css, /\[data-type="end"\][^}]*color:\s*var\(--mm-ayah-mark\)|\.mm-a
 assert.match(css, /ayah-active/);
 assert.doesNotMatch(css, /transition:\s*background-color\s+150ms/);
 
-assert.match(line, /groupVerseRuns|mm-ayah-run/);
+/* تظليل متصل بلا غلاف run يكسر space-between بين الكلمات */
+assert.match(line, /ayah-active\.mm-ayah-line__word|ayah-active/);
+assert.match(css, /\.ayah-active\.mm-ayah-line__word/);
+assert.match(css, /box-shadow:[\s\S]*?0\.22em/);
 assert.doesNotMatch(line, /border-radius:\s*3px/);
 
 console.log("mushaf-ayah-marker-gate.test.ts: ok");

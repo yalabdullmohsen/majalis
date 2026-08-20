@@ -40,7 +40,7 @@ type PagerProps = {
 >;
 
 const DEFAULT_IGNORE =
-  ".mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-ayah-hit, .mm-ayah-run, .mm-page-edge, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet, .mm-basmala--qpc";
+  ".mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-ayah-hit, .mm-page-edge, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet, .mm-basmala--qpc";
 
 function prefersReducedMotion(): boolean {
   return typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
@@ -226,7 +226,7 @@ export function MushafPager({
     }
 
     if (Math.abs(dx) < 12 && Math.abs(dy) < 12) {
-      if (t.closest(".mm-ayah-hit, .mm-ayah-run, .mm-basmala--qpc")) return;
+      if (t.closest(".mm-ayah-hit, .mm-basmala--qpc")) return;
       const rect = (shellRef.current ?? e.currentTarget).getBoundingClientRect();
       const relX = (e.clientX - rect.left) / Math.max(1, rect.width);
       if (relX >= 0.85) {
