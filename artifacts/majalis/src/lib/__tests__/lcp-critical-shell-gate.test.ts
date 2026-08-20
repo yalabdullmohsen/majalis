@@ -5,10 +5,15 @@
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
+const require = createRequire(import.meta.url);
+const { getPreviewThresholds } = require(resolve(root, "scripts/lhci-thresholds.cjs"));
+const preview = getPreviewThresholds();
+const lhciRc = require(resolve(root, "lighthouserc.cjs"));
 const html = readFileSync(resolve(root, "index.html"), "utf8");
 const home = readFileSync(resolve(root, "src/pages/account/ui/HomeView.tsx"), "utf8");
 const prewarm = readFileSync(resolve(root, "src/lib/resource-prewarm.ts"), "utf8");
@@ -19,7 +24,6 @@ const app = readFileSync(resolve(root, "src/App.tsx"), "utf8");
 const homeCss = readFileSync(resolve(root, "src/styles/m2030/home.css"), "utf8");
 const finalCss = readFileSync(resolve(root, "src/styles/final-release.css"), "utf8");
 const critical = readFileSync(resolve(root, "src/styles/critical-first-paint.css"), "utf8");
-const lhci = readFileSync(resolve(root, "lighthouserc.cjs"), "utf8");
 
 assert.doesNotMatch(html, /id="mj-lcp-chrome"/, "لا صدفة عنوان خارج #root");
 assert.doesNotMatch(html, /id="mj-lcp-title"/, "لا نقل عقدة h1");
@@ -56,7 +60,11 @@ assert.match(homeCss, /\.mj-home-lcp-ph__start-here\s*\{[\s\S]*min-height:\s*37\
 assert.doesNotMatch(homeCss, /\.mj-home-lcp-ph\s*\{[\s\S]*min-height:\s*88rem/, "لا min-height مبالغ فيه على الحاوية");
 assert.doesNotMatch(finalCss, /\.hsh-steps[^}]*content-visibility/, "ابدأ من هنا فوق الطية بلا content-visibility");
 assert.doesNotMatch(html, /fonts\.googleapis\.com/, "لا Google Fonts في إقلاع /");
-assert.match(lhci, /maxNumericValue: 0\.02/, "عتبة CLS ≤0.020");
+assert.equal(
+  lhciRc.ci.assert.assertions["cumulative-layout-shift"][1].maxNumericValue,
+  preview.cls,
+  `عتبة CLS ≤${preview.cls} (main+10%)`,
+);
 assert.match(
   postBuild,
   /rel="canonical"\|rel="alternate"\|hreflang/,
