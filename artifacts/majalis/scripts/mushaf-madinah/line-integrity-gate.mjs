@@ -20,6 +20,12 @@
  * وُجد (نمط مطابق لـ scripts/mushaf-madinah/visual-snapshot.mjs — نفس الخادم
  * المستخدَم في وظيفة mushaf-gates بـ CI)، وإلا يبني خادمًا ثابتًا محليًا من
  * dist/ (يتطلب `pnpm build` مسبقًا).
+ *
+ * عمداً غير موصولة بوظيفة mushaf-gates في ci.yml: checkout وحده يستهلك هناك
+ * ~5 دقائق من سقف timeout-minutes: 10، فإضافتها (604 صفحة، Chromium حقيقي،
+ * ~4 دقائق) كانت تُنهي الوظيفة قسرًا منتصف التنفيذ (شُوهد فعليًا في CI
+ * 2026-08-20 — cancelled بعد 10م17ث). صالحة للتشغيل المحلي والتوطين لاحقًا
+ * في مهمة/جدولة بميزانية وقت مناسبة (مثل نمط mushaf-gates-nightly).
  */
 import { createServer } from "node:http";
 import { createReadStream, existsSync, statSync, readFileSync, writeFileSync } from "node:fs";

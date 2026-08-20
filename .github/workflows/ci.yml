@@ -400,14 +400,6 @@ jobs:
           pnpm --filter @workspace/majalis run test:mushaf-active-page-lines
           pnpm --filter @workspace/majalis run test:mushaf-flip-perf
 
-      # test:mushaf-line-integrity (604 صفحة، Chromium حقيقي، ~4 دقائق —
-      # راجع scripts/mushaf-madinah/line-integrity-gate.mjs) عُزل عمداً عن
-      # هذه الوظيفة: checkout وحده يستهلك هنا ~5 دقائق من سقف
-      # timeout-minutes: 10، فكانت إضافته تُنهي الوظيفة قسراً منتصف
-      # التنفيذ (شُوهد فعليًا في CI 2026-08-20 — cancelled بعد 10م17ث).
-      # السكربت وnpm script يبقيان صالحين للتشغيل المحلي والتوطين لاحقاً
-      # في مهمة/جدولة بميزانية وقت مناسبة (مثل نمط mushaf-gates-nightly).
-
       - name: Stop preview
         if: always()
         run: kill "$(cat /tmp/mushaf-vite.pid)" 2>/dev/null || true
