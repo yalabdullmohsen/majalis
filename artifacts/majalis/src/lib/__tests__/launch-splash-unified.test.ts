@@ -21,6 +21,8 @@ assert.match(indexHtml, /prefers-reduced-motion:\s*reduce/, "مسار بلا ح�
 assert.match(indexHtml, /__mjDismissSplash/, "دخولية تعرض دالة dismiss للطبقة الحاكمة");
 assert.match(indexHtml, /MIN_MS\s*=\s*900/, "حد أدنى 900ms موجود");
 assert.match(indexHtml, /MAX_MS\s*=\s*1500/, "حد أقصى 1500ms موجود");
+assert.match(indexHtml, /EXIT_MS\s*=\s*250/, "تلاشي HTML 250ms");
+assert.match(indexHtml, /id="mj-boot-skeleton"/, "هيكل إقلاع فوري");
 assert.match(indexHtml, /mj\.silent-splash\.session/, "جلسة: إقلاع بارد فقط");
 assert.match(
   indexHtml,
@@ -44,7 +46,7 @@ assert.match(splashChunk[0], /mj-silent-splash__progress/, "مؤشر تقدّم 
 
 const splashTs = readFileSync(resolve(root, "src/lib/splash-screen.ts"), "utf8");
 assert.match(splashTs, /SplashScreen\.hide/, "يخفي الإطلاق الأصلي");
-assert.match(splashTs, /fadeOutDuration:\s*0/, "بلا تلاشٍ مصطنع على الأصلي");
+assert.match(splashTs, /SPLASH_FADE_OUT_MS\s*=\s*250/, "تلاشٍ 250ms");
 assert.match(splashTs, /requestAnimationFrame/, "إخفاء عند أول إطار");
 assert.doesNotMatch(splashTs, /MajlisLaunchScreen/);
 
@@ -62,11 +64,13 @@ assert.doesNotMatch(launch, /image="Splash"/, "بلا Splash القديم");
 assert.doesNotMatch(launch, /systemBackgroundColor/, "بلا خلفية نظام بيضاء");
 assert.match(launch, /safeArea|Safe area/i, "يحترم safe area");
 assert.match(launch, /0\.054901960784313725/, `خلفية ${BG}`);
-assert.doesNotMatch(launch, /<(label|text|button)\b/i, "قصة الإطلاق بلا عناصر نص");
+assert.match(launch, /المجلس العلمي/, "عنوان على LaunchScreen");
+assert.match(launch, /دروس شرعية/, "سطر تعريفي على LaunchScreen");
+assert.match(launch, /mk-progress-track/, "مؤشر تقدّم على LaunchScreen");
 
 const capTs = readFileSync(resolve(root, "capacitor.config.ts"), "utf8");
 assert.match(capTs, /launchShowDuration:\s*0/, "مدة إظهار Splash = 0");
-assert.match(capTs, /launchAutoHide:\s*true/, "إخفاء تلقائي");
+assert.match(capTs, /launchAutoHide:\s*false/, "إخفاء برمجي — لا فجوة بيضاء قبل HTML");
 assert.match(capTs, /showSpinner:\s*false/, "بلا مؤشر تحميل أصلي");
 assert.match(capTs, new RegExp(`backgroundColor:\\s*"${BG}"`), "لون خلفية مطابق");
 
@@ -127,5 +131,13 @@ assert.ok(manifest.icons.some((i: { purpose?: string }) => i.purpose === "maskab
 
 assert.ok(existsSync(resolve(root, "public/brand/silent-splash-390x844.png")), "لقطة 390×844");
 assert.ok(existsSync(resolve(root, "public/brand/silent-splash-390x844-dark.png")), "لقطة الوضع الثاني");
+
+const swJs = readFileSync(resolve(root, "public/sw.js"), "utf8");
+assert.match(swJs, /majlisilm-v\$\{SW_BUILD_ID\}/, "كاش SW مربوط بالبناء");
+assert.match(swJs, /SW_UPDATED_RELOAD_ONCE/, "إعادة تحميل واحدة عند التحديث");
+
+const swClient = readFileSync(resolve(root, "src/lib/service-worker.ts"), "utf8");
+assert.match(swClient, /SW_UPDATED_RELOAD_ONCE/, "العميل يستمع لإعادة التحميل الواحدة");
+assert.match(swClient, /hadController/, "لا reload عند أول claim");
 
 console.log("launch-splash-unified.test.ts: ok");

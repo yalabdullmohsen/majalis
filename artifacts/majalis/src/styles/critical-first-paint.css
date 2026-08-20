@@ -47,6 +47,11 @@ body {
   box-sizing: border-box;
 }
 
+.top-section-bar {
+  min-height: 3.5rem;
+  box-sizing: border-box;
+}
+
 .header-ticker {
   height: var(--ticker-h);
   min-height: var(--ticker-h);

@@ -24,7 +24,7 @@ export function AppSplash(): null {
 
     const MIN_MS = 900;
     const MAX_MS = 1500;
-    const EXIT_MS = 300;
+    const EXIT_MS = 250;
 
     const onPaint = () => {
       const elapsed = performance.now() - start;

@@ -101,10 +101,10 @@ async function main() {
       throw new Error(`وجدت caches unversioned: ${caches.filter((k) => k.includes("unversioned")).join(",")}`);
     }
 
-    const offlineCaches = caches.filter((k) => k.startsWith("majalis-offline-"));
-    const dataCaches = caches.filter((k) => k.startsWith("majalis-data-"));
-    assert.ok(offlineCaches.length >= 1, "majalis-offline-* غير موجود");
-    assert.ok(dataCaches.length >= 1, "majalis-data-* غير موجود");
+    const offlineCaches = caches.filter((k) => /^majlisilm-v.+-offline$/.test(k));
+    const dataCaches = caches.filter((k) => /^majlisilm-v.+-data$/.test(k));
+    assert.ok(offlineCaches.length >= 1, "majlisilm-v*-offline غير موجود");
+    assert.ok(dataCaches.length >= 1, "majlisilm-v*-data غير موجود");
   } finally {
     await browser.close();
     await stop();

@@ -69,15 +69,16 @@ async function main() {
   try {
     await page.goto(`${base}/`, { waitUntil: "load", timeout: 60_000 });
 
-    const splashStart = await page.evaluate(() => window.__mjSplashStart);
-    assert.ok(typeof splashStart === "number", "window.__mjSplashStart موجود");
+    // الويب: الدخولية تُغلق فوراً؛ الهيكل الثابت هو أول رسم.
+    const splashGone = await page.evaluate(() => !document.querySelector("#mj-silent-splash"));
+    assert.equal(splashGone, true, "الويب بلا دخولية حاجبة بعد التحميل");
 
-    await page.waitForFunction(() => !document.querySelector("#mj-silent-splash"), null, { timeout: 4000 });
-    const elapsed = await page.evaluate((s) => performance.now() - s, splashStart);
+    const html = await page.content();
+    assert.ok(
+      html.includes("mj-boot-skeleton") || (await page.locator("#root").evaluate((el) => el.childElementCount > 0)),
+      "أول رسم مرئي: هيكل أو React داخل #root",
+    );
 
-    assert.ok(elapsed >= 900 && elapsed <= 1500, `توقيت الدخولية خارج النطاق: ${elapsed}ms`);
-
-    // تنقل داخلي (بدون reload) عبر وستر
     const href = "/lessons";
     await page.click(`a[href="${href}"]`).catch(() => null);
     // إن فشل click بسبب اختلاف الصفحة، نُجبر على تغيير مسار داخل نفس الجلسة

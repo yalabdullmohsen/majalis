@@ -17,7 +17,7 @@ import { installInAppNavigationGuard } from "./lib/in-app-navigation";
 import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
 import { refreshQuranAudioRemoteConfig } from "./lib/quran-audio-remote-config";
-import { armSplashAutoHide } from "./lib/splash-screen";
+import { armNativeSplashController } from "./lib/splash-screen";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 import { initOnboardingState } from "./lib/onboarding-state";
 import { scheduleOnIdle } from "./lib/yield-to-main";
@@ -145,10 +145,11 @@ async function mount() {
   }
 
   // أخفِ الإطلاق الأصلي عند أول إطار؛ أبلغ دخولية HTML أن التطبيق رُسم.
-  armSplashAutoHide();
+  armNativeSplashController();
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       window.dispatchEvent(new Event("mj:app-painted"));
+      window.dispatchEvent(new Event("app:first-paint"));
     });
   });
 
