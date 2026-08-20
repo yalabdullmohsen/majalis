@@ -1389,16 +1389,17 @@ function DeferredAssistantWidget() {
 function App() {
   // شاشة الدخول الأولى — مرة واحدة فقط، خارج كل المزوّدات/الراوتر عمدًا
   // (لا تحتاج سياق ثيم؛ data-theme مضبوط على <html> منذ index.html).
-  const [showFirstLaunch, setShowFirstLaunch] = useState(() => !hasSeenOnboarding());
+  // تظهر فقط عند دخول المسار الجذري "/" — لا تحجب الروابط العميقة (مصحف
+  // مُشارَك، نتيجة بحث، زحف محركات البحث) خلف شاشة تحتاج تفاعلاً.
+  const [showFirstLaunch, setShowFirstLaunch] = useState(
+    () => window.location.pathname === "/" && !hasSeenOnboarding(),
+  );
 
   if (showFirstLaunch) {
     return (
       <AppFirstLaunchScreen
         onStart={() => {
           markOnboardingSeen();
-          if (window.location.pathname !== "/") {
-            window.history.replaceState(null, "", "/");
-          }
           setShowFirstLaunch(false);
         }}
       />
