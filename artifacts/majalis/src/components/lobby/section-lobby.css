@@ -34,7 +34,13 @@
   min-width: 0;
 }
 
+/* عائم أسفل يمين (RTL: inline-start) — نفس GlobalBackButton في بقية الأقسام */
 .section-lobby__back {
+  position: fixed;
+  z-index: 185;
+  bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.25rem);
+  inset-inline-start: 1rem;
+  inset-inline-end: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -54,6 +60,7 @@
   text-align: center;
   touch-action: manipulation;
   appearance: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
 }
 
 .section-lobby__title,

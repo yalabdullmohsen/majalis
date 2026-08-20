@@ -18,6 +18,9 @@ assert.match(lobby, /DirectionalIcon/);
 assert.match(css, /\.section-lobby__back[\s\S]*min-height:\s*44px/, "منطقة لمس ≥44px");
 assert.match(css, /\.section-lobby__back[\s\S]*min-width:\s*44px/);
 assert.match(css, /\.section-lobby__back[\s\S]*text-align:\s*center/);
+assert.match(css, /\.section-lobby__back[\s\S]*position:\s*fixed/, "عائم أسفل يمين كبقية الأقسام");
+assert.match(css, /\.section-lobby__back[\s\S]*inset-inline-start:\s*1rem/, "يمين في RTL");
+assert.match(css, /\.section-lobby__back[\s\S]*bottom:\s*calc\(var\(--bottom-nav-total/);
 
 const gate = read("scripts/section-back-button-gate.mjs");
 assert.match(gate, /\/fiqh/);
