@@ -2,7 +2,7 @@ import type { QpcWord } from "./qpc-page-data";
 
 /**
  * محارف QPC V2 للبسملة الزخرفية — من آية ١:١ (صفحة ١).
- * تُعرض بخط qpc-v2-pN للصفحة الحالية (نفس عائلة خط الآيات ±٢٪).
+ * تُعرض دائماً بخط `qpc-v2-p1` (انظر `.mm-basmala--qpc`) وبمقاس `--mm-qpc-size` للصفحة.
  */
 export const BASMALA_QPC_WORDS: QpcWord[] = [
   {

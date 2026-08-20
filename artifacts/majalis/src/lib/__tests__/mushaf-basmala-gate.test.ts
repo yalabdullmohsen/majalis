@@ -37,6 +37,8 @@ assert.match(dataSrc, /basmalaSlot/);
 assert.match(dataSrc, /chapter\.bismillahPre \? bannerSlot \+ 1/);
 assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-qpc-size\)/);
 assert.match(css, /\.mm-basmala\s*\{[^}]*font-weight:\s*400/);
+assert.match(css, /\.mm-basmala--qpc[\s\S]*qpc-v2-p1/);
+assert.doesNotMatch(css, /\.mm-basmala--qpc[\s\S]{0,120}--mm-qpc-family/);
 assert.doesNotMatch(css, /\.mm-basmala--uthmani/);
 
 const mushafDir = resolve(root, "src/features/mushaf-madinah");

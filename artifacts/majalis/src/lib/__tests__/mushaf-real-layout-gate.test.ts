@@ -68,7 +68,7 @@ assert.match(css, /\.mm-page-shell[^{]*\{[^}]*padding-bottom:\s*0/);
 
 assert.match(css, /\.mm-basmala\s*\{[^}]*font-size:\s*var\(--mm-qpc-size\)/);
 assert.match(css, /\.mm-basmala\s*\{[^}]*text-align:\s*center/);
-assert.match(css, /\.mm-basmala--qpc[\s\S]*--mm-qpc-family/);
+assert.match(css, /\.mm-basmala--qpc[\s\S]*qpc-v2-p1/);
 assert.doesNotMatch(css, /\.mm-basmala--uthmani/);
 assert.match(page, /bismillahPre === true/);
 assert.match(basmala, /BASMALA_QPC_WORDS/);
