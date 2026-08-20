@@ -19,7 +19,7 @@
         --inset-right: env(safe-area-inset-right, 0px);
         --inset-left: env(safe-area-inset-left, 0px);
       }
-      /* هيكل إقلاع ثابت — خارج تدفق #root حتى لا يحرّك React (CLS) */
+      /* هيكل إقلاع ثابت — أسماء فريدة حتى لا يعيد CSS اللاحق تشكيله (CLS) */
       #mj-boot-skeleton {
         position: fixed;
         inset: 0;
@@ -28,41 +28,41 @@
         overflow: hidden;
         background: #F2F4F3;
       }
-      #mj-boot-skeleton .navbar-v3 {
+      #mj-boot-skeleton .mj-sk-header {
         box-sizing: border-box;
         min-height: calc(56px + var(--inset-top, 0px));
         background: rgba(20, 63, 53, 0.05);
       }
-      #mj-boot-skeleton .mj-boot-skeleton__search-row {
+      #mj-boot-skeleton .mj-sk-search {
         height: 3rem;
         background: rgba(20, 63, 53, 0.04);
       }
-      #mj-boot-skeleton .header-ticker {
+      #mj-boot-skeleton .mj-sk-ticker {
         height: 2.25rem;
         background: rgba(20, 63, 53, 0.06);
       }
-      #mj-boot-skeleton .top-section-bar {
+      #mj-boot-skeleton .mj-sk-sections {
         min-height: 3.5rem;
         background: rgba(20, 63, 53, 0.04);
       }
-      #mj-boot-skeleton .page-hero-mj {
+      #mj-boot-skeleton .mj-sk-hero {
         min-height: 11rem;
         background: rgba(20, 63, 53, 0.05);
       }
-      #mj-boot-skeleton .hus-field {
+      #mj-boot-skeleton .mj-sk-field {
         min-height: 48px;
         margin: 0.75rem 1rem 0;
         background: rgba(20, 63, 53, 0.06);
         border-radius: 999px;
       }
-      #mj-boot-skeleton .mj-home-lcp-ph__start-here {
+      #mj-boot-skeleton .mj-sk-start {
         min-height: 37.8rem;
         margin: 0.75rem 1rem 0;
         background: rgba(20, 63, 53, 0.04);
         border-radius: 1rem;
       }
-      #mj-boot-skeleton .bottom-nav {
-        position: fixed;
+      #mj-boot-skeleton .mj-sk-nav {
+        position: absolute;
         left: 0;
         right: 0;
         bottom: 0;
@@ -70,13 +70,13 @@
         background: rgba(20, 63, 53, 0.06);
       }
       @media (min-width: 720px) {
-        #mj-boot-skeleton .mj-boot-skeleton__search-row,
-        #mj-boot-skeleton .header-ticker { display: none; }
-        #mj-boot-skeleton .mj-home-lcp-ph__start-here { min-height: 24rem; }
+        #mj-boot-skeleton .mj-sk-search,
+        #mj-boot-skeleton .mj-sk-ticker { display: none; }
+        #mj-boot-skeleton .mj-sk-start { min-height: 24rem; }
       }
       @media (min-width: 880px) {
-        #mj-boot-skeleton .bottom-nav,
-        #mj-boot-skeleton .top-section-bar { display: none; }
+        #mj-boot-skeleton .mj-sk-nav,
+        #mj-boot-skeleton .mj-sk-sections { display: none; }
       }
       html[data-theme="dark"] #mj-boot-skeleton {
         background: #101614;
@@ -397,16 +397,16 @@
         });
       } catch (error) {}
     </script>
-    <div id="mj-boot-skeleton" class="mj-home-lcp-ph" dir="rtl" aria-hidden="true">
-      <div class="navbar-v3">
-        <div class="mj-boot-skeleton__search-row"></div>
-        <div class="header-ticker"></div>
+    <div id="mj-boot-skeleton" dir="rtl" aria-hidden="true">
+      <div class="mj-sk-header">
+        <div class="mj-sk-search"></div>
+        <div class="mj-sk-ticker"></div>
       </div>
-      <div class="top-section-bar"></div>
-      <div class="page-hero-mj m2030-hero home-page-hero"></div>
-      <div class="hus mj-home-lcp-ph__search"><div class="hus-field"></div></div>
-      <div class="home-start-here mj-home-lcp-ph__start-here"></div>
-      <div class="bottom-nav bottom-nav--v2"></div>
+      <div class="mj-sk-sections"></div>
+      <div class="mj-sk-hero"></div>
+      <div class="mj-sk-field"></div>
+      <div class="mj-sk-start"></div>
+      <div class="mj-sk-nav"></div>
     </div>
     <div id="root"></div>
     <script>
