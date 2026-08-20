@@ -33,7 +33,6 @@ type Props = {
 
 function ShareCopyBar({
   copyText,
-  quizSectionId,
   shareUrl,
   title,
   adminEdit,
