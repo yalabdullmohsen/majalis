@@ -10,6 +10,7 @@ import {
   normalizeMushafFontFamily,
   setCachedFontSize,
 } from "./fitPageFontSize";
+import { MUSHAF_INK_X_END_MIN, MUSHAF_WORD_GAP_HARD_MAX_PX } from "./layout-bands";
 
 function lineOverflows(line: HTMLElement): boolean {
   return line.scrollWidth > line.clientWidth + 1;
@@ -195,6 +196,47 @@ export function useMushafPageFontFit(
             const current = Number.parseFloat(live.style.getPropertyValue("--mm-qpc-size")) || MUSHAF_FIT_MIN_PX;
             const next = shrinkUntilFit(live, liveBody, current);
             setCachedFontSize(mushafFitCacheKey(pageNumber, width, family), next);
+
+            // ضبط justify مشروط:
+            // - نقيّد space-between (data-fill=true) فقط للأسطر التي امتلاؤها قريب من المرجع.
+            // - ثم نتحقق فعلياً من max word-gap عبر bbox حتى لا ينتج over-justification يتجاوز hardMax.
+            const lines = [...live.querySelectorAll<HTMLElement>(".mm-ayah-line")];
+            for (const line of lines) {
+              if (line.dataset.centered === "true") continue;
+              // نبدأ بـ flex-start (لا نطبّق space-between) قبل القياس.
+              line.dataset.fill = "false";
+            }
+            for (const line of lines) {
+              if (line.dataset.centered === "true") continue;
+              const avail = line.clientWidth;
+              if (!avail) continue;
+
+              const natural = line.scrollWidth;
+              const ratio = natural / avail;
+
+              // إذا لم يصل naturalWidth للعتبة، نتركها flex-start.
+              if (ratio < MUSHAF_INK_X_END_MIN) {
+                line.dataset.fill = "false";
+                continue;
+              }
+
+              // جرّب space-between ثم احسب max word-gap فعلياً من bbox.
+              line.dataset.fill = "true";
+              const wordEls = [...line.querySelectorAll<HTMLElement>(".mm-ayah-line__word")];
+              const rects = wordEls.map((w) => w.getBoundingClientRect());
+              rects.sort((a, b) => a.left - b.left);
+
+              let maxGap = 0;
+              for (let i = 0; i < rects.length - 1; i++) {
+                const a = rects[i]!;
+                const b = rects[i + 1]!;
+                const gap = b.left - a.right;
+                if (gap > maxGap) maxGap = gap;
+              }
+
+              const shouldFill = maxGap <= MUSHAF_WORD_GAP_HARD_MAX_PX + 0.5;
+              line.dataset.fill = shouldFill ? "true" : "false";
+            }
           });
         })
         .catch((err) => {

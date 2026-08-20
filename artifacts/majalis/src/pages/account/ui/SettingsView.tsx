@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
@@ -21,13 +21,13 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { supabase } from "@/lib/supabase";
 import {
-  getFeaturedReciters,
   loadPlaybackRate,
   loadReciterId,
   savePlaybackRate,
   saveReciterId,
   VALID_PLAYBACK_RATES,
 } from "@/lib/quran-audio";
+import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
 import {
   MUSHAF_TAFSIR_EDITIONS,
   persistTafsirEdition,
@@ -38,7 +38,14 @@ import {
   restoreDefaultAppSettings,
   writeBackgroundPlaybackPref,
 } from "@/lib/restore-default-settings";
+import { requestFeatureTourReplay } from "@/lib/feature-tour-state";
 import "@/styles/pages/settings.css";
+
+const ReciterDownloadManager = lazy(() =>
+  import("@/components/quran/ReciterDownloadManager").then((m) => ({
+    default: m.ReciterDownloadManager,
+  })),
+);
 
 function ToggleRow({
   label,
@@ -105,7 +112,7 @@ export default function SettingsPage() {
     updatePreferences({ [key]: value });
   };
 
-  const reciters = useMemo(() => getFeaturedReciters("ayah"), []);
+  const reciters = useVerifiedReciters();
   const tafsirs = useMemo(() => MUSHAF_TAFSIR_EDITIONS, []);
 
   const sections: SectionDef[] = [
@@ -135,7 +142,7 @@ export default function SettingsPage() {
       title: "البيانات والخصوصية",
       keywords: "خصوصية تصدير حذف بيانات",
     },
-    { id: "about", title: "عن التطبيق", keywords: "حول سياسة شروط دعم مصادر" },
+    { id: "about", title: "عن التطبيق", keywords: "حول سياسة شروط دعم مصادر جولة مزايا" },
   ];
 
   const q = query.trim().toLowerCase();
@@ -425,11 +432,13 @@ export default function SettingsPage() {
 
       {visible(sections[4]!) && (
         <LegalSection title={sections[4]!.title}>
-          <p className="settings-note">إدارة التحميلات والمساحة دون اتصال من المصحف والأذان.</p>
+          <p className="settings-note">
+            تنزيل تلاوة السور كاملة للقرّاء المُحقَّقين QA — للاستماع دون اتصال.
+          </p>
+          <Suspense fallback={<p className="settings-note">جاري تحميل إدارة التنزيلات…</p>}>
+            <ReciterDownloadManager />
+          </Suspense>
           <div className="settings-legal-links">
-            <Link href="/mushaf" className="settings-legal-link">
-              التنزيلات الصوتية
-            </Link>
             <Link href="/adhan-settings" className="settings-legal-link">
               أصوات الأذان المحمّلة
             </Link>
@@ -533,6 +542,18 @@ export default function SettingsPage() {
 
       {visible(sections[6]!) && (
         <LegalSection title={sections[6]!.title}>
+          <p className="settings-note">
+            أعد مشاهدة جولة المزايا لتتعرّف على المصحف والصلاة والأذكار والبحث والتنبيهات.
+          </p>
+          <div className="settings-actions">
+            <button
+              type="button"
+              className="page-action-btn page-action-btn--secondary"
+              onClick={() => requestFeatureTourReplay()}
+            >
+              جولة المزايا
+            </button>
+          </div>
           <div className="settings-legal-links">
             <Link href="/about" className="settings-legal-link">
               حول التطبيق

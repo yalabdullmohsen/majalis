@@ -63,6 +63,8 @@ export const NATIVE_PROGRESS_KEYS = [
   "majalis-daily-challenge-best-v1",
   "majalis_notif_prefs_v1",
   "majalis-notif-permission-asked-v1",
+  /** جولة المزايا — مرة واحدة بعد التثبيت (Preferences/UserDefaults). */
+  "onboarding.completed.v1",
 ] as const;
 
 export function storageGetSync(key: string): string | null {
@@ -163,6 +165,10 @@ export async function hydrateNativeStorage(
   })();
 
   await withTimeout(work, HYDRATE_BUDGET_MS);
+
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("mj:feature-tour-storage-ready"));
+  }
 }
 
 /** كتابة مفتاح أذكار مع مزامنة Preferences. */

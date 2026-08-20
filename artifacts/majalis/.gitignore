@@ -15,5 +15,7 @@ supabase/.temp/
 .env.vercel-production
 .tmp-seed-extract/
 .backup/
+.cache/
+docs/AUDIO_QA.full-audit.log
 artifacts/mushaf-single-pass/
 artifacts/mushaf-multi-viewport/

@@ -1,0 +1,16 @@
+{
+  "sourceRunId": "32307284830",
+  "sha": "ef431e46d",
+  "branch": "main",
+  "measuredAt": "2026-08-20",
+  "environment": "lhci-preview",
+  "url": "http://127.0.0.1:24216/",
+  "runs": 3,
+  "notes": "شاهد main قبل #1286 — مصدر اشتقاق عتبات LHCI للمعاينة (main + 10%)",
+  "median": {
+    "cls": 0.0212,
+    "lcpMs": 7056,
+    "fcpMs": 4100,
+    "siMs": 4100
+  }
+}

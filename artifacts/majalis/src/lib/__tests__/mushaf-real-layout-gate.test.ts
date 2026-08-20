@@ -124,8 +124,13 @@ assert.match(actions, /SkipBack|onPrevAyah/);
 assert.match(actions, /آية \{parsed\?\.ayah|آية \$\{parsed/);
 
 const dock = read("src/features/mushaf-madinah/MushafAudioDock.tsx");
+const audioRegistry = read("src/lib/audio-registry.ts");
+const quranAudio = read("src/lib/quran-audio.ts");
+assert.match(dock, /useVerifiedReciters/);
+assert.match(dock, /DEFAULT_VERIFIED_RECITER_IDS/);
+assert.match(audioRegistry, /DEFAULT_VERIFIED_RECITER_IDS = \["husary", "minshawi", "alafasy"\]/);
 for (const id of ["alafasy", "abdulsamad", "husary", "minshawi", "ghamdi", "maher"]) {
-  assert.match(dock, new RegExp(`"${id}"`));
+  assert.match(quranAudio, new RegExp(`id:\\s*"${id}"`), `quran-audio RECITERS يتضمن ${id}`);
 }
 assert.match(read("src/features/mushaf-madinah/MushafSurahOrnament.tsx"), /mm-surah-frame/);
 assert.match(viewport, /addEventListener\("scroll"/);

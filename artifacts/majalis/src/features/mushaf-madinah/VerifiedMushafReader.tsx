@@ -107,6 +107,17 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   actionsOpenRef.current = actionsOpen;
   const audio = useMemo(() => getAudioEngine(), []);
 
+  /** أداة QA على الجهاز — قياس الفجوة بين الآيات (انظر docs/AUDIO_DEVICE_QA.md) */
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    (window as unknown as { __MAJALIS_AUDIO_ENGINE__?: typeof audio }).__MAJALIS_AUDIO_ENGINE__ =
+      audio;
+    return () => {
+      delete (window as unknown as { __MAJALIS_AUDIO_ENGINE__?: typeof audio })
+        .__MAJALIS_AUDIO_ENGINE__;
+    };
+  }, [audio]);
+
   useEffect(() => {
     try {
       localStorage.setItem(THEME_KEY, theme);
@@ -503,7 +514,11 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       ? {
           title: verseLabel,
           artist: getReciter(reciterId).nameAr,
+          album: "تلاوة القرآن — المجلس العلمي",
           playing: mediaPlaying,
+          position: audioTime.currentTime,
+          duration: audioTime.duration,
+          playbackRate: audioTime.playbackRate,
           onPlay: () => void togglePlay(),
           onPause: () => audio.pause(),
           onStop: () => audio.stop(),

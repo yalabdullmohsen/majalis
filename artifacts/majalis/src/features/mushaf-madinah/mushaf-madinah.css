@@ -96,6 +96,7 @@
   /* ظهور الأدوات لا يغيّر نطاقات الصفحة — baselineShift === 0 */
   --mm-chrome-top-h: 0px;
   --mm-chrome-bottom-h: 0px;
+  --mm-ayah-bar-h: 120px; /* مساحة ثابتة للشيت المطوي — يمنع overlap بصري/CLS */
 }
 
 html[data-theme="dark"] .mm-viewport,
@@ -459,6 +460,10 @@ html.dark .mm-surah-frame__name {
   overflow-y: visible;
   padding-block: 0.04em;
   box-sizing: border-box;
+}
+
+.mm-ayah-line[data-fill="true"] {
+  justify-content: space-between;
 }
 
 .mm-ayah-line[data-centered="true"] {

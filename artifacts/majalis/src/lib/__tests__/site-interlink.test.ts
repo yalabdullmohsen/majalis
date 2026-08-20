@@ -91,7 +91,11 @@ console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related =
   assert(!topic.includes("getRulingsEncyclopedia"), "لا موسوعة أحكام في صفحة الباب");
 
   const home = readFileSync(resolve(srcRoot, "components/home/HomeStartHereSection.tsx"), "utf8");
-  assert(home.includes('href: "/adab-talab-ilm"'), "ابدأ من هنا → دليل طالب العلم");
+  const homeData = readFileSync(resolve(srcRoot, "components/home/home-start-here-data.ts"), "utf8");
+  assert(
+    home.includes("/adab-talab-ilm") || homeData.includes('href: "/adab-talab-ilm"'),
+    "ابدأ من هنا → دليل طالب العلم",
+  );
 
   const accordion = readFileSync(resolve(srcRoot, "components/SectionAccordionLayout.tsx"), "utf8");
   assert(accordion.includes("relatedLinks"), "التخطيط الأكورديوني يدعم relatedLinks");

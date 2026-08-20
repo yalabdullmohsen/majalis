@@ -4,12 +4,9 @@
  * when the current one has no matching folder (no new streaming stack).
  */
 
+import { getVerifiedRecitersSyncFallback } from "@/lib/audio-registry";
 import { getAudioBufferPolicy } from "@/lib/audio-buffer-policy";
-import {
-  getFeaturedReciters,
-  getReciter,
-  type QuranReciter,
-} from "@/lib/quran-audio";
+import { getReciter, type QuranReciter } from "@/lib/quran-audio";
 
 export type AudioQualityBand = "low" | "mid" | "high";
 
@@ -57,7 +54,7 @@ export function resolveAdaptiveReciterId(currentReciterId: string): string {
   if (band === "mid" && kbps <= 128 && current.everyayahFolder) return currentReciterId;
   if (band === "low" && kbps <= 64 && current.everyayahFolder) return currentReciterId;
 
-  const pool = getFeaturedReciters("ayah").filter((r) => r.everyayahFolder);
+  const pool = getVerifiedRecitersSyncFallback().filter((r) => r.everyayahFolder);
   const scored = pool
     .map((r) => ({ r, k: parseKbps(r.qualityLabel || "") }))
     .filter(({ k }) => bandMatches(k, band))

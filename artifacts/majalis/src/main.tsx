@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
+import { AppSplash } from "./components/AppSplash";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { ChunkRecoveryToast } from "./components/ChunkRecoveryToast";
 import { applyFontPreference, readFontPreference } from "./lib/font-preference";
@@ -20,6 +21,7 @@ import { armSplashAutoHide } from "./lib/splash-screen";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 import { initOnboardingState } from "./lib/onboarding-state";
 import { scheduleOnIdle } from "./lib/yield-to-main";
+import { logLcpCandidateHint } from "./lib/home-lcp-static-shell";
 // خطوط الواجهة المحلية قبل أي طبقة تستخدم --font-app
 import "./styles/fonts-ui.css";
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
@@ -77,6 +79,7 @@ const queryClient = createAppQueryClient();
 resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
 initClientErrorReporting();
+logLcpCandidateHint();
 
 const bootFinalPolish = () => initFinalPolish();
 if (typeof requestIdleCallback === "function") {
@@ -127,6 +130,7 @@ async function mount() {
   try {
     createRoot(rootEl).render(
       <>
+        <AppSplash />
         <ChunkRecoveryToast />
         <ErrorBoundary>
           <QueryClientProvider client={queryClient}>

@@ -49,6 +49,7 @@ const QURAN_EXCEPTION_FONTS = [
   "kfgqpc hafs uthmanic",
   "aref ruqaa", "noto naskh arabic",
   "majlisfallback",
+  "majlisamirifallback", // metric-matched Amiri fallback في critical-first-paint.css (LCP shell)
   // قياس عرض أسطر QCF V2 في measure-mushaf-line-deviation.mjs (خطوط p{n}.woff2)
   "qpc",
 ];

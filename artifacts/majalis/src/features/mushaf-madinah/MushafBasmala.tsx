@@ -51,7 +51,7 @@ export function MushafBasmala({
     >
       <span className={`mm-ayah-run__text ${state}`.trim()}>
         {body.map((w) => (
-          <span key={w.id} className="mm-ayah-line__word">
+          <span key={w.id} className="mm-ayah-line__word" data-ayah={w.verseKey}>
             {w.glyphText}
           </span>
         ))}
@@ -61,6 +61,7 @@ export function MushafBasmala({
           className="mm-ayah-hit mm-ayah-hit--end mm-ayah-line__word"
           data-type="end"
           data-key={end.verseKey}
+          data-ayah={end.verseKey}
         >
           {end.glyphText}
         </span>
