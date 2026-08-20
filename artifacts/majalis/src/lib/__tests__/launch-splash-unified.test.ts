@@ -115,10 +115,14 @@ for (const name of readdirSync(xcassets)) {
 
 const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8");
 assert.doesNotMatch(appSrc, /MajlisLaunchScreen|isLaunching|MajalisLaunchScreen/);
+// الدليل السريع القديم (٣ شاشات: ترحيب/تفضيلات/تذكيرات) أُلغي نهائيًا —
+// هذه الأسماء بالذات تبقى محظورة. شاشة الدخول الأولى الجديدة (شاشة واحدة
+// فقط، بلا أذونات، AppFirstLaunchScreen) قرار مقصود منفصل — راجع
+// src/components/AppFirstLaunchScreen.tsx وsrc/lib/onboarding-state.ts.
 assert.doesNotMatch(
   appSrc,
-  /Onboarding|WelcomeScreen|IntroScreen|BrandReveal|AppFirstRunHost|FirstRunSetup/,
-  "لا بوابة ترحيب قديمة في التركيب",
+  /WelcomeScreen|IntroScreen|BrandReveal|AppFirstRunHost|FirstRunSetup/,
+  "لا بوابة ترحيب متعددة الخطوات قديمة في التركيب",
 );
 
 const info = readFileSync(resolve(root, "ios/App/App/Info.plist"), "utf8");
