@@ -29,6 +29,10 @@ let cachedResult: FetchLessonsResult | null = null;
 let cacheTs = 0;
 const CACHE_MS = 60_000;
 const PERSIST_KEY = "majalis-lessons-unified-v1";
+/** يمنع نداءين متزامنين لنفس الجلب (مثال: HomeUpcomingLessons وHomeUpcomingCourses
+ * يُركَّبان معًا في نفس اللحظة) من إطلاق استعلامَي Supabase مستقلَّين قبل أن
+ * يستقر أيّهما — يُشارَك نفس الوعد الجاري بدل تكراره. */
+let inFlight: Promise<FetchLessonsResult> | null = null;
 
 async function mergeDbWithSeed(dbRows: KuwaitLessonRecord[]): Promise<KuwaitLessonRecord[]> {
   const seed = await loadLessonsSeed();
@@ -77,29 +81,43 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
     }
   }
 
-  try {
-    const { data } = await fetchApprovedLessonsFromDb();
-    if (data.length > 0) {
-      const dbMapped = dedupeKuwaitLessons(
-        data.map((row) => mapLessonRow({ ...row, source: "supabase" })).filter(isLessonComplete),
-      );
-      const lessons = sortKuwaitLessons(await mergeDbWithSeed(dbMapped));
-      const source: LessonsSource = lessons.length > dbMapped.length ? "merged" : "supabase";
-      cachedResult = { lessons, source };
-      cacheTs = now;
-      writePersistedLessons(cachedResult);
-      return cachedResult;
-    }
-  } catch {
-    /* fallback below */
+  if (!options?.bypassCache && inFlight) {
+    return inFlight;
   }
 
-  const seed = await loadLessonsSeed();
-  const lessons = dedupeKuwaitLessons(seed.map((row) => mapLessonRow({ ...row, source: "seed" })));
-  cachedResult = { lessons: sortKuwaitLessons(lessons), source: "seed" };
-  cacheTs = now;
-  writePersistedLessons(cachedResult);
-  return cachedResult;
+  const run = async (): Promise<FetchLessonsResult> => {
+    try {
+      const { data } = await fetchApprovedLessonsFromDb();
+      if (data.length > 0) {
+        const dbMapped = dedupeKuwaitLessons(
+          data.map((row) => mapLessonRow({ ...row, source: "supabase" })).filter(isLessonComplete),
+        );
+        const lessons = sortKuwaitLessons(await mergeDbWithSeed(dbMapped));
+        const source: LessonsSource = lessons.length > dbMapped.length ? "merged" : "supabase";
+        cachedResult = { lessons, source };
+        cacheTs = Date.now();
+        writePersistedLessons(cachedResult);
+        return cachedResult;
+      }
+    } catch {
+      /* fallback below */
+    }
+
+    const seed = await loadLessonsSeed();
+    const lessons = dedupeKuwaitLessons(seed.map((row) => mapLessonRow({ ...row, source: "seed" })));
+    cachedResult = { lessons: sortKuwaitLessons(lessons), source: "seed" };
+    cacheTs = Date.now();
+    writePersistedLessons(cachedResult);
+    return cachedResult;
+  };
+
+  const promise = run();
+  if (!options?.bypassCache) inFlight = promise;
+  try {
+    return await promise;
+  } finally {
+    if (inFlight === promise) inFlight = null;
+  }
 }
 
 export async function fetchActiveLessons(): Promise<FetchLessonsResult & { active: KuwaitLessonRecord[] }> {

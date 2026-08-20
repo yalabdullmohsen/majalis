@@ -249,3 +249,74 @@
 .qzg-game-title-bar { text-align: center; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--ds-line-color); }
 .qzg-game-title { color: var(--majalis-brass); font-weight: 700; }
 
+
+/* Direct Q&A card — وجهة روابط البحث /quiz?qa=<id> */
+.qzg-direct-qa {
+  max-width: 640px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius, 0.5rem);
+  padding: 1.25rem 1.125rem;
+  transition: box-shadow 0.6s ease, border-color 0.6s ease;
+}
+.qzg-direct-qa--flash {
+  border-color: var(--majalis-emerald, var(--mj-brand));
+  box-shadow: 0 0 0 3px var(--ds-emerald-soft, var(--majalis-emerald-muted));
+}
+@media (prefers-reduced-motion: reduce) {
+  .qzg-direct-qa { transition: none; }
+}
+.qzg-direct-qa--loading,
+.qzg-direct-qa--missing {
+  text-align: center;
+  color: var(--majalis-ink-soft);
+  padding: 2.5rem 1rem;
+}
+.qzg-direct-qa__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  background: var(--ds-emerald-soft, var(--majalis-emerald-muted));
+  color: var(--ds-emerald-deep, var(--majalis-emerald-deep));
+  font-weight: 700;
+  font-size: 0.78rem;
+  border: 1px solid var(--ds-emerald, var(--majalis-emerald));
+  margin-bottom: 0.875rem;
+}
+.qzg-direct-qa__q {
+  margin: 0 0 0.75rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--majalis-ink);
+  line-height: 1.6;
+}
+.qzg-direct-qa__a {
+  margin: 0 0 1rem;
+  font-size: 0.98rem;
+  color: var(--majalis-ink);
+  line-height: 1.8;
+}
+.qzg-direct-qa__disclaimer {
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft);
+  border-top: 1px solid var(--ds-line-color);
+  padding-top: 0.75rem;
+  margin: 0 0 1rem;
+}
+.qzg-direct-qa__cta {
+  display: block;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border-radius: var(--ds-radius, 0.5rem);
+  background: var(--mj-brand);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: center;
+}

@@ -52,7 +52,7 @@ export async function loadUnifiedSearchIndex(): Promise<IndexPayload> {
     return cache;
   }
   const { fetchStaticJsonCached } = await import("@/lib/static-json-cache");
-  const json = await fetchStaticJsonCached<IndexPayload>(url, empty);
+  const json = await fetchStaticJsonCached<IndexPayload>(url, empty, { timeoutMs: 8_000 });
   if (!Array.isArray(json.docs) || json.docs.length === 0) {
     throw new Error("search index unavailable");
   }

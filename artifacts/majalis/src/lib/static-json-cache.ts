@@ -3,7 +3,7 @@
  * يقلّل round-trips عند التنقّل بين القصص/الفئات بعد أول جلب.
  */
 import { idbGetValue, idbPut, OFFLINE_STORES } from "@/lib/offline-db";
-import { pooledFetch } from "@/lib/fetch-pool";
+import { pooledFetch, type PooledFetchInit } from "@/lib/fetch-pool";
 
 const TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -21,7 +21,7 @@ function isDataUrl(url: string): boolean {
 export async function fetchStaticJsonCached<T>(
   url: string,
   fallback: T,
-  init?: RequestInit,
+  init?: PooledFetchInit,
 ): Promise<T> {
   const key = cacheKey(url);
   let cached: CacheRow<T> | null = null;
