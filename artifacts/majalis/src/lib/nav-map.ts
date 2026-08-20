@@ -3,7 +3,7 @@
  * الشريط السفلي: مركز القرآن · الدروس · الصلاة · فقه · الأقسام
  */
 import type { LucideIcon } from "lucide-react";
-import { bottomNavSections } from "@/config/sections.registry";
+import { navFor } from "@/config/navigation";
 import {
   SERVICES_CENTER_GROUPS,
   filterServicesCenterGroups,
@@ -17,10 +17,10 @@ export type BottomNavTab = {
   Icon: LucideIcon;
 };
 
-/** الشريط السفلي من السجل فقط */
-export const BOTTOM_NAV_TABS: BottomNavTab[] = bottomNavSections().map((s) => ({
-  href: s.route,
-  label: s.navLabel ?? s.label,
+/** الشريط السفلي من مصدر التنقّل الموحّد */
+export const BOTTOM_NAV_TABS: BottomNavTab[] = navFor("bottom").map((s) => ({
+  href: s.href,
+  label: s.label,
   Icon: s.icon,
 }));
 

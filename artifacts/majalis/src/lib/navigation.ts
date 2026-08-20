@@ -1,5 +1,6 @@
 import { seoNavLabel } from "@/lib/seo-nav-labels";
 import { filterNavItems } from "@/lib/nav-visibility";
+import { navFor } from "@/config/navigation";
 
 export type NavLink = {
   href: string;
@@ -93,10 +94,12 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
  */
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
   { href: "/", label: seoNavLabel("/", "الرئيسية") },
-  { href: "/quran-hub", label: seoNavLabel("/quran-hub", "قرآن"), description: "مركز · مصحف · تسميع · علوم" },
-  { href: "/lessons", label: seoNavLabel("/lessons", "الدروس"), description: "دروس · حديث · سيرة" },
-  { href: "/prayer-times", label: seoNavLabel("/prayer-times", "الصلاة"), description: "صلاة · أذكار · ورد" },
-  { href: "/fiqh", label: seoNavLabel("/fiqh", "فقه"), description: "أحكام · مسائل · أسئلة" },
+  ...navFor("bottom")
+    .filter((i) => i.id !== "sections")
+    .map((i) => ({
+      href: i.href,
+      label: seoNavLabel(i.href, i.label),
+    })),
 ];
 
 export const HOME_FEATURE_CARDS = [

@@ -205,7 +205,7 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   assert(!servicesNavSrc.includes('label: "المجامع الفقهية"'), "لا مجامع كقسم رئيسي");
   assert(navMapSrc.includes("BOTTOM_NAV_TABS") && navMapSrc.includes("SERVICES_CENTER_GROUPS"), "nav-map مصدر موحّد");
   assert(
-    sidebarNavSrc.includes("sections.registry") || sidebarNavSrc.includes("getSidebarGroupsFromNavMap"),
+    sidebarNavSrc.includes("sections.registry") || sidebarNavSrc.includes("config/navigation"),
     "الجانبية تشتق من السجل أو nav-map",
   );
   assert(sideSrc.includes("SIDEBAR_NAV_GROUPS") && sideSrc.includes("sidebar-panel"), "القائمة تستخدم التصميم الموحّد");
@@ -220,7 +220,7 @@ console.log("\n=== الشريط السفلي والأقسام ===");
   assert(!bottomSrc.includes("MoreBottomSheet"), "لا شيت المزيد في الشريط");
   assert(!bottomSrc.includes("المزيد"), "لا تسمية المزيد في الشريط");
   const navMapSrc = readFileSync(resolve(appRoot, "src/lib/nav-map.ts"), "utf-8");
-  assert(navMapSrc.includes("bottomNavSections"), "الشريط من سجل الأقسام");
+  assert(navMapSrc.includes("navFor") || navMapSrc.includes("config/navigation"), "الشريط من سجل الأقسام");
   const registrySrc = readFileSync(resolve(appRoot, "src/config/sections.registry.ts"), "utf-8");
   assert(registrySrc.includes('route: "/quran-hub"') && registrySrc.includes("مركز القرآن"), "مسار مركز القرآن");
   assert(registrySrc.includes('route: "/prayer-times"') && registrySrc.includes('route: "/fiqh"') && registrySrc.includes('route: "/lessons"') && registrySrc.includes('route: "/sections"'), "مسارات المساحات");

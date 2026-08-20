@@ -61,7 +61,7 @@ assert.match(bottomNav, /isImmersiveChromePath/);
 assert.equal(bottomNav.includes("isPrayerTimesPath"), false);
 
 const navMap = readFileSync(resolve(appRoot, "src/lib/nav-map.ts"), "utf8");
-assert.match(navMap, /bottomNavSections/);
+assert.match(navMap, /navFor|bottomNavSections/);
 assert.match(readFileSync(resolve(appRoot, "src/config/sections.registry.ts"), "utf8"), /route: "\/quran-hub"/);
 
 const navBar = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf8");
