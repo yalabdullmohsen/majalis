@@ -110,6 +110,24 @@ export function MushafPager({
     return () => window.clearTimeout(id);
   }, [page, snapToIndex]);
 
+  /** أسهم لوحة المفاتيح — نفس منطق الحواف: يمين = تالٍ · يسار = سابق (مصحف ورقي). */
+  useEffect(() => {
+    if (disabled) return;
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+      if (e.key === "ArrowRight" || e.key === "PageDown") {
+        e.preventDefault();
+        go(page + 1);
+      } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        e.preventDefault();
+        go(page - 1);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [disabled, go, page]);
+
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;

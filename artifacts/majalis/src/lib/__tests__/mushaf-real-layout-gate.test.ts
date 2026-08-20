@@ -46,14 +46,14 @@ assert.doesNotMatch(css, /--mm-ref-open-p2-text-end/);
 assert.doesNotMatch(css, /\.mm-page--opening\[data-page="2"\]/);
 
 assert.match(css, /\.mm-ayah-bar\s*\{[^}]*z-index:\s*9999/);
-assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*rgba\(0,\s*0,\s*0,\s*0\.45\)/);
+assert.match(css, /\.mm-ayah-bar__dismiss\s*\{[^}]*background:\s*rgba\(0,\s*0,\s*0,\s*0\.28\)/);
 assert.doesNotMatch(css, /backdrop-filter:\s*blur\(/);
-assert.match(css, /height:\s*120px/);
+assert.match(css, /height:\s*140px/);
 assert.match(css, /height:\s*50dvh/);
 assert.match(css, /height:\s*90dvh/);
 assert.doesNotMatch(css, /height:\s*35dvh/);
 assert.doesNotMatch(css, /height:\s*85dvh/);
-assert.match(css, /border-radius:\s*20px\s+20px\s+0\s+0/);
+assert.match(css, /border-radius:\s*22px\s+22px\s+0\s+0/);
 assert.match(css, /ayah-active/);
 assert.match(css, /var\(--mm-gold\) 12%/);
 assert.match(css, /\.mm-ayah-run__text\s*\{[^}]*padding:\s*0/);

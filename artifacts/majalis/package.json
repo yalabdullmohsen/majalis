@@ -242,6 +242,8 @@
     "test:ayah1-display": "node -e \"console.log(\"ayah1 display gate disabled — mushaf UI removed\")\"",
     "test:mushaf-line-grid": "node scripts/mushaf-madinah/line-grid-gate.mjs",
     "test:mushaf-basmala": "node scripts/mushaf-madinah/mushaf-basmala-all-114-gate.mjs",
+    "test:mushaf-page-direction": "node --import tsx src/lib/__tests__/mushaf-page-direction-gate.test.ts",
+    "test:mushaf-ayah-marks": "node --import tsx src/lib/__tests__/mushaf-ayah-marks-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-ayah-marker-gate.test.ts",
     "test:mushaf-no-duplicate-line": "node scripts/mushaf-madinah/mushaf-no-duplicate-first-line-gate.mjs",
     "test:mushaf-justify": "node scripts/mushaf-madinah/mushaf-justify-page-77-gate.mjs",
     "test:mushaf-ayah-highlight": "node scripts/mushaf-madinah/mushaf-ayah-highlight-gate.mjs",
