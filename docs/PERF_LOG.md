@@ -687,3 +687,56 @@ JS غير مستخدم: supabase 44KiB + index 35KiB.
 **FCP/SI:** main الشاهد أيضاً ~4100ms — فجوة LHCI↔PSI (PSI فحص 12: 2.0ث). بذرة FCP HTML → CLS **0.358** (run `32313670686`) — **مُلغاة**.
 
 **مهمة محجوزة:** `perf/fcp-si-lhci-calibration` — معايرة FCP/SI لبيئة المعاينة أو قياس PSI post-deploy فقط.
+
+---
+
+## معايرة LHCI↔PSI — الخيار ١ (2026-08-20)
+
+**قرار:** فصل بيئتي القياس. الهدف 2200/2500 **لم يُخفَّض** — نُقل إلى بوابة PSI على الإنتاج.
+
+### مصدر الاشتقاق
+
+| الحقل | القيمة |
+|---|---|
+| **Run شاهد** | `32307284830` |
+| **SHA** | `ef431e46d` (main) |
+| **البيئة** | LHCI preview (`127.0.0.1:24216`) |
+| **CLS وسيط** | 0.0212 |
+| **LCP وسيط** | 7056ms |
+| **FCP/SI** | ~4100ms |
+
+### عتبات LHCI للمعاينة = main + 10%
+
+| المقياس | main | +10% | مستوى |
+|---|---:|---:|---|
+| FCP | 4100ms | **4510ms** (≈4500) | **error** |
+| SI | 4100ms | **4510ms** (≈4500) | **error** |
+| LCP | 7056ms | **7762ms** | error |
+| CLS | 0.0212 | **0.0234** | error |
+
+**ملفات:** `config/lhci-main-baseline.json` · `scripts/lhci-thresholds.cjs` · `scripts/verify-lhci-threshold-calibration.mjs`
+
+**قاعدة دائمة:** أي عتبة LHCI تُشتق من main — لا تُنسخ يدوياً من PSI. البوابة تفشل إن كانت العتبة أشدّ من قياس main.
+
+### أهداف PSI على الإنتاج (فحص 12 — لم تتغيّر)
+
+| المقياس | الهدف | الواقع فحص 12 |
+|---|---:|---:|
+| FCP | ≤ **2200ms** | 2000 |
+| SI | ≤ **2500ms** | 2000 |
+| LCP | ≤ 6000ms | 5700 |
+| CLS | ≤ 0.020 | 0.006 |
+| TBT | ≤ 400ms | 330 |
+
+**بوابة:** `scripts/verify-psi-production-gate.mjs` — بعد النشر + `curl version.json` + PSI فحص 13. **رجوع** إن FCP/SI أسوأ من فحص 12.
+
+### layout-bands (عائق منطقي — لا يُعايَر)
+
+`.mm-ayah-line { justify-content: space-between; }` — بوابة `test:mushaf-layout-bands`.
+
+### مسار التسليم
+
+1. ✅ layout-bands + معايرة LHCI (هذا PR)
+2. دمج #1286 → نشر → `curl version.json` → PSI فحص 13
+3. `perf/lcp-static-shell-v3-hydrate` — تحسين إقلاع ~2ث (جولة منفصلة، لا تحجب التسليم)
+4. بعد #1286: #1287 → #1288 → التفسير → لقطات المصحف → إغلاق #1257/#1232 (≤3 PRs مفتوحة)

@@ -444,7 +444,7 @@ html.dark .mm-surah-frame__name {
   max-width: 100%;
   display: flex;
   flex-wrap: nowrap;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: baseline;
   text-align: center;
   direction: rtl;

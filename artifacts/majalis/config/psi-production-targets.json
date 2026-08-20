@@ -1,0 +1,26 @@
+{
+  "url": "https://majlisilm.com/",
+  "strategy": "mobile",
+  "notes": "بوابة PSI على الإنتاج فقط — لا تُنسخ إلى lighthouserc للمعاينة",
+  "targets": {
+    "performanceMin": 0.75,
+    "fcpMs": 2200,
+    "siMs": 2500,
+    "lcpMs": 6000,
+    "cls": 0.02,
+    "tbtMs": 400,
+    "accessibilityMin": 1,
+    "bestPracticesMin": 1,
+    "seoMin": 1
+  },
+  "regressionBaseline": {
+    "exam": 12,
+    "measuredAt": "2026-08-19",
+    "performance": 0.7,
+    "fcpMs": 2000,
+    "siMs": 2000,
+    "lcpMs": 5700,
+    "cls": 0.006,
+    "tbtMs": 330
+  }
+}

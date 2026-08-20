@@ -156,13 +156,51 @@ jobs:
           # صامت تجاه التنبيه بالبريد — الفشل يظهر في Checks فقط
           exit 1
 
-  notify-success:
-    name: notify-success
+  psi-gate:
+    name: PSI production gate (فحص 13)
     needs: [deploy]
     if: >
       github.repository == 'yalabdullmohsen/majalis' &&
       github.event_name == 'push' &&
-      needs.deploy.result == 'success'
+      needs.deploy.result == 'success' &&
+      needs.deploy.outputs.version_ok == '1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: PSI — FCP/SI 2200/2500 + لا انحدار عن فحص 12
+        env:
+          PAGESPEED_API_KEY: ${{ secrets.PAGESPEED_API_KEY }}
+        run: pnpm --filter @workspace/majalis run verify:psi-production-gate -- --json | tee /tmp/psi-gate.json
+
+      - name: Upload PSI report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: psi-production-gate
+          path: /tmp/psi-gate.json
+          if-no-files-found: ignore
+
+  notify-success:
+    name: notify-success
+    needs: [deploy, psi-gate]
+    if: >
+      github.repository == 'yalabdullmohsen/majalis' &&
+      github.event_name == 'push' &&
+      needs.deploy.result == 'success' &&
+      (needs.psi-gate.result == 'success' || needs.psi-gate.result == 'skipped')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
