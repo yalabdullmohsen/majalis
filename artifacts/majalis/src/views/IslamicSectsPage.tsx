@@ -1191,7 +1191,7 @@ export default function IslamicSectsPage() {
         ))}
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة والفرق" count={4} />
+        <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والفرق" count={4} />
       </div>
     </div>
   );

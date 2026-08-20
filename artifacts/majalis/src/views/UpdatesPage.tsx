@@ -175,7 +175,7 @@ export default function UpdatesPage() {
         <ShareButtons title="آخر التحديثات — المجلس العلمي" url="https://www.majlisilm.com/updates" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في التاريخ الإسلامي والفقه" count={4} />
+        <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في التاريخ الإسلامي والفقه" count={4} />
       </div>
     </div>
   );

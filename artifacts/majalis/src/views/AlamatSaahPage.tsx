@@ -535,7 +535,7 @@ export default function AlamatSaahPage() {
       </div>
       <RelatedKnowledge kind="lesson" query="علامات الساعة" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-6">
-        <SectionQuiz categoryId={["aqeeda", "tarikh"]} title="اختبر معلوماتك في العقيدة والتاريخ" count={4} />
+        <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والتاريخ" count={4} />
       </div>
     </div>
   );

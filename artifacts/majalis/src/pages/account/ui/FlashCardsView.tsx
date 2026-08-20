@@ -427,7 +427,7 @@ function FlashCardsPageInner() {
         <ShareButtons title="البطاقات التعليمية الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/flashcards" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["quran", "hadith", "fiqh"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+        <SectionQuiz route="/flashcards" title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );

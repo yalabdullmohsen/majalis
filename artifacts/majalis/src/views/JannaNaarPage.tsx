@@ -350,7 +350,7 @@ export default function JannaNaarPage() {
         <ShareButtons title="الجنة والنار — المجلس العلمي" url="https://www.majlisilm.com/janna-naar" />
       </div>
       <div className="px-4 pb-6 mt-6">
-        <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة" count={4} />
+        <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة" count={4} />
       </div>
       </div>
     </TopicPage>

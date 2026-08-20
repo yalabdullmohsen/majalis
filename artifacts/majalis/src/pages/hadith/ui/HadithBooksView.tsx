@@ -487,11 +487,7 @@ export default function HadithBooksPage() {
 
       {/* اختبار معلوماتك */}
       <div className="px-4 pb-6 mt-8">
-        <SectionQuiz
-          categoryId="hadith"
-          title="اختبر معلوماتك في الحديث"
-          count={4}
-        />
+        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث" count={4} />
       </div>
     </div>
   );

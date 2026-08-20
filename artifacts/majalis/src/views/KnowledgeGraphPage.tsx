@@ -637,7 +637,7 @@ export default function KnowledgeGraphPage() {
       </div>
       <RelatedKnowledge kind="book" query="معرفة إسلامية" title="مواد ذات صلة بالرسم المعرفي" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["aqeeda", "tarikh", "fiqh"]} title="اختبر معلوماتك في المعرفة الإسلامية" count={4} />
+        <SectionQuiz route="/knowledge-graph" title="اختبر معلوماتك في المعرفة الإسلامية" count={4} />
       </div>
     </div>
   );

@@ -261,7 +261,7 @@ function DetailContent({ university: u }: { university: University }) {
           <ShareButtons title={`${u.name_ar} — دليل الجامعات الإسلامية | المجلس العلمي`} url={`https://www.majlisilm.com/universities/${u.slug}`} />
         </div>
         <div className="px-4 pb-6 mt-4">
-          <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
+          <SectionQuiz route="/universities" title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
         </div>
       </div>
 

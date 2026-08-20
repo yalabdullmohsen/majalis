@@ -28,7 +28,7 @@ export default function FiqhPage() {
       chips={lobby.chips}
       groups={lobby.groups}
     >
-      <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
+      <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
       <div className="twh-share">
         <ShareButtons title="الفقه الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/fiqh" />
       </div>

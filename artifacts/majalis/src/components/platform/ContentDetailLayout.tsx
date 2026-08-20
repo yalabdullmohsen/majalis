@@ -25,6 +25,7 @@ type Props = {
   related?: ReactNode;
   sourceUrls?: string[];
   copyText?: string;
+  quizSectionId?: string;
   shareUrl?: string;
   /** لتفعيل زر التعديل المباشر — نوع المحتوى ومعرفه */
   adminEdit?: { contentType: InlineEditContentType; contentId: string | number; initialData?: Record<string, unknown> };
@@ -87,6 +88,7 @@ export function ContentDetailLayout({
   related,
   sourceUrls,
   copyText,
+  quizSectionId,
   shareUrl,
   adminEdit,
 }: Props) {
@@ -157,7 +159,7 @@ export function ContentDetailLayout({
       )}
 
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+        {quizSectionId ? <SectionQuiz sectionId={quizSectionId} title="اختبر معلوماتك" count={4} /> : null}
       </div>
     </PageShell>
   );

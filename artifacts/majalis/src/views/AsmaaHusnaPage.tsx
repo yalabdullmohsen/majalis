@@ -202,11 +202,7 @@ export default function AsmaaHusnaPage() {
         </div>
       )}
 
-      <SectionQuiz
-        categoryId="aqeeda"
-        title="اختبر معلوماتك في العقيدة والأسماء الحسنى"
-        count={4}
-      />
+      <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والأسماء الحسنى" count={4} />
 
       <div className="twh-share">
         <ShareButtons title="الأسماء الحسنى — المجلس العلمي" url="https://www.majlisilm.com/asma-husna" />

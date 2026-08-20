@@ -137,7 +137,7 @@ export default function FiqhCouncilStatsPage() {
         <ShareButtons title="إحصائيات مجلس الفقه — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/stats" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["fiqh", "tarikh"]} title="اختبر معلوماتك في الفقه والتاريخ" count={4} />
+        <SectionQuiz route="/fiqh-council/stats" title="اختبر معلوماتك في الفقه والتاريخ" count={4} />
       </div>
     </div>
   );

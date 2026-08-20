@@ -269,7 +269,7 @@ export default function CardsPage() {
         <ShareButtons title="البطاقات الدعوية — المجلس العلمي" url="https://www.majlisilm.com/cards" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["akhlaq", "aqeeda"]} title="اختبر معلوماتك في الأخلاق والعقيدة" count={4} />
+        <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأخلاق والعقيدة" count={4} />
       </div>
     </div>
   );

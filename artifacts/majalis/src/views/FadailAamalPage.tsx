@@ -1166,7 +1166,7 @@ export default function FadailAamalPage() {
       </div>
       <RelatedKnowledge kind="hadith" query="فضائل الأعمال" title="أحاديث في فضائل الأعمال" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["hadith", "akhlaq"]} title="اختبر معلوماتك في فضائل الأعمال" count={4} />
+        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في فضائل الأعمال" count={4} />
       </div>
     </main>
   );

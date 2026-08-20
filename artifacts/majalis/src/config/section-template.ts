@@ -11,6 +11,8 @@ export type SectionTemplateQuote = {
   text: string;
   ref: string;
   type?: "ayah" | "hadith";
+  /** قسم النسب — بلا sectionId لا يُعرض الاقتباس */
+  sectionId: string;
 };
 
 export type SectionTemplateChrome = {
@@ -20,7 +22,7 @@ export type SectionTemplateChrome = {
   eyebrow: string;
   title: string;
   subtitle: string;
-  quote: SectionTemplateQuote;
+  quote?: SectionTemplateQuote;
   groupTitle: string;
 };
 
@@ -44,94 +46,113 @@ const ROUTE_THEME: Record<string, TopicThemeId> = {
 };
 
 /** اقتباسات موجودة مسبقاً في محتوى المنصة — لا توليد نص شرعي جديد */
-const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
+export const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
   "/hadith": {
     text: "إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى.",
     ref: "متفق عليه — البخاري ١ · مسلم ١٩٠٧",
     type: "hadith",
+    sectionId: "hadith",
   },
   "/tafsir": {
     text: "وَلَا تَقْفُ مَا لَيْسَ لَكَ بِهِ عِلْمٌ",
     ref: "الإسراء: ٣٦",
     type: "ayah",
+    sectionId: "tafsir",
   },
   "/quran-hub/tajweed": {
     text: "وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا",
     ref: "المزمل: ٤",
     type: "ayah",
+    sectionId: "quran-tajweed",
   },
   "/quran-hub/qiraat": {
     text: "إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ",
     ref: "الحجر: ٩",
     type: "ayah",
+    sectionId: "quran-qiraat",
   },
   "/ulum-quran": {
     text: "إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ",
     ref: "الحجر: ٩",
     type: "ayah",
+    sectionId: "ulum-quran",
   },
   "/quran/surah-stories": {
     text: "إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ",
     ref: "الحجر: ٩",
     type: "ayah",
+    sectionId: "quran-asbab",
   },
   "/quran/people": {
     text: "إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ",
     ref: "الحجر: ٩",
     type: "ayah",
+    sectionId: "quran-figures",
   },
   "/quran-knowledge": {
     text: "إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ",
     ref: "الحجر: ٩",
     type: "ayah",
+    sectionId: "quran-topics",
   },
   "/seerah": {
     text: "وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ",
     ref: "الأنبياء: ١٠٧",
     type: "ayah",
+    sectionId: "seerah",
   },
   "/tarikh-islami": {
     text: "وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ",
     ref: "الأنبياء: ١٠٧",
     type: "ayah",
+    sectionId: "islamic-history",
   },
   "/nations": {
     text: "وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ",
     ref: "الأنبياء: ١٠٧",
     type: "ayah",
+    sectionId: "nations",
   },
   "/library": {
     text: "اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ",
     ref: "العلق: ١",
     type: "ayah",
+    sectionId: "library",
   },
   "/academic-research": {
     text: "اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ",
     ref: "العلق: ١",
     type: "ayah",
+    sectionId: "research",
   },
   "/islamic-glossary": {
     text: "اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ",
     ref: "العلق: ١",
     type: "ayah",
+    sectionId: "glossary",
   },
   "/universities": {
     text: "اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ",
     ref: "العلق: ١",
     type: "ayah",
+    sectionId: "universities",
   },
   "/discover-islam": {
     text: "قُلْ هُوَ اللَّهُ أَحَدٌ",
     ref: "الإخلاص: ١",
     type: "ayah",
+    sectionId: "discover-islam",
   },
 };
 
-const FALLBACK_QUOTE: SectionTemplateQuote = {
-  text: "وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ",
-  ref: "الذاريات: ٥٦",
-  type: "ayah",
-};
+/** يُرجع اقتباساً فقط إذا sectionId يطابق القسم — بلا fallback عام */
+export function resolveSectionQuote(route: string): SectionTemplateQuote | undefined {
+  const q = ROUTE_QUOTE[route];
+  if (!q?.sectionId) return undefined;
+  const sec = getSectionByRoute(route);
+  if (sec && q.sectionId !== sec.id) return undefined;
+  return q;
+}
 
 export function sectionThemeId(route: string): TopicThemeId {
   return ROUTE_THEME[route] ?? "aqeedah";
@@ -139,10 +160,20 @@ export function sectionThemeId(route: string): TopicThemeId {
 
 export function sectionTemplateChrome(
   route: string,
-  overrides?: Partial<Omit<SectionTemplateChrome, "sectionRoute">>,
+  overrides?: Partial<Omit<SectionTemplateChrome, "sectionRoute" | "quote">> & {
+    quote?: Pick<SectionTemplateQuote, "text" | "ref"> & Partial<Pick<SectionTemplateQuote, "type" | "sectionId">>;
+  },
 ): SectionTemplateChrome {
   const sec = getSectionByRoute(route);
   const title = overrides?.title ?? sec?.label ?? "القسم";
+  const resolved = resolveSectionQuote(route);
+  const quote =
+    overrides?.quote != null
+      ? ({
+          ...overrides.quote,
+          sectionId: overrides.quote.sectionId ?? sec?.id ?? resolved?.sectionId ?? "",
+        } as SectionTemplateQuote)
+      : resolved;
   return {
     themeId: overrides?.themeId ?? sectionThemeId(route),
     sectionRoute: route,
@@ -153,7 +184,7 @@ export function sectionTemplateChrome(
     eyebrow: overrides?.eyebrow ?? title,
     title,
     subtitle: overrides?.subtitle ?? sec?.subtitle ?? "",
-    quote: overrides?.quote ?? ROUTE_QUOTE[route] ?? FALLBACK_QUOTE,
+    quote,
     groupTitle: overrides?.groupTitle ?? `أقسام ${title}`,
   };
 }

@@ -208,7 +208,7 @@ export default function CertificateVerifyPage() {
         <ShareButtons title="التحقق من الشهادة — المجلس العلمي" url="https://www.majlisilm.com/learning/certificate" />
       </div>
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 1rem 1.5rem" }}>
-        <SectionQuiz categoryId={["fiqh","aqeeda","hadith"]} title="اختبر معلوماتك الشرعية" count={3} />
+        <SectionQuiz route="/learning-paths" title="اختبر معلوماتك الشرعية" count={3} />
       </div>
     </div>
   );

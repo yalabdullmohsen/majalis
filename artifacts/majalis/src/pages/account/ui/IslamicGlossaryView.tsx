@@ -1579,15 +1579,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
         </div>
       </div>
 
-      <SectionQuiz
-        categoryId={lockedCategory === "quran" ? ["quran"] : ["quran", "fiqh", "aqeeda"]}
-        title={
-          lockedCategory === "quran"
-            ? "اختبر معلوماتك في مصطلحات علوم القرآن"
-            : "اختبر معلوماتك في مصطلحات الشريعة"
-        }
-        count={4}
-      />
+      <SectionQuiz route="/islamic-glossary" count={4} />
 
       <div className="twh-share">
         <ShareButtons title="المعجم الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/islamic-glossary" />

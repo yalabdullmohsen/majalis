@@ -305,7 +305,7 @@ export default function ArkanIslamPage() {
       </div>
       <RelatedKnowledge kind="lesson" query="أركان الإسلام" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["fiqh", "aqeeda"]} title="اختبر معلوماتك في أركان الإسلام" count={4} />
+        <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في أركان الإسلام" count={4} />
       </div>
     </div>
   );

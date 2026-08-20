@@ -1361,11 +1361,7 @@ export default function SahabahPage() {
           </div>
         )}
 
-        <SectionQuiz
-          categoryId={["sira", "akhlaq"]}
-          title="اختبر معلوماتك في الصحابة والسيرة"
-          count={4}
-        />
+        <SectionQuiz route="/sahabah" title="اختبر معلوماتك في الصحابة والسيرة" count={4} />
 
         <div className="twh-share">
           <ShareButtons title="الصحابة الكرام — المجلس العلمي" url="https://www.majlisilm.com/sahabah" />

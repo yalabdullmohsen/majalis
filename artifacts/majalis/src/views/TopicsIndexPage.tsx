@@ -214,7 +214,7 @@ export default function TopicsIndexPage() {
         <ShareButtons title="فهرس المواضيع الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/topics" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+        <SectionQuiz route="/topics" title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </PageShell>
   );

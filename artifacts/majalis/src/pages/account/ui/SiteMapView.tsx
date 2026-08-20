@@ -234,7 +234,7 @@ export default function SiteMapPage() {
       </div>
       <RelatedKnowledge kind="book" query="أقسام المجلس" title="مواد للبدء" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
+        <SectionQuiz route="/site-map" title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
       </div>
     </div>
   );

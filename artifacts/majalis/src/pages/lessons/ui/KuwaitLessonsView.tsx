@@ -199,7 +199,7 @@ export default function KuwaitLessonsPage() {
         <ShareButtons title="دروس الكويت — المجلس العلمي" url="https://www.majlisilm.com/kuwait-lessons" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["hadith", "akhlaq"]} title="اختبر معلوماتك في العلم الشرعي" count={4} />
+        <SectionQuiz route="/lessons" title="اختبر معلوماتك في العلم الشرعي" count={4} />
       </div>
     </div>
   );

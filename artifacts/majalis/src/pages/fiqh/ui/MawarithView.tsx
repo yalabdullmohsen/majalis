@@ -558,7 +558,7 @@ export default function MawarithPage() {
       </div>
       <RelatedKnowledge kind="fatwa" query="المواريث والفرائض" title="معرفة ذات صلة بالمواريث" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في المواريث" count={4} />
+        <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في المواريث" count={4} />
       </div>
     </main>
   );

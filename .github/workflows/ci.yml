@@ -235,6 +235,7 @@ jobs:
           pnpm --filter @workspace/majalis run verify:methodology-prerender
           pnpm --filter @workspace/majalis run verify:related-dedupe
           pnpm --filter @workspace/majalis run test:navigation-intent
+          pnpm --filter @workspace/majalis run verify:content-affinity
 
       - name: Cron single-response gate
         run: pnpm run verify:single-response

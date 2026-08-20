@@ -1102,7 +1102,7 @@ export default function HadithSciencePage() {
       </section>
       <RelatedKnowledge kind="hadith" query="مصطلح الحديث" title="مواد في علوم الحديث" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />
+        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />
       </div>
     </main>
   );

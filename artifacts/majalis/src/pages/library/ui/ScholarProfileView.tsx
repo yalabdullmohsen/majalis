@@ -319,7 +319,7 @@ export default function ScholarProfilePage() {
       </nav>
 
       <div className="px-4 pb-4 mt-2">
-        <SectionQuiz categoryId={["tarikh", "akhlaq"]} title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+        <SectionQuiz route="/scholars" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
       </div>
       <div className="sch-profile-back">
         <Link href="/scholars" className="sch-related-link">

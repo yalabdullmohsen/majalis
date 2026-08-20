@@ -227,11 +227,7 @@ export default function IslamicScholarsPage() {
         </div>
       )}
 
-      <SectionQuiz
-        categoryId={["akhlaq", "tarikh"]}
-        title="اختبر معلوماتك في تاريخ العلماء والصحابة"
-        count={4}
-      />
+      <SectionQuiz route="/scholars" title="اختبر معلوماتك في تاريخ العلماء والصحابة" count={4} />
 
       {/* ── روابط ذات صلة ─────────────────────────────────────── */}
       <div className="twh-share">

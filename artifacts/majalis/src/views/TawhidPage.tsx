@@ -600,11 +600,7 @@ export default function TawhidPage() {
 
       <RelatedKnowledge kind="lesson" query="عقيدة توحيد" title="دروس ومواد ذات صلة بالتوحيد" limit={6} />
 
-      <SectionQuiz
-        categoryId="aqeeda"
-        title="اختبر معلوماتك في العقيدة والتوحيد"
-        count={4}
-      />
+      <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والتوحيد" count={4} />
 
       <div className="twh-share">
         <ShareButtons title="العقيدة والتوحيد — المجلس العلمي" url="https://www.majlisilm.com/tawhid" />

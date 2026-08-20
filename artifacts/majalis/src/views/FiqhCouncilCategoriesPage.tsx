@@ -124,7 +124,7 @@ export default function FiqhCouncilCategoriesPage() {
         <ShareButtons title="تصنيفات مجلس الفقه — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/categories" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أبواب الفقه" count={4} />
+        <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في أبواب الفقه" count={4} />
       </div>
     </div>
   );

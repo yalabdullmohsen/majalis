@@ -483,7 +483,7 @@ export default function InstitutionsPage() {
           <ShareButtons title="المؤسسات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/institutions" />
         </div>
         <div className="px-4 pb-6 mt-4">
-          <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
+          <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
         </div>
       </div>
     </div>

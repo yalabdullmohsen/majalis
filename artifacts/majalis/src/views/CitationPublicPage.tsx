@@ -227,7 +227,7 @@ export default function CitationPublicPage() {
             <ShareButtons title="اقتباس من المجلس العلمي" url={typeof window !== "undefined" ? window.location.href : "https://www.majlisilm.com"} />
           </div>
           <div className="px-4 pb-6 mt-4">
-            <SectionQuiz categoryId={["hadith", "quran"]} title="اختبر معلوماتك في القرآن والحديث" count={4} />
+            <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في القرآن والحديث" count={4} />
           </div>
         </div>
       </main>

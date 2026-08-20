@@ -451,11 +451,7 @@ export default function SeerahPage() {
       </div>
 
       <div className="page-shell narrow">
-        <SectionQuiz
-          categoryId="sira"
-          title="اختبر معلوماتك في السيرة النبوية"
-          count={4}
-        />
+        <SectionQuiz sectionId="seerah" title="اختبر معلوماتك في السيرة النبوية" count={4} />
       </div>
 
       <AdminQuickEdit section="prophet-stories" />

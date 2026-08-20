@@ -279,7 +279,7 @@ export default function ArbaeenNawawiPage() {
       </div>
       <RelatedKnowledge kind="hadith" query="الأربعون النووية" title="أحاديث ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />
+        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />
       </div>
     </div>
   );
