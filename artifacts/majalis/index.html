@@ -19,9 +19,13 @@
         --inset-right: env(safe-area-inset-right, 0px);
         --inset-left: env(safe-area-inset-left, 0px);
       }
-      /* هيكل إقلاع بلا نص — أبعاد محجوزة تطابق React (CLS) */
+      /* هيكل إقلاع ثابت — خارج تدفق #root حتى لا يحرّك React (CLS) */
       #mj-boot-skeleton {
-        min-height: 100dvh;
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        pointer-events: none;
+        overflow: hidden;
         background: #F2F4F3;
       }
       #mj-boot-skeleton .navbar-v3 {
@@ -393,19 +397,33 @@
         });
       } catch (error) {}
     </script>
-    <div id="root">
-      <div id="mj-boot-skeleton" class="mj-home-lcp-ph" dir="rtl" aria-hidden="true">
-        <div class="navbar-v3">
-          <div class="mj-boot-skeleton__search-row"></div>
-          <div class="header-ticker"></div>
-        </div>
-        <div class="top-section-bar"></div>
-        <div class="page-hero-mj m2030-hero home-page-hero"></div>
-        <div class="hus mj-home-lcp-ph__search"><div class="hus-field"></div></div>
-        <div class="home-start-here mj-home-lcp-ph__start-here"></div>
-        <div class="bottom-nav bottom-nav--v2"></div>
+    <div id="mj-boot-skeleton" class="mj-home-lcp-ph" dir="rtl" aria-hidden="true">
+      <div class="navbar-v3">
+        <div class="mj-boot-skeleton__search-row"></div>
+        <div class="header-ticker"></div>
       </div>
+      <div class="top-section-bar"></div>
+      <div class="page-hero-mj m2030-hero home-page-hero"></div>
+      <div class="hus mj-home-lcp-ph__search"><div class="hus-field"></div></div>
+      <div class="home-start-here mj-home-lcp-ph__start-here"></div>
+      <div class="bottom-nav bottom-nav--v2"></div>
     </div>
+    <div id="root"></div>
+    <script>
+      (function () {
+        var el = document.getElementById("mj-boot-skeleton");
+        if (!el) return;
+        var done = false;
+        function hide() {
+          if (done || !el.parentNode) return;
+          done = true;
+          try { el.remove(); } catch (e) {}
+        }
+        window.addEventListener("mj:app-painted", hide, { once: true });
+        window.addEventListener("app:first-paint", hide, { once: true });
+        window.setTimeout(hide, 4000);
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
     <!-- محتوى للزواحف (noscript) — يضمن فهرسة محركات البحث للمحتوى الأساسي -->
     <noscript>
