@@ -913,6 +913,10 @@ html.dark .nav-soon-badge {
   }
   .scroll-to-top { inset-inline-end: max(1rem, var(--inset-right)); }
   .global-back-btn { inset-inline-start: max(1rem, var(--inset-left)); }
+  .section-lobby__back {
+    bottom: calc(var(--bottom-nav-total) + 0.5rem);
+    inset-inline-start: max(1rem, var(--inset-left));
+  }
 
   /* المساعد الذكي متاح عبر «المزيد» — إخفاء الزر العائم على الجوال يمنع
      تداخله مع بطاقات المحتوى فوق الشريط السفلي (تحقّق smoke-mobile). */
