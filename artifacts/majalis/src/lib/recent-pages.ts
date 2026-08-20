@@ -149,7 +149,6 @@ const LABEL_MAP: Record<string, string> = {
   // ─── المكتبة والبحث ───────────────────────────────────────────────
   "/library":                       "الرئيسية",
   "/fawaid":                        "الفوائد",
-  "/topics":                        "المواضيع",
   "/research":                      "البحث العلمي",
   "/scholarly-research":            "البحث الأكاديمي",
   "/academic-research":             "الأبحاث الشرعية",

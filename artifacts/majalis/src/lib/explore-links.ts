@@ -62,7 +62,7 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/quiz", label: "الأسئلة والأجوبة" },
     { href: "/fiqh", label: "بوابة الفقه" },
     { href: "/daily-wird", label: "الورد اليومي" },
-    { href: "/topics", label: "فهرس الموضوعات" },
+    { href: "/sections", label: "الأقسام" },
   ],
   durusMutanawwia: [
     { href: "/lessons", label: "الدروس العلمية" },

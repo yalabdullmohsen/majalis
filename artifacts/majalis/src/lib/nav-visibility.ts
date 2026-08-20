@@ -48,7 +48,6 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/dalail-nubuwwah",
 
   "/start-here",
-  "/topics",
   "/islamic-glossary",
   "/rulings",
   "/fiqh-council",

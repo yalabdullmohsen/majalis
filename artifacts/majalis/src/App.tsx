@@ -118,8 +118,6 @@ const FatwaPolicyPage = lazy(() => import("@/pages/fiqh/FatwaPolicyPage"));
 
 const CalendarPage = lazy(() => import("@/views/CalendarPage"));
 const SearchPage = lazy(() => import("@/pages/account/SearchPage"));
-const TopicPage = lazy(() => import("@/views/TopicPage"));
-const TopicsIndexPage = lazy(() => import("@/views/TopicsIndexPage"));
 const LessonsPage = lazy(() => import("@/pages/lessons/LessonsPage"));
 const TeachersIndexPage = lazy(() => import("@/pages/lessons/TeachersIndexPage"));
 const TeacherDetailPage = lazy(() => import("@/pages/lessons/TeacherDetailPage"));
@@ -734,8 +732,8 @@ function Router() {
       <Route path="/feature-tour"><SafeLazyRoute component={FeatureTourPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
-      <Route path="/topics/:slug"><SafeLazyRoute component={TopicPage} /></Route>
-      <Route path="/topics"><SafeLazyRoute component={TopicsIndexPage} /></Route>
+      <Route path="/topics/:slug"><Redirect to="/sections" /></Route>
+      <Route path="/topics"><Redirect to="/sections" /></Route>
       <Route path="/scientific-announcements/:id"><SafeLazyRoute component={ScientificAnnouncementDetailPage} /></Route>
       <Route path="/lessons/current"><Redirect to="/lessons" /></Route>
       <Route path="/lessons/archive"><SafeLazyRoute component={LessonsArchivePage} /></Route>

@@ -587,7 +587,7 @@ export default function SearchPage() {
           {showFilters ? "إخفاء الفلاتر" : "بحث متقدم"}
           {hasActiveFilter && <span className="search-adv-dot" aria-hidden="true" />}
         </button>
-        <Link href="/topics" className="search-toolbar-link">الموضوعات العلمية ←</Link>
+        <Link href="/sections" className="search-toolbar-link">الأقسام ←</Link>
         {responseMs !== null && q.trim() && (
           <span className="search-response-ms">{responseMs} ms</span>
         )}
@@ -777,7 +777,7 @@ export default function SearchPage() {
                 <div className="search-topic-chips">
                   <span className="search-topic-chips__label">موضوعات ذات صلة:</span>
                   {matchedTopics.map((t) => (
-                    <Link key={t.slug} href={`/topics/${t.slug}`} className="search-topic-chip">
+                    <Link key={t.slug} href="/sections" className="search-topic-chip">
                       {t.title}
                     </Link>
                   ))}

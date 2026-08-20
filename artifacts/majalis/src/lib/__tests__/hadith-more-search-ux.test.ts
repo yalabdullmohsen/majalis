@@ -52,7 +52,7 @@ assert.ok(
   secondary.includes("القاموس الإسلامي") || secondary.includes("المصطلحات"),
   "المزيد يتضمن القاموس/المصطلحات",
 );
-assert.ok(secondary.includes("الموضوعات"));
+assert.equal(secondary.includes("الموضوعات"), false, "لا قسم الموضوعات في المزيد");
 assert.equal(secondary.includes("البحث"), false, "لا بطاقة بحث في المزيد");
 
 const moreCss = read("src/styles/pages/more-page.css");
