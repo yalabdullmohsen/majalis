@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, useCallback, startTransition } from "reac
 import { Pencil, Trash2 } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ErrorState, Empty } from "@/components/ui-common";
@@ -58,7 +58,6 @@ const TAB_LABELS: Record<TabId, string> = {
 const TAB_COMING_SOON: Partial<Record<TabId, boolean>> = { makkah: true, madinah: true };
 
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
-  const [, setLocation] = useLocation();
   const [tab, setTabState] = useState<TabId>(() => readTabFromUrl());
 
   useEffect(() => {
@@ -234,7 +233,6 @@ export default function LessonsPage({
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [myReg, setMyReg] = useState<string[]>([]);
   const [tab, setTab] = useTabFromUrl();
-  const [, navigateTo] = useLocation();
   const { user, isLoggedIn, isAdmin } = useAuth();
 
   useEffect(() => {
