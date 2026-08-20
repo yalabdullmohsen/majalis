@@ -20,6 +20,7 @@ import {
 import { getSectionAccent } from "@/config/sections.registry";
 import { sectionTemplateChrome } from "@/config/section-template";
 import { HubCard } from "@/components/ui/HubCard";
+import { navigateTo } from "@/lib/navigation-intent";
 import "@/styles/components/topic-page.css";
 
 export type TopicBreadcrumbItem = {
@@ -100,7 +101,7 @@ export function TopicPage({
   const theme = getTopicTheme(themeId);
   const baseId = useId();
   const tablistRef = useRef<HTMLDivElement>(null);
-  const [pathname, setLocation] = useLocation();
+  const [pathname] = useLocation();
   const search = useSearch();
 
   const resolvedTab =
@@ -114,8 +115,8 @@ export function TopicPage({
     const next = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
     next.set("tab", resolvedTab);
     const qs = next.toString();
-    setLocation(`${pathname}${qs ? `?${qs}` : ""}`);
-  }, [resolvedTab, syncTabParam, tabs, search, pathname, setLocation]);
+    navigateTo(`${pathname}${qs ? `?${qs}` : ""}`, { mode: "state" });
+  }, [resolvedTab, syncTabParam, tabs, search, pathname]);
 
   const selectTab = useCallback(
     (id: string) => {
@@ -124,10 +125,10 @@ export function TopicPage({
         const next = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
         next.set("tab", id);
         const qs = next.toString();
-        setLocation(`${pathname}${qs ? `?${qs}` : ""}`);
+        navigateTo(`${pathname}${qs ? `?${qs}` : ""}`, { mode: "state" });
       }
     },
-    [onTabChange, syncTabParam, search, pathname, setLocation],
+    [onTabChange, syncTabParam, search, pathname],
   );
 
   const onTabKeyDown = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
