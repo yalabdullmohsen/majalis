@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { useSearch } from "wouter";
+import { DirectQaCard } from "./DirectQaCard";
 import {
   Award, BookOpen, CheckCircle2, Handshake, Library, Lightbulb, RefreshCw, ScrollText, Moon, Search, Send, Star, Scale, Building2, Landmark, Gem, Trophy, User, Users, XCircle, Zap,
   type LucideIcon,
@@ -837,6 +839,18 @@ export function IslamicQuizGame() {
   const poolRef = useRef<Record<string, CategoryQuestions>>(ALL_QUESTIONS);
   const persistedUsedIdsRef = useRef<Set<string>>(new Set());
 
+  // وجهة روابط البحث: /quiz?qa=<id> تفتح سؤالاً محدَّداً مباشرةً قبل أي شيء آخر.
+  const urlSearch = useSearch();
+  const [directQaId, setDirectQaId] = useState<string | null>(
+    () => new URLSearchParams(urlSearch).get("qa"),
+  );
+  const dismissDirectQa = useCallback(() => {
+    setDirectQaId(null);
+    const url = new URL(window.location.href);
+    url.searchParams.delete("qa");
+    window.history.replaceState(null, "", `${url.pathname}${url.search}`);
+  }, []);
+
   // Timer state
   const [timerSec, setTimerSec] = useState(60);
   const [maxTimerSec, setMaxTimerSec] = useState(60);
@@ -917,13 +931,15 @@ export function IslamicQuizGame() {
   return (
     <div className="qzg-root">
       <div className="qzg-inner">
-        {(state.phase === "board" || state.phase === "question") && (
+        {directQaId && <DirectQaCard qaId={directQaId} onDismiss={dismissDirectQa} />}
+
+        {!directQaId && (state.phase === "board" || state.phase === "question") && (
           <div className="qzg-game-title-bar">
             <span className="qzg-game-title"><Landmark size={16} className="inline ms-1" />سين جيم</span>
           </div>
         )}
 
-        {state.phase === "setup" && <SetupPhase onStart={handleStart} />}
+        {!directQaId && state.phase === "setup" && <SetupPhase onStart={handleStart} />}
         {state.phase === "board" && (
           <BoardPhase
             state={state}
