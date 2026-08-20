@@ -67,6 +67,8 @@ export function useQpcPageFont(pageNumber: number): { fontFamily: string; ready:
     }
     void loadFace(pageNumber - 1);
     void loadFace(pageNumber + 1);
+    /* بسملة المطلع تستخدم دائماً محارف الصفحة ١ → جهّز الخط مسبقاً */
+    void loadFace(1);
     return () => {
       cancelled = true;
     };

@@ -437,7 +437,8 @@ html.dark .mm-surah-frame__name {
 }
 
 .mm-basmala--qpc {
-  font-family: var(--mm-qpc-family), "Amiri Quran", serif;
+  /* محارف بسملة ١:١ من خط الصفحة ١ فقط — خط الصفحة الحالية يرسم نفس الـPUA كنص السطر الأول */
+  font-family: "qpc-v2-p1", "Amiri Quran", serif;
   unicode-bidi: bidi-override;
   direction: rtl;
   white-space: nowrap;
