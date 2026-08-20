@@ -1,5 +1,19 @@
 /**
- * بوابة صفر فيض أفقي: ٦٠٤ صفحة × عروض 320/390/430.
+ * بوابة صفر فيض أفقي — نطاقها الفعلي: اتّساق CSS الثابت (regex على مصدر
+ * mushaf-madinah.css) + خوارزمية fitPageFontSize مقابل نفسها عبر measure()
+ * تركيبية، بلا DOM أو متصفح حقيقي. تثبت أن الخوارزمية "لا تناقض نفسها"،
+ * ولا تثبت أن المتصفح يرسم داخل الحدود فعلاً — لو أضاعت خانة grid الضمنية
+ * قيدها (مثال حي: .mm-page__body بلا grid-template-columns، أُصلح في
+ * feat/mushaf-round-2)، فهذه البوابة لا ترى شيئًا لأنها لا تفحص القيمة
+ * المحسوبة لأي خاصية grid أصلاً — 604 صفحة اجتازتها هنا رغم اقتطاع حقيقي
+ * في الإنتاج على الأقل على ص٦٠١.
+ *
+ * المرجع الحقيقي لـ«صفر سطر مقتطع» الآن: scripts/mushaf-madinah/line-integrity-gate.mjs
+ * (`pnpm run test:mushaf-line-integrity`) — Chromium حقيقي، getBoundingClientRect
+ * لكل كلمة مقابل والدها الفعلي، مطابقة نصية كاملة مع بيانات المصدر. هذه
+ * البوابة تبقى مفيدة لفحوصها الأخرى (بنية CSS، حدود fitPageFontSize، اكتمال
+ * بيانات الصفحات) — لا تعتمد عليها وحدها لادّعاء "صفر فيض".
+ *
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-line-overflow-gate.test.ts
  */
 import assert from "node:assert/strict";

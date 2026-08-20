@@ -400,6 +400,15 @@ jobs:
           pnpm --filter @workspace/majalis run test:mushaf-active-page-lines
           pnpm --filter @workspace/majalis run test:mushaf-flip-perf
 
+      # المرجع الحقيقي لـ«صفر سطر مقتطع» — Chromium حقيقي على الـpreview
+      # نفسه أعلاه، لا اعتماد على scrollWidth (لا يُسجَّل overflow تحت
+      # overflow:clip). راجع feat/mushaf-round-2 وتعليق الرأس في
+      # line-integrity-gate.mjs لتفصيل العطل الذي أفلت من test:mushaf-gates:unit.
+      - name: Line integrity (604 صفحة — اقتطاع بصري حقيقي)
+        env:
+          MUSHAF_GATE_BASE_URL: http://127.0.0.1:24216
+        run: pnpm --filter @workspace/majalis run test:mushaf-line-integrity
+
       - name: Stop preview
         if: always()
         run: kill "$(cat /tmp/mushaf-vite.pid)" 2>/dev/null || true

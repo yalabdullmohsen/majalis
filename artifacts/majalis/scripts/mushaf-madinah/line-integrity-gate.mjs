@@ -1,9 +1,25 @@
 #!/usr/bin/env node
 /**
- * بوابة سلامة الأسطر — تفحص كل صفحات المصحف (604) بحثاً عن أي كلمة/حرف
- * يمتد خارج حدود .mm-page__body المرئية (اقتطاع بصري حقيقي، بغض النظر عن
- * scrollWidth/clientWidth التي لا تُسجَّل تحت overflow:clip).
- * كذلك تطابق النص المرسوم مع نص المصدر (public/data/quran-v2/pages/page-N.json).
+ * بوابة سلامة الأسطر — المرجع الحقيقي الوحيد لـ«صفر سطر مقتطع».
+ *
+ * تحلّ محل الاعتماد على scrollWidth/clientWidth (mushaf-line-overflow-gate.test.ts
+ * ولوحة الملاءمة الحيّة useMushafPageFontFit.ts): عناصر السلسلة كلها
+ * `overflow: clip` لا `hidden`، وعنصر overflow:clip **لا يُسجِّل overflow
+ * قابلاً للقياس في scrollWidth إطلاقاً مهما اقتُطع بصريًا** (سلوك موصوف في
+ * CSS Overflow Module — وليس خللاً في القياس بل غياب دلالة أصلاً). لذلك
+ * انفلت عطل اقتطاع حقيقي (grid-template-columns مفقود على .mm-page__body،
+ * راجع feat/mushaf-round-2) عبر ١٣ بوابة CI مطلوبة دون أن تلتقطه أيّ منها.
+ *
+ * هذه البوابة تقيس عرض السطر **المرسوم فعلياً** عبر Chromium حقيقي:
+ * getBoundingClientRect لكل كلمة مقابل getBoundingClientRect لحدود والدها
+ * (.mm-page__body) — تكشف تجاوز الشبكة (grid) وoverflow:clip معاً، بصرف
+ * النظر عن قيمة scrollWidth. كذلك تطابق النص المرسوم حرفياً مع نص المصدر
+ * (public/data/quran-v2/pages/page-N.json).
+ *
+ * التشغيل: يعيد استخدام preview الحيّ عبر MUSHAF_GATE_BASE_URL/BASE_URL إن
+ * وُجد (نمط مطابق لـ scripts/mushaf-madinah/visual-snapshot.mjs — نفس الخادم
+ * المستخدَم في وظيفة mushaf-gates بـ CI)، وإلا يبني خادمًا ثابتًا محليًا من
+ * dist/ (يتطلب `pnpm build` مسبقًا).
  */
 import { createServer } from "node:http";
 import { createReadStream, existsSync, statSync, readFileSync, writeFileSync } from "node:fs";
@@ -13,9 +29,9 @@ import { chromium } from "playwright";
 const root = process.argv[2];
 const dist = join(root, "dist");
 const dataDir = join(root, "public/data/quran-v2/pages");
-const port = 24295;
 const START = Number(process.argv[3] || 1);
 const END = Number(process.argv[4] || 604);
+const baseFromEnv = process.env.MUSHAF_GATE_BASE_URL || process.env.BASE_URL || "";
 
 function ct(f) {
   const e = extname(f).toLowerCase();
@@ -26,20 +42,33 @@ function ct(f) {
   if (e === ".woff2") return "font/woff2";
   return "application/octet-stream";
 }
-const server = createServer((req, res) => {
-  const url = new URL(req.url || "/", `http://127.0.0.1:${port}`);
-  let p = decodeURIComponent(url.pathname);
-  if (p === "/") p = "/index.html";
-  const file = join(dist, p);
-  if (!file.startsWith(dist) || !existsSync(file) || statSync(file).isDirectory()) {
-    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-    createReadStream(join(dist, "index.html")).pipe(res);
-    return;
+
+async function ensurePreview() {
+  if (baseFromEnv) return { base: baseFromEnv.replace(/\/$/, ""), stop: async () => {} };
+
+  if (!existsSync(join(dist, "index.html"))) {
+    throw new Error("dist/index.html مفقود — شغّل pnpm build أولًا أو عيّن MUSHAF_GATE_BASE_URL");
   }
-  res.writeHead(200, { "Content-Type": ct(file) });
-  createReadStream(file).pipe(res);
-});
-await new Promise((r) => server.listen(port, "127.0.0.1", r));
+  const port = Number(process.env.MUSHAF_LINE_INTEGRITY_PORT || 24295);
+  const server = createServer((req, res) => {
+    const url = new URL(req.url || "/", `http://127.0.0.1:${port}`);
+    let p = decodeURIComponent(url.pathname);
+    if (p === "/") p = "/index.html";
+    const file = join(dist, p);
+    if (!file.startsWith(dist) || !existsSync(file) || statSync(file).isDirectory()) {
+      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      createReadStream(join(dist, "index.html")).pipe(res);
+      return;
+    }
+    res.writeHead(200, { "Content-Type": ct(file) });
+    createReadStream(file).pipe(res);
+  });
+  await new Promise((r, reject) => {
+    server.listen(port, "127.0.0.1", r);
+    server.on("error", reject);
+  });
+  return { base: `http://127.0.0.1:${port}`, stop: () => new Promise((r) => server.close(() => r())) };
+}
 
 function expectedTextForPage(n) {
   const raw = JSON.parse(readFileSync(join(dataDir, `page-${String(n).padStart(3, "0")}.json`), "utf8"));
@@ -53,6 +82,7 @@ function expectedTextForPage(n) {
   return text;
 }
 
+const { base, stop } = await ensurePreview();
 const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, locale: "ar-SA" });
 const page = await context.newPage();
@@ -64,7 +94,7 @@ const t0 = Date.now();
 
 for (let n = START; n <= END; n++) {
   try {
-    await page.goto(`http://127.0.0.1:${port}/mushaf?page=${n}`, { waitUntil: "domcontentloaded" });
+    await page.goto(`${base}/mushaf?page=${n}`, { waitUntil: "domcontentloaded" });
     await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${n}"]`, { timeout: 20000 });
     await page.waitForTimeout(220);
 
@@ -130,7 +160,7 @@ for (let n = START; n <= END; n++) {
 }
 
 await browser.close();
-server.close();
+await stop();
 
 const report = {
   range: [START, END],
@@ -141,9 +171,12 @@ const report = {
   elapsedSec: Math.round((Date.now() - t0) / 1000),
 };
 writeFileSync(join(root, "docs/mushaf-madinah/line-integrity-report.json"), JSON.stringify(report, null, 2));
-console.log(JSON.stringify({ total: report.total, ok: report.ok, failed: report.failed, elapsedSec: report.elapsedSec }, null, 1));
+
 if (failures.length > 0) {
+  console.log(`${report.total - report.failed}/${report.total} صفحة سليمة · ${report.failed} سطر/صفحة فيها اقتطاع أو خلل نصي`);
   console.log("=== أول 10 فشل ===");
   console.log(JSON.stringify(failures.slice(0, 10), null, 1));
   process.exit(1);
+} else {
+  console.log(`✓ mushaf-line-integrity: ${report.ok}/${report.total} صفحة سليمة · صفر سطر مقتطع (${report.elapsedSec}s)`);
 }

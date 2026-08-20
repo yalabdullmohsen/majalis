@@ -1,11 +1,11 @@
 {
   "range": [
     1,
-    604
+    5
   ],
-  "total": 604,
-  "ok": 604,
+  "total": 5,
+  "ok": 5,
   "failed": 0,
   "failures": [],
-  "elapsedSec": 233
+  "elapsedSec": 2
 }
