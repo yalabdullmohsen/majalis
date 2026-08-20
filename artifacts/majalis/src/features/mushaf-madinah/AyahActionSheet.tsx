@@ -102,7 +102,8 @@ export function AyahActionSheet({
   onReciterChange,
   onClose,
 }: Props) {
-  const [height, setHeight] = useState<SheetHeight>("collapsed");
+  // البند ٤: لوحة كاملة افتراضياً عند تحديد آية — لا مرحلة "مطوي" وسيطة
+  const [height, setHeight] = useState<SheetHeight>("full");
   const [tab, setTab] = useState<SheetTab>("tafsir");
   const [readersOpen, setReadersOpen] = useState(false);
   const [readerQuery, setReaderQuery] = useState("");
@@ -140,7 +141,7 @@ export function AyahActionSheet({
   const tajweedOn = QURAN_DATA_FEATURES.ayahTajweedTab;
 
   useEffect(() => {
-    setHeight("collapsed");
+    setHeight("full");
     setTab("tafsir");
     setReadersOpen(false);
     setRange("ayah");
@@ -407,6 +408,11 @@ export function AyahActionSheet({
             </button>
           </div>
 
+          {/* خانة شبكة ثابتة واحدة (٤ التبويبات، ٥ هذه) — تحوي المحتوى القابل
+           * للتمرير الداخلي + نصوص الحالة العابرة معاً، بمعزل عن عدد عناصر
+           * الحالة الشرطية أعلاه/أسفله (كانت تُزيح التبويبات فعلياً إلى خانة
+           * ١fr المرِنة وتتمدد كأعمدة فارغة ضخمة عند فتح اللوحة full). */}
+          <div className="ayah-action-sheet__scroll-region">
           <div className="ayah-action-sheet__body">
             {tab === "tafsir" ? (
               <div className="ayah-action-sheet__tafsir">
@@ -645,6 +651,7 @@ export function AyahActionSheet({
             </p>
           ) : null}
           {loading ? <p className="mm-ayah-bar__loading">جاري تحميل التلاوة...</p> : null}
+          </div>
         </div>
       </div>
 

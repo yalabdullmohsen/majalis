@@ -6,9 +6,8 @@ type Props = {
 
 /**
  * ذيل الصفحة — كلاسيكي هادئ:
- * - رقم الصفحة في خرطوش بسيط (بلا ميداليات).
- * - الحافة المتناوبة: فردية يمين · زوجية يسار.
- * - وصف الحزب فقط في صفحة ابتدائه.
+ * - رقم الصفحة في خرطوش بسيط بالوسط، موضع ثابت لا يتبادل بين الصفحات.
+ * - وصف الحزب (إن وُجد) يمين، بمعزل عن رقم الصفحة الوسطي.
  */
 export function MushafPageFooter({ pageNumber, hizbStartingOnPage = null }: Props) {
   const hizbStart = hizbStartingOnPage != null && hizbStartingOnPage > 0;
