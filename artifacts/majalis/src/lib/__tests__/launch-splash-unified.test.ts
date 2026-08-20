@@ -22,7 +22,7 @@ assert.match(indexHtml, /__mjDismissSplash/, "دخولية تعرض دالة dis
 assert.match(indexHtml, /MIN_MS\s*=\s*900/, "حد أدنى 900ms موجود");
 assert.match(indexHtml, /MAX_MS\s*=\s*1500/, "حد أقصى 1500ms موجود");
 assert.match(indexHtml, /EXIT_MS\s*=\s*250/, "تلاشي HTML 250ms");
-assert.match(indexHtml, /id="mj-boot-skeleton"/, "هيكل إقلاع داخل #root");
+assert.match(indexHtml, /id="mj-boot-skeleton"/, "هيكل إقلاع فوري");
 assert.match(indexHtml, /mj\.silent-splash\.session/, "جلسة: إقلاع بارد فقط");
 assert.match(
   indexHtml,

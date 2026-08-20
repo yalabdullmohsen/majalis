@@ -69,7 +69,7 @@ async function main() {
   try {
     await page.goto(`${base}/`, { waitUntil: "load", timeout: 60_000 });
 
-    // الويب: الدخولية تُغلق فوراً؛ الهيكل داخل #root هو أول رسم.
+    // الويب: الدخولية تُغلق فوراً؛ الهيكل الثابت هو أول رسم.
     const splashGone = await page.evaluate(() => !document.querySelector("#mj-silent-splash"));
     assert.equal(splashGone, true, "الويب بلا دخولية حاجبة بعد التحميل");
 
