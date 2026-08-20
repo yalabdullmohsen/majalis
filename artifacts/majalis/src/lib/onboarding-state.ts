@@ -1,11 +1,13 @@
 /**
- * onboarding-state — بوابة التشغيل الأول الموحّدة (first-run gate).
+ * onboarding-state — بوابة "شاهد المستخدم شاشة الدخول الأولى؟" + راية
+ * إشعار الخصوصية/الكوكيز. مصدر واحد لكليهما (تصميمان منفصلان منطقيًا،
+ * لكن نفس آلية التخزين الموثوقة).
  *
- * السبب الجذري لتكرار النوافذ: كل كتابة حالة في المستودع كانت
+ * السبب الجذري لتكرار النوافذ سابقًا: كل كتابة حالة في المستودع كانت
  * ‎try { localStorage.setItem(...) } catch { ignore }‎. إن فشل
  * ‎setItem‎ — خصوصية WKWebView، حصة ممتلئة، تخزين معطّل — لا تُحفظ الراية
- * ولا يُبلَّغ أحد، فتظهر التهيئة/التفضيلات/التذكيرات/شريط الخصوصية من جديد
- * في *كل* إقلاع أو reload. الفشل صامت ودائم.
+ * ولا يُبلَّغ أحد، فتظهر الشاشة من جديد في *كل* إقلاع أو reload. الفشل
+ * صامت ودائم.
  *
  * الحل هنا:
  *  ١) قراءة تحقّق بعد كل كتابة (read-back) — نعرف إن نزلت فعلًا.
@@ -15,14 +17,11 @@
  *  ٤) مفتاح لكل شاشة + إصدار كبير واحد يُعيد العرض عند تغييره عمدًا فقط.
  */
 
-/** رفع هذا الرقم — وهذا وحده — يُعيد عرض التهيئة لكل المستخدمين. */
+/** رفع هذا الرقم — وهذا وحده — يُعيد عرض شاشة الدخول لكل المستخدمين. */
 export const ONBOARDING_MAJOR_VERSION = 1;
 
 export const ONBOARDING_KEYS = {
   onboardingSeen: "onboarding_seen",
-  preferencesCompleted: "preferences_completed",
-  preferencesSkipped: "preferences_skipped",
-  reminderPromptSeen: "reminders_prompt_seen",
   storageNoticeSeen: "storage_notice_seen",
   majorVersion: "onboarding_major_version",
 } as const;
@@ -131,7 +130,7 @@ function storedMajorVersion(): number | null {
 /**
  * ترحيل لمرّة واحدة من المفاتيح القديمة، ثم تثبيت الإصدار الحالي.
  * ⚠️ تحديث الموقع/نسخة جديدة *لا* يمسّ الإصدار الكبير — لذلك لا تعود
- * النوافذ عند reload أو نشر جديد، فقط عند رفع ONBOARDING_MAJOR_VERSION.
+ * الشاشة عند reload أو نشر جديد، فقط عند رفع ONBOARDING_MAJOR_VERSION.
  */
 export function initOnboardingState(): void {
   purgeLegacyFirstRunArtifacts();
@@ -139,34 +138,26 @@ export function initOnboardingState(): void {
   const stored = storedMajorVersion();
 
   if (stored === null) {
-    // ترحيل: من كان أتمّ التهيئة القديمة لا يُسأل مرة أخرى
+    // ترحيل: من أتمّ أي تهيئة/دخولية قديمة سابقًا لا يُسأل مرة أخرى
     try {
       const legacy = localStorage.getItem("majalis-first-run-setup-v1");
       if (legacy) {
-        const parsed = JSON.parse(legacy) as { done?: boolean; skipped?: boolean };
-        if (parsed.done) {
-          setFlag(ONBOARDING_KEYS.onboardingSeen);
-          setFlag(ONBOARDING_KEYS.reminderPromptSeen);
-          setFlag(
-            parsed.skipped
-              ? ONBOARDING_KEYS.preferencesSkipped
-              : ONBOARDING_KEYS.preferencesCompleted,
-          );
-        }
+        const parsed = JSON.parse(legacy) as { done?: boolean };
+        if (parsed.done) setFlag(ONBOARDING_KEYS.onboardingSeen);
       }
       const consent = localStorage.getItem("majalis-cookie-consent-v1");
       if (consent && JSON.parse(consent)?.decidedAt) {
         setFlag(ONBOARDING_KEYS.storageNoticeSeen);
       }
     } catch {
-      /* ترحيل أفضل-جهد؛ فشله يعني عرض التهيئة مرة واحدة فقط */
+      /* ترحيل أفضل-جهد؛ فشله يعني عرض الشاشة مرة واحدة فقط */
     }
   }
 
   if (stored !== ONBOARDING_MAJOR_VERSION) {
     if (stored !== null && stored < ONBOARDING_MAJOR_VERSION) {
       // رفع مقصود للإصدار الكبير — الطريق الآلي *الوحيد* لإعادة العرض.
-      // تحديث الموقع/نشر نسخة جديدة لا يمسّه، فلا تعود النوافذ.
+      // تحديث الموقع/نشر نسخة جديدة لا يمسّه، فلا تعود الشاشة.
       clearOnboardingFlags();
     }
     writeRaw(ONBOARDING_KEYS.majorVersion, String(ONBOARDING_MAJOR_VERSION));
@@ -174,8 +165,8 @@ export function initOnboardingState(): void {
 }
 
 /**
- * يزيل مفاتيح الدليل السريع / الترحيب القديم التي قد تُفهم خطأً كبوابة عرض.
- * لا يُعاد فتح أي دليل — shouldShowFirstRunFlow دائمًا false.
+ * يزيل مفاتيح دخولية/دليل سريع قديمة أُلغيت بالكامل، حتى لا تُفهم خطأً
+ * كبوابة عرض لأي تدفّق جديد.
  */
 function purgeLegacyFirstRunArtifacts(): void {
   const keys = [
@@ -203,13 +194,7 @@ function purgeLegacyFirstRunArtifacts(): void {
 }
 
 function clearOnboardingFlags(): void {
-  for (const name of [
-    ONBOARDING_KEYS.onboardingSeen,
-    ONBOARDING_KEYS.preferencesCompleted,
-    ONBOARDING_KEYS.preferencesSkipped,
-    ONBOARDING_KEYS.reminderPromptSeen,
-    ONBOARDING_KEYS.storageNoticeSeen,
-  ]) {
+  for (const name of [ONBOARDING_KEYS.onboardingSeen, ONBOARDING_KEYS.storageNoticeSeen]) {
     memory.delete(name);
     try {
       localStorage.removeItem(`${PREFIX}${name}`);
@@ -231,52 +216,11 @@ export function markOnboardingSeen(): boolean {
   return setFlag(ONBOARDING_KEYS.onboardingSeen);
 }
 
-export function hasCompletedPreferences(): boolean {
-  return (
-    readFlag(ONBOARDING_KEYS.preferencesCompleted) ||
-    readFlag(ONBOARDING_KEYS.preferencesSkipped)
-  );
-}
-export function markPreferencesCompleted(): boolean {
-  return setFlag(ONBOARDING_KEYS.preferencesCompleted);
-}
-export function markPreferencesSkipped(): boolean {
-  return setFlag(ONBOARDING_KEYS.preferencesSkipped);
-}
-
-export function hasSeenReminderPrompt(): boolean {
-  return readFlag(ONBOARDING_KEYS.reminderPromptSeen);
-}
-export function markReminderPromptSeen(): boolean {
-  return setFlag(ONBOARDING_KEYS.reminderPromptSeen);
-}
-
 export function hasSeenStorageNotice(): boolean {
   return readFlag(ONBOARDING_KEYS.storageNoticeSeen);
 }
 export function markStorageNoticeSeen(): boolean {
   return setFlag(ONBOARDING_KEYS.storageNoticeSeen);
-}
-
-/** أُلغي الدليل السريع / تهيئة أول دخول — لا تُعرض أبدًا. */
-export function shouldShowFirstRunFlow(): boolean {
-  return false;
-}
-
-/** متبقٍ للتوافق مع الاختبارات القديمة — دائمًا false بعد إلغاء الدليل. */
-export function isOnboardingPending(): boolean {
-  return false;
-}
-
-/** زر «إعادة عرض التهيئة» في الإعدادات — الطريق اليدوي الوحيد. */
-export function resetOnboardingForDisplay(): void {
-  clearOnboardingFlags();
-  writeRaw(ONBOARDING_KEYS.majorVersion, String(ONBOARDING_MAJOR_VERSION));
-}
-
-/** مرادف صريح لمسار الإعدادات فقط — لا يُستدعى تلقائيًا عند الإقلاع. */
-export function resetOnboardingForSettingsOnly(): void {
-  resetOnboardingForDisplay();
 }
 
 /** للاختبارات فقط */
