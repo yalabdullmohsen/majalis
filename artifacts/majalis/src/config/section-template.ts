@@ -160,11 +160,20 @@ export function sectionThemeId(route: string): TopicThemeId {
 
 export function sectionTemplateChrome(
   route: string,
-  overrides?: Partial<Omit<SectionTemplateChrome, "sectionRoute">>,
+  overrides?: Partial<Omit<SectionTemplateChrome, "sectionRoute" | "quote">> & {
+    quote?: Pick<SectionTemplateQuote, "text" | "ref"> & Partial<Pick<SectionTemplateQuote, "type" | "sectionId">>;
+  },
 ): SectionTemplateChrome {
   const sec = getSectionByRoute(route);
   const title = overrides?.title ?? sec?.label ?? "القسم";
-  const quote = overrides?.quote ?? resolveSectionQuote(route);
+  const resolved = resolveSectionQuote(route);
+  const quote =
+    overrides?.quote != null
+      ? ({
+          ...overrides.quote,
+          sectionId: overrides.quote.sectionId ?? sec?.id ?? resolved?.sectionId ?? "",
+        } as SectionTemplateQuote)
+      : resolved;
   return {
     themeId: overrides?.themeId ?? sectionThemeId(route),
     sectionRoute: route,

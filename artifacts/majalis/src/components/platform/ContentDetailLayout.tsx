@@ -88,6 +88,7 @@ export function ContentDetailLayout({
   related,
   sourceUrls,
   copyText,
+  quizSectionId,
   shareUrl,
   adminEdit,
 }: Props) {
