@@ -205,21 +205,6 @@ if (isNative) {
   }, 1500);
 }
 
-// معالجة زر الرجوع في Android
-if (isAndroid) {
-  import("@capacitor/app").then(({ App: CapApp }) => {
-    CapApp.addListener("backButton", ({ canGoBack }) => {
-      if (canGoBack) {
-        window.history.back();
-      } else {
-        // في الصفحة الرئيسية — اعرض تأكيد الخروج
-        const confirmExit = window.confirm("هل تريد الخروج من التطبيق؟");
-        if (confirmExit) CapApp.exitApp();
-      }
-    });
-  }).catch(() => {});
-}
-
 /**
  * روابط عميقة (Universal Links على iOS، عبر majlisilm.com/apple-app-site-association
  * + com.apple.developer.associated-domains في App.entitlements) — تفتح

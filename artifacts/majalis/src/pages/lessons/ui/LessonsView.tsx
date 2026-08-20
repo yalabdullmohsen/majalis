@@ -3,6 +3,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { Link, useLocation } from "wouter";
+import { navigateTo } from "@/lib/navigation-intent";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ErrorState, Empty } from "@/components/ui-common";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
@@ -73,10 +74,10 @@ function useTabFromUrl(): [TabId, (tab: TabId) => void] {
       if (next === "all") params.delete("tab");
       else params.set("tab", next);
       const q = params.toString();
-      setLocation(q ? `/lessons?${q}` : "/lessons");
+      navigateTo(q ? `/lessons?${q}` : "/lessons", { mode: "state" });
       setTabState(next);
     },
-    [setLocation],
+    [],
   );
 
   return [tab, setTab];

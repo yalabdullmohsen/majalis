@@ -12,6 +12,8 @@ import { BottomNavBar } from "@/components/BottomNavBar";
 import { TopSectionBar } from "@/components/TopSectionBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { GlobalBackButton } from "@/components/GlobalBackButton";
+import { NavigationBinder } from "@/components/NavigationBinder";
+import { NativeBackButtonListener } from "@/components/NativeBackButtonListener";
 import { SafeAreaDebugOverlay } from "@/components/SafeAreaDebugOverlay";
 import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
@@ -1205,6 +1207,8 @@ function AppShellInner() {
       <NavProgressBar />
       <SeoManager />
       <ScrollResetOnNav />
+      <NavigationBinder />
+      <NativeBackButtonListener />
       <RouteEnterMotion />
       <EdgeSwipeBack />
       <DeferredPrayerRuntime />

@@ -1,3 +1,6 @@
+import { navigateBackTarget } from "@/lib/navigation-intent";
+import { getSectionByRoute, type SectionHub } from "@/config/sections.registry";
+
 const STACK_KEY = "majalis:navigation-stack:v1";
 /** عدد تنقّلات SPA للأمام في جلسة المستند الحالية — يمنع history.back() عند cold start. */
 const SPA_PUSH_KEY = "majalis:nav-spa-pushes:v1";
@@ -82,6 +85,12 @@ export function getPreviousInternalRoute(currentPath: string): string | null {
   return stack[stack.length - 2] || null;
 }
 
+const HUB_ROOT: Record<SectionHub, string> = {
+  quran: "/quran-hub",
+  lessons: "/lessons",
+  sections: "/",
+};
+
 /**
  * عند غياب تاريخ داخلي (رابط عميق / cold start) نرجع لقسم أب منطقي
  * بدل القفز دائمًا إلى الرئيسية.
@@ -116,9 +125,21 @@ export function sectionAwareFallback(currentPath: string): string {
   return "/";
 }
 
+/** أب القسم من sections.registry — قبل heuristics العامة */
+export function registryParentFallback(currentPath: string): string {
+  const p = normalizeNavPath(currentPath);
+  const sec = getSectionByRoute(p);
+  if (sec) {
+    const hubRoot = HUB_ROOT[sec.hub] ?? "/";
+    if (sec.route === p) return hubRoot;
+    return sec.route;
+  }
+  return sectionAwareFallback(p);
+}
+
 /**
  * رجوع آمن: history.back فقط إن سُجِّل تنقّل SPA في هذه الجلسة،
- * وإلا دفع fallback داخلي بلا الخروج من التطبيق.
+ * وإلا replace إلى الأب من registry.
  */
 export function goBackOrFallback(currentPath: string, fallbackHref?: string) {
   const current = normalizeNavPath(currentPath);
@@ -136,9 +157,8 @@ export function goBackOrFallback(currentPath: string, fallbackHref?: string) {
     return;
   }
 
-  const target = normalizeNavPath(fallbackHref ?? sectionAwareFallback(current));
+  const target = normalizeNavPath(fallbackHref ?? registryParentFallback(current));
   if (target !== current) {
-    window.history.pushState({}, "", target);
-    window.dispatchEvent(new PopStateEvent("popstate"));
+    navigateBackTarget(target);
   }
 }

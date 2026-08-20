@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Leaf, X } from "lucide-react";
 import { useLocation, useParams } from "wouter";
+import { navigateTo } from "@/lib/navigation-intent";
 import { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS, type AdhkarItem } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
 import { PageHeader, Empty } from "@/components/ui-common";
@@ -123,7 +124,7 @@ function hapticsComplete() {
 /* ══ الصفحة الرئيسية ══ */
 export default function AdhkarPage() {
   useReadingScrollMemory("adhkar");
-  const [location, setLocation] = useLocation();
+  const [location] = useLocation();
   const routeParams = useParams<{ slug?: string }>();
   const [category, setCategory]       = useState("all");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -168,8 +169,8 @@ export default function AdhkarPage() {
   /* ?cat= → /adhkar/:slug (استبدال دائم في العميل؛ Vercel يكمّل 301 للزحف) */
   useEffect(() => {
     const target = adhkarCatRedirectPath(window.location.search);
-    if (target) setLocation(target, { replace: true });
-  }, [location, setLocation]);
+    if (target) navigateTo(target, { mode: "state" });
+  }, [location]);
 
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get("cat")) return;
@@ -205,10 +206,10 @@ export default function AdhkarPage() {
     setCurrentIndex(0);
     setAnimKey((k) => k + 1);
     resetCounter();
-    if (catId === "all") setLocation("/adhkar");
+    if (catId === "all") navigateTo("/adhkar", { mode: "state" });
     else {
       const match = ADHKAR_CATEGORIES.find((c) => c.id === catId);
-      if (match) setLocation(hrefAdhkar(match.slug));
+      if (match) navigateTo(hrefAdhkar(match.slug), { mode: "state" });
     }
   }
 

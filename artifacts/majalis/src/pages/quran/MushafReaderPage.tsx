@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
-import { useLocation, useParams, useSearch } from "wouter";
+import { useParams, useSearch } from "wouter";
+import { navigateTo } from "@/lib/navigation-intent";
 import { MushafViewport } from "@/features/mushaf-madinah";
 import { applyPageSeo } from "@/lib/seo";
 import {
@@ -13,7 +14,6 @@ import { SURAH_START_PAGES } from "@/lib/quran-api";
  * مسار المصحف الحقيقي `/mushaf` — VerifiedMushafReader عبر alias MushafViewport، بلا PDF.
  */
 export default function MushafReaderPage() {
-  const [, setLocation] = useLocation();
   const params = useParams<{ page?: string; surah?: string }>();
   const search = useSearch();
 
@@ -45,9 +45,9 @@ export default function MushafReaderPage() {
   return (
     <MushafViewport
       pageNumber={pageNumber}
-      onPageChange={(n) => setLocation(`/mushaf?page=${clampMushafPage(n)}`)}
-      onExit={() => setLocation("/quran-hub")}
-      onIndex={() => setLocation("/quran-hub")}
+      onPageChange={(n) => navigateTo(`/mushaf?page=${clampMushafPage(n)}`, { mode: "state" })}
+      onExit={() => navigateTo("/quran-hub", { mode: "screen" })}
+      onIndex={() => navigateTo("/quran-hub", { mode: "screen" })}
     />
   );
 }
