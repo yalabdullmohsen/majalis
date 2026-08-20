@@ -7,190 +7,56 @@
     <meta name="theme-color" content="#0E1A15" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F4F3" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101614" />
-    <style id="mj-lcp-critical">
-      html, body, #root {
-        background-color: #F2F4F3;
-        margin: 0;
-        min-height: 100dvh;
-      }
+    <style id="mj-boot-critical">
       :root {
         --inset-top: env(safe-area-inset-top, 0px);
         --inset-bottom: env(safe-area-inset-bottom, 0px);
         --inset-right: env(safe-area-inset-right, 0px);
         --inset-left: env(safe-area-inset-left, 0px);
+        --mj-boot-bg-dark: #0e1a15;
+        --mj-boot-bg-light: #f2f4f3;
+        --mj-boot-fg-dark: #f2f4f3;
+        --mj-boot-fg-light: #0e1a15;
+        --mj-boot-accent: #c9a227;
+        --mj-boot-fg: var(--mj-boot-fg-dark);
+        --mj-boot-bg: var(--mj-boot-bg-dark);
+        --mj-boot-muted: rgba(242, 244, 243, 0.78);
       }
-      /* هيكل إقلاع ثابت — أسماء فريدة حتى لا يعيد CSS اللاحق تشكيله (CLS) */
-      #mj-boot-skeleton {
-        position: fixed;
-        inset: 0;
-        z-index: 20;
-        pointer-events: none;
-        overflow: hidden;
-        background: #F2F4F3;
+      html[data-theme="light"] {
+        --mj-boot-fg: var(--mj-boot-fg-light);
+        --mj-boot-bg: var(--mj-boot-bg-light);
+        --mj-boot-muted: rgba(14, 26, 21, 0.72);
       }
-      #mj-boot-skeleton .mj-sk-header {
-        box-sizing: border-box;
-        min-height: calc(56px + var(--inset-top, 0px));
-        background: rgba(20, 63, 53, 0.05);
-      }
-      #mj-boot-skeleton .mj-sk-search {
-        height: 3rem;
-        background: rgba(20, 63, 53, 0.04);
-      }
-      #mj-boot-skeleton .mj-sk-ticker {
-        height: 2.25rem;
-        background: rgba(20, 63, 53, 0.06);
-      }
-      #mj-boot-skeleton .mj-sk-sections {
-        min-height: 3.5rem;
-        background: rgba(20, 63, 53, 0.04);
-      }
-      #mj-boot-skeleton .mj-sk-hero {
-        min-height: 11rem;
-        background: rgba(20, 63, 53, 0.05);
-      }
-      #mj-boot-skeleton .mj-sk-field {
-        min-height: 48px;
-        margin: 0.75rem 1rem 0;
-        background: rgba(20, 63, 53, 0.06);
-        border-radius: 999px;
-      }
-      #mj-boot-skeleton .mj-sk-start {
-        min-height: 37.8rem;
-        margin: 0.75rem 1rem 0;
-        background: rgba(20, 63, 53, 0.04);
-        border-radius: 1rem;
-      }
-      #mj-boot-skeleton .mj-sk-nav {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        min-height: calc(3.25rem + var(--inset-bottom, 0px));
-        background: rgba(20, 63, 53, 0.06);
-      }
-      @media (min-width: 720px) {
-        #mj-boot-skeleton .mj-sk-search,
-        #mj-boot-skeleton .mj-sk-ticker { display: none; }
-        #mj-boot-skeleton .mj-sk-start { min-height: 24rem; }
-      }
-      @media (min-width: 880px) {
-        #mj-boot-skeleton .mj-sk-nav,
-        #mj-boot-skeleton .mj-sk-sections { display: none; }
-      }
-      html[data-theme="dark"] #mj-boot-skeleton {
-        background: #101614;
-      }
-    </style>
-    <style id="mj-splash-critical">
-      :root{
-        --mj-splash-bg-dark:#0E1A15;
-        --mj-splash-bg-light:#F2F4F3;
-        --mj-splash-fg-dark:#F2F4F3;
-        --mj-splash-fg-light:#0E1A15;
-        --mj-splash-accent:#C9A227;
-        --mj-splash-fg:var(--mj-splash-fg-dark);
-        --mj-splash-bg:var(--mj-splash-bg-dark);
-        --mj-splash-muted:rgba(242,244,243,.78);
-      }
-      html[data-theme="light"]{
-        --mj-splash-fg:var(--mj-splash-fg-light);
-        --mj-splash-bg:var(--mj-splash-bg-light);
-        --mj-splash-muted:rgba(14,26,21,.72);
-      }
-      html.capacitor-native, html.capacitor-native body, html.capacitor-native #root { background-color: var(--mj-splash-bg); }
-
-      #mj-silent-splash{
-        position:fixed;
-        inset:0;
-        z-index:2147483000;
-        background:radial-gradient(circle at 50% 46%, rgba(20,51,42,1) 0%, var(--mj-splash-bg) 72%);
-        color:var(--mj-splash-fg);
-        pointer-events:none;
-        overflow:hidden;
-      }
-      #mj-silent-splash::before{
-        content:"";
-        position:absolute;
-        inset:0;
-        background-image:url("/star-pattern.svg");
-        background-size:320px 320px;
-        background-repeat:repeat;
-        opacity:.10;
-        pointer-events:none;
-      }
-      #mj-silent-splash__content{
-        position:absolute;
-        inset:0;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
-        padding:calc(2.25rem + var(--inset-top, 0px)) 1rem calc(2.75rem + var(--inset-bottom, 0px)) 1rem;
-        text-align:center;
-      }
-      #mj-silent-splash__logo{
-        width:18vmin;
-        height:18vmin;
-        max-width:130px;
-        max-height:130px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        transform:translateZ(0);
-      }
-      .mj-silent-splash__glow{
-        fill:var(--mj-splash-accent);
-        fill-opacity:.12;
-        opacity:1;
-      }
-      #mj-silent-splash__title{
-        margin-top:1.2rem;
-        font-size:1.55rem;
-        font-weight:700;
-        letter-spacing:.01em;
-        line-height:1.1;
-      }
-      #mj-silent-splash__subtitle{
-        margin-top:.65rem;
-        font-size:1rem;
-        font-weight:400;
-        color:var(--mj-splash-muted);
-        line-height:1.35;
-        max-width:22rem;
-      }
-      #mj-silent-splash__progress{
-        position:absolute;
-        left:max(16px, var(--inset-left, 0px));
-        right:max(16px, var(--inset-right, 0px));
-        bottom:calc(18px + var(--inset-bottom, 0px));
-        height:4px;
-        border-radius:999px;
-        background:rgba(201,162,39,.14);
-        overflow:hidden;
-      }
-      #mj-silent-splash__progress::after{
-        content:"";
-        position:absolute;
-        inset:0;
-        background:rgba(201,162,39,.70);
-        transform:scaleX(0);
-        transform-origin:left;
-        animation:mj-splash-progress-fill 1500ms linear forwards;
-      }
-      @keyframes mj-splash-progress-fill{
-        to{ transform:scaleX(1); }
-      }
-
-      #mj-silent-splash.mj-silent-splash--out{
-        opacity:0;
-        transform:translateY(8px);
-        transition:opacity 250ms cubic-bezier(.22, 1, .36, 1), transform 250ms cubic-bezier(.22, 1, .36, 1);
-      }
-      @media (prefers-reduced-motion: reduce){
-        #mj-silent-splash__progress::after{ animation:none; transform:scaleX(1); }
-        #mj-silent-splash.mj-silent-splash--out{ transition:none; transform:none; }
-      }
+      html, body, #root { background-color: #F2F4F3; margin: 0; min-height: 100dvh; }
+      html[data-theme="dark"] body, html[data-theme="dark"] #root { background-color: #101614; }
+      html.capacitor-native, html.capacitor-native body, html.capacitor-native #root { background-color: var(--mj-boot-bg); }
+      #mj-boot-layer { position: fixed; inset: 0; z-index: 2147483000; pointer-events: none; overflow: hidden; }
+      #mj-boot-layer.mj-boot-layer--out { opacity: 0; transform: translateY(8px); transition: opacity 250ms cubic-bezier(.22, 1, .36, 1), transform 250ms cubic-bezier(.22, 1, .36, 1); }
+      .mj-boot-web { position: absolute; inset: 0; z-index: 20; background: #F2F4F3; overflow: hidden; }
+      html[data-theme="dark"] .mj-boot-web { background: #101614; }
+      .mj-boot-sk-header { box-sizing: border-box; min-height: calc(56px + var(--inset-top, 0px)); background: rgba(20, 63, 53, 0.05); }
+      .mj-boot-sk-search { height: 3rem; background: rgba(20, 63, 53, 0.04); }
+      .mj-boot-sk-ticker { height: 2.25rem; background: rgba(20, 63, 53, 0.06); }
+      .mj-boot-sk-sections { min-height: 3.5rem; background: rgba(20, 63, 53, 0.04); }
+      .mj-boot-sk-hero { min-height: 11rem; background: rgba(20, 63, 53, 0.05); }
+      .mj-boot-sk-field { min-height: 48px; margin: 0.75rem 1rem 0; background: rgba(20, 63, 53, 0.06); border-radius: 999px; }
+      .mj-boot-sk-start { min-height: 37.8rem; margin: 0.75rem 1rem 0; background: rgba(20, 63, 53, 0.04); border-radius: 1rem; }
+      .mj-boot-sk-nav { position: absolute; left: 0; right: 0; bottom: 0; min-height: calc(3.25rem + var(--inset-bottom, 0px)); background: rgba(20, 63, 53, 0.06); }
+      @media (min-width: 720px) { .mj-boot-sk-search, .mj-boot-sk-ticker { display: none; } .mj-boot-sk-start { min-height: 24rem; } }
+      @media (min-width: 880px) { .mj-boot-sk-nav, .mj-boot-sk-sections { display: none; } }
+      .mj-boot-native { position: absolute; inset: 0; display: none; background: radial-gradient(circle at 50% 46%, rgba(20, 51, 42, 1) 0%, var(--mj-boot-bg) 72%); color: var(--mj-boot-fg); }
+      .mj-boot-native::before { content: ""; position: absolute; inset: 0; background-image: url("/star-pattern.svg"); background-size: 320px 320px; background-repeat: repeat; opacity: .10; pointer-events: none; }
+      .mj-boot-native__content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: calc(2.25rem + var(--inset-top, 0px)) 1rem calc(2.75rem + var(--inset-bottom, 0px)) 1rem; text-align: center; }
+      .mj-boot-native__logo { width: 18vmin; height: 18vmin; max-width: 130px; max-height: 130px; display: flex; align-items: center; justify-content: center; transform: translateZ(0); }
+      .mj-boot-native__glow { fill: var(--mj-boot-accent); fill-opacity: .12; }
+      .mj-boot-native__title { margin-top: 1.2rem; font-size: 1.55rem; font-weight: 700; letter-spacing: .01em; line-height: 1.1; }
+      .mj-boot-native__subtitle { margin-top: .65rem; font-size: 1rem; font-weight: 400; color: var(--mj-boot-muted); line-height: 1.35; max-width: 22rem; }
+      .mj-boot-native__progress { position: absolute; left: max(16px, var(--inset-left, 0px)); right: max(16px, var(--inset-right, 0px)); bottom: calc(18px + var(--inset-bottom, 0px)); height: 4px; border-radius: 999px; background: rgba(201, 162, 39, .14); overflow: hidden; }
+      .mj-boot-native__progress::after { content: ""; position: absolute; inset: 0; background: rgba(201, 162, 39, .70); transform: scaleX(0); transform-origin: left; animation: mj-boot-progress-fill 1500ms linear forwards; }
+      @keyframes mj-boot-progress-fill { to { transform: scaleX(1); } }
+      @media (prefers-reduced-motion: reduce) { #mj-boot-layer.mj-boot-layer--out { transition: none; transform: none; } .mj-boot-native__progress::after { animation: none; transform: scaleX(1); } }
+      html.capacitor-native .mj-boot-native { display: block; }
+      html.capacitor-native .mj-boot-web { display: none; }
     </style>
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -223,8 +89,6 @@
     <link rel="icon" type="image/png" href="/icon-512.png?v=20260815" sizes="512x512" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260815" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="manifest" href="/site.webmanifest" />
     <!-- preconnect واحد فقط (Lighthouse ≤٢) — الخطوط محلية؛ أصول الصوت بعد التفاعل -->
     <link rel="preconnect" href="https://ngmvmlulzacrlicuagyp.supabase.co" />
     <!-- خط الشاشة الأولى فقط — Amiri 400 عربي. خطوط المصحف تُحمَّل داخل /mushaf -->
@@ -287,67 +151,69 @@
     </script>
   </head>
   <body>
-    <div id="mj-silent-splash" aria-hidden="true">
-      <div id="mj-silent-splash__content">
-        <div id="mj-silent-splash__logo">
-          <svg viewBox="0 0 100 100" width="100%" height="100%">
-            <circle class="mj-silent-splash__glow" cx="50" cy="50" r="38" />
-            <g fill="none" stroke="#C9A227" stroke-width="1.75" stroke-linejoin="miter">
-              <rect class="mj-silent-splash__path" x="25" y="25" width="50" height="50" />
-              <rect class="mj-silent-splash__path" x="25" y="25" width="50" height="50" transform="rotate(45 50 50)" />
-            </g>
-          </svg>
+    <div id="mj-boot-layer" dir="rtl" aria-hidden="true">
+      <div class="mj-boot-web" data-boot-panel="web">
+        <div class="mj-boot-sk-header">
+          <div class="mj-boot-sk-search"></div>
+          <div class="mj-boot-sk-ticker"></div>
         </div>
-        <div id="mj-silent-splash__title">المجلس العلمي</div>
-        <div id="mj-silent-splash__subtitle">دروس شرعية ودورات علمية</div>
-        <div id="mj-silent-splash__progress"></div>
+        <div class="mj-boot-sk-sections"></div>
+        <div class="mj-boot-sk-hero"></div>
+        <div class="mj-boot-sk-field"></div>
+        <div class="mj-boot-sk-start"></div>
+        <div class="mj-boot-sk-nav"></div>
+      </div>
+      <div class="mj-boot-native" data-boot-panel="native">
+        <div class="mj-boot-native__content">
+          <div class="mj-boot-native__logo">
+            <svg viewBox="0 0 100 100" width="100%" height="100%">
+              <circle class="mj-boot-native__glow" cx="50" cy="50" r="38" />
+              <g fill="none" stroke="#C9A227" stroke-width="1.75" stroke-linejoin="miter">
+                <rect x="25" y="25" width="50" height="50" />
+                <rect x="25" y="25" width="50" height="50" transform="rotate(45 50 50)" />
+              </g>
+            </svg>
+          </div>
+          <div class="mj-boot-native__title">المجلس العلمي</div>
+          <div class="mj-boot-native__subtitle">دروس شرعية ودورات علمية</div>
+          <div class="mj-boot-native__progress"></div>
+        </div>
       </div>
     </div>
     <script>
       (function () {
-        var el = document.getElementById("mj-silent-splash");
+        var el = document.getElementById("mj-boot-layer");
         if (!el) return;
-        var KEY = "mj.silent-splash.session";
+        var KEY = "mj.boot.session.v1";
         var done = false;
         var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         var MIN_MS = 900;
         var MAX_MS = 1500;
         var EXIT_MS = 250;
-
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
-        try { window.__mjSplashStart = start; } catch (e) {}
-
+        try { window.__mjBootStart = start; } catch (e) {}
         var native = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
-
+        if (native) document.documentElement.classList.add("capacitor-native");
         function dismiss(immediate) {
           if (done) return;
           done = true;
           try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
           if (!el.parentNode) return;
-          el.classList.add("mj-silent-splash--out");
+          el.classList.add("mj-boot-layer--out");
           if (immediate) {
             try { el.remove(); } catch (e) {}
             return;
           }
           window.setTimeout(function () { if (el.parentNode) el.remove(); }, EXIT_MS);
         }
-        try { window.__mjDismissSplash = dismiss; } catch (e) {}
-
+        try { window.__mjBootDismiss = dismiss; } catch (e) {}
         try {
           if (sessionStorage.getItem(KEY) === "1") {
             dismiss(true);
             return;
           }
         } catch (e) {}
-
-        if (!native) {
-          dismiss(true);
-          return;
-        }
-
-        // Hard fallback (React will coordinate hide after mj:app-painted).
-        // Start exit a bit earlier to absorb event-loop jitter and guarantee
-        // "removed" <= MAX_MS (keep a larger buffer for CI).
+        if (!native) return;
         window.setTimeout(function () { dismiss(reduced); }, Math.max(0, MAX_MS - EXIT_MS - 60));
       })();
     </script>
@@ -397,33 +263,7 @@
         });
       } catch (error) {}
     </script>
-    <div id="mj-boot-skeleton" dir="rtl" aria-hidden="true">
-      <div class="mj-sk-header">
-        <div class="mj-sk-search"></div>
-        <div class="mj-sk-ticker"></div>
-      </div>
-      <div class="mj-sk-sections"></div>
-      <div class="mj-sk-hero"></div>
-      <div class="mj-sk-field"></div>
-      <div class="mj-sk-start"></div>
-      <div class="mj-sk-nav"></div>
-    </div>
     <div id="root"></div>
-    <script>
-      (function () {
-        var el = document.getElementById("mj-boot-skeleton");
-        if (!el) return;
-        var done = false;
-        function hide() {
-          if (done || !el.parentNode) return;
-          done = true;
-          try { el.remove(); } catch (e) {}
-        }
-        window.addEventListener("mj:app-painted", hide, { once: true });
-        window.addEventListener("app:first-paint", hide, { once: true });
-        window.setTimeout(hide, 4000);
-      })();
-    </script>
     <script type="module" src="/src/main.tsx"></script>
     <!-- محتوى للزواحف (noscript) — يضمن فهرسة محركات البحث للمحتوى الأساسي -->
     <noscript>
@@ -506,7 +346,6 @@
           <p>أحكام ومسائل فقهية، المذاهب الأربعة، القواعد الفقهية، وقرارات المجامع المعتمدة.</p>
           <ul>
             <li><a href="/fiqh">بوابة الفقه</a></li>
-            <li><a href="/rulings">الأحكام الشرعية</a></li>
             <li><a href="/fiqh-council">المجمع الفقهي</a></li>
             <li><a href="/madhahib">المذاهب الأربعة</a></li>
             <li><a href="/fiqh-qawaid">القواعد الفقهية</a></li>

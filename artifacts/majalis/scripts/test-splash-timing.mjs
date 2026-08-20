@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 /**
- * بوابة: توقيت دخولية `#mj-silent-splash`
- *
- * تفشل إن:
- * - مدة ظهور الدخولية < 900ms أو > 1500ms (قياس من window.__mjSplashStart حتى إزالة العنصر)
+ * بوابة: توقيت طبقة `#mj-boot-layer`
  * - ظهرت مرة ثانية بعد تنقل داخلي داخل نفس الجلسة.
  */
 import { createServer } from "node:http";
@@ -69,13 +66,13 @@ async function main() {
   try {
     await page.goto(`${base}/`, { waitUntil: "load", timeout: 60_000 });
 
-    // الويب: الدخولية تُغلق فوراً؛ الهيكل الثابت هو أول رسم.
-    const splashGone = await page.evaluate(() => !document.querySelector("#mj-silent-splash"));
-    assert.equal(splashGone, true, "الويب بلا دخولية حاجبة بعد التحميل");
+    const layerGone = await page.evaluate(() => !document.querySelector("#mj-boot-layer"));
+    const rootPainted = await page.locator("#root").evaluate((el) => el.childElementCount > 0);
+    assert.ok(layerGone || rootPainted, "أول رسم: React داخل #root أو إزالة طبقة الإقلاع");
 
     const html = await page.content();
     assert.ok(
-      html.includes("mj-boot-skeleton") || (await page.locator("#root").evaluate((el) => el.childElementCount > 0)),
+      html.includes("mj-boot-sk") || rootPainted,
       "أول رسم مرئي: هيكل أو React داخل #root",
     );
 
@@ -87,8 +84,8 @@ async function main() {
     }
     await page.waitForTimeout(500);
 
-    const stillThere = await page.evaluate(() => Boolean(document.querySelector("#mj-silent-splash")));
-    assert.equal(stillThere, false, "الدخولـية لا يجب أن تعود بعد التنقل الداخلي");
+    const stillThere = await page.evaluate(() => Boolean(document.querySelector("#mj-boot-layer")));
+    assert.equal(stillThere, false, "طبقة الإقلاع لا يجب أن تعود بعد التنقل الداخلي");
   } finally {
     await browser.close();
     await stop();

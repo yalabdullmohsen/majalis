@@ -1,0 +1,244 @@
+/**
+ * أنماط الإقلاع — بادئة mj-boot-* معزولة عن CSS التطبيق.
+ * النسخة الحرجة مُضمّنة في index.html (id="mj-boot-critical") — أبقِهما متزامنين.
+ */
+:root {
+  --mj-boot-bg-dark: #0e1a15;
+  --mj-boot-bg-light: #f2f4f3;
+  --mj-boot-fg-dark: #f2f4f3;
+  --mj-boot-fg-light: #0e1a15;
+  --mj-boot-accent: #c9a227;
+  --mj-boot-fg: var(--mj-boot-fg-dark);
+  --mj-boot-bg: var(--mj-boot-bg-dark);
+  --mj-boot-muted: rgba(242, 244, 243, 0.78);
+}
+
+html[data-theme="light"] {
+  --mj-boot-fg: var(--mj-boot-fg-light);
+  --mj-boot-bg: var(--mj-boot-bg-light);
+  --mj-boot-muted: rgba(14, 26, 21, 0.72);
+}
+
+html,
+body,
+#root {
+  background-color: #f2f4f3;
+  margin: 0;
+  min-height: 100dvh;
+}
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] #root {
+  background-color: #101614;
+}
+
+html.capacitor-native,
+html.capacitor-native body,
+html.capacitor-native #root {
+  background-color: var(--mj-boot-bg);
+}
+
+#mj-boot-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#mj-boot-layer.mj-boot-layer--out {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 250ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ——— الويب: هيكل بلا نص ——— */
+.mj-boot-web {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: #f2f4f3;
+  overflow: hidden;
+}
+
+html[data-theme="dark"] .mj-boot-web {
+  background: #101614;
+}
+
+.mj-boot-sk-header {
+  box-sizing: border-box;
+  min-height: calc(56px + var(--inset-top, 0px));
+  background: rgba(20, 63, 53, 0.05);
+}
+
+.mj-boot-sk-search {
+  height: 3rem;
+  background: rgba(20, 63, 53, 0.04);
+}
+
+.mj-boot-sk-ticker {
+  height: 2.25rem;
+  background: rgba(20, 63, 53, 0.06);
+}
+
+.mj-boot-sk-sections {
+  min-height: 3.5rem;
+  background: rgba(20, 63, 53, 0.04);
+}
+
+.mj-boot-sk-hero {
+  min-height: 11rem;
+  background: rgba(20, 63, 53, 0.05);
+}
+
+.mj-boot-sk-field {
+  min-height: 48px;
+  margin: 0.75rem 1rem 0;
+  background: rgba(20, 63, 53, 0.06);
+  border-radius: 999px;
+}
+
+.mj-boot-sk-start {
+  min-height: 37.8rem;
+  margin: 0.75rem 1rem 0;
+  background: rgba(20, 63, 53, 0.04);
+  border-radius: 1rem;
+}
+
+.mj-boot-sk-nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: calc(3.25rem + var(--inset-bottom, 0px));
+  background: rgba(20, 63, 53, 0.06);
+}
+
+@media (min-width: 720px) {
+  .mj-boot-sk-search,
+  .mj-boot-sk-ticker {
+    display: none;
+  }
+  .mj-boot-sk-start {
+    min-height: 24rem;
+  }
+}
+
+@media (min-width: 880px) {
+  .mj-boot-sk-nav,
+  .mj-boot-sk-sections {
+    display: none;
+  }
+}
+
+/* ——— الأصل: عنوان + سطر + مؤشر ——— */
+.mj-boot-native {
+  position: absolute;
+  inset: 0;
+  display: none;
+  background: radial-gradient(circle at 50% 46%, rgba(20, 51, 42, 1) 0%, var(--mj-boot-bg) 72%);
+  color: var(--mj-boot-fg);
+}
+
+.mj-boot-native::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/star-pattern.svg");
+  background-size: 320px 320px;
+  background-repeat: repeat;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.mj-boot-native__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(2.25rem + var(--inset-top, 0px)) 1rem calc(2.75rem + var(--inset-bottom, 0px)) 1rem;
+  text-align: center;
+}
+
+.mj-boot-native__logo {
+  width: 18vmin;
+  height: 18vmin;
+  max-width: 130px;
+  max-height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateZ(0);
+}
+
+.mj-boot-native__glow {
+  fill: var(--mj-boot-accent);
+  fill-opacity: 0.12;
+}
+
+.mj-boot-native__title {
+  margin-top: 1.2rem;
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+
+.mj-boot-native__subtitle {
+  margin-top: 0.65rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--mj-boot-muted);
+  line-height: 1.35;
+  max-width: 22rem;
+}
+
+.mj-boot-native__progress {
+  position: absolute;
+  left: max(16px, var(--inset-left, 0px));
+  right: max(16px, var(--inset-right, 0px));
+  bottom: calc(18px + var(--inset-bottom, 0px));
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(201, 162, 39, 0.14);
+  overflow: hidden;
+}
+
+.mj-boot-native__progress::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(201, 162, 39, 0.7);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: mj-boot-progress-fill 1500ms linear forwards;
+}
+
+@keyframes mj-boot-progress-fill {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mj-boot-layer.mj-boot-layer--out {
+    transition: none;
+    transform: none;
+  }
+  .mj-boot-native__progress::after {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
+
+html.capacitor-native .mj-boot-native {
+  display: block;
+}
+
+html.capacitor-native .mj-boot-web {
+  display: none;
+}

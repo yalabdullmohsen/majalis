@@ -55,9 +55,9 @@ export function injectCriticalReserve(html, css = readCriticalCss()) {
     );
   }
   const tag = `<style id="mj-cls-reserve">${css}</style>`;
-  if (html.includes('id="mj-lcp-critical"')) {
+  if (html.includes('id="mj-boot-critical"')) {
     return html.replace(
-      /(<style id="mj-lcp-critical">[\s\S]*?<\/style>)/,
+      /(<style id="mj-boot-critical">[\s\S]*?<\/style>)/,
       `$1\n    ${tag}`,
     );
   }

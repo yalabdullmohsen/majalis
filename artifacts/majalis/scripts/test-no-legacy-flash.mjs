@@ -3,8 +3,8 @@
  * بوابة: لا وميض دخولية “قديمة” خلال أول 2500ms.
  *
  * تفشل إن:
- * - ظهرت طبقة إطلاق ثانية (غير #mj-silent-splash)
- * - أو #mj-silent-splash لم تكن بالشكل الجديد (لا title/progress)
+ * - ظهرت طبقة إطلاق ثانية (غير #mj-boot-layer)
+ * - أو #mj-boot-layer لم تكن بالشكل الجديد (لا native title/progress عند الحاجة)
  * - أو تغيّر `dataset.theme`/`dataset.font` بشكل متكرر خلال نافذة القياس
  *
  * تشغيل: node scripts/test-no-legacy-flash.mjs
@@ -67,28 +67,28 @@ async function main() {
   try {
     await page.goto(`${base}/`, { waitUntil: "load", timeout: 60_000 });
 
-    const splashStart = await page.evaluate(() => window.__mjSplashStart);
-    assert.equal(typeof splashStart, "number");
+    const bootStart = await page.evaluate(() => window.__mjBootStart);
+    assert.equal(typeof bootStart, "number");
 
     const stateHistory = [];
     const samples = 25; // 25 * 100ms = 2500ms
     for (let i = 0; i < samples; i++) {
       await page.waitForTimeout(100);
       const s = await page.evaluate(() => {
-        const splash = document.querySelector("#mj-silent-splash");
-        const title = splash?.querySelector("#mj-silent-splash__title");
-        const progress = splash?.querySelector("#mj-silent-splash__progress");
+        const layer = document.querySelector("#mj-boot-layer");
+        const title = layer?.querySelector(".mj-boot-native__title");
+        const progress = layer?.querySelector(".mj-boot-native__progress");
         const theme = document.documentElement.dataset.theme || "";
         const font = document.documentElement.dataset.font || "";
-        const splashCount = document.querySelectorAll("#mj-silent-splash").length;
+        const layerCount = document.querySelectorAll("#mj-boot-layer").length;
         const legacySplashCount =
-          document.querySelectorAll("#mj-boot-splash, #mj-splash-boot").length +
+          document.querySelectorAll("#mj-boot-skeleton, #mj-silent-splash, #mj-boot-splash, #mj-splash-boot").length +
           document.querySelectorAll("[data-launch-splash='1']").length;
         return {
-          splashPresent: Boolean(splash),
+          layerPresent: Boolean(layer),
           titlePresent: Boolean(title),
           progressPresent: Boolean(progress),
-          splashCount,
+          layerCount,
           legacySplashCount,
           theme,
           font,
@@ -100,13 +100,13 @@ async function main() {
       if (s.legacySplashCount > 0) {
         throw new Error(`legacy splash present at sample=${i}: legacySplashCount=${s.legacySplashCount}`);
       }
-      if (s.splashCount > 1) {
-        throw new Error(`multiple splashes at sample=${i}: splashCount=${s.splashCount}`);
+      if (s.layerCount > 1) {
+        throw new Error(`multiple boot layers at sample=${i}: layerCount=${s.layerCount}`);
       }
-      if (s.splashPresent) {
+      if (s.layerPresent) {
         if (!s.titlePresent || !s.progressPresent) {
           throw new Error(
-            `legacy splash structure at sample=${i}: title=${s.titlePresent} progress=${s.progressPresent}`,
+            `boot layer structure at sample=${i}: title=${s.titlePresent} progress=${s.progressPresent}`,
           );
         }
       }

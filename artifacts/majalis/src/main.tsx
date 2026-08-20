@@ -1,9 +1,9 @@
 import { createRoot } from "react-dom/client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
-import { AppSplash } from "./components/AppSplash";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { ChunkRecoveryToast } from "./components/ChunkRecoveryToast";
+import { mountBoot } from "./boot";
 import { applyFontPreference, readFontPreference } from "./lib/font-preference";
 import { readThemePreference, resolveTheme } from "./lib/theme-preference";
 import { initClientErrorReporting } from "./lib/error-report";
@@ -17,7 +17,6 @@ import { installInAppNavigationGuard } from "./lib/in-app-navigation";
 import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
 import { refreshQuranAudioRemoteConfig } from "./lib/quran-audio-remote-config";
-import { armNativeSplashController } from "./lib/splash-screen";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 import { initOnboardingState } from "./lib/onboarding-state";
 import { scheduleOnIdle } from "./lib/yield-to-main";
@@ -130,7 +129,6 @@ async function mount() {
   try {
     createRoot(rootEl).render(
       <>
-        <AppSplash />
         <ChunkRecoveryToast />
         <ErrorBoundary>
           <QueryClientProvider client={queryClient}>
@@ -144,8 +142,7 @@ async function mount() {
     return;
   }
 
-  // أخفِ الإطلاق الأصلي عند أول إطار؛ أبلغ دخولية HTML أن التطبيق رُسم.
-  armNativeSplashController();
+  mountBoot();
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       window.dispatchEvent(new Event("mj:app-painted"));

@@ -20,8 +20,8 @@ const fontsUi = readFileSync(resolve(root, "src/styles/fonts-ui.css"), "utf8");
 const lhciRc = require(resolve(root, "lighthouserc.cjs"));
 
 assert.doesNotMatch(html, /mj-home-lcp-static|mj-app-mount/, "لا صدفة نصّية/ mount منفصل");
-assert.match(html, /id="mj-boot-skeleton"/, "هيكل إقلاع فوري");
-assert.match(html, /#mj-boot-skeleton\s*\{[\s\S]*position:\s*fixed/, "الهيكل ثابت لا يزيح #root");
+assert.match(html, /id="mj-boot-layer"/, "طبقة إقلاع فورية");
+assert.match(html, /#mj-boot-layer\s*\{[\s\S]*position:\s*fixed/, "الطبقة ثابتة لا تزيح #root");
 assert.match(critical, /\.hsh-steps[\s\S]*min-height:\s*22rem/, "حجز ارتفاع hsh-steps");
 assert.match(critical, /\.hsh-step[\s\S]*min-height:\s*6\.25rem/, "حجز ارتفاع hsh-step");
 assert.match(fontsUi, /amiri-700-ar[\s\S]*font-display:\s*optional/, "Amiri 700 optional — بلا CLS");

@@ -27,17 +27,17 @@ const critical = readFileSync(resolve(root, "src/styles/critical-first-paint.css
 
 assert.doesNotMatch(html, /id="mj-lcp-chrome"/, "لا صدفة عنوان خارج #root");
 assert.doesNotMatch(html, /id="mj-lcp-title"/, "لا نقل عقدة h1");
-assert.match(html, /id="mj-lcp-critical"/, "خلفية html/body/#root فقط");
+assert.match(html, /id="mj-boot-critical"/, "خلفية html/body/#root + طبقة إقلاع");
 assert.doesNotMatch(html, /id="mj-home-lcp-static"/, "لا صدفة HTML نصّية (A-4)");
-assert.match(html, /id="mj-boot-skeleton"/, "هيكل إقلاع بلا نص");
-assert.match(html, /#mj-boot-skeleton\s*\{[\s\S]*position:\s*fixed/, "الهيكل ثابت — خارج تدفق #root");
+assert.match(html, /id="mj-boot-layer"/, "هيكل إقلاع بلا نص");
+assert.match(html, /#mj-boot-layer\s*\{[\s\S]*position:\s*fixed/, "الطبقة ثابتة — خارج تدفق #root");
 assert.match(html, /<div id="root"><\/div>/, "React يركّب في #root فارغ");
 {
-  const skStart = html.indexOf('id="mj-boot-skeleton"');
+  const skStart = html.indexOf('id="mj-boot-layer"');
   const rootStart = html.indexOf('<div id="root">');
-  assert.ok(skStart >= 0 && skStart < rootStart, "الهيكل قبل #root");
+  assert.ok(skStart >= 0 && skStart < rootStart, "طبقة الإقلاع قبل #root");
   const skChunk = html.slice(skStart, rootStart);
-  assert.doesNotMatch(skChunk, /<(h1|h2|p)\b/, "الهيكل بلا نص ينافس LCP");
+  assert.doesNotMatch(skChunk, /<(h1|h2|p)\b/, "هيكل الويب بلا نص ينافس LCP");
 }
 assert.doesNotMatch(html, /id="mj-app-mount"/, "React يركّب في #root مباشرة");
 assert.doesNotMatch(html, /id="mj-fcp-seed"/, "لا بذرة FCP — CLS 0.358 عند mount");
@@ -47,7 +47,7 @@ assert.doesNotMatch(html, /dns-prefetch/, "لا dns-prefetch في الإقلاع
   assert.ok(n <= 2, `preconnect ≤2 (الفعلي ${n})`);
 }
 assert.match(html, /isNativePlatform/, "الدخولية على الأصل فقط");
-assert.match(html, /if \(!native\) \{\s*dismiss\(true\);/, "الويب بلا دخولية حاجبة");
+assert.doesNotMatch(html, /if \(!native\) \{\s*dismiss\(true\)/, "الويب يُبقي الهيكل حتى أول رسم");
 
 assert.match(home, /title="المجلس العلمي"/, "عنوان الرئيسية في React");
 assert.doesNotMatch(home, /titleDomId/, "لا تبنّي عقدة HTML");
