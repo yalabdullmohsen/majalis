@@ -250,7 +250,7 @@ export async function inspectStorage(): Promise<StorageInspectorReport> {
           key: name,
           bytes: bytes + reqs.length * 256,
           lastAccessedAt: lru[`sw:${name}`] ?? now,
-          protected: name === "majalis-version",
+          protected: name === "majalis-version" || name === "majlisilm-version",
         });
       }
     }
@@ -320,7 +320,11 @@ export async function evictLruCache(opts?: {
       }
       if (e.layer === "cacheStorage") {
         // Only drop stale offline/data caches (not current version marker)
-        return /majalis-(offline|data)-/.test(e.key) && e.key !== "majalis-version";
+        return (
+          (/majalis-(offline|data)-/.test(e.key) || /^majlisilm-v.+-(offline|data)$/.test(e.key)) &&
+          e.key !== "majalis-version" &&
+          e.key !== "majlisilm-version"
+        );
       }
       return false;
     })
@@ -357,10 +361,10 @@ export async function evictLruCache(opts?: {
         // Prefer deleting individual stale caches that don't match newest build
         const names = await caches.keys();
         const currentish = names
-          .filter((n) => n.startsWith("majalis-offline-") || n.startsWith("majalis-data-"))
+          .filter((n) => n.startsWith("majlisilm-v") || n.startsWith("majalis-offline-") || n.startsWith("majalis-data-"))
           .sort();
         const newest = currentish[currentish.length - 1];
-        if (entry.key !== newest && entry.key !== "majalis-version") {
+        if (entry.key !== newest && entry.key !== "majalis-version" && entry.key !== "majlisilm-version") {
           await caches.delete(entry.key);
           removed.push(`sw:${entry.key}`);
           freedApproxBytes += entry.bytes;

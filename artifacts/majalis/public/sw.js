@@ -22,9 +22,10 @@ try {
   // /sw-version.js missing or failed to load — keep the fallback above.
 }
 
-const OFFLINE_CACHE = `majalis-offline-${SW_BUILD_ID}`;
-const DATA_CACHE    = `majalis-data-${SW_BUILD_ID}`;
-const VERSION_CACHE = "majalis-version";
+const OFFLINE_CACHE = `majlisilm-v${SW_BUILD_ID}-offline`;
+const DATA_CACHE    = `majlisilm-v${SW_BUILD_ID}-data`;
+const CACHE_PREFIX  = `majlisilm-v${SW_BUILD_ID}`;
+const VERSION_CACHE = "majlisilm-version";
 const FETCH_TIMEOUT = 8000;
 
 // External API routes served cache-first (Quran API data, prayer times)
@@ -92,13 +93,20 @@ self.addEventListener("activate", (event) => {
       const verCache = await caches.open(VERSION_CACHE);
       const prev = await verCache.match("/sw-version");
       const prevVersion = prev ? await prev.text() : null;
-      const isUpdate = prevVersion !== null && prevVersion !== SW_BUILD_ID;
-
-      // حذف الكاشات القديمة
       const keys = await caches.keys();
+      const hasLegacy = keys.some(
+        (k) =>
+          k === "majalis-version" ||
+          k.startsWith("majalis-offline-") ||
+          k.startsWith("majalis-data-") ||
+          (k.startsWith("majlisilm-v") && !k.startsWith(CACHE_PREFIX)),
+      );
+      const isUpdate =
+        (prevVersion !== null && prevVersion !== SW_BUILD_ID) || hasLegacy;
+
       await Promise.all(
         keys
-          .filter((k) => k !== OFFLINE_CACHE && k !== DATA_CACHE && k !== VERSION_CACHE)
+          .filter((k) => k !== VERSION_CACHE && !k.startsWith(CACHE_PREFIX))
           .map((k) => caches.delete(k)),
       );
 
@@ -108,13 +116,13 @@ self.addEventListener("activate", (event) => {
       // السيطرة على كل النوافذ
       await self.clients.claim();
 
-      // ملاحظة: كانت هذه الكتلة تُعيد تحميل كل النوافذ المفتوحة تلقائيًا
-      // عند أي تحديث. كانت خاملة عمليًا طالما SHELL_CACHE مرقَّم يدويًا
-      // (v18) نادر التغيّر — الآن بعد ربطه بمعرّف كل نشر فعلي (commit)،
-      // كانت ستُصبح نشطة على كل نشر تقريبًا (وتيرة نشر عالية جدًا)، فتُقاطع
-      // المستخدمين قسرًا أثناء الاستخدام. أُزيلت لصالح شريط "تحديث متاح"
-      // الجديد (اختياري، بضغطة المستخدم فقط) — راجع UpdateAvailableBanner.
-      void isUpdate;
+      // إعادة تحميل واحدة بعد تدوير الكاش — الحارس في العميل يمنع الوميض/التكرار
+      if (isUpdate) {
+        const windows = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+        for (const client of windows) {
+          client.postMessage({ type: "SW_UPDATED_RELOAD_ONCE" });
+        }
+      }
     })(),
   );
 });
@@ -388,7 +396,7 @@ self.addEventListener("message", (event) => {
           const keys = await caches.keys();
           await Promise.all(
             keys
-              .filter((k) => k.startsWith("majalis-offline-") || k === OFFLINE_CACHE)
+              .filter((k) => k.startsWith("majlisilm-v") || k.startsWith("majalis-offline-") || k === OFFLINE_CACHE)
               .map((k) => caches.delete(k)),
           );
         } catch (_) {
