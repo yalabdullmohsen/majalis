@@ -110,6 +110,8 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
   onPageChangeRef.current = onPageChange;
   /** يمنع قلب الصفحة أثناء تشغيل آية مختارة يدويًا */
   const suppressPageSyncRef = useRef(false);
+  /** آية قادمة من البحث/الفهرس — لا تُمسح عند تغيّر الصفحة */
+  const pendingSelectRef = useRef<string | null>(null);
   const actionsOpenRef = useRef(false);
   actionsOpenRef.current = actionsOpen;
   const audio = useMemo(() => getAudioEngine(), []);
@@ -152,8 +154,18 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
     };
   }, [page]);
 
-  /** عند تغيير الصفحة: امسح التحديد والشريط */
+  /** عند تغيير الصفحة: امسح التحديد إلا إن كان الانتقال لنتيجة بحث. */
   useEffect(() => {
+    const pending = pendingSelectRef.current;
+    pendingSelectRef.current = null;
+    if (pending) {
+      setSelectedVerseKey(pending);
+      setActionsOpen(true);
+      setTafsirOpen(false);
+      setCopyStatus(null);
+      setChromeOpen(false);
+      return;
+    }
     setSelectedVerseKey(null);
     setActionsOpen(false);
     setTafsirOpen(false);
@@ -231,8 +243,8 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
     const unAyah = audio.onAyahChange(({ surah, ayah }) => {
       const key = `${surah}:${ayah}`;
       setPlayingVerseKey(key);
-      if (!suppressPageSyncRef.current && !actionsOpenRef.current) {
-        setSelectedVerseKey(key);
+      setSelectedVerseKey(key);
+      if (!suppressPageSyncRef.current) {
         syncPageIfAllowed(surah, ayah);
       }
     });
@@ -275,17 +287,20 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
       }
       setSelectedVerseKey(verseKey);
       setActionsOpen(true);
+      setChromeOpen(false);
       setCopyStatus(null);
       setAudioError(null);
       setAudioStatus(null);
-      bumpChrome();
     },
-    [actionsOpen, bumpChrome, selectedVerseKey],
+    [actionsOpen, selectedVerseKey],
   );
 
   const closeActions = useCallback(() => {
     const key = selectedVerseKey;
     setActionsOpen(false);
+    if (playerState !== "playing" && playerState !== "buffering" && playerState !== "loading") {
+      setSelectedVerseKey(null);
+    }
     if (!key) return;
     requestAnimationFrame(() => {
       const pane = document.querySelector('[data-pane="current"]');
@@ -293,7 +308,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
         ?.querySelector<HTMLElement>(`[data-testid="mushaf-ayah-hit"][data-verse="${key}"]`)
         ?.focus();
     });
-  }, [selectedVerseKey]);
+  }, [playerState, selectedVerseKey]);
 
   const pageVerseKeys = useMemo(
     () => (layout ? uniqueVerseKeysFromRows(layout.rows) : []),
@@ -691,10 +706,13 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
               setIndexOpen(false);
             }}
             onGotoPage={(n, verseKey) => {
+              if (verseKey) pendingSelectRef.current = verseKey;
               go(n);
-              if (verseKey) {
+              if (verseKey && n === page) {
+                pendingSelectRef.current = null;
                 setSelectedVerseKey(verseKey);
                 setActionsOpen(true);
+                setChromeOpen(false);
               }
             }}
           />

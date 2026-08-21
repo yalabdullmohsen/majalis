@@ -97,9 +97,9 @@ export function AyahActionSheet({
   onReciterChange,
   onClose,
 }: Props) {
-  const [height, setHeight] = useState<SheetHeight>("collapsed");
-  const [tab, setTab] = useState<SheetTab>("tilawa");
-  const [tafsirTabAvailable, setTafsirTabAvailable] = useState(false);
+  const [height, setHeight] = useState<SheetHeight>("half");
+  const [tab, setTab] = useState<SheetTab>("tafsir");
+  const [, setTafsirTabAvailable] = useState(false);
   const [readersOpen, setReadersOpen] = useState(false);
   const [readerQuery, setReaderQuery] = useState("");
   const [tafsirAudioUiEnabled, setTafsirAudioUiEnabled] = useState(false);
@@ -132,12 +132,11 @@ export function AyahActionSheet({
   const tajweedOn = QURAN_DATA_FEATURES.ayahTajweedTab;
 
   useEffect(() => {
-    setHeight("collapsed");
-    setTab("tilawa");
+    setHeight("half");
+    setTab("tafsir");
     setReadersOpen(false);
     setRange("ayah");
     setTafsirAudioActiveClipId(null);
-    setTafsirTabAvailable(false);
   }, [verseKey]);
 
   useEffect(() => {
@@ -187,9 +186,8 @@ export function AyahActionSheet({
   }, [tafsirAudioUiEnabled, parsed?.surah, parsed?.ayah]);
 
   useEffect(() => {
-    if (tab === "tafsir" && !tafsirTabAvailable) setTab("tilawa");
     if (tab !== "tafsir-audio") setTafsirAudioActiveClipId(null);
-  }, [tab, tafsirTabAvailable]);
+  }, [tab]);
 
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
@@ -320,24 +318,22 @@ export function AyahActionSheet({
             </button>
           </div>
 
-          {expanded && ayahPreview ? (
+          {ayahPreview ? (
             <p className="ayah-action-sheet__ayah-preview" dir="rtl" lang="ar">
               {ayahPreview}
             </p>
           ) : null}
 
           <div className="ayah-action-sheet__primary" role="tablist" aria-label="تبويبات الآية">
-            {tafsirTabAvailable ? (
-              <button
-                type="button"
-                role="tab"
-                aria-selected={tab === "tafsir"}
-                onClick={() => selectTab("tafsir")}
-              >
-                <BookOpen size={18} aria-hidden="true" />
-                <span>تفسير</span>
-              </button>
-            ) : null}
+            <button
+              type="button"
+              role="tab"
+              aria-selected={tab === "tafsir"}
+              onClick={() => selectTab("tafsir")}
+            >
+              <BookOpen size={18} aria-hidden="true" />
+              <span>تفسير</span>
+            </button>
             {tafsirAudioUiEnabled && tafsirAudioAvailable ? (
               <button
                 type="button"

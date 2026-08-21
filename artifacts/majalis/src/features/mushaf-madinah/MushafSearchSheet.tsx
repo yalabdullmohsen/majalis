@@ -60,7 +60,7 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
     setLoading(true);
     setError(null);
     const t = window.setTimeout(() => {
-      void searchVersesInCorpus(q, 24)
+      void searchVersesInCorpus(q, 48)
         .then((rows) => {
           if (cancelled) return;
           const next: Hit[] = rows.map((r) => {
@@ -175,6 +175,9 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
           <>
             {loading ? <p className="mm-search-sheet__status">جاري البحث…</p> : null}
             {error && !loading ? <p className="mm-search-sheet__status">{error}</p> : null}
+            {!loading && !error && !query.trim() ? (
+              <p className="mm-search-sheet__status">اكتب كلمة للبحث في نص القرآن كاملًا.</p>
+            ) : null}
             <ul className="mm-search-sheet__list" role="listbox" aria-label="نتائج البحث">
               {hits.map((h) => (
                 <li key={`${h.surah}:${h.ayah}`}>
