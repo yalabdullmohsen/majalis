@@ -43,6 +43,8 @@ assert.match(css, /font-size:\s*22px/);
 assert.match(css, /min-width:\s*44px/);
 assert.match(css, /min-height:\s*44px/);
 assert.match(actions, /Escape/);
+assert.match(css, /\.mm-ayah-bar\s*\{[^}]*justify-items:\s*start/);
+assert.match(css, /border-radius:\s*0\s+16px\s+16px\s+0/);
 assert.match(actions, /dy > 72/);
 assert.match(actions, /mm-ayah-bar__dismiss/);
 assert.match(actions, /focusables/);

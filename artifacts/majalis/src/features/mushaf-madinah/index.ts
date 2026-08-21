@@ -10,5 +10,5 @@ export { MushafAyahNumber } from "./MushafAyahNumber";
 export { MushafPageFooter } from "./MushafPageFooter";
 export { MushafControls } from "./MushafControls";
 export { MushafTafsirSheet } from "./MushafTafsirSheet";
-export { MushafAudioDock } from "./MushafAudioDock";
+export { MushafSettingsSheet } from "./MushafSettingsSheet";
 export { findMushafPageForAyah, parseVerseKey } from "./mushaf-page-for-ayah";

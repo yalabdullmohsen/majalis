@@ -1,27 +1,32 @@
+import { BookOpen, List, Search, Settings2 } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
 
 type Props = {
   open: boolean;
   pageNumber: number;
+  persist?: boolean;
   onIndex: () => void;
   onPrev: () => void;
   onNext: () => void;
   onGoto: (page: number) => void;
   onSearch?: () => void;
+  onSettings?: () => void;
   onToggleTheme?: () => void;
   themeLabel?: string;
 };
 
-/** أدوات المصحف — شريط سفلي؛ الخروج عبر رجوع النظام/المتصفح (بلا زر «خروج» زائد). */
+/** أدوات المصحف — شريط أيقونات علوي خفيف. */
 export function MushafControls({
   open,
   pageNumber,
+  persist = false,
   onIndex,
   onPrev,
   onNext,
   onGoto,
   onSearch,
+  onSettings,
   onToggleTheme,
   themeLabel = "المصحف الورقي",
 }: Props) {
@@ -29,13 +34,13 @@ export function MushafControls({
   const [draft, setDraft] = useState(String(pageNumber));
   const [gotoError, setGotoError] = useState<string | null>(null);
   const titleId = useId();
+  const visible = open || persist || gotoOpen;
 
   useEffect(() => {
-    if (!open) {
-      setGotoOpen(false);
+    if (!visible && !gotoOpen) {
       setGotoError(null);
     }
-  }, [open]);
+  }, [visible, gotoOpen]);
 
   useEffect(() => {
     setDraft(String(pageNumber));
@@ -45,26 +50,41 @@ export function MushafControls({
   return (
     <div
       className="mm-controls"
-      data-open={open ? "1" : "0"}
+      data-open={visible ? "1" : "0"}
       data-testid="mushaf-controls"
     >
       <div className="mm-controls__bar" role="toolbar" aria-label="أدوات المصحف">
         <div className="mm-controls__cluster mm-controls__cluster--start">
-          <button type="button" className="mm-controls__btn" onClick={onIndex}>
-            فهرس
+          <button
+            type="button"
+            className="mm-controls__icon"
+            onClick={() => (onSettings ? onSettings() : onToggleTheme?.())}
+            aria-label="إعدادات"
+          >
+            <Settings2 size={20} aria-hidden="true" />
           </button>
           <button
             type="button"
-            className="mm-controls__btn"
-            onClick={() => (onSearch ? onSearch() : setGotoOpen(true))}
+            className="mm-controls__icon"
+            onClick={() => {
+              setGotoError(null);
+              setGotoOpen(true);
+            }}
+            aria-label={`الصفحة ${pageNumber} من ${MUSHAF_PAGE_MAX} — انتقال`}
           >
-            بحث
+            <BookOpen size={20} aria-hidden="true" />
           </button>
-          {onToggleTheme ? (
-            <button type="button" className="mm-controls__btn" onClick={onToggleTheme} aria-label="إعدادات المصحف">
-              إعدادات
-            </button>
-          ) : null}
+          <button
+            type="button"
+            className="mm-controls__icon"
+            onClick={() => (onSearch ? onSearch() : setGotoOpen(true))}
+            aria-label="بحث"
+          >
+            <Search size={20} aria-hidden="true" />
+          </button>
+          <button type="button" className="mm-controls__icon" onClick={onIndex} aria-label="فهرس">
+            <List size={20} aria-hidden="true" />
+          </button>
         </div>
         <button
           type="button"
@@ -99,7 +119,7 @@ export function MushafControls({
           </button>
         </div>
       </div>
-      {open && onToggleTheme ? (
+      {visible && onToggleTheme ? (
         <p className="mm-controls__theme-hint" aria-live="polite">
           {themeLabel}
         </p>
@@ -111,6 +131,7 @@ export function MushafControls({
           aria-labelledby={titleId}
           onSubmit={(e) => {
             e.preventDefault();
+            e.stopPropagation();
             const n = Number.parseInt(draft, 10);
             if (!Number.isFinite(n) || n < MUSHAF_PAGE_MIN || n > MUSHAF_PAGE_MAX) {
               setGotoError(`أدخل رقمًا بين ${MUSHAF_PAGE_MIN} و ${MUSHAF_PAGE_MAX}`);
@@ -125,15 +146,14 @@ export function MushafControls({
             انتقال إلى صفحة
           </h2>
           <input
-            type="number"
-            min={MUSHAF_PAGE_MIN}
-            max={MUSHAF_PAGE_MAX}
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
             value={draft}
             onChange={(e) => {
               setDraft(e.target.value);
               setGotoError(null);
             }}
-            inputMode="numeric"
             dir="ltr"
             aria-label="رقم الصفحة"
             aria-invalid={gotoError ? true : undefined}

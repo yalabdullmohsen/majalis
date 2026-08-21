@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { getAudioEngine, type PlayerState } from "@/core/audio/AudioEngine";
-import { getSurahMeta } from "@/lib/quran-api";
+import { getSurahMeta, savePagePosition } from "@/lib/quran-api";
 import { getReciter, listAyahAudioUrls, loadReciterId, saveReciterId } from "@/lib/quran-audio";
 import {
   getCachedMushafPage,
@@ -20,13 +20,13 @@ import {
 import {
   clampMushafPage,
   MUSHAF_PAGE_MAX,
-  saveLastPage,
 } from "@/lib/quran-last-page";
 import { useMediaSession } from "@/hooks/useMediaSession";
 import { AyahActionSheet } from "./AyahActionSheet";
 import { MushafControls } from "./MushafControls";
 import { MushafPage } from "./MushafPage";
 import { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
+import { MushafSettingsSheet, type MushafThemeChoice } from "./MushafSettingsSheet";
 import {
   findMushafPageForAyah,
   parseVerseKey,
@@ -59,15 +59,27 @@ type Props = {
 type MushafTheme = "paper" | "night";
 
 const THEME_KEY = "majlisilm.mushaf.theme";
+const THEME_CHOICE_KEY = "majlisilm.mushaf.theme-choice";
 
-function loadTheme(): MushafTheme {
+function loadThemeChoice(): MushafThemeChoice {
   try {
-    const v = localStorage.getItem(THEME_KEY);
-    if (v === "night" || v === "paper") return v;
+    const v = localStorage.getItem(THEME_CHOICE_KEY) ?? localStorage.getItem(THEME_KEY);
+    if (v === "night" || v === "paper" || v === "auto") return v;
   } catch {
     /* ignore */
   }
   return "paper";
+}
+
+function resolveTheme(choice: MushafThemeChoice): MushafTheme {
+  if (choice === "auto") {
+    try {
+      return window.matchMedia?.("(prefers-color-scheme: dark)")?.matches ? "night" : "paper";
+    } catch {
+      return "paper";
+    }
+  }
+  return choice;
 }
 
 function mushafAudioLog(
@@ -92,6 +104,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
   const [tafsirOpen, setTafsirOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [indexOpen, setIndexOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [copyStatus, setCopyStatus] = useState<string | null>(null);
   const [reciterId, setReciterId] = useState(() => loadReciterId());
   const [playerState, setPlayerState] = useState<PlayerState>("idle");
@@ -100,7 +113,8 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
   const [audioError, setAudioError] = useState<string | null>(null);
   const [audioStatus, setAudioStatus] = useState<string | null>(null);
   const [audioTime, setAudioTime] = useState({ currentTime: 0, duration: 0, playbackRate: 1 });
-  const [theme, setTheme] = useState<MushafTheme>(() => loadTheme());
+  const [themeChoice, setThemeChoice] = useState<MushafThemeChoice>(() => loadThemeChoice());
+  const theme = resolveTheme(themeChoice);
 
   const { fontFamily, ready: fontReady } = useQpcPageFont(page);
   const hideTimer = useRef<number | null>(null);
@@ -129,11 +143,12 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
 
   useEffect(() => {
     try {
+      localStorage.setItem(THEME_CHOICE_KEY, themeChoice);
       localStorage.setItem(THEME_KEY, theme);
     } catch {
       /* ignore */
     }
-  }, [theme]);
+  }, [theme, themeChoice]);
 
   useEffect(() => {
     let cancelled = false;
@@ -148,7 +163,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
       });
     prefetchMushafPage(page - 1);
     prefetchMushafPage(page + 1);
-    void saveLastPage(page);
+    savePagePosition(page);
     return () => {
       cancelled = true;
     };
@@ -174,18 +189,21 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
     suppressPageSyncRef.current = false;
   }, [page]);
 
+  const overlayOpen = searchOpen || indexOpen || settingsOpen;
+
   const bumpChrome = useCallback(() => {
     setChromeOpen(true);
     if (hideTimer.current) window.clearTimeout(hideTimer.current);
+    if (overlayOpen) return;
     hideTimer.current = window.setTimeout(() => setChromeOpen(false), MUSHAF_CHROME_HIDE_MS);
-  }, []);
+  }, [overlayOpen]);
 
   useEffect(() => {
-    setChromeOpen(false);
-    return () => {
+    if (overlayOpen) {
+      setChromeOpen(true);
       if (hideTimer.current) window.clearTimeout(hideTimer.current);
-    };
-  }, [page]);
+    }
+  }, [overlayOpen]);
 
   useEffect(() => {
     audio.setReciter(loadReciterId());
@@ -204,9 +222,9 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
         playbackRate: snap.playbackRate,
       });
       if (snap.playerState === "error") {
-        const msg = snap.errorMessage || "تعذر تحميل التلاوة، أعد المحاولة";
+        const msg = snap.errorMessage || "تعذر تحميل التلاوة، جرّب قارئًا آخر";
         setAudioError(msg);
-        setAudioStatus(null);
+        setAudioStatus("فشل التحميل");
         mushafAudioLog("error", {
           reciterId: snap.reciterId,
           ayahKey: snap.surah != null && snap.ayah != null ? `${snap.surah}:${snap.ayah}` : null,
@@ -214,23 +232,23 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
         });
       } else if (snap.playerState === "loading" || snap.playerState === "buffering") {
         setAudioError(null);
-        setAudioStatus("جاري تحميل التلاوة...");
+        setAudioStatus("جاري التحميل");
       } else if (snap.playerState === "playing") {
         setAudioError(null);
-        setAudioStatus("يتم تشغيل التلاوة");
+        setAudioStatus("يعمل الآن");
         mushafAudioLog("play", {
           reciterId: snap.reciterId,
           ayahKey: snap.surah != null && snap.ayah != null ? `${snap.surah}:${snap.ayah}` : null,
         });
       } else if (snap.playerState === "paused") {
-        setAudioStatus(null);
+        setAudioStatus("متوقف");
         mushafAudioLog("pause", {
           reciterId: snap.reciterId,
           ayahKey: snap.surah != null && snap.ayah != null ? `${snap.surah}:${snap.ayah}` : null,
         });
       } else if (snap.playerState === "idle") {
         setPlayingVerseKey(null);
-        setAudioStatus(null);
+        setAudioStatus("جاهز");
       }
       if (snap.surah != null && snap.ayah != null) {
         const key = `${snap.surah}:${snap.ayah}`;
@@ -428,6 +446,30 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
     [audio, playerState, playingVerseKey, selectedVerseKey],
   );
 
+  const onPlayReciter = useCallback(
+    async (id: string) => {
+      saveReciterId(id);
+      audio.setReciter(id);
+      setReciterId(id);
+      const key = selectedVerseKey ?? playingVerseKey;
+      if (!key) {
+        setAudioError("اختر آية أولاً");
+        return;
+      }
+      const parsed = parseVerseKey(key);
+      if (!parsed) {
+        setAudioError("اختر آية أولاً");
+        return;
+      }
+      setAudioError(null);
+      setAudioDockOpen(true);
+      suppressPageSyncRef.current = true;
+      setAudioStatus("جاري تحميل التلاوة...");
+      await audio.playAyah(parsed.surah, parsed.ayah, id);
+    },
+    [audio, playingVerseKey, selectedVerseKey],
+  );
+
   const onCopy = useCallback(async () => {
     if (!selectedVerseKey) return;
     const parsed = parseVerseKey(selectedVerseKey);
@@ -596,6 +638,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
             <MushafPage
               layout={layout}
               fontFamily={fontFamily}
+              displayPageNumber={page}
               selectedVerseKey={selectedVerseKey}
               playingVerseKey={playingVerseKey}
               onSelectVerse={onSelectVerse}
@@ -616,6 +659,9 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
           playerState={playerState}
           reciterId={reciterId}
           audioError={audioError}
+          audioStatus={audioStatus}
+          currentTime={audioTime.currentTime}
+          duration={audioTime.duration}
           onTogglePlay={() => void togglePlay()}
           onPrev={() => {
             suppressPageSyncRef.current = false;
@@ -631,19 +677,30 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
 
       <MushafControls
         open={chromeOpen && !actionsOpen}
+        persist={overlayOpen}
         pageNumber={page}
         onIndex={() => {
           setIndexOpen(true);
-          setChromeOpen(false);
+          setSearchOpen(false);
+          setSettingsOpen(false);
         }}
         onPrev={() => go(page - 1)}
         onNext={() => go(page + 1)}
         onGoto={go}
         onSearch={() => {
           setSearchOpen(true);
-          setChromeOpen(false);
+          setIndexOpen(false);
+          setSettingsOpen(false);
+          setChromeOpen(true);
+          if (hideTimer.current) window.clearTimeout(hideTimer.current);
         }}
-        onToggleTheme={() => setTheme((t) => (t === "paper" ? "night" : "paper"))}
+        onSettings={() => {
+          setSettingsOpen(true);
+          if (hideTimer.current) window.clearTimeout(hideTimer.current);
+        }}
+        onToggleTheme={() =>
+          setThemeChoice((t) => (t === "paper" ? "night" : t === "night" ? "auto" : "paper"))
+        }
         themeLabel={theme === "paper" ? "المصحف الورقي" : "ليلي هادئ"}
       />
 
@@ -681,6 +738,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
           onShare={() => void onShare()}
           onBookmark={() => void onBookmark()}
           onReciterChange={(id) => void onReciterChange(id)}
+          onPlayReciter={(id) => void onPlayReciter(id)}
           onClose={closeActions}
         />
       ) : null}
@@ -719,6 +777,13 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
         </Suspense>
       ) : null}
 
+      <MushafSettingsSheet
+        open={settingsOpen}
+        theme={themeChoice}
+        onTheme={setThemeChoice}
+        onClose={() => setSettingsOpen(false)}
+      />
+
       <span className="sr-only" aria-live="polite">
         صفحة {page} من {MUSHAF_PAGE_MAX}
       </span>
@@ -747,7 +812,9 @@ function PrefetchedMushafPage({ pageNumber }: { pageNumber: number }) {
   }, [pageNumber]);
   return (
     <div className="mm-page-shell mushaf-page-frame" aria-hidden="true">
-      {layout && ready ? <MushafPage layout={layout} fontFamily={fontFamily} /> : null}
+      {layout && ready ? (
+        <MushafPage layout={layout} fontFamily={fontFamily} displayPageNumber={pageNumber} />
+      ) : null}
     </div>
   );
 }

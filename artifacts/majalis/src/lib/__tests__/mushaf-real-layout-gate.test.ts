@@ -53,7 +53,7 @@ assert.match(css, /height:\s*50dvh/);
 assert.match(css, /height:\s*90dvh/);
 assert.doesNotMatch(css, /height:\s*35dvh/);
 assert.doesNotMatch(css, /height:\s*85dvh/);
-assert.match(css, /border-radius:\s*22px\s+22px\s+0\s+0/);
+assert.match(css, /border-radius:\s*0\s+16px\s+16px\s+0/);
 assert.match(css, /ayah-active/);
 assert.match(css, /var\(--mm-gold\) 12%/);
 assert.match(css, /\.mm-ayah-run__text\s*\{[^}]*padding:\s*0/);

@@ -12,6 +12,9 @@ type Props = {
   playerState: PlayerState;
   reciterId: string;
   audioError?: string | null;
+  audioStatus?: string | null;
+  currentTime?: number;
+  duration?: number;
   onTogglePlay: () => void;
   onPrev: () => void;
   onNext: () => void;
@@ -25,6 +28,9 @@ export function MushafAudioDock({
   playerState,
   reciterId,
   audioError = null,
+  audioStatus = null,
+  currentTime = 0,
+  duration = 0,
   onTogglePlay,
   onPrev,
   onNext,
@@ -33,6 +39,19 @@ export function MushafAudioDock({
   const playing = playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const loading = playerState === "loading" || playerState === "buffering";
   const reciters = useVerifiedReciters();
+  const statusLabel =
+    audioStatus ||
+    (playerState === "playing"
+      ? "يعمل الآن"
+      : playerState === "paused"
+        ? "متوقف"
+        : loading
+          ? "جاري التحميل"
+          : playerState === "error"
+            ? "فشل التحميل"
+            : "جاهز");
+  const progressMax = duration > 0 ? duration : 1;
+  const progressVal = duration > 0 ? Math.min(duration, Math.max(0, currentTime)) : 0;
 
   return (
     <div
@@ -59,6 +78,10 @@ export function MushafAudioDock({
           </select>
         </label>
       </div>
+      <progress className="mm-audio-dock__progress" max={progressMax} value={progressVal} aria-label="تقدم التلاوة" />
+      <p className="mm-audio-dock__status" role="status">
+        {statusLabel}
+      </p>
       {loading ? (
         <p className="mm-audio-dock__status" role="status">
           جاري تحميل التلاوة…
@@ -66,7 +89,7 @@ export function MushafAudioDock({
       ) : null}
       {audioError || playerState === "error" ? (
         <p className="mm-audio-dock__status mm-audio-dock__status--err" role="status">
-          {audioError || "تعذّر تشغيل التلاوة. جرّب قارئاً آخر."}
+          {audioError || "تعذر تحميل التلاوة، جرّب قارئًا آخر"}
         </p>
       ) : null}
       <div className="mm-audio-dock__controls">
