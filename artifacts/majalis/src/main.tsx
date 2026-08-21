@@ -1,7 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
-import { AppSplash } from "./components/AppSplash";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { ChunkRecoveryToast } from "./components/ChunkRecoveryToast";
 import { applyFontPreference, readFontPreference } from "./lib/font-preference";
@@ -130,7 +129,6 @@ async function mount() {
   try {
     createRoot(rootEl).render(
       <>
-        <AppSplash />
         <ChunkRecoveryToast />
         <ErrorBoundary>
           <QueryClientProvider client={queryClient}>
@@ -144,7 +142,7 @@ async function mount() {
     return;
   }
 
-  // أخفِ الإطلاق الأصلي عند أول إطار؛ أبلغ دخولية HTML أن التطبيق رُسم.
+  // أخفِ الإطلاق الأصلي (native) عند أول إطار؛ أبلغ هيكل الإقلاع أن التطبيق رُسم.
   armNativeSplashController();
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
