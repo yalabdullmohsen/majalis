@@ -115,15 +115,15 @@ for (const name of readdirSync(xcassets)) {
 
 const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8");
 assert.doesNotMatch(appSrc, /MajlisLaunchScreen|isLaunching|MajalisLaunchScreen/);
-// الدليل السريع القديم (٣ شاشات: ترحيب/تفضيلات/تذكيرات) أُلغي نهائيًا —
-// هذه الأسماء بالذات تبقى محظورة. شاشة الدخول الأولى الجديدة (شاشة واحدة
-// فقط، بلا أذونات، AppFirstLaunchScreen) قرار مقصود منفصل — راجع
-// src/components/AppFirstLaunchScreen.tsx وsrc/lib/onboarding-state.ts.
+// الدليل السريع القديم (٣ شاشات: ترحيب/تفضيلات/تذكيرات) أُلغي نهائيًا،
+// وشاشة الدخول الأولى اللاحقة (AppFirstLaunchScreen) حُذفت هي الأخرى —
+// التطبيق يدخل مباشرة بلا أي بوابة ترحيب.
 assert.doesNotMatch(
   appSrc,
-  /WelcomeScreen|IntroScreen|BrandReveal|AppFirstRunHost|FirstRunSetup/,
-  "لا بوابة ترحيب متعددة الخطوات قديمة في التركيب",
+  /WelcomeScreen|IntroScreen|BrandReveal|AppFirstRunHost|FirstRunSetup|AppFirstLaunchScreen/,
+  "لا بوابة ترحيب من أي نوع في التركيب",
 );
+assert.ok(!existsSync(resolve(root, "src/components/AppFirstLaunchScreen.tsx")), "AppFirstLaunchScreen.tsx محذوف");
 
 const info = readFileSync(resolve(root, "ios/App/App/Info.plist"), "utf8");
 assert.match(info, /<key>CFBundleVersion<\/key>\s*<string>40<\/string>/, "CFBundleVersion رُفع");
