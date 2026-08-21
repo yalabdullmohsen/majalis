@@ -1,0 +1,88 @@
+{
+  "updatedAt": "2026-08-21T09:47:46.803Z",
+  "tafsirs": [
+    {
+      "id": "muyassar",
+      "name": "التفسير الميسّر",
+      "author": "مجمع الملك فهد لطباعة المصحف الشريف",
+      "level": "مبتدئ",
+      "type": "text",
+      "bundled": true,
+      "quranComSlug": "ar-tafsir-muyassar",
+      "coverage": 6231,
+      "source": {
+        "name": "Quran.com / Quranic Universal Library (QUL)",
+        "url": "https://quran.com/tafsirs/ar-tafsir-muyassar",
+        "accessedAt": "2026-08-19",
+        "permission": "نص منشور للاستعمال عبر Quran.com API v4 — مع النسبة الكاملة في شاشة المصادر"
+      },
+      "bundledCoverageOk": false
+    },
+    {
+      "id": "saadi",
+      "name": "تفسير السعدي",
+      "author": "الشيخ عبد الرحمن بن ناصر السعدي",
+      "level": "مبتدئ",
+      "type": "text",
+      "bundled": true,
+      "quranComSlug": "ar-tafseer-al-saddi",
+      "coverage": 6177,
+      "source": {
+        "name": "Quran.com / Quranic Universal Library (QUL)",
+        "url": "https://quran.com/tafsirs/ar-tafseer-al-saddi",
+        "accessedAt": "2026-08-19",
+        "permission": "نص منشور للاستعمال عبر Quran.com API v4 — مع النسبة الكاملة في شاشة المصادر"
+      },
+      "bundledCoverageOk": false
+    },
+    {
+      "id": "ibn-kathir",
+      "name": "تفسير ابن كثير",
+      "author": "ابن كثير",
+      "level": "متوسط",
+      "type": "text",
+      "bundled": false,
+      "quranComSlug": "ar-tafsir-ibn-kathir",
+      "coverage": 6236,
+      "source": {
+        "name": "Quran.com / QUL",
+        "url": "https://quran.com/tafsirs/ar-tafsir-ibn-kathir",
+        "accessedAt": "2026-08-19",
+        "permission": "جلب عند الطلب — لا يُشحن في الحزمة الأساسية"
+      }
+    },
+    {
+      "id": "baghawi",
+      "name": "تفسير البغوي",
+      "author": "البغوي",
+      "level": "متوسط",
+      "type": "text",
+      "bundled": false,
+      "quranComSlug": "ar-tafsir-al-baghawi",
+      "coverage": 6236,
+      "source": {
+        "name": "Quran.com / QUL",
+        "url": "https://quran.com/tafsirs/ar-tafsir-al-baghawi",
+        "accessedAt": "2026-08-19",
+        "permission": "جلب عند الطلب"
+      }
+    },
+    {
+      "id": "tabari",
+      "name": "تفسير الطبري",
+      "author": "ابن جرير الطبري",
+      "level": "متقدم",
+      "type": "text",
+      "bundled": false,
+      "quranComSlug": "ar-tafsir-al-tabari",
+      "coverage": 6236,
+      "source": {
+        "name": "Quran.com / QUL",
+        "url": "https://quran.com/tafsirs/ar-tafsir-al-tabari",
+        "accessedAt": "2026-08-19",
+        "permission": "جلب عند الطلب"
+      }
+    }
+  ],
+  "audioSeries": []
+}
