@@ -1,8 +1,6 @@
 import { Suspense, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
 import { Link, Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
 import { AuthProvider, useAuth } from "@/components/AuthProvider";
-import { AppFirstLaunchScreen } from "@/components/AppFirstLaunchScreen";
-import { hasSeenOnboarding, markOnboardingSeen } from "@/lib/onboarding-state";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
 import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
@@ -1387,25 +1385,6 @@ function DeferredAssistantWidget() {
 }
 
 function App() {
-  // شاشة الدخول الأولى — مرة واحدة فقط، خارج كل المزوّدات/الراوتر عمدًا
-  // (لا تحتاج سياق ثيم؛ data-theme مضبوط على <html> منذ index.html).
-  // تظهر فقط عند دخول المسار الجذري "/" — لا تحجب الروابط العميقة (مصحف
-  // مُشارَك، نتيجة بحث، زحف محركات البحث) خلف شاشة تحتاج تفاعلاً.
-  const [showFirstLaunch, setShowFirstLaunch] = useState(
-    () => window.location.pathname === "/" && !hasSeenOnboarding(),
-  );
-
-  if (showFirstLaunch) {
-    return (
-      <AppFirstLaunchScreen
-        onStart={() => {
-          markOnboardingSeen();
-          setShowFirstLaunch(false);
-        }}
-      />
-    );
-  }
-
   return (
     <ThemePreferenceProvider>
       <FontPreferenceProvider>
