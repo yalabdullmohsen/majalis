@@ -402,6 +402,16 @@ async function main() {
     process.exit(1);
   }
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  // شاشة الدخول الأولى تحلّ محلّ الرئيسية في أي ملف تعريف جديد، فتصبح كل
+  // محدّدات "/" NOT_FOUND ويرسب الفاحص على صفحة لم يقسها أصلاً. نُعلِم الحالة
+  // بأنها مرئية مسبقًا (نفس مفاتيح src/lib/onboarding-state.ts) ليقيس التطبيق
+  // الحقيقي — البوابة تبقى كاملة الصرامة، لا تعطيل ولا تخفيف عتبة.
+  await page.addInitScript(() => {
+    try {
+      localStorage.setItem("majalis.onboarding.onboarding_seen", "1");
+      localStorage.setItem("majalis.onboarding.onboarding_major_version", "1");
+    } catch { /* ignore */ }
+  });
   const failures = [];
   let lastRoute = null;
 
