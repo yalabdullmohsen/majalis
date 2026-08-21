@@ -56,18 +56,19 @@ export function registerProductionServiceWorker(): void {
 
   armControlledSwReload();
 
-  window.addEventListener("load", () => {
-    void purgeStaleServiceWorkers().then(() => {
-      navigator.serviceWorker.register("/sw.js").then((registration) => {
-        const forceCheck = () => { void registration.update().catch(() => undefined); };
-        forceCheck();
-        window.setInterval(forceCheck, SW_UPDATE_CHECK_INTERVAL_MS);
-        document.addEventListener("visibilitychange", () => {
-          if (document.visibilityState === "visible") forceCheck();
-        });
-      }).catch((error) => {
-        console.warn("[majalis:pwa] service worker registration failed", error);
+  // لا ننتظر حدث load هنا — المستدعي (main.tsx) يستدعي هذه الدالة أصلاً
+  // بعد اكتمال load (أو readyState === "complete")، فانتظار load من جديد
+  // يعلّق إلى الأبد لأنه يحدث مرة واحدة فقط لكل تحميل صفحة.
+  void purgeStaleServiceWorkers().then(() => {
+    navigator.serviceWorker.register("/sw.js").then((registration) => {
+      const forceCheck = () => { void registration.update().catch(() => undefined); };
+      forceCheck();
+      window.setInterval(forceCheck, SW_UPDATE_CHECK_INTERVAL_MS);
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") forceCheck();
       });
+    }).catch((error) => {
+      console.warn("[majalis:pwa] service worker registration failed", error);
     });
   });
 }
