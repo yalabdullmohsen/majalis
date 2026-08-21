@@ -1,4 +1,4 @@
-import { useRef, type KeyboardEvent, type MouseEvent, type PointerEvent as ReactPointerEvent } from "react";
+import { memo, useRef, type KeyboardEvent, type MouseEvent, type PointerEvent as ReactPointerEvent } from "react";
 import type { QpcWord } from "@/lib/quran-data/qpc-page-data";
 
 type Props = {
@@ -24,7 +24,7 @@ type PressState = {
  * سطر آيات — كل كلمة عنصر flex مباشر (space-between كالمصحف الورقي).
  * التظليل المتصل عبر CSS على .ayah-active (خلفية + ظل يملأ فراغات الضبط).
  */
-export function MushafAyahLine({
+export const MushafAyahLine = memo(function MushafAyahLine({
   words,
   centered = false,
   selectedVerseKey = null,
@@ -121,4 +121,4 @@ export function MushafAyahLine({
       })}
     </div>
   );
-}
+});

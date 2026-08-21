@@ -8,6 +8,7 @@
  * - Never throws into UI for media failures — sets `playerState: "error"` instead.
  * - Listeners are isolated with try/catch so a bad subscriber cannot crash playback.
  */
+import { claimAudio, registerAudioStopper } from "@/lib/exclusive-audio-bus";
 import { listAyahAudioUrls, loadPlaybackRate, normalizePlaybackRate, savePlaybackRate } from "@/lib/quran-audio";
 import { getSurahMeta } from "@/lib/quran-api";
 import {
@@ -540,23 +541,7 @@ export class AudioEngine {
    * On media failure sets `playerState` to `"error"` and resolves (does not throw).
    */
   async playAyah(surah: number, ayah: number, reciterId?: string): Promise<void> {
-    try {
-      const { claimAudio, registerAudioStopper } = await import("@/lib/exclusive-audio-bus");
-      registerAudioStopper("tilawa", () => {
-        this.stop();
-      });
-      await claimAudio("tilawa");
-    } catch {
-      /* ignore bus */
-    }
-    if (reciterId) this.reciterId = reciterId;
-    this.surah = surah;
-    this.ayah = ayah;
-    if (this.repeatMode === "surah" && !this.surahRepeatStart) {
-      this.surahRepeatStart = { surah, ayah: 1 };
-    }
-    this.emitAyahChange();
-
+    /* عنصر الصوت يُنشأ قبل أي await حتى تبقى play() داخل إيماءة iOS. */
     let el: HTMLAudioElement;
     try {
       el = this.ensureAudio();
@@ -566,62 +551,58 @@ export class AudioEngine {
       return;
     }
 
+    if (reciterId) this.reciterId = reciterId;
+    this.surah = surah;
+    this.ayah = ayah;
+    if (this.repeatMode === "surah" && !this.surahRepeatStart) {
+      this.surahRepeatStart = { surah, ayah: 1 };
+    }
+    this.emitAyahChange();
+
     const urls = listAyahAudioUrls(surah, ayah, this.reciterId);
     if (!urls.length) {
-      this.setPlayerState(
-        "error",
-        "هذا القارئ لا يدعم تلاوة الآية آيةً آية. اختر قارئًا آخر أو شغّل السورة كاملة.",
-      );
+      this.setPlayerState("error", "تعذر تحميل التلاوة، جرّب قارئًا آخر");
       return;
     }
+
+    try {
+      registerAudioStopper("tilawa", () => {
+        this.stop();
+      });
+      void claimAudio("tilawa");
+    } catch {
+      /* ignore bus */
+    }
+
     const gen = ++this.playGeneration;
     this.setPlayerState("loading");
     if (this.teachEnabled) this.teachPhase = "teacher";
 
-    if (await this.tryPlayFromPreload(surah, ayah, gen)) {
-      void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
-      return;
-    }
+    void this.activatePlaybackSession();
 
+    const budgetMs = 10_000;
+    const startedAt = Date.now();
     let lastErr: unknown = null;
     for (const url of urls) {
       if (gen !== this.playGeneration) return;
+      const remaining = budgetMs - (Date.now() - startedAt);
+      if (remaining < 200) break;
       try {
         el.pause();
         el.src = url;
         el.playbackRate = this.playbackRate;
-        await this.activatePlaybackSession();
-        await new Promise<void>((resolve, reject) => {
-          let settled = false;
-          const finish = (fn: () => void) => {
-            if (settled) return;
-            settled = true;
-            cleanup();
-            fn();
-          };
-          const onReady = () => finish(() => resolve());
-          const onError = () => finish(() => reject(new Error("media_element_error")));
-          const cleanup = () => {
-            el.removeEventListener("canplay", onReady);
-            el.removeEventListener("loadeddata", onReady);
-            el.removeEventListener("error", onError);
-          };
-          el.addEventListener("canplay", onReady, { once: true });
-          el.addEventListener("loadeddata", onReady, { once: true });
-          el.addEventListener("error", onError, { once: true });
-          try {
-            el.load();
-          } catch (e) {
-            finish(() => reject(e));
-            return;
-          }
-          window.setTimeout(() => {
-            if (!settled && el.readyState >= 2) onReady();
-            else if (!settled) onError();
-          }, 8000);
-        });
-        if (gen !== this.playGeneration) return;
-        await el.play();
+        try {
+          el.load();
+        } catch {
+          /* iOS يقبل play() بعد تعيين src مباشرة */
+        }
+        const playWait = el.play();
+        await Promise.race([
+          playWait,
+          new Promise<void>((_, reject) => {
+            window.setTimeout(() => reject(new Error("audio_load_timeout")), remaining);
+          }),
+        ]);
         if (gen !== this.playGeneration) return;
         this.setPlayerState("playing");
         this.preloadNextAyah(surah, ayah, gen);
@@ -653,7 +634,7 @@ export class AudioEngine {
     const offline =
       typeof navigator !== "undefined" && navigator.onLine === false
         ? "تحقق من الاتصال بالشبكة ثم أعد المحاولة."
-        : "تعذّر تشغيل التلاوة. أعد المحاولة أو غيّر القارئ.";
+        : "تعذر تحميل التلاوة، جرّب قارئًا آخر";
     this.setPlayerState("error", offline);
   }
 

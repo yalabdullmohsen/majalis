@@ -49,8 +49,8 @@ assert.match(css, /\.mm-page-header__juz\s*\{[^}]*left:\s*0/);
 assert.match(css, /font-size:\s*clamp\(0\.78rem,\s*2\.8vw,\s*0\.95rem\)/);
 
 assert.match(footer, /mm-page-footer__cartouche/);
-assert.match(css, /\.mm-page-footer__badge\s*\{[^}]*grid-column:\s*2/);
-assert.match(css, /grid-template-columns:\s*1fr auto 1fr/);
+assert.match(css, /\.mm-page-footer__badge\s*\{[^}]*left:\s*50%/);
+assert.match(css, /transform:\s*translate\(-50%,\s*-50%\)/);
 assert.match(css, /width:\s*13\.1%/);
 assert.match(css, /z-index:\s*9/);
 assert.match(css, /\[data-chrome="1"\]\s*\.mm-controls__page\s*\{[^}]*opacity:\s*0/);

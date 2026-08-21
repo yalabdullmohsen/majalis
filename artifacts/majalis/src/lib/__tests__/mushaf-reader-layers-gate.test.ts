@@ -46,9 +46,16 @@ assert.match(search, /searchVersesInCorpus/);
 assert.match(search, /لا نتائج/);
 assert.match(search, /جاري البحث/);
 assert.match(search, /تعذّر البحث/);
+assert.match(search, /e\.preventDefault\(\)/);
+assert.match(search, /رقم الصفحة يجب أن يكون بين 1 و604/);
+assert.match(search, /300/);
+assert.match(search, /type="text"/);
 assert.match(reader, /pendingSelectRef/);
 assert.match(reader, /setSelectedVerseKey\(verseKey\)/);
 assert.match(reader, /setActionsOpen\(true\)/);
+assert.match(reader, /MushafSettingsSheet/);
+assert.match(css, /align-items:\s*flex-start/);
+assert.match(css, /\.mm-page-footer__badge\s*\{[^}]*left:\s*50%/);
 
 assert.match(pager, /dx > 0/);
 assert.match(pager, /locking\.current = true/);

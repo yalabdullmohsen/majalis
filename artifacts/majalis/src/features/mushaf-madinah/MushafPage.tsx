@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { memo, useRef } from "react";
 import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
 import { MushafAyahLine } from "./MushafAyahLine";
 import { MushafBasmala } from "./MushafBasmala";
@@ -10,15 +10,18 @@ import { useMushafPageFontFit } from "./useMushafPageFontFit";
 type Props = {
   layout: MushafPageLayout;
   fontFamily: string;
+  /** رقم العرض الفوري عند التقليب — لا ينتظر اكتمال تخطيط النص. */
+  displayPageNumber?: number;
   selectedVerseKey?: string | null;
   playingVerseKey?: string | null;
   onSelectVerse?: (verseKey: string) => void;
 };
 
 /** صفحة مصحف واحدة — شبكة ١٥ خانة من بيانات QPC. */
-export function MushafPage({
+export const MushafPage = memo(function MushafPage({
   layout,
   fontFamily,
+  displayPageNumber,
   selectedVerseKey = null,
   playingVerseKey = null,
   onSelectVerse,
@@ -26,17 +29,18 @@ export function MushafPage({
   const opening = layout.pageNumber === 1 || layout.pageNumber === 2;
   const slots = buildSlots(layout);
   const pageRef = useRef<HTMLElement | null>(null);
-  useMushafPageFontFit(pageRef, true, layout.pageNumber, fontFamily, selectedVerseKey);
+  useMushafPageFontFit(pageRef, true, layout.pageNumber, fontFamily, null);
+  const footerPage = displayPageNumber ?? layout.pageNumber;
 
   return (
     <article
       ref={pageRef}
       className={`mm-page${opening ? " mm-page--opening" : ""}`}
-      data-page={layout.pageNumber}
+      data-page={footerPage}
       data-testid="mushaf-page"
       data-opening={opening ? "1" : "0"}
       style={{ ["--mm-qpc-family" as string]: fontFamily }}
-      aria-label={`صفحة المصحف ${layout.pageNumber}`}
+      aria-label={`صفحة المصحف ${footerPage}`}
     >
       <MushafPageHeader juzNumber={layout.juzNumber} surahName={layout.headerSurahName} />
       <div
@@ -76,10 +80,10 @@ export function MushafPage({
           );
         })}
       </div>
-      <MushafPageFooter pageNumber={layout.pageNumber} hizbStartingOnPage={layout.hizbStartingOnPage} />
+      <MushafPageFooter pageNumber={footerPage} hizbStartingOnPage={layout.hizbStartingOnPage} />
     </article>
   );
-}
+});
 
 type SlotCell =
   | { kind: "banner"; nameArabic: string }

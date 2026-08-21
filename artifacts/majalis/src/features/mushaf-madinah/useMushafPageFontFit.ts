@@ -163,7 +163,7 @@ export function useMushafPageFontFit(
   ready: boolean,
   pageNumber: number,
   fontFamily: string,
-  selectedVerseKey: string | null,
+  _selectedVerseKey: string | null = null,
 ): void {
   useLayoutEffect(() => {
     if (!ready) return;
@@ -264,5 +264,5 @@ export function useMushafPageFontFit(
       window.removeEventListener("orientationchange", onOrient);
       fonts?.removeEventListener?.("loadingdone", onOrient);
     };
-  }, [ready, pageRef, pageNumber, fontFamily, selectedVerseKey]);
+  }, [ready, pageRef, pageNumber, fontFamily]);
 }

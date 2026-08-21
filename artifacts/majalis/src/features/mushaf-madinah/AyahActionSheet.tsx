@@ -58,6 +58,7 @@ type Props = {
   onShare: () => void;
   onBookmark: () => void;
   onReciterChange: (id: string) => void;
+  onPlayReciter?: (id: string) => void;
   onClose: () => void;
 };
 
@@ -95,6 +96,7 @@ export function AyahActionSheet({
   onShare,
   onBookmark,
   onReciterChange,
+  onPlayReciter,
   onClose,
 }: Props) {
   const [height, setHeight] = useState<SheetHeight>("half");
@@ -315,6 +317,9 @@ export function AyahActionSheet({
               aria-label="إغلاق"
             >
               <X size={18} aria-hidden="true" />
+            </button>
+            <button type="button" className="mm-ayah-bar__close" onClick={onCopy} aria-label="نسخ الآية">
+              نسخ
             </button>
           </div>
 
@@ -569,7 +574,7 @@ export function AyahActionSheet({
           ) : null}
           {audioError || playerState === "error" ? (
             <p className="mm-ayah-bar__status mm-ayah-bar__status--err" role="status" data-testid="mushaf-audio-error">
-              {audioError || "تعذر تحميل التلاوة، أعد المحاولة"}
+              {audioError || "تعذر تحميل التلاوة، جرّب قارئًا آخر"}
             </p>
           ) : null}
           {copyStatus ? (
@@ -632,6 +637,29 @@ export function AyahActionSheet({
                       >
                         <span>{r.nameAr}</span>
                         <span className="mm-reciter-sheet__meta">{r.qualityLabel}</span>
+                      </button>
+                      <button
+                        type="button"
+                        aria-label={r.id === reciterId && playing ? `إيقاف ${r.nameAr}` : `تشغيل ${r.nameAr}`}
+                        onClick={() => {
+                          if (r.id === reciterId && playing) {
+                            onTogglePlay();
+                            return;
+                          }
+                          if (onPlayReciter) onPlayReciter(r.id);
+                          else {
+                            onReciterChange(r.id);
+                            onPlay();
+                          }
+                          setReadersOpen(false);
+                          setReaderQuery("");
+                        }}
+                      >
+                        {r.id === reciterId && playing ? (
+                          <Pause size={16} aria-hidden="true" />
+                        ) : (
+                          <Play size={16} aria-hidden="true" />
+                        )}
                       </button>
                     </li>
                   ))}

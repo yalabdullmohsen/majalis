@@ -62,7 +62,7 @@ assert.doesNotMatch(css, /--mm-ref-open-p2-text-end/);
 assert.doesNotMatch(css, /\[data-page="2"\]/);
 assert.match(css, /--mm-basmala-size:\s*var\(--mm-qpc-size\)/);
 assert.match(css, /opacity:\s*1/);
-assert.match(css, /border-radius:\s*22px\s+22px\s+0\s+0/);
+assert.match(css, /border-radius:\s*0\s+16px\s+16px\s+0/);
 assert.match(css, /gap:\s*6px/);
 assert.match(css, /baselineShift/);
 
