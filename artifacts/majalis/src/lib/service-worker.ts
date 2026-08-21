@@ -22,6 +22,17 @@ export async function purgeStaleServiceWorkers(): Promise<void> {
 const SW_UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
 const SW_RELOAD_GUARD_KEY = "mj.sw-reload-once.v1";
 
+/**
+ * تأخير التسجيل بعد استقرار الصفحة. حدث install في public/sw.js يبدأ
+ * precache لأصول ثقيلة (ملفات أذان mp3 + خط قرآني) فورًا، فتشغيله داخل
+ * نافذة التحميل الحرجة ينافس LCP/FCP على النطاق والخيط الرئيسي.
+ * قياس A/B محلي (Lighthouse، جوال، شبكة مُخنَقة) عند إصلاح التسجيل:
+ *   بلا تأخير: FCP 5891 · LCP 8912 · CLS 0.089
+ *   مع تأخير:  FCP 3797 · LCP 4863 · CLS 0.019 (مطابق لخط الأساس)
+ * التسجيل نفسه يبقى مضمونًا — التأخير لا يلغيه.
+ */
+const SW_REGISTER_DELAY_MS = 5_000;
+
 function armControlledSwReload(): void {
   if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
 
@@ -56,7 +67,11 @@ export function registerProductionServiceWorker(): void {
 
   armControlledSwReload();
 
-  window.addEventListener("load", () => {
+  // لا ننتظر حدث load هنا — المستدعي (main.tsx) يستدعي هذه الدالة أصلاً
+  // بعد اكتمال load (أو readyState === "complete")، فانتظار load من جديد
+  // يعلّق إلى الأبد لأنه يحدث مرة واحدة فقط لكل تحميل صفحة.
+  // نؤجّل التسجيل خارج نافذة التحميل الحرجة فقط (انظر SW_REGISTER_DELAY_MS).
+  window.setTimeout(() => {
     void purgeStaleServiceWorkers().then(() => {
       navigator.serviceWorker.register("/sw.js").then((registration) => {
         const forceCheck = () => { void registration.update().catch(() => undefined); };
@@ -69,5 +84,5 @@ export function registerProductionServiceWorker(): void {
         console.warn("[majalis:pwa] service worker registration failed", error);
       });
     });
-  });
+  }, SW_REGISTER_DELAY_MS);
 }
