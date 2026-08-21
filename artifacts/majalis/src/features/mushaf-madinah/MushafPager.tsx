@@ -70,6 +70,7 @@ export function MushafPager({
   const locking = useRef(false);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const shellRef = useRef<HTMLDivElement | null>(null);
+  const settledPageRef = useRef(page);
 
   const go = useCallback(
     (next: number) => {
@@ -102,8 +103,25 @@ export function MushafPager({
   }, []);
 
   useEffect(() => {
+    const prevPage = settledPageRef.current;
+    settledPageRef.current = page;
+    const diff = page - prevPage;
+
     locking.current = true;
-    snapToIndex(1, false);
+
+    // فرق صفحة واحدة (مجاورة): اللوحة التي أصبحت "تالية"/"سابقة" بعد
+    // التحديث (index 0/2) تعرض بالضبط محتوى الصفحة القديمة — إعادة
+    // التموضع الفورية إليها لا تُحدث أي قفزة بصرية مرئية، ثم الانزلاق
+    // منها إلى المنتصف يُظهر تبديلاً اتجاهياً صحيحاً بدل قفزة فورية.
+    // فروق أكبر (٢+ صفحة) لا توفّرها اللوحات الثلاث بصريًا — تبقى فورية.
+    if (Math.abs(diff) === 1) {
+      const fromIndex = diff > 0 ? 2 : 0;
+      snapToIndex(fromIndex, false);
+      requestAnimationFrame(() => snapToIndex(1, true));
+    } else {
+      snapToIndex(1, false);
+    }
+
     const id = window.setTimeout(() => {
       locking.current = false;
     }, SETTLE_MS + 40);
