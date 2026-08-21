@@ -13,6 +13,7 @@ import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { getActiveTab } from "@/lib/get-active-tab";
 import { LOBBY_SEARCH_FILTER } from "@/config/section-lobby-chrome";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
+import BrandWordmark from "./BrandWordmark";
 import "@/styles/components/dark-emerald-menus.css";
 import "@/styles/components/app-chrome-scroll.css";
 
@@ -203,7 +204,7 @@ export default function NavBar() {
             className="navbar-v3__tagline"
             aria-label="المجلس العلمي — الرئيسية"
           >
-            المجلس العلمي
+            <BrandWordmark className="navbar-v3__tagline-mark" />
           </Link>
 
           {/* Desktop tabs */}
