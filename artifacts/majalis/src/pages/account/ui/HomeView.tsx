@@ -77,19 +77,21 @@ function HomeBelowFoldGate() {
 export default function HomePage() {
   const dailyCtx = useDailyContext();
   const [lastVisited, setLastVisited] = useState<RecentPage | null>(null);
-  const [isFirstVisit, setIsFirstVisit] = useState(false);
+  const [isFirstVisit] = useState(() => {
+    try {
+      return localStorage.getItem("majlis-home-welcomed-v1") !== "1";
+    } catch {
+      return true;
+    }
+  });
 
   useEffect(() => {
     const pages = getRecentPages(2);
     setLastVisited(pages.find((p) => p.href !== "/") ?? null);
     try {
-      const key = "majlis-home-welcomed-v1";
-      if (!localStorage.getItem(key)) {
-        setIsFirstVisit(true);
-        localStorage.setItem(key, "1");
-      }
+      localStorage.setItem("majlis-home-welcomed-v1", "1");
     } catch {
-      setIsFirstVisit(true);
+      /* التخزين معطّل — النص الأول يبقى ثابتاً دون قفزة */
     }
   }, []);
 

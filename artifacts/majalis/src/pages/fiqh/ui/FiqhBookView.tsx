@@ -1,17 +1,23 @@
 import { Link, useParams } from "wouter";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
 import { Empty } from "@/components/ui-common";
-import { getVisibleFiqhBook, publishedChapters, publishedLessonsInChapter } from "@/lib/fiqh-books";
-import { formatMasailCount } from "@/lib/arabic-count";
+import {
+  fiqhBookApproxLevel,
+  fiqhBookBlurb,
+  fiqhBookCounts,
+  getVisibleFiqhBook,
+  publishedChapters,
+  publishedLessonsInChapter,
+} from "@/lib/fiqh-books";
+import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
 
 export default function FiqhBookPage() {
   const params = useParams<{ bookId: string }>();
   const bookId = params.bookId ?? "";
   const book = getVisibleFiqhBook(bookId);
-  const [openId, setOpenId] = useState<string | null>(null);
 
   usePageView("fiqh-book", bookId || null);
 
@@ -35,42 +41,41 @@ export default function FiqhBookPage() {
   }
 
   const chapters = publishedChapters(book);
+  const counts = fiqhBookCounts(book);
+  const level = fiqhBookApproxLevel(book);
 
   return (
     <div className="fqp-root page-shell fiqh-hub" dir="rtl">
       <nav className="fiqh-crumb" aria-label="مسار التنقل">
         <Link href="/fiqh">الفقه</Link>
-        <span aria-hidden="true"> ← </span>
-        <span>{book.title}</span>
       </nav>
-      <h1 className="fiqh-book-page__title">{book.title}</h1>
+      <header className="fiqh-book-head">
+        <h1 className="fiqh-book-page__title">{book.title}</h1>
+        <p className="fiqh-book-head__blurb">{fiqhBookBlurb(book)}</p>
+        <p className="fiqh-book-head__meta">
+          {formatAbwabCount(counts.chapters)} · {formatMasailCount(counts.lessons)} · مستوى تقريبي: {level}
+        </p>
+      </header>
       <ol className="fiqh-chapter-list">
         {chapters.map((ch, i) => {
           const lessons = publishedLessonsInChapter(ch);
-          const open = openId === ch.id;
           return (
-            <li key={ch.id} className="fiqh-chapter">
-              <button
-                type="button"
-                className="fiqh-chapter__toggle"
-                aria-expanded={open}
-                onClick={() => setOpenId(open ? null : ch.id)}
-              >
+            <li key={ch.id} className="fiqh-chapter fiqh-chapter--card">
+              <div className="fiqh-chapter__card-head">
                 <span className="fiqh-chapter__num">{i + 1}</span>
                 <span className="fiqh-chapter__title">{ch.title}</span>
                 <span className="fiqh-chapter__count">{formatMasailCount(lessons.length)}</span>
-              </button>
-              {open ? (
-                <ul className="fiqh-lesson-list">
-                  {lessons.map((lesson) => (
-                    <li key={lesson.id}>
-                      <Link href={`/fiqh/books/${book.id}/lessons/${lesson.id}`} className="fiqh-lesson-link">
-                        {lesson.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
+              </div>
+              <ol className="fiqh-lesson-list">
+                {lessons.map((lesson, li) => (
+                  <li key={lesson.id}>
+                    <Link href={`/fiqh/books/${book.id}/lessons/${lesson.id}`} className="fiqh-lesson-link">
+                      <span className="fiqh-lesson-link__num">{li + 1}</span>
+                      <span>{lesson.title}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
             </li>
           );
         })}

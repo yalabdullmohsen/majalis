@@ -54,6 +54,7 @@ const {
   markOnboardingSeen,
   hasSeenStorageNotice,
   markStorageNoticeSeen,
+  shouldSkipAppStartForPath,
   __resetOnboardingStateForTests,
 } = mod;
 
@@ -90,6 +91,7 @@ test("الوحدة لا تطلب إذن إشعارات", async () => {
     "utf8",
   );
   assert.doesNotMatch(src, /requestPermission|Notification\s*\.|LocalNotifications|PushNotifications/);
+  assert.match(src, /navigator\.webdriver/);
 });
 
 test("إخفاق localStorage لا يمنع كتابة الكوكي للراية", () => {
@@ -105,6 +107,16 @@ test("الوسم idempotent", () => {
   assert.equal(markOnboardingSeen(), true);
   assert.equal(markOnboardingSeen(), true);
   assert.equal(hasSeenOnboarding(), true);
+});
+
+test("الروابط العميقة تتخطى الدخولية", () => {
+  assert.equal(shouldSkipAppStartForPath("/"), false);
+  assert.equal(shouldSkipAppStartForPath("/settings"), false);
+  assert.equal(shouldSkipAppStartForPath("/mushaf"), true);
+  assert.equal(shouldSkipAppStartForPath("/mushaf?page=2"), true);
+  assert.equal(shouldSkipAppStartForPath("/fiqh/books/taharah/lessons/taharah-miyah-aqsam"), true);
+  assert.equal(shouldSkipAppStartForPath("/search?q=صلاة"), true);
+  assert.equal(shouldSkipAppStartForPath("/lessons/1"), true);
 });
 
 test("رفع الإصدار الكبير فقط يعيد التعيين — reload عادي لا يمسّه", () => {

@@ -39,6 +39,7 @@ import {
 import { trackContinueReading } from "@/lib/continue-reading";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
+import { FocusArrival } from "@/components/FocusArrival";
 import { PwaInstallBanner } from "@/components/PwaInstallBanner";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
@@ -93,9 +94,9 @@ const CrossDeviceResumeToast = lazyWithRetry(
   () => import("@/components/CrossDeviceResumeToast").then((m) => ({ default: m.CrossDeviceResumeToast })),
   "CrossDeviceResumeToast",
 );
-const AppFeatureTourGate = lazyWithRetry(
-  () => import("@/components/onboarding/AppFeatureTourGate").then((m) => ({ default: m.AppFeatureTourGate })),
-  "AppFeatureTourGate",
+const AppStartGate = lazyWithRetry(
+  () => import("@/components/onboarding/AppStartGate").then((m) => ({ default: m.AppStartGate })),
+  "AppStartGate",
 );
 const AchievementToast = lazyWithRetry(
   () => import("@/components/AchievementToast").then((m) => ({ default: m.AchievementToast })),
@@ -1205,6 +1206,7 @@ function AppShellInner() {
       <NavProgressBar />
       <SeoManager />
       <ScrollResetOnNav />
+      <FocusArrival />
       <NavigationBinder />
       <NativeBackButtonListener />
       <RouteEnterMotion />
@@ -1257,7 +1259,7 @@ function AppShellInner() {
         <CrossDeviceResumeToast />
       </Suspense>
       <Suspense fallback={null}>
-        <AppFeatureTourGate />
+        <AppStartGate />
       </Suspense>
       {searchOpen && (
         <SectionErrorBoundary name="GlobalSearchModal">

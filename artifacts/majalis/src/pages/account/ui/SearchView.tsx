@@ -1,3 +1,4 @@
+import { withFocusQuery } from "@/lib/focus-arrival";
 import { BookMarked, BookOpen, Clock, FlaskConical, GraduationCap, Heart, Scale, Scroll } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
@@ -221,7 +222,7 @@ function ResultRow({
   query?: string;
 }) {
   return (
-    <Link href={href} className="search-result-link">
+    <Link href={withFocusQuery(href, query ?? "")} className="search-result-link">
       <div className="search-result-row">
         {avatarName && (
           <SheikhAvatar src={avatarSrc} name={avatarName} size={40} className="search-result-avatar" />

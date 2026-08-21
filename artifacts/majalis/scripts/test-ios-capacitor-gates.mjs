@@ -211,7 +211,10 @@ ok(
     || /WKWebsiteDataStore\.default\(\)\s*\.removeData/.test(appDelegate),
   "AppDelegate clears WKWebsiteDataStore on launch (live URL freshness)",
 );
-ok(appDelegate.includes("allWebsiteDataTypes"), "AppDelegate purges all website data types");
+ok(appDelegate.includes("WKWebsiteDataTypeDiskCache"), "AppDelegate purges disk cache");
+ok(appDelegate.includes("WKWebsiteDataTypeMemoryCache"), "AppDelegate purges memory cache");
+ok(appDelegate.includes("WKWebsiteDataTypeServiceWorkerRegistrations"), "AppDelegate unregisters service workers");
+ok(!appDelegate.includes("allWebsiteDataTypes"), "AppDelegate does not wipe localStorage/cookies");
 
 // Live server URL must stay in the synced native capacitor.config.json
 const capJsonPath = join(iosApp, "App", "capacitor.config.json");

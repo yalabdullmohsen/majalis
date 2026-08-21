@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
-  Bell,
   BookOpen,
   GraduationCap,
   Library,
@@ -10,7 +9,6 @@ import {
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
-import { requestNotificationPermission } from "@/lib/prayer-local-notifications";
 import { markFeatureTourCompleted } from "@/lib/feature-tour-state";
 import "@/styles/components/feature-tour.css";
 
@@ -66,13 +64,6 @@ export const FEATURE_TOUR_SLIDES: FeatureTourSlide[] = [
     hint: "من شريط البحث العلوي",
     Icon: Search,
   },
-  {
-    id: "notifications",
-    title: "التنبيهات المفيدة",
-    body: "تذكيرات الدروس والأذان والورد — يمكنك تفعيلها الآن أو لاحقاً من الإعدادات.",
-    hint: "إذن الإشعارات يُطلب هنا فقط",
-    Icon: Bell,
-  },
 ];
 
 type Props = {
@@ -84,7 +75,6 @@ type Props = {
 
 export function AppFeatureTour({ open, onClose, persistOnExit = true }: Props) {
   const [index, setIndex] = useState(0);
-  const [notifBusy, setNotifBusy] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const total = FEATURE_TOUR_SLIDES.length;
   const slide = FEATURE_TOUR_SLIDES[index]!;
@@ -110,7 +100,6 @@ export function AppFeatureTour({ open, onClose, persistOnExit = true }: Props) {
   useEffect(() => {
     if (!open) {
       setIndex(0);
-      setNotifBusy(false);
       return;
     }
     document.body.classList.add("feature-tour-open");
@@ -132,16 +121,6 @@ export function AppFeatureTour({ open, onClose, persistOnExit = true }: Props) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, finish]);
-
-  const onEnableNotifications = async () => {
-    setNotifBusy(true);
-    try {
-      await requestNotificationPermission();
-    } finally {
-      setNotifBusy(false);
-      finish();
-    }
-  };
 
   if (!open || typeof document === "undefined") return null;
 
@@ -195,54 +174,33 @@ export function AppFeatureTour({ open, onClose, persistOnExit = true }: Props) {
         </div>
 
         <footer className="feature-tour-footer">
-          {isLast ? (
-            <div className="feature-tour-notif-actions">
+          <div className="feature-tour-nav">
+            <button
+              type="button"
+              className="feature-tour-btn feature-tour-btn--ghost"
+              onClick={finish}
+            >
+              {isLast ? "إغلاق" : "تخطّي"}
+            </button>
+            <div className="feature-tour-nav__mid">
+              {index > 0 ? (
+                <button
+                  type="button"
+                  className="feature-tour-btn feature-tour-btn--ghost"
+                  onClick={goPrev}
+                >
+                  السابق
+                </button>
+              ) : null}
               <button
                 type="button"
                 className="feature-tour-btn feature-tour-btn--primary"
-                disabled={notifBusy}
-                onClick={() => void onEnableNotifications()}
+                onClick={goNext}
               >
-                {notifBusy ? "جارٍ الطلب…" : "فعّل التنبيهات"}
-              </button>
-              <button
-                type="button"
-                className="feature-tour-btn feature-tour-btn--ghost"
-                disabled={notifBusy}
-                onClick={finish}
-              >
-                لاحقاً
+                {isLast ? "تم" : "التالي"}
               </button>
             </div>
-          ) : (
-            <div className="feature-tour-nav">
-              <button
-                type="button"
-                className="feature-tour-btn feature-tour-btn--ghost"
-                onClick={finish}
-              >
-                تخطّي
-              </button>
-              <div className="feature-tour-nav__mid">
-                {index > 0 ? (
-                  <button
-                    type="button"
-                    className="feature-tour-btn feature-tour-btn--ghost"
-                    onClick={goPrev}
-                  >
-                    السابق
-                  </button>
-                ) : null}
-                <button
-                  type="button"
-                  className="feature-tour-btn feature-tour-btn--primary"
-                  onClick={goNext}
-                >
-                  التالي
-                </button>
-              </div>
-            </div>
-          )}
+          </div>
         </footer>
 
         <div className="feature-tour-progress" aria-hidden="true">

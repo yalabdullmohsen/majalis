@@ -38,7 +38,6 @@ import {
   restoreDefaultAppSettings,
   writeBackgroundPlaybackPref,
 } from "@/lib/restore-default-settings";
-import { requestFeatureTourReplay } from "@/lib/feature-tour-state";
 import "@/styles/pages/settings.css";
 
 const ReciterDownloadManager = lazy(() =>
@@ -546,13 +545,9 @@ export default function SettingsPage() {
             أعد مشاهدة جولة المزايا لتتعرّف على المصحف والصلاة والأذكار والبحث والتنبيهات.
           </p>
           <div className="settings-actions">
-            <button
-              type="button"
-              className="page-action-btn page-action-btn--secondary"
-              onClick={() => requestFeatureTourReplay()}
-            >
+            <Link href="/feature-tour" className="page-action-btn page-action-btn--secondary">
               جولة المزايا
-            </button>
+            </Link>
           </div>
           <div className="settings-legal-links">
             <Link href="/about" className="settings-legal-link">

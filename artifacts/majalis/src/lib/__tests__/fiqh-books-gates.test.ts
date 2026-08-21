@@ -6,8 +6,11 @@ import { readFileSync, existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  FIQH_CATEGORY_ORDER,
   FIQH_SUPPORTING_TOPICS,
+  adjacentFiqhLessons,
   getAllFiqhBooks,
+  getFiqhLesson,
   isPublishedLesson,
   listPublishedLessons,
   publishedBooks,
@@ -50,6 +53,20 @@ const REQUIRED_TITLES = [
   "كتاب الجهاد والسِّيَر", "كتاب الجزية",
   "كتاب القضاء", "كتاب الشهادات", "كتاب الدعوى والبيّنات", "كتاب الإقرار",
 ];
+
+console.log("\n=== ترتيب علمي للكتب ===");
+{
+  const ids = getAllFiqhBooks().map((b) => b.id);
+  const pos = (id: string) => ids.indexOf(id);
+  assert(pos("taharah") >= 0 && pos("taharah") < pos("salah"), "الطهارة قبل الصلاة");
+  assert(pos("salah") < pos("zakat"), "الصلاة قبل الزكاة");
+  assert(pos("zakat") < pos("sawm"), "الزكاة قبل الصيام");
+  assert(pos("sawm") < pos("hajj"), "الصيام قبل الحج");
+  assert(FIQH_CATEGORY_ORDER[0] === "ibadat", "العبادات أول مجموعة");
+  assert(FIQH_CATEGORY_ORDER.includes("muamalat"), "المعاملات");
+  assert(FIQH_CATEGORY_ORDER.includes("usrah"), "الأسرة");
+  assert(FIQH_CATEGORY_ORDER.includes("jinayat"), "الجنايات والحدود");
+}
 
 console.log("\n=== ١) كل عنوان كتاب يبدأ بـ«كتاب» ===");
 {
@@ -201,6 +218,21 @@ console.log("\n=== البنية والواجهة ===");
   assert(view.includes("getLobby"), "خمس مجموعات من المصدر");
   assert(view.includes("lobbyId=\"fiqh\""), "معرّف لوبي الفقه");
   assert(view.includes("title={lobby.title}"), "هيدر مختصر بلا فقرة طويلة");
+  const bookView = read("src/pages/fiqh/ui/FiqhBookView.tsx");
+  assert(bookView.includes("fiqhBookBlurb"), "وصف الكتاب من العنوان");
+  assert(bookView.includes("مستوى تقريبي"), "مستوى تقريبي في رأس الكتاب");
+  assert(bookView.includes("fiqh-chapter--card"), "أبواب كبطاقات");
+  const lessonView = read("src/pages/fiqh/ui/FiqhLessonView.tsx");
+  assert(lessonView.includes("فهرس الباب"), "فهرس داخلي");
+  assert(lessonView.includes("ملخص سريع"), "ملخص سريع");
+  assert(lessonView.includes("الراجح بدليله"), "الراجح بدليله");
+  assert(lessonView.includes("adjacentFiqhLessons"), "التالي/السابق");
+  assert(lessonView.includes("fiqh-read-progress"), "شريط تقدّم قراءة");
+  const water = getFiqhLesson("taharah", "taharah-miyah-aqsam");
+  assert(Boolean(water), "مسألة أقسام المياه");
+  const adj = adjacentFiqhLessons("taharah", "taharah-miyah-aqsam");
+  assert(Boolean(adj.next), "للمسألة الأولى تالٍ");
+  assert(!adj.prev, "لا سابق للأولى");
   const app = read("src/App.tsx");
   assert(app.includes('path="/fiqh/books/:bookId"'), "مسار الكتاب");
   assert(app.includes('path="/fiqh/books/:bookId/lessons/:lessonId"'), "مسار المسألة");

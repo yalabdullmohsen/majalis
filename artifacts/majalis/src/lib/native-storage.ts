@@ -65,6 +65,10 @@ export const NATIVE_PROGRESS_KEYS = [
   "majalis-notif-permission-asked-v1",
   /** جولة المزايا — مرة واحدة بعد التثبيت (Preferences/UserDefaults). */
   "onboarding.completed.v1",
+  /** شاشة البدء الواحدة — تصمد إن مُسح كاش WKWebView دون UserDefaults. */
+  "majalis.onboarding.onboarding_seen",
+  "majalis.onboarding.storage_notice_seen",
+  "majalis.onboarding.onboarding_major_version",
 ] as const;
 
 export function storageGetSync(key: string): string | null {

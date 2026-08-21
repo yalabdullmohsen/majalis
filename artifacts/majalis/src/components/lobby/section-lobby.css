@@ -163,6 +163,22 @@
   font-size: 17px;
 }
 
+.section-lobby[data-section-lobby="fiqh"] .card {
+  padding: 10px 12px;
+  min-height: 0;
+  gap: 6px;
+}
+.section-lobby[data-section-lobby="fiqh"] .card .card__label {
+  font-size: 15px;
+  line-height: 1.35;
+}
+.section-lobby[data-section-lobby="fiqh"] .card .card__subtitle {
+  font-size: 12px;
+}
+.section-lobby[data-section-lobby="fiqh"] .section-lobby__grid {
+  gap: 8px;
+}
+
 .section-lobby .card .card__subtitle {
   font-size: 13px;
   display: -webkit-box;
