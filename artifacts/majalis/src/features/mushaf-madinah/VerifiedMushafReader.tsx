@@ -10,7 +10,13 @@ import {
 import { getAudioEngine, type PlayerState } from "@/core/audio/AudioEngine";
 import { getSurahMeta } from "@/lib/quran-api";
 import { getReciter, listAyahAudioUrls, loadReciterId, saveReciterId } from "@/lib/quran-audio";
-import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/quran-data/qpc-page-data";
+import {
+  getCachedMushafPage,
+  loadMushafPage,
+  prefetchMushafPage,
+  type MushafPageLayout,
+  type QpcWord,
+} from "@/lib/quran-data/qpc-page-data";
 import {
   clampMushafPage,
   MUSHAF_PAGE_MAX,
@@ -78,7 +84,7 @@ function mushafAudioLog(
  */
 export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit, onIndex: _onIndex }: Props) {
   const page = clampMushafPage(pageNumber);
-  const [layout, setLayout] = useState<MushafPageLayout | null>(null);
+  const [layout, setLayout] = useState<MushafPageLayout | null>(() => getCachedMushafPage(page));
   const [error, setError] = useState<string | null>(null);
   const [chromeOpen, setChromeOpen] = useState(false);
   const [selectedVerseKey, setSelectedVerseKey] = useState<string | null>(null);
@@ -130,8 +136,8 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
   useEffect(() => {
     let cancelled = false;
     setError(null);
-    setLayout(null);
-    loadMushafPage(page)
+    setLayout(getCachedMushafPage(page));
+    void loadMushafPage(page)
       .then((data) => {
         if (!cancelled) setLayout(data);
       })
@@ -706,15 +712,16 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
 /** صفحة مجاورة محمّلة مسبقاً (خطاً ونصاً) بلا وميض عند السحب. */
 function PrefetchedMushafPage({ pageNumber }: { pageNumber: number }) {
   const { fontFamily, ready } = useQpcPageFont(pageNumber);
-  const [layout, setLayout] = useState<MushafPageLayout | null>(null);
+  const [layout, setLayout] = useState<MushafPageLayout | null>(() => getCachedMushafPage(pageNumber));
   useEffect(() => {
     let cancelled = false;
-    loadMushafPage(pageNumber)
+    setLayout(getCachedMushafPage(pageNumber));
+    void loadMushafPage(pageNumber)
       .then((data) => {
         if (!cancelled) setLayout(data);
       })
       .catch(() => {
-        if (!cancelled) setLayout(null);
+        if (!cancelled && !getCachedMushafPage(pageNumber)) setLayout(null);
       });
     return () => {
       cancelled = true;
