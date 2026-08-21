@@ -90,8 +90,13 @@ export function TafsirTabPanel({
     return () => ac.abort();
   }, [surah, ayah, editionId, editions, onAvailabilityChange]);
 
-  if (!editions.length) return null;
-  if (!loading && !text) return null;
+  if (!editions.length) {
+    return (
+      <p className="mm-ayah-bar__status">
+        لا يتوفر تفسير معتمد لهذه الآية في البيانات الحالية.
+      </p>
+    );
+  }
 
   const levelLabel = (level: TafsirRegistryEntry["level"]) => level;
 
@@ -146,7 +151,9 @@ export function TafsirTabPanel({
         >
           {text}
         </p>
-      ) : null}
+      ) : (
+        <p className="mm-ayah-bar__status">تعذّر جلب التفسير من المصدر المعتمد.</p>
+      )}
 
       {activeEntry && text ? (
         <p className="ayah-action-sheet__tafsir-attribution">

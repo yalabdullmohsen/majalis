@@ -227,11 +227,25 @@ export function MushafPager({
     const horizontal = Math.abs(dx) > Math.abs(dy) * 1.2;
 
     if (horizontal && (passRatio || passFlick)) {
-      // RTL مصحف: سحب لليمين (dx>0) = التالية · لليسار = السابقة
+      locking.current = true;
       if (dx > 0) {
+        if (page >= MUSHAF_PAGE_MAX) {
+          snapToIndex(1, true);
+          window.setTimeout(() => {
+            locking.current = false;
+          }, SETTLE_MS + 40);
+          return;
+        }
         snapToIndex(0, true);
         window.setTimeout(() => go(page + 1), SETTLE_MS);
       } else {
+        if (page <= MUSHAF_PAGE_MIN) {
+          snapToIndex(1, true);
+          window.setTimeout(() => {
+            locking.current = false;
+          }, SETTLE_MS + 40);
+          return;
+        }
         snapToIndex(2, true);
         window.setTimeout(() => go(page - 1), SETTLE_MS);
       }
