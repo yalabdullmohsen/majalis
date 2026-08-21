@@ -1,7 +1,6 @@
 /**
- * بوابة التشغيل الأول — بعد إلغاء الدليل السريع:
- * shouldShowFirstRunFlow / isOnboardingPending دائمًا false،
- * مع بقاء رايات الخصوصية/الكوكي تعمل.
+ * بوابة حالة الدخول الأولى + راية الخصوصية: قراءة/كتابة موثوقة تصمد
+ * عبر reload وإخفاق localStorage، مرة واحدة فقط لكل مستخدم.
  */
 import assert from "node:assert/strict";
 import test, { beforeEach } from "node:test";
@@ -53,17 +52,8 @@ const {
   initOnboardingState,
   hasSeenOnboarding,
   markOnboardingSeen,
-  hasCompletedPreferences,
-  markPreferencesCompleted,
-  markPreferencesSkipped,
-  hasSeenReminderPrompt,
-  markReminderPromptSeen,
   hasSeenStorageNotice,
   markStorageNoticeSeen,
-  isOnboardingPending,
-  shouldShowFirstRunFlow,
-  resetOnboardingForDisplay,
-  resetOnboardingForSettingsOnly,
   __resetOnboardingStateForTests,
 } = mod;
 
@@ -72,38 +62,23 @@ beforeEach(() => {
   __resetOnboardingStateForTests();
 });
 
-test("الدليل السريع ملغى — لا تهيئة مستحقة أبدًا", () => {
+test("مستخدم جديد لم يرَ شاشة الدخول بعد", () => {
   initOnboardingState();
-  assert.equal(isOnboardingPending(), false);
-  assert.equal(shouldShowFirstRunFlow(), false);
-  resetOnboardingForDisplay();
-  resetOnboardingForSettingsOnly();
-  assert.equal(isOnboardingPending(), false);
-  assert.equal(shouldShowFirstRunFlow(), false);
+  assert.equal(hasSeenOnboarding(), false);
 });
 
-test("رايات التفضيلات/الخصوصية ما زالت تُكتب وتُقرأ", () => {
+test("الوسم يصمد عبر reload (نفس المفتاح)", () => {
   initOnboardingState();
   markOnboardingSeen();
-  markPreferencesCompleted();
-  markReminderPromptSeen();
+  initOnboardingState();
+  assert.equal(hasSeenOnboarding(), true);
+});
+
+test("راية الخصوصية/الكوكيز تعمل باستقلال عن راية الدخول", () => {
+  initOnboardingState();
   markStorageNoticeSeen();
-  assert.equal(hasSeenOnboarding(), true);
-  assert.equal(hasCompletedPreferences(), true);
-  assert.equal(hasSeenReminderPrompt(), true);
   assert.equal(hasSeenStorageNotice(), true);
-  assert.equal(shouldShowFirstRunFlow(), false);
-});
-
-test("تخطّي التفضيلات يُسجَّل ويصمد عبر reload", () => {
-  initOnboardingState();
-  markOnboardingSeen();
-  markPreferencesSkipped();
-  markReminderPromptSeen();
-  initOnboardingState();
-  assert.equal(hasSeenOnboarding(), true);
-  assert.equal(hasCompletedPreferences(), true);
-  assert.equal(shouldShowFirstRunFlow(), false);
+  assert.equal(hasSeenOnboarding(), false);
 });
 
 test("الوحدة لا تطلب إذن إشعارات", async () => {
@@ -117,21 +92,27 @@ test("الوحدة لا تطلب إذن إشعارات", async () => {
   assert.doesNotMatch(src, /requestPermission|Notification\s*\.|LocalNotifications|PushNotifications/);
 });
 
-test("إخفاق localStorage لا يمنع كتابة الكوكي للرايات", () => {
+test("إخفاق localStorage لا يمنع كتابة الكوكي للراية", () => {
   initOnboardingState();
   lsThrows = true;
   const durable = markOnboardingSeen();
-  markPreferencesCompleted();
-  markReminderPromptSeen();
   assert.equal(durable, true);
   assert.equal(hasSeenOnboarding(), true);
-  assert.equal(shouldShowFirstRunFlow(), false);
 });
 
 test("الوسم idempotent", () => {
   initOnboardingState();
-  assert.equal(markStorageNoticeSeen(), true);
-  assert.equal(markStorageNoticeSeen(), true);
+  assert.equal(markOnboardingSeen(), true);
+  assert.equal(markOnboardingSeen(), true);
+  assert.equal(hasSeenOnboarding(), true);
+});
+
+test("رفع الإصدار الكبير فقط يعيد التعيين — reload عادي لا يمسّه", () => {
+  initOnboardingState();
+  markOnboardingSeen();
+  markStorageNoticeSeen();
+  initOnboardingState();
+  initOnboardingState();
+  assert.equal(hasSeenOnboarding(), true);
   assert.equal(hasSeenStorageNotice(), true);
-  assert.equal(hasSeenReminderPrompt(), false);
 });

@@ -481,12 +481,23 @@ html[data-theme="dark"] .fqh-hub-card__desc {
   margin: 0 0 1rem;
   font-size: 1.35rem;
 }
-.fiqh-chapter-list {
+/* ol.<class> يرفع الخصوصية فوق قاعدة `ol` عامة كانت تُعيد ترقيم القائمة
+   (computed: list-style-type: decimal · display: flex · padding-inline 24px)
+   فيظهر رقمان لكل باب: علامة القائمة + شارة .fiqh-chapter__num. */
+ol.fiqh-chapter-list {
   list-style: none;
   margin: 0;
   padding: 0;
+  padding-inline-start: 0;
   display: grid;
-  gap: 0.45rem;
+  gap: 0.4rem;
+}
+ol.fiqh-chapter-list > li {
+  display: block;
+  list-style: none;
+}
+ol.fiqh-chapter-list > li::marker {
+  content: "";
 }
 .fiqh-chapter__toggle {
   display: flex;
@@ -494,7 +505,7 @@ html[data-theme="dark"] .fqh-hub-card__desc {
   gap: 0.55rem;
   width: 100%;
   text-align: start;
-  padding: 0.7rem 0.8rem;
+  padding: 0.55rem 0.7rem;
   border: 1px solid var(--majalis-line, var(--border));
   border-radius: 0.65rem;
   background: var(--majalis-panel, var(--surface));
