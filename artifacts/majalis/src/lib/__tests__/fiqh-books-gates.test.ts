@@ -6,6 +6,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  FIQH_CATEGORY_ORDER,
   FIQH_SUPPORTING_TOPICS,
   getAllFiqhBooks,
   isPublishedLesson,
@@ -50,6 +51,20 @@ const REQUIRED_TITLES = [
   "كتاب الجهاد والسِّيَر", "كتاب الجزية",
   "كتاب القضاء", "كتاب الشهادات", "كتاب الدعوى والبيّنات", "كتاب الإقرار",
 ];
+
+console.log("\n=== ترتيب علمي للكتب ===");
+{
+  const ids = getAllFiqhBooks().map((b) => b.id);
+  const pos = (id: string) => ids.indexOf(id);
+  assert(pos("taharah") >= 0 && pos("taharah") < pos("salah"), "الطهارة قبل الصلاة");
+  assert(pos("salah") < pos("zakat"), "الصلاة قبل الزكاة");
+  assert(pos("zakat") < pos("sawm"), "الزكاة قبل الصيام");
+  assert(pos("sawm") < pos("hajj"), "الصيام قبل الحج");
+  assert(FIQH_CATEGORY_ORDER[0] === "ibadat", "العبادات أول مجموعة");
+  assert(FIQH_CATEGORY_ORDER.includes("muamalat"), "المعاملات");
+  assert(FIQH_CATEGORY_ORDER.includes("usrah"), "الأسرة");
+  assert(FIQH_CATEGORY_ORDER.includes("jinayat"), "الجنايات والحدود");
+}
 
 console.log("\n=== ١) كل عنوان كتاب يبدأ بـ«كتاب» ===");
 {

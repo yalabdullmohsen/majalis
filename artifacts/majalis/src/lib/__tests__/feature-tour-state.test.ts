@@ -63,6 +63,7 @@ test("skip path marks completed (idempotent)", async () => {
 test("native-storage includes tour key", async () => {
   const { NATIVE_PROGRESS_KEYS } = await import("../native-storage");
   assert.ok(NATIVE_PROGRESS_KEYS.includes("onboarding.completed.v1"));
+  assert.ok(NATIVE_PROGRESS_KEYS.includes("majalis.onboarding.onboarding_seen"));
 });
 
 console.log("feature-tour-state.test.ts: ok");

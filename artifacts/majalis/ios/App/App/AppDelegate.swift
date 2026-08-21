@@ -12,9 +12,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Do not activate AVAudioSession at launch — plugins configure category on demand.
         _ = AppConfig.shared
         _ = NetworkService.shared
-        // امسح كاش WKWebView / Service Worker عند كل إقلاع حتى يُحمَّل الموقع الحي بلا بقايا قديمة.
+        // امسح كاش الشبكة وعمال الخدمة فقط — لا localStorage/الكوكيز حتى تبقى شاشة البدء مرة واحدة.
+        var cacheTypes: Set<String> = [
+            WKWebsiteDataTypeDiskCache,
+            WKWebsiteDataTypeMemoryCache,
+            WKWebsiteDataTypeOfflineWebApplicationCache,
+            WKWebsiteDataTypeFetchCache,
+        ]
+        if #available(iOS 16.4, *) {
+            cacheTypes.insert(WKWebsiteDataTypeServiceWorkerRegistrations)
+        }
         WKWebsiteDataStore.default().removeData(
-            ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+            ofTypes: cacheTypes,
             modifiedSince: Date.distantPast
         ) {}
         NotificationCenter.default.addObserver(

@@ -64,6 +64,7 @@ export const FIQH_CATEGORY_ORDER: FiqhBookCategory[] = [
   "jinayat",
   "qada",
 ];
+/* التدرج العلمي داخل العبادات: طهارة ← صلاة ← زكاة ← صيام ← حج (ثم متممات العبادات). */
 
 /** مباحث مساندة — ليست كتب فروع، ولا تُخلط بشبكة الكتب. */
 export const FIQH_SUPPORTING_TOPICS: FiqhSupportingTopic[] = [

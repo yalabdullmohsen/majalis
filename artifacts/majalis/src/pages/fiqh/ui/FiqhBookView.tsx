@@ -47,29 +47,30 @@ export default function FiqhBookPage() {
       <ol className="fiqh-chapter-list">
         {chapters.map((ch, i) => {
           const lessons = publishedLessonsInChapter(ch);
-          const open = openId === ch.id;
+          const open = openId === ch.id || (openId === null && i === 0);
           return (
             <li key={ch.id} className="fiqh-chapter">
               <button
                 type="button"
                 className="fiqh-chapter__toggle"
                 aria-expanded={open}
-                onClick={() => setOpenId(open ? null : ch.id)}
+                onClick={() => setOpenId(open && openId !== null ? null : ch.id)}
               >
                 <span className="fiqh-chapter__num">{i + 1}</span>
                 <span className="fiqh-chapter__title">{ch.title}</span>
                 <span className="fiqh-chapter__count">{formatMasailCount(lessons.length)}</span>
               </button>
               {open ? (
-                <ul className="fiqh-lesson-list">
-                  {lessons.map((lesson) => (
+                <ol className="fiqh-lesson-list">
+                  {lessons.map((lesson, li) => (
                     <li key={lesson.id}>
                       <Link href={`/fiqh/books/${book.id}/lessons/${lesson.id}`} className="fiqh-lesson-link">
-                        {lesson.title}
+                        <span className="fiqh-lesson-link__num">{li + 1}</span>
+                        <span>{lesson.title}</span>
                       </Link>
                     </li>
                   ))}
-                </ul>
+                </ol>
               ) : null}
             </li>
           );

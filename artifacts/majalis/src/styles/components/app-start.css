@@ -1,0 +1,86 @@
+/* شاشة البدء الأولى — طبقة واحدة، بلا صلاحيات، بلا ظلال ثقيلة. */
+
+.app-start {
+  position: fixed;
+  inset: 0;
+  z-index: 420;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: calc(var(--inset-top, 0px) + 24px) 24px calc(var(--inset-bottom, 0px) + 24px);
+  background: var(--mj-bg, #f2f4f3);
+  color: var(--mj-ink, #16241e);
+}
+
+.app-start__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  width: min(22rem, 100%);
+}
+
+.app-start__logo {
+  width: 88px;
+  height: 88px;
+  color: #c9a227;
+}
+
+.app-start__title {
+  margin: 0;
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1.35;
+  font-family: var(--font-display, inherit);
+}
+
+.app-start__desc {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--mj-ink-2, #4a5a53);
+}
+
+.app-start__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  min-width: 12rem;
+  margin-top: 8px;
+  padding: 0.65rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--mj-brand, #1f7a5a);
+  color: var(--mj-on-brand, #fff);
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.app-start__btn:focus-visible {
+  outline: 2px solid var(--mj-brand, #1f7a5a);
+  outline-offset: 3px;
+}
+
+html[data-theme="dark"] .app-start,
+html.dark .app-start {
+  background: var(--mj-bg, #101614);
+  color: var(--mj-ink, #e8eeeb);
+}
+
+html[data-theme="dark"] .app-start__desc,
+html.dark .app-start__desc {
+  color: var(--mj-ink-2, #b7c4be);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-start,
+  .app-start__btn {
+    transition: none;
+  }
+}

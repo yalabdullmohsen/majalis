@@ -37,7 +37,7 @@ export function HeroActionCard({ section, className, onNavigate, resolveRoute }:
         window.scrollTo(0, 0);
         if (hash) {
           window.setTimeout(() => {
-            document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+            document.getElementById(hash)?.scrollIntoView({ behavior: "auto", block: "nearest" });
           }, 40);
         }
         onNavigate?.();

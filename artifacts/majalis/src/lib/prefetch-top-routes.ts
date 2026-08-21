@@ -2,6 +2,7 @@
  * تحميل مسبق للمسارات الأكثر زيارة عند خمول المتصفح.
  */
 const TOP_ROUTES: Array<() => Promise<unknown>> = [
+  () => import("@/pages/account/SearchPage"),
   () => import("@/pages/account/HomePage"),
   () => import("@/pages/lessons/LessonsPage"),
   () => import("@/pages/worship/PrayerTimesPage"),

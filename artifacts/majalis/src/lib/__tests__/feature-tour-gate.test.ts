@@ -1,8 +1,9 @@
 /**
- * بوابة ملفات جولة المزايا — lazy gate + route + settings button.
+ * جولة المزايا تبقى مسار إعدادات فقط — بلا صلاحيات.
+ * تشغيل: node --import tsx src/lib/__tests__/feature-tour-gate.test.ts
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -11,25 +12,22 @@ const root = join(dir, "../..");
 
 const app = readFileSync(join(root, "App.tsx"), "utf8");
 const settings = readFileSync(join(root, "pages/account/ui/SettingsView.tsx"), "utf8");
-const gate = readFileSync(join(root, "components/onboarding/AppFeatureTourGate.tsx"), "utf8");
 const tour = readFileSync(join(root, "components/onboarding/AppFeatureTour.tsx"), "utf8");
 const state = readFileSync(join(root, "lib/feature-tour-state.ts"), "utf8");
 
-assert.match(app, /AppFeatureTourGate/);
+assert.doesNotMatch(app, /AppFeatureTourGate/);
 assert.match(app, /\/feature-tour/);
 assert.match(app, /FeatureTourPage/);
+assert.equal(existsSync(join(root, "components/onboarding/AppFeatureTourGate.tsx")), false);
 
 assert.match(settings, /جولة المزايا/);
-assert.match(settings, /requestFeatureTourReplay/);
-
-assert.match(gate, /hasCompletedFeatureTour/);
-assert.match(gate, /MIN_VISIBLE_MS\s*=\s*900/);
-assert.match(gate, /lazy/);
+assert.match(settings, /href="\/feature-tour"/);
 
 assert.match(tour, /FEATURE_TOUR_SLIDES/);
-assert.match(tour, /فعّل التنبيهات/);
+assert.doesNotMatch(tour, /فعّل التنبيهات/);
+assert.doesNotMatch(tour, /requestNotificationPermission/);
 assert.match(tour, /markFeatureTourCompleted/);
-assert.equal((tour.match(/id:\s*"/g) ?? []).length >= 7, true, "7 slides minimum");
+assert.equal((tour.match(/id:\s*"/g) ?? []).length >= 6, true, "6 slides minimum");
 
 assert.match(state, /onboarding\.completed\.v1/);
 assert.match(state, /storageSetSync/);

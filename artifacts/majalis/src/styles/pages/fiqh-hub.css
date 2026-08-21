@@ -522,22 +522,37 @@ ol.fiqh-chapter-list > li::marker {
   font-size: 0.78rem;
   color: var(--majalis-ink-soft, var(--text-2));
 }
-.fiqh-lesson-list {
+.fiqh-lesson-list,
+ol.fiqh-lesson-list {
   list-style: none;
   margin: 0.35rem 0 0.2rem;
   padding: 0 0.5rem;
+  padding-inline-start: 0.5rem;
   display: grid;
   gap: 0.3rem;
 }
 .fiqh-lesson-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.45rem 0.55rem;
   text-decoration: none;
   color: inherit;
   border-radius: 0.45rem;
+  min-height: 44px;
+}
+.fiqh-lesson-link__num {
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--majalis-ink-soft, var(--text-2));
+  min-width: 1.25rem;
 }
 .fiqh-lesson-page section { margin-bottom: 1.1rem; }
-.fiqh-lesson-page h2 { font-size: 1rem; margin: 0 0 0.35rem; }
+.fiqh-lesson-page h2 {
+  font-size: 1rem;
+  margin: 0 0 0.35rem;
+  color: var(--mj-brand, #1f7a5a);
+}
 .fiqh-sources { padding-inline-start: 1.1rem; }
 .fiqh-usul-card {
   margin-bottom: 1rem;

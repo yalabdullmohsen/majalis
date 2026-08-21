@@ -43,6 +43,7 @@ export function useVersionCheck() {
   useEffect(() => {
     if (!loadedCommit || updateAvailable) return;
 
+    void check();
     const interval = window.setInterval(() => { void check(); }, VERSION_CHECK_INTERVAL_MS);
     const onVisibility = () => {
       if (document.visibilityState === "visible") void check();

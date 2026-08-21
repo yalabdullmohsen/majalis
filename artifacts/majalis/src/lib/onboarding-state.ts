@@ -17,6 +17,8 @@
  *  ٤) مفتاح لكل شاشة + إصدار كبير واحد يُعيد العرض عند تغييره عمدًا فقط.
  */
 
+import { storageGetSync, storageSetSync } from "./native-storage";
+
 /** رفع هذا الرقم — وهذا وحده — يُعيد عرض شاشة الدخول لكل المستخدمين. */
 export const ONBOARDING_MAJOR_VERSION = 1;
 
@@ -90,6 +92,11 @@ function writeRaw(name: string, value: string): boolean {
 
   // الكوكي دائمًا كذلك: طبقة ثانية مستقلة لا تتأثر بحصة localStorage
   const cookieOk = cookieSet(name, value);
+  try {
+    storageSetSync(key, value);
+  } catch {
+    /* Preferences طبقة أصلية إضافية — لا تُفشل الكتابة */
+  }
   return durable || cookieOk;
 }
 
@@ -148,6 +155,12 @@ export function initOnboardingState(): void {
       const consent = localStorage.getItem("majalis-cookie-consent-v1");
       if (consent && JSON.parse(consent)?.decidedAt) {
         setFlag(ONBOARDING_KEYS.storageNoticeSeen);
+      }
+      if (
+        storageGetSync("onboarding.completed.v1") === "1" ||
+        localStorage.getItem("onboarding.completed.v1") === "1"
+      ) {
+        setFlag(ONBOARDING_KEYS.onboardingSeen);
       }
     } catch {
       /* ترحيل أفضل-جهد؛ فشله يعني عرض الشاشة مرة واحدة فقط */

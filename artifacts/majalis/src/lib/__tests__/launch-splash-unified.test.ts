@@ -115,15 +115,16 @@ for (const name of readdirSync(xcassets)) {
 
 const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8");
 assert.doesNotMatch(appSrc, /MajlisLaunchScreen|isLaunching|MajalisLaunchScreen/);
-// الدليل السريع القديم (٣ شاشات: ترحيب/تفضيلات/تذكيرات) أُلغي نهائيًا،
-// وشاشة الدخول الأولى اللاحقة (AppFirstLaunchScreen) حُذفت هي الأخرى —
-// التطبيق يدخل مباشرة بلا أي بوابة ترحيب.
+// الدليل السريع القديم (٣ شاشات + جولة صلاحيات) أُلغي.
+// شاشة البدء الحالية: AppStartGate — مرة واحدة، بلا صلاحيات.
 assert.doesNotMatch(
   appSrc,
-  /WelcomeScreen|IntroScreen|BrandReveal|AppFirstRunHost|FirstRunSetup|AppFirstLaunchScreen/,
-  "لا بوابة ترحيب من أي نوع في التركيب",
+  /WelcomeScreen|IntroScreen|BrandReveal|AppFirstRunHost|FirstRunSetup|AppFirstLaunchScreen|AppFeatureTourGate/,
+  "لا بوابة ترحيب قديمة في التركيب",
 );
+assert.match(appSrc, /AppStartGate/, "شاشة البدء الواحدة موصولة");
 assert.ok(!existsSync(resolve(root, "src/components/AppFirstLaunchScreen.tsx")), "AppFirstLaunchScreen.tsx محذوف");
+assert.ok(!existsSync(resolve(root, "src/components/onboarding/AppFeatureTourGate.tsx")), "جولة المزايا التلقائية محذوفة");
 
 const info = readFileSync(resolve(root, "ios/App/App/Info.plist"), "utf8");
 assert.match(info, /<key>CFBundleVersion<\/key>\s*<string>40<\/string>/, "CFBundleVersion رُفع");
