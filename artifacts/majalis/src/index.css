@@ -2868,6 +2868,15 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
   color: #b6ebcf !important;
 }
 
+/* وردمارك SVG ثابت (ثلث/رقعة، من Aref Ruqaa) بدل النص — يتبع لون الحاوية عبر currentColor
+   ويتحجّم بوحدة em من font-size المتجاوب أعلاه فلا حاجة لاستعلامات وسائط جديدة. */
+.navbar-v3__tagline-mark {
+  height: 1.85em;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 @media (min-width: 880px) {
   .navbar-v3__tagline {
     flex: 0 1 13rem;
