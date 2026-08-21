@@ -1,0 +1,17 @@
+{
+  "updatedAt": "2026-08-21T09:47:46.803Z",
+  "tafsirs": [
+    {
+      "id": "muyassar",
+      "ayahCount": 6231,
+      "expected": 6236,
+      "ok": false
+    },
+    {
+      "id": "saadi",
+      "ayahCount": 6177,
+      "expected": 6236,
+      "ok": false
+    }
+  ]
+}
