@@ -308,6 +308,8 @@
     "verify:related-dedupe": "node scripts/verify-related-dedupe-gate.mjs",
     "test:navigation-intent": "node --import tsx src/lib/__tests__/navigation-intent-gate.test.ts",
     "test:back-navigation": "playwright test tests/back-navigation.spec.ts --project=mobile",
+    "test:mushaf-visual-baseline": "playwright test tests/mushaf-visual-baseline.spec.ts --project=desktop",
+    "test:mushaf-line-integrity": "node scripts/mushaf-madinah/line-integrity-gate.mjs \"$(pwd)\"",
     "verify:content-affinity": "node --import tsx scripts/verify-content-affinity.mjs",
     "test:quiz-content-affinity": "node --import tsx src/lib/__tests__/quiz-content-affinity.test.ts && node --import tsx scripts/verify-content-affinity.mjs",
     "test:related-dedupe": "node scripts/verify-related-dedupe-gate.mjs",

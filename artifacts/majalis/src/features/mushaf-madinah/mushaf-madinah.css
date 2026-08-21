@@ -316,6 +316,11 @@ html.dark .mm-viewport .mm-page {
   outline: none;
   min-height: 0;
   display: grid;
+  /* بلا هذا العمود يتمدّد العمود الضمني إلى max-content لأعرض سطر
+   * (nowrap) ويتجاوز عرض الحاوية الفعلي — overflow-x:clip لا يُظهر
+   * ذلك في scrollWidth (clip لا يُسجَّل overflow قابل للقياس) فتفلت
+   * بداية السطر (يمين RTL) خارج نطاق القص بصمت. */
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: repeat(15, minmax(0, 1fr));
   padding: 0;
   overflow-x: clip;
@@ -636,31 +641,18 @@ html.dark .ayah-active.mm-ayah-line__word,
   line-height: 1;
 }
 
-.mm-viewport .mm-page-footer[data-side="hizb-start"] .mm-page-footer__hizb {
-  left: 0;
-  right: auto;
-}
-
-.mm-viewport .mm-page-footer[data-side="hizb-start"] .mm-page-footer__badge {
-  right: 0;
+/* وصف الحزب دائماً يمين — لا يتحرك مع الحزب/التكافؤ (البند ٣: موضع رقم الصفحة ثابت لا يتبادل الجهة) */
+.mm-viewport .mm-page-footer__hizb {
   left: auto;
-}
-
-/* حافة متناوبة: فردية يمين · زوجية يسار (بلا حزب) */
-.mm-viewport .mm-page-footer[data-side="default"][data-parity="odd"] .mm-page-footer__badge {
   right: 0;
-  left: auto;
-}
-
-.mm-viewport .mm-page-footer[data-side="default"][data-parity="even"] .mm-page-footer__badge {
-  left: 0;
-  right: auto;
 }
 
 .mm-viewport .mm-page-footer__badge {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, -50%);
   width: 13.1%;
   min-width: 2.8rem;
   height: auto;
@@ -993,6 +985,36 @@ html.dark .mm-viewport .mm-page-footer__badge {
   opacity: 1;
 }
 
+/* لوحة الآية والبحث تُرسمان عبر createPortal إلى document.body — خارج
+ * شجرة .mm-viewport التي تُعرِّف --mm-paper/--mm-ink/... فتصل var() فارغة
+ * (خلفية شفافة تمامًا، لا خطأ في القيمة بل غياب النطاق). نكرّر هنا فقط ما
+ * تستعمله لوحتا الآية والبحث — مصدر واحد يبقى .mm-viewport. */
+.ayah-action-sheet,
+.mm-search-sheet {
+  --mm-paper: #fbf7ef;
+  --mm-paper-deep: #f5f0e4;
+  --mm-ink: #0a0a0a;
+  --mm-gold: #bf9f5b;
+  --mm-gold-soft: #d4b870;
+  --mm-gold-deep: #9a7d3c;
+  --mm-header: #c4a574;
+  --mm-chrome-fg: var(--mm-ink);
+  --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 28%, transparent);
+}
+
+html[data-theme="dark"] .ayah-action-sheet,
+html.dark .ayah-action-sheet,
+html[data-theme="dark"] .mm-search-sheet,
+html.dark .mm-search-sheet {
+  --mm-paper: #101820;
+  --mm-paper-deep: #0c1218;
+  --mm-ink: #f4efe5;
+  --mm-gold: #d4b870;
+  --mm-gold-soft: #f0dfa8;
+  --mm-gold-deep: #e8d49a;
+  --mm-header: #e8d4a8;
+}
+
 .mm-ayah-bar__dismiss {
   position: absolute;
   inset: 0;
@@ -1029,7 +1051,11 @@ html.dark .mm-ayah-bar__dismiss {
   box-shadow: 0 -8px 28px color-mix(in srgb, #5c4a28 18%, transparent);
   font-family: "IBM Plex Sans Arabic", sans-serif;
   display: grid;
-  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  /* خانات ثابتة بالاسم لا بالترتيب الضمني: المقبض١، الرأس٢، معاينة الآية٣
+   * (شرطية)، التبويبات٤، منطقة التمرير٥ (المرِنة). عناصر الحالة العابرة
+   * (خطأ صوت/نسخ/تحميل) داخل .ayah-action-sheet__scroll-region سويّاً —
+   * راجع تعليق تلك الخانة أعلاه في AyahActionSheet.tsx. */
+  grid-template-rows: auto auto auto auto minmax(0, 1fr);
   gap: 0.5rem;
   overflow: hidden;
   overscroll-behavior: contain;
@@ -1050,6 +1076,7 @@ html.dark .mm-ayah-bar__dismiss {
 }
 
 .mm-ayah-bar__handle {
+  grid-row: 1;
   width: 2.5rem;
   height: 0.28rem;
   margin: 0.15rem auto 0.1rem;
@@ -1071,6 +1098,7 @@ html.dark .mm-ayah-bar__panel {
 }
 
 .mm-ayah-bar__head {
+  grid-row: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1533,6 +1561,7 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 
 /* إجراءات شيت الآية — تبويبات تفسير · تلاوة · معاني · تجويد */
 .ayah-action-sheet__primary {
+  grid-row: 4;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.32rem;
@@ -1697,7 +1726,20 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   margin-top: 0.2rem;
 }
 
+/* خانة شبكة ٥ ثابتة — تحوي المحتوى + نصوص الحالة العابرة سويّاً بمعزل عن
+ * عددها (راجع AyahActionSheet.tsx). تمنع خانة ١fr المرِنة من الوقوع على
+ * شريط التبويبات بدل هذه المنطقة. */
+.ayah-action-sheet__scroll-region {
+  grid-row: 5;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  overflow: hidden;
+}
+
 .ayah-action-sheet__body {
+  flex: 1 1 auto;
   min-height: 0;
   overflow: auto;
   overscroll-behavior: contain;
@@ -1730,6 +1772,7 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 }
 
 .ayah-action-sheet__ayah-preview {
+  grid-row: 3;
   margin: 0;
   font-family: var(--mm-qpc-family, "IBM Plex Sans Arabic", sans-serif);
   font-size: 22px;
