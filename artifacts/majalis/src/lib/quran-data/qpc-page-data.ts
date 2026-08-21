@@ -9,6 +9,7 @@
 
 import { pooledFetch } from "@/lib/fetch-pool";
 import { LruCache } from "@/lib/lru-cache";
+import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
 import { mapInChunks, yieldToMain } from "@/lib/yield-to-main";
 
 export type QpcWord = {
@@ -127,6 +128,14 @@ export function loadChapters(): Promise<Map<number, MushafChapter>> {
 /** Bounded LRU of in-flight/resolved page JSON — prevents unbounded growth across long mushaf sessions. */
 const PAGE_CACHE_MAX = 32;
 const pageCache = new LruCache<number, Promise<QpcVerse[]>>(PAGE_CACHE_MAX);
+/** تخطيط مبني جاهز للعرض — يكفي الحالية ±١ والرجوع القريب بلا إعادة بناء. */
+const LAYOUT_CACHE_MAX = 12;
+const layoutCache = new LruCache<number, MushafPageLayout>(LAYOUT_CACHE_MAX);
+const layoutInflight = new Map<number, Promise<MushafPageLayout>>();
+
+function isMushafPageNumber(pageNumber: number): boolean {
+  return Number.isInteger(pageNumber) && pageNumber >= MUSHAF_PAGE_MIN && pageNumber <= MUSHAF_PAGE_MAX;
+}
 
 function fetchRawPage(pageNumber: number): Promise<QpcVerse[]> {
   let p = pageCache.get(pageNumber);
@@ -223,7 +232,12 @@ async function resolveRubElHizbStartingOnPage(
   return null;
 }
 
-export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayout> {
+export function getCachedMushafPage(pageNumber: number): MushafPageLayout | null {
+  if (!isMushafPageNumber(pageNumber)) return null;
+  return layoutCache.get(pageNumber) ?? null;
+}
+
+async function buildMushafPageLayout(pageNumber: number): Promise<MushafPageLayout> {
   const [verses, chapters] = await Promise.all([fetchRawPage(pageNumber), loadChapters()]);
   const [hizbStartingOnPage, rubElHizbStartingOnPage] = await Promise.all([
     resolveHizbStartingOnPage(pageNumber, verses),
@@ -360,8 +374,34 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
   };
 }
 
+export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayout> {
+  const cached = getCachedMushafPage(pageNumber);
+  if (cached) return cached;
+  const existing = layoutInflight.get(pageNumber);
+  if (existing) return existing;
+  const pending = buildMushafPageLayout(pageNumber).then((layout) => {
+    layoutCache.set(pageNumber, layout);
+    return layout;
+  });
+  layoutInflight.set(pageNumber, pending);
+  void pending.finally(() => {
+    if (layoutInflight.get(pageNumber) === pending) layoutInflight.delete(pageNumber);
+  });
+  return pending;
+}
+
 export function prefetchMushafPage(pageNumber: number): void {
-  if (pageNumber >= 1 && pageNumber <= 604) void fetchRawPage(pageNumber).catch(() => {});
+  if (!isMushafPageNumber(pageNumber)) return;
+  if (layoutCache.has(pageNumber) || layoutInflight.has(pageNumber)) return;
+  void loadMushafPage(pageNumber).catch(() => {});
+}
+
+/** للاختبارات فقط — يفرّغ JSON والتخطيط والوعود الجارية. */
+export function resetMushafPageCachesForTests(): void {
+  pageCache.clear();
+  layoutCache.clear();
+  layoutInflight.clear();
+  chaptersPromise = null;
 }
 
 /** نص الآية العثماني الكامل (لا الـglyph الخاص بخط الصفحة) من تخطيط

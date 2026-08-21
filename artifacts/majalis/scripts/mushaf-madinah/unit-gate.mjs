@@ -29,6 +29,9 @@ assert.doesNotMatch(lineSrc, /\.sort\(\(a,\s*b\)\s*=>\s*a\.position\s*-\s*b\.pos
 
 const dataSrc = read("src/lib/quran-data/qpc-page-data.ts");
 assert.match(dataSrc, /words\.sort\(\(a,\s*b\)\s*=>\s*a\.id/);
+assert.match(dataSrc, /LAYOUT_CACHE_MAX/);
+assert.match(dataSrc, /getCachedMushafPage/);
+assert.match(dataSrc, /prefetchMushafPage[\s\S]{0,500}loadMushafPage/);
 
 const css = read("src/features/mushaf-madinah/mushaf-madinah.css");
 assert.match(css, /--mm-paper/);
@@ -73,6 +76,7 @@ assert.match(viewport, /AyahActionSheet|MushafAyahActions/);
 assert.match(viewport, /MushafTafsirSheet/);
 assert.match(viewport, /MushafAudioDock/);
 assert.match(viewport, /MushafPager/);
+assert.match(viewport, /getCachedMushafPage\(page\)/);
 assert.match(viewport, /playAyah|togglePlay/);
 assert.match(viewport, /onShare|navigator\.share/);
 assert.doesNotMatch(viewport, /exitAlwaysVisible/);
