@@ -4,7 +4,14 @@ type Props = {
   onStart: () => void;
 };
 
-/** شاشة بدء واحدة: شعار، عنوان، وصف، زر. بلا صلاحيات. */
+const FEATURES = [
+  { title: "القرآن", desc: "مصحف واضح وتلاوة" },
+  { title: "الفقه والدروس", desc: "مسائل مرتبة ودروس علمية" },
+  { title: "البحث الشرعي", desc: "بحث في القرآن والفقه" },
+  { title: "الأذكار والصلاة", desc: "أذكار يومية ومواقيت" },
+] as const;
+
+/** شاشة بدء واحدة: اسم، عنوان، وصف، أربع مميزات، زر ورابط. بلا صلاحيات. */
 export function AppStartView({ onStart }: Props) {
   return (
     <div className="app-start" dir="rtl" role="dialog" aria-modal="true" aria-labelledby="app-start-title">
@@ -17,12 +24,26 @@ export function AppStartView({ onStart }: Props) {
             </g>
           </svg>
         </div>
+        <p className="app-start__name">المجلس العلمي</p>
         <h1 id="app-start-title" className="app-start__title">
-          المجلس العلمي
+          علم شرعي موثوق في مكان واحد
         </h1>
-        <p className="app-start__desc">علم شرعي موثوق في مكان واحد</p>
+        <p className="app-start__desc">
+          قرآن، فقه، دروس، أذكار، ومواقيت صلاة بتجربة هادئة وسريعة.
+        </p>
+        <ul className="app-start__features">
+          {FEATURES.map((f) => (
+            <li key={f.title} className="app-start__feature">
+              <strong>{f.title}</strong>
+              <span>{f.desc}</span>
+            </li>
+          ))}
+        </ul>
         <button type="button" className="app-start__btn" onClick={onStart}>
           ابدأ الآن
+        </button>
+        <button type="button" className="app-start__skip" onClick={onStart}>
+          تصفح مباشرة
         </button>
       </div>
     </div>

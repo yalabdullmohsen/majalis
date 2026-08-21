@@ -32,8 +32,24 @@ assert.doesNotMatch(gate, /requestPermission|Notification|LocalNotifications/);
 
 assert.match(view, /المجلس العلمي/);
 assert.match(view, /علم شرعي موثوق في مكان واحد/);
+assert.match(view, /قرآن، فقه، دروس، أذكار/);
 assert.match(view, /ابدأ الآن/);
+assert.match(view, /تصفح مباشرة/);
+assert.match(view, /القرآن/);
+assert.match(view, /الفقه والدروس/);
+assert.match(view, /البحث الشرعي/);
+assert.match(view, /الأذكار والصلاة/);
 assert.doesNotMatch(view, /requestPermission|Notification/);
+
+assert.match(gate, /shouldSkipAppStartForPath/);
+assert.doesNotMatch(gate, /markOnboardingSeen\(\);\s*\n\s*if \(shouldSkip/);
+
+assert.match(state, /onboarding_seen/);
+assert.match(state, /shouldSkipAppStartForPath/);
+assert.match(state, /\/mushaf/);
+assert.match(state, /\/fiqh/);
+assert.match(state, /\/search/);
+assert.match(state, /\/lessons/);
 
 assert.equal(existsSync(join(root, "components/onboarding/AppFeatureTourGate.tsx")), false);
 

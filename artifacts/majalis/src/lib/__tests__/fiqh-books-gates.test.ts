@@ -8,7 +8,9 @@ import { fileURLToPath } from "node:url";
 import {
   FIQH_CATEGORY_ORDER,
   FIQH_SUPPORTING_TOPICS,
+  adjacentFiqhLessons,
   getAllFiqhBooks,
+  getFiqhLesson,
   isPublishedLesson,
   listPublishedLessons,
   publishedBooks,
@@ -216,6 +218,21 @@ console.log("\n=== البنية والواجهة ===");
   assert(view.includes("getLobby"), "خمس مجموعات من المصدر");
   assert(view.includes("lobbyId=\"fiqh\""), "معرّف لوبي الفقه");
   assert(view.includes("title={lobby.title}"), "هيدر مختصر بلا فقرة طويلة");
+  const bookView = read("src/pages/fiqh/ui/FiqhBookView.tsx");
+  assert(bookView.includes("fiqhBookBlurb"), "وصف الكتاب من العنوان");
+  assert(bookView.includes("مستوى تقريبي"), "مستوى تقريبي في رأس الكتاب");
+  assert(bookView.includes("fiqh-chapter--card"), "أبواب كبطاقات");
+  const lessonView = read("src/pages/fiqh/ui/FiqhLessonView.tsx");
+  assert(lessonView.includes("فهرس الباب"), "فهرس داخلي");
+  assert(lessonView.includes("ملخص سريع"), "ملخص سريع");
+  assert(lessonView.includes("الراجح بدليله"), "الراجح بدليله");
+  assert(lessonView.includes("adjacentFiqhLessons"), "التالي/السابق");
+  assert(lessonView.includes("fiqh-read-progress"), "شريط تقدّم قراءة");
+  const water = getFiqhLesson("taharah", "taharah-miyah-aqsam");
+  assert(Boolean(water), "مسألة أقسام المياه");
+  const adj = adjacentFiqhLessons("taharah", "taharah-miyah-aqsam");
+  assert(Boolean(adj.next), "للمسألة الأولى تالٍ");
+  assert(!adj.prev, "لا سابق للأولى");
   const app = read("src/App.tsx");
   assert(app.includes('path="/fiqh/books/:bookId"'), "مسار الكتاب");
   assert(app.includes('path="/fiqh/books/:bookId/lessons/:lessonId"'), "مسار المسألة");

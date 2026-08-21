@@ -236,6 +236,17 @@ export function markStorageNoticeSeen(): boolean {
   return setFlag(ONBOARDING_KEYS.storageNoticeSeen);
 }
 
+/** روابط عميقة: لا تُعرض شاشة البدء ولا تُوسم «شوهدت». */
+const DEEP_LINK_PREFIXES = ["/mushaf", "/fiqh", "/search", "/lessons"] as const;
+
+export function shouldSkipAppStartForPath(pathname: string): boolean {
+  const path = pathname.split("?")[0]?.split("#")[0] || "/";
+  if (path === "/search" || path.startsWith("/search/")) return true;
+  return DEEP_LINK_PREFIXES.some(
+    (prefix) => path === prefix || path.startsWith(`${prefix}/`),
+  );
+}
+
 /** للاختبارات فقط */
 export function __resetOnboardingStateForTests(): void {
   clearOnboardingFlags();

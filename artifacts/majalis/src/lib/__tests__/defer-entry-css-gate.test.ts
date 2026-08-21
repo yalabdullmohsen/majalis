@@ -22,6 +22,11 @@ const pkg = readFileSync(resolve(root, "package.json"), "utf8");
 
 assert.match(vite, /deferEntryCssPlugin/, "إضافة Vite تؤجّل CSS الإقلاع");
 assert.match(pkg, /"test:defer-entry-css"/, "أمر البوابة موجود");
+assert.match(
+  (htmlSrc.split(/<head[^>]*>/i)[1] ?? "").trimStart(),
+  /^<meta charset="UTF-8"\s*\/?>/i,
+  "charset أول عنصر في head",
+);
 
 const critical = readCriticalCss();
 assert.match(critical, /--ticker-h/, "حجز الشريط من الرمز");

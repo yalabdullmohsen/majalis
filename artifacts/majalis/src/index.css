@@ -2849,8 +2849,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   line-height: 1.25;
   color: var(--majalis-emerald-deep, var(--mj-brand-deep, #145a42)) !important;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
   padding-inline: 0.25rem;
 }
 
@@ -2873,6 +2872,7 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
 .navbar-v3__tagline-mark {
   height: 1.85em;
   width: auto;
+  max-width: min(11.5rem, 42vw);
   display: inline-block;
   vertical-align: middle;
 }

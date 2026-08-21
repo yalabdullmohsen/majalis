@@ -17,6 +17,11 @@ assert.match(
   /"source"\s*:\s*"\/"[\s\S]{0,220}"Cache-Control"[\s\S]{0,80}public,\s*max-age=0,\s*must-revalidate/,
   "الرئيسية يجب أن تكون public,max-age=0,must-revalidate لا no-store",
 );
+assert.match(
+  vercel,
+  /"source"\s*:\s*"\/"[\s\S]{0,400}"Content-Type"[\s\S]{0,80}text\/html;\s*charset=utf-8/,
+  "الرئيسية ترجع text/html; charset=utf-8",
+);
 assert.equal(
   /"source"\s*:\s*"\/"[\s\S]{0,220}no-store/.test(vercel),
   false,

@@ -192,7 +192,71 @@ export function listPublishedLessons(): FiqhLessonHit[] {
 }
 
 export function getFiqhLesson(bookId: string, lessonId: string): FiqhLessonHit | undefined {
-  return listPublishedLessons().find((h) => h.book.id === bookId && h.lesson.id === lessonId);
+  const book = getVisibleFiqhBook(bookId);
+  if (!book) return undefined;
+  for (const chapter of publishedChapters(book)) {
+    const lesson = publishedLessonsInChapter(chapter).find((l) => l.id === lessonId);
+    if (!lesson) continue;
+    return {
+      lesson,
+      book,
+      chapter,
+      path: lessonPath(book, chapter, lesson),
+      href: lessonHref(book, lesson),
+    };
+  }
+  return undefined;
+}
+
+function flattenBookLessons(book: FiqhBook): FiqhLessonHit[] {
+  const hits: FiqhLessonHit[] = [];
+  for (const chapter of publishedChapters(book)) {
+    for (const lesson of publishedLessonsInChapter(chapter)) {
+      hits.push({
+        lesson,
+        book,
+        chapter,
+        path: lessonPath(book, chapter, lesson),
+        href: lessonHref(book, lesson),
+      });
+    }
+  }
+  return hits;
+}
+
+export function adjacentFiqhLessons(
+  bookId: string,
+  lessonId: string,
+): { prev?: FiqhLessonHit; next?: FiqhLessonHit; chapterHits: FiqhLessonHit[] } {
+  const current = getFiqhLesson(bookId, lessonId);
+  if (!current) return { chapterHits: [] };
+  const all = flattenBookLessons(current.book);
+  const index = all.findIndex((h) => h.lesson.id === lessonId);
+  const chapterHits = all.filter((h) => h.chapter.id === current.chapter.id);
+  return {
+    prev: index > 0 ? all[index - 1] : undefined,
+    next: index >= 0 && index < all.length - 1 ? all[index + 1] : undefined,
+    chapterHits,
+  };
+}
+
+/** وصف عرضي من عنوان الكتاب — ليس حكماً شرعياً جديداً. */
+export function fiqhBookBlurb(book: FiqhBook): string {
+  const topic = book.title.replace(/^كتاب\s+/, "").trim();
+  return `أبواب ${topic} ومسائلها المنشورة.`;
+}
+
+/** مستوى تقريبي من المسائل المنشورة في الكتاب. */
+export function fiqhBookApproxLevel(book: FiqhBook): FiqhLessonLevel {
+  const tally: Record<FiqhLessonLevel, number> = { مبتدئ: 0, متوسط: 0, متقدم: 0 };
+  for (const chapter of publishedChapters(book)) {
+    for (const lesson of publishedLessonsInChapter(chapter)) {
+      tally[lesson.level] += 1;
+    }
+  }
+  if (tally.متقدم >= tally.متوسط && tally.متقدم >= tally.مبتدئ && tally.متقدم > 0) return "متقدم";
+  if (tally.متوسط >= tally.مبتدئ && tally.متوسط > 0) return "متوسط";
+  return "مبتدئ";
 }
 
 export type FiqhSearchFilters = {
