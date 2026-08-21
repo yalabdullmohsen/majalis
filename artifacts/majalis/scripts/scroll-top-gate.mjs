@@ -89,7 +89,14 @@ async function main() {
   if (ROUTES.length < 30) throw new Error(`المسارات ${ROUTES.length} < 30`);
   const { base, stop } = await ensureBase();
   const browser = await chromium.launch({ headless: true });
-  const page = await (await browser.newContext({ viewport: { width: 390, height: 844 }, locale: "ar-KW" })).newPage();
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: "ar-KW" });
+  await context.addInitScript(() => {
+    try {
+      localStorage.setItem("majalis.onboarding.onboarding_seen", "1");
+      localStorage.setItem("majalis.onboarding.onboarding_major_version", "1");
+    } catch { /* ignore */ }
+  });
+  const page = await context.newPage();
   const rows = [];
   const failures = [];
 

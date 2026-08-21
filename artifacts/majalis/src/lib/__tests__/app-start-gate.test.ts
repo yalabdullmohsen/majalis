@@ -42,6 +42,8 @@ assert.match(view, /الأذكار والصلاة/);
 assert.doesNotMatch(view, /requestPermission|Notification/);
 
 assert.match(gate, /shouldSkipAppStartForPath/);
+assert.match(gate, /shouldSkipAppStartForAutomation/);
+assert.match(state, /navigator\.webdriver/);
 assert.doesNotMatch(gate, /markOnboardingSeen\(\);\s*\n\s*if \(shouldSkip/);
 
 assert.match(state, /onboarding_seen/);

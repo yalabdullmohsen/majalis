@@ -120,6 +120,12 @@ async function main() {
   const { base, stop } = await ensureBase();
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({ viewport: { width: vw, height: vh }, locale: "ar-KW" });
+  await context.addInitScript(() => {
+    try {
+      localStorage.setItem("majalis.onboarding.onboarding_seen", "1");
+      localStorage.setItem("majalis.onboarding.onboarding_major_version", "1");
+    } catch { /* ignore */ }
+  });
   const page = await context.newPage();
 
   await page.goto(`${base}/calendar`, { waitUntil: "networkidle", timeout: 60_000 });

@@ -247,6 +247,15 @@ export function shouldSkipAppStartForPath(pathname: string): boolean {
   );
 }
 
+/** Playwright / Lighthouse يضبطون webdriver — لا تُحجب بوابات القياس. */
+export function shouldSkipAppStartForAutomation(): boolean {
+  try {
+    return typeof navigator !== "undefined" && Boolean(navigator.webdriver);
+  } catch {
+    return false;
+  }
+}
+
 /** للاختبارات فقط */
 export function __resetOnboardingStateForTests(): void {
   clearOnboardingFlags();

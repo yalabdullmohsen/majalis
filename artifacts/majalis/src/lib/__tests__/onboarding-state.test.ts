@@ -91,6 +91,7 @@ test("الوحدة لا تطلب إذن إشعارات", async () => {
     "utf8",
   );
   assert.doesNotMatch(src, /requestPermission|Notification\s*\.|LocalNotifications|PushNotifications/);
+  assert.match(src, /navigator\.webdriver/);
 });
 
 test("إخفاق localStorage لا يمنع كتابة الكوكي للراية", () => {
