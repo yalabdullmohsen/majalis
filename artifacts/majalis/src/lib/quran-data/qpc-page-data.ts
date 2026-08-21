@@ -69,9 +69,11 @@ export type MushafPageRow =
 export type MushafPageLayout = {
   pageNumber: number;
   juzNumber: number;
+  /** اسم السورة لرأس الصفحة: سورة أول آية (لا دمج أسماء عند انتقال سورة). */
+  headerSurahName: string;
   rows: MushafPageRow[];
   surahsOnPage: MushafChapter[];
-  /** سور تبدأ فعليًا في هذه الصفحة (آية ١) — لرأس الصفحة */
+  /** سور تبدأ فعليًا في هذه الصفحة (آية ١) — للشارة/البسملة لا للرأس */
   surahsStartingOnPage: MushafChapter[];
   /**
    * تخطيط موحّد لكل الصفحات (بما فيها 1 و2): تحجيم من أعرض سطر،
@@ -359,10 +361,13 @@ async function buildMushafPageLayout(pageNumber: number): Promise<MushafPageLayo
   const surahsStartingOnPage = headerStartLines
     .map(([n]) => chapters.get(n))
     .filter((c): c is MushafChapter => !!c);
+  const firstVerse = verses[0];
+  const headerChapter = firstVerse ? chapters.get(firstVerse.surahNumber) : undefined;
 
   return {
     pageNumber,
-    juzNumber: verses[0]?.juzNumber ?? 1,
+    juzNumber: firstVerse?.juzNumber ?? 1,
+    headerSurahName: headerChapter?.nameArabic ?? "",
     rows: merged,
     surahsOnPage,
     surahsStartingOnPage,

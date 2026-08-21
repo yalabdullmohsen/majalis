@@ -1,14 +1,23 @@
 type Props = {
   juzNumber: number;
-  surahNames: string[];
+  surahName: string;
 };
 
-export function MushafPageHeader({ juzNumber, surahNames }: Props) {
-  const surahLabel = surahNames.length ? surahNames.join(" · ") : "—";
+/**
+ * رأس ثابت لكل الصفحات:
+ * يمين: اسم السورة الحالية (أول آية في الصفحة).
+ * يسار: رقم الجزء.
+ * المواضع فيزيائية لا تنعكس مع طول النص ولا مع انتقال سورة.
+ */
+export function MushafPageHeader({ juzNumber, surahName }: Props) {
   return (
-    <header className="mm-page-header">
-      <span className="mm-page-header__juz">الجزء {toArabicDigits(juzNumber)}</span>
-      <span className="mm-page-header__surah">{surahLabel}</span>
+    <header className="mm-page-header" data-testid="mushaf-page-header">
+      <span className="mm-page-header__surah" data-testid="mushaf-page-header-surah">
+        {surahName || "—"}
+      </span>
+      <span className="mm-page-header__juz" data-testid="mushaf-page-header-juz">
+        الجزء {toArabicDigits(juzNumber)}
+      </span>
     </header>
   );
 }

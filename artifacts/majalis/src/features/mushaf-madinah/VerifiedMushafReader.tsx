@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { getAudioEngine, type PlayerState } from "@/core/audio/AudioEngine";
-import { getSurahMeta } from "@/lib/quran-api";
+import { getSurahMeta, savePagePosition } from "@/lib/quran-api";
 import { getReciter, listAyahAudioUrls, loadReciterId, saveReciterId } from "@/lib/quran-audio";
 import {
   getCachedMushafPage,
@@ -20,7 +20,6 @@ import {
 import {
   clampMushafPage,
   MUSHAF_PAGE_MAX,
-  saveLastPage,
 } from "@/lib/quran-last-page";
 import { useMediaSession } from "@/hooks/useMediaSession";
 import { AyahActionSheet } from "./AyahActionSheet";
@@ -148,7 +147,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
       });
     prefetchMushafPage(page - 1);
     prefetchMushafPage(page + 1);
-    void saveLastPage(page);
+    savePagePosition(page);
     return () => {
       cancelled = true;
     };

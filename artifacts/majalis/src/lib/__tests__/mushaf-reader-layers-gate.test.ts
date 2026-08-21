@@ -52,7 +52,7 @@ assert.match(reader, /setActionsOpen\(true\)/);
 
 assert.match(pager, /dx > 0/);
 assert.match(pager, /locking\.current = true/);
-assert.match(reader, /saveLastPage/);
+assert.match(reader, /savePagePosition/);
 assert.match(reader, /onTapEmpty/);
 
 console.log("mushaf-reader-layers-gate.test.ts: ok");

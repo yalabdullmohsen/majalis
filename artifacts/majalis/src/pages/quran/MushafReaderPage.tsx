@@ -8,7 +8,8 @@ import {
   loadLastPageSync,
   MUSHAF_PAGE_MAX,
 } from "@/lib/quran-last-page";
-import { SURAH_START_PAGES } from "@/lib/quran-api";
+import { loadReadingAyahKey, SURAH_START_PAGES } from "@/lib/quran-api";
+import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
 
 /**
  * مسار المصحف الحقيقي `/mushaf` — VerifiedMushafReader عبر alias MushafViewport، بلا PDF.
@@ -75,5 +76,10 @@ function resolvePage(
     }
   }
 
-  return loadLastPageSync() ?? 1;
+  const saved = loadLastPageSync();
+  const ayahKey = loadReadingAyahKey();
+  if (ayahKey) {
+    return clampMushafPage(ayahKeyToPage(ayahKey, saved ?? undefined));
+  }
+  return saved ?? 1;
 }

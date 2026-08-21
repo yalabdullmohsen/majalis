@@ -5,19 +5,16 @@ type Props = {
 };
 
 /**
- * ذيل الصفحة — كلاسيكي هادئ:
- * - رقم الصفحة في خرطوش بسيط بالوسط، موضع ثابت لا يتبادل بين الصفحات.
- * - وصف الحزب (إن وُجد) يمين، بمعزل عن رقم الصفحة الوسطي.
+ * ذيل الصفحة — شبكة ثابتة لكل الصفحات:
+ * الوسط: خرطوش رقم الصفحة (لا يتحرك مع طول النص أو عنوان السورة أو الحزب).
+ * اليمين: وصف الحزب إن بدأ في هذه الصفحة فقط.
  */
 export function MushafPageFooter({ pageNumber, hizbStartingOnPage = null }: Props) {
   const hizbStart = hizbStartingOnPage != null && hizbStartingOnPage > 0;
-  const parity = pageNumber % 2 === 0 ? "even" : "odd";
-  const side = hizbStart ? "hizb-start" : "default";
   return (
     <footer
       className="mm-page-footer"
-      data-side={side}
-      data-parity={parity}
+      data-side={hizbStart ? "hizb-start" : "default"}
       data-testid="mushaf-page-footer"
     >
       {hizbStart ? (

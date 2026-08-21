@@ -38,10 +38,7 @@ export function MushafPage({
       style={{ ["--mm-qpc-family" as string]: fontFamily }}
       aria-label={`صفحة المصحف ${layout.pageNumber}`}
     >
-      <MushafPageHeader
-        juzNumber={layout.juzNumber}
-        surahNames={layout.surahsOnPage.map((s) => s.nameArabic)}
-      />
+      <MushafPageHeader juzNumber={layout.juzNumber} surahName={layout.headerSurahName} />
       <div
         className={`mm-page__body${opening ? " mm-page__body--opening" : ""}`}
         data-testid="mushaf-page-frame"

@@ -248,11 +248,10 @@ html.dark .mm-viewport,
   top: 0;
   inset-inline: var(--mm-ref-ink-x-start) calc(100% - var(--mm-ref-ink-x-end));
   height: var(--mm-header-h);
-  display: flex;
-  align-items: flex-end;
-  padding-bottom: 0.15rem;
+  display: block;
   z-index: 1;
   overflow: visible;
+  pointer-events: none;
 }
 
 .mm-viewport .mm-page__body,
@@ -269,7 +268,7 @@ html.dark .mm-viewport,
   top: calc(var(--mm-ref-cartouche-y) - 2.85%);
   height: 5.7%;
   inset-inline: var(--mm-ref-ink-x-start) calc(100% - var(--mm-ref-ink-x-end));
-  z-index: 2;
+  z-index: 9; /* فوق شريط الأدوات حتى لا يُغطَّى رقم الصفحة */
   pointer-events: none;
 }
 
@@ -329,8 +328,6 @@ html.dark .mm-viewport .mm-page {
 }
 
 .mm-viewport .mm-page-header {
-  justify-content: space-between;
-  gap: 0.5rem;
   color: var(--mm-header);
   font-family: "IBM Plex Sans Arabic", "Amiri Quran", serif;
   font-size: clamp(0.78rem, 2.8vw, 0.95rem);
@@ -344,20 +341,28 @@ html.dark .mm-viewport .mm-page {
 
 .mm-viewport .mm-page-header__juz,
 .mm-viewport .mm-page-header__surah {
+  position: absolute;
+  bottom: 0.15rem;
+  max-width: 48%;
   white-space: nowrap;
   overflow: visible;
   text-overflow: clip;
-  max-width: none;
-  flex: 0 1 auto;
   color: var(--mm-header);
+  font-size: inherit;
+  font-weight: inherit;
 }
 
+/* مواضع فيزيائية ثابتة: السورة يمين · الجزء يسار — لا تنعكس مع RTL/طول النص */
 .mm-viewport .mm-page-header__juz {
-  text-align: start;
+  left: 0;
+  right: auto;
+  text-align: left;
 }
 
 .mm-viewport .mm-page-header__surah {
-  text-align: end;
+  right: 0;
+  left: auto;
+  text-align: right;
 }
 
 .mm-slot {
@@ -366,6 +371,9 @@ html.dark .mm-viewport .mm-page {
   align-items: center;
   justify-content: center;
   width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding-inline: 0;
   overflow-x: clip;
 }
 
@@ -626,15 +634,21 @@ html.dark .ayah-active.mm-ayah-line__word:not([data-type="end"]),
 }
 
 .mm-viewport .mm-page-footer {
-  display: block;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  direction: ltr; /* العمود الأوسط = وسط فيزيائي ثابت */
+  align-items: center;
+  justify-items: stretch;
   padding: 0;
   box-sizing: border-box;
 }
 
 .mm-viewport .mm-page-footer__hizb {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  grid-column: 3;
+  justify-self: end;
+  position: relative;
+  top: auto;
+  transform: none;
   font-family: "IBM Plex Sans Arabic", "Amiri Quran", serif;
   font-size: clamp(0.72rem, 2.4vw, 0.88rem);
   font-weight: 600;
@@ -643,18 +657,14 @@ html.dark .ayah-active.mm-ayah-line__word:not([data-type="end"]),
   line-height: 1;
 }
 
-/* وصف الحزب دائماً يمين — لا يتحرك مع الحزب/التكافؤ (البند ٣: موضع رقم الصفحة ثابت لا يتبادل الجهة) */
-.mm-viewport .mm-page-footer__hizb {
-  left: auto;
-  right: 0;
-}
-
 .mm-viewport .mm-page-footer__badge {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  grid-column: 2;
+  justify-self: center;
+  position: relative;
+  top: auto;
+  left: auto;
   right: auto;
-  transform: translate(-50%, -50%);
+  transform: none;
   width: 13.1%;
   min-width: 2.8rem;
   height: auto;
@@ -824,9 +834,24 @@ html.dark .mm-viewport .mm-page-footer__badge {
   justify-content: flex-end;
 }
 
-/* عند إظهار الأدوات: ارفع الشريط فوق نطاق الكرتوش بالكامل */
+/* عند إظهار الأدوات: مجموعتان جانبيتان بلا تغطية لخرطوش رقم الصفحة */
 .mm-viewport[data-chrome="1"] .mm-controls__bar {
   bottom: max(0.35rem, var(--inset-bottom, 0px));
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.mm-viewport[data-chrome="1"] .mm-controls__cluster {
+  background: var(--mm-chrome);
+  border: 1px solid var(--mm-chrome-border);
+  border-radius: 0.75rem;
+  padding: 0.28rem 0.22rem;
+  box-shadow: 0 3px 14px color-mix(in srgb, #5c4a28 10%, transparent);
+}
+
+.mm-viewport[data-chrome="1"] .mm-controls__page {
+  opacity: 0; /* الرقم المرئي هو الخرطوش؛ الزر يبقى هدف انتقال */
 }
 
 .mm-controls__page {
