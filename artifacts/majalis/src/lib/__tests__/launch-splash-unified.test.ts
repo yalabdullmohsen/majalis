@@ -1,5 +1,6 @@
 /**
- * بوابة الدخولية الصامتة: SVG في index.html، بلا نص، بلا مكوّن React.
+ * بوابة الإقلاع: الدخولية الصامتة (mj-silent-splash) حُذفت عمدًا من index.html —
+ * الإقلاع الآن هيكل ثابت (mj-boot-skeleton) فقط + إخفاء الإطلاق الأصلي native.
  * تشغيل: node --import tsx src/lib/__tests__/launch-splash-unified.test.ts
  */
 import assert from "node:assert/strict";
@@ -12,23 +13,9 @@ const root = resolve(__dirname, "../../..");
 const BG = "#0E1A15";
 
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
-assert.match(indexHtml, /id="mj-silent-splash"/, "دخولية HTML واحدة");
-assert.match(indexHtml, /mj-silent-splash__path/, "رمز يُرسم بـ stroke");
-assert.doesNotMatch(indexHtml, /stroke-dashoffset/, "بلا dashoffset غير مركّب على الدخولية");
-assert.doesNotMatch(indexHtml, /mj-ss-draw|mj-ss-glow/, "بلا رسم/توهج متأخر يخفي الرمز عند أول إطار");
-assert.match(indexHtml, /cubic-bezier\(\.22,\s*1,\s*\.36,\s*1\)/, "منحنى خروج مركّب");
-assert.match(indexHtml, /prefers-reduced-motion:\s*reduce/, "مسار بلا حركة رسم");
-assert.match(indexHtml, /__mjDismissSplash/, "دخولية تعرض دالة dismiss للطبقة الحاكمة");
-assert.match(indexHtml, /MIN_MS\s*=\s*900/, "حد أدنى 900ms موجود");
-assert.match(indexHtml, /MAX_MS\s*=\s*1500/, "حد أقصى 1500ms موجود");
-assert.match(indexHtml, /EXIT_MS\s*=\s*250/, "تلاشي HTML 250ms");
+assert.doesNotMatch(indexHtml, /mj-silent-splash/, "الدخولية الصامتة محذوفة بالكامل");
+assert.doesNotMatch(indexHtml, /__mjDismissSplash/, "لا دالة dismiss متبقية");
 assert.match(indexHtml, /id="mj-boot-skeleton"/, "هيكل إقلاع فوري");
-assert.match(indexHtml, /mj\.silent-splash\.session/, "جلسة: إقلاع بارد فقط");
-assert.match(
-  indexHtml,
-  new RegExp(`background-color:\\s*(${BG}|var\\(--mj-splash-bg\\))`),
-  "خلفية html/body",
-);
 assert.match(indexHtml, new RegExp(`theme-color" content="${BG}"`), "theme-color الإقلاع مطابق للخلفية");
 assert.doesNotMatch(indexHtml, /apple-touch-startup-image/, "لا صور إقلاع PWA");
 assert.doesNotMatch(indexHtml, /splash-boot\.css/, "لا splash-boot.css");
@@ -39,10 +26,7 @@ assert.doesNotMatch(indexHtml, /preload[^>]+icon-192\.webp/, "لا preload شع�
   assert.ok(preconnects.length <= 2, `preconnect ≤ ٢ (الفعلي: ${preconnects.length})`);
 }
 
-const splashChunk = indexHtml.match(/<div id="mj-silent-splash"[\s\S]*?<\/div>\s*<\/div>/);
-assert.ok(splashChunk, "قطعة الدخولية قابلة للعزل");
-assert.match(splashChunk[0], /mj-silent-splash__title/, "عنوان دخولية موجود");
-assert.match(splashChunk[0], /mj-silent-splash__progress/, "مؤشر تقدّم موجود");
+assert.ok(!existsSync(resolve(root, "src/components/AppSplash.tsx")), "AppSplash.tsx محذوف");
 
 const splashTs = readFileSync(resolve(root, "src/lib/splash-screen.ts"), "utf8");
 assert.match(splashTs, /SplashScreen\.hide/, "يخفي الإطلاق الأصلي");
