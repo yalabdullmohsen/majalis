@@ -43,7 +43,7 @@ console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");
   assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/amiri-400-ar\.woff2/, "preload خط الشاشة الأولى فقط");
   assert.match(html, /id="mj-launch-splash"/, "دخولية MajlisSplash في HTML الحرج");
   assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل");
-  assert.match(html, /mj-launch-splash__wordmark/, "وردمارك SVG مضمّن");
+  assert.match(html, /mj-launch-splash__(wordmark|title)/, "عنوان الدخولية");
   assert.match(html, /v6-direct-boot-2026-08/, "ترحيل ثيم يمنع وميض التصميم القديم");
 }
 

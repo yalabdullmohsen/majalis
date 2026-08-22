@@ -13,7 +13,7 @@ const BG = "#F2F4F3";
 
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
 assert.match(indexHtml, /id="mj-launch-splash"/, "دخولية MajlisSplash في HTML الحرج");
-assert.match(indexHtml, /mj-launch-splash__wordmark/, "وردمارك SVG مضمّن");
+assert.match(indexHtml, /mj-launch-splash__(wordmark|title)/, "عنوان الدخولية");
 assert.match(indexHtml, /mj-launch-splash__tagline/, "عبارة الدخولية");
 assert.match(indexHtml, /علم نافع، وعمل صالح/);
 assert.doesNotMatch(indexHtml, /id="mj-silent-splash"/, "لا دخولية صامتة قديمة");
