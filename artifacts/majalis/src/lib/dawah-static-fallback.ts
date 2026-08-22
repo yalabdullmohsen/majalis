@@ -227,6 +227,23 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
     tags: ["عبادة", "آداب"],
     updated_at: STATIC_TS,
   },
+  "umrah-in-islam": {
+    id: "static-article-umrah-in-islam",
+    category_id: null,
+    slug: "umrah-in-islam",
+    title_ar: "العمرة في الإسلام",
+    title_en: "Umrah in Islam",
+    summary_ar: "العمرة زيارة البيت الحرام بإحرام وطواف وسعي وحلق أو تقصير؛ سنة مؤكدة عند جمهور العلماء.",
+    summary_en: null,
+    body_ar: `العمرة عبادة تؤدَّى في غير أشهر الحج أو معها. أركانها المشهورة: الإحرام، والطواف، والسعي، والحلق أو التقصير على تفصيل المذاهب.
+
+يُحرم من الميقات بنية العمرة، ويلبس لباس الإحرام للرجل، ويجتنب محظورات الإحرام. ثم يطوف بالبيت ويسعى بين الصفا والمروة ويحلق أو يقصّر.
+
+المسلم الجديد إن تيسّر له السفر يتعلم المناسك من دليل موثوق أو معلم، ولا يُحرج نفسه بالتشديد. العمرة تجديد للتوحيد وذكر لله في الحرم.`,
+    cover_image_url: null,
+    tags: ["عبادة", "نسك"],
+    updated_at: STATIC_TS,
+  },
 };
 
 export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
@@ -605,6 +622,31 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
     sources: [],
     objections_and_responses: [],
     conclusion: "التعدد رخصة مقيدة بالعدل؛ والظلم محرم ولو تحت اسم مباح.",
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-sh-14",
+    category_id: null,
+    slug: "alcohol-ban-outdated",
+    title: "هل تحريم الخمر قديم لا يناسب العصر؟",
+    complexity_level: "basic",
+    shubha_text: "يُقال إن تحريم الخمر مرتبط بسياق قديم، وأن الاعتدال في الشرب كافٍ في المجتمعات الحديثة.",
+    why_spread: "تطبيع المسكرات ثقافيًا، وتجاهل أضرارها الصحية والاجتماعية الثابتة.",
+    short_answer: "تحريم الخمر قطعي في الشريعة، والضرر ثابت علمًا واجتماعًا؛ والاعتدال المزعوم لا يرفع الحكم ولا يمنع الإدمان.",
+    detailed_refutation:
+      "قال تعالى: ﴿إنما الخمر والميسر... رجس من عمل الشيطان فاجتنبوه﴾. النبي ﷺ لعن في الخمر عشرة. الأضرار على العقل والأسرة والحوادث موثقة. الشريعة تحمي العقل أحد الكليات الخمس؛ فلا يُنسخ الحكم بعرف معاصر.",
+    assumption_correction: "أن تغير الزمان ينسخ القطعيات، أو أن وجود من يشرب باعتدال يُلغي علة التحريم.",
+    historical_linguistic_context: null,
+    evidences: [
+      {
+        type: "quran",
+        ref: "المائدة: 90",
+        text: "إنما الخمر والميسر والأنصاب والأزلام رجس من عمل الشيطان فاجتنبوه",
+      },
+    ],
+    sources: [],
+    objections_and_responses: [],
+    conclusion: "الخمر محرّمة قطعًا؛ وحفظ العقل مقصد شرعي لا يلغيه العصر.",
     updated_at: STATIC_TS,
   },
 ];
