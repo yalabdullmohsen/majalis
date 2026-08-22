@@ -60,7 +60,6 @@ export function useQpcPageFont(pageNumber: number): { fontFamily: string; ready:
         if (!cancelled) setReady(true);
       });
     } else {
-      setReady(false);
       void loadFace(pageNumber).then(() => {
         if (!cancelled) setReady(true);
       });

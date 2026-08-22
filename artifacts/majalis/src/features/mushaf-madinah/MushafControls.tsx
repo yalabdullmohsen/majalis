@@ -148,6 +148,7 @@ export function MushafControls({
           <input
             type="text"
             inputMode="numeric"
+            enterKeyHint="go"
             pattern="[0-9]*"
             value={draft}
             onChange={(e) => {
