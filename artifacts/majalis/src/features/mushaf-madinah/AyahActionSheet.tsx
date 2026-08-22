@@ -375,9 +375,7 @@ export function AyahActionSheet({
               type="button"
               role="tab"
               aria-selected={tab === "meanings"}
-              aria-disabled={!meaningsOn}
-              disabled={!meaningsOn}
-              onClick={() => meaningsOn && selectTab("meanings")}
+              onClick={() => selectTab("meanings")}
             >
               <Languages size={18} aria-hidden="true" />
               <span>معاني</span>
@@ -589,7 +587,11 @@ export function AyahActionSheet({
             ) : null}
 
             {tab === "meanings" ? (
-              <p className="mm-ayah-bar__status">معاني المفردات غير متاحة حتى يُعتمد مصدر موثّق.</p>
+              <p className="mm-ayah-bar__status">
+                {meaningsOn
+                  ? "معاني المفردات غير متاحة حتى يُعتمد مصدر موثّق."
+                  : "معاني المفردات غير متاحة لهذه الآية حاليًا"}
+              </p>
             ) : null}
             {tab === "tajweed" ? (
               <p className="mm-ayah-bar__status">
