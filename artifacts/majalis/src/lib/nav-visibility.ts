@@ -36,7 +36,6 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/sujood-sahw",
   "/sunnah-studies",
   "/tazkiya-topics",
-  "/tarikh-islami",
   "/usra-mujtama",
   "/fikr-waqia",
   "/mawsuaat",

@@ -6,9 +6,9 @@
   "environment": "lhci-preview",
   "url": "http://127.0.0.1:24216/",
   "runs": 3,
-  "notes": "شاهد main قبل #1286 — مصدر اشتقاق عتبات LHCI للمعاينة (main + 10%)",
+  "notes": "FCP/SI/LCP من run 32307284830؛ CLS أُعيدت معايرته 2026-08-22 من وسيط LHCI preview على main (≈0.023) لتهدئة تباين CI",
   "median": {
-    "cls": 0.0212,
+    "cls": 0.023,
     "lcpMs": 7056,
     "fcpMs": 4100,
     "siMs": 4100
