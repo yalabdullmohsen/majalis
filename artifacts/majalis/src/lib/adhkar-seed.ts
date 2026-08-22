@@ -25,6 +25,7 @@ export const FEATURED_ADHKAR_SLUGS = new Set([
   "morning", "evening", "sleep", "wakeup", "home-in", "home-out",
   "mosque", "wudu", "salah", "after-salah", "travel", "food",
   "rain", "wind", "distress", "istikharah", "istighfar", "misc",
+  "salawat", "clothing", "vehicle",
 ]);
 
 export const ADHKAR_CATEGORIES: AdhkarCategory[] = [
