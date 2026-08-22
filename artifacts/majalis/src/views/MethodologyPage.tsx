@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { ArrowRight, Bot, CheckCircle2, Shield, Users, BookOpen, AlertTriangle, Globe } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { PublicLayout } from "@/components/layout/PublicLayout";
 import "@/styles/pages/methodology.css";
 
 const SOURCES = [
@@ -131,6 +132,7 @@ export default function MethodologyPage() {
   }, []);
 
   return (
+    <PublicLayout>
     <div className="mtd-page ds-section" dir="rtl">
       <header className="mtd-head">
         <div className="mtd-head__icon" aria-hidden="true">
@@ -300,5 +302,6 @@ export default function MethodologyPage() {
         </Link>
       </div>
     </div>
+    </PublicLayout>
   );
 }

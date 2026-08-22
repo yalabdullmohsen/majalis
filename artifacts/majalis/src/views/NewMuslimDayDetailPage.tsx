@@ -4,6 +4,7 @@ import { PageHeader, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
 import { getNewMuslimPath, getNewMuslimProgress, markNewMuslimDayComplete, type NewMuslimDay } from "@/lib/dawah-service";
+import { DiscoverIslamPublicShell } from "@/components/discover-islam/DiscoverIslamPublicShell";
 import "@/styles/discover-islam.css";
 
 export default function NewMuslimDayDetailPage() {
@@ -49,6 +50,7 @@ export default function NewMuslimDayDetailPage() {
   const prev = days.find((d) => d.day_number === dayNum - 1);
 
   return (
+    <DiscoverIslamPublicShell>
     <div className="page-shell narrow dii-question-page">
       <PageHeader eyebrow={`اليوم ${dayNum} من ${days.length}`} title={item.title} showBack />
       <div className="ui-card">
@@ -69,5 +71,6 @@ export default function NewMuslimDayDetailPage() {
         {next && <Link href={`/discover-islam/new-muslim/${next.day_number}`} className="asp-run-btn">اليوم التالي</Link>}
       </div>
     </div>
+    </DiscoverIslamPublicShell>
   );
 }

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { PageShell } from "@/components/layout/PageShell";
+import { PublicLayout } from "@/components/layout/PublicLayout";
 
 type Props = {
   eyebrow: string;
@@ -17,6 +18,7 @@ function goBack() {
 
 export function LegalPageLayout({ eyebrow, title, children, updatedAt }: Props) {
   return (
+    <PublicLayout>
     <PageShell
       as="article"
       variant="narrow"
@@ -41,6 +43,7 @@ export function LegalPageLayout({ eyebrow, title, children, updatedAt }: Props) 
       }
       content={<div className="legal-page-body legal-page-inner">{children}</div>}
     />
+    </PublicLayout>
   );
 }
 

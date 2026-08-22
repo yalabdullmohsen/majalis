@@ -4,6 +4,7 @@ import { PageHeader, Empty } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { getShubhaBySlug, type DawahShubha } from "@/lib/dawah-service";
+import { DiscoverIslamPublicShell } from "@/components/discover-islam/DiscoverIslamPublicShell";
 import "@/styles/discover-islam.css";
 
 export default function DiscoverIslamDoubtDetailPage() {
@@ -25,10 +26,11 @@ export default function DiscoverIslamDoubtDetailPage() {
     });
   }, [slug]);
 
-  if (item === undefined) return <div className="page-shell narrow"><PageHeader eyebrow="التعريف بالإسلام" title="الشبهة" /></div>;
-  if (item === null) return <div className="page-shell narrow"><Empty text="لم يُعثر على هذه الشبهة، أو أنها لا تزال قيد المراجعة." /></div>;
+  if (item === undefined) return <DiscoverIslamPublicShell><div className="page-shell narrow"><PageHeader eyebrow="التعريف بالإسلام" title="الشبهة" /></div></DiscoverIslamPublicShell>;
+  if (item === null) return <DiscoverIslamPublicShell><div className="page-shell narrow"><Empty text="لم يُعثر على هذه الشبهة، أو أنها لا تزال قيد المراجعة." /></div></DiscoverIslamPublicShell>;
 
   return (
+    <DiscoverIslamPublicShell>
     <div className="page-shell narrow dii-question-page">
       <PageHeader eyebrow="شبهة وتفنيد" title={item.title} showBack />
 
@@ -120,5 +122,6 @@ export default function DiscoverIslamDoubtDetailPage() {
         <Link href="/discover-islam/contact" className="page-link-inline">لديك اعتراض آخر؟ تحدّث مع داعية ←</Link>
       </div>
     </div>
+    </DiscoverIslamPublicShell>
   );
 }

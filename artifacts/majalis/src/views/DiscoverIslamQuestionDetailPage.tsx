@@ -5,6 +5,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { getQuestionBySlug, getQuestionTranslations, type DawahQuestion, type DawahTranslation } from "@/lib/dawah-service";
 import { supabase } from "@/lib/supabase";
+import { DiscoverIslamPublicShell } from "@/components/discover-islam/DiscoverIslamPublicShell";
 import "@/styles/discover-islam.css";
 
 const LANG_LABELS: Record<string, string> = { en: "English", fr: "Français", es: "Español" };
@@ -47,6 +48,7 @@ export default function DiscoverIslamQuestionDetailPage() {
   const displayShortAnswer = activeTranslation?.summary || item.short_answer;
 
   return (
+    <DiscoverIslamPublicShell>
     <div className="page-shell narrow dii-question-page">
       <div dir={viewLang === "ar" ? "rtl" : "ltr"}>
         <PageHeader eyebrow="سؤال وجواب" title={displayTitle} showBack />
@@ -122,5 +124,6 @@ export default function DiscoverIslamQuestionDetailPage() {
         <Link href="/discover-islam/contact" className="page-link-inline">لديك سؤال آخر؟ تحدّث مع داعية ←</Link>
       </div>
     </div>
+    </DiscoverIslamPublicShell>
   );
 }

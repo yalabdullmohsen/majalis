@@ -2,6 +2,7 @@ import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { PublicLayout } from "@/components/layout/PublicLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/sitemap.css";
@@ -195,6 +196,7 @@ export default function SiteMapPage() {
   }, []);
 
   return (
+    <PublicLayout>
     <div className="page-shell sm-page">
       {/* Hero */}
       <header className="sm-hero">
@@ -237,5 +239,6 @@ export default function SiteMapPage() {
         <SectionQuiz route="/site-map" title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
       </div>
     </div>
+    </PublicLayout>
   );
 }
