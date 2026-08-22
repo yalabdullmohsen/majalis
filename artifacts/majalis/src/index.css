@@ -76,13 +76,13 @@ body {
   --sp-16: 4rem;      /* 64px */
 
   /* ── سُلَّم الطباعة (متوافق مع design-tokens / typography-scale) ── */
-  --text-xs:   0.8125rem;  /* 13px — أدنى مقروء */
-  --text-sm:   0.875rem;   /* 14px */
-  --text-base: 1.0625rem;  /* 17px */
-  --text-lg:   1.125rem;   /* 18px */
-  --text-xl:   1.3125rem;  /* 21px */
-  --text-2xl:  1.5rem;     /* 24px */
-  --text-3xl:  1.75rem;    /* 28px */
+  --text-xs:   0.8125rem;  /* 13px — شريط سفلي */
+  --text-sm:   0.875rem;   /* 14px — وصف بطاقة */
+  --text-base: 1rem;       /* 16px — نص أساسي */
+  --text-lg:   1.125rem;   /* 18px — عنوان بطاقة */
+  --text-xl:   1.375rem;   /* 22px */
+  --text-2xl:  1.625rem;   /* 26px — عنوان صفحة */
+  --text-3xl:  2rem;       /* 32px — حد أقصى */
   --text-4xl:  2rem;       /* 32px */
 
   /* ── نصف القطر (Design System — Radius Scale) ── */
@@ -576,8 +576,8 @@ html[data-font="naskh"] {
 }
 
 body {
-  font-family: var(--font-app, var(--font-body));
-  font-weight: var(--font-weight-medium, 500);
+  font-family: var(--font-body-ui, var(--font-app, var(--font-body)));
+  font-weight: var(--font-weight-regular, 400);
   background: var(--msk-canvas);
   color: var(--msk-text);
   line-height: var(--lh-body, 1.75);
@@ -2817,8 +2817,8 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   padding-inline: 0.25rem;
   /* حجز مساحة ثابتة يمنع CLS/وميض عند ظهور الشعار */
   min-height: 2.1rem;
-  width: min(11.75rem, 48vw);
-  max-width: min(11.75rem, 48vw);
+  width: min(12.5rem, 52vw);
+  max-width: min(12.5rem, 52vw);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2840,7 +2840,7 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
 
 /* وردمارك SVG — عرض أوضح على الجوال (~150–190px) وسطح المكتب */
 .navbar-v3__tagline-mark {
-  height: 2rem;
+  height: 2.1rem;
   width: 100%;
   max-width: 100%;
   display: block;
@@ -2850,16 +2850,16 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
 
 @media (min-width: 880px) {
   .navbar-v3__tagline {
-    flex: 0 1 14.5rem;
-    width: 14.5rem;
-    max-width: 14.5rem;
+    flex: 0 1 15rem;
+    width: 15rem;
+    max-width: 15rem;
     text-align: start;
     justify-content: flex-start;
     min-height: 2.25rem;
   }
 
   .navbar-v3__tagline-mark {
-    height: 2.15rem;
+    height: 2.3rem;
   }
 }
 

@@ -1,0 +1,164 @@
+/**
+ * طباعة واجهة التطبيق — خارج المصحف/QPC.
+ * خطان محليان فقط: Noto Naskh Arabic (عناوين + واجهة) · Amiri (نصوص قراءة/تفسير عبر --font-app).
+ */
+
+:root {
+  --font-heading: "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-body-ui: "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --brand-contrast: var(--brand-on-white, var(--mj-brand-deep));
+
+  /* مقاسات موحّدة */
+  --type-page-title: clamp(1.625rem, 5vw, 2rem);       /* 26–32px */
+  --type-card-title: clamp(1.125rem, 3.2vw, 1.375rem); /* 18–22px */
+  --type-card-desc: clamp(0.875rem, 2.6vw, 1rem);      /* 14–16px */
+  --type-card-body: clamp(0.9375rem, 2.8vw, 1.0625rem); /* 15–17px */
+  --type-nav-label: clamp(0.75rem, 2.2vw, 0.8125rem);  /* 12–13px */
+
+  --lh-type-ui: 1.65;
+  --lh-type-card: 1.55;
+  --lh-type-prose: 1.75;
+
+  /* نصوص فوق الخلفيات الداكنة/المتدرجة */
+  --text-on-dark-primary: #ffffff;
+  --text-on-dark-secondary: rgba(255, 255, 255, 0.9);
+  --text-on-dark-muted: rgba(255, 255, 255, 0.78);
+  --text-on-dark-stat: #a7f3d0;
+}
+
+.app-shell,
+.page-shell,
+.fqp-root,
+.fq-page,
+.fiqh-hub {
+  font-family: var(--font-body-ui);
+  color: var(--text-primary);
+}
+
+.app-shell :is(
+  h1, h2, h3,
+  .page-hero-mj__title,
+  .page-hero-mj__headline,
+  .hub-card__title,
+  .fqh-hub-card__title,
+  .twh-hub-card__title,
+  .fiqh-book-card__title,
+  .fq-card__arabic,
+  .fqp-section-title,
+  .fiqh-group__title
+) {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* قصّ الأسطر الطويلة في البطاقات */
+.mj-line-clamp-2,
+.hub-card__title,
+.fqh-hub-card__title,
+.twh-hub-card__title,
+.fiqh-book-card__title,
+.fqp-card__title,
+.fq-card__arabic {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.mj-line-clamp-3,
+.hub-card__desc,
+.fqh-hub-card__desc,
+.twh-hub-card__desc,
+.fiqh-book-card__meta,
+.fqp-card__desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.hub-card__title,
+.fqh-hub-card__title,
+.twh-hub-card__title {
+  font-size: var(--type-card-title);
+  line-height: var(--lh-type-card);
+  font-weight: 700;
+}
+
+.hub-card__desc,
+.fqh-hub-card__desc,
+.twh-hub-card__desc {
+  font-size: var(--type-card-desc);
+  line-height: var(--lh-type-ui);
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.page-hero-mj__title,
+.fqh-hub-hero__title,
+.fq-hero__title {
+  font-size: var(--type-page-title) !important;
+  line-height: 1.35 !important;
+  font-weight: 800 !important;
+}
+
+.page-hero-mj__desc,
+.fqh-hub-hero__sub,
+.fq-hero__sub {
+  font-size: var(--type-card-desc);
+  line-height: var(--lh-type-prose);
+}
+
+/* خلفيات داكنة — تباين واضح */
+.page-hero-mj--bleed :is(.page-hero-mj__title, .page-hero-mj__headline),
+.fqh-hub-hero__title,
+.fq-hero__title {
+  color: var(--text-on-dark-primary) !important;
+}
+
+.page-hero-mj--bleed .page-hero-mj__desc,
+.fqh-hub-hero__sub {
+  color: var(--text-on-dark-secondary) !important;
+}
+
+.fqh-hub-hero__eyebrow,
+.fq-hero__badge {
+  color: var(--text-on-dark-muted) !important;
+}
+
+.fq-stat__num {
+  color: var(--text-on-dark-stat) !important;
+}
+
+.fq-stat__label {
+  color: var(--text-on-dark-muted) !important;
+}
+
+/* تبويبات */
+.filter-chips__chip,
+.fqp-tab,
+.fq-tab,
+.fiqh-chip {
+  font-size: var(--type-card-desc);
+  font-weight: 600;
+  line-height: var(--lh-type-ui);
+  white-space: nowrap;
+}
+
+.filter-chips__chip.is-active,
+.fqp-tab--active,
+.fq-tab--active {
+  color: var(--text-on-brand, #fff);
+  background: var(--brand, var(--mj-brand));
+}
+
+.fqp-tab--active {
+  border-bottom-color: var(--brand, var(--mj-brand));
+  color: var(--brand-contrast, var(--mj-brand-deep));
+  background: color-mix(in srgb, var(--brand, var(--mj-brand)) 10%, transparent);
+}

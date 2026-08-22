@@ -30,7 +30,7 @@
 
 body {
   font-size: var(--text-body);
-  font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-regular, 400);
   line-height: var(--lh-body, 1.75);
   letter-spacing: 0;
 }
@@ -61,7 +61,7 @@ h4, h5, h6 {
 
 p, li, .prose, .text-readable {
   font-size: var(--text-body);
-  font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-regular, 400);
   line-height: var(--lh-prose, 1.85);
   letter-spacing: 0;
 }
@@ -89,9 +89,9 @@ textarea, select {
 .bottom-nav__tab-label,
 .bottom-nav--v2 .bottom-nav__tab-label,
 .nav-label {
-  font-size: var(--text-nav) !important;
+  font-size: var(--type-nav-label, var(--text-nav)) !important;
   font-weight: var(--font-weight-semibold, 600) !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   letter-spacing: 0 !important;
   white-space: nowrap;
 }
