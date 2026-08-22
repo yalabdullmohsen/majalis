@@ -1,0 +1,179 @@
+/**
+ * شريط إعلان الرئيسية — ارتفاع ثابت لمنع CLS (لا popup ولا overlay).
+ */
+.homepage-ad-bar {
+  --homepage-ad-bar-h: 3.25rem;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--homepage-ad-bar-h);
+  max-height: var(--homepage-ad-bar-h);
+  overflow: hidden;
+  border-block-end: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 12%, transparent);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 6%, #fff) 0%,
+    #fff 42%,
+    color-mix(in srgb, var(--majalis-brass-deep, #8b6914) 5%, #fff) 100%
+  );
+  color: var(--majalis-ink, #1a1a18);
+}
+
+html[data-theme="dark"] .homepage-ad-bar {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--majalis-emerald-deep, #4fb48b) 14%, #101614) 0%,
+    #101614 50%,
+    color-mix(in srgb, var(--majalis-brass-deep, #c9a84c) 8%, #101614) 100%
+  );
+  border-block-end-color: color-mix(in srgb, #fff 10%, transparent);
+  color: #e8f0ec;
+}
+
+.homepage-ad-bar__inner {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: min(100%, 72rem);
+  min-height: var(--homepage-ad-bar-h);
+  max-height: var(--homepage-ad-bar-h);
+  margin-inline: auto;
+  padding-inline: calc(0.65rem + var(--inset-left, 0px)) calc(0.45rem + var(--inset-right, 0px));
+}
+
+.homepage-ad-bar__logo {
+  flex: 0 0 auto;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.35rem;
+  object-fit: contain;
+}
+
+.homepage-ad-bar__badge {
+  flex: 0 0 auto;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--majalis-emerald-deep, #173d35);
+  background: color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 10%, #fff);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 18%, transparent);
+}
+
+html[data-theme="dark"] .homepage-ad-bar__badge {
+  color: #b8e8d4;
+  background: color-mix(in srgb, #4fb48b 16%, #101614);
+  border-color: color-mix(in srgb, #4fb48b 28%, transparent);
+}
+
+.homepage-ad-bar__copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  line-height: 1.25;
+}
+
+.homepage-ad-bar__title {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.homepage-ad-bar__desc {
+  margin: 0;
+  font-size: 0.68rem;
+  opacity: 0.82;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: none;
+}
+
+.homepage-ad-bar__cta {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.85rem;
+  padding: 0 0.65rem;
+  border-radius: 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  color: #fff;
+  background: var(--majalis-emerald-deep, #173d35);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 80%, #000);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--majalis-brass-deep, #8b6914) 35%, transparent);
+}
+
+.homepage-ad-bar__cta:hover,
+.homepage-ad-bar__cta:focus-visible {
+  filter: brightness(1.06);
+  outline: 2px solid color-mix(in srgb, var(--majalis-brass-deep, #8b6914) 55%, transparent);
+  outline-offset: 1px;
+}
+
+.homepage-ad-bar__close {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-inline-start: 0.1rem;
+  padding: 0;
+  border: none;
+  border-radius: 0.4rem;
+  background: transparent;
+  color: inherit;
+  opacity: 0.65;
+  cursor: pointer;
+}
+
+.homepage-ad-bar__close:hover,
+.homepage-ad-bar__close:focus-visible {
+  opacity: 1;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  outline: none;
+}
+
+@media (min-width: 720px) {
+  .homepage-ad-bar {
+    --homepage-ad-bar-h: 3.5rem;
+  }
+
+  .homepage-ad-bar__inner {
+    gap: 0.75rem;
+    padding-inline: calc(1rem + var(--inset-left, 0px)) calc(0.65rem + var(--inset-right, 0px));
+  }
+
+  .homepage-ad-bar__badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.55rem;
+  }
+
+  .homepage-ad-bar__title {
+    font-size: 0.875rem;
+  }
+
+  .homepage-ad-bar__desc {
+    display: block;
+    font-size: 0.75rem;
+  }
+
+  .homepage-ad-bar__cta {
+    min-height: 2rem;
+    padding: 0 0.85rem;
+    font-size: 0.8rem;
+  }
+}
