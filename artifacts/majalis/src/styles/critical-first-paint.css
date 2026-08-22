@@ -76,6 +76,21 @@ body {
   min-height: 11rem;
 }
 
+.home-page-hero .page-hero-mj__desc,
+.home-page-hero .pattern-backdrop {
+  display: none;
+}
+
+.navbar-v3__tagline-mark {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  height: 2.15rem;
+  width: 9.05rem;
+  max-width: min(16.75rem, 58vw);
+  aspect-ratio: 3787 / 900;
+}
+
 .m2030-home {
   padding-block-end: calc(var(--bottom-nav-h) + 1.1rem);
 }

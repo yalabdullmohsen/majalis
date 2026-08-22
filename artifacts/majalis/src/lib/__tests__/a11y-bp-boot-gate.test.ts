@@ -29,7 +29,7 @@ const slim = readFileSync(resolve(root, "src/lib/seo-nav-labels.json"));
 assert.ok(slim.byteLength < 20_000, `seo-nav-labels.json كبير أكثر من اللازم (${slim.byteLength})`);
 assert.match(app, /HomeLazyRoute|SafeLazyRoute component=\{HomePage\}/, "مسار الرئيسية موجود");
 assert.match(app, /const HomePage = lazy/, "الرئيسية كسولة لميزانية الحزمة");
-assert.match(app, /fallback=\{null\}/, "الرئيسية بلا هيكل تحميل يحجب LCP");
+assert.match(app, /fallback=\{<HomeInitialShell \/>\}/, "هيكل ارتفاع محجوز أثناء lazy الرئيسية");
 assert.match(homeView, /HomeUpcomingLessons/, "دروس الرئيسية موجودة");
 assert.match(homeView, /import\("@\/components\/home\/HomeUpcomingLessons"\)/, "دروس الرئيسية كسولة");
 assert.match(pkg, /strip:sourcemaps/, "حذف خرائط المصدر بعد البناء");

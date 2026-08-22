@@ -23,6 +23,9 @@ assert.doesNotMatch(html, /mj-home-lcp-static|mj-app-mount/, "لا صدفة نص
 assert.match(html, /id="mj-boot-skeleton"/, "هيكل إقلاع فوري");
 assert.match(html, /#mj-boot-skeleton\s*\{[\s\S]*position:\s*fixed/, "الهيكل ثابت لا يزيح #root");
 assert.match(critical, /\.home-start-here[\s\S]*min-height:\s*9\.5rem/, "حجز ارتفاع ابدأ من هنا");
+assert.match(critical, /\.home-page-hero\.page-hero-mj[\s\S]*min-height:\s*11rem/, "حجز ارتفاع هيرو الرئيسية");
+assert.match(critical, /\.navbar-v3__tagline-mark[\s\S]*width:\s*9\.05rem/, "حجز عرض وردمارك الهيدر");
+assert.match(critical, /\.home-page-hero \.page-hero-mj__desc[\s\S]*display:\s*none/, "إخفاء وصف الهيرو من أول رسمة");
 assert.match(fontsUi, /amiri-700-ar[\s\S]*font-display:\s*optional/, "Amiri 700 optional — بلا CLS");
 assert.match(fontsUi, /Aref Ruqaa[\s\S]*font-display:\s*optional/, "Aref Ruqaa optional — بلا CLS");
 assert.equal(

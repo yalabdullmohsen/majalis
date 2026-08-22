@@ -5,7 +5,7 @@
 .home-page-hero.page-hero-mj {
   position: relative;
   isolation: isolate;
-  min-height: unset;
+  min-height: 11rem;
   display: flex;
   align-items: center;
   justify-content: center;

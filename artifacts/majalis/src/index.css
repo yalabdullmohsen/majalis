@@ -2871,10 +2871,12 @@ html.dark .navbar-v3 a.navbar-v3__tagline:hover {
 /* وردمارك SVG ثابت من Aref Ruqaa 700 — currentColor يتبع الثيم */
 .navbar-v3__tagline-mark {
   height: 2.15rem;
-  width: auto;
+  width: 9.05rem;
   max-width: min(16.75rem, 58vw);
+  aspect-ratio: 3787 / 900;
   display: inline-block;
   vertical-align: middle;
+  flex-shrink: 0;
 }
 
 @media (min-width: 880px) {
@@ -2885,6 +2887,7 @@ html.dark .navbar-v3 a.navbar-v3__tagline:hover {
   }
   .navbar-v3__tagline-mark {
     height: 2.35rem;
+    width: 9.89rem;
     max-width: 18rem;
   }
 }
@@ -3981,6 +3984,7 @@ svg {
 
   .navbar-v3__tagline-mark {
     height: 2.05rem;
+    width: 8.63rem;
     max-width: min(15.75rem, 56vw);
   }
 
