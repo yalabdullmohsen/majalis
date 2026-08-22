@@ -45,6 +45,23 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
     tags: ["نبوة", "سيرة"],
     updated_at: STATIC_TS,
   },
+  "pillars-of-faith": {
+    id: "static-article-pillars-of-faith",
+    category_id: null,
+    slug: "pillars-of-faith",
+    title_ar: "أركان الإيمان والإسلام",
+    title_en: "Pillars of Faith and Islam",
+    summary_ar: "أركان الإسلام خمسة وأركان الإيمان ستة؛ فهمها يضبط المسار الشرعي للمسلم الجديد.",
+    summary_en: null,
+    body_ar: `أركان الإسلام خمسة: الشهادتان، وإقام الصلاة، وإيتاء الزكاة، وصوم رمضان، وحج البيت لمن استطاع إليه سبيلًا.
+
+وأركان الإيمان ستة: الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر خيره وشره.
+
+الفرق بينهما: الإسلام أعمال ظاهرة يُعرف بها المسلم، والإيمان اعتقاد بالقلب يُظهره العمل. المسلم الجديد يبدأ بالشهادتين ثم يتعلم الصلاة تدريجيًا، ولا يُثقّل عليه بإتقان كل الفقه دفعة واحدة.`,
+    cover_image_url: null,
+    tags: ["عقيدة", "أساسيات"],
+    updated_at: STATIC_TS,
+  },
 };
 
 export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
