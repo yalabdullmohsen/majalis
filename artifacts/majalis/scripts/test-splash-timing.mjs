@@ -64,6 +64,9 @@ async function main() {
   const { chromium } = await import("playwright");
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: "ar-KW" });
+  await context.addInitScript(() => {
+    Object.defineProperty(navigator, "webdriver", { get: () => false, configurable: true });
+  });
   const page = await context.newPage();
 
   try {

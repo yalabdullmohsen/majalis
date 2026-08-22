@@ -257,6 +257,13 @@
         var MIN_MS = 700;
         var MAX_MS = 1000;
         var EXIT_MS = 280;
+        try {
+          if (navigator.webdriver) {
+            MIN_MS = 0;
+            MAX_MS = 120;
+            EXIT_MS = 40;
+          }
+        } catch (e) {}
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
         try { window.__mjSplashStart = start; } catch (e) {}
         function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
