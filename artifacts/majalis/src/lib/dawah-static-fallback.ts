@@ -119,6 +119,25 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
     tags: ["عبادة", "صوم"],
     updated_at: STATIC_TS,
   },
+  "hajj-in-islam": {
+    id: "static-article-hajj-in-islam",
+    category_id: null,
+    slug: "hajj-in-islam",
+    title_ar: "الحج في الإسلام",
+    title_en: "Hajj in Islam",
+    summary_ar: "الحج ركن من أركان الإسلام على المستطيع؛ رحلة توحيد وتوبة واجتماع للأمة.",
+    summary_en: null,
+    body_ar: `الحج فريضة مرة في العمر على كل مسلم بالغ عاقل مستطيع. حقيقته قصد البيت الحرام لأداء مناسك معلومة في أشهر الحج.
+
+من مقاصده: توحيد الله، والتوبة، والتذكير بيوم القيامة، واجتماع المسلمين على اختلاف ألسنتهم وألوانهم في صعيد واحد.
+
+أركانه الأساسية تشمل الإحرام والوقوف بعرفة وطواف الإفاضة والسعي على التفصيل الفقهي. والعمرة سنة مؤكدة أو واجبة عند بعض العلماء.
+
+المسلم الجديد لا يُطالب بالحج فور دخوله إن لم يستطع؛ يتعلم الأركان اليومية أولًا، ثم يستعد للحج متى تيسّر المال والصحة والأمن.`,
+    cover_image_url: null,
+    tags: ["عبادة", "حج"],
+    updated_at: STATIC_TS,
+  },
 };
 
 export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
@@ -368,6 +387,24 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
     sources: [],
     objections_and_responses: [],
     conclusion: "يُقبل الصحيح ويُردّ الموضوع؛ والمنهج العلمي للمحدثين أساس الثقة لا الهوى.",
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-sh-8",
+    category_id: null,
+    slug: "islam-against-reason",
+    title: "هل الإسلام ضد العقل؟",
+    complexity_level: "basic",
+    shubha_text: "يُزعم أن الإيمان الإسلامي يلغي التفكير ويطلب التسليم الأعمى.",
+    why_spread: "خلط بين التسليم للوحي الصحيح وبين رفض النظر والاستدلال الذي دعا إليه القرآن.",
+    short_answer: "القرآن يحث على التفكر والنظر في الآيات؛ والعقل في الإسلام وسيلة لفهم الخطاب لا لمعارضة الوحي الثابت.",
+    detailed_refutation: "آيات كثيرة تأمر بالتفكر: ﴿أفلا يعقلون﴾ و﴿إن في ذلك لآيات لقوم يعقلون﴾. العقل يُدرك وجود الخالق ويُميّز الحسن من القبيح في الجملة، ثم ينقاد للوحي في تفاصيل الغيب والشرع. ما يُسمّى «ضد العقل» غالبًا هو رفض أهواء فلسفية لا العقل السليم نفسه.",
+    assumption_correction: "أن كل ما لا يوافق مزاجًا فلسفيًا معاصرًا فهو ضد العقل.",
+    historical_linguistic_context: null,
+    evidences: [{ type: "quran", ref: "البقرة: 164", text: "إن في خلق السماوات والأرض واختلاف الليل والنهار... لآيات لقوم يعقلون" }],
+    sources: [],
+    objections_and_responses: [],
+    conclusion: "الإسلام يكرّم العقل ويدعو للتفكر، ويضع الوحي هاديًا فيما لا تستقل العقول بإدراكه.",
     updated_at: STATIC_TS,
   },
 ];
