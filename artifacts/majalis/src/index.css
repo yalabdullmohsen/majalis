@@ -2838,7 +2838,7 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
   color: #e2f8ec !important;
 }
 
-/* وردمارك SVG — عرض أوضح وأعرض؛ بلا خط نصي ولا وميض */
+/* وردمارك SVG — عرض أوضح وأعرض؛ بلا خط نصي */
 .navbar-v3__tagline-mark {
   height: 2.1rem;
   width: 100%;
@@ -2846,8 +2846,6 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
   display: block;
   flex: 0 0 auto;
   overflow: visible;
-  transform: scaleX(1.04);
-  transform-origin: center center;
 }
 
 @media (min-width: 880px) {
@@ -2862,7 +2860,6 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
 
   .navbar-v3__tagline-mark {
     height: 2.3rem;
-    transform: scaleX(1.06);
   }
 }
 

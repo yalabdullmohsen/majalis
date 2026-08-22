@@ -47,8 +47,11 @@ import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
 import { AppReadingFocus } from "@/components/reading/AppReadingFocus";
-import { PublicLayout } from "@/components/layout/PublicLayout";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
+
+const PublicLayoutLazy = lazy(() =>
+  import("@/components/layout/PublicLayout").then((m) => ({ default: m.PublicLayout })),
+);
 
 const lazy = lazyWithRetry;
 
@@ -676,9 +679,9 @@ function PublicLazyRoute({ component: Component }: { component: ComponentType<an
   return (
     <ErrorBoundary>
       <Suspense fallback={<LazyRouteFallback />}>
-        <PublicLayout>
+        <PublicLayoutLazy>
           <Component params={params} />
-        </PublicLayout>
+        </PublicLayoutLazy>
       </Suspense>
     </ErrorBoundary>
   );
