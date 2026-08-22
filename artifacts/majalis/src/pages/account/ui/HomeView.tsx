@@ -2,7 +2,6 @@ import { Suspense, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { defaultSiteJsonLd } from "@/lib/seo-structured-data";
-import { useDailyContext } from "@/lib/daily-context";
 import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeUniversalSearch } from "@/components/home/HomeUniversalSearch";
@@ -75,7 +74,6 @@ function HomeBelowFoldGate() {
 }
 
 export default function HomePage() {
-  const dailyCtx = useDailyContext();
   const [lastVisited, setLastVisited] = useState<RecentPage | null>(null);
   const [isFirstVisit] = useState(() => {
     try {
@@ -115,24 +113,32 @@ export default function HomePage() {
         </div>
       )}
 
-      <PageHero
-        className="m2030-hero home-page-hero"
-        fullBleed={false}
-        eyebrow={dailyCtx.greeting}
-        title="المجلس العلمي"
-        actions={
-          <Link
-            href={continueHref}
-            className="mj-btn m2030-btn m2030-btn--primary"
-          >
-            {isFirstVisit ? "ابدأ بالدروس" : "تابع التصفح"}
-          </Link>
-        }
-      />
-
       <SectionErrorBoundary name="HomeUniversalSearch">
         <HomeUniversalSearch />
       </SectionErrorBoundary>
+
+      <PageHero
+        className="m2030-hero home-page-hero"
+        fullBleed={false}
+        withPattern={false}
+        title="علم شرعي موثوق في مكان واحد"
+        actions={
+          <>
+            <Link
+              href={continueHref}
+              className="mj-btn m2030-btn m2030-btn--primary"
+            >
+              {isFirstVisit ? "ابدأ بالدروس" : "تابع التصفح"}
+            </Link>
+            <Link
+              href="/sections"
+              className="mj-btn m2030-btn m2030-btn--ghost"
+            >
+              تصفح الأقسام
+            </Link>
+          </>
+        }
+      />
 
       <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
         <HomeStartHereSection />

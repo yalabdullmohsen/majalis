@@ -21,7 +21,9 @@ function assert(cond: boolean, label: string) {
 
 console.log("\n=== هيرو الترحيب بدون هوية مكررة ===");
 assert(!home.includes("HomeBrandTitle"), "HomeView بلا HomeBrandTitle");
-assert(home.includes("dailyCtx.greeting"), "التحية هي عنوان الهيرو");
+assert(home.includes("علم شرعي موثوق في مكان واحد"), "عنوان البطاقة الرئيسية واضح");
+assert(home.includes("تصفح الأقسام"), "زر ثانوي لتصفح الأقسام");
+assert(!home.includes('title="المجلس العلمي"'), "لا تكرار لشعار الهيدر داخل البطاقة");
 assert(!/title=\{<\s*HomeBrandTitle/.test(home), "لا عنوان هوية داخل البطاقة");
 assert(css.includes("home-page-hero"), "أنماط الهيرو المدمجة");
 assert(!css.includes("home-brand-title__panel"), "لا لوحة زخرفية للهوية في البطاقة");

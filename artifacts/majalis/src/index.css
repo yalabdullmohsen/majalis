@@ -2837,52 +2837,55 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   gap: var(--ds-space-2);
 }
 
-.navbar-v3__tagline {
+header.navbar-v3 a.navbar-v3__tagline,
+.navbar-v3 a.navbar-v3__tagline {
   flex: 1 1 auto;
   min-width: 0;
   margin: 0;
   text-align: center;
   text-decoration: none;
-  font-family: "Aref Ruqaa", "Amiri", var(--font-app, var(--font-body));
-  font-size: clamp(0.78rem, 3vw, 1rem);
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--majalis-emerald-deep, var(--mj-brand-deep, #145a42)) !important;
+  line-height: 0;
+  color: #14532d !important;
   white-space: nowrap;
   overflow: visible;
-  padding-inline: 0.25rem;
+  padding-inline: 0.35rem;
 }
 
 .navbar-v3 a.navbar-v3__tagline:hover,
 .navbar-v3 a.navbar-v3__tagline:focus-visible {
-  color: var(--majalis-emerald, var(--mj-brand, #1f7a5a)) !important;
+  color: #176b3a !important;
 }
 
-html[data-theme="dark"] .navbar-v3__tagline {
-  color: #8fd4b0 !important;
+html[data-theme="dark"] header.navbar-v3 a.navbar-v3__tagline,
+html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline,
+html.dark header.navbar-v3 a.navbar-v3__tagline {
+  color: #f3fbf6 !important;
 }
 
 html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:hover,
-html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
-  color: #b6ebcf !important;
+html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible,
+html.dark .navbar-v3 a.navbar-v3__tagline:hover {
+  color: #d8f3e6 !important;
 }
 
-/* وردمارك SVG ثابت (ثلث/رقعة، من Aref Ruqaa) بدل النص — يتبع لون الحاوية عبر currentColor
-   ويتحجّم بوحدة em من font-size المتجاوب أعلاه فلا حاجة لاستعلامات وسائط جديدة. */
+/* وردمارك SVG ثابت من Aref Ruqaa 700 — currentColor يتبع الثيم */
 .navbar-v3__tagline-mark {
-  height: 1.85em;
+  height: 2.15rem;
   width: auto;
-  max-width: min(11.5rem, 42vw);
+  max-width: min(16.75rem, 58vw);
   display: inline-block;
   vertical-align: middle;
 }
 
 @media (min-width: 880px) {
   .navbar-v3__tagline {
-    flex: 0 1 13rem;
-    max-width: 13rem;
+    flex: 0 1 18rem;
+    max-width: 18rem;
     text-align: start;
-    font-size: 0.84rem;
+  }
+  .navbar-v3__tagline-mark {
+    height: 2.35rem;
+    max-width: 18rem;
   }
 }
 
@@ -3951,29 +3954,41 @@ svg {
   }
 
   .navbar-v3__inner {
+    display: grid;
+    grid-template-columns: minmax(5.5rem, 1fr) auto minmax(5.5rem, 1fr);
+    align-items: center;
     min-height: var(--header-height, 3rem);
     max-height: none;
-    padding-block: 0.35rem;
+    padding-block: 0.4rem;
     padding-inline: max(16px, var(--gutter-inline-start, 16px))
       max(16px, var(--gutter-inline-end, 16px));
-    gap: 0.35rem;
+    gap: 0.4rem;
     box-sizing: border-box;
   }
 
   .navbar-v3__start {
+    justify-self: start;
     flex: 0 0 auto;
     min-width: 0;
   }
 
   .navbar-v3__tagline {
-    flex: 1 1 auto;
-    font-size: clamp(0.68rem, 3.1vw, 0.84rem);
+    flex: none;
+    justify-self: center;
+    max-width: min(16.75rem, 58vw);
+    padding-inline: 0.1rem;
+  }
+
+  .navbar-v3__tagline-mark {
+    height: 2.05rem;
+    max-width: min(15.75rem, 56vw);
   }
 
   .navbar-v3__end {
+    justify-self: end;
     flex: 0 0 auto;
     flex-shrink: 0;
-    gap: 0.35rem;
+    gap: 0.3rem;
   }
 
   .navbar-brand {
@@ -5433,9 +5448,10 @@ body.has-assistant-fab .app-main {
 /* ── قسم "ابدأ من هنا" — خلفية أكثر دفئاً ── */
 
 .home-start-here {
-  background: var(--msk-canvas-1, #F4F4F1) !important;
-  border-radius: var(--mj-r2, 8px);
-  padding: var(--mj-s4, 16px);
+  background: var(--mj-surface, #fffef8) !important;
+  border-radius: 16px;
+  padding: 1rem 1.05rem 1.05rem;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #145a42) 10%, transparent);
 }
 
 .home-start-here .hsh-lead {

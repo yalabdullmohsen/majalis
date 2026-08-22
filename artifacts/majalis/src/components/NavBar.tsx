@@ -135,6 +135,8 @@ export default function NavBar() {
     navigate("/login");
   }, [closeAll, logout, navigate]);
 
+  const isHomePath = (location.replace(/\/+$/, "") || "/") === "/";
+
   const openSearch = () => {
     closeAll();
     const filter = LOBBY_SEARCH_FILTER[getActiveTab(location)] ?? "all";
@@ -274,7 +276,7 @@ export default function NavBar() {
         </div>
 
         {/* صف بحث مستقل — لا يتداخل مع التبويبات أو التيكر */}
-        {isMobile && !isImmersiveChromePath(location) && (
+        {isMobile && !isHomePath && !isImmersiveChromePath(location) && (
           <div className="navbar-v3__search-row">
             <button
               type="button"
@@ -282,8 +284,8 @@ export default function NavBar() {
               onClick={openSearch}
               aria-label="فتح البحث"
             >
-              <Search size={16} strokeWidth={1.8} aria-hidden="true" />
-              <span>ابحث في المحتوى…</span>
+              <Search size={18} strokeWidth={1.8} aria-hidden="true" />
+              <span>ابحث في القرآن والدروس والأذكار...</span>
             </button>
           </div>
         )}

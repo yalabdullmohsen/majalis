@@ -6,7 +6,7 @@
   --m2030-pad: clamp(0.85rem, 3.5vw, 1.35rem);
   background: transparent;
   color: var(--text);
-  padding-block-end: calc(var(--bottom-nav-h, 3rem) + 1.1rem);
+  padding-block-end: calc(var(--bottom-nav-h, 3rem) + 1.35rem);
 }
 
 /* Hero — الهوية عبر PageHero + زخرفة ثلث الشاشة (انظر home-brand-title.css) */
@@ -59,7 +59,7 @@
 }
 
 .mj-home-lcp-ph__search .hus-field {
-  min-height: 48px;
+  min-height: 52px;
 }
 
 .mj-home-lcp-ph__search-ph {
@@ -69,7 +69,7 @@
 }
 
 .mj-home-lcp-ph__start-here {
-  min-height: 37.8rem;
+  min-height: 9.5rem;
 }
 
 .mj-home-lcp-ph__kicker,
@@ -165,11 +165,7 @@
 
 @media (min-width: 720px) {
   .mj-home-lcp-ph__start-here {
-    min-height: 24rem;
-  }
-
-  .mj-home-lcp-ph__start-here .hsh-step {
-    min-height: 6rem;
+    min-height: 8.25rem;
   }
 
   .mj-home-lcp-ph__daily-band {

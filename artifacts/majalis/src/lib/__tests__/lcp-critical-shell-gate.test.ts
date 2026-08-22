@@ -49,7 +49,7 @@ assert.doesNotMatch(html, /dns-prefetch/, "لا dns-prefetch في الإقلاع
 assert.match(html, /isNativePlatform/, "الدخولية على الأصل فقط");
 assert.match(html, /if \(!native\) \{\s*dismiss\(true\);/, "الويب بلا دخولية حاجبة");
 
-assert.match(home, /title="المجلس العلمي"/, "عنوان الرئيسية في React");
+assert.match(home, /title="علم شرعي موثوق في مكان واحد"/, "عنوان الرئيسية في React");
 assert.doesNotMatch(home, /titleDomId/, "لا تبنّي عقدة HTML");
 assert.doesNotMatch(hero, /titleDomId/, "PageHero بلا نقل عقدة");
 assert.doesNotMatch(prewarm, /link\.rel = "preconnect"/, "prewarm لا يضيف preconnect");
@@ -59,14 +59,14 @@ assert.doesNotMatch(mainSrc, /mj-app-mount/, "createRoot على #root");
 assert.match(app, /mj-home-lcp-ph/, "هيكل ارتفاع محجوز أثناء lazy الرئيسية");
 assert.match(app, /function HomeInitialShell/, "fallback مطابق للجزء المرئي من الرئيسية");
 assert.doesNotMatch(app, /scheduleRemoveHomeLcpStaticShell/, "لا إزالة صدفة HTML");
-assert.match(critical, /\.hsh-steps\s*\{[\s\S]*min-height:\s*22rem/, "حجز CLS لشبكة hsh-steps");
+assert.match(critical, /\.home-start-here\s*\{[\s\S]*min-height:\s*9\.5rem/, "حجز CLS لبطاقة ابدأ من هنا");
 assert.match(critical, /ascent-override/, "size-adjust/override للخط الاحتياطي");
 assert.match(app, /className="home-start-here mj-home-lcp-ph__start-here"/, "fallback يطابق DOM ابدأ من هنا");
 assert.match(app, /className="hsh-actions__primary"/, "fallback يستخدم نفس أزرار ابدأ من هنا");
 assert.match(app, /className="hus mj-home-lcp-ph__search"/, "fallback يطابق شريط البحث");
 assert.match(homeCss, /contain:\s*layout style/, "حاوية fallback بلا min-height مبالغ");
-assert.match(app, /HOME_START_HERE_STEPS/, "fallback يReuse نفس نصوص ابدأ من هنا");
-assert.match(homeCss, /\.mj-home-lcp-ph__start-here\s*\{[\s\S]*min-height:\s*37\.8rem/, "ارتفاع ابدأ من هنا محجوز");
+assert.match(app, /HOME_START_HERE_COPY/, "fallback يReuse نفس نصوص ابدأ من هنا");
+assert.match(homeCss, /\.mj-home-lcp-ph__start-here\s*\{[\s\S]*min-height:\s*9\.5rem/, "ارتفاع ابدأ من هنا محجوز");
 assert.doesNotMatch(homeCss, /\.mj-home-lcp-ph\s*\{[\s\S]*min-height:\s*88rem/, "لا min-height مبالغ فيه على الحاوية");
 assert.doesNotMatch(finalCss, /\.hsh-steps[^}]*content-visibility/, "ابدأ من هنا فوق الطية بلا content-visibility");
 assert.doesNotMatch(html, /fonts\.googleapis\.com/, "لا Google Fonts في إقلاع /");

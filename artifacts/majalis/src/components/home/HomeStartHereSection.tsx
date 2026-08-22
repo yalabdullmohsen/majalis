@@ -1,7 +1,5 @@
 import { Link } from "wouter";
-import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "./home-start-here-data";
-
-const START_STEPS = HOME_START_HERE_STEPS;
+import { HOME_START_HERE_COPY } from "./home-start-here-data";
 
 export function HomeStartHereSection() {
   return (
@@ -19,18 +17,6 @@ export function HomeStartHereSection() {
           </Link>
         </div>
       </div>
-      <ol className="hsh-steps">
-        {START_STEPS.map((s) => (
-          <li key={s.num} className="hsh-step">
-            <span className="hsh-step__num" aria-hidden="true">{s.num}</span>
-            <div className="hsh-step__body">
-              <strong className="hsh-step__title">{s.title}</strong>
-              <p className="hsh-step__desc">{s.desc}</p>
-              <Link href={s.href} className="hsh-step__cta">{s.cta} ←</Link>
-            </div>
-          </li>
-        ))}
-      </ol>
     </section>
   );
 }

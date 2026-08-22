@@ -46,7 +46,7 @@ import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
-import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
+import { HOME_START_HERE_COPY } from "@/components/home/home-start-here-data";
 
 const lazy = lazyWithRetry;
 
@@ -584,16 +584,6 @@ function NativeNotificationsBootstrap() {
 function HomeInitialShell() {
   return (
     <div className="m2030-home mj-home-lcp-ph" dir="rtl" aria-hidden="true">
-      <header className="page-hero-mj m2030-hero home-page-hero" dir="rtl">
-        <div className="page-hero-mj__content">
-          <p className="page-hero-mj__eyebrow mj-home-lcp-ph__hero-eyebrow">&nbsp;</p>
-          <h1 className="page-hero-mj__title">المجلس العلمي</h1>
-          <div className="page-hero-mj__actions">
-            <span className="mj-btn m2030-btn m2030-btn--primary mj-home-lcp-ph__hero-cta">تابع التصفح</span>
-          </div>
-        </div>
-      </header>
-
       <div className="hus mj-home-lcp-ph__search">
         <div className="hus-field">
           <span className="hus-input mj-home-lcp-ph__search-ph" aria-hidden="true">
@@ -601,6 +591,16 @@ function HomeInitialShell() {
           </span>
         </div>
       </div>
+
+      <header className="page-hero-mj m2030-hero home-page-hero" dir="rtl">
+        <div className="page-hero-mj__content">
+          <h1 className="page-hero-mj__title">علم شرعي موثوق في مكان واحد</h1>
+          <div className="page-hero-mj__actions">
+            <span className="mj-btn m2030-btn m2030-btn--primary mj-home-lcp-ph__hero-cta">ابدأ بالدروس</span>
+            <span className="mj-btn m2030-btn m2030-btn--ghost">تصفح الأقسام</span>
+          </div>
+        </div>
+      </header>
 
       <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
         <section aria-label="ابدأ من هنا" className="home-start-here mj-home-lcp-ph__start-here">
@@ -617,22 +617,6 @@ function HomeInitialShell() {
               </Link>
             </div>
           </div>
-          <ol className="hsh-steps">
-            {HOME_START_HERE_STEPS.map((step) => (
-              <li key={step.num} className="hsh-step">
-                <span className="hsh-step__num" aria-hidden="true">
-                  {step.num}
-                </span>
-                <div className="hsh-step__body">
-                  <strong className="hsh-step__title">{step.title}</strong>
-                  <p className="hsh-step__desc">{step.desc}</p>
-                  <Link href={step.href} className="hsh-step__cta" tabIndex={-1}>
-                    {step.cta} ←
-                  </Link>
-                </div>
-              </li>
-            ))}
-          </ol>
         </section>
       </section>
 

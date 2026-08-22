@@ -111,7 +111,7 @@ body {
 }
 
 .mj-home-lcp-ph__start-here {
-  min-height: 37.8rem;
+  min-height: 9.5rem;
 }
 
 .mj-home-lcp-ph__daily-band {
@@ -123,7 +123,7 @@ body {
 }
 
 .mj-home-lcp-ph__search .hus-field {
-  min-height: 48px;
+  min-height: 52px;
 }
 
 @media (min-width: 880px) {
@@ -139,7 +139,7 @@ body {
 
 @media (min-width: 720px) {
   .mj-home-lcp-ph__start-here {
-    min-height: 24rem;
+    min-height: 8.25rem;
   }
 
   .mj-home-lcp-ph__daily-band {
@@ -147,32 +147,13 @@ body {
   }
 }
 
-/* CLS: حجز شبكة hsh-steps — كان يُسبب 0.012–0.013 إزاحة عند الرسم */
-.hsh-steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 0.75rem;
-  min-height: 22rem;
-  list-style: none;
-  margin: 0.75rem 0 0;
-  padding: 0;
-}
-
-.hsh-step {
-  min-height: 6.25rem;
-  box-sizing: border-box;
-}
-
+/* CLS: بطاقة «ابدأ من هنا» مدمجة بلا شبكة خطوات فوق الطية */
 .home-start-here {
-  min-height: 28rem;
+  min-height: 9.5rem;
 }
 
 @media (min-width: 720px) {
-  .hsh-steps {
-    min-height: 14rem;
-  }
-
   .home-start-here {
-    min-height: 20rem;
+    min-height: 8.25rem;
   }
 }

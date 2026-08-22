@@ -133,12 +133,12 @@ export function HomeUniversalSearch() {
         بحث موحّد
       </label>
       <div className={`hus-field${focused ? " is-focused" : ""}`}>
-        <Search size={18} aria-hidden className="hus-icon" />
+        <Search size={20} aria-hidden className="hus-icon" />
         <input
           id={inputId}
           type="search"
           className="hus-input"
-          placeholder="ابحث في الآيات والكتب والعلماء والأذكار والأسئلة…"
+          placeholder="ابحث في القرآن والدروس والأذكار..."
           value={raw}
           autoComplete="off"
           enterKeyHint="search"
