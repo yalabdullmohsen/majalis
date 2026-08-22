@@ -64,13 +64,10 @@ async function main() {
   const { chromium } = await import("playwright");
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: "ar-KW" });
-  await context.addInitScript(() => {
-    Object.defineProperty(navigator, "webdriver", { get: () => false, configurable: true });
-  });
   const page = await context.newPage();
 
   try {
-    await page.goto(`${base}/`, { waitUntil: "load", timeout: 60_000 });
+    await page.goto(`${base}/?splash_timing=1`, { waitUntil: "load", timeout: 60_000 });
 
     const start = await page.evaluate(() => window.__mjSplashStart);
     assert.equal(typeof start, "number");

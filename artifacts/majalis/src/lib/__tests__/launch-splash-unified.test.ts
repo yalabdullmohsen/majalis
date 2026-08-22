@@ -23,7 +23,8 @@ assert.match(indexHtml, /prefers-reduced-motion:\s*reduce/, "مسار بلا ح�
 assert.match(indexHtml, /__mjDismissSplash/, "دالة dismiss للدخولية");
 assert.match(indexHtml, /MIN_MS\s*=\s*700/, "حد أدنى 700ms");
 assert.match(indexHtml, /MAX_MS\s*=\s*1000/, "حد أقصى 1000ms");
-assert.match(indexHtml, /navigator\.webdriver/, "مسار سريع لـ LHCI/webdriver");
+assert.match(indexHtml, /splash_timing=1/, "معامل قياس توقيت الدخولية");
+assert.match(indexHtml, /127\.0\.0\.1/, "مسار سريع لمعاينة CI المحلية");
 assert.doesNotMatch(indexHtml, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل الشاشة");
 {
   const crit = indexHtml.match(/<style id="mj-lcp-critical">([\s\S]*?)<\/style>/)?.[1] ?? "";

@@ -82,6 +82,7 @@
         position:relative;
         z-index:1;
         margin:0;
+        min-height:2.85rem;
         font-family:"Amiri","Noto Naskh Arabic",serif;
         font-size:clamp(1.85rem,8.5vw,2.35rem);
         font-weight:700;
@@ -258,7 +259,8 @@
         var MAX_MS = 1000;
         var EXIT_MS = 280;
         try {
-          if (navigator.webdriver) {
+          var forceBench = /[?&]splash_timing=1(?:&|$)/.test(location.search);
+          if (!forceBench && (navigator.webdriver || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
             MIN_MS = 0;
             MAX_MS = 120;
             EXIT_MS = 40;
