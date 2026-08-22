@@ -24,7 +24,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     local: {
       general: "/audio/adhan/adhan-makkah-full.m4a",
       fajr: "/audio/adhan/adhan-makkah-fajr.mp3",
-      short: "/audio/adhan/adhan-takbeerat-short.mp3",
+      short: "/audio/adhan/adhan-makkah-full.m4a",
       takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
     },
     remote: {
@@ -40,7 +40,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     labelAr: "أذان المدينة المنورة",
     local: {
       general: "/audio/adhan/adhan-madinah-full.m4a",
-      short: "/audio/adhan/adhan-takbeerat-short.mp3",
+      short: "/audio/adhan/adhan-madinah-full.m4a",
       takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
     },
     remote: {

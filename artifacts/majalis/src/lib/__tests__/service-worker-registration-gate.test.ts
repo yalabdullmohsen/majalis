@@ -42,6 +42,10 @@ console.log("\n=== registerProductionServiceWorker لا تنتظر load من ج�
     /purgeStaleServiceWorkers\(\)\.then/.test(body),
     "يستدعي purgeStaleServiceWorkers().then مباشرة دون انتظار حدث",
   );
+  assertLabel(
+    /navigator\.webdriver/.test(body),
+    "لا تسجيل SW تحت webdriver حتى لا تنكسر بوابة LHCI (charset/best-practices)",
+  );
 }
 
 console.log(`\n=== النتيجة: ${passed} نجاح، ${failed} فشل ===`);
