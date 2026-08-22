@@ -2809,17 +2809,16 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   margin: 0;
   text-align: center;
   text-decoration: none;
-  /* وردمارك SVG — لا يعتمد على تحميل خط وقت التشغيل فلا FOUT */
-  font-family: "Aref Ruqaa", "Amiri", var(--font-app, var(--font-body));
-  font-size: clamp(1.05rem, 4.2vw, 1.35rem);
-  font-weight: 700;
+  /* وردمارك SVG inline — بلا اعتماد على font-family وقت التشغيل */
   line-height: 1;
-  color: var(--majalis-emerald-deep, var(--mj-brand-deep, #145a42)) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep, #0f4a36)) !important;
   white-space: nowrap;
   overflow: visible;
-  padding-inline: 0.35rem;
-  /* حجز ارتفاع ثابت يمنع قفزة عند ظهور SVG */
-  min-height: 1.85rem;
+  padding-inline: 0.25rem;
+  /* حجز مساحة ثابتة يمنع CLS/وميض عند ظهور الشعار */
+  min-height: 2.1rem;
+  width: min(11.75rem, 48vw);
+  max-width: min(11.75rem, 48vw);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2827,34 +2826,40 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
 
 .navbar-v3 a.navbar-v3__tagline:hover,
 .navbar-v3 a.navbar-v3__tagline:focus-visible {
-  color: var(--majalis-emerald, var(--mj-brand, #1f7a5a)) !important;
+  color: var(--majalis-emerald, var(--mj-brand, #1a6b4f)) !important;
 }
 
 html[data-theme="dark"] .navbar-v3__tagline {
-  color: #9fdfbd !important;
+  color: #b8ebcf !important;
 }
 
 html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:hover,
 html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
-  color: #c5f0d8 !important;
+  color: #e2f8ec !important;
 }
 
-/* وردمارك SVG (رقعة/ثلث من Aref Ruqaa، مسارات ثابتة) — currentColor + حجم ثابت */
+/* وردمارك SVG — عرض أوضح على الجوال (~150–190px) وسطح المكتب */
 .navbar-v3__tagline-mark {
-  height: 1.7em;
-  width: auto;
-  max-width: min(13.5rem, 52vw);
+  height: 2rem;
+  width: 100%;
+  max-width: 100%;
   display: block;
   flex: 0 0 auto;
+  overflow: visible;
 }
 
 @media (min-width: 880px) {
   .navbar-v3__tagline {
-    flex: 0 1 15rem;
-    max-width: 15rem;
+    flex: 0 1 14.5rem;
+    width: 14.5rem;
+    max-width: 14.5rem;
     text-align: start;
-    font-size: 1.15rem;
     justify-content: flex-start;
+    min-height: 2.25rem;
+  }
+
+  .navbar-v3__tagline-mark {
+    height: 2.15rem;
   }
 }
 
@@ -3939,7 +3944,13 @@ svg {
 
   .navbar-v3__tagline {
     flex: 1 1 auto;
-    font-size: clamp(0.68rem, 3.1vw, 0.84rem);
+    width: min(11.5rem, 52vw);
+    max-width: min(11.5rem, 52vw);
+    min-height: 2rem;
+  }
+
+  .navbar-v3__tagline-mark {
+    height: 1.85rem;
   }
 
   .navbar-v3__end {
