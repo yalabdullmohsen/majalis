@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * بوابة: توقيت دخولية `#mj-silent-splash`
+ * بوابة: توقيت دخولية `#mj-launch-splash`
  *
  * تفشل إن:
- * - مدة ظهور الدخولية < 900ms أو > 1500ms (قياس من window.__mjSplashStart حتى إزالة العنصر)
+ * - مدة ظهور الدخولية < 650ms أو > 1200ms
  * - ظهرت مرة ثانية بعد تنقل داخلي داخل نفس الجلسة.
  */
 import { createServer } from "node:http";
@@ -67,16 +67,24 @@ async function main() {
   const page = await context.newPage();
 
   try {
-    await page.goto(`${base}/`, { waitUntil: "load", timeout: 60_000 });
+    await page.goto(`${base}/?splash_timing=1`, { waitUntil: "load", timeout: 60_000 });
 
-    // الويب: الدخولية تُغلق فوراً؛ الهيكل الثابت هو أول رسم.
-    const splashGone = await page.evaluate(() => !document.querySelector("#mj-silent-splash"));
-    assert.equal(splashGone, true, "الويب بلا دخولية حاجبة بعد التحميل");
+    const start = await page.evaluate(() => window.__mjSplashStart);
+    assert.equal(typeof start, "number");
+
+    await page.waitForFunction(() => !document.querySelector("#mj-launch-splash"), null, {
+      timeout: 5000,
+    });
+
+    const end = await page.evaluate(() => performance.now());
+    const duration = end - start;
+    assert.ok(duration >= 650, `splash too short: ${duration}ms`);
+    assert.ok(duration <= 1200, `splash too long: ${duration}ms`);
 
     const html = await page.content();
     assert.ok(
-      html.includes("mj-boot-skeleton") || (await page.locator("#root").evaluate((el) => el.childElementCount > 0)),
-      "أول رسم مرئي: هيكل أو React داخل #root",
+      html.includes("mj-launch-splash__tagline") || (await page.locator("#root").evaluate((el) => el.childElementCount > 0)),
+      "أول رسم: دخولية أو React داخل #root",
     );
 
     const href = "/lessons";
@@ -87,7 +95,7 @@ async function main() {
     }
     await page.waitForTimeout(500);
 
-    const stillThere = await page.evaluate(() => Boolean(document.querySelector("#mj-silent-splash")));
+    const stillThere = await page.evaluate(() => Boolean(document.querySelector("#mj-launch-splash")));
     assert.equal(stillThere, false, "الدخولـية لا يجب أن تعود بعد التنقل الداخلي");
   } finally {
     await browser.close();

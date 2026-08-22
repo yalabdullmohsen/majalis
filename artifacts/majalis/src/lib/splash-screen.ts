@@ -1,22 +1,28 @@
 /**
- * متحكّم شاشة الإطلاق الأصلية (Capacitor SplashScreen).
- * يخفي الطبقة الأصلية فور أول إطار — بلا شعار/عنوان داخل التطبيق.
+ * متحكّم شاشة الإطلاق — ويب (index.html) + Capacitor SplashScreen.
  */
 import { Capacitor } from "@capacitor/core";
+import {
+  SPLASH_FADE_OUT_MS,
+  SPLASH_MAX_VISIBLE_MS,
+  SPLASH_MIN_VISIBLE_MS,
+  SPLASH_SESSION_KEY,
+} from "@/lib/majlis-splash";
 
-export const SPLASH_MIN_VISIBLE_MS = 0;
-export const SPLASH_MAX_VISIBLE_MS = 400;
-export const SPLASH_FADE_OUT_MS = 0;
-
-const SESSION_KEY = "mj.native-splash.session.v1";
+export {
+  SPLASH_FADE_OUT_MS,
+  SPLASH_MAX_VISIBLE_MS,
+  SPLASH_MIN_VISIBLE_MS,
+};
 
 let hidden = false;
+let armedAt = 0;
 
 export async function hideNativeSplash(immediate = false): Promise<void> {
   if (hidden) return;
   hidden = true;
   try {
-    sessionStorage.setItem(SESSION_KEY, "1");
+    sessionStorage.setItem(SPLASH_SESSION_KEY, "1");
   } catch {
     /* ignore */
   }
@@ -36,18 +42,30 @@ export async function hideAppSplash(immediate = false): Promise<void> {
   await hideNativeSplash(immediate);
 }
 
-/** يخفي SplashScreen الأصلي عند أول إطار بعد التركيب. */
+function elapsedSinceArm(): number {
+  if (!armedAt) return SPLASH_MAX_VISIBLE_MS;
+  return performance.now() - armedAt;
+}
+
+function scheduleNativeHide(): void {
+  const run = () => {
+    const wait = Math.max(0, SPLASH_MIN_VISIBLE_MS - elapsedSinceArm());
+    window.setTimeout(() => {
+      void hideNativeSplash(false);
+    }, wait);
+  };
+
+  if (elapsedSinceArm() >= SPLASH_MIN_VISIBLE_MS) {
+    void hideNativeSplash(false);
+    return;
+  }
+  run();
+}
+
+/** يخفي SplashScreen الأصلي بعد أول رسم مع احترام الحد الأدنى/الأقصى. */
 export function armNativeSplashController(): void {
   if (!Capacitor.isNativePlatform()) return;
-
-  try {
-    if (sessionStorage.getItem(SESSION_KEY) === "1") {
-      void hideNativeSplash(true);
-      return;
-    }
-  } catch {
-    /* ignore */
-  }
+  armedAt = performance.now();
 
   const deadline = window.setTimeout(() => {
     void hideNativeSplash(true);
@@ -55,7 +73,7 @@ export function armNativeSplashController(): void {
 
   const hide = () => {
     window.clearTimeout(deadline);
-    void hideNativeSplash(true);
+    scheduleNativeHide();
   };
 
   window.addEventListener("mj:app-painted", hide, { once: true });

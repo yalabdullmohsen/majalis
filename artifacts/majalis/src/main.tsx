@@ -168,17 +168,10 @@ async function mount() {
     return;
   }
 
-  // أخفِ الإطلاق الأصلي وطبقة اللون فور أول إطار — بلا دخولية.
+  // أخفِ الإطلاق الأصلي بعد أول رسم — الدخولية الويب تُدار من index.html.
   armNativeSplashController();
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      try {
-        const dismiss = (window as Window & { __mjDismissSplash?: (immediate?: boolean) => void })
-          .__mjDismissSplash;
-        dismiss?.(true);
-      } catch {
-        /* ignore */
-      }
       window.dispatchEvent(new Event("mj:app-painted"));
       window.dispatchEvent(new Event("app:first-paint"));
     });
