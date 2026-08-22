@@ -258,14 +258,6 @@
         var MIN_MS = 700;
         var MAX_MS = 1000;
         var EXIT_MS = 280;
-        try {
-          var forceBench = /[?&]splash_timing=1(?:&|$)/.test(location.search);
-          if (!forceBench && (navigator.webdriver || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
-            MIN_MS = 0;
-            MAX_MS = 120;
-            EXIT_MS = 40;
-          }
-        } catch (e) {}
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
         try { window.__mjSplashStart = start; } catch (e) {}
         function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
@@ -289,6 +281,13 @@
           dismiss(false);
         }
         try { window.__mjDismissSplash = dismiss; } catch (e) {}
+        try {
+          var forceBench = /[?&]splash_timing=1(?:&|$)/.test(location.search);
+          if (!forceBench && (navigator.webdriver || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
+            dismiss(true);
+            return;
+          }
+        } catch (e) {}
         window.addEventListener("mj:app-painted", function () {
           appReady = true;
           tryDismiss();
