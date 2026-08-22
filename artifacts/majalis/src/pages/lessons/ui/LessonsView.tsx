@@ -44,18 +44,7 @@ import { formatSheikhName } from "@/lib/sheikh-name";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
 import { SITE_URL } from "@/lib/site-config";
-type TabId = "all" | "men" | "women" | "courses" | "makkah" | "madinah";
-
-const TAB_LABELS: Record<TabId, string> = {
-  all: "الكل",
-  men: "الدروس الرجالية",
-  women: "الدروس النسائية",
-  courses: "دورات",
-  makkah: "الحرم المكي",
-  madinah: "المسجد النبوي",
-};
-
-const TAB_COMING_SOON: Partial<Record<TabId, boolean>> = { makkah: true, madinah: true };
+type TabId = "all" | "men" | "women" | "courses";
 
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
   const [tab, setTabState] = useState<TabId>(() => readTabFromUrl());
@@ -85,9 +74,7 @@ function useTabFromUrl(): [TabId, (tab: TabId) => void] {
 function readTabFromUrl(): TabId {
   if (typeof window === "undefined") return "all";
   const value = new URLSearchParams(window.location.search).get("tab");
-  if (value === "courses" || value === "men" || value === "women" || value === "makkah" || value === "madinah") {
-    return value;
-  }
+  if (value === "courses" || value === "men" || value === "women") return value;
   return "all";
 }
 
@@ -95,12 +82,6 @@ function filterByTab(lessons: KuwaitLessonRecord[], tab: TabId): KuwaitLessonRec
   if (tab === "courses") return lessons.filter((l) => l.isCourse || l.activityType === "دورة");
   if (tab === "men") return lessons.filter((l) => !l.hasWomenSection);
   if (tab === "women") return lessons.filter((l) => l.hasWomenSection);
-  if (tab === "makkah") {
-    return lessons.filter((l) => /مك[ةه]|الحرم المك|المسجد الحرام|البيت الحرام/u.test(l.mosque || ""));
-  }
-  if (tab === "madinah") {
-    return lessons.filter((l) => /المدين[ةه]|المسجد النبوي|الحرم النبوي/u.test(l.mosque || ""));
-  }
   return lessons;
 }
 
@@ -563,13 +544,7 @@ export default function LessonsPage({
             onRetry={() => safeLocationReload()}
           >
             <>
-              {TAB_COMING_SOON[tab] ? (
-                <Empty
-                  text={`لم تُوثَّق بعدُ دروس ${TAB_LABELS[tab]} من مصدر معتمد. تصفّح تبويب «الكل» للمتاح الآن.`}
-                />
-              ) : (
-                <>
-                  {showFeatured && featuredSections.upcoming.length > 0 && (
+              {showFeatured && featuredSections.upcoming.length > 0 && (
                     <section className="lessons-v2-section">
                       <h2 className="lessons-v2-section__title">
                         {featuredSections.upcoming.some((l) => getFeaturedHomeStatusLabel(l) === "مستمر")
@@ -603,8 +578,6 @@ export default function LessonsPage({
                       renderGrid(mainList)
                     )}
                   </section>
-                </>
-              )}
 
               {!loading && !loadError ? (
                 <section className="lessons-past-section" aria-labelledby="past-lessons-heading">

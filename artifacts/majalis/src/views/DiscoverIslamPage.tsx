@@ -57,14 +57,14 @@ type VisitorPath = {
 };
 
 const VISITOR_PATHS: VisitorPath[] = [
-  { id: "first-time", label: "أتعرّف لأول مرة", desc: "مدخل عام مبسّط للإسلام؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/articles/what-is-islam" },
-  { id: "believe-questions", label: "أؤمن بالله ولديّ أسئلة", desc: "أسئلة حول النبوة والعبادة والقرآن؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/questions?category=prophethood" },
-  { id: "atheist", label: "لا أؤمن بوجود الله", desc: "أدلة عقلية على وجود الخالق؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/questions?category=god-existence" },
-  { id: "other-religion", label: "أنتمي إلى ديانة أخرى", desc: "تصوّر الإسلام لله والنبوة والوحي؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/questions?category=prophethood" },
-  { id: "doubts", label: "لديّ شبهات", desc: "ردود موثّقة على أشهر الشبهات؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/doubts" },
-  { id: "considering", label: "أفكّر في الدخول", desc: "خطوات عملية وواضحة؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/how-to-convert" },
-  { id: "new-muslim", label: "دخلت الإسلام حديثًا", desc: "مسار الثلاثين يومًا الأول؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/new-muslim" },
-  { id: "contact", label: "أريد التحدث مع مختص", desc: "تواصل سري مع داعية أو داعية؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/contact" },
+  { id: "first-time", label: "أتعرّف لأول مرة", desc: "مدخل عام مبسّط للإسلام من مصادره", href: "/discover-islam/articles/what-is-islam" },
+  { id: "believe-questions", label: "أؤمن بالله ولديّ أسئلة", desc: "أسئلة حول النبوة والعبادة والقرآن", href: "/discover-islam/questions?category=prophethood" },
+  { id: "atheist", label: "لا أؤمن بوجود الله", desc: "أدلة عقلية على وجود الخالق", href: "/discover-islam/questions?category=god-existence" },
+  { id: "other-religion", label: "أنتمي إلى ديانة أخرى", desc: "تصوّر الإسلام لله والنبوة والوحي", href: "/discover-islam/questions?category=prophethood" },
+  { id: "doubts", label: "لديّ شبهات", desc: "ردود موثّقة على أشهر الشبهات", href: "/discover-islam/doubts" },
+  { id: "considering", label: "أفكّر في الدخول", desc: "خطوات عملية واضحة للدخول في الإسلام", href: "/discover-islam/how-to-convert" },
+  { id: "new-muslim", label: "دخلت الإسلام حديثًا", desc: "مسار الثلاثين يومًا الأول", href: "/discover-islam/new-muslim" },
+  { id: "contact", label: "أريد التحدث مع مختص", desc: "تواصل سري مع داعية أو داعية", href: "/discover-islam/contact" },
 ];
 
 const JOURNEY_STEPS = [
@@ -88,7 +88,7 @@ export default function DiscoverIslamPage() {
     applyPageSeo({
       path: "/discover-islam",
       title: "تعرّف إلى الإسلام من مصادره | المجلس العلمي",
-      description: "منصة تعريفية بالإسلام لغير المسلمين والمهتمين: أسئلة وأجوبة، ردود على الشبهات، وكيفية الدخول في الإسلام — بلغات متعددة. محتوى معتمد في منهج",
+      description: "منصة تعريفية بالإسلام لغير المسلمين والمهتمين: أسئلة وأجوبة، ردود على الشبهات، وكيفية الدخول في الإسلام — بلغات متعددة.",
       keywords: ["ما هو الإسلام", "التعرف على الإسلام", "كيف أصبح مسلم", "أسئلة عن الإسلام"],
     });
   }, []);
@@ -144,6 +144,12 @@ export default function DiscoverIslamPage() {
           ))}
         </div>
       </section>
+
+      {categories.length === 0 && questions.length === 0 && shubuhat.length === 0 ? (
+        <p className="page-desc" style={{ marginTop: "1.5rem" }}>
+          المقالات والمسارات أدناه متاحة الآن. قسم الأسئلة والشبهات المميزة يُحدَّث دوريًا من قاعدة البيانات.
+        </p>
+      ) : null}
 
       {categories.length > 0 && (
         <section aria-labelledby="dii-categories-heading" style={{ marginTop: "2.5rem" }}>
