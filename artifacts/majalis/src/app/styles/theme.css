@@ -223,23 +223,23 @@
   --mj-s8: 32px;
   --mj-s12: 48px;
   --font-app: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
-  --mj-face: var(--font-app);
+  --mj-face: var(--font-heading, "Noto Naskh Arabic", serif);
   --mj-ui: var(--font-app);
   --mj-num: var(--font-app);
-  --mj-fs-display: 40px;
-  --mj-fs-h1: 28px;
-  --mj-fs-h2: 20px;
+  --mj-fs-display: 32px;
+  --mj-fs-h1: 26px;
+  --mj-fs-h2: 18px;
   --mj-fs-sacred: 20px;
   --mj-fs-body: 16px;
   --mj-fs-btn: 14px;
   --mj-fs-small: 14px;
-  --mj-fs-tiny: 12px;
-  --mj-lh-tight: 1.15;
-  --mj-lh-title: 1.55;
-  --mj-lh-card: 1.7;
-  --mj-lh-ui: 1.85;
-  --mj-lh-body: 1.85;
-  --mj-lh-small: 1.75;
+  --mj-fs-tiny: 13px;
+  --mj-lh-tight: 1.25;
+  --mj-lh-title: 1.4;
+  --mj-lh-card: 1.55;
+  --mj-lh-ui: 1.65;
+  --mj-lh-body: 1.75;
+  --mj-lh-small: 1.65;
   --mj-lh-sacred: 2.1;
 
   /* طبقات ارتفاع — بديل ظل واحد */

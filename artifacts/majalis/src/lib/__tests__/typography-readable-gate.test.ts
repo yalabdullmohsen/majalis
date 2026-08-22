@@ -11,14 +11,15 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const tokens = read("src/styles/design-tokens.css");
-assert.match(tokens, /--font-base:\s*1\.0625rem/, "جوال 17px");
-assert.match(tokens, /--font-base:\s*1\.125rem/, "سطح مكتب 18px");
+assert.match(tokens, /--font-base:\s*1rem/, "جوال 16px");
+assert.match(tokens, /--font-base:\s*1\.0625rem/, "سطح مكتب 17px");
 assert.match(tokens, /--lh-body:\s*1\.75/, "ارتفاع سطر للنصوص");
-assert.match(tokens, /--font-xs:\s*0\.875rem/, "meta ≥14px");
+assert.match(tokens, /--font-xs:\s*0\.8125rem/, "شريط سفلي 13px");
+assert.match(tokens, /--font-heading/, "خط عناوين واجهة");
 assert.doesNotMatch(tokens, /--font-xl:\s*clamp\([^)]*vw/, "عناوين بلا vw");
 
 const scale = read("src/styles/typography-scale.css");
-assert.match(scale, /font-weight:\s*var\(--font-weight-medium/, "body وزن 500");
+assert.match(scale, /font-weight:\s*var\(--font-weight-regular/, "body وزن 400");
 assert.match(scale, /\.text-readable/);
 assert.match(scale, /\.text-meta/);
 assert.match(scale, /\.heading-page/);
@@ -40,7 +41,7 @@ assert.match(finalCss, /--bottom-nav-height:\s*3\.25rem/);
 assert.match(finalCss, /--text-nav/);
 
 const indexCss = read("src/index.css");
-assert.match(indexCss, /font-weight:\s*var\(--font-weight-medium/);
-assert.match(indexCss, /--text-base:\s*1\.0625rem/);
+assert.match(indexCss, /font-weight:\s*var\(--font-weight-regular/);
+assert.match(indexCss, /--text-base:\s*1rem/);
 
 console.log("typography-readable-gate.test.ts: ok");

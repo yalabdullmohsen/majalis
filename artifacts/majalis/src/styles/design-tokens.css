@@ -41,14 +41,14 @@
   --warning: var(--mj-accent);
   --success: var(--mj-brand);
 
-  /* طباعة — مقروئية عربية (جوال 17px / سطح مكتب 18px عبر media أدناه) */
-  --font-xs: 0.875rem;     /* 14px — أدنى meta مقروء */
-  --font-sm: 1rem;         /* 16px — تسميات / nav */
-  --font-base: 1.0625rem;  /* 17px — نص أساسي (جوال) */
-  --font-md: 1.125rem;     /* 18px */
-  --font-lg: 1.3125rem;    /* 21px */
-  --font-xl: 1.5rem;       /* 24px — عناوين */
-  --font-2xl: 1.75rem;     /* 28px — عرض */
+  /* طباعة — مقروئية عربية (جوال) */
+  --font-xs: 0.8125rem;    /* 13px — تسميات صغيرة / شريط سفلي */
+  --font-sm: 0.875rem;     /* 14px — وصف البطاقة */
+  --font-base: 1rem;       /* 16px — نص أساسي */
+  --font-md: 1.0625rem;    /* 17px — نص بطاقة طويل */
+  --font-lg: 1.125rem;     /* 18px — عنوان بطاقة (أدنى) */
+  --font-xl: 1.375rem;     /* 22px — عنوان بطاقة (أعلى) */
+  --font-2xl: 1.625rem;    /* 26px — عنوان صفحة (جوال) */
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -57,19 +57,24 @@
   --font-weight-extrabold: 800;
 
   --line-height-tight: 1.35;
-  --line-height-normal: 1.6;
+  --line-height-normal: 1.65;
   --line-height-relaxed: 1.75;
 
   --lh-ui: var(--line-height-normal);
   --lh-body: 1.75;
   --lh-prose: 1.85;
+
+  /* خطوط واجهة (محلية) — المصحف يستخدم QPC منفصلًا */
+  --font-heading: "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-body-ui: "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --brand-contrast: var(--brand-on-white);
 }
 
 @media (min-width: 768px) {
   :root {
-    --font-base: 1.125rem; /* 18px */
-    --font-xl: 1.625rem;   /* 26px */
-    --font-2xl: 1.875rem;  /* 30px */
+    --font-base: 1.0625rem; /* 17px */
+    --font-xl: 1.375rem;    /* 22px */
+    --font-2xl: 2rem;       /* 32px — حد أقصى للعناوين */
   }
 }
 

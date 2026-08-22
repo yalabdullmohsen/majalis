@@ -19,9 +19,9 @@
   display: flex;
   flex-direction: column;
   gap: var(--mj-s3);
-  padding: var(--mj-s4);
+  padding: 0.9rem 1rem;
   background: var(--mj-surface);
-  border: 1px solid transparent;
+  border: 1px solid var(--mj-hairline);
   border-radius: var(--mj-r-lg);
   text-decoration: none;
   color: inherit;
@@ -65,19 +65,19 @@
 .hub-card__title {
   margin: 0;
   font-family: var(--mj-face);
-  font-size: var(--mj-fs-h2);
+  font-size: var(--type-card-title, var(--mj-fs-h2));
   font-weight: 700;
   line-height: var(--mj-lh-card);
-  color: var(--mj-ink);
+  color: var(--text-primary, var(--mj-ink));
 }
 
 .hub-card__desc {
   margin: 0;
-  font-family: var(--mj-ui);
-  font-size: var(--mj-fs-small);
+  font-family: var(--font-body-ui, var(--mj-ui));
+  font-size: var(--type-card-desc, var(--mj-fs-small));
   font-weight: 400;
   line-height: var(--mj-lh-small);
-  color: var(--mj-ink-2);
+  color: var(--text-secondary, var(--mj-ink-2));
 }
 
 .hub-card__badge,
@@ -194,17 +194,17 @@
 .fqh-hub-card__title,
 .twh-hub-card__title {
   font-family: var(--mj-face) !important;
-  font-size: var(--mj-fs-h2) !important;
+  font-size: var(--type-card-title, var(--mj-fs-h2)) !important;
   font-weight: 700 !important;
-  color: var(--mj-ink) !important;
+  color: var(--text-primary, var(--mj-ink)) !important;
 }
 
 .fqh-hub-card__desc,
 .twh-hub-card__desc {
-  font-family: var(--mj-ui) !important;
-  font-size: var(--mj-fs-small) !important;
+  font-family: var(--font-body-ui, var(--mj-ui)) !important;
+  font-size: var(--type-card-desc, var(--mj-fs-small)) !important;
   line-height: var(--mj-lh-small) !important;
-  color: var(--mj-ink-2) !important;
+  color: var(--text-secondary, var(--mj-ink-2)) !important;
 }
 
 .fqh-hub-card__emoji,

@@ -697,9 +697,9 @@ html.dark .nav-soon-badge {
 }
 .bottom-nav--v2 .bottom-nav__tab-label {
   display: block;
-  font-size: var(--text-nav, var(--font-xs, 0.875rem));
+  font-size: var(--type-nav-label, var(--text-nav, 0.8125rem));
   font-weight: 600;
-  line-height: 1.15;
+  line-height: 1.25;
   max-width: 100%;
   white-space: nowrap;
   overflow: visible;

@@ -33,6 +33,7 @@ import "./styles/tokens.css";
 // رموز دلالية موحّدة (سطح/نص/حد/خطوط) — بعد tokens وقبل الطبقات القديمة
 import "./styles/design-tokens.css";
 import "./styles/typography-scale.css";
+import "./styles/typography-app.css";
 import "./index.css";
 import "./styles/final-release.css";
 import "./styles/brand-v4-contrast-fixes.css";

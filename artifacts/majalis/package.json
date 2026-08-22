@@ -106,7 +106,7 @@
     "test:css-decompose": "node --import tsx src/lib/__tests__/css-decompose-gate.test.ts",
     "test:defer-entry-css": "node --import tsx src/lib/__tests__/defer-entry-css-gate.test.ts",
     "test:lhci-budget": "node --import tsx src/lib/__tests__/lhci-budget-gate.test.ts",
-    "test:typography-readable": "node --import tsx src/lib/__tests__/typography-readable-gate.test.ts",
+    "test:typography-readable": "node --import tsx src/lib/__tests__/typography-readable-gate.test.ts && node --import tsx src/lib/__tests__/typography-app-gate.test.ts",
     "test:app-first-run-host": "node --import tsx src/lib/__tests__/app-first-run-host.test.ts",
     "test:playwright-smoke": "playwright test tests/01-smoke.spec.ts tests/10-critical-acceptance.spec.ts --project=desktop",
     "test:pwa": "node --import tsx src/lib/__tests__/pwa-mobile-launch.test.ts",
