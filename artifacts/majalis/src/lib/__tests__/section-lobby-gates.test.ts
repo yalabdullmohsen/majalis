@@ -14,6 +14,7 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 const PAGES = [
   ["quran", "src/pages/quran/ui/QuranHubView.tsx"],
   ["lessons", "src/pages/lessons/ui/LessonsView.tsx"],
+  ["competitions", "src/pages/competitions/ui/CompetitionsHubView.tsx"],
   ["fiqh", "src/pages/fiqh/ui/FiqhView.tsx"],
   ["sections", "src/pages/account/SectionsPage.tsx"],
 ] as const;
@@ -85,9 +86,15 @@ assert.equal(quran.groups.find((g) => g.id === "numbers")?.items.length, 1);
 const lessons = getLobby("lessons");
 assert.ok(lessons.primary);
 assert.deepEqual(lessons.chips?.map((c) => c.id), ["all", "men", "women", "courses"]);
-assert.equal(lessons.quad?.length, 4);
-assert.deepEqual(lessons.quad?.map((q) => q.id), ["lessons", "quran-circles", "hijri-calendar", "lessons-archive"]);
-assert.ok(lessons.quad?.[0]?.accent && lessons.quad?.[1]?.accent);
+assert.equal(lessons.quad?.length, 5);
+assert.deepEqual(lessons.quad?.map((q) => q.id), [
+  "lessons",
+  "quran-circles",
+  "competitions",
+  "hijri-calendar",
+  "lessons-archive",
+]);
+assert.ok(lessons.quad?.[0]?.accent && lessons.quad?.[1]?.accent && lessons.quad?.[2]?.accent);
 assert.equal(lessons.groups.length, 0);
 
 const prayer = getLobby("prayer");

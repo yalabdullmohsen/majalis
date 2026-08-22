@@ -362,19 +362,42 @@ function ScoreBar({ teams, activeTeamId }: { teams: Team[]; activeTeamId: TeamId
 
 // ─── Setup Phase ───────────────────────────────────────────────────────────
 
-function SetupPhase({ onStart }: { onStart: (cats: string[], mode: GameMode, names: string[]) => void }) {
+export function parseCatsFromUrl(search: string): string[] {
+  const raw = new URLSearchParams(search).get("cats");
+  if (!raw) return [];
+  const valid = new Set(GAME_CATEGORIES.map((c) => c.id));
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const part of raw.split(",")) {
+    const id = part.trim();
+    if (!id || !valid.has(id) || seen.has(id)) continue;
+    seen.add(id);
+    out.push(id);
+  }
+  return out.slice(0, 6);
+}
+
+function SetupPhase({
+  onStart,
+  initialSelected = [],
+  minCategories = 2,
+}: {
+  onStart: (cats: string[], mode: GameMode, names: string[]) => void;
+  initialSelected?: string[];
+  minCategories?: number;
+}) {
   const [mode, setMode] = useState<GameMode>("team");
   const [teamCount, setTeamCount] = useState<2 | 3 | 4>(2);
   const [teamNames, setTeamNames] = useState<string[]>(["", ""]);
   const [soloName, setSoloName] = useState("");
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = useState<string[]>(initialSelected);
 
   const toggle = (id: string) =>
     setSelected((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : prev.length < 6 ? [...prev, id] : prev,
     );
 
-  const canStart = selected.length >= 2;
+  const canStart = selected.length >= minCategories;
 
   const changeTeamCount = (n: 2 | 3 | 4) => {
     setTeamCount(n);
@@ -475,7 +498,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], mode: GameMode, nam
       <section className="qzg-section-card">
         <div className="qzg-cats-head">
           <h2 className="qzg-section-h2 qzg-section-h2--flush"><Library size={16} className="inline ms-1" />اختر الفئات</h2>
-          <span className="qzg-cats-count">{selected.length}/6 (2 كحد أدنى)</span>
+          <span className="qzg-cats-count">{selected.length}/6 ({minCategories} كحد أدنى)</span>
         </div>
         <div className="qzg-cats-grid">
           {GAME_CATEGORIES.map((cat) => {
@@ -841,6 +864,7 @@ export function IslamicQuizGame() {
 
   // وجهة روابط البحث: /quiz?qa=<id> تفتح سؤالاً محدَّداً مباشرةً قبل أي شيء آخر.
   const urlSearch = useSearch();
+  const catsFromUrl = parseCatsFromUrl(urlSearch);
   const [directQaId, setDirectQaId] = useState<string | null>(
     () => new URLSearchParams(urlSearch).get("qa"),
   );
@@ -939,7 +963,13 @@ export function IslamicQuizGame() {
           </div>
         )}
 
-        {!directQaId && state.phase === "setup" && <SetupPhase onStart={handleStart} />}
+        {!directQaId && state.phase === "setup" && (
+          <SetupPhase
+            onStart={handleStart}
+            initialSelected={catsFromUrl}
+            minCategories={catsFromUrl.length > 0 ? 1 : 2}
+          />
+        )}
         {state.phase === "board" && (
           <BoardPhase
             state={state}
