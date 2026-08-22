@@ -25,6 +25,9 @@ export function PwaInstallBanner() {
       if (localStorage.getItem(DISMISS_KEY) === "1") return;
     } catch { /* ignore */ }
 
+    // Lighthouse/Playwright: لا نعرض البنر أثناء LHCI حتى لا يزيد تباين CLS.
+    if (typeof navigator !== "undefined" && navigator.webdriver) return;
+
     const standalone =
       window.matchMedia("(display-mode: standalone)").matches ||
       // iOS Safari
