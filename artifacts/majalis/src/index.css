@@ -2838,9 +2838,9 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
   color: #e2f8ec !important;
 }
 
-/* وردمارك SVG — عرض أوضح وأعرض؛ بلا خط نصي */
+/* وردمارك SVG — عرض أوضح على الجوال (~150–190px) وسطح المكتب */
 .navbar-v3__tagline-mark {
-  height: 2.1rem;
+  height: 2rem;
   width: 100%;
   max-width: 100%;
   display: block;
@@ -2850,16 +2850,16 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
 
 @media (min-width: 880px) {
   .navbar-v3__tagline {
-    flex: 0 1 16rem;
-    width: 16rem;
-    max-width: 16rem;
+    flex: 0 1 14.5rem;
+    width: 14.5rem;
+    max-width: 14.5rem;
     text-align: start;
     justify-content: flex-start;
-    min-height: 2.35rem;
+    min-height: 2.25rem;
   }
 
   .navbar-v3__tagline-mark {
-    height: 2.3rem;
+    height: 2.15rem;
   }
 }
 
