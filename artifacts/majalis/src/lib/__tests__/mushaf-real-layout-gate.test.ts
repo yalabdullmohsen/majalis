@@ -96,7 +96,7 @@ assert.match(actions, /focusables|Tab/);
 assert.match(pager, /dx > 0/);
 assert.match(pager, /go\(page \+ 1\)/);
 assert.match(pager, /go\(page - 1\)/);
-assert.match(pager, /SWIPE_MIN_PX\s*=\s*45/);
+assert.match(pager, /SWIPE_MIN_PX\s*=\s*40/);
 assert.match(pager, /SETTLE_MS\s*=\s*250/);
 assert.doesNotMatch(pager, /rotateY/);
 assert.match(viewport, /suppressPageSyncRef/);
@@ -138,7 +138,9 @@ assert.match(viewport, /addEventListener\("scroll"/);
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
 assert.match(css, /--mm-ink:\s*#f4efe5|--mm-ink:\s*#f7faf7|--mm-ink:\s*#ffffff/);
 assert.match(css, /--mm-paper:\s*#fbf7ef/);
-assert.match(css, /rgba\(191,\s*159,\s*91,\s*0\.(1[0-9]|22)\)/);
+assert.match(css, /--mm-ayah-select:\s*rgba\(46,\s*125,\s*82,\s*0\.16\)/);
+assert.match(css, /--mm-ayah-select:\s*rgba\(94,\s*196,\s*154,\s*0\.22\)/);
+assert.match(css, /\.mm-ayah-hl__band/);
 
 assert.match(page, /filledSlots|mm-page__body--opening/);
 assert.doesNotMatch(page, /\(15 - span\) \/ 2/);
@@ -146,6 +148,6 @@ assert.doesNotMatch(page, /inlineBasmala/);
 assert.match(page, /النمل/);
 
 assert.match(css, /width:\s*13\.1%/);
-assert.match(read("src/features/mushaf-madinah/MushafPageFooter.tsx"), /mm-page-footer__cartouche/);
+assert.match(read("src/features/mushaf-madinah/MushafPageFooter.tsx"), /mm-page-footer__num/);
 
 console.log("mushaf-real-layout-gate.test.ts: ok");

@@ -468,6 +468,34 @@ export function AyahActionSheet({
                     <span>{currentReciter.nameAr}</span>
                   </button>
                 </div>
+                <ul className="ayah-action-sheet__reciter-cards" aria-label="القرّاء">
+                  {reciters.map((r) => (
+                    <li key={r.id}>
+                      <span>{r.nameAr}</span>
+                      <button
+                        type="button"
+                        aria-label={r.id === reciterId && playing ? `إيقاف ${r.nameAr}` : `تشغيل ${r.nameAr}`}
+                        onClick={() => {
+                          if (r.id === reciterId && playing) {
+                            onTogglePlay();
+                            return;
+                          }
+                          if (onPlayReciter) onPlayReciter(r.id);
+                          else {
+                            onReciterChange(r.id);
+                            onPlay();
+                          }
+                        }}
+                      >
+                        {r.id === reciterId && playing ? (
+                          <Pause size={16} aria-hidden="true" />
+                        ) : (
+                          <Play size={16} aria-hidden="true" />
+                        )}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
                 <p className="ayah-action-sheet__range-label">النطاق</p>
                 <div className="ayah-action-sheet__range" role="group" aria-label="نطاق التلاوة">
                   {(

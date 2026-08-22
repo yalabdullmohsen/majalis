@@ -1,15 +1,12 @@
 /**
  * متحكّم شاشة الإطلاق الأصلية (Capacitor SplashScreen).
- *
- * الويب: لا دخولية حاجبة — هيكل ثابت يُرسم فوراً ويُزال عند أول رسم لـ React.
- * الأصلي: launchAutoHide: false حتى يُخفى برمجياً عند أول رسم،
- * ثم طبقة HTML (عنوان + سطر + مؤشر) تبقى 900–1500ms بتلاشٍ 250ms.
+ * يخفي الطبقة الأصلية فور أول إطار — بلا شعار/عنوان داخل التطبيق.
  */
 import { Capacitor } from "@capacitor/core";
 
-export const SPLASH_MIN_VISIBLE_MS = 900;
-export const SPLASH_MAX_VISIBLE_MS = 1500;
-export const SPLASH_FADE_OUT_MS = 250;
+export const SPLASH_MIN_VISIBLE_MS = 0;
+export const SPLASH_MAX_VISIBLE_MS = 400;
+export const SPLASH_FADE_OUT_MS = 120;
 
 const SESSION_KEY = "mj.native-splash.session.v1";
 
@@ -39,11 +36,7 @@ export async function hideAppSplash(immediate = false): Promise<void> {
   await hideNativeSplash(immediate);
 }
 
-/**
- * يُخفي SplashScreen الأصلي عند أول إطار بعد التركيب حتى تظهر
- * طبقة HTML المطابقة (عنوان + سطر + مؤشر) بلا فجوة بيضاء.
- * سقف أمان = SPLASH_MAX_VISIBLE_MS.
- */
+/** يخفي SplashScreen الأصلي عند أول إطار بعد التركيب. */
 export function armNativeSplashController(): void {
   if (!Capacitor.isNativePlatform()) return;
 
@@ -57,17 +50,16 @@ export function armNativeSplashController(): void {
   }
 
   const deadline = window.setTimeout(() => {
-    void hideNativeSplash(false);
+    void hideNativeSplash(true);
   }, SPLASH_MAX_VISIBLE_MS);
 
   const hide = () => {
     window.clearTimeout(deadline);
-    void hideNativeSplash(false);
+    void hideNativeSplash(true);
   };
 
-  const onPaint = () => hide();
-  window.addEventListener("mj:app-painted", onPaint, { once: true });
-  window.addEventListener("app:first-paint", onPaint, { once: true });
+  window.addEventListener("mj:app-painted", hide, { once: true });
+  window.addEventListener("app:first-paint", hide, { once: true });
 
   if (typeof requestAnimationFrame === "function") {
     requestAnimationFrame(() => {

@@ -1,7 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
-import { AppSplash } from "./components/AppSplash";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { ChunkRecoveryToast } from "./components/ChunkRecoveryToast";
 import { applyFontPreference, readFontPreference } from "./lib/font-preference";
@@ -112,7 +111,7 @@ prefetchTopRoutesOnIdle();
 async function mount() {
   const started = performance.now();
 
-  // بوابة التشغيل الأول قبل الرسم — متزامنة وسريعة (لا Preferences).
+  // ترحيل راية الخصوصية ومسح مفاتيح الدخولية القديمة — بلا شاشة بدء.
   initOnboardingState();
 
   if (isNative) {
@@ -130,7 +129,6 @@ async function mount() {
   try {
     createRoot(rootEl).render(
       <>
-        <AppSplash />
         <ChunkRecoveryToast />
         <ErrorBoundary>
           <QueryClientProvider client={queryClient}>

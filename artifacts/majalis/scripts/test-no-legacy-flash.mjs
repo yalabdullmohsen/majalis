@@ -4,7 +4,7 @@
  *
  * تفشل إن:
  * - ظهرت طبقة إطلاق ثانية (غير #mj-silent-splash)
- * - أو #mj-silent-splash لم تكن بالشكل الجديد (لا title/progress)
+ * - أو #mj-silent-splash حملت شعار/عنوان/مؤشر دخولية
  * - أو تغيّر `dataset.theme`/`dataset.font` بشكل متكرر خلال نافذة القياس
  *
  * تشغيل: node scripts/test-no-legacy-flash.mjs
@@ -104,9 +104,9 @@ async function main() {
         throw new Error(`multiple splashes at sample=${i}: splashCount=${s.splashCount}`);
       }
       if (s.splashPresent) {
-        if (!s.titlePresent || !s.progressPresent) {
+        if (s.titlePresent || s.progressPresent) {
           throw new Error(
-            `legacy splash structure at sample=${i}: title=${s.titlePresent} progress=${s.progressPresent}`,
+            `branded splash at sample=${i}: title=${s.titlePresent} progress=${s.progressPresent}`,
           );
         }
       }

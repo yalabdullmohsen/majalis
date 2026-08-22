@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link } from "wouter";
-import { Bookmark, Copy, Share2, BookOpen } from "lucide-react";
+import { ArrowRight, Bookmark, Copy, Share2 } from "lucide-react";
 import { fetchMushafAyahTafsir } from "@/lib/quran-data/fetch-ayah-content";
 import {
-  formatTafsirSourceLine,
   getEligibleTextTafsirs,
-  resolveRegistryTafsirId,
   type TafsirRegistryEntry,
 } from "@/lib/quran-data/tafsir-registry";
 import {
@@ -28,6 +25,19 @@ type Props = {
   onAvailabilityChange: (available: boolean) => void;
 };
 
+function levelLabel(level: TafsirRegistryEntry["level"]): string {
+  if (level === "مبتدئ") return "مختصر";
+  if (level === "متوسط") return "متوسط";
+  return "مطول";
+}
+
+function fontLabel(scale: TafsirFontScale): string {
+  if (scale === 0.9) return "صغير";
+  if (scale === 1) return "وسط";
+  if (scale === 1.15) return "كبير";
+  return "أكبر";
+}
+
 export function TafsirTabPanel({
   surah,
   ayah,
@@ -35,15 +45,15 @@ export function TafsirTabPanel({
   onCopy,
   onShare,
   onBookmark,
-  onExpand,
+  onExpand: _onExpand,
   onAvailabilityChange,
 }: Props) {
   const [editions, setEditions] = useState<TafsirRegistryEntry[]>([]);
-  const [editionId, setEditionId] = useState(() => resolveRegistryTafsirId(readStoredTafsirEdition()));
+  const [editionId, setEditionId] = useState(() => readStoredTafsirEdition());
   const [fontScale, setFontScale] = useState<TafsirFontScale>(() => readStoredTafsirFontScale());
   const [text, setText] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [activeEntry, setActiveEntry] = useState<TafsirRegistryEntry | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [view, setView] = useState<"list" | "text">("list");
 
   useEffect(() => {
     let cancelled = false;
@@ -56,17 +66,13 @@ export function TafsirTabPanel({
   }, []);
 
   useEffect(() => {
-    if (!editions.length) {
-      setText(null);
-      setLoading(false);
-      onAvailabilityChange(false);
+    if (view !== "text" || !editions.length) {
+      if (!editions.length) onAvailabilityChange(false);
       return;
     }
     const preferred = editions.some((e) => e.id === editionId)
       ? editionId
       : editions[0]!.id;
-    if (preferred !== editionId) setEditionId(preferred);
-
     const ac = new AbortController();
     setLoading(true);
     void fetchMushafAyahTafsir(surah, ayah, preferred, ac.signal)
@@ -74,8 +80,6 @@ export function TafsirTabPanel({
         if (ac.signal.aborted) return;
         const t = res?.text?.trim() || null;
         setText(t);
-        const entry = editions.find((e) => e.id === preferred) ?? null;
-        setActiveEntry(entry);
         onAvailabilityChange(Boolean(t));
       })
       .catch(() => {
@@ -88,39 +92,55 @@ export function TafsirTabPanel({
         if (!ac.signal.aborted) setLoading(false);
       });
     return () => ac.abort();
-  }, [surah, ayah, editionId, editions, onAvailabilityChange]);
+  }, [surah, ayah, editionId, editions, view, onAvailabilityChange]);
 
   if (!editions.length) {
     return (
-      <p className="mm-ayah-bar__status">
-        لا يتوفر تفسير معتمد لهذه الآية في البيانات الحالية.
-      </p>
+      <p className="mm-ayah-bar__status">لا يوجد تفسير متاح لهذه الآية حاليًا</p>
     );
   }
 
-  const levelLabel = (level: TafsirRegistryEntry["level"]) => level;
+  if (view === "list") {
+    return (
+      <div className="ayah-action-sheet__tafsir" data-testid="tafsir-tab-panel">
+        <ul className="ayah-action-sheet__tafsir-cards" aria-label="التفاسير المتاحة">
+          {editions.map((ed) => (
+            <li key={ed.id}>
+              <button
+                type="button"
+                className="ayah-action-sheet__tafsir-card"
+                onClick={() => {
+                  setEditionId(ed.id);
+                  persistTafsirEdition(ed.id);
+                  setView("text");
+                }}
+              >
+                <span className="ayah-action-sheet__tafsir-card-name">{ed.name}</span>
+                <span className="ayah-action-sheet__tafsir-chip-level">{levelLabel(ed.level)}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  const active = editions.find((e) => e.id === editionId) ?? editions[0]!;
 
   return (
     <div className="ayah-action-sheet__tafsir" data-testid="tafsir-tab-panel">
-      <div className="ayah-action-sheet__tafsir-chips" role="listbox" aria-label="اختيار المفسّر">
-        {editions.map((ed) => (
-          <button
-            key={ed.id}
-            type="button"
-            role="option"
-            aria-selected={editionId === ed.id}
-            className={`ayah-action-sheet__tafsir-chip${editionId === ed.id ? " is-active" : ""}`}
-            onClick={() => {
-              setEditionId(ed.id);
-              persistTafsirEdition(ed.id);
-            }}
-          >
-            <span className="ayah-action-sheet__tafsir-chip-label">{ed.name}</span>
-            <span className="ayah-action-sheet__tafsir-chip-level">{levelLabel(ed.level)}</span>
-          </button>
-        ))}
-      </div>
-
+      <button
+        type="button"
+        className="ayah-action-sheet__tafsir-back"
+        onClick={() => {
+          setView("list");
+          setText(null);
+        }}
+      >
+        <ArrowRight size={16} aria-hidden="true" />
+        العودة للتفاسير
+      </button>
+      <p className="ayah-action-sheet__tafsir-chip-label">{active.name}</p>
       <div className="ayah-action-sheet__tafsir-font" role="group" aria-label="حجم خط التفسير">
         {TAFSIR_FONT_SCALES.map((scale) => (
           <button
@@ -133,11 +153,10 @@ export function TafsirTabPanel({
               persistTafsirFontScale(scale);
             }}
           >
-            {scale === 0.9 ? "أ-" : scale === 1 ? "أ" : scale === 1.15 ? "أ+" : "أ++"}
+            {fontLabel(scale)}
           </button>
         ))}
       </div>
-
       {loading ? (
         <p className="mm-ayah-bar__status" aria-busy="true">
           جاري تحميل التفسير…
@@ -147,23 +166,13 @@ export function TafsirTabPanel({
           className="ayah-action-sheet__preview ayah-action-sheet__tafsir-text"
           dir="rtl"
           lang="ar"
-          style={{ fontSize: `${fontScale}rem`, lineHeight: 1.65, minHeight: "4.5rem" }}
+          style={{ fontSize: `${Math.max(1, fontScale)}rem`, lineHeight: 1.75, minHeight: "4.5rem" }}
         >
           {text}
         </p>
       ) : (
         <p className="mm-ayah-bar__status">تعذّر جلب التفسير من المصدر المعتمد.</p>
       )}
-
-      {activeEntry && text ? (
-        <p className="ayah-action-sheet__tafsir-attribution">
-          {formatTafsirSourceLine(activeEntry)}{" "}
-          <Link href="/sources" className="ayah-action-sheet__sources-link">
-            المصادر
-          </Link>
-        </p>
-      ) : null}
-
       {expanded && text ? (
         <div className="ayah-action-sheet__tafsir-actions" role="group" aria-label="إجراءات التفسير">
           <button type="button" onClick={onCopy}>
@@ -177,10 +186,6 @@ export function TafsirTabPanel({
           <button type="button" onClick={onBookmark}>
             <Bookmark size={18} aria-hidden="true" />
             <span>إشارة</span>
-          </button>
-          <button type="button" onClick={onExpand}>
-            <BookOpen size={18} aria-hidden="true" />
-            <span>موسّع</span>
           </button>
         </div>
       ) : null}

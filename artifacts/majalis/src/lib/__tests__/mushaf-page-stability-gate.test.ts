@@ -48,7 +48,8 @@ assert.match(css, /\.mm-page-header__surah\s*\{[^}]*right:\s*0/);
 assert.match(css, /\.mm-page-header__juz\s*\{[^}]*left:\s*0/);
 assert.match(css, /font-size:\s*clamp\(0\.78rem,\s*2\.8vw,\s*0\.95rem\)/);
 
-assert.match(footer, /mm-page-footer__cartouche/);
+assert.match(footer, /mm-page-footer__num/);
+assert.doesNotMatch(footer, /<svg/);
 assert.match(css, /\.mm-page-footer__badge\s*\{[^}]*left:\s*50%/);
 assert.match(css, /transform:\s*translate\(-50%,\s*-50%\)/);
 assert.match(css, /width:\s*13\.1%/);

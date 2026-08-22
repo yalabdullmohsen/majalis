@@ -1,5 +1,6 @@
-import { memo, useRef } from "react";
+import { memo, useRef, useState } from "react";
 import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
+import { MushafAyahHighlight } from "./MushafAyahHighlight";
 import { MushafAyahLine } from "./MushafAyahLine";
 import { MushafBasmala } from "./MushafBasmala";
 import { MushafPageFooter } from "./MushafPageFooter";
@@ -29,12 +30,16 @@ export const MushafPage = memo(function MushafPage({
   const opening = layout.pageNumber === 1 || layout.pageNumber === 2;
   const slots = buildSlots(layout);
   const pageRef = useRef<HTMLElement | null>(null);
+  const [pageEl, setPageEl] = useState<HTMLElement | null>(null);
   useMushafPageFontFit(pageRef, true, layout.pageNumber, fontFamily, null);
   const footerPage = displayPageNumber ?? layout.pageNumber;
 
   return (
     <article
-      ref={pageRef}
+      ref={(el) => {
+        pageRef.current = el;
+        if (pageEl !== el) setPageEl(el);
+      }}
       className={`mm-page${opening ? " mm-page--opening" : ""}`}
       data-page={footerPage}
       data-testid="mushaf-page"
@@ -42,6 +47,11 @@ export const MushafPage = memo(function MushafPage({
       style={{ ["--mm-qpc-family" as string]: fontFamily }}
       aria-label={`صفحة المصحف ${footerPage}`}
     >
+      <MushafAyahHighlight
+        container={pageEl}
+        verseKey={selectedVerseKey}
+        playingKey={playingVerseKey}
+      />
       <MushafPageHeader juzNumber={layout.juzNumber} surahName={layout.headerSurahName} />
       <div
         className={`mm-page__body${opening ? " mm-page__body--opening" : ""}`}

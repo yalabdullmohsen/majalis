@@ -30,9 +30,9 @@
   --mm-frame: transparent;
   --mm-banner-fill: linear-gradient(180deg, #e8d7a8 0%, #dcc48a 48%, #c9a85e 100%);
   --mm-banner-name-bg: #f3e6c4;
-  /* highlight ذهبي خفيف جدًا — لا يغطي الحروف */
-  --mm-ayah-select: rgba(191, 159, 91, 0.10);
-  --mm-ayah-play: rgba(47, 111, 78, 0.09);
+  /* highlight أخضر فاتح متصل — طبقة overlay لا تلوين الكلمات */
+  --mm-ayah-select: rgba(46, 125, 82, 0.16);
+  --mm-ayah-play: rgba(46, 125, 82, 0.10);
   --mm-outer-pad: 0;
   --mm-inner-pad-x: clamp(0.7rem, 3.2vw, 1.25rem);
   --mm-inner-pad-y: clamp(0.1rem, 0.8vw, 0.32rem);
@@ -50,6 +50,7 @@
   --mm-chrome-fg: var(--mm-ink);
   --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 28%, transparent);
   --mm-ayah-bar-h: 0px;
+  --mm-dock-pad: 0px;
   --mm-chrome-top-h: 0px;
   --mm-chrome-bottom-h: 0px;
   --mm-toolbar-band: 4.5%;
@@ -99,6 +100,15 @@
   --mm-chrome-top-h: 0px;
   --mm-chrome-bottom-h: 0px;
   --mm-ayah-bar-h: 140px; /* مساحة ثابتة للشيت المطوي — يمنع overlap بصري/CLS */
+  --mm-dock-pad: calc(140px + var(--inset-bottom, 0px));
+}
+
+.mm-viewport[data-audio-dock="1"] {
+  --mm-dock-pad: calc(6.5rem + var(--inset-bottom, 0px));
+}
+
+.mm-viewport[data-audio-dock="mini"] {
+  --mm-dock-pad: calc(3.25rem + var(--inset-bottom, 0px));
 }
 
 html[data-theme="dark"] .mm-viewport,
@@ -115,8 +125,8 @@ html.dark .mm-viewport,
   --mm-header: #e8d4a8;
   --mm-banner-fill: linear-gradient(180deg, #3d3426 0%, #2a241c 100%);
   --mm-banner-name-bg: #152028;
-  --mm-ayah-select: rgba(191, 159, 91, 0.18);
-  --mm-ayah-play: rgba(94, 196, 154, 0.18);
+  --mm-ayah-select: rgba(94, 196, 154, 0.22);
+  --mm-ayah-play: rgba(94, 196, 154, 0.14);
   --mm-chrome: color-mix(in srgb, #152028 94%, transparent);
   --mm-chrome-fg: #f4efe5;
   --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 42%, transparent);
@@ -163,6 +173,21 @@ html.dark .mm-viewport,
   align-items: stretch;
   justify-content: center;
   transition: none;
+}
+
+.mm-viewport[data-audio-dock="1"] .mm-pager__sheet[data-pane="current"] .mm-page-shell,
+.mm-viewport[data-audio-dock="mini"] .mm-pager__sheet[data-pane="current"] .mm-page-shell,
+.mm-viewport[data-ayah-bar="1"] .mm-pager__sheet[data-pane="current"] .mm-page-shell {
+  overflow-y: auto;
+  touch-action: pan-y;
+  scroll-padding-bottom: var(--mm-dock-pad);
+}
+
+/* هامش تحت الصفحة لا حشو داخلها — شبكة الـ15 سطر لا تُضغط */
+.mm-viewport[data-audio-dock="1"] .mm-pager__sheet[data-pane="current"] .mm-page,
+.mm-viewport[data-audio-dock="mini"] .mm-pager__sheet[data-pane="current"] .mm-page,
+.mm-viewport[data-ayah-bar="1"] .mm-pager__sheet[data-pane="current"] .mm-page {
+  margin-bottom: var(--mm-dock-pad);
 }
 
 .mm-pager-scroller {
@@ -525,8 +550,8 @@ html.dark .mm-surah-frame__name {
   unicode-bidi: isolate; /* لا يعكس ترتيب حروف الـglyph داخل الكلمة */
   position: relative;
   z-index: 2;
-  touch-action: manipulation;
-  scroll-margin-bottom: calc(var(--mm-ayah-bar-h) + 1.25rem);
+  touch-action: pan-x pan-y;
+  scroll-margin-bottom: calc(var(--mm-dock-pad) + 1.25rem);
   scroll-margin-top: calc(var(--mm-chrome-top-h) + 0.75rem);
 }
 
@@ -536,10 +561,28 @@ html.dark .mm-surah-frame__name {
 }
 
 /*
- * تظليل آية متصل: خلفية على كل كلمة + ظل يملأ فراغات space-between
- * (بلا صناديق منفصلة ظاهرة، وبلا غلاف run يكسر ضبط الأسطر).
+ * تظليل آية: طبقة overlay بشريط لكل سطر (getClientRects).
+ * الكلمات نفسها بلا خلفية حتى لا تظهر مربعات منفصلة.
  * .mm-ayah-run__text يُستخدم في البسملة فقط.
  */
+.mm-ayah-hl {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.mm-ayah-hl__band {
+  position: absolute;
+  background: var(--mm-ayah-select);
+  border-radius: 0.35em;
+  pointer-events: none;
+}
+
+.mm-ayah-hl__band.is-playing {
+  background: var(--mm-ayah-play);
+}
+
 .mm-ayah-run__text {
   padding: 0;
   margin: 0;
@@ -549,16 +592,13 @@ html.dark .mm-surah-frame__name {
 
 .mm-ayah-run__text.is-selected,
 .ayah-active.mm-ayah-line__word:not([data-type="end"]) {
-  background: color-mix(in srgb, var(--mm-gold) 12%, transparent);
+  background: transparent;
   border-radius: 0;
-  /* يمدّ اللون عبر فجوات space-between (حتى ~١٥–٢٠px) شريطاً واحداً */
-  box-shadow:
-    0.75em 0 0 color-mix(in srgb, var(--mm-gold) 12%, transparent),
-    -0.75em 0 0 color-mix(in srgb, var(--mm-gold) 12%, transparent);
+  box-shadow: none;
 }
 
 .mm-ayah-line__word.is-selected:not([data-type="end"]) {
-  background: color-mix(in srgb, var(--mm-gold) 12%, transparent);
+  background: transparent;
   border-radius: 0;
 }
 
@@ -573,17 +613,13 @@ html.dark .mm-ayah-run__text.is-selected,
 html[data-theme="dark"] .ayah-active.mm-ayah-line__word:not([data-type="end"]),
 html.dark .ayah-active.mm-ayah-line__word:not([data-type="end"]),
 .mm-viewport[data-mushaf-theme="night"] .ayah-active.mm-ayah-line__word:not([data-type="end"]) {
-  background: color-mix(in srgb, var(--mm-gold) 18%, transparent);
-  box-shadow:
-    0.75em 0 0 color-mix(in srgb, var(--mm-gold) 18%, transparent),
-    -0.75em 0 0 color-mix(in srgb, var(--mm-gold) 18%, transparent);
+  background: transparent;
+  box-shadow: none;
 }
 
 .mm-ayah-line__word.is-playing:not([data-type="end"]) {
-  background: color-mix(in srgb, var(--mm-ayah-play) 100%, transparent);
-  box-shadow:
-    0.75em 0 0 color-mix(in srgb, var(--mm-ayah-play) 100%, transparent),
-    -0.75em 0 0 color-mix(in srgb, var(--mm-ayah-play) 100%, transparent);
+  background: transparent;
+  box-shadow: none;
 }
 
 .mm-ayah-hit--end.is-selected,
@@ -659,19 +695,19 @@ html.dark .ayah-active.mm-ayah-line__word:not([data-type="end"]),
   right: auto;
   transform: translate(-50%, -50%);
   width: 13.1%;
-  min-width: 3.7rem;
+  min-width: 2.4rem;
   max-width: 4.4rem;
   height: 1.95rem;
   padding: 0;
   display: inline-grid;
   place-items: center;
-  color: #5c4318;
+  color: #8a6a32;
   font-family: "Amiri Quran", "IBM Plex Sans Arabic", serif;
-  font-size: 1.14rem;
-  font-weight: 800;
-  border: 1.5px solid var(--mm-gold-deep);
-  border-radius: 4px;
-  background: #fffdf8;
+  font-size: 1.18rem;
+  font-weight: 700;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   box-shadow: none;
 }
 
@@ -692,9 +728,9 @@ html.dark .ayah-active.mm-ayah-line__word:not([data-type="end"]),
 html[data-theme="dark"] .mm-viewport .mm-page-footer__badge,
 html.dark .mm-viewport .mm-page-footer__badge,
 .mm-viewport[data-mushaf-theme="night"] .mm-page-footer__badge {
-  background: #1c2418;
+  background: transparent;
   color: var(--mm-gold-soft);
-  border-color: var(--mm-gold);
+  border: 0;
   box-shadow: none;
 }
 
@@ -915,7 +951,8 @@ html.dark .mm-viewport .mm-page-footer__badge,
   background: transparent;
   opacity: 0;
   cursor: pointer;
-  z-index: 6; /* فوق الشريط الأفقي — لمس الحافة ١٥٪ */
+  z-index: 4;
+  pointer-events: none;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -949,13 +986,13 @@ html.dark .mm-viewport .mm-page-footer__badge,
 .mm-audio-dock {
   position: absolute;
   left: 50%;
-  bottom: calc(7.4% + var(--inset-bottom, 0px));
+  bottom: calc(var(--inset-bottom, 0px) + 0.4rem);
   transform: translateX(-50%);
-  width: min(22rem, calc(100% - 1.2rem));
+  width: min(20rem, calc(100% - 1.2rem));
   z-index: 6;
   display: grid;
-  gap: 0.35rem;
-  padding: 0.45rem 0.55rem;
+  gap: 0.2rem;
+  padding: 0.3rem 0.5rem 0.35rem;
   border-radius: 0.85rem;
   border: 1px solid var(--mm-chrome-border);
   background: var(--mm-chrome);
@@ -971,6 +1008,30 @@ html.dark .mm-viewport .mm-page-footer__badge,
 .mm-audio-dock[data-open="1"] {
   opacity: 1;
   pointer-events: auto;
+}
+
+.mm-audio-dock[data-mini="1"] {
+  width: min(16.5rem, calc(100% - 1.2rem));
+  padding: 0.2rem 0.4rem;
+  gap: 0;
+}
+
+.mm-audio-dock[data-mini="1"] .mm-audio-dock__reciter,
+.mm-audio-dock[data-mini="1"] .mm-audio-dock__progress,
+.mm-audio-dock[data-mini="1"] .mm-audio-dock__status {
+  display: none;
+}
+
+.mm-audio-dock__mini {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.35rem;
+  cursor: pointer;
 }
 
 .mm-audio-dock__meta {
@@ -1029,7 +1090,7 @@ html.dark .mm-viewport .mm-page-footer__badge,
   inset: 0;
   z-index: 9999;
   display: grid;
-  align-items: center;
+  align-items: end;
   justify-items: start;
   pointer-events: none;
   isolation: isolate;
@@ -1090,20 +1151,20 @@ html.dark .mm-ayah-bar__dismiss {
   position: relative;
   z-index: 1;
   pointer-events: auto;
-  width: min(22rem, 86vw);
+  width: 100%;
   height: 140px;
   max-height: 140px;
   min-height: 140px;
   margin-inline-start: 0;
-  margin-inline-end: auto;
-  margin-block: 6vh 10vh;
+  margin-inline-end: 0;
+  margin-block: 0;
   background: var(--mm-paper);
   color: var(--mm-ink);
   opacity: 1;
   border: 0;
   border-bottom: 0;
-  border-radius: 0 16px 16px 0;
-  padding: 0.55rem 1rem calc(0.7rem + var(--inset-bottom, 0px));
+  border-radius: 22px 22px 0 0;
+  padding: 0.7rem 1rem calc(0.85rem + var(--inset-bottom, 0px));
   box-shadow: 0 -8px 28px color-mix(in srgb, #5c4a28 18%, transparent);
   font-family: "IBM Plex Sans Arabic", sans-serif;
   display: grid;
@@ -1112,7 +1173,7 @@ html.dark .mm-ayah-bar__dismiss {
    * (خطأ صوت/نسخ/تحميل) داخل .ayah-action-sheet__scroll-region سويّاً —
    * راجع تعليق تلك الخانة أعلاه في AyahActionSheet.tsx. */
   grid-template-rows: auto auto auto auto minmax(0, 1fr);
-  gap: 0.5rem;
+  gap: 0.55rem;
   overflow: hidden;
   overscroll-behavior: contain;
   transition: height 220ms cubic-bezier(0.22, 0.61, 0.36, 1), max-height 220ms ease;
@@ -1633,8 +1694,23 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 }
 
 @media (min-width: 768px) {
+  .mm-ayah-bar {
+    align-items: center;
+  }
+
+  .mm-ayah-bar__panel {
+    width: min(22rem, 86vw);
+    margin-inline-end: auto;
+    margin-block: 6vh 10vh;
+    border-radius: 0 16px 16px 0;
+  }
+
   .mm-viewport {
     --mm-qpc-size: clamp(1.42rem, 2.35vw, 1.95rem);
+  }
+
+  .ayah-action-sheet__primary {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -1642,24 +1718,24 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 .ayah-action-sheet__primary {
   grid-row: 4;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.32rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
 }
 
 .ayah-action-sheet__primary:has(> :nth-child(5)) {
-  grid-template-columns: repeat(auto-fit, minmax(4.4rem, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .ayah-action-sheet__primary button {
   appearance: none;
   border: 0;
-  border-radius: 0.55rem;
+  border-radius: 0.7rem;
   background: var(--mm-paper-deep);
   color: var(--mm-ink);
   font: inherit;
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0.45rem 0.2rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.55rem 0.4rem;
   display: grid;
   justify-items: center;
   align-content: center;
@@ -1670,7 +1746,9 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 }
 
 .ayah-action-sheet__primary button[aria-selected="true"] {
-  background: color-mix(in srgb, var(--mm-gold) 22%, var(--mm-paper-deep));
+  background: color-mix(in srgb, #2f6f4e 18%, var(--mm-paper));
+  color: #2f6f4e;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #2f6f4e 35%, transparent);
 }
 
 .ayah-action-sheet__primary button:disabled {
@@ -1863,8 +1941,10 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   color: var(--mm-ink);
   user-select: text;
   -webkit-user-select: text;
-  max-height: 6.4rem;
+  max-height: 7.6rem;
   overflow: auto;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .ayah-action-sheet.is-collapsed .ayah-action-sheet__ayah-preview {
@@ -2313,4 +2393,65 @@ html.dark .mm-settings-sheet {
 .mm-settings-sheet__row.is-active {
   color: #2f6f4e;
   font-weight: 700;
+}
+
+.ayah-action-sheet__tafsir-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.ayah-action-sheet__tafsir-card,
+.ayah-action-sheet__tafsir-back {
+  width: 100%;
+  text-align: start;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 28%, transparent);
+  border-radius: 0.7rem;
+  background: color-mix(in srgb, var(--mm-paper) 92%, #fff);
+  color: var(--mm-ink);
+  font: inherit;
+  padding: 0.7rem 0.8rem;
+  min-height: 44px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.ayah-action-sheet__tafsir-card-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.ayah-action-sheet__tafsir-back {
+  justify-content: flex-start;
+  margin-bottom: 0.45rem;
+  font-weight: 700;
+}
+
+.ayah-action-sheet__reciter-cards {
+  list-style: none;
+  margin: 0.45rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.ayah-action-sheet__reciter-cards li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px;
+  gap: 0.35rem;
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 24%, transparent);
+  border-radius: 0.7rem;
+  padding: 0.35rem 0.45rem 0.35rem 0.7rem;
+  background: color-mix(in srgb, var(--mm-paper) 92%, #fff);
+}
+
+.ayah-action-sheet__reciter-cards button {
+  min-width: 44px;
+  min-height: 44px;
 }

@@ -14,6 +14,8 @@ export type QuranVerseSearchItem = {
   surahName: string;
   ayahNumber: number;
   page: number;
+  /** مطابقة داخلية فقط — لا يُعرض للمستخدم. */
+  textNorm: string;
 };
 
 export const QURAN_SEARCH_RESULT_LIMIT = 120;
@@ -36,7 +38,8 @@ export function searchVerses<T extends { text: string }>(
   if (!needleNorm) return [];
   return quranDatabase.filter((item) => {
     if (item.text.includes(raw)) return true;
-    return tolerantIncludes(item.text, raw);
+    const hay = "textNorm" in item && typeof item.textNorm === "string" ? item.textNorm : normalizeArabic(item.text);
+    return hay.includes(needleNorm) || tolerantIncludes(item.text, raw);
   });
 }
 
@@ -59,6 +62,7 @@ export async function loadQuranVerseDatabase(): Promise<QuranVerseSearchItem[]> 
       for (const ayah of detail.ayahs) {
         items.push({
           text: ayah.text,
+          textNorm: normalizeArabic(ayah.text),
           surahNumber: detail.number,
           surahName,
           ayahNumber: ayah.numberInSurah,
