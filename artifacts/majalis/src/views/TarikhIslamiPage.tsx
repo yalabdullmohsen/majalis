@@ -76,8 +76,10 @@ const MANHAJ_CARDS: Array<{ title: string; body: string }> = [
 ];
 
 function lessonText(item: DarsItem): string {
-  const raw = (item.summary || item.body || "").trim();
-  return raw || item.title;
+  const body = (item.body || "").trim();
+  const summary = (item.summary || "").trim();
+  if (body && body !== summary) return body;
+  return summary || body || item.title;
 }
 
 export default function TarikhIslamiPage() {
@@ -116,7 +118,7 @@ export default function TarikhIslamiPage() {
       {activeTab === "manhaj" ? (
         <>
           <p className="topic-card__body">
-            هذا القسم فهرس عناوين يُستكمل تدريجيًا. للتفاصيل المعتمدة في السيرة النبوية انظر{" "}
+            هذا القسم يعرض فهرسًا دراسيًا يُستكمل تدريجيًا. تبويب «العصور والدول» يتضمن الآن متنًا موسّعًا لكل موضوع. للتفاصيل المعتمدة في السيرة النبوية انظر{" "}
             <Link href="/seerah">السيرة</Link>
             ، ولضوابط النقل انظر{" "}
             <Link href="/methodology">منهج الموقع</Link>.

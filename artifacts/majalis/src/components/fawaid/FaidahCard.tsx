@@ -1,4 +1,5 @@
 import { displayText } from "@/lib/display-text";
+import { stripFawaidBoilerplate } from "@/lib/fawaid-text";
 import { isDemoId } from "@/lib/demo-id";
 import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
 import { UnsourcedBadge } from "@/components/UnsourcedBadge";
@@ -17,7 +18,7 @@ type Props = {
 };
 
 export function FaidahCard({ item }: Props) {
-  const cleaned = displayText(item.text);
+  const cleaned = stripFawaidBoilerplate(displayText(item.text));
   const meta = [
     item.source ? { label: "المصدر", value: item.source } : null,
     item.author_name ? { label: "المؤلف", value: item.author_name } : null,
