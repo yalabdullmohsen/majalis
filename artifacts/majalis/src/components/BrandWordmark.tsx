@@ -11,6 +11,8 @@ export default function BrandWordmark(props: SVGProps<SVGSVGElement>) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="-33 -780 3787 900"
+      width={138}
+      height={33}
       fill="currentColor"
       aria-hidden="true"
       focusable="false"

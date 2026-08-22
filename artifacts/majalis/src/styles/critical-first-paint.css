@@ -85,10 +85,17 @@ body {
   display: inline-block;
   vertical-align: middle;
   flex-shrink: 0;
+  box-sizing: border-box;
   height: 2.05rem;
   width: 8.63rem;
   max-width: min(15.75rem, 56vw);
   aspect-ratio: 3787 / 900;
+  overflow: visible;
+}
+
+.navbar-v3__tagline {
+  min-height: 2.05rem;
+  min-width: 8.63rem;
 }
 
 .m2030-home {
