@@ -49,11 +49,11 @@ import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
 import { AppReadingFocus } from "@/components/reading/AppReadingFocus";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
 
+const lazy = lazyWithRetry;
+
 const PublicLayoutLazy = lazy(() =>
   import("@/components/layout/PublicLayout").then((m) => ({ default: m.PublicLayout })),
 );
-
-const lazy = lazyWithRetry;
 
 /**
  * تحميل كسول للمساعد الذكي العائم — مكوّن ثانوي (تفاعلي عند الطلب فقط)
