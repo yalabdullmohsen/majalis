@@ -24,6 +24,8 @@ assert.match(html, /id="mj-boot-skeleton"/, "هيكل إقلاع فوري");
 assert.match(html, /#mj-boot-skeleton\s*\{[\s\S]*position:\s*fixed/, "الهيكل ثابت لا يزيح #root");
 assert.match(critical, /\.home-start-here[\s\S]*min-height:\s*16rem/, "حجز ارتفاع ابدأ من هنا");
 assert.match(critical, /\.home-page-hero\.page-hero-mj[\s\S]*min-height:\s*13\.5rem/, "حجز ارتفاع هيرو الرئيسية");
+assert.match(critical, /\.home-page-hero\.page-hero-mj[\s\S]*margin:\s*0\.35rem/, "هامش بطاقة الهيرو من أول رسمة");
+assert.match(critical, /\.home-page-hero\.page-hero-mj[\s\S]*border:\s*1px solid/, "حد بطاقة الهيرو من أول رسمة");
 const wordmark = readFileSync(resolve(root, "src/components/BrandWordmark.tsx"), "utf8");
 assert.match(wordmark, /width=\{138\}/, "عرض SVG Intrinsic يحجز قبل CSS");
 assert.match(wordmark, /height=\{33\}/, "ارتفاع SVG Intrinsic يحجز قبل CSS");

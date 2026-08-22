@@ -73,7 +73,18 @@ body {
 
 .m2030-hero.page-hero-mj,
 .home-page-hero.page-hero-mj {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
   min-height: 13.5rem;
+  margin: 0.35rem 0.85rem 0.55rem;
+  padding-block: 1rem 1.1rem;
+  padding-inline: 1rem;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #145a42) 10%, transparent);
 }
 
 .home-page-hero .page-hero-mj__desc,
