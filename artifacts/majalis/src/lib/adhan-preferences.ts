@@ -13,6 +13,7 @@ import {
   isAdhanPlaybackMode,
   type AdhanPlaybackMode,
 } from "./adhan-playback-modes";
+import { clampAdhanMuezzinId } from "./adhan-selectable-types";
 
 const STORE_KEY = "majalis-adhan-prefs-v1";
 /** مفتاح مواصفات الواجهة — يُزامَن مع defaultMuezzinId */
@@ -171,10 +172,21 @@ export function loadAdhanPrefs(): AdhanPreferences {
       ? Math.min(1, Math.max(0, parsed.volume))
       : base.volume;
     const iqDelay = parsed.iqamahDelayMinutes;
-    const defaultMuezzinId =
+    const defaultMuezzinId = clampAdhanMuezzinId(
       parsed.defaultMuezzinId ??
-      readSelectedMuezzinIdFallback() ??
-      base.defaultMuezzinId;
+        readSelectedMuezzinIdFallback() ??
+        base.defaultMuezzinId,
+    );
+    const prayers = { ...base.prayers, ...parsed.prayers };
+    for (const key of PRAYER_KEYS) {
+      const p = prayers[key];
+      if (!p) continue;
+      const mid = p.muezzinId || "";
+      prayers[key] = {
+        ...p,
+        muezzinId: mid && (mid === "makkah" || mid === "madinah") ? mid : "",
+      };
+    }
     const merged: AdhanPreferences = {
       globalEnabled: parsed.globalEnabled ?? base.globalEnabled,
       browserNotificationsEnabled: parsed.browserNotificationsEnabled ?? base.browserNotificationsEnabled,
@@ -192,7 +204,7 @@ export function loadAdhanPrefs(): AdhanPreferences {
       vibrateEnabled: parsed.vibrateEnabled ?? base.vibrateEnabled,
       bypassSilentMode: false, // Critical Alerts غير متوفر — لا نفعّل أبدًا من التخزين
       iosSequentialFullAdhan: parsed.iosSequentialFullAdhan ?? base.iosSequentialFullAdhan,
-      prayers: { ...base.prayers, ...parsed.prayers },
+      prayers,
       fridayBannerEnabled: parsed.fridayBannerEnabled ?? base.fridayBannerEnabled,
       lastTestedMuezzinId:
         typeof parsed.lastTestedMuezzinId === "string" ? parsed.lastTestedMuezzinId : null,

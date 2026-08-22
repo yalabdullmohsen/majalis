@@ -16,6 +16,12 @@ import {
 import { getActivePrayerLocation } from "./prayer-location-prefs";
 import { loadPrayerAlertPrefs, LIVE_ACTIVITY_LINGER_MINUTES } from "./prayer-alert-preferences";
 import {
+  getEffectiveMuezzinId,
+  loadAdhanPrefs,
+  PRAYER_KEYS,
+  type PrayerKey,
+} from "./adhan-preferences";
+import {
   cancelAllPrayerNativeNotifications,
   MAX_NATIVE_PRAYER_NOTIFS,
   purgePastPrayerNativeNotifications,
@@ -58,6 +64,8 @@ export function buildPrayerScheduleSignature(opts: {
   preAlertMinutes: number;
   postReminderEnabled?: boolean;
   soundProfile?: PrayerSoundProfile;
+  muezzinId?: string;
+  prayerEnabled?: boolean;
 }): string {
   const minuteBucket = Math.floor(opts.prayerTimeEpochMs / 60_000);
   return [
@@ -68,6 +76,8 @@ export function buildPrayerScheduleSignature(opts: {
     String(opts.preAlertMinutes),
     opts.postReminderEnabled ? "1" : "0",
     opts.soundProfile ?? "auto",
+    opts.muezzinId ?? "",
+    opts.prayerEnabled === false ? "off" : "on",
   ].join("|");
 }
 
@@ -119,10 +129,6 @@ export function findNextUpcomingPrayer(prayers: PrayerSlot[], timeZone?: string)
   return slots[0]?.slot ?? null;
 }
 
-function findNextUpcoming(prayers: PrayerSlot[]): PrayerSlot | null {
-  return findNextUpcomingPrayer(prayers);
-}
-
 function dispatchAlert(event: PrayerAlertEvent) {
   window.dispatchEvent(new CustomEvent(PRAYER_ALERT_EVENT_NAME, { detail: event }));
 }
@@ -151,6 +157,29 @@ async function fireLiveActivityEnter() {
   _timers.push(t);
 }
 
+function asPrayerKey(slotKey: string): PrayerKey | null {
+  const k = slotKey.toLowerCase();
+  return (PRAYER_KEYS as readonly string[]).includes(k) ? (k as PrayerKey) : null;
+}
+
+function resolveSlotAlertOpts(
+  slotKey: string,
+  prefs: ReturnType<typeof loadPrayerAlertPrefs>,
+) {
+  const adhanPrefs = loadAdhanPrefs();
+  const pk = asPrayerKey(slotKey);
+  const prayerOn = pk ? adhanPrefs.prayers[pk].enabled : true;
+  const preMinutes = pk ? adhanPrefs.prayers[pk].advanceMinutes : prefs.preAlertMinutes;
+  return {
+    prayerEnabled: prayerOn,
+    preAlertMinutes: preMinutes,
+    preAlertEnabled: prefs.alertsEnabled && prefs.preAlertEnabled && prayerOn,
+    enterAlertEnabled: prefs.alertsEnabled && prefs.enterAlertEnabled && prayerOn,
+    postReminderEnabled: prefs.alertsEnabled && prefs.postReminderEnabled && prayerOn,
+    muezzinId: pk ? getEffectiveMuezzinId(adhanPrefs, pk) : "",
+  };
+}
+
 async function rescheduleAllNativePrayers(
   slots: Array<{ slot: PrayerSlot; epoch: number; dateISO: string }>,
   prefs: ReturnType<typeof loadPrayerAlertPrefs>,
@@ -170,16 +199,18 @@ async function rescheduleAllNativePrayers(
 
   for (const { slot, epoch, dateISO } of slots) {
     if (budget <= 0) break;
+    const slotOpts = resolveSlotAlertOpts(slot.key, prefs);
+    if (!slotOpts.prayerEnabled) continue;
     const scheduled = await schedulePrayerNativeNotifications({
       prayerKey: slot.key.toLowerCase(),
       prayerName: KEY_TO_ARABIC[slot.key] ?? slot.name,
       prayerTimeEpochMs: epoch,
       prayerMinutesOfDay: slot.minutes ?? undefined,
       dateISO,
-      preAlertEnabled: prefs.alertsEnabled && prefs.preAlertEnabled,
-      enterAlertEnabled: prefs.alertsEnabled && prefs.enterAlertEnabled,
-      postReminderEnabled: prefs.alertsEnabled && prefs.postReminderEnabled,
-      preAlertMinutes: prefs.preAlertMinutes,
+      preAlertEnabled: slotOpts.preAlertEnabled,
+      enterAlertEnabled: slotOpts.enterAlertEnabled,
+      postReminderEnabled: slotOpts.postReminderEnabled,
+      preAlertMinutes: slotOpts.preAlertMinutes,
       soundProfile: prefs.soundProfile,
     });
     budget -= scheduled.length;
@@ -222,7 +253,6 @@ export async function startPrayerAlertScheduler(
   if (!slots.length) return;
 
   const prefs = loadPrayerAlertPrefs();
-  const preMinutes = prefs.preAlertMinutes;
   const anyAlert =
     prefs.alertsEnabled &&
     (prefs.preAlertEnabled || prefs.enterAlertEnabled || prefs.postReminderEnabled);
@@ -231,17 +261,20 @@ export async function startPrayerAlertScheduler(
     : [
         tz,
         todayISO,
-        ...slots.map(({ slot, epoch }) =>
-          buildPrayerScheduleSignature({
+        ...slots.map(({ slot, epoch }) => {
+          const slotOpts = resolveSlotAlertOpts(slot.key, prefs);
+          return buildPrayerScheduleSignature({
             prayerKey: slot.key,
             prayerTimeEpochMs: epoch,
-            preAlertEnabled: prefs.alertsEnabled && prefs.preAlertEnabled,
-            enterAlertEnabled: prefs.alertsEnabled && prefs.enterAlertEnabled,
-            preAlertMinutes: preMinutes,
-            postReminderEnabled: prefs.alertsEnabled && prefs.postReminderEnabled,
+            preAlertEnabled: slotOpts.preAlertEnabled,
+            enterAlertEnabled: slotOpts.enterAlertEnabled,
+            preAlertMinutes: slotOpts.preAlertMinutes,
+            postReminderEnabled: slotOpts.postReminderEnabled,
             soundProfile: prefs.soundProfile,
-          }),
-        ),
+            muezzinId: slotOpts.muezzinId,
+            prayerEnabled: slotOpts.prayerEnabled,
+          });
+        }),
       ].join(";");
 
   if (opts?.forceNativeReschedule || batchSig !== _lastScheduleSig) {
@@ -269,13 +302,15 @@ export async function startPrayerAlertScheduler(
     }
   }
 
-  const next = findNextUpcoming(payload.prayers);
+  const next =
+    slots.find((s) => resolveSlotAlertOpts(s.slot.key, prefs).prayerEnabled)?.slot ?? null;
   if (!next) return;
 
   const prayerEpoch = epochForSlot(next, tz);
   const prayerName = KEY_TO_ARABIC[next.key] ?? next.name;
   const prayerKey = next.key.toLowerCase();
-
+  const nextOpts = resolveSlotAlertOpts(next.key, prefs);
+  const preMinutes = nextOpts.preAlertMinutes;
   const preAlertDelay = prayerEpoch - Date.now() - preMinutes * 60_000;
   const enterDelay = prayerEpoch - Date.now();
 
@@ -287,7 +322,7 @@ export async function startPrayerAlertScheduler(
     preAlertMinutes: preMinutes,
   };
 
-  const preOn = prefs.alertsEnabled && prefs.preAlertEnabled;
+  const preOn = nextOpts.preAlertEnabled;
   if (preAlertDelay <= 0 && enterDelay > 0) {
     if (preOn) dispatchAlert(fireEvent);
     void fireLiveActivityStart(next, prayerEpoch, payload.city);
