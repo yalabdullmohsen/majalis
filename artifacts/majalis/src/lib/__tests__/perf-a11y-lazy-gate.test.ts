@@ -80,4 +80,17 @@ console.log("\n=== CSP: صوت mp3quran متعدد الخوادم ===");
   );
 }
 
+console.log("\n=== SW: أصوات الأذان بلا precache في الغلاف ===");
+{
+  const sw = read("public/sw.js");
+  assert.match(sw, /pathname\.startsWith\("\/audio\/"\)/, "network-first لمسارات الصوت");
+  const shell = sw.match(/const STATIC_SHELL_ASSETS = \[([\s\S]*?)\];/);
+  assert.ok(shell, "STATIC_SHELL_ASSETS موجود");
+  assert.doesNotMatch(
+    shell[1]!,
+    /\/audio\/|\/sounds\//,
+    "لا precache لملفات الأذان عند تثبيت SW",
+  );
+}
+
 console.log("\nperf-a11y-lazy-gate.test.ts: ok");

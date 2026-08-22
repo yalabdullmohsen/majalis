@@ -55,8 +55,14 @@ assert.doesNotMatch(
 assert.match(playbackSrc, /ADHAN_PLAY_TIMEOUT_MS = 10_000/);
 
 const sw = readFileSync(resolve(root, "public/sw.js"), "utf8");
-assert.match(sw, /\/audio\/adhan\/adhan-makkah-full\.m4a/);
 assert.doesNotMatch(sw, /makkah-general\.mp3/);
 assert.match(sw, /pathname\.startsWith\("\/audio\/"\)/);
+const shell = sw.match(/const STATIC_SHELL_ASSETS = \[([\s\S]*?)\];/);
+assert.ok(shell, "STATIC_SHELL_ASSETS موجود");
+assert.doesNotMatch(
+  shell[1]!,
+  /\/audio\/|\/sounds\//,
+  "لا precache لملفات الأذان في الغلاف — network-first عند الطلب فقط",
+);
 
 console.log("adhan-audio-service.test.ts: ok");

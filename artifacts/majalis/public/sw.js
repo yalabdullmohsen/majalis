@@ -61,14 +61,6 @@ const STATIC_SHELL_ASSETS = [
   "/site.webmanifest",
   "/manifest.webmanifest",
   "/majlisilm-og-2026.jpg",
-  "/audio/adhan/adhan-makkah-full.m4a",
-  "/audio/adhan/adhan-makkah-fajr.mp3",
-  "/audio/adhan/adhan-madinah-full.m4a",
-  "/audio/adhan/adhan-egypt-full.m4a",
-  "/audio/adhan/adhan-aqsa-full.mp3",
-  "/audio/adhan/adhan-takbeerat-short.mp3",
-  "/audio/adhan/adhan-haram-full.m4a",
-  "/audio/adhan/adhan-soft-alert.m4a",
 ];
 
 self.addEventListener("install", (event) => {
