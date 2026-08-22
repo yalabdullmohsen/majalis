@@ -83,9 +83,11 @@ const ASSERTIONS = [
   { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "dark", min: 4.5 },
   { route: "/quran/surah-stories/1", selector: ".sq-header", mode: "light", min: 4.5 },
   { route: "/quran/surah-stories/1", selector: ".sq-header", mode: "dark", min: 4.5 },
-  // .notif-row__label و.ads-sunrise-time: لون نص ثابت لا يراعي السمة.
+  // .notif-row__label: لون نص ثابت لا يراعي السمة.
   { route: "/notification-settings", selector: ".notif-row__label", mode: "dark", min: 4.5 },
-  { route: "/adhan-settings", selector: ".ads-sunrise-time", mode: "dark", min: 4.5 },
+  // عنوان إعدادات الأذان بعد تنظيف الصفحة (بدل .ads-sunrise-time المحذوف).
+  { route: "/adhan-settings", selector: ".ads-title", mode: "dark", min: 4.5 },
+  { route: "/adhan-settings", selector: ".ads-title", mode: "light", min: 4.5 },
   // .seerah-panel__topic (رقاقة موضوع) كانت مُدرَجة خطأً ضمن قائمة "نص
   // أبيض على كل خلفية خضراء داكنة" الضخمة رغم خلفيتها الشفافة الخاصة.
   { route: "/seerah", selector: ".seerah-panel__topic", mode: "light", min: 4.5 },

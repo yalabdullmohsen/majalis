@@ -304,14 +304,22 @@ export async function playAdhanPreview(
 
   const maxMs =
     playbackMode === "full"
-      ? 28_000
-      : clip.maxMs ?? (playbackMode === "takbir" ? 12_000 : 15_000);
+      ? null
+      : clip.maxMs ?? (playbackMode === "takbir" ? 12_000 : 28_000);
 
-  return playWithFallback(clip.url, {
+  // بلا سلسلة احتياطي لأنواع أخرى — إن فشل الملف المختار يظهر الخطأ ولا يُشغَّل أذان مختلف.
+  const played = await playAdhanFull(clip.url, {
     volume: Math.max(0.35, Math.min(1, volume || 0.9)),
     maxMs,
     fadeIn: false,
   });
+  if (!played.ok) {
+    return {
+      ...played,
+      message: "تعذر تشغيل الصوت، جرّب نوعًا آخر.",
+    };
+  }
+  return played;
 }
 
 /** توافق الاسم القديم */

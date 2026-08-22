@@ -12,7 +12,7 @@ const STORE_KEY = "majalis-prayer-alert-prefs-v1";
 /** دقائق التنبيه المسبق الافتراضية. */
 export const PRE_ALERT_MINUTES = 15;
 
-export const PRE_ALERT_MINUTE_OPTIONS = [5, 10, 15, 30] as const;
+export const PRE_ALERT_MINUTE_OPTIONS = [0, 5, 10, 15, 20] as const;
 export type PreAlertMinutes = (typeof PRE_ALERT_MINUTE_OPTIONS)[number];
 
 /** دقائق بعد دخول الوقت لإشعار التذكير الخفيف. */
@@ -26,7 +26,7 @@ export type PrayerAlertPreferences = {
   alertsEnabled: boolean;
   /** تنبيه قبل الصلاة (شريط داخل التطبيق + إشعار محلي). */
   preAlertEnabled: boolean;
-  /** دقائق التنبيه المسبق: 5 | 10 | 15. */
+  /** دقائق التنبيه المسبق: 0 | 5 | 10 | 15 | 20. */
   preAlertMinutes: PreAlertMinutes;
   /** تنبيه عند دخول وقت الصلاة. */
   enterAlertEnabled: boolean;
@@ -39,7 +39,7 @@ export type PrayerAlertPreferences = {
 };
 
 function isPreAlertMinutes(v: unknown): v is PreAlertMinutes {
-  return v === 5 || v === 10 || v === 15 || v === 30;
+  return v === 0 || v === 5 || v === 10 || v === 15 || v === 20;
 }
 
 function isSoundProfile(v: unknown): v is PrayerSoundProfile {
@@ -68,14 +68,18 @@ export function loadPrayerAlertPrefs(): PrayerAlertPreferences {
   try {
     const raw = localStorage.getItem(STORE_KEY);
     if (!raw) return defaultPrefs();
-    const parsed = JSON.parse(raw) as Partial<PrayerAlertPreferences>;
+    const parsedUnknown = JSON.parse(raw) as Record<string, unknown>;
+    const parsed = parsedUnknown as Partial<PrayerAlertPreferences>;
     const base = defaultPrefs();
+    const rawMinutes = parsedUnknown.preAlertMinutes;
     return {
       alertsEnabled: parsed.alertsEnabled ?? base.alertsEnabled,
       preAlertEnabled: parsed.preAlertEnabled ?? base.preAlertEnabled,
-      preAlertMinutes: isPreAlertMinutes(parsed.preAlertMinutes)
-        ? parsed.preAlertMinutes
-        : base.preAlertMinutes,
+      preAlertMinutes: rawMinutes === 30
+        ? 20
+        : isPreAlertMinutes(rawMinutes)
+          ? rawMinutes
+          : base.preAlertMinutes,
       enterAlertEnabled: parsed.enterAlertEnabled ?? base.enterAlertEnabled,
       postReminderEnabled: parsed.postReminderEnabled ?? base.postReminderEnabled,
       soundProfile: isSoundProfile(parsed.soundProfile)

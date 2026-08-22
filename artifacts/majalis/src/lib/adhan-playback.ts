@@ -201,7 +201,7 @@ export async function playAdhanUrlAsync(
           if (audio.readyState >= 2) resolve();
           else reject(new Error("load_timeout"));
         });
-      }, 12_000);
+      }, 10_000);
     });
 
     if (_current !== audio) {
@@ -219,8 +219,8 @@ export async function playAdhanUrlAsync(
       const code = err.message === "media_error" ? "missing_file" : "load_failed";
       const message =
         err.message === "media_error"
-          ? "الملف غير موجود أو تعذّر قراءته."
-          : "فشل تحميل الصوت (انتهت المهلة).";
+          ? "تعذر تشغيل الصوت، جرّب نوعًا آخر."
+          : "تعذر تشغيل الصوت، جرّب نوعًا آخر.";
       emitPlayError(code, message, url);
       return { ok: false, code, message };
     }
