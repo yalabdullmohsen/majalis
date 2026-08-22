@@ -1,5 +1,5 @@
 /**
- * بوابة الدخولية الصامتة: SVG في index.html، بلا نص، بلا مكوّن React.
+ * بوابة الإقلاع: بلا دخولية/ترحيب داخل التطبيق، خلفية مبكرة، إخفاء أصلي سريع.
  * تشغيل: node --import tsx src/lib/__tests__/launch-splash-unified.test.ts
  */
 import assert from "node:assert/strict";
@@ -12,24 +12,25 @@ const root = resolve(__dirname, "../../..");
 const BG = "#0E1A15";
 
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
-assert.match(indexHtml, /id="mj-silent-splash"/, "دخولية HTML واحدة");
-assert.match(indexHtml, /mj-silent-splash__path/, "رمز يُرسم بـ stroke");
+assert.match(indexHtml, /id="mj-silent-splash"/, "طبقة لون تقنية فقط");
+assert.doesNotMatch(indexHtml, /mj-silent-splash__path/, "بلا شعار دخولية");
+assert.doesNotMatch(indexHtml, /mj-silent-splash__title/, "بلا عنوان دخولية");
+assert.doesNotMatch(indexHtml, /mj-silent-splash__subtitle/, "بلا سطر دخولية");
+assert.doesNotMatch(indexHtml, /mj-silent-splash__progress/, "بلا مؤشر دخولية");
 assert.doesNotMatch(indexHtml, /stroke-dashoffset/, "بلا dashoffset غير مركّب على الدخولية");
-assert.doesNotMatch(indexHtml, /mj-ss-draw|mj-ss-glow/, "بلا رسم/توهج متأخر يخفي الرمز عند أول إطار");
+assert.doesNotMatch(indexHtml, /mj-ss-draw|mj-ss-glow/, "بلا رسم/توهج متأخر");
 assert.match(indexHtml, /cubic-bezier\(\.22,\s*1,\s*\.36,\s*1\)/, "منحنى خروج مركّب");
-assert.match(indexHtml, /prefers-reduced-motion:\s*reduce/, "مسار بلا حركة رسم");
-assert.match(indexHtml, /__mjDismissSplash/, "دخولية تعرض دالة dismiss للطبقة الحاكمة");
-assert.match(indexHtml, /MIN_MS\s*=\s*900/, "حد أدنى 900ms موجود");
-assert.match(indexHtml, /MAX_MS\s*=\s*1500/, "حد أقصى 1500ms موجود");
-assert.match(indexHtml, /EXIT_MS\s*=\s*250/, "تلاشي HTML 250ms");
+assert.match(indexHtml, /prefers-reduced-motion:\s*reduce/, "مسار بلا حركة");
+assert.match(indexHtml, /__mjDismissSplash/, "دالة dismiss للطبقة التقنية");
+assert.match(indexHtml, /MIN_MS\s*=\s*0/, "بلا حد أدنى حاجب");
+assert.match(indexHtml, /dismiss\(true\)/, "إزالة فورية");
 assert.match(indexHtml, /id="mj-boot-skeleton"/, "هيكل إقلاع فوري");
-assert.match(indexHtml, /mj\.silent-splash\.session/, "جلسة: إقلاع بارد فقط");
 assert.match(
   indexHtml,
-  new RegExp(`background-color:\\s*(${BG}|var\\(--mj-splash-bg\\))`),
+  new RegExp(`background-color:\\s*(${BG}|var\\(--mj-splash-bg\\)|#F2F4F3)`),
   "خلفية html/body",
 );
-assert.match(indexHtml, new RegExp(`theme-color" content="${BG}"`), "theme-color الإقلاع مطابق للخلفية");
+assert.match(indexHtml, new RegExp(`theme-color" content="${BG}"`), "theme-color الإقلاع مطابق");
 assert.doesNotMatch(indexHtml, /apple-touch-startup-image/, "لا صور إقلاع PWA");
 assert.doesNotMatch(indexHtml, /splash-boot\.css/, "لا splash-boot.css");
 assert.doesNotMatch(indexHtml, /id="mj-boot-splash"/, "لا طبقة boot قديمة");
@@ -39,20 +40,16 @@ assert.doesNotMatch(indexHtml, /preload[^>]+icon-192\.webp/, "لا preload شع�
   assert.ok(preconnects.length <= 2, `preconnect ≤ ٢ (الفعلي: ${preconnects.length})`);
 }
 
-const splashChunk = indexHtml.match(/<div id="mj-silent-splash"[\s\S]*?<\/div>\s*<\/div>/);
-assert.ok(splashChunk, "قطعة الدخولية قابلة للعزل");
-assert.match(splashChunk[0], /mj-silent-splash__title/, "عنوان دخولية موجود");
-assert.match(splashChunk[0], /mj-silent-splash__progress/, "مؤشر تقدّم موجود");
-
 const splashTs = readFileSync(resolve(root, "src/lib/splash-screen.ts"), "utf8");
 assert.match(splashTs, /SplashScreen\.hide/, "يخفي الإطلاق الأصلي");
-assert.match(splashTs, /SPLASH_FADE_OUT_MS\s*=\s*250/, "تلاشٍ 250ms");
+assert.match(splashTs, /SPLASH_MIN_VISIBLE_MS\s*=\s*0/);
 assert.match(splashTs, /requestAnimationFrame/, "إخفاء عند أول إطار");
 assert.doesNotMatch(splashTs, /MajlisLaunchScreen/);
 
 const mainSrc = readFileSync(resolve(root, "src/main.tsx"), "utf8");
 assert.match(mainSrc, /mj:app-painted/, "main يعلن أول رسم");
 assert.match(mainSrc, new RegExp(BG));
+assert.doesNotMatch(mainSrc, /AppSplash/, "مكوّن AppSplash محذوف");
 
 const launch = readFileSync(
   resolve(root, "ios/App/App/Base.lproj/LaunchScreen.storyboard"),
@@ -64,9 +61,6 @@ assert.doesNotMatch(launch, /image="Splash"/, "بلا Splash القديم");
 assert.doesNotMatch(launch, /systemBackgroundColor/, "بلا خلفية نظام بيضاء");
 assert.match(launch, /safeArea|Safe area/i, "يحترم safe area");
 assert.match(launch, /0\.054901960784313725/, `خلفية ${BG}`);
-assert.match(launch, /المجلس العلمي/, "عنوان على LaunchScreen");
-assert.match(launch, /دروس شرعية/, "سطر تعريفي على LaunchScreen");
-assert.match(launch, /mk-progress-track/, "مؤشر تقدّم على LaunchScreen");
 
 const capTs = readFileSync(resolve(root, "capacitor.config.ts"), "utf8");
 assert.match(capTs, /launchShowDuration:\s*0/, "مدة إظهار Splash = 0");
@@ -94,17 +88,17 @@ assert.match(colors, new RegExp(`splash_background">${BG}<`));
 
 assert.ok(!existsSync(resolve(root, "ios/App/App/Assets.xcassets/Splash.imageset")), "لا Splash.imageset");
 assert.ok(existsSync(resolve(root, "ios/App/App/Assets.xcassets/LaunchMark.imageset/LaunchMark.png")));
-assert.ok(existsSync(resolve(root, "ios/App/App/Assets.xcassets/LaunchMark.imageset/LaunchMark@2x.png")));
-assert.ok(existsSync(resolve(root, "ios/App/App/Assets.xcassets/LaunchMark.imageset/LaunchMark@3x.png")));
 assert.ok(!existsSync(resolve(root, "assets/splash.png")), "لا assets/splash.png");
 assert.ok(!existsSync(resolve(root, "public/brand/apple-splash")), "لا apple-splash يتيمة");
 assert.ok(!existsSync(resolve(root, "public/brand/splash-boot.css")), "لا splash-boot.css");
 assert.ok(!existsSync(resolve(root, "src/components/BrandReveal.tsx")), "BrandReveal محذوف");
 assert.ok(!existsSync(resolve(root, "src/components/MajlisLaunchScreen.tsx")), "مكوّن React محذوف");
 assert.ok(!existsSync(resolve(root, "src/components/MajalisLaunchScreen.tsx")), "الاسم القديم محذوف");
+assert.ok(!existsSync(resolve(root, "src/components/AppSplash.tsx")), "AppSplash محذوف");
 assert.ok(!existsSync(resolve(root, "src/styles/launch-screen.css")), "CSS React محذوف");
 assert.ok(!existsSync(resolve(root, "src/lib/launch-intro.ts")), "launch-intro محذوف");
 assert.ok(!existsSync(resolve(root, "src/lib/launch-readiness.ts")), "launch-readiness محذوف");
+assert.ok(!existsSync(resolve(root, "src/styles/components/app-start.css")), "CSS شاشة البدء محذوف");
 
 const xcassets = resolve(root, "ios/App/App/Assets.xcassets");
 for (const name of readdirSync(xcassets)) {
@@ -115,15 +109,14 @@ for (const name of readdirSync(xcassets)) {
 
 const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8");
 assert.doesNotMatch(appSrc, /MajlisLaunchScreen|isLaunching|MajalisLaunchScreen/);
-// الدليل السريع القديم (٣ شاشات + جولة صلاحيات) أُلغي.
-// شاشة البدء الحالية: AppStartGate — مرة واحدة، بلا صلاحيات.
 assert.doesNotMatch(
   appSrc,
-  /WelcomeScreen|IntroScreen|BrandReveal|AppFirstRunHost|FirstRunSetup|AppFirstLaunchScreen|AppFeatureTourGate/,
-  "لا بوابة ترحيب قديمة في التركيب",
+  /WelcomeScreen|IntroScreen|BrandReveal|AppFirstRunHost|FirstRunSetup|AppFirstLaunchScreen|AppFeatureTourGate|AppStartGate/,
+  "لا بوابة ترحيب أو شاشة بدء",
 );
-assert.match(appSrc, /AppStartGate/, "شاشة البدء الواحدة موصولة");
 assert.ok(!existsSync(resolve(root, "src/components/AppFirstLaunchScreen.tsx")), "AppFirstLaunchScreen.tsx محذوف");
+assert.ok(!existsSync(resolve(root, "src/components/onboarding/AppStartGate.tsx")), "AppStartGate محذوف");
+assert.ok(!existsSync(resolve(root, "src/components/onboarding/AppStartView.tsx")), "AppStartView محذوف");
 assert.ok(!existsSync(resolve(root, "src/components/onboarding/AppFeatureTourGate.tsx")), "جولة المزايا التلقائية محذوفة");
 
 const info = readFileSync(resolve(root, "ios/App/App/Info.plist"), "utf8");
@@ -133,9 +126,6 @@ const manifest = JSON.parse(readFileSync(resolve(root, "public/manifest.json"), 
 assert.equal(manifest.background_color, BG);
 assert.equal(manifest.theme_color, "#F2F4F3");
 assert.ok(manifest.icons.some((i: { purpose?: string }) => i.purpose === "maskable"));
-
-assert.ok(existsSync(resolve(root, "public/brand/silent-splash-390x844.png")), "لقطة 390×844");
-assert.ok(existsSync(resolve(root, "public/brand/silent-splash-390x844-dark.png")), "لقطة الوضع الثاني");
 
 const swJs = readFileSync(resolve(root, "public/sw.js"), "utf8");
 assert.match(swJs, /majlisilm-v\$\{SW_BUILD_ID\}/, "كاش SW مربوط بالبناء");

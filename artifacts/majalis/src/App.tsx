@@ -94,10 +94,6 @@ const CrossDeviceResumeToast = lazyWithRetry(
   () => import("@/components/CrossDeviceResumeToast").then((m) => ({ default: m.CrossDeviceResumeToast })),
   "CrossDeviceResumeToast",
 );
-const AppStartGate = lazyWithRetry(
-  () => import("@/components/onboarding/AppStartGate").then((m) => ({ default: m.AppStartGate })),
-  "AppStartGate",
-);
 const AchievementToast = lazyWithRetry(
   () => import("@/components/AchievementToast").then((m) => ({ default: m.AchievementToast })),
   "AchievementToast",
@@ -1257,9 +1253,6 @@ function AppShellInner() {
       )}
       <Suspense fallback={null}>
         <CrossDeviceResumeToast />
-      </Suspense>
-      <Suspense fallback={null}>
-        <AppStartGate />
       </Suspense>
       {searchOpen && (
         <SectionErrorBoundary name="GlobalSearchModal">

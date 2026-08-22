@@ -1,6 +1,5 @@
 /**
- * بوابة حالة الدخول الأولى + راية الخصوصية: قراءة/كتابة موثوقة تصمد
- * عبر reload وإخفاق localStorage، مرة واحدة فقط لكل مستخدم.
+ * بوابة راية الخصوصية فقط — شاشة الدخول الأولى محذوفة.
  */
 import assert from "node:assert/strict";
 import test, { beforeEach } from "node:test";
@@ -50,11 +49,8 @@ installEnv();
 const mod = await import("../onboarding-state.js");
 const {
   initOnboardingState,
-  hasSeenOnboarding,
-  markOnboardingSeen,
   hasSeenStorageNotice,
   markStorageNoticeSeen,
-  shouldSkipAppStartForPath,
   __resetOnboardingStateForTests,
 } = mod;
 
@@ -63,26 +59,14 @@ beforeEach(() => {
   __resetOnboardingStateForTests();
 });
 
-test("مستخدم جديد لم يرَ شاشة الدخول بعد", () => {
-  initOnboardingState();
-  assert.equal(hasSeenOnboarding(), false);
-});
-
-test("الوسم يصمد عبر reload (نفس المفتاح)", () => {
-  initOnboardingState();
-  markOnboardingSeen();
-  initOnboardingState();
-  assert.equal(hasSeenOnboarding(), true);
-});
-
-test("راية الخصوصية/الكوكيز تعمل باستقلال عن راية الدخول", () => {
+test("راية الخصوصية/الكوكيز تصمد عبر reload", () => {
   initOnboardingState();
   markStorageNoticeSeen();
+  initOnboardingState();
   assert.equal(hasSeenStorageNotice(), true);
-  assert.equal(hasSeenOnboarding(), false);
 });
 
-test("الوحدة لا تطلب إذن إشعارات", async () => {
+test("الوحدة لا تطلب إذن إشعارات ولا شاشة بدء", async () => {
   const { readFileSync } = await import("node:fs");
   const { resolve, dirname } = await import("node:path");
   const { fileURLToPath } = await import("node:url");
@@ -91,40 +75,20 @@ test("الوحدة لا تطلب إذن إشعارات", async () => {
     "utf8",
   );
   assert.doesNotMatch(src, /requestPermission|Notification\s*\.|LocalNotifications|PushNotifications/);
-  assert.match(src, /navigator\.webdriver/);
+  assert.doesNotMatch(src, /hasSeenOnboarding|markOnboardingSeen|shouldSkipAppStart/);
 });
 
 test("إخفاق localStorage لا يمنع كتابة الكوكي للراية", () => {
   initOnboardingState();
   lsThrows = true;
-  const durable = markOnboardingSeen();
+  const durable = markStorageNoticeSeen();
   assert.equal(durable, true);
-  assert.equal(hasSeenOnboarding(), true);
+  assert.equal(hasSeenStorageNotice(), true);
 });
 
 test("الوسم idempotent", () => {
   initOnboardingState();
-  assert.equal(markOnboardingSeen(), true);
-  assert.equal(markOnboardingSeen(), true);
-  assert.equal(hasSeenOnboarding(), true);
-});
-
-test("الروابط العميقة تتخطى الدخولية", () => {
-  assert.equal(shouldSkipAppStartForPath("/"), false);
-  assert.equal(shouldSkipAppStartForPath("/settings"), false);
-  assert.equal(shouldSkipAppStartForPath("/mushaf"), true);
-  assert.equal(shouldSkipAppStartForPath("/mushaf?page=2"), true);
-  assert.equal(shouldSkipAppStartForPath("/fiqh/books/taharah/lessons/taharah-miyah-aqsam"), true);
-  assert.equal(shouldSkipAppStartForPath("/search?q=صلاة"), true);
-  assert.equal(shouldSkipAppStartForPath("/lessons/1"), true);
-});
-
-test("رفع الإصدار الكبير فقط يعيد التعيين — reload عادي لا يمسّه", () => {
-  initOnboardingState();
-  markOnboardingSeen();
-  markStorageNoticeSeen();
-  initOnboardingState();
-  initOnboardingState();
-  assert.equal(hasSeenOnboarding(), true);
+  assert.equal(markStorageNoticeSeen(), true);
+  assert.equal(markStorageNoticeSeen(), true);
   assert.equal(hasSeenStorageNotice(), true);
 });
