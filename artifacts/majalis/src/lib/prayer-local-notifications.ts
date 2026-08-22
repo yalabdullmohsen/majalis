@@ -264,7 +264,7 @@ export async function schedulePrayerNativeNotifications(opts: {
     // إشارة سالبة صريحة: قبل الصلاة
     const preAlertEpoch = opts.prayerTimeEpochMs - opts.preAlertMinutes * 60_000;
 
-    if (opts.preAlertEnabled && preAlertEpoch > now) {
+    if (opts.preAlertEnabled && opts.preAlertMinutes > 0 && preAlertEpoch > now) {
       const actualMins = Math.round((opts.prayerTimeEpochMs - preAlertEpoch) / 60_000);
       const preCopy = buildScheduledPrayerNotificationCopy({
         kind: "pre",

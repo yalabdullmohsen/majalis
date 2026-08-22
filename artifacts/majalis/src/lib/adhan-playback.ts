@@ -134,7 +134,7 @@ function emitPlayError(code: AdhanPlayErrorCode, message: string, url: string) {
  * تشغيل مع انتظار النتيجة — للواجهات التي تعرض سبب الفشل.
  */
 const ADHAN_PLAY_TIMEOUT_MS = 10_000;
-const ADHAN_FAIL_MSG = "تعذر تشغيل الأذان، تحقق من الصوت أو الإذن";
+const ADHAN_FAIL_MSG = "تعذر تشغيل الصوت، جرّب نوعًا آخر.";
 
 export async function playAdhanUrlAsync(
   url: string,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Bell, BellRing, Sparkles } from "lucide-react";
+import { Bell, BellRing } from "lucide-react";
 import {
   loadPrayerAlertPrefs,
   patchPrayerAlertPrefs,
@@ -14,21 +14,13 @@ import {
   requestNotificationPermission,
   type PermissionStatus,
 } from "@/lib/prayer-local-notifications";
-import { areLiveActivitiesSupported } from "@/lib/plugins/prayer-live-activity";
-import {
-  PRAYER_CUSTOM_SOUNDS_ENABLED,
-  PRAYER_SOUND_PROFILE_OPTIONS,
-  type PrayerSoundProfile,
-} from "@/lib/prayer-notification-sounds";
-import { fireTestLocalNotification } from "@/lib/notifications/test-trigger";
 import { isNative } from "@/lib/capacitor-utils";
 import {
-  formatScheduleStatusAr,
-  loadPrayerScheduleStatus,
-  type PrayerScheduleStatus,
-} from "@/lib/prayer-schedule-status";
-import { invalidatePrayerNativeSchedule } from "@/lib/prayer-alert-scheduler";
-import { fetchPrayerTimes } from "@/lib/prayer-times";
+  loadAdhanPrefs,
+  patchPrayerPrefs,
+  PRAYER_KEYS,
+  type AdvanceMinutes,
+} from "@/lib/adhan-preferences";
 
 function MiniToggle({
   checked,
@@ -56,150 +48,106 @@ function MiniToggle({
   );
 }
 
-function permissionLabel(status: PermissionStatus): string {
-  if (status === "granted") return "مسموح";
-  if (status === "denied") return "مرفوض";
-  if (status === "unsupported") return "غير مدعوم";
-  return "غير محدد";
-}
-
 /**
- * بطاقة إعدادات "تنبيه الصلاة القادمة": شريط داخل التطبيق + Live Activity +
- * إشعار قبل الصلاة/عند دخول الوقت. لا يُطلَب إذن الإشعارات هنا تلقائياً —
- * تُعرَض شارة شرح الفائدة أولاً، ولا يُرسَل الطلب الفعلي إلا بضغطة المستخدم.
+ * بطاقة إشعارات الصلاة: تفعيل، تنبيه قبل، مدة، دخول الوقت.
+ * تغيير التفضيلات يطلق majalis:prayer-alert-prefs-changed فيعيد App الجدولة.
  */
 export function PrayerAlertSettingsCard() {
   const [prefs, setPrefs] = useState<PrayerAlertPreferences>(() => loadPrayerAlertPrefs());
   const [permission, setPermission] = useState<PermissionStatus>("prompt");
   const [showExplainer, setShowExplainer] = useState(false);
-  const [liveActivitySupported, setLiveActivitySupported] = useState(false);
-  const [testBusy, setTestBusy] = useState(false);
-  const [testMsg, setTestMsg] = useState<string | null>(null);
-  const [scheduleStatus, setScheduleStatus] = useState<PrayerScheduleStatus | null>(() =>
-    loadPrayerScheduleStatus(),
-  );
-  const [rescheduleBusy, setRescheduleBusy] = useState(false);
 
   useEffect(() => {
     getNotificationPermissionStatus().then(setPermission);
-    areLiveActivitiesSupported().then(setLiveActivitySupported);
   }, []);
 
   const patch = (p: Partial<PrayerAlertPreferences>) => {
     setPrefs(patchPrayerAlertPrefs(p));
   };
 
+  const applyGlobalMinutes = (minutes: PreAlertMinutes) => {
+    const prev = prefs.preAlertMinutes;
+    patch({ preAlertMinutes: minutes });
+    const adhan = loadAdhanPrefs();
+    for (const key of PRAYER_KEYS) {
+      if (adhan.prayers[key].advanceMinutes === prev) {
+        patchPrayerPrefs(key, { advanceMinutes: minutes as AdvanceMinutes });
+      }
+    }
+  };
+
   const openSystemSettings = async () => {
     try {
       if (isNative) {
         window.location.href = "app-settings:";
-        return;
       }
     } catch {
-      /* fall through */
-    }
-    setTestMsg("افتح إعدادات الجهاز ← المجلس العلمي ← الإشعارات.");
-  };
-
-  const runTestNotification = async () => {
-    setTestBusy(true);
-    setTestMsg(null);
-    const result = await fireTestLocalNotification();
-    setTestBusy(false);
-    if (result.ok) {
-      setTestMsg("سيصل إشعار تجريبي خلال ١٥ ثانية تقريبًا — أبقِ التطبيق في الخلفية للتحقق من صوت CAF.");
-      return;
-    }
-    if (result.reason === "permission") {
-      setTestMsg("يلزم تفعيل إذن الإشعارات أولًا.");
-      return;
-    }
-    setTestMsg("تعذّر إرسال الإشعار التجريبي على هذا الجهاز.");
-  };
-
-  const runReschedule = async () => {
-    setRescheduleBusy(true);
-    setTestMsg(null);
-    try {
-      invalidatePrayerNativeSchedule();
-      const { startPrayerAlertScheduler } = await import("@/lib/prayer-alert-scheduler");
-      const payload = await fetchPrayerTimes();
-      await startPrayerAlertScheduler(payload, { forceNativeReschedule: true });
-      await import("@/lib/adhan-scheduler").then((m) => m.startAdhanScheduler(payload));
-      setScheduleStatus(loadPrayerScheduleStatus());
-      setTestMsg(
-        isNative
-          ? "أُعيدت جدولة الأذان للصلوات القادمة."
-          : "أُعيدت الجدولة (على الويب تعمل الإشعارات أثناء فتح الصفحة).",
-      );
-    } catch {
-      setTestMsg("تعذّرت إعادة جدولة الأذان. حاول مرة أخرى.");
-    } finally {
-      setRescheduleBusy(false);
+      /* ignore */
     }
   };
 
-  const handleEnableClick = () => {
-    if (permission === "prompt" && !hasAskedNotificationPermission()) {
-      setShowExplainer(true);
-      return;
-    }
-    void doRequestPermission();
-  };
-
-  const doRequestPermission = async () => {
+  const doRequestPermission = async (): Promise<PermissionStatus> => {
     markNotificationPermissionAsked();
     await requestNotificationPermission();
     const status = await getNotificationPermissionStatus();
     setPermission(status);
     setShowExplainer(false);
+    return status;
+  };
+
+  const handleEnableAlerts = (v: boolean) => {
+    if (!v) {
+      patch({ alertsEnabled: false });
+      return;
+    }
+    if (permission === "denied") {
+      void openSystemSettings();
+      return;
+    }
+    if (permission === "prompt" && !hasAskedNotificationPermission()) {
+      setShowExplainer(true);
+      return;
+    }
+    if (permission === "prompt") {
+      void doRequestPermission().then((status) => {
+        if (status === "granted" || status === "unsupported") {
+          patch({ alertsEnabled: true });
+        }
+      });
+      return;
+    }
+    patch({ alertsEnabled: true });
   };
 
   const alertsOn = prefs.alertsEnabled;
-  const preMinutes = prefs.preAlertMinutes;
-  const soundLabel =
-    PRAYER_SOUND_PROFILE_OPTIONS.find((o) => o.id === prefs.soundProfile)?.label ??
-    prefs.soundProfile;
 
   return (
     <div className="ads-card">
       <div className="ads-card__head">
         <BellRing size={15} strokeWidth={2} />
-        <span>تنبيه الصلاة القادمة</span>
+        <span>إشعارات الصلاة</span>
       </div>
       <div className="ads-card__body">
-        <p className="ads-adhan-desc">
-          إشعارات قصيرة قبل الصلاة وعند دخول الوقت، مع صوت مناسب لشاشة القفل.
-          على iOS: صوت الإشعار قصير (≤٣٠ث) عند إغلاق التطبيق؛ الأذان الكامل يُسمَع
-          داخل التطبيق أو إذا بدأ التشغيل والتطبيق في الخلفية. قد يُكتم الصوت في
-          الوضع الصامت أو Focus على iOS، ولا يمكن تجاوزه إلا بصلاحية Critical Alerts من Apple.
-        </p>
-
-        <div className="ads-row-sep">
-          <div>
-            <div className="ads-global-label">حالة الأذان</div>
-            <div className="ads-global-desc">
-              {permissionLabel(permission)}
-              {" · "}
-              الصوت المختار: {soundLabel}
-              {PRAYER_CUSTOM_SOUNDS_ENABLED ? " (مخصّص)" : " (نظام)"}
-              {" · "}
-              {formatScheduleStatusAr(scheduleStatus)}
-            </div>
-          </div>
-        </div>
-
         {showExplainer && (
           <div className="pasc-explainer">
             <Bell size={16} strokeWidth={2} />
             <div>
-              <p className="pasc-explainer__title">لماذا نطلب إذن الإشعارات؟</p>
+              <p className="pasc-explainer__title">تفعيل إشعارات الصلاة</p>
               <p className="pasc-explainer__desc">
-                لتنبيهك قبل كل صلاة بـ{preMinutes} دقيقة وعند دخول وقتها، حتى لو كان
-                التطبيق مغلقاً. يمكنك تعطيل هذا لاحقاً في أي وقت.
+                لننبّهك قبل الصلاة وعند دخول وقتها، حتى لو كان التطبيق مغلقًا.
               </p>
               <div className="pasc-explainer__actions">
-                <button type="button" className="ads-pill-btn" onClick={doRequestPermission}>
+                <button
+                  type="button"
+                  className="ads-pill-btn"
+                  onClick={() => {
+                    void doRequestPermission().then((status) => {
+                      if (status === "granted" || status === "unsupported") {
+                        patch({ alertsEnabled: true });
+                      }
+                    });
+                  }}
+                >
                   تفعيل الإشعارات
                 </button>
                 <button
@@ -207,91 +155,33 @@ export function PrayerAlertSettingsCard() {
                   className="ads-pill-btn-ghost"
                   onClick={() => setShowExplainer(false)}
                 >
-                  لاحقاً
+                  لاحقًا
                 </button>
               </div>
             </div>
           </div>
         )}
 
-        {!showExplainer && permission !== "granted" && permission !== "unsupported" && (
-          <div className="ads-row-sep">
-            <div>
-              <div className="ads-global-label">إذن الإشعارات</div>
-              <div className="ads-global-desc">
-                {permission === "denied"
-                  ? "محجوب من إعدادات النظام — افتح الإعدادات لتفعيله"
-                  : "لم يُفعَّل بعد"}
-              </div>
-            </div>
-            {permission === "prompt" && (
-              <button type="button" className="ads-pill-btn" onClick={handleEnableClick}>
-                تفعيل
-              </button>
-            )}
-            {permission === "denied" && (
-              <button type="button" className="ads-pill-btn" onClick={() => void openSystemSettings()}>
-                فتح الإعدادات
-              </button>
-            )}
-          </div>
-        )}
-
-        {alertsOn && (
-          <div className="ads-row-sep">
-            <div>
-              <div className="ads-global-label">اختبار إشعار بعد 15 ثانية</div>
-              <div className="ads-global-desc">
-                اضغط ثم اقفل الشاشة أو ضع التطبيق بالخلفية للتحقق من صوت الإشعار القصير
-              </div>
-            </div>
-            <button
-              type="button"
-              className="ads-pill-btn"
-              disabled={testBusy}
-              onClick={() => void runTestNotification()}
-            >
-              {testBusy ? "جارٍ…" : "اختبار 15ث"}
-            </button>
-          </div>
-        )}
-
-        {alertsOn && (
-          <div className="ads-row-sep">
-            <div>
-              <div className="ads-global-label">إعادة جدولة الأذان</div>
-              <div className="ads-global-desc">
-                بعد تغيير المدينة أو طريقة الحساب أو عند يوم جديد
-              </div>
-            </div>
-            <button
-              type="button"
-              className="ads-pill-btn"
-              disabled={rescheduleBusy}
-              onClick={() => void runReschedule()}
-            >
-              {rescheduleBusy ? "جارٍ…" : "إعادة جدولة"}
-            </button>
-          </div>
-        )}
-        {testMsg && <p className="ads-adhan-desc" role="status">{testMsg}</p>}
-
         <div className="ads-row-sep">
           <div>
-            <div className="ads-global-label">إشعارات الصلاة</div>
-            <div className="ads-global-desc">تفعيل أو إيقاف كل تنبيهات مواقيت الصلاة</div>
+            <div className="ads-global-label">تفعيل إشعارات الصلاة</div>
+            <div className="ads-global-desc">
+              {permission === "denied"
+                ? "محجوب من إعدادات النظام"
+                : "جدولة تنبيهات المواقيت"}
+            </div>
           </div>
           <MiniToggle
             checked={prefs.alertsEnabled}
-            onChange={(v) => patch({ alertsEnabled: v })}
-            label="إشعارات الصلاة"
+            onChange={handleEnableAlerts}
+            label="تفعيل إشعارات الصلاة"
           />
         </div>
 
         <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
           <div>
             <div className="ads-global-label">تنبيه قبل الصلاة</div>
-            <div className="ads-global-desc">شريط وإشعار قبل الموعد</div>
+            <div className="ads-global-desc">إشعار قبل الموعد</div>
           </div>
           <MiniToggle
             checked={prefs.preAlertEnabled}
@@ -301,28 +191,26 @@ export function PrayerAlertSettingsCard() {
           />
         </div>
 
-        {alertsOn && prefs.preAlertEnabled && (
-          <div className="ads-row-sep">
+        {alertsOn && prefs.preAlertEnabled ? (
+          <div className="ads-row-sep ads-row-sep--stack">
             <div>
-              <div className="ads-global-label">مدة التذكير قبل الصلاة</div>
-              <div className="ads-global-desc">متى يصل الإشعار المسبق</div>
+              <div className="ads-global-label">مدة التنبيه قبل الصلاة</div>
+              <div className="ads-global-desc">بدون أو 5 إلى 20 دقيقة</div>
             </div>
-            <select
-              className="ads-gov-select"
-              aria-label="مدة التذكير قبل الصلاة"
-              value={prefs.preAlertMinutes}
-              onChange={(e) =>
-                patch({ preAlertMinutes: Number(e.target.value) as PreAlertMinutes })
-              }
-            >
+            <div className="ads-chip-scroll" role="group" aria-label="مدة التنبيه قبل الصلاة">
               {PRE_ALERT_MINUTE_OPTIONS.map((m) => (
-                <option key={m} value={m}>
-                  {m} دقائق
-                </option>
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => applyGlobalMinutes(m)}
+                  className={`ads-chip${prefs.preAlertMinutes === m ? " is-active" : ""}`}
+                >
+                  {m === 0 ? "بدون" : `${m} د`}
+                </button>
               ))}
-            </select>
+            </div>
           </div>
-        )}
+        ) : null}
 
         <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
           <div>
@@ -336,64 +224,6 @@ export function PrayerAlertSettingsCard() {
             disabled={!alertsOn}
           />
         </div>
-
-        <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
-          <div>
-            <div className="ads-global-label">تذكير خفيف بعد الصلاة</div>
-            <div className="ads-global-desc">تنبيه لطيف بعد دخول الوقت بقليل</div>
-          </div>
-          <MiniToggle
-            checked={prefs.postReminderEnabled}
-            onChange={(v) => patch({ postReminderEnabled: v })}
-            label="تذكير خفيف بعد الصلاة"
-            disabled={!alertsOn}
-          />
-        </div>
-
-        {alertsOn && (
-          <div className="ads-row-sep">
-            <div>
-              <div className="ads-global-label">صوت الإشعار</div>
-              <div className="ads-global-desc">
-                {PRAYER_SOUND_PROFILE_OPTIONS.find((o) => o.id === prefs.soundProfile)?.hint ??
-                  "صوت مخصّص قصير لشاشة القفل"}
-              </div>
-            </div>
-            <select
-              className="ads-gov-select"
-              aria-label="صوت إشعار الصلاة"
-              value={prefs.soundProfile}
-              onChange={(e) =>
-                patch({ soundProfile: e.target.value as PrayerSoundProfile })
-              }
-            >
-              {PRAYER_SOUND_PROFILE_OPTIONS.map((o) => (
-                <option key={o.id} value={o.id}>
-                  {o.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
-        {liveActivitySupported ? (
-        <div className="ads-row-sep">
-          <div>
-            <div className="ads-global-label">
-              <Sparkles size={13} strokeWidth={2} style={{ display: "inline", marginLeft: 4 }} />
-              Live Activity
-            </div>
-            <div className="ads-global-desc">
-              عرض العدّ التنازلي في Dynamic Island وشاشة القفل
-            </div>
-          </div>
-          <MiniToggle
-            checked={prefs.liveActivitiesEnabled && liveActivitySupported}
-            onChange={(v) => patch({ liveActivitiesEnabled: v })}
-            label="Live Activity"
-          />
-        </div>
-        ) : null}
       </div>
     </div>
   );
