@@ -61,12 +61,14 @@ const STATIC_SHELL_ASSETS = [
   "/site.webmanifest",
   "/manifest.webmanifest",
   "/majlisilm-og-2026.jpg",
-  "/sounds/adhan/makkah-general.mp3",
-  "/sounds/adhan/makkah-fajr.mp3",
-  "/sounds/adhan/madinah-general.mp3",
-  "/sounds/adhan/egypt-general.mp3",
-  "/sounds/adhan/aqsa-general.mp3",
-  "/sounds/adhan/takbeerat-short.mp3",
+  "/audio/adhan/adhan-makkah-full.m4a",
+  "/audio/adhan/adhan-makkah-fajr.mp3",
+  "/audio/adhan/adhan-madinah-full.m4a",
+  "/audio/adhan/adhan-egypt-full.m4a",
+  "/audio/adhan/adhan-aqsa-full.mp3",
+  "/audio/adhan/adhan-takbeerat-short.mp3",
+  "/audio/adhan/adhan-haram-full.m4a",
+  "/audio/adhan/adhan-soft-alert.m4a",
 ];
 
 self.addEventListener("install", (event) => {
@@ -258,6 +260,27 @@ self.addEventListener("fetch", (event) => {
   // JSON seed chunks — SWR (قرآن/أذكار/فهارس ثابتة مع تحديث خلفي هادئ)
   if (url.pathname.startsWith("/data/") && url.pathname.endsWith(".json")) {
     event.respondWith(staleWhileRevalidate(req, DATA_CACHE));
+    return;
+  }
+
+  // أصوات الأذان — network-first حتى لا تُخدم 404 قديمة من الكاش
+  if (url.pathname.startsWith("/audio/") || url.pathname.startsWith("/sounds/")) {
+    event.respondWith(
+      (async () => {
+        try {
+          const res = await fetchWithTimeout(req, 10_000);
+          if (res.ok || res.status === 206) {
+            const cache = await caches.open(OFFLINE_CACHE);
+            cache.put(req, res.clone()).catch(() => undefined);
+          }
+          return res;
+        } catch {
+          const cached = await caches.match(req);
+          if (cached && cached.ok) return cached;
+          return new Response("audio unavailable", { status: 503 });
+        }
+      })(),
+    );
     return;
   }
 

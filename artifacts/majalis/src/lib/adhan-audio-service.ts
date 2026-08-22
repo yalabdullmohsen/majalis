@@ -198,15 +198,8 @@ export async function playAdhanFull(
 ): Promise<AdhanPlayResult> {
   lastUrl = url;
   lastError = null;
-  await claimExclusiveBus();
-  const session = await ensurePlaybackSession();
-  if (!session.ok && opts?.requireSession !== false && isNative && isIOS) {
-    return {
-      ok: false,
-      code: "unknown",
-      message: session.message || "فشل تفعيل جلسة الصوت",
-    };
-  }
+  void claimExclusiveBus();
+  void ensurePlaybackSession();
   pushAttempt(`play ${url}`);
   syncAdhanMediaSessionPlaying();
   const vol = Math.min(1, Math.max(0, opts?.volume ?? 1));
@@ -250,9 +243,7 @@ async function playWithFallback(
     message: "ملف الصوت غير موجود",
   };
   for (const url of chain) {
-    const exists = await probeAdhanAssetExists(url);
-    pushAttempt(`try ${url} exists=${exists}`);
-    if (!exists && url.startsWith("/")) continue;
+    pushAttempt(`try ${url}`);
     last = await playAdhanFull(url, opts);
     if (last.ok) return last;
   }

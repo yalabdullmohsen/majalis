@@ -271,12 +271,20 @@ function FeaturedAdhanStyles({
     setLoadingId(id);
     setStatus("loading");
     setPreviewing(null);
+    const watchdog = window.setTimeout(() => {
+      stopAdhanPreview();
+      setLoadingId(null);
+      setPreviewing(null);
+      setStatus("failed");
+      setError("تعذر تشغيل الأذان، تحقق من الصوت أو الإذن");
+    }, 10_000);
     void playAdhanPreview(id, playbackMode === "silent" ? "full" : playbackMode, volume).then((result) => {
+      window.clearTimeout(watchdog);
       setLoadingId(null);
       if (!result.ok) {
         setPreviewing(null);
         setStatus("failed");
-        setError(result.message || "تعذّر تشغيل الصوت. جرّب نوعًا آخر أو أعد التحميل.");
+        setError(result.message || "تعذر تشغيل الأذان، تحقق من الصوت أو الإذن");
         return;
       }
       setPreviewing(id);
@@ -1256,7 +1264,7 @@ export default function AdhanSettingsPage() {
                   setTestMsg(
                     r.ok
                       ? "يُشغَّل الأذان الآن داخل التطبيق."
-                      : `تعذّر التشغيل: ${r.message}`,
+                      : r.message || "تعذر تشغيل الأذان، تحقق من الصوت أو الإذن",
                   );
                 });
               }}
@@ -1276,7 +1284,7 @@ export default function AdhanSettingsPage() {
                   setTestMsg(
                     r.ok
                       ? "يُشغَّل الأذان الكامل الآن داخل التطبيق."
-                      : `تعذّر التشغيل: ${r.message}`,
+                      : r.message || "تعذر تشغيل الأذان، تحقق من الصوت أو الإذن",
                   );
                 });
               }}

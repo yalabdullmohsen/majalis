@@ -37,6 +37,7 @@ assert.match(view, /اختبار الأذان الآن/);
 assert.match(view, /إعادة جدولة التنبيهات/);
 assert.match(view, /أنواع الأذان/);
 assert.match(view, /تجربة الصوت/);
+assert.match(view, /تعذر تشغيل الأذان، تحقق من الصوت أو الإذن/);
 assert.match(view, /تذكير أذكار الصباح والمساء/);
 assert.match(view, /اختبار إشعار قصير بعد 15 ثانية/);
 assert.match(view, /اختبار الأذان المتتابع/);

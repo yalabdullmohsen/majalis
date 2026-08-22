@@ -70,6 +70,7 @@ console.log("\n=== CSP: صوت mp3quran متعدد الخوادم ===");
   assert.match(vercel, /Content-Security-Policy/);
   assert.match(vercel, /https:\/\/\*\.mp3quran\.net/, "wildcard mp3quran في CSP");
   assert.match(vercel, /https:\/\/everyayah\.com/, "everyayah مسموح");
+  assert.match(vercel, /https:\/\/cdn\.islamic\.network/, "islamic.network مسموح للتلاوة الاحتياطية");
   assert.match(vercel, /https:\/\/\*\.supabase\.co/, "supabase مسموح");
   assert.equal(
     /media-src[^;]*server8\.mp3quran\.net/.test(vercel) &&

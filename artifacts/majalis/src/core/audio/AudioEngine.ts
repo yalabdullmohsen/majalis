@@ -192,9 +192,8 @@ export class AudioEngine {
     });
     el.addEventListener("error", () => {
       if (el !== this.getActiveElRef()) return;
-      if (this.playerState === "playing" || this.playerState === "loading") {
-        return;
-      }
+      if (this.playerState === "playing") return;
+      if (this.playerState === "loading" || this.playerState === "buffering") return;
       this.setPlayerState("error", "تعذّر تحميل ملف التلاوة. أعد المحاولة أو غيّر القارئ.");
     });
     el.addEventListener("timeupdate", () => {
@@ -254,8 +253,9 @@ export class AudioEngine {
       this.preloadKey = null;
       const el = this.getActiveElRef();
       el.playbackRate = this.playbackRate;
-      await this.activatePlaybackSession();
-      await el.play();
+      const playWait = el.play();
+      void this.activatePlaybackSession();
+      await playWait;
       if (gen !== this.playGeneration) return false;
       this.setPlayerState("playing");
       this.preloadNextAyah(surah, ayah, gen);
@@ -273,6 +273,33 @@ export class AudioEngine {
    */
   private ensureAudio(): HTMLAudioElement {
     return this.getActiveEl();
+  }
+
+  /** play() داخل الإيماءة + انتظار playing أو خطأ أو مهلة — لا يبقى loading بلا نهاية. */
+  private waitUntilPlaying(el: HTMLAudioElement, timeoutMs: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      let settled = false;
+      const finish = (fn: () => void) => {
+        if (settled) return;
+        settled = true;
+        el.removeEventListener("playing", onPlaying);
+        el.removeEventListener("error", onErr);
+        window.clearTimeout(timer);
+        fn();
+      };
+      const onPlaying = () => finish(() => resolve());
+      const onErr = () => finish(() => reject(new Error("media_error")));
+      const timer = window.setTimeout(
+        () => finish(() => reject(new Error("audio_load_timeout"))),
+        timeoutMs,
+      );
+      el.addEventListener("playing", onPlaying);
+      el.addEventListener("error", onErr);
+      const playWait = el.play();
+      if (playWait && typeof playWait.then === "function") {
+        playWait.catch((err) => finish(() => reject(err)));
+      }
+    });
   }
 
   private async activatePlaybackSession(): Promise<void> {
@@ -460,12 +487,18 @@ export class AudioEngine {
     try {
       el.src = url;
       el.playbackRate = this.playbackRate;
-      await this.activatePlaybackSession();
-      await el.play();
+      const playWait = el.play();
+      void this.activatePlaybackSession();
+      await Promise.race([
+        playWait,
+        new Promise<void>((_, reject) => {
+          window.setTimeout(() => reject(new Error("audio_load_timeout")), 10_000);
+        }),
+      ]);
       this.setPlayerState("playing");
     } catch (err) {
       console.warn("[AudioEngine] playUrl:", err);
-      this.setPlayerState("error");
+      this.setPlayerState("error", "تعذر تحميل التلاوة، جرّب قارئًا آخر");
     }
   }
 
@@ -579,8 +612,14 @@ export class AudioEngine {
     if (this.teachEnabled) this.teachPhase = "teacher";
 
     void this.activatePlaybackSession();
+    try {
+      this.getIdleElRef().pause();
+    } catch {
+      /* slotB may be unused */
+    }
 
     const budgetMs = 10_000;
+    const perUrlMs = 3_500;
     const startedAt = Date.now();
     let lastErr: unknown = null;
     for (const url of urls) {
@@ -596,13 +635,7 @@ export class AudioEngine {
         } catch {
           /* iOS يقبل play() بعد تعيين src مباشرة */
         }
-        const playWait = el.play();
-        await Promise.race([
-          playWait,
-          new Promise<void>((_, reject) => {
-            window.setTimeout(() => reject(new Error("audio_load_timeout")), remaining);
-          }),
-        ]);
+        await this.waitUntilPlaying(el, Math.min(perUrlMs, remaining));
         if (gen !== this.playGeneration) return;
         this.setPlayerState("playing");
         this.preloadNextAyah(surah, ayah, gen);
