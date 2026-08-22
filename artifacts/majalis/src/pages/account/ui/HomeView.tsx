@@ -160,13 +160,23 @@ export default function HomePage() {
   const continueHref = lastVisited?.href ?? "/lessons";
 
   useEffect(() => {
-    applyPageSeo({
-      path: "/",
-      title: "المجلس العلمي، منصة العلوم الإسلامية",
-      description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الأحكام الشرعية، والفقه المعاصر.",
-      keywords: ["المجلس العلمي", "علوم إسلامية", "قرآن كريم", "أذكار", "أحكام شرعية", "دروس علمية"],
-      jsonLd: defaultSiteJsonLd(),
+    const run = () =>
+      applyPageSeo({
+        path: "/",
+        title: "المجلس العلمي، منصة العلوم الإسلامية",
+        description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الأحكام الشرعية، والفقه المعاصر.",
+        keywords: ["المجلس العلمي", "علوم إسلامية", "قرآن كريم", "أذكار", "أحكام شرعية", "دروس علمية"],
+        jsonLd: defaultSiteJsonLd(),
+      });
+    scheduleOnIdle(run, 0);
+  }, []);
+
+  useEffect(() => {
+    const paint = () => window.dispatchEvent(new Event("mj:home-painted"));
+    const id = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(paint);
     });
+    return () => window.cancelAnimationFrame(id);
   }, []);
 
   return (

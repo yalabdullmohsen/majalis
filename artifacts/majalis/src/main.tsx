@@ -95,8 +95,16 @@ const queryClient = createAppQueryClient();
 
 resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
-initClientErrorReporting();
-logLcpCandidateHint();
+
+const bootReporting = () => {
+  initClientErrorReporting();
+  logLcpCandidateHint();
+};
+if (typeof requestIdleCallback === "function") {
+  requestIdleCallback(bootReporting, { timeout: 2_500 });
+} else {
+  setTimeout(bootReporting, 0);
+}
 
 const bootFinalPolish = () => initFinalPolish();
 if (typeof requestIdleCallback === "function") {

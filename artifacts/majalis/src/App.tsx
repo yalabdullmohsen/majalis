@@ -579,7 +579,7 @@ function NativeNotificationsBootstrap() {
 
 function HomeInitialShell() {
   return (
-    <div className="m2030-home mj-home-lcp-ph" dir="rtl" aria-hidden="true">
+    <div className="m2030-home mj-home-lcp-ph" dir="rtl">
       <header className="page-hero-mj m2030-hero home-page-hero" dir="rtl">
         <div className="page-hero-mj__content">
           <p className="page-hero-mj__eyebrow mj-home-lcp-ph__hero-eyebrow">&nbsp;</p>
@@ -590,7 +590,7 @@ function HomeInitialShell() {
         </div>
       </header>
 
-      <div className="hus mj-home-lcp-ph__search">
+      <div className="hus mj-home-lcp-ph__search" role="search" aria-label="بحث موحّد">
         <div className="hus-field">
           <span className="hus-input mj-home-lcp-ph__search-ph" aria-hidden="true">
             &nbsp;
@@ -635,28 +635,11 @@ function HomeInitialShell() {
       <section
         className="m2030-band m2030-band--sage home-daily-wird daily-wird-card mj-home-lcp-ph__daily-band"
         aria-label="ورد اليوم"
+        aria-busy="true"
         data-testid="daily-wird-card"
       >
         <div className="m2030-band__head">
           <h2 className="m2030-band__title">ورد اليوم</h2>
-          <div className="daily-wird-card__actions" aria-hidden="true">
-            <span className="daily-wird-card__done-btn mj-home-lcp-ph__daily-done">تم</span>
-            <span className="m2030-band__link mj-home-lcp-ph__daily-link">الورد الكامل</span>
-          </div>
-        </div>
-        <div className="home-daily-wird__grid">
-          {Array.from({ length: 4 }).map((_, idx) => (
-            <article key={idx} className="home-daily-wird__card mj-card mj-home-lcp-ph__daily-card">
-              <header className="home-daily-wird__card-head">
-                <span className="mj-home-lcp-ph__daily-icon" aria-hidden="true" />
-                <span className="mj-home-lcp-ph__daily-label">&nbsp;</span>
-              </header>
-              <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
-              <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
-              <div className="home-daily-wird__meta mj-home-lcp-ph__daily-meta skeleton-base" />
-              <div className="home-daily-wird__cta mj-home-lcp-ph__daily-cta skeleton-base" />
-            </article>
-          ))}
         </div>
       </section>
     </div>
@@ -1286,7 +1269,7 @@ function AppShellInner() {
         </SectionErrorBoundary>
       )}
       {!hideSiteChrome && <Suspense fallback={null}><PrayerRespectBanner /></Suspense>}
-      <main id="main-content" className="app-main" tabIndex={-1} data-scroll-root="1">
+      <main id="main-content" className="app-main" tabIndex={-1} data-scroll-root="1" aria-label="المحتوى الرئيسي">
         <Router />
       </main>
       {/* تذييل الموقع للويب فقط — داخل التطبيق الأصلي يُخفى (App Store: الروابط القانونية في الإعدادات) */}
