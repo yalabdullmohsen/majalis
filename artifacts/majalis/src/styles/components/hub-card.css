@@ -314,6 +314,11 @@ html.dark .sq-card {
   color: var(--mj-on-brand) !important;
 }
 
+.navbar-prayer-chip--placeholder .navbar-prayer-chip__hms {
+  min-width: 3.25rem;
+  display: inline-block;
+}
+
 .navbar-v3__inner {
   overflow: visible !important;
   min-height: 3.25rem;

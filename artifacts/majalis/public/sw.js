@@ -55,7 +55,6 @@ const STATIC_SHELL_ASSETS = [
   "/icon-192.png",
   "/icon-512.png",
   "/brand/icon-512-maskable.png",
-  "/fonts/amiri-quran/AmiriQuran-Regular.woff2",
   "/star-pattern.svg",
   "/manifest.json",
   "/site.webmanifest",

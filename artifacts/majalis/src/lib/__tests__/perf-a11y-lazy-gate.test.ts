@@ -91,6 +91,11 @@ console.log("\n=== SW: أصوات الأذان بلا precache في الغلاف
     /\/audio\/|\/sounds\//,
     "لا precache لملفات الأذان عند تثبيت SW",
   );
+  assert.doesNotMatch(
+    shell[1]!,
+    /AmiriQuran-Regular\.woff2|amiri-quran/,
+    "لا precache لخط المصحف عند تثبيت SW",
+  );
 }
 
 console.log("\nperf-a11y-lazy-gate.test.ts: ok");

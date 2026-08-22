@@ -10,7 +10,6 @@ import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { PageHero } from "@/components/ui/PageHero";
 import "@/styles/components/home-brand-title.css";
 import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
-import { HomeDailyWirdBand } from "@/components/home/DailyWirdCard";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { scheduleOnIdle } from "@/lib/yield-to-main";
 import "@/styles/m2030/home.css";
@@ -20,6 +19,69 @@ const HomeBelowFold = lazyWithRetry(
   () => import("./HomeBelowFold"),
   "HomeBelowFold",
 );
+
+const HomeDailyWirdBand = lazyWithRetry(
+  () => import("@/components/home/DailyWirdCard").then((m) => ({ default: m.HomeDailyWirdBand })),
+  "HomeDailyWirdBand",
+);
+
+function HomeDailyWirdSkeleton() {
+  return (
+    <section
+      className="m2030-band m2030-band--sage home-daily-wird daily-wird-card mj-home-lcp-ph__daily-band"
+      aria-label="ورد اليوم"
+      aria-busy="true"
+      data-testid="daily-wird-card"
+    >
+      <div className="m2030-band__head">
+        <h2 className="m2030-band__title">ورد اليوم</h2>
+        <div className="daily-wird-card__actions" aria-hidden="true">
+          <span className="daily-wird-card__done-btn mj-home-lcp-ph__daily-done">تم</span>
+          <span className="m2030-band__link mj-home-lcp-ph__daily-link">الورد الكامل</span>
+        </div>
+      </div>
+      <div className="home-daily-wird__grid">
+        {Array.from({ length: 4 }).map((_, idx) => (
+          <article key={idx} className="home-daily-wird__card mj-card mj-home-lcp-ph__daily-card">
+            <header className="home-daily-wird__card-head">
+              <span className="mj-home-lcp-ph__daily-icon" aria-hidden="true" />
+              <span className="mj-home-lcp-ph__daily-label">&nbsp;</span>
+            </header>
+            <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
+            <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
+            <div className="home-daily-wird__meta mj-home-lcp-ph__daily-meta skeleton-base" />
+            <div className="home-daily-wird__cta mj-home-lcp-ph__daily-cta skeleton-base" />
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function HomeDailyWirdGate() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const reveal = () => {
+      if (!cancelled) setShow(true);
+    };
+    scheduleOnIdle(reveal, 900);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!show) return <HomeDailyWirdSkeleton />;
+
+  return (
+    <SectionErrorBoundary name="HomeDailyWird">
+      <Suspense fallback={<HomeDailyWirdSkeleton />}>
+        <HomeDailyWirdBand />
+      </Suspense>
+    </SectionErrorBoundary>
+  );
+}
 
 function HomeBelowFoldGate() {
   const [show, setShow] = useState(false);
@@ -138,7 +200,7 @@ export default function HomePage() {
         <HomeStartHereSection />
       </section>
 
-      <HomeDailyWirdBand />
+      <HomeDailyWirdGate />
       <HomeBelowFoldGate />
     </div>
   );

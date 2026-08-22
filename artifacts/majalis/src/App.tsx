@@ -1139,10 +1139,68 @@ function AppShell() {
   );
 }
 
+function DeferredPrayerCountdownBanner({ defer }: { defer: boolean }) {
+  const [ready, setReady] = useState(!defer);
+  useEffect(() => {
+    if (!defer) return;
+    let cancelled = false;
+    const reveal = () => {
+      if (!cancelled) setReady(true);
+    };
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(reveal, { timeout: 3200 });
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(id);
+      };
+    }
+    const t = window.setTimeout(reveal, 1400);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+  }, [defer]);
+  if (!ready) return null;
+  return <PrayerCountdownBanner />;
+}
+
+function DeferredAchievementToasts() {
+  const { newBadges, dismissBadges } = useAchievementCheck();
+  if (newBadges.length === 0) return null;
+  return (
+    <Suspense fallback={null}>
+      <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
+    </Suspense>
+  );
+}
+
+function DeferredAchievementBoot() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    const reveal = () => {
+      if (!cancelled) setReady(true);
+    };
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(reveal, { timeout: 4500 });
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(id);
+      };
+    }
+    const t = window.setTimeout(reveal, 2200);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+  }, []);
+  if (!ready) return null;
+  return <DeferredAchievementToasts />;
+}
+
 function AppShellInner() {
   const { dir, t } = useLanguage();
   const { isAdmin } = useAuth();
-  const { newBadges, dismissBadges } = useAchievementCheck();
   const [searchOpen, setSearchOpen] = useState(false);
   const [comingSoonTitle, setComingSoonTitle] = useState("");
   const [comingSoonOpen, setComingSoonOpen] = useState(false);
@@ -1150,6 +1208,7 @@ function AppShellInner() {
   const immersive = isImmersiveChromePath(location);
   const onPrayer = isPrayerTimesPath(location);
   const hideSiteChrome = immersive || onPrayer;
+  const deferHomePrayerChrome = location === "/" || location === "";
   const { isHidden: shouldHideChrome } = useAutoHideBottomNav({
     forceShow: searchOpen || comingSoonOpen || hideSiteChrome,
     routeKey: location,
@@ -1214,7 +1273,9 @@ function AppShellInner() {
       <TopSectionBar />
       {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
       {!hideSiteChrome && !onPrayer && (
-        <Suspense fallback={null}><PrayerCountdownBanner /></Suspense>
+        <Suspense fallback={null}>
+          <DeferredPrayerCountdownBanner defer={deferHomePrayerChrome} />
+        </Suspense>
       )}
       {!hideSiteChrome && <Suspense fallback={null}><AdhanNotificationBar /></Suspense>}
       {!hideSiteChrome && (
@@ -1246,11 +1307,7 @@ function AppShellInner() {
       </Suspense>
       <VisualViewportKeyboardBridge />
       <SafeAreaDebugOverlay />
-      {newBadges.length > 0 && (
-        <Suspense fallback={null}>
-          <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
-        </Suspense>
-      )}
+      <DeferredAchievementBoot />
       <Suspense fallback={null}>
         <CrossDeviceResumeToast />
       </Suspense>
