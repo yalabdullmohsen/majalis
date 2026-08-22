@@ -47,6 +47,7 @@ import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
 import { AppReadingFocus } from "@/components/reading/AppReadingFocus";
+import { PublicLayout } from "@/components/layout/PublicLayout";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
 
 const lazy = lazyWithRetry;
@@ -670,6 +671,19 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType<any>
   );
 }
 
+function PublicLazyRoute({ component: Component }: { component: ComponentType<any> }) {
+  const params = useParams();
+  return (
+    <ErrorBoundary>
+      <Suspense fallback={<LazyRouteFallback />}>
+        <PublicLayout>
+          <Component params={params} />
+        </PublicLayout>
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
 function AdminLazyRoute({ component: Component }: { component: ComponentType }) {
   return (
     <AdminRouteGuard>
@@ -690,24 +704,24 @@ function Router() {
       </Route>
       <Route path="/quran-engine/viewer"><SafeLazyRoute component={QuranEnginePage} /></Route>
       <Route path="/quran-engine"><SafeLazyRoute component={QuranEnginePage} /></Route>
-      <Route path="/about"><SafeLazyRoute component={AboutPage} /></Route>
+      <Route path="/about"><PublicLazyRoute component={AboutPage} /></Route>
       <Route path="/about-us"><Redirect to="/about" /></Route>
       <Route path="/who-we-are"><Redirect to="/about" /></Route>
       <Route path="/man-nahnu"><Redirect to="/about" /></Route>
-      <Route path="/sources"><SafeLazyRoute component={SourcesLicensesPage} /></Route>
+      <Route path="/sources"><PublicLazyRoute component={SourcesLicensesPage} /></Route>
       <Route path="/sources-licenses"><Redirect to="/sources" /></Route>
       <Route path="/licenses"><Redirect to="/sources" /></Route>
-      <Route path="/methodology"><SafeLazyRoute component={MethodologyPage} /></Route>
-      <Route path="/fatwa-policy"><SafeLazyRoute component={FatwaPolicyPage} /></Route>
-      <Route path="/sitemap"><SafeLazyRoute component={SiteMapPage} /></Route>
-      <Route path="/privacy"><SafeLazyRoute component={PrivacyPage} /></Route>
+      <Route path="/methodology"><PublicLazyRoute component={MethodologyPage} /></Route>
+      <Route path="/fatwa-policy"><PublicLazyRoute component={FatwaPolicyPage} /></Route>
+      <Route path="/sitemap"><PublicLazyRoute component={SiteMapPage} /></Route>
+      <Route path="/privacy"><PublicLazyRoute component={PrivacyPage} /></Route>
       <Route path="/privacy-center"><Redirect to="/privacy" /></Route>
       <Route path="/privacy-policy"><Redirect to="/privacy" /></Route>
-      <Route path="/terms"><SafeLazyRoute component={TermsPage} /></Route>
-      <Route path="/account-deletion"><SafeLazyRoute component={AccountDeletionPage} /></Route>
+      <Route path="/terms"><PublicLazyRoute component={TermsPage} /></Route>
+      <Route path="/account-deletion"><PublicLazyRoute component={AccountDeletionPage} /></Route>
       <Route path="/delete-account"><Redirect to="/account-deletion" /></Route>
       <Route path="/account/delete"><Redirect to="/account-deletion" /></Route>
-      <Route path="/support"><SafeLazyRoute component={ContactPage} /></Route>
+      <Route path="/support"><PublicLazyRoute component={ContactPage} /></Route>
       <Route path="/contact"><Redirect to="/support" /></Route>
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
       <Route path="/feature-tour"><SafeLazyRoute component={FeatureTourPage} /></Route>
@@ -963,16 +977,16 @@ function Router() {
       {/* الفقه الإسلامي الموحّد + السيرة النبوية */}
       <Route path="/tawhid"><SafeLazyRoute component={TawhidPage} /></Route>
       <Route path="/aqidah"><Redirect to="/tawhid" /></Route>
-      <Route path="/discover-islam"><SafeLazyRoute component={DiscoverIslamPage} /></Route>
-      <Route path="/discover-islam/questions"><SafeLazyRoute component={DiscoverIslamQuestionsPage} /></Route>
-      <Route path="/discover-islam/questions/:slug"><SafeLazyRoute component={DiscoverIslamQuestionDetailPage} /></Route>
-      <Route path="/discover-islam/doubts"><SafeLazyRoute component={DiscoverIslamDoubtsPage} /></Route>
-      <Route path="/discover-islam/doubts/:slug"><SafeLazyRoute component={DiscoverIslamDoubtDetailPage} /></Route>
-      <Route path="/discover-islam/articles/:slug"><SafeLazyRoute component={DiscoverIslamArticleDetailPage} /></Route>
-      <Route path="/discover-islam/how-to-convert"><SafeLazyRoute component={HowToBecomeMuslimPage} /></Route>
-      <Route path="/discover-islam/new-muslim"><SafeLazyRoute component={NewMuslimPathPage} /></Route>
-      <Route path="/discover-islam/new-muslim/:day"><SafeLazyRoute component={NewMuslimDayDetailPage} /></Route>
-      <Route path="/discover-islam/contact"><SafeLazyRoute component={DiscoverIslamContactPage} /></Route>
+      <Route path="/discover-islam"><PublicLazyRoute component={DiscoverIslamPage} /></Route>
+      <Route path="/discover-islam/questions"><PublicLazyRoute component={DiscoverIslamQuestionsPage} /></Route>
+      <Route path="/discover-islam/questions/:slug"><PublicLazyRoute component={DiscoverIslamQuestionDetailPage} /></Route>
+      <Route path="/discover-islam/doubts"><PublicLazyRoute component={DiscoverIslamDoubtsPage} /></Route>
+      <Route path="/discover-islam/doubts/:slug"><PublicLazyRoute component={DiscoverIslamDoubtDetailPage} /></Route>
+      <Route path="/discover-islam/articles/:slug"><PublicLazyRoute component={DiscoverIslamArticleDetailPage} /></Route>
+      <Route path="/discover-islam/how-to-convert"><PublicLazyRoute component={HowToBecomeMuslimPage} /></Route>
+      <Route path="/discover-islam/new-muslim"><PublicLazyRoute component={NewMuslimPathPage} /></Route>
+      <Route path="/discover-islam/new-muslim/:day"><PublicLazyRoute component={NewMuslimDayDetailPage} /></Route>
+      <Route path="/discover-islam/contact"><PublicLazyRoute component={DiscoverIslamContactPage} /></Route>
       <Route path="/knowledge/:section/:id"><SafeLazyRoute component={KnowledgeSectionPage} /></Route>
       <Route path="/knowledge/:section"><SafeLazyRoute component={KnowledgeSectionPage} /></Route>
       <Route path="/knowledge"><Redirect to="/knowledge/intro-islam" /></Route>

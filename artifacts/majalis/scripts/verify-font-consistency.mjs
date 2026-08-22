@@ -84,7 +84,7 @@ function unwrapVar(value) {
 }
 
 const UI_FONT_MARKERS = [
-  "alexandria", "ibm plex sans arabic", "noto sans arabic", "tajawal",
+  "alexandria", "ibm plex sans arabic", "noto sans arabic", "noto kufi arabic", "tajawal",
   "system-ui", "-apple-system", "sans-serif",
 ];
 

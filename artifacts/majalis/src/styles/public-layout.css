@@ -1,0 +1,65 @@
+/**
+ * طباعة الصفحات الخارجية — scoped داخل .public-layout فقط.
+ * لا يُطبَّق على body ولا على المصحف ولا الأقسام الداخلية.
+ */
+.public-layout {
+  --font-public-heading: "Noto Kufi Arabic", "Noto Naskh Arabic", "Traditional Arabic", sans-serif;
+  --font-public-body: "IBM Plex Sans Arabic", "Noto Naskh Arabic", "Traditional Arabic", sans-serif;
+  font-family: var(--font-public-body);
+  font-weight: 400;
+  line-height: 1.75;
+  color: inherit;
+}
+
+.public-layout :where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .m2030-band__title,
+  .page-hero__title,
+  .section-template__title,
+  .section-template-hero__title,
+  .methodology-hero__title,
+  .legal-page-hero h1,
+  .legal-section h2,
+  .discover-islam-hero__title
+) {
+  font-family: var(--font-public-heading);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.public-layout :where(
+  p,
+  li,
+  dd,
+  dt,
+  blockquote,
+  figcaption,
+  label,
+  input,
+  textarea,
+  select,
+  button,
+  .btn,
+  a.legal-back-btn,
+  .legal-page-eyebrow,
+  .legal-page-updated,
+  .legal-page-body,
+  .methodology-hero__lead,
+  .discover-islam-hero__lead,
+  [class*="__cta"],
+  [class*="__btn"],
+  [class*="__desc"],
+  [class*="__label"]
+) {
+  font-family: var(--font-public-body);
+}
+
+.public-layout :where(strong, b, .legal-section h3) {
+  font-family: var(--font-public-body);
+  font-weight: 600;
+}
