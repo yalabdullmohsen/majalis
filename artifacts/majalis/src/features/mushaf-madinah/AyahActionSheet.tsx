@@ -324,9 +324,12 @@ export function AyahActionSheet({
           </div>
 
           {ayahPreview ? (
-            <p className="ayah-action-sheet__ayah-preview" dir="rtl" lang="ar">
-              {ayahPreview}
-            </p>
+            <details className="mm-ayah-bar__ayah-snippet">
+              <summary>معاينة مختصرة</summary>
+              <p className="ayah-action-sheet__ayah-preview" dir="rtl" lang="ar">
+                {ayahPreview}
+              </p>
+            </details>
           ) : null}
 
           <div className="ayah-action-sheet__primary" role="tablist" aria-label="تبويبات الآية">
@@ -362,6 +365,15 @@ export function AyahActionSheet({
             <button
               type="button"
               role="tab"
+              aria-selected={tab === "tajweed"}
+              onClick={() => selectTab("tajweed")}
+            >
+              <Sparkles size={18} aria-hidden="true" />
+              <span>تجويد</span>
+            </button>
+            <button
+              type="button"
+              role="tab"
               aria-selected={tab === "meanings"}
               aria-disabled={!meaningsOn}
               disabled={!meaningsOn}
@@ -369,17 +381,6 @@ export function AyahActionSheet({
             >
               <Languages size={18} aria-hidden="true" />
               <span>معاني</span>
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={tab === "tajweed"}
-              aria-disabled={!tajweedOn}
-              disabled={!tajweedOn}
-              onClick={() => tajweedOn && selectTab("tajweed")}
-            >
-              <Sparkles size={18} aria-hidden="true" />
-              <span>تجويد</span>
             </button>
           </div>
 
@@ -591,7 +592,11 @@ export function AyahActionSheet({
               <p className="mm-ayah-bar__status">معاني المفردات غير متاحة حتى يُعتمد مصدر موثّق.</p>
             ) : null}
             {tab === "tajweed" ? (
-              <p className="mm-ayah-bar__status">أحكام التجويد غير متاحة حتى يُعتمد مصدر موثّق.</p>
+              <p className="mm-ayah-bar__status">
+                {tajweedOn
+                  ? "أحكام التجويد غير متاحة حتى يُعتمد مصدر موثّق."
+                  : "التجويد غير متاح لهذه الآية حاليًا"}
+              </p>
             ) : null}
           </div>
 

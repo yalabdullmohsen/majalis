@@ -661,15 +661,15 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
       pageSlot={
         <div className="mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
           {error ? <div className="mm-status">{error}</div> : null}
-          {!error && (!layout || !fontReady) ? (
-            <div className="mm-status" role="status">
+          {!error && !layout ? (
+            <div className="mm-page-placeholder" role="status" aria-label="جاري تحميل الصفحة">
               جاري تحميل الصفحة…
             </div>
           ) : null}
-          {layout && fontReady ? (
+          {layout ? (
             <MushafPage
               layout={layout}
-              fontFamily={fontFamily}
+              fontFamily={fontReady ? fontFamily : '"Amiri", "Noto Naskh Arabic", serif'}
               displayPageNumber={page}
               selectedVerseKey={selectedVerseKey}
               playingVerseKey={playingVerseKey}
@@ -842,9 +842,15 @@ function PrefetchedMushafPage({ pageNumber }: { pageNumber: number }) {
   }, [pageNumber]);
   return (
     <div className="mm-page-shell mushaf-page-frame" aria-hidden="true">
-      {layout && ready ? (
-        <MushafPage layout={layout} fontFamily={fontFamily} displayPageNumber={pageNumber} />
-      ) : null}
+      {layout ? (
+        <MushafPage
+          layout={layout}
+          fontFamily={ready ? fontFamily : '"Amiri", "Noto Naskh Arabic", serif'}
+          displayPageNumber={pageNumber}
+        />
+      ) : (
+        <div className="mm-page-placeholder" aria-hidden="true" />
+      )}
     </div>
   );
 }

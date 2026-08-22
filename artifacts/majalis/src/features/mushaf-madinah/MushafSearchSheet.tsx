@@ -135,10 +135,31 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
 
   const pageHint = parseMushafPageQuery(query.trim());
   const pageValid = pageHint != null && pageHint >= MUSHAF_PAGE_MIN && pageHint <= MUSHAF_PAGE_MAX;
+  const isPageQuery = pageHint != null;
 
   const goPage = (n: number, verseKey?: string) => {
     onGotoPage(n, verseKey);
     onClose();
+  };
+
+  const submitQuery = () => {
+    const q = query.trim();
+    const asPage = parseMushafPageQuery(q);
+    if (asPage != null) {
+      if (asPage < MUSHAF_PAGE_MIN || asPage > MUSHAF_PAGE_MAX) {
+        setError("رقم الصفحة يجب أن يكون بين ١ و٦٠٤");
+        return;
+      }
+      goPage(asPage);
+      return;
+    }
+    if (q.length < 1) return;
+    if (hits.length > 0) {
+      const first = hits[0]!;
+      goPage(first.page, `${first.surah}:${first.ayah}`);
+      return;
+    }
+    if (!loading && error === "لا نتائج") return;
   };
 
   if (!open) return null;
@@ -173,12 +194,7 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            if (pageHint == null) return;
-            if (!pageValid) {
-              setError("رقم الصفحة يجب أن يكون بين ١ و٦٠٤");
-              return;
-            }
-            goPage(pageHint);
+            submitQuery();
           }}
         >
           {mode === "index" ? (
@@ -218,44 +234,52 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
               </button>
             </div>
           ) : null}
-          <label className="mm-search-sheet__field">
-            <span className="sr-only">نص البحث أو رقم الصفحة</span>
-            <input
-              ref={inputRef}
-              type="text"
-              inputMode={pageHint != null ? "numeric" : "search"}
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value);
-                setError(null);
-              }}
-              onFocus={() => {
-                typingRef.current = true;
-              }}
-              onBlur={() => {
-                window.setTimeout(() => {
-                  typingRef.current = false;
-                }, 180);
-              }}
-              placeholder={
-                mode === "index" ? "اسم السورة أو رقمها…" : "كلمة، آية، اسم سورة، أو رقم صفحة…"
-              }
-              dir="rtl"
-              enterKeyHint="search"
-              autoComplete="off"
-              autoCorrect="off"
-            />
-          </label>
-        </form>
-        {tab === "search" && pageValid ? (
-          <p className="mm-search-sheet__status">
-            انتقال إلى الصفحة {pageHint} — اضغط إدخال
-            {" "}
-            <button type="button" className="mm-search-sheet__go" onClick={() => goPage(pageHint!)}>
-              انتقال
+          <div className="mm-search-sheet__field-row">
+            <label className="mm-search-sheet__field">
+              <span className="sr-only">نص البحث أو رقم الصفحة</span>
+              <input
+                ref={inputRef}
+                type="text"
+                inputMode={isPageQuery ? "numeric" : "search"}
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setError(null);
+                }}
+                onFocus={() => {
+                  typingRef.current = true;
+                }}
+                onBlur={() => {
+                  window.setTimeout(() => {
+                    typingRef.current = false;
+                  }, 180);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    submitQuery();
+                  }
+                }}
+                placeholder={
+                  mode === "index" ? "اسم السورة أو رقمها…" : "كلمة، آية، اسم سورة، أو رقم صفحة…"
+                }
+                dir="rtl"
+                enterKeyHint={isPageQuery ? "go" : "search"}
+                autoComplete="off"
+                autoCorrect="off"
+              />
+            </label>
+            <button
+              type="submit"
+              className="mm-search-sheet__submit"
+              data-testid="mushaf-search-submit"
+              disabled={tab !== "search" || (!query.trim() && !pageValid)}
+            >
+              {isPageQuery ? "انتقال" : "بحث"}
             </button>
-          </p>
-        ) : null}
+          </div>
+        </form>
         {tab === "juz" ? (
           <div className="mm-search-sheet__body">
             <ul className="mm-search-sheet__list mm-search-sheet__list--surahs mm-search-sheet__list--index" role="listbox" aria-label="الأجزاء">
@@ -308,9 +332,6 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
               <p className="mm-search-sheet__status" role="alert">
                 {error}
               </p>
-            ) : null}
-            {!loading && !error && !query.trim() ? (
-              <p className="mm-search-sheet__status">اكتب كلمة أو رقم صفحة بين ١ و٦٠٤.</p>
             ) : null}
             <ul className="mm-search-sheet__list" role="listbox" aria-label="نتائج البحث">
               {hits.map((h) => (

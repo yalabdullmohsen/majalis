@@ -2093,6 +2093,99 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   cursor: pointer;
 }
 
+.mm-search-sheet__field-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.45rem;
+}
+
+.mm-search-sheet__field {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mm-search-sheet__field input {
+  width: 100%;
+  min-height: 3rem;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 45%, #ccc);
+  border-radius: 0.65rem;
+  padding: 0.75rem 0.85rem;
+  font: inherit;
+  font-size: 1.05rem;
+  background: color-mix(in srgb, var(--mm-paper) 92%, #fff);
+  color: var(--mm-ink);
+}
+
+.mm-search-sheet__submit {
+  flex: 0 0 auto;
+  min-width: 4.5rem;
+  min-height: 3rem;
+  padding: 0.65rem 1rem;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 55%, #ccc);
+  background: color-mix(in srgb, var(--mm-gold) 28%, var(--mm-paper));
+  color: var(--mm-ink);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mm-search-sheet__submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.mm-page-placeholder {
+  min-height: 70dvh;
+  background: var(--mm-paper);
+  color: transparent;
+  user-select: none;
+}
+
+.mm-ayah-bar__ayah-snippet {
+  margin: 0.25rem 0 0.35rem;
+  width: 100%;
+}
+
+.mm-ayah-bar__ayah-snippet summary {
+  font-size: 0.82rem;
+  color: color-mix(in srgb, var(--mm-ink) 72%, transparent);
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.ayah-action-sheet__tafsir-depth {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.55rem;
+}
+
+.ayah-action-sheet__tafsir-depth button {
+  flex: 1 1 0;
+  min-height: 44px;
+  border-radius: 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 35%, #ccc);
+  background: color-mix(in srgb, var(--mm-paper) 92%, #fff);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ayah-action-sheet__tafsir-depth button.is-active {
+  background: color-mix(in srgb, var(--mm-gold) 24%, var(--mm-paper));
+  border-color: color-mix(in srgb, var(--mm-gold) 55%, #ccc);
+}
+
+.ayah-action-sheet__tafsir-text {
+  margin: 0.35rem 0 0;
+  max-height: min(52dvh, 28rem);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .mm-search-sheet__field input {
   width: 100%;
   border: 1px solid color-mix(in srgb, var(--mm-gold) 45%, #ccc);

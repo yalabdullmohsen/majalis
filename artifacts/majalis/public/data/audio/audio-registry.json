@@ -43,6 +43,32 @@
       "qaPassedAt": "2026-08-19T18:25:21.316Z"
     },
     {
+      "id": "dosari",
+      "name": "ياسر الدوسري",
+      "style": "مرتل",
+      "granularity": "ayah",
+      "bitrate": 128,
+      "folder": "Yasser_Ad-Dussary_128kbps",
+      "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
+      "source": "everyayah",
+      "verified": true,
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-08-22T08:22:18.000Z"
+    },
+    {
+      "id": "shuraim",
+      "name": "سعود الشريم",
+      "style": "مرتل",
+      "granularity": "ayah",
+      "bitrate": 128,
+      "folder": "Saood_ash-Shuraym_128kbps",
+      "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
+      "source": "everyayah",
+      "verified": true,
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-08-22T08:22:19.000Z"
+    },
+    {
       "id": "abdulsamad",
       "name": "عبد الباسط عبد الصمد",
       "style": "مرتل",
