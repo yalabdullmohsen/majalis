@@ -5,8 +5,7 @@ type Props = {
 };
 
 /**
- * ذيل الصفحة — شبكة ثابتة لكل الصفحات:
- * الوسط: خرطوش رقم الصفحة (لا يتحرك مع طول النص أو عنوان السورة أو الحزب).
+ * ذيل الصفحة — رقم الصفحة فقط في المنتصف (بلا صندوق أو زخرفة).
  * اليمين: وصف الحزب إن بدأ في هذه الصفحة فقط.
  */
 export function MushafPageFooter({ pageNumber, hizbStartingOnPage = null }: Props) {
@@ -23,19 +22,6 @@ export function MushafPageFooter({ pageNumber, hizbStartingOnPage = null }: Prop
         </span>
       ) : null}
       <span className="mm-page-footer__badge" aria-label={`صفحة ${pageNumber}`}>
-        <svg className="mm-page-footer__cartouche" viewBox="0 0 96 36" aria-hidden="true">
-          <rect
-            x="8"
-            y="6"
-            width="80"
-            height="24"
-            rx="3"
-            ry="3"
-            fill="var(--mm-banner-name-bg, #fffdf8)"
-            stroke="var(--mm-gold-deep, #9a7d3c)"
-            strokeWidth="1.5"
-          />
-        </svg>
         <span className="mm-page-footer__num">{toArabicDigits(pageNumber)}</span>
       </span>
     </footer>

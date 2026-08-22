@@ -1,6 +1,6 @@
 import { BookOpen, List, Search, Settings2 } from "lucide-react";
 import { useEffect, useId, useState } from "react";
-import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
+import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN, parseMushafPageQuery } from "@/lib/quran-last-page";
 
 type Props = {
   open: boolean;
@@ -132,8 +132,8 @@ export function MushafControls({
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            const n = Number.parseInt(draft, 10);
-            if (!Number.isFinite(n) || n < MUSHAF_PAGE_MIN || n > MUSHAF_PAGE_MAX) {
+            const n = parseMushafPageQuery(draft);
+            if (n == null || n < MUSHAF_PAGE_MIN || n > MUSHAF_PAGE_MAX) {
               setGotoError(`أدخل رقمًا بين ${MUSHAF_PAGE_MIN} و ${MUSHAF_PAGE_MAX}`);
               return;
             }

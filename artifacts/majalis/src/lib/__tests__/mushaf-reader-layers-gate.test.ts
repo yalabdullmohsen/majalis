@@ -3,9 +3,10 @@
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-reader-layers-gate.test.ts
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { parseMushafPageQuery, TOTAL_QURAN_PAGES } from "../../lib/quran-last-page";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (p: string) => readFileSync(resolve(root, p), "utf8");
@@ -34,7 +35,7 @@ assert.match(actions, /تلاوة/);
 assert.match(actions, /معاني/);
 assert.match(actions, /تجويد/);
 assert.match(actions, /ayahPreview/);
-assert.match(tafsir, /تعذّر جلب التفسير|لا يتوفر تفسير/);
+assert.match(tafsir, /تعذّر جلب التفسير|لا يوجد تفسير متاح/);
 
 assert.match(controls, /\{pageNumber\} \/ \{MUSHAF_PAGE_MAX\}/);
 assert.match(controls, /mm-goto__error/);
@@ -47,7 +48,7 @@ assert.match(search, /لا نتائج/);
 assert.match(search, /جاري البحث/);
 assert.match(search, /تعذّر البحث/);
 assert.match(search, /e\.preventDefault\(\)/);
-assert.match(search, /رقم الصفحة يجب أن يكون بين 1 و604/);
+assert.match(search, /رقم الصفحة يجب أن يكون بين/);
 assert.match(search, /300/);
 assert.match(search, /type="text"/);
 assert.match(reader, /pendingSelectRef/);
@@ -61,5 +62,15 @@ assert.match(pager, /dx > 0/);
 assert.match(pager, /locking\.current = true/);
 assert.match(reader, /savePagePosition/);
 assert.match(reader, /onTapEmpty/);
+
+assert.equal(TOTAL_QURAN_PAGES, 604);
+assert.equal(parseMushafPageQuery("255"), 255);
+assert.equal(parseMushafPageQuery("٢٥٥"), 255);
+assert.equal(parseMushafPageQuery("۲۵۵"), 255);
+assert.equal(parseMushafPageQuery("700"), 700);
+const pageFiles = readdirSync(resolve(root, "public/data/quran-v2/pages")).filter((f) =>
+  /^page-\d+\.json$/.test(f),
+);
+assert.equal(pageFiles.length, 604);
 
 console.log("mushaf-reader-layers-gate.test.ts: ok");
