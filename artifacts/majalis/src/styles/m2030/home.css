@@ -117,7 +117,7 @@
 }
 
 .mj-home-lcp-ph__daily-band {
-  min-height: 47rem;
+  min-height: 28rem;
 }
 
 .mj-home-lcp-ph__daily-card {
@@ -169,13 +169,20 @@
   }
 
   .mj-home-lcp-ph__daily-band {
-    min-height: 28rem;
+    min-height: 18rem;
   }
 }
 
 .daily-wird-card,
 [data-testid="daily-wird-card"] {
-  min-height: 9rem;
+  min-height: 28rem;
+}
+
+@media (min-width: 720px) {
+  .daily-wird-card,
+  [data-testid="daily-wird-card"] {
+    min-height: 18rem;
+  }
 }
 
 /* هيرو الرئيسية: عنوان هوية + تحية + زر */

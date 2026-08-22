@@ -47,6 +47,8 @@ import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
 import { HOME_START_HERE_COPY } from "@/components/home/home-start-here-data";
+import "@/styles/components/page-hero.css";
+import "@/styles/components/home-brand-title.css";
 
 const lazy = lazyWithRetry;
 
@@ -643,6 +645,8 @@ function HomeInitialShell() {
           ))}
         </div>
       </section>
+
+      <div className="mj-home-below-fold-ph" id="mj-home-below-fold" aria-hidden="true" />
     </div>
   );
 }

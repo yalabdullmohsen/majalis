@@ -15,6 +15,18 @@
 }
 
 @font-face {
+  font-family: "Amiri";
+  font-style: normal;
+  font-weight: 700;
+  font-display: optional;
+  src: url("/fonts/ui/amiri-700-ar.woff2") format("woff2");
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+0660-0669;
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
   font-family: "MajlisAmiriFallback";
   src: local("Noto Naskh Arabic");
   ascent-override: 95%;
@@ -190,6 +202,10 @@ body {
   justify-content: center;
 }
 
+.m2030-home {
+  contain: layout style;
+}
+
 .mj-home-lcp-ph {
   contain: layout style;
 }
@@ -198,8 +214,10 @@ body {
   min-height: 16rem;
 }
 
-.mj-home-lcp-ph__daily-band {
-  min-height: 47rem;
+.mj-home-lcp-ph__daily-band,
+.daily-wird-card,
+[data-testid="daily-wird-card"] {
+  min-height: 28rem;
 }
 
 .mj-home-below-fold-ph {
@@ -226,8 +244,10 @@ body {
     min-height: 12rem;
   }
 
-  .mj-home-lcp-ph__daily-band {
-    min-height: 28rem;
+  .mj-home-lcp-ph__daily-band,
+  .daily-wird-card,
+  [data-testid="daily-wird-card"] {
+    min-height: 18rem;
   }
 }
 

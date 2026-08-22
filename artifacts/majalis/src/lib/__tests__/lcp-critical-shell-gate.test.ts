@@ -65,7 +65,7 @@ assert.match(app, /className="home-start-here mj-home-lcp-ph__start-here"/, "fal
 assert.match(app, /className="hsh-actions__primary"/, "fallback يستخدم نفس أزرار ابدأ من هنا");
 assert.match(app, /className="hus mj-home-lcp-ph__search"/, "fallback يطابق شريط البحث");
 assert.match(homeCss, /contain:\s*layout style/, "حاوية fallback بلا min-height مبالغ");
-assert.match(app, /HOME_START_HERE_COPY/, "fallback يReuse نفس نصوص ابدأ من هنا");
+assert.match(app, /mj-home-below-fold-ph/, "fallback يحجز أسفل الطية قبل lazy Home");
 assert.match(homeCss, /\.mj-home-lcp-ph__start-here\s*\{[\s\S]*min-height:\s*16rem/, "ارتفاع ابدأ من هنا محجوز");
 assert.doesNotMatch(homeCss, /\.mj-home-lcp-ph\s*\{[\s\S]*min-height:\s*88rem/, "لا min-height مبالغ فيه على الحاوية");
 assert.doesNotMatch(finalCss, /\.hsh-steps[^}]*content-visibility/, "ابدأ من هنا فوق الطية بلا content-visibility");
