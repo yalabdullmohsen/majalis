@@ -133,82 +133,75 @@ function emitPlayError(code: AdhanPlayErrorCode, message: string, url: string) {
 /**
  * تشغيل مع انتظار النتيجة — للواجهات التي تعرض سبب الفشل.
  */
+const ADHAN_PLAY_TIMEOUT_MS = 10_000;
+const ADHAN_FAIL_MSG = "تعذر تشغيل الصوت، جرّب نوعًا آخر.";
+
 export async function playAdhanUrlAsync(
   url: string,
   volume = 1,
   opts?: { maxMs?: number | null; fadeIn?: boolean },
 ): Promise<AdhanPlayResult> {
   if (!url) {
-    return { ok: false, code: "missing_file", message: "ملف الصوت غير موجود." };
+    return { ok: false, code: "missing_file", message: ADHAN_FAIL_MSG };
   }
   stopAdhan();
-  try {
-    const { ensureNativePlaybackAudioSession } = await import("@/lib/native-playback-audio");
-    await ensureNativePlaybackAudioSession({
-      title: "الأذان",
-      artist: "المجلس العلمي",
-    });
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : String(e);
-    console.warn("[adhan] native playback session failed:", msg);
-    const { isIOS, isNative } = await import("@/lib/capacitor-utils");
-    if (isNative && isIOS) {
-      const message =
-        msg.includes("recording")
-          ? "جلسة الصوت مشغولة بالتسجيل — أوقف التلاوة/الكلام ثم أعد المحاولة."
-          : "فشل تفعيل جلسة الصوت (AVAudioSession playback).";
-      emitPlayError("unknown", message, url);
-      return { ok: false, code: "unknown", message };
-    }
-  }
   const audio = new Audio();
+  try {
+    audio.setAttribute("playsinline", "true");
+    (audio as HTMLAudioElement & { playsInline?: boolean }).playsInline = true;
+  } catch {
+    /* ignore */
+  }
   const targetVol = Math.min(1, Math.max(0, volume));
   const useFade = opts?.fadeIn !== false;
   audio.preload = "auto";
   audio.volume = useFade ? 0 : targetVol;
   _current = audio;
+  audio.src = preferLocalAdhanUrl(url);
 
   const maxMs = opts?.maxMs;
   if (typeof maxMs === "number" && maxMs > 0) {
     _stopTimer = setTimeout(() => stopAdhan(), maxMs);
   }
 
-  try {
-    const playUrl = await resolvePlayableUrl(url);
-    if (_current !== audio) {
-      return { ok: false, code: "unknown", message: "أُلغي التشغيل." };
-    }
-    audio.src = playUrl;
+  void import("@/lib/native-playback-audio")
+    .then((m) =>
+      m.ensureNativePlaybackAudioSession({
+        title: "الأذان",
+        artist: "المجلس العلمي",
+      }),
+    )
+    .catch((e) => console.warn("[adhan] native playback session:", e));
 
+  try {
+    const playPromise = audio.play();
     await new Promise<void>((resolve, reject) => {
       let settled = false;
       const finish = (fn: () => void) => {
         if (settled) return;
         settled = true;
+        audio.removeEventListener("playing", onPlaying);
         audio.removeEventListener("error", onErr);
-        audio.removeEventListener("canplaythrough", onReady);
-        audio.removeEventListener("loadeddata", onReady);
+        window.clearTimeout(timer);
         fn();
       };
+      const onPlaying = () => finish(() => resolve());
       const onErr = () => finish(() => reject(new Error("media_error")));
-      const onReady = () => finish(() => resolve());
+      const timer = window.setTimeout(
+        () => finish(() => reject(new Error("load_timeout"))),
+        ADHAN_PLAY_TIMEOUT_MS,
+      );
+      audio.addEventListener("playing", onPlaying);
       audio.addEventListener("error", onErr);
-      audio.addEventListener("canplaythrough", onReady);
-      audio.addEventListener("loadeddata", onReady);
-      audio.load();
-      setTimeout(() => {
-        finish(() => {
-          if (audio.readyState >= 2) resolve();
-          else reject(new Error("load_timeout"));
-        });
-      }, 10_000);
+      if (playPromise && typeof playPromise.then === "function") {
+        playPromise.catch((err) => finish(() => reject(err)));
+      }
     });
-
     if (_current !== audio) {
       return { ok: false, code: "unknown", message: "أُلغي التشغيل." };
     }
-    await audio.play();
     if (useFade && _current === audio) fadeIn(audio, targetVol);
+    void resolvePlayableUrl(url).catch(() => undefined);
     return { ok: true, audio };
   } catch (err) {
     if (
@@ -217,17 +210,15 @@ export async function playAdhanUrlAsync(
     ) {
       stopAdhan();
       const code = err.message === "media_error" ? "missing_file" : "load_failed";
-      const message =
-        err.message === "media_error"
-          ? "تعذر تشغيل الصوت، جرّب نوعًا آخر."
-          : "تعذر تشغيل الصوت، جرّب نوعًا آخر.";
-      emitPlayError(code, message, url);
-      return { ok: false, code, message };
+      emitPlayError(code, ADHAN_FAIL_MSG, url);
+      return { ok: false, code, message: ADHAN_FAIL_MSG };
     }
     stopAdhan();
     const classified = classifyPlayError(err);
-    emitPlayError(classified.code, classified.message, url);
-    return { ok: false, ...classified };
+    const message =
+      classified.code === "autoplay_blocked" ? classified.message : ADHAN_FAIL_MSG;
+    emitPlayError(classified.code, message, url);
+    return { ok: false, code: classified.code, message };
   }
 }
 
@@ -252,26 +243,31 @@ export function playAdhanUrl(
     _stopTimer = setTimeout(() => stopAdhan(), maxMs);
   }
 
+  audio.src = preferLocalAdhanUrl(url);
+  void import("@/lib/native-playback-audio")
+    .then((m) =>
+      m.ensureNativePlaybackAudioSession({
+        title: "الأذان",
+        artist: "المجلس العلمي",
+      }),
+    )
+    .catch(() => undefined);
   void (async () => {
     try {
       if (!url) {
-        emitPlayError("missing_file", "ملف الصوت غير موجود.", url);
+        emitPlayError("missing_file", ADHAN_FAIL_MSG, url);
         return;
       }
-      const playUrl = await resolvePlayableUrl(url);
-      if (_current !== audio) return;
-      audio.src = playUrl;
       await audio.play();
       if (useFade && _current === audio) fadeIn(audio, targetVol);
     } catch (err) {
       if (_current !== audio) return;
       const classified = classifyPlayError(err);
-      // خطأ تحميل الوسائط
-      if (audio.error) {
-        emitPlayError("missing_file", "الملف غير موجود أو تعذّر قراءته.", url);
-        return;
-      }
-      emitPlayError(classified.code, classified.message, url);
+      emitPlayError(
+        audio.error ? "missing_file" : classified.code,
+        classified.code === "autoplay_blocked" ? classified.message : ADHAN_FAIL_MSG,
+        url,
+      );
     }
   })();
 

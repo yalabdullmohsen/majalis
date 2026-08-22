@@ -19,12 +19,25 @@ export async function purgeStaleServiceWorkers(): Promise<void> {
   }
 }
 
+/** أزل كل SW (بما فيها /sw.js) تحت webdriver حتى لا يعترض LHCI التنقّل */
+export async function unregisterServiceWorkersForMeasurement(): Promise<void> {
+  if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
+
+  try {
+    if (!navigator.webdriver) return;
+    const registrations = await navigator.serviceWorker.getRegistrations();
+    await Promise.all(registrations.map((reg) => reg.unregister()));
+  } catch {
+    /* ignore */
+  }
+}
+
 const SW_UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
 const SW_RELOAD_GUARD_KEY = "mj.sw-reload-once.v1";
 
 /**
  * تأخير التسجيل بعد استقرار الصفحة. حدث install في public/sw.js يبدأ
- * precache لأصول ثقيلة (ملفات أذان mp3 + خط قرآني) فورًا، فتشغيله داخل
+ * precache لأصول الغلاف (أيقونات + خط قرآني) فورًا، فتشغيله داخل
  * نافذة التحميل الحرجة ينافس LCP/FCP على النطاق والخيط الرئيسي.
  * قياس A/B محلي (Lighthouse، جوال، شبكة مُخنَقة) عند إصلاح التسجيل:
  *   بلا تأخير: FCP 5891 · LCP 8912 · CLS 0.089
@@ -67,7 +80,10 @@ export function registerProductionServiceWorker(): void {
   // Lighthouse/Playwright يضبطون webdriver. اعتراض التنقّل من SW يُسقط
   // MainDocumentContent (Network.getResponseBody) فتصبح فئة best-practices = NaN.
   try {
-    if (navigator.webdriver) return;
+    if (navigator.webdriver) {
+      void unregisterServiceWorkersForMeasurement();
+      return;
+    }
   } catch {
     /* ignore */
   }

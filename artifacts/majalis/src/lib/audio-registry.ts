@@ -82,7 +82,12 @@ export async function getVerifiedReciters(): Promise<QuranReciter[]> {
     .map((r) => byId.get(r.id))
     .filter((x): x is QuranReciter => Boolean(x));
 
-  verifiedRecitersCache = verified.length > 0 ? verified : fallbackVerifiedReciters();
+  verifiedRecitersCache = (verified.length > 0 ? verified : fallbackVerifiedReciters()).filter(
+    (r) => Boolean(r.everyayahFolder),
+  );
+  if (verifiedRecitersCache.length === 0) {
+    verifiedRecitersCache = fallbackVerifiedReciters();
+  }
   return verifiedRecitersCache;
 }
 
