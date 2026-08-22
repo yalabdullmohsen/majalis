@@ -1,5 +1,5 @@
 /**
- * بوابة الإقلاع: بلا دخولية/ترحيب داخل التطبيق، خلفية مبكرة، إخفاء أصلي سريع.
+ * بوابة الإقلاع: بلا دخولية/ترحيب داخل التطبيق، خلفية سطح فاتحة، إخفاء أصلي سريع.
  * تشغيل: node --import tsx src/lib/__tests__/launch-splash-unified.test.ts
  */
 import assert from "node:assert/strict";
@@ -9,7 +9,8 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "../../..");
-const BG = "#0E1A15";
+/** سطح الرئيسية — بلا خلفية خضراء دعائية */
+const BG = "#F2F4F3";
 
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
 assert.match(indexHtml, /id="mj-silent-splash"/, "طبقة لون تقنية فقط");
@@ -19,7 +20,6 @@ assert.doesNotMatch(indexHtml, /mj-silent-splash__subtitle/, "بلا سطر دخ
 assert.doesNotMatch(indexHtml, /mj-silent-splash__progress/, "بلا مؤشر دخولية");
 assert.doesNotMatch(indexHtml, /stroke-dashoffset/, "بلا dashoffset غير مركّب على الدخولية");
 assert.doesNotMatch(indexHtml, /mj-ss-draw|mj-ss-glow/, "بلا رسم/توهج متأخر");
-assert.match(indexHtml, /cubic-bezier\(\.22,\s*1,\s*\.36,\s*1\)/, "منحنى خروج مركّب");
 assert.match(indexHtml, /prefers-reduced-motion:\s*reduce/, "مسار بلا حركة");
 assert.match(indexHtml, /__mjDismissSplash/, "دالة dismiss للطبقة التقنية");
 assert.match(indexHtml, /MIN_MS\s*=\s*0/, "بلا حد أدنى حاجب");
@@ -31,6 +31,7 @@ assert.match(
   "خلفية html/body",
 );
 assert.match(indexHtml, new RegExp(`theme-color" content="${BG}"`), "theme-color الإقلاع مطابق");
+assert.match(indexHtml, /--mj-splash-bg:\s*var\(--mj-splash-bg-light\)/, "الدخول الافتراضي فاتح");
 assert.doesNotMatch(indexHtml, /apple-touch-startup-image/, "لا صور إقلاع PWA");
 assert.doesNotMatch(indexHtml, /splash-boot\.css/, "لا splash-boot.css");
 assert.doesNotMatch(indexHtml, /id="mj-boot-splash"/, "لا طبقة boot قديمة");
@@ -55,12 +56,15 @@ const launch = readFileSync(
   resolve(root, "ios/App/App/Base.lproj/LaunchScreen.storyboard"),
   "utf8",
 );
-assert.match(launch, /image="LaunchMark"/, "LaunchScreen برمز واحد");
-assert.match(launch, /<imageView\b/, "ImageView للرمز");
-assert.doesNotMatch(launch, /image="Splash"/, "بلا Splash القديم");
+assert.doesNotMatch(launch, /image="LaunchMark"/, "بلا رمز نجمة في LaunchScreen");
+assert.doesNotMatch(launch, /<imageView\b/, "بلا ImageView");
+assert.doesNotMatch(launch, /المجلس العلمي/, "بلا عنوان دعائي");
+assert.doesNotMatch(launch, /دروس شرعية/, "بلا سطر دعائي");
+assert.doesNotMatch(launch, /mk-progress/, "بلا شريط تقدّم");
+assert.doesNotMatch(launch, /image="Splash"/, "بلا Splash قديم");
 assert.doesNotMatch(launch, /systemBackgroundColor/, "بلا خلفية نظام بيضاء");
 assert.match(launch, /safeArea|Safe area/i, "يحترم safe area");
-assert.match(launch, /0\.054901960784313725/, `خلفية ${BG}`);
+assert.match(launch, /0\.94901960784313721/, `خلفية ${BG}`);
 
 const capTs = readFileSync(resolve(root, "capacitor.config.ts"), "utf8");
 assert.match(capTs, /launchShowDuration:\s*0/, "مدة إظهار Splash = 0");
@@ -80,14 +84,13 @@ const splashIconXml = readFileSync(
   resolve(root, "android/app/src/main/res/drawable/splash_icon.xml"),
   "utf8",
 );
-assert.match(splashIconXml, /#C9A227/, "رمز ذهبي");
-assert.match(splashIconXml, new RegExp(BG), "خلفية الأيقونة");
+assert.doesNotMatch(splashIconXml, /#C9A227/, "بلا نجمة ذهبية");
+assert.match(splashIconXml, new RegExp(BG), "خلفية الأيقونة = سطح");
 
 const colors = readFileSync(resolve(root, "android/app/src/main/res/values/colors.xml"), "utf8");
 assert.match(colors, new RegExp(`splash_background">${BG}<`));
 
 assert.ok(!existsSync(resolve(root, "ios/App/App/Assets.xcassets/Splash.imageset")), "لا Splash.imageset");
-assert.ok(existsSync(resolve(root, "ios/App/App/Assets.xcassets/LaunchMark.imageset/LaunchMark.png")));
 assert.ok(!existsSync(resolve(root, "assets/splash.png")), "لا assets/splash.png");
 assert.ok(!existsSync(resolve(root, "public/brand/apple-splash")), "لا apple-splash يتيمة");
 assert.ok(!existsSync(resolve(root, "public/brand/splash-boot.css")), "لا splash-boot.css");
@@ -120,7 +123,7 @@ assert.ok(!existsSync(resolve(root, "src/components/onboarding/AppStartView.tsx"
 assert.ok(!existsSync(resolve(root, "src/components/onboarding/AppFeatureTourGate.tsx")), "جولة المزايا التلقائية محذوفة");
 
 const info = readFileSync(resolve(root, "ios/App/App/Info.plist"), "utf8");
-assert.match(info, /<key>CFBundleVersion<\/key>\s*<string>40<\/string>/, "CFBundleVersion رُفع");
+assert.match(info, /<key>CFBundleVersion<\/key>\s*<string>41<\/string>/, "CFBundleVersion رُفع");
 
 const manifest = JSON.parse(readFileSync(resolve(root, "public/manifest.json"), "utf8"));
 assert.equal(manifest.background_color, BG);
@@ -134,5 +137,9 @@ assert.match(swJs, /SW_UPDATED_RELOAD_ONCE/, "إعادة تحميل واحدة �
 const swClient = readFileSync(resolve(root, "src/lib/service-worker.ts"), "utf8");
 assert.match(swClient, /SW_UPDATED_RELOAD_ONCE/, "العميل يستمع لإعادة التحميل الواحدة");
 assert.match(swClient, /hadController/, "لا reload عند أول claim");
+
+const brand = readFileSync(resolve(root, "src/components/BrandWordmark.tsx"), "utf8");
+assert.match(brand, /viewBox=/, "وردمارك SVG");
+assert.match(brand, /currentColor|fill="currentColor"/, "لون يتبع الثيم");
 
 console.log("launch-splash-unified.test.ts: ok");

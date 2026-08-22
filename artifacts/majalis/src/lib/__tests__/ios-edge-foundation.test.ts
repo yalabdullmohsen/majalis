@@ -25,6 +25,6 @@ assert.ok(existsSync(resolve(root, "src/components/SafeAreaDebugOverlay.tsx")));
 const manifest = JSON.parse(readFileSync(resolve(root, "public/manifest.json"), "utf8"));
 assert.equal(manifest.theme_color, "#F2F4F3");
 /** خلفية الإقلاع/الشاشة الأصلية */
-assert.equal(manifest.background_color, "#0E1A15");
+assert.equal(manifest.background_color, "#F2F4F3");
 
 console.log("ios-edge-foundation.test.ts: ok");

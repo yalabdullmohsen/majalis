@@ -8,65 +8,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!-- إقلاع صامت: لون سطح التطبيق فقط — بلا شعار ولا عنوان ولا شريط تقدّم -->
         <scene sceneID="EHf-IW-A2E">
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchMark" translatesAutoresizingMaskIntoConstraints="NO" id="mk-star-01">
-                                <rect key="frame" x="152.5" y="318" width="88" height="88"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="88" id="mk-w"/>
-                                    <constraint firstAttribute="height" constant="88" id="mk-h"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="المجلس العلمي" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mk-title">
-                                <rect key="frame" x="96.666666666666686" y="422" width="200" height="29"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                <color key="textColor" red="0.94901960784313721" green="0.95686274509803926" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="دروس شرعية ودورات علمية" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mk-subtitle">
-                                <rect key="frame" x="46.666666666666686" y="459" width="300" height="20.333333333333314"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.94901960784313721" green="0.95686274509803926" blue="0.95294117647058818" alpha="0.78000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mk-progress-track">
-                                <rect key="frame" x="32" y="804" width="329" height="4"/>
-                                <color key="backgroundColor" red="0.78823529411764707" green="0.63529411764705879" blue="0.15294117647058825" alpha="0.14000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="4" id="mk-ph"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mk-progress-fill">
-                                <rect key="frame" x="32" y="804" width="120" height="4"/>
-                                <color key="backgroundColor" red="0.78823529411764707" green="0.63529411764705879" blue="0.15294117647058825" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="4" id="mk-pfh"/>
-                                    <constraint firstAttribute="width" constant="120" id="mk-pfw"/>
-                                </constraints>
-                            </view>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
-                        <color key="backgroundColor" red="0.054901960784313725" green="0.10196078431372549" blue="0.08235294117647059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="mk-star-01" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="mk-cx"/>
-                            <constraint firstItem="mk-star-01" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-64" id="mk-cy"/>
-                            <constraint firstItem="mk-title" firstAttribute="top" secondItem="mk-star-01" secondAttribute="bottom" constant="16" id="mk-t-top"/>
-                            <constraint firstItem="mk-title" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="mk-t-cx"/>
-                            <constraint firstItem="mk-subtitle" firstAttribute="top" secondItem="mk-title" secondAttribute="bottom" constant="8" id="mk-s-top"/>
-                            <constraint firstItem="mk-subtitle" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="mk-s-cx"/>
-                            <constraint firstItem="mk-subtitle" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="24" id="mk-s-l"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mk-subtitle" secondAttribute="trailing" constant="24" id="mk-s-r"/>
-                            <constraint firstItem="mk-progress-track" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="16" id="mk-p-l"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="mk-progress-track" secondAttribute="trailing" constant="16" id="mk-p-r"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="mk-progress-track" secondAttribute="bottom" constant="16" id="mk-p-b"/>
-                            <constraint firstItem="mk-progress-fill" firstAttribute="leading" secondItem="mk-progress-track" secondAttribute="leading" id="mk-pf-l"/>
-                            <constraint firstItem="mk-progress-fill" firstAttribute="centerY" secondItem="mk-progress-track" secondAttribute="centerY" id="mk-pf-y"/>
-                        </constraints>
+                        <color key="backgroundColor" red="0.94901960784313721" green="0.95686274509803926" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -74,7 +24,4 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="LaunchMark" width="88" height="88"/>
-    </resources>
 </document>
