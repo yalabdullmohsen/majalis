@@ -6,7 +6,7 @@ import { Capacitor } from "@capacitor/core";
 
 export const SPLASH_MIN_VISIBLE_MS = 0;
 export const SPLASH_MAX_VISIBLE_MS = 400;
-export const SPLASH_FADE_OUT_MS = 120;
+export const SPLASH_FADE_OUT_MS = 0;
 
 const SESSION_KEY = "mj.native-splash.session.v1";
 

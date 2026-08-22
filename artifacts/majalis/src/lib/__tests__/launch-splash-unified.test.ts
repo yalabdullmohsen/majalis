@@ -24,7 +24,11 @@ assert.match(indexHtml, /prefers-reduced-motion:\s*reduce/, "مسار بلا ح�
 assert.match(indexHtml, /__mjDismissSplash/, "دالة dismiss للطبقة التقنية");
 assert.match(indexHtml, /MIN_MS\s*=\s*0/, "بلا حد أدنى حاجب");
 assert.match(indexHtml, /dismiss\(true\)/, "إزالة فورية");
-assert.match(indexHtml, /id="mj-boot-skeleton"/, "هيكل إقلاع فوري");
+assert.doesNotMatch(indexHtml, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل الشاشة");
+{
+  const crit = indexHtml.match(/<style id="mj-lcp-critical">([\s\S]*?)<\/style>/)?.[1] ?? "";
+  assert.doesNotMatch(crit, /Aref\s+Ruqaa/, "بلا رقعة في CSS الحرج — يمنع وميض الخط");
+}
 assert.match(
   indexHtml,
   new RegExp(`background-color:\\s*(${BG}|var\\(--mj-splash-bg\\)|#F2F4F3)`),
@@ -44,6 +48,7 @@ assert.doesNotMatch(indexHtml, /preload[^>]+icon-192\.webp/, "لا preload شع�
 const splashTs = readFileSync(resolve(root, "src/lib/splash-screen.ts"), "utf8");
 assert.match(splashTs, /SplashScreen\.hide/, "يخفي الإطلاق الأصلي");
 assert.match(splashTs, /SPLASH_MIN_VISIBLE_MS\s*=\s*0/);
+assert.match(splashTs, /SPLASH_FADE_OUT_MS\s*=\s*0/, "إخفاء بلا تلاشي حاجب");
 assert.match(splashTs, /requestAnimationFrame/, "إخفاء عند أول إطار");
 assert.doesNotMatch(splashTs, /MajlisLaunchScreen/);
 

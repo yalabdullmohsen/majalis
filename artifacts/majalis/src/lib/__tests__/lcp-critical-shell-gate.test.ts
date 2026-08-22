@@ -29,16 +29,8 @@ assert.doesNotMatch(html, /id="mj-lcp-chrome"/, "لا صدفة عنوان خار
 assert.doesNotMatch(html, /id="mj-lcp-title"/, "لا نقل عقدة h1");
 assert.match(html, /id="mj-lcp-critical"/, "خلفية html/body/#root فقط");
 assert.doesNotMatch(html, /id="mj-home-lcp-static"/, "لا صدفة HTML نصّية (A-4)");
-assert.match(html, /id="mj-boot-skeleton"/, "هيكل إقلاع بلا نص");
-assert.match(html, /#mj-boot-skeleton\s*\{[\s\S]*position:\s*fixed/, "الهيكل ثابت — خارج تدفق #root");
+assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل — دخول مباشر");
 assert.match(html, /<div id="root"><\/div>/, "React يركّب في #root فارغ");
-{
-  const skStart = html.indexOf('id="mj-boot-skeleton"');
-  const rootStart = html.indexOf('<div id="root">');
-  assert.ok(skStart >= 0 && skStart < rootStart, "الهيكل قبل #root");
-  const skChunk = html.slice(skStart, rootStart);
-  assert.doesNotMatch(skChunk, /<(h1|h2|p)\b/, "الهيكل بلا نص ينافس LCP");
-}
 assert.doesNotMatch(html, /id="mj-app-mount"/, "React يركّب في #root مباشرة");
 assert.doesNotMatch(html, /id="mj-fcp-seed"/, "لا بذرة FCP — CLS 0.358 عند mount");
 assert.doesNotMatch(html, /dns-prefetch/, "لا dns-prefetch في الإقلاع");
@@ -48,6 +40,11 @@ assert.doesNotMatch(html, /dns-prefetch/, "لا dns-prefetch في الإقلاع
 }
 assert.match(html, /dismiss\(true\)/, "طبقة اللون تُزال فورًا");
 assert.doesNotMatch(html, /mj-silent-splash__title|mj-silent-splash__progress/, "بلا شعار/مؤشر دخولية");
+assert.match(html, /id="mj-theme-boot"|v6-direct-boot-2026-08/, "ثيم مبكر قبل الرسم");
+{
+  const crit = html.match(/<style id="mj-lcp-critical">([\s\S]*?)<\/style>/)?.[1] ?? "";
+  assert.doesNotMatch(crit, /Aref\s+Ruqaa/, "بلا رقعة في CSS الحرج");
+}
 
 assert.match(home, /title="المجلس العلمي"/, "عنوان الرئيسية في React");
 assert.doesNotMatch(home, /titleDomId/, "لا تبنّي عقدة HTML");

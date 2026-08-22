@@ -24,7 +24,7 @@ assert.doesNotMatch(main, /AppSplash/);
 assert.equal(existsSync(resolve(root, "src/components/AppSplash.tsx")), false);
 assert.match(html, /MIN_MS\s*=\s*0/);
 assert.match(html, /dismiss\(true\)/, "إزالة فورية بلا انتظار");
-assert.match(html, /id="mj-boot-skeleton"/, "هيكل فوري على الويب");
+assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل");
 assert.doesNotMatch(html, /mj-silent-splash__title/);
 assert.doesNotMatch(html, /mj-silent-splash__progress/);
 
