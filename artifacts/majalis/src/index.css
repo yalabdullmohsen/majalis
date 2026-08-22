@@ -2870,9 +2870,9 @@ html.dark .navbar-v3 a.navbar-v3__tagline:hover {
 
 /* وردمارك SVG ثابت من Aref Ruqaa 700 — currentColor يتبع الثيم */
 .navbar-v3__tagline-mark {
-  height: 2.15rem;
-  width: 9.05rem;
-  max-width: min(16.75rem, 58vw);
+  height: 2.05rem;
+  width: 8.63rem;
+  max-width: min(15.75rem, 56vw);
   aspect-ratio: 3787 / 900;
   display: inline-block;
   vertical-align: middle;

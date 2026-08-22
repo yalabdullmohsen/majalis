@@ -29,7 +29,7 @@ assert(css.includes("home-page-hero"), "أنماط الهيرو المدمجة")
 assert(!css.includes("home-brand-title__panel"), "لا لوحة زخرفية للهوية في البطاقة");
 assert(!/min-height:\s*clamp\(11\.5rem,\s*33dvh/.test(css), "لا ارتفاع ثلث شاشة زائد");
 assert(!/min-height:\s*unset/.test(css), "لا إلغاء حجز ارتفاع الهيرو بعد الرسم");
-assert(/min-height:\s*11rem/.test(css), "ارتفاع الهيرو يطابق CSS الحرج");
+assert(/min-height:\s*13\.5rem/.test(css), "ارتفاع الهيرو يطابق CSS الحرج");
 
 if (failed) process.exit(1);
 console.log("home-brand-hero.test.ts: ok");

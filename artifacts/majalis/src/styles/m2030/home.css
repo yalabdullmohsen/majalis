@@ -16,7 +16,7 @@
   isolation: isolate;
   overflow: hidden;
   color: var(--mj-ink);
-  min-height: 11rem;
+  min-height: 13.5rem;
 }
 
 .mj-home-lcp-ph {
@@ -69,7 +69,7 @@
 }
 
 .mj-home-lcp-ph__start-here {
-  min-height: 9.5rem;
+  min-height: 16rem;
 }
 
 .mj-home-lcp-ph__kicker,
@@ -165,7 +165,7 @@
 
 @media (min-width: 720px) {
   .mj-home-lcp-ph__start-here {
-    min-height: 8.25rem;
+    min-height: 12rem;
   }
 
   .mj-home-lcp-ph__daily-band {
