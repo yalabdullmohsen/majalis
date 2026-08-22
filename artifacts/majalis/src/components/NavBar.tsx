@@ -79,7 +79,42 @@ function tabCls(active: boolean, extra = "") {
   return `nav-tab${active ? " nav-tab--active" : ""}${extra ? " " + extra : ""}`;
 }
 
-const TICKER_FALLBACK = <div className="header-ticker header-ticker--empty" aria-hidden="true" />;
+const TICKER_FALLBACK = (
+  <div className="header-ticker header-ticker--empty" role="status" aria-label="شريط التنبيهات">
+    &nbsp;
+  </div>
+);
+
+function DeferredHeaderTicker() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const reveal = () => {
+      if (!cancelled) setReady(true);
+    };
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(reveal, { timeout: 3500 });
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(id);
+      };
+    }
+    const t = window.setTimeout(reveal, 1800);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+  }, []);
+
+  if (!ready) return TICKER_FALLBACK;
+
+  return (
+    <Suspense fallback={TICKER_FALLBACK}>
+      <HeaderTicker />
+    </Suspense>
+  );
+}
 
 export default function NavBar() {
   const { isAdmin, isLoggedIn, user, logout } = useAuth();
@@ -286,11 +321,7 @@ export default function NavBar() {
                 <Search size={17} strokeWidth={1.8} aria-hidden="true" />
               </button>
             )}
-            {!isMobile && !isImmersiveChromePath(location) && (
-              <Suspense fallback={TICKER_FALLBACK}>
-                <HeaderTicker />
-              </Suspense>
-            )}
+            {!isMobile && !isImmersiveChromePath(location) && <DeferredHeaderTicker />}
             {!isMobile && desktopAuthLinks}
 
             {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
@@ -328,9 +359,7 @@ export default function NavBar() {
         {/* صف مستقل تحت أزرار الهيدر — يمنع تداخل التيكر مع القائمة/البحث/الحساب */}
         {isMobile && !isImmersiveChromePath(location) && (
           <div className="navbar-ticker-row" aria-label="شريط تنبيهات ومقتطفات">
-            <Suspense fallback={TICKER_FALLBACK}>
-              <HeaderTicker />
-            </Suspense>
+            <DeferredHeaderTicker />
           </div>
         )}
       </header>
