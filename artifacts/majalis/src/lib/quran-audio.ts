@@ -441,9 +441,17 @@ export function listAyahAudioUrls(surah: number, ayah: number, reciterId: string
   const push = (u: string) => {
     if (u && !urls.includes(u)) urls.push(u);
   };
-  push(getAyahAudioUrl(surah, ayah, reciterId));
+  const primary = getAyahAudioUrl(surah, ayah, reciterId);
+  push(primary);
+  if (primary.includes("://everyayah.com/")) {
+    push(primary.replace("://everyayah.com/", "://www.everyayah.com/"));
+  }
   if (reciterId !== "alafasy") {
-    push(getAyahAudioUrl(surah, ayah, "alafasy"));
+    const afasy = getAyahAudioUrl(surah, ayah, "alafasy");
+    push(afasy);
+    if (afasy.includes("://everyayah.com/")) {
+      push(afasy.replace("://everyayah.com/", "://www.everyayah.com/"));
+    }
   }
   push(getIslamicNetworkAyahUrl(surah, ayah, reciterId));
   if (reciterId !== "alafasy") {

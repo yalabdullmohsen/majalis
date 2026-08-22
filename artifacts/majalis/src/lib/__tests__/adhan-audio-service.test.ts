@@ -3,7 +3,7 @@
  * تشغيل: node --import tsx src/lib/__tests__/adhan-audio-service.test.ts
  */
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -44,5 +44,25 @@ const diag = getAudioDiagnostics();
 assert.ok(["ios", "android", "web"].includes(diag.platform));
 assert.equal(diag.criticalAlertsEntitlement, false);
 assert.ok(diag.silentModeNote.length > 10);
+
+const playbackSrc = readFileSync(resolve(root, "src/lib/adhan-playback.ts"), "utf8");
+assert.match(playbackSrc, /audio\.play\(\)/);
+assert.doesNotMatch(
+  playbackSrc,
+  /canplaythrough[\s\S]{0,80}await audio\.play/,
+  "لا انتظار canplaythrough قبل play",
+);
+assert.match(playbackSrc, /ADHAN_PLAY_TIMEOUT_MS = 10_000/);
+
+const sw = readFileSync(resolve(root, "public/sw.js"), "utf8");
+assert.doesNotMatch(sw, /makkah-general\.mp3/);
+assert.match(sw, /pathname\.startsWith\("\/audio\/"\)/);
+const shell = sw.match(/const STATIC_SHELL_ASSETS = \[([\s\S]*?)\];/);
+assert.ok(shell, "STATIC_SHELL_ASSETS موجود");
+assert.doesNotMatch(
+  shell[1]!,
+  /\/audio\/|\/sounds\//,
+  "لا precache لملفات الأذان في الغلاف — network-first عند الطلب فقط",
+);
 
 console.log("adhan-audio-service.test.ts: ok");

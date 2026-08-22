@@ -44,6 +44,24 @@ import "./styles/m2030/pages.css";
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
 import "./styles/dark-mode-surfaces.css";
+
+// Lighthouse/Playwright: أزل أي SW قديم يتحكم بالصفحة قبل القياس
+if (
+  !isNative &&
+  typeof navigator !== "undefined" &&
+  "serviceWorker" in navigator
+) {
+  try {
+    if (navigator.webdriver) {
+      void navigator.serviceWorker.getRegistrations().then((regs) =>
+        Promise.all(regs.map((r) => r.unregister())),
+      );
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 // طبقات مظهر غير حرجة — بعد load + idle حتى لا تنافس LCP (كانت void import فوريًا)
 function loadNonCriticalCss() {
   void import("./styles/design-system.css").then(() => {

@@ -79,6 +79,14 @@ assert.ok(
   husaryUrls.some((u) => /Alafasy|islamic\.network/.test(u)),
   "يجب وجود مرشّح احتياط",
 );
+assert.ok(
+  husaryUrls.some((u) => u.includes("cdn.islamic.network")),
+  "احتياط islamic.network مفعّل",
+);
+assert.ok(
+  husaryUrls.some((u) => u.includes("www.everyayah.com")),
+  "مرآة www.everyayah",
+);
 assert.ok(listAyahAudioUrls(1, 1, "alafasy").length >= 1);
 assert.ok(
   listAyahAudioUrls(1, 1, "balilah").some((u) => /Alafasy|islamic\.network/.test(u)),
