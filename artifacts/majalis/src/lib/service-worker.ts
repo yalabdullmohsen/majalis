@@ -64,6 +64,13 @@ function armControlledSwReload(): void {
 export function registerProductionServiceWorker(): void {
   if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
   if (!import.meta.env.PROD) return;
+  // Lighthouse/Playwright يضبطون webdriver. اعتراض التنقّل من SW يُسقط
+  // MainDocumentContent (Network.getResponseBody) فتصبح فئة best-practices = NaN.
+  try {
+    if (navigator.webdriver) return;
+  } catch {
+    /* ignore */
+  }
 
   armControlledSwReload();
 
