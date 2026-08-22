@@ -46,8 +46,8 @@ assert.doesNotMatch(html, /dns-prefetch/, "لا dns-prefetch في الإقلاع
   const n = [...html.matchAll(/rel="preconnect"/g)].length;
   assert.ok(n <= 2, `preconnect ≤2 (الفعلي ${n})`);
 }
-assert.match(html, /isNativePlatform/, "الدخولية على الأصل فقط");
-assert.match(html, /if \(!native\) \{\s*dismiss\(true\);/, "الويب بلا دخولية حاجبة");
+assert.match(html, /dismiss\(true\)/, "طبقة اللون تُزال فورًا");
+assert.doesNotMatch(html, /mj-silent-splash__title|mj-silent-splash__progress/, "بلا شعار/مؤشر دخولية");
 
 assert.match(home, /title="المجلس العلمي"/, "عنوان الرئيسية في React");
 assert.doesNotMatch(home, /titleDomId/, "لا تبنّي عقدة HTML");

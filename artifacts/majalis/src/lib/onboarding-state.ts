@@ -1,7 +1,6 @@
 /**
- * onboarding-state — بوابة "شاهد المستخدم شاشة الدخول الأولى؟" + راية
- * إشعار الخصوصية/الكوكيز. مصدر واحد لكليهما (تصميمان منفصلان منطقيًا،
- * لكن نفس آلية التخزين الموثوقة).
+ * onboarding-state — راية إشعار الخصوصية/الكوكيز فقط.
+ * شاشة الدخول الأولى أُلغيت بالكامل.
  *
  * السبب الجذري لتكرار النوافذ سابقًا: كل كتابة حالة في المستودع كانت
  * ‎try { localStorage.setItem(...) } catch { ignore }‎. إن فشل
@@ -17,13 +16,12 @@
  *  ٤) مفتاح لكل شاشة + إصدار كبير واحد يُعيد العرض عند تغييره عمدًا فقط.
  */
 
-import { storageGetSync, storageSetSync } from "./native-storage";
+import { storageSetSync } from "./native-storage";
 
-/** رفع هذا الرقم — وهذا وحده — يُعيد عرض شاشة الدخول لكل المستخدمين. */
+/** رفع هذا الرقم يعيد راية الخصوصية فقط — ليست شاشة بدء. */
 export const ONBOARDING_MAJOR_VERSION = 1;
 
 export const ONBOARDING_KEYS = {
-  onboardingSeen: "onboarding_seen",
   storageNoticeSeen: "storage_notice_seen",
   majorVersion: "onboarding_major_version",
 } as const;
@@ -145,25 +143,14 @@ export function initOnboardingState(): void {
   const stored = storedMajorVersion();
 
   if (stored === null) {
-    // ترحيل: من أتمّ أي تهيئة/دخولية قديمة سابقًا لا يُسأل مرة أخرى
+    // ترحيل: من أتمّ موافقة الكوكيز سابقًا لا يُسأل مرة أخرى
     try {
-      const legacy = localStorage.getItem("majalis-first-run-setup-v1");
-      if (legacy) {
-        const parsed = JSON.parse(legacy) as { done?: boolean };
-        if (parsed.done) setFlag(ONBOARDING_KEYS.onboardingSeen);
-      }
       const consent = localStorage.getItem("majalis-cookie-consent-v1");
       if (consent && JSON.parse(consent)?.decidedAt) {
         setFlag(ONBOARDING_KEYS.storageNoticeSeen);
       }
-      if (
-        storageGetSync("onboarding.completed.v1") === "1" ||
-        localStorage.getItem("onboarding.completed.v1") === "1"
-      ) {
-        setFlag(ONBOARDING_KEYS.onboardingSeen);
-      }
     } catch {
-      /* ترحيل أفضل-جهد؛ فشله يعني عرض الشاشة مرة واحدة فقط */
+      /* ترحيل أفضل-جهد */
     }
   }
 
@@ -191,6 +178,9 @@ function purgeLegacyFirstRunArtifacts(): void {
     "majalis-boot-guide",
     "show-onboarding",
     "force-onboarding",
+    "majalis-first-run-setup-v1",
+    "majalis.onboarding.onboarding_seen",
+    "mj.silent-splash.session",
   ];
   for (const key of keys) {
     try {
@@ -207,7 +197,7 @@ function purgeLegacyFirstRunArtifacts(): void {
 }
 
 function clearOnboardingFlags(): void {
-  for (const name of [ONBOARDING_KEYS.onboardingSeen, ONBOARDING_KEYS.storageNoticeSeen]) {
+  for (const name of [ONBOARDING_KEYS.storageNoticeSeen]) {
     memory.delete(name);
     try {
       localStorage.removeItem(`${PREFIX}${name}`);
@@ -222,38 +212,11 @@ function clearOnboardingFlags(): void {
 }
 
 /* ── الواجهة العامة ─────────────────────────────────────────────────── */
-export function hasSeenOnboarding(): boolean {
-  return readFlag(ONBOARDING_KEYS.onboardingSeen);
-}
-export function markOnboardingSeen(): boolean {
-  return setFlag(ONBOARDING_KEYS.onboardingSeen);
-}
-
 export function hasSeenStorageNotice(): boolean {
   return readFlag(ONBOARDING_KEYS.storageNoticeSeen);
 }
 export function markStorageNoticeSeen(): boolean {
   return setFlag(ONBOARDING_KEYS.storageNoticeSeen);
-}
-
-/** روابط عميقة: لا تُعرض شاشة البدء ولا تُوسم «شوهدت». */
-const DEEP_LINK_PREFIXES = ["/mushaf", "/fiqh", "/search", "/lessons"] as const;
-
-export function shouldSkipAppStartForPath(pathname: string): boolean {
-  const path = pathname.split("?")[0]?.split("#")[0] || "/";
-  if (path === "/search" || path.startsWith("/search/")) return true;
-  return DEEP_LINK_PREFIXES.some(
-    (prefix) => path === prefix || path.startsWith(`${prefix}/`),
-  );
-}
-
-/** Playwright / Lighthouse يضبطون webdriver — لا تُحجب بوابات القياس. */
-export function shouldSkipAppStartForAutomation(): boolean {
-  try {
-    return typeof navigator !== "undefined" && Boolean(navigator.webdriver);
-  } catch {
-    return false;
-  }
 }
 
 /** للاختبارات فقط */
