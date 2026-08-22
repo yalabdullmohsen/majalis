@@ -144,7 +144,11 @@ assert.match(swClient, /SW_UPDATED_RELOAD_ONCE/, "العميل يستمع لإع
 assert.match(swClient, /hadController/, "لا reload عند أول claim");
 
 const brand = readFileSync(resolve(root, "src/components/BrandWordmark.tsx"), "utf8");
-assert.match(brand, /viewBox=/, "وردمارك SVG");
-assert.match(brand, /currentColor|fill="currentColor"/, "لون يتبع الثيم");
+assert.match(brand, /MajlisWordmark|viewBox=/, "وردمارك SVG عبر MajlisWordmark");
+const majlisMark = readFileSync(resolve(root, "src/components/brand/MajlisWordmark.tsx"), "utf8");
+assert.match(majlisMark, /viewBox=/, "MajlisWordmark SVG");
+assert.match(majlisMark, /currentColor|fill="currentColor"/, "لون يتبع الثيم");
+assert.match(majlisMark, /aria-label="المجلس العلمي"/, "تسمية وصول");
+assert.match(majlisMark, /WORDMARK_PATH|path d=/, "مسارات ثابتة بلا خط وقت التشغيل");
 
 console.log("launch-splash-unified.test.ts: ok");
