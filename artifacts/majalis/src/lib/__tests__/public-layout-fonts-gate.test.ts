@@ -22,11 +22,10 @@ assert.equal(isPublicRoute("/mushaf"), false);
 assert.equal(isPublicRoute("/fiqh"), false);
 assert.equal(isPublicRoute("/lessons"), false);
 
-assert.match(app, /function PublicLazyRoute/);
-assert.match(app, /<PublicLazyRoute component=\{AboutPage\}/);
-assert.match(app, /<PublicLazyRoute component=\{DiscoverIslamPage\}/);
-assert.doesNotMatch(app, /<PublicLazyRoute component=\{LessonsPage\}/);
-assert.doesNotMatch(app, /<PublicLazyRoute component=\{FiqhPage\}/);
+assert.match(app, /PublicRouteOutlet/);
+assert.match(app, /<SafeLazyRoute component=\{AboutPage\}/);
+assert.match(app, /<SafeLazyRoute component=\{DiscoverIslamPage\}/);
+assert.doesNotMatch(app, /<PublicLazyRoute/);
 
 assert.match(fontsPublic, /"Noto Kufi Arabic"/);
 assert.match(fontsPublic, /"IBM Plex Sans Arabic"/);
