@@ -100,6 +100,25 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
     tags: ["عبادة", "زكاة"],
     updated_at: STATIC_TS,
   },
+  "sawm-in-islam": {
+    id: "static-article-sawm-in-islam",
+    category_id: null,
+    slug: "sawm-in-islam",
+    title_ar: "الصوم في الإسلام",
+    title_en: "Fasting in Islam",
+    summary_ar: "صوم رمضان ركن من أركان الإسلام؛ تربية للنفس وتقوى، بضوابط واضحة للمقيم والمسافر والمريض.",
+    summary_en: null,
+    body_ar: `صوم رمضان فريضة على كل مسلم بالغ عاقل قادر. حقيقته الإمساك عن المفطرات من طلوع الفجر إلى غروب الشمس، مع النية.
+
+من مقاصده: تقوى الله، وكسر الشهوة، ومواساة الفقير، وتدريب الإرادة. ليس مجرد جوع وعطش، بل عبادة قلبية وبدنية.
+
+رُخّص للمريض والمسافر الفطر مع القضاء. والحامل والمرضع لهما أحكام يُسأل عنها أهل العلم. والمسلم الجديد يتعلّم الصوم تدريجيًا ولا يُحمَّل فوق طاقته في أول رمضان.
+
+بعد الإفطار يُستحب الدعاء والصدقة وقيام الليل بحسب الاستطاعة. رمضان مدرسة سنوية لا موسمًا اجتماعيًا فقط.`,
+    cover_image_url: null,
+    tags: ["عبادة", "صوم"],
+    updated_at: STATIC_TS,
+  },
 };
 
 export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
@@ -331,6 +350,24 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
     sources: [],
     objections_and_responses: [],
     conclusion: "يُحاكم الفاعل بنص الشرع والقانون؛ ولا تُحمَّل الرسالة وزر المسيء.",
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-sh-7",
+    category_id: null,
+    slug: "hadith-unreliable",
+    title: "هل الحديث النبوي غير موثوق؟",
+    complexity_level: "intermediate",
+    shubha_text: "يُزعم أن الأحاديث كُتبت متأخرة فلا يُوثق بها، أو أن السنة لا تلزم.",
+    why_spread: "جهل بمنهج المحدثين، وخلط بين الحديث الصحيح والضعيف والموضوع.",
+    short_answer: "السنة وحي بالمعنى، ونقلها علماء الجرح والتعديل بأسانيد مضبوطة؛ والصحيح منها حجة مع القرآن.",
+    detailed_refutation: "حفظ الصحابة السنة وبلّغوها، ثم دوّنها الأئمة كالبخاري ومسلم وفق شروط صارمة. علم مصطلح الحديث يميّز الصحيح من الضعيف. رفض السنة جملةً يهدم فهم القرآن نفسه؛ لأن الصلاة والزكاة والحج فُصّلت بالسنة. يُناقش كل حديث بمنهجه لا بتعميم.",
+    assumption_correction: "أن كل ما نُسب للنبي ﷺ متساوٍ في القوة، أو أن التأخر النسبي في التدوين يعني الاختلاق.",
+    historical_linguistic_context: null,
+    evidences: [{ type: "quran", ref: "الحشر: 7", text: "وما آتاكم الرسول فخذوه وما نهاكم عنه فانتهوا" }],
+    sources: [],
+    objections_and_responses: [],
+    conclusion: "يُقبل الصحيح ويُردّ الموضوع؛ والمنهج العلمي للمحدثين أساس الثقة لا الهوى.",
     updated_at: STATIC_TS,
   },
 ];
