@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
+import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
 import { Link, Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
 import { AuthProvider, useAuth } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
@@ -48,6 +48,11 @@ import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
 import { AppReadingFocus } from "@/components/reading/AppReadingFocus";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
+import { FirstVisitIntro } from "@/components/onboarding/FirstVisitIntro";
+import {
+  markFirstVisitIntroSeen,
+  shouldShowFirstVisitIntro,
+} from "@/lib/first-visit-intro-state";
 
 const lazy = lazyWithRetry;
 
@@ -1193,6 +1198,24 @@ function AppShellInner() {
   const onPrayer = isPrayerTimesPath(location);
   const hideSiteChrome = immersive || onPrayer;
   const deferHomePrayerChrome = location === "/" || location === "";
+  const isHomePath = deferHomePrayerChrome;
+  const [introActive, setIntroActive] = useState(() =>
+    shouldShowFirstVisitIntro(typeof window !== "undefined" ? window.location.pathname : "/"),
+  );
+
+  const dismissFirstVisitIntro = useCallback(() => {
+    markFirstVisitIntroSeen();
+    setIntroActive(false);
+  }, []);
+
+  useEffect(() => {
+    if (!isHomePath) {
+      setIntroActive(false);
+      return;
+    }
+    setIntroActive(shouldShowFirstVisitIntro(location));
+  }, [isHomePath, location]);
+
   const { isHidden: shouldHideChrome } = useAutoHideBottomNav({
     forceShow: searchOpen || comingSoonOpen || hideSiteChrome,
     routeKey: location,
@@ -1226,6 +1249,19 @@ function AppShellInner() {
       window.removeEventListener("global-coming-soon-open", soonHandler as EventListener);
     };
   }, []);
+
+  if (introActive && isHomePath) {
+    return (
+      <div
+        className={`app-shell app-shell--first-visit-intro${isNativeApp ? " app-shell--native" : ""}`}
+        style={{ "--app-dir": dir } as React.CSSProperties}
+        data-native-app={isNativeApp ? "true" : "false"}
+      >
+        <PageChromeSync />
+        <FirstVisitIntro onContinue={dismissFirstVisitIntro} />
+      </div>
+    );
+  }
 
   return (
     <div
