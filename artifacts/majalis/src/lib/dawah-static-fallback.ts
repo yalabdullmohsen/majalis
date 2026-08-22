@@ -81,6 +81,25 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
     tags: ["عبادة", "صلاة"],
     updated_at: STATIC_TS,
   },
+  "zakat-in-islam": {
+    id: "static-article-zakat-in-islam",
+    category_id: null,
+    slug: "zakat-in-islam",
+    title_ar: "الزكاة في الإسلام",
+    title_en: "Zakat in Islam",
+    summary_ar: "الزكاة ركن من أركان الإسلام؛ تطهير للمال ونصرة للفقير بضوابط شرعية.",
+    summary_en: null,
+    body_ar: `الزكاة فريضة على من ملك النصاب وحال عليه الحول في أغلب الأموال. هي حق معلوم في المال، لا منّة من الغني على الفقير.
+
+مصارفها ثمانية ذكرها القرآن: الفقراء والمساكين والعاملين عليها والمؤلفة قلوبهم وفي الرقاب والغارمين وفي سبيل الله وابن السبيل.
+
+المسلم الجديد لا يُطالب بحساب الزكاة فور دخوله؛ يتعلم أولًا الأركان والصلاة، ثم يسأل عالمًا أو جهة موثوقة عند استقرار دخله. الصدقة التطوعية مفتوحة في كل وقت.
+
+الزكاة تطهّر النفس من الشحّ، وتُصلح المجتمع بتقليل الحاجة، وهي عبادة مالية لا ضريبة مدنية فقط.`,
+    cover_image_url: null,
+    tags: ["عبادة", "زكاة"],
+    updated_at: STATIC_TS,
+  },
 };
 
 export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
@@ -294,6 +313,24 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
     sources: [],
     objections_and_responses: [],
     conclusion: "الإسلام يدعو إلى العلم والتفكر لا إلى الجهل أو رفض المعرفة.",
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-sh-6",
+    category_id: null,
+    slug: "islam-equals-violence",
+    title: "هل الإسلام دين عنف؟",
+    complexity_level: "basic",
+    shubha_text: "يُربط الإسلام أحيانًا بالعنف بسبب جرائم يرتكبها بعض المنتسبين إليه.",
+    why_spread: "خلط بين فعل أفراد أو جماعات متطرفة وبين أحكام الدين ونصوصه.",
+    short_answer: "الإسلام يحرّم قتل النفس المعصومة والعدوان؛ وما يقع من جرائم يُحاسب عليه مرتكبوه ولا يُنسب للدين كأصل.",
+    detailed_refutation: "قال تعالى: ﴿من قتل نفسًا بغير نفس أو فساد في الأرض فكأنما قتل الناس جميعًا﴾. والجهاد في الشرع له ضوابط وشروط لا تُبرر الاعتداء على المدنيين. التطرف ظاهرة بشرية تُواجه بالنص والعلم والعدل لا بتعميم على مليار مسلم.",
+    assumption_correction: "أن جريمة فرد أو جماعة تمثّل الإسلام كله.",
+    historical_linguistic_context: null,
+    evidences: [{ type: "quran", ref: "المائدة: 32", text: "من قتل نفسًا بغير نفس أو فساد في الأرض فكأنما قتل الناس جميعًا" }],
+    sources: [],
+    objections_and_responses: [],
+    conclusion: "يُحاكم الفاعل بنص الشرع والقانون؛ ولا تُحمَّل الرسالة وزر المسيء.",
     updated_at: STATIC_TS,
   },
 ];
