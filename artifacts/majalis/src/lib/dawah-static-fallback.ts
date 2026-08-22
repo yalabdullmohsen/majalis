@@ -244,6 +244,23 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
     tags: ["عبادة", "نسك"],
     updated_at: STATIC_TS,
   },
+  "parents-rights": {
+    id: "static-article-parents-rights",
+    category_id: null,
+    slug: "parents-rights",
+    title_ar: "بر الوالدين في الإسلام",
+    title_en: "Honoring Parents in Islam",
+    summary_ar: "بر الوالدين من أعظم القربات بعد التوحيد؛ بالقول اللين والنفقة والدعاء، دون طاعتهما في معصية الله.",
+    summary_en: null,
+    body_ar: `أمر الله بالإحسان إلى الوالدين مباشرة بعد الوصية بالتوحيد. البر يشمل القول الكريم، وخفض الجناح، والنفقة عند الحاجة، والدعاء لهما في الحياة وبعد الممات.
+
+لا طاعة لمخلوق في معصية الخالق: إن أمرا بشرك أو حرام لم يُطعما فيه، مع بقاء الإحسان في المعاملة. العقوق من الكبائر.
+
+المسلم الجديد يبدأ بشكر من ربّاه، ويتعلم أن صلة الرحم وبر الوالدين جزء من الإيمان العملي لا مجرد شعور.`,
+    cover_image_url: null,
+    tags: ["أخلاق", "أسرة"],
+    updated_at: STATIC_TS,
+  },
 };
 
 export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
@@ -647,6 +664,31 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
     sources: [],
     objections_and_responses: [],
     conclusion: "الخمر محرّمة قطعًا؛ وحفظ العقل مقصد شرعي لا يلغيه العصر.",
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-sh-15",
+    category_id: null,
+    slug: "prayer-in-any-language",
+    title: "هل تجوز الصلاة بأي لغة؟",
+    complexity_level: "basic",
+    shubha_text: "يُقال إن المهم الخشوع بأي لسان، وأن اشتراط العربية في الصلاة تضييق بلا حاجة.",
+    why_spread: "صعوبة تعلّم العربية على غير الناطقين، وخلط بين الدعاء المطلق وفرائض الصلاة.",
+    short_answer: "الفاتحة وأركان القراءة في الصلاة تُؤدَّى بالعربية كما نزلت؛ والدعاء بعد الصلاة يجوز بأي لسان. التعلم التدريجي ميسور.",
+    detailed_refutation:
+      "الصلاة توقيفية؛ وال النبي ﷺ صلّى بالقرآن العربي وأمر: «صلوا كما رأيتموني أصلي». الفاتحة ركن عند الجمهور. أما الدعاء والذكر خارج أركان القراءة فواسع. المسلم الجديد يتعلم الفاتحة سورة قصيرة بالتدريج، والله لا يكلّف نفسًا إلا وسعها في زمن التعلم مع بذل السبب.",
+    assumption_correction: "أن كل ذكر في الصلاة كالدعاء الحر، أو أن صعوبة البداية تبيح تبديل النص المنزل.",
+    historical_linguistic_context: null,
+    evidences: [
+      {
+        type: "quran",
+        ref: "الفاتحة: 1-7",
+        text: "القرآن أُنزل بلسان عربي مبين، والصلاة قراءة لما أُنزل",
+      },
+    ],
+    sources: [],
+    objections_and_responses: [],
+    conclusion: "قراءة الصلاة بالعربية كما شُرعت؛ والتيسير في التعلم لا في تبديل الأركان.",
     updated_at: STATIC_TS,
   },
 ];
