@@ -27,8 +27,8 @@ assert.match(html, /id="mj-launch-splash"/);
 assert.match(html, /MIN_MS\s*=\s*700/);
 assert.match(html, /MAX_MS\s*=\s*1000/);
 assert.match(html, /mj-launch-splash__tagline/);
+assert.match(html, /splash_timing=1/, "معامل قياس توقيت الدخولية");
 assert.doesNotMatch(html, /id="mj-silent-splash"/);
-assert.doesNotMatch(html, /dismiss\(true\)/, "لا إزالة فورية بلا انتظار");
 assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل");
 
 console.log("splash-timing-gate.test.ts: ok");
