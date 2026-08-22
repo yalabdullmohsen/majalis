@@ -3,7 +3,7 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { getSurahMeta, JUZ_START_PAGES, SURAH_START_PAGES } from "@/lib/quran-api";
 import { arabicMatchAny, normalizeArabic } from "@/lib/arabic-search";
-import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
+import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN, parseMushafPageQuery } from "@/lib/quran-last-page";
 import { findMushafPageForAyah } from "./mushaf-page-for-ayah";
 import { searchVersesInCorpus } from "@/lib/quran-search-verses";
 
@@ -50,15 +50,6 @@ function juzForPage(page: number): number {
   return j;
 }
 
-function parsePageQuery(raw: string): number | null {
-  const trimmed = raw.trim();
-  if (!trimmed) return null;
-  const western = trimmed.replace(/[٠-٩]/g, (d) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
-  if (!/^\d+$/.test(western)) return null;
-  const n = Number.parseInt(western, 10);
-  return Number.isFinite(n) ? n : null;
-}
-
 /** بحث علوي + فهرس السور/الأجزاء — لا لوحة سفلية. */
 export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }: Props) {
   const titleId = useId();
@@ -79,12 +70,12 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
   useEffect(() => {
     if (!open || tab !== "search") return;
     const q = query.trim();
-    const asPage = parsePageQuery(q);
+    const asPage = parseMushafPageQuery(q);
     if (asPage != null) {
       setHits([]);
       setLoading(false);
       if (asPage < MUSHAF_PAGE_MIN || asPage > MUSHAF_PAGE_MAX) {
-        setError("رقم الصفحة يجب أن يكون بين 1 و604");
+        setError("رقم الصفحة يجب أن يكون بين ١ و٦٠٤");
       } else {
         setError(null);
       }
@@ -135,14 +126,14 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
     const q = query.trim();
     if (!q || tab !== "surahs") return ALL_SURAHS;
     const nq = normalizeArabic(q);
-    const asNum = parsePageQuery(q);
+    const asNum = parseMushafPageQuery(q);
     return ALL_SURAHS.filter((s) => {
       if (asNum != null && (s.n === asNum || s.page === asNum)) return true;
       return arabicMatchAny([s.name], q) || normalizeArabic(s.name).includes(nq);
     });
   }, [query, tab]);
 
-  const pageHint = parsePageQuery(query.trim());
+  const pageHint = parseMushafPageQuery(query.trim());
   const pageValid = pageHint != null && pageHint >= MUSHAF_PAGE_MIN && pageHint <= MUSHAF_PAGE_MAX;
 
   const goPage = (n: number, verseKey?: string) => {
@@ -184,7 +175,7 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
             e.stopPropagation();
             if (pageHint == null) return;
             if (!pageValid) {
-              setError("رقم الصفحة يجب أن يكون بين 1 و604");
+              setError("رقم الصفحة يجب أن يكون بين ١ و٦٠٤");
               return;
             }
             goPage(pageHint);
@@ -319,7 +310,7 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
               </p>
             ) : null}
             {!loading && !error && !query.trim() ? (
-              <p className="mm-search-sheet__status">اكتب كلمة أو رقم صفحة بين 1 و604.</p>
+              <p className="mm-search-sheet__status">اكتب كلمة أو رقم صفحة بين ١ و٦٠٤.</p>
             ) : null}
             <ul className="mm-search-sheet__list" role="listbox" aria-label="نتائج البحث">
               {hits.map((h) => (

@@ -48,6 +48,7 @@ function prefersReducedMotion(): boolean {
 
 /**
  * قلب صفحة RTL: شريط أفقي مع scroll-snap، سحب لليمين = التالية.
+ * ثلاث لوحات في DOM فقط (تالية · حالية · سابقة) من أصل TOTAL_QURAN_PAGES=604.
  * بلا لف ثلاثي الأبعاد. إكمال الانتقال ≤ 250ms.
  */
 export function MushafPager({
@@ -278,6 +279,7 @@ export function MushafPager({
       ref={shellRef}
       className={className}
       data-testid={testId}
+      data-total-pages={MUSHAF_PAGE_MAX}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}

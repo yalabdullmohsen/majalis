@@ -146,6 +146,6 @@ assert.doesNotMatch(page, /inlineBasmala/);
 assert.match(page, /النمل/);
 
 assert.match(css, /width:\s*13\.1%/);
-assert.match(read("src/features/mushaf-madinah/MushafPageFooter.tsx"), /mm-page-footer__cartouche/);
+assert.match(read("src/features/mushaf-madinah/MushafPageFooter.tsx"), /mm-page-footer__num/);
 
 console.log("mushaf-real-layout-gate.test.ts: ok");

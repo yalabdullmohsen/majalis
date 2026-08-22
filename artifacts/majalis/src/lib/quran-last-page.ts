@@ -6,14 +6,25 @@
  * const saved = await loadLastPage(); // number | null
  * ```
  */
+import { toLatinDigits } from "@/lib/numerals";
 
 export const LAST_PAGE_KEY = "lastPage";
 export const MUSHAF_PAGE_MIN = 1;
 export const MUSHAF_PAGE_MAX = 604;
+/** المصدر المركزي لعدد صفحات المصحف — مرادف لـ MUSHAF_PAGE_MAX. */
+export const TOTAL_QURAN_PAGES = MUSHAF_PAGE_MAX;
 
 export function clampMushafPage(page: number): number {
   if (!Number.isFinite(page)) return MUSHAF_PAGE_MIN;
   return Math.min(MUSHAF_PAGE_MAX, Math.max(MUSHAF_PAGE_MIN, Math.floor(page)));
+}
+
+/** يحوّل 255 / ٢٥٥ / ۲۵۵ إلى رقم موحّد، أو null إن لم يكن رقم صفحة خالصًا. */
+export function parseMushafPageQuery(raw: string): number | null {
+  const western = toLatinDigits(raw.trim());
+  if (!/^\d+$/.test(western)) return null;
+  const n = Number.parseInt(western, 10);
+  return Number.isFinite(n) ? n : null;
 }
 
 /**
