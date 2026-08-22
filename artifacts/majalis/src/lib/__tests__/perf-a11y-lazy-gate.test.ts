@@ -41,7 +41,10 @@ console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");
   assert.equal([...html.matchAll(/rel="preload"/g)].length, 1, "preload واحد فقط");
   assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/, "لا Google Fonts في الإقلاع");
   assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/amiri-400-ar\.woff2/, "preload خط الشاشة الأولى فقط");
-  assert.match(html, /id="mj-silent-splash"/, "دخولية HTML صامتة");
+  assert.match(html, /id="mj-silent-splash"/, "طبقة لون تقنية بلا دخولية");
+  assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل");
+  assert.doesNotMatch(html, /mj-silent-splash__title|mj-silent-splash__progress/, "بلا شعار/مؤشر");
+  assert.match(html, /v6-direct-boot-2026-08/, "ترحيل ثيم يمنع وميض التصميم القديم");
 }
 
 console.log("\n=== LCP أصول WebP موجودة ===");

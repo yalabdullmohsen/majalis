@@ -8,12 +8,13 @@
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F4F3" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101614" />
     <style id="mj-lcp-critical">
+      /* سطح نهائي فورًا — بلا أبيض افتراضي وبلا انتظار خط ثلث/رقعة */
       html, body, #root {
         background-color: #F2F4F3;
         margin: 0;
         min-height: 100dvh;
         color: #14241c;
-        font-family: "Amiri", "Noto Naskh Arabic", "Aref Ruqaa", system-ui, sans-serif;
+        font-family: "Amiri", "Noto Naskh Arabic", system-ui, sans-serif;
       }
       html[data-theme="dark"], html[data-theme="dark"] body, html[data-theme="dark"] #root {
         background-color: #101614;
@@ -24,68 +25,6 @@
         --inset-bottom: env(safe-area-inset-bottom, 0px);
         --inset-right: env(safe-area-inset-right, 0px);
         --inset-left: env(safe-area-inset-left, 0px);
-      }
-      /* هيكل إقلاع ثابت — أسماء فريدة حتى لا يعيد CSS اللاحق تشكيله (CLS) */
-      #mj-boot-skeleton {
-        position: fixed;
-        inset: 0;
-        z-index: 20;
-        pointer-events: none;
-        overflow: hidden;
-        background: #F2F4F3;
-      }
-      #mj-boot-skeleton .mj-sk-header {
-        box-sizing: border-box;
-        min-height: calc(56px + var(--inset-top, 0px));
-        background: rgba(20, 63, 53, 0.05);
-      }
-      #mj-boot-skeleton .mj-sk-search {
-        height: 3rem;
-        background: rgba(20, 63, 53, 0.04);
-      }
-      #mj-boot-skeleton .mj-sk-ticker {
-        height: 2.25rem;
-        background: rgba(20, 63, 53, 0.06);
-      }
-      #mj-boot-skeleton .mj-sk-sections {
-        min-height: 3.5rem;
-        background: rgba(20, 63, 53, 0.04);
-      }
-      #mj-boot-skeleton .mj-sk-hero {
-        min-height: 11rem;
-        background: rgba(20, 63, 53, 0.05);
-      }
-      #mj-boot-skeleton .mj-sk-field {
-        min-height: 48px;
-        margin: 0.75rem 1rem 0;
-        background: rgba(20, 63, 53, 0.06);
-        border-radius: 999px;
-      }
-      #mj-boot-skeleton .mj-sk-start {
-        min-height: 37.8rem;
-        margin: 0.75rem 1rem 0;
-        background: rgba(20, 63, 53, 0.04);
-        border-radius: 1rem;
-      }
-      #mj-boot-skeleton .mj-sk-nav {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        min-height: calc(3.25rem + var(--inset-bottom, 0px));
-        background: rgba(20, 63, 53, 0.06);
-      }
-      @media (min-width: 720px) {
-        #mj-boot-skeleton .mj-sk-search,
-        #mj-boot-skeleton .mj-sk-ticker { display: none; }
-        #mj-boot-skeleton .mj-sk-start { min-height: 24rem; }
-      }
-      @media (min-width: 880px) {
-        #mj-boot-skeleton .mj-sk-nav,
-        #mj-boot-skeleton .mj-sk-sections { display: none; }
-      }
-      html[data-theme="dark"] #mj-boot-skeleton {
-        background: #101614;
       }
     </style>
     <style id="mj-splash-critical">
@@ -99,6 +38,7 @@
       }
       html.capacitor-native, html.capacitor-native body, html.capacitor-native #root { background-color: var(--mj-splash-bg); }
 
+      /* طبقة لون تقنية فقط — تُزال فورًا، بلا شعار/عنوان/مؤشر */
       #mj-silent-splash{
         position:fixed;
         inset:0;
@@ -108,7 +48,7 @@
       }
       #mj-silent-splash.mj-silent-splash--out{
         opacity:0;
-        transition:opacity 80ms linear;
+        transition:opacity 40ms linear;
       }
       @media (prefers-reduced-motion: reduce){
         #mj-silent-splash.mj-silent-splash--out{ transition:none; }
@@ -209,6 +149,38 @@
     </script>
   </head>
   <body>
+    <script id="mj-theme-boot">
+      (function () {
+        try {
+          /* أول سطر في body — قبل الطبقة والجذر؛ يمنع وميض الثيم/التصميم القديم */
+          var _dsv = "v6-direct-boot-2026-08";
+          if (localStorage.getItem("majalis-design-v") !== _dsv) {
+            localStorage.setItem("majalis-design-v", _dsv);
+            localStorage.removeItem("majalis-theme");
+            localStorage.removeItem("majalis-font-preference");
+            localStorage.removeItem("majalis-font-preference-v2");
+          }
+          var storedTheme = localStorage.getItem("majalis-theme");
+          var resolved = storedTheme === "light" ? "light"
+            : storedTheme === "dark" ? "dark"
+            : storedTheme === "auto"
+              ? (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+              : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          document.documentElement.dataset.theme = resolved;
+          document.documentElement.classList.toggle("dark", resolved === "dark");
+          document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
+          var splashBg = resolved === "dark" ? "#101614" : "#F2F4F3";
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+            m.setAttribute("content", splashBg);
+          });
+          var storedFont = localStorage.getItem("majalis-font-preference-v2");
+          document.documentElement.dataset.font =
+            storedFont === "naskh" || storedFont === "default"
+              ? storedFont
+              : "naskh";
+        } catch (e) {}
+      })();
+    </script>
     <div id="mj-silent-splash" aria-hidden="true"></div>
     <script>
       (function () {
@@ -217,12 +189,9 @@
         var KEY = "mj.silent-splash.session";
         var done = false;
         var MIN_MS = 0;
-        var MAX_MS = 400;
-        var EXIT_MS = 80;
-
+        var EXIT_MS = 40;
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
         try { window.__mjSplashStart = start; } catch (e) {}
-
         function dismiss(immediate) {
           if (done) return;
           done = true;
@@ -236,52 +205,18 @@
           window.setTimeout(function () { if (el.parentNode) el.remove(); }, EXIT_MS);
         }
         try { window.__mjDismissSplash = dismiss; } catch (e) {}
-
         try {
           if (sessionStorage.getItem(KEY) === "1") {
             dismiss(true);
             return;
           }
         } catch (e) {}
-
+        /* إزالة فورية — لا دخولية ولا انتظار */
         dismiss(true);
       })();
     </script>
     <script>
       try {
-        /* مِشكاة: تطبيق الوضع (ليل/نهار) فوراً لمنع الوميض */
-        /* ترحيل v4-light-2026: إعادة تعيين التفضيل عند أول تشغيل بعد تغيير الهوية */
-        var _dsv = "v5-splashless-2026-08";
-        if (localStorage.getItem("majalis-design-v") !== _dsv) {
-          localStorage.setItem("majalis-design-v", _dsv);
-          localStorage.removeItem("majalis-theme");
-          localStorage.removeItem("majalis-font-preference");
-          localStorage.removeItem("majalis-font-preference-v2");
-        }
-        /* المفتاح الحقيقي المستخدَم في theme-preference.ts هو "majalis-theme" —
-           كان هذا المِشكاة يقرأ مفتاحًا مختلفًا ("majalis-theme-preference") لا
-           يكتب إليه أي جزء آخر من التطبيق، فكان يُنتج وميض الوضع النهاري دومًا
-           قبل أن يُصحِّحه React بعد الترطيب (2026-07-16). */
-        var storedTheme = localStorage.getItem("majalis-theme");
-        var resolved = storedTheme === "light" ? "light"
-          : storedTheme === "dark" ? "dark"
-          : storedTheme === "auto"
-            ? (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-            : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-        document.documentElement.dataset.theme = resolved;
-        document.documentElement.classList.toggle("dark", resolved === "dark");
-        document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
-        /* theme-color أثناء الإقلاع = سطح الصفحة (يمنع وميض أخضر قديم) */
-        var splashBg = resolved === "dark" ? "#101614" : "#F2F4F3";
-        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
-          m.setAttribute("content", splashBg);
-        });
-
-        var storedFont = localStorage.getItem("majalis-font-preference-v2");
-        document.documentElement.dataset.font =
-          storedFont === "naskh" || storedFont === "default"
-            ? storedFont
-            : "naskh";
         document.body.classList.remove("side-nav-open", "navbar-more-open", "mobile-nav-body-lock");
         document.body.style.removeProperty("overflow");
         document.body.style.removeProperty("touch-action");
@@ -290,33 +225,7 @@
         });
       } catch (error) {}
     </script>
-    <div id="mj-boot-skeleton" dir="rtl" aria-hidden="true">
-      <div class="mj-sk-header">
-        <div class="mj-sk-search"></div>
-        <div class="mj-sk-ticker"></div>
-      </div>
-      <div class="mj-sk-sections"></div>
-      <div class="mj-sk-hero"></div>
-      <div class="mj-sk-field"></div>
-      <div class="mj-sk-start"></div>
-      <div class="mj-sk-nav"></div>
-    </div>
     <div id="root"></div>
-    <script>
-      (function () {
-        var el = document.getElementById("mj-boot-skeleton");
-        if (!el) return;
-        var done = false;
-        function hide() {
-          if (done || !el.parentNode) return;
-          done = true;
-          try { el.remove(); } catch (e) {}
-        }
-        window.addEventListener("mj:app-painted", hide, { once: true });
-        window.addEventListener("app:first-paint", hide, { once: true });
-        window.setTimeout(hide, 4000);
-      })();
-    </script>
     <script type="module" src="/src/main.tsx"></script>
     <!-- محتوى للزواحف (noscript) — يضمن فهرسة محركات البحث للمحتوى الأساسي -->
     <noscript>

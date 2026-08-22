@@ -168,10 +168,17 @@ async function mount() {
     return;
   }
 
-  // أخفِ الإطلاق الأصلي عند أول إطار؛ أبلغ دخولية HTML أن التطبيق رُسم.
+  // أخفِ الإطلاق الأصلي وطبقة اللون فور أول إطار — بلا دخولية.
   armNativeSplashController();
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
+      try {
+        const dismiss = (window as Window & { __mjDismissSplash?: (immediate?: boolean) => void })
+          .__mjDismissSplash;
+        dismiss?.(true);
+      } catch {
+        /* ignore */
+      }
       window.dispatchEvent(new Event("mj:app-painted"));
       window.dispatchEvent(new Event("app:first-paint"));
     });
