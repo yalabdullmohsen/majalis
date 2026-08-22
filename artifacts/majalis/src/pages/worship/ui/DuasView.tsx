@@ -1050,6 +1050,7 @@ export default function DuasPage() {
       {/* ═══ Hero ═══ */}
       <div className="duas-hero">
         <div className="duas-hero__bismillah">وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ</div>
+        <cite className="duas-hero__ayah-ref">البقرة: ١٨٦</cite>
         <h1 className="duas-hero__title">الأدعية الشرعية</h1>
         <p className="duas-hero__sub">
           أدعية موثقة من القرآن الكريم والسنة النبوية الصحيحة

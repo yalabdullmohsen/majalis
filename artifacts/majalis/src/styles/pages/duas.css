@@ -14,8 +14,15 @@
   font-size: var(--ds-text-base);
   font-family: var(--font-quran, serif);
   color: rgba(255,255,255,0.8);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
   line-height: 1.9;
+}
+.duas-hero__ayah-ref {
+  display: block;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.65);
+  font-style: normal;
+  margin-bottom: 0.75rem;
 }
 .duas-hero__title {
   font-size: 2rem;
