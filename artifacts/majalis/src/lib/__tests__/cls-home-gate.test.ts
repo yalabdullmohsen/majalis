@@ -26,6 +26,9 @@ assert.match(critical, /\.home-start-here[\s\S]*min-height:\s*16rem/, "حجز ا
 assert.match(critical, /\.home-page-hero\.page-hero-mj[\s\S]*min-height:\s*13\.5rem/, "حجز ارتفاع هيرو الرئيسية");
 assert.match(critical, /\.home-page-hero\.page-hero-mj[\s\S]*margin:\s*0\.35rem/, "هامش بطاقة الهيرو من أول رسمة");
 assert.match(critical, /\.home-page-hero\.page-hero-mj[\s\S]*border:\s*1px solid/, "حد بطاقة الهيرو من أول رسمة");
+assert.match(critical, /\.home-page-hero \.page-hero-mj__title[\s\S]*font-size:\s*clamp/, "حجم عنوان الهيرو من أول رسمة");
+assert.match(critical, /\.hus-field[\s\S]*min-height:\s*52px/, "حجز شريط البحث من أول رسمة");
+assert.match(critical, /\.home-start-here[\s\S]*padding:\s*1rem/, "حشو بطاقة ابدأ من هنا من أول رسمة");
 const wordmark = readFileSync(resolve(root, "src/components/BrandWordmark.tsx"), "utf8");
 assert.match(wordmark, /width=\{138\}/, "عرض SVG Intrinsic يحجز قبل CSS");
 assert.match(wordmark, /height=\{33\}/, "ارتفاع SVG Intrinsic يحجز قبل CSS");

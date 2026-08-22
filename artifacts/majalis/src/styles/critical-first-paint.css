@@ -92,6 +92,57 @@ body {
   display: none;
 }
 
+.home-page-hero .page-hero-mj__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 40rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.7rem;
+}
+
+.home-page-hero .page-hero-mj__title {
+  margin: 0;
+  font-size: clamp(1.2rem, 4.6vw, 1.55rem);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.home-page-hero .page-hero-mj__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  gap: 0.45rem;
+  margin-top: 0.1rem;
+}
+
+.home-page-hero .page-hero-mj__actions .m2030-btn {
+  min-height: 2.65rem;
+}
+
+.hus {
+  position: relative;
+  width: min(100% - 1.7rem, 40rem);
+  margin-inline: auto;
+  margin-block: 0.85rem 0.35rem;
+}
+
+.hus-field {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 52px;
+  padding: 0.4rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 18%, transparent);
+  box-sizing: border-box;
+}
+
 .navbar-v3__tagline-mark {
   display: inline-block;
   vertical-align: middle;
@@ -183,6 +234,11 @@ body {
 /* CLS: بطاقة «ابدأ من هنا» مدمجة بلا شبكة خطوات فوق الطية */
 .home-start-here {
   min-height: 16rem;
+  margin-block: 0.65rem 0.85rem;
+  padding: 1rem 1.05rem 1.05rem;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #145a42) 10%, transparent);
+  border-radius: 16px;
+  box-sizing: border-box;
 }
 
 @media (min-width: 720px) {
