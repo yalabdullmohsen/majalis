@@ -69,6 +69,10 @@ const AdhanActiveOverlay = lazyWithRetry(
   () => import("@/components/adhan/AdhanActiveOverlay").then((m) => ({ default: m.AdhanActiveOverlay })),
   "AdhanActiveOverlay",
 );
+const HomepageAdBar = lazyWithRetry(
+  () => import("@/components/home/HomepageAdBar").then((m) => ({ default: m.HomepageAdBar })),
+  "HomepageAdBar",
+);
 const PrayerCountdownBanner = lazyWithRetry(
   () => import("@/components/prayer/PrayerCountdownBanner").then((m) => ({ default: m.PrayerCountdownBanner })),
   "PrayerCountdownBanner",
@@ -1193,6 +1197,7 @@ function AppShellInner() {
   const onPrayer = isPrayerTimesPath(location);
   const hideSiteChrome = immersive || onPrayer;
   const deferHomePrayerChrome = location === "/" || location === "";
+  const isHomePath = deferHomePrayerChrome;
   const { isHidden: shouldHideChrome } = useAutoHideBottomNav({
     forceShow: searchOpen || comingSoonOpen || hideSiteChrome,
     routeKey: location,
@@ -1254,6 +1259,11 @@ function AppShellInner() {
       <DeferredPrayerRuntime />
       <NativeNotificationsBootstrap />
       <IdleRuntimeBoot />
+      {isHomePath && !hideSiteChrome && (
+        <Suspense fallback={null}>
+          <HomepageAdBar />
+        </Suspense>
+      )}
       <NavBar />
       <TopSectionBar />
       {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
