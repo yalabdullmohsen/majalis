@@ -288,10 +288,7 @@
           appReady = true;
           tryDismiss();
         }, MAX_MS);
-        var tick = window.setInterval(function () {
-          tryDismiss();
-          if (done) window.clearInterval(tick);
-        }, 48);
+        window.setTimeout(tryDismiss, MIN_MS);
       })();
     </script>
     <script>
