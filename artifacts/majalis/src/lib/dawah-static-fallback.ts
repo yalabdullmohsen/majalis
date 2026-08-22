@@ -210,6 +210,23 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
     tags: ["عبادة", "صلاة"],
     updated_at: STATIC_TS,
   },
+  "mosque-etiquette": {
+    id: "static-article-mosque-etiquette",
+    category_id: null,
+    slug: "mosque-etiquette",
+    title_ar: "آداب المسجد",
+    title_en: "Mosque Etiquette",
+    summary_ar: "المسجد بيت الله: طهارة، وهدوء، وذكر، واحترام للمصلين، دون أذى أو لغو.",
+    summary_en: null,
+    body_ar: `المسجد للصلاة والذكر وتعلّم العلم. يُدخل باليمين مع الدعاء الوارد، ويُحافظ على الطهارة وستر العورة، ويُجتنب رفع الصوت بما يشغل المصلين.
+
+لا يُمرّ بين يدي المصلي بلا حاجة، ولا تُؤذى الصفوف بالزحام غير المنضبط. التجارة والبيع داخل المسجد منهي عنهما في السنة.
+
+المسلم الجديد يبدأ بحضور الجماعة بهدوء، ويتعلم من المصلين دون حرج من السؤال بلطف. المسجد مكان رحمة لا مكان خصومة.`,
+    cover_image_url: null,
+    tags: ["عبادة", "آداب"],
+    updated_at: STATIC_TS,
+  },
 };
 
 export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
@@ -563,6 +580,31 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
     sources: [],
     objections_and_responses: [],
     conclusion: "نظام الميراث والنفقة متكامل؛ والحكم الشرعي يُفهم بجملته لا بآية مقطوعة عن سياقها الفقهي.",
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-sh-13",
+    category_id: null,
+    slug: "polygamy-oppression",
+    title: "هل تعدد الزوجات ظلم للمرأة؟",
+    complexity_level: "basic",
+    shubha_text: "يُفهم التعدد أحيانًا على أنه إهانة للنساء أو حق مطلق بلا ضوابط.",
+    why_spread: "عرض التعدد بمعزل عن العدل والنفقة، ومقارنته بممارسات غير منضبطة خارج الفقه.",
+    short_answer: "التعدد مباح بقيود العدل والقدرة، لا واجب؛ ومن خاف ألا يعدل فواحدة. وهو تشريع يعالج واقعًا لا يبرر الظلم.",
+    detailed_refutation:
+      "قال تعالى: ﴿فإن خفتم ألا تعدلوا فواحدة﴾. العدل في المبيت والنفقة شرط، والضرر مرفوع. الشريعة لم تجعل التعدد فرضًا ولا أطلقت العنان للهوى. مقارنة التشريع بحالات سوء تطبيق لا تلغي الحكم مع ضوابطه، كما لا تلغي الزواج حالات الخيانة.",
+    assumption_correction: "أن كل مباح بلا قيد، أو أن سوء تطبيق بعض الرجال يساوي ظلم التشريع نفسه.",
+    historical_linguistic_context: null,
+    evidences: [
+      {
+        type: "quran",
+        ref: "النساء: 3",
+        text: "فإن خفتم ألا تعدلوا فواحدة أو ما ملكت أيمانكم",
+      },
+    ],
+    sources: [],
+    objections_and_responses: [],
+    conclusion: "التعدد رخصة مقيدة بالعدل؛ والظلم محرم ولو تحت اسم مباح.",
     updated_at: STATIC_TS,
   },
 ];
