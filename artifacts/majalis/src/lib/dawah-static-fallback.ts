@@ -138,6 +138,25 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
     tags: ["عبادة", "حج"],
     updated_at: STATIC_TS,
   },
+  "friday-prayer": {
+    id: "static-article-friday-prayer",
+    category_id: null,
+    slug: "friday-prayer",
+    title_ar: "صلاة الجمعة",
+    title_en: "Friday Prayer",
+    summary_ar: "الجمعة فريضة أسبوعية على الرجال المستطيعين؛ خطبة وصلاة جامعة للأمة.",
+    summary_en: null,
+    body_ar: `صلاة الجمعة بدل الظهر يوم الجمعة على الرجال البالغين المقيمين المستطيعين على التفصيل الفقهي. لها خطبتان ثم ركعتان.
+
+من مقاصدها: اجتماع المسلمين، والتذكير بالتقوى، وتجديد العهد مع الله كل أسبوع.
+
+يُستحب التبكير والغسل والتطيّب والإنصات للخطيب. والمسلم الجديد يتعلّم الصلاة اليومية أولًا ثم يحضر الجمعة مع الجماعة متى استطاع.
+
+إن فاتته الجمعة صلى ظهرًا أربعًا. والسفر والمرض من الأعذار المشهورة عند الفقهاء.`,
+    cover_image_url: null,
+    tags: ["عبادة", "صلاة"],
+    updated_at: STATIC_TS,
+  },
 };
 
 export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
@@ -405,6 +424,24 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
     sources: [],
     objections_and_responses: [],
     conclusion: "الإسلام يكرّم العقل ويدعو للتفكر، ويضع الوحي هاديًا فيما لا تستقل العقول بإدراكه.",
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-sh-9",
+    category_id: null,
+    slug: "quran-not-preserved",
+    title: "هل حُرّف القرآن؟",
+    complexity_level: "intermediate",
+    shubha_text: "يُزعم أحيانًا أن نص القرآن تغيّر عبر القرون أو أن فيه قراءات متناقضة.",
+    why_spread: "خلط بين القراءات المتواترة الصحيحة وبين التحريف، وجهل بمنهج حفظ الصحابة والرسم العثماني.",
+    short_answer: "القرآن محفوظ بالتواتر كتابةً ومشافهة؛ والقراءات المتواترة وجوه أداء ثابتة لا تحريف.",
+    detailed_refutation: "حفظ الصحابة القرآن في الصدور والسطور، وجُمع في عهد أبي بكر ثم وُحّد الرسم في عهد عثمان. التواتر جيلًا بعد جيل يمنع التبديل الخفي. اختلاف القراءات المتواترة اختلاف أداء مأذون به لا اختلاف معنى يُسقط النص. ما يُنسب للتحريف غالبًا روايات شاذة أو فهم خاطئ للتاريخ.",
+    assumption_correction: "أن كل اختلاف في الأداء يعني تغيّر النص الأصلي.",
+    historical_linguistic_context: null,
+    evidences: [{ type: "quran", ref: "الحجر: 9", text: "إنا نحن نزلنا الذكر وإنا له لحافظون" }],
+    sources: [],
+    objections_and_responses: [],
+    conclusion: "الحفظ وعد إلهي تحقق عبر التواتر والرسم؛ والشاذ يُردّ بمنهج أهل العلم.",
     updated_at: STATIC_TS,
   },
 ];
