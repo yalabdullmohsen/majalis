@@ -2,7 +2,7 @@
  * محتوى ثابت احتياطي لبوابة «اكتشف الإسلام» عند فراغ Supabase.
  * لا يُعرض كحقيقة قطعية خارج ما ثبت في الكتاب والسنة المعتمدة.
  */
-import type { DawahArticle, DawahQuestion, NewMuslimDay } from "@/lib/dawah-service";
+import type { DawahArticle, DawahQuestion, DawahShubha, NewMuslimDay } from "@/lib/dawah-service";
 
 const STATIC_TS = "2026-08-22T00:00:00.000Z";
 
@@ -160,6 +160,88 @@ export const STATIC_NEW_MUSLIM_PATH: NewMuslimDay[] = [
   { id: "static-nm-5", day_number: 5, audience: "all", title: "أذكار الصباح والمساء", content_ar: "اختر ثلاثة أذكار بسيطة من قسم الأذكار: مثل «أصبحنا وأصبح الملك لله»، و«أعوذ بكلمات الله التامات». الاستمرار أهم من الكثرة.", content_en: null },
   { id: "static-nm-6", day_number: 6, audience: "all", title: "اللباس والطهارة", content_ar: "تعلّم ما يجب ستره في الصلاة، وما يُستحب من النظافة والطيب. الإسلام يُكرّم الجسد ولا يُهينه.", content_en: null },
   { id: "static-nm-7", day_number: 7, audience: "all", title: "مراجعة الأسبوع الأول", content_ar: "راجع ما تعلّمته: الشهادتان، الوضوء، صلاة واحدة، الفاتحة، أذكار بسيطة. اسأل عما لم يتضح. الدين يُتعلّم تدريجيًا ولا عيب في السؤال.", content_en: null },
+  { id: "static-nm-8", day_number: 8, audience: "all", title: "الصلوات الخمس", content_ar: "وسّع ما تعلّمته: أضف صلاة ثانية ثم ثالثة. تعلّم أوقات الصلاة تقريبية من التقويم أو تطبيق مواقيت. لا تُؤخر الصلاة عن وقتها قدر الإمكان.", content_en: null },
+  { id: "static-nm-9", day_number: 9, audience: "all", title: "الزكاة والصدقة", content_ar: "الزكاة ركن على من ملك النصاب؛ والصدقة تطوع. ابدأ بفهم أن المال حق لله والعباد شُرِكوا فيه. لا يُطالب المسلم الجديد بالزكاة فورًا قبل استقرار دخله.", content_en: null },
+  { id: "static-nm-10", day_number: 10, audience: "all", title: "الصوم في رمضان", content_ar: "صوم رمضان ركن سنوي. تعلّم أركانه: النية، الإمساك عن المفطرات من الفجر إلى المغرب. إن كان رمضان بعيدًا، اقرأ عنه استعدادًا دون ضغط.", content_en: null },
+  { id: "static-nm-11", day_number: 11, audience: "all", title: "الأخلاق اليومية", content_ar: "الصدق، الأمانة، حسن الجوار، وبر الوالدين من أصول الإسلام. اختر خلقًا واحدًا تركز عليه هذا الأسبوع: مثل الصدق في الكلام.", content_en: null },
+  { id: "static-nm-12", day_number: 12, audience: "all", title: "الطعام الحلال", content_ar: "تعلّم أساسيات الحلال: ذبح ذبيحة مسلم، تجنب الخنزير والخمر، والتسمية عند الأكل. لا تُعقّد الأمور؛ اسأل عند الشك من مصدر موثوق.", content_en: null },
+  { id: "static-nm-13", day_number: 13, audience: "all", title: "القرآن والتلاوة", content_ar: "اقرأ قصيرًا من القرآن يوميًا ولو آية. تعلّم سورة قصيرة مثل الإخلاص أو الفلق. التلاوة عبادة ولا يُشترط إتقان التجويد من أول يوم.", content_en: null },
+  { id: "static-nm-14", day_number: 14, audience: "all", title: "مراجعة الأسبوعين", content_ar: "راجع تقدّمك: الصلاة، الأذكار، الأخلاق، الحلال. حدّد سؤالًا واحدًا تبحث عنه أو تسأل داعيةً عنه. المسار يستمر بعد اليوم 14 — لا نهاية قسرية.", content_en: null },
+];
+
+export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
+  {
+    id: "static-sh-1",
+    category_id: null,
+    slug: "spread-by-sword",
+    title: "هل انتشر الإسلام بالسيف؟",
+    complexity_level: "basic",
+    shubha_text: "يُقال إن الإسلام انتشر بالقوة والغزو لا بالقناعة.",
+    why_spread: "خلط بين الفتوحات السياسية وقبول الناس للدين.",
+    short_answer: "الإسلام دين عقيدة؛ والفتوحات التاريخية لا تعني إكراهًا على الإيمان، والقرآن ينهى عن ذلك صراحة.",
+    detailed_refutation: "قال تعالى: ﴿لا إكراه في الدين﴾. وتاريخيًا دخل كثير من الناس في الإسلام بقناعة بعد معاينة أخلاق المسلمين وعدلهم، ومنهم من بقي على دينه بعهد وأمان. الفتوحات كانت ظاهرة سياسية عسكرية تُروى بتمحيص دون تبسيط إلى «سيف فقط».",
+    assumption_correction: "الخلط بين توسع الدولة وبين قبول الأفراد للإيمان.",
+    historical_linguistic_context: null,
+    evidences: [{ type: "quran", ref: "البقرة: 256", text: "لا إكراه في الدين" }],
+    sources: [],
+    objections_and_responses: [],
+    conclusion: "الدعوة إلى الإسلام تقوم على البيان والحجة لا على الإكراه.",
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-sh-2",
+    category_id: null,
+    slug: "women-oppressed",
+    title: "هل الإسلام يُقصي المرأة؟",
+    complexity_level: "basic",
+    shubha_text: "يُصوَّر الإسلام أحيانًا بأنه يحرم المرأة حقوقها.",
+    why_spread: "سوء فهم لأحكام شرعية أو خلطها بعادات ثقافية قديمة.",
+    short_answer: "الإسلام أعطى المرأة حقوق الملكية والتعلم والشهادة والميراث قبل كثير من النظم القديمة، مع ضوابط شرعية تُفهم في سياقها لا بعزلها عن العصر.",
+    detailed_refutation: "القرآن والسنة فيهما نصوص صريحة في حق المرأة في المال والعلم والكرامة. ما يُنسب أحيانًا للإسلام من قهر قد يكون من عادات مجتمعية أو تطبيق خاطئ. يُميَّز بين النص الشرعي والتطبيق البشري.",
+    assumption_correction: "اعتبار كل ممارسة مجتمعية حكمًا شرعيًا.",
+    historical_linguistic_context: null,
+    evidences: [{ type: "quran", ref: "النساء: 1", text: "يا أيها الناس اتقوا ربكم الذي خلقكم من نفس واحدة" }],
+    sources: [],
+    objections_and_responses: [],
+    conclusion: "المراجعة الشرعية تفصل بين الحكم الثابت والتطبيق المعيب.",
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-sh-3",
+    category_id: null,
+    slug: "quran-copied-bible",
+    title: "هل نُسخ القرآن من الكتاب المقدس؟",
+    complexity_level: "intermediate",
+    shubha_text: "يُزعم تشابه بعض القصص بين القرآن والتوراة والإنجيل.",
+    why_spread: "عدم تمييز بين القصص المشتركة في الأنبياء وبين النسخ الحرفي.",
+    short_answer: "التشابه في قصص الأنبياء متوقع لأن المصدر واحد: الله. والقرآن يصحح ما حُرف ويخبر بما لم يكن عند أهل الكتاب.",
+    detailed_refutation: "القرآن يخاطب أهل الكتاب ويُنكر عليهم التحريف، ويأتي بقصص موسى وعيسى وإبراهيم عليهم السلام بضبط شرعي. المعجزة القرآنية في اللغة والبيان والإعجاز العلمي لا تُختزل إلى «نسخ».",
+    assumption_correction: "أن التشابه في القصص يعني النسخ من مصدر بشري واحد.",
+    historical_linguistic_context: null,
+    evidences: [{ type: "quran", ref: "يونس: 37", text: "وما كان هذا القرآن أن يفترى من دون الله" }],
+    sources: [],
+    objections_and_responses: [],
+    conclusion: "القرآن وحي مستقل مع تصحيح لما سبقه من كتب.",
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-sh-4",
+    category_id: null,
+    slug: "too-many-rules",
+    title: "لماذا كثير من الأحكام في الإسلام؟",
+    complexity_level: "basic",
+    shubha_text: "يُشعر البعض أن الإسلام يقيّد الحياة بكثرة الأوامر والنواهي.",
+    why_spread: "نظرة من خارج الدين دون فهم مقصد التشريع.",
+    short_answer: "الأحكام تنظّم العبادة والمعاملة والأخلاق؛ والتدرج في التعلم يخفف الحِمل على المبتدئ.",
+    detailed_refutation: "الإسلام لا يطالب المسلم الجديد بإتقان كل الفقه دفعة واحدة. يبدأ بالأركان، ثم يتعلم تدريجيًا. كثير من الأحكام رحمة: في الطعام والزواج والمال والعدل. ما يُرى قيدًا قد يكون حماية للنفس والمجتمع.",
+    assumption_correction: "أن كثرة الأحكام تعني تعقيدًا بلا منفعة.",
+    historical_linguistic_context: null,
+    evidences: [],
+    sources: [],
+    objections_and_responses: [],
+    conclusion: "التعلم التدريجي جزء من منهج الإسلام نفسه.",
+    updated_at: STATIC_TS,
+  },
 ];
 
 export function getStaticArticleBySlug(slug: string): DawahArticle | null {
@@ -168,4 +250,8 @@ export function getStaticArticleBySlug(slug: string): DawahArticle | null {
 
 export function getStaticQuestionBySlug(slug: string): DawahQuestion | null {
   return STATIC_DAWAH_QUESTIONS.find((q) => q.slug === slug) ?? null;
+}
+
+export function getStaticShubhaBySlug(slug: string): DawahShubha | null {
+  return STATIC_DAWAH_SHUBUHAT.find((s) => s.slug === slug) ?? null;
 }

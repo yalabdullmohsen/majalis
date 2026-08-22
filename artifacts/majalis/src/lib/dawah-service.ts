@@ -12,6 +12,8 @@ import {
   getStaticQuestionBySlug,
   STATIC_DAWAH_QUESTIONS,
   STATIC_NEW_MUSLIM_PATH,
+  STATIC_DAWAH_SHUBUHAT,
+  getStaticShubhaBySlug,
 } from "@/lib/dawah-static-fallback";
 
 export type DawahCategory = {
@@ -222,8 +224,8 @@ export async function searchDawahQuestions(term: string): Promise<DawahQuestion[
 
 export async function getFeaturedShubuhat(limit = 6): Promise<DawahShubha[]> {
   const { data, error } = await supabase.from("dawah_shubuhat").select("*").match(PUBLISHED).order("created_at", { ascending: false }).limit(limit);
-  if (error) return [];
-  return (data || []) as DawahShubha[];
+  if (error || !data?.length) return STATIC_DAWAH_SHUBUHAT.slice(0, limit);
+  return data as DawahShubha[];
 }
 
 export async function getShubuhatByCategory(categorySlug?: string, complexity?: string): Promise<DawahShubha[]> {
@@ -237,7 +239,7 @@ export async function getShubuhatByCategory(categorySlug?: string, complexity?: 
 
 export async function getShubhaBySlug(slug: string): Promise<DawahShubha | null> {
   const { data, error } = await supabase.from("dawah_shubuhat").select("*").eq("slug", slug).match(PUBLISHED).maybeSingle();
-  if (error || !data) return null;
+  if (error || !data) return getStaticShubhaBySlug(slug);
   return data as DawahShubha;
 }
 
