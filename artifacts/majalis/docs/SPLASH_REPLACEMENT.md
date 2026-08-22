@@ -1,22 +1,23 @@
-# الدخولية الصامتة
+# دخولية MajlisSplash
 
-دخولية واحدة في المشروع: رمز هندسي ذهبي على خلفية `#0E1A15`، بلا نص.
+دخولية احترافية خفيفة: وردمارك SVG + عبارة «علم نافع، وعمل صالح» على سطح `#F2F4F3` / `#101614`.
 
 ## المصدر المعتمد
 
-1. الويب: SVG مضمّن في `index.html` (`#mj-silent-splash`) مع أنماط في `<style id="mj-splash-critical">`. ليست مكوّن React.
-2. iOS: `LaunchScreen.storyboard` (لون خلفية واحد + `LaunchMark` @1x/2x/3x). القصة ثابتة نظامياً.
-3. Android 12+: `splash_background` + `drawable/splash_icon.xml`.
-4. PWA: `manifest.background_color` = `#0E1A15`.
+1. الويب: SVG مضمّن في `index.html` (`#mj-launch-splash`) مع أنماط في `<style id="mj-splash-critical">`.
+2. React: `src/components/MajlisSplash.tsx` + `src/lib/majlis-splash.ts` (ثوابت التوقيت).
+3. iOS: `LaunchScreen.storyboard` (لون سطح مطابق — بلا نص أصلي).
+4. Android 12+: `splash_background` + `drawable/splash_icon.xml`.
+5. PWA: `manifest.background_color` = `#F2F4F3`.
 
-## توليد أصول الرمز
+## التوقيت
 
-```bash
-python3 scripts/generate-silent-splash-assets.py
-```
+- حد أدنى: 700ms
+- حد أقصى: 1000ms (لا انتظار تحميل بيانات)
+- تُخفى عند `mj:app-painted` بعد الحد الأدنى
 
-لا تستخدم `@capacitor/assets generate` لشاشة الإقلاع — يعيد `Splash.imageset` و`splash-2732`. سكربت `assets:generate` يحذف تلك المخرجات بعد التشغيل ويعيد `LaunchMark`.
+## ممنوع
 
-`pnpm run assets:splash` مقفل عمداً.
-
-بعد أي تعديل أصلي ارفع `CFBundleVersion` (حالياً 40).
+- الخلفية الخضراء الداكنة القديمة `#0E1A15` في الإقلاع
+- `dismiss(true)` الفوري
+- دخولية React حاجبة داخل `App.tsx`

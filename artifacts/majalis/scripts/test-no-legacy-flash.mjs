@@ -3,8 +3,8 @@
  * بوابة: لا وميض دخولية “قديمة” خلال أول 2500ms.
  *
  * تفشل إن:
- * - ظهرت طبقة إطلاق ثانية (غير #mj-silent-splash)
- * - أو #mj-silent-splash حملت شعار/عنوان/مؤشر دخولية
+ * - ظهرت طبقة إطلاق ثانية (غير #mj-launch-splash)
+ * - أو ظهرت دخولية قديمة (#mj-silent-splash / #mj-boot-splash)
  * - أو تغيّر `dataset.theme`/`dataset.font` بشكل متكرر خلال نافذة القياس
  *
  * تشغيل: node scripts/test-no-legacy-flash.mjs
@@ -75,19 +75,17 @@ async function main() {
     for (let i = 0; i < samples; i++) {
       await page.waitForTimeout(100);
       const s = await page.evaluate(() => {
-        const splash = document.querySelector("#mj-silent-splash");
-        const title = splash?.querySelector("#mj-silent-splash__title");
-        const progress = splash?.querySelector("#mj-silent-splash__progress");
+        const splash = document.querySelector("#mj-launch-splash");
+        const legacySilent = document.querySelector("#mj-silent-splash");
         const theme = document.documentElement.dataset.theme || "";
         const font = document.documentElement.dataset.font || "";
-        const splashCount = document.querySelectorAll("#mj-silent-splash").length;
+        const splashCount = document.querySelectorAll("#mj-launch-splash").length;
         const legacySplashCount =
-          document.querySelectorAll("#mj-boot-splash, #mj-splash-boot").length +
+          document.querySelectorAll("#mj-boot-splash, #mj-splash-boot, #mj-silent-splash").length +
           document.querySelectorAll("[data-launch-splash='1']").length;
         return {
           splashPresent: Boolean(splash),
-          titlePresent: Boolean(title),
-          progressPresent: Boolean(progress),
+          legacySilentPresent: Boolean(legacySilent),
           splashCount,
           legacySplashCount,
           theme,
@@ -97,18 +95,11 @@ async function main() {
       stateHistory.push(s);
 
       // Structural checks while splash might still be present.
-      if (s.legacySplashCount > 0) {
-        throw new Error(`legacy splash present at sample=${i}: legacySplashCount=${s.legacySplashCount}`);
+      if (s.legacySplashCount > 0 || s.legacySilentPresent) {
+        throw new Error(`legacy splash at sample=${i}: legacy=${s.legacySplashCount} silent=${s.legacySilentPresent}`);
       }
       if (s.splashCount > 1) {
         throw new Error(`multiple splashes at sample=${i}: splashCount=${s.splashCount}`);
-      }
-      if (s.splashPresent) {
-        if (s.titlePresent || s.progressPresent) {
-          throw new Error(
-            `branded splash at sample=${i}: title=${s.titlePresent} progress=${s.progressPresent}`,
-          );
-        }
       }
     }
 
