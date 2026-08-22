@@ -1,8 +1,9 @@
 /* ============================================================
    Quran Section — rebuilt from scratch
-   Font: Amiri Quran (مُستضاف محليًا الآن، لا Google Fonts — انظر أدناه)
+   Font: Amiri Quran (مُستضاف محليًا — fonts-quran.css مع مسارات القرآن)
    Direction: RTL throughout
    ============================================================ */
+@import "./fonts-quran.css";
 
 /* @font-face الفعلي في src/index.css (يُحمَّل عالميًا في كل صفحات
    التطبيق، لا هنا فقط — "Amiri Quran" تستخدمه ملفات أخرى غير مرتبطة

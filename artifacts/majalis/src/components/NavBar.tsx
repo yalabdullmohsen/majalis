@@ -23,12 +23,11 @@ const HeaderTicker = lazy(() =>
 const SideNavDrawer = lazy(() =>
   import("./SideNavDrawer").then((m) => ({ default: m.SideNavDrawer })),
 );
-function PrayerChip() {
+
+function PrayerChipLive() {
   const { countdown: cd } = usePrayerCountdown();
 
   if (!cd?.next) return null;
-  // خلال فترة السماح (٣٥ دقيقة بعد الأذان) نعرض عدّادًا تصاعديًا منذ أذان
-  // الصلاة التي رنّت للتو — نفس منطق PrayerTimesPage وTopTicker.
   const inGrace = cd.sinceSeconds != null;
   const displayName = cd.next.name;
   const displayHms = inGrace && cd.sinceHms ? cd.sinceHms : cd.remainingHms;
@@ -38,6 +37,42 @@ function PrayerChip() {
       <span className="navbar-prayer-chip__hms" aria-live="off">{displayHms}</span>
     </Link>
   );
+}
+
+function PrayerChip() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const reveal = () => {
+      if (!cancelled) setReady(true);
+    };
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(reveal, { timeout: 2800 });
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(id);
+      };
+    }
+    const t = window.setTimeout(reveal, 1200);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+  }, []);
+
+  if (!ready) {
+    return (
+      <Link href="/prayer-times" className="navbar-prayer-chip navbar-prayer-chip--placeholder" aria-label="مواقيت الصلاة">
+        <span className="navbar-prayer-chip__name">الصلاة</span>
+        <span className="navbar-prayer-chip__hms" aria-hidden="true">
+          &nbsp;
+        </span>
+      </Link>
+    );
+  }
+
+  return <PrayerChipLive />;
 }
 
 function tabCls(active: boolean, extra = "") {

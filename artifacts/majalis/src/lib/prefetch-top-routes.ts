@@ -1,17 +1,9 @@
 /**
  * تحميل مسبق للمسارات الأكثر زيارة عند خمول المتصفح.
  */
+/** مسارات خفيفة فقط — لا مصحف ولا فقه ولا بحث ولا دروس ثقيلة على إقلاع الرئيسية */
 const TOP_ROUTES: Array<() => Promise<unknown>> = [
-  () => import("@/pages/account/SearchPage"),
-  () => import("@/pages/account/HomePage"),
-  () => import("@/pages/lessons/LessonsPage"),
-  () => import("@/pages/worship/PrayerTimesPage"),
-  () => import("@/pages/quran/QuranKnowledgeHubPage"),
-  () => import("@/pages/quran/QuranHubPage"),
-  () => import("@/pages/fiqh/FiqhPage"),
-  () => import("@/views/ProphetStoriesPage"),
-  () => import("@/pages/quran/QuranPeoplePage"),
-  () => import("@/views/NationsPage"),
+  () => import("@/pages/account/SectionsPage"),
 ];
 
 export function prefetchTopRoutesOnIdle(): void {

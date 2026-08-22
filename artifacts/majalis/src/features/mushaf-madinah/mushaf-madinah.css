@@ -3,6 +3,7 @@
  * لا letter-spacing على نص القرآن (حروف QPC PUA).
  * توزيع السطر: flex + space-between (كالمصحف الورقي). حجم الخط من canvas.
  */
+@import "../../styles/fonts-quran.css";
 
 .mm-viewport .sr-only {
   position: absolute;

@@ -67,7 +67,7 @@ assert.match(read("src/lib/offline-sync-bootstrap.ts"), /migrateLocalBookmarksTo
 const sw = read("public/sw.js");
 assert.match(sw, /STATIC_SHELL_ASSETS/);
 assert.match(sw, /manifest\.json/);
-assert.match(sw, /AmiriQuran-Regular\.woff2/);
+assert.doesNotMatch(sw, /STATIC_SHELL_ASSETS[\s\S]*AmiriQuran-Regular\.woff2/, "لا precache لخط المصحف في الغلاف");
 assert.match(sw, /apple-touch-icon/);
 assert.match(sw, /staleWhileRevalidate|cacheFirst/);
 assert.ok(existsSync(resolve(root, "public/offline.html")));
