@@ -147,7 +147,7 @@ export default function DiscoverIslamPage() {
 
       {categories.length === 0 && questions.length === 0 && shubuhat.length === 0 ? (
         <p className="page-desc" style={{ marginTop: "1.5rem" }}>
-          المقالات والمسارات أدناه متاحة الآن. قسم الأسئلة والشبهات المميزة يُحدَّث دوريًا من قاعدة البيانات.
+          المقالات والمسارات أدناه متاحة الآن. عند فراغ قاعدة البيانات تُعرض أسئلة مميزة معتمدة محليًا إلى حين التحديث.
         </p>
       ) : null}
 

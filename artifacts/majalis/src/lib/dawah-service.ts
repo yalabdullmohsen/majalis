@@ -7,6 +7,12 @@
 import { supabase } from "@/lib/supabase";
 import { arabicSearchPatterns, arabicMatchAny, ilikePattern } from "@/lib/arabic-search";
 import type { Lang } from "@/lib/language-preference";
+import {
+  getStaticArticleBySlug,
+  getStaticQuestionBySlug,
+  STATIC_DAWAH_QUESTIONS,
+  STATIC_NEW_MUSLIM_PATH,
+} from "@/lib/dawah-static-fallback";
 
 export type DawahCategory = {
   id: string;
@@ -161,8 +167,8 @@ export async function getFeaturedQuestions(limit = 8): Promise<DawahQuestion[]> 
     .match(PUBLISHED)
     .order("view_count", { ascending: false })
     .limit(limit);
-  if (error) return [];
-  return (data || []) as DawahQuestion[];
+  if (error || !data?.length) return STATIC_DAWAH_QUESTIONS.slice(0, limit);
+  return data as DawahQuestion[];
 }
 
 export async function getQuestionsByCategory(categorySlug?: string, limit = 50): Promise<DawahQuestion[]> {
@@ -194,7 +200,7 @@ export async function getQuestionBySlug(slug: string): Promise<DawahQuestion | n
     .eq("slug", slug)
     .match(PUBLISHED)
     .maybeSingle();
-  if (error || !data) return null;
+  if (error || !data) return getStaticQuestionBySlug(slug);
   return data as DawahQuestion;
 }
 
@@ -245,7 +251,7 @@ export async function getArticlesByCategory(categorySlug?: string, limit = 30): 
 
 export async function getArticleBySlug(slug: string): Promise<DawahArticle | null> {
   const { data, error } = await supabase.from("dawah_articles").select("*").eq("slug", slug).match(PUBLISHED).maybeSingle();
-  if (error || !data) return null;
+  if (error || !data) return getStaticArticleBySlug(slug);
   return data as DawahArticle;
 }
 
@@ -256,8 +262,8 @@ export async function getNewMuslimPath(audience: "all" | "men" | "women" = "all"
     .match(PUBLISHED)
     .in("audience", audience === "all" ? ["all"] : ["all", audience])
     .order("day_number");
-  if (error) return [];
-  return (data || []) as NewMuslimDay[];
+  if (error || !data?.length) return STATIC_NEW_MUSLIM_PATH;
+  return data as NewMuslimDay[];
 }
 
 export async function getNewMuslimProgress(userId: string): Promise<number[]> {
