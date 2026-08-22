@@ -1,4 +1,4 @@
-import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
+import { ChevronDown, ChevronUp, Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import type { PlayerState } from "@/core/audio/AudioEngine";
 import { DEFAULT_VERIFIED_RECITER_IDS } from "@/lib/audio-registry";
 import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
@@ -15,6 +15,8 @@ type Props = {
   audioStatus?: string | null;
   currentTime?: number;
   duration?: number;
+  mini?: boolean;
+  onMiniChange?: (mini: boolean) => void;
   onTogglePlay: () => void;
   onPrev: () => void;
   onNext: () => void;
@@ -31,6 +33,8 @@ export function MushafAudioDock({
   audioStatus = null,
   currentTime = 0,
   duration = 0,
+  mini = false,
+  onMiniChange,
   onTogglePlay,
   onPrev,
   onNext,
@@ -57,12 +61,23 @@ export function MushafAudioDock({
     <div
       className="mm-audio-dock"
       data-open={open ? "1" : "0"}
+      data-mini={mini ? "1" : "0"}
       data-testid="mushaf-audio-dock"
       role="region"
       aria-label="مشغّل التلاوة"
     >
       <div className="mm-audio-dock__meta">
         <span className="mm-audio-dock__verse">{verseLabel}</span>
+        <button
+          type="button"
+          className="mm-audio-dock__mini"
+          aria-pressed={mini}
+          aria-label={mini ? "توسيع المشغل" : "تصغير المشغل"}
+          onClick={() => onMiniChange?.(!mini)}
+        >
+          {mini ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
+        </button>
+        {mini ? null : (
         <label className="mm-audio-dock__reciter">
           <span className="sr-only">القارئ</span>
           <select
@@ -77,8 +92,11 @@ export function MushafAudioDock({
             ))}
           </select>
         </label>
+        )}
       </div>
+      {mini ? null : (
       <progress className="mm-audio-dock__progress" max={progressMax} value={progressVal} aria-label="تقدم التلاوة" />
+      )}
       <p className="mm-audio-dock__status" role="status">
         {statusLabel}
       </p>

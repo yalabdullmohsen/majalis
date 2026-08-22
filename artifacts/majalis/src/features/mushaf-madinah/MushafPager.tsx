@@ -13,13 +13,12 @@ import {
 } from "@/lib/quran-last-page";
 import { MUSHAF_SETTLE_MS } from "./layout-bands";
 
-/** عتبة السحب — ٢٥٪ من العرض أو مسافة دنيا */
-export const SWIPE_MIN_PX = 45;
+/** عتبة السحب الأفقي — من أي مكان في الصفحة */
+export const SWIPE_MIN_PX = 40;
 export const SETTLE_MS = 250;
 if (SETTLE_MS !== MUSHAF_SETTLE_MS) {
   throw new Error("SETTLE_MS must match layout-bands");
 }
-const SWIPE_RATIO = 0.25;
 const FLICK_PX_PER_MS = 0.5;
 
 type PagerProps = {
@@ -40,7 +39,7 @@ type PagerProps = {
 >;
 
 const DEFAULT_IGNORE =
-  ".mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-ayah-hit, .mm-page-edge, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet, .mm-basmala--qpc";
+  ".mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-page-edge, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet, input, textarea, select, button";
 
 function prefersReducedMotion(): boolean {
   return typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
@@ -198,7 +197,7 @@ export function MushafPager({
     if (!start || disabled) return;
     const dx = e.clientX - start.x;
     const dy = e.clientY - start.y;
-    if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy) * 1.05) {
+    if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
       panning.current = true;
       onNavigateStart?.();
     }
@@ -221,13 +220,12 @@ export function MushafPager({
     const dx = e.clientX - start.x;
     const dy = e.clientY - start.y;
     const dt = Math.max(1, Date.now() - start.t);
-    const w = window.innerWidth || 390;
     const speed = Math.abs(dx) / dt;
-    const passRatio = Math.abs(dx) >= w * SWIPE_RATIO;
-    const passFlick = speed >= FLICK_PX_PER_MS && Math.abs(dx) >= SWIPE_MIN_PX;
-    const horizontal = Math.abs(dx) > Math.abs(dy) * 1.2;
+    const horizontal = Math.abs(dx) > Math.abs(dy);
+    const passSwipe = horizontal && Math.abs(dx) >= SWIPE_MIN_PX;
+    const passFlick = horizontal && speed >= FLICK_PX_PER_MS && Math.abs(dx) >= SWIPE_MIN_PX;
 
-    if (horizontal && (passRatio || passFlick)) {
+    if (passSwipe || passFlick) {
       locking.current = true;
       if (dx > 0) {
         if (page >= MUSHAF_PAGE_MAX) {

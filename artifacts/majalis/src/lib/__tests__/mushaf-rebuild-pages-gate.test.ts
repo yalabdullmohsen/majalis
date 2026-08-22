@@ -45,7 +45,7 @@ assert.match(viewport, /mushaf-page-frame|mm-page-shell/);
 assert.match(viewport, /MushafControls/);
 assert.doesNotMatch(viewport, /exitAlwaysVisible/);
 assert.match(viewport, /MUSHAF_CHROME_HIDE_MS|3200/);
-assert.doesNotMatch(viewport, /scrollIntoView/);
+assert.match(viewport, /scrollIntoView\(\{\s*block:\s*"center"/);
 assert.doesNotMatch(
   css,
   /\.mm-viewport\[data-ayah-bar="1"\][^{]*\{[^}]*--mm-chrome-bottom-h:\s*var\(--mm-ayah-bar-h\)/,

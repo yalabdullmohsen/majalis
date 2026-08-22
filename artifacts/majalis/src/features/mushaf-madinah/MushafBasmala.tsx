@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import type { QpcWord } from "@/lib/quran-data/qpc-page-data";
 import { BASMALA_QPC_WORDS } from "@/lib/quran-data/basmala-qpc-words";
 
@@ -27,6 +28,7 @@ export function MushafBasmala({
   const body = qpcWords.filter((w) => w.charType !== "end");
   const end = qpcWords.find((w) => w.charType === "end") ?? null;
   const state = [selected ? "is-selected" : "", playing ? "is-playing" : ""].filter(Boolean).join(" ");
+  const tapRef = useRef<{ x: number; y: number } | null>(null);
 
   return (
     <div
@@ -37,7 +39,21 @@ export function MushafBasmala({
       lang="ar"
       role={onSelect ? "button" : undefined}
       tabIndex={onSelect ? 0 : undefined}
-      onClick={onSelect}
+      onPointerDown={(e) => {
+        tapRef.current = { x: e.clientX, y: e.clientY };
+      }}
+      onClick={(e) => {
+        if (!onSelect) return;
+        const start = tapRef.current;
+        tapRef.current = null;
+        if (
+          start &&
+          (Math.abs(e.clientX - start.x) > 40 || Math.abs(e.clientY - start.y) > 40)
+        ) {
+          return;
+        }
+        onSelect();
+      }}
       onKeyDown={
         onSelect
           ? (e) => {
@@ -51,7 +67,12 @@ export function MushafBasmala({
     >
       <span className={`mm-ayah-run__text ${state}`.trim()}>
         {body.map((w) => (
-          <span key={w.id} className="mm-ayah-line__word" data-ayah={w.verseKey}>
+          <span
+            key={w.id}
+            className="mm-ayah-line__word"
+            data-ayah={w.verseKey}
+            data-verse={w.verseKey}
+          >
             {w.glyphText}
           </span>
         ))}

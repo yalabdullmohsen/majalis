@@ -20,12 +20,15 @@ const search = read("src/features/mushaf-madinah/MushafSearchSheet.tsx");
 const reader = read("src/features/mushaf-madinah/VerifiedMushafReader.tsx");
 const pager = read("src/features/mushaf-madinah/MushafPager.tsx");
 const tafsir = read("src/features/mushaf-madinah/TafsirTabPanel.tsx");
+const highlight = read("src/features/mushaf-madinah/MushafAyahHighlight.tsx");
 
 assert.match(line, /\{w\.glyphText\}/);
 assert.doesNotMatch(line, /MushafAyahNumber/);
 assert.match(css, /\.ayah-active\.mm-ayah-line__word:not\(\[data-type="end"\]\)/);
 assert.match(css, /\.mm-ayah-hit--end\.ayah-active/);
-assert.match(css, /box-shadow:[\s\S]*?0\.75em/);
+assert.match(css, /\.mm-ayah-hl__band/);
+assert.match(page, /MushafAyahHighlight/);
+assert.match(highlight, /getClientRects/);
 assert.doesNotMatch(page, /inlineBasmala/);
 
 assert.match(actions, /useState<SheetTab>\("tafsir"\)/);
@@ -60,8 +63,14 @@ assert.match(css, /\.mm-page-footer__badge\s*\{[^}]*left:\s*50%/);
 
 assert.match(pager, /dx > 0/);
 assert.match(pager, /locking\.current = true/);
+assert.match(pager, /SWIPE_MIN_PX\s*=\s*40/);
 assert.match(reader, /savePagePosition/);
 assert.match(reader, /onTapEmpty/);
+assert.match(reader, /data-audio-dock/);
+assert.match(reader, /block:\s*"center"/);
+assert.match(css, /--mm-ayah-select:\s*rgba\(46,\s*125,\s*82/);
+assert.match(css, /margin-bottom:\s*var\(--mm-dock-pad\)/);
+assert.match(css, /--mm-dock-pad:\s*calc\([^)]*var\(--inset-bottom/);
 
 assert.equal(TOTAL_QURAN_PAGES, 604);
 assert.equal(parseMushafPageQuery("255"), 255);

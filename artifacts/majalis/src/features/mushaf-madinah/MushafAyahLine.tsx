@@ -9,7 +9,7 @@ type Props = {
   onSelectVerse?: (verseKey: string) => void;
 };
 
-const TAP_SLOP_PX = 14;
+const TAP_SLOP_PX = 40;
 const LONG_PRESS_MS = 480;
 
 type PressState = {
@@ -22,7 +22,7 @@ type PressState = {
 
 /**
  * سطر آيات — كل كلمة عنصر flex مباشر (space-between كالمصحف الورقي).
- * التظليل المتصل عبر CSS على .ayah-active (خلفية + ظل يملأ فراغات الضبط).
+ * التظليل المتصل عبر طبقة getClientRects (.mm-ayah-hl) لا خلفية كل كلمة.
  */
 export const MushafAyahLine = memo(function MushafAyahLine({
   words,
@@ -41,7 +41,6 @@ export const MushafAyahLine = memo(function MushafAyahLine({
   };
 
   const startPress = (verseKey: string, e: ReactPointerEvent<HTMLElement>) => {
-    e.stopPropagation();
     clearPress();
     const longTimer = window.setTimeout(() => {
       const cur = pressRef.current;
@@ -59,7 +58,6 @@ export const MushafAyahLine = memo(function MushafAyahLine({
   };
 
   const endPress = (verseKey: string, e: ReactPointerEvent<HTMLElement>) => {
-    e.stopPropagation();
     const p = pressRef.current;
     if (!p || p.verseKey !== verseKey) {
       clearPress();
@@ -99,8 +97,7 @@ export const MushafAyahLine = memo(function MushafAyahLine({
             aria-pressed={selected}
             onPointerDown={(e: ReactPointerEvent<HTMLElement>) => startPress(w.verseKey, e)}
             onPointerUp={(e: ReactPointerEvent<HTMLElement>) => endPress(w.verseKey, e)}
-            onPointerCancel={(e: ReactPointerEvent<HTMLElement>) => {
-              e.stopPropagation();
+            onPointerCancel={() => {
               clearPress();
             }}
             onClick={(e: MouseEvent<HTMLElement>) => {

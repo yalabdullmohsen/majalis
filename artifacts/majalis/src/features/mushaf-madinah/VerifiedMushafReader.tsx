@@ -110,6 +110,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
   const [playerState, setPlayerState] = useState<PlayerState>("idle");
   const [playingVerseKey, setPlayingVerseKey] = useState<string | null>(null);
   const [audioDockOpen, setAudioDockOpen] = useState(false);
+  const [audioDockMini, setAudioDockMini] = useState(false);
   const [audioError, setAudioError] = useState<string | null>(null);
   const [audioStatus, setAudioStatus] = useState<string | null>(null);
   const [audioTime, setAudioTime] = useState({ currentTime: 0, duration: 0, playbackRate: 1 });
@@ -309,6 +310,13 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
       setCopyStatus(null);
       setAudioError(null);
       setAudioStatus(null);
+      requestAnimationFrame(() => {
+        document
+          .querySelector<HTMLElement>(
+            `[data-pane="current"] [data-verse="${verseKey}"]:not([data-type="end"])`,
+          )
+          ?.scrollIntoView({ block: "center", inline: "nearest", behavior: "smooth" });
+      });
     },
     [actionsOpen, selectedVerseKey],
   );
@@ -599,6 +607,29 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
   );
 
   const edgesDisabled = actionsOpen || tafsirOpen || searchOpen || indexOpen;
+  const audioDockVisible =
+    !actionsOpen &&
+    audioDockOpen &&
+    (chromeOpen || playerState === "playing" || playerState === "buffering" || playerState === "error");
+
+  useEffect(() => {
+    const shell = document.querySelector<HTMLElement>('[data-pane="current"] .mm-page-shell');
+    if (!shell) return;
+    if (!audioDockVisible && !actionsOpen) {
+      shell.scrollTop = 0;
+      return;
+    }
+    const id = window.requestAnimationFrame(() => {
+      const selected = shell.querySelector<HTMLElement>(".ayah-active");
+      if (selected) {
+        selected.scrollIntoView({ block: "center", inline: "nearest", behavior: "smooth" });
+        return;
+      }
+      const maxScroll = Math.max(0, shell.scrollHeight - shell.clientHeight);
+      if (maxScroll > 0) shell.scrollTo({ top: maxScroll, behavior: "smooth" });
+    });
+    return () => window.cancelAnimationFrame(id);
+  }, [audioDockVisible, actionsOpen, audioDockMini, selectedVerseKey]);
 
   return (
     <MushafPager
@@ -617,6 +648,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
       className="mm-viewport mushaf-shell"
       data-chrome={chromeOpen ? "1" : "0"}
       data-ayah-bar={actionsOpen ? "1" : "0"}
+      data-audio-dock={audioDockVisible ? (audioDockMini ? "mini" : "1") : "0"}
       data-mushaf-theme={theme}
       data-testid="mushaf-viewport"
       dir="rtl"
@@ -650,11 +682,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
 
       <Suspense fallback={null}>
         <MushafAudioDock
-          open={
-            !actionsOpen &&
-            audioDockOpen &&
-            (chromeOpen || playerState === "playing" || playerState === "buffering" || playerState === "error")
-          }
+          open={audioDockVisible}
           verseLabel={verseLabel}
           playerState={playerState}
           reciterId={reciterId}
@@ -662,6 +690,8 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
           audioStatus={audioStatus}
           currentTime={audioTime.currentTime}
           duration={audioTime.duration}
+          mini={audioDockMini}
+          onMiniChange={setAudioDockMini}
           onTogglePlay={() => void togglePlay()}
           onPrev={() => {
             suppressPageSyncRef.current = false;
