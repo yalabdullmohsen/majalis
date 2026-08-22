@@ -4,6 +4,7 @@ import { PageHeader, Empty } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { getArticleBySlug, getArticleTranslations, type DawahArticle, type DawahTranslation } from "@/lib/dawah-service";
+import { DiscoverIslamPublicShell } from "@/components/discover-islam/DiscoverIslamPublicShell";
 import "@/styles/discover-islam.css";
 
 const LANG_LABELS: Record<string, string> = { en: "English", fr: "Français", tr: "Türkçe", ur: "اردو", id: "Bahasa Indonesia" };
@@ -47,6 +48,7 @@ export default function DiscoverIslamArticleDetailPage() {
   const isRtlLang = viewLang === "ar" || viewLang === "ur";
 
   return (
+    <DiscoverIslamPublicShell>
     <div className="page-shell narrow dii-question-page">
       <div dir={isRtlLang ? "rtl" : "ltr"}>
         <PageHeader eyebrow="مقال" title={displayTitle} showBack />
@@ -81,5 +83,6 @@ export default function DiscoverIslamArticleDetailPage() {
         <ShareButtons title={displayTitle} url={`https://www.majlisilm.com/discover-islam/articles/${item.slug}`} />
       </div>
     </div>
+    </DiscoverIslamPublicShell>
   );
 }

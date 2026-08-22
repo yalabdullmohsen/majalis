@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { DiscoverIslamPublicShell } from "@/components/discover-islam/DiscoverIslamPublicShell";
 import "@/styles/discover-islam.css";
 
 export default function HowToBecomeMuslimPage() {
@@ -14,6 +15,7 @@ export default function HowToBecomeMuslimPage() {
   }, []);
 
   return (
+    <DiscoverIslamPublicShell>
     <div className="page-shell narrow dii-question-page">
       <PageHeader eyebrow="التعريف بالإسلام" title="كيف أصبح مسلمًا؟" subtitle="لا حاجة لموعد أو مناسبة أو وسيط — القرار قرارك وحدك، ومتى ما استقر قلبك عليه فالطريق بسيط وواضح." />
 
@@ -74,5 +76,6 @@ export default function HowToBecomeMuslimPage() {
         </div>
       </div>
     </div>
+    </DiscoverIslamPublicShell>
   );
 }

@@ -4,6 +4,7 @@ import { AlertTriangle, Trash2, ShieldOff, CheckCircle } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
 import { supabase } from "@/lib/supabase";
+import { PublicLayout } from "@/components/layout/PublicLayout";
 import "@/styles/pages/account-deletion.css";
 
 export default function AccountDeletionPage() {
@@ -77,6 +78,7 @@ export default function AccountDeletionPage() {
 
   if (step === "done") {
     return (
+      <PublicLayout>
       <div className="page-shell">
         <div className="accd-done">
           <CheckCircle size={48} className="accd-done__icon" aria-hidden="true" />
@@ -85,10 +87,12 @@ export default function AccountDeletionPage() {
           <Link href="/" className="btn-primary">العودة للرئيسية</Link>
         </div>
       </div>
+      </PublicLayout>
     );
   }
 
   return (
+    <PublicLayout>
     <div className="page-shell">
       <header ref={heroRef} className="accd-hero" style={{ color: "#DC2626" }}>
         <ShieldOff size={36} className="accd-hero__icon" aria-hidden="true" />
@@ -180,5 +184,6 @@ export default function AccountDeletionPage() {
         <Link href="/contact">تواصل معنا</Link>
       </div>
     </div>
+    </PublicLayout>
   );
 }

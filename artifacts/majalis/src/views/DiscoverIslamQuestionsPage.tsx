@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { getDawahCategories, getQuestionsByCategory, getQuestionsByReligion, searchDawahQuestions, RELIGIONS, type DawahCategory, type DawahQuestion, type ReligionCode } from "@/lib/dawah-service";
+import { DiscoverIslamPublicShell } from "@/components/discover-islam/DiscoverIslamPublicShell";
 import "@/styles/discover-islam.css";
 
 function useDebounced<T>(value: T, ms = 350): T {
@@ -58,6 +59,7 @@ export default function DiscoverIslamQuestionsPage() {
   };
 
   return (
+    <DiscoverIslamPublicShell>
     <div className="page-shell narrow content-hub-page">
       <PageHeader eyebrow="التعريف بالإسلام" title="أسئلة وأجوبة" subtitle="إجابات موثّقة، مختصرة ومفصّلة، عن أهم الأسئلة حول الإسلام." />
 
@@ -106,5 +108,6 @@ export default function DiscoverIslamQuestionsPage() {
         </div>
       )}
     </div>
+    </DiscoverIslamPublicShell>
   );
 }

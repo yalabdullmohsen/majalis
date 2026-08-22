@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { useLanguage } from "@/components/LanguageProvider";
 import { submitDawahContactRequest, CONTACT_RELIGIONS, type ReligionCode } from "@/lib/dawah-service";
+import { DiscoverIslamPublicShell } from "@/components/discover-islam/DiscoverIslamPublicShell";
 import "@/styles/discover-islam.css";
 
 export default function DiscoverIslamContactPage() {
@@ -54,6 +55,7 @@ export default function DiscoverIslamContactPage() {
 
   if (result?.ok) {
     return (
+      <DiscoverIslamPublicShell>
       <div className="page-shell narrow">
         <PageHeader eyebrow="التعريف بالإسلام" title="تم استلام طلبك" />
         <div className="ui-card dii-answer-card">
@@ -62,10 +64,12 @@ export default function DiscoverIslamContactPage() {
           <p className="page-desc">احتفظ بهذا الرمز إن احتجت للاستفسار عن حالة طلبك لاحقًا.</p>
         </div>
       </div>
+      </DiscoverIslamPublicShell>
     );
   }
 
   return (
+    <DiscoverIslamPublicShell>
     <div className="page-shell narrow">
       <PageHeader eyebrow="التعريف بالإسلام" title="تواصل سرّي مع داعية" subtitle="بياناتك تُستخدَم فقط للتواصل معك، ولا تُعرض لأي طرف آخر أبدًا." />
 
@@ -114,5 +118,6 @@ export default function DiscoverIslamContactPage() {
         <button type="submit" disabled={busy} className="asp-run-btn">{busy ? "جارٍ الإرسال..." : "إرسال الطلب"}</button>
       </form>
     </div>
+    </DiscoverIslamPublicShell>
   );
 }

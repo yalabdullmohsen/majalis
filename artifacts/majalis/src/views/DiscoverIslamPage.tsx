@@ -23,6 +23,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LANG_META } from "@/lib/language-preference";
 import { getFeaturedQuestions, getFeaturedShubuhat, getDawahCategories, type DawahQuestion, type DawahShubha, type DawahCategory } from "@/lib/dawah-service";
+import { DiscoverIslamPublicShell } from "@/components/discover-islam/DiscoverIslamPublicShell";
 import "@/styles/discover-islam.css";
 
 /** Allowlist — avoids `import * as LucideIcons` pulling the entire icon set into this route. */
@@ -100,6 +101,7 @@ export default function DiscoverIslamPage() {
   }, []);
 
   return (
+    <DiscoverIslamPublicShell>
     <SectionTemplatePage
       route="/discover-islam"
       eyebrow="بوابة التعريف بالإسلام"
@@ -225,5 +227,6 @@ export default function DiscoverIslamPage() {
       </section>
     </div>
     </SectionTemplatePage>
+    </DiscoverIslamPublicShell>
   );
 }

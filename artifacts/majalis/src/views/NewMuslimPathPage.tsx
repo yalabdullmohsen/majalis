@@ -4,6 +4,7 @@ import { PageHeader, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
 import { getNewMuslimPath, getNewMuslimProgress, type NewMuslimDay } from "@/lib/dawah-service";
+import { DiscoverIslamPublicShell } from "@/components/discover-islam/DiscoverIslamPublicShell";
 import "@/styles/discover-islam.css";
 
 export default function NewMuslimPathPage() {
@@ -25,6 +26,7 @@ export default function NewMuslimPathPage() {
   }, [user?.id]);
 
   return (
+    <DiscoverIslamPublicShell>
     <div className="page-shell narrow content-hub-page">
       <PageHeader eyebrow="المسلم الجديد" title="مسار الثلاثين يومًا" subtitle="لا سباق ولا حساب للتأخر — أكمل بالسرعة التي تناسبك، وارجع إلى أي يوم متى شئت." />
 
@@ -47,5 +49,6 @@ export default function NewMuslimPathPage() {
         </ol>
       )}
     </div>
+    </DiscoverIslamPublicShell>
   );
 }

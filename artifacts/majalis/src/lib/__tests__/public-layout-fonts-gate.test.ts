@@ -22,10 +22,17 @@ assert.equal(isPublicRoute("/mushaf"), false);
 assert.equal(isPublicRoute("/fiqh"), false);
 assert.equal(isPublicRoute("/lessons"), false);
 
-assert.match(app, /PublicRouteOutlet/);
-assert.match(app, /<SafeLazyRoute component=\{AboutPage\}/);
-assert.match(app, /<SafeLazyRoute component=\{DiscoverIslamPage\}/);
-assert.doesNotMatch(app, /<PublicLazyRoute/);
+const legal = readFileSync(resolve(root, "src/components/LegalPageLayout.tsx"), "utf8");
+
+assert.equal(isPublicRoute("/about"), true);
+assert.equal(isPublicRoute("/discover-islam/articles/what-is-islam"), true);
+assert.equal(isPublicRoute("/"), false);
+assert.equal(isPublicRoute("/mushaf"), false);
+assert.equal(isPublicRoute("/fiqh"), false);
+assert.equal(isPublicRoute("/lessons"), false);
+
+assert.match(legal, /PublicLayout/);
+assert.doesNotMatch(app, /PublicRouteOutlet/);
 
 assert.match(fontsPublic, /"Noto Kufi Arabic"/);
 assert.match(fontsPublic, /"IBM Plex Sans Arabic"/);

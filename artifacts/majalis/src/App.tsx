@@ -47,7 +47,6 @@ import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
 import { AppReadingFocus } from "@/components/reading/AppReadingFocus";
-import { PublicRouteOutlet } from "@/components/layout/PublicRouteOutlet";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
 
 const lazy = lazyWithRetry;
@@ -685,7 +684,6 @@ function AdminLazyRoute({ component: Component }: { component: ComponentType }) 
 
 function Router() {
   return (
-    <PublicRouteOutlet>
     <Switch>
       <Route path="/">
         <HomeLazyRoute />
@@ -1080,7 +1078,6 @@ function Router() {
         </Suspense>
       )} />
     </Switch>
-    </PublicRouteOutlet>
   );
 }
 

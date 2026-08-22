@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { getShubuhatByCategory, type DawahShubha } from "@/lib/dawah-service";
+import { DiscoverIslamPublicShell } from "@/components/discover-islam/DiscoverIslamPublicShell";
 import "@/styles/discover-islam.css";
 
 const COMPLEXITY_LABEL: Record<string, string> = { basic: "أساسي", intermediate: "متوسط", advanced: "متقدّم" };
@@ -20,6 +21,7 @@ export default function DiscoverIslamDoubtsPage() {
   }, []);
 
   return (
+    <DiscoverIslamPublicShell>
     <div className="page-shell narrow content-hub-page">
       <PageHeader eyebrow="التعريف بالإسلام" title="الشبهات والتفنيدات" subtitle="نعرض الشبهة بصياغتها الحقيقية، ثم نجيب بالدليل والسياق — لا ردود سطحية." />
 
@@ -43,5 +45,6 @@ export default function DiscoverIslamDoubtsPage() {
         </div>
       )}
     </div>
+    </DiscoverIslamPublicShell>
   );
 }
