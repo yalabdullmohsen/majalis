@@ -9,18 +9,16 @@ import { dismissHomepageAd, isHomepageAdDismissed } from "@/lib/homepage-ad-dism
  */
 export function HomepageAdBar() {
   const cfg = homepageAdConfig;
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(() => {
+    if (typeof window === "undefined") return false;
+    if (!cfg.enabled) return false;
+    if (navigator.webdriver) return false;
+    return !isHomepageAdDismissed();
+  });
 
   useEffect(() => {
     void import("@/styles/components/homepage-ad-bar.css");
   }, []);
-
-  useEffect(() => {
-    if (!cfg.enabled) return;
-    if (typeof navigator !== "undefined" && navigator.webdriver) return;
-    if (isHomepageAdDismissed()) return;
-    setVisible(true);
-  }, [cfg.enabled]);
 
   if (!cfg.enabled || !visible) return null;
 

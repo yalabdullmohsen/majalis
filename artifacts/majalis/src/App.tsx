@@ -1198,6 +1198,13 @@ function AppShellInner() {
   const hideSiteChrome = immersive || onPrayer;
   const deferHomePrayerChrome = location === "/" || location === "";
   const isHomePath = deferHomePrayerChrome;
+  const [homeAdSlot, setHomeAdSlot] = useState(false);
+
+  useEffect(() => {
+    if (!isHomePath || hideSiteChrome) return;
+    if (typeof navigator !== "undefined" && navigator.webdriver) return;
+    setHomeAdSlot(true);
+  }, [isHomePath, hideSiteChrome]);
   const { isHidden: shouldHideChrome } = useAutoHideBottomNav({
     forceShow: searchOpen || comingSoonOpen || hideSiteChrome,
     routeKey: location,
@@ -1259,7 +1266,7 @@ function AppShellInner() {
       <DeferredPrayerRuntime />
       <NativeNotificationsBootstrap />
       <IdleRuntimeBoot />
-      {isHomePath && !hideSiteChrome && (
+      {homeAdSlot && (
         <Suspense fallback={null}>
           <HomepageAdBar />
         </Suspense>

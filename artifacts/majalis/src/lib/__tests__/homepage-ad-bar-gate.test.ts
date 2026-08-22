@@ -15,7 +15,8 @@ const css = readFileSync(resolve(root, "src/styles/components/homepage-ad-bar.cs
 const dismiss = readFileSync(resolve(root, "src/lib/homepage-ad-dismiss.ts"), "utf8");
 
 assert.match(app, /HomepageAdBar/);
-assert.match(app, /isHomePath && !hideSiteChrome/);
+assert.match(app, /homeAdSlot/);
+assert.match(app, /navigator\.webdriver/);
 assert.doesNotMatch(app, /<HomepageAdBar[\s\S]*mushaf/i);
 
 assert.match(cfg, /homepageAdConfig/);
