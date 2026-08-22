@@ -30,12 +30,12 @@ assert.doesNotMatch(
   "لا يُنتظر purgeNativeWebRuntimeCaches قبل createRoot",
 );
 
-// الخلفية قبل React تبقى داكنة (ليست فاتحة تسبب شاشة بيضاء)
-assert.match(main, /#0E1A15/);
-assert.doesNotMatch(
-  main.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, ""),
+// خلفية الإقلاع = سطح الرئيسية (يمنع وميض أخضر قديم / شاشة دعائية)
+assert.match(main, /#F2F4F3/);
+assert.match(
+  main,
   /setProperty\(\s*["']--app-status-bg["']\s*,\s*["']#F2F4F3["']/,
-  "لا تُفرض خلفية فاتحة قبل التركيب",
+  "خلفية الإقلاع الأصلي تطابق سطح التطبيق",
 );
 
 console.log("boot-mount-order-gate.test.ts: ok");

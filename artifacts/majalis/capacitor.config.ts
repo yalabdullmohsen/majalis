@@ -16,7 +16,8 @@ const config: CapacitorConfig = {
     SplashScreen: {
       launchShowDuration: 0,
       launchAutoHide: false,
-      backgroundColor: "#0E1A15",
+      /* سطح الرئيسية — بلا خلفية خضراء قديمة ولا أيقونة دعائية */
+      backgroundColor: "#F2F4F3",
       showSpinner: false,
       androidSplashResourceName: "splash",
       androidScaleType: "CENTER_CROP",
@@ -58,8 +59,8 @@ const config: CapacitorConfig = {
     // Safe areas are owned by the shared CSS shell via env(safe-area-inset-*).
     // UIKit adjustment here would apply a second inset around the WKWebView.
     contentInset: "never",
-    // أخضر الإقلاع — أي فجوة تحت الشريط السفلي/Home Indicator لا تظهر بيضاء
-    backgroundColor: "#0E1A15",
+    // سطح الرئيسية — يطابق أول إطار ويمنع وميض أخضر قديم
+    backgroundColor: "#F2F4F3",
     scrollEnabled: true,
   },
 };

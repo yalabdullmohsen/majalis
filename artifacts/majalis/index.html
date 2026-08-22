@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#0E1A15" />
+    <meta name="theme-color" content="#F2F4F3" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F4F3" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101614" />
     <style id="mj-lcp-critical">
@@ -12,6 +12,12 @@
         background-color: #F2F4F3;
         margin: 0;
         min-height: 100dvh;
+        color: #14241c;
+        font-family: "Amiri", "Noto Naskh Arabic", "Aref Ruqaa", system-ui, sans-serif;
+      }
+      html[data-theme="dark"], html[data-theme="dark"] body, html[data-theme="dark"] #root {
+        background-color: #101614;
+        color: #e8efea;
       }
       :root {
         --inset-top: env(safe-area-inset-top, 0px);
@@ -84,12 +90,12 @@
     </style>
     <style id="mj-splash-critical">
       :root{
-        --mj-splash-bg-dark:#0E1A15;
+        --mj-splash-bg-dark:#101614;
         --mj-splash-bg-light:#F2F4F3;
-        --mj-splash-bg:var(--mj-splash-bg-dark);
-      }
-      html[data-theme="light"]{
         --mj-splash-bg:var(--mj-splash-bg-light);
+      }
+      html[data-theme="dark"]{
+        --mj-splash-bg:var(--mj-splash-bg-dark);
       }
       html.capacitor-native, html.capacitor-native body, html.capacitor-native #root { background-color: var(--mj-splash-bg); }
 
@@ -102,7 +108,7 @@
       }
       #mj-silent-splash.mj-silent-splash--out{
         opacity:0;
-        transition:opacity 120ms cubic-bezier(.22, 1, .36, 1);
+        transition:opacity 80ms linear;
       }
       @media (prefers-reduced-motion: reduce){
         #mj-silent-splash.mj-silent-splash--out{ transition:none; }
@@ -212,7 +218,7 @@
         var done = false;
         var MIN_MS = 0;
         var MAX_MS = 400;
-        var EXIT_MS = 120;
+        var EXIT_MS = 80;
 
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
         try { window.__mjSplashStart = start; } catch (e) {}
@@ -245,7 +251,7 @@
       try {
         /* مِشكاة: تطبيق الوضع (ليل/نهار) فوراً لمنع الوميض */
         /* ترحيل v4-light-2026: إعادة تعيين التفضيل عند أول تشغيل بعد تغيير الهوية */
-        var _dsv = "v4-light-2026-naskh";
+        var _dsv = "v5-splashless-2026-08";
         if (localStorage.getItem("majalis-design-v") !== _dsv) {
           localStorage.setItem("majalis-design-v", _dsv);
           localStorage.removeItem("majalis-theme");
@@ -265,14 +271,11 @@
         document.documentElement.dataset.theme = resolved;
         document.documentElement.classList.toggle("dark", resolved === "dark");
         document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
-        /* theme-color أثناء الإقلاع = خلفية الدخول (يمنع وميض الشريط الأبيض) */
-        var splashNative = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
-        if (splashNative) {
-          var splashBg = "#0E1A15";
-          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
-            m.setAttribute("content", splashBg);
-          });
-        }
+        /* theme-color أثناء الإقلاع = سطح الصفحة (يمنع وميض أخضر قديم) */
+        var splashBg = resolved === "dark" ? "#101614" : "#F2F4F3";
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+          m.setAttribute("content", splashBg);
+        });
 
         var storedFont = localStorage.getItem("majalis-font-preference-v2");
         document.documentElement.dataset.font =

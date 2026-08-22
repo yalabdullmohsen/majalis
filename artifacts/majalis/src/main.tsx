@@ -85,7 +85,7 @@ if (isNative) {
   document.documentElement.classList.add("capacitor-native");
   document.documentElement.dataset.platform = isAndroid ? "android" : isIOS ? "ios" : "native";
   // أبقِ خلفية الإقلاع حتى يركّب React ويضبط PageChrome.
-  document.documentElement.style.setProperty("--app-status-bg", "#0E1A15");
+  document.documentElement.style.setProperty("--app-status-bg", "#F2F4F3");
   document.documentElement.style.setProperty("--app-status-fg-mode", "light");
   void import("./styles/capacitor-native-ux.css");
   void import("./styles/ios-edge.css");

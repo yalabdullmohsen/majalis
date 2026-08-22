@@ -2809,14 +2809,20 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   margin: 0;
   text-align: center;
   text-decoration: none;
+  /* وردمارك SVG — لا يعتمد على تحميل خط وقت التشغيل فلا FOUT */
   font-family: "Aref Ruqaa", "Amiri", var(--font-app, var(--font-body));
-  font-size: clamp(0.78rem, 3vw, 1rem);
+  font-size: clamp(1.05rem, 4.2vw, 1.35rem);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1;
   color: var(--majalis-emerald-deep, var(--mj-brand-deep, #145a42)) !important;
   white-space: nowrap;
   overflow: visible;
-  padding-inline: 0.25rem;
+  padding-inline: 0.35rem;
+  /* حجز ارتفاع ثابت يمنع قفزة عند ظهور SVG */
+  min-height: 1.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar-v3 a.navbar-v3__tagline:hover,
@@ -2825,30 +2831,30 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
 }
 
 html[data-theme="dark"] .navbar-v3__tagline {
-  color: #8fd4b0 !important;
+  color: #9fdfbd !important;
 }
 
 html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:hover,
 html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
-  color: #b6ebcf !important;
+  color: #c5f0d8 !important;
 }
 
-/* وردمارك SVG ثابت (ثلث/رقعة، من Aref Ruqaa) بدل النص — يتبع لون الحاوية عبر currentColor
-   ويتحجّم بوحدة em من font-size المتجاوب أعلاه فلا حاجة لاستعلامات وسائط جديدة. */
+/* وردمارك SVG (رقعة/ثلث من Aref Ruqaa، مسارات ثابتة) — currentColor + حجم ثابت */
 .navbar-v3__tagline-mark {
-  height: 1.85em;
+  height: 1.7em;
   width: auto;
-  max-width: min(11.5rem, 42vw);
-  display: inline-block;
-  vertical-align: middle;
+  max-width: min(13.5rem, 52vw);
+  display: block;
+  flex: 0 0 auto;
 }
 
 @media (min-width: 880px) {
   .navbar-v3__tagline {
-    flex: 0 1 13rem;
-    max-width: 13rem;
+    flex: 0 1 15rem;
+    max-width: 15rem;
     text-align: start;
-    font-size: 0.84rem;
+    font-size: 1.15rem;
+    justify-content: flex-start;
   }
 }
 

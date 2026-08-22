@@ -2,8 +2,8 @@ import type { SVGProps } from "react";
 
 /**
  * وردمارك "المجلس العلمي" — مسارات SVG ثابتة مُستخرجة من خط Aref Ruqaa
- * (SIL OFL، مُستضاف محليًا في المشروع) عبر تشكيل HarfBuzz حقيقي، وليس
- * صورة أو خطًا يُحمَّل وقت التشغيل. لا تكلفة شبكة إضافية.
+ * (أسلوب رقعة/ثلث فاخر، SIL OFL، مُستضاف محليًا). لا تحميل خط وقت التشغيل،
+ * فلا تبدّل خطوط ولا FOUT عند فتح التطبيق.
  */
 export default function BrandWordmark(props: SVGProps<SVGSVGElement>) {
   return (
