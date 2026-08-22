@@ -61,7 +61,7 @@ export function MushafControls({
             onClick={() => (onSettings ? onSettings() : onToggleTheme?.())}
             aria-label="إعدادات"
           >
-            <Settings2 size={20} aria-hidden="true" />
+            <Settings2 size={22} aria-hidden="true" />
           </button>
           <button
             type="button"
@@ -72,7 +72,7 @@ export function MushafControls({
             }}
             aria-label={`الصفحة ${pageNumber} من ${MUSHAF_PAGE_MAX} — انتقال`}
           >
-            <BookOpen size={20} aria-hidden="true" />
+            <BookOpen size={22} aria-hidden="true" />
           </button>
           <button
             type="button"
@@ -80,10 +80,10 @@ export function MushafControls({
             onClick={() => (onSearch ? onSearch() : setGotoOpen(true))}
             aria-label="بحث"
           >
-            <Search size={20} aria-hidden="true" />
+            <Search size={22} aria-hidden="true" />
           </button>
           <button type="button" className="mm-controls__icon" onClick={onIndex} aria-label="فهرس">
-            <List size={20} aria-hidden="true" />
+            <List size={22} aria-hidden="true" />
           </button>
         </div>
         <button
