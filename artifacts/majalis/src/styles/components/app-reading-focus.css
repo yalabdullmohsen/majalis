@@ -1,0 +1,133 @@
+/**
+ * تجربة قراءة تفاعلية — إضاءة خفيفة عند اقتراب العنصر من منتصف الشاشة.
+ * CSS transitions فقط؛ لا تكبير يسبب CLS.
+ */
+
+/* —— شريط تقدّم القراءة (صفحات طويلة) —— */
+.app-reading-progress {
+  position: fixed;
+  top: var(--inset-top, 0px);
+  inset-inline: 0;
+  height: 2px;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0;
+  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 18%, transparent);
+  transform-origin: inline-end;
+  transform: scaleX(0);
+  transition: opacity 180ms ease;
+}
+
+html.app-reading-focus-enabled .app-reading-progress {
+  opacity: 1;
+  transform: scaleX(var(--app-reading-progress, 0));
+}
+
+/* —— الحالات الافتراضية —— */
+html.app-reading-focus-enabled .app-focus-idle,
+html.app-reading-focus-enabled .app-focus-near,
+html.app-reading-focus-enabled .app-focus-active {
+  transition:
+    box-shadow 260ms ease,
+    border-color 260ms ease,
+    background-color 260ms ease,
+    color 260ms ease,
+    filter 260ms ease;
+  will-change: box-shadow, border-color;
+}
+
+html.app-reading-focus-enabled .app-focus-idle {
+  box-shadow: none;
+}
+
+/* —— قريب من منتصف الشاشة —— */
+html.app-reading-focus-enabled .app-focus-near {
+  box-shadow: 0 4px 18px -12px color-mix(in srgb, var(--mj-brand, #1f7a5a) 14%, transparent);
+}
+
+html.app-reading-focus-enabled .app-focus-near:is(.card, .ui-card, .mj-card, .hub-card) {
+  border-color: color-mix(in srgb, var(--mj-brand, #1f7a5a) 16%, var(--mj-hairline, #e3e8e6));
+}
+
+/* —— في منطقة التركيز (الأوضح) —— */
+html.app-reading-focus-enabled .app-focus-active {
+  box-shadow:
+    0 6px 24px -10px color-mix(in srgb, var(--mj-brand, #1f7a5a) 22%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--mj-brand, #1f7a5a) 12%, transparent);
+}
+
+html.app-reading-focus-enabled .app-focus-active:is(.card, .ui-card, .mj-card, .hub-card) {
+  border-color: color-mix(in srgb, var(--mj-brand, #1f7a5a) 28%, var(--mj-hairline, #e3e8e6));
+  background-color: color-mix(in srgb, var(--mj-brand-soft, #e4f0ea) 22%, var(--mj-surface, #fff));
+}
+
+html.app-reading-focus-enabled .app-focus-active :is(h1, h2, h3, h4, .card__label, .hub-card__title) {
+  color: var(--mj-ink, #16241e);
+  font-weight: 600;
+}
+
+html.app-reading-focus-enabled .app-focus-active :is(p, .card__desc, .hub-card__desc) {
+  color: color-mix(in srgb, var(--mj-ink, #16241e) 88%, transparent);
+}
+
+/* —— ضغط لمسي خفيف —— */
+html.app-reading-focus-enabled .app-focus-active:active,
+html.app-reading-focus-enabled .app-focus-near:active,
+html.app-reading-focus-enabled .app-focus-idle:active {
+  filter: brightness(0.97);
+  transition-duration: 80ms;
+}
+
+/* —— الوضع الليلي —— */
+html[data-theme="dark"].app-reading-focus-enabled .app-focus-near,
+html.dark.app-reading-focus-enabled .app-focus-near {
+  box-shadow: 0 4px 20px -12px color-mix(in srgb, #7ec9a8 12%, transparent);
+}
+
+html[data-theme="dark"].app-reading-focus-enabled .app-focus-active,
+html.dark.app-reading-focus-enabled .app-focus-active {
+  box-shadow:
+    0 8px 28px -12px color-mix(in srgb, #7ec9a8 18%, transparent),
+    0 0 0 1px color-mix(in srgb, #7ec9a8 14%, transparent);
+  background-color: color-mix(in srgb, #1a3028 55%, var(--mj-surface, #12211c));
+}
+
+html[data-theme="dark"].app-reading-focus-enabled .app-focus-active :is(h1, h2, h3, h4, .card__label, .hub-card__title),
+html.dark.app-reading-focus-enabled .app-focus-active :is(h1, h2, h3, h4, .card__label, .hub-card__title) {
+  color: #eef5f1;
+}
+
+html[data-theme="dark"].app-reading-focus-enabled .app-reading-progress,
+html.dark.app-reading-focus-enabled .app-reading-progress {
+  background: color-mix(in srgb, #7ec9a8 28%, transparent);
+}
+
+/* —— تقليل الحركة —— */
+@media (prefers-reduced-motion: reduce) {
+  html.app-reading-focus-enabled .app-focus-idle,
+  html.app-reading-focus-enabled .app-focus-near,
+  html.app-reading-focus-enabled .app-focus-active {
+    transition: none;
+  }
+
+  html.app-reading-focus-enabled .app-reading-progress {
+    display: none;
+  }
+}
+
+/* —— حماية المصحف: لا تأثير داخل العارض —— */
+.mm-viewport .app-focus-active,
+.mm-viewport .app-focus-near,
+.mm-viewport .app-focus-idle,
+.mushaf-page-frame .app-focus-active,
+.mushaf-page-frame .app-focus-near,
+.mushaf-page-frame .app-focus-idle,
+[data-mushaf-root] .app-focus-active,
+[data-mushaf-root] .app-focus-near,
+[data-mushaf-root] .app-focus-idle {
+  box-shadow: none !important;
+  border-color: inherit !important;
+  background-color: inherit !important;
+  filter: none !important;
+  transition: none !important;
+}
