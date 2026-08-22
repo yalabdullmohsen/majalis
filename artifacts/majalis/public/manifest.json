@@ -8,11 +8,19 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
-  "background_color": "#0E1A15",
+  "display_override": [
+    "standalone",
+    "minimal-ui",
+    "window-controls-overlay"
+  ],
+  "background_color": "#F2F4F3",
   "theme_color": "#F2F4F3",
   "orientation": "portrait-primary",
-  "categories": ["education", "books", "lifestyle"],
+  "categories": [
+    "education",
+    "books",
+    "lifestyle"
+  ],
   "prefer_related_applications": false,
   "icons": [
     {
@@ -58,28 +66,48 @@
       "short_name": "القرآن",
       "url": "/quran-hub",
       "description": "المصحف الرقمي الاحترافي",
-      "icons": [{ "src": "/icon-192.png?v=20260815", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/icon-192.png?v=20260815",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "الدروس العلمية",
       "short_name": "الدروس",
       "url": "/lessons",
       "description": "دروس ومحاضرات شرعية",
-      "icons": [{ "src": "/icon-192.png?v=20260815", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/icon-192.png?v=20260815",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "أوقات الصلاة",
       "short_name": "الصلاة",
       "url": "/prayer-times",
       "description": "مواقيت الصلاة الدقيقة",
-      "icons": [{ "src": "/icon-192.png?v=20260815", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/icon-192.png?v=20260815",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "الأذكار",
       "short_name": "الأذكار",
       "url": "/adhkar",
       "description": "أذكار الصباح والمساء",
-      "icons": [{ "src": "/icon-192.png?v=20260815", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/icon-192.png?v=20260815",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

@@ -32,6 +32,8 @@ console.log("\n=== Lazy: تفسير / صوت / بحث المصحف ===");
 console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");
 {
   const html = read("index.html");
+  const vite = read("vite.config.ts");
+  assert.match(vite, /htmlCharsetPlugin/, "middleware charset في vite preview/dev");
   const count = [...html.matchAll(/rel="preconnect"/g)].length;
   assert.ok(count <= 2, `preconnect ≤ ٢ (الفعلي ${count})`);
   const afterHead = html.split(/<head[^>]*>/i)[1] ?? "";
@@ -54,7 +56,11 @@ console.log("\n=== معالم دلالية ===");
 {
   const app = read("src/App.tsx");
   assert.match(app, /<main id="main-content"/, "main");
+  assert.match(app, /aria-label="المحتوى الرئيسي"/, "main بعنوان واضح");
   assert.match(app, /skip-link|#main-content/, "رابط تخطّي");
+  const hus = read("src/components/home/HomeUniversalSearch.tsx");
+  assert.match(hus, /role="search"/, "منطقة بحث");
+  assert.match(hus, /aria-label="بحث موحّد/, "حقل بحث بأريّة");
   const nav = read("src/components/NavBar.tsx");
   assert.match(nav, /<header/, "header");
   assert.match(nav, /aria-label="فتح البحث"/, "زر بحث بأريّة");

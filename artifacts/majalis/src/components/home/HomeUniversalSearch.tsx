@@ -128,7 +128,7 @@ export function HomeUniversalSearch() {
   const showResults = focused && !!debounced && !!payload;
 
   return (
-    <div className="hus" ref={wrapRef} dir="rtl">
+    <div className="hus" ref={wrapRef} dir="rtl" role="search">
       <label className="hus-label" htmlFor={inputId}>
         بحث موحّد
       </label>
@@ -139,6 +139,7 @@ export function HomeUniversalSearch() {
           type="search"
           className="hus-input"
           placeholder="ابحث في الآيات والكتب والعلماء والأذكار والأسئلة…"
+          aria-label="بحث موحّد في الآيات والكتب والعلماء والأذكار والأسئلة"
           value={raw}
           autoComplete="off"
           enterKeyHint="search"
