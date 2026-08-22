@@ -157,6 +157,25 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
     tags: ["عبادة", "صلاة"],
     updated_at: STATIC_TS,
   },
+  "halal-food": {
+    id: "static-article-halal-food",
+    category_id: null,
+    slug: "halal-food",
+    title_ar: "الطعام الحلال في الإسلام",
+    title_en: "Halal Food in Islam",
+    summary_ar: "الحلال أصل في المطاعم والمشروبات؛ مع اجتناب الخنزير والخمر والميتة وما أهل لغير الله به.",
+    summary_en: null,
+    body_ar: `الأصل في الطعام الحلّ إلا ما حرّمه الشرع. من المحرّمات الظاهرة: الميتة، والدم، ولحم الخنزير، وما ذُبح لغير الله، والخمر والمسكرات.
+
+الذكاة الشرعية شرط في كثير من الحيوانات المباحة. وعند الشك يُسأل مصدر موثوق ولا يُتشدد بلا علم.
+
+المسلم الجديد يبدأ بفهم الأساسيات: اجتناب الخنزير والخمر، والبحث عن الذبح الحلال حيث تيسر، والتسمية عند الأكل.
+
+الضيافة وحسن الجوار لا يبرران أكل المحرّم؛ والضرورة تُقدَّر بقدرها عند أهل الفقه.`,
+    cover_image_url: null,
+    tags: ["عبادة", "حلال"],
+    updated_at: STATIC_TS,
+  },
 };
 
 export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
@@ -442,6 +461,24 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
     sources: [],
     objections_and_responses: [],
     conclusion: "الحفظ وعد إلهي تحقق عبر التواتر والرسم؛ والشاذ يُردّ بمنهج أهل العلم.",
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-sh-10",
+    category_id: null,
+    slug: "islam-hates-nonmuslims",
+    title: "هل يكره الإسلام غير المسلمين؟",
+    complexity_level: "basic",
+    shubha_text: "يُفهم أحيانًا من بعض النصوص أن الإسلام يدعو لبغض كل مخالف في الدين.",
+    why_spread: "خلط بين البراءة من الشرك وبين حسن المعاملة، وبين أحكام الحرب وأحكام السلم.",
+    short_answer: "الإسلام يأمر بالعدل والإحسان إلى غير المحاربين؛ والولاء في الدين لا يعني ظلم المخالف المسالم.",
+    detailed_refutation: "قال تعالى: ﴿لا ينهاكم الله عن الذين لم يقاتلوكم في الدين... أن تبرّوهم وتقسطوا إليهم﴾. الإحسان والعدل مع المسالمين مشروع. أما البراءة فمعناها عدم موالاة الشرك والعقيدة الباطلة، لا إباحة العدوان على المدنيين. يُفرَّق بين العقيدة والمعاملة المدنية.",
+    assumption_correction: "أن كل آية في الولاء والبراء تعني الكراهية الشخصية أو الظلم.",
+    historical_linguistic_context: null,
+    evidences: [{ type: "quran", ref: "الممتحنة: 8", text: "لا ينهاكم الله عن الذين لم يقاتلوكم في الدين ولم يخرجوكم من دياركم أن تبروهم وتقسطوا إليهم" }],
+    sources: [],
+    objections_and_responses: [],
+    conclusion: "العدل والإحسان للمسلمين والمسالمين من غير المسلمين أصل؛ والظلم محرّم على الجميع.",
     updated_at: STATIC_TS,
   },
 ];
