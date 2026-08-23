@@ -491,15 +491,15 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "competitions",
     label: "المسابقات",
-    subtitle: "قرآن وحديث وسيرة نبوية",
+    subtitle: "إعلانات مسابقات شرعية وقرآنية خارجية",
     route: "/competitions",
     icon: Trophy,
     group: "learning",
     order: 4,
     surfaces: SEARCH_ONLY,
     status: "live",
-    keywords: ["مسابقات", "سين جيم", "اختبار"],
-    aliases: ["مسابقة", "سين جيم"],
+    keywords: ["مسابقات", "إعلان مسابقة", "حفظ", "تسميع", "جوائز", "الماهر"],
+    aliases: ["مسابقة", "إعلانات المسابقات"],
     hub: "lessons",
   },
   {

@@ -83,3 +83,12 @@ export const NOUN_ASILA: ArabicCountNoun = {
   few: "أسئلة",
   many: "سؤالاً",
 };
+
+/** عدّادات إعلانات المسابقات الخارجية (ليست أسئلة). */
+export const NOUN_MUSABAQAT: ArabicCountNoun = {
+  zero: "لا مسابقات",
+  one: "مسابقة",
+  two: "مسابقتان",
+  few: "مسابقات",
+  many: "مسابقة",
+};

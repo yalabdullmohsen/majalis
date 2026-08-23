@@ -125,6 +125,7 @@ const CalendarPage = lazy(() => import("@/views/CalendarPage"));
 const SearchPage = lazy(() => import("@/pages/account/SearchPage"));
 const LessonsPage = lazy(() => import("@/pages/lessons/LessonsPage"));
 const CompetitionsPage = lazy(() => import("@/pages/competitions/CompetitionsPage"));
+const CompetitionDetailPage = lazy(() => import("@/pages/competitions/CompetitionDetailPage"));
 const TeachersIndexPage = lazy(() => import("@/pages/lessons/TeachersIndexPage"));
 const TeacherDetailPage = lazy(() => import("@/pages/lessons/TeacherDetailPage"));
 const LessonsArchivePage = lazy(() => import("@/pages/lessons/LessonsArchivePage"));
@@ -728,6 +729,7 @@ function Router() {
       <Route path="/scientific-announcements/:id"><SafeLazyRoute component={ScientificAnnouncementDetailPage} /></Route>
       <Route path="/lessons/current"><Redirect to="/lessons" /></Route>
       <Route path="/lessons/archive"><SafeLazyRoute component={LessonsArchivePage} /></Route>
+      <Route path="/competitions/:id"><SafeLazyRoute component={CompetitionDetailPage} /></Route>
       <Route path="/competitions"><SafeLazyRoute component={CompetitionsPage} /></Route>
       <Route path="/lessons"><SafeLazyRoute component={LessonsPage} /></Route>
       <Route path="/lessons/:id"><SafeLazyRoute component={LessonDetailPage} /></Route>

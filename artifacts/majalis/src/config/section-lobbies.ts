@@ -22,8 +22,8 @@ import {
   publishedBooks,
   type FiqhBookCategory,
 } from "@/lib/fiqh-books";
-import { formatAbwabCount, formatMasailCount, NOUN_ASILA, NOUN_DURUS, NOUN_HALAQAT, NOUN_MUNASABAT, type ArabicCountNoun } from "@/lib/arabic-count";
-import { totalCompetitionQuestions } from "@/config/competitions-hub";
+import { formatAbwabCount, formatMasailCount, NOUN_DURUS, NOUN_HALAQAT, NOUN_MUNASABAT, NOUN_MUSABAQAT, type ArabicCountNoun } from "@/lib/arabic-count";
+import { totalExternalCompetitions } from "@/config/competitions-hub";
 import {
   SECTION_GROUP_META,
   SECTION_GROUP_ORDER,
@@ -207,7 +207,7 @@ export function getLobby(id: LobbyId): LobbySpec {
       quad: [
         { ...must("lessons"), count: 97, noun: NOUN_DURUS, accent: true },
         { ...must("quran-circles"), label: "الحلقات", count: 28, noun: NOUN_HALAQAT, accent: true },
-        { ...must("competitions"), count: totalCompetitionQuestions(), noun: NOUN_ASILA, accent: true },
+        { ...must("competitions"), count: totalExternalCompetitions(), noun: NOUN_MUSABAQAT, accent: true },
         { ...must("hijri-calendar"), label: "التقويم", count: 35, noun: NOUN_MUNASABAT },
         { ...must("lessons-archive"), count: 97, noun: NOUN_DURUS },
       ],

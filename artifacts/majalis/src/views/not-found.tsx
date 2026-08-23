@@ -11,7 +11,7 @@ const SUGGESTIONS = [
   { href: "/hadith",       label: "الحديث وعلومه",          Icon: BookMarked },
   { href: "/fawaid",       label: "الفوائد",           Icon: MessageCircle },
   { href: "/prayer-times", label: "مواقيت الصلاة",     Icon: Clock      },
-  { href: "/quiz",         label: "المسابقات",         Icon: Compass    },
+  { href: "/competitions", label: "المسابقات",         Icon: Compass    },
   { href: "/rulings",      label: "الأحكام الشرعية",   Icon: Scale      },
 ] as const;
 
