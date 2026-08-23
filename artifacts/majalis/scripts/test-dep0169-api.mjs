@@ -22,16 +22,19 @@ assert.doesNotMatch(serverIndex, /patch-url-parse/, "server/index must not impor
 assert.equal(existsSync(join(root, "server/patch-url-parse.mjs")), false, "blind patch file must be removed");
 
 /** CI workflows that install with pnpm must use Corepack — not pnpm/action-setup. */
+/** Workflows allowed to use pnpm/action-setup (isolated job; Corepack elsewhere). */
+const ACTION_SETUP_ALLOWED = new Set(["harvest-sources.yml"]);
 const workflowsDir = join(repoRoot, ".github", "workflows");
 const workflowFiles = readdirSync(workflowsDir).filter((f) => f.endsWith(".yml") || f.endsWith(".yaml"));
 const actionSetupHits = [];
 const missingCorepack = [];
 for (const file of workflowFiles) {
   const text = readFileSync(join(workflowsDir, file), "utf8");
-  if (text.includes("pnpm/action-setup@")) actionSetupHits.push(file);
+  if (text.includes("pnpm/action-setup@") && !ACTION_SETUP_ALLOWED.has(file)) actionSetupHits.push(file);
   const installsPnpm =
     /pnpm\s+install/.test(text) || /cache:\s*['"]?pnpm['"]?/.test(text);
-  if (installsPnpm && !/corepack\s+enable/.test(text)) missingCorepack.push(file);
+  const usesActionSetup = text.includes("pnpm/action-setup@");
+  if (installsPnpm && !/corepack\s+enable/.test(text) && !usesActionSetup) missingCorepack.push(file);
 }
 assert.equal(
   actionSetupHits.length,
