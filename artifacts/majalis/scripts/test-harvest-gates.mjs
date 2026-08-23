@@ -141,6 +141,17 @@ const accounts = JSON.parse(readFileSync(resolve(root, "public/data/sources/acco
 assert.ok(accounts.accounts.length >= 55, `accounts ${accounts.accounts.length}`);
 const keys = new Set(accounts.accounts.map((a) => `${a.platform}:${a.handle}`));
 assert.equal(keys.size, accounts.accounts.length);
+for (const a of accounts.accounts) {
+  assert.equal(typeof a.trusted, "boolean", `${a.id} trusted`);
+  assert.equal(typeof a.autoPublish, "boolean", `${a.id} autoPublish`);
+}
+
+console.log("=== تقرير الحصاد في مسار safe:content ===");
+assert.match(
+  read("scripts/harvest/run.mjs"),
+  /public\/data\/sources\/harvest-report\.json/,
+);
+assert.doesNotMatch(read("scripts/harvest/run.mjs"), /appendHarvestReport|docs\/HARVEST_REPORT\.md/);
 
 console.log("=== UI hooks ===");
 assert.match(read("src/pages/lessons/ui/LessonsView.tsx"), /HarvestFeedPanel/);

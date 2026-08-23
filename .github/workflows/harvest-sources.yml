@@ -30,24 +30,44 @@ jobs:
         run: pnpm install --frozen-lockfile
         working-directory: artifacts/majalis
 
-      - name: Run harvest
+      - name: Dry-run harvest gate
         working-directory: artifacts/majalis
         env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          INSTAGRAM_INGEST_MODE: provider
-          INSTAGRAM_PROVIDER_KEY: ${{ secrets.INSTAGRAM_PROVIDER_KEY }}
-          INSTAGRAM_PROVIDER_ENDPOINT: ${{ secrets.INSTAGRAM_PROVIDER_ENDPOINT }}
-        run: pnpm run harvest
+          INSTAGRAM_INGEST_MODE: oembed
+        run: pnpm run harvest:dry
 
       - name: Test harvest gates
         working-directory: artifacts/majalis
         run: pnpm run test:harvest
 
+      - name: Resolve Instagram ingest mode
+        id: ig
+        env:
+          INSTAGRAM_PROVIDER_KEY: ${{ secrets.INSTAGRAM_PROVIDER_KEY }}
+          INSTAGRAM_PROVIDER_ENDPOINT: ${{ secrets.INSTAGRAM_PROVIDER_ENDPOINT }}
+        run: |
+          if [ -n "$INSTAGRAM_PROVIDER_KEY" ] && [ -n "$INSTAGRAM_PROVIDER_ENDPOINT" ]; then
+            echo "mode=provider" >> "$GITHUB_OUTPUT"
+            echo "Instagram: provider (secrets present)"
+          else
+            echo "mode=oembed" >> "$GITHUB_OUTPUT"
+            echo "Instagram: oembed (no provider secrets — will skip empty inbox)"
+          fi
+
+      - name: Run harvest (live)
+        working-directory: artifacts/majalis
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          INSTAGRAM_INGEST_MODE: ${{ steps.ig.outputs.mode }}
+          INSTAGRAM_PROVIDER_KEY: ${{ secrets.INSTAGRAM_PROVIDER_KEY }}
+          INSTAGRAM_PROVIDER_ENDPOINT: ${{ secrets.INSTAGRAM_PROVIDER_ENDPOINT }}
+        run: pnpm run harvest
+
       - name: Check for changes
         id: diff
         run: |
-          if git diff --quiet -- artifacts/majalis/public/data artifacts/majalis/docs/HARVEST_REPORT.md; then
+          if git diff --quiet -- artifacts/majalis/public/data; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -63,7 +83,6 @@ jobs:
           labels: safe:content
           commit-message: "chore(harvest): تحديث feed المصادر"
           body: |
-            تشغيلة حصاد تلقائية — تحديث `feed.json` و`accounts.json` و`HARVEST_REPORT.md`.
+            تشغيلة حصاد تلقائية — تحديث `feed.json` و`accounts.json` و`harvest-report.json` تحت `public/data` (مسارات safe:content).
           add-paths: |
             artifacts/majalis/public/data/**
-            artifacts/majalis/docs/HARVEST_REPORT.md

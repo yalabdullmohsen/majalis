@@ -36,6 +36,8 @@ function legacyKuwaitAccounts() {
     site: s.config.website_url,
     contact: undefined,
     enabled: s.active !== false,
+    trusted: true,
+    autoPublish: true,
     poll_priority: HIGH_HANDLES.has(s.config.handle) ? "high" : "normal",
     last_seen_at: null,
   }));
@@ -116,6 +118,8 @@ function toAccount(row) {
     site: row.site,
     contact: row.contact,
     enabled: true,
+    trusted: true,
+    autoPublish: true,
     poll_priority: row.poll_priority ?? (high ? "high" : "normal"),
     last_seen_at: null,
   };
