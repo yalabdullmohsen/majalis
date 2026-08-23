@@ -5,18 +5,40 @@ import {
   isNewVersionAvailable,
 } from "@/lib/version-check";
 import { safeLocationReload } from "@/lib/safe-reload";
+import { isChunkRecoveryInFlight } from "@/lib/chunk-recovery";
+
+/** خلال نافذة الإقلاع: لا شيت تحديث — إعادة تحميل صامتة مرة واحدة فقط. */
+const BOOT_SILENT_MS = 8_000;
+const BOOT_RELOAD_KEY = "majalis-boot-version-reload.v1";
+
+function alreadyDidBootReload(): boolean {
+  try {
+    return sessionStorage.getItem(BOOT_RELOAD_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function markBootReload(): void {
+  try {
+    sessionStorage.setItem(BOOT_RELOAD_KEY, "1");
+  } catch {
+    /* ignore */
+  }
+}
 
 /**
- * يفحص دوريًا (كل بضع دقائق + فور رجوع التبويب من الخلفية) هل صار هناك
- * نشر أحدث من الذي حُمِّلت به هذه الجلسة، بمقارنة commit الحيّ في
- * /version.json بما حُمِّل فعليًا عند بدء الجلسة. عند الاكتشاف يعرض شيتًا
- * هادئًا دون إعادة تحميل قسرية — `applyUpdate` يُعيد التحميل عند طلب المستخدم.
+ * فحص نشر أحدث عبر /version.json.
+ * - عند الدخول (أول ثوانٍ): إن وُجدت نسخة أحدث → reload صامت مرة واحدة بلا شيت
+ *   (يمنع ظهور «تحديثان قديمان» وتعليق الشاشة مع SW/chunk-recovery).
+ * - بعد استقرار الجلسة: شيت هادئ فقط إن طلب المستخدم التحديث.
  */
 export function useVersionCheck() {
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [loadedCommit] = useState(() => getLoadedCommit());
   const checkingRef = useRef(false);
   const dismissedRef = useRef(false);
+  const bootAtRef = useRef(Date.now());
 
   const applyUpdate = useCallback(() => {
     safeLocationReload();
@@ -29,12 +51,23 @@ export function useVersionCheck() {
 
   const check = useCallback(async () => {
     if (!loadedCommit || checkingRef.current || dismissedRef.current) return;
+    if (isChunkRecoveryInFlight()) return;
+
     checkingRef.current = true;
     try {
       const found = await isNewVersionAvailable(loadedCommit);
-      if (found && !dismissedRef.current) {
-        setUpdateAvailable(true);
+      if (!found || dismissedRef.current || isChunkRecoveryInFlight()) return;
+
+      const inBootWindow = Date.now() - bootAtRef.current < BOOT_SILENT_MS;
+      if (inBootWindow) {
+        if (!alreadyDidBootReload()) {
+          markBootReload();
+          safeLocationReload();
+        }
+        return;
       }
+
+      setUpdateAvailable(true);
     } finally {
       checkingRef.current = false;
     }
@@ -43,14 +76,22 @@ export function useVersionCheck() {
   useEffect(() => {
     if (!loadedCommit || updateAvailable) return;
 
-    void check();
-    const interval = window.setInterval(() => { void check(); }, VERSION_CHECK_INTERVAL_MS);
+    // لا تفحص فورًا عند الرسم الأول — أعطِ SW/chunks فرصة للاستقرار
+    const bootDelay = window.setTimeout(() => {
+      void check();
+    }, 2_500);
+
+    const interval = window.setInterval(() => {
+      void check();
+    }, VERSION_CHECK_INTERVAL_MS);
+
     const onVisibility = () => {
       if (document.visibilityState === "visible") void check();
     };
     document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
+      window.clearTimeout(bootDelay);
       window.clearInterval(interval);
       document.removeEventListener("visibilitychange", onVisibility);
     };

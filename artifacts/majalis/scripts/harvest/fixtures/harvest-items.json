@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "sourceId": "telegram-DrosQ8",
+      "externalId": "fixture-001",
+      "url": "https://t.me/DrosQ8/1001",
+      "title": "درس فقه العبادات",
+      "text": "درس فقه العبادات — الشيخ: فهد المطيري — مسجد الصباحية — بعد المغرب — للرجال",
+      "publishedAt": "2026-08-22T18:00:00.000Z"
+    },
+    {
+      "sourceId": "telegram-DrosQ8",
+      "externalId": "fixture-002",
+      "url": "https://t.me/DrosQ8/1002",
+      "title": "حلقة تحفيظ",
+      "text": "حلقة تحفيظ للنساء في مركز الدرر — تسميع جزء عم — يوم الثلاثاء ٥ م",
+      "publishedAt": "2026-08-22T16:00:00.000Z"
+    },
+    {
+      "sourceId": "web-awqaf.gov.kw",
+      "externalId": "fixture-awqaf-1",
+      "url": "https://awqaf.gov.kw",
+      "title": "خطبة الجمعة",
+      "text": "خطبة الجمعة في المسجد الكبير — الشيخ: محمد العجمي — بعد صلاة الجمعة",
+      "publishedAt": "2026-08-22T09:00:00.000Z"
+    },
+    {
+      "sourceId": "ig-nebraas_kw",
+      "externalId": "fixture-neb-1",
+      "url": "https://instagram.com/p/fixture1",
+      "title": "دورة السيرة",
+      "text": "دورة السيرة النبوية — برنامج أسبوعي — التسجيل مفتوح https://forms.gle/example",
+      "publishedAt": "2026-08-21T12:00:00.000Z"
+    },
+    {
+      "sourceId": "ig-alholah_kw",
+      "externalId": "fixture-hol-1",
+      "url": "https://instagram.com/p/fixture2",
+      "title": "إعلان حلقة",
+      "text": "حلقات الخلة تعلن عن مقرأة جديدة للنشء في منطقة حولي",
+      "publishedAt": "2026-08-21T10:00:00.000Z"
+    }
+  ]
+}

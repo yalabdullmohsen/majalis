@@ -30,20 +30,20 @@
   margin: 0 0 0.4rem;
 }
 .fqh-hub-hero__title {
-  font-size: clamp(1.5rem, 5vw, 2rem);
-  font-weight: 900;
-  color: #FFFFFF;
+  font-size: var(--type-page-title, clamp(1.625rem, 5vw, 2rem));
+  font-weight: 800;
+  color: var(--text-on-dark-primary, #FFFFFF);
   margin: 0 0 0.5rem;
-  font-family: var(--font-display, serif);
-  line-height: 1.4;
+  font-family: var(--font-heading, var(--font-display, serif));
+  line-height: 1.35;
   letter-spacing: 0;
 }
 .fqh-hub-hero__sub {
-  font-size: clamp(0.875rem, 3vw, 1rem);
-  color: rgba(255,255,255,0.82);
+  font-size: var(--type-card-desc, clamp(0.875rem, 3vw, 1rem));
+  color: var(--text-on-dark-secondary, rgba(255,255,255,0.9));
   margin: 0;
   max-width: 55ch;
-  line-height: 1.9;
+  line-height: var(--lh-type-prose, 1.75);
   letter-spacing: 0;
 }
 
@@ -79,9 +79,9 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 0.45rem;
-  padding: 1rem 1.1rem;
-  min-height: 8rem;
+  gap: 0.5rem;
+  padding: 0.85rem 0.95rem;
+  min-height: 7.25rem;
   height: auto;
   border-radius: 12px;
   border: 1.5px solid var(--border);
@@ -102,27 +102,23 @@
 }
 .fqh-hub-card__emoji { font-size: 1.6rem; line-height: 1; }
 .fqh-hub-card__title {
-  font-size: clamp(1.05rem, 3.6vw, 1.25rem);
+  font-size: var(--type-card-title, clamp(1.125rem, 3.2vw, 1.25rem));
   font-weight: 700;
-  color: var(--textPrimary, var(--majalis-ink, var(--text)));
+  color: var(--text-primary, var(--textPrimary, var(--majalis-ink, var(--text))));
   margin: 0;
-  line-height: 1.4;
+  line-height: var(--lh-type-card, 1.55);
   letter-spacing: 0;
   overflow-wrap: anywhere;
 }
-.fqh-hub-card:hover .fqh-hub-card__title { color: var(--fqh-clr, var(--text-brand)); }
+.fqh-hub-card:hover .fqh-hub-card__title { color: var(--fqh-clr, var(--brand, var(--text-brand))); }
 .fqh-hub-card__desc {
-  font-size: clamp(0.875rem, 3vw, 1rem);
-  color: var(--textSecondary, var(--text-2));
+  font-size: var(--type-card-desc, clamp(0.875rem, 3vw, 0.9375rem));
+  color: var(--text-secondary, var(--textSecondary, var(--text-2)));
   margin: 0;
-  line-height: 1.9;
+  line-height: var(--lh-type-ui, 1.65);
   letter-spacing: 0;
   overflow: hidden;
   overflow-wrap: anywhere;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
 }
 html[data-theme="dark"] .fqh-hub-card__desc {
   color: var(--textSecondary, var(--text-2));
@@ -178,18 +174,22 @@ html[data-theme="dark"] .fqh-hub-card__desc {
 .fqp-tabs-scroll::-webkit-scrollbar { display: none; }
 .fqp-tab {
   display: inline-flex; align-items: center; gap: .375rem;
-  padding: .875rem 1.25rem; font-size: .875rem; font-weight: 500;
+  padding: .75rem 1rem; font-size: var(--type-card-desc, .875rem); font-weight: 600;
   white-space: nowrap; border-bottom: 2px solid transparent;
-  transition: color .15s, border-color .15s;
-  color: var(--majalis-ink-soft); background: none; border-top: none;
+  transition: color .15s, border-color .15s, background .15s;
+  color: var(--text-secondary, var(--majalis-ink-soft)); background: none; border-top: none;
   border-inline-start: none; border-inline-end: none; cursor: pointer;
   flex: 0 0 auto;
   scroll-snap-align: start;
 }
-.fqp-tab:hover { color: var(--majalis-ink); }
-.fqp-tab--active { border-bottom-color: var(--mn-border-active, var(--majalis-emerald)); color: var(--mn-text-active, var(--majalis-emerald-deep)); }
-.fqp-section-title { font-size: var(--ds-text-xl); font-weight: 700; color: var(--majalis-ink); display: flex; align-items: center; gap: .5rem; }
-.fqp-section-desc { font-size: .875rem; color: var(--majalis-ink-soft); }
+.fqp-tab:hover { color: var(--text-primary, var(--majalis-ink)); }
+.fqp-tab--active {
+  border-bottom-color: var(--brand, var(--mn-border-active, var(--majalis-emerald)));
+  color: var(--brand-contrast, var(--mn-text-active, var(--majalis-emerald-deep)));
+  background: color-mix(in srgb, var(--brand, var(--majalis-emerald)) 10%, transparent);
+}
+.fqp-section-title { font-size: var(--type-card-title, var(--ds-text-xl)); font-weight: 700; color: var(--text-primary, var(--majalis-ink)); display: flex; align-items: center; gap: .5rem; }
+.fqp-section-desc { font-size: var(--type-card-desc, .875rem); color: var(--text-secondary, var(--majalis-ink-soft)); line-height: var(--lh-type-ui, 1.65); }
 .fqp-see-all { font-size: .875rem; color: var(--majalis-emerald); text-decoration: none; cursor: pointer; }
 .fqp-see-all:hover { text-decoration: underline; }
 .fqp-card {
@@ -200,7 +200,7 @@ html[data-theme="dark"] .fqh-hub-card__desc {
 .fqp-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
 .fqp-card--hover-border:hover { border-color: var(--majalis-emerald); }
 .fqp-card--center { text-align: center; }
-.fqp-card__title { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; line-height: 1.35; margin-bottom: .25rem; }
+.fqp-card__title { font-weight: 600; color: var(--text-primary, var(--majalis-ink)); font-size: var(--type-card-title, .9375rem); line-height: var(--lh-type-card, 1.45); margin-bottom: .25rem; }
 .fqp-card__title--mb2 { margin-bottom: .5rem; }
 .fqp-card__icon { font-size: var(--ds-text-2xl); margin-bottom: .25rem; }
 .fqp-cat-badge {
@@ -431,18 +431,18 @@ html[data-theme="dark"] .fqh-hub-card__desc {
 }
 .fiqh-book-card__title {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: var(--type-card-title, 0.9375rem);
   font-weight: 700;
-  line-height: 1.45;
+  line-height: var(--lh-type-card, 1.45);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.35rem;
 }
 .fiqh-book-card__meta {
   margin: 0.35rem 0 0;
-  font-size: 0.78rem;
-  color: var(--majalis-ink-soft, var(--text-2));
-  line-height: 1.45;
+  font-size: var(--type-card-desc, 0.8125rem);
+  color: var(--text-secondary, var(--majalis-ink-soft, var(--text-2)));
+  line-height: var(--lh-type-ui, 1.65);
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;

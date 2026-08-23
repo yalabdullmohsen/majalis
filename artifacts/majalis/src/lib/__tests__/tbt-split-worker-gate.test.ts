@@ -26,7 +26,8 @@ assert.match(unified, /search-index\.worker/, "فهرس البحث عبر Worker
 
 const app = read("src/App.tsx");
 assert.match(app, /IdleRuntimeBoot/, "منطق المنصة بعد الخمول");
-assert.match(app, /DeferredPrayerRuntime/, "جدولة الصلاة بعد load+idle");
+assert.match(app, /PrayerCountdownScope/, "جدولة الصلاة مؤجلة على الرئيسية");
+assert.match(app, /PrayerRuntimeBoot/, "منطق الأذان داخل مزوّد الصلاة");
 assert.match(app, /lazyWithRetry\([\s\S]*PrayerCountdownBanner/, "شريط الصلاة خارج حزمة الإقلاع");
 
 const homeView = read("src/pages/account/ui/HomeView.tsx");

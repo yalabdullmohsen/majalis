@@ -22,7 +22,8 @@ import {
   publishedBooks,
   type FiqhBookCategory,
 } from "@/lib/fiqh-books";
-import { formatAbwabCount, formatMasailCount, NOUN_DURUS, NOUN_HALAQAT, NOUN_MUNASABAT, type ArabicCountNoun } from "@/lib/arabic-count";
+import { formatAbwabCount, formatMasailCount, NOUN_ASILA, NOUN_DURUS, NOUN_HALAQAT, NOUN_MUNASABAT, type ArabicCountNoun } from "@/lib/arabic-count";
+import { totalCompetitionQuestions } from "@/config/competitions-hub";
 import {
   SECTION_GROUP_META,
   SECTION_GROUP_ORDER,
@@ -71,8 +72,8 @@ export type LobbySpec = {
   primary?: LobbyPrimary;
   chips?: LobbyChip[];
   groups: LobbyGroup[];
-  /** رباعية اختصارات ٢×٢ — ترتيب RTL: دروس · حلقات · تقويم · أرشيف */
-  quad?: [LobbyQuadItem, LobbyQuadItem, LobbyQuadItem, LobbyQuadItem];
+  /** اختصارات سريعة — شبكة ٣+٢ في الدروس، ٢×٢ في غيرها */
+  quad?: LobbyQuadItem[];
 };
 
 function must(id: string): LobbyItem {
@@ -206,6 +207,7 @@ export function getLobby(id: LobbyId): LobbySpec {
       quad: [
         { ...must("lessons"), count: 97, noun: NOUN_DURUS, accent: true },
         { ...must("quran-circles"), label: "الحلقات", count: 28, noun: NOUN_HALAQAT, accent: true },
+        { ...must("competitions"), count: totalCompetitionQuestions(), noun: NOUN_ASILA, accent: true },
         { ...must("hijri-calendar"), label: "التقويم", count: 35, noun: NOUN_MUNASABAT },
         { ...must("lessons-archive"), count: 97, noun: NOUN_DURUS },
       ],

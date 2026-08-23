@@ -16,6 +16,7 @@
  *  ٤) مفتاح لكل شاشة + إصدار كبير واحد يُعيد العرض عند تغييره عمدًا فقط.
  */
 
+import { migrateLegacyFirstVisitIntroKeys } from "./first-visit-intro-state";
 import { storageSetSync } from "./native-storage";
 
 /** رفع هذا الرقم يعيد راية الخصوصية فقط — ليست شاشة بدء. */
@@ -138,6 +139,7 @@ function storedMajorVersion(): number | null {
  * الشاشة عند reload أو نشر جديد، فقط عند رفع ONBOARDING_MAJOR_VERSION.
  */
 export function initOnboardingState(): void {
+  migrateLegacyFirstVisitIntroKeys();
   purgeLegacyFirstRunArtifacts();
 
   const stored = storedMajorVersion();

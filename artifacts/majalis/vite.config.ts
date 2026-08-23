@@ -145,7 +145,9 @@ export default defineConfig({
          * التقسيم اليدوي هنا مقتصر على node_modules (تخزين مؤقت طويل الأمد).
          */
         manualChunks(id) {
-          if (!id.includes("node_modules")) return;
+          if (!id.includes("node_modules")) {
+            return;
+          }
 
           if (id.includes("@supabase")) return "supabase";
           if (id.includes("html-to-image")) return "html-export";

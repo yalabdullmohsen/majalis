@@ -93,11 +93,11 @@ html.dark .pattern-backdrop {
 }
 .page-hero-mj__title {
   margin: 0;
-  font-family: var(--mj-face, var(--font-display));
-  font-size: clamp(1.65rem, 6.2vw, 2.55rem);
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--mj-ink) !important;
+  font-family: var(--font-heading, var(--mj-face, var(--font-display)));
+  font-size: var(--type-page-title, clamp(1.625rem, 5vw, 2rem));
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--text-primary, var(--mj-ink)) !important;
 }
 .page-hero-mj__headline {
   margin: 0;
@@ -189,7 +189,7 @@ html.dark .pattern-backdrop {
 }
 .filter-chips__chip.is-active {
   background: var(--mj-brand, var(--color-primary));
-  color: #fff;
+  color: var(--text-on-brand, #fff);
   border-color: var(--mj-brand, var(--color-primary));
   box-shadow: none;
 }

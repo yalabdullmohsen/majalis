@@ -6,16 +6,21 @@ import { cn } from "@/lib/utils";
 import "./quick-actions-quad.css";
 
 type Props = {
-  items: [LobbyQuadItem, LobbyQuadItem, LobbyQuadItem, LobbyQuadItem];
+  items: LobbyQuadItem[];
 };
 
 /**
- * مربع اختصارات ٢×٢ — صندوق واحد بفواصل داخلية.
- * ترتيب RTL في الشبكة: يمين أعلى ← يسار أعلى ← يمين أسفل ← يسار أسفل.
+ * شبكة اختصارات — ٢×٢ افتراضيًا، ٣+٢ للدروس (٥ عناصر).
+ * ترتيب RTL: يمين أعلى ← يسار أعلى ← …
  */
 export function QuickActionsQuad({ items }: Props) {
   return (
-    <div className="quick-quad" data-quick-quad="1" dir="rtl">
+    <div
+      className="quick-quad"
+      data-quick-quad="1"
+      data-count={items.length}
+      dir="rtl"
+    >
       {items.map((it) => {
         const countLabel = pluralAr(it.count, it.noun);
         const Icon = it.icon;

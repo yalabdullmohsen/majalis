@@ -10,7 +10,7 @@ import {
   Landmark,
   type LucideIcon,
 } from "lucide-react";
-import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
+import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
 import { useNumerals } from "@/hooks/useNumerals";
 import { PRE_ALERT_MINUTES, isBannerDismissedFor, dismissBannerFor, loadPrayerAlertPrefs } from "@/lib/prayer-alert-preferences";
 import "@/styles/components/prayer-countdown-banner.css";
@@ -32,7 +32,7 @@ const POST_ADHAN_MAX_SEC = 35 * 60;
  * - بعد ذلك يختفي ويعود شريط الصلاة القادمة عبر مسارات أخرى
  */
 export function PrayerCountdownBanner() {
-  const { countdown } = usePrayerCountdown();
+  const { countdown } = useSharedPrayerCountdown();
   const fmt = useNumerals();
   const [dismissedKey, setDismissedKey] = useState<string | null>(null);
   const [leaving, setLeaving] = useState(false);

@@ -1,0 +1,564 @@
+{
+  "month": "2026-08",
+  "items": [
+    {
+      "id": "5de459c93f46c192bc23f6324432a33e5f36818c",
+      "type": "إعلان",
+      "title_ar": "https://aayatkw.com",
+      "summary_ar": "https://aayatkw.com",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "web-aayatkw.com",
+          "name_ar": "مبرة آيات",
+          "url": "https://aayatkw.com",
+          "post_url": "https://aayatkw.com",
+          "platform": "web"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:53.855Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "f2c03d3dbeac78ae9562922c47e246fd1dda0de2",
+      "type": "إعلان",
+      "title_ar": "drosq8 Official: Instagram, X | Linktree",
+      "summary_ar": "موقع دروس الكويت",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "web-drosq8-linktree",
+          "name_ar": "دروس الكويت — روابط",
+          "url": "https://linktr.ee/drosq8",
+          "post_url": "https://linktr.ee/drosq8",
+          "platform": "web"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:50.676Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "f29663ca6f0dd705a6e387802e208ccf6d2f6228",
+      "type": "درس",
+      "title_ar": "ندعوكم اليوم لحضور درس علمي: شرح رسالة ‌&rlm;« أصول السنة » للإمام أحمد بن حنبل للشيخ حسين المويزري @H_Almuwiz",
+      "summary_ar": "ندعوكم اليوم لحضور درس علمي: شرح رساله ‌&rlm;« اصول السنه » للامام احمد بن حنبل للشيخ حسين المويزري @H_Almuwizri ⌚ كل يوم السبت (بعد صلاه العصر) مسجد سعد بن دب…",
+      "sheikh": null,
+      "place": "سعد بن دبيس-الفردوس https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27607",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.460Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "bdb9f945182d591e709e5ca3b7480072e327ecb4",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور درس علمي: شرح نظم الآجرمية للقلاوي للشيخ حسين المويزري @H_Almuwizri ⌚ كل سبت بعد صلاة المغ",
+      "summary_ar": "ندعوكم الليله لحضور درس علمي: شرح نظم الاجرميه للقلاوي للشيخ حسين المويزري @H_Almuwizri ⌚ كل سبت بعد صلاه المغرب مسجد سعد بن دبيس-الفردوس https://maps.app.goo.…",
+      "sheikh": null,
+      "place": "سعد بن دبيس-الفردوس https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27608",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.460Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "8e7fc91e7d3bbb7fdacb61a4569dbc4731543f8f",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور الدرس العلمي: (شرح كتاب زاد المستقنع) للشيخ د. حمد بن محمد الهاجري &rlm; @DrHamadAlhajri \ud83d",
+      "summary_ar": "ندعوكم الليله لحضور الدرس العلمي: (شرح كتاب زاد المستقنع) للشيخ د. حمد بن محمد الهاجري &rlm; @DrHamadAlhajri كل يوم&nbsp;سبت ⏰ بعد صلاه المغرب مسجد عبدالمحسن ا…",
+      "sheikh": "حمد بن محمد الهاجري &rlm; @DrHamadAlhajri 📆 كل يوم&nbsp;سبت",
+      "place": "عبدالمحسن الزبن - الفنيطيس ق٦ https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27609",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.460Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "1e814a787a3bb229e56a35d2797b42122c668033",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور المجلس العلمي: (التعليق على حاشية ابن قاسم على الدرة المضيئة ) للشيخ بندر الميموني @bander",
+      "summary_ar": "ندعوكم الليله لحضور المجلس العلمي: (التعليق علي حاشيه ابن قاسم علي الدره المضيئه ) للشيخ بندر الميموني @bandersnt كل يوم سبت واحد ⏰ بعد صلاه المغرب مسجد نابي ا…",
+      "sheikh": null,
+      "place": "نابي الدويلة - العمرية https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27610",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.460Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "41197c6d88f8225d4025b09a596aebc19d8ebb31",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور محاضرة بعنوان: وقفات مع مولد النبي ﷺ للشيخ منصور بن ناصر الخالدي @mnsalkhaldi ⏰ الساعة:",
+      "summary_ar": "ندعوكم الليله لحضور محاضره بعنوان: وقفات مع مولد النبي ﷺ للشيخ منصور بن ناصر الخالدي @mnsalkhaldi ⏰ الساعه: 9:30 م ديوان فلاح الشمري - بمنطقه المطلاع N7 https:…",
+      "sheikh": null,
+      "place": "المطلاع N7 https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": "9:30 م",
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27611",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.460Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "891307e9153dc9a4a373aad6566e407b493667fd",
+      "type": "درس",
+      "title_ar": "الان مباشر من المغرب (1) شرح مقدمة الجامع لابن أبي زيد القيرواني فضيلة الشيخ د. خالد بن ضحوي الظفيري رابط البث",
+      "summary_ar": "الان مباشر من المغرب (1) شرح مقدمه الجامع لابن ابي زيد القيرواني فضيله الشيخ د. خالد بن ضحوي الظفيري رابط البث المباشر https://aldhafiri.mixlr.com/embed قناه م…",
+      "sheikh": "خالد بن ضحوي الظفيري 🔗 رابط البث المباشر https://aldhafiri",
+      "place": "لابن أبي زيد القيرواني 🎙️ فضيلة الشيخ د",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27612",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.460Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "4e92208b5aeba235aa150454d4117a221823f22d",
+      "type": "إعلان",
+      "title_ar": "الآن مباشر وقفات مع مولد النبي ﷺ للشيخ منصور بن ناصر الخالدي رابط البث المباشر https://www.youtube.com/live",
+      "summary_ar": "الان مباشر وقفات مع مولد النبي ﷺ للشيخ منصور بن ناصر الخالدي رابط البث المباشر https://www.youtube.com/live/AuLOIHG7jVs?si= قناه موقع دروس الكويت https://t.me/…",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27613",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.460Z",
+      "confidence": 0.7
+    },
+    {
+      "id": "d7af134b85f5f8793d40aa0d32f10ab5978d1371",
+      "type": "إعلان",
+      "title_ar": "#المولد_النبوي",
+      "summary_ar": "#المولد_النبوي",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27614",
+          "platform": "telegram"
+        },
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27615",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.460Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "e2959c2e0a15d62877467881a3e9dcc293415897",
+      "type": "درس",
+      "title_ar": "قال العلامه العثيمين رحمه الله: &rlm;&quot; الذين يبتدعون الاحتفال بالمولد النبوي ناقصون في تحقيق شهادة أن محمد رسول الل",
+      "summary_ar": "قال العلامه العثيمين رحمه الله: &rlm;&quot; الذين يبتدعون الاحتفال بالمولد النبوي ناقصون في تحقيق شهاده ان محمد رسول الله ؛ لان تحقيقها يستلزم ان لايزيد في شري…",
+      "sheikh": null,
+      "place": "تحقيق شهادة أن محمد رسول الله ؛ لأن تحقيقها يستلزم أن لايزيد في شريعته ماليس منه",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27616",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.460Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "4fb4066b7905a14cb9614ae81092da3c633d2962",
+      "type": "إعلان",
+      "title_ar": "أحاديث يوم الجمعة",
+      "summary_ar": "احاديث يوم الجمعه",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27595",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.459Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "38833884fd17999f10ad61e45aa9c633d5e06330",
+      "type": "إعلان",
+      "title_ar": "من خطب الجمعة اليوم",
+      "summary_ar": "من خطب الجمعه اليوم",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27598",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.459Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "e5bd3bfb1c508be32c9050bf9c4dd358bbb43e31",
+      "type": "خطبة",
+      "title_ar": "خطبة - بين وفاة النبي صلى الله عليه وسلم والاحتفال بالمولده للشيخ بندر الميموني @bandersnt رابط الخطبة http",
+      "summary_ar": "خطبه - بين وفاه النبي صلي الله عليه وسلم والاحتفال بالمولده للشيخ بندر الميموني @bandersnt رابط الخطبه https://drosq8.com/play/24825 قناه موقع دروس الكويت http…",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27599",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.459Z",
+      "confidence": 0.7
+    },
+    {
+      "id": "caa314c8e6982d910616dcfd6130021be40d7772",
+      "type": "خطبة",
+      "title_ar": "خطبة - لا تحاسدوا فضيلة الشيخ د. عمر رشيد الزبيدي @alzubaidy77 رابط الخطبة https://drosq8.com/play/24823",
+      "summary_ar": "خطبه - لا تحاسدوا فضيله الشيخ د. عمر رشيد الزبيدي @alzubaidy77 رابط الخطبه https://drosq8.com/play/24823 قناه موقع دروس الكويت https://t.me/DrosQ8",
+      "sheikh": "عمر رشيد الزبيدي @alzubaidy77 🔊 رابط الخطبة 👇 https://dros",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27600",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.459Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "393b853781da991a8bdef1203dd295361c473322",
+      "type": "خطبة",
+      "title_ar": "خطبة - الحث على لزوم الآداب الإسلامية فضيلة الشيخ حسين بن مبارك المويزري @H_Almuwizri رابط الخطبة https://d",
+      "summary_ar": "خطبه - الحث علي لزوم الاداب الاسلاميه فضيله الشيخ حسين بن مبارك المويزري @H_Almuwizri رابط الخطبه https://drosq8.com/play/24826 قناه موقع دروس الكويت https://t…",
+      "sheikh": "حسين بن مبارك المويزري @H_Almuwizri 🔊 رابط الخطبة 👇 https:",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27601",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.459Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "db734efafc902105f4a8ec3191bb82b790402d6a",
+      "type": "خطبة",
+      "title_ar": "خطبة - مقتل الصحابي علي بن أبي طالب رضي الله عنه فضيلة الشيخ مرزوق العازمي @Marzog_Alazmi رابط الخطبة https",
+      "summary_ar": "خطبه - مقتل الصحابي علي بن ابي طالب رضي الله عنه فضيله الشيخ مرزوق العازمي @Marzog_Alazmi رابط الخطبه https://drosq8.com/play/24822 قناه موقع دروس الكويت https…",
+      "sheikh": "مرزوق العازمي @Marzog_Alazmi 🔊 رابط الخطبة 👇 https://drosq",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27602",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.459Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "e7c1993b93cb73b6494255ff76dbf014108526d0",
+      "type": "خطبة",
+      "title_ar": "خطبة - اتباع السُنة والتحذير من بدعة المولد فضيلة الشيخ فهد بن سعود الدوسري رابط الخطبة https://drosq8.com/",
+      "summary_ar": "خطبه - اتباع السنه والتحذير من بدعه المولد فضيله الشيخ فهد بن سعود الدوسري رابط الخطبه https://drosq8.com/play/24827 قناه موقع دروس الكويت https://t.me/DrosQ8",
+      "sheikh": "فهد بن سعود الدوسري 🔊 رابط الخطبة 👇 https://drosq8",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27603",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.459Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "849e6d92335ef65d2ad59d7e6cc8aaeebd7d8fb0",
+      "type": "خطبة",
+      "title_ar": "خطبة - تحقيق الشهادتين فضيلة الشيخ يوسف الغريب رابط الخطبة https://drosq8.com/play/24824",
+      "summary_ar": "خطبه - تحقيق الشهادتين فضيله الشيخ يوسف الغريب رابط الخطبه https://drosq8.com/play/24824 قناه موقع دروس الكويت https://t.me/DrosQ8",
+      "sheikh": "يوسف الغريب 🔊 رابط الخطبة 👇 https://drosq8",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27604",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.459Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "26d208057b2dbfd9526a4ef4d7de04482bc33caa",
+      "type": "إعلان",
+      "title_ar": "&rlm; قال الشيخ صالح الفوزان حفظه الله : &rlm; إقامة المولد النبوي من البدع المحرمة التي لم يرد بها دليل من كتاب الله",
+      "summary_ar": "&rlm; قال الشيخ صالح الفوزان حفظه الله : &rlm; اقامه المولد النبوي من البدع المحرمه التي لم يرد بها دليل من كتاب الله ولا من سنه رسول الله صلي الله عليه وسلم :…",
+      "sheikh": "صالح الفوزان حفظه الله : &rlm; إقامة المولد النبوي من البدع",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27605",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.459Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "09280cee56d0009d47352c48e6fb50b1375ef193",
+      "type": "إعلان",
+      "title_ar": "جدول دروس اليوم السبت",
+      "summary_ar": "جدول دروس اليوم السبت",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27606",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:43.459Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "d7061220400944e57eaeae5b96aea9f6f7950a72",
+      "type": "إعلان",
+      "title_ar": "جمعية الوحيين للقرآن والسنة",
+      "summary_ar": "جمعيه الوحيين للقران والسنه",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "web-waheen.net",
+          "name_ar": "جمعية الوحيين",
+          "url": "https://waheen.net",
+          "post_url": "https://waheen.net",
+          "platform": "web"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:39.756Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "c28f9570135a071a50937a8f0c435a2563314016",
+      "type": "إعلان",
+      "title_ar": "جمعية المنابر القرآنية",
+      "summary_ar": "جمعيه المنابر القرانيه",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "web-almanabr.org",
+          "name_ar": "جمعية المنابر القرآنية",
+          "url": "https://almanabr.org",
+          "post_url": "https://almanabr.org",
+          "platform": "web"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T00:28:34.045Z",
+      "confidence": 0.65
+    }
+  ]
+}

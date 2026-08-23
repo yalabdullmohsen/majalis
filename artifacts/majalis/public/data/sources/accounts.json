@@ -1,0 +1,978 @@
+{
+  "version": 1,
+  "updated_at": "2026-08-23T02:39:04.863Z",
+  "accounts": [
+    {
+      "id": "web-aayatkw.com",
+      "platform": "web",
+      "handle": "aayatkw.com",
+      "url": "https://aayatkw.com",
+      "name_ar": "آيات",
+      "kind": "مبرة",
+      "topics": [
+        "قرآن",
+        "حلقات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://aayatkw.com",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-athr_yabka",
+      "platform": "instagram",
+      "handle": "athr_yabka",
+      "url": "https://instagram.com/athr_yabka",
+      "name_ar": "أثر يبقى",
+      "kind": "مبادرة",
+      "topics": [
+        "فوائد",
+        "دعوة"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-erth.kwt",
+      "platform": "instagram",
+      "handle": "erth.kwt",
+      "url": "https://instagram.com/erth.kwt",
+      "name_ar": "إرث",
+      "kind": "مبادرة",
+      "topics": [
+        "دورات",
+        "قرآن",
+        "تربية"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-itm2nan_",
+      "platform": "instagram",
+      "handle": "itm2nan_",
+      "url": "https://instagram.com/itm2nan_",
+      "name_ar": "إطمئنان",
+      "kind": "مبادرة",
+      "topics": [
+        "دعوة",
+        "تذكير"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-shariaaac",
+      "platform": "instagram",
+      "handle": "shariaaac",
+      "url": "https://instagram.com/shariaaac",
+      "name_ar": "أكاديمية الشريعة",
+      "kind": "أكاديمية",
+      "topics": [
+        "فقه",
+        "علم شرعي",
+        "دورات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-w_alanbiya",
+      "platform": "instagram",
+      "handle": "w_alanbiya",
+      "url": "https://instagram.com/w_alanbiya",
+      "name_ar": "أكاديمية ورثة الأنبياء",
+      "kind": "أكاديمية",
+      "topics": [
+        "علم شرعي",
+        "دورات",
+        "دروس"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-rasikhoon",
+      "platform": "instagram",
+      "handle": "rasikhoon",
+      "url": "https://instagram.com/rasikhoon",
+      "name_ar": "الراسخون",
+      "kind": "جمعية",
+      "topics": [
+        "علم شرعي",
+        "دروس"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-masjid_alshalahi_women",
+      "platform": "instagram",
+      "handle": "masjid_alshalahi_women",
+      "url": "https://instagram.com/masjid_alshalahi_women",
+      "name_ar": "اللجنة النسائية بجامع سعد الشلاحي",
+      "kind": "مسجد",
+      "topics": [
+        "دروس",
+        "فقه"
+      ],
+      "audience": "نساء",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-thegrandmosque",
+      "platform": "instagram",
+      "handle": "thegrandmosque",
+      "url": "https://instagram.com/thegrandmosque",
+      "name_ar": "المسجد الكبير — دولة الكويت",
+      "kind": "مسجد",
+      "topics": [
+        "خطب",
+        "محاضرات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-quranicplatform",
+      "platform": "instagram",
+      "handle": "quranicplatform",
+      "url": "https://instagram.com/quranicplatform",
+      "name_ar": "المنصة القرآنية العالمية",
+      "kind": "منصة",
+      "topics": [
+        "قرآن",
+        "تعليم"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-alshalahi_masjid",
+      "platform": "instagram",
+      "handle": "alshalahi_masjid",
+      "url": "https://instagram.com/alshalahi_masjid",
+      "name_ar": "جامع سعد الشلاحي",
+      "kind": "مسجد",
+      "topics": [
+        "دروس",
+        "فقه"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-alshalahi_masjd",
+      "platform": "instagram",
+      "handle": "alshalahi_masjd",
+      "url": "https://instagram.com/alshalahi_masjd",
+      "name_ar": "جامع سعد محمد الشلاحي",
+      "kind": "مسجد",
+      "topics": [
+        "فقه",
+        "دروس",
+        "خطب"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-almanabr",
+      "platform": "instagram",
+      "handle": "almanabr",
+      "url": "https://almanabr.org",
+      "name_ar": "جمعية المنابر القرآنية",
+      "kind": "جمعية",
+      "topics": [
+        "قرآن",
+        "حلقات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://almanabr.org",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "web-almanabr.org",
+      "platform": "web",
+      "handle": "almanabr.org",
+      "url": "https://almanabr.org",
+      "name_ar": "جمعية المنابر القرآنية",
+      "kind": "جمعية",
+      "topics": [
+        "قرآن",
+        "حلقات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://almanabr.org",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "web-waheen.net",
+      "platform": "web",
+      "handle": "waheen.net",
+      "url": "https://waheen.net",
+      "name_ar": "جمعية الوحيين",
+      "kind": "جمعية",
+      "topics": [
+        "قرآن",
+        "علم",
+        "دورات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://waheen.net",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-alwa7yyen",
+      "platform": "instagram",
+      "handle": "alwa7yyen",
+      "url": "https://waheen.net",
+      "name_ar": "جمعية الوحيين — مركز الدرر",
+      "kind": "جمعية",
+      "topics": [
+        "قرآن",
+        "علم",
+        "دورات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://waheen.net",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-tartelkw",
+      "platform": "instagram",
+      "handle": "tartelkw",
+      "url": "https://instagram.com/tartelkw",
+      "name_ar": "جمعية ترتيل",
+      "kind": "جمعية",
+      "topics": [
+        "قرآن",
+        "نساء",
+        "حلقات"
+      ],
+      "audience": "نساء",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-jouryaldahi",
+      "platform": "instagram",
+      "handle": "jouryaldahi",
+      "url": "https://instagram.com/jouryaldahi",
+      "name_ar": "جوري جاسم الضاحي",
+      "kind": "شخصية",
+      "topics": [
+        "قرآن",
+        "تعليم"
+      ],
+      "audience": "نشء",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "web-hoffath.org",
+      "platform": "web",
+      "handle": "hoffath.org",
+      "url": "https://hoffath.org",
+      "name_ar": "حفّاظ",
+      "kind": "جمعية",
+      "topics": [
+        "قرآن",
+        "حلقات",
+        "تحفيظ"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://hoffath.org",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-7offath",
+      "platform": "instagram",
+      "handle": "7offath",
+      "url": "https://hoffath.org",
+      "name_ar": "حُفّاظ",
+      "kind": "جمعية",
+      "topics": [
+        "قرآن",
+        "حلقات",
+        "تحفيظ"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://hoffath.org",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-erwaa.quran",
+      "platform": "instagram",
+      "handle": "erwaa.quran",
+      "url": "https://instagram.com/erwaa.quran",
+      "name_ar": "حلقات إرواء للقرآن — جامعة الكويت",
+      "kind": "حلقات",
+      "topics": [
+        "قرآن",
+        "طالبات"
+      ],
+      "audience": "نشء",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-alholah_kw",
+      "platform": "instagram",
+      "handle": "alholah_kw",
+      "url": "https://instagram.com/alholah_kw",
+      "name_ar": "حلقات الخلة لتحفيظ القرآن الكريم",
+      "kind": "حلقات",
+      "topics": [
+        "قرآن",
+        "تحفيظ"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-trahumkwclub",
+      "platform": "instagram",
+      "handle": "trahumkwclub",
+      "url": "https://instagram.com/trahumkwclub",
+      "name_ar": "حلقات تراحم التربوية",
+      "kind": "حلقات",
+      "topics": [
+        "قرآن",
+        "تربية"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-othmanalkamees",
+      "platform": "instagram",
+      "handle": "othmanalkamees",
+      "url": "https://instagram.com/othmanalkamees",
+      "name_ar": "د. عثمان الخميس",
+      "kind": "مسجد",
+      "topics": [
+        "دروس",
+        "فقه"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://www.othmanalkamees.com",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-duroos.alseera",
+      "platform": "instagram",
+      "handle": "duroos.alseera",
+      "url": "https://instagram.com/duroos.alseera",
+      "name_ar": "دروس السيرة النبوية",
+      "kind": "قناة",
+      "topics": [
+        "سيرة",
+        "دروس"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-DrosQ8",
+      "platform": "instagram",
+      "handle": "DrosQ8",
+      "url": "https://instagram.com/DrosQ8",
+      "name_ar": "دروس الكويت",
+      "kind": "قناة",
+      "topics": [
+        "دروس",
+        "خطب",
+        "مشايخ"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "telegram-DrosQ8",
+      "platform": "telegram",
+      "handle": "DrosQ8",
+      "url": "https://t.me/DrosQ8",
+      "name_ar": "دروس الكويت",
+      "kind": "قناة",
+      "topics": [
+        "دروس",
+        "خطب",
+        "مشايخ"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "contact": "https://t.me/DrosQ8",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-drooss_kw",
+      "platform": "instagram",
+      "handle": "drooss_kw",
+      "url": "https://instagram.com/drooss_kw",
+      "name_ar": "دروس شرعية الكويت",
+      "kind": "مسجد",
+      "topics": [
+        "دروس",
+        "فقه"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-duroos_abdullahalmubarak",
+      "platform": "instagram",
+      "handle": "duroos_abdullahalmubarak",
+      "url": "https://instagram.com/duroos_abdullahalmubarak",
+      "name_ar": "دروس غرب عبدالله المبارك",
+      "kind": "قناة",
+      "topics": [
+        "دروس",
+        "حلقات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-warathakw2",
+      "platform": "instagram",
+      "handle": "warathakw2",
+      "url": "https://instagram.com/warathakw2",
+      "name_ar": "دورات ورثة الأنبياء",
+      "kind": "أكاديمية",
+      "topics": [
+        "دورات",
+        "فقه"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://www.waratha.com",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-ibnabitallib",
+      "platform": "instagram",
+      "handle": "ibnabitallib",
+      "url": "https://instagram.com/ibnabitallib",
+      "name_ar": "دورة الخليفة الراشد علي بن أبي طالب العلمية",
+      "kind": "أكاديمية",
+      "topics": [
+        "دورات",
+        "فقه"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-diwan_al3uni_alsharif_alesbuei",
+      "platform": "instagram",
+      "handle": "diwan_al3uni_alsharif_alesbuei",
+      "url": "https://instagram.com/diwan_al3uni_alsharif_alesbuei",
+      "name_ar": "ديوان العوني الشريف الأسبوعي",
+      "kind": "ديوان",
+      "topics": [
+        "دروس",
+        "لقاءات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "web-drosq8-linktree",
+      "platform": "web",
+      "handle": "drosq8-linktree",
+      "url": "https://linktr.ee/drosq8",
+      "name_ar": "روابط دروس الكويت",
+      "kind": "قناة",
+      "topics": [
+        "دروس",
+        "خطب",
+        "مشايخ"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://linktr.ee/drosq8",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-fajeralkous",
+      "platform": "instagram",
+      "handle": "fajeralkous",
+      "url": "https://instagram.com/fajeralkous",
+      "name_ar": "فجر عبدالرحمن الكوس",
+      "kind": "شخصية",
+      "topics": [
+        "قرآن",
+        "تعليم"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-ghaith.kw",
+      "platform": "instagram",
+      "handle": "ghaith.kw",
+      "url": "https://instagram.com/ghaith.kw",
+      "name_ar": "فريق غيث",
+      "kind": "فريق",
+      "topics": [
+        "دعوة",
+        "مبادرات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-qetaa_quran",
+      "platform": "instagram",
+      "handle": "qetaa_quran",
+      "url": "https://instagram.com/qetaa_quran",
+      "name_ar": "قطاع القرآن الكريم — جمعية الوحيين",
+      "kind": "قطاع",
+      "topics": [
+        "قرآن",
+        "حلقات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-manaratkw",
+      "platform": "instagram",
+      "handle": "manaratkw",
+      "url": "https://instagram.com/manaratkw",
+      "name_ar": "لجنة منارات للعلم والدعوة",
+      "kind": "لجنة",
+      "topics": [
+        "دعوة",
+        "علم",
+        "دروس"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-al_mabarrah",
+      "platform": "instagram",
+      "handle": "al_mabarrah",
+      "url": "https://aayatkw.com",
+      "name_ar": "مبرة المتميزين — الحلقات النسائية",
+      "kind": "مبرة",
+      "topics": [
+        "نساء",
+        "قرآن",
+        "حلقات"
+      ],
+      "audience": "نساء",
+      "region_ar": "الكويت",
+      "site": "https://aayatkw.com",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-mrkz_al_albany",
+      "platform": "instagram",
+      "handle": "mrkz_al_albany",
+      "url": "https://instagram.com/mrkz_al_albany",
+      "name_ar": "مركز الإمام الألباني لتعليم العلوم الشرعية",
+      "kind": "مركز",
+      "topics": [
+        "علم شرعي",
+        "دورات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-saad.al.abdullah.city",
+      "platform": "instagram",
+      "handle": "saad.al.abdullah.city",
+      "url": "https://instagram.com/saad.al.abdullah.city",
+      "name_ar": "مركز سعد العبدالله لتحفيظ القرآن",
+      "kind": "مركز",
+      "topics": [
+        "قرآن",
+        "حلقات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-nebraas_kw",
+      "platform": "instagram",
+      "handle": "nebraas_kw",
+      "url": "https://instagram.com/nebraas_kw",
+      "name_ar": "مركز نبراس للسنة النبوية",
+      "kind": "مركز",
+      "topics": [
+        "سنة",
+        "حديث",
+        "دروس",
+        "دورات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-mosque.mbark.j",
+      "platform": "instagram",
+      "handle": "mosque.mbark.j",
+      "url": "https://instagram.com/mosque.mbark.j",
+      "name_ar": "مسجد الشيخ مبارك عبدالله المبارك الصباح — الجهراء",
+      "kind": "مسجد",
+      "topics": [
+        "دروس",
+        "حلقات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-mpe.kh11",
+      "platform": "instagram",
+      "handle": "mpe.kh11",
+      "url": "https://instagram.com/mpe.kh11",
+      "name_ar": "مسجد بتلة الخرينج",
+      "kind": "مسجد",
+      "topics": [
+        "دروس",
+        "فقه"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-masjedalansary",
+      "platform": "instagram",
+      "handle": "masjedalansary",
+      "url": "https://instagram.com/masjedalansary",
+      "name_ar": "مسجد جابر عتيك الأنصاري",
+      "kind": "مسجد",
+      "topics": [
+        "دروس",
+        "فقه"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-mhamadh.kw",
+      "platform": "instagram",
+      "handle": "mhamadh.kw",
+      "url": "https://instagram.com/mhamadh.kw",
+      "name_ar": "مسجد حمد حمدان العتيبي",
+      "kind": "مسجد",
+      "topics": [
+        "دروس",
+        "فقه"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-m_alkhayatq8",
+      "platform": "instagram",
+      "handle": "m_alkhayatq8",
+      "url": "https://instagram.com/m_alkhayatq8",
+      "name_ar": "مسجد راشد الخياط",
+      "kind": "مسجد",
+      "topics": [
+        "دروس",
+        "حلقات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-masjedalmehry",
+      "platform": "instagram",
+      "handle": "masjedalmehry",
+      "url": "https://instagram.com/masjedalmehry",
+      "name_ar": "مسجد عائشة المحري",
+      "kind": "مسجد",
+      "topics": [
+        "دروس",
+        "فقه"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-masjid_mubark_alsaifi",
+      "platform": "instagram",
+      "handle": "masjid_mubark_alsaifi",
+      "url": "https://instagram.com/masjid_mubark_alsaifi",
+      "name_ar": "مسجد مبارك الصيفي ووالديه",
+      "kind": "مسجد",
+      "topics": [
+        "دروس",
+        "قرآن",
+        "محاضرات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-moudhi_mosque",
+      "platform": "instagram",
+      "handle": "moudhi_mosque",
+      "url": "https://instagram.com/moudhi_mosque",
+      "name_ar": "مسجد موضي السور",
+      "kind": "مسجد",
+      "topics": [
+        "دروس",
+        "فقه"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "web-manar-alsabil.org",
+      "platform": "web",
+      "handle": "manar-alsabil.org",
+      "url": "https://manar-alsabil.org",
+      "name_ar": "منار السبيل",
+      "kind": "لجنة",
+      "topics": [
+        "دعوة",
+        "علم",
+        "دروس"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://manar-alsabil.org",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-mansuh_quranayh",
+      "platform": "instagram",
+      "handle": "mansuh_quranayh",
+      "url": "https://instagram.com/mansuh_quranayh",
+      "name_ar": "منصة قرآنية عن بُعد",
+      "kind": "منصة",
+      "topics": [
+        "قرآن",
+        "تلاوة",
+        "حفظ"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-nadwat.kw",
+      "platform": "instagram",
+      "handle": "nadwat.kw",
+      "url": "https://instagram.com/nadwat.kw",
+      "name_ar": "ندوات وحلقات ذكر — دروس الكويت للنساء",
+      "kind": "قناة",
+      "topics": [
+        "نساء",
+        "دروس",
+        "محاضرات"
+      ],
+      "audience": "نساء",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-wejdanalh",
+      "platform": "instagram",
+      "handle": "wejdanalh",
+      "url": "https://instagram.com/wejdanalh",
+      "name_ar": "وجدان محمد الجفيري",
+      "kind": "شخصية",
+      "topics": [
+        "دروس",
+        "قرآن"
+      ],
+      "audience": "نساء",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "web-awqaf.gov.kw",
+      "platform": "web",
+      "handle": "awqaf.gov.kw",
+      "url": "https://awqaf.gov.kw",
+      "name_ar": "وزارة الأوقاف",
+      "kind": "حكومي",
+      "topics": [
+        "دروس",
+        "خطب",
+        "فعاليات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://awqaf.gov.kw",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-kwt_awqaf",
+      "platform": "instagram",
+      "handle": "kwt_awqaf",
+      "url": "https://awqaf.gov.kw",
+      "name_ar": "وزارة الأوقاف والشؤون الإسلامية",
+      "kind": "حكومي",
+      "topics": [
+        "دروس",
+        "خطب",
+        "فعاليات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://awqaf.gov.kw",
+      "enabled": true,
+      "poll_priority": "high",
+      "last_seen_at": null
+    }
+  ]
+}

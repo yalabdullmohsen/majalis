@@ -1,0 +1,69 @@
+name: Harvest sources
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+    - cron: "0 15 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "pnpm"
+
+      - name: Enable pnpm
+        run: corepack enable
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+        working-directory: artifacts/majalis
+
+      - name: Run harvest
+        working-directory: artifacts/majalis
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          INSTAGRAM_INGEST_MODE: provider
+          INSTAGRAM_PROVIDER_KEY: ${{ secrets.INSTAGRAM_PROVIDER_KEY }}
+          INSTAGRAM_PROVIDER_ENDPOINT: ${{ secrets.INSTAGRAM_PROVIDER_ENDPOINT }}
+        run: pnpm run harvest
+
+      - name: Test harvest gates
+        working-directory: artifacts/majalis
+        run: pnpm run test:harvest
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- artifacts/majalis/public/data artifacts/majalis/docs/HARVEST_REPORT.md; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create PR
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: chore/harvest-${{ github.run_id }}
+          title: "chore(harvest): تحديث feed المصادر"
+          labels: safe:content
+          commit-message: "chore(harvest): تحديث feed المصادر"
+          body: |
+            تشغيلة حصاد تلقائية — تحديث `feed.json` و`accounts.json` و`HARVEST_REPORT.md`.
+          add-paths: |
+            artifacts/majalis/public/data/**
+            artifacts/majalis/docs/HARVEST_REPORT.md

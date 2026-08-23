@@ -15,8 +15,8 @@
   padding: .25rem .9rem; font-size: .75rem; font-weight: 700; letter-spacing: normal;
   margin-bottom: .9rem;
 }
-.fq-hero__title { font-size: 2rem; font-weight: 900; margin: 0 0 .6rem; line-height: 1.2; }
-.fq-hero__sub { font-size: .95rem; color: rgba(200,230,255,.75); margin: 0 0 1.75rem; line-height: 1.7; }
+.fq-hero__title { font-size: var(--type-page-title, clamp(1.625rem, 5vw, 2rem)); font-weight: 800; margin: 0 0 .6rem; line-height: 1.35; color: var(--text-on-dark-primary, #fff); }
+.fq-hero__sub { font-size: var(--type-card-desc, .9375rem); color: var(--text-on-dark-secondary, rgba(255,255,255,.88)); margin: 0 0 1.75rem; line-height: var(--lh-type-prose, 1.75); }
 .fq-hero__stats {
   display: flex; justify-content: center; gap: var(--ds-space-6); flex-wrap: wrap;
 }
@@ -67,13 +67,16 @@
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.fq-card__num { font-size: .85rem; font-weight: 900; }
+.fq-card__num { font-size: 0.8125rem; font-weight: 800; }
 .fq-card__title-wrap { flex: 1; min-width: 0; }
 .fq-card__arabic {
-  font-size: var(--ds-text-xl); font-weight: 900; color: #0F172A;
-  font-family: var(--font-body);
+  font-size: var(--type-card-title, 1.0625rem);
+  font-weight: 800;
+  color: var(--text-primary, var(--mj-ink));
+  font-family: var(--font-heading, var(--font-body));
+  line-height: var(--lh-type-card, 1.45);
 }
-.fq-card__chevron { color: #9CA3AF; flex-shrink: 0; display: flex; }
+.fq-card__chevron { color: var(--text-muted, #9CA3AF); flex-shrink: 0; display: flex; width: 1rem; height: 1rem; opacity: 0.75; }
 
 .fq-card__body {
   border-top: 1px solid #F3F4F6; padding: 1.1rem 1.25rem;

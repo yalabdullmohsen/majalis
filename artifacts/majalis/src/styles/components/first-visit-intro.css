@@ -1,0 +1,163 @@
+/* صفحة التعريف عند أول زيارة — خفيفة، RTL، mobile-first */
+
+.first-visit-intro {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding:
+    max(1rem, var(--inset-top, 0px))
+    max(1rem, var(--inset-right, 0px))
+    max(1.25rem, var(--inset-bottom, 0px))
+    max(1rem, var(--inset-left, 0px));
+  background:
+    radial-gradient(120% 80% at 50% -10%, color-mix(in srgb, var(--mj-brand, #1e5f4b) 14%, transparent), transparent 55%),
+    var(--mj-bg, #e8ecea);
+  color: var(--mj-ink, #0e241e);
+  box-sizing: border-box;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.first-visit-intro__inner {
+  width: min(100%, 28rem);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.first-visit-intro__hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.35rem;
+}
+
+.first-visit-intro__badge {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--mj-brand, #1e5f4b);
+}
+
+.first-visit-intro__title {
+  margin: 0;
+  font-size: clamp(1.35rem, 4.8vw, 1.65rem);
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--mj-ink, #0e241e);
+}
+
+.first-visit-intro__lead {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--mj-ink, #0e241e) 78%, transparent);
+}
+
+.first-visit-intro__cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.first-visit-intro__card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.8rem 0.85rem;
+  border-radius: var(--mj-r-md, 14px);
+  background: var(--mj-surface, #f2f4f3);
+  border: 1px solid var(--mj-hairline, rgba(14, 36, 30, 0.1));
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--mj-ink, #0e241e) 4%, transparent);
+}
+
+.first-visit-intro__card-icon {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 11%, var(--mj-surface, #fff));
+  color: var(--mj-brand, #1e5f4b);
+}
+
+.first-visit-intro__card-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.first-visit-intro__card-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.first-visit-intro__card-desc {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--mj-ink, #0e241e) 72%, transparent);
+}
+
+.first-visit-intro__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding-top: 0.15rem;
+}
+
+.first-visit-intro__btn {
+  min-height: 2.75rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.first-visit-intro__btn--primary {
+  background: var(--mj-brand, #1e5f4b);
+  color: var(--mj-on-brand, #fff);
+}
+
+.first-visit-intro__btn--primary:hover {
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 88%, #000);
+}
+
+.first-visit-intro__btn--ghost {
+  background: transparent;
+  color: var(--mj-brand, #1e5f4b);
+  border-color: color-mix(in srgb, var(--mj-brand, #1e5f4b) 35%, transparent);
+}
+
+.first-visit-intro__btn--ghost:hover {
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 8%, transparent);
+}
+
+@media (min-width: 480px) {
+  .first-visit-intro__inner {
+    gap: 1.45rem;
+  }
+
+  .first-visit-intro__cards {
+    gap: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .first-visit-intro__btn {
+    transition: none;
+  }
+}

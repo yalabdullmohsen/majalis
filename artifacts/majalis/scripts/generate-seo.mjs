@@ -710,6 +710,14 @@ const LIST_JSON_LD = {
     (PLATFORM_SEED.qa_items || []).slice(0, 24).map((r) => ({ name: r.question, url: `/quiz` })),
     "أسئلة لعبة سين جيم",
   ),
+  "/competitions": itemListJsonLdScript(
+    [
+      { name: "مسابقة القرآن الكريم", url: "/quiz?cats=quran" },
+      { name: "مسابقة الحديث الشريف", url: "/quiz?cats=hadith" },
+      { name: "مسابقة السيرة النبوية", url: "/quiz?cats=sira" },
+    ],
+    "مسابقات المجلس العلمي",
+  ),
   "/lessons": itemListJsonLdScript(lessonRows.slice(0, 30).map((r) => ({ name: r.title, url: `/lessons/${r.id}` })), "الدروس الشرعية"),
   "/adhkar": itemListJsonLdScript(FEATURED_ADHKAR.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })), "أقسام الأذكار"),
   "/prophets": itemListJsonLdScript(
@@ -1427,7 +1435,7 @@ ${linkList("خطوات مقترحة", [
 ${linkList("روابط ذات صلة", [
   { name: "من نحن", url: "/about-us" },
   { name: "سياسة الفتوى والمراجعة", url: "/fatwa-policy" },
-  { name: "المصادر والتراخيص", url: "/sources" },
+  { name: "المصادر والتراخيص", url: "/data-licenses" },
   { name: "تواصل معنا", url: "/contact" },
   { name: "علوم الحديث", url: "/hadith-science" },
 ])}`,
@@ -2580,6 +2588,7 @@ const LASTMOD_TODAY = "2026-08-15";
 const LASTMOD_PATHS = new Set([
   "/",
   "/lessons",
+  "/competitions",
   "/quran-hub",
   "/mushaf",
   "/adhkar",

@@ -1465,6 +1465,18 @@
       "destination": "/index.html"
     },
     {
+      "source": "/sources/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/data-licenses",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/competitions",
+      "destination": "/index.html"
+    },
+    {
       "source": "/more",
       "destination": "/index.html"
     }
@@ -1540,6 +1552,22 @@
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
         },
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/html.*"
+        }
+      ],
+      "headers": [
         {
           "key": "Content-Type",
           "value": "text/html; charset=utf-8"

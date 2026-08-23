@@ -33,14 +33,13 @@ import "./styles/tokens.css";
 // رموز دلالية موحّدة (سطح/نص/حد/خطوط) — بعد tokens وقبل الطبقات القديمة
 import "./styles/design-tokens.css";
 import "./styles/typography-scale.css";
+import "./styles/typography-app.css";
 import "./index.css";
-import "./styles/final-release.css";
 import "./styles/brand-v4-contrast-fixes.css";
 import "./styles/a11y-release-gate.css";
 import "./styles/m2030/foundation.css";
 import "./styles/m2030/navigation.css";
-import "./styles/m2030/pages.css";
-// calendar.css يُحمَّل مع صفحة التقويم فقط — ليس في مسار رسم الرئيسية
+// m2030/pages.css + final-release.css — بعد load+idle (ليست حرجة لأول شاشة)
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
 import "./styles/dark-mode-surfaces.css";
@@ -70,6 +69,8 @@ function loadNonCriticalCss() {
   void import("./styles/components/instant-interaction.css");
   void import("./styles/components/native-feel.css");
   void import("./styles/m2030/interactions.css");
+  void import("./styles/m2030/pages.css");
+  void import("./styles/final-release.css");
 }
 function scheduleNonCriticalCss() {
   scheduleOnIdle(loadNonCriticalCss, 2500);

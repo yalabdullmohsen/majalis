@@ -52,6 +52,7 @@ import {
   Mountain,
   Network,
   NotebookPen,
+  Radio,
   Scale,
   School,
   ScrollText,
@@ -61,6 +62,7 @@ import {
   Shapes,
   Sun,
   Trash2,
+  Trophy,
   User,
   Users,
   Volume2,
@@ -205,7 +207,7 @@ const QURAN_HUB_IDS = new Set([
   "quran-ulum-terms",
 ]);
 
-const LESSONS_HUB_IDS = new Set(["quran-circles", "lessons-archive"]);
+const LESSONS_HUB_IDS = new Set(["quran-circles", "competitions", "lessons-archive"]);
 
 type SectionSeed = Omit<SectionDef, "hub" | "accent"> & {
   hub?: SectionHub;
@@ -484,6 +486,20 @@ const SECTION_SEEDS: SectionSeed[] = [
     status: "live",
     keywords: ["حلقات", "تحفيظ", "دورات قرآن"],
     aliases: ["حلقات التحفيظ", "دور التحفيظ"],
+    hub: "lessons",
+  },
+  {
+    id: "competitions",
+    label: "المسابقات",
+    subtitle: "قرآن وحديث وسيرة نبوية",
+    route: "/competitions",
+    icon: Trophy,
+    group: "learning",
+    order: 4,
+    surfaces: SEARCH_ONLY,
+    status: "live",
+    keywords: ["مسابقات", "سين جيم", "اختبار"],
+    aliases: ["مسابقة", "سين جيم"],
     hub: "lessons",
   },
   {
@@ -967,13 +983,26 @@ const SECTION_SEEDS: SectionSeed[] = [
     id: "sources",
     label: "المصادر والتراخيص",
     subtitle: "مراجع ومصادر المحتوى",
-    route: "/sources",
+    route: "/data-licenses",
     icon: FolderOpen,
     group: "account",
     order: 80,
     surfaces: ACCOUNT,
     status: "live",
     keywords: ["مصادر", "تراخيص"],
+  },
+  {
+    id: "lesson-sources",
+    label: "دليل الجهات",
+    subtitle: "حسابات الدروس والحلقات",
+    route: "/sources",
+    icon: Radio,
+    group: "learning",
+    order: 7,
+    surfaces: SEARCH_ONLY,
+    status: "live",
+    keywords: ["جهات", "دروس", "حلقات", "مصادر"],
+    hub: "lessons",
   },
   {
     id: "fatwa-policy",

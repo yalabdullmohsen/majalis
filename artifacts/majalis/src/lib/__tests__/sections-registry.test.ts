@@ -29,6 +29,7 @@ assert.ok(quranHubSections().some((s) => s.id === "quran-tajweed"));
 assert.ok(quranHubSections().some((s) => s.id === "quran-qiraat"));
 assert.ok(quranHubSections().length >= 12);
 assert.ok(lessonsHubSections().some((s) => s.id === "quran-circles"));
+assert.ok(lessonsHubSections().some((s) => s.id === "competitions"));
 assert.equal(
   quranHubSections().some((s) => s.id === "quran-circles"),
   false,
