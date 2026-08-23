@@ -20,10 +20,49 @@ export function getInstagramIngestMode() {
   return String(process.env.INSTAGRAM_INGEST_MODE || "oembed").toLowerCase();
 }
 
+/**
+ * يقبل رابط API فقط (https://...) من GitHub Secrets / env.
+ * يرفض أوامر curl الكاملة أو أي قيمة غير URL صالحة — دون تسجيل قيمة السر.
+ * @param {string} raw
+ * @returns {{ ok: true, endpoint: string }|{ ok: false, reason: string }}
+ */
+export function normalizeProviderEndpoint(raw) {
+  const value = String(raw || "").trim();
+  if (!value) return { ok: false, reason: "missing_endpoint" };
+  // رفض أوامر curl أو حقن أوامر شائعة
+  if (/^curl\b/i.test(value) || /\s-(?:H|X|d|u)\b/.test(value) || /\n|\r|;|\|/.test(value)) {
+    return { ok: false, reason: "endpoint_must_be_api_url_not_curl" };
+  }
+  let url;
+  try {
+    url = new URL(value);
+  } catch {
+    return { ok: false, reason: "endpoint_invalid_url" };
+  }
+  if (url.protocol !== "https:" && url.protocol !== "http:") {
+    return { ok: false, reason: "endpoint_unsupported_protocol" };
+  }
+  // لا نسمح بمسافات أو بيانات اعتماد داخل الرابط في اللوج؛ نُسقط userinfo
+  url.username = "";
+  url.password = "";
+  // أساس API بدون مسار زائد ضار — نحفظ origin + pathname بدون query/hash
+  const endpoint = `${url.origin}${url.pathname}`.replace(/\/+$/, "");
+  if (!endpoint) return { ok: false, reason: "endpoint_empty_after_normalize" };
+  return { ok: true, endpoint };
+}
+
 export function getInstagramProviderConfig() {
+  // يُقرأ حصراً من البيئة (في CI: GitHub Secrets عبر workflow env)
   const key = process.env.INSTAGRAM_PROVIDER_KEY?.trim() || "";
-  const endpoint = process.env.INSTAGRAM_PROVIDER_ENDPOINT?.trim() || "";
-  return { key, endpoint, configured: Boolean(key && endpoint) };
+  const endpointRaw = process.env.INSTAGRAM_PROVIDER_ENDPOINT?.trim() || "";
+  const normalized = normalizeProviderEndpoint(endpointRaw);
+  const endpoint = normalized.ok ? normalized.endpoint : "";
+  return {
+    key,
+    endpoint,
+    configured: Boolean(key && endpoint),
+    endpointError: key && endpointRaw && !normalized.ok ? normalized.reason : null,
+  };
 }
 
 /** @returns {{ mode: string, configured: boolean|null, message: string|null }} */
@@ -34,10 +73,13 @@ export function getInstagramProviderStatus() {
 
   const cfg = getInstagramProviderConfig();
   if (!cfg.configured) {
+    const message = cfg.endpointError
+      ? "Instagram provider endpoint is invalid (expected API URL from secrets)."
+      : "Instagram provider is not configured.";
     return {
       mode,
       configured: false,
-      message: "Instagram provider is not configured.",
+      message,
     };
   }
   return { mode, configured: true, message: null };
