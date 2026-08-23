@@ -90,6 +90,7 @@ self.addEventListener("activate", (event) => {
       const hasLegacy = keys.some(
         (k) =>
           k === "majalis-version" ||
+          k === "majalis-audio-v1" ||
           k.startsWith("majalis-offline-") ||
           k.startsWith("majalis-data-") ||
           (k.startsWith("majlisilm-v") && !k.startsWith(CACHE_PREFIX)),
@@ -387,9 +388,18 @@ self.addEventListener("message", (event) => {
       event.waitUntil(
         (async () => {
           try {
-            const cache = await caches.open("majalis-audio-v1").catch(() => null);
+            // كاش الصوت القديم majalis-audio-v1 يُحذف في activate؛ نعدّ إدخالات /audio/ في OFFLINE_CACHE
+            const cache = await caches.open(OFFLINE_CACHE).catch(() => null);
             const keys = cache ? await cache.keys() : [];
-            reply(true, { audioEntries: keys.length });
+            const audioEntries = keys.filter((req) => {
+              try {
+                const p = new URL(req.url).pathname;
+                return p.startsWith("/audio/") || p.startsWith("/sounds/");
+              } catch (_) {
+                return false;
+              }
+            }).length;
+            reply(true, { audioEntries });
           } catch (err) {
             reply(false, null, String(err && err.message ? err.message : err));
           }

@@ -210,9 +210,8 @@
           var _dsv = "v6-direct-boot-2026-08";
           if (localStorage.getItem("majalis-design-v") !== _dsv) {
             localStorage.setItem("majalis-design-v", _dsv);
-            localStorage.removeItem("majalis-theme");
+            /* لا نمسح الثيم — يمنع وميض الوضع عند تحديث التصميم */
             localStorage.removeItem("majalis-font-preference");
-            localStorage.removeItem("majalis-font-preference-v2");
           }
           var storedTheme = localStorage.getItem("majalis-theme");
           var resolved = storedTheme === "light" ? "light"
@@ -235,6 +234,8 @@
         } catch (e) {}
       })();
     </script>
+    
+    
     <div id="mj-launch-splash" aria-hidden="true">
       <svg class="mj-launch-splash__ornament" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
         <g fill="none" stroke="currentColor" stroke-width="0.55" opacity="0.85">

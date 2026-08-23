@@ -13,6 +13,8 @@ export type StallRecoveryCallbacks = {
 };
 
 export type StallRecoveryOptions = StallRecoveryCallbacks & {
+  /** إن عاد false تُتجاهل محاولات الاستعادة (مثلاً أثناء loading الأولي). */
+  shouldRecover?: () => boolean;
   /** Max transparent resume attempts per continuous stall sequence. Default 3. */
   maxAttempts?: number;
   /** Ignore micro-stalls shorter than this (ms). Default 600. */
@@ -136,6 +138,7 @@ export function attachAudioStallRecovery(
 
   const onWaiting = () => {
     if (disposed || userPaused || audio.ended) return;
+    if (opts.shouldRecover && !opts.shouldRecover()) return;
     if (phase === "recovering") return;
     captureTime();
     setPhase("buffering");
@@ -189,6 +192,7 @@ export function attachAudioStallRecovery(
 
   const onError = () => {
     if (disposed || userPaused) return;
+    if (opts.shouldRecover && !opts.shouldRecover()) return;
     const code = audio.error?.code;
     // MEDIA_ERR_NETWORK (2) or MEDIA_ERR_SRC_NOT_SUPPORTED (4) after partial play → resume
     if (code === 2 || code === 4 || code === 1) {
