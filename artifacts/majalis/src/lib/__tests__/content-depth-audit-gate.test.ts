@@ -54,4 +54,29 @@ assert.match(normalize, /[ىی]/, "تطبيع الألف المقصورة/الي
 const registry = read("src/config/sections.registry.ts");
 assert.doesNotMatch(registry, /subtitle:\s*""/, "لا عناوين فرعية فارغة في السجل");
 
+assert.ok(
+  list.every((p: { definition?: string }) => (p.definition || "").trim().length >= 100),
+  "كل تعريف علم ≥100 حرفًا",
+);
+
+const quizSeed = read("src/lib/quiz-seed.ts");
+assert.match(quizSeed, /isLiveQuizQuestion|demo\[-_\]/, "تصفية أسئلة demo من العرض الحي");
+
+const kgService = read("src/lib/knowledge-graph-service.ts");
+assert.match(kgService, /fetchStaticKnGraphFallback/, "احتياطي محلي للرسم المعرفي");
+
+const kgPage = read("src/views/KnowledgeGraphPage.tsx");
+assert.match(kgPage, /fetchStaticKnGraphFallback/, "الصفحة تستخدم الاحتياطي المحلي");
+assert.match(kgPage, /\/prophets|\/fiqh|\/quran\/people/, "رسالة الفراغ توجّه لأقسام مفيدة");
+
+// عيّنة قصص السيرة: لا تبقَ بطاقات قصيرة جدًا بلا توسعة
+{
+  const seerah019 = JSON.parse(read("public/data/stories/سيرة-019.json"));
+  const short = (Array.isArray(seerah019) ? seerah019 : []).filter(
+    (s: { full_content?: string }) =>
+      String(s.full_content || "").trim().split(/\s+/).filter(Boolean).length < 80,
+  );
+  assert.equal(short.length, 0, "سيرة-019 بلا قصص أقل من 80 كلمة");
+}
+
 console.log("content-depth-audit-gate.test.ts: ok");
