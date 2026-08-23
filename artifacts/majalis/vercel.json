@@ -1465,6 +1465,14 @@
       "destination": "/index.html"
     },
     {
+      "source": "/sources/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/data-licenses",
+      "destination": "/index.html"
+    },
+    {
       "source": "/competitions",
       "destination": "/index.html"
     },

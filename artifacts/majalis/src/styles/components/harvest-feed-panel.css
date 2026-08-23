@@ -1,0 +1,108 @@
+.harvest-panel {
+  margin-bottom: 20px;
+  padding: 14px;
+  border: 1px solid var(--mj-hairline, #d5ddd9);
+  border-radius: 16px;
+  background: var(--mj-surface, #fff);
+}
+
+.harvest-panel__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.harvest-panel__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--mj-ink, #16241e);
+}
+
+.harvest-panel__sub {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--mj-ink-2, #4a5a53);
+}
+
+.harvest-panel__sub a {
+  color: var(--mj-brand-deep, #123f2e);
+  font-weight: 700;
+}
+
+.harvest-panel__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--mj-ink, #16241e);
+}
+
+.harvest-panel__tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+}
+
+.harvest-panel__tabs button {
+  border: 1px solid var(--mj-hairline, #d5ddd9);
+  background: var(--mj-surface, #fff);
+  color: var(--mj-ink, #16241e);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.harvest-panel__tabs button.is-active {
+  background: var(--mj-brand, #1f7a5a);
+  border-color: var(--mj-brand, #1f7a5a);
+  color: #fff;
+}
+
+.harvest-panel__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+
+@media (min-width: 720px) {
+  .harvest-panel__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.harvest-panel__empty {
+  margin: 0;
+  font-size: 13px;
+  color: var(--mj-ink-2, #4a5a53);
+}
+
+html[data-theme="dark"] .harvest-panel,
+html.dark .harvest-panel {
+  background: var(--mj-surface, #1a221f);
+  border-color: var(--mj-hairline, #2a3531);
+}
+
+html[data-theme="dark"] .harvest-panel__title,
+html.dark .harvest-panel__title {
+  color: var(--mj-ink, #e8eeeb);
+}
+
+html[data-theme="dark"] .harvest-panel__sub,
+html.dark .harvest-panel__sub {
+  color: var(--mj-ink-2, #b7c4be);
+}
+
+html[data-theme="dark"] .harvest-panel__tabs button:not(.is-active),
+html.dark .harvest-panel__tabs button:not(.is-active) {
+  background: var(--mj-surface, #1a221f);
+  color: var(--mj-ink, #e8eeeb);
+  border-color: var(--mj-hairline, #2a3531);
+}
