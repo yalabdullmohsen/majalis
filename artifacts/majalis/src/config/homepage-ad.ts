@@ -1,3 +1,4 @@
+/** @deprecated أُزيل الشريط العلوي — استخدم header-ad.ts */
 /**
  * إعدادات شريط الإعلان في الصفحة الرئيسية فقط.
  *
@@ -24,7 +25,7 @@ export type HomepageAdConfig = {
 };
 
 export const homepageAdConfig: HomepageAdConfig = {
-  enabled: true,
+  enabled: false,
   label: "مساحة إعلانية مميزة",
   title: "أعلن لآلاف المهتمين بالمحتوى الشرعي والتعليمي",
   description: "مساحة مخصصة للرعايات والإعلانات المتوافقة مع هوية المجلس العلمي.",

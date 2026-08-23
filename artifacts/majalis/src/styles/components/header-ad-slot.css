@@ -1,0 +1,121 @@
+/**
+ * كبسولة إعلان منتصف الهيدر — نص + CTA صغير، بلا صور وبلا سكربتات خارجية.
+ */
+.header-ad-slot {
+  --header-ad-h: 36px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-width: 0;
+  max-width: min(13.5rem, 52vw);
+  width: min(13.5rem, 52vw);
+  height: var(--header-ad-h);
+  min-height: var(--header-ad-h);
+  max-height: var(--header-ad-h);
+  margin: 0;
+  padding: 0 0.45rem 0 0.35rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--majalis-emerald-deep, #173d35);
+  background: color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 8%, #fff);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 18%, transparent);
+  line-height: 1;
+  overflow: hidden;
+  flex: 1 1 auto;
+}
+
+.header-ad-slot:hover,
+.header-ad-slot:focus-visible {
+  background: color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 12%, #fff);
+  outline: 2px solid color-mix(in srgb, var(--majalis-brass-deep, #8b6914) 45%, transparent);
+  outline-offset: 1px;
+}
+
+.header-ad-slot__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-ad-slot__cta {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.45rem;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+  background: var(--majalis-emerald-deep, #173d35);
+  white-space: nowrap;
+}
+
+html[data-theme="dark"] .header-ad-slot {
+  color: #c8ebd9;
+  background: color-mix(in srgb, #4fb48b 14%, #101614);
+  border-color: color-mix(in srgb, #4fb48b 28%, transparent);
+}
+
+html[data-theme="dark"] .header-ad-slot:hover,
+html[data-theme="dark"] .header-ad-slot:focus-visible {
+  background: color-mix(in srgb, #4fb48b 20%, #101614);
+}
+
+html[data-theme="dark"] .header-ad-slot__cta {
+  background: #2f8f6a;
+  color: #fff;
+}
+
+@media (max-width: 379px) {
+  .header-ad-slot {
+    max-width: min(11.5rem, 48vw);
+    width: min(11.5rem, 48vw);
+    gap: 0.3rem;
+    padding-inline: 0.35rem 0.28rem;
+  }
+
+  .header-ad-slot__title {
+    font-size: 0.66rem;
+  }
+
+  .header-ad-slot__cta {
+    font-size: 0.62rem;
+    padding-inline: 0.38rem;
+  }
+}
+
+@media (min-width: 880px) {
+  .header-ad-slot {
+    --header-ad-h: 38px;
+    width: 15rem;
+    max-width: 15rem;
+    flex: 0 1 15rem;
+  }
+
+  .header-ad-slot__title {
+    font-size: 0.8rem;
+  }
+
+  .header-ad-slot__cta {
+    font-size: 0.72rem;
+    min-height: 1.55rem;
+  }
+}
+
+
+/* محاذاة وسط الهيدر بنفس سلوك الوردمارك */
+.navbar-v3__inner > .header-ad-slot {
+  flex: 1 1 auto;
+  justify-self: center;
+  margin-inline: auto;
+}
