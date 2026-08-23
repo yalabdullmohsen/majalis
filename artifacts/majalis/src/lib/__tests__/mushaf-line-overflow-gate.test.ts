@@ -37,12 +37,13 @@ const INK_RATIO = 0.984 - 0.015;
 const ayahBlock = css.match(/\.mm-ayah-line\s*\{[^}]+\}/)?.[0] ?? "";
 assert.ok(ayahBlock, ".mm-ayah-line");
 assert.match(ayahBlock, /display:\s*flex/);
-assert.match(ayahBlock, /justify-content:\s*space-between/);
+assert.match(ayahBlock, /justify-content:\s*center/);
+assert.match(css, /\.mm-ayah-line\[data-fill="true"\][^}]*justify-content:\s*space-between/);
 assert.match(ayahBlock, /overflow-x:\s*(hidden|clip)/);
 assert.doesNotMatch(ayahBlock, /overflow-x:\s*visible/);
 assert.doesNotMatch(ayahBlock, /overflow:\s*visible/);
 
-assert.match(css, /\.mm-ayah-line\[data-centered="true"\]\s*\{[^}]*justify-content:\s*center/);
+assert.match(css, /data-centered="true"[^}]*justify-content:\s*center|data-fill="false"[^}]*justify-content:\s*center/);
 assert.match(css, /\.mm-viewport\s+\.mm-page\s*\{[^}]*overflow-x:\s*(hidden|clip)/);
 assert.match(css, /contain:\s*layout\s+paint/);
 

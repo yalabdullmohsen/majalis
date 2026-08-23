@@ -21,7 +21,7 @@ type PressState = {
 };
 
 /**
- * سطر آيات — كل كلمة عنصر flex مباشر (space-between كالمصحف الورقي).
+ * سطر آيات — كلمات flex بفجوة ثابتة؛ space-between فقط بعد قياس fill الآمن.
  * التظليل المتصل عبر طبقة getClientRects (.mm-ayah-hl) لا خلفية كل كلمة.
  */
 export const MushafAyahLine = memo(function MushafAyahLine({
@@ -73,7 +73,12 @@ export const MushafAyahLine = memo(function MushafAyahLine({
   };
 
   return (
-    <div className="mm-ayah-line" data-centered={centered ? "true" : "false"} dir="rtl">
+    <div
+      className="mm-ayah-line"
+      data-centered={centered ? "true" : "false"}
+      data-fill="false"
+      dir="rtl"
+    >
       {ordered.map((w) => {
         const selected = selectedVerseKey === w.verseKey;
         const playing = playingVerseKey === w.verseKey;

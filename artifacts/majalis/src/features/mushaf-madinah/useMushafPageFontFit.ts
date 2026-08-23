@@ -11,7 +11,10 @@ import {
   setCachedFontSize,
   MUSHAF_FIT_MAX_PX,
 } from "./fitPageFontSize";
-import { MUSHAF_INK_X_END_MIN, MUSHAF_WORD_GAP_HARD_MAX_PX } from "./layout-bands";
+import {
+  MUSHAF_LINE_FILL_RATIO,
+  MUSHAF_WORD_GAP_HARD_MAX_PX,
+} from "./layout-bands";
 
 function readFamily(pageEl: HTMLElement, fallback: string): string {
   try {
@@ -102,27 +105,38 @@ async function waitPageFont(fontFamily: string): Promise<string> {
   return family;
 }
 
-/** ضبط justify للأسطر دون تغيير حجم الخط. */
+/** ضبط justify للأسطر دون تغيير حجم الخط — الأسطر القصيرة تُوسَّط بلا تمديد. */
 function applyLineFillRules(live: HTMLElement): void {
   const lines = [...live.querySelectorAll<HTMLElement>(".mm-ayah-line")];
+  // قياس العرض الطبيعي دائمًا بوضع التعبئة معطّلًا (مركز + فجوة ثابتة)
   for (const line of lines) {
-    if (line.dataset.centered === "true") continue;
     line.dataset.fill = "false";
   }
   for (const line of lines) {
-    if (line.dataset.centered === "true") continue;
+    if (line.dataset.centered === "true") {
+      line.dataset.fill = "false";
+      continue;
+    }
     const avail = line.clientWidth;
-    if (!avail) continue;
-
-    const natural = line.scrollWidth;
-    const ratio = natural / avail;
-    if (ratio < MUSHAF_INK_X_END_MIN) {
+    if (!avail) {
       line.dataset.fill = "false";
       continue;
     }
 
+    const natural = line.scrollWidth;
+    const ratio = natural / avail;
+    if (ratio < MUSHAF_LINE_FILL_RATIO) {
+      line.dataset.fill = "false";
+      continue;
+    }
+
+    // جرّب التوزيع المتوازن ثم ارفضه إن تجاوزت فجوة الكلمات الحد الصلب
     line.dataset.fill = "true";
     const wordEls = [...line.querySelectorAll<HTMLElement>(".mm-ayah-line__word")];
+    if (wordEls.length < 2) {
+      line.dataset.fill = "false";
+      continue;
+    }
     const rects = wordEls.map((w) => w.getBoundingClientRect());
     rects.sort((a, b) => a.left - b.left);
 

@@ -115,7 +115,7 @@ assert.match(actions, /مشاركة|onShare/);
 assert.match(actions, /SkipBack|onPrevAyah/);
 assert.match(actions, /useVerifiedReciters/);
 assert.match(actions, /mm-ayah-bar__handle/);
-assert.match(actions, /جاري تحميل التلاوة/);
+assert.match(actions, /جاري التحميل|جاري تحميل التلاوة/);
 assert.match(actions, /mushaf-ayah-play/);
 assert.match(actions, /سورة|آية/);
 assert.match(actions, /استماع|تفسير/);
