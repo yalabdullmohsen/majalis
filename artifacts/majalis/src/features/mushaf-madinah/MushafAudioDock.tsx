@@ -51,9 +51,11 @@ export function MushafAudioDock({
         ? "متوقف"
         : loading
           ? "جاري التحميل"
-          : playerState === "error"
-            ? "فشل التحميل"
-            : "جاهز");
+          : playerState === "ended"
+            ? "انتهت التلاوة"
+            : playerState === "error"
+              ? "فشل التحميل"
+              : "جاهز");
   const progressMax = duration > 0 ? duration : 1;
   const progressVal = duration > 0 ? Math.min(duration, Math.max(0, currentTime)) : 0;
 

@@ -247,6 +247,8 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
           reciterId: snap.reciterId,
           ayahKey: snap.surah != null && snap.ayah != null ? `${snap.surah}:${snap.ayah}` : null,
         });
+      } else if (snap.playerState === "ended") {
+        setAudioStatus("انتهت التلاوة");
       } else if (snap.playerState === "idle") {
         setPlayingVerseKey(null);
         setAudioStatus("جاهز");
