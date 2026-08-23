@@ -2,6 +2,174 @@
   "month": "2026-08",
   "items": [
     {
+      "id": "3ab56300a8308522c169622b89d587b198c6be87",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور المجلس العلمي: شرح كتاب التوحيد للشيخ عمر مثيب العتيبي ⏰ بعد صلاة المغرب الأحد إلى الأر",
+      "summary_ar": "ندعوكم الليله لحضور المجلس العلمي: شرح كتاب التوحيد للشيخ عمر مثيب العتيبي ⏰ بعد صلاه المغرب الاحد الي الاربعاء مسجد الامام القرطبي - جليب الشيوخ https://maps.…",
+      "sheikh": null,
+      "place": "الإمام القرطبي - جليب الشيوخ https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27617",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T21:52:32.600Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "74bc5f8eb8ed056f2af7a4f07b29201f367b8009",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور الدرس العلمي: (شرح ثلاثة الأصول) للشيخ د. حمد بن محمد الهاجري ⏰ بعد صلاة المغرب (كل أحد) \ud83d",
+      "summary_ar": "ندعوكم الليله لحضور الدرس العلمي: (شرح ثلاثه الاصول) للشيخ د. حمد بن محمد الهاجري ⏰ بعد صلاه المغرب (كل احد) مسجد عبدالمحسن الزبن - الفنيطيس https://maps.app.g…",
+      "sheikh": "حمد بن محمد الهاجري ⏰ بعد صلاة المغرب (كل أحد) 🕌 مسجد عبدال",
+      "place": "عبدالمحسن الزبن - الفنيطيس https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27618",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T21:52:32.600Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "15d0f5e332d690cc00688f697f324e8ab3d2ffb2",
+      "type": "درس",
+      "title_ar": "ندعوكم اليوم لحضور الدرس العلمي: قراءة كتاب (100) سؤال وجواب في عقيدة التوحيد للشيخ د. عبدالله شبيب العازمي ⏰ ب",
+      "summary_ar": "ندعوكم اليوم لحضور الدرس العلمي: قراءه كتاب (100) سؤال وجواب في عقيده التوحيد للشيخ د. عبدالله شبيب العازمي ⏰ بعد صلاه العصر ديوانيه شباب صباح الاحمد https://m…",
+      "sheikh": "عبدالله شبيب العازمي ⏰ بعد صلاة العصر 📍 ديوانية شباب صباح ا",
+      "place": "عقيدة التوحيد 🎙 للشيخ د",
+      "audience": "نشء",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27619",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T21:52:32.600Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "0803d11b7e9f2b26c52205537b49c10a25b97334",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور محاضرة بعنوان: ( فضل عيادة المريض ) للشيخ حسين المويزري @H_Almuwizri ⌚ بعد صلاة المغرب",
+      "summary_ar": "ندعوكم الليله لحضور محاضره بعنوان: ( فضل عياده المريض ) للشيخ حسين المويزري @H_Almuwizri ⌚ بعد صلاه المغرب مسجد قبيصه الخزاعي - المطلاع https://maps.app.goo.gl…",
+      "sheikh": null,
+      "place": "قبيصة الخزاعي - المطلاع https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27621",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T21:52:32.600Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "56d7d55d7f698bf786a0fc07624da58967635210",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور المجلس العلمي: شرح كتاب [ دين الإسلام سؤال وجواب ] للشيخ عمر رشيد الزبيدي @alzubaidy77 ⏰ ب",
+      "summary_ar": "ندعوكم الليله لحضور المجلس العلمي: شرح كتاب [ دين الاسلام سؤال وجواب ] للشيخ عمر رشيد الزبيدي @alzubaidy77 ⏰ بعد صلاه المغرب (كل يوم احد ) مسجد الخرينج&nbsp; -…",
+      "sheikh": null,
+      "place": "الخرينج&nbsp; - الفروانية https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27622",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T21:52:32.600Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "5deb69fe06a4b606d03ea392d350fceed195f01b",
+      "type": "درس",
+      "title_ar": "الآن مباشر (14) شرح ثلاثة الأصول لفضيلة الشيخ أ.د. حمد الهاجري رابط البث المباشر https://t.me/DrHamadAlhajr",
+      "summary_ar": "الان مباشر (14) شرح ثلاثه الاصول لفضيله الشيخ ا.د. حمد الهاجري رابط البث المباشر https://t.me/DrHamadAlhajri?livestream الدروس السابقه https://drosq8.com/cat/1…",
+      "sheikh": "حمد الهاجري 🔗 رابط البث المباشر https://t",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrHamadAlhajri?livestream",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27623",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T21:52:32.600Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "2ea750a9acd2a12aad8195f22e8eae4bf099800e",
+      "type": "درس",
+      "title_ar": "الآن مباشر (35) شرح كتاب&nbsp; التوحيد للإمام محمد بن عبدالوهاب فضيلة الشيخ عمر مثيب العتيبي رابط البث المب",
+      "summary_ar": "الان مباشر (35) شرح كتاب&nbsp; التوحيد للامام محمد بن عبدالوهاب فضيله الشيخ عمر مثيب العتيبي رابط البث المباشر https://t.me/omar_muthib?livestream تحميل الكتاب…",
+      "sheikh": "عمر مثيب العتيبي 🔗 رابط البث المباشر https://t",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/omar_muthib?livestream",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27624",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-23T21:52:32.600Z",
+      "confidence": 0.8
+    },
+    {
       "id": "5de459c93f46c192bc23f6324432a33e5f36818c",
       "type": "إعلان",
       "title_ar": "https://aayatkw.com",
@@ -138,6 +306,13 @@
           "name_ar": "دروس الكويت",
           "url": "https://t.me/DrosQ8",
           "post_url": "https://t.me/DrosQ8/27610",
+          "platform": "telegram"
+        },
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27620",
           "platform": "telegram"
         }
       ],
