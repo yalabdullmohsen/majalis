@@ -207,7 +207,7 @@ const TERMS: HadithTerm[] = [
     grade: "accepted",
     definition: "الجامع الصحيح المسند من حديث رسول الله ﷺ وسننه وأيامه، للإمام محمد بن إسماعيل البخاري (ت256ه).",
     example: "يحتوي على 7563 حديثاً بالمكررات، وهو أصح كتب السنة عند جمهور العلماء.",
-    note: "أصح كتاب بعد القرآن الكريم بإجماع العلماء.",
+    note: "أصح كتاب بعد القرآن الكريم عند جمهور أهل العلم.",
   },
   {
     id: "muslim",
@@ -1008,7 +1008,7 @@ export default function HadithSciencePage() {
           <input
             className="hs-search"
             type="search"
-            placeholder="ابحث في المصطلحات..."
+            placeholder="ابحث في المصطلحات."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             aria-label="بحث في مصطلح الحديث"
