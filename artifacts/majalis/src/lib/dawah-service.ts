@@ -10,6 +10,7 @@ import type { Lang } from "@/lib/language-preference";
 import {
   getStaticArticleBySlug,
   getStaticQuestionBySlug,
+  STATIC_DAWAH_ARTICLES,
   STATIC_DAWAH_QUESTIONS,
   STATIC_NEW_MUSLIM_PATH,
   STATIC_DAWAH_SHUBUHAT,
@@ -177,8 +178,12 @@ export async function getQuestionsByCategory(categorySlug?: string, limit = 50):
   let q = supabase.from("dawah_questions").select("*, dawah_categories!inner(slug)").match(PUBLISHED).order("title").limit(limit);
   if (categorySlug) q = q.eq("dawah_categories.slug", categorySlug);
   const { data, error } = await q;
-  if (error) return [];
-  return (data || []) as DawahQuestion[];
+  if (error || !data?.length) {
+    // بدون فئة في الثابت — عند غياب الفئة أو فشل الانضمام الداخلي نعرض القائمة الاحتياطية كاملة
+    if (categorySlug) return [];
+    return STATIC_DAWAH_QUESTIONS.slice(0, limit);
+  }
+  return data as DawahQuestion[];
 }
 
 export async function getQuestionsByReligion(religion: ReligionCode, limit = 30): Promise<DawahQuestion[]> {
@@ -189,8 +194,10 @@ export async function getQuestionsByReligion(religion: ReligionCode, limit = 30)
     .eq("target_religion", religion)
     .order("title")
     .limit(limit);
-  if (error) return [];
-  return (data || []) as DawahQuestion[];
+  if (error || !data?.length) {
+    return STATIC_DAWAH_QUESTIONS.filter((q) => q.target_religion === religion).slice(0, limit);
+  }
+  return data as DawahQuestion[];
 }
 
 export async function getQuestionBySlug(slug: string): Promise<DawahQuestion | null> {
@@ -218,8 +225,12 @@ export async function searchDawahQuestions(term: string): Promise<DawahQuestion[
     })
     .join(",");
   const { data, error } = await supabase.from("dawah_questions").select("*").match(PUBLISHED).or(orFilter).limit(20);
-  if (error) return [];
-  return ((data || []) as DawahQuestion[]).filter((q) => arabicMatchAny([q.title, q.short_answer, ...(q.keywords || [])], trimmed));
+  if (error || !data?.length) {
+    return STATIC_DAWAH_QUESTIONS.filter((q) =>
+      arabicMatchAny([q.title, q.short_answer, ...(q.keywords || [])], trimmed),
+    ).slice(0, 20);
+  }
+  return (data as DawahQuestion[]).filter((q) => arabicMatchAny([q.title, q.short_answer, ...(q.keywords || [])], trimmed));
 }
 
 export async function getFeaturedShubuhat(limit = 6): Promise<DawahShubha[]> {
@@ -233,8 +244,14 @@ export async function getShubuhatByCategory(categorySlug?: string, complexity?: 
   if (categorySlug) q = q.eq("dawah_categories.slug", categorySlug);
   if (complexity) q = q.eq("complexity_level", complexity);
   const { data, error } = await q;
-  if (error) return [];
-  return (data || []) as DawahShubha[];
+  if (error || !data?.length) {
+    // !inner يفشل عند غياب الفئة؛ نرجع الثابت عند عدم تحديد فئة
+    if (categorySlug) return [];
+    let list = STATIC_DAWAH_SHUBUHAT;
+    if (complexity) list = list.filter((s) => s.complexity_level === complexity);
+    return list;
+  }
+  return data as DawahShubha[];
 }
 
 export async function getShubhaBySlug(slug: string): Promise<DawahShubha | null> {
@@ -247,8 +264,11 @@ export async function getArticlesByCategory(categorySlug?: string, limit = 30): 
   let q = supabase.from("dawah_articles").select("*, dawah_categories!inner(slug)").match(PUBLISHED).order("created_at", { ascending: false }).limit(limit);
   if (categorySlug) q = q.eq("dawah_categories.slug", categorySlug);
   const { data, error } = await q;
-  if (error) return [];
-  return (data || []) as DawahArticle[];
+  if (error || !data?.length) {
+    if (categorySlug) return [];
+    return Object.values(STATIC_DAWAH_ARTICLES).slice(0, limit);
+  }
+  return data as DawahArticle[];
 }
 
 export async function getArticleBySlug(slug: string): Promise<DawahArticle | null> {
@@ -264,7 +284,12 @@ export async function getNewMuslimPath(audience: "all" | "men" | "women" = "all"
     .match(PUBLISHED)
     .in("audience", audience === "all" ? ["all"] : ["all", audience])
     .order("day_number");
-  if (error || !data?.length) return STATIC_NEW_MUSLIM_PATH;
+  // إن كانت القاعدة ناقصة عن المسار الثابت (٣٠ يومًا) نفضّل الثابت حتى لا يظهر مسار مبتور
+  if (error || !data?.length || data.length < STATIC_NEW_MUSLIM_PATH.length) {
+    return audience === "all"
+      ? STATIC_NEW_MUSLIM_PATH
+      : STATIC_NEW_MUSLIM_PATH.filter((d) => d.audience === "all" || d.audience === audience);
+  }
   return data as NewMuslimDay[];
 }
 
