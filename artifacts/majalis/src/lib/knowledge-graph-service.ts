@@ -154,6 +154,79 @@ export async function fetchKnNodes(
   return json?.nodes ?? [];
 }
 
+const KIND_TO_NODE_TYPE: Record<string, KnNodeType> = {
+  scholar: "scholar",
+  book: "book",
+  hadith: "hadith",
+  ruling: "fatwa",
+  term: "term",
+  surah: "quran_ayah",
+  dua: "benefit",
+  prophet: "prophet_story",
+  lesson: "lesson",
+};
+
+/**
+ * احتياطي محلي من public/data/graph/links.json عند فراغ واجهة API.
+ * لا يعتمد على Supabase؛ يكفي لعرض هيكل علمي أولي.
+ */
+export async function fetchStaticKnGraphFallback(): Promise<{
+  nodes: KnNode[];
+  edges: KnEdge[];
+} | null> {
+  try {
+    const base = String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/");
+    const res = await requestFetch(`${base}data/graph/links.json`);
+    if (!res.ok) return null;
+    const data = (await res.json()) as {
+      nodes?: { kind?: string; slug?: string; titleAr?: string }[];
+      links?: {
+        from?: { slug?: string };
+        to?: { slug?: string };
+        rel?: string;
+        source?: string;
+        target?: string;
+      }[];
+    };
+    const nodes: KnNode[] = (data.nodes || [])
+      .filter((n) => n.slug && n.titleAr)
+      .map((n) => ({
+        id: String(n.slug),
+        node_type: KIND_TO_NODE_TYPE[String(n.kind || "term")] || "term",
+        title: String(n.titleAr),
+        reference_id: String(n.slug),
+      }));
+    const idSet = new Set(nodes.map((n) => n.id));
+    const relMap: Record<string, KnRelType> = {
+      authored: "authored_by",
+      authored_by: "authored_by",
+      explains: "explains",
+      references: "references",
+      related: "related_topic",
+      related_topic: "related_topic",
+      prerequisite: "prerequisite",
+    };
+    const edges: KnEdge[] = (data.links || [])
+      .map((l, i) => {
+        const sourceId = String(l.from?.slug || l.source || "");
+        const targetId = String(l.to?.slug || l.target || "");
+        return {
+          id: `static-e-${i}`,
+          source_id: sourceId,
+          target_id: targetId,
+          relationship_type: relMap[String(l.rel || "")] || "related_topic",
+          strength: 0.6,
+          verified_by: "static-fallback",
+        } satisfies KnEdge;
+      })
+      .filter((e) => e.source_id && e.target_id && idSet.has(e.source_id) && idSet.has(e.target_id));
+    if (nodes.length === 0) return null;
+    return { nodes, edges };
+  } catch {
+    return null;
+  }
+}
+
 export async function createKnRelationship(
   payload: {
     source_node_id: string;

@@ -3026,22 +3026,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/idris</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/quran/people/nuh</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/quran/people/hud</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/quran/people/salih</loc>
+    <loc>https://majlisilm.com/quran/people/azar</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -3051,17 +3036,47 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/azar</loc>
+    <loc>https://majlisilm.com/quran/people/iblis</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/lut</loc>
+    <loc>https://majlisilm.com/quran/people/walad-nuh</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/ismail</loc>
+    <loc>https://majlisilm.com/quran/people/wife-musa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/abu-lahab</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/musa-sister</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/bunyaamin</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/ukhwat-yusuf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/idris</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/idriss-extra</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -3071,47 +3086,167 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/yaqub</loc>
+    <loc>https://majlisilm.com/quran/people/ahl-kahf-names</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/yusuf</loc>
+    <loc>https://majlisilm.com/quran/people/ismail</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/ayyub</loc>
+    <loc>https://majlisilm.com/quran/people/ismail-extra</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/shuayb</loc>
+    <loc>https://majlisilm.com/quran/people/thamud-label</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/musa</loc>
+    <loc>https://majlisilm.com/quran/people/ashab-fil</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/harun</loc>
+    <loc>https://majlisilm.com/quran/people/ahqaf</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/dhul-kifl</loc>
+    <loc>https://majlisilm.com/quran/people/ansar</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/dawud</loc>
+    <loc>https://majlisilm.com/quran/people/al-aiykah</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/sulayman</loc>
+    <loc>https://majlisilm.com/quran/people/kaaba</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/bayt-izzah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/jannah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/judi</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/hijr</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/hafaza</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/zabaniya</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/samiri</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/dual-qarnayn-sadd</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/sabiun</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/siddiqah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/safa-marwa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/tur</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/khidr</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/aziz-misr</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/majusi</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/madinah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/qiblatayn</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/maseeh-dajjal-ref</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/mashar</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/rukban</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/ashab-ukhdud-king</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/munafiqun</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/muhajirun</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/namrud</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -3126,62 +3261,52 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/yunus</loc>
+    <loc>https://majlisilm.com/quran/people/al-yasaa-extra</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/zakariyya</loc>
+    <loc>https://majlisilm.com/quran/people/musa-mother</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/yahya</loc>
+    <loc>https://majlisilm.com/quran/people/imraat-aziz</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/isa</loc>
+    <loc>https://majlisilm.com/quran/people/asiyah</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/muhammad</loc>
+    <loc>https://majlisilm.com/quran/people/imraat-lut</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/maryam</loc>
+    <loc>https://majlisilm.com/quran/people/imraat-nuh</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/imran</loc>
+    <loc>https://majlisilm.com/quran/people/ahl-kitab</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/firawn</loc>
+    <loc>https://majlisilm.com/quran/people/ayyub</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/haman</loc>
+    <loc>https://majlisilm.com/quran/people/babylon</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/qarun</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/quran/people/luqman</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/quran/people/talut</loc>
+    <loc>https://majlisilm.com/quran/people/tubba-king</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -3191,7 +3316,17 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/uzayr</loc>
+    <loc>https://majlisilm.com/quran/people/jibril</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/jahannam</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/dawud</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -3201,17 +3336,162 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://majlisilm.com/quran/people/dhul-kifl</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/zakariyya</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majlisilm.com/quran/people/zayd</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/abu-lahab</loc>
+    <loc>https://majlisilm.com/quran/people/sidrat</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/iblis</loc>
+    <loc>https://majlisilm.com/quran/people/sulayman</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/shuayb</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/sahib-hwt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/salih</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/talut</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/arafat</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/uzayr</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/ifrit</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/imran</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/isa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/firawn</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/qarun</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/quraysh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/kiraman</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/kalb-kahf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/luqman</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/lut</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/marut</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/man-believer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/jinn-believers</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/muhammad</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/madyan-place</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/maryam</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/misr</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/makkah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/malak-mawt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/musa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/nuh</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -3221,7 +3501,42 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/quran/people/marut</loc>
+    <loc>https://majlisilm.com/quran/people/harun</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/haman</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/hud</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/yajuj</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/yahya</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/yaqub</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/yusuf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/people/yunus</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
