@@ -57,7 +57,7 @@ export const PERSON_CATEGORY_LABEL: Record<PersonCategory, string> = {
   king: "ملك",
   companion: "صحابي",
   figure: "شخصية",
-  other: "أخرى",
+  other: "أماكن وأقوام وغيرها",
 };
 
 export const MENTION_TYPE_LABEL: Record<MentionType, string> = {

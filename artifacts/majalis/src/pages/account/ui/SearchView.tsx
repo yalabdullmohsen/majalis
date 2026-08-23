@@ -732,6 +732,9 @@ export default function SearchPage() {
           {total === 0 ? (
             <div className="search-no-results" role="status">
               <p className="search-no-results__msg">لا نتائج لـ «{q}».</p>
+              <p className="search-no-results__hint">
+                جرّب كلمة أخرى، أو اختصر العبارة، أو تحقق من الإملاء (الهمزات والتشكيل لا تمنع المطابقة).
+              </p>
               <button
                 type="button"
                 className="ds-btn ds-btn--secondary"
