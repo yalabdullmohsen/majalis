@@ -4,12 +4,10 @@
  */
 
 :root {
-  --ad-banner-height: 0px;
   --app-header-height: var(--header-chrome, 56px);
   --search-height: 0px;
   --ticker-height: var(--ticker-h, 2.25rem);
   --bottom-nav-height: var(--nav-chrome, 64px);
-  --z-ad-banner: 140;
   --z-app-header: 200;
   --z-search: 190;
   --z-ticker: 180;
@@ -18,9 +16,6 @@
   --z-fab: 220;
 }
 
-html[data-home-ad="1"] {
-  --ad-banner-height: var(--homepage-ad-bar-h, 48px);
-}
 
 @media (max-width: 879px) {
   :root {
@@ -31,19 +26,11 @@ html[data-home-ad="1"] {
   }
 }
 
-.homepage-ad-bar {
-  z-index: var(--z-ad-banner);
-}
 
 .navbar-v3 {
   z-index: var(--z-app-header);
 }
 
-/* عند ظهور الإعلان: لا تكرار لـ safe-area في الهيدر */
-html[data-home-ad="1"] .navbar-v3 {
-  padding-block-start: 0 !important;
-  min-height: var(--app-header-height) !important;
-}
 
 @media (max-width: 879px) {
   .navbar-v3__inner {

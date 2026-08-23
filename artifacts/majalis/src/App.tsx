@@ -73,10 +73,6 @@ const AdhanActiveOverlay = lazyWithRetry(
   () => import("@/components/adhan/AdhanActiveOverlay").then((m) => ({ default: m.AdhanActiveOverlay })),
   "AdhanActiveOverlay",
 );
-const HomepageAdBar = lazyWithRetry(
-  () => import("@/components/home/HomepageAdBar").then((m) => ({ default: m.HomepageAdBar })),
-  "HomepageAdBar",
-);
 const PrayerCountdownBanner = lazyWithRetry(
   () => import("@/components/prayer/PrayerCountdownBanner").then((m) => ({ default: m.PrayerCountdownBanner })),
   "PrayerCountdownBanner",
@@ -1209,13 +1205,6 @@ function AppShellInner() {
   const hideSiteChrome = immersive || onPrayer;
   const deferHomePrayerChrome = location === "/" || location === "";
   const isHomePath = deferHomePrayerChrome;
-  const [homeAdSlot, setHomeAdSlot] = useState(false);
-
-  useEffect(() => {
-    if (!isHomePath || hideSiteChrome) return;
-    if (typeof navigator !== "undefined" && navigator.webdriver) return;
-    setHomeAdSlot(true);
-  }, [isHomePath, hideSiteChrome]);
 
   const [introActive, setIntroActive] = useState(() =>
     shouldShowFirstVisitIntro(typeof window !== "undefined" ? window.location.pathname : "/"),
@@ -1307,11 +1296,6 @@ function AppShellInner() {
       <EdgeSwipeBack />
       <NativeNotificationsBootstrap />
       <IdleRuntimeBoot />
-      {homeAdSlot && isHomePath && !hideSiteChrome && (
-        <Suspense fallback={null}>
-          <HomepageAdBar />
-        </Suspense>
-      )}
       <NavBar />
       <TopSectionBar />
       {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
