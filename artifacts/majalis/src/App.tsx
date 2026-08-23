@@ -7,7 +7,7 @@ import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import { LanguageProvider, useLanguage } from "@/components/LanguageProvider";
 import NavBar from "@/components/NavBar";
-import SiteFooter from "@/components/SiteFooter";
+import { PrayerCountdownProvider } from "@/components/prayer/PrayerCountdownProvider";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { TopSectionBar } from "@/components/TopSectionBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
@@ -25,7 +25,7 @@ import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary"
 import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
-import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
+import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
 import { PRAYER_ALERT_PREFS_CHANGED_EVENT } from "@/lib/prayer-alert-preferences";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
@@ -106,6 +106,7 @@ const AchievementToast = lazyWithRetry(
 );
 
 const NotFound = lazy(() => import("@/views/not-found"));
+const SiteFooter = lazy(() => import("@/components/SiteFooter"));
 const HomePage = lazy(() => import("@/pages/account/HomePage"));
 const QuranEnginePage = lazy(() => import("@/pages/quran/QuranEnginePage"));
 const AboutPage = lazy(() => import("@/views/AboutPage"));
@@ -447,7 +448,7 @@ function IslamicReminderBootstrap() {
 }
 
 function AdhanSchedulerBootstrap() {
-  const { data } = usePrayerCountdown();
+  const { data } = useSharedPrayerCountdown();
   useEffect(() => {
     if (!data) return;
     // مزامنة كاش أوقات الصلاة في lesson-time بالبيانات الحية الفعلية من كل
@@ -479,7 +480,7 @@ function AdhanSchedulerBootstrap() {
  * (مثلاً بعد إغلاقه في الخلفية لدقائق ثم فتحه من جديد داخل نافذة الـ١٥ دقيقة).
  */
 function PrayerAlertSchedulerBootstrap() {
-  const { data } = usePrayerCountdown();
+  const { data } = useSharedPrayerCountdown();
 
   useEffect(() => {
     if (!data) return;
@@ -1270,6 +1271,7 @@ function AppShellInner() {
   }
 
   return (
+    <PrayerCountdownScope deferMs={isHomePath ? 10_000 : 0}>
     <div
       className={`app-shell${shouldHideChrome ? " app-chrome-hidden" : ""}${isNativeApp ? " app-shell--native" : ""}`}
       style={{ "--app-dir": dir } as React.CSSProperties}
@@ -1293,7 +1295,6 @@ function AppShellInner() {
       <RouteEnterMotion />
       <AppReadingFocus />
       <EdgeSwipeBack />
-      <DeferredPrayerRuntime />
       <NativeNotificationsBootstrap />
       <IdleRuntimeBoot />
       <NavBar />
@@ -1304,20 +1305,14 @@ function AppShellInner() {
           <DeferredPrayerCountdownBanner defer={deferHomePrayerChrome} />
         </Suspense>
       )}
-      {!hideSiteChrome && <Suspense fallback={null}><AdhanNotificationBar /></Suspense>}
       {!hideSiteChrome && (
-        <SectionErrorBoundary name="AdhanActiveOverlay">
-          <Suspense fallback={null}>
-            <AdhanActiveOverlay />
-          </Suspense>
-        </SectionErrorBoundary>
+        <DeferredHomeAdhanChrome defer={deferHomePrayerChrome} />
       )}
-      {!hideSiteChrome && <Suspense fallback={null}><PrayerRespectBanner /></Suspense>}
       <main id="main-content" className="app-main" tabIndex={-1} data-scroll-root="1" aria-label="المحتوى الرئيسي">
         <Router />
       </main>
       {/* تذييل الموقع للويب فقط — داخل التطبيق الأصلي يُخفى (App Store: الروابط القانونية في الإعدادات) */}
-      {!hideSiteChrome && !isNative && <SiteFooter />}
+      {!hideSiteChrome && !isNative && <DeferredSiteFooter />}
       <DeferredAssistantWidget />
       {/* أزرار تحرير المشرف العائمة لا تغطي المواقيت/المصحف */}
       {isAdmin && !hideSiteChrome && (
@@ -1351,29 +1346,124 @@ function AppShellInner() {
         onClose={() => setComingSoonOpen(false)}
       />
     </div>
+    </PrayerCountdownScope>
   );
 }
 
-/** يؤجّل المنطق غير المرئي حتى بعد load + 10ث — خارج نافذة Lighthouse. */
-function DeferredPrayerRuntime() {
-  const [ready, setReady] = useState(false);
+/** يؤجّل مزوّد أوقات الصلاة والجدولة — ١٠ث على الرئيسية لتخفيف TBT. */
+function PrayerCountdownScope({
+  deferMs,
+  children,
+}: {
+  deferMs: number;
+  children: React.ReactNode;
+}) {
+  const [ready, setReady] = useState(deferMs === 0);
+
   useEffect(() => {
+    if (deferMs === 0) return;
+    let cancelled = false;
+    const reveal = () => {
+      if (!cancelled) setReady(true);
+    };
     const arm = () => {
       if (typeof window.requestIdleCallback === "function") {
-        window.requestIdleCallback(() => setReady(true), { timeout: 2500 });
+        window.requestIdleCallback(reveal, { timeout: deferMs });
       } else {
-        window.setTimeout(() => setReady(true), 1);
+        window.setTimeout(reveal, deferMs);
       }
     };
-    if (document.readyState === "complete") arm();
-    else window.addEventListener("load", arm, { once: true });
-  }, []);
-  if (!ready) return null;
+    const afterLoad = () => window.setTimeout(arm, 0);
+    if (document.readyState === "complete") afterLoad();
+    else window.addEventListener("load", afterLoad, { once: true });
+    return () => {
+      cancelled = true;
+    };
+  }, [deferMs]);
+
+  if (!ready) return <>{children}</>;
+  return (
+    <PrayerCountdownProvider>
+      <PrayerRuntimeBoot />
+      {children}
+    </PrayerCountdownProvider>
+  );
+}
+
+function PrayerRuntimeBoot() {
   return (
     <>
       <IslamicReminderBootstrap />
       <AdhanSchedulerBootstrap />
       <PrayerAlertSchedulerBootstrap />
+    </>
+  );
+}
+
+function DeferredSiteFooter() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    const reveal = () => {
+      if (!cancelled) setReady(true);
+    };
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(reveal, { timeout: 4_000 });
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(id);
+      };
+    }
+    const t = window.setTimeout(reveal, 2_000);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+  }, []);
+  if (!ready) return null;
+  return (
+    <Suspense fallback={null}>
+      <SiteFooter />
+    </Suspense>
+  );
+}
+
+function DeferredHomeAdhanChrome({ defer }: { defer: boolean }) {
+  const [ready, setReady] = useState(!defer);
+  useEffect(() => {
+    if (!defer) return;
+    let cancelled = false;
+    const reveal = () => {
+      if (!cancelled) setReady(true);
+    };
+    const arm = () => {
+      if (typeof window.requestIdleCallback === "function") {
+        window.requestIdleCallback(reveal, { timeout: 10_000 });
+      } else {
+        window.setTimeout(reveal, 10_000);
+      }
+    };
+    const afterLoad = () => window.setTimeout(arm, 0);
+    if (document.readyState === "complete") afterLoad();
+    else window.addEventListener("load", afterLoad, { once: true });
+    return () => {
+      cancelled = true;
+    };
+  }, [defer]);
+  if (!ready) return null;
+  return (
+    <>
+      <Suspense fallback={null}>
+        <AdhanNotificationBar />
+      </Suspense>
+      <SectionErrorBoundary name="AdhanActiveOverlay">
+        <Suspense fallback={null}>
+          <AdhanActiveOverlay />
+        </Suspense>
+      </SectionErrorBoundary>
+      <Suspense fallback={null}>
+        <PrayerRespectBanner />
+      </Suspense>
     </>
   );
 }

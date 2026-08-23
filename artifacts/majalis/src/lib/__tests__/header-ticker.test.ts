@@ -132,7 +132,10 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
     resolve(appRoot, "src/components/prayer/PrayerCountdownChip.tsx"),
     "utf-8",
   );
-  assert(chipSrc.includes("usePrayerCountdown"), "العدّ من مصدر الصلاة الموحّد داخل الشريحة");
+  assert(
+    chipSrc.includes("useSharedPrayerCountdown") || chipSrc.includes("usePrayerCountdown"),
+    "العدّ من مصدر الصلاة الموحّد داخل الشريحة",
+  );
   assert(chipSrc.includes("memo"), "الشريحة مغلّفة بـ memo");
 }
 

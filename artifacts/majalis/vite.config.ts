@@ -145,7 +145,21 @@ export default defineConfig({
          * التقسيم اليدوي هنا مقتصر على node_modules (تخزين مؤقت طويل الأمد).
          */
         manualChunks(id) {
-          if (!id.includes("node_modules")) return;
+          if (!id.includes("node_modules")) {
+            if (/\/src\/pages\/quran\//.test(id) || /\/src\/features\/mushaf/.test(id)) {
+              return "chunk-quran";
+            }
+            if (/\/src\/pages\/fiqh\//.test(id)) {
+              return "chunk-fiqh";
+            }
+            if (/\/src\/pages\/admin\//.test(id) || /\/src\/components\/admin\//.test(id)) {
+              return "chunk-admin";
+            }
+            if (/\/scripts\/harvest\//.test(id)) {
+              return "chunk-harvest";
+            }
+            return;
+          }
 
           if (id.includes("@supabase")) return "supabase";
           if (id.includes("html-to-image")) return "html-export";
