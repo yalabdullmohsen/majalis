@@ -110,6 +110,8 @@ const HomePage = lazy(() => import("@/pages/account/HomePage"));
 const QuranEnginePage = lazy(() => import("@/pages/quran/QuranEnginePage"));
 const AboutPage = lazy(() => import("@/views/AboutPage"));
 const SourcesLicensesPage = lazy(() => import("@/views/SourcesLicensesPage"));
+const SourcesDirectoryPage = lazy(() => import("@/pages/sources/SourcesDirectoryPage"));
+const SourceDetailPage = lazy(() => import("@/pages/sources/SourceDetailPage"));
 const SiteMapPage = lazy(() => import("@/pages/account/SiteMapPage"));
 const PrivacyPage = lazy(() => import("@/views/PrivacyPage"));
 const CookieConsentBanner = lazy(() =>
@@ -700,9 +702,11 @@ function Router() {
       <Route path="/about-us"><Redirect to="/about" /></Route>
       <Route path="/who-we-are"><Redirect to="/about" /></Route>
       <Route path="/man-nahnu"><Redirect to="/about" /></Route>
-      <Route path="/sources"><SafeLazyRoute component={SourcesLicensesPage} /></Route>
-      <Route path="/sources-licenses"><Redirect to="/sources" /></Route>
-      <Route path="/licenses"><Redirect to="/sources" /></Route>
+      <Route path="/sources/:id"><SafeLazyRoute component={SourceDetailPage} /></Route>
+      <Route path="/sources"><SafeLazyRoute component={SourcesDirectoryPage} /></Route>
+      <Route path="/data-licenses"><SafeLazyRoute component={SourcesLicensesPage} /></Route>
+      <Route path="/sources-licenses"><Redirect to="/data-licenses" /></Route>
+      <Route path="/licenses"><Redirect to="/data-licenses" /></Route>
       <Route path="/methodology"><SafeLazyRoute component={MethodologyPage} /></Route>
       <Route path="/fatwa-policy"><SafeLazyRoute component={FatwaPolicyPage} /></Route>
       <Route path="/sitemap"><SafeLazyRoute component={SiteMapPage} /></Route>

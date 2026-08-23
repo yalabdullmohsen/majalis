@@ -6,6 +6,7 @@ import { Link } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ErrorState, Empty } from "@/components/ui-common";
+import { HarvestFeedPanel } from "@/components/lessons/HarvestFeedPanel";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
 import { getLobby } from "@/config/section-lobbies";
 import {
@@ -532,6 +533,7 @@ export default function LessonsPage({
     >
       <div className="lessons-v2-layout lessons-v3-layout">
         <main className="lessons-v2-main">
+          <HarvestFeedPanel />
           {loadError && !loading ? (
             <ErrorState text={loadError} onRetry={() => safeLocationReload()} />
           ) : null}

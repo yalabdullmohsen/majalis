@@ -328,6 +328,8 @@ const PATHS = [
   "/sins-and-rights/:slug",
   "/sitemap",
   "/sources",
+  "/sources/:id",
+  "/data-licenses",
   "/sources-licenses",
   "/start-here",
   "/stats",

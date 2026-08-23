@@ -1435,7 +1435,7 @@ ${linkList("خطوات مقترحة", [
 ${linkList("روابط ذات صلة", [
   { name: "من نحن", url: "/about-us" },
   { name: "سياسة الفتوى والمراجعة", url: "/fatwa-policy" },
-  { name: "المصادر والتراخيص", url: "/sources" },
+  { name: "المصادر والتراخيص", url: "/data-licenses" },
   { name: "تواصل معنا", url: "/contact" },
   { name: "علوم الحديث", url: "/hadith-science" },
 ])}`,
