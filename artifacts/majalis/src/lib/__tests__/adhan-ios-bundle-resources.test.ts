@@ -15,6 +15,8 @@ assert.ok(existsSync(pbx), "xcodeproj");
 
 const required = [
   "adhan-short-makkah.caf",
+  "adhan-makkah-short.caf",
+  "adhan-madinah-short.caf",
   "adhan-short-madinah.caf",
   "adhan-short-aqsa.caf",
   "adhan-short-egypt.caf",

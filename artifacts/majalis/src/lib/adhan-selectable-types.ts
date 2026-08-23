@@ -19,11 +19,13 @@ export type SelectableAdhanTypeId = (typeof SELECTABLE_ADHAN_TYPE_IDS)[number];
 export type SelectableAdhanType = {
   id: SelectableAdhanTypeId;
   label: string;
+  /** جملة قصيرة توضّح نظام التشغيل vs داخل التطبيق */
+  hint: string;
   muezzinId: "makkah" | "madinah";
   mode: "full" | "short";
   /** تشغيل داخل التطبيق */
   inAppUrl: string;
-  /** صوت الإشعار الأصلي (اسم الملف في الحزمة) */
+  /** صوت الإشعار الأصلي (اسم الملف في الحزمة فقط — بلا مسار) */
   notificationSound: string;
 };
 
@@ -31,34 +33,38 @@ export const SELECTABLE_ADHAN_TYPES: readonly SelectableAdhanType[] = [
   {
     id: "makkah-full",
     label: "أذان مكة كامل",
+    hint: "تشغيل كامل داخل التطبيق · إشعار النظام يبقى قصيرًا",
     muezzinId: "makkah",
     mode: "full",
     inAppUrl: "/audio/adhan/adhan-makkah-full.m4a",
-    notificationSound: "adhan-short-makkah.caf",
+    notificationSound: "adhan-makkah-short.caf",
   },
   {
     id: "madinah-full",
     label: "أذان المدينة كامل",
+    hint: "تشغيل كامل داخل التطبيق · إشعار النظام يبقى قصيرًا",
     muezzinId: "madinah",
     mode: "full",
     inAppUrl: "/audio/adhan/adhan-madinah-full.m4a",
-    notificationSound: "adhan-short-madinah.caf",
+    notificationSound: "adhan-madinah-short.caf",
   },
   {
     id: "makkah-short",
     label: "أذان مكة مختصر",
+    hint: "صوت إشعار النظام (CAF ≤٢٩ث) · المعاينة داخل التطبيق",
     muezzinId: "makkah",
     mode: "short",
     inAppUrl: "/audio/adhan/adhan-makkah-full.m4a",
-    notificationSound: "adhan-short-makkah.caf",
+    notificationSound: "adhan-makkah-short.caf",
   },
   {
     id: "madinah-short",
     label: "أذان المدينة مختصر",
+    hint: "صوت إشعار النظام (CAF ≤٢٩ث) · المعاينة داخل التطبيق",
     muezzinId: "madinah",
     mode: "short",
     inAppUrl: "/audio/adhan/adhan-madinah-full.m4a",
-    notificationSound: "adhan-short-madinah.caf",
+    notificationSound: "adhan-madinah-short.caf",
   },
 ];
 

@@ -40,6 +40,8 @@
 		AD10BF09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD10FR09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf */; };
 		AD11BF01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf */; };
 		AD11BF02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf */; };
+		AD12BF01A1B2C3D4E5F6071890 /* adhan-makkah-short.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD12FR01A1B2C3D4E5F6071890 /* adhan-makkah-short.caf */; };
+		AD12BF02A1B2C3D4E5F6071890 /* adhan-madinah-short.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD12FR02A1B2C3D4E5F6071890 /* adhan-madinah-short.caf */; };
 		AD11BF03A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR03A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf */; };
 		AD11BF04A1B2C3D4E5F6071890 /* adhan-short-egypt.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR04A1B2C3D4E5F6071890 /* adhan-short-egypt.caf */; };
 		AD11BF05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf */; };
@@ -185,6 +187,8 @@
 				AD10FR09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf */,
 				AD11FR01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf */,
 				AD11FR02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf */,
+				AD12FR01A1B2C3D4E5F6071890 /* adhan-makkah-short.caf */,
+				AD12FR02A1B2C3D4E5F6071890 /* adhan-madinah-short.caf */,
 				AD11FR03A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf */,
 				AD11FR04A1B2C3D4E5F6071890 /* adhan-short-egypt.caf */,
 				AD11FR05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf */,
@@ -343,6 +347,8 @@
 				AD10BF09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf in Resources */,
 				AD11BF01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf in Resources */,
 				AD11BF02A1B2C3D4E5F6071890 /* adhan-short-madinah.caf in Resources */,
+				AD12BF01A1B2C3D4E5F6071890 /* adhan-makkah-short.caf in Resources */,
+				AD12BF02A1B2C3D4E5F6071890 /* adhan-madinah-short.caf in Resources */,
 				AD11BF03A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf in Resources */,
 				AD11BF04A1B2C3D4E5F6071890 /* adhan-short-egypt.caf in Resources */,
 				AD11BF05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf in Resources */,

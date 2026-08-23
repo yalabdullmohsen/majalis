@@ -36,6 +36,9 @@ assert.match(view, /اختيار الأذان/);
 assert.match(view, /SELECTABLE_ADHAN_TYPES/);
 assert.match(view, /t\.label/);
 assert.match(view, /اختبار الصوت/);
+assert.match(view, /اختبار إشعار بعد ١٥ ثانية/);
+assert.match(view, /فحص حالة الأذان/);
+assert.match(view, /إشعار النظام صوت قصير/);
 assert.match(view, /تخصيص كل صلاة/);
 assert.match(view, /إعادة جدولة التنبيهات/);
 assert.match(view, /إذن الإشعارات/);
@@ -49,6 +52,8 @@ assert.match(typesSrc, /أذان مكة كامل/);
 assert.match(typesSrc, /أذان المدينة كامل/);
 assert.match(typesSrc, /أذان مكة مختصر/);
 assert.match(typesSrc, /أذان المدينة مختصر/);
+assert.match(typesSrc, /hint:/);
+assert.match(view, /selectedType\.hint/);
 
 assert.match(alerts, /تفعيل إشعارات الصلاة/);
 assert.match(alerts, /تنبيه قبل الصلاة/);

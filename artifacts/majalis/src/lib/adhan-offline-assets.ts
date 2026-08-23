@@ -33,7 +33,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       short: `${CDN}/general/madinah-02.mp3`,
       takbir: `${CDN}/general/madinah-02.mp3`,
     },
-    notificationSound: "adhan-short-makkah.caf",
+    notificationSound: "adhan-makkah-short.caf",
   },
   {
     id: "madinah",
@@ -48,7 +48,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       short: `${CDN}/general/madinah-02.mp3`,
       takbir: `${CDN}/general/madinah-02.mp3`,
     },
-    notificationSound: "adhan-short-madinah.caf",
+    notificationSound: "adhan-madinah-short.caf",
   },
   {
     id: "egypt",
@@ -110,7 +110,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       short: `${CDN}/general/madinah-02.mp3`,
       takbir: `${CDN}/general/madinah-02.mp3`,
     },
-    notificationSound: "adhan-short-makkah.caf",
+    notificationSound: "adhan-makkah-short.caf",
   },
   {
     id: "soft",
@@ -155,7 +155,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       short: `${CDN}/general/madinah-02.mp3`,
       takbir: `${CDN}/general/madinah-02.mp3`,
     },
-    notificationSound: "adhan-short-makkah.caf",
+    notificationSound: "adhan-makkah-short.caf",
   },
 ];
 
