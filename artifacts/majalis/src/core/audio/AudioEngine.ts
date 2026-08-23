@@ -18,10 +18,14 @@ import {
   type AyahLoopConfig,
   type AyahLoopRuntime,
 } from "@/lib/ayah-loop-controller";
+import {
+  attachAudioStallRecovery,
+  type StallRecoveryHandle,
+} from "@/lib/audio-stall-recovery";
 
 export type RepeatMode = "off" | "ayah" | "surah";
 export type TeachPhase = "idle" | "teacher" | "student" | "waiting";
-export type PlayerState = "idle" | "loading" | "playing" | "paused" | "buffering" | "error";
+export type PlayerState = "idle" | "loading" | "playing" | "paused" | "buffering" | "ended" | "error";
 
 export type AudioEngineSnapshot = {
   playerState: PlayerState;
@@ -106,6 +110,10 @@ export class AudioEngine {
   private interruptionCleanups: Array<() => void> = [];
   /** يمنع حدث error القديم من مسار URL سابق من إفساد تشغيل ناجح */
   private playGeneration = 0;
+  /** استعادة من توقف الشبكة لكل عنصر صوت */
+  private stallByEl = new WeakMap<HTMLAudioElement, StallRecoveryHandle>();
+  private bufferingWatchTimer: ReturnType<typeof setTimeout> | null = null;
+  private static readonly BUFFERING_WATCH_MS = 12_000;
 
   static getInstance(): AudioEngine {
     if (!AudioEngine.instance) AudioEngine.instance = new AudioEngine();
@@ -188,12 +196,20 @@ export class AudioEngine {
     });
     el.addEventListener("waiting", () => {
       if (el !== this.getActiveElRef()) return;
+      if (this.playerState === "loading") return;
       this.setPlayerState("buffering");
+    });
+    el.addEventListener("canplay", () => {
+      if (el !== this.getActiveElRef()) return;
+      if (this.playerState === "buffering" && !el.paused) {
+        this.setPlayerState("playing");
+      }
     });
     el.addEventListener("error", () => {
       if (el !== this.getActiveElRef()) return;
       if (this.playerState === "playing") return;
-      if (this.playerState === "loading" || this.playerState === "buffering") return;
+      /* أثناء loading يتولى waitUntilPlaying الفشل؛ أثناء buffering لا نترك الحالة معلّقة */
+      if (this.playerState === "loading") return;
       this.setPlayerState("error", "تعذّر تحميل ملف التلاوة. أعد المحاولة أو غيّر القارئ.");
     });
     el.addEventListener("timeupdate", () => {
@@ -207,6 +223,27 @@ export class AudioEngine {
       if (el !== this.getActiveElRef()) return;
       void this.onEnded();
     });
+    const stall = attachAudioStallRecovery(el, {
+      shouldRecover: () =>
+        this.playerState === "playing" || this.playerState === "buffering",
+      onPhaseChange: (phase) => {
+        if (el !== this.getActiveElRef()) return;
+        if (phase === "failed") {
+          this.setPlayerState(
+            "error",
+            "تعذّر استئناف التلاوة بعد انقطاع الشبكة. أعد المحاولة أو غيّر القارئ.",
+          );
+          return;
+        }
+        if (
+          (phase === "buffering" || phase === "recovering") &&
+          (this.playerState === "playing" || this.playerState === "buffering")
+        ) {
+          this.setPlayerState("buffering");
+        }
+      },
+    });
+    this.stallByEl.set(el, stall);
     return el;
   }
 
@@ -365,9 +402,31 @@ export class AudioEngine {
     }
   }
 
+  private clearBufferingWatch(): void {
+    if (this.bufferingWatchTimer != null) {
+      clearTimeout(this.bufferingWatchTimer);
+      this.bufferingWatchTimer = null;
+    }
+  }
+
+  private armBufferingWatch(): void {
+    this.clearBufferingWatch();
+    this.bufferingWatchTimer = setTimeout(() => {
+      this.bufferingWatchTimer = null;
+      if (this.playerState === "buffering" || this.playerState === "loading") {
+        this.setPlayerState(
+          "error",
+          "انتهت مهلة تحميل التلاوة. تحقق من الشبكة أو جرّب قارئًا آخر.",
+        );
+      }
+    }, AudioEngine.BUFFERING_WATCH_MS);
+  }
+
   private setPlayerState(state: PlayerState, errorMessage: string | null = null): void {
     this.playerState = state;
     this.errorMessage = state === "error" ? errorMessage : null;
+    if (state === "loading" || state === "buffering") this.armBufferingWatch();
+    else this.clearBufferingWatch();
     this.emitSnapshot();
   }
 
@@ -771,10 +830,13 @@ export class AudioEngine {
    */
   stopAndUnload(): void {
     this.clearLoopConfig();
+    this.clearBufferingWatch();
     this.preloadKey = null;
     for (const el of [this.slotA, this.slotB]) {
       if (!el) continue;
       try {
+        this.stallByEl.get(el)?.dispose();
+        this.stallByEl.delete(el);
         el.pause();
         el.removeAttribute("src");
         el.load();
@@ -867,7 +929,7 @@ export class AudioEngine {
           return;
         }
       }
-      this.setPlayerState("idle");
+      this.setPlayerState("ended");
     } catch (err) {
       console.warn("[AudioEngine] onEnded:", err);
       this.setPlayerState("error");
