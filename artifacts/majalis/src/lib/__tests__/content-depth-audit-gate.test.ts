@@ -43,6 +43,10 @@ const searchView = read("src/pages/account/ui/SearchView.tsx");
 assert.match(searchView, /لا نتائج/, "رسالة واضحة عند فراغ البحث");
 assert.match(searchView, /جرّب|تحقق|اختصر|كلمة أخرى/, "إرشاد عملي عند عدم وجود نتائج");
 
+const newMuslim = read("src/views/NewMuslimPathPage.tsx");
+assert.doesNotMatch(newMuslim, /قيد الإعداد/, "مسار المسلم الجديد لا يعرض «قيد الإعداد»");
+assert.match(newMuslim, /جاري تحميل/, "مسار المسلم الجديد يعرض حالة تحميل");
+
 const normalize = read("src/shared/arabic-normalize.ts");
 assert.match(normalize, /ة/g, "تطبيع التاء المربوطة");
 assert.match(normalize, /[ىی]/, "تطبيع الألف المقصورة/الياء");

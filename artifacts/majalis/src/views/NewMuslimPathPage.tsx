@@ -28,8 +28,10 @@ export default function NewMuslimPathPage() {
     <div className="page-shell narrow content-hub-page">
       <PageHeader eyebrow="المسلم الجديد" title="مسار الثلاثين يومًا" subtitle="لا سباق ولا حساب للتأخر — أكمل بالسرعة التي تناسبك، وارجع إلى أي يوم متى شئت." />
 
-      {days === null ? null : days.length === 0 ? (
-        <Empty text="محتوى المسار لا يزال قيد الإعداد." />
+      {days === null ? (
+        <p className="page-desc" role="status">جاري تحميل المسار…</p>
+      ) : days.length === 0 ? (
+        <Empty text="تعذّر تحميل أيام المسار. تحقق من الاتصال ثم أعد المحاولة." />
       ) : (
         <ol className="dii-path-list">
           {days.map((d) => {
