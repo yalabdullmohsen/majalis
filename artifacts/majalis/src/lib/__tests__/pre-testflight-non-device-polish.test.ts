@@ -50,7 +50,7 @@ assert.match(appSrc, /auth\/update-password/);
 assert.match(appSrc, /DeferredHomeAdhanChrome/);
 assert.match(appSrc, /AdhanNotificationBar/);
 assert.match(appSrc, /PrayerRespectBanner/);
-assert.match(appSrc, /!hideSiteChrome && <ScrollToTop/);
+assert.match(appSrc, /!hideSiteChrome &&[\s\S]{0,120}<ScrollToTop/);
 
 const loginSrc = read("src/pages/account/ui/LoginView.tsx");
 assert.match(loginSrc, /sanitizeAuthNext/);

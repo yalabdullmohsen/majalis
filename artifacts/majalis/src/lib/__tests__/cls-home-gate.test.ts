@@ -17,17 +17,19 @@ const preview = getPreviewThresholds();
 const html = readFileSync(resolve(root, "index.html"), "utf8");
 const critical = readFileSync(resolve(root, "src/styles/critical-first-paint.css"), "utf8");
 const fontsUi = readFileSync(resolve(root, "src/styles/fonts-ui.css"), "utf8");
+const fontsBold = readFileSync(resolve(root, "src/styles/fonts-ui-bold.css"), "utf8");
 const lhciRc = require(resolve(root, "lighthouserc.cjs"));
 
 assert.doesNotMatch(html, /mj-home-lcp-static|mj-app-mount/, "لا صدفة نصّية/ mount منفصل");
 assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل الشاشة");
 assert.doesNotMatch(html, /#mj-boot-skeleton/, "بلا أنماط هيكل إقلاع حاجب");
 assert.match(html, /id="mj-launch-splash"/, "دخولية MajlisSplash");
-assert.match(html, /MAX_MS\s*=\s*1000/, "حد أقصى للدخولية");
+assert.match(html, /MAX_MS\s*=\s*700/, "حد أقصى للدخولية");
 assert.match(critical, /\.hsh-steps[\s\S]*min-height:\s*22rem/, "حجز ارتفاع hsh-steps");
 assert.match(critical, /\.hsh-step[\s\S]*min-height:\s*6\.25rem/, "حجز ارتفاع hsh-step");
-assert.match(fontsUi, /amiri-700-ar[\s\S]*font-display:\s*optional/, "Amiri 700 optional — بلا CLS");
-assert.match(fontsUi, /Aref Ruqaa[\s\S]*font-display:\s*optional/, "Aref Ruqaa optional — بلا CLS");
+assert.doesNotMatch(fontsUi, /amiri-700/, "لا Amiri 700 في fonts-ui الإقلاع");
+assert.match(fontsBold, /amiri-700-ar[\s\S]*font-display:\s*optional/, "Amiri 700 optional مؤجّل — بلا CLS");
+assert.match(fontsBold, /Aref Ruqaa[\s\S]*font-display:\s*optional/, "Aref Ruqaa 700 optional");
 assert.equal(
   lhciRc.ci.assert.assertions["cumulative-layout-shift"][1].maxNumericValue,
   preview.cls,

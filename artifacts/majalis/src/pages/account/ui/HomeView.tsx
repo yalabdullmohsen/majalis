@@ -13,7 +13,6 @@ import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { scheduleOnIdle } from "@/lib/yield-to-main";
 import "@/styles/m2030/home.css";
-import "@/styles/pages/home-legacy.css";
 
 const HomeBelowFold = lazyWithRetry(
   () => import("./HomeBelowFold"),

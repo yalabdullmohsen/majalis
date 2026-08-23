@@ -107,7 +107,7 @@ export const ar = {
   close: "إغلاق",
   error: "حدث خطأ",
   not_found: "الصفحة غير موجودة",
-  skip_to_content: "تخطّي إلى المحتوى",
+  skip_to_content: "تجاوز إلى المحتوى",
 
   // ── Mega-Prompt 4: sync / i18n / habits ──
   vault_title: "المحفظة العلمية",

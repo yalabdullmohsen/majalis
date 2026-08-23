@@ -15,6 +15,11 @@
         min-height: 100dvh;
         color: #14241c;
         font-family: "Amiri", "Noto Naskh Arabic", system-ui, sans-serif;
+        font-weight: 400;
+      }
+      /* يمنع طلب amiri-700 قبل CSS المكوّنات (h1 افتراضيًا bold) */
+      h1, h2, h3, h4, strong, b, button {
+        font-weight: 400;
       }
       html[data-theme="dark"], html[data-theme="dark"] body, html[data-theme="dark"] #root {
         background-color: #101614;
@@ -56,7 +61,7 @@
         color:var(--mj-splash-ink);
         pointer-events:none;
         opacity:1;
-        transition:opacity 280ms ease;
+        transition:opacity 180ms ease;
       }
       #mj-launch-splash.mj-launch-splash--out{
         opacity:0;
@@ -85,7 +90,7 @@
         min-height:2.85rem;
         font-family:"Amiri","Noto Naskh Arabic",serif;
         font-size:clamp(1.85rem,8.5vw,2.35rem);
-        font-weight:700;
+        font-weight:400;
         line-height:1.2;
         color:var(--mj-splash-ink);
       }
@@ -256,9 +261,9 @@
         var KEY = "mj.launch-splash.session.v2";
         var done = false;
         var appReady = false;
-        var MIN_MS = 700;
-        var MAX_MS = 1000;
-        var EXIT_MS = 280;
+        var MIN_MS = 280;
+        var MAX_MS = 700;
+        var EXIT_MS = 180;
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
         try { window.__mjSplashStart = start; } catch (e) {}
         function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
@@ -285,6 +290,10 @@
         try {
           var forceBench = /[?&]splash_timing=1(?:&|$)/.test(location.search);
           if (!forceBench && (navigator.webdriver || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
+            dismiss(true);
+            return;
+          }
+          if (!forceBench && sessionStorage.getItem(KEY) === "1") {
             dismiss(true);
             return;
           }

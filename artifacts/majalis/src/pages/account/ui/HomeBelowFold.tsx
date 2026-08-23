@@ -37,6 +37,8 @@ import {
   visibleWidgetOrder,
   type HomepagePrefs,
 } from "@/lib/homepage-layout";
+/** CSS قديم لأقسام تحت الطية فقط — لا يدخل حزمة فوق الطية / LCP. */
+import "@/styles/pages/home-legacy.css";
 
 const HomeUpcomingLessons = lazyWithRetry(
   () => import("@/components/home/HomeUpcomingLessons").then((m) => ({ default: m.HomeUpcomingLessons })),

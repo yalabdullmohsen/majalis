@@ -6,16 +6,10 @@ import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
 import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import { LanguageProvider, useLanguage } from "@/components/LanguageProvider";
-import NavBar from "@/components/NavBar";
 import { PrayerCountdownProvider } from "@/components/prayer/PrayerCountdownProvider";
-import { BottomNavBar } from "@/components/BottomNavBar";
-import { TopSectionBar } from "@/components/TopSectionBar";
-import { ScrollToTop } from "@/components/ScrollToTop";
-import { GlobalBackButton } from "@/components/GlobalBackButton";
 import { NavigationBinder } from "@/components/NavigationBinder";
 import { NativeBackButtonListener } from "@/components/NativeBackButtonListener";
 import { SafeAreaDebugOverlay } from "@/components/SafeAreaDebugOverlay";
-import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
 import { PageChromeSync } from "@/components/PageChromeSync";
@@ -37,7 +31,6 @@ import {
   type ScrollSnapshot,
 } from "@/lib/scroll-document-top";
 import { trackContinueReading } from "@/lib/continue-reading";
-import { OfflineBanner } from "@/components/OfflineBanner";
 import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
 import { FocusArrival } from "@/components/FocusArrival";
 import { PwaInstallBanner } from "@/components/PwaInstallBanner";
@@ -52,6 +45,33 @@ import {
   markFirstVisitIntroSeen,
   shouldShowFirstVisitIntro,
 } from "@/lib/first-visit-intro-state";
+
+/** شريط/كروم ثقيل (lucide + nav-map) — كسول حتى لا يدخل مسار أول زيارة / LCP */
+const NavBar = lazyWithRetry(() => import("@/components/NavBar"), "NavBar");
+const BottomNavBar = lazyWithRetry(
+  () => import("@/components/BottomNavBar").then((m) => ({ default: m.BottomNavBar })),
+  "BottomNavBar",
+);
+const TopSectionBar = lazyWithRetry(
+  () => import("@/components/TopSectionBar").then((m) => ({ default: m.TopSectionBar })),
+  "TopSectionBar",
+);
+const ScrollToTop = lazyWithRetry(
+  () => import("@/components/ScrollToTop").then((m) => ({ default: m.ScrollToTop })),
+  "ScrollToTop",
+);
+const GlobalBackButton = lazyWithRetry(
+  () => import("@/components/GlobalBackButton").then((m) => ({ default: m.GlobalBackButton })),
+  "GlobalBackButton",
+);
+const ComingSoonDialog = lazyWithRetry(
+  () => import("@/components/ComingSoonDialog").then((m) => ({ default: m.ComingSoonDialog })),
+  "ComingSoonDialog",
+);
+const OfflineBanner = lazyWithRetry(
+  () => import("@/components/OfflineBanner").then((m) => ({ default: m.OfflineBanner })),
+  "OfflineBanner",
+);
 
 const lazy = lazyWithRetry;
 
@@ -1283,7 +1303,9 @@ function AppShellInner() {
       <PageChromeSync />
       <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />
       <a href="#main-content" className="skip-link mj-skip-link">{t("skip_to_content")}</a>
-      <OfflineBanner />
+      <Suspense fallback={null}>
+        <OfflineBanner />
+      </Suspense>
       <Suspense fallback={null}>
         <CookieConsentBanner />
       </Suspense>
@@ -1298,8 +1320,10 @@ function AppShellInner() {
       <EdgeSwipeBack />
       <NativeNotificationsBootstrap />
       <IdleRuntimeBoot />
-      <NavBar />
-      <TopSectionBar />
+      <Suspense fallback={null}>
+        <NavBar />
+        <TopSectionBar />
+      </Suspense>
       {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
       {!hideSiteChrome && !onPrayer && (
         <Suspense fallback={null}>
@@ -1321,10 +1345,18 @@ function AppShellInner() {
           <AdminSiteEditBar />
         </Suspense>
       )}
-      {!hideSiteChrome && <ScrollToTop />}
-      <GlobalBackButton />
+      {!hideSiteChrome && (
+        <Suspense fallback={null}>
+          <ScrollToTop />
+        </Suspense>
+      )}
+      <Suspense fallback={null}>
+        <GlobalBackButton />
+      </Suspense>
       {!hideSiteChrome && <PwaInstallBanner />}
-      <BottomNavBar isHidden={shouldHideChrome} />
+      <Suspense fallback={null}>
+        <BottomNavBar isHidden={shouldHideChrome} />
+      </Suspense>
       <Suspense fallback={null}>
         <QuranMiniPlayerBar />
       </Suspense>
@@ -1341,11 +1373,13 @@ function AppShellInner() {
           </Suspense>
         </SectionErrorBoundary>
       )}
-      <ComingSoonDialog
-        open={comingSoonOpen}
-        title={comingSoonTitle}
-        onClose={() => setComingSoonOpen(false)}
-      />
+      <Suspense fallback={null}>
+        <ComingSoonDialog
+          open={comingSoonOpen}
+          title={comingSoonTitle}
+          onClose={() => setComingSoonOpen(false)}
+        />
+      </Suspense>
     </div>
     </PrayerCountdownScope>
   );
