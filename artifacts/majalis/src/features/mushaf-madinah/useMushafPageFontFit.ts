@@ -166,6 +166,25 @@ export function useMushafPageFontFit(
     let cancelled = false;
     let lastGeom = "";
 
+    const markFit = (node: HTMLElement, ok: boolean) => {
+      node.dataset.mmFit = ok ? "1" : "0";
+    };
+
+    const applyFit = (node: HTMLElement, family: string) => {
+      try {
+        fitMushafPageFont(node, { family, pageNumber });
+        markFit(node, true);
+      } catch (err) {
+        if (import.meta.env.DEV) console.error(err);
+        node.style.setProperty("--mm-qpc-size", `${MUSHAF_FIT_MIN_PX}px`);
+        markFit(node, true);
+      }
+      requestAnimationFrame(() => {
+        if (cancelled || !pageRef.current) return;
+        applyLineFillRules(pageRef.current);
+      });
+    };
+
     const run = (force: boolean) => {
       if (cancelled) return;
       const node = pageRef.current;
@@ -176,24 +195,22 @@ export function useMushafPageFontFit(
       const geom = `${width}x${height}`;
       if (!force && geom === lastGeom) return;
       lastGeom = geom;
+      const family = normalizeMushafFontFamily(fontFamily);
+      if (isMushafPageFontReady(family)) {
+        applyFit(node, family);
+        return;
+      }
+      markFit(node, false);
       void waitPageFont(fontFamily)
-        .then((family) => {
+        .then((loadedFamily) => {
           if (cancelled || !pageRef.current) return;
-          try {
-            fitMushafPageFont(pageRef.current, { family, pageNumber });
-          } catch (err) {
-            if (import.meta.env.DEV) console.error(err);
-            pageRef.current.style.setProperty("--mm-qpc-size", `${MUSHAF_FIT_MIN_PX}px`);
-          }
-          requestAnimationFrame(() => {
-            if (cancelled || !pageRef.current) return;
-            applyLineFillRules(pageRef.current);
-          });
+          applyFit(pageRef.current, loadedFamily);
         })
         .catch((err) => {
           if (import.meta.env.DEV) console.error(err);
           if (pageRef.current) {
             pageRef.current.style.setProperty("--mm-qpc-size", `${MUSHAF_FIT_MIN_PX}px`);
+            markFit(pageRef.current, true);
           }
         });
     };

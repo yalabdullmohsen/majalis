@@ -17,6 +17,7 @@ import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
 import { refreshQuranAudioRemoteConfig } from "./lib/quran-audio-remote-config";
 import { armNativeSplashController } from "./lib/splash-screen";
+import { awaitBootReadiness } from "./lib/boot-readiness";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 import { initOnboardingState } from "./lib/onboarding-state";
 import { scheduleOnIdle } from "./lib/yield-to-main";
@@ -90,8 +91,17 @@ if (isNative) {
   document.documentElement.classList.add("capacitor-native");
   document.documentElement.dataset.platform = isAndroid ? "android" : isIOS ? "ios" : "native";
   // أبقِ خلفية الإقلاع حتى يركّب React ويضبط PageChrome.
-  document.documentElement.style.setProperty("--app-status-bg", "#F2F4F3");
-  document.documentElement.style.setProperty("--app-status-fg-mode", "light");
+  {
+    const bootTheme = resolveTheme(readThemePreference());
+    document.documentElement.style.setProperty(
+      "--app-status-bg",
+      bootTheme === "dark" ? "#101614" : "#F2F4F3",
+    );
+    document.documentElement.style.setProperty(
+      "--app-status-fg-mode",
+      bootTheme === "dark" ? "dark" : "light",
+    );
+  }
   void import("./styles/capacitor-native-ux.css");
   void import("./styles/ios-edge.css");
 }
@@ -173,12 +183,14 @@ async function mount() {
     return;
   }
 
-  // أخفِ الإطلاق الأصلي بعد أول رسم — الدخولية الويب تُدار من index.html.
+  // أخفِ الإطلاق بعد جاهزية الثيم/الخطوط (مهلة قصيرة داخل awaitBootReadiness).
   armNativeSplashController();
-  requestAnimationFrame(() => {
+  void awaitBootReadiness().then(() => {
     requestAnimationFrame(() => {
-      window.dispatchEvent(new Event("mj:app-painted"));
-      window.dispatchEvent(new Event("app:first-paint"));
+      requestAnimationFrame(() => {
+        window.dispatchEvent(new Event("mj:app-painted"));
+        window.dispatchEvent(new Event("app:first-paint"));
+      });
     });
   });
 

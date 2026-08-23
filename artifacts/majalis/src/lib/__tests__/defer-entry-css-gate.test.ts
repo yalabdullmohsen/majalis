@@ -67,8 +67,13 @@ const head = htmlSrc.split("</head>")[0];
 for (const m of head.matchAll(/<script\b([^>]*)>/gi)) {
   const attrs = m[1];
   const type = attrs.match(/\btype\s*=\s*["']([^"']+)["']/i)?.[1] || "";
+  const id = attrs.match(/\bid\s*=\s*["']([^"']+)["']/i)?.[1] || "";
+  // mj-theme-boot: سكربت متزامن صغير متعمّد قبل أول paint لمنع وميض الثيم/RTL
   assert.ok(
-    type === "application/ld+json" || type === "module" || /\basync\b|\bdefer\b/i.test(attrs),
+    id === "mj-theme-boot" ||
+      type === "application/ld+json" ||
+      type === "module" ||
+      /\basync\b|\bdefer\b/i.test(attrs),
     `سكربت حاجب في <head>: ${attrs.trim() || "(بدون صفات)"}`,
   );
 }

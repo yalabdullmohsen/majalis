@@ -5,7 +5,8 @@
   font-family: "Amiri Quran";
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
+  /* block: لا FOUT بخط نظام ثم قفزة إلى Amiri Quran */
+  font-display: block;
   size-adjust: 100%;
   ascent-override: 90%;
   descent-override: 30%;
@@ -18,7 +19,7 @@
   font-family: "KFGQPC Hafs Uthmanic";
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
+  font-display: block;
   src: url("/fonts/amiri-quran/AmiriQuran-Regular.woff2") format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
 }

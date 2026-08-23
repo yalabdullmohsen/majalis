@@ -276,10 +276,15 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // أصول ثابتة للهوية/الخطوط المحلية — cache-first (لا hashed، آمنة عبر النشرات)
+  // خطوط محلية — SWR: يعرض الكاش فورًا ويحدّث في الخلفية حتى لا يبقى ملف خط قديم بعد نشر
+  if (url.pathname.startsWith("/fonts/")) {
+    event.respondWith(staleWhileRevalidate(req, OFFLINE_CACHE));
+    return;
+  }
+
+  // أصول ثابتة للهوية — cache-first (لا hashed، آمنة عبر النشرات)
   if (
     STATIC_SHELL_ASSETS.includes(url.pathname) ||
-    url.pathname.startsWith("/fonts/") ||
     url.pathname === "/manifest.webmanifest" ||
     url.pathname === "/site.webmanifest" ||
     url.pathname === "/manifest.json"

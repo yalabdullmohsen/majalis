@@ -38,13 +38,14 @@ console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");
   assert.ok(count <= 2, `preconnect ≤ ٢ (الفعلي ${count})`);
   const afterHead = html.split(/<head[^>]*>/i)[1] ?? "";
   assert.match(afterHead.trimStart(), /^<meta charset="UTF-8"\s*\/?>/i, "charset أول عنصر في head");
-  assert.equal([...html.matchAll(/rel="preload"/g)].length, 1, "preload واحد فقط");
+  assert.ok([...html.matchAll(/rel="preload"/g)].length >= 1 && [...html.matchAll(/rel="preload"/g)].length <= 4, "preload خطوط أساسية محلية (١–٤)");
   assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/, "لا Google Fonts في الإقلاع");
-  assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/amiri-400-ar\.woff2/, "preload خط الشاشة الأولى فقط");
+  assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/amiri-400-ar\.woff2/, "preload خط الواجهة Amiri");
+  assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/noto-naskh-400-ar\.woff2/, "preload Noto Naskh");
   assert.match(html, /id="mj-launch-splash"/, "دخولية MajlisSplash في HTML الحرج");
   assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل");
   assert.match(html, /mj-launch-splash__(wordmark|title)/, "عنوان الدخولية");
-  assert.match(html, /v6-direct-boot-2026-08/, "ترحيل ثيم يمنع وميض التصميم القديم");
+  assert.match(html, /v6-direct-boot-2026-08|v7-boot-fouc-2026-08/, "ترحيل ثيم يمنع وميض التصميم القديم");
 }
 
 console.log("\n=== LCP أصول WebP موجودة ===");

@@ -37,14 +37,15 @@ export function resolveTheme(preference: ThemePreference): "light" | "dark" {
 export function applyThemePreference(preference: ThemePreference) {
   if (typeof document === "undefined") return;
   const resolved = resolveTheme(preference);
-  document.documentElement.dataset.theme = resolved;
-  if (resolved === "dark") {
-    document.documentElement.classList.add("dark");
-    document.documentElement.style.colorScheme = "dark";
-  } else {
-    document.documentElement.classList.remove("dark");
-    document.documentElement.style.colorScheme = "light";
+  const root = document.documentElement;
+  // لا تعِد الكتابة إن طابق سكربت الإقلاع — يمنع إعادة طلاء بلا قيمة
+  if (root.dataset.theme !== resolved) {
+    root.dataset.theme = resolved;
   }
+  root.classList.toggle("dark", resolved === "dark");
+  root.classList.toggle("theme-dark", resolved === "dark");
+  root.classList.toggle("theme-light", resolved === "light");
+  root.style.colorScheme = resolved === "dark" ? "dark" : "light";
   // auto يترك media queries؛ light/dark يفرضان لون السطح المطابق
   ensureChromeMeta(preference === "auto" ? undefined : resolved);
   // إبقاء الاستيراد ظاهرًا لبوابة meta-consistency

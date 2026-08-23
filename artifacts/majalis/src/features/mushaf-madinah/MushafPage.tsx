@@ -47,6 +47,7 @@ export const MushafPage = memo(function MushafPage({
       data-page-type={pageType}
       data-testid="mushaf-page"
       data-opening={opening ? "1" : "0"}
+      data-mm-fit="0"
       style={{ ["--mm-qpc-family" as string]: fontFamily }}
       aria-label={`صفحة المصحف ${footerPage}`}
     >
