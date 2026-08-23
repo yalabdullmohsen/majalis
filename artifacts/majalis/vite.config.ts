@@ -146,18 +146,6 @@ export default defineConfig({
          */
         manualChunks(id) {
           if (!id.includes("node_modules")) {
-            if (/\/src\/pages\/quran\//.test(id) || /\/src\/features\/mushaf/.test(id)) {
-              return "chunk-quran";
-            }
-            if (/\/src\/pages\/fiqh\//.test(id)) {
-              return "chunk-fiqh";
-            }
-            if (/\/src\/pages\/admin\//.test(id) || /\/src\/components\/admin\//.test(id)) {
-              return "chunk-admin";
-            }
-            if (/\/scripts\/harvest\//.test(id)) {
-              return "chunk-harvest";
-            }
             return;
           }
 
