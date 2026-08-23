@@ -31,7 +31,7 @@ assert.match(page, /MushafAyahHighlight/);
 assert.match(highlight, /getClientRects/);
 assert.doesNotMatch(page, /inlineBasmala/);
 
-assert.match(actions, /useState<SheetTab>\("tafsir"\)/);
+assert.match(actions, /useState<SheetTab>\("tilawa"\)/);
 assert.match(actions, /setHeight\("half"\)/);
 assert.match(actions, /تفسير/);
 assert.match(actions, /تلاوة/);

@@ -199,6 +199,7 @@ export function MushafPager({
     const dy = e.clientY - start.y;
     if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
       panning.current = true;
+      scrollerRef.current?.classList.add("is-panning");
       onNavigateStart?.();
     }
   };
@@ -215,6 +216,7 @@ export function MushafPager({
     }
     const start = touchRef.current;
     touchRef.current = null;
+    scrollerRef.current?.classList.remove("is-panning");
     if (!start || disabled) return;
 
     const dx = e.clientX - start.x;

@@ -27,6 +27,9 @@ export const MUSHAF_OPEN_PAGE_DELTA_MAX = 0.005;
 export const MUSHAF_GLYPH_H_MIN = 0.04;
 export const MUSHAF_GLYPH_H_TARGET = 0.043;
 
+/** نسبة امتلاء السطر قبل تفعيل space-between (أسطر قصيرة تُوسَّط). */
+export const MUSHAF_LINE_FILL_RATIO = 0.88;
+
 /** سقف فجوة الكلمات بعد الملاءمة — المستهدف ١٥px، الحد الصلب ٢٠px */
 export const MUSHAF_WORD_GAP_MAX_PX = 15;
 export const MUSHAF_WORD_GAP_HARD_MAX_PX = 20;

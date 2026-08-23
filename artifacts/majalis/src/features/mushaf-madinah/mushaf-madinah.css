@@ -1,7 +1,7 @@
 /**
  * مصحف المدينة — رموز بصرية من reference/mushaf-ayah-style (390×844).
  * لا letter-spacing على نص القرآن (حروف QPC PUA).
- * توزيع السطر: flex + space-between (كالمصحف الورقي). حجم الخط من canvas.
+ * توزيع السطر: توسيط بفجوة ثابتة؛ space-between فقط بعد قياس fill الآمن.
  */
 @import "../../styles/fonts-quran.css";
 
@@ -48,6 +48,11 @@
   --mm-basmala-size: var(--mm-qpc-size);
   --mm-line-height: 1.75;
   --mm-line-gap: 0;
+  /* تقارب كلمات المصحف — لا تمديد للأسطر القصيرة */
+  --mushaf-word-spacing: 0.22em;
+  --mushaf-line-height: var(--mm-line-height);
+  --mushaf-page-padding: var(--mm-inner-pad-x);
+  --mushaf-line-gap: var(--mm-line-gap);
   /* قالب صفحة موحّد — أسماء صريحة للمواصفة */
   --mushaf-page-width: var(--mm-page-max-w);
   --mushaf-top-margin: var(--mm-ref-text-start);
@@ -500,14 +505,16 @@ html.dark .mm-surah-frame__name {
   max-width: 100%;
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  /* افتراضي: توسيط بفجوة ثابتة — لا space-between قبل قياس fill */
+  justify-content: center;
+  gap: var(--mushaf-word-spacing, 0.22em);
   align-items: baseline;
   text-align: center;
   direction: rtl;
   unicode-bidi: bidi-override; /* ترتيب بصري = ترتيب كلمات QPC */
   font-family: var(--mm-qpc-family), "Amiri Quran", serif;
   font-size: var(--mm-qpc-size);
-  line-height: var(--mm-line-height);
+  line-height: var(--mushaf-line-height, var(--mm-line-height));
   color: var(--mm-ink);
   letter-spacing: 0;
   word-spacing: 0;
@@ -518,19 +525,17 @@ html.dark .mm-surah-frame__name {
   box-sizing: border-box;
 }
 
-/* عند فشل قياس الفجوة: لا تباعد منفلت كلمةً كلمة */
-.mm-ayah-line[data-fill="false"] {
-  justify-content: flex-start;
+/* أسطر قصيرة / غير ممتلئة: توسيط هادئ بلا تمديد */
+.mm-ayah-line[data-fill="false"],
+.mm-ayah-line[data-centered="true"] {
+  justify-content: center;
+  gap: var(--mushaf-word-spacing, 0.22em);
 }
 
 /* space-between فقط عند data-fill=true وبعد بوابة فجوة الكلمات */
-.mm-ayah-line[data-fill="true"] {
+.mm-ayah-line[data-fill="true"]:not([data-centered="true"]) {
   justify-content: space-between;
-}
-
-.mm-ayah-line[data-centered="true"] {
-  justify-content: center;
-  gap: 0.35em;
+  gap: 0;
 }
 
 .mm-viewport .mm-page:not(.mm-page--opening) .mm-ayah-line {
@@ -2596,4 +2601,46 @@ html.dark .mm-settings-sheet {
 
 .mm-viewport .mm-page-footer__cartouche {
   display: none;
+}
+
+
+/* زر التلاوة الرئيسي في شيت الآية */
+.ayah-action-sheet__play-hero {
+  display: flex;
+  width: 100%;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 0;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--mm-gold, #bf9f5b) 22%, #1f4d3a);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: inherit;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.ayah-action-sheet__play-hero:active {
+  opacity: 0.92;
+}
+.ayah-action-sheet__audio-state {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: color-mix(in srgb, var(--mm-ink, #0a0a0a) 62%, transparent);
+  text-align: center;
+}
+.ayah-action-sheet__tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+.ayah-action-sheet__tabs button[aria-selected="true"] {
+  background: color-mix(in srgb, var(--mm-gold, #bf9f5b) 28%, transparent);
+  font-weight: 700;
+}
+.mm-pager-track.is-panning {
+  will-change: scroll-position;
 }
