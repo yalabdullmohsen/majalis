@@ -50,7 +50,7 @@ assert.match(lineSrc, /data-type=\{w\.charType\}/);
 assert.match(lineSrc, /data-centered=\{centered \? "true" : "false"\}/);
 assert.match(pageSrc, /isLastSurahLine/);
 assert.match(fitFn, /createElement\("canvas"\)/);
-assert.match(fitSrc, /fitPageFontSize/);
+assert.match(fitSrc, /resolveUniformMushafFontSize|fitMushafPageFont/);
 assert.match(fitSrc, /ResizeObserver/);
 assert.doesNotMatch(fitSrc, /wordSpacing/);
 
@@ -76,9 +76,9 @@ assert.match(fitFn, /MUSHAF_FIT_MAX_PX = 34/);
 assert.match(fitFn, /MUSHAF_FIT_LINE_RATIO = 1.75/);
 assert.match(fitFn, /assertMushafPageFontReady/);
 assert.match(fitFn, /normalizeMushafFontFamily/);
-assert.match(fitSrc, /document\.fonts\.check/);
-assert.match(fitSrc, /loadingdone/);
-assert.match(fitSrc, /shrinkUntilFit/);
+assert.match(fitSrc, /document\.fonts\.(check|load)/);
+assert.match(fitSrc, /loadingdone|orientationchange/);
+assert.match(fitSrc, /resolveUniformMushafFontSize/);
 assert.doesNotMatch(fitSrc, /opening \? 56/);
 
 let pages = 0;

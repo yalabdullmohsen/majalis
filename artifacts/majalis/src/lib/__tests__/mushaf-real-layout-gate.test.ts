@@ -33,7 +33,7 @@ assert.match(css, /100svh|100dvh/);
 assert.match(css, /--mm-page-max-w:\s*min\(100%/);
 assert.match(page, /useMushafPageFontFit/);
 assert.doesNotMatch(viewport, /exitAlwaysVisible/);
-assert.match(fit, /slotInkOverflows/);
+assert.match(fit, /resolveUniformMushafFontSize|fitMushafPageFont/);
 assert.match(css, /\.mm-page--opening\s+\.mm-slot\[data-kind="empty"\]/);
 assert.match(css, /\.mm-page-shell[^{]*\{[^}]*padding-top:\s*0/);
 

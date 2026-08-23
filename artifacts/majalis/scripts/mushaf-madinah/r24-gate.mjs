@@ -33,7 +33,8 @@ assert.match(font, /document\.fonts\.load/);
 assert.match(font, /document\.fonts\.ready/);
 assert.match(fit, /document\.fonts\.load/);
 assert.match(fit, /document\.fonts\.ready/);
-assert.match(fit, /overflowsConstraints/);
+assert.match(fit, /resolveUniformMushafFontSize/);
+assert.match(fit, /mushafUniformFitCacheKey/);
 assert.doesNotMatch(fit, /pageNumber\s*===\s*3/);
 assert.doesNotMatch(page, /pageNumber\s*===\s*3/);
 
