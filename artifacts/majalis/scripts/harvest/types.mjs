@@ -18,6 +18,10 @@
  * @property {boolean} autoPublish
  * @property {'high'|'normal'} poll_priority
  * @property {string|null} last_seen_at
+ * @property {string|null} [last_seen_post_id]
+ * @property {string|null} [last_seen_post_url]
+ * @property {string|null} [last_checked_at]
+ * @property {string|null} [last_published_at]
  */
 
 /**

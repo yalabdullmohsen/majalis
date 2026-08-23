@@ -1,12 +1,19 @@
 import { harvestUserAgent, sleep } from "../http.mjs";
+import {
+  loadInstagramQuota,
+  saveInstagramQuota,
+  canConsumeQuota,
+  consumeQuota,
+  maxLatestPostsPerAccount,
+} from "./instagram-quota.mjs";
 
 /** @typedef {import('../types.mjs').HarvestItem} HarvestItem */
 
 /**
- * عقد مزوّد مرخّص (لا كشط مباشر لإنستغرام):
- * GET {endpoint}/accounts/{handle}/posts?since={iso}
+ * عقد مزوّد مرخّص (لا كشط مباشر):
+ * PROBE: GET {endpoint}/accounts/{handle}/latest → { id|shortcode, url, published_at? }
+ * FETCH: GET {endpoint}/accounts/{handle}/posts/{id} — منشور واحد فقط
  * Authorization: Bearer {INSTAGRAM_PROVIDER_KEY}
- * → { posts: [{ id, url, caption|text, image_url?, published_at }] }
  */
 
 export function getInstagramIngestMode() {
@@ -36,16 +43,25 @@ export function getInstagramProviderStatus() {
   return { mode, configured: true, message: null };
 }
 
-function mockPosts(handle) {
-  return [
-    {
-      id: `mock-${handle}-1`,
-      url: `https://www.instagram.com/p/mock-${handle}-1/`,
-      caption: `درس علمي — @${handle} — بعد المغرب في المسجد`,
-      image_url: null,
-      published_at: new Date().toISOString(),
-    },
-  ];
+function mockLatest(handle) {
+  const id = process.env.INSTAGRAM_MOCK_LATEST_ID?.trim() || `mock-${handle}-1`;
+  return {
+    id,
+    shortcode: id,
+    url: `https://www.instagram.com/p/${id}/`,
+    published_at: new Date().toISOString(),
+  };
+}
+
+function mockPostDetails(handle, postId) {
+  const id = postId || mockLatest(handle).id;
+  return {
+    id,
+    url: `https://www.instagram.com/p/${id}/`,
+    caption: `درس علمي — @${handle} — بعد المغرب في المسجد`,
+    image_url: null,
+    published_at: new Date().toISOString(),
+  };
 }
 
 /** @param {unknown} post */
@@ -73,58 +89,269 @@ function normalizeProviderPost(post) {
 }
 
 /**
- * @param {string} handle
- * @param {Date} [since]
- * @returns {Promise<ReturnType<typeof normalizeProviderPost>[]>}
+ * @param {unknown} raw
+ * @returns {{ id: string, url: string, publishedAt: string|null }|null}
  */
-async function fetchPostsFromProviderApi(handle, since) {
+export function normalizeLatestProbe(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  const id = String(
+    raw.id ?? raw.shortcode ?? raw.latest_post_id ?? raw.media_id ?? raw.external_id ?? "",
+  ).trim();
+  const url = String(
+    raw.url ??
+      raw.permalink ??
+      raw.latest_post_url ??
+      (raw.shortcode ? `https://www.instagram.com/p/${raw.shortcode}/` : "") ??
+      "",
+  ).trim();
+  if (!id && !url) return null;
+  const publishedAtRaw = raw.published_at ?? raw.latest_post_published_at ?? raw.timestamp ?? null;
+  return {
+    id: id || url,
+    url: url || (id ? `https://www.instagram.com/p/${id}/` : ""),
+    publishedAt: publishedAtRaw ? new Date(publishedAtRaw).toISOString() : null,
+  };
+}
+
+function authHeaders(key) {
+  return {
+    Authorization: `Bearer ${key}`,
+    Accept: "application/json",
+    "User-Agent": harvestUserAgent(),
+  };
+}
+
+/**
+ * @param {string} handle
+ * @returns {Promise<{ ok: true, latest: {id:string,url:string,publishedAt:string|null} }|{ ok: false, status: string, message: string }>}
+ */
+export async function probeLatestPost(handle) {
+  const status = getInstagramProviderStatus();
+  if (status.mode === "provider" && status.configured === false) {
+    return { ok: false, status: "missing_secret", message: status.message || "missing_secret" };
+  }
+  if (status.mode !== "provider") {
+    return { ok: false, status: "provider_error", message: `mode=${status.mode}` };
+  }
+
   if (process.env.INSTAGRAM_PROVIDER_MOCK === "1") {
-    return mockPosts(handle).map(normalizeProviderPost);
+    const latest = normalizeLatestProbe(mockLatest(handle));
+    if (!latest?.id) {
+      return {
+        ok: false,
+        status: "provider_missing_latest_post_id",
+        message: "provider_missing_latest_post_id",
+      };
+    }
+    return { ok: true, latest };
   }
 
   const { key, endpoint } = getInstagramProviderConfig();
   const base = endpoint.replace(/\/$/, "");
-  const qs = since ? `?since=${encodeURIComponent(since.toISOString())}` : "";
-  const url = `${base}/accounts/${encodeURIComponent(handle)}/posts${qs}`;
+  const h = handle.replace(/^@/, "");
 
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${key}`,
-      Accept: "application/json",
-      "User-Agent": harvestUserAgent(),
-    },
-    redirect: "follow",
-  });
+  try {
+    let res = await fetch(`${base}/accounts/${encodeURIComponent(h)}/latest`, {
+      headers: authHeaders(key),
+      redirect: "follow",
+    });
 
-  if (!res.ok) throw new Error(`Provider HTTP ${res.status} for @${handle}`);
-  const data = await res.json();
-  const posts = data.posts ?? data.items ?? data.data ?? [];
-  if (!Array.isArray(posts)) return [];
-  return posts.map(normalizeProviderPost).filter((p) => p.url && (p.title || p.text));
+    if (res.status === 404) {
+      res = await fetch(`${base}/accounts/${encodeURIComponent(h)}/posts?limit=1`, {
+        headers: authHeaders(key),
+        redirect: "follow",
+      });
+    }
+
+    if (res.status === 401 || res.status === 403) {
+      return { ok: false, status: "private_or_unavailable", message: `HTTP ${res.status}` };
+    }
+    if (res.status === 429) {
+      return { ok: false, status: "rate_limited", message: "HTTP 429" };
+    }
+    if (!res.ok) {
+      return { ok: false, status: "provider_error", message: `HTTP ${res.status}` };
+    }
+
+    const data = await res.json();
+    const raw =
+      data.latest ??
+      data.post ??
+      (Array.isArray(data.posts) ? data.posts[0] : null) ??
+      (Array.isArray(data.items) ? data.items[0] : null) ??
+      data;
+
+    const latest = normalizeLatestProbe(raw);
+    if (!latest?.id) {
+      return {
+        ok: false,
+        status: "provider_missing_latest_post_id",
+        message: "provider_missing_latest_post_id",
+      };
+    }
+    return { ok: true, latest };
+  } catch (err) {
+    return { ok: false, status: "provider_error", message: String(err?.message || err) };
+  }
 }
 
 /**
+ * @param {string} handle
+ * @param {string} postId
+ */
+export async function fetchSinglePost(handle, postId) {
+  if (process.env.INSTAGRAM_PROVIDER_MOCK === "1") {
+    return normalizeProviderPost(mockPostDetails(handle, postId));
+  }
+
+  const { key, endpoint } = getInstagramProviderConfig();
+  const base = endpoint.replace(/\/$/, "");
+  const h = handle.replace(/^@/, "");
+  const id = encodeURIComponent(postId);
+
+  let res = await fetch(`${base}/accounts/${encodeURIComponent(h)}/posts/${id}`, {
+    headers: authHeaders(key),
+    redirect: "follow",
+  });
+
+  if (res.status === 404) {
+    res = await fetch(`${base}/accounts/${encodeURIComponent(h)}/posts?ids=${id}&limit=1`, {
+      headers: authHeaders(key),
+      redirect: "follow",
+    });
+  }
+
+  if (!res.ok) throw new Error(`Provider HTTP ${res.status} for @${h} post ${postId}`);
+  const data = await res.json();
+  const post = data.post ?? data.posts?.[0] ?? data.items?.[0] ?? data;
+  return normalizeProviderPost(post);
+}
+
+export function samePost(account, latest) {
+  const seenId = String(account.last_seen_post_id || "").trim();
+  const seenUrl = String(account.last_seen_post_url || "").trim();
+  if (seenId && (latest.id === seenId || latest.url.includes(seenId))) return true;
+  if (seenUrl && (latest.url === seenUrl || (latest.id && seenUrl.includes(latest.id)))) return true;
+  return false;
+}
+
+/**
+ * probe خفيف ثم fetch مشروط (منشور واحد كحد أقصى إلا مع backfill).
  * @param {import('../types.mjs').SourceAccount} account
- * @param {Date} since
+ * @param {{ persistQuota?: boolean }} [opts]
+ */
+export async function probeAndMaybeFetch(account, opts = {}) {
+  const persistQuota = opts.persistQuota !== false;
+  const handle = String(account.handle || "").replace(/^@/, "");
+
+  const out = {
+    status: "unchanged",
+    items: /** @type {HarvestItem[]} */ ([]),
+    probeUsed: 0,
+    fetchUsed: 0,
+    latest: /** @type {{id:string,url:string,publishedAt:string|null}|null} */ (null),
+    message: /** @type {string|undefined} */ (undefined),
+  };
+
+  const mode = getInstagramIngestMode();
+  if (mode === "off") {
+    out.status = "provider_error";
+    out.message = "instagram skipped: mode=off";
+    return out;
+  }
+
+  if (mode === "provider") {
+    const st = getInstagramProviderStatus();
+    if (!st.configured) {
+      out.status = "missing_secret";
+      out.message = st.message || "missing_secret";
+      return out;
+    }
+  } else {
+    // oembed: لا probe عبر المزود — يُعالَج من inbox في المحوّل
+    out.status = "provider_error";
+    out.message = "use_oembed_adapter";
+    return out;
+  }
+
+  let quota = loadInstagramQuota();
+  const probeGate = canConsumeQuota(quota, "probe");
+  if (!probeGate.ok) {
+    out.status = "rate_limited";
+    out.message = probeGate.detail || "rate_limited";
+    return out;
+  }
+
+  consumeQuota(quota, "probe");
+  out.probeUsed = 1;
+
+  const probed = await probeLatestPost(handle);
+  if (persistQuota) saveInstagramQuota(quota);
+
+  if (!probed.ok) {
+    out.status = probed.status;
+    out.message = probed.message;
+    return out;
+  }
+
+  out.latest = probed.latest;
+
+  if (samePost(account, probed.latest)) {
+    out.status = "unchanged";
+    return out;
+  }
+
+  const fetchGate = canConsumeQuota(quota, "fetch");
+  if (!fetchGate.ok) {
+    out.status = "rate_limited";
+    out.message = fetchGate.detail || "rate_limited";
+    return out;
+  }
+
+  const limit = maxLatestPostsPerAccount();
+  try {
+    consumeQuota(quota, "fetch");
+    out.fetchUsed = 1;
+    const post = await fetchSinglePost(handle, probed.latest.id);
+    if (persistQuota) saveInstagramQuota(quota);
+
+    if (!post.url || !(post.title || post.text)) {
+      out.status = "provider_error";
+      out.message = "empty_post_payload";
+      return out;
+    }
+
+    out.items = [
+      {
+        sourceId: account.id,
+        externalId: post.externalId,
+        url: post.url,
+        title: post.title,
+        text: post.text,
+        imageUrl: post.imageUrl,
+        publishedAt: post.publishedAt,
+      },
+    ].slice(0, limit);
+
+    out.status = "new_post";
+    return out;
+  } catch (err) {
+    if (persistQuota) saveInstagramQuota(quota);
+    out.status = "provider_error";
+    out.message = String(err?.message || err);
+    return out;
+  }
+}
+
+/**
+ * توافق خلفي: يستخدم مسار probe→fetch (منشور واحد).
+ * @param {import('../types.mjs').SourceAccount} account
+ * @param {Date} _since
  * @returns {Promise<HarvestItem[]>}
  */
-export async function fetchViaProvider(account, since) {
-  const status = getInstagramProviderStatus();
-  if (!status.configured) return [];
-
-  const handle = account.handle.replace(/^@/, "");
-  const posts = await fetchPostsFromProviderApi(handle, since);
-  return posts
-    .filter((p) => !since || new Date(p.publishedAt) >= since)
-    .map((p) => ({
-      sourceId: account.id,
-      externalId: p.externalId,
-      url: p.url,
-      title: p.title,
-      text: p.text,
-      imageUrl: p.imageUrl,
-      publishedAt: p.publishedAt,
-    }));
+export async function fetchViaProvider(account, _since) {
+  const result = await probeAndMaybeFetch(account, { persistQuota: true });
+  return result.items;
 }
 
 export async function fetchAllProviderAccounts(accounts, since) {
@@ -138,7 +365,7 @@ export async function fetchAllProviderAccounts(accounts, since) {
       const batch = await fetchViaProvider(account, since);
       items.push(...batch);
     } catch {
-      /* يُسجَّل في run.mjs عبر stats.failed */
+      /* يُسجَّل في run.mjs */
     }
     await sleep(400);
   }

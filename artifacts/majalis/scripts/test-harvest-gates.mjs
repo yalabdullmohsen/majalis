@@ -158,4 +158,92 @@ assert.match(read("src/pages/lessons/ui/LessonsView.tsx"), /HarvestFeedPanel/);
 assert.match(read("src/components/lessons/SourceItemCard.tsx"), /المصدر/);
 assert.match(read("src/App.tsx"), /SourcesDirectoryPage/);
 
+
+console.log("=== Instagram probe: unchanged لا يغيّر feed ===");
+{
+  const prevMode = process.env.INSTAGRAM_INGEST_MODE;
+  const prevKey = process.env.INSTAGRAM_PROVIDER_KEY;
+  const prevEndpoint = process.env.INSTAGRAM_PROVIDER_ENDPOINT;
+  const prevMock = process.env.INSTAGRAM_PROVIDER_MOCK;
+  const prevLatest = process.env.INSTAGRAM_MOCK_LATEST_ID;
+  process.env.INSTAGRAM_INGEST_MODE = "provider";
+  process.env.INSTAGRAM_PROVIDER_KEY = "test-key";
+  process.env.INSTAGRAM_PROVIDER_ENDPOINT = "https://provider.example";
+  process.env.INSTAGRAM_PROVIDER_MOCK = "1";
+  process.env.INSTAGRAM_MOCK_LATEST_ID = "mock-nebraas_kw-1";
+
+  const { harvestInstagramAccount } = await import("./harvest/adapters/instagram.mjs");
+  const unchangedAcc = {
+    id: "ig-nebraas_kw",
+    platform: "instagram",
+    handle: "nebraas_kw",
+    enabled: true,
+    trusted: true,
+    autoPublish: true,
+    last_seen_post_id: "mock-nebraas_kw-1",
+    last_seen_post_url: "https://www.instagram.com/p/mock-nebraas_kw-1/",
+  };
+  const unchanged = await harvestInstagramAccount(unchangedAcc, { persistQuota: false });
+  assert.equal(unchanged.status, "unchanged");
+  assert.equal(unchanged.items.length, 0);
+
+  console.log("=== Instagram probe: منشور جديد → بطاقة واحدة ===");
+  process.env.INSTAGRAM_MOCK_LATEST_ID = "mock-nebraas_kw-NEW";
+  const freshAcc = {
+    ...unchangedAcc,
+    last_seen_post_id: "mock-nebraas_kw-1",
+    last_seen_post_url: "https://www.instagram.com/p/mock-nebraas_kw-1/",
+  };
+  const fresh = await harvestInstagramAccount(freshAcc, { persistQuota: false });
+  assert.equal(fresh.status, "new_post");
+  assert.equal(fresh.items.length, 1);
+
+  console.log("=== Instagram: نفس المنشور لا يُنشر مرتين ===");
+  const again = await harvestInstagramAccount(
+    {
+      ...freshAcc,
+      last_seen_post_id: fresh.items[0].externalId,
+      last_seen_post_url: fresh.items[0].url,
+    },
+    { persistQuota: false },
+  );
+  assert.equal(again.status, "unchanged");
+  assert.equal(again.items.length, 0);
+
+  console.log("=== Instagram: تجاوز limit لا يكسر ===");
+  process.env.INSTAGRAM_PROBE_DAILY_LIMIT = "0";
+  const limited = await harvestInstagramAccount(freshAcc, { persistQuota: false });
+  assert.equal(limited.status, "rate_limited");
+  delete process.env.INSTAGRAM_PROBE_DAILY_LIMIT;
+
+  console.log("=== dry-run لا يكتب last_seen_post_id ===");
+  const beforeAccounts = JSON.parse(readFileSync(resolve(root, "public/data/sources/accounts.json"), "utf8"));
+  const beforeIg = beforeAccounts.accounts.find((a) => a.platform === "instagram");
+  const beforeId = beforeIg?.last_seen_post_id ?? null;
+  await runHarvest({ dryRun: true, fixture: true, verbose: false });
+  const afterAccounts = JSON.parse(readFileSync(resolve(root, "public/data/sources/accounts.json"), "utf8"));
+  const afterIg = afterAccounts.accounts.find((a) => a.id === beforeIg.id);
+  assert.equal(afterIg.last_seen_post_id ?? null, beforeId);
+
+  console.log("=== accounts.json حقول التتبع لإنستغرام ===");
+  for (const a of afterAccounts.accounts.filter((x) => x.platform === "instagram")) {
+    assert.ok("last_seen_post_id" in a, `${a.id} last_seen_post_id`);
+    assert.ok("last_seen_post_url" in a, `${a.id} last_seen_post_url`);
+    assert.ok("last_checked_at" in a, `${a.id} last_checked_at`);
+    assert.ok("last_published_at" in a, `${a.id} last_published_at`);
+  }
+
+  if (prevMode !== undefined) process.env.INSTAGRAM_INGEST_MODE = prevMode;
+  else delete process.env.INSTAGRAM_INGEST_MODE;
+  if (prevKey !== undefined) process.env.INSTAGRAM_PROVIDER_KEY = prevKey;
+  else delete process.env.INSTAGRAM_PROVIDER_KEY;
+  if (prevEndpoint !== undefined) process.env.INSTAGRAM_PROVIDER_ENDPOINT = prevEndpoint;
+  else delete process.env.INSTAGRAM_PROVIDER_ENDPOINT;
+  if (prevMock !== undefined) process.env.INSTAGRAM_PROVIDER_MOCK = prevMock;
+  else delete process.env.INSTAGRAM_PROVIDER_MOCK;
+  if (prevLatest !== undefined) process.env.INSTAGRAM_MOCK_LATEST_ID = prevLatest;
+  else delete process.env.INSTAGRAM_MOCK_LATEST_ID;
+}
+
+
 console.log("test-harvest-gates.mjs: ok");
