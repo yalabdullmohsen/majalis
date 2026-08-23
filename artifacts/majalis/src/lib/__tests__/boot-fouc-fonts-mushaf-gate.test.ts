@@ -1,0 +1,87 @@
+/**
+ * بوابة: لا وميض خطوط/ثيم عند الإقلاع، ولا رسم مصحف قبل جاهزية QPC.
+ * تشغيل: node --import tsx src/lib/__tests__/boot-fouc-fonts-mushaf-gate.test.ts
+ */
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
+const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
+
+const html = read("index.html");
+const head = html.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? "";
+const reader = read("src/features/mushaf-madinah/VerifiedMushafReader.tsx");
+const fit = read("src/features/mushaf-madinah/useMushafPageFontFit.ts");
+const mushafCss = read("src/features/mushaf-madinah/mushaf-madinah.css");
+const fontsQuran = read("src/styles/fonts-quran.css");
+const boot = read("src/lib/boot-readiness.ts");
+const splash = read("src/lib/splash-screen.ts");
+const main = read("src/main.tsx");
+const sw = read("public/sw.js");
+const theme = read("src/lib/theme-preference.ts");
+
+// 1) ثيم قبل أول paint
+{
+  const themeIdx = head.indexOf('id="mj-theme-boot"');
+  const critIdx = head.indexOf('id="mj-lcp-critical"');
+  assert.ok(themeIdx >= 0, "سكربت ثيم في head");
+  assert.ok(critIdx > themeIdx, "الثيم قبل CSS الحرج");
+  assert.match(head, /setAttribute\("dir",\s*"rtl"\)/);
+  assert.match(head, /theme-dark/);
+  assert.match(head, /theme-light/);
+  assert.match(head, /dataset\.theme/);
+  assert.match(head, /majalis-theme/);
+}
+
+// 2) خطوط محلية + preload
+{
+  assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/);
+  assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/amiri-400-ar\.woff2/);
+  assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/noto-naskh-400-ar\.woff2/);
+  assert.match(html, /rel="preload"[^>]+as="font"/);
+  assert.match(fontsQuran, /font-display:\s*block/);
+  assert.doesNotMatch(fontsQuran, /font-display:\s*swap/);
+}
+
+// 3) المصحف: لا Amiri بديل قبل QPC
+{
+  assert.doesNotMatch(reader, /Amiri/, "لا رسم المصحف بخط Amiri بديل");
+  assert.match(reader, /layout && fontReady/);
+  assert.match(reader, /layout && ready/);
+  assert.match(fit, /dataset\.mmFit/);
+  assert.match(fit, /isMushafPageFontReady/);
+  assert.match(mushafCss, /data-mm-fit="1"/);
+}
+
+// 4) لا تبديل ثيم بعد أول إطار بطريقة تسبب وميض
+{
+  assert.match(theme, /dataset\.theme !== resolved/);
+  assert.match(theme, /theme-dark/);
+  assert.match(theme, /theme-light/);
+}
+
+// 5) جاهزية إقلاع + Splash لا يُخفى قبل الخطوط
+{
+  assert.match(boot, /awaitBootReadiness/);
+  assert.match(boot, /fontsReady/);
+  assert.match(main, /awaitBootReadiness/);
+  assert.match(splash, /mj:boot-ready/);
+  assert.doesNotMatch(
+    splash,
+    /requestAnimationFrame\(\(\)\s*=>\s*\{\s*requestAnimationFrame\(hide\)/,
+    "Splash لا يُخفى بـ double-rAF فوري",
+  );
+}
+
+// 6) SW: skipWaiting + clients.claim + تدوير كاش
+{
+  assert.match(sw, /skipWaiting/);
+  assert.match(sw, /clients\.claim/);
+  assert.match(sw, /SW_BUILD_ID|CACHE_PREFIX/);
+  assert.match(sw, /caches\.delete/);
+  assert.match(sw, /pathname\.startsWith\("\/fonts\/"\)[\s\S]{0,120}staleWhileRevalidate/, "خطوط SWR لا CSS/خط قديم عالق");
+}
+
+console.log("boot-fouc-fonts-mushaf-gate.test.ts: ok");

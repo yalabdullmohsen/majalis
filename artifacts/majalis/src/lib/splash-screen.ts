@@ -78,14 +78,8 @@ export function armNativeSplashController(): void {
 
   window.addEventListener("mj:app-painted", hide, { once: true });
   window.addEventListener("app:first-paint", hide, { once: true });
-
-  if (typeof requestAnimationFrame === "function") {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(hide);
-    });
-  } else {
-    window.setTimeout(hide, 0);
-  }
+  window.addEventListener("mj:boot-ready", hide, { once: true });
+  // لا double-rAF فوري — كان يخفي Splash قبل جاهزية الخطوط
 }
 
 /** @deprecated */

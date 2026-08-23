@@ -2161,6 +2161,12 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   user-select: none;
 }
 
+/* أخفِ نص المصحف حتى اكتمال قياس الخط — يحجز المساحة بلا قفزة حجم */
+.mm-page:not([data-mm-fit="1"]) .mm-page__body {
+  visibility: hidden;
+}
+
+
 .mm-ayah-bar__ayah-snippet {
   margin: 0.25rem 0 0.35rem;
   width: 100%;

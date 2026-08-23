@@ -3,6 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- ثيم+RTL قبل أي CSS مرئي — يمنع وميض فاتح/داكن وFOUC (v6-direct-boot-2026-08 → v7-boot-fouc-2026-08) -->
+    <script id="mj-theme-boot">
+      (function () {
+        try {
+          var html = document.documentElement;
+          html.setAttribute("lang", "ar");
+          html.setAttribute("dir", "rtl");
+          var _dsv = "v7-boot-fouc-2026-08";
+          if (localStorage.getItem("majalis-design-v") !== _dsv) {
+            localStorage.setItem("majalis-design-v", _dsv);
+            localStorage.removeItem("majalis-font-preference");
+          }
+          var storedTheme = localStorage.getItem("majalis-theme");
+          var resolved = storedTheme === "light" ? "light"
+            : storedTheme === "dark" ? "dark"
+            : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          html.dataset.theme = resolved;
+          html.classList.toggle("dark", resolved === "dark");
+          html.classList.toggle("theme-dark", resolved === "dark");
+          html.classList.toggle("theme-light", resolved === "light");
+          html.style.colorScheme = resolved === "dark" ? "dark" : "light";
+          var splashBg = resolved === "dark" ? "#101614" : "#F2F4F3";
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+            m.setAttribute("content", splashBg);
+          });
+          var storedFont = localStorage.getItem("majalis-font-preference-v2");
+          html.dataset.font =
+            storedFont === "naskh" || storedFont === "default" ? storedFont : "naskh";
+        } catch (e) {}
+      })();
+    </script>
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#F2F4F3" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F4F3" />
@@ -21,7 +52,9 @@
       h1, h2, h3, h4, strong, b, button {
         font-weight: 400;
       }
-      html[data-theme="dark"], html[data-theme="dark"] body, html[data-theme="dark"] #root {
+      html.theme-dark, html[data-theme="dark"],
+      html.theme-dark body, html[data-theme="dark"] body,
+      html.theme-dark #root, html[data-theme="dark"] #root {
         background-color: #101614;
         color: #e8efea;
       }
@@ -30,7 +63,18 @@
         --inset-bottom: env(safe-area-inset-bottom, 0px);
         --inset-right: env(safe-area-inset-right, 0px);
         --inset-left: env(safe-area-inset-left, 0px);
+        --header-chrome: 56px;
+        --header-h: calc(var(--header-chrome) + var(--inset-top, 0px));
+        --bottom-nav-h: 3.25rem;
+        --bottom-nav-height: 3.25rem;
+        --nav-h: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px));
+        --mm-paper: #f7f1e3;
       }
+      html.theme-dark, html[data-theme="dark"] {
+        --mm-paper: #1a221c;
+      }
+      .navbar-v3 { min-height: var(--header-h); box-sizing: border-box; }
+      .bottom-nav, [data-bottom-nav] { min-height: var(--nav-h); box-sizing: border-box; }
     </style>
     <style id="mj-splash-critical">
       :root{
@@ -148,8 +192,10 @@
     <link rel="manifest" href="/site.webmanifest" />
     <!-- preconnect واحد فقط (Lighthouse ≤٢) — الخطوط محلية؛ أصول الصوت بعد التفاعل -->
     <link rel="preconnect" href="https://ngmvmlulzacrlicuagyp.supabase.co" />
-    <!-- خط الشاشة الأولى فقط — Amiri 400 عربي. خطوط المصحف تُحمَّل داخل /mushaf -->
+    <!-- خطوط الواجهة محلية — بلا CDN. خط المصحف QPC يُحمَّل داخل /mushaf قبل الرسم -->
     <link rel="preload" href="/fonts/ui/amiri-400-ar.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ui/noto-naskh-400-ar.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ui/aref-ruqaa-400-ar.woff2" as="font" type="font/woff2" crossorigin />
 
     <script type="application/ld+json">
       {
@@ -208,39 +254,6 @@
     </script>
   </head>
   <body>
-    <script id="mj-theme-boot">
-      (function () {
-        try {
-          /* أول سطر في body — قبل الطبقة والجذر؛ يمنع وميض الثيم/التصميم القديم */
-          var _dsv = "v6-direct-boot-2026-08";
-          if (localStorage.getItem("majalis-design-v") !== _dsv) {
-            localStorage.setItem("majalis-design-v", _dsv);
-            /* لا نمسح الثيم — يمنع وميض الوضع عند تحديث التصميم */
-            localStorage.removeItem("majalis-font-preference");
-          }
-          var storedTheme = localStorage.getItem("majalis-theme");
-          var resolved = storedTheme === "light" ? "light"
-            : storedTheme === "dark" ? "dark"
-            : storedTheme === "auto"
-              ? (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-              : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-          document.documentElement.dataset.theme = resolved;
-          document.documentElement.classList.toggle("dark", resolved === "dark");
-          document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
-          var splashBg = resolved === "dark" ? "#101614" : "#F2F4F3";
-          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
-            m.setAttribute("content", splashBg);
-          });
-          var storedFont = localStorage.getItem("majalis-font-preference-v2");
-          document.documentElement.dataset.font =
-            storedFont === "naskh" || storedFont === "default"
-              ? storedFont
-              : "naskh";
-        } catch (e) {}
-      })();
-    </script>
-    
-    
     <div id="mj-launch-splash" aria-hidden="true">
       <svg class="mj-launch-splash__ornament" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
         <g fill="none" stroke="currentColor" stroke-width="0.55" opacity="0.85">
@@ -264,9 +277,16 @@
         var MIN_MS = 280;
         var MAX_MS = 700;
         var EXIT_MS = 180;
+        var bootReady = false;
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
         try { window.__mjSplashStart = start; } catch (e) {}
         function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
+        function fontsLikelyReady() {
+          try {
+            if (!document.fonts || !document.fonts.check) return true;
+            return document.fonts.check('16px "Amiri"') || document.fonts.check('16px "Noto Naskh Arabic"');
+          } catch (e) { return true; }
+        }
         function dismiss(immediate) {
           if (done) return;
           done = true;
@@ -284,6 +304,8 @@
           var elapsed = now() - start;
           if (elapsed < MIN_MS) return;
           if (!appReady && elapsed < MAX_MS) return;
+          /* بعد appReady: انتظر الخط إن أمكن ضمن سقف MAX */
+          if (appReady && !bootReady && !fontsLikelyReady() && elapsed < MAX_MS) return;
           dismiss(false);
         }
         try { window.__mjDismissSplash = dismiss; } catch (e) {}
@@ -302,8 +324,14 @@
           appReady = true;
           tryDismiss();
         }, { once: true });
+        window.addEventListener("mj:boot-ready", function () {
+          bootReady = true;
+          appReady = true;
+          tryDismiss();
+        }, { once: true });
         window.setTimeout(function () {
           appReady = true;
+          bootReady = true;
           tryDismiss();
         }, MAX_MS);
         window.setTimeout(tryDismiss, MIN_MS);

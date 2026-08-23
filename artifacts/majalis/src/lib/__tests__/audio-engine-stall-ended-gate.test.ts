@@ -37,9 +37,13 @@ assert.match(sw, /pathname\.startsWith\("\/audio\/"\)/, "network-first للصو�
 
 const html = read("index.html");
 const head = html.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? "";
-const body = html.match(/<body>([\s\S]*?)<\/body>/)?.[1] ?? "";
 assert.match(head.trimStart(), /^<meta charset=/i, "charset أول عنصر في head");
-assert.match(body.trimStart(), /id="mj-theme-boot"/, "ثيم الإقلاع أول body قبل React");
+assert.match(head, /id="mj-theme-boot"/, "ثيم الإقلاع في head قبل أي CSS مرئي");
+{
+  const themeIdx = head.indexOf('id="mj-theme-boot"');
+  const critIdx = head.indexOf('id="mj-lcp-critical"');
+  assert.ok(themeIdx >= 0 && critIdx > themeIdx, "سكربت الثيم قبل CSS الحرج");
+}
 assert.doesNotMatch(
   html,
   /localStorage\.removeItem\("majalis-theme"\)/,

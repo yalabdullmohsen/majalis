@@ -30,12 +30,18 @@ assert.doesNotMatch(
   "لا يُنتظر purgeNativeWebRuntimeCaches قبل createRoot",
 );
 
-// خلفية الإقلاع = سطح الرئيسية (يمنع وميض أخضر قديم / شاشة دعائية)
+// خلفية الإقلاع تتبع الثيم المحلول (يمنع وميض فاتح فوق ليلي / شاشة دعائية)
 assert.match(main, /#F2F4F3/);
+assert.match(main, /#101614/);
 assert.match(
   main,
-  /setProperty\(\s*["']--app-status-bg["']\s*,\s*["']#F2F4F3["']/,
-  "خلفية الإقلاع الأصلي تطابق سطح التطبيق",
+  /setProperty\(\s*["']--app-status-bg["'][\s\S]{0,80}#F2F4F3/,
+  "خلفية الإقلاع النهاري تطابق سطح التطبيق",
+);
+assert.match(
+  main,
+  /bootTheme === "dark" \? "#101614"/,
+  "خلفية الإقلاع الليلي من الثيم المحلول قبل الرسم",
 );
 
 console.log("boot-mount-order-gate.test.ts: ok");

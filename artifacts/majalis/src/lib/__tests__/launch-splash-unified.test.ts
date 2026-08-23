@@ -49,7 +49,13 @@ const splashTs = readFileSync(resolve(root, "src/lib/splash-screen.ts"), "utf8")
 assert.match(splashTs, /SplashScreen\.hide/, "يخفي الإطلاق الأصلي");
 assert.match(splashTs, /SPLASH_MIN_VISIBLE_MS/);
 assert.match(splashTs, /SPLASH_MAX_VISIBLE_MS/);
-assert.match(splashTs, /requestAnimationFrame/, "إخفاء عند أول إطار");
+assert.match(splashTs, /mj:boot-ready/, "إخفاء بعد جاهزية الإقلاع/الخطوط");
+assert.match(splashTs, /mj:app-painted/, "إخفاء بعد أول رسم معلَن");
+assert.doesNotMatch(
+  splashTs,
+  /requestAnimationFrame\(\(\)\s*=>\s*\{\s*requestAnimationFrame\(hide\)/,
+  "لا إخفاء بـ double-rAF قبل جاهزية الخطوط",
+);
 
 const majlisSplash = readFileSync(resolve(root, "src/lib/majlis-splash.ts"), "utf8");
 assert.match(majlisSplash, /SPLASH_MIN_VISIBLE_MS\s*=\s*280/);
