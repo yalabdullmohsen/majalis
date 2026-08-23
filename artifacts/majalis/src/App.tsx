@@ -46,7 +46,6 @@ import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
-import { AppReadingFocus } from "@/components/reading/AppReadingFocus";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
 import { FirstVisitIntro } from "@/components/onboarding/FirstVisitIntro";
 import {
@@ -1293,7 +1292,6 @@ function AppShellInner() {
       <NavigationBinder />
       <NativeBackButtonListener />
       <RouteEnterMotion />
-      <AppReadingFocus />
       <EdgeSwipeBack />
       <NativeNotificationsBootstrap />
       <IdleRuntimeBoot />
