@@ -220,7 +220,7 @@ export default function DiscoverIslamPage() {
 
       <section className="dii-contact-cta ui-card" style={{ marginTop: "2.5rem" }}>
         <h2>هل تحتاج التحدث مع شخص مباشرة؟</h2>
-        <p>تواصل سري وآمن مع داعية أو داعية — بلا أي إلزام، وبلا نشر بياناتك لأحد.</p>
+        <p>تواصل سري وآمن مع داعٍ أو داعية — بلا أي إلزام، وبلا نشر بياناتك لأحد.</p>
         <Link href="/discover-islam/contact" className="asp-run-btn">ابدأ التواصل السري</Link>
       </section>
     </div>

@@ -150,13 +150,15 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
         </section>
       )}
 
-      {/* الدليل من السنة */}
-      {topic.hadithEvidence.length > 0 && (
+      {/* الدليل من السنة — لا يُعرض الضعيف/الموضوع في قسم التعبّد */}
+      {topic.hadithEvidence.filter((ev) => !/ضعيف|موضوع|منكر|واه/.test(ev.grade || "")).length > 0 && (
         <section className="snr-detail-section">
           <div className="snr-detail-section-title">
             <span>📜</span> الدليل من السنة النبوية
           </div>
-          {topic.hadithEvidence.map((ev, i) => (
+          {topic.hadithEvidence
+            .filter((ev) => !/ضعيف|موضوع|منكر|واه/.test(ev.grade || ""))
+            .map((ev, i) => (
             <div key={i} className="snr-evidence-item">
               <div className="snr-evidence-text">«{ev.text}»</div>
               <div className="snr-evidence-source">

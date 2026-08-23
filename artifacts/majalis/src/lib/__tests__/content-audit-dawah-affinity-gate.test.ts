@@ -72,8 +72,12 @@ console.log("\n=== أدعية بلا خلاف في الثبوت ===");
 console.log("\n=== صياغة التعريف بالإسلام ===");
 {
   const hub = read("src/views/DiscoverIslamPage.tsx");
-  assert.match(hub, /داعٍ أو داعية/, "لا تكرار ركيك «داعية أو داعية»");
-  assert.match(hub, /مسار الثلاثين يومًا/, "المسار يعدّ بثلاثين يومًا");
+  const contact = read("src/views/DiscoverIslamContactPage.tsx");
+  assert.doesNotMatch(hub + contact, /داعية أو داعية/, "لا تكرار ركيك «داعية أو داعية»");
+  assert.match(hub, /داعٍ أو داعية/, "صيغة داعٍ أو داعية");
+  assert.match(hub, /مسار الثلاثين يومًا|الثلاثين يومًا/, "المسار يعدّ بثلاثين يومًا");
+  const snr = read("src/views/SinsAndRightsDetailPage.tsx");
+  assert.match(snr, /ضعيف\|موضوع\|منكر/, "أدلة الذنوب تستبعد الضعيف من العرض");
 }
 
 console.log("\ncontent-audit-dawah-affinity-gate.test.ts: ok");
