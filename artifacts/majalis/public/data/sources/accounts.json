@@ -39,7 +39,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-erth.kwt",
@@ -59,7 +63,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-itm2nan_",
@@ -78,7 +86,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-shariaaac",
@@ -98,7 +110,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-w_alanbiya",
@@ -118,7 +134,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-rasikhoon",
@@ -137,7 +157,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-masjid_alshalahi_women",
@@ -156,7 +180,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-thegrandmosque",
@@ -175,7 +203,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-quranicplatform",
@@ -194,7 +226,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-alshalahi_masjid",
@@ -213,7 +249,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-alshalahi_masjd",
@@ -233,7 +273,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-almanabr",
@@ -253,7 +297,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "web-almanabr.org",
@@ -315,7 +363,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-tartelkw",
@@ -335,7 +387,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-jouryaldahi",
@@ -354,7 +410,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "web-hoffath.org",
@@ -396,7 +456,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-erwaa.quran",
@@ -415,7 +479,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-alholah_kw",
@@ -434,7 +502,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-trahumkwclub",
@@ -453,7 +525,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-othmanalkamees",
@@ -473,7 +549,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-duroos.alseera",
@@ -492,7 +572,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-DrosQ8",
@@ -512,7 +596,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "telegram-DrosQ8",
@@ -552,7 +640,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-duroos_abdullahalmubarak",
@@ -571,7 +663,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-warathakw2",
@@ -591,7 +687,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-ibnabitallib",
@@ -610,7 +710,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-diwan_al3uni_alsharif_alesbuei",
@@ -629,7 +733,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "web-drosq8-linktree",
@@ -669,7 +777,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-ghaith.kw",
@@ -688,7 +800,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-qetaa_quran",
@@ -707,7 +823,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-manaratkw",
@@ -727,7 +847,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-al_mabarrah",
@@ -748,7 +872,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-mrkz_al_albany",
@@ -767,7 +895,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-saad.al.abdullah.city",
@@ -786,7 +918,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-nebraas_kw",
@@ -807,7 +943,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-mosque.mbark.j",
@@ -826,7 +966,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-mpe.kh11",
@@ -845,7 +989,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-masjedalansary",
@@ -864,7 +1012,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-mhamadh.kw",
@@ -883,7 +1035,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-m_alkhayatq8",
@@ -902,7 +1058,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-masjedalmehry",
@@ -921,7 +1081,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-masjid_mubark_alsaifi",
@@ -941,7 +1105,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-moudhi_mosque",
@@ -960,7 +1128,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "web-manar-alsabil.org",
@@ -1001,7 +1173,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-nadwat.kw",
@@ -1021,7 +1197,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-wejdanalh",
@@ -1040,7 +1220,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "web-awqaf.gov.kw",
@@ -1082,7 +1266,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     }
   ]
 }

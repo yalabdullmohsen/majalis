@@ -40,6 +40,10 @@ function legacyKuwaitAccounts() {
     autoPublish: true,
     poll_priority: HIGH_HANDLES.has(s.config.handle) ? "high" : "normal",
     last_seen_at: null,
+    last_seen_post_id: null,
+    last_seen_post_url: null,
+    last_checked_at: null,
+    last_published_at: null,
   }));
 }
 
@@ -122,6 +126,14 @@ function toAccount(row) {
     autoPublish: true,
     poll_priority: row.poll_priority ?? (high ? "high" : "normal"),
     last_seen_at: null,
+    ...(platform === "instagram"
+      ? {
+          last_seen_post_id: null,
+          last_seen_post_url: null,
+          last_checked_at: null,
+          last_published_at: null,
+        }
+      : {}),
   };
 }
 

@@ -2,7 +2,11 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { adapterFor } from "./adapters/index.mjs";
-import { getInstagramIngestMode, getInstagramProviderStatus } from "./adapters/instagram.mjs";
+import {
+  getInstagramIngestMode,
+  getInstagramProviderStatus,
+  harvestInstagramAccount,
+} from "./adapters/instagram.mjs";
 import { stripEmojiFromTitle, summaryFromText } from "./normalize.mjs";
 import { classifyType, extractFields, confidenceFor } from "./classify.mjs";
 import { fingerprintPrimary, fingerprintSecondary, mergeOrAppend } from "./dedupe.mjs";
@@ -53,12 +57,26 @@ function resolveInstagramNote() {
     return { ...status, message: status.message || "instagram skipped: mode=off" };
   }
   if (mode === "provider" && status.configured === false) {
-    return status; // message: "Instagram provider is not configured."
+    return status;
   }
   if (mode === "oembed" && inboxIsEmpty()) {
     return { mode, configured: null, message: "instagram skipped: empty inbox" };
   }
   return status;
+}
+
+function emptyInstagramStats(total = 0) {
+  return {
+    accounts_total: total,
+    checked: 0,
+    unchanged: 0,
+    new_posts_found: 0,
+    published: 0,
+    skipped_private: 0,
+    failed: 0,
+    probe_records_used: 0,
+    fetch_records_used: 0,
+  };
 }
 
 function itemToCard(item, account) {
@@ -93,6 +111,8 @@ function itemToCard(item, account) {
     published_at,
     confidence: confidenceFor(item, fields),
     _primary: fingerprintPrimary(account.id, item.externalId),
+    _igPostId: item.externalId || null,
+    _igPostUrl: item.url || null,
   };
 }
 
@@ -107,6 +127,15 @@ function writeHarvestReportJson(stats, { dryRun }) {
     dry_run: dryRun,
     instagram_mode: getInstagramIngestMode(),
     instagram: stats.instagram,
+    instagram_accounts_total: stats.instagramStats.accounts_total,
+    instagram_checked: stats.instagramStats.checked,
+    instagram_unchanged: stats.instagramStats.unchanged,
+    instagram_new_posts_found: stats.instagramStats.new_posts_found,
+    instagram_published: stats.instagramStats.published,
+    instagram_skipped_private: stats.instagramStats.skipped_private,
+    instagram_failed: stats.instagramStats.failed,
+    instagram_probe_records_used: stats.instagramStats.probe_records_used,
+    instagram_fetch_records_used: stats.instagramStats.fetch_records_used,
     sources: stats.sources,
     fetched: stats.fetched,
     published: stats.published,
@@ -114,6 +143,7 @@ function writeHarvestReportJson(stats, { dryRun }) {
     failed: stats.failed,
     skipped: stats.skippedList,
     last_seen_updates: stats.lastSeenUpdates,
+    content_changed: stats.contentChanged === true,
   };
   mkdirSync(dirname(REPORT_JSON), { recursive: true });
   writeFileSync(REPORT_JSON, `${JSON.stringify(payload, null, 2)}\n`);
@@ -128,7 +158,30 @@ function touchLastSeen(accountsById, accountId, publishedAt) {
   }
 }
 
+function touchInstagramChecked(accountsById, accountId, checkedAt) {
+  const acc = accountsById.get(accountId);
+  if (!acc) return;
+  acc.last_checked_at = checkedAt;
+  acc._accountsMetaChanged = true;
+}
+
+function touchInstagramPublished(accountsById, accountId, { postId, postUrl, publishedAt }) {
+  const acc = accountsById.get(accountId);
+  if (!acc) return;
+  const iso = publishedAt ? new Date(publishedAt).toISOString() : new Date().toISOString();
+  if (postId) acc.last_seen_post_id = postId;
+  if (postUrl) acc.last_seen_post_url = postUrl;
+  acc.last_published_at = iso;
+  acc.last_checked_at = iso;
+  acc._maxPublished = iso;
+  acc._accountsMetaChanged = true;
+  acc._feedContentChanged = true;
+}
+
 export async function runHarvest({ dryRun = false, fixture = false, verbose = false } = {}) {
+  const allAccounts = loadAccounts();
+  const igTotal = allAccounts.filter((a) => a.platform === "instagram").length;
+
   const stats = {
     sources: 0,
     fetched: 0,
@@ -139,6 +192,8 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
     skippedList: /** @type {Array<{id?:string,reason:string}>} */ ([]),
     lastSeenUpdates: /** @type {Array<{id:string,last_seen_at:string}>} */ ([]),
     instagram: resolveInstagramNote(),
+    instagramStats: emptyInstagramStats(igTotal),
+    contentChanged: false,
   };
 
   const pushSkip = (id, reason) => {
@@ -146,8 +201,6 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
     stats.skippedList.push({ id, reason });
   };
 
-  // كل الحسابات تُحفظ كما هي — الحصاد فقط للمؤهّلين للنشر التلقائي
-  const allAccounts = loadAccounts();
   const accountsById = new Map(allAccounts.map((a) => [a.id, { ...a }]));
   const harvestAccounts = allAccounts.filter((a) => canAutoPublish(a));
   stats.sources = harvestAccounts.length;
@@ -155,7 +208,6 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
   for (const a of allAccounts) {
     const reason = skipReasonForAccount(a);
     if (reason && a.enabled) {
-      // نسجّل غير الموثوق / بدون autoPublish مرة واحدة (ليس لكل عنصر)
       if (reason === "not_trusted" || reason === "auto_publish_off") {
         pushSkip(a.id, reason);
       }
@@ -171,6 +223,7 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
 
   const now = Date.now();
   const defaultSince = new Date(now - HOURS_48);
+  const nowIso = new Date().toISOString();
 
   const igMode = getInstagramIngestMode();
   const igStatus = getInstagramProviderStatus();
@@ -180,24 +233,74 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
     igMode === "off";
 
   if (skipAllInstagram && stats.instagram?.message) {
-    // رسالة عامة مرة واحدة — تفادي فشل التشغيلة
     if (!stats.skippedList.some((s) => s.id === "instagram")) {
       pushSkip("instagram", stats.instagram.message);
     }
   }
 
-  /** حسابات فشل محوّلها بالكامل — لا last_seen_at */
   const adapterFailed = new Set();
-
   let harvested = [];
+
   if (fixture || dryRun) {
     harvested = loadFixtureItems();
     stats.fetched = harvested.length;
   } else {
     for (const account of harvestAccounts) {
-      if (account.platform === "instagram" && skipAllInstagram) {
+      if (account.platform === "instagram") {
+        if (skipAllInstagram) continue;
+        try {
+          const result = await harvestInstagramAccount(account, { persistQuota: !dryRun });
+          stats.instagramStats.checked += 1;
+          stats.instagramStats.probe_records_used += result.probeUsed || 0;
+          stats.instagramStats.fetch_records_used += result.fetchUsed || 0;
+
+          if (result.status === "unchanged") {
+            stats.instagramStats.unchanged += 1;
+            touchInstagramChecked(accountsById, account.id, nowIso);
+            continue;
+          }
+          if (result.status === "private_or_unavailable") {
+            stats.instagramStats.skipped_private += 1;
+            pushSkip(account.id, result.message || result.status);
+            touchInstagramChecked(accountsById, account.id, nowIso);
+            continue;
+          }
+          if (result.status === "missing_secret" || result.status === "rate_limited") {
+            pushSkip(account.id, result.message || result.status);
+            if (result.status === "rate_limited") {
+              // تخطّي بقية إنستغرام عند استنفاد الحصة دون إسقاط التشغيلة
+              pushSkip("instagram", result.message || "rate_limited");
+              break;
+            }
+            continue;
+          }
+          if (result.status === "provider_missing_latest_post_id") {
+            pushSkip(account.id, "provider_missing_latest_post_id");
+            stats.instagramStats.failed += 1;
+            continue;
+          }
+          if (result.status === "provider_error") {
+            stats.failed.push({ id: account.id, reason: result.message || result.status });
+            stats.instagramStats.failed += 1;
+            adapterFailed.add(account.id);
+            continue;
+          }
+          if (result.status === "new_post" && result.items?.length) {
+            stats.instagramStats.new_posts_found += result.items.length;
+            stats.fetched += result.items.length;
+            harvested.push(...result.items);
+            continue;
+          }
+          pushSkip(account.id, result.status || "instagram_skipped");
+        } catch (err) {
+          const msg = String(err?.message || err);
+          stats.failed.push({ id: account.id, reason: msg });
+          stats.instagramStats.failed += 1;
+          adapterFailed.add(account.id);
+        }
         continue;
       }
+
       const adapter = adapterFor(account.platform);
       if (!adapter) {
         pushSkip(account.id, `no_adapter:${account.platform}`);
@@ -208,16 +311,10 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
         const items = await adapter.fetch(account, since);
         stats.fetched += items.length;
         harvested.push(...items);
-        // لا تُحدَّث last_seen هنا — فقط بعد نشر/دمج ناجح أدناه
       } catch (err) {
         const msg = String(err?.message || err);
-        // فشل محوّل واحد لا يسقط التشغيلة
-        if (/instagram/i.test(msg) && /not configured|empty|skip/i.test(msg)) {
-          pushSkip(account.id, msg);
-        } else {
-          stats.failed.push({ id: account.id, reason: msg });
-          adapterFailed.add(account.id);
-        }
+        stats.failed.push({ id: account.id, reason: msg });
+        adapterFailed.add(account.id);
       }
     }
   }
@@ -255,8 +352,18 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
       const { merged } = mergeOrAppend(cards, card);
       if (merged) {
         stats.merged++;
+        stats.contentChanged = true;
         if (!adapterFailed.has(account.id)) {
-          touchLastSeen(accountsById, account.id, card.published_at);
+          if (account.platform === "instagram") {
+            touchInstagramPublished(accountsById, account.id, {
+              postId: card._igPostId,
+              postUrl: card._igPostUrl,
+              publishedAt: card.published_at,
+            });
+            stats.instagramStats.published += 1;
+          } else {
+            touchLastSeen(accountsById, account.id, card.published_at);
+          }
         }
       }
       continue;
@@ -264,17 +371,33 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
     seenSecondary.add(card.id);
     cards.push(card);
     stats.published++;
+    stats.contentChanged = true;
     if (!adapterFailed.has(account.id)) {
-      touchLastSeen(accountsById, account.id, card.published_at);
+      if (account.platform === "instagram") {
+        touchInstagramPublished(accountsById, account.id, {
+          postId: card._igPostId,
+          postUrl: card._igPostUrl,
+          publishedAt: card.published_at,
+        });
+        stats.instagramStats.published += 1;
+      } else {
+        touchLastSeen(accountsById, account.id, card.published_at);
+      }
     }
   }
 
-  for (const c of cards) delete c._primary;
+  for (const c of cards) {
+    delete c._primary;
+    delete c._igPostId;
+    delete c._igPostUrl;
+  }
 
-  // لا تكتب last_seen لحساب فشل محوّله بالكامل
   for (const id of adapterFailed) {
     const acc = accountsById.get(id);
-    if (acc) delete acc._maxPublished;
+    if (acc) {
+      delete acc._maxPublished;
+      delete acc._feedContentChanged;
+    }
   }
 
   for (const acc of accountsById.values()) {
@@ -283,14 +406,22 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
     }
   }
 
+  const accountsMetaChanged = [...accountsById.values()].some((a) => a._accountsMetaChanged);
+  for (const acc of accountsById.values()) {
+    delete acc._accountsMetaChanged;
+    delete acc._feedContentChanged;
+  }
+
+  // content_changed = منشورات جديدة في feed (ليس مجرد last_checked_at / report)
+  stats.contentChanged = Boolean(stats.contentChanged);
+
   if (!dryRun) {
-    // تمرير كل الحسابات حتى لا يُحذف غير المحصود
     publishFeed(cards, accountsById);
     writeHarvestReportJson(stats, { dryRun: false });
   }
 
   if (verbose) console.log(JSON.stringify(stats, null, 2));
-  return { stats, items: cards };
+  return { stats, items: cards, accountsMetaChanged };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
@@ -303,10 +434,12 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       if (stats.instagram?.message) {
         console.log(`harvest: ${stats.instagram.message}`);
       }
+      console.log(
+        `harvest ig: checked=${stats.instagramStats.checked} unchanged=${stats.instagramStats.unchanged} new=${stats.instagramStats.new_posts_found} published=${stats.instagramStats.published} private=${stats.instagramStats.skipped_private} failed=${stats.instagramStats.failed} probe=${stats.instagramStats.probe_records_used} fetch=${stats.instagramStats.fetch_records_used}`,
+      );
       if (stats.failed.length) {
         for (const f of stats.failed.slice(0, 5)) console.error(`  ✗ ${f.id}: ${f.reason}`);
       }
-      // فشل محوّل واحد لا يسقط العملية
       process.exit(0);
     })
     .catch((e) => {

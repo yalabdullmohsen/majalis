@@ -34,7 +34,9 @@ async function oembedPost(url) {
  * @returns {Promise<import('../types.mjs').HarvestItem[]>}
  */
 export async function fetchViaOembed(account) {
-  const inboxUrls = readInboxForHandle(account.handle);
+  const inboxUrls = Array.isArray(account._inboxOverrideUrls)
+    ? account._inboxOverrideUrls
+    : readInboxForHandle(account.handle);
   const items = [];
   for (const postUrl of inboxUrls) {
     try {

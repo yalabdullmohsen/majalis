@@ -125,6 +125,7 @@
     "test:harvest": "node scripts/test-harvest-gates.mjs",
     "harvest": "node scripts/harvest/run.mjs",
     "harvest:dry": "node scripts/harvest/run.mjs --dry-run --fixture",
+    "harvest:instagram-check": "node scripts/harvest/instagram-check.mjs",
     "harvest:accounts": "node scripts/harvest/build-accounts.mjs",
     "test:supabase-policy-audit": "node scripts/test-supabase-policy-audit.mjs",
     "test:ci-security-gates": "node scripts/test-ci-security-gates.mjs",

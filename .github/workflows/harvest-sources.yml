@@ -64,13 +64,28 @@ jobs:
           INSTAGRAM_PROVIDER_ENDPOINT: ${{ secrets.INSTAGRAM_PROVIDER_ENDPOINT }}
         run: pnpm run harvest
 
-      - name: Check for changes
+      - name: Check for content changes
         id: diff
         run: |
-          if git diff --quiet -- artifacts/majalis/public/data; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
+          REPORT="artifacts/majalis/public/data/sources/harvest-report.json"
+          CONTENT_CHANGED=false
+          if [ -f "$REPORT" ]; then
+            CONTENT_CHANGED=$(node -e "const r=require('./$REPORT'); process.stdout.write(String(r.content_changed===true))")
+          fi
+
+          # احتياط: أي تغيير على feed يُعد محتوى
+          if ! git diff --quiet -- artifacts/majalis/public/data/lessons/feed.json 2>/dev/null; then
+            CONTENT_CHANGED=true
+          fi
+
+          if [ "$CONTENT_CHANGED" = "true" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Content change detected (new posts / last_seen)"
+          else
+            # unchanged بالكامل أو تقرير فقط — لا PR محتوى
+            git checkout -- artifacts/majalis/public/data 2>/dev/null || true
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "All Instagram unchanged or report-only — skip PR"
           fi
 
       - name: Create PR
@@ -83,6 +98,7 @@ jobs:
           labels: safe:content
           commit-message: "chore(harvest): تحديث feed المصادر"
           body: |
-            تشغيلة حصاد تلقائية — تحديث `feed.json` و`accounts.json` و`harvest-report.json` تحت `public/data` (مسارات safe:content).
+            تشغيلة حصاد تلقائية — تحديث `feed.json` و/أو `accounts.json` (تتبع last_seen) تحت `public/data`.
+            لا تُفتح PR عند تقرير فقط أو عندما تكون كل حسابات Instagram unchanged.
           add-paths: |
             artifacts/majalis/public/data/**
