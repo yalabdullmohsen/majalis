@@ -7,6 +7,7 @@ import { SectionCard } from "@/components/sections/SectionCard";
 import { QuickActionsQuad } from "@/components/lobby/QuickActionsQuad";
 import type { LobbyChip, LobbyGroup, LobbyId, LobbyItem, LobbyPrimary, LobbyQuadItem } from "@/config/section-lobbies";
 import type { SectionDef } from "@/config/sections.registry";
+import { isTabRootPath } from "@/config/section-lobby-chrome";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { cn } from "@/lib/utils";
 import "./section-lobby.css";
@@ -58,6 +59,8 @@ export function SectionLobby({
   className,
 }: Props) {
   const [location] = useLocation();
+  /* جذور التبويب تعتمد القائمة السفلية — لا زر رجوع عائم يغطي البطاقات */
+  const showFloatingBack = !isTabRootPath(location);
   return (
     <div
       className={cn("section-lobby", className)}
@@ -70,16 +73,18 @@ export function SectionLobby({
     >
       <div className="section-lobby__shot" data-lobby-shot="1">
         <header className="section-lobby__head">
-          <button
-            type="button"
-            className="section-lobby__back"
-            data-section-back="1"
-            aria-label="رجوع"
-            onClick={() => goBackOrFallback(location)}
-          >
-            <DirectionalIcon icon={ArrowRight} size={18} strokeWidth={2.2} />
-            <span>رجوع</span>
-          </button>
+          {showFloatingBack ? (
+            <button
+              type="button"
+              className="section-lobby__back"
+              data-section-back="1"
+              aria-label="رجوع"
+              onClick={() => goBackOrFallback(location)}
+            >
+              <DirectionalIcon icon={ArrowRight} size={18} strokeWidth={2.2} />
+              <span>رجوع</span>
+            </button>
+          ) : null}
           <h1
             className={cn(
               "section-lobby__title",

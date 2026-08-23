@@ -16,6 +16,7 @@ import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownPro
 import MajlisWordmark from "./brand/MajlisWordmark";
 import "@/styles/components/dark-emerald-menus.css";
 import "@/styles/components/app-chrome-scroll.css";
+import "@/styles/components/top-chrome-layout.css";
 
 const HeaderTicker = lazy(() =>
   import("./HeaderTicker").then((m) => ({ default: m.HeaderTicker })),

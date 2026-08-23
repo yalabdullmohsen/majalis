@@ -20,6 +20,17 @@ export function HomepageAdBar() {
     void import("@/styles/components/homepage-ad-bar.css");
   }, []);
 
+  useEffect(() => {
+    if (!visible) return;
+    const root = document.documentElement;
+    root.setAttribute("data-home-ad", "1");
+    root.style.setProperty("--ad-banner-height", "var(--homepage-ad-bar-h, 48px)");
+    return () => {
+      root.removeAttribute("data-home-ad");
+      root.style.setProperty("--ad-banner-height", "0px");
+    };
+  }, [visible]);
+
   if (!cfg.enabled || !visible) return null;
 
   const close = () => {
