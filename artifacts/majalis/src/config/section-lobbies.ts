@@ -194,7 +194,7 @@ export function getLobby(id: LobbyId): LobbySpec {
       primary: item({
         id: "next-lesson",
         label: "أقرب درس اليوم",
-        subtitle: "\u00a0",
+        subtitle: "جدول الدروس والحلقات لهذا اليوم",
         route: "/lessons",
         icon: GraduationCap,
       }),
@@ -223,7 +223,7 @@ export function getLobby(id: LobbyId): LobbySpec {
       primary: item({
         id: "next-prayer",
         label: "الصلاة القادمة",
-        subtitle: "\u00a0",
+        subtitle: "المواقيت والأذان حسب موقعك",
         route: "/prayer-times#mawaqeet",
         icon: CircleDot,
       }),

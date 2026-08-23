@@ -93,7 +93,7 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
     applyPageSeo({
       path,
       title: `قصة سورة ${story.name} | المجلس العلمي`,
-      description: `${story.namingReason} — ${story.revelationTime}، ${story.revelationPlace}، ${story.ayahCount} آية. ${story.virtues || ""}؛ محتوى تعليمي معتمد في منهج المجلس العلمي؛ يُستفاد في التعلم والتطبيق — مرجع تربوي شرعي`.slice(0, 300),
+      description: `${story.namingReason} — ${story.revelationTime}، ${story.revelationPlace}، ${story.ayahCount} آية. ${story.virtues || ""}`.slice(0, 300),
       keywords: [story.name, "قصص القرآن", "أسباب النزول", ...story.keywords],
       ogType: "article",
       canonicalPath: path,
