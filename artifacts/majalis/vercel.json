@@ -1465,6 +1465,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/competitions",
+      "destination": "/index.html"
+    },
+    {
       "source": "/more",
       "destination": "/index.html"
     }
