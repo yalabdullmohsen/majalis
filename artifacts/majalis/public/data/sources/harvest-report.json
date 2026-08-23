@@ -1,0 +1,237 @@
+{
+  "generated_at": "2026-08-23T22:59:24.233Z",
+  "dry_run": false,
+  "instagram_mode": "provider",
+  "instagram": {
+    "mode": "provider",
+    "configured": true,
+    "message": null
+  },
+  "instagram_accounts_total": 47,
+  "instagram_checked": 47,
+  "instagram_unchanged": 0,
+  "instagram_new_posts_found": 0,
+  "instagram_published": 0,
+  "instagram_skipped_private": 0,
+  "instagram_failed": 47,
+  "instagram_probe_records_used": 47,
+  "instagram_fetch_records_used": 0,
+  "sources": 55,
+  "fetched": 24,
+  "published": 7,
+  "merged": 17,
+  "failed": [
+    {
+      "id": "ig-athr_yabka",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-erth.kwt",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-itm2nan_",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-shariaaac",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-w_alanbiya",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-rasikhoon",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-masjid_alshalahi_women",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-thegrandmosque",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-quranicplatform",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-alshalahi_masjid",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-alshalahi_masjd",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-almanabr",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-alwa7yyen",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-tartelkw",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-jouryaldahi",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-7offath",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-erwaa.quran",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-alholah_kw",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-trahumkwclub",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-othmanalkamees",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-duroos.alseera",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-DrosQ8",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-drooss_kw",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-duroos_abdullahalmubarak",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-warathakw2",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-ibnabitallib",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-diwan_al3uni_alsharif_alesbuei",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-fajeralkous",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-ghaith.kw",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-qetaa_quran",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-manaratkw",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-al_mabarrah",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-mrkz_al_albany",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-saad.al.abdullah.city",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-nebraas_kw",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-mosque.mbark.j",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-mpe.kh11",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-masjedalansary",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-mhamadh.kw",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-m_alkhayatq8",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-masjedalmehry",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-masjid_mubark_alsaifi",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-moudhi_mosque",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-mansuh_quranayh",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-nadwat.kw",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-wejdanalh",
+      "reason": "HTTP 404"
+    },
+    {
+      "id": "ig-kwt_awqaf",
+      "reason": "HTTP 404"
+    }
+  ],
+  "skipped": [],
+  "last_seen_updates": [
+    {
+      "id": "web-aayatkw.com",
+      "last_seen_at": "2026-08-23T22:58:51.499Z"
+    },
+    {
+      "id": "web-almanabr.org",
+      "last_seen_at": "2026-08-23T22:59:04.073Z"
+    },
+    {
+      "id": "web-waheen.net",
+      "last_seen_at": "2026-08-23T22:59:06.800Z"
+    },
+    {
+      "id": "telegram-DrosQ8",
+      "last_seen_at": "2026-08-23T22:59:12.321Z"
+    },
+    {
+      "id": "web-drosq8-linktree",
+      "last_seen_at": "2026-08-23T22:59:15.481Z"
+    }
+  ],
+  "content_changed": true
+}
