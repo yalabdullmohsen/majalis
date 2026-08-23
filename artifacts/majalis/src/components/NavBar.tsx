@@ -12,7 +12,7 @@ import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { getActiveTab } from "@/lib/get-active-tab";
 import { LOBBY_SEARCH_FILTER } from "@/config/section-lobby-chrome";
-import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
+import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
 import MajlisWordmark from "./brand/MajlisWordmark";
 import "@/styles/components/dark-emerald-menus.css";
 import "@/styles/components/app-chrome-scroll.css";
@@ -25,7 +25,7 @@ const SideNavDrawer = lazy(() =>
 );
 
 function PrayerChipLive() {
-  const { countdown: cd } = usePrayerCountdown();
+  const { countdown: cd } = useSharedPrayerCountdown();
 
   if (!cd?.next) return null;
   const inGrace = cd.sinceSeconds != null;

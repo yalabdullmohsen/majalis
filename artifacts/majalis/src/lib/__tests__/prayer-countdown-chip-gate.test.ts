@@ -56,7 +56,7 @@ console.log("\n=== عزل إعادة الرسم: الأب بلا usePrayerCountd
 
   const chip = read("src/components/prayer/PrayerCountdownChip.tsx");
   assert.match(chip, /memo\(PrayerCountdownChipInner\)/, "الشريحة مغلّفة بـ React.memo");
-  assert.match(chip, /usePrayerCountdown/, "العدّ داخل الشريحة فقط");
+  assert.match(chip, /useSharedPrayerCountdown/, "العدّ داخل الشريحة فقط");
   assert.match(chip, /AppBottomSheet/, "الضغط يفتح شيتًا لا تنقّلًا");
   assert.equal(/Link\s+href=["']\/prayer-times/.test(chip), false, "لا Link إلى /prayer-times");
   assert.equal(/Clock/.test(chip), false, "لا أيقونة ساعة");

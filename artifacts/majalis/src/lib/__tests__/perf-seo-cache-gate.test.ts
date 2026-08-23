@@ -22,6 +22,11 @@ assert.match(
   /"source"\s*:\s*"\/"[\s\S]{0,400}"Content-Type"[\s\S]{0,80}text\/html;\s*charset=utf-8/,
   "الرئيسية ترجع text/html; charset=utf-8",
 );
+assert.match(
+  vercel,
+  /charset=utf-8/,
+  "ترويسة charset لمسارات SPA",
+);
 assert.equal(
   /"source"\s*:\s*"\/"[\s\S]{0,220}no-store/.test(vercel),
   false,

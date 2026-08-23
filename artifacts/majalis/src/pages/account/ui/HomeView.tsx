@@ -148,13 +148,15 @@ export default function HomePage() {
   });
 
   useEffect(() => {
-    const pages = getRecentPages(2);
-    setLastVisited(pages.find((p) => p.href !== "/") ?? null);
-    try {
-      localStorage.setItem("majlis-home-welcomed-v1", "1");
-    } catch {
-      /* التخزين معطّل — النص الأول يبقى ثابتاً دون قفزة */
-    }
+    scheduleOnIdle(() => {
+      const pages = getRecentPages(2);
+      setLastVisited(pages.find((p) => p.href !== "/") ?? null);
+      try {
+        localStorage.setItem("majlis-home-welcomed-v1", "1");
+      } catch {
+        /* التخزين معطّل */
+      }
+    }, 0);
   }, []);
 
   const continueHref = lastVisited?.href ?? "/lessons";

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
 import { ArrowRight, Bell, Compass, HandHeart, MapPin, CircleDot } from "lucide-react";
-import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
+import { usePrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
 import {
   formatTime12,
   type PrayerSlot,

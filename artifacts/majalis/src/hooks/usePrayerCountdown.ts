@@ -34,7 +34,15 @@ function initialPayload(governorateId?: string): PrayerTimesPayload {
   return staticPrayerFallback(city);
 }
 
-export function usePrayerCountdown(governorateId?: string) {
+export type PrayerCountdownValue = {
+  data: PrayerTimesPayload | null;
+  countdown: PrayerCountdown | null;
+  loading: boolean;
+  reload: () => void;
+};
+
+/** منطق العدّ — استخدم PrayerCountdownProvider + usePrayerCountdown من components/prayer. */
+export function usePrayerCountdownState(governorateId?: string): PrayerCountdownValue {
   const [data, setData] = useState<PrayerTimesPayload | null>(() => initialPayload(governorateId));
   const [countdown, setCountdown] = useState<PrayerCountdown | null>(() => {
     const seed = initialPayload(governorateId);
