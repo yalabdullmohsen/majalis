@@ -152,7 +152,9 @@ export function isTabActive(location: string, href: string): boolean {
       location === "/sections" ||
       location.startsWith("/sections/") ||
       location === "/more" ||
-      location.startsWith("/more/")
+      location.startsWith("/more/") ||
+      location === "/quiz" ||
+      location.startsWith("/quiz?")
     );
   }
   return location === href || location.startsWith(href + "/");

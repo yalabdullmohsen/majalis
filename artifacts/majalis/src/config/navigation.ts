@@ -22,6 +22,7 @@ const DRAWER_IDS = [
   "lessons",
   "fiqh",
   "sections",
+  "qa",
   "prayer",
   "adhkar",
   "qibla",

@@ -29,6 +29,7 @@ const TAB_PREFETCH: Record<string, () => Promise<unknown>> = {
   "/prayer-times": () => import("@/pages/worship/PrayerTimesPage"),
   "/fiqh": () => import("@/pages/fiqh/FiqhPage"),
   "/sections": () => import("@/pages/account/SectionsPage"),
+  "/quiz": () => import("@/pages/account/QuizPage"),
   "/": () => import("@/pages/account/HomePage"),
 };
 
