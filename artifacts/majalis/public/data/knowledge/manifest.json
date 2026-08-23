@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "updated_at": "2026-08-14",
-  "round": "fill-quran-people",
+  "updated_at": "2026-08-23",
+  "round": "fill-tafsir-muyassar",
   "totals": {
-    "all": 3634,
-    "verified": 2437,
-    "needs_review": 1197,
+    "all": 3635,
+    "verified": 3418,
+    "needs_review": 217,
     "quiz": 2100,
     "prophets": 25,
     "nations": 16,
