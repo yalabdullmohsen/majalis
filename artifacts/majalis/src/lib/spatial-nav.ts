@@ -1,12 +1,18 @@
-import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 import { normalizeNavPath } from "@/lib/navigation-back";
 
 /** نوع حركة التنقّل المكاني (Instagram-style، بدون framer-motion). */
 export type NavMotionKind = "push" | "pop" | "tab" | "modal" | "none";
 
+/** جذور التبويب — مسارات ثابتة لتقليل حزمة الإقلاع. */
 const TAB_ROOTS = new Set<string>([
   "/",
-  ...BOTTOM_NAV_TABS.map((t) => normalizeNavPath(t.href)),
+  "/quran-hub",
+  "/mushaf",
+  "/lessons",
+  "/prayer-times",
+  "/fiqh",
+  "/sections",
+  "/more",
   "/adhkar",
   "/hadith",
   "/library",

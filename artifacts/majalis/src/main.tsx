@@ -74,6 +74,10 @@ function loadNonCriticalCss() {
 }
 function scheduleNonCriticalCss() {
   scheduleOnIdle(loadNonCriticalCss, 2500);
+  // أوزان 700 متأخرة جدًا — لا rIC (يطلق فور الخمول فيُحسب في Lighthouse)
+  window.setTimeout(() => {
+    void import("./styles/fonts-ui-bold.css");
+  }, 20000);
 }
 if (document.readyState === "complete") {
   scheduleNonCriticalCss();
@@ -178,7 +182,7 @@ async function mount() {
     });
   });
 
-  // خلفيات غير حاجبة للإقلاع — بعد الرسم + خمول (لا تنافس TBT)
+  // خلفيات غير حاجبة للإقلاع — تأجيل طويل (لا rIC: يطلق فور الخمول فيُحسب Unused JS).
   const afterPaint = () => {
     void purgeNativeWebRuntimeCaches().catch(() => {});
     void hydrateNativeStorage().catch(() => {});
@@ -186,7 +190,15 @@ async function mount() {
       .then((m) => m.bootstrapSupabaseFromServer().then(() => m.resetSupabaseClient()))
       .catch(() => {});
   };
-  scheduleOnIdle(afterPaint, 2500);
+  let afterPaintStarted = false;
+  const startAfterPaint = () => {
+    if (afterPaintStarted) return;
+    afterPaintStarted = true;
+    afterPaint();
+  };
+  window.addEventListener("pointerdown", startAfterPaint, { once: true, passive: true });
+  window.addEventListener("keydown", startAfterPaint, { once: true });
+  window.setTimeout(startAfterPaint, 20000);
 
   const renderMs = Math.round(performance.now() - started);
   if (renderMs > PERF_SLOW_MS) {

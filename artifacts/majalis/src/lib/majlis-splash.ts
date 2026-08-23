@@ -5,14 +5,14 @@
 
 export const LAUNCH_SPLASH_ID = "mj-launch-splash";
 
-/** الحد الأدنى لإحساس الدخولية الاحترافي — لا يُخفى قبله. */
-export const SPLASH_MIN_VISIBLE_MS = 700;
+/** الحد الأدنى لإحساس الدخولية — قصير حتى لا يؤخّر LCP. */
+export const SPLASH_MIN_VISIBLE_MS = 280;
 
 /** الحد الأقصى — لا انتظار تحميل بيانات أو مصحف. */
-export const SPLASH_MAX_VISIBLE_MS = 1000;
+export const SPLASH_MAX_VISIBLE_MS = 700;
 
 /** مدة تلاشي الخروج. */
-export const SPLASH_FADE_OUT_MS = 280;
+export const SPLASH_FADE_OUT_MS = 180;
 
 export const SPLASH_SESSION_KEY = "mj.launch-splash.session.v2";
 

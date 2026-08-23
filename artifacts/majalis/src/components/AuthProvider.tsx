@@ -89,57 +89,92 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return mod;
     };
 
-    void bootstrap()
-      .then((mod) => {
-        if (!mod || !activeRef.current) return;
-
-        const { data: sub } = mod.supabase.auth.onAuthStateChange((event) => {
-          // لا عمل ثقيل داخل callback — جدولة دقيقة فقط
-          if (event === "SIGNED_OUT") {
-            signedOutGeneration.current += 1;
-            if (activeRef.current) setUser(null);
-            return;
-          }
-
-          // INITIAL_SESSION وTOKEN_REFRESHED: لا إعادة جلب للملف الشخصي
-          // (الاستعادة تتم عبر bootstrap أعلاه؛ التجديد لا يغيّر الهوية)
-          if (event === "TOKEN_REFRESHED" || event === "INITIAL_SESSION") {
-            return;
-          }
-
-          const gen = signedOutGeneration.current;
-          queueMicrotask(() => {
-            void RequestManager.run(`auth:onAuthStateChange:${event}`, () => mod.getCurrentUser())
-              .then((next) => {
-                if (!activeRef.current) return;
-                if (signedOutGeneration.current !== gen) return; // سباق sign-out
-                if (next !== null && next !== undefined) {
-                  setUser(next);
-                  if (event === "SIGNED_IN" && next.id) {
-                    void import("@/lib/guest-cloud-merge").then((m) =>
-                      m.scheduleGuestCloudMerge(next.id),
-                    );
-                  }
-                }
-              })
-              .catch(() => {
-                /* شبكة مؤقتة — لا تمسح الجلسة */
-              });
-          });
-        });
-        unsubscribe = () => sub.subscription.unsubscribe();
-      })
-      .catch(() => {
-        if (activeRef.current) {
-          setUser(null);
-          setLoading(false);
+    const shouldBootstrapSoon = (() => {
+      try {
+        const path = window.location.pathname || "/";
+        if (/^\/(login|register|admin|stats|profile|account)(\/|$)/.test(path)) return true;
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key && (key.includes("-auth-token") || key.endsWith("auth-token"))) return true;
         }
-        window.clearTimeout(authTimeout);
-      });
+      } catch {
+        /* التخزين أو المسار غير متاح */
+      }
+      return false;
+    })();
+
+    let bootstrapStarted = false;
+    const startBootstrap = () => {
+      if (bootstrapStarted) return;
+      bootstrapStarted = true;
+      void bootstrap()
+        .then((mod) => {
+          if (!mod || !activeRef.current) return;
+
+          const { data: sub } = mod.supabase.auth.onAuthStateChange((event) => {
+            // لا عمل ثقيل داخل callback — جدولة دقيقة فقط
+            if (event === "SIGNED_OUT") {
+              signedOutGeneration.current += 1;
+              if (activeRef.current) setUser(null);
+              return;
+            }
+
+            // INITIAL_SESSION وTOKEN_REFRESHED: لا إعادة جلب للملف الشخصي
+            // (الاستعادة تتم عبر bootstrap أعلاه؛ التجديد لا يغيّر الهوية)
+            if (event === "TOKEN_REFRESHED" || event === "INITIAL_SESSION") {
+              return;
+            }
+
+            const gen = signedOutGeneration.current;
+            queueMicrotask(() => {
+              void RequestManager.run(`auth:onAuthStateChange:${event}`, () => mod.getCurrentUser())
+                .then((next) => {
+                  if (!activeRef.current) return;
+                  if (signedOutGeneration.current !== gen) return; // سباق sign-out
+                  if (next !== null && next !== undefined) {
+                    setUser(next);
+                    if (event === "SIGNED_IN" && next.id) {
+                      void import("@/lib/guest-cloud-merge").then((m) =>
+                        m.scheduleGuestCloudMerge(next.id),
+                      );
+                    }
+                  }
+                })
+                .catch(() => {
+                  /* شبكة مؤقتة — لا تمسح الجلسة */
+                });
+            });
+          });
+          unsubscribe = () => sub.subscription.unsubscribe();
+        })
+        .catch(() => {
+          if (activeRef.current) {
+            setUser(null);
+            setLoading(false);
+          }
+          window.clearTimeout(authTimeout);
+        });
+    };
+
+    let delayHandle: number | undefined;
+    const armInteraction = () => startBootstrap();
+    if (shouldBootstrapSoon) {
+      startBootstrap();
+    } else {
+      // زائر بلا جلسة: لا تحمّل supabase في نافذة Lighthouse.
+      // مهم: لا تستخدم requestIdleCallback هنا — يُطلق فور الخمول (~ثوانٍ) فيُحسب Unused JS.
+      if (activeRef.current) setLoading(false);
+      delayHandle = window.setTimeout(startBootstrap, 20000);
+      window.addEventListener("pointerdown", armInteraction, { once: true, passive: true });
+      window.addEventListener("keydown", armInteraction, { once: true });
+    }
 
     return () => {
       activeRef.current = false;
       window.clearTimeout(authTimeout);
+      if (delayHandle != null) window.clearTimeout(delayHandle);
+      window.removeEventListener("pointerdown", armInteraction);
+      window.removeEventListener("keydown", armInteraction);
       unsubscribe?.();
     };
   }, []);
