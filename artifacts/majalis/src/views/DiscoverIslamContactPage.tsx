@@ -23,7 +23,7 @@ export default function DiscoverIslamContactPage() {
     applyPageSeo({
       path: "/discover-islam/contact",
       title: "تواصل سرّي مع داعية | التعريف بالإسلام",
-      description: "نموذج آمن للتواصل مع داعية أو داعية — بياناتك لا تُعرض لأحد.",
+      description: "نموذج آمن للتواصل مع داعٍ أو داعية — بياناتك لا تُعرض لأحد.",
     });
   }, []);
 

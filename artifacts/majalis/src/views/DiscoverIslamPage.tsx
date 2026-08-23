@@ -64,7 +64,7 @@ const VISITOR_PATHS: VisitorPath[] = [
   { id: "doubts", label: "لديّ شبهات", desc: "ردود موثّقة على أشهر الشبهات", href: "/discover-islam/doubts" },
   { id: "considering", label: "أفكّر في الدخول", desc: "خطوات عملية واضحة للدخول في الإسلام", href: "/discover-islam/how-to-convert" },
   { id: "new-muslim", label: "دخلت الإسلام حديثًا", desc: "مسار الثلاثين يومًا الأول", href: "/discover-islam/new-muslim" },
-  { id: "contact", label: "أريد التحدث مع مختص", desc: "تواصل سري مع داعية أو داعية", href: "/discover-islam/contact" },
+  { id: "contact", label: "أريد التحدث مع مختص", desc: "تواصل سري مع داعٍ أو داعية", href: "/discover-islam/contact" },
 ];
 
 const JOURNEY_STEPS = [
@@ -220,7 +220,7 @@ export default function DiscoverIslamPage() {
 
       <section className="dii-contact-cta ui-card" style={{ marginTop: "2.5rem" }}>
         <h2>هل تحتاج التحدث مع شخص مباشرة؟</h2>
-        <p>تواصل سري وآمن مع داعية أو داعية — بلا أي إلزام، وبلا نشر بياناتك لأحد.</p>
+        <p>تواصل سري وآمن مع داعٍ أو داعية — بلا أي إلزام، وبلا نشر بياناتك لأحد.</p>
         <Link href="/discover-islam/contact" className="asp-run-btn">ابدأ التواصل السري</Link>
       </section>
     </div>
