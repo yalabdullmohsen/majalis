@@ -28,6 +28,8 @@ export const MushafPage = memo(function MushafPage({
   onSelectVerse,
 }: Props) {
   const opening = layout.pageNumber === 1 || layout.pageNumber === 2;
+  const surahStart = !opening && layout.surahsStartingOnPage.length > 0;
+  const pageType = opening ? "opening" : surahStart ? "surah-start" : "normal";
   const slots = buildSlots(layout);
   const pageRef = useRef<HTMLElement | null>(null);
   const [pageEl, setPageEl] = useState<HTMLElement | null>(null);
@@ -40,8 +42,9 @@ export const MushafPage = memo(function MushafPage({
         pageRef.current = el;
         if (pageEl !== el) setPageEl(el);
       }}
-      className={`mm-page${opening ? " mm-page--opening" : ""}`}
+      className={`mm-page${opening ? " mm-page--opening" : ""}${surahStart ? " mm-page--surah-start" : ""}`}
       data-page={footerPage}
+      data-page-type={pageType}
       data-testid="mushaf-page"
       data-opening={opening ? "1" : "0"}
       style={{ ["--mm-qpc-family" as string]: fontFamily }}

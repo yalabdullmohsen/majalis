@@ -46,7 +46,17 @@
   /* مقياس ابتدائي ≈٤٫٣٪ ارتفاع — يُضبط ببحث ثنائي 0.25px بعد fonts.ready */
   --mm-qpc-size: clamp(12px, 4.3vh, 34px);
   --mm-basmala-size: var(--mm-qpc-size);
+  --mm-line-height: 1.75;
   --mm-line-gap: 0;
+  /* قالب صفحة موحّد — أسماء صريحة للمواصفة */
+  --mushaf-page-width: var(--mm-page-max-w);
+  --mushaf-top-margin: var(--mm-ref-text-start);
+  --mushaf-side-margin-start: var(--mm-ref-ink-x-start);
+  --mushaf-side-margin-end: calc(100% - var(--mm-ref-ink-x-end));
+  --mushaf-line-height: var(--mm-line-height);
+  --mushaf-font-size: var(--mm-qpc-size);
+  --mushaf-surah-header-height: 100%; /* خانة شبكة واحدة من ١٥ */
+  --mushaf-page-number-bottom: calc(100% - var(--mm-ref-cartouche-y));
   --mm-chrome: color-mix(in srgb, var(--mm-paper) 94%, #fff);
   --mm-chrome-fg: var(--mm-ink);
   --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 28%, transparent);
@@ -412,25 +422,27 @@ html.dark .mm-viewport .mm-page {
   justify-content: center;
   min-height: 0;
   padding-block: 0;
-  overflow-x: clip;
-  overflow-y: visible;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 /* إطار اسم السورة — شريط بسيط بعرض كتلة النص (مصحف المدينة) */
 .mm-surah-frame {
   width: 100%;
   max-width: 100%;
-  height: 100%;
+  height: var(--mushaf-surah-header-height);
   max-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  margin-inline: auto;
+  margin: 0;
   padding-inline: 0.35rem;
+  padding-block: 0;
   border: 1px solid color-mix(in srgb, var(--mm-gold) 72%, transparent);
   border-radius: 2px;
   background: color-mix(in srgb, var(--mm-paper) 88%, var(--mm-gold) 12%);
+  overflow: hidden;
 }
 
 .mm-surah-frame__name {
@@ -464,7 +476,7 @@ html.dark .mm-surah-frame__name {
   font-size: var(--mm-qpc-size);
   font-weight: 400;
   color: var(--mm-ink);
-  line-height: 1.75;
+  line-height: var(--mm-line-height);
   letter-spacing: 0;
   word-spacing: 0;
   margin: 0;
@@ -495,7 +507,7 @@ html.dark .mm-surah-frame__name {
   unicode-bidi: bidi-override; /* ترتيب بصري = ترتيب كلمات QPC */
   font-family: var(--mm-qpc-family), "Amiri Quran", serif;
   font-size: var(--mm-qpc-size);
-  line-height: 1.75;
+  line-height: var(--mm-line-height);
   color: var(--mm-ink);
   letter-spacing: 0;
   word-spacing: 0;
@@ -2548,4 +2560,40 @@ html.dark .mm-settings-sheet {
 .ayah-action-sheet__reciter-cards button {
   min-width: 44px;
   min-height: 44px;
+}
+
+
+/* أنواع الصفحات — نفس الشبكة والهوامش؛ لا إزاحة علوية حسب المحتوى */
+.mm-viewport .mm-page[data-page-type="normal"] .mm-page__body,
+.mm-viewport .mm-page[data-page-type="surah-start"] .mm-page__body {
+  top: var(--mushaf-top-margin);
+  bottom: calc(100% - var(--mm-ref-text-end));
+  inset-inline: var(--mushaf-side-margin-start) var(--mushaf-side-margin-end);
+}
+
+.mm-viewport .mm-page[data-page-type="surah-start"] .mm-slot[data-kind="banner"],
+.mm-viewport .mm-page[data-page-type="surah-start"] .mm-slot[data-kind="basmala"] {
+  /* خانة واحدة من شبكة ١٥ — بلا تمدد خارج الخانة */
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.mm-viewport .mm-page-footer__badge {
+  /* رقم فقط — بلا زخرفة متحركة أو مقياس مختلف بين الصفحات */
+  width: auto;
+  min-width: 2rem;
+  max-width: none;
+  height: auto;
+  font-size: var(--mushaf-page-number-size, 1.05rem);
+  font-weight: 600;
+  color: var(--mm-header);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  transform: translate(-50%, -50%);
+}
+
+.mm-viewport .mm-page-footer__cartouche {
+  display: none;
 }

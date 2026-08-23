@@ -55,8 +55,43 @@ function defaultMeasure(fontPx: number, text: string, family: string): number {
   return ctx.measureText(text).width;
 }
 
+/** مفتاح قديم (لكل صفحة) — يُبقى للتوافق مع اختبارات القياس التركيبية. */
 export function mushafFitCacheKey(page: number, containerWidth: number, family: string): string {
   return `${page}|${Math.round(containerWidth)}|${normalizeMushafFontFamily(family)}`;
+}
+
+/**
+ * مفتاح موحّد لكل صفحات المصحف عند نفس عرض/ارتفاع الحاوية.
+ * يمنع اختلاف --mm-qpc-size بين صفحة وأخرى (سبب عدم تناسق ١٢٦–١٢٨).
+ */
+export function mushafUniformFitCacheKey(
+  containerWidth: number,
+  blockHeightPx: number,
+  _family: string = "",
+): string {
+  /* الحجم موحّد من الهندسة فقط — لا نُفرّق حسب خط الصفحة (qpc-v2-pN). */
+  return `uniform-v1|${Math.round(containerWidth)}|${Math.round(blockHeightPx)}`;
+}
+
+/**
+ * حجم خط موحّد من هندسة الحاوية فقط — بلا قياس محتوى الصفحة.
+ * ١٥ سطرًا × نسبة ارتفاع السطر، مع سقف عرض تقريبي لمصحف المدينة.
+ */
+export function resolveUniformMushafFontSize(
+  containerWidthPx: number,
+  blockHeightPx: number,
+): number {
+  if (containerWidthPx <= 0) return MUSHAF_FIT_MIN_PX;
+  const byHeight =
+    blockHeightPx > 0
+      ? Math.floor(blockHeightPx / 15 / MUSHAF_FIT_LINE_RATIO)
+      : MUSHAF_FIT_MAX_PX;
+  /** سعة أفقية تقريبية لسطر المصحف عند مقاس التصميم */
+  const byWidth = Math.floor(containerWidthPx / 19.5);
+  return Math.max(
+    MUSHAF_FIT_MIN_PX,
+    Math.min(MUSHAF_FIT_MAX_PX, byHeight, byWidth),
+  );
 }
 
 function inFitRange(v: number): boolean {

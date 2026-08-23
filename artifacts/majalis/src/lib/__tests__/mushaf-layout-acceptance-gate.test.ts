@@ -37,7 +37,7 @@ assert.doesNotMatch(css, /mix-blend-mode:\s*multiply/);
 // 4) خط QPC + ملاءمة الحجم
 assert.match(page, /useMushafPageFontFit/);
 assert.match(fitSrc, /fitMushafPageFont/);
-assert.match(fitSrc, /fitPageFontSize/);
+assert.match(fitSrc, /resolveUniformMushafFontSize/);
 assert.match(css, /--mm-qpc-size:\s*clamp/);
 assert.doesNotMatch(css, /transform:\s*scale\(/);
 
@@ -50,8 +50,8 @@ assert.match(viewport, /playAyah|playSelected/);
 assert.match(viewport, /MushafTafsirSheet/);
 assert.match(viewport, /useMediaSession/);
 assert.doesNotMatch(viewport, /exitAlwaysVisible/);
-assert.match(fitSrc, /document\.fonts\.check/);
-assert.match(fitSrc, /loadingdone/);
+assert.match(fitSrc, /document\.fonts\.(check|load)/);
+assert.match(fitSrc, /loadingdone|orientationchange/);
 
 // 6) وحدة الملاءمة لا ترمي
 const fake = {
