@@ -9,6 +9,7 @@ import {
   fetchKnNodes,
   fetchKnSubgraph,
   fetchKnNodesByTag,
+  fetchStaticKnGraphFallback,
   NODE_TYPE_COLOR,
   NODE_TYPE_LABEL,
   REL_TYPE_LABEL,
@@ -211,7 +212,21 @@ export default function KnowledgeGraphPage() {
   const loadNew = useCallback(async () => {
     setLoading(true);
     const nodes = await fetchKnNodes(undefined, 60);
-    if (nodes.length === 0) { setSource("old"); return; }
+    if (nodes.length === 0) {
+      const local = await fetchStaticKnGraphFallback();
+      if (local && local.nodes.length > 0) {
+        const { gNodes: gn, gEdges: ge } = buildNewGraph(local.nodes, local.edges);
+        setGNodes(gn);
+        setGEdges(ge);
+        setNodeCount(gn.length);
+        setEdgeCount(ge.length);
+        nodesRef.current = gn;
+        setLoading(false);
+        return;
+      }
+      setSource("old");
+      return;
+    }
     if (nodes.length > 0 && !centerNodeId) {
       // depth 1 on first paint — expand on demand (was depth 2 / 120 nodes).
       const sub = await fetchKnSubgraph(nodes[0].id, 1);
@@ -395,7 +410,14 @@ export default function KnowledgeGraphPage() {
               <p className="kng-empty__desc">
                 {isAdmin
                   ? <>شغّل <code>knowledge_graph_islamic_v1.sql</code> و<code>knowledge_graph_islamic_seed_v1.sql</code> في Supabase، ثم أعد التحميل.</>
-                  : "الرسم البياني المعرفي قيد الإعداد حاليًا، يرجى العودة لاحقًا."}
+                  : <>
+                      تعذّر تحميل الرسم الآن. يمكنك مؤقتًا تصفّح{" "}
+                      <Link href="/prophets">قصص الأنبياء</Link>
+                      {" "}و{" "}
+                      <Link href="/fiqh">الفقه</Link>
+                      {" "}و{" "}
+                      <Link href="/quran/people">الذين ذُكروا في القرآن</Link>.
+                    </>}
               </p>
             </div>
           ) : (

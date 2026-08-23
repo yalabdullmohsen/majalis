@@ -22,12 +22,24 @@ export type QuizQuestion = {
   last_updated_at?: string;
 };
 
+/** يستبعد أسئلة التجربة غير المراجعة وأشباهها من العرض الحي. */
+function isLiveQuizQuestion(q: QuizQuestion): boolean {
+  const id = String(q.id || "");
+  if (/^demo[-_]/i.test(id) || id.includes("demo-")) return false;
+  if (q.status === "draft" || q.status === "needs_review") return false;
+  if (q.editorial_review_status === "needs_review" || q.editorial_review_status === "rejected") return false;
+  if (q.documentation_status === "unsourced" && !q.reference) return false;
+  return true;
+}
+
 export async function loadDemoQuizQuestions(opts?: { section?: string }): Promise<QuizQuestion[]> {
-  if (opts?.section) {
-    const key = String(opts.section).replace(/[^\p{L}\p{N}_-]+/gu, "_").slice(0, 40) || "general";
-    return loadSeedChunksByKey<QuizQuestion>(QUIZ_DATA_BASE, key);
-  }
-  return loadAllSeedChunks<QuizQuestion>(QUIZ_DATA_BASE);
+  const raw = opts?.section
+    ? await loadSeedChunksByKey<QuizQuestion>(
+        QUIZ_DATA_BASE,
+        String(opts.section).replace(/[^\p{L}\p{N}_-]+/gu, "_").slice(0, 40) || "general",
+      )
+    : await loadAllSeedChunks<QuizQuestion>(QUIZ_DATA_BASE);
+  return raw.filter(isLiveQuizQuestion);
 }
 
 export function getDemoQuizQuestionsCached(): QuizQuestion[] {
