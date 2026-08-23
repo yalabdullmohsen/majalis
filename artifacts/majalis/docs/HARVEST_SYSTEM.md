@@ -75,7 +75,7 @@ public/data/sources/
 ## الأتمتة
 `.github/workflows/harvest-sources.yml` — مرتان يومياً (٦ صباحاً و٦ مساءً بتوقيت الكويت = ٠٣:٠٠ و١٥:٠٠ UTC).
 - بلا تغيير → ينتهي بنجاح بلا PR
-- مع تغيير → PR تلقائي لـ `feed.json` و`accounts.json` و`HARVEST_REPORT.md`
+- مع تغيير → PR تلقائي لـ `feed.json` و`accounts.json` و`harvest-report.json` تحت `public/data/**` (متوافق مع `safe:content`)
 
 ## التصنيف والنشر
 يُستخرج من النص (والوصف/صورة عبر provider): عنوان، شيخ، مكان، وقت، تاريخ، رابط تسجيل، جمهور، نوع (درس/حلقة/دورة/خطبة/تسجيل/إعلان).

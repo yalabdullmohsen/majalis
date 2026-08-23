@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-23T02:39:04.863Z",
+  "updated_at": "2026-08-23T18:14:42.860Z",
   "accounts": [
     {
       "id": "web-aayatkw.com",
@@ -18,7 +18,9 @@
       "site": "https://aayatkw.com",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-athr_yabka",
@@ -35,7 +37,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-erth.kwt",
@@ -53,7 +57,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-itm2nan_",
@@ -70,7 +76,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-shariaaac",
@@ -88,7 +96,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-w_alanbiya",
@@ -106,7 +116,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-rasikhoon",
@@ -123,7 +135,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-masjid_alshalahi_women",
@@ -140,7 +154,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-thegrandmosque",
@@ -157,7 +173,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-quranicplatform",
@@ -174,7 +192,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-alshalahi_masjid",
@@ -191,7 +211,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-alshalahi_masjd",
@@ -209,7 +231,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-almanabr",
@@ -227,7 +251,9 @@
       "site": "https://almanabr.org",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "web-almanabr.org",
@@ -245,7 +271,9 @@
       "site": "https://almanabr.org",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "web-waheen.net",
@@ -264,7 +292,9 @@
       "site": "https://waheen.net",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-alwa7yyen",
@@ -283,7 +313,9 @@
       "site": "https://waheen.net",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-tartelkw",
@@ -301,7 +333,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-jouryaldahi",
@@ -318,7 +352,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "web-hoffath.org",
@@ -337,7 +373,9 @@
       "site": "https://hoffath.org",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-7offath",
@@ -356,7 +394,9 @@
       "site": "https://hoffath.org",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-erwaa.quran",
@@ -373,7 +413,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-alholah_kw",
@@ -390,7 +432,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-trahumkwclub",
@@ -407,7 +451,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-othmanalkamees",
@@ -425,7 +471,9 @@
       "site": "https://www.othmanalkamees.com",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-duroos.alseera",
@@ -442,7 +490,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-DrosQ8",
@@ -460,7 +510,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "telegram-DrosQ8",
@@ -479,7 +531,9 @@
       "contact": "https://t.me/DrosQ8",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-drooss_kw",
@@ -496,7 +550,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-duroos_abdullahalmubarak",
@@ -513,7 +569,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-warathakw2",
@@ -531,7 +589,9 @@
       "site": "https://www.waratha.com",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-ibnabitallib",
@@ -548,7 +608,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-diwan_al3uni_alsharif_alesbuei",
@@ -565,7 +627,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "web-drosq8-linktree",
@@ -584,7 +648,9 @@
       "site": "https://linktr.ee/drosq8",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-fajeralkous",
@@ -601,7 +667,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-ghaith.kw",
@@ -618,7 +686,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-qetaa_quran",
@@ -635,7 +705,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-manaratkw",
@@ -653,7 +725,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-al_mabarrah",
@@ -672,7 +746,9 @@
       "site": "https://aayatkw.com",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-mrkz_al_albany",
@@ -689,7 +765,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-saad.al.abdullah.city",
@@ -706,7 +784,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-nebraas_kw",
@@ -725,7 +805,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-mosque.mbark.j",
@@ -742,7 +824,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-mpe.kh11",
@@ -759,7 +843,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-masjedalansary",
@@ -776,7 +862,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-mhamadh.kw",
@@ -793,7 +881,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-m_alkhayatq8",
@@ -810,7 +900,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-masjedalmehry",
@@ -827,7 +919,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-masjid_mubark_alsaifi",
@@ -845,7 +939,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-moudhi_mosque",
@@ -862,7 +958,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "web-manar-alsabil.org",
@@ -881,7 +979,9 @@
       "site": "https://manar-alsabil.org",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-mansuh_quranayh",
@@ -899,7 +999,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-nadwat.kw",
@@ -917,7 +1019,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-wejdanalh",
@@ -934,7 +1038,9 @@
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "web-awqaf.gov.kw",
@@ -953,7 +1059,9 @@
       "site": "https://awqaf.gov.kw",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     },
     {
       "id": "ig-kwt_awqaf",
@@ -972,7 +1080,9 @@
       "site": "https://awqaf.gov.kw",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": null
+      "last_seen_at": null,
+      "trusted": true,
+      "autoPublish": true
     }
   ]
 }

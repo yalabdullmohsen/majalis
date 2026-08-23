@@ -14,6 +14,8 @@
  * @property {string} [site]
  * @property {string} [contact]
  * @property {boolean} enabled
+ * @property {boolean} trusted
+ * @property {boolean} autoPublish
  * @property {'high'|'normal'} poll_priority
  * @property {string|null} last_seen_at
  */
