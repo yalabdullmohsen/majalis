@@ -93,9 +93,52 @@ const broken = await runHarvest({
 });
 assert.ok(Array.isArray(broken.stats.failed));
 
+console.log("=== Instagram provider — غير مضبوط لا يفشل ===");
+const prevMode = process.env.INSTAGRAM_INGEST_MODE;
+const prevKey = process.env.INSTAGRAM_PROVIDER_KEY;
+const prevEndpoint = process.env.INSTAGRAM_PROVIDER_ENDPOINT;
+process.env.INSTAGRAM_INGEST_MODE = "provider";
+delete process.env.INSTAGRAM_PROVIDER_KEY;
+delete process.env.INSTAGRAM_PROVIDER_ENDPOINT;
+const { getInstagramProviderStatus } = await import("./harvest/adapters/instagram-provider.mjs");
+const igStatus = getInstagramProviderStatus();
+assert.equal(igStatus.mode, "provider");
+assert.equal(igStatus.configured, false);
+assert.equal(igStatus.message, "Instagram provider is not configured.");
+const noProvider = await runHarvest({ dryRun: true, fixture: false, verbose: false });
+assert.equal(noProvider.stats.instagram?.message, "Instagram provider is not configured.");
+if (prevMode !== undefined) process.env.INSTAGRAM_INGEST_MODE = prevMode;
+else delete process.env.INSTAGRAM_INGEST_MODE;
+if (prevKey !== undefined) process.env.INSTAGRAM_PROVIDER_KEY = prevKey;
+if (prevEndpoint !== undefined) process.env.INSTAGRAM_PROVIDER_ENDPOINT = prevEndpoint;
+
+console.log("=== Instagram provider mock ===");
+process.env.INSTAGRAM_INGEST_MODE = "provider";
+process.env.INSTAGRAM_PROVIDER_KEY = "test-key";
+process.env.INSTAGRAM_PROVIDER_ENDPOINT = "https://provider.example";
+process.env.INSTAGRAM_PROVIDER_MOCK = "1";
+const { fetchViaProvider } = await import("./harvest/adapters/instagram-provider.mjs");
+const mockItems = await fetchViaProvider(
+  { id: "ig-test", platform: "instagram", handle: "test_handle", enabled: true },
+  new Date(0),
+);
+assert.ok(mockItems.length >= 1);
+assert.ok(mockItems[0].text.includes("درس"));
+delete process.env.INSTAGRAM_PROVIDER_MOCK;
+delete process.env.INSTAGRAM_PROVIDER_KEY;
+delete process.env.INSTAGRAM_PROVIDER_ENDPOINT;
+if (prevMode !== undefined) process.env.INSTAGRAM_INGEST_MODE = prevMode;
+else delete process.env.INSTAGRAM_INGEST_MODE;
+
+console.log("=== Telegram/Web adapters موجودان ===");
+const { ADAPTERS } = await import("./harvest/adapters/index.mjs");
+assert.ok(typeof ADAPTERS.telegram.fetch === "function");
+assert.ok(typeof ADAPTERS.web.fetch === "function");
+assert.ok(typeof ADAPTERS.instagram.fetch === "function");
+
 console.log("=== accounts.json ===");
 const accounts = JSON.parse(readFileSync(resolve(root, "public/data/sources/accounts.json"), "utf8"));
-assert.ok(accounts.accounts.length >= 50, `accounts ${accounts.accounts.length}`);
+assert.ok(accounts.accounts.length >= 55, `accounts ${accounts.accounts.length}`);
 const keys = new Set(accounts.accounts.map((a) => `${a.platform}:${a.handle}`));
 assert.equal(keys.size, accounts.accounts.length);
 
