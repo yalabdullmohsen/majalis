@@ -879,8 +879,7 @@ html.dark .nav-soon-badge {
     padding-inline: max(16px, var(--gutter-inline-start, 16px))
       max(16px, var(--gutter-inline-end, 16px));
   }
-  /* الوضع الليلي داخل «المزيد»؛ البحث عبر الصف الكامل فقط */
-  .navbar-theme-toggle { display: none; }
+  /* الوضع الليلي يبقى في الهيدر؛ إخفاء زر البحث المدمج فقط عبر القاعدة أدناه */
   .navbar-menu-btn__label, .navbar-mobile-login__label { display: none; }
   .hpv4-hero { border-radius: var(--radius-lg); }
   .site-footer--v3 .site-footer-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-6); }
@@ -1727,7 +1726,7 @@ header.navbar-v3,
   position:relative!important;top:auto!important;inset-block-start:auto!important;
   display:flex!important;flex-direction:column!important;align-items:stretch!important;
   max-height:none!important;height:auto!important;width:100%!important;max-width:100%!important;
-  box-sizing:border-box!important;overflow-x:clip!important
+  box-sizing:border-box!important;overflow-x:clip!important;overflow-y:visible!important
 }
 .top-section-bar{position:relative!important;top:auto!important}
 @media (max-width:879px){

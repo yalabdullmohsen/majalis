@@ -1,0 +1,187 @@
+/**
+ * طبقات الكروم العلوي — ارتفاعات ثابتة + safe-area + عزل التيكر.
+ * يُحمَّل مع NavBar (مسار حرج للجوال).
+ */
+
+:root {
+  --ad-banner-height: 0px;
+  --app-header-height: var(--header-chrome, 56px);
+  --search-height: 0px;
+  --ticker-height: var(--ticker-h, 2.25rem);
+  --bottom-nav-height: var(--nav-chrome, 64px);
+  --z-ad-banner: 140;
+  --z-app-header: 200;
+  --z-search: 190;
+  --z-ticker: 180;
+  --z-page: 1;
+  --z-bottom-nav: 210;
+  --z-fab: 220;
+}
+
+html[data-home-ad="1"] {
+  --ad-banner-height: var(--homepage-ad-bar-h, 48px);
+}
+
+@media (max-width: 879px) {
+  :root {
+    --header-chrome: 48px;
+    --app-header-height: 48px;
+    --search-height: 3.25rem;
+    --ticker-height: 2.25rem;
+  }
+}
+
+.homepage-ad-bar {
+  z-index: var(--z-ad-banner);
+}
+
+.navbar-v3 {
+  z-index: var(--z-app-header);
+}
+
+/* عند ظهور الإعلان: لا تكرار لـ safe-area في الهيدر */
+html[data-home-ad="1"] .navbar-v3 {
+  padding-block-start: 0 !important;
+  min-height: var(--app-header-height) !important;
+}
+
+@media (max-width: 879px) {
+  .navbar-v3__inner {
+    min-height: var(--app-header-height);
+    padding-block: 0.2rem;
+    gap: 0.35rem;
+    align-items: center;
+  }
+
+  /* الوضع الليلي في الهيدر؛ زر البحث المدمج يبقى مخفيًا */
+  .navbar-theme-toggle {
+    display: inline-flex !important;
+  }
+
+  .navbar-theme-toggle.navbar-search-toggle {
+    display: none !important;
+  }
+
+  .navbar-v3__tagline {
+    width: min(13.5rem, 58vw);
+    max-width: min(13.5rem, 58vw);
+    min-height: 2.2rem;
+  }
+
+  .navbar-v3__tagline-mark {
+    height: 2.15rem;
+  }
+
+  .navbar-v3__search-row {
+    z-index: var(--z-search);
+    position: relative;
+    box-sizing: border-box;
+    height: var(--search-height);
+    min-height: var(--search-height);
+    max-height: var(--search-height);
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding-block: 0.35rem;
+    background: var(--mj-bg, var(--color-bg, #f2f4f3));
+    border-block-start: 1px solid var(--mj-hairline, var(--color-border));
+  }
+
+  .navbar-v3__search-btn {
+    min-height: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .navbar-ticker-row {
+    z-index: var(--z-ticker);
+    position: relative;
+    isolation: isolate;
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(var(--ticker-height) + 0.5rem);
+    min-height: calc(var(--ticker-height) + 0.5rem);
+    max-height: calc(var(--ticker-height) + 0.5rem);
+    margin: 0;
+    padding-block: 0.25rem;
+    padding-inline: max(12px, var(--gutter-inline-start, 12px))
+      max(12px, var(--gutter-inline-end, 12px));
+    overflow: hidden;
+    background: var(--mj-surface, var(--color-surface, #fff));
+    border-block-start: 1px solid var(--mj-hairline, var(--color-border));
+  }
+
+  .navbar-ticker-row .header-ticker {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-width: 0;
+    height: var(--ticker-height);
+    min-height: var(--ticker-height);
+    max-height: var(--ticker-height);
+    margin: 0;
+    padding-block: 0;
+    border-radius: 0;
+    background: var(--mj-surface, var(--color-surface, #fff));
+    overflow: hidden;
+  }
+
+  .navbar-ticker-row .header-ticker__viewport {
+    overflow: hidden;
+    height: 100%;
+    max-height: 100%;
+  }
+
+  .navbar-ticker-row .header-ticker--with-prayer {
+    overflow: hidden;
+  }
+}
+
+/* overflow-x:clip لا يجب أن يحوّل overflow-y إلى auto ويقصّ الصفوف */
+header.navbar-v3,
+.navbar-v3:not(.navbar-v3--menu-open) {
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+.app-main,
+#main-content.app-main {
+  position: relative;
+  z-index: var(--z-page);
+  margin-block-start: 0;
+}
+
+.global-back-btn {
+  z-index: var(--z-fab);
+  bottom: calc(
+    var(--bottom-nav-total, var(--nav-h, 4.5rem)) + 0.5rem + var(--inset-bottom, 0px)
+  );
+}
+
+.section-lobby__back {
+  z-index: var(--z-fab);
+  bottom: calc(
+    var(--bottom-nav-total, var(--nav-h, 4.5rem)) + 0.5rem + var(--inset-bottom, 0px)
+  );
+}
+
+.bottom-nav,
+.bottom-nav--v2 {
+  z-index: var(--z-bottom-nav);
+}
+
+@media (max-width: 879px) {
+  .app-main,
+  #main-content.app-main {
+    padding-block-end: calc(var(--bottom-nav-total, var(--nav-h, 4.5rem)) + 1rem);
+  }
+}
+
+html[data-theme="dark"] .navbar-ticker-row,
+html[data-theme="dark"] .navbar-ticker-row .header-ticker {
+  background: var(--mj-surface, #101614);
+  border-block-start-color: color-mix(in srgb, #fff 10%, transparent);
+}
+
+html[data-theme="dark"] .navbar-v3__search-row {
+  background: var(--mj-bg, #0c1210);
+}

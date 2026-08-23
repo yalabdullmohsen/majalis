@@ -111,6 +111,11 @@
   --gutter-inline-start: max(var(--inset-right), 16px);
   --gutter-inline-end: max(var(--inset-left), 16px);
   --header-chrome: 56px;
+  --ad-banner-height: 0px;
+  --app-header-height: var(--header-chrome);
+  --search-height: 0px;
+  --ticker-height: 2.25rem;
+  --bottom-nav-height: var(--nav-chrome);
   --nav-chrome: 64px;
   --header-h: calc(var(--header-chrome) + var(--inset-top));
   --nav-h: calc(var(--nav-chrome) + var(--inset-bottom));

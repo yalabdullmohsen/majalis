@@ -3944,13 +3944,13 @@ svg {
 
   .navbar-v3__tagline {
     flex: 1 1 auto;
-    width: min(11.5rem, 52vw);
-    max-width: min(11.5rem, 52vw);
-    min-height: 2rem;
+    width: min(13.5rem, 58vw);
+    max-width: min(13.5rem, 58vw);
+    min-height: 2.2rem;
   }
 
   .navbar-v3__tagline-mark {
-    height: 1.85rem;
+    height: 2.15rem;
   }
 
   .navbar-v3__end {

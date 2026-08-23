@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * بوابة: زر رجوع ظاهر في كل مسار قسم، وموضعه موحّد داخل قالب اللوبي.
+ * بوابة: زر رجوع في المسارات الداخلية؛ جذور التبويب بلا عائم، وموضعه موحّد داخل قالب اللوبي.
  * تشغيل: node scripts/section-back-button-gate.mjs
  * بلا dist: يتخطى التصفح ويكتفي بفحص المصدر (يُشغَّل مع الاختبار الثابت).
  */
@@ -111,18 +111,22 @@ async function main() {
         h: Math.round(r.height),
       };
     });
+    if (TAB_ROOTS.includes(route)) {
+      if (box) failures.push(`${route}: جذر تبويب — يُتوقَّع بلا زر رجوع عائم`);
+      continue;
+    }
     if (!box) {
       failures.push(`${route}: بلا زر رجوع`);
       continue;
     }
     if (box.w < 44 || box.h < 44) failures.push(`${route}: منطقة لمس ${box.w}×${box.h} < 44`);
-    if (TAB_ROOTS.includes(route)) {
-      if (box.kind !== "lobby") failures.push(`${route}: متوقع زر القالب data-section-back`);
+    /* المسارات الداخلية قد تستخدم GlobalBack أو قالب اللوبي — لا نفرض النوع */
+    if (box.kind === "lobby") {
       if (lobbyTop == null) {
         lobbyTop = box.top;
         lobbyStart = box.start;
       } else if (Math.abs(box.top - lobbyTop) > 8 || Math.abs(box.start - lobbyStart) > 12) {
-        failures.push(`${route}: موضع مختلف عن /fiqh (top ${box.top} vs ${lobbyTop})`);
+        failures.push(`${route}: موضع لوبي مختلف (top ${box.top} vs ${lobbyTop})`);
       }
     }
   }

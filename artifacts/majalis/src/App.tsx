@@ -1307,7 +1307,7 @@ function AppShellInner() {
       <EdgeSwipeBack />
       <NativeNotificationsBootstrap />
       <IdleRuntimeBoot />
-      {homeAdSlot && (
+      {homeAdSlot && isHomePath && !hideSiteChrome && (
         <Suspense fallback={null}>
           <HomepageAdBar />
         </Suspense>
