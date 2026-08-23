@@ -110,6 +110,7 @@ const PATHS = [
   "/contact",
   "/courses",
   "/competitions",
+  "/competitions/:id",
   "/daily-wird",
   "/dalail-nubuwwah",
   "/delete-account",

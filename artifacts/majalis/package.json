@@ -206,7 +206,7 @@
     "test:perf-nav-ia": "node --import tsx src/lib/__tests__/perf-nav-ia.test.ts",
     "test:fiqh-hub-routing": "node --import tsx src/lib/__tests__/fiqh-hub-routing.test.ts",
     "test:fiqh-books-gates": "node --import tsx src/lib/__tests__/fiqh-books-gates.test.ts",
-    "test:section-lobby-gates": "node --import tsx src/lib/__tests__/section-lobby-gates.test.ts && node --import tsx src/lib/__tests__/section-back-button.test.ts && node --import tsx src/lib/__tests__/quick-actions-quad.test.ts",
+    "test:section-lobby-gates": "node --import tsx src/lib/__tests__/section-lobby-gates.test.ts && node --import tsx src/lib/__tests__/section-back-button.test.ts && node --import tsx src/lib/__tests__/quick-actions-quad.test.ts && pnpm run test:competitions-announcements",
     "test:section-back-button": "node --import tsx src/lib/__tests__/section-back-button.test.ts && node scripts/section-back-button-gate.mjs",
     "test:calendar-dates": "node --import tsx src/lib/__tests__/calendar-dates-gate.test.ts",
     "test:calendar-render": "node scripts/calendar-render-gate.mjs",
@@ -427,6 +427,7 @@
     "generate:seo-nav-labels": "node scripts/generate-seo-nav-labels.mjs",
     "strip:sourcemaps": "node scripts/strip-sourcemaps.mjs",
     "test:audio-stall-ended-gate": "node --import tsx src/lib/__tests__/audio-engine-stall-ended-gate.test.ts",
+    "test:competitions-announcements": "node --import tsx src/lib/__tests__/competitions-announcements-gate.test.ts",
     "test:content-audit-dawah": "node --import tsx src/lib/__tests__/content-audit-dawah-affinity-gate.test.ts"
   },
   "devDependencies": {
