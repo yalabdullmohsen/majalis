@@ -80,4 +80,62 @@ console.log("\n=== صياغة التعريف بالإسلام ===");
   assert.match(snr, /ضعيف\|موضوع\|منكر/, "أدلة الذنوب تستبعد الضعيف من العرض");
 }
 
+console.log("\n=== إصلاحات تدقيق الواجهة ===");
+{
+  const akhlaq = read("src/views/AkhlaqPage.tsx");
+  assert.match(
+    akhlaq,
+    /id:\s*"haya-allah"[\s\S]*?ayahRef:\s*"ق:\s*18"/,
+    "الحياء من الله → ق ١٨",
+  );
+  assert.doesNotMatch(
+    akhlaq,
+    /id:\s*"haya-allah"[\s\S]*?ayahRef:\s*"البقرة:\s*26"/,
+    "الحياء من الله لا يستشهد بالبقرة ٢٦",
+  );
+
+  const sunan = read("src/views/SunanYawmiyyaPage.tsx");
+  assert.match(
+    sunan,
+    /قراءة سورة الكهف يوم الجمعة[\s\S]*?حسن، وفي سنده نظر/,
+    "حكم الكهف الجمعة موحَّد بحسن/فيه نظر",
+  );
+  assert.doesNotMatch(
+    sunan,
+    /قراءة سورة الكهف يوم الجمعة[\s\S]{0,280}رواه الحاكم، صحيح/,
+    "الكهف الجمعة ليست «صحيح» قطعي",
+  );
+
+  const sitemap = read("src/pages/account/ui/SiteMapView.tsx");
+  assert.match(sitemap, /أرسل محتوى/, "همزة «أرسل محتوى»");
+  assert.doesNotMatch(sitemap, /ارسل محتوى/, "لا «ارسل» بلا همزة");
+  const quizHits = [...sitemap.matchAll(/href:\s*"\/quiz"/g)];
+  assert.equal(quizHits.length, 1, "سين جيم مرة واحدة في خريطة الموقع");
+
+  const glossary = read("src/pages/account/ui/IslamicGlossaryView.tsx");
+  assert.match(
+    glossary,
+    /الأنصار والمهاجرون[\s\S]*?يُحِبُّونَ مَنْ هَاجَرَ إِلَيْهِمْ/,
+    "آية الحشر للأنصار مكتملة في المعجم",
+  );
+
+  const duas = read("src/pages/worship/ui/DuasView.tsx");
+  assert.doesNotMatch(
+    duas,
+    /id:\s*"nawm-6"[\s\S]*?مستدرك الحاكم، صحيح/,
+    "nawm-6 بلا وسم صحيح قطعي",
+  );
+
+  const research = read("src/pages/library/ui/ScholarlyResearchView.tsx");
+  assert.match(research, /جاري التحميل…/, "مكتبة البحث تعرض رسالة تحميل");
+
+  const hajj = read("src/pages/fiqh/ui/HajjView.tsx");
+  assert.doesNotMatch(hajj, /طواف الوداع[\s\S]{0,200}— \./, "طواف الوداع بلا ذيل مقطوع");
+  assert.match(
+    hajj,
+    /title:\s*"الترتيب في رمي الجمرات"[\s\S]*?ثم الكبرى/,
+    "ترتيب الجمرات مكتمل",
+  );
+}
+
 console.log("\ncontent-audit-dawah-affinity-gate.test.ts: ok");

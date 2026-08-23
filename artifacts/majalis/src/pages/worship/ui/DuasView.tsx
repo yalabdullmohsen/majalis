@@ -511,7 +511,7 @@ const DUAS: DuaEntry[] = [
     arabic: "لَا إِلَهَ إِلَّا اللَّهُ الْوَاحِدُ الْقَهَّارُ، رَبُّ السَّمَاوَاتِ وَالأَرْضِ وَمَا بَيْنَهُمَا الْعَزِيزُ الْغَفَّارُ",
     transliteration: "La ilaha illallahul-wahidul-qahhar, rabbus-samawati wal-ardi wa ma baynahuma al-'azizul-ghaffar",
     meaning: "لا إله إلا الله الواحد القهار رب السماوات والأرض وما بينهما العزيز الغفار",
-    source: "مستدرك الحاكم، صحيح",
+    source: "مستدرك الحاكم — يُروى عند تعذّر النوم؛ وفيه كلام في الإسناد",
     category: "النوم واليقظة",
     occasion: "عند التقلب في الفراش وتعذّر النوم",
   },
