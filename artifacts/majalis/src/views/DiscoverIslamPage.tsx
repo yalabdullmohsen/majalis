@@ -64,7 +64,7 @@ const VISITOR_PATHS: VisitorPath[] = [
   { id: "doubts", label: "لديّ شبهات", desc: "ردود موثّقة على أشهر الشبهات", href: "/discover-islam/doubts" },
   { id: "considering", label: "أفكّر في الدخول", desc: "خطوات عملية واضحة للدخول في الإسلام", href: "/discover-islam/how-to-convert" },
   { id: "new-muslim", label: "دخلت الإسلام حديثًا", desc: "مسار الثلاثين يومًا الأول", href: "/discover-islam/new-muslim" },
-  { id: "contact", label: "أريد التحدث مع مختص", desc: "تواصل سري مع داعية أو داعية", href: "/discover-islam/contact" },
+  { id: "contact", label: "أريد التحدث مع مختص", desc: "تواصل سري مع داعٍ أو داعية", href: "/discover-islam/contact" },
 ];
 
 const JOURNEY_STEPS = [

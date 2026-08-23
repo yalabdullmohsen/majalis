@@ -69,4 +69,11 @@ console.log("\n=== أدعية بلا خلاف في الثبوت ===");
   assert.match(duas, /أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ/, "دعاء الطعام الثابت موجود");
 }
 
+console.log("\n=== صياغة التعريف بالإسلام ===");
+{
+  const hub = read("src/views/DiscoverIslamPage.tsx");
+  assert.match(hub, /داعٍ أو داعية/, "لا تكرار ركيك «داعية أو داعية»");
+  assert.match(hub, /مسار الثلاثين يومًا/, "المسار يعدّ بثلاثين يومًا");
+}
+
 console.log("\ncontent-audit-dawah-affinity-gate.test.ts: ok");
