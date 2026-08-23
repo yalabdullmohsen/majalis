@@ -75,3 +75,11 @@ export const NOUN_MUNASABAT: ArabicCountNoun = {
   few: "مناسبات",
   many: "مناسبة",
 };
+
+export const NOUN_ASILA: ArabicCountNoun = {
+  zero: "لا أسئلة",
+  one: "سؤال",
+  two: "سؤالان",
+  few: "أسئلة",
+  many: "سؤالاً",
+};

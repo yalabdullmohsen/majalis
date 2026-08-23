@@ -19,7 +19,7 @@ type Props = {
   primary?: LobbyPrimary;
   chips?: Array<LobbyChip & { href?: string; active?: boolean; onSelect?: () => void }>;
   groups: LobbyGroup[];
-  quad?: [LobbyQuadItem, LobbyQuadItem, LobbyQuadItem, LobbyQuadItem];
+  quad?: LobbyQuadItem[];
   /** ورقة تصفية فقط — بلا حقل بحث */
   filterSlot?: ReactNode;
   children?: ReactNode;

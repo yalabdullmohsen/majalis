@@ -37,6 +37,7 @@ function titleFromPath(path: string): string {
   "/search": "البحث",
   "/islamic-glossary": "المصطلحات",
   "/quiz": "المسابقة",
+  "/competitions": "المسابقات",
   "/settings": "الإعدادات"
 };
   if (known[path]) return known[path];
@@ -108,6 +109,7 @@ const PATHS = [
   "/condolences",
   "/contact",
   "/courses",
+  "/competitions",
   "/daily-wird",
   "/dalail-nubuwwah",
   "/delete-account",
@@ -412,7 +414,7 @@ const NAV_PATHS = new Set(["/","/quran-knowledge","/lessons","/hadith","/library
 function inferSection(path: string): AppRouteSection {
   if (path === "/") return "other";
   if (/^\/(quran|mushaf|tilawa|tajweed|tafsir|ulum|surah)/.test(path)) return "quran";
-  if (/^\/(lesson|learn|teacher|kuwait)/.test(path)) return "lessons";
+  if (/^\/(lesson|learn|teacher|kuwait|competitions)/.test(path)) return "lessons";
   if (/^\/(hadith|sunnah|arbaeen)/.test(path)) return "hadith";
   if (/^\/(fiqh|ruling|zakat|hajj|janaza|mawarith|nikah|talaq|salah)/.test(path)) return "fiqh";
   if (/^\/(library|scholar)/.test(path)) return "library";
