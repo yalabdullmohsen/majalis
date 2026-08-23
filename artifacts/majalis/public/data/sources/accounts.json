@@ -1,7 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-08-23T00:28:59.045Z",
+  "updated_at": "2026-08-23T02:39:04.863Z",
   "accounts": [
+    {
+      "id": "web-aayatkw.com",
+      "platform": "web",
+      "handle": "aayatkw.com",
+      "url": "https://aayatkw.com",
+      "name_ar": "آيات",
+      "kind": "مبرة",
+      "topics": [
+        "قرآن",
+        "حلقات"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://aayatkw.com",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
     {
       "id": "ig-athr_yabka",
       "platform": "instagram",
@@ -10,7 +28,8 @@
       "name_ar": "أثر يبقى",
       "kind": "مبادرة",
       "topics": [
-        "عام"
+        "فوائد",
+        "دعوة"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -23,11 +42,12 @@
       "platform": "instagram",
       "handle": "erth.kwt",
       "url": "https://instagram.com/erth.kwt",
-      "name_ar": "إرث — دورات قرآنية وتربوية",
+      "name_ar": "إرث",
       "kind": "مبادرة",
       "topics": [
         "دورات",
-        "قرآن"
+        "قرآن",
+        "تربية"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -43,7 +63,8 @@
       "name_ar": "إطمئنان",
       "kind": "مبادرة",
       "topics": [
-        "عام"
+        "دعوة",
+        "تذكير"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -60,12 +81,13 @@
       "kind": "أكاديمية",
       "topics": [
         "فقه",
+        "علم شرعي",
         "دورات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "normal",
+      "poll_priority": "high",
       "last_seen_at": null
     },
     {
@@ -76,13 +98,14 @@
       "name_ar": "أكاديمية ورثة الأنبياء",
       "kind": "أكاديمية",
       "topics": [
+        "علم شرعي",
         "دورات",
-        "سيرة"
+        "دروس"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "normal",
+      "poll_priority": "high",
       "last_seen_at": null
     },
     {
@@ -93,8 +116,8 @@
       "name_ar": "الراسخون",
       "kind": "جمعية",
       "topics": [
-        "دروس",
-        "فقه"
+        "علم شرعي",
+        "دروس"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -116,7 +139,7 @@
       "audience": "نساء",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "high",
+      "poll_priority": "normal",
       "last_seen_at": null
     },
     {
@@ -127,13 +150,13 @@
       "name_ar": "المسجد الكبير — دولة الكويت",
       "kind": "مسجد",
       "topics": [
-        "خطبة",
-        "دروس"
+        "خطب",
+        "محاضرات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "normal",
+      "poll_priority": "high",
       "last_seen_at": null
     },
     {
@@ -144,7 +167,8 @@
       "name_ar": "المنصة القرآنية العالمية",
       "kind": "منصة",
       "topics": [
-        "قرآن"
+        "قرآن",
+        "تعليم"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -166,7 +190,7 @@
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "high",
+      "poll_priority": "normal",
       "last_seen_at": null
     },
     {
@@ -177,7 +201,9 @@
       "name_ar": "جامع سعد محمد الشلاحي",
       "kind": "مسجد",
       "topics": [
-        "دروس"
+        "فقه",
+        "دروس",
+        "خطب"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -209,17 +235,17 @@
       "handle": "almanabr.org",
       "url": "https://almanabr.org",
       "name_ar": "جمعية المنابر القرآنية",
-      "kind": "موقع",
+      "kind": "جمعية",
       "topics": [
-        "دروس",
-        "إعلان"
+        "قرآن",
+        "حلقات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
       "site": "https://almanabr.org",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": "2026-08-23T00:28:34.045Z"
+      "last_seen_at": null
     },
     {
       "id": "web-waheen.net",
@@ -227,31 +253,34 @@
       "handle": "waheen.net",
       "url": "https://waheen.net",
       "name_ar": "جمعية الوحيين",
-      "kind": "موقع",
+      "kind": "جمعية",
       "topics": [
-        "دروس",
-        "إعلان"
+        "قرآن",
+        "علم",
+        "دورات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
       "site": "https://waheen.net",
       "enabled": true,
-      "poll_priority": "high",
-      "last_seen_at": "2026-08-23T00:28:39.756Z"
+      "poll_priority": "normal",
+      "last_seen_at": null
     },
     {
       "id": "ig-alwa7yyen",
       "platform": "instagram",
       "handle": "alwa7yyen",
-      "url": "https://instagram.com/alwa7yyen",
+      "url": "https://waheen.net",
       "name_ar": "جمعية الوحيين — مركز الدرر",
       "kind": "جمعية",
       "topics": [
         "قرآن",
-        "حديث"
+        "علم",
+        "دورات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
+      "site": "https://waheen.net",
       "enabled": true,
       "poll_priority": "normal",
       "last_seen_at": null
@@ -264,29 +293,12 @@
       "name_ar": "جمعية ترتيل",
       "kind": "جمعية",
       "topics": [
-        "حلقات",
-        "قرآن"
+        "قرآن",
+        "نساء",
+        "حلقات"
       ],
       "audience": "نساء",
       "region_ar": "الكويت",
-      "enabled": true,
-      "poll_priority": "normal",
-      "last_seen_at": null
-    },
-    {
-      "id": "web-hoffath.org",
-      "platform": "web",
-      "handle": "hoffath.org",
-      "url": "https://hoffath.org",
-      "name_ar": "جمعية حُفّاظ",
-      "kind": "موقع",
-      "topics": [
-        "دروس",
-        "إعلان"
-      ],
-      "audience": "عام",
-      "region_ar": "الكويت",
-      "site": "https://hoffath.org",
       "enabled": true,
       "poll_priority": "high",
       "last_seen_at": null
@@ -299,12 +311,32 @@
       "name_ar": "جوري جاسم الضاحي",
       "kind": "شخصية",
       "topics": [
-        "دروس"
+        "قرآن",
+        "تعليم"
       ],
-      "audience": "نساء",
+      "audience": "نشء",
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "web-hoffath.org",
+      "platform": "web",
+      "handle": "hoffath.org",
+      "url": "https://hoffath.org",
+      "name_ar": "حفّاظ",
+      "kind": "جمعية",
+      "topics": [
+        "قرآن",
+        "حلقات",
+        "تحفيظ"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://hoffath.org",
+      "enabled": true,
+      "poll_priority": "high",
       "last_seen_at": null
     },
     {
@@ -312,17 +344,18 @@
       "platform": "instagram",
       "handle": "7offath",
       "url": "https://hoffath.org",
-      "name_ar": "حُفّاظ — الجمعية الخيرية الكويتية",
+      "name_ar": "حُفّاظ",
       "kind": "جمعية",
       "topics": [
+        "قرآن",
         "حلقات",
-        "قرآن"
+        "تحفيظ"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
       "site": "https://hoffath.org",
       "enabled": true,
-      "poll_priority": "normal",
+      "poll_priority": "high",
       "last_seen_at": null
     },
     {
@@ -333,10 +366,10 @@
       "name_ar": "حلقات إرواء للقرآن — جامعة الكويت",
       "kind": "حلقات",
       "topics": [
-        "حلقات",
-        "قرآن"
+        "قرآن",
+        "طالبات"
       ],
-      "audience": "عام",
+      "audience": "نشء",
       "region_ar": "الكويت",
       "enabled": true,
       "poll_priority": "normal",
@@ -350,13 +383,13 @@
       "name_ar": "حلقات الخلة لتحفيظ القرآن الكريم",
       "kind": "حلقات",
       "topics": [
-        "حلقات",
-        "قرآن"
+        "قرآن",
+        "تحفيظ"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "normal",
+      "poll_priority": "high",
       "last_seen_at": null
     },
     {
@@ -367,7 +400,7 @@
       "name_ar": "حلقات تراحم التربوية",
       "kind": "حلقات",
       "topics": [
-        "حلقات",
+        "قرآن",
         "تربية"
       ],
       "audience": "عام",
@@ -391,7 +424,7 @@
       "region_ar": "الكويت",
       "site": "https://www.othmanalkamees.com",
       "enabled": true,
-      "poll_priority": "high",
+      "poll_priority": "normal",
       "last_seen_at": null
     },
     {
@@ -408,7 +441,25 @@
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "normal",
+      "poll_priority": "high",
+      "last_seen_at": null
+    },
+    {
+      "id": "ig-DrosQ8",
+      "platform": "instagram",
+      "handle": "DrosQ8",
+      "url": "https://instagram.com/DrosQ8",
+      "name_ar": "دروس الكويت",
+      "kind": "قناة",
+      "topics": [
+        "دروس",
+        "خطب",
+        "مشايخ"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "high",
       "last_seen_at": null
     },
     {
@@ -420,33 +471,15 @@
       "kind": "قناة",
       "topics": [
         "دروس",
-        "حلقات",
-        "دورات"
+        "خطب",
+        "مشايخ"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
-      "contact": "https://linktr.ee/drosq8",
+      "contact": "https://t.me/DrosQ8",
       "enabled": true,
       "poll_priority": "high",
-      "last_seen_at": "2026-08-23T00:28:43.460Z"
-    },
-    {
-      "id": "web-drosq8-linktree",
-      "platform": "web",
-      "handle": "drosq8-linktree",
-      "url": "https://linktr.ee/drosq8",
-      "name_ar": "دروس الكويت — روابط",
-      "kind": "موقع",
-      "topics": [
-        "دروس",
-        "إعلان"
-      ],
-      "audience": "عام",
-      "region_ar": "الكويت",
-      "site": "https://linktr.ee/drosq8",
-      "enabled": true,
-      "poll_priority": "high",
-      "last_seen_at": "2026-08-23T00:28:50.676Z"
+      "last_seen_at": null
     },
     {
       "id": "ig-drooss_kw",
@@ -462,7 +495,7 @@
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "high",
+      "poll_priority": "normal",
       "last_seen_at": null
     },
     {
@@ -473,7 +506,8 @@
       "name_ar": "دروس غرب عبدالله المبارك",
       "kind": "قناة",
       "topics": [
-        "دروس"
+        "دروس",
+        "حلقات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -496,7 +530,7 @@
       "region_ar": "الكويت",
       "site": "https://www.waratha.com",
       "enabled": true,
-      "poll_priority": "high",
+      "poll_priority": "normal",
       "last_seen_at": null
     },
     {
@@ -513,7 +547,7 @@
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "high",
+      "poll_priority": "normal",
       "last_seen_at": null
     },
     {
@@ -524,10 +558,30 @@
       "name_ar": "ديوان العوني الشريف الأسبوعي",
       "kind": "ديوان",
       "topics": [
-        "دروس"
+        "دروس",
+        "لقاءات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
+      "enabled": true,
+      "poll_priority": "normal",
+      "last_seen_at": null
+    },
+    {
+      "id": "web-drosq8-linktree",
+      "platform": "web",
+      "handle": "drosq8-linktree",
+      "url": "https://linktr.ee/drosq8",
+      "name_ar": "روابط دروس الكويت",
+      "kind": "قناة",
+      "topics": [
+        "دروس",
+        "خطب",
+        "مشايخ"
+      ],
+      "audience": "عام",
+      "region_ar": "الكويت",
+      "site": "https://linktr.ee/drosq8",
       "enabled": true,
       "poll_priority": "normal",
       "last_seen_at": null
@@ -540,7 +594,8 @@
       "name_ar": "فجر عبدالرحمن الكوس",
       "kind": "شخصية",
       "topics": [
-        "دروس"
+        "قرآن",
+        "تعليم"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -556,7 +611,8 @@
       "name_ar": "فريق غيث",
       "kind": "فريق",
       "topics": [
-        "دعوة"
+        "دعوة",
+        "مبادرات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -590,6 +646,7 @@
       "kind": "لجنة",
       "topics": [
         "دعوة",
+        "علم",
         "دروس"
       ],
       "audience": "عام",
@@ -599,24 +656,6 @@
       "last_seen_at": null
     },
     {
-      "id": "web-aayatkw.com",
-      "platform": "web",
-      "handle": "aayatkw.com",
-      "url": "https://aayatkw.com",
-      "name_ar": "مبرة آيات",
-      "kind": "موقع",
-      "topics": [
-        "دروس",
-        "إعلان"
-      ],
-      "audience": "عام",
-      "region_ar": "الكويت",
-      "site": "https://aayatkw.com",
-      "enabled": true,
-      "poll_priority": "high",
-      "last_seen_at": "2026-08-23T00:28:53.855Z"
-    },
-    {
       "id": "ig-al_mabarrah",
       "platform": "instagram",
       "handle": "al_mabarrah",
@@ -624,8 +663,9 @@
       "name_ar": "مبرة المتميزين — الحلقات النسائية",
       "kind": "مبرة",
       "topics": [
-        "حلقات",
-        "قرآن"
+        "نساء",
+        "قرآن",
+        "حلقات"
       ],
       "audience": "نساء",
       "region_ar": "الكويت",
@@ -642,13 +682,13 @@
       "name_ar": "مركز الإمام الألباني لتعليم العلوم الشرعية",
       "kind": "مركز",
       "topics": [
-        "سنة",
-        "فقه"
+        "علم شرعي",
+        "دورات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "normal",
+      "poll_priority": "high",
       "last_seen_at": null
     },
     {
@@ -659,8 +699,8 @@
       "name_ar": "مركز سعد العبدالله لتحفيظ القرآن",
       "kind": "مركز",
       "topics": [
-        "حلقات",
-        "قرآن"
+        "قرآن",
+        "حلقات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -677,12 +717,14 @@
       "kind": "مركز",
       "topics": [
         "سنة",
-        "سيرة"
+        "حديث",
+        "دروس",
+        "دورات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "normal",
+      "poll_priority": "high",
       "last_seen_at": null
     },
     {
@@ -693,7 +735,8 @@
       "name_ar": "مسجد الشيخ مبارك عبدالله المبارك الصباح — الجهراء",
       "kind": "مسجد",
       "topics": [
-        "دروس"
+        "دروس",
+        "حلقات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -715,7 +758,7 @@
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "high",
+      "poll_priority": "normal",
       "last_seen_at": null
     },
     {
@@ -732,7 +775,7 @@
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "high",
+      "poll_priority": "normal",
       "last_seen_at": null
     },
     {
@@ -749,7 +792,7 @@
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "high",
+      "poll_priority": "normal",
       "last_seen_at": null
     },
     {
@@ -760,7 +803,8 @@
       "name_ar": "مسجد راشد الخياط",
       "kind": "مسجد",
       "topics": [
-        "دروس"
+        "دروس",
+        "حلقات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -782,7 +826,7 @@
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "high",
+      "poll_priority": "normal",
       "last_seen_at": null
     },
     {
@@ -793,7 +837,9 @@
       "name_ar": "مسجد مبارك الصيفي ووالديه",
       "kind": "مسجد",
       "topics": [
-        "دروس"
+        "دروس",
+        "قرآن",
+        "محاضرات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -815,7 +861,7 @@
       "audience": "عام",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "high",
+      "poll_priority": "normal",
       "last_seen_at": null
     },
     {
@@ -824,16 +870,17 @@
       "handle": "manar-alsabil.org",
       "url": "https://manar-alsabil.org",
       "name_ar": "منار السبيل",
-      "kind": "موقع",
+      "kind": "لجنة",
       "topics": [
-        "دروس",
-        "إعلان"
+        "دعوة",
+        "علم",
+        "دروس"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
       "site": "https://manar-alsabil.org",
       "enabled": true,
-      "poll_priority": "high",
+      "poll_priority": "normal",
       "last_seen_at": null
     },
     {
@@ -845,7 +892,8 @@
       "kind": "منصة",
       "topics": [
         "قرآن",
-        "حلقات"
+        "تلاوة",
+        "حفظ"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -858,16 +906,17 @@
       "platform": "instagram",
       "handle": "nadwat.kw",
       "url": "https://instagram.com/nadwat.kw",
-      "name_ar": "ندوات وحلقات ذكر — دروس الكويت",
+      "name_ar": "ندوات وحلقات ذكر — دروس الكويت للنساء",
       "kind": "قناة",
       "topics": [
+        "نساء",
         "دروس",
-        "حلقات"
+        "محاضرات"
       ],
       "audience": "نساء",
       "region_ar": "الكويت",
       "enabled": true,
-      "poll_priority": "normal",
+      "poll_priority": "high",
       "last_seen_at": null
     },
     {
@@ -878,7 +927,8 @@
       "name_ar": "وجدان محمد الجفيري",
       "kind": "شخصية",
       "topics": [
-        "دروس"
+        "دروس",
+        "قرآن"
       ],
       "audience": "نساء",
       "region_ar": "الكويت",
@@ -891,11 +941,12 @@
       "platform": "web",
       "handle": "awqaf.gov.kw",
       "url": "https://awqaf.gov.kw",
-      "name_ar": "وزارة الأوقاف — الموقع الرسمي",
-      "kind": "موقع",
+      "name_ar": "وزارة الأوقاف",
+      "kind": "حكومي",
       "topics": [
         "دروس",
-        "إعلان"
+        "خطب",
+        "فعاليات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
@@ -913,13 +964,14 @@
       "kind": "حكومي",
       "topics": [
         "دروس",
-        "خطبة"
+        "خطب",
+        "فعاليات"
       ],
       "audience": "عام",
       "region_ar": "الكويت",
       "site": "https://awqaf.gov.kw",
       "enabled": true,
-      "poll_priority": "normal",
+      "poll_priority": "high",
       "last_seen_at": null
     }
   ]

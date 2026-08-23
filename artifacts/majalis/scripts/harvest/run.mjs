@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { adapterFor } from "./adapters/index.mjs";
+import { getInstagramProviderStatus } from "./adapters/instagram.mjs";
 import { normalizeArabic, stripEmojiFromTitle, summaryFromText } from "./normalize.mjs";
 import { classifyType, extractFields, confidenceFor } from "./classify.mjs";
 import { fingerprintPrimary, fingerprintSecondary, mergeOrAppend } from "./dedupe.mjs";
@@ -62,7 +63,8 @@ function loadFixtureItems() {
 
 function appendHarvestReport(stats) {
   const reportPath = resolve(__dirname, "../../docs/HARVEST_REPORT.md");
-  const line = `| ${new Date().toISOString()} | ${stats.sources} | ${stats.fetched} | ${stats.published} | ${stats.merged} | ${stats.failed.length} |`;
+  const igNote = stats.instagram?.message ? ` | IG: ${stats.instagram.message}` : "";
+  const line = `| ${new Date().toISOString()} | ${stats.sources} | ${stats.fetched} | ${stats.published} | ${stats.merged} | ${stats.failed.length}${igNote} |`;
   let body = "";
   try {
     body = readFileSync(reportPath, "utf8");
@@ -84,6 +86,7 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
     merged: 0,
     failed: [],
     skipped: 0,
+    instagram: getInstagramProviderStatus(),
   };
 
   const accounts = loadAccounts().filter((a) => a.enabled);
@@ -169,6 +172,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       console.log(
         `harvest: sources=${stats.sources} fetched=${stats.fetched} published=${stats.published} merged=${stats.merged} failed=${stats.failed.length}`,
       );
+      if (stats.instagram?.message) {
+        console.log(`harvest: ${stats.instagram.message}`);
+      }
       if (stats.failed.length) {
         for (const f of stats.failed.slice(0, 5)) console.error(`  ✗ ${f.id}: ${f.reason}`);
       }

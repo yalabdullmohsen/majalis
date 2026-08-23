@@ -35,7 +35,9 @@ jobs:
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          INSTAGRAM_INGEST_MODE: oembed
+          INSTAGRAM_INGEST_MODE: provider
+          INSTAGRAM_PROVIDER_KEY: ${{ secrets.INSTAGRAM_PROVIDER_KEY }}
+          INSTAGRAM_PROVIDER_ENDPOINT: ${{ secrets.INSTAGRAM_PROVIDER_ENDPOINT }}
         run: pnpm run harvest
 
       - name: Test harvest gates
@@ -45,7 +47,7 @@ jobs:
       - name: Check for changes
         id: diff
         run: |
-          if git diff --quiet -- public/data docs/HARVEST_REPORT.md; then
+          if git diff --quiet -- artifacts/majalis/public/data artifacts/majalis/docs/HARVEST_REPORT.md; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
