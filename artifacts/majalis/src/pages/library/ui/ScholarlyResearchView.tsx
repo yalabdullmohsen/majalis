@@ -415,7 +415,9 @@ export default function ScholarlyResearchPage() {
             )}
 
             {isLoggedIn && libLoading && (
-              <div className="srp-empty"></div>
+              <div className="srp-empty" role="status" aria-live="polite">
+                جاري التحميل…
+              </div>
             )}
 
             {isLoggedIn && !libLoading && library.length === 0 && (
