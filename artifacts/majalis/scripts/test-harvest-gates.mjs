@@ -112,6 +112,28 @@ else delete process.env.INSTAGRAM_INGEST_MODE;
 if (prevKey !== undefined) process.env.INSTAGRAM_PROVIDER_KEY = prevKey;
 if (prevEndpoint !== undefined) process.env.INSTAGRAM_PROVIDER_ENDPOINT = prevEndpoint;
 
+console.log("=== Instagram endpoint: رابط API فقط وليس curl ===");
+{
+  const { normalizeProviderEndpoint, getInstagramProviderConfig } = await import("./harvest/adapters/instagram-provider.mjs");
+  assert.equal(normalizeProviderEndpoint("https://provider.example/v1").ok, true);
+  assert.equal(normalizeProviderEndpoint("curl https://provider.example -H 'Authorization: Bearer x'").ok, false);
+  assert.equal(normalizeProviderEndpoint("not-a-url").ok, false);
+  const prevEndpoint = process.env.INSTAGRAM_PROVIDER_ENDPOINT;
+  const prevKey = process.env.INSTAGRAM_PROVIDER_KEY;
+  process.env.INSTAGRAM_PROVIDER_KEY = "test-key";
+  process.env.INSTAGRAM_PROVIDER_ENDPOINT = "curl https://evil.example -H Authorization:Bearer leak";
+  const bad = getInstagramProviderConfig();
+  assert.equal(bad.configured, false);
+  assert.equal(bad.endpoint, "");
+  assert.match(String(bad.endpointError||""), /curl|url/i);
+  // لا يُعاد تخزين أمر curl في endpoint
+  assert.doesNotMatch(JSON.stringify(bad), /Bearer leak/);
+  if (prevEndpoint !== undefined) process.env.INSTAGRAM_PROVIDER_ENDPOINT = prevEndpoint;
+  else delete process.env.INSTAGRAM_PROVIDER_ENDPOINT;
+  if (prevKey !== undefined) process.env.INSTAGRAM_PROVIDER_KEY = prevKey;
+  else delete process.env.INSTAGRAM_PROVIDER_KEY;
+}
+
 console.log("=== Instagram provider mock ===");
 process.env.INSTAGRAM_INGEST_MODE = "provider";
 process.env.INSTAGRAM_PROVIDER_KEY = "test-key";
