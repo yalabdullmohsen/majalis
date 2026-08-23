@@ -1,11 +1,11 @@
 /**
  * طباعة واجهة التطبيق — خارج المصحف/QPC.
- * خطان محليان فقط: Noto Naskh Arabic (عناوين + واجهة) · Amiri (نصوص قراءة/تفسير عبر --font-app).
+ * خط الواجهة الموحّد: Amiri عبر --font-app (كما كان قبل طبقة Noto Naskh).
  */
 
 :root {
-  --font-heading: "Noto Naskh Arabic", "Traditional Arabic", serif;
-  --font-body-ui: "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-heading: var(--font-app, "Amiri", "Traditional Arabic", serif);
+  --font-body-ui: var(--font-app, "Amiri", "Traditional Arabic", serif);
   --brand-contrast: var(--brand-on-white, var(--mj-brand-deep));
 
   /* مقاسات موحّدة */

@@ -6,7 +6,7 @@
  * `force: true` لتجاوز الحارس عند استعادة chunk بعد نشر (مسار حرج).
  */
 const GUARD_KEY = "majalis-safe-reload-ts";
-const GUARD_WINDOW_MS = 4000;
+const GUARD_WINDOW_MS = 12_000;
 
 export function safeLocationReload(opts?: { force?: boolean }): void {
   if (!opts?.force) {

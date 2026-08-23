@@ -16,12 +16,16 @@ const theme = readFileSync(join(root, "app/styles/theme.css"), "utf8");
 
 assert.match(main, /typography-app\.css/);
 assert.match(typoApp, /--font-heading/);
+assert.match(typoApp, /--font-app/);
+assert.match(typoApp, /Amiri/);
 assert.match(typoApp, /--type-card-title/);
 assert.match(typoApp, /line-clamp: 2/);
 assert.match(typoApp, /--text-on-dark-primary/);
+assert.doesNotMatch(typoApp, /Noto Naskh Arabic/);
 assert.doesNotMatch(typoApp, /--mm-qpc|qpc-v2/);
 
 assert.match(theme, /--font-app: "Amiri"/);
+assert.match(theme, /--mj-face: var\(--font-app\)/);
 assert.match(mushaf, /--mm-qpc-size/);
 assert.match(mushaf, /qpc-v2-p1/);
 assert.doesNotMatch(mushaf, /--font-heading/);

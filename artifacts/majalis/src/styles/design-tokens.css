@@ -64,9 +64,9 @@
   --lh-body: 1.75;
   --lh-prose: 1.85;
 
-  /* خطوط واجهة (محلية) — المصحف يستخدم QPC منفصلًا */
-  --font-heading: "Noto Naskh Arabic", "Traditional Arabic", serif;
-  --font-body-ui: "Noto Naskh Arabic", "Traditional Arabic", serif;
+  /* خطوط واجهة موحّدة عبر --font-app (Amiri) — المصحف يستخدم QPC منفصلًا */
+  --font-heading: var(--font-app, "Amiri", "Traditional Arabic", serif);
+  --font-body-ui: var(--font-app, "Amiri", "Traditional Arabic", serif);
   --brand-contrast: var(--brand-on-white);
 }
 
