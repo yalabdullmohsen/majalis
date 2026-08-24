@@ -18,6 +18,7 @@ const TIME_RE =
 const DATE_RE =
   /(?:\d{4}[-/]\d{1,2}[-/]\d{1,2})|(?:\d{1,2}[-/]\d{1,2}[-/]\d{2,4})|(?:\d{1,2}\s+(?:يناير|فبراير|مارس|ابريل|أبريل|مايو|يونيو|يوليو|اغسطس|أغسطس|سبتمبر|اكتوبر|أكتوبر|نوفمبر|ديسمبر))|(?:\d{1,2}\s+(?:محرم|صفر|ربيع|جمادى|رجب|شعبان|رمضان|شوال|ذو))/i;
 const REGISTER_RE = /(https?:\/\/(?:forms\.gle|docs\.google\.com\/forms)[^\s]+|https?:\/\/(?:wa\.me|t\.me)\/[^\s]+)/i;
+const AUDIENCES_SAFE = new Set(["عام", "رجال", "نساء", "نشء"]);
 
 export function classifyType(text) {
   const n = normalizeArabic(text);
@@ -25,6 +26,31 @@ export function classifyType(text) {
     if (rule.re.test(n)) return rule.type;
   }
   return "إعلان";
+}
+
+const WEEKLY_RE =
+  /(?:كل\s*(?:اسبوع|أسبوع)|اسبوعيا|أسبوعي(?:ا|ً)?|كل\s*(?:سبت|احد|أحد|اثنين|ثلاثاء|اربعاء|أربعاء|خميس|جمعه|جمعة)|يوم\s*(?:السبت|الاحد|الأحد|الاثنين|الثلاثاء|الاربعاء|الأربعاء|الخميس|الجمعه|الجمعة))/iu;
+const MONTHLY_RE = /(?:كل\s*شهر|شهريا|شهري(?:ا|ً)?|مرة\s*في\s*الشهر|من\s*كل\s*شهر)/iu;
+const UPCOMING_RE =
+  /(?:غدا|غداً|اليوم|الليلة|الليله|قادم|القادم|مقبل|المقبل|يبدا|يبدأ|يبداً|بعد\s*(?:الفجر|الظهر|العصر|المغرب|العشاء)|التسجيل\s*مفتوح)/iu;
+
+/** كشف الجدول: قادم / أسبوعي / شهري — بلا تخمين خارج النص */
+export function detectScheduleKind(text) {
+  const n = normalizeArabic(text);
+  if (MONTHLY_RE.test(n) || MONTHLY_RE.test(String(text ?? ""))) return "monthly";
+  if (WEEKLY_RE.test(n) || WEEKLY_RE.test(String(text ?? ""))) return "weekly";
+  if (UPCOMING_RE.test(n) || UPCOMING_RE.test(String(text ?? ""))) return "upcoming";
+  return null;
+}
+
+/** هل النص يشير لدرس/حلقة/دورة قادمة أو متكررة؟ */
+export function isLessonRelevant(text) {
+  const type = classifyType(text);
+  if (type === "درس" || type === "حلقة" || type === "دورة" || type === "خطبة" || type === "تسجيل") {
+    return true;
+  }
+  const kind = detectScheduleKind(text);
+  return kind === "weekly" || kind === "monthly" || kind === "upcoming";
 }
 
 export function extractFields(text, accountAudience = "عام") {
@@ -39,14 +65,26 @@ export function extractFields(text, accountAudience = "عام") {
     if (!Number.isNaN(parsed)) starts_at = new Date(parsed).toISOString();
   }
   const register_url = raw.match(REGISTER_RE)?.[1] ?? null;
+  const schedule_kind = detectScheduleKind(raw);
 
-  const { womenAttendance } = classifyWomenAttendance(raw);
+  const { womenAttendance, womenAttendanceNote } = classifyWomenAttendance(raw);
   let audience = accountAudience;
-  if (womenAttendance === "متاح") audience = "الكل";
+  if (womenAttendance === "متاح") audience = "عام";
   else if (/رجال|للرجال/.test(normalizeArabic(raw))) audience = "رجال";
   else if (/نشء|شباب/.test(normalizeArabic(raw))) audience = "نشء";
+  if (!AUDIENCES_SAFE.has(audience)) audience = "عام";
 
-  return { sheikh, place, time_text, starts_at, register_url, audience, womenAttendance };
+  return {
+    sheikh,
+    place,
+    time_text,
+    starts_at,
+    register_url,
+    audience,
+    womenAttendance,
+    womenAttendanceNote,
+    schedule_kind,
+  };
 }
 
 export function confidenceFor(item, fields) {

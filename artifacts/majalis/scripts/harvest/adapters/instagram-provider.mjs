@@ -5,6 +5,7 @@ import {
   canConsumeQuota,
   consumeQuota,
   maxLatestPostsPerAccount,
+  isBackfillEnabled,
 } from "./instagram-quota.mjs";
 
 /** @typedef {import('../types.mjs').HarvestItem} HarvestItem */
@@ -278,13 +279,93 @@ export function samePost(account, latest) {
 }
 
 /**
+ * قائمة منشورات حديثة (لنافذة 7 أيام / backfill).
+ * @param {string} handle
+ * @param {{ limit?: number, since?: Date }} [opts]
+ */
+export async function fetchRecentPosts(handle, opts = {}) {
+  const limit = Math.max(1, Math.min(30, Number(opts.limit) || maxLatestPostsPerAccount()));
+  const sinceMs = opts.since instanceof Date ? opts.since.getTime() : Date.now() - 7 * 24 * 60 * 60 * 1000;
+
+  if (process.env.INSTAGRAM_PROVIDER_MOCK === "1") {
+    const post = normalizeProviderPost(mockPostDetails(handle, `mock-${handle}-1`));
+    return [
+      {
+        sourceId: "",
+        externalId: post.externalId,
+        url: post.url,
+        title: post.title,
+        text: post.text,
+        imageUrl: post.imageUrl,
+        publishedAt: post.publishedAt,
+      },
+    ];
+  }
+
+  const status = getInstagramProviderStatus();
+  if (status.mode !== "provider" || !status.configured) return [];
+
+  const { key, endpoint } = getInstagramProviderConfig();
+  const base = endpoint.replace(/\/$/, "");
+  const h = handle.replace(/^@/, "");
+  const paths = [
+    `/accounts/${encodeURIComponent(h)}/posts?limit=${limit}`,
+    `/accounts/${encodeURIComponent(h)}/media?limit=${limit}`,
+    `/v1/accounts/${encodeURIComponent(h)}/posts?limit=${limit}`,
+    `/instagram/accounts/${encodeURIComponent(h)}/posts?limit=${limit}`,
+  ];
+
+  for (const path of paths) {
+    try {
+      const res = await fetch(`${base}${path}`, {
+        headers: authHeaders(key),
+        redirect: "follow",
+      });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const list = Array.isArray(data)
+        ? data
+        : Array.isArray(data.posts)
+          ? data.posts
+          : Array.isArray(data.items)
+            ? data.items
+            : Array.isArray(data.data)
+              ? data.data
+              : [];
+      if (!list.length) continue;
+      return list
+        .map((raw) => normalizeProviderPost(raw))
+        .filter((p) => p.url && (p.title || p.text))
+        .filter((p) => {
+          const t = Date.parse(p.publishedAt);
+          return Number.isNaN(t) || t >= sinceMs;
+        })
+        .slice(0, limit)
+        .map((p) => ({
+          sourceId: "",
+          externalId: p.externalId,
+          url: p.url,
+          title: p.title,
+          text: p.text,
+          imageUrl: p.imageUrl,
+          publishedAt: p.publishedAt,
+        }));
+    } catch {
+      /* جرّب المسار التالي */
+    }
+  }
+  return [];
+}
+
+/**
  * probe خفيف ثم fetch مشروط (منشور واحد كحد أقصى إلا مع backfill).
  * @param {import('../types.mjs').SourceAccount} account
- * @param {{ persistQuota?: boolean }} [opts]
+ * @param {{ persistQuota?: boolean, since?: Date }} [opts]
  */
 export async function probeAndMaybeFetch(account, opts = {}) {
   const persistQuota = opts.persistQuota !== false;
   const handle = String(account.handle || "").replace(/^@/, "");
+  const since = opts.since instanceof Date ? opts.since : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
   const out = {
     status: "unchanged",
@@ -310,7 +391,6 @@ export async function probeAndMaybeFetch(account, opts = {}) {
       return out;
     }
   } else {
-    // oembed: لا probe عبر المزود — يُعالَج من inbox في المحوّل
     out.status = "provider_error";
     out.message = "use_oembed_adapter";
     return out;
@@ -331,6 +411,31 @@ export async function probeAndMaybeFetch(account, opts = {}) {
   if (persistQuota) saveInstagramQuota(quota);
 
   if (!probed.ok) {
+    // بديل عند 404: محاولة قائمة منشورات النافذة إن كان backfill مفعّلاً
+    if (isBackfillEnabled() && (probed.message || "").includes("404")) {
+      const fetchGate = canConsumeQuota(quota, "fetch");
+      if (fetchGate.ok) {
+        consumeQuota(quota, "fetch");
+        out.fetchUsed = 1;
+        try {
+          const recent = await fetchRecentPosts(handle, {
+            limit: maxLatestPostsPerAccount(),
+            since,
+          });
+          if (persistQuota) saveInstagramQuota(quota);
+          if (recent.length) {
+            out.items = recent.map((p) => ({ ...p, sourceId: account.id }));
+            out.status = "new_post";
+            return out;
+          }
+        } catch (err) {
+          if (persistQuota) saveInstagramQuota(quota);
+          out.status = "provider_error";
+          out.message = String(err?.message || err);
+          return out;
+        }
+      }
+    }
     out.status = probed.status;
     out.message = probed.message;
     return out;
@@ -338,7 +443,8 @@ export async function probeAndMaybeFetch(account, opts = {}) {
 
   out.latest = probed.latest;
 
-  if (samePost(account, probed.latest)) {
+  const backfill = isBackfillEnabled();
+  if (!backfill && samePost(account, probed.latest)) {
     out.status = "unchanged";
     return out;
   }
@@ -354,6 +460,17 @@ export async function probeAndMaybeFetch(account, opts = {}) {
   try {
     consumeQuota(quota, "fetch");
     out.fetchUsed = 1;
+
+    if (backfill) {
+      const recent = await fetchRecentPosts(handle, { limit, since });
+      if (persistQuota) saveInstagramQuota(quota);
+      if (recent.length) {
+        out.items = recent.map((p) => ({ ...p, sourceId: account.id }));
+        out.status = "new_post";
+        return out;
+      }
+    }
+
     const post = await fetchSinglePost(handle, probed.latest.id);
     if (persistQuota) saveInstagramQuota(quota);
 
@@ -392,7 +509,10 @@ export async function probeAndMaybeFetch(account, opts = {}) {
  * @returns {Promise<HarvestItem[]>}
  */
 export async function fetchViaProvider(account, _since) {
-  const result = await probeAndMaybeFetch(account, { persistQuota: true });
+  const result = await probeAndMaybeFetch(account, {
+    persistQuota: true,
+    since: _since instanceof Date ? _since : undefined,
+  });
   return result.items;
 }
 

@@ -2,8 +2,8 @@ name: Harvest sources
 
 on:
   schedule:
-    - cron: "0 3 * * *"
-    - cron: "0 15 * * *"
+    # كل 6 ساعات — تفعيل كامل للأتمتة
+    - cron: "0 */6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -56,7 +56,7 @@ jobs:
             echo "Instagram: oembed (no provider secrets — will skip empty inbox)"
           fi
 
-      - name: Run harvest (live)
+      - name: Run harvest (live — 7 days + backfill)
         working-directory: artifacts/majalis
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
@@ -64,7 +64,10 @@ jobs:
           INSTAGRAM_INGEST_MODE: ${{ steps.ig.outputs.mode }}
           INSTAGRAM_PROVIDER_KEY: ${{ secrets.INSTAGRAM_PROVIDER_KEY }}
           INSTAGRAM_PROVIDER_ENDPOINT: ${{ secrets.INSTAGRAM_PROVIDER_ENDPOINT }}
-        run: pnpm run harvest
+          HARVEST_LOOKBACK_DAYS: "7"
+          INSTAGRAM_BACKFILL_ENABLED: "true"
+          INSTAGRAM_BACKFILL_LIMIT: "14"
+        run: pnpm run harvest -- --days=7 --backfill
 
       - name: Check for content changes
         id: diff
@@ -100,7 +103,7 @@ jobs:
           labels: safe:content
           commit-message: "chore(harvest): تحديث feed المصادر"
           body: |
-            تشغيلة حصاد تلقائية — تحديث `feed.json` و/أو `accounts.json` (تتبع last_seen) تحت `public/data`.
+            تشغيلة حصاد تلقائية (نافذة 7 أيام + دروس قادمة/متكررة) — تحديث `feed.json` و/أو `accounts.json` تحت `public/data`.
             لا تُفتح PR عند تقرير فقط أو عندما تكون كل حسابات Instagram unchanged.
           add-paths: |
             artifacts/majalis/public/data/**

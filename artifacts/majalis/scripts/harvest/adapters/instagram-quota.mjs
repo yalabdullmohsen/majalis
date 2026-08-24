@@ -94,7 +94,7 @@ export function isBackfillEnabled() {
 }
 
 export function maxLatestPostsPerAccount() {
-  return isBackfillEnabled() ? Math.max(1, numEnv("INSTAGRAM_BACKFILL_LIMIT", 5)) : 1;
+  return isBackfillEnabled() ? Math.max(1, numEnv("INSTAGRAM_BACKFILL_LIMIT", 14)) : 1;
 }
 
 export { QUOTA_PATH };
