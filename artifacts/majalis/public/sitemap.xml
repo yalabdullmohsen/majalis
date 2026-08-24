@@ -3026,6 +3026,26 @@
     <priority>0.72</priority>
   </url>
   <url>
+    <loc>https://majlisilm.com/nations/ashab-kahf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.72</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/nations/ashab-ukhdud</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.72</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/nations/qawm-yunus</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.72</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/nations/rum-furs</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.72</priority>
+  </url>
+  <url>
     <loc>https://majlisilm.com/quran/people/adam</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
