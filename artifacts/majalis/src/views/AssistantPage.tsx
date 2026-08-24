@@ -30,7 +30,7 @@ const QUICK_PROMPTS = [
 
 const RESEARCHER_LINKS = [
   { href: "/fiqh-council/research-assistant", label: "الباحث الفقهي" },
-  { href: "/rulings", label: "الأحكام" },
+  { href: "/fiqh", label: "الفقه والأحكام" },
 ];
 
 export default function AssistantPage() {

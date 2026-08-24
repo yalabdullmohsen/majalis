@@ -243,18 +243,15 @@ export default async function handler(req, res) {
     res.end(html);
   } catch (err) {
     console.error("[lesson-page]", err);
-    // فشل السيرفر (Supabase معطّل مؤقتًا وغيره) يجب ألا يمنع الزائر من رؤية
-    // الصفحة إطلاقًا — نُسلِّم صدفة SPA العامة فيتولى العميل الجلب من جديد،
-    // بدل صفحة خطأ فارغة.
-    try {
-      const shell = await readFile(DIST_INDEX_PATH, "utf8");
-      res.statusCode = 200;
-      res.setHeader("Content-Type", "text/html; charset=utf-8");
-      res.setHeader("Cache-Control", "no-store");
-      res.end(shell);
-    } catch {
-      res.statusCode = 500;
-      res.end("تعذّر تحميل الصفحة.");
-    }
+    // ممنوع fallback للصفحة الرئيسية — 503 HTML واضح حتى لا يُفسَر الخطأ كـ SPA.
+    res.statusCode = 503;
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.setHeader("Cache-Control", "no-store");
+    res.end(buildNotFoundHtml({
+      title: `تعذّر تحميل الدرس | ${SITE_NAME}`,
+      description: "تعذّر تحميل بيانات الدرس مؤقتًا. أعد المحاولة أو تصفّح قائمة الدروس.",
+      heading: "تعذّر تحميل الدرس",
+      detail: "قد يكون المصدر غير متاح مؤقتًا. جرّب مجددًا بعد لحظات أو ارجع إلى فهرس الدروس.",
+    }));
   }
 }

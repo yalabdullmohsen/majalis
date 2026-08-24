@@ -235,7 +235,7 @@ export function HeaderTicker() {
             item={{
               key: "fallback",
               Icon: Sparkles,
-              label: "مجالس العلم",
+              label: "المجلس العلمي",
               text: "تصفّح المصحف والدروس والفتاوى",
               href: "/quran-hub",
             }}

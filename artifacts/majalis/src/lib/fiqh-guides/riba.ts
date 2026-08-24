@@ -18,7 +18,7 @@ export const RIBA_GUIDE: FiqhGuideSection = {
     { href: "/zakat", label: "الزكاة" },
     { href: "/fiqh", label: "الفقه" },
     { href: "/fiqh-council/nawazil", label: "النوازل" },
-    { href: "/rulings", label: "الأحكام الشرعية" },
+    { href: "/fiqh-qawaid", label: "القواعد الفقهية" },
   ],
   tabs: [
     {

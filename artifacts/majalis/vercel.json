@@ -14,6 +14,10 @@
     "api/index.js": {
       "maxDuration": 60,
       "includeFiles": "{lib/**,supabase/**,data/**,src/data/universities-catalog.json,dist/index.html}"
+    },
+    "api/lessons/[id].js": {
+      "maxDuration": 60,
+      "includeFiles": "{lib/**,supabase/**,data/**,scripts/lessons-seed.snapshot.json,dist/index.html}"
     }
   },
   "redirects": [

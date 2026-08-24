@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
-import { SkeletonPage, Empty } from "@/components/ui-common";
+import { SkeletonPage } from "@/components/ui-common";
+import NotFound from "@/views/not-found";
 import ContentActions from "@/components/ContentActions";
 import { ContentReportButton } from "@/components/ContentReportButton";
 import { isDemoId } from "@/lib/demo-id";
@@ -214,7 +215,7 @@ export default function LessonDetailPage({
   usePageView("lesson", params.id);
 
   if (loading) return <SkeletonPage />;
-  if (!unified) return <Empty text="لم يُعثر على الدرس." />;
+  if (!unified) return <NotFound />;
 
   const sheikhName = unified.sheikhName;
   const sheikhImage = kuwaitLesson?.sheikhImage || (lesson ? resolveLessonSheikhImage(lesson) : undefined);

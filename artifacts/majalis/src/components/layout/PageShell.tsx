@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
+import { dedupeLinksByHref } from "@/lib/link-dedupe";
 import "@/styles/components/page-shell.css";
 
 export type PageShellDensity = "dense" | "medium" | "airy";
@@ -93,12 +94,16 @@ export function PageRelatedLinks({
   title?: string;
   links: Array<{ href: string; label: string }>;
 }) {
-  if (!links.length) return null;
+  const unique = useMemo(
+    () => dedupeLinksByHref(links.map((l) => ({ href: l.href, label: l.label }))),
+    [links],
+  );
+  if (!unique.length) return null;
   return (
     <div className="page-related">
       <h2 className="page-related__title">{title}</h2>
       <ul className="page-related__grid">
-        {links.map((l) => (
+        {unique.map((l) => (
           <li key={l.href + l.label}>
             <a href={l.href} className="page-related__link">
               {l.label}
