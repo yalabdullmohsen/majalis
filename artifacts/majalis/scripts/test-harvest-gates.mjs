@@ -162,6 +162,17 @@ console.log("=== Instagram Bright Data fixture: منشور واحد عبر disco
     "https://api.brightdata.com/datasets/v3/scrape?dataset_id=gd_lk5ns7kz21pck8jpis&notify=false&include_errors=true&type=discover_new&discover_by=url";
   delete process.env.INSTAGRAM_PROVIDER_MOCK;
 
+  // PR الحصاد قد يرفع instagram-quota.json ممتلئًا — لا نربط الاختبار بحالة الإنتاج
+  const { saveInstagramQuota } = await import("./harvest/adapters/instagram-quota.mjs");
+  const quotaNow = new Date();
+  saveInstagramQuota({
+    day: quotaNow.toISOString().slice(0, 10),
+    month: quotaNow.toISOString().slice(0, 7),
+    probe_count: 0,
+    fetch_count: 0,
+    month_count: 0,
+  });
+
   const realFetch = globalThis.fetch;
   let sawPost = false;
   let sawDiscover = false;
