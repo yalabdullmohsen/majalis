@@ -2,6 +2,195 @@
   "month": "2026-08",
   "items": [
     {
+      "id": "94aa3dce917340b96a2e429b89453581d57e824d",
+      "type": "إعلان",
+      "title_ar": "عن أبي هريرة رضي الله عنه أن رسول الله صلى الله عليه وسلم قال: كان رجل يداين الناس، وكان يقول لفتاه: إذا أنَتيت معسرا",
+      "summary_ar": "عن ابي هريره رضي الله عنه ان رسول الله صلي الله عليه وسلم قال: كان رجل يداين الناس، وكان يقول لفتاه: اذا انتيت معسرا فتجاوز عنه، لعل الله يتجاوز عنا، فلقي الله…",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27626",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T13:20:21.199Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "5546ef7a0595823256be99f714863cb855a67328",
+      "type": "إعلان",
+      "title_ar": "جدول دروس اليوم الأثنين",
+      "summary_ar": "جدول دروس اليوم الاثنين",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27627",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T13:20:21.199Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "24da580404bdaf31304d7effd90cf47c92e6562e",
+      "type": "درس",
+      "title_ar": "ندعوكم لحضور الدرس العلمي: التعليق على ‌&rlm;« روضة الأفهام في شرح زوائد المحرر على بلوغ المرام» للشيخ حسين ال",
+      "summary_ar": "ندعوكم لحضور الدرس العلمي: التعليق علي ‌&rlm;« روضه الافهام في شرح زوائد المحرر علي بلوغ المرام» للشيخ حسين المويزري @H_Almuwizri ⌚ (كل اثنين) بعد صلاه العصر م…",
+      "sheikh": null,
+      "place": "شرح زوائد المحرر على بلوغ المرام» 🎙️ للشيخ حسين المويزري @H_Almuwizri ⌚ (كل اثن",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27628",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T13:20:21.199Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "0ccc2a51e5d926994334c36f2c4e2b2a2a9d978c",
+      "type": "درس",
+      "title_ar": "ندعوكم لحضور الدرس العلمي: شرح عقيدة أهل السنة والجماعة لابن عثيمين رحمه الله للشيخ محمد باتل الرشيدي ⌚ (كل اث",
+      "summary_ar": "ندعوكم لحضور الدرس العلمي: شرح عقيده اهل السنه والجماعه لابن عثيمين رحمه الله للشيخ محمد باتل الرشيدي ⌚ (كل اثنين) بعد صلاه المغرب مسجد محمد سعد البيدان -الفرو…",
+      "sheikh": null,
+      "place": "محمد سعد البيدان -الفروانية https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27629",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T13:20:21.199Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "8e1e24e7aa8a765099333fb94669c4954e754d37",
+      "type": "إعلان",
+      "title_ar": "الآن مباشر (3) التعليق على كتاب دليل الطالب لنيل المطالب للشيخ عبدالرحمن زيدان الشمري رابط البث المباشر htt",
+      "summary_ar": "الان مباشر (3) التعليق علي كتاب دليل الطالب لنيل المطالب للشيخ عبدالرحمن زيدان الشمري رابط البث المباشر https://www.youtube.com/live/bgZUhndpBWw?si= قناه موقع …",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27630",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T13:20:21.199Z",
+      "confidence": 0.7
+    },
+    {
+      "id": "051aa02d72819d907598e4f2e77031a3c7d41c18",
+      "type": "إعلان",
+      "title_ar": "الآن مباشر (10) التعليق على التجريد على كتاب التوحيد لأحمد مثيب العتيبي للشيخ د. راشد صليهم الهاجري رابط ال",
+      "summary_ar": "الان مباشر (10) التعليق علي التجريد علي كتاب التوحيد لاحمد مثيب العتيبي للشيخ د. راشد صليهم الهاجري رابط البث المباشر https://www.youtube.com/live/RxH3bAg-SLg?…",
+      "sheikh": "راشد صليهم الهاجري 🔗 رابط البث المباشر https://www",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27631",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T13:20:21.199Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "ccbf03e63d1388ab7f8ffe95aa9ad437350769e8",
+      "type": "حلقة",
+      "title_ar": "جمعية حفاظ",
+      "summary_ar": "تعتبر جمعيه حفاظ من الجمعيات المهمه في دوله الكويت وتعتبر من اهم واشهر الجمعيات التي تساهم في فعل الخير وتقديم المساعدات وتحفيظ القراءن وتنفيذ المشاريع",
+      "sheikh": null,
+      "place": "ظ القراءن وتنفيذ المشاريع",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "web-hoffath.org",
+          "name_ar": "حفّاظ",
+          "url": "https://hoffath.org",
+          "post_url": "https://hoffath.org",
+          "platform": "web"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T13:20:17.174Z",
+      "confidence": 0.75
+    },
+    {
       "id": "14ac7448d15d62059998dd35e0d25f25610e84bc",
       "type": "إعلان",
       "title_ar": "drosq8 Official: Instagram, X | Linktree",
