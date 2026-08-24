@@ -50,12 +50,23 @@ export function parseStatusCheckRollup(rollup = []) {
 
 /**
  * True when Vercel (or similar) skipped/canceled because the change set
- * does not need a Preview deploy (Ignored Build Step).
+ * does not need a Preview deploy (Ignored Build Step), or when the failure
+ * is an external rate-limit that must not block GitHub merge.
  * @param {{ state?: string, description?: string, name?: string }} row
  */
 export function isIgnorablePreviewStatus(row = {}) {
   const blob = `${row.state || ""} ${row.description || ""} ${row.name || ""}`;
-  return /ignored\s*build\s*step|skipped\s*-\s*not\s*affected|canceled by ignored|cancelled by ignored|no\s*preview/i.test(
+  return /ignored\s*build\s*step|skipped\s*-\s*not\s*affected|canceled by ignored|cancelled by ignored|no\s*preview|deployment\s*rate\s*limited|rate\s*limited|upgradeToPro=build-rate-limit|retry\s*in\s*\d+\s*hours/i.test(
     blob,
   );
+}
+
+/**
+ * True when any check row is a Vercel GitHub status with rate-limit wording.
+ * @param {{ state?: string, description?: string, name?: string }} row
+ */
+export function isVercelRateLimitedStatus(row = {}) {
+  const name = String(row.name || "");
+  if (!/^Vercel\s*[–-]/i.test(name)) return false;
+  return isIgnorablePreviewStatus(row);
 }
