@@ -11,10 +11,12 @@ import {
 /** @typedef {import('../types.mjs').HarvestItem} HarvestItem */
 
 /**
- * عقد مزوّد مرخّص (لا كشط مباشر):
- * PROBE: GET {endpoint}/accounts/{handle}/latest → { id|shortcode, url, published_at? }
- * FETCH: GET {endpoint}/accounts/{handle}/posts/{id} — منشور واحد فقط
+ * عقد مزوّد مرخّص (لا كشط مباشر) — المسار الرسمي:
+ * GET {endpoint}/accounts/{handle}/posts?since={iso}
  * Authorization: Bearer {INSTAGRAM_PROVIDER_KEY}
+ * → { posts: [{ id, url, caption|text, image_url?, published_at }] }
+ *
+ * مسارات اختيارية للتوافق: /latest و /posts/{id} إن وُجدت لدى المزوّد.
  */
 
 export function getInstagramIngestMode() {
@@ -165,6 +167,67 @@ function authHeaders(key) {
 }
 
 /**
+ * المسار الرسمي للمزوّد: قائمة منشورات منذ تاريخ.
+ * @param {string} handle
+ * @param {Date} [since]
+ * @returns {Promise<ReturnType<typeof normalizeProviderPost>[]>}
+ */
+export async function fetchPostsFromProviderApi(handle, since) {
+  if (process.env.INSTAGRAM_PROVIDER_MOCK === "1") {
+    return [normalizeProviderPost(mockPostDetails(handle, mockLatest(handle).id))];
+  }
+
+  const { key, endpoint } = getInstagramProviderConfig();
+  if (!key || !endpoint) return [];
+
+  const base = endpoint.replace(/\/$/, "");
+  const h = handle.replace(/^@/, "");
+  const sinceIso = since instanceof Date ? since.toISOString() : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  const paths = [
+    `/accounts/${encodeURIComponent(h)}/posts?since=${encodeURIComponent(sinceIso)}`,
+    `/accounts/${encodeURIComponent(h)}/posts?since=${encodeURIComponent(sinceIso)}&limit=30`,
+    `/v1/accounts/${encodeURIComponent(h)}/posts?since=${encodeURIComponent(sinceIso)}`,
+  ];
+
+  let lastError = /** @type {Error|null} */ (null);
+  for (const path of paths) {
+    try {
+      const res = await fetch(`${base}${path}`, {
+        headers: authHeaders(key),
+        redirect: "follow",
+      });
+      if (res.status === 401 || res.status === 403) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+      if (res.status === 429) {
+        throw new Error("HTTP 429");
+      }
+      if (!res.ok) {
+        lastError = new Error(`HTTP ${res.status}`);
+        continue;
+      }
+      const data = await res.json();
+      const posts = Array.isArray(data)
+        ? data
+        : Array.isArray(data.posts)
+          ? data.posts
+          : Array.isArray(data.items)
+            ? data.items
+            : Array.isArray(data.data)
+              ? data.data
+              : [];
+      if (!Array.isArray(posts)) continue;
+      return posts.map(normalizeProviderPost).filter((p) => p.url && (p.title || p.text));
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err));
+      if (/HTTP 401|HTTP 403|HTTP 429/.test(lastError.message)) throw lastError;
+    }
+  }
+  if (lastError) throw lastError;
+  return [];
+}
+
+/**
  * @param {string} handle
  * @returns {Promise<{ ok: true, latest: {id:string,url:string,publishedAt:string|null} }|{ ok: false, status: string, message: string }>}
  */
@@ -192,20 +255,28 @@ export async function probeLatestPost(handle) {
   const { key, endpoint } = getInstagramProviderConfig();
   const base = endpoint.replace(/\/$/, "");
   const h = handle.replace(/^@/, "");
+  const sinceIso = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
   try {
-    let res = await fetch(`${base}/accounts/${encodeURIComponent(h)}/latest`, {
-      headers: authHeaders(key),
-      redirect: "follow",
-    });
+    const candidates = [
+      `${base}/accounts/${encodeURIComponent(h)}/posts?since=${encodeURIComponent(sinceIso)}&limit=1`,
+      `${base}/accounts/${encodeURIComponent(h)}/posts?since=${encodeURIComponent(sinceIso)}`,
+      `${base}/accounts/${encodeURIComponent(h)}/latest`,
+      `${base}/accounts/${encodeURIComponent(h)}/posts?limit=1`,
+    ];
 
-    if (res.status === 404) {
-      res = await fetch(`${base}/accounts/${encodeURIComponent(h)}/posts?limit=1`, {
+    let res = null;
+    for (const url of candidates) {
+      res = await fetch(url, {
         headers: authHeaders(key),
         redirect: "follow",
       });
+      if (res.ok || res.status === 401 || res.status === 403 || res.status === 429) break;
     }
 
+    if (!res) {
+      return { ok: false, status: "provider_error", message: "no_response" };
+    }
     if (res.status === 401 || res.status === 403) {
       return { ok: false, status: "private_or_unavailable", message: `HTTP ${res.status}` };
     }
@@ -222,6 +293,7 @@ export async function probeLatestPost(handle) {
       data.post ??
       (Array.isArray(data.posts) ? data.posts[0] : null) ??
       (Array.isArray(data.items) ? data.items[0] : null) ??
+      (Array.isArray(data.data) ? data.data[0] : null) ??
       data;
 
     const latest = normalizeLatestProbe(raw);
@@ -279,13 +351,15 @@ export function samePost(account, latest) {
 }
 
 /**
- * قائمة منشورات حديثة (لنافذة 7 أيام / backfill).
+ * قائمة منشورات حديثة (لنافذة 7 أيام / backfill) — العقد الرسمي `posts?since=`.
  * @param {string} handle
  * @param {{ limit?: number, since?: Date }} [opts]
  */
 export async function fetchRecentPosts(handle, opts = {}) {
   const limit = Math.max(1, Math.min(30, Number(opts.limit) || maxLatestPostsPerAccount()));
-  const sinceMs = opts.since instanceof Date ? opts.since.getTime() : Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const since =
+    opts.since instanceof Date ? opts.since : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const sinceMs = since.getTime();
 
   if (process.env.INSTAGRAM_PROVIDER_MOCK === "1") {
     const post = normalizeProviderPost(mockPostDetails(handle, `mock-${handle}-1`));
@@ -305,60 +379,26 @@ export async function fetchRecentPosts(handle, opts = {}) {
   const status = getInstagramProviderStatus();
   if (status.mode !== "provider" || !status.configured) return [];
 
-  const { key, endpoint } = getInstagramProviderConfig();
-  const base = endpoint.replace(/\/$/, "");
-  const h = handle.replace(/^@/, "");
-  const paths = [
-    `/accounts/${encodeURIComponent(h)}/posts?limit=${limit}`,
-    `/accounts/${encodeURIComponent(h)}/media?limit=${limit}`,
-    `/v1/accounts/${encodeURIComponent(h)}/posts?limit=${limit}`,
-    `/instagram/accounts/${encodeURIComponent(h)}/posts?limit=${limit}`,
-  ];
-
-  for (const path of paths) {
-    try {
-      const res = await fetch(`${base}${path}`, {
-        headers: authHeaders(key),
-        redirect: "follow",
-      });
-      if (!res.ok) continue;
-      const data = await res.json();
-      const list = Array.isArray(data)
-        ? data
-        : Array.isArray(data.posts)
-          ? data.posts
-          : Array.isArray(data.items)
-            ? data.items
-            : Array.isArray(data.data)
-              ? data.data
-              : [];
-      if (!list.length) continue;
-      return list
-        .map((raw) => normalizeProviderPost(raw))
-        .filter((p) => p.url && (p.title || p.text))
-        .filter((p) => {
-          const t = Date.parse(p.publishedAt);
-          return Number.isNaN(t) || t >= sinceMs;
-        })
-        .slice(0, limit)
-        .map((p) => ({
-          sourceId: "",
-          externalId: p.externalId,
-          url: p.url,
-          title: p.title,
-          text: p.text,
-          imageUrl: p.imageUrl,
-          publishedAt: p.publishedAt,
-        }));
-    } catch {
-      /* جرّب المسار التالي */
-    }
-  }
-  return [];
+  const posts = await fetchPostsFromProviderApi(handle, since);
+  return posts
+    .filter((p) => {
+      const t = Date.parse(p.publishedAt);
+      return Number.isNaN(t) || t >= sinceMs;
+    })
+    .slice(0, limit)
+    .map((p) => ({
+      sourceId: "",
+      externalId: p.externalId,
+      url: p.url,
+      title: p.title,
+      text: p.text,
+      imageUrl: p.imageUrl,
+      publishedAt: p.publishedAt,
+    }));
 }
 
 /**
- * probe خفيف ثم fetch مشروط (منشور واحد كحد أقصى إلا مع backfill).
+ * يجلب منشورات النافذة عبر العقد الرسمي `posts?since=` ثم يحتفظ بمسار probe كاحتياطي.
  * @param {import('../types.mjs').SourceAccount} account
  * @param {{ persistQuota?: boolean, since?: Date }} [opts]
  */
@@ -407,98 +447,113 @@ export async function probeAndMaybeFetch(account, opts = {}) {
   consumeQuota(quota, "probe");
   out.probeUsed = 1;
 
-  const probed = await probeLatestPost(handle);
-  if (persistQuota) saveInstagramQuota(quota);
-
-  if (!probed.ok) {
-    // بديل عند 404: محاولة قائمة منشورات النافذة إن كان backfill مفعّلاً
-    if (isBackfillEnabled() && (probed.message || "").includes("404")) {
-      const fetchGate = canConsumeQuota(quota, "fetch");
-      if (fetchGate.ok) {
-        consumeQuota(quota, "fetch");
-        out.fetchUsed = 1;
-        try {
-          const recent = await fetchRecentPosts(handle, {
-            limit: maxLatestPostsPerAccount(),
-            since,
-          });
-          if (persistQuota) saveInstagramQuota(quota);
-          if (recent.length) {
-            out.items = recent.map((p) => ({ ...p, sourceId: account.id }));
-            out.status = "new_post";
-            return out;
-          }
-        } catch (err) {
-          if (persistQuota) saveInstagramQuota(quota);
-          out.status = "provider_error";
-          out.message = String(err?.message || err);
-          return out;
-        }
-      }
-    }
-    out.status = probed.status;
-    out.message = probed.message;
-    return out;
-  }
-
-  out.latest = probed.latest;
-
-  const backfill = isBackfillEnabled();
-  if (!backfill && samePost(account, probed.latest)) {
-    out.status = "unchanged";
-    return out;
-  }
-
   const fetchGate = canConsumeQuota(quota, "fetch");
   if (!fetchGate.ok) {
+    if (persistQuota) saveInstagramQuota(quota);
     out.status = "rate_limited";
     out.message = fetchGate.detail || "rate_limited";
     return out;
   }
 
+  const backfill = isBackfillEnabled();
   const limit = maxLatestPostsPerAccount();
+
+  // المسار الرسمي: posts?since= (كل الحسابات ضمن آخر 7 أيام)
   try {
     consumeQuota(quota, "fetch");
     out.fetchUsed = 1;
-
-    if (backfill) {
-      const recent = await fetchRecentPosts(handle, { limit, since });
-      if (persistQuota) saveInstagramQuota(quota);
-      if (recent.length) {
-        out.items = recent.map((p) => ({ ...p, sourceId: account.id }));
-        out.status = "new_post";
-        return out;
-      }
-    }
-
-    const post = await fetchSinglePost(handle, probed.latest.id);
+    const posts = await fetchPostsFromProviderApi(handle, since);
     if (persistQuota) saveInstagramQuota(quota);
 
-    if (!post.url || !(post.title || post.text)) {
-      out.status = "provider_error";
-      out.message = "empty_post_payload";
+    const filtered = posts
+      .filter((p) => {
+        const t = Date.parse(p.publishedAt);
+        return Number.isNaN(t) || t >= since.getTime();
+      })
+      .slice(0, limit);
+
+    if (filtered.length) {
+      const tip = filtered[0];
+      out.latest = {
+        id: tip.externalId,
+        url: tip.url,
+        publishedAt: tip.publishedAt || null,
+      };
+      if (!backfill && samePost(account, out.latest)) {
+        out.status = "unchanged";
+        return out;
+      }
+      out.items = filtered.map((p) => ({
+        sourceId: account.id,
+        externalId: p.externalId,
+        url: p.url,
+        title: p.title,
+        text: p.text,
+        imageUrl: p.imageUrl,
+        publishedAt: p.publishedAt,
+      }));
+      out.status = "new_post";
       return out;
     }
 
-    out.items = [
-      {
-        sourceId: account.id,
-        externalId: post.externalId,
-        url: post.url,
-        title: post.title,
-        text: post.text,
-        imageUrl: post.imageUrl,
-        publishedAt: post.publishedAt,
-      },
-    ].slice(0, limit);
+    // قائمة فارغة ضمن النافذة = لا جديد
+    out.status = "unchanged";
+    return out;
+  } catch (primaryErr) {
+    // احتياطي: probe/latest ثم منشور واحد إن وُجد لدى المزوّد
+    const msg = String(primaryErr?.message || primaryErr);
+    if (/HTTP 401|HTTP 403/.test(msg)) {
+      if (persistQuota) saveInstagramQuota(quota);
+      out.status = "private_or_unavailable";
+      out.message = msg;
+      return out;
+    }
+    if (/HTTP 429/.test(msg)) {
+      if (persistQuota) saveInstagramQuota(quota);
+      out.status = "rate_limited";
+      out.message = msg;
+      return out;
+    }
 
-    out.status = "new_post";
-    return out;
-  } catch (err) {
+    const probed = await probeLatestPost(handle);
     if (persistQuota) saveInstagramQuota(quota);
-    out.status = "provider_error";
-    out.message = String(err?.message || err);
-    return out;
+    if (!probed.ok) {
+      out.status = probed.status;
+      out.message = probed.message || msg;
+      return out;
+    }
+
+    out.latest = probed.latest;
+    if (!backfill && samePost(account, probed.latest)) {
+      out.status = "unchanged";
+      return out;
+    }
+
+    try {
+      const post = await fetchSinglePost(handle, probed.latest.id);
+      if (!post.url || !(post.title || post.text)) {
+        out.status = "provider_error";
+        out.message = "empty_post_payload";
+        return out;
+      }
+      out.items = [
+        {
+          sourceId: account.id,
+          externalId: post.externalId,
+          url: post.url,
+          title: post.title,
+          text: post.text,
+          imageUrl: post.imageUrl,
+          publishedAt: post.publishedAt,
+        },
+      ];
+      out.status = "new_post";
+      return out;
+    } catch (err) {
+      out.status = "provider_error";
+      out.message = String(err?.message || err || msg);
+      return out;
+    }
   }
 }
 
