@@ -556,6 +556,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://majlisilm.com/quran-hub/seven-ahruf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://majlisilm.com/quran-hub/tilawa</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

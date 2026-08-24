@@ -26,6 +26,7 @@ assert.match(app, /QuranSevenAhrufPage/);
 assert.match(app, /\/quran-hub\/seven-ahruf/);
 assert.match(qiraat, /\/quran-hub\/seven-ahruf/);
 assert.match(view, /data-quran-seven-ahruf/);
+assert.match(read("src/lib/seo-routes.json"), /\/quran-hub\/seven-ahruf/, "مسار SEO/prerender مطلوب وإلا 404 على الإنتاج");
 
 assert.ok(AHRUF_SECTIONS.length >= 7, "أبواب كافية");
 for (const s of AHRUF_SECTIONS) {
