@@ -13,6 +13,7 @@ import { parseQuickNav } from "@/features/search/quick-nav";
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { scoreTolerantMatch, type TolerantMatch } from "@/features/search/tolerant-match";
 import { searchHadithCorpus } from "@/lib/hadith-corpus";
+import { searchFiqhLessons } from "@/lib/fiqh-books";
 
 export type AppSearchResult = {
   id: string;
