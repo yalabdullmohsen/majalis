@@ -398,7 +398,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     label: "الأحرف السبعة",
     subtitle: "نزول القرآن على سبعة أحرف والفرق عن القراءات",
     route: "/quran-hub/seven-ahruf",
-    icon: GitBranch,
+    icon: Sparkles,
     group: "sciences",
     order: 8,
     surfaces: SEARCH_ONLY,
