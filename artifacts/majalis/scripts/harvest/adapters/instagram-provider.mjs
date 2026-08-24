@@ -10,14 +10,10 @@ import {
 
 /** @typedef {import('../types.mjs').HarvestItem} HarvestItem */
 
-/**
- * عقد مزوّد مرخّص (لا كشط مباشر) — المسار الرسمي:
- * GET {endpoint}/accounts/{handle}/posts?since={iso}
- * Authorization: Bearer {INSTAGRAM_PROVIDER_KEY}
- * → { posts: [{ id, url, caption|text, image_url?, published_at }] }
- *
- * مسارات اختيارية للتوافق: /latest و /posts/{id} إن وُجدت لدى المزوّد.
- */
+/** Instagram Posts — Discover by URL (ليس dataset الملف الشخصي) */
+export const BRIGHTDATA_POSTS_DATASET_ID = "gd_lk5ns7kz21pck8jpis";
+/** يُرفض إن وُجد في السر — هدفنا آخر منشور لا بروفايل */
+export const BRIGHTDATA_PROFILE_DATASET_ID = "gd_l1vikfch901nx3by4";
 
 export function getInstagramIngestMode() {
   return String(process.env.INSTAGRAM_INGEST_MODE || "oembed").toLowerCase();
@@ -25,14 +21,14 @@ export function getInstagramIngestMode() {
 
 /**
  * يقبل رابط Bright Data فقط (https://api.brightdata.com/...).
- * يرفض أوامر curl الكاملة أو أي قيمة غير URL صالحة — دون تسجيل قيمة السر.
+ * يرفض أوامر curl الكاملة — دون تسجيل قيمة السر.
+ * يبني رابط scrape لـ Posts / discover_by=url.
  * @param {string} raw
- * @returns {{ ok: true, endpoint: string }|{ ok: false, reason: string }}
+ * @returns {{ ok: true, endpoint: string, scrapeUrl: string, datasetId: string }|{ ok: false, reason: string }}
  */
 export function normalizeProviderEndpoint(raw) {
   const value = String(raw || "").trim();
   if (!value) return { ok: false, reason: "missing_endpoint" };
-  // رفض أوامر curl أو حقن أوامر شائعة
   if (/^curl\b/i.test(value) || /\s-(?:H|X|d|u)\b/.test(value) || /\n|\r|;|\|/.test(value)) {
     return { ok: false, reason: "endpoint_must_be_api_url_not_curl" };
   }
@@ -48,26 +44,38 @@ export function normalizeProviderEndpoint(raw) {
   if (url.hostname !== "api.brightdata.com") {
     return { ok: false, reason: "endpoint_must_be_brightdata_api" };
   }
-  // لا نسمح بمسافات أو بيانات اعتماد داخل الرابط في اللوج؛ نُسقط userinfo
   url.username = "";
   url.password = "";
-  // أساس API بدون مسار زائد ضار — نحفظ origin + pathname بدون query/hash
-  const endpoint = `${url.origin}${url.pathname}`.replace(/\/+$/, "");
-  if (!endpoint) return { ok: false, reason: "endpoint_empty_after_normalize" };
-  return { ok: true, endpoint };
+
+  let datasetId = url.searchParams.get("dataset_id") || BRIGHTDATA_POSTS_DATASET_ID;
+  if (datasetId === BRIGHTDATA_PROFILE_DATASET_ID) {
+    datasetId = BRIGHTDATA_POSTS_DATASET_ID;
+  }
+
+  const scrape = new URL("https://api.brightdata.com/datasets/v3/scrape");
+  scrape.searchParams.set("dataset_id", datasetId);
+  scrape.searchParams.set("notify", "false");
+  scrape.searchParams.set("include_errors", "true");
+  scrape.searchParams.set("type", "discover_new");
+  scrape.searchParams.set("discover_by", "url");
+  scrape.searchParams.set("format", "json");
+
+  const endpoint = `${url.origin}${url.pathname}`.replace(/\/+$/, "") || "https://api.brightdata.com/datasets/v3";
+  return { ok: true, endpoint, scrapeUrl: scrape.toString(), datasetId };
 }
 
 export function getInstagramProviderConfig() {
-  // يُقرأ حصراً من البيئة (في CI: GitHub Secrets عبر workflow env)
   const key = process.env.INSTAGRAM_PROVIDER_KEY?.trim() || "";
   const endpointRaw = process.env.INSTAGRAM_PROVIDER_ENDPOINT?.trim() || "";
   const normalized = normalizeProviderEndpoint(endpointRaw);
-  const endpoint = normalized.ok ? normalized.endpoint : "";
   return {
     key,
-    endpoint,
-    configured: Boolean(key && endpoint),
+    endpoint: normalized.ok ? normalized.endpoint : "",
+    scrapeUrl: normalized.ok ? normalized.scrapeUrl : "",
+    datasetId: normalized.ok ? normalized.datasetId : "",
+    configured: Boolean(key && normalized.ok),
     endpointError: key && endpointRaw && !normalized.ok ? normalized.reason : null,
+    provider_endpoint_ok: Boolean(normalized.ok),
   };
 }
 
@@ -82,13 +90,23 @@ export function getInstagramProviderStatus() {
     const message = cfg.endpointError
       ? `Instagram provider endpoint invalid (${cfg.endpointError}). Expected https://api.brightdata.com/...`
       : "Instagram provider is not configured.";
-    return {
-      mode,
-      configured: false,
-      message,
-    };
+    return { mode, configured: false, message };
   }
   return { mode, configured: true, message: null };
+}
+
+/**
+ * لوج غير حسّاس — لا يطبع المفتاح ولا الـURL الكامل.
+ * @param {{ account_handle: string, status_code: number|string, dataset_id?: string, provider_endpoint_ok?: boolean }} info
+ */
+export function logProviderProbe(info) {
+  const handle = String(info.account_handle || "").replace(/^@/, "") || "-";
+  const code = info.status_code ?? "-";
+  const dataset = info.dataset_id || BRIGHTDATA_POSTS_DATASET_ID;
+  const ok = info.provider_endpoint_ok === false ? "false" : "true";
+  console.log(
+    `instagram_provider provider_endpoint_ok=${ok} dataset_id=${dataset} status_code=${code} account_handle=${handle}`,
+  );
 }
 
 function mockLatest(handle) {
@@ -114,21 +132,30 @@ function mockPostDetails(handle, postId) {
 
 /** @param {unknown} post */
 function normalizeProviderPost(post) {
-  const caption = String(post.caption ?? post.text ?? post.description ?? post.title ?? "").trim();
-  const externalId = String(post.id ?? post.shortcode ?? post.external_id ?? post.url ?? "").trim();
+  if (!post || typeof post !== "object") {
+    return { externalId: "", url: "", title: "", text: "", imageUrl: undefined, publishedAt: new Date().toISOString() };
+  }
+  const caption = String(
+    post.caption ?? post.text ?? post.description ?? post.title ?? "",
+  ).trim();
+  const shortcode = String(post.shortcode ?? "").trim();
+  const externalId = String(
+    post.id ?? post.shortcode ?? post.external_id ?? post.post_id ?? post.url ?? "",
+  ).trim();
   const url =
     post.url ??
     post.permalink ??
-    (post.shortcode ? `https://www.instagram.com/p/${post.shortcode}/` : "");
+    (shortcode ? `https://www.instagram.com/p/${shortcode}/` : "");
   const imageUrl =
     post.image_url ?? post.thumbnail_url ?? post.display_url ?? post.media_url ?? undefined;
   const ocrText = post.ocr_text ?? post.alt_text ?? post.image_text ?? "";
   const text = [caption, ocrText].filter(Boolean).join("\n").trim() || caption;
-  const publishedAt = post.published_at ?? post.timestamp ?? post.taken_at ?? new Date().toISOString();
+  const publishedAt =
+    post.published_at ?? post.datetime ?? post.timestamp ?? post.taken_at ?? post.date_posted ?? new Date().toISOString();
 
   return {
     externalId: externalId || url,
-    url,
+    url: String(url || ""),
     title: text.split("\n")[0].slice(0, 120) || "منشور إنستغرام",
     text,
     imageUrl: imageUrl || undefined,
@@ -153,7 +180,8 @@ export function normalizeLatestProbe(raw) {
       "",
   ).trim();
   if (!id && !url) return null;
-  const publishedAtRaw = raw.published_at ?? raw.latest_post_published_at ?? raw.timestamp ?? null;
+  const publishedAtRaw =
+    raw.published_at ?? raw.datetime ?? raw.latest_post_published_at ?? raw.timestamp ?? raw.date_posted ?? null;
   return {
     id: id || url,
     url: url || (id ? `https://www.instagram.com/p/${id}/` : ""),
@@ -165,69 +193,169 @@ function authHeaders(key) {
   return {
     Authorization: `Bearer ${key}`,
     Accept: "application/json",
+    "Content-Type": "application/json",
     "User-Agent": harvestUserAgent(),
   };
 }
 
 /**
- * المسار الرسمي للمزوّد: قائمة منشورات منذ تاريخ.
+ * يستخرج منشورات من استجابة Bright Data (مصفوفة منشورات أو كائن بروفايل بـ posts[]).
+ * @param {unknown} data
+ * @returns {ReturnType<typeof normalizeProviderPost>[]}
+ */
+export function extractPostsFromBrightDataPayload(data) {
+  if (!data) return [];
+  if (Array.isArray(data)) {
+    const out = [];
+    for (const row of data) {
+      if (!row || typeof row !== "object") continue;
+      if (row.error || row.error_code) continue;
+      if (Array.isArray(row.posts) && row.posts.length) {
+        for (const p of row.posts) out.push(normalizeProviderPost(p));
+        continue;
+      }
+      // صف منشور مباشر
+      if (row.url || row.shortcode || row.caption || row.description) {
+        out.push(normalizeProviderPost(row));
+      }
+    }
+    return out.filter((p) => p.url && (p.title || p.text || p.externalId));
+  }
+  if (typeof data === "object") {
+    if (Array.isArray(data.posts)) {
+      return data.posts.map(normalizeProviderPost).filter((p) => p.url);
+    }
+    if (Array.isArray(data.data)) return extractPostsFromBrightDataPayload(data.data);
+  }
+  return [];
+}
+
+class ProviderHttpError extends Error {
+  /** @param {number} status @param {string} [detail] */
+  constructor(status, detail) {
+    super(detail ? `HTTP ${status}: ${detail}` : `HTTP ${status}`);
+    this.name = "ProviderHttpError";
+    this.status = status;
+  }
+}
+
+/**
+ * @param {string} key
+ * @param {string} snapshotId
+ * @param {{ maxAttempts?: number, delayMs?: number }} [opts]
+ */
+async function fetchSnapshotJson(key, snapshotId, opts = {}) {
+  const maxAttempts = opts.maxAttempts ?? 8;
+  const delayMs = opts.delayMs ?? 2500;
+  const url = `https://api.brightdata.com/datasets/v3/snapshot/${encodeURIComponent(snapshotId)}?format=json`;
+  for (let i = 0; i < maxAttempts; i++) {
+    const res = await fetch(url, { headers: authHeaders(key), redirect: "follow" });
+    if (res.status === 202) {
+      await sleep(delayMs);
+      continue;
+    }
+    if (!res.ok) throw new ProviderHttpError(res.status, "snapshot");
+    return res.json();
+  }
+  throw new ProviderHttpError(408, "snapshot_timeout");
+}
+
+/**
+ * Bright Data: Instagram Posts — Discover by URL.
+ * @param {string} handle
+ * @param {{ numOfPosts?: number }} [opts]
+ * @returns {Promise<{ posts: ReturnType<typeof normalizeProviderPost>[], statusCode: number, datasetId: string }>}
+ */
+export async function scrapePostsDiscoverByUrl(handle, opts = {}) {
+  const h = String(handle || "").replace(/^@/, "");
+  const numOfPosts = Math.max(1, Math.min(30, Number(opts.numOfPosts) || 1));
+
+  if (process.env.INSTAGRAM_PROVIDER_MOCK === "1") {
+    const post = normalizeProviderPost(mockPostDetails(h, mockLatest(h).id));
+    logProviderProbe({
+      account_handle: h,
+      status_code: 200,
+      dataset_id: BRIGHTDATA_POSTS_DATASET_ID,
+      provider_endpoint_ok: true,
+    });
+    return { posts: [post], statusCode: 200, datasetId: BRIGHTDATA_POSTS_DATASET_ID };
+  }
+
+  const cfg = getInstagramProviderConfig();
+  if (!cfg.configured || !cfg.scrapeUrl || !cfg.key) {
+    logProviderProbe({
+      account_handle: h,
+      status_code: 0,
+      dataset_id: cfg.datasetId || BRIGHTDATA_POSTS_DATASET_ID,
+      provider_endpoint_ok: false,
+    });
+    throw new ProviderHttpError(0, "not_configured");
+  }
+
+  const body = {
+    input: [
+      {
+        url: `https://www.instagram.com/${h}/`,
+        num_of_posts: numOfPosts,
+        post_type: "Post",
+      },
+    ],
+    limit_per_input: numOfPosts,
+  };
+
+  const res = await fetch(cfg.scrapeUrl, {
+    method: "POST",
+    headers: authHeaders(cfg.key),
+    body: JSON.stringify(body),
+    redirect: "follow",
+  });
+
+  logProviderProbe({
+    account_handle: h,
+    status_code: res.status,
+    dataset_id: cfg.datasetId,
+    provider_endpoint_ok: cfg.provider_endpoint_ok,
+  });
+
+  if (res.status === 404) {
+    throw new ProviderHttpError(404);
+  }
+  if (res.status === 401 || res.status === 403) {
+    throw new ProviderHttpError(res.status);
+  }
+  if (res.status === 429) {
+    throw new ProviderHttpError(429);
+  }
+  if (!res.ok) {
+    throw new ProviderHttpError(res.status);
+  }
+
+  let data = await res.json();
+  if (data && typeof data === "object" && !Array.isArray(data) && data.snapshot_id) {
+    data = await fetchSnapshotJson(cfg.key, String(data.snapshot_id));
+  }
+
+  const posts = extractPostsFromBrightDataPayload(data);
+  return { posts, statusCode: res.status, datasetId: cfg.datasetId };
+}
+
+/**
  * @param {string} handle
  * @param {Date} [since]
  * @returns {Promise<ReturnType<typeof normalizeProviderPost>[]>}
  */
 export async function fetchPostsFromProviderApi(handle, since) {
-  if (process.env.INSTAGRAM_PROVIDER_MOCK === "1") {
-    return [normalizeProviderPost(mockPostDetails(handle, mockLatest(handle).id))];
-  }
-
-  const { key, endpoint } = getInstagramProviderConfig();
-  if (!key || !endpoint) return [];
-
-  const base = endpoint.replace(/\/$/, "");
-  const h = handle.replace(/^@/, "");
-  const sinceIso = since instanceof Date ? since.toISOString() : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
-  const paths = [
-    `/accounts/${encodeURIComponent(h)}/posts?since=${encodeURIComponent(sinceIso)}`,
-    `/accounts/${encodeURIComponent(h)}/posts?since=${encodeURIComponent(sinceIso)}&limit=30`,
-    `/v1/accounts/${encodeURIComponent(h)}/posts?since=${encodeURIComponent(sinceIso)}`,
-  ];
-
-  let lastError = /** @type {Error|null} */ (null);
-  for (const path of paths) {
-    try {
-      const res = await fetch(`${base}${path}`, {
-        headers: authHeaders(key),
-        redirect: "follow",
-      });
-      if (res.status === 401 || res.status === 403) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-      if (res.status === 429) {
-        throw new Error("HTTP 429");
-      }
-      if (!res.ok) {
-        lastError = new Error(`HTTP ${res.status}`);
-        continue;
-      }
-      const data = await res.json();
-      const posts = Array.isArray(data)
-        ? data
-        : Array.isArray(data.posts)
-          ? data.posts
-          : Array.isArray(data.items)
-            ? data.items
-            : Array.isArray(data.data)
-              ? data.data
-              : [];
-      if (!Array.isArray(posts)) continue;
-      return posts.map(normalizeProviderPost).filter((p) => p.url && (p.title || p.text));
-    } catch (err) {
-      lastError = err instanceof Error ? err : new Error(String(err));
-      if (/HTTP 401|HTTP 403|HTTP 429/.test(lastError.message)) throw lastError;
-    }
-  }
-  if (lastError) throw lastError;
-  return [];
+  const num =
+    since instanceof Date
+      ? Math.min(30, maxLatestPostsPerAccount())
+      : 1;
+  const { posts } = await scrapePostsDiscoverByUrl(handle, { numOfPosts: num });
+  if (!(since instanceof Date)) return posts;
+  const sinceMs = since.getTime();
+  return posts.filter((p) => {
+    const t = Date.parse(p.publishedAt);
+    return Number.isNaN(t) || t >= sinceMs;
+  });
 }
 
 /**
@@ -243,63 +371,21 @@ export async function probeLatestPost(handle) {
     return { ok: false, status: "provider_error", message: `mode=${status.mode}` };
   }
 
-  if (process.env.INSTAGRAM_PROVIDER_MOCK === "1") {
-    const latest = normalizeLatestProbe(mockLatest(handle));
-    if (!latest?.id) {
+  try {
+    const { posts } = await scrapePostsDiscoverByUrl(handle, { numOfPosts: 1 });
+    const tip = posts[0];
+    if (!tip) {
       return {
         ok: false,
         status: "provider_missing_latest_post_id",
         message: "provider_missing_latest_post_id",
       };
     }
-    return { ok: true, latest };
-  }
-
-  const { key, endpoint } = getInstagramProviderConfig();
-  const base = endpoint.replace(/\/$/, "");
-  const h = handle.replace(/^@/, "");
-  const sinceIso = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
-
-  try {
-    const candidates = [
-      `${base}/accounts/${encodeURIComponent(h)}/posts?since=${encodeURIComponent(sinceIso)}&limit=1`,
-      `${base}/accounts/${encodeURIComponent(h)}/posts?since=${encodeURIComponent(sinceIso)}`,
-      `${base}/accounts/${encodeURIComponent(h)}/latest`,
-      `${base}/accounts/${encodeURIComponent(h)}/posts?limit=1`,
-    ];
-
-    let res = null;
-    for (const url of candidates) {
-      res = await fetch(url, {
-        headers: authHeaders(key),
-        redirect: "follow",
-      });
-      if (res.ok || res.status === 401 || res.status === 403 || res.status === 429) break;
-    }
-
-    if (!res) {
-      return { ok: false, status: "provider_error", message: "no_response" };
-    }
-    if (res.status === 401 || res.status === 403) {
-      return { ok: false, status: "private_or_unavailable", message: `HTTP ${res.status}` };
-    }
-    if (res.status === 429) {
-      return { ok: false, status: "rate_limited", message: "HTTP 429" };
-    }
-    if (!res.ok) {
-      return { ok: false, status: "provider_error", message: `HTTP ${res.status}` };
-    }
-
-    const data = await res.json();
-    const raw =
-      data.latest ??
-      data.post ??
-      (Array.isArray(data.posts) ? data.posts[0] : null) ??
-      (Array.isArray(data.items) ? data.items[0] : null) ??
-      (Array.isArray(data.data) ? data.data[0] : null) ??
-      data;
-
-    const latest = normalizeLatestProbe(raw);
+    const latest = normalizeLatestProbe({
+      id: tip.externalId,
+      url: tip.url,
+      published_at: tip.publishedAt,
+    });
     if (!latest?.id) {
       return {
         ok: false,
@@ -309,6 +395,16 @@ export async function probeLatestPost(handle) {
     }
     return { ok: true, latest };
   } catch (err) {
+    const statusCode = err?.status ?? 0;
+    if (statusCode === 404) {
+      return { ok: false, status: "skipped_provider_404", message: "HTTP 404" };
+    }
+    if (statusCode === 401 || statusCode === 403) {
+      return { ok: false, status: "private_or_unavailable", message: `HTTP ${statusCode}` };
+    }
+    if (statusCode === 429) {
+      return { ok: false, status: "rate_limited", message: "HTTP 429" };
+    }
     return { ok: false, status: "provider_error", message: String(err?.message || err) };
   }
 }
@@ -321,28 +417,15 @@ export async function fetchSinglePost(handle, postId) {
   if (process.env.INSTAGRAM_PROVIDER_MOCK === "1") {
     return normalizeProviderPost(mockPostDetails(handle, postId));
   }
-
-  const { key, endpoint } = getInstagramProviderConfig();
-  const base = endpoint.replace(/\/$/, "");
-  const h = handle.replace(/^@/, "");
-  const id = encodeURIComponent(postId);
-
-  let res = await fetch(`${base}/accounts/${encodeURIComponent(h)}/posts/${id}`, {
-    headers: authHeaders(key),
-    redirect: "follow",
-  });
-
-  if (res.status === 404) {
-    res = await fetch(`${base}/accounts/${encodeURIComponent(h)}/posts?ids=${id}&limit=1`, {
-      headers: authHeaders(key),
-      redirect: "follow",
-    });
-  }
-
-  if (!res.ok) throw new Error(`Provider HTTP ${res.status} for @${h} post ${postId}`);
-  const data = await res.json();
-  const post = data.post ?? data.posts?.[0] ?? data.items?.[0] ?? data;
-  return normalizeProviderPost(post);
+  const { posts } = await scrapePostsDiscoverByUrl(handle, { numOfPosts: 5 });
+  const match = posts.find(
+    (p) =>
+      p.externalId === postId ||
+      p.url.includes(postId) ||
+      String(p.externalId).includes(postId),
+  );
+  if (!match) throw new Error(`Provider post not found for @${handle} post ${postId}`);
+  return match;
 }
 
 export function samePost(account, latest) {
@@ -354,7 +437,6 @@ export function samePost(account, latest) {
 }
 
 /**
- * قائمة منشورات حديثة (لنافذة 7 أيام / backfill) — العقد الرسمي `posts?since=`.
  * @param {string} handle
  * @param {{ limit?: number, since?: Date }} [opts]
  */
@@ -401,7 +483,6 @@ export async function fetchRecentPosts(handle, opts = {}) {
 }
 
 /**
- * يجلب منشورات النافذة عبر العقد الرسمي `posts?since=` ثم يحتفظ بمسار probe كاحتياطي.
  * @param {import('../types.mjs').SourceAccount} account
  * @param {{ persistQuota?: boolean, since?: Date }} [opts]
  */
@@ -450,11 +531,10 @@ export async function probeAndMaybeFetch(account, opts = {}) {
   const backfill = isBackfillEnabled();
   const limit = backfill ? maxLatestPostsPerAccount() : 1;
 
-  // المسار الرسمي: posts?since= — فحص خفيف؛ لا fetch إضافي إن لم يتغيّر آخر منشور
   try {
     consumeQuota(quota, "probe");
     out.probeUsed = 1;
-    const posts = await fetchPostsFromProviderApi(handle, since);
+    const { posts } = await scrapePostsDiscoverByUrl(handle, { numOfPosts: limit });
     if (persistQuota) saveInstagramQuota(quota);
 
     const filtered = posts
@@ -504,73 +584,32 @@ export async function probeAndMaybeFetch(account, opts = {}) {
     return out;
   } catch (primaryErr) {
     if (persistQuota) saveInstagramQuota(quota);
-    // احتياطي: probe/latest ثم منشور واحد إن وُجد لدى المزوّد
+    const statusCode = primaryErr?.status ?? 0;
     const msg = String(primaryErr?.message || primaryErr);
-    if (/HTTP 401|HTTP 403/.test(msg)) {
+
+    if (statusCode === 404 || /HTTP 404/.test(msg)) {
+      out.status = "skipped_provider_404";
+      out.message = "HTTP 404";
+      return out;
+    }
+    if (statusCode === 401 || statusCode === 403 || /HTTP 401|HTTP 403/.test(msg)) {
       out.status = "private_or_unavailable";
       out.message = msg;
       return out;
     }
-    if (/HTTP 429/.test(msg)) {
+    if (statusCode === 429 || /HTTP 429/.test(msg)) {
       out.status = "rate_limited";
       out.message = msg;
       return out;
     }
 
-    const probed = await probeLatestPost(handle);
-    if (!probed.ok) {
-      out.status = probed.status;
-      out.message = probed.message || msg;
-      return out;
-    }
-
-    out.latest = probed.latest;
-    if (!backfill && samePost(account, probed.latest)) {
-      out.status = "unchanged";
-      return out;
-    }
-
-    const fetchGate = canConsumeQuota(quota, "fetch");
-    if (!fetchGate.ok) {
-      out.status = "rate_limited";
-      out.message = fetchGate.detail || "rate_limited";
-      return out;
-    }
-
-    try {
-      consumeQuota(quota, "fetch");
-      out.fetchUsed = 1;
-      const post = await fetchSinglePost(handle, probed.latest.id);
-      if (persistQuota) saveInstagramQuota(quota);
-      if (!post.url || !(post.title || post.text)) {
-        out.status = "provider_error";
-        out.message = "empty_post_payload";
-        return out;
-      }
-      out.items = [
-        {
-          sourceId: account.id,
-          externalId: post.externalId,
-          url: post.url,
-          title: post.title,
-          text: post.text,
-          imageUrl: post.imageUrl,
-          publishedAt: post.publishedAt,
-        },
-      ];
-      out.status = "new_post";
-      return out;
-    } catch (err) {
-      if (persistQuota) saveInstagramQuota(quota);
-      out.status = "provider_error";
-      out.message = String(err?.message || err || msg);
-      return out;
-    }
+    out.status = "provider_error";
+    out.message = msg;
+    return out;
   }
 }
 
 /**
- * توافق خلفي: يستخدم مسار probe→fetch (منشور واحد).
  * @param {import('../types.mjs').SourceAccount} account
  * @param {Date} _since
  * @returns {Promise<HarvestItem[]>}

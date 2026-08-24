@@ -86,6 +86,7 @@ function emptyInstagramStats(total = 0) {
     new_posts_found: 0,
     published: 0,
     skipped_private: 0,
+    skipped_provider_404: 0,
     failed: 0,
     probe_records_used: 0,
     fetch_records_used: 0,
@@ -150,6 +151,7 @@ function writeHarvestReportJson(stats, { dryRun }) {
     instagram_new_posts_found: stats.instagramStats.new_posts_found,
     instagram_published: stats.instagramStats.published,
     instagram_skipped_private: stats.instagramStats.skipped_private,
+    instagram_skipped_provider_404: stats.instagramStats.skipped_provider_404,
     instagram_failed: stats.instagramStats.failed,
     instagram_probe_records_used: stats.instagramStats.probe_records_used,
     instagram_fetch_records_used: stats.instagramStats.fetch_records_used,
@@ -292,6 +294,12 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
           if (result.status === "private_or_unavailable") {
             stats.instagramStats.skipped_private += 1;
             pushSkip(account.id, result.message || result.status);
+            touchInstagramChecked(accountsById, account.id, nowIso);
+            continue;
+          }
+          if (result.status === "skipped_provider_404") {
+            stats.instagramStats.skipped_provider_404 += 1;
+            pushSkip(account.id, "skipped_provider_404");
             touchInstagramChecked(accountsById, account.id, nowIso);
             continue;
           }
