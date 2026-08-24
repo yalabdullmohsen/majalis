@@ -3,10 +3,15 @@ import { classifyWomenAttendance } from "../../lib/lesson-women-attendance.mjs";
 
 const TYPE_RULES = [
   { type: "تسجيل", re: /تسجيل|التسجيل مفتوح|استماره|استمارة|forms\.gle|رابط التسجيل/i },
+  { type: "مسابقة", re: /مسابقه|مسابقة|مسابقات|جائزة|جوائز|م competition|competition/i },
   { type: "دورة", re: /دورة|دوره|دبلوم|برنامج|مسار|اكاديميه|أكاديمية|اكاديمية/i },
-  { type: "حلقة", re: /حلقه|حلقة|حلقات|تحفيظ|تسميع|مقراه|مقرأة/i },
-  { type: "خطبة", re: /خطبه|خطبة|الجمعه|الجمعة|خطيب/i },
-  { type: "درس", re: /درس|شرح|مجلس|محاضره|محاضرة|لقاء/i },
+  { type: "حلقة", re: /حلقه|حلقة|حلقات|تحفيظ|تسميع|مقراه|مقرأة|حلقة قرآن|حلقات قرآن/i },
+  { type: "محاضرة", re: /خطبه|خطبة|الجمعه|الجمعة|خطيب|محاضره|محاضرة|محاضرات/i },
+  { type: "درس", re: /درس|دروس|شرح|مجلس|لقاء علمي|لقاء/i },
+  {
+    type: "تنبيه",
+    re: /تنبيه|تذكير|موعد|يبدأ|يبدا|غدا|غداً|اليوم|الليلة|الليله|قادم|المقبل/i,
+  },
 ];
 
 const SHEIKH_RE =
@@ -25,7 +30,7 @@ export function classifyType(text) {
   for (const rule of TYPE_RULES) {
     if (rule.re.test(n)) return rule.type;
   }
-  return "إعلان";
+  return null;
 }
 
 const WEEKLY_RE =
@@ -46,7 +51,15 @@ export function detectScheduleKind(text) {
 /** هل النص يشير لدرس/حلقة/دورة قادمة أو متكررة؟ */
 export function isLessonRelevant(text) {
   const type = classifyType(text);
-  if (type === "درس" || type === "حلقة" || type === "دورة" || type === "خطبة" || type === "تسجيل") {
+  if (
+    type === "درس" ||
+    type === "حلقة" ||
+    type === "دورة" ||
+    type === "محاضرة" ||
+    type === "تسجيل" ||
+    type === "مسابقة" ||
+    type === "تنبيه"
+  ) {
     return true;
   }
   const kind = detectScheduleKind(text);

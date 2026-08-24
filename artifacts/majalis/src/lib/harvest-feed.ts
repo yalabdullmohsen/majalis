@@ -11,7 +11,7 @@ export type HarvestFeedSource = {
 
 export type HarvestFeedCard = {
   id: string;
-  type: "درس" | "حلقة" | "دورة" | "خطبة" | "تسجيل" | "إعلان";
+  type: "درس" | "حلقة" | "دورة" | "تسجيل" | "محاضرة" | "مسابقة" | "تنبيه";
   title_ar: string;
   summary_ar: string;
   sheikh: string | null;
@@ -93,4 +93,27 @@ export function isThisWeek(iso: string): boolean {
 
 export function feedForAccount(feed: HarvestFeedCard[], accountId: string): HarvestFeedCard[] {
   return feed.filter((c) => c.sources.some((s) => s.id === accountId));
+}
+
+/** أولوية العرض — أعلى = أهم (تسجيل مفتوح، موعد قريب، حلقة/دورة) */
+export function feedPriorityScore(card: HarvestFeedCard): number {
+  let score = 0;
+  if (card.register_url) score += 120;
+  if (card.starts_at) {
+    const t = Date.parse(card.starts_at);
+    if (Number.isFinite(t)) {
+      const days = (t - Date.now()) / (24 * 60 * 60 * 1000);
+      if (days >= 0 && days <= 14) score += 90 - Math.min(80, days * 4);
+    }
+  }
+  if (card.type === "تسجيل") score += 70;
+  if (card.type === "حلقة") score += 55;
+  if (card.type === "دورة") score += 50;
+  if (card.type === "درس" || card.type === "محاضرة") score += 45;
+  if (card.type === "مسابقة") score += 40;
+  if (card.published_at) {
+    const ageDays = (Date.now() - Date.parse(card.published_at)) / (24 * 60 * 60 * 1000);
+    if (Number.isFinite(ageDays) && ageDays >= 0) score += Math.max(0, 30 - ageDays);
+  }
+  return score;
 }

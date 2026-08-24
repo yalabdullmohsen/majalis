@@ -1,4 +1,4 @@
-const CARD_TYPES = new Set(["درس", "حلقة", "دورة", "خطبة", "تسجيل", "إعلان"]);
+const CARD_TYPES = new Set(["درس", "حلقة", "دورة", "تسجيل", "محاضرة", "مسابقة", "تنبيه"]);
 const AUDIENCES = new Set(["عام", "رجال", "نساء", "نشء"]);
 
 export function validateFeedCard(card, index = 0) {

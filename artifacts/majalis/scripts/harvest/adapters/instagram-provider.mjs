@@ -133,7 +133,7 @@ function mockPostDetails(handle, postId) {
 /** @param {unknown} post */
 function normalizeProviderPost(post) {
   if (!post || typeof post !== "object") {
-    return { externalId: "", url: "", title: "", text: "", imageUrl: undefined, publishedAt: new Date().toISOString() };
+    return { externalId: "", url: "", title: "", text: "", imageUrl: undefined, publishedAt: null };
   }
   const caption = String(
     post.caption ?? post.text ?? post.description ?? post.title ?? "",
@@ -150,16 +150,21 @@ function normalizeProviderPost(post) {
     post.image_url ?? post.thumbnail_url ?? post.display_url ?? post.media_url ?? undefined;
   const ocrText = post.ocr_text ?? post.alt_text ?? post.image_text ?? "";
   const text = [caption, ocrText].filter(Boolean).join("\n").trim() || caption;
-  const publishedAt =
-    post.published_at ?? post.datetime ?? post.timestamp ?? post.taken_at ?? post.date_posted ?? new Date().toISOString();
+  const publishedAtRaw =
+    post.published_at ?? post.datetime ?? post.timestamp ?? post.taken_at ?? post.date_posted ?? null;
+  let publishedAt = null;
+  if (publishedAtRaw) {
+    const t = Date.parse(String(publishedAtRaw));
+    if (Number.isFinite(t)) publishedAt = new Date(t).toISOString();
+  }
 
   return {
     externalId: externalId || url,
     url: String(url || ""),
-    title: text.split("\n")[0].slice(0, 120) || "منشور إنستغرام",
+    title: text.split("\n")[0].slice(0, 120) || "",
     text,
     imageUrl: imageUrl || undefined,
-    publishedAt: new Date(publishedAt).toISOString(),
+    publishedAt,
   };
 }
 

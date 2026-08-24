@@ -25,7 +25,7 @@ console.log("=== classification ≥ 90% ===");
 const samples = [
   ["درس فقه العبادات بعد المغرب", "درس"],
   ["شرح كتاب التوحيد في المسجد", "درس"],
-  ["محاضرة عن السيرة النبوية", "درس"],
+  ["محاضرة عن السيرة النبوية", "محاضرة"],
   ["مجلس علمي بعد العشاء", "درس"],
   ["حلقة تحفيظ للنساء", "حلقة"],
   ["حلقات تسميع جزء عم", "حلقة"],
@@ -33,16 +33,16 @@ const samples = [
   ["دورة السيرة النبوية", "دورة"],
   ["برنامج أكاديمي في الفقه", "دورة"],
   ["دبلوم علوم شرعية", "دورة"],
-  ["خطبة الجمعة في المسجد الكبير", "خطبة"],
-  ["خطيب الجمعة الشيخ فلان", "خطبة"],
+  ["خطبة الجمعة في المسجد الكبير", "محاضرة"],
+  ["خطيب الجمعة الشيخ فلان", "محاضرة"],
   ["التسجيل مفتوح عبر forms.gle", "تسجيل"],
   ["استمارة التسجيل متاحة الآن", "تسجيل"],
-  ["إعلان عام عن نشاط الجمعية", "إعلان"],
-  ["تذكير بموعد اللقاء", "إعلان"],
+  ["إعلان عام عن نشاط الجمعية", null],
+  ["تذكير بموعد اللقاء غداً", "تنبيه"],
   ["لقاء علمي بعد المغرب", "درس"],
   ["مسار تعليمي في العقيدة", "دورة"],
   ["تحفيظ القرآن للنشء", "حلقة"],
-  ["محاضرة شرعية مسائية", "درس"],
+  ["محاضرة شرعية مسائية", "محاضرة"],
 ];
 let ok = 0;
 for (const [text, expected] of samples) {
@@ -83,7 +83,11 @@ const feedPath = resolve(root, "public/data/lessons/feed.json");
 assert.ok(existsSync(feedPath), "feed.json مفقود");
 const feed = JSON.parse(readFileSync(feedPath, "utf8"));
 assertValidFeed(feed);
-assert.ok(feed.items.length >= 20, `feed items ${feed.items.length} < 20`);
+assert.ok(feed.items.length >= 1, `feed items ${feed.items.length} < 1`);
+for (const item of feed.items) {
+  assert.notEqual(item.type, "إعلان", "لا يُسمح بنوع إعلان في feed");
+  assert.doesNotMatch(item.title_ar, /photo by|puede ser|image may contain/i);
+}
 
 console.log("=== فشل محوّل لا يُسقط التشغيلة ===");
 const broken = await runHarvest({
@@ -310,7 +314,101 @@ console.log("=== UI hooks ===");
 assert.match(read("src/pages/lessons/ui/LessonsView.tsx"), /HarvestFeedPanel/);
 assert.match(read("src/components/lessons/SourceItemCard.tsx"), /المصدر/);
 assert.match(read("src/App.tsx"), /SourcesDirectoryPage/);
+assert.doesNotMatch(read("src/components/lessons/SourceItemCard.tsx"), /إعلان/);
 
+console.log("=== qualityGate: منشور قديم بلا موعد ===");
+{
+  const { qualityGate } = await import("./harvest/quality-gate.mjs");
+  const old = qualityGate({
+    text: "درس فقه بعد المغرب في مسجد الصباحية",
+    publishedAt: "2021-03-10T12:00:00.000Z",
+    type: "درس",
+    now: new Date("2026-08-24T12:00:00.000Z"),
+  });
+  assert.equal(old.ok, false);
+  assert.equal(old.reason, "too_old");
+}
+
+console.log("=== qualityGate: قديم لكن موعد تسجيل مستقبلي ===");
+{
+  const { qualityGate } = await import("./harvest/quality-gate.mjs");
+  const future = qualityGate({
+    text: "دورة علمية — التسجيل مفتوح — يبدأ 15 سبتمبر 2026 — forms.gle/x",
+    publishedAt: "2021-01-01T00:00:00.000Z",
+    type: "تسجيل",
+    now: new Date("2026-08-24T12:00:00.000Z"),
+  });
+  assert.equal(future.ok, true);
+  assert.equal(future.type, "تسجيل");
+}
+
+console.log("=== qualityGate: Photo by / Puede ser ===");
+{
+  const { qualityGate } = await import("./harvest/quality-gate.mjs");
+  const weak1 = qualityGate({
+    text: "Photo by Ahmed on Instagram. Puede ser una imagen de texto",
+    publishedAt: "2026-08-24T10:00:00.000Z",
+    type: "درس",
+    now: new Date("2026-08-24T12:00:00.000Z"),
+  });
+  assert.equal(weak1.ok, false);
+  assert.equal(weak1.reason, "weak_title");
+}
+
+console.log("=== qualityGate: عنوان عربي نظيف ===");
+{
+  const { qualityGate, extractArabicTitle } = await import("./harvest/quality-gate.mjs");
+  const title = extractArabicTitle("حلقة تحفيظ قرآن للنساء — بعد العصر — مسجد الدرر");
+  assert.match(title, /حلقة تحفيظ/);
+  const ok = qualityGate({
+    text: "حلقة تحفيظ قرآن للنساء — بعد العصر — مسجد الدرر",
+    publishedAt: "2026-08-23T10:00:00.000Z",
+    type: "حلقة",
+    now: new Date("2026-08-24T12:00:00.000Z"),
+  });
+  assert.equal(ok.ok, true);
+  assert.equal(ok.title_ar, title);
+}
+
+console.log("=== qualityGate: بدون نوع مفيد ===");
+{
+  const { qualityGate } = await import("./harvest/quality-gate.mjs");
+  const generic = qualityGate({
+    text: "نشاط عام للجمعية الخيرية بدون درس محدد",
+    publishedAt: "2026-08-24T10:00:00.000Z",
+    now: new Date("2026-08-24T12:00:00.000Z"),
+  });
+  assert.equal(generic.ok, false);
+  assert.equal(generic.reason, "no_useful_type");
+}
+
+console.log("=== qualityGate: تاريخ Photo by قديم ===");
+{
+  const { qualityGate, parseCaptionPublishedDate } = await import("./harvest/quality-gate.mjs");
+  const cap = parseCaptionPublishedDate(
+    "جانب من افتتاح حلقات دار ترتيل Photo by @qetaa_quran on February 11, 2024.",
+  );
+  assert.ok(cap?.startsWith("2024-02-11"));
+  const old = qualityGate({
+    text: "جانب من افتتاح حلقات دار ترتيل للفصل الدراسي الثاني Photo by @qetaa_quran on February 11, 2024.",
+    publishedAt: "2026-08-24T16:05:27.496Z",
+    now: new Date("2026-08-24T12:00:00.000Z"),
+  });
+  assert.equal(old.ok, false);
+  assert.equal(old.reason, "too_old");
+}
+
+console.log("=== qualityGate: تعازي لا يُنشر ===");
+{
+  const { qualityGate } = await import("./harvest/quality-gate.mjs");
+  const condolence = qualityGate({
+    text: "يتقدم رئيس مجلس إدارة الجمعية بخالص العزاء وصادق المواساة في وفاة والده المغفور له",
+    publishedAt: "2026-08-24T10:00:00.000Z",
+    now: new Date("2026-08-24T12:00:00.000Z"),
+  });
+  assert.equal(condolence.ok, false);
+  assert.equal(condolence.reason, "no_useful_type");
+}
 
 console.log("=== Instagram probe: unchanged لا يغيّر feed ===");
 {

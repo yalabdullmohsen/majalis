@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { assertValidFeed } from "./schema.mjs";
+import { curateStoredFeedItems } from "./quality-gate.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_ROOT = resolve(__dirname, "../../public/data");
@@ -32,8 +33,9 @@ export function loadFeed() {
 export function publishFeed(items, accountsById) {
   const now = new Date();
   const cutoff = new Date(now.getTime() - RETENTION_DAYS * 86400000);
-  const trimmed = items
-    .filter((it) => new Date(it.published_at) >= cutoff)
+  const { items: curated, stats: qualityStats } = curateStoredFeedItems(items, now);
+  const trimmed = curated
+    .filter((it) => it.published_at && new Date(it.published_at) >= cutoff)
     .sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
 
   const doc = {
@@ -57,5 +59,5 @@ export function publishFeed(items, accountsById) {
   }
   saveAccounts([...accountsById.values()]);
 
-  return { feedPath: FEED_PATH, archivePath, count: trimmed.length };
+  return { feedPath: FEED_PATH, archivePath, count: trimmed.length, qualityStats };
 }
