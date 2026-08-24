@@ -17,7 +17,7 @@
 
   --content-max: 42rem; /* ~72ch للنص المتدفّق */
   --content-max-wide: 48rem; /* ~80ch */
-  --page-pad-x: max(1rem, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+  --page-pad-x: max(1rem, var(--inset-left, 0px), var(--inset-right, 0px));
   --touch-min: 44px;
   --app-vh: 100dvh;
 }

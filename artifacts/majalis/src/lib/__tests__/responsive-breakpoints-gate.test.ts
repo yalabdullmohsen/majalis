@@ -24,10 +24,11 @@ assert.match(css, /--bp-laptop:\s*1280px/);
 assert.match(css, /--bp-wide:\s*1440px/);
 assert.match(css, /--bp-ultrawide:\s*1728px/);
 assert.match(css, /100dvh/);
-assert.match(css, /safe-area-inset/);
+assert.match(css, /var\(--inset-/);
 assert.match(css, /--touch-min:\s*44px/);
 assert.match(css, /mushaf-root/);
 assert.match(css, /--content-max/);
+assert.doesNotMatch(css, /env\(safe-area/);
 
 assert.match(main, /breakpoints\.css/);
 assert.doesNotMatch(css, /\b100vh\b/);
