@@ -236,14 +236,14 @@ html[data-theme="dark"] {
   --surface-inverse: #ECF2EF;
   --surface-elevated: #222D29;
 
-  --text-title:      #ECF2EF;
-  --text:            #ECF2EF;
-  --text-2:          #C2CFCA;
-  --text-muted:      #9FB0AB;
-  --text-meta:       #9FB0AB;
-  --text-on-dark:    #ECF2EF;
-  --text-brand:      #5CC095;
-  --text-brand-deep: #7BD6AE;
+  --text-title:      #F8FAFC;
+  --text:            #F8FAFC;
+  --text-2:          #E2E8F0;
+  --text-muted:      #C5D0CB;
+  --text-meta:       #C5D0CB;
+  --text-on-dark:    #FFFFFF;
+  --text-brand:      #7BD6AE;
+  --text-brand-deep: #A7E4C8;
 
   --border:             #35443F;
   --border-strong:      #445651;

@@ -62,16 +62,19 @@
   --on-brand-min-luma: #e5e5e5;
 }
 
-/* الوضع الليلي: نفس الأزواج بالضبط — لا مسار لوني منفصل.
-   الأسطح الغامقة تبقى غامقة والنص فوقها يبقى أبيض، فلا شيء يُقلب. */
+/*
+ * الوضع الليلي: الأسطح الغامقة تبقى غامقة والنص فوقها أبيض.
+ * الأزرار النعناعية (--brand / --accent) تستخدم --text-on-brand الداكن منفصلة.
+ * لا تُجعل --surface-brand-solid نعناعياً — ذلك يُخفي النص الأبيض على الأبطال.
+ */
 html[data-theme="dark"],
 html.dark {
-  --surface-brand-solid: var(--mj-brand, #5CC095);
-  --surface-brand-strong: var(--mj-brand-deep, #0E1C17);
+  --surface-brand-solid: #12362C;
+  --surface-brand-strong: #0A1612;
   --surface-brand-wash: #16261F;
-  --on-brand: #06231A;
-  --on-brand-secondary: #0E2A22;
-  --on-brand-tertiary: #16352C;
+  --on-brand: #FFFFFF;
+  --on-brand-secondary: #F8FAFC;
+  --on-brand-tertiary: #E8EEEC;
   --on-brand-wash: #F8FAFC;
   --on-brand-wash-secondary: #E2E8F0;
   --on-dark-strong: #FFFFFF;

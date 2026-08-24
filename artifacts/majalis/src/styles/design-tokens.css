@@ -86,7 +86,7 @@ html.dark,
   --surface: #1B2421;
   --surface-muted: #222D29;
   --surface-elevated: #222D29;
-  --surface-brand: #5CC095;
+  --surface-brand: #16261F;
   --surface-brand-soft: #16261F;
   --surface-1: #1B2421;
   --surface-2: #222D29;
@@ -94,17 +94,17 @@ html.dark,
   --border: #35443F;
   --border-strong: #445651;
   --border-subtle: #35443F;
-  --text-primary: #ECF2EF;
-  --text-secondary: #C2CFCA;
-  --text-muted: #9FB0AB;
-  --txt-primary: #ECF2EF;
-  --txt-secondary: #C2CFCA;
-  --txt-muted: #9FB0AB;
-  /* فوق الأخضر الفاتح (أزرار brand) */
+  --text-primary: #F8FAFC;
+  --text-secondary: #E2E8F0;
+  --text-muted: #C5D0CB;
+  --txt-primary: #F8FAFC;
+  --txt-secondary: #E2E8F0;
+  --txt-muted: #C5D0CB;
+  /* فوق زر نعناعي فقط */
   --text-on-brand: #06231A;
   --text-on-brand-secondary: #0E2A22;
-  --icon-primary: #ECF2EF;
-  --icon-muted: #9FB0AB;
+  --icon-primary: #F8FAFC;
+  --icon-muted: #C5D0CB;
   --accent: #5CC095;
   --accent-strong: #7BD6AE;
   --on-accent: #06231A;
