@@ -79,4 +79,42 @@ assert.match(kgPage, /\/prophets|\/fiqh|\/quran\/people/, "رسالة الفرا
   assert.equal(short.length, 0, "سيرة-019 بلا قصص أقل من 80 كلمة");
 }
 
+// فقه books.json: لا حشو عام، وعمق حدّ أدنى للملخص والدليل
+{
+  const books = JSON.parse(read("content/fiqh/books.json"));
+  const stubRe = /مدخل إلى|يتناول هذا المبحث|الأصل في مسائل/;
+  let lessons = 0;
+  for (const book of books.books || []) {
+    for (const ch of book.chapters || []) {
+      for (const lesson of ch.lessons || []) {
+        lessons += 1;
+        const blob = `${lesson.title || ""}\n${lesson.summary || ""}\n${lesson.evidence || ""}`;
+        assert.doesNotMatch(blob, stubRe, `لا حشو عام في ${book.id}/${ch.id}/${lesson.id}`);
+        assert.ok(
+          String(lesson.summary || "").trim().length >= 80,
+          `ملخص ≥80: ${lesson.id}`,
+        );
+        assert.ok(
+          String(lesson.evidence || "").trim().length >= 40,
+          `دليل ≥40: ${lesson.id}`,
+        );
+      }
+    }
+  }
+  assert.ok(lessons >= 50, `مسائل فقه كافية (الآن ${lessons})`);
+}
+
+// الخط الزمني: أجسام كافية بلا عبارات تأجيل
+{
+  const timeline = JSON.parse(read("public/data/knowledge/history/timeline.json"));
+  const items = timeline.items || [];
+  assert.ok(items.length >= 1, "timeline.json فيه عناصر");
+  const deferRe = /يُربط لاحقاً|حقبة ضمن الخط الزمني/;
+  for (const item of items) {
+    const body = String(item.body || "").trim();
+    assert.ok(body.length >= 400, `timeline body≥400: ${item.id}`);
+    assert.doesNotMatch(body, deferRe, `timeline بلا تأجيل: ${item.id}`);
+  }
+}
+
 console.log("content-depth-audit-gate.test.ts: ok");
