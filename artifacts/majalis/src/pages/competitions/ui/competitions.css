@@ -53,6 +53,17 @@
   line-height: 1.75;
 }
 
+.cmp-empty__hint {
+  font-size: 0.92rem;
+  color: var(--msk-text-3, var(--mj-ink-3));
+}
+
+.cmp-empty__hint a {
+  color: var(--mj-brand, var(--msk-brand));
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .cmp-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));

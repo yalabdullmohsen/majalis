@@ -118,7 +118,13 @@ export default function CompetitionsHubView() {
         {items.length === 0 ? (
           <div className="cmp-empty" role="status" data-competitions-empty="1">
             <Trophy size={36} strokeWidth={1.4} aria-hidden />
-            <p>سيتم إضافة المسابقات قريبًا بإذن الله.</p>
+            <p>لا مسابقات منشورة حاليًا. نضيف مسابقات موثوقة عند توفرها بإذن الله.</p>
+            <p className="cmp-empty__hint">
+              يمكنك في الأثناء الاستفادة من{" "}
+              <Link href="/quiz">الاختبارات</Link>
+              {" "}و{" "}
+              <Link href="/lessons">الدروس</Link>.
+            </p>
           </div>
         ) : (
           <div className="cmp-grid">
