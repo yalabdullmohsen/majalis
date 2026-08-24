@@ -32,15 +32,15 @@ assert.match(
   /html\.pts-immersive #root[\s\S]*?background-color:\s*var\(--em-950/,
   "#root مطلي بزمرد الصلاة لا --app-bg",
 );
-assert.match(
-  css,
-  /\.pts-sheet-close[\s\S]*?background-color:\s*inherit/,
-  "زر الإغلاق يرث خلفية الشاشة — بلا درزة --pts-bg-0",
-);
 assert.doesNotMatch(
   css,
   /\.pts-sheet-close[\s\S]{0,200}position:\s*sticky/,
-  "لا sticky يسحب الزر فوق فجوة #root",
+  "لا زر إغلاق ثابت يسحب فجوة فوق التنقّل",
+);
+assert.doesNotMatch(
+  css,
+  /\.pts-sheet-close/,
+  "لا زر إغلاق ثابت في صفحة الصلاة",
 );
 
 assert.match(

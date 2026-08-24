@@ -59,12 +59,13 @@ test.describe("لا شريط أبيض فوق التنقّل السفلي", () =>
     });
   }
 
-  test("/prayer-times زر إغلاق ظاهر", async ({ page }) => {
+  test("/prayer-times شبكة الأدوات ظاهرة", async ({ page }) => {
     await page.goto("/prayer-times", { waitUntil: "domcontentloaded" });
     await page.waitForTimeout(500);
-    await expect(page.locator(".pts-sheet-close__btn")).toBeVisible();
-    await assertNavFlushToBottom(page, "prayer sheet close nav flush");
-    await assertBottomNotWhite(page, "prayer sheet close");
+    await expect(page.locator(".pts-dock__item")).toHaveCount(4);
+    await expect(page.locator(".pts-annual")).toHaveCount(0);
+    await assertNavFlushToBottom(page, "prayer dock nav flush");
+    await assertBottomNotWhite(page, "prayer dock bottom");
   });
 
   test("الدرج مفتوح من اليمين", async ({ page }) => {

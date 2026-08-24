@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
-import { ArrowRight, Bell, Compass, HandHeart, MapPin, CircleDot } from "lucide-react";
+import { ArrowRight, Bell, Compass, HandHeart, MapPin, CircleDot, Settings2 } from "lucide-react";
 import { usePrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
 import {
   formatTime12,
@@ -309,16 +309,22 @@ export default function PrayerTimesPage() {
             <ArrowRight size={18} strokeWidth={2.5} aria-hidden="true" />
             <span>رجوع</span>
           </button>
-          <button
-            type="button"
-            className="pts-location"
-            onClick={() => setGovOpen((v) => !v)}
-            aria-expanded={govOpen}
-            aria-controls="pts-gov-panel"
-          >
-            <MapPin size={15} strokeWidth={2} aria-hidden="true" />
-            <span>{locLabel}</span>
-          </button>
+          <div className="pts-header__actions">
+            <Link href="/adhan-settings" className="pts-settings" aria-label="إعدادات الصلاة والأذان">
+              <Settings2 size={16} strokeWidth={2} aria-hidden="true" />
+              <span>إعدادات</span>
+            </Link>
+            <button
+              type="button"
+              className="pts-location"
+              onClick={() => setGovOpen((v) => !v)}
+              aria-expanded={govOpen}
+              aria-controls="pts-gov-panel"
+            >
+              <MapPin size={15} strokeWidth={2} aria-hidden="true" />
+              <span>{locLabel}</span>
+            </button>
+          </div>
         </div>
         <div className="pts-dates">
           {hijriStr && <span>{hijriStr}</span>}
@@ -338,50 +344,56 @@ export default function PrayerTimesPage() {
               reload();
             }}
           />
-          <label className="pts-method" htmlFor="pts-calc-method">
-            <span className="pts-method__label">طريقة الحساب</span>
-            <select
-              id="pts-calc-method"
-              className="pts-method__select"
-              value={calcMethod}
-              onChange={(e) => handleCalcMethod(e.target.value as PrayerCalcMethodId)}
-              dir="rtl"
-            >
-              {PRAYER_CALC_METHODS.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.labelAr}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="pts-method" htmlFor="pts-madhab">
-            <span className="pts-method__label">مذهب العصر</span>
-            <select
-              id="pts-madhab"
-              className="pts-method__select"
-              value={madhab}
-              onChange={(e) => handleMadhab(e.target.value as PrayerMadhabId)}
-              dir="rtl"
-            >
-              <option value="Shafi">شافعي / مالكي / حنبلي</option>
-              <option value="Hanafi">حنفي</option>
-            </select>
-          </label>
-          <label className="pts-method" htmlFor="pts-highlat">
-            <span className="pts-method__label">مناطق خطوط العرض العالية</span>
-            <select
-              id="pts-highlat"
-              className="pts-method__select"
-              value={highLat}
-              onChange={(e) => handleHighLat(e.target.value as HighLatitudeRuleId)}
-              dir="rtl"
-            >
-              <option value="auto">تلقائي موصى به</option>
-              <option value="MiddleOfTheNight">منتصف الليل</option>
-              <option value="SeventhOfTheNight">سُبع الليل</option>
-              <option value="TwilightAngle">زاوية الشفق</option>
-            </select>
-          </label>
+          <details className="pts-more">
+            <summary>خيارات متقدمة</summary>
+            <div className="pts-more__body">
+              <label className="pts-method" htmlFor="pts-calc-method">
+                <span className="pts-method__label">طريقة الحساب</span>
+                <select
+                  id="pts-calc-method"
+                  className="pts-method__select"
+                  value={calcMethod}
+                  onChange={(e) => handleCalcMethod(e.target.value as PrayerCalcMethodId)}
+                  dir="rtl"
+                >
+                  {PRAYER_CALC_METHODS.map((m) => (
+                    <option key={m.id} value={m.id}>
+                      {m.labelAr}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="pts-method" htmlFor="pts-madhab">
+                <span className="pts-method__label">مذهب العصر</span>
+                <select
+                  id="pts-madhab"
+                  className="pts-method__select"
+                  value={madhab}
+                  onChange={(e) => handleMadhab(e.target.value as PrayerMadhabId)}
+                  dir="rtl"
+                >
+                  <option value="Shafi">شافعي / مالكي / حنبلي</option>
+                  <option value="Hanafi">حنفي</option>
+                </select>
+              </label>
+              <label className="pts-method" htmlFor="pts-highlat">
+                <span className="pts-method__label">مناطق خطوط العرض العالية</span>
+                <select
+                  id="pts-highlat"
+                  className="pts-method__select"
+                  value={highLat}
+                  onChange={(e) => handleHighLat(e.target.value as HighLatitudeRuleId)}
+                  dir="rtl"
+                >
+                  <option value="auto">تلقائي موصى به</option>
+                  <option value="MiddleOfTheNight">منتصف الليل</option>
+                  <option value="SeventhOfTheNight">سُبع الليل</option>
+                  <option value="TwilightAngle">زاوية الشفق</option>
+                </select>
+              </label>
+              <PrayerAnnualTimetable />
+            </div>
+          </details>
         </div>
       )}
 
@@ -448,8 +460,6 @@ export default function PrayerTimesPage() {
         </nav>
       )}
 
-      <PrayerAnnualTimetable />
-
       <nav className="pts-dock" aria-label="أدوات الصلاة">
         <Link href="/adhkar" className="pts-dock__item">
           <span className="pts-dock__icon"><HandHeart size={20} strokeWidth={1.7} /></span>
@@ -468,12 +478,6 @@ export default function PrayerTimesPage() {
           <span>تنبيهات الأذان</span>
         </Link>
       </nav>
-
-      <div className="pts-sheet-close">
-        <button type="button" className="pts-sheet-close__btn" onClick={handleBack}>
-          إغلاق
-        </button>
-      </div>
     </div>
   );
 }

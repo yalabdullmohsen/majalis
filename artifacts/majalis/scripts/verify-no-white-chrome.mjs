@@ -100,12 +100,7 @@ assert.equal(hits.length, 0, `كروم التخطيط يجب أن يطابق --s
 {
   const pts = readFileSync(join(root, "src/styles/pages/prayer-times.css"), "utf8");
   assert.match(pts, /\.pts-screen\s*\{[\s\S]*?background-image:\s*none/, "الصلاة: خلفية متصلة بلا تدرّج مقطوع");
-  assert.match(pts, /\.pts-sheet-close\s*\{[\s\S]*?background-color:\s*inherit/, "الصلاة: لا درزة داكنة تحت الرصيف");
-  assert.doesNotMatch(
-    pts,
-    /\.pts-sheet-close\s*\{[\s\S]*?background-color:\s*var\(--pts-bg-0/,
-    "الصلاة: إغلاق لا يستخدم لوناً أغمق من الشاشة",
-  );
+  assert.doesNotMatch(pts, /\.pts-sheet-close/, "الصلاة: بلا زر إغلاق ثابت");
   assert.match(pts, /var\(--inset-top/);
   assert.match(pts, /var\(--inset-bottom/);
   assert.doesNotMatch(pts, /env\(\s*safe-area-inset/);
