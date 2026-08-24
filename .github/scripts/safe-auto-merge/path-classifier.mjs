@@ -34,6 +34,8 @@ export function isPolicyPath(p) {
     /^\.github\/workflows\/platform-bootstrap\.yml$/i.test(s) ||
     /^\.github\/workflows\/production-bootstrap\.yml$/i.test(s) ||
     /^\.github\/workflows\/phase2-trial-import\.yml$/i.test(s) ||
+    /^\.github\/workflows\/harvest-sources\.yml$/i.test(s) ||
+    /^\.github\/workflows\/auto-deploy\.yml$/i.test(s) ||
     /^artifacts\/majalis\/vercel\.json$/i.test(s)
   );
 }
@@ -47,6 +49,7 @@ export function isContentPath(p) {
   return (
     /^artifacts\/majalis\/public\/data\//i.test(s) ||
     /^artifacts\/majalis\/data\//i.test(s) ||
+    /^artifacts\/majalis\/scripts\/harvest\//i.test(s) ||
     /^CONTINUATION_PLAN\.md$/i.test(s)
   );
 }
@@ -107,7 +110,9 @@ function isPolicyWorkflowAllowlist(p) {
     /^\.github\/workflows\/owner-bootstrap\.yml$/i.test(p) ||
     /^\.github\/workflows\/platform-bootstrap\.yml$/i.test(p) ||
     /^\.github\/workflows\/production-bootstrap\.yml$/i.test(p) ||
-    /^\.github\/workflows\/phase2-trial-import\.yml$/i.test(p)
+    /^\.github\/workflows\/phase2-trial-import\.yml$/i.test(p) ||
+    /^\.github\/workflows\/harvest-sources\.yml$/i.test(p) ||
+    /^\.github\/workflows\/auto-deploy\.yml$/i.test(p)
   );
 }
 
@@ -232,9 +237,15 @@ function finalizeClassification(input) {
 
   const needBuild = needFrontendBuild;
   const needPolicyTests = Boolean(kinds.policy);
-  // مع كل بناء واجهة: البوابة تفحص التطبيق كله، فلا تُتخطّى لأن الملف ليس CSS.
-  const needColorContrast = needBuild;
-  // Verify build وحده كان شرط الدمج؛ Color contrast و visual-snapshot صارا إلزاميين مع كل بناء.
+  // لقطات/تباين/LHCI: واجهة أو مصحف أو risky/full — ليست إلزامية لمحتوى/حصاد فقط.
+  const needVisual =
+    Boolean(forceFull) ||
+    Boolean(kinds.frontend) ||
+    Boolean(kinds.mushaf) ||
+    Boolean(kinds.risky) ||
+    Boolean(kinds.other);
+  // مع بناء واجهة حقيقي: تباين الألوان. محتوى JSON فقط → لا.
+  const needColorContrast = needVisual || Boolean(hasUiCss && needBuild);
   const needPreviewSmoke = false;
   const needVercelCheck = false;
 
@@ -259,10 +270,10 @@ function finalizeClassification(input) {
     mushafMeasure: needMushaf,
     mushafGates: needMushaf,
     layoutBands: needMushaf,
-    visualSnapshot: needBuild,
+    visualSnapshot: needVisual,
     fastLane: needFastLane,
     postgres: needPostgres,
-    colorContrast: needBuild,
+    colorContrast: needColorContrast,
     previewSmoke: needPreviewSmoke,
     vercelCheck: needVercelCheck,
   };
@@ -279,6 +290,7 @@ function finalizeClassification(input) {
     needFastLane,
     needMushaf,
     needPostgres,
+    needVisual,
     needColorContrast,
     needPreviewSmoke,
     needVercelCheck,
@@ -291,6 +303,7 @@ function finalizeClassification(input) {
       need_fast_lane: needFastLane ? "true" : "false",
       need_mushaf: needMushaf ? "true" : "false",
       need_postgres: needPostgres ? "true" : "false",
+      need_visual: needVisual ? "true" : "false",
       need_color_contrast: needColorContrast ? "true" : "false",
       need_preview_smoke: needPreviewSmoke ? "true" : "false",
       need_policy_tests: needPolicyTests ? "true" : "false",

@@ -2,8 +2,8 @@ name: Harvest sources
 
 on:
   schedule:
-    # كل 6 ساعات — تفعيل كامل للأتمتة
-    - cron: "0 */6 * * *"
+    # مرتان يومياً بتوقيت الكويت ≈ 06:00 و18:00 (03:00 و15:00 UTC)
+    - cron: "0 3,15 * * *"
   workflow_dispatch:
 
 permissions:
@@ -48,15 +48,30 @@ jobs:
           INSTAGRAM_PROVIDER_KEY: ${{ secrets.INSTAGRAM_PROVIDER_KEY }}
           INSTAGRAM_PROVIDER_ENDPOINT: ${{ secrets.INSTAGRAM_PROVIDER_ENDPOINT }}
         run: |
-          if [ -n "$INSTAGRAM_PROVIDER_KEY" ] && [ -n "$INSTAGRAM_PROVIDER_ENDPOINT" ]; then
-            echo "mode=provider" >> "$GITHUB_OUTPUT"
-            echo "Instagram: provider (secrets present)"
-          else
+          set -euo pipefail
+          # لا تطبع القيم — تحقق شكل فقط
+          if [ -z "${INSTAGRAM_PROVIDER_KEY:-}" ] || [ -z "${INSTAGRAM_PROVIDER_ENDPOINT:-}" ]; then
             echo "mode=oembed" >> "$GITHUB_OUTPUT"
-            echo "Instagram: oembed (no provider secrets — will skip empty inbox)"
+            echo "Instagram: oembed (secrets missing)"
+            exit 0
           fi
+          # رفض curl/أوامر؛ قبول URL Bright Data فقط
+          case "$INSTAGRAM_PROVIDER_ENDPOINT" in
+            curl\ *|*\ -H\ *|*\ -X\ *)
+              echo "mode=oembed" >> "$GITHUB_OUTPUT"
+              echo "Instagram: endpoint looks like curl — refusing (use https://api.brightdata.com/... only)"
+              exit 0
+              ;;
+          esac
+          if [[ "$INSTAGRAM_PROVIDER_ENDPOINT" != https://api.brightdata.com/* ]]; then
+            echo "mode=oembed" >> "$GITHUB_OUTPUT"
+            echo "Instagram: endpoint host not api.brightdata.com — refusing provider mode"
+            exit 0
+          fi
+          echo "mode=provider" >> "$GITHUB_OUTPUT"
+          echo "Instagram: provider (Bright Data secrets present, shape OK)"
 
-      - name: Run harvest (live — 7 days + backfill)
+      - name: Run harvest (probe latest only — twice daily)
         working-directory: artifacts/majalis
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
@@ -65,9 +80,8 @@ jobs:
           INSTAGRAM_PROVIDER_KEY: ${{ secrets.INSTAGRAM_PROVIDER_KEY }}
           INSTAGRAM_PROVIDER_ENDPOINT: ${{ secrets.INSTAGRAM_PROVIDER_ENDPOINT }}
           HARVEST_LOOKBACK_DAYS: "7"
-          INSTAGRAM_BACKFILL_ENABLED: "true"
-          INSTAGRAM_BACKFILL_LIMIT: "14"
-        run: pnpm run harvest -- --days=7 --backfill
+          INSTAGRAM_BACKFILL_ENABLED: "false"
+        run: pnpm run harvest -- --days=7
 
       - name: Check for content changes
         id: diff
@@ -78,7 +92,6 @@ jobs:
             CONTENT_CHANGED=$(node -e "const r=require('./$REPORT'); process.stdout.write(String(r.content_changed===true))")
           fi
 
-          # احتياط: أي تغيير على feed يُعد محتوى
           if ! git diff --quiet -- artifacts/majalis/public/data/lessons/feed.json 2>/dev/null; then
             CONTENT_CHANGED=true
           fi
@@ -87,7 +100,6 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
             echo "Content change detected (new posts / last_seen)"
           else
-            # unchanged بالكامل أو تقرير فقط — لا PR محتوى
             git checkout -- artifacts/majalis/public/data 2>/dev/null || true
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "All Instagram unchanged or report-only — skip PR"
@@ -103,7 +115,7 @@ jobs:
           labels: safe:content
           commit-message: "chore(harvest): تحديث feed المصادر"
           body: |
-            تشغيلة حصاد تلقائية (نافذة 7 أيام + دروس قادمة/متكررة) — تحديث `feed.json` و/أو `accounts.json` تحت `public/data`.
-            لا تُفتح PR عند تقرير فقط أو عندما تكون كل حسابات Instagram unchanged.
+            تشغيلة حصاد تلقائية (مرتين يومياً — فحص آخر منشور فقط لكل حساب Instagram).
+            تُفتح PR فقط عند منشور جديد أو تغيير feed حقيقي.
           add-paths: |
             artifacts/majalis/public/data/**

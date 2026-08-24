@@ -96,7 +96,18 @@ async function main() {
 
   for (const route of SECTION_PATHS) {
     await page.goto(`${base}${route}`, { waitUntil: "domcontentloaded", timeout: 60_000 });
-    await page.waitForTimeout(400);
+    if (TAB_ROOTS.includes(route)) {
+      await page.waitForTimeout(400);
+    } else {
+      // GlobalBackButton يُحمَّل lazy — انتظر ظهور زر الرجوع قبل الحكم
+      await page
+        .waitForSelector("[data-section-back], .global-back-btn, [aria-label='رجوع']", {
+          timeout: 12_000,
+          state: "attached",
+        })
+        .catch(() => null);
+      await page.waitForTimeout(200);
+    }
     const box = await page.evaluate(() => {
       const lobby = document.querySelector("[data-section-back]");
       const global = document.querySelector(".global-back-btn, [aria-label='رجوع']");

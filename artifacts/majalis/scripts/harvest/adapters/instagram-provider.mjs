@@ -24,7 +24,7 @@ export function getInstagramIngestMode() {
 }
 
 /**
- * يقبل رابط API فقط (https://...) من GitHub Secrets / env.
+ * يقبل رابط Bright Data فقط (https://api.brightdata.com/...).
  * يرفض أوامر curl الكاملة أو أي قيمة غير URL صالحة — دون تسجيل قيمة السر.
  * @param {string} raw
  * @returns {{ ok: true, endpoint: string }|{ ok: false, reason: string }}
@@ -42,8 +42,11 @@ export function normalizeProviderEndpoint(raw) {
   } catch {
     return { ok: false, reason: "endpoint_invalid_url" };
   }
-  if (url.protocol !== "https:" && url.protocol !== "http:") {
-    return { ok: false, reason: "endpoint_unsupported_protocol" };
+  if (url.protocol !== "https:") {
+    return { ok: false, reason: "endpoint_must_be_https" };
+  }
+  if (url.hostname !== "api.brightdata.com") {
+    return { ok: false, reason: "endpoint_must_be_brightdata_api" };
   }
   // لا نسمح بمسافات أو بيانات اعتماد داخل الرابط في اللوج؛ نُسقط userinfo
   url.username = "";
@@ -77,7 +80,7 @@ export function getInstagramProviderStatus() {
   const cfg = getInstagramProviderConfig();
   if (!cfg.configured) {
     const message = cfg.endpointError
-      ? "Instagram provider endpoint is invalid (expected API URL from secrets)."
+      ? `Instagram provider endpoint invalid (${cfg.endpointError}). Expected https://api.brightdata.com/...`
       : "Instagram provider is not configured.";
     return {
       mode,
@@ -444,24 +447,13 @@ export async function probeAndMaybeFetch(account, opts = {}) {
     return out;
   }
 
-  consumeQuota(quota, "probe");
-  out.probeUsed = 1;
-
-  const fetchGate = canConsumeQuota(quota, "fetch");
-  if (!fetchGate.ok) {
-    if (persistQuota) saveInstagramQuota(quota);
-    out.status = "rate_limited";
-    out.message = fetchGate.detail || "rate_limited";
-    return out;
-  }
-
   const backfill = isBackfillEnabled();
-  const limit = maxLatestPostsPerAccount();
+  const limit = backfill ? maxLatestPostsPerAccount() : 1;
 
-  // المسار الرسمي: posts?since= (كل الحسابات ضمن آخر 7 أيام)
+  // المسار الرسمي: posts?since= — فحص خفيف؛ لا fetch إضافي إن لم يتغيّر آخر منشور
   try {
-    consumeQuota(quota, "fetch");
-    out.fetchUsed = 1;
+    consumeQuota(quota, "probe");
+    out.probeUsed = 1;
     const posts = await fetchPostsFromProviderApi(handle, since);
     if (persistQuota) saveInstagramQuota(quota);
 
@@ -472,51 +464,60 @@ export async function probeAndMaybeFetch(account, opts = {}) {
       })
       .slice(0, limit);
 
-    if (filtered.length) {
-      const tip = filtered[0];
-      out.latest = {
-        id: tip.externalId,
-        url: tip.url,
-        publishedAt: tip.publishedAt || null,
-      };
-      if (!backfill && samePost(account, out.latest)) {
-        out.status = "unchanged";
-        return out;
-      }
-      out.items = filtered.map((p) => ({
-        sourceId: account.id,
-        externalId: p.externalId,
-        url: p.url,
-        title: p.title,
-        text: p.text,
-        imageUrl: p.imageUrl,
-        publishedAt: p.publishedAt,
-      }));
-      out.status = "new_post";
+    if (!filtered.length) {
+      out.status = "unchanged";
       return out;
     }
 
-    // قائمة فارغة ضمن النافذة = لا جديد
-    out.status = "unchanged";
+    const tip = filtered[0];
+    out.latest = {
+      id: tip.externalId,
+      url: tip.url,
+      publishedAt: tip.publishedAt || null,
+    };
+
+    if (!backfill && samePost(account, out.latest)) {
+      out.status = "unchanged";
+      return out;
+    }
+
+    const fetchGate = canConsumeQuota(quota, "fetch");
+    if (!fetchGate.ok) {
+      out.status = "rate_limited";
+      out.message = fetchGate.detail || "rate_limited";
+      return out;
+    }
+    consumeQuota(quota, "fetch");
+    out.fetchUsed = 1;
+    if (persistQuota) saveInstagramQuota(quota);
+
+    out.items = filtered.map((p) => ({
+      sourceId: account.id,
+      externalId: p.externalId,
+      url: p.url,
+      title: p.title,
+      text: p.text,
+      imageUrl: p.imageUrl,
+      publishedAt: p.publishedAt,
+    }));
+    out.status = "new_post";
     return out;
   } catch (primaryErr) {
+    if (persistQuota) saveInstagramQuota(quota);
     // احتياطي: probe/latest ثم منشور واحد إن وُجد لدى المزوّد
     const msg = String(primaryErr?.message || primaryErr);
     if (/HTTP 401|HTTP 403/.test(msg)) {
-      if (persistQuota) saveInstagramQuota(quota);
       out.status = "private_or_unavailable";
       out.message = msg;
       return out;
     }
     if (/HTTP 429/.test(msg)) {
-      if (persistQuota) saveInstagramQuota(quota);
       out.status = "rate_limited";
       out.message = msg;
       return out;
     }
 
     const probed = await probeLatestPost(handle);
-    if (persistQuota) saveInstagramQuota(quota);
     if (!probed.ok) {
       out.status = probed.status;
       out.message = probed.message || msg;
@@ -529,8 +530,18 @@ export async function probeAndMaybeFetch(account, opts = {}) {
       return out;
     }
 
+    const fetchGate = canConsumeQuota(quota, "fetch");
+    if (!fetchGate.ok) {
+      out.status = "rate_limited";
+      out.message = fetchGate.detail || "rate_limited";
+      return out;
+    }
+
     try {
+      consumeQuota(quota, "fetch");
+      out.fetchUsed = 1;
       const post = await fetchSinglePost(handle, probed.latest.id);
+      if (persistQuota) saveInstagramQuota(quota);
       if (!post.url || !(post.title || post.text)) {
         out.status = "provider_error";
         out.message = "empty_post_payload";
@@ -550,6 +561,7 @@ export async function probeAndMaybeFetch(account, opts = {}) {
       out.status = "new_post";
       return out;
     } catch (err) {
+      if (persistQuota) saveInstagramQuota(quota);
       out.status = "provider_error";
       out.message = String(err?.message || err || msg);
       return out;
