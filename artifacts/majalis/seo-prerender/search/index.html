@@ -51,8 +51,25 @@
     <main>
       <article>
         <h1>البحث العلمي</h1>
-        <p>ابحث في الدروس والمكتبة العلمية والفوائد والأسئلة والأجوبة داخل المجلس العلمي.</p>
         
+        <p>ابحث في الآيات والأحاديث والفتاوى والدروس والكتب والعلماء — نتائج من المحتوى المنشور في المنصة.</p>
+<form role="search" aria-label="نموذج البحث الشامل" action="https://majlisilm.com/search" method="get">
+  <label for="seo-search-q">كلمة البحث</label>
+  <input id="seo-search-q" type="search" name="q" placeholder="ابحث في المحتوى…" autocomplete="off" dir="rtl" />
+  <button type="submit">بحث</button>
+</form>
+<h2>ما يشمله البحث</h2>
+<ul>
+  <li>القرآن والتفسير والسور</li>
+  <li>الأحاديث والفتاوى والفقه</li>
+  <li>الدروس والكتب والعلماء</li>
+  <li>الأذكار والقصص والموضوعات</li>
+</ul>
+<h2>الفلاتر المدعومة</h2>
+<p>بعد كتابة الاستعلام يمكن تصفية النتائج حسب القسم: قرآن، تفسير، مكتبة، أحاديث، فتاوى، فقه، دروس، علماء، أذكار، قصص.</p>
+<p id="search-empty-state">ابدأ بكتابة كلمة أو عبارة في خانة البحث أعلاه.</p>
+<p id="search-no-results" hidden>لا توجد نتائج مطابقة — جرّب كلمات أخرى أو تصفية مختلفة.</p>
+<p id="search-error" hidden>تعذّر تحميل نتائج البحث مؤقتًا — أعد المحاولة.</p>
         <nav aria-label="التنقل">
           <a href="https://majlisilm.com">الرئيسية</a>
           <a href="https://majlisilm.com/search">البحث العلمي</a>

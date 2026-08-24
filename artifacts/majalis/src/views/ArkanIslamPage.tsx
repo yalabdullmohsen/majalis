@@ -291,7 +291,7 @@ export default function ArkanIslamPage() {
             { href: "/duas",       label: "الأدعية الشرعية" },
             { href: "/prayer-ranks", label: "فضائل الصلاة" },
             { href: "/hadith",     label: "الأحاديث النبوية" },
-            { href: "/rulings",    label: "الأحكام الشرعية" },
+            { href: "/fiqh-qawaid", label: "القواعد الفقهية" },
             { href: "/fiqh",       label: "الفقه الإسلامي" },
           ].map(({ href, label }) => (
             <Link key={href} href={href} className="arkan-related__link">

@@ -28,6 +28,7 @@ import {
   ADMIN_DEFAULT_ROBOTS,
 } from "./seo-path-class.mjs";
 import { IA_BREADCRUMB_PARENTS, IA_REDIRECTS } from "../src/lib/ia-final-structure.ts";
+import { dedupeLinksByHref } from "../src/lib/link-dedupe.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
@@ -339,10 +340,13 @@ function lessonDescription(row) {
 
 function linkList(heading, items) {
   if (!items?.length) return "";
+  const deduped = dedupeLinksByHref(
+    items.map((i) => ({ href: i.url, name: i.name, note: i.note, url: i.url })),
+  );
   return `<h2>${escapeHtml(heading)}</h2>
 <ul>
-  ${items
-    .map((i) => `<li><a href="${escapeHtml(absoluteUrl(i.url))}">${escapeHtml(i.name)}</a>${i.note ? ` — ${escapeHtml(i.note)}` : ""}</li>`)
+  ${deduped
+    .map((i) => `<li><a href="${escapeHtml(absoluteUrl(i.url || i.href))}">${escapeHtml(i.name || i.label || "")}</a>${i.note ? ` — ${escapeHtml(i.note)}` : ""}</li>`)
     .join("\n  ")}
 </ul>`;
 }
@@ -1002,14 +1006,12 @@ ${linkList(
   })),
 )}
 ${linkList("روابط ذات صلة", [
-  { name: "الدروس الشرعية", url: "/lessons" },
   { name: "الدروس والدورات", url: "/lessons" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
 ])}`,
   "/tahara": `<p>أحكام الطهارة: الوضوء والغسل والتيمم وإزالة النجاسة — مدخل عملي قبل أبواب الصلاة والعبادات.</p>
 ${linkList("روابط ذات صلة", [
   { name: "دليل الصلاة", url: "/salah-guide" },
-  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "الزكاة", url: "/zakat" },
   { name: "الصيام", url: "/sawm" },
@@ -1021,7 +1023,6 @@ ${linkList("روابط ذات صلة", [
   { name: "الطهارة", url: "/tahara" },
   { name: "الصيام", url: "/sawm" },
   { name: "الحج والعمرة", url: "/hajj" },
-  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "المجمع الفقهي", url: "/fiqh-council" },
 ])}`,
@@ -1039,7 +1040,6 @@ ${linkList("روابط ذات صلة", [
   { name: "الطهارة", url: "/tahara" },
   { name: "الزكاة", url: "/zakat" },
   { name: "الصيام", url: "/sawm" },
-  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "المناسبات الإسلامية", url: "/occasions" },
 ])}`,
@@ -1091,7 +1091,6 @@ ${linkList("روابط ذات صلة", [
   "/janaza": `<p>أحكام الجنائز: تغسيل الميت وتكفينه والصلاة عليه والدفن والتعزية — مرتبطة بباب الطهارة والفقه.</p>
 ${linkList("روابط ذات صلة", [
   { name: "الطهارة", url: "/tahara" },
-  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "التوبة والاستغفار", url: "/tawba" },
   { name: "صفة الجنة والنار", url: "/janna-naar" },
@@ -1187,7 +1186,6 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "المذاهب الأربعة", url: "/madhahib" },
   { name: "بوابة الفقه", url: "/fiqh" },
-  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "المجمع الفقهي", url: "/fiqh-council" },
   { name: "المعجم الشرعي", url: "/islamic-glossary" },
 ])}`,
@@ -1237,7 +1235,6 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "الطهارة", url: "/tahara" },
   { name: "مراتب الناس في الصلاة", url: "/prayer-ranks" },
-  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "الأذكار", url: "/adhkar" },
   { name: "أركان الإسلام", url: "/arkan" },
@@ -1310,7 +1307,6 @@ ${linkList("روابط ذات صلة", [
 ])}`,
   "/mawarith": `<p>علم المواريث والفرائض: أصول قسمة التركات وأنصبة الورثة، ضمن أبواب الفقه والمعاملات.</p>
 ${linkList("روابط ذات صلة", [
-  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
   { name: "المذاهب الأربعة", url: "/madhahib" },
@@ -1645,7 +1641,6 @@ ${linkList("روابط ذات صلة", [
   { name: "البطاقات التعليمية", url: "/flashcards" },
   { name: "الفوائد", url: "/fawaid" },
   { name: "الدروس والدورات", url: "/lessons" },
-  { name: "الدروس والدورات", url: "/lessons" },
 ])}`;
   })(),
   "/flashcards": `<p>بطاقات تعليمية تفاعلية لمراجعة المفاهيم الشرعية وتثبيتها، مع ربط بالمسارات والاختبارات.</p>
@@ -1676,13 +1671,11 @@ ${linkList("روابط ذات صلة", [
   "/sitemap": `<p>خريطة أقسام المجلس العلمي: مداخل سريعة لأهم المحاور والأدوات وصفحات التعريف.</p>
 ${linkList("محاور أساسية", [
   { name: "الدروس والدورات", url: "/lessons" },
-  { name: "الدروس الشرعية", url: "/lessons" },
   { name: "المكتبة العلمية", url: "/library" },
   { name: "مركز القرآن", url: "/quran-hub" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "الأحاديث النبوية", url: "/hadith" },
   { name: "أعلام العلماء", url: "/scholars" },
-  { name: "الدروس والدورات", url: "/lessons" },
 ])}
 ${linkList("أدوات", [
   { name: "مواقيت الصلاة", url: "/prayer-times" },
@@ -1692,6 +1685,42 @@ ${linkList("أدوات", [
   { name: "لعبة سين جيم", url: "/quiz" },
   { name: "البطاقات التعليمية", url: "/flashcards" },
 ])}`,
+  "/search": `<p>ابحث في الآيات والأحاديث والفتاوى والدروس والكتب والعلماء — نتائج من المحتوى المنشور في المنصة.</p>
+<form role="search" aria-label="نموذج البحث الشامل" action="${escapeHtml(absoluteUrl("/search"))}" method="get">
+  <label for="seo-search-q">كلمة البحث</label>
+  <input id="seo-search-q" type="search" name="q" placeholder="ابحث في المحتوى…" autocomplete="off" dir="rtl" />
+  <button type="submit">بحث</button>
+</form>
+<h2>ما يشمله البحث</h2>
+<ul>
+  <li>القرآن والتفسير والسور</li>
+  <li>الأحاديث والفتاوى والفقه</li>
+  <li>الدروس والكتب والعلماء</li>
+  <li>الأذكار والقصص والموضوعات</li>
+</ul>
+<h2>الفلاتر المدعومة</h2>
+<p>بعد كتابة الاستعلام يمكن تصفية النتائج حسب القسم: قرآن، تفسير، مكتبة، أحاديث، فتاوى، فقه، دروس، علماء، أذكار، قصص.</p>
+<p id="search-empty-state">ابدأ بكتابة كلمة أو عبارة في خانة البحث أعلاه.</p>
+<p id="search-no-results" hidden>لا توجد نتائج مطابقة — جرّب كلمات أخرى أو تصفية مختلفة.</p>
+<p id="search-error" hidden>تعذّر تحميل نتائج البحث مؤقتًا — أعد المحاولة.</p>`,
+  "/quran/recitation-test-ai": `<p>اختبار تلاوة تجريبي: تختار سورة وآية (أو وضعًا حرًا)، ثم تُسمِع تلاوتك ليقارن النظام ما يُسمَع بالنص المرجعي.</p>
+<h2>خطوات الاستخدام</h2>
+<ol>
+  <li>اقرأ التنبيهات ووافق على استخدام الميكروفون.</li>
+  <li>اختر السورة والآية أو الوضع المناسب.</li>
+  <li>اضغط «ابدأ التلاوة» واقرأ بصوت واضح.</li>
+  <li>راجع مطابقة الكلمات والملاحظات بعد الجلسة.</li>
+</ol>
+<h2>إذن الميكروفون</h2>
+<p>يُطلَب إذن الميكروفون قبل بدء الاستماع. إذا رُفِض الإذن لن يبدأ الاختبار — يمكنك تفعيله من إعدادات المتصفح أو الجهاز ثم إعادة المحاولة.</p>
+<h2>ما يقيسه النظام فعلًا</h2>
+<ul>
+  <li>مطابقة الكلمات مع النص المرجعي (حذف أو زيادة أو ترتيب).</li>
+  <li>ثقة التعرّف الصوتي حسب ما يوفّره المتصفح/الجهاز.</li>
+  <li>ملاحظات تجويد تقريبية عند تفعيل وضع «إتقان التجويد» وتوفر الاتصال بالمزوّد — وليست بديلًا عن معلّم متقن.</li>
+</ul>
+<p>لا يُحفَظ التسجيل افتراضيًا ولا يُرسَل صوتك لخوادم المجلس العلمي (Majlisilm). راجع <a href="${escapeHtml(absoluteUrl("/privacy"))}">سياسة الخصوصية</a>.</p>
+<p><a href="${escapeHtml(absoluteUrl("/quran/recitation-test-ai"))}">ابدأ اختبار التلاوة</a></p>`,
   "/hadith/sahih": `<p>مجموعة مختارة من الأحاديث الصحيحة من مصادر معتمدة، مع مداخل إلى علوم الحديث وكتب الرواية.</p>
 ${linkList("أقسام الحديث", [
   { name: "الأحاديث النبوية", url: "/hadith" },

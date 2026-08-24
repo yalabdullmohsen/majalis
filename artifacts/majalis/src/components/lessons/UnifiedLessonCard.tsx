@@ -16,6 +16,7 @@ import {
   computeNextOccurrenceMs,
   formatLessonAppointmentLine,
   formatRelativeTimeDetailed,
+  formatShortLessonTime,
   hasConfirmedLessonSchedule,
   isLessonInProgress,
 } from "@/lib/lesson-time";
@@ -115,6 +116,11 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     ? (appointmentLine || lesson.day || lesson.time)
     : "الوقت قيد التأكيد";
   const placeLine = [lesson.mosque, lesson.region].filter(Boolean).join(" — ");
+  const sessionSubject = lesson.linkedLessons?.[0] || lesson.note || lesson.description;
+  const scheduleLine = [
+    lesson.day,
+    scheduleConfirmed ? (lesson.time || formatShortLessonTime(scheduleTime) || scheduleTime) : "الوقت قيد التأكيد",
+  ].filter(Boolean).join(" · ");
   const compactMeta = [
     lesson.activityType || lesson.category,
     timeChip,
@@ -143,6 +149,12 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           <p className="lesson-unified-card__sheikh">
             المحاضر: {lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")}
           </p>
+        )}
+        {sessionSubject && (
+          <p className="lesson-unified-card__session-subject">{sessionSubject}</p>
+        )}
+        {scheduleLine && (
+          <p className="lesson-unified-card__schedule-line">{scheduleLine}</p>
         )}
         {lesson.organizerName &&
           lesson.organizerName.replace(/^الشيخ(?:ة)?:\s*/u, "") !==

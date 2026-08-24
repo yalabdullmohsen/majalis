@@ -438,7 +438,7 @@ export default function ZakatPage() {
             { href: "/arkan",          label: "أركان الإسلام" },
             { href: "/prayer-ranks",   label: "فضائل الصلاة" },
             { href: "/fiqh",           label: "الفقه الإسلامي" },
-            { href: "/rulings",        label: "الأحكام الشرعية" },
+            { href: "/fiqh-qawaid",    label: "القواعد الفقهية" },
             { href: "/sunan-yawmiyya", label: "السنن اليومية" },
           ].map(({ href, label }) => (
             <Link key={href} href={href} className="zk-related__link">{label}</Link>

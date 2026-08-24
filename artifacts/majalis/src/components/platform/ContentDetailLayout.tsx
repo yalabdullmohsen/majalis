@@ -7,6 +7,7 @@ import { Clock, Copy } from "lucide-react";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { PageShell } from "@/components/layout/PageShell";
+import { dedupeLinksByHref } from "@/lib/link-dedupe";
 
 function estimateReadMinutes(text?: string): number | null {
   if (!text || text.length < 200) return null;
@@ -189,11 +190,12 @@ export function PlatformContentCard({ href, title, meta, tag, summary }: CardPro
 }
 
 export function RelatedLinks({ items }: { items: { href: string; title: string; meta?: string }[] }) {
-  if (items.length === 0) return null;
+  const unique = dedupeLinksByHref(items.map((item) => ({ href: item.href, title: item.title, meta: item.meta })));
+  if (unique.length === 0) return null;
   return (
     <div className="page-card-grid">
-      {items.map((item) => (
-        <PlatformContentCard key={item.href} href={item.href} title={item.title} meta={item.meta} />
+      {unique.map((item) => (
+        <PlatformContentCard key={item.href} href={item.href} title={item.title!} meta={item.meta} />
       ))}
     </div>
   );

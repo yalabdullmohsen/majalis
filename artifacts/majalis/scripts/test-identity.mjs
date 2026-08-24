@@ -16,6 +16,8 @@ const LEGITIMATE_ARABIC = [
   /مجالس العلم(?!ي)/, // «مجالس العلم» كمعنى لغوي — يُسمح بها في المحتوى الديني
   /المجالس العلمية/,
   /مجلس العلم /,
+  /حضور مجالس العلم/,
+  /مجالس العلم والصحبة/,
 ];
 
 /** ملفات لا تُعرض للمستخدم: تعليقات CSS، بذور محتوى ديني، سكربتات خادمية. */
@@ -30,7 +32,7 @@ const SKIP_PATHS = [
 ];
 
 /** بذور المحتوى الديني: نصوص شرعية قد تحوي «مجالس العلم» بمعناها اللغوي. */
-const CONTENT_SEEDS = /\/(src\/lib\/[a-z-]*seed|src\/data|src\/views\/(AdabTalabIlm|DuasQuran))/;
+const CONTENT_SEEDS = /\/(src\/lib\/[a-z-]*seed|src\/data|src\/views\/(AdabTalabIlm|DuasQuran)|src\/lib\/dawah-static-fallback|src\/pages\/quran\/ui\/DuasQuranView)/;
 
 const UI_EXTENSIONS = new Set([".ts", ".tsx", ".json", ".html", ".plist", ".xml"]);
 

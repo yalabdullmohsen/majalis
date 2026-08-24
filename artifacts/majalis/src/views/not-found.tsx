@@ -12,7 +12,7 @@ const SUGGESTIONS = [
   { href: "/fawaid",       label: "الفوائد",           Icon: MessageCircle },
   { href: "/prayer-times", label: "مواقيت الصلاة",     Icon: Clock      },
   { href: "/competitions", label: "المسابقات",         Icon: Compass    },
-  { href: "/rulings",      label: "الأحكام الشرعية",   Icon: Scale      },
+  { href: "/fiqh",         label: "الفقه والأحكام",    Icon: Scale      },
 ] as const;
 
 export default function NotFound() {

@@ -27,7 +27,6 @@ export const ACCORDION_EXPLORE_LINKS = {
   arabic: [
     { href: "/quran-knowledge", label: "القرآن وعلومه" },
     { href: "/adab-talab-ilm", label: "آداب طالب العلم" },
-    { href: "/quran-knowledge", label: "القرآن وعلومه" },
     { href: "/islamic-glossary", label: "المصطلحات الشرعية" },
   ],
   tazkiya: [
