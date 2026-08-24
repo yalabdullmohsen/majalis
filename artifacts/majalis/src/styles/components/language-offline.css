@@ -21,11 +21,11 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.32rem 0.7rem;
-  border: 1.5px solid var(--clr-border, rgba(0,0,0,.12));
+  border: 1.5px solid var(--ds-border, var(--border, rgba(0,0,0,.12)));
   border-radius: 0.55rem;
-  background: var(--clr-surface, #fff);
-  color: var(--clr-ink, #1a1a1a);
-  font-size: 0.82rem;
+  background: var(--ds-surface, var(--surface, #fff));
+  color: var(--ds-textPrimary, var(--text-primary, #1a1a1a));
+  font-size: var(--font-sm, 0.875rem);
   font-weight: 600;
   cursor: pointer;
   transition: border-color .15s;
@@ -40,10 +40,10 @@
   top: calc(100% + 6px);
   inset-inline-end: 0;
   min-width: 200px;
-  background: var(--clr-surface, #fff);
-  border: 1.5px solid var(--clr-border, rgba(0,0,0,.12));
+  background: var(--ds-surfaceElevated, var(--surface-elevated, #fff));
+  border: 1.5px solid var(--ds-border, var(--border, rgba(0,0,0,.12)));
   border-radius: var(--ds-radius-lg);
-  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  box-shadow: var(--mj-sh, 0 8px 24px rgba(0,0,0,.12));
   padding: 0.3rem;
   list-style: none;
   margin: 0;
@@ -56,8 +56,8 @@
   padding: 0.5rem 0.7rem;
   border-radius: var(--ds-radius);
   cursor: pointer;
-  font-size: 0.83rem;
-  color: var(--clr-ink, #1a1a1a);
+  font-size: var(--font-sm, 0.875rem);
+  color: var(--ds-textPrimary, var(--text-primary, #1a1a1a));
   transition: background .12s;
 }
 .lsw-option:hover { background: rgba(23,61,53,.07); }
@@ -84,45 +84,62 @@
   flex-shrink: 0;
 }
 
-/* ── Offline Banner enhanced ── */
+/* ── Offline Banner — مصدر واحد (لا تكرار في index.css) ── */
 .offline-banner {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--ds-space-2);
-  padding: 0.5rem 1rem;
-  background: var(--mj-brand-deep);
-  color: var(--mj-bg);
-  font-size: 0.8rem;
+  gap: var(--ds-space-2, 0.5rem);
+  padding: 0.55rem 1rem;
+  background: var(--mj-brand-deep, #12362c);
+  /* نص فوق سطح داكن: لا تستخدم --mj-bg (يصير داكنًا في الوضع الليلي) */
+  color: var(--on-dark-body, #F8FAFC);
+  font-size: var(--font-sm, 0.875rem);
   font-weight: 600;
+  font-family: var(--font-app, var(--font-primary, inherit));
   text-align: center;
+  direction: rtl;
+  line-height: 1.45;
   animation: ob-slide-in 0.3s ease;
-  z-index: 150;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
 }
 .offline-banner--back {
-  background: var(--mj-brand);
+  background: var(--mj-brand, #1e5f4b);
   animation: ob-slide-in 0.2s ease;
 }
 .offline-banner--pending {
   background: var(--mj-ink-2, #4a5a53);
 }
 .offline-banner__icon { flex-shrink: 0; }
+.offline-banner__text { line-height: 1.45; max-width: 40rem; }
 @keyframes ob-slide-in {
   from { transform: translateY(-100%); opacity: 0; }
   to   { transform: none; opacity: 1; }
 }
 
+html[data-theme="dark"] .offline-banner,
+html.dark .offline-banner {
+  background: var(--surface-brand-strong, #0A1612);
+  color: var(--on-dark-body, #F8FAFC);
+}
+html[data-theme="dark"] .offline-banner--back,
+html.dark .offline-banner--back {
+  background: var(--mj-brand, #5CC095);
+  color: var(--on-accent, #06231A);
+}
+
 /* Dark mode 69 */
 html[data-theme="dark"] .lsw-trigger {
-  background: rgba(255,255,255,.05);
-  border-color: rgba(255,255,255,.12);
-  color: var(--mj-brand-soft);
+  background: var(--ds-surface, var(--surface));
+  border-color: var(--ds-border, var(--border));
+  color: var(--ds-textPrimary, var(--text-primary));
 }
 html[data-theme="dark"] .lsw-menu {
-  background: var(--mj-brand-deep);
-  border-color: rgba(255,255,255,.12);
+  background: var(--ds-surfaceElevated, var(--surface-elevated));
+  border-color: var(--ds-border, var(--border));
 }
-html[data-theme="dark"] .lsw-option { color: var(--mj-brand-soft); }
-html[data-theme="dark"] .lsw-option:hover { background: rgba(23,61,53,.15); }
+html[data-theme="dark"] .lsw-option { color: var(--ds-textPrimary, var(--text-primary)); }
+html[data-theme="dark"] .lsw-option:hover { background: color-mix(in srgb, var(--ds-accent, var(--accent)) 12%, transparent); }
 

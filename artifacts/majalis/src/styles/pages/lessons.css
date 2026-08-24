@@ -290,7 +290,7 @@
 
 .feature-status-badge--done { background: #dcfce7; color: var(--mj-brand); }
 .feature-status-badge--partial { background: #E6EDE9; color: var(--mj-brand-deep); }
-.feature-status-badge--blocked { background: #fee2e2; color: var(--mj-danger-deep); }
+.feature-status-badge--blocked { background: var(--mj-danger-soft, #fee2e2); color: var(--mj-danger-deep); }
 .feature-status-badge--mock { background: #e0e7ff; color: #3730a3; }
 .feature-status-badge--missing { background: #f1f5f9; color: #475569; }
 

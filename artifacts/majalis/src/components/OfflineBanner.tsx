@@ -74,7 +74,7 @@ export function OfflineBanner() {
         <>
           <WifiOff size={14} aria-hidden="true" className="offline-banner__icon" />
           <span className="offline-banner__text">
-            أنت غير متصل — المصحف والأذكار متاحان أوفلاين
+            أنت غير متصل، سيتم عرض المحتوى المحفوظ
             {pending > 0 ? ` · ${pending} تغيير بانتظار المزامنة` : ""}
           </span>
         </>

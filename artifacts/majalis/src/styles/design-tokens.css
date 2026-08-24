@@ -68,6 +68,21 @@
   --font-heading: var(--font-app, "Amiri", "Traditional Arabic", serif);
   --font-body-ui: var(--font-app, "Amiri", "Traditional Arabic", serif);
   --brand-contrast: var(--brand-on-white);
+
+  /*
+   * طبقة DS الدلالية (أسماء ثابتة للمكوّنات الجديدة).
+   * لا تُستبدل القيم هنا — جسر فقط إلى الرموز أعلاه حتى لا تتفرّق الألوان.
+   */
+  --ds-background: var(--bg);
+  --ds-surface: var(--surface);
+  --ds-surfaceElevated: var(--surface-elevated);
+  --ds-textPrimary: var(--text-primary);
+  --ds-textSecondary: var(--text-secondary);
+  --ds-accent: var(--accent);
+  --ds-border: var(--border);
+  --ds-muted: var(--text-muted);
+  --ds-danger: var(--danger);
+  --ds-success: var(--success);
 }
 
 @media (min-width: 768px) {
