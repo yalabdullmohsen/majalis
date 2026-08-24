@@ -350,6 +350,36 @@ describe("checks + report", () => {
     assert.ok(isIgnorablePreviewStatus(rows[1]));
   });
 
+  it("treats Vercel rate-limit fail as ignorable (does not block merge)", () => {
+    const rateRow = {
+      name: "Vercel – majalis-majalis",
+      state: "fail",
+      description: "Deployment rate limited — retry in 24 hours.",
+    };
+    assert.ok(isIgnorablePreviewStatus(rateRow));
+    const r = evaluateEligibility(
+      base({
+        labels: [],
+        files: [{ path: "artifacts/majalis/src/lib/format-date.ts", additions: 2, deletions: 0 }],
+        checks: greenChecks.map((c) =>
+          c.name === "Vercel – majalis-majalis" ? rateRow : c,
+        ).concat([
+          {
+            name: "Vercel – majalis-api-server",
+            state: "fail",
+            description: "Deployment rate limited — retry in 24 hours.",
+          },
+        ]),
+        strictVercel: true,
+      }),
+    );
+    assert.equal(r.eligible, true);
+    assert.equal(r.blockers.length, 0);
+    assert.ok(
+      r.warnings.some((w) => /rate limit|deferred|ignored for merge/i.test(w)),
+    );
+  });
+
   it("formats report with Vercel ignore + production deploy lines", () => {
     const result = evaluateEligibility(
       base({

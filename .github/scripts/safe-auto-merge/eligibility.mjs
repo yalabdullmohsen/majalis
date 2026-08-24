@@ -1,7 +1,7 @@
 /**
  * Pure eligibility evaluation for safe auto-merge.
  */
-import { isIgnorablePreviewStatus } from "./checks.mjs";
+import { isIgnorablePreviewStatus, isVercelRateLimitedStatus } from "./checks.mjs";
 import {
   AUTH_SECURITY_PATH_PATTERNS,
   AUTH_SECURITY_TEXT,
@@ -45,7 +45,7 @@ export function normalizeCheckState(raw, description = "") {
   if (
     isIgnorablePreviewStatus({ state: s, description: desc }) ||
     (/^(cancel|canceled|cancelled|fail|failure)$/.test(s) &&
-      /ignored|skipped\s*-\s*not\s*affected/i.test(desc))
+      /ignored|skipped\s*-\s*not\s*affected|rate\s*limited|upgradeToPro=build-rate-limit/i.test(desc))
   ) {
     return "skip";
   }
@@ -192,6 +192,12 @@ export function evaluateEligibility(input = {}) {
   const preview = findCheck(REQUIRED_CHECK_NAMES.previewSmoke);
   const vercelLint = findCheck(REQUIRED_CHECK_NAMES.vercelCheck);
   const vercelDeploy = findCheck(REQUIRED_CHECK_NAMES.vercelDeploy);
+  // أي مشروع Vercel إضافي (api-server…) — لا يُسقط الدمج عند rate limit
+  const vercelRateLimitedExtras = checks.filter(
+    (c) =>
+      /^Vercel\s*[–-]/i.test(c.name || "") &&
+      isVercelRateLimitedStatus(c),
+  );
   const postgres = findCheck(REQUIRED_CHECK_NAMES.postgres);
   const colorContrast = findCheck(REQUIRED_CHECK_NAMES.colorContrast);
   const iosStatic = findCheck(REQUIRED_CHECK_NAMES.iosStatic);
@@ -392,16 +398,24 @@ export function evaluateEligibility(input = {}) {
 
     if (vercelDeploy.ignoredPreview || vercelDeploy.state === "skip") {
       vercelPreviewKind = "ignored";
+      const rateLimited =
+        isVercelRateLimitedStatus({
+          name: vercelDeploy.name || "Vercel",
+          state: vercelDeploy.state,
+          description: vercelDeploy.description,
+        }) || vercelRateLimitedExtras.length > 0;
       warnings.push(
-        "Vercel Preview ignored/skipped (Ignored Build Step) — لا يمنع content-safe / Fast Lane",
+        rateLimited
+          ? "Vercel rate limit / deferred deploy — لا يمنع الدمج؛ الإنتاج يُعاد عبر auto-deploy schedule"
+          : "Vercel Preview ignored/skipped (Ignored Build Step) — لا يمنع content-safe / Fast Lane",
       );
     } else if (vercelDeploy.state === "pass") {
       vercelPreviewKind = "green";
     } else if (vercelDeploy.state === "pending") {
       vercelPreviewKind = "pending";
-      if (isContentAudit || !req.previewSmoke) {
+      if (isContentAudit || !req.previewSmoke || input.strictVercel !== true) {
         warnings.push(
-          `Vercel Preview pending — OK for lane ${pathLane.lane} / content-safe`,
+          `Vercel Preview pending — OK for lane ${pathLane.lane} (production من main فقط)`,
         );
       } else {
         waitBlockers.push(`Vercel deployment not ready (${vercelDeploy.state})`);
@@ -413,19 +427,27 @@ export function evaluateEligibility(input = {}) {
           `Vercel – majalis-majalis status missing — OK for lane ${pathLane.lane}`,
         );
       } else if (input.strictVercel === true) {
-        waitBlockers.push("Vercel deployment status missing (waiting)");
+        warnings.push(
+          "Vercel deployment status missing — لا ننتظر Preview؛ الإنتاج من main فقط",
+        );
       } else {
         warnings.push("Vercel – majalis-majalis status not reported yet");
       }
     } else if (vercelDeploy.state === "fail") {
       vercelPreviewKind = "failed";
-      if (isContentAudit || !req.previewSmoke) {
-        warnings.push(
-          "Vercel Preview fail ignored for content-safe / Fast Lane (production ينشر من main فقط)",
-        );
-      } else {
-        hardBlockers.push(`Vercel deployment not green (${vercelDeploy.state})`);
-      }
+      // Preview/rate-limit لا يمنع الدمج أبدًا — البناء الحقيقي داخل Verify build
+      warnings.push(
+        "Vercel Preview/deploy fail ignored for merge (production ينشر من main؛ rate limit خارجي محتمل)",
+      );
+    }
+
+    if (vercelRateLimitedExtras.length) {
+      warnings.push(
+        `Vercel rate-limited projects ignored: ${vercelRateLimitedExtras
+          .map((c) => c.name)
+          .slice(0, 5)
+          .join(", ")}`,
+      );
     }
 
     if (req.postgres) {

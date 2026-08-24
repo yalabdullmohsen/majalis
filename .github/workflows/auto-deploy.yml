@@ -136,20 +136,27 @@ jobs:
               return 1
             fi
 
-            # على push فقط نطابق version.json مع الـcommit المدموج
+            # على schedule/dispatch: طابق SHA الإنتاج مع main؛ وإلا نجاح ليّن + إعادة ساعة لاحقًا
             if [ "$EVENT_NAME" != "push" ]; then
-              # schedule/dispatch: نجاح إذا الإنتاج حي؛ طابق إن أمكن
-              body=$(curl -sS --max-time 30 -L "https://www.majlisilm.com/version.json" || true)
-              got=$(echo "$body" | jq -r '.commit // empty' 2>/dev/null || true)
-              echo "version.json (non-push): ${got:-empty} expect=$EXPECT_SHA"
-              if [ -n "$got" ] && [ "$got" = "$EXPECT_SHA" ]; then
+              ok_ver=0
+              got=""
+              for i in 1 2 3 4 5 6; do
+                body=$(curl -sS --max-time 30 -L "https://www.majlisilm.com/version.json" || true)
+                got=$(echo "$body" | jq -r '.commit // empty' 2>/dev/null || true)
+                echo "version.json (schedule) محاولة $i: ${got:-empty} expect=$EXPECT_SHA"
+                if [ -n "$got" ] && [ "$got" = "$EXPECT_SHA" ]; then
+                  ok_ver=1
+                  break
+                fi
+                sleep 20
+              done
+              if [ "$ok_ver" = "1" ]; then
                 echo "version_ok=1" >> "$GITHUB_OUTPUT"
                 echo "deploy_status=matched" >> "$GITHUB_OUTPUT"
-              else
-                echo "version_ok=skip" >> "$GITHUB_OUTPUT"
-                echo "deploy_status=http_ok_sha_pending" >> "$GITHUB_OUTPUT"
+                echo "✓ الإنتاج طابق main ($EXPECT_SHA)"
+                return 0
               fi
-              return 0
+              soft_rate_limit "$got"
             fi
 
             ok_ver=0
