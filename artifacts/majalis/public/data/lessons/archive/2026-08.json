@@ -2,6 +2,60 @@
   "month": "2026-08",
   "items": [
     {
+      "id": "94aa3dce917340b96a2e429b89453581d57e824d",
+      "type": "إعلان",
+      "title_ar": "عن أبي هريرة رضي الله عنه أن رسول الله صلى الله عليه وسلم قال: كان رجل يداين الناس، وكان يقول لفتاه: إذا أنَتيت معسرا",
+      "summary_ar": "عن ابي هريره رضي الله عنه ان رسول الله صلي الله عليه وسلم قال: كان رجل يداين الناس، وكان يقول لفتاه: اذا انتيت معسرا فتجاوز عنه، لعل الله يتجاوز عنا، فلقي الله…",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27626",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T08:58:48.850Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "2c6be9159f12e5c74ef77bf8ba8272f5635e41a6",
+      "type": "إعلان",
+      "title_ar": "One moment, please...",
+      "summary_ar": "One moment, please...",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "web-hoffath.org",
+          "name_ar": "حفّاظ",
+          "url": "https://hoffath.org",
+          "post_url": "https://hoffath.org",
+          "platform": "web"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T08:58:27.980Z",
+      "confidence": 0.65
+    },
+    {
       "id": "14ac7448d15d62059998dd35e0d25f25610e84bc",
       "type": "إعلان",
       "title_ar": "drosq8 Official: Instagram, X | Linktree",
