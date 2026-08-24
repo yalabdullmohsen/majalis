@@ -115,8 +115,9 @@ if (prevEndpoint !== undefined) process.env.INSTAGRAM_PROVIDER_ENDPOINT = prevEn
 console.log("=== Instagram endpoint: رابط API فقط وليس curl ===");
 {
   const { normalizeProviderEndpoint, getInstagramProviderConfig } = await import("./harvest/adapters/instagram-provider.mjs");
-  assert.equal(normalizeProviderEndpoint("https://provider.example/v1").ok, true);
-  assert.equal(normalizeProviderEndpoint("curl https://provider.example -H 'Authorization: Bearer x'").ok, false);
+  assert.equal(normalizeProviderEndpoint("https://api.brightdata.com/datasets/v3").ok, true);
+  assert.equal(normalizeProviderEndpoint("https://provider.example/v1").ok, false);
+  assert.equal(normalizeProviderEndpoint("curl https://api.brightdata.com/x -H Authorization:Bearer leak").ok, false);
   assert.equal(normalizeProviderEndpoint("not-a-url").ok, false);
   const prevEndpoint = process.env.INSTAGRAM_PROVIDER_ENDPOINT;
   const prevKey = process.env.INSTAGRAM_PROVIDER_KEY;
@@ -137,7 +138,7 @@ console.log("=== Instagram endpoint: رابط API فقط وليس curl ===");
 console.log("=== Instagram provider mock ===");
 process.env.INSTAGRAM_INGEST_MODE = "provider";
 process.env.INSTAGRAM_PROVIDER_KEY = "test-key";
-process.env.INSTAGRAM_PROVIDER_ENDPOINT = "https://provider.example";
+process.env.INSTAGRAM_PROVIDER_ENDPOINT = "https://api.brightdata.com/datasets/v3";
 process.env.INSTAGRAM_PROVIDER_MOCK = "1";
 const { fetchViaProvider } = await import("./harvest/adapters/instagram-provider.mjs");
 const mockItems = await fetchViaProvider(
@@ -190,7 +191,7 @@ console.log("=== Instagram probe: unchanged لا يغيّر feed ===");
   const prevLatest = process.env.INSTAGRAM_MOCK_LATEST_ID;
   process.env.INSTAGRAM_INGEST_MODE = "provider";
   process.env.INSTAGRAM_PROVIDER_KEY = "test-key";
-  process.env.INSTAGRAM_PROVIDER_ENDPOINT = "https://provider.example";
+  process.env.INSTAGRAM_PROVIDER_ENDPOINT = "https://api.brightdata.com/datasets/v3";
   process.env.INSTAGRAM_PROVIDER_MOCK = "1";
   process.env.INSTAGRAM_MOCK_LATEST_ID = "mock-nebraas_kw-1";
 

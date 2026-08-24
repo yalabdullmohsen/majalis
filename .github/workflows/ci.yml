@@ -41,6 +41,7 @@ jobs:
       need_fast_lane: ${{ steps.lane.outputs.need_fast_lane }}
       need_mushaf: ${{ steps.lane.outputs.need_mushaf }}
       need_postgres: ${{ steps.lane.outputs.need_postgres }}
+      need_visual: ${{ steps.lane.outputs.need_visual }}
       need_color_contrast: ${{ steps.lane.outputs.need_color_contrast }}
       need_preview_smoke: ${{ steps.lane.outputs.need_preview_smoke }}
       need_policy_tests: ${{ steps.lane.outputs.need_policy_tests }}
@@ -443,7 +444,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh run cancel "${{ github.run_id }}" || true
 
-  # لقطات بصرية — مع كل بناء ناجح (لا تُتخطّى لأن المصحف لم يُلمس)
+  # لقطات بصرية — واجهة/مصحف/risky فقط (محتوى/حصاد يتخطّى دون إسقاط ci-required)
   visual-snapshot:
     name: visual-snapshot
     needs: [classify, build]
@@ -451,7 +452,8 @@ jobs:
       always() &&
       !cancelled() &&
       needs.classify.result == 'success' &&
-      needs.build.result == 'success'
+      needs.build.result == 'success' &&
+      needs.classify.outputs.need_visual == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -515,7 +517,8 @@ jobs:
       always() &&
       !cancelled() &&
       needs.classify.result == 'success' &&
-      needs.build.result == 'success'
+      needs.build.result == 'success' &&
+      needs.classify.outputs.need_color_contrast == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -564,7 +567,8 @@ jobs:
       always() &&
       !cancelled() &&
       needs.classify.result == 'success' &&
-      needs.build.result == 'success'
+      needs.build.result == 'success' &&
+      needs.classify.outputs.need_visual == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -696,6 +700,8 @@ jobs:
           NEED_BUILD: ${{ needs.classify.outputs.need_build }}
           NEED_FAST: ${{ needs.classify.outputs.need_fast_lane }}
           NEED_MUSHAF: ${{ needs.classify.outputs.need_mushaf }}
+          NEED_VISUAL: ${{ needs.classify.outputs.need_visual }}
+          NEED_COLOR: ${{ needs.classify.outputs.need_color_contrast }}
           CLASSIFY_RESULT: ${{ needs.classify.result }}
           FAST_RESULT: ${{ needs.fast-lane.result }}
           STATIC_RESULT: ${{ needs.static-checks.result }}
@@ -722,9 +728,9 @@ jobs:
             echo "| mushaf-measure | $MEASURE_RESULT |"
             echo "| mushaf-gates | $GATES_RESULT |"
             echo "| layout-bands | $BANDS_RESULT |"
-            echo "| visual-snapshot | $VISUAL_RESULT |"
-            echo "| color-contrast | $COLOR_RESULT |"
-            echo "| lhci-home | $LHCI_RESULT |"
+            echo "| visual-snapshot | $VISUAL_RESULT (need=$NEED_VISUAL) |"
+            echo "| color-contrast | $COLOR_RESULT (need=$NEED_COLOR) |"
+            echo "| lhci-home | $LHCI_RESULT (need=$NEED_VISUAL) |"
             echo ""
             echo "بناء واحد فقط (وظيفة \`build\`) — كل البوابات تنزّل dist."
             echo "مسار PR: ٦ صفحات مرجعية × 390×844 على ٤ shards. الكامل ليلاً."
@@ -765,9 +771,9 @@ jobs:
           check_req "mushaf-measure" "$NEED_MUSHAF" "$MEASURE_RESULT"
           check_req "mushaf-gates" "$NEED_MUSHAF" "$GATES_RESULT"
           check_req "layout-bands" "$NEED_MUSHAF" "$BANDS_RESULT"
-          check_req "visual-snapshot" "$NEED_BUILD" "$VISUAL_RESULT"
-          check_req "color-contrast" "$NEED_BUILD" "$COLOR_RESULT"
-          check_req "lhci-home" "$NEED_BUILD" "$LHCI_RESULT"
+          check_req "visual-snapshot" "$NEED_VISUAL" "$VISUAL_RESULT"
+          check_req "color-contrast" "$NEED_COLOR" "$COLOR_RESULT"
+          check_req "lhci-home" "$NEED_VISUAL" "$LHCI_RESULT"
 
           echo "Verify build OK (lane=$LANE)"
 
@@ -790,6 +796,8 @@ jobs:
       - name: Required gates — Skipped is failure
         env:
           NEED_BUILD: ${{ needs.classify.outputs.need_build }}
+          NEED_VISUAL: ${{ needs.classify.outputs.need_visual }}
+          NEED_COLOR: ${{ needs.classify.outputs.need_color_contrast }}
           CLASSIFY_RESULT: ${{ needs.classify.result }}
           VERIFY_RESULT: ${{ needs.verify.result }}
           COLOR_RESULT: ${{ needs.color-contrast.result }}
@@ -803,9 +811,9 @@ jobs:
             echo "|-----|--------|----------------|"
             echo "| classify | $CLASSIFY_RESULT | always |"
             echo "| Verify build | $VERIFY_RESULT | always |"
-            echo "| color-contrast | $COLOR_RESULT | need_build=$NEED_BUILD |"
-            echo "| visual-snapshot | $VISUAL_RESULT | need_build=$NEED_BUILD |"
-            echo "| lhci-home | $LHCI_RESULT | need_build=$NEED_BUILD |"
+            echo "| color-contrast | $COLOR_RESULT | need_color=$NEED_COLOR |"
+            echo "| visual-snapshot | $VISUAL_RESULT | need_visual=$NEED_VISUAL |"
+            echo "| lhci-home | $LHCI_RESULT | need_visual=$NEED_VISUAL |"
           } >> "$GITHUB_STEP_SUMMARY"
 
           if [ "$CLASSIFY_RESULT" != "success" ]; then
@@ -834,7 +842,7 @@ jobs:
             echo "OK optional $name=$result"
           }
 
-          check_req "color-contrast" "$NEED_BUILD" "$COLOR_RESULT"
-          check_req "visual-snapshot" "$NEED_BUILD" "$VISUAL_RESULT"
-          check_req "lhci-home" "$NEED_BUILD" "$LHCI_RESULT"
+          check_req "color-contrast" "$NEED_COLOR" "$COLOR_RESULT"
+          check_req "visual-snapshot" "$NEED_VISUAL" "$VISUAL_RESULT"
+          check_req "lhci-home" "$NEED_VISUAL" "$LHCI_RESULT"
           echo "ci-required OK"

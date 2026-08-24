@@ -38,7 +38,7 @@ describe("path-classifier", () => {
     assert.equal(r.needPolicyTests, true);
   });
 
-  it("content-only does not require mushaf unless Quran/mushaf paths", () => {
+  it("content-only builds without visual/color gates", () => {
     const quiz = classifyChangedPaths([
       "artifacts/majalis/public/data/quiz/العقيدة-011.json",
       "CONTINUATION_PLAN.md",
@@ -47,6 +47,21 @@ describe("path-classifier", () => {
     assert.equal(quiz.needBuild, true);
     assert.equal(quiz.needMushaf, false);
     assert.equal(quiz.needPostgres, false);
+    assert.equal(quiz.needVisual, false);
+    assert.equal(quiz.needColorContrast, false);
+    assert.equal(quiz.requiredChecks.visualSnapshot, false);
+    assert.equal(quiz.outputs.need_visual, "false");
+  });
+
+  it("harvest scripts/data are content-only (no visual)", () => {
+    const r = classifyChangedPaths([
+      "artifacts/majalis/scripts/harvest/adapters/instagram-provider.mjs",
+      "artifacts/majalis/public/data/lessons/feed.json",
+    ]);
+    assert.equal(r.lane, "content-only");
+    assert.equal(r.needBuild, true);
+    assert.equal(r.needVisual, false);
+    assert.equal(r.requiredChecks.visualSnapshot, false);
   });
 
   it("quran/mushaf paths enable mushaf UI gates", () => {
@@ -135,6 +150,8 @@ describe("path-classifier", () => {
     const r = classifyChangedPaths([
       ".github/workflows/vercel-check.yml",
       ".github/workflows/preview-smoke.yml",
+      ".github/workflows/harvest-sources.yml",
+      ".github/workflows/auto-deploy.yml",
       "artifacts/majalis/vercel.json",
     ]);
     assert.equal(r.manualReview, false);
