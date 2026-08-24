@@ -60,6 +60,7 @@ import {
   Settings,
   Shield,
   Shapes,
+  Sparkles,
   Sun,
   Trash2,
   Trophy,
