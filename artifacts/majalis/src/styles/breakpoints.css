@@ -1,0 +1,131 @@
+/**
+ * سلّم نقاط التوقّف الموحّد — المصدر الوحيد للأبعاد.
+ * آيفون: 320/375/390/430 · آيباد: 768/820/1024 · سطح المكتب: 1280/1440/1728
+ * المصحف مستثنى (docs/MUSHAF_SPEC.md + layout-bands).
+ */
+:root {
+  --bp-xs: 320px;
+  --bp-sm: 375px;
+  --bp-md: 390px;
+  --bp-lg: 430px;
+  --bp-tablet: 768px;
+  --bp-tablet-lg: 820px;
+  --bp-desktop: 1024px;
+  --bp-laptop: 1280px;
+  --bp-wide: 1440px;
+  --bp-ultrawide: 1728px;
+
+  --content-max: 42rem; /* ~72ch للنص المتدفّق */
+  --content-max-wide: 48rem; /* ~80ch */
+  --page-pad-x: max(1rem, var(--inset-left, 0px), var(--inset-right, 0px));
+  --touch-min: 44px;
+  --app-vh: 100dvh;
+}
+
+html {
+  overflow-x: clip;
+}
+
+body {
+  min-height: 100dvh;
+  min-height: var(--app-vh);
+  overflow-x: clip;
+}
+
+/* حاوية قراءة موحّدة — لا تمدّد النص على كامل الشاشة العريضة */
+.page-shell,
+.section-lobby,
+.hub-page,
+.fiqh-hub,
+.aqeedah-hub,
+.content-detail-layout,
+.prose-page {
+  width: min(100%, var(--content-max-wide));
+  max-width: var(--content-max-wide);
+  margin-inline: auto;
+  padding-inline: var(--page-pad-x);
+  box-sizing: border-box;
+}
+
+.page-shell--narrow,
+.prose-flow {
+  max-width: var(--content-max);
+}
+
+/* شبكات: 1 → 2 → 3–4 */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+@media (min-width: 768px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .responsive-grid--dense {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.responsive-grid > * {
+  min-height: 0;
+  height: 100%;
+}
+
+/* تمرير أفقي محكوم للجداول/الشرائح — بلا دفع للمستند */
+.scroll-x-safe {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.scroll-x-safe::-webkit-scrollbar {
+  height: 4px;
+}
+
+/* أهداف لمس ≥ 44×44 */
+.touch-target,
+.bottom-nav__tab,
+.ds-filter-toggle,
+.navbar-theme-toggle,
+.navbar-menu-btn {
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+}
+
+/* أفق الجوال: لا تبتلع الترويسة نصف الشاشة */
+@media (max-height: 430px) and (orientation: landscape) {
+  :root {
+    --header-chrome: 44px;
+    --app-header-height: 44px;
+  }
+
+  .navbar-v3__inner,
+  .navbar-v3__search-row,
+  .navbar-ticker-row {
+    min-height: 0;
+  }
+
+  .navbar-ticker-row {
+    display: none;
+  }
+}
+
+/* استثناء المصحف — لا تطبّق قيود الحاوية على قارئ المصحف */
+.mushaf-root,
+.mushaf-page,
+[data-mushaf="1"],
+.mm-reader {
+  max-width: none !important;
+  width: 100% !important;
+}

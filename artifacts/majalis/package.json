@@ -116,6 +116,8 @@
     "test:quran-audio": "node --import tsx src/tests/audio-engine.test.ts",
     "test:nav-active": "node --import tsx src/lib/__tests__/nav-active.test.ts && node --import tsx src/lib/__tests__/scroll-reset-on-nav.test.ts && node --import tsx src/lib/__tests__/critical-routes-no-home-redirect.test.ts && node --import tsx src/lib/__tests__/content-trust-more-page-gate.test.ts && node --import tsx src/lib/__tests__/perf-seo-cache-gate.test.ts && node --import tsx src/lib/__tests__/critical-css-gzip-gate.test.ts && node --import tsx src/hooks/__tests__/useAutoHideBottomNav.test.ts && node --import tsx src/lib/__tests__/scholar-roles.test.ts",
     "test:mobile-nav-dedupe": "node --import tsx src/lib/__tests__/mobile-nav-dedupe.test.ts && node --import tsx src/lib/__tests__/side-nav-drawer-gate.test.ts && node --import tsx src/lib/__tests__/app-navigation.test.ts",
+    "test:responsive-overflow": "playwright test tests/responsive-overflow.spec.ts --project=desktop",
+    "test:responsive-breakpoints-gate": "node --import tsx src/lib/__tests__/responsive-breakpoints-gate.test.ts",
     "test:onboarding-state": "node --import tsx src/lib/__tests__/onboarding-state.test.ts && node --import tsx src/lib/__tests__/first-visit-intro-state.test.ts && node --import tsx src/lib/__tests__/app-start-gate.test.ts && node --import tsx src/lib/__tests__/focus-arrival.test.ts",
     "test:pr602-critical": "node --import tsx src/lib/__tests__/pr602-critical-fixes.test.ts",
     "test:quiz-qa-deeplink": "node --import tsx src/lib/__tests__/quiz-qa-deeplink.test.ts",
