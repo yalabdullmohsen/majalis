@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-23T23:37:42.845Z",
+  "generated_at": "2026-08-24T03:58:03.372Z",
   "dry_run": false,
   "instagram_mode": "provider",
   "instagram": {
@@ -18,8 +18,8 @@
   "instagram_fetch_records_used": 0,
   "sources": 55,
   "fetched": 24,
-  "published": 0,
-  "merged": 24,
+  "published": 22,
+  "merged": 2,
   "failed": [
     {
       "id": "ig-athr_yabka",
@@ -214,23 +214,23 @@
   "last_seen_updates": [
     {
       "id": "web-aayatkw.com",
-      "last_seen_at": "2026-08-23T23:37:15.267Z"
+      "last_seen_at": "2026-08-24T03:57:39.241Z"
     },
     {
       "id": "web-almanabr.org",
-      "last_seen_at": "2026-08-23T23:37:25.421Z"
+      "last_seen_at": "2026-08-24T03:57:48.051Z"
     },
     {
       "id": "web-waheen.net",
-      "last_seen_at": "2026-08-23T23:37:28.579Z"
+      "last_seen_at": "2026-08-24T03:57:50.902Z"
     },
     {
       "id": "telegram-DrosQ8",
-      "last_seen_at": "2026-08-23T23:37:32.891Z"
+      "last_seen_at": "2026-08-24T03:57:54.096Z"
     },
     {
       "id": "web-drosq8-linktree",
-      "last_seen_at": "2026-08-23T23:37:35.543Z"
+      "last_seen_at": "2026-08-24T03:57:57.067Z"
     }
   ],
   "content_changed": true
