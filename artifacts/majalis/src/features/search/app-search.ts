@@ -169,6 +169,20 @@ export async function runAppSearch(
     results = [...corpusHits.filter((h) => !seenHref.has(h.href)), ...results];
   }
 
+  const fiqhHits = searchFiqhLessons(query)
+    .slice(0, 12)
+    .map((h) => ({
+      id: `fiqh:${h.lesson.id}`,
+      kind: "fiqh",
+      title: h.lesson.title,
+      href: h.href,
+      summary: h.path,
+    }));
+  if (fiqhHits.length) {
+    const seenHref = new Set(results.map((r) => r.href));
+    results = [...fiqhHits.filter((h) => !seenHref.has(h.href)), ...results];
+  }
+
   const groups: Record<string, AppSearchResult[]> = {};
   const counts: Record<string, number> = {};
   for (const r of results) {
