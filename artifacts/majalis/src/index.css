@@ -405,128 +405,130 @@ html {
 html[data-theme="dark"] {
   color-scheme: dark;
 
-  --msk-canvas:        #081A16;
-  --msk-canvas-1:      #081A16;
-  --msk-canvas-2:      #12211C;
-  --msk-canvas-glass:  rgba(13,26,20,.93);
-  --msk-manuscript:    #12211C;
-  --msk-manuscript-2:  #182C25;
-  --msk-gold:          #5CC49A;
-  --msk-gold-deep:     #4BA882;
-  --msk-gold-dim:      rgba(92,196,154,.14);
-  --msk-gold-glow:     rgba(92,196,154,.18);
-  --msk-gold-border:   rgba(92,196,154,.22);
+  /* خلفية زمردية هادئة — موحّدة مع theme.css / brand-v4 */
+  --msk-canvas:        #131A18;
+  --msk-canvas-1:      #131A18;
+  --msk-canvas-2:      #1B2421;
+  --msk-canvas-glass:  rgba(19,26,24,.93);
+  --msk-manuscript:    #1B2421;
+  --msk-manuscript-2:  #222D29;
+  /* ذهب يبقى ذهباً — لا يُسطَّح إلى نعناعي */
+  --msk-gold:          #D9B871;
+  --msk-gold-deep:     #C4A35C;
+  --msk-gold-dim:      rgba(217,184,113,.14);
+  --msk-gold-glow:     rgba(217,184,113,.18);
+  --msk-gold-border:   rgba(217,184,113,.28);
   --msk-sky:           #64BEDA;
   --msk-sky-dim:       rgba(100,190,218,.12);
-  --msk-text:          #F5F7F6;
-  --msk-text-2:        #D5E0DC;
-  --msk-text-3:        #C2D0CB;
-  --msk-green:         #5CC49A;
-  --msk-red:           #EF9898;
-  --msk-red-dim:       rgba(239,152,152,.12);
-  --msk-border:        rgba(92,196,154,.10);
-  --msk-border-strong: var(--mj-brand-deep);
-  --msk-divider:       rgba(255,255,255,.05);
+  --msk-text:          #F8FAFC;
+  --msk-text-2:        #E2E8F0;
+  --msk-text-3:        #C5D0CB;
+  --msk-green:         #5CC095;
+  --msk-red:           #F2B8C0;
+  --msk-red-dim:       rgba(242,184,192,.12);
+  --msk-border:        #35443F;
+  --msk-border-strong: #445651;
+  --msk-divider:       rgba(255,255,255,.08);
   --msk-shadow-sm:     0 1px 2px rgba(0,0,0,.40);
   --msk-shadow:        0 4px 12px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.35);
   --msk-shadow-lg:     0 12px 32px rgba(0,0,0,.55);
-  --msk-shadow-gold:   0 0 24px rgba(92,196,154,.15);
+  --msk-shadow-gold:   0 0 24px rgba(217,184,113,.12);
 
-  --majalis-ink:           #F5F7F6;
-  --majalis-ink-soft:      #D5E0DC;
-  --majalis-ink-muted:     #C2D0CB;
+  --majalis-ink:           #F8FAFC;
+  --majalis-ink-soft:      #E2E8F0;
+  --majalis-ink-muted:     #C5D0CB;
   --majalis-charcoal:      #FFFFFF;
-  --majalis-parchment:     #081A16;
-  --majalis-parchment-deep:#12211C;
-  --majalis-panel:         #12211C;
-  --majalis-panel-raised:  #182C25;
-  --majalis-emerald:       #5CC49A;
-  --majalis-emerald-deep:  #4BA882;
-  --majalis-emerald-muted: rgba(92,196,154,.14);
-  --majalis-emerald-soft:  rgba(92,196,154,.08);
+  --majalis-parchment:     #131A18;
+  --majalis-parchment-deep:#1B2421;
+  --majalis-panel:         #1B2421;
+  --majalis-panel-raised:  #222D29;
+  --majalis-emerald:       #5CC095;
+  --majalis-emerald-deep:  #4AA882;
+  --majalis-emerald-muted: rgba(92,192,149,.14);
+  --majalis-emerald-soft:  rgba(92,192,149,.08);
   --majalis-blue:          #64BEDA;
   --majalis-blue-deep:     #4EA8C4;
   --majalis-blue-soft:     rgba(100,190,218,.10);
-  --majalis-brass:         #5CC49A;
-  --majalis-brass-deep:    #4BA882;
-  --majalis-brass-soft:    rgba(92,196,154,.08);
-  --majalis-sage:          #182C25;
-  --majalis-danger:        #EF9898;
-  --majalis-danger-muted:  rgba(239,152,152,.12);
-  --majalis-success:       #5CC49A;
-  --majalis-warning:       #5CC49A;
-  --majalis-line:          rgba(92,196,154,.12);
-  --majalis-line-strong:   var(--mj-brand-deep);
+  --majalis-brass:         #D9B871;
+  --majalis-brass-deep:    #C4A35C;
+  --majalis-brass-soft:    rgba(217,184,113,.10);
+  --majalis-sage:          #222D29;
+  --majalis-danger:        #F2B8C0;
+  --majalis-danger-muted:  rgba(242,184,192,.12);
+  --majalis-success:       #7BD6AE;
+  --majalis-warning:       #D9B871;
+  --majalis-line:          #35443F;
+  --majalis-line-strong:   #445651;
   --majalis-shadow:        0 4px 12px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.35);
   --majalis-shadow-sm:     0 1px 2px rgba(0,0,0,.40);
   --majalis-shadow-lg:     0 12px 32px rgba(0,0,0,.55);
   --majalis-shadow-xl:     0 24px 64px rgba(0,0,0,.65);
-  --majalis-gold:          #5CC49A;
-  --majalis-gold-light:    rgba(92,196,154,.18);
-  --majalis-ivory:         #081A16;
+  --majalis-gold:          #D9B871;
+  --majalis-gold-light:    rgba(217,184,113,.18);
+  --majalis-ivory:         #131A18;
 
-  --clr-bg:          #081A16;
-  --clr-surface:     #12211C;
-  --clr-border:      rgba(92,196,154,.12);
-  --clr-divider:     rgba(255,255,255,.05);
-  --clr-text-1:      #F5F7F6;
-  --clr-text-2:      #D5E0DC;
+  --clr-bg:          #131A18;
+  --clr-surface:     #1B2421;
+  --clr-border:      #35443F;
+  --clr-divider:     rgba(255,255,255,.08);
+  --clr-text-1:      #F8FAFC;
+  --clr-text-2:      #E2E8F0;
 
-  --bg-card:   #12211C;
-  --bg-base:   #081A16;
-  --text-base: #F5F7F6;
-  --text-body: #D5E0DC;
-  --text-muted:#C2D0CB;
+  --bg-card:   #1B2421;
+  --bg-base:   #131A18;
+  --text-base: #F8FAFC;
+  --text-body: #E2E8F0;
+  --text-muted:#C5D0CB;
 
-  --v2-green:        #5CC49A;
-  --v2-green-deep:   #4BA882;
-  --v2-green-soft:   rgba(92,196,154,.08);
-  --v2-green-mid:    rgba(92,196,154,.40);
-  --v2-gold:         #5CC49A;
-  --v2-gold-soft:    rgba(92,196,154,.08);
-  --v2-ink:          #F5F7F6;
-  --v2-ink-2:        #D5E0DC;
-  --v2-ink-3:        #C2D0CB;
-  --v2-surface-0:    #12211C;
-  --v2-surface-1:    #182C25;
-  --v2-surface-2:    #1F3830;
-  --v2-border:       rgba(92,196,154,.12);
-  --v2-border-soft:  rgba(255,255,255,.05);
+  --v2-green:        #5CC095;
+  --v2-green-deep:   #4AA882;
+  --v2-green-soft:   rgba(92,192,149,.08);
+  --v2-green-mid:    rgba(92,192,149,.40);
+  --v2-gold:         #D9B871;
+  --v2-gold-soft:    rgba(217,184,113,.10);
+  --v2-ink:          #F8FAFC;
+  --v2-ink-2:        #E2E8F0;
+  --v2-ink-3:        #C5D0CB;
+  --v2-surface-0:    #1B2421;
+  --v2-surface-1:    #222D29;
+  --v2-surface-2:    #2A3733;
+  --v2-border:       #35443F;
+  --v2-border-soft:  rgba(255,255,255,.08);
   --v2-shadow-1:     0 1px 2px rgba(0,0,0,.40);
   --v2-shadow-2:     0 4px 12px rgba(0,0,0,.45);
   --v2-shadow-3:     0 12px 32px rgba(0,0,0,.55);
   --v2-shadow-4:     0 24px 64px rgba(0,0,0,.65);
 
-  --color-parchment: #081A16;
-  --color-line:      rgba(92,196,154,.12);
-  --majalis-accent:  #5CC49A;
-  --majalis-surface-2: #182C25;
-  --majalis-surface-hover: rgba(92,196,154,.06);
-  --majalis-surface-muted: #182C25;
-  --ds-surface-2: #182C25;
-  --mark-green: #5CC49A;
+  --color-parchment: #131A18;
+  --color-line:      #35443F;
+  --majalis-accent:  #D9B871;
+  --majalis-surface-2: #222D29;
+  --majalis-surface-hover: rgba(92,192,149,.08);
+  --majalis-surface-muted: #222D29;
+  --ds-surface-2: #222D29;
+  --mark-green: #5CC095;
 }
 
 html[data-theme="dark"] body {
-  background-color: #081A16;
-  color: #F7FAF9;
+  background-color: #131A18;
+  color: #F8FAFC;
 }
 
 /* WCAG AA — focus-visible في الوضع الليلي */
 
 html[data-theme="dark"] :focus-visible {
-  outline-color: #5CC49A !important;
+  outline-color: #7BD6AE !important;
   outline-offset: 3px !important;
 }
 
-/* تحسين تباين روابط الملاحة في dark mode */
+/* روابط: نعناعي فاتح مقروء — لا ذهب للنصوص الطويلة */
 
 html[data-theme="dark"] a {
-  color: #7DD4B0;
+  color: #7BD6AE;
 }
 
 html[data-theme="dark"] a:hover {
-  color: #5CC49A;
+  color: #A7E4C8;
 }
 
 /* Alexandria هو الخط الموحَّد الوحيد لواجهة المنصة (2026-07-18) — كلا خياري

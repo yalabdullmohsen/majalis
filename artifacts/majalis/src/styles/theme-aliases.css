@@ -159,10 +159,12 @@ html.dark,
   --surface-3: var(--mj-surface-3, #2A3733);
   --surface-muted: var(--mj-surface-2);
   --surface-brand: var(--mj-brand-soft);
-  --surface-brand-solid: var(--mj-brand);
-  --surface-brand-strong: var(--mj-brand-deep);
-  --on-brand: #06231A;
-  --on-brand-secondary: #0E2A22;
+  /* أسطح العلامة الغامقة: نص أبيض — الأزرار النعناعية عبر --text-on-brand */
+  --surface-brand-solid: #12362C;
+  --surface-brand-strong: #0A1612;
+  --on-brand: #FFFFFF;
+  --on-brand-secondary: #F8FAFC;
+  --on-brand-tertiary: #E8EEEC;
   --on-accent: #06231A;
   --surface-inverse: var(--mj-bg);
   --surface-elevated: var(--mj-surface-2);
@@ -177,6 +179,7 @@ html.dark,
   --text-primary: var(--mj-ink);
   --text-muted: var(--mj-muted);
   --text-meta: var(--mj-muted);
+  /* نص فوق زر نعناعي فقط */
   --text-on-brand: #06231A;
   --on-dark-strong: #FFFFFF;
   --on-dark-body: #F8FAFC;
@@ -185,8 +188,8 @@ html.dark,
   --text-on-dark: var(--on-dark-strong);
   --text-on-dark-secondary: var(--on-dark-secondary);
   --text-primary-inverse: var(--on-dark-strong);
-  --text-brand: var(--mj-brand);
-  --text-brand-deep: var(--accent-strong, #7BD6AE);
+  --text-brand: #7BD6AE;
+  --text-brand-deep: #A7E4C8;
 
   --border: var(--mj-hairline);
   --border-subtle: var(--mj-hairline);
@@ -199,6 +202,7 @@ html.dark,
   --brand-active: var(--mj-brand);
   --brand-soft: var(--mj-brand-soft);
   --brand-deep: var(--mj-brand-deep);
+  /* نعناعي للأزرار/الحالات — الذهب عبر --gold / --mj-accent فقط */
   --accent: var(--mj-brand);
   --accent-soft: var(--mj-brand-soft);
   --gold: var(--mj-accent);
@@ -209,9 +213,9 @@ html.dark,
   --em-100: var(--mj-brand-soft);
   --em-500: var(--mj-brand);
   --em-600: var(--mj-brand);
-  --em-700: var(--mj-brand);
-  --em-800: var(--mj-brand-deep);
-  --em-900: var(--mj-brand-deep);
+  --em-700: #12362C;
+  --em-800: #0E1C17;
+  --em-900: #0A1612;
   --em-950: var(--mj-bg);
 
   --n-0: var(--mj-surface);
@@ -224,9 +228,11 @@ html.dark,
   --color-primary-foreground: #06231A;
 
   --majalis-emerald: var(--mj-brand);
-  --majalis-emerald-deep: var(--mj-brand);
+  --majalis-emerald-deep: #4AA882;
   --majalis-parchment: var(--mj-bg);
-  --msk-gold: var(--mj-brand);
+  --majalis-gold: var(--mj-accent);
+  --majalis-brass: var(--mj-accent);
+  --msk-gold: var(--mj-accent);
   --msk-canvas: var(--mj-bg);
   --msk-text: var(--mj-ink);
   --msk-text-2: var(--mj-ink-2);

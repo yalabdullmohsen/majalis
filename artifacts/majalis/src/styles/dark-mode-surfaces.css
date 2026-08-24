@@ -317,7 +317,7 @@ html[data-theme="dark"] input::placeholder,
 html[data-theme="dark"] textarea::placeholder,
 html.dark input::placeholder,
 html.dark textarea::placeholder {
-  color: var(--txt-muted, #9FB0AB);
+  color: var(--txt-muted, #C5D0CB);
   opacity: 1;
 }
 
@@ -326,7 +326,7 @@ html[data-theme="dark"] .bottom-nav__tab,
 html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab,
 html.dark .bottom-nav__tab,
 html.dark .bottom-nav--v2 .bottom-nav__tab {
-  color: var(--txt-muted, #9FB0AB) !important;
+  color: var(--txt-muted, #C5D0CB) !important;
 }
 html[data-theme="dark"] .bottom-nav__tab.is-active,
 html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
@@ -615,4 +615,139 @@ html.dark .quran-hub-card,
 html[data-theme="dark"] .quran-hub-page,
 html.dark .quran-hub-page {
   color: var(--on-dark-body, var(--txt-primary, #F8FAFC)) !important;
+}
+
+/* ── شبكة أمان عامة: بطاقات / شيتات / تبويبات ليلاً ── */
+html[data-theme="dark"] :where(
+  .hub-card,
+  .topic-card,
+  .fiqh-hub-card,
+  .content-card,
+  .source-card,
+  .app-sheet,
+  .app-bottom-sheet,
+  .more-sheet,
+  .more-bottom-sheet,
+  .global-search-modal,
+  .search-suggestions-panel
+),
+html.dark :where(
+  .hub-card,
+  .topic-card,
+  .fiqh-hub-card,
+  .content-card,
+  .source-card,
+  .app-sheet,
+  .app-bottom-sheet,
+  .more-sheet,
+  .more-bottom-sheet,
+  .global-search-modal,
+  .search-suggestions-panel
+) {
+  background-color: var(--surface-1, #1B2421);
+  border-color: var(--border-subtle, #35443F);
+  color: var(--txt-primary, #F8FAFC);
+}
+
+html[data-theme="dark"] :where(
+  .hub-card__title,
+  .topic-card__title,
+  .fiqh-hub-card__title,
+  .content-card__title,
+  .source-card__title,
+  .app-sheet__title,
+  .more-sheet-item__label
+),
+html.dark :where(
+  .hub-card__title,
+  .topic-card__title,
+  .fiqh-hub-card__title,
+  .content-card__title,
+  .source-card__title,
+  .app-sheet__title,
+  .more-sheet-item__label
+) {
+  color: var(--txt-primary, #F8FAFC) !important;
+}
+
+html[data-theme="dark"] :where(
+  .hub-card__desc,
+  .topic-card__desc,
+  .fiqh-hub-card__desc,
+  .content-card__desc,
+  .source-card__meta,
+  .more-sheet-item__hint
+),
+html.dark :where(
+  .hub-card__desc,
+  .topic-card__desc,
+  .fiqh-hub-card__desc,
+  .content-card__desc,
+  .source-card__meta,
+  .more-sheet-item__hint
+) {
+  color: var(--txt-secondary, #E2E8F0) !important;
+}
+
+/* منع حبر داكن صريح فوق خلفية ليلية */
+html[data-theme="dark"] :where(
+  [style*="color:#000"],
+  [style*="color: #000"],
+  [style*="color:#111"],
+  [style*="color: #111"],
+  [style*="color:#16241E"],
+  [style*="color:rgb(0, 0, 0)"]
+),
+html.dark :where(
+  [style*="color:#000"],
+  [style*="color: #000"],
+  [style*="color:#111"],
+  [style*="color: #111"],
+  [style*="color:#16241E"],
+  [style*="color:rgb(0, 0, 0)"]
+) {
+  color: var(--txt-primary, #F8FAFC) !important;
+}
+
+/* زخارف/نقوش — لا تغطي النص */
+html[data-theme="dark"] :where(
+  .islamic-pattern,
+  .geo-pattern,
+  .page-hero-mj::before,
+  .page-hero-mj::after,
+  .m2030-hero::before,
+  [class*="star-pattern"],
+  [class*="ornament"]
+),
+html.dark :where(
+  .islamic-pattern,
+  .geo-pattern,
+  .page-hero-mj::before,
+  .page-hero-mj::after,
+  .m2030-hero::before,
+  [class*="star-pattern"],
+  [class*="ornament"]
+) {
+  opacity: 0.12 !important;
+}
+
+/* أزرار رجوع/إغلاق على أسطح داكنة */
+html[data-theme="dark"] :where(
+  .page-back,
+  .sheet-close,
+  .app-sheet__close,
+  .modal-close,
+  [aria-label="إغلاق"],
+  [aria-label="رجوع"]
+),
+html.dark :where(
+  .page-back,
+  .sheet-close,
+  .app-sheet__close,
+  .modal-close,
+  [aria-label="إغلاق"],
+  [aria-label="رجوع"]
+) {
+  color: var(--txt-primary, #F8FAFC) !important;
+  border-color: var(--border-strong, #445651);
 }
