@@ -5,6 +5,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { classifyWomenAttendance } from "../lib/lesson-women-attendance.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
@@ -92,7 +93,12 @@ function extractStartDate(description) {
 
 function rowToCsvRecord(row, externalKey, courseLinkedTitles) {
   const isCourse = String(row.title || "").includes("الدورة العلمية التأصيلية");
-  const hasWomen = /نساء/u.test(String(row.description || ""));
+  const { womenAttendance } = classifyWomenAttendance([
+    row.title,
+    row.description,
+    row.mosque,
+  ].filter(Boolean).join("\n"), { venue: row.mosque });
+  const hasWomen = womenAttendance === "متاح";
   const coursePrefix = isCourse ? String(row.title).split(" — ")[0]?.trim() : "";
 
   return {

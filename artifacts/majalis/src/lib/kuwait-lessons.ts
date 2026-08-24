@@ -19,6 +19,7 @@ import {
   resolveLessonTimeWindow,
 } from "@/lib/lesson-time";
 import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
+import { classifyWomenAttendance } from "@/lib/lesson-women-attendance";
 
 export type ActivityType = "درس" | "دورة";
 
@@ -57,7 +58,10 @@ export type KuwaitLessonRecord = {
   recurring?: boolean;
   courseId?: string;
   isCourse?: boolean;
+  /** @deprecated استخدم womenAttendance === "متاح" */
   hasWomenSection?: boolean;
+  womenAttendance?: "متاح" | "men_only";
+  womenAttendanceNote?: string;
   /** true فقط إذا كان الدرس للنساء فقط (audience = نساء) */
   isWomenOnly?: boolean;
   source?: "supabase" | "seed";
@@ -234,6 +238,19 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
   const rawId = String(row.external_key || row.id || "").replace(/:/g, "-");
   const id = canonicalizeLessonPublicId(rawId);
   const linkedLessons = Array.isArray(row.linked_titles) ? row.linked_titles : undefined;
+  const women = classifyWomenAttendance(
+    {
+      title: row.title,
+      description: row.description,
+      mosque: row.mosque,
+      venue_type: row.venue_type,
+      women_section: row.women_section,
+      schedule: row.schedule,
+      keywords: tags,
+      linked_titles: linkedLessons,
+    },
+    { venue: row.mosque, venueType: row.venue_type },
+  );
 
   const partialLesson = enrichScheduleFields({
     id,
@@ -262,10 +279,10 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     streamUrl: row.live_url,
     siteUrl: row.book_url,
     isCourse: Boolean(row.is_course),
-    // isWomenOnly = true فقط عند وجود نص صريح (audience = نساء)
-    // hasWomenSection = true عند وجود مكان مخصص للنساء — بمعزل عن audience
     isWomenOnly: row.audience === "نساء",
-    hasWomenSection: Boolean(row.has_women_section) || row.audience === "نساء",
+    womenAttendance: women.womenAttendance,
+    womenAttendanceNote: women.womenAttendanceNote,
+    hasWomenSection: women.womenAttendance === "متاح",
     courseId: row.course_id,
     recurring: row.is_recurring !== false && !row.end_date,
     archivedAt: row.archived_at || null,

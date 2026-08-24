@@ -5,6 +5,7 @@ import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { validateLessonDraft, buildExternalKey } from "./content-validator.mjs";
 import { writeRevisionLogs } from "./audit-revision.mjs";
 import { sendMessage } from "../telegram/bot.mjs";
+import { classifyWomenAttendance } from "../lesson-women-attendance.mjs";
 
 async function sendTelegramNewLesson(title, speaker, lessonId) {
   const chatId = String(process.env.TELEGRAM_ADMIN_CHAT_ID || "").trim();
@@ -20,9 +21,19 @@ function mapDraftToLesson(extracted, opts = {}) {
   const d = extracted || {};
   const sourceUrl = opts.sourceUrl;
   const hasLive = Boolean(d.has_live_stream || d.live_url);
-  const hasWomen = Boolean(
-    d.has_women_section || (d.women_section && String(d.women_section).trim()),
-  );
+  const corpus = [
+    d.title,
+    d.description,
+    d.mosque,
+    d.location,
+    d.women_section,
+    d.raw_ocr_text,
+  ].filter(Boolean).join("\n");
+  const { womenAttendance } = classifyWomenAttendance(corpus, {
+    venue: d.mosque || d.location,
+    venueType: d.venue_type,
+  });
+  const hasWomen = womenAttendance === "متاح";
   const startDate = d.start_date || d.gregorian_date || null;
   const keywords = Array.isArray(d.keywords) ? d.keywords.filter(Boolean) : [];
 

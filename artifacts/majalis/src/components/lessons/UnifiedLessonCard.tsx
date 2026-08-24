@@ -30,13 +30,21 @@ type Props = {
   onToggleRegister?: () => void;
 };
 
-function MetaCell({ label, value }: { label: string; value?: string | number }) {
+function MetaCell({
+  label,
+  value,
+  showEmpty = false,
+}: {
+  label: string;
+  value?: string | number;
+  showEmpty?: boolean;
+}) {
   const text = value != null && value !== "" ? cleanDisplayText(String(value)) : "";
-  if (!text) return null;
+  if (!text && !showEmpty) return null;
   return (
     <div className="lesson-unified-card__meta-cell">
       <span className="lesson-unified-card__meta-label">{label}</span>
-      <strong>{text}</strong>
+      <strong>{text || "لم يذكر"}</strong>
     </div>
   );
 }
@@ -115,7 +123,13 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
   const timeChip = scheduleConfirmed
     ? (appointmentLine || lesson.day || lesson.time)
     : "الوقت قيد التأكيد";
-  const placeLine = [lesson.mosque, lesson.region].filter(Boolean).join(" — ");
+  const displayDate = lesson.gregorianDate || "";
+  const displayDay = lesson.day || "";
+  const displayTime = scheduleConfirmed
+    ? (lesson.time || formatShortLessonTime(scheduleTime) || scheduleTime || "")
+    : "لم يذكر";
+  const displayPlace = lesson.mosque || "";
+  const placeLine = [displayPlace, lesson.region].filter(Boolean).join(" — ");
   const sessionSubject = lesson.linkedLessons?.[0] || lesson.note || lesson.description;
   const scheduleLine = [
     lesson.day,
@@ -185,11 +199,19 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
         )}
 
         <div className={`lesson-unified-card__meta${compact ? " lesson-unified-card__meta--compact" : ""}`}>
-          {!compact && <MetaCell label="نوع النشاط" value={lesson.activityType} />}
-          {!compact && <MetaCell label="الموعد" value={appointmentLine || "الوقت قيد التأكيد"} />}
-          {!compact && <MetaCell label="المكان" value={lesson.mosque} />}
-          {!compact && <MetaCell label="المنطقة" value={lesson.region} />}
-          {!compact && <MetaCell label="المحافظة" value={lesson.governorate} />}
+          {!compact && <MetaCell label="نوع النشاط" value={lesson.activityType} showEmpty />}
+          {!compact && <MetaCell label="التاريخ" value={displayDate} showEmpty />}
+          {!compact && <MetaCell label="اليوم" value={displayDay} showEmpty />}
+          {!compact && <MetaCell label="الوقت" value={displayTime} showEmpty />}
+          {!compact && <MetaCell label="المكان" value={displayPlace} showEmpty />}
+          {!compact && lesson.womenAttendance === "متاح" && (
+            <MetaCell
+              label="حضور النساء"
+              value={lesson.womenAttendanceNote || "متاح"}
+            />
+          )}
+          {!compact && lesson.region && <MetaCell label="المنطقة" value={lesson.region} />}
+          {!compact && lesson.governorate && <MetaCell label="المحافظة" value={lesson.governorate} />}
           {!compact && lesson.linkedLessons && lesson.linkedLessons.length > 0 && (
             <MetaCell label="الجلسات" value={lesson.linkedLessons.join(" · ")} />
           )}

@@ -122,7 +122,7 @@
     "test:pr602-critical": "node --import tsx src/lib/__tests__/pr602-critical-fixes.test.ts",
     "test:quiz-qa-deeplink": "node --import tsx src/lib/__tests__/quiz-qa-deeplink.test.ts",
     "test:phase1-quality": "node --import tsx src/lib/__tests__/phase1-code-quality.test.ts",
-    "test:lessons-domain": "node --import tsx src/features/lessons/application/__tests__/load-lesson-detail.test.ts",
+    "test:lessons-domain": "node --import tsx src/features/lessons/application/__tests__/load-lesson-detail.test.ts && node --import tsx src/lib/__tests__/lesson-women-attendance.test.ts",
     "test:lessons-inflight-dedup": "node --import tsx src/lib/__tests__/lessons-service-inflight-dedup.test.ts",
     "test:harvest": "node scripts/test-harvest-gates.mjs",
     "harvest": "node scripts/harvest/run.mjs",
