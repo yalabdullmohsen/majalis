@@ -21,6 +21,21 @@ const EXTRACTION_PHRASES = [
   /نص\s+تجريبي/giu,
 ];
 
+/** إزالة أرقام تسلسل الدروس/الحلقات من العناوين المعروضة */
+export function stripLessonSeriesNumbers(text: string | null | undefined): string {
+  if (!text) return "";
+  return String(text)
+    .replace(/[([]\s*[٠-٩0-9]{1,4}\s*[)\]]/gu, " ")
+    .replace(
+      /(?:^|\s)(?:ال)?(?:حلقة|حلقات|درس|دروس|محاضرة|محاضرات|لقاء|جلسة)\s*(?:رقم|#)?\s*[٠-٩0-9]{1,3}(?=\s|$|[،,.])/giu,
+      " ",
+    )
+    .replace(/#\s*[٠-٩0-9]+\b/gu, " ")
+    .replace(/\s*[—–\-|]\s*[٠-٩0-9]{1,3}\s*$/u, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 /** Clean user-visible text from markdown artifacts. */
 export function displayText(text: string | null | undefined): string {
   if (!text) return "";
@@ -39,5 +54,5 @@ export function cleanDisplayText(text: string | null | undefined): string {
     value = value.replace(pattern, " ").replace(/\s+/g, " ").trim();
   }
 
-  return stripEmoji(cleanTimeText(value));
+  return stripLessonSeriesNumbers(stripEmoji(cleanTimeText(value)));
 }
