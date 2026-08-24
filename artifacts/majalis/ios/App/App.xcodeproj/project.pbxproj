@@ -46,6 +46,7 @@
 		AD11BF06A1B2C3D4E5F6071890 /* adhan-seq-makkah-01.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR06A1B2C3D4E5F6071890 /* adhan-seq-makkah-01.caf */; };
 		AD11BF07A1B2C3D4E5F6071890 /* adhan-seq-makkah-02.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR07A1B2C3D4E5F6071890 /* adhan-seq-makkah-02.caf */; };
 		AD11BF08A1B2C3D4E5F6071890 /* adhan-seq-makkah-03.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR08A1B2C3D4E5F6071890 /* adhan-seq-makkah-03.caf */; };
+		AD11BF09A1B2C3D4E5F6071890 /* adhan-seq-makkah-04.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR09A1B2C3D4E5F6071890 /* adhan-seq-makkah-04.caf */; };
 		AD11BF10A1B2C3D4E5F6071890 /* adhan-short-makkah-fajr.caf in Resources */ = {isa = PBXBuildFile; fileRef = AD11FR10A1B2C3D4E5F6071890 /* adhan-short-makkah-fajr.caf */; };
 /* End PBXBuildFile section */
 
@@ -426,7 +427,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = 5D8TX37HTS;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PrayerLiveActivity/Info.plist;
@@ -453,7 +454,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = 5D8TX37HTS;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PrayerLiveActivity/Info.plist;
@@ -590,7 +591,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = 5D8TX37HTS;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -614,7 +615,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = 5D8TX37HTS;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;

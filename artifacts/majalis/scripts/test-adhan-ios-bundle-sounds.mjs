@@ -18,12 +18,21 @@ const required = [
   "adhan-short-egypt.caf",
   "adhan-short-aqsa.caf",
   "adhan-short-takbeerat.caf",
+  "adhan-seq-makkah-01.caf",
+  "adhan-seq-makkah-02.caf",
+  "adhan-seq-makkah-03.caf",
+  "adhan-seq-makkah-04.caf",
+  "adhan-short-makkah-fajr.caf",
 ];
 
 for (const name of required) {
   assert.ok(existsSync(resolve(sounds, name)), `مفقود Sounds/${name}`);
   assert.ok(existsSync(resolve(app, name)), `مفقود App/${name} (جذر Bundle)`);
   assert.ok(pbx.includes(`${name} in Resources`), `${name} غير مدرج في Copy Bundle Resources`);
+  assert.ok(
+    new RegExp(`\\/\\* ${name.replace(/\./g, "\\.")} in Resources \\*\\/ = \\{isa = PBXBuildFile`).test(pbx),
+    `${name} بلا PBXBuildFile (مرجع معلق)`,
+  );
 }
 
 assert.ok(!pbx.includes("path = Sounds/adhan-short"), "مسار FileRef يجب أن يكون بجذر App لا Sounds/");
