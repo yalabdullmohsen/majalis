@@ -399,6 +399,7 @@ const PATHS = [
   "/qa/:rest*",
   "/quran-hub/numbers",
   "/quran-hub/qiraat",
+  "/quran-hub/seven-ahruf",
   "/quran-hub/tajweed",
   "/quran-hub/tajweed/:chapter",
   "/quran-hub/terms",

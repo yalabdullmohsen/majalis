@@ -438,7 +438,8 @@
     "test:mushaf-ayah-sheet": "node --import tsx src/lib/__tests__/mushaf-ayah-sheet-gate.test.ts",
     "test:mushaf-line-overflow": "node --import tsx src/lib/__tests__/mushaf-line-overflow-gate.test.ts",
     "verify:fiqh-registry": "node --import tsx src/lib/__tests__/fiqh-registry-gate.test.ts",
-    "test:tarteel-latency": "node --import tsx src/lib/recitation-ai/__tests__/tarteel-latency-gate.test.ts"
+    "test:tarteel-latency": "node --import tsx src/lib/recitation-ai/__tests__/tarteel-latency-gate.test.ts",
+    "test:seven-ahruf-gate": "node --import tsx src/lib/__tests__/seven-ahruf-gate.test.ts"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
