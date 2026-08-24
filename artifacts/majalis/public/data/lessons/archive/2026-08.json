@@ -2,6 +2,843 @@
   "month": "2026-08",
   "items": [
     {
+      "id": "3db6566f0e2a502060b46424ef09c8caca5edbf3",
+      "type": "إعلان",
+      "title_ar": "⁨ تكريم الفائزين بمسابقة #موضي_برجس_السور رحمها الله -الثالثة- لحفظ القرآن الكريم بحضور الشيخ د. #عثمان_الخميس ⁩",
+      "summary_ar": "⁨ تكريم الفائزين بمسابقه #موضي_برجس_السور رحمها الله -الثالثه- لحفظ القران الكريم بحضور الشيخ د. #عثمان_الخميس ⁩ Photo by مسجد موضي السور on March 10, 2026.",
+      "sheikh": "#عثمان_الخميس 🌙✨⁩",
+      "place": "موضي السور on March 10",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-moudhi_mosque",
+          "name_ar": "مسجد موضي السور",
+          "url": "https://instagram.com/moudhi_mosque",
+          "post_url": "https://www.instagram.com/p/DVtuzKbjQIv/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:38:31.246Z",
+      "confidence": 0.85
+    },
+    {
+      "id": "3713e3de719eee7825b324cd0b47c9e691d081bb",
+      "type": "إعلان",
+      "title_ar": "الخواطر الأسبوعية(١١)",
+      "summary_ar": "الخواطر الاسبوعيه(١١) \"سلامه الصدر\" مع الشيخ عايد باتع العتيبي الاربعاء ٥/ ٨ Photo by مسجد مبارك الصيفي ووالديه، رحمهم الله on August 03, 2026. Puede ser una i…",
+      "sheikh": "عايد باتع العتيبي",
+      "place": "مبارك الصيفي ووالديه",
+      "audience": "عام",
+      "starts_at": "2026-08-05T00:00:00.000Z",
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-masjid_mubark_alsaifi",
+          "name_ar": "مسجد مبارك الصيفي ووالديه",
+          "url": "https://instagram.com/masjid_mubark_alsaifi",
+          "post_url": "https://www.instagram.com/p/DblxEX3AY1w/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:37:33.344Z",
+      "confidence": 0.95
+    },
+    {
+      "id": "5b3fa3511fd80095d69ac2ae9c971d9716e250bc",
+      "type": "خطبة",
+      "title_ar": "لقاء الجمعة الأسبوعي بعنوان ( قم فأنذر )",
+      "summary_ar": "لقاء الجمعه الاسبوعي بعنوان ( قم فانذر ) للدكتوره الفاضله مريم مندكار الدعوه عامه احبتنا في الله اهلا وحبا Photo by مسجد راشد الخياط on August 21, 2026. Puede …",
+      "sheikh": "ة الفاضلة مريم مندكار 🍃",
+      "place": "الله 🤍 أهلاً وحباً 🤍",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-m_alkhayatq8",
+          "name_ar": "مسجد راشد الخياط",
+          "url": "https://instagram.com/m_alkhayatq8",
+          "post_url": "https://www.instagram.com/p/DcTl89_IEOm/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:35:19.615Z",
+      "confidence": 0.85
+    },
+    {
+      "id": "d57fad9c0c34e5d0c2e9a0b5c639819a338ef5bf",
+      "type": "إعلان",
+      "title_ar": "جدول دروس مسجد حمد حمدان العتيبي",
+      "summary_ar": "جدول دروس مسجد حمد حمدان العتيبي Photo by مسجد حمد حمدان العتيبي on April 30, 2026.",
+      "sheikh": null,
+      "place": "حمد حمدان العتيبي",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-mhamadh.kw",
+          "name_ar": "مسجد حمد حمدان العتيبي",
+          "url": "https://instagram.com/mhamadh.kw",
+          "post_url": "https://www.instagram.com/p/DXwdcuTCGkB/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:34:13.628Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "61a5f5b4b60a4bf59c01537260ec74992601161d",
+      "type": "إعلان",
+      "title_ar": "أتيتُ رسولَ اللهِ صلَّى اللهُ عليهِ وسلَّمَ وهو مُتَّكِئٌ في المسجدِ على بُرْدٍ لهُ أحمرَ فقلتُ لهُ يا رسولَ اللهِ إني ج",
+      "summary_ar": "اتيت رسول الله صلي الله عليه وسلم وهو متكئ في المسجد علي برد له احمر فقلت له يا رسول الله اني جئت اطلب العلم فقال مرحبا بطالب العلم ان طالب العلم لتحفه الملائك…",
+      "sheikh": null,
+      "place": "المسجدِ على بُرْدٍ لهُ أحمرَ فقلتُ لهُ يا رسولَ اللهِ إني جئتُ أطلبُ العِلْمَ فق",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-masjedalansary",
+          "name_ar": "مسجد جابر عتيك الأنصاري",
+          "url": "https://instagram.com/masjedalansary",
+          "post_url": "https://www.instagram.com/p/DIMCT3iIN0k/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:33:00.476Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "b0e6c9a67becaf6489e5cc21b1e4196a30624a96",
+      "type": "تسجيل",
+      "title_ar": "تذكير بمجلس اليوم بإذن الله تعالى بعد صلاة العصر مباشرة",
+      "summary_ar": "تذكير بمجلس اليوم باذن الله تعالي بعد صلاه العصر مباشره Photo by مسجد بتله الخرينج on August 01, 2026. Puede ser una imagen de ‎libro, póster, pastel y ‎texto …",
+      "sheikh": "وللحمْضاديايّيني اليمبي يوجد مكان مخصص (للنساء) يوم السبت ال",
+      "place": "بتلة الخرينج on August 01",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-mpe.kh11",
+          "name_ar": "مسجد بتلة الخرينج",
+          "url": "https://instagram.com/mpe.kh11",
+          "post_url": "https://www.instagram.com/p/DbfqR1MtNQB/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:32:01.441Z",
+      "confidence": 0.85
+    },
+    {
+      "id": "5ed42596c61d4d9552a16d0f66995c1ecf87f8f3",
+      "type": "إعلان",
+      "title_ar": "Photo by مسجد الشيخ مبارك عبدالله المبارك الصباح on April 29, 2026.",
+      "summary_ar": "Photo by مسجد الشيخ مبارك عبدالله المبارك الصباح on April 29, 2026.",
+      "sheikh": "مبارك عبدالله المبارك الصباح on April 29",
+      "place": "الشيخ مبارك عبدالله المبارك الصباح on April 29",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-mosque.mbark.j",
+          "name_ar": "مسجد الشيخ مبارك عبدالله المبارك الصباح — الجهراء",
+          "url": "https://instagram.com/mosque.mbark.j",
+          "post_url": "https://www.instagram.com/p/DXuqo8tCPON/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:31:22.432Z",
+      "confidence": 0.85
+    },
+    {
+      "id": "1207fa96ee5607042846574d886971f8bf3ddf05",
+      "type": "إعلان",
+      "title_ar": "ساهم في نشر نور السنة",
+      "summary_ar": "ساهم في نشر نور السنه من خلال مشاريع مركز نبراس للسنه النبويه https://insan.org.kw/n4454?mid=2781782 Photo by مركز نبراس للسنه النبويه on March 06, 2026.",
+      "sheikh": null,
+      "place": "نشر نور السنة",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-nebraas_kw",
+          "name_ar": "مركز نبراس للسنة النبوية",
+          "url": "https://instagram.com/nebraas_kw",
+          "post_url": "https://www.instagram.com/p/DVicJi5jSJ4/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:30:33.931Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "7f95430e3753dc91874ad76847467c77793a6a63",
+      "type": "تسجيل",
+      "title_ar": "استقبال الطلبة المستجدين في مراكز الصحة المدرسية",
+      "summary_ar": "استقبال الطلبه المستجدين في مراكز الصحه المدرسيه Photo by سعد العبدالله اليوم 🇰🇼 on August 24, 2026. Puede ser una imagen de ‎póster, revista y ‎texto que di…",
+      "sheikh": null,
+      "place": "مراكز الصحة المدرسية",
+      "audience": "عام",
+      "starts_at": "2026-09-06T00:00:00.000Z",
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "upcoming",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-saad.al.abdullah.city",
+          "name_ar": "مركز سعد العبدالله لتحفيظ القرآن",
+          "url": "https://instagram.com/saad.al.abdullah.city",
+          "post_url": "https://www.instagram.com/p/Dca_2NFtyep/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:29:35.983Z",
+      "confidence": 0.85
+    },
+    {
+      "id": "8bb1e701ffa3783f68b87d0c03d14b89a13656ad",
+      "type": "تسجيل",
+      "title_ar": "القرآن هو النور الذي يضيء القلوب، والصحبة الطيبة هي السند الذي يقوّي خطانا...",
+      "summary_ar": "القران هو النور الذي يضيء القلوب، والصحبه الطيبه هي السند الذي يقوي خطانا... في مركز ورتل لتحفيظ القران الكريم اونلاين، نفتح لك المجال لتكوني من اهل الله وخاصت…",
+      "sheikh": null,
+      "place": "مركز ورتل لتحفيظ القرآن الكريم أونلاين",
+      "audience": "نساء",
+      "starts_at": null,
+      "time_text": "7:00 م",
+      "register_url": null,
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-al_mabarrah",
+          "name_ar": "مبرة المتميزين — الحلقات النسائية",
+          "url": "https://aayatkw.com",
+          "post_url": "https://www.instagram.com/p/DaREK1iMYsd/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:27:05.607Z",
+      "confidence": 0.85
+    },
+    {
+      "id": "aec4be4f10bc1c3e91eb3bbcc72d4496b85e6f70",
+      "type": "إعلان",
+      "title_ar": "قال تعالى:",
+      "summary_ar": "قال تعالي: (تبرك ٱلذي بيده الملك وهو علي كل شيء قدير (١ .. [الملك: ٣٠ - ١] (تبرك): تكاثر خير الله وبره علي جميع خلقه. {طباقا): متناسقه. (فطور): شقوق او صدوع. (…",
+      "sheikh": null,
+      "place": "غريب القرآن",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-manaratkw",
+          "name_ar": "لجنة منارات للعلم والدعوة",
+          "url": "https://instagram.com/manaratkw",
+          "post_url": "https://www.instagram.com/p/DZhf-nGIbqN/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:25:51.001Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "70d33db3e1d4e8e325d1f6b0d6c65a7c80173d46",
+      "type": "حلقة",
+      "title_ar": "جانب من افتتاح حلقات دار ترتيل للفصل الدراسي الثاني",
+      "summary_ar": "جانب من افتتاح حلقات دار ترتيل للفصل الدراسي الثاني Photo by @qetaa_quran on February 11, 2024.",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-qetaa_quran",
+          "name_ar": "قطاع القرآن الكريم — جمعية الوحيين",
+          "url": "https://instagram.com/qetaa_quran",
+          "post_url": "https://www.instagram.com/p/C3M6nI8sDtt/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:24:32.504Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "1163e4725cc4381f69184b698c764e3deff421e0",
+      "type": "تسجيل",
+      "title_ar": "‏",
+      "summary_ar": "‏ يقدم لكم فريق غيث اعاده للدوره *الاكثر طلبا* *دوره الشخصيه القويه* لبدايه كلها انجاز وابداع تقديم / ا.عائشه سليمان بوغيث حيث نهدف لبناء شخصيه قويه متزنه تسعي…",
+      "sheikh": null,
+      "place": "الرابط",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-ghaith.kw",
+          "name_ar": "فريق غيث",
+          "url": "https://instagram.com/ghaith.kw",
+          "post_url": "https://www.instagram.com/p/DcWFBO9CMwq/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:23:41.146Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "85b2a1eca6b15fd478b372513f1a7fa7213873b7",
+      "type": "درس",
+      "title_ar": "Photo by ​ ديوان العوني الشريف الإسبوعي on August 02, 2026. Puede ser una imagen de ‎pastel y ‎texto que dice \"‎يدعونك",
+      "summary_ar": "Photo by ​ ديوان العوني الشريف الاسبوعي on August 02, 2026. Puede ser una imagen de ‎pastel y ‎texto que dice \"‎يدعونكم اخوانكم في دیوان العوني الشريف الاسبوعي…",
+      "sheikh": "الدكتور ابراهيم بن صالح المحيميد من المملكه العربيه السعوديه",
+      "place": "دیوان العوني الشريف الإسبوعي عي سبو لحضور اللقاء المفتوح لفضيلة الشيخ الدكتور اب",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-diwan_al3uni_alsharif_alesbuei",
+          "name_ar": "ديوان العوني الشريف الأسبوعي",
+          "url": "https://instagram.com/diwan_al3uni_alsharif_alesbuei",
+          "post_url": "https://www.instagram.com/p/DbiMyjSoyv_/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:21:33.421Z",
+      "confidence": 0.85
+    },
+    {
+      "id": "b4dd5cb240933307a01af887b6bdab746e8662f0",
+      "type": "إعلان",
+      "title_ar": "إعلان هاام",
+      "summary_ar": "اعلان هاام تم انتقال جميع انشطه حساب دورات والانبياء الي الحساب الجديد @warathat_alanbeya Photo by دورات ورثه الانبياء on March 08, 2021.",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-warathakw2",
+          "name_ar": "دورات ورثة الأنبياء",
+          "url": "https://instagram.com/warathakw2",
+          "post_url": "https://www.instagram.com/p/CMMAyKAAmUm/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:20:36.550Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "606ca6df35bc6a27e05b02f07f79105b19616980",
+      "type": "درس",
+      "title_ar": "Photo by دروس غرب عبدالله المبارك on August 01, 2026. Puede ser una imagen de ‎pastel y ‎texto que dice \"‎يدعونكم إخوانك",
+      "summary_ar": "Photo by دروس غرب عبدالله المبارك on August 01, 2026. Puede ser una imagen de ‎pastel y ‎texto que dice \"‎يدعونكم اخوانكم في ديوان العوني الشريف الاسبو عي لحضو…",
+      "sheikh": "الدكتور ابراهيم بن صالح المحيميد من المملكه العربيه السعوديه",
+      "place": "ديوان العوني الشريف الإسبو عي لحضور اللقاء المفتوح لفضيلة الشيخ الدكتور ابراهيم",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-duroos_abdullahalmubarak",
+          "name_ar": "دروس غرب عبدالله المبارك",
+          "url": "https://instagram.com/duroos_abdullahalmubarak",
+          "post_url": "https://www.instagram.com/p/Dbfrel5M_LB/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:19:34.081Z",
+      "confidence": 0.85
+    },
+    {
+      "id": "5fbb65a20e022eee250b84b535f685c738a4e292",
+      "type": "دورة",
+      "title_ar": "Photo by دروس شرعية الكويت on August 22, 2026. Puede ser una imagen de ‎póster y ‎texto que dice \"‎قت_ه_ن_الا_اتارنی الد",
+      "summary_ar": "Photo by دروس شرعيه الكويت on August 22, 2026. Puede ser una imagen de ‎póster y ‎texto que dice \"‎قت_ه_ن_الا_اتارنی الدوره /،ه الدبيه مضهرلدلالازای في مسجد ال…",
+      "sheikh": "الدكتور ورعاه حفظه 白D النسخة المعتمدة da دار السلام صحهح الب",
+      "place": "مسجد الإمام البخاري Ge- نيروبي كينيا يلقيها فضيلة الشيخ الدكتور ورعاه حفظه 白D ال",
+      "audience": "عام",
+      "starts_at": "2026-08-26T00:00:00.000Z",
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-drooss_kw",
+          "name_ar": "دروس شرعية الكويت",
+          "url": "https://instagram.com/drooss_kw",
+          "post_url": "https://www.instagram.com/p/DcW4yMYO02O/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:18:22.787Z",
+      "confidence": 0.95
+    },
+    {
+      "id": "6eec71c28a7a72640dea30eb3008c76319178f48",
+      "type": "إعلان",
+      "title_ar": "الآن مباشر (10) التعليق على العقيدة الطحاوية للشيخ د. راشد صليهم الهاجري رابط البث المباشر https://www.yout",
+      "summary_ar": "الان مباشر (10) التعليق علي العقيده الطحاويه للشيخ د. راشد صليهم الهاجري رابط البث المباشر https://www.youtube.com/live/I5KFAt2zRG0?si=Xi7Gh6f4QpRC9RiD قناه مو…",
+      "sheikh": "راشد صليهم الهاجري 🔗 رابط البث المباشر https://www",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27632",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:17:18.275Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "88ee291e867ad7ad36071cbd63dabd8c86b99755",
+      "type": "درس",
+      "title_ar": "الآن مباشر (36) شرح كتاب&nbsp; التوحيد للإمام محمد بن عبدالوهاب فضيلة الشيخ عمر مثيب العتيبي رابط البث المب",
+      "summary_ar": "الان مباشر (36) شرح كتاب&nbsp; التوحيد للامام محمد بن عبدالوهاب فضيله الشيخ عمر مثيب العتيبي رابط البث المباشر https://t.me/omar_muthib?livestream تحميل الكتاب…",
+      "sheikh": "عمر مثيب العتيبي 🔗 رابط البث المباشر https://t",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/omar_muthib?livestream",
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27633",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:17:18.275Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "7eb5b75d25b2c8d9636acd336ab473bb10e0d843",
+      "type": "درس",
+      "title_ar": "جديد محاضرة بعنوان: &nbsp;&nbsp;( وقفات مع مولد النبي ﷺ ) لفضيلة الشيخ منصور بن ناصر الخالدي @mnsalkhaldi",
+      "summary_ar": "جديد محاضره بعنوان: &nbsp;&nbsp;( وقفات مع مولد النبي ﷺ ) لفضيله الشيخ منصور بن ناصر الخالدي @mnsalkhaldi مرئي https://youtu.be/q9XMrsFEo7Q?si صوتي https://dro…",
+      "sheikh": "منصور بن ناصر الخالدي @mnsalkhaldi 🎥 مرئي https://youtu",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27634",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:17:18.275Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "35453c56944f8c9cebc83fba8803e0867dc9bab1",
+      "type": "إعلان",
+      "title_ar": "نشوفكم اليوم بإذن الله",
+      "summary_ar": "نشوفكم اليوم باذن الله Photo by دروس السيره النبويه on May 05, 2026.",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "upcoming",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-duroos.alseera",
+          "name_ar": "دروس السيرة النبوية",
+          "url": "https://instagram.com/duroos.alseera",
+          "post_url": "https://www.instagram.com/p/DX-tIzCiKBv/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:15:56.152Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "96bdf8d2d25df2cc4eae2c21a36dde710b6a3b5f",
+      "type": "خطبة",
+      "title_ar": "غداً السبت الساعة 10:00 صباحاً بإذن الله",
+      "summary_ar": "غدا السبت الساعه 10:00 صباحا باذن الله بمسجد الياقوت قراءه صحيح مسلم وصلنا كتاب الرضاع المجلس 31 للشيخ عثمان الخميس لتفاصيل المحاضرات وللبث المباشر في الموقع ا…",
+      "sheikh": "جميع دروس الشيخ ومواعيد محاضراته تجدونها في الموقع الإلكترون",
+      "place": "الياقوت",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": "10:00 ص",
+      "register_url": null,
+      "schedule_kind": "upcoming",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-othmanalkamees",
+          "name_ar": "د. عثمان الخميس",
+          "url": "https://instagram.com/othmanalkamees",
+          "post_url": "https://www.instagram.com/p/DcURFLzCGTu/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:15:04.847Z",
+      "confidence": 0.95
+    },
+    {
+      "id": "e47b34035a6987c13e21f8564c8e1f4bf40dadb3",
+      "type": "حلقة",
+      "title_ar": "Photo by حلقات تراحم التربوية on January 08, 2024.",
+      "summary_ar": "Photo by حلقات تراحم التربويه on January 08, 2024.",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-trahumkwclub",
+          "name_ar": "حلقات تراحم التربوية",
+          "url": "https://instagram.com/trahumkwclub",
+          "post_url": "https://www.instagram.com/p/C11wMCgiMvE/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:14:09.459Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "55126320e3be38d4b24f3ce10641157626a1c140",
+      "type": "حلقة",
+      "title_ar": "صحبة أهل القرآن في طريق حفظ القرآن غييييير",
+      "summary_ar": "صحبه اهل القران في طريق حفظ القران غييييير ما مثلها صحبه، ولا مثل بركتها بركه! تدرون ليش؟ لانها صحبه اجتمعت علي اعظم كلام: كلام الله، تكفون… شنو احسن من جذي؟ P…",
+      "sheikh": null,
+      "place": "طريق حفظ القرآن غييييير🤍",
+      "audience": "نشء",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-erwaa.quran",
+          "name_ar": "حلقات إرواء للقرآن — جامعة الكويت",
+          "url": "https://instagram.com/erwaa.quran",
+          "post_url": "https://www.instagram.com/p/DcOMxRmsdvy/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:11:38.254Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "d95c06eb3dc81ddbb79c5653b7201f0ec7a22242",
+      "type": "إعلان",
+      "title_ar": "مشروع برد عليهم صيفهم",
+      "summary_ar": "مشروع برد عليهم صيفهم توفير المكيفات والثلاجات للاسر المتعففه بالكويت كن عونا لهم بصدقتك https://www.almanabr.org/n28419?mid=3171 تجوز الزكاه #جمعيه_المنابر_ال…",
+      "sheikh": null,
+      "place": "ر المكيفات والثلاجات للأسر المتعففة بالكويت",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-almanabr",
+          "name_ar": "جمعية المنابر القرآنية",
+          "url": "https://almanabr.org",
+          "post_url": "https://www.instagram.com/p/DcarJ_-j6rO/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:04:37.088Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "c149f9c14bcbc57d26a9c7eb26ff716b209f1508",
+      "type": "دورة",
+      "title_ar": "Photo by جامع سعد الشلاحي on July 31, 2026. May be an image of ‎pie, kitchenware and ‎text that says '‎اسوح تدزج وبناء ل",
+      "summary_ar": "Photo by جامع سعد الشلاحي on July 31, 2026. May be an image of ‎pie, kitchenware and ‎text that says '‎اسوح تدزج وبناء للناشئه دعوه يسرنا دعوتكن لحضور الحفل ال…",
+      "sheikh": null,
+      "place": "سعد الشلاحي on July 31",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": "6:30 م",
+      "register_url": null,
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-alshalahi_masjd",
+          "name_ar": "جامع سعد محمد الشلاحي",
+          "url": "https://instagram.com/alshalahi_masjd",
+          "post_url": "https://www.instagram.com/p/DbehWeOiJIc/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:03:23.131Z",
+      "confidence": 0.85
+    },
+    {
+      "id": "ae5ccf4f4e50788a1990dcba502c1d3a13c6b5ac",
+      "type": "دورة",
+      "title_ar": "حلقات أونلاين",
+      "summary_ar": "حلقات اونلاين #الدوره #الصيفيه Photo by المنصه القرانيه العالميه on July 11, 2026. Puede ser una imagen de ‎instrumento musical, pastel y ‎texto que dice \"‎الص…",
+      "sheikh": null,
+      "place": "ظ القرآن الكريم أون لاين‎\"‎‎",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-quranicplatform",
+          "name_ar": "المنصة القرآنية العالمية",
+          "url": "https://instagram.com/quranicplatform",
+          "post_url": "https://www.instagram.com/p/DapimG-u2jp/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:01:58.588Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "00b64b04dabd20e34de1ca02290eb87a41f17d72",
+      "type": "درس",
+      "title_ar": "حياكم الله غداً بإذن الله لمجلس الذكر بجامع سعد الشلاحي",
+      "summary_ar": "حياكم الله غدا باذن الله لمجلس الذكر بجامع سعد الشلاحي Photo by اللجنه النسائيه مسجد الشلاحي on August 22, 2026. Puede ser una imagen de ‎póster y ‎texto que d…",
+      "sheikh": null,
+      "place": "سعد الشلاحي 🩵🌱",
+      "audience": "نساء",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "upcoming",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-masjid_alshalahi_women",
+          "name_ar": "اللجنة النسائية بجامع سعد الشلاحي",
+          "url": "https://instagram.com/masjid_alshalahi_women",
+          "post_url": "https://www.instagram.com/p/DcWX_NkM9Yb/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T16:00:04.136Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "f0b111521f7920b4f0d8174e97c2ed72c4253051",
+      "type": "تسجيل",
+      "title_ar": "لا يقتصر طالب العلم على التعلم لنفسه، بل يحمل العلم ويبلغه للناس بالحكمة والبصيرة.",
+      "summary_ar": "لا يقتصر طالب العلم علي التعلم لنفسه، بل يحمل العلم ويبلغه للناس بالحكمه والبصيره. في برنامج بدايات العلماء لا تكتسب التاصيل العلمي فحسب، بل تبني لديك المهارات…",
+      "sheikh": null,
+      "place": "برنامج بدايات العلماء لا تكتسب التأصيل العلمي فحسب",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://docs.google.com/forms/d/e/1FAIpQLScY1fTXHS3XynY1PhI3-z8hvJ40ZZC4otObWfupCSbSLknyfQ/viewform",
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-rasikhoon",
+          "name_ar": "الراسخون",
+          "url": "https://instagram.com/rasikhoon",
+          "post_url": "https://www.instagram.com/p/DcZBxCBAWzM/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T15:59:10.200Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "52ded0e49ba3cb26e31646bb2606bbc5ea9858bb",
+      "type": "إعلان",
+      "title_ar": "فالسؤال كيف له أن يبلغ ذلك ؟",
+      "summary_ar": "فالسؤال كيف له ان يبلغ ذلك ؟ مالسر وراء انفاعله ما السر وراء تبدل حاله ؟ Photo by ارث on August 24, 2026.",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-erth.kwt",
+          "name_ar": "إرث",
+          "url": "https://instagram.com/erth.kwt",
+          "post_url": "https://www.instagram.com/p/DcbYOwfCKPn/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T15:55:24.902Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "edb0e5d40ff3263e7fb9096f383d9fcaedfea7ae",
+      "type": "إعلان",
+      "title_ar": "Photo by أثر يبقى on August 19, 2026. Puede ser una imagen de ‎libro y ‎texto que dice \"‎ኢዋድት 顺 أثريبقى @ATHR_YABKA كان",
+      "summary_ar": "Photo by اثر يبقي on August 19, 2026. Puede ser una imagen de ‎libro y ‎texto que dice \"‎ኢዋድት 顺 اثريبقي @ATHR_YABKA كان عثمان بن عفان اذا وقف علي قبر بكي حتي ي…",
+      "sheikh": null,
+      "place": "قول إن رسول الله ﷺ قال الإيمان باليوم باليومالأخر الأخر إِنَّ القبر أؤَل مَنازل",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "upcoming",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-athr_yabka",
+          "name_ar": "أثر يبقى",
+          "url": "https://instagram.com/athr_yabka",
+          "post_url": "https://www.instagram.com/p/DcOejUDIvN1/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T15:54:05.115Z",
+      "confidence": 0.75
+    },
+    {
       "id": "94aa3dce917340b96a2e429b89453581d57e824d",
       "type": "إعلان",
       "title_ar": "عن أبي هريرة رضي الله عنه أن رسول الله صلى الله عليه وسلم قال: كان رجل يداين الناس، وكان يقول لفتاه: إذا أنَتيت معسرا",
