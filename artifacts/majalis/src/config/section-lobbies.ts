@@ -122,7 +122,7 @@ const QURAN_GROUPS: Array<{ id: string; title: string; ids: string[] }> = [
   },
   {
     id: "hifz",
-    title: "الحفظ والتسميع",
+    title: "الحفظ والتلاوة",
     ids: ["quran-recitation", "flashcards"],
   },
   {

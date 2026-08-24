@@ -18,6 +18,7 @@ export type NavEntry = {
 const BOTTOM_IDS = ["quran", "lessons", "prayer", "fiqh", "sections"] as const;
 const DRAWER_IDS = [
   "open-mushaf",
+  "quran-recitation",
   "quran",
   "lessons",
   "fiqh",

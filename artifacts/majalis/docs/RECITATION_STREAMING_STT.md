@@ -68,3 +68,16 @@ Vercel Functions **لا** تستضيف WebSocket ASR دائم. مسار الـ W
 - لا تجويد فونيمي كامل (إدغام/إخفاء) بدون نموذج متخصص.
 - كمون Whisper REST يعتمد على شبكة + Groq؛ VAD يقلّل الطلبات الفارغة فقط.
 - WebSocket ثنائي الاتجاه يتطلّب خدمة طويلة العمر (ليست Vercel Functions).
+
+## كمون — قبل / بعد (Phase 4)
+
+| مرحلة | قبل | بعد (مسار منخفض الكمون) |
+|---|---|---|
+| فتح الصفحة | لا تسخين | `warmRecitationWsConnection()` يفتح WS بلا ميكروفون |
+| بدء الجلسة | مصافحة WS باردة + إذن ميك | إعادة استخدام المقبس الدافئ + Web Speech interim كاحتياطي |
+| مطابقة الكلمات | غالبًا بعد final فقط | partial hypotheses + `INTERIM_CONFIDENCE` + محاذاة تدريجية |
+| قياس | — | `markTarteelLatency` / `summarizeTarteelLatency` + بوابة `test:tarteel-latency` |
+
+أهداف دافئة تقريبية: page→ws_ready ≤ 800ms · button→first_partial ≤ 800ms.
+
+قتل سريع: `VITE_AI_TARTEEL_DISABLED=1` (واجهة عربية واضحة بلا مفاتيح في الحزمة).

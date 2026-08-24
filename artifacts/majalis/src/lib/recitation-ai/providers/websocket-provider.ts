@@ -36,6 +36,8 @@ import {
   getRecitationWsUrl,
   pickSupportedMimeType,
 } from "../streaming-audio";
+import { takeWarmedRecitationWs } from "../warm-connection";
+import { markTarteelLatency } from "../tarteel-latency";
 import { EnergyVad, rmsToLevel01 } from "../vad";
 import { dedupeOverlappingWords } from "./server-provider";
 
@@ -146,7 +148,7 @@ export class WebSocketQuranASRProvider implements QuranASRProvider {
     if (!wsUrl) {
       throw new ASRProviderUnavailableError({
         code: "NOT_CONFIGURED",
-        message: "بوابة التسميع الفورية غير مُهيَّأة (VITE_RECITATION_WS_URL).",
+        message: "بوابة التلاوة الفورية غير مُهيَّأة حاليًا.",
       });
     }
 
@@ -254,9 +256,70 @@ export class WebSocketQuranASRProvider implements QuranASRProvider {
     for (const cb of active.statusListeners) cb(status);
   }
 
+  private attachWsHandlers(active: Active, sock: WebSocket): void {
+    sock.onmessage = (ev) => {
+      if (typeof ev.data !== "string") return;
+      const parsed = parseIncomingMessage(ev.data);
+      if (!parsed || parsed.words.length === 0) return;
+      this.emitStatus(active, "matching");
+      this.ingestWords(active, parsed.words, parsed.timed, parsed.confidences);
+      if (!active.speaking) this.emitStatus(active, "listening");
+      else this.emitStatus(active, "speech");
+    };
+
+    sock.onclose = () => {
+      active.ws = null;
+      if (active.stopped) return;
+      if (active.reconnectAttempts >= 3) {
+        this.emitStatus(active, "reconnecting");
+        return;
+      }
+      active.reconnectAttempts += 1;
+      this.emitStatus(active, "reconnecting");
+      const nextUrl = getRecitationWsUrl();
+      if (!nextUrl) return;
+      setTimeout(() => {
+        if (active.stopped) return;
+        void this.connectWs(active, nextUrl).catch(() => {});
+      }, 400 * active.reconnectAttempts);
+    };
+  }
+
+  private sendStartMessage(sock: WebSocket, mimeType: string): void {
+    const token = getRecitationWsToken();
+    try {
+      sock.send(
+        JSON.stringify({
+          type: "start",
+          mimeType,
+          language: "ar",
+          sampleRateHint: 16000,
+          ...(token ? { token } : {}),
+        }),
+      );
+    } catch {
+      /* ignore */
+    }
+  }
+
   private connectWs(active: Active, url: string): Promise<void> {
+    const warmed = takeWarmedRecitationWs();
+    if (warmed && warmed.readyState === WebSocket.OPEN) {
+      active.ws = warmed;
+      active.reconnectAttempts = 0;
+      this.attachWsHandlers(active, warmed);
+      this.sendStartMessage(warmed, active.mimeType);
+      return Promise.resolve();
+    }
+    if (warmed) {
+      try {
+        warmed.close();
+      } catch {
+        /* ignore */
+      }
+    }
+
     return new Promise((resolve, reject) => {
-      const token = getRecitationWsToken();
       const sock = new WebSocket(url);
       sock.binaryType = "arraybuffer";
       const timer = setTimeout(() => {
@@ -268,53 +331,14 @@ export class WebSocketQuranASRProvider implements QuranASRProvider {
         clearTimeout(timer);
         active.ws = sock;
         active.reconnectAttempts = 0;
-        // تهيئة اختيارية — البوابة قد تتجاهلها
-        try {
-          sock.send(
-            JSON.stringify({
-              type: "start",
-              mimeType: active.mimeType,
-              language: "ar",
-              sampleRateHint: 16000,
-              ...(token ? { token } : {}),
-            }),
-          );
-        } catch {
-          /* ignore */
-        }
+        this.attachWsHandlers(active, sock);
+        this.sendStartMessage(sock, active.mimeType);
         resolve();
       };
 
       sock.onerror = () => {
         clearTimeout(timer);
         reject(new Error("ws error"));
-      };
-
-      sock.onmessage = (ev) => {
-        if (typeof ev.data !== "string") return;
-        const parsed = parseIncomingMessage(ev.data);
-        if (!parsed || parsed.words.length === 0) return;
-        this.emitStatus(active, "matching");
-        this.ingestWords(active, parsed.words, parsed.timed, parsed.confidences);
-        if (!active.speaking) this.emitStatus(active, "listening");
-        else this.emitStatus(active, "speech");
-      };
-
-      sock.onclose = () => {
-        active.ws = null;
-        if (active.stopped) return;
-        if (active.reconnectAttempts >= 3) {
-          this.emitStatus(active, "reconnecting");
-          return;
-        }
-        active.reconnectAttempts += 1;
-        this.emitStatus(active, "reconnecting");
-        const nextUrl = getRecitationWsUrl();
-        if (!nextUrl) return;
-        setTimeout(() => {
-          if (active.stopped) return;
-          void this.connectWs(active, nextUrl).catch(() => {});
-        }, 400 * active.reconnectAttempts);
       };
     });
   }
@@ -328,6 +352,7 @@ export class WebSocketQuranASRProvider implements QuranASRProvider {
     const { fresh, nextNormsTail } = dedupeOverlappingWords(active.lastEmittedNorms, words);
     active.lastEmittedNorms = nextNormsTail;
     if (fresh.length === 0) return;
+    if (active.words.length === 0) markTarteelLatency("first_partial");
     const skip = words.length - fresh.length;
     active.words.push(...fresh);
     const now = Date.now();

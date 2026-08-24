@@ -44,6 +44,12 @@ import {
   resumePlaybackAfterTasmee,
   stopAuxiliaryAudioForTasmee,
 } from "@/lib/recitation-ai/playback-handoff";
+import {
+  AI_TARTEEL_DISABLED_MESSAGE,
+  isAiTarteelEnabled,
+} from "@/lib/recitation-ai/feature-flag";
+import { warmRecitationWsConnection, discardWarmedRecitationWs } from "@/lib/recitation-ai/warm-connection";
+import { markTarteelLatency } from "@/lib/recitation-ai/tarteel-latency";
 import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord, TajweedNote } from "@/lib/recitation-ai/types";
 import "@/styles/recitation-ai.css";
 
@@ -55,13 +61,13 @@ function playAyahOnce(surah: number, ayah: number, signal?: { cancelled: boolean
 type Phase = "setup" | "loading" | "detecting" | "session" | "report" | "error";
 
 const MODE_LABELS: Record<RecitationMode, { label: string; hint: string }> = {
-  full_hide: { label: "وضع الاختبار", hint: "النص مخفٍ تمامًا" },
+  full_hide: { label: "وضع التلاوة المخفاة", hint: "النص مخفٍ تمامًا" },
   assisted: { label: "وضع التلقين", hint: "تلميح متدرج عند التوقف" },
   word_follow: { label: "وضع القراءة", hint: "النص ظاهر مع متابعة الكلمات" },
   interactive_mushaf: { label: "وضع الحفظ", hint: "الكلمات مموَّهة وتنكشف بتلاوتك" },
-  teacher_test: { label: "اختبار المعلّم", hint: "يبدأ من موضع عشوائي" },
-  freeform: { label: "التسميع الحر", hint: "ابدأ التلاوة مباشرة — نكتشف السورة تلقائيًا" },
-  listen_repeat: { label: "استماع ثم تكرار", hint: "استمع للقارئ ثم سمّع للمقارنة" },
+  teacher_test: { label: "تلاوة مع معلّم", hint: "يبدأ من موضع عشوائي" },
+  freeform: { label: "التلاوة الحرة", hint: "ابدأ التلاوة مباشرة — نكتشف السورة تلقائيًا" },
+  listen_repeat: { label: "استماع ثم تكرار", hint: "استمع للقارئ ثم اقرأ للمقارنة" },
 };
 
 const ALERT_LABELS: Record<AlertLevel, string> = { gentle: "لطيف", medium: "متوسط", immediate: "فوري", teacher: "معلّم حقيقي" };
@@ -218,9 +224,14 @@ function RecitationTestPageInner() {
   useEffect(() => {
     applyPageSeo({
       path: "/quran/recitation-test-ai",
-      title: "التسميع | المجلس العلمي",
-      description: "اختبر حفظك بمطابقة الكلمات على الجهاز (إغفال/زيادة/ترتيب عند توفرها)؛ تقرير الجلسة نصي. ملاحظات المدّ الزمنية اختيارية عند مستوى التجويد — ليست تحليلاً لمخارج أو صفات كامل.",
+      title: "التلاوة | المجلس العلمي",
+      description: "طابق كلمات تلاوتك مباشرة بمطابقة الكلمات (إغفال/زيادة/ترتيب عند توفرها)؛ تقرير الجلسة نصي. ملاحظات المدّ الزمنية اختيارية عند مستوى التجويد — ليست تحليلاً لمخارج أو صفات كامل.",
     });
+    markTarteelLatency("page_open");
+    void warmRecitationWsConnection();
+    return () => {
+      discardWarmedRecitationWs();
+    };
   }, []);
 
   useEffect(() => {
@@ -411,8 +422,9 @@ function RecitationTestPageInner() {
     setErrorMsg("جارٍ تهيئة الميكروفون…");
     setErrorCode(null);
     setTajweedNotes([]);
+    markTarteelLatency("session_button");
     try {
-      // أوقف أي تلاوة قائمة قبل فتح الميكروفون (تبديل فئة الصوت)
+      // أوقف أي تلاوة/أذان قائمة قبل فتح الميكروفون (تبديل فئة الصوت)
       await pausePlaybackForTasmee();
       await stopAuxiliaryAudioForTasmee();
 
@@ -457,12 +469,12 @@ function RecitationTestPageInner() {
         preferTajweed: precisionLevel === "tajweed",
       });
       if (!selection.provider) {
-        setErrorMsg("لا يتوفر محرك تعرّف صوتي على هذا الجهاز/المتصفح حاليًا. جرّب من تطبيق الجوال، أو تحقّق من إذن الميكروفون.");
+        setErrorMsg("لا يتوفر محرك تعرّف صوتي على هذا الجهاز/المتصفح حاليًا. جرّب Chrome أو تطبيق الجوال، أو تحقّق من إذن الميكروفون.");
         setPhase("error");
         return;
       }
       if (precisionLevel === "tajweed" && !selection.provider.supportsTajweed) {
-        setErrorMsg("إتقان التجويد يتطلب المزوّد الخادمي (اتصال + GROQ). جرّب لاحقًا أو اختر مستوى الحفظ فقط.");
+        setErrorMsg("إتقان التجويد يتطلب اتصالًا بالمزوّد الخادمي. جرّب لاحقًا أو اختر مستوى الحفظ فقط.");
         setPhase("error");
         return;
       }
@@ -596,7 +608,7 @@ function RecitationTestPageInner() {
       sessionStartRef.current = Date.now();
 
       if (!provider.onPartialWord) {
-        setErrorMsg("المزوّد المتاح لا يدعم الاستماع اللحظي اللازم للتسميع الحر.");
+        setErrorMsg("المزوّد المتاح لا يدعم الاستماع اللحظي اللازم للتلاوة الحرة.");
         setPhase("error");
         return;
       }
@@ -877,6 +889,7 @@ function RecitationTestPageInner() {
     if (events.length === 0) return;
     const policy = applyAlertPolicy(events, alertLevelRef.current);
     const mapped = policy.events;
+    if (mapped.some((e) => e.kind === "correct")) markTarteelLatency("first_match");
     setLiveEvents((prev) => [...prev, ...mapped]);
     setWordStates((prev) => {
       const next = new Map(prev);
@@ -1220,17 +1233,17 @@ function RecitationTestPageInner() {
             ليقارنها بنص الآيات فور نطقها. إليك بالتحديد ما يحدث ببياناتك:
           </p>
           <ul className="rai-consent-screen__list">
-            <li>سيُطلَب إذن الميكروفون فقط عند ضغطك "ابدأ التسميع" — لا استماع في الخلفية بلا علمك.</li>
+            <li>سيُطلَب إذن الميكروفون فقط عند ضغطك «ابدأ التلاوة» — لا استماع في الخلفية بلا علمك.</li>
             <li><strong>التعرّف محليًا أولًا</strong> على جهازك. إن لم يتوفر تعرّف عربي كامل محليًا، قد يمرّ الصوت عبر خدمة نظام التشغيل (Apple/Google) — لا يُرسَل صوت إلى خوادم المجلس العلمي مطلقًا.</li>
             <li>إن سجّلت الدخول: نتيجة كل جلسة (نسبة الدقة، مواضع الأخطاء، المدة) تُحفَظ في حسابك لعرضها في التقارير ومراجعة الأخطاء المتكررة.</li>
             <li>زائر بلا حساب: يُحفظ تقرير موجز وتقدّم الحفظ على جهازك فقط (محليًا).</li>
-            <li>يمكنك سحب الموافقة وحذف بيانات جلسات التسميع في أي وقت.</li>
+            <li>يمكنك سحب الموافقة وحذف بيانات جلسات التلاوة في أي وقت.</li>
           </ul>
 
           {user?.id && (
             <div className="rai-consent-screen__delete">
               <button type="button" className="rai-consent-screen__delete-btn" onClick={() => void handleDeleteRecitationData()} disabled={deletingData}>
-                {deletingData ? "جارٍ الحذف…" : "حذف كل بيانات جلسات التسميع المحفوظة"}
+                {deletingData ? "جارٍ الحذف…" : "حذف كل بيانات جلسات التلاوة المحفوظة"}
               </button>
               {deleteResult === "success" && <p className="rai-consent-screen__delete-status rai-consent-screen__delete-status--ok">تم الحذف بنجاح.</p>}
               {deleteResult === "error" && <p className="rai-consent-screen__delete-status rai-consent-screen__delete-status--err">تعذّر الحذف. حاول مجددًا.</p>}
@@ -1286,7 +1299,7 @@ function RecitationTestPageInner() {
             التلاوة
             <span className="rai-experimental-badge">نسخة تجريبية</span>
           </h1>
-          <p className="rai-header__sub">اختبر تلاوتك من حفظك؛ يستمع التطبيق لحظيًا ويكشف المصحف الآية فور نطقها</p>
+          <p className="rai-header__sub">طابق تلاوتك من حفظك؛ يستمع التطبيق لحظيًا ويكشف المصحف الآية فور نطقها</p>
           <p className="rai-header__sub" style={{ fontSize: ".78rem", opacity: .85 }}>
             تحليل الحفظ الأساسي (كلمة صحيحة/خاطئة/ناقصة/زائدة) يعمل فعليًا. التحليل الصوتي الكامل
             (خصوصًا تفاصيل التجويد الدقيقة) لا يزال قيد التطوير.
@@ -1470,7 +1483,7 @@ function RecitationTestPageInner() {
           )}
 
           <div className="rai-setup__group">
-            <span className="rai-setup__label">نوع الاختبار</span>
+            <span className="rai-setup__label">نوع التلاوة</span>
             <div className="rai-choice-grid">
               {(Object.keys(MODE_LABELS) as RecitationMode[]).map((m) => (
                 <button key={m} type="button" className={`rai-choice ${mode === m ? "rai-choice--active" : ""}`} onClick={() => setMode(m)}>
@@ -1555,7 +1568,7 @@ function RecitationTestPageInner() {
             onClick={mode === "freeform" ? () => void startSessionFreeform() : startSession}
             disabled={phase === "loading"}
           >
-            {phase === "loading" ? "جارٍ تهيئة الميكروفون…" : "ابدأ التسميع"}
+            {phase === "loading" ? "جارٍ تهيئة الميكروفون…" : "ابدأ التلاوة"}
           </button>
           <p className="rai-report__disclaimer">
             سيُطلَب إذن الميكروفون قبل بدء الاستماع، ويُستخدَم فقط أثناء الجلسة — لا يُحفَظ التسجيل افتراضيًا،
@@ -1572,7 +1585,7 @@ function RecitationTestPageInner() {
               setConsentGiven(false);
             }}
           >
-            سحب موافقة التسميع
+            سحب موافقة التلاوة
           </button>
         </div>
       </div>
@@ -1601,7 +1614,7 @@ function RecitationTestPageInner() {
               )}
               <span className="rai-pipeline-status" style={{ fontFamily: "var(--font-body)", fontSize: ".85rem" }}>
                 {listenModelPlaying
-                  ? "استمع للقارئ… ثم سمّع"
+                  ? "استمع للقارئ… ثم اقرأ"
                   : listening
                     ? (
                       pipelineStatus === "matching" ? "جاري المطابقة…"
@@ -1887,7 +1900,7 @@ function RecitationTestPageInner() {
                     className="rai-icon-btn"
                     onClick={() => void retryAyah(group.surah, group.ayah)}
                   >
-                    <RotateCcw size={14} style={{ verticalAlign: "middle" }} /> إعادة اختبار هذه الآية
+                    <RotateCcw size={14} style={{ verticalAlign: "middle" }} /> إعادة تلاوة هذه الآية
                   </button>
                   {user?.id && (
                     <button
@@ -1931,6 +1944,31 @@ function errorTypeLabel(t: string): string {
 }
 
 export default function RecitationTestPage() {
+  if (!isAiTarteelEnabled()) {
+    return (
+      <div className="rai-shell">
+        <button
+          type="button"
+          className="rai-back-btn"
+          onClick={() => goBackOrFallback("/quran/recitation-test-ai")}
+          aria-label="رجوع"
+        >
+          <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
+          رجوع
+        </button>
+        <div className="rai-page" role="alert">
+          <div className="rai-header">
+            <h1 className="rai-header__title">التلاوة</h1>
+            <p className="rai-header__sub">{AI_TARTEEL_DISABLED_MESSAGE}</p>
+          </div>
+          <Link href="/quran-hub" className="rai-start-btn">
+            العودة لمركز القرآن
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="rai-shell">
       <button
