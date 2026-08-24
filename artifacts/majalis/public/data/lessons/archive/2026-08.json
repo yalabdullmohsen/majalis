@@ -2,6 +2,548 @@
   "month": "2026-08",
   "items": [
     {
+      "id": "14ac7448d15d62059998dd35e0d25f25610e84bc",
+      "type": "إعلان",
+      "title_ar": "drosq8 Official: Instagram, X | Linktree",
+      "summary_ar": "موقع دروس الكويت",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "web-drosq8-linktree",
+          "name_ar": "روابط دروس الكويت",
+          "url": "https://linktr.ee/drosq8",
+          "post_url": "https://linktr.ee/drosq8",
+          "platform": "web"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:57.067Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "944e4f435a682fb29fa2470ccacaa02fe0095d24",
+      "type": "إعلان",
+      "title_ar": "جدول دروس اليوم السبت",
+      "summary_ar": "جدول دروس اليوم السبت",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27606",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "42c0be7d241757dc8074ede179402a99b69d08ca",
+      "type": "درس",
+      "title_ar": "ندعوكم اليوم لحضور درس علمي: شرح رسالة ‌&rlm;« أصول السنة » للإمام أحمد بن حنبل للشيخ حسين المويزري @H_Almuwiz",
+      "summary_ar": "ندعوكم اليوم لحضور درس علمي: شرح رساله ‌&rlm;« اصول السنه » للامام احمد بن حنبل للشيخ حسين المويزري @H_Almuwizri ⌚ كل يوم السبت (بعد صلاه العصر) مسجد سعد بن دب…",
+      "sheikh": null,
+      "place": "سعد بن دبيس-الفردوس https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27607",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "7aaeced50b7cbb9bdd02ad5f5bc0e2215a80723c",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور درس علمي: شرح نظم الآجرمية للقلاوي للشيخ حسين المويزري @H_Almuwizri ⌚ كل سبت بعد صلاة المغ",
+      "summary_ar": "ندعوكم الليله لحضور درس علمي: شرح نظم الاجرميه للقلاوي للشيخ حسين المويزري @H_Almuwizri ⌚ كل سبت بعد صلاه المغرب مسجد سعد بن دبيس-الفردوس https://maps.app.goo.…",
+      "sheikh": null,
+      "place": "سعد بن دبيس-الفردوس https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27608",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "0e8fb949f6f355ae0ec5bb0021498fc39197aa51",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور الدرس العلمي: (شرح كتاب زاد المستقنع) للشيخ د. حمد بن محمد الهاجري &rlm; @DrHamadAlhajri \ud83d",
+      "summary_ar": "ندعوكم الليله لحضور الدرس العلمي: (شرح كتاب زاد المستقنع) للشيخ د. حمد بن محمد الهاجري &rlm; @DrHamadAlhajri كل يوم&nbsp;سبت ⏰ بعد صلاه المغرب مسجد عبدالمحسن ا…",
+      "sheikh": "حمد بن محمد الهاجري &rlm; @DrHamadAlhajri 📆 كل يوم&nbsp;سبت",
+      "place": "عبدالمحسن الزبن - الفنيطيس ق٦ https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27609",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "2e0cd17d80364e42ff7dcf2881ab787efbff4c3b",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور المجلس العلمي: (التعليق على حاشية ابن قاسم على الدرة المضيئة ) للشيخ بندر الميموني @bander",
+      "summary_ar": "ندعوكم الليله لحضور المجلس العلمي: (التعليق علي حاشيه ابن قاسم علي الدره المضيئه ) للشيخ بندر الميموني @bandersnt كل يوم سبت واحد ⏰ بعد صلاه المغرب مسجد نابي ا…",
+      "sheikh": null,
+      "place": "نابي الدويلة - العمرية https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27610",
+          "platform": "telegram"
+        },
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27620",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "f1ba6d7742b61c15ae97d58e60a6c423fd98ea34",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور محاضرة بعنوان: وقفات مع مولد النبي ﷺ للشيخ منصور بن ناصر الخالدي @mnsalkhaldi ⏰ الساعة:",
+      "summary_ar": "ندعوكم الليله لحضور محاضره بعنوان: وقفات مع مولد النبي ﷺ للشيخ منصور بن ناصر الخالدي @mnsalkhaldi ⏰ الساعه: 9:30 م ديوان فلاح الشمري - بمنطقه المطلاع N7 https:…",
+      "sheikh": null,
+      "place": "المطلاع N7 https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": "9:30 م",
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27611",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "0c42742d04e5d861730a058d430aa36ae8f2ce60",
+      "type": "درس",
+      "title_ar": "الان مباشر من المغرب (1) شرح مقدمة الجامع لابن أبي زيد القيرواني فضيلة الشيخ د. خالد بن ضحوي الظفيري رابط البث",
+      "summary_ar": "الان مباشر من المغرب (1) شرح مقدمه الجامع لابن ابي زيد القيرواني فضيله الشيخ د. خالد بن ضحوي الظفيري رابط البث المباشر https://aldhafiri.mixlr.com/embed قناه م…",
+      "sheikh": "خالد بن ضحوي الظفيري 🔗 رابط البث المباشر https://aldhafiri",
+      "place": "لابن أبي زيد القيرواني 🎙️ فضيلة الشيخ د",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27612",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "85a55fc02872e899d23750e014762ad33df3afbf",
+      "type": "إعلان",
+      "title_ar": "الآن مباشر وقفات مع مولد النبي ﷺ للشيخ منصور بن ناصر الخالدي رابط البث المباشر https://www.youtube.com/live",
+      "summary_ar": "الان مباشر وقفات مع مولد النبي ﷺ للشيخ منصور بن ناصر الخالدي رابط البث المباشر https://www.youtube.com/live/AuLOIHG7jVs?si= قناه موقع دروس الكويت https://t.me/…",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27613",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.7
+    },
+    {
+      "id": "0b79b177b55090ef268ac08b7a1dc710accdbaab",
+      "type": "إعلان",
+      "title_ar": "#المولد_النبوي",
+      "summary_ar": "#المولد_النبوي",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27614",
+          "platform": "telegram"
+        },
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27615",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "72fd98d139ca852704c0a826394095130081e2e1",
+      "type": "درس",
+      "title_ar": "قال العلامه العثيمين رحمه الله: &rlm;&quot; الذين يبتدعون الاحتفال بالمولد النبوي ناقصون في تحقيق شهادة أن محمد رسول الل",
+      "summary_ar": "قال العلامه العثيمين رحمه الله: &rlm;&quot; الذين يبتدعون الاحتفال بالمولد النبوي ناقصون في تحقيق شهاده ان محمد رسول الله ؛ لان تحقيقها يستلزم ان لايزيد في شري…",
+      "sheikh": null,
+      "place": "تحقيق شهادة أن محمد رسول الله ؛ لأن تحقيقها يستلزم أن لايزيد في شريعته ماليس منه",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27616",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "ab61d8f31f6eed3a42f925cfde9d758f07e088cd",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور المجلس العلمي: شرح كتاب التوحيد للشيخ عمر مثيب العتيبي ⏰ بعد صلاة المغرب الأحد إلى الأر",
+      "summary_ar": "ندعوكم الليله لحضور المجلس العلمي: شرح كتاب التوحيد للشيخ عمر مثيب العتيبي ⏰ بعد صلاه المغرب الاحد الي الاربعاء مسجد الامام القرطبي - جليب الشيوخ https://maps.…",
+      "sheikh": null,
+      "place": "الإمام القرطبي - جليب الشيوخ https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27617",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "f5c586e9c93d8526a0146dd7a461cdd807baeaed",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور الدرس العلمي: (شرح ثلاثة الأصول) للشيخ د. حمد بن محمد الهاجري ⏰ بعد صلاة المغرب (كل أحد) \ud83d",
+      "summary_ar": "ندعوكم الليله لحضور الدرس العلمي: (شرح ثلاثه الاصول) للشيخ د. حمد بن محمد الهاجري ⏰ بعد صلاه المغرب (كل احد) مسجد عبدالمحسن الزبن - الفنيطيس https://maps.app.g…",
+      "sheikh": "حمد بن محمد الهاجري ⏰ بعد صلاة المغرب (كل أحد) 🕌 مسجد عبدال",
+      "place": "عبدالمحسن الزبن - الفنيطيس https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27618",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "a0f1198c2b589708523f50b0cf1155d52bb13f54",
+      "type": "درس",
+      "title_ar": "ندعوكم اليوم لحضور الدرس العلمي: قراءة كتاب (100) سؤال وجواب في عقيدة التوحيد للشيخ د. عبدالله شبيب العازمي ⏰ ب",
+      "summary_ar": "ندعوكم اليوم لحضور الدرس العلمي: قراءه كتاب (100) سؤال وجواب في عقيده التوحيد للشيخ د. عبدالله شبيب العازمي ⏰ بعد صلاه العصر ديوانيه شباب صباح الاحمد https://m…",
+      "sheikh": "عبدالله شبيب العازمي ⏰ بعد صلاة العصر 📍 ديوانية شباب صباح ا",
+      "place": "عقيدة التوحيد 🎙 للشيخ د",
+      "audience": "نشء",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27619",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "1e7dcf4805dc3470d1c8f25dc4aa8e42f8e93b14",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور محاضرة بعنوان: ( فضل عيادة المريض ) للشيخ حسين المويزري @H_Almuwizri ⌚ بعد صلاة المغرب",
+      "summary_ar": "ندعوكم الليله لحضور محاضره بعنوان: ( فضل عياده المريض ) للشيخ حسين المويزري @H_Almuwizri ⌚ بعد صلاه المغرب مسجد قبيصه الخزاعي - المطلاع https://maps.app.goo.gl…",
+      "sheikh": null,
+      "place": "قبيصة الخزاعي - المطلاع https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27621",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "33309f53d21a1cdb46ac7371c641e4f25669bc28",
+      "type": "درس",
+      "title_ar": "ندعوكم الليلة لحضور المجلس العلمي: شرح كتاب [ دين الإسلام سؤال وجواب ] للشيخ عمر رشيد الزبيدي @alzubaidy77 ⏰ ب",
+      "summary_ar": "ندعوكم الليله لحضور المجلس العلمي: شرح كتاب [ دين الاسلام سؤال وجواب ] للشيخ عمر رشيد الزبيدي @alzubaidy77 ⏰ بعد صلاه المغرب (كل يوم احد ) مسجد الخرينج&nbsp; -…",
+      "sheikh": null,
+      "place": "الخرينج&nbsp; - الفروانية https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27622",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "6f04a328eed48df3e07240a8ce6a80a6518bfa97",
+      "type": "درس",
+      "title_ar": "الآن مباشر (14) شرح ثلاثة الأصول لفضيلة الشيخ أ.د. حمد الهاجري رابط البث المباشر https://t.me/DrHamadAlhajr",
+      "summary_ar": "الان مباشر (14) شرح ثلاثه الاصول لفضيله الشيخ ا.د. حمد الهاجري رابط البث المباشر https://t.me/DrHamadAlhajri?livestream الدروس السابقه https://drosq8.com/cat/1…",
+      "sheikh": "حمد الهاجري 🔗 رابط البث المباشر https://t",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrHamadAlhajri?livestream",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27623",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "a959d946a25efff838f3056428290d50b99a16e5",
+      "type": "درس",
+      "title_ar": "الآن مباشر (35) شرح كتاب&nbsp; التوحيد للإمام محمد بن عبدالوهاب فضيلة الشيخ عمر مثيب العتيبي رابط البث المب",
+      "summary_ar": "الان مباشر (35) شرح كتاب&nbsp; التوحيد للامام محمد بن عبدالوهاب فضيله الشيخ عمر مثيب العتيبي رابط البث المباشر https://t.me/omar_muthib?livestream تحميل الكتاب…",
+      "sheikh": "عمر مثيب العتيبي 🔗 رابط البث المباشر https://t",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/omar_muthib?livestream",
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27624",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.8
+    },
+    {
+      "id": "3a5004fabdfd697832e3c1d5aa2a9fcc152e53c1",
+      "type": "إعلان",
+      "title_ar": "قال رسول الله صلى الله عليه وسلم: كُلُّ امرئِ في ظِلِّ صدقَتِهِ حتى يُقضي بين الناس صحيح الجامع (٤٥١٠)",
+      "summary_ar": "قال رسول الله صلي الله عليه وسلم: كل امرئ في ظل صدقته حتي يقضي بين الناس صحيح الجامع (٤٥١٠) قناتنا بالواتس اب https://whatsapp.com/channel/0029VaHgXnQ4tRrtkUSN…",
+      "sheikh": null,
+      "place": "ظِلِّ صدقَتِهِ حتى يُقضي بين الناس 📗 صحيح الجامع (٤٥١٠) 🔹 🔹 🔊 🔹 🔹 قناتنا ب",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27625",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:54.096Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "b5e960d28cf68f0a866a8fbbf327e9d0922af3c2",
+      "type": "إعلان",
+      "title_ar": "جمعية الوحيين للقرآن والسنة",
+      "summary_ar": "جمعيه الوحيين للقران والسنه",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "web-waheen.net",
+          "name_ar": "جمعية الوحيين",
+          "url": "https://waheen.net",
+          "post_url": "https://waheen.net",
+          "platform": "web"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:50.902Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "e77e3f3ace497217a27723ce9c909ba06d4067db",
+      "type": "إعلان",
+      "title_ar": "جمعية المنابر القرآنية",
+      "summary_ar": "جمعيه المنابر القرانيه",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "web-almanabr.org",
+          "name_ar": "جمعية المنابر القرآنية",
+          "url": "https://almanabr.org",
+          "post_url": "https://almanabr.org",
+          "platform": "web"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:48.051Z",
+      "confidence": 0.65
+    },
+    {
+      "id": "e7d646f6fbbbbb0ec9731820e657c08654cef81d",
+      "type": "إعلان",
+      "title_ar": "https://aayatkw.com",
+      "summary_ar": "https://aayatkw.com",
+      "sheikh": null,
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "sources": [
+        {
+          "id": "web-aayatkw.com",
+          "name_ar": "آيات",
+          "url": "https://aayatkw.com",
+          "post_url": "https://aayatkw.com",
+          "platform": "web"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T03:57:39.241Z",
+      "confidence": 0.65
+    },
+    {
       "id": "3ab56300a8308522c169622b89d587b198c6be87",
       "type": "درس",
       "title_ar": "ندعوكم الليلة لحضور المجلس العلمي: شرح كتاب التوحيد للشيخ عمر مثيب العتيبي ⏰ بعد صلاة المغرب الأحد إلى الأر",
