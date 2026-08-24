@@ -101,10 +101,13 @@ console.log("\n=== الإسراء والمعراج — لا جزم بليلة 27
 
 console.log("\n=== عمر خديجة رضي الله عنها عند الزواج — لا جزم بأربعين سنة دون بيان الخلاف ===");
 {
-  const storiesSrc = readSrc("src/lib/islamic-stories-seed.ts");
-  assert(!storiesSrc.includes("بلغت خديجة الأربعين وكان محمد ﷺ يومها خمسة وعشرين"),
-    "لا جزم قديم بعمر خديجة الأربعين دون تحفّظ (قصة السيرة الكاملة)");
-  assert(storiesSrc.includes("ولا يثبت في تحديد عمرها حديث صحيح"), "النص الحالي ينفي وجود حديث صحيح يحدد عمرها");
+  const seerahStoryJson = readSrc("public/data/stories/سيرة-019.json");
+  assert(!seerahStoryJson.includes("بلغت خديجة الأربعين وكان محمد ﷺ يومها خمسة وعشرين"),
+    "لا جزم قديم بعمر خديجة الأربعين في قصة السيرة (JSON)");
+  assert(
+    seerahStoryJson.includes("ولا يثبت تحديد") && seerahStoryJson.includes("حديث صحيح"),
+    "قصة السيرة تحفظ بتحفّظ في عمر خديجة",
+  );
 
   const seerahSrc = readSrc("src/views/SeerahPage.tsx");
   assert(!seerahSrc.includes("تزوج خديجة بنت خويلد وعمره 25 وهي 40، عشا معاً 25 عاماً"),
