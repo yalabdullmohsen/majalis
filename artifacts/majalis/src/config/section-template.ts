@@ -115,10 +115,46 @@ export const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
     sectionId: "islamic-history",
   },
   "/nations": {
-    text: "لَقَدْ كَانَ فِي قَصَصِهِمْ عِبْرَةٌ لِّأُولِي الْأَلْبَابِ",
-    ref: "يوسف: ١١١",
+    text: "فَكُلًّا أَخَذْنَا بِذَنبِهِ ۖ وَمِنْهُم مَّنْ أَرْسَلْنَا عَلَيْهِ حَاصِبًا",
+    ref: "العنكبوت: ٤٠",
     type: "ayah",
     sectionId: "nations",
+  },
+  "/prophets": {
+    text: "وَتِلْكَ حُجَّتُنَا آتَيْنَاهَا إِبْرَاهِيمَ عَلَىٰ قَوْمِهِ ۚ نَرْفَعُ دَرَجَاتٍ مَّن نَّشَاءُ",
+    ref: "الأنعام: ٨٣",
+    type: "ayah",
+    sectionId: "prophets",
+  },
+  "/fiqh": {
+    text: "فَاسْأَلُوا أَهْلَ الذِّكْرِ إِن كُنتُمْ لَا تَعْلَمُونَ",
+    ref: "النحل: ٤٣",
+    type: "ayah",
+    sectionId: "fiqh",
+  },
+  "/duas": {
+    text: "وَقَالَ رَبُّكُمُ ادْعُونِي أَسْتَجِبْ لَكُمْ",
+    ref: "غافر: ٦٠",
+    type: "ayah",
+    sectionId: "adhkar",
+  },
+  "/tawhid": {
+    text: "قُلْ هُوَ اللَّهُ أَحَدٌ",
+    ref: "الإخلاص: ١",
+    type: "ayah",
+    sectionId: "aqidah",
+  },
+  "/scholars": {
+    text: "يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ",
+    ref: "المجادلة: ١١",
+    type: "ayah",
+    sectionId: "biographies",
+  },
+  "/lessons": {
+    text: "وَقُل رَّبِّ زِدْنِي عِلْمًا",
+    ref: "طه: ١١٤",
+    type: "ayah",
+    sectionId: "lessons",
   },
   "/library": {
     text: "قُلْ هَلْ يَسْتَوِي الَّذِينَ يَعْلَمُونَ وَالَّذِينَ لَا يَعْلَمُونَ",

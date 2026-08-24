@@ -22,6 +22,12 @@ import {
   YAJUJ_MAJUJ,
   QURUN_MUJMALA,
 } from "./nations/data/others";
+import {
+  ASHAB_KAHF,
+  ASHAB_UKHDUD,
+  QAWM_YUNUS,
+  RUM_FURS,
+} from "./nations/data/knowledge-extras";
 
 export type { Nation, NationChapter, Evidence, EvidenceKind, PunishmentType } from "./nations/types";
 
@@ -44,6 +50,10 @@ export const NATIONS: Nation[] = [
   ASHAB_JANNA,
   YAJUJ_MAJUJ,
   QURUN_MUJMALA,
+  ASHAB_KAHF,
+  ASHAB_UKHDUD,
+  QAWM_YUNUS,
+  RUM_FURS,
 ];
 
 export function getNation(slug: string): Nation | undefined {

@@ -6,11 +6,30 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { prophetArticleJsonLd, breadcrumbJsonLd, defaultSiteJsonLd } from "@/lib/seo-structured-data";
 import { supabase } from "@/lib/supabase";
+import { getKnowledgeItem, type KnowledgeItem } from "@/lib/knowledge-loader";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
 import { ScholarlyTrustBadge } from "@/components/ScholarlyTrustBadge";
 import { GraphRelatedRail } from "@/widgets/RelatedRail";
 import "@/styles/pages/prophet-stories.css";
+
+function knowledgeBodyBlocks(body: string): { title?: string; paragraphs: string[] }[] {
+  const chunks = body.split(/\n(?=##\s)/);
+  return chunks
+    .map((chunk) => {
+      const lines = chunk.trim().split("\n").filter(Boolean);
+      if (!lines.length) return null;
+      const title = lines[0].startsWith("##")
+        ? lines[0].replace(/^##\s*/, "").trim()
+        : undefined;
+      const paragraphs = (title ? lines.slice(1) : lines)
+        .map((l) => l.trim())
+        .filter((l) => l && !l.startsWith("###"))
+        .filter((l) => !l.startsWith("- ") || l.length > 20);
+      return paragraphs.length ? { title, paragraphs } : null;
+    })
+    .filter(Boolean) as { title?: string; paragraphs: string[] }[];
+}
 
 type Citation = { surah: string; ayahs: string; note: string };
 
@@ -275,11 +294,14 @@ function ProphetDetailView({
   const [fontSize, setFontSize] = useState(16);
   const [dbStory, setDbStory] = useState<{ content: string; citations: Citation[] } | null>(null);
   const [dbLoading, setDbLoading] = useState(true);
+  const [knowledge, setKnowledge] = useState<KnowledgeItem | null>(null);
+  const [knowledgeLoading, setKnowledgeLoading] = useState(true);
   const [readPct, setReadPct] = useState(0);
   const [activeSection, setActiveSection] = useState("bio");
   const articleRef = useRef<HTMLElement>(null);
   const prevProphet = p && p.id > 1 ? PROPHETS[p.id - 2] : null;
   const nextProphet = p && p.id < PROPHETS.length ? PROPHETS[p.id] : null;
+  const knowledgeBlocks = knowledge?.body ? knowledgeBodyBlocks(knowledge.body) : [];
 
   const sections: DetailSection[] = [
     { id: "bio", label: "نبذة" },
@@ -290,6 +312,7 @@ function ProphetDetailView({
     { id: "surahs", label: "السور" },
     { id: "attrs", label: "الصفات" },
     { id: "lessons", label: "العبر" },
+    ...(!knowledgeLoading && knowledgeBlocks.length ? [{ id: "knowledge", label: "عرض موسّع" }] : []),
     ...(!dbLoading && dbStory?.content ? [{ id: "story", label: "القصة" }] : []),
     ...(!dbLoading && dbStory?.citations?.length ? [{ id: "citations", label: "الاستشهادات" }] : []),
   ];
@@ -343,6 +366,21 @@ function ProphetDetailView({
   }, [canonicalSlug]);
 
   useEffect(() => {
+    let cancelled = false;
+    setKnowledge(null);
+    setKnowledgeLoading(true);
+    void getKnowledgeItem("prophets", `prophet-${canonicalSlug}`).then((item) => {
+      if (!cancelled) {
+        setKnowledge(item);
+        setKnowledgeLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [canonicalSlug]);
+
+  useEffect(() => {
     const onScroll = () => {
       const el = document.documentElement;
       const max = el.scrollHeight - el.clientHeight;
@@ -373,7 +411,7 @@ function ProphetDetailView({
     );
     nodes.forEach(n => io.observe(n));
     return () => io.disconnect();
-  }, [slug, dbLoading, dbStory]);
+  }, [slug, dbLoading, dbStory, knowledgeLoading, knowledge]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -624,6 +662,32 @@ function ProphetDetailView({
             ))}
           </div>
         </section>
+
+        {!knowledgeLoading && knowledgeBlocks.length > 0 && (
+          <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="knowledge">
+            <div className="prophet-section-lux__header">
+              <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
+              <h2 className="prophet-section-lux__title">عرض موسّع من طبقة المعرفة</h2>
+            </div>
+            <div className="prophet-db-story">
+              {knowledgeBlocks.map((block, bi) => (
+                <div key={bi} className="prophet-knowledge-block">
+                  {block.title ? (
+                    <h3 className="prophet-section-lux__title">{block.title}</h3>
+                  ) : null}
+                  {block.paragraphs.map((para, pi) => (
+                    <p key={pi} className="prophet-section-lux__text prophet-db-para">
+                      {para}
+                    </p>
+                  ))}
+                </div>
+              ))}
+            </div>
+            {knowledge?.review_status === "verified" ? (
+              <p className="prophet-section-lux__text">مصدر محلي موثّق — يُراجع عند أي توسع علمي.</p>
+            ) : null}
+          </section>
+        )}
 
         {!dbLoading && dbStory?.content && (
           <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="story">

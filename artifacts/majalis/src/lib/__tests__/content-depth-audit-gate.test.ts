@@ -117,4 +117,70 @@ assert.match(kgPage, /\/prophets|\/fiqh|\/quran\/people/, "رسالة الفرا
   }
 }
 
+// الأنبياء: نبذ حية كافية + ربط بطبقة المعرفة في واجهة التفاصيل
+{
+  const prophetsTs = read("src/lib/prophets-data.ts");
+  const bios = [...prophetsTs.matchAll(/briefBio:\s*\n\s*"([^"]+)"/g)].map((m) => m[1]);
+  assert.equal(bios.length, 25, "٢٥ نبذة للأنبياء");
+  assert.ok(
+    bios.every((b) => b.trim().split(/\s+/).filter(Boolean).length >= 40),
+    "كل briefBio ≥40 كلمة",
+  );
+  const prophetPage = read("src/views/ProphetStoriesPage.tsx");
+  assert.match(prophetPage, /getKnowledgeItem/, "صفحة الأنبياء تحمّل مقال المعرفة");
+  assert.match(prophetPage, /عرض موسّع/, "قسم العرض الموسّع ظاهر في الواجهة");
+}
+
+// اقتباسات أقسام أساسية لا تبقى بلا آية/حديث مناسب
+{
+  const tpl = read("src/config/section-template.ts");
+  for (const route of ["/prophets", "/fiqh", "/duas", "/tawhid", "/scholars", "/lessons", "/nations"]) {
+    assert.match(tpl, new RegExp(`"${route.replace("/", "\\/")}"\\s*:`), `اقتباس لـ ${route}`);
+  }
+  assert.match(tpl, /العنكبوت:\s*٤٠/, "آية الأمم السابقة مناسبة لموضوع العذاب والعبرة");
+}
+
+// أمم كانت يتيمة في المعرفة أصبحت في البذرة الحية
+{
+  const seed = read("src/lib/nations-seed.ts");
+  assert.match(seed, /knowledge-extras/, "تسجيل الأمم الإضافية");
+  assert.match(seed, /ASHAB_KAHF/, "أصحاب الكهف في البذرة");
+  assert.match(seed, /ASHAB_UKHDUD/, "أصحاب الأخدود في البذرة");
+  assert.match(seed, /QAWM_YUNUS/, "قوم يونس في البذرة");
+  assert.match(seed, /RUM_FURS/, "الروم والفرس في البذرة");
+}
+
+// بنك قصص الأنبياء: لا يبقى على أربع بطاقات فقط
+{
+  const anbiya = JSON.parse(read("public/data/stories/أنبياء-015.json"));
+  const list = Array.isArray(anbiya) ? anbiya : [];
+  assert.ok(list.length >= 10, `قصص أنبياء ≥10 (الآن ${list.length})`);
+  assert.ok(
+    list.every(
+      (s: { title?: string; full_content?: string; sources?: unknown[] }) =>
+        Boolean(s.title && s.full_content && Array.isArray(s.sources) && s.sources.length > 0),
+    ),
+    "كل قصة عنوان ومحتوى ومصدر",
+  );
+  const short = list.filter(
+    (s: { full_content?: string }) =>
+      String(s.full_content || "").trim().split(/\s+/).filter(Boolean).length < 80,
+  );
+  assert.equal(short.length, 0, "لا قصص أنبياء أقل من 80 كلمة");
+}
+
+// اكتشف الإسلام: لا محطات إنجليزية وهمية
+{
+  const discover = JSON.parse(read("public/data/knowledge/discover-islam/path-and-faq.json"));
+  const items = Array.isArray(discover) ? discover : discover.items || [];
+  assert.ok(
+    items.every((i: { id?: string; title?: string }) => !String(i.id || "").startsWith("discover-path-en-")),
+    "لا discover-path-en stubs",
+  );
+  assert.ok(
+    items.every((i: { title?: string }) => !/Station\s+\d+\s*\(English\)/i.test(String(i.title || ""))),
+    "لا عناوين Station English",
+  );
+}
+
 console.log("content-depth-audit-gate.test.ts: ok");
