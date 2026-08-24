@@ -8,7 +8,7 @@ import {
   harvestInstagramAccount,
 } from "./adapters/instagram.mjs";
 import { stripEmojiFromTitle, summaryFromText } from "./normalize.mjs";
-import { classifyType, extractFields, confidenceFor } from "./classify.mjs";
+import { classifyType, extractFields, confidenceFor, isLessonRelevant } from "./classify.mjs";
 import { fingerprintPrimary, fingerprintSecondary, mergeOrAppend } from "./dedupe.mjs";
 import { loadAccounts, loadFeed, publishFeed } from "./publish.mjs";
 
@@ -17,9 +17,22 @@ const FIXTURES = resolve(__dirname, "fixtures/harvest-items.json");
 const REPORT_JSON = resolve(__dirname, "../../public/data/sources/harvest-report.json");
 const INBOX_PATH = resolve(__dirname, "../../public/data/sources/inbox.jsonl");
 
-const HOURS_48 = 48 * 60 * 60 * 1000;
+const MS_DAY = 24 * 60 * 60 * 1000;
+
+function lookbackDays() {
+  const n = Number(process.env.HARVEST_LOOKBACK_DAYS || 7);
+  return Number.isFinite(n) && n > 0 ? Math.min(30, Math.floor(n)) : 7;
+}
 
 function parseArgs(argv) {
+  const daysFlag = argv.find((a) => a.startsWith("--days="));
+  if (daysFlag) {
+    const n = Number(daysFlag.slice("--days=".length));
+    if (Number.isFinite(n) && n > 0) process.env.HARVEST_LOOKBACK_DAYS = String(Math.floor(n));
+  }
+  if (argv.includes("--backfill")) {
+    process.env.INSTAGRAM_BACKFILL_ENABLED = "true";
+  }
   return {
     dryRun: argv.includes("--dry-run"),
     fixture: argv.includes("--fixture"),
@@ -98,6 +111,9 @@ function itemToCard(item, account) {
     starts_at: fields.starts_at,
     time_text: fields.time_text,
     register_url: fields.register_url,
+    schedule_kind: fields.schedule_kind ?? null,
+    women_attendance: fields.womenAttendance ?? null,
+    women_attendance_note: fields.womenAttendanceNote ?? null,
     sources: [
       {
         id: account.id,
@@ -113,6 +129,7 @@ function itemToCard(item, account) {
     _primary: fingerprintPrimary(account.id, item.externalId),
     _igPostId: item.externalId || null,
     _igPostUrl: item.url || null,
+    _lessonRelevant: isLessonRelevant(text),
   };
 }
 
@@ -143,6 +160,9 @@ function writeHarvestReportJson(stats, { dryRun }) {
     failed: stats.failed,
     skipped: stats.skippedList,
     last_seen_updates: stats.lastSeenUpdates,
+    lookback_days: stats.lookback_days ?? lookbackDays(),
+    lookback_since: stats.lookback_since ?? null,
+    lesson_relevant_published: stats.lessonRelevantPublished ?? 0,
     content_changed: stats.contentChanged === true,
   };
   mkdirSync(dirname(REPORT_JSON), { recursive: true });
@@ -191,6 +211,9 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
     skipped: 0,
     skippedList: /** @type {Array<{id?:string,reason:string}>} */ ([]),
     lastSeenUpdates: /** @type {Array<{id:string,last_seen_at:string}>} */ ([]),
+    lookback_days: lookbackDays(),
+    lookback_since: null,
+    lessonRelevantPublished: 0,
     instagram: resolveInstagramNote(),
     instagramStats: emptyInstagramStats(igTotal),
     contentChanged: false,
@@ -222,8 +245,12 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
   const seenSecondary = new Set(cards.map((c) => c.id));
 
   const now = Date.now();
-  const defaultSince = new Date(now - HOURS_48);
+  const lookbackMs = lookbackDays() * MS_DAY;
+  // نافذة ثابتة (افتراضي 7 أيام) — لا تعتمد على last_seen حتى لا نفقد دروسًا قادمة/متكررة
+  const defaultSince = new Date(now - lookbackMs);
   const nowIso = new Date().toISOString();
+  stats.lookback_days = lookbackDays();
+  stats.lookback_since = defaultSince.toISOString();
 
   const igMode = getInstagramIngestMode();
   const igStatus = getInstagramProviderStatus();
@@ -249,7 +276,10 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
       if (account.platform === "instagram") {
         if (skipAllInstagram) continue;
         try {
-          const result = await harvestInstagramAccount(account, { persistQuota: !dryRun });
+          const result = await harvestInstagramAccount(account, {
+            persistQuota: !dryRun,
+            since: defaultSince,
+          });
           stats.instagramStats.checked += 1;
           stats.instagramStats.probe_records_used += result.probeUsed || 0;
           stats.instagramStats.fetch_records_used += result.fetchUsed || 0;
@@ -286,9 +316,13 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
             continue;
           }
           if (result.status === "new_post" && result.items?.length) {
-            stats.instagramStats.new_posts_found += result.items.length;
-            stats.fetched += result.items.length;
-            harvested.push(...result.items);
+            const windowed = result.items.filter((it) => {
+              if (!it?.publishedAt) return true;
+              return new Date(it.publishedAt).getTime() >= defaultSince.getTime();
+            });
+            stats.instagramStats.new_posts_found += windowed.length;
+            stats.fetched += windowed.length;
+            harvested.push(...windowed);
             continue;
           }
           pushSkip(account.id, result.status || "instagram_skipped");
@@ -306,11 +340,15 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
         pushSkip(account.id, `no_adapter:${account.platform}`);
         continue;
       }
-      const since = account.last_seen_at ? new Date(account.last_seen_at) : defaultSince;
+      const since = defaultSince;
       try {
         const items = await adapter.fetch(account, since);
-        stats.fetched += items.length;
-        harvested.push(...items);
+        const windowed = items.filter((it) => {
+          if (!it?.publishedAt) return true;
+          return new Date(it.publishedAt).getTime() >= defaultSince.getTime();
+        });
+        stats.fetched += windowed.length;
+        harvested.push(...windowed);
       } catch (err) {
         const msg = String(err?.message || err);
         stats.failed.push({ id: account.id, reason: msg });
@@ -371,6 +409,7 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
     seenSecondary.add(card.id);
     cards.push(card);
     stats.published++;
+    if (card._lessonRelevant) stats.lessonRelevantPublished += 1;
     stats.contentChanged = true;
     if (!adapterFailed.has(account.id)) {
       if (account.platform === "instagram") {
@@ -390,6 +429,7 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
     delete c._primary;
     delete c._igPostId;
     delete c._igPostUrl;
+    delete c._lessonRelevant;
   }
 
   for (const id of adapterFailed) {
