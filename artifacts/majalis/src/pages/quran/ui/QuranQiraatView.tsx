@@ -47,6 +47,8 @@ export default function QuranQiraatView() {
     <div className="qr-page" dir="rtl" data-quran-qiraat="1">
       <p className="qr-note" role="note">
         أوجه القراءات تُعرض وصفًا («قرأ فلان كذا») مع المصدر، ولا تُحقن في صفحة المصحف.
+        لمعرفة أصل التعدد والتيسير انظر{" "}
+        <Link href="/quran-hub/seven-ahruf">نزول القرآن على سبعة أحرف</Link>.
       </p>
 
       {QIRAAT_SECTIONS.map((sec) => (

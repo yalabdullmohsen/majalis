@@ -119,6 +119,12 @@ export default function QuranTajweedHubView() {
         <p className="tj-source">
           <strong>المصدر:</strong> {TAJWEED_HUB_INTRO.source}
         </p>
+        <p className="tj-related">
+          لمعرفة أصل تعدد الأوجه والتيسير انظر{" "}
+          <Link href="/quran-hub/seven-ahruf">الأحرف السبعة</Link>
+          {" · "}
+          <Link href="/quran-hub/qiraat">القراءات العشر</Link>.
+        </p>
         {!TAJWEED_COLORING_FLAG ? (
           <p className="tj-flag-note" role="note">
             تلوين أحكام التجويد داخل المصحف غير مفعّل — لا يُعرض إلا ببيانات أحكام مراجَعة لكل كلمة.

@@ -596,9 +596,19 @@ export function AyahActionSheet({
             ) : null}
 
             {tab === "tajweed" ? (
-              <p className="mm-ayah-bar__status" data-testid="mushaf-tajweed-empty">
-                لا توجد أحكام تجويد متاحة لهذه الآية حاليًا.
-              </p>
+              <div className="ayah-action-sheet__tajweed" data-testid="mushaf-tajweed-empty">
+                <p className="mm-ayah-bar__status">
+                  لا توجد أحكام تجويد متاحة لهذه الآية حاليًا.
+                </p>
+                <p className="mm-ayah-bar__status" data-testid="mushaf-ayah-see-also">
+                  انظر أيضًا:{" "}
+                  <a href="/quran-hub/tajweed">التجويد</a>
+                  {" · "}
+                  <a href="/quran-hub/qiraat">القراءات العشر</a>
+                  {" · "}
+                  <a href="/quran-hub/seven-ahruf">الأحرف السبعة</a>
+                </p>
+              </div>
             ) : null}
           </div>
 

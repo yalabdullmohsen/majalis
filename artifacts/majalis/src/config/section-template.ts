@@ -31,6 +31,7 @@ const ROUTE_THEME: Record<string, TopicThemeId> = {
   "/tafsir": "quran",
   "/quran-hub/tajweed": "quran",
   "/quran-hub/qiraat": "quran",
+  "/quran-hub/seven-ahruf": "quran",
   "/ulum-quran": "quran",
   "/quran/surah-stories": "quran",
   "/quran/people": "quran",
@@ -64,6 +65,12 @@ export const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
     ref: "المزمل: ٤",
     type: "ayah",
     sectionId: "quran-tajweed",
+  },
+  "/quran-hub/seven-ahruf": {
+    text: "إن هذا القرآن أُنزل على سبعة أحرف، فاقرؤوا ما تيسّر منه.",
+    ref: "متفق عليه — البخاري ٤٩٩٢ · مسلم ٨١٨",
+    type: "hadith",
+    sectionId: "quran-seven-ahruf",
   },
   "/quran-hub/qiraat": {
     text: "إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ",

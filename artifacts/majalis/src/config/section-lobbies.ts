@@ -118,7 +118,7 @@ const QURAN_GROUPS: Array<{ id: string; title: string; ids: string[] }> = [
   {
     id: "tajweed-qiraat",
     title: "التجويد والقراءات",
-    ids: ["quran-tajweed", "quran-qiraat"],
+    ids: ["quran-tajweed", "quran-qiraat", "quran-seven-ahruf"],
   },
   {
     id: "hifz",
