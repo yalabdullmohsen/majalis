@@ -436,7 +436,8 @@
     "test:pagespeed-home": "node --import tsx src/lib/__tests__/pagespeed-home-gate.test.ts",
     "test:mushaf-word-spacing": "node --import tsx src/lib/__tests__/mushaf-word-spacing-gate.test.ts",
     "test:mushaf-ayah-sheet": "node --import tsx src/lib/__tests__/mushaf-ayah-sheet-gate.test.ts",
-    "test:mushaf-line-overflow": "node --import tsx src/lib/__tests__/mushaf-line-overflow-gate.test.ts"
+    "test:mushaf-line-overflow": "node --import tsx src/lib/__tests__/mushaf-line-overflow-gate.test.ts",
+    "verify:fiqh-registry": "node --import tsx src/lib/__tests__/fiqh-registry-gate.test.ts"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

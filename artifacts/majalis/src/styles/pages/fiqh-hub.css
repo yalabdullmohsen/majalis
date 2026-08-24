@@ -108,7 +108,9 @@
   margin: 0;
   line-height: var(--lh-type-card, 1.55);
   letter-spacing: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
+  white-space: normal;
 }
 .fqh-hub-card:hover .fqh-hub-card__title { color: var(--fqh-clr, var(--brand, var(--text-brand))); }
 .fqh-hub-card__desc {
@@ -118,7 +120,11 @@
   line-height: var(--lh-type-ui, 1.65);
   letter-spacing: 0;
   overflow: hidden;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 html[data-theme="dark"] .fqh-hub-card__desc {
   color: var(--textSecondary, var(--text-2));
@@ -344,9 +350,15 @@ html[data-theme="dark"] .fqh-hub-card__desc {
   font-size: 0.82rem;
   font-weight: 600;
   line-height: 1.2;
+  max-width: 100%;
+  overflow-wrap: normal;
+  word-break: keep-all;
 }
 .fiqh-chip__label {
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 16rem;
 }
 .fiqh-search {
   position: sticky;

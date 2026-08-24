@@ -13,6 +13,7 @@ import { parseQuickNav } from "@/features/search/quick-nav";
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { scoreTolerantMatch, type TolerantMatch } from "@/features/search/tolerant-match";
 import { searchHadithCorpus } from "@/lib/hadith-corpus";
+import { searchFiqhLessons } from "@/lib/fiqh-books";
 
 export type AppSearchResult = {
   id: string;
@@ -166,6 +167,20 @@ export async function runAppSearch(
   if (corpusHits.length) {
     const seenHref = new Set(results.map((r) => r.href));
     results = [...corpusHits.filter((h) => !seenHref.has(h.href)), ...results];
+  }
+
+  const fiqhHits = searchFiqhLessons(query)
+    .slice(0, 12)
+    .map((h) => ({
+      id: `fiqh:${h.lesson.id}`,
+      kind: "fiqh",
+      title: h.lesson.title,
+      href: h.href,
+      summary: h.path,
+    }));
+  if (fiqhHits.length) {
+    const seenHref = new Set(results.map((r) => r.href));
+    results = [...fiqhHits.filter((h) => !seenHref.has(h.href)), ...results];
   }
 
   const groups: Record<string, AppSearchResult[]> = {};
