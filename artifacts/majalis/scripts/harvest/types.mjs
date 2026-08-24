@@ -32,13 +32,13 @@
  * @property {string} title
  * @property {string} text
  * @property {string} [imageUrl]
- * @property {string} publishedAt
+ * @property {string|null} publishedAt
  */
 
 /**
  * @typedef {Object} FeedCard
  * @property {string} id
- * @property {'درس'|'حلقة'|'دورة'|'خطبة'|'تسجيل'|'إعلان'} type
+ * @property {'درس'|'حلقة'|'دورة'|'تسجيل'|'محاضرة'|'مسابقة'|'تنبيه'} type
  * @property {string} title_ar
  * @property {string} summary_ar
  * @property {string|null} sheikh

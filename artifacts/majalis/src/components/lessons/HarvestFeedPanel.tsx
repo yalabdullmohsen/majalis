@@ -5,6 +5,7 @@ import {
   isThisWeek,
   isToday,
   loadHarvestFeed,
+  feedPriorityScore,
   type HarvestFeedCard,
 } from "@/lib/harvest-feed";
 import "@/styles/components/harvest-feed-panel.css";
@@ -19,6 +20,9 @@ const TABS: { id: FeedTab; label: string }[] = [
   { id: "women", label: "نساء" },
 ];
 
+const TODAY_LIMIT = 12;
+const WEEK_LIMIT = 12;
+
 function filterTab(items: HarvestFeedCard[], tab: FeedTab): HarvestFeedCard[] {
   if (tab === "today") return items.filter((c) => isToday(c.published_at));
   if (tab === "week") return items.filter((c) => isThisWeek(c.published_at));
@@ -26,6 +30,26 @@ function filterTab(items: HarvestFeedCard[], tab: FeedTab): HarvestFeedCard[] {
   if (tab === "circles") return items.filter((c) => c.type === "حلقة");
   if (tab === "women") return items.filter((c) => c.audience === "نساء");
   return items;
+}
+
+function dedupeBySource(items: HarvestFeedCard[]): HarvestFeedCard[] {
+  const seen = new Set<string>();
+  const out: HarvestFeedCard[] = [];
+  for (const card of items) {
+    const srcId = card.sources[0]?.id ?? card.id;
+    if (seen.has(srcId)) continue;
+    seen.add(srcId);
+    out.push(card);
+  }
+  return out;
+}
+
+function sortByPriority(items: HarvestFeedCard[]): HarvestFeedCard[] {
+  return [...items].sort((a, b) => {
+    const d = feedPriorityScore(b) - feedPriorityScore(a);
+    if (d !== 0) return d;
+    return Date.parse(b.published_at) - Date.parse(a.published_at);
+  });
 }
 
 export function HarvestFeedPanel() {
@@ -38,9 +62,11 @@ export function HarvestFeedPanel() {
   }, []);
 
   const filtered = useMemo(() => {
-    let list = filterTab(items, tab);
+    let list = sortByPriority(filterTab(items, tab));
     if (openRegister) list = list.filter((c) => Boolean(c.register_url));
-    return list.slice(0, 12);
+    list = dedupeBySource(list);
+    const limit = tab === "today" ? TODAY_LIMIT : tab === "week" ? WEEK_LIMIT : TODAY_LIMIT;
+    return list.slice(0, limit);
   }, [items, tab, openRegister]);
 
   const todayCount = useMemo(() => items.filter((c) => isToday(c.published_at)).length, [items]);

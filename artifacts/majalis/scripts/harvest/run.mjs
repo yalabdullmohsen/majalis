@@ -7,8 +7,9 @@ import {
   getInstagramProviderStatus,
   harvestInstagramAccount,
 } from "./adapters/instagram.mjs";
-import { stripEmojiFromTitle, summaryFromText } from "./normalize.mjs";
+import { summaryFromText } from "./normalize.mjs";
 import { classifyType, extractFields, confidenceFor, isLessonRelevant } from "./classify.mjs";
+import { qualityGate, resolvePublishedAt } from "./quality-gate.mjs";
 import { fingerprintPrimary, fingerprintSecondary, mergeOrAppend } from "./dedupe.mjs";
 import { loadAccounts, loadFeed, publishFeed } from "./publish.mjs";
 
@@ -94,22 +95,28 @@ function emptyInstagramStats(total = 0) {
 }
 
 function itemToCard(item, account) {
-  const title = stripEmojiFromTitle(item.title || item.text?.slice(0, 80) || "إعلان");
-  const text = item.text || title;
+  const text = item.text || item.title || "";
   const fields = extractFields(text, account.audience);
-  const type = classifyType(text);
-  const published_at = item.publishedAt || new Date().toISOString();
-  const dateKey = fields.starts_at || published_at.slice(0, 10);
+  const published_at = item.publishedAt && Number.isFinite(Date.parse(item.publishedAt))
+    ? new Date(item.publishedAt).toISOString()
+    : null;
+  const gate = qualityGate({ text, title: item.title, publishedAt: published_at, fields });
+  if (!gate.ok) {
+    return { _rejected: gate.reason, _gate: gate };
+  }
+  const title = gate.title_ar;
+  const resolvedPublished = resolvePublishedAt(published_at, text);
+  const dateKey = fields.starts_at || resolvedPublished?.slice(0, 10) || gate.future_at?.slice(0, 10) || "unknown";
   const id = fingerprintSecondary(title, dateKey, fields.place);
   return {
     id,
-    type,
+    type: gate.type,
     title_ar: title,
     summary_ar: summaryFromText(text, 160),
     sheikh: fields.sheikh,
     place: fields.place,
     audience: fields.audience,
-    starts_at: fields.starts_at,
+    starts_at: fields.starts_at || gate.future_at,
     time_text: fields.time_text,
     register_url: fields.register_url,
     schedule_kind: fields.schedule_kind ?? null,
@@ -125,8 +132,8 @@ function itemToCard(item, account) {
       },
     ],
     image_url: item.imageUrl ?? null,
-    published_at,
-    confidence: confidenceFor(item, fields),
+    published_at: resolvedPublished || gate.future_at || fields.starts_at,
+    confidence: confidenceFor({ title, text }, fields),
     _primary: fingerprintPrimary(account.id, item.externalId),
     _igPostId: item.externalId || null,
     _igPostUrl: item.url || null,
@@ -165,6 +172,7 @@ function writeHarvestReportJson(stats, { dryRun }) {
     lookback_days: stats.lookback_days ?? lookbackDays(),
     lookback_since: stats.lookback_since ?? null,
     lesson_relevant_published: stats.lessonRelevantPublished ?? 0,
+    quality_gate: stats.qualityGate,
     content_changed: stats.contentChanged === true,
   };
   mkdirSync(dirname(REPORT_JSON), { recursive: true });
@@ -216,6 +224,14 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
     lookback_days: lookbackDays(),
     lookback_since: null,
     lessonRelevantPublished: 0,
+    qualityGate: {
+      rejected_old: 0,
+      rejected_weak_title: 0,
+      rejected_no_useful_type: 0,
+      rejected_missing_date: 0,
+      rejected_other: 0,
+      published: 0,
+    },
     instagram: resolveInstagramNote(),
     instagramStats: emptyInstagramStats(igTotal),
     contentChanged: false,
@@ -386,6 +402,16 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
     }
 
     const card = itemToCard(item, account);
+    if (card._rejected) {
+      const reason = `quality_gate:${card._rejected}`;
+      if (card._rejected === "too_old") stats.qualityGate.rejected_old += 1;
+      else if (card._rejected === "weak_title") stats.qualityGate.rejected_weak_title += 1;
+      else if (card._rejected === "no_useful_type") stats.qualityGate.rejected_no_useful_type += 1;
+      else if (card._rejected === "missing_date") stats.qualityGate.rejected_missing_date += 1;
+      else stats.qualityGate.rejected_other += 1;
+      pushSkip(account.id, reason);
+      continue;
+    }
     if (seenPrimary.has(card._primary)) continue;
     seenPrimary.add(card._primary);
 
@@ -417,6 +443,7 @@ export async function runHarvest({ dryRun = false, fixture = false, verbose = fa
     seenSecondary.add(card.id);
     cards.push(card);
     stats.published++;
+    stats.qualityGate.published += 1;
     if (card._lessonRelevant) stats.lessonRelevantPublished += 1;
     stats.contentChanged = true;
     if (!adapterFailed.has(account.id)) {
