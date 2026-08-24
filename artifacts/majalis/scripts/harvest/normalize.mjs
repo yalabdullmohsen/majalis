@@ -23,6 +23,19 @@ export function stripEmojiFromTitle(title) {
     .trim();
 }
 
+/** إزالة أرقام تسلسل الدروس/الحلقات من العناوين */
+export function stripLessonSeriesNumbers(text) {
+  return String(text ?? "")
+    .replace(/[(\[]\s*[٠-٩0-9]{1,4}\s*[)\]]/gu, " ")
+    .replace(
+      /(?:^|\s)(?:ال)?(?:حلقة|حلقات|درس|دروس|محاضرة|محاضرات|لقاء|جلسة)\s*(?:رقم|#)?\s*[٠-٩0-9]{1,3}(?=\s|$|[،,.])/giu,
+      " ",
+    )
+    .replace(/#\s*[٠-٩0-9]+\b/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export function summaryFromText(text, max = 160) {
   const clean = normalizeArabic(text).replace(/\s+/g, " ").trim();
   if (clean.length <= max) return clean;

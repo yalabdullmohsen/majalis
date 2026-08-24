@@ -66,9 +66,9 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
   const [nowLive, setNowLive] = useState(() => isLessonInProgress(lesson.day, scheduleTime));
 
   useEffect(() => {
-    if (lesson.featuredHomeStatus) {
-      setNowLive(lesson.featuredHomeStatus === "مستمر");
-      setStatusLabel(lesson.featuredHomeStatus);
+    if (lesson.featuredHomeStatus === "مستمر") {
+      setNowLive(true);
+      setStatusLabel("مستمر");
       return;
     }
     if (!scheduleConfirmed) {

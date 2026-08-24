@@ -1,5 +1,6 @@
 import { ExternalLink, UserRound } from "lucide-react";
 import type { HarvestFeedCard } from "@/lib/harvest-feed";
+import { formatRelativeTime } from "@/lib/lesson-time";
 import "@/styles/components/source-item-card.css";
 
 type Props = {
@@ -9,7 +10,10 @@ type Props = {
 
 export function SourceItemCard({ card, compact }: Props) {
   const source = card.sources[0];
-  const meta = [card.sheikh, card.place, card.time_text].filter(Boolean).join(" · ");
+  const countdown = card.starts_at
+    ? formatRelativeTime(Date.parse(card.starts_at))
+    : card.time_text || "";
+  const meta = [card.sheikh, card.place, countdown].filter(Boolean).join(" · ");
 
   return (
     <article className="src-card" data-src-type={card.type} dir="rtl">

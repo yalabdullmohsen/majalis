@@ -1,8 +1,9 @@
-import { normalizeArabic, stripEmojiFromTitle } from "./normalize.mjs";
-import { classifyType, extractFields } from "./classify.mjs";
+import { normalizeArabic, stripEmojiFromTitle, stripLessonSeriesNumbers } from "./normalize.mjs";
+import { classifyType, detectScheduleKind, extractFields } from "./classify.mjs";
 
 export const PUBLISH_MAX_AGE_DAYS = 14;
 const MS_DAY = 24 * 60 * 60 * 1000;
+const MS_HOUR = 60 * 60 * 1000;
 
 /** @type {Set<string>} */
 export const USEFUL_CARD_TYPES = new Set([
@@ -103,15 +104,16 @@ export function extractArabicTitle(text, maxLen = 80) {
     if (arabic.length < 6) continue;
     const latin = line.match(LATIN_HEAVY);
     if (latin && latin.join(" ").length > arabic.length * 0.45) continue;
-    if (arabic.length <= maxLen) return arabic;
-    return `${arabic.slice(0, maxLen - 1)}…`;
+    if (arabic.length <= maxLen) return stripLessonSeriesNumbers(arabic);
+    return stripLessonSeriesNumbers(`${arabic.slice(0, maxLen - 1)}…`);
   }
 
   const allRuns = raw.match(ARABIC_RUN);
   if (!allRuns?.length) return null;
   const merged = allRuns.join(" ").replace(/\s+/g, " ").trim();
   if (merged.length < 6 || isWeakAutoTitle(merged)) return null;
-  return merged.length <= maxLen ? merged : `${merged.slice(0, maxLen - 1)}…`;
+  const titled = merged.length <= maxLen ? merged : `${merged.slice(0, maxLen - 1)}…`;
+  return stripLessonSeriesNumbers(titled);
 }
 
 /**
@@ -272,6 +274,17 @@ export function qualityGate(input) {
 
   if (lacksUsefulLessonSignal(text, fields)) {
     return { ok: false, reason: "no_useful_type" };
+  }
+
+  const schedule = fields.schedule_kind ?? detectScheduleKind(text);
+  const eventStart = fields.starts_at ? Date.parse(fields.starts_at) : NaN;
+  if (
+    schedule !== "weekly" &&
+    schedule !== "monthly" &&
+    Number.isFinite(eventStart) &&
+    eventStart + 2 * MS_HOUR < now.getTime()
+  ) {
+    return { ok: false, reason: "too_old" };
   }
 
   return { ok: true, title_ar, type, future_at };

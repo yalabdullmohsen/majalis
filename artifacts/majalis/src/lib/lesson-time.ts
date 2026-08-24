@@ -426,23 +426,6 @@ export function formatHijriDate(date: Date): string {
 }
 
 /**
- * تحويل الفارق الزمني إلى نص عربي واضح.
- *
- * الحالات:
- *  ≤ 0          → "انتهى"   (إذا مرّ ولو ثانية)
- *  ≤ 2 min      → "الآن"
- *  ≤ 59 min     → "بعد X دقيقة" / "بعد دقيقتين"
- *  < 1 h        → "بعد أقل من ساعة"
- *  1 h          → "بعد ساعة"
- *  2 h          → "بعد ساعتين"
- *  < 24 h       → "بعد X ساعات"
- *  < 48 h       → "غداً"
- *  ≤ 6 days     → "بعد X أيام"
- *  ≤ 13 days    → "الأسبوع القادم"
- *  ≤ 20 days    → "بعد أسبوعين"
- *  months       → "بعد X أشهر"
- */
-/**
  * صيغة الموعد الموحّدة للعرض:
  * اليوم + ميلادي كامل + هجري بين قوسين + الوقت + «توقيت الكويت».
  * لا صيغ مختصرة ملتبسة مثل 7/5–7/8.
@@ -477,6 +460,9 @@ export function formatLessonAppointmentLine(input: {
   return line;
 }
 
+/**
+ * تحويل الفارق الزمني إلى نص عربي واضح — «بعد ساعة/يوم/يومين/3 أيام» بلا «قادم».
+ */
 export function formatRelativeTime(targetMs: number, now = Date.now()): string {
   const diffMs = targetMs - now;
 
@@ -498,28 +484,20 @@ export function formatRelativeTime(targetMs: number, now = Date.now()): string {
   }
 
   const days = Math.floor(minutes / (24 * 60));
-  if (days === 1)           return "غداً";
-  if (days === 2)           return "بعد يومين";
-  if (days <= 6)            return toArabicIndicDigits(`بعد ${days} أيام`);
-  if (days <= 13)           return "الأسبوع القادم";
-  if (days <= 20)           return "بعد أسبوعين";
-
-  const months = Math.floor(days / 30);
-  if (months >= 1) {
-    return months === 1 ? "بعد شهر" : toArabicIndicDigits(`بعد ${months} أشهر`);
-  }
+  if (days === 1) return "بعد يوم";
+  if (days === 2) return "بعد يومين";
+  if (days === 3) return toArabicIndicDigits("بعد 3 أيام");
   return toArabicIndicDigits(`بعد ${days} أيام`);
 }
 
 /**
- * الوصف الموجز لحالة الدرس، مع حالة خاصة "غداً فجراً".
+ * الوصف الموجز لحالة الدرس — «بعد يوم · فجراً» عند الاقتضاء.
  */
 export function formatRelativeTimeDetailed(targetMs: number, time: string, now = Date.now()): string {
   const basic = formatRelativeTime(targetMs, now);
 
-  // إذا كان الدرس غداً وكان وقته الفجر → "غداً فجراً"
-  if (basic === "غداً" && /فجر/u.test(time)) {
-    return "غداً فجراً";
+  if (basic === "بعد يوم" && /فجر/u.test(time)) {
+    return "بعد يوم · فجراً";
   }
 
   return basic;

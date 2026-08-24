@@ -303,8 +303,10 @@ export default function LessonsPage({
     const upcoming = sorted
       .filter((l) => {
         const label = getFeaturedHomeStatusLabel(l);
-        if (label === "مستمر" || label === "يبدأ اليوم") return true;
-        return label === "قادم" && computeNextOccurrenceMs(l.day, l.time) - now <= THRESHOLD_MS;
+        if (!label) return false;
+        if (label === "مستمر") return true;
+        const nextMs = computeNextOccurrenceMs(l.day, l.time);
+        return nextMs - now <= THRESHOLD_MS;
       })
       .slice(0, 4);
     const upcomingIds = new Set(upcoming.map((l) => l.id));

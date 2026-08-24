@@ -1,10 +1,9 @@
 /**
- * تسميات الحالة المسموحة في الرئيسية والأقسام المميزة.
+ * تسميات العدّ التنازلي في الرئيسية والأقسام المميزة — بلا «قادم».
  * التشغيل: npx tsx src/lib/__tests__/featured-home-status.test.ts
  */
 import assert from "node:assert/strict";
 import {
-  FEATURED_HOME_STATUS_LABELS,
   filterFeaturedHomeLessons,
   getFeaturedHomeStatusLabel,
   isFeaturedHomeStatusLabel,
@@ -12,16 +11,14 @@ import {
   type KuwaitLessonRecord,
 } from "../kuwait-lessons";
 
-console.log("\n=== featured home status allowlist ===");
+console.log("\n=== featured home countdown labels ===");
 
-assert.deepEqual([...FEATURED_HOME_STATUS_LABELS], ["يبدأ اليوم", "مستمر", "قادم"]);
-
-for (const label of FEATURED_HOME_STATUS_LABELS) {
-  assert.equal(isFeaturedHomeStatusLabel(label), true, `${label} allowed`);
-}
+assert.equal(isFeaturedHomeStatusLabel("مستمر"), true);
+assert.equal(isFeaturedHomeStatusLabel("بعد يوم"), true);
+assert.equal(isFeaturedHomeStatusLabel("بعد ساعتين"), true);
+assert.equal(isFeaturedHomeStatusLabel("قادم"), false);
 assert.equal(isFeaturedHomeStatusLabel("انتهى اليوم"), false);
 assert.equal(isFeaturedHomeStatusLabel("منتهٍ"), false);
-assert.equal(isFeaturedHomeStatusLabel("جارٍ الآن"), false);
 
 const baseRow = {
   id: "feat-test-1",
@@ -38,11 +35,14 @@ const baseRow = {
 } as const;
 
 const activeLesson = mapLessonRow(baseRow) as KuwaitLessonRecord;
-const wednesdayNoon = new Date("2026-08-05T12:00:00+03:00").getTime(); // الأربعاء
-assert.equal(getFeaturedHomeStatusLabel(activeLesson, wednesdayNoon), "قادم");
+const wednesdayNoon = new Date("2026-08-05T12:00:00+03:00").getTime();
+const labelFar = getFeaturedHomeStatusLabel(activeLesson, wednesdayNoon);
+assert.ok(labelFar?.startsWith("بعد"), `expected countdown, got ${labelFar}`);
+assert.notEqual(labelFar, "قادم");
 
-const fridayMorning = new Date("2026-08-07T10:00:00+03:00").getTime(); // الجمعة قبل الدرس
-assert.equal(getFeaturedHomeStatusLabel(activeLesson, fridayMorning), "يبدأ اليوم");
+const fridayMorning = new Date("2026-08-07T10:00:00+03:00").getTime();
+const labelToday = getFeaturedHomeStatusLabel(activeLesson, fridayMorning);
+assert.ok(labelToday?.startsWith("بعد") || labelToday === "الآن", `got ${labelToday}`);
 
 const expiredLesson = mapLessonRow({
   ...baseRow,

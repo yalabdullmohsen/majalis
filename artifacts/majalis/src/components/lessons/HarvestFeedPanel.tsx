@@ -64,6 +64,12 @@ export function HarvestFeedPanel() {
   const filtered = useMemo(() => {
     let list = sortByPriority(filterTab(items, tab));
     if (openRegister) list = list.filter((c) => Boolean(c.register_url));
+    list = list.filter((c) => {
+      if (!c.starts_at) return true;
+      const t = Date.parse(c.starts_at);
+      if (!Number.isFinite(t)) return true;
+      return t + 2 * 60 * 60 * 1000 >= Date.now();
+    });
     list = dedupeBySource(list);
     const limit = tab === "today" ? TODAY_LIMIT : tab === "week" ? WEEK_LIMIT : TODAY_LIMIT;
     return list.slice(0, limit);
