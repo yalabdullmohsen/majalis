@@ -1,7 +1,34 @@
 {
   "version": 1,
-  "generated_at": "2026-08-24T13:20:40.061Z",
+  "generated_at": "2026-08-24T15:46:03.171Z",
   "items": [
+    {
+      "id": "6eec71c28a7a72640dea30eb3008c76319178f48",
+      "type": "إعلان",
+      "title_ar": "الآن مباشر (10) التعليق على العقيدة الطحاوية للشيخ د. راشد صليهم الهاجري رابط البث المباشر https://www.yout",
+      "summary_ar": "الان مباشر (10) التعليق علي العقيده الطحاويه للشيخ د. راشد صليهم الهاجري رابط البث المباشر https://www.youtube.com/live/I5KFAt2zRG0?si=Xi7Gh6f4QpRC9RiD قناه مو…",
+      "sheikh": "راشد صليهم الهاجري 🔗 رابط البث المباشر https://www",
+      "place": null,
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27632",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T15:45:57.083Z",
+      "confidence": 0.8
+    },
     {
       "id": "94aa3dce917340b96a2e429b89453581d57e824d",
       "type": "إعلان",

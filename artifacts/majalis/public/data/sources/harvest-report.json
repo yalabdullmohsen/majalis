@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-24T13:20:40.062Z",
+  "generated_at": "2026-08-24T15:46:03.173Z",
   "dry_run": false,
   "instagram_mode": "provider",
   "instagram": {
@@ -8,18 +8,18 @@
     "message": null
   },
   "instagram_accounts_total": 47,
-  "instagram_checked": 47,
+  "instagram_checked": 44,
   "instagram_unchanged": 0,
   "instagram_new_posts_found": 0,
   "instagram_published": 0,
   "instagram_skipped_private": 0,
-  "instagram_failed": 47,
-  "instagram_probe_records_used": 47,
+  "instagram_failed": 43,
+  "instagram_probe_records_used": 43,
   "instagram_fetch_records_used": 0,
   "sources": 55,
   "fetched": 25,
-  "published": 7,
-  "merged": 18,
+  "published": 1,
+  "merged": 24,
   "failed": [
     {
       "id": "ig-athr_yabka",
@@ -192,53 +192,46 @@
     {
       "id": "ig-moudhi_mosque",
       "reason": "HTTP 404"
-    },
-    {
-      "id": "ig-mansuh_quranayh",
-      "reason": "HTTP 404"
-    },
-    {
-      "id": "ig-nadwat.kw",
-      "reason": "HTTP 404"
-    },
-    {
-      "id": "ig-wejdanalh",
-      "reason": "HTTP 404"
-    },
-    {
-      "id": "ig-kwt_awqaf",
-      "reason": "HTTP 404"
     }
   ],
-  "skipped": [],
+  "skipped": [
+    {
+      "id": "ig-mansuh_quranayh",
+      "reason": "probe_daily_limit"
+    },
+    {
+      "id": "instagram",
+      "reason": "probe_daily_limit"
+    }
+  ],
   "last_seen_updates": [
     {
       "id": "web-aayatkw.com",
-      "last_seen_at": "2026-08-24T13:19:53.597Z"
+      "last_seen_at": "2026-08-24T15:45:37.866Z"
     },
     {
       "id": "web-almanabr.org",
-      "last_seen_at": "2026-08-24T13:20:08.937Z"
+      "last_seen_at": "2026-08-24T15:45:47.852Z"
     },
     {
       "id": "web-waheen.net",
-      "last_seen_at": "2026-08-24T13:20:11.939Z"
+      "last_seen_at": "2026-08-24T15:45:50.498Z"
     },
     {
       "id": "web-hoffath.org",
-      "last_seen_at": "2026-08-24T13:20:17.174Z"
+      "last_seen_at": "2026-08-24T15:45:55.886Z"
     },
     {
       "id": "telegram-DrosQ8",
-      "last_seen_at": "2026-08-24T13:20:21.199Z"
+      "last_seen_at": "2026-08-24T15:45:57.083Z"
     },
     {
       "id": "web-drosq8-linktree",
-      "last_seen_at": "2026-08-24T13:20:26.054Z"
+      "last_seen_at": "2026-08-24T15:45:59.319Z"
     }
   ],
   "lookback_days": 7,
-  "lookback_since": "2026-08-17T13:19:48.783Z",
-  "lesson_relevant_published": 4,
+  "lookback_since": "2026-08-17T15:45:33.504Z",
+  "lesson_relevant_published": 0,
   "content_changed": true
 }
