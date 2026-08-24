@@ -11,6 +11,7 @@ export const TAB_ROOT_PATHS = [
   "/prayer-times",
   "/fiqh",
   "/sections",
+  "/competitions",
 ] as const;
 
 export function isTabRootPath(pathname: string): boolean {

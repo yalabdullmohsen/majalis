@@ -2,26 +2,26 @@
  * كبسولة إعلان منتصف الهيدر — نص + CTA صغير، بلا صور وبلا سكربتات خارجية.
  */
 .header-ad-slot {
-  --header-ad-h: 36px;
+  --header-ad-h: 40px;
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   min-width: 0;
-  max-width: min(13.5rem, 52vw);
-  width: min(13.5rem, 52vw);
+  max-width: min(15rem, 58vw);
+  width: min(15rem, 58vw);
   height: var(--header-ad-h);
   min-height: var(--header-ad-h);
   max-height: var(--header-ad-h);
   margin: 0;
-  padding: 0 0.45rem 0 0.35rem;
+  padding: 0 0.4rem 0 0.35rem;
   border-radius: 999px;
   text-decoration: none;
   color: var(--majalis-emerald-deep, #173d35);
   background: color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 8%, #fff);
   border: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 18%, transparent);
-  line-height: 1;
+  line-height: 1.15;
   overflow: hidden;
   flex: 1 1 auto;
 }
@@ -33,12 +33,29 @@
   outline-offset: 1px;
 }
 
-.header-ad-slot__title {
+.header-ad-slot__copy {
   flex: 1 1 auto;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  overflow: hidden;
+}
+
+.header-ad-slot__title {
   margin: 0;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.68rem;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-ad-slot__subtitle {
+  margin: 0;
+  font-size: 0.58rem;
+  font-weight: 600;
+  opacity: 0.88;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -78,36 +95,47 @@ html[data-theme="dark"] .header-ad-slot__cta {
 
 @media (max-width: 379px) {
   .header-ad-slot {
-    max-width: min(11.5rem, 48vw);
-    width: min(11.5rem, 48vw);
-    gap: 0.3rem;
-    padding-inline: 0.35rem 0.28rem;
+    --header-ad-h: 38px;
+    max-width: min(12.5rem, 50vw);
+    width: min(12.5rem, 50vw);
+    gap: 0.28rem;
+    padding-inline: 0.32rem 0.26rem;
   }
 
   .header-ad-slot__title {
-    font-size: 0.66rem;
+    font-size: 0.64rem;
+  }
+
+  .header-ad-slot__subtitle {
+    font-size: 0.54rem;
   }
 
   .header-ad-slot__cta {
-    font-size: 0.62rem;
-    padding-inline: 0.38rem;
+    font-size: 0.6rem;
+    padding-inline: 0.35rem;
   }
 }
 
 @media (min-width: 880px) {
   .header-ad-slot {
-    --header-ad-h: 38px;
-    width: 15rem;
-    max-width: 15rem;
-    flex: 0 1 15rem;
+    --header-ad-h: 42px;
+    width: 16.5rem;
+    max-width: 16.5rem;
+    flex: 0 1 16.5rem;
+    gap: 0.45rem;
+    padding-inline: 0.5rem 0.4rem;
   }
 
   .header-ad-slot__title {
-    font-size: 0.8rem;
+    font-size: 0.74rem;
+  }
+
+  .header-ad-slot__subtitle {
+    font-size: 0.62rem;
   }
 
   .header-ad-slot__cta {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     min-height: 1.55rem;
   }
 }

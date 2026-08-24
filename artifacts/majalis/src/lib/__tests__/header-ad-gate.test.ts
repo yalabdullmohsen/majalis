@@ -34,7 +34,10 @@ assert.match(slot, /header-ad-slot/);
 assert.doesNotMatch(slot, /googlesyndication|adsbygoogle|gtag/i);
 assert.doesNotMatch(slot, /<img\b/);
 
-assert.match(css, /--header-ad-h:\s*36px/);
+assert.match(cfg, /subtitle:/);
+assert.match(slot, /header-ad-slot__subtitle/);
+
+assert.match(css, /--header-ad-h:\s*40px/);
 assert.match(css, /max-height:\s*var\(--header-ad-h\)/);
 assert.doesNotMatch(css, /position:\s*(fixed|absolute)/i);
 
