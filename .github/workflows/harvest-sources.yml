@@ -110,7 +110,8 @@ jobs:
         if: steps.diff.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # PROD_DEPLOY_TOKEN يطلق CI على PR الجديد؛ GITHUB_TOKEN وحده لا يفعل (GitHub policy).
+          token: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}
           branch: chore/harvest-${{ github.run_id }}
           title: "chore(harvest): تحديث feed المصادر"
           labels: safe:content
