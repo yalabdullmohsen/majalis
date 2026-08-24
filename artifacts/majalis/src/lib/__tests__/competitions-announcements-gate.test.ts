@@ -50,7 +50,7 @@ console.log("\n=== واجهة المسابقات بلا /quiz وأسئلة ===")
     assert.doesNotMatch(src, /180\s*سؤال/, `${name}: بلا 180 سؤال`);
   }
   assert.match(hub, /data-competitions-empty/);
-  assert.match(hub, /سيتم إضافة المسابقات من المصادر الموثوقة/);
+  assert.match(hub, /سيتم إضافة المسابقات قريبًا/);
   assert.match(hub, /COMPETITION_FILTERS/);
   assert.match(detail, /data-competition-detail|انتهى التسجيل/);
 }

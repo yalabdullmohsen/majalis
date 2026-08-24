@@ -12,6 +12,8 @@
 export type HeaderAdConfig = {
   enabled: boolean;
   title: string;
+  /** سطر ثانٍ عند عدم وجود راعٍ فعلي */
+  subtitle: string;
   ctaLabel: string;
   /** رابط الضغط — بريد أو صفحة تواصل داخلية (بلا popup) */
   ctaUrl: string;
@@ -20,6 +22,7 @@ export type HeaderAdConfig = {
 export const headerAdConfig: HeaderAdConfig = {
   enabled: true,
   title: "مساحة إعلانية مميزة",
+  subtitle: "أعلن هنا للمهتمين بالمحتوى الشرعي والتعليمي",
   ctaLabel: "احجز",
   ctaUrl:
     "mailto:Majlisilm.app@gmail.com?subject=" +
@@ -33,9 +36,22 @@ export const headerAdConfig: HeaderAdConfig = {
 /** شكل مختصر كما في المواصفات */
 export const headerAd = headerAdConfig;
 
+/** جذور الأقسام الرئيسية — إعلان الهيدر يبقى ثابتًا عند التنقل بينها */
+export const HEADER_AD_SECTION_PATHS = [
+  "/",
+  "/sections",
+  "/fiqh",
+  "/prayer-times",
+  "/lessons",
+  "/quran-hub",
+  "/quran-circles",
+  "/competitions",
+  "/more",
+] as const;
+
 /**
  * أين يُعرض إعلان الهيدر؟
- * الرئيسية + جذور التبويب العامة فقط.
+ * الرئيسية + جذور الأقسام الرئيسية.
  * المصحف/القراءة/التفسير/التلاوة/تفاصيل الدرس → شعار المجلس العلمي.
  */
 export function shouldShowHeaderAd(pathname: string): boolean {
@@ -43,18 +59,5 @@ export function shouldShowHeaderAd(pathname: string): boolean {
   if (typeof navigator !== "undefined" && navigator.webdriver) return false;
 
   const p = pathname.split("?")[0]?.replace(/\/+$/, "") || "/";
-
-  if (p === "/") return true;
-
-  const publicHubs = new Set([
-    "/quran-hub",
-    "/lessons",
-    "/fiqh",
-    "/sections",
-    "/more",
-    "/prayer-times",
-  ]);
-  if (publicHubs.has(p)) return true;
-
-  return false;
+  return (HEADER_AD_SECTION_PATHS as readonly string[]).includes(p);
 }

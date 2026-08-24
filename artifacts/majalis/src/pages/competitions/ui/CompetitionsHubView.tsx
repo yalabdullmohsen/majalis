@@ -88,7 +88,7 @@ export default function CompetitionsHubView() {
       path: "/competitions",
       title: "المسابقات | المجلس العلمي",
       description:
-        "إعلانات مسابقات شرعية وقرآنية خارجية: حفظ، تسميع، تجويد، حديث، وجوائز من جهات موثوقة.",
+        "إعلانات مسابقات خارجية قرآنية وحديثية وتجويدية، مع روابط التسجيل والمصدر.",
       keywords: ["مسابقات", "حفظ قرآن", "تسميع", "الماهر", "حديث", "جوائز", "المجلس العلمي"],
     });
   }, []);
@@ -97,7 +97,8 @@ export default function CompetitionsHubView() {
     <SectionLobby lobbyId="hub" title="المسابقات" groups={[]}>
       <div className="cmp-hub" data-competitions-hub="1">
         <p className="cmp-hub__lead">
-          إعلانات مسابقات خارجية موثوقة (قرآن وحديث وتجويد وعلمية) — وليست أسئلة داخل التطبيق.
+          إعلانات مسابقات خارجية قرآنية وحديثية وتجويدية، مع روابط التسجيل والمصدر. وليست
+          أسئلة داخل التطبيق.
         </p>
 
         <div className="cmp-filters" role="toolbar" aria-label="تصفية المسابقات">
@@ -117,7 +118,7 @@ export default function CompetitionsHubView() {
         {items.length === 0 ? (
           <div className="cmp-empty" role="status" data-competitions-empty="1">
             <Trophy size={36} strokeWidth={1.4} aria-hidden />
-            <p>سيتم إضافة المسابقات من المصادر الموثوقة قريبًا بإذن الله.</p>
+            <p>سيتم إضافة المسابقات قريبًا بإذن الله.</p>
           </div>
         ) : (
           <div className="cmp-grid">

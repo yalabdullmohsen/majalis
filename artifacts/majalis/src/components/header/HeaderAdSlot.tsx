@@ -13,10 +13,15 @@ export function HeaderAdSlot() {
     <a
       href={cfg.ctaUrl}
       className="header-ad-slot"
-      aria-label={`${cfg.title} — ${cfg.ctaLabel}`}
+      aria-label={`${cfg.title}. ${cfg.subtitle} — ${cfg.ctaLabel}`}
       data-header-ad="1"
     >
-      <span className="header-ad-slot__title">{cfg.title}</span>
+      <span className="header-ad-slot__copy">
+        <span className="header-ad-slot__title">{cfg.title}</span>
+        {cfg.subtitle ? (
+          <span className="header-ad-slot__subtitle">{cfg.subtitle}</span>
+        ) : null}
+      </span>
       <span className="header-ad-slot__cta">{cfg.ctaLabel}</span>
     </a>
   );
