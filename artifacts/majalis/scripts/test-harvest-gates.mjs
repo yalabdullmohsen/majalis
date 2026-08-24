@@ -114,11 +114,26 @@ if (prevEndpoint !== undefined) process.env.INSTAGRAM_PROVIDER_ENDPOINT = prevEn
 
 console.log("=== Instagram endpoint: رابط API فقط وليس curl ===");
 {
-  const { normalizeProviderEndpoint, getInstagramProviderConfig } = await import("./harvest/adapters/instagram-provider.mjs");
+  const { normalizeProviderEndpoint, getInstagramProviderConfig, BRIGHTDATA_POSTS_DATASET_ID } =
+    await import("./harvest/adapters/instagram-provider.mjs");
   assert.equal(normalizeProviderEndpoint("https://api.brightdata.com/datasets/v3").ok, true);
   assert.equal(normalizeProviderEndpoint("https://provider.example/v1").ok, false);
   assert.equal(normalizeProviderEndpoint("curl https://api.brightdata.com/x -H Authorization:Bearer leak").ok, false);
   assert.equal(normalizeProviderEndpoint("not-a-url").ok, false);
+  const scrape = normalizeProviderEndpoint(
+    "https://api.brightdata.com/datasets/v3/scrape?dataset_id=gd_lk5ns7kz21pck8jpis",
+  );
+  assert.equal(scrape.ok, true);
+  assert.equal(scrape.datasetId, BRIGHTDATA_POSTS_DATASET_ID);
+  assert.match(scrape.scrapeUrl, /discover_by=url/);
+  assert.match(scrape.scrapeUrl, /type=discover_new/);
+  assert.match(scrape.scrapeUrl, /dataset_id=gd_lk5ns7kz21pck8jpis/);
+  // dataset بروفايل يُستبدل بـ Posts
+  const forced = normalizeProviderEndpoint(
+    "https://api.brightdata.com/datasets/v3/scrape?dataset_id=gd_l1vikfch901nx3by4",
+  );
+  assert.equal(forced.ok, true);
+  assert.equal(forced.datasetId, BRIGHTDATA_POSTS_DATASET_ID);
   const prevEndpoint = process.env.INSTAGRAM_PROVIDER_ENDPOINT;
   const prevKey = process.env.INSTAGRAM_PROVIDER_KEY;
   process.env.INSTAGRAM_PROVIDER_KEY = "test-key";
@@ -133,6 +148,110 @@ console.log("=== Instagram endpoint: رابط API فقط وليس curl ===");
   else delete process.env.INSTAGRAM_PROVIDER_ENDPOINT;
   if (prevKey !== undefined) process.env.INSTAGRAM_PROVIDER_KEY = prevKey;
   else delete process.env.INSTAGRAM_PROVIDER_KEY;
+}
+
+console.log("=== Instagram Bright Data fixture: منشور واحد عبر discover_by=url ===");
+{
+  const prevMode = process.env.INSTAGRAM_INGEST_MODE;
+  const prevKey = process.env.INSTAGRAM_PROVIDER_KEY;
+  const prevEndpoint = process.env.INSTAGRAM_PROVIDER_ENDPOINT;
+  const prevMock = process.env.INSTAGRAM_PROVIDER_MOCK;
+  process.env.INSTAGRAM_INGEST_MODE = "provider";
+  process.env.INSTAGRAM_PROVIDER_KEY = "test-key-never-log";
+  process.env.INSTAGRAM_PROVIDER_ENDPOINT =
+    "https://api.brightdata.com/datasets/v3/scrape?dataset_id=gd_lk5ns7kz21pck8jpis&notify=false&include_errors=true&type=discover_new&discover_by=url";
+  delete process.env.INSTAGRAM_PROVIDER_MOCK;
+
+  const realFetch = globalThis.fetch;
+  let sawPost = false;
+  let sawDiscover = false;
+  globalThis.fetch = async (url, init = {}) => {
+    const u = String(url);
+    assert.match(u, /api\.brightdata\.com\/datasets\/v3\/scrape/);
+    assert.match(u, /discover_by=url/);
+    assert.match(u, /dataset_id=gd_lk5ns7kz21pck8jpis/);
+    assert.equal(init.method, "POST");
+    sawDiscover = true;
+    const body = JSON.parse(String(init.body || "{}"));
+    assert.ok(Array.isArray(body.input));
+    assert.match(body.input[0].url, /instagram\.com\/nebraas_kw/);
+    assert.equal(body.input[0].num_of_posts, 1);
+    assert.equal(body.input[0].post_type, "Post");
+    // لا يُسرّب المفتاح في جسم الطلب
+    assert.doesNotMatch(JSON.stringify(body), /test-key-never-log/);
+    sawPost = true;
+    return new Response(
+      JSON.stringify([
+        {
+          account: "nebraas_kw",
+          posts: [
+            {
+              id: "bd-fixture-1",
+              shortcode: "BdFixture1",
+              url: "https://www.instagram.com/p/BdFixture1/",
+              caption: "درس علمي — fixture Bright Data",
+              datetime: "2026-08-24T12:00:00.000Z",
+              image_url: null,
+            },
+          ],
+        },
+      ]),
+      { status: 200, headers: { "content-type": "application/json" } },
+    );
+  };
+
+  const { harvestInstagramAccount } = await import("./harvest/adapters/instagram.mjs");
+  const { extractPostsFromBrightDataPayload } = await import("./harvest/adapters/instagram-provider.mjs");
+  const extracted = extractPostsFromBrightDataPayload([
+    { posts: [{ id: "x", url: "https://www.instagram.com/p/x/", caption: "ص", datetime: "2026-01-01T00:00:00Z" }] },
+  ]);
+  assert.equal(extracted.length, 1);
+
+  const result = await harvestInstagramAccount(
+    {
+      id: "ig-nebraas_kw",
+      platform: "instagram",
+      handle: "nebraas_kw",
+      enabled: true,
+      trusted: true,
+      autoPublish: true,
+      last_seen_post_id: null,
+      last_seen_post_url: null,
+    },
+    { persistQuota: false },
+  );
+  assert.equal(sawDiscover, true);
+  assert.equal(sawPost, true);
+  assert.equal(result.status, "new_post");
+  assert.equal(result.items.length, 1);
+  assert.match(result.items[0].text, /fixture Bright Data/);
+
+  // 404 → skipped_provider_404 دون رمي
+  globalThis.fetch = async () =>
+    new Response("{}", { status: 404, headers: { "content-type": "application/json" } });
+  const skipped = await harvestInstagramAccount(
+    {
+      id: "ig-nebraas_kw",
+      platform: "instagram",
+      handle: "nebraas_kw",
+      enabled: true,
+      trusted: true,
+      autoPublish: true,
+    },
+    { persistQuota: false },
+  );
+  assert.equal(skipped.status, "skipped_provider_404");
+  assert.equal(skipped.items.length, 0);
+
+  globalThis.fetch = realFetch;
+  if (prevMode !== undefined) process.env.INSTAGRAM_INGEST_MODE = prevMode;
+  else delete process.env.INSTAGRAM_INGEST_MODE;
+  if (prevKey !== undefined) process.env.INSTAGRAM_PROVIDER_KEY = prevKey;
+  else delete process.env.INSTAGRAM_PROVIDER_KEY;
+  if (prevEndpoint !== undefined) process.env.INSTAGRAM_PROVIDER_ENDPOINT = prevEndpoint;
+  else delete process.env.INSTAGRAM_PROVIDER_ENDPOINT;
+  if (prevMock !== undefined) process.env.INSTAGRAM_PROVIDER_MOCK = prevMock;
+  else delete process.env.INSTAGRAM_PROVIDER_MOCK;
 }
 
 console.log("=== Instagram provider mock ===");

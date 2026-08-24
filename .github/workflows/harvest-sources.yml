@@ -68,8 +68,9 @@ jobs:
             echo "Instagram: endpoint host not api.brightdata.com — refusing provider mode"
             exit 0
           fi
+          # يُعاد بناء scrape لـ Posts discover_by=url داخل المحوّل؛ هنا تحقق الشكل فقط
           echo "mode=provider" >> "$GITHUB_OUTPUT"
-          echo "Instagram: provider (Bright Data secrets present, shape OK)"
+          echo "Instagram: provider (Bright Data secrets present, shape OK — posts discover_by=url)"
 
       - name: Run harvest (probe latest only — twice daily)
         working-directory: artifacts/majalis
