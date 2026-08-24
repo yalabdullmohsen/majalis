@@ -5584,27 +5584,7 @@ button,
   animation: skeleton-shimmer 1.5s infinite;
 }
 
-/* ── OfflineBanner ── */
-
-.offline-banner {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-space-2);
-  justify-content: center;
-  padding: 0.4rem 1rem;
-  background: var(--mj-brand-deep);
-  color: #d1fae5;
-  font-size: 0.8rem;
-  font-family: var(--font-primary);
-  direction: rtl;
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-}
-
-.offline-banner__icon { flex-shrink: 0; }
-
-.offline-banner__text { line-height: 1.3; }
+/* ── OfflineBanner: الأنماط في styles/components/language-offline.css ── */
 
 /* ── شارة الصلاة العائمة (bottom nav) ──
    مربوطة بنفس نقطة تجاوب .bottom-nav — بلا هذا القيد كانت تطفو فوق محتوى
@@ -5662,12 +5642,7 @@ button,
   }
 }
 
-/* ── الوضع الليلي: OfflineBanner ── */
-
-html[data-theme="dark"] .offline-banner {
-  background: var(--mj-brand-deep);
-  color: #6ee7b7;
-}
+/* ── الوضع الليلي: skeleton فقط (OfflineBanner في language-offline.css) ── */
 
 html[data-theme="dark"] .skeleton-base {
   background: linear-gradient(90deg, var(--mj-brand-deep) 25%, var(--mj-brand-deep) 50%, var(--mj-brand-deep) 75%);

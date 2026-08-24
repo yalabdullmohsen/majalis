@@ -60,6 +60,8 @@ const STATIC_SHELL_ASSETS = [
   "/site.webmanifest",
   "/manifest.webmanifest",
   "/majlisilm-og-2026.jpg",
+  /* غلاف أوفلاين خفيف — لا تُسبَق كاش بيانات ضخمة هنا */
+  "/sw-version.js",
 ];
 
 self.addEventListener("install", (event) => {
