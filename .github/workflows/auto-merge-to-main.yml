@@ -146,9 +146,10 @@ jobs:
             # Refresh report (best-effort) then evaluate with strict Vercel gate
             $EVAL report --pr "$n" --post || true
 
-            # تقييم الأهلية: Verify build / ci-required هما الحاجز؛ Vercel Preview لا يمنع الدمج
+            # تقييم الأهلية: Verify build حاجز الدمج؛ --strict-vercel يبقى للبوابة
+            # لكن rate-limit / Preview fail لا يُسقطان الأهلية (انظر eligibility.mjs).
             set +e
-            $EVAL evaluate --pr "$n"
+            $EVAL evaluate --pr "$n" --strict-vercel
             code=$?
             set -e
             # 3 = checks still pending → wait; do NOT disable auto-merge permanently
