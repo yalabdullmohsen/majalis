@@ -1,5 +1,11 @@
 import { stripMarkdown } from "./strip-markdown";
 import { cleanTimeText } from "./lesson-time";
+import { stripEmojiFromTitle } from "../../scripts/harvest/normalize.mjs";
+
+/** إزالة الإيموجي من النص المعروض */
+export function stripEmoji(text: string | null | undefined): string {
+  return stripEmojiFromTitle(text);
+}
 
 const EXTRACTION_PHRASES = [
   /إعلانات\s+رسمية/giu,
@@ -33,5 +39,5 @@ export function cleanDisplayText(text: string | null | undefined): string {
     value = value.replace(pattern, " ").replace(/\s+/g, " ").trim();
   }
 
-  return cleanTimeText(value);
+  return stripEmoji(cleanTimeText(value));
 }

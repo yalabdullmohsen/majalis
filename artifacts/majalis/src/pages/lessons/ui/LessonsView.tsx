@@ -43,6 +43,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { formatSheikhName } from "@/lib/sheikh-name";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+import { isWomenFriendlyLesson } from "@/lib/lesson-women-attendance";
 
 import { SITE_URL } from "@/lib/site-config";
 type TabId = "all" | "men" | "women" | "courses";
@@ -81,8 +82,8 @@ function readTabFromUrl(): TabId {
 
 function filterByTab(lessons: KuwaitLessonRecord[], tab: TabId): KuwaitLessonRecord[] {
   if (tab === "courses") return lessons.filter((l) => l.isCourse || l.activityType === "دورة");
-  if (tab === "men") return lessons.filter((l) => !l.hasWomenSection);
-  if (tab === "women") return lessons.filter((l) => l.hasWomenSection);
+  if (tab === "men") return lessons.filter((l) => !isWomenFriendlyLesson(l));
+  if (tab === "women") return lessons.filter((l) => isWomenFriendlyLesson(l));
   return lessons;
 }
 

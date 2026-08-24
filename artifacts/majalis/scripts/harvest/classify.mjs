@@ -1,4 +1,5 @@
 import { normalizeArabic } from "./normalize.mjs";
+import { classifyWomenAttendance } from "../../lib/lesson-women-attendance.mjs";
 
 const TYPE_RULES = [
   { type: "تسجيل", re: /تسجيل|التسجيل مفتوح|استمارة|forms\.gle|رابط التسجيل/i },
@@ -39,13 +40,13 @@ export function extractFields(text, accountAudience = "عام") {
   }
   const register_url = raw.match(REGISTER_RE)?.[1] ?? null;
 
+  const { womenAttendance } = classifyWomenAttendance(raw);
   let audience = accountAudience;
-  const n = normalizeArabic(raw);
-  if (/نساء|نسائيه|للنساء/.test(n)) audience = "نساء";
-  else if (/رجال|للرجال/.test(n)) audience = "رجال";
-  else if (/نشء|شباب/.test(n)) audience = "نشء";
+  if (womenAttendance === "متاح") audience = "الكل";
+  else if (/رجال|للرجال/.test(normalizeArabic(raw))) audience = "رجال";
+  else if (/نشء|شباب/.test(normalizeArabic(raw))) audience = "نشء";
 
-  return { sheikh, place, time_text, starts_at, register_url, audience };
+  return { sheikh, place, time_text, starts_at, register_url, audience, womenAttendance };
 }
 
 export function confidenceFor(item, fields) {

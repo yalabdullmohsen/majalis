@@ -60,6 +60,8 @@ export type UnifiedLesson = {
   siteUrl?: string;
   qrCodeUrl?: string;
   keywords?: string[];
+  womenAttendance?: "متاح" | "men_only";
+  womenAttendanceNote?: string;
 };
 
 /** حاجز دائم: لا رابط تفاصيل إلا لمعرّف موجود (بذرة أو مكتمل) وغير يتيم. */
@@ -116,6 +118,8 @@ export function fromKuwaitLesson(
     siteUrl: lesson.siteUrl,
     qrCodeUrl: lesson.qrCodeUrl,
     keywords: lesson.keywords,
+    womenAttendance: lesson.womenAttendance,
+    womenAttendanceNote: lesson.womenAttendanceNote,
   };
 }
 

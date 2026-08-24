@@ -16,6 +16,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { validateLessonDraft, buildExternalKey, buildLessonSlug } from "./content-validator.mjs";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
+import { classifyWomenAttendance } from "../lesson-women-attendance.mjs";
 
 const MODEL = "claude-sonnet-4-6";
 const MAX_RETRIES = 2;
@@ -457,6 +458,17 @@ function mergeExtractions(primary, fallback) {
 // ── Normalize payload ─────────────────────────────────────────────────────────
 function normalizePayload(extracted, enriched = {}) {
   const corrected = enriched.corrected || {};
+  const corpus = [
+    extracted.title,
+    extracted.description,
+    extracted.mosque,
+    extracted.women_section,
+    extracted.raw_ocr_text,
+  ].filter(Boolean).join("\n");
+  const women = classifyWomenAttendance(corpus, {
+    venue: extracted.mosque,
+    venueType: extracted.venue_type,
+  });
   const base = {
     ...emptyLessonPayload(),
     ...extracted,
@@ -464,10 +476,10 @@ function normalizePayload(extracted, enriched = {}) {
     start_date: corrected.start_date || extracted.start_date || extracted.gregorian_date || "",
     gregorian_date: extracted.gregorian_date || corrected.gregorian_date || extracted.start_date || "",
     has_live_stream: Boolean(extracted.has_live_stream || extracted.live_url),
-    has_women_section: Boolean(
-      extracted.has_women_section || (extracted.women_section && String(extracted.women_section).trim()),
-    ),
-    audience: corrected.audience || extracted.audience || "الكل",
+    has_women_section: women.womenAttendance === "متاح",
+    women_attendance: women.womenAttendance,
+    women_attendance_note: women.womenAttendanceNote || "",
+    audience: women.womenAttendance === "متاح" ? "الكل" : "رجال",
     seo_title: enriched.seo_title || extracted.title || "",
     seo_description: enriched.seo_description || extracted.description || "",
     slug: enriched.slug || extracted.slug || buildLessonSlug(extracted.title || ""),
