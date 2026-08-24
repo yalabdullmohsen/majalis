@@ -2632,6 +2632,26 @@ html.dark .mm-settings-sheet {
 .ayah-action-sheet__play-hero:active {
   opacity: 0.92;
 }
+.ayah-action-sheet__ai-tarteel {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 0.45rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--mm-gold, #bf9f5b) 45%, transparent);
+  background: color-mix(in srgb, var(--mm-gold, #bf9f5b) 12%, transparent);
+  color: var(--mm-ink, #0a0a0a);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-decoration: none;
+}
+.ayah-action-sheet__ai-tarteel:active {
+  opacity: 0.9;
+}
 .ayah-action-sheet__audio-state {
   margin: 0.35rem 0 0;
   font-size: 0.85rem;

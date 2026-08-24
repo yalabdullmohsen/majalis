@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   BookOpen,
   Headphones,
+  Mic,
   Pause,
   Play,
   SkipBack,
@@ -14,6 +15,7 @@ import type { PlayerState } from "@/core/audio/AudioEngine";
 import { getReciter } from "@/lib/quran-audio";
 import { getSurahMeta } from "@/lib/quran-api";
 import { QURAN_DATA_FEATURES } from "@/lib/quran-data/flags";
+import { isAiTarteelEnabled } from "@/lib/recitation-ai/feature-flag";
 import {
   displayScholarLabel,
   findTafsirAudioForAyah,
@@ -454,6 +456,16 @@ export function AyahActionSheet({
                   {playing ? <Pause size={22} aria-hidden="true" /> : <Play size={22} aria-hidden="true" />}
                   <span>{playLabel}</span>
                 </button>
+                {isAiTarteelEnabled() && parsed ? (
+                  <a
+                    className="ayah-action-sheet__ai-tarteel"
+                    href={`/quran/recitation-test-ai?surah=${parsed.surah}`}
+                    data-testid="mushaf-ayah-ai-tarteel"
+                  >
+                    <Mic size={18} aria-hidden="true" />
+                    <span>تلاوة بالذكاء</span>
+                  </a>
+                ) : null}
                 <p className="ayah-action-sheet__audio-state" role="status" data-testid="mushaf-audio-state">
                   {audioStateLabel}
                   {currentReciter?.nameAr ? ` · ${currentReciter.nameAr}` : ""}

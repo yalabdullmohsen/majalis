@@ -40,6 +40,8 @@ assert.doesNotMatch(actions, />\s*معاني\s*</, "لا تبويب معاني �
 assert.match(actions, /useState<SheetTab>\("tilawa"\)/, "التبويب الافتراضي تلاوة");
 assert.match(actions, /ابدأ التلاوة|إيقاف مؤقت/);
 assert.match(actions, /ayah-action-sheet__play-hero/);
+assert.match(actions, /isAiTarteelEnabled|تلاوة بالذكاء/);
+assert.match(actions, /recitation-test-ai/);
 assert.match(actions, /لا توجد أحكام تجويد متاحة لهذه الآية حاليًا/);
 assert.match(actions, /QURAN_DATA_FEATURES/);
 assert.match(css, /font-size:\s*22px/);

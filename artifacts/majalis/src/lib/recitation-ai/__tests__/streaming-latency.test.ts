@@ -69,11 +69,16 @@ const webSrc = readFileSync(resolve(root, "lib/recitation-ai/providers/web-speec
 assert.match(webSrc, /INTERIM_CONFIDENCE/);
 assert.match(webSrc, /emittedInterimNorms/);
 
+const warmSrc = readFileSync(resolve(root, "lib/recitation-ai/warm-connection.ts"), "utf8");
+assert.match(warmSrc, /warmRecitationWsConnection/);
+
 const viewSrc = readFileSync(resolve(root, "pages/quran/ui/RecitationTestView.tsx"), "utf8");
 assert.match(viewSrc, /جاري المطابقة/);
 assert.match(viewSrc, /onPipelineStatus/);
 assert.match(viewSrc, /rai-word-/);
 assert.match(viewSrc, /MicPermissionHelp/);
+assert.match(viewSrc, /warmRecitationWsConnection/);
+assert.match(viewSrc, /ابدأ التلاوة/);
 
 const mushafSrc = readFileSync(resolve(root, "components/quran/InteractiveMushafReveal.tsx"), "utf8");
 assert.match(mushafSrc, /imr-word--cursor/);

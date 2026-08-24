@@ -121,7 +121,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     if (!(await this.isAvailable())) {
       throw new ASRProviderUnavailableError({
         code: "NOT_CONFIGURED",
-        message: "مزوّد التعرّف الصوتي الخادمي غير مُهيَّأ بعد (GROQ_API_KEY مفقود على الخادم).",
+        message: "مزوّد التعرّف الصوتي الخادمي غير مُهيَّأ بعد. أعد المحاولة لاحقًا أو استخدم متصفحًا يدعم التعرّف المحلي.",
       });
     }
 
