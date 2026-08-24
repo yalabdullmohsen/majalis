@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-23T23:37:42.844Z",
+  "updated_at": "2026-08-24T01:11:52.858Z",
   "accounts": [
     {
       "id": "web-aayatkw.com",
@@ -20,7 +20,11 @@
       "poll_priority": "normal",
       "last_seen_at": "2026-08-23T23:37:15.267Z",
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-athr_yabka",
@@ -321,7 +325,11 @@
       "poll_priority": "high",
       "last_seen_at": "2026-08-23T23:37:25.421Z",
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "web-waheen.net",
@@ -342,7 +350,11 @@
       "poll_priority": "normal",
       "last_seen_at": "2026-08-23T23:37:28.579Z",
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-alwa7yyen",
@@ -435,7 +447,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-7offath",
@@ -621,7 +637,11 @@
       "poll_priority": "high",
       "last_seen_at": "2026-08-23T23:37:32.891Z",
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-drooss_kw",
@@ -758,7 +778,11 @@
       "poll_priority": "normal",
       "last_seen_at": "2026-08-23T23:37:35.543Z",
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-fajeralkous",
@@ -1153,7 +1177,11 @@
       "poll_priority": "normal",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-mansuh_quranayh",
@@ -1245,7 +1273,11 @@
       "poll_priority": "high",
       "last_seen_at": null,
       "trusted": true,
-      "autoPublish": true
+      "autoPublish": true,
+      "last_seen_post_id": null,
+      "last_seen_post_url": null,
+      "last_checked_at": null,
+      "last_published_at": null
     },
     {
       "id": "ig-kwt_awqaf",
