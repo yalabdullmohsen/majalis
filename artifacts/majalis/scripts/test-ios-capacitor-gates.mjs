@@ -168,6 +168,42 @@ const buildFileIds = [...pbx.matchAll(/^\s+([0-9A-Fa-f]{24}) \/\*.* in (Sources|
 const bfSet = new Set(buildFileIds);
 ok(bfSet.size === buildFileIds.length, "no duplicate PBXBuildFile IDs");
 
+// كل مرجع «X in Resources» داخل مرحلة Resources يجب أن يملك PBXBuildFile معرّفًا
+const resourcePhaseRefs = [
+  ...pbx.matchAll(
+    /504EC3021FED79650016851F \/\* Resources \*\/ = \{[\s\S]*?files = \(([\s\S]*?)\);/g,
+  ),
+];
+ok(resourcePhaseRefs.length === 1, "App Resources build phase found once");
+const resourceIds = [...resourcePhaseRefs[0][1].matchAll(/^\s+([0-9A-Fa-f]{24}) \/\*/gm)].map((m) => m[1]);
+const missingBf = resourceIds.filter(
+  (id) => !new RegExp(`${id} \\/\\*[^*]+\\*\\/ = \\{isa = PBXBuildFile`).test(pbx),
+);
+ok(
+  missingBf.length === 0,
+  `every Resources entry has PBXBuildFile (missing=${missingBf.join(",") || "none"})`,
+);
+ok(
+  pbx.includes(
+    "AD11BF09A1B2C3D4E5F6071890 /* adhan-seq-makkah-04.caf in Resources */ = {isa = PBXBuildFile",
+  ),
+  "adhan-seq-makkah-04.caf has PBXBuildFile (not dangling Resources ref)",
+);
+
+ok(
+  /CFBundleVersion<\/key>\s*<string>\$\(CURRENT_PROJECT_VERSION\)<\/string>/s.test(plist),
+  "App Info.plist CFBundleVersion uses $(CURRENT_PROJECT_VERSION)",
+);
+const livePlist = readFileSync(join(iosApp, "PrayerLiveActivity", "Info.plist"), "utf8");
+ok(
+  /CFBundleVersion<\/key>\s*<string>\$\(CURRENT_PROJECT_VERSION\)<\/string>/s.test(livePlist),
+  "PrayerLiveActivity CFBundleVersion uses $(CURRENT_PROJECT_VERSION)",
+);
+ok(
+  /ITSAppUsesNonExemptEncryption<\/key>\s*<false\/>/s.test(plist),
+  "Info.plist declares ITSAppUsesNonExemptEncryption=false (export compliance)",
+);
+
 const secretPatterns = [
   /service_role/i,
   /BEGIN (RSA |EC )?PRIVATE KEY/,
