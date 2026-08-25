@@ -58,16 +58,24 @@ html.theme-dark .top-sponsor-banner {
   display: flex;
   align-items: center;
   height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
   text-decoration: none;
   color: var(--top-sponsor-ink);
   border-radius: 0.4rem;
   outline-offset: 2px;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .top-sponsor-banner__sponsor:hover,
 .top-sponsor-banner__sponsor:focus-visible {
   opacity: 0.9;
+}
+
+.top-sponsor-banner__sponsor:active {
+  transform: scale(0.98);
 }
 
 .top-sponsor-banner__copy {
@@ -102,6 +110,11 @@ html.theme-dark .top-sponsor-banner {
   line-height: 1.2;
 }
 
+.top-sponsor-banner__tap-hint {
+  color: var(--top-sponsor-gold);
+  font-weight: 800;
+}
+
 .top-sponsor-banner__partner {
   flex: 0 0 auto;
   display: inline-flex;
@@ -114,16 +127,16 @@ html.theme-dark .top-sponsor-banner {
   background: #0f2f28;
   border: 1px solid color-mix(in srgb, #9a7b2f 45%, #0f2f28);
   box-shadow: 0 1px 0 color-mix(in srgb, #9a7b2f 40%, transparent);
-  transition: opacity 0.15s ease, transform 0.12s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .top-sponsor-banner__partner:hover,
 .top-sponsor-banner__partner:focus-visible {
-  opacity: 0.94;
+  opacity: 0.9;
 }
 
 .top-sponsor-banner__partner:active {
-  transform: scale(0.98);
+  transform: scale(0.95);
 }
 
 .top-sponsor-banner__partner-label {

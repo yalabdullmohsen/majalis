@@ -32,6 +32,24 @@ export type HeaderAdConfig = {
   sponsorUrl: string;
   /** aria-label لرابط الشركة */
   sponsorAriaLabel: string;
+  /** تلميح النقر في الشريط العلوي */
+  topBarTapHint: string;
+  /** عنوان نافذة الشراكة */
+  modalTitle: string;
+  /** نص نافذة الشراكة */
+  modalBody: string;
+  /** زر الإنستقرام */
+  instagramLabel: string;
+  /** المعرف الظاهر (@...) */
+  instagramHandle: string;
+  /** تسمية أيقونة الساعة */
+  watchHighlight: string;
+  /** نص مختصر تحت أيقونة الساعة في الكارت */
+  watchMetric: string;
+  /** تسمية أيقونة الشحن */
+  chargeHighlight: string;
+  /** نسبة الشحن المعروضة */
+  chargePercent: string;
 };
 
 /** ألوان شريط الحالة تحت الإعلان (تباين أيقونات الساعة/الشحن) */
@@ -42,7 +60,7 @@ export const TOP_SPONSOR_STATUS = {
 
 export const headerAdConfig: HeaderAdConfig = {
   enabled: true,
-  placement: "top",
+  placement: "both",
   badgeLabel: "إعلان شراكة",
   title: "شركة العبد المحسن للحج",
   subtitle: "الثقة • الجودة • المتعة",
@@ -51,6 +69,16 @@ export const headerAdConfig: HeaderAdConfig = {
   ctaUrl: "/support",
   sponsorUrl: "https://instagram.com/Al_abdalmhsn",
   sponsorAriaLabel: "فتح حساب شركة العبد المحسن في إنستقرام",
+  topBarTapHint: "اضغط للتفاصيل",
+  modalTitle: "شراكة مع شركة العبد المحسن للحج",
+  modalBody:
+    "شريك موثوق في خدمات الحج والعمرة — جودة عالية، موثوقية، وتجربة مريحة. تابع حسابهم على إنستقرام للعروض والتحديثات.",
+  instagramLabel: "تابعنا على إنستقرام",
+  instagramHandle: "@Al_abdalmhsn",
+  watchHighlight: "ساعة ذكية دقيقة",
+  watchMetric: "دقة",
+  chargeHighlight: "شحن سريع وآمن",
+  chargePercent: "92%",
 };
 
 /** شكل مختصر كما في المواصفات */

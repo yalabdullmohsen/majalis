@@ -1,0 +1,130 @@
+.partnership-ad-modal {
+  border-color: var(--mj-hairline, var(--border));
+  background: var(--mj-surface, var(--surface));
+  color: var(--mj-ink, var(--text-primary));
+  max-width: min(92vw, 26rem);
+}
+
+.partnership-ad-modal__header {
+  text-align: start;
+  gap: 0.55rem;
+}
+
+.partnership-ad-modal__badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.35rem;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--mj-brand-deep, #0f2f28);
+  background: color-mix(in srgb, var(--mj-brand-soft, #e8f0ec) 88%, var(--mj-surface));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 28%, transparent);
+}
+
+.partnership-ad-modal__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--mj-ink, var(--text-primary));
+  line-height: 1.35;
+}
+
+.partnership-ad-modal__desc {
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: var(--mj-ink-2, var(--text-muted));
+}
+
+.partnership-ad-modal__highlights {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+}
+
+.partnership-ad-modal__highlight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 4.75rem;
+  padding: 0.65rem 0.45rem;
+  border-radius: var(--mj-r-md, 0.65rem);
+  background: var(--mj-surface-2, var(--surface-2));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 18%, var(--mj-hairline));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--mj-accent, #9a7b2f) 10%, transparent);
+}
+
+.partnership-ad-modal__icon {
+  color: var(--mj-brand-deep, #0f2f28);
+  flex-shrink: 0;
+}
+
+.partnership-ad-modal__highlight-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--mj-ink, var(--text-primary));
+  text-align: center;
+  line-height: 1.25;
+}
+
+.partnership-ad-modal__footer {
+  margin-top: 0.15rem;
+}
+
+.partnership-ad-modal__instagram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--mj-r-md, 0.65rem);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--mj-on-brand, #fff);
+  background: var(--mj-brand, #1f7a5a);
+  border: 1px solid color-mix(in srgb, var(--mj-accent, #9a7b2f) 35%, var(--mj-brand));
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--mj-accent, #9a7b2f) 28%, transparent);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.partnership-ad-modal__instagram:hover,
+.partnership-ad-modal__instagram:focus-visible {
+  opacity: 0.9;
+}
+
+.partnership-ad-modal__instagram:active {
+  transform: scale(0.95);
+}
+
+.partnership-ad-modal__handle {
+  font-size: 0.74rem;
+  font-weight: 700;
+  opacity: 0.95;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+html[data-theme="dark"] .partnership-ad-modal__badge,
+html.theme-dark .partnership-ad-modal__badge {
+  color: #d5eee2;
+  background: color-mix(in srgb, var(--mj-brand, #2a7a5c) 22%, #151c19);
+  border-color: color-mix(in srgb, var(--mj-brand, #4fb48b) 35%, transparent);
+}
+
+html[data-theme="dark"] .partnership-ad-modal__icon,
+html.theme-dark .partnership-ad-modal__icon {
+  color: #c8ebd9;
+}
+
+html[data-theme="dark"] .partnership-ad-modal__highlight,
+html.theme-dark .partnership-ad-modal__highlight {
+  background: color-mix(in srgb, var(--mj-brand, #4fb48b) 12%, #121816);
+  border-color: color-mix(in srgb, var(--mj-brand, #4fb48b) 28%, transparent);
+}
