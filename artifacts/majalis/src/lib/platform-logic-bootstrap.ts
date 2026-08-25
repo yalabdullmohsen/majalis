@@ -111,6 +111,13 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    try {
+      const { startSovereignCore } = await import("@/lib/sovereign/sovereign-bootstrap");
+      startSovereignCore();
+    } catch {
+      /* ignore */
+    }
+
     const prediction = predictKhatmahCompletion();
     await syncSmartLocalNotifications({ khatmahBehind: prediction.behindSchedule });
     maybeNotifyKhatmahBehind(prediction);

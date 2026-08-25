@@ -623,6 +623,15 @@ html.dark .mm-surah-frame__name {
   transition: none;
 }
 
+html[data-sovereign-tier="conserving"] .mm-ayah-hl__band,
+html[data-sovereign-tier="critical"] .mm-ayah-hl__band,
+html[data-sovereign-tier="conserving"] .scroll-to-top,
+html[data-sovereign-tier="critical"] .scroll-to-top {
+  will-change: auto;
+  filter: none;
+  backdrop-filter: none;
+}
+
 .mm-ayah-hl__band.is-playing {
   background: var(--mm-ayah-play);
 }
