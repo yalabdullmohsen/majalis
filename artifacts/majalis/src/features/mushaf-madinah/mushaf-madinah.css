@@ -46,7 +46,7 @@
   /* مقياس ابتدائي ≈٤٫٣٪ ارتفاع — يُضبط ببحث ثنائي 0.25px بعد fonts.ready */
   --mm-qpc-size: clamp(12px, 4.3vh, 34px);
   --mm-basmala-size: var(--mm-qpc-size);
-  --mm-line-height: 1.75;
+  --mm-line-height: 1.85;
   --mm-line-gap: 0;
   /* تقارب كلمات المصحف — لا تمديد للأسطر القصيرة */
   --mushaf-word-spacing: 0.22em;
@@ -370,7 +370,10 @@ html.dark .mm-viewport .mm-page {
    * بداية السطر (يمين RTL) خارج نطاق القص بصمت. */
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: repeat(15, minmax(0, 1fr));
-  padding: 0;
+  padding-block: 0;
+  /* حشو آمن واعٍ بالخط — يمنع قصّ التشكيل عند الحواف المنحنية/الجزيرة */
+  padding-inline-start: max(0.05em, var(--inset-left, 0px));
+  padding-inline-end: max(0.05em, var(--inset-right, 0px));
   overflow-x: clip;
   overflow-y: clip;
   box-sizing: border-box;
@@ -603,6 +606,21 @@ html.dark .mm-surah-frame__name {
   background: var(--mm-ayah-select);
   border-radius: 0.35em;
   pointer-events: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  contain: layout style paint;
+}
+
+.mm-viewport[data-text-profile="low"] .mm-ayah-hl__band {
+  will-change: auto;
+  box-shadow: none;
+  filter: none;
+}
+
+.mm-viewport[data-text-profile="low"] .mm-ayah-line__word {
+  text-shadow: none;
+  transition: none;
 }
 
 .mm-ayah-hl__band.is-playing {

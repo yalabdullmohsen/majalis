@@ -22,7 +22,7 @@ assert.match(css, /font-size:\s*inherit/);
 assert.match(css, /vertical-align:\s*baseline/);
 assert.doesNotMatch(css, /ayah-marker|ayahBadge|verse-marker|end-marker/);
 assert.doesNotMatch(css, /border-radius:\s*50%\s*\/\s*42%/);
-assert.match(line, /charType === "end"|data-type=\{w\.charType\}/);
-assert.match(line, /\{w\.glyphText\}/);
+assert.match(line, /charType === "end"|data-type=\{(w|word)\.charType\}/);
+assert.match(line, /\{(w|word)\.glyphText\}/);
 
 console.log("mushaf-ayah-marks-gate.test.ts: ok");

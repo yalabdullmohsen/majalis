@@ -1,11 +1,13 @@
 import { memo, useRef, type KeyboardEvent, type MouseEvent, type PointerEvent as ReactPointerEvent } from "react";
 import type { QpcWord } from "@/lib/quran-data/qpc-page-data";
+import {
+  useMushafAyahWordPlaying,
+  useMushafAyahWordSelected,
+} from "@/features/mushaf-madinah/mushaf-ayah-sync-store";
 
 type Props = {
   words: QpcWord[];
   centered?: boolean;
-  selectedVerseKey?: string | null;
-  playingVerseKey?: string | null;
   onSelectVerse?: (verseKey: string) => void;
 };
 
@@ -20,6 +22,60 @@ type PressState = {
   longFired: boolean;
 };
 
+const AyahWordSpan = memo(function AyahWordSpan({
+  word,
+  onSelectVerse,
+  startPress,
+  endPress,
+  clearPress,
+}: {
+  word: QpcWord;
+  onSelectVerse?: (verseKey: string) => void;
+  startPress: (verseKey: string, e: ReactPointerEvent<HTMLElement>) => void;
+  endPress: (verseKey: string, e: ReactPointerEvent<HTMLElement>) => void;
+  clearPress: () => void;
+}) {
+  const selected = useMushafAyahWordSelected(word.verseKey);
+  const playing = useMushafAyahWordPlaying(word.verseKey);
+  const isEnd = word.charType === "end";
+  const stateClass = [selected ? "ayah-active" : "", playing ? "is-playing" : ""]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <span
+      className={`mm-ayah-line__word mm-ayah-hit ${isEnd ? "mm-ayah-hit--end" : ""} ${stateClass}`.trim()}
+      data-type={word.charType}
+      data-key={word.verseKey}
+      data-verse={word.verseKey}
+      data-ayah={word.verseKey}
+      data-testid="mushaf-ayah-hit"
+      role="button"
+      tabIndex={0}
+      aria-label={`آية ${word.verseKey}`}
+      aria-pressed={selected}
+      onPointerDown={(e: ReactPointerEvent<HTMLElement>) => startPress(word.verseKey, e)}
+      onPointerUp={(e: ReactPointerEvent<HTMLElement>) => endPress(word.verseKey, e)}
+      onPointerCancel={() => {
+        clearPress();
+      }}
+      onClick={(e: MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+      onKeyDown={(e: KeyboardEvent<HTMLElement>) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          e.stopPropagation();
+          onSelectVerse?.(word.verseKey);
+        }
+      }}
+    >
+      {word.glyphText}
+    </span>
+  );
+});
+
 /**
  * سطر آيات — كلمات flex بفجوة ثابتة؛ space-between فقط بعد قياس fill الآمن.
  * التظليل المتصل عبر طبقة getClientRects (.mm-ayah-hl) لا خلفية كل كلمة.
@@ -27,8 +83,6 @@ type PressState = {
 export const MushafAyahLine = memo(function MushafAyahLine({
   words,
   centered = false,
-  selectedVerseKey = null,
-  playingVerseKey = null,
   onSelectVerse,
 }: Props) {
   const ordered = [...words].sort((a, b) => a.id - b.id || a.position - b.position);
@@ -79,48 +133,16 @@ export const MushafAyahLine = memo(function MushafAyahLine({
       data-fill="false"
       dir="rtl"
     >
-      {ordered.map((w) => {
-        const selected = selectedVerseKey === w.verseKey;
-        const playing = playingVerseKey === w.verseKey;
-        const isEnd = w.charType === "end";
-        const stateClass = [selected ? "ayah-active" : "", playing ? "is-playing" : ""]
-          .filter(Boolean)
-          .join(" ");
-
-        return (
-          <span
-            key={`${w.verseKey}-${w.position}-${w.id}`}
-            className={`mm-ayah-line__word mm-ayah-hit ${isEnd ? "mm-ayah-hit--end" : ""} ${stateClass}`.trim()}
-            data-type={w.charType}
-            data-key={w.verseKey}
-            data-verse={w.verseKey}
-            data-ayah={w.verseKey}
-            data-testid="mushaf-ayah-hit"
-            role="button"
-            tabIndex={0}
-            aria-label={`آية ${w.verseKey}`}
-            aria-pressed={selected}
-            onPointerDown={(e: ReactPointerEvent<HTMLElement>) => startPress(w.verseKey, e)}
-            onPointerUp={(e: ReactPointerEvent<HTMLElement>) => endPress(w.verseKey, e)}
-            onPointerCancel={() => {
-              clearPress();
-            }}
-            onClick={(e: MouseEvent<HTMLElement>) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-            onKeyDown={(e: KeyboardEvent<HTMLElement>) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                e.stopPropagation();
-                onSelectVerse?.(w.verseKey);
-              }
-            }}
-          >
-            {w.glyphText}
-          </span>
-        );
-      })}
+      {ordered.map((w) => (
+        <AyahWordSpan
+          key={`${w.verseKey}-${w.position}-${w.id}`}
+          word={w}
+          onSelectVerse={onSelectVerse}
+          startPress={startPress}
+          endPress={endPress}
+          clearPress={clearPress}
+        />
+      ))}
     </div>
   );
 });

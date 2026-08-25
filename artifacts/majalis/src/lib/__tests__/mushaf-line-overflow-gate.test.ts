@@ -47,7 +47,7 @@ assert.match(css, /data-centered="true"[^}]*justify-content:\s*center|data-fill=
 assert.match(css, /\.mm-viewport\s+\.mm-page\s*\{[^}]*overflow-x:\s*(hidden|clip)/);
 assert.match(css, /contain:\s*layout\s+paint/);
 
-assert.match(lineSrc, /data-type=\{w\.charType\}/);
+assert.match(lineSrc, /data-type=\{(w|word)\.charType\}/);
 assert.match(lineSrc, /data-centered=\{centered \? "true" : "false"\}/);
 assert.match(pageSrc, /isLastSurahLine/);
 assert.match(fitFn, /createElement\("canvas"\)/);
@@ -68,13 +68,13 @@ assert.ok(fitPageFontSize(["أ".repeat(80)], 200, "qpc", measure) < 34);
 
 {
   const tall = fitPageFontSize(["ا"], 400, "qpc", measure, { blockHeightPx: 525, lineCount: 15 });
-  assert.ok(tall <= Math.floor(525 / 15 / 1.75), `قيد الارتفاع: ${tall}`);
+  assert.ok(tall <= Math.floor(525 / 15 / 1.85), `قيد الارتفاع: ${tall}`);
   assert.ok(tall >= 12 && tall <= 34, `داخل الحدود: ${tall}`);
 }
 
 assert.match(fitFn, /mushaf-fitPageFontSize-v2/);
 assert.match(fitFn, /MUSHAF_FIT_MAX_PX = 34/);
-assert.match(fitFn, /MUSHAF_FIT_LINE_RATIO = 1.75/);
+assert.match(fitFn, /MUSHAF_FIT_LINE_RATIO = 1.85/);
 assert.match(fitFn, /assertMushafPageFontReady/);
 assert.match(fitFn, /normalizeMushafFontFamily/);
 assert.match(fitSrc, /document\.fonts\.(check|load)/);

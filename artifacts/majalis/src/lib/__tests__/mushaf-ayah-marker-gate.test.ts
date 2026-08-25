@@ -20,9 +20,9 @@ const endBlock =
   css.match(/\[data-type="end"\][^,{]*[,{][\s\S]*?\{[^}]+\}/)?.[0] ??
   "";
 
-assert.match(line, /data-type=\{w\.charType\}/);
+assert.match(line, /data-type=\{(w|word)\.charType\}/);
 assert.match(line, /ayah-active/);
-assert.match(line, /\{w\.glyphText\}/);
+assert.match(line, /\{(w|word)\.glyphText\}/);
 assert.doesNotMatch(line, /MushafAyahNumber/);
 assert.doesNotMatch(numberSrc, /<svg/i);
 assert.doesNotMatch(numberSrc, /scale\(/);

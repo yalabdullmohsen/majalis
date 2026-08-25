@@ -5,7 +5,7 @@
  * Flutter `SystemUiMode.immersiveSticky` via `useImmersiveSystemUi`.
  * Font size is user-controlled (12–40, step 2, default 20), persisted in localStorage
  * (`userFontSize` — same key as the RN AsyncStorage sketch), with
- * lineHeight = fontSize * 1.5 (focus uses * 2.0 like Flutter `height: 2.0`).
+ * lineHeight = fontSize * 1.85 (focus uses * 2.0 like Flutter `height: 2.0`).
  * The ± control bar is hidden while focused.
  * Light paper is Flutter parchment `#F5F5DC` — independent of app chrome.
  * Ayah numbers toggle (`showAyahNumbers` via useQuranPreferences) hides badges and
@@ -356,7 +356,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     return () => window.removeEventListener("keydown", onKey);
   }, [isFocusMode, setFocus]);
 
-  // lineHeight = fontSize * 1.5 normally; Focus Mode uses Flutter height: 2.0
+  // lineHeight = fontSize * 1.85 normally; Focus Mode uses Flutter height: 2.0
   const textStyle = useMemo(() => {
     const base = quranTextStyle(fontSize);
     if (!isFocusMode) return base;

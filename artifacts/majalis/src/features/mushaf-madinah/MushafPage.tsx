@@ -1,7 +1,8 @@
-import { memo, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
 import { MushafAyahHighlight } from "./MushafAyahHighlight";
 import { MushafAyahLine } from "./MushafAyahLine";
+import { setMushafAyahSyncKeys } from "./mushaf-ayah-sync-store";
 import { MushafBasmala } from "./MushafBasmala";
 import { MushafPageFooter } from "./MushafPageFooter";
 import { MushafPageHeader } from "./MushafPageHeader";
@@ -35,6 +36,11 @@ export const MushafPage = memo(function MushafPage({
   const [pageEl, setPageEl] = useState<HTMLElement | null>(null);
   useMushafPageFontFit(pageRef, true, layout.pageNumber, fontFamily, null);
   const footerPage = displayPageNumber ?? layout.pageNumber;
+
+  useEffect(() => {
+    setMushafAyahSyncKeys(selectedVerseKey ?? null, playingVerseKey ?? null);
+    return () => setMushafAyahSyncKeys(null, null);
+  }, [selectedVerseKey, playingVerseKey]);
 
   return (
     <article
@@ -84,8 +90,6 @@ export const MushafPage = memo(function MushafPage({
                   <MushafAyahLine
                     words={cell.words}
                     centered={opening || isLastSurahLine(cell.words, layout)}
-                    selectedVerseKey={selectedVerseKey}
-                    playingVerseKey={playingVerseKey}
                     onSelectVerse={onSelectVerse}
                   />
                 )

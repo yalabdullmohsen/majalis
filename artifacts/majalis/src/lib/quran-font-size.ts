@@ -1,6 +1,6 @@
 /**
  * Web port of RN QuranReader font-size controls:
- * default 20, step ±2, min 14, max 32 (Phase 6 reader range), lineHeight = fontSize * 1.5
+ * default 20, step ±2, min 14, max 32, lineHeight = fontSize * 1.85 (تشكيل)
  * maxFontSizeMultiplier ≈ 32/20 = 1.6 لقارئ الآيات؛ واجهة UI لها سقف منفصل 1.35.
  */
 
@@ -9,7 +9,7 @@ export const QURAN_FONT_MAX_PX = 32;
 export const QURAN_FONT_STEP_PX = 2;
 export const QURAN_FONT_DEFAULT_PX = 20;
 export const QURAN_FONT_STORAGE_KEY = "userFontSize";
-export const QURAN_FONT_LINE_HEIGHT_RATIO = 1.5;
+export const QURAN_FONT_LINE_HEIGHT_RATIO = 1.85;
 
 /** سقف مضاعف حجم نظام الواجهة (مكافئ RN maxFontSizeMultiplier للـUI) */
 export const UI_FONT_SCALE_MIN = 0.85;
@@ -57,7 +57,7 @@ export function persistQuranFontSize(size: number): number {
   return clamped;
 }
 
-/** RN: quranTextStyle = { fontSize, lineHeight: fontSize * 1.5 } */
+/** RN: quranTextStyle = { fontSize, lineHeight: fontSize * 1.85 } */
 export function quranTextStyle(fontSize: number): { fontSize: number; lineHeight: number } {
   const size = clampQuranFontSize(fontSize);
   return {

@@ -7,7 +7,9 @@ export type MeasureTextFn = (fontPx: number, text: string, family: string) => nu
 
 export const MUSHAF_FIT_MIN_PX = 12;
 export const MUSHAF_FIT_MAX_PX = 34;
-export const MUSHAF_FIT_LINE_RATIO = 1.75;
+import { releaseCanvasResources } from "@/lib/canvas-gl-cleanup";
+
+export const MUSHAF_FIT_LINE_RATIO = 1.85;
 const LS_KEY = "mushaf-fitPageFontSize-v2";
 
 const mem = new Map<string, number>();
@@ -48,11 +50,16 @@ export function assertMushafPageFontReady(family: string): void {
 function defaultMeasure(fontPx: number, text: string, family: string): number {
   assertMushafPageFontReady(family);
   if (typeof document === "undefined") return text.length * fontPx * 0.55;
-  const ctx = document.createElement("canvas").getContext("2d");
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
   if (!ctx) return text.length * fontPx * 0.55;
-  const fam = normalizeMushafFontFamily(family);
-  ctx.font = `${fontPx}px "${fam}"`;
-  return ctx.measureText(text).width;
+  try {
+    const fam = normalizeMushafFontFamily(family);
+    ctx.font = `${fontPx}px "${fam}"`;
+    return ctx.measureText(text).width;
+  } finally {
+    releaseCanvasResources(canvas);
+  }
 }
 
 /** مفتاح قديم (لكل صفحة) — يُبقى للتوافق مع اختبارات القياس التركيبية. */

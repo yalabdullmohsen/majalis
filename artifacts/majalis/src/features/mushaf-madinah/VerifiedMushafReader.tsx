@@ -26,6 +26,10 @@ import {
 } from "@/lib/power-saver-engine";
 import { startBatteryFpsMonitor } from "@/lib/render-fps-throttle";
 import {
+  isLowEndTextProfile,
+  scrollAyahIntoViewCentered,
+} from "@/lib/text-layout-geometry";
+import {
   clampMushafPage,
   MUSHAF_PAGE_MAX,
 } from "@/lib/quran-last-page";
@@ -359,11 +363,15 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
       setAudioError(null);
       setAudioStatus(null);
       requestAnimationFrame(() => {
-        document
-          .querySelector<HTMLElement>(
-            `[data-pane="current"] [data-verse="${verseKey}"]:not([data-type="end"])`,
-          )
-          ?.scrollIntoView({ block: "center", inline: "nearest", behavior: "smooth" });
+        const shell = document.querySelector<HTMLElement>('[data-pane="current"] .mm-page-shell');
+        const target = document.querySelector<HTMLElement>(
+          `[data-pane="current"] [data-verse="${verseKey}"]:not([data-type="end"])`,
+        );
+        if (shell && target) {
+          scrollAyahIntoViewCentered(shell, target, { behavior: "smooth" });
+          return;
+        }
+        target?.scrollIntoView({ block: "center", inline: "nearest", behavior: "smooth" });
       });
     },
     [actionsOpen, selectedVerseKey],
@@ -657,6 +665,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
   );
 
   const edgesDisabled = actionsOpen || tafsirOpen || searchOpen || indexOpen;
+  const lowEndText = isLowEndTextProfile();
   const audioDockVisible =
     !actionsOpen &&
     audioDockOpen &&
@@ -670,9 +679,9 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
       return;
     }
     const id = window.requestAnimationFrame(() => {
-      const selected = shell.querySelector<HTMLElement>(".ayah-active");
+      const selected = shell.querySelector<HTMLElement>(".ayah-active, .is-playing");
       if (selected) {
-        selected.scrollIntoView({ block: "center", inline: "nearest", behavior: "smooth" });
+        scrollAyahIntoViewCentered(shell, selected, { behavior: "smooth" });
         return;
       }
       const maxScroll = Math.max(0, shell.scrollHeight - shell.clientHeight);
@@ -700,6 +709,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
       data-ayah-bar={actionsOpen ? "1" : "0"}
       data-audio-dock={audioDockVisible ? (audioDockMini ? "mini" : "1") : "0"}
       data-mushaf-theme={theme}
+      data-text-profile={lowEndText ? "low" : "normal"}
       data-testid="mushaf-viewport"
       dir="rtl"
       nextPage={
