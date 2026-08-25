@@ -1,19 +1,19 @@
 {
   "version": 1,
-  "generated_at": "2026-08-24T12:00:00.000Z",
+  "generated_at": "2026-08-25T04:34:37.739Z",
   "items": [
     {
-      "id": "88ee291e867ad7ad36071cbd63dabd8c86b99755",
+      "id": "5120eecc72e9fdf1df338d45dab1158d7890fdb8",
       "type": "درس",
-      "title_ar": "الآن مباشر شرح كتاب التوحيد للإمام محمد بن عبدالوهاب فضيلة الشيخ عمر مثيب العتي…",
-      "summary_ar": "الان مباشر (36) شرح كتاب&nbsp; التوحيد للامام محمد بن عبدالوهاب فضيله الشيخ عمر مثيب العتيبي رابط البث المباشر https://t.me/omar_muthib?livestream تحميل الكتاب…",
-      "sheikh": "عمر مثيب العتيبي 🔗 رابط البث المباشر https://t",
-      "place": null,
+      "title_ar": "ندعوكم الليلة لحضور المجلس العلمي شرح كتاب التوحيد للشيخ عمر مثيب العتيبي بعد ص…",
+      "summary_ar": "ندعوكم الليله لحضور المجلس العلمي: شرح كتاب التوحيد للشيخ عمر مثيب العتيبي ⏰ بعد صلاه المغرب الاحد الي الاربعاء مسجد الامام القرطبي - جليب الشيوخ https://maps.…",
+      "sheikh": null,
+      "place": "الإمام القرطبي - جليب الشيوخ https://maps",
       "audience": "عام",
       "starts_at": null,
       "time_text": null,
-      "register_url": "https://t.me/omar_muthib?livestream",
-      "schedule_kind": null,
+      "register_url": "https://t.me/DrosQ8",
+      "schedule_kind": "upcoming",
       "women_attendance": "men_only",
       "women_attendance_note": null,
       "sources": [
@@ -21,40 +21,13 @@
           "id": "telegram-DrosQ8",
           "name_ar": "دروس الكويت",
           "url": "https://t.me/DrosQ8",
-          "post_url": "https://t.me/DrosQ8/27633",
+          "post_url": "https://t.me/DrosQ8/27617",
           "platform": "telegram"
         }
       ],
       "image_url": null,
-      "published_at": "2026-08-24T15:58:03.712Z",
+      "published_at": "2026-08-25T04:08:58.517Z",
       "confidence": 0.8
-    },
-    {
-      "id": "f1779458bfd256ebbbb04154b25758cd2b19a77a",
-      "type": "تسجيل",
-      "title_ar": "فرصة ثمينة فرصه ثمينه تعلن حلقات الحله لتحفيظ القران الكريم التابعه ل جمعيه الر…",
-      "summary_ar": "فرصه ثمينه تعلن حلقات الحله لتحفيظ القران الكريم التابعه ل جمعيه الراسخون في العلم الخيريه عن: فتح باب التسجيل للفصل الاول 2026–2027 في مسجد بدريه الهاجري بمنط…",
-      "sheikh": "عثمان الهلال الأعمار 5 سنوات فما فوق سجل الآن موعد التسجيل م",
-      "place": "ظ القرآن الكريم ✨",
-      "audience": "عام",
-      "starts_at": "2026-08-16T00:00:00.000Z",
-      "time_text": null,
-      "register_url": null,
-      "schedule_kind": null,
-      "women_attendance": "men_only",
-      "women_attendance_note": null,
-      "sources": [
-        {
-          "id": "ig-alholah_kw",
-          "name_ar": "حلقات الخلة لتحفيظ القرآن الكريم",
-          "url": "https://instagram.com/alholah_kw",
-          "post_url": "https://www.instagram.com/p/DcOINh_uO2v/",
-          "platform": "instagram"
-        }
-      ],
-      "image_url": null,
-      "published_at": "2026-08-24T15:54:42.314Z",
-      "confidence": 0.95
     },
     {
       "id": "96bdf8d2d25df2cc4eae2c21a36dde710b6a3b5f",
@@ -82,6 +55,33 @@
       "image_url": null,
       "published_at": "2026-08-24T15:56:29.848Z",
       "confidence": 0.95
+    },
+    {
+      "id": "d50eff9e92a431e5a30dd90fc69aad4f77689992",
+      "type": "دورة",
+      "title_ar": "التأصيل الصحيح يبدأ من المعلم المتمكن في برنامج بدايات العلماء يدرس الطالب على …",
+      "summary_ar": "التاصيل الصحيح يبدا من المعلم المتمكن. في برنامج بدايات العلماء يدرس الطالب علي نخبه من اهل العلم المتخصصين، ممن يجمعون بين التاصيل العلمي، وحسن التعليم، ومعرف…",
+      "sheikh": "الدكتور أحمدو نعمه w",
+      "place": "برنامج بدايات العلماء يدرس الطالب على نخبةٍ من أهل العلم المتخصصين",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://docs.google.com/forms/d/e/1FAIpQLScY1fTXHS3XynY1PhI3-z8hvJ40ZZC4otObWfupCSbSLknyfQ/viewform",
+      "schedule_kind": "upcoming",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-rasikhoon",
+          "name_ar": "الراسخون",
+          "url": "https://instagram.com/rasikhoon",
+          "post_url": "https://www.instagram.com/p/DcbmjZnEmLV/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-24T00:00:00.000Z",
+      "confidence": 0.9
     },
     {
       "id": "5b3fa3511fd80095d69ac2ae9c971d9716e250bc",
