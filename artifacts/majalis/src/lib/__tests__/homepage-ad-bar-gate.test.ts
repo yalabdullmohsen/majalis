@@ -18,7 +18,7 @@ assert.match(nav, /shouldShowHeaderAd/);
 assert.doesNotMatch(nav, /MajlisWordmark/);
 assert.match(cfg, /headerAdConfig/);
 assert.match(cfg, /enabled:\s*true/);
-assert.match(cfg, /placement:\s*"top"/);
+assert.match(cfg, /placement:\s*"both"/);
 assert.match(cfg, /شركة العبد المحسن للحج/);
 assert.match(cfg, /الثقة/);
 

@@ -39,6 +39,7 @@ import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { TopSponsorBanner } from "@/components/header/TopSponsorBanner";
+import { PartnershipAdModal } from "@/components/header/PartnershipAdModal";
 import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
 import { FirstVisitIntro } from "@/components/onboarding/FirstVisitIntro";
@@ -1347,6 +1348,7 @@ function AppShellInner() {
           <Suspense fallback={null}>
             <NavBar />
           </Suspense>
+          <PartnershipAdModal />
         </div>
       ) : null}
       <Suspense fallback={null}>

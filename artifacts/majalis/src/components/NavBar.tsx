@@ -270,12 +270,8 @@ export default function NavBar() {
             </button>
           </div>
 
-          {/* منتصف الهيدر: مساحة إعلانية موحّدة في كل الأقسام (بلا عنوان العلامة) */}
-          {shouldShowHeaderAd(location) ? (
-            <HeaderAdSlot />
-          ) : (
-            <div className="header-ad-slot header-ad-slot--spacer" aria-hidden="true" />
-          )}
+          {/* منتصف الهيدر: spacer للتوازن — الكارت الإعلاني بجانب زر القمر */}
+          <div className="header-ad-slot header-ad-slot--spacer" aria-hidden="true" />
 
           {/* Desktop tabs */}
           {!isMobile && (
@@ -294,6 +290,7 @@ export default function NavBar() {
           )}
 
           <div className="navbar-v3__end">
+            {shouldShowHeaderAd(location) ? <HeaderAdSlot /> : null}
             {/* عداد الصلاة التالية — سطح المكتب فقط؛ يُخفى داخل صفحة المواقيت نفسها */}
             {!isMobile && !isImmersiveChromePath(location) && <PrayerChip />}
             {/* زر الوضع الليلي */}

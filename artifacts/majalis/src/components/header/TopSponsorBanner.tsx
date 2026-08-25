@@ -1,13 +1,13 @@
 /**
  * شريط راعٍ/إعلان أعلى الهيدر — يظهر في الويب والتطبيق الأصلي.
- * الضغط على الشركة → إنستقرام؛ الضغط على «إعلان شراكة» → /support.
+ * الضغط على الشركة → نافذة الشراكة؛ «إعلان شراكة» → /support.
  */
-import { useEffect, type MouseEvent } from "react";
+import { useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { headerAdConfig, TOP_SPONSOR_STATUS } from "@/config/header-ad";
 import { applyPageChromeDom } from "@/lib/apply-page-chrome";
-import { openExternalUrl } from "@/lib/capacitor-utils";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { openPartnershipAdModal } from "@/lib/partnership-ad-bus";
 import "@/styles/components/top-sponsor-banner.css";
 
 function isInternalPath(url: string): boolean {
@@ -46,8 +46,6 @@ function syncSponsorStatusBar() {
 export function TopSponsorBanner() {
   const [location] = useLocation();
   const cfg = headerAdConfig;
-  // لا نخفي الشريط في فحوص الأتمتة: بوابة التباين تحتاج العنصر في DOM؛
-  // المحتوى طرف أول ثابت وليس سكربت إعلان.
   const show =
     cfg.enabled &&
     (cfg.placement === "top" || cfg.placement === "both") &&
@@ -79,11 +77,6 @@ export function TopSponsorBanner() {
 
   if (!show) return null;
 
-  const onSponsorClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    void openExternalUrl(cfg.sponsorUrl);
-  };
-
   const partnerBody = (
     <span className="top-sponsor-banner__partner-label">{cfg.ctaLabel || cfg.badgeLabel}</span>
   );
@@ -95,21 +88,25 @@ export function TopSponsorBanner() {
       data-top-sponsor-banner="1"
     >
       <div className="top-sponsor-banner__inner">
-        <a
-          href={cfg.sponsorUrl}
+        <button
+          type="button"
           className="top-sponsor-banner__sponsor"
-          aria-label={cfg.sponsorAriaLabel}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={onSponsorClick}
+          aria-label={`${cfg.title} — ${cfg.topBarTapHint}`}
+          onClick={() => openPartnershipAdModal()}
         >
           <span className="top-sponsor-banner__copy">
             <span className="top-sponsor-banner__title">{cfg.title}</span>
             {cfg.subtitle ? (
-              <span className="top-sponsor-banner__subtitle">{cfg.subtitle}</span>
+              <span className="top-sponsor-banner__subtitle">
+                {cfg.subtitle}
+                <span className="top-sponsor-banner__tap-hint" aria-hidden="true">
+                  {" · "}
+                  {cfg.topBarTapHint}
+                </span>
+              </span>
             ) : null}
           </span>
-        </a>
+        </button>
 
         {isInternalPath(cfg.ctaUrl) ? (
           <Link

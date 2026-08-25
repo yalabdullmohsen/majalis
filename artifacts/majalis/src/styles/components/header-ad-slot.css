@@ -1,5 +1,5 @@
 /**
- * كبسولة إعلان منتصف الهيدر — مرنة بين أزرار اليمين واليسار، بلا صور وبلا سكربتات خارجية.
+ * كارت إعلان بجانب زر القمر — أيقونات SVG عالية التباين، بلا صور raster.
  */
 .header-ad-slot {
   --header-ad-h: 40px;
@@ -7,62 +7,91 @@
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.4rem;
+  gap: 0.35rem;
   min-width: 0;
   width: auto;
-  max-width: 100%;
+  max-width: min(11.5rem, 34vw);
   height: var(--header-ad-h);
   min-height: var(--header-ad-h);
   max-height: var(--header-ad-h);
   margin: 0;
-  padding: 0 0.45rem 0 0.4rem;
-  border-radius: 999px;
-  text-decoration: none;
-  color: var(--majalis-emerald-deep, #173d35);
-  background: color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 7%, #f7faf8);
-  border: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 16%, transparent);
+  padding: 0 0.4rem 0 0.35rem;
+  border-radius: var(--mj-r-md, 0.65rem);
+  cursor: pointer;
+  font: inherit;
+  text-align: inherit;
+  color: var(--mj-ink, var(--text-primary));
+  background: var(--mj-surface-2, color-mix(in srgb, var(--mj-brand-deep, #173d35) 7%, #f7faf8));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 22%, var(--mj-hairline, transparent));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--mj-accent, #9a7b2f) 8%, transparent);
   line-height: 1.15;
   overflow: hidden;
-  flex: 1 1 auto;
-}
-
-.header-ad-slot__sponsor {
-  flex: 1 1 auto;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
-  height: 100%;
+  flex: 0 1 auto;
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
 }
 
 .header-ad-slot:hover,
 .header-ad-slot:focus-visible {
-  background: color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 11%, #fff);
-  outline: 2px solid color-mix(in srgb, var(--majalis-brass-deep, #8b6914) 45%, transparent);
+  opacity: 0.9;
+  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 10%, var(--mj-surface-2, #f7faf8));
+  outline: 2px solid color-mix(in srgb, var(--mj-accent, #9a7b2f) 45%, transparent);
   outline-offset: 1px;
 }
 
 .header-ad-slot:active {
-  transform: scale(0.99);
+  transform: scale(0.95);
 }
 
-.header-ad-slot__badge {
+.header-ad-slot__icons {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
+  gap: 0.2rem;
+}
+
+.header-ad-slot__icon-chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  min-height: 1.15rem;
-  padding: 0.1rem 0.35rem;
-  border-radius: 999px;
-  font-size: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  gap: 0.02rem;
+  min-width: 1.55rem;
+  padding: 0.08rem 0.12rem;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 12%, var(--mj-surface, #fff));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 24%, transparent);
+}
+
+.header-ad-slot__icon-chip--charge {
+  background: color-mix(in srgb, var(--mj-accent, #9a7b2f) 14%, var(--mj-surface, #fff));
+  border-color: color-mix(in srgb, var(--mj-accent, #9a7b2f) 28%, transparent);
+}
+
+.header-ad-slot__svg {
+  color: var(--mj-brand-deep, #0f2f28);
+  display: block;
+  width: 1rem;
+  height: 1rem;
+}
+
+.header-ad-slot__icon-chip--charge .header-ad-slot__svg {
+  color: var(--mj-accent-deep, #7a5c18);
+}
+
+.header-ad-slot__metric {
+  font-size: 0.46rem;
+  font-weight: 800;
   line-height: 1;
-  color: var(--majalis-emerald-deep, #173d35);
-  background: color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 12%, #fff);
-  border: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 18%, transparent);
+  color: var(--mj-ink, var(--text-primary));
+  max-width: 2.4rem;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-ad-slot__icon-chip--charge .header-ad-slot__metric {
+  font-size: 0.5rem;
+  letter-spacing: -0.02em;
 }
 
 .header-ad-slot__copy {
@@ -70,83 +99,74 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.05rem;
+  gap: 0.03rem;
   overflow: hidden;
 }
 
 .header-ad-slot__title {
   margin: 0;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.66rem;
+  font-weight: 800;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--mj-ink, var(--text-primary));
 }
 
 .header-ad-slot__subtitle {
   margin: 0;
-  font-size: 0.58rem;
-  font-weight: 500;
-  opacity: 0.9;
+  font-size: 0.52rem;
+  font-weight: 600;
+  color: var(--mj-ink-2, var(--text-muted));
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
-  line-height: 1.2;
-  max-height: 1.25em;
+  line-height: 1.15;
+  max-height: 1.2em;
 }
 
-.header-ad-slot__cta {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 1.45rem;
-  padding: 0 0.5rem;
-  border-radius: 999px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  line-height: 1;
-  color: #fff;
-  background: var(--majalis-emerald-deep, #173d35);
-  white-space: nowrap;
-  text-decoration: none;
-}
-
-html[data-theme="dark"] .header-ad-slot {
-  color: #d5eee2;
-  background: color-mix(in srgb, #4fb48b 16%, #151c19);
-  border-color: color-mix(in srgb, #4fb48b 32%, transparent);
+html[data-theme="dark"] .header-ad-slot,
+html.theme-dark .header-ad-slot {
+  color: var(--mj-ink, #d5eee2);
+  background: color-mix(in srgb, var(--mj-brand, #4fb48b) 14%, #151c19);
+  border-color: color-mix(in srgb, var(--mj-brand, #4fb48b) 30%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--mj-accent, #d4b76a) 12%, transparent);
 }
 
 html[data-theme="dark"] .header-ad-slot:hover,
-html[data-theme="dark"] .header-ad-slot:focus-visible {
-  background: color-mix(in srgb, #4fb48b 22%, #151c19);
+html[data-theme="dark"] .header-ad-slot:focus-visible,
+html.theme-dark .header-ad-slot:hover,
+html.theme-dark .header-ad-slot:focus-visible {
+  background: color-mix(in srgb, var(--mj-brand, #4fb48b) 20%, #151c19);
 }
 
-html[data-theme="dark"] .header-ad-slot__badge {
+html[data-theme="dark"] .header-ad-slot__icon-chip,
+html.theme-dark .header-ad-slot__icon-chip {
+  background: color-mix(in srgb, var(--mj-brand, #4fb48b) 16%, #101614);
+  border-color: color-mix(in srgb, var(--mj-brand, #4fb48b) 28%, transparent);
+}
+
+html[data-theme="dark"] .header-ad-slot__svg,
+html.theme-dark .header-ad-slot__svg {
   color: #c8ebd9;
-  background: color-mix(in srgb, #4fb48b 18%, #101614);
-  border-color: color-mix(in srgb, #4fb48b 30%, transparent);
 }
 
-html[data-theme="dark"] .header-ad-slot__cta {
-  background: #2f8f6a;
-  color: #fff;
+html[data-theme="dark"] .header-ad-slot__icon-chip--charge .header-ad-slot__svg,
+html.theme-dark .header-ad-slot__icon-chip--charge .header-ad-slot__svg {
+  color: #e8d08a;
 }
 
-/* محاذاة وسط الهيدر — يمتد بين أزرار البداية والنهاية دون تجاوز الشاشة */
-.navbar-v3__inner > .header-ad-slot {
-  flex: 1 1 auto;
+/* بجانب زر القمر في نهاية الهيدر */
+.navbar-v3__end > .header-ad-slot {
+  flex: 0 1 auto;
   min-width: 0;
-  max-width: min(100%, calc(100vw - 9.25rem));
-  justify-self: stretch;
-  margin-inline: 0.15rem;
+  max-width: min(11.5rem, 34vw);
+  margin-inline-end: 0.1rem;
 }
 
-/* حافظ على توازن الشبكة عند إخفاء الإعلان (webdriver / معطّل) بلا عنوان العلامة */
 .header-ad-slot--spacer {
   pointer-events: none;
   visibility: hidden;
@@ -154,62 +174,59 @@ html[data-theme="dark"] .header-ad-slot__cta {
   background: transparent;
   min-height: var(--header-ad-h, 40px);
   height: var(--header-ad-h, 40px);
+  box-shadow: none;
 }
 
 @media (max-width: 379px) {
   .header-ad-slot {
     --header-ad-h: 38px;
-    gap: 0.28rem;
-    padding-inline: 0.3rem 0.28rem;
-  }
-
-  .header-ad-slot__badge {
-    font-size: 0.5rem;
-    padding-inline: 0.28rem;
-    min-height: 1.05rem;
+    gap: 0.22rem;
+    padding-inline: 0.28rem 0.25rem;
+    max-width: min(9.5rem, 42vw);
   }
 
   .header-ad-slot__title {
-    font-size: 0.64rem;
+    font-size: 0.58rem;
   }
 
   .header-ad-slot__subtitle {
-    font-size: 0.52rem;
-    -webkit-line-clamp: 1;
+    display: none;
   }
 
-  .header-ad-slot__cta {
-    font-size: 0.58rem;
-    padding-inline: 0.35rem;
-    min-height: 1.3rem;
+  .header-ad-slot__metric {
+    font-size: 0.42rem;
   }
 
-  .navbar-v3__inner > .header-ad-slot {
-    max-width: min(100%, calc(100vw - 8.5rem));
+  .header-ad-slot__svg {
+    width: 0.9rem;
+    height: 0.9rem;
   }
 }
 
 @media (min-width: 880px) {
   .header-ad-slot {
     --header-ad-h: 42px;
-    gap: 0.5rem;
-    padding-inline: 0.55rem 0.45rem;
+    gap: 0.42rem;
+    padding-inline: 0.5rem 0.42rem;
+    max-width: min(13rem, 22vw);
   }
 
   .header-ad-slot__title {
-    font-size: 0.78rem;
+    font-size: 0.72rem;
   }
 
   .header-ad-slot__subtitle {
-    font-size: 0.64rem;
+    font-size: 0.58rem;
   }
 
-  .header-ad-slot__cta {
-    font-size: 0.72rem;
-    min-height: 1.55rem;
+  .header-ad-slot__svg {
+    width: 1.1rem;
+    height: 1.1rem;
   }
+}
 
-  .navbar-v3__inner > .header-ad-slot {
-    max-width: min(28rem, 42vw);
+@media (max-width: 859px) {
+  .navbar-v3__end > .header-ad-slot {
+    max-width: min(10rem, 38vw);
   }
 }
