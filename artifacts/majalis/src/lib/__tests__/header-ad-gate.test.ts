@@ -35,6 +35,9 @@ assert.match(cfg, /shouldShowHeaderAd/);
 assert.match(cfg, /shouldShowTopSponsorBanner/);
 assert.match(cfg, /Google Ads/);
 assert.match(cfg, /ctaUrl:\s*"\/support"/);
+assert.match(cfg, /شركة العبد المحسن للحج/);
+assert.match(cfg, /الثقة/);
+assert.match(cfg, /badgeLabel:\s*"شريك"/);
 
 assert.match(slot, /headerAdConfig/);
 assert.match(slot, /HeaderAdBanner/);
@@ -48,7 +51,7 @@ assert.doesNotMatch(top, /navigator\.webdriver/);
 assert.doesNotMatch(top, /googlesyndication|adsbygoogle|gtag/i);
 
 assert.match(css, /--header-ad-h:\s*40px/);
-assert.match(topCss, /--top-sponsor-content-h:\s*36px/);
+assert.match(topCss, /--top-sponsor-content-h:\s*40px/);
 assert.match(topCss, /\.app-top-chrome/);
 
 console.log("\nheader-ad-gate.test.ts: ok");

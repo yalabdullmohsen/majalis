@@ -19,8 +19,10 @@ export type HeaderAdConfig = {
    * both = الاثنان معًا
    */
   placement: HeaderAdPlacement;
+  /** شارة صغيرة بجانب العنوان (مثل: شريك / إعلان) */
+  badgeLabel: string;
   title: string;
-  /** سطر ثانٍ عند عدم وجود راعٍ فعلي */
+  /** سطر ثانٍ داعم */
   subtitle: string;
   ctaLabel: string;
   /** رابط الضغط — مسار داخلي أو mailto (بلا popup) */
@@ -30,9 +32,10 @@ export type HeaderAdConfig = {
 export const headerAdConfig: HeaderAdConfig = {
   enabled: true,
   placement: "top",
-  title: "مساحة إعلانية مميزة",
-  subtitle: "أعلن هنا للمهتمين بالمحتوى الشرعي والتعليمي",
-  ctaLabel: "احجز",
+  badgeLabel: "شريك",
+  title: "شركة العبد المحسن للحج",
+  subtitle: "الثقة · الجودة · المتعة",
+  ctaLabel: "تواصل",
   /** صفحة الدعم والتواصل — آمن داخل التطبيق */
   ctaUrl: "/support",
 };
