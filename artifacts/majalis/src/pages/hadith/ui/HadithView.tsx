@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import { AlertTriangle, Star } from "lucide-react";
+import { AlertTriangle, Check, Copy, Flag, Share2, Star } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { truncateAtWord } from "@/lib/utils";
@@ -27,7 +27,6 @@ import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBotto
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
 import { IsnadAttributionBar } from "@/components/IsnadAttributionBar";
-import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
 import { fetchSahihaynLocal } from "@/lib/sahihayn-local";
@@ -228,6 +227,18 @@ function gradeClass(grade: string | null): string {
 
 const GRADE_UNKNOWN_LABEL = "الدرجة غير مثبتة في المصدر";
 
+/** نص شارة الدرجة للعرض — هادئ ولا يطغى على المتن. */
+function gradeDisplayLabel(grade: string | null): string {
+  if (!grade) return GRADE_UNKNOWN_LABEL;
+  const g = grade.trim();
+  if (/موضوع|باطل|مكذوب|لا\s*أصل/i.test(g)) {
+    return /لا\s*ي?صح/.test(g) ? g : "موضوع — لا يصح";
+  }
+  if (/^ضعيف\b/.test(g) && g.length <= 24) return g;
+  if (g === "ضعيف") return "ضعيف";
+  return g;
+}
+
 // ─── HadithCard ──────────────────────────────────────────────────────────────
 
 function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) => void }) {
@@ -245,15 +256,28 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
   useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
 
   const displayMatn = extractDisplayMatn(h.title, h.text);
+  const citation = `${displayMatn}\n\n— ${h.source_name ?? ""}${h.hadith_number ? ` ${h.hadith_number}` : ""}`;
+  const reportTopic = h.title || displayMatn.slice(0, 60) || "حديث نبوي شريف";
 
   function handleCopy(e: React.MouseEvent) {
     e.stopPropagation();
-    const content = `${displayMatn}\n\n— ${h.source_name ?? ""}${h.hadith_number ? ` ${h.hadith_number}` : ""}`;
-    navigator.clipboard.writeText(content).then(() => {
+    navigator.clipboard.writeText(citation).then(() => {
       if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
       setCopied(true);
       copyTimerRef.current = setTimeout(() => setCopied(false), 2000);
     });
+  }
+
+  function handleShare(e: React.MouseEvent) {
+    e.stopPropagation();
+    const payload = { title: h.title || "حديث نبوي شريف", text: citation, url: "https://www.majlisilm.com/hadith" };
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+      void navigator.share(payload).catch(() => {
+        void navigator.clipboard.writeText(citation);
+      });
+      return;
+    }
+    void navigator.clipboard.writeText(citation);
   }
 
   function handleSave(e: React.MouseEvent) {
@@ -277,18 +301,23 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
 
   const compRef = h.metadata?.companion as string | undefined;
   const takhrijShort = h.metadata?.takhrij ? String(h.metadata.takhrij) : null;
+  const gradeCls = gradeClass(h.grade);
 
   return (
     <div
       id={h.id}
       className="hadith-card ui-card"
       onClick={() => onExpand(h)}
-      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onExpand(h)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onExpand(h);
+        }
+      }}
       tabIndex={0}
       role="button"
       aria-label={`عرض تفاصيل الحديث: ${h.title ?? displayMatn.slice(0, 40)}`}
     >
-      {/* Header */}
       <header className="hadith-card__header">
         <div className="hadith-card__badges">
           {h.collection && (
@@ -300,14 +329,11 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
             <span className="hadith-badge hadith-badge--num">#{h.hadith_number}</span>
           )}
         </div>
-        {h.grade ? (
-          <span className={`hadith-grade ${gradeClass(h.grade)}`}>{h.grade}</span>
-        ) : (
-          <span className="hadith-grade hadith-grade--unknown">{GRADE_UNKNOWN_LABEL}</span>
-        )}
+        <span className={`hadith-grade ${gradeCls}`} title={h.grade ?? undefined}>
+          {gradeDisplayLabel(h.grade)}
+        </span>
       </header>
 
-      {/* Title */}
       {h.title && h.title !== "حديث" && (
         <h3 className="hadith-card__title">{h.title}</h3>
       )}
@@ -315,10 +341,8 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         <p className="hadith-card__chapter">{h.chapter}</p>
       )}
 
-      {/* المتن فقط — بلا سند في العرض الخارجي */}
       <blockquote className="hadith-card__text hadith-card__text--matn">{displayMatn}</blockquote>
 
-      {/* Meta */}
       <div className="hadith-card__meta">
         {(h.narrator || compRef) && (
           <span className="hadith-meta-item">
@@ -327,7 +351,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
           </span>
         )}
         {h.source_name && (
-          <span className="hadith-meta-item">
+          <span className="hadith-meta-item hadith-meta-item--source">
             <span className="hadith-meta-label">المصدر:</span>{" "}
             {h.source_name}
           </span>
@@ -340,7 +364,6 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         )}
       </div>
 
-      {/* Keywords */}
       {h.keywords && h.keywords.length > 0 && (
         <div className="hadith-card__keywords">
           {h.keywords.slice(0, 4).map((k) => (
@@ -349,40 +372,44 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         </div>
       )}
 
-      {/* Actions. onClick لمنع انتشار النقر إلى البطاقة الأم (التي تفتح تفاصيل
-          الحديث عند النقر) — لا إجراء فعلي هنا يحتاج مكافئ لوحة مفاتيح؛ كل
-          الأزرار الفعلية داخل هذا الصف قابلة للوصول بلوحة المفاتيح أصلًا. */}
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div className="hadith-card__actions" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
           className={`hadith-action-btn ${saved ? "hadith-action-btn--active" : ""}`}
-          title={saved ? "محفوظ" : "حفظ في المفضلة"}
           onClick={handleSave}
-          aria-label="حفظ في المفضلة"
+          aria-label={saved ? "إزالة من المفضلة" : "حفظ في المفضلة"}
+          title={saved ? "محفوظ" : "حفظ"}
         >
-          {saved ? <Star size={15} className="icon-star--filled" /> : <Star size={15} />}
+          <Star size={16} strokeWidth={2} className={saved ? "icon-star--filled" : undefined} aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          className="hadith-action-btn"
+          onClick={handleShare}
+          aria-label="مشاركة الحديث"
+          title="مشاركة"
+        >
+          <Share2 size={16} strokeWidth={2} aria-hidden="true" />
         </button>
         <button
           type="button"
           className="hadith-action-btn"
           onClick={handleCopy}
-          aria-label="نسخ المتن"
+          aria-label={copied ? "تم النسخ" : "نسخ المتن"}
+          title="نسخ"
         >
-          {copied ? "✓" : "⎘"}
+          {copied ? <Check size={16} strokeWidth={2} aria-hidden="true" /> : <Copy size={16} strokeWidth={2} aria-hidden="true" />}
         </button>
-        <button
-          type="button"
-          className="hadith-action-btn"
-          onClick={(e) => { e.stopPropagation(); onExpand(h); }}
-          aria-label="عرض التفاصيل والتخريج"
+        <Link
+          href={`/contact?topic=${encodeURIComponent(reportTopic)}`}
+          className="hadith-action-btn hadith-action-btn--link"
+          aria-label="بلاغ عن خطأ في المحتوى"
+          title="بلاغ"
+          onClick={(e) => e.stopPropagation()}
         >
-          ↗
-        </button>
-        <ShareButtons
-          title={h.title || displayMatn.slice(0, 60) || "حديث نبوي شريف"}
-          url="https://www.majlisilm.com/hadith"
-        />
+          <Flag size={16} strokeWidth={2} aria-hidden="true" />
+        </Link>
       </div>
     </div>
   );
@@ -461,7 +488,9 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
               <span className="hadith-badge hadith-badge--num">حديث #{h.hadith_number}</span>
             )}
             {h.grade ? (
-              <span className={`hadith-grade ${gradeClass(h.grade)}`}>{h.grade}</span>
+              <span className={`hadith-grade ${gradeClass(h.grade)}`} title={h.grade}>
+                {gradeDisplayLabel(h.grade)}
+              </span>
             ) : (
               <span className="hadith-grade hadith-grade--unknown">{GRADE_UNKNOWN_LABEL}</span>
             )}
@@ -563,7 +592,9 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
           <div className="hadith-modal__meta-item">
             <strong>درجة الحديث</strong>
             {h.grade ? (
-              <span className={`hadith-grade ${gradeClass(h.grade)}`}>{h.grade}</span>
+              <span className={`hadith-grade ${gradeClass(h.grade)}`} title={h.grade}>
+                {gradeDisplayLabel(h.grade)}
+              </span>
             ) : (
               <span className="hadith-grade hadith-grade--unknown">{GRADE_UNKNOWN_LABEL}</span>
             )}

@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { GraduationCap } from "lucide-react";
+import { GraduationCap, ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
-import { ShareButtons } from "@/components/ContentActions";
+import { ContentReportLink } from "@/components/ContentReportLink";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
@@ -212,73 +212,72 @@ export default function ArbaeenNawawiPage() {
       {filtered.length === 0 ? (
         <p className="an-empty">لا توجد نتائج، جرب بحثاً مختلفاً</p>
       ) : (
-        <div className="an-grid">
+        <div className="an-list" role="list">
           {filtered.map((h) => {
             const isRead = read.has(h.id);
             const isExp = expanded.has(h.id);
             const isToday = h.id === todayHadith.id;
+            const preview = truncateAtWord(h.text, 90);
             return (
               <article
                 key={h.id}
                 id={`hadith-${h.id}`}
-                className={`an-card${isRead ? " an-card--read" : ""}${isToday ? " an-card--today" : ""}`}
+                role="listitem"
+                className={`an-row${isRead ? " an-row--read" : ""}${isToday ? " an-row--today" : ""}${isExp ? " an-row--open" : ""}`}
               >
-                <div className="an-card__header">
-                  <span className="an-card__num">{h.id}</span>
-                  <h3 className="an-card__title">{h.title}</h3>
-                  {isToday && <span className="an-card__today-badge">اليوم</span>}
-                </div>
-                <blockquote className="an-card__text">
-                  {h.text.length > 120 && !isExp
-                    ? `«${truncateAtWord(h.text, 117)}»`
-                    : `«${h.text}»`}
-                </blockquote>
+                <button
+                  type="button"
+                  className="an-row__main"
+                  onClick={() => toggleExpand(h.id)}
+                  aria-expanded={isExp}
+                  aria-controls={`hadith-body-${h.id}`}
+                >
+                  <span className="an-row__num" aria-hidden="true">{h.id}</span>
+                  <span className="an-row__body">
+                    <span className="an-row__title">{h.title}</span>
+                    {!isExp && (
+                      <span className="an-row__preview">«{preview}»</span>
+                    )}
+                  </span>
+                  <ChevronLeft className="an-row__chevron" size={18} strokeWidth={2} aria-hidden="true" />
+                </button>
                 {isExp && (
-                  <>
-                    <p className="an-card__expl">{h.explanation}</p>
+                  <div className="an-row__detail" id={`hadith-body-${h.id}`}>
+                    <blockquote className="an-row__text">«{h.text}»</blockquote>
+                    <p className="an-row__expl">{h.explanation}</p>
                     {h.benefits && (
-                      <div className="an-card__benefit">
-                        <span className="an-card__benefit-label">الفائدة</span>
+                      <div className="an-row__benefit">
+                        <span className="an-row__benefit-label">الفائدة</span>
                         <span>{h.benefits}</span>
                       </div>
                     )}
-                  </>
-                )}
-                <footer className="an-card__footer">
-                  <span className="an-card__source">{h.source}</span>
-                  <div className="an-card__actions">
-                    <button
-                      type="button"
-                      className="an-expand-btn"
-                      onClick={() => toggleExpand(h.id)}
-                      aria-expanded={isExp}
-                    >
-                      {isExp ? "طيّ" : "تفصيل"}
-                    </button>
-                    <Link href={`/arbaeen-nawawi/${h.id}`} className="an-expand-btn" aria-label={`صفحة تعلّم واختبار الحديث ${h.id}`}>
-                      <GraduationCap size={13} strokeWidth={1.8} aria-hidden="true" /> اختبر نفسك
-                    </Link>
-                    <button
-                      type="button"
-                      className={`an-read-btn an-read-btn--sm${isRead ? " an-read-btn--done" : ""}`}
-                      onClick={() => toggleRead(h.id)}
-                      aria-label={isRead ? "إلغاء تعليم كمقروء" : "تعليم كمقروء"}
-                    >
-                      {isRead ? "✓" : "قرأت"}
-                    </button>
+                    <footer className="an-row__footer">
+                      <span className="an-row__source">المصدر: {h.source}</span>
+                      <div className="an-row__actions">
+                        <Link href={`/arbaeen-nawawi/${h.id}`} className="an-row__action" aria-label={`صفحة تعلّم واختبار الحديث ${h.id}`}>
+                          <GraduationCap size={14} strokeWidth={1.8} aria-hidden="true" /> اختبر
+                        </Link>
+                        <button
+                          type="button"
+                          className={`an-row__action${isRead ? " an-row__action--done" : ""}`}
+                          onClick={() => toggleRead(h.id)}
+                          aria-label={isRead ? "إلغاء تعليم كمقروء" : "تعليم كمقروء"}
+                        >
+                          {isRead ? "مقروء" : "قرأت"}
+                        </button>
+                      </div>
+                    </footer>
                   </div>
-                </footer>
+                )}
               </article>
             );
           })}
         </div>
       )}
 
-      <div className="twh-share">
-        <ShareButtons title="الأربعون النووية — المجلس العلمي" url="https://www.majlisilm.com/arbaeen-nawawi" />
-      </div>
+      <ContentReportLink context="الأربعون النووية — المجلس العلمي" />
       <RelatedKnowledge kind="hadith" query="الأربعون النووية" title="أحاديث ذات صلة" limit={6} />
-      <div className="px-4 pb-6 mt-4">
+      <div className="an-quiz-wrap">
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />
       </div>
     </div>
