@@ -67,13 +67,13 @@ export default function LearnHubPage() {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: "تعلّم",
-          url: "https://www.majlisilm.com/learn",
+          url: "https://majlisilm.com/learn",
           description:
             "أقسام التعلّم الأساسية وفهرس أبواب العلم المنشورة",
           hasPart: LEARN_SECTIONS.map((s) => ({
             "@type": "WebPage",
             name: s.label,
-            url: `https://www.majlisilm.com${s.href}`,
+            url: `https://majlisilm.com${s.href}`,
           })),
         },
       ],

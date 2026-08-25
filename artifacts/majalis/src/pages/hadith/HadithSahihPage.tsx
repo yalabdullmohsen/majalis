@@ -16,7 +16,7 @@ export default function HadithSahihPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "الأحاديث الصحيحة — مرجع الصحيحين",
-          url: "https://www.majlisilm.com/hadith/sahih",
+          url: "https://majlisilm.com/hadith/sahih",
           description: "مرجع الصحيحين الكامل مع عرض المتن بلا سند وبحث متعدد الطرق",
           about: { "@type": "Thing", name: "صحيح البخاري وصحيح مسلم" },
         },
@@ -28,7 +28,7 @@ export default function HadithSahihPage() {
     <>
       <HadithSection authenticityClass="sahih" />
       <div className="twh-share">
-        <ShareButtons title="الأحاديث الصحيحة — المجلس العلمي" url="https://www.majlisilm.com/hadith/sahih" />
+        <ShareButtons title="الأحاديث الصحيحة — المجلس العلمي" url="https://majlisilm.com/hadith/sahih" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />

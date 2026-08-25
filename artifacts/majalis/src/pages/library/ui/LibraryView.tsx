@@ -171,7 +171,7 @@ export default function LibraryPage({
             "@type": "ListItem",
             position: i + 1,
             name: cat,
-            url: `https://www.majlisilm.com/library?cat=${encodeURIComponent(cat)}`,
+            url: `https://majlisilm.com/library?cat=${encodeURIComponent(cat)}`,
           })),
         },
       ],
@@ -317,7 +317,7 @@ export default function LibraryPage({
         فهرس المكتبة متاح للتصفح. بيانات التحقق والمصادر تُستكمل تدريجيًا ولا تُعرض كحقيقة نهائية دون مراجعة.
       </p>
       <div className="twh-share">
-        <ShareButtons title="المكتبة الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/library" />
+        <ShareButtons title="المكتبة الإسلامية — المجلس العلمي" url="https://majlisilm.com/library" />
       </div>
       <RelatedKnowledge kind="book" query="مكتبة إسلامية" title="كتب ومواد ذات صلة" limit={6} />
     </ContentHubLayout>

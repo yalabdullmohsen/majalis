@@ -196,7 +196,7 @@ export default function SourcesLicensesPage() {
       <LegalBackLink />
       <ShareButtons
         title="المصادر والتراخيص — المجلس العلمي"
-        url="https://www.majlisilm.com/sources"
+        url="https://majlisilm.com/sources"
       />
     </LegalPageLayout>
   );

@@ -997,7 +997,7 @@ export default function AkhlaqPage() {
             "@type": "ListItem",
             position: i + 1,
             name: a.title,
-            url: `https://www.majlisilm.com/akhlaq#${a.id}`,
+            url: `https://majlisilm.com/akhlaq#${a.id}`,
           })),
         },
       ],
@@ -1133,7 +1133,7 @@ export default function AkhlaqPage() {
       <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأخلاق والصحابة" count={4} />
 
       <div className="twh-share">
-        <ShareButtons title="الأخلاق الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/akhlaq" />
+        <ShareButtons title="الأخلاق الإسلامية — المجلس العلمي" url="https://majlisilm.com/akhlaq" />
       </div>
 
       {/* روابط ذات صلة */}

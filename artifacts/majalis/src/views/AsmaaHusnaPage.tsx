@@ -58,7 +58,7 @@ export default function AsmaaHusnaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${a.arabic} — ${a.meaning}`,
-            url: `https://www.majlisilm.com/asma-husna#name-${a.num}`,
+            url: `https://majlisilm.com/asma-husna#name-${a.num}`,
           })),
         },
       ],
@@ -205,7 +205,7 @@ export default function AsmaaHusnaPage() {
       <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والأسماء الحسنى" count={4} />
 
       <div className="twh-share">
-        <ShareButtons title="الأسماء الحسنى — المجلس العلمي" url="https://www.majlisilm.com/asma-husna" />
+        <ShareButtons title="الأسماء الحسنى — المجلس العلمي" url="https://majlisilm.com/asma-husna" />
       </div>
 
       {/* ═══ نافذة التفاصيل ═══ */}

@@ -841,7 +841,31 @@
     },
     {
       "source": "/annual-courses",
-      "destination": "/lessons?tab=courses",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/lessons",
+      "has": [{ "type": "query", "key": "tab", "value": "courses" }],
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/lessons",
+      "has": [{ "type": "query", "key": "tab", "value": "men" }],
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/lessons",
+      "has": [{ "type": "query", "key": "tab", "value": "women" }],
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.majlisilm.com" }],
+      "destination": "https://majlisilm.com/:path*",
       "permanent": true
     },
     {
@@ -1017,17 +1041,6 @@
     {
       "source": "/scholars/fakhr-al-razi",
       "destination": "/scholars/fakhr-razi",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.majlisilm.com"
-        }
-      ],
-      "destination": "https://majlisilm.com/:path*",
       "permanent": true
     },
     {

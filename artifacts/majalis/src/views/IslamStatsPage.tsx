@@ -321,7 +321,7 @@ export default function IslamStatsPage() {
             "@type": "ListItem",
             position: i + 1,
             name: tab.label,
-            url: `https://www.majlisilm.com/islam-stats#${tab.id}`,
+            url: `https://majlisilm.com/islam-stats#${tab.id}`,
           })),
         },
       ],
@@ -507,7 +507,7 @@ export default function IslamStatsPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الإسلام في أرقام — المجلس العلمي" url="https://www.majlisilm.com/islam-stats" />
+        <ShareButtons title="الإسلام في أرقام — المجلس العلمي" url="https://majlisilm.com/islam-stats" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في الإسلام والتاريخ" count={4} />

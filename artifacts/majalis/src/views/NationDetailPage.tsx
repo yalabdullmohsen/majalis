@@ -59,7 +59,7 @@ export default function NationDetailPage() {
           headline: nation.name,
           description: nation.summary.slice(0, 300),
           inLanguage: "ar",
-          url: `https://www.majlisilm.com/nations/${nation.slug}`,
+          url: `https://majlisilm.com/nations/${nation.slug}`,
         },
       ],
     });
@@ -355,7 +355,7 @@ export default function NationDetailPage() {
       <div className="nations-share">
         <ShareButtons
           title={`${nation.name} — الأمم السابقة | المجلس العلمي`}
-          url={`https://www.majlisilm.com/nations/${nation.slug}`}
+          url={`https://majlisilm.com/nations/${nation.slug}`}
         />
       </div>
     </div>

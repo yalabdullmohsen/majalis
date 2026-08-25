@@ -338,10 +338,10 @@ function FlashCardsPageInner() {
         "@type": "LearningResource",
         name: "بطاقات المراجعة التعليمية",
         description: "بطاقات مراجعة بنظام التكرار المتباعد لتثبيت المعلومات الشرعية.",
-        url: "https://www.majlisilm.com/flashcards",
+        url: "https://majlisilm.com/flashcards",
         inLanguage: "ar",
         learningResourceType: "Flashcard",
-        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
       }],
     });
   }, []);
@@ -424,7 +424,7 @@ function FlashCardsPageInner() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="البطاقات التعليمية الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/flashcards" />
+        <ShareButtons title="البطاقات التعليمية الإسلامية — المجلس العلمي" url="https://majlisilm.com/flashcards" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/flashcards" title="اختبر معلوماتك في العلوم الشرعية" count={4} />

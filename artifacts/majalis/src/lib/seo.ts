@@ -14,6 +14,7 @@ import {
   webPageJsonLd,
 } from "./seo-structured-data";
 import { SEO_SITE } from "./seo-nav-labels";
+import { absoluteUrl as canonicalAbsoluteUrl } from "./site-config";
 import type { KuwaitLessonRecord } from "./kuwait-lessons";
 
 type SeoRoute = {
@@ -64,7 +65,7 @@ function requiredRoute(routes: SeoRoute[], path: string) {
 }
 
 function absoluteUrl(path: string) {
-  return new URL(path, SEO_SITE.siteUrl).toString();
+  return canonicalAbsoluteUrl(path);
 }
 
 export function normalizePath(path: string) {

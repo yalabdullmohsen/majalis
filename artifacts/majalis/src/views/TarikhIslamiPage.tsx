@@ -148,7 +148,7 @@ export default function TarikhIslamiPage() {
 
       <ShareButtons
         title="التاريخ الإسلامي والحضارة — المجلس العلمي"
-        url="https://www.majlisilm.com/tarikh-islami"
+        url="https://majlisilm.com/tarikh-islami"
       />
     </SectionTemplatePage>
   );

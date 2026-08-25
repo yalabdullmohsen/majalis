@@ -245,8 +245,8 @@ export default function LearningPathDetailPage() {
           "@type": "Course",
           name: path.title,
           description: path.description || undefined,
-          url: `https://www.majlisilm.com${path_}`,
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+          url: `https://majlisilm.com${path_}`,
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
           inLanguage: "ar",
           numberOfCredits: path.totalSessions || undefined,
         },
@@ -440,7 +440,7 @@ export default function LearningPathDetailPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="تفاصيل المسار التعليمي — المجلس العلمي" url={`https://www.majlisilm.com/learning/paths/${slug}`} />
+        <ShareButtons title="تفاصيل المسار التعليمي — المجلس العلمي" url={`https://majlisilm.com/learning/paths/${slug}`} />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/learning-paths" title="اختبر معلوماتك في العلوم الشرعية" count={4} />

@@ -97,9 +97,9 @@ export default function ScientificAnnouncementDetailPage({
           "@context": "https://schema.org",
           "@type": "Event",
           name: item.announcementTitle,
-          url: `https://www.majlisilm.com/scientific-announcements/${params.id}`,
+          url: `https://majlisilm.com/scientific-announcements/${params.id}`,
           description: `${item.announcementTitle} — تفاصيل الحدث العلمي`,
-          organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+          organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
           ...(item.posterImage ? { image: item.posterImage } : {}),
         },
       ]}

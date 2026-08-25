@@ -39,7 +39,7 @@ export function HomeUpcomingCourses() {
       eyebrow="برامج علمية"
       title="الدورات القادمة"
       description="دورات علمية منظّمة مرتّبة حسب أقرب موعد."
-      moreHref="/lessons?tab=courses"
+      moreHref="/lessons#courses"
       moreLabel="كل الدورات"
       state="ready"
     >

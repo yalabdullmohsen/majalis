@@ -191,9 +191,9 @@ export default function PrayerTimesPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "مواقيت الصلاة العالمية",
-          url: "https://www.majlisilm.com/prayer-times",
+          url: "https://majlisilm.com/prayer-times",
           description: "مواقيت الصلوات الخمس لأي مدينة في العالم بحساب فلكي محلي",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
         },
       ],
     });

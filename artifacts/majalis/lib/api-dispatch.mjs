@@ -125,7 +125,7 @@ const recitationTranscribeRateLimit = createRateLimiter({
 
 // تطبيق iOS/Android الأصلي (Capacitor) يستدعي هذا المسار برابط مطلق
 // (server-provider.ts) لأنه لا يملك خادمًا محليًا خاصًا به — أصله ليس
-// https://www.majlisilm.com بل أحد هذه المخططات المحلية، فيحتاج طلب
+// https://majlisilm.com بل أحد هذه المخططات المحلية، فيحتاج طلب
 // POST (Content-Type: application/json، لا "طلب بسيط" حسب CORS) إلى
 // preflight ناجح. الفرع العام لـOPTIONS أدناه ينهي الطلب فورًا قبل بلوغ
 // الوحدة (recitation-transcribe.js) نفسها — corsPreflightOrigins هنا هو

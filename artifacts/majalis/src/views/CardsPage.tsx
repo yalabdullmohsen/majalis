@@ -85,12 +85,12 @@ export default function CardsPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "صانع البطاقات الإسلامية",
-          url: "https://www.majlisilm.com/cards",
+          url: "https://majlisilm.com/cards",
           description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة؛ محتوى معتمد في منهج المجلس العلمي",
           applicationCategory: "ReligiousApplication",
           operatingSystem: "Web",
           inLanguage: "ar",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
         },
       ],
     });
@@ -266,7 +266,7 @@ export default function CardsPage() {
       </div>
       <RelatedKnowledge kind="fawaid" query="فوائد دعوية" title="فوائد ومواد ذات صلة" limit={6} />
       <div className="twh-share">
-        <ShareButtons title="البطاقات الدعوية — المجلس العلمي" url="https://www.majlisilm.com/cards" />
+        <ShareButtons title="البطاقات الدعوية — المجلس العلمي" url="https://majlisilm.com/cards" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأخلاق والعقيدة" count={4} />

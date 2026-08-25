@@ -335,7 +335,7 @@ export default function DuasQuranPage() {
             "@type": "ListItem",
             position: i + 1,
             name: d.name,
-            url: `https://www.majlisilm.com/duas-quran#${d.id}`,
+            url: `https://majlisilm.com/duas-quran#${d.id}`,
           })),
         },
       ],
@@ -474,7 +474,7 @@ export default function DuasQuranPage() {
         </div>
 
         <div className="twh-share">
-          <ShareButtons title="أدعية القرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/duas-quran" />
+          <ShareButtons title="أدعية القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/duas-quran" />
         </div>
 
         {/* related */}

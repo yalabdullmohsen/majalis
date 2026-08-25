@@ -37,10 +37,10 @@ function testParseHtml() {
   const html = `<!doctype html><html lang="ar" dir="rtl"><head>
 <title>اختبار | المجلس العلمي</title>
 <meta name="description" content="وصف تجريبي كافٍ للفحص">
-<link rel="canonical" href="https://www.majlisilm.com/test">
+<link rel="canonical" href="https://majlisilm.com/test">
 </head><body><main><h1>عنوان</h1><p>محتوى الصفحة</p>
 <a href="/fiqh">الفقه</a></main></body></html>`;
-  const p = parseHtml(html, "https://www.majlisilm.com/test");
+  const p = parseHtml(html, "https://majlisilm.com/test");
   assert.equal(p.title, "اختبار | المجلس العلمي");
   assert.equal(p.htmlAttrs.lang, "ar");
   assert.equal(p.htmlAttrs.dir, "rtl");

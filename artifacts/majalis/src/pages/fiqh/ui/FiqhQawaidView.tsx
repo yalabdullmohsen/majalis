@@ -407,7 +407,7 @@ export default function FiqhQawaidPage() {
             "@type": "ListItem",
             position: i + 1,
             name: q.text,
-            url: `https://www.majlisilm.com/fiqh-qawaid#qaaida-${q.id}`,
+            url: `https://majlisilm.com/fiqh-qawaid#qaaida-${q.id}`,
           })),
         },
       ],
@@ -686,7 +686,7 @@ export default function FiqhQawaidPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="القواعد الفقهية — المجلس العلمي" url="https://www.majlisilm.com/fiqh-qawaid" />
+        <ShareButtons title="القواعد الفقهية — المجلس العلمي" url="https://majlisilm.com/fiqh-qawaid" />
       </div>
       <RelatedKnowledge kind="fatwa" query="القواعد الفقهية" title="معرفة ذات صلة بالقواعد الفقهية" limit={6} />
       <div className="px-4 pb-6 mt-4">

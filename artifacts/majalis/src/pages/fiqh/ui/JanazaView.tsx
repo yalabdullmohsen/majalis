@@ -166,7 +166,7 @@ export default function JanazaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${s.num}: ${s.title} — ${s.desc}`,
-            url: `https://www.majlisilm.com/janaza#step-${i + 1}`,
+            url: `https://majlisilm.com/janaza#step-${i + 1}`,
           })),
         },
       ],
@@ -394,7 +394,7 @@ export default function JanazaPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="أحكام الجنازة — المجلس العلمي" url="https://www.majlisilm.com/janaza" />
+          <ShareButtons title="أحكام الجنازة — المجلس العلمي" url="https://majlisilm.com/janaza" />
         </div>
 
         {/* related */}

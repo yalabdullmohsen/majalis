@@ -111,12 +111,12 @@ export default function StudyRoomPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "غرفة الدراسة — المجلس العلمي",
-          url: "https://www.majlisilm.com/study-room",
+          url: "https://majlisilm.com/study-room",
           description: "بيئة مذاكرة مركّزة مع مؤقت Pomodoro وتتبع جلسات الدراسة الشرعية",
           applicationCategory: "EducationalApplication",
           operatingSystem: "Web",
           inLanguage: "ar",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
         },
       ],
     });
@@ -315,7 +315,7 @@ export default function StudyRoomPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="غرفة الدراسة — المجلس العلمي" url="https://www.majlisilm.com/study-room" />
+        <ShareButtons title="غرفة الدراسة — المجلس العلمي" url="https://majlisilm.com/study-room" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/study-room" title="اختبر معلوماتك أثناء الدراسة" count={4} />

@@ -231,7 +231,7 @@ export default function TawbaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `الشرط ${s.num}: ${s.title}`,
-            url: `https://www.majlisilm.com/tawba#shart-${s.num}`,
+            url: `https://majlisilm.com/tawba#shart-${s.num}`,
           })),
         },
       ],
@@ -468,7 +468,7 @@ export default function TawbaPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="التوبة والاستغفار، المجلس العلمي" url="https://www.majlisilm.com/tawba" />
+          <ShareButtons title="التوبة والاستغفار، المجلس العلمي" url="https://majlisilm.com/tawba" />
         </div>
 
         {/* related */}

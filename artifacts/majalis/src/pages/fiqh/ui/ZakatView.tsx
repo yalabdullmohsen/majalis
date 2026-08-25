@@ -302,7 +302,7 @@ export default function ZakatPage() {
             "@type": "ListItem",
             position: i + 1,
             name: k.title,
-            url: `https://www.majlisilm.com/zakat#${k.id}`,
+            url: `https://majlisilm.com/zakat#${k.id}`,
           })),
         },
       ],
@@ -427,7 +427,7 @@ export default function ZakatPage() {
 
       {/* مشاركة */}
       <div className="zk-share">
-        <ShareButtons title="الزكاة وأحكامها — المجلس العلمي" url="https://www.majlisilm.com/zakat" />
+        <ShareButtons title="الزكاة وأحكامها — المجلس العلمي" url="https://majlisilm.com/zakat" />
       </div>
 
       {/* ذات صلة */}

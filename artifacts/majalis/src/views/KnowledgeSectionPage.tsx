@@ -127,7 +127,7 @@ export default function KnowledgeSectionPage() {
             type="button"
             className="asp-run-btn"
             onClick={() => {
-              const url = `https://www.majlisilm.com/knowledge/${section}/${item.id}`;
+              const url = `https://majlisilm.com/knowledge/${section}/${item.id}`;
               void navigator.share?.({ title: item.title, url }).catch(() => navigator.clipboard.writeText(url));
             }}
           >

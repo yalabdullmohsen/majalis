@@ -574,7 +574,7 @@ export default function SawmPage() {
             "@type": "ListItem",
             position: i + 1,
             name: f.title,
-            url: `https://www.majlisilm.com/sawm#${f.id}`,
+            url: `https://majlisilm.com/sawm#${f.id}`,
           })),
         },
       ],
@@ -801,7 +801,7 @@ export default function SawmPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="الصيام وأحكامه — المجلس العلمي" url="https://www.majlisilm.com/sawm" />
+          <ShareButtons title="الصيام وأحكامه — المجلس العلمي" url="https://majlisilm.com/sawm" />
         </div>
 
         {/* related */}

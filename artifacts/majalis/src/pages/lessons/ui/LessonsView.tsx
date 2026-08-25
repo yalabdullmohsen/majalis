@@ -54,17 +54,26 @@ function useTabFromUrl(): [TabId, (tab: TabId) => void] {
   useEffect(() => {
     const sync = () => setTabState(readTabFromUrl());
     sync();
+    const params = new URLSearchParams(window.location.search);
+    const legacyTab = params.get("tab");
+    if (legacyTab === "courses" || legacyTab === "men" || legacyTab === "women") {
+      params.delete("tab");
+      const q = params.toString();
+      const base = q ? `/lessons?${q}` : "/lessons";
+      window.history.replaceState(null, "", `${base}#${legacyTab}`);
+      setTabState(legacyTab);
+    }
     window.addEventListener("popstate", sync);
-    return () => window.removeEventListener("popstate", sync);
+    window.addEventListener("hashchange", sync);
+    return () => {
+      window.removeEventListener("popstate", sync);
+      window.removeEventListener("hashchange", sync);
+    };
   }, []);
 
   const setTab = useCallback(
     (next: TabId) => {
-      const params = new URLSearchParams(window.location.search);
-      if (next === "all") params.delete("tab");
-      else params.set("tab", next);
-      const q = params.toString();
-      navigateTo(q ? `/lessons?${q}` : "/lessons", { mode: "state" });
+      writeTabToUrl(next);
       setTabState(next);
     },
     [],
@@ -75,9 +84,16 @@ function useTabFromUrl(): [TabId, (tab: TabId) => void] {
 
 function readTabFromUrl(): TabId {
   if (typeof window === "undefined") return "all";
-  const value = new URLSearchParams(window.location.search).get("tab");
-  if (value === "courses" || value === "men" || value === "women") return value;
+  const hash = window.location.hash.replace(/^#/, "");
+  if (hash === "courses" || hash === "men" || hash === "women") return hash;
+  const legacy = new URLSearchParams(window.location.search).get("tab");
+  if (legacy === "courses" || legacy === "men" || legacy === "women") return legacy;
   return "all";
+}
+
+function writeTabToUrl(next: TabId) {
+  const hash = next === "all" ? "" : `#${next}`;
+  navigateTo(`/lessons${hash}`, { mode: "state" });
 }
 
 function filterByTab(lessons: KuwaitLessonRecord[], tab: TabId): KuwaitLessonRecord[] {
@@ -229,7 +245,8 @@ export default function LessonsPage({
     if (debouncedSearch.trim()) params.set("search", debouncedSearch.trim());
     else params.delete("search");
     const q = params.toString();
-    const next = q ? `/lessons?${q}` : "/lessons";
+    const hash = window.location.hash;
+    const next = q ? `/lessons?${q}${hash}` : `/lessons${hash}`;
     window.history.replaceState(window.history.state, "", next);
   }, [debouncedSearch]);
 
@@ -248,12 +265,9 @@ export default function LessonsPage({
           name: "الدروس الشرعية والدورات العلمية",
           description:
             "دروس ودورات علمية من أئمة وعلماء الكويت في الفقه والعقيدة والقرآن والسيرة؛ محتوى معتمد في منهج المجلس العلمي",
-          numberOfItems: 4,
+          numberOfItems: 1,
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "جميع الدروس", url: `${SITE_URL}/lessons` },
-            { "@type": "ListItem", position: 2, name: "الدورات العلمية", url: `${SITE_URL}/lessons?tab=courses` },
-            { "@type": "ListItem", position: 3, name: "الدروس الرجالية", url: `${SITE_URL}/lessons?tab=men` },
-            { "@type": "ListItem", position: 4, name: "الدروس النسائية", url: `${SITE_URL}/lessons?tab=women` },
+            { "@type": "ListItem", position: 1, name: "الدروس الشرعية والدورات العلمية", url: `${SITE_URL}/lessons` },
           ],
         },
       ],

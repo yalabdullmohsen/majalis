@@ -52,7 +52,7 @@ export default function CompetitionDetailView({ params }: { params: { id: string
   const pageUrl =
     typeof window !== "undefined"
       ? `${window.location.origin}${(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}/competitions/${item.id}`
-      : `https://www.majlisilm.com/competitions/${item.id}`;
+      : `https://majlisilm.com/competitions/${item.id}`;
 
   return (
     <div className="cmp-detail" dir="rtl" data-competition-detail="1">
