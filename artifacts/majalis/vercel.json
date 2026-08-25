@@ -848,22 +848,19 @@
       "source": "/lessons",
       "has": [{ "type": "query", "key": "tab", "value": "courses" }],
       "destination": "/lessons",
-      "permanent": true,
-      "preserveQueryParams": false
+      "permanent": true
     },
     {
       "source": "/lessons",
       "has": [{ "type": "query", "key": "tab", "value": "men" }],
       "destination": "/lessons",
-      "permanent": true,
-      "preserveQueryParams": false
+      "permanent": true
     },
     {
       "source": "/lessons",
       "has": [{ "type": "query", "key": "tab", "value": "women" }],
       "destination": "/lessons",
-      "permanent": true,
-      "preserveQueryParams": false
+      "permanent": true
     },
     {
       "source": "/:path*",
