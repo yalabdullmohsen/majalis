@@ -163,7 +163,7 @@
   --header-chrome: 56px;
   --nav-chrome: 64px;
   --top-sponsor-content-h: 48px;
-  --ad-banner-height: var(--top-sponsor-content-h);
+  --ad-banner-height: 0px;
   --header-h: calc(var(--header-chrome) + var(--inset-top) + var(--ad-banner-height, 0px));
   --nav-h: calc(var(--nav-chrome) + var(--inset-bottom));
   --content-pb: calc(var(--nav-h) + 16px);

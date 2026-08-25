@@ -1,5 +1,5 @@
 /**
- * إعلان المنصة — شريط أعلى الهيدر و/أو كبسولة منتصف الهيدر.
+ * إعلان المنصة — banner داخل الهيدر (ليس فوق شريط النظام).
  *
  * سياسة المحتوى (إلزامي قبل التفعيل):
  * - إعلانات ورعايات متوافقة مع هوية المجلس العلمي ومحتواه الشرعي التعليمي.
@@ -14,88 +14,57 @@ export type HeaderAdPlacement = "top" | "header" | "both";
 export type HeaderAdConfig = {
   enabled: boolean;
   /**
-   * top = شريط أعلى الهيدر (أوضح في التطبيق)
-   * header = كبسولة منتصف الهيدر
-   * both = الاثنان معًا
+   * top = شريط منفصل (مُهمَل — استخدم header)
+   * header = banner داخل الهيدر
+   * both = header + top (legacy)
    */
   placement: HeaderAdPlacement;
-  /** شارة/زر الشراكة (مثل: إعلان شراكة) */
+  /** شارة الشراكة داخل الإعلان */
   badgeLabel: string;
   title: string;
-  /** سطر ثانٍ داعم */
+  /** سطر تسويقي */
   subtitle: string;
-  /** نص زر الشراكة */
+  /** CTA مدمج داخل البطاقة */
   ctaLabel: string;
-  /** رابط زر الشراكة — مسار داخلي */
+  /** رابط «للإعلان معنا» */
   ctaUrl: string;
-  /** رابط الضغط على إعلان الشركة (خارجي آمن) */
+  /** رابط إنستقرام الشركة */
   sponsorUrl: string;
-  /** aria-label لرابط الشركة */
+  /** aria-label للإعلان */
   sponsorAriaLabel: string;
-  /** تلميح النقر في الشريط العلوي */
-  topBarTapHint: string;
-  /** عنوان نافذة الشراكة */
-  modalTitle: string;
-  /** نص نافذة الشراكة */
-  modalBody: string;
-  /** زر الإنستقرام */
-  instagramLabel: string;
-  /** المعرف الظاهر (@...) */
-  instagramHandle: string;
-  /** تسمية أيقونة الساعة */
-  watchHighlight: string;
-  /** نص مختصر تحت أيقونة الساعة في الكارت */
-  watchMetric: string;
-  /** تسمية أيقونة الشحن */
-  chargeHighlight: string;
-  /** نسبة الشحن المعروضة */
-  chargePercent: string;
+  /** نص رابط الإعلان معنا */
+  advertiseWithUsLabel: string;
 };
 
-/** ألوان شريط الحالة تحت الإعلان (تباين أيقونات الساعة/الشحن) */
+/** legacy — لم يعد يُفعَّل من TopSponsorBanner */
 export const TOP_SPONSOR_STATUS = {
-  light: { hex: "#E8F0EC", style: "dark" as const },
-  dark: { hex: "#121816", style: "light" as const },
+  light: { hex: "#F2F4F3", style: "dark" as const },
+  dark: { hex: "#101614", style: "light" as const },
 };
 
 export const headerAdConfig: HeaderAdConfig = {
   enabled: true,
-  placement: "both",
-  badgeLabel: "إعلان شراكة",
+  placement: "header",
+  badgeLabel: "شريك المجلس العلمي",
   title: "شركة العبد المحسن للحج",
   subtitle: "الثقة • الجودة • المتعة",
-  ctaLabel: "إعلان شراكة",
-  /** صفحة الدعم والتواصل — للإعلان معنا */
+  ctaLabel: "تواصل عبر إنستقرام",
   ctaUrl: "/support",
   sponsorUrl: "https://instagram.com/Al_abdalmhsn",
-  sponsorAriaLabel: "فتح حساب شركة العبد المحسن في إنستقرام",
-  topBarTapHint: "اضغط للتفاصيل",
-  modalTitle: "شراكة مع شركة العبد المحسن للحج",
-  modalBody:
-    "شريك موثوق في خدمات الحج والعمرة — جودة عالية، موثوقية، وتجربة مريحة. تابع حسابهم على إنستقرام للعروض والتحديثات.",
-  instagramLabel: "تابعنا على إنستقرام",
-  instagramHandle: "@Al_abdalmhsn",
-  watchHighlight: "ساعة ذكية دقيقة",
-  watchMetric: "دقة",
-  chargeHighlight: "شحن سريع وآمن",
-  chargePercent: "92%",
+  sponsorAriaLabel: "فتح حساب شركة العبد المحسن للحج في إنستقرام",
+  advertiseWithUsLabel: "للإعلان معنا",
 };
 
 /** شكل مختصر كما في المواصفات */
 export const headerAd = headerAdConfig;
 
-/**
- * هل تُعرض كبسولة منتصف الهيدر؟
- */
 export function shouldShowHeaderAd(_pathname?: string): boolean {
   if (!headerAdConfig.enabled) return false;
   return headerAdConfig.placement === "header" || headerAdConfig.placement === "both";
 }
 
-/**
- * هل يُعرض شريط الراعي أعلى الهيدر؟
- */
+/** @deprecated — الإعلان داخل الهيدر فقط */
 export function shouldShowTopSponsorBanner(): boolean {
   if (!headerAdConfig.enabled) return false;
-  return headerAdConfig.placement === "top" || headerAdConfig.placement === "both";
+  return headerAdConfig.placement === "top";
 }
