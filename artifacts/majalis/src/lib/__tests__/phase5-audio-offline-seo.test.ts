@@ -50,7 +50,13 @@ assert.match(resume, /adhkar:/);
 // ── PWA / SWR ───────────────────────────────────────────────────────────────
 const sw = readFileSync(resolve(root, "public/sw.js"), "utf8");
 assert.match(sw, /function staleWhileRevalidate/);
-assert.match(sw, /staleWhileRevalidate\(req, DATA_CACHE\)/);
+assert.match(sw, /function networkFirstThenCache/);
+assert.match(sw, /networkFirstThenCache\(req, DATA_CACHE\)/);
+assert.match(sw, /pathname === "\/version\.json"/);
+{
+  const shell = sw.match(/const STATIC_SHELL_ASSETS = \[([\s\S]*?)\];/)?.[1] ?? "";
+  assert.doesNotMatch(shell, /sw-version/, "sw-version.js لا يُسبق في STATIC_SHELL");
+}
 assert.ok(existsSync(resolve(root, "public/manifest.json")));
 assert.ok(existsSync(resolve(root, "public/site.webmanifest")));
 

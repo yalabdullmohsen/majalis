@@ -56,12 +56,7 @@ const STATIC_SHELL_ASSETS = [
   "/icon-512.png",
   "/brand/icon-512-maskable.png",
   "/star-pattern.svg",
-  "/manifest.json",
-  "/site.webmanifest",
-  "/manifest.webmanifest",
   "/majlisilm-og-2026.jpg",
-  /* غلاف أوفلاين خفيف — لا تُسبَق كاش بيانات ضخمة هنا */
-  "/sw-version.js",
 ];
 
 self.addEventListener("install", (event) => {
@@ -178,6 +173,34 @@ async function staleWhileRevalidate(req, cacheName) {
   });
 }
 
+/**
+ * Network-first ثم كاش عند الفشل — مناسب لـ /data و manifests بعد النشر
+ * حتى لا تُعرض JSON/واجهة قديمة للحظة ثم تُستبدل.
+ */
+async function networkFirstThenCache(req, cacheName) {
+  try {
+    let networkReq = req;
+    try {
+      networkReq = new Request(req, { cache: "no-store" });
+    } catch (_) {
+      networkReq = req;
+    }
+    const res = await fetchWithTimeout(networkReq);
+    if (res && (res.ok || res.status === 206)) {
+      const cache = await caches.open(cacheName);
+      cache.put(req, res.clone()).catch(() => undefined);
+    }
+    return res;
+  } catch {
+    const cached = await caches.match(req);
+    if (cached) return cached;
+    return new Response(JSON.stringify({ ok: false, error: "offline" }), {
+      status: 503,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+}
+
 /** Navigations must never be stored: current network document or offline page only. */
 async function networkFirstNavigation(req) {
   try {
@@ -209,6 +232,41 @@ self.addEventListener("fetch", (event) => {
 
   // Only handle same-origin from here
   if (url.origin !== self.location.origin) return;
+
+  // ملفات يجب ألا تُخدم من كاش قديم أبدًا (نشر / هوية / SW)
+  if (
+    url.pathname === "/version.json" ||
+    url.pathname === "/sw-version.js" ||
+    url.pathname === "/sw.js" ||
+    url.pathname === "/manifest.json" ||
+    url.pathname === "/site.webmanifest" ||
+    url.pathname === "/manifest.webmanifest"
+  ) {
+    event.respondWith(
+      (async () => {
+        try {
+          let networkReq = req;
+          try {
+            networkReq = new Request(req, { cache: "no-store" });
+          } catch (_) {
+            networkReq = req;
+          }
+          return await fetchWithTimeout(networkReq);
+        } catch {
+          // manifests فقط: fallback كاش خفيف للتثبيت أوفلاين — لا لـ version/sw
+          if (url.pathname.includes("manifest")) {
+            const cached = await caches.match(req);
+            if (cached) return cached;
+          }
+          return new Response("{}", {
+            status: 503,
+            headers: { "Content-Type": "application/json" },
+          });
+        }
+      })(),
+    );
+    return;
+  }
 
   // Hashed JS/CSS/fonts under /assets/: cache-first by immutable filename.
   // Never fall back to HTML (SPA offline shell) for script/style requests —
@@ -251,9 +309,9 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // JSON seed chunks — SWR (قرآن/أذكار/فهارس ثابتة مع تحديث خلفي هادئ)
+  // JSON تحت /data/ — network-first ثم كاش (لا SWR يعرض قديمًا أولًا)
   if (url.pathname.startsWith("/data/") && url.pathname.endsWith(".json")) {
-    event.respondWith(staleWhileRevalidate(req, DATA_CACHE));
+    event.respondWith(networkFirstThenCache(req, DATA_CACHE));
     return;
   }
 
@@ -284,13 +342,8 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // أصول ثابتة للهوية — cache-first (لا hashed، آمنة عبر النشرات)
-  if (
-    STATIC_SHELL_ASSETS.includes(url.pathname) ||
-    url.pathname === "/manifest.webmanifest" ||
-    url.pathname === "/site.webmanifest" ||
-    url.pathname === "/manifest.json"
-  ) {
+  // أصول ثابتة للهوية — cache-first (لا hashed؛ بلا manifests/version)
+  if (STATIC_SHELL_ASSETS.includes(url.pathname)) {
     event.respondWith(cacheFirst(req, OFFLINE_CACHE));
     return;
   }
@@ -305,12 +358,12 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // بيانات المصحف QPC v2 — SWR للنصوص، cache-first للخطوط
+  // بيانات المصحف QPC v2 — network-first ثم كاش (نفس سياسة /data)
   if (
     url.pathname.startsWith("/data/quran-v2/") ||
     url.pathname === "/data/quran/page-juz-index.json"
   ) {
-    event.respondWith(staleWhileRevalidate(req, DATA_CACHE));
+    event.respondWith(networkFirstThenCache(req, DATA_CACHE));
     return;
   }
   if (url.pathname.startsWith("/fonts/quran/")) {
