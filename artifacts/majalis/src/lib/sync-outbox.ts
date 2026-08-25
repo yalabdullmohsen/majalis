@@ -4,6 +4,7 @@
  */
 
 import { idbDelete, idbGetAll, idbPut, isOnline, OFFLINE_STORES } from "@/lib/offline-db";
+import { computeBackoffDelayMs } from "@/lib/retry-policy";
 
 export type OutboxMutationType =
   | "flashcard_review"
@@ -18,6 +19,8 @@ export type OutboxItem = {
   updatedAt: string;
   attempts: number;
   lastError?: string;
+  /** epoch ms — لا تُعاد المحاولة قبل هذا الوقت (backoff) */
+  nextRetryAt?: number;
 };
 
 const OUTBOX_PREFIX = "outbox:";
@@ -66,8 +69,11 @@ export async function flushOutbox(): Promise<{ flushed: number; remaining: numbe
 
   const items = await listOutbox();
   let flushed = 0;
+  const now = Date.now();
+  const OUTBOX_BACKOFF = { maxRetries: 8, baseDelayMs: 800, maxDelayMs: 120_000 };
 
   for (const item of items) {
+    if (item.nextRetryAt != null && item.nextRetryAt > now) continue;
     const handler = handlers.get(item.type);
     if (!handler) continue;
     try {
@@ -78,11 +84,13 @@ export async function flushOutbox(): Promise<{ flushed: number; remaining: numbe
       } else {
         item.attempts += 1;
         item.lastError = "handler_rejected";
+        item.nextRetryAt = now + computeBackoffDelayMs(item.attempts, OUTBOX_BACKOFF);
         await idbPut(OFFLINE_STORES.meta, `${OUTBOX_PREFIX}${item.type}:${item.id}`, item, item.updatedAt);
       }
     } catch (e) {
       item.attempts += 1;
       item.lastError = e instanceof Error ? e.message : "flush_error";
+      item.nextRetryAt = now + computeBackoffDelayMs(item.attempts, OUTBOX_BACKOFF);
       await idbPut(OFFLINE_STORES.meta, `${OUTBOX_PREFIX}${item.type}:${item.id}`, item, item.updatedAt);
     }
   }

@@ -9,6 +9,7 @@ import {
   type PrayerTimesPayload,
 } from "@/lib/prayer-times";
 import { subscribeSecondTick } from "@/lib/second-tick";
+import { subscribePrayerDayRollover } from "@/lib/prayer-day-rollover";
 
 function kuwaitNowParts() {
   const parts = new Intl.DateTimeFormat("en-GB", {
@@ -61,6 +62,12 @@ function useCompactPrayer() {
 
   useEffect(() => {
     fetchPrayerTimes().then(setData).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    return subscribePrayerDayRollover("Asia/Kuwait", () => {
+      void fetchPrayerTimes().then(setData).catch(() => {});
+    });
   }, []);
 
   useEffect(() => {
