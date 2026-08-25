@@ -82,14 +82,13 @@ export async function loadQuranVerseDatabase(): Promise<QuranVerseSearchItem[]> 
   }
 }
 
-/** Convenience: load plain index then search, capped for UI. */
+/** Convenience: load plain index then search off main thread when possible. */
 export async function searchVersesInCorpus(
   query: string,
   limit = QURAN_SEARCH_RESULT_LIMIT,
 ): Promise<QuranVerseSearchItem[]> {
-  const { loadPlainQuranTextIndex, searchPlainQuranIndex } = await import(
-    "@/lib/quran-plain-text-index"
-  );
+  const { loadPlainQuranTextIndex } = await import("@/lib/quran-plain-text-index");
+  const { plainSearchOffMain } = await import("@/lib/sovereign/sovereign-worker-hub");
   const index = await loadPlainQuranTextIndex();
-  return searchPlainQuranIndex(query, index, limit);
+  return plainSearchOffMain(query, index, limit);
 }

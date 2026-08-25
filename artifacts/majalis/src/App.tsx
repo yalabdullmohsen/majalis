@@ -1543,6 +1543,7 @@ function IdleRuntimeBoot() {
     <>
       <OfflineSyncBootstrap />
       <PlatformLogicBootstrap />
+      <SovereignNavigationBridge />
     </>
   );
 }
@@ -1573,6 +1574,20 @@ function PlatformLogicBootstrap() {
     };
   }, []);
   return null;
+}
+
+function SovereignNavigationBridge() {
+  const [Bridge, setBridge] = useState<ComponentType | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    void import("@/lib/sovereign/SovereignNavigationBridge").then((m) => {
+      if (!cancelled) setBridge(() => m.SovereignNavigationBridge);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  return Bridge ? <Bridge /> : null;
 }
 
 /** يؤجّل تحميل حزمة المساعد حتى الخمول أو أول تفاعل — لا يحجب العرض الأول. */
