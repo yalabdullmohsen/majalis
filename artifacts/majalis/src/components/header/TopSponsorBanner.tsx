@@ -30,7 +30,7 @@ export function TopSponsorBanner() {
       return;
     }
     root.setAttribute("data-top-sponsor", "1");
-    root.style.setProperty("--ad-banner-height", "var(--top-sponsor-content-h, 36px)");
+    root.style.setProperty("--ad-banner-height", "var(--top-sponsor-content-h, 40px)");
     return () => {
       root.removeAttribute("data-top-sponsor");
       root.style.setProperty("--ad-banner-height", "0px");

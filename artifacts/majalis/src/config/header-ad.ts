@@ -19,7 +19,7 @@ export type HeaderAdConfig = {
    * both = الاثنان معًا
    */
   placement: HeaderAdPlacement;
-  /** شارة صغيرة بجانب العنوان (مثل: حملة / إعلان) */
+  /** شارة صغيرة بجانب العنوان (مثل: شريك / إعلان) */
   badgeLabel: string;
   title: string;
   /** سطر ثانٍ داعم */
@@ -32,10 +32,10 @@ export type HeaderAdConfig = {
 export const headerAdConfig: HeaderAdConfig = {
   enabled: true,
   placement: "top",
-  badgeLabel: "حملة",
-  title: "حملة العبد المحسن",
-  subtitle: "ادعم المحتوى الشرعي والتعليمي في المجلس العلمي",
-  ctaLabel: "ساهم",
+  badgeLabel: "شريك",
+  title: "شركة العبد المحسن للحج",
+  subtitle: "الثقة · الجودة · المتعة",
+  ctaLabel: "تواصل",
   /** صفحة الدعم والتواصل — آمن داخل التطبيق */
   ctaUrl: "/support",
 };

@@ -1,8 +1,9 @@
 /**
  * شريط الراعي أعلى الهيدر — ارتفاع ثابت + safe-area لمنع CLS.
+ * مظهر احترافي لشريك الحج: زمردي هادئ + لمسة ذهبية خفيفة.
  */
 .top-sponsor-banner {
-  --top-sponsor-content-h: 36px;
+  --top-sponsor-content-h: 40px;
   box-sizing: border-box;
   width: 100%;
   min-height: calc(var(--inset-top, 0px) + var(--top-sponsor-content-h));
@@ -10,16 +11,23 @@
   padding-top: var(--inset-top, 0px);
   margin: 0;
   /* لون صلب أولاً: بوابة التباين ترفض التدرج وحده (NO_COLOR). */
-  background-color: #f7f0e0;
-  background-image: linear-gradient(90deg, #fffef8 0%, #f7f0e0 45%, #f3e8cf 100%);
-  border-bottom: 1px solid color-mix(in srgb, #8b6914 22%, transparent);
+  background-color: #f4f7f5;
+  background-image: linear-gradient(
+    105deg,
+    #f7faf8 0%,
+    #eef4f1 42%,
+    #f6f1e4 100%
+  );
+  border-bottom: 1px solid color-mix(in srgb, #173d35 14%, transparent);
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, #c4a35a 18%, transparent);
 }
 
 html[data-theme="dark"] .top-sponsor-banner,
 html.theme-dark .top-sponsor-banner {
-  background-color: #222018;
-  background-image: linear-gradient(90deg, #1a1c16 0%, #222018 50%, #1c1a14 100%);
-  border-bottom-color: color-mix(in srgb, #c4a35a 28%, transparent);
+  background-color: #171c19;
+  background-image: linear-gradient(105deg, #151a17 0%, #1a211c 55%, #1c1a14 100%);
+  border-bottom-color: color-mix(in srgb, #c4a35a 22%, transparent);
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, #c4a35a 14%, transparent);
 }
 
 .top-sponsor-banner__inner {
@@ -29,18 +37,24 @@ html.theme-dark .top-sponsor-banner {
   height: var(--top-sponsor-content-h);
   min-height: var(--top-sponsor-content-h);
   max-height: var(--top-sponsor-content-h);
-  padding-inline: max(0.65rem, var(--inset-right, 0px)) max(0.65rem, var(--inset-left, 0px));
+  padding-inline: max(0.7rem, var(--inset-right, 0px)) max(0.7rem, var(--inset-left, 0px));
 }
 
 .top-sponsor-banner__link {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.55rem;
   width: 100%;
   min-width: 0;
   height: 100%;
   text-decoration: none;
-  color: #173d35;
+  color: #143f35;
+  transition: opacity 0.15s ease;
+}
+
+.top-sponsor-banner__link:hover,
+.top-sponsor-banner__link:focus-visible {
+  opacity: 0.92;
 }
 
 html[data-theme="dark"] .top-sponsor-banner__link,
@@ -53,23 +67,24 @@ html.theme-dark .top-sponsor-banner__link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 1.15rem;
-  padding: 0.1rem 0.4rem;
-  border-radius: 999px;
+  min-height: 1.2rem;
+  padding: 0.12rem 0.45rem;
+  border-radius: 0.35rem;
   font-size: 0.58rem;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.02em;
   line-height: 1;
-  color: #173d35;
-  background: color-mix(in srgb, #8b6914 16%, #fff);
-  border: 1px solid color-mix(in srgb, #8b6914 28%, transparent);
+  color: #143f35;
+  background: color-mix(in srgb, #c4a35a 22%, #fff);
+  border: 1px solid color-mix(in srgb, #8b6914 32%, transparent);
   white-space: nowrap;
 }
 
 html[data-theme="dark"] .top-sponsor-banner__badge,
 html.theme-dark .top-sponsor-banner__badge {
-  color: #f0e6c8;
-  background: color-mix(in srgb, #c4a35a 22%, #151812);
-  border-color: color-mix(in srgb, #c4a35a 35%, transparent);
+  color: #f5ecd4;
+  background: color-mix(in srgb, #c4a35a 24%, #121510);
+  border-color: color-mix(in srgb, #c4a35a 38%, transparent);
 }
 
 .top-sponsor-banner__copy {
@@ -77,33 +92,40 @@ html.theme-dark .top-sponsor-banner__badge {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.02rem;
+  justify-content: center;
+  gap: 0.05rem;
   overflow: hidden;
 }
 
 .top-sponsor-banner__title {
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 800;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.2;
-  color: #173d35;
+  color: #143f35;
 }
 
 html[data-theme="dark"] .top-sponsor-banner__title,
 html.theme-dark .top-sponsor-banner__title {
-  color: #e8efea;
+  color: #eef5f1;
 }
 
 .top-sponsor-banner__subtitle {
-  font-size: 0.62rem;
-  font-weight: 500;
-  opacity: 0.88;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: color-mix(in srgb, #143f35 72%, #8b6914);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.2;
+}
+
+html[data-theme="dark"] .top-sponsor-banner__subtitle,
+html.theme-dark .top-sponsor-banner__subtitle {
+  color: color-mix(in srgb, #e8efea 78%, #c4a35a);
 }
 
 .top-sponsor-banner__cta {
@@ -111,21 +133,25 @@ html.theme-dark .top-sponsor-banner__title {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 1.55rem;
-  padding: 0 0.65rem;
-  border-radius: 999px;
+  min-height: 1.65rem;
+  padding: 0 0.75rem;
+  border-radius: 0.45rem;
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1;
   color: #fff;
-  background: #173d35;
+  background: #143f35;
+  border: 1px solid color-mix(in srgb, #0f2f28 40%, transparent);
   white-space: nowrap;
+  box-shadow: 0 1px 0 color-mix(in srgb, #c4a35a 35%, transparent);
 }
 
 html[data-theme="dark"] .top-sponsor-banner__cta,
 html.theme-dark .top-sponsor-banner__cta {
-  background: #2f8f6a;
+  background: #2a7a5c;
+  border-color: color-mix(in srgb, #6ee7b7 25%, transparent);
   color: #fff;
+  box-shadow: none;
 }
 
 .app-top-chrome {
@@ -137,20 +163,20 @@ html.theme-dark .top-sponsor-banner__cta {
 
 @media (max-width: 390px) {
   .top-sponsor-banner {
-    --top-sponsor-content-h: 34px;
+    --top-sponsor-content-h: 38px;
   }
 
   .top-sponsor-banner__title {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
   }
 
   .top-sponsor-banner__subtitle {
-    display: none;
+    font-size: 0.58rem;
   }
 
   .top-sponsor-banner__cta {
-    font-size: 0.64rem;
-    min-height: 1.4rem;
-    padding-inline: 0.5rem;
+    font-size: 0.66rem;
+    min-height: 1.45rem;
+    padding-inline: 0.55rem;
   }
 }
