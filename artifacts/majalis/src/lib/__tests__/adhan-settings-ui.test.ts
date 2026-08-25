@@ -1,5 +1,5 @@
 /**
- * بوابة واجهة إعدادات الأذان: أربعة أنواع، اختبار واحد، بلا تشخيص أو خيارات وهمية.
+ * بوابة واجهة إعدادات الأذان: نوعان افتراضيان، اختبار واحد، بلا تشخيص أو خيارات وهمية.
  * تشغيل: node --import tsx src/lib/__tests__/adhan-settings-ui.test.ts
  */
 import assert from "node:assert/strict";
@@ -37,6 +37,7 @@ assert.match(view, /SELECTABLE_ADHAN_TYPES/);
 assert.match(view, /t\.label/);
 assert.match(view, /اختبار الصوت/);
 assert.match(view, /تخصيص كل صلاة/);
+assert.match(view, /تنبيه الإقامة/);
 assert.match(view, /إعادة جدولة التنبيهات/);
 assert.match(view, /إذن الإشعارات/);
 assert.match(view, /إذن الموقع/);
@@ -44,11 +45,12 @@ assert.match(view, /حالة الصوت/);
 assert.match(view, /playAdhanPreview/);
 assert.match(view, /ads-prayer-row/);
 assert.match(view, /rounded-full icon-only/);
+assert.doesNotMatch(view, /أذان المدينة/);
+assert.doesNotMatch(typesSrc, /muezzinId:\s*"madinah"/);
+assert.match(typesSrc, /madinah-full.*makkah-full/); // ترحيل قديم فقط
 
-assert.match(typesSrc, /أذان مكة كامل/);
-assert.match(typesSrc, /أذان المدينة كامل/);
-assert.match(typesSrc, /أذان مكة مختصر/);
-assert.match(typesSrc, /أذان المدينة مختصر/);
+assert.match(typesSrc, /الأذان الكامل \(الافتراضي\)/);
+assert.match(typesSrc, /الأذان المختصر \(الافتراضي\)/);
 
 assert.match(alerts, /تفعيل إشعارات الصلاة/);
 assert.match(alerts, /تنبيه قبل الصلاة/);
@@ -74,15 +76,16 @@ const forbiddenCopy = [
   "إشعار نصي",
   "أذان متتابع",
   "Live Activity",
+  "أذان المدينة",
 ];
 const leaked = forbiddenCopy.filter((text) => view.includes(text) || alerts.includes(text));
 if (leaked.length > 0) {
   throw new Error(`نصوص محظورة ظهرت في واجهة الأذان: ${leaked.join("، ")}`);
 }
 
-assert.equal(SELECTABLE_ADHAN_TYPES.length, 4);
+assert.equal(SELECTABLE_ADHAN_TYPES.length, 2);
 const ids = SELECTABLE_ADHAN_TYPES.map((t) => t.id);
-assert.deepEqual(ids, ["makkah-full", "madinah-full", "makkah-short", "madinah-short"]);
+assert.deepEqual(ids, ["makkah-full", "makkah-short"]);
 
 for (const t of SELECTABLE_ADHAN_TYPES) {
   const rel = t.inAppUrl.replace(/^\//, "");

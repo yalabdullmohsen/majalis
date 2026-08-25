@@ -20,12 +20,6 @@
       "sha256": "75708353f66e734c"
     },
     {
-      "path": "public/audio/adhan/adhan-madinah-full.m4a",
-      "bytes": 121951,
-      "durationSec": 28.734694,
-      "sha256": "a3c492fd77e0b812"
-    },
-    {
       "path": "public/audio/adhan/adhan-makkah-fajr.mp3",
       "bytes": 909184,
       "durationSec": 227.088,
@@ -86,12 +80,6 @@
       "sha256": "a287c17c0c6f25b0"
     },
     {
-      "path": "ios/App/App/Sounds/adhan-short-madinah.caf",
-      "bytes": 135710,
-      "durationSec": 11.232653,
-      "sha256": "e07c0124ccf05fd4"
-    },
-    {
       "path": "ios/App/App/Sounds/adhan-short-makkah-fajr.caf",
       "bytes": 203948,
       "durationSec": 23.508,
@@ -132,12 +120,6 @@
       "bytes": 97834,
       "durationSec": 8,
       "sha256": "85e4b2bcb6e7da72"
-    },
-    {
-      "path": "ios/App/App/Sounds/prayer_madinah.caf",
-      "bytes": 97834,
-      "durationSec": 8,
-      "sha256": "bbc909f86788969f"
     },
     {
       "path": "ios/App/App/Sounds/prayer_makkah.caf",
@@ -200,12 +182,6 @@
       "sha256": "ce910173610857cc"
     },
     {
-      "path": "android/app/src/main/res/raw/adhan_short_madinah.mp3",
-      "bytes": 180000,
-      "durationSec": 11.25,
-      "sha256": "da73f9e42b7fed16"
-    },
-    {
       "path": "android/app/src/main/res/raw/adhan_short_makkah.mp3",
       "bytes": 180000,
       "durationSec": 11.25,
@@ -237,12 +213,6 @@
     },
     {
       "path": "android/app/src/main/res/raw/prayer_egypt.mp3",
-      "bytes": 72738,
-      "durationSec": 12.068571,
-      "sha256": "14cde65b9c0aa0c4"
-    },
-    {
-      "path": "android/app/src/main/res/raw/prayer_madinah.mp3",
       "bytes": 72738,
       "durationSec": 12.068571,
       "sha256": "14cde65b9c0aa0c4"

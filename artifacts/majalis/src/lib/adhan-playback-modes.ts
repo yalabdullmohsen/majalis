@@ -108,12 +108,16 @@ export function resolveAdhanClip(
   };
 }
 
+/**
+ * مقطع الإقامة: ملف مستقل إن وُجد، وإلا التكبيرات كتنبيه إقامة قصير.
+ */
 export function resolveIqamahClip(sources: AdhanClipSources): ResolvedAdhanClip | null {
-  if (!sources.iqamahUrl) return null;
+  const url = sources.iqamahUrl || sources.takbirUrl;
+  if (!url) return null;
   return {
     kind: "iqamah",
-    url: sources.iqamahUrl,
-    maxMs: null,
-    truncatedFromFull: false,
+    url,
+    maxMs: sources.iqamahUrl ? null : ADHAN_TAKBIR_MAX_SEC * 1000,
+    truncatedFromFull: !sources.iqamahUrl,
   };
 }

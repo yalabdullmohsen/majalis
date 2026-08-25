@@ -1,5 +1,5 @@
 /**
- * إعدادات الأذان — أربعة أنواع فقط (مكة/المدينة × كامل/مختصر).
+ * إعدادات الأذان — نوعان افتراضيان (كامل / مختصر).
  * داخل التطبيق: M4A من /audio/adhan.
  * إشعار iOS: CAF قصير من حزمة Sounds. لا يُعرض خيار تجاوز الرنين لأنه غير مدعوم.
  */
@@ -143,8 +143,8 @@ export default function AdhanSettingsPage() {
     applyPageSeo({
       path: "/adhan-settings",
       title: "إعدادات الأذان | المجلس العلمي",
-      description: "اختر أذان مكة أو المدينة، اختبر الصوت، وفعّل إشعارات الصلاة.",
-      keywords: ["إعدادات أذان", "تنبيه الصلاة", "أذان مكة", "أذان المدينة"],
+      description: "اختر الأذان الافتراضي، اختبر الصوت، وفعّل إشعارات الصلاة والإقامة.",
+      keywords: ["إعدادات أذان", "تنبيه الصلاة", "إقامة", "أذان"],
       robots: "noindex, follow",
     });
   }, []);
@@ -196,6 +196,41 @@ export default function AdhanSettingsPage() {
 
   function togglePrayer(key: PrayerKey, enabled: boolean) {
     setPrefs(patchPrayerPrefs(key, { enabled }));
+    flashSaved();
+  }
+
+  function togglePrayerIqamah(key: PrayerKey, iqamahEnabled: boolean) {
+    setPrefs(
+      patchAdhanPrefs({
+        iqamahEnabled: iqamahEnabled ? true : prefs.iqamahEnabled,
+        prayers: {
+          ...prefs.prayers,
+          [key]: { ...prefs.prayers[key], iqamahEnabled },
+        },
+      }),
+    );
+    flashSaved();
+  }
+
+  function setGlobalIqamah(enabled: boolean) {
+    const prayers = { ...prefs.prayers };
+    if (enabled) {
+      for (const key of PRAYER_KEYS) {
+        if (prayers[key].enabled) {
+          prayers[key] = { ...prayers[key], iqamahEnabled: true };
+        }
+      }
+    } else {
+      for (const key of PRAYER_KEYS) {
+        prayers[key] = { ...prayers[key], iqamahEnabled: false };
+      }
+    }
+    setPrefs(patchAdhanPrefs({ iqamahEnabled: enabled, prayers }));
+    flashSaved();
+  }
+
+  function setIqamahDelay(minutes: 0 | 5 | 10 | 15) {
+    setPrefs(patchAdhanPrefs({ iqamahDelayMinutes: minutes }));
     flashSaved();
   }
 
@@ -270,7 +305,7 @@ export default function AdhanSettingsPage() {
   return (
     <div className="ads-page">
       <h1 className="ads-title">إعدادات الأذان</h1>
-      <p className="ads-subtitle">اختر الأذان، اختبر الصوت، وفعّل إشعارات الصلاة.</p>
+      <p className="ads-subtitle">اختر الأذان الافتراضي، اختبر الصوت، وفعّل إشعارات الصلاة والإقامة.</p>
 
       {saved ? (
         <div className="ads-toast" role="status" aria-live="polite">
@@ -343,6 +378,36 @@ export default function AdhanSettingsPage() {
 
       <PrayerAlertSettingsCard />
 
+      <section className="ads-card" aria-labelledby="ads-iqamah-head">
+        <div className="ads-card__head" id="ads-iqamah-head">
+          <Bell size={15} strokeWidth={2} aria-hidden="true" />
+          <span>تنبيه الإقامة</span>
+        </div>
+        <div className="ads-card__body">
+          <div className="ads-row">
+            <span>تفعيل الإقامة</span>
+            <Toggle
+              checked={prefs.iqamahEnabled}
+              onChange={setGlobalIqamah}
+              label="تفعيل تنبيه الإقامة"
+            />
+          </div>
+          <div className="ads-chip-scroll" role="group" aria-label="دقائق بعد الأذان للإقامة">
+            {([0, 5, 10, 15] as const).map((min) => (
+              <button
+                key={min}
+                type="button"
+                disabled={!prefs.iqamahEnabled}
+                onClick={() => setIqamahDelay(min)}
+                className={`ads-chip${prefs.iqamahDelayMinutes === min ? " is-active" : ""}`}
+              >
+                {min === 0 ? "مع الأذان" : `${min} د`}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="ads-card" aria-labelledby="ads-prayers-head">
         <div className="ads-card__head" id="ads-prayers-head">
           <Bell size={15} strokeWidth={2} aria-hidden="true" />
@@ -368,6 +433,15 @@ export default function AdhanSettingsPage() {
                     checked={p.enabled}
                     onChange={(v) => togglePrayer(key, v)}
                     label={`${PRAYER_ARABIC[key]} — تشغيل الأذان`}
+                  />
+                </div>
+                <div className="ads-prayer-row__top">
+                  <span className="ads-gov-label">الإقامة</span>
+                  <Toggle
+                    checked={Boolean(prefs.iqamahEnabled && p.iqamahEnabled)}
+                    onChange={(v) => togglePrayerIqamah(key, v)}
+                    label={`${PRAYER_ARABIC[key]} — تنبيه الإقامة`}
+                    disabled={!p.enabled || !prefs.iqamahEnabled}
                   />
                 </div>
                 <label className="ads-gov-label" htmlFor={`ads-type-${key}`}>نوع الأذان</label>

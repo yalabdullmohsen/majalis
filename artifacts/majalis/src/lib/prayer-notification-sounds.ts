@@ -17,7 +17,7 @@ export const PRAYER_SOUND_FILES = {
   /** تكبيرات قصيرة — نفس محتوى prayer_quiet.caf في الحزمة */
   quiet: "adhan-short-takbeerat.caf",
   clear: "adhan-short-makkah.caf",
-  soft: "adhan-short-madinah.caf",
+  soft: "adhan-short-takbeerat.caf",
 } as const;
 
 /** توافق أسماء الحزمة القديمة (ما زالت في Copy Bundle Resources). */
@@ -31,12 +31,12 @@ export const PRAYER_LEGACY_SOUND_FILES = {
 /** أصوات إضافية للمعاينة/التعيين حسب نمط الأذان (إشعار قصير). */
 export const PRAYER_ADHAN_STYLE_SOUNDS = {
   makkah: "adhan-short-makkah.caf",
-  madinah: "adhan-short-madinah.caf",
   egypt: "adhan-short-egypt.caf",
   aqsa: "adhan-short-aqsa.caf",
   turkey: "adhan-short-makkah.caf",
   kuwait: "adhan-short-makkah.caf",
   takbeerat: "adhan-short-takbeerat.caf",
+  soft: "adhan-short-takbeerat.caf",
   default: "adhan-short-makkah.caf",
   /** توافق أسماء الحزمة القديمة */
   prayer_makkah: "prayer_makkah.caf",
@@ -60,7 +60,7 @@ export const PRAYER_SOUND_PROFILE_OPTIONS: Array<{
   { id: "auto", label: "تلقائي", hint: "هادئ قبل الصلاة، أوضح عند الدخول، خفيف للتذكير" },
   { id: "quiet", label: "هادئ / تنبيه قصير", hint: "تكبيرات قصيرة للتنبيه المسبق" },
   { id: "clear", label: "أذان واضح (قصير)", hint: "مقطع قصير من نمط مكة لدخول الوقت" },
-  { id: "soft", label: "خفيف / مدني", hint: "مقطع لطيف للتذكير بعد الصلاة" },
+  { id: "soft", label: "خفيف", hint: "مقطع لطيف للتذكير بعد الصلاة" },
   { id: "system", label: "صوت النظام", hint: "الصوت الافتراضي للجهاز" },
 ];
 

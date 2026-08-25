@@ -394,8 +394,16 @@ self.addEventListener("fetch", (event) => {
 // SW holds a setTimeout so the notification fires even when the tab is in background.
 
 const _adhanTimers = new Map(); // prayerKey → timeoutId (keeps SW alive via waitUntil)
+const _iqamahTimers = new Map(); // prayerKey → timeoutId
 
 const _smartLocalTimers = new Map(); // tag → timeoutId
+
+function clearAllAdhanSwTimers() {
+  for (const tid of _adhanTimers.values()) clearTimeout(tid);
+  _adhanTimers.clear();
+  for (const tid of _iqamahTimers.values()) clearTimeout(tid);
+  _iqamahTimers.clear();
+}
 
 self.addEventListener("message", (event) => {
   const msg = event.data;
@@ -523,6 +531,44 @@ self.addEventListener("message", (event) => {
       });
       event.waitUntil(promise);
     }
+    return;
+  }
+
+  if (msg.type === "CANCEL_ALL_ADHAN") {
+    clearAllAdhanSwTimers();
+    return;
+  }
+
+  if (msg.type === "SCHEDULE_IQAMAH") {
+    const { prayerKey, prayerArabic, delayMs, fireAt, cityName } = msg;
+    if (typeof delayMs !== "number" || delayMs < 0) return;
+    if (_iqamahTimers.has(prayerKey)) {
+      clearTimeout(_iqamahTimers.get(prayerKey));
+    }
+    const STALE_TOLERANCE_MS = 2 * 60000;
+    const promise = new Promise((resolve) => {
+      const tid = setTimeout(() => {
+        _iqamahTimers.delete(prayerKey);
+        if (typeof fireAt === "number" && Date.now() - fireAt > STALE_TOLERANCE_MS) {
+          resolve();
+          return;
+        }
+        const cityLine = cityName ? ` — ${cityName}` : "";
+        self.registration.showNotification(`إقامة ${prayerArabic}${cityLine}`, {
+          body: `قد قامت الصلاة${cityName ? ` · ${cityName}` : ""}`,
+          icon: "/logo.png?v=9",
+          badge: "/favicon.png?v=9",
+          dir: "rtl",
+          lang: "ar",
+          tag: `iqamah-${prayerKey}`,
+          renotify: true,
+          requireInteraction: false,
+          data: { url: "/prayer-times", action: "iqamah", prayerKey },
+        }).then(resolve).catch(resolve);
+      }, Math.min(delayMs, 86_400_000));
+      _iqamahTimers.set(prayerKey, tid);
+    });
+    event.waitUntil(promise);
     return;
   }
 

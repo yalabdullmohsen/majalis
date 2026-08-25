@@ -28,7 +28,6 @@ export const CRITICAL_ALERTS_ENTITLEMENT_PRESENT = false;
 
 export const ADHAN_FULL_AUDIO_PATHS = {
   makkah: "/audio/adhan/adhan-makkah-full.m4a",
-  madinah: "/audio/adhan/adhan-madinah-full.m4a",
   aqsa: "/audio/adhan/adhan-aqsa-full.mp3",
   egypt: "/audio/adhan/adhan-egypt-full.m4a",
   alharam: "/audio/adhan/adhan-haram-full.m4a",
@@ -39,7 +38,6 @@ export const ADHAN_FULL_AUDIO_PATHS = {
 
 export type AdhanStyleId =
   | "makkah"
-  | "madinah"
   | "aqsa"
   | "egypt"
   | "turkey"
@@ -466,10 +464,10 @@ function resolveFullPathForStyle(style: AdhanStyleId): string | null {
   if (style === "silent") return null;
   if (style === "takbeerat") return ADHAN_FULL_AUDIO_PATHS.takbeerat;
   if (style === "soft") return ADHAN_FULL_AUDIO_PATHS.soft;
-  if (style === "makkah" || style === "madinah" || style === "aqsa" || style === "egypt" || style === "alharam") {
+  if (style === "makkah" || style === "aqsa" || style === "egypt" || style === "alharam") {
     return ADHAN_FULL_AUDIO_PATHS[style];
   }
-  return null;
+  return ADHAN_FULL_AUDIO_PATHS.makkah;
 }
 
 export async function playFullAdhan(style: AdhanStyleId): Promise<AdhanPlayResult> {

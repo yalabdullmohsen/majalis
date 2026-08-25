@@ -15,10 +15,15 @@ import {
 } from "../adhan-offline-assets";
 import { getMuezzin } from "../adhan-audio";
 
-assert.ok(OFFLINE_ADHAN_CORE_PACKS.length >= 5, "حزم مكة/المدينة/مصر/الأقصى/تكبيرات");
+assert.ok(OFFLINE_ADHAN_CORE_PACKS.length >= 5, "حزم مكة/مصر/الأقصى/تكبيرات/…");
+assert.ok(!OFFLINE_ADHAN_CORE_PACKS.some((p) => p.id === "madinah"), "بلا حزمة مدينة");
 assert.ok(resolveOfflineClipUrl("makkah", "general")?.startsWith("/audio/adhan/"));
 assert.ok(resolveOfflineClipUrl("makkah", "fajr")?.startsWith("/audio/adhan/"));
-assert.ok(resolveOfflineClipUrl("madinah", "general")?.startsWith("/audio/adhan/"));
+assert.equal(
+  resolveOfflineClipUrl("madinah", "general"),
+  resolveOfflineClipUrl("makkah", "general"),
+  "المدينة القديمة → مكة",
+);
 assert.ok(resolveOfflineClipUrl("egypt", "general")?.startsWith("/audio/adhan/"));
 assert.ok(resolveOfflineClipUrl("aqsa", "general")?.startsWith("/audio/adhan/"));
 assert.ok(resolveOfflineClipUrl("takbeerat", "takbir")?.startsWith("/audio/adhan/"));
@@ -27,7 +32,7 @@ assert.ok(resolveOfflineClipUrl("turkey", "general")?.startsWith("/audio/adhan/"
 assert.ok(resolveOfflineClipUrl("soft", "short")?.startsWith("/audio/adhan/"));
 
 assert.equal(notificationSoundForAdhanPack("makkah"), "adhan-short-makkah.caf");
-assert.equal(notificationSoundForAdhanPack("madinah"), "adhan-short-madinah.caf");
+assert.equal(notificationSoundForAdhanPack("madinah"), "adhan-short-makkah.caf");
 assert.equal(notificationSoundForAdhanPack("egypt"), "adhan-short-egypt.caf");
 
 const aqsa = getMuezzin("aqsa");

@@ -58,14 +58,23 @@ const basePrefs: AdhanPreferences = {
   defaultMuezzinId: generalOnly[0].id,
   playbackMode: "full",
   iqamahEnabled: false,
+  iqamahDelayMinutes: 0,
+  volume: 1,
+  vibrateEnabled: true,
+  bypassSilentMode: false,
+  iosSequentialFullAdhan: false,
   prayers: {
-    fajr: { enabled: true, muezzinId: generalOnly[0].id, advanceMinutes: 15 },
-    dhuhr: { enabled: true, muezzinId: "", advanceMinutes: 10 },
-    asr: { enabled: true, muezzinId: "", advanceMinutes: 10 },
-    maghrib: { enabled: true, muezzinId: "", advanceMinutes: 5 },
-    isha: { enabled: true, muezzinId: "", advanceMinutes: 10 },
+    fajr: { enabled: true, iqamahEnabled: false, muezzinId: generalOnly[0].id, advanceMinutes: 15 },
+    dhuhr: { enabled: true, iqamahEnabled: false, muezzinId: "", advanceMinutes: 10 },
+    asr: { enabled: true, iqamahEnabled: false, muezzinId: "", advanceMinutes: 10 },
+    maghrib: { enabled: true, iqamahEnabled: false, muezzinId: "", advanceMinutes: 5 },
+    isha: { enabled: true, iqamahEnabled: false, muezzinId: "", advanceMinutes: 10 },
   },
   fridayBannerEnabled: true,
+  lastTestedMuezzinId: null,
+  lastTestSuccessAt: null,
+  lastTestFailureAt: null,
+  lastTestFailureReason: null,
 };
 
 const sanitized = sanitizeFajrMuezzinPrefs(basePrefs);

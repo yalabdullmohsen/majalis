@@ -2,6 +2,7 @@
  * خريطة أصول الأذان الأوفلاين — مسارات محلية عالية الجودة أولاً ثم CDN.
  * المصدر الرسمي للتشغيل: `/audio/adhan/*` (مع إبقاء `/sounds/adhan` توافقًا).
  * ملاحظة: الملفات المحلية الكاملة مقاطع ~٢٨ث AAC ضمن ميزانية الحزمة؛ الكامل الطويل عبر CDN.
+ * أُزيلت حزمة المدينة — أي مسار قديم يُحوَّل لمكة.
  */
 
 export type OfflineAdhanClipKind = "general" | "fajr" | "short" | "takbir";
@@ -16,11 +17,11 @@ export type OfflineAdhanPack = {
 
 const CDN = "https://cdn.jsdelivr.net/gh/mohsalvi/adhan-audio@main";
 
-/** الحزمة الأساسية: مكة / المدينة / مصر / الأقصى / حرم / تكبيرات / لطيف / تركي */
+/** الحزمة الأساسية: مكة / مصر / الأقصى / حرم / تكبيرات / لطيف / تركي */
 export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
   {
     id: "makkah",
-    labelAr: "أذان مكة المكرمة",
+    labelAr: "الأذان الافتراضي",
     local: {
       general: "/audio/adhan/adhan-makkah-full.m4a",
       fajr: "/audio/adhan/adhan-makkah-fajr.mp3",
@@ -30,25 +31,10 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     remote: {
       general: `${CDN}/general/makkah-haram-02.mp3`,
       fajr: `${CDN}/fajr/makkah-fajr-01.mp3`,
-      short: `${CDN}/general/madinah-02.mp3`,
-      takbir: `${CDN}/general/madinah-02.mp3`,
+      short: `${CDN}/general/makkah-haram-02.mp3`,
+      takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
     notificationSound: "adhan-short-makkah.caf",
-  },
-  {
-    id: "madinah",
-    labelAr: "أذان المدينة المنورة",
-    local: {
-      general: "/audio/adhan/adhan-madinah-full.m4a",
-      short: "/audio/adhan/adhan-madinah-full.m4a",
-      takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
-    },
-    remote: {
-      general: `${CDN}/general/madinah-02.mp3`,
-      short: `${CDN}/general/madinah-02.mp3`,
-      takbir: `${CDN}/general/madinah-02.mp3`,
-    },
-    notificationSound: "adhan-short-madinah.caf",
   },
   {
     id: "egypt",
@@ -60,8 +46,8 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     },
     remote: {
       general: `${CDN}/general/egypt-traditional-02.mp3`,
-      short: `${CDN}/general/madinah-02.mp3`,
-      takbir: `${CDN}/general/madinah-02.mp3`,
+      short: `${CDN}/general/makkah-haram-02.mp3`,
+      takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
     notificationSound: "adhan-short-egypt.caf",
   },
@@ -75,8 +61,8 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     },
     remote: {
       general: `${CDN}/general/al-aqsa-jerusalem-02.mp3`,
-      short: `${CDN}/general/madinah-02.mp3`,
-      takbir: `${CDN}/general/madinah-02.mp3`,
+      short: `${CDN}/general/makkah-haram-02.mp3`,
+      takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
     notificationSound: "adhan-short-aqsa.caf",
   },
@@ -89,9 +75,9 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       general: "/audio/adhan/adhan-takbeerat-short.mp3",
     },
     remote: {
-      short: `${CDN}/general/madinah-02.mp3`,
-      takbir: `${CDN}/general/madinah-02.mp3`,
-      general: `${CDN}/general/madinah-02.mp3`,
+      short: `${CDN}/general/makkah-haram-02.mp3`,
+      takbir: `${CDN}/general/makkah-haram-02.mp3`,
+      general: `${CDN}/general/makkah-haram-02.mp3`,
     },
     notificationSound: "adhan-short-takbeerat.caf",
   },
@@ -107,8 +93,8 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     remote: {
       general: `${CDN}/general/al-haram-01.mp3`,
       fajr: `${CDN}/fajr/makkah-fajr-01.mp3`,
-      short: `${CDN}/general/madinah-02.mp3`,
-      takbir: `${CDN}/general/madinah-02.mp3`,
+      short: `${CDN}/general/makkah-haram-02.mp3`,
+      takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
     notificationSound: "adhan-short-makkah.caf",
   },
@@ -121,9 +107,9 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       takbir: "/audio/adhan/adhan-soft-alert.m4a",
     },
     remote: {
-      general: `${CDN}/general/madinah-02.mp3`,
-      short: `${CDN}/general/madinah-02.mp3`,
-      takbir: `${CDN}/general/madinah-02.mp3`,
+      general: `${CDN}/general/makkah-haram-02.mp3`,
+      short: `${CDN}/general/makkah-haram-02.mp3`,
+      takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
     notificationSound: "adhan-short-takbeerat.caf",
   },
@@ -137,8 +123,8 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     },
     remote: {
       general: `${CDN}/general/mustafa-ozcan-turkey-01.mp3`,
-      short: `${CDN}/general/madinah-02.mp3`,
-      takbir: `${CDN}/general/madinah-02.mp3`,
+      short: `${CDN}/general/makkah-haram-02.mp3`,
+      takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
     notificationSound: "adhan-short-takbeerat.caf",
   },
@@ -152,8 +138,8 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     },
     remote: {
       general: `${CDN}/general/uae-01.mp3`,
-      short: `${CDN}/general/madinah-02.mp3`,
-      takbir: `${CDN}/general/madinah-02.mp3`,
+      short: `${CDN}/general/makkah-haram-02.mp3`,
+      takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
     notificationSound: "adhan-short-makkah.caf",
   },
@@ -161,7 +147,6 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
 
 export const OFFLINE_FEATURED_MUEZZIN_IDS = [
   "makkah",
-  "madinah",
   "alharam",
   "egypt",
   "aqsa",
@@ -172,23 +157,25 @@ export const OFFLINE_FEATURED_MUEZZIN_IDS = [
 
 const byId = new Map(OFFLINE_ADHAN_CORE_PACKS.map((p) => [p.id, p]));
 
-/** توافق المسارات القديمة → الجديدة (m4a) */
+/** توافق المسارات القديمة → الجديدة (m4a) — المدينة → مكة */
 const LEGACY_SOUND_ALIASES: Record<string, string> = {
   "/sounds/adhan/makkah-general.mp3": "/audio/adhan/adhan-makkah-full.m4a",
   "/sounds/adhan/makkah-general.m4a": "/audio/adhan/adhan-makkah-full.m4a",
   "/sounds/adhan/makkah-fajr.mp3": "/audio/adhan/adhan-makkah-fajr.mp3",
-  "/sounds/adhan/madinah-general.mp3": "/audio/adhan/adhan-madinah-full.m4a",
-  "/sounds/adhan/madinah-general.m4a": "/audio/adhan/adhan-madinah-full.m4a",
+  "/sounds/adhan/madinah-general.mp3": "/audio/adhan/adhan-makkah-full.m4a",
+  "/sounds/adhan/madinah-general.m4a": "/audio/adhan/adhan-makkah-full.m4a",
   "/sounds/adhan/egypt-general.mp3": "/audio/adhan/adhan-egypt-full.m4a",
   "/sounds/adhan/egypt-general.m4a": "/audio/adhan/adhan-egypt-full.m4a",
   "/sounds/adhan/aqsa-general.mp3": "/audio/adhan/adhan-aqsa-full.mp3",
   "/sounds/adhan/takbeerat-short.mp3": "/audio/adhan/adhan-takbeerat-short.mp3",
   "/audio/adhan/adhan-makkah-full.mp3": "/audio/adhan/adhan-makkah-full.m4a",
-  "/audio/adhan/adhan-madinah-full.mp3": "/audio/adhan/adhan-madinah-full.m4a",
+  "/audio/adhan/adhan-madinah-full.mp3": "/audio/adhan/adhan-makkah-full.m4a",
+  "/audio/adhan/adhan-madinah-full.m4a": "/audio/adhan/adhan-makkah-full.m4a",
   "/audio/adhan/adhan-egypt-full.mp3": "/audio/adhan/adhan-egypt-full.m4a",
 };
 
 export function getOfflineAdhanPack(id: string): OfflineAdhanPack | undefined {
+  if (id === "madinah") return byId.get("makkah");
   return byId.get(id);
 }
 
@@ -200,7 +187,7 @@ export function resolveOfflineClipUrl(
   packId: string,
   kind: OfflineAdhanClipKind,
 ): string | null {
-  const pack = byId.get(packId);
+  const pack = getOfflineAdhanPack(packId);
   if (!pack) return null;
   return pack.local[kind] || pack.remote[kind] || null;
 }
@@ -231,5 +218,5 @@ export function listBundledAdhanSoundPaths(): string[] {
 }
 
 export function notificationSoundForAdhanPack(packId: string): string | null {
-  return byId.get(packId)?.notificationSound ?? null;
+  return getOfflineAdhanPack(packId)?.notificationSound ?? null;
 }
