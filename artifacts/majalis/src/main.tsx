@@ -11,6 +11,11 @@ import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { setupStatusBar, setupKeyboard, isAndroid, isIOS, isNative } from "./lib/capacitor-utils";
 import { purgeNativeWebRuntimeCaches } from "./lib/native-cache-freshness";
+import {
+  ensureAppVersionMarker,
+  installMajalisClearCacheDebug,
+  purgeStaleRuntimeCaches,
+} from "./lib/runtime-cache-purge";
 import { hydrateNativeStorage } from "./lib/native-storage";
 import { installInAppNavigationGuard } from "./lib/in-app-navigation";
 import { initFinalPolish } from "./lib/init-final-polish";
@@ -111,6 +116,15 @@ const queryClient = createAppQueryClient();
 
 resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
+installMajalisClearCacheDebug();
+// تنظيف كاش عرض قديم عند تغيّر النسخة / راية التصميم — بلا حجب createRoot
+void purgeStaleRuntimeCaches({ reloadOnce: false })
+  .then(() => {
+    ensureAppVersionMarker();
+  })
+  .catch(() => {
+    ensureAppVersionMarker();
+  });
 
 const bootReporting = () => {
   initClientErrorReporting();
