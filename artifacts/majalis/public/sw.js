@@ -56,7 +56,7 @@ const STATIC_SHELL_ASSETS = [
   "/icon-512.png",
   "/brand/icon-512-maskable.png",
   "/star-pattern.svg",
-  "/majlisilm-og-2026.jpg",
+  "/brand/official-og.png?v=20260825",
 ];
 
 self.addEventListener("install", (event) => {
@@ -518,8 +518,8 @@ self.addEventListener("message", (event) => {
           }
           self.registration.showNotification(item.title || "المجلس العلمي", {
             body: item.body || "",
-            icon: "/logo.png?v=9",
-            badge: "/favicon.png?v=9",
+            icon: "/logo.png?v=20260825",
+            badge: "/favicon.png?v=20260825",
             dir: "rtl",
             lang: "ar",
             tag,
@@ -556,8 +556,8 @@ self.addEventListener("message", (event) => {
         const cityLine = cityName ? ` — ${cityName}` : "";
         self.registration.showNotification(`إقامة ${prayerArabic}${cityLine}`, {
           body: `قد قامت الصلاة${cityName ? ` · ${cityName}` : ""}`,
-          icon: "/logo.png?v=9",
-          badge: "/favicon.png?v=9",
+          icon: "/logo.png?v=20260825",
+          badge: "/favicon.png?v=20260825",
           dir: "rtl",
           lang: "ar",
           tag: `iqamah-${prayerKey}`,
@@ -595,8 +595,8 @@ self.addEventListener("message", (event) => {
       const cityLine = cityName ? ` — ${cityName}` : "";
       self.registration.showNotification(`حان وقت ${prayerArabic}${cityLine}`, {
         body: `حيَّ على الصلاة، حيَّ على الفلاح${cityName ? ` · ${cityName}` : ""}`,
-        icon: "/logo.png?v=9",
-        badge: "/favicon.png?v=9",
+        icon: "/logo.png?v=20260825",
+        badge: "/favicon.png?v=20260825",
         dir: "rtl",
         lang: "ar",
         tag: `adhan-${prayerKey}`,
@@ -626,8 +626,8 @@ self.addEventListener("push", (event) => {
   const title = payload.title || "المجلس العلمي";
   const options = {
     body: payload.body || "",
-    icon: "/logo.png?v=9",
-    badge: "/favicon.png?v=9",
+    icon: "/logo.png?v=20260825",
+    badge: "/favicon.png?v=20260825",
     dir: "rtl",
     lang: "ar",
     data: { url: payload.url || "/" },

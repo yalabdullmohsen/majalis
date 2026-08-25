@@ -22,6 +22,11 @@
   },
   "redirects": [
     {
+      "source": "/majlisilm-og-2026.jpg",
+      "destination": "/brand/official-og.png",
+      "permanent": true
+    },
+    {
       "source": "/start-here/:path*",
       "destination": "/lessons",
       "permanent": true
@@ -1486,7 +1491,7 @@
       ]
     },
     {
-      "source": "/majlisilm-og-2026.jpg",
+      "source": "/brand/official-og.png",
       "headers": [
         {
           "key": "Cache-Control",

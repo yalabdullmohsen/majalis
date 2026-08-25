@@ -23,9 +23,9 @@
   "forbiddenEmailDomains": ["gmail.com", "hotmail.com", "outlook.com", "yahoo.com"],
 
   "$brandAssetsNote": "مصدر الصور الرسمي الوحيد — لا majlisilm-og-2026 ولا شعارات قديمة في meta/manifest/JSON-LD.",
-  "assetVersion": "20260815",
-  "defaultImage": "/brand/official-og.png?v=20260815",
-  "logoImage": "/brand/official.png?v=20260815",
+  "assetVersion": "20260825",
+  "defaultImage": "/brand/official-og.png?v=20260825",
+  "logoImage": "/brand/official.png?v=20260825",
   "ogImageWidth": 1200,
   "ogImageHeight": 630,
 

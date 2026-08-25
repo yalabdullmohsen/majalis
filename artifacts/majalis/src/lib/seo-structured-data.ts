@@ -4,8 +4,8 @@ import { formatSheikhName, stripSheikhHonorifics } from "./sheikh-name";
 
 const SITE_URL = SEO_SITE.siteUrl;
 const SITE_NAME = SEO_SITE.siteName;
-const LOGO_PATH = SEO_SITE.logoImage || "/brand/official.png?v=20260815";
-const DEFAULT_IMAGE = SEO_SITE.defaultImage || "/brand/official-og.png?v=20260815";
+const LOGO_PATH = SEO_SITE.logoImage || "/brand/official.png?v=20260825";
+const DEFAULT_IMAGE = SEO_SITE.defaultImage || "/brand/official-og.png?v=20260825";
 
 function absoluteUrl(path: string) {
   return new URL(path, SITE_URL).toString();
