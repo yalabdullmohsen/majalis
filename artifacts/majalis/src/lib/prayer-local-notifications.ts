@@ -23,6 +23,7 @@ import { getEffectiveMuezzinId, loadAdhanPrefs } from "@/lib/adhan-preferences";
 import {
   allPrayerNotificationIdsForWindow,
   dateISOInZone,
+  friendlyAdhanNotificationKey,
   hashPrayerNotificationId,
 } from "@/lib/prayer-notification-ids";
 import {
@@ -92,8 +93,20 @@ type NativeNotif = {
     prayerKey: string;
     prayerAtMs: number;
     dateISO: string;
+    /** adhan-fajr-yyyy-mm-dd — للتشخيص؛ id الرقمي لـ Capacitor */
+    friendlyKey: string;
   };
 };
+
+/** اسم ملف فقط لـ UNNotificationSound — بلا مسار. */
+function assertIosNotificationFilename(sound: string): string {
+  const cleaned = sound.replace(/^.*\//, "").trim();
+  if (!cleaned || cleaned.includes("/") || cleaned.includes("\\")) {
+    console.error("[notifications/prayer] invalid iOS sound path — using default", sound);
+    return DEFAULT_ALERT_SOUND;
+  }
+  return cleaned;
+}
 
 function safeSound(
   role: "quiet" | "clear" | "soft",
@@ -102,9 +115,11 @@ function safeSound(
 ): string {
   try {
     if (role === "clear" && muezzinId) {
-      return resolveAdhanStyleNotificationSound(muezzinId);
+      return assertIosNotificationFilename(resolveAdhanStyleNotificationSound(muezzinId));
     }
-    return resolvePrayerNotificationSound(role, profile) || DEFAULT_ALERT_SOUND;
+    return assertIosNotificationFilename(
+      resolvePrayerNotificationSound(role, profile) || DEFAULT_ALERT_SOUND,
+    );
   } catch {
     return DEFAULT_ALERT_SOUND;
   }
@@ -278,6 +293,7 @@ export async function schedulePrayerNativeNotifications(opts: {
         id,
         title: preCopy.title,
         body: preCopy.body,
+        // قبل الصلاة فقط — منفصل عن دخول الوقت (لا offset على الأذان نفسه)
         schedule: { at: new Date(preAlertEpoch), allowWhileIdle: true },
         sound,
         channelId: CHANNEL_PRAYER,
@@ -288,6 +304,7 @@ export async function schedulePrayerNativeNotifications(opts: {
           prayerKey: opts.prayerKey,
           prayerAtMs: opts.prayerTimeEpochMs,
           dateISO: opts.dateISO,
+          friendlyKey: friendlyAdhanNotificationKey(opts.prayerKey, opts.dateISO, "pre"),
         },
       });
       scheduled.push({ id, kind: "pre", atMs: preAlertEpoch });
@@ -305,6 +322,7 @@ export async function schedulePrayerNativeNotifications(opts: {
         id,
         title: enterCopy.title,
         body: enterCopy.body,
+        // دخول الوقت = وقت الصلاة نفسه بالضبط — بلا تقديم ولا تأخير
         schedule: { at: new Date(opts.prayerTimeEpochMs), allowWhileIdle: true },
         sound,
         channelId: CHANNEL_PRAYER,
@@ -315,6 +333,7 @@ export async function schedulePrayerNativeNotifications(opts: {
           prayerKey: opts.prayerKey,
           prayerAtMs: opts.prayerTimeEpochMs,
           dateISO: opts.dateISO,
+          friendlyKey: friendlyAdhanNotificationKey(opts.prayerKey, opts.dateISO, "enter"),
         },
       });
       scheduled.push({ id, kind: "enter", atMs: opts.prayerTimeEpochMs });
@@ -343,6 +362,7 @@ export async function schedulePrayerNativeNotifications(opts: {
           prayerKey: opts.prayerKey,
           prayerAtMs: opts.prayerTimeEpochMs,
           dateISO: opts.dateISO,
+          friendlyKey: friendlyAdhanNotificationKey(opts.prayerKey, opts.dateISO, "post"),
         },
       });
       scheduled.push({ id, kind: "post", atMs: postEpoch });
@@ -360,6 +380,32 @@ export async function schedulePrayerNativeNotifications(opts: {
     console.warn("[notifications/prayer] schedule failed", e);
   }
   return scheduled;
+}
+
+/** قائمة معلّقات الصلاة للتشخيص (عدد + عيّنة friendlyKey/sound). */
+export async function listPendingPrayerNotifications(): Promise<{
+  count: number;
+  items: Array<{ id: number; at: string | null; sound: string | null; friendlyKey: string | null; kind: string | null }>;
+}> {
+  if (!isNative) return { count: 0, items: [] };
+  try {
+    const { LocalNotifications } = await import("@capacitor/local-notifications");
+    const { notifications } = await LocalNotifications.getPending();
+    const items = notifications.map((n) => {
+      const extra = (n.extra ?? {}) as { friendlyKey?: string; kind?: string };
+      const raw = n as { sound?: unknown };
+      return {
+        id: n.id,
+        at: n.schedule?.at ? new Date(n.schedule.at).toISOString() : null,
+        sound: typeof raw.sound === "string" ? raw.sound : null,
+        friendlyKey: extra.friendlyKey ?? null,
+        kind: extra.kind ?? null,
+      };
+    });
+    return { count: items.length, items };
+  } catch {
+    return { count: 0, items: [] };
+  }
 }
 
 /** إلغاء معلّقات الصلاة لليوم+الغد (معرّفات قابلة للتنبؤ) + أي معلّق قديم بنطاق سابق. */

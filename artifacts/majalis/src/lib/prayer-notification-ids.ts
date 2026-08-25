@@ -1,11 +1,26 @@
 /**
  * معرّفات إشعارات صلاة قابلة للتنبؤ: hash(prayer, dateISO, kind)
  * يمنع التكرار والتضاعف عبر الأيام.
+ *
+ * Capacitor يتطلّب id رقميًا؛ المفتاح الودّي في extra.friendlyKey
+ * بصيغة: adhan-fajr-yyyy-mm-dd (دخول الوقت) أو …-pre / …-post.
  */
 
 export type PrayerNotifIdKind = "pre" | "enter" | "post";
 
 const PRAYER_ORDER = ["fajr", "dhuhr", "asr", "maghrib", "isha"] as const;
+
+/** مفتاح ودّي ثابت للتشخيص وعدم التكرار المنطقي. */
+export function friendlyAdhanNotificationKey(
+  prayerKey: string,
+  dateISO: string,
+  kind: PrayerNotifIdKind = "enter",
+): string {
+  const pk = prayerKey.toLowerCase().replace(/^prayer-/, "");
+  const base = `adhan-${pk}-${dateISO}`;
+  if (kind === "enter") return base;
+  return `${base}-${kind}`;
+}
 
 /** نطاق رقمي آمن لـ Capacitor (موجب، مستقر). */
 export function hashPrayerNotificationId(
