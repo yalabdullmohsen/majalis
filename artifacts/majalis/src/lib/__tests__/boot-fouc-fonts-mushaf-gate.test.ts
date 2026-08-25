@@ -43,6 +43,13 @@ const theme = read("src/lib/theme-preference.ts");
   assert.match(html, /rel="preload"[^>]+as="font"/);
   assert.match(fontsQuran, /font-display:\s*block/);
   assert.doesNotMatch(fontsQuran, /font-display:\s*swap/);
+  const fontsUi = read("src/styles/fonts-ui.css");
+  assert.match(fontsUi, /amiri-400-ar[\s\S]*font-display:\s*block/);
+  assert.match(fontsUi, /noto-naskh-400-ar[\s\S]*font-display:\s*block/);
+  assert.match(boot, /BOOT_FONT_TIMEOUT_MS\s*=\s*2_?200|BOOT_FONT_TIMEOUT_MS\s*=\s*2200/);
+  assert.match(boot, /document\.fonts\.ready/);
+  assert.match(boot, /registerBootStorageGate|storageReady/);
+  assert.match(main, /registerBootStorageGate/);
 }
 
 // 3) المصحف: لا Amiri بديل قبل QPC
@@ -52,7 +59,11 @@ const theme = read("src/lib/theme-preference.ts");
   assert.match(reader, /layout && ready/);
   assert.match(fit, /dataset\.mmFit/);
   assert.match(fit, /isMushafPageFontReady/);
+  assert.match(fit, /requestAnimationFrame/);
   assert.match(mushafCss, /data-mm-fit="1"/);
+  const qpc = read("src/features/mushaf-madinah/useQpcPageFont.ts");
+  assert.match(qpc, /display:\s*"block"/);
+  assert.match(qpc, /if \(!cancelled && ok\) setReady\(true\)/);
 }
 
 // 4) لا تبديل ثيم بعد أول إطار بطريقة تسبب وميض

@@ -2,12 +2,13 @@
  * خطوط الواجهة مستضافة محليًا (woff2) — بلا Google Fonts.
  * SIL OFL: Amiri / Noto Naskh Arabic / Aref Ruqaa / Scheherazade New.
  * أوزان 400 فقط هنا — أوزان 700 في fonts-ui-bold.css بعد أول رسم.
+ * block للخطوط الحرجة: يمنع FOUT؛ حارس الإقلاع ينتظر document.fonts قبل إخفاء Splash.
  */
 @font-face {
   font-family: "Amiri";
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: block;
   src: url("/fonts/ui/amiri-400-ar.woff2") format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+0660-0669;
 }
@@ -15,7 +16,7 @@
   font-family: "Amiri";
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: block;
   src: url("/fonts/ui/amiri-400-lat.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC;
 }
@@ -23,7 +24,7 @@
   font-family: "Noto Naskh Arabic";
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: block;
   src: url("/fonts/ui/noto-naskh-400-ar.woff2") format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+0660-0669;
 }
@@ -31,7 +32,7 @@
   font-family: "Noto Naskh Arabic";
   font-style: normal;
   font-weight: 400 700;
-  font-display: optional;
+  font-display: block;
   src: url("/fonts/ui/noto-naskh-400-lat.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC;
 }

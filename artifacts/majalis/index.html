@@ -279,7 +279,8 @@
         var done = false;
         var appReady = false;
         var MIN_MS = 280;
-        var MAX_MS = 700;
+        var SOFT_MAX_MS = 700;
+        var MAX_MS = 2200;
         var EXIT_MS = 180;
         var bootReady = false;
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
@@ -288,7 +289,7 @@
         function fontsLikelyReady() {
           try {
             if (!document.fonts || !document.fonts.check) return true;
-            return document.fonts.check('16px "Amiri"') || document.fonts.check('16px "Noto Naskh Arabic"');
+            return document.fonts.check('16px "Amiri"') && document.fonts.check('16px "Noto Naskh Arabic"');
           } catch (e) { return true; }
         }
         function dismiss(immediate) {
@@ -307,10 +308,16 @@
           if (done) return;
           var elapsed = now() - start;
           if (elapsed < MIN_MS) return;
-          if (!appReady && elapsed < MAX_MS) return;
-          /* بعد appReady: انتظر الخط إن أمكن ضمن سقف MAX */
-          if (appReady && !bootReady && !fontsLikelyReady() && elapsed < MAX_MS) return;
-          dismiss(false);
+          var fontsOk = bootReady || fontsLikelyReady();
+          /* لا تكشف الواجهة قبل الخطوط إلا عند السقف الصلب */
+          if (!fontsOk && elapsed < MAX_MS) return;
+          if (!appReady && !bootReady && elapsed < MAX_MS) return;
+          /* خطوط جاهزة: أخفِ بعد الحد الأدنى (هدف LCP الليّن SOFT_MAX عند البطء فقط كمرجع) */
+          if (fontsOk && (bootReady || appReady)) {
+            dismiss(false);
+            return;
+          }
+          if (elapsed >= MAX_MS) dismiss(false);
         }
         try { window.__mjDismissSplash = dismiss; } catch (e) {}
         try {

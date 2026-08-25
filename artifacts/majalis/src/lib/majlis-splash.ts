@@ -5,11 +5,17 @@
 
 export const LAUNCH_SPLASH_ID = "mj-launch-splash";
 
-/** الحد الأدنى لإحساس الدخولية — قصير حتى لا يؤخّر LCP. */
+/** الحد الأدنى لإحساس الدخولية — قصير حتى لا يؤخّر LCP عند جاهزية الخطوط. */
 export const SPLASH_MIN_VISIBLE_MS = 280;
 
-/** الحد الأقصى — لا انتظار تحميل بيانات أو مصحف. */
-export const SPLASH_MAX_VISIBLE_MS = 700;
+/**
+ * هدف LCP الليّن: يُسمح بالإخفاء مبكرًا إذا كانت الخطوط جاهزة (boot-ready / check).
+ * السقف الصلب أطول لمنع FOUT عند بطء التحميل.
+ */
+export const SPLASH_LCP_SOFT_MS = 700;
+
+/** السقف الصلب — انتظار خطوط الواجهة قبل كشف النص. */
+export const SPLASH_MAX_VISIBLE_MS = 2_200;
 
 /** مدة تلاشي الخروج. */
 export const SPLASH_FADE_OUT_MS = 180;
