@@ -1,7 +1,7 @@
 /**
  * بطاقة متابعة محلية — مصحف / دروس / أنبياء / أذكار / مكتبة / علماء.
  */
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { BookOpen, Headphones } from "lucide-react";
 import { getSurahMeta, loadPagePosition, loadReadingAyahKey } from "@/lib/quran-api";
@@ -9,6 +9,7 @@ import { loadAudioResumeState } from "@/lib/quran-audio-resume";
 import { getContinueReadingEntries, type ContinueSection } from "@/lib/continue-reading";
 import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
 import { toArabicDigits } from "@/lib/utils";
+import { FEATURE_TOUR_HYDRATED_EVENT } from "@/lib/feature-tour-state";
 import "@/styles/components/home-local-resume.css";
 
 type ResumeItem = {
@@ -85,7 +86,17 @@ function buildItems(): ResumeItem[] {
 }
 
 export function HomeLocalResumeCard() {
-  const items = useMemo(() => buildItems(), []);
+  const [items, setItems] = useState<ResumeItem[]>(() => buildItems());
+
+  useEffect(() => {
+    const refresh = () => setItems(buildItems());
+    window.addEventListener(FEATURE_TOUR_HYDRATED_EVENT, refresh);
+    window.addEventListener("storage", refresh);
+    return () => {
+      window.removeEventListener(FEATURE_TOUR_HYDRATED_EVENT, refresh);
+      window.removeEventListener("storage", refresh);
+    };
+  }, []);
 
   if (items.length === 0) return null;
 

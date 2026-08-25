@@ -12,6 +12,8 @@ import {
   legacyPageToCurrentPageNum,
   pageFirstAyahMushaf1,
 } from "@/lib/quran-data/ayah-page-index.generated";
+import { storageGetSync, storageSetSync } from "@/lib/native-storage";
+import { recoverLocalJsonTmp, writeLocalJsonAtomic } from "@/lib/safe-json";
 
 export const MY_BOOKMARKS_KEY = "myBookmarks";
 export const MY_BOOKMARKS_MIGRATED_KEY = "myBookmarks:ayah-migrated-v1";
@@ -33,6 +35,29 @@ type LegacyBookmark = {
   date?: string;
   ayahKey?: string;
 };
+
+let memBookmarks: MyBookmark[] | null = null;
+let memPageIndex: Set<number> | null = null;
+
+function setMem(list: MyBookmark[]): void {
+  memBookmarks = list;
+  memPageIndex = new Set(list.map((b) => b.page));
+}
+
+function persistList(list: MyBookmark[]): void {
+  setMem(list);
+  writeLocalJsonAtomic(MY_BOOKMARKS_KEY, list);
+  try {
+    storageSetSync(MY_BOOKMARKS_KEY, JSON.stringify(list));
+  } catch {
+    /* ignore */
+  }
+  try {
+    storageSetSync(MY_BOOKMARKS_MIGRATED_KEY, "1");
+  } catch {
+    /* ignore */
+  }
+}
 
 function clampPage(page: number): number {
   if (!Number.isFinite(page)) return 1;
@@ -90,18 +115,19 @@ function normalizeBookmark(raw: LegacyBookmark): MyBookmark | null {
 function migrateStorageIfNeeded(): void {
   if (typeof localStorage === "undefined") return;
   try {
-    if (localStorage.getItem(MY_BOOKMARKS_MIGRATED_KEY) === "1") return;
-    const existing = localStorage.getItem(MY_BOOKMARKS_KEY) || "[]";
+    if (storageGetSync(MY_BOOKMARKS_MIGRATED_KEY) === "1" || localStorage.getItem(MY_BOOKMARKS_MIGRATED_KEY) === "1") {
+      return;
+    }
+    const existing = storageGetSync(MY_BOOKMARKS_KEY) || localStorage.getItem(MY_BOOKMARKS_KEY) || "[]";
     const parsed = JSON.parse(existing) as unknown;
     if (!Array.isArray(parsed)) {
-      localStorage.setItem(MY_BOOKMARKS_MIGRATED_KEY, "1");
+      storageSetSync(MY_BOOKMARKS_MIGRATED_KEY, "1");
       return;
     }
     const next = parsed
       .map((b) => normalizeBookmark(b as LegacyBookmark))
       .filter((b): b is MyBookmark => b != null);
-    localStorage.setItem(MY_BOOKMARKS_KEY, JSON.stringify(next));
-    localStorage.setItem(MY_BOOKMARKS_MIGRATED_KEY, "1");
+    persistList(next);
   } catch {
     /* ignore */
   }
@@ -109,16 +135,24 @@ function migrateStorageIfNeeded(): void {
 
 export function getMyBookmarks(): MyBookmark[] {
   if (typeof localStorage === "undefined") return [];
+  if (memBookmarks) return memBookmarks;
   migrateStorageIfNeeded();
+  recoverLocalJsonTmp(MY_BOOKMARKS_KEY);
   try {
-    const existing = localStorage.getItem(MY_BOOKMARKS_KEY) || "[]";
+    const existing = storageGetSync(MY_BOOKMARKS_KEY) || localStorage.getItem(MY_BOOKMARKS_KEY) || "[]";
     const parsed = JSON.parse(existing) as unknown;
-    if (!Array.isArray(parsed)) return [];
-    return parsed
+    if (!Array.isArray(parsed)) {
+      setMem([]);
+      return [];
+    }
+    const list = parsed
       .map((b) => normalizeBookmark(b as LegacyBookmark))
       .filter((b): b is MyBookmark => b != null)
       .sort((a, b) => b.id - a.id);
+    setMem(list);
+    return list;
   } catch {
+    setMem([]);
     return [];
   }
 }
@@ -130,8 +164,7 @@ export async function saveBookmarks(bookmarks: MyBookmark[]): Promise<void> {
           .map((b) => normalizeBookmark(b as LegacyBookmark))
           .filter((b): b is MyBookmark => b != null)
       : [];
-    localStorage.setItem(MY_BOOKMARKS_KEY, JSON.stringify(list));
-    localStorage.setItem(MY_BOOKMARKS_MIGRATED_KEY, "1");
+    persistList(list);
   } catch (e) {
     console.error("خطأ في حفظ الفواصل", e);
   }
@@ -140,10 +173,6 @@ export async function saveBookmarks(bookmarks: MyBookmark[]): Promise<void> {
 export async function addBookmark(page: number, label: string): Promise<MyBookmark | null> {
   try {
     migrateStorageIfNeeded();
-    const existing = localStorage.getItem(MY_BOOKMARKS_KEY) || "[]";
-    const bookmarks = JSON.parse(existing) as LegacyBookmark[];
-    if (!Array.isArray(bookmarks)) throw new Error("invalid myBookmarks shape");
-
     const p = clampPage(page);
     const ayahKey = currentPageFirstAyah(p);
 
@@ -154,11 +183,8 @@ export async function addBookmark(page: number, label: string): Promise<MyBookma
       label: (label || `صفحة ${p}`).trim(),
       date: new Date().toLocaleDateString("ar"),
     };
-    const normalized = bookmarks
-      .map((b) => normalizeBookmark(b))
-      .filter((b): b is MyBookmark => b != null);
-    localStorage.setItem(MY_BOOKMARKS_KEY, JSON.stringify([...normalized, newBookmark]));
-    localStorage.setItem(MY_BOOKMARKS_MIGRATED_KEY, "1");
+    const next = [...getMyBookmarks(), newBookmark];
+    persistList(next);
     return newBookmark;
   } catch (e) {
     console.error("خطأ في حفظ الفاصل", e);
@@ -168,8 +194,7 @@ export async function addBookmark(page: number, label: string): Promise<MyBookma
 
 export async function removeMyBookmark(id: number): Promise<void> {
   try {
-    const next = getMyBookmarks().filter((b) => b.id !== id);
-    localStorage.setItem(MY_BOOKMARKS_KEY, JSON.stringify(next));
+    persistList(getMyBookmarks().filter((b) => b.id !== id));
   } catch (e) {
     console.error("خطأ في حذف الفاصل", e);
   }
@@ -177,5 +202,11 @@ export async function removeMyBookmark(id: number): Promise<void> {
 
 export function isPageBookmarked(page: number): boolean {
   const p = clampPage(page);
-  return getMyBookmarks().some((b) => b.page === p);
+  getMyBookmarks();
+  return Boolean(memPageIndex?.has(p));
+}
+
+export function resetMyBookmarksCacheForTests(): void {
+  memBookmarks = null;
+  memPageIndex = null;
 }

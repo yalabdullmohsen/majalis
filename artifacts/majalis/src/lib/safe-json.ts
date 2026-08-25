@@ -58,12 +58,49 @@ export function readLocalJson<T>(
 
 /** Write LS with try/catch — never throws. */
 export function writeLocalJson(key: string, value: unknown): boolean {
+  return writeLocalJsonAtomic(key, value);
+}
+
+/**
+ * كتابة ذرية تقريبية: tmp ثم النهائي ثم مسح tmp —
+ * يقلّل فساد البيانات عند إنهاء مفاجئ أثناء الكتابة.
+ */
+export function writeLocalJsonAtomic(key: string, value: unknown): boolean {
   if (typeof localStorage === "undefined") return false;
+  const tmpKey = `${key}::__tmp`;
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    const raw = JSON.stringify(value);
+    localStorage.setItem(tmpKey, raw);
+    localStorage.setItem(key, raw);
+    try {
+      localStorage.removeItem(tmpKey);
+    } catch {
+      /* ignore */
+    }
     return true;
   } catch {
+    try {
+      localStorage.removeItem(tmpKey);
+    } catch {
+      /* ignore */
+    }
     return false;
+  }
+}
+
+/** يستعيد قيمة من مفتاح مؤقت إن وُجد وفشل النهائي. */
+export function recoverLocalJsonTmp(key: string): void {
+  if (typeof localStorage === "undefined") return;
+  const tmpKey = `${key}::__tmp`;
+  try {
+    const tmp = localStorage.getItem(tmpKey);
+    if (tmp == null) return;
+    if (localStorage.getItem(key) == null) {
+      localStorage.setItem(key, tmp);
+    }
+    localStorage.removeItem(tmpKey);
+  } catch {
+    /* ignore */
   }
 }
 

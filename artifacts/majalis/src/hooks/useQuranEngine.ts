@@ -11,6 +11,7 @@ import {
   type QuranEngineState,
 } from "@/core/quran/QuranEngineContext";
 import type { ReadingProgress } from "@/core/quran/DatabaseManager";
+import { loadLastPageSync } from "@/lib/quran-last-page";
 
 function useSingletonEngine(): QuranEngineReactValue {
   const engine = getQuranEngineContext();
@@ -19,7 +20,8 @@ function useSingletonEngine(): QuranEngineReactValue {
     () => engine.getState(),
     () => engine.getState(),
   );
-  const [hydrating, setHydrating] = useState(true);
+  // بلا وميض «جاري استعادة» إن وُجد موضع محلي متزامن
+  const [hydrating, setHydrating] = useState(() => loadLastPageSync() == null);
 
   useEffect(() => {
     let cancelled = false;

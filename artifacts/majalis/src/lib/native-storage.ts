@@ -57,6 +57,7 @@ async function prefsApi() {
 /** مفاتيح التقدّم الشخصي التي تُزامَن إلى Preferences. */
 export const NATIVE_PROGRESS_KEYS = [
   "lastPage",
+  "myBookmarks",
   "majalis-continue-reading-v1",
   "majalis-daily-wird-done-v1",
   "majalis-daily-challenge-score-v1",

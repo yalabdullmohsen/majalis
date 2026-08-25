@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import {
   X,
@@ -36,6 +36,13 @@ export function PrayerCountdownBanner() {
   const fmt = useNumerals();
   const [dismissedKey, setDismissedKey] = useState<string | null>(null);
   const [leaving, setLeaving] = useState(false);
+  const dismissTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (dismissTimer.current != null) window.clearTimeout(dismissTimer.current);
+    };
+  }, []);
 
   const inGrace = countdown?.sinceSeconds != null;
   const prayerKey = inGrace
@@ -76,7 +83,9 @@ export function PrayerCountdownBanner() {
 
   const handleDismiss = () => {
     setLeaving(true);
-    window.setTimeout(() => {
+    if (dismissTimer.current != null) window.clearTimeout(dismissTimer.current);
+    dismissTimer.current = window.setTimeout(() => {
+      dismissTimer.current = null;
       if (prayerKey) {
         dismissBannerFor(prayerKey);
         setDismissedKey(prayerKey);

@@ -207,6 +207,12 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
   }, [overlayOpen]);
 
   useEffect(() => {
+    return () => {
+      if (hideTimer.current) window.clearTimeout(hideTimer.current);
+    };
+  }, []);
+
+  useEffect(() => {
     audio.setReciter(loadReciterId());
     const syncPageIfAllowed = (surah: number, ayah: number) => {
       if (suppressPageSyncRef.current) return;
