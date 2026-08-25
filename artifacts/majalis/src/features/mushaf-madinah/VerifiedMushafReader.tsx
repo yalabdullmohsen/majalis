@@ -17,6 +17,14 @@ import {
   type MushafPageLayout,
   type QpcWord,
 } from "@/lib/quran-data/qpc-page-data";
+import { haptics } from "@/lib/haptics";
+import {
+  beginPowerSaverSession,
+  endPowerSaverSession,
+  getPowerSaverState,
+  scheduleNonCriticalWork,
+} from "@/lib/power-saver-engine";
+import { startBatteryFpsMonitor } from "@/lib/render-fps-throttle";
 import {
   clampMushafPage,
   MUSHAF_PAGE_MAX,
@@ -157,6 +165,21 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
     }
   }, [theme, themeChoice]);
 
+  /** جلسة قراءة طويلة: مراقبة البطارية + توفير طاقة يقلّل الـprefetch والحلقات غير الحرجة */
+  useEffect(() => {
+    startBatteryFpsMonitor();
+    beginPowerSaverSession();
+    return () => {
+      endPowerSaverSession();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (playerState === "playing" || playerState === "buffering" || playerState === "loading") {
+      beginPowerSaverSession({ immediate: true });
+    }
+  }, [playerState]);
+
   useEffect(() => {
     let cancelled = false;
     setError(null);
@@ -168,8 +191,18 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
       .catch(() => {
         if (!cancelled) setError("تعذّر تحميل الصفحة");
       });
-    prefetchMushafPage(page - 1);
-    prefetchMushafPage(page + 1);
+    const saver = getPowerSaverState();
+    if (saver.mode === "aggressive") {
+      /* لا prefetch جارٍ أثناء وضع الطاقة العدواني */
+    } else if (saver.throttleBackground) {
+      scheduleNonCriticalWork(() => {
+        if (cancelled) return;
+        prefetchMushafPage(page + 1);
+      });
+    } else {
+      prefetchMushafPage(page - 1);
+      prefetchMushafPage(page + 1);
+    }
     savePagePosition(page);
     return () => {
       cancelled = true;
@@ -318,6 +351,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
         setActionsOpen(false);
         return;
       }
+      haptics.selection();
       setSelectedVerseKey(verseKey);
       setActionsOpen(true);
       setChromeOpen(false);
@@ -564,8 +598,10 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
         date: new Date().toLocaleDateString("ar"),
       };
       await saveBookmarks([next, ...list]);
+      haptics.success();
       setCopyStatus("تم حفظ العلامة");
     } catch {
+      haptics.error();
       setCopyStatus("تعذّر حفظ العلامة");
     }
   }, [page, selectedVerseKey]);

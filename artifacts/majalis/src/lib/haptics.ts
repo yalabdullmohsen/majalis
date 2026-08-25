@@ -1,13 +1,41 @@
 /**
  * كتالوج اهتزاز لمسي موحّد — Capacitor Haptics على الأصلي، Vibration API على الويب.
  * يحترم إعداد المستخدم ومفتاح الأذكار القديم للتوافق.
+ * يُزامَن مع إطار الرسم عبر rAF لتجنّب إسقاط الإطارات.
  */
 
-import { hapticNotify, hapticTap } from "@/lib/capacitor-utils";
+import { hapticNotify, hapticTap, isNative } from "@/lib/capacitor-utils";
 
 export type HapticKind = "selection" | "light" | "medium" | "success" | "warning" | "error";
 
 const LEGACY_ADHKAR_KEY = "adhkar_haptics_enabled";
+
+/** دعم Vibration API على الويب (navigator.vibrate) — لا يُستدعى على منصات بلا دعم. */
+function webVibrateSupported(): boolean {
+  return typeof navigator !== "undefined" && typeof navigator.vibrate === "function";
+}
+
+let capabilityKnown = false;
+let hapticsCapable = true;
+
+/** فحص قدرة الجهاز مرة واحدة — يمنع تحذيرات الكونسول على أجهزة بلا دعم. */
+export function supportsHaptics(): boolean {
+  if (typeof window === "undefined") return false;
+  if (capabilityKnown) return hapticsCapable;
+  capabilityKnown = true;
+  if (isNative) {
+    hapticsCapable = true;
+    return true;
+  }
+  hapticsCapable = webVibrateSupported();
+  return hapticsCapable;
+}
+
+/** للاختبارات فقط */
+export function resetHapticsCapabilityForTests(): void {
+  capabilityKnown = false;
+  hapticsCapable = true;
+}
 
 function readPrefsHaptics(): boolean | null {
   try {
@@ -43,9 +71,7 @@ export function setHapticsEnabled(enabled: boolean): void {
   }
 }
 
-/** تشغيل نمط اهتزاز — لا يرمي؛ يتجاهل المنصات بلا دعم. */
-export function triggerHaptic(kind: HapticKind = "light"): void {
-  if (!isHapticsEnabled()) return;
+function fireHaptic(kind: HapticKind): void {
   switch (kind) {
     case "selection":
     case "light":
@@ -66,6 +92,21 @@ export function triggerHaptic(kind: HapticKind = "light"): void {
     default:
       void hapticTap("light");
   }
+}
+
+/**
+ * تشغيل نمط اهتزاز — لا يرمي؛ يتجاهل المنصات بلا دعم.
+ * @param syncWithFrame إن true يُؤجَّل لنهاية إطار الرسم لمزامنة الميكرو-أنيميشن.
+ */
+export function triggerHaptic(kind: HapticKind = "light", syncWithFrame = true): void {
+  if (!isHapticsEnabled() || !supportsHaptics()) return;
+  if (!syncWithFrame || typeof requestAnimationFrame !== "function") {
+    fireHaptic(kind);
+    return;
+  }
+  requestAnimationFrame(() => {
+    fireHaptic(kind);
+  });
 }
 
 /** اختصارات شائعة */

@@ -15,8 +15,10 @@ import {
   type PermissionStatus,
 } from "@/lib/prayer-local-notifications";
 import { isNative } from "@/lib/capacitor-utils";
+import { haptics } from "@/lib/haptics";
 import {
   loadAdhanPrefs,
+  patchAdhanPrefs,
   patchPrayerPrefs,
   PRAYER_KEYS,
   type AdvanceMinutes,
@@ -40,7 +42,10 @@ function MiniToggle({
       aria-checked={checked}
       aria-label={label}
       disabled={disabled}
-      onClick={() => onChange(!checked)}
+      onClick={() => {
+        haptics.selection();
+        onChange(!checked);
+      }}
       className={`ads-toggle rounded-full icon-only${checked ? " is-on" : ""}${disabled ? " is-disabled" : ""}`}
     >
       <span className="ads-toggle__thumb" />
@@ -54,6 +59,7 @@ function MiniToggle({
  */
 export function PrayerAlertSettingsCard() {
   const [prefs, setPrefs] = useState<PrayerAlertPreferences>(() => loadPrayerAlertPrefs());
+  const [vibrateEnabled, setVibrateEnabled] = useState(() => loadAdhanPrefs().vibrateEnabled);
   const [permission, setPermission] = useState<PermissionStatus>("prompt");
   const [showExplainer, setShowExplainer] = useState(false);
 
@@ -221,6 +227,22 @@ export function PrayerAlertSettingsCard() {
             checked={prefs.enterAlertEnabled}
             onChange={(v) => patch({ enterAlertEnabled: v })}
             label="تنبيه دخول الوقت"
+            disabled={!alertsOn}
+          />
+        </div>
+
+        <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
+          <div>
+            <div className="ads-global-label">اهتزاز مع التنبيه</div>
+            <div className="ads-global-desc">نبضة لمسية عند أذان الصلاة</div>
+          </div>
+          <MiniToggle
+            checked={vibrateEnabled}
+            onChange={(v) => {
+              setVibrateEnabled(v);
+              patchAdhanPrefs({ vibrateEnabled: v });
+            }}
+            label="اهتزاز مع التنبيه"
             disabled={!alertsOn}
           />
         </div>

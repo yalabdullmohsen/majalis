@@ -398,6 +398,7 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
 export function prefetchMushafPage(pageNumber: number): void {
   if (!isMushafPageNumber(pageNumber)) return;
   if (layoutCache.has(pageNumber) || layoutInflight.has(pageNumber)) return;
+  // تحميل مسبق غير حرج — يُؤجَّل عند ضغط الطاقة عبر المستدعي (scheduleNonCriticalWork)
   void loadMushafPage(pageNumber).catch(() => {});
 }
 

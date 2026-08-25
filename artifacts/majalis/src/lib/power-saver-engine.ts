@@ -130,9 +130,60 @@ function ensureVisibilityBinding(): void {
   });
 }
 
+type BatteryManagerLike = {
+  level: number;
+  charging: boolean;
+  addEventListener?: (type: string, listener: () => void) => void;
+};
+
+let batteryHintsBound = false;
+
+/**
+ * ربط تلميحات الطاقة المنخفضة (Battery API + saveData).
+ * عند بطارية أقل من 20% دون شحن أثناء جلسة نشطة → balanced فوري.
+ */
+function ensureLowPowerHints(): void {
+  if (batteryHintsBound || typeof navigator === "undefined") return;
+  batteryHintsBound = true;
+
+  const maybeEngageFromBattery = (level: number, charging: boolean) => {
+    if (!state.sessionActive || charging) return;
+    if (level < 0.1) {
+      applyMode("aggressive");
+    } else if (level < 0.2 && state.mode === "off") {
+      applyMode(loadPowerSaverPrefs().preferredMode === "off" ? "balanced" : loadPowerSaverPrefs().preferredMode);
+    }
+  };
+
+  try {
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (conn?.saveData && state.sessionActive && state.mode === "off") {
+      applyMode("balanced");
+    }
+  } catch {
+    /* ignore */
+  }
+
+  const nav = navigator as Navigator & {
+    getBattery?: () => Promise<BatteryManagerLike>;
+  };
+  if (!nav.getBattery) return;
+  void nav
+    .getBattery()
+    .then((bat) => {
+      maybeEngageFromBattery(bat.level, bat.charging);
+      bat.addEventListener?.("levelchange", () => maybeEngageFromBattery(bat.level, bat.charging));
+      bat.addEventListener?.("chargingchange", () => maybeEngageFromBattery(bat.level, bat.charging));
+    })
+    .catch(() => {
+      /* غير مدعوم — iOS WKWebView غالبًا */
+    });
+}
+
 /** Begin prolonged reading / audio session — engages saver after engageAfterMs. */
 export function beginPowerSaverSession(opts?: { immediate?: boolean }): PowerSaverState {
   ensureVisibilityBinding();
+  ensureLowPowerHints();
   const prefs = loadPowerSaverPrefs();
   state.sessionActive = true;
   state.startedAt = Date.now();

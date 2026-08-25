@@ -114,6 +114,7 @@ export default defineConfig({
     target: "es2022",
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
+    minify: "esbuild",
     sourcemap: "hidden",
     cssMinify: true,
     cssCodeSplit: true,
