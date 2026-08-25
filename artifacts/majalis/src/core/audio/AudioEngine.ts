@@ -10,6 +10,9 @@
  */
 import { claimAudio, registerAudioStopper } from "@/lib/exclusive-audio-bus";
 import { listAyahAudioUrls, loadPlaybackRate, normalizePlaybackRate, savePlaybackRate } from "@/lib/quran-audio";
+import { crossfadeAudio } from "@/lib/sovereign/audio-crossfade";
+import { recordCdnFailure, recordCdnSuccess } from "@/lib/sovereign/cdn-failover-router";
+import { recordReadingActivity } from "@/lib/sovereign/predictive-analytics";
 import { getSurahMeta } from "@/lib/quran-api";
 import {
   advanceAfterAyahEnded,
@@ -285,7 +288,8 @@ export class AudioEngine {
     if (idle.readyState < 2) return false;
     if (gen !== this.playGeneration) return false;
     try {
-      this.getActiveElRef().pause();
+      const outgoing = this.getActiveElRef();
+      outgoing.pause();
       this.swapActiveSlot();
       this.preloadKey = null;
       const el = this.getActiveElRef();
@@ -294,7 +298,10 @@ export class AudioEngine {
       void this.activatePlaybackSession();
       await playWait;
       if (gen !== this.playGeneration) return false;
+      void crossfadeAudio(outgoing, el);
       this.setPlayerState("playing");
+      recordCdnSuccess(el.src);
+      recordReadingActivity({ surah, ayah, reciterId: this.reciterId });
       this.preloadNextAyah(surah, ayah, gen);
       return true;
     } catch {
@@ -677,6 +684,11 @@ export class AudioEngine {
       /* slotB may be unused */
     }
 
+    if (await this.tryPlayFromPreload(surah, ayah, gen)) {
+      void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
+      return;
+    }
+
     const budgetMs = 10_000;
     const perUrlMs = 3_500;
     const startedAt = Date.now();
@@ -696,12 +708,15 @@ export class AudioEngine {
         }
         await this.waitUntilPlaying(el, Math.min(perUrlMs, remaining));
         if (gen !== this.playGeneration) return;
+        recordCdnSuccess(url);
+        recordReadingActivity({ surah, ayah, reciterId: this.reciterId });
         this.setPlayerState("playing");
         this.preloadNextAyah(surah, ayah, gen);
         void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
         return;
       } catch (err) {
         lastErr = err;
+        recordCdnFailure(url);
         if (import.meta.env.DEV) {
           console.warn("[AudioEngine] playAyah candidate failed:", url, err);
         }
