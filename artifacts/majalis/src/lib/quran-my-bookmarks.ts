@@ -14,6 +14,7 @@ import {
 } from "@/lib/quran-data/ayah-page-index.generated";
 import { storageGetSync, storageSetSync } from "@/lib/native-storage";
 import { recoverLocalJsonTmp, writeLocalJsonAtomic } from "@/lib/safe-json";
+import { runOptimisticWalPersist } from "@/lib/sovereign/optimistic-wal";
 
 export const MY_BOOKMARKS_KEY = "myBookmarks";
 export const MY_BOOKMARKS_MIGRATED_KEY = "myBookmarks:ayah-migrated-v1";
@@ -164,7 +165,28 @@ export async function saveBookmarks(bookmarks: MyBookmark[]): Promise<void> {
           .map((b) => normalizeBookmark(b as LegacyBookmark))
           .filter((b): b is MyBookmark => b != null)
       : [];
-    persistList(list);
+    await runOptimisticWalPersist({
+      store: MY_BOOKMARKS_KEY,
+      entryId: `save-${list.length}`,
+      apply: () => {
+        setMem(list);
+        return list;
+      },
+      persist: (snapshot) => {
+        writeLocalJsonAtomic(MY_BOOKMARKS_KEY, snapshot);
+        try {
+          storageSetSync(MY_BOOKMARKS_KEY, JSON.stringify(snapshot));
+          storageSetSync(MY_BOOKMARKS_MIGRATED_KEY, "1");
+        } catch {
+          /* ignore */
+        }
+      },
+      rollback: () => {
+        memBookmarks = null;
+        memPageIndex = null;
+        getMyBookmarks();
+      },
+    });
   } catch (e) {
     console.error("خطأ في حفظ الفواصل", e);
   }
@@ -194,7 +216,28 @@ export async function addBookmark(page: number, label: string): Promise<MyBookma
 
 export async function removeMyBookmark(id: number): Promise<void> {
   try {
-    persistList(getMyBookmarks().filter((b) => b.id !== id));
+    const prev = getMyBookmarks();
+    const next = prev.filter((b) => b.id !== id);
+    await runOptimisticWalPersist({
+      store: MY_BOOKMARKS_KEY,
+      entryId: `del-${id}`,
+      op: "delete",
+      apply: () => {
+        setMem(next);
+        return next;
+      },
+      persist: (snapshot) => {
+        writeLocalJsonAtomic(MY_BOOKMARKS_KEY, snapshot);
+        try {
+          storageSetSync(MY_BOOKMARKS_KEY, JSON.stringify(snapshot));
+        } catch {
+          /* ignore */
+        }
+      },
+      rollback: () => {
+        setMem(prev);
+      },
+    });
   } catch (e) {
     console.error("خطأ في حذف الفاصل", e);
   }

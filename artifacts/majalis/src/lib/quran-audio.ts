@@ -18,6 +18,7 @@ import {
   isReciterDisabled,
   refreshQuranAudioRemoteConfig,
 } from "@/lib/quran-audio-remote-config";
+import { orderAudioUrlsByCdnHealth } from "@/lib/sovereign/cdn-failover-router";
 
 export type QuranReciter = {
   id: string;
@@ -457,7 +458,7 @@ export function listAyahAudioUrls(surah: number, ayah: number, reciterId: string
   if (reciterId !== "alafasy") {
     push(getIslamicNetworkAyahUrl(surah, ayah, "alafasy"));
   }
-  return urls;
+  return orderAudioUrlsByCdnHealth(urls);
 }
 
 /** Full-surah MP3 from mp3quran.net. */
