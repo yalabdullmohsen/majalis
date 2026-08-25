@@ -419,10 +419,12 @@ export async function validateAudioAssets(): Promise<AdhanAssetProbe[]> {
     });
   }
   assetCache = out;
-  console.info(
-    "[AdhanAudioService] validateAudioAssets",
-    out.map((a) => ({ id: a.soundId, exists: a.exists, dur: a.durationSec, playable: a.playable })),
-  );
+  if (import.meta.env?.DEV) {
+    console.info(
+      "[AdhanAudioService] validateAudioAssets",
+      out.map((a) => ({ id: a.soundId, exists: a.exists, dur: a.durationSec, playable: a.playable })),
+    );
+  }
   return out;
 }
 

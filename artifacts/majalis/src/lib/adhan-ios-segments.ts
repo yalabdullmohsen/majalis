@@ -161,15 +161,17 @@ export async function scheduleAdhanIosSegmentChain(
   if (!isAdhanIosSegmentsAvailable()) {
     // ويب/اختبار: خزّن السلسلة فقط
     for (const p of plan) {
-      console.info("[adhan-schedule]", {
-        prayerName: p.title ?? plan[0].title,
-        prayerKey: p.prayerKey,
-        prayerTime: new Date(p.atMs).toISOString(),
-        mode: plan.length > 1 ? "sequential" : "short",
-        soundName: p.sound,
-        notificationId: p.id,
-        segmentIndex: p.segmentIndex,
-      });
+      if (import.meta.env?.DEV) {
+        console.info("[adhan-schedule]", {
+          prayerName: p.title ?? plan[0].title,
+          prayerKey: p.prayerKey,
+          prayerTime: new Date(p.atMs).toISOString(),
+          mode: plan.length > 1 ? "sequential" : "short",
+          soundName: p.sound,
+          notificationId: p.id,
+          segmentIndex: p.segmentIndex,
+        });
+      }
     }
     writeChain({
       prayerKey: plan[0].prayerKey,
@@ -193,16 +195,18 @@ export async function scheduleAdhanIosSegmentChain(
   }));
 
   await LocalNotifications.schedule({ notifications });
-  for (const p of plan) {
-    console.info("[adhan-schedule]", {
-      prayerName: p.title ?? plan[0].title,
-      prayerKey: p.prayerKey,
-      prayerTime: new Date(p.atMs).toISOString(),
-      mode: plan.length > 1 ? "sequential" : "short",
-      soundName: p.sound,
-      notificationId: p.id,
-      segmentIndex: p.segmentIndex,
-    });
+  if (import.meta.env?.DEV) {
+    for (const p of plan) {
+      console.info("[adhan-schedule]", {
+        prayerName: p.title ?? plan[0].title,
+        prayerKey: p.prayerKey,
+        prayerTime: new Date(p.atMs).toISOString(),
+        mode: plan.length > 1 ? "sequential" : "short",
+        soundName: p.sound,
+        notificationId: p.id,
+        segmentIndex: p.segmentIndex,
+      });
+    }
   }
   writeChain({
     prayerKey: plan[0].prayerKey,
