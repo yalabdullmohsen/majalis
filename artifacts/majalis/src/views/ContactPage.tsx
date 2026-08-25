@@ -1,42 +1,42 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearch } from "wouter";
-import { AlertTriangle, Lock, Mail, Plus, Settings2, Users2 } from "lucide-react";
+import { AlertTriangle, Check, Copy, Lock, Mail, Plus, Settings2, Users2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
-import { ShareButtons } from "@/components/ContentActions";
-import { InstagramAcademyLink } from "@/components/InstagramAcademyLink";
+import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { applyPageSeo } from "@/lib/seo";
 import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
+import "@/styles/pages/contact.css";
 
 const FAQ = [
   {
-    q: "كيف أُبلّغ عن خطأ في حديث أو فتوى؟",
-    a: 'أرسل بريداً إلكترونياً بعنوان "تصحيح محتوى" مع ذكر الصفحة والخطأ المقترح وإن أمكن المصدر. سنراجعه خلال 3 أيام عمل.',
+    q: "كيف أبلغ عن خطأ في حديث أو فتوى؟",
+    a: 'أرسل بريداً بعنوان «تصحيح محتوى» مع رابط الصفحة ووصف الخطأ، وإن أمكن المصدر. نراجعه عادة خلال 3–5 أيام عمل.',
   },
   {
-    q: "هل يمكنني اقتراح شيخ أو عالم لإضافته؟",
-    a: "نعم، أرسل اسم العالم وسيرته المختصرة وأبرز مؤلفاته ودروسه. سنتحقق من المعلومات ونضيفه إن توفرت البيانات الكافية.",
+    q: "هل يمكنني اقتراح شيخ أو عالم؟",
+    a: "نعم. أرسل اسم العالم وسيرة مختصرة وأبرز مؤلفاته أو دروسه الموثوقة. نتحقق من البيانات ونضيفه إن توفرت مصادر كافية.",
   },
   {
     q: "كيف أطلب حذف بيانات حسابي؟",
-    a: 'أرسل طلباً عبر البريد الإلكتروني بعنوان "طلب حذف حساب" من البريد المرتبط بحسابك. سنُنجز الطلب خلال 7 أيام عمل.',
+    a: 'من داخل الحساب استخدم مسار حذف الحساب إن وُجد، أو أرسل من البريد المرتبط بحسابك رسالة بعنوان «طلب حذف حساب». ننجز الطلب خلال 7 أيام عمل.',
   },
   {
     q: "هل يمكنني المساهمة في المحتوى؟",
-    a: 'بالتأكيد. استخدم صفحة "أضف محتوى" لتقديم فوائد ودروس تنتظر المراجعة قبل النشر، أو تواصل معنا مباشرةً للمساهمة المتخصصة.',
+    a: "نعم للمساهمات العلمية الموثقة. راسلنا بموضوع «مساهمة محتوى» مع نبذة عن المادة والمصادر؛ تُراجع قبل أي نشر.",
   },
   {
-    q: "هل تقبلون تمويلاً أو شراكات؟",
-    a: "نرحب بالشراكات مع مؤسسات علمية وهيئات شرعية موثوقة. تواصل معنا بتفاصيل الشراكة المقترحة وسنردّ في أقرب وقت.",
+    q: "هل تقبلون شراكات أو إعلانات؟",
+    a: "نرحب بالشراكات العلمية والمؤسسية المتوافقة مع منهجنا. لا نقبل إعلانات تخلّ بالثقة أو بالمحتوى الشرعي. راسلنا بتفاصيل المقترح.",
   },
-];
+].filter((item) => Boolean(item.q?.trim() && item.a?.trim()));
 
 const TOPICS: { id: string; Icon: LucideIcon; label: string; note: string; subject: string }[] = [
   { id: "report", Icon: AlertTriangle, label: "الإبلاغ عن خطأ في المحتوى", note: "درس / حديث / فتوى / معلومة غير دقيقة", subject: "الإبلاغ عن خطأ" },
-  { id: "suggest", Icon: Plus, label: "اقتراح محتوى أو شيخ جديد", note: "علماء / كتب / دروس / فوائد", subject: "اقتراح أو شراكة" },
-  { id: "tech", Icon: Settings2, label: "مشكلة تقنية في المنصة", note: "خلل في عرض الصفحات أو الأدوات", subject: "ملاحظة تقنية" },
-  { id: "privacy", Icon: Lock, label: "طلب حذف أو تعديل بيانات الحساب", note: "خصوصيتك مكفولة", subject: "استفسار عام" },
-  { id: "partner", Icon: Users2, label: "شراكات مؤسسية وعلمية", note: "مؤسسات / هيئات / جامعات", subject: "اقتراح أو شراكة" },
+  { id: "suggest", Icon: Plus, label: "اقتراح محتوى أو شيخ جديد", note: "علماء / كتب / دروس / فوائد", subject: "اقتراح محتوى" },
+  { id: "tech", Icon: Settings2, label: "مشكلة تقنية في المنصة", note: "خلل في العرض أو الأدوات", subject: "مشكلة تقنية" },
+  { id: "privacy", Icon: Lock, label: "طلب حذف أو تعديل بيانات الحساب", note: "خصوصية وحماية البيانات", subject: "طلب حذف حساب" },
+  { id: "partner", Icon: Users2, label: "شراكات مؤسسية وعلمية", note: "مؤسسات / هيئات / جامعات", subject: "شراكة مؤسسية" },
 ];
 
 function resolveTopicId(raw: string): string | null {
@@ -48,7 +48,6 @@ function resolveTopicId(raw: string): string | null {
   if (t.includes("تقنية") || t.includes("tech")) return "tech";
   if (t.includes("حذف") || t.includes("خصوصية") || t.includes("privacy")) return "privacy";
   if (t.includes("شراكة") || t.includes("partner")) return "partner";
-  // سياق صفحة محتوى (من ContentReportLink) → إبلاغ
   return "report";
 }
 
@@ -57,12 +56,13 @@ export default function ContactPage() {
   const topicParam = useMemo(() => new URLSearchParams(search.startsWith("?") ? search.slice(1) : search).get("topic") || "", [search]);
   const activeTopicId = useMemo(() => resolveTopicId(topicParam), [topicParam]);
   const activeTopic = TOPICS.find((t) => t.id === activeTopicId) ?? null;
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     applyPageSeo({
       path: "/contact",
       title: "تواصل معنا | المجلس العلمي",
-      description: "تواصل مع فريق المجلس العلمي، تقرير خطأ، اقتراح محتوى، شراكات مؤسسية، أو طلبات تقنية.",
+      description: "يسعدنا استقبال ملاحظاتك واقتراحاتك وتصحيحاتك عبر البريد الرسمي للمجلس العلمي.",
       keywords: ["تواصل", "المجلس العلمي", "الدعم", "اقتراح محتوى", "إبلاغ عن خطأ"],
       jsonLd: [{ "@context": "https://schema.org", "@type": "ContactPage", name: "تواصل مع المجلس العلمي", url: "https://www.majlisilm.com/contact", about: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" } }],
     });
@@ -74,50 +74,63 @@ export default function ContactPage() {
       : activeTopic.subject
     : "استفسار عام";
 
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(CONTACT_EMAIL);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
+
   return (
-    <LegalPageLayout eyebrow="التواصل" title="تواصل معنا" updatedAt="2026-08-05">
+    <LegalPageLayout eyebrow="الدعم" title="تواصل معنا" density="medium" className="contact-page">
+      <p className="contact-lead">يسعدنا استقبال ملاحظاتك واقتراحاتك وتصحيحاتك.</p>
 
-      <LegalSection title="يسعدنا تواصلك">
-        <p>
-          فريق المجلس العلمي حريصٌ على الرد على جميع الاستفسارات الشرعية والتقنية
-          وملاحظات المحتوى. اختر القناة الأنسب أو وصف موضوعك أدناه.
+      {activeTopic ? (
+        <p className="contact-topic-banner" role="status">
+          موضوع مقترَح من الرابط: <strong>{activeTopic.label}</strong>
+          {topicParam && topicParam !== activeTopic.id ? (
+            <>
+              {" "}
+              — السياق: <span dir="auto">{topicParam}</span>
+            </>
+          ) : null}
         </p>
-        {activeTopic ? (
-          <p className="contact-topic-banner" role="status">
-            موضوع مقترَح من الرابط: <strong>{activeTopic.label}</strong>
-            {topicParam && topicParam !== activeTopic.id ? (
-              <>
-                {" "}
-                — السياق: <span dir="auto">{topicParam}</span>
-              </>
-            ) : null}
-            . يمكنك المتابعة مباشرة عبر{" "}
-            <a href={mailtoWithSubject(mailtoSubject)}>البريد الإلكتروني</a>.
-          </p>
-        ) : null}
-      </LegalSection>
+      ) : null}
 
-      <LegalSection title="قنوات التواصل">
-        <div className="contact-channels">
-          <div className="contact-channel">
-            <p className="contact-channel__label">البريد الإلكتروني الرسمي والتواصل</p>
-            <a href={mailtoWithSubject(mailtoSubject)} className="contact-channel__link">
-              {CONTACT_EMAIL}
-            </a>
-            <p className="contact-channel__note">
-              للاستفسارات العامة، والملاحظات التقنية، وتصحيح المحتوى العلمي، والاقتراحات والشراكات.
-            </p>
+      <LegalSection title="البريد الرسمي">
+        <div className="contact-email-card">
+          <div className="contact-email-card__head">
+            <span className="contact-email-card__icon" aria-hidden="true">
+              <Mail size={18} strokeWidth={1.9} />
+            </span>
+            <div className="contact-email-card__meta">
+              <p className="contact-email-card__label">البريد الإلكتروني</p>
+              <p className="contact-email-card__address" dir="ltr" lang="en">
+                <a href={mailtoWithSubject(mailtoSubject)} className="contact-email-card__link">
+                  {CONTACT_EMAIL}
+                </a>
+              </p>
+            </div>
           </div>
+          <div className="contact-email-card__actions">
+            <a href={mailtoWithSubject(mailtoSubject)} className="contact-btn contact-btn--primary">
+              إرسال بريد
+            </a>
+            <button type="button" className="contact-btn contact-btn--ghost" onClick={copyEmail}>
+              {copied ? <Check size={15} strokeWidth={2} aria-hidden="true" /> : <Copy size={15} strokeWidth={2} aria-hidden="true" />}
+              {copied ? "تم النسخ" : "نسخ البريد"}
+            </button>
+          </div>
+          <p className="contact-email-card__hint" role="note">
+            يمكنك مراسلتنا مباشرة عبر البريد الرسمي.
+          </p>
         </div>
       </LegalSection>
 
-      <LegalSection title="تابعونا">
-        <div className="contact-channels">
-          <InstagramAcademyLink variant="card" />
-        </div>
-      </LegalSection>
-
-      <LegalSection title="يمكننا مساعدتك في">
+      <LegalSection title="كيف نساعدك؟">
         <div className="contact-topics">
           {TOPICS.map((t) => {
             const selected = activeTopicId === t.id;
@@ -125,19 +138,21 @@ export default function ContactPage() {
               selected && topicParam && topicParam !== t.id
                 ? `${t.subject} — ${topicParam}`
                 : t.subject;
+            const Icon = t.Icon;
             return (
               <a
-                key={t.label}
+                key={t.id}
                 href={mailtoWithSubject(subject)}
-                className={`contact-topic contact-topic--link${selected ? " is-selected" : ""}`}
+                className={`contact-topic${selected ? " is-selected" : ""}`}
                 aria-current={selected ? "true" : undefined}
               >
-                <span className="contact-topic__icon" aria-hidden="true">{(() => { const I = t.Icon; return <I size={18} strokeWidth={1.8} />; })()}</span>
-                <div>
+                <span className="contact-topic__icon" aria-hidden="true">
+                  <Icon size={18} strokeWidth={1.8} />
+                </span>
+                <span className="contact-topic__body">
                   <strong className="contact-topic__label">{t.label}</strong>
-                  <p className="contact-topic__note">{t.note}</p>
-                </div>
-                <Mail size={15} strokeWidth={1.8} className="contact-topic__mail-icon" aria-hidden="true" />
+                  <span className="contact-topic__note">{t.note}</span>
+                </span>
               </a>
             );
           })}
@@ -145,45 +160,38 @@ export default function ContactPage() {
       </LegalSection>
 
       <LegalSection title="أوقات الرد">
-        <div className="contact-times">
-          <div className="contact-time-row">
-            <span>استفسارات عامة</span>
-            <strong>خلال 1-3 أيام عمل</strong>
-          </div>
-          <div className="contact-time-row">
+        <ul className="contact-times">
+          <li className="contact-time-row">
+            <span>الاستفسارات العامة</span>
+            <strong>1–3 أيام عمل</strong>
+          </li>
+          <li className="contact-time-row">
             <span>تصحيح المحتوى العلمي</span>
-            <strong>خلال 3-5 أيام عمل</strong>
-          </div>
-          <div className="contact-time-row">
-            <span>مشاكل تقنية</span>
+            <strong>3–5 أيام عمل</strong>
+          </li>
+          <li className="contact-time-row">
+            <span>المشاكل التقنية</span>
             <strong>خلال 24 ساعة</strong>
-          </div>
-          <div className="contact-time-row">
+          </li>
+          <li className="contact-time-row">
             <span>طلبات حذف البيانات</span>
             <strong>خلال 7 أيام عمل</strong>
-          </div>
-        </div>
-        <p>
-          نحرص على الرد على جميع الرسائل. إن لم تصلك ردود بعد المدة المذكورة،
-          يرجى المراسلة مجدداً مع ذكر بريدك الإلكتروني الأصلي.
-        </p>
+          </li>
+        </ul>
       </LegalSection>
 
       <LegalSection title="الأسئلة الشائعة">
-        <div className="contact-faq">
-          {FAQ.map((item) => (
-            <div key={item.q} className="contact-faq__item">
-              <p className="contact-faq__q">{item.q}</p>
-              <p className="contact-faq__a">{item.a}</p>
-            </div>
+        <Accordion type="single" collapsible className="contact-faq" defaultValue="faq-0">
+          {FAQ.map((item, i) => (
+            <AccordionItem key={item.q} value={`faq-${i}`} className="contact-faq__item">
+              <AccordionTrigger className="contact-faq__trigger text-start hover:no-underline">
+                {item.q}
+              </AccordionTrigger>
+              <AccordionContent className="contact-faq__a">{item.a}</AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </LegalSection>
-
-      <div className="twh-share">
-        <ShareButtons title="تواصل مع المجلس العلمي" url="https://www.majlisilm.com/contact" />
-      </div>
-      <LegalBackLink />
     </LegalPageLayout>
   );
 }

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { goBackOrFallback } from "@/lib/navigation-back";
-import { PageShell } from "@/components/layout/PageShell";
+import { PageShell, type PageShellDensity } from "@/components/layout/PageShell";
 
 type Props = {
   eyebrow: string;
@@ -8,6 +8,9 @@ type Props = {
   children: ReactNode;
   /** تاريخ آخر تحديث ظاهر للمستخدم (مثل سياسة الخصوصية) */
   updatedAt?: string;
+  /** كثافة الإيقاع — الافتراضي airy لصفحات السياسات الطويلة */
+  density?: PageShellDensity;
+  className?: string;
 };
 
 function goBack() {
@@ -15,13 +18,20 @@ function goBack() {
   goBackOrFallback(currentPath);
 }
 
-export function LegalPageLayout({ eyebrow, title, children, updatedAt }: Props) {
+export function LegalPageLayout({
+  eyebrow,
+  title,
+  children,
+  updatedAt,
+  density = "airy",
+  className = "",
+}: Props) {
   return (
     <PageShell
       as="article"
       variant="narrow"
-      density="airy"
-      className="legal-page"
+      density={density}
+      className={`legal-page ${className}`.trim()}
       aria-labelledby="legal-page-title"
       intro={
         <header className="legal-page-hero">
