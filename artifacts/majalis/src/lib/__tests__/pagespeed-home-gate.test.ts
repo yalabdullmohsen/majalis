@@ -22,9 +22,11 @@ const intro = read("src/components/onboarding/FirstVisitIntro.tsx");
 const navBack = read("src/lib/navigation-back.ts");
 
 assert.match(html, /MIN_MS\s*=\s*280/, "دخولية قصيرة — LCP");
-assert.match(html, /MAX_MS\s*=\s*700/, "سقف دخولية ≤700ms");
+assert.match(html, /SOFT_MAX_MS\s*=\s*700/, "هدف LCP ليّن ≤700ms عند جاهزية الخطوط");
+assert.match(html, /MAX_MS\s*=\s*2200/, "سقف صلب لانتظار الخطوط — منع FOUT");
 assert.match(splash, /SPLASH_MIN_VISIBLE_MS\s*=\s*280/);
-assert.match(splash, /SPLASH_MAX_VISIBLE_MS\s*=\s*700/);
+assert.match(splash, /SPLASH_LCP_SOFT_MS\s*=\s*700/);
+assert.match(splash, /SPLASH_MAX_VISIBLE_MS\s*=\s*2_?200|SPLASH_MAX_VISIBLE_MS\s*=\s*2200/);
 assert.match(html, /sessionStorage\.getItem\(KEY\)/, "تخطّي الدخولية في نفس الجلسة");
 assert.match(html, /<meta charset="UTF-8"\s*\/>/, "charset موجود");
 {

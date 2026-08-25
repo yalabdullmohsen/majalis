@@ -24,10 +24,12 @@ assert.doesNotMatch(html, /mj-home-lcp-static|mj-app-mount/, "لا صدفة نص
 assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل الشاشة");
 assert.doesNotMatch(html, /#mj-boot-skeleton/, "بلا أنماط هيكل إقلاع حاجب");
 assert.match(html, /id="mj-launch-splash"/, "دخولية MajlisSplash");
-assert.match(html, /MAX_MS\s*=\s*700/, "حد أقصى للدخولية");
+assert.match(html, /SOFT_MAX_MS\s*=\s*700/, "هدف LCP ليّن");
+assert.match(html, /MAX_MS\s*=\s*2200/, "سقف انتظار خطوط");
 assert.match(critical, /\.hsh-steps[\s\S]*min-height:\s*22rem/, "حجز ارتفاع hsh-steps");
 assert.match(critical, /\.hsh-step[\s\S]*min-height:\s*6\.25rem/, "حجز ارتفاع hsh-step");
 assert.doesNotMatch(fontsUi, /amiri-700/, "لا Amiri 700 في fonts-ui الإقلاع");
+assert.match(fontsUi, /amiri-400-ar[\s\S]*font-display:\s*block/, "Amiri 400 block — بلا FOUT");
 assert.match(fontsBold, /amiri-700-ar[\s\S]*font-display:\s*optional/, "Amiri 700 optional مؤجّل — بلا CLS");
 assert.match(fontsBold, /Aref Ruqaa[\s\S]*font-display:\s*optional/, "Aref Ruqaa 700 optional");
 assert.equal(

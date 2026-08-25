@@ -22,7 +22,8 @@ assert.doesNotMatch(indexHtml, /#0E1A15/, "لا خلفية خضراء داكنة
 assert.match(indexHtml, /prefers-reduced-motion:\s*reduce/, "مسار بلا حركة");
 assert.match(indexHtml, /__mjDismissSplash/, "دالة dismiss للدخولية");
 assert.match(indexHtml, /MIN_MS\s*=\s*280/, "حد أدنى 280ms");
-assert.match(indexHtml, /MAX_MS\s*=\s*700/, "حد أقصى 700ms");
+assert.match(indexHtml, /SOFT_MAX_MS\s*=\s*700/, "هدف LCP ليّن 700ms");
+assert.match(indexHtml, /MAX_MS\s*=\s*2200/, "سقف صلب لخطوط الواجهة");
 assert.match(indexHtml, /splash_timing=1/, "معامل قياس توقيت الدخولية");
 assert.match(indexHtml, /127\.0\.0\.1/, "مسار سريع لمعاينة CI المحلية");
 assert.doesNotMatch(indexHtml, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل الشاشة");
@@ -59,7 +60,8 @@ assert.doesNotMatch(
 
 const majlisSplash = readFileSync(resolve(root, "src/lib/majlis-splash.ts"), "utf8");
 assert.match(majlisSplash, /SPLASH_MIN_VISIBLE_MS\s*=\s*280/);
-assert.match(majlisSplash, /SPLASH_MAX_VISIBLE_MS\s*=\s*700/);
+assert.match(majlisSplash, /SPLASH_LCP_SOFT_MS\s*=\s*700/);
+assert.match(majlisSplash, /SPLASH_MAX_VISIBLE_MS\s*=\s*2_?200|SPLASH_MAX_VISIBLE_MS\s*=\s*2200/);
 
 const mainSrc = readFileSync(resolve(root, "src/main.tsx"), "utf8");
 assert.match(mainSrc, /mj:app-painted/, "main يعلن أول رسم");

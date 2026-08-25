@@ -215,7 +215,14 @@ export function useMushafPageFontFit(
         });
     };
 
-    run(true);
+    // إطار أول بلا قياس ديناميكي — أخفِ النص (data-mm-fit=0) حتى fonts + هندسة مستقرة.
+    markFit(el, false);
+    let firstFrameId = 0;
+    firstFrameId = requestAnimationFrame(() => {
+      firstFrameId = requestAnimationFrame(() => {
+        if (!cancelled) run(true);
+      });
+    });
     const ro =
       typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => run(false)) : null;
     ro?.observe(el);
@@ -228,6 +235,7 @@ export function useMushafPageFontFit(
     fonts?.addEventListener?.("loadingdone", onOrient);
     return () => {
       cancelled = true;
+      cancelAnimationFrame(firstFrameId);
       ro?.disconnect();
       window.removeEventListener("orientationchange", onOrient);
       fonts?.removeEventListener?.("loadingdone", onOrient);

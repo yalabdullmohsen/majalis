@@ -6,8 +6,8 @@ function fontFamilyName(pageNumber: number): string {
   return `qpc-v2-p${pageNumber}`;
 }
 
-async function waitUntilReady(pageNumber: number): Promise<void> {
-  if (typeof document === "undefined" || !document.fonts) return;
+async function waitUntilReady(pageNumber: number): Promise<boolean> {
+  if (typeof document === "undefined" || !document.fonts) return true;
   const family = fontFamilyName(pageNumber);
   const spec = `16px "${family}"`;
   try {
@@ -16,14 +16,15 @@ async function waitUntilReady(pageNumber: number): Promise<void> {
   } catch {
     /* يُعاد الفحص أدناه */
   }
-  if (!document.fonts.check(spec) && !document.fonts.check(`16px ${family}`)) {
-    throw new Error(`الخط ${family} لم يُحمَّل`);
-  }
+  return Boolean(
+    document.fonts.check(spec) || document.fonts.check(`16px ${family}`),
+  );
 }
 
-function loadFace(pageNumber: number): Promise<void> {
+function loadFace(pageNumber: number): Promise<boolean> {
+  if (pageNumber < 1 || pageNumber > 604) return Promise.resolve(false);
   if (loaded.has(pageNumber)) return waitUntilReady(pageNumber);
-  if (pageNumber < 1 || pageNumber > 604) return Promise.resolve();
+
   const fontFamily = fontFamilyName(pageNumber);
   const url = `/fonts/qpc-v2/p${pageNumber}.woff2`;
   const face = new FontFace(fontFamily, `url(${url})`, {
@@ -35,16 +36,14 @@ function loadFace(pageNumber: number): Promise<void> {
     .load()
     .then(async (loadedFace) => {
       document.fonts.add(loadedFace);
-      await waitUntilReady(pageNumber);
-      loaded.add(pageNumber);
+      const ok = await waitUntilReady(pageNumber);
+      if (ok) loaded.add(pageNumber);
+      return ok;
     })
     .catch(async () => {
-      try {
-        await waitUntilReady(pageNumber);
-        loaded.add(pageNumber);
-      } catch {
-        /* لا نعلن الجاهزية بخط احتياطي — القياس عندها ينفجر */
-      }
+      const ok = await waitUntilReady(pageNumber);
+      if (ok) loaded.add(pageNumber);
+      return ok;
     });
 }
 
@@ -55,15 +54,10 @@ export function useQpcPageFont(pageNumber: number): { fontFamily: string; ready:
 
   useEffect(() => {
     let cancelled = false;
-    if (loaded.has(pageNumber)) {
-      void waitUntilReady(pageNumber).then(() => {
-        if (!cancelled) setReady(true);
-      });
-    } else {
-      void loadFace(pageNumber).then(() => {
-        if (!cancelled) setReady(true);
-      });
-    }
+    setReady(loaded.has(pageNumber));
+    void loadFace(pageNumber).then((ok) => {
+      if (!cancelled && ok) setReady(true);
+    });
     void loadFace(pageNumber - 1);
     void loadFace(pageNumber + 1);
     /* بسملة المطلع تستخدم دائماً محارف الصفحة ١ → جهّز الخط مسبقاً */

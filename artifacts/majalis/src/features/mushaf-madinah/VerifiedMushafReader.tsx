@@ -664,9 +664,12 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
         <div className="mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
           {error ? <div className="mm-status">{error}</div> : null}
           {!error && (!layout || !fontReady) ? (
-            <div className="mm-page-placeholder" role="status" aria-label="جاري تحميل الصفحة">
-              {!layout ? "جاري تحميل الصفحة…" : null}
-            </div>
+            <div
+              className="mm-page-placeholder"
+              role="status"
+              aria-label="جاري تحميل الصفحة"
+              aria-busy="true"
+            />
           ) : null}
           {layout && fontReady ? (
             <MushafPage

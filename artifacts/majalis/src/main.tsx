@@ -22,7 +22,7 @@ import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
 import { refreshQuranAudioRemoteConfig } from "./lib/quran-audio-remote-config";
 import { armNativeSplashController } from "./lib/splash-screen";
-import { awaitBootReadiness } from "./lib/boot-readiness";
+import { awaitBootReadiness, registerBootStorageGate } from "./lib/boot-readiness";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 import { initOnboardingState } from "./lib/onboarding-state";
 import { scheduleOnIdle } from "./lib/yield-to-main";
@@ -198,7 +198,11 @@ async function mount() {
     return;
   }
 
-  // أخفِ الإطلاق بعد جاهزية الثيم/الخطوط (مهلة قصيرة داخل awaitBootReadiness).
+  // مزامنة التخزين الأصلي بالتوازي مع الرسم — لا await قبل createRoot.
+  const storageHydrate = hydrateNativeStorage().catch(() => {});
+  registerBootStorageGate(storageHydrate);
+
+  // أخفِ الإطلاق بعد جاهزية الثيم/الخطوط/التخزين (document.fonts داخل awaitBootReadiness).
   armNativeSplashController();
   void awaitBootReadiness().then(() => {
     requestAnimationFrame(() => {
@@ -212,7 +216,7 @@ async function mount() {
   // خلفيات غير حاجبة للإقلاع — تأجيل طويل (لا rIC: يطلق فور الخمول فيُحسب Unused JS).
   const afterPaint = () => {
     void purgeNativeWebRuntimeCaches().catch(() => {});
-    void hydrateNativeStorage().catch(() => {});
+    void storageHydrate;
     void import("./lib/supabase-bootstrap")
       .then((m) => m.bootstrapSupabaseFromServer().then(() => m.resetSupabaseClient()))
       .catch(() => {});
