@@ -358,6 +358,19 @@ export default function SettingsPage() {
               <option value="amiri">أميري (Amiri)</option>
             </select>
           </label>
+          <label className="settings-field">
+            <span>نظام الأرقام</span>
+            <select
+              name="numeral-system"
+              value={preferences.numeralSystem}
+              onChange={(e) =>
+                update("numeralSystem", e.target.value as UserPreferences["numeralSystem"])
+              }
+            >
+              <option value="عربي">عربية مشرقية (١٢٣)</option>
+              <option value="إنجليزي">غربية (123)</option>
+            </select>
+          </label>
           <div className="settings-actions">
             <button type="button" className="ds-btn ds-btn--ghost" onClick={() => bumpFont(2)}>
               {t("settings_quran_font_up")}

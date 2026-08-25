@@ -134,6 +134,8 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
   root.dataset.readingWidth = prefs.readingWidth;
   root.dataset.readingTheme = prefs.readingTheme || "default";
   root.dir = prefs.direction;
+  /** عربي = أرقام مشرقية ١٢٣ · إنجليزي = غربية 123 — عرض فقط بلا لمس نصوص شرعية */
+  root.dataset.numerals = prefs.numeralSystem === "إنجليزي" ? "lat" : "ar";
   root.dataset.imageQuality = dataSaver ? "منخفض" : prefs.imageQuality;
   root.dataset.uiDensity = senior ? "comfortable" : prefs.uiDensity;
   root.dataset.dataSaver = dataSaver ? "1" : "0";

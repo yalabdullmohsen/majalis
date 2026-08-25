@@ -390,7 +390,7 @@ html[data-theme="dark"] .rai-correction-card__dismiss { color: #E8DED4; border-c
 }
 html[data-theme="dark"] .rai-icon-btn { background: #1A2120; color: var(--mj-brand-soft); }
 
-.rai-plain-words { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: var(--ds-text-2xl); line-height: 1.9; color: #1A1A1A; text-align: justify; }
+.rai-plain-words { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: var(--ds-text-2xl); line-height: 1.9; color: #1A1A1A; text-align: start; hyphens: none; font-synthesis: none; letter-spacing: normal; }
 html[data-theme="dark"] .rai-plain-words { color: var(--mj-brand-soft); }
 .rai-plain-word--correct { color: var(--rai-emerald-deep); }
 .rai-plain-word--error { color: var(--rai-error); text-decoration: underline wavy var(--rai-error); }

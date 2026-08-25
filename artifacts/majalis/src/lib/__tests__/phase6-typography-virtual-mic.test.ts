@@ -37,8 +37,10 @@ assert.equal(clampQuranFontSize(20), 20);
 const indexCss = read("index.css");
 assert.match(indexCss, /"Amiri Quran"/);
 assert.match(indexCss, /"KFGQPC Hafs Uthmanic"/);
-assert.match(indexCss, /size-adjust/);
-assert.match(indexCss, /ascent-override/);
+const fontsQuran = read("styles/fonts-quran.css");
+assert.match(fontsQuran, /size-adjust/);
+assert.match(fontsQuran, /ascent-override/);
+assert.match(fontsQuran, /font-synthesis:\s*none/);
 
 const html = readFileSync(resolve(root, "index.html"), "utf8");
 assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/);

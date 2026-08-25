@@ -40,7 +40,9 @@ assert.match(actions, /تجويد/);
 assert.match(actions, /ayahPreview/);
 assert.match(tafsir, /تعذّر جلب التفسير|لا يوجد تفسير متاح/);
 
-assert.match(controls, /\{pageNumber\} \/ \{MUSHAF_PAGE_MAX\}/);
+assert.match(controls, /fmt\(pageNumber\)/);
+assert.match(controls, /fmt\(MUSHAF_PAGE_MAX\)/);
+assert.match(controls, /useNumerals/);
 assert.match(controls, /mm-goto__error/);
 assert.match(controls, /أدخل رقمًا بين/);
 assert.match(css, /\.mm-controls__page[\s\S]*?font-weight:\s*800/);

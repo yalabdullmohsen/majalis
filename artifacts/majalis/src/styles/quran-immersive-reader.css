@@ -102,6 +102,12 @@
   color: inherit;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  font-synthesis: none;
+  hyphens: none;
+  -webkit-hyphens: none;
+  letter-spacing: normal;
+  overflow-wrap: anywhere;
+  max-width: 100%;
 }
 
 .quran-verse-list__verse.is-selected .quran-verse-list__text {

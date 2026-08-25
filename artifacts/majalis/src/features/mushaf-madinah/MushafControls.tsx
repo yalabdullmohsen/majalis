@@ -1,5 +1,6 @@
 import { BookOpen, List, Search, Settings2 } from "lucide-react";
 import { useEffect, useId, useState } from "react";
+import { useNumerals } from "@/hooks/useNumerals";
 import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN, parseMushafPageQuery } from "@/lib/quran-last-page";
 
 type Props = {
@@ -34,6 +35,7 @@ export function MushafControls({
   const [draft, setDraft] = useState(String(pageNumber));
   const [gotoError, setGotoError] = useState<string | null>(null);
   const titleId = useId();
+  const fmt = useNumerals();
   const visible = open || persist || gotoOpen;
 
   useEffect(() => {
@@ -96,7 +98,7 @@ export function MushafControls({
           aria-label={`الصفحة ${pageNumber} من ${MUSHAF_PAGE_MAX} — انتقال`}
           dir="ltr"
         >
-          {pageNumber} / {MUSHAF_PAGE_MAX}
+          {fmt(pageNumber)} / {fmt(MUSHAF_PAGE_MAX)}
         </button>
         <div className="mm-controls__cluster mm-controls__cluster--end">
           <button

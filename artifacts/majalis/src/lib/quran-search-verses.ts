@@ -88,6 +88,118 @@ export async function searchVersesInCorpus(
   limit = QURAN_SEARCH_RESULT_LIMIT,
 ): Promise<QuranVerseSearchItem[]> {
   const db = await loadQuranVerseDatabase();
-  const hits = searchVerses(query, db);
-  return limit > 0 ? hits.slice(0, limit) : hits;
+  const viaWorker = await searchVersesViaWorker(query, db, limit);
+  if (viaWorker) return viaWorker;
+  const hits = await searchVersesIdle(query, db, limit);
+  return hits;
+}
+
+function searchVersesIdle(
+  query: string,
+  db: QuranVerseSearchItem[],
+  limit: number,
+): Promise<QuranVerseSearchItem[]> {
+  return new Promise((resolve) => {
+    const run = () => {
+      const hits = searchVerses(query, db);
+      resolve(limit > 0 ? hits.slice(0, limit) : hits);
+    };
+    if (typeof requestIdleCallback === "function") {
+      requestIdleCallback(() => run(), { timeout: 120 });
+    } else {
+      setTimeout(run, 0);
+    }
+  });
+}
+
+let sharedWorker: Worker | null = null;
+let workerDbReady = false;
+let workerId = 0;
+let workerInitPromise: Promise<boolean> | null = null;
+
+function getVerseSearchWorker(): Worker | null {
+  if (typeof Worker === "undefined") return null;
+  if (sharedWorker) return sharedWorker;
+  try {
+    sharedWorker = new Worker(new URL("./quran-verse-search.worker.ts", import.meta.url), {
+      type: "module",
+    });
+    sharedWorker.addEventListener("error", () => {
+      sharedWorker?.terminate();
+      sharedWorker = null;
+      workerDbReady = false;
+      workerInitPromise = null;
+    });
+    return sharedWorker;
+  } catch {
+    return null;
+  }
+}
+
+function ensureWorkerDb(db: QuranVerseSearchItem[]): Promise<boolean> {
+  const worker = getVerseSearchWorker();
+  if (!worker) return Promise.resolve(false);
+  if (workerDbReady) return Promise.resolve(true);
+  if (workerInitPromise) return workerInitPromise;
+  workerInitPromise = new Promise((resolve) => {
+    const onMsg = (ev: MessageEvent<{ ok?: boolean }>) => {
+      worker.removeEventListener("message", onMsg);
+      workerDbReady = Boolean(ev.data?.ok);
+      resolve(workerDbReady);
+    };
+    worker.addEventListener("message", onMsg);
+    worker.postMessage({
+      type: "init",
+      items: db.map((v) => ({ text: v.text, textNorm: v.textNorm })),
+    });
+    window.setTimeout(() => {
+      worker.removeEventListener("message", onMsg);
+      resolve(false);
+    }, 8_000);
+  });
+  return workerInitPromise;
+}
+
+/**
+ * بحث في Web Worker بعد تهيئة القاعدة مرة واحدة.
+ * عند الفشل يُرجع null ليعمل مسار idle على الخيط الرئيسي.
+ */
+async function searchVersesViaWorker(
+  query: string,
+  db: QuranVerseSearchItem[],
+  limit: number,
+): Promise<QuranVerseSearchItem[] | null> {
+  const raw = query.trim();
+  if (!raw) return [];
+  const queryNorm = normalizeArabic(raw);
+  if (!queryNorm) return [];
+
+  const ready = await ensureWorkerDb(db);
+  const worker = getVerseSearchWorker();
+  if (!ready || !worker) return null;
+
+  const id = ++workerId;
+  try {
+    const result = await new Promise<{ ok: boolean; indices?: number[] }>((resolve) => {
+      const timer = window.setTimeout(() => resolve({ ok: false }), 3_000);
+      const onMsg = (ev: MessageEvent<{ id: number; ok: boolean; indices?: number[] }>) => {
+        if (ev.data?.id !== id) return;
+        window.clearTimeout(timer);
+        worker.removeEventListener("message", onMsg);
+        resolve(ev.data);
+      };
+      worker.addEventListener("message", onMsg);
+      worker.postMessage({
+        type: "search",
+        id,
+        query: raw,
+        queryNorm,
+        limit: limit > 0 ? limit : db.length,
+      });
+    });
+    if (!result.ok || !result.indices) return null;
+    return result.indices.map((i) => db[i]!).filter(Boolean);
+  } catch {
+    return null;
+  }
 }

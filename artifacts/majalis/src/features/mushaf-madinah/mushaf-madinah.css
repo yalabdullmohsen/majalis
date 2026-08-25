@@ -82,6 +82,20 @@
   --mm-ref-open-text-end: 74.8%;
   --mushaf-bg: var(--mm-outer-bg);
 
+  /* قفل تكبير نص النظام + منع التخليق الاصطناعي للخط العثماني */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  hyphens: none;
+  -webkit-hyphens: none;
+  /* عزل OpenType الموروث — هندسة QPC ثابتة */
+  font-feature-settings: normal;
+  font-variant-ligatures: none;
+  font-kerning: none;
+  letter-spacing: 0;
+
   position: fixed;
   inset: 0;
   z-index: 40;
@@ -523,6 +537,9 @@ html.dark .mm-surah-frame__name {
   overflow-y: visible;
   padding-block: 0.04em;
   box-sizing: border-box;
+  font-synthesis: none;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
 
 /* أسطر قصيرة / غير ممتلئة: توسيط هادئ بلا تمديد */
@@ -678,6 +695,12 @@ html.dark .ayah-active.mm-ayah-line__word:not([data-type="end"]),
   color: var(--mm-ayah-mark);
   vertical-align: baseline;
   white-space: nowrap;
+  font-synthesis: none;
+  letter-spacing: 0;
+  /* ثبات موضع علامة نهاية الآية / الترقيم دون قصّ */
+  overflow: visible;
+  position: relative;
+  z-index: 1;
 }
 
 .mm-ayah-number__glyph {

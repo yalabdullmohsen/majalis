@@ -289,9 +289,10 @@
   font-family: "Amiri Quran", "Scheherazade New", serif;
   font-size: var(--qs-font-size, 26px);
   line-height: 2.5;
-  text-align: justify;
-  text-justify: inter-word;
-  text-align-last: right;
+  /* بلا تبرير ممتد (كشيدة) — محاذاة بداية RTL أوضح للقراءة القرآنية */
+  text-align: start;
+  text-justify: none;
+  text-align-last: start;
   direction: rtl;
   color: var(--text-body, #1a1a1a);
   padding: 1.25rem 1rem 2rem;
@@ -303,6 +304,9 @@
   white-space: normal;
   letter-spacing: normal;
   word-spacing: normal;
+  hyphens: none;
+  -webkit-hyphens: none;
+  font-synthesis: none;
 }
 
 /* Each ayah: pure inline, no block breaking */

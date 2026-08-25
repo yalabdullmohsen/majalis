@@ -103,7 +103,9 @@ assert.doesNotMatch(pager, /rotateY/);
 const controls = read("src/features/mushaf-madinah/MushafControls.tsx");
 assert.doesNotMatch(controls, /exitAlwaysVisible/);
 assert.doesNotMatch(controls, /× خروج|mm-controls__exit|data-exit/, "بلا زر خروج زائد");
-assert.match(controls, /\{pageNumber\} \/ \{MUSHAF_PAGE_MAX\}/);
+assert.match(controls, /fmt\(pageNumber\)/);
+assert.match(controls, /fmt\(MUSHAF_PAGE_MAX\)/);
+assert.match(controls, /useNumerals/);
 assert.match(controls, /onSearch|بحث/);
 assert.match(controls, /فهرس/);
 
