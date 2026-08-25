@@ -1,5 +1,5 @@
 /**
- * إعلان منتصف الهيدر — يستبدل وردمارك «المجلس العلمي» في كل الصفحات غير الغامرة.
+ * إعلان المنصة — شريط أعلى الهيدر و/أو كبسولة منتصف الهيدر.
  *
  * سياسة المحتوى (إلزامي قبل التفعيل):
  * - إعلانات ورعايات متوافقة مع هوية المجلس العلمي ومحتواه الشرعي التعليمي.
@@ -7,10 +7,18 @@
  * - لا محتوى يخالف الشريعة أو يسيء لسمعة المنصة.
  * - المراجعة البشرية مطلوبة قبل نشر أي راعٍ حقيقي.
  *
- * التعطيل: ضع `headerAd.enabled = false` لإخفاء الكبسولة دون إرجاع نص العلامة في الهيدر.
+ * التعطيل: ضع `headerAd.enabled = false`.
  */
+export type HeaderAdPlacement = "top" | "header" | "both";
+
 export type HeaderAdConfig = {
   enabled: boolean;
+  /**
+   * top = شريط أعلى الهيدر (أوضح في التطبيق)
+   * header = كبسولة منتصف الهيدر
+   * both = الاثنان معًا
+   */
+  placement: HeaderAdPlacement;
   title: string;
   /** سطر ثانٍ عند عدم وجود راعٍ فعلي */
   subtitle: string;
@@ -21,10 +29,11 @@ export type HeaderAdConfig = {
 
 export const headerAdConfig: HeaderAdConfig = {
   enabled: true,
+  placement: "top",
   title: "مساحة إعلانية مميزة",
   subtitle: "أعلن هنا للمهتمين بالمحتوى الشرعي والتعليمي",
   ctaLabel: "احجز",
-  /** صفحة الدعم والتواصل — آمن داخل التطبيق؛ البريد يبقى في نص الرسالة هناك */
+  /** صفحة الدعم والتواصل — آمن داخل التطبيق */
   ctaUrl: "/support",
 };
 
@@ -32,9 +41,17 @@ export const headerAdConfig: HeaderAdConfig = {
 export const headerAd = headerAdConfig;
 
 /**
- * هل يُعرض إعلان الهيدر؟
- * نعم في كل المسارات التي تظهر فيها الترويسة العامة (NavBar يخفي نفسه في المسارات الغامرة).
+ * هل تُعرض كبسولة منتصف الهيدر؟
  */
 export function shouldShowHeaderAd(_pathname?: string): boolean {
-  return headerAdConfig.enabled;
+  if (!headerAdConfig.enabled) return false;
+  return headerAdConfig.placement === "header" || headerAdConfig.placement === "both";
+}
+
+/**
+ * هل يُعرض شريط الراعي أعلى الهيدر؟
+ */
+export function shouldShowTopSponsorBanner(): boolean {
+  if (!headerAdConfig.enabled) return false;
+  return headerAdConfig.placement === "top" || headerAdConfig.placement === "both";
 }

@@ -80,7 +80,7 @@ article,
  * لون المنطقة العليا = --app-status-bg (PageChrome).
  */
 html.capacitor-native {
-  --header-h: calc(var(--header-chrome, 56px) + var(--inset-top));
+  --header-h: calc(var(--header-chrome, 56px) + var(--inset-top) + var(--ad-banner-height, 0px));
   background-color: var(--mj-splash, #0E1A15);
   min-height: 100dvh;
 }

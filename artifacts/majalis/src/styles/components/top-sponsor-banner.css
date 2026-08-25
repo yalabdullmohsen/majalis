@@ -1,0 +1,156 @@
+/**
+ * شريط الراعي أعلى الهيدر — ارتفاع ثابت + safe-area لمنع CLS.
+ */
+.top-sponsor-banner {
+  --top-sponsor-content-h: 36px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(var(--inset-top, 0px) + var(--top-sponsor-content-h));
+  max-height: calc(var(--inset-top, 0px) + var(--top-sponsor-content-h));
+  padding-top: var(--inset-top, 0px);
+  margin: 0;
+  /* لون صلب أولاً: بوابة التباين ترفض التدرج وحده (NO_COLOR). */
+  background-color: #f7f0e0;
+  background-image: linear-gradient(90deg, #fffef8 0%, #f7f0e0 45%, #f3e8cf 100%);
+  border-bottom: 1px solid color-mix(in srgb, #8b6914 22%, transparent);
+}
+
+html[data-theme="dark"] .top-sponsor-banner,
+html.theme-dark .top-sponsor-banner {
+  background-color: #222018;
+  background-image: linear-gradient(90deg, #1a1c16 0%, #222018 50%, #1c1a14 100%);
+  border-bottom-color: color-mix(in srgb, #c4a35a 28%, transparent);
+}
+
+.top-sponsor-banner__inner {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: var(--top-sponsor-content-h);
+  min-height: var(--top-sponsor-content-h);
+  max-height: var(--top-sponsor-content-h);
+  padding-inline: max(0.65rem, var(--inset-right, 0px)) max(0.65rem, var(--inset-left, 0px));
+}
+
+.top-sponsor-banner__link {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  text-decoration: none;
+  color: #173d35;
+}
+
+html[data-theme="dark"] .top-sponsor-banner__link,
+html.theme-dark .top-sponsor-banner__link {
+  color: #e8efea;
+}
+
+.top-sponsor-banner__badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.15rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.58rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #173d35;
+  background: color-mix(in srgb, #8b6914 16%, #fff);
+  border: 1px solid color-mix(in srgb, #8b6914 28%, transparent);
+  white-space: nowrap;
+}
+
+html[data-theme="dark"] .top-sponsor-banner__badge,
+html.theme-dark .top-sponsor-banner__badge {
+  color: #f0e6c8;
+  background: color-mix(in srgb, #c4a35a 22%, #151812);
+  border-color: color-mix(in srgb, #c4a35a 35%, transparent);
+}
+
+.top-sponsor-banner__copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.02rem;
+  overflow: hidden;
+}
+
+.top-sponsor-banner__title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+  color: #173d35;
+}
+
+html[data-theme="dark"] .top-sponsor-banner__title,
+html.theme-dark .top-sponsor-banner__title {
+  color: #e8efea;
+}
+
+.top-sponsor-banner__subtitle {
+  font-size: 0.62rem;
+  font-weight: 500;
+  opacity: 0.88;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.top-sponsor-banner__cta {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.55rem;
+  padding: 0 0.65rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  background: #173d35;
+  white-space: nowrap;
+}
+
+html[data-theme="dark"] .top-sponsor-banner__cta,
+html.theme-dark .top-sponsor-banner__cta {
+  background: #2f8f6a;
+  color: #fff;
+}
+
+.app-top-chrome {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-app-header, 200);
+  background: var(--app-bg, var(--mj-bg, #f2f4f3));
+}
+
+@media (max-width: 390px) {
+  .top-sponsor-banner {
+    --top-sponsor-content-h: 34px;
+  }
+
+  .top-sponsor-banner__title {
+    font-size: 0.7rem;
+  }
+
+  .top-sponsor-banner__subtitle {
+    display: none;
+  }
+
+  .top-sponsor-banner__cta {
+    font-size: 0.64rem;
+    min-height: 1.4rem;
+    padding-inline: 0.5rem;
+  }
+}

@@ -39,12 +39,21 @@ html:not(.pts-immersive) body {
 }
 
 @media (max-width: 879px) {
-  .navbar-v3.mj-chrome-scrollable {
+  .app-top-chrome {
     position: sticky;
     top: 0;
     z-index: var(--z-nav, 200);
     transition: transform 220ms ease, opacity 220ms ease;
     will-change: transform;
+    background: var(--app-bg) !important;
+  }
+
+  .navbar-v3.mj-chrome-scrollable {
+    position: relative;
+    top: auto;
+    z-index: auto;
+    transition: none;
+    will-change: auto;
     background: var(--app-bg) !important;
     background-image: none !important;
   }
@@ -70,6 +79,12 @@ html:not(.pts-immersive) body {
   }
 
   .app-shell.app-chrome-hidden .navbar-v3.mj-chrome-scrollable {
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .app-shell.app-chrome-hidden .app-top-chrome {
     transform: translateY(-100%);
     opacity: 0;
     pointer-events: none;
