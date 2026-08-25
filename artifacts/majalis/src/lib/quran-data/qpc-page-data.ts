@@ -402,6 +402,11 @@ export function prefetchMushafPage(pageNumber: number): void {
   void loadMushafPage(pageNumber).catch(() => {});
 }
 
+/** تفريغ تخطيطات الصفحات بعيدة الشاشة عند ضغط الذاكرة */
+export function purgeMushafLayoutCaches(): void {
+  layoutCache.clear();
+}
+
 /** للاختبارات فقط — يفرّغ JSON والتخطيط والوعود الجارية. */
 export function resetMushafPageCachesForTests(): void {
   pageCache.clear();

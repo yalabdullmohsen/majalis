@@ -155,7 +155,7 @@ assert.match(read("src/features/mushaf-madinah/MushafPage.tsx"), /hizbStartingOn
 const line = read("src/features/mushaf-madinah/MushafAyahLine.tsx");
 assert.match(line, /onSelectVerse/);
 assert.match(line, /mm-ayah-hit/);
-assert.match(line, /data-type=\{w\.charType\}/);
+assert.match(line, /data-type=\{(w|word)\.charType\}/);
 assert.match(line, /charType === "end"/);
 assert.match(line, /stopPropagation/);
 assert.match(line, /LONG_PRESS_MS/);

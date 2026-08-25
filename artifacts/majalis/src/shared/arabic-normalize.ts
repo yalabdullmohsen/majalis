@@ -50,6 +50,12 @@ function stripInvisible(text: string): string {
     .replace(/\u00A0/g, " ");
 }
 
+/** يزيل التشكيل للعرض/البحث الخفيف — دون تطبيع حروف (يُبقى النص العثماني). */
+export function stripArabicDiacritics(text: string): string {
+  if (!text) return "";
+  return removeTashkeel(stripInvisible(text)).replace(/\s+/g, " ").trim();
+}
+
 /** Uncached normalize core — used by memoized wrapper. */
 function normalizeArabicUncached(text: string): string {
   // ─── توحيد الأرقام (لوحة مفاتيح عربية على iOS/Android تكتب ٢ لا 2) ──

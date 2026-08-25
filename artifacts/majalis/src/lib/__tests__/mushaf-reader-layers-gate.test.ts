@@ -22,7 +22,7 @@ const pager = read("src/features/mushaf-madinah/MushafPager.tsx");
 const tafsir = read("src/features/mushaf-madinah/TafsirTabPanel.tsx");
 const highlight = read("src/features/mushaf-madinah/MushafAyahHighlight.tsx");
 
-assert.match(line, /\{w\.glyphText\}/);
+assert.match(line, /\{(w|word)\.glyphText\}/);
 assert.doesNotMatch(line, /MushafAyahNumber/);
 assert.match(css, /\.ayah-active\.mm-ayah-line__word:not\(\[data-type="end"\]\)/);
 assert.match(css, /\.mm-ayah-hit--end\.ayah-active/);
@@ -71,7 +71,7 @@ assert.match(reader, /haptics\.success/);
 assert.match(reader, /beginPowerSaverSession/);
 assert.match(reader, /startBatteryFpsMonitor/);
 assert.match(reader, /data-audio-dock/);
-assert.match(reader, /block:\s*"center"/);
+assert.match(reader, /scrollAyahIntoViewCentered|block:\s*"center"/);
 assert.match(css, /--mm-ayah-select:\s*rgba\(46,\s*125,\s*82/);
 assert.match(css, /margin-bottom:\s*var\(--mm-dock-pad\)/);
 assert.match(css, /--mm-dock-pad:\s*calc\([^)]*var\(--inset-bottom/);

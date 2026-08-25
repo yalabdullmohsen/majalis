@@ -160,6 +160,32 @@ export async function purgeUnderMemoryPressure(
     }
   }
 
+  try {
+    const { clearTextMeasureCache } = await import("@/lib/text-layout-geometry");
+    clearTextMeasureCache();
+    actions.push("text-measure-cache");
+  } catch {
+    /* ignore */
+  }
+
+  try {
+    const { clearPlainQuranTextIndex } = await import("@/lib/quran-plain-text-index");
+    clearPlainQuranTextIndex();
+    actions.push("plain-quran-index");
+  } catch {
+    /* ignore */
+  }
+
+  if (level === "critical" || level === "moderate") {
+    try {
+      const { purgeMushafLayoutCaches } = await import("@/lib/quran-data/qpc-page-data");
+      purgeMushafLayoutCaches();
+      actions.push("mushaf-layout-cache");
+    } catch {
+      /* ignore */
+    }
+  }
+
   if (level === "critical") {
     try {
       const { clearMemoryStorageCache } = await import("@/lib/storage-reconciler");

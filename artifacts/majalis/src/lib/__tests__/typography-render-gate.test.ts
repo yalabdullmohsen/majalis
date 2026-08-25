@@ -43,8 +43,7 @@ assert.match(settings, /commitQuranScale/);
 assert.match(settings, /mj-bidi-isolate/);
 
 const fit = read("features/mushaf-madinah/fitPageFontSize.ts");
-assert.match(fit, /createElement\("canvas"\)/);
-assert.match(fit, /measureText/);
+assert.match(fit, /releaseCanvasResources/);
 
 const qpcHook = read("features/mushaf-madinah/useQpcPageFont.ts");
 assert.match(qpcHook, /FontFace/);
