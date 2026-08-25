@@ -79,6 +79,33 @@ export default tseslint.config(
     },
   },
   {
+    files: ["src/**/*.{ts,tsx}"],
+    ignores: [
+      "src/**/__tests__/**",
+      "src/**/*.test.ts",
+      "src/**/*.test.tsx",
+      "src/**/*.spec.ts",
+      "src/**/*.spec.tsx",
+      "src/tests/**",
+    ],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            "CallExpression[callee.object.name='console'][callee.property.name=/^(log|debug)$/]",
+          message: "أزل console.log/debug من كود الإنتاج — استخدم warn/error أو structured-logger",
+        },
+      ],
+    },
+  },
+  {
+    files: ["src/lib/structured-logger.ts"],
+    rules: {
+      "no-restricted-syntax": "off",
+    },
+  },
+  {
     files: ["src/components/topic/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-syntax": [

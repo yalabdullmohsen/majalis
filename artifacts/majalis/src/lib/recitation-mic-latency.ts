@@ -37,8 +37,8 @@ export function createMicLatencyTracker() {
     };
     samples.push(sample);
     if (samples.length > MAX_SAMPLES) samples.shift();
-    if (typeof console !== "undefined" && console.debug) {
-      console.debug("[recitation-latency]", event, {
+    if (typeof console !== "undefined" && console.warn) {
+      console.warn("[recitation-latency]", event, {
         msFromButton: extra.msFromButton,
         msFromTap: extra.msFromTap,
         cold: extra.cold,

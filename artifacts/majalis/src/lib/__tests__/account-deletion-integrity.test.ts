@@ -20,6 +20,7 @@ assert.match(handler, /requireUser/, "يتطلب جلسة مستخدم");
 assert.match(handler, /405/, "يرفض الطرق غير المسموحة");
 assert.match(handler, /503/, "فشل عند غياب admin");
 assert.match(handler, /تعذّر حذف الحساب/, "رسالة فشل واضحة");
+assert.match(handler, /USER_OWNED_TABLES|wipeOwnedUserData/, "مسح بيانات المستخدم صراحة قبل Auth");
 
 assert.match(view, /\/api\/account\/delete/, "الواجهة تستدعي endpoint الحذف");
 assert.match(view, /Authorization.*Bearer/, "يرسل JWT");
@@ -31,6 +32,10 @@ assert.match(
   /المحتوى العلمي العام المنشور غير المرتبط بملكية حسابك، مثل الدروس والمكتبة والقرآن والأحكام العامة/,
 );
 assert.doesNotMatch(view, /الفتاوى المنشورة/);
+
+const settings = readFileSync(resolve(root, "src/pages/account/ui/SettingsView.tsx"), "utf8");
+assert.match(settings, /settings_delete_account|settings-delete-account/, "مدخل حذف في الإعدادات");
+assert.match(settings, /alertdialog/, "حوار تأكيد");
 
 assert.match(clearLocal, /clearUserLocalDataAndMedia/, "مسّاح محلي");
 assert.match(dispatch, /accountDeleteRateLimit|account-delete/, "rate limit على الحذف");

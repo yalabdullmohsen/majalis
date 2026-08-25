@@ -40,8 +40,8 @@ export function markTarteelLatency(
   const sample: TarteelLatencySample = { mark, atMs, ...extra };
   samples.push(sample);
   if (samples.length > MAX) samples.shift();
-  if (typeof console !== "undefined" && console.debug) {
-    console.debug("[tarteel-latency]", mark, extra.ms ?? "", {
+  if (typeof console !== "undefined" && console.warn) {
+    console.warn("[tarteel-latency]", mark, extra.ms ?? "", {
       fromPage: pageOpenAt ? Math.round(atMs - pageOpenAt) : null,
       fromButton: sessionButtonAt ? Math.round(atMs - sessionButtonAt) : null,
     });

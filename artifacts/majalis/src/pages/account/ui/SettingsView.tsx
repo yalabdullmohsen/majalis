@@ -86,6 +86,7 @@ export default function SettingsPage() {
   const [tafsirId, setTafsirIdState] = useState(readStoredTafsirEdition);
   const [playbackRate, setPlaybackRateState] = useState(loadPlaybackRate);
   const [bgPlayback, setBgPlayback] = useState(readBackgroundPlaybackPref);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   useEffect(() => {
     applyPageSeo({
@@ -115,7 +116,7 @@ export default function SettingsPage() {
   const tafsirs = useMemo(() => MUSHAF_TAFSIR_EDITIONS, []);
 
   const sections: SectionDef[] = [
-    { id: "account", title: t("settings_account"), keywords: "حساب دخول تسجيل خروج" },
+    { id: "account", title: t("settings_account"), keywords: "حساب دخول تسجيل خروج حذف الحساب" },
     {
       id: "reading",
       title: "القراءة",
@@ -214,9 +215,19 @@ export default function SettingsPage() {
           </div>
           <div className="settings-actions">
             {isLoggedIn ? (
-              <button type="button" className="page-action-btn" onClick={() => logout()}>
-                {t("settings_logout")}
-              </button>
+              <>
+                <button type="button" className="page-action-btn" onClick={() => logout()}>
+                  {t("settings_logout")}
+                </button>
+                <button
+                  type="button"
+                  className="page-action-btn page-action-btn--danger"
+                  data-testid="settings-delete-account"
+                  onClick={() => setDeleteDialogOpen(true)}
+                >
+                  {t("settings_delete_account")}
+                </button>
+              </>
             ) : (
               <>
                 <Link href="/login" className="page-action-btn">
@@ -228,6 +239,39 @@ export default function SettingsPage() {
               </>
             )}
           </div>
+          {deleteDialogOpen ? (
+            <div
+              className="settings-delete-dialog"
+              role="alertdialog"
+              aria-modal="true"
+              aria-labelledby="settings-delete-title"
+              aria-describedby="settings-delete-desc"
+            >
+              <div className="settings-delete-dialog__panel">
+                <h2 id="settings-delete-title">تأكيد حذف الحساب</h2>
+                <p id="settings-delete-desc">
+                  سيُحذف حسابك وبيانات المصادقة وجميع بياناتك الشخصية المرتبطة به نهائيًا
+                  ولا يمكن التراجع عن ذلك. المحتوى العلمي العام غير المرتبط بحسابك يبقى متاحًا للجميع.
+                </p>
+                <div className="settings-delete-dialog__actions">
+                  <Link
+                    href="/account-deletion?confirm=1"
+                    className="page-action-btn page-action-btn--danger"
+                    onClick={() => setDeleteDialogOpen(false)}
+                  >
+                    المتابعة إلى الحذف النهائي
+                  </Link>
+                  <button
+                    type="button"
+                    className="page-action-btn page-action-btn--secondary"
+                    onClick={() => setDeleteDialogOpen(false)}
+                  >
+                    إلغاء
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </LegalSection>
       )}
 
