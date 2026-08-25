@@ -3,7 +3,6 @@
  */
 export const FEATURED_ADHAN_STYLE_IDS = [
   "makkah",
-  "madinah",
   "alharam",
   "aqsa",
   "egypt",
@@ -15,8 +14,7 @@ export const FEATURED_ADHAN_STYLE_IDS = [
 export type FeaturedAdhanStyleId = (typeof FEATURED_ADHAN_STYLE_IDS)[number];
 
 export const FEATURED_ADHAN_STYLE_LABELS: Record<FeaturedAdhanStyleId, string> = {
-  makkah: "أذان مكة",
-  madinah: "أذان المدينة",
+  makkah: "الأذان الافتراضي",
   alharam: "أذان الحرم",
   aqsa: "أذان المسجد الأقصى",
   egypt: "أذان مصري",

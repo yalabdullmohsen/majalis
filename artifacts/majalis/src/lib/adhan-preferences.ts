@@ -66,6 +66,8 @@ export type AdhanDeliveryMode = AdhanPlaybackMode;
 
 export type PerPrayerPrefs = {
   enabled: boolean;         // adhan notification on/off for this prayer
+  /** تنبيه الإقامة لهذه الصلاة (يتطلّب iqamahEnabled العام) */
+  iqamahEnabled: boolean;
   muezzinId: string;        // which muezzin to use (overrides default if set)
   advanceMinutes: AdvanceMinutes; // advance reminder, 0=off
   /** override اختياري؛ فارغ = استخدم playbackMode العام */
@@ -126,6 +128,7 @@ function defaultPrefs(): AdhanPreferences {
   for (const key of PRAYER_KEYS) {
     prayers[key] = {
       enabled: true,
+      iqamahEnabled: false,
       muezzinId: "",           // "" = use defaultMuezzinId
       advanceMinutes: DEFAULT_ADVANCE[key],
       deliveryMode: "",
@@ -182,9 +185,17 @@ export function loadAdhanPrefs(): AdhanPreferences {
       const p = prayers[key];
       if (!p) continue;
       const mid = p.muezzinId || "";
+      // المدينة أُزيلت — أي اختيار قديم يُصفَّر لاستخدام الافتراضي (مكة)
+      const safeMid = mid === "makkah" ? "makkah" : "";
       prayers[key] = {
+        ...base.prayers[key],
         ...p,
-        muezzinId: mid && (mid === "makkah" || mid === "madinah") ? mid : "",
+        enabled: p.enabled !== false,
+        iqamahEnabled:
+          typeof p.iqamahEnabled === "boolean"
+            ? p.iqamahEnabled
+            : base.prayers[key].iqamahEnabled,
+        muezzinId: safeMid,
       };
     }
     const merged: AdhanPreferences = {
@@ -238,8 +249,16 @@ function emitAdhanPrefsChanged() {
 export function saveAdhanPrefs(prefs: AdhanPreferences): AdhanPreferences {
   const safe = sanitizeFajrMuezzinPrefs({
     ...prefs,
+    defaultMuezzinId: clampAdhanMuezzinId(prefs.defaultMuezzinId),
     bypassSilentMode: false,
   });
+  // صفّر أي muezzinId غير افتراضي في الصلوات
+  for (const key of PRAYER_KEYS) {
+    const mid = safe.prayers[key]?.muezzinId || "";
+    if (mid && mid !== "makkah") {
+      safe.prayers[key] = { ...safe.prayers[key], muezzinId: "" };
+    }
+  }
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(safe));
   } catch { /* ignore quota errors */ }
@@ -290,6 +309,16 @@ export function getEffectivePlaybackMode(
   const per = prefs.prayers[key]?.deliveryMode;
   if (isAdhanDeliveryMode(per)) return per;
   return global;
+}
+
+/** هل تُجدوَل الإقامة لهذه الصلاة؟ (عام + لكل صلاة) */
+export function isIqamahEnabledForPrayer(
+  prefs: AdhanPreferences,
+  key: PrayerKey,
+): boolean {
+  if (!prefs.iqamahEnabled) return false;
+  if (!prefs.prayers[key]?.enabled) return false;
+  return prefs.prayers[key]?.iqamahEnabled === true;
 }
 
 /** يطبّق المؤذن الافتراضي على كل الصلوات دفعة واحدة */

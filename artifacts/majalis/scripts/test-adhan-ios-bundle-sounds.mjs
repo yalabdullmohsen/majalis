@@ -14,7 +14,6 @@ const pbx = readFileSync(resolve(root, "ios/App/App.xcodeproj/project.pbxproj"),
 
 const required = [
   "adhan-short-makkah.caf",
-  "adhan-short-madinah.caf",
   "adhan-short-egypt.caf",
   "adhan-short-aqsa.caf",
   "adhan-short-takbeerat.caf",
@@ -35,10 +34,14 @@ for (const name of required) {
   );
 }
 
+assert.equal(existsSync(resolve(sounds, "adhan-short-madinah.caf")), false);
+assert.doesNotMatch(pbx, /madinah/i);
+
 assert.ok(!pbx.includes("path = Sounds/adhan-short"), "مسار FileRef يجب أن يكون بجذر App لا Sounds/");
 
 const soundsTs = readFileSync(resolve(root, "src/lib/prayer-notification-sounds.ts"), "utf8");
 assert.match(soundsTs, /adhan-short-makkah\.caf/);
 assert.doesNotMatch(soundsTs, /\/sounds\/adhan\//);
+assert.doesNotMatch(soundsTs, /adhan-short-madinah/);
 
 console.log("✓ adhan-ios-bundle-sounds gate ok");

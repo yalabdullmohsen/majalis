@@ -15,7 +15,6 @@ assert.ok(existsSync(pbx), "xcodeproj");
 
 const required = [
   "adhan-short-makkah.caf",
-  "adhan-short-madinah.caf",
   "adhan-short-aqsa.caf",
   "adhan-short-egypt.caf",
   "adhan-short-takbeerat.caf",
@@ -29,6 +28,9 @@ const required = [
 const pbxText = readFileSync(pbx, "utf8");
 const onDisk = new Set(readdirSync(soundsDir));
 
+assert.equal(onDisk.has("adhan-short-madinah.caf"), false, "أُزيل CAF المدينة");
+assert.doesNotMatch(pbxText, /madinah/i);
+
 for (const name of required) {
   assert.ok(onDisk.has(name), `missing file ${name}`);
   assert.ok(pbxText.includes(name), `pbxproj missing ${name}`);
@@ -41,7 +43,6 @@ for (const name of required) {
 const fullDir = join(root, "public/audio/adhan");
 for (const name of [
   "adhan-makkah-full.m4a",
-  "adhan-madinah-full.m4a",
   "adhan-aqsa-full.mp3",
   "adhan-egypt-full.m4a",
   "adhan-haram-full.m4a",
@@ -50,11 +51,11 @@ for (const name of [
 ]) {
   assert.ok(existsSync(join(fullDir, name)), `missing full audio ${name}`);
 }
+assert.equal(existsSync(join(fullDir, "adhan-madinah-full.m4a")), false);
 
 const androidRaw = join(root, "android/app/src/main/res/raw");
 for (const name of [
   "adhan_short_makkah.mp3",
-  "adhan_short_madinah.mp3",
   "adhan_short_egypt.mp3",
   "adhan_short_aqsa.mp3",
   "adhan_short_takbeerat.mp3",
@@ -65,6 +66,7 @@ for (const name of [
 ]) {
   assert.ok(existsSync(join(androidRaw, name)), `missing android raw ${name}`);
 }
+assert.equal(existsSync(join(androidRaw, "adhan_short_madinah.mp3")), false);
 
 assert.equal(
   readFileSync(join(root, "ios/App/App/App.entitlements"), "utf8").includes(

@@ -53,7 +53,7 @@ assert.equal(again.length, 0);
 // تفاعل إشعار مقطع (في Node لا يوجد Audio — الاستئناف يُلغى بأمان)
 rememberAdhanResumeContext({
   prayerKey: "isha",
-  muezzinId: "madinah",
+  muezzinId: "makkah",
   isFajr: false,
 });
 const handled = await onAdhanSegmentNotificationInteraction({

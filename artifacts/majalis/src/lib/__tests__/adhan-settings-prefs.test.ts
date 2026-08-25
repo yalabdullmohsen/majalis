@@ -58,12 +58,23 @@ patchPrayerPrefs("dhuhr", { deliveryMode: "takbir" });
 assert.equal(getEffectivePlaybackMode(loadAdhanPrefs(), "dhuhr"), "takbir");
 
 patchAdhanPrefs({ playbackMode: "short", defaultMuezzinId: "madinah" });
-assert.equal(mem.get("selected_muezzin_id"), "madinah", "مزامنة selected_muezzin_id");
+assert.equal(mem.get("selected_muezzin_id"), "makkah", "المدينة تُرحَّل للافتراضي");
+assert.equal(loadAdhanPrefs().defaultMuezzinId, "makkah");
 patchPrayerPrefs("asr", { muezzinId: "egypt" });
-const all = applyDefaultMuezzinToAllPrayers("madinah");
+const all = applyDefaultMuezzinToAllPrayers("makkah");
 assert.equal(all.prayers.asr.muezzinId, "");
-assert.equal(all.defaultMuezzinId, "madinah");
-assert.equal(mem.get("selected_muezzin_id"), "madinah");
+assert.equal(all.defaultMuezzinId, "makkah");
+assert.equal(mem.get("selected_muezzin_id"), "makkah");
+
+// ثبات تبديل الأذان/الإقامة لكل صلاة
+patchAdhanPrefs({ iqamahEnabled: true });
+patchPrayerPrefs("fajr", { iqamahEnabled: true });
+patchPrayerPrefs("dhuhr", { iqamahEnabled: false });
+const afterIq = loadAdhanPrefs();
+assert.equal(afterIq.iqamahEnabled, true);
+assert.equal(afterIq.prayers.fajr.iqamahEnabled, true);
+assert.equal(afterIq.prayers.dhuhr.iqamahEnabled, false);
+assert.equal(afterIq.prayers.fajr.enabled, true);
 
 assert.ok(ADHAN_FULL_DOWNLOAD_CAP_BYTES >= 40 * 1024 * 1024);
 assert.match(formatAdhanDownloadCap(), /ميغابايت/);

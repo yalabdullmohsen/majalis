@@ -84,17 +84,10 @@
   "adhan": [
     {
       "id": "makkah",
-      "name": "أذان مكة",
+      "name": "الأذان الافتراضي",
       "full": "/audio/adhan/adhan-makkah-full.m4a",
       "short30": "adhan-short-makkah.caf",
       "fajr": "/audio/adhan/adhan-makkah-fajr.mp3"
-    },
-    {
-      "id": "madinah",
-      "name": "أذان المدينة",
-      "full": "/audio/adhan/adhan-madinah-full.m4a",
-      "short30": "adhan-short-madinah.caf",
-      "fajr": null
     },
     {
       "id": "egypt",

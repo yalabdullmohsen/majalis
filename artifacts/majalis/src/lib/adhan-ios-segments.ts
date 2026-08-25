@@ -59,10 +59,10 @@ export function adhanIosSoundName(
     return `adhan-seq-makkah-0${segmentIndex1Based}.caf`;
   }
   const shortMap: Record<string, string> = {
-    madinah: "adhan-short-madinah.caf",
     egypt: "adhan-short-egypt.caf",
     aqsa: "adhan-short-aqsa.caf",
     takbeerat: "adhan-short-takbeerat.caf",
+    soft: "adhan-short-takbeerat.caf",
   };
   return shortMap[recordingId] ?? "adhan-short-makkah.caf";
 }

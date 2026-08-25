@@ -1,11 +1,13 @@
 /**
  * Adhan scheduler — sets timers for each prayer and triggers:
- *   1. Audio playback (adhan)
- *   2. Browser Notification
+ *   1. Audio playback (adhan / iqamah)
+ *   2. Browser Notification (web)
  *   3. Custom event for in-app bar
  *
  * Must be started once when the app loads. Re-schedules automatically
- * after midnight Kuwait time.
+ * after midnight local prayer timezone.
+ *
+ * جيل جدولة (_scheduleGen) يمنع تداخل المؤقتات عند إعادة التشغيل المتزامنة.
  */
 
 import {
@@ -16,14 +18,17 @@ import { getActivePrayerLocation } from "./prayer-location-prefs";
 import {
   loadAdhanPrefs,
   PRAYER_ARABIC,
+  PRAYER_KEYS,
   type PrayerKey,
   getEffectiveMuezzinId,
   getEffectivePlaybackMode,
+  isIqamahEnabledForPrayer,
 } from "./adhan-preferences";
-import { getMuezzin, hasFajrAdhan, playAdhan } from "./adhan-audio";
+import { getMuezzin, hasFajrAdhan, playAdhan, playIqamah } from "./adhan-audio";
 import { hapticTap, isIOS, isNative } from "./capacitor-utils";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "./adhan-events";
 import {
+  cancelAndroidFullAdhan,
   isAdhanAndroidAlarmAvailable,
   scheduleAndroidFullAdhan,
 } from "./adhan-android-alarm";
@@ -38,16 +43,30 @@ function iosFullAdhanActive(): boolean {
 
 /**
  * أقصى تأخّر مسموح به قبل اعتبار المؤقّت "قديماً". مؤقّتات JS تتوقف أثناء نوم
- * الجهاز/الخلفية ثم تُطلَق متأخّرة عند الاستيقاظ — فنمنع تشغيل أذانٍ فات وقته
- * (مثلاً بساعة). القيمة بالملّي ثانية.
+ * الجهاز/الخلفية ثم تُطلَق متأخّرة عند الاستيقاظ — فنمنع تشغيل أذانٍ فات وقته.
  */
 const STALE_TOLERANCE_MS = 2 * 60_000; // دقيقتان
 
 const _timers: ReturnType<typeof setTimeout>[] = [];
+/** جيل الجدولة — أي مؤقّت قديم يتجاهل نفسه إن تغيّر الجيل */
+let _scheduleGen = 0;
 
 function clearAllTimers() {
   for (const t of _timers) clearTimeout(t);
   _timers.length = 0;
+}
+
+function pushTimer(tid: ReturnType<typeof setTimeout>) {
+  _timers.push(tid);
+}
+
+/** للاختبارات: عدد المؤقتات النشطة */
+export function getAdhanSchedulerTimerCount(): number {
+  return _timers.length;
+}
+
+export function getAdhanSchedulerGeneration(): number {
+  return _scheduleGen;
 }
 
 function kuwaitNowMs(): number {
@@ -74,28 +93,22 @@ function prayerMs(slot: PrayerSlot): number | null {
   return slot.minutes * 60_000;
 }
 
-
 function showBrowserNotification(event: AdhanEvent) {
-  // على iOS/Android الأصليين: إشعارات دخول الوقت والتذكير المسبق تُغطّى فعلياً
-  // عبر prayer-alert-scheduler.ts (إشعارات Capacitor المحلية الحقيقية — تعمل
-  // حتى مع إغلاق التطبيق). أما Notification API + Service Worker هنا فهما
-  // آليتا ويب/PWA لا تعملان بشكل موثوق داخل تطبيق Capacitor الأصلي، وإطلاقهما
-  // كان يُنتج إشعارًا مكرَّرًا محتملاً على الويب لو عمل أحيانًا. نقتصر هذا
-  // المسار على الويب فقط لتفادي التكرار (2026-07-16).
   if (isNative) return;
-  // إشعار "دخول الوقت" مُغطّى بالفعل عبر Service Worker (postSwSchedule أدناه)
-  // ليعمل حتى مع تبويب في الخلفية — إطلاقه هنا أيضًا كان يُنتج إشعارًا مكرَّرًا
-  // فعليًا على الويب (وسمان مختلفان: adhan-{key}-adhan هنا مقابل adhan-{key}
-  // في sw.js، فلا يُدمجهما المتصفح). التنبيه المسبق (advance) لا مسار SW موازيًا
-  // له، فيبقى هنا فقط (2026-07-16).
   if (event.type === "adhan") return;
   if (!("Notification" in window) || Notification.permission !== "granted") return;
-  const title = event.type === "advance"
-    ? `استعد للصلاة`
-    : `أذان ${event.prayerName}`;
-  const body = event.type === "advance"
-    ? `${event.prayerName}${event.prayerTimeLabel ? ` ${event.prayerTimeLabel}` : ""} · بعد ${event.minutesBefore} دقيقة`
-    : `${event.prayerTimeLabel ?? "حان وقت الصلاة"}`;
+  const title =
+    event.type === "advance"
+      ? `استعد للصلاة`
+      : event.type === "iqamah"
+        ? `إقامة ${event.prayerName}`
+        : `أذان ${event.prayerName}`;
+  const body =
+    event.type === "advance"
+      ? `${event.prayerName}${event.prayerTimeLabel ? ` ${event.prayerTimeLabel}` : ""} · بعد ${event.minutesBefore} دقيقة`
+      : event.type === "iqamah"
+        ? `${event.prayerTimeLabel ?? "حان وقت الإقامة"}`
+        : `${event.prayerTimeLabel ?? "حان وقت الصلاة"}`;
 
   try {
     new Notification(title, {
@@ -113,7 +126,12 @@ function dispatchAdhanEvent(event: AdhanEvent) {
   showBrowserNotification(event);
 }
 
-function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) {
+function scheduleForPrayer(
+  slot: PrayerSlot,
+  key: PrayerKey,
+  cityName: string | undefined,
+  gen: number,
+) {
   const prefs = loadAdhanPrefs();
   if (!prefs.globalEnabled) return;
   const prayerPrefs = prefs.prayers[key];
@@ -123,17 +141,15 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) 
   const slotMs = prayerMs(slot);
   if (slotMs == null) return;
 
-  // ── Main adhan timer ──
   let adhanDelay = slotMs - nowMs;
-  if (adhanDelay < 0) adhanDelay += 24 * 3600_000; // next day
-  if (adhanDelay > 24 * 3600_000) return; // too far ahead
+  if (adhanDelay < 0) adhanDelay += 24 * 3600_000;
+  if (adhanDelay > 24 * 3600_000) return;
 
   const adhanTargetEpoch = Date.now() + adhanDelay;
-
   const deliveryMode = getEffectivePlaybackMode(prefs, key);
 
-  // أندرويد + وضع كامل: منبّه دقيق + خدمة أمامية (لا يعتمد على مؤقّت JS)
   if (isAdhanAndroidAlarmAvailable() && deliveryMode === "full") {
+    void cancelAndroidFullAdhan(key);
     const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, key));
     const isFajr = key === "fajr";
     const clip = resolveAdhanClip(muezzin, { isFajr, mode: "full" });
@@ -147,7 +163,6 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) 
     }
   }
 
-  // iOS + وضع كامل: سلسلة مقاطع إشعار ≤28ث (حد النظام 30ث) — لا يعتمد على مؤقّت JS في الخلفية
   if (iosFullAdhanActive() && deliveryMode === "full") {
     const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, key));
     const isFajr = key === "fajr";
@@ -165,14 +180,12 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) 
   }
 
   const t1 = setTimeout(() => {
-    // مؤقّت متأخّر (نوم/خلفية): لا تُشغّل أذاناً فات وقته بأكثر من المسموح
+    if (gen !== _scheduleGen) return;
     if (Date.now() - adhanTargetEpoch > STALE_TOLERANCE_MS) return;
-    // حارس أوسع: لا أذان بعد أكثر من 5 دقائق من الوقت المستهدف
     if (Date.now() - adhanTargetEpoch > 5 * 60_000) return;
     const fresh = loadAdhanPrefs();
     if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
     const mode = getEffectivePlaybackMode(fresh, key);
-    // على أندرويد/iOS في الوضع الكامل تتولى الطبقة الأصلية التشغيل
     if (
       mode === "full" &&
       (isAdhanAndroidAlarmAvailable() || iosFullAdhanActive())
@@ -190,8 +203,6 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) 
     const muezzinId = getEffectiveMuezzinId(fresh, key);
     const muezzin = getMuezzin(muezzinId);
     const isFajr = key === "fajr";
-    // الفجر: لا يُشغَّل بلا نسخة تثويب؛ ولا يُستبدل بالعام
-    // silent: إشعار فقط بلا صوت
     const audio = playAdhan(muezzin, isFajr, mode, fresh.volume ?? 1);
     if (!audio && isFajr && mode !== "silent") return;
     if (fresh.vibrateEnabled) void hapticTap("medium");
@@ -203,9 +214,8 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) 
       prayerTimeLabel: slot.time,
     });
   }, adhanDelay);
-  _timers.push(t1);
+  pushTimer(t1);
 
-  // Also register with SW for background-tab notifications
   postSwSchedule(
     key,
     PRAYER_ARABIC[key] ?? slot.name,
@@ -214,8 +224,41 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) 
     cityName,
   );
 
-  // ── Advance reminder timer ──
-  // لا تلفّ التنبيه المسبق إلى +24س عند advDelay<0 — ذلك يُسقط تنبيه اليوم داخل النافذة.
+  // ── Iqamah timer (بعد الأذان) ──
+  if (isIqamahEnabledForPrayer(prefs, key)) {
+    const iqDelayMin = prefs.iqamahDelayMinutes;
+    const iqamahDelay = adhanDelay + iqDelayMin * 60_000;
+    if (iqamahDelay > 0 && iqamahDelay < 24 * 3600_000) {
+      const iqamahTargetEpoch = Date.now() + iqamahDelay;
+      const tIq = setTimeout(() => {
+        if (gen !== _scheduleGen) return;
+        if (Date.now() - iqamahTargetEpoch > STALE_TOLERANCE_MS) return;
+        const fresh = loadAdhanPrefs();
+        if (!isIqamahEnabledForPrayer(fresh, key)) return;
+        const muezzin = getMuezzin(getEffectiveMuezzinId(fresh, key));
+        playIqamah(muezzin);
+        if (fresh.vibrateEnabled) void hapticTap("light");
+        dispatchAdhanEvent({
+          type: "iqamah",
+          prayerKey: key,
+          prayerName: slot.name,
+          minutesAfterAdhan: fresh.iqamahDelayMinutes,
+          cityName,
+          prayerTimeLabel: slot.time,
+        });
+      }, iqamahDelay);
+      pushTimer(tIq);
+      postSwIqamahSchedule(
+        key,
+        PRAYER_ARABIC[key] ?? slot.name,
+        iqamahDelay,
+        iqamahTargetEpoch,
+        cityName,
+      );
+    }
+  }
+
+  // ── Advance reminder ──
   const advMin = prayerPrefs.advanceMinutes;
   if (advMin > 0) {
     const prayerDelayFromNow =
@@ -225,8 +268,9 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) 
       const advTargetEpoch = Date.now() + advDelay;
       const prayerTargetEpoch = Date.now() + prayerDelayFromNow;
       const t2 = setTimeout(() => {
+        if (gen !== _scheduleGen) return;
         if (Date.now() - advTargetEpoch > STALE_TOLERANCE_MS) return;
-        if (Date.now() >= prayerTargetEpoch) return; // حارس: لا pre بعد دخول الوقت
+        if (Date.now() >= prayerTargetEpoch) return;
         const fresh = loadAdhanPrefs();
         if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
         if (fresh.prayers[key].advanceMinutes === 0) return;
@@ -239,24 +283,26 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey, cityName?: string) 
           prayerTimeLabel: slot.time,
         });
       }, advDelay);
-      _timers.push(t2);
+      pushTimer(t2);
     }
   }
 }
 
 /**
  * Start the scheduler for the current prayer data. Call once on app load.
- *
- * لا يطلب إذن الإشعارات هنا أبداً — كان يفعل ذلك تلقائياً عند كل تحميل
- * للتطبيق (أول فتح)، مخالفًا صراحةً لسياسة "اطلب الإذن في وقت منطقي بعد
- * شرح الفائدة لا عند أول فتح". طلب الإذن الفعلي يحدث فقط عبر مسار مستخدم
- * صريح في PrayerAlertSettingsCard.tsx (زر "تفعيل" بعد شارة شرح). المؤقّتات
- * هنا تعمل بصرف النظر عن الإذن — تشغيل الصوت لا يحتاج إذنًا، والإشعار
- * يُعرض فقط إن كان الإذن ممنوحًا مسبقًا (انظر showBrowserNotification).
+ * لا يطلب إذن الإشعارات هنا أبداً.
  */
 export async function startAdhanScheduler(payload: PrayerTimesPayload): Promise<void> {
+  const gen = ++_scheduleGen;
   clearAllTimers();
-  // لا تتداخل سلسلتان — ألغِ أي سلسلة سابقة قبل إعادة الجدولة
+  postSwCancelAll();
+
+  if (isAdhanAndroidAlarmAvailable()) {
+    for (const key of PRAYER_KEYS) {
+      void cancelAndroidFullAdhan(key);
+    }
+  }
+
   if (iosFullAdhanActive()) {
     void import("./adhan-ios-segments").then(({ cancelAdhanIosSegmentChain }) =>
       cancelAdhanIosSegmentChain(),
@@ -272,24 +318,33 @@ export async function startAdhanScheduler(payload: PrayerTimesPayload): Promise<
   ];
 
   for (const [slotKey, prayerKey] of SLOT_KEYS) {
+    if (gen !== _scheduleGen) return;
     const slot = payload.prayers.find((p) => p.key === slotKey);
-    if (slot) scheduleForPrayer(slot, prayerKey, payload.city);
+    if (slot) scheduleForPrayer(slot, prayerKey, payload.city, gen);
   }
 
-  // Re-schedule at midnight Kuwait time
+  if (gen !== _scheduleGen) return;
+
   const nowMs = kuwaitNowMs();
-  const midnightDelay = 24 * 3600_000 - nowMs + 5_000; // 5s after midnight
+  const midnightDelay = 24 * 3600_000 - nowMs + 5_000;
   const midnight = setTimeout(() => {
-    // Fetch new prayer times and restart
+    if (gen !== _scheduleGen) return;
     import("./prayer-times").then(({ fetchPrayerTimes }) => {
       fetchPrayerTimes().then((p) => startAdhanScheduler(p));
     });
   }, midnightDelay);
-  _timers.push(midnight);
+  pushTimer(midnight);
 }
 
 export function stopAdhanScheduler() {
+  _scheduleGen += 1;
   clearAllTimers();
+  postSwCancelAll();
+  if (isAdhanAndroidAlarmAvailable()) {
+    for (const key of PRAYER_KEYS) {
+      void cancelAndroidFullAdhan(key);
+    }
+  }
   if (iosFullAdhanActive()) {
     void import("./adhan-ios-segments").then(({ cancelAdhanIosSegmentChain }) =>
       cancelAdhanIosSegmentChain(),
@@ -297,7 +352,12 @@ export function stopAdhanScheduler() {
   }
 }
 
-/** Posts SCHEDULE_ADHAN to the SW so notifications fire even in background tabs. */
+function postSwCancelAll() {
+  const sw = navigator.serviceWorker?.controller;
+  if (!sw) return;
+  sw.postMessage({ type: "CANCEL_ALL_ADHAN" });
+}
+
 function postSwSchedule(
   prayerKey: PrayerKey,
   prayerArabic: string,
@@ -309,6 +369,25 @@ function postSwSchedule(
   if (!sw) return;
   sw.postMessage({
     type: "SCHEDULE_ADHAN",
+    prayerKey,
+    prayerArabic,
+    delayMs,
+    fireAt,
+    cityName: cityName || "",
+  });
+}
+
+function postSwIqamahSchedule(
+  prayerKey: PrayerKey,
+  prayerArabic: string,
+  delayMs: number,
+  fireAt: number,
+  cityName?: string,
+) {
+  const sw = navigator.serviceWorker?.controller;
+  if (!sw) return;
+  sw.postMessage({
+    type: "SCHEDULE_IQAMAH",
     prayerKey,
     prayerArabic,
     delayMs,

@@ -16,10 +16,11 @@ import {
 import { OFFLINE_ADHAN_CORE_PACKS } from "../adhan-offline-assets";
 
 assert.ok(adhanCatalog.some((e) => e.id === "makkah" && e.default));
-assert.ok(adhanCatalog.some((e) => e.id === "madinah"));
+assert.ok(!adhanCatalog.some((e) => e.id === "madinah"), "بلا مدينة في الكتالوج");
 assert.ok(adhanCatalog.some((e) => e.id === "alharam"));
 assert.ok(adhanCatalog.some((e) => e.id === "soft" && e.notificationOnlyAllowed));
 assert.ok(adhanCatalog.some((e) => e.id === "custom" && e.fallback === "makkah"));
+assert.ok(!("madinah" in ADHAN_FULL_AUDIO_PATHS));
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 for (const path of Object.values(ADHAN_FULL_AUDIO_PATHS)) {

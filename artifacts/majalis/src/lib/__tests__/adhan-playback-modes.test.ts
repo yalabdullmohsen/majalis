@@ -53,7 +53,14 @@ assert.equal(takbir.maxMs, ADHAN_TAKBIR_MAX_SEC * 1000);
 
 const iqamah = resolveIqamahClip(sources)!;
 assert.equal(iqamah.kind, "iqamah");
+assert.equal(iqamah.url, sources.iqamahUrl);
 assert.equal(resolveIqamahClip({ audioUrl: sources.audioUrl }), null);
+const iqFallback = resolveIqamahClip({
+  audioUrl: sources.audioUrl,
+  takbirUrl: sources.takbirUrl,
+})!;
+assert.equal(iqFallback.url, sources.takbirUrl);
+assert.equal(iqFallback.truncatedFromFull, true);
 
 assert.ok(ADHAN_SHORT_MAX_SEC <= 28);
 

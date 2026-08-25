@@ -33,7 +33,6 @@ import { getOfflineAdhanPack } from "./adhan-offline-assets";
 const CDN = "https://cdn.jsdelivr.net/gh/mohsalvi/adhan-audio@main";
 
 const OFF_MAKKAH = getOfflineAdhanPack("makkah");
-const OFF_MADINAH = getOfflineAdhanPack("madinah");
 const OFF_EGYPT = getOfflineAdhanPack("egypt");
 const OFF_AQSA = getOfflineAdhanPack("aqsa");
 const OFF_TURKEY = getOfflineAdhanPack("turkey");
@@ -96,7 +95,7 @@ function patternStyle(id: AdhanPatternId): string {
 export const MUEZZINS: Muezzin[] = [
   {
     id: "makkah",
-    name: "أذان مكة",
+    name: "الأذان الافتراضي",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -106,8 +105,8 @@ export const MUEZZINS: Muezzin[] = [
     country: "السعودية",
     style: patternStyle("makki"),
     category: "حرم مكي",
-    tags: ["مكي", "رسمي"],
-    biography: "تسجيل بنمط الحرم المكي الشريف. يُعرض باسم النمط دون نسبة شخصية حتى التثبّت.",
+    tags: ["مكي", "رسمي", "افتراضي"],
+    biography: "التسجيل الافتراضي بنمط الحرم المكي الشريف. يُعرض باسم النمط دون نسبة شخصية حتى التثبّت.",
     rating: 4.95,
     totalRatings: 380000,
     followers: 720000,
@@ -123,6 +122,7 @@ export const MUEZZINS: Muezzin[] = [
       `${CDN}/fajr/makkah-fajr-01.mp3`,
     shortUrl: OFF_MAKKAH?.local.short || OFF_TAKBIR?.local.short,
     takbirUrl: OFF_MAKKAH?.local.takbir || OFF_TAKBIR?.local.takbir,
+    iqamahUrl: OFF_TAKBIR?.local.takbir || OFF_TAKBIR?.local.short,
     sourceId: "mohsalvi-adhan-audio",
     licenseNote: "بث عبر mohsalvi/adhan-audio + حزمة أوفلاين محلية — راجع CREDITS.md",
   },
@@ -156,34 +156,7 @@ export const MUEZZINS: Muezzin[] = [
       `${CDN}/fajr/makkah-fajr-01.mp3`,
     shortUrl: OFF_ALHARAM?.local.short || OFF_TAKBIR?.local.short,
     takbirUrl: OFF_ALHARAM?.local.takbir || OFF_TAKBIR?.local.takbir,
-    sourceId: "mohsalvi-adhan-audio",
-    licenseNote: "بث عبر mohsalvi/adhan-audio + حزمة أوفلاين محلية — راجع CREDITS.md",
-  },
-  {
-    id: "madinah",
-    name: "أذان المدينة",
-    personName: null,
-    attribution: "style_only",
-    patternId: "madani",
-    mosque: "المسجد النبوي",
-    recordingYear: null,
-    origin: "المدينة المنورة",
-    country: "السعودية",
-    style: patternStyle("madani"),
-    category: "حرم نبوي",
-    tags: ["مدني", "رسمي"],
-    biography: "تسجيل بنمط المسجد النبوي الشريف. يُعرض باسم النمط دون نسبة شخصية حتى التثبّت.",
-    rating: 4.92,
-    totalRatings: 295000,
-    followers: 580000,
-    durationSec: 110,
-    audioAvailable: true,
-    audioUrl:
-      OFF_MADINAH?.local.general ||
-      OFF_MADINAH?.remote.general ||
-      `${CDN}/general/madinah-01.mp3`,
-    shortUrl: OFF_MADINAH?.local.short || OFF_TAKBIR?.local.short,
-    takbirUrl: OFF_MADINAH?.local.takbir || OFF_TAKBIR?.local.takbir,
+    iqamahUrl: OFF_TAKBIR?.local.takbir || OFF_TAKBIR?.local.short,
     sourceId: "mohsalvi-adhan-audio",
     licenseNote: "بث عبر mohsalvi/adhan-audio + حزمة أوفلاين محلية — راجع CREDITS.md",
   },
@@ -385,9 +358,10 @@ export const MUEZZINS: Muezzin[] = [
     audioUrl:
       OFF_TAKBIR?.local.general ||
       OFF_TAKBIR?.local.takbir ||
-      `${CDN}/general/madinah-01.mp3`,
+      `${CDN}/general/makkah-haram-01.mp3`,
     shortUrl: OFF_TAKBIR?.local.short,
     takbirUrl: OFF_TAKBIR?.local.takbir,
+    iqamahUrl: OFF_TAKBIR?.local.takbir,
     sourceId: "mohsalvi-adhan-audio",
     licenseNote: "حزمة أوفلاين محلية — راجع CREDITS.md",
   },
@@ -413,13 +387,37 @@ export const MUEZZINS: Muezzin[] = [
     audioUrl:
       OFF_SOFT?.local.general ||
       OFF_TAKBIR?.local.general ||
-      `${CDN}/general/madinah-01.mp3`,
+      `${CDN}/general/makkah-haram-01.mp3`,
     shortUrl: OFF_SOFT?.local.short || OFF_TAKBIR?.local.short,
     takbirUrl: OFF_SOFT?.local.takbir || OFF_TAKBIR?.local.takbir,
+    iqamahUrl: OFF_TAKBIR?.local.takbir,
     sourceId: "mohsalvi-adhan-audio",
     licenseNote: "حزمة أوفلاين محلية — راجع CREDITS.md",
   },
   /* أنماط بلا ملف مرخّص مثبت بعد — ظاهرة في الفهرس كـ«قريبًا» وغير قابلة للاختيار */
+  {
+    id: "madinah-retired",
+    name: "أذان المدينة (أُزيل)",
+    personName: null,
+    attribution: "style_only",
+    patternId: "madani",
+    mosque: "المسجد النبوي",
+    recordingYear: null,
+    origin: "المدينة المنورة",
+    country: "السعودية",
+    style: patternStyle("madani"),
+    category: "حرم نبوي",
+    tags: ["مدني", "أُزيل"],
+    biography: "أُزيل اختيار مؤذن المدينة لصالح الأذان الافتراضي. الإدخالات القديمة تُرحَّل تلقائيًا.",
+    rating: 0,
+    totalRatings: 0,
+    followers: 0,
+    durationSec: 0,
+    audioAvailable: false,
+    audioUrl: "",
+    sourceId: "mohsalvi-adhan-audio",
+    licenseNote: "أُزيل الأصل الصوتي — راجع CREDITS.md",
+  },
   {
     id: "aqsa-pending",
     name: "أذان المسجد الأقصى (قريبًا)",
@@ -545,7 +543,8 @@ export function listSelectableMuezzins(opts?: { requireFajr?: boolean }): Muezzi
 }
 
 export function getMuezzin(id: string, opts?: { requireFajr?: boolean }): Muezzin {
-  const hit = MUEZZINS.find((m) => m.id === id);
+  const normalized = id === "madinah" ? DEFAULT_MUEZZIN_ID : id;
+  const hit = MUEZZINS.find((m) => m.id === normalized);
   if (hit && isMuezzinSelectable(hit) && (!opts?.requireFajr || hit.fajrUrl)) {
     return hit;
   }
