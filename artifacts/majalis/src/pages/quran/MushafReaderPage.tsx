@@ -10,6 +10,7 @@ import {
 } from "@/lib/quran-last-page";
 import { loadReadingAyahKey, SURAH_START_PAGES } from "@/lib/quran-api";
 import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
+import { useNavigationPaintGate } from "@/hooks/useNavigationPaintGate";
 
 /**
  * مسار المصحف الحقيقي `/mushaf` — VerifiedMushafReader عبر alias MushafViewport، بلا PDF.
@@ -17,6 +18,7 @@ import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
 export default function MushafReaderPage() {
   const params = useParams<{ page?: string; surah?: string }>();
   const search = useSearch();
+  const paintReady = useNavigationPaintGate(100);
 
   const pageNumber = useMemo(() => resolvePage(params, search), [params, search]);
 
@@ -42,6 +44,18 @@ export default function MushafReaderPage() {
       window.history.replaceState(null, "", desired);
     }
   }, [pageNumber, params.page, params.surah]);
+
+  if (!paintReady) {
+    return (
+      <div
+        className="mm-page-placeholder"
+        role="status"
+        aria-busy="true"
+        aria-label="تجهيز المصحف"
+        style={{ minHeight: "70dvh" }}
+      />
+    );
+  }
 
   return (
     <MushafViewport

@@ -492,6 +492,13 @@ function AdhanSchedulerBootstrap() {
     window.addEventListener("majalis:adhan-prefs-changed", onPrefs);
     return () => window.removeEventListener("majalis:adhan-prefs-changed", onPrefs);
   }, [data]);
+
+  useEffect(() => {
+    return () => {
+      void import("@/lib/adhan-scheduler").then((m) => m.stopAdhanScheduler());
+    };
+  }, []);
+
   return null;
 }
 
@@ -514,6 +521,14 @@ function PrayerAlertSchedulerBootstrap() {
       cancelled = true;
     };
   }, [data]);
+
+  useEffect(() => {
+    return () => {
+      void import("@/lib/prayer-alert-scheduler").then((mod) => {
+        mod.stopPrayerAlertScheduler();
+      });
+    };
+  }, []);
 
   useEffect(() => {
     const loadScheduler = () => import("@/lib/prayer-alert-scheduler");
