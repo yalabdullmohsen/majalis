@@ -160,3 +160,29 @@
   color: var(--brand-contrast, var(--mj-brand-deep));
   background: color-mix(in srgb, var(--brand, var(--mj-brand)) 10%, transparent);
 }
+
+/* دقة عرض عربي للواجهة — خارج QPC PUA (لا يُورَّث للمصحف) */
+.app-shell :is(h1, h2, h3, p, li, label, button, a, span, .hub-card__title, .hub-card__desc),
+.page-shell :is(h1, h2, h3, p, li, label, button, a, span) {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+/**
+ * عزل اتجاهي للعناصر المختلطة عربي/إنجليزي/أرقام —
+ * يمنع انعكاس ترتيب الأرقام اللاتينية داخل جملة عربية.
+ */
+.mj-bidi-isolate,
+[data-bidi="isolate"] {
+  unicode-bidi: isolate;
+  direction: inherit;
+}
+
+/* سقف مقياس واجهة Dynamic Type عبر --ui-font-scale (يُضبط من user-preferences) */
+:root {
+  --ui-font-scale-min: 0.85;
+  --ui-font-scale-max: 1.35;
+}
+

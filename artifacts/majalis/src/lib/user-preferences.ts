@@ -1,3 +1,5 @@
+import { clampReadingTextSize, clampUiFontScale } from "@/lib/quran-font-size";
+
 /** ثيم قارئ الكتب/النصوص الطويلة — يُحفظ محليًا. */
 export type ReadingThemeId = "default" | "sepia" | "night";
 
@@ -104,18 +106,19 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
   }
 
   const senior = prefs.seniorMode;
-  const fontScale = senior
-    ? "1.16"
+  const rawFontScale = senior
+    ? 1.16
     : prefs.fontSize === "صغير"
-      ? "0.92"
+      ? 0.92
       : prefs.fontSize === "كبير"
-        ? "1.08"
-        : "1";
+        ? 1.08
+        : 1;
+  const fontScale = String(clampUiFontScale(rawFontScale));
   const densityScale = prefs.uiDensity === "compact" && !senior ? "0.92" : "1";
   root.style.setProperty("--ui-font-scale", fontScale);
   root.style.setProperty("--ui-density-scale", densityScale);
   const baseReading = Number(prefs.readingTextSize) || 17;
-  const readingPx = Math.min(32, Math.max(14, senior ? Math.max(baseReading, 22) : baseReading));
+  const readingPx = clampReadingTextSize(senior ? Math.max(baseReading, 22) : baseReading);
   root.style.setProperty("--reading-font-size", `${readingPx}px`);
   root.style.setProperty("--quran-font-size", `${prefs.quranFontScale}px`);
   root.style.setProperty(

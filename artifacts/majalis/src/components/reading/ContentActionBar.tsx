@@ -7,6 +7,7 @@ import {
   type ReadingThemeId,
   type UserPreferences,
 } from "@/lib/user-preferences";
+import { clampReadingTextSize } from "@/lib/quran-font-size";
 import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
 import {
   isSavedOffline,
@@ -93,7 +94,7 @@ export function ContentActionBar({
   }, [readingMode]);
 
   const bumpFont = useCallback((delta: number) => {
-    const next = Math.min(32, Math.max(14, readingSize + delta));
+    const next = clampReadingTextSize(readingSize + delta);
     setReadingSize(next);
     writePreferences({ readingTextSize: String(next) });
   }, [readingSize]);

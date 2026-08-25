@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import {
+  clampQuranFontSize,
   QURAN_FONT_DEFAULT_PX,
   QURAN_FONT_MAX_PX,
   QURAN_FONT_MIN_PX,
@@ -92,13 +93,18 @@ export function useQuranPreferences() {
   }, [prefs]);
 
   const setPref = useCallback(<K extends keyof QuranPreferences>(key: K, value: QuranPreferences[K]) => {
-    setPrefsState((p) => ({ ...p, [key]: value }));
+    setPrefsState((p) => {
+      if (key === "fontScale") {
+        return { ...p, fontScale: clampQuranFontSize(Number(value)) };
+      }
+      return { ...p, [key]: value };
+    });
   }, []);
 
   const bumpFont = useCallback((delta: number) => {
     setPrefsState((p) => ({
       ...p,
-      fontScale: Math.min(QURAN_FONT_MAX_PX, Math.max(QURAN_FONT_MIN_PX, p.fontScale + delta)),
+      fontScale: clampQuranFontSize(p.fontScale + delta),
     }));
   }, []);
 

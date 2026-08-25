@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getPowerSaverState } from "@/lib/power-saver-engine";
 
 const loaded = new Set<number>();
 
@@ -58,8 +59,11 @@ export function useQpcPageFont(pageNumber: number): { fontFamily: string; ready:
     void loadFace(pageNumber).then((ok) => {
       if (!cancelled && ok) setReady(true);
     });
-    void loadFace(pageNumber - 1);
-    void loadFace(pageNumber + 1);
+    const saver = getPowerSaverState();
+    if (saver.mode !== "aggressive") {
+      void loadFace(pageNumber - 1);
+      void loadFace(pageNumber + 1);
+    }
     /* بسملة المطلع تستخدم دائماً محارف الصفحة ١ → جهّز الخط مسبقاً */
     void loadFace(1);
     return () => {
