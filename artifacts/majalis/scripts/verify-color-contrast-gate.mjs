@@ -63,12 +63,12 @@ const ASSERTIONS = [
   // (تبقى #143F35 في الوضع الليلي؛ لا تُسطَّح إلى نعناعي).
   { route: "/", selector: ".lsw-section .ds-section__title", mode: "dark", min: 3 },
   // ── أبطال الصفحات (2026-08): بطل الرئيسية يعرض title + تحية + زر؛
-  // كبسولة الإعلان في منتصف الترويسة بدل عنوان العلامة.
+  // شريط الراعي أعلى الهيدر (placement: top) بدل كبسولة .header-ad-slot.
   { route: "/", selector: ".page-hero-mj__title", mode: "light", min: 3 },
-  { route: "/", selector: ".header-ad-slot__title", mode: "light", min: 4.5 },
+  { route: "/", selector: ".top-sponsor-banner__title", mode: "light", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__actions .m2030-btn--primary", mode: "light", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__title", mode: "dark", min: 3 },
-  { route: "/", selector: ".header-ad-slot__title", mode: "dark", min: 4.5 },
+  { route: "/", selector: ".top-sponsor-banner__title", mode: "dark", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__actions .m2030-btn--primary", mode: "dark", min: 4.5 },
   // .sq-title (عنوان SectionQuiz داخل .sq-header الداكن) كان يخسر نفس المعركة.
   { route: "/cards", selector: ".sq-title", mode: "light", min: 4.5 },
