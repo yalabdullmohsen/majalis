@@ -2,17 +2,17 @@
   "month": "2026-08",
   "items": [
     {
-      "id": "5120eecc72e9fdf1df338d45dab1158d7890fdb8",
+      "id": "d78933ae5f24cd7b840c0c70423c2577d4747e3f",
       "type": "درس",
-      "title_ar": "ندعوكم الليلة لحضور المجلس العلمي شرح كتاب التوحيد للشيخ عمر مثيب العتيبي بعد ص…",
-      "summary_ar": "ندعوكم الليله لحضور المجلس العلمي: شرح كتاب التوحيد للشيخ عمر مثيب العتيبي ⏰ بعد صلاه المغرب الاحد الي الاربعاء مسجد الامام القرطبي - جليب الشيوخ https://maps.…",
+      "title_ar": "ندعوكم لحضور الدرس العلمي التعليق على روضة الأفهام في شرح زوائد المحرر على بلوغ…",
+      "summary_ar": "ندعوكم لحضور الدرس العلمي: التعليق علي ‌&rlm;« روضه الافهام في شرح زوائد المحرر علي بلوغ المرام» للشيخ حسين المويزري @H_Almuwizri ⌚ (كل اثنين) بعد صلاه العصر م…",
       "sheikh": null,
-      "place": "الإمام القرطبي - جليب الشيوخ https://maps",
+      "place": "شرح زوائد المحرر على بلوغ المرام» 🎙️ للشيخ حسين المويزري @H_Almuwizri ⌚ (كل اثن",
       "audience": "عام",
       "starts_at": null,
       "time_text": null,
       "register_url": "https://t.me/DrosQ8",
-      "schedule_kind": "upcoming",
+      "schedule_kind": "weekly",
       "women_attendance": "men_only",
       "women_attendance_note": null,
       "sources": [
@@ -20,12 +20,12 @@
           "id": "telegram-DrosQ8",
           "name_ar": "دروس الكويت",
           "url": "https://t.me/DrosQ8",
-          "post_url": "https://t.me/DrosQ8/27617",
+          "post_url": "https://t.me/DrosQ8/27628",
           "platform": "telegram"
         }
       ],
       "image_url": null,
-      "published_at": "2026-08-25T04:08:58.517Z",
+      "published_at": "2026-08-25T16:02:24.243Z",
       "confidence": 0.8
     },
     {
