@@ -290,7 +290,6 @@ export default function NavBar() {
           )}
 
           <div className="navbar-v3__end">
-            {shouldShowHeaderAd(location) ? <HeaderAdSlot /> : null}
             {/* عداد الصلاة التالية — سطح المكتب فقط؛ يُخفى داخل صفحة المواقيت نفسها */}
             {!isMobile && !isImmersiveChromePath(location) && <PrayerChip />}
             {/* زر الوضع الليلي */}
@@ -335,6 +334,12 @@ export default function NavBar() {
             )}
           </div>
         </div>
+
+        {shouldShowHeaderAd(location) ? (
+          <div className="navbar-v3__ad-row">
+            <HeaderAdSlot />
+          </div>
+        ) : null}
 
         {/* صف بحث مستقل — لا يتداخل مع التبويبات أو التيكر */}
         {isMobile && !isImmersiveChromePath(location) && (
