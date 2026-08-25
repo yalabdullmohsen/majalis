@@ -12,6 +12,7 @@ import {
   legacyPageToCurrentPageNum,
   pageFirstAyahMushaf1,
 } from "@/lib/quran-data/ayah-page-index.generated";
+import { storageGetSync, storageSetSync } from "@/lib/native-storage";
 import { recoverLocalJsonTmp, writeLocalJsonAtomic } from "@/lib/safe-json";
 
 export const MY_BOOKMARKS_KEY = "myBookmarks";
@@ -34,6 +35,29 @@ type LegacyBookmark = {
   date?: string;
   ayahKey?: string;
 };
+
+let memBookmarks: MyBookmark[] | null = null;
+let memPageIndex: Set<number> | null = null;
+
+function setMem(list: MyBookmark[]): void {
+  memBookmarks = list;
+  memPageIndex = new Set(list.map((b) => b.page));
+}
+
+function persistList(list: MyBookmark[]): void {
+  setMem(list);
+  writeLocalJsonAtomic(MY_BOOKMARKS_KEY, list);
+  try {
+    storageSetSync(MY_BOOKMARKS_KEY, JSON.stringify(list));
+  } catch {
+    /* ignore */
+  }
+  try {
+    storageSetSync(MY_BOOKMARKS_MIGRATED_KEY, "1");
+  } catch {
+    /* ignore */
+  }
+}
 
 function clampPage(page: number): number {
   if (!Number.isFinite(page)) return 1;
@@ -91,31 +115,22 @@ function normalizeBookmark(raw: LegacyBookmark): MyBookmark | null {
 function migrateStorageIfNeeded(): void {
   if (typeof localStorage === "undefined") return;
   try {
-    if (localStorage.getItem(MY_BOOKMARKS_MIGRATED_KEY) === "1") return;
-    const existing = localStorage.getItem(MY_BOOKMARKS_KEY) || "[]";
+    if (storageGetSync(MY_BOOKMARKS_MIGRATED_KEY) === "1" || localStorage.getItem(MY_BOOKMARKS_MIGRATED_KEY) === "1") {
+      return;
+    }
+    const existing = storageGetSync(MY_BOOKMARKS_KEY) || localStorage.getItem(MY_BOOKMARKS_KEY) || "[]";
     const parsed = JSON.parse(existing) as unknown;
     if (!Array.isArray(parsed)) {
-      localStorage.setItem(MY_BOOKMARKS_MIGRATED_KEY, "1");
+      storageSetSync(MY_BOOKMARKS_MIGRATED_KEY, "1");
       return;
     }
     const next = parsed
       .map((b) => normalizeBookmark(b as LegacyBookmark))
       .filter((b): b is MyBookmark => b != null);
-    writeLocalJsonAtomic(MY_BOOKMARKS_KEY, next);
-    localStorage.setItem(MY_BOOKMARKS_MIGRATED_KEY, "1");
-    memBookmarks = next;
-    memPageIndex = new Set(next.map((b) => b.page));
+    persistList(next);
   } catch {
     /* ignore */
   }
-}
-
-let memBookmarks: MyBookmark[] | null = null;
-let memPageIndex: Set<number> | null = null;
-
-function setMem(list: MyBookmark[]): void {
-  memBookmarks = list;
-  memPageIndex = new Set(list.map((b) => b.page));
 }
 
 export function getMyBookmarks(): MyBookmark[] {
@@ -124,7 +139,7 @@ export function getMyBookmarks(): MyBookmark[] {
   migrateStorageIfNeeded();
   recoverLocalJsonTmp(MY_BOOKMARKS_KEY);
   try {
-    const existing = localStorage.getItem(MY_BOOKMARKS_KEY) || "[]";
+    const existing = storageGetSync(MY_BOOKMARKS_KEY) || localStorage.getItem(MY_BOOKMARKS_KEY) || "[]";
     const parsed = JSON.parse(existing) as unknown;
     if (!Array.isArray(parsed)) {
       setMem([]);
@@ -149,9 +164,7 @@ export async function saveBookmarks(bookmarks: MyBookmark[]): Promise<void> {
           .map((b) => normalizeBookmark(b as LegacyBookmark))
           .filter((b): b is MyBookmark => b != null)
       : [];
-    setMem(list);
-    writeLocalJsonAtomic(MY_BOOKMARKS_KEY, list);
-    localStorage.setItem(MY_BOOKMARKS_MIGRATED_KEY, "1");
+    persistList(list);
   } catch (e) {
     console.error("خطأ في حفظ الفواصل", e);
   }
@@ -170,11 +183,8 @@ export async function addBookmark(page: number, label: string): Promise<MyBookma
       label: (label || `صفحة ${p}`).trim(),
       date: new Date().toLocaleDateString("ar"),
     };
-    const normalized = getMyBookmarks();
-    const next = [...normalized, newBookmark];
-    setMem(next);
-    writeLocalJsonAtomic(MY_BOOKMARKS_KEY, next);
-    localStorage.setItem(MY_BOOKMARKS_MIGRATED_KEY, "1");
+    const next = [...getMyBookmarks(), newBookmark];
+    persistList(next);
     return newBookmark;
   } catch (e) {
     console.error("خطأ في حفظ الفاصل", e);
@@ -184,9 +194,7 @@ export async function addBookmark(page: number, label: string): Promise<MyBookma
 
 export async function removeMyBookmark(id: number): Promise<void> {
   try {
-    const next = getMyBookmarks().filter((b) => b.id !== id);
-    setMem(next);
-    writeLocalJsonAtomic(MY_BOOKMARKS_KEY, next);
+    persistList(getMyBookmarks().filter((b) => b.id !== id));
   } catch (e) {
     console.error("خطأ في حذف الفاصل", e);
   }

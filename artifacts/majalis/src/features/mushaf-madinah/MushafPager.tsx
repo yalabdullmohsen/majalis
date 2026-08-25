@@ -71,6 +71,23 @@ export function MushafPager({
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const shellRef = useRef<HTMLDivElement | null>(null);
   const settledPageRef = useRef(page);
+  const timersRef = useRef<Set<number>>(new Set());
+
+  const scheduleTimer = useCallback((fn: () => void, ms: number) => {
+    const id = window.setTimeout(() => {
+      timersRef.current.delete(id);
+      fn();
+    }, ms);
+    timersRef.current.add(id);
+    return id;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      for (const id of timersRef.current) window.clearTimeout(id);
+      timersRef.current.clear();
+    };
+  }, []);
 
   const go = useCallback(
     (next: number) => {
@@ -122,11 +139,11 @@ export function MushafPager({
       snapToIndex(1, false);
     }
 
-    const id = window.setTimeout(() => {
+    const id = scheduleTimer(() => {
       locking.current = false;
     }, SETTLE_MS + 40);
     return () => window.clearTimeout(id);
-  }, [page, snapToIndex]);
+  }, [page, snapToIndex, scheduleTimer]);
 
   /** أسهم لوحة المفاتيح — نفس منطق الحواف: يمين = تالٍ · يسار = سابق (مصحف ورقي). */
   useEffect(() => {
@@ -152,13 +169,13 @@ export function MushafPager({
     const onResize = () => {
       locking.current = true;
       snapToIndex(1, false);
-      window.setTimeout(() => {
+      scheduleTimer(() => {
         locking.current = false;
       }, 40);
     };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-  }, [snapToIndex]);
+  }, [snapToIndex, scheduleTimer]);
 
   const commitFromScroll = useCallback(() => {
     const el = scrollerRef.current;
@@ -232,23 +249,23 @@ export function MushafPager({
       if (dx > 0) {
         if (page >= MUSHAF_PAGE_MAX) {
           snapToIndex(1, true);
-          window.setTimeout(() => {
+          scheduleTimer(() => {
             locking.current = false;
           }, SETTLE_MS + 40);
           return;
         }
         snapToIndex(0, true);
-        window.setTimeout(() => go(page + 1), SETTLE_MS);
+        scheduleTimer(() => go(page + 1), SETTLE_MS);
       } else {
         if (page <= MUSHAF_PAGE_MIN) {
           snapToIndex(1, true);
-          window.setTimeout(() => {
+          scheduleTimer(() => {
             locking.current = false;
           }, SETTLE_MS + 40);
           return;
         }
         snapToIndex(2, true);
-        window.setTimeout(() => go(page - 1), SETTLE_MS);
+        scheduleTimer(() => go(page - 1), SETTLE_MS);
       }
       return;
     }
