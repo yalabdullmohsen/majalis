@@ -1,20 +1,20 @@
-#!/usr/bin/env node
 /**
- * يولّد أصول العلامة الرسمية من public/brand/icon-1024.png
+ * يولّد أصول العلامة الرسمية من public/brand/majlisilm-brand-source.png
  * تشغيل: node scripts/generate-official-brand-assets.mjs
  */
 import sharp from "sharp";
-import { writeFileSync, copyFileSync, readFileSync } from "node:fs";
+import { writeFileSync, copyFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const pub = resolve(root, "public");
 const brand = resolve(pub, "brand");
-const srcPath = resolve(brand, "icon-1024.png");
+const srcPath = resolve(brand, "majlisilm-brand-source.png");
 const srcBuf = await sharp(srcPath).png().toBuffer();
-const GREEN = { r: 0, g: 43, b: 33, alpha: 1 };
+const GREEN = { r: 16, g: 55, b: 42, alpha: 1 };
 
+copyFileSync(srcPath, resolve(brand, "icon-1024.png"));
 copyFileSync(srcPath, resolve(brand, "official.png"));
 
 async function square(size, out) {
@@ -23,6 +23,7 @@ async function square(size, out) {
 
 await square(512, resolve(pub, "icon-512.png"));
 await square(512, resolve(pub, "logo.png"));
+await square(512, resolve(pub, "logo-icon.png"));
 await square(512, resolve(pub, "favicon.png"));
 await square(192, resolve(pub, "icon-192.png"));
 await square(180, resolve(pub, "apple-touch-icon.png"));
@@ -36,10 +37,23 @@ const logo = await sharp(srcBuf)
   .resize(520, 520, { fit: "contain", background: GREEN })
   .png()
   .toBuffer();
-await sharp({ create: { width: 1200, height: 630, channels: 3, background: GREEN } })
+const og = await sharp({ create: { width: 1200, height: 630, channels: 3, background: GREEN } })
   .composite([{ input: logo, gravity: "center" }])
   .png()
-  .toFile(resolve(brand, "official-og.png"));
+  .toBuffer();
+writeFileSync(resolve(brand, "official-og.png"), og);
+writeFileSync(resolve(brand, "twitter-image.png"), og);
+
+await sharp(srcBuf).webp({ quality: 90 }).toFile(resolve(brand, "official.webp"));
+await sharp(srcBuf)
+  .resize(512, 512)
+  .webp({ quality: 90 })
+  .toFile(resolve(brand, "splash-logo.webp"));
+await sharp(srcBuf).resize(512, 512).png().toFile(resolve(brand, "splash-logo.png"));
+await sharp(srcBuf)
+  .resize(192, 192)
+  .webp({ quality: 90 })
+  .toFile(resolve(pub, "icon-192.webp"));
 
 const sizes = [16, 32, 48];
 const pngs = [];

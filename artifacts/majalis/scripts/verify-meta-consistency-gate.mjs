@@ -22,8 +22,8 @@ function read(rel) {
 const site = JSON.parse(read("site.config.json"));
 const theme = site.themeColor || "#1F7A5A";
 const themeDark = site.themeColorDark || "#4FB48B";
-const defaultImage = site.defaultImage || "/brand/official-og.png?v=20260815";
-const logoImage = site.logoImage || "/brand/official.png?v=20260815";
+const defaultImage = site.defaultImage || "/brand/official-og.png?v=20260825";
+const logoImage = site.logoImage || "/brand/official.png?v=20260825";
 const ogW = String(site.ogImageWidth || 1200);
 const ogH = String(site.ogImageHeight || 630);
 const navExpected = (site.prerenderNav || []).map((n) => n.label);

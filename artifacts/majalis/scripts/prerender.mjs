@@ -65,7 +65,7 @@ if (!fs.existsSync(DIST)) {
 const seoData = JSON.parse(fs.readFileSync(SEO_JSON, "utf8"));
 const routes = seoData.routes;
 const siteUrl = seoData.siteUrl;
-const defaultImagePath = String(seoData.defaultImage || "/brand/official-og.png?v=20260815");
+const defaultImagePath = String(seoData.defaultImage || "/brand/official-og.png?v=20260825");
 const defaultImage = /^https?:\/\//i.test(defaultImagePath)
   ? defaultImagePath
   : `${siteUrl}${defaultImagePath.startsWith("/") ? "" : "/"}${defaultImagePath}`;
