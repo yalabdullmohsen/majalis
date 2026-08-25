@@ -20,17 +20,22 @@ assert.doesNotMatch(app, /homeAdSlot/);
 
 assert.match(nav, /HeaderAdSlot/);
 assert.match(nav, /shouldShowHeaderAd/);
-assert.match(nav, /MajlisWordmark/);
+assert.doesNotMatch(nav, /MajlisWordmark/);
+assert.doesNotMatch(nav, /navbar-v3__tagline/);
+assert.doesNotMatch(nav, /aria-label="المجلس العلمي/);
 
 assert.match(cfg, /headerAdConfig/);
 assert.match(cfg, /export const headerAd\b/);
 assert.match(cfg, /enabled:\s*true/);
-assert.match(cfg, /Majlisilm\.app@gmail\.com/);
 assert.match(cfg, /shouldShowHeaderAd/);
 assert.match(cfg, /Google Ads/);
+assert.match(cfg, /ctaUrl:\s*"\/support"/);
+assert.doesNotMatch(cfg, /HEADER_AD_SECTION_PATHS/);
 
 assert.match(slot, /headerAdConfig/);
 assert.match(slot, /header-ad-slot/);
+assert.match(slot, /header-ad-slot__badge/);
+assert.match(slot, /HeaderAdBanner/);
 assert.doesNotMatch(slot, /googlesyndication|adsbygoogle|gtag/i);
 assert.doesNotMatch(slot, /<img\b/);
 
@@ -39,6 +44,7 @@ assert.match(slot, /header-ad-slot__subtitle/);
 
 assert.match(css, /--header-ad-h:\s*40px/);
 assert.match(css, /max-height:\s*var\(--header-ad-h\)/);
+assert.match(css, /calc\(100vw - 9\.25rem\)/);
 assert.doesNotMatch(css, /position:\s*(fixed|absolute)/i);
 
 console.log("\nheader-ad-gate.test.ts: ok");
