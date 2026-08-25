@@ -9,13 +9,16 @@
   max-height: calc(var(--inset-top, 0px) + var(--top-sponsor-content-h));
   padding-top: var(--inset-top, 0px);
   margin: 0;
-  background: linear-gradient(90deg, #fffef8 0%, #f7f0e0 45%, #f3e8cf 100%);
+  /* لون صلب أولاً: بوابة التباين ترفض التدرج وحده (NO_COLOR). */
+  background-color: #f7f0e0;
+  background-image: linear-gradient(90deg, #fffef8 0%, #f7f0e0 45%, #f3e8cf 100%);
   border-bottom: 1px solid color-mix(in srgb, #8b6914 22%, transparent);
 }
 
 html[data-theme="dark"] .top-sponsor-banner,
 html.theme-dark .top-sponsor-banner {
-  background: linear-gradient(90deg, #1a1c16 0%, #222018 50%, #1c1a14 100%);
+  background-color: #222018;
+  background-image: linear-gradient(90deg, #1a1c16 0%, #222018 50%, #1c1a14 100%);
   border-bottom-color: color-mix(in srgb, #c4a35a 28%, transparent);
 }
 
@@ -85,6 +88,12 @@ html.theme-dark .top-sponsor-banner__badge {
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.2;
+  color: #173d35;
+}
+
+html[data-theme="dark"] .top-sponsor-banner__title,
+html.theme-dark .top-sponsor-banner__title {
+  color: #e8efea;
 }
 
 .top-sponsor-banner__subtitle {
