@@ -13,7 +13,6 @@ import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { getActiveTab } from "@/lib/get-active-tab";
 import { LOBBY_SEARCH_FILTER } from "@/config/section-lobby-chrome";
 import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
-import MajlisWordmark from "./brand/MajlisWordmark";
 import { HeaderAdSlot } from "@/components/header/HeaderAdSlot";
 import { shouldShowHeaderAd } from "@/config/header-ad";
 import "@/styles/components/dark-emerald-menus.css";
@@ -271,17 +270,11 @@ export default function NavBar() {
             </button>
           </div>
 
-          {/* منتصف الهيدر: إعلان مضمّن أو وردمارك المجلس العلمي */}
+          {/* منتصف الهيدر: مساحة إعلانية موحّدة في كل الأقسام (بلا عنوان العلامة) */}
           {shouldShowHeaderAd(location) ? (
             <HeaderAdSlot />
           ) : (
-            <Link
-              href="/"
-              className="navbar-v3__tagline"
-              aria-label="المجلس العلمي — الرئيسية"
-            >
-              <MajlisWordmark className="navbar-v3__tagline-mark" />
-            </Link>
+            <div className="header-ad-slot header-ad-slot--spacer" aria-hidden="true" />
           )}
 
           {/* Desktop tabs */}
