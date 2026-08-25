@@ -263,6 +263,11 @@
   --mj-dur-med: 240ms;
   --mj-touch-min: 48px;
 
+  /* Ambient UX — يُضبط من ambient-ux-engine (فجر→عشاء، بطارية، راحة العين) */
+  --mj-ambient-contrast: 1;
+  --mj-ambient-weight-delta: 0;
+  --mj-ambient-dim: 1;
+
   /* جسر shadcn/خطوط → --mj-* (يتبع الوضع الليلي تلقائيًا) */
   --background: var(--mj-bg);
   --foreground: var(--mj-ink);
@@ -876,4 +881,17 @@ html.dark .mj-btn--ghost {
   .mj-btn {
     transition-duration: 0.01ms;
   }
+}
+
+/* Dynamic Ambient UX — راحة العين ليلاً وللتلاوة */
+:root[data-ambient-comfort="soft"] {
+  filter: contrast(calc(var(--mj-ambient-contrast, 1) * 100%));
+}
+:root[data-ambient-comfort="dim"] {
+  filter: contrast(calc(var(--mj-ambient-contrast, 1) * 100%))
+    brightness(var(--mj-ambient-dim, 0.88));
+}
+:root[data-ambient-phase="isha"] body,
+:root[data-ambient-phase="maghrib"] body {
+  --mj-ambient-dim: min(var(--mj-ambient-dim, 1), 0.94);
 }
