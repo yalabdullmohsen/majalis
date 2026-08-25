@@ -77,6 +77,13 @@
       html.theme-dark, html[data-theme="dark"] {
         --mm-paper: #1a221c;
       }
+      /* PWA / standalone: املأ الشاشة؛ Safe Area عبر --inset-* في الهيكل */
+      @media (display-mode: standalone), (display-mode: fullscreen) {
+        html, body {
+          min-height: 100dvh;
+          min-height: -webkit-fill-available;
+        }
+      }
       .navbar-v3 { min-height: var(--header-h); box-sizing: border-box; }
       .bottom-nav, [data-bottom-nav] { min-height: var(--nav-h); box-sizing: border-box; }
     </style>

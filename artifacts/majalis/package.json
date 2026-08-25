@@ -421,7 +421,7 @@
     "test:universities-ssr": "node --import tsx src/lib/__tests__/universities-ssr-regression.test.ts",
     "test:rulings-route-inventory": "node --import tsx src/lib/__tests__/rulings-route-inventory.test.ts",
     "test:fiqh-source-validation": "node --import tsx src/lib/__tests__/fiqh-council-source-validation.test.ts",
-    "test:account-deletion-integrity": "node --import tsx src/lib/__tests__/account-deletion-integrity.test.ts",
+    "test:account-deletion-integrity": "node --import tsx src/lib/__tests__/account-deletion-integrity.test.ts && node --import tsx src/lib/__tests__/apple-account-deletion-5-1-1-gate.test.ts",
     "test:recitation-capability-copy": "node --import tsx src/lib/__tests__/recitation-capability-copy.test.ts",
     "test:home-hide-content-counts": "node --import tsx src/lib/__tests__/home-hide-content-counts.test.ts",
     "test:round-integrity-p0": "pnpm run test:rulings-publication-gate && pnpm run test:rulings-index-empty && pnpm run test:library-sources-audit && pnpm run test:production-p0-regressions && pnpm run test:prod-routing-fix-regressions && pnpm run test:link-dedupe && pnpm run test:lesson-roles && pnpm run test:universities-ssr && pnpm run test:home-hide-content-counts",

@@ -111,6 +111,56 @@
   background: rgba(192,57,43,0.07) !important;
 }
 
+.page-action-btn--danger {
+  background: color-mix(in srgb, #c0392b 12%, transparent) !important;
+  color: #9b2c1f !important;
+  border: 1.5px solid rgba(192, 57, 43, 0.35) !important;
+}
+
+.page-action-btn--danger:hover,
+.page-action-btn--danger:focus-visible {
+  background: color-mix(in srgb, #c0392b 20%, transparent) !important;
+}
+
+.settings-delete-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: max(16px, var(--inset-top, 0px)) max(16px, var(--inset-right, 0px))
+    max(16px, var(--inset-bottom, 0px)) max(16px, var(--inset-left, 0px));
+  background: color-mix(in srgb, #0a1210 55%, transparent);
+}
+
+.settings-delete-dialog__panel {
+  width: min(100%, 26rem);
+  padding: 1.25rem 1.1rem;
+  border-radius: 14px;
+  background: var(--mj-surface, var(--elite-white, #fff));
+  color: var(--mj-ink, var(--elite-ink, #14241c));
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+}
+
+.settings-delete-dialog__panel h2 {
+  margin: 0 0 0.65rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #9b2c1f;
+}
+
+.settings-delete-dialog__panel p {
+  margin: 0 0 1rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.settings-delete-dialog__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
 /* حقل الإعداد (label + input/select) */
 .settings-field {
   display: flex !important;

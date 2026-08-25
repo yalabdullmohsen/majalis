@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import { AlertTriangle, Trash2, ShieldOff, CheckCircle } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
@@ -8,7 +8,11 @@ import "@/styles/pages/account-deletion.css";
 
 export default function AccountDeletionPage() {
   const { user, isLoggedIn, logout } = useAuth();
-  const [step, setStep] = useState<"info" | "confirm" | "typing" | "deleting" | "done">("info");
+  const search = useSearch();
+  const startConfirm = /(?:^|[?&])confirm=1(?:&|$)/.test(search);
+  const [step, setStep] = useState<"info" | "confirm" | "typing" | "deleting" | "done">(
+    startConfirm && isLoggedIn ? "confirm" : "info",
+  );
   const [confirmWord, setConfirmWord] = useState("");
   const [error, setError] = useState("");
   const heroRef = useRef<HTMLElement>(null);
@@ -22,15 +26,11 @@ export default function AccountDeletionPage() {
     });
   }, []);
 
-  // قاعدة [class$="-hero"], [class$="-hero"] * العامة (elite-2026.css) تفرض
-  // color:#fff!important على .accd-hero وكل عنصر داخله (h1/p/الأيقونة)
-  // افتراضًا أن خلفيته داكنة — .accd-hero بلا خلفية فعلاً. أي محدِّد CSS
-  // خارجي (حتى !important بتخصيص أعلى) يخسر أمامها لسبب لم يُحسَم رغم
-  // تحقيق مطوَّل، وحتى inline style عادي (style={{}}) يخسر أيضًا لأن
-  // !important في ورقة الأنماط يتفوّق على inline غير important بصرف النظر
-  // عن التخصيص — والقاعدة تطابق كل عنصر ابن مباشرة عبر "*" فلا يكفي تصحيح
-  // لون الحاوية وحدها (لا وراثة فعلية). الحل الوحيد المؤكَّد تجريبيًا: فرض
-  // inline style بأولوية "important" على كل عنصر داخل الهيرو عبر DOM API.
+  useEffect(() => {
+    if (startConfirm && isLoggedIn) setStep("confirm");
+  }, [startConfirm, isLoggedIn]);
+
+  // فرض لون الهيرو أمام قواعد CSS العامة التي تفرض أبيضًا على *-hero
   useEffect(() => {
     const hero = heroRef.current;
     if (!hero) return;
@@ -41,12 +41,20 @@ export default function AccountDeletionPage() {
   }, [step]);
 
   async function handleDelete() {
-    if (confirmWord !== "حذف") { setError("يجب كتابة كلمة «حذف» بالضبط للتأكيد."); return; }
-    if (!user?.id) { setError("يجب تسجيل الدخول أولاً."); return; }
+    if (confirmWord !== "حذف") {
+      setError("يجب كتابة كلمة «حذف» بالضبط للتأكيد.");
+      return;
+    }
+    if (!user?.id) {
+      setError("يجب تسجيل الدخول أولاً.");
+      return;
+    }
     setStep("deleting");
     setError("");
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       const token = session?.access_token;
       if (!token) throw new Error("لا يوجد JWT صالح");
       const res = await fetch("/api/account/delete", {
@@ -82,7 +90,9 @@ export default function AccountDeletionPage() {
           <CheckCircle size={48} className="accd-done__icon" aria-hidden="true" />
           <h1>تم حذف حسابك</h1>
           <p>جميع بياناتك قد حُذفت نهائياً. نأسف لمغادرتك، ويسعدنا استقبالك من جديد دوماً.</p>
-          <Link href="/" className="btn-primary">العودة للرئيسية</Link>
+          <Link href="/" className="btn-primary">
+            العودة للرئيسية
+          </Link>
         </div>
       </div>
     );
@@ -105,53 +115,76 @@ export default function AccountDeletionPage() {
           <li>سجل تقدمك في الدروس والقرآن والدورات</li>
           <li>بطاقاتك المراجَعة (SM-2) والمفضلات (bookmarks)</li>
           <li>إنجازاتك ومتابعاتك للعلماء</li>
-          <li>جميع البيانات الشخصية المرتبطة بحسابك عبر قيود الحذف في قاعدة البيانات</li>
+          <li>جميع البيانات الشخصية المرتبطة بحسابك عبر المسح الصريح وقيود الحذف في قاعدة البيانات</li>
         </ul>
         <ol className="accd-info__steps">
-          <li>سجّل الدخول إلى حسابك.</li>
-          <li>اضغط «أريد حذف حسابي».</li>
+          <li>سجّل الدخول إلى حسابك من الإعدادات أو صفحة الحذف.</li>
+          <li>اضغط «أريد حذف حسابي» بعد تحذير عدم القابلية للتراجع.</li>
           <li>اكتب كلمة «حذف» للتأكيد.</li>
-          <li>يُنفَّذ الحذف فورًا على الخادم؛ ثم تُنهى جلستك تلقائيًا.</li>
+          <li>يُنفَّذ الحذف فورًا على الخادم داخل التطبيق؛ ثم تُنهى جلستك تلقائيًا.</li>
         </ol>
         <p className="accd-info__note">
           المحتوى العلمي العام المنشور غير المرتبط بملكية حسابك، مثل الدروس والمكتبة والقرآن والأحكام العامة، يبقى متاحًا للجميع.
-          مدة التنفيذ: فورية من جهة الخادم عند نجاح الطلب. إن تعذّر الحذف الكامل يُعرض خطأ ولا يُعلن اكتمال الحذف.
+          مدة التنفيذ: فورية من جهة الخادم عند نجاح الطلب. لا نحتفظ ببيانات حسابك الشخصية بعد اكتمال الحذف لأغراض تقديم الخدمة.
+          إن تعذّر الحذف الكامل يُعرض خطأ ولا يُعلن اكتمال الحذف — التواصل عبر /contact للمساعدة فقط وليس كمسار وحيد للحذف.
         </p>
       </section>
 
       {!isLoggedIn && (
         <div className="accd-login-prompt">
           <p>يجب تسجيل الدخول أولاً لحذف حسابك.</p>
-          <Link href="/login" className="btn-primary">تسجيل الدخول</Link>
+          <Link href="/login" className="btn-primary">
+            تسجيل الدخول
+          </Link>
         </div>
       )}
 
       {isLoggedIn && step === "info" && (
         <div className="accd-actions">
-          <p className="accd-actions__email">تسجيل الدخول الحالي: <strong>{user?.email}</strong></p>
+          <p className="accd-actions__email">
+            تسجيل الدخول الحالي: <strong>{user?.email}</strong>
+          </p>
           <button type="button" className="btn-danger" onClick={() => setStep("confirm")}>
             <Trash2 size={16} /> أريد حذف حسابي
           </button>
-          <Link href="/settings" className="btn-secondary">إلغاء</Link>
+          <Link href="/settings" className="btn-secondary">
+            إلغاء
+          </Link>
         </div>
       )}
 
       {isLoggedIn && (step === "confirm" || step === "typing") && (
-        <div className="accd-confirm ui-card">
-          <p className="accd-confirm__warning">
-            ⚠️ لتأكيد الحذف النهائي، اكتب كلمة <strong>«حذف»</strong> في الحقل أدناه:
+        <div
+          className="accd-confirm ui-card"
+          role="alertdialog"
+          aria-labelledby="accd-confirm-title"
+          aria-describedby="accd-confirm-desc"
+        >
+          <p id="accd-confirm-title" className="accd-confirm__warning">
+            تحذير: الحذف نهائي وغير قابل للاستعادة.
+          </p>
+          <p id="accd-confirm-desc" className="accd-confirm__warning">
+            لتأكيد الحذف النهائي، اكتب كلمة <strong>«حذف»</strong> في الحقل أدناه:
           </p>
           <input
             type="text"
             className="accd-confirm__input"
             placeholder="اكتب: حذف"
             value={confirmWord}
-            onChange={e => { setConfirmWord(e.target.value); setError(""); setStep("typing"); }}
+            onChange={(e) => {
+              setConfirmWord(e.target.value);
+              setError("");
+              setStep("typing");
+            }}
             dir="rtl"
             autoComplete="off"
             aria-label="كلمة التأكيد"
           />
-          {error && <p className="accd-confirm__error" role="alert">{error}</p>}
+          {error && (
+            <p className="accd-confirm__error" role="alert">
+              {error}
+            </p>
+          )}
           <div className="accd-confirm__btns">
             <button
               type="button"
@@ -161,7 +194,15 @@ export default function AccountDeletionPage() {
             >
               <Trash2 size={16} /> حذف حسابي نهائياً
             </button>
-            <button type="button" className="btn-secondary" onClick={() => { setStep("info"); setConfirmWord(""); setError(""); }}>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => {
+                setStep("info");
+                setConfirmWord("");
+                setError("");
+              }}
+            >
               إلغاء
             </button>
           </div>
