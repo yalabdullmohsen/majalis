@@ -15,8 +15,8 @@ function isInternalPath(url: string): boolean {
 export function TopSponsorBanner() {
   const [location] = useLocation();
   const cfg = headerAdConfig;
-  // لا نخفي الشريط تحت navigator.webdriver: بوابة التباين (Playwright)
-  // تحتاج العنصر في DOM؛ المحتوى طرف أول ثابت وليس سكربت إعلان.
+  // لا نخفي الشريط في فحوص الأتمتة: بوابة التباين تحتاج العنصر في DOM؛
+  // المحتوى طرف أول ثابت وليس سكربت إعلان.
   const show =
     cfg.enabled &&
     (cfg.placement === "top" || cfg.placement === "both") &&
@@ -43,7 +43,7 @@ export function TopSponsorBanner() {
   const body = (
     <>
       <span className="top-sponsor-banner__badge" aria-hidden="true">
-        إعلان
+        {cfg.badgeLabel}
       </span>
       <span className="top-sponsor-banner__copy">
         <span className="top-sponsor-banner__title">{cfg.title}</span>
@@ -58,7 +58,7 @@ export function TopSponsorBanner() {
   const className = "top-sponsor-banner__link";
 
   return (
-    <aside className="top-sponsor-banner" aria-label="مساحة إعلانية" data-top-sponsor-banner="1">
+    <aside className="top-sponsor-banner" aria-label={cfg.title} data-top-sponsor-banner="1">
       <div className="top-sponsor-banner__inner">
         {isInternalPath(cfg.ctaUrl) ? (
           <Link href={cfg.ctaUrl} className={className} aria-label={label}>

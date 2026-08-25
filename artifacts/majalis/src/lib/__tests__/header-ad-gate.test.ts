@@ -35,6 +35,8 @@ assert.match(cfg, /shouldShowHeaderAd/);
 assert.match(cfg, /shouldShowTopSponsorBanner/);
 assert.match(cfg, /Google Ads/);
 assert.match(cfg, /ctaUrl:\s*"\/support"/);
+assert.match(cfg, /حملة العبد المحسن/);
+assert.match(cfg, /badgeLabel:\s*"حملة"/);
 
 assert.match(slot, /headerAdConfig/);
 assert.match(slot, /HeaderAdBanner/);

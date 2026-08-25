@@ -18,7 +18,7 @@ export function HeaderAdSlot() {
   const body = (
     <>
       <span className="header-ad-slot__badge" aria-hidden="true">
-        إعلان
+        {cfg.badgeLabel}
       </span>
       <span className="header-ad-slot__copy">
         <span className="header-ad-slot__title">{cfg.title}</span>

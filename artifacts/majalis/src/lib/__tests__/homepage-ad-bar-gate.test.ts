@@ -19,5 +19,6 @@ assert.doesNotMatch(nav, /MajlisWordmark/);
 assert.match(cfg, /headerAdConfig/);
 assert.match(cfg, /enabled:\s*true/);
 assert.match(cfg, /placement:\s*"top"/);
+assert.match(cfg, /حملة العبد المحسن/);
 
 console.log("\nhomepage-ad-bar-gate.test.ts: ok (top sponsor in app)");
