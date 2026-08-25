@@ -65,10 +65,11 @@ const WEB_VIBRATE_PATTERN: Record<"success" | "warning" | "error", number[]> = {
 
 export async function hapticTap(style: "light" | "medium" | "heavy" = "light") {
   if (!isNative) {
+    if (typeof navigator === "undefined" || typeof navigator.vibrate !== "function") return;
     try {
-      navigator.vibrate?.(WEB_VIBRATE_MS[style]);
+      navigator.vibrate(WEB_VIBRATE_MS[style]);
     } catch {
-      /* تجاهل */
+      /* تجاهل — أجهزة بلا دعم أو سياسة المتصفح */
     }
     return;
   }
@@ -81,14 +82,15 @@ export async function hapticTap(style: "light" | "medium" | "heavy" = "light") {
     };
     await Haptics.impact({ style: map[style] });
   } catch {
-    /* تجاهل */
+    /* تجاهل — إضافة غير متاحة أو جهاز بلا محرك لمسي */
   }
 }
 
 export async function hapticNotify(type: "success" | "warning" | "error") {
   if (!isNative) {
+    if (typeof navigator === "undefined" || typeof navigator.vibrate !== "function") return;
     try {
-      navigator.vibrate?.(WEB_VIBRATE_PATTERN[type]);
+      navigator.vibrate(WEB_VIBRATE_PATTERN[type]);
     } catch {
       /* تجاهل */
     }

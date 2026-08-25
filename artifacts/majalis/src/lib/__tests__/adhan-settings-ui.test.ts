@@ -56,6 +56,9 @@ assert.match(alerts, /تفعيل إشعارات الصلاة/);
 assert.match(alerts, /تنبيه قبل الصلاة/);
 assert.match(alerts, /مدة التنبيه قبل الصلاة/);
 assert.match(alerts, /تنبيه دخول الوقت/);
+assert.match(alerts, /اهتزاز مع التنبيه/);
+assert.match(alerts, /vibrateEnabled/);
+assert.match(alerts, /haptics\.selection/);
 
 const forbiddenCopy = [
   "تجاوز التركيز",

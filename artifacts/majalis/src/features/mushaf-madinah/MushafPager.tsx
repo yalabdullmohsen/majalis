@@ -11,6 +11,7 @@ import {
   MUSHAF_PAGE_MAX,
   MUSHAF_PAGE_MIN,
 } from "@/lib/quran-last-page";
+import { haptics } from "@/lib/haptics";
 import { MUSHAF_SETTLE_MS } from "./layout-bands";
 
 /** عتبة السحب الأفقي — من أي مكان في الصفحة */
@@ -94,6 +95,7 @@ export function MushafPager({
       const clamped = clampMushafPage(next);
       if (clamped === page) return;
       onNavigateStart?.();
+      haptics.selection();
       onPageChange(clamped);
     },
     [onNavigateStart, onPageChange, page],
