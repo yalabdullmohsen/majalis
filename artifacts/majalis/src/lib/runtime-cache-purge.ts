@@ -45,6 +45,54 @@ const PURGE_LOCAL_STORAGE_PREFIXES = [
   "mj.sw-reload",
 ];
 
+/** مفاتيح دخولية/تخطيط قديمة أو تالفة تُمسح في الإقلاع البارد (متزامن). */
+const LEGACY_COLD_BOOT_KEYS = [
+  "majalis-quick-guide-v1",
+  "majalis-quick-guide-seen",
+  "majlis-quick-guide-v1",
+  "majalis-welcome-v1",
+  "majalis-intro-seen",
+  "majalis-boot-guide",
+  "show-onboarding",
+  "force-onboarding",
+  "majalis-first-run-setup-v1",
+  "majalis.onboarding.onboarding_seen",
+  "mj.silent-splash.session",
+  "mj.launch-splash.session.v1",
+  "majalis-layout-cache-v0",
+  "majalis-font-fit-cache-v0",
+  "majalis-mushaf-layout-draft",
+  "majalis-homepage-ad-dismissed",
+  "HomepageAdBar",
+];
+
+/**
+ * مسح صامت لمفاتيح إقلاع قديمة/تالفة — متزامن وغير حاجب.
+ * لا يمس الثيم/الخط/آخر صفحة مصحف/إعدادات الأذان.
+ */
+export function purgeLegacyColdBootKeysSync(): number {
+  let n = 0;
+  for (const key of LEGACY_COLD_BOOT_KEYS) {
+    try {
+      if (localStorage.getItem(key) != null) {
+        localStorage.removeItem(key);
+        n += 1;
+      }
+    } catch {
+      /* private mode */
+    }
+    try {
+      if (sessionStorage.getItem(key) != null) {
+        sessionStorage.removeItem(key);
+        n += 1;
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+  return n;
+}
+
 export function resolveAppVersion(): string | null {
   const { commitHash, buildVersion } = getBuildMetadata();
   if (commitHash && commitHash !== "unknown" && commitHash !== "dev") {
