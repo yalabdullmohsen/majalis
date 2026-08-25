@@ -2,6 +2,7 @@
  * تطبيق PageChrome على DOM + Capacitor StatusBar + theme-color.
  */
 import { Capacitor } from "@capacitor/core";
+import { TOP_SPONSOR_STATUS } from "@/config/header-ad";
 import {
   resolvePageChrome,
   type PageChromeDef,
@@ -94,7 +95,20 @@ export type ApplyPageChromeOpts = {
  * نقطة الدخول المركزية — تُستدعى عند تغيير المسار أو الوضع.
  */
 export async function applyPageChrome(opts: ApplyPageChromeOpts): Promise<PageChromeDef & { key: string }> {
-  const chrome = resolvePageChrome(opts.pathname, opts.resolvedTheme);
+  let chrome = resolvePageChrome(opts.pathname, opts.resolvedTheme);
+  // عند ظهور شريط الراعي: لون الحالة = سطح الإعلان لضمان وضوح الساعة/الشحن
+  if (
+    typeof document !== "undefined" &&
+    document.documentElement.getAttribute("data-top-sponsor") === "1"
+  ) {
+    const status = TOP_SPONSOR_STATUS[opts.resolvedTheme];
+    chrome = {
+      ...chrome,
+      statusBarColor: status.hex,
+      statusBarColorHex: status.hex,
+      statusBarStyle: status.style,
+    };
+  }
   const sig = `${chrome.key}:${chrome.statusBarColorHex}:${chrome.statusBarStyle}`;
   const prev = `${lastAppliedKey}:${lastAppliedHex}:${lastAppliedStyle}`;
   if (!opts.force && sig === prev) {

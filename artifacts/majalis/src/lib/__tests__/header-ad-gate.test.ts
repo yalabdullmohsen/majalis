@@ -37,21 +37,35 @@ assert.match(cfg, /Google Ads/);
 assert.match(cfg, /ctaUrl:\s*"\/support"/);
 assert.match(cfg, /شركة العبد المحسن للحج/);
 assert.match(cfg, /الثقة/);
-assert.match(cfg, /badgeLabel:\s*"شريك"/);
+assert.match(cfg, /badgeLabel:\s*"إعلان شراكة"/);
+assert.match(cfg, /sponsorUrl:\s*"https:\/\/instagram\.com\/Al_abdalmhsn"/);
+assert.match(cfg, /sponsorAriaLabel:\s*"فتح حساب شركة العبد المحسن في إنستقرام"/);
+assert.match(cfg, /TOP_SPONSOR_STATUS/);
 
 assert.match(slot, /headerAdConfig/);
 assert.match(slot, /HeaderAdBanner/);
+assert.match(slot, /openExternalUrl/);
+assert.match(slot, /sponsorUrl/);
 assert.doesNotMatch(slot, /googlesyndication|adsbygoogle|gtag/i);
 assert.doesNotMatch(slot, /<img\b/);
 
 assert.match(top, /headerAdConfig/);
 assert.match(top, /top-sponsor-banner/);
 assert.match(top, /placement === "top"/);
+assert.match(top, /openExternalUrl/);
+assert.match(top, /sponsorAriaLabel/);
+assert.match(top, /top-sponsor-banner__partner/);
+assert.match(top, /syncSponsorStatusBar|TOP_SPONSOR_STATUS/);
 assert.doesNotMatch(top, /navigator\.webdriver/);
 assert.doesNotMatch(top, /googlesyndication|adsbygoogle|gtag/i);
 
 assert.match(css, /--header-ad-h:\s*40px/);
-assert.match(topCss, /--top-sponsor-content-h:\s*40px/);
+assert.match(topCss, /--top-sponsor-content-h:\s*48px/);
 assert.match(topCss, /\.app-top-chrome/);
+assert.match(topCss, /background-color:\s*#e8f0ec/);
+
+const apply = read("src/lib/apply-page-chrome.ts");
+assert.match(apply, /TOP_SPONSOR_STATUS/);
+assert.match(apply, /data-top-sponsor/);
 
 console.log("\nheader-ad-gate.test.ts: ok");

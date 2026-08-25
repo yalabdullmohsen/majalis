@@ -26,6 +26,16 @@
   flex: 1 1 auto;
 }
 
+.header-ad-slot__sponsor {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
 .header-ad-slot:hover,
 .header-ad-slot:focus-visible {
   background: color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 11%, #fff);
@@ -102,6 +112,7 @@
   color: #fff;
   background: var(--majalis-emerald-deep, #173d35);
   white-space: nowrap;
+  text-decoration: none;
 }
 
 html[data-theme="dark"] .header-ad-slot {

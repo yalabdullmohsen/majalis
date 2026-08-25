@@ -19,25 +19,38 @@ export type HeaderAdConfig = {
    * both = الاثنان معًا
    */
   placement: HeaderAdPlacement;
-  /** شارة صغيرة بجانب العنوان (مثل: شريك / إعلان) */
+  /** شارة/زر الشراكة (مثل: إعلان شراكة) */
   badgeLabel: string;
   title: string;
   /** سطر ثانٍ داعم */
   subtitle: string;
+  /** نص زر الشراكة */
   ctaLabel: string;
-  /** رابط الضغط — مسار داخلي أو mailto (بلا popup) */
+  /** رابط زر الشراكة — مسار داخلي */
   ctaUrl: string;
+  /** رابط الضغط على إعلان الشركة (خارجي آمن) */
+  sponsorUrl: string;
+  /** aria-label لرابط الشركة */
+  sponsorAriaLabel: string;
+};
+
+/** ألوان شريط الحالة تحت الإعلان (تباين أيقونات الساعة/الشحن) */
+export const TOP_SPONSOR_STATUS = {
+  light: { hex: "#E8F0EC", style: "dark" as const },
+  dark: { hex: "#121816", style: "light" as const },
 };
 
 export const headerAdConfig: HeaderAdConfig = {
   enabled: true,
   placement: "top",
-  badgeLabel: "شريك",
+  badgeLabel: "إعلان شراكة",
   title: "شركة العبد المحسن للحج",
-  subtitle: "الثقة · الجودة · المتعة",
-  ctaLabel: "تواصل",
-  /** صفحة الدعم والتواصل — آمن داخل التطبيق */
+  subtitle: "الثقة • الجودة • المتعة",
+  ctaLabel: "إعلان شراكة",
+  /** صفحة الدعم والتواصل — للإعلان معنا */
   ctaUrl: "/support",
+  sponsorUrl: "https://instagram.com/Al_abdalmhsn",
+  sponsorAriaLabel: "فتح حساب شركة العبد المحسن في إنستقرام",
 };
 
 /** شكل مختصر كما في المواصفات */
