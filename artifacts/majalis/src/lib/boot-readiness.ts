@@ -110,6 +110,13 @@ export async function awaitBootReadiness(): Promise<BootFlags> {
   }
 
   try {
+    const { markBootReady } = await import("@/lib/boot-sequence");
+    markBootReady();
+  } catch {
+    /* ignore */
+  }
+
+  try {
     window.dispatchEvent(
       new CustomEvent("mj:boot-ready", { detail: { ...flags } }),
     );

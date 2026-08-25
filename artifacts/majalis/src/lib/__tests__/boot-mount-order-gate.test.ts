@@ -13,12 +13,14 @@ const main = readFileSync(resolve(root, "main.tsx"), "utf8");
 assert.match(main, /createRoot\(/);
 assert.match(main, /hydrateNativeStorage/);
 assert.match(main, /purgeNativeWebRuntimeCaches/);
+assert.match(main, /runBootSequenceBeforeMount/);
 
 // بعد الإصلاح: لا await hydrate/purge قبل createRoot
 const createIdx = main.indexOf("createRoot(");
 assert.ok(createIdx > 0, "createRoot موجود");
 
 const beforeCreate = main.slice(0, createIdx);
+assert.match(beforeCreate, /runBootSequenceBeforeMount/);
 assert.doesNotMatch(
   beforeCreate,
   /await\s+hydrateNativeStorage\s*\(/,

@@ -3,7 +3,6 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { ChunkRecoveryToast } from "./components/ChunkRecoveryToast";
-import { applyFontPreference, readFontPreference } from "./lib/font-preference";
 import { readThemePreference, resolveTheme } from "./lib/theme-preference";
 import { initClientErrorReporting } from "./lib/error-report";
 import { resetMobileNavBodyLock } from "./lib/mobile-nav-body-lock";
@@ -11,11 +10,12 @@ import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { setupStatusBar, setupKeyboard, isAndroid, isIOS, isNative } from "./lib/capacitor-utils";
 import { purgeNativeWebRuntimeCaches } from "./lib/native-cache-freshness";
+import { installMajalisClearCacheDebug } from "./lib/runtime-cache-purge";
 import {
-  ensureAppVersionMarker,
-  installMajalisClearCacheDebug,
-  purgeStaleRuntimeCaches,
-} from "./lib/runtime-cache-purge";
+  markBootAwaitPaint,
+  runBootSequenceBeforeMount,
+  scheduleMushafLastPagePrewarm,
+} from "./lib/boot-sequence";
 import { hydrateNativeStorage } from "./lib/native-storage";
 import { installInAppNavigationGuard } from "./lib/in-app-navigation";
 import { initFinalPolish } from "./lib/init-final-polish";
@@ -115,16 +115,9 @@ if (isNative) {
 const queryClient = createAppQueryClient();
 
 resetMobileNavBodyLock();
-applyFontPreference(readFontPreference());
 installMajalisClearCacheDebug();
-// تنظيف كاش عرض قديم عند تغيّر النسخة / راية التصميم — بلا حجب createRoot
-void purgeStaleRuntimeCaches({ reloadOnce: false })
-  .then(() => {
-    ensureAppVersionMarker();
-  })
-  .catch(() => {
-    ensureAppVersionMarker();
-  });
+// تسلسل إقلاع موحّد (مسح قديم + ترطيب ثيم/صفحة + قفل مقاييس) — بلا await قبل createRoot
+runBootSequenceBeforeMount();
 
 const bootReporting = () => {
   initClientErrorReporting();
@@ -203,12 +196,14 @@ async function mount() {
   registerBootStorageGate(storageHydrate);
 
   // أخفِ الإطلاق بعد جاهزية الثيم/الخطوط/التخزين (document.fonts داخل awaitBootReadiness).
+  markBootAwaitPaint();
   armNativeSplashController();
   void awaitBootReadiness().then(() => {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         window.dispatchEvent(new Event("mj:app-painted"));
         window.dispatchEvent(new Event("app:first-paint"));
+        scheduleMushafLastPagePrewarm();
       });
     });
   });

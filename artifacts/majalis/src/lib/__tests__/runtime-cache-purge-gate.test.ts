@@ -22,9 +22,10 @@ assert.match(purge, /__MAJALIS_CLEAR_CACHE__/);
 assert.match(purge, /installMajalisClearCacheDebug/);
 assert.match(purge, /static-json:/);
 
-assert.match(main, /purgeStaleRuntimeCaches/);
+assert.match(main, /purgeStaleRuntimeCaches|runBootSequenceBeforeMount/);
 assert.match(main, /installMajalisClearCacheDebug/);
 assert.doesNotMatch(main, /await\s+purgeStaleRuntimeCaches/);
+assert.match(purge, /purgeLegacyColdBootKeysSync/);
 
 assert.match(sw, /networkFirstThenCache/);
 assert.match(sw, /pathname === "\/version\.json"/);
