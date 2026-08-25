@@ -30,6 +30,8 @@ assert.match(apply, /setOverlaysWebView\(\{\s*overlay:\s*true\s*\}\)/);
 assert.match(apply, /Style\.Dark/);
 assert.match(apply, /Style\.Light/);
 assert.match(apply, /--app-status-bg/);
+assert.match(apply, /TOP_SPONSOR_STATUS/);
+assert.match(apply, /data-top-sponsor/);
 
 const chrome = read("src/lib/page-chrome.ts");
 assert.match(chrome, /PRAYER_STATUS_HEX\s*=\s*"#091814"/);

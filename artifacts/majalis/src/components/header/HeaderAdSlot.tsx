@@ -1,5 +1,7 @@
+import { type MouseEvent } from "react";
 import { Link } from "wouter";
 import { headerAdConfig } from "@/config/header-ad";
+import { openExternalUrl } from "@/lib/capacitor-utils";
 import "@/styles/components/header-ad-slot.css";
 
 function isInternalPath(url: string): boolean {
@@ -8,51 +10,51 @@ function isInternalPath(url: string): boolean {
 
 /**
  * كبسولة إعلان في منتصف الهيدر — نص فقط، بلا صور/سكربتات خارجية/popup.
- * العنصر الأساسي بدل عنوان «المجلس العلمي» في كل الصفحات ذات الهيدر العام.
+ * الشركة → إنستقرام؛ «إعلان شراكة» → /support.
  */
 export function HeaderAdSlot() {
   const cfg = headerAdConfig;
   if (!cfg.enabled) return null;
 
-  const label = `${cfg.title}. ${cfg.subtitle} — ${cfg.ctaLabel}`;
-  const body = (
-    <>
-      <span className="header-ad-slot__badge" aria-hidden="true">
-        {cfg.badgeLabel}
-      </span>
-      <span className="header-ad-slot__copy">
-        <span className="header-ad-slot__title">{cfg.title}</span>
-        {cfg.subtitle ? (
-          <span className="header-ad-slot__subtitle">{cfg.subtitle}</span>
-        ) : null}
-      </span>
-      <span className="header-ad-slot__cta">{cfg.ctaLabel}</span>
-    </>
-  );
+  const onSponsorClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    void openExternalUrl(cfg.sponsorUrl);
+  };
 
-  if (isInternalPath(cfg.ctaUrl)) {
-    return (
-      <Link
-        href={cfg.ctaUrl}
-        className="header-ad-slot"
-        aria-label={label}
-        data-header-ad="1"
-      >
-        {body}
-      </Link>
-    );
-  }
+  const partnerLabel = cfg.ctaLabel || cfg.badgeLabel;
 
   return (
-    <a
-      href={cfg.ctaUrl}
-      className="header-ad-slot"
-      aria-label={label}
-      data-header-ad="1"
-      rel={cfg.ctaUrl.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-    >
-      {body}
-    </a>
+    <div className="header-ad-slot" data-header-ad="1">
+      <a
+        href={cfg.sponsorUrl}
+        className="header-ad-slot__sponsor"
+        aria-label={cfg.sponsorAriaLabel}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onSponsorClick}
+      >
+        <span className="header-ad-slot__copy">
+          <span className="header-ad-slot__title">{cfg.title}</span>
+          {cfg.subtitle ? (
+            <span className="header-ad-slot__subtitle">{cfg.subtitle}</span>
+          ) : null}
+        </span>
+      </a>
+      {isInternalPath(cfg.ctaUrl) ? (
+        <Link href={cfg.ctaUrl} className="header-ad-slot__cta" aria-label={partnerLabel}>
+          {partnerLabel}
+        </Link>
+      ) : (
+        <a
+          href={cfg.ctaUrl}
+          className="header-ad-slot__cta"
+          aria-label={partnerLabel}
+          rel={cfg.ctaUrl.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+        >
+          {partnerLabel}
+        </a>
+      )}
+    </div>
   );
 }
 
