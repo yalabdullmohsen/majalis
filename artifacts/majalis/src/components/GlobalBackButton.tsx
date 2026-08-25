@@ -22,6 +22,10 @@ export function GlobalBackButton() {
   if (path === "/prophets" || path.startsWith("/prophets/") || path.startsWith("/prophet-stories") || path.startsWith("/prophets-stories")) {
     return null;
   }
+  /* صفحات الدعم/التواصل لها زر رجوع أعلى الصفحة — تجنب التداخل مع المحتوى */
+  if (path === "/support" || path === "/contact") {
+    return null;
+  }
 
   const goBack = () => {
     haptics.selection();
