@@ -13,9 +13,13 @@ import { clearLocalBookmarks } from "@/lib/local-bookmarks";
 import { clearOfflineReading } from "@/lib/offline-reading-pack";
 import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
 import {
+  clampQuranFontSize,
+  clampReadingTextSize,
   QURAN_FONT_MAX_PX,
   QURAN_FONT_MIN_PX,
   QURAN_FONT_STEP_PX,
+  READING_TEXT_MAX_PX,
+  READING_TEXT_MIN_PX,
 } from "@/lib/quran-font-size";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -107,6 +111,31 @@ export default function SettingsPage() {
   } = useThemePreference();
   const { prefs: quranPrefs, setPref: setQuranPref, bumpFont } = useQuranPreferences();
   const { preferences, updatePreferences } = useUserPreferences();
+  /** مسودة مقياس الخط أثناء السحب — تُلتزَم عند الإفلات فقط لتجنّب وميض التخطيط */
+  const [draftQuranScale, setDraftQuranScale] = useState(quranPrefs.fontScale);
+  const [draftReadingSize, setDraftReadingSize] = useState(
+    () => clampReadingTextSize(Number(preferences.readingTextSize) || 17),
+  );
+
+  useEffect(() => {
+    setDraftQuranScale(quranPrefs.fontScale);
+  }, [quranPrefs.fontScale]);
+
+  useEffect(() => {
+    setDraftReadingSize(clampReadingTextSize(Number(preferences.readingTextSize) || 17));
+  }, [preferences.readingTextSize]);
+
+  const commitQuranScale = (raw: number) => {
+    const next = clampQuranFontSize(raw);
+    setDraftQuranScale(next);
+    setQuranPref("fontScale", next);
+  };
+
+  const commitReadingSize = (raw: number) => {
+    const next = clampReadingTextSize(raw);
+    setDraftReadingSize(next);
+    updatePreferences({ readingTextSize: String(next) });
+  };
 
   const update = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
     updatePreferences({ [key]: value });
@@ -328,12 +357,15 @@ export default function SettingsPage() {
             <input
               type="range"
               name="reading-text-size"
-              min="16"
-              max="28"
-              value={preferences.readingTextSize}
-              onChange={(e) => update("readingTextSize", e.target.value)}
+              min={READING_TEXT_MIN_PX}
+              max={READING_TEXT_MAX_PX}
+              value={draftReadingSize}
+              onInput={(e) => setDraftReadingSize(Number(e.currentTarget.value))}
+              onPointerUp={(e) => commitReadingSize(Number(e.currentTarget.value))}
+              onKeyUp={(e) => commitReadingSize(Number((e.target as HTMLInputElement).value))}
+              onBlur={(e) => commitReadingSize(Number(e.currentTarget.value))}
             />
-            <strong>{preferences.readingTextSize}px</strong>
+            <strong className="mj-bidi-isolate">{draftReadingSize}px</strong>
           </label>
           <label className="settings-field">
             <span>{t("settings_quran_font_size")}</span>
@@ -342,10 +374,13 @@ export default function SettingsPage() {
               min={QURAN_FONT_MIN_PX}
               max={QURAN_FONT_MAX_PX}
               step={QURAN_FONT_STEP_PX}
-              value={quranPrefs.fontScale}
-              onChange={(e) => setQuranPref("fontScale", Number(e.target.value))}
+              value={draftQuranScale}
+              onInput={(e) => setDraftQuranScale(Number(e.currentTarget.value))}
+              onPointerUp={(e) => commitQuranScale(Number(e.currentTarget.value))}
+              onKeyUp={(e) => commitQuranScale(Number((e.target as HTMLInputElement).value))}
+              onBlur={(e) => commitQuranScale(Number(e.currentTarget.value))}
             />
-            <strong>{quranPrefs.fontScale}px</strong>
+            <strong className="mj-bidi-isolate">{draftQuranScale}px</strong>
           </label>
           <label className="settings-field">
             <span>{t("settings_quran_font")}</span>

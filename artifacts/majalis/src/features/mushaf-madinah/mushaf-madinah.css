@@ -82,6 +82,14 @@
   --mm-ref-open-text-end: 74.8%;
   --mushaf-bg: var(--mm-outer-bg);
 
+  /* قفل تكبير نص النظام — يمنع كسر تخطيط الآيات (مكافئ maxFontSizeMultiplier) */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* عزل عن أي font-feature-settings موروث من الواجهة — يحافظ على هندسة QPC */
+  font-feature-settings: normal;
+  font-variant-ligatures: none;
+  font-kerning: none;
+
   position: fixed;
   inset: 0;
   z-index: 40;
