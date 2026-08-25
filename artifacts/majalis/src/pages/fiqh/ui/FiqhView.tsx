@@ -30,7 +30,7 @@ export default function FiqhPage() {
     >
       <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
       <div className="twh-share">
-        <ShareButtons title="الفقه الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/fiqh" />
+        <ShareButtons title="الفقه الإسلامي — المجلس العلمي" url="https://majlisilm.com/fiqh" />
       </div>
     </SectionLobby>
   );

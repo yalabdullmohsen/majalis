@@ -460,7 +460,7 @@ export default function MawarithCalculatorPage() {
           </div>
 
           <div className="twh-share no-print">
-            <ShareButtons title="حاسبة المواريث الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/mawarith/calculator" />
+            <ShareButtons title="حاسبة المواريث الإسلامية — المجلس العلمي" url="https://majlisilm.com/mawarith/calculator" />
           </div>
         </div>
       )}

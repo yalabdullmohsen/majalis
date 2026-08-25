@@ -149,7 +149,7 @@ export const HOME_FEATURE_CARDS = [
 
 export const HOME_MORE_SECTIONS_RAW = [
   { href: "/lessons",               title: seoNavLabel("/lessons", "الدروس"),                description: "دروس ودورات علمية" },
-  { href: "/lessons?tab=courses",   title: seoNavLabel("/lessons?tab=courses", "الدورات العلمية"), description: "برامج ودورات ضمن جدول الدروس" },
+  { href: "/lessons",   title: seoNavLabel("/lessons", "الدورات العلمية"), description: "برامج ودورات ضمن جدول الدروس" },
   { href: "/mushaf",    title: seoNavLabel("/mushaf", "المصحف الشريف"),          description: "قراءة القرآن الكريم مع التلاوة والبحث والمرجع الأخير" },
     { href: "/hadith", title: seoNavLabel("/hadith", "الأحاديث النبوية"), description: "أحاديث صحيحة وضعيفة وموضوعة مصنّفة ومفصولة" },
   { href: "/tawhid", title: seoNavLabel("/tawhid", "التوحيد والعقيدة"), description: "أنواع التوحيد وأركان الإيمان والأسماء الحسنى على منهج أهل السنة" },

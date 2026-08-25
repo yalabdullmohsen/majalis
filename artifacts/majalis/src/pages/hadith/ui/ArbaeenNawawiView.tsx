@@ -74,7 +74,7 @@ export default function ArbaeenNawawiPage() {
           name: "الأربعون النووية",
           author: { "@type": "Person", name: "الإمام النووي" },
           description: "الأربعون حديثاً النووية الجامعة لأحكام الإسلام؛ محتوى معتمد في منهج المجلس العلمي",
-          url: "https://www.majlisilm.com/arbaeen-nawawi",
+          url: "https://majlisilm.com/arbaeen-nawawi",
           inLanguage: "ar",
         },
         {
@@ -86,7 +86,7 @@ export default function ArbaeenNawawiPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `الحديث ${h.id}: ${h.title}`,
-            url: `https://www.majlisilm.com/arbaeen-nawawi#hadith-${h.id}`,
+            url: `https://majlisilm.com/arbaeen-nawawi#hadith-${h.id}`,
           })),
         },
       ],

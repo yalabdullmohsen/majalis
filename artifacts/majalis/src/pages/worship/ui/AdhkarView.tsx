@@ -159,7 +159,7 @@ export default function AdhkarPage() {
             "@type": "ListItem",
             position: i + 1,
             name: c.name,
-            url: `https://www.majlisilm.com${hrefAdhkar(c.slug)}`,
+            url: `https://majlisilm.com${hrefAdhkar(c.slug)}`,
           })),
         },
       ],

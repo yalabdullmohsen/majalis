@@ -704,7 +704,7 @@ export default function VaultPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="مخزن المعرفة — المجلس العلمي" url="https://www.majlisilm.com/vault" />
+        <ShareButtons title="مخزن المعرفة — المجلس العلمي" url="https://majlisilm.com/vault" />
       </div>
       <RelatedKnowledge kind="fawaid" query="محفظة المحفوظات" title="مواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

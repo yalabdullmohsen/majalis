@@ -43,13 +43,13 @@ export default function LessonsArchivePage() {
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "الرئيسية", item: "https://www.majlisilm.com/" },
-            { "@type": "ListItem", position: 2, name: "الدروس", item: "https://www.majlisilm.com/lessons" },
+            { "@type": "ListItem", position: 1, name: "الرئيسية", item: "https://majlisilm.com/" },
+            { "@type": "ListItem", position: 2, name: "الدروس", item: "https://majlisilm.com/lessons" },
             {
               "@type": "ListItem",
               position: 3,
               name: "الأرشيف",
-              item: "https://www.majlisilm.com/lessons/archive",
+              item: "https://majlisilm.com/lessons/archive",
             },
           ],
         },

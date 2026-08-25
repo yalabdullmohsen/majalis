@@ -69,7 +69,7 @@ export async function fetchUrlContent(url) {
   await assertSafeUrl(url);
   const res = await safeFetch(url, {
     headers: {
-      "User-Agent": "MajalisBot/1.0 (+https://www.majlisilm.com)",
+      "User-Agent": "MajalisBot/1.0 (+https://majlisilm.com)",
       Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     },
   });

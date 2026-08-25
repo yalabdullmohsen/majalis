@@ -116,7 +116,7 @@ export default function DiscoverIslamDoubtDetailPage() {
       )}
 
       <div className="twh-share" style={{ marginTop: "1.5rem" }}>
-        <ShareButtons title={item.title} url={`https://www.majlisilm.com/discover-islam/doubts/${item.slug}`} />
+        <ShareButtons title={item.title} url={`https://majlisilm.com/discover-islam/doubts/${item.slug}`} />
         <Link href="/discover-islam/contact" className="page-link-inline">لديك اعتراض آخر؟ تحدّث مع داعية ←</Link>
       </div>
     </div>

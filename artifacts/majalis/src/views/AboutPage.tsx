@@ -23,7 +23,7 @@ export default function AboutPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "المجلس العلمي",
-          url: "https://www.majlisilm.com",
+          url: "https://majlisilm.com",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",
           operatingSystem: "Web, iOS, Android",
@@ -86,7 +86,7 @@ export default function AboutPage() {
       </LegalSection>
 
       <LegalBackLink />
-      <ShareButtons title="حول التطبيق — المجلس العلمي" url="https://www.majlisilm.com/about" />
+      <ShareButtons title="حول التطبيق — المجلس العلمي" url="https://majlisilm.com/about" />
     </LegalPageLayout>
   );
 }

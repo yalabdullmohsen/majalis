@@ -57,7 +57,7 @@ export const OFFICIAL_SOURCE_DEFAULTS = {
     name: "المجلس العلمي",
     entity_name: "المجلس العلمي",
     source_type: "official",
-    url: "https://www.majlisilm.com",
+    url: "https://majlisilm.com",
     trust_level: 88,
     licensing: "owned",
     import_method: "seed",

@@ -94,7 +94,7 @@ export const MERGED_PATH_REDIRECTS: Record<string, string> = {
   "/anbiya": "/prophets",
   "/learning/calendar": "/occasions-lessons",
   "/prayer-countdown": "/prayer-times",
-  "/annual-courses": "/lessons?tab=courses",
+  "/annual-courses": "/lessons",
 
   // أقسام محذوفة من الواجهة (صفحات عميقة تبقى؛ لا تحويل للرئيسية للمكتبة)
   "/start-here": "/lessons",

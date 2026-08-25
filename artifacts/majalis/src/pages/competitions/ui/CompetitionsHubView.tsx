@@ -135,7 +135,7 @@ export default function CompetitionsHubView() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="المسابقات — المجلس العلمي" url="https://www.majlisilm.com/competitions" />
+          <ShareButtons title="المسابقات — المجلس العلمي" url="https://majlisilm.com/competitions" />
         </div>
       </div>
     </SectionLobby>

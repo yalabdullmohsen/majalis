@@ -285,7 +285,7 @@ export default function ScholarProfilePage() {
       <div className="twh-share" style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
         <ShareButtons
           title={`${scholar.name} — المجلس العلمي`}
-          url={`https://www.majlisilm.com/scholars/${scholar.id}`}
+          url={`https://majlisilm.com/scholars/${scholar.id}`}
         />
         <ContentReportButton contentType="scholar" contentId={scholar.id} title={scholar.name} />
       </div>

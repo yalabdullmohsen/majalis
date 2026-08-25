@@ -17,13 +17,13 @@ export default function AboutUsPage() {
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "المجلس العلمي",
-          url: "https://www.majlisilm.com",
+          url: "https://majlisilm.com",
           logo: "https://majlisilm.com/brand/official.png?v=20260825",
           description: "منصة شرعية رقمية كويتية تجمع الدروس والأحكام الشرعية والقرآن والأذكار في مرجع موثوق",
           foundingDate: "2024",
           areaServed: { "@type": "Country", name: "الكويت" },
           inLanguage: "ar",
-          sameAs: ["https://www.majlisilm.com"],
+          sameAs: ["https://majlisilm.com"],
         },
       ],
     });
@@ -81,7 +81,7 @@ export default function AboutUsPage() {
       </LegalSection>
 
       <LegalBackLink />
-      <ShareButtons title="من نحن — المجلس العلمي" url="https://www.majlisilm.com/about-us" />
+      <ShareButtons title="من نحن — المجلس العلمي" url="https://majlisilm.com/about-us" />
     </LegalPageLayout>
   );
 }

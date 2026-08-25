@@ -1582,7 +1582,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
       <SectionQuiz route="/islamic-glossary" count={4} />
 
       <div className="twh-share">
-        <ShareButtons title="المعجم الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/islamic-glossary" />
+        <ShareButtons title="المعجم الإسلامي — المجلس العلمي" url="https://majlisilm.com/islamic-glossary" />
       </div>
     </div>
     </SectionTemplatePage>

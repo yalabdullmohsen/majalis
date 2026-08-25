@@ -604,7 +604,7 @@ export default function WasayaNabawiyyaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: w.title,
-            url: `https://www.majlisilm.com/wasaya-nabawiyya#wasiyya${w.id}`,
+            url: `https://majlisilm.com/wasaya-nabawiyya#wasiyya${w.id}`,
           })),
         },
       ],
@@ -791,7 +791,7 @@ export default function WasayaNabawiyyaPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الوصايا النبوية — المجلس العلمي" url="https://www.majlisilm.com/wasaya-nabawiyya" />
+        <ShareButtons title="الوصايا النبوية — المجلس العلمي" url="https://majlisilm.com/wasaya-nabawiyya" />
       </div>
       <RelatedKnowledge kind="hadith" query="الوصايا النبوية" title="أحاديث ووصايا ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

@@ -368,11 +368,11 @@ export default function QuranMemorizationPage() {
         "@type": "LearningResource",
         name: "اختبارات الحفظ القرآني",
         description: "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة. محتوى معتمد في منهج المجلس العلمي",
-        url: "https://www.majlisilm.com/quran-memorization",
+        url: "https://majlisilm.com/quran-memorization",
         inLanguage: "ar",
         educationalLevel: "Beginner",
         learningResourceType: "Quiz",
-        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
       }],
     });
 

@@ -48,7 +48,7 @@ export default function AcademicResearchPage() {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: "الأبحاث الشرعية",
-          url: "https://www.majlisilm.com/academic-research",
+          url: "https://majlisilm.com/academic-research",
           description: "مكتبة أكاديمية متخصصة في الأبحاث الشرعية الموثقة",
         },
       ],
@@ -235,7 +235,7 @@ export default function AcademicResearchPage() {
         </p>
       </section>
 
-      <ShareButtons title="الأبحاث الشرعية — المجلس العلمي" url="https://www.majlisilm.com/academic-research" />
+      <ShareButtons title="الأبحاث الشرعية — المجلس العلمي" url="https://majlisilm.com/academic-research" />
     </div>
     </SectionTemplatePage>
   );

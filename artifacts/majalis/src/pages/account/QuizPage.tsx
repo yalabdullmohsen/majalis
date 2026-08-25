@@ -18,11 +18,11 @@ export default function QuizPage() {
           "@context": "https://schema.org",
           "@type": "Quiz",
           name: "لعبة سين جيم – أسئلة وأجوبة",
-          url: "https://www.majlisilm.com/quiz",
+          url: "https://majlisilm.com/quiz",
           description: "اختبر معلوماتك من خلال تحدّ يومي ولعبة أسئلة وأجوبة متدرجة",
           educationalLevel: "متعدد المستويات",
           inLanguage: "ar",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
         },
       ],
     });
@@ -33,7 +33,7 @@ export default function QuizPage() {
       <DailyChallengeQuiz />
       <IslamicQuizGame />
       <div className="twh-share">
-        <ShareButtons title="لعبة سين جيم – أسئلة وأجوبة — المجلس العلمي" url="https://www.majlisilm.com/quiz" />
+        <ShareButtons title="لعبة سين جيم – أسئلة وأجوبة — المجلس العلمي" url="https://majlisilm.com/quiz" />
       </div>
     </>
   );

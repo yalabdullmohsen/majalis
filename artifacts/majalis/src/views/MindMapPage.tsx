@@ -163,7 +163,7 @@ export default function MindMapPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "الخرائط الذهنية للعلوم الإسلامية",
-          url: "https://www.majlisilm.com/mind-map",
+          url: "https://majlisilm.com/mind-map",
           description: "خرائط ذهنية تفاعلية تنظّم العلوم الإسلامية من فقه وعقيدة وحديث وسيرة؛ محتوى معتمد في منهج المجلس العلمي",
           about: { "@type": "Thing", name: "العلوم الإسلامية وتنظيمها المعرفي" },
         },
@@ -294,7 +294,7 @@ export default function MindMapPage() {
         أيقونة <ExternalLink size={11} strokeWidth={2} className="icon-inline" /> تفتح الصفحة المرتبطة مباشرة.
       </p>
       <div className="twh-share">
-        <ShareButtons title="الخرائط الذهنية الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/mind-map" />
+        <ShareButtons title="الخرائط الذهنية الإسلامية — المجلس العلمي" url="https://majlisilm.com/mind-map" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/mind-map" title="اختبر معلوماتك في العلوم الشرعية" count={4} />

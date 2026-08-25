@@ -203,8 +203,8 @@ export default function UploadPage() {
         "@type": "WebPage",
         name: "رفع درس علمي",
         description: "أرسل درساً علمياً للمجلس العلمي.",
-        url: "https://www.majlisilm.com/upload",
-        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+        url: "https://majlisilm.com/upload",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
       }],
     });
   }, []);

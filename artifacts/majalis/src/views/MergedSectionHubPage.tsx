@@ -66,7 +66,7 @@ export default function MergedSectionHubPage({ path, title, description, cards, 
           />
         ))}
       </div>
-      <ShareButtons title={`${title} — المجلس العلمي`} url={`https://www.majlisilm.com${path}`} />
+      <ShareButtons title={`${title} — المجلس العلمي`} url={`https://majlisilm.com${path}`} />
     </SectionTemplatePage>
   );
 }

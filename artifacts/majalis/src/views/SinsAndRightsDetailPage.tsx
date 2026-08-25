@@ -44,7 +44,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
           headline: topic.title,
           description: topic.shortDescription,
           inLanguage: "ar",
-          publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+          publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },

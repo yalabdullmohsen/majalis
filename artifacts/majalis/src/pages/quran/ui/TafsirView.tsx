@@ -130,9 +130,9 @@ export default function TafsirPage() {
           name: "علم التفسير",
           description:
             "موسوعة علم التفسير على منهج أهل السنة مع طبقات المفسرين وتفسير كامل للآيات في المصحف.",
-          url: "https://www.majlisilm.com/tafsir",
+          url: "https://majlisilm.com/tafsir",
           inLanguage: "ar",
-          isPartOf: { "@type": "WebSite", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+          isPartOf: { "@type": "WebSite", name: "المجلس العلمي", url: "https://majlisilm.com" },
         },
       ],
     });
@@ -450,7 +450,7 @@ export default function TafsirPage() {
       </section>
 
       <div className="twh-share">
-        <ShareButtons title="علم التفسير — المجلس العلمي" url="https://www.majlisilm.com/tafsir" />
+        <ShareButtons title="علم التفسير — المجلس العلمي" url="https://majlisilm.com/tafsir" />
       </div>
 
       <section className="tf-related">

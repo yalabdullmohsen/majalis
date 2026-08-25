@@ -103,7 +103,7 @@ export default function KuwaitLessonsPage() {
           "@type": "ItemList",
           name: "دروس مشايخ الكويت القادمة",
           description: "قائمة الدروس الشرعية القادمة لعلماء ومشايخ الكويت؛ محتوى معتمد في منهج المجلس العلمي",
-          url: "https://www.majlisilm.com/kuwait-lessons",
+          url: "https://majlisilm.com/kuwait-lessons",
           about: {
             "@type": "Country",
             name: "الكويت",
@@ -121,9 +121,9 @@ export default function KuwaitLessonsPage() {
           organizer: {
             "@type": "Organization",
             name: "المجلس العلمي",
-            url: "https://www.majlisilm.com",
+            url: "https://majlisilm.com",
           },
-          url: "https://www.majlisilm.com/kuwait-lessons",
+          url: "https://majlisilm.com/kuwait-lessons",
           inLanguage: "ar",
         },
       ],
@@ -196,7 +196,7 @@ export default function KuwaitLessonsPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="دروس الكويت — المجلس العلمي" url="https://www.majlisilm.com/kuwait-lessons" />
+        <ShareButtons title="دروس الكويت — المجلس العلمي" url="https://majlisilm.com/kuwait-lessons" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/lessons" title="اختبر معلوماتك في العلم الشرعي" count={4} />

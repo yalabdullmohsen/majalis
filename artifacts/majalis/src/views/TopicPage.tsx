@@ -143,7 +143,7 @@ export default function TopicPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="موضوعات المجلس العلمي" url="https://www.majlisilm.com/topics" />
+        <ShareButtons title="موضوعات المجلس العلمي" url="https://majlisilm.com/topics" />
       </div>
       <RelatedKnowledge kind="lesson" query="موضوع علمي" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

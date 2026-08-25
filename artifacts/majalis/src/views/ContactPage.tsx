@@ -64,7 +64,7 @@ export default function ContactPage() {
       title: "تواصل معنا | المجلس العلمي",
       description: "يسعدنا استقبال ملاحظاتك واقتراحاتك وتصحيحاتك عبر البريد الرسمي للمجلس العلمي.",
       keywords: ["تواصل", "المجلس العلمي", "الدعم", "اقتراح محتوى", "إبلاغ عن خطأ"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "ContactPage", name: "تواصل مع المجلس العلمي", url: "https://www.majlisilm.com/contact", about: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "ContactPage", name: "تواصل مع المجلس العلمي", url: "https://majlisilm.com/contact", about: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" } }],
     });
   }, []);
 

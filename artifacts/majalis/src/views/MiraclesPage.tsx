@@ -123,7 +123,7 @@ export default function MiraclesPage({
             "@type": "ListItem",
             position: i + 1,
             name: cat,
-            url: `https://www.majlisilm.com/miracles?cat=${encodeURIComponent(cat)}`,
+            url: `https://majlisilm.com/miracles?cat=${encodeURIComponent(cat)}`,
           })),
         },
       ],
@@ -336,7 +336,7 @@ export default function MiraclesPage({
                 <div className="mk-card__actions">
                   <ShareButtons
                     title={item.title}
-                    url={`https://www.majlisilm.com/miracles#${encodeURIComponent(item.id)}`}
+                    url={`https://majlisilm.com/miracles#${encodeURIComponent(item.id)}`}
                   />
                 </div>
                 {isAdmin && <AdminQuickEdit section="miracles" searchTerm={item.title} />}

@@ -33,7 +33,7 @@ export const RESEARCH_DEMO_SEED: ResearchRecord[] = [
     methodology: "وصف واجهة فقط — بلا منهج علمي حقيقي.",
     findings: ["الواجهة تعرض الملخص دون ملف."],
     recommendations: ["لا تُستخدم العيّنة في الإنتاج."],
-    sourceUrl: "https://www.majlisilm.com/academic-research",
+    sourceUrl: "https://majlisilm.com/academic-research",
     reviewStatus: "published",
     license: "cc_by",
     accessType: "abstract_only",

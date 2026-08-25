@@ -48,7 +48,7 @@ export default function ArbaeenHadithDetailPage() {
         headline: hadith.title,
         articleSection: "الأربعون النووية",
         position: hadith.id,
-        url: `https://www.majlisilm.com/arbaeen-nawawi/${hadith.id}`,
+        url: `https://majlisilm.com/arbaeen-nawawi/${hadith.id}`,
         inLanguage: "ar",
       }],
     });

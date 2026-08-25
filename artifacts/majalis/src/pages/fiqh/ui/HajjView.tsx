@@ -343,7 +343,7 @@ export default function HajjPage() {
             "@type": "ListItem",
             position: i + 1,
             name: r.title,
-            url: `https://www.majlisilm.com/hajj#${r.id}`,
+            url: `https://majlisilm.com/hajj#${r.id}`,
           })),
         },
       ],
@@ -615,7 +615,7 @@ export default function HajjPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="الحج والعمرة — المجلس العلمي" url="https://www.majlisilm.com/hajj" />
+          <ShareButtons title="الحج والعمرة — المجلس العلمي" url="https://majlisilm.com/hajj" />
         </div>
 
         {/* related */}

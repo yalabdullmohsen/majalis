@@ -124,7 +124,7 @@ const SECTIONS = [
     icon: "learn",
     links: [
       { href: "/lessons",          label: "الدروس والمحاضرات",    desc: "دروس صوتية ومرئية" },
-      { href: "/lessons?tab=courses", label: "الدورات العلمية",   desc: "برامج وكورسات ضمن جدول الدروس" },
+      { href: "/lessons", label: "الدورات العلمية",   desc: "برامج وكورسات ضمن جدول الدروس" },
       { href: "/kuwait-lessons",   label: "دروس الكويت",          desc: "دليل الدروس بالمساجد الكويتية" },
       { href: "/scholars",         label: "أعلام الإسلام",        desc: "تراجم العلماء" },
       { href: "/quiz",             label: "سين جيم",   desc: "مسابقة أسئلة تفاعلية" },
@@ -184,7 +184,7 @@ export default function SiteMapPage() {
       path: "/sitemap",
       title: "أهم الأقسام | المجلس العلمي",
       description: "دليل لأهم أقسام المجلس العلمي: قرآن وحديث وفقه وعقيدة وسيرة وأدوات التعلم والخدمات.",
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "دليل أقسام المجلس العلمي", url: "https://www.majlisilm.com/sitemap", about: { "@type": "WebSite", name: "المجلس العلمي", url: "https://www.majlisilm.com" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "دليل أقسام المجلس العلمي", url: "https://majlisilm.com/sitemap", about: { "@type": "WebSite", name: "المجلس العلمي", url: "https://majlisilm.com" } }],
     });
   }, []);
 
@@ -224,7 +224,7 @@ export default function SiteMapPage() {
         ))}
       </main>
       <div className="twh-share">
-        <ShareButtons title="دليل أقسام المجلس العلمي" url="https://www.majlisilm.com/sitemap" />
+        <ShareButtons title="دليل أقسام المجلس العلمي" url="https://majlisilm.com/sitemap" />
       </div>
       <RelatedKnowledge kind="book" query="أقسام المجلس" title="مواد للبدء" limit={6} />
       <div className="px-4 pb-6 mt-4">

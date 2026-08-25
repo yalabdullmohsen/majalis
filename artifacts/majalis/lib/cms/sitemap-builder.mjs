@@ -86,7 +86,7 @@ export async function fetchDynamicUrls() {
     // المبنية بكثافة هذه الجلسة) كانت غائبة تماماً عن sitemap.xml الحي —
     // seo-routes.json (المصدر الثابت لـbuildSitemapXml) لا يحوي أي إدخال
     // فردي لمسار، وfetchDynamicUrls لم يكن يستعلم جدول learning_paths
-    // إطلاقاً. تحقَّق مباشرة من https://www.majlisilm.com/sitemap.xml
+    // إطلاقاً. تحقَّق مباشرة من https://majlisilm.com/sitemap.xml
     // الحي: يحوي فقط /learning/paths (الفهرس) بلا أي مسار فردي. أُضيف
     // استعلام حي هنا (لا مرآة ثابتة) ليبقى متزامناً تلقائياً مع أي مسار
     // جديد يُنشَر مستقبلاً.

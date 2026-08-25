@@ -166,7 +166,7 @@ export default function ArkanIslamPage() {
             "@type": "ListItem",
             position: i + 1,
             name: r.title,
-            url: `https://www.majlisilm.com/arkan#rukn-${r.num}`,
+            url: `https://majlisilm.com/arkan#rukn-${r.num}`,
           })),
         },
       ],
@@ -301,7 +301,7 @@ export default function ArkanIslamPage() {
         </div>
       </div>
       <div className="zk-share">
-        <ShareButtons title="أركان الإسلام الخمسة — المجلس العلمي" url="https://www.majlisilm.com/arkan-islam" />
+        <ShareButtons title="أركان الإسلام الخمسة — المجلس العلمي" url="https://majlisilm.com/arkan-islam" />
       </div>
       <RelatedKnowledge kind="lesson" query="أركان الإسلام" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
