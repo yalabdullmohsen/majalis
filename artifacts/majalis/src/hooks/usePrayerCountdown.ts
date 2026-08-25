@@ -11,6 +11,7 @@ import {
 import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { subscribeSecondTick } from "@/lib/second-tick";
+import { subscribePrayerDayRollover } from "@/lib/prayer-day-rollover";
 
 function syncLessonCache(payload: PrayerTimesPayload) {
   const cache: Record<string, number> = {};
@@ -97,6 +98,14 @@ export function usePrayerCountdownState(governorateId?: string): PrayerCountdown
       setCountdown(computePrayerCountdown(prayers, tz));
     });
   }, [data]);
+
+  // عبور منتصف الليل → إعادة جلب مواقيت اليوم دون إعادة تشغيل التطبيق
+  useEffect(() => {
+    const tz = activeTz(data);
+    return subscribePrayerDayRollover(tz, () => {
+      setReloadToken((n) => n + 1);
+    });
+  }, [data?.timezone, governorateId]);
 
   return { data, countdown, loading, reload };
 }
