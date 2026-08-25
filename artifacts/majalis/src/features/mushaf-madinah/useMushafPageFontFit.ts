@@ -40,6 +40,24 @@ function applySize(pageEl: HTMLElement, size: number): void {
   pageEl.style.setProperty("--mushaf-font-size", `${size}px`);
 }
 
+/** حجم هندسي فوري (كاش أو حساب) بلا قياس محتوى — يمنع قفزة الإطار الأول. */
+function applyGeometrySizeHint(pageEl: HTMLElement, familyHint: string): boolean {
+  const body = pageEl.querySelector<HTMLElement>(".mm-page__body");
+  const containerPx = Math.round(body?.clientWidth || pageEl.clientWidth || 0);
+  const blockHeightPx = Math.round(body?.clientHeight || 0);
+  if (!containerPx) return false;
+  const family = normalizeMushafFontFamily(familyHint || readFamily(pageEl, "qpc-v2"));
+  const key = mushafUniformFitCacheKey(containerPx, blockHeightPx, family);
+  const cached = getCachedFontSize(key);
+  const geo = resolveUniformMushafFontSize(containerPx, blockHeightPx);
+  const size = Math.max(
+    MUSHAF_FIT_MIN_PX,
+    Math.min(MUSHAF_FIT_MAX_PX, cached != null ? Math.min(cached, geo) : geo),
+  );
+  applySize(pageEl, size);
+  return true;
+}
+
 /**
  * يضبط مقياس الخط من هندسة الحاوية فقط — نفس الحجم لكل الصفحات عند نفس العرض.
  * لا قياس لمحتوى الأسطر ولا shrink حسب الصفحة (سبب اختلاف ١٢٦/١٢٧/١٢٨).
@@ -192,10 +210,16 @@ export function useMushafPageFontFit(
       const body = node.querySelector<HTMLElement>(".mm-page__body");
       const width = Math.round(body?.clientWidth || node.clientWidth || 0);
       const height = Math.round(body?.clientHeight || 0);
+      if (!width) {
+        markFit(node, false);
+        return;
+      }
       const geom = `${width}x${height}`;
       if (!force && geom === lastGeom) return;
       lastGeom = geom;
       const family = normalizeMushafFontFamily(fontFamily);
+      // حجم هندسي فوري قبل القياس الثقيل — يقلّل قفزة المقاس عند الكشف
+      applyGeometrySizeHint(node, family);
       if (isMushafPageFontReady(family)) {
         applyFit(node, family);
         return;
@@ -215,8 +239,9 @@ export function useMushafPageFontFit(
         });
     };
 
-    // إطار أول بلا قياس ديناميكي — أخفِ النص (data-mm-fit=0) حتى fonts + هندسة مستقرة.
+    // إطار أول: أخفِ النص، ثبّت حجمًا هندسيًا إن وُجد عرض، ثم قِس بعد استقرار الإطار
     markFit(el, false);
+    applyGeometrySizeHint(el, fontFamily);
     let firstFrameId = 0;
     firstFrameId = requestAnimationFrame(() => {
       firstFrameId = requestAnimationFrame(() => {

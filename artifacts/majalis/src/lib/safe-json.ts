@@ -62,7 +62,8 @@ export function writeLocalJson(key: string, value: unknown): boolean {
 }
 
 /**
- * كتابة ذرية تقريبية: tmp ثم النهائي ثم مسح tmp —
+ * كتابة ذرية تقريبية لـ localStorage:
+ * يُكتب المفتاح المؤقت أولًا ثم يُثبَّت النهائي ثم يُمسح المؤقت —
  * يقلّل فساد البيانات عند إنهاء مفاجئ أثناء الكتابة.
  */
 export function writeLocalJsonAtomic(key: string, value: unknown): boolean {
@@ -88,7 +89,7 @@ export function writeLocalJsonAtomic(key: string, value: unknown): boolean {
   }
 }
 
-/** يستعيد قيمة من مفتاح مؤقت إن وُجد وفشل النهائي. */
+/** يستعيد قيمة من مفتاح مؤقت إن وُجد وفشل النهائي (إقلاع بعد قتل مفاجئ). */
 export function recoverLocalJsonTmp(key: string): void {
   if (typeof localStorage === "undefined") return;
   const tmpKey = `${key}::__tmp`;

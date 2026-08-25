@@ -55,15 +55,22 @@ const theme = read("src/lib/theme-preference.ts");
 // 3) المصحف: لا Amiri بديل قبل QPC
 {
   assert.doesNotMatch(reader, /Amiri/, "لا رسم المصحف بخط Amiri بديل");
-  assert.match(reader, /layout && fontReady/);
+  assert.match(reader, /canMountPage/);
+  assert.match(reader, /allowOffscreenPrefetch/);
+  assert.match(reader, /useMushafResourceGate/);
   assert.match(reader, /layout && ready/);
   assert.match(fit, /dataset\.mmFit/);
   assert.match(fit, /isMushafPageFontReady/);
   assert.match(fit, /requestAnimationFrame/);
+  assert.match(fit, /applyGeometrySizeHint/);
   assert.match(mushafCss, /data-mm-fit="1"/);
   const qpc = read("src/features/mushaf-madinah/useQpcPageFont.ts");
   assert.match(qpc, /display:\s*"block"/);
   assert.match(qpc, /if \(!cancelled && ok\) setReady\(true\)/);
+  const gate = read("src/features/mushaf-madinah/useMushafResourceGate.ts");
+  assert.match(gate, /isFontLoaded/);
+  assert.match(gate, /isPageDataReady/);
+  assert.match(gate, /data-mm-fit/);
 }
 
 // 4) لا تبديل ثيم بعد أول إطار بطريقة تسبب وميض
