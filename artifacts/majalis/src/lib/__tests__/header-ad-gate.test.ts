@@ -44,6 +44,7 @@ assert.doesNotMatch(slot, /<img\b/);
 assert.match(top, /headerAdConfig/);
 assert.match(top, /top-sponsor-banner/);
 assert.match(top, /placement === "top"/);
+assert.doesNotMatch(top, /navigator\.webdriver/);
 assert.doesNotMatch(top, /googlesyndication|adsbygoogle|gtag/i);
 
 assert.match(css, /--header-ad-h:\s*40px/);

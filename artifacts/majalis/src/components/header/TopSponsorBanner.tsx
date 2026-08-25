@@ -15,11 +15,12 @@ function isInternalPath(url: string): boolean {
 export function TopSponsorBanner() {
   const [location] = useLocation();
   const cfg = headerAdConfig;
+  // لا نخفي الشريط تحت navigator.webdriver: بوابة التباين (Playwright)
+  // تحتاج العنصر في DOM؛ المحتوى طرف أول ثابت وليس سكربت إعلان.
   const show =
     cfg.enabled &&
     (cfg.placement === "top" || cfg.placement === "both") &&
-    !isImmersiveChromePath(location) &&
-    !(typeof navigator !== "undefined" && navigator.webdriver);
+    !isImmersiveChromePath(location);
 
   useEffect(() => {
     const root = document.documentElement;
