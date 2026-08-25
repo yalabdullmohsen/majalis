@@ -68,7 +68,9 @@
         --inset-right: env(safe-area-inset-right, 0px);
         --inset-left: env(safe-area-inset-left, 0px);
         --header-chrome: 56px;
-        --header-h: calc(var(--header-chrome) + var(--inset-top, 0px));
+        --top-sponsor-content-h: 36px;
+        --ad-banner-height: var(--top-sponsor-content-h);
+        --header-h: calc(var(--header-chrome) + var(--inset-top, 0px) + var(--ad-banner-height, 0px));
         --bottom-nav-h: 3.25rem;
         --bottom-nav-height: 3.25rem;
         --nav-h: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px));
@@ -84,7 +86,19 @@
           min-height: -webkit-fill-available;
         }
       }
-      .navbar-v3 { min-height: var(--header-h); box-sizing: border-box; }
+      /* حجز شريط الراعي قبل React — يمنع CLS */
+      .top-sponsor-banner {
+        box-sizing: border-box;
+        min-height: calc(var(--inset-top, 0px) + var(--top-sponsor-content-h, 36px));
+        max-height: calc(var(--inset-top, 0px) + var(--top-sponsor-content-h, 36px));
+        background: linear-gradient(90deg, #fffef8 0%, #f7f0e0 45%, #f3e8cf 100%);
+      }
+      html.theme-dark .top-sponsor-banner,
+      html[data-theme="dark"] .top-sponsor-banner {
+        background: linear-gradient(90deg, #1a1c16 0%, #222018 50%, #1c1a14 100%);
+      }
+      .navbar-v3 { min-height: var(--header-chrome, 56px); box-sizing: border-box; }
+      html[data-top-sponsor="1"] .navbar-v3 { min-height: var(--header-chrome, 56px); }
       .bottom-nav, [data-bottom-nav] { min-height: var(--nav-h); box-sizing: border-box; }
     </style>
     <style id="mj-splash-critical">

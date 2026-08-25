@@ -59,19 +59,29 @@ if (liveHttp) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
   });
-  assert.equal(noAuth.status, 401, "بدون JWT → 401");
+  if (noAuth.status === 402) {
+    const bodyText = await noAuth.text().catch(() => "");
+    assert.match(
+      bodyText,
+      /Payment required|DEPLOYMENT_DISABLED/i,
+      "402 يجب أن يكون تعطيل نشر Vercel لا مسار حذف",
+    );
+    proven.push("live HTTP skipped: Vercel DEPLOYMENT_DISABLED (402)");
+  } else {
+    assert.equal(noAuth.status, 401, "بدون JWT → 401");
 
-  const badAuth = await fetch(`${base}/api/account/delete`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: "Bearer invalid-token" },
-  });
-  assert.equal(badAuth.status, 401, "JWT باطل → 401");
-  const badBody = await badAuth.json().catch(() => ({}));
-  assert.equal(badBody.ok, false);
+    const badAuth = await fetch(`${base}/api/account/delete`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer invalid-token" },
+    });
+    assert.equal(badAuth.status, 401, "JWT باطل → 401");
+    const badBody = await badAuth.json().catch(() => ({}));
+    assert.equal(badBody.ok, false);
 
-  const getMethod = await fetch(`${base}/api/account/delete`, { method: "GET" });
-  assert.equal(getMethod.status, 405, "GET → 405");
-  proven.push("failure paths 401/405 (live HTTP)");
+    const getMethod = await fetch(`${base}/api/account/delete`, { method: "GET" });
+    assert.equal(getMethod.status, 405, "GET → 405");
+    proven.push("failure paths 401/405 (live HTTP)");
+  }
 } else {
   proven.push("live HTTP skipped in CI (set MAJLIS_AUDIT_LIVE=1)");
 }
