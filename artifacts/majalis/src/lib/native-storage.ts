@@ -131,27 +131,44 @@ export async function hydrateNativeStorage(
   const work = (async () => {
     const Preferences = await prefsApi();
     if (!Preferences) return;
-    for (const key of keys) {
-      try {
-        const { value } = await Preferences.get({ key });
-        if (value == null || value === "") continue;
-        const existing = storageGetSync(key);
-        if (existing == null || existing === "") {
-          try {
-            localStorage.setItem(key, value);
-          } catch {
-            /* ignore */
-          }
+
+    // دفعة متوازية لمفاتيح التقدّم — أسرع من حلقة get متسلسلة
+    const results = await Promise.all(
+      keys.map(async (key) => {
+        try {
+          const { value } = await Preferences.get({ key });
+          return { key, value: value ?? null };
+        } catch {
+          return { key, value: null as string | null };
         }
-      } catch {
-        /* ignore per key */
+      }),
+    );
+    for (const { key, value } of results) {
+      if (value == null || value === "") continue;
+      const existing = storageGetSync(key);
+      if (existing == null || existing === "") {
+        try {
+          localStorage.setItem(key, value);
+        } catch {
+          /* ignore */
+        }
       }
     }
+
     try {
       const { keys: all } = await Preferences.keys();
-      for (const key of all) {
-        if (!key.startsWith("adhkar_progress_")) continue;
-        const { value } = await Preferences.get({ key });
+      const adhkarKeys = all.filter((key) => key.startsWith("adhkar_progress_"));
+      const adhkarResults = await Promise.all(
+        adhkarKeys.map(async (key) => {
+          try {
+            const { value } = await Preferences.get({ key });
+            return { key, value: value ?? null };
+          } catch {
+            return { key, value: null as string | null };
+          }
+        }),
+      );
+      for (const { key, value } of adhkarResults) {
         if (value == null) continue;
         if (storageGetSync(key) == null) {
           try {

@@ -14,6 +14,9 @@ export const MUSHAF_PAGE_MAX = 604;
 /** المصدر المركزي لعدد صفحات المصحف — مرادف لـ MUSHAF_PAGE_MAX. */
 export const TOTAL_QURAN_PAGES = MUSHAF_PAGE_MAX;
 
+/** undefined = لم تُقرأ بعد؛ null = لا قيمة محفوظة */
+let memLastPage: number | null | undefined;
+
 export function clampMushafPage(page: number): number {
   if (!Number.isFinite(page)) return MUSHAF_PAGE_MIN;
   return Math.min(MUSHAF_PAGE_MAX, Math.max(MUSHAF_PAGE_MIN, Math.floor(page)));
@@ -33,6 +36,7 @@ export function parseMushafPageQuery(raw: string): number | null {
 export async function saveLastPage(pageNumber: number): Promise<void> {
   try {
     const page = clampMushafPage(pageNumber);
+    memLastPage = page;
     const { storageSetSync } = await import("@/lib/native-storage");
     storageSetSync(LAST_PAGE_KEY, page.toString());
     // Background cloud resume for signed-in users (hybrid local→cloud)
@@ -74,12 +78,20 @@ export async function saveLastPage(pageNumber: number): Promise<void> {
  */
 export async function loadLastPage(): Promise<number | null> {
   try {
+    if (memLastPage !== undefined) return memLastPage;
     const { storageGetSync } = await import("@/lib/native-storage");
     const savedPage = storageGetSync(LAST_PAGE_KEY);
-    if (savedPage === null) return null;
+    if (savedPage === null) {
+      memLastPage = null;
+      return null;
+    }
     const n = parseInt(savedPage, 10);
-    if (!Number.isFinite(n)) return null;
-    return clampMushafPage(n);
+    if (!Number.isFinite(n)) {
+      memLastPage = null;
+      return null;
+    }
+    memLastPage = clampMushafPage(n);
+    return memLastPage;
   } catch (e) {
     console.error("خطأ في استعادة الصفحة", e);
     return null;
@@ -89,14 +101,26 @@ export async function loadLastPage(): Promise<number | null> {
 /** Sync read for initial React state (avoids flash before async load). */
 export function loadLastPageSync(): number | null {
   try {
-    // sync path — localStorage (Preferences تُزامَن عند الإقلاع عبر hydrateNativeStorage)
+    if (memLastPage !== undefined) return memLastPage;
     const savedPage =
       typeof localStorage !== "undefined" ? localStorage.getItem(LAST_PAGE_KEY) : null;
-    if (savedPage === null) return null;
+    if (savedPage === null) {
+      memLastPage = null;
+      return null;
+    }
     const n = parseInt(savedPage, 10);
-    if (!Number.isFinite(n)) return null;
-    return clampMushafPage(n);
+    if (!Number.isFinite(n)) {
+      memLastPage = null;
+      return null;
+    }
+    memLastPage = clampMushafPage(n);
+    return memLastPage;
   } catch {
     return null;
   }
+}
+
+/** للاختبارات */
+export function resetLastPageCacheForTests(): void {
+  memLastPage = undefined;
 }

@@ -35,6 +35,7 @@ import {
   type RecitationRange,
 } from "./mushaf-page-for-ayah";
 import { useQpcPageFont } from "./useQpcPageFont";
+import { useMushafResourceGate } from "./useMushafResourceGate";
 import { MUSHAF_CHROME_HIDE_MS } from "./layout-bands";
 import "./mushaf-madinah.css";
 
@@ -118,6 +119,11 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
   const theme = resolveTheme(themeChoice);
 
   const { fontFamily, ready: fontReady } = useQpcPageFont(page);
+  const { canMountPage, allowOffscreenPrefetch } = useMushafResourceGate(
+    fontReady,
+    Boolean(layout) && !error,
+    page,
+  );
   const hideTimer = useRef<number | null>(null);
   const pageRef = useRef(page);
   pageRef.current = page;
@@ -655,15 +661,19 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
       data-testid="mushaf-viewport"
       dir="rtl"
       nextPage={
-        page < MUSHAF_PAGE_MAX ? <PrefetchedMushafPage pageNumber={page + 1} /> : undefined
+        allowOffscreenPrefetch && page < MUSHAF_PAGE_MAX ? (
+          <PrefetchedMushafPage pageNumber={page + 1} />
+        ) : undefined
       }
       prevPage={
-        page > 1 ? <PrefetchedMushafPage pageNumber={page - 1} /> : undefined
+        allowOffscreenPrefetch && page > 1 ? (
+          <PrefetchedMushafPage pageNumber={page - 1} />
+        ) : undefined
       }
       pageSlot={
         <div className="mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
           {error ? <div className="mm-status">{error}</div> : null}
-          {!error && (!layout || !fontReady) ? (
+          {!error && !canMountPage ? (
             <div
               className="mm-page-placeholder"
               role="status"
@@ -671,7 +681,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
               aria-busy="true"
             />
           ) : null}
-          {layout && fontReady ? (
+          {canMountPage && layout ? (
             <MushafPage
               layout={layout}
               fontFamily={fontFamily}
