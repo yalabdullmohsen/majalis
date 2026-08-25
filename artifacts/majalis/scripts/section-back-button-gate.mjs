@@ -101,7 +101,7 @@ async function main() {
     } else {
       // GlobalBackButton يُحمَّل lazy — انتظر ظهور زر الرجوع قبل الحكم
       await page
-        .waitForSelector("[data-section-back], .global-back-btn, [aria-label='رجوع']", {
+        .waitForSelector("[data-section-back], [data-floating-back], .floating-back-btn, .global-back-btn, [aria-label='رجوع']", {
           timeout: 12_000,
           state: "attached",
         })
@@ -110,7 +110,9 @@ async function main() {
     }
     const box = await page.evaluate(() => {
       const lobby = document.querySelector("[data-section-back]");
-      const global = document.querySelector(".global-back-btn, [aria-label='رجوع']");
+      const global = document.querySelector(
+        "[data-floating-back], .floating-back-btn, .global-back-btn, [aria-label='رجوع']",
+      );
       const el = lobby || global;
       if (!el) return null;
       const r = el.getBoundingClientRect();

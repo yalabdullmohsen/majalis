@@ -79,7 +79,7 @@ const prayerSrc = read("src/pages/worship/ui/PrayerTimesView.tsx");
 assert.match(prayerSrc, /reload/);
 assert.match(prayerSrc, /pts-retry/);
 
-const globalBack = read("src/components/GlobalBackButton.tsx");
+const globalBack = read("src/components/FloatingBackButton.tsx");
 /* زر الرجوع ظاهر دائمًا (بلا بوابة تمرير) — أوضح للخروج من الأقسام */
 assert.match(globalBack, /بدون شرط تمرير/);
 assert.match(globalBack, /haptics\.selection/);

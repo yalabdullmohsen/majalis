@@ -19,7 +19,7 @@ const BACK_SELECTORS = [
   ".ds-page-back-btn", ".legal-back-btn", "[aria-label='رجوع']",
   ".tawheed-breadcrumb", ".fiqh-hub-strip", "nav[aria-label='مسار التنقل']",
   ".udp-back", ".back-btn", "[class*='breadcrumb']", "[class*='-back-btn']",
-  ".global-back-btn",
+  ".global-back-btn", ".floating-back-btn", "[data-floating-back]",
 ];
 
 const browser = await chromium.launch();
