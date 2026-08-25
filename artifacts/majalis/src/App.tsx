@@ -62,8 +62,11 @@ const ScrollToTop = lazyWithRetry(
   "ScrollToTop",
 );
 const GlobalBackButton = lazyWithRetry(
-  () => import("@/components/GlobalBackButton").then((m) => ({ default: m.GlobalBackButton })),
-  "GlobalBackButton",
+  () =>
+    import("@/components/FloatingBackButton").then((m) => ({
+      default: m.FloatingBackButton,
+    })),
+  "FloatingBackButton",
 );
 const ComingSoonDialog = lazyWithRetry(
   () => import("@/components/ComingSoonDialog").then((m) => ({ default: m.ComingSoonDialog })),

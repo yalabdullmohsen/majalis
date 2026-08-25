@@ -9,7 +9,7 @@ import assert from "node:assert/strict";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const contact = readFileSync(resolve(root, "src/views/ContactPage.tsx"), "utf8");
 const css = readFileSync(resolve(root, "src/styles/pages/contact.css"), "utf8");
-const globalBack = readFileSync(resolve(root, "src/components/GlobalBackButton.tsx"), "utf8");
+const globalBack = readFileSync(resolve(root, "src/components/FloatingBackButton.tsx"), "utf8");
 
 assert.match(contact, /styles\/pages\/contact\.css/, "استيراد أنماط التواصل مباشرة");
 assert.match(contact, /CONTACT_EMAIL/);

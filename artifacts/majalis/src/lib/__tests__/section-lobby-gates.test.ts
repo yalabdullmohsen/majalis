@@ -44,7 +44,7 @@ assert.match(merged, /lobbyId="hub"|groupTitle/);
 assert.doesNotMatch(merged, /<PageHero/);
 assert.doesNotMatch(merged, /lobbyId="sections"/);
 
-const back = read("src/components/GlobalBackButton.tsx");
+const back = read("src/components/FloatingBackButton.tsx");
 assert.match(back, /isTabRootPath/);
 assert.match(back, /section-lobby-chrome/);
 

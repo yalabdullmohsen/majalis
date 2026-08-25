@@ -137,7 +137,8 @@ header.navbar-v3,
   margin-block-start: 0;
 }
 
-.global-back-btn {
+.global-back-btn,
+.floating-back-btn {
   z-index: var(--z-fab);
   bottom: calc(
     var(--bottom-nav-total, var(--nav-h, 4.5rem)) + 0.5rem + var(--inset-bottom, 0px)

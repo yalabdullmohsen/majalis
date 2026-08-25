@@ -905,13 +905,15 @@ html.dark .nav-soon-badge {
   }
 
   .scroll-to-top,
-  .global-back-btn {
-    bottom: calc(var(--bottom-nav-total) + 0.5rem);
+  .global-back-btn,
+  .floating-back-btn {
+    bottom: calc(var(--bottom-nav-total) + 0.5rem + var(--inset-bottom, 0px));
     min-width: 44px;
     min-height: 44px;
   }
   .scroll-to-top { inset-inline-end: max(1rem, var(--inset-right)); }
-  .global-back-btn { inset-inline-start: max(1rem, var(--inset-left)); }
+  .global-back-btn,
+  .floating-back-btn { inset-inline-start: max(20px, var(--inset-left)); }
   .section-lobby__back {
     bottom: calc(var(--bottom-nav-total) + 0.5rem);
     inset-inline-start: max(1rem, var(--inset-left));
@@ -946,12 +948,15 @@ html[data-theme="dark"] .bottom-nav--v2 {
 
 /* أزرار رجوع/أعلى العامة (App.tsx) — كانت محصورة بـupdates.css الكسول */
 .global-back-btn,
+.floating-back-btn,
 .scroll-to-top {
   position: fixed;
-  bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.25rem);
+  bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.25rem + var(--inset-bottom, 0px));
   z-index: 185;
   width: 44px;
   height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
   border: none;
   display: flex;
@@ -961,12 +966,26 @@ html[data-theme="dark"] .bottom-nav--v2 {
   transition: opacity .2s, transform .2s, background .15s;
   opacity: .9;
   box-shadow: 0 4px 14px rgba(0,0,0,.16);
+  /* تثبيت طبقة التركيب أثناء التمرير السريع — بلا reflow */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
-.global-back-btn {
-  inset-inline-start: 1rem;
+.global-back-btn,
+.floating-back-btn {
+  /* يمين في RTL / يسار في LTR — bottom≈24px و inset≈20px على سطح المكتب أدناه */
+  inset-inline-start: max(20px, var(--inset-left));
   background: var(--majalis-panel, #fff);
   color: var(--majalis-ink, #1A1A18);
   border: 1px solid var(--majalis-line, rgba(0,0,0,.1));
+}
+.floating-back-btn--top {
+  background: var(--color-primary, var(--mj-brand));
+  color: var(--text-on-primary, #fff);
+  border-color: transparent;
+  opacity: .92;
 }
 .scroll-to-top {
   inset-inline-end: 1rem;
@@ -977,29 +996,37 @@ html[data-theme="dark"] .bottom-nav--v2 {
   box-shadow: 0 4px 14px rgba(0,0,0,.22);
 }
 .global-back-btn:hover,
-.scroll-to-top:hover { opacity: 1; transform: translateY(-2px); }
-.scroll-to-top:hover { background: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
+.floating-back-btn:hover,
+.scroll-to-top:hover { opacity: 1; transform: translate3d(0, -2px, 0); }
+.scroll-to-top:hover,
+.floating-back-btn--top:hover { background: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
 .global-back-btn:active,
-.scroll-to-top:active { transform: scale(.93); }
+.floating-back-btn:active,
+.scroll-to-top:active { transform: translateZ(0) scale(.93); }
 @media (prefers-reduced-motion: reduce) {
   .global-back-btn,
+  .floating-back-btn,
   .scroll-to-top,
   .global-back-btn:hover,
+  .floating-back-btn:hover,
   .scroll-to-top:hover,
   .global-back-btn:active,
+  .floating-back-btn:active,
   .scroll-to-top:active,
   .global-back-btn--hidden {
     transition: none;
     transform: none;
   }
 }
-body.filter-sheet-open .global-back-btn { display: none; }
+body.filter-sheet-open .global-back-btn,
+body.filter-sheet-open .floating-back-btn { display: none; }
 .global-back-btn--hidden {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translate3d(0, 10px, 0);
   pointer-events: none;
 }
-html[data-theme="dark"] .global-back-btn {
+html[data-theme="dark"] .global-back-btn:not(.floating-back-btn--top),
+html[data-theme="dark"] .floating-back-btn:not(.floating-back-btn--top) {
   background: var(--clr-surface, #1A2120) !important;
   color: var(--clr-text-1, var(--mj-brand-soft)) !important;
   border-color: var(--clr-border, rgba(255,255,255,.08)) !important;
@@ -1016,7 +1043,14 @@ html[data-theme="dark"] .global-back-btn {
 .stt-icon { position: relative; z-index: 1; flex-shrink: 0; }
 @media (min-width: 880px) {
   .global-back-btn,
-  .scroll-to-top { bottom: 1.5rem; }
+  .floating-back-btn,
+  .scroll-to-top {
+    bottom: max(24px, calc(24px + var(--inset-bottom, 0px)));
+  }
+  .global-back-btn,
+  .floating-back-btn {
+    inset-inline-start: max(20px, var(--inset-left));
+  }
   /* ارفع زر المساعد فوق زر «للأعلى» حتى لا يتراكبا في الزاوية نفسها */
   .assistant-fab {
     bottom: calc(1.5rem + 3.25rem + var(--inset-bottom));

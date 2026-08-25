@@ -214,7 +214,7 @@
     "test:fiqh-hub-routing": "node --import tsx src/lib/__tests__/fiqh-hub-routing.test.ts",
     "test:fiqh-books-gates": "node --import tsx src/lib/__tests__/fiqh-books-gates.test.ts",
     "test:section-lobby-gates": "node --import tsx src/lib/__tests__/section-lobby-gates.test.ts && node --import tsx src/lib/__tests__/section-back-button.test.ts && node --import tsx src/lib/__tests__/quick-actions-quad.test.ts && pnpm run test:competitions-announcements",
-    "test:section-back-button": "node --import tsx src/lib/__tests__/section-back-button.test.ts && node scripts/section-back-button-gate.mjs",
+    "test:section-back-button": "node --import tsx src/lib/__tests__/section-back-button.test.ts && node --import tsx src/lib/__tests__/floating-back-button.test.ts && node scripts/section-back-button-gate.mjs",
     "test:calendar-dates": "node --import tsx src/lib/__tests__/calendar-dates-gate.test.ts",
     "test:calendar-render": "node scripts/calendar-render-gate.mjs",
     "test:calendar-gates": "pnpm run test:calendar-dates && pnpm run test:calendar-render",
