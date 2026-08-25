@@ -8,6 +8,7 @@ import {
   type PrayerSlot,
   type PrayerTimesPayload,
 } from "@/lib/prayer-times";
+import { subscribeSecondTick } from "@/lib/second-tick";
 
 function kuwaitNowParts() {
   const parts = new Intl.DateTimeFormat("en-GB", {
@@ -64,16 +65,13 @@ function useCompactPrayer() {
 
   useEffect(() => {
     if (!data?.prayers?.length) return;
-    const tick = () => {
+    return subscribeSecondTick(() => {
       const cd = computePrayerCountdown(data.prayers);
       setNextKey(cd.next?.key ?? null);
       setCountdown(cd.remainingHms ?? "");
       setSinceSeconds(cd.sinceSeconds);
       setGraceNextHms(cd.graceNextHms ?? null);
-    };
-    tick();
-    const t = setInterval(tick, 1000);
-    return () => clearInterval(t);
+    });
   }, [data]);
 
   return { data, nextKey, countdown, sinceSeconds, graceNextHms };
@@ -95,10 +93,9 @@ export function HomeCompactPrayer() {
       setSelectedCountdown("—");
       return;
     }
-    const tick = () => setSelectedCountdown(getRemainingForPrayer(prayer.minutes!));
-    tick();
-    const t = setInterval(tick, 1000);
-    return () => clearInterval(t);
+    return subscribeSecondTick(() => {
+      setSelectedCountdown(getRemainingForPrayer(prayer.minutes!));
+    });
   }, [selectedKey, data]);
 
   if (!data?.prayers?.length) return null;

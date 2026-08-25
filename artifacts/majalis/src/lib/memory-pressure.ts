@@ -31,9 +31,23 @@ const CRITICAL_RATIO = 0.85;
 
 let started = false;
 let timer: ReturnType<typeof setInterval> | null = null;
+let pollMs = 15_000;
 let lastLevel: MemoryPressureLevel = "normal";
 const listeners = new Set<MemoryPressureListener>();
 let lastPurgeAt = 0;
+
+function startPoll(): void {
+  if (timer || typeof window === "undefined") return;
+  timer = setInterval(() => {
+    void tick();
+  }, pollMs);
+}
+
+function stopPoll(): void {
+  if (!timer) return;
+  clearInterval(timer);
+  timer = null;
+}
 
 export function readMemorySnapshot(): MemorySnapshot {
   const at = Date.now();
@@ -185,13 +199,18 @@ async function tick(): Promise<void> {
 }
 
 function onVisibility(): void {
-  if (typeof document !== "undefined" && document.visibilityState === "hidden") {
+  if (typeof document === "undefined") return;
+  if (document.visibilityState === "hidden") {
+    stopPoll();
     // Soft purge when backgrounded — OS may reclaim soon
     const snap = readMemorySnapshot();
     if (snap.level !== "normal" || (snap.deviceMemoryGb != null && snap.deviceMemoryGb <= 4)) {
       void purgeUnderMemoryPressure(snap.level === "normal" ? "moderate" : snap.level);
     }
+    return;
   }
+  void tick();
+  startPoll();
 }
 
 function bindPressureEvents(): void {
@@ -225,20 +244,17 @@ export function startMemoryPressureObserver(opts?: {
 }): void {
   if (typeof window === "undefined" || started) return;
   started = true;
+  pollMs = Math.max(5_000, opts?.intervalMs ?? 15_000);
   bindPressureEvents();
-  const ms = Math.max(5_000, opts?.intervalMs ?? 15_000);
   void tick();
-  timer = setInterval(() => {
-    void tick();
-  }, ms);
+  if (typeof document === "undefined" || document.visibilityState !== "hidden") {
+    startPoll();
+  }
 }
 
 export function stopMemoryPressureObserver(): void {
   started = false;
-  if (timer) {
-    clearInterval(timer);
-    timer = null;
-  }
+  stopPoll();
   lastLevel = "normal";
 }
 
