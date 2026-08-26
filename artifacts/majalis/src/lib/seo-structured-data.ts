@@ -236,6 +236,29 @@ export function bookJsonLd(book: {
   };
 }
 
+/** مسألة/درس فقهي — LearningResource للفهرسة الغنية. */
+export function learningResourceJsonLd(resource: {
+  name: string;
+  description?: string;
+  url: string;
+  about?: string;
+  educationalLevel?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    name: resource.name,
+    description: resource.description,
+    url: absoluteUrl(resource.url),
+    inLanguage: "ar",
+    learningResourceType: "مسألة فقهية",
+    educationalLevel: resource.educationalLevel,
+    about: resource.about,
+    provider: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+  };
+}
+
 export function prophetArticleJsonLd(prophet: {
   name: string;
   slug: string;

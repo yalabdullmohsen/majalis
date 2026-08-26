@@ -163,6 +163,7 @@ export function OptimizedSheikhImage({
       style={imgStyle}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
+      fetchPriority={priority ? "high" : "auto"}
       width={cssSize ?? outputSize}
       height={
         cssSize !== undefined

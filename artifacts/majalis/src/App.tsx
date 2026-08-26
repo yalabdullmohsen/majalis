@@ -13,7 +13,6 @@ import { SafeAreaDebugOverlay } from "@/components/SafeAreaDebugOverlay";
 import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
 import { PageChromeSync } from "@/components/PageChromeSync";
-import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import { useAutoHideBottomNav } from "@/hooks/useAutoHideBottomNav";
 import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
@@ -21,8 +20,6 @@ import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
 import { PRAYER_ALERT_PREFS_CHANGED_EVENT } from "@/lib/prayer-alert-preferences";
-import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
-import { NavProgressBar } from "@/components/NavProgressBar";
 import { recordRecentPage } from "@/lib/recent-pages";
 import {
   captureScrollSnapshot,
@@ -31,16 +28,11 @@ import {
   type ScrollSnapshot,
 } from "@/lib/scroll-document-top";
 import { trackContinueReading } from "@/lib/continue-reading";
-import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
-import { FocusArrival } from "@/components/FocusArrival";
-import { PwaInstallBanner } from "@/components/PwaInstallBanner";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
-import { EdgeSwipeBack, RouteEnterMotion } from "@/components/motion";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
-import { FirstVisitIntro } from "@/components/onboarding/FirstVisitIntro";
 import {
   markFirstVisitIntroSeen,
   shouldShowFirstVisitIntro,
@@ -122,9 +114,45 @@ const CrossDeviceResumeToast = lazyWithRetry(
   () => import("@/components/CrossDeviceResumeToast").then((m) => ({ default: m.CrossDeviceResumeToast })),
   "CrossDeviceResumeToast",
 );
-const AchievementToast = lazyWithRetry(
-  () => import("@/components/AchievementToast").then((m) => ({ default: m.AchievementToast })),
-  "AchievementToast",
+/** كروم ثانوي — خارج حزمة الإقلاع (شيتات / حركة / بنرات / مقدمة أول زيارة) */
+const FirstVisitIntro = lazyWithRetry(
+  () =>
+    import("@/components/onboarding/FirstVisitIntro").then((m) => ({ default: m.FirstVisitIntro })),
+  "FirstVisitIntro",
+);
+const UpdateAvailableBanner = lazyWithRetry(
+  () =>
+    import("@/components/UpdateAvailableBanner").then((m) => ({ default: m.UpdateAvailableBanner })),
+  "UpdateAvailableBanner",
+);
+const PwaInstallBanner = lazyWithRetry(
+  () => import("@/components/PwaInstallBanner").then((m) => ({ default: m.PwaInstallBanner })),
+  "PwaInstallBanner",
+);
+const FocusArrival = lazyWithRetry(
+  () => import("@/components/FocusArrival").then((m) => ({ default: m.FocusArrival })),
+  "FocusArrival",
+);
+const NavProgressBar = lazyWithRetry(
+  () => import("@/components/NavProgressBar").then((m) => ({ default: m.NavProgressBar })),
+  "NavProgressBar",
+);
+const EdgeSwipeBack = lazyWithRetry(
+  () =>
+    import("@/components/motion/EdgeSwipeBack").then((m) => ({ default: m.EdgeSwipeBack })),
+  "EdgeSwipeBack",
+);
+const RouteEnterMotion = lazyWithRetry(
+  () =>
+    import("@/components/motion/RouteEnterMotion").then((m) => ({ default: m.RouteEnterMotion })),
+  "RouteEnterMotion",
+);
+const DeferredAchievementBoot = lazyWithRetry(
+  () =>
+    import("@/components/DeferredAchievementBoot").then((m) => ({
+      default: m.DeferredAchievementBoot,
+    })),
+  "DeferredAchievementBoot",
 );
 
 const NotFound = lazy(() => import("@/views/not-found"));
@@ -459,14 +487,22 @@ function IslamicReminderBootstrap() {
   useEffect(() => {
     if (fired.current) return;
     fired.current = true;
-    const prefs = loadNotifPrefs();
-    if (prefs.enabled) scheduleIslamicReminder();
-    // تأجير تلقائي: نُرسل مرة بعد 30 دقيقة من فتح التطبيق
-    const t = setTimeout(() => {
-      const p = loadNotifPrefs();
-      if (p.enabled) scheduleIslamicReminder();
-    }, 30 * 60 * 1000);
-    return () => clearTimeout(t);
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    void import("@/lib/local-notifications").then(({ loadNotifPrefs, scheduleIslamicReminder }) => {
+      if (cancelled) return;
+      const prefs = loadNotifPrefs();
+      if (prefs.enabled) scheduleIslamicReminder();
+      // تأجير تلقائي: نُرسل مرة بعد 30 دقيقة من فتح التطبيق
+      timer = setTimeout(() => {
+        const p = loadNotifPrefs();
+        if (p.enabled) scheduleIslamicReminder();
+      }, 30 * 60 * 1000);
+    });
+    return () => {
+      cancelled = true;
+      if (timer) clearTimeout(timer);
+    };
   }, []);
   return null;
 }
@@ -1201,40 +1237,6 @@ function DeferredPrayerCountdownBanner({ defer }: { defer: boolean }) {
   return <PrayerCountdownBanner />;
 }
 
-function DeferredAchievementToasts() {
-  const { newBadges, dismissBadges } = useAchievementCheck();
-  if (newBadges.length === 0) return null;
-  return (
-    <Suspense fallback={null}>
-      <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
-    </Suspense>
-  );
-}
-
-function DeferredAchievementBoot() {
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    let cancelled = false;
-    const reveal = () => {
-      if (!cancelled) setReady(true);
-    };
-    if (typeof window.requestIdleCallback === "function") {
-      const id = window.requestIdleCallback(reveal, { timeout: 4500 });
-      return () => {
-        cancelled = true;
-        window.cancelIdleCallback(id);
-      };
-    }
-    const t = window.setTimeout(reveal, 2200);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(t);
-    };
-  }, []);
-  if (!ready) return null;
-  return <DeferredAchievementToasts />;
-}
-
 function AppShellInner() {
   const { dir, t } = useLanguage();
   const { isAdmin } = useAuth();
@@ -1307,7 +1309,9 @@ function AppShellInner() {
         data-native-app={isNativeApp ? "true" : "false"}
       >
         <PageChromeSync />
-        <FirstVisitIntro onContinue={dismissFirstVisitIntro} />
+        <Suspense fallback={null}>
+          <FirstVisitIntro onContinue={dismissFirstVisitIntro} />
+        </Suspense>
       </div>
     );
   }
@@ -1329,15 +1333,25 @@ function AppShellInner() {
       <Suspense fallback={null}>
         <CookieConsentBanner />
       </Suspense>
-      <UpdateAvailableBanner />
-      <NavProgressBar />
+      <Suspense fallback={null}>
+        <UpdateAvailableBanner />
+      </Suspense>
+      <Suspense fallback={null}>
+        <NavProgressBar />
+      </Suspense>
       <SeoManager />
       <ScrollResetOnNav />
-      <FocusArrival />
+      <Suspense fallback={null}>
+        <FocusArrival />
+      </Suspense>
       <NavigationBinder />
       <NativeBackButtonListener />
-      <RouteEnterMotion />
-      <EdgeSwipeBack />
+      <Suspense fallback={null}>
+        <RouteEnterMotion />
+      </Suspense>
+      <Suspense fallback={null}>
+        <EdgeSwipeBack />
+      </Suspense>
       <NativeNotificationsBootstrap />
       <IdleRuntimeBoot />
       {!hideSiteChrome ? (
@@ -1379,7 +1393,11 @@ function AppShellInner() {
       <Suspense fallback={null}>
         <GlobalBackButton />
       </Suspense>
-      {!hideSiteChrome && <PwaInstallBanner />}
+      {!hideSiteChrome && (
+        <Suspense fallback={null}>
+          <PwaInstallBanner />
+        </Suspense>
+      )}
       <Suspense fallback={null}>
         <BottomNavBar isHidden={shouldHideChrome} />
       </Suspense>
@@ -1388,7 +1406,9 @@ function AppShellInner() {
       </Suspense>
       <VisualViewportKeyboardBridge />
       <SafeAreaDebugOverlay />
-      <DeferredAchievementBoot />
+      <Suspense fallback={null}>
+        <DeferredAchievementBoot />
+      </Suspense>
       <Suspense fallback={null}>
         <CrossDeviceResumeToast />
       </Suspense>

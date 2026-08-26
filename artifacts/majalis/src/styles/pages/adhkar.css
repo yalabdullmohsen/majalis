@@ -15,6 +15,10 @@
   padding: 1.5rem 0 2rem;
 }
 
+.adhkar-page-footer {
+  padding-bottom: calc(var(--bottom-nav-total, 5rem) + var(--inset-bottom, 0px) + 1rem) !important;
+}
+
 .adhkar-focus-counter {
   font-size: var(--ds-text-sm);
   font-weight: 600;

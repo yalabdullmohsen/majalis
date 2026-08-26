@@ -263,13 +263,14 @@ function ProphetCard({
               {sup.book && ` · ${sup.book}`}
             </span>
           )}
-          <span className="prophet-lux-card__read">
-            اقرأ القصة <ChevronLeft size={14} aria-hidden="true" />
-          </span>
+          <span className="prophet-lux-card__read">اقرأ القصة</span>
         </div>
       </div>
 
       {isUlulAzm && <div className="prophet-lux-card__azm-tag">أولو العزم</div>}
+      <span className="prophet-lux-card__go" aria-hidden="true">
+        <ChevronLeft size={16} strokeWidth={2.5} />
+      </span>
       <div className="prophet-lux-card__border" />
     </div>
   );

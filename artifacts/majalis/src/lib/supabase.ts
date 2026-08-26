@@ -40,6 +40,26 @@ const LESSON_LIST_COLUMNS = [
   "audio_url",
   "video_url",
 ].join(",");
+
+/** تفصيل درس — أعمدة صريحة بدل select('*'). */
+const LESSON_DETAIL_COLUMNS = [
+  LESSON_LIST_COLUMNS,
+  "poster_image_url",
+  "audience",
+  "delivery",
+  "keywords",
+  "live_url",
+  "book_url",
+  "maps_url",
+  "start_date",
+  "end_date",
+  "is_recurring",
+  "activity_type",
+  "is_course",
+  "course_id",
+  "session_count",
+  "linked_titles",
+].join(",");
 import { writeAuditLog } from "@/lib/cms/audit-log";
 import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
@@ -404,7 +424,7 @@ export async function getLessonById(id: string) {
     if (kind === "uuid" && isUuid(id)) {
       const byId = await supabase
         .from("lessons")
-        .select(`*, ${SHEIKH_EMBED}`)
+        .select(`${LESSON_DETAIL_COLUMNS}, ${SHEIKH_EMBED}`)
         .eq("id", id.trim())
         .eq("status", "approved")
         .maybeSingle();
@@ -421,7 +441,7 @@ export async function getLessonById(id: string) {
     const orFilter = keys.map((k) => `external_key.eq.${k}`).join(",");
     const byExternalKey = await supabase
       .from("lessons")
-      .select(`*, ${SHEIKH_EMBED}`)
+      .select(`${LESSON_DETAIL_COLUMNS}, ${SHEIKH_EMBED}`)
       .or(orFilter)
       .eq("status", "approved")
       .maybeSingle();

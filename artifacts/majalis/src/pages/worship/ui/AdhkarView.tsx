@@ -1,22 +1,25 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Leaf, X } from "lucide-react";
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Leaf } from "lucide-react";
 import { useLocation, useParams } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
-import { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS, type AdhkarItem } from "@/lib/adhkar-seed";
+import { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { PageShell } from "@/components/layout/PageShell";
-import { ShareButton } from "@/components/ShareButton";
-import { IsnadAttributionBar } from "@/components/IsnadAttributionBar";
 import { adhkarCatRedirectPath, hrefAdhkar, resolveAdhkarCategory } from "@/lib/content-href";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { haptics } from "@/lib/haptics";
 import { markMorningAdhkarDone } from "@/lib/local-milestones";
 import { recordUserActivity } from "@/lib/user-streak";
 import "@/styles/pages/adhkar.css";
 import "@/styles/components/thumb-zone.css";
+
+const AdhkarDhikrSheet = lazy(() =>
+  import("./AdhkarDhikrSheet").then((m) => ({ default: m.AdhkarDhikrSheet })),
+);
 
 const FEATURED_CATEGORIES = ADHKAR_CATEGORIES.filter((c) =>
   FEATURED_ADHKAR_SLUGS.has(c.slug),
@@ -43,54 +46,6 @@ function RingProgress({ pct, size = 120 }: { pct: number; size?: number }) {
         className="adhkar-ring-fill"
       />
     </svg>
-  );
-}
-
-/* ── تفاصيل الذكر (bottom sheet) ── */
-function DhikrSheet({ item, onClose }: { item: AdhkarItem; onClose: () => void }) {
-  useEffect(() => {
-    const h = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    document.addEventListener("keydown", h);
-    return () => document.removeEventListener("keydown", h);
-  }, [onClose]);
-
-  return (
-    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
-    // مساران بديلان كاملان بلوحة المفاتيح.
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-    <div
-      className="adhkar-sheet-overlay"
-      role="dialog" aria-modal="true" aria-label="تفاصيل الذكر"
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-    >
-      <div className="adhkar-sheet">
-        <div className="adhkar-sheet-handle" aria-hidden="true" />
-        <button type="button" className="adhkar-sheet-close" onClick={onClose} aria-label="إغلاق"><X size={18} strokeWidth={1.8} aria-hidden="true" /></button>
-        <h2 className="adhkar-sheet-title">تفاصيل الذكر</h2>
-        <div className="adhkar-sheet-text">{item.text}</div>
-        <dl className="adhkar-sheet-details">
-          <div className="adhkar-sheet-row"><dt>عدد المرات</dt><dd>{toAr(item.count)} مرة</dd></div>
-        </dl>
-        <IsnadAttributionBar
-          data={{
-            source: item.source,
-            grade: item.grade,
-            narrator: item.narrator,
-            reference: item.reference,
-            needsReview: !item.source || !item.grade,
-            reportContentType: "adhkar",
-            reportContentId: item.id,
-          }}
-        />
-        <ShareButton
-          title="ذكر"
-          text={`${item.text}${item.source ? `\n— ${item.source}` : ""}`}
-          size="sm"
-          className="adhkar-sheet-share"
-        />
-        <button type="button" className="adhkar-sheet-dismiss" onClick={onClose}>إغلاق</button>
-      </div>
-    </div>
   );
 }
 
@@ -293,7 +248,7 @@ export default function AdhkarPage() {
       <PageHeader
         eyebrow="العبادة اليومية"
         title="الأذكار"
-        subtitle="من القرآن والسنة الصحيحة"
+        subtitle="أذكار الصباح والمساء والنوم وبعد الصلاة من القرآن والسنة — مع العدّ والحفظ والمشاركة."
       />
 
       {/* شريط التصنيفات */}
@@ -454,9 +409,20 @@ export default function AdhkarPage() {
       ) : null}
 
       {showSheet && current && (
-        <DhikrSheet item={current} onClose={() => setShowSheet(false)} />
+        <Suspense fallback={null}>
+          <AdhkarDhikrSheet item={current} onClose={() => setShowSheet(false)} />
+        </Suspense>
       )}
-      <div className="px-4 pb-6 mt-4">
+      <div className="px-4 pb-6 mt-4 adhkar-page-footer">
+        <ExploreAlsoNav
+          title="استكشف أيضًا"
+          links={[
+            { href: "/duas", label: "الأدعية الشرعية" },
+            { href: "/daily-wird", label: "الورد اليومي" },
+            { href: "/hadith", label: "الحديث وعلومه" },
+            { href: "/mushaf", label: "المصحف" },
+          ]}
+        />
         <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
       </div>
     </PageShell>

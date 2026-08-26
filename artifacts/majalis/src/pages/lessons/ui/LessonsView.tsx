@@ -555,14 +555,18 @@ export default function LessonsPage({
             <ErrorState text={loadError} onRetry={() => safeLocationReload()} />
           ) : null}
 
+          {!loadError ? (
           <PageLoadingGuard
             loading={loading}
             error={null}
-            empty={false}
-            emptyText="لا توجد دروس مطابقة للتصفية الحالية."
+            empty={!loading && filtered.length === 0}
+            emptyText="لا توجد دروس مطابقة للتصفية الحالية. جرّب مسح الفلاتر أو تصفّح الأرشيف."
             onRetry={() => safeLocationReload()}
           >
             <>
+              <p className="lessons-v3-intro">
+                دروس ولقاءات علمية في الكويت مرتبة حسب الموعد والشيخ والمكان — اختر التبويب الرجالي أو النسائي أو الدورات، ثم صفِّ حسب المحافظة واليوم.
+              </p>
               {showFeatured && featuredSections.upcoming.length > 0 && (
                     <section className="lessons-v2-section">
                       <h2 className="lessons-v2-section__title">
@@ -571,6 +575,13 @@ export default function LessonsPage({
                           : "الأقرب موعدًا"}
                       </h2>
                       {renderGrid(featuredSections.upcoming, "", true)}
+                    </section>
+                  )}
+
+                  {showFeatured && featuredSections.popular.length > 0 && (
+                    <section className="lessons-v2-section">
+                      <h2 className="lessons-v2-section__title">الأكثر تداولاً</h2>
+                      {renderGrid(featuredSections.popular, "pop-", true)}
                     </section>
                   )}
 
@@ -598,7 +609,7 @@ export default function LessonsPage({
                     )}
                   </section>
 
-              {!loading && !loadError ? (
+              {!loading ? (
                 <section className="lessons-past-section" aria-labelledby="past-lessons-heading">
                   <h2 id="past-lessons-heading" className="lessons-past-section__title">الدروس السابقة</h2>
                   <p className="lessons-empty-state">
@@ -611,6 +622,7 @@ export default function LessonsPage({
               ) : null}
             </>
           </PageLoadingGuard>
+          ) : null}
         </main>
 
         <aside className="lessons-v2-sidebar" aria-label="تصفية سطح المكتب">
@@ -638,7 +650,7 @@ export default function LessonsPage({
       </FilterSheet>
 
       <div className="twh-share">
-        <ShareButtons aria-label="الدروس العلمية — المجلس العلمي" url={`${SITE_URL}/lessons`} />
+        <ShareButtons title="الدروس العلمية — المجلس العلمي" url={`${SITE_URL}/lessons`} />
       </div>
       <ExploreAlsoNav
         title="استكشف أيضًا"

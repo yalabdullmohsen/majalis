@@ -224,7 +224,12 @@ export async function searchDawahQuestions(term: string): Promise<DawahQuestion[
       return ["title", "short_answer"].map((col) => `${col}.ilike.${like}`);
     })
     .join(",");
-  const { data, error } = await supabase.from("dawah_questions").select("*").match(PUBLISHED).or(orFilter).limit(20);
+  const { data, error } = await supabase
+    .from("dawah_questions")
+    .select("id, category_id, slug, title, short_answer, keywords, target_religion, view_count, updated_at")
+    .match(PUBLISHED)
+    .or(orFilter)
+    .limit(20);
   if (error || !data?.length) {
     return STATIC_DAWAH_QUESTIONS.filter((q) =>
       arabicMatchAny([q.title, q.short_answer, ...(q.keywords || [])], trimmed),
@@ -234,7 +239,14 @@ export async function searchDawahQuestions(term: string): Promise<DawahQuestion[
 }
 
 export async function getFeaturedShubuhat(limit = 6): Promise<DawahShubha[]> {
-  const { data, error } = await supabase.from("dawah_shubuhat").select("*").match(PUBLISHED).order("created_at", { ascending: false }).limit(limit);
+  const { data, error } = await supabase
+    .from("dawah_shubuhat")
+    .select(
+      "id, category_id, slug, title, complexity_level, short_answer, shubha_text, updated_at",
+    )
+    .match(PUBLISHED)
+    .order("created_at", { ascending: false })
+    .limit(limit);
   if (error || !data?.length) return STATIC_DAWAH_SHUBUHAT.slice(0, limit);
   return data as DawahShubha[];
 }

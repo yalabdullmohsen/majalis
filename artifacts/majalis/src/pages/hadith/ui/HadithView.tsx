@@ -3,6 +3,8 @@ import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { AlertTriangle, Check, Copy, Flag, Share2, Star } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/site-config";
+import { nativeShareFaida } from "@/lib/share-faida";
 import { truncateAtWord } from "@/lib/utils";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
@@ -270,14 +272,9 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
 
   function handleShare(e: React.MouseEvent) {
     e.stopPropagation();
-    const payload = { title: h.title || "حديث نبوي شريف", text: citation, url: "https://majlisilm.com/hadith" };
-    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
-      void navigator.share(payload).catch(() => {
-        void navigator.clipboard.writeText(citation);
-      });
-      return;
-    }
-    void navigator.clipboard.writeText(citation);
+    const pageUrl = absoluteUrl(`/hadith#${h.id}`);
+    const shareTitle = h.title && h.title !== "حديث" ? h.title : displayMatn.slice(0, 72);
+    void nativeShareFaida(shareTitle, pageUrl);
   }
 
   function handleSave(e: React.MouseEvent) {
@@ -1232,7 +1229,7 @@ export default function HadithPage() {
     applyPageSeo({
       path: "/hadith",
       title: "الحديث وعلومه | المجلس العلمي",
-      description: "تصفح الأحاديث ودرجاتها وكتب الحديث ومصطلحاته بطريقة منظمة.",
+      description: "بوابة الحديث النبوي: صحيح وحسن وضعيف وموضوع، مع الأربعين النووية وكتب الحديث ومصطلحاته — المتن أولاً والحكم والمصدر بوضوح.",
       keywords: ["أحاديث نبوية", "الحديث الشريف", "صحيح البخاري", "صحيح مسلم", "الحديث الضعيف", "مصطلح الحديث"],
       jsonLd: [
         {
@@ -1267,7 +1264,7 @@ export default function HadithPage() {
       route="/hadith"
       eyebrow="علوم الحديث النبوي"
       title="الحديث وعلومه"
-      subtitle="تصفح الأحاديث ودرجاتها وكتب الحديث ومصطلحاته بطريقة منظمة."
+      subtitle="صحيح وحسن وضعيف وموضوع — مع الأربعين النووية وكتب الحديث ومصطلح الحديث. المتن أوضح عنصر، والحكم والمصدر بجانب كل حديث."
       groupTitle="أقسام الحديث وعلومه"
     >
       <div className="hadith-page hadith-page--hub">

@@ -70,6 +70,7 @@ html.dark .nb-table__row--clickable:hover td {
   color: var(--ps-ink);
   font-family: var(--font-body);
   direction: rtl;
+  padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 16px);
 }
 
 .prophets-light-section {
@@ -79,15 +80,18 @@ html.dark .nb-table__row--clickable:hover td {
 /* ── Hero (قائمة) ── */
 .prophets-lux-hero {
   position: relative;
-  padding: 4rem max(1rem, var(--page-gutter, 1rem)) 3rem;
+  margin: 0.5rem max(1rem, var(--page-gutter, 1rem)) 1.5rem;
+  width: auto;
+  padding: 3.25rem max(1rem, var(--page-gutter, 1rem)) 2.75rem;
   text-align: center;
   overflow: hidden;
   background-color: var(--ps-emerald);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E");
   background-size: 100px 100px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  box-shadow: 0 8px 24px -14px rgba(11, 32, 24, 0.35);
   color: var(--ps-on-emerald);
-  width: 100%;
   box-sizing: border-box;
 }
 .prophets-lux-hero__stars {
@@ -165,16 +169,17 @@ html.dark .nb-table__row--clickable:hover td {
 }
 .prophets-lux-tabs::-webkit-scrollbar { display: none; }
 .prophets-lux-tab {
-  padding: 0.45rem 1.1rem;
-  border-radius: 8px;
-  border: 1px solid var(--ps-line);
-  background: transparent;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--ps-line);
+  background: var(--ps-surface);
   color: var(--ps-ink-soft);
   font-family: var(--font-body);
   font-size: var(--ds-text-sm);
+  font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 .prophets-lux-tab:hover {
   border-color: var(--ps-emerald-bright);
@@ -257,22 +262,27 @@ html.dark .nb-table__row--clickable:hover td {
 /* ── Prophet Card ── */
 .prophet-lux-card {
   position: relative;
-  background: var(--ps-surface);
-  border: 1px solid var(--ps-line);
-  border-radius: 16px;
-  padding: 1.25rem 1rem 1rem;
+  background: color-mix(in srgb, var(--ps-surface) 96%, var(--ps-emerald-bright) 4%);
+  border: 1px solid color-mix(in srgb, var(--prophet-color, var(--ps-emerald)) 24%, var(--ps-line));
+  border-radius: 22px;
+  padding: 1.2rem 1rem 3.2rem;
+  min-height: 11rem;
   cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
   overflow: hidden;
   text-align: end;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px -6px rgba(11, 32, 24, 0.14);
 }
 .prophet-lux-card:hover,
 .prophet-lux-card:focus-visible {
-  transform: translateY(-3px);
+  transform: translateY(-1px);
   border-color: color-mix(in srgb, var(--prophet-color, var(--ps-emerald)) 55%, transparent);
-  box-shadow: 0 6px 20px rgba(20, 63, 53, 0.12);
+  box-shadow: 0 6px 18px -8px rgba(20, 63, 53, 0.16);
   outline: none;
+}
+.prophet-lux-card:focus-visible {
+  outline: 2px solid var(--prophet-color, var(--ps-emerald));
+  outline-offset: 2px;
 }
 .prophet-lux-card__num {
   position: absolute;
@@ -330,12 +340,29 @@ html.dark .nb-table__row--clickable:hover td {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
   font-size: var(--ds-text-xs);
+  padding-inline-end: 2.4rem;
 }
-.prophet-lux-card__surahs { color: #7A8480; }
+.prophet-lux-card__surahs { color: var(--ps-ink-soft); }
 .prophet-lux-card__read {
   color: var(--prophet-color, var(--ps-emerald));
-  font-weight: 600;
+  font-weight: 700;
+}
+.prophet-lux-card__go {
+  position: absolute;
+  inset-inline-end: 0.85rem;
+  bottom: 0.85rem;
+  width: 1.85rem;
+  height: 1.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--prophet-color, var(--ps-emerald)) 35%, transparent);
+  background: color-mix(in srgb, var(--prophet-color, var(--ps-emerald)) 10%, var(--ps-surface));
+  color: var(--prophet-color, var(--ps-emerald));
+  pointer-events: none;
 }
 .prophet-lux-card__bookmark {
   display: none !important;
