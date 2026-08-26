@@ -10,7 +10,6 @@ import { ShareFaida } from "@/components/ShareFaida";
 import { cn } from "@/lib/utils";
 import {
   breadcrumbJsonLd,
-  defaultSiteJsonLd,
   learningResourceJsonLd,
 } from "@/lib/seo-structured-data";
 import "@/styles/pages/fiqh-hub.css";
@@ -75,7 +74,6 @@ export default function FiqhLessonPage() {
       description: hit.lesson.summary.slice(0, 160),
       keywords: [hit.lesson.title, hit.chapter.title, hit.book.title, "فقه"],
       jsonLd: [
-        ...defaultSiteJsonLd(),
         learningResourceJsonLd({
           name: hit.lesson.title,
           description: hit.lesson.summary.slice(0, 200),

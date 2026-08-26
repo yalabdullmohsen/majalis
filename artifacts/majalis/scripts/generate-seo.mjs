@@ -343,7 +343,25 @@ function librarySourceLabel(url) {
 }
 
 function jsonLdScript(payload) {
-  return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
+  const cleaned = sanitizeJsonLd(payload);
+  if (cleaned == null) return "";
+  return `<script type="application/ld+json">${JSON.stringify(cleaned)}</script>`;
+}
+
+function sanitizeJsonLd(value) {
+  if (value == null) return undefined;
+  if (typeof value === "string") return value.trim() === "" ? undefined : value;
+  if (typeof value !== "object") return value;
+  if (Array.isArray(value)) {
+    const next = value.map(sanitizeJsonLd).filter((v) => v !== undefined);
+    return next.length ? next : undefined;
+  }
+  const out = {};
+  for (const [k, v] of Object.entries(value)) {
+    const cleaned = sanitizeJsonLd(v);
+    if (cleaned !== undefined) out[k] = cleaned;
+  }
+  return Object.keys(out).length ? out : undefined;
 }
 
 function dedupeLessons(rows) {
@@ -391,28 +409,34 @@ function linkList(heading, items) {
 // JSON-LD
 // ─────────────────────────────────────────────────────────────────────────────
 function lessonJsonLdScript(row) {
+  const sheikh = String(row.speaker_name || "").trim();
+  const isCourse = row.is_course || row.activity_type === "دورة";
   return jsonLdScript({
     "@context": "https://schema.org",
-    "@type": row.is_course || row.activity_type === "دورة" ? "Course" : "EducationEvent",
+    "@type": "LearningResource",
     name: row.title,
     description: row.description || lessonDescription(row),
     url: absoluteUrl(`/lessons/${row.id}`),
     image: absoluteUrl(row.sheikh_image_url || row.poster_image_url || DEFAULT_IMAGE),
     inLanguage: "ar",
-    organizer: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
-    performer: row.speaker_name ? { "@type": "Person", name: row.speaker_name } : undefined,
-    location: row.mosque
+    learningResourceType: isCourse ? "دورة علمية" : "درس شرعي",
+    provider: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    ...(sheikh ? { author: { "@type": "Person", name: sheikh } } : {}),
+    ...(row.mosque
       ? {
-          "@type": "Place",
-          name: row.mosque,
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: row.region || row.city || "الكويت",
-            addressCountry: "KW",
+          spatialCoverage: {
+            "@type": "Place",
+            name: row.mosque,
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: row.region || row.city || "الكويت",
+              addressCountry: "KW",
+            },
           },
         }
-      : undefined,
-    keywords: (row.keywords || [row.category]).filter(Boolean).join(", "),
+      : {}),
+    keywords: (row.keywords || [row.category]).filter(Boolean).join(", ") || undefined,
   });
 }
 
@@ -422,7 +446,7 @@ function siteJsonLdScript() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: absoluteUrl(LOGO_IMAGE),
+    logo: { "@type": "ImageObject", url: absoluteUrl(LOGO_IMAGE) },
     image: absoluteUrl(DEFAULT_IMAGE),
     inLanguage: "ar",
   };
@@ -433,9 +457,18 @@ function siteJsonLdScript() {
     url: SITE_URL,
     image: absoluteUrl(DEFAULT_IMAGE),
     inLanguage: "ar",
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: absoluteUrl(LOGO_IMAGE) },
+    },
     potentialAction: {
       "@type": "SearchAction",
-      target: `${SITE_URL}/search?q={search_term_string}`,
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
+      },
       "query-input": "required name=search_term_string",
     },
   };
@@ -447,7 +480,7 @@ function bookJsonLdScript(row) {
     "@context": "https://schema.org",
     "@type": "Book",
     name: row.title,
-    author: { "@type": "Person", name: row.author },
+    ...(row.author ? { author: { "@type": "Person", name: row.author } } : {}),
     description: row.description || row.title,
     inLanguage: "ar",
     genre: row.category || "فقه إسلامي",
@@ -459,13 +492,15 @@ function bookJsonLdScript(row) {
 function courseJsonLdScript(row) {
   return jsonLdScript({
     "@context": "https://schema.org",
-    "@type": "Course",
+    "@type": "LearningResource",
     name: row.title || row.name,
     description: row.description || row.title || row.name,
     inLanguage: "ar",
+    learningResourceType: "دورة علمية",
     url: absoluteUrl(`/annual-courses/${row.id}`),
     provider: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
-    ...(row.instructor ? { instructor: { "@type": "Person", name: row.instructor } } : {}),
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    ...(row.instructor ? { author: { "@type": "Person", name: row.instructor } } : {}),
   });
 }
 

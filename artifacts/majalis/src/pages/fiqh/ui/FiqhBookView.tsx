@@ -2,7 +2,7 @@ import { Link, useParams } from "wouter";
 import { useEffect } from "react";
 import { ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { breadcrumbJsonLd, bookJsonLd, defaultSiteJsonLd } from "@/lib/seo-structured-data";
+import { breadcrumbJsonLd, bookJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import { Empty } from "@/components/ui-common";
 import {
@@ -31,7 +31,6 @@ export default function FiqhBookPage() {
       description: `${book.title}: أبواب ومسائل فقهية موثَّقة.`,
       keywords: [book.title, "فقه", "المجلس العلمي"],
       jsonLd: [
-        ...defaultSiteJsonLd(),
         bookJsonLd({
           name: book.title,
           description: fiqhBookBlurb(book),

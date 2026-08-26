@@ -332,9 +332,36 @@ function upsertCanonical(href: string) {
   element.setAttribute("href", href);
 }
 
+/** يزيل null/undefined/المصفوفات الفارغة والنصوص الفارغة من JSON-LD قبل الحقن. */
+export function sanitizeJsonLd(value: unknown): unknown {
+  if (value == null) return undefined;
+  if (typeof value === "string") return value.trim() === "" ? undefined : value;
+  if (typeof value !== "object") return value;
+  if (Array.isArray(value)) {
+    const next = value.map(sanitizeJsonLd).filter((v) => v !== undefined);
+    return next.length ? next : undefined;
+  }
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+    const cleaned = sanitizeJsonLd(v);
+    if (cleaned !== undefined) out[k] = cleaned;
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+
 function upsertJsonLd(data: Record<string, unknown> | Record<string, unknown>[]) {
-  const payload = Array.isArray(data) ? data : [data];
-  let element = document.getElementById(JSON_LD_ID) as HTMLScriptElement | null;
+  const existing = document.getElementById(JSON_LD_ID);
+  const cleaned = sanitizeJsonLd(data);
+  if (
+    cleaned == null ||
+    (Array.isArray(cleaned) && cleaned.length === 0) ||
+    (typeof cleaned === "object" && !Array.isArray(cleaned) && Object.keys(cleaned as object).length === 0)
+  ) {
+    existing?.remove();
+    return;
+  }
+  const payload = Array.isArray(cleaned) ? cleaned : [cleaned];
+  let element = existing as HTMLScriptElement | null;
   if (!element) {
     element = document.createElement("script");
     element.id = JSON_LD_ID;
@@ -456,7 +483,7 @@ export function usePageSeo(path: string) {
       const jsonLd =
         normalized === "/"
           ? defaultSiteJsonLd()
-          : [pageSchema, ...(breadcrumbs ? [breadcrumbs] : []), ...defaultSiteJsonLd()];
+          : [pageSchema, ...(breadcrumbs ? [breadcrumbs] : [])];
 
       applyPageSeo({
         path: normalized,
@@ -504,7 +531,7 @@ export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string, lo
       image: meta.image,
       ogType: meta.ogType,
       canonicalPath: meta.canonicalPath,
-      jsonLd: [lessonJsonLd(lesson), breadcrumbs, ...defaultSiteJsonLd()],
+      jsonLd: [lessonJsonLd(lesson), breadcrumbs],
     });
   }, [lesson, path, loading]);
 }

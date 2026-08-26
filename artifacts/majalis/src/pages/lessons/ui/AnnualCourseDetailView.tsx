@@ -63,10 +63,12 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
       jsonLd: [
         {
           "@context": "https://schema.org",
-          "@type": "Course",
+          "@type": "LearningResource",
           name: item.title,
           description: item.summary,
-          provider: { "@type": "Organization", name: "المجلس العلمي" },
+          learningResourceType: "دورة علمية",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
           inLanguage: "ar",
         },
         breadcrumbJsonLd([

@@ -4,7 +4,7 @@ import { Link } from "wouter";
 import { PROPHETS, getProphet, resolveProphetSlug, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { prophetArticleJsonLd, breadcrumbJsonLd, defaultSiteJsonLd } from "@/lib/seo-structured-data";
+import { prophetArticleJsonLd, breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { supabase } from "@/lib/supabase";
 import { getKnowledgeItem, type KnowledgeItem } from "@/lib/knowledge-loader";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -339,7 +339,6 @@ function ProphetDetailView({
         { name: "قصص الأنبياء", path: "/prophets" },
         { name: p.arabicName, path: `/prophets/${p.slug}` },
       ]),
-      ...defaultSiteJsonLd(),
     ];
     applyPageSeo({
       path: `/prophets/${p.slug}`,
