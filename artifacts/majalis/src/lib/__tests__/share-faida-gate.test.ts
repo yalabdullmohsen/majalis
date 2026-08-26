@@ -23,7 +23,8 @@ assert.match(wa, /^https:\/\/wa\.me\/\?text=/);
 const shareFaida = read("src/components/ShareFaida.tsx");
 assert.match(shareFaida, /Share2/);
 assert.match(shareFaida, /واتساب/);
-assert.match(shareFaida, /نسخ الرابط/);
+assert.match(shareFaida, />نسخ</);
+assert.doesNotMatch(shareFaida, /\{copied \? "تم النسخ" : "نسخ الرابط"\}/);
 
 const contentActions = read("src/components/ContentActions.tsx");
 assert.match(contentActions, /ShareFaida/);

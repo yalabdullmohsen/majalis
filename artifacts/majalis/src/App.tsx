@@ -757,8 +757,8 @@ function Router() {
       <Route path="/account-deletion"><SafeLazyRoute component={AccountDeletionPage} /></Route>
       <Route path="/delete-account"><Redirect to="/account-deletion" /></Route>
       <Route path="/account/delete"><Redirect to="/account-deletion" /></Route>
-      <Route path="/support"><SafeLazyRoute component={ContactPage} /></Route>
-      <Route path="/contact"><Redirect to="/support" /></Route>
+      <Route path="/contact"><SafeLazyRoute component={ContactPage} /></Route>
+      <Route path="/support"><Redirect to="/contact" /></Route>
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
       <Route path="/feature-tour"><SafeLazyRoute component={FeatureTourPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>

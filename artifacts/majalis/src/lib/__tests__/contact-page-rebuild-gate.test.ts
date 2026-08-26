@@ -15,7 +15,8 @@ assert.match(contact, /styles\/pages\/contact\.css/, "استيراد أنماط 
 assert.match(contact, /CONTACT_EMAIL/);
 assert.match(contact, /mailtoWithSubject/);
 assert.match(contact, /إرسال بريد/);
-assert.match(contact, /نسخ البريد/);
+assert.match(contact, /نسخ/);
+assert.doesNotMatch(contact, /نسخ البريد/);
 assert.match(contact, /فتح إنستقرام/);
 assert.match(contact, /instagram\.com\/Al_abdalmhsn/);
 assert.match(contact, /إنستقرام شركة العبد المحسن للحج/);

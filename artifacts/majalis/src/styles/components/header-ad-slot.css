@@ -16,6 +16,16 @@
   .header-ad-slot {
     --header-ad-h: 2.35rem;
   }
+
+  .header-ad-slot__cta-label {
+    display: none;
+  }
+
+  .header-ad-slot__cta {
+    min-width: 1.55rem;
+    padding-inline: 0.35rem;
+    justify-content: center;
+  }
 }
 
 .header-ad-slot__banner {
@@ -207,16 +217,6 @@ html.theme-dark .navbar-v3__ad-row {
 
   .header-ad-slot__subtitle {
     font-size: 0.58rem;
-  }
-
-  .header-ad-slot__cta-label {
-    display: none;
-  }
-
-  .header-ad-slot__cta {
-    min-width: 1.55rem;
-    padding-inline: 0.35rem;
-    justify-content: center;
   }
 }
 
