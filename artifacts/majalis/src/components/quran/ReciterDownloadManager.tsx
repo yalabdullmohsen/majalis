@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Download, Pause, Play, Trash2 } from "lucide-react";
 import { getSelectableReciters } from "@/lib/quran-audio";
 import { getVerifiedReciters, getVerifiedRecitersSyncFallback } from "@/lib/audio-registry";
 import {
@@ -13,6 +12,7 @@ import {
   type ReciterDownloadStatus,
 } from "@/lib/quran-audio-downloads";
 import { FullQuranDownloader } from "@/lib/full-quran-downloader";
+import { BulkDownloadCard } from "@/components/quran/BulkDownloadCard";
 import { toArabicDigits } from "@/lib/utils";
 
 function formatMB(bytes: number): string {
@@ -21,7 +21,7 @@ function formatMB(bytes: number): string {
 
 type ActiveJob = DownloadProgress & { reciterId: string };
 
-/** إدارة تنزيل تلاوة السور كاملة — إيقاف/استئناف + شريط تقدّم */
+/** إدارة تنزيل تلاوة السور كاملة — بطاقة BulkDownloadCard لكل قارئ */
 export function ReciterDownloadManager() {
   const [statuses, setStatuses] = useState<ReciterDownloadStatus[]>([]);
   const [activeJob, setActiveJob] = useState<ActiveJob | null>(null);
@@ -116,57 +116,23 @@ export function ReciterDownloadManager() {
           {quotaMsg}
         </p>
       ) : null}
-      <div className="rdm-list">
+      <div className="bdm-list">
         {visibleReciters.map((r) => {
           const status = statuses.find((s) => s.reciterId === r.id);
-          const isDownloading = activeJob?.reciterId === r.id;
-          const isPaused = pausedReciterId === r.id && !isDownloading;
-          const percent = isDownloading ? activeJob!.percentage : 0;
+          const isPaused = pausedReciterId === r.id && activeJob?.reciterId !== r.id;
           return (
-            <div key={r.id} className="rdm-row">
-              <div className="rdm-row__info">
-                <span className="rdm-row__name">{r.nameAr}</span>
-                <span className="rdm-row__status">
-                  {isDownloading
-                    ? `سورة ${toArabicDigits(activeJob!.currentSurah)} — ${toArabicDigits(percent)}٪ · ${activeJob!.downloadedMB}/${activeJob!.totalMB} م.ب`
-                    : isPaused
-                      ? `متوقف مؤقتًا — ${toArabicDigits(status?.downloadedSurahs ?? 0)}/١١٤`
-                      : status?.complete
-                        ? `مُنزَّلة كاملة — ${formatMB(status.totalBytes)} م.ب`
-                        : status && status.downloadedSurahs > 0
-                          ? `جزئي — ${toArabicDigits(status.downloadedSurahs)}/١١٤ سورة`
-                          : "غير مُنزَّلة"}
-                </span>
-                {isDownloading && (
-                  <div className="rdm-progress" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}>
-                    <div className="rdm-progress__fill" style={{ width: `${percent}%` }} />
-                  </div>
-                )}
-              </div>
-              {isDownloading ? (
-                <button type="button" className="mpv-chip" onClick={handlePause}>
-                  <Pause size={14} strokeWidth={2} aria-hidden="true" /> إيقاف
-                </button>
-              ) : isPaused ? (
-                <button type="button" className="mpv-chip" onClick={() => void handleDownload(r.id)}>
-                  <Play size={14} strokeWidth={2} aria-hidden="true" /> استئناف
-                </button>
-              ) : status && status.downloadedSurahs > 0 ? (
-                <button type="button" className="mpv-chip" onClick={() => void handleDelete(r.id)} aria-label={`حذف تنزيل ${r.nameAr}`}>
-                  <Trash2 size={14} strokeWidth={2} aria-hidden="true" /> حذف
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="mpv-chip"
-                  onClick={() => void handleDownload(r.id)}
-                  aria-label={`تنزيل تلاوة ${r.nameAr}`}
-                  disabled={!!activeJob}
-                >
-                  <Download size={14} strokeWidth={2} aria-hidden="true" /> تنزيل
-                </button>
-              )}
-            </div>
+            <BulkDownloadCard
+              key={r.id}
+              reciterId={r.id}
+              reciterName={r.nameAr}
+              activeProgress={activeJob}
+              storedStatus={status}
+              isPaused={isPaused}
+              downloadLocked={!!activeJob && activeJob.reciterId !== r.id}
+              onStart={() => void handleDownload(r.id)}
+              onPause={handlePause}
+              onDelete={() => void handleDelete(r.id)}
+            />
           );
         })}
       </div>

@@ -3077,6 +3077,80 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 .quran-shell--high-contrast .rdm-progress { background: #000 !important; }
 .quran-shell--high-contrast .rdm-progress__fill { background: #555 !important; }
 
+/* ── بطاقة تنزيل المصحف كاملاً (bdm-*) — بديل BulkDownloadModal ── */
+.bdm-list { display: flex; flex-direction: column; gap: .75rem; }
+.bdm-card {
+  border: 1px solid var(--border, var(--mj-hairline));
+  border-radius: 1rem;
+  padding: 1rem 1.1rem;
+  background: var(--surface-raised, var(--mj-surface, #fff));
+}
+.bdm-card__header {
+  border-bottom: 1px solid var(--border, var(--mj-hairline));
+  padding-bottom: .75rem;
+  margin-bottom: .85rem;
+}
+.bdm-card__title { margin: 0; font-size: .95rem; font-weight: 700; }
+.bdm-card__reciter { margin: .25rem 0 0; font-size: .82rem; color: var(--brand-deep, var(--mj-brand-deep, #1a4d3e)); font-weight: 600; }
+.bdm-card__progress { margin-bottom: .85rem; }
+.bdm-card__info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .35rem .75rem;
+  font-size: .75rem;
+  color: var(--text-muted, var(--mj-muted));
+  margin-bottom: .5rem;
+}
+.bdm-card__bar {
+  height: .55rem;
+  border-radius: var(--ds-radius-full);
+  background: var(--border, var(--mj-hairline));
+  overflow: hidden;
+}
+.bdm-card__bar-fill {
+  height: 100%;
+  background: var(--brand-deep, var(--mj-brand-deep, #1a4d3e));
+  border-radius: var(--ds-radius-full);
+  transition: width .2s ease;
+}
+.bdm-card__size { margin: .4rem 0 0; font-size: .72rem; color: var(--text-muted, var(--mj-muted)); }
+.bdm-card__actions { display: flex; justify-content: center; }
+.bdm-card__action-row { display: flex; gap: .5rem; width: 100%; }
+.bdm-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  width: 100%;
+  padding: .65rem 1rem;
+  border: none;
+  border-radius: .65rem;
+  font-size: .85rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  color: #fff;
+}
+.bdm-card__btn:disabled { opacity: .55; cursor: not-allowed; }
+.bdm-card__btn--start { background: var(--brand-deep, var(--mj-brand-deep, #1a4d3e)); }
+.bdm-card__btn--pause { background: #d97706; }
+.bdm-card__btn--done { background: #065f46; }
+.bdm-card__btn--delete {
+  width: auto;
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid var(--border, var(--mj-hairline));
+  color: var(--text, var(--mj-text));
+}
+
+.quran-shell--night .bdm-card { background: #161b22; border-color: #30363d; }
+.quran-shell--night .bdm-card__header { border-color: #30363d; }
+.quran-shell--night .bdm-card__info,
+.quran-shell--night .bdm-card__size { color: #8b949e; }
+.quran-shell--night .bdm-card__bar { background: #30363d; }
+.quran-shell--warm .bdm-card { border-color: #d4b896; }
+
 /* ── ورقة إجراءات الآية ── */
 .aas-sheet { position: fixed; inset: 0; z-index: 220; background: rgba(0,0,0,0.45); display: flex; align-items: flex-end; }
 .aas-panel {
