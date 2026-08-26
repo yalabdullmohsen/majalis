@@ -1,4 +1,4 @@
-import { CalendarDays, Zap } from "lucide-react";
+import { CalendarDays, Repeat, Zap } from "lucide-react";
 import MergedSectionHubPage from "@/views/MergedSectionHubPage";
 
 export default function MemorizationHubPage() {
@@ -13,6 +13,12 @@ export default function MemorizationHubPage() {
           title: "اختبارات الحفظ",
           desc: "أنواع متعددة من اختبارات الحفظ القرآني",
           Icon: Zap,
+        },
+        {
+          href: "/quran/hifz-loop?surah=1",
+          title: "مشغّل التحفيظ",
+          desc: "تكرار A-B مع تظليل الآية وتعديل السرعة",
+          Icon: Repeat,
         },
         {
           href: "/quran/memorization-plans",

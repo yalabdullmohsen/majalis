@@ -1,0 +1,56 @@
+/* صفحة مشغّل التحفيظ A-B */
+.qhl-page {
+  padding-bottom: 5rem;
+}
+
+.qhl-hero {
+  padding: 2rem 1.25rem 1.5rem;
+  text-align: center;
+}
+
+.qhl-hero__icon {
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+.qhl-hero__title {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  font-weight: 700;
+}
+
+.qhl-hero__sub {
+  margin: 0 auto 1rem;
+  max-width: 28rem;
+  font-size: 0.88rem;
+  color: var(--on-brand-secondary, color-mix(in srgb, #fff 68%, transparent));
+  line-height: 1.55;
+}
+
+.qhl-surah-pick {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--on-brand-secondary, color-mix(in srgb, #fff 80%, transparent));
+}
+
+.qhl-surah-pick__select {
+  min-width: 12rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, #fff 22%, transparent);
+  background: color-mix(in srgb, #000 25%, transparent);
+  color: #fff;
+}
+
+.qhl-player-wrap {
+  padding: 1.25rem 1rem 2rem;
+}
+
+.hifz-loop__loop-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
