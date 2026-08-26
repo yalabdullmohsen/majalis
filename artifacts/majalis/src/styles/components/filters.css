@@ -319,8 +319,8 @@ html.dark .mj-filter-fields label,
 .isp-filter-chips .isp-chip.is-active,
 .ads-chip.is-active,
 .kng-filter-chip.is-active {
-  background: var(--mj-brand, #1f7a5a) !important;
-  border-color: var(--mj-brand, #1f7a5a) !important;
+  background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e)) !important;
+  border-color: var(--color-primary-dark, var(--mj-brand-deep, #123f2e)) !important;
   color: #fff !important;
 }
 

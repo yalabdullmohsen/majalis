@@ -81,7 +81,7 @@
   height: 2px;
   margin-block-start: 8px;
   border-radius: 999px;
-  background: var(--mj-brand, #1f7a5a);
+  background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
 }
 
 .section-lobby__primary {
@@ -122,8 +122,8 @@
 }
 
 .section-lobby__chip.is-active {
-  background: var(--mj-brand, #1f7a5a);
-  border-color: var(--mj-brand, #1f7a5a);
+  background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
+  border-color: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
   color: var(--mj-on-brand, #fff);
 }
 

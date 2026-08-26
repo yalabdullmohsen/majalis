@@ -682,8 +682,8 @@ html.dark .nav-soon-badge {
   background: color-mix(in srgb, var(--color-primary) 8%, transparent);
 }
 .bottom-nav--v2 .bottom-nav__tab.is-active {
-  color: var(--color-primary);
-  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  color: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
+  background: var(--color-active-tab-bg, color-mix(in srgb, var(--mj-brand-deep, #123f2e) 12%, transparent));
 }
 .bottom-nav--v2 .bottom-nav__tab-icon {
   display: flex;
@@ -796,8 +796,8 @@ html.dark .nav-soon-badge {
 
   .bottom-nav--v2 .bottom-nav__tab.is-active,
   .bottom-nav .bottom-nav__tab.is-active {
-    color: var(--color-primary) !important;
-    background: color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
+    color: var(--color-primary-dark, var(--mj-brand-deep, #123f2e)) !important;
+    background: var(--color-active-tab-bg, color-mix(in srgb, var(--mj-brand-deep, #123f2e) 12%, transparent)) !important;
     font-weight: 700 !important;
   }
 
@@ -941,8 +941,8 @@ html[data-theme="dark"] .bottom-nav--v2 {
   }
   html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
   html[data-theme="dark"] .bottom-nav .bottom-nav__tab.is-active {
-    color: var(--color-primary) !important;
-    background: color-mix(in srgb, var(--color-primary) 16%, transparent) !important;
+    color: var(--color-primary-dark, #8fd4b0) !important;
+    background: var(--color-active-tab-bg, color-mix(in srgb, var(--mj-brand-deep, #8fd4b0) 16%, transparent)) !important;
   }
 }
 

@@ -152,7 +152,7 @@
 .fqp-tab--active,
 .fq-tab--active {
   color: var(--text-on-brand, #fff);
-  background: var(--brand, var(--mj-brand));
+  background: var(--color-primary-dark, var(--mj-brand-deep, var(--mj-brand)));
 }
 
 .fqp-tab--active {
