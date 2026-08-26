@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-25T16:28:01.897Z",
+  "generated_at": "2026-08-26T04:37:40.518Z",
   "dry_run": false,
   "instagram_mode": "provider",
   "instagram": {
@@ -9,37 +9,33 @@
   },
   "instagram_accounts_total": 47,
   "instagram_checked": 47,
-  "instagram_unchanged": 22,
-  "instagram_new_posts_found": 13,
-  "instagram_published": 1,
+  "instagram_unchanged": 21,
+  "instagram_new_posts_found": 17,
+  "instagram_published": 2,
   "instagram_skipped_private": 0,
   "instagram_skipped_provider_404": 0,
-  "instagram_failed": 12,
+  "instagram_failed": 9,
   "instagram_probe_records_used": 47,
-  "instagram_fetch_records_used": 13,
+  "instagram_fetch_records_used": 17,
   "sources": 55,
-  "fetched": 37,
-  "published": 15,
+  "fetched": 42,
+  "published": 16,
   "merged": 3,
   "failed": [
     {
-      "id": "ig-thegrandmosque",
+      "id": "ig-w_alanbiya",
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
-      "id": "ig-quranicplatform",
+      "id": "ig-masjid_alshalahi_women",
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
-      "id": "ig-7offath",
+      "id": "ig-tartelkw",
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
-      "id": "ig-alholah_kw",
-      "reason": "HTTP 408: snapshot_timeout"
-    },
-    {
-      "id": "ig-trahumkwclub",
+      "id": "ig-fajeralkous",
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
@@ -47,24 +43,16 @@
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
-      "id": "ig-masjedalansary",
+      "id": "ig-mrkz_al_albany",
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
-      "id": "ig-masjedalmehry",
+      "id": "ig-nebraas_kw",
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
-      "id": "ig-moudhi_mosque",
-      "reason": "HTTP 408: snapshot_timeout"
-    },
-    {
-      "id": "ig-mansuh_quranayh",
-      "reason": "HTTP 408: snapshot_timeout"
-    },
-    {
-      "id": "ig-wejdanalh",
-      "reason": "HTTP 408: snapshot_timeout"
+      "id": "ig-mhamadh.kw",
+      "reason": "HTTP 502"
     },
     {
       "id": "ig-kwt_awqaf",
@@ -81,11 +69,19 @@
       "reason": "quality_gate:weak_title"
     },
     {
+      "id": "ig-erth.kwt",
+      "reason": "quality_gate:no_useful_type"
+    },
+    {
       "id": "ig-itm2nan_",
       "reason": "quality_gate:weak_title"
     },
     {
       "id": "ig-shariaaac",
+      "reason": "quality_gate:too_old"
+    },
+    {
+      "id": "ig-quranicplatform",
       "reason": "quality_gate:too_old"
     },
     {
@@ -105,8 +101,12 @@
       "reason": "quality_gate:no_useful_type"
     },
     {
-      "id": "ig-erwaa.quran",
+      "id": "web-hoffath.org",
       "reason": "quality_gate:no_useful_type"
+    },
+    {
+      "id": "ig-erwaa.quran",
+      "reason": "quality_gate:weak_title"
     },
     {
       "id": "telegram-DrosQ8",
@@ -129,46 +129,54 @@
       "reason": "quality_gate:no_useful_type"
     },
     {
-      "id": "ig-fajeralkous",
-      "reason": "quality_gate:too_old"
-    },
-    {
       "id": "ig-ghaith.kw",
       "reason": "quality_gate:no_useful_type"
-    },
-    {
-      "id": "ig-mrkz_al_albany",
-      "reason": "quality_gate:weak_title"
     },
     {
       "id": "ig-mosque.mbark.j",
       "reason": "quality_gate:weak_title"
     },
     {
+      "id": "ig-masjedalmehry",
+      "reason": "quality_gate:too_old"
+    },
+    {
+      "id": "ig-mansuh_quranayh",
+      "reason": "quality_gate:too_old"
+    },
+    {
       "id": "ig-nadwat.kw",
       "reason": "quality_gate:weak_title"
+    },
+    {
+      "id": "ig-wejdanalh",
+      "reason": "quality_gate:too_old"
     }
   ],
   "last_seen_updates": [
     {
-      "id": "ig-w_alanbiya",
-      "last_seen_at": "2026-08-16T00:00:00.000Z"
+      "id": "ig-rasikhoon",
+      "last_seen_at": "2026-08-25T00:00:00.000Z"
+    },
+    {
+      "id": "ig-othmanalkamees",
+      "last_seen_at": "2026-08-25T00:00:00.000Z"
     },
     {
       "id": "telegram-DrosQ8",
-      "last_seen_at": "2026-08-25T16:02:24.243Z"
+      "last_seen_at": "2026-08-26T04:13:43.276Z"
     }
   ],
   "lookback_days": 7,
-  "lookback_since": "2026-08-18T15:40:36.564Z",
-  "lesson_relevant_published": 15,
+  "lookback_since": "2026-08-19T03:52:19.251Z",
+  "lesson_relevant_published": 16,
   "quality_gate": {
-    "rejected_old": 2,
+    "rejected_old": 5,
     "rejected_weak_title": 9,
-    "rejected_no_useful_type": 8,
+    "rejected_no_useful_type": 9,
     "rejected_missing_date": 0,
     "rejected_other": 0,
-    "published": 15
+    "published": 16
   },
   "content_changed": true
 }
