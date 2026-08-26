@@ -189,6 +189,9 @@
   --mj-brand: #1F7A5A;
   --mj-brand-soft: #E4F0EA;
   --mj-brand-deep: #123F2E;
+  /* أخضر الهوية الغامق الموحّد (بنر الفقه) — للتبويبات/البنرات الرئيسية */
+  --color-primary-dark: var(--mj-brand-deep);
+  --color-active-tab-bg: color-mix(in srgb, var(--mj-brand-deep) 12%, transparent);
   --mj-on-brand: #FFFFFF;
   --on-surface: #16241E;
   --on-surface-muted: #4A5A53;
@@ -320,6 +323,8 @@ html.dark,
   /* خلفية عميقة فقط — لا يُستخدم كلون نص (العناوين عبر --elite-forest / accent) */
   --mj-brand-deep: #0E1C17;
   --elite-forest: #8FD4B0;
+  --color-primary-dark: var(--mj-brand-deep);
+  --color-active-tab-bg: color-mix(in srgb, var(--elite-forest, #8fd4b0) 16%, transparent);
   --mj-on-brand: #06231A;
   --mj-accent: #D9B871;
   --mj-accent-soft: #2A3733;
@@ -859,7 +864,7 @@ html.dark .mj-btn--ghost {
 }
 .mj-nav-skin a[aria-current="page"],
 .mj-nav-skin .is-active {
-  color: var(--mj-brand);
+  color: var(--color-primary-dark, var(--mj-brand-deep));
 }
 
 /* شريط سفلي — أهداف لمس + spring خفيف */

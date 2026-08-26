@@ -334,7 +334,7 @@
   background: color-mix(in srgb, var(--mj-brand) 8%, transparent) !important;
 }
 .kuwait-tab--active {
-  background: var(--majalis-emerald, var(--mj-brand)) !important;
+  background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e)) !important;
   color: var(--mj-on-brand, #fff) !important;
   border-color: transparent !important;
   font-weight: 700;
@@ -384,7 +384,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
   color: var(--majalis-ink, #EDE9DD);
 }
 .lessons-filter-tab--active {
-  background: var(--majalis-emerald, var(--mj-brand));
+  background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
   color: #fff;
   font-weight: 700;
 }

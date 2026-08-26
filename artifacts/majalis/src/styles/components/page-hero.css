@@ -44,7 +44,7 @@ html.dark .pattern-backdrop {
   padding-block: 1.5rem 2rem;
   padding-inline: max(1rem, var(--page-gutter, 1rem));
   border-radius: 0;
-  background: #143f35;
+  background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
   color: #fff;
 }
 .page-hero-mj--bleed .pattern-backdrop {
@@ -57,7 +57,7 @@ html.dark .pattern-backdrop {
   margin-inline: auto;
 }
 .page-hero-mj--bleed .page-hero-mj__eyebrow {
-  color: #a7f3d0;
+  color: rgba(255, 255, 255, 0.78);
 }
 .page-hero-mj--bleed :is(.page-hero-mj__title, .page-hero-mj__headline) {
   color: #fff !important;
@@ -188,9 +188,9 @@ html.dark .pattern-backdrop {
   max-width: none;
 }
 .filter-chips__chip.is-active {
-  background: var(--mj-brand, var(--color-primary));
+  background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
   color: var(--text-on-brand, #fff);
-  border-color: var(--mj-brand, var(--color-primary));
+  border-color: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
   box-shadow: none;
 }
 .filter-chips__soon {

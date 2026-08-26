@@ -272,8 +272,16 @@ const SPACING = new Set([8, 12, 16, 24]);
       if (featCss && !/card--featured[\s\S]{0,800}color:\s*#ffffff/i.test(featCss)) {
         fail("section-cards.css: .card--featured بلا لون نص أبيض مربوط");
       }
-      if (featCss && !/card--featured[\s\S]{0,500}background-color:\s*#1f7a5a/i.test(featCss)) {
-        fail("section-cards.css: .card--featured بلا خلفية خضراء حرفية");
+      if (
+        featCss &&
+        !/card--featured[\s\S]{0,700}background-color:\s*var\(--color-primary-dark|card--featured[\s\S]{0,700}background-color:\s*var\(--mj-brand-deep|card--featured[\s\S]{0,700}background-color:\s*#123[fF]2[eE]/i.test(
+          featCss,
+        )
+      ) {
+        fail("section-cards.css: .card--featured بلا خلفية أخضر غامق موحّد (فقه)");
+      }
+      if (featCss && /card--featured[\s\S]{0,500}background-color:\s*#1f7a5a/i.test(featCss)) {
+        fail("section-cards.css: .card--featured ما زال يستخدم Teal الفاتح #1f7a5a");
       }
     }
 

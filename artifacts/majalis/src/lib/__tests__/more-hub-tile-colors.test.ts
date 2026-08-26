@@ -28,8 +28,12 @@ assert.doesNotMatch(hub, /card--featured/);
 assert.doesNotMatch(hub, /FeaturedSectionsGrid/);
 assert.doesNotMatch(featured, /text-white/);
 assert.match(css, /\.card--featured\s*\{|button\.card--featured/);
-assert.match(css, /background-color:\s*#1f7a5a/);
+assert.match(
+  css,
+  /background-color:\s*var\(--color-primary-dark|background-color:\s*var\(--mj-brand-deep|#123[fF]2[eE]/,
+);
 assert.match(css, /color:\s*#ffffff/);
+assert.doesNotMatch(css, /background-color:\s*#1f7a5a/i);
 assert.doesNotMatch(card, /card--featured|linear-gradient/);
 assert.match(tokens, /--on-brand:\s*#ffffff/);
 assert.match(featured, /aria-label/);
