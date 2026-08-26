@@ -1,4 +1,6 @@
 import { navigateBackTarget } from "@/lib/navigation-intent";
+import { abortScope } from "@/lib/route-abort";
+import { RequestManager } from "@/lib/request-manager";
 
 const STACK_KEY = "majalis:navigation-stack:v1";
 /** عدد تنقّلات SPA للأمام في جلسة المستند الحالية — يمنع history.back() عند cold start. */
@@ -127,10 +129,22 @@ export function registryParentFallback(currentPath: string): string {
 }
 
 /**
+ * إلغاء فوري لعمل الشاشة المغادَرة قبل history.back أو replace —
+ * يمنع تعليق الواجهة بسبب طلبات شبكية أو async معلّقة.
+ */
+export function prepareInstantBackNavigation(leavingPath: string): void {
+  const normalized = normalizeNavPath(leavingPath);
+  abortScope(`route:${normalized}`);
+  abortScope("route:prev");
+  RequestManager.cancelAllInflight();
+}
+
+/**
  * رجوع آمن: history.back فقط إن سُجِّل تنقّل SPA في هذه الجلسة،
  * وإلا replace إلى الأب من registry.
  */
 export function goBackOrFallback(currentPath: string, fallbackHref?: string) {
+  prepareInstantBackNavigation(currentPath);
   const current = normalizeNavPath(currentPath);
   const previous = getPreviousInternalRoute(current);
   const spaPushes = readSpaPushCount();

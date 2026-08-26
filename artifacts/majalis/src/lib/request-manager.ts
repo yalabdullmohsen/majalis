@@ -286,6 +286,18 @@ export class RequestManager {
     inflight.get(dedupeKey)?.controller.abort();
     inflight.delete(dedupeKey);
   }
+
+  /** إلغاء فوري لكل الطلبات الجارية — يُستدعى عند الرجوع السريع. */
+  static cancelAllInflight(): void {
+    for (const [key, pending] of inflight) {
+      try {
+        pending.controller.abort();
+      } catch {
+        /* ignore */
+      }
+      inflight.delete(key);
+    }
+  }
 }
 
 /** Wrap legacy Promise loaders — timeout + retry + guaranteed settlement (graceful failure). */

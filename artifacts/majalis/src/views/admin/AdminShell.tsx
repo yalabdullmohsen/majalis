@@ -211,9 +211,9 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
   const clearFlash  = useCallback(() => setFlash(null), []);
   const closeMobile = () => setMobileOpen(false);
 
-  const handleLogout = async () => {
-    await logout();
+  const handleLogout = () => {
     navigate("/login");
+    void logout();
   };
 
   const handleNavClick = (key: AdminSection) => {
