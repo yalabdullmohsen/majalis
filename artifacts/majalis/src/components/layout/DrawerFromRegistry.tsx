@@ -1,8 +1,8 @@
 /**
- * صفوف الدرج من مصدر التنقّل الموحّد — أيقونة + عنوان، بلا بطاقات متدرّجة.
+ * صفوف الدرج من مصدر التنقّل الموحّد — مجموعات بعناوين وألوان مميزة.
  * لا تحميل لخطوط المصحف من هنا — الرابط فقط.
  */
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState, type CSSProperties } from "react";
 import { Link, useLocation } from "wouter";
 import { SIDEBAR_NAV_GROUPS } from "@/lib/sidebar-nav";
 import { isNavHrefActive } from "@/lib/nav-active";
@@ -48,14 +48,22 @@ export const DrawerFromRegistry = memo(function DrawerFromRegistry({
         <section
           key={group.id}
           className="sidebar-section"
-          aria-label={group.title || undefined}
+          aria-labelledby={`sidebar-group-${group.id}`}
+          style={
+            {
+              "--sidebar-group-accent": group.accent,
+            } as CSSProperties
+          }
         >
-          {group.title ? (
-            <h2 className="sidebar-section-title">{group.title}</h2>
-          ) : null}
-          <nav aria-label={group.title || "تنقّل الدرج"}>
+          <h2 id={`sidebar-group-${group.id}`} className="sidebar-section-title">
+            {group.title}
+          </h2>
+          <nav aria-label={group.title}>
             {group.items.map((item) => {
               const active = isNavHrefActive(pathname, item.href);
+              const itemStyle = {
+                "--sidebar-item-accent": item.accent,
+              } as CSSProperties;
               const row = (
                 <Link
                   key={item.href}
@@ -64,6 +72,7 @@ export const DrawerFromRegistry = memo(function DrawerFromRegistry({
                   className={`sidebar-item${active ? " active" : ""}`}
                   aria-current={active ? "page" : undefined}
                   aria-label={item.label}
+                  style={itemStyle}
                 >
                   <span className="sidebar-item-icon" aria-hidden="true">
                     <item.Icon size={18} strokeWidth={1.8} />
@@ -82,6 +91,7 @@ export const DrawerFromRegistry = memo(function DrawerFromRegistry({
                     onClick={onNavigate}
                     className="sidebar-item"
                     aria-label={`متابعة القراءة — صفحة ${resume.page}${resume.surah ? ` — ${resume.surah}` : ""}`}
+                    style={itemStyle}
                   >
                     <span className="sidebar-item-icon" aria-hidden="true">
                       <item.Icon size={18} strokeWidth={1.8} />

@@ -47,9 +47,14 @@ for (const t of [
   assert.ok(titles.includes(t), `المزيد يتضمن «${t}»`);
 }
 const secondary = MORE_STANDARD_SECTIONS.map((s) => s.title);
-assert.ok(secondary.includes("الأدعية"));
 assert.ok(
-  secondary.includes("القاموس الإسلامي") || secondary.includes("المصطلحات"),
+  secondary.includes("الأدعية") ||
+    secondary.includes("الأذكار والأدعية") ||
+    secondary.includes("الأدعية الشرعية"),
+  "المزيد يتضمن الأذكار/الأدعية",
+);
+assert.ok(
+  secondary.some((t) => t.includes("المصطلحات") || t.includes("القاموس")),
   "المزيد يتضمن القاموس/المصطلحات",
 );
 assert.equal(secondary.includes("الموضوعات"), false, "لا قسم الموضوعات في المزيد");

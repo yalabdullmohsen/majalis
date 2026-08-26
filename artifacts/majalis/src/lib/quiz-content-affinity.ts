@@ -56,7 +56,7 @@ export const QUIZ_ROUTE_SECTION_OVERRIDES: Record<string, string> = {
   "/mind-map": "subjects",
   "/knowledge-graph": "subjects",
   "/research": "research",
-  "/duas": "adhkar",
+  "/duas": "duas",
   "/daily-wird": "wird",
   "/sahabah": "biographies",
   "/fadail-aamal": "hadith",

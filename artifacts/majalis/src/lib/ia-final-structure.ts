@@ -37,7 +37,6 @@ export const IA_REDIRECTS: Record<string, string> = {
   "/man-nahnu": "/about",
   "/rulings": "/fiqh",
   "/fatwa": "/fiqh",
-  "/fawaid": "/flashcards",
   "/topics": "/sections",
   "/tajweed": "/quran-hub/tajweed",
   "/quran/tajweed": "/quran-hub/tajweed",

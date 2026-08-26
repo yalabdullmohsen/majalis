@@ -22,6 +22,8 @@ const DRAWER_IDS = [
   "quran",
   "lessons",
   "fiqh",
+  "fawaid",
+  "miracles",
   "sections",
   "qa",
   "prayer",
@@ -34,7 +36,6 @@ const HOME_IDS = ["quran", "lessons", "fiqh"] as const;
 
 const LABEL_OVERRIDE: Record<string, string> = {
   "open-mushaf": "المصحف",
-  adhkar: "الأذكار",
 };
 
 function entryFromId(id: string, surfaces: readonly NavPlacement[]): NavEntry | null {

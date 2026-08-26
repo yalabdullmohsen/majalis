@@ -27,6 +27,10 @@ function stripComments(src) {
 
 function mustUsePageShell(rel, src) {
   const clean = stripComments(src);
+  // صفحات TopicPage الحديثة تغني عن PageShell لنفس الهيكل المرئي
+  if (/from\s+["']@\/components\/topic\/TopicPage["']/.test(clean) && /<TopicPage[\s>]/.test(clean)) {
+    return;
+  }
   if (!/from\s+["']@\/components\/layout\/PageShell["']|from\s+["']\.\/PageShell["']/.test(clean)) {
     issues.push(`${rel}: يجب استيراد PageShell`);
   }
