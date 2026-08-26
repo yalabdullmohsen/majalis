@@ -16,12 +16,15 @@ const manifest = readFileSync(
 
 assert.match(manifest, /AdhanPlaybackService/);
 assert.match(manifest, /AdhanAlarmReceiver/);
+assert.match(manifest, /AdhanBootReceiver/);
+assert.match(manifest, /BOOT_COMPLETED/);
 assert.match(manifest, /SCHEDULE_EXACT_ALARM/);
 assert.match(manifest, /FOREGROUND_SERVICE_MEDIA_PLAYBACK/);
 
 const files = [
   "android/app/src/main/java/com/majlisilm/app/AdhanPlaybackService.kt",
   "android/app/src/main/java/com/majlisilm/app/AdhanAlarmReceiver.kt",
+  "android/app/src/main/java/com/majlisilm/app/AdhanBootReceiver.kt",
   "android/app/src/main/java/com/majlisilm/app/MajlisAdhanAlarmPlugin.kt",
   "src/lib/adhan-android-alarm.ts",
 ];
@@ -34,6 +37,22 @@ const main = readFileSync(
   "utf8",
 );
 assert.match(main, /MajlisAdhanAlarmPlugin/);
+assert.match(main, /EXTRA_ADHAN_RESCHEDULE|majlis_adhan_reschedule/);
+assert.match(main, /majalis:boot-adhan-reschedule/);
+
+const bridge = readFileSync(resolve(appRoot, "src/lib/adhan-android-alarm.ts"), "utf8");
+assert.match(bridge, /getAndroidAdhanPermissionStatus/);
+assert.match(bridge, /playAndroidAdhanNow/);
+assert.doesNotMatch(bridge, /notifee|@notifee/i);
+
+const settings = readFileSync(
+  resolve(appRoot, "src/pages/worship/ui/AdhanSettingsView.tsx"),
+  "utf8",
+);
+assert.match(settings, /AndroidAdhanNativeCard/);
+assert.match(settings, /playAndroidAdhanNow/);
+assert.match(settings, /حماية تشغيل الخلفية \(أندroid\)/);
+assert.doesNotMatch(settings, /notifee|critical:\s*true|Critical Alerts/i);
 
 const plugin = readFileSync(
   resolve(appRoot, "android/app/src/main/java/com/majlisilm/app/MajlisAdhanAlarmPlugin.kt"),
