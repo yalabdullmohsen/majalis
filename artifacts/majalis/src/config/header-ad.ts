@@ -46,8 +46,8 @@ export const headerAdConfig: HeaderAdConfig = {
   badgeLabel: "شريك المجلس العلمي",
   title: "شركة العبد المحسن للحج",
   subtitle: "الثقة • الجودة • المتعة",
-  ctaLabel: "تواصل عبر إنستقرام",
-  ctaUrl: "/support",
+  ctaLabel: "فتح إنستقرام",
+  ctaUrl: "/contact",
   sponsorUrl: "https://instagram.com/Al_abdalmhsn",
   sponsorAriaLabel: "فتح حساب شركة العبد المحسن للحج في إنستقرام",
 };

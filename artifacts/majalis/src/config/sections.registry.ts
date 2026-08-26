@@ -176,7 +176,7 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/memorize", to: "/flashcards", note: "بطاقات المراجعة → بطاقات الحفظ والمراجعة" },
   { from: "/my-citations", to: "/flashcards", note: "المحفوظات → بطاقات الحفظ والمراجعة" },
   { from: "/citations", to: "/flashcards", note: "citations → بطاقات الحفظ والمراجعة" },
-  { from: "/contact", to: "/support", note: "تواصل معنا → الدعم والتواصل" },
+  { from: "/support", to: "/contact", note: "الدعم → تواصل معنا (canonical)" },
   { from: "/privacy-center", to: "/privacy", note: "مركز الخصوصية → الخصوصية" },
   { from: "/about-us", to: "/about", note: "من نحن → عن المجلس العلمي" },
   { from: "/aqidah", to: "/tawhid", note: "عقيدة قديم → التوحيد/العقيدة" },
