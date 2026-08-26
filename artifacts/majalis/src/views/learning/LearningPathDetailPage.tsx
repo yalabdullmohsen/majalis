@@ -242,13 +242,14 @@ export default function LearningPathDetailPage() {
       jsonLd: [
         {
           "@context": "https://schema.org",
-          "@type": "Course",
+          "@type": "LearningResource",
           name: path.title,
           description: path.description || undefined,
           url: `https://majlisilm.com${path_}`,
+          learningResourceType: "مسار تعلّم",
           provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
           inLanguage: "ar",
-          numberOfCredits: path.totalSessions || undefined,
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },

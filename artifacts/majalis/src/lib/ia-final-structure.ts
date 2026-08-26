@@ -30,6 +30,19 @@ export const IA_REDIRECTS: Record<string, string> = {
   "/study-paths": "/lessons",
   "/qa": "/quiz",
   "/courses": "/lessons",
+  "/memorize": "/flashcards",
+  "/support": "/contact",
+  "/about-us": "/about",
+  "/who-we-are": "/about",
+  "/man-nahnu": "/about",
+  "/rulings": "/fiqh",
+  "/fatwa": "/fiqh",
+  "/fawaid": "/flashcards",
+  "/topics": "/sections",
+  "/tajweed": "/quran-hub/tajweed",
+  "/quran/tajweed": "/quran-hub/tajweed",
+  "/quran": "/quran-hub",
+  "/anbiya": "/prophets",
 };
 
 /** عناوين ممنوعة في الأسطح العامة (رئيسية / المزيد / تذييل / وصول سريع). */

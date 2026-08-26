@@ -25,7 +25,7 @@ function CatIcon({ name }: { name?: string }) {
 }
 
 const FIQH_HUB_TABS = [
-  { key: "rulings", label: "الأحكام الشرعية", href: "/rulings" },
+  { key: "rulings", label: "الأحكام الشرعية", href: "/fiqh" },
   { key: "qa",      label: "الأسئلة والأجوبة", href: "/quiz" },
   { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },
 ] as const;

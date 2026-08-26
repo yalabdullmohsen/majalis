@@ -1281,7 +1281,7 @@ export default function HadithPage() {
         <ExploreAlsoNav
           title="استكشف أيضًا"
           links={[
-            { href: "/memorize", label: "بطاقات الحفظ" },
+            { href: "/flashcards", label: "بطاقات الحفظ" },
             { href: "/scholars", label: "أعلام وتراجم" },
             { href: "/quiz", label: "سين جيم" },
           ]}

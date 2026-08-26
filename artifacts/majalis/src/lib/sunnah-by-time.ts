@@ -19,7 +19,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
       { label: "أذكار الصباح", href: "/adhkar/morning" },
       { label: "ركعتا الإشراق", href: "/adhkar/salah" },
       { label: "ورد القرآن اليومي", href: "/daily-wird" },
-      { label: "فائدة علمية", href: "/fawaid" },
+      { label: "فائدة علمية", href: "/flashcards" },
       { label: "حكمة السلف", href: "/hikam-salaf" },
     ],
   },
@@ -40,7 +40,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
       { label: "سنة الظهر البعدية", href: "/adhkar/salah" },
       { label: "أذكار ما بعد الصلاة", href: "/adhkar/after-salah" },
       { label: "قراءة القرآن", href: "/quran-hub" },
-      { label: "فوائد علمية", href: "/fawaid" },
+      { label: "فوائد علمية", href: "/flashcards" },
     ],
   },
   afterAsr: {
@@ -59,7 +59,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
     suggestions: [
       { label: "أذكار المساء", href: "/adhkar/evening" },
       { label: "قراءة سورة الملك", href: "/mushaf/67" },
-      { label: "الفوائد العلمية", href: "/fawaid" },
+      { label: "الفوائد العلمية", href: "/flashcards" },
       { label: "الوصايا النبوية", href: "/wasaya-nabawiyya" },
     ],
   },

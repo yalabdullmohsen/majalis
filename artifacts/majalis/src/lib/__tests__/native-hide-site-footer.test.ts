@@ -22,7 +22,7 @@ assert.match(nativeCss, /html\.capacitor-native \.site-footer/);
 assert.match(settingsSrc, /عن التطبيق/);
 assert.match(settingsSrc, /href="\/privacy"|to="\/privacy"|\/privacy/);
 assert.match(settingsSrc, /\/terms/);
-assert.match(settingsSrc, /\/support/);
+assert.match(settingsSrc, /\/contact/);
 assert.match(servicesSrc, /sections\.registry|الإعدادات والمساعدة|الحساب والإعدادات/);
 const account =
   SERVICES_CENTER_GROUPS.find((g) => g.id === "account") ||

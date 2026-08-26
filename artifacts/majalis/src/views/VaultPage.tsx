@@ -80,7 +80,7 @@ function HighlightsLibrary({ query }: { query: string }) {
     <div className="vault-notes" role="tabpanel">
       <div className="vault-notes__toolbar">
         <span className="vault-count">{items.length} فائدة محدَّدة</span>
-        <Link href="/fawaid" className="vault-btn vault-btn--ghost">تصفح الفوائد</Link>
+        <Link href="/flashcards" className="vault-btn vault-btn--ghost">تصفح الفوائد</Link>
       </div>
       {items.length === 0 && (
         <div className="vault-empty">

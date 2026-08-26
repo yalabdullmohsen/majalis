@@ -463,7 +463,7 @@ export default function TafsirPage() {
             { href: "/quran-hub", label: "مركز القرآن" },
             { href: "/mushaf", label: "المصحف" },
             { href: "/ulum-quran", label: "علوم القرآن" },
-            { href: "/quran/tajweed", label: "علم التجويد" },
+            { href: "/quran-hub/tajweed", label: "علم التجويد" },
             { href: "/quran/surah-stories", label: "قصص السور" },
             { href: "/duas-quran", label: "أدعية القرآن" },
             { href: "/hadith-science", label: "علوم الحديث" },

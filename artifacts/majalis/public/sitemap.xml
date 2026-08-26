@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://majlisilm.com/</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/lessons</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/competitions</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -25,12 +25,7 @@
   </url>
   <url>
     <loc>https://majlisilm.com/adhkar</loc>
-    <lastmod>2026-08-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.82</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/quran/tajweed</loc>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
   </url>
@@ -51,7 +46,7 @@
   </url>
   <url>
     <loc>https://majlisilm.com/prayer-times</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.88</priority>
   </url>
@@ -82,7 +77,7 @@
   </url>
   <url>
     <loc>https://majlisilm.com/library</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -93,11 +88,6 @@
   </url>
   <url>
     <loc>https://majlisilm.com/miracles</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/fawaid</loc>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -282,11 +272,6 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/memorize</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.86</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/tawhid</loc>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
@@ -318,7 +303,7 @@
   </url>
   <url>
     <loc>https://majlisilm.com/scholars</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -484,7 +469,7 @@
   </url>
   <url>
     <loc>https://majlisilm.com/fiqh</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
   </url>
@@ -530,13 +515,13 @@
   </url>
   <url>
     <loc>https://majlisilm.com/mushaf</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/quran-hub</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -586,11 +571,6 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/topics</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/sitemap</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -637,11 +617,6 @@
   </url>
   <url>
     <loc>https://majlisilm.com/islamic-landmarks</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tajweed</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -4429,256 +4404,6 @@
     <loc>https://majlisilm.com/fiqh-council/issues/smart-contracts</loc>
     <changefreq>monthly</changefreq>
     <priority>0.69</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/salah</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/sawm</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/zakat</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/hajj</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/nikah</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/talaq</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/mirath</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/buyu</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/waqf</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/wasiyya</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/qadha</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/uqubat</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/tawhid</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/asma-sifat</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/iman</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/yawm-akhir</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/qadar</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/nubuwwat</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/malaika</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/bid-ah</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/sidq</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/birr-sila</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/adl</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/tawadu</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/sabr-shukr</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/hasad</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/ghiba</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/haya</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/ulum-quran</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/tafsir</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/tajwid</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/ijaz</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/asbab-nuzul</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/nasikh-mansukh</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/muhkam-mutashabih</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/makki-madani</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/mustalah</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/jarh-tadil</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/sihah-sitta</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/arbaeen-nawawi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/hadith-sahih</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/hadith-daif</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/mutawatir</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/fiqh-hadith</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/mawlid</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/hijra</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/ghazawat</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/sahaba</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/ummahat-mumineen</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/topics/fath-makkah</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.66</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/adhkar/morning</loc>

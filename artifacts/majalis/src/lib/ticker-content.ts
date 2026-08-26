@@ -104,7 +104,7 @@ export function buildTickerPool(): TickerContentItem[] {
       label: f.category || "فائدة",
       text: normalizeText(f.text),
       source: f.source || undefined,
-      href: "/fawaid",
+      href: "/flashcards",
     });
   }
 

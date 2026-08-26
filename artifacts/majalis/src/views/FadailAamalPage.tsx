@@ -1156,7 +1156,7 @@ export default function FadailAamalPage() {
               { href: "/sunan-yawmiyya", label: "السنن اليومية" },
               { href: "/hikam-salaf", label: "حكم السلف" },
               { href: "/duas", label: "الأدعية الشرعية" },
-              { href: "/fawaid", label: "الفوائد العلمية" },
+              { href: "/flashcards", label: "الفوائد العلمية" },
               { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
             ].map((r) => (
               <a key={r.href} href={r.href} className="fa-related__link">{r.label}</a>

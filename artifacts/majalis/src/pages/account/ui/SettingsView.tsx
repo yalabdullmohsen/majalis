@@ -635,7 +635,7 @@ export default function SettingsPage() {
             <Link href="/sources" className="settings-legal-link">
               المصادر والتراخيص
             </Link>
-            <Link href="/support" className="settings-legal-link">
+            <Link href="/contact" className="settings-legal-link">
               الدعم والتواصل
             </Link>
             <Link href="/privacy" className="settings-legal-link">

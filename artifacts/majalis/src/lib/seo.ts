@@ -76,13 +76,64 @@ export function normalizePath(path: string) {
   return cleanPath;
 }
 
+function safeDecodeURIComponent(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+const META_DESC_MIN = 120;
+const META_DESC_MAX = 160;
+const TITLE_MAX = 60;
+const TITLE_SUFFIX = " | المجلس العلمي";
+
+function tidySeoText(text: string): string {
+  return String(text || "")
+    .replace(/\.{2,}/g, ".")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function clampSeoText(text: string, max: number): string {
+  const t = tidySeoText(text);
+  return t.length <= max ? t : `${t.slice(0, max - 1).trimEnd()}…`;
+}
+
+/** يضمن وصفًا بين 120–160 حرفًا للعارض وAhrefs. */
+export function normalizeMetaDescription(text: string, hint = ""): string {
+  let t = tidySeoText(text);
+  const pad = tidySeoText(hint) || `محتوى شرعي موثّق ضمن منصة ${SEO_SITE.siteName}.`;
+  if (!t) t = pad;
+  else if (t.length < META_DESC_MIN && !t.includes(pad.slice(0, Math.min(20, pad.length)))) {
+    t = `${t} — ${pad}`;
+  }
+  let guard = 0;
+  while (t.length < META_DESC_MIN && guard < 4) {
+    t = `${t} تصفّح الأقسام المرتبطة في ${SEO_SITE.siteName}.`;
+    guard += 1;
+  }
+  return clampSeoText(t, META_DESC_MAX);
+}
+
+/** «[اسم] | المجلس العلمي» بحد ≈60 حرفًا. */
+export function normalizePageTitle(title: string): string {
+  let name = tidySeoText(title);
+  if (!name) return SEO_SITE.siteName;
+  if (name.endsWith(TITLE_SUFFIX)) name = name.slice(0, -TITLE_SUFFIX.length).trim();
+  else if (name.includes("|")) name = name.split("|")[0].trim();
+  const maxRaw = Math.max(12, TITLE_MAX - TITLE_SUFFIX.length);
+  return `${clampSeoText(name, maxRaw)}${TITLE_SUFFIX}`;
+}
+
 function routeForPath(routes: SeoRoute[], path: string) {
   const normalized = normalizePath(path);
   const exact = routes.find((route) => route.path === normalized);
   if (exact) return exact;
 
   if (normalized.startsWith("/search/")) {
-    const term = decodeURIComponent(normalized.slice("/search/".length));
+    const term = safeDecodeURIComponent(normalized.slice("/search/".length));
     return {
       ...requiredRoute(routes, "/search"),
       title: `نتائج البحث: ${term} | المجلس العلمي`,
@@ -96,7 +147,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
   }
 
   if (normalized.startsWith("/sheikhs/")) {
-    const name = decodeURIComponent(normalized.slice("/sheikhs/".length));
+    const name = safeDecodeURIComponent(normalized.slice("/sheikhs/".length));
     return {
       ...requiredRoute(routes, "/sheikhs"),
       title: `${name} | المجلس العلمي`,
@@ -212,7 +263,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
   }
 
   if (normalized.startsWith("/nations/")) {
-    const nationSlug = decodeURIComponent(normalized.slice("/nations/".length));
+    const nationSlug = safeDecodeURIComponent(normalized.slice("/nations/".length));
     return {
       ...requiredRoute(routes, "/nations"),
       path: normalized,
@@ -227,7 +278,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
   }
 
   if (normalized.startsWith("/quran/people/")) {
-    const personSlug = decodeURIComponent(normalized.slice("/quran/people/".length));
+    const personSlug = safeDecodeURIComponent(normalized.slice("/quran/people/".length));
     return {
       ...requiredRoute(routes, "/quran/people"),
       path: normalized,
@@ -238,7 +289,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
   }
 
   if (normalized.startsWith("/prophets/")) {
-    const prophetSlug = decodeURIComponent(normalized.slice("/prophets/".length));
+    const prophetSlug = safeDecodeURIComponent(normalized.slice("/prophets/".length));
     const PROPHET_NAMES: Record<string, string> = {
       adam: "آدم", idris: "إدريس", nuh: "نوح", hud: "هود",
       salih: "صالح", ibrahim: "إبراهيم", lut: "لوط", ismail: "إسماعيل",
@@ -281,9 +332,36 @@ function upsertCanonical(href: string) {
   element.setAttribute("href", href);
 }
 
+/** يزيل null/undefined/المصفوفات الفارغة والنصوص الفارغة من JSON-LD قبل الحقن. */
+export function sanitizeJsonLd(value: unknown): unknown {
+  if (value == null) return undefined;
+  if (typeof value === "string") return value.trim() === "" ? undefined : value;
+  if (typeof value !== "object") return value;
+  if (Array.isArray(value)) {
+    const next = value.map(sanitizeJsonLd).filter((v) => v !== undefined);
+    return next.length ? next : undefined;
+  }
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+    const cleaned = sanitizeJsonLd(v);
+    if (cleaned !== undefined) out[k] = cleaned;
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+
 function upsertJsonLd(data: Record<string, unknown> | Record<string, unknown>[]) {
-  const payload = Array.isArray(data) ? data : [data];
-  let element = document.getElementById(JSON_LD_ID) as HTMLScriptElement | null;
+  const existing = document.getElementById(JSON_LD_ID);
+  const cleaned = sanitizeJsonLd(data);
+  if (
+    cleaned == null ||
+    (Array.isArray(cleaned) && cleaned.length === 0) ||
+    (typeof cleaned === "object" && !Array.isArray(cleaned) && Object.keys(cleaned as object).length === 0)
+  ) {
+    existing?.remove();
+    return;
+  }
+  const payload = Array.isArray(cleaned) ? cleaned : [cleaned];
+  let element = existing as HTMLScriptElement | null;
   if (!element) {
     element = document.createElement("script");
     element.id = JSON_LD_ID;
@@ -303,12 +381,17 @@ export function applyPageSeo(options: PageSeoOptions) {
   const image = /^https?:\/\//i.test(imagePath) ? imagePath : absoluteUrl(imagePath);
   const robots = options.robots || "index, follow";
   const ogType = options.ogType || "website";
+  const title = normalizePageTitle(options.title);
+  const description = normalizeMetaDescription(
+    options.description,
+    `صفحة ضمن منصة ${SEO_SITE.siteName}`,
+  );
 
   document.documentElement.lang = "ar";
   document.documentElement.dir = "rtl";
-  document.title = options.title;
+  document.title = title;
 
-  upsertMeta("name", "description", options.description);
+  upsertMeta("name", "description", description);
   // meta keywords ملغاة نهائيًا — أزل أي وسم قديم من SPA أو prerender
   document.querySelector('meta[name="keywords"]')?.remove();
   upsertMeta("name", "robots", robots);
@@ -321,17 +404,17 @@ export function applyPageSeo(options: PageSeoOptions) {
   upsertMeta("property", "og:site_name", SEO_SITE.siteName);
   upsertMeta("property", "og:locale", "ar_KW");
   upsertMeta("property", "og:type", ogType);
-  upsertMeta("property", "og:title", options.title);
-  upsertMeta("property", "og:description", options.description);
+  upsertMeta("property", "og:title", title);
+  upsertMeta("property", "og:description", description);
   upsertMeta("property", "og:url", canonical);
   upsertMeta("property", "og:image", image);
-  upsertMeta("property", "og:image:alt", options.title);
+  upsertMeta("property", "og:image:alt", title);
   upsertMeta("property", "og:image:width", String(SEO_SITE.ogImageWidth));
   upsertMeta("property", "og:image:height", String(SEO_SITE.ogImageHeight));
 
   upsertMeta("name", "twitter:card", "summary_large_image");
-  upsertMeta("name", "twitter:title", options.title);
-  upsertMeta("name", "twitter:description", options.description);
+  upsertMeta("name", "twitter:title", title);
+  upsertMeta("name", "twitter:description", description);
   upsertMeta("name", "twitter:image", image);
   upsertMeta("name", "twitter:url", canonical);
 
@@ -400,7 +483,7 @@ export function usePageSeo(path: string) {
       const jsonLd =
         normalized === "/"
           ? defaultSiteJsonLd()
-          : [pageSchema, ...(breadcrumbs ? [breadcrumbs] : []), ...defaultSiteJsonLd()];
+          : [pageSchema, ...(breadcrumbs ? [breadcrumbs] : [])];
 
       applyPageSeo({
         path: normalized,
@@ -448,7 +531,7 @@ export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string, lo
       image: meta.image,
       ogType: meta.ogType,
       canonicalPath: meta.canonicalPath,
-      jsonLd: [lessonJsonLd(lesson), breadcrumbs, ...defaultSiteJsonLd()],
+      jsonLd: [lessonJsonLd(lesson), breadcrumbs],
     });
   }, [lesson, path, loading]);
 }

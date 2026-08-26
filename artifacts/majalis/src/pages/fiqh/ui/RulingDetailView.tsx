@@ -161,7 +161,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
-        { label: "الأحكام الشرعية", href: "/rulings" },
+        { label: "الأحكام الشرعية", href: "/fiqh" },
         { label: item.category, href: `/rulings?category=${encodeURIComponent(item.category)}` },
         { label: item.title },
       ]}

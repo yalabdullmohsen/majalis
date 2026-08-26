@@ -136,7 +136,7 @@ export function buildSmartRecommendations(ctx: SmartRecContext = {}): SmartRecom
         id: "fawaid-sabr",
         kind: "fawaid",
         title: "فوائد في الصبر والابتلاء",
-        href: "/fawaid",
+        href: "/flashcards",
         reason: "موضوع متقاطع مع قراءتك",
         score: 5,
       });

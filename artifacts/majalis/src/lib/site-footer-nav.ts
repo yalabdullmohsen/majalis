@@ -44,7 +44,7 @@ export const SITE_FOOTER_GROUPS: FooterGroup[] = [
     links: [
       { href: "/methodology", label: "منهجيتنا في التوثيق" },
       { href: "/fatwa-policy", label: "سياسة الفتوى" },
-      { href: "/about-us", label: "من نحن" },
+      { href: "/about", label: "من نحن" },
       { href: "/sources", label: "المصادر والتراخيص" },
       { href: "/contact", label: "تواصل معنا" },
     ],

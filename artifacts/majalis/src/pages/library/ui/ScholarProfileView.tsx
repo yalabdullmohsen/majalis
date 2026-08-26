@@ -164,11 +164,11 @@ export default function ScholarProfilePage() {
       });
       return;
     }
-    // metaDescription مقصوص؛ النص الظاهر يبقى scholar.bio كاملاً في الجسم (D1)
+    const bioText = String(scholar.bio || "");
     const metaDesc =
-      scholar.bio.length > 155
-        ? scholar.bio.slice(0, 152).replace(/\s+\S*$/, "") + "…"
-        : scholar.bio;
+      bioText.length > 155
+        ? bioText.slice(0, 152).replace(/\s+\S*$/, "") + "…"
+        : bioText;
     applyPageSeo({
       path: `/scholars/${scholar.id}`,
       title: `${scholar.name} — سيرة العالم | المجلس العلمي`,
@@ -222,7 +222,7 @@ export default function ScholarProfilePage() {
           <div className="sch-profile-hero__meta">
             <span className="sch-tag" title="تصنيف ضمن طبقات العرض">التصنيف: {scholar.era}</span>
             {scholar.madhhab && <span className="sch-tag sch-tag--madhhab">{scholar.madhhab}</span>}
-            {scholar.specialty.map(sp => (
+            {scholar.specialty?.map(sp => (
               <span key={sp} className="sch-tag">{sp}</span>
             ))}
           </div>
@@ -265,7 +265,7 @@ export default function ScholarProfilePage() {
             <BookOpen size={16} aria-hidden="true" /> أبرز المؤلفات
           </h2>
           <ul className="sch-profile-works">
-            {scholar.key_works.map((w) => {
+            {(scholar.key_works || []).map((w) => {
               const link = resolveScholarWorkLink(w, scholar.name);
               return (
                 <li key={w}>

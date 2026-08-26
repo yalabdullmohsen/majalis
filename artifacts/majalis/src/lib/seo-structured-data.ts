@@ -26,12 +26,14 @@ export function organizationJsonLd() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: absoluteUrl(LOGO_PATH),
+    logo: {
+      "@type": "ImageObject",
+      url: absoluteUrl(LOGO_PATH),
+    },
     image: absoluteUrl(DEFAULT_IMAGE),
     description:
       "منصة علمية عربية تجمع الدروس الشرعية والدورات والقرآن والأذكار والفوائد في مكان واحد.",
     inLanguage: "ar",
-    sameAs: [],
   };
 }
 
@@ -48,12 +50,18 @@ export function websiteJsonLd() {
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
-      logo: absoluteUrl(LOGO_PATH),
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl(LOGO_PATH),
+      },
       url: SITE_URL,
     },
     potentialAction: {
       "@type": "SearchAction",
-      target: `${SITE_URL}/search?q={search_term_string}`,
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
+      },
       "query-input": "required name=search_term_string",
     },
   };
@@ -72,52 +80,52 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
   };
 }
 
-function lessonEventType(lesson: KuwaitLessonRecord) {
-  if (lesson.isCourse || lesson.activityType === "دورة") return "Course";
-  return "EducationEvent";
-}
-
 export function lessonJsonLd(lesson: KuwaitLessonRecord) {
   const path = `/lessons/${lesson.id}`;
   const image = lesson.sheikhImage || lesson.lessonImage || DEFAULT_IMAGE;
-  const type = lessonEventType(lesson);
+  const sheikh = String(lesson.sheikhName || "")
+    .replace(/^الشيخ:\s*/u, "")
+    .trim();
 
   const base: Record<string, unknown> = {
     "@context": "https://schema.org",
-    "@type": type,
+    "@type": "LearningResource",
     name: lesson.title,
-    description: lesson.description || lesson.note || `${lesson.title} — ${lesson.sheikhName}`,
+    description: lesson.description || lesson.note || `${lesson.title}${sheikh ? ` — ${sheikh}` : ""}`,
     url: absoluteUrl(path),
     image: absoluteUrl(image.startsWith("http") ? image : image),
     inLanguage: "ar",
-    organizer: {
+    learningResourceType: lesson.isCourse || lesson.activityType === "دورة" ? "دورة علمية" : "درس شرعي",
+    provider: {
       "@type": "Organization",
       name: SITE_NAME,
       url: SITE_URL,
     },
-    performer: {
-      "@type": "Person",
-      name: lesson.sheikhName.replace(/^الشيخ:\s*/u, ""),
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
     },
-    location: lesson.mosque
-      ? {
-          "@type": "Place",
-          name: lesson.mosque,
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: lesson.region || lesson.governorate || "الكويت",
-            addressCountry: "KW",
-          },
-        }
-      : undefined,
-    keywords: (lesson.keywords || [lesson.category]).join(", "),
   };
 
-  if (lesson.startDate || lesson.gregorianDate) {
-    base.startDate = lesson.startDate || lesson.gregorianDate;
+  if (sheikh) {
+    base.author = { "@type": "Person", name: sheikh };
   }
-  if (lesson.endDate) {
-    base.endDate = lesson.endDate;
+  if (lesson.mosque) {
+    base.spatialCoverage = {
+      "@type": "Place",
+      name: lesson.mosque,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: lesson.region || lesson.governorate || "الكويت",
+        addressCountry: "KW",
+      },
+    };
+  }
+  const keywords = (lesson.keywords || [lesson.category]).filter(Boolean);
+  if (keywords.length) base.keywords = keywords.join(", ");
+  if (lesson.startDate || lesson.gregorianDate) {
+    base.datePublished = lesson.startDate || lesson.gregorianDate;
   }
 
   return base;
@@ -128,16 +136,23 @@ export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
   const sheikhCore = stripSheikhHonorifics(lesson.sheikhName);
   const place = lesson.mosque || lesson.region || "";
   const schedule = [lesson.day, lesson.time, lesson.gregorianDate].filter(Boolean).join(" · ");
-  const title = `${lesson.title} | ${SITE_NAME}`;
-  const description = [
+  const rawTitle = String(lesson.title || "درس شرعي").trim();
+  const titleCore =
+    rawTitle.length <= 42 ? rawTitle : `${rawTitle.slice(0, 41).trimEnd()}…`;
+  const title = `${titleCore} | ${SITE_NAME}`;
+  let description = [
     sheikhLabel,
     place ? `المكان: ${place}` : "",
     schedule,
     lesson.category ? `التصنيف: ${lesson.category}` : "",
   ]
     .filter(Boolean)
-    .join(" — ")
-    .slice(0, 160);
+    .join(" — ");
+  if (!description) description = `${lesson.title} — درس شرعي على ${SITE_NAME}`;
+  if (description.length < 120) {
+    description = `${description} — درس شرعي موثّق ضمن منصة ${SITE_NAME}.`;
+  }
+  if (description.length > 160) description = `${description.slice(0, 159).trimEnd()}…`;
 
   const keywords = [
     lesson.title,
@@ -146,7 +161,6 @@ export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
     lesson.activityType,
     "دروس شرعية",
     "دروس علمية",
-    "دروس شرعية",
     "دورات شرعية",
     "طلب العلم",
     SITE_NAME,
@@ -157,7 +171,7 @@ export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
 
   return {
     title,
-    description: description || `${lesson.title} — درس شرعي على ${SITE_NAME}`,
+    description,
     keywords: [...new Set(keywords)],
     canonicalPath: `/lessons/${lesson.id}`,
     image: image.startsWith("http") ? image : absoluteUrl(image),
@@ -189,16 +203,19 @@ export function personJsonLd(person: {
   jobTitle?: string;
   knowsAbout?: string[];
 }) {
-  return {
+  const payload: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: person.name,
-    description: person.description,
     url: absoluteUrl(person.url),
-    image: person.image ? absoluteUrl(person.image.startsWith("http") ? person.image : person.image) : undefined,
-    jobTitle: person.jobTitle ?? "عالم",
-    knowsAbout: person.knowsAbout,
   };
+  if (person.description) payload.description = person.description;
+  if (person.image) {
+    payload.image = absoluteUrl(person.image.startsWith("http") ? person.image : person.image);
+  }
+  if (person.jobTitle) payload.jobTitle = person.jobTitle;
+  if (person.knowsAbout?.length) payload.knowsAbout = person.knowsAbout;
+  return payload;
 }
 
 export function faqPageJsonLd(items: { question: string; answer: string }[]) {

@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Scale } from "lucide-react";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
-import { breadcrumbJsonLd, defaultSiteJsonLd, webPageJsonLd } from "@/lib/seo-structured-data";
+import { breadcrumbJsonLd, webPageJsonLd } from "@/lib/seo-structured-data";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
@@ -79,7 +79,6 @@ export default function FiqhPage() {
         "أبواب ومسائل فقهية مرتبة: عبادات ومعاملات وأسرة وجنايات — كتب وأبواب ومسائل للقراءة والتدرج.",
       keywords: ["فقه إسلامي", "كتب الفقه", "مسائل فقهية", "المجلس العلمي"],
       jsonLd: [
-        ...defaultSiteJsonLd(),
         webPageJsonLd(
           "الفقه",
           "أبواب ومسائل فقهية مرتبة للقراءة والتدرج في العبادات والمعاملات والأسرة.",

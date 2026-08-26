@@ -56,7 +56,7 @@ export function filterLibraryCatalog({
   return getLibraryCatalog().filter((item) => {
     if (category && category !== "الكل" && item.category !== category) return false;
     if (type && type !== "الكل" && item.type !== type) return false;
-    if (q && !arabicMatchAny([item.title, item.author, item.description, item.category, item.type, ...item.keywords], q)) {
+    if (q && !arabicMatchAny([item.title, item.author, item.description, item.category, item.type, ...(item.keywords || [])], q)) {
       return false;
     }
     return true;

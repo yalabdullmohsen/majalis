@@ -295,7 +295,15 @@ export default function SearchPage() {
   // useSearch() هي الأداة الصحيحة من wouter نفسها لقراءة search المتفاعل.
   const search = useSearch();
   const queryParams = new URLSearchParams(search);
-  const q = params.q ? decodeURIComponent(params.q) : (queryParams.get("q") || "");
+  const q = params.q
+    ? (() => {
+        try {
+          return decodeURIComponent(params.q);
+        } catch {
+          return String(params.q || "");
+        }
+      })()
+    : (queryParams.get("q") || "");
   const [term, setTerm] = useState(q);
   const [results, setResults] = useState<SearchResults>(EMPTY);
   const [intelligentResults, setIntelligentResults] = useState<IntelligentSearchResult[]>([]);

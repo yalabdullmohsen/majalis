@@ -31,7 +31,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/lessons",       label: seoNavLabel("/lessons", "الدروس") },
   { href: "/quran-knowledge", label: seoNavLabel("/quran-knowledge", "القرآن وعلومه") },
   { href: "/hadith",        label: seoNavLabel("/hadith", "الأحاديث") },
-  { href: "/fawaid",        label: seoNavLabel("/fawaid", "الفوائد") },
+  { href: "/flashcards",        label: seoNavLabel("/fawaid", "الفوائد") },
   { href: "/prophets",      label: seoNavLabel("/prophets", "قصص الأنبياء") },
   { href: "/miracles",             label: seoNavLabel("/miracles", "إشارات كونية") },
   { href: "/prophetic-medicine",   label: seoNavLabel("/prophetic-medicine", "الطب النبوي") },

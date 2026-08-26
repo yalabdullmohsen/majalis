@@ -162,7 +162,7 @@ export const MIND_MAPS: MindMap[] = [
         {
           id: "tajweed",
           label: "علم التجويد",
-          href: "/quran/tajweed",
+          href: "/quran-hub/tajweed",
           children: [
             { id: "tj-1", label: "مخارج الحروف" },
             { id: "tj-2", label: "صفات الحروف" },
@@ -361,7 +361,7 @@ export const MIND_MAPS: MindMap[] = [
         {
           id: "prophets-chain",
           label: "الأنبياء والرسل",
-          href: "/anbiya",
+          href: "/prophets",
           children: [
             { id: "pr-1", label: "أولو العزم من الرسل" },
             { id: "pr-2", label: "قصص الأنبياء", href: "/prophets" },
@@ -396,7 +396,7 @@ export const MIND_MAPS: MindMap[] = [
           label: "المرحلة الثانية: التأصيل",
           children: [
             { id: "im-1", label: "حفظ الأربعين النووية", href: "/arbaeen-nawawi" },
-            { id: "im-2", label: "تعلم التجويد", href: "/quran/tajweed" },
+            { id: "im-2", label: "تعلم التجويد", href: "/quran-hub/tajweed" },
             { id: "im-3", label: "دراسة العقيدة", href: "/tawhid" },
             { id: "im-4", label: "أصول الفقه والقواعد", href: "/lessons" },
           ],
@@ -1251,7 +1251,7 @@ export const MIND_MAPS: MindMap[] = [
         {
           id: "mr-books",
           label: "مراجع منهج التعلم",
-          href: "/start-here",
+          href: "/lessons",
           children: [
             { id: "mr-bk1", label: "تذكرة السامع والمتكلم — ابن جماعة" },
             { id: "mr-bk2", label: "شرح حلية طالب العلم — ابن عثيمين" },

@@ -9,7 +9,7 @@ const SUGGESTIONS = [
   { href: "/adhkar",       label: "الأذكار",           Icon: Scroll     },
   { href: "/lessons",      label: "الدروس",            Icon: BookText   },
   { href: "/hadith",       label: "الحديث وعلومه",          Icon: BookMarked },
-  { href: "/fawaid",       label: "الفوائد",           Icon: MessageCircle },
+  { href: "/flashcards",       label: "الفوائد",           Icon: MessageCircle },
   { href: "/prayer-times", label: "مواقيت الصلاة",     Icon: Clock      },
   { href: "/competitions", label: "المسابقات",         Icon: Compass    },
   { href: "/fiqh",         label: "الفقه والأحكام",    Icon: Scale      },

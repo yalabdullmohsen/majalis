@@ -270,7 +270,7 @@ export default function NationDetailPage() {
             </li>
           ))}
         </ul>
-        <Link href="/quran" className="nations-link">افتح المصحف واقرأ المواضع كاملة</Link>
+        <Link href="/quran-hub" className="nations-link">افتح المصحف واقرأ المواضع كاملة</Link>
       </section>
 
       {nation.hadiths.length > 0 && (
