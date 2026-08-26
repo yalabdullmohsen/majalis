@@ -174,6 +174,7 @@ function scheduleForPrayer(
           recordingId: muezzin.id,
           isFajr,
           startAtMs: adhanTargetEpoch,
+          deliveryMode,
         }),
       );
     }

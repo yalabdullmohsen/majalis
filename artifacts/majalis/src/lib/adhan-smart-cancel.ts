@@ -9,13 +9,10 @@
  */
 
 import { isNative } from "./capacitor-utils";
-import {
-  getEffectiveMuezzinId,
-  loadAdhanPrefs,
-  type PrayerKey,
-} from "./adhan-preferences";
+import { getEffectiveMuezzinId, loadAdhanPrefs, PRAYER_ARABIC, type PrayerKey } from "./adhan-preferences";
 import { getMuezzin, playAdhan } from "./adhan-audio";
 import { ADHAN_IOS_MAX_SEGMENTS } from "./adhan-ios-segments";
+import { ADHAN_EVENT_NAME, type AdhanEvent } from "./adhan-events";
 
 const RESUME_STORE_KEY = "majalis-adhan-resume-v1";
 
@@ -183,6 +180,14 @@ export async function resumeAdhanInternally(opts?: {
   }
 
   const audio = playAdhan(muezzin, isFajr, "full", prefs.volume ?? 1);
+  if (audio && typeof window !== "undefined") {
+    const event: AdhanEvent = {
+      type: "adhan",
+      prayerKey,
+      prayerName: PRAYER_ARABIC[prayerKey] ?? prayerKey,
+    };
+    window.dispatchEvent(new CustomEvent(ADHAN_EVENT_NAME, { detail: event }));
+  }
   clearAdhanResumeContext();
   return Boolean(audio);
 }

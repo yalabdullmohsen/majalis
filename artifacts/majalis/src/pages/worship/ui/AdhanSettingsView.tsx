@@ -30,11 +30,15 @@ import {
 import { invalidatePrayerNativeSchedule } from "@/lib/prayer-alert-scheduler";
 import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
 import {
-  SELECTABLE_ADHAN_TYPES,
   getSelectableAdhanType,
+  getAdhanTypeForMuezzinAndMode,
   typeIdFromPrefs,
-  type SelectableAdhanTypeId,
 } from "@/lib/adhan-selectable-types";
+import {
+  listSelectableMuezzins,
+  type SelectableMuezzinId,
+} from "@/lib/adhan-muezzin-library";
+import { isIOS, isNative } from "@/lib/capacitor-utils";
 import {
   KUWAIT_GOVERNORATES,
   getSelectedGovernorate,
@@ -42,7 +46,6 @@ import {
   fetchPrayerTimes,
 } from "@/lib/prayer-times";
 import { applyPageSeo } from "@/lib/seo";
-import { isNative } from "@/lib/capacitor-utils";
 import {
   getAndroidAdhanPermissionStatus,
   isAdhanAndroidAlarmAvailable,
@@ -151,6 +154,37 @@ function NotificationPermBadge() {
     };
   }, []);
   return <PermissionBadge value={state} />;
+}
+
+function IosChainedAdhanCard({
+  muezzinId,
+  isFullMode,
+}: {
+  muezzinId: string;
+  isFullMode: boolean;
+}) {
+  if (!isNative || !isIOS) return null;
+  const entry = listSelectableMuezzins().find((m) => m.id === muezzinId);
+  const chained = Boolean(entry?.iosChainedSegments && isFullMode);
+  return (
+    <section className="ads-card" aria-labelledby="ads-ios-chain-head">
+      <div className="ads-card__head" id="ads-ios-chain-head">
+        <Bell size={15} strokeWidth={2} aria-hidden="true" />
+        <span>إشعارات iOS (حد ٣٠ ثانية)</span>
+      </div>
+      <div className="ads-card__body">
+        <p className="ads-adhan-desc" role="note">
+          {chained
+            ? "الوضع الكامل: حتى ٤ إشعارات متتابعة (≤٢٨ث لكل مقطع) ثم إكمال الأذان داخل التطبيق عند الفتح."
+            : isFullMode
+              ? "الوضع الكامل: إشعار قصير واحد — افتح التطبيق لسماع الأذان كاملاً."
+              : "الوضع المختصر: إشعار واحد بصوت CAF قصير (تكبيرات أو مقطع ≤٢٩ث)."}
+          {" "}
+          تجاوز زر الصامت غير متاح دون امتياز Apple الرسمي.
+        </p>
+      </div>
+    </section>
+  );
 }
 
 function AndroidAdhanNativeCard({
@@ -285,8 +319,12 @@ export default function AdhanSettingsPage() {
   const [statusBusy, setStatusBusy] = useState(false);
   const [statusLines, setStatusLines] = useState<string[] | null>(null);
 
-  const selectedTypeId = typeIdFromPrefs(prefs.defaultMuezzinId, prefs.playbackMode);
-  const selectedType = getSelectableAdhanType(selectedTypeId);
+  const selectedType = getAdhanTypeForMuezzinAndMode(
+    prefs.defaultMuezzinId,
+    prefs.playbackMode,
+  );
+  const isFullMode = prefs.playbackMode === "full";
+  const muezzinOptions = listSelectableMuezzins();
 
   useEffect(() => {
     applyPageSeo({
@@ -334,12 +372,24 @@ export default function AdhanSettingsPage() {
     savedTimerRef.current = setTimeout(() => setSaved(false), 2000);
   }
 
-  function selectType(id: SelectableAdhanTypeId) {
-    const t = getSelectableAdhanType(id);
-    setPrefs(patchAdhanPrefs({
-      defaultMuezzinId: t.muezzinId,
-      playbackMode: t.mode,
-    }));
+  function selectMuezzin(id: SelectableMuezzinId) {
+    setPrefs(patchAdhanPrefs({ defaultMuezzinId: id }));
+    flashSaved();
+  }
+
+  function setFullAdhanMode(full: boolean) {
+    setPrefs(patchAdhanPrefs({ playbackMode: full ? "full" : "short" }));
+    flashSaved();
+  }
+
+  function setPrayerTypeFromLegacyId(key: PrayerKey, value: string) {
+    if (!value) {
+      setPrefs(patchPrayerPrefs(key, { muezzinId: "", deliveryMode: "" }));
+      flashSaved();
+      return;
+    }
+    const t = getSelectableAdhanType(value);
+    setPrefs(patchPrayerPrefs(key, { muezzinId: t.muezzinId, deliveryMode: t.mode }));
     flashSaved();
   }
 
@@ -384,14 +434,7 @@ export default function AdhanSettingsPage() {
   }
 
   function setPrayerType(key: PrayerKey, value: string) {
-    if (!value) {
-      setPrefs(patchPrayerPrefs(key, { muezzinId: "", deliveryMode: "" }));
-      flashSaved();
-      return;
-    }
-    const t = getSelectableAdhanType(value);
-    setPrefs(patchPrayerPrefs(key, { muezzinId: t.muezzinId, deliveryMode: t.mode }));
-    flashSaved();
+    setPrayerTypeFromLegacyId(key, value);
   }
 
   function setPrayerAdvance(key: PrayerKey, minutes: AdvanceMinutes) {
@@ -565,23 +608,42 @@ export default function AdhanSettingsPage() {
       <section className="ads-card" aria-labelledby="ads-styles-head">
         <div className="ads-card__head" id="ads-styles-head">
           <Music size={15} strokeWidth={2} aria-hidden="true" />
-          <span>اختيار الأذان</span>
+          <span>اختيار المؤذن وصيغة الإشعار</span>
         </div>
         <div className="ads-card__body">
-          <div className="ads-style-grid" role="radiogroup" aria-label="نوع الأذان">
-            {SELECTABLE_ADHAN_TYPES.map((t) => {
-              const selected = selectedTypeId === t.id;
+          <div className="ads-row">
+            <div>
+              <span className="ads-gov-label">تشغيل الأذان كاملاً</span>
+              <p className="ads-adhan-desc">
+                {isFullMode
+                  ? "إشعارات متتابعة على iOS (مكة/الحرم) أو إكمال داخل التطبيق"
+                  : "تنبيه مختصر — التكبيرات أو مقطع قصير فقط"}
+              </p>
+            </div>
+            <Toggle
+              checked={isFullMode}
+              onChange={setFullAdhanMode}
+              label="تشغيل الأذان كاملاً"
+            />
+          </div>
+          <p className="ads-gov-label">المؤذن</p>
+          <div className="ads-style-grid" role="radiogroup" aria-label="اختيار المؤذن">
+            {muezzinOptions.map((m) => {
+              const selected = prefs.defaultMuezzinId === m.id;
               return (
                 <button
-                  key={t.id}
+                  key={m.id}
                   type="button"
                   role="radio"
                   aria-checked={selected}
                   className={`ads-style-card${selected ? " is-selected" : ""}`}
-                  onClick={() => selectType(t.id)}
+                  onClick={() => selectMuezzin(m.id)}
                 >
-                  <span className="ads-style-card__name">{t.label}</span>
+                  <span className="ads-style-card__name">{m.label}</span>
                   {selected ? <span className="ads-style-card__badge">مختار</span> : null}
+                  {!m.bundled ? (
+                    <span className="ads-style-card__hint">بث</span>
+                  ) : null}
                 </button>
               );
             })}
@@ -615,6 +677,8 @@ export default function AdhanSettingsPage() {
       </section>
 
       <PrayerAlertSettingsCard />
+
+      <IosChainedAdhanCard muezzinId={prefs.defaultMuezzinId} isFullMode={isFullMode} />
 
       <AndroidAdhanNativeCard selectedMuezzinId={selectedType.muezzinId} />
 
@@ -693,9 +757,12 @@ export default function AdhanSettingsPage() {
                   disabled={!p.enabled}
                 >
                   <option value="">حسب الإعداد العام</option>
-                  {SELECTABLE_ADHAN_TYPES.map((t) => (
-                    <option key={t.id} value={t.id}>{t.label}</option>
-                  ))}
+                  {(["makkah-full", "makkah-short"] as const).map((tid) => {
+                    const t = getSelectableAdhanType(tid);
+                    return (
+                      <option key={tid} value={tid}>{t.label} — {getMuezzin(t.muezzinId).name}</option>
+                    );
+                  })}
                 </select>
                 <div className="ads-chip-scroll" role="group" aria-label={`تنبيه قبل ${PRAYER_ARABIC[key]}`}>
                   {ADVANCE_OPTIONS.map((min) => (

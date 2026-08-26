@@ -547,6 +547,11 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   background: color-mix(in srgb, var(--msk-gold, #1c5244) 16%, transparent);
   color: var(--msk-gold, var(--mj-brand-deep));
 }
+.ads-style-card__hint {
+  flex-shrink: 0;
+  font-size: 0.62rem;
+  opacity: 0.7;
+}
 .ads-style-card__preview {
   min-height: 40px;
   border-radius: 0.55rem;

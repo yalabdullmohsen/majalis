@@ -13,7 +13,7 @@ import {
   isAdhanPlaybackMode,
   type AdhanPlaybackMode,
 } from "./adhan-playback-modes";
-import { clampAdhanMuezzinId } from "./adhan-selectable-types";
+import { clampAdhanMuezzinId, isAllowedAdhanMuezzinId } from "./adhan-selectable-types";
 
 const STORE_KEY = "majalis-adhan-prefs-v1";
 /** مفتاح مواصفات الواجهة — يُزامَن مع defaultMuezzinId */
@@ -185,8 +185,7 @@ export function loadAdhanPrefs(): AdhanPreferences {
       const p = prayers[key];
       if (!p) continue;
       const mid = p.muezzinId || "";
-      // المدينة أُزيلت — أي اختيار قديم يُصفَّر لاستخدام الافتراضي (مكة)
-      const safeMid = mid === "makkah" ? "makkah" : "";
+      const safeMid = mid && isAllowedAdhanMuezzinId(mid) ? mid : "";
       prayers[key] = {
         ...base.prayers[key],
         ...p,
@@ -252,10 +251,10 @@ export function saveAdhanPrefs(prefs: AdhanPreferences): AdhanPreferences {
     defaultMuezzinId: clampAdhanMuezzinId(prefs.defaultMuezzinId),
     bypassSilentMode: false,
   });
-  // صفّر أي muezzinId غير افتراضي في الصلوات
+  // صفّر أي muezzinId غير مسموح في الصلوات
   for (const key of PRAYER_KEYS) {
     const mid = safe.prayers[key]?.muezzinId || "";
-    if (mid && mid !== "makkah") {
+    if (mid && !isAllowedAdhanMuezzinId(mid)) {
       safe.prayers[key] = { ...safe.prayers[key], muezzinId: "" };
     }
   }
