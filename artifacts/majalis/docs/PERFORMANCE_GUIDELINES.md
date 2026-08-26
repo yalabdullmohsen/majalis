@@ -2,6 +2,21 @@
 
 آخر تحديث: **2026-08-26** · يُكمّل `docs/PERFORMANCE_BASELINE.md`
 
+## CI/CD — لا تُكرّر بوابة خاطئة
+
+- **لا** تضف `.github/workflows/performance-gate.yml` بـ `minScore: 90` أو `npm ci` أو منفذ `3000`.
+- البوابات الحية: `ci.yml` → `test:bundle-budget` + `lhci-home` (معاينة `127.0.0.1:24216`).
+- أتمتة التوثيق دون مسح القياسات: `bash scripts/setup-perf.sh`
+- مثال توثيقي (معطّل): `docs/performance/performance-gate.workflow.example.yml`
+
+## قواعد منع الانحدار (Zero-Regression)
+
+1. **مكتبات خارجية:** يُمنع تثبيت أي تبعية جديدة يزيد حجمها عن **10 KiB gzip** في مسار الإقلاع دون موافقة معمارية مكتوبة في الـPR.
+2. **حزمة الإقلاع:** أي استيراد ثابت جديد في `App.tsx` / `main.tsx` لمكوّن غير حرج لـLCP → ارفض في المراجعة؛ استخدم `lazyWithRetry`.
+3. **LHCI معاينة:** عتبة الأداء الحالية `minScore` معاينة ≈ **0.75** (انظر `lhci-thresholds.cjs`) — لا ترفع إلى 0.90 على المعاينة المحلية بلا CDN؛ بوابة الإنتاج عبر PSI منفصلة.
+4. **Debounce بحث/فلترة:** استخدم `useDebouncedValue` (افتراضي ≤300ms فعليًا؛ السقف المطلوب 300ms).
+5. **لمس/تمرير:** `passive: true` + `touch-action: manipulation` في الطبقات العامة موجودة في `index.css` / `native-feel.css`.
+
 ## مبادئ
 
 1. **لا حذف ميزات** لتسريع التطبيق — قسّم الكود أو أجّل التحميل.

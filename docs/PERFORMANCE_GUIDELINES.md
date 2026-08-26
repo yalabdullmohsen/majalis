@@ -2,6 +2,13 @@
 
 آخر تحديث: **2026-08-26** · يُكمّل `docs/PERFORMANCE_BASELINE.md`
 
+## CI/CD — لا تُكرّر بوابة خاطئة
+
+- **لا** تضف `.github/workflows/performance-gate.yml` بـ `minScore: 90` أو `npm ci` أو منفذ `3000`.
+- البوابات الحية: `ci.yml` → `test:bundle-budget` + `lhci-home` (معاينة `127.0.0.1:24216`).
+- أتمتة التوثيق دون مسح القياسات: `bash scripts/setup-perf.sh`
+- مثال توثيقي (معطّل): `docs/performance/performance-gate.workflow.example.yml`
+
 ## قواعد منع الانحدار (Zero-Regression)
 
 1. **مكتبات خارجية:** يُمنع تثبيت أي تبعية جديدة يزيد حجمها عن **10 KiB gzip** في مسار الإقلاع دون موافقة معمارية مكتوبة في الـPR.
