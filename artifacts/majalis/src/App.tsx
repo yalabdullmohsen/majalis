@@ -185,6 +185,7 @@ const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAn
 const LibraryPage = lazy(() => import("@/pages/library/LibraryPage"));
 const LibraryDetailPage = lazy(() => import("@/pages/library/LibraryDetailPage"));
 const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
+const FawaidPage = lazy(() => import("@/pages/account/FawaidPage"));
 const PropheticMedicinePage = lazy(() => import("@/views/PropheticMedicinePage"));
 const HadithPage = lazy(() => import("@/pages/hadith/HadithPage"));
 const HadithByIdPage = lazy(() => import("@/pages/hadith/HadithByIdPage"));
@@ -821,7 +822,7 @@ function Router() {
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
       <Route path="/prophetic-medicine"><SafeLazyRoute component={PropheticMedicinePage} /></Route>
       <Route path="/quran-circles"><SafeLazyRoute component={QuranCirclesPage} /></Route>
-      <Route path="/fawaid"><Redirect to="/flashcards" /></Route>
+      <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
       <Route path="/hadith/books"><SafeLazyRoute component={HadithBooksPage} /></Route>
       <Route path="/hadith/books-and-rulings"><SafeLazyRoute component={HadithBooksAndRulingsPage} /></Route>
       <Route path="/hadith/arbaeen-love-of-allah"><SafeLazyRoute component={ArbaeenLovePage} /></Route>

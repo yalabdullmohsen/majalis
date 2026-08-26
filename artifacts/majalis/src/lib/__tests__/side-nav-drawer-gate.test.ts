@@ -61,7 +61,7 @@ assert.match(lockSrc, /scrollTo/, "استعادة التمرير");
 assert.match(lockSrc, /#drawer-root/, "لا حذف drawer-root عند التطهير");
 
 const drawerHrefs = SIDEBAR_NAV_GROUPS.flatMap((g) => g.items.map((i) => i.href));
-for (const href of ["/mushaf", "/quran-hub", "/lessons", "/fiqh", "/sections", "/prayer-times", "/qibla", "/tasbih", "/settings"]) {
+for (const href of ["/mushaf", "/quran-hub", "/lessons", "/fiqh", "/fawaid", "/miracles", "/sections", "/prayer-times", "/qibla", "/tasbih", "/settings"]) {
   assert.ok(drawerHrefs.includes(href), `الدرج يشمل ${href}`);
 }
 assert.ok(
@@ -73,8 +73,13 @@ assert.match(registrySrc, /loadLastPageSync/, "متابعة من التخزين 
 assert.doesNotMatch(registrySrc, /warmStaticQuranicFonts|qpc-page/, "لا تحميل خطوط المصحف من الدرج");
 assert.ok(drawerHrefs.length < 40, `عدد صفوف الدرج ${drawerHrefs.length} < 40`);
 assert.ok(
-  SIDEBAR_NAV_GROUPS.every((g) => g.items.every((i) => i.href && i.label)),
-  "مجموعات الدرج مكتملة",
+  SIDEBAR_NAV_GROUPS.every((g) => g.title && g.accent && g.items.every((i) => i.href && i.label && i.accent)),
+  "مجموعات الدرج مكتملة بعناوين وألوان",
+);
+assert.ok(SIDEBAR_NAV_GROUPS.length >= 3, "الدرج مقسوم إلى مجموعات متعددة");
+assert.ok(
+  new Set(SIDEBAR_NAV_GROUPS.map((g) => g.accent)).size >= 3,
+  "ألوان مجموعات الدرج متمايزة",
 );
 
 assert.ok(existsSync(resolve(root, "public/brand/drawer-open-390x844.png")), "لقطة 390×844");

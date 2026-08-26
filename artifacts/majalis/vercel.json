@@ -161,11 +161,6 @@
       "permanent": true
     },
     {
-      "source": "/fawaid",
-      "destination": "/flashcards",
-      "permanent": true
-    },
-    {
       "source": "/topics",
       "destination": "/sections",
       "permanent": true

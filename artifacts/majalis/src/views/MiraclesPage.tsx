@@ -23,6 +23,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import "@/styles/pages/miracles.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
+import { TopicPage } from "@/components/topic/TopicPage";
 
 const CATEGORIES = MIRACLE_CATEGORIES;
 const SOURCE_TYPES = ["الكل", "قرآن", "سنة"];
@@ -110,14 +111,14 @@ export default function MiraclesPage({
   useEffect(() => {
     applyPageSeo({
       path: "/miracles",
-      title: "إشارات كونية في الوحي | المجلس العلمي",
-      description: "موضوعات تُعرض بحذر للتأمل في دلائل الآيات الكونية عند ثبوت المعنى؛ منهج الموقع: الإعجاز البياني والغيبي والتشريعي لا الإعجاز العلمي المطلق.",
-      keywords: ["إشارات كونية", "تفكر في الخلق", "إعجاز بياني", "علوم القرآن"],
+      title: "الإعجاز العلمي | المجلس العلمي",
+      description: "الإعجاز العلمي وإشارات كونية في الوحي بحذر منهجي؛ المعتمد: الإعجاز البياني والغيبي والتشريعي، لا ربط بنظريات قابلة للنقض.",
+      keywords: ["إعجاز علمي", "إشارات كونية", "تفكر في الخلق", "إعجاز بياني", "علوم القرآن"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "إشارات كونية في الوحي",
+          name: "الإعجاز العلمي",
           description: "موضوعات للتأمل في آيات الخلق مع تنبيه منهجي على حدود الاستدلال؛ محتوى معتمد في منهج المجلس العلمي",
           itemListElement: CATEGORIES.filter(c => c !== "الكل").map((cat, i) => ({
             "@type": "ListItem",
@@ -172,26 +173,33 @@ export default function MiraclesPage({
   );
 
   return (
-    <div className="page-shell ds-page mk-page">
+    <TopicPage
+      themeId="quran"
+      sectionRoute="/miracles"
+      breadcrumb={[
+        { label: "الرئيسية", href: "/" },
+        { label: "الأقسام", href: "/sections" },
+        { label: "الإعجاز العلمي" },
+      ]}
+      eyebrow="بحذر منهجي"
+      title="الإعجاز العلمي"
+      subtitle="إشارات كونية في الوحي عند ثبوت المعنى — بلا إعجاز عددي ولا ربط بنظريات قابلة للنقض."
+      quote={{
+        text: "﴿سَنُرِيهِمْ آيَاتِنَا فِي الْآفَاقِ وَفِي أَنفُسِهِمْ حَتَّىٰ يَتَبَيَّنَ لَهُمْ أَنَّهُ الْحَقُّ﴾",
+        ref: "فصّلت: ٥٣",
+        type: "ayah",
+      }}
+    >
+    <div className="mk-page mk-page--embedded" dir="rtl">
 
-      {/* ══ Hero ══ */}
-      <header className="mk-hero">
-        <div className="mk-hero__inner">
-          <p className="mk-hero__eyebrow">بحذر منهجي</p>
-          <h1 className="mk-hero__title">إشارات كونية في الوحي</h1>
-          <p className="mk-hero__sub">
-            المعتمد في منهج الموقع: الإعجاز البياني والتشريعي والغيبي. ما يُعرض هنا إشارات للتأمل عند ثبوت المعنى — لا إعجاز عددي ولا ربط بنظريات قابلة للنقض.
-          </p>
-          <p className="mk-hero__note">
-            <AlertTriangle size={16} strokeWidth={1.8} aria-hidden="true" />
-            <span>
-              للتقرير المنهجي راجع{" "}
-              <Link href="/ulum-quran" className="mk-hero__link">علوم القرآن</Link>
-              ؛ ولا تُبنى عقيدة أو حكم على دعاوى علمية معاصرة. الموضوعات غير المحرَّرة محجوبة عن العرض.
-            </span>
-          </p>
-        </div>
-      </header>
+      <p className="mk-hero__note" style={{ marginBottom: "1rem" }}>
+        <AlertTriangle size={16} strokeWidth={1.8} aria-hidden="true" />
+        <span>
+          للتقرير المنهجي راجع{" "}
+          <Link href="/ulum-quran" className="mk-hero__link">علوم القرآن</Link>
+          ؛ ولا تُبنى عقيدة أو حكم على دعاوى علمية معاصرة. الموضوعات غير المحرَّرة محجوبة عن العرض.
+        </span>
+      </p>
 
       {/* ══ فئات سريعة ══ */}
       <section className="mk-cats-bar" aria-label="تصفية حسب الفئة">
@@ -369,5 +377,6 @@ export default function MiraclesPage({
         <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والإعجاز" count={4} />
       </div>
     </div>
+    </TopicPage>
   );
 }

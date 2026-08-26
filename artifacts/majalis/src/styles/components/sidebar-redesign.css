@@ -117,15 +117,25 @@ html[dir="rtl"] .sidebar-panel {
 }
 
 .sidebar-section {
-  margin-top: 16px;
+  margin-top: 4px;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--sidebar-group-accent, #12362a) 28%, transparent);
+}
+
+.sidebar-section:first-of-type {
+  margin-top: 8px;
+  padding-top: 4px;
+  border-top: 0;
 }
 
 .sidebar-section-title {
-  padding: 0 8px 8px;
-  color: #3d4a45;
-  font-size: 12px;
+  padding: 0 10px 10px;
+  color: var(--sidebar-group-accent, #3d4a45);
+  font-size: 11px;
   font-weight: 800;
+  letter-spacing: 0.04em;
   margin: 0;
+  text-transform: none;
 }
 
 .sidebar-item {
@@ -140,6 +150,7 @@ html[dir="rtl"] .sidebar-panel {
   text-decoration: none;
   background: transparent;
   border: 1px solid transparent;
+  border-inline-start: 3px solid transparent;
   box-sizing: border-box;
   cursor: pointer;
   font: inherit;
@@ -147,12 +158,13 @@ html[dir="rtl"] .sidebar-panel {
 }
 
 .sidebar-item:hover {
-  background: #eef5f1;
+  background: color-mix(in srgb, var(--sidebar-item-accent, #12362a) 8%, #ffffff);
 }
 
 .sidebar-item.active {
-  background: #e8f0ec;
-  border-color: rgba(18, 54, 42, 0.18);
+  background: color-mix(in srgb, var(--sidebar-item-accent, #12362a) 12%, #ffffff);
+  border-color: color-mix(in srgb, var(--sidebar-item-accent, #12362a) 22%, transparent);
+  border-inline-start-color: var(--sidebar-item-accent, #12362a);
   color: #12362a;
 }
 
@@ -160,17 +172,17 @@ html[dir="rtl"] .sidebar-panel {
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: #ffffff;
-  border: 1px solid rgba(18, 54, 42, 0.12);
+  background: color-mix(in srgb, var(--sidebar-item-accent, #12362a) 10%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--sidebar-item-accent, #12362a) 22%, transparent);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #12362a;
+  color: var(--sidebar-item-accent, #12362a);
   flex-shrink: 0;
 }
 
 .sidebar-item.active .sidebar-item-icon {
-  background: #12362a;
+  background: var(--sidebar-item-accent, #12362a);
   color: #fff;
   border-color: transparent;
 }

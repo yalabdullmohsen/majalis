@@ -1,5 +1,5 @@
 import { withFocusQuery } from "@/lib/focus-arrival";
-import { BookMarked, BookOpen, Clock, FlaskConical, GraduationCap, Heart, Scale, Scroll } from "lucide-react";
+import { BookMarked, BookOpen, Clock, GraduationCap, Heart, Map, Scale, Scroll } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { hrefAdhkar } from "@/lib/content-href";
@@ -725,7 +725,7 @@ export default function SearchPage() {
                 { href: "/fiqh", Icon: Scale, label: "الفقه والأحكام" },
                 { href: "/memorization", Icon: GraduationCap, label: "الحفظ والمراجعة" },
                 { href: "/occasions-lessons", Icon: Clock, label: "المناسبات والدروس" },
-                { href: "/islamic-directory", Icon: FlaskConical, label: "الدليل الإسلامي" },
+                { href: "/islamic-directory", Icon: Map, label: "دليل المؤسسات والمساجد" },
                 { href: "/prayer-times", Icon: Clock, label: "الصلاة" },
                 { href: "/my-learning", Icon: Heart, label: "حسابي" },
                 { href: "/adhkar", Icon: Heart, label: "الأذكار" },

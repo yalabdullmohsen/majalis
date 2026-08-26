@@ -136,6 +136,12 @@ export const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
     text: "وَقَالَ رَبُّكُمُ ادْعُونِي أَسْتَجِبْ لَكُمْ",
     ref: "غافر: ٦٠",
     type: "ayah",
+    sectionId: "duas",
+  },
+  "/adhkar": {
+    text: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
+    ref: "الرعد: ٢٨",
+    type: "ayah",
     sectionId: "adhkar",
   },
   "/tawhid": {

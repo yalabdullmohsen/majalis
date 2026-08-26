@@ -8,13 +8,13 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { DEMO_FAWAID, FAWAID_CATEGORIES, ensureDemoContentLoaded } from "@/lib/demo-content";
 import { canSubmitForm } from "@/lib/form-rate-limit";
-import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
-import { PageShell } from "@/components/layout/PageShell";
+import { SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { useAuth } from "@/components/AuthProvider";
 import { FaidahCard } from "@/components/fawaid/FaidahCard";
 import { ShareButtons } from "@/components/ContentActions";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { TopicPage } from "@/components/topic/TopicPage";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 
 /** دفعات واجهة — تفادي رسم مئات البطاقات دفعة واحدة في DOM. */
@@ -85,15 +85,15 @@ export default function FawaidPage({
   useEffect(() => {
     applyPageSeo({
       path: "/fawaid",
-      title: "الفوائد العلمية | المجلس العلمي",
-      description: "منصة لنشر ومشاركة الفوائد العلمية والشرعية، فوائد قرآنية وحديثية وعقدية وفقهية وتربوية. محتوى معتمد في منهج المجلس العلمي",
-      keywords: ["فوائد علمية", "فوائد شرعية", "فوائد قرآنية", "فوائد حديثية", "الفوائد الإسلامية"],
+      title: "الفوائد الشرعية | المجلس العلمي",
+      description: "منصة لنشر ومشاركة الفوائد الشرعية، فوائد قرآنية وحديثية وعقدية وفقهية وتربوية. محتوى معتمد في منهج المجلس العلمي",
+      keywords: ["فوائد شرعية", "فوائد علمية", "فوائد قرآنية", "فوائد حديثية", "الفوائد الإسلامية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "أقسام الفوائد العلمية",
-          description: "أقسام الفوائد العلمية والشرعية على المنصة؛ محتوى معتمد في منهج المجلس العلمي",
+          name: "أقسام الفوائد الشرعية",
+          description: "أقسام الفوائد الشرعية على المنصة؛ محتوى معتمد في منهج المجلس العلمي",
           itemListElement: FAWAID_CATEGORIES.map((cat, i) => ({
             "@type": "ListItem",
             position: i + 1,
@@ -221,94 +221,107 @@ export default function FawaidPage({
   );
 
   return (
-    <PageShell variant="narrow" className="content-hub-page fawaid-page">
-      <PageHeader
-        eyebrow="مختارات نافعة"
-        title="الفوائد"
-        subtitle="فوائد شرعية موثقة ومنظمة."
-      />
+    <TopicPage
+      themeId="hadith"
+      sectionRoute="/fawaid"
+      breadcrumb={[
+        { label: "الرئيسية", href: "/" },
+        { label: "الأقسام", href: "/sections" },
+        { label: "الفوائد الشرعية" },
+      ]}
+      eyebrow="مختارات نافعة"
+      title="الفوائد الشرعية"
+      subtitle="فوائد شرعية موثّقة ومنتقاة — قرآنية وحديثية وعقدية وفقهية وتربوية."
+      quote={{
+        text: "﴿وَقُل رَّبِّ زِدْنِي عِلْمًا﴾",
+        ref: "طه: ١١٤",
+        type: "ayah",
+      }}
+    >
+      <div className="content-hub-page fawaid-page mk-page mk-page--embedded" dir="rtl">
+        <div className="ds-section__head">
+          {isAdmin && (
+            <div className="page-stats-row page-stats-row--flush">
+              <span>{displayItems.length} فائدة</span>
+              <span>{FAWAID_CATEGORIES.length} تصنيف</span>
+            </div>
+          )}
+          <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
+        </div>
 
-      <div className="ds-section__head">
-        {isAdmin && (
-          <div className="page-stats-row page-stats-row--flush">
-            <span>{displayItems.length} فائدة</span>
-            <span>{FAWAID_CATEGORIES.length} تصنيف</span>
+        {loading ? (
+          <SkeletonCardGrid count={8} />
+        ) : displayItems.length === 0 ? (
+          <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}».` : "لا توجد فوائد في هذا القسم."} />
+        ) : (
+          <>
+            <div className="faidah-grid">
+              {visibleItems.map((f) => (
+                <FaidahCard key={f.id} item={f} />
+              ))}
+            </div>
+            {hasMore ? (
+              <div ref={loadMoreRef} className="fawaid-load-more">
+                <button type="button" className="content-hub-chip" onClick={revealMore}>
+                  عرض المزيد ({visibleCount} من {displayItems.length})
+                </button>
+              </div>
+            ) : null}
+          </>
+        )}
+
+        <p className="fawaid-cards-link" style={{ marginBlock: "1rem" }}>
+          <Link href="/flashcards">بطاقات المراجعة ←</Link>
+        </p>
+        <RelatedKnowledge kind="fawaid" title="فوائد ذات صلة" />
+
+        {isLoggedIn && (
+          <div className="ui-card content-submit-panel">
+            <h2>أرسل فائدة</h2>
+            {submitted ? (
+              <p className="content-submit-success">شكرًا. سيتم مراجعة الفائدة قبل نشرها.</p>
+            ) : (
+              <form onSubmit={handleSubmit} className="content-submit-form" aria-label="إرسال فائدة علمية">
+                {submitError && <p className="content-submit-error" role="alert">{submitError}</p>}
+                <textarea
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  aria-label="نص الفائدة"
+                  placeholder="اكتب الفائدة هنا..."
+                  rows={4}
+                />
+                <input
+                  value={authorName}
+                  onChange={(e) => setAuthorName(e.target.value)}
+                  aria-label="اسم الكاتب (اختياري)"
+                  placeholder="اسم الكاتب (اختياري)"
+                />
+                <button type="submit" disabled={submitting || !text.trim()}>
+                  {submitting ? "جارٍ الإرسال..." : "إرسال الفائدة"}
+                </button>
+              </form>
+            )}
           </div>
         )}
-        <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
-      </div>
 
-      {loading ? (
-        <SkeletonCardGrid count={8} />
-      ) : displayItems.length === 0 ? (
-        <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}».` : "لا توجد فوائد في هذا القسم."} />
-      ) : (
-        <>
-          <div className="faidah-grid">
-            {visibleItems.map((f) => (
-              <FaidahCard key={f.id} item={f} />
-            ))}
+        <aside className="ds-filters-panel ds-filters-panel--desktop">
+          <div className="ds-filters-panel__head">
+            <h2>بحث وتصفية</h2>
           </div>
-          {hasMore ? (
-            <div ref={loadMoreRef} className="fawaid-load-more">
-              <button type="button" className="content-hub-chip" onClick={revealMore}>
-                عرض المزيد ({visibleCount} من {displayItems.length})
-              </button>
-            </div>
-          ) : null}
-        </>
-      )}
+          {filtersPanel}
+        </aside>
 
-      <p className="fawaid-cards-link" style={{marginBlock:"1rem"}}>
-        <Link href="/flashcards">بطاقات المراجعة ←</Link>
-      </p>
-      <RelatedKnowledge kind="fawaid" title="فوائد ذات صلة" />
-
-      {isLoggedIn && (
-        <div className="ui-card content-submit-panel">
-          <h2>أرسل فائدة</h2>
-          {submitted ? (
-            <p className="content-submit-success">شكرًا. سيتم مراجعة الفائدة قبل نشرها.</p>
-          ) : (
-            <form onSubmit={handleSubmit} className="content-submit-form" aria-label="إرسال فائدة علمية">
-              {submitError && <p className="content-submit-error" role="alert">{submitError}</p>}
-              <textarea
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                aria-label="نص الفائدة"
-                placeholder="اكتب الفائدة هنا..."
-                rows={4}
-              />
-              <input
-                value={authorName}
-                onChange={(e) => setAuthorName(e.target.value)}
-                aria-label="اسم الكاتب (اختياري)" placeholder="اسم الكاتب (اختياري)"
-              />
-              <button type="submit" disabled={submitting || !text.trim()}>
-                {submitting ? "جارٍ الإرسال..." : "إرسال الفائدة"}
-              </button>
-            </form>
-          )}
+        <div className="twh-share">
+          <ShareButtons title="الفوائد العلمية — المجلس العلمي" url="https://majlisilm.com/fawaid" />
         </div>
-      )}
 
-      <aside className="ds-filters-panel ds-filters-panel--desktop">
-        <div className="ds-filters-panel__head">
-          <h2>بحث وتصفية</h2>
+        <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
+          {filtersPanel}
+        </FilterBottomSheet>
+        <div className="px-4 pb-6 mt-4">
+          <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث والفوائد" count={4} />
         </div>
-        {filtersPanel}
-      </aside>
-
-      <div className="twh-share">
-        <ShareButtons title="الفوائد العلمية — المجلس العلمي" url="https://majlisilm.com/fawaid" />
       </div>
-
-      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
-        {filtersPanel}
-      </FilterBottomSheet>
-      <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث والفوائد" count={4} />
-      </div>
-    </PageShell>
+    </TopicPage>
   );
 }
