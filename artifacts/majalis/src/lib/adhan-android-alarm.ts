@@ -58,7 +58,7 @@ export async function cancelAndroidFullAdhan(prayerKey: string): Promise<void> {
   }
 }
 
-export async function ensureAndroidAdhanPermissions(): Promise<{
+export async function getAndroidAdhanPermissionStatus(): Promise<{
   exactAlarm: boolean;
   battery: boolean;
 }> {
@@ -67,12 +67,44 @@ export async function ensureAndroidAdhanPermissions(): Promise<{
   }
   try {
     const exact = await Native.canScheduleExact();
-    if (!exact.ok) await Native.openExactAlarmSettings();
     const bat = await Native.isIgnoringBatteryOptimizations();
-    if (!bat.ok) await Native.requestIgnoreBatteryOptimizations();
-    const exact2 = await Native.canScheduleExact();
-    const bat2 = await Native.isIgnoringBatteryOptimizations();
-    return { exactAlarm: exact2.ok, battery: bat2.ok };
+    return { exactAlarm: exact.ok, battery: bat.ok };
+  } catch {
+    return { exactAlarm: false, battery: false };
+  }
+}
+
+export async function openAndroidExactAlarmSettings(): Promise<void> {
+  if (!isAdhanAndroidAlarmAvailable()) return;
+  try {
+    await Native.openExactAlarmSettings();
+  } catch {
+    /* ignore */
+  }
+}
+
+export async function openAndroidBatteryOptimizationSettings(): Promise<void> {
+  if (!isAdhanAndroidAlarmAvailable()) return;
+  try {
+    await Native.requestIgnoreBatteryOptimizations();
+  } catch {
+    /* ignore */
+  }
+}
+
+/** يفتح إعدادات النظام عند الحاجة — للاستدعاء من معالج الإعداد الأولي. */
+export async function ensureAndroidAdhanPermissions(): Promise<{
+  exactAlarm: boolean;
+  battery: boolean;
+}> {
+  if (!isAdhanAndroidAlarmAvailable()) {
+    return { exactAlarm: false, battery: false };
+  }
+  try {
+    const before = await getAndroidAdhanPermissionStatus();
+    if (!before.exactAlarm) await Native.openExactAlarmSettings();
+    if (!before.battery) await Native.requestIgnoreBatteryOptimizations();
+    return await getAndroidAdhanPermissionStatus();
   } catch {
     return { exactAlarm: false, battery: false };
   }

@@ -532,7 +532,12 @@ function AdhanSchedulerBootstrap() {
 
     const onPrefs = () => run();
     window.addEventListener("majalis:adhan-prefs-changed", onPrefs);
-    return () => window.removeEventListener("majalis:adhan-prefs-changed", onPrefs);
+    const onBootReschedule = () => run();
+    window.addEventListener("majalis:boot-adhan-reschedule", onBootReschedule);
+    return () => {
+      window.removeEventListener("majalis:adhan-prefs-changed", onPrefs);
+      window.removeEventListener("majalis:boot-adhan-reschedule", onBootReschedule);
+    };
   }, [data]);
 
   useEffect(() => {

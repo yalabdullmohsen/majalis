@@ -43,6 +43,8 @@ assert.match(view, /إذن الإشعارات/);
 assert.match(view, /إذن الموقع/);
 assert.match(view, /حالة الصوت/);
 assert.match(view, /playAdhanPreview/);
+assert.match(view, /getAndroidAdhanPermissionStatus/);
+assert.match(view, /playAndroidAdhanNow/);
 assert.match(view, /ads-prayer-row/);
 assert.match(view, /rounded-full icon-only/);
 assert.doesNotMatch(view, /أذان المدينة/);
