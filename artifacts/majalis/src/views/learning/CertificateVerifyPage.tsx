@@ -200,7 +200,7 @@ export default function CertificateVerifyPage() {
       </section>
 
       <div className="cvp-links">
-        <Link href="/learning/paths" className="cvp-back-link">المسارات العلمية</Link>
+        <Link href="/lessons" className="cvp-back-link">الدروس العلمية</Link>
         <Link href="/quiz" className="cvp-back-link">المسابقات التعليمية</Link>
         <Link href="/contact" className="cvp-back-link">تواصل معنا</Link>
       </div>
