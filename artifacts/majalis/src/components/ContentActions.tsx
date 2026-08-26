@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { supabase } from "@/lib/supabase";
 import "@/styles/components/content-actions-rag.css";
-import { ContentReportLink } from "@/components/ContentReportLink";
 import { ShareFaida } from "@/components/ShareFaida";
 
 interface Props {

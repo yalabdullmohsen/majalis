@@ -81,6 +81,24 @@ html.dark .share-faida__btn {
   color: var(--text-primary, #ecf2ef);
 }
 
+.share-faida--inline {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.share-faida--inline .share-faida__actions {
+  width: 100%;
+}
+
+.share-faida--sm .share-faida__btn {
+  min-height: 36px;
+  flex: 1;
+  font-size: 0.72rem;
+  padding-inline: 0.5rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .share-faida__btn {
     transition: none;

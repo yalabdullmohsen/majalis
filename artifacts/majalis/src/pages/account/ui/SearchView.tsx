@@ -17,6 +17,15 @@ import "@/styles/pages/search.css";
 import "@/styles/pages/search-legacy.css";
 import "@/styles/components/surface-polish.css";
 
+const SEARCH_QUICK_SUGGESTIONS = [
+  { label: "أذكار الصباح", href: "/adhkar/morning" },
+  { label: "الأربعون النووية", href: "/arbaeen-nawawi" },
+  { label: "أحاديث ضعيفة", href: "/hadith/daif" },
+  { label: "حفظ القرآن", href: "/memorization" },
+  { label: "فقه الصلاة", href: "/salah-guide" },
+  { label: "دروس الكويت", href: "/kuwait-lessons" },
+] as const;
+
 /* ── تمييز على النص الأصلي عبر محرك التسامح الموحّد ── */
 function highlightText(text: string, query: string): React.ReactNode {
   if (!text || !query.trim()) return text;
@@ -688,15 +697,12 @@ export default function SearchPage() {
           )}
 
           {/* ── مقترحات البحث ── */}
+          <p className="srch-quick-sections__title">اقتراحات جاهزة</p>
           <div className="search-suggestion-chips">
-            {[
-              "الصلاة", "الزكاة", "الحج", "التوبة", "الصيام",
-              "أحكام الطهارة", "فضل الذكر", "صفة الوضوء",
-              "القرآن والسنة", "العقيدة",
-            ].map((s) => (
-              <button key={s} type="button" className="search-suggestion-chip" onClick={() => submitSearch(s)}>
-                {s}
-              </button>
+            {SEARCH_QUICK_SUGGESTIONS.map(({ label, href }) => (
+              <Link key={href} href={href} className="search-suggestion-chip">
+                {label}
+              </Link>
             ))}
           </div>
 
@@ -765,6 +771,13 @@ export default function SearchPage() {
                   ؟
                 </p>
               )}
+              <div className="search-suggestion-chips" style={{ marginTop: "0.75rem" }}>
+                {SEARCH_QUICK_SUGGESTIONS.map(({ label, href }) => (
+                  <Link key={href} href={href} className="search-suggestion-chip">
+                    {label}
+                  </Link>
+                ))}
+              </div>
             </div>
           ) : (
             <>

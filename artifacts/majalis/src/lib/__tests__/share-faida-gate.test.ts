@@ -32,4 +32,8 @@ assert.match(contentActions, /فائدة من المجلس العلمي/);
 const contact = read("src/views/ContactPage.tsx");
 assert.doesNotMatch(contact, /ShareFaida/, "صفحة التواصل بلا ShareFaida");
 
+const shareButton = read("src/components/ShareButton.tsx");
+assert.doesNotMatch(shareButton, /return null/, "ShareButton مفعّل للأذكار");
+assert.match(shareButton, /واتساب/);
+
 console.log("share-faida-gate.test.ts: ok");

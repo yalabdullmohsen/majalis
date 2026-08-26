@@ -638,7 +638,7 @@ export default function LessonsPage({
       </FilterSheet>
 
       <div className="twh-share">
-        <ShareButtons aria-label="الدروس العلمية — المجلس العلمي" url={`${SITE_URL}/lessons`} />
+        <ShareButtons title="الدروس العلمية — المجلس العلمي" url={`${SITE_URL}/lessons`} />
       </div>
       <ExploreAlsoNav
         title="استكشف أيضًا"
