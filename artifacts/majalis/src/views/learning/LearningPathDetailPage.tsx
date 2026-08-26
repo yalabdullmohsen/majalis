@@ -253,7 +253,7 @@ export default function LearningPathDetailPage() {
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },
-          { name: "المسارات العلمية", path: "/learning/paths" },
+          { name: "الدروس العلمية", path: "/lessons" },
           { name: path.title, path: path_ },
         ]),
       ],
@@ -324,7 +324,7 @@ export default function LearningPathDetailPage() {
     <div className="page-shell narrow lpd2-page" dir="rtl">
       <div className="lpd2-hero">
         <nav className="lpd2-breadcrumb" aria-label="مسار التنقل">
-          <Link href="/learning/paths">المسارات</Link>
+          <Link href="/lessons">الدروس</Link>
           <ChevronLeft size={13} aria-hidden="true" />
           <span>{path.title}</span>
         </nav>
@@ -441,7 +441,7 @@ export default function LearningPathDetailPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="تفاصيل المسار التعليمي — المجلس العلمي" url={`https://majlisilm.com/learning/paths/${slug}`} />
+        <ShareButtons title="تفاصيل المسار التعليمي — المجلس العلمي" url="https://majlisilm.com/lessons" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/learning-paths" title="اختبر معلوماتك في العلوم الشرعية" count={4} />

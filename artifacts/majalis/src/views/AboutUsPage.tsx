@@ -8,7 +8,7 @@ import { applyPageSeo } from "@/lib/seo";
 export default function AboutUsPage() {
   useEffect(() => {
     applyPageSeo({
-      path: "/about-us",
+      path: "/about",
       title: "من نحن | المجلس العلمي",
       description: "تعرّف على المجلس العلمي، رسالته، منهجه على منهج أهل السنة والجماعة وفق فهم السلف، ومنهجية إعداد المحتوى ومراجعته.",
       keywords: ["المجلس العلمي", "من نحن", "منهج السلف", "منصة إسلامية", "الكويت"],
@@ -23,7 +23,7 @@ export default function AboutUsPage() {
           foundingDate: "2024",
           areaServed: { "@type": "Country", name: "الكويت" },
           inLanguage: "ar",
-          sameAs: ["https://majlisilm.com"],
+          sameAs: ["https://www.instagram.com/Majlisalilm"],
         },
       ],
     });
