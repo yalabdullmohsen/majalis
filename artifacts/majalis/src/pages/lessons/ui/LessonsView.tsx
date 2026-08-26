@@ -508,6 +508,15 @@ export default function LessonsPage({
   );
 
   const lobby = useMemo(() => getLobby("lessons"), []);
+  const quad = useMemo(
+    () =>
+      lobby.quad?.map((item) => {
+        if (item.id === "lessons") return { ...item, count: activeLessons.length };
+        if (item.id === "lessons-archive") return { ...item, count: archivedLessons.length };
+        return item;
+      }),
+    [lobby.quad, activeLessons.length, archivedLessons.length],
+  );
   const nearest = featuredSections.upcoming[0];
   const primary = lobby.primary
     ? {
@@ -532,7 +541,7 @@ export default function LessonsPage({
         onSelect: () => setTab(c.id as TabId),
       }))}
       groups={lobby.groups}
-      quad={lobby.quad}
+      quad={quad}
       filterSlot={
         <div className="lessons-v3-sticky">
           <FilterToggle
