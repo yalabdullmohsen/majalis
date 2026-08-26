@@ -1,19 +1,46 @@
 {
   "version": 1,
-  "generated_at": "2026-08-26T04:37:40.514Z",
+  "generated_at": "2026-08-26T17:00:44.392Z",
   "items": [
     {
-      "id": "c7a4a88dbec9ad56d2449e4423fabdcb06d1abb6",
+      "id": "cf7dfd49ea2f086354f9625ef1f9f2ee65fffb27",
+      "type": "تنبيه",
+      "title_ar": "جمعية مدينة سعد العبدالله التعاونية سعد العبدالله اليوم جمعية سعد العبدالله الت…",
+      "summary_ar": "#جمعيه_مدينه_سعد_العبدالله_التعاونيه Photo by سعد العبدالله اليوم 🇰🇼 on August 26, 2026. May be an image of ‎poster and ‎text that says '‎เพมเมม Operative جم…",
+      "sheikh": null,
+      "place": "2 يستقبلكم خلال المواعيد الرسمية من الساعة 8 صباحاً إلى الساعة 9 مساءً‎'‎‎",
+      "audience": "عام",
+      "starts_at": "2026-08-27T00:00:00.000Z",
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-saad.al.abdullah.city",
+          "name_ar": "مركز سعد العبدالله لتحفيظ القرآن",
+          "url": "https://instagram.com/saad.al.abdullah.city",
+          "post_url": "https://www.instagram.com/p/DcgIHr6NhcU/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-26T16:49:40.342Z",
+      "confidence": 0.85
+    },
+    {
+      "id": "17cf661670830e35ec3196e0adf4e5dd149386c8",
       "type": "درس",
-      "title_ar": "الآن مباشر شرح كتاب التوحيد للإمام محمد بن عبدالوهاب فضيلة الشيخ عمر مثيب العتي…",
-      "summary_ar": "الان مباشر (36) شرح كتاب&nbsp; التوحيد للامام محمد بن عبدالوهاب فضيله الشيخ عمر مثيب العتيبي رابط البث المباشر https://t.me/omar_muthib?livestream تحميل الكتاب…",
-      "sheikh": "عمر مثيب العتيبي 🔗 رابط البث المباشر https://t",
-      "place": null,
+      "title_ar": "ندعوكم اليوم لحضور الدرس العلمي شرح كتاب منهج السالكين للشيخ حسين المويزري بعد …",
+      "summary_ar": "ندعوكم اليوم لحضور الدرس العلمي: ( شرح كتاب منهج السالكين ) للشيخ حسين المويزري @H_Almuwizri ⌚ بعد صلاه العصر ( كل يوم ثلاثاء) مسجد قبيصه الخزاعي - المطلاع htt…",
+      "sheikh": null,
+      "place": "قبيصة الخزاعي - المطلاع https://maps",
       "audience": "عام",
       "starts_at": null,
       "time_text": null,
-      "register_url": "https://t.me/omar_muthib?livestream",
-      "schedule_kind": null,
+      "register_url": "https://t.me/DrosQ8",
+      "schedule_kind": "upcoming",
       "women_attendance": "men_only",
       "women_attendance_note": null,
       "sources": [
@@ -21,20 +48,40 @@
           "id": "telegram-DrosQ8",
           "name_ar": "دروس الكويت",
           "url": "https://t.me/DrosQ8",
-          "post_url": "https://t.me/DrosQ8/27633",
-          "platform": "telegram"
-        },
-        {
-          "id": "telegram-DrosQ8",
-          "name_ar": "دروس الكويت",
-          "url": "https://t.me/DrosQ8",
-          "post_url": "https://t.me/DrosQ8/27646",
+          "post_url": "https://t.me/DrosQ8/27638",
           "platform": "telegram"
         }
       ],
       "image_url": null,
-      "published_at": "2026-08-26T04:13:43.276Z",
+      "published_at": "2026-08-26T16:39:36.903Z",
       "confidence": 0.8
+    },
+    {
+      "id": "521409728e47b4bf644be0da76c2d29acd4a1ce5",
+      "type": "حلقة",
+      "title_ar": "ودج بإنجاز يفرحج كل أسبوع؟ حلقات إرواء للقرآن ودج يكون عندج إنجاز يفرحج كل اسبو…",
+      "summary_ar": "ودج بانجاز يفرحج كل اسبوع؟ Photo by حلقات ارواء للقران on August 26, 2026. May be an image of ‎text that says '‎ودج يكون عندج انجاز يفرحج كل اسبوع؟ CrwDa ទេ ال…",
+      "sheikh": null,
+      "place": null,
+      "audience": "نشء",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-erwaa.quran",
+          "name_ar": "حلقات إرواء للقرآن — جامعة الكويت",
+          "url": "https://instagram.com/erwaa.quran",
+          "post_url": "https://www.instagram.com/p/DcgSaZ1MoJO/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-26T16:34:23.140Z",
+      "confidence": 0.65
     },
     {
       "id": "26448a5df818331f38a48e66fd0806d94a550832",
