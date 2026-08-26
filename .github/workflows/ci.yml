@@ -19,6 +19,7 @@ permissions:
   actions: write
 
 # Pin trusted action SHAs (tag comments for humans).
+# content-audit-fill re-trigger: ensure CI schedules on latest head
 
 env:
   PORT: "24216"

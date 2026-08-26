@@ -14,6 +14,7 @@ export type QuizQuestion = {
   question: string;
   answer: string;
   status?: string;
+  /** إن غاب، يُعرض `answer` كشرح في الواجهة. */
   explanation?: string;
   reference?: string;
   documentation_status?: "sourced" | "unsourced";
@@ -21,6 +22,11 @@ export type QuizQuestion = {
   editorial_review_status?: string;
   last_updated_at?: string;
 };
+
+/** شرح العرض: explanation إن وُجد وإلا answer. */
+export function quizExplanationOf(q: Pick<QuizQuestion, "explanation" | "answer">): string {
+  return String(q.explanation || q.answer || "").trim();
+}
 
 /** يستبعد أسئلة التجربة غير المراجعة وأشباهها من العرض الحي. */
 function isLiveQuizQuestion(q: QuizQuestion): boolean {

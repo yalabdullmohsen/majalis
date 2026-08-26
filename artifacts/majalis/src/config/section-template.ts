@@ -55,8 +55,8 @@ export const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
     sectionId: "hadith",
   },
   "/tafsir": {
-    text: "وَلَا تَقْفُ مَا لَيْسَ لَكَ بِهِ عِلْمٌ",
-    ref: "الإسراء: ٣٦",
+    text: "وَأَنزَلْنَا إِلَيْكَ الذِّكْرَ لِتُبَيِّنَ لِلنَّاسِ مَا نُزِّلَ إِلَيْهِمْ",
+    ref: "النحل: ٤٤",
     type: "ayah",
     sectionId: "tafsir",
   },
@@ -79,8 +79,8 @@ export const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
     sectionId: "quran-qiraat",
   },
   "/ulum-quran": {
-    text: "إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ",
-    ref: "الحجر: ٩",
+    text: "كِتَابٌ أَنزَلْنَاهُ إِلَيْكَ مُبَارَكٌ لِّيَدَّبَّرُوا آيَاتِهِ",
+    ref: "ص: ٢٩",
     type: "ayah",
     sectionId: "ulum-quran",
   },

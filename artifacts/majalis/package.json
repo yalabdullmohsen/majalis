@@ -451,7 +451,7 @@
     "test:content-audit-char": "node --import tsx src/lib/__tests__/content-audit-char-integrity-gate.test.ts",
     "test:content-audit-sections": "node --import tsx src/lib/__tests__/content-audit-sections-registry-gate.test.ts",
     "test:content-audit-corpus": "node --import tsx src/lib/__tests__/content-audit-corpus-depth-gate.test.ts",
-    "test:content-audit-gates": "pnpm run test:content-audit-char && pnpm run test:content-audit-sections && pnpm run test:content-audit-corpus",
+    "test:content-audit-gates": "pnpm run test:content-audit-char && pnpm run test:content-audit-sections && pnpm run test:content-audit-corpus && node --import tsx src/lib/__tests__/content-audit-wave1-gate.test.ts && node --import tsx src/lib/__tests__/content-audit-wave2-gate.test.ts && node --import tsx src/lib/__tests__/content-audit-wave3-gate.test.ts && node --import tsx src/lib/__tests__/content-audit-wave4-gate.test.ts",
     "test:unify-dark-emerald": "node --import tsx src/lib/__tests__/unify-dark-emerald-theme-gate.test.ts"
   },
   "devDependencies": {
