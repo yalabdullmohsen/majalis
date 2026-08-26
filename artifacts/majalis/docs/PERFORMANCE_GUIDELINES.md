@@ -25,7 +25,7 @@
 | الطبقة | الملف / المسار | ملاحظات |
 |--------|----------------|----------|
 | عميل RUM | `src/lib/rum-telemetry.ts` | PerformanceObserver؛ إقلاع كسول من `main.tsx` |
-| خادم RUM | `lib/api-handlers/rum.js` → `POST /api/rum` | سجل + webhook اختياري |
+| خادم RUM | `lib/rum-http.mjs` → `POST /api/rum` | سجل + webhook اختياري (خارج `api-handlers` لتفادي danger-path) |
 | بطء شبكة | `src/lib/performance-monitor.ts` | `PERF_API_SLOW_MS = 500` |
 | بوابة بناء محلية | `scripts/test-bundle-budget.mjs` | Entry JS gzip ≤ **120 KiB** |
 | LHCI معاينة | `lighthouserc.cjs` | عتبات معاينة (أبطأ من CDN) |

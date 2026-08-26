@@ -254,7 +254,7 @@ export const API_ROUTES = [
   { prefix: "/api/fiqh-research-assistant", module: "./api-handlers/fiqh-research-assistant.js", rateLimit: fiqhResearchRateLimit, allowGet: true },
   { prefix: "/api/assistant", module: "./api-handlers/assistant.js", rateLimit: assistantRateLimit, allowGet: true },
   { prefix: "/api/client-error-log", module: "./api-handlers/client-error-log.js", allowGet: true, rateLimit: clientErrorLogRateLimit },
-  { prefix: "/api/rum", module: "./api-handlers/rum.js", allowGet: true, exact: true, rateLimit: rumRateLimit },
+  { prefix: "/api/rum", module: "./rum-http.mjs", allowGet: true, exact: true, rateLimit: rumRateLimit },
   { prefix: "/api/push/subscribe", module: "./api-handlers/push-subscribe.js", allowGet: true, exact: true, rateLimit: pushSubscribeRateLimit },
   { prefix: "/api/test-anthropic", module: "./api-handlers/test-anthropic.js", allowGet: true },
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },

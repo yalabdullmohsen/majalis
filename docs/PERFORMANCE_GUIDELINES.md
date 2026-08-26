@@ -2,6 +2,14 @@
 
 آخر تحديث: **2026-08-26** · يُكمّل `docs/PERFORMANCE_BASELINE.md`
 
+## قواعد منع الانحدار (Zero-Regression)
+
+1. **مكتبات خارجية:** يُمنع تثبيت أي تبعية جديدة يزيد حجمها عن **10 KiB gzip** في مسار الإقلاع دون موافقة معمارية مكتوبة في الـPR.
+2. **حزمة الإقلاع:** أي استيراد ثابت جديد في `App.tsx` / `main.tsx` لمكوّن غير حرج لـLCP → ارفض في المراجعة؛ استخدم `lazyWithRetry`.
+3. **LHCI معاينة:** عتبة الأداء الحالية `minScore` معاينة ≈ **0.75** (انظر `lhci-thresholds.cjs`) — لا ترفع إلى 0.90 على المعاينة المحلية بلا CDN؛ بوابة الإنتاج عبر PSI منفصلة.
+4. **Debounce بحث/فلترة:** استخدم `useDebouncedValue` (افتراضي ≤300ms فعليًا؛ السقف المطلوب 300ms).
+5. **لمس/تمرير:** `passive: true` + `touch-action: manipulation` في الطبقات العامة موجودة في `index.css` / `native-feel.css`.
+
 ## مبادئ
 
 1. **لا حذف ميزات** لتسريع التطبيق — قسّم الكود أو أجّل التحميل.
@@ -25,7 +33,7 @@
 | الطبقة | الملف / المسار | ملاحظات |
 |--------|----------------|----------|
 | عميل RUM | `src/lib/rum-telemetry.ts` | PerformanceObserver؛ إقلاع كسول من `main.tsx` |
-| خادم RUM | `lib/api-handlers/rum.js` → `POST /api/rum` | سجل + webhook اختياري |
+| خادم RUM | `lib/rum-http.mjs` → `POST /api/rum` | سجل + webhook اختياري (خارج `api-handlers` لتفادي danger-path) |
 | بطء شبكة | `src/lib/performance-monitor.ts` | `PERF_API_SLOW_MS = 500` |
 | بوابة بناء محلية | `scripts/test-bundle-budget.mjs` | Entry JS gzip ≤ **120 KiB** |
 | LHCI معاينة | `lighthouserc.cjs` | عتبات معاينة (أبطأ من CDN) |

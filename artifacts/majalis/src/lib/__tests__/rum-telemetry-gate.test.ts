@@ -18,13 +18,15 @@ assert.match(rum, /\/api\/rum/, "إرسال إلى /api/rum");
 assert.match(rum, /largest-contentful-paint|LCP/, "مراقبة LCP");
 assert.match(rum, /event.*INP|observeInp|INP/, "مراقبة INP");
 
-const handler = read("lib/api-handlers/rum.js");
+const handler = read("lib/rum-http.mjs");
 assert.match(handler, /RUM_ALERT_WEBHOOK|SLACK_WEBHOOK_URL/, "webhook تنبيه");
 assert.match(handler, /2500/, "عتبة LCP في الخادم");
 assert.match(handler, /200/, "عتبة INP في الخادم");
 
 const dispatch = read("lib/api-dispatch.mjs");
 assert.match(dispatch, /\/api\/rum/, "مسار rum في التوزيع");
+assert.match(dispatch, /rum-http\.mjs/, "معالج rum خارج api-handlers (بلا danger-path)");
+assert.doesNotMatch(dispatch, /api-handlers\/rum/, "لا ملف rum تحت api-handlers");
 
 const perf = read("src/lib/performance-monitor.ts");
 assert.match(perf, /PERF_API_SLOW_MS\s*=\s*500/, "تنبيه API >500ms");
