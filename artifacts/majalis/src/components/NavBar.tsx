@@ -201,10 +201,10 @@ export default function NavBar() {
     };
   }, [isMenuOpen, location, openMenu]);
 
-  const handleLogout = useCallback(async () => {
+  const handleLogout = useCallback(() => {
     closeAll();
-    await logout();
     navigate("/login");
+    void logout();
   }, [closeAll, logout, navigate]);
 
   const openSearch = () => {
