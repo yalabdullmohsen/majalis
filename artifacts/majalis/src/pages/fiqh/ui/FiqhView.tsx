@@ -5,6 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd, defaultSiteJsonLd, webPageJsonLd } from "@/lib/seo-structured-data";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
 import { getLobby } from "@/config/section-lobbies";
 import {
@@ -34,7 +35,9 @@ function FiqhLuxHero({
         <h1 id="fiqh-lux-title" className="fiqh-lux-hero__title">
           الفقه
         </h1>
-        <p className="fiqh-lux-hero__sub">أبواب ومسائل فقهية مرتبة للقراءة والتدرج</p>
+        <p className="fiqh-lux-hero__sub">
+          بوابة فقهية مرتّبة للقراءة والتدرج: عبادات، معاملات، أسرة، وجنايات — كتب وأبواب ومسائل مع ملخص وأدلة وأقوال أهل العلم.
+        </p>
         <p className="fiqh-lux-hero__stats">
           <span>{bookCount} كتاب</span>
           <span className="fiqh-lux-hero__dot" aria-hidden="true">
@@ -108,6 +111,15 @@ export default function FiqhPage() {
         <div className="twh-share">
           <ShareButtons title="الفقه الإسلامي — المجلس العلمي" url="https://majlisilm.com/fiqh" />
         </div>
+        <ExploreAlsoNav
+          title="استكشف أيضًا"
+          links={[
+            { href: "/hadith", label: "الحديث وعلومه" },
+            { href: "/lessons", label: "الدروس العلمية" },
+            { href: "/library", label: "المكتبة" },
+            { href: "/salah-guide", label: "دليل الصلاة" },
+          ]}
+        />
       </SectionLobby>
     </div>
   );

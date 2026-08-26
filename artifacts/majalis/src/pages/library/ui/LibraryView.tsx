@@ -10,6 +10,7 @@ import { LIBRARY_CATEGORIES, type LibraryContentStatus } from "@/lib/library-cat
 import { getLibraryCatalog } from "@/lib/library-service";
 import { Chip, SearchField, Badge } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
 import { usePersistedState } from "@/hooks/usePersistedState";
@@ -320,6 +321,15 @@ export default function LibraryPage({
         <ShareButtons title="المكتبة الإسلامية — المجلس العلمي" url="https://majlisilm.com/library" />
       </div>
       <RelatedKnowledge kind="book" query="مكتبة إسلامية" title="كتب ومواد ذات صلة" limit={6} />
+      <ExploreAlsoNav
+        title="استكشف أيضًا"
+        links={[
+          { href: "/scholars", label: "أعلام الإسلام" },
+          { href: "/fiqh", label: "الفقه" },
+          { href: "/hadith", label: "الحديث" },
+          { href: "/lessons", label: "الدروس" },
+        ]}
+      />
     </ContentHubLayout>
   );
 }

@@ -380,7 +380,7 @@ export default function QaPage({
         title="استكشف أيضًا"
         links={[
           { href: "/rulings", label: "موسوعة الأحكام" },
-          { href: "/fiqh", label: "بوابة الفقه" },
+          { href: "/salah-guide", label: "دليل الصلاة" },
           { href: "/fiqh-council", label: "المجمع الفقهي" },
           { href: "/lessons", label: "الدروس العلمية" },
         ]}

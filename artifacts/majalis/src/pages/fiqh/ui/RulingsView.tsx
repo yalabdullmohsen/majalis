@@ -334,7 +334,7 @@ export default function RulingsPage() {
         title="استكشف أيضًا"
         links={[
           { href: "/quiz", label: "الأسئلة والأجوبة" },
-          { href: "/fiqh", label: "بوابة الفقه" },
+          { href: "/salah-guide", label: "دليل الصلاة" },
           { href: "/fiqh-council", label: "المجمع الفقهي" },
           { href: "/lessons", label: "الدروس العلمية" },
         ]}

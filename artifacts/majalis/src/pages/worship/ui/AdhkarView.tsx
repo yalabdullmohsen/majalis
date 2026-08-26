@@ -11,6 +11,7 @@ import { IsnadAttributionBar } from "@/components/IsnadAttributionBar";
 import { adhkarCatRedirectPath, hrefAdhkar, resolveAdhkarCategory } from "@/lib/content-href";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { haptics } from "@/lib/haptics";
 import { markMorningAdhkarDone } from "@/lib/local-milestones";
@@ -293,7 +294,7 @@ export default function AdhkarPage() {
       <PageHeader
         eyebrow="العبادة اليومية"
         title="الأذكار"
-        subtitle="من القرآن والسنة الصحيحة"
+        subtitle="أذكار الصباح والمساء والنوم وبعد الصلاة من القرآن والسنة — مع العدّ والحفظ والمشاركة."
       />
 
       {/* شريط التصنيفات */}
@@ -456,7 +457,16 @@ export default function AdhkarPage() {
       {showSheet && current && (
         <DhikrSheet item={current} onClose={() => setShowSheet(false)} />
       )}
-      <div className="px-4 pb-6 mt-4">
+      <div className="px-4 pb-6 mt-4 adhkar-page-footer">
+        <ExploreAlsoNav
+          title="استكشف أيضًا"
+          links={[
+            { href: "/duas", label: "الأدعية الشرعية" },
+            { href: "/daily-wird", label: "الورد اليومي" },
+            { href: "/hadith", label: "الحديث وعلومه" },
+            { href: "/mushaf", label: "المصحف" },
+          ]}
+        />
         <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
       </div>
     </PageShell>
