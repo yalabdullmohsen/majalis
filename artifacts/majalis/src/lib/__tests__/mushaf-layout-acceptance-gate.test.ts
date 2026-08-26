@@ -49,7 +49,8 @@ assert.match(actions, /data-sheet-height|is-expanded/);
 assert.match(viewport, /playAyah|playSelected/);
 assert.match(viewport, /MushafTafsirSheet/);
 assert.match(viewport, /useMediaSession/);
-assert.doesNotMatch(viewport, /exitAlwaysVisible/);
+assert.match(viewport, /exitAlwaysVisible=\{actionsOpen\s*\|\|\s*chromeOpen\s*\|\|\s*overlayOpen\}/);
+assert.doesNotMatch(viewport, /exitAlwaysVisible=\{true\}/);
 assert.match(fitSrc, /document\.fonts\.(check|load)/);
 assert.match(fitSrc, /loadingdone|orientationchange/);
 

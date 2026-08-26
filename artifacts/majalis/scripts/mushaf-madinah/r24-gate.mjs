@@ -49,7 +49,8 @@ assert.match(page, /hizbStartingOnPage/);
 assert.doesNotMatch(page, /hizbNumber=\{layout\.hizbNumber\}/);
 
 assert.match(viewport, /useState\(false\)/);
-assert.doesNotMatch(viewport, /exitAlwaysVisible/);
+assert.match(viewport, /exitAlwaysVisible=\{actionsOpen\s*\|\|\s*chromeOpen\s*\|\|\s*overlayOpen\}/);
+assert.doesNotMatch(viewport, /exitAlwaysVisible=\{true\}/);
 assert.doesNotMatch(viewport, /تعذّرت المشاركة/);
 assert.match(viewport, /PrefetchedMushafPage/);
 assert.match(viewport, /MUSHAF_CHROME_HIDE_MS/);

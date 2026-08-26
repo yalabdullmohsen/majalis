@@ -40,6 +40,10 @@ assert.match(actions, /تجويد/);
 assert.match(actions, /ayahPreview/);
 assert.match(tafsir, /تعذّر جلب التفسير|لا يوجد تفسير متاح/);
 
+assert.match(controls, /mm-controls__exit/);
+assert.match(controls, /onExit/);
+assert.match(controls, /data-exit=/);
+assert.match(reader, /onExit=\{onExit\}/);
 assert.match(controls, /\{pageNumber\} \/ \{MUSHAF_PAGE_MAX\}/);
 assert.match(controls, /mm-goto__error/);
 assert.match(controls, /أدخل رقمًا بين/);

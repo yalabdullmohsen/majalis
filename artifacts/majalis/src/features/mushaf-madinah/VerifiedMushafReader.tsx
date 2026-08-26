@@ -107,7 +107,7 @@ function mushafAudioLog(
  * VerifiedMushafReader — غلاف المصحف الموثّق:
  * صفحة بعرض آمن كامل، ملاءمة خط QPC بلا قص، قلب صفحة RTL، أدوات آية خارج النص.
  */
-export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit, onIndex: _onIndex }: Props) {
+export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex: _onIndex }: Props) {
   const page = clampMushafPage(pageNumber);
   const [layout, setLayout] = useState<MushafPageLayout | null>(() => getCachedMushafPage(page));
   const [error, setError] = useState<string | null>(null);
@@ -774,8 +774,10 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit: _onExit
 
       <MushafControls
         open={chromeOpen && !actionsOpen}
+        exitAlwaysVisible={actionsOpen || chromeOpen || overlayOpen}
         persist={overlayOpen}
         pageNumber={page}
+        onExit={onExit}
         onIndex={() => {
           setIndexOpen(true);
           setSearchOpen(false);
