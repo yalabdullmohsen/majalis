@@ -75,16 +75,16 @@
 
 html.dark .mj-filter-chip,
 [data-theme="dark"] .mj-filter-chip {
-  background: color-mix(in srgb, var(--mj-surface, #12201b) 92%, #000);
-  border-color: color-mix(in srgb, var(--mj-brand, #4fb48b) 35%, transparent);
-  color: var(--mj-ink, #f2f7f4);
+  background: rgb(2 44 34 / 0.35);
+  border-color: rgb(6 95 70 / 0.6);
+  color: #a7f3d0;
 }
 
 html.dark .mj-filter-chip.is-active,
 [data-theme="dark"] .mj-filter-chip.is-active {
-  background: var(--mj-brand, #4fb48b);
-  border-color: var(--mj-brand, #4fb48b);
-  color: #062218;
+  background: #059669;
+  border-color: #059669;
+  color: #ffffff;
 }
 
 .mj-filter-bar {
@@ -328,9 +328,9 @@ html.dark .filter-chips__chip.is-active,
 html.dark .ds-chip.is-active,
 [data-theme="dark"] .filter-chips__chip.is-active,
 [data-theme="dark"] .ds-chip.is-active {
-  background: var(--mj-brand, #4fb48b) !important;
-  border-color: var(--mj-brand, #4fb48b) !important;
-  color: #062218 !important;
+  background: #059669 !important;
+  border-color: #059669 !important;
+  color: #ffffff !important;
 }
 
 

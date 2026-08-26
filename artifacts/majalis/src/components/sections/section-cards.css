@@ -331,8 +331,9 @@ html.dark .card .card__subtitle {
 
 html[data-theme="dark"] .card .card__icon,
 html.dark .card .card__icon {
-  background: var(--chip-bg, #16261f);
-  color: var(--chip-fg, #b8e0cc);
+  background: rgb(28 58 48 / 0.72);
+  color: #6ee7b7;
+  border: 1px solid rgb(6 95 70 / 0.4);
 }
 
 /* featured ليلاً: نفس الربط الحرفي أبيض فوق أخضر عميق */

@@ -404,7 +404,7 @@
     "test:fiqh-council-completeness": "node --import tsx src/lib/__tests__/fiqh-council-completeness.test.ts",
     "refresh:lessons-snapshot": "node --import tsx scripts/refresh-lessons-seed-snapshot.mjs",
     "lint:design-tokens": "node scripts/lint-design-tokens.mjs",
-    "test:on-dark-text-tokens": "node --import tsx src/lib/__tests__/on-dark-text-tokens.test.ts && node --import tsx src/lib/__tests__/prophet-stories-on-dark-text.test.ts",
+    "test:on-dark-text-tokens": "node --import tsx src/lib/__tests__/on-dark-text-tokens.test.ts && node --import tsx src/lib/__tests__/prophet-stories-on-dark-text.test.ts && node --import tsx src/lib/__tests__/dark-mode-icon-chip-contrast-gate.test.ts",
     "test:a11y-contrast-100": "node --import tsx src/lib/__tests__/a11y-contrast-100-gate.test.ts",
     "test:section-template": "node --import tsx src/lib/__tests__/section-template-gate.test.ts",
     "test:topic-page-shell": "node --import tsx src/lib/__tests__/arabic-count.test.ts && node --import tsx src/lib/__tests__/topic-themes-contrast.test.ts && node --import tsx src/lib/__tests__/topic-page-shell-gate.test.ts && node --import tsx src/lib/__tests__/a11y-bp-boot-gate.test.ts && pnpm run test:section-template && pnpm run test:navigation-intent && pnpm run test:quiz-content-affinity",
