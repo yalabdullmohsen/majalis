@@ -18,6 +18,7 @@ import "./featured-home-status.test.ts";
 import "./phase3-batch1-gate.test.ts";
 import "./instant-back-auth-gate.test.ts";
 import "./hifz-audio-loop-gate.test.ts";
+import "./quran-worship-hub-gate.test.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");

@@ -1,4 +1,4 @@
-import { CalendarDays, Repeat, Zap } from "lucide-react";
+import { CalendarDays, Clock, Repeat, Zap } from "lucide-react";
 import MergedSectionHubPage from "@/views/MergedSectionHubPage";
 
 export default function MemorizationHubPage() {
@@ -8,6 +8,12 @@ export default function MemorizationHubPage() {
       title="الحفظ والمراجعة"
       description="اختبارات الحفظ وخطط الحفظ والمراجعة في قسم موحّد."
       cards={[
+        {
+          href: "/quran/worship-hub?surah=1",
+          title: "مركز العبادة القرآنية",
+          desc: "مواقيت الصلاة، تحفيظ A-B، وتنزيل التلاوات أوفلاين",
+          Icon: Clock,
+        },
         {
           href: "/quran-memorization",
           title: "اختبارات الحفظ",
