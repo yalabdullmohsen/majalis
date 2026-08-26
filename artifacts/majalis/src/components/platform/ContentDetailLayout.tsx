@@ -8,6 +8,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { PageShell } from "@/components/layout/PageShell";
 import { dedupeLinksByHref } from "@/lib/link-dedupe";
+import { CompactSources } from "@/components/content/CompactSources";
 
 function estimateReadMinutes(text?: string): number | null {
   if (!text || text.length < 200) return null;
@@ -140,16 +141,19 @@ export function ContentDetailLayout({
       {children}
 
       {sourceUrls && sourceUrls.length > 0 && (
-        <section className="content-detail-sources ui-card">
-          <h2>المراجع الأصلية</h2>
-          <ul>
-            {sourceUrls.map((url, i) => (
-              <li key={i}>
-                <a href={url} target="_blank" rel="noopener noreferrer">{url}</a>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <CompactSources
+          title="المراجع الأصلية"
+          items={sourceUrls.map((url) => {
+            let summary: string;
+            try {
+              const u = new URL(url);
+              summary = u.hostname.replace(/^www\./, "") + (u.pathname !== "/" ? u.pathname.slice(0, 28) : "");
+            } catch {
+              summary = url.length > 48 ? `${url.slice(0, 47)}…` : url;
+            }
+            return { summary, detail: url };
+          })}
+        />
       )}
 
       {related && (

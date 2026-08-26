@@ -39,8 +39,9 @@ assert.match(cfg, /الثقة/);
 assert.match(cfg, /badgeLabel:\s*"شريك المجلس العلمي"/);
 assert.match(cfg, /sponsorUrl:\s*"https:\/\/instagram\.com\/Al_abdalmhsn"/);
 assert.match(cfg, /sponsorAriaLabel:\s*"فتح حساب شركة العبد المحسن للحج في إنستقرام"/);
-assert.match(cfg, /advertiseWithUsLabel:\s*"للإعلان معنا"/);
 assert.match(cfg, /ctaLabel:\s*"تواصل عبر إنستقرام"/);
+assert.doesNotMatch(cfg, /advertiseWithUsLabel/);
+assert.doesNotMatch(cfg, /للإعلان معنا/);
 
 assert.match(slot, /headerAdConfig/);
 assert.match(slot, /HeaderAdBanner/);
@@ -49,6 +50,7 @@ assert.match(slot, /sponsorUrl/);
 assert.match(slot, /header-ad-slot__banner/);
 assert.match(slot, /target="_blank"/);
 assert.match(slot, /rel="noopener noreferrer"/);
+assert.doesNotMatch(slot, /advertise-link|advertiseWithUsLabel|cfg\.ctaUrl/);
 assert.doesNotMatch(slot, /googlesyndication|adsbygoogle|gtag/i);
 assert.doesNotMatch(slot, /<img\b/);
 assert.doesNotMatch(slot, /openPartnershipAdModal/);

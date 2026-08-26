@@ -7,6 +7,7 @@ import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import { resolveQuranRefHref } from "@/lib/quran-ref-links";
 import { resolveAuthorScholarLink } from "@/lib/author-scholar-links";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
+import { CompactSources, summarizeSourceLine } from "@/components/content/CompactSources";
 
 type Props = {
   ruling: ShariaRulingExtended;
@@ -118,26 +119,18 @@ export function RulingDetailSections({ ruling, relations }: Props) {
       )}
 
       {((ruling.evidence?.length ?? 0) > 0 || (ruling.references?.length ?? 0) > 0) && (
-        <section className="ruling-detail-block ui-card">
-          <h2>المراجع</h2>
-          <ul>
-            {[...(ruling.evidence ?? []), ...(ruling.references ?? [])].map((ref, i) => (
-              <li key={i}>
-                {ref.type && <strong>{ref.type}: </strong>}
-                {ref.text}
-                {ref.source && <> — <em>{ref.source}</em></>}
-                {ref.url && (
-                  <>
-                    {" "}
-                    <a href={ref.url} target="_blank" rel="noopener noreferrer">
-                      رابط
-                    </a>
-                  </>
-                )}
-              </li>
-            ))}
-          </ul>
-        </section>
+        <CompactSources
+          title="المراجع"
+          items={[...(ruling.evidence ?? []), ...(ruling.references ?? [])].map((ref) => {
+            const bits = [ref.type, ref.text, ref.source].filter(Boolean).map(String);
+            const full = bits.join(" — ");
+            const short =
+              ref.source && ref.text
+                ? `${String(ref.text).slice(0, 48)}${String(ref.text).length > 48 ? "…" : ""} — ${ref.source}`
+                : summarizeSourceLine(full).summary;
+            return { summary: short, detail: full !== short ? full : undefined };
+          })}
+        />
       )}
 
       {relations.length > 0 && (

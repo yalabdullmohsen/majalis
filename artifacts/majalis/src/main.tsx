@@ -74,6 +74,7 @@ function loadNonCriticalCss() {
     void import("./styles/brand-v4-components.css");
   });
   void import("./styles/components/instant-interaction.css");
+  void import("./styles/components/compact-sources.css");
   void import("./styles/components/native-feel.css");
   void import("./styles/m2030/interactions.css");
   void import("./styles/m2030/pages.css");

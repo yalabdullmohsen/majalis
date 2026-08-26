@@ -1,0 +1,172 @@
+/**
+ * مصادر مختصرة وهادئة — أصغر من المتن، أقل بروزًا من العناوين.
+ */
+.compact-sources {
+  margin-block: 0.85rem 0.35rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.55rem;
+  border: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+  background: color-mix(in srgb, currentColor 3%, transparent);
+}
+
+.compact-sources__title {
+  margin: 0 0 0.35rem !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em;
+  color: var(--majalis-ink-soft, var(--mj-muted, #5a7268)) !important;
+  line-height: 1.35 !important;
+}
+
+.compact-sources__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.compact-sources__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.45rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--majalis-ink-soft, var(--mj-muted, #5a7268));
+  font-weight: 500;
+}
+
+.compact-sources__text {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.compact-sources__more {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0.1rem 0.35rem;
+  border: none;
+  border-radius: 0.35rem;
+  background: transparent;
+  color: var(--mj-brand, #1f7a5a);
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.compact-sources__more:hover {
+  opacity: 0.88;
+  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 8%, transparent);
+}
+
+.compact-sources__more:active {
+  opacity: 0.75;
+}
+
+.compact-sources__more:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 55%, transparent);
+  outline-offset: 1px;
+}
+
+/* أنماط عامة لأقسام المصادر القديمة دون إعادة كتابة كل صفحة */
+.fiqh-sources,
+.content-detail-sources ul,
+.seerah-sources__list,
+.mdb-sources,
+.lrn-citations-list {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--majalis-ink-soft, var(--mj-muted, #5a7268));
+  font-weight: 500;
+}
+
+.content-detail-sources {
+  padding: 0.55rem 0.75rem !important;
+  margin-top: 0.85rem !important;
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, currentColor 3%, transparent);
+}
+
+.content-detail-sources h2 {
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  color: var(--majalis-ink-soft, var(--mj-muted)) !important;
+  margin-bottom: 0.35rem !important;
+}
+
+.mdb-source-chip {
+  font-size: 0.7rem !important;
+  font-weight: 500 !important;
+  padding: 0.15rem 0.4rem !important;
+  opacity: 0.92;
+}
+
+.seerah-sources__title {
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+}
+
+.dii-sources-list {
+  font-size: 0.74rem;
+  line-height: 1.45;
+  color: var(--majalis-ink-soft, var(--mj-muted));
+  font-weight: 500;
+  padding-inline-start: 1rem;
+}
+
+html[data-theme="dark"] .compact-sources,
+html.theme-dark .compact-sources,
+html.dark .compact-sources {
+  background: color-mix(in srgb, #fff 4%, transparent);
+  border-color: color-mix(in srgb, #fff 10%, transparent);
+}
+
+/* طباعة أوضح للصفحات الخارجية الطويلة */
+.fiqh-lesson-page h1,
+.legal-page .legal-page-hero h1,
+.page-shell.narrow h1 {
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.fiqh-lesson-page h2 {
+  font-weight: 750;
+  font-size: 1.05rem;
+}
+
+.fiqh-lesson-page p,
+.legal-page .legal-section p,
+.contact-page .contact-lead {
+  font-weight: 500;
+  line-height: 1.75;
+}
+
+.fiqh-lesson-page {
+  padding-bottom: max(1.5rem, calc(var(--bottom-nav-height, 3.5rem) + var(--inset-bottom, 0px) + 0.5rem));
+}
+
+/* تفاعل خفيف عام للأزرار/البطاقات في الصفحات الخارجية */
+.contact-btn,
+.contact-topic,
+.fiqh-lesson-pager__link {
+  transition: transform 0.12s ease, opacity 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.contact-btn:active,
+.contact-topic:active,
+.fiqh-lesson-pager__link:active {
+  transform: scale(0.985);
+}
+
+.contact-btn:focus-visible,
+.contact-topic:focus-visible,
+.fiqh-lesson-pager__link:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 55%, transparent);
+  outline-offset: 2px;
+}
