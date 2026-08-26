@@ -4,6 +4,10 @@
   "installCommand": "corepack enable && cd ../.. && corepack pnpm install --frozen-lockfile --prod=false",
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
+  "proxy": {
+    "entrypoint": "middleware.js",
+    "matcher": "/lessons"
+  },
   "git": {
     "deploymentEnabled": {
       "*": false,
@@ -841,24 +845,6 @@
     },
     {
       "source": "/annual-courses",
-      "destination": "/lessons",
-      "permanent": true
-    },
-    {
-      "source": "/lessons",
-      "has": [{ "type": "query", "key": "tab", "value": "courses" }],
-      "destination": "/lessons",
-      "permanent": true
-    },
-    {
-      "source": "/lessons",
-      "has": [{ "type": "query", "key": "tab", "value": "men" }],
-      "destination": "/lessons",
-      "permanent": true
-    },
-    {
-      "source": "/lessons",
-      "has": [{ "type": "query", "key": "tab", "value": "women" }],
       "destination": "/lessons",
       "permanent": true
     },

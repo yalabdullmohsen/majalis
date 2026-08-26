@@ -43,8 +43,13 @@ assert.match(
 );
 assert.match(
   vercel,
-  /"source"\s*:\s*"\/lessons"[\s\S]*?"key"\s*:\s*"tab"[\s\S]*?"value"\s*:\s*"courses"[\s\S]*?"destination"\s*:\s*"\/lessons"/,
-  "vercel: 301 من /lessons?tab=courses إلى /lessons",
+  /"proxy"\s*:\s*\{[\s\S]*"entrypoint"\s*:\s*"middleware\.js"[\s\S]*"matcher"\s*:\s*"\/lessons"/,
+  "vercel: proxy middleware لـ /lessons",
+);
+assert.match(
+  readFileSync(resolve(root, "middleware.js"), "utf8"),
+  /searchParams\.delete\("tab"\)/,
+  "middleware: يزيل ?tab= من /lessons",
 );
 
 const sitemap = readFileSync(resolve(root, "public/sitemap.xml"), "utf8");
