@@ -36,6 +36,29 @@ node artifacts/majalis/scripts/test-bundle-budget.mjs
 
 **قراءة التقرير:** المربعات الكبيرة = مكتبات/chunks ثقيلة. ركّز على ما يدخل مسار الإقلاع (entry / vendor المشترك). مكتبة كبيرة لمكوّن غير أساسي → `lazyWithRetry` أو `await import()` داخل المعالج، ثم أعد القياس وقارن gzip في `PERFORMANCE_BASELINE.md`.
 
+## مكتبات ثقيلة — سياسة المجلس (لا Moment / Axios / Lodash كامل)
+
+| مكتبة ثقيلة | حالة المشروع | السياسة |
+|-------------|--------------|---------|
+| Moment.js (~70 KiB) | **غير موجود** | ممنوع؛ استخدم `date-fns` (موجود) باستيراد دوال مفردة |
+| Lodash كاملة (~25 KiB) | **لا استيراد مباشر** | ممنوع `import _ from "lodash"`؛ native أو دالة مفردة عند الحاجة |
+| Axios (~11 KiB) | **غير موجود** | ممنوع؛ استخدم `fetch` / طبقات الشبكة الحالية (`RequestManager`) |
+| Chart.js / Recharts | **أُزيلت** (كانت `recharts` + `ui/chart.tsx` بلا مستهلك) | أي رسم بياني مستقبلي → `lazyWithRetry` فقط، لا تثبيت في مسار الإقلاع |
+| Lucide | مستخدم باستيراد رمزي → chunk `icons` (~23 KiB gzip) | استيراد أسماء فقط؛ ممنوع `import *`؛ لا استبدال جماعي لـRadix Icons دون مهمة UI منفصلة |
+
+```ts
+// ✅
+import { format } from "date-fns";
+import { BookOpen } from "lucide-react";
+const res = await fetch("/api/…");
+
+// ❌
+// import moment from "moment";
+// import axios from "axios";
+// import _ from "lodash";
+// import * as Icons from "lucide-react";
+```
+
 ## CI/CD — لا تُكرّر بوابة خاطئة
 
 - **لا** تضف `.github/workflows/performance-gate.yml` بـ `minScore: 90` أو `npm ci` أو منفذ `3000`.
