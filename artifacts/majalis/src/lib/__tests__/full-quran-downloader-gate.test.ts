@@ -27,12 +27,18 @@ assert.match(core, /downloadedMB/);
 assert.doesNotMatch(core, /from ['"]react-native-fs|import RNFS|@notifee/i);
 
 const ui = read("src/components/quran/ReciterDownloadManager.tsx");
+assert.match(ui, /BulkDownloadCard/);
 assert.match(ui, /FullQuranDownloader/);
 assert.match(ui, /handlePause/);
-assert.match(ui, /Pause/);
-assert.match(ui, /Play/);
-assert.match(ui, /إيقاف/);
-assert.match(ui, /استئناف/);
 assert.doesNotMatch(ui, /from ['"]react-native-fs|import RNFS|@notifee/i);
+
+const card = read("src/components/quran/BulkDownloadCard.tsx");
+assert.match(card, /bdm-card/);
+assert.match(card, /تنزيل المصحف كاملاً/);
+assert.match(card, /إيقاف مؤقت/);
+assert.match(card, /Pause/);
+assert.match(card, /Play/);
+assert.match(card, /استئناف/);
+assert.doesNotMatch(card, /react-native|TouchableOpacity|StyleSheet|ProgressBarAndroid/i);
 
 console.log("full-quran-downloader-gate: ok");
