@@ -27,6 +27,7 @@ import { HomeExplorePlatform } from "@/components/home/HomeExplorePlatform";
 import { HomeContentHub } from "@/components/home/HomeContentHub";
 import { HomeMostReadBand } from "@/components/home/HomeMostReadBand";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
+import { ShareFaida } from "@/components/ShareFaida";
 import { QUICK_LINKS } from "@/lib/home-feature-catalog";
 import { IA_HOME_PRIMARY } from "@/lib/ia-final-structure";
 import {
@@ -197,6 +198,10 @@ export default function HomeBelowFold() {
       </div>
 
       <HomeRecentPagesBar />
+
+      <section className="m2030-band" aria-label="شارك الموقع">
+        <ShareFaida title="المجلس العلمي — منصة تعليمية إسلامية" url="https://majlisilm.com/" />
+      </section>
 
       <div className="m2030-band" style={{ textAlign: "center" }}>
         <button type="button" className="m2030-customize" onClick={() => setCustomizeOpen(true)}>

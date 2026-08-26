@@ -116,18 +116,16 @@ function normDedup(value: string) {
   return normalizeArabic(String(value || "")).replace(/\s+/g, "");
 }
 
-// Primary key: normalized title + mosque + day.
-// Sheikh name is a secondary tiebreaker — included when mosque is empty to
-// avoid collapsing different lessons at different (unknown) locations.
+// Primary key: title + sheikh + time (+ day). Same title/sheikh/time merges once.
+// Mosque disambiguates only when time is empty (avoid collapsing distinct venues).
 function lessonDedupeKey(lesson: KuwaitLessonRecord) {
-  const title  = normDedup(lesson.title);
-  const mosque = normDedup(lesson.mosque);
-  const day    = normDedup(lesson.day);
+  const title = normDedup(lesson.title);
   const sheikh = normDedup(lesson.sheikhName);
-  // When mosque is known, (title+mosque+day) uniquely identifies the lesson.
-  // When mosque is absent, add sheikh to avoid false merges.
-  const secondary = mosque || sheikh;
-  return [title, secondary, day].join("|");
+  const time = normDedup(lesson.time || "");
+  const day = normDedup(lesson.day);
+  const mosque = normDedup(lesson.mosque);
+  if (time) return [title, sheikh, time, day].join("|");
+  return [title, sheikh || mosque, day].join("|");
 }
 
 function computeCompleteness(lesson: KuwaitLessonRecord): { score: number; missing: string[] } {

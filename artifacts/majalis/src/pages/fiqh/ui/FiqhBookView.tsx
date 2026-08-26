@@ -1,6 +1,8 @@
 import { Link, useParams } from "wouter";
 import { useEffect } from "react";
+import { ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { breadcrumbJsonLd, bookJsonLd, defaultSiteJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import { Empty } from "@/components/ui-common";
 import {
@@ -28,14 +30,29 @@ export default function FiqhBookPage() {
       title: `${book.title} | الفقه | المجلس العلمي`,
       description: `${book.title}: أبواب ومسائل فقهية موثَّقة.`,
       keywords: [book.title, "فقه", "المجلس العلمي"],
+      jsonLd: [
+        ...defaultSiteJsonLd(),
+        bookJsonLd({
+          name: book.title,
+          description: fiqhBookBlurb(book),
+          url: `/fiqh/books/${book.id}`,
+        }),
+        breadcrumbJsonLd([
+          { name: "الرئيسية", path: "/" },
+          { name: "الفقه", path: "/fiqh" },
+          { name: book.title, path: `/fiqh/books/${book.id}` },
+        ]),
+      ],
     });
   }, [book]);
 
   if (!book) {
     return (
-      <div className="fqp-root page-shell fiqh-hub" dir="rtl">
+      <div className="fiqh-lux-shell fiqh-lux-book page-shell" dir="rtl">
         <Empty title="كتاب غير منشور" text="هذا الكتاب غير مدرج في الكتب الظاهرة، أو لا مسائل منشورة فيه." />
-        <p className="fiqh-results__empty"><Link href="/fiqh">العودة إلى الفقه</Link></p>
+        <p className="fiqh-lux-empty">
+          <Link href="/fiqh">العودة إلى الفقه</Link>
+        </p>
       </div>
     );
   }
@@ -45,37 +62,63 @@ export default function FiqhBookPage() {
   const level = fiqhBookApproxLevel(book);
 
   return (
-    <div className="fqp-root page-shell fiqh-hub" dir="rtl">
-      <nav className="fiqh-crumb" aria-label="مسار التنقل">
+    <div className="fiqh-lux-shell fiqh-lux-book page-shell" dir="rtl">
+      <nav className="fiqh-lux-crumb" aria-label="مسار التنقل">
         <Link href="/fiqh">الفقه</Link>
+        <span aria-hidden="true"> ← </span>
+        <span aria-current="page">{book.title}</span>
       </nav>
-      <header className="fiqh-book-head">
-        <h1 className="fiqh-book-page__title">{book.title}</h1>
-        <p className="fiqh-book-head__blurb">{fiqhBookBlurb(book)}</p>
-        <p className="fiqh-book-head__meta">
-          {formatAbwabCount(counts.chapters)} · {formatMasailCount(counts.lessons)} · مستوى تقريبي: {level}
+
+      <header className="fiqh-lux-book-hero">
+        <h1 className="fiqh-lux-book-hero__title">{book.title}</h1>
+        <p className="fiqh-lux-book-hero__blurb">{fiqhBookBlurb(book)}</p>
+        <p className="fiqh-lux-book-hero__meta">
+          {formatAbwabCount(counts.chapters)} · {formatMasailCount(counts.lessons)} · مستوى تقريبي:{" "}
+          {level}
         </p>
       </header>
-      <ol className="fiqh-chapter-list">
+
+      <ol className="fiqh-lux-chapter-list">
         {chapters.map((ch, i) => {
           const lessons = publishedLessonsInChapter(ch);
+          const first = lessons[0];
           return (
-            <li key={ch.id} className="fiqh-chapter fiqh-chapter--card">
-              <div className="fiqh-chapter__card-head">
-                <span className="fiqh-chapter__num">{i + 1}</span>
-                <span className="fiqh-chapter__title">{ch.title}</span>
-                <span className="fiqh-chapter__count">{formatMasailCount(lessons.length)}</span>
-              </div>
-              <ol className="fiqh-lesson-list">
-                {lessons.map((lesson, li) => (
-                  <li key={lesson.id}>
-                    <Link href={`/fiqh/books/${book.id}/lessons/${lesson.id}`} className="fiqh-lesson-link">
-                      <span className="fiqh-lesson-link__num">{li + 1}</span>
-                      <span>{lesson.title}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ol>
+            <li key={ch.id} className="fiqh-chapter fiqh-chapter--card fiqh-lux-chapter">
+              <Link
+                href={
+                  first
+                    ? `/fiqh/books/${book.id}/lessons/${first.id}`
+                    : `/fiqh/books/${book.id}`
+                }
+                className="fiqh-lux-chapter__head"
+              >
+                <span className="fiqh-lux-chapter__num">{i + 1}</span>
+                <span className="fiqh-lux-chapter__body">
+                  <span className="fiqh-lux-chapter__title">{ch.title}</span>
+                  {first ? (
+                    <span className="fiqh-lux-chapter__preview">{first.title}</span>
+                  ) : null}
+                  <span className="fiqh-lux-chapter__count">{formatMasailCount(lessons.length)}</span>
+                </span>
+                <span className="fiqh-lux-chapter__go" aria-hidden="true">
+                  <ChevronLeft size={16} strokeWidth={2.5} />
+                </span>
+              </Link>
+              {lessons.length > 1 ? (
+                <ol className="fiqh-lux-lesson-list">
+                  {lessons.map((lesson, li) => (
+                    <li key={lesson.id}>
+                      <Link
+                        href={`/fiqh/books/${book.id}/lessons/${lesson.id}`}
+                        className="fiqh-lux-lesson-link"
+                      >
+                        <span className="fiqh-lux-lesson-link__num">{li + 1}</span>
+                        <span>{lesson.title}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ol>
+              ) : null}
             </li>
           );
         })}

@@ -201,6 +201,11 @@
   transition: all 0.15s;
 }
 
+a.search-suggestion-chip {
+  text-decoration: none;
+  display: inline-block;
+}
+
 .search-section-chips {
   display: flex;
   flex-wrap: nowrap;

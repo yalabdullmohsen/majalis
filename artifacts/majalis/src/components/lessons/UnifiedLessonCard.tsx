@@ -127,7 +127,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
   const displayDay = lesson.day || "";
   const displayTime = scheduleConfirmed
     ? (lesson.time || formatShortLessonTime(scheduleTime) || scheduleTime || "")
-    : "لم يذكر";
+    : "";
   const displayPlace = lesson.mosque || "";
   const placeLine = [displayPlace, lesson.region].filter(Boolean).join(" — ");
   const sessionSubject = lesson.linkedLessons?.[0] || lesson.note || lesson.description;
@@ -199,11 +199,11 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
         )}
 
         <div className={`lesson-unified-card__meta${compact ? " lesson-unified-card__meta--compact" : ""}`}>
-          {!compact && <MetaCell label="نوع النشاط" value={lesson.activityType} showEmpty />}
-          {!compact && <MetaCell label="التاريخ" value={displayDate} showEmpty />}
-          {!compact && <MetaCell label="اليوم" value={displayDay} showEmpty />}
-          {!compact && <MetaCell label="الوقت" value={displayTime} showEmpty />}
-          {!compact && <MetaCell label="المكان" value={displayPlace} showEmpty />}
+          {!compact && <MetaCell label="نوع النشاط" value={lesson.activityType} />}
+          {!compact && <MetaCell label="التاريخ" value={displayDate} />}
+          {!compact && <MetaCell label="اليوم" value={displayDay} />}
+          {!compact && <MetaCell label="الوقت" value={displayTime} />}
+          {!compact && <MetaCell label="المكان" value={displayPlace} />}
           {!compact && lesson.womenAttendance === "متاح" && (
             <MetaCell
               label="حضور النساء"
