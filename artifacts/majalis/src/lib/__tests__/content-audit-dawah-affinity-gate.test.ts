@@ -46,10 +46,12 @@ console.log("\n=== ملاءمة آيات لوحات الأقسام ===");
 {
   const tpl = read("src/config/section-template.ts");
   assert.match(tpl, /"\/quran\/surah-stories"[\s\S]*?يوسف:\s*١١١/, "قصص السور → يوسف ١١١");
-  assert.match(tpl, /"\/nations"[\s\S]*?يوسف:\s*١١١/, "الأمم → يوسف ١١١");
+  assert.match(tpl, /"\/nations":\s*\{[\s\S]*?العنكبوت:\s*٤٠/, "الأمم → العنكبوت ٤٠");
   assert.match(tpl, /"\/tarikh-islami"[\s\S]*?الحج:\s*٤١/, "التاريخ → الحج ٤١");
   assert.match(tpl, /"\/seerah"[\s\S]*?الأنبياء:\s*١٠٧/, "السيرة → الأنبياء ١٠٧");
   assert.match(tpl, /"\/quran\/people"[\s\S]*?النساء:\s*١٦٤/, "المذكورون → النساء ١٦٤");
+  assert.match(tpl, /"\/tafsir":\s*\{[\s\S]*?النحل:\s*٤٤/, "التفسير → النحل ٤٤");
+  assert.match(tpl, /"\/ulum-quran":\s*\{[\s\S]*?ص:\s*٢٩/, "علوم القرآن → ص ٢٩");
   assert.doesNotMatch(
     tpl,
     /"\/quran\/surah-stories"[\s\S]{0,200}الحجر:\s*٩/,
@@ -59,6 +61,11 @@ console.log("\n=== ملاءمة آيات لوحات الأقسام ===");
     tpl,
     /"\/library"[\s\S]{0,200}العلق:\s*١/,
     "المكتبة لا تستخدم العلق ١ كآية عامة مكررة",
+  );
+  assert.doesNotMatch(
+    tpl,
+    /"\/ulum-quran":\s*\{[\s\S]*?الحجر:\s*٩/,
+    "علوم القرآن لا تشارك آية الحفظ مع القراءات",
   );
 }
 

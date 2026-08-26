@@ -19,17 +19,23 @@ function ayahText(surah: number, ayah: number): string {
 }
 
 assert.equal(ROUTE_QUOTE["/tarikh-islami"]?.ref, "الحج: ٤١");
-assert.equal(ROUTE_QUOTE["/nations"]?.ref, "يوسف: ١١١");
+assert.equal(ROUTE_QUOTE["/nations"]?.ref, "العنكبوت: ٤٠");
 assert.equal(ROUTE_QUOTE["/quran/people"]?.ref, "النساء: ١٦٤");
 assert.equal(ROUTE_QUOTE["/seerah"]?.ref, "الأنبياء: ١٠٧");
+assert.equal(ROUTE_QUOTE["/tafsir"]?.ref, "النحل: ٤٤");
+assert.equal(ROUTE_QUOTE["/ulum-quran"]?.ref, "ص: ٢٩");
+assert.equal(ROUTE_QUOTE["/quran-hub/qiraat"]?.ref, "الحجر: ٩");
 
 assert.doesNotMatch(ROUTE_QUOTE["/tarikh-islami"]!.text, /رحمة.*العالمين/);
 assert.doesNotMatch(ROUTE_QUOTE["/nations"]!.text, /رحمة.*العالمين/);
-assert.match(ROUTE_QUOTE["/nations"]!.text, /عِبْرَة/);
+assert.match(ROUTE_QUOTE["/nations"]!.text, /ذَنب|حَاصِب/);
 assert.match(ROUTE_QUOTE["/tarikh-islami"]!.text, /مَّكَّنَّاهُمْ/);
+assert.notEqual(ROUTE_QUOTE["/ulum-quran"]?.ref, ROUTE_QUOTE["/quran-hub/qiraat"]?.ref);
 
 assert.ok(ayahText(22, 41).length > 20, "الحج 41 في المصدر");
-assert.ok(ayahText(12, 111).length > 20, "يوسف 111 في المصدر");
+assert.ok(ayahText(29, 40).length > 20, "العنكبوت 40 في المصدر");
 assert.ok(ayahText(4, 164).length > 20, "النساء 164 في المصدر");
+assert.ok(ayahText(16, 44).length > 20, "النحل 44 في المصدر");
+assert.ok(ayahText(38, 29).length > 20, "ص 29 في المصدر");
 
 console.log("section-route-quotes.test.ts: ok");
