@@ -1,0 +1,164 @@
+/* مركز العبادة القرآنية — مواقيت + تحفيظ + أوفلاين */
+.qwh-page {
+  padding-bottom: 5rem;
+}
+
+.qwh-hero {
+  padding: 1.75rem 1.25rem 1.25rem;
+  text-align: center;
+}
+
+.qwh-hero__icon {
+  opacity: 0.9;
+  margin-bottom: 0.35rem;
+}
+
+.qwh-hero__title {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.3rem, 4vw, 1.75rem);
+  font-weight: 700;
+}
+
+.qwh-hero__sub {
+  margin: 0 auto;
+  max-width: 30rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--on-brand-secondary, color-mix(in srgb, #fff 68%, transparent));
+}
+
+.qwh-prayer-strip {
+  margin: 1rem 1rem 0;
+  padding: 1rem 1.1rem;
+  border-radius: var(--ds-radius-xl, 1rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.qwh-prayer-strip__next {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.qwh-prayer-strip__clock {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.qwh-prayer-strip__label {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.78;
+}
+
+.qwh-prayer-strip__name {
+  margin: 0.15rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.qwh-prayer-strip__countdown {
+  margin: 0.25rem 0 0;
+  font-size: 0.82rem;
+  opacity: 0.85;
+}
+
+.qwh-prayer-strip__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.qwh-prayer-chip {
+  flex: 1 1 calc(33% - 0.45rem);
+  min-width: 4.5rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  background: color-mix(in srgb, #000 28%, transparent);
+  border: 1px solid color-mix(in srgb, #fff 14%, transparent);
+}
+
+.qwh-prayer-chip__label {
+  display: block;
+  font-size: 0.7rem;
+  opacity: 0.72;
+}
+
+.qwh-prayer-chip__time {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.qwh-prayer-strip__link {
+  font-size: 0.78rem;
+  color: inherit;
+  opacity: 0.88;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  align-self: flex-start;
+}
+
+.qwh-adhan-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.85rem 1rem 0;
+  font-size: 0.82rem;
+  color: var(--color-text-muted, #94a3b8);
+}
+
+.qwh-adhan-note a {
+  color: var(--mj-brand-mid, #2a7a6e);
+  font-weight: 600;
+}
+
+.qwh-hifz,
+.qwh-offline {
+  padding: 1.25rem 1rem 0;
+}
+
+.qwh-hifz__head,
+.qwh-offline__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.qwh-section-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.qwh-surah-pick {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+}
+
+.qwh-surah-pick__select {
+  min-width: 11rem;
+  padding: 0.3rem 0.45rem;
+  border-radius: 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 35%, transparent);
+  background: var(--color-surface-elevated, #0f172a);
+  color: inherit;
+}
+
+.qwh-offline__hint {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.82rem;
+  color: var(--color-text-muted, #94a3b8);
+}

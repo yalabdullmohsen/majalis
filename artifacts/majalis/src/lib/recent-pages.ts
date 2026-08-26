@@ -211,6 +211,7 @@ const LABEL_MAP: Record<string, string> = {
   "/islamic-landmarks":             "المشاهد الإسلامية والمساجد التاريخية",
   "/quran-memorization":            "اختبارات الحفظ القرآني",
   "/quran/hifz-loop":               "مشغّل التحفيظ",
+  "/quran/worship-hub":             "مركز العبادة القرآنية",
   "/mutashabihat":                  "الآيات المتشابهات",
 };
 

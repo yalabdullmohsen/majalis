@@ -288,6 +288,7 @@ const PATHS = [
   "/quran/makki-madani",
   "/quran/memorization-plans",
   "/quran/hifz-loop",
+  "/quran/worship-hub",
   "/quran/recitation-test-ai",
   "/quran/revelation-order",
   "/quran/search",
