@@ -2,6 +2,18 @@
 
 آخر تحديث: **2026-08-26** · يُكمّل `docs/PERFORMANCE_BASELINE.md`
 
+## تقسيم ديناميكي (مكافئ Next.js `dynamic` في Vite)
+
+هذا المشروع **Vite + React** — لا تستخدم `next/dynamic`. المكافئ المعتمد:
+
+| نمط Next.js | المكافئ هنا |
+|-------------|-------------|
+| `dynamic(() => import(...), { ssr: false })` | `lazyWithRetry(() => import(...), "Name")` + `<Suspense>` |
+| مودال عند الفتح فقط | `{open && <Suspense><Modal /></Suspense>}` (مثل `GlobalSearchModal`) |
+| مكتبة عند الضغط | `await import("...")` داخل المعالج (مثل `local-notifications` / RUM) |
+
+أمثلة حيّة في `App.tsx`: `GlobalSearchModal`, `UpdateAvailableBanner`, `EdgeSwipeBack`, `FirstVisitIntro`, المسارات الإدارية.
+
 ## CI/CD — لا تُكرّر بوابة خاطئة
 
 - **لا** تضف `.github/workflows/performance-gate.yml` بـ `minScore: 90` أو `npm ci` أو منفذ `3000`.
