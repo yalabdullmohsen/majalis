@@ -14,6 +14,28 @@
 
 أمثلة حيّة في `App.tsx`: `GlobalSearchModal`, `UpdateAvailableBanner`, `EdgeSwipeBack`, `FirstVisitIntro`, المسارات الإدارية.
 
+## تحليل حجم الحزمة (مكافئ `@next/bundle-analyzer`)
+
+**لا** تثبّت `@next/bundle-analyzer` — هذا المشروع Vite. الأداة المعتمدة موجودة مسبقًا: `rollup-plugin-visualizer` في `vite.config.ts` عند `ANALYZE=1`.
+
+| Next.js | هنا |
+|---------|-----|
+| `ANALYZE=true npm run build` → `client.html` | `ANALYZE=1` + بناء Vite → `artifacts/majalis/dist/bundle-stats.html` |
+| حجم Gzipped في التقرير | مفعّل: `gzipSize` + `brotliSize` في الـvisualizer |
+| بوابة رقمية في CI | `scripts/test-bundle-budget.mjs` (entry gzip ≤ 120 KiB) — ليس التقرير البصري |
+
+```bash
+# تقرير تفاعلي (Treemap) — افتح dist/bundle-stats.html بعد البناء
+cd "$(git rev-parse --show-toplevel)"
+PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run analyze
+
+# بوابة رقمية (CI) بعد بناء عادي
+PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build
+node artifacts/majalis/scripts/test-bundle-budget.mjs
+```
+
+**قراءة التقرير:** المربعات الكبيرة = مكتبات/chunks ثقيلة. ركّز على ما يدخل مسار الإقلاع (entry / vendor المشترك). مكتبة كبيرة لمكوّن غير أساسي → `lazyWithRetry` أو `await import()` داخل المعالج، ثم أعد القياس وقارن gzip في `PERFORMANCE_BASELINE.md`.
+
 ## CI/CD — لا تُكرّر بوابة خاطئة
 
 - **لا** تضف `.github/workflows/performance-gate.yml` بـ `minScore: 90` أو `npm ci` أو منفذ `3000`.
@@ -73,9 +95,10 @@
 ## أوامر قياس سريعة
 
 ```bash
-# حجم الحزمة
+# حجم الحزمة (رقمي + اختياري بصري)
 PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build
 node artifacts/majalis/scripts/test-bundle-budget.mjs
+pnpm --filter @workspace/majalis run analyze   # → dist/bundle-stats.html
 
 # Lighthouse محلي
 PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run start
