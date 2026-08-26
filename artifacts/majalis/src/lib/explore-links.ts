@@ -40,7 +40,7 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/fiqh", label: "فقه التقنية" },
     { href: "/fiqh-council/nawazil", label: "النوازل المعاصرة" },
     { href: "/fiqh-council", label: "فقه الأقليات" },
-    { href: "/quiz", label: "لعبة سين جيم" },
+    { href: "/quiz", label: "سين جيم" },
     { href: "/discover-islam", label: "تعرّف على الإسلام" },
   ],
   dalail: [
@@ -58,7 +58,7 @@ export const ACCORDION_EXPLORE_LINKS = {
   ],
   mawsuaat: [
     { href: "/fawaid", label: "الفوائد" },
-    { href: "/quiz", label: "لعبة سين جيم" },
+    { href: "/quiz", label: "سين جيم" },
     { href: "/fiqh", label: "بوابة الفقه" },
     { href: "/daily-wird", label: "الورد اليومي" },
     { href: "/sections", label: "الأقسام" },

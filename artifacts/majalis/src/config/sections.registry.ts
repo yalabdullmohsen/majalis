@@ -919,7 +919,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   // —— ٦. التعلّم الشخصي ——
   {
     id: "qa",
-    label: "لعبة سين جيم",
+    label: "سين جيم",
     navLabel: "سين جيم",
     subtitle: "اختبار معلومات شرعية بأسئلة متعددة",
     route: "/quiz",
@@ -928,8 +928,8 @@ const SECTION_SEEDS: SectionSeed[] = [
     order: 20,
     surfaces: NAV,
     status: "live",
-    keywords: ["أسئلة", "أجوبة", "س ج", "مسابقة", "اختبار"],
-    aliases: ["سين جيم", "الأسئلة والأجوبة"],
+    keywords: ["أسئلة", "أجوبة", "س ج", "مسابقة", "اختبار", "سين جيم"],
+    aliases: ["لعبة سين جيم", "الأسئلة والأجوبة"],
   },
   {
     id: "progress",
