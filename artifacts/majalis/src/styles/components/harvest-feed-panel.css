@@ -102,7 +102,24 @@ html.dark .harvest-panel__sub {
 
 html[data-theme="dark"] .harvest-panel__tabs button:not(.is-active),
 html.dark .harvest-panel__tabs button:not(.is-active) {
-  background: var(--mj-surface, #1a221f);
+  background: rgb(2 44 34 / 0.35);
+  color: #a7f3d0;
+  border-color: rgb(6 95 70 / 0.6);
+}
+
+html[data-theme="dark"] .harvest-panel__tabs button.is-active,
+html.dark .harvest-panel__tabs button.is-active {
+  background: #059669;
+  border-color: #059669;
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .harvest-panel__sub a,
+html.dark .harvest-panel__sub a {
+  color: #6ee7b7;
+}
+
+html[data-theme="dark"] .harvest-panel__toggle,
+html.dark .harvest-panel__toggle {
   color: var(--mj-ink, #e8eeeb);
-  border-color: var(--mj-hairline, #2a3531);
 }
