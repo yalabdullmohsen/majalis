@@ -79,6 +79,16 @@ pnpm dlx lighthouse@12.8.2 http://127.0.0.1:24216/ \
 | ترقيم/تمرير لانهائي | ✅ فوائد |
 | توثيق قبل/بعد رقمي | ✅ هذا الملف |
 | Web Vitals أخضر تام محليًا | ⚠️ Performance 76 محليًا؛ CLS/TBT ممتازان؛ LCP يحتاج CDN بعد النشر |
+| `.github/workflows/performance-gate.yml` بـ minScore 90 | ❌ **مرفوض عمدًا** — مثال معطّل فقط في `docs/performance/performance-gate.workflow.example.yml` |
+| أرقام تسويقية (480→145 KB / LH 96 / LCP 0.9s) | ❌ **ليست قياس هذه الجولة** — لا تُنسخ إلى التقارير |
+
+## قائمة مراجعة دمج (صادقة)
+
+- [x] تخفيض entry فعلي (~−7.7% gzip) + lazy للكروم الثانوي + إزالة `recharts` الميت
+- [x] لمس/تمرير: `passive` + `touch-action: manipulation` (قائم؛ لا ادّعاء إلغاء 300ms منفصل كإنجاز جديد)
+- [x] بوابات CI الحية: bundle-budget + LHCI معاينة (~0.75) + RUM — **بلا** بوابة 90 على المعاينة المحلية
+- [x] `docs/PERFORMANCE_BASELINE.md` + `docs/PERFORMANCE_GUIDELINES.md`
+- [ ] دمج `#1460` → `main` ثم إعادة قياس إنتاج CDN
 
 ## إعادة القياس بعد النشر
 
