@@ -1,0 +1,176 @@
+/* مشغّل التلاوة التفاعلي — تظليل الآية (qpv-*) */
+.qpv-page {
+  padding: 1rem 1rem 5rem;
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.qpv-page__head {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.qpv-page__title {
+  margin: 0.35rem 0;
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
+  font-weight: 700;
+}
+
+.qpv-page__sub {
+  margin: 0 0 0.65rem;
+  font-size: 0.85rem;
+  color: var(--text-muted, var(--mj-muted));
+}
+
+.qpv-page__back {
+  font-size: 0.82rem;
+  color: var(--brand-deep, var(--mj-brand-deep, #1a4d3e));
+  text-decoration: none;
+}
+
+.qpv-card {
+  border: 1px solid var(--border, var(--mj-hairline));
+  border-radius: 1rem;
+  background: var(--surface-raised, var(--mj-surface, #fff));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 24rem;
+}
+
+.qpv-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem 1rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--border, var(--mj-hairline));
+}
+
+.qpv-card__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.qpv-card__reciter {
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+  color: var(--brand-deep, var(--mj-brand-deep, #1a4d3e));
+  font-weight: 600;
+}
+
+.qpv-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #34d399;
+  background: rgba(26, 77, 62, 0.15);
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.5rem;
+}
+
+.qpv-card__hint,
+.qpv-card__error {
+  margin: 0;
+  padding: 0.45rem 1rem;
+  font-size: 0.78rem;
+}
+
+.qpv-card__hint {
+  color: var(--text-muted, var(--mj-muted));
+  background: color-mix(in srgb, var(--brand-deep, #1a4d3e) 6%, transparent);
+}
+
+.qpv-card__error {
+  color: var(--mj-danger, #b91c1c);
+  background: color-mix(in srgb, #b91c1c 8%, transparent);
+}
+
+.qpv-card__content {
+  flex: 1;
+  overflow: auto;
+  max-height: min(52vh, 28rem);
+  padding: 1rem 1.1rem;
+  background: color-mix(in srgb, var(--brand-deep, #1a4d3e) 4%, var(--mj-surface, #fff));
+}
+
+.qpv-card__quran {
+  margin: 0;
+  font-family: var(--font-quran, var(--font-app));
+  font-size: clamp(1.15rem, 4.5vw, 1.45rem);
+  line-height: 2.1;
+  text-align: justify;
+  color: var(--text, var(--mj-text));
+}
+
+.qpv-ayah {
+  cursor: pointer;
+  border-radius: 0.35rem;
+  padding: 0.05rem 0.15rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.qpv-ayah--active {
+  color: #34d399;
+  background: rgba(26, 77, 62, 0.4);
+  font-weight: 700;
+}
+
+.qpv-ayah__mark {
+  font-size: 0.78em;
+  opacity: 0.85;
+}
+
+.qpv-card__controls {
+  padding: 0.85rem 1rem 1rem;
+}
+
+.qpv-card__btn {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: #fff;
+  cursor: pointer;
+}
+
+.qpv-card__btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.qpv-card__btn--play {
+  background: var(--brand-deep, var(--mj-brand-deep, #1a4d3e));
+  color: #fff;
+}
+
+.qpv-card__btn--pause {
+  background: #d97706;
+}
+
+.quran-shell--night .qpv-card {
+  background: #111827;
+  border-color: #30363d;
+}
+
+.quran-shell--night .qpv-card__content {
+  background: #0f1419;
+}
+
+.quran-shell--night .qpv-card__quran {
+  color: #d1d5db;
+}
+
+.quran-shell--night .qpv-ayah--active {
+  color: #34d399;
+}
