@@ -27,8 +27,8 @@ Web (`artifacts/majalis`, Vite + React SPA) is the primary surface. Mobile (Expo
 ## Measurement
 
 - `PERF_SLOW_MS` (3s) → console + client error pipeline.
-- Optional: `ANALYZE=1` Vite build → `dist/bundle-stats.html`.
-- Gate: `pnpm --filter @workspace/majalis run test:phase7-performance`.
+- Optional visual report: `PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run analyze` → `dist/bundle-stats.html` (`rollup-plugin-visualizer`; **not** `@next/bundle-analyzer`).
+- Numeric gate: `test:bundle-budget` (entry gzip budget) + `pnpm --filter @workspace/majalis run test:phase7-performance`.
 
 ## Anti-patterns (do not reintroduce)
 

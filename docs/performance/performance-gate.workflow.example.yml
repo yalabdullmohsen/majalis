@@ -1,0 +1,35 @@
+# Performance Gate (مرجع / توثيق) — لا يُفعَّل كـworkflow مستقل بـ minScore: 90
+#
+# السبب: المستودع يملك أصلًا:
+#   - `.github/workflows/ci.yml` → `test:bundle-budget` + job `lhci-home`
+#   - عتبات معايرة في `artifacts/majalis/scripts/lhci-thresholds.cjs` (~0.75 معاينة)
+#   - PSI إنتاج عبر `verify-psi-production-gate`
+#
+# رفع minScore إلى 0.90 على معاينة بلا CDN يفشل PRs سليمة (قياس محلي ~76/100).
+# أي ملف تحت `.github/workflows/` يُصنَّف danger-path ويمنع auto-merge.
+#
+# للتحقق المحلي بعد البناء:
+#   PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build
+#   pnpm --filter @workspace/majalis run test:bundle-budget
+#   PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run lighthouse:ci
+#
+# أتمتة التوثيق:
+#   bash scripts/setup-perf.sh
+#
+# إن احتجت job منفصل لاحقًا: انسخ منطق `lhci-home` من ci.yml بنفس العتبات،
+# لا تستخدم foo-software/lighthouse-check-action مع localhost:3000 / npm / Node 18.
+
+name: Performance Gate (disabled stub — see comments)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use existing CI gates
+        run: |
+          echo "Performance gates live in ci.yml (bundle-budget + lhci-home)."
+          echo "Do not enable minScore 90 on preview."
+          exit 0

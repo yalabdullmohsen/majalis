@@ -123,6 +123,10 @@ runBootSequenceBeforeMount();
 const bootReporting = () => {
   initClientErrorReporting();
   logLcpCandidateHint();
+  // RUM بعد idle — لا ينافس LCP؛ يُفعَّل فقط مع موافقة التحليلات
+  scheduleOnIdle(() => {
+    void import("./lib/rum-telemetry").then((m) => m.initRumTelemetry());
+  }, 4_000);
 };
 if (typeof requestIdleCallback === "function") {
   requestIdleCallback(bootReporting, { timeout: 2_500 });

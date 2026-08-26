@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useLocation } from "wouter";
 import type { SectionDef } from "@/config/sections.registry";
 import { prefetchRoute } from "@/lib/prefetch-route";
@@ -23,7 +24,7 @@ function go(href: string, setLocation: (h: string) => void) {
 /**
  * بطاقة متوسطة محايدة (شبكة عمودين) — بلا تدرّج أخضر.
  */
-export function SectionCard({ section, className, onNavigate }: Props) {
+export const SectionCard = memo(function SectionCard({ section, className, onNavigate }: Props) {
   const [, setLocation] = useLocation();
   const Icon = section.icon;
   const aria = `${section.label} — ${section.subtitle}`;
@@ -49,4 +50,4 @@ export function SectionCard({ section, className, onNavigate }: Props) {
       <span className="card__subtitle">{section.subtitle}</span>
     </button>
   );
-}
+});

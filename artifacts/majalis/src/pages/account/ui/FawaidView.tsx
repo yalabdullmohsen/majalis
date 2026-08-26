@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
@@ -16,6 +16,9 @@ import { FaidahCard } from "@/components/fawaid/FaidahCard";
 import { ShareButtons } from "@/components/ContentActions";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
+
+/** دفعات واجهة — تفادي رسم مئات البطاقات دفعة واحدة في DOM. */
+const FAWAID_PAGE_SIZE = 24;
 
 const LEGACY_CATEGORIES = [
   "فوائد قرآنية",
@@ -60,6 +63,8 @@ export default function FawaidPage({
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(FAWAID_PAGE_SIZE);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const { user, isLoggedIn, isAdmin } = useAuth();
 
   // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
@@ -138,6 +143,34 @@ export default function FawaidPage({
     return items;
   }, [normalized, category, debouncedSearch]);
 
+  useEffect(() => {
+    setVisibleCount(FAWAID_PAGE_SIZE);
+  }, [category, debouncedSearch]);
+
+  const visibleItems = useMemo(
+    () => displayItems.slice(0, visibleCount),
+    [displayItems, visibleCount],
+  );
+  const hasMore = visibleCount < displayItems.length;
+
+  const revealMore = useCallback(() => {
+    setVisibleCount((n) => Math.min(n + FAWAID_PAGE_SIZE, displayItems.length));
+  }, [displayItems.length]);
+
+  useEffect(() => {
+    if (!hasMore) return;
+    const node = loadMoreRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) revealMore();
+      },
+      { rootMargin: "240px 0px" },
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, [hasMore, revealMore, visibleCount]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!text.trim()) return;
@@ -210,11 +243,20 @@ export default function FawaidPage({
       ) : displayItems.length === 0 ? (
         <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}».` : "لا توجد فوائد في هذا القسم."} />
       ) : (
-        <div className="faidah-grid">
-          {displayItems.map((f) => (
-            <FaidahCard key={f.id} item={f} />
-          ))}
-        </div>
+        <>
+          <div className="faidah-grid">
+            {visibleItems.map((f) => (
+              <FaidahCard key={f.id} item={f} />
+            ))}
+          </div>
+          {hasMore ? (
+            <div ref={loadMoreRef} className="fawaid-load-more">
+              <button type="button" className="content-hub-chip" onClick={revealMore}>
+                عرض المزيد ({visibleCount} من {displayItems.length})
+              </button>
+            </div>
+          ) : null}
+        </>
       )}
 
       <p className="fawaid-cards-link" style={{marginBlock:"1rem"}}>

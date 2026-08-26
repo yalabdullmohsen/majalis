@@ -5,6 +5,8 @@
 import { logClientError, buildErrorReport } from "@/lib/error-report";
 
 export const PERF_SLOW_MS = 3000;
+/** عتبة تنبيه طلبات الشبكة/API حسب مهمة RUM (500ms). */
+export const PERF_API_SLOW_MS = 500;
 
 type PerfKind = "api" | "query" | "render" | "supabase" | "fetch";
 
@@ -23,8 +25,15 @@ function dedupeKey(kind: PerfKind, label: string): string {
   return `${kind}:${label}`;
 }
 
+function thresholdFor(kind: PerfKind): number {
+  if (kind === "api" || kind === "fetch" || kind === "supabase" || kind === "query") {
+    return PERF_API_SLOW_MS;
+  }
+  return PERF_SLOW_MS;
+}
+
 export function recordPerformance(entry: PerfEntry): void {
-  if (entry.durationMs < PERF_SLOW_MS) return;
+  if (entry.durationMs < thresholdFor(entry.kind)) return;
 
   const key = dedupeKey(entry.kind, entry.label);
   const now = Date.now();

@@ -14,6 +14,44 @@ import { loadAllRulingsFromChunks, RULINGS_ENCYCLOPEDIA_SEED } from "./rulings-d
 
 const isConfigured = isSupabaseConfigured();
 
+/** حقول التفصيل العامة — بلا select('*') لتقليل الحمولة الشبكية. */
+const RULING_DETAIL_COLUMNS = [
+  "id",
+  "external_key",
+  "slug",
+  "title",
+  "summary",
+  "body",
+  "category",
+  "subcategory",
+  "subcategories",
+  "quran_evidence",
+  "sunnah_evidence",
+  "scholar_opinions",
+  "prevailing_view",
+  "evidence",
+  "references",
+  "hadith_grade",
+  "keywords",
+  "benefits",
+  "importance_score",
+  "popularity_score",
+  "search_count",
+  "view_count",
+  "status",
+  "verification_status",
+  "content_type",
+  "related_ids",
+  "linked_qa_ids",
+  "linked_lesson_ids",
+  "linked_fatwa_ids",
+  "linked_fiqh_ids",
+  "source_origin",
+  "published_at",
+  "created_at",
+  "updated_at",
+].join(",");
+
 type DbReadyState = { ready: boolean; count: number; reason?: string };
 let dbReadyCache: DbReadyState | null = null;
 let dbReadyPromise: Promise<DbReadyState> | null = null;
@@ -138,45 +176,32 @@ export async function resolveRulingByIdentifier(id: string): Promise<RulingResol
     const db = await checkRulingsDbReady();
     if (db.ready) {
       try {
-        const byId = await supabase
-          .from("sharia_rulings")
-          .select("*")
-          .eq("id", trimmed)
-          .eq("status", "approved")
-          .eq("verification_status", "approved")
-          .maybeSingle();
-        if (byId.data) {
-          const row = byId.data as ShariaRulingExtended;
-          if (!CONTENT_CURRICULUM_ENABLED && isCurriculumRuling(row)) {
-            return { ...evaluateRulingRecord(trimmed, null), usingSeed: false };
-          }
-          return { ...evaluateRulingRecord(trimmed, row), usingSeed: false };
-        }
-
-        const byKey = await supabase
-          .from("sharia_rulings")
-          .select("*")
-          .eq("external_key", trimmed)
-          .eq("status", "approved")
-          .eq("verification_status", "approved")
-          .maybeSingle();
-        if (byKey.data) {
-          const row = byKey.data as ShariaRulingExtended;
-          if (!CONTENT_CURRICULUM_ENABLED && isCurriculumRuling(row)) {
-            return { ...evaluateRulingRecord(trimmed, null), usingSeed: false };
-          }
-          return { ...evaluateRulingRecord(trimmed, row), usingSeed: false };
-        }
-
-        const bySlug = await supabase
-          .from("sharia_rulings")
-          .select("*")
-          .eq("slug", trimmed)
-          .eq("status", "approved")
-          .eq("verification_status", "approved")
-          .maybeSingle();
-        if (bySlug.data) {
-          const row = bySlug.data as ShariaRulingExtended;
+        const approved = { status: "approved" as const, verification_status: "approved" as const };
+        const [byId, byKey, bySlug] = await Promise.all([
+          supabase
+            .from("sharia_rulings")
+            .select(RULING_DETAIL_COLUMNS)
+            .eq("id", trimmed)
+            .eq("status", approved.status)
+            .eq("verification_status", approved.verification_status)
+            .maybeSingle(),
+          supabase
+            .from("sharia_rulings")
+            .select(RULING_DETAIL_COLUMNS)
+            .eq("external_key", trimmed)
+            .eq("status", approved.status)
+            .eq("verification_status", approved.verification_status)
+            .maybeSingle(),
+          supabase
+            .from("sharia_rulings")
+            .select(RULING_DETAIL_COLUMNS)
+            .eq("slug", trimmed)
+            .eq("status", approved.status)
+            .eq("verification_status", approved.verification_status)
+            .maybeSingle(),
+        ]);
+        const row = (byId.data || byKey.data || bySlug.data) as unknown as ShariaRulingExtended | null;
+        if (row) {
           if (!CONTENT_CURRICULUM_ENABLED && isCurriculumRuling(row)) {
             return { ...evaluateRulingRecord(trimmed, null), usingSeed: false };
           }
@@ -255,12 +280,12 @@ export async function getAllRulingsForAdmin(): Promise<ShariaRulingExtended[]> {
   if (!isConfigured) return [];
   const { data, error } = await supabase
     .from("sharia_rulings")
-    .select("*")
+    .select(RULING_DETAIL_COLUMNS)
     .order("importance_score", { ascending: false })
     .limit(500);
   if (error) {
     logSupabaseError("getAllRulingsForAdmin", error);
     return [];
   }
-  return (data || []) as ShariaRulingExtended[];
+  return (data || []) as unknown as ShariaRulingExtended[];
 }

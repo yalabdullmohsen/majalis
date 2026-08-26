@@ -49,10 +49,10 @@ const dailyQuiz = read("src/components/quiz-game/DailyChallengeQuiz.tsx");
 assert.match(dailyQuiz, /قيد إضافة المصدر/);
 assert.doesNotMatch(dailyQuiz, /موثق بالأدلة/);
 
-// 4) adhkar غير المراجعة لها badge
-const adhkar = read("src/pages/worship/ui/AdhkarView.tsx");
-assert.match(adhkar, /needsReview/);
-assert.match(adhkar, /IsnadAttributionBar|قيد المراجعة/);
+// 4) adhkar غير المراجعة لها badge (في شيت التفاصيل الكسول)
+const adhkarSheet = read("src/pages/worship/ui/AdhkarDhikrSheet.tsx");
+assert.match(adhkarSheet, /needsReview/);
+assert.match(adhkarSheet, /IsnadAttributionBar|قيد المراجعة/);
 
 // 5) lessons لا تعرض وقتًا فارغًا
 const lessonCard = read("src/components/lessons/UnifiedLessonCard.tsx");
