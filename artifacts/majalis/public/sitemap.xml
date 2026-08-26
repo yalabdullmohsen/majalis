@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://majlisilm.com/</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/lessons</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/competitions</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -25,7 +25,7 @@
   </url>
   <url>
     <loc>https://majlisilm.com/adhkar</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
   </url>
@@ -51,7 +51,7 @@
   </url>
   <url>
     <loc>https://majlisilm.com/prayer-times</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.88</priority>
   </url>
@@ -82,7 +82,7 @@
   </url>
   <url>
     <loc>https://majlisilm.com/library</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -93,11 +93,6 @@
   </url>
   <url>
     <loc>https://majlisilm.com/miracles</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/fawaid</loc>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -282,11 +277,6 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/memorize</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.86</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/tawhid</loc>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
@@ -318,7 +308,7 @@
   </url>
   <url>
     <loc>https://majlisilm.com/scholars</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -484,7 +474,7 @@
   </url>
   <url>
     <loc>https://majlisilm.com/fiqh</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
   </url>
@@ -530,13 +520,13 @@
   </url>
   <url>
     <loc>https://majlisilm.com/mushaf</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/quran-hub</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>

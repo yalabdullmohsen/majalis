@@ -270,12 +270,19 @@ function absoluteUrl(path) {
   return new URL(path, SITE_URL).toString();
 }
 
-/** «[اسم الصفحة] | المجلس العلمي» — الصيغة الوحيدة المعتمدة. */
+/** «[اسم الصفحة] | المجلس العلمي» — الصيغة الوحيدة المعتمدة، بحد أقصى ~60 حرفًا. */
+const META_DESC_MIN = 120;
+const META_DESC_MAX = 160;
+const TITLE_MAX = 60;
+
 function pageTitle(route) {
-  const name = String(route.title || "").trim();
-  if (route.suffix === false || !name) return name || SITE_NAME;
-  if (name.endsWith(TITLE_SUFFIX)) return name;
-  return `${name}${TITLE_SUFFIX}`;
+  const suffix = TITLE_SUFFIX;
+  let name = String(route.title || "").trim();
+  if (route.suffix === false || !name) return clamp(name || SITE_NAME, TITLE_MAX);
+  if (name.endsWith(suffix)) name = name.slice(0, -suffix.length).trim();
+  else if (name.includes("|")) name = name.split("|")[0].trim();
+  const maxRaw = Math.max(12, TITLE_MAX - suffix.length);
+  return `${clamp(name, maxRaw)}${suffix}`;
 }
 
 /** يوحّد النقط المتكررة في نهاية الوصف (خلل شائع: ".." من قوالب سابقة). */
@@ -286,13 +293,23 @@ function tidyDesc(text) {
     .trim();
 }
 
+/** يمدّ الوصف إلى ≥120 حرفًا ثم يقصّه عند 160 — نطاق Ahrefs/Google الآمن. */
 function padDesc(text, suffix) {
-  const t = tidyDesc(text);
-  if (!t) return suffix;
-  return t.length >= 50 ? t : `${t}، ${suffix}`;
+  let t = tidyDesc(text);
+  const pad = tidyDesc(suffix) || `محتوى شرعي موثّق ضمن منصة ${SITE_NAME}.`;
+  if (!t) t = pad;
+  else if (t.length < META_DESC_MIN && pad && !t.includes(pad.slice(0, Math.min(20, pad.length)))) {
+    t = `${t} — ${pad}`;
+  }
+  let guard = 0;
+  while (t.length < META_DESC_MIN && guard < 4) {
+    t = `${t} تصفّح الأقسام المرتبطة في ${SITE_NAME}.`;
+    guard += 1;
+  }
+  return clamp(t, META_DESC_MAX);
 }
 
-function clamp(text, max = 300) {
+function clamp(text, max = META_DESC_MAX) {
   const t = String(text || "").replace(/\s+/g, " ").trim();
   return t.length <= max ? t : `${t.slice(0, max - 1).trimEnd()}…`;
 }
@@ -662,7 +679,19 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
 /** كل صفحة مُصيَّرة تُسجَّل هنا؛ منها تُبنى الخريطة، فلا تتفرّق مصادر الحقيقة. */
 const pages = [];
 function addPage(route, { extraJsonLd = "", richBody = "", parents = [], sitemap = true, priority = 0.7, changefreq = "weekly" } = {}) {
-  pages.push({ route, extraJsonLd, richBody, parents, sitemap, priority, changefreq });
+  const description = padDesc(
+    route.description,
+    `صفحة ${route.title || route.path} في منصة ${SITE_NAME}`,
+  );
+  pages.push({
+    route: { ...route, description },
+    extraJsonLd,
+    richBody,
+    parents,
+    sitemap,
+    priority,
+    changefreq,
+  });
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -831,8 +860,8 @@ const RICH_BODY_MAP = {
   <li>روابط تفاصيل كل درس مع مشاركة وحفظ</li>
 </ul>
 ${linkList(
-  "أبرز الدروس والدورات",
-  lessonRows.slice(0, 20).map((r) => ({ name: r.title, url: `/lessons/${r.id}`, note: r.speaker_name })),
+  "الدروس والدورات",
+  lessonRows.map((r) => ({ name: r.title, url: `/lessons/${r.id}`, note: r.speaker_name })),
 )}
 ${linkList("روابط ذات صلة", [
   { name: "دروس الكويت", url: "/kuwait-lessons" },
@@ -840,10 +869,16 @@ ${linkList("روابط ذات صلة", [
   { name: "أعلام العلماء", url: "/scholars" },
   { name: "البحث العلمي", url: "/search" },
 ])}`,
-  "/library": linkList(
-    "من الكتب المتاحة",
-    LIBRARY_CATALOG.slice(0, 15).map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author })),
-  ),
+  "/library": `${linkList(
+    "كتب المكتبة العلمية",
+    LIBRARY_CATALOG.map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author })),
+  )}
+${linkList("روابط ذات صلة", [
+  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "الفقه الإسلامي", url: "/fiqh" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "البحث", url: "/search" },
+])}`,
   "/adhkar": `${linkList(
     "أقسام الأذكار",
     FEATURED_ADHKAR.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })),
@@ -854,10 +889,16 @@ ${linkList("روابط ذات صلة", [
   { name: "السنن اليومية", url: "/sunan-yawmiyya" },
   { name: "أدعية القرآن", url: "/duas-quran" },
 ])}`,
-  "/scholars": linkList(
-    "من علماء المسلمين",
-    SCHOLARS.slice(0, 30).map((s) => ({ name: s.name, url: `/scholars/${s.id}`, note: s.died })),
-  ),
+  "/scholars": `${linkList(
+    "أعلام العلماء المسلمين",
+    SCHOLARS.map((s) => ({ name: s.name, url: `/scholars/${s.id}`, note: s.died })),
+  )}
+${linkList("روابط ذات صلة", [
+  { name: "المكتبة العلمية", url: "/library" },
+  { name: "الدروس الشرعية", url: "/lessons" },
+  { name: "الفقه الإسلامي", url: "/fiqh" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+])}`,
   "/quiz": linkList(
     "من أسئلة سين جيم",
     (PLATFORM_SEED.qa_items || []).slice(0, 12).map((q) => ({ name: q.question, url: `/quiz` })),
@@ -880,7 +921,7 @@ ${linkList("روابط ذات صلة", [
   "/quran/people": `<p>فهرس من ذُكروا في القرآن بأسمائهم أو أوصافهم، مع مواضع الآيات والربط بقصص الأنبياء، والاقتصار على ما ثبت دون إسرائيليات مجزوم بها.</p>
 ${linkList(
   "من الذين ذكروا في القرآن",
-  QURAN_PEOPLE.slice(0, 40).map((p) => ({ name: p.nameAr, url: `/quran/people/${p.slug}` })),
+  QURAN_PEOPLE.map((p) => ({ name: p.nameAr, url: `/quran/people/${p.slug}` })),
 )}
 ${linkList("روابط ذات صلة", [
   { name: "قصص الأنبياء", url: "/prophets" },
@@ -891,7 +932,7 @@ ${linkList("روابط ذات صلة", [
   "/topics": linkList("المواضيع الإسلامية", TOPICS.map((t) => ({ name: t.title, url: `/topics/${t.slug}` }))),
   "/quran/surah-stories": linkList(
     "قصص السور",
-    SURAH_STORIES.slice(0, 30).map((s) => ({ name: `سورة ${s.name}`, url: `/quran/surah-stories/${s.number}` })),
+    SURAH_STORIES.map((s) => ({ name: `سورة ${s.name}`, url: `/quran/surah-stories/${s.number}` })),
   ),
   "/quran/surahs": linkList(
     "سور القرآن الكريم الـ114",
@@ -904,7 +945,7 @@ ${linkList("روابط ذات صلة", [
   "/sins-and-rights": linkList("موضوعات الذنوب والحقوق", SINS_TOPICS.map((t) => ({ name: t.title, url: `/sins-and-rights/${t.slug}` }))),
   "/fiqh-council/issues": linkList(
     "المسائل الفقهية المعاصرة",
-    PUBLIC_FIQH_ISSUES.slice(0, 25).map((i) => ({ name: i.title, url: `/fiqh-council/issues/${i.slug}` })),
+    PUBLIC_FIQH_ISSUES.map((i) => ({ name: i.title, url: `/fiqh-council/issues/${i.slug}` })),
   ),
   "/fiqh": `<p>بوابة الفقه الإسلامي في المجلس العلمي: كتب وأبواب ومسائل مرتّبة للعبادات والمعاملات والأسرة والجنايات، مع إحالة إلى المجامع والقواعد والمذاهب — دون إفتاء فردي من المنصة.</p>
 <h2>إحصاءات البوابة</h2>
@@ -919,7 +960,7 @@ ${FIQH_CATEGORY_ORDER.map((cat) => `<li>${escapeHtml(FIQH_CATEGORY_LABELS[cat])}
 </ul>
 ${linkList(
   "من كتب الفقه",
-  PUBLISHED_FIQH_BOOKS.slice(0, 12).map((b) => ({
+  PUBLISHED_FIQH_BOOKS.map((b) => ({
     name: b.title,
     url: bookHref(b.id),
     note: FIQH_CATEGORY_LABELS[b.category] || "",
@@ -1255,8 +1296,8 @@ ${linkList("روابط ذات صلة", [
 ])}`,
   "/fiqh-council": `<p>المجمع الفقهي الإسلامي: قرارات وفتاوى ومسائل معاصرة ونوازل، مع أدوات بحث ومقارنة وأرشيف.</p>
 ${linkList(
-  "من مواد المجمع",
-  PUBLIC_FIQH_ITEMS.slice(0, 12).map((r) => ({
+  "مواد المجمع المنشورة",
+  PUBLIC_FIQH_ITEMS.map((r) => ({
     name: `${r.title} (${fiqhItemKind(r)})`,
     url: `/fiqh-council/${r.slug || r.id}`,
   })),
@@ -1493,7 +1534,7 @@ ${linkList("خطوات مقترحة", [
   <li>لا نمنح شارة توثيق بلا مراجِع بشري ومصدر خارجي.</li>
 </ul>
 ${linkList("روابط ذات صلة", [
-  { name: "من نحن", url: "/about-us" },
+  { name: "من نحن", url: "/about" },
   { name: "سياسة الفتوى والمراجعة", url: "/fatwa-policy" },
   { name: "المصادر والتراخيص", url: "/data-licenses" },
   { name: "تواصل معنا", url: "/contact" },
@@ -2250,22 +2291,29 @@ ${linkList("روابط ذات صلة", [
 for (const route of seoConfig.routes) {
   if (route.path.includes(":")) continue;
   if (route.path === "/rulings") continue; // يُضاف يدويًا أدناه كإعادة توجيه
+  const redirectTarget = IA_REDIRECTS[route.path];
   const privateRoute = isPrivateSeoPath(route.path);
   const effectiveRoute = privateRoute
     ? {
         ...route,
         description:
-          String(route.description || "").trim().length >= 50
+          String(route.description || "").trim().length >= META_DESC_MIN
             ? route.description
             : ADMIN_DEFAULT_DESCRIPTION,
         robots: ADMIN_DEFAULT_ROBOTS,
         sitemap: false,
       }
-    : route;
+    : redirectTarget
+      ? {
+          ...route,
+          robots: "noindex, follow",
+          sitemap: false,
+        }
+      : route;
   addPage(effectiveRoute, {
     extraJsonLd: LIST_JSON_LD[route.path] || "",
     richBody: RICH_BODY_MAP[route.path] || "",
-    sitemap: privateRoute ? false : Boolean(route.sitemap),
+    sitemap: privateRoute || redirectTarget ? false : Boolean(route.sitemap),
     priority: route.priority ?? 0.7,
     changefreq: route.changefreq ?? "weekly",
   });
@@ -2290,11 +2338,34 @@ for (const route of seoConfig.routes) {
 // ٢) الدروس
 // ─────────────────────────────────────────────────────────────────────────────
 for (const row of lessonRows) {
+  const related = lessonRows
+    .filter(
+      (l) =>
+        l.id !== row.id &&
+        ((row.speaker_name && l.speaker_name === row.speaker_name) ||
+          (row.category && l.category === row.category)),
+    )
+    .slice(0, 8)
+    .map((l) => ({ name: l.title, url: `/lessons/${l.id}`, note: l.speaker_name }));
+  const place = row.mosque || row.region || "";
   addPage(
     {
       path: `/lessons/${row.id}`,
       title: row.title,
-      description: padDesc(lessonDescription(row), `درس شرعي على منصة ${SITE_NAME}`),
+      description: padDesc(
+        lessonDescription(row),
+        `درس شرعي${row.speaker_name ? ` للشيخ ${row.speaker_name}` : ""}${row.category ? ` في ${row.category}` : ""} على منصة ${SITE_NAME}`,
+      ),
+      body: [
+        row.title,
+        row.speaker_name ? `الشيخ: ${row.speaker_name}` : "",
+        place ? `المكان: ${place}` : "",
+        row.schedule || "",
+        row.category ? `التصنيف: ${row.category}` : "",
+        row.description || "",
+      ]
+        .filter(Boolean)
+        .join(" — "),
       keywords: [row.title, row.speaker_name, row.category, "دروس شرعية", "محاضرات إسلامية", "دورات شرعية"].filter(Boolean),
       image: row.sheikh_image_url || row.poster_image_url || DEFAULT_IMAGE,
       ogType: "article",
@@ -2303,6 +2374,21 @@ for (const row of lessonRows) {
       extraJsonLd: lessonJsonLdScript(row),
       parents: [{ name: "الدروس الشرعية", path: "/lessons" }],
       priority: 0.72,
+      richBody: `<h2>بيانات الدرس</h2>
+<ul>
+  ${row.speaker_name ? `<li>الشيخ: ${escapeHtml(row.speaker_name)}</li>` : ""}
+  ${place ? `<li>المكان: ${escapeHtml(place)}</li>` : ""}
+  ${row.schedule ? `<li>الجدول: ${escapeHtml(row.schedule)}</li>` : ""}
+  ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
+  ${row.activity_type ? `<li>النوع: ${escapeHtml(row.activity_type)}</li>` : ""}
+</ul>
+${linkList("دروس ذات صلة", related)}
+${linkList("روابط ذات صلة", [
+  { name: "فهرس الدروس", url: "/lessons" },
+  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "المكتبة العلمية", url: "/library" },
+  { name: "الفقه الإسلامي", url: "/fiqh" },
+])}`,
     },
   );
 }
@@ -2314,7 +2400,7 @@ for (const row of PUBLIC_FIQH_ITEMS) {
   const kind = fiqhItemKind(row);
   const desc = clamp(
     padDesc(row.summary || row.ruling_text || row.title, `${kind} من ${row.source_name || "مجمع الفقه الإسلامي الدولي"}`),
-    300,
+    META_DESC_MAX,
   );
   addPage(
     {
@@ -2378,7 +2464,7 @@ for (const row of LIBRARY_CATALOG) {
     {
       path: `/library/${row.id}`,
       title: row.title,
-      description: clamp(padDesc(desc, `كتاب من المكتبة الشرعية في ${SITE_NAME}`), 160),
+      description: clamp(padDesc(desc, `كتاب من المكتبة الشرعية في ${SITE_NAME}`), META_DESC_MAX),
       body: desc,
       ogType: "book",
     },
@@ -2426,13 +2512,13 @@ ${linkList("روابط ذات صلة", [
 // العلماء — Person JSON-LD (٩٦ ترجمة). المعرّفات تُقرأ وقت البناء من scholars-data.ts.
 for (const s of SCHOLARS) {
   const bioFull = String(s.bio || "").replace(/\s+/g, " ").trim();
-  const bioShort = clamp(bioFull, 155);
+  const bioShort = clamp(bioFull, META_DESC_MAX);
   addPage(
     {
       path: `/scholars/${s.id}`,
       title: `${s.name} — سيرة العالم`,
       // meta فقط — يجوز «…»
-      description: clamp(padDesc(bioShort, `ترجمة ${s.name} في ${SITE_NAME}`), 155),
+      description: clamp(padDesc(bioShort, `ترجمة ${s.name} في ${SITE_NAME}`), META_DESC_MAX),
       // النص الظاهر الكامل — بلا قصّ
       body: bioFull,
       ogType: "profile",
@@ -2449,7 +2535,19 @@ for (const s of SCHOLARS) {
   ${s.madhhab ? `<li>المذهب: ${escapeHtml(s.madhhab)}</li>` : ""}
   ${s.specialty?.length ? `<li>التخصص: ${escapeHtml(s.specialty.join("، "))}</li>` : ""}
 </ul>
-${s.key_works?.length ? `<h2>أبرز المؤلفات</h2>\n<ul>\n  ${s.key_works.map((w) => `<li>${escapeHtml(w)}</li>`).join("\n  ")}\n</ul>` : ""}`,
+${s.key_works?.length ? `<h2>أبرز المؤلفات</h2>\n<ul>\n  ${s.key_works.map((w) => `<li>${escapeHtml(w)}</li>`).join("\n  ")}\n</ul>` : ""}
+${linkList(
+  "علماء ذوو صلة",
+  SCHOLARS.filter((o) => o.id !== s.id && (o.madhhab === s.madhhab || o.era === s.era))
+    .slice(0, 8)
+    .map((o) => ({ name: o.name, url: `/scholars/${o.id}`, note: o.died })),
+)}
+${linkList("روابط ذات صلة", [
+  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "المكتبة العلمية", url: "/library" },
+  { name: "الدروس الشرعية", url: "/lessons" },
+  { name: "الفقه الإسلامي", url: "/fiqh" },
+])}`,
       priority: 0.75,
       changefreq: "monthly",
     },
@@ -2462,7 +2560,7 @@ for (const p of PROPHETS) {
     {
       path: `/prophets/${p.slug}`,
       title: `قصة ${p.arabicName} عليه السلام`,
-      description: clamp(p.briefBio, 300),
+      description: clamp(p.briefBio, META_DESC_MAX),
       keywords: [p.arabicName, p.title, "قصص الأنبياء", "الأنبياء والرسل", ...(p.mainSurahs || [])].filter(Boolean),
       ogType: "article",
     },
@@ -2524,7 +2622,7 @@ for (const person of QURAN_PEOPLE) {
     {
       path: `/quran/people/${person.slug}`,
       title: `${person.nameAr} في القرآن`,
-      description: clamp(padDesc(person.definition, peopleSuffix), 300),
+      description: clamp(padDesc(person.definition, peopleSuffix), META_DESC_MAX),
       keywords: [person.nameAr, ...(person.aliases || []), "الذين ذكروا في القرآن", "أعلام القرآن"].filter(Boolean),
       ogType: "article",
     },
@@ -2546,7 +2644,7 @@ for (const s of SURAH_STORIES) {
     {
       path: `/quran/surah-stories/${s.number}`,
       title: `سورة ${s.name} — سبب التسمية والمحاور`,
-      description: clamp(padDesc(s.namingReason, `سورة ${s.name} — ${s.revelationPlace}، ${s.ayahCount} آية.`), 300),
+      description: clamp(padDesc(s.namingReason, `سورة ${s.name} — ${s.revelationPlace}، ${s.ayahCount} آية.`), META_DESC_MAX),
       keywords: [`سورة ${s.name}`, "قصص السور", "أسباب النزول", "علوم القرآن", ...(s.keywords || [])].filter(Boolean),
       ogType: "article",
     },
@@ -2577,7 +2675,7 @@ for (const t of SINS_TOPICS) {
     {
       path: `/sins-and-rights/${t.slug}`,
       title: `${t.title} — الذنوب والحقوق`,
-      description: clamp(padDesc(t.shortDescription, "من موضوعات الذنوب والحقوق في المجلس العلمي"), 300),
+      description: clamp(padDesc(t.shortDescription, "من موضوعات الذنوب والحقوق في المجلس العلمي"), META_DESC_MAX),
       keywords: [t.title, "الذنوب والحقوق", "التوبة", "الكبائر"],
       ogType: "article",
       // الموضوعات قيد المراجعة الشرعية لا تُفهرَس حتى تُعتمَد.
@@ -2602,7 +2700,7 @@ for (const issue of PUBLIC_FIQH_ISSUES) {
     {
       path: `/fiqh-council/issues/${issue.slug}`,
       title: `${issue.title} — المسائل الفقهية`,
-      description: clamp(padDesc(issue.summary || issue.title, "مسألة فقهية معاصرة في المجمع الفقهي الإسلامي"), 300),
+      description: clamp(padDesc(issue.summary || issue.title, "مسألة فقهية معاصرة في المجمع الفقهي الإسلامي"), META_DESC_MAX),
       keywords: [issue.title, issue.category, "المسائل الفقهية", "المجمع الفقهي", "فقه النوازل"].filter(Boolean),
       ogType: "article",
     },
@@ -2638,7 +2736,7 @@ for (const t of TOPICS) {
 
 // أقسام الأذكار — `/adhkar/:slug` (مصدر واحد: adhkar-seed.ts)
 for (const c of FEATURED_ADHKAR) {
-  const desc = clamp(padDesc(c.description, `${c.name} على ${SITE_NAME}`), 158);
+  const desc = clamp(padDesc(c.description, `${c.name} على ${SITE_NAME}`), META_DESC_MAX);
   addPage(
     {
       path: `/adhkar/${c.slug}`,
@@ -2696,7 +2794,7 @@ const sitemapPages = pages.filter(
     !(p.route.robots || "").includes("noindex") &&
     !IA_REDIRECTS[p.route.path],
 );
-const LASTMOD_TODAY = "2026-08-15";
+const LASTMOD_TODAY = "2026-08-26";
 const LASTMOD_PATHS = new Set([
   "/",
   "/lessons",

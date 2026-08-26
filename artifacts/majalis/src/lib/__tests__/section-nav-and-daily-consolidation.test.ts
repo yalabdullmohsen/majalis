@@ -173,7 +173,7 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   assert(!homeSrc.includes("HomeAboutSection"), "من نحن خارج الرئيسية");
   const footerNavSrc = readFileSync(resolve(appRoot, "src/lib/site-footer-nav.ts"), "utf-8");
   assert(footerSrc.includes("SITE_FOOTER_GROUPS") || footerSrc.includes("site-footer-nav"), "التذييل من مصدر المجموعات");
-  assert(footerNavSrc.includes("/about-us") && footerNavSrc.includes("/privacy"), "تذييل عن المجلس");
+  assert(footerNavSrc.includes("/about") && footerNavSrc.includes("/privacy"), "تذييل عن المجلس");
   assert(footerNavSrc.includes("/lessons") && footerNavSrc.includes("/quiz"), "تذييل دروس/سين جيم");
   assert(footerNavSrc.includes("SITE_FOOTER_GROUPS") && footerNavSrc.includes("الأقسام"), "تذييل رباعي المجموعات");
   for (const title of ["الأقسام", "ابدأ", "الثقة", "قانوني"]) {

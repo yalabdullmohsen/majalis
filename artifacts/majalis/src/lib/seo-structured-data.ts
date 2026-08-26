@@ -128,16 +128,23 @@ export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
   const sheikhCore = stripSheikhHonorifics(lesson.sheikhName);
   const place = lesson.mosque || lesson.region || "";
   const schedule = [lesson.day, lesson.time, lesson.gregorianDate].filter(Boolean).join(" · ");
-  const title = `${lesson.title} | ${SITE_NAME}`;
-  const description = [
+  const rawTitle = String(lesson.title || "درس شرعي").trim();
+  const titleCore =
+    rawTitle.length <= 42 ? rawTitle : `${rawTitle.slice(0, 41).trimEnd()}…`;
+  const title = `${titleCore} | ${SITE_NAME}`;
+  let description = [
     sheikhLabel,
     place ? `المكان: ${place}` : "",
     schedule,
     lesson.category ? `التصنيف: ${lesson.category}` : "",
   ]
     .filter(Boolean)
-    .join(" — ")
-    .slice(0, 160);
+    .join(" — ");
+  if (!description) description = `${lesson.title} — درس شرعي على ${SITE_NAME}`;
+  if (description.length < 120) {
+    description = `${description} — درس شرعي موثّق ضمن منصة ${SITE_NAME}.`;
+  }
+  if (description.length > 160) description = `${description.slice(0, 159).trimEnd()}…`;
 
   const keywords = [
     lesson.title,
@@ -146,7 +153,6 @@ export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
     lesson.activityType,
     "دروس شرعية",
     "دروس علمية",
-    "دروس شرعية",
     "دورات شرعية",
     "طلب العلم",
     SITE_NAME,
@@ -157,7 +163,7 @@ export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
 
   return {
     title,
-    description: description || `${lesson.title} — درس شرعي على ${SITE_NAME}`,
+    description,
     keywords: [...new Set(keywords)],
     canonicalPath: `/lessons/${lesson.id}`,
     image: image.startsWith("http") ? image : absoluteUrl(image),

@@ -132,7 +132,7 @@ const SECTIONS = [
       { href: "/assistant",        label: "المساعد الذكي",        desc: "استفسر عن أي مسألة" },
             { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
       { href: "/fawaid",           label: "الفوائد والبطاقات",      desc: "فوائد ومراجعة سريعة" },
-      { href: "/memorize",         label: "بطاقات المراجعة",      desc: "أداة مراجعة مرتبطة بالفوائد" },
+      { href: "/flashcards",         label: "بطاقات المراجعة",      desc: "أداة مراجعة مرتبطة بالفوائد" },
       { href: "/miracles",         label: "الإشارات الكونية",     desc: "آيات كونية بضوابط علمية" },
       { href: "/mind-map",         label: "الخرائط الذهنية",      desc: "خرائط مفاهيم شرعية" },
       { href: "/maqasid-sharia",   label: "مقاصد الشريعة",        desc: "مدخل المقاصد الخمس" },

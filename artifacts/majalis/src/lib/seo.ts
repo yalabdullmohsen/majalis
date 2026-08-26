@@ -76,6 +76,49 @@ export function normalizePath(path: string) {
   return cleanPath;
 }
 
+const META_DESC_MIN = 120;
+const META_DESC_MAX = 160;
+const TITLE_MAX = 60;
+const TITLE_SUFFIX = " | المجلس العلمي";
+
+function tidySeoText(text: string): string {
+  return String(text || "")
+    .replace(/\.{2,}/g, ".")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function clampSeoText(text: string, max: number): string {
+  const t = tidySeoText(text);
+  return t.length <= max ? t : `${t.slice(0, max - 1).trimEnd()}…`;
+}
+
+/** يضمن وصفًا بين 120–160 حرفًا للعارض وAhrefs. */
+export function normalizeMetaDescription(text: string, hint = ""): string {
+  let t = tidySeoText(text);
+  const pad = tidySeoText(hint) || `محتوى شرعي موثّق ضمن منصة ${SEO_SITE.siteName}.`;
+  if (!t) t = pad;
+  else if (t.length < META_DESC_MIN && !t.includes(pad.slice(0, Math.min(20, pad.length)))) {
+    t = `${t} — ${pad}`;
+  }
+  let guard = 0;
+  while (t.length < META_DESC_MIN && guard < 4) {
+    t = `${t} تصفّح الأقسام المرتبطة في ${SEO_SITE.siteName}.`;
+    guard += 1;
+  }
+  return clampSeoText(t, META_DESC_MAX);
+}
+
+/** «[اسم] | المجلس العلمي» بحد ≈60 حرفًا. */
+export function normalizePageTitle(title: string): string {
+  let name = tidySeoText(title);
+  if (!name) return SEO_SITE.siteName;
+  if (name.endsWith(TITLE_SUFFIX)) name = name.slice(0, -TITLE_SUFFIX.length).trim();
+  else if (name.includes("|")) name = name.split("|")[0].trim();
+  const maxRaw = Math.max(12, TITLE_MAX - TITLE_SUFFIX.length);
+  return `${clampSeoText(name, maxRaw)}${TITLE_SUFFIX}`;
+}
+
 function routeForPath(routes: SeoRoute[], path: string) {
   const normalized = normalizePath(path);
   const exact = routes.find((route) => route.path === normalized);
@@ -303,12 +346,17 @@ export function applyPageSeo(options: PageSeoOptions) {
   const image = /^https?:\/\//i.test(imagePath) ? imagePath : absoluteUrl(imagePath);
   const robots = options.robots || "index, follow";
   const ogType = options.ogType || "website";
+  const title = normalizePageTitle(options.title);
+  const description = normalizeMetaDescription(
+    options.description,
+    `صفحة ضمن منصة ${SEO_SITE.siteName}`,
+  );
 
   document.documentElement.lang = "ar";
   document.documentElement.dir = "rtl";
-  document.title = options.title;
+  document.title = title;
 
-  upsertMeta("name", "description", options.description);
+  upsertMeta("name", "description", description);
   // meta keywords ملغاة نهائيًا — أزل أي وسم قديم من SPA أو prerender
   document.querySelector('meta[name="keywords"]')?.remove();
   upsertMeta("name", "robots", robots);
@@ -321,17 +369,17 @@ export function applyPageSeo(options: PageSeoOptions) {
   upsertMeta("property", "og:site_name", SEO_SITE.siteName);
   upsertMeta("property", "og:locale", "ar_KW");
   upsertMeta("property", "og:type", ogType);
-  upsertMeta("property", "og:title", options.title);
-  upsertMeta("property", "og:description", options.description);
+  upsertMeta("property", "og:title", title);
+  upsertMeta("property", "og:description", description);
   upsertMeta("property", "og:url", canonical);
   upsertMeta("property", "og:image", image);
-  upsertMeta("property", "og:image:alt", options.title);
+  upsertMeta("property", "og:image:alt", title);
   upsertMeta("property", "og:image:width", String(SEO_SITE.ogImageWidth));
   upsertMeta("property", "og:image:height", String(SEO_SITE.ogImageHeight));
 
   upsertMeta("name", "twitter:card", "summary_large_image");
-  upsertMeta("name", "twitter:title", options.title);
-  upsertMeta("name", "twitter:description", options.description);
+  upsertMeta("name", "twitter:title", title);
+  upsertMeta("name", "twitter:description", description);
   upsertMeta("name", "twitter:image", image);
   upsertMeta("name", "twitter:url", canonical);
 

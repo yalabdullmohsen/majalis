@@ -260,7 +260,7 @@ export default function FawaidPage({
       )}
 
       <p className="fawaid-cards-link" style={{marginBlock:"1rem"}}>
-        <Link href="/memorize">بطاقات المراجعة ←</Link>
+        <Link href="/flashcards">بطاقات المراجعة ←</Link>
       </p>
       <RelatedKnowledge kind="fawaid" title="فوائد ذات صلة" />
 

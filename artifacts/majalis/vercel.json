@@ -153,12 +153,17 @@
     {
       "source": "/support",
       "destination": "/contact",
-      "permanent": false
+      "permanent": true
+    },
+    {
+      "source": "/about-us",
+      "destination": "/about",
+      "permanent": true
     },
     {
       "source": "/who-we-are",
       "destination": "/about",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/delete-account",
@@ -739,8 +744,13 @@
       "permanent": true
     },
     {
-      "source": "/flashcards",
-      "destination": "/memorize",
+      "source": "/memorize",
+      "destination": "/flashcards",
+      "permanent": true
+    },
+    {
+      "source": "/memorize/:path*",
+      "destination": "/flashcards/:path*",
       "permanent": true
     },
     {
@@ -1171,7 +1181,11 @@
       "destination": "/index.html"
     },
     {
-      "source": "/about-us",
+      "source": "/flashcards",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/flashcards/:path*",
       "destination": "/index.html"
     },
     {
@@ -1256,14 +1270,6 @@
     },
     {
       "source": "/quran-engine/:path*",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/memorize",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/memorize/:path*",
       "destination": "/index.html"
     },
     {

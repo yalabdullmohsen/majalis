@@ -22,7 +22,6 @@ const MUST_DISCOVER = [
   "/methodology",
   "/fatwa-policy",
   "/about",
-  "/about-us",
   "/privacy",
   "/contact",
   "/terms",

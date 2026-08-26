@@ -17,7 +17,7 @@ assert.match(appSrc, /path="\/who-we-are"/, "who-we-are alias");
 assert.match(appSrc, /path="\/delete-account"/, "delete-account alias");
 assert.match(appSrc, /path="\/account\/delete"/, "account/delete alias");
 assert.match(appSrc, /path="\/support"/, "support alias");
-assert.match(appSrc, /Redirect to="\/about-us"/, "who-we-are → about-us");
+assert.match(appSrc, /Redirect to="\/about"/, "who-we-are → about");
 assert.match(appSrc, /Redirect to="\/account-deletion"/, "delete-account → account-deletion");
 assert.match(appSrc, /Redirect to="\/contact"/, "support → contact");
 
