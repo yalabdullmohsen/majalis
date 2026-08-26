@@ -4,8 +4,11 @@ import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN, parseMushafPageQuery } from "@/lib/qu
 
 type Props = {
   open: boolean;
-  pageNumber: number;
   persist?: boolean;
+  /** إظهار زر الخروج حتى عند إخفاء شريط الأدوات (مثل لوحة الآية) */
+  exitAlwaysVisible?: boolean;
+  pageNumber: number;
+  onExit: () => void;
   onIndex: () => void;
   onPrev: () => void;
   onNext: () => void;
@@ -19,8 +22,10 @@ type Props = {
 /** أدوات المصحف — شريط أيقونات علوي خفيف. */
 export function MushafControls({
   open,
-  pageNumber,
   persist = false,
+  exitAlwaysVisible = false,
+  pageNumber,
+  onExit,
   onIndex,
   onPrev,
   onNext,
@@ -35,6 +40,7 @@ export function MushafControls({
   const [gotoError, setGotoError] = useState<string | null>(null);
   const titleId = useId();
   const visible = open || persist || gotoOpen;
+  const showExit = open || exitAlwaysVisible;
 
   useEffect(() => {
     if (!visible && !gotoOpen) {
@@ -51,8 +57,12 @@ export function MushafControls({
     <div
       className="mm-controls"
       data-open={visible ? "1" : "0"}
+      data-exit={showExit ? "1" : "0"}
       data-testid="mushaf-controls"
     >
+      <button type="button" className="mm-controls__exit" onClick={onExit} aria-label="خروج من المصحف">
+        × خروج
+      </button>
       <div className="mm-controls__bar" role="toolbar" aria-label="أدوات المصحف">
         <div className="mm-controls__cluster mm-controls__cluster--start">
           <button
