@@ -13,17 +13,34 @@ export function ensureHybridSyncOutboxHandlers(): void {
   registerOutboxHandler("reading_progress", async (item: OutboxItem) => {
     try {
       const userId = String(item.payload.userId || "");
-      const page = Number(item.payload.page);
-      if (!userId || !Number.isFinite(page)) return true;
+      if (!userId) return true;
+      const page = item.payload.page != null ? Number(item.payload.page) : NaN;
+      const surah = item.payload.surah != null ? Number(item.payload.surah) : NaN;
+      const ayah = item.payload.ayah != null ? Number(item.payload.ayah) : NaN;
       const { saveResumePosition } = await import("@/lib/user-profile-service");
-      await saveResumePosition(userId, {
-        content_type: "mushaf_page",
-        content_id: String(page),
-        content_title: `المصحف — صفحة ${page}`,
-        content_url: `/mushaf?page=${page}`,
-        thumbnail_icon: "BookOpen",
-        position: { item_index: page },
-      });
+      if (Number.isFinite(page)) {
+        await saveResumePosition(userId, {
+          content_type: "mushaf_page",
+          content_id: String(page),
+          content_title: `المصحف — صفحة ${page}`,
+          content_url: `/mushaf?page=${page}`,
+          thumbnail_icon: "BookOpen",
+          position: { item_index: page },
+        });
+        return true;
+      }
+      if (Number.isFinite(surah)) {
+        const ayahNum = Number.isFinite(ayah) ? ayah : 1;
+        await saveResumePosition(userId, {
+          content_type: "quran_surah",
+          content_id: `${surah}:${ayahNum}`,
+          content_title: `القرآن — سورة ${surah}`,
+          content_url: `/quran/offline-player?surah=${surah}`,
+          thumbnail_icon: "BookOpen",
+          position: { item_index: surah, section: String(ayahNum) },
+        });
+        return true;
+      }
       return true;
     } catch {
       return false;

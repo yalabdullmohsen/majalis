@@ -118,6 +118,13 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    try {
+      const { startUnifiedAppEngine } = await import("@/lib/unified-app-engine");
+      void startUnifiedAppEngine();
+    } catch {
+      /* ignore */
+    }
+
     const prediction = predictKhatmahCompletion();
     await syncSmartLocalNotifications({ khatmahBehind: prediction.behindSchedule });
     maybeNotifyKhatmahBehind(prediction);

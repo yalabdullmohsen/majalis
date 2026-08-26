@@ -24,6 +24,8 @@ assert.match(core, /cancelReciterDownload/);
 assert.match(core, /fetchSurahBlob/);
 assert.match(core, /status: QuranDownloadStatus/);
 assert.match(core, /downloadedMB/);
+assert.match(core, /resolveDownloadResumeHint/);
+assert.match(core, /setDownloadResumeHint/);
 assert.doesNotMatch(core, /from ['"]react-native-fs|import RNFS|@notifee/i);
 
 const ui = read("src/components/quran/ReciterDownloadManager.tsx");
