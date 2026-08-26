@@ -10,6 +10,7 @@ import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { PageHero } from "@/components/ui/PageHero";
 import "@/styles/components/home-brand-title.css";
 import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
+import { HomeLiveNowBanner } from "@/components/home/HomeLiveNowBanner";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { scheduleOnIdle } from "@/lib/yield-to-main";
 import "@/styles/m2030/home.css";
@@ -202,6 +203,10 @@ export default function HomePage() {
           </Link>
         }
       />
+
+      <SectionErrorBoundary name="HomeLiveNow">
+        <HomeLiveNowBanner />
+      </SectionErrorBoundary>
 
       <SectionErrorBoundary name="HomeUniversalSearch">
         <HomeUniversalSearch />

@@ -4276,6 +4276,35 @@ svg {
 
 /* Production sprint — lesson detail + radio player */
 
+.lesson-recording-player {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.lesson-recording-player__audio {
+  width: 100%;
+  min-height: 44px;
+}
+
+.lesson-recording-player__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lesson-recording-player__hint {
+  font-size: 0.78rem;
+  color: var(--mj-brand-deep, #1a4d3e);
+}
+
+.lesson-recording-player__seek-note {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
 @media (max-width: 640px) {
   .lesson-detail-page {
     padding-bottom: max(1rem, var(--inset-bottom));

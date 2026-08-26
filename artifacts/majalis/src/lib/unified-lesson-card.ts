@@ -21,6 +21,7 @@ import {
   isOrphanKuwaitLessonHashId,
 } from "./lesson-id-aliases";
 import { findSeedLessonById } from "./lessons-seed";
+import { toArabicIndicDigits } from "@/lib/numerals";
 
 export type UnifiedLesson = {
   id: string;
@@ -55,6 +56,7 @@ export type UnifiedLesson = {
   linkedLessons?: string[];
   hasLiveStream?: boolean;
   hasRecording?: boolean;
+  recordingUrl?: string;
   mapsUrl?: string;
   streamUrl?: string;
   siteUrl?: string;
@@ -113,6 +115,7 @@ export function fromKuwaitLesson(
     linkedLessons: lesson.linkedLessons,
     hasLiveStream: lesson.hasLiveStream,
     hasRecording: lesson.hasRecording,
+    recordingUrl: lesson.recordingUrl,
     mapsUrl: lesson.mapsUrl,
     streamUrl: lesson.streamUrl,
     siteUrl: lesson.siteUrl,
@@ -186,6 +189,7 @@ export function fromDbLesson(lesson: {
     hijriDate: day ? formatHijriDate(nextDate) : undefined,
     hasLiveStream: Boolean(lesson.live_url || lesson.stream_url),
     hasRecording: Boolean(lesson.video_url || lesson.audio_url || lesson.recording_url),
+    recordingUrl: lesson.audio_url || lesson.video_url || lesson.recording_url || undefined,
     mapsUrl: lesson.maps_url,
     streamUrl: lesson.live_url || lesson.stream_url,
     siteUrl: lesson.book_url || lesson.website_url,
@@ -216,9 +220,60 @@ export function buildLessonCopyText(lesson: UnifiedLesson): string {
   return lines.join("\n");
 }
 
-export function buildLessonShareUrl(lesson: UnifiedLesson): string {
-  if (typeof window === "undefined") return lesson.detailsHref;
-  return `${window.location.origin}${lesson.detailsHref}`;
+export function buildLessonShareUrl(
+  lesson: UnifiedLesson,
+  opts?: { atSeconds?: number },
+): string {
+  const base =
+    typeof window === "undefined"
+      ? lesson.detailsHref
+      : `${window.location.origin}${lesson.detailsHref}`;
+  const seconds = opts?.atSeconds;
+  if (seconds == null || !Number.isFinite(seconds) || seconds <= 0) return base;
+  const url = new URL(base, typeof window !== "undefined" ? window.location.origin : "https://majlisilm.com");
+  url.searchParams.set("t", String(Math.floor(seconds)));
+  return url.pathname + url.search;
+}
+
+/** يستخرج ثواني البداية من ?t= أو ?time= في رابط الدرس. */
+export function parseLessonShareTimestamp(search: string): number | null {
+  const raw = search.startsWith("?") ? search.slice(1) : search;
+  const params = new URLSearchParams(raw);
+  const val = params.get("t") ?? params.get("time");
+  if (!val) return null;
+  const n = Number(val);
+  if (!Number.isFinite(n) || n < 0) return null;
+  return Math.floor(n);
+}
+
+/** تنسيق «١٢:٣٠» للمشاركة من وقت محدد. */
+export function formatLessonTimestampLabel(totalSeconds: number): string {
+  const s = Math.max(0, Math.floor(totalSeconds));
+  const mins = Math.floor(s / 60);
+  const secs = s % 60;
+  return `${toArabicIndicDigits(String(mins).padStart(2, "0"))}:${toArabicIndicDigits(String(secs).padStart(2, "0"))}`;
+}
+
+export async function shareLessonAtTimestamp(
+  lesson: UnifiedLesson,
+  atSeconds: number,
+): Promise<void> {
+  const label = formatLessonTimestampLabel(atSeconds);
+  const url = buildLessonShareUrl(lesson, { atSeconds });
+  const text = `${lesson.title} — من الدقيقة ${label}\n${url}`;
+  try {
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+      await navigator.share({ title: lesson.title, text, url });
+      return;
+    }
+  } catch {
+    /* fall through */
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    /* ignore */
+  }
 }
 
 export function prominenceClass(sortKey: number, archived?: boolean): string {
