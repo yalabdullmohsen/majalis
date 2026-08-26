@@ -32,8 +32,8 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.25rem 0.45rem;
-  font-size: 0.72rem;
-  line-height: 1.45;
+  font-size: 0.68rem;
+  line-height: 1.4;
   color: var(--majalis-ink-soft, var(--mj-muted, #5a7268));
   font-weight: 500;
 }

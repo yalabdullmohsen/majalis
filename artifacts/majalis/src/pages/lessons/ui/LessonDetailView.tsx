@@ -3,7 +3,6 @@ import { Link, useLocation } from "wouter";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { SkeletonPage } from "@/components/ui-common";
-import NotFound from "@/views/not-found";
 import ContentActions from "@/components/ContentActions";
 import { ContentReportButton } from "@/components/ContentReportButton";
 import { isDemoId } from "@/lib/demo-id";
@@ -34,8 +33,10 @@ import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedIt
 import { ScholarFollowButton } from "@/components/ScholarFollowButton";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
+import { canonicalizeLessonPublicId, isOrphanKuwaitLessonHashId } from "@/lib/lesson-id-aliases";
 import { getLessonsModule, type LessonDbRow } from "@/features/lessons";
+import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/not-found.css";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -102,6 +103,35 @@ function StatPill({ label, value }: { label: string; value: number | string }) {
     <div className="lesson-detail-stat">
       <span>{label}</span>
       <strong>{typeof value === "number" ? value.toLocaleString("ar") : value}</strong>
+    </div>
+  );
+}
+
+function LessonUnavailable({ lessonId }: { lessonId: string }) {
+  useEffect(() => {
+    applyPageSeo({
+      path: `/lessons/${lessonId}`,
+      title: "الدرس غير متاح | المجلس العلمي",
+      description: "هذا الدرس غير متاح أو نُقل. تصفّح فهرس الدروس أو ابحث عن درس مشابه.",
+      keywords: ["درس", "غير متاح"],
+      robots: "noindex, follow",
+    });
+  }, [lessonId]);
+
+  return (
+    <div className="nf2-page" dir="rtl" lang="ar">
+      <section className="nf2-card">
+        <p className="nf2-code" aria-hidden="true">—</p>
+        <h1 className="nf2-title">الدرس غير متاح</h1>
+        <p className="nf2-desc">
+          الرابط قديم أو الدرس نُقل. يمكنك فتح فهرس الدروس، دروس الكويت، أو البحث عن عنوان مشابه.
+        </p>
+        <div className="nf2-actions">
+          <Link href="/lessons" className="nf2-btn nf2-btn--primary">فهرس الدروس</Link>
+          <Link href="/kuwait-lessons" className="nf2-btn nf2-btn--outline">دروس الكويت</Link>
+          <Link href="/search" className="nf2-btn nf2-btn--outline">البحث</Link>
+        </div>
+      </section>
     </div>
   );
 }
@@ -181,6 +211,14 @@ export default function LessonDetailPage({
     return null;
   }, [kuwaitLesson, lesson]);
 
+  // بصمات kuwait-lessons يتيمة بلا alias — أعد التوجيه لفهرس الدروس بدل صفحة خطأ مفهرسة.
+  useEffect(() => {
+    if (!params.id || loading || unified) return;
+    if (isOrphanKuwaitLessonHashId(params.id)) {
+      setLocation("/lessons", { replace: true });
+    }
+  }, [params.id, loading, unified, setLocation]);
+
   const seoLesson = useMemo((): KuwaitLessonRecord | null => {
     if (kuwaitLesson) return kuwaitLesson;
     if (!lesson || !unified) return null;
@@ -215,7 +253,7 @@ export default function LessonDetailPage({
   usePageView("lesson", params.id);
 
   if (loading) return <SkeletonPage />;
-  if (!unified) return <NotFound />;
+  if (!unified) return <LessonUnavailable lessonId={params.id} />;
 
   const sheikhName = unified.sheikhName;
   const sheikhImage = kuwaitLesson?.sheikhImage || (lesson ? resolveLessonSheikhImage(lesson) : undefined);

@@ -33,13 +33,13 @@ assert.match(cfg, /enabled:\s*true/);
 assert.match(cfg, /placement:\s*"header"/);
 assert.match(cfg, /shouldShowHeaderAd/);
 assert.match(cfg, /Google Ads/);
-assert.match(cfg, /ctaUrl:\s*"\/support"/);
+assert.match(cfg, /ctaUrl:\s*"\/contact"/);
 assert.match(cfg, /شركة العبد المحسن للحج/);
 assert.match(cfg, /الثقة/);
 assert.match(cfg, /badgeLabel:\s*"شريك المجلس العلمي"/);
 assert.match(cfg, /sponsorUrl:\s*"https:\/\/instagram\.com\/Al_abdalmhsn"/);
 assert.match(cfg, /sponsorAriaLabel:\s*"فتح حساب شركة العبد المحسن للحج في إنستقرام"/);
-assert.match(cfg, /ctaLabel:\s*"تواصل عبر إنستقرام"/);
+assert.match(cfg, /ctaLabel:\s*"فتح إنستقرام"/);
 assert.doesNotMatch(cfg, /advertiseWithUsLabel/);
 assert.doesNotMatch(cfg, /للإعلان معنا/);
 

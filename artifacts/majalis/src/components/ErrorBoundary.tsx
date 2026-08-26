@@ -20,8 +20,35 @@ type State = {
   recovering: boolean;
 };
 
+const ERROR_ESCAPE_LINKS = [
+  { href: "/lessons", label: "الدروس" },
+  { href: "/fiqh", label: "الفقه" },
+  { href: "/hadith", label: "الحديث" },
+  { href: "/search", label: "البحث" },
+  { href: "/contact", label: "التواصل" },
+] as const;
+
 function userFacingBody(): string {
-  return "حدث خلل أثناء تحميل هذا القسم. يمكنك إعادة المحاولة أو العودة للرئيسية.";
+  return "حدث خلل أثناء تحميل هذا القسم. يمكنك إعادة المحاولة أو الانتقال إلى قسم آخر.";
+}
+
+/** يمنع فهرسة شاشة الخطأ/الاستعادة كصفحة محتوى أساسية في Google. */
+function applyErrorBoundaryRobots(active: boolean): void {
+  if (typeof document === "undefined") return;
+  let el = document.querySelector('meta[name="robots"]');
+  if (active) {
+    if (!el) {
+      el = document.createElement("meta");
+      el.setAttribute("name", "robots");
+      document.head.appendChild(el);
+    }
+    el.setAttribute("content", "noindex, follow");
+    el.setAttribute("data-error-boundary", "1");
+    return;
+  }
+  if (el?.getAttribute("data-error-boundary") === "1") {
+    el.removeAttribute("data-error-boundary");
+  }
 }
 
 export class ErrorBoundary extends Component<Props, State> {
@@ -47,6 +74,7 @@ export class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, info: ErrorInfo) {
     const errorId = this.state.errorId || createErrorId("MJL");
     this.setState({ componentStack: info.componentStack ?? null, errorId });
+    applyErrorBoundaryRobots(true);
 
     void logClientError(
       buildErrorReport(error, {
@@ -62,8 +90,14 @@ export class ErrorBoundary extends Component<Props, State> {
     }
   }
 
+  componentDidUpdate(_prev: Readonly<Props>, prevState: Readonly<State>) {
+    if (this.state.error && !prevState.error) applyErrorBoundaryRobots(true);
+    if (!this.state.error && prevState.error) applyErrorBoundaryRobots(false);
+  }
+
   reset = () => {
     clearChunkReloadGuard();
+    applyErrorBoundaryRobots(false);
     this.setState({
       error: null,
       copied: false,
@@ -73,10 +107,14 @@ export class ErrorBoundary extends Component<Props, State> {
     });
   };
 
-  goHome = () => {
+  goTo = (path: string) => {
     this.reset();
-    window.history.pushState(null, "", "/");
+    window.history.pushState(null, "", path);
     window.dispatchEvent(new PopStateEvent("popstate"));
+  };
+
+  goHome = () => {
+    this.goTo("/");
   };
 
   copyId = async () => {
@@ -103,8 +141,14 @@ export class ErrorBoundary extends Component<Props, State> {
 
       if (this.state.recovering || (chunkError && isChunkRecoveryInFlight())) {
         return (
-          <div className="error-boundary-page error-boundary-page--recovering" role="status" aria-live="polite" dir="rtl">
-            <h1 className="error-boundary-page__title">جاري تحديث العرض</h1>
+          <div
+            className="error-boundary-page error-boundary-page--recovering"
+            role="status"
+            aria-live="polite"
+            dir="rtl"
+            data-nosnippet
+          >
+            <p className="error-boundary-page__title">جاري تحديث العرض</p>
             <p className="error-boundary-page__body">
               تم تحديث المنصة، جاري تحسين العرض…
             </p>
@@ -113,8 +157,8 @@ export class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div role="alert" className="error-boundary-page">
-          <h1 className="error-boundary-page__title">تعذّر عرض هذه الصفحة</h1>
+        <div role="alert" className="error-boundary-page" data-nosnippet dir="rtl" lang="ar">
+          <p className="error-boundary-page__title">حدث خلل مؤقت في العرض</p>
           <p className="error-boundary-page__body">
             {chunkError
               ? "تعذّر تحميل ملفات الصفحة بعد تحديث المنصة. اضغط «تحديث المنصة» لمسح الكاش وإعادة التحميل."
@@ -143,6 +187,23 @@ export class ErrorBoundary extends Component<Props, State> {
               الإبلاغ عن الخطأ
             </button>
           </div>
+
+          <nav className="error-boundary-page__nav" aria-label="أقسام مفيدة">
+            <p className="error-boundary-page__nav-label">أقسام مفيدة</p>
+            <ul className="error-boundary-page__nav-list">
+              {ERROR_ESCAPE_LINKS.map((item) => (
+                <li key={item.href}>
+                  <button
+                    type="button"
+                    className="error-boundary-btn error-boundary-btn--ghost"
+                    onClick={() => this.goTo(item.href)}
+                  >
+                    {item.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           {this.state.copied && (
             <p className="error-boundary-page__copied">تم تجهيز تقرير الخطأ.</p>

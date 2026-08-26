@@ -68,7 +68,7 @@ export default function ContactPage() {
       title: "تواصل معنا | المجلس العلمي",
       description: "يسعدنا استقبال ملاحظاتك واقتراحاتك وتصحيحاتك عبر البريد الرسمي للمجلس العلمي.",
       keywords: ["تواصل", "المجلس العلمي", "الدعم", "اقتراحات", "إبلاغ عن خطأ"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "ContactPage", name: "تواصل مع المجلس العلمي", url: "https://majlisilm.com/support", about: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "ContactPage", name: "تواصل مع المجلس العلمي", url: "https://majlisilm.com/contact", about: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" } }],
     });
   }, []);
 
@@ -131,7 +131,7 @@ export default function ContactPage() {
               </a>
               <button type="button" className="contact-btn contact-btn--ghost" onClick={copyEmail}>
                 {copied ? <Check size={15} strokeWidth={2} aria-hidden="true" /> : <Copy size={15} strokeWidth={2} aria-hidden="true" />}
-                {copied ? "تم النسخ" : "نسخ البريد"}
+                {copied ? "تم النسخ" : "نسخ"}
               </button>
             </div>
           </div>

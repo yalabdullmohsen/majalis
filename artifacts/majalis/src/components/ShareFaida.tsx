@@ -17,7 +17,7 @@ type Props = {
 };
 
 /**
- * زر مشاركة موحّد — Web Share API · واتساب · نسخ الرابط.
+ * زر مشاركة موحّد — Web Share API · واتساب · نسخ.
  */
 export function ShareFaida({ title, url, className = "" }: Props) {
   const shareUrl = useMemo(() => resolveShareUrl(url), [url]);
@@ -76,14 +76,14 @@ export function ShareFaida({ title, url, className = "" }: Props) {
           type="button"
           className="share-faida__btn"
           onClick={handleCopy}
-          aria-label={copied ? "تم نسخ الرابط" : "نسخ الرابط"}
+          aria-label={copied ? "تم النسخ" : "نسخ"}
         >
           {copied ? (
             <Check size={15} strokeWidth={2.2} aria-hidden="true" />
           ) : (
             <Copy size={15} strokeWidth={2} aria-hidden="true" />
           )}
-          {copied ? "تم النسخ" : "نسخ الرابط"}
+          {copied ? "تم" : "نسخ"}
         </button>
       </div>
     </div>
