@@ -1,19 +1,19 @@
 {
   "version": 1,
-  "generated_at": "2026-08-25T16:28:01.893Z",
+  "generated_at": "2026-08-26T04:37:40.514Z",
   "items": [
     {
-      "id": "d78933ae5f24cd7b840c0c70423c2577d4747e3f",
+      "id": "c7a4a88dbec9ad56d2449e4423fabdcb06d1abb6",
       "type": "درس",
-      "title_ar": "ندعوكم لحضور الدرس العلمي التعليق على روضة الأفهام في شرح زوائد المحرر على بلوغ…",
-      "summary_ar": "ندعوكم لحضور الدرس العلمي: التعليق علي ‌&rlm;« روضه الافهام في شرح زوائد المحرر علي بلوغ المرام» للشيخ حسين المويزري @H_Almuwizri ⌚ (كل اثنين) بعد صلاه العصر م…",
-      "sheikh": null,
-      "place": "شرح زوائد المحرر على بلوغ المرام» 🎙️ للشيخ حسين المويزري @H_Almuwizri ⌚ (كل اثن",
+      "title_ar": "الآن مباشر شرح كتاب التوحيد للإمام محمد بن عبدالوهاب فضيلة الشيخ عمر مثيب العتي…",
+      "summary_ar": "الان مباشر (36) شرح كتاب&nbsp; التوحيد للامام محمد بن عبدالوهاب فضيله الشيخ عمر مثيب العتيبي رابط البث المباشر https://t.me/omar_muthib?livestream تحميل الكتاب…",
+      "sheikh": "عمر مثيب العتيبي 🔗 رابط البث المباشر https://t",
+      "place": null,
       "audience": "عام",
       "starts_at": null,
       "time_text": null,
-      "register_url": "https://t.me/DrosQ8",
-      "schedule_kind": "weekly",
+      "register_url": "https://t.me/omar_muthib?livestream",
+      "schedule_kind": null,
       "women_attendance": "men_only",
       "women_attendance_note": null,
       "sources": [
@@ -21,24 +21,31 @@
           "id": "telegram-DrosQ8",
           "name_ar": "دروس الكويت",
           "url": "https://t.me/DrosQ8",
-          "post_url": "https://t.me/DrosQ8/27628",
+          "post_url": "https://t.me/DrosQ8/27633",
+          "platform": "telegram"
+        },
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27646",
           "platform": "telegram"
         }
       ],
       "image_url": null,
-      "published_at": "2026-08-25T16:02:24.243Z",
+      "published_at": "2026-08-26T04:13:43.276Z",
       "confidence": 0.8
     },
     {
-      "id": "96bdf8d2d25df2cc4eae2c21a36dde710b6a3b5f",
+      "id": "26448a5df818331f38a48e66fd0806d94a550832",
       "type": "محاضرة",
-      "title_ar": "غداً السبت الساعة صباحاً بإذن الله غدا السبت الساعه صباحا باذن الله بمسجد الياق…",
-      "summary_ar": "غدا السبت الساعه 10:00 صباحا باذن الله بمسجد الياقوت قراءه صحيح مسلم وصلنا كتاب الرضاع المجلس 31 للشيخ عثمان الخميس لتفاصيل المحاضرات وللبث المباشر في الموقع ا…",
-      "sheikh": "جميع دروس الشيخ ومواعيد محاضراته تجدونها في الموقع الإلكترون",
+      "title_ar": "غداً الأربعاء بعد صلاة المغرب بإذن الله مسجد الياقوت درس تلخيص مختصر المقنع الم…",
+      "summary_ar": "غدا الاربعاء بعد صلاه المغرب باذن الله مسجد الياقوت درس تلخيص مختصر المقنع المجلس (133) – كتاب الخلع للشيخ عثمان الخميس لتفاصيل المحاضرات وللبث المباشر في المو…",
+      "sheikh": "جميع دروس الشيخ ومواعيد محافراته تجدونها في الموقع الإلكتثرو",
       "place": "الياقوت",
       "audience": "عام",
       "starts_at": null,
-      "time_text": "10:00 ص",
+      "time_text": null,
       "register_url": null,
       "schedule_kind": "upcoming",
       "women_attendance": "men_only",
@@ -48,13 +55,13 @@
           "id": "ig-othmanalkamees",
           "name_ar": "د. عثمان الخميس",
           "url": "https://instagram.com/othmanalkamees",
-          "post_url": "https://www.instagram.com/p/DcURFLzCGTu/",
+          "post_url": "https://www.instagram.com/p/DcefqmwiD2p/",
           "platform": "instagram"
         }
       ],
       "image_url": null,
-      "published_at": "2026-08-24T15:56:29.848Z",
-      "confidence": 0.95
+      "published_at": "2026-08-25T00:00:00.000Z",
+      "confidence": 0.85
     },
     {
       "id": "d50eff9e92a431e5a30dd90fc69aad4f77689992",

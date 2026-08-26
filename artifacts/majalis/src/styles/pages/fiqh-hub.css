@@ -715,7 +715,7 @@ html.dark .fiqh-lux-page.section-lobby {
 .fiqh-lux-hero {
   position: relative;
   margin: 0.75rem max(1rem, var(--page-gutter, 1rem)) 0;
-  padding: 1.65rem max(1rem, var(--page-gutter, 1rem)) 1.5rem;
+  padding: 2.5rem max(1rem, var(--page-gutter, 1rem)) 2rem;
   border-radius: 22px;
   overflow: hidden;
   background-color: var(--fq-emerald);

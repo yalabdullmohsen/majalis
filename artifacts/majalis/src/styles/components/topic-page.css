@@ -10,7 +10,7 @@
   --topic-on-hero-accent: #E8D5A3;
   direction: rtl;
   overflow-x: clip;
-  padding-bottom: calc(var(--nav-h, 64px) + var(--fab-space, 56px) + 16px + var(--inset-bottom, 0px));
+  padding-bottom: calc(var(--nav-h, 64px) + var(--fab-space, 56px) + 24px + var(--inset-bottom, 0px));
 }
 
 .topic-page__crumb {
@@ -32,7 +32,9 @@
 
 .topic-page__hero {
   width: auto;
+  max-width: 42rem;
   margin: 0.65rem max(0.75rem, var(--page-gutter, 1rem)) 0;
+  margin-inline: auto;
   border-radius: 22px;
   overflow: hidden;
   /* لون صلب أولاً — بوابة التباين ترفض background-image بلا background-color */
@@ -85,10 +87,11 @@
 
 .topic-page__quote {
   margin: 1rem 0 0;
-  padding: 0.65rem 0.85rem;
-  border-inline-end: 3px solid color-mix(in srgb, var(--topic-on-hero) 40%, transparent);
-  background: color-mix(in srgb, var(--topic-on-hero) 8%, transparent);
-  border-radius: 0 0.5rem 0.5rem 0;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--topic-on-hero) 22%, transparent);
+  border-inline-end: 3px solid color-mix(in srgb, var(--topic-on-hero-accent, var(--topic-on-hero)) 55%, transparent);
+  background: color-mix(in srgb, var(--topic-on-hero) 10%, transparent);
+  border-radius: 16px;
 }
 
 .topic-page__quote-text {
@@ -151,16 +154,17 @@
   flex: 0 0 auto;
   height: 36px;
   min-height: 36px;
-  padding: 0 0.85rem;
-  border-radius: 0.55rem;
+  padding: 0 0.95rem;
+  border-radius: 999px;
   border: 1.5px solid var(--msk-border, var(--mj-hairline));
   background: var(--mj-surface, #fff);
   color: var(--mj-ink);
   font: inherit;
   font-size: 0.8125rem;
-  font-weight: 600;
+  font-weight: 700;
   white-space: nowrap;
   cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 .topic-page__tab:focus-visible {
   outline: 2px solid var(--topic-accent, var(--mj-brand));
@@ -214,17 +218,19 @@
 }
 
 .topic-card {
-  background: var(--mj-surface, #fff);
-  border-radius: 0.75rem;
-  border: 1px solid var(--msk-border, var(--mj-hairline));
+  background: color-mix(in srgb, var(--mj-surface, #fff) 96%, var(--mj-brand-soft, #e4f0ea));
+  border-radius: 22px;
+  border: 1px solid color-mix(in srgb, var(--topic-accent, var(--mj-brand)) 24%, var(--msk-border, var(--mj-hairline)));
   border-inline-start: 3px solid var(--topic-accent, var(--mj-brand));
-  padding: 0.85rem 1rem;
+  padding: 1rem 1.05rem;
+  box-shadow: 0 2px 10px -7px rgba(11, 32, 24, 0.16);
+  min-height: 4.5rem;
 }
 
 .topic-card__title {
   margin: 0 0 0.35rem;
-  font-size: 1.0625rem; /* 17px */
-  font-weight: 600;
+  font-size: 1.0625rem;
+  font-weight: 800;
   color: var(--mj-ink);
 }
 
@@ -263,7 +269,29 @@
 
 @media (prefers-reduced-motion: reduce) {
   .topic-page__tab,
-  .topic-page__hero {
+  .topic-page__hero,
+  .hub-card {
     transition: none;
   }
+}
+
+html[data-theme="dark"] .topic-card,
+html.dark .topic-card {
+  background: color-mix(in srgb, var(--mj-surface, #1a221f) 94%, #0f3d2e 6%);
+  border-color: color-mix(in srgb, var(--topic-accent, var(--mj-brand)) 32%, var(--mj-hairline));
+  box-shadow: 0 2px 12px -7px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="dark"] .topic-page__tab,
+html.dark .topic-page__tab {
+  background: var(--mj-surface-2, #222d29);
+  border-color: var(--mj-hairline);
+  color: var(--mj-ink);
+}
+
+html[data-theme="dark"] .topic-page__tab.is-active,
+html.dark .topic-page__tab.is-active {
+  border-color: var(--topic-accent, var(--mj-brand));
+  background: color-mix(in srgb, var(--topic-accent, var(--mj-brand)) 18%, transparent);
+  color: color-mix(in srgb, var(--topic-accent, var(--mj-brand)) 88%, #fff);
 }
