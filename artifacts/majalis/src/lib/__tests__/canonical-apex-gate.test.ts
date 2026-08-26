@@ -51,6 +51,16 @@ assert.match(
   /searchParams\.delete\("tab"\)/,
   "middleware: يزيل ?tab= من /lessons",
 );
+assert.match(
+  readFileSync(resolve(root, "middleware.js"), "utf8"),
+  /from\s+"@vercel\/functions"/,
+  "middleware: next() من @vercel/functions لتمرير الطلبات",
+);
+assert.match(
+  readFileSync(resolve(root, "middleware.js"), "utf8"),
+  /return\s+next\(\)/,
+  "middleware: return next() عند غياب tab",
+);
 
 const sitemap = readFileSync(resolve(root, "public/sitemap.xml"), "utf8");
 assert.equal(/https:\/\/www\.majlisilm\.com/.test(sitemap), false, "sitemap: بلا www");
