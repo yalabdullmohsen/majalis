@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { displayText } from "@/lib/display-text";
 import { stripFawaidBoilerplate } from "@/lib/fawaid-text";
 import { isDemoId } from "@/lib/demo-id";
@@ -17,7 +18,7 @@ type Props = {
   item: FaidahLike;
 };
 
-export function FaidahCard({ item }: Props) {
+export const FaidahCard = memo(function FaidahCard({ item }: Props) {
   const cleaned = stripFawaidBoilerplate(displayText(item.text));
   const meta = [
     item.source ? { label: "المصدر", value: item.source } : null,
@@ -45,6 +46,6 @@ export function FaidahCard({ item }: Props) {
       adminEditData={{ text: item.text, source: item.source || "", category: item.category || "" }}
     />
   );
-}
+});
 
 export default FaidahCard;

@@ -23,14 +23,14 @@ export async function fetchLessonEngagementStats(contentId: string): Promise<Les
 
     const viewsPromise = supabase
       .from("content_views")
-      .select("*", { count: "exact", head: true })
+      .select("id", { count: "exact", head: true })
       .eq("content_type", "lesson")
       .eq("content_id", contentId);
 
     const savesPromise = isAuthed
       ? supabase
           .from("bookmarks")
-          .select("*", { count: "exact", head: true })
+          .select("id", { count: "exact", head: true })
           .eq("content_type", "lesson")
           .eq("content_id", contentId)
       : Promise.resolve({ count: 0, error: null });

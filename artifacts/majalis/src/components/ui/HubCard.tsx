@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { memo, type ReactNode } from "react";
 import { Link } from "wouter";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -20,7 +20,7 @@ export type HubCardProps = {
 /**
  * بطاقة قسم موحّدة: سطح فاتح + أيقونة soft، بلا كتلة داكنة فارغة.
  */
-export function HubCard({
+export const HubCard = memo(function HubCard({
   href,
   title,
   description,
@@ -61,4 +61,4 @@ export function HubCard({
       </div>
     </Link>
   );
-}
+});
