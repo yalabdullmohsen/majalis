@@ -57,6 +57,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "الإيمان والتوحيد",
+    source: "حلية الأولياء",
   },
   {
     id: "i5",
@@ -65,6 +66,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام الشافعي",
     died: "204ه",
     category: "الإيمان والتوحيد",
+    source: "مناقب الشافعي",
   },
 
   {
@@ -83,6 +85,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام الشافعي",
     died: "204ه",
     category: "الإيمان والتوحيد",
+    source: "مناقب الشافعي",
   },
 
   /* ─── العلم والعمل ─── */
@@ -93,6 +96,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن مسعود",
     died: "32ه",
     category: "العلم والعمل",
+    source: "حلية الأولياء",
   },
   {
     id: "e2",
@@ -101,6 +105,7 @@ const HIKAM: Hikma[] = [
     scholar: "سفيان الثوري",
     died: "161ه",
     category: "العلم والعمل",
+    source: "حلية الأولياء",
   },
   {
     id: "e3",
@@ -109,6 +114,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام مالك",
     died: "179ه",
     category: "العلم والعمل",
+    source: "ترتيب المدارك",
   },
   {
     id: "e4",
@@ -117,6 +123,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام أحمد",
     died: "241ه",
     category: "العلم والعمل",
+    source: "طبقات الحنابلة",
   },
   {
     id: "e5",
@@ -125,6 +132,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن مسعود",
     died: "32ه",
     category: "العلم والعمل",
+    source: "حلية الأولياء",
   },
   {
     id: "e6",
@@ -133,6 +141,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام الشافعي",
     died: "204ه",
     category: "العلم والعمل",
+    source: "مناقب الشافعي",
   },
   {
     id: "e7",
@@ -141,6 +150,7 @@ const HIKAM: Hikma[] = [
     scholar: "عمر بن الخطاب",
     died: "23ه",
     category: "العلم والعمل",
+    source: "حلية الأولياء",
   },
 
   {
@@ -150,6 +160,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام أحمد",
     died: "241ه",
     category: "العلم والعمل",
+    source: "طبقات الحنابلة",
   },
   {
     id: "e9",
@@ -158,6 +169,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "العلم والعمل",
+    source: "حلية الأولياء",
   },
 
   /* ─── الدنيا والزهد ─── */
@@ -168,6 +180,7 @@ const HIKAM: Hikma[] = [
     scholar: "سلمان الفارسي",
     died: "35ه",
     category: "الدنيا والزهد",
+    source: "حلية الأولياء",
   },
   {
     id: "d2",
@@ -185,6 +198,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن مسعود",
     died: "32ه",
     category: "الدنيا والزهد",
+    source: "حلية الأولياء",
   },
   {
     id: "d4",
@@ -193,6 +207,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "الدنيا والزهد",
+    source: "الترمذي: ٢٣٢٠ — حديث مرفوع (يُراجع إسناد النسبة للحسن)",
   },
   {
     id: "d5",
@@ -201,6 +216,7 @@ const HIKAM: Hikma[] = [
     scholar: "سفيان الثوري",
     died: "161ه",
     category: "الدنيا والزهد",
+    source: "حلية الأولياء",
   },
   {
     id: "d6",
@@ -208,6 +224,7 @@ const HIKAM: Hikma[] = [
     scholar: "علي بن أبي طالب",
     died: "40ه",
     category: "الدنيا والزهد",
+    source: "نهج البلاغة وكتب الأثر",
   },
   {
     id: "d7",
@@ -216,6 +233,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "الدنيا والزهد",
+    source: "حلية الأولياء",
   },
   {
     id: "d8",
@@ -224,6 +242,7 @@ const HIKAM: Hikma[] = [
     scholar: "إبراهيم بن أدهم",
     died: "162ه",
     category: "الدنيا والزهد",
+    source: "صفة الصفوة لابن الجوزي",
   },
 
   /* ─── التوبة والاستغفار ─── */
@@ -234,6 +253,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "التوبة والاستغفار",
+    source: "حلية الأولياء",
   },
   {
     id: "t2",
@@ -242,6 +262,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن تيمية",
     died: "728ه",
     category: "التوبة والاستغفار",
+    source: "مجموع الفتاوى",
   },
   {
     id: "t3",
@@ -259,6 +280,7 @@ const HIKAM: Hikma[] = [
     scholar: "عمر بن الخطاب",
     died: "23ه",
     category: "التوبة والاستغفار",
+    source: "حلية الأولياء",
   },
   {
     id: "t5",
@@ -267,6 +289,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "التوبة والاستغفار",
+    source: "حلية الأولياء",
   },
   {
     id: "t6",
@@ -295,6 +318,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن مسعود",
     died: "32ه",
     category: "الصبر والشكر",
+    source: "حلية الأولياء",
   },
   {
     id: "s2",
@@ -303,6 +327,7 @@ const HIKAM: Hikma[] = [
     scholar: "عمر بن الخطاب",
     died: "23ه",
     category: "الصبر والشكر",
+    source: "البخاري: ٦٤٧٠ / مسلم: ١٠٥ — معنى حديث مرفوع؛ يُراجع اللفظ",
   },
   {
     id: "s4",
@@ -311,6 +336,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام أحمد",
     died: "241ه",
     category: "الصبر والشكر",
+    source: "طبقات الحنابلة",
   },
   {
     id: "s5",
@@ -319,6 +345,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن القيم",
     died: "751ه",
     category: "الصبر والشكر",
+    source: "مدارج السالكين",
   },
   {
     id: "s6",
@@ -336,6 +363,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "الصبر والشكر",
+    source: "حلية الأولياء",
   },
 
   /* ─── الأخلاق ─── */
@@ -346,6 +374,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام الشافعي",
     died: "204ه",
     category: "الأخلاق",
+    source: "مناقب الشافعي",
   },
   {
     id: "a2",
@@ -354,6 +383,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن مسعود",
     died: "32ه",
     category: "الأخلاق",
+    source: "حلية الأولياء",
   },
   {
     id: "a3",
@@ -362,6 +392,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن القيم",
     died: "751ه",
     category: "الأخلاق",
+    source: "مدارج السالكين",
   },
   {
     id: "a4",
@@ -370,6 +401,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "الأخلاق",
+    source: "حلية الأولياء",
   },
   {
     id: "a5",
@@ -378,6 +410,7 @@ const HIKAM: Hikma[] = [
     scholar: "عبدالله بن عباس",
     died: "68ه",
     category: "الأخلاق",
+    source: "حلية الأولياء",
   },
   {
     id: "a6",
@@ -386,6 +419,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام أحمد",
     died: "241ه",
     category: "الأخلاق",
+    source: "طبقات الحنابلة",
   },
   {
     id: "a7",
@@ -394,6 +428,7 @@ const HIKAM: Hikma[] = [
     scholar: "سفيان الثوري",
     died: "161ه",
     category: "الأخلاق",
+    source: "حلية الأولياء",
   },
   {
     id: "a8",
@@ -402,6 +437,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن مسعود",
     died: "32ه",
     category: "الأخلاق",
+    source: "حلية الأولياء",
   },
 
   /* ─── الموت والآخرة ─── */
@@ -412,6 +448,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "الموت والآخرة",
+    source: "حلية الأولياء",
   },
   {
     id: "m2",
@@ -420,6 +457,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "الموت والآخرة",
+    source: "حلية الأولياء",
   },
   {
     id: "m3",
@@ -428,6 +466,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن القيم",
     died: "751ه",
     category: "الموت والآخرة",
+    source: "مدارج السالكين",
   },
   {
     id: "m4",
@@ -436,6 +475,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن رجب الحنبلي",
     died: "795ه",
     category: "الموت والآخرة",
+    source: "جامع العلوم والحكم",
   },
   {
     id: "m5",
@@ -444,6 +484,7 @@ const HIKAM: Hikma[] = [
     scholar: "سفيان الثوري",
     died: "161ه",
     category: "الموت والآخرة",
+    source: "حلية الأولياء",
   },
   {
     id: "m6",
@@ -452,6 +493,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "الموت والآخرة",
+    source: "حلية الأولياء",
   },
   {
     id: "m7",
@@ -460,6 +502,7 @@ const HIKAM: Hikma[] = [
     scholar: "علي بن أبي طالب",
     died: "40ه",
     category: "الموت والآخرة",
+    source: "نهج البلاغة وكتب الأثر",
   },
 
   /* ─── القرآن والذكر ─── */
@@ -470,6 +513,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "القرآن والذكر",
+    source: "حلية الأولياء",
   },
   {
     id: "q2",
@@ -487,6 +531,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "القرآن والذكر",
+    source: "حلية الأولياء",
   },
   {
     id: "q4",
@@ -531,6 +576,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن مسعود",
     died: "32ه",
     category: "القرآن والذكر",
+    source: "حلية الأولياء",
   },
 
   /* ─── الإيمان والتوحيد، إضافية ─── */
@@ -550,6 +596,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن مسعود",
     died: "32ه",
     category: "الإيمان والتوحيد",
+    source: "حلية الأولياء",
   },
   {
     id: "i10",
@@ -569,6 +616,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام الشافعي",
     died: "204ه",
     category: "العلم والعمل",
+    source: "مناقب الشافعي",
   },
   {
     id: "e11",
@@ -597,6 +645,7 @@ const HIKAM: Hikma[] = [
     scholar: "أبو ذر الغفاري",
     died: "32ه",
     category: "الدنيا والزهد",
+    source: "حلية الأولياء",
   },
   {
     id: "d10",
@@ -605,6 +654,7 @@ const HIKAM: Hikma[] = [
     scholar: "علي بن أبي طالب",
     died: "40ه",
     category: "الدنيا والزهد",
+    source: "نهج البلاغة وكتب الأثر",
   },
 
   /* ─── التوبة والاستغفار، إضافية ─── */
@@ -615,6 +665,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن مسعود",
     died: "32ه",
     category: "التوبة والاستغفار",
+    source: "حلية الأولياء",
   },
   {
     id: "t9",
@@ -623,6 +674,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "التوبة والاستغفار",
+    source: "حلية الأولياء",
   },
 
   /* ─── الصبر والشكر، إضافية ─── */
@@ -633,6 +685,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام الشافعي",
     died: "204ه",
     category: "الصبر والشكر",
+    source: "مناقب الشافعي",
   },
   {
     id: "s9",
@@ -661,6 +714,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام الشافعي",
     died: "204ه",
     category: "الأخلاق",
+    source: "مناقب الشافعي",
   },
   {
     id: "a10",
@@ -669,6 +723,7 @@ const HIKAM: Hikma[] = [
     scholar: "الإمام أحمد",
     died: "241ه",
     category: "الأخلاق",
+    source: "طبقات الحنابلة",
   },
 
   /* ─── الموت والآخرة، إضافية ─── */
@@ -679,6 +734,7 @@ const HIKAM: Hikma[] = [
     scholar: "عمر بن الخطاب",
     died: "23ه",
     category: "الموت والآخرة",
+    source: "حلية الأولياء",
   },
   {
     id: "m9",
@@ -687,6 +743,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "الموت والآخرة",
+    source: "حلية الأولياء",
   },
 
   /* ─── القرآن والذكر، إضافية ─── */
@@ -706,6 +763,7 @@ const HIKAM: Hikma[] = [
     scholar: "الحسن البصري",
     died: "110ه",
     category: "القرآن والذكر",
+    source: "حلية الأولياء",
   },
   {
     id: "q11",
@@ -813,6 +871,7 @@ const HIKAM: Hikma[] = [
     scholar: "عمر بن الخطاب",
     died: "23ه",
     category: "الصبر والشكر",
+    source: "حلية الأولياء",
   },
   {
     id: "a12",
@@ -899,6 +958,7 @@ const HIKAM: Hikma[] = [
     scholar: "أبو بكر الصديق",
     died: "13ه",
     category: "الأخلاق",
+    source: "حلية الأولياء",
   },
   {
     id: "m11",
@@ -916,6 +976,7 @@ const HIKAM: Hikma[] = [
     scholar: "ابن مسعود",
     died: "32ه",
     category: "القرآن والذكر",
+    source: "حلية الأولياء",
   },
   {
     id: "i22",
@@ -940,6 +1001,7 @@ const HIKAM: Hikma[] = [
     scholar: "علي بن أبي طالب",
     died: "40ه",
     category: "الدنيا والزهد",
+    source: "نهج البلاغة وكتب الأثر",
   },
   {
     id: "t12",
