@@ -7,7 +7,7 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getLobby } from "@/config/section-lobbies";
-import { NOUN_ASILA, NOUN_MUSABAQAT, pluralAr } from "@/lib/arabic-count";
+import { NOUN_ASILA, NOUN_MUSABAQAT, pluralArBucket } from "@/lib/arabic-count";
 import {
   COMPETITION_FILTERS,
   canPublishCompetition,
@@ -29,7 +29,7 @@ console.log("\n=== لوبي الدروس: مسابقات لا أسئلة ===");
   assert.ok(cell, "خلية المسابقات في لوبي الدروس");
   assert.equal(cell.noun, NOUN_MUSABAQAT, "عدّاد المسابقات = NOUN_MUSABAQAT");
   assert.notEqual(cell.noun, NOUN_ASILA, "لا يستخدم عدّاد الأسئلة");
-  const label = pluralAr(cell.count, cell.noun);
+  const label = pluralArBucket(cell.count, cell.noun);
   assert.doesNotMatch(label, /سؤال/, `العدّاد بلا كلمة سؤال: ${label}`);
   assert.doesNotMatch(label, /180/, "لا يظهر 180");
   assert.equal(cell.count, countPublishedCompetitions());

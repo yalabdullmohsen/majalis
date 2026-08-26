@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import type { LobbyQuadItem } from "@/config/section-lobbies";
 import { prefetchRoute } from "@/lib/prefetch-route";
-import { pluralAr } from "@/lib/arabic-count";
+import { pluralArBucket } from "@/lib/arabic-count";
 import { cn } from "@/lib/utils";
 import "./quick-actions-quad.css";
 
@@ -22,7 +22,7 @@ export function QuickActionsQuad({ items }: Props) {
       dir="rtl"
     >
       {items.map((it) => {
-        const countLabel = pluralAr(it.count, it.noun);
+        const countLabel = pluralArBucket(it.count, it.noun);
         const Icon = it.icon;
         return (
           <Link
