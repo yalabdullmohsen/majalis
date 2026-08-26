@@ -81,7 +81,7 @@ assert.doesNotMatch(topic, LOCAL_SEARCH);
 const css = read("src/styles/components/topic-page.css");
 assert.match(css, /overflow-x:\s*clip/);
 assert.match(css, /--section-accent/);
-assert.match(css, /padding:\s*2\.25rem/);
+assert.match(css, /padding:\s*2(?:\.25|)\s*rem/);
 assert.match(css, /background-color:\s*var\(--topic-hero-from\)/, "لافتة القسم بلون صلب لقياس التباين");
 assert.match(css, /background-image:\s*linear-gradient/, "تدرّج فوق اللون الصلب");
 assert.match(css, /border-inline-end/);

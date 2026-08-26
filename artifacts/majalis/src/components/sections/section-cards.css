@@ -40,7 +40,7 @@
   background-color: var(--mj-surface, #ffffff);
   background-image: none;
   border: 1px solid var(--mj-hairline, #e3e8e6);
-  border-radius: 16px;
+  border-radius: 22px;
   box-shadow: 0 4px 14px -10px rgba(11, 32, 24, 0.35);
   transition: filter 120ms ease, transform 120ms ease;
 }

@@ -55,6 +55,7 @@ console.log("\n=== بنية المكوّنات ===");
   const topBar = readFileSync(resolve(root, "src/components/TopSectionBar.tsx"), "utf8");
 
   assert(hubCardTsx.includes("hub-card__title"), "HubCard يعرّف العنوان");
+  assert(hubCardTsx.includes("hub-card__go"), "HubCard: سهم مدمج");
   assert(tawhidPage.includes("HubCard"), "TawhidPage يرحّل إلى HubCard");
   assert(fiqhPage.includes("SectionLobby"), "FiqhPage يرحّل إلى SectionLobby");
   assert(quranHub.includes("SectionLobby"), "QuranHubPage يرحّل إلى SectionLobby");
