@@ -27,6 +27,21 @@ console.log("\n=== Lazy: تفسير / صوت / بحث المصحف ===");
   const app = read("src/App.tsx");
   assert.match(app, /lazyWithRetry\([\s\S]*GlobalSearchModal/, "GlobalSearchModal lazy");
   assert.match(app, /lazyWithRetry\([\s\S]*QuranMiniPlayerBar/, "QuranMiniPlayerBar lazy");
+  assert.match(app, /lazyWithRetry\([\s\S]*UpdateAvailableBanner/, "UpdateAvailableBanner lazy");
+  assert.match(app, /lazyWithRetry\([\s\S]*FirstVisitIntro/, "FirstVisitIntro lazy");
+  assert.match(app, /lazyWithRetry\([\s\S]*EdgeSwipeBack/, "EdgeSwipeBack lazy");
+  assert.match(app, /lazyWithRetry\([\s\S]*RouteEnterMotion/, "RouteEnterMotion lazy");
+  assert.match(app, /lazyWithRetry\([\s\S]*DeferredAchievementBoot/, "DeferredAchievementBoot lazy");
+  assert.doesNotMatch(
+    app,
+    /from\s+["']@\/lib\/local-notifications["']/,
+    "local-notifications ديناميكي خارج الإقلاع",
+  );
+  assert.doesNotMatch(
+    app,
+    /from\s+["']@\/components\/motion["']/,
+    "لا barrel motion في الإقلاع",
+  );
 }
 
 console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");

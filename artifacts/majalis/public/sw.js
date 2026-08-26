@@ -348,13 +348,25 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Internal API data — SWR للنصوص الأساسية (أذكار/مكتبة)، cache-first لباقي APIs الثقيلة
+  // Internal API data — SWR للنصوص/المواقيت الشائعة، cache-first لباقي APIs الثقيلة
   if (CACHEABLE_API_PATHS.some((p) => url.pathname.startsWith(p))) {
     const useSwr =
-      url.pathname.startsWith("/api/adhkar") || url.pathname.startsWith("/api/library");
+      url.pathname.startsWith("/api/adhkar") ||
+      url.pathname.startsWith("/api/library") ||
+      url.pathname.startsWith("/api/fawaid") ||
+      url.pathname.startsWith("/api/prayer");
     event.respondWith(
       useSwr ? staleWhileRevalidate(req, DATA_CACHE) : cacheFirst(req, DATA_CACHE),
     );
+    return;
+  }
+
+  // صور الهوية والعلامات تحت /brand/ — cache-first (WebP/PNG)
+  if (
+    url.pathname.startsWith("/brand/") &&
+    /\.(png|webp|svg|jpe?g|ico|avif)$/i.test(url.pathname)
+  ) {
+    event.respondWith(cacheFirst(req, OFFLINE_CACHE));
     return;
   }
 

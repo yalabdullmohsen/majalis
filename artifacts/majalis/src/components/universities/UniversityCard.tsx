@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Globe, GraduationCap, MapPin } from "lucide-react";
 import { Link } from "wouter";
 import type { University } from "@/lib/universities-service";
@@ -10,7 +11,7 @@ interface Props {
   compact?:   boolean;
 }
 
-export function UniversityCard({ university: u, compact = false }: Props) {
+export const UniversityCard = memo(function UniversityCard({ university: u, compact = false }: Props) {
   const { isInCompare, addToCompare, removeFromCompare, canAdd } = useCompare();
   const inCompare = isInCompare(u.slug);
 
@@ -116,4 +117,4 @@ export function UniversityCard({ university: u, compact = false }: Props) {
       </div>
     </div>
   );
-}
+});

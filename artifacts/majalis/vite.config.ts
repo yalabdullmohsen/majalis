@@ -155,7 +155,6 @@ export default defineConfig({
           if (id.includes("date-fns")) return "date-fns";
           if (id.includes("lucide-react")) return "icons";
           if (id.includes("@radix-ui")) return "radix";
-          if (id.includes("recharts") || id.includes("d3-") || id.includes("victory")) return "charts";
           if (id.includes("adhan")) return "adhan";
           if (id.includes("@tanstack")) return "query";
           const vendor = vendorChunkName(id);
