@@ -47,6 +47,8 @@ export type KuwaitLessonRecord = {
   linkedLessons?: string[];
   hasLiveStream?: boolean;
   hasRecording?: boolean;
+  /** رابط تسجيل صوتي/مرئي للدرس */
+  recordingUrl?: string;
   mapsUrl?: string;
   streamUrl?: string;
   siteUrl?: string;
@@ -268,7 +270,8 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     sessionCount: row.session_count,
     linkedLessons: row.linked_titles,
     hasLiveStream,
-    hasRecording: Boolean(row.video_url || row.audio_url),
+    hasRecording: Boolean(row.video_url || row.audio_url || row.recording_url),
+    recordingUrl: row.audio_url || row.video_url || row.recording_url || undefined,
     mapsUrl: row.maps_url,
     streamUrl: row.live_url,
     siteUrl: row.book_url,

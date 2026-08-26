@@ -1,0 +1,115 @@
+/* شارة البث الحي — الرئيسية (#1A4D3E) */
+.hlive {
+  margin: 0 0 1rem;
+  padding: 0 var(--page-gutter, 1rem);
+}
+
+.hlive__inner {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-lg, 12px);
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 35%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 12%, var(--color-surface)) 0%,
+    var(--color-surface) 100%
+  );
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 10%, transparent);
+}
+
+.hlive__pulse {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  color: var(--mj-brand-deep, #1a4d3e);
+  background: color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 14%, transparent);
+}
+
+.hlive__copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.hlive__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.2rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.hlive__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: #c0392b;
+  box-shadow: 0 0 0 2px color-mix(in srgb, #c0392b 25%, transparent);
+  animation: hlive-pulse 2s ease-in-out infinite;
+}
+
+.hlive__dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #fff;
+  animation: hlive-blink 1.2s step-end infinite;
+}
+
+@keyframes hlive-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.82; }
+}
+
+@keyframes hlive-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.hlive__title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hlive__meta,
+.hlive__more {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hlive__cta {
+  flex-shrink: 0;
+  white-space: nowrap;
+  min-height: 44px;
+}
+
+@media (max-width: 520px) {
+  .hlive__inner {
+    flex-wrap: wrap;
+  }
+  .hlive__cta {
+    width: 100%;
+    justify-content: center;
+  }
+}

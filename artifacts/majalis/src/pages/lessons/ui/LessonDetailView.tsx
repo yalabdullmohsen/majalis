@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Link, useLocation, useSearch } from "wouter";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { SkeletonPage } from "@/components/ui-common";
@@ -18,7 +18,9 @@ import {
   fromKuwaitLesson,
   openLessonExternalUrl,
   shareLesson,
+  parseLessonShareTimestamp,
 } from "@/lib/unified-lesson-card";
+import { LessonRecordingPlayer } from "@/components/lessons/LessonRecordingPlayer";
 import { cleanDisplayText } from "@/lib/display-text";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { formatShortLessonTime } from "@/lib/lesson-time";
@@ -144,6 +146,7 @@ export default function LessonDetailPage({
   initialLesson?: KuwaitLessonRecord | null;
 }) {
   const [, setLocation] = useLocation();
+  const urlSearch = useSearch();
   const [lesson, setLesson] = useState<LessonDbRow | null>(null);
 
   // أسماء بديلة تاريخية (kuwait-lessons-HASH) → المعرّف الكانوني kw-*
@@ -210,6 +213,19 @@ export default function LessonDetailPage({
     if (lesson) return fromDbLesson(lesson);
     return null;
   }, [kuwaitLesson, lesson]);
+
+  const shareStartSeconds = useMemo(
+    () => parseLessonShareTimestamp(urlSearch),
+    [urlSearch],
+  );
+
+  const recordingSrc =
+    unified?.recordingUrl ||
+    kuwaitLesson?.recordingUrl ||
+    lesson?.audio_url ||
+    lesson?.video_url ||
+    lesson?.recording_url ||
+    null;
 
   // بصمات kuwait-lessons يتيمة بلا alias — أعد التوجيه لفهرس الدروس بدل صفحة خطأ مفهرسة.
   useEffect(() => {
@@ -338,6 +354,16 @@ export default function LessonDetailPage({
               sizes="(max-width: 720px) 100vw, 720px"
             />
           </figure>
+        )}
+
+        {recordingSrc && (
+          <div className="lesson-detail-body">
+            <LessonRecordingPlayer
+              lesson={unified}
+              src={recordingSrc}
+              startAtSeconds={shareStartSeconds}
+            />
+          </div>
         )}
 
         <div className="lesson-detail-stats-row">
