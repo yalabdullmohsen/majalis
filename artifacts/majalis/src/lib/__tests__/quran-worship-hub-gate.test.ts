@@ -13,7 +13,10 @@ const read = (rel: string) => readFileSync(resolve(appRoot, rel), "utf8");
 const view = read("src/pages/quran/ui/QuranWorshipHubView.tsx");
 assert.match(view, /usePrayerCountdown/);
 assert.match(view, /HifzAudioLoopPlayer/);
+import "./audio-library-engine.test.ts";
+
 assert.match(view, /ReciterDownloadManager/);
+assert.match(view, /AudioLibrarySelectionPanel/);
 assert.match(view, /\/quran\/worship-hub/);
 assert.doesNotMatch(view, /AdhanCalculationService/);
 assert.doesNotMatch(view, /OfflineRecitationManager/);

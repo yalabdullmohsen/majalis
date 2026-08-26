@@ -4,6 +4,7 @@ import { Link, useSearch } from "wouter";
 import { Bell, Clock, Download, WifiOff } from "lucide-react";
 import { HifzAudioLoopPlayer } from "@/components/quran/HifzAudioLoopPlayer";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
+import { AudioLibrarySelectionPanel } from "@/components/audio/AudioLibrarySelectionPanel";
 import { usePrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
 import { applyPageSeo } from "@/lib/seo";
 import { fetchSurahList, getSurahMeta, type SurahSummary } from "@/lib/quran-api";
@@ -134,6 +135,10 @@ export default function QuranWorshipHubView() {
           </div>
         </div>
         <HifzAudioLoopPlayer key={surah} surah={surah} />
+      </section>
+
+      <section className="qwh-library">
+        <AudioLibrarySelectionPanel />
       </section>
 
       <section className="qwh-offline" aria-labelledby="qwh-offline-title">
