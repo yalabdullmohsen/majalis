@@ -37,7 +37,11 @@ assert(vercel.includes('"api/lessons/[id].js"'), "vercel.json يُضمّن handl
 assert(vercel.includes('"/lessons/:id"'), "rewrite /lessons/:id موجود");
 assert(!lessonPage.includes("dist/index.html") || lessonPage.includes("injectLessonHead"), "لا fallback SPA خام في catch");
 assert(!/catch[\s\S]*statusCode\s*=\s*200[\s\S]*dist\/index\.html/.test(lessonPage), "catch لا يعيد 200 + index");
-assert(lessonDetail.includes("NotFound"), "تفاصيل الدرس → NotFound عند غياب السجل");
+assert(
+  lessonDetail.includes("LessonUnavailable") || lessonDetail.includes("NotFound"),
+  "تفاصيل الدرس → حالة غير متاح/NotFound عند غياب السجل",
+);
+assert(lessonDetail.includes("noindex"), "درس مفقود → noindex");
 assert(!lessonDetail.includes('<Empty text="لم يُعثر على الدرس."'), "لا Empty عام");
 
 console.log("\n=== P0: dedupe مركزي ===");

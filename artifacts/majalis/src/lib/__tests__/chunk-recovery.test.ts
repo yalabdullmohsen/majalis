@@ -74,6 +74,10 @@ assert.match(boundary, /hardRecoverStaleDeploy/);
 assert.match(boundary, /تم تحديث المنصة، جاري تحسين العرض/);
 assert.match(boundary, /getDerivedStateFromError[\s\S]*?recovering:\s*isChunkLoadError/);
 assert.match(boundary, /componentDidCatch[\s\S]*?tryRecoverFromStaleChunk/);
+assert.match(boundary, /noindex,\s*follow/);
+assert.match(boundary, /data-nosnippet/);
+assert.match(boundary, /أقسام مفيدة/);
+assert.doesNotMatch(boundary, /<h1[^>]*>تعذّر عرض هذه الصفحة/);
 
 const main = readFileSync(join(root, "main.tsx"), "utf8");
 assert.match(main, /ChunkRecoveryToast/);

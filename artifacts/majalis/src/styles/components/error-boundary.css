@@ -30,6 +30,25 @@
   gap: var(--ds-space-2);
   flex-wrap: wrap;
 }
+.error-boundary-page__nav {
+  margin-top: 1.35rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--majalis-line);
+}
+.error-boundary-page__nav-label {
+  margin: 0 0 0.65rem;
+  font-size: 0.82rem;
+  color: var(--majalis-ink-soft);
+}
+.error-boundary-page__nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 .error-boundary-page__copied {
   color: var(--majalis-ink-soft);
   margin-top: 0.75rem;

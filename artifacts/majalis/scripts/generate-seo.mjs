@@ -117,6 +117,14 @@ const { FIQH_ISSUES_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-issues-seed
 const { isPublicIssue, isVerifiedPublicItem } = await importSrc("src/lib/fiqh-council-trust.ts");
 const { FIQH_COUNCIL_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-council-seed.ts");
 const { FIQH_ITEM_TYPE_LABELS } = await importSrc("src/lib/fiqh-council-types.ts");
+const {
+  publishedBooks,
+  FIQH_CATEGORY_LABELS,
+  FIQH_CATEGORY_ORDER,
+  FIQH_SUPPORTING_TOPICS,
+  bookHref,
+  fiqhBookCounts,
+} = await importSrc("src/lib/fiqh-books.ts");
 const { SCHOLARS } = await importSrc("src/lib/scholars-data.ts");
 const { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS } = await importSrc("src/lib/adhkar-seed.ts");
 const { MUEZZINS } = await importSrc("src/lib/adhan-audio.ts");
@@ -132,6 +140,17 @@ if (QURAN_SURAHS.length !== 114) {
 const SURAH_STORIES = getAllSurahStories();
 const PUBLIC_FIQH_ISSUES = FIQH_ISSUES_PUBLISHED_SEED.filter(isPublicIssue);
 const PUBLIC_FIQH_ITEMS = FIQH_COUNCIL_PUBLISHED_SEED.filter(isVerifiedPublicItem);
+const PUBLISHED_FIQH_BOOKS = publishedBooks();
+const FIQH_BOOK_STATS = (() => {
+  let chapters = 0;
+  let lessons = 0;
+  for (const book of PUBLISHED_FIQH_BOOKS) {
+    const c = fiqhBookCounts(book);
+    chapters += c.chapters;
+    lessons += c.lessons;
+  }
+  return { books: PUBLISHED_FIQH_BOOKS.length, chapters, lessons };
+})();
 const QURAN_PEOPLE_CATALOG = JSON.parse(
   await readFile(resolve(appRoot, "public/data/quran-people/people.json"), "utf8"),
 );
@@ -804,10 +823,23 @@ const RICH_BODY_MAP = {
 <p>اختر جامعتين أو أكثر من دليل الجامعات ثم افتح هذه الصفحة. لا تُعرض بيانات وهمية قبل الاختيار.</p>
 <p><a href="${SITE_URL}/universities">العودة إلى دليل الجامعات</a></p>`,
 
-  "/lessons": linkList(
-    "أبرز الدروس والدورات",
-    lessonRows.slice(0, 15).map((r) => ({ name: r.title, url: `/lessons/${r.id}`, note: r.speaker_name })),
-  ),
+  "/lessons": `<p>فهرس الدروس والدورات الشرعية في المجلس العلمي: عنوان الدرس، الشيخ، اليوم، التاريخ، المكان، والتصنيف — مرتّبة حسب أقرب موعد مع بحث وفلاتر.</p>
+<h2>ماذا تجد في صفحة الدروس؟</h2>
+<ul>
+  <li>دروس ودورات علمية في الكويت وخارجها عند التوفر</li>
+  <li>فلاتر حسب المكان والتصنيف والشيخ</li>
+  <li>روابط تفاصيل كل درس مع مشاركة وحفظ</li>
+</ul>
+${linkList(
+  "أبرز الدروس والدورات",
+  lessonRows.slice(0, 20).map((r) => ({ name: r.title, url: `/lessons/${r.id}`, note: r.speaker_name })),
+)}
+${linkList("روابط ذات صلة", [
+  { name: "دروس الكويت", url: "/kuwait-lessons" },
+  { name: "الدورات السنوية", url: "/annual-courses" },
+  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "البحث العلمي", url: "/search" },
+])}`,
   "/library": linkList(
     "من الكتب المتاحة",
     LIBRARY_CATALOG.slice(0, 15).map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author })),
@@ -874,20 +906,40 @@ ${linkList("روابط ذات صلة", [
     "المسائل الفقهية المعاصرة",
     PUBLIC_FIQH_ISSUES.slice(0, 25).map((i) => ({ name: i.title, url: `/fiqh-council/issues/${i.slug}` })),
   ),
-  "/fiqh": `<p>بوابة الفقه الإسلامي: أحكام العبادات والمعاملات، المذاهب الأربعة، القواعد الفقهية، وقرارات المجامع — مع إحالة المسائل المعاصرة إلى مصادرها المعتمدة.</p>
-${linkList("أقسام الفقه", [
+  "/fiqh": `<p>بوابة الفقه الإسلامي في المجلس العلمي: كتب وأبواب ومسائل مرتّبة للعبادات والمعاملات والأسرة والجنايات، مع إحالة إلى المجامع والقواعد والمذاهب — دون إفتاء فردي من المنصة.</p>
+<h2>إحصاءات البوابة</h2>
+<ul>
+  <li>${FIQH_BOOK_STATS.books} كتابًا فقهيًا منشورًا</li>
+  <li>${FIQH_BOOK_STATS.chapters} بابًا</li>
+  <li>${FIQH_BOOK_STATS.lessons} مسألة موثَّقة</li>
+</ul>
+<h2>محاور الفقه</h2>
+<ul>
+${FIQH_CATEGORY_ORDER.map((cat) => `<li>${escapeHtml(FIQH_CATEGORY_LABELS[cat])}</li>`).join("\n")}
+</ul>
+${linkList(
+  "من كتب الفقه",
+  PUBLISHED_FIQH_BOOKS.slice(0, 12).map((b) => ({
+    name: b.title,
+    url: bookHref(b.id),
+    note: FIQH_CATEGORY_LABELS[b.category] || "",
+  })),
+)}
+${linkList("أقسام ومراجع", [
   { name: "المجمع الفقهي", url: "/fiqh-council", note: "قرارات وفتاوى مؤسسية" },
   { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
   { name: "النوازل المعاصرة", url: "/fiqh-council/nawazil" },
-  { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
-  { name: "المذاهب الأربعة", url: "/madhahib" },
-  { name: "الأسئلة والأجوبة", url: "/quiz" },
+  ...FIQH_SUPPORTING_TOPICS.slice(0, 6).map((t) => ({ name: t.title, url: t.href })),
   { name: "الطهارة", url: "/tahara" },
   { name: "دليل الصلاة", url: "/salah-guide" },
   { name: "الزكاة", url: "/zakat" },
   { name: "الصيام", url: "/sawm" },
   { name: "الحج والعمرة", url: "/hajj" },
-])}`,
+])}
+${linkList(
+  "من المسائل المعاصرة",
+  PUBLIC_FIQH_ISSUES.slice(0, 12).map((i) => ({ name: i.title, url: `/fiqh-council/issues/${i.slug}` })),
+)}`,
   "/quran-hub": `<p>مركز القرآن الكريم: المصحف الرقمي، فهرس السور، التجويد، القصص، علوم القرآن، والتحفيظ — مدخل موحّد لخدمات القراءة والتعلّم.</p>
 ${linkList("خدمات القرآن", [
   { name: "المصحف الرقمي", url: "/mushaf" },
@@ -938,7 +990,14 @@ ${linkList("أقسام ذات صلة", [
   { name: "الصيام", url: "/sawm" },
   { name: "الحج والعمرة", url: "/hajj" },
 ])}`,
-  "/hadith": `<p>مكتبة الأحاديث النبوية: صحيح وضعيف وموضوع، مع مداخل إلى كتب الرواية والأربعين النووية وعلوم الحديث.</p>
+  "/hadith": `<p>مكتبة الأحاديث النبوية في المجلس العلمي: متن الحديث بارز، مع بيان الحكم المنسوب (صحيح، حسن، ضعيف، موضوع) والمصدر بقدر الإمكان — راجع التخريج قبل الاستشهاد.</p>
+<h2>درجات الحديث المعروضة</h2>
+<ul>
+  <li>صحيح</li>
+  <li>حسن</li>
+  <li>ضعيف</li>
+  <li>موضوع</li>
+</ul>
 ${linkList("أقسام الأحاديث", [
   { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
   { name: "الأحاديث الضعيفة", url: "/hadith/daif" },
@@ -954,6 +1013,11 @@ ${linkList("من كتب الحديث في المكتبة", [
   { name: "صحيح مسلم", url: "/library/book-muslim" },
   { name: "رياض الصالحين", url: "/library/book-riyadh" },
   { name: "الأربعون النووية (المكتبة)", url: "/library/book-nawawi40" },
+])}
+${linkList("روابط ذات صلة", [
+  { name: "الفوائد الحديثية", url: "/fawaid?cat=" + encodeURIComponent("فوائد حديثية") },
+  { name: "البحث العلمي", url: "/search" },
+  { name: "مسابقة الحديث", url: "/quiz?cats=hadith" },
 ])}`,
   "/fawaid": `<p>فوائد علمية مختصرة وموثّقة في القرآن والحديث والعقيدة والفقه والتربية والدعوة والآداب — للانتفاع السريع مع الإحالة إلى المصدر.</p>
 ${linkList(
@@ -1484,12 +1548,22 @@ ${linkList("روابط ذات صلة", [
   { name: "الدروس والدورات", url: "/lessons" },
   { name: "من نحن", url: "/about" },
 ])}`,
-  "/contact": `<p>تواصل مع فريق المجلس العلمي للاستفسارات والاقتراحات والإبلاغ عن ملاحظات على المحتوى أو التقنية.</p>
+  "/contact": `<p>تواصل مع فريق المجلس العلمي للاستفسارات والاقتراحات والإبلاغ عن ملاحظات على المحتوى أو التقنية، وللشراكات والإعلان المتوافق مع منهج المنصة.</p>
 <h2>قنوات التواصل</h2>
 <ul>
   <li>البريد الإلكتروني الرسمي: <a href="mailto:${escapeHtml(SITE.contactEmail)}">${escapeHtml(SITE.contactEmail)}</a></li>
+  <li>إنستقرام شركة العبد المحسن للحج: <a href="https://instagram.com/Al_abdalmhsn" rel="noopener noreferrer">@Al_abdalmhsn</a></li>
 </ul>
-<p>للاستفسارات العامة، وتصحيح المحتوى العلمي، والملاحظات التقنية، والاقتراحات والشراكات — راسلنا على البريد أعلاه مع موضوع واضح.</p>
+<h2>موضوعات الرسائل</h2>
+<ul>
+  <li>اقتراحات وملاحظات</li>
+  <li>بلاغ عن خطأ في المحتوى</li>
+  <li>مشكلة تقنية في المنصة</li>
+  <li>شراكات مؤسسية وعلمية</li>
+  <li>طلب حذف أو تعديل بيانات الحساب</li>
+</ul>
+<h2>للإعلان والشراكات</h2>
+<p>نرحب بالشراكات العلمية والمؤسسية المتوافقة مع منهجنا. راسلنا على البريد أعلاه بموضوع «شراكة مؤسسية»، أو تواصل عبر إنستقرام شركة العبد المحسن للحج.</p>
 ${linkList("روابط ذات صلة", [
   { name: "من نحن", url: "/about" },
   { name: "منهجيتنا", url: "/methodology" },
@@ -1685,12 +1759,21 @@ ${linkList("أدوات", [
   { name: "لعبة سين جيم", url: "/quiz" },
   { name: "البطاقات التعليمية", url: "/flashcards" },
 ])}`,
-  "/search": `<p>ابحث في الآيات والأحاديث والفتاوى والدروس والكتب والعلماء — نتائج من المحتوى المنشور في المنصة.</p>
+  "/search": `<p>ابحث في الآيات والأحاديث والفتاوى والدروس والكتب والعلماء داخل المجلس العلمي — نتائج من المحتوى المنشور في المنصة.</p>
 <form role="search" aria-label="نموذج البحث الشامل" action="${escapeHtml(absoluteUrl("/search"))}" method="get">
   <label for="seo-search-q">كلمة البحث</label>
   <input id="seo-search-q" type="search" name="q" placeholder="ابحث في المحتوى…" autocomplete="off" dir="rtl" />
   <button type="submit">بحث</button>
 </form>
+<h2>اقتراحات جاهزة</h2>
+<ul>
+  <li><a href="${escapeHtml(absoluteUrl("/adhkar/morning"))}">أذكار الصباح</a></li>
+  <li><a href="${escapeHtml(absoluteUrl("/arbaeen-nawawi"))}">الأربعون النووية</a></li>
+  <li><a href="${escapeHtml(absoluteUrl("/hadith/daif"))}">أحاديث ضعيفة</a></li>
+  <li><a href="${escapeHtml(absoluteUrl("/memorization"))}">حفظ القرآن</a></li>
+  <li><a href="${escapeHtml(absoluteUrl("/salah-guide"))}">فقه الصلاة</a></li>
+  <li><a href="${escapeHtml(absoluteUrl("/kuwait-lessons"))}">دروس الكويت</a></li>
+</ul>
 <h2>ما يشمله البحث</h2>
 <ul>
   <li>القرآن والتفسير والسور</li>
@@ -1700,7 +1783,7 @@ ${linkList("أدوات", [
 </ul>
 <h2>الفلاتر المدعومة</h2>
 <p>بعد كتابة الاستعلام يمكن تصفية النتائج حسب القسم: قرآن، تفسير، مكتبة، أحاديث، فتاوى، فقه، دروس، علماء، أذكار، قصص.</p>
-<p id="search-empty-state">ابدأ بكتابة كلمة أو عبارة في خانة البحث أعلاه.</p>
+<p id="search-empty-state">ابدأ بكتابة كلمة أو عبارة في خانة البحث أعلاه، أو اختر اقتراحًا جاهزًا.</p>
 <p id="search-no-results" hidden>لا توجد نتائج مطابقة — جرّب كلمات أخرى أو تصفية مختلفة.</p>
 <p id="search-error" hidden>تعذّر تحميل نتائج البحث مؤقتًا — أعد المحاولة.</p>`,
   "/quran/recitation-test-ai": `<p>اختبار تلاوة تجريبي: تختار سورة وآية (أو وضعًا حرًا)، ثم تُسمِع تلاوتك ليقارن النظام ما يُسمَع بالنص المرجعي.</p>
