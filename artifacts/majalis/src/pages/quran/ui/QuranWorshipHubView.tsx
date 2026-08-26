@@ -1,7 +1,7 @@
 import "@/styles/quran-worship-hub.css";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearch } from "wouter";
-import { Bell, Clock, Download, WifiOff } from "lucide-react";
+import { Bell, Clock, Download, Headphones, WifiOff } from "lucide-react";
 import { HifzAudioLoopPlayer } from "@/components/quran/HifzAudioLoopPlayer";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
 import { AudioLibrarySelectionPanel } from "@/components/audio/AudioLibrarySelectionPanel";
@@ -153,6 +153,12 @@ export default function QuranWorshipHubView() {
           تنزيل اختياري لسور القارئ كاملة — يُستخدم تلقائيًا عند انقطاع الشبكة.
         </p>
         <ReciterDownloadManager />
+        <p className="qwh-offline__hint" style={{ marginTop: "0.75rem" }}>
+          <Headphones size={14} aria-hidden="true" />
+          <Link href={`/quran/offline-player?surah=${surah}`}>
+            مشغّل التلاوة التفاعلي — تظليل الآية أثناء الاستماع
+          </Link>
+        </p>
       </section>
     </div>
   );

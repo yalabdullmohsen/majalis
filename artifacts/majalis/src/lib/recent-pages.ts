@@ -212,6 +212,7 @@ const LABEL_MAP: Record<string, string> = {
   "/quran-memorization":            "اختبارات الحفظ القرآني",
   "/quran/hifz-loop":               "مشغّل التحفيظ",
   "/quran/worship-hub":             "مركز العبادة القرآنية",
+  "/quran/offline-player":        "مشغّل التلاوة التفاعلي",
   "/mutashabihat":                  "الآيات المتشابهات",
 };
 
