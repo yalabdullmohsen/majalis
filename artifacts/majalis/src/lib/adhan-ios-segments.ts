@@ -223,9 +223,19 @@ export function defaultAdhanSegmentDurations(count = ADHAN_IOS_MAX_SEGMENTS): nu
   );
 }
 
+/** هل يتوفر تقطيع CAF متتابع لهذا التسجيل في الحزمة؟ */
+export function recordingSupportsIosChainedSegments(recordingId: string): boolean {
+  return (
+    recordingId === "makkah" ||
+    recordingId === "makki" ||
+    recordingId === "alharam"
+  );
+}
+
 /**
- * جدولة أذان كامل على iOS من معرّف التسجيل.
- * السلسلة المتتابعة اختيارية (iosSequentialFullAdhan) ولبكّة مكة فقط.
+ * جدولة أذان على iOS من معرّف التسجيل.
+ * وضع full + تسجيل يدعم السلسلة → حتى ٤ إشعارات متتابعة (≤٢٨ث لكل مقطع).
+ * وضع short/takbir → إشعار واحد بصوت CAF قصير.
  */
 export async function scheduleIosFullAdhan(opts: {
   prayerKey: string;
@@ -234,21 +244,16 @@ export async function scheduleIosFullAdhan(opts: {
   isFajr: boolean;
   startAtMs: number;
   durationsSec?: number[];
+  /** صيغة التسليم — full يفعّل السلسلة عند توفر المقاطع */
+  deliveryMode?: "full" | "short" | "takbir" | "silent";
 }): Promise<{ ok: boolean; ids: number[] }> {
-  let sequentialEnabled = false;
-  try {
-    const { loadAdhanPrefs } = await import("./adhan-preferences");
-    sequentialEnabled = Boolean(loadAdhanPrefs().iosSequentialFullAdhan);
-  } catch {
-    /* بيئة بلا localStorage — يبقى false */
-  }
+  const mode = opts.deliveryMode ?? "full";
+  if (mode === "silent") return { ok: false, ids: [] };
 
   const canChain =
     ADHAN_IOS_MULTI_SEGMENT_BUNDLED &&
-    sequentialEnabled &&
-    (opts.recordingId === "makkah" ||
-      opts.recordingId === "makki" ||
-      opts.recordingId === "alharam");
+    mode === "full" &&
+    recordingSupportsIosChainedSegments(opts.recordingId);
 
   // الافتراضي والآمن: إشعار واحد بصوت قصير مضمّن
   if (!canChain) {

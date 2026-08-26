@@ -32,9 +32,10 @@ assert.match(css, /\.ads-prayer-row__top/);
 const typesSrc = readFileSync(resolve(appRoot, "src/lib/adhan-selectable-types.ts"), "utf8");
 
 assert.match(view, /إعدادات الأذان/);
-assert.match(view, /اختيار الأذان/);
-assert.match(view, /SELECTABLE_ADHAN_TYPES/);
-assert.match(view, /t\.label/);
+assert.match(view, /اختيار المؤذن وصيغة الإشعار/);
+assert.match(view, /listSelectableMuezzins/);
+assert.match(view, /تشغيل الأذان كاملاً/);
+assert.match(view, /IosChainedAdhanCard/);
 assert.match(view, /اختبار الصوت/);
 assert.match(view, /تخصيص كل صلاة/);
 assert.match(view, /تنبيه الإقامة/);
@@ -51,8 +52,8 @@ assert.doesNotMatch(view, /أذان المدينة/);
 assert.doesNotMatch(typesSrc, /muezzinId:\s*"madinah"/);
 assert.match(typesSrc, /madinah-full.*makkah-full/); // ترحيل قديم فقط
 
-assert.match(typesSrc, /الأذان الكامل \(الافتراضي\)/);
-assert.match(typesSrc, /الأذان المختصر \(الافتراضي\)/);
+assert.match(typesSrc, /الأذان الكامل/);
+assert.match(typesSrc, /تنبيه مختصر/);
 
 assert.match(alerts, /تفعيل إشعارات الصلاة/);
 assert.match(alerts, /تنبيه قبل الصلاة/);
@@ -67,21 +68,15 @@ const forbiddenCopy = [
   "Focus",
   "Silent Mode",
   "Do Not Disturb",
-  "تجاوز الصامت",
   "Critical Alerts",
   "تفاصيل iOS",
   "نسخ تقرير التشخيص",
-  "تشغيل الأذان المتتابع",
   "تحميل النسخ الكاملة",
   "اختبار الأذان الكامل",
   "اختبار الأذان المختصر",
-  "الأقصى",
-  "تكبيرات",
-  "تنبيه لطيف",
-  "إشعار نصي",
-  "أذان متتابع",
   "Live Activity",
   "أذان المدينة",
+  "Notifee",
 ];
 const leaked = forbiddenCopy.filter((text) => view.includes(text) || alerts.includes(text));
 if (leaked.length > 0) {
@@ -93,12 +88,17 @@ const ids = SELECTABLE_ADHAN_TYPES.map((t) => t.id);
 assert.deepEqual(ids, ["makkah-full", "makkah-short"]);
 
 for (const t of SELECTABLE_ADHAN_TYPES) {
-  const rel = t.inAppUrl.replace(/^\//, "");
-  assert.ok(existsSync(resolve(appRoot, "public", rel)), `ملف داخل التطبيق مفقود: ${t.inAppUrl}`);
+  assert.ok(t.hint.trim().length > 0, `hint missing for ${t.id}`);
   assert.ok(
     existsSync(resolve(appRoot, "ios/App/App/Sounds", t.notificationSound)),
     `ملف إشعار iOS مفقود: ${t.notificationSound}`,
   );
+  if (t.inAppUrl.startsWith("/")) {
+    assert.ok(
+      existsSync(resolve(appRoot, "public", t.inAppUrl.replace(/^\//, ""))),
+      `ملف داخل التطبيق مفقود: ${t.inAppUrl}`,
+    );
+  }
 }
 
 console.log("adhan-settings-ui.test.ts: ok");

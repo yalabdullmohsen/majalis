@@ -67,15 +67,28 @@ assert.equal(
 
 assert.equal(defaultAdhanSegmentDurations().length, 4);
 
-// بدون تفعيل iosSequentialFullAdhan في prefs: إشعار واحد
-const scheduled = await scheduleIosFullAdhan({
+// الوضع الكامل + مكة: سلسلة ٤ مقاطع تلقائيًا
+const scheduledFull = await scheduleIosFullAdhan({
   prayerKey: "isha",
   prayerName: "العشاء",
   recordingId: "makkah",
   isFajr: false,
   startAtMs: start,
+  deliveryMode: "full",
 });
-assert.equal(scheduled.ok, true);
-assert.equal(scheduled.ids.length, 1, "الافتراضي إشعار قصير واحد");
+assert.equal(scheduledFull.ok, true);
+assert.equal(scheduledFull.ids.length, 4, "الوضع الكامل يفعّل السلسلة لمكة");
+
+// الوضع المختصر: إشعار واحد
+const scheduledShort = await scheduleIosFullAdhan({
+  prayerKey: "isha",
+  prayerName: "العشاء",
+  recordingId: "makkah",
+  isFajr: false,
+  startAtMs: start,
+  deliveryMode: "short",
+});
+assert.equal(scheduledShort.ok, true);
+assert.equal(scheduledShort.ids.length, 1, "الوضع المختصر إشعار قصير واحد");
 
 console.log("adhan-ios-segments.test.ts: ok");

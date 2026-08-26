@@ -69,7 +69,16 @@ for (const t of SELECTABLE_ADHAN_TYPES) {
     t.inAppUrl,
   );
   assert.ok(t.hint.trim().length > 0, `hint missing for ${t.id}`);
-  assert.equal(t.notificationSound, "adhan-short-makkah.caf");
+  assert.ok(
+    existsSync(resolve(appRoot, "ios/App/App/Sounds", t.notificationSound)),
+    t.notificationSound,
+  );
+  if (t.inAppUrl.startsWith("/")) {
+    assert.ok(
+      existsSync(resolve(appRoot, "public", t.inAppUrl.replace(/^\//, ""))),
+      t.inAppUrl,
+    );
+  }
 }
 
 const keys = ["fajr", "dhuhr", "asr", "maghrib", "isha"].map((p) =>
