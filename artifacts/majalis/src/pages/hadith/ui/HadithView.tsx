@@ -3,6 +3,8 @@ import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { AlertTriangle, Check, Copy, Flag, Share2, Star } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/site-config";
+import { nativeShareFaida } from "@/lib/share-faida";
 import { truncateAtWord } from "@/lib/utils";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
@@ -270,14 +272,9 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
 
   function handleShare(e: React.MouseEvent) {
     e.stopPropagation();
-    const payload = { title: h.title || "حديث نبوي شريف", text: citation, url: "https://majlisilm.com/hadith" };
-    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
-      void navigator.share(payload).catch(() => {
-        void navigator.clipboard.writeText(citation);
-      });
-      return;
-    }
-    void navigator.clipboard.writeText(citation);
+    const pageUrl = absoluteUrl(`/hadith#${h.id}`);
+    const shareTitle = h.title && h.title !== "حديث" ? h.title : displayMatn.slice(0, 72);
+    void nativeShareFaida(shareTitle, pageUrl);
   }
 
   function handleSave(e: React.MouseEvent) {

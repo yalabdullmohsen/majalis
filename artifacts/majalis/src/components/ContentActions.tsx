@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { supabase } from "@/lib/supabase";
 import "@/styles/components/content-actions-rag.css";
 import { ContentReportLink } from "@/components/ContentReportLink";
+import { ShareFaida } from "@/components/ShareFaida";
 
 interface Props {
   contentType: string;
@@ -13,13 +14,16 @@ interface Props {
 
 const REPORT_TYPES = ["خطأ_علمي", "خطأ_إملائي", "محتوى_غير_لائق", "رابط_مكسور", "أخرى"] as const;
 
-// أزرار المشاركة أُلغيت في كل أنحاء الموقع بطلب صريح من المالك
-// (2026-07-24). يبقى المكوّن مُصدَّرًا بنفس الواجهة؛ يُعرض بدلًا منه
-// رابط بلاغ المحتوى الموحّد.
+// ShareButtons — مشاركة «فائدة من المجلس العلمي» (Web Share · واتساب · نسخ).
 
 export function ShareButtons(props: { title?: string; url?: string }) {
-  const context = props.title || (typeof window !== "undefined" ? window.location.pathname : undefined);
-  return <ContentReportLink context={context} />;
+  const title =
+    props.title ||
+    (typeof document !== "undefined"
+      ? document.title.replace(/\s*\|\s*المجلس العلمي\s*$/, "").trim()
+      : "المجلس العلمي");
+  const url = props.url;
+  return <ShareFaida title={title} url={url} />;
 }
 
 export default function ContentActions({ contentType, contentId, shareTitle, shareUrl }: Props) {

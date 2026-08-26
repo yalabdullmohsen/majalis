@@ -1466,3 +1466,63 @@
   color: var(--mj-ink, #e9efec);
   border-color: color-mix(in srgb, #fff 12%, transparent);
 }
+
+/* ── بطاقة حديث — polish 2026-08 ── */
+.hadith-card.ui-card {
+  border-radius: 22px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 16%, var(--mj-hairline, #e3e8e6));
+  background: color-mix(in srgb, var(--mj-surface, #fff) 97%, #e4f0ea);
+  box-shadow: 0 2px 10px -6px rgba(11, 32, 24, 0.12);
+}
+
+.hadith-card__text--matn {
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.85;
+  color: var(--mj-ink, #16241e);
+}
+
+.hadith-meta-item--source,
+.hadith-meta-item--takhrij {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--mj-ink-2, #4a5a53);
+  line-height: 1.45;
+}
+
+.hadith-grade {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+}
+
+.hadith-card__actions {
+  gap: 0.35rem;
+  padding-top: 0.15rem;
+  border-top: 1px solid color-mix(in srgb, var(--mj-brand) 10%, var(--mj-hairline));
+}
+
+.hadith-action-btn {
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--mj-hairline, #e3e8e6);
+  background: var(--mj-surface, #fff);
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.12s ease;
+}
+
+.hadith-action-btn:hover {
+  border-color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, #1f7a5a);
+}
+
+.hadith-action-btn:active {
+  transform: scale(0.96);
+}
+
+html[data-theme="dark"] .hadith-card.ui-card,
+html.dark .hadith-card.ui-card {
+  background: color-mix(in srgb, var(--mj-surface, #1a221f) 94%, #0f3d2e 6%);
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 22%, #2a3531);
+}

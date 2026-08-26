@@ -1,0 +1,88 @@
+.share-faida {
+  margin: 0.85rem 0 0.35rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 18%, var(--mj-hairline, #e3e8e6));
+  background: color-mix(in srgb, var(--mj-brand-soft, #e4f0ea) 35%, var(--mj-surface, #fff));
+}
+
+.share-faida__label {
+  margin: 0 0 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--mj-brand-deep, #123f2e);
+}
+
+.share-faida__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.share-faida__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 40px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--mj-hairline, #e3e8e6);
+  background: var(--mj-surface, #fff);
+  color: var(--mj-ink, #16241e);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.12s ease;
+}
+
+.share-faida__btn:hover {
+  border-color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, #1f7a5a);
+}
+
+.share-faida__btn:active {
+  transform: scale(0.98);
+}
+
+.share-faida__btn:focus-visible {
+  outline: 2px solid var(--mj-brand, #1f7a5a);
+  outline-offset: 2px;
+}
+
+.share-faida__btn--primary {
+  background: var(--mj-brand, #1f7a5a);
+  border-color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-on-brand, #fff);
+}
+
+.share-faida__btn--primary:hover {
+  background: var(--mj-brand-deep, #14614a);
+  border-color: var(--mj-brand-deep, #14614a);
+  color: var(--mj-on-brand, #fff);
+}
+
+html[data-theme="dark"] .share-faida,
+html.dark .share-faida {
+  background: color-mix(in srgb, var(--mj-brand, #5cc095) 10%, var(--mj-surface, #1a221f));
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, #2a3531);
+}
+
+html[data-theme="dark"] .share-faida__label,
+html.dark .share-faida__label {
+  color: color-mix(in srgb, var(--mj-brand, #5cc095) 80%, #ecf2ef);
+}
+
+html[data-theme="dark"] .share-faida__btn,
+html.dark .share-faida__btn {
+  background: var(--mj-surface-2, #222d29);
+  border-color: #35443f;
+  color: var(--text-primary, #ecf2ef);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share-faida__btn {
+    transition: none;
+  }
+}

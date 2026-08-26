@@ -6,7 +6,13 @@ import { usePageView } from "@/hooks/usePageView";
 import { Empty } from "@/components/ui-common";
 import { adjacentFiqhLessons, getFiqhLesson } from "@/lib/fiqh-books";
 import { CompactSources } from "@/components/content/CompactSources";
+import { ShareFaida } from "@/components/ShareFaida";
 import { cn } from "@/lib/utils";
+import {
+  breadcrumbJsonLd,
+  defaultSiteJsonLd,
+  learningResourceJsonLd,
+} from "@/lib/seo-structured-data";
 import "@/styles/pages/fiqh-hub.css";
 
 function firstSentence(text: string): { intro: string; rest: string } {
@@ -68,6 +74,22 @@ export default function FiqhLessonPage() {
       title: `${hit.lesson.title} | ${hit.book.title} | المجلس العلمي`,
       description: hit.lesson.summary.slice(0, 160),
       keywords: [hit.lesson.title, hit.chapter.title, hit.book.title, "فقه"],
+      jsonLd: [
+        ...defaultSiteJsonLd(),
+        learningResourceJsonLd({
+          name: hit.lesson.title,
+          description: hit.lesson.summary.slice(0, 200),
+          url: hit.href,
+          about: `${hit.book.title} — ${hit.chapter.title}`,
+          educationalLevel: hit.lesson.level,
+        }),
+        breadcrumbJsonLd([
+          { name: "الرئيسية", path: "/" },
+          { name: "الفقه", path: "/fiqh" },
+          { name: hit.book.title, path: `/fiqh/books/${hit.book.id}` },
+          { name: hit.lesson.title, path: hit.href },
+        ]),
+      ],
     });
   }, [hit]);
 
@@ -194,6 +216,8 @@ export default function FiqhLessonPage() {
           />
         </div>
       </div>
+
+      <ShareFaida title={lesson.title} url={hit.href} />
 
       <nav className="fiqh-lux-pager" aria-label="المسألة التالية والسابقة">
         {nav.prev ? (

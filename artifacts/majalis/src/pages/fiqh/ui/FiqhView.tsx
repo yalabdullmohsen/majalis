@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Scale } from "lucide-react";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
+import { breadcrumbJsonLd, defaultSiteJsonLd, webPageJsonLd } from "@/lib/seo-structured-data";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
@@ -70,9 +71,22 @@ export default function FiqhPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh",
-      title: "الفقه الإسلامي | المجلس العلمي",
-      description: "كتب الفقه وأبوابها ومسائلها: عبادات ومعاملات وأسرة وجنايات وقضاء، مع مباحث مساندة.",
+      title: "الفقه | المجلس العلمي",
+      description:
+        "أبواب ومسائل فقهية مرتبة: عبادات ومعاملات وأسرة وجنايات — كتب وأبواب ومسائل للقراءة والتدرج.",
       keywords: ["فقه إسلامي", "كتب الفقه", "مسائل فقهية", "المجلس العلمي"],
+      jsonLd: [
+        ...defaultSiteJsonLd(),
+        webPageJsonLd(
+          "الفقه",
+          "أبواب ومسائل فقهية مرتبة للقراءة والتدرج في العبادات والمعاملات والأسرة.",
+          "/fiqh",
+        ),
+        breadcrumbJsonLd([
+          { name: "الرئيسية", path: "/" },
+          { name: "الفقه", path: "/fiqh" },
+        ]),
+      ],
     });
   }, []);
 
