@@ -48,4 +48,15 @@ for (const name of readdirSync(storiesDir).filter((f) => f.endsWith(".json") && 
 assert.ok(stories >= 450, `قصص ≥450 (الآن ${stories})`);
 assert.equal(under200, 0, `لا قصص دون 200 كلمة (ناقص: ${under200})`);
 
+let dupLessonBlock = 0;
+for (const name of readdirSync(storiesDir).filter((f) => f.endsWith(".json") && f !== "manifest.json")) {
+  const arr = JSON.parse(readFileSync(resolve(storiesDir, name), "utf8")) as Array<{
+    full_content?: string;
+  }>;
+  for (const s of arr) {
+    if (String(s.full_content || "").includes("**دروس مستفادة من القصة:**")) dupLessonBlock++;
+  }
+}
+assert.equal(dupLessonBlock, 0, "لا تكرار لدروس الواجهة داخل full_content");
+
 console.log(`content-audit-wave4-gate.test.ts: ok (hikam=${ids.length}, stories=${stories})`);

@@ -107,7 +107,7 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
 
       <section className="isp-detail__section isp-detail__section--content">
         <h2 className="isp-detail__section-title"><BookOpen size={18} strokeWidth={1.8} aria-hidden="true" /> تفاصيل القصة</h2>
-        <div className="isp-detail__body">{story.full_content}</div>
+        <div className="isp-detail__body">{story.full_content.replace(/\*\*([^*]+)\*\*/g, "$1")}</div>
       </section>
 
       {story.key_lessons.length > 0 && (
