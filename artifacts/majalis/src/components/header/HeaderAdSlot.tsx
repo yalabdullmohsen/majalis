@@ -1,12 +1,10 @@
 import { type MouseEvent } from "react";
-import { Link } from "wouter";
-import { ArrowUpLeft } from "lucide-react";
 import { headerAdConfig } from "@/config/header-ad";
 import { openExternalUrl } from "@/lib/capacitor-utils";
 import "@/styles/components/header-ad-slot.css";
 
 /**
- * Banner إعلان شراكة داخل الهيدر — بلا صور raster، CTA مدمج، يفتح إنستقرام.
+ * Banner إعلان شراكة داخل الهيدر فقط — رابط الشراكات في صفحة التواصل.
  */
 export function HeaderAdSlot() {
   const cfg = headerAdConfig;
@@ -36,16 +34,14 @@ export function HeaderAdSlot() {
         </span>
         <span className="header-ad-slot__cta">
           <span className="header-ad-slot__cta-label">{cfg.ctaLabel}</span>
-          <ArrowUpLeft className="header-ad-slot__cta-icon" size={14} strokeWidth={2.2} aria-hidden="true" />
+          <svg className="header-ad-slot__cta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H9M17 7v8" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </span>
       </a>
-      <Link href={cfg.ctaUrl} className="header-ad-slot__advertise-link">
-        {cfg.advertiseWithUsLabel}
-      </Link>
     </div>
   );
 }
 
-/** اسم بديل للمواصفات */
 export { HeaderAdSlot as HeaderAdBanner };
 export { HeaderAdSlot as TopHeaderAdSlot };

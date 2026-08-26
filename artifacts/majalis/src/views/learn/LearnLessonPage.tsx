@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "wouter";
-import { AlertTriangle, BookMarked, ChevronLeft, ChevronRight } from "lucide-react";
+import { AlertTriangle, ChevronLeft, ChevronRight } from "lucide-react";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { fetchLessonDetail, type LessonDetail } from "@/lib/learn-library-service";
 import { supabase } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
+import { CompactSources, summarizeSourceLine } from "@/components/content/CompactSources";
 import "@/styles/pages/library.css";
 
 const SECTION_LABEL: Record<string, string> = {
@@ -116,14 +117,12 @@ export default function LearnLessonPage() {
         ))}
 
       {citations.length > 0 && (
-        <section className="lrn-lesson-section">
-          <h2 className="lrn-section-title"><BookMarked size={16} /> المصادر والمراجع</h2>
-          <ul className="lrn-citations-list">
-            {citations.map((c) => (
-              <li key={c.id}>{c.citation}{c.url && <> — <a href={c.url} target="_blank" rel="noopener noreferrer">رابط</a></>}</li>
-            ))}
-          </ul>
-        </section>
+        <CompactSources
+          items={citations.map((c) => {
+            const base = summarizeSourceLine(c.citation);
+            return c.url ? { summary: base.summary, detail: `${c.citation} — ${c.url}` } : base;
+          })}
+        />
       )}
 
       {seriesNav && (seriesNav.prev || seriesNav.next) && (

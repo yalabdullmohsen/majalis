@@ -26,14 +26,12 @@ export type HeaderAdConfig = {
   subtitle: string;
   /** CTA مدمج داخل البطاقة */
   ctaLabel: string;
-  /** رابط «للإعلان معنا» */
+  /** وجهة ثانوية (صفحة التواصل) — غير ظاهرة في الهيدر */
   ctaUrl: string;
   /** رابط إنستقرام الشركة */
   sponsorUrl: string;
   /** aria-label للإعلان */
   sponsorAriaLabel: string;
-  /** نص رابط الإعلان معنا */
-  advertiseWithUsLabel: string;
 };
 
 /** legacy — لم يعد يُفعَّل من TopSponsorBanner */
@@ -52,7 +50,6 @@ export const headerAdConfig: HeaderAdConfig = {
   ctaUrl: "/support",
   sponsorUrl: "https://instagram.com/Al_abdalmhsn",
   sponsorAriaLabel: "فتح حساب شركة العبد المحسن للحج في إنستقرام",
-  advertiseWithUsLabel: "للإعلان معنا",
 };
 
 /** شكل مختصر كما في المواصفات */

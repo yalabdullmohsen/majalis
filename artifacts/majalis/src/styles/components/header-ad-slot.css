@@ -122,25 +122,6 @@
   flex-shrink: 0;
 }
 
-.header-ad-slot__advertise-link {
-  flex: 0 0 auto;
-  font-size: 0.58rem;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--mj-muted, #5a7268);
-  text-decoration: none;
-  white-space: nowrap;
-  padding: 0.15rem 0.1rem;
-  transition: color 0.15s ease, opacity 0.15s ease;
-}
-
-.header-ad-slot__advertise-link:hover,
-.header-ad-slot__advertise-link:focus-visible {
-  color: var(--mj-brand, #1f7a5a);
-  text-decoration: underline;
-  outline: none;
-}
-
 html[data-theme="dark"] .header-ad-slot__banner,
 html.theme-dark .header-ad-slot__banner {
   color: #edf7f2;
@@ -172,16 +153,6 @@ html[data-theme="dark"] .header-ad-slot__cta,
 html.theme-dark .header-ad-slot__cta {
   color: #0f2f28;
   background: linear-gradient(135deg, #ebe4d4 0%, #d4b76a 100%);
-}
-
-html[data-theme="dark"] .header-ad-slot__advertise-link,
-html.theme-dark .header-ad-slot__advertise-link {
-  color: color-mix(in srgb, #fff 62%, #7a9a8c);
-}
-
-html[data-theme="dark"] .header-ad-slot__advertise-link:hover,
-html.theme-dark .header-ad-slot__advertise-link:focus-visible {
-  color: #c8ebd9;
 }
 
 .navbar-v3__ad-row {
@@ -240,11 +211,6 @@ html.theme-dark .navbar-v3__ad-row {
     min-width: 1.55rem;
     padding-inline: 0.35rem;
     justify-content: center;
-  }
-
-  .header-ad-slot__advertise-link {
-    margin-inline-start: auto;
-    font-size: 0.54rem;
   }
 }
 

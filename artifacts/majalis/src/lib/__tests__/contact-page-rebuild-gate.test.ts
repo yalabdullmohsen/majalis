@@ -1,5 +1,5 @@
 /**
- * بوابة صفحة التواصل: بنية نظيفة + FAQ بإجابات + بريد رسمي.
+ * بوابة صفحة التواصل: بنية نظيفة + FAQ بإجابات + بريد رسمي + إنستقرام + بلا اقتراح شيخ.
  */
 import { readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
@@ -15,17 +15,25 @@ assert.match(contact, /styles\/pages\/contact\.css/, "استيراد أنماط 
 assert.match(contact, /CONTACT_EMAIL/);
 assert.match(contact, /mailtoWithSubject/);
 assert.match(contact, /إرسال بريد/);
+assert.match(contact, /نسخ البريد/);
+assert.match(contact, /فتح إنستقرام/);
+assert.match(contact, /instagram\.com\/Al_abdalmhsn/);
+assert.match(contact, /إنستقرام شركة العبد المحسن للحج/);
+assert.match(contact, /للإعلان والشراكات/);
+assert.match(contact, /اقتراحات وملاحظات/);
 assert.match(contact, /يسعدنا استقبال ملاحظاتك واقتراحاتك وتصحيحاتك/);
 assert.match(contact, /كيف نساعدك؟/);
-assert.match(contact, /يمكنك مراسلتنا مباشرة عبر البريد الرسمي/);
 assert.match(contact, /Accordion/);
+assert.doesNotMatch(contact, /اقتراح محتوى أو شيخ/);
+assert.doesNotMatch(contact, /اقتراح شيخ/);
+assert.doesNotMatch(contact, /هل يمكنني اقتراح شيخ/);
 assert.doesNotMatch(contact, /InstagramAcademyLink/, "لا بقايا إنستغرام أكاديمية في صفحة التواصل");
 assert.doesNotMatch(contact, /ShareButtons/, "لا أزرار مشاركة زائدة");
 assert.doesNotMatch(contact, /LegalBackLink/, "لا زر رجوع مكرر أسفل الصفحة");
 
 for (const q of [
   "كيف أبلغ عن خطأ في حديث أو فتوى؟",
-  "هل يمكنني اقتراح شيخ أو عالم؟",
+  "كيف أرسل اقتراحًا أو ملاحظة؟",
   "كيف أطلب حذف بيانات حسابي؟",
   "هل يمكنني المساهمة في المحتوى؟",
   "هل تقبلون شراكات أو إعلانات؟",
@@ -34,6 +42,8 @@ for (const q of [
 }
 
 assert.match(css, /\.contact-email-card/, "بطاقة البريد في CSS");
+assert.match(css, /\.contact-ig-card/, "بطاقة إنستقرام");
+assert.match(css, /\.contact-ads-block/, "قسم الإعلان والشراكات");
 assert.match(css, /@media \(max-width: 390px\)/, "ضبط عرض الجوال 390");
 assert.match(globalBack, /path === "\/support"/, "إخفاء الرجوع العائم على /support");
 assert.match(globalBack, /path === "\/contact"/, "إخفاء الرجوع العائم على /contact");

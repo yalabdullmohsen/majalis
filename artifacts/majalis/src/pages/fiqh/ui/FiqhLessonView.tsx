@@ -4,6 +4,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
 import { Empty } from "@/components/ui-common";
 import { adjacentFiqhLessons, getFiqhLesson } from "@/lib/fiqh-books";
+import { CompactSources } from "@/components/content/CompactSources";
 import "@/styles/pages/fiqh-hub.css";
 
 function firstSentence(text: string): { intro: string; rest: string } {
@@ -125,16 +126,12 @@ export default function FiqhLessonPage() {
         <h2>الراجح بدليله</h2>
         <p>{lesson.preferred}</p>
       </section>
-      <section>
-        <h2>المصادر</h2>
-        <ul className="fiqh-sources">
-          {lesson.sources.map((s) => (
-            <li key={`${s.book}-${s.ref}`}>
-              {s.book} — {s.author} — {s.ref}
-            </li>
-          ))}
-        </ul>
-      </section>
+      <CompactSources
+        items={lesson.sources.map((s) => ({
+          summary: `${s.book} — ${s.ref}`,
+          detail: `${s.book} — ${s.author} — ${s.ref}`,
+        }))}
+      />
 
       <nav className="fiqh-lesson-pager" aria-label="المسألة التالية والسابقة">
         {nav.prev ? (
