@@ -97,7 +97,7 @@ export default function TopicPage() {
       <div className="page-shell narrow">
         <h1>موضوع غير متاح</h1>
         <p>لم نتمكن من عرض محتوى لهذا الرابط. قد يكون الموضوع محذوفاً أو لم يُنشَر بعد.</p>
-        <Link href="/topics">العودة للموضوعات</Link>
+        <Link href="/sections">العودة للموضوعات</Link>
       </div>
     );
   }
@@ -105,7 +105,7 @@ export default function TopicPage() {
   return (
     <div className="page-shell narrow search-page">
       <nav className="tpc-breadcrumb" aria-label="مسار التنقل">
-        <Link href="/topics">الموضوعات العلمية</Link>
+        <Link href="/sections">الموضوعات العلمية</Link>
         <span className="tpc-sep">/</span>
         <span>{topic.title}</span>
       </nav>

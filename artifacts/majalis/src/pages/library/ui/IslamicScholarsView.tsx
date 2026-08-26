@@ -159,7 +159,7 @@ export default function IslamicScholarsPage() {
                   <p className="sch-card__fullname">{s.fullName}</p>
                   <div className="sch-card__tags">
                     <span className="sch-tag sch-tag--role">{role}</span>
-                    {s.specialty.map(sp => (
+                    {s.specialty?.map(sp => (
                       <span key={sp} className="sch-tag">{sp}</span>
                     ))}
                     {s.madhhab && <span className="sch-tag sch-tag--madhhab">{s.madhhab}</span>}
@@ -187,7 +187,7 @@ export default function IslamicScholarsPage() {
                       <BookOpen size={14} /> أبرز المؤلفات
                     </h3>
                     <ul className="sch-card__works-list">
-                      {s.key_works.map((w) => {
+                      {(s.key_works || []).map((w) => {
                         const link = resolveScholarWorkLink(w, s.name);
                         return (
                           <li key={w}>

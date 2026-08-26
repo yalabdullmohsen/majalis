@@ -141,7 +141,7 @@ export function DailyWirdCard() {
           <p className="home-daily-wird__meta">
             {[faida.author_name, faida.source, faida.category].filter(Boolean).join(" · ")}
           </p>
-          <Link href="/fawaid" className="home-daily-wird__cta">
+          <Link href="/flashcards" className="home-daily-wird__cta">
             الفوائد
           </Link>
         </article>

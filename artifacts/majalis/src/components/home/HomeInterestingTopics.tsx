@@ -24,7 +24,7 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     color: "var(--mj-brand)",
   },
   {
-    href: "/fawaid",
+    href: "/flashcards",
     icon: '<path d="M11 2a5 5 0 0 1 5 5c0 2.4-1.5 4.5-3.5 5.4V14H9.5v-1.6C7.5 11.5 6 9.4 6 7a5 5 0 0 1 5-5z"/><line x1="9.5" y1="17" x2="12.5" y2="17"/><line x1="10" y1="20" x2="12" y2="20"/>',
     label: "الفوائد العلمية",
     desc: "لآلئ ودرر من كلام العلماء",

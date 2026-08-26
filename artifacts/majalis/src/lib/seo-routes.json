@@ -117,9 +117,10 @@
         "قراءة القرآن",
         "أحكام التجويد"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.82
+      "priority": 0.82,
+      "robots": "noindex, follow"
     },
     {
       "path": "/quran/surah-stories",
@@ -2256,9 +2257,10 @@
         "المحتوى الشرعي",
         "أبواب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.75
+      "priority": 0.75,
+      "robots": "noindex, follow"
     },
     {
       "path": "/sitemap",
@@ -2537,9 +2539,10 @@
         "تعلم التجويد",
         "مخارج الحروف"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.75
+      "priority": 0.75,
+      "robots": "noindex, follow"
     },
     {
       "path": "/universities/compare",

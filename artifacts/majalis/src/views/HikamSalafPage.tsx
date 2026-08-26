@@ -1630,7 +1630,7 @@ export default function HikamSalafPage() {
         <div className="hk-related__grid">
           {[
             { href: "/scholars",       label: "أعلام الإسلام" },
-            { href: "/fawaid",         label: "الفوائد الدينية" },
+            { href: "/flashcards",         label: "الفوائد الدينية" },
             { href: "/akhlaq",         label: "الأخلاق الإسلامية" },
             { href: "/arkan-iman",     label: "أركان الإيمان" },
             { href: "/arbaeen-nawawi", label: "الأربعون النووية" },

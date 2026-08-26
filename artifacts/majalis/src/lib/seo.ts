@@ -76,6 +76,14 @@ export function normalizePath(path: string) {
   return cleanPath;
 }
 
+function safeDecodeURIComponent(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
 const META_DESC_MIN = 120;
 const META_DESC_MAX = 160;
 const TITLE_MAX = 60;
@@ -125,7 +133,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
   if (exact) return exact;
 
   if (normalized.startsWith("/search/")) {
-    const term = decodeURIComponent(normalized.slice("/search/".length));
+    const term = safeDecodeURIComponent(normalized.slice("/search/".length));
     return {
       ...requiredRoute(routes, "/search"),
       title: `نتائج البحث: ${term} | المجلس العلمي`,
@@ -139,7 +147,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
   }
 
   if (normalized.startsWith("/sheikhs/")) {
-    const name = decodeURIComponent(normalized.slice("/sheikhs/".length));
+    const name = safeDecodeURIComponent(normalized.slice("/sheikhs/".length));
     return {
       ...requiredRoute(routes, "/sheikhs"),
       title: `${name} | المجلس العلمي`,
@@ -255,7 +263,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
   }
 
   if (normalized.startsWith("/nations/")) {
-    const nationSlug = decodeURIComponent(normalized.slice("/nations/".length));
+    const nationSlug = safeDecodeURIComponent(normalized.slice("/nations/".length));
     return {
       ...requiredRoute(routes, "/nations"),
       path: normalized,
@@ -270,7 +278,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
   }
 
   if (normalized.startsWith("/quran/people/")) {
-    const personSlug = decodeURIComponent(normalized.slice("/quran/people/".length));
+    const personSlug = safeDecodeURIComponent(normalized.slice("/quran/people/".length));
     return {
       ...requiredRoute(routes, "/quran/people"),
       path: normalized,
@@ -281,7 +289,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
   }
 
   if (normalized.startsWith("/prophets/")) {
-    const prophetSlug = decodeURIComponent(normalized.slice("/prophets/".length));
+    const prophetSlug = safeDecodeURIComponent(normalized.slice("/prophets/".length));
     const PROPHET_NAMES: Record<string, string> = {
       adam: "آدم", idris: "إدريس", nuh: "نوح", hud: "هود",
       salih: "صالح", ibrahim: "إبراهيم", lut: "لوط", ismail: "إسماعيل",

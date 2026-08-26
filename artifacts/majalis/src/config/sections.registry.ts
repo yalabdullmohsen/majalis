@@ -181,7 +181,6 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/about-us", to: "/about", note: "من نحن → عن المجلس العلمي" },
   { from: "/aqidah", to: "/tawhid", note: "عقيدة قديم → التوحيد/العقيدة" },
   { from: "/prayer", to: "/prayer-times", note: "صلاة مختصر → مواقيت الصلاة" },
-  { from: "/adhkar", to: "/duas", note: "أذكار → الأدعية (مسار موحّد)" },
   { from: "/more", to: "/sections", note: "المزيد → الأقسام" },
 ];
 

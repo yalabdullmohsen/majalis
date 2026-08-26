@@ -2721,16 +2721,21 @@ ${issue.category ? `<p>التصنيف: ${escapeHtml(issue.category)}</p>` : ""}`
 }
 
 
-// المواضيع — من STATIC_TOPICS في TopicsIndexPage
+// المواضيع — محوّلة إلى /sections؛ تبقى قشرة noindex بلا sitemap حتى لا تُفهرَس كيتيمة
 for (const t of TOPICS) {
   addPage(
     {
       path: `/topics/${t.slug}`,
       title: t.title,
-      description: `${t.title} — أدلة وأحكام وفتاوى ودروس وكتب ذات صلة، مجموعة من مصادر المجلس العلمي الموثقة.`,
+      description: padDesc(
+        `${t.title} — أدلة وأحكام ودروس وكتب ذات صلة من مصادر المجلس العلمي.`,
+        `موضوع إسلامي ضمن منصة ${SITE_NAME}`,
+      ),
       keywords: [t.title, "مواضيع إسلامية", "أحكام شرعية"],
+      robots: "noindex, follow",
+      sitemap: false,
     },
-    { parents: [{ name: "المواضيع الإسلامية", path: "/topics" }], priority: 0.66, changefreq: "monthly" },
+    { parents: [{ name: "الأقسام", path: "/sections" }], sitemap: false, priority: 0.3, changefreq: "monthly" },
   );
 }
 

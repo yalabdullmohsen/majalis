@@ -857,7 +857,7 @@ function Router() {
       <Route path="/islamic-stories"><Redirect to="/stories" /></Route>
       <Route path="/adhkar/:slug"><SafeLazyRoute component={AdhkarPage} /></Route>
       <Route path="/duas"><SafeLazyRoute component={DuasPage} /></Route>
-      <Route path="/adhkar"><Redirect to="/duas" /></Route>
+      <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
       <Route path="/qa"><Redirect to="/quiz" /></Route>
       <Route path="/qa/:rest*"><Redirect to="/quiz" /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>

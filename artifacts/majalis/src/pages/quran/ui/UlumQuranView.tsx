@@ -22,13 +22,13 @@ const ADAWAT_CARDS = [
   {
     title: "آداب التلاوة",
     desc: "الطهارة، واستقبال القبلة إن تيسّر، والترتيل، والخضوع، والعمل بما يُتلى. قال تعالى: ﴿وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا﴾ (المزمل: ٤). من حقائق علوم القرآن الأساسية؛ نصّ قرآني يُعرض للتذكّر والتدبر دون تغيير في لفظه.",
-    href: "/quran/tajweed",
+    href: "/quran-hub/tajweed",
     linkLabel: "علم التجويد وآداب القراءة",
   },
   {
     title: "الوقف والابتداء",
     desc: "معرفة مواضع الوقف التام والكافي والحسن؛ حتى لا يُقطع معنى الآية على وجه يُفسد المراد. يُدرَس ضمن التجويد وكتب الوقف.",
-    href: "/quran/tajweed",
+    href: "/quran-hub/tajweed",
     linkLabel: "باب الوقف في التجويد",
   },
   {
@@ -509,7 +509,7 @@ export default function UlumQuranPage() {
               { href: "/mushaf", label: "المصحف" },
               { href: "/tafsir", label: "علم التفسير" },
               { href: "/quran/makki-madani", label: "المكي والمدني" },
-              { href: "/quran/tajweed", label: "علم التجويد" },
+              { href: "/quran-hub/tajweed", label: "علم التجويد" },
               { href: "/duas-quran", label: "أدعية القرآن" },
             ].map((r) => (
               <a key={r.href} href={r.href} className="uq-related__link">{r.label}</a>

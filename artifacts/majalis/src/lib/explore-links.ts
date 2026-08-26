@@ -57,7 +57,7 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/lessons", label: "الدروس العلمية" },
   ],
   mawsuaat: [
-    { href: "/fawaid", label: "الفوائد" },
+    { href: "/flashcards", label: "الفوائد" },
     { href: "/quiz", label: "الأسئلة والأجوبة" },
     { href: "/fiqh", label: "بوابة الفقه" },
     { href: "/daily-wird", label: "الورد اليومي" },

@@ -156,6 +156,31 @@
       "permanent": true
     },
     {
+      "source": "/man-nahnu",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/fawaid",
+      "destination": "/flashcards",
+      "permanent": true
+    },
+    {
+      "source": "/topics",
+      "destination": "/sections",
+      "permanent": true
+    },
+    {
+      "source": "/tajweed",
+      "destination": "/quran-hub/tajweed",
+      "permanent": true
+    },
+    {
+      "source": "/quran/tajweed",
+      "destination": "/quran-hub/tajweed",
+      "permanent": true
+    },
+    {
       "source": "/about-us",
       "destination": "/about",
       "permanent": true

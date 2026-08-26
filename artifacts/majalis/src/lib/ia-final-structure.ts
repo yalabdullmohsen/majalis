@@ -38,6 +38,11 @@ export const IA_REDIRECTS: Record<string, string> = {
   "/rulings": "/fiqh",
   "/fatwa": "/fiqh",
   "/fawaid": "/flashcards",
+  "/topics": "/sections",
+  "/tajweed": "/quran-hub/tajweed",
+  "/quran/tajweed": "/quran-hub/tajweed",
+  "/quran": "/quran-hub",
+  "/anbiya": "/prophets",
 };
 
 /** عناوين ممنوعة في الأسطح العامة (رئيسية / المزيد / تذييل / وصول سريع). */
