@@ -1,32 +1,33 @@
-import { useEffect, useRef, useState } from "react";
-import { Download, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Download, Pause, Play, Trash2 } from "lucide-react";
 import { getSelectableReciters } from "@/lib/quran-audio";
 import { getVerifiedReciters, getVerifiedRecitersSyncFallback } from "@/lib/audio-registry";
 import {
   getAllDownloadStatuses,
-  downloadReciter,
   deleteReciterDownloads,
   estimateStorageUsage,
   MAX_FULL_OFFLINE_RECITERS,
   MAX_OFFLINE_AUDIO_BYTES,
   OfflineAudioQuotaError,
+  type DownloadProgress,
   type ReciterDownloadStatus,
 } from "@/lib/quran-audio-downloads";
+import { FullQuranDownloader } from "@/lib/full-quran-downloader";
 import { toArabicDigits } from "@/lib/utils";
 
 function formatMB(bytes: number): string {
   return toArabicDigits((bytes / (1024 * 1024)).toFixed(0));
 }
 
-/** إدارة تنزيل تلاوة السور كاملة لكل قارئ للاستماع دون اتصال — قائمة مدمجة
- * ضمن لوحة إعدادات قارئ المصحف، تُعيد استخدام أنماط mpv-settings-group/
- * mpv-chip القائمة بلا تكرار تصميم جديد. */
+type ActiveJob = DownloadProgress & { reciterId: string };
+
+/** إدارة تنزيل تلاوة السور كاملة — إيقاف/استئناف + شريط تقدّم */
 export function ReciterDownloadManager() {
   const [statuses, setStatuses] = useState<ReciterDownloadStatus[]>([]);
-  const [activeDownload, setActiveDownload] = useState<{ reciterId: string; done: number; total: number } | null>(null);
+  const [activeJob, setActiveJob] = useState<ActiveJob | null>(null);
+  const [pausedReciterId, setPausedReciterId] = useState<string | null>(null);
   const [storage, setStorage] = useState<{ usage: number; quota: number } | null>(null);
   const [quotaMsg, setQuotaMsg] = useState<string | null>(null);
-  const cancelRef = useRef(false);
   const [verifiedReciters, setVerifiedReciters] = useState(() => getVerifiedRecitersSyncFallback());
 
   const refresh = async () => {
@@ -49,29 +50,47 @@ export function ReciterDownloadManager() {
   }, []);
 
   const handleDownload = async (reciterId: string) => {
-    cancelRef.current = false;
     setQuotaMsg(null);
-    setActiveDownload({ reciterId, done: 0, total: 114 });
+    setPausedReciterId(null);
+    setActiveJob({
+      reciterId,
+      currentSurah: 1,
+      totalSurahs: 114,
+      percentage: 0,
+      downloadedMB: "0.0",
+      totalMB: "0.0",
+      status: "downloading",
+      surah: 1,
+      done: 0,
+      total: 114,
+    });
     try {
-      await downloadReciter(
-        reciterId,
-        (p) => setActiveDownload({ reciterId, done: p.done, total: p.total }),
-        () => cancelRef.current,
-      );
+      const result = await FullQuranDownloader.downloadFullQuran(reciterId, (p) => {
+        setActiveJob({ ...p, reciterId });
+      });
+      if (result === "paused") {
+        setPausedReciterId(reciterId);
+      }
     } catch (err) {
       if (err instanceof OfflineAudioQuotaError) {
         setQuotaMsg(err.message);
       }
-      // فشل جزئي (انقطاع شبكة) — ما نُزّل يبقى؛ إعادة المحاولة تُكمل من موضع التوقّف.
     }
-    setActiveDownload(null);
+    setActiveJob(null);
     await refresh();
   };
 
-  const handleCancel = () => { cancelRef.current = true; };
+  const handlePause = () => {
+    FullQuranDownloader.pauseDownload();
+    if (activeJob) {
+      setPausedReciterId(activeJob.reciterId);
+      setActiveJob(null);
+    }
+  };
 
   const handleDelete = async (reciterId: string) => {
     await deleteReciterDownloads(reciterId);
+    if (pausedReciterId === reciterId) setPausedReciterId(null);
     await refresh();
   };
 
@@ -100,20 +119,23 @@ export function ReciterDownloadManager() {
       <div className="rdm-list">
         {visibleReciters.map((r) => {
           const status = statuses.find((s) => s.reciterId === r.id);
-          const isDownloading = activeDownload?.reciterId === r.id;
-          const percent = isDownloading ? Math.round((activeDownload!.done / activeDownload!.total) * 100) : 0;
+          const isDownloading = activeJob?.reciterId === r.id;
+          const isPaused = pausedReciterId === r.id && !isDownloading;
+          const percent = isDownloading ? activeJob!.percentage : 0;
           return (
             <div key={r.id} className="rdm-row">
               <div className="rdm-row__info">
                 <span className="rdm-row__name">{r.nameAr}</span>
                 <span className="rdm-row__status">
                   {isDownloading
-                    ? `جارٍ التنزيل — ${toArabicDigits(percent)}٪`
-                    : status?.complete
-                      ? `مُنزَّلة كاملة — ${formatMB(status.totalBytes)} م.ب`
-                      : status && status.downloadedSurahs > 0
-                        ? `جزئي — ${toArabicDigits(status.downloadedSurahs)}/١١٤ سورة`
-                        : "غير مُنزَّلة"}
+                    ? `سورة ${toArabicDigits(activeJob!.currentSurah)} — ${toArabicDigits(percent)}٪ · ${activeJob!.downloadedMB}/${activeJob!.totalMB} م.ب`
+                    : isPaused
+                      ? `متوقف مؤقتًا — ${toArabicDigits(status?.downloadedSurahs ?? 0)}/١١٤`
+                      : status?.complete
+                        ? `مُنزَّلة كاملة — ${formatMB(status.totalBytes)} م.ب`
+                        : status && status.downloadedSurahs > 0
+                          ? `جزئي — ${toArabicDigits(status.downloadedSurahs)}/١١٤ سورة`
+                          : "غير مُنزَّلة"}
                 </span>
                 {isDownloading && (
                   <div className="rdm-progress" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}>
@@ -122,13 +144,25 @@ export function ReciterDownloadManager() {
                 )}
               </div>
               {isDownloading ? (
-                <button type="button" className="mpv-chip" onClick={handleCancel}>إلغاء</button>
+                <button type="button" className="mpv-chip" onClick={handlePause}>
+                  <Pause size={14} strokeWidth={2} aria-hidden="true" /> إيقاف
+                </button>
+              ) : isPaused ? (
+                <button type="button" className="mpv-chip" onClick={() => void handleDownload(r.id)}>
+                  <Play size={14} strokeWidth={2} aria-hidden="true" /> استئناف
+                </button>
               ) : status && status.downloadedSurahs > 0 ? (
-                <button type="button" className="mpv-chip" onClick={() => handleDelete(r.id)} aria-label={`حذف تنزيل ${r.nameAr}`}>
+                <button type="button" className="mpv-chip" onClick={() => void handleDelete(r.id)} aria-label={`حذف تنزيل ${r.nameAr}`}>
                   <Trash2 size={14} strokeWidth={2} aria-hidden="true" /> حذف
                 </button>
               ) : (
-                <button type="button" className="mpv-chip" onClick={() => handleDownload(r.id)} aria-label={`تنزيل تلاوة ${r.nameAr}`} disabled={!!activeDownload}>
+                <button
+                  type="button"
+                  className="mpv-chip"
+                  onClick={() => void handleDownload(r.id)}
+                  aria-label={`تنزيل تلاوة ${r.nameAr}`}
+                  disabled={!!activeJob}
+                >
                   <Download size={14} strokeWidth={2} aria-hidden="true" /> تنزيل
                 </button>
               )}

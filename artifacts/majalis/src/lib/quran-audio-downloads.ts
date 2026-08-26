@@ -16,6 +16,7 @@ const DB_NAME = "majalis-quran-audio";
 const DB_VERSION = 1;
 const STORE = "surah-audio";
 const TOTAL_SURAHS = 114;
+export { TOTAL_SURAHS };
 
 /** سقف تخزين اختياري دون اتصال — لا تُحزَم ملفات صوت في حزمة التطبيق. */
 export const MAX_OFFLINE_AUDIO_BYTES = 1.5 * 1024 * 1024 * 1024; // 1.5 GiB
@@ -160,6 +161,141 @@ export type ReciterDownloadStatus = {
   complete: boolean;
 };
 
+export type QuranDownloadStatus =
+  | "idle"
+  | "downloading"
+  | "paused"
+  | "completed"
+  | "error";
+
+export type DownloadProgress = {
+  currentSurah: number;
+  totalSurahs: number;
+  percentage: number;
+  downloadedMB: string;
+  totalMB: string;
+  status: QuranDownloadStatus;
+  /** توافق مع الواجهة القديمة */
+  surah: number;
+  done: number;
+  total: number;
+};
+
+export type DownloadControl = {
+  isCancelled?: () => boolean;
+  isPaused?: () => boolean;
+};
+
+type ActiveDownloadSession = {
+  reciterId: string;
+  paused: boolean;
+  abort: AbortController | null;
+};
+
+let activeSession: ActiveDownloadSession | null = null;
+
+function formatMb(bytes: number): string {
+  if (!Number.isFinite(bytes) || bytes <= 0) return "0.0";
+  return (bytes / (1024 * 1024)).toFixed(1);
+}
+
+function normalizeControl(control?: (() => boolean) | DownloadControl): DownloadControl {
+  if (typeof control === "function") {
+    return { isCancelled: control };
+  }
+  return control ?? {};
+}
+
+function emitProgress(
+  onProgress: (p: DownloadProgress) => void,
+  opts: {
+    currentSurah: number;
+    doneSurahs: number;
+    totalSurahs: number;
+    sessionBytes: number;
+    surahPartialBytes: number;
+    surahTotalBytes: number | null;
+    status: QuranDownloadStatus;
+  },
+): void {
+  const { currentSurah, doneSurahs, totalSurahs, sessionBytes, surahPartialBytes, surahTotalBytes, status } =
+    opts;
+  const partialRatio =
+    surahTotalBytes && surahTotalBytes > 0
+      ? Math.min(1, surahPartialBytes / surahTotalBytes)
+      : 0;
+  const effectiveDone = doneSurahs + partialRatio;
+  const percentage = Math.min(100, Math.round((effectiveDone / totalSurahs) * 100));
+  const downloadedBytes = sessionBytes + surahPartialBytes;
+  const estimatedTotal =
+    doneSurahs > 0
+      ? (downloadedBytes / Math.max(doneSurahs + partialRatio, 0.001)) * totalSurahs
+      : surahTotalBytes
+        ? surahTotalBytes * totalSurahs
+        : downloadedBytes;
+
+  onProgress({
+    currentSurah,
+    totalSurahs,
+    percentage,
+    downloadedMB: formatMb(downloadedBytes),
+    totalMB: formatMb(estimatedTotal),
+    status,
+    surah: currentSurah,
+    done: doneSurahs,
+    total: totalSurahs,
+  });
+}
+
+async function fetchSurahBlob(
+  url: string,
+  signal: AbortSignal,
+  onBytes: (written: number, total: number | null) => void,
+): Promise<Blob> {
+  const res = await fetch(url, { signal });
+  if (!res.ok) throw new Error(`فشل التنزيل: ${res.status}`);
+  const total = Number(res.headers.get("content-length")) || null;
+  const reader = res.body?.getReader();
+  if (!reader) {
+    const blob = await res.blob();
+    onBytes(blob.size, blob.size);
+    return blob;
+  }
+  const chunks: BlobPart[] = [];
+  let written = 0;
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+    written += value.byteLength;
+    onBytes(written, total);
+  }
+  return new Blob(chunks);
+}
+
+/** إيقاف التنزيل الجاري — يُستأنف لاحقًا من آخر سورة مكتملة. */
+export function pauseReciterDownload(): void {
+  if (!activeSession) return;
+  activeSession.paused = true;
+  activeSession.abort?.abort();
+}
+
+/** إلغاء التنزيل (لا يُحذف ما نُزّل). */
+export function cancelReciterDownload(): void {
+  if (!activeSession) return;
+  activeSession.paused = false;
+  activeSession.abort?.abort();
+  activeSession = null;
+}
+
+export function getPausedReciterId(): string | null {
+  return activeSession?.paused ? activeSession.reciterId : null;
+}
+
+export function isReciterDownloadActive(reciterId: string): boolean {
+  return activeSession?.reciterId === reciterId && !activeSession.paused;
+}
+
 export async function getReciterDownloadStatus(reciterId: string): Promise<ReciterDownloadStatus> {
   try {
     const entries = await listKeysForReciter(reciterId);
@@ -180,18 +316,21 @@ export async function getAllDownloadStatuses(): Promise<ReciterDownloadStatus[]>
   return Promise.all(RECITERS.map((r) => getReciterDownloadStatus(r.id)));
 }
 
-export type DownloadProgress = { surah: number; done: number; total: number };
 
-/** يحمّل السور 1..114 تسلسليًا (لا تزامنًا — يتفادى إغراق الشبكة/الذاكرة على الجوال)، يتخطى ما هو محمَّل مسبقًا. */
+/** يحمّل السور 1..114 تسلسليًا — يتخطى المحمّل، يدعم إيقاف/استئناف. */
 export async function downloadReciter(
   reciterId: string,
   onProgress: (p: DownloadProgress) => void,
-  isCancelled: () => boolean,
-): Promise<void> {
+  control?: (() => boolean) | DownloadControl,
+): Promise<"completed" | "paused" | "cancelled"> {
+  const { isCancelled, isPaused } = normalizeControl(control);
+  activeSession = { reciterId, paused: false, abort: null };
+
   const status = await getReciterDownloadStatus(reciterId);
   if (!status.complete) {
     const othersComplete = await completeOfflineReciterCount(reciterId);
     if (othersComplete >= MAX_FULL_OFFLINE_RECITERS) {
+      activeSession = null;
       throw new OfflineAudioQuotaError(
         `الحد الأقصى ${MAX_FULL_OFFLINE_RECITERS} قرّاء كاملين دون اتصال. احذف تنزيلاً أولاً.`,
       );
@@ -199,27 +338,134 @@ export async function downloadReciter(
   }
 
   const existing = new Set((await listKeysForReciter(reciterId)).map((e) => e.surah));
-  for (let surah = 1; surah <= TOTAL_SURAHS; surah++) {
-    if (isCancelled()) return;
-    if (!existing.has(surah)) {
+  let sessionBytes = (await getReciterDownloadStatus(reciterId)).totalBytes;
+
+  try {
+    for (let surah = 1; surah <= TOTAL_SURAHS; surah++) {
+      if (isCancelled?.()) {
+        activeSession = null;
+        return "cancelled";
+      }
+      if (isPaused?.() || activeSession?.paused) {
+        emitProgress(onProgress, {
+          currentSurah: surah,
+          doneSurahs: surah - 1,
+          totalSurahs: TOTAL_SURAHS,
+          sessionBytes,
+          surahPartialBytes: 0,
+          surahTotalBytes: null,
+          status: "paused",
+        });
+        return "paused";
+      }
+
+      if (existing.has(surah)) {
+        emitProgress(onProgress, {
+          currentSurah: surah,
+          doneSurahs: surah,
+          totalSurahs: TOTAL_SURAHS,
+          sessionBytes,
+          surahPartialBytes: 0,
+          surahTotalBytes: null,
+          status: "downloading",
+        });
+        continue;
+      }
+
       const used = await totalOfflineBytes();
       if (used >= MAX_OFFLINE_AUDIO_BYTES) {
         throw new OfflineAudioQuotaError(
           "تجاوز سقف التخزين المحلي للتلاوات (١٫٥ غيغابايت). احذف تنزيلاً أولاً.",
         );
       }
-      const res = await fetch(getSurahAudioUrl(surah, reciterId));
-      if (!res.ok) throw new Error(`فشل تنزيل السورة ${surah}: ${res.status}`);
-      const blob = await res.blob();
+
+      const abort = new AbortController();
+      if (activeSession) activeSession.abort = abort;
+
+      let surahTotal: number | null = null;
+
+      const blob = await fetchSurahBlob(
+        getSurahAudioUrl(surah, reciterId),
+        abort.signal,
+        (written, total) => {
+          surahTotal = total;
+          emitProgress(onProgress, {
+            currentSurah: surah,
+            doneSurahs: surah - 1,
+            totalSurahs: TOTAL_SURAHS,
+            sessionBytes,
+            surahPartialBytes: written,
+            surahTotalBytes: total,
+            status: "downloading",
+          });
+        },
+      );
+
+      if (isCancelled?.()) {
+        activeSession = null;
+        return "cancelled";
+      }
+      if (isPaused?.() || activeSession?.paused || abort.signal.aborted) {
+        emitProgress(onProgress, {
+          currentSurah: surah,
+          doneSurahs: surah - 1,
+          totalSurahs: TOTAL_SURAHS,
+          sessionBytes,
+          surahPartialBytes: 0,
+          surahTotalBytes: null,
+          status: "paused",
+        });
+        return "paused";
+      }
+
       if (used + blob.size > MAX_OFFLINE_AUDIO_BYTES) {
         throw new OfflineAudioQuotaError(
           "تجاوز سقف التخزين المحلي للتلاوات (١٫٥ غيغابايت). احذف تنزيلاً أولاً.",
         );
       }
-      if (isCancelled()) return;
+
       await putBlob(reciterId, surah, blob);
+      sessionBytes += blob.size;
+      existing.add(surah);
+
+      emitProgress(onProgress, {
+        currentSurah: surah,
+        doneSurahs: surah,
+        totalSurahs: TOTAL_SURAHS,
+        sessionBytes,
+        surahPartialBytes: 0,
+        surahTotalBytes: surahTotal,
+        status: "downloading",
+      });
     }
-    onProgress({ surah, done: surah, total: TOTAL_SURAHS });
+
+    emitProgress(onProgress, {
+      currentSurah: TOTAL_SURAHS,
+      doneSurahs: TOTAL_SURAHS,
+      totalSurahs: TOTAL_SURAHS,
+      sessionBytes,
+      surahPartialBytes: 0,
+      surahTotalBytes: null,
+      status: "completed",
+    });
+    activeSession = null;
+    return "completed";
+  } catch (err) {
+    activeSession = null;
+    if (err instanceof OfflineAudioQuotaError) throw err;
+    if (err instanceof DOMException && err.name === "AbortError") {
+      return "paused";
+    }
+    emitProgress(onProgress, {
+      currentSurah: 1,
+      doneSurahs: 0,
+      totalSurahs: TOTAL_SURAHS,
+      sessionBytes,
+      surahPartialBytes: 0,
+      surahTotalBytes: null,
+      status: "error",
+    });
+    throw err;
   }
 }
 
