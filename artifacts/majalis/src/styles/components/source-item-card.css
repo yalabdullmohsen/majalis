@@ -113,7 +113,21 @@ html.dark .src-card__meta {
 
 html[data-theme="dark"] .src-card__btn:not(.src-card__btn--primary),
 html.dark .src-card__btn:not(.src-card__btn--primary) {
-  background: var(--mj-surface, #1a221f);
-  color: var(--mj-ink, #e8eeeb);
-  border-color: var(--mj-hairline, #2a3531);
+  background: rgb(2 44 34 / 0.35);
+  color: #a7f3d0;
+  border-color: rgb(6 95 70 / 0.6);
+}
+
+html[data-theme="dark"] .src-card__badge,
+html.dark .src-card__badge {
+  background: rgb(28 58 48 / 0.72);
+  color: #6ee7b7;
+  border: 1px solid rgb(6 95 70 / 0.4);
+}
+
+html[data-theme="dark"] .src-card__btn--primary,
+html.dark .src-card__btn--primary {
+  background: #059669;
+  border-color: #059669;
+  color: #ffffff;
 }

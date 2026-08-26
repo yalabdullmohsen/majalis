@@ -201,6 +201,14 @@ html.dark .section-lobby {
 
 html[data-theme="dark"] .section-lobby__chip,
 html.dark .section-lobby__chip {
-  background: var(--mj-surface, #1a221f);
-  border-color: var(--mj-hairline, #2a3531);
+  background: rgb(2 44 34 / 0.35); /* emerald-950/35 */
+  border-color: rgb(6 95 70 / 0.6); /* emerald-800/60 */
+  color: #a7f3d0; /* emerald-200 */
+}
+
+html[data-theme="dark"] .section-lobby__chip.is-active,
+html.dark .section-lobby__chip.is-active {
+  background: #059669; /* emerald-600 */
+  border-color: #059669;
+  color: #ffffff;
 }
