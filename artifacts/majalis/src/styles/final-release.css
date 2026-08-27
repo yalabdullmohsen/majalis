@@ -975,11 +975,13 @@ html[data-theme="dark"] .bottom-nav--v2 {
 }
 .global-back-btn,
 .floating-back-btn {
-  /* يمين في RTL / يسار في LTR — bottom≈24px و inset≈20px على سطح المكتب أدناه */
+  /* يمين في RTL / يسار في LTR — فوق الشريط السفلي دائمًا */
   inset-inline-start: max(20px, var(--inset-left));
   background: var(--majalis-panel, #fff);
   color: var(--majalis-ink, #1A1A18);
-  border: 1px solid var(--majalis-line, rgba(0,0,0,.1));
+  border: 1.5px solid color-mix(in srgb, var(--mj-brand-deep, #135034) 35%, var(--majalis-line, rgba(0,0,0,.12)));
+  opacity: 1;
+  z-index: 200;
 }
 .floating-back-btn--top {
   background: var(--color-primary, var(--mj-brand));
@@ -989,11 +991,13 @@ html[data-theme="dark"] .bottom-nav--v2 {
 }
 .scroll-to-top {
   inset-inline-end: 1rem;
-  z-index: 190;
+  z-index: 200;
   background: var(--color-primary, var(--mj-brand));
   color: var(--text-on-primary, #fff);
-  opacity: .88;
+  opacity: .92;
   box-shadow: 0 4px 14px rgba(0,0,0,.22);
+  /* يبعد عن زر الرجوع (الزاوية المقابلة) وعن أزرار التسجيل في البطاقات */
+  bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.75rem + var(--inset-bottom, 0px));
 }
 .global-back-btn:hover,
 .floating-back-btn:hover,

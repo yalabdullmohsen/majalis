@@ -22,8 +22,9 @@ assert.match(page, /mk-search-bar/);
 assert.match(page, /ShareFaida[\s\S]*variant="icons"/);
 assert.match(page, /mk-card__footer/);
 
-assert.match(fab, /if \(deepScroll\) return null/);
+assert.doesNotMatch(fab, /if \(deepScroll\) return null/);
 assert.doesNotMatch(fab, /ChevronUp/);
+assert.match(fab, /بدون شرط تمرير/);
 
 assert.match(share, /variant === "icons"/);
 assert.match(share, /share-faida--icons/);

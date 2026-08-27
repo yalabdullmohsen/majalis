@@ -39,7 +39,7 @@ export function SegmentedFilter({
         scroll && "mj-segmented-filter--scroll",
         className,
       )}
-      role="radiogroup"
+      role="group"
       aria-label={ariaLabel}
     >
       {items.map((item) => (
