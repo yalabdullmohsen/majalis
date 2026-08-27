@@ -4,7 +4,7 @@
  */
 import { useRef } from "react";
 import { Link, useLocation } from "wouter";
-import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isAuthStandalonePath, isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isComingSoonPath } from "@/lib/nav-visibility";
 import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 import { getActiveTab, type BottomTabId } from "@/lib/get-active-tab";
@@ -38,7 +38,7 @@ export function BottomNavBar({ isHidden = false }: { isHidden?: boolean } = {}) 
   const prefetched = useRef(new Set<string>());
   const activeId = getActiveTab(location);
 
-  if (isImmersiveChromePath(location)) return null;
+  if (isImmersiveChromePath(location) || isAuthStandalonePath(location)) return null;
 
   function triggerPrefetch(href: string) {
     const load = TAB_PREFETCH[href];

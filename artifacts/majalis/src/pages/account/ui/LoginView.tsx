@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { ADMIN_ACCESS_DENIED_MESSAGE, mapAuthError } from "@/lib/auth-messages";
@@ -11,12 +11,22 @@ import {
   GOOGLE_OAUTH_ENABLED,
   APPLE_OAUTH_ENABLED,
   resetPasswordForEmail,
+  supabase,
 } from "@/lib/supabase";
 import { preloadRoute } from "@/lib/lazy-with-retry";
 import { Loading } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { sanitizeAuthNext } from "@/lib/auth-redirect";
 import "@/styles/pages/auth.css";
+
+type AuthTab = "login" | "register" | "forgot";
+
+const HIGHLIGHTS = [
+  { href: "/mushaf", label: "القرآن" },
+  { href: "/lessons", label: "الدروس" },
+  { href: "/fiqh", label: "الفقه" },
+  { href: "/prayer-times", label: "الصلاة" },
+] as const;
 
 function canAccessAdminUser(current: Awaited<ReturnType<typeof import("@/lib/supabase").getCurrentUser>>) {
   if (!current) return false;
@@ -45,30 +55,62 @@ function isAdminLogin(nextPath: string) {
   return nextPath.startsWith("/admin");
 }
 
-export default function LoginPage() {
-  const [email, setEmail] = useState("");
+function resolveInitialTab(pathname: string): AuthTab {
+  const p = pathname.replace(/\/+$/, "") || "/";
+  if (p === "/register" || p.startsWith("/auth/register")) return "register";
+  if (typeof window !== "undefined") {
+    const tab = new URLSearchParams(window.location.search).get("tab");
+    if (tab === "register") return "register";
+    if (tab === "forgot") return "forgot";
+  }
+  return "login";
+}
 
-  useEffect(() => {
-    applyPageSeo({
-      path: "/login",
-      title: "تسجيل الدخول | المجلس العلمي",
-      description: "سجّل دخولك إلى المجلس العلمي للوصول إلى محتوى شخصي وأدوات متقدمة.",
-      keywords: ["تسجيل دخول", "المجلس العلمي"],
-      robots: "noindex, follow",
-    });
-  }, []);
+export default function LoginPage() {
+  const [location, navigate] = useLocation();
+  const [tab, setTab] = useState<AuthTab>(() => resolveInitialTab(location));
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [denied, setDenied] = useState(false);
   const [loading, setLoading] = useState(false);
   const [authReady, setAuthReady] = useState(isSupabaseConfigured());
-  const [mode, setMode] = useState<"login" | "forgot">("login");
   const [resetSent, setResetSent] = useState(false);
-  const { login, logout, refreshUser, isAdmin, isLoggedIn, loading: authLoading } = useAuth();
-  const [, navigate] = useLocation();
-  const nextPath = getNextPath();
+  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const { login, register, logout, refreshUser, isAdmin, isLoggedIn, loading: authLoading } = useAuth();
+  const nextPath = useMemo(() => getNextPath(), [location]);
   const adminLogin = isAdminLogin(nextPath);
   const authEnabled = authReady;
+
+  useEffect(() => () => {
+    if (navTimerRef.current) clearTimeout(navTimerRef.current);
+  }, []);
+
+  useEffect(() => {
+    const next = resolveInitialTab(location);
+    setTab((prev) => (prev === "forgot" && next === "login" ? prev : next));
+  }, [location]);
+
+  useEffect(() => {
+    const isRegister = tab === "register";
+    applyPageSeo({
+      path: isRegister ? "/register" : "/login",
+      title: isRegister
+        ? "إنشاء حساب | المجلس العلمي"
+        : tab === "forgot"
+          ? "استعادة كلمة المرور | المجلس العلمي"
+          : "تسجيل الدخول | المجلس العلمي",
+      description: isRegister
+        ? "أنشئ حسابك في المجلس العلمي وابدأ رحلتك في تعلم العلوم الإسلامية."
+        : "سجّل دخولك إلى المجلس العلمي للوصول إلى محتوى شخصي وأدوات متقدمة.",
+      keywords: isRegister ? ["إنشاء حساب", "تسجيل", "المجلس العلمي"] : ["تسجيل دخول", "المجلس العلمي"],
+      robots: "noindex, follow",
+    });
+  }, [tab]);
 
   useEffect(() => {
     if (authReady) return;
@@ -77,18 +119,43 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (authLoading) return;
-    if (isLoggedIn) {
-      if (adminLogin && isAdmin) {
-        navigate(nextPath);
-        return;
-      }
-      if (!adminLogin) {
-        navigate(nextPath);
-      }
+    if (!isLoggedIn) return;
+    if (adminLogin && isAdmin) {
+      navigate(nextPath);
+      return;
     }
+    if (!adminLogin) navigate(nextPath);
   }, [authLoading, isLoggedIn, isAdmin, navigate, nextPath, adminLogin]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const switchTab = (next: AuthTab) => {
+    setError("");
+    setSuccess("");
+    setDenied(false);
+    setResetSent(false);
+    setTab(next);
+    if (adminLogin) return;
+    if (next === "register") {
+      navigate(nextPath !== "/" ? `/register?next=${encodeURIComponent(nextPath)}` : "/register");
+    } else if (next === "login") {
+      navigate(nextPath !== "/" ? `/login?next=${encodeURIComponent(nextPath)}` : "/login");
+    }
+  };
+
+  const validateRegister = (): string | null => {
+    if (fullName.trim().length < 2) return "يرجى إدخال الاسم (حرفان على الأقل).";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return "البريد غير صحيح";
+    if (password.length < 8) return "كلمة المرور قصيرة";
+    if (password !== confirmPassword) return "كلمة المرور غير متطابقة";
+    return null;
+  };
+
+  const validateLogin = (): string | null => {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return "البريد غير صحيح";
+    if (!password) return "أدخل كلمة المرور";
+    return null;
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!authEnabled) {
       setError(mapAuthError(null));
@@ -96,14 +163,51 @@ export default function LoginPage() {
     }
 
     setError("");
+    setSuccess("");
     setDenied(false);
     setLoading(true);
 
     try {
-      if (mode === "forgot") {
+      if (tab === "forgot") {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+          setError("البريد غير صحيح");
+          return;
+        }
         const { error: resetError } = await resetPasswordForEmail(email.trim());
         if (resetError) throw resetError;
         setResetSent(true);
+        return;
+      }
+
+      if (tab === "register") {
+        const validationError = validateRegister();
+        if (validationError) {
+          setError(validationError);
+          return;
+        }
+        const { data, error: signUpError } = await register(email.trim(), password, fullName.trim());
+        if (signUpError) throw signUpError;
+
+        const userId = data?.user?.id;
+        if (userId) {
+          await supabase.from("profiles").upsert(
+            { id: userId, full_name: fullName.trim(), email: email.trim(), role: "user" },
+            { onConflict: "id" },
+          );
+        }
+
+        if (data?.session) {
+          setSuccess("تم إنشاء حسابك بنجاح. جاري تحويلك…");
+          navTimerRef.current = setTimeout(() => navigate(nextPath || "/"), 900);
+          return;
+        }
+        setSuccess("تم إنشاء حسابك. راجع بريدك لتأكيد الحساب ثم سجّل الدخول.");
+        return;
+      }
+
+      const loginValidation = validateLogin();
+      if (loginValidation) {
+        setError(loginValidation);
         return;
       }
 
@@ -111,7 +215,6 @@ export default function LoginPage() {
       if (signInError) throw signInError;
 
       const current = await refreshUser();
-
       if (adminLogin) {
         if (canAccessAdminUser(current)) {
           preloadRoute(() => import("@/views/AdminPage"));
@@ -134,42 +237,75 @@ export default function LoginPage() {
 
   if (authLoading || !authReady) {
     return (
-      <div className="login-page">
+      <div className="login-page" dir="rtl">
         <Loading />
       </div>
     );
   }
 
+  const title =
+    tab === "forgot"
+      ? "استعادة كلمة المرور"
+      : adminLogin
+        ? "دخول المسؤول"
+        : tab === "register"
+          ? "إنشاء حساب"
+          : "تسجيل الدخول";
+
   return (
-    <div className="login-page">
+    <div className="login-page" dir="rtl">
       <div className="login-card">
-        <div className="login-card__header">
-          <picture>
-            <source srcSet="/brand/splash-logo.webp" type="image/webp" />
+        <header className="login-card__header">
+          <div className="login-app-icon" aria-hidden="true">
             <img
-              src="/brand/splash-logo.png"
-              alt="المجلس العلمي"
-              className="login-logo"
+              src="/brand/icon-1024.png"
+              alt=""
+              className="login-app-icon__img"
               loading="eager"
               decoding="async"
               fetchPriority="high"
-              width={512}
-              height={728}
+              width={96}
+              height={96}
             />
-          </picture>
+          </div>
           <p className="login-card__brand">المجلس العلمي</p>
-          <p className="login-card__tagline">علم نافع · محتوى موثوق</p>
-          <h1 className="login-card__title">
-            {mode === "forgot" ? "استعادة كلمة المرور" : adminLogin ? "دخول المسؤول" : "تسجيل الدخول"}
-          </h1>
-          <p className="login-card__subtitle">
-            {mode === "forgot"
-              ? "أدخل بريدك وسنرسل رابطًا لإعادة التعيين"
-              : adminLogin
-                ? "سجّل الدخول للوصول إلى لوحة التحكم"
-                : "سجّل الدخول للوصول إلى حسابك"}
-          </p>
-        </div>
+          <p className="login-card__tagline">علم نافع، محتوى موثوق، ودروس ميسّرة</p>
+          {!adminLogin && tab !== "forgot" ? (
+            <ul className="login-highlights" aria-label="أبرز الأقسام">
+              {HIGHLIGHTS.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="login-chip">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          <h1 className="login-card__title">{title}</h1>
+        </header>
+
+        {!adminLogin && tab !== "forgot" ? (
+          <div className="login-tabs" role="tablist" aria-label="وضع الحساب">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={tab === "login"}
+              className={`login-tab${tab === "login" ? " is-active" : ""}`}
+              onClick={() => switchTab("login")}
+            >
+              تسجيل الدخول
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={tab === "register"}
+              className={`login-tab${tab === "register" ? " is-active" : ""}`}
+              onClick={() => switchTab("register")}
+            >
+              إنشاء حساب
+            </button>
+          </div>
+        ) : null}
 
         {!authEnabled && (
           <p className="login-alert login-alert--error" role="alert">
@@ -177,134 +313,178 @@ export default function LoginPage() {
           </p>
         )}
 
-        {error && (
+        {error ? (
           <p className="login-alert login-alert--error" role="alert">
             {error}
           </p>
-        )}
+        ) : null}
 
-        {denied && (
+        {denied ? (
           <p className="login-alert login-alert--warn" role="status">
             {ADMIN_ACCESS_DENIED_MESSAGE}
           </p>
-        )}
+        ) : null}
+
+        {success ? (
+          <p className="login-alert login-alert--success" role="status">
+            {success}
+          </p>
+        ) : null}
 
         {resetSent ? (
-          <p className="login-alert" role="status">
-            إن وُجد حساب بهذا البريد فستصلك رسالة لإعادة تعيين كلمة المرور. تحقق من صندوق الوارد.
+          <p className="login-alert login-alert--success" role="status">
+            إن وُجد حساب بهذا البريد فستصلك رسالة لإعادة تعيين كلمة المرور.
           </p>
         ) : (
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="login-field">
-            <label htmlFor="login-email">البريد الإلكتروني</label>
-            <input
-              id="login-email"
-              type="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={loading || !authEnabled}
-            />
-          </div>
+          <form onSubmit={handleSubmit} className="login-form" noValidate>
+            {tab === "register" ? (
+              <div className="login-field">
+                <label htmlFor="auth-name">الاسم</label>
+                <input
+                  id="auth-name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="اسمك الكامل"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                  minLength={2}
+                  disabled={loading || !authEnabled}
+                />
+              </div>
+            ) : null}
 
-          {mode === "login" ? (
-          <div className="login-field">
-            <label htmlFor="login-password">كلمة المرور</label>
-            <input
-              id="login-password"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={loading || !authEnabled}
-            />
-          </div>
-          ) : null}
+            <div className="login-field">
+              <label htmlFor="auth-email">البريد الإلكتروني</label>
+              <input
+                id="auth-email"
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                placeholder="name@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={loading || !authEnabled}
+              />
+            </div>
 
-          <button type="submit" className="login-submit" disabled={loading || !authEnabled}>
-            {loading
-              ? "جارٍ التحقق..."
-              : mode === "forgot"
-                ? "إرسال رابط الاستعادة"
-                : "تسجيل الدخول"}
-          </button>
-        </form>
+            {tab !== "forgot" ? (
+              <div className="login-field">
+                <label htmlFor="auth-password">كلمة المرور</label>
+                <input
+                  id="auth-password"
+                  type="password"
+                  autoComplete={tab === "register" ? "new-password" : "current-password"}
+                  placeholder={tab === "register" ? "٨ أحرف على الأقل" : "••••••••"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={tab === "register" ? 8 : undefined}
+                  disabled={loading || !authEnabled}
+                />
+              </div>
+            ) : null}
+
+            {tab === "register" ? (
+              <div className="login-field">
+                <label htmlFor="auth-confirm">تأكيد كلمة المرور</label>
+                <input
+                  id="auth-confirm"
+                  type="password"
+                  autoComplete="new-password"
+                  placeholder="أعد إدخال كلمة المرور"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  minLength={8}
+                  disabled={loading || !authEnabled}
+                />
+              </div>
+            ) : null}
+
+            <button type="submit" className="login-submit" disabled={loading || !authEnabled}>
+              {loading
+                ? tab === "register"
+                  ? "جاري الإنشاء…"
+                  : tab === "forgot"
+                    ? "جارٍ الإرسال…"
+                    : "جارٍ التحقق…"
+                : tab === "register"
+                  ? "إنشاء حساب"
+                  : tab === "forgot"
+                    ? "إرسال رابط الاستعادة"
+                    : "تسجيل الدخول"}
+            </button>
+          </form>
         )}
 
-        {!adminLogin && mode === "login" && authEnabled && (
+        {!adminLogin && tab === "login" && authEnabled ? (
           <button
             type="button"
-            className="login-back-link"
-            style={{ display: "block", width: "100%", border: "none", background: "none", cursor: "pointer", marginTop: "0.75rem" }}
-            onClick={() => { setMode("forgot"); setError(""); setResetSent(false); }}
+            className="login-text-btn"
+            onClick={() => switchTab("forgot")}
           >
             نسيت كلمة المرور؟
           </button>
-        )}
-        {mode === "forgot" && (
-          <button
-            type="button"
-            className="login-back-link"
-            style={{ display: "block", width: "100%", border: "none", background: "none", cursor: "pointer", marginTop: "0.75rem" }}
-            onClick={() => { setMode("login"); setError(""); setResetSent(false); }}
-          >
+        ) : null}
+
+        {tab === "forgot" ? (
+          <button type="button" className="login-text-btn" onClick={() => switchTab("login")}>
             العودة لتسجيل الدخول
           </button>
-        )}
+        ) : null}
 
         {!adminLogin &&
           authEnabled &&
-          (GOOGLE_OAUTH_ENABLED || APPLE_OAUTH_ENABLED) &&
-          mode === "login" && (
-          <div className="login-oauth">
-            <div className="login-oauth__divider"><span>أو</span></div>
-            {GOOGLE_OAUTH_ENABLED ? (
-              <button
-                type="button"
-                className="login-oauth__btn"
-                onClick={async () => {
-                  const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
-                  await signInWithGoogle(getAuthCallbackUrl(nextPath !== "/" ? nextPath : "/"));
-                }}
-                disabled={loading}
-              >
-                <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-                  <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
-                  <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z"/>
-                  <path fill="#FBBC05" d="M3.964 10.712A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.712V4.956H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.044l3.007-2.332z"/>
-                  <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.956L3.964 7.288C4.672 5.161 6.656 3.58 9 3.58z"/>
-                </svg>
-                تسجيل الدخول بـ Google
-              </button>
-            ) : null}
-            {APPLE_OAUTH_ENABLED ? (
-              <button
-                type="button"
-                className="login-oauth__btn"
-                onClick={async () => {
-                  const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
-                  await signInWithApple(getAuthCallbackUrl(nextPath !== "/" ? nextPath : "/"));
-                }}
-                disabled={loading}
-              >
-                تسجيل الدخول بـ Apple
-              </button>
-            ) : null}
+          tab === "login" &&
+          (GOOGLE_OAUTH_ENABLED || APPLE_OAUTH_ENABLED) && (
+            <div className="login-oauth">
+              <div className="login-oauth__divider">
+                <span>أو</span>
+              </div>
+              {GOOGLE_OAUTH_ENABLED ? (
+                <button
+                  type="button"
+                  className="login-oauth__btn"
+                  onClick={async () => {
+                    const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
+                    await signInWithGoogle(getAuthCallbackUrl(nextPath !== "/" ? nextPath : "/"));
+                  }}
+                  disabled={loading}
+                >
+                  تسجيل الدخول بـ Google
+                </button>
+              ) : null}
+              {APPLE_OAUTH_ENABLED ? (
+                <button
+                  type="button"
+                  className="login-oauth__btn"
+                  onClick={async () => {
+                    const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
+                    await signInWithApple(getAuthCallbackUrl(nextPath !== "/" ? nextPath : "/"));
+                  }}
+                  disabled={loading}
+                >
+                  تسجيل الدخول بـ Apple
+                </button>
+              ) : null}
+            </div>
+          )}
+
+        {!adminLogin ? (
+          <div className="login-actions">
+            <Link href="/" className="login-guest-btn">
+              المتابعة كزائر
+            </Link>
+          </div>
+        ) : (
+          <div className="login-actions">
+            <Link href="/" className="login-text-btn">
+              العودة للصفحة الرئيسية
+            </Link>
           </div>
         )}
-
-        <div className="login-actions">
-          {!adminLogin && (
-            <Link href="/register" className="login-back-link login-back-link--primary">
-              إنشاء حساب جديد
-            </Link>
-          )}
-          <Link href="/" className="login-back-link">
-            العودة للصفحة الرئيسية
-          </Link>
-        </div>
       </div>
     </div>
   );

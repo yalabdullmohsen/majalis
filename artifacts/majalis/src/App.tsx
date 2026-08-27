@@ -30,7 +30,7 @@ import {
 import { trackContinueReading } from "@/lib/continue-reading";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
-import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
+import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
 import {
@@ -1258,7 +1258,8 @@ function AppShellInner() {
   const [location] = useLocation();
   const immersive = isImmersiveChromePath(location);
   const onPrayer = isPrayerTimesPath(location);
-  const hideSiteChrome = immersive || onPrayer;
+  const onAuthStandalone = isAuthStandalonePath(location);
+  const hideSiteChrome = immersive || onPrayer || onAuthStandalone;
   const deferHomePrayerChrome = location === "/" || location === "";
   const isHomePath = deferHomePrayerChrome;
 
@@ -1390,7 +1391,7 @@ function AppShellInner() {
       </main>
       {/* تذييل الموقع للويب فقط — داخل التطبيق الأصلي يُخفى (App Store: الروابط القانونية في الإعدادات) */}
       {!hideSiteChrome && !isNative && <DeferredSiteFooter />}
-      <DeferredAssistantWidget />
+      {!hideSiteChrome && <DeferredAssistantWidget />}
       {/* أزرار تحرير المشرف العائمة لا تغطي المواقيت/المصحف */}
       {isAdmin && !hideSiteChrome && (
         <Suspense fallback={null}>
@@ -1402,20 +1403,26 @@ function AppShellInner() {
           <ScrollToTop />
         </Suspense>
       )}
-      <Suspense fallback={null}>
-        <GlobalBackButton />
-      </Suspense>
+      {!onAuthStandalone && (
+        <Suspense fallback={null}>
+          <GlobalBackButton />
+        </Suspense>
+      )}
       {!hideSiteChrome && (
         <Suspense fallback={null}>
           <PwaInstallBanner />
         </Suspense>
       )}
-      <Suspense fallback={null}>
-        <BottomNavBar isHidden={shouldHideChrome} />
-      </Suspense>
-      <Suspense fallback={null}>
-        <QuranMiniPlayerBar />
-      </Suspense>
+      {!onAuthStandalone && (
+        <Suspense fallback={null}>
+          <BottomNavBar isHidden={shouldHideChrome} />
+        </Suspense>
+      )}
+      {!onAuthStandalone && (
+        <Suspense fallback={null}>
+          <QuranMiniPlayerBar />
+        </Suspense>
+      )}
       <VisualViewportKeyboardBridge />
       <SafeAreaDebugOverlay />
       <Suspense fallback={null}>

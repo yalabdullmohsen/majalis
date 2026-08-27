@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import type { LucideIcon } from "lucide-react";
-import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isAuthStandalonePath, isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isComingSoonPath } from "@/lib/nav-visibility";
 import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 import { useIsMobileNav } from "@/hooks/useIsMobileNav";
@@ -172,7 +172,7 @@ export function TopSectionBar() {
     activeRef.current?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
   }, [location, isMobileNav]);
 
-  if (isImmersiveChromePath(location)) return null;
+  if (isImmersiveChromePath(location) || isAuthStandalonePath(location)) return null;
 
   // على الجوال هذا الشريط تكرار حرفي للشريط السفلي — SECTION_TABS مبنية من
   // نفس BOTTOM_NAV_TABS. يُلغى من الشجرة (لا يُخفى بـCSS) فيُستعاد ~3.5rem من

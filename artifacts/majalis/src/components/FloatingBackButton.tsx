@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { useLocation } from "wouter";
-import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isAuthStandalonePath, isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isTabRootPath } from "@/config/section-lobby-chrome";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { haptics } from "@/lib/haptics";
@@ -18,6 +18,7 @@ export function FloatingBackButton() {
 
   if (location === "/") return null;
   if (isImmersiveChromePath(location) || isTabRootPath(location)) return null;
+  if (isAuthStandalonePath(location)) return null;
   const path = location.replace(/\/+$/, "") || "/";
   /* صفحات الدعم/التواصل لها زر رجوع أعلى الصفحة — تجنب التداخل مع المحتوى */
   if (path === "/support" || path === "/contact") {
