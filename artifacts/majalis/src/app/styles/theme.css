@@ -129,7 +129,9 @@
   --color-brand-strong: var(--color-brand-deep);
   --text-primary: var(--color-ink);
   --text-muted: var(--color-muted);
-  --radius-card: var(--radius-mj-md);
+  --radius-card: 28px;
+  --radius-tile: 24px;
+  --radius-pill: 999px;
   --shadow-sheet: var(--shadow-mj);
   --page-gutter: var(--gutter-inline-start);
   --page-gutter-end: var(--gutter-inline-end);
@@ -216,14 +218,17 @@
   --color-brand-strong: var(--mj-brand-deep);
   --text-primary: var(--mj-ink);
   --text-muted: var(--mj-muted);
-  --radius-card: var(--mj-r-md);
+  /* بطاقات ناعمة موحّدة — لا تعتمد على mj-r-md الصغير */
+  --radius-card: 28px;
+  --radius-tile: 24px;
+  --radius-pill: 999px;
   --shadow-sheet: var(--mj-sh);
   --page-gutter: var(--gutter-inline-start);
   --page-gutter-end: var(--gutter-inline-end);
   --mj-r-sm: 12px;
   --mj-r-md: 16px;
   --mj-r-lg: 22px;
-  --mj-r-pill: 999px;
+  --mj-r-pill: var(--radius-pill);
   --mj-sh: 0 10px 26px -18px rgba(11, 32, 24, 0.45);
   --mj-s1: 4px;
   --mj-s2: 8px;

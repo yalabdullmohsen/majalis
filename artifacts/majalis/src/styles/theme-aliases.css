@@ -112,9 +112,11 @@
   --r-sm: var(--mj-r-sm);
   --r-md: var(--mj-r-md);
   --r-lg: var(--mj-r-lg);
-  --r-xl: var(--mj-r-lg);
-  --r-full: var(--mj-r-pill);
-  --radius-card: var(--mj-r-lg);
+  --r-xl: var(--radius-card, 28px);
+  --r-full: var(--radius-pill, var(--mj-r-pill));
+  --radius-card: 28px;
+  --radius-tile: 24px;
+  --radius-pill: 999px;
   --e-1: var(--mj-sh);
   --e-2: var(--mj-sh);
   --e-3: var(--mj-sh);
