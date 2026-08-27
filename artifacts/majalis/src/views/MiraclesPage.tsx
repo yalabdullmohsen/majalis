@@ -282,32 +282,75 @@ export default function MiraclesPage({
                   </div>
                 </div>
 
-                {/* محتوى */}
+                {/* محتوى: آية ← شرح موجز ← تفصيل علمي */}
                 <div className="miracle-item__body-wrap mk-card__body">
-                  {item.reference && (
-                    <p className="miracle-item__ref mk-card__ref">﴿ {item.reference} ﴾</p>
+                  {(item.verse || item.reference) && (
+                    <figure className="miracle-ayah">
+                      {item.verse ? (
+                        <blockquote className="miracle-ayah__text" lang="ar" dir="rtl">
+                          ﴿ {item.verse} ﴾
+                        </blockquote>
+                      ) : null}
+                      {item.reference ? (
+                        <figcaption className="miracle-ayah__ref">
+                          <BookOpen size={12} strokeWidth={2} aria-hidden="true" />
+                          <span>{item.reference}</span>
+                        </figcaption>
+                      ) : null}
+                    </figure>
                   )}
-                  {bodyText && (
-                    <>
-                      <p className="miracle-item__body mk-card__text">
-                        {isExpanded ? bodyText : `${preview}${bodyText.length > 240 ? "…" : ""}`}
-                      </p>
-                    </>
-                  )}
+
+                  {item.tafsir_summary ? (
+                    <section className="miracle-explain" aria-label="شرح موجز للآية">
+                      <header className="miracle-explain__head">
+                        <span className="miracle-explain__mark" aria-hidden="true" />
+                        <h3 className="miracle-explain__label">شرح موجز</h3>
+                      </header>
+                      <p className="miracle-explain__text">{item.tafsir_summary}</p>
+                    </section>
+                  ) : null}
+
+                  {bodyText && (!item.tafsir_summary || isExpanded) ? (
+                    <section
+                      className={`miracle-detail${item.tafsir_summary ? " is-open" : " miracle-detail--solo"}`}
+                      aria-label="التفصيل العلمي"
+                    >
+                      {item.tafsir_summary ? (
+                        <>
+                          <header className="miracle-detail__head">
+                            <h3 className="miracle-detail__label">التفصيل العلمي</h3>
+                          </header>
+                          <p className="miracle-detail__text">{bodyText}</p>
+                        </>
+                      ) : (
+                        <p className="miracle-detail__text">
+                          {isExpanded || bodyText.length <= 240
+                            ? bodyText
+                            : `${preview}…`}
+                        </p>
+                      )}
+                    </section>
+                  ) : null}
+
                   {item.scholarly_source && (
                     <p className="miracle-item__source mk-card__source">
                       <ScrollText size={12} strokeWidth={1.8} aria-hidden="true" /> {item.scholarly_source}
                     </p>
                   )}
                   <div className="mk-card__footer">
-                    {bodyText.length > 240 ? (
+                    {bodyText && (item.tafsir_summary || bodyText.length > 240) ? (
                       <button
                         type="button"
                         className="mk-expand-btn"
+                        aria-expanded={isExpanded}
                         onClick={() => setExpanded(isExpanded ? null : item.id)}
                       >
                         <BookOpen size={14} strokeWidth={2} aria-hidden="true" />
-                        {isExpanded ? "طوِّ التفاصيل" : "تفاصيل الموضوع"}
+                        {isExpanded
+                          ? "إخفاء التفصيل"
+                          : item.tafsir_summary
+                            ? "اقرأ التفصيل العلمي"
+                            : "تفاصيل الموضوع"}
                       </button>
                     ) : (
                       <span />

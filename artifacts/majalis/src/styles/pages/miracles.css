@@ -53,17 +53,124 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--ds-space-2);
+  gap: 0.85rem;
 }
-.miracle-item__ref {
-  font-family: var(--font-quran);
-  font-size: var(--ds-text-base);
-  color: var(--mk-border, var(--mj-brand));
-  border-inline-end: 3px solid var(--mk-border, var(--mj-brand));
-  padding-inline-end: 0.5rem;
+
+/* كتلة الآية — بارزة ومرتبة */
+.miracle-ayah {
+  margin: 0;
+  padding: 0.95rem 1rem 0.85rem;
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--mk-border, var(--mj-brand)) 9%, #f7faf8) 0%,
+      color-mix(in srgb, var(--mj-surface, #fff) 92%, #e8f0ec) 100%
+    );
+  border: 1px solid color-mix(in srgb, var(--mk-border, var(--mj-brand)) 22%, var(--majalis-line, #d5ddd9));
+  border-inline-start: 3px solid var(--mk-border, var(--mj-brand));
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.miracle-ayah__text {
+  margin: 0;
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", serif);
+  font-size: clamp(1.05rem, 2.6vw, 1.22rem);
+  line-height: 2.05;
+  color: var(--mj-ink, #15201c);
+  text-align: center;
+  quotes: none;
+}
+
+.miracle-ayah__ref {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  align-self: center;
+  margin: 0;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #1a4d3e;
+  background: color-mix(in srgb, #1a4d3e 10%, transparent);
+  border: 1px solid color-mix(in srgb, #1a4d3e 22%, transparent);
+}
+
+/* شرح موجز — طبقة قراءة واضحة */
+.miracle-explain {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.miracle-explain__head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.miracle-explain__mark {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: var(--mk-border, #1a4d3e);
+  flex-shrink: 0;
+}
+
+.miracle-explain__label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #1a4d3e;
+  letter-spacing: 0.02em;
+}
+
+.miracle-explain__text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--mj-ink, #16241e);
+}
+
+/* التفصيل العلمي */
+.miracle-detail.is-open {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  background: color-mix(in srgb, #1a4d3e 4.5%, var(--mj-surface, #fff));
+  border: 1px solid color-mix(in srgb, #1a4d3e 12%, var(--majalis-line, #d5ddd9));
+}
+
+.miracle-detail--solo {
+  display: flex;
+  flex-direction: column;
+}
+
+.miracle-detail__head {
+  display: flex;
+  align-items: center;
+}
+
+.miracle-detail__label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #1a4d3e;
+}
+
+.miracle-detail__text {
+  margin: 0;
+  font-size: var(--ds-text-sm, 0.875rem);
   line-height: 1.8;
+  color: var(--mj-ink, #16241e);
 }
-.miracle-item__body { font-size: var(--ds-text-sm); line-height: 1.75; flex: 1; }
 
 .miracle-item__source {
   font-size: 0.8rem;
@@ -71,6 +178,50 @@
   margin-top: auto;
   padding-top: 0.5rem;
   border-top: 1px solid var(--majalis-line);
+}
+
+/* وضع داكن */
+html.dark .miracle-ayah,
+[data-theme="dark"] .miracle-ayah {
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--mk-border, #5a9e88) 18%, #15201c) 0%,
+      color-mix(in srgb, #1a2620 88%, #0f1612) 100%
+    );
+  border-color: color-mix(in srgb, #5a9e88 28%, #2a3832);
+}
+
+html.dark .miracle-ayah__text,
+[data-theme="dark"] .miracle-ayah__text {
+  color: #e8eee9;
+}
+
+html.dark .miracle-ayah__ref,
+[data-theme="dark"] .miracle-ayah__ref {
+  color: #b8d4c8;
+  background: color-mix(in srgb, #5a9e88 18%, transparent);
+  border-color: color-mix(in srgb, #5a9e88 32%, transparent);
+}
+
+html.dark .miracle-explain__label,
+html.dark .miracle-detail__label,
+[data-theme="dark"] .miracle-explain__label,
+[data-theme="dark"] .miracle-detail__label {
+  color: #9fcabb;
+}
+
+html.dark .miracle-explain__text,
+html.dark .miracle-detail__text,
+[data-theme="dark"] .miracle-explain__text,
+[data-theme="dark"] .miracle-detail__text {
+  color: #dce6e0;
+}
+
+html.dark .miracle-detail.is-open,
+[data-theme="dark"] .miracle-detail.is-open {
+  background: color-mix(in srgb, #5a9e88 8%, #15201c);
+  border-color: color-mix(in srgb, #5a9e88 20%, #2a3832);
 }
 
 /* miracle-item — category palette modifiers (--mk-bg / --mk-accent) */
