@@ -572,10 +572,35 @@ async function main() {
 
       if (WHITE_LEAK_ROUTES.has(route)) {
         await page.evaluate(() => {
+          try {
+            localStorage.setItem("theme", "dark");
+            localStorage.setItem("mj-theme", "dark");
+            localStorage.setItem("majlisilm.theme", "dark");
+          } catch { /* ignore */ }
           document.documentElement.dataset.theme = "dark";
           document.documentElement.classList.add("dark");
+          document.documentElement.style.colorScheme = "dark";
         });
-        await page.waitForTimeout(150);
+        await page.waitForTimeout(350);
+        // انتظر استقرار سمة التذييل قبل فحص تسرّب الأبيض
+        await page.evaluate(async () => {
+          const btn = document.querySelector(".site-footer-accordion__btn");
+          if (!btn) return;
+          for (let i = 0; i < 20; i++) {
+            document.documentElement.dataset.theme = "dark";
+            document.documentElement.classList.add("dark");
+            const bg = getComputedStyle(btn).backgroundColor;
+            const m = String(bg).match(/rgba?\(([^)]+)\)/);
+            if (m) {
+              const parts = m[1].includes(",")
+                ? m[1].split(",").map((s) => parseFloat(s.trim()))
+                : m[1].split("/")[0].trim().split(/\s+/).map((s) => parseFloat(s));
+              const [rr, gg, bb, aa = 1] = parts;
+              if (aa >= 0.9 && rr < 80 && gg < 80 && bb < 80) return;
+            }
+            await new Promise((r) => setTimeout(r, 50));
+          }
+        });
         const leaks = await page.evaluate(() => {
           const out = [];
           for (const el of document.querySelectorAll("body *")) {
