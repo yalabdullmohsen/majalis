@@ -25,6 +25,8 @@ type Props = {
   filterSlot?: ReactNode;
   children?: ReactNode;
   className?: string;
+  /** زر رجوع في الهيدر (أعلى) — للمسابقات وغير جذور التبويب */
+  inlineHeaderBack?: boolean;
 };
 
 function asSection(item: LobbyItem): SectionDef {
@@ -57,10 +59,11 @@ export function SectionLobby({
   filterSlot,
   children,
   className,
+  inlineHeaderBack = false,
 }: Props) {
   const [location] = useLocation();
   /* جذور التبويب تعتمد القائمة السفلية — لا زر رجوع عائم يغطي البطاقات */
-  const showFloatingBack = !isTabRootPath(location);
+  const showFloatingBack = !inlineHeaderBack && !isTabRootPath(location);
   return (
     <div
       className={cn("section-lobby", className)}
@@ -73,26 +76,45 @@ export function SectionLobby({
     >
       <div className="section-lobby__shot" data-lobby-shot="1">
         <header className="section-lobby__head">
-          {showFloatingBack ? (
-            <button
-              type="button"
-              className="section-lobby__back"
-              data-section-back="1"
-              aria-label="رجوع"
-              onClick={() => goBackOrFallback(location)}
-            >
-              <DirectionalIcon icon={ArrowRight} size={18} strokeWidth={2.2} />
-              <span>رجوع</span>
-            </button>
-          ) : null}
-          <h1
-            className={cn(
-              "section-lobby__title",
-              lobbyId === "quran" && "quran-hub-page__title",
-            )}
-          >
-            {title}
-          </h1>
+          {inlineHeaderBack ? (
+            <div className="section-lobby__head-row">
+              <button
+                type="button"
+                className="section-lobby__back-inline"
+                data-section-back="1"
+                aria-label="رجوع"
+                onClick={() => goBackOrFallback(location)}
+              >
+                <DirectionalIcon icon={ArrowRight} size={18} strokeWidth={2.2} />
+                <span>رجوع</span>
+              </button>
+              <h1 className="section-lobby__title section-lobby__title--centered">{title}</h1>
+              <span className="section-lobby__head-spacer" aria-hidden="true" />
+            </div>
+          ) : (
+            <>
+              {showFloatingBack ? (
+                <button
+                  type="button"
+                  className="section-lobby__back"
+                  data-section-back="1"
+                  aria-label="رجوع"
+                  onClick={() => goBackOrFallback(location)}
+                >
+                  <DirectionalIcon icon={ArrowRight} size={18} strokeWidth={2.2} />
+                  <span>رجوع</span>
+                </button>
+              ) : null}
+              <h1
+                className={cn(
+                  "section-lobby__title",
+                  lobbyId === "quran" && "quran-hub-page__title",
+                )}
+              >
+                {title}
+              </h1>
+            </>
+          )}
         </header>
 
         {primary ? (

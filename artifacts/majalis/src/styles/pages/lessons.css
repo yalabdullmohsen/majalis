@@ -419,6 +419,14 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
   padding-bottom: calc(var(--bottom-nav-total, 72px) + var(--inset-bottom, 0px) + 1rem);
 }
 
+.lessons-page-v3 .section-lobby__shot {
+  gap: 12px;
+}
+
+.lessons-page-v3 .lessons-v2-main {
+  scroll-margin-top: 0.75rem;
+}
+
 .lessons-v3-sticky {
   position: sticky;
   top: 0;

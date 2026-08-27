@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import type { LobbyQuadItem } from "@/config/section-lobbies";
+import { normalizeNavPath } from "@/lib/navigation-back";
 import { prefetchRoute } from "@/lib/prefetch-route";
 import { pluralArBucket } from "@/lib/arabic-count";
 import { cn } from "@/lib/utils";
@@ -31,7 +32,17 @@ export function QuickActionsQuad({ items }: Props) {
             role="link"
             className={cn("quick-quad__cell", it.accent && "quick-quad__cell--accent")}
             aria-label={`افتح ${it.label} — ${countLabel}`}
-            onPointerDown={() => prefetchRoute(it.route)}
+            onPointerDown={() => prefetchRoute(it.route.split("#")[0] || it.route)}
+            onClick={(e) => {
+              const [path, hash] = it.route.split("#");
+              if (
+                hash &&
+                normalizeNavPath(path || "/") === normalizeNavPath(window.location.pathname)
+              ) {
+                e.preventDefault();
+                document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+            }}
           >
             <span className="quick-quad__icon" aria-hidden>
               <Icon strokeWidth={1.75} />

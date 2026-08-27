@@ -297,6 +297,17 @@ export default function LessonsPage({
     }
   }, [isLoggedIn, user]);
 
+  useEffect(() => {
+    const scrollToList = () => {
+      const hash = window.location.hash.replace(/^#/, "");
+      if (hash !== "lessons-list") return;
+      document.getElementById("lessons-list")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    scrollToList();
+    window.addEventListener("hashchange", scrollToList);
+    return () => window.removeEventListener("hashchange", scrollToList);
+  }, []);
+
   const tabLessons = useMemo(() => filterByTab(activeLessons, tab), [activeLessons, tab]);
   const options = useMemo(() => extractFilterOptions(tabLessons), [tabLessons]);
   const regionOptions = useMemo(() => {
@@ -511,7 +522,9 @@ export default function LessonsPage({
   const quad = useMemo(
     () =>
       lobby.quad?.map((item) => {
-        if (item.id === "lessons") return { ...item, count: activeLessons.length };
+        if (item.id === "lessons") {
+          return { ...item, count: activeLessons.length, route: "/lessons#lessons-list" };
+        }
         if (item.id === "lessons-archive") return { ...item, count: archivedLessons.length };
         return item;
       }),
@@ -558,8 +571,7 @@ export default function LessonsPage({
       }
     >
       <div className="lessons-v2-layout lessons-v3-layout">
-        <main className="lessons-v2-main">
-          <HarvestFeedPanel />
+        <main className="lessons-v2-main" id="lessons-list">
           {loadError && !loading ? (
             <ErrorState text={loadError} onRetry={() => safeLocationReload()} />
           ) : null}
@@ -573,9 +585,6 @@ export default function LessonsPage({
             onRetry={() => safeLocationReload()}
           >
             <>
-              <p className="lessons-v3-intro">
-                دروس ولقاءات علمية في الكويت مرتبة حسب الموعد والشيخ والمكان — اختر التبويب الرجالي أو النسائي أو الدورات، ثم صفِّ حسب المحافظة واليوم.
-              </p>
               {showFeatured && featuredSections.upcoming.length > 0 && (
                     <section className="lessons-v2-section">
                       <h2 className="lessons-v2-section__title">
@@ -632,6 +641,7 @@ export default function LessonsPage({
             </>
           </PageLoadingGuard>
           ) : null}
+          <HarvestFeedPanel />
         </main>
 
         <aside className="lessons-v2-sidebar" aria-label="تصفية سطح المكتب">
