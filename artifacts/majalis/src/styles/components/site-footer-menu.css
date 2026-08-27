@@ -157,23 +157,26 @@
   }
 }
 
-html[data-theme="dark"] .site-footer.site-footer--global {
+html[data-theme="dark"] .site-footer.site-footer--global,
+html.dark .site-footer.site-footer--global {
   background: color-mix(in srgb, #0f1a17 92%, var(--color-primary, #4fb48b) 8%);
   border-block-start-color: rgba(255, 255, 255, 0.08);
 }
 
 html[data-theme="dark"] .site-footer-group__title,
-html[data-theme="dark"] .site-footer-accordion__btn {
+html.dark .site-footer-group__title {
   color: #e8f5ef;
-  background: transparent;
 }
 
-html[data-theme="dark"] .site-footer-accordion__btn {
-  /* سطح صريح يمنع WHITE_LEAK عند وراثة خلفية فاتحة من زر النظام */
-  background-color: #15201c;
+html[data-theme="dark"] .site-footer-accordion__btn,
+html.dark .site-footer-accordion__btn {
+  color: #e8f5ef;
+  /* سطح صريح داكن — يمنع WHITE_LEAK (لا transparent على الزر) */
+  background: #15201c;
   border-block-end-color: rgba(255, 255, 255, 0.1);
 }
 
-html[data-theme="dark"] .site-footer-link {
+html[data-theme="dark"] .site-footer-link,
+html.dark .site-footer-link {
   color: #f4f3ee;
 }

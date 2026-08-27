@@ -154,7 +154,9 @@ const FIQH_BOOK_STATS = (() => {
 const QURAN_PEOPLE_CATALOG = JSON.parse(
   await readFile(resolve(appRoot, "public/data/quran-people/people.json"), "utf8"),
 );
-const QURAN_PEOPLE = (QURAN_PEOPLE_CATALOG.people || []).filter((p) => p.status === "published");
+const QURAN_PEOPLE = (QURAN_PEOPLE_CATALOG.people || []).filter(
+  (p) => p.status === "published" && p.category !== "prophet",
+);
 if (!QURAN_PEOPLE.some((p) => p.slug === "azar" || p.nameAr === "آزر")) {
   throw new Error("قائمة الذين ذكروا في القرآن تفتقد آزر (الأنعام 6:74)");
 }
@@ -953,7 +955,7 @@ ${linkList("روابط ذات صلة", [
   { name: "قصص السور", url: "/quran/surah-stories" },
   { name: "مركز القرآن", url: "/quran-hub" },
 ])}`,
-  "/quran/people": `<p>فهرس من ذُكروا في القرآن بأسمائهم أو أوصافهم، مع مواضع الآيات والربط بقصص الأنبياء، والاقتصار على ما ثبت دون إسرائيليات مجزوم بها.</p>
+  "/quran/people": `<p>فهرس من ذُكروا في القرآن من غير الأنبياء، مع مواضع الآيات والاقتصار على ما ثبت دون إسرائيليات مجزوم بها. الأنبياء عليهم السلام في قسم قصص الأنبياء.</p>
 ${linkList(
   "من الذين ذكروا في القرآن",
   QURAN_PEOPLE.map((p) => ({ name: p.nameAr, url: `/quran/people/${p.slug}` })),

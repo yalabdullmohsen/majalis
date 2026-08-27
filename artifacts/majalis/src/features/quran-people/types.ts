@@ -1,6 +1,7 @@
 /**
  * الذين ذكروا في القرآن — أنواع وتحميل كسول.
  * لا تُعرض مادة status≠published. الوصفي/غير الموثّق → PEOPLE_REVIEW_QUEUE.
+ * الأنبياء (category=prophet) مستبعدون من هذا الفهرس — موجودون في /prophets.
  */
 
 /** عنوان المنتج المعتمد للتنقّل والـSEO */
@@ -60,28 +61,60 @@ export const PERSON_CATEGORY_LABEL: Record<PersonCategory, string> = {
   other: "أماكن وأقوام وغيرها",
 };
 
+/** تصنيفات واجهة الفهرس — بلا أنبياء (قسم /prophets مستقل). */
+export const LISTABLE_PERSON_CATEGORIES: PersonCategory[] = [
+  "righteous",
+  "tyrant",
+  "king",
+  "companion",
+  "figure",
+  "other",
+];
+
 export const MENTION_TYPE_LABEL: Record<MentionType, string> = {
   name: "ذُكر بالاسم",
   description: "ذُكر بالوصف",
 };
 
-let cache: QuranPerson[] | null = null;
+let publishedCache: QuranPerson[] | null = null;
+let listCache: QuranPerson[] | null = null;
 
-export async function loadQuranPeople(): Promise<QuranPerson[]> {
-  if (cache) return cache;
+async function loadPublishedPeople(): Promise<QuranPerson[]> {
+  if (publishedCache) return publishedCache;
   const { fetchStaticJsonCached } = await import("@/lib/static-json-cache");
   const json = await fetchStaticJsonCached<PeopleCatalog>(
     "/data/quran-people/people.json",
     { version: 0, updatedAt: "", people: [] },
     { credentials: "omit" },
   );
-  cache = (json.people ?? []).filter((p) => p.status === "published");
-  return cache;
+  publishedCache = (json.people ?? []).filter((p) => p.status === "published");
+  return publishedCache;
+}
+
+export function isProphetPerson(p: Pick<QuranPerson, "category">): boolean {
+  return p.category === "prophet";
+}
+
+export async function loadQuranPeople(): Promise<QuranPerson[]> {
+  if (listCache) return listCache;
+  const all = await loadPublishedPeople();
+  listCache = all.filter((p) => !isProphetPerson(p));
+  return listCache;
 }
 
 export async function getQuranPerson(slug: string): Promise<QuranPerson | null> {
-  const all = await loadQuranPeople();
-  return all.find((p) => p.slug === slug) ?? null;
+  const all = await loadPublishedPeople();
+  const person = all.find((p) => p.slug === slug) ?? null;
+  if (!person || isProphetPerson(person)) return null;
+  return person;
+}
+
+/** إن كان الـslug لنبي في الفهرس القديم → مسار قصص الأنبياء. */
+export async function getProphetPeopleRedirect(slug: string): Promise<string | null> {
+  const all = await loadPublishedPeople();
+  const person = all.find((p) => p.slug === slug);
+  if (!person || !isProphetPerson(person)) return null;
+  return prophetStoryHref(person.prophetSlug || person.slug);
 }
 
 export function peopleForAyah(

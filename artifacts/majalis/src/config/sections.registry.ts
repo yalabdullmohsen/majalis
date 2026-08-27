@@ -421,7 +421,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "quran-figures",
     label: "الذين ذُكروا في القرآن",
-    subtitle: "أعلام ومواضع ذكر في القرآن مع العبرة",
+    subtitle: "أعلام ومواضع ذكر — بلا أنبياء (قسمهم مستقل)",
     route: "/quran/people",
     icon: Users,
     group: "stories",

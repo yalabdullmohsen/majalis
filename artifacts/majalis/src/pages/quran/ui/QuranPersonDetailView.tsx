@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "wouter";
+import { Link, Redirect, useParams } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { PageHero } from "@/components/ui/PageHero";
 import { toArabicDigits } from "@/lib/utils";
 import { getSurahMeta } from "@/lib/quran-api";
 import {
   getQuranPerson,
+  getProphetPeopleRedirect,
   mushafAyahHref,
   prophetStoryHref,
   PERSON_CATEGORY_LABEL,
@@ -18,24 +19,40 @@ export default function QuranPersonDetailView() {
   const params = useParams<{ slug?: string }>();
   const slug = params.slug ?? "";
   const [person, setPerson] = useState<QuranPerson | null | undefined>(undefined);
+  const [prophetRedirect, setProphetRedirect] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    void getQuranPerson(slug).then((p) => {
+    setPerson(undefined);
+    setProphetRedirect(null);
+    void (async () => {
+      const p = await getQuranPerson(slug);
       if (cancelled) return;
-      setPerson(p);
       if (p) {
+        setPerson(p);
         applyPageSeo({
           title: `${p.nameAr} في القرآن`,
           description: p.definition,
           path: `/quran/people/${p.slug}`,
         });
+        return;
       }
-    });
+      const to = await getProphetPeopleRedirect(slug);
+      if (cancelled) return;
+      if (to) {
+        setProphetRedirect(to);
+        return;
+      }
+      setPerson(null);
+    })();
     return () => {
       cancelled = true;
     };
   }, [slug]);
+
+  if (prophetRedirect) {
+    return <Redirect to={prophetRedirect} />;
+  }
 
   if (person === undefined) {
     return <div className="quran-hub-page" dir="rtl"><p style={{ padding: "2rem" }}></p></div>;
@@ -45,7 +62,10 @@ export default function QuranPersonDetailView() {
       <div className="quran-hub-page" dir="rtl">
         <PageHero title="غير موجود" description="لم نجد هذه الشخصية في الفهرس المنشور" />
         <p style={{ padding: "1rem", textAlign: "center" }}>
-          <Link href="/quran/people">العودة إلى الذين ذكروا في القرآن</Link></p>
+          <Link href="/quran/people">العودة إلى الذين ذكروا في القرآن</Link>
+          {" · "}
+          <Link href="/prophets">قصص الأنبياء</Link>
+        </p>
       </div>
     );
   }

@@ -5,6 +5,7 @@ import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { toArabicDigits } from "@/lib/utils";
 import {
   loadQuranPeople,
+  LISTABLE_PERSON_CATEGORIES,
   PERSON_CATEGORY_LABEL,
   MENTION_TYPE_LABEL,
   QURAN_PEOPLE_PAGE_TITLE,
@@ -31,7 +32,7 @@ export default function QuranPeopleView() {
   useEffect(() => {
     applyPageSeo({
       title: QURAN_PEOPLE_PAGE_TITLE,
-      description: "فهرس من ذُكروا في القرآن بأسمائهم، مع مواضع الآيات والربط بقصص الأنبياء.",
+      description: "فهرس من ذُكروا في القرآن من غير الأنبياء — بأسمائهم ومواضع الآيات، مع ربط لقصص الأنبياء في قسمها المستقل.",
       path: "/quran/people",
     });
     let cancelled = false;
@@ -63,13 +64,14 @@ export default function QuranPeopleView() {
     <SectionTemplatePage
       route="/quran/people"
       title={QURAN_PEOPLE_PAGE_TITLE}
-      subtitle="أسماء صريحة موثّقة بمواضع الآيات — مع ربط لقصص الأنبياء دون إعادة سرد"
+      subtitle="أسماء صريحة موثّقة بمواضع الآيات — الأنبياء في قسم قصص الأنبياء"
       groupTitle="المذكورون في القرآن"
     >
     <div className="quran-hub-page qp-people" dir="rtl">
       <div className="qp-people__body">
         <p className="qp-people__intro">
-          الدفعة الحالية: المذكورون بالاسم. ما ذُكر بالوصف فقط مدرج في طابور مراجعة ولا يُعرض كحقيقة قطعية.
+          الدفعة الحالية: المذكورون بالاسم من غير الأنبياء. الأنبياء عليهم السلام في قسم مستقل.
+          ما ذُكر بالوصف فقط مدرج في طابور مراجعة ولا يُعرض كحقيقة قطعية.
           انظر أيضاً:{" "}
           <Link href="/prophets">قصص الأنبياء</Link>
           {" · "}
@@ -83,7 +85,7 @@ export default function QuranPeopleView() {
               aria-label="التصنيف"
             >
               <option value="all">كل التصنيفات</option>
-              {(Object.keys(PERSON_CATEGORY_LABEL) as PersonCategory[]).map((c) => (
+              {LISTABLE_PERSON_CATEGORIES.map((c) => (
                 <option key={c} value={c}>{PERSON_CATEGORY_LABEL[c]}</option>
               ))}
             </select>

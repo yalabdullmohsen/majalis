@@ -1,10 +1,13 @@
 export {
   loadQuranPeople,
   getQuranPerson,
+  getProphetPeopleRedirect,
+  isProphetPerson,
   peopleForAyah,
   mushafAyahHref,
   prophetStoryHref,
   PERSON_CATEGORY_LABEL,
+  LISTABLE_PERSON_CATEGORIES,
   MENTION_TYPE_LABEL,
   QURAN_PEOPLE_PAGE_TITLE,
   type QuranPerson,

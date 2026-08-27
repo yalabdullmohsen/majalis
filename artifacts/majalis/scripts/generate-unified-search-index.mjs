@@ -276,6 +276,7 @@ try {
   const peopleJson = JSON.parse(fs.readFileSync(peoplePath, "utf8"));
   for (const p of peopleJson.people ?? []) {
     if (p.status !== "published") continue;
+    if (p.category === "prophet") continue; // الأنبياء في فهرس /prophets
     pushDoc(
       `person:${p.slug}`,
       "person",
