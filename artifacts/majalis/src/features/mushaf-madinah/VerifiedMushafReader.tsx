@@ -48,6 +48,7 @@ import {
 } from "./mushaf-page-for-ayah";
 import { useQpcPageFont } from "./useQpcPageFont";
 import { useMushafResourceGate } from "./useMushafResourceGate";
+import { prefetchAdjacentPageAudio } from "./prefetch-adjacent-audio";
 import { MUSHAF_CHROME_HIDE_MS } from "./layout-bands";
 import "./mushaf-madinah.css";
 
@@ -69,7 +70,7 @@ type Props = {
   onIndex: () => void;
 };
 
-type MushafTheme = "paper" | "night";
+type MushafTheme = "paper" | "sepia" | "night";
 
 const THEME_KEY = "majlisilm.mushaf.theme";
 const THEME_CHOICE_KEY = "majlisilm.mushaf.theme-choice";
@@ -77,7 +78,7 @@ const THEME_CHOICE_KEY = "majlisilm.mushaf.theme-choice";
 function loadThemeChoice(): MushafThemeChoice {
   try {
     const v = localStorage.getItem(THEME_CHOICE_KEY) ?? localStorage.getItem(THEME_KEY);
-    if (v === "night" || v === "paper" || v === "auto") return v;
+    if (v === "night" || v === "paper" || v === "sepia" || v === "auto") return v;
   } catch {
     /* ignore */
   }
@@ -206,6 +207,10 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     } else {
       prefetchMushafPage(page - 1);
       prefetchMushafPage(page + 1);
+      scheduleNonCriticalWork(() => {
+        if (cancelled) return;
+        void prefetchAdjacentPageAudio(page, loadReciterId());
+      });
     }
     savePagePosition(page);
     return () => {
@@ -375,6 +380,18 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       });
     },
     [actionsOpen, selectedVerseKey],
+  );
+
+  const onLongPressVerse = useCallback(
+    (verseKey: string) => {
+      haptics.medium();
+      setSelectedVerseKey(verseKey);
+      setActionsOpen(true);
+      setTafsirOpen(true);
+      setChromeOpen(false);
+      setCopyStatus(null);
+    },
+    [],
   );
 
   const closeActions = useCallback(() => {
@@ -589,6 +606,27 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     }
   }, [page, selectedVerseKey, versePreview]);
 
+  const onShareImage = useCallback(async () => {
+    if (!selectedVerseKey) return;
+    const parsed = parseVerseKey(selectedVerseKey);
+    if (!parsed) return;
+    const body = versePreview(selectedVerseKey);
+    try {
+      const { shareAyahAsImage } = await import("@/lib/share-ayah");
+      haptics.light();
+      await shareAyahAsImage({
+        text: body,
+        surahName: getSurahMeta(parsed.surah).name,
+        ayahNum: parsed.ayah,
+        surahNum: parsed.surah,
+      });
+      setCopyStatus("تم تجهيز البطاقة");
+    } catch {
+      setCopyStatus("تعذّر إنشاء البطاقة");
+      haptics.error();
+    }
+  }, [selectedVerseKey, versePreview]);
+
   const onBookmark = useCallback(async () => {
     if (!selectedVerseKey) return;
     const parsed = parseVerseKey(selectedVerseKey);
@@ -741,6 +779,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
               selectedVerseKey={selectedVerseKey}
               playingVerseKey={playingVerseKey}
               onSelectVerse={onSelectVerse}
+              onLongPressVerse={onLongPressVerse}
             />
           ) : null}
         </div>
@@ -798,9 +837,13 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           if (hideTimer.current) window.clearTimeout(hideTimer.current);
         }}
         onToggleTheme={() =>
-          setThemeChoice((t) => (t === "paper" ? "night" : t === "night" ? "auto" : "paper"))
+          setThemeChoice((t) =>
+            t === "paper" ? "sepia" : t === "sepia" ? "night" : t === "night" ? "auto" : "paper",
+          )
         }
-        themeLabel={theme === "paper" ? "المصحف الورقي" : "ليلي هادئ"}
+        themeLabel={
+          theme === "night" ? "ليلي هادئ" : theme === "sepia" ? "بيج دافئ" : "المصحف الورقي"
+        }
       />
 
       {actionsOpen && selectedVerseKey ? (
@@ -835,6 +878,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           }}
           onCopy={() => void onCopy()}
           onShare={() => void onShare()}
+          onShareImage={() => void onShareImage()}
           onBookmark={() => void onBookmark()}
           onReciterChange={(id) => void onReciterChange(id)}
           onPlayReciter={(id) => void onPlayReciter(id)}
