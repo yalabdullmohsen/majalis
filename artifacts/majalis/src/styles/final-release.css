@@ -49,17 +49,26 @@ html[data-theme="dark"] {
 }
 
 html {
-  /* تحتية زمردية داكنة — أي فجوة تحت الكروم/السجل تظهر خضراء لا بيضاء */
-  background: var(--mj-splash, #0E1A15);
+  /* سطح التطبيق يملأ الحافة — لا شريط أسود تحت Home Indicator */
+  background: var(--surface-app, var(--mj-bg, #F2F4F3));
   min-height: 100dvh;
 }
 body {
   min-width: 320px;
   overflow-x: clip;
-  background: var(--mj-splash, #0E1A15);
+  background: var(--surface-app, var(--mj-bg, #F2F4F3));
   color: var(--mj-ink, var(--color-text));
   font-family: var(--font-app, var(--font-body, "Amiri", "Noto Naskh Arabic", serif));
   line-height: 1.85;
+}
+
+html[data-theme="dark"],
+html.dark {
+  background: var(--surface-app, var(--mj-bg, #101614));
+}
+html[data-theme="dark"] body,
+html.dark body {
+  background: var(--surface-app, var(--mj-bg, #101614));
 }
 
 #root,

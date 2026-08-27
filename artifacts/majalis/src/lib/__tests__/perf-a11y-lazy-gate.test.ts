@@ -62,7 +62,7 @@ console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");
   assert.match(html, /mj-launch-splash__(wordmark|title)/, "عنوان الدخولية");
   assert.match(
     html,
-    /v6-direct-boot-2026-08|v7-boot-fouc-2026-08|v9-theme-light-default-2026-08/,
+    /v6-direct-boot-2026-08|v7-boot-fouc-2026-08|v9-theme-light-default-2026-08|v10-pwa-single-paint-2026-08/,
     "ترحيل ثيم يمنع وميض التصميم القديم",
   );
 }

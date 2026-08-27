@@ -18,7 +18,11 @@ const purge = read("src/lib/runtime-cache-purge.ts");
 const sw = read("public/sw.js");
 const vercel = read("vercel.json");
 
-assert.match(html, /v9-theme-light-default-2026-08/);
+assert.match(html, /v10-pwa-single-paint-2026-08/);
+assert.match(html, /id="mj-version-boot"/);
+assert.match(html, /majlisilm-refreshing-version/);
+assert.match(html, /version\.json\?t=/);
+assert.match(html, /cache:\s*"no-store"/);
 assert.match(html, /classList\.add\("light"/);
 assert.match(html, /classList\.remove\("dark"/);
 assert.match(html, /storedTheme === "auto"/);
@@ -37,10 +41,19 @@ assert.match(settings, /refreshAppAndPurgeCaches/);
 
 assert.match(versionHook, /purgeStaleRuntimeCaches/);
 assert.match(versionHook, /SKIP_WAITING/);
+assert.match(versionHook, /majlisilm-refreshing-version/);
+assert.match(versionHook, /setTimeout\(\(\) => \{\s*void check\(\);\s*\}, 0\)/);
+assert.doesNotMatch(versionHook, /2_500/, "لا تأخير 2.5s قبل فحص النسخة");
 assert.match(purge, /refreshAppAndPurgeCaches/);
 
 assert.match(sw, /SKIP_WAITING/);
 assert.match(sw, /clients\.claim/);
+assert.match(sw, /networkFirstThenCache\(req, DATA_CACHE\)/);
+assert.doesNotMatch(
+  sw,
+  /useSwr \? staleWhileRevalidate/,
+  "APIs الداخلية ليست SWR (قديم أولًا)",
+);
 assert.match(vercel, /\/version\.json[\s\S]*?no-store/);
 assert.match(vercel, /\/sw\.js[\s\S]*?no-store/);
 assert.match(vercel, /\/assets\/\(\.\*\)[\s\S]*?immutable/);

@@ -34,6 +34,7 @@ export async function unregisterServiceWorkersForMeasurement(): Promise<void> {
 
 const SW_UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
 const SW_RELOAD_GUARD_KEY = "mj.sw-reload-once.v1";
+const REFRESHING_FLAG = "majlisilm-refreshing-version";
 
 /**
  * تأخير التسجيل بعد استقرار الصفحة. حدث install في public/sw.js يبدأ
@@ -53,8 +54,14 @@ function armControlledSwReload(): void {
 
   const reloadOnce = () => {
     try {
-      if (sessionStorage.getItem(SW_RELOAD_GUARD_KEY) === "1") return;
+      if (
+        sessionStorage.getItem(SW_RELOAD_GUARD_KEY) === "1" ||
+        sessionStorage.getItem(REFRESHING_FLAG) === "1"
+      ) {
+        return;
+      }
       sessionStorage.setItem(SW_RELOAD_GUARD_KEY, "1");
+      sessionStorage.setItem(REFRESHING_FLAG, "1");
     } catch {
       /* proceed with safe reload guard */
     }
