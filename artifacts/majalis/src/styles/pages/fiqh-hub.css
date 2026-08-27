@@ -711,11 +711,12 @@ html.dark .fiqh-lux-page.section-lobby {
   direction: rtl;
 }
 
-/* ── Hero الرئيسية ── */
+/* ── Hero الرئيسية — أيقونة في التدفق بلا تداخل مع الشارة ── */
 .fiqh-lux-hero {
   position: relative;
+  isolation: isolate;
   margin: 0.75rem max(1rem, var(--page-gutter, 1rem)) 0;
-  padding: 2.5rem max(1rem, var(--page-gutter, 1rem)) 2rem;
+  padding: 1.75rem 1.5rem;
   border-radius: 22px;
   overflow: hidden;
   background-color: var(--fq-emerald);
@@ -728,39 +729,52 @@ html.dark .fiqh-lux-page.section-lobby {
 }
 
 .fiqh-lux-hero__icon {
-  position: absolute;
-  inset-inline-start: 1.25rem;
-  top: 1.25rem;
+  position: static;
   width: 2.75rem;
   height: 2.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.1);
   color: var(--fq-on-hero);
-  opacity: 0.85;
+  opacity: 1;
+  pointer-events: none;
 }
 
 .fiqh-lux-hero__content {
   position: relative;
+  z-index: 2;
   max-width: 36rem;
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
-  padding-inline-start: 0.25rem;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.fiqh-lux-hero__lead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
 }
 
 .fiqh-lux-hero__badge {
   display: inline-flex;
   align-self: flex-start;
-  padding: 0.2rem 0.65rem;
+  max-width: 100%;
+  padding: 0.3rem 0.75rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--fq-on-hero-muted);
   font-size: 0.72rem;
   font-weight: 700;
+  line-height: 1.5;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .fiqh-lux-hero__title {
@@ -784,7 +798,7 @@ html.dark .fiqh-lux-page.section-lobby {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.35rem 0.5rem;
-  margin: 0.35rem 0 0;
+  margin: 0.15rem 0 0;
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--fq-on-hero-muted);
@@ -862,9 +876,14 @@ html.dark .fiqh-lux-page.section-lobby {
 
 .fiqh-lux-page .card {
   position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
   min-height: 10.5rem;
-  padding: 0.95rem 1rem 1rem;
-  padding-inline-end: 2.75rem;
+  padding: 1rem 1rem 2.85rem;
+  padding-inline-end: 2.85rem;
   border-radius: 22px;
   border: 1px solid var(--fq-line);
   background: color-mix(in srgb, var(--fq-surface) 96%, #e4f0ea 4%);
@@ -873,6 +892,15 @@ html.dark .fiqh-lux-page.section-lobby {
     border-color 0.16s ease,
     box-shadow 0.16s ease,
     transform 0.16s ease;
+}
+
+/* يهزم ضغط section-lobby للفقه الذي كان يُضيّق الحشو ويُقرب العناصر */
+.fiqh-lux-page.section-lobby[data-section-lobby="fiqh"] .card,
+.section-lobby[data-section-lobby="fiqh"].fiqh-lux-page .card {
+  padding: 1rem 1rem 2.85rem;
+  padding-inline-end: 2.85rem;
+  min-height: 10.5rem;
+  gap: 0.65rem;
 }
 
 .fiqh-lux-page .card:hover {
@@ -887,29 +915,41 @@ html.dark .fiqh-lux-page.section-lobby {
 }
 
 .fiqh-lux-page .card__icon {
+  position: relative;
+  z-index: 2;
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 12px;
   background: color-mix(in srgb, var(--fq-emerald-bright) 12%, transparent);
   color: var(--fq-emerald-bright);
+  flex-shrink: 0;
 }
 
 .fiqh-lux-page .card__label {
+  position: relative;
+  z-index: 2;
   font-size: 0.95rem;
   font-weight: 800;
   line-height: 1.35;
+  overflow-wrap: anywhere;
+  max-width: 100%;
 }
 
 .fiqh-lux-page .card__subtitle {
+  position: relative;
+  z-index: 2;
   font-size: 0.78rem;
   font-weight: 500;
   line-height: 1.5;
   color: var(--fq-ink-soft);
+  overflow-wrap: anywhere;
+  max-width: 100%;
 }
 
 .fiqh-lux-page .card::after {
   content: "‹";
   position: absolute;
+  z-index: 1;
   inset-inline-end: 0.85rem;
   bottom: 0.85rem;
   width: 1.85rem;

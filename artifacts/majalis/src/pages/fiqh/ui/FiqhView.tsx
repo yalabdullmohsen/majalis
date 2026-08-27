@@ -15,6 +15,7 @@ import {
 } from "@/lib/fiqh-books";
 import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
+import "@/styles/components/safe-hero.css";
 
 function FiqhLuxHero({
   bookCount,
@@ -26,12 +27,14 @@ function FiqhLuxHero({
   lessonCount: number;
 }) {
   return (
-    <header className="fiqh-lux-hero" data-section-hero="1" aria-labelledby="fiqh-lux-title">
-      <div className="fiqh-lux-hero__icon" aria-hidden="true">
-        <Scale size={28} strokeWidth={1.6} />
-      </div>
-      <div className="fiqh-lux-hero__content">
-        <span className="fiqh-lux-hero__badge">فقه العبادات والمعاملات</span>
+    <header className="fiqh-lux-hero safe-hero" data-section-hero="1" aria-labelledby="fiqh-lux-title">
+      <div className="fiqh-lux-hero__content safe-hero__body">
+        <div className="fiqh-lux-hero__lead safe-hero__lead">
+          <div className="fiqh-lux-hero__icon safe-hero__icon" aria-hidden="true">
+            <Scale size={28} strokeWidth={1.6} />
+          </div>
+          <span className="fiqh-lux-hero__badge safe-hero__badge">فقه العبادات والمعاملات</span>
+        </div>
         <h1 id="fiqh-lux-title" className="fiqh-lux-hero__title">
           الفقه
         </h1>

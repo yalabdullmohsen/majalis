@@ -19,7 +19,7 @@ assert.ok(topicPage.includes('role="tab"'), "TopicPage: tab");
 assert.ok(topicPage.includes('role="tabpanel"'), "TopicPage: tabpanel");
 assert.ok(topicPage.includes("aria-selected={selected}"), "TopicPage: aria-selected على التبويب");
 assert.ok(topicPage.includes("aria-controls={panelId}"), "TopicPage: aria-controls");
-assert.ok(topicPage.includes('className="topic-page__hero on-dark"'), "TopicPage: hero on-dark");
+assert.ok(/className="topic-page__hero on-dark(?:\s+safe-hero)?"/.test(topicPage), "TopicPage: hero on-dark");
 assert.ok(topicPage.includes("syncTabParam"), "TopicPage: مزامنة ?tab=");
 
 assert.ok(janna.includes('from "@/components/topic/TopicPage"'), "JannaNaar: يستورد TopicPage");
