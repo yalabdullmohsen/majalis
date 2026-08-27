@@ -23,16 +23,17 @@
   border: 1px solid var(--msk-border, var(--mj-hairline));
   background: var(--msk-surface, #faf8f4);
   color: var(--msk-text, var(--mj-ink));
-  border-radius: 999px;
-  padding: 0.35rem 0.85rem;
-  font-size: 0.85rem;
+  border-radius: 8px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.78rem;
   cursor: pointer;
 }
 
 .cmp-filter--active {
-  background: var(--msk-primary, #1a3c2e);
-  border-color: var(--msk-primary, #1a3c2e);
+  background: #1a4d3e;
+  border-color: color-mix(in srgb, #1a4d3e 80%, #34d399);
   color: #fff;
+  font-weight: 700;
 }
 
 .cmp-empty {

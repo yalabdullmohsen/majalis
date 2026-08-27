@@ -84,6 +84,83 @@
   background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
 }
 
+.section-lobby__head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid color-mix(in srgb, #1a4d3e 38%, transparent);
+}
+
+.section-lobby__back-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  padding: 0.45rem 0.75rem;
+  margin: 0;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, #1a4d3e 45%, transparent);
+  background: color-mix(in srgb, #1a4d3e 22%, transparent);
+  color: #34d399;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+  appearance: none;
+}
+
+.section-lobby__head-spacer {
+  width: 4.5rem;
+  flex-shrink: 0;
+}
+
+.section-lobby__title--centered {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+}
+
+.section-lobby__title--centered::after {
+  display: none;
+}
+
+.section-lobby[data-lessons-hub="1"] .section-lobby__shot {
+  gap: 12px;
+}
+
+.section-lobby[data-lessons-hub="1"] .section-lobby__primary {
+  min-height: 64px;
+}
+
+.section-lobby[data-lessons-hub="1"] .section-lobby__primary .card--featured {
+  min-height: 64px;
+  padding-block: 0.55rem;
+}
+
+.section-lobby[data-lessons-hub="1"] .section-lobby__chip {
+  min-height: 32px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.section-lobby[data-lessons-hub="1"] .quick-quad[data-count="5"] .quick-quad__cell {
+  min-height: 72px;
+  padding: 8px 6px;
+}
+
+.section-lobby[data-lessons-hub="1"] .quick-quad__name {
+  font-size: 13px;
+}
+
+.section-lobby[data-lessons-hub="1"] .quick-quad__count {
+  font-size: 10px;
+}
+
 .section-lobby__primary {
   min-height: 88px;
 }
@@ -125,6 +202,12 @@
   background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
   border-color: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
   color: var(--mj-on-brand, #fff);
+}
+
+.section-lobby[data-lessons-hub="1"] .section-lobby__chip.is-active {
+  background: #1a4d3e;
+  border-color: color-mix(in srgb, #1a4d3e 85%, #34d399);
+  color: #fff;
 }
 
 .section-lobby__chip-label {

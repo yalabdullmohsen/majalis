@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { ExternalLink, MapPin, Trophy } from "lucide-react";
-import { ShareButtons } from "@/components/ContentActions";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
@@ -88,17 +87,16 @@ export default function CompetitionsHubView() {
       path: "/competitions",
       title: "المسابقات | المجلس العلمي",
       description:
-        "إعلانات مسابقات خارجية قرآنية وحديثية وتجويدية، مع روابط التسجيل والمصدر.",
+        "إعلانات مسابقات قرآنية وحديثية وتجويدية داخل التطبيق.",
       keywords: ["مسابقات", "حفظ قرآن", "تسميع", "الماهر", "حديث", "جوائز", "المجلس العلمي"],
     });
   }, []);
 
   return (
-    <SectionLobby lobbyId="hub" title="المسابقات" groups={[]}>
+    <SectionLobby lobbyId="hub" title="المسابقات" groups={[]} inlineHeaderBack>
       <div className="cmp-hub" data-competitions-hub="1">
         <p className="cmp-hub__lead">
-          إعلانات مسابقات خارجية قرآنية وحديثية وتجويدية، مع روابط التسجيل والمصدر. وليست
-          أسئلة داخل التطبيق.
+          إعلانات مسابقات قرآنية وحديثية وتجويدية داخل التطبيق.
         </p>
 
         <div className="cmp-filters" role="toolbar" aria-label="تصفية المسابقات">
@@ -121,8 +119,6 @@ export default function CompetitionsHubView() {
             <p>لا مسابقات منشورة حاليًا. نضيف مسابقات موثوقة عند توفرها بإذن الله.</p>
             <p className="cmp-empty__hint">
               يمكنك في الأثناء الاستفادة من{" "}
-              <Link href="/quiz">الاختبارات</Link>
-              {" "}و{" "}
               <Link href="/lessons">الدروس</Link>.
             </p>
           </div>
@@ -134,9 +130,6 @@ export default function CompetitionsHubView() {
           </div>
         )}
 
-        <div className="twh-share">
-          <ShareButtons title="المسابقات — المجلس العلمي" url="https://majlisilm.com/competitions" />
-        </div>
       </div>
     </SectionLobby>
   );
