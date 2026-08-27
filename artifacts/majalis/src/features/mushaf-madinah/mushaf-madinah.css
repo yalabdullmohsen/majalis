@@ -174,6 +174,28 @@ html.dark .mm-viewport,
   background: var(--mm-outer-bg);
 }
 
+/* بيج دافئ / Sepia — ملمس ورق خفيف عبر تدرّج فقط (بلا صور ثقيلة) */
+.mm-viewport[data-mushaf-theme="sepia"] {
+  --mm-paper: #f4efe3;
+  --mm-paper-deep: #ebe2d0;
+  --mm-outer-bg: #f0e8d8;
+  --mm-ink: #2c1a12;
+  --mm-gold: #9a7a52;
+  --mm-gold-soft: #c4a574;
+  --mm-gold-deep: #7a5c38;
+  --mm-ayah-select: rgba(196, 155, 110, 0.38);
+  --mm-ayah-play: rgba(196, 155, 110, 0.22);
+  --mm-ui-accent: #1a6b46;
+  --mm-audio-capsule: #ebe4d4;
+  --mm-banner-fill: linear-gradient(180deg, #e8dcc4 0%, #dcc8a8 48%, #c9b089 100%);
+  --mm-banner-name-bg: #e8dcc4;
+  --mushaf-bg: var(--mm-outer-bg);
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(166, 139, 103, 0.07), transparent 55%),
+    radial-gradient(ellipse at 80% 90%, rgba(140, 109, 70, 0.06), transparent 50%),
+    var(--mm-outer-bg);
+}
+
 .mm-viewport[data-chrome="1"] {
   cursor: default;
 }
