@@ -348,16 +348,9 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Internal API data — SWR للنصوص/المواقيت الشائعة، cache-first لباقي APIs الثقيلة
+  // Internal API data — network-first (لا SWR يعرض قديمًا أولًا ثم يحدّث)
   if (CACHEABLE_API_PATHS.some((p) => url.pathname.startsWith(p))) {
-    const useSwr =
-      url.pathname.startsWith("/api/adhkar") ||
-      url.pathname.startsWith("/api/library") ||
-      url.pathname.startsWith("/api/fawaid") ||
-      url.pathname.startsWith("/api/prayer");
-    event.respondWith(
-      useSwr ? staleWhileRevalidate(req, DATA_CACHE) : cacheFirst(req, DATA_CACHE),
-    );
+    event.respondWith(networkFirstThenCache(req, DATA_CACHE));
     return;
   }
 

@@ -11,10 +11,15 @@ import { purgeStaleRuntimeCaches } from "@/lib/runtime-cache-purge";
 /** خلال نافذة الإقلاع: لا شيت تحديث — إعادة تحميل صامتة مرة واحدة فقط. */
 const BOOT_SILENT_MS = 8_000;
 const BOOT_RELOAD_KEY = "majalis-boot-version-reload.v1";
+/** حارس موحّد مع سكربت mj-version-boot في index.html */
+const REFRESHING_FLAG = "majlisilm-refreshing-version";
 
 function alreadyDidBootReload(): boolean {
   try {
-    return sessionStorage.getItem(BOOT_RELOAD_KEY) === "1";
+    return (
+      sessionStorage.getItem(BOOT_RELOAD_KEY) === "1" ||
+      sessionStorage.getItem(REFRESHING_FLAG) === "1"
+    );
   } catch {
     return false;
   }
@@ -23,6 +28,7 @@ function alreadyDidBootReload(): boolean {
 function markBootReload(): void {
   try {
     sessionStorage.setItem(BOOT_RELOAD_KEY, "1");
+    sessionStorage.setItem(REFRESHING_FLAG, "1");
   } catch {
     /* ignore */
   }
@@ -46,7 +52,7 @@ async function purgeThenReload(): Promise<void> {
 
 /**
  * فحص نشر أحدث عبر /version.json.
- * - عند الدخول (أول ثوانٍ): إن وُجدت نسخة أحدث → مسح كاش + reload صامت مرة واحدة
+ * - فور الدخول: إن وُجدت نسخة أحدث → مسح كاش + reload صامت مرة واحدة
  * - بعد استقرار الجلسة: شيت هادئ فقط إن طلب المستخدم التحديث.
  */
 export function useVersionCheck() {
@@ -89,10 +95,10 @@ export function useVersionCheck() {
   useEffect(() => {
     if (!loadedCommit || updateAvailable) return;
 
-    // لا تفحص فورًا عند الرسم الأول — أعطِ SW/chunks فرصة للاستقرار
+    // فحص فوري عند الإقلاع — لا تؤجّل 2.5s (كانت تسبب وميض نسخة قديمة)
     const bootDelay = window.setTimeout(() => {
       void check();
-    }, 2_500);
+    }, 0);
 
     const interval = window.setInterval(() => {
       void check();

@@ -68,9 +68,10 @@ for (const m of head.matchAll(/<script\b([^>]*)>/gi)) {
   const attrs = m[1];
   const type = attrs.match(/\btype\s*=\s*["']([^"']+)["']/i)?.[1] || "";
   const id = attrs.match(/\bid\s*=\s*["']([^"']+)["']/i)?.[1] || "";
-  // mj-theme-boot: سكربت متزامن صغير متعمّد قبل أول paint لمنع وميض الثيم/RTL
+  // mj-theme-boot / mj-version-boot: سكربتات إقلاع صغيرة قبل أول paint (ثيم + منع كاش قديم)
   assert.ok(
     id === "mj-theme-boot" ||
+      id === "mj-version-boot" ||
       type === "application/ld+json" ||
       type === "module" ||
       /\basync\b|\bdefer\b/i.test(attrs),

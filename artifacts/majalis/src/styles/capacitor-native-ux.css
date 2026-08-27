@@ -81,19 +81,24 @@ article,
  */
 html.capacitor-native {
   --header-h: calc(var(--header-chrome, 56px) + var(--inset-top) + var(--ad-banner-height, 0px));
-  background-color: var(--mj-splash, #0E1A15);
+  background-color: var(--surface-app, var(--mj-bg, #F2F4F3));
   min-height: 100dvh;
 }
 
 html.capacitor-native,
 html.capacitor-native body {
   overscroll-behavior-y: none;
-  background-color: var(--mj-splash, #0E1A15);
+  background-color: var(--surface-app, var(--mj-bg, #F2F4F3));
 }
 
 html.capacitor-native[data-theme="dark"],
 html.capacitor-native.dark {
-  background-color: var(--mj-splash, #0E1A15);
+  background-color: var(--surface-app, var(--mj-bg, #101614));
+}
+
+html.capacitor-native[data-theme="dark"] body,
+html.capacitor-native.dark body {
+  background-color: var(--surface-app, var(--mj-bg, #101614));
 }
 
 html.capacitor-native .scroll-y,

@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#F2F4F3" />
-    <!-- ثيم+RTL قبل أي CSS/JS — يمنع وميض ليلي وكاش قديم (v9-theme-light-default-2026-08) -->
+    <!-- ثيم+RTL قبل أي CSS/JS — يمنع وميض ليلي وكاش قديم (v10-pwa-single-paint-2026-08) -->
     <script id="mj-theme-boot">
       (function () {
         try {
           var html = document.documentElement;
           html.setAttribute("lang", "ar");
           html.setAttribute("dir", "rtl");
-          var _dsv = "v9-theme-light-default-2026-08";
+          var _dsv = "v10-pwa-single-paint-2026-08";
           if (localStorage.getItem("majalis-design-v") !== _dsv) {
             localStorage.setItem("majalis-design-v", _dsv);
             localStorage.removeItem("majalis-font-preference");
@@ -50,10 +50,82 @@
             m.setAttribute("content", splashBg);
             m.removeAttribute("media");
           });
+          var csMeta = document.querySelector('meta[name="color-scheme"]');
+          if (csMeta) {
+            csMeta.setAttribute("content", resolved === "dark" ? "dark light" : "light");
+          }
           var storedFont = localStorage.getItem("majalis-font-preference-v2");
           html.dataset.font =
             storedFont === "naskh" || storedFont === "default" ? storedFont : "naskh";
         } catch (e) {}
+      })();
+    </script>
+    <!-- فحص نسخة مبكر: يمنع رسم كاش قديم ثم استبداله بعد ثوانٍ -->
+    <script id="mj-version-boot">
+      (function () {
+        var FLAG = "majlisilm-refreshing-version";
+        try {
+          if (sessionStorage.getItem(FLAG) === "1") {
+            sessionStorage.removeItem(FLAG);
+            return;
+          }
+        } catch (_) {}
+        var prev = null;
+        try {
+          prev = localStorage.getItem("majalis_app_version");
+        } catch (_) {}
+        if (!prev) return;
+        var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+        var timer =
+          ctrl &&
+          setTimeout(function () {
+            try {
+              ctrl.abort();
+            } catch (_) {}
+          }, 2500);
+        fetch("/version.json?t=" + Date.now(), {
+          cache: "no-store",
+          signal: ctrl ? ctrl.signal : undefined,
+        })
+          .then(function (r) {
+            return r.ok ? r.json() : null;
+          })
+          .then(function (j) {
+            if (timer) clearTimeout(timer);
+            if (!j) return;
+            var live = String(j.shortCommit || j.commit || "").slice(0, 12);
+            if (!live) return;
+            var same =
+              live === prev ||
+              prev.indexOf(live) === 0 ||
+              live.indexOf(prev) === 0;
+            if (same) return;
+            try {
+              sessionStorage.setItem(FLAG, "1");
+              localStorage.setItem("majalis_force_cache_purge", "1");
+            } catch (_) {}
+            var finish = function () {
+              location.reload();
+            };
+            if (!window.caches || !caches.keys) {
+              finish();
+              return;
+            }
+            caches
+              .keys()
+              .then(function (keys) {
+                return Promise.all(
+                  keys.map(function (k) {
+                    return caches.delete(k);
+                  }),
+                );
+              })
+              .catch(function () {})
+              .then(finish);
+          })
+          .catch(function () {
+            if (timer) clearTimeout(timer);
+          });
       })();
     </script>
     <style id="mj-lcp-critical">

@@ -1,5 +1,5 @@
 /**
- * بوابة: الشريط السفلي يطابق لون الصفحة (--surface-app) لا أبيض مستقل ولا تسرب أخضر.
+ * بوابة: الشريط السفلي يطابق لون الصفحة (--surface-app) لا أسود/أخضر داكن.
  * node --import tsx src/lib/__tests__/bottom-nav-safe-area-green.test.ts
  */
 import assert from "node:assert/strict";
@@ -14,7 +14,6 @@ const html = read("index.html");
 assert.match(html, /viewport-fit=cover/);
 
 const finalCss = read("src/styles/final-release.css");
-assert.match(finalCss, /--mj-splash,\s*#0E1A15/);
 assert.match(
   finalCss,
   /padding-bottom:\s*var\(--inset-bottom\)/,
@@ -34,15 +33,38 @@ assert.doesNotMatch(
 assert.doesNotMatch(
   finalCss,
   /\.bottom-nav[\s\S]{0,800}?background-image:\s*linear-gradient\([\s\S]*?--mj-splash/,
-  "لا تدرّج أخضر تحت الشريط السفلي",
+  "لا تدرّج أسود/أخضر تحت الشريط السفلي",
 );
 assert.match(finalCss, /#root,\s*\n\.app-shell/);
+assert.match(
+  finalCss,
+  /html\s*\{[\s\S]*?background:\s*var\(--surface-app/,
+  "html بسطح التطبيق لا mj-splash",
+);
 
 const foundation = read("src/styles/m2030/foundation.css");
-assert.match(foundation, /background-color:\s*var\(--mj-splash,\s*#0E1A15\)/);
+assert.match(foundation, /background-color:\s*var\(--surface-app/);
+assert.doesNotMatch(
+  foundation,
+  /body\s*\{[\s\S]*?--mj-splash,\s*#0E1A15/,
+  "body بلا bleed أسود",
+);
+
+const nav = read("src/styles/m2030/navigation.css");
+assert.match(nav, /\.bottom-nav[\s\S]*?background-color:\s*var\(--surface-app/);
+assert.doesNotMatch(
+  nav,
+  /\.bottom-nav[\s\S]{0,500}?--mj-splash,\s*#0E1A15/,
+  "navigation بلا تدرّج splash أسود",
+);
 
 const native = read("src/styles/capacitor-native-ux.css");
-assert.match(native, /html\.capacitor-native[\s\S]*--mj-splash,\s*#0E1A15/);
+assert.match(native, /html\.capacitor-native[\s\S]*--surface-app/);
+assert.doesNotMatch(
+  native,
+  /html\.capacitor-native[\s\S]{0,200}--mj-splash,\s*#0E1A15/,
+  "Capacitor بلا خلفية splash سوداء",
+);
 
 const capTs = read("capacitor.config.ts");
 assert.match(capTs, /ios:\s*\{[\s\S]*?backgroundColor:\s*"#F2F4F3"/);
