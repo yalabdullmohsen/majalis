@@ -2,44 +2,17 @@
   "month": "2026-08",
   "items": [
     {
-      "id": "cf7dfd49ea2f086354f9625ef1f9f2ee65fffb27",
-      "type": "تنبيه",
-      "title_ar": "جمعية مدينة سعد العبدالله التعاونية سعد العبدالله اليوم جمعية سعد العبدالله الت…",
-      "summary_ar": "#جمعيه_مدينه_سعد_العبدالله_التعاونيه Photo by سعد العبدالله اليوم 🇰🇼 on August 26, 2026. May be an image of ‎poster and ‎text that says '‎เพมเมม Operative جم…",
-      "sheikh": null,
-      "place": "2 يستقبلكم خلال المواعيد الرسمية من الساعة 8 صباحاً إلى الساعة 9 مساءً‎'‎‎",
-      "audience": "عام",
-      "starts_at": "2026-08-27T00:00:00.000Z",
-      "time_text": null,
-      "register_url": null,
-      "schedule_kind": "weekly",
-      "women_attendance": "men_only",
-      "women_attendance_note": null,
-      "sources": [
-        {
-          "id": "ig-saad.al.abdullah.city",
-          "name_ar": "مركز سعد العبدالله لتحفيظ القرآن",
-          "url": "https://instagram.com/saad.al.abdullah.city",
-          "post_url": "https://www.instagram.com/p/DcgIHr6NhcU/",
-          "platform": "instagram"
-        }
-      ],
-      "image_url": null,
-      "published_at": "2026-08-26T16:49:40.342Z",
-      "confidence": 0.85
-    },
-    {
-      "id": "17cf661670830e35ec3196e0adf4e5dd149386c8",
+      "id": "ca740203ac6356452ab2fa4ee62fa9b3177c14e0",
       "type": "درس",
-      "title_ar": "ندعوكم اليوم لحضور الدرس العلمي شرح كتاب منهج السالكين للشيخ حسين المويزري بعد …",
-      "summary_ar": "ندعوكم اليوم لحضور الدرس العلمي: ( شرح كتاب منهج السالكين ) للشيخ حسين المويزري @H_Almuwizri ⌚ بعد صلاه العصر ( كل يوم ثلاثاء) مسجد قبيصه الخزاعي - المطلاع htt…",
-      "sheikh": null,
-      "place": "قبيصة الخزاعي - المطلاع https://maps",
+      "title_ar": "الآن مباشر شرح كتاب التوحيد للإمام محمد بن عبدالوهاب فضيلة الشيخ عمر مثيب العتي…",
+      "summary_ar": "الان مباشر (37) شرح كتاب&nbsp; التوحيد للامام محمد بن عبدالوهاب فضيله الشيخ عمر مثيب العتيبي رابط البث المباشر https://t.me/omar_muthib?livestream تحميل الكتاب…",
+      "sheikh": "عمر مثيب العتيبي 🔗 رابط البث المباشر https://t",
+      "place": null,
       "audience": "عام",
       "starts_at": null,
       "time_text": null,
-      "register_url": "https://t.me/DrosQ8",
-      "schedule_kind": "upcoming",
+      "register_url": "https://t.me/omar_muthib?livestream",
+      "schedule_kind": null,
       "women_attendance": "men_only",
       "women_attendance_note": null,
       "sources": [
@@ -47,12 +20,12 @@
           "id": "telegram-DrosQ8",
           "name_ar": "دروس الكويت",
           "url": "https://t.me/DrosQ8",
-          "post_url": "https://t.me/DrosQ8/27638",
+          "post_url": "https://t.me/DrosQ8/27646",
           "platform": "telegram"
         }
       ],
       "image_url": null,
-      "published_at": "2026-08-26T16:39:36.903Z",
+      "published_at": "2026-08-27T14:15:32.847Z",
       "confidence": 0.8
     },
     {
@@ -83,6 +56,33 @@
       "confidence": 0.65
     },
     {
+      "id": "b8ffcd1850630b336b6ef44340723b94a71b30ee",
+      "type": "دورة",
+      "title_ar": "من هنا يبدأ الفهم لكتاب الله وسنة رسوله صلى الله عليه وسلم التحقي بطلائع العالم…",
+      "summary_ar": "من هنا يبدا الفهم لكتاب الله وسنه رسوله صلي الله عليه وسلم التحقي بطلائع العالمات … لفهم اعمق ونور يدفع الجهل برنامج طلائع العالمات _ الدفعه السابعه ٢٠٢٦-٢٠٢٨م…",
+      "sheikh": "الدكتور محمد عالي الحسين www",
+      "place": "طلائع العالمات سوف تدرسين أصول فهم القرأن والسنة",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://forms.gle/qaqtsfAREkcWZS438",
+      "schedule_kind": "upcoming",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-rasikhoon",
+          "name_ar": "الراسخون",
+          "url": "https://instagram.com/rasikhoon",
+          "post_url": "https://www.instagram.com/p/Dcg7TqQDECd/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-26T00:00:00.000Z",
+      "confidence": 0.9
+    },
+    {
       "id": "26448a5df818331f38a48e66fd0806d94a550832",
       "type": "محاضرة",
       "title_ar": "غداً الأربعاء بعد صلاة المغرب بإذن الله مسجد الياقوت درس تلخيص مختصر المقنع الم…",
@@ -108,33 +108,6 @@
       "image_url": null,
       "published_at": "2026-08-25T00:00:00.000Z",
       "confidence": 0.85
-    },
-    {
-      "id": "d50eff9e92a431e5a30dd90fc69aad4f77689992",
-      "type": "دورة",
-      "title_ar": "التأصيل الصحيح يبدأ من المعلم المتمكن في برنامج بدايات العلماء يدرس الطالب على …",
-      "summary_ar": "التاصيل الصحيح يبدا من المعلم المتمكن. في برنامج بدايات العلماء يدرس الطالب علي نخبه من اهل العلم المتخصصين، ممن يجمعون بين التاصيل العلمي، وحسن التعليم، ومعرف…",
-      "sheikh": "الدكتور أحمدو نعمه w",
-      "place": "برنامج بدايات العلماء يدرس الطالب على نخبةٍ من أهل العلم المتخصصين",
-      "audience": "عام",
-      "starts_at": null,
-      "time_text": null,
-      "register_url": "https://docs.google.com/forms/d/e/1FAIpQLScY1fTXHS3XynY1PhI3-z8hvJ40ZZC4otObWfupCSbSLknyfQ/viewform",
-      "schedule_kind": "upcoming",
-      "women_attendance": "men_only",
-      "women_attendance_note": null,
-      "sources": [
-        {
-          "id": "ig-rasikhoon",
-          "name_ar": "الراسخون",
-          "url": "https://instagram.com/rasikhoon",
-          "post_url": "https://www.instagram.com/p/DcbmjZnEmLV/",
-          "platform": "instagram"
-        }
-      ],
-      "image_url": null,
-      "published_at": "2026-08-24T00:00:00.000Z",
-      "confidence": 0.9
     },
     {
       "id": "5b3fa3511fd80095d69ac2ae9c971d9716e250bc",
