@@ -12,7 +12,7 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const people = JSON.parse(read("public/data/quran-people/people.json"));
 const list = people.people || [];
-assert.ok(list.length >= 90, `الذين ذكروا في القرآن ≥90 (الآن ${list.length})`);
+assert.ok(list.length >= 90, `الذين ذكروا في القرآن ≥90 في البيانات (الآن ${list.length})`);
 assert.ok(
   list.every((p: { slug?: string; nameAr?: string; definition?: string; status?: string; occurrences?: unknown[] }) =>
     Boolean(p.slug && p.nameAr && p.definition && Array.isArray(p.occurrences) && p.occurrences.length > 0),
@@ -23,9 +23,20 @@ assert.ok(
   list.filter((p: { status?: string }) => p.status === "published").length >= 80,
   "≥80 مدخلًا منشورًا",
 );
+const nonProphets = list.filter(
+  (p: { status?: string; category?: string }) => p.status === "published" && p.category !== "prophet",
+);
+assert.ok(
+  nonProphets.length >= 60,
+  `فهرس الواجهة بلا أنبياء ≥60 (الآن ${nonProphets.length})`,
+);
 for (const required of ["adam", "ibrahim", "musa", "isa", "muhammad", "maryam", "firawn"]) {
-  assert.ok(list.some((p: { slug?: string }) => p.slug === required), `مطلوب وجود: ${required}`);
+  assert.ok(list.some((p: { slug?: string }) => p.slug === required), `مطلوب وجود في البيانات: ${required}`);
 }
+assert.ok(
+  !nonProphets.some((p: { category?: string }) => p.category === "prophet"),
+  "لا أنبياء في قائمة الواجهة",
+);
 
 const seerah = read("src/views/SeerahPage.tsx");
 assert.doesNotMatch(seerah, /\ufde2/, "لا محارف PUA بدل رضي الله عنها في السيرة");
