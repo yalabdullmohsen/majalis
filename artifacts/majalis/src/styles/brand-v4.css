@@ -120,7 +120,9 @@
   --color-success:           var(--ok-fg);
   --shadow-soft:             var(--e-1);
   --shadow-card:             0 10px 30px rgba(0, 0, 0, 0.04);
-  --radius-card:             var(--r-lg);
+  --radius-card:             28px;
+  --radius-tile:             24px;
+  --radius-pill:             999px;
   --space-page:              var(--s-4);
 
   /* ══════════════════════════════════════════════════════════

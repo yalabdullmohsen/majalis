@@ -1,0 +1,100 @@
+/**
+ * نظام بطاقات ناعمة موحّد — مرجع بصري: الإعجاز العلمي + الصفحات الداكنة
+ * soft-card (كبيرة) · soft-tile (صغيرة) · soft-pill (أزرار/تصنيفات)
+ */
+
+:root {
+  --radius-card: 28px;
+  --radius-tile: 24px;
+  --radius-pill: 999px;
+
+  --soft-card-pad: clamp(1rem, 2.8vw, 1.35rem);
+  --soft-tile-pad: clamp(0.85rem, 2.2vw, 1.1rem);
+
+  --soft-card-grad: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.13),
+    rgba(255, 255, 255, 0.045)
+  );
+  --soft-tile-grad: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.11),
+    rgba(255, 255, 255, 0.04)
+  );
+  --soft-card-border: rgba(255, 255, 255, 0.14);
+  --soft-tile-border: rgba(255, 255, 255, 0.13);
+  --soft-card-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 18px 44px rgba(0, 0, 0, 0.18);
+  --soft-tile-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 12px 28px rgba(0, 0, 0, 0.14);
+}
+
+/* أسطح فاتحة — تدرّج هادئ بلا سطوع زائد */
+.soft-card--on-light,
+.soft-tile--on-light {
+  --soft-card-grad: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--mj-surface, #fff) 94%, #e8f0ec) 0%,
+    color-mix(in srgb, var(--mj-brand, #1f6b56) 6%, #f7faf8) 100%
+  );
+  --soft-tile-grad: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--mj-surface, #fff) 96%, #eef4f1) 0%,
+    color-mix(in srgb, var(--mj-brand, #1f6b56) 4%, #f9fbfa) 100%
+  );
+  --soft-card-border: color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, var(--mj-hairline, #d5ddd9));
+  --soft-tile-border: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--mj-hairline, #d5ddd9));
+  --soft-card-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    0 14px 32px -18px rgba(11, 32, 24, 0.28);
+  --soft-tile-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 10px 22px -14px rgba(11, 32, 24, 0.22);
+}
+
+.soft-card {
+  border-radius: var(--radius-card);
+  background-color: rgba(12, 42, 34, 0.45);
+  background-image: var(--soft-card-grad);
+  border: 1px solid var(--soft-card-border);
+  box-shadow: var(--soft-card-shadow);
+  overflow: hidden;
+  padding: var(--soft-card-pad);
+  box-sizing: border-box;
+}
+
+.soft-tile {
+  border-radius: var(--radius-tile);
+  background-color: rgba(12, 42, 34, 0.4);
+  background-image: var(--soft-tile-grad);
+  border: 1px solid var(--soft-tile-border);
+  box-shadow: var(--soft-tile-shadow);
+  overflow: hidden;
+  padding: var(--soft-tile-pad);
+  box-sizing: border-box;
+}
+
+.soft-pill {
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--soft-tile-border);
+  background-image: var(--soft-tile-grad);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+/* تمييز ذهبي/زمردي ناعم (صلاة قادمة / عنصر نشط) */
+.soft-card--accent,
+.soft-tile--accent {
+  background-color: rgba(40, 52, 28, 0.5);
+  background-image: linear-gradient(
+    145deg,
+    rgba(222, 196, 128, 0.22),
+    rgba(255, 255, 255, 0.06)
+  );
+  border-color: rgba(226, 199, 126, 0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 16px 36px rgba(0, 0, 0, 0.18);
+}
