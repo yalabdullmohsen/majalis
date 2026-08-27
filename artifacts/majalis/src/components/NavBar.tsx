@@ -50,13 +50,13 @@ function PrayerChip() {
       if (!cancelled) setReady(true);
     };
     if (typeof window.requestIdleCallback === "function") {
-      const id = window.requestIdleCallback(reveal, { timeout: 2800 });
+      const id = window.requestIdleCallback(reveal, { timeout: 900 });
       return () => {
         cancelled = true;
         window.cancelIdleCallback(id);
       };
     }
-    const t = window.setTimeout(reveal, 1200);
+    const t = window.setTimeout(reveal, 400);
     return () => {
       cancelled = true;
       window.clearTimeout(t);
@@ -96,13 +96,13 @@ function DeferredHeaderTicker() {
       if (!cancelled) setReady(true);
     };
     if (typeof window.requestIdleCallback === "function") {
-      const id = window.requestIdleCallback(reveal, { timeout: 3500 });
+      const id = window.requestIdleCallback(reveal, { timeout: 1200 });
       return () => {
         cancelled = true;
         window.cancelIdleCallback(id);
       };
     }
-    const t = window.setTimeout(reveal, 1800);
+    const t = window.setTimeout(reveal, 600);
     return () => {
       cancelled = true;
       window.clearTimeout(t);
