@@ -7,6 +7,7 @@ import {
   PRAYER_STATUS_HEX,
   MUSHAF_PAPER_HEX,
   MUSHAF_NIGHT_HEX,
+  MUSHAF_OLED_HEX,
   resolvePageChrome,
   resolvePageChromeKey,
   resolveMushafThemeChrome,
@@ -40,6 +41,9 @@ assert.equal(mushaf.statusBarStyle, "dark");
 const mushafNight = resolveMushafThemeChrome("night");
 assert.equal(mushafNight.statusBarColorHex, MUSHAF_NIGHT_HEX);
 assert.equal(mushafNight.statusBarStyle, "light");
+const mushafOled = resolveMushafThemeChrome("oled");
+assert.equal(mushafOled.statusBarColorHex, MUSHAF_OLED_HEX);
+assert.equal(mushafOled.statusBarStyle, "light");
 const mushafPaper = resolveMushafThemeChrome("paper");
 assert.equal(mushafPaper.statusBarStyle, "dark");
 
