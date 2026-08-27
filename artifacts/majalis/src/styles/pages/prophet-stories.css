@@ -787,8 +787,13 @@ html.dark .nb-table__row--clickable:hover td {
   .prophet-lessons-grid { grid-template-columns: repeat(2, 1fr); }
 }
 .prophet-lesson-card {
-  background: var(--ps-detail-card);
-  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04));
+  /* خلفية صلبة للقياس/التباين ثم تدرّج فوقها — لا rgba شفاف وحده */
+  background-color: #143028;
+  background-image: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.11),
+    rgba(255, 255, 255, 0.04)
+  );
   border: 1px solid var(--ps-detail-border);
   border-radius: var(--radius-card, 28px);
   padding: var(--ds-space-4);
@@ -809,7 +814,7 @@ html.dark .nb-table__row--clickable:hover td {
   color: var(--prophet-color-on-dark);
 }
 .prophet-lesson-card__text {
-  color: var(--ps-text-body, var(--text-on-dark, #FFFFFF));
+  color: #ffffff;
   opacity: 1;
   font-weight: 500;
   font-size: 0.9rem;
