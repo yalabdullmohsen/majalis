@@ -18,7 +18,10 @@ const ornament = readFileSync(resolve(root, "src/features/mushaf-madinah/MushafS
 assert.match(page, /Array\.from\(\{ length: 15 \}/);
 assert.match(page, /filledSlots/);
 assert.match(page, /mm-page__body--opening/);
+assert.match(page, /mm-page__body--flex/);
 assert.match(css, /mm-page__body--opening/);
+assert.match(css, /mm-page__body--flex/);
+assert.match(css, /data-page-type="lead"/);
 assert.match(css, /justify-content:\s*center/);
 assert.match(css, /grid-template-rows:\s*repeat\(15,\s*minmax\(0,\s*1fr\)\)/);
 assert.match(css, /--mm-ref-open-banner-y:\s*27\.7%/);

@@ -34,6 +34,10 @@ const SURFACE_DARK_APP = "#131A18";
 export const PRAYER_STATUS_HEX = "#091814";
 /** ورق المصحف */
 export const MUSHAF_PAPER_HEX = "#FBF7EF";
+export const MUSHAF_NIGHT_HEX = "#101820";
+export const MUSHAF_SEPIA_HEX = "#f0e8d8";
+
+export type MushafSurfaceTheme = "paper" | "sepia" | "night";
 
 type ChromePair = { light: PageChromeDef; dark: PageChromeDef };
 
@@ -175,4 +179,27 @@ export function resolvePageChrome(
   const pairDef = PAGE_CHROME[key] ?? PAGE_CHROME.default;
   const def = resolvedTheme === "dark" ? pairDef.dark : pairDef.light;
   return { ...def, key };
+}
+
+/** شريط حالة iOS/Android حسب ثيم المصحف الداخلي (ورقي/بيج/ليلي). */
+export function resolveMushafThemeChrome(theme: MushafSurfaceTheme): PageChromeDef {
+  if (theme === "night") {
+    return {
+      statusBarColor: "var(--mm-paper, #101820)",
+      statusBarColorHex: MUSHAF_NIGHT_HEX,
+      statusBarStyle: "light",
+    };
+  }
+  if (theme === "sepia") {
+    return {
+      statusBarColor: "var(--mm-paper, #f0e8d8)",
+      statusBarColorHex: MUSHAF_SEPIA_HEX,
+      statusBarStyle: "dark",
+    };
+  }
+  return {
+    statusBarColor: "var(--color-mushaf-paper, #FBF7EF)",
+    statusBarColorHex: MUSHAF_PAPER_HEX,
+    statusBarStyle: "dark",
+  };
 }

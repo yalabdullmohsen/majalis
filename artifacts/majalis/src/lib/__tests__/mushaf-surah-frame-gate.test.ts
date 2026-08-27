@@ -20,7 +20,7 @@ assert.doesNotMatch(ornament, /linearGradient/i);
 assert.doesNotMatch(ornament, /data-ornament/);
 
 assert.match(css, /\.mm-surah-frame\s*\{[^}]*border:\s*1px/);
-assert.match(css, /\.mm-surah-frame\s*\{[^}]*border-radius:\s*2px/);
+assert.match(css, /\.mm-surah-frame\s*\{[^}]*border-radius:\s*6px/);
 assert.match(css, /\.mm-surah-frame__name\s*\{[^}]*font-size:\s*calc\(var\(--mm-qpc-size\) \* 0\.85\)/);
 assert.match(css, /\.mm-surah-frame__name\s*\{[^}]*font-weight:\s*400/);
 assert.match(css, /\.mm-surah-frame__name[\s\S]*--mm-qpc-family/);

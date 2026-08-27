@@ -55,7 +55,7 @@
   --mm-line-height: 1.85;
   --mm-line-gap: 0;
   /* تقارب كلمات المصحف — لا تمديد للأسطر القصيرة */
-  --mushaf-word-spacing: 0.22em;
+  --mushaf-word-spacing: 0.18em;
   --mushaf-line-height: var(--mm-line-height);
   --mushaf-page-padding: var(--mm-inner-pad-x);
   --mushaf-line-gap: var(--mm-line-gap);
@@ -66,7 +66,7 @@
   --mushaf-side-margin-end: calc(100% - var(--mm-ref-ink-x-end));
   --mushaf-line-height: var(--mm-line-height);
   --mushaf-font-size: var(--mm-qpc-size);
-  --mushaf-surah-header-height: 100%; /* خانة شبكة واحدة من ١٥ */
+  --mushaf-surah-header-height: auto;
   --mushaf-page-number-bottom: calc(100% - var(--mm-ref-cartouche-y));
   --mm-chrome: color-mix(in srgb, var(--mm-paper) 94%, #fff);
   --mm-chrome-fg: var(--mm-ink);
@@ -358,24 +358,61 @@ html.dark .mm-viewport,
   pointer-events: none;
 }
 
-/* ص١ وص٢: هندسة واحدة — شارة ٢٧٫٧٪ · نهاية كتلة ٧٤٫٨٪ · كتلة موسّطة بلا خانات فارغة */
-.mm-viewport .mm-page--opening .mm-page__body,
-.mm-viewport .mm-page--opening .mm-page__body--opening {
-  top: var(--mm-ref-open-banner-y);
-  bottom: calc(100% - var(--mm-ref-open-text-end));
+/* ص١–٢: تخطيط flex بلا خانات فارغة — ص١ فقط يستخدم open-banner-y */
+.mm-viewport .mm-page__body--flex {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  gap: 0.2em;
-  padding-top: 0.15em;
+  gap: 0.15em;
+  padding-top: 0;
   grid-template-rows: none;
 }
 
-.mm-viewport .mm-page--opening .mm-slot {
+.mm-viewport .mm-page__body--flex .mm-slot {
   flex: 0 0 auto;
   height: auto;
-  min-height: 0;
+  min-height: min-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  box-sizing: border-box;
+  padding-block: 0.1em;
+}
+
+.mm-viewport .mm-page__body--flex .mm-slot[data-kind="line"] {
+  min-height: min-content;
+}
+
+.mm-viewport .mm-page__body--flex .mm-ayah-line,
+.mm-viewport .mm-page__body--flex .mm-basmala {
+  padding-block: 0;
+}
+
+.mm-viewport .mm-page__body--flex .mm-slot[data-kind="banner"],
+.mm-viewport .mm-page__body--flex .mm-slot[data-kind="basmala"] {
+  min-height: calc(var(--mm-qpc-size, 16px) * 1.15);
+}
+
+.mm-viewport .mm-page__body--flex .mm-slot[data-kind="empty"] {
+  visibility: hidden;
+  pointer-events: none;
+  display: none;
+}
+
+/* ص١: شارة الفاتحة عند ٢٧٫٧٪ · نهاية كتلة ٧٤٫٨٪ */
+.mm-viewport .mm-page--opening .mm-page__body,
+.mm-viewport .mm-page--opening .mm-page__body--opening {
+  top: var(--mm-ref-open-banner-y);
+  bottom: calc(100% - var(--mm-ref-open-text-end));
+}
+
+/* ص٢ (البقرة): هامش قراءة عادي — لا فراغ علوي مبالغ */
+.mm-viewport .mm-page[data-page-type="lead"] .mm-page__body,
+.mm-viewport .mm-page[data-page-type="lead"] .mm-page__body--flex {
+  top: var(--mm-ref-text-start);
+  bottom: calc(100% - var(--mm-ref-text-end));
 }
 
 .mm-viewport .mm-page--opening .mm-slot[data-kind="empty"] {
@@ -468,33 +505,34 @@ html.dark .mm-viewport .mm-page {
 
 .mm-slot__banner {
   width: 100%;
-  height: 100%;
+  height: auto;
   max-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 0;
-  padding-block: 0;
+  padding-block: 0.05em;
   overflow: hidden;
   box-sizing: border-box;
 }
 
-/* إطار اسم السورة — شريط بسيط بعرض كتلة النص (مصحف المدينة) */
+/* فاصل سورة — شريط خفيف بعرض النص، لا مستطيل بعرض الشاشة */
 .mm-surah-frame {
-  width: 100%;
-  max-width: 100%;
-  height: var(--mushaf-surah-header-height);
-  max-height: 100%;
-  display: flex;
+  width: auto;
+  max-width: min(92%, 100%);
+  height: auto;
+  min-height: 0;
+  max-height: 2.05em;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  margin: 0;
-  padding-inline: 0.35rem;
-  padding-block: 0;
-  border: 1px solid color-mix(in srgb, var(--mm-gold) 72%, transparent);
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--mm-paper) 88%, var(--mm-gold) 12%);
+  margin: 0 auto;
+  padding-inline: 0.55em;
+  padding-block: 0.08em;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 38%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--mm-paper) 96%, var(--mm-gold) 4%);
   overflow: hidden;
 }
 
@@ -512,8 +550,8 @@ html.dark .mm-viewport .mm-page {
 
 html[data-theme="dark"] .mm-surah-frame,
 html.dark .mm-surah-frame {
-  background: color-mix(in srgb, var(--mm-paper-deep) 92%, var(--mm-gold) 8%);
-  border-color: color-mix(in srgb, var(--mm-gold-soft) 55%, transparent);
+  background: color-mix(in srgb, var(--mm-paper-deep) 94%, var(--mm-gold) 6%);
+  border-color: color-mix(in srgb, var(--mm-gold-soft) 42%, transparent);
 }
 
 html[data-theme="dark"] .mm-surah-frame__name,

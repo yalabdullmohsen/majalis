@@ -30,9 +30,17 @@ export const MushafPage = memo(function MushafPage({
   onSelectVerse,
   onLongPressVerse,
 }: Props) {
-  const opening = layout.pageNumber === 1 || layout.pageNumber === 2;
-  const surahStart = !opening && layout.surahsStartingOnPage.length > 0;
-  const pageType = opening ? "opening" : surahStart ? "surah-start" : "normal";
+  /** ص١: كتلة موسّطة بشارة علوية — ص٢: بداية البقرة من هامش القراءة العادي */
+  const isOpeningP1 = layout.pageNumber === 1;
+  const isFlexBody = layout.pageNumber === 1 || layout.pageNumber === 2;
+  const surahStart = !isFlexBody && layout.surahsStartingOnPage.length > 0;
+  const pageType = isOpeningP1
+    ? "opening"
+    : layout.pageNumber === 2
+      ? "lead"
+      : surahStart
+        ? "surah-start"
+        : "normal";
   const slots = buildSlots(layout);
   const pageRef = useRef<HTMLElement | null>(null);
   const [pageEl, setPageEl] = useState<HTMLElement | null>(null);
@@ -50,11 +58,11 @@ export const MushafPage = memo(function MushafPage({
         pageRef.current = el;
         if (pageEl !== el) setPageEl(el);
       }}
-      className={`mm-page${opening ? " mm-page--opening" : ""}${surahStart ? " mm-page--surah-start" : ""}`}
+      className={`mm-page${isOpeningP1 ? " mm-page--opening" : ""}${isFlexBody ? " mm-page--flex" : ""}${surahStart ? " mm-page--surah-start" : ""}`}
       data-page={footerPage}
       data-page-type={pageType}
       data-testid="mushaf-page"
-      data-opening={opening ? "1" : "0"}
+      data-opening={isFlexBody ? "1" : "0"}
       data-mm-fit="0"
       style={{ ["--mm-qpc-family" as string]: fontFamily }}
       aria-label={`صفحة المصحف ${footerPage}`}
@@ -66,10 +74,10 @@ export const MushafPage = memo(function MushafPage({
       />
       <MushafPageHeader juzNumber={layout.juzNumber} surahName={layout.headerSurahName} />
       <div
-        className={`mm-page__body${opening ? " mm-page__body--opening" : ""}`}
+        className={`mm-page__body${isOpeningP1 ? " mm-page__body--opening" : ""}${isFlexBody ? " mm-page__body--flex" : ""}`}
         data-testid="mushaf-page-frame"
       >
-        {(opening ? filledSlots(slots) : Array.from({ length: 15 }, (_, i) => i + 1)).map((slot) => {
+        {(isFlexBody ? filledSlots(slots) : Array.from({ length: 15 }, (_, i) => i + 1)).map((slot) => {
           const cell = slots.get(slot);
           return (
             <div key={slot} className="mm-slot" data-slot={slot} data-kind={cell?.kind ?? "empty"}>
@@ -91,7 +99,7 @@ export const MushafPage = memo(function MushafPage({
                 ) : (
                   <MushafAyahLine
                     words={cell.words}
-                    centered={opening || isLastSurahLine(cell.words, layout)}
+                    centered={isFlexBody || isLastSurahLine(cell.words, layout)}
                     onSelectVerse={onSelectVerse}
                     onLongPressVerse={onLongPressVerse}
                   />

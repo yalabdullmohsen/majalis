@@ -6,8 +6,10 @@ import assert from "node:assert/strict";
 import {
   PRAYER_STATUS_HEX,
   MUSHAF_PAPER_HEX,
+  MUSHAF_NIGHT_HEX,
   resolvePageChrome,
   resolvePageChromeKey,
+  resolveMushafThemeChrome,
 } from "../page-chrome";
 
 assert.equal(resolvePageChromeKey("/"), "home");
@@ -34,6 +36,12 @@ assert.equal(quran.statusBarColorHex, "#F2F4F3");
 const mushaf = resolvePageChrome("/mushaf", "dark");
 assert.equal(mushaf.statusBarColorHex, MUSHAF_PAPER_HEX);
 assert.equal(mushaf.statusBarStyle, "dark");
+
+const mushafNight = resolveMushafThemeChrome("night");
+assert.equal(mushafNight.statusBarColorHex, MUSHAF_NIGHT_HEX);
+assert.equal(mushafNight.statusBarStyle, "light");
+const mushafPaper = resolveMushafThemeChrome("paper");
+assert.equal(mushafPaper.statusBarStyle, "dark");
 
 const homeDark = resolvePageChrome("/", "dark");
 assert.equal(homeDark.statusBarStyle, "light");

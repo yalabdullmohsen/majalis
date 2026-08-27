@@ -39,6 +39,7 @@ assert.doesNotMatch(css, /transform:\s*scale\(/);
 
 assert.match(page, /data-page-type=\{pageType\}/);
 assert.match(page, /surah-start/);
+assert.match(page, /"lead"/);
 assert.match(page, /useMushafPageFontFit/);
 assert.match(fitHook, /resolveUniformMushafFontSize/);
 assert.match(fitHook, /mushafUniformFitCacheKey/);
