@@ -48,7 +48,21 @@ const css = read("features/mushaf-madinah/mushaf-madinah.css");
 assert.match(css, /translateZ\(0\)/);
 assert.match(css, /data-text-profile="low"/);
 assert.match(css, /--mm-line-height:\s*1\.85/);
-assert.match(css, /mm-page__body[\s\S]*padding-inline-start:\s*max\(0\.05em,\s*var\(--inset-left/);
+assert.match(
+  css,
+  /mm-page__body[\s\S]*padding-inline-start:\s*0\.08em/,
+  "mm-page__body optical pad only (no double safe-area on iPhone)",
+);
+assert.doesNotMatch(
+  css,
+  /\.mm-viewport\s+\.mm-page__body[\s\S]*?padding-inline-start:\s*max\(\s*0\.05em\s*,\s*var\(--inset-left/,
+  "mm-page__body must not re-apply CSS inset-left",
+);
+assert.match(css, /\.mm-ayah-line\s*\{[\s\S]*?-webkit-text-size-adjust:\s*100%/);
+assert.match(
+  css,
+  /\.mm-ayah-line\s*\{[\s\S]*?gap:\s*var\(--mushaf-word-spacing,\s*0\.18em\)/,
+);
 
 const fit = read("features/mushaf-madinah/fitPageFontSize.ts");
 assert.match(fit, /releaseCanvasResources/);
