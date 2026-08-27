@@ -715,8 +715,17 @@
 }
 
 /* إصلاح شامل: ألوان نصوص الإحصائيات والفلاتر */
-.hadith-stat { color: var(--elite-ink-soft, #4A4A4A) !important; }
-.hadith-stat strong { color: var(--elite-forest, var(--mj-brand-deep)) !important; }
+.hadith-stat { color: var(--mj-ink-2, #4B625A) !important; }
+.hadith-stat strong { color: var(--mj-brand-deep, #123F32) !important; font-weight: 900 !important; }
+
+html.dark .hadith-stat,
+html[data-theme="dark"] .hadith-stat {
+  color: var(--on-brand-wash-secondary, #E2E8F0) !important;
+}
+html.dark .hadith-stat strong,
+html[data-theme="dark"] .hadith-stat strong {
+  color: var(--on-brand-wash, #F8FAFC) !important;
+}
 .hadith-quick-cat { color: var(--elite-ink-soft, #4A4A4A) !important; }
 .hadith-quick-cat:hover { color: var(--elite-forest, var(--mj-brand-deep)) !important; border-color: var(--elite-forest, var(--mj-brand-deep)) !important; }
 .hadith-quick-cat--active { background: var(--elite-forest, var(--mj-brand-deep)) !important; border-color: var(--elite-forest, var(--mj-brand-deep)) !important; color: #fff !important; }

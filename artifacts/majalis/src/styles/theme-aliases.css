@@ -467,14 +467,28 @@ html.dark .header-ticker__label {
   gap: var(--mj-s3);
 }
 .ds-stat {
-  background: var(--mj-surface);
-  border: 1px solid var(--mj-hairline);
+  background: var(--surface-card, var(--mj-surface));
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #123F32) 14%, var(--mj-hairline));
   border-radius: var(--mj-r-md);
   padding: var(--mj-s3);
   color: var(--mj-ink);
 }
-.ds-stat strong { color: var(--mj-brand); }
-.ds-stat span { color: var(--mj-muted); }
+.ds-stat strong { color: var(--mj-brand-deep, #123F32); font-weight: 900; }
+.ds-stat span { color: var(--mj-ink-2, #4B625A); opacity: 1; }
+
+html.dark .ds-stat,
+html[data-theme="dark"] .ds-stat {
+  background: color-mix(in srgb, var(--surface-brand-wash, #16261F) 90%, #0f1612);
+  border-color: color-mix(in srgb, #5a9e88 26%, #2a3832);
+}
+html.dark .ds-stat strong,
+html[data-theme="dark"] .ds-stat strong {
+  color: var(--on-brand-wash, #F8FAFC);
+}
+html.dark .ds-stat span,
+html[data-theme="dark"] .ds-stat span {
+  color: var(--on-brand-wash-secondary, #E2E8F0);
+}
 
 .gl-cat--active {
   background: var(--mj-brand) !important;
