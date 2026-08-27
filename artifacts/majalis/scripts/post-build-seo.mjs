@@ -142,8 +142,7 @@ function buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody) {
     </div>
     <!-- جذر React — يُفعَّل بعد تشغيل JavaScript -->
     <div id="root"></div>
-    <!-- سكريبت تهيئة الثيم فوراً لمنع الوميض -->
-    <script>try{var _dsv="v4-light-2026";if(localStorage.getItem("majalis-design-v")!==_dsv){localStorage.setItem("majalis-design-v",_dsv);localStorage.removeItem("majalis-theme-preference");}var st=localStorage.getItem("majalis-theme-preference");var res=st==="dark"?"dark":"light";document.documentElement.dataset.theme=res;document.documentElement.classList.toggle("dark",res==="dark");}catch(e){}</script>
+    <!-- الثيم من mj-theme-boot داخل spaAssets فقط — لا سكربت body قديم يعيد design-v إلى v4 -->
   </body>
 </html>`;
 }

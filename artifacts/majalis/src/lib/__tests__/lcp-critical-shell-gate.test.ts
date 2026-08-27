@@ -76,5 +76,15 @@ assert.match(
   /rel="canonical"\|rel="alternate"\|hreflang/,
   "دمج SEO لا ينسخ preconnect من prerender",
 );
+assert.doesNotMatch(
+  postBuild,
+  /v4-light-2026|majalis-theme-preference/,
+  "دمج SEO لا يعيد كتابة design-v بسكربت body قديم (يكسر mj-theme-boot)",
+);
+assert.match(
+  postBuild,
+  /mj-theme-boot|spaAssets/,
+  "دمج SEO يعتمد ثيم الإقلاع من أصول SPA",
+);
 
 console.log("lcp-critical-shell-gate.test.ts: ok");
