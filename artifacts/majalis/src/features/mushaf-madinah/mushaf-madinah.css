@@ -25,19 +25,21 @@
   --mm-ink: #111111;
   --mm-gold: #a68b67;
   --mm-gold-soft: #c5b396;
-  --mm-gold-deep: #8c6d46;
-  /* فاصلة الآية — بني عثماني */
-  --mm-ayah-mark: #8c6d46;
-  --mm-header: #8e8e93;
+  /* إطار/ذهب غامق — WCAG ≥4.5:1 على الورق الكريمي */
+  --mm-gold-deep: #785e38;
+  /* فاصلة الآية — بني عثماني غامق */
+  --mm-ayah-mark: #785e38;
+  /* ميتا الجزء/السورة — كان #8e8e93 (تباين ضعيف) → #4a4a4a (~7:1) */
+  --mm-header: #4a4a4a;
   --mm-frame: transparent;
   --mm-banner-fill: linear-gradient(180deg, #efe6d8 0%, #e8dcc8 48%, #d5c4a1 100%);
   --mm-banner-name-bg: #efe6d8;
-  /* تظليل آية نشطة — بيج خشبي دافئ مطابق للمصحف الورقي */
-  --mm-ayah-select: rgba(225, 193, 162, 0.4);
-  --mm-ayah-play: rgba(242, 226, 206, 0.55);
-  --mm-ui-accent: #1e7e52;
-  --mm-ui-accent-deep: #166534;
-  --mm-audio-capsule: #f4f0e8;
+  /* تظليل آية نشطة — صلب #eedcc2 + نص #111111 (لا شفافية تضعف التباين) */
+  --mm-ayah-select: #eedcc2;
+  --mm-ayah-play: #f2e2ce;
+  --mm-ui-accent: #135034;
+  --mm-ui-accent-deep: #0e3d27;
+  --mm-audio-capsule: #faf7f0;
   --mm-outer-pad: 0;
   --mm-inner-pad-x: clamp(0.7rem, 3.2vw, 1.25rem);
   --mm-inner-pad-y: clamp(0.1rem, 0.8vw, 0.32rem);
@@ -182,10 +184,11 @@ html.dark .mm-viewport,
   --mm-ink: #2c1a12;
   --mm-gold: #9a7a52;
   --mm-gold-soft: #c4a574;
-  --mm-gold-deep: #7a5c38;
-  --mm-ayah-select: rgba(196, 155, 110, 0.38);
-  --mm-ayah-play: rgba(196, 155, 110, 0.22);
-  --mm-ui-accent: #1a6b46;
+  --mm-gold-deep: #785e38;
+  --mm-header: #4a4a4a;
+  --mm-ayah-select: #eedcc2;
+  --mm-ayah-play: #f2e2ce;
+  --mm-ui-accent: #135034;
   --mm-audio-capsule: #ebe4d4;
   --mm-banner-fill: linear-gradient(180deg, #e8dcc4 0%, #dcc8a8 48%, #c9b089 100%);
   --mm-banner-name-bg: #e8dcc4;
@@ -988,7 +991,7 @@ html.dark .mm-viewport .mm-page-footer__badge,
   appearance: none;
   border: 0;
   background: transparent;
-  color: var(--mm-ui-accent, #1e7e52);
+  color: var(--mm-ui-accent, #135034);
   width: 48px;
   height: 48px;
   min-width: 48px;
@@ -1275,9 +1278,9 @@ html.dark .mm-viewport .mm-page-footer__badge,
   --mm-ink: #111111;
   --mm-gold: #a68b67;
   --mm-gold-soft: #c5b396;
-  --mm-gold-deep: #8c6d46;
-  --mm-header: #8e8e93;
-  --mm-ui-accent: #1e7e52;
+  --mm-gold-deep: #785e38;
+  --mm-header: #4a4a4a;
+  --mm-ui-accent: #135034;
   --mm-chrome-fg: var(--mm-ink);
   --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 28%, transparent);
 }
@@ -2552,8 +2555,8 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   --mm-paper-deep: #faf7f0;
   --mm-ink: #111111;
   --mm-gold: #a68b67;
-  --mm-gold-deep: #8c6d46;
-  --mm-ui-accent: #1e7e52;
+  --mm-gold-deep: #785e38;
+  --mm-ui-accent: #135034;
 }
 
 html[data-theme="dark"] .mm-settings-sheet,

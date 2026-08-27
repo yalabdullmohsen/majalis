@@ -165,7 +165,7 @@ export async function generateAyahImage(opts: ShareImageOptions): Promise<string
     ctx.strokeRect(30, 30, W - 60, H - 60);
 
     const corners = [[40, 40], [W - 40, 40], [40, H - 40], [W - 40, H - 40]] as const;
-    ctx.strokeStyle = "#1e7e52";
+    ctx.strokeStyle = "#135034";
     ctx.lineWidth = 1.5;
     for (const [cx, cy] of corners) {
       ctx.beginPath();
@@ -192,11 +192,11 @@ export async function generateAyahImage(opts: ShareImageOptions): Promise<string
     wrapText(ctx, text, W / 2, startY, maxWidth, lineHeight);
 
     ctx.font = `bold 22px "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif`;
-    ctx.fillStyle = "#1e7e52";
+    ctx.fillStyle = "#135034";
     ctx.fillText(`سورة ${surahName} ﴿${ayahNum}﴾`, W / 2, H - 80);
 
     ctx.font = `14px "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif`;
-    ctx.fillStyle = "rgba(17, 17, 17, 0.45)";
+    ctx.fillStyle = "#4a4a4a";
     ctx.fillText("المجلس العلمي", W / 2, H - 45);
     ctx.restore();
 
