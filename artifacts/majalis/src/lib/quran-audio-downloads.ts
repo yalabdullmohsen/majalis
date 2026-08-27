@@ -23,6 +23,62 @@ export const MAX_OFFLINE_AUDIO_BYTES = 1.5 * 1024 * 1024 * 1024; // 1.5 GiB
 /** أقصى عدد قرّاء مكتملين في التخزين المحلي في آن واحد. */
 export const MAX_FULL_OFFLINE_RECITERS = 2;
 
+const DOWNLOAD_RESUME_LS_KEY = "majalis-quran-download-resume-v1";
+
+export type DownloadResumeHint = {
+  reciterId: string;
+  updatedAt: string;
+};
+
+/** يحفظ مؤشر استئناف التنزيل عند الإيقاف أو إغلاق التطبيق. */
+export function setDownloadResumeHint(reciterId: string): void {
+  if (typeof localStorage === "undefined") return;
+  try {
+    localStorage.setItem(
+      DOWNLOAD_RESUME_LS_KEY,
+      JSON.stringify({ reciterId, updatedAt: new Date().toISOString() } satisfies DownloadResumeHint),
+    );
+  } catch {
+    /* ignore */
+  }
+}
+
+export function clearDownloadResumeHint(): void {
+  if (typeof localStorage === "undefined") return;
+  try {
+    localStorage.removeItem(DOWNLOAD_RESUME_LS_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
+export function readDownloadResumeHint(): DownloadResumeHint | null {
+  if (typeof localStorage === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(DOWNLOAD_RESUME_LS_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as DownloadResumeHint;
+    if (!parsed?.reciterId) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+/** يُرجع تلميح الاستئناف إن وُجد تنزيل غير مكتمل — ويُنظّف التلميحات اليتيمة. */
+export async function resolveDownloadResumeHint(): Promise<
+  (DownloadResumeHint & { downloadedSurahs: number }) | null
+> {
+  const hint = readDownloadResumeHint();
+  if (!hint) return null;
+  const status = await getReciterDownloadStatus(hint.reciterId);
+  if (status.complete || status.downloadedSurahs === 0) {
+    clearDownloadResumeHint();
+    return null;
+  }
+  return { ...hint, downloadedSurahs: status.downloadedSurahs };
+}
+
 export class OfflineAudioQuotaError extends Error {
   constructor(message: string) {
     super(message);
@@ -356,6 +412,7 @@ export async function downloadReciter(
           surahTotalBytes: null,
           status: "paused",
         });
+        setDownloadResumeHint(reciterId);
         return "paused";
       }
 
@@ -415,6 +472,7 @@ export async function downloadReciter(
           surahTotalBytes: null,
           status: "paused",
         });
+        setDownloadResumeHint(reciterId);
         return "paused";
       }
 
@@ -448,12 +506,14 @@ export async function downloadReciter(
       surahTotalBytes: null,
       status: "completed",
     });
+    clearDownloadResumeHint();
     activeSession = null;
     return "completed";
   } catch (err) {
     activeSession = null;
     if (err instanceof OfflineAudioQuotaError) throw err;
     if (err instanceof DOMException && err.name === "AbortError") {
+      setDownloadResumeHint(reciterId);
       return "paused";
     }
     emitProgress(onProgress, {
@@ -470,6 +530,8 @@ export async function downloadReciter(
 }
 
 export async function deleteReciterDownloads(reciterId: string): Promise<void> {
+  const hint = readDownloadResumeHint();
+  if (hint?.reciterId === reciterId) clearDownloadResumeHint();
   const native = await nativePluginReady();
   if (native) {
     await native.deleteReciter({ reciterId });

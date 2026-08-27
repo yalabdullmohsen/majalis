@@ -8,6 +8,7 @@ import {
   MAX_FULL_OFFLINE_RECITERS,
   MAX_OFFLINE_AUDIO_BYTES,
   OfflineAudioQuotaError,
+  resolveDownloadResumeHint,
   type DownloadProgress,
   type ReciterDownloadStatus,
 } from "@/lib/quran-audio-downloads";
@@ -36,6 +37,23 @@ export function ReciterDownloadManager() {
   };
 
   useEffect(() => { void refresh(); }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const hint = await resolveDownloadResumeHint();
+      if (!cancelled && hint) setPausedReciterId(hint.reciterId);
+    })();
+    const onHint = (e: Event) => {
+      const detail = (e as CustomEvent<{ reciterId?: string }>).detail;
+      if (detail?.reciterId) setPausedReciterId(detail.reciterId);
+    };
+    window.addEventListener("majalis:download-resume-hint", onHint);
+    return () => {
+      cancelled = true;
+      window.removeEventListener("majalis:download-resume-hint", onHint);
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;

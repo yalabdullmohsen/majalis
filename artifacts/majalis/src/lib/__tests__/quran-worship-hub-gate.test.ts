@@ -7,6 +7,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import "./full-quran-downloader-gate.test.ts";
 import "./offline-quran-player-gate.test.ts";
+import "./unified-app-engine-gate.test.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
