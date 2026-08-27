@@ -56,7 +56,7 @@ assert.doesNotMatch(css, /height:\s*35dvh/);
 assert.doesNotMatch(css, /height:\s*85dvh/);
 assert.match(css, /border-radius:\s*0\s+16px\s+16px\s+0/);
 assert.match(css, /ayah-active/);
-assert.match(css, /var\(--mm-gold\) 12%/);
+assert.match(css, /var\(--mm-gold\) 4%/);
 assert.match(css, /\.mm-ayah-run__text\s*\{[^}]*padding:\s*0/);
 assert.match(css, /grid-template-columns:\s*repeat\(4,/);
 assert.match(css, /\[data-chrome="1"\]\s*\.mm-controls__bar/);
@@ -104,7 +104,7 @@ assert.match(viewport, /suppressPageSyncRef/);
 assert.match(viewport, /useMediaSession/);
 assert.match(viewport, /اختر آية أولاً/);
 assert.match(viewport, /listAyahAudioUrls/);
-assert.match(viewport, /import\.meta\.env\.DEV/);
+assert.match(viewport, /applyMushafThemeChrome/);
 
 assert.match(line, /stopPropagation/);
 assert.match(line, /LONG_PRESS_MS/);
@@ -149,6 +149,9 @@ assert.match(dock, /اختيار التلاوة/);
 assert.match(dock, /createPortal/);
 assert.match(css, /\.mm-ayah-hl__band/);
 
+assert.match(page, /data-page-type=\{pageType\}/);
+assert.match(page, /"lead"/);
+assert.match(page, /mm-page__body--flex/);
 assert.match(page, /filledSlots|mm-page__body--opening/);
 assert.doesNotMatch(page, /\(15 - span\) \/ 2/);
 assert.doesNotMatch(page, /inlineBasmala/);

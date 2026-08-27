@@ -5,6 +5,8 @@ import { Capacitor } from "@capacitor/core";
 import { TOP_SPONSOR_STATUS } from "@/config/header-ad";
 import {
   resolvePageChrome,
+  resolveMushafThemeChrome,
+  type MushafSurfaceTheme,
   type PageChromeDef,
   type StatusBarIconStyle,
 } from "@/lib/page-chrome";
@@ -134,6 +136,16 @@ export async function reapplyPageChromeFromLocation(
   }
   if (!pathname.startsWith("/")) pathname = `/${pathname}`;
   await applyPageChrome({ pathname, resolvedTheme, force: true });
+}
+
+/** مزامنة شريط الحالة مع ثيم المصحف (ورقي/بيج/ليلي) أثناء القراءة. */
+export async function applyMushafThemeChrome(theme: MushafSurfaceTheme): Promise<void> {
+  const chrome = resolveMushafThemeChrome(theme);
+  applyPageChromeDom(chrome, "mushaf");
+  await applyNativeStatusBar(chrome);
+  lastAppliedKey = "mushaf";
+  lastAppliedHex = chrome.statusBarColorHex;
+  lastAppliedStyle = chrome.statusBarStyle;
 }
 
 /** تهيئة إقلاع: overlay + لون افتراضي (قبل React إن أمكن). */

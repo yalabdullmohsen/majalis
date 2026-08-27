@@ -170,6 +170,22 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     }
   }, [theme, themeChoice]);
 
+  /** شريط حالة iOS: أيقونات داكنة على الورق · فاتحة على الليلي */
+  useEffect(() => {
+    let cancelled = false;
+    void import("@/lib/apply-page-chrome").then(({ applyMushafThemeChrome }) => {
+      if (!cancelled) void applyMushafThemeChrome(theme);
+    });
+    return () => {
+      cancelled = true;
+      const resolved =
+        document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      void import("@/lib/apply-page-chrome").then(({ reapplyPageChromeFromLocation }) =>
+        reapplyPageChromeFromLocation(resolved),
+      );
+    };
+  }, [theme]);
+
   /** جلسة قراءة طويلة: مراقبة البطارية + توفير طاقة يقلّل الـprefetch والحلقات غير الحرجة */
   useEffect(() => {
     startBatteryFpsMonitor();
