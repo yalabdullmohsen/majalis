@@ -49,8 +49,15 @@ if (!indexHtml.includes(`content="${theme}"`)) {
 if (!indexHtml.includes('content="#F2F4F3"')) {
   issues.push("index.html: theme-color الإقلاع يجب #F2F4F3 مع خلفية السطح");
 }
-if (!indexHtml.includes(`content="${themeDark}"`)) {
+/* اللون الداكن يُضبط من سكربت الإقلاع حسب اختيار المستخدم — لا meta بـ prefers-color-scheme */
+if (
+  !indexHtml.includes(`content="${themeDark}"`) &&
+  !indexHtml.includes(`"${themeDark}"`)
+) {
   issues.push(`index.html: theme-color dark يجب أن يطابق ${themeDark}`);
+}
+if (/media="\(prefers-color-scheme:\s*dark\)"/.test(indexHtml)) {
+  issues.push("index.html: لا theme-color يتبع prefers-color-scheme بمعزل عن اختيار المستخدم");
 }
 if (!/viewport-fit=cover/.test(indexHtml)) {
   issues.push("index.html: viewport-fit=cover مطلوب");

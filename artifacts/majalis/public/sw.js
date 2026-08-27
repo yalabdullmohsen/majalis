@@ -421,6 +421,12 @@ self.addEventListener("message", (event) => {
   const msg = event.data;
   if (!msg) return;
 
+  // العميل يطلب تفعيل SW الجديد فورًا (زر تحديث الكاش / فحص النسخة)
+  if (msg.type === "SKIP_WAITING") {
+    self.skipWaiting();
+    return;
+  }
+
   // Part 19: MessageChannel request/response (__majalisChannel + ports[0])
   if (msg.__majalisChannel && event.ports && event.ports[0]) {
     const port = event.ports[0];

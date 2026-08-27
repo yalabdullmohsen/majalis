@@ -18,6 +18,7 @@ const vercel = read("vercel.json");
 
 assert.match(purge, /majalis_app_version/);
 assert.match(purge, /purgeStaleRuntimeCaches/);
+assert.match(purge, /refreshAppAndPurgeCaches/);
 assert.match(purge, /__MAJALIS_CLEAR_CACHE__/);
 assert.match(purge, /installMajalisClearCacheDebug/);
 assert.match(purge, /static-json:/);
@@ -37,8 +38,15 @@ assert.match(sw, /pathname === "\/sw-version\.js"/);
   assert.doesNotMatch(shell, /version\.json/);
 }
 
-assert.match(html, /v8-cache-purge-2026-08/);
+assert.match(html, /v9-theme-light-default-2026-08/);
 assert.match(html, /majalis_force_cache_purge/);
+assert.match(html, /classList\.add\("light"/);
+assert.match(html, /storedTheme === "auto"/);
+assert.doesNotMatch(
+  html,
+  /storedTheme === "light" \? "light"\s*: storedTheme === "dark" \? "dark"\s*: \(window\.matchMedia/,
+  "لا سقوط إلى prefers-color-scheme عند غياب الاختيار",
+);
 
 assert.match(staticJson, /cache:\s*"no-store"/);
 assert.match(staticJson, /isLikelyOnline/);

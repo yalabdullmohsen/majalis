@@ -42,6 +42,7 @@ import {
   restoreDefaultAppSettings,
   writeBackgroundPlaybackPref,
 } from "@/lib/restore-default-settings";
+import { refreshAppAndPurgeCaches } from "@/lib/runtime-cache-purge";
 import "@/styles/pages/settings.css";
 
 const ReciterDownloadManager = lazy(() =>
@@ -91,6 +92,8 @@ export default function SettingsPage() {
   const [playbackRate, setPlaybackRateState] = useState(loadPlaybackRate);
   const [bgPlayback, setBgPlayback] = useState(readBackgroundPlaybackPref);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [cacheRefreshBusy, setCacheRefreshBusy] = useState(false);
+  const [cacheRefreshNote, setCacheRefreshNote] = useState<string | null>(null);
 
   useEffect(() => {
     applyPageSeo({
@@ -327,6 +330,29 @@ export default function SettingsPage() {
           </div>
           <p className="settings-note">
             الوضع الحالي: {resolvedTheme === "dark" ? "داكن" : "فاتح"}
+          </p>
+          <button
+            type="button"
+            className="page-action-btn page-action-btn--secondary"
+            disabled={cacheRefreshBusy}
+            onClick={() => {
+              setCacheRefreshBusy(true);
+              setCacheRefreshNote("جاري تحديث التطبيق وحذف الكاش…");
+              void refreshAppAndPurgeCaches()
+                .then(() => {
+                  setCacheRefreshNote("تم التحديث — يُعاد التحميل…");
+                })
+                .catch(() => {
+                  setCacheRefreshBusy(false);
+                  setCacheRefreshNote("تعذّر التحديث. حاول مرة أخرى.");
+                });
+            }}
+          >
+            {cacheRefreshBusy ? "جاري التحديث…" : "تحديث التطبيق وحذف الكاش"}
+          </button>
+          {cacheRefreshNote ? <p className="settings-note">{cacheRefreshNote}</p> : null}
+          <p className="settings-note">
+            يحذف نسخة الواجهة القديمة فقط، ولا يمس الثيم أو المفضلة أو إعدادات الصلاة.
           </p>
           <ToggleRow
             label="وضع كبار السن"

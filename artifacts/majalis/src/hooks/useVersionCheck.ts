@@ -6,6 +6,7 @@ import {
 } from "@/lib/version-check";
 import { safeLocationReload } from "@/lib/safe-reload";
 import { isChunkRecoveryInFlight } from "@/lib/chunk-recovery";
+import { purgeStaleRuntimeCaches } from "@/lib/runtime-cache-purge";
 
 /** خلال نافذة الإقلاع: لا شيت تحديث — إعادة تحميل صامتة مرة واحدة فقط. */
 const BOOT_SILENT_MS = 8_000;
@@ -27,10 +28,25 @@ function markBootReload(): void {
   }
 }
 
+async function purgeThenReload(): Promise<void> {
+  if (alreadyDidBootReload()) return;
+  markBootReload();
+  try {
+    await purgeStaleRuntimeCaches({ force: true, reloadOnce: false });
+    if ("serviceWorker" in navigator) {
+      const reg = await navigator.serviceWorker.getRegistration();
+      await reg?.update().catch(() => undefined);
+      reg?.waiting?.postMessage({ type: "SKIP_WAITING" });
+    }
+  } catch {
+    /* ignore — نعيد التحميل على أي حال */
+  }
+  safeLocationReload();
+}
+
 /**
  * فحص نشر أحدث عبر /version.json.
- * - عند الدخول (أول ثوانٍ): إن وُجدت نسخة أحدث → reload صامت مرة واحدة بلا شيت
- *   (يمنع ظهور «تحديثان قديمان» وتعليق الشاشة مع SW/chunk-recovery).
+ * - عند الدخول (أول ثوانٍ): إن وُجدت نسخة أحدث → مسح كاش + reload صامت مرة واحدة
  * - بعد استقرار الجلسة: شيت هادئ فقط إن طلب المستخدم التحديث.
  */
 export function useVersionCheck() {
@@ -41,7 +57,7 @@ export function useVersionCheck() {
   const bootAtRef = useRef(Date.now());
 
   const applyUpdate = useCallback(() => {
-    safeLocationReload();
+    void purgeThenReload();
   }, []);
 
   const dismissUpdate = useCallback(() => {
@@ -60,10 +76,7 @@ export function useVersionCheck() {
 
       const inBootWindow = Date.now() - bootAtRef.current < BOOT_SILENT_MS;
       if (inBootWindow) {
-        if (!alreadyDidBootReload()) {
-          markBootReload();
-          safeLocationReload();
-        }
+        await purgeThenReload();
         return;
       }
 

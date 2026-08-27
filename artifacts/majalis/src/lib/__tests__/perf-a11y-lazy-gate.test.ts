@@ -60,7 +60,11 @@ console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");
   assert.match(html, /id="mj-launch-splash"/, "دخولية MajlisSplash في HTML الحرج");
   assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل");
   assert.match(html, /mj-launch-splash__(wordmark|title)/, "عنوان الدخولية");
-  assert.match(html, /v6-direct-boot-2026-08|v7-boot-fouc-2026-08/, "ترحيل ثيم يمنع وميض التصميم القديم");
+  assert.match(
+    html,
+    /v6-direct-boot-2026-08|v7-boot-fouc-2026-08|v9-theme-light-default-2026-08/,
+    "ترحيل ثيم يمنع وميض التصميم القديم",
+  );
 }
 
 console.log("\n=== LCP أصول WebP موجودة ===");
