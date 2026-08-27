@@ -14,12 +14,14 @@ type Props = {
   title: string;
   url?: string;
   className?: string;
+  /** default: بطاقة كاملة — icons: نسخ + مشاركة بأيقونات فقط */
+  variant?: "default" | "icons";
 };
 
 /**
  * زر مشاركة موحّد — Web Share API · واتساب · نسخ.
  */
-export function ShareFaida({ title, url, className = "" }: Props) {
+export function ShareFaida({ title, url, className = "", variant = "default" }: Props) {
   const shareUrl = useMemo(() => resolveShareUrl(url), [url]);
   const shareText = useMemo(() => buildFaidaShareText(title, shareUrl), [title, shareUrl]);
   const [copied, setCopied] = useState(false);
@@ -49,6 +51,36 @@ export function ShareFaida({ title, url, className = "" }: Props) {
   const handleWhatsApp = () => {
     void openExternalUrl(whatsappShareUrl(shareText));
   };
+
+  if (variant === "icons") {
+    return (
+      <div className={`share-faida share-faida--icons ${className}`.trim()} dir="rtl">
+        <button
+          type="button"
+          className="share-faida__icon-btn"
+          onClick={handleCopy}
+          aria-label={copied ? "تم النسخ" : "نسخ"}
+          title={copied ? "تم النسخ" : "نسخ"}
+        >
+          {copied ? (
+            <Check size={15} strokeWidth={2.2} aria-hidden="true" />
+          ) : (
+            <Copy size={15} strokeWidth={2} aria-hidden="true" />
+          )}
+        </button>
+        <button
+          type="button"
+          className="share-faida__icon-btn share-faida__icon-btn--primary"
+          onClick={handleNative}
+          disabled={busy}
+          aria-label="مشاركة"
+          title="مشاركة"
+        >
+          <Share2 size={15} strokeWidth={2} aria-hidden="true" />
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className={`share-faida ${className}`.trim()} dir="rtl">

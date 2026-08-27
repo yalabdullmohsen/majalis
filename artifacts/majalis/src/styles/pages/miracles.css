@@ -130,3 +130,129 @@
 .miracle-card--iron { border-top: 3px solid #64748b; }
 .miracle-card--wind { border-top: 3px solid #06b6d4; }
 .miracle-card--cloud { border-top: 3px solid var(--brand-hover, #195345); }
+
+/* ── MiraclesPage v2 — بحث + تصفية مطوية + بطاقات مدمجة ── */
+.mk-page--embedded {
+  padding-bottom: calc(var(--bottom-nav-total, 4.5rem) + 1rem);
+}
+
+.mk-search-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.mk-search-bar__row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.45rem;
+}
+
+.mk-search-bar__input-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.mk-search-bar__icon {
+  position: absolute;
+  inset-inline-end: 0.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--mj-ink-3, #6b7c74);
+  pointer-events: none;
+}
+
+.mk-search-bar__input {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 40px;
+  padding: 0.45rem 2rem 0.45rem 0.65rem;
+  border-radius: 12px;
+  border: 1px solid var(--mj-hairline, #d5ddd9);
+  background: var(--mj-surface, #fff);
+  color: var(--mj-ink, #16241e);
+  font: inherit;
+  font-size: 0.82rem;
+}
+
+.mk-search-bar__input:focus {
+  outline: 2px solid color-mix(in srgb, #1a4d3e 55%, transparent);
+  border-color: #1a4d3e;
+}
+
+.mk-search-bar__filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 40px;
+  padding: 0.35rem 0.7rem;
+  border-radius: 12px;
+  border: 1px solid var(--mj-hairline, #d5ddd9);
+  background: var(--mj-surface, #fff);
+  color: #1a4d3e;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.mk-search-bar__count {
+  font-size: 0.72rem;
+  color: var(--mj-ink-3, #6b7c74);
+  padding-inline: 0.15rem;
+}
+
+.mk-search-bar__filters {
+  padding: 0.55rem 0.65rem;
+  border-radius: 12px;
+  border: 1px solid var(--mj-hairline, #d5ddd9);
+  background: color-mix(in srgb, #1a4d3e 6%, var(--mj-surface, #fff));
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.miracles-filters--sheet {
+  gap: 0.35rem;
+  margin-bottom: 0;
+}
+
+.miracles-filters--sheet .ds-btn--primary {
+  background: #1a4d3e;
+  border-color: #1a4d3e;
+  color: #fff;
+}
+
+.mk-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.mk-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--majalis-line, var(--mj-hairline));
+}
+
+.mk-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #1a4d3e;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
