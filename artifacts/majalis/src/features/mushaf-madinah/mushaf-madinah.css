@@ -445,9 +445,9 @@ html.dark .mm-viewport .mm-page {
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: repeat(15, minmax(0, 1fr));
   padding-block: 0;
-  /* حشو آمن واعٍ بالخط — يمنع قصّ التشكيل عند الحواف المنحنية/الجزيرة */
-  padding-inline-start: max(0.05em, var(--inset-left, 0px));
-  padding-inline-end: max(0.05em, var(--inset-right, 0px));
+  /* حشو أفقي خفيف فقط — safe-area على .mm-viewport وحده (لا مضاعفة على iPhone) */
+  padding-inline-start: 0.08em;
+  padding-inline-end: 0.08em;
   overflow-x: clip;
   overflow-y: clip;
   box-sizing: border-box;
@@ -593,8 +593,8 @@ html.dark .mm-surah-frame__name {
   flex-wrap: nowrap;
   /* افتراضي: توسيط بفجوة ثابتة — لا space-between قبل قياس fill */
   justify-content: center;
-  gap: var(--mushaf-word-spacing, 0.22em);
-  align-items: baseline;
+  gap: var(--mushaf-word-spacing, 0.18em);
+  align-items: center;
   text-align: center;
   direction: rtl;
   unicode-bidi: bidi-override; /* ترتيب بصري = ترتيب كلمات QPC */
@@ -607,15 +607,18 @@ html.dark .mm-surah-frame__name {
   white-space: nowrap;
   overflow-x: clip;
   overflow-y: visible;
-  padding-block: 0.04em;
+  padding-block: 0;
   box-sizing: border-box;
+  /* Safari iOS: يمنع تضخيم نص تلقائي يفسد مقاس السطر */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* أسطر قصيرة / غير ممتلئة: توسيط هادئ بلا تمديد */
 .mm-ayah-line[data-fill="false"],
 .mm-ayah-line[data-centered="true"] {
   justify-content: center;
-  gap: var(--mushaf-word-spacing, 0.22em);
+  gap: var(--mushaf-word-spacing, 0.18em);
 }
 
 /* space-between فقط عند data-fill=true وبعد بوابة فجوة الكلمات */

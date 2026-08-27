@@ -124,6 +124,17 @@ async function waitPageFont(fontFamily: string): Promise<string> {
 }
 
 /** ضبط justify للأسطر دون تغيير حجم الخط — الأسطر القصيرة تُوسَّط بلا تمديد. */
+function measureLineContentWidth(line: HTMLElement): number {
+  const wordEls = [...line.querySelectorAll<HTMLElement>(".mm-ayah-line__word")];
+  if (wordEls.length === 0) return line.scrollWidth;
+  // overflow-x:clip يُخفي الفيض عن scrollWidth — نقيس من حدود الكلمات الفعلية
+  const rects = wordEls.map((w) => w.getBoundingClientRect());
+  const left = Math.min(...rects.map((r) => r.left));
+  const right = Math.max(...rects.map((r) => r.right));
+  const span = right - left;
+  return span > 0 ? span : line.scrollWidth;
+}
+
 function applyLineFillRules(live: HTMLElement): void {
   const lines = [...live.querySelectorAll<HTMLElement>(".mm-ayah-line")];
   // قياس العرض الطبيعي دائمًا بوضع التعبئة معطّلًا (مركز + فجوة ثابتة)
@@ -141,7 +152,7 @@ function applyLineFillRules(live: HTMLElement): void {
       continue;
     }
 
-    const natural = line.scrollWidth;
+    const natural = measureLineContentWidth(line);
     const ratio = natural / avail;
     if (ratio < MUSHAF_LINE_FILL_RATIO) {
       line.dataset.fill = "false";
@@ -166,7 +177,10 @@ function applyLineFillRules(live: HTMLElement): void {
       if (gap > maxGap) maxGap = gap;
     }
 
-    line.dataset.fill = maxGap <= MUSHAF_WORD_GAP_HARD_MAX_PX + 0.5 ? "true" : "false";
+    // على العروض الضيّقة (iPhone) سقف أدنى قليلًا لتقليل التمزّق البصري
+    const hardMax =
+      avail < 360 ? MUSHAF_WORD_GAP_HARD_MAX_PX - 4 : MUSHAF_WORD_GAP_HARD_MAX_PX;
+    line.dataset.fill = maxGap <= hardMax + 0.5 ? "true" : "false";
   }
 }
 
@@ -256,6 +270,13 @@ export function useMushafPageFontFit(
       run(true);
     };
     window.addEventListener("orientationchange", onOrient);
+    const vv = window.visualViewport;
+    const onVv = () => {
+      lastGeom = "";
+      run(true);
+    };
+    vv?.addEventListener("resize", onVv);
+    vv?.addEventListener("scroll", onVv);
     const fonts = typeof document !== "undefined" ? document.fonts : undefined;
     fonts?.addEventListener?.("loadingdone", onOrient);
     return () => {
@@ -263,6 +284,8 @@ export function useMushafPageFontFit(
       cancelAnimationFrame(firstFrameId);
       ro?.disconnect();
       window.removeEventListener("orientationchange", onOrient);
+      vv?.removeEventListener("resize", onVv);
+      vv?.removeEventListener("scroll", onVv);
       fonts?.removeEventListener?.("loadingdone", onOrient);
     };
   }, [ready, pageRef, pageNumber, fontFamily]);
