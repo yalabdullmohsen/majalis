@@ -22,10 +22,76 @@
 .uq-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: #fff; }
 .uq-hero__sub   { font-size: .9rem; opacity: .88; margin: 0 0 1.4rem; line-height: 1.6; color: #fff; }
 
-.uq-stats-row { display: flex; justify-content: center; gap: var(--ds-space-4); flex-wrap: wrap; }
-.uq-stat { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); border-radius: .7rem; padding: .6rem .9rem; min-width: 4.5rem; }
-.uq-stat__num   { display: block; font-size: 1.2rem; font-weight: 800; color: #fff; }
-.uq-stat__label { display: block; font-size: 0.8rem; color: rgba(255,255,255,.8); margin-top: .1rem; }
+/* إحصاءات جسم الصفحة — تباين WCAG AA (داخل البطل تُستعاد أدناه) */
+.uq-stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+.uq-stat {
+  min-width: 4.75rem;
+  padding: 0.7rem 1rem;
+  border-radius: 0.85rem;
+  background: var(--surface-card, var(--mj-surface, #ffffff));
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #123F32) 14%, var(--majalis-line, #d5ddd9));
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-brand-deep, #123F32) 6%, transparent);
+  text-align: center;
+}
+.uq-stat__num {
+  display: block;
+  font-size: 1.55rem;
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--mj-brand-deep, var(--em-800, #123F32));
+}
+.uq-stat__label {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--mj-ink-2, #4B625A);
+  opacity: 1;
+}
+
+.uq-hero .uq-stat {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: none;
+}
+.uq-hero .uq-stat__num { color: var(--on-brand, #ffffff); }
+.uq-hero .uq-stat__label { color: var(--on-brand-secondary, #F8FAFC); }
+
+html.dark .uq-stat,
+html[data-theme="dark"] .uq-stat {
+  background: color-mix(in srgb, var(--surface-brand-wash, #16261F) 90%, #0f1612);
+  border-color: color-mix(in srgb, #5a9e88 26%, #2a3832);
+  box-shadow: none;
+}
+html.dark .uq-stat__num,
+html[data-theme="dark"] .uq-stat__num {
+  color: var(--on-brand-wash, #F8FAFC);
+}
+html.dark .uq-stat__label,
+html[data-theme="dark"] .uq-stat__label {
+  color: var(--on-brand-wash-secondary, #E2E8F0);
+}
+
+html.dark .uq-hero .uq-stat,
+html[data-theme="dark"] .uq-hero .uq-stat {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+html.dark .uq-hero .uq-stat__num,
+html[data-theme="dark"] .uq-hero .uq-stat__num {
+  color: var(--on-brand, #ffffff);
+}
+html.dark .uq-hero .uq-stat__label,
+html[data-theme="dark"] .uq-hero .uq-stat__label {
+  color: var(--on-brand-secondary, #F8FAFC);
+}
 
 /* tabs */
 .uq-tabs-bar {

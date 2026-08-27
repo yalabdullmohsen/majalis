@@ -39,19 +39,64 @@
   line-height: 1.7;
 }
 
-.tf-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--ds-space-4); }
+/* بطاقات إحصاء على جسم الصفحة (سطح فاتح) — لا أبيض فوق أبيض */
+.tf-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+}
 .tf-stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  justify-content: center;
+  min-width: 4.75rem;
+  padding: 0.7rem 1rem;
   border-radius: 0.85rem;
-  padding: 0.6rem 1.1rem;
-  min-width: 64px;
+  background: var(--surface-card, var(--mj-surface, #ffffff));
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #123F32) 14%, var(--majalis-line, #d5ddd9));
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-brand-deep, #123F32) 6%, transparent);
 }
-.tf-stat strong { font-size: 1.4rem; font-weight: 900; color: #FFFFFF; line-height: 1.1; }
-.tf-stat span { font-size: 0.72rem; color: rgba(255, 255, 255, 0.78); margin-top: 0.15rem; }
+.tf-stat strong {
+  font-size: 1.55rem;
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--mj-brand-deep, var(--em-800, #123F32));
+}
+.tf-stat span {
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--mj-ink-2, #4B625A);
+  opacity: 1;
+}
+
+html.dark .tf-stat,
+html[data-theme="dark"] .tf-stat {
+  background: color-mix(in srgb, var(--surface-brand-wash, #16261F) 90%, #0f1612);
+  border-color: color-mix(in srgb, #5a9e88 26%, #2a3832);
+  box-shadow: none;
+}
+html.dark .tf-stat strong,
+html[data-theme="dark"] .tf-stat strong {
+  color: var(--on-brand-wash, #F8FAFC);
+}
+html.dark .tf-stat span,
+html[data-theme="dark"] .tf-stat span {
+  color: var(--on-brand-wash-secondary, #E2E8F0);
+}
+
+/* إن وُضعت البطاقات داخل بطل غامق — نص فاتح فوق الأخضر */
+.tf-hero .tf-stat {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: none;
+}
+.tf-hero .tf-stat strong { color: var(--on-brand, #ffffff); }
+.tf-hero .tf-stat span { color: var(--on-brand-secondary, #F8FAFC); }
 
 .tf-intro {
   background: #F4FAF7;

@@ -1222,22 +1222,42 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 4.5rem;
+  min-width: 4.75rem;
   padding: var(--ds-space-2) var(--ds-space-3);
-  background: var(--majalis-panel, #fff);
-  border: 1px solid var(--ds-line-color);
+  background: var(--surface-card, var(--majalis-panel, #fff));
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #123F32) 14%, var(--ds-line-color, #d5ddd9));
   border-radius: var(--ds-radius);
 }
 
 .ds-stat strong {
-  font-size: var(--ds-text-md);
-  font-weight: 800;
-  color: var(--ds-emerald-deep);
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--mj-brand-deep, var(--ds-emerald-deep, #123F32));
 }
 
 .ds-stat span {
+  margin-top: 0.15rem;
   font-size: var(--ds-text-xs);
-  color: var(--ds-ink-soft);
+  font-weight: 600;
+  color: var(--mj-ink-2, var(--ds-ink-soft, #4B625A));
+  opacity: 1;
+}
+
+html.dark .ds-stat,
+html[data-theme="dark"] .ds-stat {
+  background: color-mix(in srgb, var(--surface-brand-wash, #16261F) 90%, #0f1612);
+  border-color: color-mix(in srgb, #5a9e88 26%, #2a3832);
+}
+
+html.dark .ds-stat strong,
+html[data-theme="dark"] .ds-stat strong {
+  color: var(--on-brand-wash, #F8FAFC);
+}
+
+html.dark .ds-stat span,
+html[data-theme="dark"] .ds-stat span {
+  color: var(--on-brand-wash-secondary, #E2E8F0);
 }
 
 .reading-toolbar--minimal {
@@ -2655,7 +2675,10 @@ h1, h2, h3 {
 }
 
 /* ── 11. الإحصائيات ── */
-.ds-stat strong,
+.ds-stat strong {
+  color: var(--mj-brand-deep, var(--ds-emerald-deep, #123F32));
+  font-weight: 900;
+}
 .user-stat-card__value,
 .profile-stat-card__value {
   color: var(--ds-ink);
