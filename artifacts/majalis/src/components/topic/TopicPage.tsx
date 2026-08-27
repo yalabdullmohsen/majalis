@@ -22,6 +22,7 @@ import { sectionTemplateChrome } from "@/config/section-template";
 import { HubCard } from "@/components/ui/HubCard";
 import { navigateTo } from "@/lib/navigation-intent";
 import "@/styles/components/topic-page.css";
+import "@/styles/components/safe-hero.css";
 
 export type TopicBreadcrumbItem = {
   label: string;
@@ -187,11 +188,21 @@ export function TopicPage({
         })}
       </nav>
 
-      <header className="topic-page__hero on-dark" data-on-dark data-section-hero="1" style={heroStyle}>
-        <div className="topic-page__hero-inner">
-          {eyebrow ? <p className="topic-page__eyebrow" data-section-eyebrow="1">{eyebrow}</p> : null}
-          <h1 className="topic-page__title" data-section-title="1">{title}</h1>
-          {subtitle ? <p className="topic-page__sub" data-section-sub="1">{subtitle}</p> : null}
+      <header className="topic-page__hero on-dark safe-hero" data-on-dark data-section-hero="1" style={heroStyle}>
+        <div className="topic-page__hero-inner safe-hero__body">
+          {eyebrow ? (
+            <p className="topic-page__eyebrow safe-hero__badge" data-section-eyebrow="1">
+              {eyebrow}
+            </p>
+          ) : null}
+          <h1 className="topic-page__title" data-section-title="1">
+            {title}
+          </h1>
+          {subtitle ? (
+            <p className="topic-page__sub" data-section-sub="1">
+              {subtitle}
+            </p>
+          ) : null}
           {quote ? (
             <blockquote className="topic-page__quote" data-section-quote="1">
               <p className="topic-page__quote-text">{quote.text}</p>
