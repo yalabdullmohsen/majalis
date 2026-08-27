@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   AlertTriangle, Bone, BookOpen, Bug, Clock, Cloud, Cog, Dna,
   Droplets, Globe, Globe2, Leaf, Lightbulb, Microscope,
-  Mountain, ScrollText, Search, Sparkles, Star, Stethoscope,
+  Mountain, ScrollText, Search, SlidersHorizontal, Sparkles, Star, Stethoscope,
   Telescope, Waves, Wind,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -12,14 +12,13 @@ import { useAuth } from "@/components/AuthProvider";
 import { getMiracles } from "@/lib/supabase";
 import { Chip } from "@/components/ui-common";
 import { AsyncDataView } from "@/components/AsyncDataView";
-import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { MIRACLE_CATEGORIES } from "@/lib/miracles-seed";
 import { safeLoadEffect } from "@/lib/safe-load";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { ShareButtons } from "@/components/ContentActions";
+import { ShareFaida } from "@/components/ShareFaida";
 import "@/styles/pages/miracles.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
@@ -159,12 +158,12 @@ export default function MiraclesPage({
 
   const filterPanel = (
     <>
-      <div className="miracles-filters">
+      <div className="miracles-filters miracles-filters--sheet">
         {CATEGORIES.map((c) => (
           <Chip key={c} active={category === c} onClick={() => setCategory(c)}>{c}</Chip>
         ))}
       </div>
-      <div className="miracles-filters">
+      <div className="miracles-filters miracles-filters--sheet">
         {SOURCE_TYPES.map((s) => (
           <Chip key={s} active={sourceType === s} onClick={() => setSourceType(s)}>{s}</Chip>
         ))}
@@ -201,70 +200,39 @@ export default function MiraclesPage({
         </span>
       </p>
 
-      {/* ══ فئات سريعة ══ */}
-      <section className="mk-cats-bar" aria-label="تصفية حسب الفئة">
-        <div className="mk-cats-bar__grid">
-          <button
-            type="button"
-            onClick={() => setCategory("الكل")}
-            className={`mk-cat-pill${category === "الكل" ? " mk-cat-pill--active" : ""}`}
-          >
-            <Search size={14} strokeWidth={2} aria-hidden="true" />
-            <span>الكل</span>
-          </button>
-          {(CATEGORIES as readonly string[]).filter(c => c !== "الكل").map((c) => {
-            const PillIcon: LucideIcon = CATEGORY_ICONS[c] ?? Microscope;
-            return (
-              <button
-                key={c}
-                type="button"
-                onClick={() => setCategory(c)}
-                className={`mk-cat-pill${category === c ? " mk-cat-pill--active" : ""}`}
-              >
-                <PillIcon size={14} strokeWidth={2} aria-hidden="true" />
-                <span>{c}</span>
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ══ مصدر + عدد ══ */}
-      <div className="mk-toolbar">
-        <div className="mk-src-tabs">
-          {SOURCE_TYPES.map((s) => (
-            <button
-              key={s}
-              type="button"
-              onClick={() => setSourceType(s)}
-              className={`mk-src-tab${sourceType === s ? " mk-src-tab--active" : ""}`}
-            >
-              {s === "قرآن" ? (
-                <><BookOpen size={14} strokeWidth={2} aria-hidden="true" /> قرآن</>
-              ) : s === "سنة" ? (
-                <><ScrollText size={14} strokeWidth={2} aria-hidden="true" /> سنة</>
-              ) : "الجميع"}
-            </button>
-          ))}
-        </div>
-        <div className="mk-toolbar__right">
-          {!loading && status === "success" && (
-            <span className="mk-count">{displayed.length} موضوع</span>
-          )}
-          <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="فلاتر" />
-        </div>
-      </div>
-
+      {/* ══ بحث + تصفية قابلة للطي (بدون تكدس أوسام دائم) ══ */}
       {status === "success" && (
-        <div className="prefix-search-wrap">
-          <input
-            type="search"
-            className="ds-input prefix-search-input"
-            placeholder="ابحث في الإشارات الكونية..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            aria-label="بحث في الإشارات الكونية"
-          />
+        <div className="mk-search-bar">
+          <div className="mk-search-bar__row">
+            <div className="mk-search-bar__input-wrap">
+              <Search size={16} strokeWidth={2} aria-hidden="true" className="mk-search-bar__icon" />
+              <input
+                type="search"
+                className="mk-search-bar__input"
+                placeholder="ابحث في الإشارات الكونية..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                aria-label="بحث في الإشارات الكونية"
+              />
+            </div>
+            <button
+              type="button"
+              className="mk-search-bar__filter-btn"
+              aria-expanded={filtersOpen}
+              onClick={() => setFiltersOpen((o) => !o)}
+            >
+              <SlidersHorizontal size={15} strokeWidth={2} aria-hidden="true" />
+              <span>تصفية</span>
+            </button>
+          </div>
+          {!loading && (
+            <span className="mk-search-bar__count">{displayed.length} موضوع</span>
+          )}
+          {filtersOpen && (
+            <div className="mk-search-bar__filters" role="region" aria-label="تصفية الإشارات">
+              {filterPanel}
+            </div>
+          )}
         </div>
       )}
 
@@ -324,15 +292,6 @@ export default function MiraclesPage({
                       <p className="miracle-item__body mk-card__text">
                         {isExpanded ? bodyText : `${preview}${bodyText.length > 240 ? "…" : ""}`}
                       </p>
-                      {bodyText.length > 240 && (
-                        <button
-                          type="button"
-                          className="mk-expand-btn"
-                          onClick={() => setExpanded(isExpanded ? null : item.id)}
-                        >
-                          {isExpanded ? "▲ طوِّ التفاصيل" : "▼ تفاصيل الموضوع"}
-                        </button>
-                      )}
                     </>
                   )}
                   {item.scholarly_source && (
@@ -340,12 +299,25 @@ export default function MiraclesPage({
                       <ScrollText size={12} strokeWidth={1.8} aria-hidden="true" /> {item.scholarly_source}
                     </p>
                   )}
-                </div>
-                <div className="mk-card__actions">
-                  <ShareButtons
-                    title={item.title}
-                    url={`https://majlisilm.com/miracles#${encodeURIComponent(item.id)}`}
-                  />
+                  <div className="mk-card__footer">
+                    {bodyText.length > 240 ? (
+                      <button
+                        type="button"
+                        className="mk-expand-btn"
+                        onClick={() => setExpanded(isExpanded ? null : item.id)}
+                      >
+                        <BookOpen size={14} strokeWidth={2} aria-hidden="true" />
+                        {isExpanded ? "طوِّ التفاصيل" : "تفاصيل الموضوع"}
+                      </button>
+                    ) : (
+                      <span />
+                    )}
+                    <ShareFaida
+                      variant="icons"
+                      title={item.title}
+                      url={`https://majlisilm.com/miracles#${encodeURIComponent(item.id)}`}
+                    />
+                  </div>
                 </div>
                 {isAdmin && <AdminQuickEdit section="miracles" searchTerm={item.title} />}
               </article>
@@ -354,14 +326,6 @@ export default function MiraclesPage({
         </div>
       </AsyncDataView>
 
-      <aside className="ds-filters-panel ds-filters-panel--desktop">
-        <div className="ds-filters-panel__head"><h2>تصفية المقالات</h2></div>
-        {filterPanel}
-      </aside>
-
-      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="تصفية المقالات">
-        {filterPanel}
-      </FilterBottomSheet>
       {isAdmin && <AdminQuickEdit section="miracles" />}
       <RelatedKnowledge kind="book" query="علوم القرآن إعجاز بياني" title="مواد ذات صلة بعلوم القرآن" limit={6} />
       <ExploreAlsoNav

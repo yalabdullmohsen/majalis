@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, ChevronUp } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { useLocation } from "wouter";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
@@ -13,7 +13,7 @@ const DEEP_SCROLL_PX = 400;
  * زر عائم عالمي للخروج السريع والرجوع للأعلى في الصفحات الطويلة.
  * يظهر بدون شرط تمرير للرجوع؛ مساحة لمس ≥44px عبر CSS.
  * - قرب أعلى الصفحة: رجوع (`goBackOrFallback`)
- * - بعد تمرير عميق: تمرير سلس للأعلى
+ * - بعد تمرير عميق: يُخفى — `ScrollToTop` وحده يتولى الصعود للأعلى (بلا تكرار)
  * موضع ثابت + احترام safe-area عبر CSS.
  */
 export function FloatingBackButton() {
@@ -44,6 +44,7 @@ export function FloatingBackButton() {
   if (path === "/support" || path === "/contact") {
     return null;
   }
+  if (deepScroll) return null;
 
   const goBack = () => {
     haptics.selection();
@@ -52,33 +53,17 @@ export function FloatingBackButton() {
     goBackOrFallback(location);
   };
 
-  const onClick = () => {
-    if (deepScroll) {
-      haptics.selection();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-    goBack();
-  };
-
-  const mode = deepScroll ? "top" : "back";
-  const label = deepScroll ? "العودة إلى الأعلى" : "رجوع";
-
   return (
     <button
       type="button"
-      className={`floating-back-btn global-back-btn mj-pressable${nudge ? " mj-back-nudge" : ""}${deepScroll ? " floating-back-btn--top" : ""}`}
+      className={`floating-back-btn global-back-btn mj-pressable${nudge ? " mj-back-nudge" : ""}`}
       data-floating-back="1"
-      data-mode={mode}
-      onClick={onClick}
-      aria-label={label}
-      title={label}
+      data-mode="back"
+      onClick={goBack}
+      aria-label="رجوع"
+      title="رجوع"
     >
-      {deepScroll ? (
-        <ChevronUp size={18} strokeWidth={2.4} aria-hidden="true" />
-      ) : (
-        <DirectionalIcon icon={ArrowRight} size={18} strokeWidth={2.2} />
-      )}
+      <DirectionalIcon icon={ArrowRight} size={18} strokeWidth={2.2} />
     </button>
   );
 }

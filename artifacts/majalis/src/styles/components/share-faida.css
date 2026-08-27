@@ -99,6 +99,43 @@ html.dark .share-faida__btn {
   padding-inline: 0.5rem;
 }
 
+.share-faida--icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.share-faida__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0;
+  border-radius: 10px;
+  border: 1px solid var(--mj-hairline, #d5ddd9);
+  background: color-mix(in srgb, var(--mj-surface-2, #f3f6f4) 90%, transparent);
+  color: var(--mj-ink-2, #4a5a53);
+  cursor: pointer;
+}
+
+.share-faida__icon-btn--primary {
+  background: #1a4d3e;
+  border-color: color-mix(in srgb, #1a4d3e 85%, #34d399);
+  color: #fff;
+}
+
+.share-faida__icon-btn:focus-visible {
+  outline: 2px solid #1a4d3e;
+  outline-offset: 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .share-faida__btn {
     transition: none;
