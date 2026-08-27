@@ -9,6 +9,7 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  isAuthStandalonePath,
   isImmersiveChromePath,
   isPrayerTimesPath,
   isQuranImmersivePath,
@@ -40,6 +41,11 @@ assert.equal(isImmersiveChromePath("/quran/recitation-test-ai"), true);
 assert.equal(isImmersiveChromePath("/"), false);
 assert.equal(isImmersiveChromePath("/hadith"), false);
 
+assert.equal(isAuthStandalonePath("/login"), true);
+assert.equal(isAuthStandalonePath("/register"), true);
+assert.equal(isAuthStandalonePath("/auth/callback"), true);
+assert.equal(isAuthStandalonePath("/"), false);
+
 const prayerSrc = readFileSync(resolve(appRoot, "src/pages/worship/ui/PrayerTimesView.tsx"), "utf8");
 assert.equal(prayerSrc.includes("SectionQuiz"), false, "صفحة الصلاة بلا SectionQuiz");
 assert.equal(prayerSrc.includes("categoryId"), false, "صفحة الصلاة لا تحمّل تصنيفات اختبار");
@@ -57,6 +63,7 @@ assert.equal(appSrc.includes("MushafPageView"), false, "قارئ المصحف ا
 assert.equal(appSrc.includes("MushafComingSoonPage"), false, "صفحة قيد التطوير أُزيلت من المسار");
 assert.match(appSrc, /isImmersiveChromePath/);
 assert.match(appSrc, /isPrayerTimesPath/);
+assert.match(appSrc, /isAuthStandalonePath/);
 assert.match(appSrc, /hideSiteChrome/);
 
 const bottomNav = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf8");

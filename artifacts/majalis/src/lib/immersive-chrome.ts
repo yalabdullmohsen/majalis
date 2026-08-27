@@ -27,3 +27,13 @@ export function isQuranImmersivePath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";
   return p === "/mushaf" || p.startsWith("/mushaf/");
 }
+
+/** صفحة دخول/تسجيل مستقلة — بلا هيدر/إعلان/بحث/تيكر/شريط سفلي */
+export function isAuthStandalonePath(pathname: string): boolean {
+  const p = pathname.replace(/\/+$/, "") || "/";
+  return (
+    p === "/login" ||
+    p === "/register" ||
+    p.startsWith("/auth/")
+  );
+}
