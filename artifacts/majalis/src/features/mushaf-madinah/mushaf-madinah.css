@@ -18,22 +18,26 @@
 }
 
 .mm-viewport {
-  --mm-paper: #fbf7ef;
-  --mm-paper-deep: #f5f0e4;
-  --mm-outer-bg: #fbf7ef;
-  --mm-ink: #0a0a0a;
-  --mm-gold: #bf9f5b;
-  --mm-gold-soft: #d4b870;
-  --mm-gold-deep: #9a7d3c;
-  /* فاصلة الآية — أصفر غامق موحّد (token واحد) */
-  --mm-ayah-mark: #8b6914;
-  --mm-header: #c4a574;
+  /* ورق مصحف عثماني — كريمي دافئ (ليس أبيض نقي) */
+  --mm-paper: #fdfbf7;
+  --mm-paper-deep: #faf7f0;
+  --mm-outer-bg: #fdfbf7;
+  --mm-ink: #111111;
+  --mm-gold: #a68b67;
+  --mm-gold-soft: #c5b396;
+  --mm-gold-deep: #8c6d46;
+  /* فاصلة الآية — بني عثماني */
+  --mm-ayah-mark: #8c6d46;
+  --mm-header: #8e8e93;
   --mm-frame: transparent;
-  --mm-banner-fill: linear-gradient(180deg, #e8d7a8 0%, #dcc48a 48%, #c9a85e 100%);
-  --mm-banner-name-bg: #f3e6c4;
-  /* highlight أخضر فاتح متصل — طبقة overlay لا تلوين الكلمات */
-  --mm-ayah-select: rgba(46, 125, 82, 0.16);
-  --mm-ayah-play: rgba(46, 125, 82, 0.10);
+  --mm-banner-fill: linear-gradient(180deg, #efe6d8 0%, #e8dcc8 48%, #d5c4a1 100%);
+  --mm-banner-name-bg: #efe6d8;
+  /* تظليل آية نشطة — بيج خشبي دافئ مطابق للمصحف الورقي */
+  --mm-ayah-select: rgba(225, 193, 162, 0.4);
+  --mm-ayah-play: rgba(242, 226, 206, 0.55);
+  --mm-ui-accent: #1e7e52;
+  --mm-ui-accent-deep: #166534;
+  --mm-audio-capsule: #f4f0e8;
   --mm-outer-pad: 0;
   --mm-inner-pad-x: clamp(0.7rem, 3.2vw, 1.25rem);
   --mm-inner-pad-y: clamp(0.1rem, 0.8vw, 0.32rem);
@@ -149,8 +153,11 @@ html.dark .mm-viewport,
   --mm-header: #e8d4a8;
   --mm-banner-fill: linear-gradient(180deg, #3d3426 0%, #2a241c 100%);
   --mm-banner-name-bg: #152028;
-  --mm-ayah-select: rgba(94, 196, 154, 0.22);
-  --mm-ayah-play: rgba(94, 196, 154, 0.14);
+  --mm-ayah-select: rgba(45, 38, 30, 0.72);
+  --mm-ayah-play: rgba(45, 38, 30, 0.55);
+  --mm-ui-accent: #5ec49a;
+  --mm-ui-accent-deep: #3da87a;
+  --mm-audio-capsule: #1e1e1e;
   --mm-chrome: color-mix(in srgb, #152028 94%, transparent);
   --mm-chrome-fg: #f4efe5;
   --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 42%, transparent);
@@ -159,10 +166,10 @@ html.dark .mm-viewport,
 }
 
 .mm-viewport[data-mushaf-theme="paper"] {
-  --mm-paper: #fbf7ef;
-  --mm-paper-deep: #f5f0e4;
-  --mm-outer-bg: #fbf7ef;
-  --mm-ink: #0a0a0a;
+  --mm-paper: #fdfbf7;
+  --mm-paper-deep: #faf7f0;
+  --mm-outer-bg: #fdfbf7;
+  --mm-ink: #111111;
   --mushaf-bg: var(--mm-outer-bg);
   background: var(--mm-outer-bg);
 }
@@ -937,7 +944,7 @@ html.dark .mm-viewport .mm-page-footer__badge,
   appearance: none;
   border: 0;
   background: transparent;
-  color: #2f6f4e;
+  color: var(--mm-ui-accent, #1e7e52);
   width: 48px;
   height: 48px;
   min-width: 48px;
@@ -1036,26 +1043,35 @@ html.dark .mm-viewport .mm-page-footer__badge,
   pointer-events: none;
 }
 
+/* شريط صوت عائم — كبسولة مركزية (Capsule Audio Bar) */
 .mm-audio-dock {
   position: absolute;
   left: 50%;
-  bottom: calc(var(--inset-bottom, 0px) + 0.4rem);
+  bottom: calc(var(--inset-bottom, 0px) + 0.75rem);
   transform: translateX(-50%);
-  width: min(20rem, calc(100% - 1.2rem));
+  width: auto;
+  max-width: calc(100% - 1.5rem);
   z-index: 6;
-  display: grid;
-  gap: 0.2rem;
-  padding: 0.3rem 0.5rem 0.35rem;
-  border-radius: 0.85rem;
-  border: 1px solid var(--mm-chrome-border);
-  background: var(--mm-chrome);
-  color: var(--mm-chrome-fg);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.55rem 0.35rem 0.4rem;
+  border-radius: 9999px;
+  border: 1px solid #e3d9c6;
+  background: var(--mm-audio-capsule, #f4f0e8);
+  color: var(--mm-ink);
   font-family: "IBM Plex Sans Arabic", sans-serif;
-  font-size: 0.78rem;
-  box-shadow: 0 4px 18px color-mix(in srgb, #5c4a28 12%, transparent);
+  font-size: 0.75rem;
+  box-shadow: 0 8px 28px color-mix(in srgb, #5c4a28 18%, transparent);
   transition: opacity 160ms ease, transform 160ms ease, bottom 180ms ease;
   pointer-events: none;
   opacity: 0;
+}
+
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock {
+  border-color: color-mix(in srgb, var(--mm-gold) 35%, transparent);
+  color: var(--mm-chrome-fg);
 }
 
 .mm-audio-dock[data-open="1"] {
@@ -1064,14 +1080,14 @@ html.dark .mm-viewport .mm-page-footer__badge,
 }
 
 .mm-audio-dock[data-mini="1"] {
-  width: min(16.5rem, calc(100% - 1.2rem));
-  padding: 0.2rem 0.4rem;
-  gap: 0;
+  padding: 0.3rem 0.4rem;
+  gap: 0.35rem;
 }
 
 .mm-audio-dock[data-mini="1"] .mm-audio-dock__reciter,
 .mm-audio-dock[data-mini="1"] .mm-audio-dock__progress,
-.mm-audio-dock[data-mini="1"] .mm-audio-dock__status {
+.mm-audio-dock[data-mini="1"] .mm-audio-dock__status,
+.mm-audio-dock[data-mini="1"] .mm-audio-dock__verse {
   display: none;
 }
 
@@ -1079,43 +1095,70 @@ html.dark .mm-viewport .mm-page-footer__badge,
   appearance: none;
   border: 0;
   background: transparent;
-  color: inherit;
+  color: var(--mm-ui-accent);
   font: inherit;
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0 0.35rem;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
   cursor: pointer;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
 }
 
 .mm-audio-dock__meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
+  display: contents;
 }
 
 .mm-audio-dock__verse {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.mm-audio-dock__reciter {
+  display: flex;
+  align-items: center;
+  max-width: 10.5rem;
+}
+
+.mm-audio-dock__reciter-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  max-width: 100%;
+  border: 1px solid #d5c4a1;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--mm-banner-name-bg) 70%, transparent);
+  color: var(--mm-ui-accent);
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.72rem;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+  min-height: 36px;
+}
+
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__reciter-btn {
+  border-color: color-mix(in srgb, var(--mm-gold) 40%, transparent);
+  background: color-mix(in srgb, #2a241c 80%, transparent);
+}
+
+.mm-audio-dock__reciter-btn span {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.mm-audio-dock__reciter select {
-  max-width: 9.5rem;
-  border: 1px solid var(--mm-chrome-border);
-  border-radius: 0.4rem;
-  background: color-mix(in srgb, var(--mm-paper) 88%, #fff);
-  color: inherit;
-  font: inherit;
-  padding: 0.2rem 0.35rem;
-}
-
 .mm-audio-dock__controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.85rem;
+  gap: 0.15rem;
 }
 
 .mm-audio-dock__controls button {
@@ -1123,10 +1166,10 @@ html.dark .mm-viewport .mm-page-footer__badge,
   border: 0;
   background: transparent;
   color: inherit;
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   border-radius: 999px;
   display: grid;
   place-items: center;
@@ -1134,7 +1177,30 @@ html.dark .mm-viewport .mm-page-footer__badge,
 }
 
 .mm-audio-dock__controls button.mm-audio-dock__play {
-  background: color-mix(in srgb, var(--mm-gold) 22%, transparent);
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  background: var(--mm-ui-accent);
+  color: #fff;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--mm-ui-accent) 35%, transparent);
+}
+
+.mm-audio-dock__controls button.mm-audio-dock__play:hover,
+.mm-audio-dock__controls button.mm-audio-dock__play:focus-visible {
+  background: var(--mm-ui-accent-deep);
+}
+
+.mm-audio-dock__status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.mm-audio-dock__progress {
+  display: none;
 }
 
 /* Bottom sheet للآية — معزول عن لوحة النص · z=9999 · معتم تماماً */
@@ -1160,13 +1226,14 @@ html.dark .mm-viewport .mm-page-footer__badge,
  * تستعمله لوحتا الآية والبحث — مصدر واحد يبقى .mm-viewport. */
 .ayah-action-sheet,
 .mm-search-sheet {
-  --mm-paper: #fbf7ef;
-  --mm-paper-deep: #f5f0e4;
-  --mm-ink: #0a0a0a;
-  --mm-gold: #bf9f5b;
-  --mm-gold-soft: #d4b870;
-  --mm-gold-deep: #9a7d3c;
-  --mm-header: #c4a574;
+  --mm-paper: #fdfbf7;
+  --mm-paper-deep: #faf7f0;
+  --mm-ink: #111111;
+  --mm-gold: #a68b67;
+  --mm-gold-soft: #c5b396;
+  --mm-gold-deep: #8c6d46;
+  --mm-header: #8e8e93;
+  --mm-ui-accent: #1e7e52;
   --mm-chrome-fg: var(--mm-ink);
   --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 28%, transparent);
 }
@@ -1405,6 +1472,11 @@ html.dark .mm-ayah-bar__actions button {
 }
 
 .mm-audio-dock__status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
   margin: 0;
   font-size: 0.72rem;
   color: var(--mm-gold-deep);
@@ -1657,8 +1729,8 @@ html.dark .app-sheet-overlay:has(.mm-tafsir) .app-sheet-overlay__scrim {
 }
 
 .app-sheet-overlay:has(.mm-tafsir) .app-sheet {
-  background: var(--mm-paper, #fbf7ef);
-  color: var(--mm-ink, #0a0a0a);
+  background: var(--mm-paper, #fdfbf7);
+  color: var(--mm-ink, #111111);
 }
 
 .mm-status {
@@ -2422,22 +2494,7 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 }
 
 .mm-audio-dock__progress {
-  width: 100%;
-  height: 3px;
-  border: 0;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--mm-gold) 22%, transparent);
-  appearance: none;
-}
-
-.mm-audio-dock__progress::-webkit-progress-bar {
-  background: color-mix(in srgb, var(--mm-gold) 22%, transparent);
-  border-radius: 999px;
-}
-
-.mm-audio-dock__progress::-webkit-progress-value {
-  background: var(--mm-gold-deep);
-  border-radius: 999px;
+  display: none;
 }
 
 .mm-settings-sheet {
@@ -2447,11 +2504,12 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  --mm-paper: #fbf7ef;
-  --mm-paper-deep: #f5f0e4;
-  --mm-ink: #0a0a0a;
-  --mm-gold: #bf9f5b;
-  --mm-gold-deep: #9a7d3c;
+  --mm-paper: #fdfbf7;
+  --mm-paper-deep: #faf7f0;
+  --mm-ink: #111111;
+  --mm-gold: #a68b67;
+  --mm-gold-deep: #8c6d46;
+  --mm-ui-accent: #1e7e52;
 }
 
 html[data-theme="dark"] .mm-settings-sheet,
@@ -2461,6 +2519,7 @@ html.dark .mm-settings-sheet {
   --mm-ink: #f4efe5;
   --mm-gold: #d4b870;
   --mm-gold-deep: #e8d49a;
+  --mm-ui-accent: #5ec49a;
 }
 
 .mm-settings-sheet__scrim {
