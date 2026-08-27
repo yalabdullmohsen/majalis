@@ -2,7 +2,7 @@
  * الشريط السفلي — مشتق من سجل الأقسام فقط.
  * مركز القرآن · الدروس · الصلاة · فقه · الأقسام
  */
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { isAuthStandalonePath, isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isComingSoonPath } from "@/lib/nav-visibility";
@@ -38,14 +38,37 @@ export function BottomNavBar({ isHidden = false }: { isHidden?: boolean } = {}) 
   const prefetched = useRef(new Set<string>());
   const activeId = getActiveTab(location);
 
-  if (isImmersiveChromePath(location) || isAuthStandalonePath(location)) return null;
-
   function triggerPrefetch(href: string) {
     const load = TAB_PREFETCH[href];
     if (!load || prefetched.current.has(href)) return;
     prefetched.current.add(href);
     void load();
   }
+
+  // بعد أول إطار: سخّن تبويبات الشريط حتى يكون التنقّل فوريًا
+  useEffect(() => {
+    let cancelled = false;
+    const warm = () => {
+      if (cancelled) return;
+      for (const href of BOTTOM_NAV_TABS.map((t) => t.href)) {
+        triggerPrefetch(href);
+      }
+    };
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(warm, { timeout: 800 });
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(id);
+      };
+    }
+    const t = window.setTimeout(warm, 200);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+  }, []);
+
+  if (isImmersiveChromePath(location) || isAuthStandalonePath(location)) return null;
 
   const visibilityClass = isHidden ? "bottom-nav--hidden" : "bottom-nav--visible";
 

@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
-const SHOW_AFTER_MS = 200;
-const MIN_VISIBLE_MS = 400;
+const SHOW_AFTER_MS = 80;
+const MIN_VISIBLE_MS = 160;
 
 /**
- * يؤخّر إظهار هيكل التحميل 200ms، ويبقيه 400ms على الأقل إن ظهر.
+ * يؤخّر إظهار هيكل التحميل 80ms، ويبقيه 160ms على الأقل إن ظهر — بلا بقاء طويل يبطئ الإحساس بالتنقّل.
  */
 export function useDeferredLoading(loading: boolean): boolean {
   const [visible, setVisible] = useState(false);

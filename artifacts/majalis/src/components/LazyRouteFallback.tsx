@@ -1,7 +1,7 @@
 import { useDeferredLoading } from "@/hooks/useDeferredLoading";
 
 /**
- * هيكل مسار كسول — يظهر بعد 200ms بلا نص تحميل ظاهر.
+ * هيكل مسار كسول — يظهر بعد 80ms بلا نص تحميل ظاهر.
  * هيكل ذاتي بلا أيقونات خارجية حتى تبقى حزمة الإقلاع خفيفة (LCP).
  */
 export function LazyRouteFallback() {
