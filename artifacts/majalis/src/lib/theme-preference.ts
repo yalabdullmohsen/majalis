@@ -42,11 +42,15 @@ export function applyThemePreference(preference: ThemePreference) {
   if (root.dataset.theme !== resolved) {
     root.dataset.theme = resolved;
   }
-  root.classList.toggle("dark", resolved === "dark");
-  root.classList.toggle("theme-dark", resolved === "dark");
-  root.classList.toggle("theme-light", resolved === "light");
+  if (resolved === "dark") {
+    root.classList.add("dark", "theme-dark");
+    root.classList.remove("light", "theme-light");
+  } else {
+    root.classList.add("light", "theme-light");
+    root.classList.remove("dark", "theme-dark");
+  }
   root.style.colorScheme = resolved === "dark" ? "dark" : "light";
-  // auto يترك media queries؛ light/dark يفرضان لون السطح المطابق
+  // light/dark يفرضان لون السطح؛ auto يتبع الجهاز عبر resolveTheme فقط
   ensureChromeMeta(preference === "auto" ? undefined : resolved);
   // إبقاء الاستيراد ظاهرًا لبوابة meta-consistency
   void BRAND_THEME_COLOR;

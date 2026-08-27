@@ -241,10 +241,41 @@ export async function purgeStaleRuntimeCaches(options?: {
   return { purged: true, cachesCleared, version };
 }
 
+/**
+ * زر الإعدادات «تحديث التطبيق وحذف الكاش»:
+ * يمسح Cache Storage + كاش العرض، يحدّث SW، ثم يعيد التحميل مرة واحدة.
+ * لا يمس الثيم/المفضلة/الصلاة/المصادقة.
+ */
+export async function refreshAppAndPurgeCaches(): Promise<{
+  purged: boolean;
+  cachesCleared: number;
+}> {
+  const result = await purgeStaleRuntimeCaches({ force: true, reloadOnce: false });
+  try {
+    if ("serviceWorker" in navigator) {
+      const reg = await navigator.serviceWorker.getRegistration();
+      await reg?.update().catch(() => undefined);
+      reg?.waiting?.postMessage({ type: "SKIP_WAITING" });
+      reg?.active?.postMessage({ type: "MAJALIS_PURGE_SHELL_ASSETS" });
+    }
+  } catch {
+    /* ignore */
+  }
+  try {
+    if (sessionStorage.getItem(PURGE_RELOAD_GUARD) !== "1") {
+      sessionStorage.setItem(PURGE_RELOAD_GUARD, "1");
+      safeLocationReload();
+    }
+  } catch {
+    safeLocationReload();
+  }
+  return { purged: result.purged, cachesCleared: result.cachesCleared };
+}
+
 /** تشخيص تطوير فقط */
 export function installMajalisClearCacheDebug(): void {
-  if (!import.meta.env.DEV) return;
   if (typeof window === "undefined") return;
-  (window as Window & { __MAJALIS_CLEAR_CACHE__?: () => Promise<unknown> }).__MAJALIS_CLEAR_CACHE__ =
-    async () => purgeStaleRuntimeCaches({ force: true, reloadOnce: true });
+  (window as Window & {
+    __MAJALIS_CLEAR_CACHE__?: () => Promise<unknown>;
+  }).__MAJALIS_CLEAR_CACHE__ = async () => refreshAppAndPurgeCaches();
 }

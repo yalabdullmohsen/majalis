@@ -270,10 +270,21 @@
 .sr-form__check { flex-direction: row; align-items: flex-start; gap: 0.5rem; font-weight: 500; }
 .sr-form__check input { min-height: auto; margin-top: 0.2rem; }
 
-@media (prefers-color-scheme: dark) {
-  .sr-cat, .sr-card, .sr-stat, .sr-detail__cell, .sr-form input, .sr-form select, .sr-form textarea {
-    background: var(--color-surface);
-  }
+html.dark .sr-cat,
+html.dark .sr-card,
+html.dark .sr-stat,
+html.dark .sr-detail__cell,
+html.dark .sr-form input,
+html.dark .sr-form select,
+html.dark .sr-form textarea,
+html[data-theme="dark"] .sr-cat,
+html[data-theme="dark"] .sr-card,
+html[data-theme="dark"] .sr-stat,
+html[data-theme="dark"] .sr-detail__cell,
+html[data-theme="dark"] .sr-form input,
+html[data-theme="dark"] .sr-form select,
+html[data-theme="dark"] .sr-form textarea {
+  background: var(--color-surface);
 }
 
 @supports (padding: var(--inset-bottom)) {

@@ -32,7 +32,9 @@ const theme = read("src/lib/theme-preference.ts");
   assert.match(head, /theme-dark/);
   assert.match(head, /theme-light/);
   assert.match(head, /dataset\.theme/);
+  assert.match(head, /classList\.add\("light"/);
   assert.match(head, /majalis-theme/);
+  assert.match(head, /storedTheme === "auto"/);
 }
 
 // 2) خطوط محلية + preload
@@ -76,6 +78,7 @@ const theme = read("src/lib/theme-preference.ts");
 // 4) لا تبديل ثيم بعد أول إطار بطريقة تسبب وميض
 {
   assert.match(theme, /dataset\.theme !== resolved/);
+  assert.match(theme, /classList\.add\("light"/);
   assert.match(theme, /theme-dark/);
   assert.match(theme, /theme-light/);
 }
@@ -95,11 +98,16 @@ const theme = read("src/lib/theme-preference.ts");
 
 // 6) SW: skipWaiting + clients.claim + تدوير كاش
 {
+  assert.match(sw, /SKIP_WAITING/);
   assert.match(sw, /skipWaiting/);
   assert.match(sw, /clients\.claim/);
   assert.match(sw, /SW_BUILD_ID|CACHE_PREFIX/);
   assert.match(sw, /caches\.delete/);
-  assert.match(sw, /pathname\.startsWith\("\/fonts\/"\)[\s\S]{0,120}staleWhileRevalidate/, "خطوط SWR لا CSS/خط قديم عالق");
+  assert.match(
+    sw,
+    /pathname\.startsWith\("\/fonts\/"\)[\s\S]{0,120}staleWhileRevalidate/,
+    "خطوط SWR لا CSS/خط قديم عالق",
+  );
 }
 
 console.log("boot-fouc-fonts-mushaf-gate.test.ts: ok");
