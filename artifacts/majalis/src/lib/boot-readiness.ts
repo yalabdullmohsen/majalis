@@ -11,11 +11,11 @@ export type BootFlags = {
   storageReady: boolean;
 };
 
-/** سقف انتظار خطوط الواجهة — preload محلي؛ أطول من 420ms السابقة التي كانت تُفرّغ قبل التحميل. */
-const BOOT_FONT_TIMEOUT_MS = 2_200;
+/** سقف انتظار خط الواجهة النشط — preload محلي؛ لا ننتظر خطّين كاملين بلا داعٍ. */
+const BOOT_FONT_TIMEOUT_MS = 1_200;
 
 /** سقف مزامنة Preferences → localStorage داخل حارس الإقلاع (لا يحجب createRoot). */
-const BOOT_STORAGE_TIMEOUT_MS = 900;
+const BOOT_STORAGE_TIMEOUT_MS = 450;
 
 const flags: BootFlags = {
   themeReady: false,
@@ -52,17 +52,16 @@ export function registerBootStorageGate(promise: Promise<unknown>): void {
 async function waitUiFonts(timeoutMs: number): Promise<boolean> {
   if (typeof document === "undefined" || !document.fonts) return true;
   try {
+    const preferNaskh = document.documentElement.dataset.font !== "default";
+    const primary = preferNaskh ? '16px "Noto Naskh Arabic"' : '16px "Amiri"';
+    const secondary = preferNaskh ? '16px "Amiri"' : '16px "Noto Naskh Arabic"';
     const load = (async () => {
-      await Promise.all([
-        document.fonts.load('16px "Amiri"'),
-        document.fonts.load('16px "Noto Naskh Arabic"'),
-      ]);
-      await document.fonts.ready;
+      // خط الواجهة النشط أولًا — يكفي لكشف النص بلا انتظار الخط البديل
+      await document.fonts.load(primary);
+      void document.fonts.load(secondary);
     })();
     await Promise.race([load, raceTimeout(timeoutMs)]);
-    const amiri = document.fonts.check('16px "Amiri"');
-    const noto = document.fonts.check('16px "Noto Naskh Arabic"');
-    return amiri && noto;
+    return document.fonts.check(primary);
   } catch {
     return false;
   }

@@ -24,8 +24,8 @@ assert.doesNotMatch(html, /mj-home-lcp-static|mj-app-mount/, "لا صدفة نص
 assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل الشاشة");
 assert.doesNotMatch(html, /#mj-boot-skeleton/, "بلا أنماط هيكل إقلاع حاجب");
 assert.match(html, /id="mj-launch-splash"/, "دخولية MajlisSplash");
-assert.match(html, /SOFT_MAX_MS\s*=\s*700/, "هدف LCP ليّن");
-assert.match(html, /MAX_MS\s*=\s*2200/, "سقف انتظار خطوط");
+assert.match(html, /SOFT_MAX_MS\s*=\s*420/, "هدف LCP ليّن");
+assert.match(html, /MAX_MS\s*=\s*1400/, "سقف انتظار خطوط");
 assert.match(critical, /\.hsh-steps[\s\S]*min-height:\s*22rem/, "حجز ارتفاع hsh-steps");
 assert.match(critical, /\.hsh-step[\s\S]*min-height:\s*6\.25rem/, "حجز ارتفاع hsh-step");
 assert.match(critical, /\.home-page-hero\.page-hero-mj[\s\S]*min-height:\s*11rem/, "حجز ارتفاع هيرو الرئيسية");

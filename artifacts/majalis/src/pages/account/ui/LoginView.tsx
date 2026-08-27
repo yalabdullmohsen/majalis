@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { ADMIN_ACCESS_DENIED_MESSAGE, mapAuthError } from "@/lib/auth-messages";
@@ -79,16 +79,11 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [authReady, setAuthReady] = useState(isSupabaseConfigured());
   const [resetSent, setResetSent] = useState(false);
-  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { login, register, logout, refreshUser, isAdmin, isLoggedIn, loading: authLoading } = useAuth();
   const nextPath = useMemo(() => getNextPath(), [location]);
   const adminLogin = isAdminLogin(nextPath);
   const authEnabled = authReady;
-
-  useEffect(() => () => {
-    if (navTimerRef.current) clearTimeout(navTimerRef.current);
-  }, []);
 
   useEffect(() => {
     const next = resolveInitialTab(location);
@@ -197,8 +192,8 @@ export default function LoginPage() {
         }
 
         if (data?.session) {
-          setSuccess("تم إنشاء حسابك بنجاح. جاري تحويلك…");
-          navTimerRef.current = setTimeout(() => navigate(nextPath || "/"), 900);
+          setSuccess("تم إنشاء حسابك بنجاح.");
+          navigate(nextPath || "/");
           return;
         }
         setSuccess("تم إنشاء حسابك. راجع بريدك لتأكيد الحساب ثم سجّل الدخول.");

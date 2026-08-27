@@ -48,8 +48,10 @@ const theme = read("src/lib/theme-preference.ts");
   const fontsUi = read("src/styles/fonts-ui.css");
   assert.match(fontsUi, /amiri-400-ar[\s\S]*font-display:\s*block/);
   assert.match(fontsUi, /noto-naskh-400-ar[\s\S]*font-display:\s*block/);
-  assert.match(boot, /BOOT_FONT_TIMEOUT_MS\s*=\s*2_?200|BOOT_FONT_TIMEOUT_MS\s*=\s*2200/);
-  assert.match(boot, /document\.fonts\.ready/);
+  assert.match(boot, /BOOT_FONT_TIMEOUT_MS\s*=\s*1_?200|BOOT_FONT_TIMEOUT_MS\s*=\s*1200/);
+  assert.match(boot, /dataset\.font/);
+  assert.match(boot, /document\.fonts\.load\(primary\)/);
+  assert.match(boot, /fonts\.check\(primary\)/);
   assert.match(boot, /registerBootStorageGate|storageReady/);
   assert.match(main, /registerBootStorageGate/);
 }

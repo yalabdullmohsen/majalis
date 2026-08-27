@@ -66,7 +66,7 @@ function HomeDailyWirdGate() {
     const reveal = () => {
       if (!cancelled) setShow(true);
     };
-    scheduleOnIdle(reveal, 900);
+    scheduleOnIdle(reveal, 180);
     return () => {
       cancelled = true;
     };
@@ -97,7 +97,7 @@ function HomeBelowFoldGate() {
     const watch = () => {
       const el = document.getElementById("mj-home-below-fold");
       if (!el || typeof IntersectionObserver === "undefined") {
-        scheduleOnIdle(reveal, 1200);
+        scheduleOnIdle(reveal, 320);
         return;
       }
       io = new IntersectionObserver(
@@ -110,7 +110,7 @@ function HomeBelowFoldGate() {
         { rootMargin: "240px 0px" },
       );
       io.observe(el);
-      scheduleOnIdle(reveal, 2500);
+      scheduleOnIdle(reveal, 800);
     };
 
     const id = window.requestAnimationFrame(watch);
