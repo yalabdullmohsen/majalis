@@ -69,7 +69,7 @@
 }
 
 .mj-home-lcp-ph__start-here {
-  min-height: 37.8rem;
+  min-height: 28rem;
 }
 
 .mj-home-lcp-ph__kicker,
@@ -117,7 +117,7 @@
 }
 
 .mj-home-lcp-ph__daily-band {
-  min-height: 47rem;
+  min-height: 28rem;
 }
 
 .mj-home-lcp-ph__daily-card {
@@ -165,7 +165,7 @@
 
 @media (min-width: 720px) {
   .mj-home-lcp-ph__start-here {
-    min-height: 24rem;
+    min-height: 20rem;
   }
 
   .mj-home-lcp-ph__start-here .hsh-step {
