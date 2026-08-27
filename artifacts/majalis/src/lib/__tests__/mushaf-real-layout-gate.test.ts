@@ -138,9 +138,14 @@ assert.match(viewport, /addEventListener\("scroll"/);
 
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
 assert.match(css, /--mm-ink:\s*#f4efe5|--mm-ink:\s*#f7faf7|--mm-ink:\s*#ffffff/);
-assert.match(css, /--mm-paper:\s*#fbf7ef/);
-assert.match(css, /--mm-ayah-select:\s*rgba\(46,\s*125,\s*82,\s*0\.16\)/);
-assert.match(css, /--mm-ayah-select:\s*rgba\(94,\s*196,\s*154,\s*0\.22\)/);
+assert.match(css, /--mm-paper:\s*#fdfbf7/);
+assert.match(css, /--mm-ayah-select:\s*rgba\(225,\s*193,\s*162,\s*0\.4\)/);
+assert.match(css, /--mm-ayah-select:\s*rgba\(45,\s*38,\s*30,\s*0\.72\)/);
+assert.match(css, /--mm-ui-accent:\s*#1e7e52/);
+assert.match(css, /border-radius:\s*9999px/);
+assert.match(dock, /mm-audio-dock__reciter-btn/);
+assert.match(dock, /اختيار التلاوة/);
+assert.match(dock, /createPortal/);
 assert.match(css, /\.mm-ayah-hl__band/);
 
 assert.match(page, /filledSlots|mm-page__body--opening/);
