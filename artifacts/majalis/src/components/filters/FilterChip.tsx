@@ -24,14 +24,14 @@ export function FilterChip({
   return (
     <button
       type="button"
-      role="radio"
-      aria-checked={active}
+      aria-pressed={active}
       aria-label={ariaLabel}
       disabled={disabled}
       className={cn("mj-filter-chip", active && "is-active", className)}
       onClick={onClick}
     >
       <span className="mj-filter-chip__label">{label}</span>
+      {active ? <span className="mj-filter-chip__mark" aria-hidden="true">●</span> : null}
       {soon ? <span className="mj-filter-chip__soon">قريبًا</span> : null}
     </button>
   );

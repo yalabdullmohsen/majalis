@@ -10,6 +10,7 @@ import {
 import { ActiveFilters, type ActiveFilterItem } from "@/components/filters/ActiveFilters";
 import { FilterBar } from "@/components/filters/FilterBar";
 import { FilterSheet } from "@/components/filters/FilterSheet";
+import { SegmentedFilter } from "@/components/filters/SegmentedFilter";
 import { applyPageSeo } from "@/lib/seo";
 import {
   getQuranCircles,
@@ -21,7 +22,23 @@ import "@/styles/pages/quran-circles.css";
 
 const LEVELS = ["الكل", "مبتدئ", "متوسط", "متقدم"] as const;
 const TRACKS = ["الكل", "رجال", "نساء", "أطفال", "عام"] as const;
-const MODES = ["الكل", "حضوري", "عن بُعد", "هجين"] as const;
+/** فلتر الحضور السريع — هجين يظهر ضمن «الكل» فقط (بلا تخمين). */
+const ATTENDANCE = [
+  { id: "الكل", label: "الكل" },
+  { id: "حضوري", label: "حضوري" },
+  { id: "عن بُعد", label: "عن بعد" },
+] as const;
+const GENDER = [
+  { id: "الكل", label: "الكل" },
+  { id: "رجال", label: "رجال" },
+  { id: "نساء", label: "نساء" },
+] as const;
+const HUB_LINKS = [
+  { href: "/quran-circles", label: "حلقات التحفيظ", current: true },
+  { href: "/quran-hub", label: "مركز القرآن", current: false },
+  { href: "/quran-memorization", label: "اختبارات الحفظ", current: false },
+  { href: "/quran/memorization-plans", label: "خطط الحفظ", current: false },
+] as const;
 
 function cleanDescription(text: string): string {
   return text.replace(/\.{4,}/g, ".").trim();
@@ -189,7 +206,11 @@ export default function QuranCirclesPage() {
       items.push({ id: "level", label: level, onRemove: () => setLevel("الكل") });
     }
     if (mode !== "الكل") {
-      items.push({ id: "mode", label: mode, onRemove: () => setMode("الكل") });
+      items.push({
+        id: "mode",
+        label: mode === "عن بُعد" ? "عن بعد" : mode,
+        onRemove: () => setMode("الكل"),
+      });
     }
     if (governorate !== "الكل") {
       items.push({ id: "gov", label: governorate, onRemove: () => setGovernorate("الكل") });
@@ -211,6 +232,8 @@ export default function QuranCirclesPage() {
     setGovernorate("الكل");
     setRegistrationOpen(false);
   }, []);
+
+  const genderValue = track === "رجال" || track === "نساء" ? track : "الكل";
 
   const visible = useMemo(() => {
     const needle = q.trim();
@@ -248,11 +271,26 @@ export default function QuranCirclesPage() {
           بيانات أولية من إدارة شؤون القرآن الكريم بوزارة الأوقاف الكويتية ومنصات موثوقة
           معلنة. تحقق من روابط التسجيل قبل الالتحاق؛ الجداول قد تتغيّر.
         </p>
-        <div className="qc-hero__links">
-          <Link href="/quran-hub">مركز القرآن</Link>
-          <Link href="/quran-memorization">اختبارات الحفظ</Link>
-          <Link href="/quran/memorization-plans">خطط الحفظ</Link>
-        </div>
+        <nav className="qc-hub-nav" aria-label="أقسام التحفيظ">
+          {HUB_LINKS.map((item) =>
+            item.current ? (
+              <span
+                key={item.href}
+                className="qc-hub-nav__chip is-active"
+                aria-current="page"
+              >
+                {item.label}
+                <span className="qc-hub-nav__mark" aria-hidden="true">
+                  ●
+                </span>
+              </span>
+            ) : (
+              <Link key={item.href} href={item.href} className="qc-hub-nav__chip">
+                {item.label}
+              </Link>
+            ),
+          )}
+        </nav>
       </header>
 
       <section className="qc-toolbar" aria-label="بحث وتصفية الحلقات">
@@ -267,11 +305,43 @@ export default function QuranCirclesPage() {
           filterToggleLabel="فلترة"
           onClearAll={activeFilterCount > 0 ? clearAllFilters : undefined}
         />
+
+        <div className="qc-quick-filters">
+          <p className="qc-quick-filters__label" id="qc-attendance-label">
+            نوع الحضور
+          </p>
+          <SegmentedFilter
+            ariaLabel="نوع الحضور"
+            value={mode}
+            onChange={setMode}
+            items={ATTENDANCE.map((x) => ({ id: x.id, label: x.label }))}
+          />
+          <p className="qc-quick-filters__label" id="qc-gender-label">
+            الجنس
+          </p>
+          <SegmentedFilter
+            ariaLabel="الجنس"
+            value={genderValue}
+            onChange={(id) => setTrack(id)}
+            items={GENDER.map((x) => ({ id: x.id, label: x.label }))}
+          />
+        </div>
+
         <ActiveFilters
           items={activeFilterItems}
           onClearAll={activeFilterItems.length > 1 ? clearAllFilters : undefined}
           resultCount={loading ? null : visible.length}
         />
+
+        {!loading ? (
+          <p className="qc-result-count" aria-live="polite">
+            {visible.length === 0
+              ? "لا نتائج"
+              : visible.length === 1
+                ? "نتيجة واحدة"
+                : `${visible.length} نتيجة`}
+          </p>
+        ) : null}
       </section>
 
       <FilterSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="تصفية الحلقات">
@@ -297,13 +367,12 @@ export default function QuranCirclesPage() {
             </select>
           </label>
           <label>
-            النمط
+            نوع الحضور
             <select value={mode} onChange={(e) => setMode(e.target.value)}>
-              {MODES.map((x) => (
-                <option key={x} value={x}>
-                  {x}
-                </option>
-              ))}
+              <option value="الكل">الكل</option>
+              <option value="حضوري">حضوري</option>
+              <option value="عن بُعد">عن بعد</option>
+              <option value="هجين">هجين</option>
             </select>
           </label>
           <label>
@@ -314,20 +383,6 @@ export default function QuranCirclesPage() {
                   {x}
                 </option>
               ))}
-            </select>
-          </label>
-          <label>
-            الجنس
-            <select
-              value={track === "رجال" || track === "نساء" ? track : "الكل"}
-              onChange={(e) => {
-                const v = e.target.value;
-                setTrack(v === "الكل" ? "الكل" : v);
-              }}
-            >
-              <option value="الكل">الكل</option>
-              <option value="رجال">رجال</option>
-              <option value="نساء">نساء</option>
             </select>
           </label>
           <label className="qc-sheet-check">
@@ -344,18 +399,20 @@ export default function QuranCirclesPage() {
       {loading ? (
         <p className="qc-empty">جارٍ تحميل الدليل…</p>
       ) : visible.length === 0 ? (
-        <p className="qc-empty">لا حلقات مطابقة للمرشّحات الحالية.</p>
+        <p className="qc-empty">لا توجد حلقات مطابقة لهذا الفلتر حاليًا</p>
       ) : (
-        byGov.map(([gov, list]) => (
-          <section key={gov} className="qc-group">
-            <h2 className="qc-group__title">{gov}</h2>
-            <ul className="qc-list">
-              {list.map((c) => (
-                <CircleCard key={c.id} circle={c} />
-              ))}
-            </ul>
-          </section>
-        ))
+        <div className="qc-results">
+          {byGov.map(([gov, list]) => (
+            <section key={gov} className="qc-group">
+              <h2 className="qc-group__title">{gov}</h2>
+              <ul className="qc-list">
+                {list.map((c) => (
+                  <CircleCard key={c.id} circle={c} />
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
       )}
 
       <footer className="qc-footnote">

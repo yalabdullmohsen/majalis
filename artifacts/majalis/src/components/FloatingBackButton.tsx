@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { useLocation } from "wouter";
@@ -7,35 +7,14 @@ import { isTabRootPath } from "@/config/section-lobby-chrome";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { haptics } from "@/lib/haptics";
 
-const DEEP_SCROLL_PX = 400;
-
 /**
- * زر عائم عالمي للخروج السريع والرجوع للأعلى في الصفحات الطويلة.
- * يظهر بدون شرط تمرير للرجوع؛ مساحة لمس ≥44px عبر CSS.
- * - قرب أعلى الصفحة: رجوع (`goBackOrFallback`)
- * - بعد تمرير عميق: يُخفى — `ScrollToTop` وحده يتولى الصعود للأعلى (بلا تكرار)
- * موضع ثابت + احترام safe-area عبر CSS.
+ * زر عائم عالمي للرجوع — ظاهر دائمًا بدون شرط تمرير.
+ * مساحة لمس ≥44px عبر CSS؛ موضع ثابت + احترام safe-area.
+ * الصعود للأعلى يبقى عبر ScrollToTop في الزاوية المقابلة.
  */
 export function FloatingBackButton() {
   const [location] = useLocation();
   const [nudge, setNudge] = useState(false);
-  const [deepScroll, setDeepScroll] = useState(false);
-
-  useEffect(() => {
-    let ticking = false;
-    const measure = () => {
-      setDeepScroll(window.scrollY > DEEP_SCROLL_PX);
-      ticking = false;
-    };
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(measure);
-    };
-    measure();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [location]);
 
   if (location === "/") return null;
   if (isImmersiveChromePath(location) || isTabRootPath(location)) return null;
@@ -44,7 +23,6 @@ export function FloatingBackButton() {
   if (path === "/support" || path === "/contact") {
     return null;
   }
-  if (deepScroll) return null;
 
   const goBack = () => {
     haptics.selection();
