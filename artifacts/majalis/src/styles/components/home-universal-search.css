@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  min-height: 48px;
+  min-height: 52px;
   padding: 0.35rem 0.75rem;
   border-radius: 14px;
   border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 18%, transparent);

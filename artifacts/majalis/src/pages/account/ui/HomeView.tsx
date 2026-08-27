@@ -195,12 +195,20 @@ export default function HomePage() {
         eyebrow={dailyCtx.greeting}
         title="المجلس العلمي"
         actions={
-          <Link
-            href={continueHref}
-            className="mj-btn m2030-btn m2030-btn--primary"
-          >
-            {isFirstVisit ? "ابدأ بالدروس" : "تابع التصفح"}
-          </Link>
+          <>
+            <Link
+              href={continueHref}
+              className="mj-btn m2030-btn m2030-btn--primary"
+            >
+              {isFirstVisit ? "ابدأ بالدروس" : "تابع التصفح"}
+            </Link>
+            <Link
+              href="/sections"
+              className="mj-btn m2030-btn m2030-btn--ghost"
+            >
+              تصفح الأقسام
+            </Link>
+          </>
         }
       />
 
