@@ -4836,15 +4836,10 @@ body.has-assistant-fab .app-main {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ── انتقالات الصفحة ── */
+/* ── انتقالات الصفحة: فورية (بلا fade يؤخّر الإحساس بالتنقّل) ── */
 
 .page-shell {
-  animation: fadeInPage 0.2s ease;
-}
-
-@keyframes fadeInPage {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  animation: none;
 }
 
 /* ── Widescreen Hero ── */
@@ -5645,15 +5640,10 @@ button,
   }
 }
 
-/* ── انتقالات الصفحات ── */
+/* ── انتقالات الصفحات: فورية ── */
 
 .page-shell {
-  animation: page-fade-in 150ms ease-out both;
-}
-
-@keyframes page-fade-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  animation: none;
 }
 
 /* ── prefers-reduced-motion شامل ── */

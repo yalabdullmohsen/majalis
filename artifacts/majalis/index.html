@@ -204,7 +204,7 @@
         color:var(--mj-splash-ink);
         pointer-events:none;
         opacity:1;
-        transition:opacity 180ms ease;
+        transition:opacity 90ms ease;
       }
       #mj-launch-splash.mj-launch-splash--out{
         opacity:0;
@@ -216,7 +216,7 @@
         gap:0.85rem;
         width:min(88vw,22rem);
         text-align:center;
-        animation:mj-launch-enter 520ms cubic-bezier(0.22,1,0.36,1) both;
+        animation:mj-launch-enter 220ms cubic-bezier(0.22,1,0.36,1) both;
       }
       .mj-launch-splash__ornament{
         position:absolute;
@@ -373,10 +373,10 @@
         var KEY = "mj.launch-splash.session.v2";
         var done = false;
         var appReady = false;
-        var MIN_MS = 280;
-        var SOFT_MAX_MS = 700;
-        var MAX_MS = 2200;
-        var EXIT_MS = 180;
+        var MIN_MS = 120;
+        var SOFT_MAX_MS = 420;
+        var MAX_MS = 1400;
+        var EXIT_MS = 90;
         var bootReady = false;
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
         try { window.__mjSplashStart = start; } catch (e) {}
@@ -384,7 +384,10 @@
         function fontsLikelyReady() {
           try {
             if (!document.fonts || !document.fonts.check) return true;
-            return document.fonts.check('16px "Amiri"') && document.fonts.check('16px "Noto Naskh Arabic"');
+            var preferNaskh = document.documentElement.dataset.font !== "default";
+            return preferNaskh
+              ? document.fonts.check('16px "Noto Naskh Arabic"')
+              : document.fonts.check('16px "Amiri"');
           } catch (e) { return true; }
         }
         function dismiss(immediate) {
