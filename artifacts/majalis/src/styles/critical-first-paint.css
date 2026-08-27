@@ -74,7 +74,32 @@ body {
 
 .m2030-hero.page-hero-mj,
 .home-page-hero.page-hero-mj {
+  box-sizing: border-box;
   min-height: 11rem;
+}
+
+.home-page-hero .page-hero-mj__eyebrow {
+  min-height: 1.35rem;
+}
+
+.home-page-hero .page-hero-mj__desc {
+  display: none;
+}
+
+.navbar-v3__tagline-mark {
+  display: block;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  height: 2.1rem;
+  width: 8.85rem;
+  max-width: min(15rem, 56vw);
+  aspect-ratio: 3787 / 900;
+  overflow: visible;
+}
+
+.navbar-v3__tagline {
+  min-height: 2.1rem;
+  min-width: 8.85rem;
 }
 
 .m2030-home {
@@ -115,16 +140,20 @@ body {
   min-height: 37.8rem;
 }
 
-.mj-home-lcp-ph__daily-band {
-  min-height: 47rem;
+.mj-home-lcp-ph__daily-band,
+.daily-wird-card,
+[data-testid="daily-wird-card"] {
+  min-height: 28rem;
 }
 
 .mj-home-below-fold-ph {
   min-height: 28rem;
 }
 
-.mj-home-lcp-ph__search .hus-field {
-  min-height: 48px;
+.mj-home-lcp-ph__search .hus-field,
+.hus-field {
+  min-height: 52px;
+  box-sizing: border-box;
 }
 
 @media (min-width: 880px) {

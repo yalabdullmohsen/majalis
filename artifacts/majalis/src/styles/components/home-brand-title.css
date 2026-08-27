@@ -1,18 +1,17 @@
 /**
- * هيرو الرئيسية بعد إزالة عنوان الهوية المكرر داخل بطاقة الترحيب.
- * التحية هي العنوان؛ الزر يتبع مباشرة بلا فراغ زخرفي كبير.
+ * هيرو الرئيسية: هوية واضحة + تحية، مع حجز ارتفاع ثابت لمنع إزاحة التخطيط.
  */
 
 .home-page-hero.page-hero-mj {
   position: relative;
   isolation: isolate;
-  min-height: unset;
+  min-height: 11rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-block:
-    0.75rem
-    0.85rem;
+  box-sizing: border-box;
+  padding-block: 0.85rem 0.95rem;
+  padding-inline: 1rem;
   background-color: var(--mj-bg) !important;
   background-image: none !important;
   color: var(--mj-ink);
@@ -52,7 +51,15 @@ html.dark .home-page-hero .pattern-backdrop {
   margin-inline: auto;
   align-items: center;
   text-align: center;
-  gap: 0.65rem;
+  gap: 0.55rem;
+}
+
+.home-page-hero .page-hero-mj__eyebrow {
+  min-height: 1.35rem;
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--mj-ink-2, var(--color-text-muted));
 }
 
 .home-page-hero .page-hero-mj__title-slot {
@@ -65,6 +72,7 @@ html.dark .home-page-hero .pattern-backdrop {
   font-weight: 700;
   line-height: 1.25;
   margin: 0;
+  text-wrap: balance;
 }
 
 .home-page-hero .page-hero-mj__desc {
@@ -72,7 +80,22 @@ html.dark .home-page-hero .pattern-backdrop {
 }
 
 .home-page-hero .page-hero-mj__actions {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   width: 100%;
   margin-top: 0.15rem;
+  gap: 0.45rem;
+}
+
+.home-page-hero .m2030-btn--ghost {
+  background: transparent;
+  color: var(--mj-brand-deep, #145a42);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 32%, transparent);
+}
+
+html[data-theme="dark"] .home-page-hero .m2030-btn--ghost,
+html.dark .home-page-hero .m2030-btn--ghost {
+  color: #c8eedb;
+  border-color: color-mix(in srgb, #8fd4b0 32%, transparent);
 }

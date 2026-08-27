@@ -28,6 +28,15 @@ assert.match(html, /SOFT_MAX_MS\s*=\s*700/, "هدف LCP ليّن");
 assert.match(html, /MAX_MS\s*=\s*2200/, "سقف انتظار خطوط");
 assert.match(critical, /\.hsh-steps[\s\S]*min-height:\s*22rem/, "حجز ارتفاع hsh-steps");
 assert.match(critical, /\.hsh-step[\s\S]*min-height:\s*6\.25rem/, "حجز ارتفاع hsh-step");
+assert.match(critical, /\.home-page-hero\.page-hero-mj[\s\S]*min-height:\s*11rem/, "حجز ارتفاع هيرو الرئيسية");
+assert.match(critical, /\.hus-field[\s\S]*min-height:\s*52px/, "حجز شريط البحث");
+assert.match(critical, /\.daily-wird-card[\s\S]*min-height:\s*28rem/, "حجز ورد اليوم يطابق المحتوى");
+assert.match(critical, /\.navbar-v3__tagline-mark[\s\S]*aspect-ratio/, "حجز وردمارك الهيدر");
+assert.doesNotMatch(
+  readFileSync(resolve(root, "src/styles/components/home-brand-title.css"), "utf8"),
+  /min-height:\s*unset/,
+  "لا min-height:unset في هيرو الرئيسية",
+);
 assert.doesNotMatch(fontsUi, /amiri-700/, "لا Amiri 700 في fonts-ui الإقلاع");
 assert.match(fontsUi, /amiri-400-ar[\s\S]*font-display:\s*block/, "Amiri 400 block — بلا FOUT");
 assert.match(fontsBold, /amiri-700-ar[\s\S]*font-display:\s*optional/, "Amiri 700 optional مؤجّل — بلا CLS");
