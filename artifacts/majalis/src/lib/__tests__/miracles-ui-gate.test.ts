@@ -21,6 +21,16 @@ assert.doesNotMatch(page, /FilterBottomSheet/);
 assert.match(page, /mk-search-bar/);
 assert.match(page, /ShareFaida[\s\S]*variant="icons"/);
 assert.match(page, /mk-card__footer/);
+assert.match(page, /miracle-ayah/);
+assert.match(page, /item\.verse/);
+assert.match(page, /tafsir_summary/);
+assert.match(page, /miracle-explain/);
+assert.match(page, /miracle-detail/);
+
+const css = read("src/styles/pages/miracles.css");
+assert.match(css, /\.miracle-ayah__text/);
+assert.match(css, /\.miracle-explain__label/);
+assert.doesNotMatch(css, /\.miracle-item__ref\s*\{/);
 
 assert.doesNotMatch(fab, /if \(deepScroll\) return null/);
 assert.doesNotMatch(fab, /ChevronUp/);
