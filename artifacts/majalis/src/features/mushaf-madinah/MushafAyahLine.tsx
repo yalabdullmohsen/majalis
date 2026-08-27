@@ -9,6 +9,8 @@ type Props = {
   words: QpcWord[];
   centered?: boolean;
   onSelectVerse?: (verseKey: string) => void;
+  /** ضغط مطوّل — يفتح التفسير مباشرة */
+  onLongPressVerse?: (verseKey: string) => void;
 };
 
 const TAP_SLOP_PX = 40;
@@ -84,6 +86,7 @@ export const MushafAyahLine = memo(function MushafAyahLine({
   words,
   centered = false,
   onSelectVerse,
+  onLongPressVerse,
 }: Props) {
   const ordered = [...words].sort((a, b) => a.id - b.id || a.position - b.position);
   const pressRef = useRef<PressState | null>(null);
@@ -100,7 +103,8 @@ export const MushafAyahLine = memo(function MushafAyahLine({
       const cur = pressRef.current;
       if (!cur || cur.verseKey !== verseKey) return;
       cur.longFired = true;
-      onSelectVerse?.(verseKey);
+      if (onLongPressVerse) onLongPressVerse(verseKey);
+      else onSelectVerse?.(verseKey);
     }, LONG_PRESS_MS);
     pressRef.current = {
       verseKey,

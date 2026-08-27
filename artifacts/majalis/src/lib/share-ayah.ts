@@ -149,36 +149,39 @@ export async function generateAyahImage(opts: ShareImageOptions): Promise<string
   const W = 900, H = 600;
   const { withEphemeralCanvas } = await import("@/lib/canvas-gl-cleanup");
   return withEphemeralCanvas(W, H, (canvas, ctx) => {
-    // ── Background gradient ──
+    // ورق عثماني كريمي دافئ
     const bg = ctx.createLinearGradient(0, 0, W, H);
-    bg.addColorStop(0,   "#0d3527");
-    bg.addColorStop(0.5, "#123F2E");
-    bg.addColorStop(1,   "#0d3527");
+    bg.addColorStop(0, "#fdfbf7");
+    bg.addColorStop(0.55, "#faf7f0");
+    bg.addColorStop(1, "#efe6d8");
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, W, H);
 
-    // ── Gold border ──
-    ctx.strokeStyle = "rgba(23,61,53,0.5)";
+    ctx.strokeStyle = "#a68b67";
     ctx.lineWidth = 3;
     ctx.strokeRect(20, 20, W - 40, H - 40);
-    ctx.strokeStyle = "rgba(23,61,53,0.25)";
+    ctx.strokeStyle = "rgba(166, 139, 103, 0.45)";
     ctx.lineWidth = 1;
     ctx.strokeRect(30, 30, W - 60, H - 60);
 
-    // ── Corner ornaments (simple crosses) ──
-    const corners = [[40,40],[W-40,40],[40,H-40],[W-40,H-40]] as const;
-    ctx.strokeStyle = "rgba(23,61,53,0.7)";
+    const corners = [[40, 40], [W - 40, 40], [40, H - 40], [W - 40, H - 40]] as const;
+    ctx.strokeStyle = "#1e7e52";
     ctx.lineWidth = 1.5;
-    for (const [cx,cy] of corners) {
-      ctx.beginPath(); ctx.moveTo(cx-10,cy); ctx.lineTo(cx+10,cy); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(cx,cy-10); ctx.lineTo(cx,cy+10); ctx.stroke();
+    for (const [cx, cy] of corners) {
+      ctx.beginPath();
+      ctx.moveTo(cx - 10, cy);
+      ctx.lineTo(cx + 10, cy);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 10);
+      ctx.lineTo(cx, cy + 10);
+      ctx.stroke();
     }
 
-    // ── Ayah text (RTL) ──
     ctx.save();
     ctx.direction = "rtl";
     ctx.textAlign = "center";
-    ctx.fillStyle = "#f5f0e8";
+    ctx.fillStyle = "#111111";
 
     const maxWidth = W - 100;
     const lineHeight = 62;
@@ -188,15 +191,12 @@ export async function generateAyahImage(opts: ShareImageOptions): Promise<string
     ctx.font = `${fontSize}px "Amiri Quran", "KFGQPC Uthmanic Script", "Scheherazade New", serif`;
     wrapText(ctx, text, W / 2, startY, maxWidth, lineHeight);
 
-    // ── Ayah number ──
     ctx.font = `bold 22px "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif`;
-    ctx.fillStyle = "rgba(23,61,53,0.9)";
-    const surahLine = `سورة ${surahName} ﴿${ayahNum}﴾`;
-    ctx.fillText(surahLine, W / 2, H - 80);
+    ctx.fillStyle = "#1e7e52";
+    ctx.fillText(`سورة ${surahName} ﴿${ayahNum}﴾`, W / 2, H - 80);
 
-    // ── Site watermark ──
     ctx.font = `14px "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif`;
-    ctx.fillStyle = "rgba(255,255,255,0.35)";
+    ctx.fillStyle = "rgba(17, 17, 17, 0.45)";
     ctx.fillText("المجلس العلمي", W / 2, H - 45);
     ctx.restore();
 

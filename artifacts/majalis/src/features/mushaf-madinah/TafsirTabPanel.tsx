@@ -20,6 +20,7 @@ type Props = {
   expanded: boolean;
   onCopy: () => void;
   onShare: () => void;
+  onShareImage?: () => void;
   onBookmark: () => void;
   onExpand: () => void;
   onAvailabilityChange: (available: boolean) => void;
@@ -68,6 +69,7 @@ export function TafsirTabPanel({
   expanded,
   onCopy,
   onShare,
+  onShareImage,
   onBookmark,
   onExpand: _onExpand,
   onAvailabilityChange,
@@ -223,6 +225,12 @@ export function TafsirTabPanel({
             <Share2 size={18} aria-hidden="true" />
             <span>مشاركة</span>
           </button>
+          {onShareImage ? (
+            <button type="button" onClick={onShareImage}>
+              <Share2 size={18} aria-hidden="true" />
+              <span>بطاقة</span>
+            </button>
+          ) : null}
           <button type="button" onClick={onBookmark}>
             <Bookmark size={18} aria-hidden="true" />
             <span>إشارة</span>

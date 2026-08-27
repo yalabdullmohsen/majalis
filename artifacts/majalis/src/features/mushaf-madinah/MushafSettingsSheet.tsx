@@ -1,7 +1,7 @@
 import { Check } from "lucide-react";
 import { createPortal } from "react-dom";
 
-export type MushafThemeChoice = "auto" | "paper" | "night";
+export type MushafThemeChoice = "auto" | "paper" | "sepia" | "night";
 
 type Props = {
   open: boolean;
@@ -42,7 +42,8 @@ export function MushafSettingsSheet({ open, theme, onTheme, onClose }: Props) {
           {(
             [
               ["auto", "تلقائي"],
-              ["paper", "فاتح"],
+              ["paper", "ورق"],
+              ["sepia", "بيج دافئ"],
               ["night", "داكن"],
             ] as const
           ).map(([id, label]) => (

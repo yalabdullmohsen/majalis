@@ -114,7 +114,8 @@ export function MushafPager({
     const t0 = performance.now();
     const tick = (now: number) => {
       const p = Math.min(1, (now - t0) / SETTLE_MS);
-      const eased = 1 - (1 - p) ** 3;
+      /* تقريب soft-spring بلا مكتبة: ease-out مع لمسة تسارع مبكرة */
+      const eased = 1 - (1 - p) ** 3.2;
       el.scrollLeft = from + (to - from) * eased;
       if (p < 1) requestAnimationFrame(tick);
     };

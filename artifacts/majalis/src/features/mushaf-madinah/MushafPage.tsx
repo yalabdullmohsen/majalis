@@ -17,6 +17,7 @@ type Props = {
   selectedVerseKey?: string | null;
   playingVerseKey?: string | null;
   onSelectVerse?: (verseKey: string) => void;
+  onLongPressVerse?: (verseKey: string) => void;
 };
 
 /** صفحة مصحف واحدة — شبكة ١٥ خانة من بيانات QPC. */
@@ -27,6 +28,7 @@ export const MushafPage = memo(function MushafPage({
   selectedVerseKey = null,
   playingVerseKey = null,
   onSelectVerse,
+  onLongPressVerse,
 }: Props) {
   const opening = layout.pageNumber === 1 || layout.pageNumber === 2;
   const surahStart = !opening && layout.surahsStartingOnPage.length > 0;
@@ -91,6 +93,7 @@ export const MushafPage = memo(function MushafPage({
                     words={cell.words}
                     centered={opening || isLastSurahLine(cell.words, layout)}
                     onSelectVerse={onSelectVerse}
+                    onLongPressVerse={onLongPressVerse}
                   />
                 )
               ) : null}

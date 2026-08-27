@@ -56,6 +56,7 @@ type Props = {
   onTafsir: () => void;
   onCopy: () => void;
   onShare: () => void;
+  onShareImage?: () => void;
   onBookmark: () => void;
   onReciterChange: (id: string) => void;
   onPlayReciter?: (id: string) => void;
@@ -94,6 +95,7 @@ export function AyahActionSheet({
   onTafsir,
   onCopy,
   onShare,
+  onShareImage,
   onBookmark,
   onReciterChange,
   onPlayReciter,
@@ -381,6 +383,7 @@ export function AyahActionSheet({
                     expanded={expanded}
                     onCopy={onCopy}
                     onShare={onShare}
+                    onShareImage={onShareImage}
                     onBookmark={onBookmark}
                     onExpand={onTafsir}
                     onAvailabilityChange={setTafsirTabAvailable}

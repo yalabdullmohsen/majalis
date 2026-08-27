@@ -165,6 +165,13 @@ html[data-theme="dark"] .site-footer.site-footer--global {
 html[data-theme="dark"] .site-footer-group__title,
 html[data-theme="dark"] .site-footer-accordion__btn {
   color: #e8f5ef;
+  background: transparent;
+}
+
+html[data-theme="dark"] .site-footer-accordion__btn {
+  /* سطح صريح يمنع WHITE_LEAK عند وراثة خلفية فاتحة من زر النظام */
+  background-color: #15201c;
+  border-block-end-color: rgba(255, 255, 255, 0.1);
 }
 
 html[data-theme="dark"] .site-footer-link {
