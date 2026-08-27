@@ -108,14 +108,14 @@ export function MushafAyahHighlight({ container, verseKey, playingKey = null }: 
     <div className="mm-ayah-hl" data-testid="mushaf-ayah-highlight" aria-hidden="true">
       {playing.map((b, i) => (
         <span
-          key={`p-${i}`}
+          key={`p-${playingKey ?? "x"}-${i}-${Math.round(b.left)}-${Math.round(b.top)}`}
           className="mm-ayah-hl__band is-playing"
           style={{ left: b.left, top: b.top, width: b.width, height: b.height }}
         />
       ))}
       {selected.map((b, i) => (
         <span
-          key={`s-${i}`}
+          key={`s-${verseKey ?? "x"}-${i}-${Math.round(b.left)}-${Math.round(b.top)}`}
           className="mm-ayah-hl__band is-selected"
           style={{ left: b.left, top: b.top, width: b.width, height: b.height }}
         />

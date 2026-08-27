@@ -259,6 +259,8 @@ html.dark .mm-viewport,
   -webkit-overflow-scrolling: touch;
   touch-action: pan-x;
   direction: ltr;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .mm-pager-scroller::-webkit-scrollbar {
@@ -272,6 +274,9 @@ html.dark .mm-viewport,
   scroll-snap-align: start;
   scroll-snap-stop: always;
   position: relative;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  contain: layout paint;
 }
 
 .mm-pager__sheet .mm-page-shell,
@@ -635,16 +640,33 @@ html.dark .mm-surah-frame__name {
   background: var(--mm-ayah-select);
   border-radius: 0.35em;
   pointer-events: none;
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   will-change: transform, opacity;
   contain: layout style paint;
+  animation: mm-ayah-hl-in 160ms ease-out;
+}
+
+@keyframes mm-ayah-hl-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-ayah-hl__band {
+    animation: none;
+  }
 }
 
 .mm-viewport[data-text-profile="low"] .mm-ayah-hl__band {
   will-change: auto;
   box-shadow: none;
   filter: none;
+  animation: none;
 }
 
 .mm-viewport[data-text-profile="low"] .mm-ayah-line__word {

@@ -33,5 +33,9 @@ assert.match(share, /#fdfbf7/);
 assert.match(share, /#1e7e52/);
 assert.match(tafsir, /onShareImage/);
 assert.match(tafsir, /بطاقة/);
+assert.match(css, /mm-ayah-hl-in/);
+assert.match(css, /translate3d\(0,\s*0,\s*0\)/);
+assert.doesNotMatch(read("package.json"), /framer-motion/);
+assert.doesNotMatch(prefetch, /api\.quran\.com/);
 
 console.log("mushaf-performance-engine-gate.test.ts: ok");
