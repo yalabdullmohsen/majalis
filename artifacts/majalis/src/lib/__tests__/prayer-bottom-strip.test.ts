@@ -50,8 +50,8 @@ assert.match(
 );
 assert.match(
   css,
-  /\.pts-hero\s*\{[\s\S]*?border-radius:\s*1\.15rem/,
-  "بطاقة البطل بزوايا مستديرة",
+  /\.pts-hero\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius,\s*1\.5rem\)/,
+  "بطاقة البطل بزوايا ناعمة (24px)",
 );
 assert.doesNotMatch(
   css,
@@ -62,8 +62,12 @@ assert.doesNotMatch(
 assert.doesNotMatch(
   css,
   /\.pts-screen\s*\{[^}]*linear-gradient/,
-  "خلفية الشاشة لون واحد متصل بلا تدرّج مقطوع",
+  "خلفية الشاشة الصلبة بلا تدرّج داخل الكتلة — التدرّج عبر ::after",
 );
+assert.match(css, /\.pts-screen::after[\s\S]*?linear-gradient\(180deg,\s*#0f4a38/);
+assert.match(css, /\.pts-row\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius/);
+assert.match(css, /\.pts-dock__item\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius-sm/);
+assert.match(css, /padding-bottom:\s*calc\(\s*96px\s*\+\s*var\(--inset-bottom/);
 assert.match(css, /var\(--inset-top/);
 assert.match(css, /var\(--inset-bottom/);
 assert.doesNotMatch(css, /env\(\s*safe-area-inset/);
