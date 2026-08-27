@@ -38,7 +38,7 @@ import { AyahActionSheet } from "./AyahActionSheet";
 import { MushafControls } from "./MushafControls";
 import { MushafPage } from "./MushafPage";
 import { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
-import { MushafSettingsSheet, type MushafThemeChoice } from "./MushafSettingsSheet";
+import { MushafSettingsSheet, type MushafHideLevel, type MushafThemeChoice } from "./MushafSettingsSheet";
 import {
   findMushafPageForAyah,
   parseVerseKey,
@@ -70,19 +70,30 @@ type Props = {
   onIndex: () => void;
 };
 
-type MushafTheme = "paper" | "sepia" | "night";
+type MushafTheme = "paper" | "sepia" | "night" | "oled";
 
 const THEME_KEY = "majlisilm.mushaf.theme";
 const THEME_CHOICE_KEY = "majlisilm.mushaf.theme-choice";
+const HIDE_LEVEL_KEY = "majlisilm.mushaf.hide-level";
 
 function loadThemeChoice(): MushafThemeChoice {
   try {
     const v = localStorage.getItem(THEME_CHOICE_KEY) ?? localStorage.getItem(THEME_KEY);
-    if (v === "night" || v === "paper" || v === "sepia" || v === "auto") return v;
+    if (v === "night" || v === "paper" || v === "sepia" || v === "oled" || v === "auto") return v;
   } catch {
     /* ignore */
   }
   return "paper";
+}
+
+function loadHideLevel(): MushafHideLevel {
+  try {
+    const v = Number(localStorage.getItem(HIDE_LEVEL_KEY));
+    if (v === 1 || v === 2) return v;
+  } catch {
+    /* ignore */
+  }
+  return 0;
 }
 
 function resolveTheme(choice: MushafThemeChoice): MushafTheme {
@@ -130,6 +141,8 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   const [audioTime, setAudioTime] = useState({ currentTime: 0, duration: 0, playbackRate: 1 });
   const [themeChoice, setThemeChoice] = useState<MushafThemeChoice>(() => loadThemeChoice());
   const theme = resolveTheme(themeChoice);
+  const [hideLevel, setHideLevel] = useState<MushafHideLevel>(() => loadHideLevel());
+  const [revealedVerses, setRevealedVerses] = useState<ReadonlySet<string>>(() => new Set());
 
   const { fontFamily, ready: fontReady } = useQpcPageFont(page);
   const { canMountPage, allowOffscreenPrefetch } = useMushafResourceGate(
@@ -169,6 +182,19 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       /* ignore */
     }
   }, [theme, themeChoice]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(HIDE_LEVEL_KEY, String(hideLevel));
+    } catch {
+      /* ignore */
+    }
+    setRevealedVerses(new Set());
+  }, [hideLevel]);
+
+  useEffect(() => {
+    setRevealedVerses(new Set());
+  }, [page]);
 
   /** شريط حالة iOS: أيقونات داكنة على الورق · فاتحة على الليلي */
   useEffect(() => {
@@ -768,12 +794,12 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       dir="rtl"
       nextPage={
         allowOffscreenPrefetch && page < MUSHAF_PAGE_MAX ? (
-          <PrefetchedMushafPage pageNumber={page + 1} />
+          <PrefetchedMushafPage pageNumber={page + 1} hideLevel={hideLevel} />
         ) : undefined
       }
       prevPage={
         allowOffscreenPrefetch && page > 1 ? (
-          <PrefetchedMushafPage pageNumber={page - 1} />
+          <PrefetchedMushafPage pageNumber={page - 1} hideLevel={hideLevel} />
         ) : undefined
       }
       pageSlot={
@@ -796,6 +822,16 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
               playingVerseKey={playingVerseKey}
               onSelectVerse={onSelectVerse}
               onLongPressVerse={onLongPressVerse}
+              hideLevel={hideLevel}
+              revealedVerses={revealedVerses}
+              onToggleReveal={(verseKey) => {
+                setRevealedVerses((prev) => {
+                  if (prev.has(verseKey)) return prev;
+                  const next = new Set(prev);
+                  next.add(verseKey);
+                  return next;
+                });
+              }}
             />
           ) : null}
         </div>
@@ -854,11 +890,25 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         }}
         onToggleTheme={() =>
           setThemeChoice((t) =>
-            t === "paper" ? "sepia" : t === "sepia" ? "night" : t === "night" ? "auto" : "paper",
+            t === "paper"
+              ? "sepia"
+              : t === "sepia"
+                ? "night"
+                : t === "night"
+                  ? "oled"
+                  : t === "oled"
+                    ? "auto"
+                    : "paper",
           )
         }
         themeLabel={
-          theme === "night" ? "ليلي هادئ" : theme === "sepia" ? "بيج دافئ" : "المصحف الورقي"
+          theme === "oled"
+            ? "أسود OLED"
+            : theme === "night"
+              ? "ليلي هادئ"
+              : theme === "sepia"
+                ? "بيج دافئ"
+                : "المصحف الورقي"
         }
       />
 
@@ -940,6 +990,8 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         open={settingsOpen}
         theme={themeChoice}
         onTheme={setThemeChoice}
+        hideLevel={hideLevel}
+        onHideLevel={setHideLevel}
         onClose={() => setSettingsOpen(false)}
       />
 
@@ -952,7 +1004,13 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
 }
 
 /** صفحة مجاورة محمّلة مسبقاً (خطاً ونصاً) بلا وميض عند السحب. */
-function PrefetchedMushafPage({ pageNumber }: { pageNumber: number }) {
+function PrefetchedMushafPage({
+  pageNumber,
+  hideLevel = 0,
+}: {
+  pageNumber: number;
+  hideLevel?: MushafHideLevel;
+}) {
   const { fontFamily, ready } = useQpcPageFont(pageNumber);
   const [layout, setLayout] = useState<MushafPageLayout | null>(() => getCachedMushafPage(pageNumber));
   useEffect(() => {
@@ -976,6 +1034,7 @@ function PrefetchedMushafPage({ pageNumber }: { pageNumber: number }) {
           layout={layout}
           fontFamily={fontFamily}
           displayPageNumber={pageNumber}
+          hideLevel={hideLevel}
         />
       ) : (
         <div className="mm-page-placeholder" aria-hidden="true" />

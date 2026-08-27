@@ -143,7 +143,8 @@
 
 html[data-theme="dark"] .mm-viewport,
 html.dark .mm-viewport,
-.mm-viewport[data-mushaf-theme="night"] {
+.mm-viewport[data-mushaf-theme="night"],
+.mm-viewport[data-mushaf-theme="oled"] {
   --mm-paper: #101820;
   --mm-paper-deep: #0c1218;
   --mm-outer-bg: #0f1720;
@@ -165,6 +166,31 @@ html.dark .mm-viewport,
   --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 42%, transparent);
   --mushaf-bg: var(--mm-outer-bg);
   background: var(--mm-outer-bg);
+}
+
+/* OLED True Black — خلفية مطلقة وحبر بيج خافت لتقليل إجهاد العين واستهلاك البطارية */
+.mm-viewport[data-mushaf-theme="oled"] {
+  --mm-paper: #000000;
+  --mm-paper-deep: #000000;
+  --mm-outer-bg: #000000;
+  --mm-ink: #d4c5a9;
+  --mm-gold: #c9b896;
+  --mm-gold-soft: #d4c5a9;
+  --mm-gold-deep: #b8a078;
+  --mm-ayah-mark: #c9b896;
+  --mm-header: #d4c5a9;
+  --mm-banner-fill: linear-gradient(180deg, #1a1814 0%, #0a0908 100%);
+  --mm-banner-name-bg: #000000;
+  --mm-ayah-select: rgba(212, 197, 169, 0.2);
+  --mm-ayah-play: rgba(212, 197, 169, 0.14);
+  --mm-ui-accent: #5ec49a;
+  --mm-ui-accent-deep: #3da87a;
+  --mm-audio-capsule: #0a0a0a;
+  --mm-chrome: #000000;
+  --mm-chrome-fg: #d4c5a9;
+  --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 42%, transparent);
+  --mushaf-bg: #000000;
+  background: #000000;
 }
 
 .mm-viewport[data-mushaf-theme="paper"] {
@@ -757,10 +783,12 @@ html[data-sovereign-tier="critical"] .scroll-to-top {
 
 html[data-theme="dark"] .mm-ayah-run__text.is-selected,
 html.dark .mm-ayah-run__text.is-selected,
-.mm-viewport[data-mushaf-theme="night"] .mm-ayah-run__text.is-selected,
+.mm-viewport[data-mushaf-theme="night"],
+.mm-viewport[data-mushaf-theme="oled"] .mm-ayah-run__text.is-selected,
 html[data-theme="dark"] .ayah-active.mm-ayah-line__word:not([data-type="end"]),
 html.dark .ayah-active.mm-ayah-line__word:not([data-type="end"]),
-.mm-viewport[data-mushaf-theme="night"] .ayah-active.mm-ayah-line__word:not([data-type="end"]) {
+.mm-viewport[data-mushaf-theme="night"],
+.mm-viewport[data-mushaf-theme="oled"] .ayah-active.mm-ayah-line__word:not([data-type="end"]) {
   background: transparent;
   box-shadow: none;
 }
@@ -787,6 +815,19 @@ html.dark .ayah-active.mm-ayah-line__word:not([data-type="end"]),
   flex: 0 0 auto;
   letter-spacing: 0;
   word-spacing: 0;
+}
+
+/* اختبار الحفظ — إخفاء كلمات دون كسر تخطيط QPC */
+.mm-ayah-line__word.is-blanked:not([data-type="end"]) {
+  color: transparent;
+  background: color-mix(in srgb, var(--mm-gold-soft) 52%, var(--mm-paper));
+  border-radius: 0.12em;
+  user-select: none;
+}
+
+.mm-viewport[data-mushaf-theme="night"] .mm-ayah-line__word.is-blanked:not([data-type="end"]),
+.mm-viewport[data-mushaf-theme="oled"] .mm-ayah-line__word.is-blanked:not([data-type="end"]) {
+  background: color-mix(in srgb, var(--mm-gold) 30%, transparent);
 }
 
 .mm-ayah-number,
@@ -875,7 +916,8 @@ html.dark .ayah-active.mm-ayah-line__word:not([data-type="end"]),
 
 html[data-theme="dark"] .mm-viewport .mm-page-footer__badge,
 html.dark .mm-viewport .mm-page-footer__badge,
-.mm-viewport[data-mushaf-theme="night"] .mm-page-footer__badge {
+.mm-viewport[data-mushaf-theme="night"],
+.mm-viewport[data-mushaf-theme="oled"] .mm-page-footer__badge {
   background: transparent;
   color: var(--mm-gold-soft);
   border: 0;
@@ -1043,7 +1085,8 @@ html.dark .mm-viewport .mm-page-footer__badge,
   cursor: pointer;
 }
 
-.mm-viewport[data-mushaf-theme="night"] .mm-controls__icon {
+.mm-viewport[data-mushaf-theme="night"],
+.mm-viewport[data-mushaf-theme="oled"] .mm-controls__icon {
   color: #8fbf9a;
 }
 
@@ -1157,7 +1200,8 @@ html.dark .mm-viewport .mm-page-footer__badge,
   opacity: 0;
 }
 
-.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock {
+.mm-viewport[data-mushaf-theme="night"],
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock {
   border-color: color-mix(in srgb, var(--mm-gold) 35%, transparent);
   color: var(--mm-chrome-fg);
 }
@@ -1230,7 +1274,8 @@ html.dark .mm-viewport .mm-page-footer__badge,
   min-height: 36px;
 }
 
-.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__reciter-btn {
+.mm-viewport[data-mushaf-theme="night"],
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__reciter-btn {
   border-color: color-mix(in srgb, var(--mm-gold) 40%, transparent);
   background: color-mix(in srgb, #2a241c 80%, transparent);
 }
@@ -1873,7 +1918,8 @@ html.dark .app-sheet-overlay:has(.mm-tafsir) .app-sheet-overlay__scrim {
 
 html[data-theme="dark"] .mm-goto__error,
 html.dark .mm-goto__error,
-.mm-viewport[data-mushaf-theme="night"] .mm-goto__error {
+.mm-viewport[data-mushaf-theme="night"],
+.mm-viewport[data-mushaf-theme="oled"] .mm-goto__error {
   color: #f0b4b4;
 }
 
@@ -2670,6 +2716,13 @@ html.dark .mm-settings-sheet {
   margin: 0 0 0.25rem;
   font-size: 0.92rem;
   font-weight: 700;
+}
+
+.mm-settings-sheet__hint {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--mm-ink, #111) 62%, transparent);
 }
 
 .mm-settings-sheet__row {

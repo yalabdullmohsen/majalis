@@ -7,6 +7,7 @@ import { MushafBasmala } from "./MushafBasmala";
 import { MushafPageFooter } from "./MushafPageFooter";
 import { MushafPageHeader } from "./MushafPageHeader";
 import { MushafSurahOrnament } from "./MushafSurahOrnament";
+import type { MushafHideLevel } from "./MushafSettingsSheet";
 import { useMushafPageFontFit } from "./useMushafPageFontFit";
 
 type Props = {
@@ -18,6 +19,9 @@ type Props = {
   playingVerseKey?: string | null;
   onSelectVerse?: (verseKey: string) => void;
   onLongPressVerse?: (verseKey: string) => void;
+  hideLevel?: MushafHideLevel;
+  revealedVerses?: ReadonlySet<string>;
+  onToggleReveal?: (verseKey: string) => void;
 };
 
 /** صفحة مصحف واحدة — شبكة ١٥ خانة من بيانات QPC. */
@@ -29,6 +33,9 @@ export const MushafPage = memo(function MushafPage({
   playingVerseKey = null,
   onSelectVerse,
   onLongPressVerse,
+  hideLevel = 0,
+  revealedVerses,
+  onToggleReveal,
 }: Props) {
   /** ص١: كتلة موسّطة بشارة علوية — ص٢: بداية البقرة من هامش القراءة العادي */
   const isOpeningP1 = layout.pageNumber === 1;
@@ -102,6 +109,9 @@ export const MushafPage = memo(function MushafPage({
                     centered={isFlexBody || isLastSurahLine(cell.words, layout)}
                     onSelectVerse={onSelectVerse}
                     onLongPressVerse={onLongPressVerse}
+                    hideLevel={hideLevel}
+                    revealedVerses={revealedVerses}
+                    onToggleReveal={onToggleReveal}
                   />
                 )
               ) : null}

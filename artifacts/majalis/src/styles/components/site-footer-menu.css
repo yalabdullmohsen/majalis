@@ -169,10 +169,14 @@ html.dark .site-footer-group__title {
 }
 
 html[data-theme="dark"] .site-footer-accordion__btn,
-html.dark .site-footer-accordion__btn {
+html.dark .site-footer-accordion__btn,
+html[data-theme="dark"] .site-footer.site-footer--global .site-footer-accordion__btn,
+html.dark .site-footer.site-footer--global .site-footer-accordion__btn {
   color: #e8f5ef;
-  /* سطح صريح داكن — يمنع WHITE_LEAK (لا transparent على الزر) */
+  /* سطح صريح داكن — يمنع WHITE_LEAK (لا transparent ولا تدرّج فاتح) */
   background: #15201c;
+  background-color: #15201c;
+  background-image: none;
   border-block-end-color: rgba(255, 255, 255, 0.1);
 }
 
