@@ -63,17 +63,17 @@ function measure(fontPx: number, text: string): number {
 }
 
 assert.equal(fitPageFontSize([], 300, "qpc", measure), 12);
-assert.equal(fitPageFontSize(["ا"], 300, "qpc", measure), 34);
-assert.ok(fitPageFontSize(["أ".repeat(80)], 200, "qpc", measure) < 34);
+assert.equal(fitPageFontSize(["ا"], 300, "qpc", measure), 35);
+assert.ok(fitPageFontSize(["أ".repeat(80)], 200, "qpc", measure) < 35);
 
 {
   const tall = fitPageFontSize(["ا"], 400, "qpc", measure, { blockHeightPx: 525, lineCount: 15 });
   assert.ok(tall <= Math.floor(525 / 15 / 1.85), `قيد الارتفاع: ${tall}`);
-  assert.ok(tall >= 12 && tall <= 34, `داخل الحدود: ${tall}`);
+  assert.ok(tall >= 12 && tall <= 35, `داخل الحدود: ${tall}`);
 }
 
 assert.match(fitFn, /mushaf-fitPageFontSize-v2/);
-assert.match(fitFn, /MUSHAF_FIT_MAX_PX = 34/);
+assert.match(fitFn, /MUSHAF_FIT_MAX_PX = 35/);
 assert.match(fitFn, /MUSHAF_FIT_LINE_RATIO = 1.85/);
 assert.match(fitFn, /assertMushafPageFontReady/);
 assert.match(fitFn, /normalizeMushafFontFamily/);

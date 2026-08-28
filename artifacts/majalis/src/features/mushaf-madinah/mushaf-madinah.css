@@ -24,6 +24,10 @@
   --mm-paper-deep: #faf7f0;
   --mm-outer-bg: #fdfbf7;
   --mm-ink: #111111;
+  /* حبر الآيات — يُغمَق على ثيم الورق */
+  --mm-qpc-ink: var(--mm-ink);
+  /* سمك بصري لخط QPC أحادي الوزن (لا font-weight) */
+  --mm-qpc-ink-emphasis: 0.016em 0 0 var(--mm-qpc-ink), -0.016em 0 0 var(--mm-qpc-ink);
   --mm-gold: #a68b67;
   --mm-gold-soft: #c5b396;
   /* إطار/ذهب غامق — WCAG ≥4.5:1 على الورق الكريمي */
@@ -51,7 +55,7 @@
   --mm-ayah-end: 1.12em;
   --mm-page-max-w: min(100%, 42rem);
   /* مقياس ابتدائي ≈٤٫٣٪ ارتفاع — يُضبط ببحث ثنائي 0.25px بعد fonts.ready */
-  --mm-qpc-size: clamp(12px, 4.3vh, 34px);
+  --mm-qpc-size: clamp(12px, 4.45vh, 35px);
   --mm-basmala-size: var(--mm-qpc-size);
   --mm-line-height: 1.85;
   --mm-line-gap: 0;
@@ -200,7 +204,8 @@ html.dark .mm-viewport,
   --mm-paper: #fdfbf7;
   --mm-paper-deep: #faf7f0;
   --mm-outer-bg: #fdfbf7;
-  --mm-ink: #111111;
+  --mm-ink: #000000;
+  --mm-qpc-ink: #000000;
   --mushaf-bg: var(--mm-outer-bg);
   background: var(--mm-outer-bg);
 }
@@ -589,7 +594,8 @@ html.dark .mm-viewport .mm-page {
 }
 
 .mm-surah-frame__name {
-  color: var(--mm-ink);
+  color: var(--mm-qpc-ink, var(--mm-ink));
+  text-shadow: var(--mm-qpc-ink-emphasis, none);
   text-align: center;
   font-family: var(--mm-qpc-family), "Amiri Quran", serif;
   font-size: calc(var(--mm-qpc-size) * 0.85);
@@ -618,7 +624,10 @@ html.dark .mm-surah-frame__name {
   text-align: center;
   font-size: var(--mm-qpc-size);
   font-weight: 400;
-  color: var(--mm-ink);
+  color: var(--mm-qpc-ink, var(--mm-ink));
+  text-shadow: var(--mm-qpc-ink-emphasis, none);
+  -webkit-font-smoothing: auto;
+  text-rendering: geometricPrecision;
   line-height: var(--mm-line-height);
   letter-spacing: 0;
   word-spacing: 0;
@@ -653,7 +662,10 @@ html.dark .mm-surah-frame__name {
   font-family: var(--mm-qpc-family), "Amiri Quran", serif;
   font-size: var(--mm-qpc-size);
   line-height: var(--mushaf-line-height, var(--mm-line-height));
-  color: var(--mm-ink);
+  color: var(--mm-qpc-ink, var(--mm-ink));
+  text-shadow: var(--mm-qpc-ink-emphasis, none);
+  -webkit-font-smoothing: auto;
+  text-rendering: geometricPrecision;
   letter-spacing: 0;
   word-spacing: 0;
   white-space: nowrap;
@@ -768,6 +780,22 @@ html.dark .mm-surah-frame__name {
 .mm-viewport[data-text-profile="low"] .mm-ayah-line__word {
   text-shadow: none;
   transition: none;
+}
+
+.mm-viewport[data-text-profile="low"] .mm-ayah-line,
+.mm-viewport[data-text-profile="low"] .mm-basmala,
+.mm-viewport[data-text-profile="low"] .mm-surah-frame__name {
+  text-shadow: none;
+}
+
+.mm-viewport[data-mushaf-theme="night"] .mm-ayah-line,
+.mm-viewport[data-mushaf-theme="night"] .mm-basmala,
+.mm-viewport[data-mushaf-theme="night"] .mm-surah-frame__name,
+.mm-viewport[data-mushaf-theme="oled"] .mm-ayah-line,
+.mm-viewport[data-mushaf-theme="oled"] .mm-basmala,
+.mm-viewport[data-mushaf-theme="oled"] .mm-surah-frame__name {
+  --mm-qpc-ink-emphasis: none;
+  text-shadow: none;
 }
 
 html[data-sovereign-tier="conserving"] .mm-ayah-hl__band,
