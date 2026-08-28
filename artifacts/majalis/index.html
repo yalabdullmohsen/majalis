@@ -64,6 +64,8 @@
     <script id="mj-version-boot">
       (function () {
         var FLAG = "majlisilm-refreshing-version";
+        if (navigator.webdriver) return;
+        if (location.hostname === "127.0.0.1" || location.hostname === "localhost") return;
         try {
           if (sessionStorage.getItem(FLAG) === "1") {
             sessionStorage.removeItem(FLAG);
@@ -130,6 +132,10 @@
     </script>
     <style id="mj-lcp-critical">
       /* سطح نهائي فورًا — بلا أبيض افتراضي وبلا انتظار خط ثلث/رقعة */
+      html {
+        --ui-font-scale: 1;
+        --ui-density-scale: 1;
+      }
       html, body, #root {
         background-color: #F2F4F3;
         margin: 0;
