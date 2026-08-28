@@ -12,7 +12,7 @@ const STORE_KEY = "majalis-prayer-alert-prefs-v1";
 /** دقائق التنبيه المسبق الافتراضية. */
 export const PRE_ALERT_MINUTES = 15;
 
-export const PRE_ALERT_MINUTE_OPTIONS = [0, 5, 10, 15, 20, 30] as const;
+export const PRE_ALERT_MINUTE_OPTIONS = [0, 5, 10, 15, 30] as const;
 export type PreAlertMinutes = (typeof PRE_ALERT_MINUTE_OPTIONS)[number];
 
 /** دقائق بعد دخول الوقت لإشعار التذكير الخفيف. */
@@ -26,7 +26,7 @@ export type PrayerAlertPreferences = {
   alertsEnabled: boolean;
   /** تنبيه قبل الصلاة (شريط داخل التطبيق + إشعار محلي). */
   preAlertEnabled: boolean;
-  /** دقائق التنبيه المسبق: 0 | 5 | 10 | 15 | 20. */
+  /** دقائق التنبيه المسبق: 0 | 5 | 10 | 15 | 30. */
   preAlertMinutes: PreAlertMinutes;
   /** تنبيه عند دخول وقت الصلاة. */
   enterAlertEnabled: boolean;
@@ -39,7 +39,7 @@ export type PrayerAlertPreferences = {
 };
 
 function isPreAlertMinutes(v: unknown): v is PreAlertMinutes {
-  return v === 0 || v === 5 || v === 10 || v === 15 || v === 20;
+  return v === 0 || v === 5 || v === 10 || v === 15 || v === 30;
 }
 
 function isSoundProfile(v: unknown): v is PrayerSoundProfile {
@@ -75,8 +75,9 @@ export function loadPrayerAlertPrefs(): PrayerAlertPreferences {
     return {
       alertsEnabled: parsed.alertsEnabled ?? base.alertsEnabled,
       preAlertEnabled: parsed.preAlertEnabled ?? base.preAlertEnabled,
-      preAlertMinutes: rawMinutes === 30
-        ? 20
+      /* ترحيل: 20 دقيقة القديمة → 15 */
+      preAlertMinutes: rawMinutes === 20
+        ? 15
         : isPreAlertMinutes(rawMinutes)
           ? rawMinutes
           : base.preAlertMinutes,

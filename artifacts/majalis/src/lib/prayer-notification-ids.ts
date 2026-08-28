@@ -2,13 +2,19 @@
  * معرّفات إشعارات صلاة قابلة للتنبؤ: hash(prayer, dateISO, kind)
  * يمنع التكرار والتضاعف عبر الأيام.
  *
+ * مفاتيح الصلوات الثابتة (لا random):
+ *   fajr | dhuhr | asr | maghrib | isha
+ *
  * Capacitor يتطلّب id رقميًا؛ المفتاح الودّي في extra.friendlyKey
  * بصيغة: adhan-fajr-yyyy-mm-dd (دخول الوقت) أو …-pre / …-post.
  */
 
+export const STABLE_PRAYER_KEYS = ["fajr", "dhuhr", "asr", "maghrib", "isha"] as const;
+export type StablePrayerKey = (typeof STABLE_PRAYER_KEYS)[number];
+
 export type PrayerNotifIdKind = "pre" | "enter" | "post";
 
-const PRAYER_ORDER = ["fajr", "dhuhr", "asr", "maghrib", "isha"] as const;
+const PRAYER_ORDER = STABLE_PRAYER_KEYS;
 
 /** مفتاح ودّي ثابت للتشخيص وعدم التكرار المنطقي. */
 export function friendlyAdhanNotificationKey(

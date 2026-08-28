@@ -408,7 +408,7 @@ export async function listPendingPrayerNotifications(): Promise<{
   }
 }
 
-/** إلغاء معلّقات الصلاة لليوم+الغد (معرّفات قابلة للتنبؤ) + أي معلّق قديم بنطاق سابق. */
+/** إلغاء معلّقات الصلاة لليوم+الغد + مقاطع الأذان + أي معلّق prayer-/adhanSegment. */
 export async function cancelAllPrayerNativeNotifications(): Promise<void> {
   if (!isNative) return;
   try {
@@ -422,8 +422,37 @@ export async function cancelAllPrayerNativeNotifications(): Promise<void> {
       const idx = PRAYER_ORDER.indexOf(key);
       ids.push({ id: 9100 + idx }, { id: 9200 + idx }, { id: 9400 + idx });
     }
-    await LocalNotifications.cancel({ notifications: ids });
+
+    try {
+      const { notifications } = await LocalNotifications.getPending();
+      for (const n of notifications) {
+        const extra = (n.extra ?? {}) as {
+          kind?: string;
+          adhanSegment?: boolean;
+          friendlyKey?: string;
+          prayerKey?: string;
+        };
+        const pk = String(extra.prayerKey || "").toLowerCase();
+        const isPrayer =
+          String(extra.kind || "").startsWith("prayer-") ||
+          extra.adhanSegment === true ||
+          String(extra.friendlyKey || "").startsWith("adhan-") ||
+          (PRAYER_ORDER as readonly string[]).includes(pk);
+        if (isPrayer) ids.push({ id: n.id });
+      }
+    } catch {
+      /* ignore pending scan */
+    }
+
+    const unique = Array.from(new Map(ids.map((x) => [x.id, x])).values());
+    await LocalNotifications.cancel({ notifications: unique });
     await purgePastPrayerNativeNotifications();
+    try {
+      const { cancelAdhanIosSegmentChain } = await import("./adhan-ios-segments");
+      await cancelAdhanIosSegmentChain();
+    } catch {
+      /* ignore */
+    }
   } catch {
     /* تجاهل */
   }

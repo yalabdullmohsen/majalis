@@ -17,12 +17,14 @@ import { getActivePrayerLocation } from "./prayer-location-prefs";
 import { loadPrayerAlertPrefs, LIVE_ACTIVITY_LINGER_MINUTES } from "./prayer-alert-preferences";
 import {
   getEffectiveMuezzinId,
+  getEffectivePlaybackMode,
   loadAdhanPrefs,
   PRAYER_KEYS,
   type PrayerKey,
 } from "./adhan-preferences";
 import {
   cancelAllPrayerNativeNotifications,
+  listPendingPrayerNotifications,
   MAX_NATIVE_PRAYER_NOTIFS,
   purgePastPrayerNativeNotifications,
   schedulePrayerNativeNotifications,
@@ -32,6 +34,7 @@ import { dateISOInZone } from "./prayer-notification-ids";
 import { startPrayerLiveActivity, markPrayerLiveActivityEntered, endPrayerLiveActivity } from "./plugins/prayer-live-activity";
 import type { PrayerSoundProfile } from "./prayer-notification-sounds";
 import { PRAYER_ALERT_EVENT_NAME, type PrayerAlertEvent } from "./prayer-alert-events";
+import { isIOS, isNative } from "./capacitor-utils";
 
 export { PRAYER_ALERT_EVENT_NAME, type PrayerAlertEvent } from "./prayer-alert-events";
 
@@ -66,6 +69,7 @@ export function buildPrayerScheduleSignature(opts: {
   soundProfile?: PrayerSoundProfile;
   muezzinId?: string;
   prayerEnabled?: boolean;
+  iosFullHandlesEnter?: boolean;
 }): string {
   const minuteBucket = Math.floor(opts.prayerTimeEpochMs / 60_000);
   return [
@@ -78,6 +82,7 @@ export function buildPrayerScheduleSignature(opts: {
     opts.soundProfile ?? "auto",
     opts.muezzinId ?? "",
     opts.prayerEnabled === false ? "off" : "on",
+    opts.iosFullHandlesEnter ? "ios-full" : "enter-native",
   ].join("|");
 }
 
@@ -170,13 +175,21 @@ function resolveSlotAlertOpts(
   const pk = asPrayerKey(slotKey);
   const prayerOn = pk ? adhanPrefs.prayers[pk].enabled : true;
   const preMinutes = pk ? adhanPrefs.prayers[pk].advanceMinutes : prefs.preAlertMinutes;
+  const fullMode = pk ? getEffectivePlaybackMode(adhanPrefs, pk) === "full" : false;
+  /**
+   * على iOS الوضع الكامل: مقاطع الأذان (`scheduleIosFullAdhan`) هي إشعار الدخول.
+   * لا نُجدول enter منفصلًا هنا وإلا يتكرر الإشعار.
+   */
+  const iosFullHandlesEnter = isNative && isIOS && fullMode;
   return {
     prayerEnabled: prayerOn,
     preAlertMinutes: preMinutes,
     preAlertEnabled: prefs.alertsEnabled && prefs.preAlertEnabled && prayerOn,
-    enterAlertEnabled: prefs.alertsEnabled && prefs.enterAlertEnabled && prayerOn,
+    enterAlertEnabled:
+      prefs.alertsEnabled && prefs.enterAlertEnabled && prayerOn && !iosFullHandlesEnter,
     postReminderEnabled: prefs.alertsEnabled && prefs.postReminderEnabled && prayerOn,
     muezzinId: pk ? getEffectiveMuezzinId(adhanPrefs, pk) : "",
+    iosFullHandlesEnter,
   };
 }
 
@@ -227,6 +240,18 @@ async function rescheduleAllNativePrayers(
   if (!verify.ok) {
     console.error("[prayer-alert] post-schedule drift", verify.diffs);
   }
+
+  const pending = await listPendingPrayerNotifications();
+  console.info("[adhan/debug] pending after reschedule", {
+    count: pending.count,
+    items: pending.items.map((i) => ({
+      id: i.id,
+      kind: i.kind,
+      friendlyKey: i.friendlyKey,
+      at: i.at,
+      sound: i.sound,
+    })),
+  });
 }
 
 /**
@@ -273,6 +298,7 @@ export async function startPrayerAlertScheduler(
             soundProfile: prefs.soundProfile,
             muezzinId: slotOpts.muezzinId,
             prayerEnabled: slotOpts.prayerEnabled,
+            iosFullHandlesEnter: slotOpts.iosFullHandlesEnter,
           });
         }),
       ].join(";");

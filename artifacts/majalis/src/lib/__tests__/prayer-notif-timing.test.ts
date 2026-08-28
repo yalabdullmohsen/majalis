@@ -239,8 +239,16 @@ const { hashPrayerNotificationId } = await import("../prayer-notification-ids");
   });
   assert.match(pre.title, /اقترب/);
   assert.match(pre.body, /المغرب/);
-  assert.match(pre.body, /١٥|15|بقي/);
+  assert.match(pre.body, /١٥|15|بقي|دقائق/);
   assert.match(pre.body, /صلاة/);
+  const pre10 = buildScheduledPrayerNotificationCopy({
+    kind: "pre",
+    prayerName: "المغرب",
+    prayerTimeLabel: formatTime12("18:27"),
+    minutesBefore: 10,
+  });
+  assert.equal(pre10.title, "اقترب وقت المغرب");
+  assert.equal(pre10.body, "بقي 10 دقائق على صلاة المغرب");
   const enter = buildScheduledPrayerNotificationCopy({
     kind: "enter",
     prayerName: "المغرب",

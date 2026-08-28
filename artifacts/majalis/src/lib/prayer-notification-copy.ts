@@ -104,6 +104,15 @@ export function preAlertKindForMinutes(minutes: number): "pre-15" | "pre-10" | "
  * العنوان: استعد للصلاة / أذان …
  * الجسم: المغرب ٦:٢٧ م · بعد ١٥ دقيقة
  */
+/** صياغة عربية لعدد الدقائق في نص التنبيه المسبق. */
+export function formatPreAlertMinutesPhrase(minutes: number): string {
+  const mins = Math.max(1, Math.round(minutes));
+  if (mins === 1) return "دقيقة واحدة";
+  if (mins === 2) return "دقيقتين";
+  if (mins >= 3 && mins <= 10) return `${mins} دقائق`;
+  return `${mins} دقيقة`;
+}
+
 export function buildScheduledPrayerNotificationCopy(opts: {
   kind: "pre" | "enter" | "post";
   prayerName: string;
@@ -116,7 +125,7 @@ export function buildScheduledPrayerNotificationCopy(opts: {
     const mins = Math.max(1, Math.round(opts.minutesBefore ?? 15));
     return {
       title: `اقترب وقت ${name}`,
-      body: `بقي ${mins} دقائق على صلاة ${name}`,
+      body: `بقي ${formatPreAlertMinutesPhrase(mins)} على صلاة ${name}`,
     };
   }
   if (opts.kind === "enter") {
