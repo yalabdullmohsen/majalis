@@ -235,6 +235,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "quran",
     label: "مركز القرآن الكريم",
+    navLabel: "مركز القرآن",
     subtitle: "المصحف والتلاوة والتفسير",
     route: "/quran-hub",
     icon: BookOpen,
@@ -243,7 +244,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     surfaces: ["bottomNav", "search"],
     status: "live",
     keywords: ["مصحف", "قرآن", "quran", "مركز القرآن الكريم"],
-    aliases: ["القرآن", "القرآن الكريم", "قرآن", "المصحف", "مركز القرآن الكريم"],
+    aliases: ["القرآن", "القرآن الكريم", "قرآن", "المصحف", "مركز القرآن الكريم", "مركز القرآن"],
   },
   {
     id: "lessons",
