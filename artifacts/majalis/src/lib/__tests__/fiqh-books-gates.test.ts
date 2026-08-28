@@ -119,7 +119,7 @@ console.log("\n=== ٣) صفر درس فقهي في مصادر الأقسام ا�
     assert(leaked.length === 0, `${f} بلا معرفات مسائل الفقه (${leaked.slice(0, 3).join(",") || "لا شيء"})`);
   }
   const view = read("src/pages/fiqh/ui/FiqhView.tsx");
-  assert(!view.includes("@/pages/lessons") && !view.includes("/quran-hub"), "بوابة الفقه لا تدمج مركز القرآن/الدروس");
+  assert(!view.includes("@/pages/lessons") && !view.includes("/quran-hub"), "بوابة الفقه لا تدمج مركز القرآن الكريم/الدروس");
 }
 
 console.log("\n=== ٤) صفر تكرار مسار أو عنوان في الشبكة ===");

@@ -133,8 +133,8 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     Icon: BookMarked,
     label: "القرآن الكريم",
     items: [
-      { href: "/mushaf",               Icon: BookOpen,     title: seoNavLabel("/mushaf", "القرآن"), desc: "المصحف الشريف" },
-      { href: "/quran-hub",      Icon: BookMarked,   title: seoNavLabel("/quran-hub", "مركز القرآن"), desc: "المصحف والتجويد والحفظ وعلوم القرآن" },
+      { href: "/mushaf",               Icon: BookOpen,     title: seoNavLabel("/mushaf", "القرآن الكريم"), desc: "المصحف الشريف" },
+      { href: "/quran-hub",      Icon: BookMarked,   title: seoNavLabel("/quran-hub", "مركز القرآن الكريم"), desc: "المصحف والتجويد والحفظ وعلوم القرآن" },
       { href: "/tafsir",               Icon: BookOpen,     title: seoNavLabel("/tafsir", "علم التفسير"),            desc: "أنواع التفسير وأصوله وأشهر كتب المفسرين" },
       { href: "/quran-circles",        Icon: Users,        title: seoNavLabel("/quran-circles", "حلقات التحفيظ"),   desc: "دليل حلقات القرآن في الكويت والمنصات الموثوقة" },
     ],

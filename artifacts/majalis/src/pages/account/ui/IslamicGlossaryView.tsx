@@ -1417,7 +1417,7 @@ const TERMS: GlossaryTerm[] = [
 ];
 
 export type IslamicGlossaryProps = {
-  /** يقيّد العرض على تصنيف واحد (مثل علوم القرآن من مركز القرآن) */
+  /** يقيّد العرض على تصنيف واحد (مثل علوم القرآن من مركز القرآن الكريم) */
   lockedCategory?: Exclude<Category, "all">;
 };
 
@@ -1475,8 +1475,8 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
     ? CATEGORIES.filter((c) => c.id === lockedCategory)
     : CATEGORIES;
 
-  const heroTitle = lockedCategory === "quran" ? "مصطلحات علوم القرآن" : "المصطلحات الإسلامية";
-  const heroEyebrow = lockedCategory === "quran" ? "مركز القرآن" : "القاموس الإسلامي";
+  const heroTitle = lockedCategory === "quran" ? "مصطلحات علوم القرآن" : "مفاهيم شرعية";
+  const heroEyebrow = lockedCategory === "quran" ? "مركز القرآن الكريم" : "القاموس الإسلامي";
 
   return (
     <SectionTemplatePage
@@ -1488,7 +1488,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
           ? "مصطلحات علوم القرآن من القاموس الإسلامي الموحّد — ليست نسخة ثانية من المحتوى."
           : "تعريفات دقيقة موثّقة لأهم المصطلحات في العلوم الشرعية، مرجع لطالب العلم."
       }
-      groupTitle="أقسام المصطلحات"
+      groupTitle="أقسام المفاهيم الشرعية"
     >
     <div className="gl-page mj-page" dir="rtl" data-islamic-glossary="1">
       <p className="gl-hero__actions">
@@ -1503,7 +1503,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
       </p>
 
       <div className="gl-container">
-        <div className="gl-cats" role="tablist" aria-label="تصنيفات المصطلحات الإسلامية">
+        <div className="gl-cats" role="tablist" aria-label="تصنيفات المفاهيم الشرعية">
           {cats.map((c) => (
             <button
               key={c.id}

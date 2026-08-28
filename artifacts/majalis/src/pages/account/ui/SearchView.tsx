@@ -116,7 +116,7 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   fiqh_decision: "المجمع الفقهي", fiqh_council: "المجمع الفقهي",
   knowledge: "محرك المعرفة",
   surah: "سور القرآن",
-  quran: "القرآن",
+  quran: "القرآن الكريم",
   tafsir: "التفسير",
   hadith: "الأحاديث الصحيحة",
   story: "القصص الإسلامية", stories: "القصص الإسلامية",

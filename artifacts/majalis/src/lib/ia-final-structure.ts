@@ -5,7 +5,7 @@
 
 /** الشريط السفلي (بدون «المزيد» الذي يفتح الورقة/الصفحة). */
 export const IA_BOTTOM_TABS = [
-  { href: "/quran-hub", label: "القرآن" },
+  { href: "/quran-hub", label: "القرآن الكريم" },
   { href: "/lessons", label: "الدروس" },
   { href: "/prayer-times", label: "الصلاة" },
   { href: "/fiqh", label: "الفقه" },
@@ -49,7 +49,7 @@ export const IA_FORBIDDEN_PUBLIC_LABELS = [
   "المسارات العلمية",
   "مسارات التعلم",
   "الموضوعات العلمية",
-  "المصطلحات الإسلامية",
+  "مفاهيم شرعية",
 ] as const;
 
 /**

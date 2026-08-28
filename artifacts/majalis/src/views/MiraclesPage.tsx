@@ -375,7 +375,7 @@ export default function MiraclesPage({
         title="استكشف أيضًا"
         links={[
           { href: "/ulum-quran", label: "علوم القرآن" },
-          { href: "/quran-hub", label: "مركز القرآن" },
+          { href: "/quran-hub", label: "مركز القرآن الكريم" },
           { href: "/tawhid", label: "التوحيد" },
           { href: "/quran/surah-stories", label: "قصص السور" },
         ]}

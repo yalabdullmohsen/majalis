@@ -16,7 +16,7 @@ const CAT_TO_SECTION: Record<string, string> = {
   sawm: "الفقه",
   hajj: "الفقه",
   seerah: "السيرة",
-  quran: "القرآن",
+  quran: "القرآن الكريم",
   hadith: "الحديث",
   adhkar: "الآداب",
   adab: "الآداب",

@@ -1,5 +1,5 @@
 /**
- * شاشة بحث الآيات — منفصلة عن بحث انتقال السور في مركز القرآن.
+ * شاشة بحث الآيات — منفصلة عن بحث انتقال السور في مركز القرآن الكريم.
  * عرض فقط: فصل البسملة، أسماء بلا تشكيل، إبراز، تجميع باسم السورة.
  */
 import { useEffect, useMemo, useState } from "react";
@@ -127,7 +127,7 @@ export default function QuranSearchPage() {
       <PageHeader
         eyebrow="القرآن الكريم"
         title="بحث في الآيات"
-        subtitle="شاشة بحث منفصلة عن المصحف — اكتب كلمة أو جملة من نص الآية. لانتقال السور استخدم مركز القرآن."
+        subtitle="شاشة بحث منفصلة عن المصحف — اكتب كلمة أو جملة من نص الآية. لانتقال السور استخدم مركز القرآن الكريم."
       />
 
       <form
@@ -185,7 +185,7 @@ export default function QuranSearchPage() {
 
       {!loadingDb && !dbError && !debounced ? (
         <p className="quran-search-page__hint">
-          ابدأ بالكتابة لعرض الآيات المطابقة. للانتقال لسورة بالاسم استخدم البحث أعلى مركز القرآن.
+          ابدأ بالكتابة لعرض الآيات المطابقة. للانتقال لسورة بالاسم استخدم البحث أعلى مركز القرآن الكريم.
         </p>
       ) : null}
 
@@ -269,7 +269,7 @@ export default function QuranSearchPage() {
       ) : null}
 
       <p className="quran-search-page__footer">
-        <Link href="/quran-hub">مركز القرآن</Link>
+        <Link href="/quran-hub">مركز القرآن الكريم</Link>
         {" · "}
         <Link href="/mushaf">المصحف</Link>
         {" · "}

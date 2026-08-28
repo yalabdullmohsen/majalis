@@ -16,7 +16,7 @@ export const ar = {
   // ── Primary nav labels ──
   nav_home: "الرئيسية",
   nav_lessons: "الدروس",
-  nav_quran: "القرآن",
+  nav_quran: "القرآن الكريم",
   nav_library: "المكتبة",
   nav_adhkar: "الأذكار",
   nav_prayer: "الصلاة",

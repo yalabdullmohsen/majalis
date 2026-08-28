@@ -1,5 +1,5 @@
 /**
- * مركز القرآن — لوبي موحّد من سجل الأقسام.
+ * مركز القرآن الكريم — لوبي موحّد من سجل الأقسام.
  */
 import { useEffect, useMemo, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
@@ -16,8 +16,8 @@ export default function QuranHubPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/quran-hub",
-      title: "مركز القرآن — المجلس العلمي",
-      description: "مركز القرآن: المصحف والتفسير والتلاوة وعلوم القرآن والإحصاءات الموثّقة.",
+      title: "مركز القرآن الكريم — المجلس العلمي",
+      description: "مركز القرآن الكريم: المصحف والتفسير والتلاوة وعلوم القرآن والإحصاءات الموثّقة.",
       keywords: ["القرآن الكريم", "المصحف", "تفسير", "تلاوة"],
     });
   }, []);

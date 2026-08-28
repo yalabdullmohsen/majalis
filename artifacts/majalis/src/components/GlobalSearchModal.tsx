@@ -462,7 +462,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                 <div className="gsm-quicklinks">
                   {[
                     { href: "/my-learning#flashcards", label: "المراجعة", Icon: CreditCard },
-                    { href: "/mushaf", label: "القرآن", Icon: BookMarked },
+                    { href: "/mushaf", label: "القرآن الكريم", Icon: BookMarked },
                     { href: "/quran-knowledge", label: "القرآن وعلومه", Icon: BookOpen },
                     { href: "/adhkar", label: "الأذكار", Icon: RotateCw },
                     { href: "/lessons", label: "الدروس", Icon: GraduationCap },

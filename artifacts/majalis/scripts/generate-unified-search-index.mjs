@@ -224,7 +224,7 @@ const APP_PAGES = [
   ["app:duas-quran", "dua", "أدعية القرآن", "/duas-quran", ["دعاء", "قرآن"]],
   ["app:lessons", "lesson", "الدروس", "/lessons", ["دروس"]],
   ["app:courses", "course", "الدورات العلمية", "/courses", ["دورات"]],
-  ["app:glossary", "app", "المصطلحات", "/glossary", ["مصطلحات", "glossary"]],
+  ["app:glossary", "app", "مفاهيم شرعية", "/glossary", ["مصطلحات", "المصطلحات", "glossary"]],
   ["app:reciters", "app", "القرّاء", "/reciters", ["قراء", "تلاوة"]],
   ["app:prayer", "app", "مواقيت الصلاة", "/prayer-times", ["صلاة", "أذان"]],
   ["app:adhan-settings", "settings", "إعدادات الأذان", "/adhan-settings", ["أذان", "مؤذن"]],
@@ -235,7 +235,7 @@ const APP_PAGES = [
   ["app:quiz", "app", "لعبة سين جيم", "/quiz", ["اختبار"]],
   ["app:ibtillaat", "prophet", "ابتلاءات الأنبياء", "/prophets", ["ابتلاء", "أنبياء"]],
   ["app:tafsir-audio", "tafsir-audio", "التفسير الصوتي", "/tafsir", ["تفسير صوتي", "استماع تفسير"]],
-  ["app:quran-hub", "quran", "مركز القرآن", "/quran-hub", ["مركز", "قرآن"]],
+  ["app:quran-hub", "quran", "مركز القرآن الكريم", "/quran-hub", ["مركز", "قرآن", "القرآن الكريم"]],
   [
     "app:quran-numbers",
     "quran",
@@ -354,9 +354,9 @@ try {
 pushDoc(
   "tool:glossary",
   "tool",
-  "المصطلحات الإسلامية",
+  "مفاهيم شرعية",
   "/islamic-glossary",
-  ["معجم", "مصطلحات", "بحث"],
+  ["معجم", "مصطلحات", "المصطلحات", "بحث"],
   "أداة بحث",
 );
 

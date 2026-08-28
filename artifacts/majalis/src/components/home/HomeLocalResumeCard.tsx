@@ -21,7 +21,7 @@ type ResumeItem = {
 };
 
 const SECTION_LABEL: Record<ContinueSection | "listen", string> = {
-  mushaf: "القرآن",
+  mushaf: "القرآن الكريم",
   lessons: "الدروس",
   prophets: "قصص الأنبياء",
   adhkar: "الأذكار",

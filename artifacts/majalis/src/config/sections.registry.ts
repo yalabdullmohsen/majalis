@@ -193,7 +193,7 @@ const ACCOUNT: Surface[] = ["moreHub", "search"];
 const ACCOUNT_DRAWER: Surface[] = ["moreHub", "drawer", "search"];
 const SEARCH_ONLY: Surface[] = ["search"];
 
-/** أقسام مركز القرآن — تُعرض هناك فقط كبطاقات */
+/** أقسام مركز القرآن الكريم — تُعرض هناك فقط كبطاقات */
 const QURAN_HUB_IDS = new Set([
   "open-mushaf",
   "quran-surahs",
@@ -234,7 +234,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   },
   {
     id: "quran",
-    label: "مركز القرآن",
+    label: "مركز القرآن الكريم",
     subtitle: "المصحف والتلاوة والتفسير",
     route: "/quran-hub",
     icon: BookOpen,
@@ -242,8 +242,8 @@ const SECTION_SEEDS: SectionSeed[] = [
     order: -9,
     surfaces: ["bottomNav", "search"],
     status: "live",
-    keywords: ["مصحف", "قرآن", "quran", "مركز القرآن"],
-    aliases: ["القرآن", "قرآن", "المصحف"],
+    keywords: ["مصحف", "قرآن", "quran", "مركز القرآن الكريم"],
+    aliases: ["القرآن", "القرآن الكريم", "قرآن", "المصحف", "مركز القرآن الكريم"],
   },
   {
     id: "lessons",
@@ -283,7 +283,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     aliases: ["المزيد"],
   },
 
-  // —— مركز القرآن (hub: quran) ——
+  // —— مركز القرآن الكريم (hub: quran) ——
   {
     id: "open-mushaf",
     label: "فتح المصحف",
@@ -788,8 +788,8 @@ const SECTION_SEEDS: SectionSeed[] = [
   },
   {
     id: "glossary",
-    label: "المصطلحات الشرعية",
-    subtitle: "معجم موجز للمصطلحات الإسلامية",
+    label: "مفاهيم شرعية",
+    subtitle: "معجم موجز للمفاهيم الشرعية",
     route: "/islamic-glossary",
     icon: BookText,
     group: "library",
@@ -797,7 +797,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     surfaces: NAV,
     status: "live",
     keywords: ["مصطلح", "معجم", "قاموس", "مصطلحات إسلامية"],
-    aliases: ["القاموس الإسلامي", "المصطلحات", "المصطلحات الإسلامية"],
+    aliases: ["القاموس الإسلامي", "مفاهيم شرعية", "مصطلحات", "المصطلحات", "المصطلحات الإسلامية"],
     hub: "sections",
   },
   {

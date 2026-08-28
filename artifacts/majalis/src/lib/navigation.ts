@@ -58,7 +58,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/janaza",            label: seoNavLabel("/janaza", "أحكام الجنائز") },
   { href: "/sahabah",           label: seoNavLabel("/sahabah", "أعلام الصحابة") },
   { href: "/shamael",           label: seoNavLabel("/shamael", "صفةُ سيِّد الخلقِ ﷺ") },
-  { href: "/islamic-glossary",  label: seoNavLabel("/islamic-glossary", "المصطلحات الإسلامية") },
+  { href: "/islamic-glossary",  label: seoNavLabel("/islamic-glossary", "مفاهيم شرعية") },
   { href: "/adab-talab-ilm",   label: seoNavLabel("/adab-talab-ilm", "آداب طالب العلم") },
   { href: "/janna-naar",        label: seoNavLabel("/janna-naar", "صفة الجنة") },
   { href: "/alamat-saah",       label: seoNavLabel("/alamat-saah", "علامات الساعة") },

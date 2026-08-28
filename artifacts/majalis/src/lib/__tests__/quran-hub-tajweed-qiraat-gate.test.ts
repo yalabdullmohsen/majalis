@@ -1,5 +1,5 @@
 /**
- * بوابات التجويد والقراءات + تنظيف مركز القرآن.
+ * بوابات التجويد والقراءات + تنظيف مركز القرآن الكريم.
  * تشغيل: node --import tsx src/lib/__tests__/quran-hub-tajweed-qiraat-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -50,7 +50,7 @@ assert.ok(hub.some((s) => s.id === "quran-ulum-terms"));
 assert.equal(
   hub.some((s) => s.id === "quran-terms" || s.route === "/islamic-glossary"),
   false,
-  "القاموس العام لا يظهر في مركز القرآن",
+  "القاموس العام لا يظهر في مركز القرآن الكريم",
 );
 
 const glossary = SECTIONS.find((s) => s.id === "glossary");

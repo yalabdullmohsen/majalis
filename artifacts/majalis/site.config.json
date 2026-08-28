@@ -39,7 +39,7 @@
   "prerenderNav": [
     { "path": "/", "label": "الرئيسية" },
     { "path": "/lessons", "label": "الدروس" },
-    { "path": "/quran-hub", "label": "القرآن" },
+    { "path": "/quran-hub", "label": "القرآن الكريم" },
     { "path": "/adhkar", "label": "الأذكار" },
     { "path": "/prayer-times", "label": "الصلاة" },
     { "path": "/fiqh", "label": "الفقه" },

@@ -23,7 +23,7 @@ export default function QuranTilawaView() {
   return (
     <div className="tl-page" dir="rtl" data-quran-tilawa="1">
       <nav className="tl-crumb" aria-label="مسار">
-        <Link href="/quran-hub">مركز القرآن</Link>
+        <Link href="/quran-hub">مركز القرآن الكريم</Link>
         <span aria-hidden="true"> · </span>
         <span>التلاوة والقرّاء</span>
       </nav>
