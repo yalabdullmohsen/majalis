@@ -19,10 +19,10 @@
 }
 
 .mm-viewport {
-  /* ورق مصحف عثماني — كريمي دافئ (ليس أبيض نقي) */
-  --mm-paper: #fdfbf7;
-  --mm-paper-deep: #faf7f0;
-  --mm-outer-bg: #fdfbf7;
+  /* ورق مصحف عثماني — عاجي هادئ (مرجع ص١٢٦، ليس أبيض حاد) */
+  --mm-paper: #fdf9f3;
+  --mm-paper-deep: #faf6ee;
+  --mm-outer-bg: #fdf9f3;
   --mm-ink: #111111;
   /* حبر الآيات — يُغمَق على ثيم الورق */
   --mm-qpc-ink: var(--mm-ink);
@@ -34,28 +34,29 @@
   --mm-gold-deep: #785e38;
   /* فاصلة الآية — بني عثماني غامق */
   --mm-ayah-mark: #785e38;
-  /* ميتا الجزء/السورة — كان #8e8e93 (تباين ضعيف) → #4a4a4a (~7:1) */
-  --mm-header: #4a4a4a;
+  /* ميتا الجزء/السورة — بني/ذهبي هادئ كالمرجع */
+  --mm-header: #8a6a32;
   --mm-frame: transparent;
   --mm-banner-fill: linear-gradient(180deg, #efe6d8 0%, #e8dcc8 48%, #d5c4a1 100%);
   --mm-banner-name-bg: #efe6d8;
-  /* تظليل آية محددة — أوضح قليلًا دون إزعاج */
+  /* تظليل آية محددة — خلف النص بشفافية عالية */
   --mm-ayah-select: #e8d4b0;
   --mm-ayah-play: #f0e0c8;
   --mm-ui-accent: #135034;
   --mm-ui-accent-deep: #0e3d27;
-  --mm-audio-capsule: #faf7f0;
+  --mm-audio-capsule: #faf6ee;
   --mm-outer-pad: 0;
-  --mm-inner-pad-x: clamp(0.55rem, 2.8vw, 1.1rem);
+  --mm-inner-pad-x: clamp(18px, 5vw, 24px);
   --mm-inner-pad-y: clamp(0.1rem, 0.8vw, 0.32rem);
   --mm-header-h: 8.3vh;
   --mm-footer-h: clamp(2.1rem, 5.2vh, 2.75rem);
   /* ارتفاع لوحة السورة يلائم خانة شبكة واحدة */
   --mm-banner-h: clamp(2.55rem, 8vw, 3.35rem);
   --mm-ayah-end: 1.12em;
-  --mm-page-max-w: min(100%, 42rem);
-  /* مقياس ابتدائي ≈٤٫٣٪ ارتفاع — يُضبط ببحث ثنائي 0.25px بعد fonts.ready */
-  --mm-qpc-size: clamp(12px, 4.45vh, 35px);
+  /* حاوية مصحف هاتفية — لا تمدّد عشوائي على الشاشات العريضة */
+  --mm-page-max-w: min(100%, 430px);
+  /* مقياس مقروء بلا تضخيم متعب — يُضبط بعد fonts.ready */
+  --mm-qpc-size: clamp(13px, 4.15vh, 31px);
   --mm-basmala-size: var(--mm-qpc-size);
   --mm-line-height: 1.85;
   --mm-line-gap: 0;
@@ -201,11 +202,12 @@ html.dark .mm-viewport,
 }
 
 .mm-viewport[data-mushaf-theme="paper"] {
-  --mm-paper: #fdfbf7;
-  --mm-paper-deep: #faf7f0;
-  --mm-outer-bg: #fdfbf7;
-  --mm-ink: #000000;
-  --mm-qpc-ink: #000000;
+  --mm-paper: #fdf9f3;
+  --mm-paper-deep: #faf6ee;
+  --mm-outer-bg: #fdf9f3;
+  --mm-ink: #111111;
+  --mm-qpc-ink: #111111;
+  --mm-header: #8a6a32;
   --mushaf-bg: var(--mm-outer-bg);
   background: var(--mm-outer-bg);
 }
@@ -239,7 +241,7 @@ html.dark .mm-viewport,
 
 .mm-page-shell,
 .mushaf-page-frame {
-  width: 100%;
+  width: min(100%, 430px);
   max-width: var(--mm-page-max-w);
   height: 100%;
   max-height: 100%;
@@ -254,10 +256,10 @@ html.dark .mm-viewport,
   overflow-y: hidden;
   overscroll-behavior: none;
   scrollbar-width: none;
-  /* صفر حشو — النطاقات مرجع الشاشة؛ الأدوات فوق الصفحة بلا تقليص */
+  /* هوامش متوازنة — لا يلتصق النص بأطراف الشاشة */
   padding-top: 0;
   padding-bottom: 0;
-  padding-inline: 0;
+  padding-inline: var(--mm-inner-pad-x);
   box-sizing: border-box;
   display: flex;
   align-items: stretch;
@@ -318,9 +320,11 @@ html.dark .mm-viewport,
 
 .mm-pager__sheet .mm-page-shell,
 .mm-pager__sheet .mushaf-page-frame {
-  width: 100%;
+  width: min(100%, 430px);
   height: 100%;
-  max-width: none;
+  max-width: var(--mm-page-max-w);
+  margin-inline: auto;
+  padding-inline: var(--mm-inner-pad-x);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -502,7 +506,7 @@ html.dark .mm-viewport .mm-page {
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: repeat(15, minmax(0, 1fr));
   padding-block: 0;
-  /* حشو أفقي خفيف فقط — safe-area على .mm-viewport وحده (لا مضاعفة على iPhone) */
+  /* حشو أفقي خفيف فقط — الهامش الأساسي من حاوية الـ430px + safe-area على viewport */
   padding-inline-start: 0.08em;
   padding-inline-end: 0.08em;
   overflow-x: clip;
@@ -732,9 +736,9 @@ html.dark .mm-surah-frame__name {
 }
 
 /*
- * تظليل آية: طبقة overlay بشريط لكل سطر (getClientRects).
- * الكلمات نفسها بلا خلفية حتى لا تظهر مربعات منفصلة.
- * .mm-ayah-run__text يُستخدم في البسملة فقط.
+ * تظليل آية:
+ * - التحديد الأساسي على الكلمات (.is-selected / .ayah-active) خلف النص.
+ * - طبقة .mm-ayah-hl للتلاوة الجارية فقط (أو تعزيز خفيف) — z-index أقل من النص.
  */
 .mm-ayah-hl {
   position: absolute;
@@ -745,20 +749,21 @@ html.dark .mm-surah-frame__name {
 
 .mm-ayah-hl__band {
   position: absolute;
-  background: var(--mm-ayah-select);
+  background: var(--mm-ayah-play);
   border-radius: 0.35em;
   pointer-events: none;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   contain: layout style paint;
   animation: mm-ayah-hl-in 140ms ease-out;
+  opacity: 0.55;
 }
 
 .mm-ayah-hl__band.is-selected {
-  background: color-mix(in srgb, var(--mm-ayah-select) 78%, #2f7a52 22%);
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, #2f7a52 22%, transparent),
-    0 0 0 1px color-mix(in srgb, #e8d4b0 35%, transparent);
+  /* احتياطي خفيف فقط — التحديد المرئي على الكلمات */
+  background: color-mix(in srgb, var(--mm-ayah-select) 42%, transparent);
+  box-shadow: none;
+  opacity: 0.35;
 }
 
 @keyframes mm-ayah-hl-in {
@@ -824,37 +829,42 @@ html[data-sovereign-tier="critical"] .scroll-to-top {
   background: transparent;
 }
 
+/* تحديد الآية: خلفية شفافة خلف كل كلمة — النص يبقى فوقها وواضحًا */
 .mm-ayah-run__text.is-selected,
+.mm-ayah-line__word.is-selected:not([data-type="end"]),
 .ayah-active.mm-ayah-line__word:not([data-type="end"]) {
-  background: transparent;
-  border-radius: 0;
-  box-shadow: none;
-}
-
-.mm-ayah-line__word.is-selected:not([data-type="end"]) {
-  background: transparent;
-  border-radius: 0;
+  background: color-mix(in srgb, var(--mm-ayah-select) 58%, transparent);
+  border-radius: 0.18em;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mm-gold-deep) 18%, transparent);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .mm-viewport[data-mushaf-theme="paper"] .mm-ayah-run__text.is-selected,
+.mm-viewport[data-mushaf-theme="paper"] .mm-ayah-line__word.is-selected:not([data-type="end"]),
 .mm-viewport[data-mushaf-theme="paper"] .ayah-active.mm-ayah-line__word:not([data-type="end"]) {
   mix-blend-mode: normal;
+  background: color-mix(in srgb, #e8d4b0 62%, transparent);
 }
 
 html[data-theme="dark"] .mm-ayah-run__text.is-selected,
 html.dark .mm-ayah-run__text.is-selected,
-.mm-viewport[data-mushaf-theme="night"],
+.mm-viewport[data-mushaf-theme="night"] .mm-ayah-run__text.is-selected,
 .mm-viewport[data-mushaf-theme="oled"] .mm-ayah-run__text.is-selected,
+html[data-theme="dark"] .mm-ayah-line__word.is-selected:not([data-type="end"]),
+html.dark .mm-ayah-line__word.is-selected:not([data-type="end"]),
+.mm-viewport[data-mushaf-theme="night"] .mm-ayah-line__word.is-selected:not([data-type="end"]),
+.mm-viewport[data-mushaf-theme="oled"] .mm-ayah-line__word.is-selected:not([data-type="end"]),
 html[data-theme="dark"] .ayah-active.mm-ayah-line__word:not([data-type="end"]),
 html.dark .ayah-active.mm-ayah-line__word:not([data-type="end"]),
-.mm-viewport[data-mushaf-theme="night"],
+.mm-viewport[data-mushaf-theme="night"] .ayah-active.mm-ayah-line__word:not([data-type="end"]),
 .mm-viewport[data-mushaf-theme="oled"] .ayah-active.mm-ayah-line__word:not([data-type="end"]) {
-  background: transparent;
-  box-shadow: none;
+  background: color-mix(in srgb, var(--mm-gold) 28%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mm-gold) 35%, transparent);
 }
 
 .mm-ayah-line__word.is-playing:not([data-type="end"]) {
-  background: transparent;
+  background: color-mix(in srgb, var(--mm-ayah-play) 48%, transparent);
   box-shadow: none;
 }
 
@@ -862,12 +872,14 @@ html.dark .ayah-active.mm-ayah-line__word:not([data-type="end"]),
 .mm-ayah-hit--end.is-playing,
 .mm-ayah-hit--end.ayah-active,
 .mm-ayah-line__word[data-type="end"].ayah-active,
+.mm-ayah-line__word[data-type="end"].is-selected,
 .mm-ayah-hit--end.is-selected .mm-ayah-number,
 .mm-ayah-hit--end.is-playing .mm-ayah-number,
 .mm-ayah-hit--end.ayah-active .mm-ayah-number {
-  background: transparent;
+  background: color-mix(in srgb, var(--mm-ayah-select) 40%, transparent);
   box-shadow: none;
   opacity: 1;
+  border-radius: 0.35em;
 }
 
 .mm-ayah-line__word {
@@ -947,17 +959,19 @@ html.dark .ayah-active.mm-ayah-line__word:not([data-type="end"]),
   min-width: 2.4rem;
   max-width: 4.4rem;
   height: 1.95rem;
-  padding: 0;
+  padding: 0 0.35rem;
   display: inline-grid;
   place-items: center;
   color: #8a6a32;
   font-family: "Amiri Quran", "IBM Plex Sans Arabic", serif;
   font-size: 1.18rem;
   font-weight: 700;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  border: 1px solid color-mix(in srgb, var(--mm-gold-deep) 55%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mm-paper) 88%, #efe6d8);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--mm-paper) 100%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--mm-gold-soft) 45%, transparent);
 }
 
 .mm-viewport .mm-page-footer__cartouche {
@@ -1419,13 +1433,13 @@ html.dark .mm-viewport .mm-page-footer__badge,
  * تستعمله لوحتا الآية والبحث — مصدر واحد يبقى .mm-viewport. */
 .ayah-action-sheet,
 .mm-search-sheet {
-  --mm-paper: #fdfbf7;
-  --mm-paper-deep: #faf7f0;
+  --mm-paper: #fdf9f3;
+  --mm-paper-deep: #faf6ee;
   --mm-ink: #111111;
   --mm-gold: #a68b67;
   --mm-gold-soft: #c5b396;
   --mm-gold-deep: #785e38;
-  --mm-header: #4a4a4a;
+  --mm-header: #8a6a32;
   --mm-ui-accent: #135034;
   --mm-chrome-fg: var(--mm-ink);
   --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 28%, transparent);
@@ -1448,7 +1462,7 @@ html.dark .mm-search-sheet {
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(0, 0, 0, 0.28);
+  background: rgba(0, 0, 0, 0.14);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   cursor: pointer;
@@ -1457,7 +1471,7 @@ html.dark .mm-search-sheet {
 
 html[data-theme="dark"] .mm-ayah-bar__dismiss,
 html.dark .mm-ayah-bar__dismiss {
-  background: rgba(0, 0, 0, 0.42);
+  background: rgba(0, 0, 0, 0.28);
 }
 
 .mm-ayah-bar__panel {
@@ -1487,9 +1501,8 @@ html.dark .mm-ayah-bar__dismiss {
   overscroll-behavior: contain;
   transform: translate3d(0, 0, 0);
   transition:
-    height 220ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    max-height 220ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 160ms ease-out;
 }
 
 .ayah-action-sheet.is-half .mm-ayah-bar__panel {
@@ -2930,8 +2943,8 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 }
 
 .mm-settings-sheet {
-  --mm-paper: #fdfbf7;
-  --mm-paper-deep: #faf7f0;
+  --mm-paper: #fdf9f3;
+  --mm-paper-deep: #faf6ee;
   --mm-ink: #111111;
   --mm-gold: #a68b67;
   --mm-gold-deep: #785e38;

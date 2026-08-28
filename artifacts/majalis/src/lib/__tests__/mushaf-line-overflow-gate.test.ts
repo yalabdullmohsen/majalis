@@ -72,7 +72,7 @@ assert.ok(fitPageFontSize(["أ".repeat(80)], 200, "qpc", measure) < 35);
   assert.ok(tall >= 12 && tall <= 35, `داخل الحدود: ${tall}`);
 }
 
-assert.match(fitFn, /mushaf-fitPageFontSize-v2/);
+assert.match(fitFn, /mushaf-fitPageFontSize-v3/);
 assert.match(fitFn, /MUSHAF_FIT_MAX_PX = 35/);
 assert.match(fitFn, /MUSHAF_FIT_LINE_RATIO = 1.85/);
 assert.match(fitFn, /assertMushafPageFontReady/);

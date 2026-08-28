@@ -60,7 +60,7 @@ const AyahWordSpan = memo(function AyahWordSpan({
   const ayahNum = Number(word.verseKey.split(":")[1]) || 0;
   const markTone = isEnd ? String(((ayahNum - 1) % 4 + 4) % 4) : undefined;
   const stateClass = [
-    selected ? "ayah-active" : "",
+    selected ? "ayah-active is-selected" : "",
     playing ? "is-playing" : "",
     blanked && !isEnd ? "is-blanked" : "",
   ]
@@ -104,7 +104,7 @@ const AyahWordSpan = memo(function AyahWordSpan({
 
 /**
  * سطر آيات — كلمات flex بفجوة ثابتة؛ space-between فقط بعد قياس fill الآمن.
- * التظليل المتصل عبر طبقة getClientRects (.mm-ayah-hl) لا خلفية كل كلمة.
+ * التحديد عبر class is-selected على الكلمات؛ طبقة .mm-ayah-hl للتلاوة الجارية.
  */
 export const MushafAyahLine = memo(function MushafAyahLine({
   words,

@@ -12,7 +12,7 @@ export const MUSHAF_FIT_OPENING_MAX_PX = 46;
 import { releaseCanvasResources } from "@/lib/canvas-gl-cleanup";
 
 export const MUSHAF_FIT_LINE_RATIO = 1.85;
-const LS_KEY = "mushaf-fitPageFontSize-v2";
+const LS_KEY = "mushaf-fitPageFontSize-v3";
 
 const mem = new Map<string, number>();
 
@@ -79,7 +79,7 @@ export function mushafUniformFitCacheKey(
   _family: string = "",
 ): string {
   /* الحجم موحّد من الهندسة فقط — لا نُفرّق حسب خط الصفحة (qpc-v2-pN). */
-  return `uniform-v2|${Math.round(containerWidth)}|${Math.round(blockHeightPx)}`;
+  return `uniform-v3|${Math.round(containerWidth)}|${Math.round(blockHeightPx)}`;
 }
 
 /** مفتاح مستقل لصفحتي الافتتاح — لا يُقيَّدان بسقف الصفحات الكثيفة. */
@@ -130,7 +130,7 @@ export function resolveUniformMushafFontSize(
       ? Math.floor(blockHeightPx / 15 / MUSHAF_FIT_LINE_RATIO)
       : MUSHAF_FIT_MAX_PX;
   /** سعة أفقية تقريبية لسطر المصحف عند مقاس التصميم */
-  const byWidth = Math.floor(containerWidthPx / 18.5);
+  const byWidth = Math.floor(containerWidthPx / 19);
   return Math.max(
     MUSHAF_FIT_MIN_PX,
     Math.min(MUSHAF_FIT_MAX_PX, byHeight, byWidth),

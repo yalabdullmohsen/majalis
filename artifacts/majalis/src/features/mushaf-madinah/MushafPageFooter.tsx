@@ -5,7 +5,7 @@ type Props = {
 };
 
 /**
- * ذيل الصفحة — رقم الصفحة فقط في المنتصف (بلا صندوق أو زخرفة).
+ * ذيل الصفحة — رقم الصفحة في المنتصف داخل إطار بيضاوي بسيط (CSS فقط).
  * اليمين: وصف الحزب إن بدأ في هذه الصفحة فقط.
  */
 export function MushafPageFooter({ pageNumber, hizbStartingOnPage = null }: Props) {

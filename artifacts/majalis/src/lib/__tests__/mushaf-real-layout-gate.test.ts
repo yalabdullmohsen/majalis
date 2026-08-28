@@ -138,7 +138,7 @@ assert.match(viewport, /addEventListener\("scroll"/);
 
 assert.match(css, /html\[data-theme="dark"\]\s*\.mm-viewport/);
 assert.match(css, /--mm-ink:\s*#f4efe5|--mm-ink:\s*#f7faf7|--mm-ink:\s*#ffffff/);
-assert.match(css, /--mm-paper:\s*#fdfbf7/);
+assert.match(css, /--mm-paper:\s*#fdf9f3/);
 assert.match(css, /--mm-ayah-select:\s*#eedcc2/);
 assert.match(css, /--mm-ayah-select:\s*rgba\(45,\s*38,\s*30,\s*0\.72\)/);
 assert.match(css, /--mm-ui-accent:\s*#135034/);
