@@ -23,7 +23,7 @@ function read(rel) {
 
 /** 1) لا حشو بنقاط ≥ 4 في بذور المحتوى */
 for (const rel of [
-  "src/data/islamic-history/personalities.json",
+  "src/data/islamic-history/modern.json",
   "src/lib/sheikhs-seed.ts",
   "src/lib/library-catalog.ts",
 ]) {
@@ -41,7 +41,7 @@ const BANNED_PHRASES = [
   "يُنصح به لطالب العلم؛ من مراجع",
 ];
 for (const rel of [
-  "src/data/islamic-history/personalities.json",
+  "src/data/islamic-history/modern.json",
   "src/lib/sheikhs-seed.ts",
   "src/lib/library-catalog.ts",
 ]) {
