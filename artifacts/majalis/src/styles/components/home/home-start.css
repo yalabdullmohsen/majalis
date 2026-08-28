@@ -87,7 +87,8 @@
 
 .mj-start-header__pill--accent {
   color: #fff;
-  background: linear-gradient(145deg, var(--mj-start-brand), var(--mj-start-deep));
+  background: #19815f;
+  background-image: none;
   border-color: transparent;
 }
 
@@ -303,7 +304,7 @@
 }
 
 .mj-home-featured {
-  min-height: 11rem;
+  min-height: 11.1rem;
 }
 
 .mj-home-featured__grid {
@@ -454,4 +455,37 @@
   .mj-home-featured__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
+
+html[data-theme="dark"] .mj-home-start__logo-wrap,
+html.dark .mj-home-start__logo-wrap {
+  background: #15201c;
+  background-color: #15201c;
+  box-shadow: none;
+}
+
+html[data-theme="dark"] .mj-app-card,
+html.dark .mj-app-card {
+  background: #15201c;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #e8f5ef;
+}
+
+html[data-theme="dark"] .mj-home-start,
+html.dark .mj-home-start {
+  color: #e8f5ef;
+}
+
+html[data-theme="dark"] .mj-home-start__title,
+html.dark .mj-home-start__title,
+html[data-theme="dark"] .mj-app-section-header__title,
+html.dark .mj-app-section-header__title {
+  color: #e8f5ef;
+}
+
+html[data-theme="dark"] .mj-start-header__pill,
+html.dark .mj-start-header__pill {
+  background: #1a2a24;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #e8f5ef;
 }

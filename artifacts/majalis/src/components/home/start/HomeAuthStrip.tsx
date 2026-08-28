@@ -34,7 +34,10 @@ export function HomeAuthStrip() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
-  if (loading || isLoggedIn || dismissed) return null;
+  if (loading) {
+    return <section className="mj-app-card mj-home-auth mj-home-auth--ph" aria-hidden="true" />;
+  }
+  if (isLoggedIn || dismissed) return null;
 
   const resetForm = () => {
     setMode("idle");

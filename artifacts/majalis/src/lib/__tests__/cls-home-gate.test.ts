@@ -30,7 +30,7 @@ assert.match(critical, /\.mj-home-start__brand[\s\S]*min-height:\s*7\.5rem/, "ح
 assert.match(critical, /\.mj-prayer-summary[\s\S]*min-height:\s*11\.5rem/, "حجز مواقيت الصلاة");
 assert.match(critical, /\.mj-dhikr-summary[\s\S]*min-height:\s*10rem/, "حجز الأذكار");
 assert.match(critical, /\.hus-field[\s\S]*min-height:\s*52px/, "حجز شريط البحث");
-assert.match(critical, /\.mj-home-featured[\s\S]*min-height:\s*11rem/, "حجز الأقسام");
+assert.match(critical, /\.mj-home-featured[\s\S]*min-height:\s*11\.1rem/, "حجز الأقسام");
 assert.match(critical, /\.navbar-v3__tagline-mark[\s\S]*aspect-ratio/, "حجز وردمارك الهيدر");
 assert.doesNotMatch(startCss, /min-height:\s*unset/, "لا min-height:unset في شاشة البداية");
 assert.doesNotMatch(fontsUi, /amiri-700/, "لا Amiri 700 في fonts-ui الإقلاع");

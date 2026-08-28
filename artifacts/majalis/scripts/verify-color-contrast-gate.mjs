@@ -42,13 +42,13 @@ const ASSERTIONS = [
   // زر CTA أخضر (.btn-primary وما شابه) كان يفقد لونه الصحيح (أبيض/داكن)
   // أمام قاعدة "كل <a> أخضر في الوضع الليلي" العامة (تخصيص أعلى).
   { route: "/account-deletion", selector: ".btn-primary", mode: "dark", min: 3 },
-  // الرئيسية المركّزة في إصدار الإطلاق: نفحص العناصر الثابتة الظاهرة بدل
-  // ودجتات الحديث/المسابقة/المكتبة التي أصبحت اختيارية من شاشة التخصيص.
-  // لا تتغير عتبات WCAG؛ تغيرت فقط أهداف DOM لتطابق البنية المنشورة فعليًا.
-  { route: "/", selector: ".m2030-btn--primary", mode: "light", min: 4.5 },
-  { route: "/", selector: ".m2030-btn--primary", mode: "dark", min: 4.5 },
-  { route: "/", selector: ".m2030-band__title", mode: "light", min: 4.5 },
-  { route: "/", selector: ".m2030-feature__title", mode: "light", min: 4.5 },
+  // الرئيسية — شاشة البداية الجديدة (2026-08): عناصر ثابتة فوق الطية.
+  { route: "/", selector: ".mj-start-header__pill--accent", mode: "light", min: 4.5 },
+  { route: "/", selector: ".mj-start-header__pill--accent", mode: "dark", min: 4.5 },
+  { route: "/", selector: ".mj-home-start__title", mode: "light", min: 3 },
+  { route: "/", selector: ".mj-home-start__title", mode: "dark", min: 3 },
+  { route: "/", selector: ".mj-app-section-header__title", mode: "light", min: 4.5 },
+  { route: "/", selector: ".mj-quick-action__label", mode: "light", min: 4.5 },
   // ── تكليف ثانٍ (2026-07-19، بند 7): عناوين "شارة" أقسام (نص أبيض/خلفية
   // خضراء داكنة، §4c في elite-2026.css) كانت تخسر لونها الأبيض المقصود أمام
   // قواعد `.home-section h2`/`.page-shell h2:not(...)` عالية التخصيص (بفعل
@@ -62,13 +62,8 @@ const ASSERTIONS = [
   // "مواسم التعلّم" — شارة عنوان بقسم: نص على خلفية --elite-forest العميقة
   // (تبقى #143F35 في الوضع الليلي؛ لا تُسطَّح إلى نعناعي).
   { route: "/", selector: ".lsw-section .ds-section__title", mode: "dark", min: 3 },
-  // banner إعلان الشراكة داخل الهيدر (placement: header).
-  { route: "/", selector: ".page-hero-mj__title", mode: "light", min: 3 },
   { route: "/", selector: ".header-ad-slot__title", mode: "light", min: 4.5 },
-  { route: "/", selector: ".page-hero-mj__actions .m2030-btn--primary", mode: "light", min: 4.5 },
-  { route: "/", selector: ".page-hero-mj__title", mode: "dark", min: 3 },
   { route: "/", selector: ".header-ad-slot__title", mode: "dark", min: 4.5 },
-  { route: "/", selector: ".page-hero-mj__actions .m2030-btn--primary", mode: "dark", min: 4.5 },
   // .sq-title (عنوان SectionQuiz داخل .sq-header الداكن) كان يخسر نفس المعركة.
   { route: "/cards", selector: ".sq-title", mode: "light", min: 4.5 },
   // .twh-hub-card__current-tag اكتسب خلفية داكنة بالخطأ (يطابق [class*="-card"]
@@ -194,6 +189,7 @@ const TITLE_SELECTORS = [
   "h1",
   ".section-lobby__title",
   ".topic-page__title",
+  ".mj-home-start__title",
   ".page-hero-mj__title",
   ".pts-hero__name",
   ".ds-page-header__title",
@@ -415,7 +411,21 @@ async function main() {
     try {
       localStorage.setItem("majalis.onboarding.onboarding_seen", "1");
       localStorage.setItem("majalis.onboarding.onboarding_major_version", "1");
+      localStorage.setItem("majlis-home-auth-dismissed-v1", "1");
     } catch { /* ignore */ }
+    const reveal = () => {
+      document.documentElement.classList.remove("app-booting");
+      document.documentElement.classList.add("app-ready");
+      const root = document.getElementById("root");
+      if (root) root.style.visibility = "visible";
+      const splash = document.getElementById("mj-launch-splash");
+      if (splash) splash.style.display = "none";
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", reveal, { once: true });
+    } else {
+      reveal();
+    }
   });
   const failures = [];
   let lastRoute = null;
@@ -424,7 +434,7 @@ async function main() {
     try {
       if (lastRoute !== a.route) {
         await page.goto(`${baseUrl}${a.route}`, { waitUntil: "domcontentloaded", timeout: 30000 });
-        await page.waitForTimeout(400);
+        await page.waitForTimeout(a.route === "/" ? 1200 : 400);
         lastRoute = a.route;
       }
       const currentMode = await page.evaluate(() => document.documentElement.dataset.theme || "light");

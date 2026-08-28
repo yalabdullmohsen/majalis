@@ -133,6 +133,12 @@ body {
   box-sizing: border-box;
 }
 
+.mj-start-header__pill--accent {
+  color: #fff;
+  background: #19815f;
+  background-image: none;
+}
+
 .mj-home-start__brand {
   min-height: 7.5rem;
   box-sizing: border-box;
@@ -155,7 +161,7 @@ body {
 }
 
 .mj-home-featured {
-  min-height: 11rem;
+  min-height: 11.1rem;
   box-sizing: border-box;
 }
 
@@ -245,6 +251,13 @@ body {
   .mj-home-start {
     max-width: 36rem;
   }
+}
+
+html[data-theme="dark"] .mj-home-start__logo-wrap,
+html.dark .mj-home-start__logo-wrap {
+  background: #15201c;
+  background-color: #15201c;
+  box-shadow: none;
 }
 
 .bottom-nav,

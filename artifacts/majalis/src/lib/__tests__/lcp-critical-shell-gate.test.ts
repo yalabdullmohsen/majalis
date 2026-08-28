@@ -61,7 +61,7 @@ assert.match(critical, /\.mj-prayer-summary\s*\{[\s\S]*min-height:\s*11\.5rem/, 
 assert.match(critical, /ascent-override/, "size-adjust/override للخط الاحتياطي");
 assert.match(homeCss, /contain:\s*layout style/, "حاوية placeholder بلا min-height مبالغ");
 assert.match(critical, /\.mj-home-start__brand\s*\{[\s\S]*min-height:\s*7\.5rem/, "حجز الشعار في CSS الحرج");
-assert.match(critical, /\.mj-home-featured\s*\{[\s\S]*min-height:\s*11rem/, "حجز الأقسام في CSS الحرج");
+assert.match(critical, /\.mj-home-featured\s*\{[\s\S]*min-height:\s*11\.1rem/, "حجز الأقسام في CSS الحرج");
 assert.doesNotMatch(homeCss, /\.mj-home-lcp-ph\s*\{[\s\S]*min-height:\s*88rem/, "لا min-height مبالغ فيه على الحاوية");
 assert.doesNotMatch(html, /fonts\.googleapis\.com/, "لا Google Fonts في إقلاع /");
 assert.equal(
