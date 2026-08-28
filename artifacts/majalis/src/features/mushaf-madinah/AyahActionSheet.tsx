@@ -484,7 +484,7 @@ export function AyahActionSheet({
                 >
                   {loading ? (
                     <span className="ayah-action-sheet__play-spinner" aria-hidden="true" />
-                  ) : playerState === "playing" || playerState === "paused" ? (
+                  ) : playerState === "playing" ? (
                     <Pause size={22} aria-hidden="true" />
                   ) : (
                     <Play size={22} aria-hidden="true" />
@@ -501,58 +501,22 @@ export function AyahActionSheet({
                     <span>تلاوة بالذكاء</span>
                   </a>
                 ) : null}
-                <p className="ayah-action-sheet__audio-state" role="status" data-testid="mushaf-audio-state">
-                  {audioStateLabel}
-                  {currentReciter?.nameAr ? ` · ${currentReciter.nameAr}` : ""}
-                </p>
-                <div className="ayah-action-sheet__primary" role="group" aria-label="اختيار القارئ">
-                  <button type="button" onClick={() => setReadersOpen(true)}>
+                <div className="ayah-action-sheet__tilawa-reader" role="group" aria-label="القارئ المختار">
+                  <p className="ayah-action-sheet__tilawa-reader-name" data-testid="mushaf-active-reciter">
+                    {currentReciter?.nameAr ?? "اختر القارئ"}
+                  </p>
+                  <button
+                    type="button"
+                    className="ayah-action-sheet__tilawa-reader-btn"
+                    onClick={() => setReadersOpen(true)}
+                  >
                     <Headphones size={18} aria-hidden="true" />
-                    <span>{currentReciter?.nameAr ?? "اختر القارئ"}</span>
+                    <span>تغيير القارئ</span>
                   </button>
                 </div>
-                <ul className="ayah-action-sheet__reciter-cards" aria-label="القرّاء">
-                  {reciters.map((r) => {
-                    const selected = r.id === reciterId;
-                    return (
-                      <li key={r.id} className={selected ? "is-selected" : undefined}>
-                        <button
-                          type="button"
-                          className="ayah-action-sheet__reciter-pick"
-                          aria-pressed={selected}
-                          onClick={() => onReciterChange(r.id)}
-                        >
-                          {selected ? <Check size={16} aria-hidden="true" /> : null}
-                          <span>{r.nameAr}</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="ayah-action-sheet__reciter-play"
-                          aria-label={
-                            selected && playing ? `إيقاف ${r.nameAr}` : `تشغيل ${r.nameAr}`
-                          }
-                          onClick={() => {
-                            if (selected && playing) {
-                              onTogglePlay();
-                              return;
-                            }
-                            if (onPlayReciter) onPlayReciter(r.id);
-                            else {
-                              onReciterChange(r.id);
-                              onPlay();
-                            }
-                          }}
-                        >
-                          {selected && playing ? (
-                            <Pause size={16} aria-hidden="true" />
-                          ) : (
-                            <Play size={16} aria-hidden="true" />
-                          )}
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
+                <p className="ayah-action-sheet__audio-state" role="status" data-testid="mushaf-audio-state">
+                  {audioStateLabel}
+                </p>
                 <p className="ayah-action-sheet__range-label">النطاق</p>
                 <div className="ayah-action-sheet__range" role="group" aria-label="نطاق التلاوة">
                   {(

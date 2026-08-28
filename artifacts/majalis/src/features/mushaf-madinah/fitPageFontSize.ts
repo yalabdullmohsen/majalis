@@ -8,7 +8,7 @@ export type MeasureTextFn = (fontPx: number, text: string, family: string) => nu
 export const MUSHAF_FIT_MIN_PX = 12;
 export const MUSHAF_FIT_MAX_PX = 34;
 /** سقف أعلى لصفحتي الفاتحة وبداية البقرة (أسطر أقل → تكبير دون قص). */
-export const MUSHAF_FIT_OPENING_MAX_PX = 42;
+export const MUSHAF_FIT_OPENING_MAX_PX = 46;
 import { releaseCanvasResources } from "@/lib/canvas-gl-cleanup";
 
 export const MUSHAF_FIT_LINE_RATIO = 1.85;
@@ -88,7 +88,7 @@ export function mushafOpeningFitCacheKey(
   containerWidth: number,
   blockHeightPx: number,
 ): string {
-  return `opening-v2|${page}|${Math.round(containerWidth)}|${Math.round(blockHeightPx)}`;
+  return `opening-v3|${page}|${Math.round(containerWidth)}|${Math.round(blockHeightPx)}`;
 }
 
 export function isMushafOpeningPage(pageNumber: number): boolean {

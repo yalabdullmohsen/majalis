@@ -35,9 +35,9 @@
   --mm-frame: transparent;
   --mm-banner-fill: linear-gradient(180deg, #efe6d8 0%, #e8dcc8 48%, #d5c4a1 100%);
   --mm-banner-name-bg: #efe6d8;
-  /* تظليل آية نشطة — صلب #eedcc2 + نص #111111 (لا شفافية تضعف التباين) */
-  --mm-ayah-select: #eedcc2;
-  --mm-ayah-play: #f2e2ce;
+  /* تظليل آية محددة — أوضح قليلًا دون إزعاج */
+  --mm-ayah-select: #e8d4b0;
+  --mm-ayah-play: #f0e0c8;
   --mm-ui-accent: #135034;
   --mm-ui-accent-deep: #0e3d27;
   --mm-audio-capsule: #faf7f0;
@@ -86,8 +86,9 @@
   --mm-ref-ink-x-start: 1.5%;
   --mm-ref-ink-x-end: 98.4%;
   /* ص١: مطابق مرجع مصحف المدينة (بوابات الهندسة) */
-  --mm-ref-open-banner-y: 27.7%;
-  --mm-ref-open-text-end: 74.8%;
+  /* ص١: شارة أقرب ونص أكبر ضمن الصفحة بلا قص */
+  --mm-ref-open-banner-y: 24.5%;
+  --mm-ref-open-text-end: 78.5%;
   --mushaf-bg: var(--mm-outer-bg);
 
   /* قفل تكبير نص النظام — يمنع كسر تخطيط الآيات (مكافئ maxFontSizeMultiplier) */
@@ -437,8 +438,8 @@ html.dark .mm-viewport,
 }
 
 .mm-viewport .mm-page--opening {
-  --mm-line-height: 1.62;
-  --mushaf-line-height: 1.62;
+  --mm-line-height: 1.52;
+  --mushaf-line-height: 1.52;
 }
 
 /* ص٢ (البقرة): هامش قراءة عادي — لا فراغ علوي مبالغ */
@@ -449,8 +450,21 @@ html.dark .mm-viewport,
 }
 
 .mm-viewport .mm-page[data-page-type="lead"] {
-  --mm-line-height: 1.72;
-  --mushaf-line-height: 1.72;
+  --mm-line-height: 1.62;
+  --mushaf-line-height: 1.62;
+}
+
+/* ص١–٢ فقط: تقريب شارة السورة والبسملة من كتلة النص */
+.mm-viewport .mm-page--opening .mm-slot[data-kind="banner"],
+.mm-viewport .mm-page--flex .mm-slot[data-kind="banner"] {
+  min-height: calc(var(--mm-qpc-size, 16px) * 1.05);
+  margin-block-end: 0.05em;
+}
+
+.mm-viewport .mm-page--opening .mm-slot[data-kind="basmala"],
+.mm-viewport .mm-page--flex .mm-slot[data-kind="basmala"] {
+  min-height: calc(var(--mm-qpc-size, 16px) * 1.05);
+  margin-block: 0.05em 0.12em;
 }
 
 .mm-viewport .mm-page--opening .mm-slot[data-kind="empty"] {
@@ -2221,6 +2235,94 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 .ayah-action-sheet__tilawa {
   display: grid;
   gap: 0.35rem;
+}
+
+.ayah-action-sheet__tilawa-reader {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--mm-ui-accent) 28%, transparent);
+  background: color-mix(in srgb, var(--mm-ui-accent) 8%, var(--mm-paper));
+}
+
+.ayah-action-sheet__tilawa-reader-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--mm-ui-accent-deep);
+  line-height: 1.35;
+}
+
+.ayah-action-sheet__tilawa-reader-btn {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--mm-ui-accent) 40%, transparent);
+  border-radius: 999px;
+  background: var(--mm-paper);
+  color: var(--mm-ui-accent-deep);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 650;
+  min-height: 40px;
+  padding: 0.35rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  cursor: pointer;
+}
+
+/* مختصر/مطول — صغيرة وخضراء عند التحديد */
+.ayah-action-sheet__tafsir .mm-search-sheet__tafsir-depth,
+.ayah-action-sheet__tafsir .quran-tabbar {
+  display: inline-flex;
+  gap: 0.3rem;
+  margin-block-end: 0.45rem;
+}
+
+.ayah-action-sheet__tafsir .quran-btn--segment,
+.ayah-action-sheet__tafsir-depth button {
+  min-height: 32px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 650;
+  border-radius: 999px;
+}
+
+.ayah-action-sheet__tafsir .quran-btn--segment.is-active,
+.ayah-action-sheet__tafsir-depth button.is-active {
+  background: color-mix(in srgb, #2f7a52 16%, var(--mm-paper));
+  border-color: #2f7a52;
+  color: #1a4d3e;
+}
+
+.ayah-action-sheet__tafsir-font {
+  margin-block: 0.25rem 0.35rem;
+}
+
+.ayah-action-sheet__tafsir-font .ayah-action-sheet__font-btn {
+  min-height: 32px;
+  min-width: 32px;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.75rem;
+}
+
+/* علامات ترقيم الآيات — 4 ألوان هادئة على فاصلة الآية فقط (لا تغيّر الرسم) */
+.mm-viewport[data-ayah-marks="1"] .mm-ayah-hit--end[data-mark-tone="0"],
+.mm-viewport[data-ayah-marks="1"] .mm-ayah-hit--end[data-mark-tone="0"] .mm-ayah-number {
+  color: #2f7a52;
+}
+.mm-viewport[data-ayah-marks="1"] .mm-ayah-hit--end[data-mark-tone="1"],
+.mm-viewport[data-ayah-marks="1"] .mm-ayah-hit--end[data-mark-tone="1"] .mm-ayah-number {
+  color: #a68b67;
+}
+.mm-viewport[data-ayah-marks="1"] .mm-ayah-hit--end[data-mark-tone="2"],
+.mm-viewport[data-ayah-marks="1"] .mm-ayah-hit--end[data-mark-tone="2"] .mm-ayah-number {
+  color: #5a6f7d;
+}
+.mm-viewport[data-ayah-marks="1"] .mm-ayah-hit--end[data-mark-tone="3"],
+.mm-viewport[data-ayah-marks="1"] .mm-ayah-hit--end[data-mark-tone="3"] .mm-ayah-number {
+  color: #9a5b55;
 }
 
 .ayah-action-sheet__preview {

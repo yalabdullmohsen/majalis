@@ -46,7 +46,12 @@ assert.match(viewport, /MushafControls/);
 assert.match(viewport, /exitAlwaysVisible=\{actionsOpen\s*\|\|\s*chromeOpen\s*\|\|\s*overlayOpen\}/);
 assert.doesNotMatch(viewport, /exitAlwaysVisible=\{true\}/);
 assert.match(viewport, /MUSHAF_CHROME_HIDE_MS|3200/);
-assert.match(viewport, /scrollIntoView\(\{\s*block:\s*"center"/);
+assert.match(viewport, /scrollAyahIntoViewCentered/);
+assert.doesNotMatch(
+  viewport,
+  /onSelectVerse[\s\S]*?scrollIntoView\(\{\s*block:\s*"center"/,
+  "ضغط الآية لا يمرّر الصفحة",
+);
 assert.doesNotMatch(
   css,
   /\.mm-viewport\[data-ayah-bar="1"\][^{]*\{[^}]*--mm-chrome-bottom-h:\s*var\(--mm-ayah-bar-h\)/,

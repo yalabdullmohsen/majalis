@@ -362,18 +362,22 @@ function waitForServer(url, timeoutMs = 30000) {
 }
 
 async function main() {
-  console.log(`▶ تشغيل خادم Vite dev على 127.0.0.1:${PORT} لبوابة انحدار تباين الألوان...`);
-  // تجاوز --host 0.0.0.0 في سكربت dev — البوابة تلزم loopback فقط.
-  const server = spawn(
-    "pnpm",
-    ["exec", "vite", "--config", "vite.config.ts", "--host", "127.0.0.1", "--port", PORT],
-    {
-      cwd: appRoot,
-      env: { ...process.env, PORT, BASE_PATH: process.env.BASE_PATH || "/", HOST: "127.0.0.1" },
-      stdio: ["ignore", "pipe", "pipe"],
-      detached: true,
-    },
+  const distIndex = resolve(appRoot, "dist/index.html");
+  const usePreview = existsSync(distIndex);
+  // في CI يُنزَّل dist الجاهز — preview أسرع بكثير من Vite cold-compile ويحمي من timeout 15د.
+  const viteArgs = usePreview
+    ? ["exec", "vite", "preview", "--config", "vite.config.ts", "--host", "127.0.0.1", "--port", PORT]
+    : ["exec", "vite", "--config", "vite.config.ts", "--host", "127.0.0.1", "--port", PORT];
+  console.log(
+    `▶ تشغيل Vite ${usePreview ? "preview (dist)" : "dev"} على 127.0.0.1:${PORT} لبوابة انحدار تباين الألوان...`,
   );
+  // تجاوز --host 0.0.0.0 في سكربت start — البوابة تلزم loopback فقط.
+  const server = spawn("pnpm", viteArgs, {
+    cwd: appRoot,
+    env: { ...process.env, PORT, BASE_PATH: process.env.BASE_PATH || "/", HOST: "127.0.0.1" },
+    stdio: ["ignore", "pipe", "pipe"],
+    detached: true,
+  });
   let serverOutput = "";
   server.stdout.on("data", (d) => { serverOutput += d.toString(); });
   server.stderr.on("data", (d) => { serverOutput += d.toString(); });
@@ -383,11 +387,11 @@ async function main() {
   };
 
   try {
-    await waitForServer(baseUrl, 45000);
+    await waitForServer(baseUrl, usePreview ? 60000 : 90000);
   } catch (e) {
     console.error(serverOutput.slice(-2000));
     killServer();
-    console.error(`❌ تعذّر تشغيل خادم dev: ${e.message}`);
+    console.error(`❌ تعذّر تشغيل خادم ${usePreview ? "preview" : "dev"}: ${e.message}`);
     process.exit(1);
   }
 

@@ -24,5 +24,9 @@ assert.doesNotMatch(css, /ayah-marker|ayahBadge|verse-marker|end-marker/);
 assert.doesNotMatch(css, /border-radius:\s*50%\s*\/\s*42%/);
 assert.match(line, /charType === "end"|data-type=\{(w|word)\.charType\}/);
 assert.match(line, /\{(w|word)\.glyphText\}/);
+/* تمييز اختياري بأربع درجات على الفاصلة فقط — بلا اختراع علامات وقف */
+assert.match(css, /data-ayah-marks="1"/);
+assert.match(css, /data-mark-tone="0"/);
+assert.match(line, /data-mark-tone/);
 
 console.log("mushaf-ayah-marks-gate.test.ts: ok");

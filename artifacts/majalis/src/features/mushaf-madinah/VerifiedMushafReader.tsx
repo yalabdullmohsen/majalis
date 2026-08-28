@@ -75,6 +75,7 @@ type MushafTheme = "paper" | "sepia" | "night" | "oled";
 const THEME_KEY = "majlisilm.mushaf.theme";
 const THEME_CHOICE_KEY = "majlisilm.mushaf.theme-choice";
 const HIDE_LEVEL_KEY = "majlisilm.mushaf.hide-level";
+const AYAH_MARKS_KEY = "majlisilm.mushaf.ayah-marks";
 
 function loadThemeChoice(): MushafThemeChoice {
   try {
@@ -94,6 +95,14 @@ function loadHideLevel(): MushafHideLevel {
     /* ignore */
   }
   return 0;
+}
+
+function loadAyahMarks(): boolean {
+  try {
+    return localStorage.getItem(AYAH_MARKS_KEY) === "1";
+  } catch {
+    return false;
+  }
 }
 
 function resolveTheme(choice: MushafThemeChoice): MushafTheme {
@@ -142,6 +151,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   const [themeChoice, setThemeChoice] = useState<MushafThemeChoice>(() => loadThemeChoice());
   const theme = resolveTheme(themeChoice);
   const [hideLevel, setHideLevel] = useState<MushafHideLevel>(() => loadHideLevel());
+  const [ayahMarks, setAyahMarks] = useState<boolean>(() => loadAyahMarks());
   const [revealedVerses, setRevealedVerses] = useState<ReadonlySet<string>>(() => new Set());
 
   const { fontFamily, ready: fontReady } = useQpcPageFont(page);
@@ -191,6 +201,14 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     }
     setRevealedVerses(new Set());
   }, [hideLevel]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(AYAH_MARKS_KEY, ayahMarks ? "1" : "0");
+    } catch {
+      /* ignore */
+    }
+  }, [ayahMarks]);
 
   useEffect(() => {
     setRevealedVerses(new Set());
@@ -400,6 +418,9 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     (verseKey: string) => {
       if (selectedVerseKey === verseKey && actionsOpen) {
         setActionsOpen(false);
+        if (playerState !== "playing" && playerState !== "buffering" && playerState !== "loading") {
+          setSelectedVerseKey(null);
+        }
         return;
       }
       haptics.selection();
@@ -409,19 +430,9 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       setCopyStatus(null);
       setAudioError(null);
       setAudioStatus(null);
-      requestAnimationFrame(() => {
-        const shell = document.querySelector<HTMLElement>('[data-pane="current"] .mm-page-shell');
-        const target = document.querySelector<HTMLElement>(
-          `[data-pane="current"] [data-verse="${verseKey}"]:not([data-type="end"])`,
-        );
-        if (shell && target) {
-          scrollAyahIntoViewCentered(shell, target, { behavior: "smooth" });
-          return;
-        }
-        target?.scrollIntoView({ block: "center", inline: "nearest", behavior: "smooth" });
-      });
+      /* بلا تمرير الصفحة — التحديد يظهر مكانه دون إحساس بتقليب */
     },
-    [actionsOpen, selectedVerseKey],
+    [actionsOpen, playerState, selectedVerseKey],
   );
 
   const onLongPressVerse = useCallback(
@@ -758,6 +769,8 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       shell.scrollTop = 0;
       return;
     }
+    /* لا تمرير عند الضغط على آية فقط — التحديد يبقى مكانه. تمرير عند رصيف التلاوة فقط. */
+    if (!audioDockVisible) return;
     const id = window.requestAnimationFrame(() => {
       const selected = shell.querySelector<HTMLElement>(".ayah-active, .is-playing");
       if (selected) {
@@ -789,6 +802,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       data-ayah-bar={actionsOpen ? "1" : "0"}
       data-audio-dock={audioDockVisible ? (audioDockMini ? "mini" : "1") : "0"}
       data-mushaf-theme={theme}
+      data-ayah-marks={ayahMarks ? "1" : "0"}
       data-text-profile={lowEndText ? "low" : "normal"}
       data-testid="mushaf-viewport"
       dir="rtl"
@@ -992,6 +1006,8 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         onTheme={setThemeChoice}
         hideLevel={hideLevel}
         onHideLevel={setHideLevel}
+        ayahMarks={ayahMarks}
+        onAyahMarks={setAyahMarks}
         onClose={() => setSettingsOpen(false)}
       />
 

@@ -11,6 +11,8 @@ type Props = {
   onTheme: (theme: MushafThemeChoice) => void;
   hideLevel: MushafHideLevel;
   onHideLevel: (level: MushafHideLevel) => void;
+  ayahMarks: boolean;
+  onAyahMarks: (on: boolean) => void;
   onClose: () => void;
 };
 
@@ -21,6 +23,8 @@ export function MushafSettingsSheet({
   onTheme,
   hideLevel,
   onHideLevel,
+  ayahMarks,
+  onAyahMarks,
   onClose,
 }: Props) {
   return (
@@ -71,6 +75,21 @@ export function MushafSettingsSheet({
               {theme === id ? <Check size={18} aria-hidden="true" /> : null}
             </button>
           ))}
+        </section>
+        <section className="mm-settings-sheet__card quran-card">
+          <h3>علامات الآيات</h3>
+          <p className="mm-settings-sheet__hint">
+            تلوين هادئ لفاصلة الآية فقط (أربع درجات) — لا يغيّر نص القرآن. لا توجد بيانات وقف خارجية مخترعة.
+          </p>
+          <button
+            type="button"
+            className={`mm-settings-sheet__row quran-row${ayahMarks ? " is-active" : ""}`}
+            onClick={() => onAyahMarks(!ayahMarks)}
+            aria-pressed={ayahMarks}
+          >
+            <span>{ayahMarks ? "مفعّلة" : "متوقفة"}</span>
+            {ayahMarks ? <Check size={18} aria-hidden="true" /> : null}
+          </button>
         </section>
         <section className="mm-settings-sheet__card quran-card">
           <h3>اختبار الحفظ</h3>
