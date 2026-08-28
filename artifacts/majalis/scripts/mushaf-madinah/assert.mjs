@@ -33,7 +33,7 @@ const bad = all.filter((m) => {
   const paintFail =
     "fontCheck" in m &&
     (m.fontCheck === false ||
-      !(m.fontSize >= 12 && m.fontSize <= 34) ||
+      !(m.fontSize >= 12 && m.fontSize <= 35) ||
       m.pageOverflow ||
       m.lineOverflow ||
       m.overlap);

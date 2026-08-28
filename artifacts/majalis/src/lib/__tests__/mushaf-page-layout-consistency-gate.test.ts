@@ -46,7 +46,7 @@ assert.match(fitHook, /mushafUniformFitCacheKey/);
 assert.match(fitHook, /mushafOpeningFitCacheKey|isMushafOpeningPage/);
 assert.doesNotMatch(fitHook, /shrinkUntilFit/);
 assert.match(fitHook, /fitPageFontSize\(/);
-assert.match(fitAlgo, /uniform-v1\|/);
+assert.match(fitAlgo, /uniform-v2\|/);
 assert.match(fitAlgo, /opening-v3\|/);
 assert.match(fitAlgo, /MUSHAF_FIT_OPENING_MAX_PX/);
 assert.match(css, /--mm-ref-open-banner-y:\s*24\.5%/);
