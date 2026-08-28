@@ -89,22 +89,13 @@ export function hasBlockingStylesheet(html) {
   });
 }
 
-function injectBuildCommit(html) {
-  const commit =
-    process.env.VERCEL_GIT_COMMIT_SHA ||
-    process.env.GITHUB_SHA ||
-    process.env.GIT_COMMIT ||
-    "dev";
-  return html.replace(/__MJ_BUILD_COMMIT__/g, commit);
-}
-
 export function deferEntryCssPlugin() {
   return {
     name: "majalis-defer-entry-css",
     transformIndexHtml: {
       order: "post",
       handler(html) {
-        return injectBuildCommit(applyEntryCssDefer(html));
+        return applyEntryCssDefer(html);
       },
     },
   };

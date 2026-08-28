@@ -72,7 +72,6 @@ export function useVersionCheck() {
   }, []);
 
   const check = useCallback(async () => {
-    if (typeof navigator !== "undefined" && navigator.webdriver) return;
     if (!loadedCommit || checkingRef.current || dismissedRef.current) return;
     if (isChunkRecoveryInFlight()) return;
 

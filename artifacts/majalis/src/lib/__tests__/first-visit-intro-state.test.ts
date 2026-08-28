@@ -39,8 +39,8 @@ beforeEach(() => {
   resetFirstVisitIntroStateForTests();
 });
 
-test("أول زيارة على الرئيسية لا تعرض التعريف (معطّل)", () => {
-  assert.equal(shouldShowFirstVisitIntro("/"), false);
+test("أول زيارة على الرئيسية تعرض التعريف", () => {
+  assert.equal(shouldShowFirstVisitIntro("/"), true);
 });
 
 test("مسار غير الرئيسية لا يعرض التعريف", () => {
