@@ -6,14 +6,34 @@ import { HomeUniversalSearch } from "@/components/home/HomeUniversalSearch";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { scheduleOnIdle } from "@/lib/yield-to-main";
-import { getSurahMeta, loadPagePosition, loadReadingAyahKey } from "@/lib/quran-api";
 import { toArabicDigits } from "@/lib/utils";
 import { StartHeader } from "@/components/home/start/StartHeader";
 import { HOME_SEARCH_INPUT_ID } from "@/lib/home-search-id";
-import { PrayerSummaryCard } from "@/components/home/start/PrayerSummaryCard";
-import { DhikrSummaryCard } from "@/components/home/start/DhikrSummaryCard";
-import { HomeFeaturedSections } from "@/components/home/start/HomeFeaturedSections";
 import "@/styles/components/home/home-start.css";
+
+const PAGE_POS_KEY = "majalis-quran-page-pos";
+
+function readLocalMushafResume(): { href: string; label: string } {
+  try {
+    const raw = localStorage.getItem(PAGE_POS_KEY);
+    if (!raw) return { href: "/mushaf", label: "المصحف" };
+    const parsed = JSON.parse(raw) as { page?: number; ayahKey?: string };
+    const page = Number(parsed?.page);
+    if (!Number.isFinite(page) || page < 1 || page > 604) {
+      return { href: "/mushaf", label: "المصحف" };
+    }
+    const ayahKey =
+      typeof parsed?.ayahKey === "string" && /^\d{1,3}:\d{1,3}$/.test(parsed.ayahKey)
+        ? parsed.ayahKey
+        : null;
+    return {
+      href: ayahKey ? `/mushaf/page/${page}?ayah=${ayahKey}` : `/mushaf/page/${page}`,
+      label: `صفحة ${toArabicDigits(page)}`,
+    };
+  } catch {
+    return { href: "/mushaf", label: "المصحف" };
+  }
+}
 
 const HomeBelowFold = lazyWithRetry(
   () => import("./HomeBelowFold"),
@@ -26,6 +46,30 @@ const HomeAuthStrip = lazyWithRetry(
       default: m.HomeAuthStrip,
     })),
   "HomeAuthStrip",
+);
+
+const PrayerSummaryCard = lazyWithRetry(
+  () =>
+    import("@/components/home/start/PrayerSummaryCard").then((m) => ({
+      default: m.PrayerSummaryCard,
+    })),
+  "PrayerSummaryCard",
+);
+
+const DhikrSummaryCard = lazyWithRetry(
+  () =>
+    import("@/components/home/start/DhikrSummaryCard").then((m) => ({
+      default: m.DhikrSummaryCard,
+    })),
+  "DhikrSummaryCard",
+);
+
+const HomeFeaturedSections = lazyWithRetry(
+  () =>
+    import("@/components/home/start/HomeFeaturedSections").then((m) => ({
+      default: m.HomeFeaturedSections,
+    })),
+  "HomeFeaturedSections",
 );
 
 function HomeBelowFoldGate() {
@@ -81,29 +125,54 @@ function HomeBelowFoldGate() {
   );
 }
 
-function resolveMushafHref(): string {
-  const page = loadPagePosition();
-  if (page != null && page >= 1) {
-    const ayahKey = loadReadingAyahKey();
-    return ayahKey ? `/mushaf/page/${page}?ayah=${ayahKey}` : `/mushaf/page/${page}`;
-  }
-  return "/mushaf";
+function PrayerSkeleton() {
+  return (
+    <section className="mj-app-card mj-prayer-summary mj-prayer-summary--ph" aria-label="مواقيت الصلاة" aria-busy="true">
+      <div className="mj-prayer-summary__hero mj-prayer-summary__hero--ph">
+        <span className="mj-home-start-ph__line mj-home-start-ph__line--md" />
+        <span className="mj-home-start-ph__line mj-home-start-ph__line--lg" />
+      </div>
+      <div className="mj-prayer-summary__row mj-prayer-summary__row--ph" aria-hidden="true">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <span key={i} className="mj-home-start-ph__chip" />
+        ))}
+      </div>
+    </section>
+  );
 }
 
-function resolveMushafLabel(): string {
-  const page = loadPagePosition();
-  if (page == null || page < 1) return "المصحف";
-  const ayahKey = loadReadingAyahKey();
-  if (!ayahKey) return `صفحة ${toArabicDigits(page)}`;
-  const [s] = ayahKey.split(":").map(Number);
-  if (!s || s < 1 || s > 114) return `صفحة ${toArabicDigits(page)}`;
-  const name = getSurahMeta(s).name.replace(/^سُورَةُ\s*/u, "");
-  return name ? `متابعة ${name}` : `صفحة ${toArabicDigits(page)}`;
+function FeaturedSkeleton() {
+  return (
+    <section className="mj-app-card mj-home-featured mj-home-featured--ph" aria-label="أقسام بارزة" aria-busy="true">
+      <div className="mj-app-section-header">
+        <h2 className="mj-app-section-header__title">استكشف</h2>
+      </div>
+      <div className="mj-home-featured__grid" aria-hidden="true">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <span key={i} className="mj-home-start-ph__action mj-home-start-ph__chip" />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function DhikrSkeleton() {
+  return (
+    <section className="mj-app-card mj-dhikr-summary mj-dhikr-summary--ph" aria-label="الأذكار" aria-busy="true">
+      <div className="mj-app-section-header">
+        <h2 className="mj-app-section-header__title">الأذكار</h2>
+      </div>
+      <div className="mj-dhikr-summary__list" aria-hidden="true">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <span key={i} className="mj-dhikr-summary__row-ph mj-home-start-ph__chip" />
+        ))}
+      </div>
+    </section>
+  );
 }
 
 export default function HomePage() {
-  const [mushafHref] = useState(resolveMushafHref);
-  const [mushafLabel] = useState(resolveMushafLabel);
+  const [{ href: mushafHref, label: mushafLabel }] = useState(readLocalMushafResume);
 
   useEffect(() => {
     scheduleOnIdle(() => {
@@ -160,11 +229,15 @@ export default function HomePage() {
       {brand}
 
       <SectionErrorBoundary name="PrayerSummary">
-        <PrayerSummaryCard />
+        <Suspense fallback={<PrayerSkeleton />}>
+          <PrayerSummaryCard />
+        </Suspense>
       </SectionErrorBoundary>
 
       <SectionErrorBoundary name="DhikrSummary">
-        <DhikrSummaryCard />
+        <Suspense fallback={<DhikrSkeleton />}>
+          <DhikrSummaryCard />
+        </Suspense>
       </SectionErrorBoundary>
 
       <SectionErrorBoundary name="HomeUniversalSearch">
@@ -172,7 +245,9 @@ export default function HomePage() {
       </SectionErrorBoundary>
 
       <SectionErrorBoundary name="HomeFeatured">
-        <HomeFeaturedSections />
+        <Suspense fallback={<FeaturedSkeleton />}>
+          <HomeFeaturedSections />
+        </Suspense>
       </SectionErrorBoundary>
 
       <SectionErrorBoundary name="HomeAuthStrip">

@@ -32,7 +32,6 @@ import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
-import { StartHeader } from "@/components/home/start/StartHeader";
 import { HOME_SEARCH_INPUT_ID } from "@/lib/home-search-id";
 import {
   markFirstVisitIntroSeen,
@@ -684,7 +683,19 @@ function NativeNotificationsBootstrap() {
 function HomeInitialShell() {
   return (
     <div className="mj-home-start m2030-home mj-home-lcp-ph" dir="rtl">
-      <StartHeader searchInputId={HOME_SEARCH_INPUT_ID} mushafHref="/mushaf" />
+      <header className="mj-start-header">
+        <a href="/settings" className="mj-start-header__icon-btn" aria-label="الإعدادات">
+          ⚙
+        </a>
+        <div className="mj-start-header__end">
+          <a href={`#${HOME_SEARCH_INPUT_ID}`} className="mj-start-header__pill">
+            بحث
+          </a>
+          <a href="/mushaf" className="mj-start-header__pill mj-start-header__pill--accent">
+            المصحف
+          </a>
+        </div>
+      </header>
 
       <section className="mj-home-start__brand" aria-label="المجلس العلمي">
         <div className="mj-home-start__logo-wrap">

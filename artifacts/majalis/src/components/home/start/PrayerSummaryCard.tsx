@@ -133,8 +133,8 @@ export function PrayerSummaryCard() {
 
 export function PrayerSummaryCardSkeleton() {
   return (
-    <AppCard className="mj-prayer-summary mj-prayer-summary--ph" as="section" aria-label="مواقيت الصلاة" aria-busy="true">
-      <div className="mj-prayer-summary__hero mj-prayer-summary__hero--ph">
+    <AppCard className="mj-prayer-summary mj-prayer-summary--ph" as="section" aria-label="مواقيت الصلاة">
+      <div className="mj-prayer-summary__hero mj-prayer-summary__hero--ph" aria-busy="true">
         <span className="mj-home-start-ph__line mj-home-start-ph__line--md" />
         <span className="mj-home-start-ph__line mj-home-start-ph__line--lg" />
       </div>
