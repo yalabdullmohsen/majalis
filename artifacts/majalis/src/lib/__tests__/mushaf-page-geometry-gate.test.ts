@@ -24,7 +24,7 @@ assert.match(css, /mm-page__body--flex/);
 assert.match(css, /data-page-type="lead"/);
 assert.match(css, /justify-content:\s*center/);
 assert.match(css, /grid-template-rows:\s*repeat\(15,\s*minmax\(0,\s*1fr\)\)/);
-assert.match(css, /--mm-ref-open-banner-y:\s*27\.7%/);
+assert.match(css, /--mm-ref-open-banner-y:\s*24\.5%/);
 assert.match(bands, /MUSHAF_LINES_NORMAL = 15/);
 assert.match(bands, /MUSHAF_HIZB_START_PAGES = 60/);
 assert.match(bands, /MUSHAF_TOUCH_MIN_PX = 44/);

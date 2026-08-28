@@ -16,7 +16,7 @@ function collectBands(root: HTMLElement, verseKey: string): TextBand[] {
   const cacheKey = `${verseKey}|${root.clientWidth}|${root.clientHeight}`;
   return getCachedTextBands(cacheKey, scrollLeft, scrollTop, () => {
     const nodes = root.querySelectorAll<HTMLElement>(
-      `[data-verse="${CSS.escape(verseKey)}"]:not([data-type="end"])`,
+      `[data-verse="${CSS.escape(verseKey)}"]`,
     );
     const origin = root.getBoundingClientRect();
     const raw: TextBand[] = [];
@@ -70,8 +70,12 @@ export function MushafAyahHighlight({ container, verseKey, playingKey = null }: 
 
     const measureNow = () => {
       rafRef.current = null;
-      if (shouldThrottleUiRender()) return;
+      /* التحديد يجب أن يظهر فورًا حتى في وضع التوفير */
       setSelected(verseKey ? collectBands(container, verseKey) : []);
+      if (shouldThrottleUiRender() && !verseKey) {
+        setPlaying([]);
+        return;
+      }
       setPlaying(playingKey && playingKey !== verseKey ? collectBands(container, playingKey) : []);
     };
 

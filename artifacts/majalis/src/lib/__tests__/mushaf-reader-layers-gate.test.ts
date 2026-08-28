@@ -76,7 +76,7 @@ assert.match(reader, /beginPowerSaverSession/);
 assert.match(reader, /startBatteryFpsMonitor/);
 assert.match(reader, /data-audio-dock/);
 assert.match(reader, /scrollAyahIntoViewCentered|block:\s*"center"/);
-assert.match(css, /--mm-ayah-select:\s*#eedcc2/);
+assert.match(css, /--mm-ayah-select:\s*#e8d4b0/);
 assert.match(css, /margin-bottom:\s*var\(--mm-dock-pad\)/);
 assert.match(css, /--mm-dock-pad:\s*calc\([^)]*var\(--inset-bottom/);
 
