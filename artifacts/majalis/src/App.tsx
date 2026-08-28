@@ -686,7 +686,7 @@ function HomeInitialShell() {
       <header className="page-hero-mj m2030-hero home-page-hero" dir="rtl">
         <div className="page-hero-mj__content">
           <p className="page-hero-mj__eyebrow mj-home-lcp-ph__hero-eyebrow">&nbsp;</p>
-          <h1 className="page-hero-mj__title">المجلس العلمي</h1>
+          <h1 className="page-hero-mj__title">سُنّة</h1>
           <div className="page-hero-mj__actions">
             <span className="mj-btn m2030-btn m2030-btn--primary mj-home-lcp-ph__hero-cta">تابع التصفح</span>
           </div>

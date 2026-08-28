@@ -13,9 +13,9 @@ export default function ArbaeenLovePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/hadith/arbaeen-love-of-allah",
-      title: "الأربعون في محبة رب العالمين | المجلس العلمي",
+      title: "الأربعون في محبة رب العالمين | سُنّة",
       description: "أحاديث نبوية موثقة في محبة الله لعباده ومحبة العبد لربه، من صحيح البخاري ومسلم وغيرهما.",
-      keywords: ["الأربعون", "محبة الله", "أحاديث محبة الله", "المجلس العلمي"],
+      keywords: ["الأربعون", "محبة الله", "أحاديث محبة الله", "سُنّة"],
     });
   }, []);
 
@@ -71,7 +71,7 @@ export default function ArbaeenLovePage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="الأربعون في محبة رب العالمين — المجلس العلمي" url="https://majlisilm.com/hadith/arbaeen-love-of-allah" />
+        <ShareButtons title="الأربعون في محبة رب العالمين — سُنّة" url="https://majlisilm.com/hadith/arbaeen-love-of-allah" />
       </div>
     </div>
   );

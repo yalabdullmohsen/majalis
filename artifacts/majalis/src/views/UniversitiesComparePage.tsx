@@ -156,7 +156,7 @@ function CompareContent() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="مقارنة الجامعات الإسلامية — المجلس العلمي" url="https://majlisilm.com/universities/compare" />
+        <ShareButtons title="مقارنة الجامعات الإسلامية — سُنّة" url="https://majlisilm.com/universities/compare" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/universities" title="اختبر معلوماتك في الفقه والتاريخ" count={4} />
@@ -169,8 +169,8 @@ export default function UniversitiesComparePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/universities/compare",
-      title: "مقارنة الجامعات الإسلامية | المجلس العلمي",
-      description: "قارن بين الجامعات الإسلامية، التخصصات والاعتمادات والبرامج الأكاديمية جنباً إلى جنب. محتوى معتمد في منهج المجلس العلمي",
+      title: "مقارنة الجامعات الإسلامية | سُنّة",
+      description: "قارن بين الجامعات الإسلامية، التخصصات والاعتمادات والبرامج الأكاديمية جنباً إلى جنب. محتوى معتمد في منهج سُنّة",
       keywords: ["مقارنة جامعات", "جامعات إسلامية", "دراسة شرعية", "اعتماد أكاديمي", "مقارنة برامج"],
       jsonLd: [
         {
@@ -178,7 +178,7 @@ export default function UniversitiesComparePage() {
           "@type": "WebPage",
           name: "مقارنة الجامعات الإسلامية",
           url: "https://majlisilm.com/universities/compare",
-          description: "مقارنة تفصيلية بين الجامعات الإسلامية في التخصصات والبرامج الأكاديمية؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "مقارنة تفصيلية بين الجامعات الإسلامية في التخصصات والبرامج الأكاديمية؛ محتوى معتمد في منهج سُنّة",
           about: { "@type": "Thing", name: "الجامعات الإسلامية والدراسة الشرعية" },
         },
       ],

@@ -65,10 +65,10 @@ export default function ContactPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/contact",
-      title: "تواصل معنا | المجلس العلمي",
+      title: "تواصل معنا | سُنّة",
       description: "يسعدنا استقبال ملاحظاتك واقتراحاتك وتصحيحاتك عبر البريد الرسمي للمجلس العلمي.",
-      keywords: ["تواصل", "المجلس العلمي", "الدعم", "اقتراحات", "إبلاغ عن خطأ"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "تواصل مع المجلس العلمي", url: "https://majlisilm.com/contact", about: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" } }],
+      keywords: ["تواصل", "سُنّة", "الدعم", "اقتراحات", "إبلاغ عن خطأ"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "تواصل مع سُنّة", url: "https://majlisilm.com/contact", about: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" } }],
     });
   }, []);
 

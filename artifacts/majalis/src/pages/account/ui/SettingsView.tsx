@@ -98,9 +98,9 @@ export default function SettingsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/settings",
-      title: "الإعدادات | المجلس العلمي",
-      description: "إعدادات القراءة والصوت والتذكيرات والخصوصية في المجلس العلمي.",
-      keywords: ["إعدادات", "المجلس العلمي", "تفضيلات"],
+      title: "الإعدادات | سُنّة",
+      description: "إعدادات القراءة والصوت والتذكيرات والخصوصية في سُنّة.",
+      keywords: ["إعدادات", "سُنّة", "تفضيلات"],
       robots: "noindex, follow",
     });
   }, []);

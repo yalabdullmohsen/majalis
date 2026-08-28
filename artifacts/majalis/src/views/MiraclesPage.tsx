@@ -110,7 +110,7 @@ export default function MiraclesPage({
   useEffect(() => {
     applyPageSeo({
       path: "/miracles",
-      title: "الإعجاز العلمي | المجلس العلمي",
+      title: "الإعجاز العلمي | سُنّة",
       description: "الإعجاز العلمي وإشارات كونية في الوحي بحذر منهجي؛ المعتمد: الإعجاز البياني والغيبي والتشريعي، لا ربط بنظريات قابلة للنقض.",
       keywords: ["إعجاز علمي", "إشارات كونية", "تفكر في الخلق", "إعجاز بياني", "علوم القرآن"],
       jsonLd: [
@@ -118,7 +118,7 @@ export default function MiraclesPage({
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "الإعجاز العلمي",
-          description: "موضوعات للتأمل في آيات الخلق مع تنبيه منهجي على حدود الاستدلال؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "موضوعات للتأمل في آيات الخلق مع تنبيه منهجي على حدود الاستدلال؛ محتوى معتمد في منهج سُنّة",
           itemListElement: CATEGORIES.filter(c => c !== "الكل").map((cat, i) => ({
             "@type": "ListItem",
             position: i + 1,

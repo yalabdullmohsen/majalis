@@ -208,7 +208,7 @@ export default function IslamicLandmarksPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/islamic-landmarks",
-      title: "المشاهد الإسلامية والمساجد التاريخية | المجلس العلمي",
+      title: "المشاهد الإسلامية والمساجد التاريخية | سُنّة",
       description:
         "استكشف أبرز المشاهد الإسلامية والمساجد التاريخية حول العالم: المسجد الحرام، المسجد النبوي، المسجد الأقصى، الجامع الأزهر، وأكثر من 19 موقعًا",
       keywords: [
@@ -228,7 +228,7 @@ export default function IslamicLandmarksPage() {
           name: "المشاهد الإسلامية والمساجد التاريخية",
           url: "https://majlisilm.com/islamic-landmarks",
           description:
-            "مجموعة أبرز المشاهد الإسلامية والمساجد التاريخية حول العالم مع معلومات تاريخية مفصلة. محتوى معتمد في منهج المجلس العلمي",
+            "مجموعة أبرز المشاهد الإسلامية والمساجد التاريخية حول العالم مع معلومات تاريخية مفصلة. محتوى معتمد في منهج سُنّة",
         },
       ],
     });
@@ -419,7 +419,7 @@ export default function IslamicLandmarksPage() {
       )}
 
       <div className="ilm-share-wrap">
-        <ShareButtons title="المواقع الإسلامية التاريخية | المجلس العلمي" url="https://majlisilm.com/islamic-landmarks" />
+        <ShareButtons title="المواقع الإسلامية التاريخية | سُنّة" url="https://majlisilm.com/islamic-landmarks" />
       </div>
     </div>
   );

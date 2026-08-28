@@ -635,7 +635,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     const url = `${window.location.origin}/mushaf?page=${page}`;
     try {
       if (typeof navigator.share === "function") {
-        await navigator.share({ title: "المصحف — المجلس العلمي", text, url });
+        await navigator.share({ title: "المصحف — سُنّة", text, url });
         setCopyStatus("تم النسخ");
         return;
       }
@@ -1080,7 +1080,7 @@ function MushafMediaSessionBridge({
       ? {
           title,
           artist,
-          album: "تلاوة القرآن — المجلس العلمي",
+          album: "تلاوة القرآن — سُنّة",
           playing,
           position: clock.currentTime,
           duration: clock.duration,

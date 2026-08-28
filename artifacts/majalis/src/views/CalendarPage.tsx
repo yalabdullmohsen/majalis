@@ -90,7 +90,7 @@ function generateIcs(monthEvents: { date: Date; ev: CalendarEvent }[], monthLabe
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
     "PRODID:-//majlisilm.com//Islamic Lessons Calendar//AR",
-    `X-WR-CALNAME:دروس المجلس العلمي — ${monthLabel}`,
+    `X-WR-CALNAME:دروس سُنّة — ${monthLabel}`,
     "X-WR-TIMEZONE:Asia/Kuwait",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
@@ -170,7 +170,7 @@ export default function CalendarPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/calendar",
-      title: "التقويم الإسلامي والدروس | المجلس العلمي",
+      title: "التقويم الإسلامي والدروس | سُنّة",
       description: "تقويم الدروس والمناسبات الإسلامية، عرض شهري وأسبوعي ويومي مع الأحداث والحلقات العلمية.",
       keywords: ["تقويم إسلامي", "مواعيد دروس", "التقويم الهجري", "الأحداث الإسلامية", "جدول الدروس"],
       jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "التقويم الإسلامي والدروس", url: "https://majlisilm.com/calendar", about: { "@type": "Thing", name: "التقويم الهجري والمناسبات الإسلامية" } }],
@@ -332,7 +332,7 @@ export default function CalendarPage() {
       {modalEvent ? <EventModal event={modalEvent} onClose={() => setModalEvent(null)} /> : null}
 
       <div className="twh-share">
-        <ShareButtons aria-label="التقويم الهجري والمناسبات الإسلامية — المجلس العلمي" url="https://majlisilm.com/calendar" />
+        <ShareButtons aria-label="التقويم الهجري والمناسبات الإسلامية — سُنّة" url="https://majlisilm.com/calendar" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="islamic-history" aria-label="اختبر معلوماتك في التاريخ الإسلامي" count={4} />

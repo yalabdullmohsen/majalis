@@ -113,7 +113,7 @@ function UniversitiesContent() {
   useEffect(() => {
     applyPageSeo({
       path: "/universities",
-      title: "دليل الجامعات الإسلامية | المجلس العلمي",
+      title: "دليل الجامعات الإسلامية | سُنّة",
       description: "دليل الجامعات والمعاهد الإسلامية حول العالم: ابحث وقارن حسب التخصص والمستوى وطريقة الدراسة.",
       keywords: ["جامعات إسلامية", "كليات شريعة", "دراسة شرعية", "جامعة إسلامية", "معهد ديني"],
       jsonLd: [
@@ -121,7 +121,7 @@ function UniversitiesContent() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "دليل الجامعات الإسلامية حول العالم",
-          description: "جامعات ومعاهد إسلامية في عشرات الدول العربية والإسلامية؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "جامعات ومعاهد إسلامية في عشرات الدول العربية والإسلامية؛ محتوى معتمد في منهج سُنّة",
           numberOfItems: COUNTRIES.length,
           itemListElement: COUNTRIES.map((country, i) => ({
             "@type": "ListItem",
@@ -264,7 +264,7 @@ function UniversitiesContent() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الجامعات الإسلامية — المجلس العلمي" url="https://majlisilm.com/universities" />
+        <ShareButtons title="الجامعات الإسلامية — سُنّة" url="https://majlisilm.com/universities" />
       </div>
       <RelatedKnowledge kind="book" query="جامعات إسلامية" title="مواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

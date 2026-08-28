@@ -92,9 +92,9 @@ export default function MethodologyPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/methodology",
-      title: "منهجيتنا في التوثيق | المجلس العلمي",
-      description: "مصادر التحقق، منهجية المراجعة البشرية، وضمانات الجودة في المجلس العلمي.",
-      keywords: ["منهجية التوثيق", "مصادر علمية موثوقة", "مراجعة بشرية", "المجلس العلمي"],
+      title: "منهجيتنا في التوثيق | سُنّة",
+      description: "مصادر التحقق، منهجية المراجعة البشرية، وضمانات الجودة في سُنّة.",
+      keywords: ["منهجية التوثيق", "مصادر علمية موثوقة", "مراجعة بشرية", "سُنّة"],
       jsonLd: [
         {
           "@context": "https://schema.org",
@@ -102,10 +102,10 @@ export default function MethodologyPage() {
           name: "منهجيتنا في التوثيق",
           url: "https://majlisilm.com/methodology",
           description:
-            "منهجية المجلس العلمي: شارة «محتوى موثّق» عند وجود مصدر أو مرجع، ووسم صريح للمحتوى المولَّد آلياً.",
+            "منهجية سُنّة: شارة «محتوى موثّق» عند وجود مصدر أو مرجع، ووسم صريح للمحتوى المولَّد آلياً.",
           publisher: {
             "@type": "Organization",
-            name: "المجلس العلمي",
+            name: "سُنّة",
             url: "https://majlisilm.com",
           },
           about: {

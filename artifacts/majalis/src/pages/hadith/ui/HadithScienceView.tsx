@@ -942,7 +942,7 @@ export default function HadithSciencePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/hadith-science",
-      title: "مصطلح الحديث | المجلس العلمي",
+      title: "مصطلح الحديث | سُنّة",
       description: "مرجع شامل لمصطلح الحديث وعلومه: أنواع الأحاديث والسند والرجال والجرح والتعديل وكتب الحديث. مع شرح المصطلحات وكتب الحديث مرجع شامل في علوم",
       keywords: ["مصطلح الحديث", "علوم الحديث", "الحديث الصحيح", "الجرح والتعديل", "الإسناد"],
       jsonLd: [
@@ -1082,7 +1082,7 @@ export default function HadithSciencePage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="علوم الحديث — المجلس العلمي" url="https://majlisilm.com/hadith-science" />
+        <ShareButtons title="علوم الحديث — سُنّة" url="https://majlisilm.com/hadith-science" />
       </div>
 
       {/* مصادر للمزيد */}

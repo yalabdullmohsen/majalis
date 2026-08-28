@@ -46,7 +46,7 @@ assert.match(html, /id="mj-theme-boot"|v6-direct-boot-2026-08/, "ثيم مبكر
   assert.doesNotMatch(crit, /Aref\s+Ruqaa/, "بلا رقعة في CSS الحرج");
 }
 
-assert.match(home, /title="المجلس العلمي"/, "عنوان الرئيسية في React");
+assert.match(home, /title="سُنّة"/, "عنوان الرئيسية في React");
 assert.doesNotMatch(home, /titleDomId/, "لا تبنّي عقدة HTML");
 assert.doesNotMatch(hero, /titleDomId/, "PageHero بلا نقل عقدة");
 assert.doesNotMatch(prewarm, /link\.rel = "preconnect"/, "prewarm لا يضيف preconnect");

@@ -17,7 +17,7 @@ export default function FiqhCouncilIssuesPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-council/issues",
-      title: "المسائل الفقهية | المجمع الفقهي، المجلس العلمي",
+      title: "المسائل الفقهية | المجمع الفقهي، سُنّة",
       description: "موسوعة المسائل الفقهية، ملفات جامعة تربط القرارات والفتاوى والبحوث والتوصيات والأدلة.",
       keywords: ["المسائل الفقهية", "المجمع الفقهي", "قرارات فقهية", "فتاوى جماعية"],
       jsonLd: [
@@ -87,7 +87,7 @@ export default function FiqhCouncilIssuesPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="المسائل الفقهية — المجمع الفقهي | المجلس العلمي" url="https://majlisilm.com/fiqh-council/issues" />
+        <ShareButtons title="المسائل الفقهية — المجمع الفقهي | سُنّة" url="https://majlisilm.com/fiqh-council/issues" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/fiqh-council/issues" title="اختبر معلوماتك في المسائل الفقهية" count={4} />

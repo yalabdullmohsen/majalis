@@ -485,7 +485,7 @@ export default function AdabTalabIlmPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/adab-talab-ilm",
-      title: "آداب طالب العلم | المجلس العلمي",
+      title: "آداب طالب العلم | سُنّة",
       description: "دليل طالب العلم الشرعي، فضل العلم وآداب التعلم ومراتب طالب العلم والكتب المقررة في كل مستوى.",
       keywords: ["آداب طالب العلم", "فضل العلم", "طلب العلم", "الطريق إلى العلم", "كتب العلم"],
       jsonLd: [
@@ -744,7 +744,7 @@ export default function AdabTalabIlmPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="آداب طالب العلم — المجلس العلمي" url="https://majlisilm.com/adab-talab-ilm" />
+        <ShareButtons title="آداب طالب العلم — سُنّة" url="https://majlisilm.com/adab-talab-ilm" />
       </div>
 
       <div className="px-4 mt-4">

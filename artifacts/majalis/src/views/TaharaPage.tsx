@@ -144,7 +144,7 @@ export default function TaharaPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/tahara",
-      title: "الطهارة وأحكامها، المجلس العلمي",
+      title: "الطهارة وأحكامها، سُنّة",
       description: "دليل شامل لأحكام الطهارة: الوضوء والغسل والتيمم وأنواع المياه والنجاسات.",
       keywords: ["الطهارة", "الوضوء", "الغسل", "التيمم", "أحكام الطهارة", "الفقه"],
       jsonLd: [
@@ -435,7 +435,7 @@ export default function TaharaPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="الطهارة وأحكامها — المجلس العلمي" url="https://majlisilm.com/tahara" />
+          <ShareButtons title="الطهارة وأحكامها — سُنّة" url="https://majlisilm.com/tahara" />
         </div>
 
         {/* related */}

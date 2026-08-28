@@ -1,29 +1,36 @@
 import type { SVGProps } from "react";
-import { MAJLIS_WORDMARK_PATH, MAJLIS_WORDMARK_VIEWBOX } from "@/lib/majlis-wordmark-path";
 
 /**
- * وردمارك «المجلس العلمي» — مسارات SVG ثابتة من خط Aref Ruqaa Bold المحلي (SIL OFL).
- * أسلوب رقعة فاخر قريب من الثلث الجلي؛ بلا تحميل خط وقت التشغيل، بلا FOUT.
+ * وردمارك «سُنّة» — نص قصير بخط الواجهة (Amiri) بدل مسار SVG للاسم القديم.
+ * بلا تحميل خط إضافي وقت التشغيل فوق خط الإقلاع.
  */
 
-export default function MajlisWordmark({ className, width, height, ...props }: SVGProps<SVGSVGElement>) {
+export default function MajlisWordmark({ className, width, height, style, ...props }: SVGProps<SVGSVGElement>) {
+  const w = width ?? 138;
+  const h = height ?? 33;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={MAJLIS_WORDMARK_VIEWBOX}
-      width={width ?? 138}
-      height={height ?? 33}
-      fill="currentColor"
+      viewBox="0 0 138 33"
+      width={w}
+      height={h}
       role="img"
-      aria-label="المجلس العلمي"
+      aria-label="سُنّة"
       focusable="false"
       className={className}
+      style={style}
       {...props}
     >
-      <title>المجلس العلمي</title>
-      <g transform="scale(1,-1)">
-        <path d={MAJLIS_WORDMARK_PATH} />
-      </g>
+      <title>سُنّة</title>
+      <text
+        x="69"
+        y="24"
+        textAnchor="middle"
+        fill="currentColor"
+        style={{ fontFamily: '"Amiri", "Noto Naskh Arabic", serif', fontSize: 26, fontWeight: 700 }}
+      >
+        سُنّة
+      </text>
     </svg>
   );
 }

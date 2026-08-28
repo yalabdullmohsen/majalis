@@ -77,8 +77,8 @@ export default function CardsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/cards",
-      title: "بطاقات الاقتباسات الإسلامية | المجلس العلمي",
-      description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة، اختر القالب والحجم وصدّر بجودة عالية. محتوى معتمد في منهج المجلس العلمي",
+      title: "بطاقات الاقتباسات الإسلامية | سُنّة",
+      description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة، اختر القالب والحجم وصدّر بجودة عالية. محتوى معتمد في منهج سُنّة",
       keywords: ["بطاقات إسلامية", "اقتباسات إسلامية", "بطاقات دينية", "صور إسلامية", "بطاقات قرآنية"],
       jsonLd: [
         {
@@ -86,11 +86,11 @@ export default function CardsPage() {
           "@type": "WebApplication",
           name: "صانع البطاقات الإسلامية",
           url: "https://majlisilm.com/cards",
-          description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة؛ محتوى معتمد في منهج سُنّة",
           applicationCategory: "ReligiousApplication",
           operatingSystem: "Web",
           inLanguage: "ar",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
         },
       ],
     });
@@ -140,7 +140,7 @@ export default function CardsPage() {
     try {
       await exportSocialCard(cardRef.current, exportPreset, {
         fileName: `بطاقة-${Date.now()}.png`,
-        title: "بطاقة المجلس العلمي",
+        title: "بطاقة سُنّة",
         text: `${quote}\n— ${source}`,
       });
     } finally {
@@ -152,7 +152,7 @@ export default function CardsPage() {
     <div dir="rtl" className="cards-page">
       <div className="cards-page-inner">
         <Link href="/" className="cards-back-link">
-          المجلس العلمي
+          سُنّة
         </Link>
         <h1 className="cards-page-title">البطاقات الدعوية</h1>
         <p className="cond-page-desc">صمّم بطاقة للمشاركة على واتساب وإنستغرام، بدون حقوق أو شعار افتراضي.</p>
@@ -266,7 +266,7 @@ export default function CardsPage() {
       </div>
       <RelatedKnowledge kind="fawaid" query="فوائد دعوية" title="فوائد ومواد ذات صلة" limit={6} />
       <div className="twh-share">
-        <ShareButtons title="البطاقات الدعوية — المجلس العلمي" url="https://majlisilm.com/cards" />
+        <ShareButtons title="البطاقات الدعوية — سُنّة" url="https://majlisilm.com/cards" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأخلاق والعقيدة" count={4} />

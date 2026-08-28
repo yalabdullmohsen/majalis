@@ -254,9 +254,9 @@ export default function LessonsPage({
     applyPageSeo({
       path: "/lessons",
       canonicalPath: "/lessons",
-      title: "الدروس الشرعية والعلمية | المجلس العلمي",
+      title: "الدروس الشرعية والعلمية | سُنّة",
       description:
-        "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم، فقه وعقيدة وقرآن وسيرة ولغة عربية. محتوى معتمد في منهج المجلس العلمي",
+        "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم، فقه وعقيدة وقرآن وسيرة ولغة عربية. محتوى معتمد في منهج سُنّة",
       keywords: ["دروس شرعية", "دروس دينية", "دروس علمية", "علماء الكويت", "حلقات علمية"],
       jsonLd: [
         {
@@ -264,7 +264,7 @@ export default function LessonsPage({
           "@type": "ItemList",
           name: "الدروس الشرعية والدورات العلمية",
           description:
-            "دروس ودورات علمية من أئمة وعلماء الكويت في الفقه والعقيدة والقرآن والسيرة؛ محتوى معتمد في منهج المجلس العلمي",
+            "دروس ودورات علمية من أئمة وعلماء الكويت في الفقه والعقيدة والقرآن والسيرة؛ محتوى معتمد في منهج سُنّة",
           numberOfItems: 1,
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "الدروس الشرعية والدورات العلمية", url: `${SITE_URL}/lessons` },
@@ -669,7 +669,7 @@ export default function LessonsPage({
       </FilterSheet>
 
       <div className="twh-share">
-        <ShareButtons title="الدروس العلمية — المجلس العلمي" url={`${SITE_URL}/lessons`} />
+        <ShareButtons title="الدروس العلمية — سُنّة" url={`${SITE_URL}/lessons`} />
       </div>
       <ExploreAlsoNav
         title="استكشف أيضًا"

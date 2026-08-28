@@ -398,7 +398,7 @@ export const DAILY_FAIDA_POOL: DailyFaidaEntry[] = [
     id: "df-6",
     text: "تربية النفس على الصبر واليقين من أهم ثمرات العلم الشرعي.",
     category: "فوائد تربوية",
-    source: "المجلس العلمي",
+    source: "سُنّة",
   },
 ];
 

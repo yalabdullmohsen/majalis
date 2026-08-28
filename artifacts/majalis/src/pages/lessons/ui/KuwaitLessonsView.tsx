@@ -94,15 +94,15 @@ export default function KuwaitLessonsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/kuwait-lessons",
-      title: "دروس مشايخ الكويت | المجلس العلمي",
-      description: "جميع الدروس العلمية القادمة لمشايخ الكويت، محدَّثة تلقائياً من مصادر معتمدة. محتوى معتمد في منهج المجلس العلمي",
+      title: "دروس مشايخ الكويت | سُنّة",
+      description: "جميع الدروس العلمية القادمة لمشايخ الكويت، محدَّثة تلقائياً من مصادر معتمدة. محتوى معتمد في منهج سُنّة",
       keywords: ["دروس الكويت", "مشايخ الكويت", "دروس كويتية", "علماء الكويت", "حلقات علمية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "دروس مشايخ الكويت القادمة",
-          description: "قائمة الدروس الشرعية القادمة لعلماء ومشايخ الكويت؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "قائمة الدروس الشرعية القادمة لعلماء ومشايخ الكويت؛ محتوى معتمد في منهج سُنّة",
           url: "https://majlisilm.com/kuwait-lessons",
           about: {
             "@type": "Country",
@@ -113,14 +113,14 @@ export default function KuwaitLessonsPage() {
           "@context": "https://schema.org",
           "@type": "Event",
           name: "الدروس العلمية الأسبوعية في الكويت",
-          description: "دروس شرعية منتظمة في مساجد ومراكز الكويت العلمية؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "دروس شرعية منتظمة في مساجد ومراكز الكويت العلمية؛ محتوى معتمد في منهج سُنّة",
           location: {
             "@type": "Country",
             name: "الكويت",
           },
           organizer: {
             "@type": "Organization",
-            name: "المجلس العلمي",
+            name: "سُنّة",
             url: "https://majlisilm.com",
           },
           url: "https://majlisilm.com/kuwait-lessons",
@@ -196,7 +196,7 @@ export default function KuwaitLessonsPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="دروس الكويت — المجلس العلمي" url="https://majlisilm.com/kuwait-lessons" />
+        <ShareButtons title="دروس الكويت — سُنّة" url="https://majlisilm.com/kuwait-lessons" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/lessons" title="اختبر معلوماتك في العلم الشرعي" count={4} />

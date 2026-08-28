@@ -1,4 +1,4 @@
-# أصول متجر App Store / Play — المجلس العلمي
+# أصول متجر App Store / Play — سُنّة
 
 مسار العمل: Capacitor حول `artifacts/majalis` فقط.
 
@@ -6,7 +6,7 @@
 
 | أصل | المواصفات | الحالة |
 |---|---|---|
-| أيقونة 1024×1024 | بلا شفافية، من هوية المجلس العلمي | توليد عبر `pnpm --filter @workspace/majalis run assets:generate` ثم مراجعة يدوية |
+| أيقونة 1024×1024 | بلا شفافية، من هوية سُنّة | توليد عبر `pnpm --filter @workspace/majalis run assets:generate` ثم مراجعة يدوية |
 | لقطات 6.7" | iPhone | يولّدها المالك من TestFlight / محاكي |
 | لقطات 6.5" | iPhone | كذلك |
 | لقطات iPad | 12.9" أو الحجم المطلوب في App Store Connect | كذلك |

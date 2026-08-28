@@ -21,17 +21,17 @@ export default function AmrBilMarufPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/amr-bil-maruf",
-      title: "الأمر بالمعروف والنهي عن المنكر | المجلس العلمي",
-      description: "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة. محتوى معتمد في منهج المجلس العلمي",
+      title: "الأمر بالمعروف والنهي عن المنكر | سُنّة",
+      description: "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة. محتوى معتمد في منهج سُنّة",
       keywords: ["أمر بالمعروف", "نهي عن المنكر", "مراتب", "شروط", "فقه"],
       jsonLd: [{
         "@context": "https://schema.org",
         "@type": "Article",
         headline: "الأمر بالمعروف والنهي عن المنكر",
-        description: "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة. محتوى معتمد في منهج المجلس العلمي",
+        description: "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة. محتوى معتمد في منهج سُنّة",
         url: "https://majlisilm.com/amr-bil-maruf",
         inLanguage: "ar",
-        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
       }],
     });
   }, []);

@@ -31,8 +31,8 @@ export default function MushafReaderPage() {
   useEffect(() => {
     applyPageSeo({
       path: `/mushaf?page=${pageNumber}`,
-      title: `المصحف — صفحة ${pageNumber} | المجلس العلمي`,
-      description: "مصحف المدينة الرقمي في المجلس العلمي — نص عثماني من بيانات QPC مع خطوط مضمّنة.",
+      title: `المصحف — صفحة ${pageNumber} | سُنّة`,
+      description: "مصحف المدينة الرقمي في سُنّة — نص عثماني من بيانات QPC مع خطوط مضمّنة.",
       keywords: ["المصحف", "القرآن", "مصحف المدينة", "QPC"],
     });
   }, [pageNumber]);

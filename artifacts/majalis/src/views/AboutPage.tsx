@@ -15,14 +15,14 @@ export default function AboutPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/about",
-      title: "حول التطبيق | المجلس العلمي",
-      description: "ماذا يقدّم تطبيق المجلس العلمي: الأقسام، الأدوات، رقم الإصدار، مصادر المحتوى، وشكر للمراجع.",
-      keywords: ["حول التطبيق", "المجلس العلمي", "إصدار", "أقسام"],
+      title: "حول التطبيق | سُنّة",
+      description: "ماذا يقدّم تطبيق سُنّة: الأقسام، الأدوات، رقم الإصدار، مصادر المحتوى، وشكر للمراجع.",
+      keywords: ["حول التطبيق", "سُنّة", "إصدار", "أقسام"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "WebApplication",
-          name: "المجلس العلمي",
+          name: "سُنّة",
           url: "https://majlisilm.com",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",
@@ -42,7 +42,7 @@ export default function AboutPage() {
     <LegalPageLayout eyebrow="التطبيق" title="حول التطبيق">
       <LegalSection title="ماذا يقدّم التطبيق">
         <p>
-          تطبيق المجلس العلمي يجمع لطالب العلم والمسلم العام أدوات يومية ومراجع شرعية في مكان واحد:
+          تطبيق سُنّة يجمع لطالب العلم والمسلم العام أدوات يومية ومراجع شرعية في مكان واحد:
           مصحف رقمي، أذكار موثّقة، مواقيت صلاة، مسارات علم، وبحث سريع في المحتوى.
         </p>
       </LegalSection>
@@ -86,7 +86,7 @@ export default function AboutPage() {
       </LegalSection>
 
       <LegalBackLink />
-      <ShareButtons title="حول التطبيق — المجلس العلمي" url="https://majlisilm.com/about" />
+      <ShareButtons title="حول التطبيق — سُنّة" url="https://majlisilm.com/about" />
     </LegalPageLayout>
   );
 }

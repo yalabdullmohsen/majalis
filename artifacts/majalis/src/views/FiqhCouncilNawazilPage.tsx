@@ -24,7 +24,7 @@ export default function FiqhCouncilNawazilPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-council/nawazil",
-      title: "النوازل المعاصرة | المجمع الفقهي | المجلس العلمي",
+      title: "النوازل المعاصرة | المجمع الفقهي | سُنّة",
       description: "النوازل الفقهية المعاصرة، مسائل العصر الحديث من التقنية والاقتصاد الرقمي والطب والبيئة.",
       keywords: ["نوازل معاصرة", "مسائل معاصرة", "فقه معاصر", "نوازل فقهية", "مستجدات فقهية"],
       jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "النوازل المعاصرة", url: "https://majlisilm.com/fiqh-council/nawazil", about: { "@type": "Thing", name: "النوازل الفقهية والمستجدات المعاصرة" } }],
@@ -121,7 +121,7 @@ export default function FiqhCouncilNawazilPage() {
       </p>
 
       <div className="twh-share">
-        <ShareButtons title="نوازل فقهية معاصرة — المجلس العلمي" url="https://majlisilm.com/fiqh-council/nawazil" />
+        <ShareButtons title="نوازل فقهية معاصرة — سُنّة" url="https://majlisilm.com/fiqh-council/nawazil" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في النوازل الفقهية" count={4} />

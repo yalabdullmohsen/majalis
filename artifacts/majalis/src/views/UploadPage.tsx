@@ -195,16 +195,16 @@ export default function UploadPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/upload",
-      title: "رفع درس علمي | المجلس العلمي",
+      title: "رفع درس علمي | سُنّة",
       description: "أرسل درساً علمياً موثّقاً للمجلس العلمي للمراجعة قبل النشر.",
-      keywords: ["تسجيل درس", "رفع ملف صوتي", "مشاركة علمية", "المجلس العلمي"],
+      keywords: ["تسجيل درس", "رفع ملف صوتي", "مشاركة علمية", "سُنّة"],
       jsonLd: [{
         "@context": "https://schema.org",
         "@type": "WebPage",
         name: "رفع درس علمي",
         description: "أرسل درساً علمياً للمجلس العلمي.",
         url: "https://majlisilm.com/upload",
-        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
       }],
     });
   }, []);
@@ -214,7 +214,7 @@ export default function UploadPage() {
       <div className="ulp-header">
         <p className="ulp-eyebrow">المشاركة</p>
         <h1 className="ulp-title"><Upload size={22} strokeWidth={1.5} aria-hidden="true" /> رفع درس علمي</h1>
-        <p className="ulp-subtitle">شارك درساً علمياً موثّقاً · يُراجَع من فريق المجلس العلمي قبل النشر.</p>
+        <p className="ulp-subtitle">شارك درساً علمياً موثّقاً · يُراجَع من فريق سُنّة قبل النشر.</p>
       </div>
 
       <div className="ulp-notice">

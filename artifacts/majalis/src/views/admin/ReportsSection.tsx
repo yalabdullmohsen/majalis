@@ -38,7 +38,7 @@ export function ReportsSection() {
 
   const exportReport = () => {
     const lines = [
-      "تقرير المجلس العلمي",
+      "تقرير سُنّة",
       new Date().toLocaleString("ar-KW"),
       "",
       ...cards.map((c) => `${c.label}: ${c.value}${"total" in c && c.total ? ` / ${c.total}` : ""}`),

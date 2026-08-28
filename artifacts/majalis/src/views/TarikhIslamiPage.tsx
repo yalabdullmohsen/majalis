@@ -64,7 +64,7 @@ export default function TarikhIslamiPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/tarikh-islami",
-      title: "التاريخ الإسلامي | المجلس العلمي",
+      title: "التاريخ الإسلامي | سُنّة",
       description:
         "خط زمني منظم في السيرة النبوية والخلافة والدول الإسلامية والحضارة وشخصيات تاريخية مؤثرة — بمنهج أهل السنة وتمحيص الروايات.",
       keywords: [
@@ -123,7 +123,7 @@ export default function TarikhIslamiPage() {
           من السيرة النبوية إلى الحضارة والدول — نروي بعد التمحيص، ونُبيّن درجة التوثيق، ولا نملأ الفراغ بما
           لم يثبت.
         </p>
-        <ShareButtons title="التاريخ الإسلامي — المجلس العلمي" />
+        <ShareButtons title="التاريخ الإسلامي — سُنّة" />
       </header>
 
       <div className="tarikh-toolbar">

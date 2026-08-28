@@ -36,7 +36,7 @@ assert.match(cfg, /Google Ads/);
 assert.match(cfg, /ctaUrl:\s*"\/contact"/);
 assert.match(cfg, /شركة العبد المحسن للحج/);
 assert.match(cfg, /الثقة/);
-assert.match(cfg, /badgeLabel:\s*"شريك المجلس العلمي"/);
+assert.match(cfg, /badgeLabel:\s*"شريك سُنّة"/);
 assert.match(cfg, /sponsorUrl:\s*"https:\/\/instagram\.com\/Al_abdalmhsn"/);
 assert.match(cfg, /sponsorAriaLabel:\s*"فتح حساب شركة العبد المحسن للحج في إنستقرام"/);
 assert.match(cfg, /ctaLabel:\s*"فتح إنستقرام"/);

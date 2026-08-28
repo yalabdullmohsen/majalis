@@ -503,7 +503,7 @@ export default function VaultPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/vault",
-      title: "خزينتي الشخصية | المجلس العلمي",
+      title: "خزينتي الشخصية | سُنّة",
       description: "احفظ المحتوى الإسلامي المفضل، الإشارات المرجعية والملاحظات الشخصية وسجل القراءة في مكان واحد.",
       keywords: ["خزينة", "إشارات مرجعية", "حفظ المحتوى", "ملاحظات إسلامية", "مكتبة شخصية"],
       robots: "noindex, follow",
@@ -704,7 +704,7 @@ export default function VaultPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="مخزن المعرفة — المجلس العلمي" url="https://majlisilm.com/vault" />
+        <ShareButtons title="مخزن المعرفة — سُنّة" url="https://majlisilm.com/vault" />
       </div>
       <RelatedKnowledge kind="fawaid" query="محفظة المحفوظات" title="مواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

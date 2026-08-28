@@ -17,7 +17,7 @@ function buildExportText(item: FiqhCouncilItem): string {
     item.source_name ? `\nالمصدر: ${item.source_name}` : "",
     item.source_url ? `الرابط: ${item.source_url}` : "",
     "",
-    "— المجلس العلمي — المجمع الفقهي الإسلامي",
+    "— سُنّة — المجمع الفقهي الإسلامي",
   ].filter(Boolean);
 
   return lines.join("\n");
@@ -58,7 +58,7 @@ export function printFiqhItemPdf(item: FiqhCouncilItem) {
   ${item.content ? `<h2>المحتوى</h2><div>${item.content.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/\n/g, "<br>")}</div>` : ""}
   ${item.key_points?.length ? `<h2>النقاط الرئيسية</h2><ul>${item.key_points.map((p) => `<li>${p}</li>`).join("")}</ul>` : ""}
   ${item.source_name ? `<p><strong>المصدر:</strong> ${item.source_name}${item.source_url ? ` — <a href="${item.source_url}">${item.source_url}</a>` : ""}</p>` : ""}
-  <footer>المجلس العلمي — المجمع الفقهي الإسلامي</footer>
+  <footer>سُنّة — المجمع الفقهي الإسلامي</footer>
 </body>
 </html>`;
 

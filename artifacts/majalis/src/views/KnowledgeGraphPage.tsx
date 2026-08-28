@@ -185,8 +185,8 @@ export default function KnowledgeGraphPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/knowledge-graph",
-      title: "الرسم البياني المعرفي | المجلس العلمي",
-      description: "استكشف العلاقات بين المفاهيم الإسلامية، رسم بياني تفاعلي يربط العلماء والكتب والمسائل الفقهية. محتوى معتمد في منهج المجلس العلمي",
+      title: "الرسم البياني المعرفي | سُنّة",
+      description: "استكشف العلاقات بين المفاهيم الإسلامية، رسم بياني تفاعلي يربط العلماء والكتب والمسائل الفقهية. محتوى معتمد في منهج سُنّة",
       keywords: ["رسم بياني معرفي", "علاقات إسلامية", "استكشاف المعرفة", "خريطة علمية", "علم الشبكات"],
       jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الرسم البياني المعرفي الإسلامي", url: absoluteUrl("/knowledge-graph"), about: { "@type": "Thing", name: "شبكة المعرفة الإسلامية التفاعلية" } }],
     });
@@ -655,7 +655,7 @@ export default function KnowledgeGraphPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="الرسم البياني المعرفي الإسلامي — المجلس العلمي" url={absoluteUrl("/knowledge-graph")} />
+        <ShareButtons title="الرسم البياني المعرفي الإسلامي — سُنّة" url={absoluteUrl("/knowledge-graph")} />
       </div>
       <RelatedKnowledge kind="book" query="معرفة إسلامية" title="مواد ذات صلة بالرسم المعرفي" limit={6} />
       <div className="px-4 pb-6 mt-4">

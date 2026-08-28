@@ -204,7 +204,7 @@ export default function IslamicStoriesPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/stories",
-      title: "قصص الصحابة والفتوحات الإسلامية | المجلس العلمي",
+      title: "قصص الصحابة والفتوحات الإسلامية | سُنّة",
       description: "قصص الصحابة الكرام والفتوحات الإسلامية والأحداث التاريخية، من الهجرة النبوية إلى فتح مكة وما بعدها من عصور الإسلام.",
       keywords: ["قصص إسلامية", "الصحابة", "الفتوحات الإسلامية", "التاريخ الإسلامي", "السيرة"],
       jsonLd: [
@@ -212,7 +212,7 @@ export default function IslamicStoriesPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أقسام القصص الإسلامية",
-          description: "قصص الصحابة والفتوحات والتاريخ الإسلامي عبر العصور؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "قصص الصحابة والفتوحات والتاريخ الإسلامي عبر العصور؛ محتوى معتمد في منهج سُنّة",
           itemListElement: CATEGORY_LABELS.filter(c => c !== "الكل").map((cat, i) => ({
             "@type": "ListItem",
             position: i + 1,

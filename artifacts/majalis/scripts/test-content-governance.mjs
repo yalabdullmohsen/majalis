@@ -265,7 +265,7 @@ function checkNoAutoPublish() {
 }
 
 // ───────────────────────────────────────────────────────────────────────────
-console.log("\n اختبار حوكمة المحتوى — المجلس العلمي\n");
+console.log("\n اختبار حوكمة المحتوى — سُنّة\n");
 
 checkRulingsData();
 checkTrustBadges();

@@ -1,5 +1,5 @@
 # دليل نشر مجالس العلم على App Store
-# Majalis Al-Ilm — App Store Readiness Guide
+# سُنّة — App Store Readiness Guide
 
 **الفرع:** `feat/app-store-readiness`  
 **تاريخ الإعداد:** يوليو 2026

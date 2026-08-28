@@ -77,10 +77,10 @@ export default function FiqhPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh",
-      title: "الفقه | المجلس العلمي",
+      title: "الفقه | سُنّة",
       description:
         "أبواب ومسائل فقهية مرتبة: عبادات ومعاملات وأسرة وجنايات — كتب وأبواب ومسائل للقراءة والتدرج.",
-      keywords: ["فقه إسلامي", "كتب الفقه", "مسائل فقهية", "المجلس العلمي"],
+      keywords: ["فقه إسلامي", "كتب الفقه", "مسائل فقهية", "سُنّة"],
       jsonLd: [
         webPageJsonLd(
           "الفقه",
@@ -111,7 +111,7 @@ export default function FiqhPage() {
       >
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
         <div className="twh-share">
-          <ShareButtons title="الفقه الإسلامي — المجلس العلمي" url="https://majlisilm.com/fiqh" />
+          <ShareButtons title="الفقه الإسلامي — سُنّة" url="https://majlisilm.com/fiqh" />
         </div>
         <ExploreAlsoNav
           title="استكشف أيضًا"

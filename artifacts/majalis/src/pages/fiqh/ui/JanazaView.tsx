@@ -152,7 +152,7 @@ export default function JanazaPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/janaza",
-      title: "أحكام الجنائز، المجلس العلمي",
+      title: "أحكام الجنائز، سُنّة",
       description: "دليل شامل لأحكام الجنائز: الغسل والتكفين والصلاة والدفن والتعزية والزيارة يُعرض بأسلوب تعليمي منضبط يراعي أصول أهل السنة والجماعة دون إغفال.",
       keywords: ["الجنائز", "أحكام الجنازة", "صلاة الجنازة", "التكفين", "الدفن", "التعزية"],
       jsonLd: [
@@ -394,7 +394,7 @@ export default function JanazaPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="أحكام الجنازة — المجلس العلمي" url="https://majlisilm.com/janaza" />
+          <ShareButtons title="أحكام الجنازة — سُنّة" url="https://majlisilm.com/janaza" />
         </div>
 
         {/* related */}

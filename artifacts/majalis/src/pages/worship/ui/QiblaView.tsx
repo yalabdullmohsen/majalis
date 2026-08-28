@@ -185,7 +185,7 @@ export default function QiblaPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/qibla",
-      title: "اتجاه القبلة | المجلس العلمي",
+      title: "اتجاه القبلة | سُنّة",
       description:
         "حدد اتجاه القبلة من موقعك الحالي بدقة، بوصلة رقمية تعتمد على GPS للمسلمين في كل مكان.",
       keywords: ["اتجاه القبلة", "قبلة", "بوصلة إسلامية", "اتجاه مكة", "صلاة"],
@@ -389,7 +389,7 @@ export default function QiblaPage() {
 
       <RelatedKnowledge kind="fatwa" query="القبلة والصلاة" title="معرفة ذات صلة بالقبلة" limit={6} />
       <div className="twh-share">
-        <ShareButtons title="اتجاه القبلة — المجلس العلمي" url="https://majlisilm.com/qibla" />
+        <ShareButtons title="اتجاه القبلة — سُنّة" url="https://majlisilm.com/qibla" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في أحكام القبلة والصلاة" count={4} />

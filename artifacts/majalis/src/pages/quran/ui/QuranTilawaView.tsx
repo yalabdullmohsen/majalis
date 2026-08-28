@@ -14,7 +14,7 @@ export default function QuranTilawaView() {
   useEffect(() => {
     applyPageSeo({
       path: "/quran-hub/tilawa",
-      title: "التلاوة والقرّاء — المجلس العلمي",
+      title: "التلاوة والقرّاء — سُنّة",
       description: "اختر قارئًا واستمع عبر مصحف المدينة برواية حفص.",
       keywords: ["تلاوة", "قرّاء", "استماع", "حفص"],
     });

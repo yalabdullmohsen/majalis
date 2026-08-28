@@ -855,7 +855,7 @@ export default function SunanYawmiyyaPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/sunan-yawmiyya",
-      title: "السنن النبوية اليومية | المجلس العلمي",
+      title: "السنن النبوية اليومية | سُنّة",
       description: "دليلك لتطبيق السنن النبوية اليومية: سنن النوم والأكل والصلاة والذكر والتعامل مع الناس، مع المصادر والأجر.",
       keywords: ["سنن نبوية", "سنة نبوية", "سنن يومية", "اقتداء بالنبي", "هدي نبوي"],
       jsonLd: [
@@ -1008,7 +1008,7 @@ export default function SunanYawmiyyaPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="السنن اليومية — المجلس العلمي" url="https://majlisilm.com/sunan-yawmiyya" />
+        <ShareButtons title="السنن اليومية — سُنّة" url="https://majlisilm.com/sunan-yawmiyya" />
       </div>
 
       {/* صفحات ذات صلة */}

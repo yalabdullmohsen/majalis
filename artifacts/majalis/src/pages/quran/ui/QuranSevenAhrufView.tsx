@@ -13,7 +13,7 @@ export default function QuranSevenAhrufView() {
   useEffect(() => {
     applyPageSeo({
       path: "/quran-hub/seven-ahruf",
-      title: "الأحرف السبعة — المجلس العلمي",
+      title: "الأحرف السبعة — سُنّة",
       description:
         "معنى نزول القرآن على سبعة أحرف، أحاديث الصحيحين، الفرق عن القراءات العشر، وجمع عثمان — موثّق لأهل السنة.",
       keywords: ["أحرف سبعة", "سبعة أحرف", "قراءات", "عثمان", "عمر وهشام"],

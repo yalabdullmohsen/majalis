@@ -329,7 +329,7 @@ export default function HajjPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/hajj",
-      title: "الحج والعمرة، المجلس العلمي",
+      title: "الحج والعمرة، سُنّة",
       description: "دليل شامل لأحكام الحج والعمرة: الأركان والواجبات والسنن والمشاعر والدعاء.",
       keywords: ["الحج", "العمرة", "أركان الحج", "مناسك الحج", "أحكام الحج", "الإحرام"],
       jsonLd: [
@@ -615,7 +615,7 @@ export default function HajjPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="الحج والعمرة — المجلس العلمي" url="https://majlisilm.com/hajj" />
+          <ShareButtons title="الحج والعمرة — سُنّة" url="https://majlisilm.com/hajj" />
         </div>
 
         {/* related */}

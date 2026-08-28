@@ -50,7 +50,7 @@ export default function HadithByIdView() {
     if (!hadith) return;
     applyPageSeo({
       path: `/hadith/${hadith.id}`,
-      title: `${hadith.id} | الحديث | المجلس العلمي`,
+      title: `${hadith.id} | الحديث | سُنّة`,
       description: hadith.isMawdu
         ? `تحذير: حديث موضوع — ${hadith.matn.slice(0, 120)}`
         : hadith.matn.slice(0, 160),

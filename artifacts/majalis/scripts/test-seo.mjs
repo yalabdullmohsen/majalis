@@ -46,7 +46,7 @@ for (const r of seoConfig.routes) {
 }
 
 // ── خريطة path → title المتوقع، بمحاكاة pageTitle() في generate-seo.mjs
-// (عناوين seo-routes.json عارية؛ اللاحقة "| المجلس العلمي" تُضاف برمجياً إلا
+// (عناوين seo-routes.json عارية؛ اللاحقة "| سُنّة" تُضاف برمجياً إلا
 // إذا كان route.suffix === false). يكشف ملفات seo-prerender/ "المتجمدة" التي
 // لم تُعَد توليدها بعد تعديل seo-routes.json (السبب الجذري لتجمّد H1 سابقاً).
 function pageTitle(route) {
@@ -140,7 +140,7 @@ function checkPage(relPath, html, homepageBody) {
     warns.push(`⚠️ أكثر من <h1> في الصفحة (${h1s.length})`);
   }
   // H1 يجب ألا يحمل اسم العلامة التجارية — هذا خاص بـ<title> فقط.
-  if (!privatePath && h1s.some((h) => h.includes("المجلس العلمي")) && normalizedPath !== "/") {
+  if (!privatePath && h1s.some((h) => h.includes("سُنّة")) && normalizedPath !== "/") {
     issues.push(`❌ [P0] <h1> يحتوي اسم العلامة التجارية (يجب أن يكون في <title> فقط): "${h1s[0]}"`);
   }
 

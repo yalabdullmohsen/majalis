@@ -1,4 +1,4 @@
-# Vercel Deployment — المجلس العلمي (majalis)
+# Vercel Deployment — سُنّة (majalis)
 
 هذا المشروع **Vite + React SPA** مع **Serverless API** (`api/index.js`).  
 **ليس Next.js** — لا تستخدم إعدادات Next.js في Vercel.

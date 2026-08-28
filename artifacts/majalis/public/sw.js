@@ -528,7 +528,7 @@ self.addEventListener("message", (event) => {
             resolve();
             return;
           }
-          self.registration.showNotification(item.title || "المجلس العلمي", {
+          self.registration.showNotification(item.title || "سُنّة", {
             body: item.body || "",
             icon: "/logo.png?v=20260825",
             badge: "/favicon.png?v=20260825",
@@ -633,9 +633,9 @@ self.addEventListener("message", (event) => {
 self.addEventListener("push", (event) => {
   if (!event.data) return;
   let payload;
-  try { payload = event.data.json(); } catch { payload = { title: "المجلس العلمي", body: event.data.text() }; }
+  try { payload = event.data.json(); } catch { payload = { title: "سُنّة", body: event.data.text() }; }
 
-  const title = payload.title || "المجلس العلمي";
+  const title = payload.title || "سُنّة";
   const options = {
     body: payload.body || "",
     icon: "/logo.png?v=20260825",

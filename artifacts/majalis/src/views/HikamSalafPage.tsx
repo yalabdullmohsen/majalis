@@ -1515,7 +1515,7 @@ export default function HikamSalafPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/hikam-salaf",
-      title: "حكم السلف الصالح | المجلس العلمي",
+      title: "حكم السلف الصالح | سُنّة",
       description: "مختارات من حكم السلف الصالح وأقوال الأئمة: الحسن البصري وابن تيمية وابن القيم والشافعي وأحمد وغيرهم.",
       keywords: ["حكم السلف", "أقوال العلماء", "حكم إسلامية", "ابن القيم", "الحسن البصري"],
       jsonLd: [
@@ -1693,7 +1693,7 @@ export default function HikamSalafPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="حكم السلف الصالح — المجلس العلمي" url="https://majlisilm.com/hikam-salaf" />
+        <ShareButtons title="حكم السلف الصالح — سُنّة" url="https://majlisilm.com/hikam-salaf" />
       </div>
 
       {/* ذات صلة */}

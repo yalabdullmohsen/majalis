@@ -112,10 +112,10 @@ export default function SourcesLicensesPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/sources",
-      title: "المصادر والتراخيص | المجلس العلمي",
+      title: "المصادر والتراخيص | سُنّة",
       description:
-        "جرد مصادر البيانات والأصول الرقمية في المجلس العلمي وحالة الإذن والترخيص لكل أصل.",
-      keywords: ["مصادر", "تراخيص", "QPC", "المجلس العلمي", "حقوق"],
+        "جرد مصادر البيانات والأصول الرقمية في سُنّة وحالة الإذن والترخيص لكل أصل.",
+      keywords: ["مصادر", "تراخيص", "QPC", "سُنّة", "حقوق"],
     });
   }, []);
 
@@ -171,7 +171,7 @@ export default function SourcesLicensesPage() {
       <LegalSection title="التراخيص والاستخدام">
         <ul>
           <li>
-            واجهة المجلس العلمي ومكوّناتها البرمجية ملك للمنصة، ويُسمح بالتصفح الشخصي
+            واجهة سُنّة ومكوّناتها البرمجية ملك للمنصة، ويُسمح بالتصفح الشخصي
             والتعليمي وفق <Link href="/terms">شروط الاستخدام</Link>.
           </li>
           <li>
@@ -195,7 +195,7 @@ export default function SourcesLicensesPage() {
 
       <LegalBackLink />
       <ShareButtons
-        title="المصادر والتراخيص — المجلس العلمي"
+        title="المصادر والتراخيص — سُنّة"
         url="https://majlisilm.com/sources"
       />
     </LegalPageLayout>

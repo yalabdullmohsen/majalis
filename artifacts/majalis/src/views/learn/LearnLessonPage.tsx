@@ -40,7 +40,7 @@ export default function LearnLessonPage() {
     if (!detail) return;
     applyPageSeo({
       path: `/learn/lesson/${detail.lesson.id}`,
-      title: `${detail.lesson.title} | المجلس العلمي`,
+      title: `${detail.lesson.title} | سُنّة`,
       description: detail.lesson.description || detail.lesson.title,
     });
 

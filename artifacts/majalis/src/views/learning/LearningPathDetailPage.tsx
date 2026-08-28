@@ -226,7 +226,7 @@ export default function LearningPathDetailPage() {
     if (!path) {
       applyPageSeo({
         path: path_,
-        title: "المسار غير موجود | المجلس العلمي",
+        title: "المسار غير موجود | سُنّة",
         description: "لم يُعثر على هذا المسار التعليمي.",
         robots: "noindex, follow",
         jsonLd: [],
@@ -235,7 +235,7 @@ export default function LearningPathDetailPage() {
     }
     applyPageSeo({
       path: path_,
-      title: `${path.title} | مسارات التعلم، المجلس العلمي`,
+      title: `${path.title} | مسارات التعلم، سُنّة`,
       description: path.description || `مسار تعلّم شرعي منظّم في ${path.title} — كتب ودروس واختبارات وشهادة إتمام.`,
       keywords: [path.title, path.category || "", "مسار تعليمي", "تعلم إسلامي", "مقررات دراسية", "شهادة إتمام"].filter(Boolean),
       canonicalPath: path_,
@@ -247,8 +247,8 @@ export default function LearningPathDetailPage() {
           description: path.description || undefined,
           url: `https://majlisilm.com${path_}`,
           learningResourceType: "مسار تعلّم",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
-          publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+          publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
           inLanguage: "ar",
         },
         breadcrumbJsonLd([
@@ -441,7 +441,7 @@ export default function LearningPathDetailPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="تفاصيل المسار التعليمي — المجلس العلمي" url="https://majlisilm.com/lessons" />
+        <ShareButtons title="تفاصيل المسار التعليمي — سُنّة" url="https://majlisilm.com/lessons" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/learning-paths" title="اختبر معلوماتك في العلوم الشرعية" count={4} />

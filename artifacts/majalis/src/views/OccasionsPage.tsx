@@ -36,15 +36,15 @@ export default function OccasionsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/occasions",
-      title: "المناسبات الإسلامية والمواسم | المجلس العلمي",
-      description: "تقويم المناسبات الإسلامية والأعياد والمواسم الدينية، رمضان وعيد الفطر وعيد الأضحى والمواسم الهجرية. محتوى معتمد في منهج المجلس العلمي",
+      title: "المناسبات الإسلامية والمواسم | سُنّة",
+      description: "تقويم المناسبات الإسلامية والأعياد والمواسم الدينية، رمضان وعيد الفطر وعيد الأضحى والمواسم الهجرية. محتوى معتمد في منهج سُنّة",
       keywords: ["مناسبات إسلامية", "أعياد إسلامية", "رمضان", "عيد الأضحى", "المواسم الدينية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "المناسبات والمواسم الإسلامية",
-          description: "تقويم الأعياد والمناسبات الدينية في الشهور الهجرية؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "تقويم الأعياد والمناسبات الدينية في الشهور الهجرية؛ محتوى معتمد في منهج سُنّة",
           numberOfItems: 12,
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "شهر رمضان المبارك", url: "https://majlisilm.com/occasions?month=9" },
@@ -192,7 +192,7 @@ export default function OccasionsPage() {
 
       <RelatedKnowledge kind="lesson" query="المناسبات الإسلامية" title="دروس ومواد في المناسبات" limit={6} />
       <div className="twh-share">
-        <ShareButtons title="المناسبات الإسلامية — المجلس العلمي" url="https://majlisilm.com/occasions" />
+        <ShareButtons title="المناسبات الإسلامية — سُنّة" url="https://majlisilm.com/occasions" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />

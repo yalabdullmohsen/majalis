@@ -370,5 +370,5 @@ app.use("/api", (_req, res) => {
 });
 
 app.listen(port, "0.0.0.0", () => {
-  console.log(`المجلس العلمي — الخادم يعمل على http://0.0.0.0:${port}`);
+  console.log(`سُنّة — الخادم يعمل على http://0.0.0.0:${port}`);
 });

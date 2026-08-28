@@ -12,7 +12,7 @@ export default function SourcesDirectoryPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/sources",
-      title: "دليل الجهات | المجلس العلمي",
+      title: "دليل الجهات | سُنّة",
       description: "دليل الحسابات والجهات الدعوية والتعليمية في الكويت — روابط مباشرة للمصدر دون إعادة استضافة المحتوى.",
       keywords: ["دليل جهات", "دروس الكويت", "حلقات قرآن", "مصادر"],
     });
@@ -37,7 +37,7 @@ export default function SourcesDirectoryPage() {
       className="sources-directory-page"
     >
       <p className="sources-policy-note">
-        المحتوى مملوك لأصحابه، والمجلس العلمي يعرض روابطه فقط.
+        المحتوى مملوك لأصحابه، وسُنّة يعرض روابطه فقط.
         {" "}
         <Link href="/data-licenses">التراخيص</Link>
         {" · "}

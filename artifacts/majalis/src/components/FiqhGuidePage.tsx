@@ -16,7 +16,7 @@ export function FiqhGuidePage({ section }: Props) {
   useEffect(() => {
     applyPageSeo({
       path: section.path,
-      title: `${section.seoTitle} | المجلس العلمي`,
+      title: `${section.seoTitle} | سُنّة`,
       description: section.seoDescription,
       keywords: section.keywords,
     });

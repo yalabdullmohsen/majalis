@@ -22,7 +22,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
     if (!topic) {
       applyPageSeo({
         path: `/sins-and-rights/${params.slug}`,
-        title: "موضوع غير متاح | المجلس العلمي",
+        title: "موضوع غير متاح | سُنّة",
         description: "لم يُعثر على هذا الموضوع.",
         robots: "noindex, follow",
         jsonLd: [],
@@ -32,9 +32,9 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
     const path = `/sins-and-rights/${topic.slug}`;
     applyPageSeo({
       path,
-      title: `${topic.title} | الذنوب والحقوق | المجلس العلمي`,
+      title: `${topic.title} | الذنوب والحقوق | سُنّة`,
       description: topic.shortDescription,
-      keywords: [topic.title, "التوبة", "الذنوب والحقوق", "المجلس العلمي", RIGHTS_CATEGORY_LABELS[topic.rightsCategory]],
+      keywords: [topic.title, "التوبة", "الذنوب والحقوق", "سُنّة", RIGHTS_CATEGORY_LABELS[topic.rightsCategory]],
       ogType: "article",
       canonicalPath: path,
       jsonLd: [
@@ -44,7 +44,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
           headline: topic.title,
           description: topic.shortDescription,
           inLanguage: "ar",
-          publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },

@@ -23,8 +23,8 @@ export default function UpdatePasswordPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/auth/update-password",
-      title: "تعيين كلمة مرور جديدة | المجلس العلمي",
-      description: "عيّن كلمة مرور جديدة لحسابك في المجلس العلمي.",
+      title: "تعيين كلمة مرور جديدة | سُنّة",
+      description: "عيّن كلمة مرور جديدة لحسابك في سُنّة.",
       robots: "noindex, nofollow",
     });
   }, []);

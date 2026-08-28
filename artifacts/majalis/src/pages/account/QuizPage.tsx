@@ -10,7 +10,7 @@ export default function QuizPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/quiz",
-      title: "لعبة سين جيم – أسئلة وأجوبة | المجلس العلمي",
+      title: "لعبة سين جيم – أسئلة وأجوبة | سُنّة",
       description: "اختبر معلوماتك من خلال تحدّ يومي ولعبة أسئلة وأجوبة متدرجة.",
       keywords: ["سين جيم", "مسابقة إسلامية", "اختبار معلومات", "أسئلة إسلامية", "تحدي قرآني", "مسابقة فقهية"],
       jsonLd: [
@@ -22,7 +22,7 @@ export default function QuizPage() {
           description: "اختبر معلوماتك من خلال تحدّ يومي ولعبة أسئلة وأجوبة متدرجة",
           educationalLevel: "متعدد المستويات",
           inLanguage: "ar",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
         },
       ],
     });
@@ -33,7 +33,7 @@ export default function QuizPage() {
       <DailyChallengeQuiz />
       <IslamicQuizGame />
       <div className="twh-share">
-        <ShareButtons title="لعبة سين جيم – أسئلة وأجوبة — المجلس العلمي" url="https://majlisilm.com/quiz" />
+        <ShareButtons title="لعبة سين جيم – أسئلة وأجوبة — سُنّة" url="https://majlisilm.com/quiz" />
       </div>
     </>
   );

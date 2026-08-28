@@ -27,7 +27,7 @@ export default function LearnCategoryPage() {
     if (!detail) return;
     applyPageSeo({
       path: `/learn/${detail.category.slug}`,
-      title: `${detail.category.name} | أبواب العلم | المجلس العلمي`,
+      title: `${detail.category.name} | أبواب العلم | سُنّة`,
       description: detail.category.description || `دروس وسلاسل في ${detail.category.name} — محتوى معتمد فقط.`,
       keywords: [detail.category.name, "أبواب العلم", "دروس شرعية"],
     });

@@ -983,7 +983,7 @@ export default function AkhlaqPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/akhlaq",
-      title: "الأخلاق الإسلامية، القيم والآداب | المجلس العلمي",
+      title: "الأخلاق الإسلامية، القيم والآداب | سُنّة",
       description: "موسوعة الأخلاق الإسلامية: التواضع، الصدق، الأمانة، الصبر، الكرم، مع الآيات والأحاديث وأقوال العلماء. من أبواب الأخلاق والسلوك في الإسلام.",
       keywords: ["أخلاق إسلامية", "قيم", "آداب", "تواضع", "صدق", "أمانة", "صبر"],
       jsonLd: [
@@ -1133,7 +1133,7 @@ export default function AkhlaqPage() {
       <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأخلاق والصحابة" count={4} />
 
       <div className="twh-share">
-        <ShareButtons title="الأخلاق الإسلامية — المجلس العلمي" url="https://majlisilm.com/akhlaq" />
+        <ShareButtons title="الأخلاق الإسلامية — سُنّة" url="https://majlisilm.com/akhlaq" />
       </div>
 
       {/* روابط ذات صلة */}
