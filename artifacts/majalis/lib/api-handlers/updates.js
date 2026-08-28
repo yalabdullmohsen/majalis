@@ -70,7 +70,7 @@ export default async function handler(req, res) {
 
     sendJson(res, 200, updates, {
       "Cache-Control": "no-store, max-age=0",
-      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": "https://majlisilm.com",
     });
   } catch (error) {
     console.error("[api/updates]", error);

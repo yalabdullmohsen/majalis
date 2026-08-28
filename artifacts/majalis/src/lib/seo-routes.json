@@ -2920,9 +2920,10 @@
         "المصحف",
         "آيات قرآنية"
       ],
-      "sitemap": true,
+      "sitemap": false,
+      "robots": "noindex, follow",
       "changefreq": "monthly",
-      "priority": 0.7
+      "priority": 0.3
     },
     {
       "path": "/quran/revelation-order",
