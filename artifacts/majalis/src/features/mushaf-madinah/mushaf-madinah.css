@@ -380,7 +380,7 @@ html.dark .mm-viewport,
   top: var(--mm-ref-text-start);
   bottom: calc(100% - var(--mm-ref-text-end));
   inset-inline: var(--mm-ref-ink-x-start) calc(100% - var(--mm-ref-ink-x-end));
-  z-index: 1;
+  z-index: 0;
 }
 
 .mm-viewport .mm-page-footer {
@@ -739,7 +739,7 @@ html.dark .mm-surah-frame__name {
 .mm-ayah-hl {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
 }
 
@@ -750,9 +750,15 @@ html.dark .mm-surah-frame__name {
   pointer-events: none;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
-  will-change: transform, opacity;
   contain: layout style paint;
-  animation: mm-ayah-hl-in 160ms ease-out;
+  animation: mm-ayah-hl-in 140ms ease-out;
+}
+
+.mm-ayah-hl__band.is-selected {
+  background: color-mix(in srgb, var(--mm-ayah-select) 78%, #2f7a52 22%);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, #2f7a52 22%, transparent),
+    0 0 0 1px color-mix(in srgb, #e8d4b0 35%, transparent);
 }
 
 @keyframes mm-ayah-hl-in {
@@ -1471,19 +1477,19 @@ html.dark .mm-ayah-bar__dismiss {
   border: 0;
   border-bottom: 0;
   border-radius: 22px 22px 0 0;
-  padding: 0.7rem 1rem calc(0.85rem + var(--inset-bottom, 0px));
+  padding: 0.55rem 0.85rem calc(0.65rem + var(--inset-bottom, 0px));
   box-shadow: 0 -8px 28px color-mix(in srgb, #5c4a28 18%, transparent);
   font-family: "IBM Plex Sans Arabic", sans-serif;
   display: grid;
-  /* خانات ثابتة بالاسم لا بالترتيب الضمني: المقبض١، الرأس٢، معاينة الآية٣
-   * (شرطية)، التبويبات٤، منطقة التمرير٥ (المرِنة). عناصر الحالة العابرة
-   * (خطأ صوت/نسخ/تحميل) داخل .ayah-action-sheet__scroll-region سويّاً —
-   * راجع تعليق تلك الخانة أعلاه في AyahActionSheet.tsx. */
-  grid-template-rows: auto auto auto auto minmax(0, 1fr);
-  gap: 0.55rem;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  gap: 0.4rem;
   overflow: hidden;
   overscroll-behavior: contain;
-  transition: height 220ms cubic-bezier(0.22, 0.61, 0.36, 1), max-height 220ms ease;
+  transform: translate3d(0, 0, 0);
+  transition:
+    height 220ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    max-height 220ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .ayah-action-sheet.is-half .mm-ayah-bar__panel {
@@ -2113,9 +2119,21 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 }
 
 .ayah-action-sheet__tafsir {
+  display: flex;
+  flex-direction: column;
   min-height: 0;
-  overflow: auto;
+  max-height: 100%;
+  gap: 0.25rem;
+}
+
+.ayah-action-sheet__tafsir-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: min(38dvh, 20rem);
+  overflow-y: auto;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: calc(0.65rem + var(--inset-bottom, 0px));
 }
 
 .ayah-action-sheet__tafsir-source {
@@ -2124,18 +2142,33 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   color: color-mix(in srgb, var(--mm-ink) 45%, transparent);
 }
 
-.ayah-action-sheet.is-collapsed .ayah-action-sheet__body {
+.ayah-action-sheet.is-collapsed .ayah-action-sheet__scroll-region {
   display: none;
 }
 
-.quran-quick-bar {
+.quran-quick-bar,
+.ayah-action-sheet__actions-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.35rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.32rem;
 }
 
 .quran-quick-bar--4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ayah-action-sheet__actions-grid .quran-tab,
+.ayah-action-sheet__actions-grid button {
+  min-height: 44px;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.3rem;
+  gap: 3px;
+}
+
+.ayah-action-sheet__actions-grid .quran-tab svg,
+.ayah-action-sheet__actions-grid button svg {
+  width: 17px;
+  height: 17px;
 }
 
 .quran-tab--utility[aria-selected="true"] {
@@ -2148,10 +2181,11 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 
 .ayah-action-sheet__tafsir-toolbar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.4rem;
-  margin-bottom: 0.25rem;
+  gap: 0.3rem 0.45rem;
+  margin-bottom: 0.1rem;
 }
 
 .ayah-action-sheet__edition select,
@@ -2245,19 +2279,21 @@ html.dark .mm-goto__actions button[data-primary="1"] {
  * عددها (راجع AyahActionSheet.tsx). تمنع خانة ١fr المرِنة من الوقوع على
  * شريط التبويبات بدل هذه المنطقة. */
 .ayah-action-sheet__scroll-region {
-  grid-row: 5;
+  grid-row: 4;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.35rem;
   overflow: hidden;
 }
 
 .ayah-action-sheet__body {
   flex: 1 1 auto;
   min-height: 0;
-  overflow: auto;
+  overflow-y: auto;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: calc(0.5rem + var(--inset-bottom, 0px));
 }
 
 .ayah-action-sheet__tilawa {
@@ -2304,15 +2340,17 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 .ayah-action-sheet__tafsir .mm-search-sheet__tafsir-depth,
 .ayah-action-sheet__tafsir .quran-tabbar {
   display: inline-flex;
-  gap: 0.3rem;
-  margin-block-end: 0.45rem;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-block-end: 0.25rem;
 }
 
 .ayah-action-sheet__tafsir .quran-btn--segment,
 .ayah-action-sheet__tafsir-depth button {
-  min-height: 32px;
-  padding: 0.2rem 0.55rem;
-  font-size: 0.78rem;
+  min-height: 28px;
+  min-width: 0;
+  padding: 0.12rem 0.45rem;
+  font-size: 0.72rem;
   font-weight: 650;
   border-radius: 999px;
 }
@@ -2325,14 +2363,31 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 }
 
 .ayah-action-sheet__tafsir-font {
-  margin-block: 0.25rem 0.35rem;
+  margin-block: 0.1rem 0.2rem;
 }
 
 .ayah-action-sheet__tafsir-font .ayah-action-sheet__font-btn {
-  min-height: 32px;
-  min-width: 32px;
-  padding: 0.15rem 0.4rem;
-  font-size: 0.75rem;
+  min-height: 28px;
+  min-width: 28px;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.72rem;
+}
+
+.ayah-action-sheet__tafsir-chip-label {
+  margin: 0 0 0.15rem;
+  font-size: 0.72rem;
+  color: color-mix(in srgb, var(--mm-ink) 55%, transparent);
+}
+
+.ayah-action-sheet__tafsir-text {
+  margin: 0;
+  line-height: 1.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-ayah-bar__panel {
+    transition: none;
+  }
 }
 
 /* علامات ترقيم الآيات — 4 ألوان هادئة على فاصلة الآية فقط (لا تغيّر الرسم) */

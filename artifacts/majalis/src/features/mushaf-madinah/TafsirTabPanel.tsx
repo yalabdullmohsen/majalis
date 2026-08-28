@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { Bookmark, Copy, Share2 } from "lucide-react";
 import { fetchMushafAyahTafsir } from "@/lib/quran-data/fetch-ayah-content";
 import {
@@ -69,7 +69,7 @@ function stepFontScale(current: TafsirFontScale, dir: -1 | 1): TafsirFontScale {
   return TAFSIR_FONT_SCALES[next] ?? current;
 }
 
-export function TafsirTabPanel({
+export const TafsirTabPanel = memo(function TafsirTabPanel({
   surah,
   ayah,
   expanded,
@@ -160,27 +160,60 @@ export function TafsirTabPanel({
 
   return (
     <div className="ayah-action-sheet__tafsir" data-testid="tafsir-tab-panel">
-      <div className="mm-search-sheet__tafsir-depth quran-tabbar" role="tablist" aria-label="عمق التفسير">
-        <button
-          type="button"
-          role="tab"
-          className={`quran-tab quran-btn--segment${depth === "brief" ? " is-active" : ""}`}
-          aria-selected={depth === "brief"}
-          disabled={!briefEdition}
-          onClick={() => switchDepth("brief")}
-        >
-          مختصر
-        </button>
-        <button
-          type="button"
-          role="tab"
-          className={`quran-tab quran-btn--segment${depth === "extended" ? " is-active" : ""}`}
-          aria-selected={depth === "extended"}
-          disabled={!extendedEdition}
-          onClick={() => switchDepth("extended")}
-        >
-          مطول
-        </button>
+      <div className="ayah-action-sheet__tafsir-toolbar">
+        <div className="mm-search-sheet__tafsir-depth quran-tabbar" role="tablist" aria-label="عمق التفسير">
+          <button
+            type="button"
+            role="tab"
+            className={`quran-tab quran-btn--segment${depth === "brief" ? " is-active" : ""}`}
+            aria-selected={depth === "brief"}
+            disabled={!briefEdition}
+            onClick={() => switchDepth("brief")}
+          >
+            مختصر
+          </button>
+          <button
+            type="button"
+            role="tab"
+            className={`quran-tab quran-btn--segment${depth === "extended" ? " is-active" : ""}`}
+            aria-selected={depth === "extended"}
+            disabled={!extendedEdition}
+            onClick={() => switchDepth("extended")}
+          >
+            مطول
+          </button>
+        </div>
+        <div className="ayah-action-sheet__tafsir-font quran-font-stepper" role="group" aria-label="حجم خط التفسير">
+          <button
+            type="button"
+            className="ayah-action-sheet__font-btn quran-font-stepper__btn quran-btn"
+            aria-label="تصغير خط التفسير"
+            disabled={fontScale === TAFSIR_FONT_SCALES[0]}
+            onClick={() => {
+              const next = stepFontScale(fontScale, -1);
+              setFontScale(next);
+              persistTafsirFontScale(next);
+            }}
+          >
+            أ−
+          </button>
+          <span className="ayah-action-sheet__font-label quran-font-stepper__label" aria-live="polite">
+            {fontLabel(fontScale)}
+          </span>
+          <button
+            type="button"
+            className="ayah-action-sheet__font-btn quran-font-stepper__btn quran-btn"
+            aria-label="تكبير خط التفسير"
+            disabled={fontScale === TAFSIR_FONT_SCALES[TAFSIR_FONT_SCALES.length - 1]}
+            onClick={() => {
+              const next = stepFontScale(fontScale, 1);
+              setFontScale(next);
+              persistTafsirFontScale(next);
+            }}
+          >
+            أ+
+          </button>
+        </div>
       </div>
       {active ? (
         <p className="ayah-action-sheet__tafsir-chip-label">
@@ -188,53 +221,24 @@ export function TafsirTabPanel({
           <span className="ayah-action-sheet__tafsir-chip-level">{depthLabel(depth)}</span>
         </p>
       ) : null}
-      <div className="ayah-action-sheet__tafsir-font quran-font-stepper" role="group" aria-label="حجم خط التفسير">
-        <button
-          type="button"
-          className="ayah-action-sheet__font-btn quran-font-stepper__btn quran-btn"
-          aria-label="تصغير خط التفسير"
-          disabled={fontScale === TAFSIR_FONT_SCALES[0]}
-          onClick={() => {
-            const next = stepFontScale(fontScale, -1);
-            setFontScale(next);
-            persistTafsirFontScale(next);
-          }}
-        >
-          أ−
-        </button>
-        <span className="ayah-action-sheet__font-label quran-font-stepper__label" aria-live="polite">
-          {fontLabel(fontScale)}
-        </span>
-        <button
-          type="button"
-          className="ayah-action-sheet__font-btn quran-font-stepper__btn quran-btn"
-          aria-label="تكبير خط التفسير"
-          disabled={fontScale === TAFSIR_FONT_SCALES[TAFSIR_FONT_SCALES.length - 1]}
-          onClick={() => {
-            const next = stepFontScale(fontScale, 1);
-            setFontScale(next);
-            persistTafsirFontScale(next);
-          }}
-        >
-          أ+
-        </button>
+      <div className="ayah-action-sheet__tafsir-scroll">
+        {loading ? (
+          <p className="mm-ayah-bar__status" aria-busy="true">
+            جاري تحميل التفسير…
+          </p>
+        ) : text ? (
+          <p
+            className="ayah-action-sheet__tafsir-text"
+            dir="rtl"
+            lang="ar"
+            style={{ fontSize: `${Math.max(1.05, fontScale * 1.05)}rem`, lineHeight: 1.8 }}
+          >
+            {text}
+          </p>
+        ) : (
+          <p className="mm-ayah-bar__status">لا يوجد تفسير متاح لهذه الآية حاليًا</p>
+        )}
       </div>
-      {loading ? (
-        <p className="mm-ayah-bar__status" aria-busy="true">
-          جاري تحميل التفسير…
-        </p>
-      ) : text ? (
-        <p
-          className="ayah-action-sheet__tafsir-text"
-          dir="rtl"
-          lang="ar"
-          style={{ fontSize: `${Math.max(1.05, fontScale * 1.05)}rem`, lineHeight: 1.8 }}
-        >
-          {text}
-        </p>
-      ) : (
-        <p className="mm-ayah-bar__status">لا يوجد تفسير متاح لهذه الآية حاليًا</p>
-      )}
       {expanded && text ? (
         <div className="ayah-action-sheet__tafsir-actions" role="group" aria-label="إجراءات التفسير">
           <button type="button" onClick={onCopy}>
@@ -259,4 +263,4 @@ export function TafsirTabPanel({
       ) : null}
     </div>
   );
-}
+});

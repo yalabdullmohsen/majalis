@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { memo, useLayoutEffect, useRef, useState } from "react";
 import { shouldThrottleUiRender } from "@/lib/power-saver-engine";
 import { clearTextMeasureCache, getCachedTextBands, type TextBand } from "@/lib/text-layout-geometry";
 
@@ -9,6 +9,8 @@ type Props = {
 };
 
 const LINE_TOL_PX = 6;
+const BAND_PAD_X = 3;
+const BAND_PAD_Y = 2;
 
 function collectBands(root: HTMLElement, verseKey: string): TextBand[] {
   const scrollLeft = root.scrollLeft;
@@ -26,10 +28,10 @@ function collectBands(root: HTMLElement, verseKey: string): TextBand[] {
         const r = rects[i]!;
         if (r.width < 1 || r.height < 1) continue;
         raw.push({
-          left: r.left - origin.left + scrollLeft,
-          top: r.top - origin.top + scrollTop,
-          width: r.width,
-          height: r.height,
+          left: r.left - origin.left + scrollLeft - BAND_PAD_X,
+          top: r.top - origin.top + scrollTop - BAND_PAD_Y,
+          width: r.width + BAND_PAD_X * 2,
+          height: r.height + BAND_PAD_Y * 2,
         });
       }
     });
@@ -53,10 +55,14 @@ function collectBands(root: HTMLElement, verseKey: string): TextBand[] {
 }
 
 /**
- * طبقة تظليل آية: شريط واحد لكل سطر عبر دمج getClientRects مع تخزين قياس مؤقت.
- * طبقة GPU منفصلة — بلا إعادة رسم شجرة الكلمات.
+ * طبقة تظليل آية: شريط واحد لكل سطر عبر دمج getClientRects.
+ * قياس فوري عند التحديد + إعادة قياس خفيفة على scroll/resize.
  */
-export function MushafAyahHighlight({ container, verseKey, playingKey = null }: Props) {
+export const MushafAyahHighlight = memo(function MushafAyahHighlight({
+  container,
+  verseKey,
+  playingKey = null,
+}: Props) {
   const [selected, setSelected] = useState<TextBand[]>([]);
   const [playing, setPlaying] = useState<TextBand[]>([]);
   const rafRef = useRef<number | null>(null);
@@ -70,7 +76,6 @@ export function MushafAyahHighlight({ container, verseKey, playingKey = null }: 
 
     const measureNow = () => {
       rafRef.current = null;
-      /* التحديد يجب أن يظهر فورًا حتى في وضع التوفير */
       setSelected(verseKey ? collectBands(container, verseKey) : []);
       if (shouldThrottleUiRender() && !verseKey) {
         setPlaying([]);
@@ -84,16 +89,22 @@ export function MushafAyahHighlight({ container, verseKey, playingKey = null }: 
       rafRef.current = window.requestAnimationFrame(measureNow);
     };
 
+    measureNow();
     scheduleMeasure();
+
+    const scrollRoot = container.closest<HTMLElement>(".mm-page-shell") ?? container;
     const onScroll = () => scheduleMeasure();
+    scrollRoot.addEventListener("scroll", onScroll, { passive: true });
     container.addEventListener("scroll", onScroll, { passive: true });
 
     const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(scheduleMeasure) : null;
     ro?.observe(container);
+    if (scrollRoot !== container) ro?.observe(scrollRoot);
     window.addEventListener("resize", scheduleMeasure);
 
     return () => {
       if (rafRef.current != null) window.cancelAnimationFrame(rafRef.current);
+      scrollRoot.removeEventListener("scroll", onScroll);
       container.removeEventListener("scroll", onScroll);
       ro?.disconnect();
       window.removeEventListener("resize", scheduleMeasure);
@@ -126,4 +137,4 @@ export function MushafAyahHighlight({ container, verseKey, playingKey = null }: 
       ))}
     </div>
   );
-}
+});
