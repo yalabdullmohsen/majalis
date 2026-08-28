@@ -319,7 +319,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         playbackRate: snap.playbackRate,
       });
       if (snap.playerState === "error") {
-        const msg = snap.errorMessage || "تعذر تحميل التلاوة، جرّب قارئًا آخر";
+        const msg = snap.errorMessage || "تعذر تشغيل هذه الآية لهذا القارئ";
         setAudioError(msg);
         setAudioStatus("فشل التحميل");
         mushafAudioLog("error", {

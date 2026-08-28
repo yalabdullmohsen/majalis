@@ -43,9 +43,14 @@ assert.match(page, /"lead"/);
 assert.match(page, /useMushafPageFontFit/);
 assert.match(fitHook, /resolveUniformMushafFontSize/);
 assert.match(fitHook, /mushafUniformFitCacheKey/);
+assert.match(fitHook, /mushafOpeningFitCacheKey|isMushafOpeningPage/);
 assert.doesNotMatch(fitHook, /shrinkUntilFit/);
 assert.match(fitHook, /fitPageFontSize\(/);
 assert.match(fitAlgo, /uniform-v1\|/);
+assert.match(fitAlgo, /opening-v2\|/);
+assert.match(fitAlgo, /MUSHAF_FIT_OPENING_MAX_PX/);
+assert.match(css, /--mm-ref-open-banner-y:\s*27\.7%/);
+assert.match(css, /--mm-ref-open-text-end:\s*74\.8%/);
 assert.match(footer, /mm-page-footer__num/);
 assert.doesNotMatch(footer, /<svg/);
 

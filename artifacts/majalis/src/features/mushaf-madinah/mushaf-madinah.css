@@ -84,6 +84,7 @@
   --mm-ref-cartouche-y: 94.3%;
   --mm-ref-ink-x-start: 1.5%;
   --mm-ref-ink-x-end: 98.4%;
+  /* ص١: مطابق مرجع مصحف المدينة (بوابات الهندسة) */
   --mm-ref-open-banner-y: 27.7%;
   --mm-ref-open-text-end: 74.8%;
   --mushaf-bg: var(--mm-outer-bg);
@@ -427,11 +428,16 @@ html.dark .mm-viewport,
   display: none;
 }
 
-/* ص١: شارة الفاتحة عند ٢٧٫٧٪ · نهاية كتلة ٧٤٫٨٪ */
+/* ص١: شارة الفاتحة · كتلة نص أوضح لتقليل الفراغ دون قص */
 .mm-viewport .mm-page--opening .mm-page__body,
 .mm-viewport .mm-page--opening .mm-page__body--opening {
   top: var(--mm-ref-open-banner-y);
   bottom: calc(100% - var(--mm-ref-open-text-end));
+}
+
+.mm-viewport .mm-page--opening {
+  --mm-line-height: 1.62;
+  --mushaf-line-height: 1.62;
 }
 
 /* ص٢ (البقرة): هامش قراءة عادي — لا فراغ علوي مبالغ */
@@ -439,6 +445,11 @@ html.dark .mm-viewport,
 .mm-viewport .mm-page[data-page-type="lead"] .mm-page__body--flex {
   top: var(--mm-ref-text-start);
   bottom: calc(100% - var(--mm-ref-text-end));
+}
+
+.mm-viewport .mm-page[data-page-type="lead"] {
+  --mm-line-height: 1.72;
+  --mushaf-line-height: 1.72;
 }
 
 .mm-viewport .mm-page--opening .mm-slot[data-kind="empty"] {
@@ -1726,37 +1737,81 @@ html.dark .mm-reciter-sheet__search input {
 .mm-reciter-sheet__list li {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 44px;
-  gap: 0.3rem;
+  gap: 0.35rem;
   align-items: center;
 }
 
-.mm-reciter-sheet__list button {
+.mm-reciter-sheet__list li.is-selected .mm-reciter-sheet__pick {
+  background: color-mix(in srgb, var(--mm-ui-accent) 14%, var(--mm-paper));
+  border-color: color-mix(in srgb, var(--mm-ui-accent) 45%, transparent);
+  color: var(--mm-ui-accent-deep, #0e3d27);
+  font-weight: 700;
+}
+
+.mm-reciter-sheet__pick {
+  appearance: none;
+  -webkit-appearance: none;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
+  justify-content: flex-start;
+  gap: 0.45rem;
   text-align: start;
   padding: 0.7rem 0.85rem;
-  border-radius: 0.65rem;
-  border: 1px solid var(--mm-chrome-border);
-  background: color-mix(in srgb, var(--mm-paper) 85%, #fff);
-  color: inherit;
+  border-radius: 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 28%, transparent);
+  background: color-mix(in srgb, var(--mm-paper) 94%, #fff);
+  color: var(--mm-ink);
   font: inherit;
   font-size: 0.95rem;
   cursor: pointer;
   min-height: 44px;
+  outline: none;
 }
 
-.mm-reciter-sheet__list button.is-active {
-  background: color-mix(in srgb, var(--mm-gold) 22%, transparent);
-  border-color: var(--mm-gold);
+.mm-reciter-sheet__pick:focus-visible,
+.mm-reciter-sheet__play:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mm-ui-accent) 35%, transparent);
+}
+
+.mm-reciter-sheet__pick.is-active {
+  background: color-mix(in srgb, var(--mm-ui-accent) 16%, var(--mm-paper));
+  border-color: color-mix(in srgb, var(--mm-ui-accent) 48%, transparent);
   font-weight: 700;
+}
+
+.mm-reciter-sheet__check {
+  color: var(--mm-ui-accent);
+  flex-shrink: 0;
+}
+
+.mm-reciter-sheet__name {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mm-reciter-sheet__play {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mm-ui-accent) 35%, transparent);
+  background: color-mix(in srgb, var(--mm-ui-accent) 12%, var(--mm-paper));
+  color: var(--mm-ui-accent-deep, #135034);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
 }
 
 .mm-reciter-sheet__meta {
   font-size: 0.72rem;
   color: color-mix(in srgb, var(--mm-ink) 55%, transparent);
+  margin-inline-start: auto;
 }
 
 .mm-tafsir {
@@ -2136,9 +2191,27 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 }
 
 .ayah-action-sheet__seek input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
   width: 100%;
   min-height: 44px;
-  accent-color: var(--mm-gold-deep);
+  background: transparent;
+  accent-color: var(--mm-ui-accent);
+}
+.ayah-action-sheet__seek input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mm-ui-accent) 28%, #d9d0bf);
+}
+.ayah-action-sheet__seek input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -7px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--mm-ui-accent);
 }
 
 .ayah-action-sheet__apply-range {
@@ -2429,19 +2502,78 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 }
 
 .ayah-action-sheet__tafsir-depth button {
+  appearance: none;
+  -webkit-appearance: none;
   flex: 1 1 0;
   min-height: 44px;
-  border-radius: 0.55rem;
-  border: 1px solid color-mix(in srgb, var(--mm-gold) 35%, #ccc);
-  background: color-mix(in srgb, var(--mm-paper) 92%, #fff);
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 32%, #d6c7a8);
+  background: color-mix(in srgb, var(--mm-paper) 96%, #fff);
+  color: var(--mm-ink);
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ayah-action-sheet__tafsir-depth button:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mm-ui-accent) 35%, transparent);
 }
 
 .ayah-action-sheet__tafsir-depth button.is-active {
-  background: color-mix(in srgb, var(--mm-gold) 24%, var(--mm-paper));
-  border-color: color-mix(in srgb, var(--mm-gold) 55%, #ccc);
+  background: color-mix(in srgb, var(--mm-ui-accent) 16%, var(--mm-paper));
+  border-color: color-mix(in srgb, var(--mm-ui-accent) 55%, transparent);
+  color: var(--mm-ui-accent-deep, #0e3d27);
+}
+
+.ayah-action-sheet__tafsir-depth button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.ayah-action-sheet__tafsir-font {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.45rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 28%, transparent);
+  background: color-mix(in srgb, var(--mm-paper) 94%, #fff);
+}
+
+.ayah-action-sheet__font-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mm-ui-accent) 10%, transparent);
+  color: var(--mm-ui-accent-deep, #135034);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.ayah-action-sheet__font-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.ayah-action-sheet__font-btn:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mm-ui-accent) 35%, transparent);
+}
+
+.ayah-action-sheet__font-label {
+  min-width: 3.2rem;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--mm-ink) 70%, transparent);
 }
 
 .ayah-action-sheet__tafsir-text {
@@ -2449,6 +2581,7 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   max-height: min(52dvh, 28rem);
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  color: var(--mm-ink);
 }
 
 .mm-search-sheet__field input {
@@ -2798,14 +2931,61 @@ html.dark .mm-settings-sheet {
   gap: 0.35rem;
   align-items: center;
   border: 1px solid color-mix(in srgb, var(--mm-gold) 24%, transparent);
-  border-radius: 0.7rem;
-  padding: 0.35rem 0.45rem 0.35rem 0.7rem;
-  background: color-mix(in srgb, var(--mm-paper) 92%, #fff);
+  border-radius: 1.15rem;
+  padding: 0.3rem 0.35rem 0.3rem 0.55rem;
+  background: color-mix(in srgb, var(--mm-paper) 94%, #fff);
 }
 
-.ayah-action-sheet__reciter-cards button {
+.ayah-action-sheet__reciter-cards li.is-selected {
+  background: color-mix(in srgb, var(--mm-ui-accent) 14%, var(--mm-paper));
+  border-color: color-mix(in srgb, var(--mm-ui-accent) 48%, transparent);
+}
+
+.ayah-action-sheet__reciter-pick {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--mm-ink);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
+  padding: 0.25rem 0.2rem;
+  outline: none;
+}
+
+.ayah-action-sheet__reciter-cards li.is-selected .ayah-action-sheet__reciter-pick {
+  color: var(--mm-ui-accent-deep, #0e3d27);
+}
+
+.ayah-action-sheet__reciter-pick:focus-visible,
+.ayah-action-sheet__reciter-play:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mm-ui-accent) 35%, transparent);
+  border-radius: 0.75rem;
+}
+
+.ayah-action-sheet__reciter-play {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 44px;
+  height: 44px;
   min-width: 44px;
   min-height: 44px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mm-ui-accent) 35%, transparent);
+  background: color-mix(in srgb, var(--mm-ui-accent) 12%, var(--mm-paper));
+  color: var(--mm-ui-accent-deep, #135034);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
 }
 
 
@@ -2847,25 +3027,55 @@ html.dark .mm-settings-sheet {
 
 /* زر التلاوة الرئيسي في شيت الآية */
 .ayah-action-sheet__play-hero {
+  appearance: none;
+  -webkit-appearance: none;
   display: flex;
   width: 100%;
   min-height: 52px;
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  border: 0;
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--mm-gold, #bf9f5b) 22%, #1f4d3a);
-  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--mm-ui-accent) 40%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mm-ui-accent) 16%, var(--mm-paper));
+  color: var(--mm-ui-accent-deep, #0e3d27);
   font-size: 1.05rem;
   font-weight: 700;
   font-family: inherit;
   padding: 0.85rem 1rem;
   cursor: pointer;
+  outline: none;
   -webkit-tap-highlight-color: transparent;
+}
+.ayah-action-sheet__play-hero.is-active {
+  background: color-mix(in srgb, var(--mm-ui-accent) 22%, var(--mm-paper));
+}
+.ayah-action-sheet__play-hero.is-loading {
+  opacity: 0.85;
+}
+.ayah-action-sheet__play-hero.is-error {
+  border-color: color-mix(in srgb, #9a3412 45%, transparent);
+  color: #9a3412;
+  background: color-mix(in srgb, #9a3412 10%, var(--mm-paper));
+}
+.ayah-action-sheet__play-hero:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mm-ui-accent) 40%, transparent);
 }
 .ayah-action-sheet__play-hero:active {
   opacity: 0.92;
+}
+.ayah-action-sheet__play-spinner {
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--mm-ui-accent) 35%, transparent);
+  border-top-color: var(--mm-ui-accent);
+  animation: mm-play-spin 0.7s linear infinite;
+}
+@keyframes mm-play-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 .ayah-action-sheet__ai-tarteel {
   display: flex;
@@ -2898,9 +3108,42 @@ html.dark .mm-settings-sheet {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.35rem;
 }
+.ayah-action-sheet__tabs button {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid color-mix(in srgb, var(--mm-gold) 28%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--mm-paper) 96%, #fff);
+  color: var(--mm-ink);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  min-height: 48px;
+  padding: 0.45rem 0.35rem;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 4px;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.ayah-action-sheet__tabs button:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mm-ui-accent) 35%, transparent);
+}
 .ayah-action-sheet__tabs button[aria-selected="true"] {
-  background: color-mix(in srgb, var(--mm-gold, #bf9f5b) 28%, transparent);
+  background: color-mix(in srgb, var(--mm-ui-accent) 16%, var(--mm-paper));
+  border-color: color-mix(in srgb, var(--mm-ui-accent) 50%, transparent);
+  color: var(--mm-ui-accent-deep, #0e3d27);
   font-weight: 700;
+}
+.ayah-action-sheet__tajweed a {
+  color: var(--mm-ui-accent-deep, #135034);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ayah-action-sheet a:not(.ayah-action-sheet__ai-tarteel) {
+  color: var(--mm-ui-accent-deep, #135034);
 }
 .mm-pager-track.is-panning {
   will-change: scroll-position;

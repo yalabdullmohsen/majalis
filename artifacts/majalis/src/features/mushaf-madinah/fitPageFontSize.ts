@@ -7,6 +7,8 @@ export type MeasureTextFn = (fontPx: number, text: string, family: string) => nu
 
 export const MUSHAF_FIT_MIN_PX = 12;
 export const MUSHAF_FIT_MAX_PX = 34;
+/** سقف أعلى لصفحتي الفاتحة وبداية البقرة (أسطر أقل → تكبير دون قص). */
+export const MUSHAF_FIT_OPENING_MAX_PX = 40;
 import { releaseCanvasResources } from "@/lib/canvas-gl-cleanup";
 
 export const MUSHAF_FIT_LINE_RATIO = 1.85;
@@ -80,6 +82,40 @@ export function mushafUniformFitCacheKey(
   return `uniform-v1|${Math.round(containerWidth)}|${Math.round(blockHeightPx)}`;
 }
 
+/** مفتاح مستقل لصفحتي الافتتاح — لا يُقيَّدان بسقف الصفحات الكثيفة. */
+export function mushafOpeningFitCacheKey(
+  page: number,
+  containerWidth: number,
+  blockHeightPx: number,
+): string {
+  return `opening-v2|${page}|${Math.round(containerWidth)}|${Math.round(blockHeightPx)}`;
+}
+
+export function isMushafOpeningPage(pageNumber: number): boolean {
+  return pageNumber === 1 || pageNumber === 2;
+}
+
+/**
+ * حجم هندسي لصفحات الافتتاح حسب عدد الأسطر الفعلية (لا ÷١٥).
+ */
+export function resolveOpeningMushafFontSize(
+  containerWidthPx: number,
+  blockHeightPx: number,
+  lineCount: number,
+): number {
+  if (containerWidthPx <= 0) return MUSHAF_FIT_MIN_PX;
+  const lines = Math.max(1, lineCount);
+  const byHeight =
+    blockHeightPx > 0
+      ? Math.floor(blockHeightPx / lines / MUSHAF_FIT_LINE_RATIO)
+      : MUSHAF_FIT_OPENING_MAX_PX;
+  const byWidth = Math.floor(containerWidthPx / 18.5);
+  return Math.max(
+    MUSHAF_FIT_MIN_PX,
+    Math.min(MUSHAF_FIT_OPENING_MAX_PX, byHeight, byWidth),
+  );
+}
+
 /**
  * حجم خط موحّد من هندسة الحاوية فقط — بلا قياس محتوى الصفحة.
  * ١٥ سطرًا × نسبة ارتفاع السطر، مع سقف عرض تقريبي لمصحف المدينة.
@@ -101,8 +137,8 @@ export function resolveUniformMushafFontSize(
   );
 }
 
-function inFitRange(v: number): boolean {
-  return Number.isFinite(v) && v >= MUSHAF_FIT_MIN_PX && v <= MUSHAF_FIT_MAX_PX;
+function inFitRange(v: number, maxPx: number = MUSHAF_FIT_OPENING_MAX_PX): boolean {
+  return Number.isFinite(v) && v >= MUSHAF_FIT_MIN_PX && v <= maxPx;
 }
 
 export function getCachedFontSize(key: string): number | null {

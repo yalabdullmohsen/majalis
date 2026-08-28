@@ -660,7 +660,7 @@ export class AudioEngine {
 
     const urls = listAyahAudioUrls(surah, ayah, this.reciterId);
     if (!urls.length) {
-      this.setPlayerState("error", "تعذر تحميل التلاوة، جرّب قارئًا آخر");
+      this.setPlayerState("error", "تعذر تشغيل هذه الآية لهذا القارئ");
       return;
     }
 
@@ -741,7 +741,7 @@ export class AudioEngine {
     const offline =
       typeof navigator !== "undefined" && navigator.onLine === false
         ? "تحقق من الاتصال بالشبكة ثم أعد المحاولة."
-        : "تعذر تحميل التلاوة، جرّب قارئًا آخر";
+        : "تعذر تشغيل هذه الآية لهذا القارئ";
     this.setPlayerState("error", offline);
   }
 
@@ -771,12 +771,12 @@ export class AudioEngine {
       }
       return;
     }
-    await this.playAyah(surah, ayah);
+    await this.playAyah(surah, ayah, this.reciterId);
   }
 
   /** Jump to another ayah and start playback (alias of {@link playAyah}). */
   async seekToAyah(surah: number, ayah: number): Promise<void> {
-    await this.playAyah(surah, ayah);
+    await this.playAyah(surah, ayah, this.reciterId);
   }
 
   /** Seek within the current track; no-op when duration is unknown. */
@@ -787,18 +787,18 @@ export class AudioEngine {
     this.emitSnapshot();
   }
 
-  /** الآية التالية (عبر حدود السور). */
+  /** الآية التالية (عبر حدود السور) — نفس الشيخ المختار دائمًا. */
   async skipNext(): Promise<void> {
     if (this.surah == null || this.ayah == null) return;
     const next = nextAyah(this.surah, this.ayah);
-    if (next) await this.playAyah(next.surah, next.ayah);
+    if (next) await this.playAyah(next.surah, next.ayah, this.reciterId);
   }
 
-  /** الآية السابقة. */
+  /** الآية السابقة — نفس الشيخ المختار دائمًا. */
   async skipPrev(): Promise<void> {
     if (this.surah == null || this.ayah == null) return;
     const prev = prevAyah(this.surah, this.ayah);
-    if (prev) await this.playAyah(prev.surah, prev.ayah);
+    if (prev) await this.playAyah(prev.surah, prev.ayah, this.reciterId);
   }
 
   /** دورة سرعات وضع الحفظ/المصغّر: 0.75 → 1 → 1.25 → 0.75 */
@@ -903,7 +903,7 @@ export class AudioEngine {
         const delay = next.delayMs;
         const playNext = () => {
           this.loopDelayTimer = null;
-          void this.playAyah(this.loopSurah!, next.ayah);
+          void this.playAyah(this.loopSurah!, next.ayah, this.reciterId);
         };
         if (delay > 0) {
           this.setPlayerState("paused");
@@ -922,25 +922,25 @@ export class AudioEngine {
       }
 
       if (this.repeatMode === "ayah" && this.surah != null && this.ayah != null) {
-        await this.playAyah(this.surah, this.ayah);
+        await this.playAyah(this.surah, this.ayah, this.reciterId);
         return;
       }
 
       if (this.repeatMode === "surah" && this.surah != null && this.ayah != null) {
         const next = nextAyah(this.surah, this.ayah);
         if (next && next.surah === this.surah) {
-          await this.playAyah(next.surah, next.ayah);
+          await this.playAyah(next.surah, next.ayah, this.reciterId);
           return;
         }
         const start = this.surahRepeatStart ?? { surah: this.surah, ayah: 1 };
-        await this.playAyah(start.surah, start.ayah);
+        await this.playAyah(start.surah, start.ayah, this.reciterId);
         return;
       }
 
       if (this.surah != null && this.ayah != null) {
         const next = nextAyah(this.surah, this.ayah);
         if (next) {
-          await this.playAyah(next.surah, next.ayah);
+          await this.playAyah(next.surah, next.ayah, this.reciterId);
           return;
         }
       }

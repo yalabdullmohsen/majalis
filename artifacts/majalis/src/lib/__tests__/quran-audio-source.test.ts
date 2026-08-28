@@ -73,24 +73,46 @@ assert.match(getSurahAudioUrl(1, "balilah"), /balilah\/001\.mp3$/);
 assert.equal(getAyahAudioUrl(1, 1, "balilah"), "");
 
 const husaryUrls = listAyahAudioUrls(1, 1, "husary");
-assert.ok(husaryUrls.length >= 2, "احتياط عفاسي/CDN بعد القارئ الأساسي");
+assert.ok(husaryUrls.length >= 2, "مرآة everyayah + islamic.network لنفس الشيخ");
 assert.match(husaryUrls[0]!, /Husary/);
 assert.ok(
-  husaryUrls.some((u) => /Alafasy|islamic\.network/.test(u)),
-  "يجب وجود مرشّح احتياط",
+  husaryUrls.every((u) => /Husary|ar\.husary/i.test(u)),
+  "ممنوع fallback لقارئ آخر",
+);
+assert.ok(
+  !husaryUrls.some((u) => /Alafasy|ar\.alafasy/i.test(u)),
+  "لا يُحقن صوت عفاسي عند اختيار حصري",
 );
 assert.ok(
   husaryUrls.some((u) => u.includes("cdn.islamic.network")),
-  "احتياط islamic.network مفعّل",
+  "احتياط islamic.network لنفس الشيخ",
 );
 assert.ok(
   husaryUrls.some((u) => u.includes("www.everyayah.com")),
   "مرآة www.everyayah",
 );
 assert.ok(listAyahAudioUrls(1, 1, "alafasy").length >= 1);
+assert.equal(
+  listAyahAudioUrls(1, 1, "balilah").length,
+  0,
+  "قارئ سورة-فقط: لا روابط آية ولا تبديل شيخ",
+);
 assert.ok(
-  listAyahAudioUrls(1, 1, "balilah").some((u) => /Alafasy|islamic\.network/.test(u)),
-  "قارئ سورة-فقط: احتياط للصوت",
+  listAyahAudioUrls(2, 1, "dosari").length >= 1 &&
+    listAyahAudioUrls(2, 1, "dosari").every((u) => /Yasser_Ad-Dussary/i.test(u)),
+  "الدوسري: روابطه فقط",
+);
+assert.ok(
+  !listAyahAudioUrls(2, 1, "dosari").some((u) => /Alafasy|ar\.alafasy/i.test(u)),
+);
+assert.ok(
+  listAyahAudioUrls(2, 1, "shuraim").length >= 1 &&
+    listAyahAudioUrls(2, 1, "shuraim").every(
+      (u) => /Saood_ash-Shuraym|ar\.saoodshuraym/i.test(u),
+    ),
+);
+assert.ok(
+  !listAyahAudioUrls(2, 1, "shuraim").some((u) => /Alafasy|ar\.alafasy/i.test(u)),
 );
 assert.equal(getGlobalAyahNumber(1, 1), 1);
 assert.equal(getGlobalAyahNumber(2, 1), 8);
