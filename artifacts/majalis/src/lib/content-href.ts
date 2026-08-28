@@ -5,6 +5,7 @@
  */
 
 import { ADHKAR_CATEGORIES } from "@/lib/adhkar-seed";
+import { redirectScholarPath } from "@/lib/scholar-to-history-redirect";
 
 function idOrEmpty(id?: string | null): string {
   return String(id ?? "").trim();
@@ -23,8 +24,13 @@ export function hrefLibrary(id?: string | null): string {
   return pathWithId("/library", id);
 }
 
+export function hrefIslamicHistory(id?: string | null): string {
+  return pathWithId("/tarikh-islami", id);
+}
+
+/** @deprecated قسم العلماء أُزيل — يُوجَّه إلى التاريخ الإسلامي */
 export function hrefScholars(id?: string | null): string {
-  return pathWithId("/scholars", id);
+  return redirectScholarPath(id);
 }
 
 /** مشايخ معاصرون من دروس الكويت — slug مُشتق من sheikhNameKey. */
@@ -118,7 +124,7 @@ export const CONTENT_TYPE_HREF: Record<ContentHrefType, (id: string) => string> 
   fatwa: (id) => hrefRulings(id),
   benefit: (id) => hrefFawaid(id),
   book: (id) => hrefLibrary(id),
-  scholar: (id) => hrefScholars(id),
+  scholar: (id) => hrefIslamicHistory(id),
   qa: (id) => hrefQa(id),
   ruling: (id) => hrefRulings(id),
   story: (id) => hrefStories(id),
@@ -131,7 +137,7 @@ export const CONTENT_TYPE_HREF: Record<ContentHrefType, (id: string) => string> 
 export type KnowledgeRelatedHrefType = "scholar" | "lesson" | "book" | "fawaid" | "question";
 
 export const KNOWLEDGE_RELATED_HREF: Record<KnowledgeRelatedHrefType, (id: string) => string> = {
-  scholar: (id) => hrefScholars(id),
+  scholar: (id) => hrefIslamicHistory(id),
   lesson: (id) => hrefLessons(id),
   book: (id) => hrefLibrary(id),
   fawaid: (id) => hrefFawaid(id),
@@ -164,7 +170,7 @@ export function hrefKnowledgeNode(
     case "fatwa":
       return hrefRulings(ref || null);
     case "scholar":
-      return hrefScholars(ref || null);
+      return hrefIslamicHistory(ref || null);
     case "book":
       return hrefLibrary(ref || null);
     case "lesson":

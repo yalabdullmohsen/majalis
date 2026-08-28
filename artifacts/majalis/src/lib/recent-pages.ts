@@ -178,7 +178,6 @@ const LABEL_MAP: Record<string, string> = {
   "/islamic-glossary":              "المصطلحات الإسلامية",
 
   // ─── العلماء والمؤسسات ────────────────────────────────────────────
-  "/scholars":                      "العلماء",
   "/universities":                  "الجامعات",
   "/universities/compare":          "مقارنة الجامعات",
   "/institutions":                  "المؤسسات العلمية",

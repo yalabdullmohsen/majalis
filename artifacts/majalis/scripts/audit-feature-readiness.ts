@@ -87,7 +87,7 @@ assert.equal(resolveContinueSection("/admin/dashboard"), null);
 assert.equal(resolveContinueSection("/search?q=x"), null);
 assert.equal(resolveContinueSection("/lessons/abc"), "lessons");
 assert.equal(resolveContinueSection("/prophets/nuh"), "prophets");
-assert.equal(resolveContinueSection("/scholars/ibn-taymiyyah"), "scholars");
+assert.equal(resolveContinueSection("/tarikh-islami/pers-al-tabari"), "tarikh");
 
 if (errors.length) {
   console.error("audit:feature-readiness FAILED");

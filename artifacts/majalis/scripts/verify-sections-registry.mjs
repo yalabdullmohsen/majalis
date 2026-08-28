@@ -92,8 +92,8 @@ const SPACING = new Set([8, 12, 16, 24]);
     fail("مجموعة الحساب والإعدادات يجب أن تكون الأخيرة");
   }
   const featured = featuredSections();
-  if (featured.length !== 6) {
-    fail(`الأبواب المميّزة يجب أن تكون 6 وليس ${featured.length}`);
+  if (featured.length !== 7) {
+    fail(`الأبواب المميّزة يجب أن تكون 7 وليس ${featured.length}`);
   }
   const bottom = bottomNavSections();
   const expectedBottom = ["quran", "lessons", "prayer", "fiqh", "sections"];

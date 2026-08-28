@@ -133,7 +133,7 @@ async function main() {
   const SPOT_CHECK_PATHS = [
     "/lessons/index.html",
     "/library/index.html",
-    "/scholars/index.html",
+    "/tarikh-islami/index.html",
     "/fatwa/index.html",
     "/rulings/index.html",
     "/adhkar/index.html",

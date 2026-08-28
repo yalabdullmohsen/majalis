@@ -302,12 +302,6 @@
     <priority>0.82</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars</loc>
-    <lastmod>2026-08-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/shamael</loc>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
@@ -652,8 +646,9 @@
   </url>
   <url>
     <loc>https://majlisilm.com/tarikh-islami</loc>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/usra-mujtama</loc>
@@ -2116,677 +2111,502 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/abu-hanifa</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-pre-prophecy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/malik</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-first-revelation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/shafi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-makkan-daawah</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ahmad</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-hijra</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/bukhari</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-madinan-state</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/muslim</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-badr</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-taymiyya</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-uhud</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-qayyim</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-khaybar</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/nawawi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-conquest-makkah</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-hajar</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-farewell-pilgrimage</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/shawkani</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-death-prophet</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-baz</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-abu-bakr</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-uthaymeen</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-ridda-wars</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/albani</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-quran-compilation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/qaradawi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-umar</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/tirmidhi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-conquest-jerusalem</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-majah</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-umar-martyrdom</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ghazali</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-uthman</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-kathir</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-ali</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-khaldun</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-battle-camel</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-ashur</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-battle-siffin</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/fawzan</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-arbitration</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/al-suyuti</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-hasan-reconciliation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/abu-dawud</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-conquests-overview</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/nasai</loc>
+    <loc>https://majlisilm.com/tarikh-islami/rashidun-first-fitna</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/daraqutni</loc>
+    <loc>https://majlisilm.com/tarikh-islami/umayyad-era</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/bayhaki</loc>
+    <loc>https://majlisilm.com/tarikh-islami/umayyad-muawiyah</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-juzayy</loc>
+    <loc>https://majlisilm.com/tarikh-islami/umayyad-abd-malik</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/shatbi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/umayyad-conquest-spain</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/shanqiti</loc>
+    <loc>https://majlisilm.com/tarikh-islami/umayyad-siege-constantinople</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/bint-al-shati</loc>
+    <loc>https://majlisilm.com/tarikh-islami/umayyad-omar-ibn-abdul-aziz</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/zuhayli</loc>
+    <loc>https://majlisilm.com/tarikh-islami/umayyad-fall</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/abu-zayd</loc>
+    <loc>https://majlisilm.com/tarikh-islami/umayyad-damascus</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/muhammad-ghazali</loc>
+    <loc>https://majlisilm.com/tarikh-islami/umayyad-arabization</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/mubarakfuri</loc>
+    <loc>https://majlisilm.com/tarikh-islami/abbasid-revolution</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/tabari</loc>
+    <loc>https://majlisilm.com/tarikh-islami/abbasid-baghdad-founded</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-jawzi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/abbasid-house-of-wisdom</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-rajab</loc>
+    <loc>https://majlisilm.com/tarikh-islami/abbasid-harun-rashid</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-abd-al-barr</loc>
+    <loc>https://majlisilm.com/tarikh-islami/abbasid-al-mamun</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/dhahabi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/abbasid-mihna</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/izz-ibn-abd-al-salam</loc>
+    <loc>https://majlisilm.com/tarikh-islami/abbasid-decline</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-abd-al-wahhab</loc>
+    <loc>https://majlisilm.com/tarikh-islami/abbasid-buyids</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-abidin</loc>
+    <loc>https://majlisilm.com/tarikh-islami/abbasid-seljuk-entry</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/rashid-rida</loc>
+    <loc>https://majlisilm.com/tarikh-islami/abbasid-translation-movement</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/muhammad-abdu</loc>
+    <loc>https://majlisilm.com/tarikh-islami/abbasid-sack-baghdad</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-badis</loc>
+    <loc>https://majlisilm.com/tarikh-islami/andalus-tariq</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/abu-yusuf</loc>
+    <loc>https://majlisilm.com/tarikh-islami/andalus-umayyad-emirate</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/shaybani</loc>
+    <loc>https://majlisilm.com/tarikh-islami/andalus-abd-arrahman</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/muzani</loc>
+    <loc>https://majlisilm.com/tarikh-islami/andalus-cordoba-caliphate</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-hibban</loc>
+    <loc>https://majlisilm.com/tarikh-islami/andalus-toledo-school</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-khuzayma</loc>
+    <loc>https://majlisilm.com/tarikh-islami/andalus-muluk-tawaif</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/hakim</loc>
+    <loc>https://majlisilm.com/tarikh-islami/andalus-alhambra</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-mubarak</loc>
+    <loc>https://majlisilm.com/tarikh-islami/andalus-fall-granada</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/sufyan-thawri</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seljuk-rise</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/awzai</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seljuk-nizamiyya</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/laith-ibn-sad</loc>
+    <loc>https://majlisilm.com/tarikh-islami/nur-ad-din</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-al-mundhir</loc>
+    <loc>https://majlisilm.com/tarikh-islami/ayyubid-founding</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/khattabi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/battle-hattin</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-hajar-haytami</loc>
+    <loc>https://majlisilm.com/tarikh-islami/jerusalem-liberation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ali-tantawi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/crusader-states</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/shaarawi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/ayyubid-legacy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-ghudiyan</loc>
+    <loc>https://majlisilm.com/tarikh-islami/mamluk-rise</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/afifi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/tartars-threat</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/sufyan-uyayna</loc>
+    <loc>https://majlisilm.com/tarikh-islami/ain-jalut</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/muqbil</loc>
+    <loc>https://majlisilm.com/tarikh-islami/mamluk-baybars</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-muflih</loc>
+    <loc>https://majlisilm.com/tarikh-islami/mamluk-decline</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-rushd</loc>
+    <loc>https://majlisilm.com/tarikh-islami/ottoman-founding</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-hazm</loc>
+    <loc>https://majlisilm.com/tarikh-islami/ottoman-istanbul</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-asakir</loc>
+    <loc>https://majlisilm.com/tarikh-islami/ottoman-suleyman</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-nujaym</loc>
+    <loc>https://majlisilm.com/tarikh-islami/ottoman-millet</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/khatib-baghdadi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/ottoman-waqf</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/al-amir-al-sanani</loc>
+    <loc>https://majlisilm.com/tarikh-islami/ottoman-science</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/kawakibi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/ottoman-decline</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/khayr-al-din</loc>
+    <loc>https://majlisilm.com/tarikh-islami/ottoman-dissolution</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/mustafa-zarqa</loc>
+    <loc>https://majlisilm.com/tarikh-islami/civ-waqf</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-faris</loc>
+    <loc>https://majlisilm.com/tarikh-islami/civ-judiciary</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/zarkashi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/civ-education</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-jibreen</loc>
+    <loc>https://majlisilm.com/tarikh-islami/civ-medicine</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/syed-saabiq</loc>
+    <loc>https://majlisilm.com/tarikh-islami/civ-astronomy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/abd-al-karim-al-khudair</loc>
+    <loc>https://majlisilm.com/tarikh-islami/civ-architecture</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-qudama</loc>
+    <loc>https://majlisilm.com/tarikh-islami/civ-manuscripts</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/juwayny</loc>
+    <loc>https://majlisilm.com/tarikh-islami/civ-travel</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-salah</loc>
+    <loc>https://majlisilm.com/tarikh-islami/civ-science</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/al-qarafi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/civ-house-wisdom</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/fakhr-razi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-umar-abd-aziz</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/al-mizzi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-harun-rashid</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/al-saadi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-al-mamun</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-aqil</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-muhammad-fatih</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ahmad-shakir</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-ibn-khaldun</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/al-mundhiri</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-al-tabari</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-daqiq</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-ibn-kathir</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-battuta</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-al-dhahabi</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/al-mawardi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-ibn-hajar</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-ata-allah-al-sakandari</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-al-baladhuri</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/al-sakhawi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-ibn-al-athir</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/al-ajurri</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-saladin</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-al-wazir</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-nur-ad-din</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/ibn-abi-shaybah</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-abu-bakr</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/al-qurtubi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-umar-ibn-khattab</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/scholars/abu-nuaym</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/alusi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/baghawi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/sarakhsi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/kasani</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/zamakhshari</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/wahidi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/ibn-atiyya</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/baydawi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/munawi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/tahawi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/marghinani</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/ibn-al-athir</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/abu-hayyan</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/qadi-iyad</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/ibn-abi-dunya</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/amidi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/hasan-basri</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/ibn-abi-izz</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/ramli</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/bahuti</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/hajjawi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/mardawi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/ayni</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/khiraqi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/ibn-humam</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/khalil-ibn-ishaq</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/ibn-abi-hatim</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/qastallani</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/zaylai</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/dardir</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/al-dusuki</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/al-hattab</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/al-kharashi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/baqillani</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/scholars/al-sanusi</loc>
+    <loc>https://majlisilm.com/tarikh-islami/pers-uthman</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>

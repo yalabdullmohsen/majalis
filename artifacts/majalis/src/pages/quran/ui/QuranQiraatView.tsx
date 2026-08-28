@@ -84,7 +84,7 @@ export default function QuranQiraatView() {
                 <strong>المصدر:</strong> {q.source}
               </p>
               <p>
-                <Link href="/scholars">أعلام وتراجم</Link>
+                <Link href="/tarikh-islami">التاريخ الإسلامي</Link>
               </p>
             </article>
           ))}

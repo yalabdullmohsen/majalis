@@ -90,7 +90,7 @@ for (const route of [
   "/lessons",
   "/adhkar",
   "/library",
-  "/scholars",
+  "/tarikh-islami",
   "/prophets",
   "/fiqh",
   "/more",

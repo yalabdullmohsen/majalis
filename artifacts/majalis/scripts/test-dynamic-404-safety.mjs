@@ -49,12 +49,12 @@ async function importSrc(relPath) {
   }
 }
 
-const { SCHOLARS } = await importSrc("src/lib/scholars-data.ts");
+const { ISLAMIC_HISTORY_ITEMS } = await importSrc("src/data/islamic-history/index.ts");
 const { LIBRARY_CATALOG } = await importSrc("src/lib/library-catalog.ts");
 
-for (const s of SCHOLARS) {
-  const p = resolve(distDir, "scholars", s.id, "index.html");
-  if (!existsSync(p)) failures.push(`عالِم بلا prerender: ${s.id} (سيرجع 404 حقيقية خطأً)`);
+for (const item of ISLAMIC_HISTORY_ITEMS) {
+  const p = resolve(distDir, "tarikh-islami", item.id, "index.html");
+  if (!existsSync(p)) failures.push(`عنصر تاريخ بلا prerender: ${item.id} (سيرجع 404 حقيقية خطأً)`);
 }
 
 for (const b of LIBRARY_CATALOG) {
@@ -81,10 +81,10 @@ const spaRewrites = rewrites.filter((r) => r.destination === "/index.html");
 const forbiddenSpa = spaRewrites.filter(
   (r) =>
     typeof r.source === "string" &&
-    (r.source.startsWith("/scholars") || r.source.startsWith("/library")),
+    (r.source.startsWith("/tarikh-islami") || r.source.startsWith("/library")),
 );
 if (forbiddenSpa.length) {
-  failures.push("vercel.json: scholars/ أو library/ يجب ألا تُعاد كتابتها إلى /index.html");
+  failures.push("vercel.json: tarikh-islami/ أو library/ يجب ألا تُعاد كتابتها إلى /index.html");
 }
 
 const muezzinsRedirect = (vercel.redirects || []).some(
@@ -98,7 +98,7 @@ if (!existsSync(resolve(distDir, "404.html"))) {
   failures.push("dist/404.html غير موجود — الـslugs غير الصحيحة ستحصل على صفحة 404 فارغة من Vercel بدل الصفحة المصمَّمة.");
 }
 
-console.log(`فُحص: ${SCHOLARS.length} عالِمًا و${LIBRARY_CATALOG.length} كتابًا.`);
+console.log(`فُحص: ${ISLAMIC_HISTORY_ITEMS.length} عنصر تاريخ و${LIBRARY_CATALOG.length} كتابًا.`);
 console.log(`rewrites إلى /index.html (SPA فقط): ${spaRewrites.length}`);
 
 if (failures.length) {
@@ -107,4 +107,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("✓ كل سجل حي (عالِم/كتاب) له prerender مطابق — ولا catch-all يُخفي 404.");
+console.log("✓ كل سجل حي (تاريخ/كتاب) له prerender مطابق — ولا catch-all يُخفي 404.");

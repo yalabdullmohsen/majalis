@@ -78,9 +78,9 @@ const bookLd = bookJsonLd({
 assert.equal(bookLd["@type"], "Book");
 
 const personLd = personJsonLd({
-  name: "أحمد بن حنبل",
-  url: "/scholars/ahmad",
-  knowsAbout: ["حديث"],
+  name: "الطبري",
+  url: "/tarikh-islami/pers-al-tabari",
+  knowsAbout: ["تاريخ"],
 });
 assert.equal(personLd["@type"], "Person");
 
@@ -88,9 +88,9 @@ const libraryDetail = read("pages/library/ui/LibraryDetailView.tsx");
 assert.match(libraryDetail, /bookJsonLd\(/);
 assert.doesNotMatch(libraryDetail, /cover_url|image_url/);
 
-const scholar = read("pages/library/ui/ScholarProfileView.tsx");
-assert.match(scholar, /personJsonLd\(/);
-assert.doesNotMatch(scholar, /scholar\.image|scholar\.photo/);
+const historyDetail = read("views/TarikhIslamiDetailPage.tsx");
+assert.match(historyDetail, /applyPageSeo/);
+assert.match(historyDetail, /sources/);
 
 const mushaf = read("pages/quran/MushafReaderPage.tsx");
 assert.match(mushaf, /applyPageSeo/);

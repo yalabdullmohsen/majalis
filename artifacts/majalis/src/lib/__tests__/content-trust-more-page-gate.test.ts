@@ -18,6 +18,6 @@ assert.match(box, /contentType/);
 assert.match(sectionsPage, /MoreHubFromRegistry|SectionsHubFromRegistry/);
 assert.match(sectionsPage, /الأقسام/);
 assert.match(sections, /sections\.registry/);
-assert.equal(MORE_FEATURED_SECTIONS.length, 6);
+assert.equal(MORE_FEATURED_SECTIONS.length, 7);
 
 console.log("content-trust-more-page-gate.test.ts: ok");

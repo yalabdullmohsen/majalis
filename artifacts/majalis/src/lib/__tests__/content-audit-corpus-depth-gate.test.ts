@@ -144,7 +144,7 @@ for (const rootRel of JSON_ROOTS) {
 const SEED_FILES = [
   "src/lib/prophets-data.ts",
   "src/lib/library-catalog.ts",
-  "src/lib/scholars-data.ts",
+  "src/data/islamic-history/index.ts",
   "src/lib/adhkar-seed.ts",
   "src/lib/nations-seed.ts",
   "src/lib/islamic-stories-seed.ts",

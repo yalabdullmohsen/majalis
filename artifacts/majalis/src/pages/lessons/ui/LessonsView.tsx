@@ -674,7 +674,7 @@ export default function LessonsPage({
       <ExploreAlsoNav
         title="استكشف أيضًا"
         links={[
-          { href: "/scholars", label: "العلماء" },
+          { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
           { href: "/quran-knowledge", label: "القرآن وعلومه" },
           { href: "/hadith", label: "الحديث وعلومه" },
           { href: "/fiqh", label: "الفقه والأحكام" },

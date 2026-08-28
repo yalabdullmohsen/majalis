@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(__dirname, "..");
 
-const { SCHOLARS } = await import("../src/lib/scholars-data.ts");
+const { ISLAMIC_HISTORY_ITEMS } = await import("../src/data/islamic-history/index.ts");
 const { LIBRARY_CATALOG } = await import("../src/lib/library-catalog.ts");
 const { getSurahList } = await import("../src/lib/quran-api.ts");
 const { normalizeArabic } = await import("../src/shared/arabic-normalize.ts");
@@ -49,15 +49,15 @@ function pushDoc(id, kind, titleAr, href, parts = [], meta) {
   });
 }
 
-// ── علماء ──────────────────────────────────────────────────────────────────
-for (const s of SCHOLARS) {
+// ── التاريخ الإسلامي ─────────────────────────────────────────────────────
+for (const item of ISLAMIC_HISTORY_ITEMS) {
   pushDoc(
-    `scholar:${s.id}`,
-    "scholar",
-    s.name,
-    `/scholars/${s.id}`,
-    [s.fullName, s.era, ...(s.specialty ?? [])],
-    s.era,
+    `history:${item.id}`,
+    "history",
+    item.title,
+    `/tarikh-islami/${item.id}`,
+    [item.summary, item.era, ...(item.relatedPersons ?? [])],
+    item.era,
   );
 }
 
@@ -214,7 +214,7 @@ const APP_PAGES = [
   ["app:hadith", "hadith", "الحديث", "/hadith", ["سنة"]],
   ["app:fiqh", "fiqh", "الفقه والأحكام", "/fiqh", ["فقه", "أحكام"]],
   ["app:library", "book", "المكتبة", "/library", ["كتب"]],
-  ["app:scholars", "scholar", "أعلام الإسلام", "/scholars", ["علماء", "مشايخ"]],
+  ["app:tarikh-islami", "history", "التاريخ الإسلامي", "/tarikh-islami", ["تاريخ", "سيرة", "حضارة"]],
   ["app:seerah", "seerah", "السيرة النبوية", "/seerah", ["سيرة"]],
   ["app:prophets", "prophet", "قصص الأنبياء", "/prophets", ["أنبياء", "ابتلاءات"]],
   ["app:quran-people", "person", "الذين ذكروا في القرآن", "/quran/people", ["أعلام", "شخصيات", "مذكورون", "فرعون", "مريم", "أشخاص القرآن"]],

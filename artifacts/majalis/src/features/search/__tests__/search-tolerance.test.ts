@@ -55,12 +55,12 @@ const FIXTURE: UnifiedSearchDoc[] = [
   doc("app:tafsir", "tafsir", "التفسير", "/tafsir", ["تفسير"]),
   doc("app:tafsir-audio", "tafsir-audio", "التفسير الصوتي", "/tafsir", ["تفسير صوتي"]),
   doc("app:library", "book", "المكتبة", "/library", ["كتب"]),
-  doc("app:scholars", "scholar", "أعلام الإسلام", "/scholars", ["علماء"]),
+  doc("app:tarikh-islami", "history", "التاريخ الإسلامي", "/tarikh-islami", ["تاريخ"]),
   doc("app:nations", "nation", "الأمم السابقة", "/nations", ["أمم"]),
   doc("app:hadith", "hadith", "الحديث", "/hadith", ["سنة"]),
   doc("app:lessons", "lesson", "الدروس", "/lessons", ["دروس"]),
   doc("book:riyadh", "book", "رياض الصالحين", "/library/riyadh", [" النووي"]),
-  doc("scholar:nawawi", "scholar", "النووي", "/scholars/nawawi", ["يحيى بن شرف"]),
+  doc("history:tabari", "history", "الطبري", "/tarikh-islami/pers-al-tabari", ["تاريخ"]),
 ];
 
 type Case = { q: string; expectId: string; note?: string };
@@ -114,12 +114,12 @@ const CASES: Case[] = [
   { q: "تفسير", expectId: "app:tafsir" },
   { q: "تفسير صوتي", expectId: "app:tafsir-audio" },
   { q: "المكتبه", expectId: "app:library" },
-  { q: "علماء", expectId: "app:scholars" },
+  { q: "تاريخ", expectId: "app:tarikh-islami" },
   { q: "امم سابقه", expectId: "app:nations" },
   { q: "حديث", expectId: "app:hadith" },
   { q: "دروس", expectId: "app:lessons" },
   { q: "رياض الصالحين", expectId: "book:riyadh" },
-  { q: "النووي", expectId: "scholar:nawawi" },
+  { q: "الطبري", expectId: "history:tabari" },
   // أخطاء حرف واحد / تطويل
   { q: "البـقرة", expectId: "surah:2" },
   { q: "الكهـف", expectId: "surah:18" },
@@ -132,7 +132,7 @@ const CASES: Case[] = [
   { q: "الأنبياء قصص", expectId: "app:prophets" },
   // مرادفات
   { q: "تلاوة", expectId: "app:reciters" },
-  { q: "أعلام الإسلام", expectId: "app:scholars" },
+  { q: "التاريخ الإسلامي", expectId: "app:tarikh-islami" },
 ];
 
 assert.ok(CASES.length >= 60, `يحتاج ≥60 حالة (الآن ${CASES.length})`);

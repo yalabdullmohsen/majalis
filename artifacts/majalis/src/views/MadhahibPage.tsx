@@ -330,7 +330,7 @@ export default function MadhahibPage() {
             { href: "/hadith-science", label: "مصطلح الحديث" },
             { href: "/tawhid",         label: "التوحيد والعقيدة" },
             { href: "/arkan",          label: "أركان الإسلام" },
-            { href: "/scholars",       label: "أعلام الإسلام" },
+            { href: "/tarikh-islami",       label: "التاريخ الإسلامي" },
           ].map(({ href, label }) => (
             <Link key={href} href={href} className="mdb-related__link">{label}</Link>
           ))}

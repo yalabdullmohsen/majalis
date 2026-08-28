@@ -35,12 +35,13 @@ assert.doesNotMatch(more, /onClose|button.*إغلاق|aria-label=["']إغلاق/
 assert.match(more, /الأقسام/);
 
 const titles = MORE_FEATURED_SECTIONS.map((s) => s.title);
-assert.equal(titles.length, 6);
+assert.equal(titles.length, 7);
 for (const t of [
   "العقيدة",
   "الحديث وعلومه",
   "الفقه والأحكام",
   "السيرة النبوية",
+  "التاريخ الإسلامي",
   "قصص الأنبياء",
   "الأمم السابقة",
 ]) {

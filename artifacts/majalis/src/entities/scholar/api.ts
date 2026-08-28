@@ -1,4 +1,4 @@
-import { SCHOLARS, type Scholar } from "@/lib/scholars-data";
+import { ISLAMIC_HISTORY_ITEMS } from "@/data/islamic-history";
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { scoreTolerantMatch, compareTolerantMatches } from "@/features/search/tolerant-match";
 import type { EntityRepository } from "@/entities/_ports";
@@ -14,29 +14,30 @@ export type ScholarEntity = {
   specialty?: string[];
 };
 
-function toEntity(s: Scholar): ScholarEntity {
+const HISTORY_PERSONALITIES = ISLAMIC_HISTORY_ITEMS.filter((item) => item.kind === "personality");
+
+function toEntity(item: (typeof HISTORY_PERSONALITIES)[number]): ScholarEntity {
   return {
-    slug: s.id,
-    titleAr: s.name,
-    fullName: s.fullName,
-    era: s.era,
-    specialty: s.specialty,
+    slug: item.id,
+    titleAr: item.title,
+    era: item.era,
+    specialty: item.category === "personalities" ? ["شخصية تاريخية"] : undefined,
   };
 }
 
 export const scholarRepository: EntityRepository<ScholarEntity> = {
   async getAll() {
-    return SCHOLARS.map(toEntity);
+    return HISTORY_PERSONALITIES.map(toEntity);
   },
   async getBySlug(slug: string) {
-    const hit = SCHOLARS.find((s) => s.id === slug);
+    const hit = HISTORY_PERSONALITIES.find((s) => s.id === slug);
     return hit ? toEntity(hit) : null;
   },
   async search(query: string) {
     const q = normalizeArabic(query);
     if (!q) return [];
-    const scored = SCHOLARS.map((s) => {
-      const hay = [s.name, s.fullName, s.era, ...(s.specialty ?? [])].join(" ");
+    const scored = HISTORY_PERSONALITIES.map((s) => {
+      const hay = [s.title, s.era, s.summary, ...(s.relatedPersons ?? [])].join(" ");
       const hayNorm = normalizeArabic(hay);
       const m = scoreTolerantMatch(hay, query, hayNorm);
       return m ? { s, m } : null;

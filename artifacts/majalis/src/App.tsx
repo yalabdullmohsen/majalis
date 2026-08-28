@@ -37,6 +37,7 @@ import {
   markFirstVisitIntroSeen,
   shouldShowFirstVisitIntro,
 } from "@/lib/first-visit-intro-state";
+import { redirectScholarPath } from "@/lib/scholar-to-history-redirect";
 
 /** شريط/كروم ثقيل (lucide + nav-map) — كسول حتى لا يدخل مسار أول زيارة / LCP */
 const NavBar = lazyWithRetry(() => import("@/components/NavBar"), "NavBar");
@@ -305,8 +306,7 @@ const QuranMemorizationPlansPage = lazy(() => import("@/pages/quran/QuranMemoriz
 const QuranHifzLoopPage = lazy(() => import("@/pages/quran/QuranHifzLoopPage"));
 const QuranWorshipHubPage = lazy(() => import("@/pages/quran/QuranWorshipHubPage"));
 const QuranOfflinePlayerPage = lazy(() => import("@/pages/quran/QuranOfflinePlayerPage"));
-const IslamicScholarsPage = lazy(() => import("@/pages/library/IslamicScholarsPage"));
-const ScholarProfilePage = lazy(() => import("@/pages/library/ScholarProfilePage"));
+const TarikhIslamiDetailPage = lazy(() => import("@/views/TarikhIslamiDetailPage"));
 const AsmaaHusnaPage = lazy(() => import("@/views/AsmaaHusnaPage"));
 const AkhlaqPage = lazy(() => import("@/views/AkhlaqPage"));
 const DuasPage = lazy(() => import("@/pages/worship/DuasPage"));
@@ -763,6 +763,11 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType<any>
   );
 }
 
+function ScholarLegacyRedirect() {
+  const params = useParams<{ id?: string }>();
+  return <Redirect to={redirectScholarPath(params?.id)} />;
+}
+
 function AdminLazyRoute({ component: Component }: { component: ComponentType }) {
   return (
     <AdminRouteGuard>
@@ -875,8 +880,9 @@ function Router() {
       <Route path="/mind-map"><SafeLazyRoute component={MindMapPage} /></Route>
       <Route path="/islamic-landmarks"><SafeLazyRoute component={IslamicLandmarksPage} /></Route>
       <Route path="/mutashabihat"><SafeLazyRoute component={MutashabihatPage} /></Route>
-      <Route path="/scholars/:id"><SafeLazyRoute component={ScholarProfilePage} /></Route>
-      <Route path="/scholars"><SafeLazyRoute component={IslamicScholarsPage} /></Route>
+      <Route path="/scholars/:id"><ScholarLegacyRedirect /></Route>
+      <Route path="/scholars"><Redirect to="/tarikh-islami?tab=personalities" /></Route>
+      <Route path="/tarikh-islami/:id"><SafeLazyRoute component={TarikhIslamiDetailPage} /></Route>
       <Route path="/asma-husna"><SafeLazyRoute component={AsmaaHusnaPage} /></Route>
       <Route path="/akhlaq"><SafeLazyRoute component={AkhlaqPage} /></Route>
       <Route path="/arkan"><SafeLazyRoute component={ArkanIslamPage} /></Route>

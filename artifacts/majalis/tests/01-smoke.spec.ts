@@ -18,7 +18,7 @@ const PUBLIC_ROUTES = [
   { path: "/library", name: "المكتبة" },
   { path: "/sections", name: "الأقسام" },
   { path: "/more", name: "الأقسام (تحويل)" },
-  { path: "/scholars", name: "العلماء" },
+  { path: "/tarikh-islami", name: "العلماء" },
   { path: "/fiqh", name: "الفقه" },
   { path: "/quiz", name: "الاختبارات" },
   { path: "/fawaid", name: "الفوائد" },

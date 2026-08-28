@@ -20,11 +20,11 @@ assert.equal(parseQuickNav(""), null);
 
 const docs: UnifiedSearchDoc[] = [
   {
-    id: "scholar:abu-hanifa",
-    kind: "scholar",
-    titleAr: "أبو حنيفة",
-    href: "/scholars/abu-hanifa",
-    norm: "ابو حنيفه النعمان",
+    id: "history:pers-al-tabari",
+    kind: "history",
+    titleAr: "الطبري",
+    href: "/tarikh-islami/pers-al-tabari",
+    norm: "الطبري تاريخ",
   },
   {
     id: "book:x",
@@ -35,8 +35,8 @@ const docs: UnifiedSearchDoc[] = [
   },
 ];
 
-const hits = searchUnifiedIndex(docs, "حنيف");
-assert.ok((hits.scholar?.length ?? 0) >= 1, "بحث عالم");
+const hits = searchUnifiedIndex(docs, "طبري");
+assert.ok((hits.history?.length ?? 0) >= 1, "بحث تاريخ");
 const hits2 = searchUnifiedIndex(docs, "الموطأ");
 assert.ok((hits2.book?.length ?? 0) >= 1, "بحث كتاب");
 
@@ -56,7 +56,7 @@ for (const k of [
   "hadith",
   "qa",
   "lesson",
-  "scholar",
+  "history",
   "adhkar",
   "nation",
   "story",
@@ -99,7 +99,7 @@ const sectionProbes: Record<string, string> = {
   hadith: "البخاري",
   qa: "الصلاة",
   lesson: "درس",
-  scholar: "حنفيه",
+  history: "التاريخ",
   adhkar: "الصباح",
   nation: "عاد",
   story: "قصة سورة",

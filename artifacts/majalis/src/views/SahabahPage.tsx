@@ -1373,7 +1373,7 @@ export default function SahabahPage() {
           <div className="sb-related__grid">
             {[
               { href: "/seerah", label: "السيرة النبوية" },
-              { href: "/scholars", label: "أعلام الإسلام" },
+              { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
               { href: "/stories", label: "القصص الإسلامية" },
               { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
               { href: "/hikam-salaf", label: "حكم السلف" },

@@ -36,7 +36,7 @@ const BATCHES = {
     "/hadith/books", "/hadith/books-and-rulings", "/hadith/sahih",
     "/hadith/daif", "/hadith/mawdu", "/stories", "/nations", "/prophets",
     "/prophets/tree", "/quiz", "/knowledge-graph", "/knowledge-map",
-    "/mind-map", "/islamic-landmarks", "/mutashabihat", "/scholars",
+    "/mind-map", "/islamic-landmarks", "/mutashabihat", "/tarikh-islami",
     "/asma-husna", "/akhlaq", "/duas", "/arkan", "/arkan-iman",
     "/hadith-science", "/madhahib", "/islamic-sects", "/fiqh-qawaid",
     "/shamael", "/islam-stats", "/islamic-glossary", "/adab-talab-ilm",
