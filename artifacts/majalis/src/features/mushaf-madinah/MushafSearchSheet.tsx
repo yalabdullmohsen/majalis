@@ -166,7 +166,7 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
 
   return createPortal(
     <div
-      className="mm-search-sheet"
+      className="mm-search-sheet quran-sheet"
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
@@ -175,7 +175,7 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
     >
       <button
         type="button"
-        className="mm-search-sheet__scrim"
+        className="mm-search-sheet__scrim quran-sheet__scrim"
         aria-label="إغلاق"
         onMouseDown={(e) => {
           if (typingRef.current) {

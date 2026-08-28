@@ -283,7 +283,7 @@ export function AyahActionSheet({
   return createPortal(
     <>
       <div
-        className={`mm-ayah-bar ayah-action-sheet is-${height}${expanded ? " is-expanded" : " is-collapsed"}`}
+        className={`mm-ayah-bar ayah-action-sheet quran-sheet is-${height}${expanded ? " is-expanded" : " is-collapsed"}`}
         data-testid="mushaf-ayah-actions"
         data-sheet-height={HEIGHT_ATTR[height]}
         data-opacity="1"
@@ -344,10 +344,11 @@ export function AyahActionSheet({
           </div>
 
 
-          <div className="ayah-action-sheet__primary ayah-action-sheet__tabs" role="tablist" aria-label="تبويبات الآية">
+          <div className="ayah-action-sheet__primary ayah-action-sheet__tabs quran-tabbar" role="tablist" aria-label="تبويبات الآية">
             <button
               type="button"
               role="tab"
+              className="quran-tab"
               aria-selected={tab === "tilawa"}
               onClick={() => selectTab("tilawa")}
             >
@@ -357,6 +358,7 @@ export function AyahActionSheet({
             <button
               type="button"
               role="tab"
+              className="quran-tab"
               aria-selected={tab === "tafsir"}
               onClick={() => selectTab("tafsir")}
             >
@@ -366,6 +368,7 @@ export function AyahActionSheet({
             <button
               type="button"
               role="tab"
+              className="quran-tab"
               aria-selected={tab === "tajweed"}
               onClick={() => selectTab("tajweed")}
             >
@@ -664,19 +667,20 @@ export function AyahActionSheet({
 
       {readersOpen
         ? createPortal(
-            <div className="mm-reciter-sheet" role="dialog" aria-modal="true" aria-label="اختيار القارئ">
+            <div className="mm-reciter-sheet quran-sheet" role="dialog" aria-modal="true" aria-label="اختيار القارئ">
               <button
                 type="button"
-                className="mm-reciter-sheet__scrim"
+                className="mm-reciter-sheet__scrim quran-sheet__scrim"
                 aria-label="إغلاق قائمة القراء"
                 onClick={() => setReadersOpen(false)}
               />
-              <div className="mm-reciter-sheet__panel">
-                <div className="mm-reciter-sheet__head">
-                  <h2 className="mm-reciter-sheet__title">اختر القارئ</h2>
+              <div className="mm-reciter-sheet__panel quran-sheet__panel">
+                <div className="quran-sheet__handle" aria-hidden="true" />
+                <div className="mm-reciter-sheet__head quran-sheet__head">
+                  <h2 className="mm-reciter-sheet__title quran-sheet__title">اختر القارئ</h2>
                   <button
                     type="button"
-                    className="mm-ayah-bar__close"
+                    className="mm-ayah-bar__close quran-sheet__close"
                     onClick={() => setReadersOpen(false)}
                     aria-label="إغلاق"
                   >
@@ -697,16 +701,16 @@ export function AyahActionSheet({
                     {surahName} · آية {parsed?.ayah ?? verseKey}
                   </p>
                 ) : null}
-                <ul className="mm-reciter-sheet__list" role="listbox" aria-label="قائمة القراء">
+                <ul className="mm-reciter-sheet__list quran-reciter-list" role="listbox" aria-label="قائمة القراء">
                   {filtered.map((r) => {
                     const selected = r.id === reciterId;
                     return (
-                      <li key={r.id} className={selected ? "is-selected" : undefined}>
+                      <li key={r.id} className={`quran-reciter-card${selected ? " is-selected" : ""}`}>
                         <button
                           type="button"
                           role="option"
                           aria-selected={selected}
-                          className={`mm-reciter-sheet__pick${selected ? " is-active" : ""}`}
+                          className={`mm-reciter-sheet__pick quran-reciter-card__pick quran-row${selected ? " is-active" : ""}`}
                           onClick={() => {
                             onReciterChange(r.id);
                             setReadersOpen(false);
@@ -719,7 +723,7 @@ export function AyahActionSheet({
                         </button>
                         <button
                           type="button"
-                          className="mm-reciter-sheet__play"
+                          className="mm-reciter-sheet__play quran-reciter-card__play quran-btn quran-btn--icon"
                           aria-label={
                             selected && playing ? `إيقاف ${r.nameAr}` : `تشغيل ${r.nameAr}`
                           }
@@ -757,5 +761,6 @@ export function AyahActionSheet({
   );
 }
 
-/** توافق البوابات القديمة */
+/** @deprecated استخدم QuranActionSheet — الاسم الموحّد */
 export { AyahActionSheet as MushafAyahActions };
+export { AyahActionSheet as QuranActionSheet };

@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { AppBottomSheet } from "@/components/ui/AppBottomSheet";
+import { useEffect, useId, useState } from "react";
 import { getSurahMeta } from "@/lib/quran-api";
 import { fetchMushafAyahTafsir } from "@/lib/quran-data/fetch-ayah-content";
 import {
   DEFAULT_MUSHAF_TAFSIR_EDITION,
   MUSHAF_TAFSIR_EDITIONS,
 } from "@/lib/quran-data/tafsir-editions";
+import { QuranSheetShell } from "./quran-sheet";
 import { parseVerseKey } from "./mushaf-page-for-ayah";
 
 const EDITION_TABS: Array<{ id: string; label: string }> = [
@@ -25,8 +25,9 @@ type Props = {
   onClose: () => void;
 };
 
-/** شيت تفسير فاتح — الميسّر / السعدي / ابن كثير. */
+/** شيت تفسير فاتح — الميسّر / السعدي / ابن كثير (QuranSettingsSheet shell). */
 export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Props) {
+  const titleId = useId();
   const [editionId, setEditionId] = useState(DEFAULT_MUSHAF_TAFSIR_EDITION);
   const [text, setText] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -49,7 +50,7 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
     fetchMushafAyahTafsir(parsed.surah, parsed.ayah, editionId, ac.signal)
       .then((res) => {
         if (ac.signal.aborted) return;
-          if (!res?.text) {
+        if (!res?.text) {
           setError("لا يوجد تفسير لهذه الآية حاليًا");
           setText(null);
         } else {
@@ -68,8 +69,17 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
   }, [open, parsed?.surah, parsed?.ayah, editionId]);
 
   return (
-    <AppBottomSheet open={open} onClose={onClose} title={title} snap="half" elevated>
-      <div className="mm-tafsir" data-testid="mushaf-tafsir-sheet">
+    <QuranSheetShell
+      open={open}
+      ariaLabel="التفسير"
+      title={title}
+      titleId={titleId}
+      onClose={onClose}
+      snap="half"
+      testId="mushaf-tafsir-sheet"
+      panelClassName="mm-tafsir-sheet__panel"
+    >
+      <div className="mm-tafsir quran-sheet__body">
         {parsed ? (
           <header className="mm-tafsir__meta">
             <p className="mm-tafsir__meta-label">
@@ -82,16 +92,17 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
             ) : null}
           </header>
         ) : null}
-        <div className="mm-tafsir__editions" role="tablist" aria-label="مصدر التفسير">
+        <div className="mm-tafsir__editions quran-tabbar" role="tablist" aria-label="مصدر التفسير">
           {PRIMARY_EDITIONS.map((ed) => {
             const tab = EDITION_TABS.find((t) => t.id === ed.id);
+            const active = editionId === ed.id;
             return (
               <button
                 key={ed.id}
                 type="button"
                 role="tab"
-                aria-selected={editionId === ed.id}
-                className={editionId === ed.id ? "is-active" : undefined}
+                aria-selected={active}
+                className={`quran-tab quran-btn--segment${active ? " is-active" : ""}`}
                 onClick={() => setEditionId(ed.id)}
               >
                 {tab?.label ?? ed.label}
@@ -107,6 +118,6 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
           </div>
         ) : null}
       </div>
-    </AppBottomSheet>
+    </QuranSheetShell>
   );
 }
