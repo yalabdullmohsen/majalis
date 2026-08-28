@@ -25,7 +25,7 @@ if (!existsSync(file)) {
     "مصادر التحقق",
     "dorar.net",
     "سياسة التصحيح",
-    "قيد المراجعة",
+    "محتوى موثّق",
   ]) {
     if (!article.includes(needle)) {
       issues.push(`عنصر مطلوب مفقود من prerender: ${needle}`);

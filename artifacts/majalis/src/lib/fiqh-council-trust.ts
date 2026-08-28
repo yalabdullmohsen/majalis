@@ -19,7 +19,7 @@ export type FiqhDocumentationLevel =
 export const FIQH_DOCUMENTATION_LABELS: Record<FiqhDocumentationLevel, string> = {
   official_verified: "موثق من المصدر الرسمي",
   general_reasoning: "استدلال عام — بلا مصدر مسمّى",
-  imported_needs_review: "مستورد — يحتاج مراجعة",
+  imported_needs_review: "مستورد — مرجع عام",
   admin_summary: "ملخص إداري",
   rejected: "مرفوض",
   archived: "مؤرشف",
