@@ -132,7 +132,7 @@ test.describe("Sections page render contract", () => {
 
       // الشريط السفلي: تسميات صحيحة
       const nav = page.locator("[data-bottom-nav='sections-ia']");
-      await expect(nav.getByText("مركز القرآن الكريم", { exact: true })).toBeVisible();
+      await expect(nav.getByText("مركز القرآن", { exact: true })).toBeVisible();
       await expect(nav.getByText("الأقسام", { exact: true })).toBeVisible();
       await expect(nav.getByText("المزيد", { exact: true })).toHaveCount(0);
       await expect(nav.getByText("قرآن", { exact: true })).toHaveCount(0);
