@@ -1,0 +1,812 @@
+[
+  {
+    "legacyId": "abu-hanifa",
+    "name": "أبو حنيفة النعمان",
+    "fullName": "النعمان بن ثابت الكوفي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "malik",
+    "name": "الإمام مالك",
+    "fullName": "مالك بن أنس الأصبحي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "shafi",
+    "name": "الإمام الشافعي",
+    "fullName": "محمد بن إدريس الشافعي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ahmad",
+    "name": "الإمام أحمد",
+    "fullName": "أحمد بن محمد بن حنبل الشيباني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "bukhari",
+    "name": "الإمام البخاري",
+    "fullName": "محمد بن إسماعيل البخاري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "muslim",
+    "name": "الإمام مسلم",
+    "fullName": "مسلم بن الحجاج القشيري النيسابوري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-taymiyya",
+    "name": "ابن تيمية",
+    "fullName": "أحمد بن عبد الحليم بن تيمية الحراني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-qayyim",
+    "name": "ابن القيم",
+    "fullName": "محمد بن أبي بكر بن قيم الجوزية",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "nawawi",
+    "name": "الإمام النووي",
+    "fullName": "أبو زكريا يحيى بن شرف النووي الدمشقي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-hajar",
+    "name": "ابن حجر العسقلاني",
+    "fullName": "أحمد بن علي بن حجر العسقلاني",
+    "href": "/tarikh-islami/pers-ibn-hajar"
+  },
+  {
+    "legacyId": "shawkani",
+    "name": "الشوكاني",
+    "fullName": "محمد بن علي بن محمد الشوكاني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-baz",
+    "name": "الشيخ ابن باز",
+    "fullName": "عبد العزيز بن عبد الله بن باز",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-uthaymeen",
+    "name": "الشيخ ابن عثيمين",
+    "fullName": "محمد بن صالح بن محمد العثيمين",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "albani",
+    "name": "الشيخ الألباني",
+    "fullName": "محمد ناصر الدين الألباني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "qaradawi",
+    "name": "الشيخ القرضاوي",
+    "fullName": "يوسف بن عبد الله القرضاوي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "tirmidhi",
+    "name": "الإمام الترمذي",
+    "fullName": "محمد بن عيسى بن سَوْرة الترمذي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-majah",
+    "name": "ابن ماجه",
+    "fullName": "محمد بن يزيد القزويني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ghazali",
+    "name": "الإمام الغزالي",
+    "fullName": "محمد بن محمد الغزالي الطوسي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-kathir",
+    "name": "ابن كثير",
+    "fullName": "إسماعيل بن عمر بن كثير الدمشقي",
+    "href": "/tarikh-islami/pers-ibn-kathir"
+  },
+  {
+    "legacyId": "ibn-khaldun",
+    "name": "ابن خلدون",
+    "fullName": "عبد الرحمن بن محمد بن خلدون",
+    "href": "/tarikh-islami/pers-ibn-khaldun"
+  },
+  {
+    "legacyId": "ibn-ashur",
+    "name": "ابن عاشور",
+    "fullName": "محمد الطاهر بن محمد ابن عاشور",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "fawzan",
+    "name": "الشيخ صالح الفوزان",
+    "fullName": "صالح بن فوزان بن عبد الله الفوزان",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-suyuti",
+    "name": "الإمام السيوطي",
+    "fullName": "جلال الدين عبد الرحمن السيوطي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "abu-dawud",
+    "name": "أبو داود السجستاني",
+    "fullName": "سليمان بن الأشعث السجستاني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "nasai",
+    "name": "الإمام النسائي",
+    "fullName": "أحمد بن شعيب بن علي النسائي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "daraqutni",
+    "name": "الإمام الدارقطني",
+    "fullName": "علي بن عمر الدارقطني البغدادي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "bayhaki",
+    "name": "الإمام البيهقي",
+    "fullName": "أبو بكر أحمد بن الحسين بن علي البيهقي الخراساني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-juzayy",
+    "name": "ابن جزي الكلبي",
+    "fullName": "أبو القاسم محمد بن أحمد بن محمد بن جزي الكلبي الغرناطي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "shatbi",
+    "name": "الإمام الشاطبي",
+    "fullName": "إبراهيم بن موسى اللخمي الغرناطي الشاطبي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "shanqiti",
+    "name": "الشنقيطي",
+    "fullName": "محمد الأمين بن محمد المختار الشنقيطي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "bint-al-shati",
+    "name": "بنت الشاطئ",
+    "fullName": "عائشة عبد الرحمن المعروفة ببنت الشاطئ",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "zuhayli",
+    "name": "الشيخ وهبة الزحيلي",
+    "fullName": "وهبة مصطفى الزحيلي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "abu-zayd",
+    "name": "الشيخ بكر أبو زيد",
+    "fullName": "بكر بن عبد الله أبو زيد",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "muhammad-ghazali",
+    "name": "الشيخ محمد الغزالي",
+    "fullName": "محمد الغزالي السقا",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "mubarakfuri",
+    "name": "المباركفوري",
+    "fullName": "أبو العلا محمد عبد الرحمن بن عبد الرحيم المباركفوري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "tabari",
+    "name": "الطبري",
+    "fullName": "محمد بن جرير الطبري",
+    "href": "/tarikh-islami/pers-al-tabari"
+  },
+  {
+    "legacyId": "ibn-jawzi",
+    "name": "ابن الجوزي",
+    "fullName": "عبد الرحمن بن علي بن الجوزي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-rajab",
+    "name": "ابن رجب الحنبلي",
+    "fullName": "عبد الرحمن بن أحمد بن رجب الحنبلي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-abd-al-barr",
+    "name": "ابن عبد البر",
+    "fullName": "يوسف بن عبد الله بن عبد البر النمري القرطبي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "dhahabi",
+    "name": "الإمام الذهبي",
+    "fullName": "محمد بن أحمد بن عثمان الذهبي",
+    "href": "/tarikh-islami/pers-al-dhahabi"
+  },
+  {
+    "legacyId": "izz-ibn-abd-al-salam",
+    "name": "العز بن عبد السلام",
+    "fullName": "أبو محمد عز الدين عبد العزيز بن عبد السلام السلمي الدمشقي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-abd-al-wahhab",
+    "name": "الشيخ محمد بن عبد الوهاب",
+    "fullName": "محمد بن عبد الوهاب بن سليمان التميمي النجدي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-abidin",
+    "name": "ابن عابدين",
+    "fullName": "محمد أمين بن عمر بن عبد العزيز ابن عابدين الشامي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "rashid-rida",
+    "name": "رشيد رضا",
+    "fullName": "محمد رشيد بن علي رضا القلموني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "muhammad-abdu",
+    "name": "الشيخ محمد عبده",
+    "fullName": "محمد بن عبده بن حسن خيرالله",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-badis",
+    "name": "عبد الحميد بن باديس",
+    "fullName": "عبد الحميد بن محمد المصطفى بن مكي بن باديس",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "abu-yusuf",
+    "name": "الإمام أبو يوسف",
+    "fullName": "يعقوب بن إبراهيم بن حبيب الأنصاري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "shaybani",
+    "name": "الإمام محمد الشيباني",
+    "fullName": "محمد بن الحسن بن فرقد الشيباني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "muzani",
+    "name": "الإمام المزني",
+    "fullName": "إسماعيل بن يحيى المزني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-hibban",
+    "name": "الإمام ابن حبان",
+    "fullName": "محمد بن حبان بن أحمد التميمي البُستي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-khuzayma",
+    "name": "الإمام ابن خزيمة",
+    "fullName": "محمد بن إسحاق بن خزيمة النيسابوري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "hakim",
+    "name": "الإمام الحاكم",
+    "fullName": "محمد بن عبد الله بن محمد النيسابوري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-mubarak",
+    "name": "الإمام عبد الله بن المبارك",
+    "fullName": "أبو عبد الرحمن عبد الله بن المبارك المروزي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "sufyan-thawri",
+    "name": "الإمام سفيان الثوري",
+    "fullName": "سفيان بن سعيد بن مسروق الثوري الكوفي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "awzai",
+    "name": "الإمام الأوزاعي",
+    "fullName": "عبد الرحمن بن عمرو الأوزاعي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "laith-ibn-sad",
+    "name": "الإمام الليث بن سعد",
+    "fullName": "الليث بن سعد بن عبد الرحمن الفهمي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-al-mundhir",
+    "name": "الإمام ابن المنذر",
+    "fullName": "محمد بن إبراهيم بن المنذر النيسابوري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "khattabi",
+    "name": "الإمام الخطابي",
+    "fullName": "حمد بن محمد بن إبراهيم الخطابي البُستي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-hajar-haytami",
+    "name": "ابن حجر الهيتمي",
+    "fullName": "أبو العباس أحمد بن محمد بن علي بن حجر الهيتمي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ali-tantawi",
+    "name": "الشيخ علي الطنطاوي",
+    "fullName": "علي بن مصطفى بن أحمد الطنطاوي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "shaarawi",
+    "name": "الشيخ الشعراوي",
+    "fullName": "محمد متولي الشعراوي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-ghudiyan",
+    "name": "الشيخ عبد الله بن غديان",
+    "fullName": "عبد الله بن عبد الرحمن بن عبد الرزاق بن قاسم آل غديان",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "afifi",
+    "name": "الشيخ عبد الرزاق عفيفي",
+    "fullName": "عبد الرزاق بن عفيفي بن عطية بن عبد البر بن شرف الدين النوبي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "sufyan-uyayna",
+    "name": "الإمام سفيان بن عيينة",
+    "fullName": "سفيان بن عيينة بن أبي عمران الهلالي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "muqbil",
+    "name": "الشيخ مقبل بن هادي الوادعي",
+    "fullName": "مقبل بن هادي بن مقبل الوادعي الهمداني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-muflih",
+    "name": "الإمام ابن مفلح",
+    "fullName": "محمد بن مفلح بن محمد المقدسي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-rushd",
+    "name": "ابن رشد",
+    "fullName": "محمد بن أحمد بن محمد بن رشد القرطبي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-hazm",
+    "name": "ابن حزم الأندلسي",
+    "fullName": "علي بن أحمد بن سعيد بن حزم القرطبي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-asakir",
+    "name": "ابن عساكر",
+    "fullName": "علي بن الحسن بن هبة الله بن عساكر",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-nujaym",
+    "name": "ابن نجيم",
+    "fullName": "زين الدين بن إبراهيم بن محمد بن نجيم المصري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "khatib-baghdadi",
+    "name": "الخطيب البغدادي",
+    "fullName": "أبو بكر أحمد بن علي بن ثابت الخطيب البغدادي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-amir-al-sanani",
+    "name": "الأمير الصنعاني",
+    "fullName": "محمد بن إسماعيل بن صلاح الأمير الصنعاني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "kawakibi",
+    "name": "عبد الرحمن الكواكبي",
+    "fullName": "عبد الرحمن بن أحمد بن مسعود الكواكبي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "khayr-al-din",
+    "name": "خير الدين التونسي",
+    "fullName": "خير الدين بن مصطفى التونسي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "mustafa-zarqa",
+    "name": "مصطفى أحمد الزرقا",
+    "fullName": "مصطفى أحمد بن محمد أبو سنة الزرقا",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-faris",
+    "name": "ابن فارس",
+    "fullName": "أحمد بن فارس بن زكريا القزويني الرازي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "zarkashi",
+    "name": "الزركشي",
+    "fullName": "بدر الدين محمد بن عبد الله الزركشي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-jibreen",
+    "name": "الشيخ ابن جبرين",
+    "fullName": "عبد الله بن عبد الرحمن بن جبرين",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "syed-saabiq",
+    "name": "الشيخ سيد سابق",
+    "fullName": "سيد سابق محمد التهامي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "abd-al-karim-al-khudair",
+    "name": "الشيخ عبد الكريم الخضير",
+    "fullName": "عبد الكريم بن عبد الله بن عبد الرحمن الخضير",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-qudama",
+    "name": "ابن قدامة المقدسي",
+    "fullName": "أبو محمد موفق الدين عبد الله بن قدامة المقدسي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "juwayny",
+    "name": "إمام الحرمين الجويني",
+    "fullName": "أبو المعالي عبد الملك بن عبد الله الجويني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-salah",
+    "name": "ابن الصلاح",
+    "fullName": "أبو عمرو عثمان بن عبد الرحمن ابن الصلاح الشهرزوري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-qarafi",
+    "name": "الإمام القرافي",
+    "fullName": "أبو العباس شهاب الدين أحمد بن إدريس القرافي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "fakhr-razi",
+    "name": "الفخر الرازي",
+    "fullName": "أبو عبد الله محمد بن عمر فخر الدين الرازي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-mizzi",
+    "name": "الإمام المزي",
+    "fullName": "أبو الحجاج جمال الدين يوسف بن عبد الرحمن المزي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-saadi",
+    "name": "الشيخ عبد الرحمن السعدي",
+    "fullName": "عبد الرحمن بن ناصر بن عبد الله السعدي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-aqil",
+    "name": "ابن عقيل الحنبلي",
+    "fullName": "أبو الوفاء علي بن عقيل البغدادي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ahmad-shakir",
+    "name": "الشيخ أحمد محمد شاكر",
+    "fullName": "أحمد محمد شاكر العرابي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-mundhiri",
+    "name": "الحافظ المنذري",
+    "fullName": "أبو محمد زكي الدين عبد العظيم المنذري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-daqiq",
+    "name": "ابن دقيق العيد",
+    "fullName": "أبو الفتح تقي الدين محمد بن علي ابن دقيق العيد",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-battuta",
+    "name": "ابن بطوطة",
+    "fullName": "أبو عبد الله محمد بن عبد الله اللواتي الطنجي ابن بطوطة",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-mawardi",
+    "name": "الماوردي",
+    "fullName": "أبو الحسن علي بن محمد بن حبيب البصري الماوردي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-ata-allah-al-sakandari",
+    "name": "ابن عطاء الله السكندري",
+    "fullName": "أحمد بن محمد بن عبد الكريم ابن عطاء الله الشاذلي الإسكندري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-sakhawi",
+    "name": "السخاوي",
+    "fullName": "أبو الخير محمد بن عبد الرحمن بن محمد السخاوي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-ajurri",
+    "name": "الآجري",
+    "fullName": "أبو بكر محمد بن الحسين الآجري البغدادي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-al-wazir",
+    "name": "ابن الوزير",
+    "fullName": "أبو عبدالله محمد بن إبراهيم بن علي بن المرتضى ابن الوزير اليماني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-abi-shaybah",
+    "name": "ابن أبي شيبة",
+    "fullName": "أبو بكر عبد الله بن محمد بن إبراهيم ابن أبي شيبة العبسي الكوفي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-qurtubi",
+    "name": "القرطبي",
+    "fullName": "أبو عبد الله محمد بن أحمد بن أبي بكر الأنصاري القرطبي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "abu-nuaym",
+    "name": "أبو نعيم الأصبهاني",
+    "fullName": "أحمد بن عبد الله بن أحمد أبو نعيم الأصبهاني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "alusi",
+    "name": "الآلوسي",
+    "fullName": "محمود بن عبد الله الحسيني الآلوسي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "baghawi",
+    "name": "البغوي",
+    "fullName": "الحسين بن مسعود البغوي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "sarakhsi",
+    "name": "السرخسي",
+    "fullName": "محمد بن أحمد بن أبي سهل شمس الأئمة السرخسي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "kasani",
+    "name": "الكاساني",
+    "fullName": "أبو بكر بن مسعود بن أحمد الكاساني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "zamakhshari",
+    "name": "الزمخشري",
+    "fullName": "محمود بن عمر جار الله الزمخشري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "wahidi",
+    "name": "الواحدي",
+    "fullName": "علي بن أحمد الواحدي النيسابوري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-atiyya",
+    "name": "ابن عطية",
+    "fullName": "عبد الحق بن غالب بن عطية الأندلسي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "baydawi",
+    "name": "البيضاوي",
+    "fullName": "عبد الله بن عمر البيضاوي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "munawi",
+    "name": "المناوي",
+    "fullName": "عبد الرؤوف بن تاج العارفين المناوي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "tahawi",
+    "name": "الطحاوي",
+    "fullName": "أحمد بن محمد بن سلامة أبو جعفر الطحاوي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "marghinani",
+    "name": "المرغيناني",
+    "fullName": "علي بن أبي بكر المرغيناني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-al-athir",
+    "name": "ابن الأثير",
+    "fullName": "علي بن محمد عز الدين ابن الأثير الجزري",
+    "href": "/tarikh-islami/pers-ibn-al-athir"
+  },
+  {
+    "legacyId": "abu-hayyan",
+    "name": "أبو حيان الأندلسي",
+    "fullName": "محمد بن يوسف أبو حيان الغرناطي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "qadi-iyad",
+    "name": "القاضي عياض",
+    "fullName": "عياض بن موسى اليحصبي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-abi-dunya",
+    "name": "ابن أبي الدنيا",
+    "fullName": "عبد الله بن محمد ابن أبي الدنيا",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "amidi",
+    "name": "الآمدي",
+    "fullName": "علي بن أبي علي بن محمد بن سالم سيف الدين الآمدي التغلبي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "hasan-basri",
+    "name": "الحسن البصري",
+    "fullName": "الحسن بن يسار البصري",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-abi-izz",
+    "name": "ابن أبي العز",
+    "fullName": "علي بن علي بن محمد ابن أبي العز الحنفي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ramli",
+    "name": "الرملي",
+    "fullName": "محمد بن أحمد شمس الدين الرملي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "bahuti",
+    "name": "البهوتي",
+    "fullName": "منصور بن يونس البهوتي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "hajjawi",
+    "name": "الحجاوي",
+    "fullName": "موسى بن أحمد الحجاوي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "mardawi",
+    "name": "المرداوي",
+    "fullName": "علي بن سليمان علاء الدين المرداوي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ayni",
+    "name": "العيني",
+    "fullName": "محمود بن أحمد بدر الدين العيني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "khiraqi",
+    "name": "الخرقي",
+    "fullName": "عمر بن الحسين أبو القاسم الخرقي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-humam",
+    "name": "ابن الهمام",
+    "fullName": "كمال الدين محمد بن عبد الواحد السيواسي ابن الهمام",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "khalil-ibn-ishaq",
+    "name": "خليل بن إسحاق",
+    "fullName": "خليل بن إسحاق الجندي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "ibn-abi-hatim",
+    "name": "ابن أبي حاتم",
+    "fullName": "عبد الرحمن بن محمد بن إدريس الرازي ابن أبي حاتم",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "qastallani",
+    "name": "القسطلاني",
+    "fullName": "أحمد بن محمد شهاب الدين القسطلاني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "zaylai",
+    "name": "الزيلعي",
+    "fullName": "جمال الدين عبد الله بن يوسف الزيلعي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "dardir",
+    "name": "الدردير",
+    "fullName": "أحمد بن محمد العدوي الدردير",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-dusuki",
+    "name": "الدسوقي",
+    "fullName": "محمد بن أحمد بن عرفة الدسوقي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-hattab",
+    "name": "الحطّاب",
+    "fullName": "محمد بن محمد الحطّاب الرعيني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-kharashi",
+    "name": "الخرشي",
+    "fullName": "محمد بن عبد الله الخرشي",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "baqillani",
+    "name": "الباقلاني",
+    "fullName": "القاضي أبو بكر محمد بن الطيب الباقلاني",
+    "href": "/tarikh-islami?tab=personalities"
+  },
+  {
+    "legacyId": "al-sanusi",
+    "name": "السنوسي",
+    "fullName": "محمد بن يوسف السنوسي الحسني",
+    "href": "/tarikh-islami?tab=personalities"
+  }
+]

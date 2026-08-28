@@ -1,8 +1,8 @@
 /**
- * ربط اسم مؤلّف الكتاب بصفحة العالم عند تطابق موثوق للاسم.
- * لا يغيّر بيانات العلماء أو المكتبة — مطابقة عرض فقط.
+ * ربط اسم مؤلّف الكتاب بصفحة التاريخ الإسلامي عند تطابق موثوق.
  */
-import { SCHOLARS, type Scholar } from "@/lib/scholars-data";
+import authorAliases from "@/data/islamic-history/author-aliases.json";
+import { ISLAMIC_HISTORY_ITEMS } from "@/data/islamic-history";
 
 function normalizeName(value: string): string {
   return value
@@ -16,45 +16,10 @@ function normalizeName(value: string): string {
     .toLowerCase();
 }
 
-/**
- * \u0645\u0637\u0627\u0628\u0642\u0629 \u0628\u0627\u0644\u0623\u062C\u0632\u0627\u0621 (\u062A\u064F\u062C\u0631\u064E\u0651\u0628 \u0628\u0639\u062F \u0627\u0644\u0645\u0637\u0627\u0628\u0642\u0629 \u0627\u0644\u062A\u0627\u0645\u0629 \u0648\u0642\u0628\u0644 \u0627\u0644\u0645\u0637\u0627\u0628\u0642\u0629 \u0627\u0644\u062C\u0632\u0626\u064A\u0629).
- *
- * \u0627\u0643\u062A\u064F\u0634\u0641 2026-07-27: \u0635\u0641\u062D\u0629 \u0627\u0644\u0643\u062A\u0627\u0628 \u062A\u0631\u0628\u0637 \u0627\u0633\u0645 \u0627\u0644\u0645\u0624\u0644\u0641 \u0628\u0635\u0641\u062D\u0629 \u0627\u0644\u0639\u0627\u0644\u0645\u060C \u0648\u0643\u0627\u0646\u062A
- * 112 \u0645\u0646 173 \u0643\u062A\u0627\u0628\u0627\u064B \u0628\u0644\u0627 \u0631\u0627\u0628\u0637 \u2014 \u0644\u0627 \u0644\u063A\u064A\u0627\u0628 \u0635\u0641\u062D\u0629 \u0627\u0644\u0639\u0627\u0644\u0645 \u0628\u0644 \u0644\u0627\u062E\u062A\u0644\u0627\u0641 *\u0635\u064A\u063A\u0629*
- * \u0627\u0644\u0627\u0633\u0645 \u0628\u064A\u0646 \u0627\u0644\u0645\u0644\u0641\u0651\u064A\u0646: \u00AB\u0627\u0644\u0625\u0645\u0627\u0645 \u0627\u0644\u0646\u0648\u0648\u064A\u00BB \u0641\u064A scholars-data.ts \u0645\u0642\u0627\u0628\u0644
- * \u00AB\u0627\u0644\u0625\u0645\u0627\u0645 \u064A\u062D\u064A\u0649 \u0628\u0646 \u0634\u0631\u0641 \u0627\u0644\u0646\u0648\u0648\u064A\u00BB \u0641\u064A \u0641\u0647\u0631\u0633 \u0627\u0644\u0645\u0643\u062A\u0628\u0629. \u0648\u0627\u0644\u0645\u0637\u0627\u0628\u0642\u0629 \u0627\u0644\u062C\u0632\u0626\u064A\u0629
- * \u0627\u0644\u0642\u0627\u0626\u0645\u0629 \u062A\u0634\u062A\u0631\u0637 bestScore >= 8 \u0648\u0647\u0648 \u0637\u0648\u0644 \u0644\u0627 \u062A\u0628\u0644\u063A\u0647 \u0646\u0633\u0628\u0629\u064C \u0642\u0635\u064A\u0631\u0629 \u0645\u062B\u0644
- * \u00AB\u0627\u0644\u0646\u0648\u0648\u064A\u00BB (6) \u0623\u0648 \u00AB\u0627\u0644\u0633\u064A\u0648\u0637\u064A\u00BB (7) \u21D2 \u0641\u0643\u062A\u0628 \u0647\u0624\u0644\u0627\u0621 \u0644\u0627 \u062A\u064F\u0631\u0628\u0637 \u0623\u0628\u062F\u0627\u064B.
- * \u0648\u062E\u0641\u0636\u064F \u0627\u0644\u0639\u062A\u0628\u0629 \u0648\u062D\u062F\u0647 \u064A\u064F\u0646\u062A\u062C \u0631\u0648\u0627\u0628\u0637 \u062E\u0627\u0637\u0626\u0629 (\u0641\u0640\u00AB\u0627\u0628\u0646 \u0631\u0634\u062F \u0627\u0644\u0642\u0631\u0637\u0628\u064A\u00BB \u064A\u0635\u064A\u0631
- * \u0627\u0644\u0642\u0631\u0637\u0628\u064A\u064E\u0651 \u0627\u0644\u0645\u0641\u0633\u0650\u0651\u0631)\u060C \u0648\u0627\u0644\u0646\u0633\u0628\u0629 \u0627\u0644\u062E\u0627\u0637\u0626\u0629 \u0623\u0633\u0648\u0623 \u0645\u0646 \u063A\u064A\u0627\u0628 \u0627\u0644\u0631\u0627\u0628\u0637.
- *
- * \u0641\u0627\u0644\u0642\u0627\u0639\u062F\u0629 \u0647\u0646\u0627: \u062A\u064F\u0637\u0627\u0628\u064E\u0642 \u0623\u062C\u0632\u0627\u0621 \u0627\u0633\u0645 \u0627\u0644\u0645\u0624\u0644\u0641 \u0643\u0644\u064F\u0651\u0647\u0627 \u0645\u0639 \u0645\u062C\u0645\u0648\u0639 \u0623\u062C\u0632\u0627\u0621 \u0627\u0633\u0645
- * \u0627\u0644\u0639\u0627\u0644\u0645 \u0648\u0627\u0633\u0645\u0647 \u0627\u0644\u0643\u0627\u0645\u0644 \u0645\u0639\u0627\u064B\u060C \u0648\u062A\u064F\u0633\u0642\u064E\u0637 \u0627\u0644\u0623\u0644\u0642\u0627\u0628 \u063A\u064A\u0631 \u0627\u0644\u0645\u0645\u064A\u0650\u0651\u0632\u0629 (\u0641\u0644\u0627\u0646 \u0627\u0644\u062F\u064A\u0646\u060C
- * \u062D\u062C\u0629/\u0634\u064A\u062E \u0627\u0644\u0625\u0633\u0644\u0627\u0645\u060C \u0634\u0645\u0633 \u0627\u0644\u0623\u0626\u0645\u0629\u060C \u0646\u0633\u0628\u0629 \u0627\u0644\u0645\u0630\u0647\u0628) \u0648\u0623\u062F\u0648\u0627\u062A \u0627\u0644\u0646\u0633\u0628 (\u0628\u0646/\u0627\u0628\u0646/\u0623\u0628\u0648)\u060C
- * \u0648\u0644\u0627 \u064A\u064F\u0642\u0628\u0644 \u0627\u0644\u0631\u0627\u0628\u0637 \u0625\u0644\u0627 \u0625\u0630\u0627 \u0643\u0627\u0646 \u0627\u0644\u0639\u0627\u0644\u0650\u0645\u064F \u0627\u0644\u0645\u0637\u0627\u0628\u0642 \u0648\u0627\u062D\u062F\u0627\u064B \u0644\u0627 \u063A\u064A\u0631 \u2014 \u0641\u0627\u0644\u0627\u0644\u062A\u0628\u0627\u0633
- * (\u0643\u0640\u00AB\u0623\u0628\u0648 \u062D\u0627\u0645\u062F \u0627\u0644\u063A\u0632\u0627\u0644\u064A\u00BB \u0628\u064A\u0646 \u0627\u0644\u063A\u0632\u0627\u0644\u064A\u064E\u0651\u064A\u0646) \u064A\u0628\u0642\u0649 \u0628\u0644\u0627 \u0631\u0627\u0628\u0637 \u0639\u0645\u062F\u0627\u064B.
- */
-const LAQAB_PAIRS = /(?:\S+\s+\u0627\u0644\u062F\u064A\u0646|\u062D\u062C\u0647\s+\u0627\u0644\u0627\u0633\u0644\u0627\u0645|\u0634\u064A\u062E\s+\u0627\u0644\u0627\u0633\u0644\u0627\u0645|\u0634\u0645\u0633\s+\u0627\u0644\u0627\u0626\u0645\u0647|\u0627\u0645\u0627\u0645\s+\u0627\u0644\u062D\u0631\u0645\u064A\u0646)\s*/g;
-// \u0627\u0644\u0643\u0646\u064A\u0629 \u062C\u0632\u0621\u064C \u063A\u064A\u0631 \u0645\u0645\u064A\u0650\u0651\u0632: \u00AB\u0623\u0628\u0648 \u0645\u062D\u0645\u062F \u0627\u0644\u062D\u0633\u064A\u0646 \u0628\u0646 \u0645\u0633\u0639\u0648\u062F \u0627\u0644\u0628\u063A\u0648\u064A\u00BB \u0648\u00AB\u0627\u0644\u062D\u0633\u064A\u0646 \u0628\u0646
-// \u0645\u0633\u0639\u0648\u062F \u0627\u0644\u0628\u063A\u0648\u064A\u00BB \u0631\u062C\u0644\u064C \u0648\u0627\u062D\u062F\u060C \u0648\u0644\u0648 \u0628\u0642\u064A\u062A \u00AB\u0645\u062D\u0645\u062F\u00BB \u0634\u0631\u0637\u0627\u064B \u0644\u064E\u0645\u0627 \u0637\u0627\u0628\u0642 \u0623\u062D\u062F\u064F\u0647\u0645\u0627 \u0627\u0644\u0622\u062E\u0631.
-// \u0648\u062A\u064F\u0633\u062A\u062B\u0646\u0649 \u0627\u0644\u0643\u0646\u064A\u0629 \u0627\u0644\u0645\u0633\u0628\u0648\u0642\u0629 \u0628\u0640\u00AB\u0627\u0628\u0646\u00BB \u0623\u0648 \u00AB\u0628\u0646\u00BB \u0641\u0647\u064A \u0623\u0635\u0644\u064F \u0627\u0644\u0627\u0633\u0645 \u0623\u0648 \u0646\u0633\u0628\u064F \u0623\u0628\u064A\u0647 \u0644\u0627
-// \u0643\u0646\u064A\u0629\u064E \u0635\u0627\u062D\u0628\u0650\u0647 (\u00AB\u0627\u0628\u0646 \u0623\u0628\u064A \u062D\u0627\u062A\u0645\u00BB\u060C \u00AB\u0645\u062D\u0645\u062F \u0628\u0646 \u0623\u0628\u064A \u0628\u0643\u0631 \u0627\u0644\u0631\u0627\u0632\u064A\u00BB): \u0625\u0633\u0642\u0627\u0637\u064F\u0647\u0627 \u064A\u0645\u062D\u0648
-// \u0645\u0627 \u064A\u0645\u064A\u0651\u0632\u0647 \u0639\u0646 \u063A\u064A\u0631\u0647 \u2014 \u0648\u0628\u0625\u0633\u0642\u0627\u0637\u0647\u0627 \u0635\u0627\u0631 \u00AB\u0645\u062D\u0645\u062F \u0628\u0646 \u0623\u0628\u064A \u0628\u0643\u0631 \u0627\u0644\u0631\u0627\u0632\u064A\u00BB (\u0635\u0627\u062D\u0628 \u0645\u062E\u062A\u0627\u0631
-// \u0627\u0644\u0635\u062D\u0627\u062D) \u0647\u0648 \u0627\u0644\u0641\u062E\u0631\u064E \u0627\u0644\u0631\u0627\u0632\u064A\u064E\u0651 \u0627\u0644\u0645\u0641\u0633\u0650\u0651\u0631\u060C \u0648\u0647\u064A \u0646\u0633\u0628\u0629\u064C \u062E\u0627\u0637\u0626\u0629 \u0644\u0627 \u0631\u0627\u0628\u0637\u064C \u0646\u0627\u0642\u0635.
-const KUNYA_HEAD = new Set(["\u0627\u0628\u0648", "\u0627\u0628\u064A"]);
+const LAQAB_PAIRS = /(?:\S+\s+الدين|حجه\s+الاسلام|شيخ\s+الاسلام|شمس\s+الائمه|امام\s+الحرمين)\s*/g;
+const KUNYA_HEAD = new Set(["ابو", "ابي"]);
 const NON_DISTINCTIVE = new Set([
-  "\u0628\u0646",
-  "\u0627\u0628\u0646",
-  "\u0627\u0628\u0648",
-  "\u0627\u0628\u064A",
-  "\u0627\u0644\u0627\u0645\u0627\u0645",
-  "\u0627\u0644\u0627\u0645\u0627\u0645\u0627\u0646",
-  "\u0627\u0644\u0634\u064A\u062E",
-  "\u0627\u0644\u062D\u0627\u0641\u0638",
-  "\u0627\u0644\u0642\u0627\u0636\u064A",
-  "\u0627\u0644\u0639\u0644\u0627\u0645\u0647",
-  "\u0627\u0644\u062F\u0643\u062A\u0648\u0631",
-  "\u062F",
+  "بن", "ابن", "ابو", "ابي", "الامام", "الامامان", "الشيخ", "الحافظ", "القاضي", "العلامه", "الدكتور", "د",
 ]);
 
 function nameTokens(value: string): string[] {
@@ -62,7 +27,7 @@ function nameTokens(value: string): string[] {
   const kept: string[] = [];
   for (let i = 0; i < raw.length; i += 1) {
     if (KUNYA_HEAD.has(raw[i]) && raw[i - 1] !== "ابن" && raw[i - 1] !== "بن") {
-      i += raw[i + 1] === "عبد" ? 2 : 1; // «أبو عبد الله» كنية من ثلاثة أجزاء
+      i += raw[i + 1] === "عبد" ? 2 : 1;
       continue;
     }
     if (!NON_DISTINCTIVE.has(raw[i])) kept.push(raw[i]);
@@ -70,53 +35,48 @@ function nameTokens(value: string): string[] {
   return kept;
 }
 
-// \u0646\u0633\u0628\u0629\u064F \u0627\u0644\u0645\u0630\u0647\u0628 \u0641\u064A \u0641\u0647\u0631\u0633 \u0627\u0644\u0645\u0643\u062A\u0628\u0629 (\u00AB\u0627\u0644\u0642\u0631\u0627\u0641\u064A \u0627\u0644\u0645\u0627\u0644\u0643\u064A\u00BB) \u0644\u0627 \u062A\u064E\u0631\u0650\u062F \u0641\u064A \u0627\u0633\u0645 \u0627\u0644\u0639\u0627\u0644\u0645
-// \u0648\u0644\u0627 \u0641\u064A \u0627\u0633\u0645\u0647 \u0627\u0644\u0643\u0627\u0645\u0644\u060C \u0648\u0625\u0646\u0645\u0627 \u0641\u064A \u062D\u0642\u0644 madhhab \u2014 \u0641\u062A\u064F\u0636\u0645\u0651 \u0625\u0644\u0649 \u0623\u062C\u0632\u0627\u0626\u0647 \u062D\u062A\u0649 \u0644\u0627
-// \u062A\u064F\u0633\u0642\u0650\u0637 \u0627\u0644\u0645\u0637\u0627\u0628\u0642\u0629\u064E. \u0648\u0644\u0627 \u062A\u064F\u062D\u0630\u064E\u0641 \u0645\u0646 \u0637\u0631\u0641 \u0627\u0644\u0645\u0624\u0644\u0651\u0641 \u0644\u0623\u0646\u0647\u0627 \u0642\u062F \u062A\u0643\u0648\u0646 \u0646\u0633\u0628\u0629\u064E \u0627\u0644\u0631\u062C\u0644
-// \u0646\u0641\u0633\u0650\u0647 \u0644\u0627 \u0645\u0630\u0647\u0628\u064E\u0647 (\u00AB\u0645\u062D\u0645\u062F \u0628\u0646 \u0625\u062F\u0631\u064A\u0633 \u0627\u0644\u0634\u0627\u0641\u0639\u064A\u00BB).
-const MADHHAB_TOKEN: Record<string, string> = {
-  \u062D\u0646\u0641\u064A: "\u0627\u0644\u062D\u0646\u0641\u064A",
-  \u0645\u0627\u0644\u0643\u064A: "\u0627\u0644\u0645\u0627\u0644\u0643\u064A",
-  \u0634\u0627\u0641\u0639\u064A: "\u0627\u0644\u0634\u0627\u0641\u0639\u064A",
-  \u062D\u0646\u0628\u0644\u064A: "\u0627\u0644\u062D\u0646\u0628\u0644\u064A",
-};
+type AliasRow = { legacyId: string; name: string; fullName?: string; href: string };
 
-const SCHOLAR_TOKENS = SCHOLARS.map((scholar) => ({
-  scholar,
-  // أجزاء الاسم المعروض وحدها هي المميِّزة: سلسلة النسب في الاسم الكامل
-  // تحمل نسبةَ غيره أحياناً («مسلم بن الحجاج القشيري» و«أبو القاسم
-  // القشيري» رجلان)، فلا يكفي ورودُ الجزء في السلسلة وحدها.
-  identity: new Set(nameTokens(scholar.name)),
-  tokens: new Set(
-    [
-      ...nameTokens(scholar.name),
-      ...nameTokens(scholar.fullName || ""),
-      MADHHAB_TOKEN[(scholar.madhhab || "").trim()] || "",
-    ].filter(Boolean)
-  ),
-}));
+const BY_NAME = new Map<string, string>();
+const ALIAS_TOKENS: Array<{ tokens: Set<string>; identity: Set<string>; href: string }> = [];
 
-function matchByTokens(author: string): Scholar | null {
-  const required = nameTokens(author);
-  if (!required.length || !required.some((token) => token.length >= 4)) return null;
-  const hits = SCHOLAR_TOKENS.filter(
-    (entry) =>
-      required.every((token) => entry.tokens.has(token)) &&
-      required.some((token) => entry.identity.has(token))
-  );
-  return hits.length === 1 ? hits[0].scholar : null;
-}
-
-const BY_NAME = new Map<string, Scholar>();
-for (const s of SCHOLARS) {
-  const key = normalizeName(s.name);
-  if (key && !BY_NAME.has(key)) BY_NAME.set(key, s);
-  // كنية قصيرة شائعة: آخر مقطعين إن كانا كافيين
+for (const row of authorAliases as AliasRow[]) {
+  const href = row.href;
+  const key = normalizeName(row.name);
+  if (key && !BY_NAME.has(key)) BY_NAME.set(key, href);
+  if (row.fullName) {
+    const fk = normalizeName(row.fullName);
+    if (fk && !BY_NAME.has(fk)) BY_NAME.set(fk, href);
+  }
   const parts = key.split(" ").filter(Boolean);
   if (parts.length >= 2) {
     const short = parts.slice(-2).join(" ");
-    if (short.length >= 6 && !BY_NAME.has(short)) BY_NAME.set(short, s);
+    if (short.length >= 6 && !BY_NAME.has(short)) BY_NAME.set(short, href);
   }
+  ALIAS_TOKENS.push({
+    href,
+    tokens: new Set([...nameTokens(row.name), ...nameTokens(row.fullName || "")].filter(Boolean)),
+    identity: new Set(nameTokens(row.name)),
+  });
+}
+
+for (const item of ISLAMIC_HISTORY_ITEMS.filter((i) => i.kind === "personality")) {
+  const href = `/tarikh-islami/${item.id}`;
+  for (const label of [item.title, ...(item.relatedPersons ?? [])]) {
+    const key = normalizeName(label);
+    if (key && !BY_NAME.has(key)) BY_NAME.set(key, href);
+  }
+}
+
+function matchByTokens(author: string): string | null {
+  const required = nameTokens(author);
+  if (!required.length || !required.some((token) => token.length >= 4)) return null;
+  const hits = ALIAS_TOKENS.filter(
+    (entry) =>
+      required.every((token) => entry.tokens.has(token)) &&
+      required.some((token) => entry.identity.has(token)),
+  );
+  return hits.length === 1 ? hits[0].href : null;
 }
 
 export type AuthorScholarLink = {
@@ -131,27 +91,32 @@ export function resolveAuthorScholarLink(author: string | null | undefined): Aut
 
   const key = normalizeName(label);
   const exact = BY_NAME.get(key);
-  if (exact) return { label, scholarId: exact.id, href: `/scholars/${exact.id}` };
+  if (exact) {
+    const id = exact.match(/\/tarikh-islami\/([^/?#]+)/)?.[1] ?? null;
+    return { label, scholarId: id, href: exact };
+  }
 
   const byTokens = matchByTokens(label);
-  if (byTokens) return { label, scholarId: byTokens.id, href: `/scholars/${byTokens.id}` };
+  if (byTokens) {
+    const id = byTokens.match(/\/tarikh-islami\/([^/?#]+)/)?.[1] ?? null;
+    return { label, scholarId: id, href: byTokens };
+  }
 
-  // تطابق جزئي حذر: اسم العالم ⊆ المؤلف أو العكس
-  let best: Scholar | null = null;
+  let bestHref: string | null = null;
   let bestScore = 0;
-  for (const s of SCHOLARS) {
-    const sk = normalizeName(s.name);
-    if (sk.length < 5) continue;
-    if (key.includes(sk) || sk.includes(key)) {
-      const score = Math.min(key.length, sk.length);
+  for (const [aliasKey, href] of BY_NAME) {
+    if (aliasKey.length < 5) continue;
+    if (key.includes(aliasKey) || aliasKey.includes(key)) {
+      const score = Math.min(key.length, aliasKey.length);
       if (score > bestScore) {
-        best = s;
+        bestHref = href;
         bestScore = score;
       }
     }
   }
-  if (best && bestScore >= 8) {
-    return { label, scholarId: best.id, href: `/scholars/${best.id}` };
+  if (bestHref && bestScore >= 8) {
+    const id = bestHref.match(/\/tarikh-islami\/([^/?#]+)/)?.[1] ?? null;
+    return { label, scholarId: id, href: bestHref };
   }
 
   return { label, scholarId: null, href: null };

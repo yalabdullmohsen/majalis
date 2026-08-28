@@ -1282,7 +1282,7 @@ export default function HadithPage() {
           title="استكشف أيضًا"
           links={[
             { href: "/flashcards", label: "بطاقات الحفظ" },
-            { href: "/scholars", label: "أعلام وتراجم" },
+            { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
             { href: "/quiz", label: "سين جيم" },
           ]}
         />

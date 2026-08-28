@@ -22,7 +22,6 @@ import {
   Clock,
   Church,
   Compass,
-  Contact,
   FileStack,
   FileText,
   Flame,
@@ -683,14 +682,15 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "islamic-history",
     label: "التاريخ الإسلامي",
-    subtitle: "عصور ومدن ومؤسسات وحضارة",
+    subtitle: "عصور ودول وحضارة وشخصيات تاريخية",
     route: "/tarikh-islami",
     icon: History,
     group: "sciences",
     order: 80,
     surfaces: NAV,
     status: "live",
-    keywords: ["تاريخ", "حضارة"],
+    featured: true,
+    keywords: ["تاريخ", "حضارة", "سيرة", "فتوحات"],
   },
 
   // —— ٢. القصص والأعلام ——
@@ -720,19 +720,6 @@ const SECTION_SEEDS: SectionSeed[] = [
     status: "live",
     keywords: ["أمم", "أقوام"],
   },
-  {
-    id: "biographies",
-    label: "أعلام وتراجم",
-    subtitle: "تراجم العلماء والأعلام",
-    route: "/scholars",
-    icon: Contact,
-    group: "stories",
-    order: 40,
-    surfaces: NAV,
-    status: "live",
-    keywords: ["تراجم", "علماء"],
-  },
-
   // —— ٣. الدعوة والتعريف ——
   {
     id: "discover-islam",

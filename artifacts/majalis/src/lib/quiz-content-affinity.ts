@@ -75,7 +75,7 @@ export const QUIZ_ROUTE_SECTION_OVERRIDES: Record<string, string> = {
   "/my-learning": "knowledge-doors",
   "/site-map": "subjects",
   "/fawaid": "flashcards",
-  "/scholars": "biographies",
+  "/tarikh-islami": "islamic-history",
   "/islamic-glossary": "glossary",
   "/duas-quran": "quran",
   "/adab-talab-ilm": "knowledge-doors",

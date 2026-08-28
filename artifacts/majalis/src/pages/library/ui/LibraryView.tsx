@@ -324,7 +324,7 @@ export default function LibraryPage({
       <ExploreAlsoNav
         title="استكشف أيضًا"
         links={[
-          { href: "/scholars", label: "أعلام الإسلام" },
+          { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
           { href: "/fiqh", label: "الفقه" },
           { href: "/hadith", label: "الحديث" },
           { href: "/lessons", label: "الدروس" },

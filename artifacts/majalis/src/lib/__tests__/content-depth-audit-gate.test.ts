@@ -145,7 +145,7 @@ assert.match(kgPage, /\/prophets|\/fiqh|\/quran\/people/, "رسالة الفرا
 // اقتباسات أقسام أساسية لا تبقى بلا آية/حديث مناسب
 {
   const tpl = read("src/config/section-template.ts");
-  for (const route of ["/prophets", "/fiqh", "/duas", "/tawhid", "/scholars", "/lessons", "/nations"]) {
+  for (const route of ["/prophets", "/fiqh", "/duas", "/tawhid", "/tarikh-islami", "/lessons", "/nations"]) {
     assert.match(tpl, new RegExp(`"${route.replace("/", "\\/")}"\\s*:`), `اقتباس لـ ${route}`);
   }
   assert.match(tpl, /العنكبوت:\s*٤٠/, "آية الأمم السابقة مناسبة لموضوع العذاب والعبرة");

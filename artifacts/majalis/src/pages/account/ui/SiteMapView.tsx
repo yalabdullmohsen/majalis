@@ -126,7 +126,7 @@ const SECTIONS = [
       { href: "/lessons",          label: "الدروس والمحاضرات",    desc: "دروس صوتية ومرئية" },
       { href: "/lessons", label: "الدورات العلمية",   desc: "برامج وكورسات ضمن جدول الدروس" },
       { href: "/kuwait-lessons",   label: "دروس الكويت",          desc: "دليل الدروس بالمساجد الكويتية" },
-      { href: "/scholars",         label: "أعلام الإسلام",        desc: "تراجم العلماء" },
+      { href: "/tarikh-islami",         label: "التاريخ الإسلامي",        desc: "التاريخ الإسلامي" },
       { href: "/quiz",             label: "سين جيم",   desc: "مسابقة أسئلة تفاعلية" },
       { href: "/my-learning",      label: "حسابي",                desc: "التقدم والبطاقات المراجعة" },
       { href: "/assistant",        label: "المساعد الذكي",        desc: "استفسر عن أي مسألة" },

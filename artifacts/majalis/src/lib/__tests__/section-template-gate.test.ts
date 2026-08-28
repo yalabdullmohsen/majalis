@@ -33,7 +33,6 @@ const HUB_PAGES: Array<[string, string]> = [
   ["المذكورون في القرآن", "src/pages/quran/ui/QuranPeopleView.tsx"],
   ["السيرة", "src/views/SeerahPage.tsx"],
   ["الأمم السابقة", "src/views/NationsPage.tsx"],
-  ["التاريخ", "src/views/TarikhIslamiPage.tsx"],
   ["المكتبة", "src/pages/library/ui/LibraryView.tsx"],
   ["الرسائل", "src/views/AcademicResearchPage.tsx"],
   ["المصطلحات", "src/pages/account/ui/IslamicGlossaryView.tsx"],
@@ -114,9 +113,9 @@ for (const [label, rel] of HUB_PAGES) {
 
 {
   const tarikh = read("src/views/TarikhIslamiPage.tsx");
-  assert.match(tarikh, /SectionTemplatePage/, "التاريخ: غلاف قالب العقيدة");
-  assert.match(tarikh, /TopicCard/, "التاريخ: بطاقات كالعقيدة لا أكورديون");
-  assert.match(tarikh, /tabs=\{TABS\}/, "التاريخ: شرائح موضوعية");
+  assert.match(tarikh, /tarikh-hero/, "التاريخ: واجهة مخصصة");
+  assert.match(tarikh, /ISLAMIC_HISTORY_ITEMS/, "التاريخ: بيانات موحدة");
+  assert.match(tarikh, /type=["']search["']/, "التاريخ: بحث داخلي مقصود");
   assert.doesNotMatch(tarikh, /SectionAccordionLayout/, "التاريخ: بلا أكورديون قديم");
 }
 

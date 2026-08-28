@@ -19,7 +19,7 @@ export type RelatedRailItem = {
 function hrefFor(kind: string, slug: string): string {
   switch (kind) {
     case "scholar":
-      return `/scholars/${slug}`;
+      return `/tarikh-islami/${slug}`;
     case "book":
       return `/library/${slug}`;
     case "hadith":

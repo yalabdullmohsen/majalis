@@ -218,7 +218,7 @@ export default function HomeBelowFold() {
 
         {isAdmin && (
           <p className="m2030-band__sub" style={{ textAlign: "center" }}>
-            محتوى مرجعي: {toArabicDigits(contentCounts.scholars)} عالم · {toArabicDigits(contentCounts.quizQuestions)} سؤال
+            محتوى مرجعي: {toArabicDigits(contentCounts.islamicHistory)} عنصر تاريخ · {toArabicDigits(contentCounts.quizQuestions)} سؤال
           </p>
         )}
       </div>

@@ -52,7 +52,7 @@ const registry = readFileSync(join(root, "config/sections.registry.ts"), "utf8")
 assert.match(registry, /\/hadith/);
 assert.match(registry, /الحديث وعلومه/);
 assert.match(registry, /سين جيم/);
-assert.match(registry, /أعلام وتراجم/);
+assert.match(registry, /التاريخ الإسلامي/);
 
 const nav = readFileSync(join(root, "lib/navigation.ts"), "utf8");
 assert.match(nav, /href: "\/nations"/);

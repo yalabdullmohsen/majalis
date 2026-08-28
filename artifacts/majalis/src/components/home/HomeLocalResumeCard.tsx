@@ -26,7 +26,7 @@ const SECTION_LABEL: Record<ContinueSection | "listen", string> = {
   prophets: "قصص الأنبياء",
   adhkar: "الأذكار",
   library: "المكتبة",
-  scholars: "العلماء",
+  tarikh: "التاريخ الإسلامي",
   listen: "الاستماع",
 };
 

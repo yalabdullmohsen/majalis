@@ -15,17 +15,12 @@ import type {
   UniversalSectionId,
   UniversalSearchResponse,
 } from "@/features/search/universal-home-search";
+import {
+  UNIVERSAL_DEBOUNCE_MS,
+  UNIVERSAL_SECTION_LABELS,
+  UNIVERSAL_SECTION_ORDER,
+} from "@/features/search/universal-home-search";
 import "@/styles/components/home-universal-search.css";
-
-const UNIVERSAL_DEBOUNCE_MS = 120;
-const UNIVERSAL_SECTION_ORDER = ["quran", "book", "scholar", "adhkar", "quiz"] as const;
-const UNIVERSAL_SECTION_LABELS: Record<(typeof UNIVERSAL_SECTION_ORDER)[number], string> = {
-  quran: "آيات القرآن",
-  book: "الكتب",
-  scholar: "العلماء",
-  adhkar: "الأذكار",
-  quiz: "أسئلة المسابقة",
-};
 
 const FOCUS_SUGGESTIONS = [
   "البقرة ٢٥٥",
@@ -138,8 +133,8 @@ export function HomeUniversalSearch() {
           id={inputId}
           type="search"
           className="hus-input"
-          placeholder="ابحث في الآيات والكتب والعلماء والأذكار والأسئلة…"
-          aria-label="بحث موحّد في الآيات والكتب والعلماء والأذكار والأسئلة"
+          placeholder="ابحث في الآيات والكتب والتاريخ والأذكار والأسئلة…"
+          aria-label="بحث موحّد في الآيات والكتب والتاريخ والأذكار والأسئلة"
           value={raw}
           autoComplete="off"
           enterKeyHint="search"

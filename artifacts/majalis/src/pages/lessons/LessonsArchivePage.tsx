@@ -130,7 +130,7 @@ export default function LessonsArchivePage() {
         links={[
           { href: "/lessons", label: "الدروس النشطة" },
           { href: "/calendar", label: "التقويم" },
-          { href: "/scholars", label: "العلماء" },
+          { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
         ]}
       />
     </PageShell>

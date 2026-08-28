@@ -23,7 +23,7 @@ export const SITE_FOOTER_GROUPS: FooterGroup[] = [
       { href: "/fiqh", label: "الفقه" },
       { href: "/more", label: "المزيد" },
       { href: "/library", label: "المكتبة" },
-      { href: "/scholars", label: "أعلام وتراجم" },
+      { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
       { href: "/hadith", label: "الحديث وعلومه" },
       { href: "/adhkar", label: "الأذكار" },
       { href: "/quiz", label: "سين جيم" },

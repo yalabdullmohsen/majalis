@@ -38,10 +38,18 @@ export async function fetchDynamicUrls() {
   const admin = getSupabaseAdmin();
   const urls = [];
 
-  // ── بيانات ثابتة: العلماء والكتب من JSON ──
-  const scholars = loadStaticCatalog("scholars-list.json");
-  for (const s of scholars) {
-    urls.push({ loc: `/scholars/${s.id}`, priority: 0.76, changefreq: "monthly" });
+  // ── بيانات ثابتة: التاريخ الإسلامي والكتب من JSON ──
+  const historyFiles = [
+    "seerah.json", "rashidun.json", "umayyad.json", "abbasid.json", "andalus.json",
+    "seljuk-ayyubid.json", "mamluk.json", "ottoman.json", "civilization.json", "personalities.json",
+  ];
+  for (const file of historyFiles) {
+    try {
+      const items = JSON.parse(readFileSync(join(APP_ROOT, `src/data/islamic-history/${file}`), "utf8"));
+      for (const item of items) {
+        urls.push({ loc: `/tarikh-islami/${item.id}`, priority: 0.76, changefreq: "monthly" });
+      }
+    } catch { /* optional */ }
   }
 
   const books = loadStaticCatalog("library-catalog.json");

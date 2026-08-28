@@ -55,7 +55,7 @@ const ROUTES = [
   "/calendar",
   "/prophets",
   "/adhkar",
-  "/scholars",
+  "/tarikh-islami",
 ];
 
 async function ensureBase() {

@@ -15,7 +15,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
 assert.equal(SERVICES_CENTER_GROUPS[0]?.id, "hubs");
 assert.equal(SERVICES_CENTER_GROUPS[0]?.layout, "featured");
-assert.equal(MORE_FEATURED_SECTIONS.length, 6);
+assert.equal(MORE_FEATURED_SECTIONS.length, 7);
 assert.deepEqual(
   MORE_FEATURED_SECTIONS.map((s) => s.title),
   featuredSections().map((s) => s.label),

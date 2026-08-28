@@ -18,7 +18,7 @@ import { toArabicDigits } from "@/lib/utils";
 export const UNIVERSAL_SECTION_ORDER = [
   "quran",
   "book",
-  "scholar",
+  "history",
   "adhkar",
   "quiz",
 ] as const;
@@ -28,7 +28,7 @@ export type UniversalSectionId = (typeof UNIVERSAL_SECTION_ORDER)[number];
 export const UNIVERSAL_SECTION_LABELS: Record<UniversalSectionId, string> = {
   quran: "آيات القرآن",
   book: "الكتب",
-  scholar: "العلماء",
+  history: "التاريخ الإسلامي",
   adhkar: "الأذكار",
   quiz: "أسئلة المسابقة",
 };
@@ -42,9 +42,7 @@ const UNIVERSAL_KINDS = new Set([
   "quran",
   "book",
   "library",
-  "scholar",
-  "sheikh",
-  "person",
+  "history",
   "adhkar",
   "dua",
   "qa",
@@ -55,9 +53,7 @@ const KIND_TO_SECTION: Record<string, UniversalSectionId> = {
   quran: "quran",
   book: "book",
   library: "book",
-  scholar: "scholar",
-  sheikh: "scholar",
-  person: "scholar",
+  history: "history",
   adhkar: "adhkar",
   dua: "adhkar",
   qa: "quiz",
@@ -145,7 +141,7 @@ function flattenGrouped(groups: Record<string, UnifiedSearchHit[]>): AppSearchRe
 }
 
 function emptyCounts(): Record<UniversalSectionId, number> {
-  return { quran: 0, book: 0, scholar: 0, adhkar: 0, quiz: 0 };
+  return { quran: 0, book: 0, history: 0, adhkar: 0, quiz: 0 };
 }
 
 /** بحث موحّد سريع على شريحة الفهرس ذات الصلة (+ قفز مصحف). */
@@ -209,7 +205,7 @@ export async function runUniversalSearch(
   const bySection: Record<UniversalSectionId, UniversalHit[]> = {
     quran: [],
     book: [],
-    scholar: [],
+    history: [],
     adhkar: [],
     quiz: [],
   };

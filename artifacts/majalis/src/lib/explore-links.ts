@@ -71,7 +71,7 @@ export const ACCORDION_EXPLORE_LINKS = {
   ],
   tarikh: [
     { href: "/seerah", label: "السيرة النبوية" },
-    { href: "/scholars", label: "أعلام الإسلام" },
+    { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
     { href: "/prophets", label: "قصص الأنبياء" },
     { href: "/islamic-landmarks", label: "معالم إسلامية" },
     { href: "/nations", label: "الأمم السابقة" },
@@ -93,11 +93,11 @@ export function accordionExploreLinks(key: AccordionExploreKey): ExploreAlsoLink
 
 /** روابط ثابتة لصفحات غير أكورديونية */
 export const PAGE_EXPLORE_LINKS = {
-  scholar: [
-    { href: "/quran-knowledge", label: "القرآن وعلومه" },
+  historyDetail: [
+    { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
+    { href: "/seerah", label: "السيرة النبوية" },
+    { href: "/library", label: "المكتبة العلمية" },
     { href: "/lessons", label: "الدروس العلمية" },
-    { href: "/madhahib", label: "المذاهب الأربعة" },
-    { href: "/memorization", label: "الحفظ والمراجعة" },
   ],
   asmaHusna: [
     { href: "/tawhid", label: "التوحيد" },

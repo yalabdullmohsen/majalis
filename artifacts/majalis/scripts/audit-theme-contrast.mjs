@@ -21,7 +21,7 @@
  */
 import { chromium } from "playwright";
 const B = process.env.BASE_URL || "http://127.0.0.1:4403";
-const ROUTES=["/","/quran-hub","/lessons","/library","/scholars","/qa","/adhkar","/rulings",
+const ROUTES=["/","/quran-hub","/lessons","/library","/tarikh-islami","/qa","/adhkar","/rulings",
  "/prayer-times","/seerah","/learning/paths","/sections","/about","/login","/search","/fiqh-council",
  "/prophet-stories","/quiz","/mushaf","/my-learning","/hadith","/fawaid","/miracles","/sitemap",
  "/register","/stats","/calendar","/adhan-settings","/tasbeeh-counter","/asmaa-husna",
