@@ -2,7 +2,7 @@
   "month": "2026-08",
   "items": [
     {
-      "id": "ca740203ac6356452ab2fa4ee62fa9b3177c14e0",
+      "id": "6f682218416429d03cc4a471c7f82d69c9904078",
       "type": "درس",
       "title_ar": "الآن مباشر شرح كتاب التوحيد للإمام محمد بن عبدالوهاب فضيلة الشيخ عمر مثيب العتي…",
       "summary_ar": "الان مباشر (37) شرح كتاب&nbsp; التوحيد للامام محمد بن عبدالوهاب فضيله الشيخ عمر مثيب العتيبي رابط البث المباشر https://t.me/omar_muthib?livestream تحميل الكتاب…",
@@ -25,8 +25,62 @@
         }
       ],
       "image_url": null,
-      "published_at": "2026-08-27T14:15:32.847Z",
+      "published_at": "2026-08-28T00:37:57.619Z",
       "confidence": 0.8
+    },
+    {
+      "id": "bf815a91e51843a1741acf5cc0cbb901cf166575",
+      "type": "تسجيل",
+      "title_ar": "قرار التحاقكِ بطلائع العالمات بداية مسيرة علمية تفتح لكِ آفاق العلم الشرعي برنا…",
+      "summary_ar": "قرار التحاقك بطلائع العالمات … بدايه مسيره علميه تفتح لك افاق العلم الشرعي. برنامج طلائع العالمات _ الدفعه السابعه ٢٠٢٦-٢٠٢٨م رابط التسجيل القديم معطل اليك راب…",
+      "sheikh": "الدكتو أحمدو محمدو اشريف المختار www",
+      "place": "طلائع العالمات سوف تأخذين العلم من أهله 華 فضيلة الشيخ الدكتو أحمدو محمدو اشريف ا",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://forms.gle/qaqtsfAREkcWZS438",
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-rasikhoon",
+          "name_ar": "الراسخون",
+          "url": "https://instagram.com/rasikhoon",
+          "post_url": "https://www.instagram.com/p/DcjmJ73jM1c/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-27T00:00:00.000Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "a6fd5cf4e2feaf000c9573125aa5b2474de1e010",
+      "type": "محاضرة",
+      "title_ar": "غداً الجمعة بعد المغرب بإذن الله تفسير سورة النحل آية المجلس مسجد موضي الصديق ل…",
+      "summary_ar": "غدا الجمعه بعد المغرب باذن الله تفسير سوره النحل (ايه 120) المجلس 16 مسجد موضي –الصديق لتفاصيل المحاضرات وللبث المباشر في الموقع الالكتروني للشيخ عثمان الخميس …",
+      "sheikh": "جميع دروس الشيخ ومواعيد اعيد محاضراته تجدونها ونها في الموقع",
+      "place": "موضي –الصديق",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": "بعد المغرب",
+      "register_url": null,
+      "schedule_kind": "upcoming",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-othmanalkamees",
+          "name_ar": "د. عثمان الخميس",
+          "url": "https://instagram.com/othmanalkamees",
+          "post_url": "https://www.instagram.com/p/Dci7LW8CGTP/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-27T00:00:00.000Z",
+      "confidence": 0.95
     },
     {
       "id": "521409728e47b4bf644be0da76c2d29acd4a1ce5",
@@ -54,60 +108,6 @@
       "image_url": null,
       "published_at": "2026-08-26T16:34:23.140Z",
       "confidence": 0.65
-    },
-    {
-      "id": "b8ffcd1850630b336b6ef44340723b94a71b30ee",
-      "type": "دورة",
-      "title_ar": "من هنا يبدأ الفهم لكتاب الله وسنة رسوله صلى الله عليه وسلم التحقي بطلائع العالم…",
-      "summary_ar": "من هنا يبدا الفهم لكتاب الله وسنه رسوله صلي الله عليه وسلم التحقي بطلائع العالمات … لفهم اعمق ونور يدفع الجهل برنامج طلائع العالمات _ الدفعه السابعه ٢٠٢٦-٢٠٢٨م…",
-      "sheikh": "الدكتور محمد عالي الحسين www",
-      "place": "طلائع العالمات سوف تدرسين أصول فهم القرأن والسنة",
-      "audience": "عام",
-      "starts_at": null,
-      "time_text": null,
-      "register_url": "https://forms.gle/qaqtsfAREkcWZS438",
-      "schedule_kind": "upcoming",
-      "women_attendance": "men_only",
-      "women_attendance_note": null,
-      "sources": [
-        {
-          "id": "ig-rasikhoon",
-          "name_ar": "الراسخون",
-          "url": "https://instagram.com/rasikhoon",
-          "post_url": "https://www.instagram.com/p/Dcg7TqQDECd/",
-          "platform": "instagram"
-        }
-      ],
-      "image_url": null,
-      "published_at": "2026-08-26T00:00:00.000Z",
-      "confidence": 0.9
-    },
-    {
-      "id": "26448a5df818331f38a48e66fd0806d94a550832",
-      "type": "محاضرة",
-      "title_ar": "غداً الأربعاء بعد صلاة المغرب بإذن الله مسجد الياقوت درس تلخيص مختصر المقنع الم…",
-      "summary_ar": "غدا الاربعاء بعد صلاه المغرب باذن الله مسجد الياقوت درس تلخيص مختصر المقنع المجلس (133) – كتاب الخلع للشيخ عثمان الخميس لتفاصيل المحاضرات وللبث المباشر في المو…",
-      "sheikh": "جميع دروس الشيخ ومواعيد محافراته تجدونها في الموقع الإلكتثرو",
-      "place": "الياقوت",
-      "audience": "عام",
-      "starts_at": null,
-      "time_text": null,
-      "register_url": null,
-      "schedule_kind": "upcoming",
-      "women_attendance": "men_only",
-      "women_attendance_note": null,
-      "sources": [
-        {
-          "id": "ig-othmanalkamees",
-          "name_ar": "د. عثمان الخميس",
-          "url": "https://instagram.com/othmanalkamees",
-          "post_url": "https://www.instagram.com/p/DcefqmwiD2p/",
-          "platform": "instagram"
-        }
-      ],
-      "image_url": null,
-      "published_at": "2026-08-25T00:00:00.000Z",
-      "confidence": 0.85
     },
     {
       "id": "5b3fa3511fd80095d69ac2ae9c971d9716e250bc",
