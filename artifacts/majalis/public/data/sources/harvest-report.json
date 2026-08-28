@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-27T14:39:09.304Z",
+  "generated_at": "2026-08-28T01:02:21.591Z",
   "dry_run": false,
   "instagram_mode": "provider",
   "instagram": {
@@ -9,21 +9,29 @@
   },
   "instagram_accounts_total": 47,
   "instagram_checked": 47,
-  "instagram_unchanged": 20,
+  "instagram_unchanged": 24,
   "instagram_new_posts_found": 13,
   "instagram_published": 2,
   "instagram_skipped_private": 0,
   "instagram_skipped_provider_404": 0,
-  "instagram_failed": 14,
+  "instagram_failed": 10,
   "instagram_probe_records_used": 47,
   "instagram_fetch_records_used": 13,
   "sources": 55,
-  "fetched": 37,
+  "fetched": 38,
   "published": 17,
   "merged": 4,
   "failed": [
     {
-      "id": "ig-itm2nan_",
+      "id": "ig-shariaaac",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-w_alanbiya",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-masjid_alshalahi_women",
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
@@ -31,19 +39,15 @@
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
+      "id": "ig-alshalahi_masjd",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
       "id": "ig-almanabr",
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
-      "id": "ig-tartelkw",
-      "reason": "HTTP 408: snapshot_timeout"
-    },
-    {
-      "id": "ig-jouryaldahi",
-      "reason": "HTTP 408: snapshot_timeout"
-    },
-    {
-      "id": "ig-7offath",
+      "id": "ig-alwa7yyen",
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
@@ -51,31 +55,11 @@
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
-      "id": "ig-trahumkwclub",
-      "reason": "HTTP 408: snapshot_timeout"
-    },
-    {
       "id": "ig-mrkz_al_albany",
       "reason": "HTTP 408: snapshot_timeout"
     },
     {
-      "id": "ig-saad.al.abdullah.city",
-      "reason": "HTTP 408: snapshot_timeout"
-    },
-    {
-      "id": "ig-mosque.mbark.j",
-      "reason": "HTTP 408: snapshot_timeout"
-    },
-    {
       "id": "ig-masjedalmehry",
-      "reason": "HTTP 408: snapshot_timeout"
-    },
-    {
-      "id": "ig-moudhi_mosque",
-      "reason": "HTTP 408: snapshot_timeout"
-    },
-    {
-      "id": "ig-kwt_awqaf",
       "reason": "HTTP 408: snapshot_timeout"
     }
   ],
@@ -89,11 +73,7 @@
       "reason": "quality_gate:weak_title"
     },
     {
-      "id": "ig-shariaaac",
-      "reason": "quality_gate:too_old"
-    },
-    {
-      "id": "ig-alshalahi_masjd",
+      "id": "ig-itm2nan_",
       "reason": "quality_gate:weak_title"
     },
     {
@@ -105,7 +85,7 @@
       "reason": "quality_gate:no_useful_type"
     },
     {
-      "id": "ig-othmanalkamees",
+      "id": "web-hoffath.org",
       "reason": "quality_gate:weak_title"
     },
     {
@@ -133,6 +113,10 @@
       "reason": "quality_gate:too_old"
     },
     {
+      "id": "ig-mosque.mbark.j",
+      "reason": "quality_gate:no_useful_type"
+    },
+    {
       "id": "ig-mansuh_quranayh",
       "reason": "quality_gate:too_old"
     },
@@ -143,29 +127,33 @@
     {
       "id": "ig-wejdanalh",
       "reason": "quality_gate:too_old"
+    },
+    {
+      "id": "ig-kwt_awqaf",
+      "reason": "quality_gate:no_useful_type"
     }
   ],
   "last_seen_updates": [
     {
-      "id": "ig-erth.kwt",
-      "last_seen_at": "2026-08-26T00:00:00.000Z"
+      "id": "ig-rasikhoon",
+      "last_seen_at": "2026-08-27T00:00:00.000Z"
     },
     {
-      "id": "ig-rasikhoon",
-      "last_seen_at": "2026-08-26T00:00:00.000Z"
+      "id": "ig-othmanalkamees",
+      "last_seen_at": "2026-08-27T00:00:00.000Z"
     },
     {
       "id": "telegram-DrosQ8",
-      "last_seen_at": "2026-08-27T14:15:32.847Z"
+      "last_seen_at": "2026-08-28T00:37:57.619Z"
     }
   ],
   "lookback_days": 7,
-  "lookback_since": "2026-08-20T13:51:44.771Z",
+  "lookback_since": "2026-08-21T00:14:14.960Z",
   "lesson_relevant_published": 17,
   "quality_gate": {
-    "rejected_old": 5,
+    "rejected_old": 4,
     "rejected_weak_title": 6,
-    "rejected_no_useful_type": 5,
+    "rejected_no_useful_type": 7,
     "rejected_missing_date": 0,
     "rejected_other": 0,
     "published": 17
