@@ -425,17 +425,17 @@ export function getIslamicNetworkAyahUrl(
   if (isAudioSourceDisabled("everyayah") && isAudioSourceDisabled("mp3quran")) {
     /* كلا المصدرين معطّلان من الإعداد البعيد — لا نكسر سياسة التعطيل */
   }
-  if (isReciterDisabled(reciterId) && reciterId !== "alafasy") return "";
-  const edition =
-    ISLAMIC_NETWORK_EDITION[reciterId] ?? ISLAMIC_NETWORK_EDITION.alafasy ?? "ar.alafasy";
+  if (isReciterDisabled(reciterId)) return "";
+  const edition = ISLAMIC_NETWORK_EDITION[reciterId];
+  if (!edition) return "";
   const global = getGlobalAyahNumber(surah, ayah);
   if (global < 1) return "";
   return `https://cdn.islamic.network/quran/audio/128/${edition}/${global}.mp3`;
 }
 
 /**
- * مرشّحو تشغيل الآية بالترتيب: القارئ → عفاسي everyayah → islamic.network.
- * لا يغيّر نص القرآن — روابط صوت فقط.
+ * مرشّحو تشغيل الآية لنفس الشيخ فقط: everyayah (+مرآة www) ثم islamic.network إن وُجد.
+ * ممنوع إضافة قارئ آخر (عفاسي) — ذلك كان يغيّر الصوت عند الانتقال بين الآيات.
  */
 export function listAyahAudioUrls(surah: number, ayah: number, reciterId: string): string[] {
   const urls: string[] = [];
@@ -447,17 +447,7 @@ export function listAyahAudioUrls(surah: number, ayah: number, reciterId: string
   if (primary.includes("://everyayah.com/")) {
     push(primary.replace("://everyayah.com/", "://www.everyayah.com/"));
   }
-  if (reciterId !== "alafasy") {
-    const afasy = getAyahAudioUrl(surah, ayah, "alafasy");
-    push(afasy);
-    if (afasy.includes("://everyayah.com/")) {
-      push(afasy.replace("://everyayah.com/", "://www.everyayah.com/"));
-    }
-  }
   push(getIslamicNetworkAyahUrl(surah, ayah, reciterId));
-  if (reciterId !== "alafasy") {
-    push(getIslamicNetworkAyahUrl(surah, ayah, "alafasy"));
-  }
   return orderAudioUrlsByCdnHealth(urls);
 }
 

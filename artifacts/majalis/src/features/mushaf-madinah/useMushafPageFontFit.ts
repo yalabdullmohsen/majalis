@@ -4,12 +4,16 @@ import {
   assertMushafPageFontReady,
   getCachedFontSize,
   isMushafPageFontReady,
+  isMushafOpeningPage,
+  mushafOpeningFitCacheKey,
   mushafUniformFitCacheKey,
   normalizeMushafFontFamily,
   fitPageFontSize,
+  resolveOpeningMushafFontSize,
   resolveUniformMushafFontSize,
   setCachedFontSize,
   MUSHAF_FIT_MAX_PX,
+  MUSHAF_FIT_OPENING_MAX_PX,
 } from "./fitPageFontSize";
 import {
   MUSHAF_LINE_FILL_RATIO,
@@ -40,27 +44,41 @@ function applySize(pageEl: HTMLElement, size: number): void {
   pageEl.style.setProperty("--mushaf-font-size", `${size}px`);
 }
 
+function readPageNumber(pageEl: HTMLElement, fallback = 0): number {
+  const raw = pageEl.getAttribute?.("data-page");
+  const n = Number(raw);
+  return Number.isFinite(n) && n > 0 ? n : fallback;
+}
+
 /** حجم هندسي فوري (كاش أو حساب) بلا قياس محتوى — يمنع قفزة الإطار الأول. */
-function applyGeometrySizeHint(pageEl: HTMLElement, familyHint: string): boolean {
+function applyGeometrySizeHint(pageEl: HTMLElement, familyHint: string, pageNumber = 0): boolean {
   const body = pageEl.querySelector<HTMLElement>(".mm-page__body");
   const containerPx = Math.round(body?.clientWidth || pageEl.clientWidth || 0);
   const blockHeightPx = Math.round(body?.clientHeight || 0);
   if (!containerPx) return false;
   const family = normalizeMushafFontFamily(familyHint || readFamily(pageEl, "qpc-v2"));
-  const key = mushafUniformFitCacheKey(containerPx, blockHeightPx, family);
+  const page = pageNumber || readPageNumber(pageEl);
+  const opening = isMushafOpeningPage(page);
+  const maxPx = opening ? MUSHAF_FIT_OPENING_MAX_PX : MUSHAF_FIT_MAX_PX;
+  const key = opening
+    ? mushafOpeningFitCacheKey(page, containerPx, blockHeightPx)
+    : mushafUniformFitCacheKey(containerPx, blockHeightPx, family);
   const cached = getCachedFontSize(key);
-  const geo = resolveUniformMushafFontSize(containerPx, blockHeightPx);
+  const geo = opening
+    ? resolveOpeningMushafFontSize(containerPx, blockHeightPx, 8)
+    : resolveUniformMushafFontSize(containerPx, blockHeightPx);
   const size = Math.max(
     MUSHAF_FIT_MIN_PX,
-    Math.min(MUSHAF_FIT_MAX_PX, cached != null ? Math.min(cached, geo) : geo),
+    Math.min(maxPx, cached != null ? Math.min(cached, geo) : geo),
   );
   applySize(pageEl, size);
   return true;
 }
 
 /**
- * يضبط مقياس الخط من هندسة الحاوية فقط — نفس الحجم لكل الصفحات عند نفس العرض.
- * لا قياس لمحتوى الأسطر ولا shrink حسب الصفحة (سبب اختلاف ١٢٦/١٢٧/١٢٨).
+ * يضبط مقياس الخط من هندسة الحاوية.
+ * الصفحات العادية: حجم موحّد عند نفس العرض.
+ * صفحتا الافتتاح (١–٢): قياس مستقل لأكبر حجم ممكن بلا قص.
  */
 export function fitMushafPageFont(
   pageEl: HTMLElement,
@@ -70,7 +88,9 @@ export function fitMushafPageFont(
   const containerPx = Math.round(body?.clientWidth || pageEl.clientWidth || 0);
   const blockHeightPx = Math.round(body?.clientHeight || 0);
   const family = normalizeMushafFontFamily(opts.family || readFamily(pageEl, "qpc-v2"));
-  const pageNumber = opts.pageNumber ?? Number(pageEl.getAttribute?.("data-page") || 0);
+  const pageNumber = opts.pageNumber ?? readPageNumber(pageEl);
+  const opening = isMushafOpeningPage(pageNumber);
+  const maxPx = opening ? MUSHAF_FIT_OPENING_MAX_PX : MUSHAF_FIT_MAX_PX;
 
   if (!containerPx) {
     applySize(pageEl, MUSHAF_FIT_MIN_PX);
@@ -79,30 +99,40 @@ export function fitMushafPageFont(
 
   assertMushafPageFontReady(family);
 
-  const key = mushafUniformFitCacheKey(containerPx, blockHeightPx, family);
-  const geo = resolveUniformMushafFontSize(containerPx, blockHeightPx);
   const lines = [...pageEl.querySelectorAll<HTMLElement>(".mm-ayah-line, .mm-basmala")]
     .map((el) => (el.textContent ?? "").replace(/\s+/g, ""))
     .filter(Boolean);
+
+  const lineCount = opening
+    ? Math.max(lines.length, 1)
+    : Math.max(lines.length, 15);
+
+  const key = opening
+    ? mushafOpeningFitCacheKey(pageNumber, containerPx, blockHeightPx)
+    : mushafUniformFitCacheKey(containerPx, blockHeightPx, family);
+
+  const geo = opening
+    ? resolveOpeningMushafFontSize(containerPx, blockHeightPx, lineCount)
+    : resolveUniformMushafFontSize(containerPx, blockHeightPx);
 
   let contentCap = geo;
   if (lines.length > 0) {
     try {
       contentCap = fitPageFontSize(lines, containerPx, family, undefined, {
-        maxPx: MUSHAF_FIT_MAX_PX,
+        maxPx,
         blockHeightPx: blockHeightPx || undefined,
-        lineCount: Math.max(lines.length, pageNumber <= 2 ? lines.length : 15),
+        lineCount,
       });
     } catch {
       contentCap = MUSHAF_FIT_MIN_PX;
     }
   }
 
-  /** سقف الصفحة الحالية ∩ الهندسة، ثم تخزين موحّد لا يزيد أبدًا (تصغير مشترك فقط). */
+  /** سقف الصفحة الحالية ∩ الهندسة؛ للافتتاح كاش مستقل لا يضغطه صفحات كثيفة. */
   let size = Math.min(geo, contentCap);
   const cached = getCachedFontSize(key);
   if (cached != null) size = Math.min(cached, size);
-  size = Math.max(MUSHAF_FIT_MIN_PX, Math.min(MUSHAF_FIT_MAX_PX, size));
+  size = Math.max(MUSHAF_FIT_MIN_PX, Math.min(maxPx, size));
 
   applySize(pageEl, size);
   setCachedFontSize(key, size);
@@ -233,7 +263,7 @@ export function useMushafPageFontFit(
       lastGeom = geom;
       const family = normalizeMushafFontFamily(fontFamily);
       // حجم هندسي فوري قبل القياس الثقيل — يقلّل قفزة المقاس عند الكشف
-      applyGeometrySizeHint(node, family);
+      applyGeometrySizeHint(node, family, pageNumber);
       if (isMushafPageFontReady(family)) {
         applyFit(node, family);
         return;
@@ -255,7 +285,7 @@ export function useMushafPageFontFit(
 
     // إطار أول: أخفِ النص، ثبّت حجمًا هندسيًا إن وُجد عرض، ثم قِس بعد استقرار الإطار
     markFit(el, false);
-    applyGeometrySizeHint(el, fontFamily);
+    applyGeometrySizeHint(el, fontFamily, pageNumber);
     let firstFrameId = 0;
     firstFrameId = requestAnimationFrame(() => {
       firstFrameId = requestAnimationFrame(() => {

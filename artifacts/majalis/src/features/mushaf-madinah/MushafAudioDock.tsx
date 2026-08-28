@@ -138,7 +138,7 @@ export function MushafAudioDock({
           {statusLabel}
           {loading ? " · جاري تحميل التلاوة…" : ""}
           {audioError || playerState === "error"
-            ? ` · ${audioError || "تعذر تحميل التلاوة، جرّب قارئًا آخر"}`
+            ? ` · ${audioError || "تعذر تشغيل هذه الآية لهذا القارئ"}`
             : ""}
         </p>
       </div>

@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   BookOpen,
+  Check,
   Headphones,
   Mic,
   Pause,
@@ -451,12 +452,25 @@ export function AyahActionSheet({
               <div className="ayah-action-sheet__tilawa">
                 <button
                   type="button"
-                  className="ayah-action-sheet__play-hero"
+                  className={[
+                    "ayah-action-sheet__play-hero",
+                    playerState === "playing" || playerState === "paused" ? "is-active" : "",
+                    loading ? "is-loading" : "",
+                    audioError || playerState === "error" ? "is-error" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
                   onClick={handlePlayClick}
                   data-testid="mushaf-ayah-play"
                   aria-label={playLabel}
                 >
-                  {playing ? <Pause size={22} aria-hidden="true" /> : <Play size={22} aria-hidden="true" />}
+                  {loading ? (
+                    <span className="ayah-action-sheet__play-spinner" aria-hidden="true" />
+                  ) : playerState === "playing" || playerState === "paused" ? (
+                    <Pause size={22} aria-hidden="true" />
+                  ) : (
+                    <Play size={22} aria-hidden="true" />
+                  )}
                   <span>{playLabel}</span>
                 </button>
                 {isAiTarteelEnabled() && parsed ? (
@@ -480,32 +494,46 @@ export function AyahActionSheet({
                   </button>
                 </div>
                 <ul className="ayah-action-sheet__reciter-cards" aria-label="القرّاء">
-                  {reciters.map((r) => (
-                    <li key={r.id}>
-                      <span>{r.nameAr}</span>
-                      <button
-                        type="button"
-                        aria-label={r.id === reciterId && playing ? `إيقاف ${r.nameAr}` : `تشغيل ${r.nameAr}`}
-                        onClick={() => {
-                          if (r.id === reciterId && playing) {
-                            onTogglePlay();
-                            return;
+                  {reciters.map((r) => {
+                    const selected = r.id === reciterId;
+                    return (
+                      <li key={r.id} className={selected ? "is-selected" : undefined}>
+                        <button
+                          type="button"
+                          className="ayah-action-sheet__reciter-pick"
+                          aria-pressed={selected}
+                          onClick={() => onReciterChange(r.id)}
+                        >
+                          {selected ? <Check size={16} aria-hidden="true" /> : null}
+                          <span>{r.nameAr}</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="ayah-action-sheet__reciter-play"
+                          aria-label={
+                            selected && playing ? `إيقاف ${r.nameAr}` : `تشغيل ${r.nameAr}`
                           }
-                          if (onPlayReciter) onPlayReciter(r.id);
-                          else {
-                            onReciterChange(r.id);
-                            onPlay();
-                          }
-                        }}
-                      >
-                        {r.id === reciterId && playing ? (
-                          <Pause size={16} aria-hidden="true" />
-                        ) : (
-                          <Play size={16} aria-hidden="true" />
-                        )}
-                      </button>
-                    </li>
-                  ))}
+                          onClick={() => {
+                            if (selected && playing) {
+                              onTogglePlay();
+                              return;
+                            }
+                            if (onPlayReciter) onPlayReciter(r.id);
+                            else {
+                              onReciterChange(r.id);
+                              onPlay();
+                            }
+                          }}
+                        >
+                          {selected && playing ? (
+                            <Pause size={16} aria-hidden="true" />
+                          ) : (
+                            <Play size={16} aria-hidden="true" />
+                          )}
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
                 <p className="ayah-action-sheet__range-label">النطاق</p>
                 <div className="ayah-action-sheet__range" role="group" aria-label="نطاق التلاوة">
@@ -622,7 +650,7 @@ export function AyahActionSheet({
           ) : null}
           {audioError || playerState === "error" ? (
             <p className="mm-ayah-bar__status mm-ayah-bar__status--err" role="status" data-testid="mushaf-audio-error">
-              {audioError || "تعذر تحميل التلاوة، جرّب قارئًا آخر"}
+              {audioError || "تعذر تشغيل هذه الآية لهذا القارئ"}
             </p>
           ) : null}
           {copyStatus ? (
@@ -670,47 +698,54 @@ export function AyahActionSheet({
                   </p>
                 ) : null}
                 <ul className="mm-reciter-sheet__list" role="listbox" aria-label="قائمة القراء">
-                  {filtered.map((r) => (
-                    <li key={r.id}>
-                      <button
-                        type="button"
-                        role="option"
-                        aria-selected={r.id === reciterId}
-                        className={r.id === reciterId ? "is-active" : undefined}
-                        onClick={() => {
-                          onReciterChange(r.id);
-                          setReadersOpen(false);
-                          setReaderQuery("");
-                        }}
-                      >
-                        <span>{r.nameAr}</span>
-                        <span className="mm-reciter-sheet__meta">{r.qualityLabel}</span>
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={r.id === reciterId && playing ? `إيقاف ${r.nameAr}` : `تشغيل ${r.nameAr}`}
-                        onClick={() => {
-                          if (r.id === reciterId && playing) {
-                            onTogglePlay();
-                            return;
-                          }
-                          if (onPlayReciter) onPlayReciter(r.id);
-                          else {
+                  {filtered.map((r) => {
+                    const selected = r.id === reciterId;
+                    return (
+                      <li key={r.id} className={selected ? "is-selected" : undefined}>
+                        <button
+                          type="button"
+                          role="option"
+                          aria-selected={selected}
+                          className={`mm-reciter-sheet__pick${selected ? " is-active" : ""}`}
+                          onClick={() => {
                             onReciterChange(r.id);
-                            onPlay();
+                            setReadersOpen(false);
+                            setReaderQuery("");
+                          }}
+                        >
+                          {selected ? <Check size={16} aria-hidden="true" className="mm-reciter-sheet__check" /> : null}
+                          <span className="mm-reciter-sheet__name">{r.nameAr}</span>
+                          <span className="mm-reciter-sheet__meta">{r.qualityLabel}</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="mm-reciter-sheet__play"
+                          aria-label={
+                            selected && playing ? `إيقاف ${r.nameAr}` : `تشغيل ${r.nameAr}`
                           }
-                          setReadersOpen(false);
-                          setReaderQuery("");
-                        }}
-                      >
-                        {r.id === reciterId && playing ? (
-                          <Pause size={16} aria-hidden="true" />
-                        ) : (
-                          <Play size={16} aria-hidden="true" />
-                        )}
-                      </button>
-                    </li>
-                  ))}
+                          onClick={() => {
+                            if (selected && playing) {
+                              onTogglePlay();
+                              return;
+                            }
+                            if (onPlayReciter) onPlayReciter(r.id);
+                            else {
+                              onReciterChange(r.id);
+                              onPlay();
+                            }
+                            setReadersOpen(false);
+                            setReaderQuery("");
+                          }}
+                        >
+                          {selected && playing ? (
+                            <Pause size={16} aria-hidden="true" />
+                          ) : (
+                            <Play size={16} aria-hidden="true" />
+                          )}
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>,

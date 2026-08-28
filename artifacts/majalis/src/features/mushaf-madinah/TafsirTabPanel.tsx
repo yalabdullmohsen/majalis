@@ -57,10 +57,16 @@ function pickEdition(editions: TafsirRegistryEntry[], depth: Depth, preferredId?
 }
 
 function fontLabel(scale: TafsirFontScale): string {
-  if (scale === 0.9) return "أ";
-  if (scale === 1) return "أ+";
-  if (scale === 1.15) return "أ++";
-  return "أ+++";
+  if (scale === 0.9) return "صغير";
+  if (scale === 1) return "عادي";
+  if (scale === 1.15) return "كبير";
+  return "أكبر";
+}
+
+function stepFontScale(current: TafsirFontScale, dir: -1 | 1): TafsirFontScale {
+  const idx = TAFSIR_FONT_SCALES.indexOf(current);
+  const next = Math.max(0, Math.min(TAFSIR_FONT_SCALES.length - 1, idx + dir));
+  return TAFSIR_FONT_SCALES[next] ?? current;
 }
 
 export function TafsirTabPanel({
@@ -183,21 +189,35 @@ export function TafsirTabPanel({
         </p>
       ) : null}
       <div className="ayah-action-sheet__tafsir-font" role="group" aria-label="حجم خط التفسير">
-        {TAFSIR_FONT_SCALES.map((scale) => (
-          <button
-            key={scale}
-            type="button"
-            aria-pressed={fontScale === scale}
-            aria-label={`حجم ${fontLabel(scale)}`}
-            className={`ayah-action-sheet__font-btn${fontScale === scale ? " is-active" : ""}`}
-            onClick={() => {
-              setFontScale(scale);
-              persistTafsirFontScale(scale);
-            }}
-          >
-            {fontLabel(scale)}
-          </button>
-        ))}
+        <button
+          type="button"
+          className="ayah-action-sheet__font-btn"
+          aria-label="تصغير خط التفسير"
+          disabled={fontScale === TAFSIR_FONT_SCALES[0]}
+          onClick={() => {
+            const next = stepFontScale(fontScale, -1);
+            setFontScale(next);
+            persistTafsirFontScale(next);
+          }}
+        >
+          أ−
+        </button>
+        <span className="ayah-action-sheet__font-label" aria-live="polite">
+          {fontLabel(fontScale)}
+        </span>
+        <button
+          type="button"
+          className="ayah-action-sheet__font-btn"
+          aria-label="تكبير خط التفسير"
+          disabled={fontScale === TAFSIR_FONT_SCALES[TAFSIR_FONT_SCALES.length - 1]}
+          onClick={() => {
+            const next = stepFontScale(fontScale, 1);
+            setFontScale(next);
+            persistTafsirFontScale(next);
+          }}
+        >
+          أ+
+        </button>
       </div>
       {loading ? (
         <p className="mm-ayah-bar__status" aria-busy="true">
