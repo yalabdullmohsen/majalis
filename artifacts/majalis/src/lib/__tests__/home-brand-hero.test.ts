@@ -1,5 +1,5 @@
 /**
- * بوابة: هيرو الترحيب = هوية + تحية، بلا لوحة مكررة وبلا min-height:unset.
+ * بوابة: شاشة البداية — هوية واضحة بلا لوحة مكررة.
  * node --import tsx src/lib/__tests__/home-brand-hero.test.ts
  */
 import { readFileSync } from "node:fs";
@@ -8,8 +8,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const home = readFileSync(resolve(root, "src/pages/account/ui/HomeView.tsx"), "utf8");
-const css = readFileSync(resolve(root, "src/styles/components/home-brand-title.css"), "utf8");
-const wordmark = readFileSync(resolve(root, "src/components/brand/MajlisWordmark.tsx"), "utf8");
+const startCss = readFileSync(resolve(root, "src/styles/components/home/home-start.css"), "utf8");
 
 let failed = 0;
 function assert(cond: boolean, label: string) {
@@ -20,19 +19,19 @@ function assert(cond: boolean, label: string) {
   }
 }
 
-console.log("\n=== هيرو الترحيب بدون هوية مكررة ===");
+console.log("\n=== شاشة البداية — هوية Majlisilm ===");
+assert(!home.includes("PageHero"), "HomeView بلا PageHero القديم");
 assert(!home.includes("HomeBrandTitle"), "HomeView بلا HomeBrandTitle");
-assert(home.includes("dailyCtx.greeting"), "التحية ظاهرة في الهيرو");
-assert(home.includes('title="المجلس العلمي"'), "اسم التطبيق عنوان الهيرو");
-assert(home.includes("تصفح الأقسام"), "زر ثانوي لتصفح الأقسام");
-assert(!/title=\{<\s*HomeBrandTitle/.test(home), "لا عنوان هوية داخل البطاقة");
-assert(css.includes("home-page-hero"), "أنماط الهيرو المدمجة");
-assert(!css.includes("home-brand-title__panel"), "لا لوحة زخرفية للهوية في البطاقة");
-assert(!/min-height:\s*clamp\(11\.5rem,\s*33dvh/.test(css), "لا ارتفاع ثلث شاشة زائد");
-assert(!/min-height:\s*unset/.test(css), "لا إلغاء حجز ارتفاع الهيرو");
-assert(/min-height:\s*11rem/.test(css), "ارتفاع الهيرو محجوز");
-assert(/width\s*\?\?\s*138/.test(wordmark), "عرض SVG Intrinsic يحجز قبل CSS");
-assert(/height\s*\?\?\s*33/.test(wordmark), "ارتفاع SVG Intrinsic يحجز قبل CSS");
+assert(home.includes("mj-home-start__title"), "عنوان التطبيق في الشعار");
+assert(home.includes("المجلس العلمي"), "اسم التطبيق");
+assert(home.includes("علم نافع، محتوى موثوق، ودروس ميسرة"), "وصف قصير");
+assert(home.includes("StartHeader"), "هيدر البداية");
+assert(home.includes("PrayerSummaryCard"), "بطاقة مواقيت الصلاة");
+assert(home.includes("DhikrSummaryCard"), "بطاقة الأذكار");
+assert(home.includes("HomeFeaturedSections"), "أقسام بارزة");
+assert(startCss.includes("--mj-start-brand: #19815f"), "الأخضر الرئيسي");
+assert(startCss.includes("border-radius: 24px"), "حواف ناعمة");
+assert(!startCss.includes("min-height: unset"), "لا إلغاء حجز الارتفاع");
 
 if (failed) process.exit(1);
 console.log("home-brand-hero.test.ts: ok");

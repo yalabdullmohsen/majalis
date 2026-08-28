@@ -33,8 +33,8 @@ assert.match(app, /lazyWithRetry\([\s\S]*PrayerCountdownBanner/, "شريط ال�
 const homeView = read("src/pages/account/ui/HomeView.tsx");
 assert.match(homeView, /HomeBelowFold/, "جزيرة تحت الطية كسولة");
 assert.match(homeView, /IntersectionObserver/, "ترطيب تحت الطية عند الظهور");
-assert.match(homeView, /HomeDailyWirdGate/, "ورد اليوم مؤجّل عن أول شاشة");
-assert.match(homeView, /lazyWithRetry[\s\S]*DailyWirdCard/, "بيانات الورد كسولة");
+assert.match(homeView, /HomeBelowFoldGate/, "ورد اليوم ومحتوى إضافي تحت الطية");
+assert.doesNotMatch(homeView, /HomeDailyWirdGate/, "لا ورد يومي فوق الطية — صفحة أقصر");
 
 const mainSrc = read("src/main.tsx");
 assert.doesNotMatch(mainSrc, /import\("@\/pages\/account\/HomePage"\)/, "لا تسخين مزدوج لـ HomePage قبل الرسم");

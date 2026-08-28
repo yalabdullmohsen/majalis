@@ -119,6 +119,87 @@ body {
   padding-block-end: calc(var(--bottom-nav-h) + 1.1rem);
 }
 
+.mj-home-start {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 2.8vw, 1rem);
+  padding-inline: clamp(0.85rem, 3.5vw, 1.25rem);
+  max-width: 32rem;
+  margin-inline: auto;
+}
+
+.mj-start-header {
+  min-height: 2.75rem;
+  box-sizing: border-box;
+}
+
+.mj-home-start__brand {
+  min-height: 7.5rem;
+  box-sizing: border-box;
+}
+
+.mj-home-start__title {
+  margin: 0;
+  font-size: clamp(1.35rem, 4.8vw, 1.55rem);
+  line-height: 1.25;
+}
+
+.mj-prayer-summary {
+  min-height: 11.5rem;
+  box-sizing: border-box;
+}
+
+.mj-dhikr-summary {
+  min-height: 8.5rem;
+  box-sizing: border-box;
+}
+
+.mj-home-featured {
+  min-height: 9.5rem;
+  box-sizing: border-box;
+}
+
+.mj-app-card {
+  border-radius: 24px;
+  box-sizing: border-box;
+}
+
+.mj-home-lcp-ph {
+  contain: layout style;
+}
+
+.mj-home-below-fold-ph {
+  min-height: 28rem;
+}
+
+.daily-wird-card,
+[data-testid="daily-wird-card"] {
+  min-height: 28rem;
+}
+
+.mj-home-lcp-ph__search .hus-field,
+.hus-field {
+  min-height: 52px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 880px) {
+  #main-content.app-main {
+    padding-block-end: 2rem;
+  }
+
+  .bottom-nav,
+  .bottom-nav--v2 {
+    display: none;
+  }
+}
+
+@media (min-width: 720px) {
+  .mj-home-start {
+    max-width: 36rem;
+  }
+}
+
 .bottom-nav,
 .bottom-nav--v2 {
   position: fixed;
@@ -143,79 +224,4 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.mj-home-lcp-ph {
-  contain: layout style;
-}
-
-.mj-home-lcp-ph__start-here {
-  min-height: 28rem;
-}
-
-.mj-home-lcp-ph__daily-band,
-.daily-wird-card,
-[data-testid="daily-wird-card"] {
-  min-height: 28rem;
-}
-
-.mj-home-below-fold-ph {
-  min-height: 28rem;
-}
-
-.mj-home-lcp-ph__search .hus-field,
-.hus-field {
-  min-height: 52px;
-  box-sizing: border-box;
-}
-
-@media (min-width: 880px) {
-  #main-content.app-main {
-    padding-block-end: 2rem;
-  }
-
-  .bottom-nav,
-  .bottom-nav--v2 {
-    display: none;
-  }
-}
-
-@media (min-width: 720px) {
-  .mj-home-lcp-ph__start-here {
-    min-height: 20rem;
-  }
-
-  .mj-home-lcp-ph__daily-band {
-    min-height: 28rem;
-  }
-}
-
-/* CLS: حجز شبكة hsh-steps — كان يُسبب 0.012–0.013 إزاحة عند الرسم */
-.hsh-steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 0.75rem;
-  min-height: 22rem;
-  list-style: none;
-  margin: 0.75rem 0 0;
-  padding: 0;
-}
-
-.hsh-step {
-  min-height: 6.25rem;
-  box-sizing: border-box;
-}
-
-.home-start-here {
-  min-height: 28rem;
-}
-
-@media (min-width: 720px) {
-  .hsh-steps {
-    min-height: 14rem;
-  }
-
-  .home-start-here {
-    min-height: 20rem;
-  }
 }
