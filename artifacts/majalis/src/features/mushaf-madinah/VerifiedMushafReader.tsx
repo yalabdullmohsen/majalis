@@ -468,7 +468,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   );
 
   const playRange = useCallback(
-    async (range: RecitationRange, repeatCount: number) => {
+    async (range: RecitationRange, repeatCount: number, delayMs = 0) => {
       const key = selectedVerseKey ?? playingVerseKey;
       if (!key) {
         setAudioError("اختر آية أولاً");
@@ -494,7 +494,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         startAyah: loop.startAyah,
         endAyah: loop.endAyah,
         repeatCount: repeat,
-        delayMs: 0,
+        delayMs: Math.max(0, delayMs),
       });
       const start = range === "page" || range === "surah" ? loop.startAyah : parsed.ayah;
       setAudioStatus("جاري تحميل التلاوة...");
@@ -862,6 +862,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           audioStatus={audioStatus}
           currentTime={audioTime.currentTime}
           duration={audioTime.duration}
+          playbackRate={audioTime.playbackRate}
           mini={audioDockMini}
           onMiniChange={setAudioDockMini}
           onTogglePlay={() => void togglePlay()}
@@ -874,6 +875,13 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
             void audio.skipNext();
           }}
           onReciterChange={(id) => void onReciterChange(id)}
+          onSeek={(seconds) => audio.seek(seconds)}
+          onSpeed={(rate) => audio.setPlaybackRate(rate)}
+          onClose={() => {
+            setAudioDockOpen(false);
+            setAudioDockMini(false);
+            void audio.pause();
+          }}
         />
       </Suspense>
 
@@ -948,7 +956,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
             suppressPageSyncRef.current = false;
             void audio.skipNext();
           }}
-          onPlayRange={(range, repeat) => void playRange(range, repeat)}
+          onPlayRange={(range, repeat, delayMs) => void playRange(range, repeat, delayMs)}
           onSeek={(seconds) => audio.seek(seconds)}
           onSpeed={(rate) => {
             audio.setPlaybackRate(rate);

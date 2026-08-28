@@ -142,11 +142,11 @@
 }
 
 .mm-viewport[data-audio-dock="1"] {
-  --mm-dock-pad: calc(6.5rem + var(--inset-bottom, 0px));
+  --mm-dock-pad: calc(6.75rem + var(--inset-bottom, 0px));
 }
 
 .mm-viewport[data-audio-dock="mini"] {
-  --mm-dock-pad: calc(3.25rem + var(--inset-bottom, 0px));
+  --mm-dock-pad: calc(4rem + var(--inset-bottom, 0px));
 }
 
 html[data-theme="dark"] .mm-viewport,
@@ -1248,63 +1248,118 @@ html.dark .mm-viewport .mm-page-footer__badge,
   pointer-events: none;
 }
 
-/* شريط صوت عائم — كبسولة مركزية (Capsule Audio Bar) */
+/* شريط صوت مضغوط أسفل المصحف */
 .mm-audio-dock {
   position: absolute;
   left: 50%;
-  bottom: calc(var(--inset-bottom, 0px) + 0.75rem);
-  transform: translateX(-50%);
-  width: auto;
-  max-width: calc(100% - 1.5rem);
+  bottom: calc(var(--inset-bottom, 0px) + 0.5rem);
+  transform: translateX(-50%) translate3d(0, 12px, 0);
+  width: min(430px, calc(100% - 1rem));
+  max-width: calc(100% - 1rem);
   z-index: 6;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.35rem 0.55rem 0.35rem 0.4rem;
-  border-radius: 9999px;
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.45rem 0.65rem 0.5rem;
+  min-height: 72px;
+  max-height: 118px;
+  box-sizing: border-box;
+  border-radius: 1rem;
   border: 1px solid #e3d9c6;
-  background: var(--mm-audio-capsule, #f4f0e8);
-  color: var(--mm-ink);
+  background: #fdf9f3;
+  color: #111111;
   font-family: "IBM Plex Sans Arabic", sans-serif;
   font-size: 0.75rem;
   box-shadow: 0 8px 28px color-mix(in srgb, #5c4a28 18%, transparent);
   transition: opacity 160ms ease, transform 160ms ease, bottom 180ms ease;
   pointer-events: none;
   opacity: 0;
+  overflow: hidden;
 }
 
-.mm-viewport[data-mushaf-theme="night"],
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock,
 .mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock {
   border-color: color-mix(in srgb, var(--mm-gold) 35%, transparent);
-  color: var(--mm-chrome-fg);
+  background: #f7f3ea;
+  color: #111111;
 }
 
 .mm-audio-dock[data-open="1"] {
   opacity: 1;
   pointer-events: auto;
+  transform: translateX(-50%) translate3d(0, 0, 0);
 }
 
 .mm-audio-dock[data-mini="1"] {
-  padding: 0.3rem 0.4rem;
-  gap: 0.35rem;
+  max-height: 56px;
+  min-height: 52px;
+  padding: 0.3rem 0.45rem;
 }
 
-.mm-audio-dock[data-mini="1"] .mm-audio-dock__reciter,
-.mm-audio-dock[data-mini="1"] .mm-audio-dock__progress,
-.mm-audio-dock[data-mini="1"] .mm-audio-dock__status,
-.mm-audio-dock[data-mini="1"] .mm-audio-dock__verse {
-  display: none;
+.mm-audio-dock__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
 }
 
+.mm-audio-dock__meta {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.mm-audio-dock__reciter-name {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0e3d27;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mm-audio-dock__verse {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #4a4a4a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mm-audio-dock__head-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+.mm-audio-dock__reciter-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  border: 1px solid #d5c4a1;
+  border-radius: 9999px;
+  background: #fff;
+  color: #0e3d27;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.72rem;
+  min-height: 36px;
+  padding: 0 0.55rem;
+  cursor: pointer;
+}
+
+.mm-audio-dock__close,
 .mm-audio-dock__mini {
   appearance: none;
   border: 0;
-  background: transparent;
-  color: var(--mm-ui-accent);
+  background: color-mix(in srgb, #111 8%, transparent);
+  color: #111;
   font: inherit;
-  min-width: 36px;
-  min-height: 36px;
+  min-width: 44px;
+  min-height: 44px;
   padding: 0;
   cursor: pointer;
   display: grid;
@@ -1312,67 +1367,50 @@ html.dark .mm-viewport .mm-page-footer__badge,
   border-radius: 999px;
 }
 
-.mm-audio-dock__meta {
-  display: contents;
+.mm-audio-dock__seek {
+  display: block;
+  margin: 0;
 }
 
-.mm-audio-dock__verse {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-}
-
-.mm-audio-dock__reciter {
-  display: flex;
-  align-items: center;
-  max-width: 10.5rem;
-}
-
-.mm-audio-dock__reciter-btn {
+.mm-audio-dock__progress {
   appearance: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  max-width: 100%;
-  border: 1px solid #d5c4a1;
-  border-radius: 9999px;
-  background: color-mix(in srgb, var(--mm-banner-name-bg) 70%, transparent);
-  color: var(--mm-ui-accent);
-  font: inherit;
-  font-weight: 700;
-  font-size: 0.72rem;
-  padding: 0.4rem 0.7rem;
-  cursor: pointer;
-  min-height: 36px;
+  -webkit-appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 22px;
+  margin: 0;
+  background: transparent;
+  accent-color: #135034;
 }
 
-.mm-viewport[data-mushaf-theme="night"],
-.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__reciter-btn {
-  border-color: color-mix(in srgb, var(--mm-gold) 40%, transparent);
-  background: color-mix(in srgb, #2a241c 80%, transparent);
+.mm-audio-dock__progress::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, #135034 28%, #d9d0bf);
 }
 
-.mm-audio-dock__reciter-btn span {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.mm-audio-dock__progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border-radius: 999px;
+  background: #135034;
+  border: 0;
 }
 
 .mm-audio-dock__controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.15rem;
+  gap: 0.35rem;
 }
 
 .mm-audio-dock__controls button {
   appearance: none;
-  border: 0;
-  background: transparent;
-  color: inherit;
+  border: 1px solid color-mix(in srgb, #135034 22%, #ddd);
+  background: #fff;
+  color: #0e3d27;
   width: 40px;
   height: 40px;
   min-width: 40px;
@@ -1384,29 +1422,52 @@ html.dark .mm-viewport .mm-page-footer__badge,
 }
 
 .mm-audio-dock__controls button.mm-audio-dock__play {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  min-height: 42px;
-  background: var(--mm-ui-accent);
-  color: #fff;
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--mm-ui-accent) 35%, transparent);
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  background: color-mix(in srgb, #135034 16%, #fff);
+  border-color: #135034;
 }
 
 .mm-audio-dock__controls button.mm-audio-dock__play:hover,
 .mm-audio-dock__controls button.mm-audio-dock__play:focus-visible {
-  background: var(--mm-ui-accent-deep);
+  background: color-mix(in srgb, #135034 22%, #fff);
+}
+
+.mm-audio-dock__rates {
+  display: flex;
+  gap: 0.2rem;
+  margin-inline-start: 0.25rem;
+}
+
+.mm-audio-dock__rates button {
+  width: auto !important;
+  min-width: 36px;
+  padding: 0 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.mm-audio-dock__rates button[aria-pressed="true"] {
+  background: color-mix(in srgb, #135034 16%, #fff);
+  border-color: #135034;
 }
 
 .mm-audio-dock__status {
-  position: absolute;
-  width: 1px;
-  height: 1px;
+  margin: 0;
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #4a4a4a;
+  white-space: nowrap;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  text-overflow: ellipsis;
 }
 
-.mm-audio-dock__progress {
+.mm-audio-dock[data-mini="1"] .mm-audio-dock__seek,
+.mm-audio-dock[data-mini="1"] .mm-audio-dock__status,
+.mm-audio-dock[data-mini="1"] .mm-audio-dock__rates {
   display: none;
 }
 
@@ -1485,24 +1546,32 @@ html.dark .mm-ayah-bar__dismiss {
   margin-inline-start: 0;
   margin-inline-end: 0;
   margin-block: 0;
-  background: var(--mm-paper);
-  color: var(--mm-ink);
+  /* لوحة فاتحة دائمًا — تباين مقروء على الورق والليلي */
+  background: #fdf9f3;
+  color: #111111;
   opacity: 1;
   border: 0;
   border-bottom: 0;
   border-radius: 22px 22px 0 0;
-  padding: 0.55rem 0.85rem calc(0.65rem + var(--inset-bottom, 0px));
+  padding: 0.45rem 0.75rem calc(0.55rem + var(--inset-bottom, 0px));
   box-shadow: 0 -8px 28px color-mix(in srgb, #5c4a28 18%, transparent);
   font-family: "IBM Plex Sans Arabic", sans-serif;
   display: grid;
   grid-template-rows: auto auto auto minmax(0, 1fr);
-  gap: 0.4rem;
+  gap: 0.3rem;
   overflow: hidden;
   overscroll-behavior: contain;
   transform: translate3d(0, 0, 0);
   transition:
     transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
     opacity 160ms ease-out;
+}
+
+/* مشغّل مضغوط داخل الشيت المطوي */
+.ayah-action-sheet.is-collapsed.is-tilawa .mm-ayah-bar__panel {
+  height: min(248px, 42dvh);
+  max-height: min(248px, 42dvh);
+  min-height: 200px;
 }
 
 .ayah-action-sheet.is-half .mm-ayah-bar__panel {
@@ -1522,9 +1591,9 @@ html.dark .mm-ayah-bar__dismiss {
   grid-row: 1;
   width: 2.5rem;
   height: 0.28rem;
-  margin: 0.15rem auto 0.1rem;
+  margin: 0.1rem auto 0.05rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mm-ink) 22%, transparent);
+  background: color-mix(in srgb, #111 22%, transparent);
 }
 
 .mm-ayah-bar__panel:has(.mm-ayah-bar__readers),
@@ -1535,9 +1604,9 @@ html.dark .mm-ayah-bar__dismiss {
 
 html[data-theme="dark"] .mm-ayah-bar__panel,
 html.dark .mm-ayah-bar__panel {
-  background: #1a2420;
-  color: #f7faf7;
-  box-shadow: 0 -4px 22px color-mix(in srgb, #000 45%, transparent);
+  background: #f7f3ea;
+  color: #111111;
+  box-shadow: 0 -4px 22px color-mix(in srgb, #000 35%, transparent);
 }
 
 .mm-ayah-bar__head {
@@ -1552,7 +1621,7 @@ html.dark .mm-ayah-bar__panel {
   margin: 0;
   font-size: 0.86rem;
   font-weight: 600;
-  color: var(--mm-gold-deep);
+  color: #785e38;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1561,14 +1630,14 @@ html.dark .mm-ayah-bar__panel {
 
 html[data-theme="dark"] .mm-ayah-bar__title,
 html.dark .mm-ayah-bar__title {
-  color: var(--mm-gold-soft);
+  color: #785e38;
 }
 
 .mm-ayah-bar__close {
   appearance: none;
   border: 0;
-  background: color-mix(in srgb, var(--mm-ink) 6%, transparent);
-  color: inherit;
+  background: color-mix(in srgb, #111 8%, transparent);
+  color: #111111;
   width: 44px;
   height: 44px;
   min-width: 44px;
@@ -1578,6 +1647,8 @@ html.dark .mm-ayah-bar__title {
   place-items: center;
   cursor: pointer;
   flex-shrink: 0;
+  position: relative;
+  z-index: 2;
 }
 
 .mm-ayah-bar__transport {
@@ -2204,13 +2275,14 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 .ayah-action-sheet__edition select,
 .ayah-action-sheet__repeat select {
   font: inherit;
-  font-size: 0.78rem;
+  font-size: 0.86rem;
+  font-weight: 600;
   min-height: 44px;
   border-radius: 0.45rem;
-  border: 1px solid color-mix(in srgb, var(--mm-gold) 40%, #ccc);
-  background: var(--mm-paper);
-  color: var(--mm-ink);
-  padding: 0 0.45rem;
+  border: 1px solid color-mix(in srgb, #785e38 40%, #bbb);
+  background: #ffffff;
+  color: #111111;
+  padding: 0 0.55rem;
 }
 
 .ayah-action-sheet__tafsir-actions,
@@ -2221,19 +2293,23 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   gap: 0.32rem;
 }
 
+.ayah-action-sheet__player .ayah-action-sheet__rates {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .ayah-action-sheet__tafsir-actions button,
 .ayah-action-sheet__range button,
 .ayah-action-sheet__rates button,
 .ayah-action-sheet__apply-range,
 .mm-ayah-bar__transport .mm-ayah-bar__skip {
   appearance: none;
-  border: 0;
+  border: 1px solid color-mix(in srgb, #135034 22%, #d0d0d0);
   border-radius: 0.55rem;
-  background: var(--mm-paper-deep);
-  color: var(--mm-ink);
+  background: #ffffff;
+  color: #111111;
   font: inherit;
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 700;
   min-width: 44px;
   min-height: 44px;
   display: inline-flex;
@@ -2245,32 +2321,42 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 
 .ayah-action-sheet__range button[aria-pressed="true"],
 .ayah-action-sheet__rates button[aria-pressed="true"] {
-  background: color-mix(in srgb, var(--mm-gold) 22%, var(--mm-paper-deep));
+  background: color-mix(in srgb, #135034 16%, #fff);
+  border-color: #135034;
+  color: #0e3d27;
 }
 
 .ayah-action-sheet__range-label,
 .ayah-action-sheet__repeat {
   margin: 0.15rem 0 0;
-  font-size: 0.75rem;
-  color: color-mix(in srgb, var(--mm-ink) 55%, transparent);
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: #2a2a2a;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
 }
 
+.ayah-action-sheet__seek {
+  display: block;
+  margin: 0;
+  padding-inline: 0.1rem;
+}
+
 .ayah-action-sheet__seek input[type="range"] {
   appearance: none;
   -webkit-appearance: none;
   width: 100%;
-  min-height: 44px;
+  min-height: 28px;
+  margin: 0;
   background: transparent;
-  accent-color: var(--mm-ui-accent);
+  accent-color: #135034;
 }
 .ayah-action-sheet__seek input[type="range"]::-webkit-slider-runnable-track {
   height: 4px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mm-ui-accent) 28%, #d9d0bf);
+  background: color-mix(in srgb, #135034 28%, #d9d0bf);
 }
 .ayah-action-sheet__seek input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -2280,12 +2366,16 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   margin-top: -7px;
   border-radius: 999px;
   border: 0;
-  background: var(--mm-ui-accent);
+  background: #135034;
 }
 
 .ayah-action-sheet__apply-range {
   width: 100%;
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
+  background: #135034;
+  color: #ffffff;
+  border-color: #135034;
+  font-size: 0.95rem;
 }
 
 /* خانة شبكة ٥ ثابتة — تحوي المحتوى + نصوص الحالة العابرة سويّاً بمعزل عن
@@ -2311,7 +2401,134 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 
 .ayah-action-sheet__tilawa {
   display: grid;
+  gap: 0.45rem;
+}
+
+.ayah-action-sheet__player {
+  display: grid;
   gap: 0.35rem;
+  padding: 0.45rem 0.55rem 0.55rem;
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in srgb, #135034 22%, #d9d0bf);
+  background: #fffef9;
+  color: #111111;
+  min-height: 72px;
+  max-height: 96px;
+  box-sizing: content-box;
+}
+
+.ayah-action-sheet.is-tilawa .ayah-action-sheet__player {
+  max-height: none;
+}
+
+.ayah-action-sheet__player-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.ayah-action-sheet__player-meta {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.ayah-action-sheet__player-reciter {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #0e3d27;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ayah-action-sheet__player-ayah {
+  margin: 0.05rem 0 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #4a4a4a;
+  line-height: 1.3;
+}
+
+.ayah-action-sheet__player-settings {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, #135034 35%, transparent);
+  background: #f3faf6;
+  color: #0e3d27;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.ayah-action-sheet__player-controls {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.ayah-action-sheet__ctrl {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, #135034 25%, transparent);
+  background: #fff;
+  color: #0e3d27;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.ayah-action-sheet__ctrl:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ayah-action-sheet__hifz-toggle {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, #785e38 40%, transparent);
+  background: color-mix(in srgb, #e8d4b0 35%, #fff);
+  color: #3d2e14;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  min-height: 44px;
+  border-radius: 0.7rem;
+  cursor: pointer;
+}
+
+.ayah-action-sheet__hifz-toggle.is-open {
+  background: color-mix(in srgb, #135034 14%, #fff);
+  border-color: color-mix(in srgb, #135034 40%, transparent);
+  color: #0e3d27;
+}
+
+.ayah-action-sheet__hifz {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.65rem 0.7rem;
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in srgb, #785e38 28%, #d9d0bf);
+  background: #fffefb;
+  color: #111111;
+}
+
+.ayah-action-sheet__hifz-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0e3d27;
 }
 
 .ayah-action-sheet__tilawa-reader {
@@ -2319,24 +2536,24 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   gap: 0.35rem;
   padding: 0.55rem 0.65rem;
   border-radius: 0.85rem;
-  border: 1px solid color-mix(in srgb, var(--mm-ui-accent) 28%, transparent);
-  background: color-mix(in srgb, var(--mm-ui-accent) 8%, var(--mm-paper));
+  border: 1px solid color-mix(in srgb, #135034 28%, transparent);
+  background: color-mix(in srgb, #135034 8%, #fff);
 }
 
 .ayah-action-sheet__tilawa-reader-name {
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
-  color: var(--mm-ui-accent-deep);
+  color: #0e3d27;
   line-height: 1.35;
 }
 
 .ayah-action-sheet__tilawa-reader-btn {
   appearance: none;
-  border: 1px solid color-mix(in srgb, var(--mm-ui-accent) 40%, transparent);
+  border: 1px solid color-mix(in srgb, #135034 40%, transparent);
   border-radius: 999px;
-  background: var(--mm-paper);
-  color: var(--mm-ui-accent-deep);
+  background: #fff;
+  color: #0e3d27;
   font: inherit;
   font-size: 0.82rem;
   font-weight: 650;
@@ -2938,10 +3155,6 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   min-height: 0;
 }
 
-.mm-audio-dock__progress {
-  display: none;
-}
-
 .mm-settings-sheet {
   --mm-paper: #fdf9f3;
   --mm-paper-deep: #faf6ee;
@@ -3188,24 +3401,24 @@ html.dark .mm-settings-sheet {
   -webkit-appearance: none;
   display: flex;
   width: 100%;
-  min-height: 52px;
+  min-height: 44px;
   align-items: center;
   justify-content: center;
-  gap: 0.55rem;
-  border: 1px solid color-mix(in srgb, var(--mm-ui-accent) 40%, transparent);
+  gap: 0.45rem;
+  border: 1px solid color-mix(in srgb, #135034 40%, transparent);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mm-ui-accent) 16%, var(--mm-paper));
-  color: var(--mm-ui-accent-deep, #0e3d27);
-  font-size: 1.05rem;
+  background: color-mix(in srgb, #135034 14%, #fff);
+  color: #0e3d27;
+  font-size: 0.95rem;
   font-weight: 700;
   font-family: inherit;
-  padding: 0.85rem 1rem;
+  padding: 0.45rem 0.75rem;
   cursor: pointer;
   outline: none;
   -webkit-tap-highlight-color: transparent;
 }
 .ayah-action-sheet__play-hero.is-active {
-  background: color-mix(in srgb, var(--mm-ui-accent) 22%, var(--mm-paper));
+  background: color-mix(in srgb, #135034 20%, #fff);
 }
 .ayah-action-sheet__play-hero.is-loading {
   opacity: 0.85;
@@ -3213,10 +3426,10 @@ html.dark .mm-settings-sheet {
 .ayah-action-sheet__play-hero.is-error {
   border-color: color-mix(in srgb, #9a3412 45%, transparent);
   color: #9a3412;
-  background: color-mix(in srgb, #9a3412 10%, var(--mm-paper));
+  background: color-mix(in srgb, #9a3412 10%, #fff);
 }
 .ayah-action-sheet__play-hero:focus-visible {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mm-ui-accent) 40%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, #135034 40%, transparent);
 }
 .ayah-action-sheet__play-hero:active {
   opacity: 0.92;
@@ -3225,8 +3438,8 @@ html.dark .mm-settings-sheet {
   width: 1.15rem;
   height: 1.15rem;
   border-radius: 999px;
-  border: 2px solid color-mix(in srgb, var(--mm-ui-accent) 35%, transparent);
-  border-top-color: var(--mm-ui-accent);
+  border: 2px solid color-mix(in srgb, #135034 35%, transparent);
+  border-top-color: #135034;
   animation: mm-play-spin 0.7s linear infinite;
 }
 @keyframes mm-play-spin {
@@ -3241,11 +3454,11 @@ html.dark .mm-settings-sheet {
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  margin-top: 0.45rem;
+  margin-top: 0.15rem;
   border-radius: 12px;
-  border: 1px solid color-mix(in srgb, var(--mm-gold, #bf9f5b) 45%, transparent);
-  background: color-mix(in srgb, var(--mm-gold, #bf9f5b) 12%, transparent);
-  color: var(--mm-ink, #0a0a0a);
+  border: 1px solid color-mix(in srgb, #bf9f5b 45%, transparent);
+  background: color-mix(in srgb, #bf9f5b 12%, #fff);
+  color: #111111;
   font-size: 0.95rem;
   font-weight: 600;
   font-family: inherit;
@@ -3255,9 +3468,10 @@ html.dark .mm-settings-sheet {
   opacity: 0.9;
 }
 .ayah-action-sheet__audio-state {
-  margin: 0.35rem 0 0;
-  font-size: 0.85rem;
-  color: color-mix(in srgb, var(--mm-ink, #0a0a0a) 62%, transparent);
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #3d3d3d;
   text-align: center;
 }
 .ayah-action-sheet__tabs {
