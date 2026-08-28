@@ -36,6 +36,8 @@ export function isPolicyPath(p) {
     /^\.github\/workflows\/phase2-trial-import\.yml$/i.test(s) ||
     /^\.github\/workflows\/harvest-sources\.yml$/i.test(s) ||
     /^\.github\/workflows\/auto-deploy\.yml$/i.test(s) ||
+    /^\.github\/workflows\/auto-maintenance\.yml$/i.test(s) ||
+    /^scripts\/auto-maintenance\//i.test(s) ||
     /^artifacts\/majalis\/vercel\.json$/i.test(s)
   );
 }
@@ -112,7 +114,8 @@ function isPolicyWorkflowAllowlist(p) {
     /^\.github\/workflows\/production-bootstrap\.yml$/i.test(p) ||
     /^\.github\/workflows\/phase2-trial-import\.yml$/i.test(p) ||
     /^\.github\/workflows\/harvest-sources\.yml$/i.test(p) ||
-    /^\.github\/workflows\/auto-deploy\.yml$/i.test(p)
+    /^\.github\/workflows\/auto-deploy\.yml$/i.test(p) ||
+    /^\.github\/workflows\/auto-maintenance\.yml$/i.test(p)
   );
 }
 
@@ -125,6 +128,7 @@ export function isRiskyPath(p) {
   // Allowlisted policy workflows / throughput paths are not risky.
   if (isPolicyWorkflowAllowlist(s)) return false;
   if (/^artifacts\/majalis\/vercel\.json$/i.test(s)) return false;
+  if (/^scripts\/auto-maintenance\//i.test(s)) return false;
   for (const re of DANGER_PATH_PATTERNS) {
     if (re.test(s)) return true;
   }

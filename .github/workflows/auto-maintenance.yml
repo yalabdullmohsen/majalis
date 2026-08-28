@@ -1,0 +1,101 @@
+name: Auto Maintenance
+
+# مسح صيانة دوري: بيانات، كاش، أسرار ظاهرة، npm audit، تقارير.
+# لا يدمج تغييرات شرعية/خطرة تلقائيًا — يرفع تقريرًا وقد يقترح PR منخفض الخطورة.
+
+on:
+  schedule:
+    - cron: "30 2 * * *"   # 05:30 Kuwait
+    - cron: "30 14 * * *"  # 17:30 Kuwait
+  workflow_dispatch:
+    inputs:
+      fail_on_secrets:
+        description: "Fail job if live secrets detected"
+        required: false
+        type: boolean
+        default: true
+      skip_network:
+        description: "Skip production version.json probe"
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: auto-maintenance
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  actions: read
+
+jobs:
+  scan:
+    if: github.repository == 'yalabdullmohsen/majalis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Policy unit tests
+        run: node --test scripts/auto-maintenance/__tests__/policy.test.mjs
+
+      - name: Run maintenance scan
+        env:
+          AUTO_MAINTENANCE_SKIP_NETWORK: ${{ inputs.skip_network && '1' || '0' }}
+        run: |
+          EXTRA=""
+          if [ "${{ inputs.fail_on_secrets }}" = "true" ] || [ "${{ github.event_name }}" = "schedule" ]; then
+            EXTRA="--fail-on-blocked"
+          fi
+          if [ "$AUTO_MAINTENANCE_SKIP_NETWORK" = "1" ]; then
+            EXTRA="$EXTRA --no-network"
+          fi
+          node scripts/auto-maintenance/run.mjs $EXTRA
+
+      - name: Ensure labels
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ensure() {
+            local name="$1" color="$2" desc="$3"
+            gh label create "$name" --color "$color" --description "$desc" 2>/dev/null \
+              || gh label edit "$name" --color "$color" --description "$desc" 2>/dev/null \
+              || true
+          }
+          ensure "maintenance-safe" "FBCA04" "Domain: maintenance-safe"
+          ensure "needs-content-review" "D4C5F9" "Islamic/content change needs human review"
+          ensure "risky:manual-review" "D93F0B" "Requires human review"
+          ensure "security-safe" "B60205" "Domain: security-safe"
+          ensure "safe:auto-merge" "0E8A16" "Opt-in for immediate safe auto-merge"
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: auto-maintenance-report
+          path: reports/auto-maintenance/
+          if-no-files-found: warn
+
+      - name: Summarize in job log
+        if: always()
+        run: |
+          if [ -f reports/auto-maintenance/auto-maintenance-latest.md ]; then
+            echo "## Auto maintenance" >> "$GITHUB_STEP_SUMMARY"
+            head -n 80 reports/auto-maintenance/auto-maintenance-latest.md >> "$GITHUB_STEP_SUMMARY"
+          fi
