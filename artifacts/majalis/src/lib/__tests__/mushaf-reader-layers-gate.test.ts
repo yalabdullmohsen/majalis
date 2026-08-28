@@ -47,6 +47,12 @@ assert.match(reader, /onExit=\{onExit\}/);
 assert.match(controls, /\{pageNumber\} \/ \{MUSHAF_PAGE_MAX\}/);
 assert.match(controls, /mm-goto__error/);
 assert.match(controls, /أدخل رقمًا بين/);
+assert.match(controls, /enterKeyHint=["']go["']/);
+assert.match(controls, /type=["']text["']/);
+assert.match(controls, /handleGoToPage|onSubmit=\{handleGoToPage\}/);
+assert.match(controls, /inputRef|focus\(/);
+assert.match(controls, /\[0-9٠-٩۰-۹\]/);
+assert.doesNotMatch(controls, /type=["']number["']/);
 assert.match(css, /\.mm-controls__page[\s\S]*?font-weight:\s*800/);
 assert.match(css, /grid-template-columns:\s*1fr auto 1fr/);
 

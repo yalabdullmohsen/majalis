@@ -1,5 +1,5 @@
 import { BookOpen, List, Search, Settings2 } from "lucide-react";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN, parseMushafPageQuery } from "@/lib/quran-last-page";
 
 type Props = {
@@ -18,6 +18,13 @@ type Props = {
   onToggleTheme?: () => void;
   themeLabel?: string;
 };
+
+/** أرقام غربية/عربية/فارسية فقط أثناء الكتابة */
+const PAGE_DIGIT_RE = /[0-9٠-٩۰-۹]/g;
+
+function sanitizePageDraft(raw: string): string {
+  return (raw.match(PAGE_DIGIT_RE) ?? []).join("");
+}
 
 /** أدوات المصحف — شريط أيقونات علوي خفيف. */
 export function MushafControls({
@@ -39,6 +46,7 @@ export function MushafControls({
   const [draft, setDraft] = useState(String(pageNumber));
   const [gotoError, setGotoError] = useState<string | null>(null);
   const titleId = useId();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const visible = open || persist || gotoOpen;
   const showExit = open || exitAlwaysVisible;
 
@@ -52,6 +60,51 @@ export function MushafControls({
     setDraft(String(pageNumber));
     setGotoError(null);
   }, [pageNumber]);
+
+  useEffect(() => {
+    if (!gotoOpen) return;
+    setDraft(String(pageNumber));
+    setGotoError(null);
+    const id = window.requestAnimationFrame(() => {
+      const el = inputRef.current;
+      if (!el) return;
+      el.focus({ preventScroll: true });
+      el.select();
+    });
+    return () => window.cancelAnimationFrame(id);
+  }, [gotoOpen, pageNumber]);
+
+  const openGoto = () => {
+    setGotoError(null);
+    setGotoOpen(true);
+  };
+
+  const closeGoto = () => {
+    inputRef.current?.blur();
+    setGotoOpen(false);
+    setGotoError(null);
+  };
+
+  const handleGoToPage = (e?: FormEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    const n = parseMushafPageQuery(draft);
+    if (n == null || n < MUSHAF_PAGE_MIN || n > MUSHAF_PAGE_MAX) {
+      setGotoError(`أدخل رقمًا بين ${MUSHAF_PAGE_MIN} و${MUSHAF_PAGE_MAX}`);
+      inputRef.current?.focus({ preventScroll: true });
+      return;
+    }
+    setGotoError(null);
+    inputRef.current?.blur();
+    onGoto(n);
+    setGotoOpen(false);
+  };
+
+  const onInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    handleGoToPage();
+  };
 
   return (
     <div
@@ -76,10 +129,7 @@ export function MushafControls({
           <button
             type="button"
             className="mm-controls__icon"
-            onClick={() => {
-              setGotoError(null);
-              setGotoOpen(true);
-            }}
+            onClick={openGoto}
             aria-label={`الصفحة ${pageNumber} من ${MUSHAF_PAGE_MAX} — انتقال`}
           >
             <BookOpen size={22} aria-hidden="true" />
@@ -87,7 +137,7 @@ export function MushafControls({
           <button
             type="button"
             className="mm-controls__icon"
-            onClick={() => (onSearch ? onSearch() : setGotoOpen(true))}
+            onClick={() => (onSearch ? onSearch() : openGoto())}
             aria-label="بحث"
           >
             <Search size={22} aria-hidden="true" />
@@ -99,10 +149,7 @@ export function MushafControls({
         <button
           type="button"
           className="mm-controls__btn mm-controls__page"
-          onClick={() => {
-            setGotoError(null);
-            setGotoOpen(true);
-          }}
+          onClick={openGoto}
           aria-label={`الصفحة ${pageNumber} من ${MUSHAF_PAGE_MAX} — انتقال`}
           dir="ltr"
         >
@@ -139,36 +186,41 @@ export function MushafControls({
         <form
           className="mm-goto"
           aria-labelledby={titleId}
-          onSubmit={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const n = parseMushafPageQuery(draft);
-            if (n == null || n < MUSHAF_PAGE_MIN || n > MUSHAF_PAGE_MAX) {
-              setGotoError(`أدخل رقمًا بين ${MUSHAF_PAGE_MIN} و ${MUSHAF_PAGE_MAX}`);
-              return;
-            }
-            setGotoError(null);
-            onGoto(n);
-            setGotoOpen(false);
-          }}
+          data-testid="mushaf-goto-form"
+          action="#"
+          method="get"
+          noValidate
+          onSubmit={handleGoToPage}
         >
           <h2 id={titleId} className="mm-goto__title">
             انتقال إلى صفحة
           </h2>
+          {/*
+            iOS: inputMode=numeric يعرض لوحة أرقام بلا زر Go/بحث.
+            نستخدم text + enterKeyHint=go ليظهر «انتقال/Go» مع قبول الأرقام فقط.
+          */}
           <input
+            ref={inputRef}
             type="text"
-            inputMode="numeric"
+            name="mushaf-page"
+            inputMode="text"
             enterKeyHint="go"
-            pattern="[0-9]*"
+            pattern="[0-9٠-٩۰-۹]*"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
             value={draft}
             onChange={(e) => {
-              setDraft(e.target.value);
+              setDraft(sanitizePageDraft(e.target.value));
               setGotoError(null);
             }}
+            onKeyDown={onInputKeyDown}
             dir="ltr"
             aria-label="رقم الصفحة"
             aria-invalid={gotoError ? true : undefined}
             aria-describedby={gotoError ? `${titleId}-err` : undefined}
+            data-testid="mushaf-goto-input"
           />
           {gotoError ? (
             <p className="mm-goto__error" id={`${titleId}-err`} role="alert">
@@ -179,7 +231,7 @@ export function MushafControls({
             <button type="submit" data-primary="1">
               انتقال
             </button>
-            <button type="button" data-primary="0" onClick={() => setGotoOpen(false)}>
+            <button type="button" data-primary="0" onClick={closeGoto}>
               إلغاء
             </button>
           </div>
