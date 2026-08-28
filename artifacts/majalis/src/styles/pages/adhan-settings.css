@@ -24,6 +24,13 @@
   margin-bottom: 1rem;
 }
 
+.ads-help-link {
+  color: var(--msk-gold, var(--mj-brand-deep, #1c5244));
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 /* Toast عابر — لا يحجز مساحة في التدفق */
 .ads-toast {
   position: fixed;

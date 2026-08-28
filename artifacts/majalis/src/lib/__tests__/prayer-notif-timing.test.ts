@@ -237,17 +237,17 @@ const { hashPrayerNotificationId } = await import("../prayer-notification-ids");
     prayerTimeLabel: formatTime12("18:27"),
     minutesBefore: 15,
   });
-  assert.match(pre.title, /استعد/);
+  assert.match(pre.title, /اقترب/);
   assert.match(pre.body, /المغرب/);
-  assert.match(pre.body, /١٥|15|٦|6/);
-  assert.match(pre.body, /بعد/);
+  assert.match(pre.body, /١٥|15|بقي/);
+  assert.match(pre.body, /صلاة/);
   const enter = buildScheduledPrayerNotificationCopy({
     kind: "enter",
     prayerName: "المغرب",
     prayerTimeLabel: formatTime12("18:27"),
   });
-  assert.match(enter.title, /أذان/);
-  assert.ok(enter.body.length > 0);
+  assert.match(enter.title, /أذان المغرب/);
+  assert.match(enter.body, /حان وقت صلاة المغرب/);
   console.log("  ✓ scheduled copy includes clock time");
 }
 

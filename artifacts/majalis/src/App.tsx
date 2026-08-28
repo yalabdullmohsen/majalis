@@ -382,6 +382,7 @@ const LearnCategoryPage = lazy(() => import("@/views/learn/LearnCategoryPage"));
 const LearnSeriesPage = lazy(() => import("@/views/learn/LearnSeriesPage"));
 const LearnLessonPage = lazy(() => import("@/views/learn/LearnLessonPage"));
 const AdhanSettingsPage = lazy(() => import("@/pages/worship/AdhanSettingsPage"));
+const AdhanHelpPage = lazy(() => import("@/pages/worship/AdhanHelpPage"));
 const UploadPage = lazy(() => import("@/views/UploadPage"));
 const MySubmissionsPage = lazy(() => import("@/views/MySubmissionsPage"));
 const UserStatsPage = lazy(() => import("@/views/UserStatsPage"));
@@ -1098,6 +1099,7 @@ function Router() {
       <Route path="/muezzins/:rest"><Redirect to="/adhan-settings" /></Route>
       <Route path="/muezzins"><Redirect to="/adhan-settings" /></Route>
       <Route path="/adhan-settings"><SafeLazyRoute component={AdhanSettingsPage} /></Route>
+      <Route path="/adhan-help"><SafeLazyRoute component={AdhanHelpPage} /></Route>
       <Route path="/qibla"><SafeLazyRoute component={QiblaPage} /></Route>
       <Route path="/tasbih"><SafeLazyRoute component={TasbihPage} /></Route>
       <Route path="/daily-wird"><SafeLazyRoute component={DailyWirdPage} /></Route>

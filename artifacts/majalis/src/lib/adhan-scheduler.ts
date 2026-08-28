@@ -99,16 +99,16 @@ function showBrowserNotification(event: AdhanEvent) {
   if (!("Notification" in window) || Notification.permission !== "granted") return;
   const title =
     event.type === "advance"
-      ? `استعد للصلاة`
+      ? `اقترب وقت ${event.prayerName}`
       : event.type === "iqamah"
         ? `إقامة ${event.prayerName}`
         : `أذان ${event.prayerName}`;
   const body =
     event.type === "advance"
-      ? `${event.prayerName}${event.prayerTimeLabel ? ` ${event.prayerTimeLabel}` : ""} · بعد ${event.minutesBefore} دقيقة`
+      ? `بقي ${event.minutesBefore} دقائق على صلاة ${event.prayerName}`
       : event.type === "iqamah"
         ? `${event.prayerTimeLabel ?? "حان وقت الإقامة"}`
-        : `${event.prayerTimeLabel ?? "حان وقت الصلاة"}`;
+        : `حان وقت صلاة ${event.prayerName}`;
 
   try {
     new Notification(title, {
