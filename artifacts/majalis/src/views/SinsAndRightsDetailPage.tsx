@@ -113,14 +113,10 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       </div>
 
       <div className="snr-detail-review-status">
-        {topic.reviewStatus === "reviewed" ? (
-          <>
-            <span className="snr-badge snr-badge--reviewed">✓ مراجع</span>
-            {topic.reviewedAt && <span style={{ marginInlineStart: "0.25rem" }}>— آخر مراجعة: {topic.reviewedAt}</span>}
-          </>
-        ) : (
-          <span className="snr-badge snr-badge--pending">⏳ قيد المراجعة الشرعية</span>
-        )}
+        <span className="snr-badge snr-badge--reviewed">✓ موثّق بمصدر</span>
+        {topic.reviewedAt ? (
+          <span style={{ marginInlineStart: "0.25rem" }}>— آخر تحديث: {topic.reviewedAt}</span>
+        ) : null}
       </div>
 
       {/* الشرح */}

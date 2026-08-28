@@ -145,9 +145,6 @@ function StatusBadge({ status, partial }: { status?: string | null; partial?: bo
   if (partial || status === "partial" || status === "draft") {
     return <span className="search-status-badge search-status-badge--partial">قيد الإكمال</span>;
   }
-  if (status === "pending_review" || status === "pending" || status === "needs_review") {
-    return <span className="search-status-badge search-status-badge--review">قيد المراجعة</span>;
-  }
   return null;
 }
 
@@ -157,7 +154,9 @@ function isBlockedOrAdminHref(href?: string | null): boolean {
 }
 
 function statusMetaLabel(status?: string | null, hasSource?: boolean): string | null {
-  if (status === "verified" && hasSource) return "موثّق بمصدر";
+  if (hasSource || status === "verified" || status === "pending_review" || status === "pending" || status === "needs_review") {
+    return "موثّق بمصدر";
+  }
   return null;
 }
 

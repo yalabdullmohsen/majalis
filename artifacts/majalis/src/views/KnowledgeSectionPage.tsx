@@ -101,15 +101,9 @@ export default function KnowledgeSectionPage() {
   }
 
   if (item) {
-    const isReview = item.review_status === "needs_review";
     return (
       <div className={`page-shell narrow ${focusMode ? "knowledge-focus" : ""}`} dir="rtl">
         <PageHeader eyebrow={SECTION_TITLE[section] || "معرفة"} title={item.title} />
-        {isReview && (
-          <p role="status" className="knowledge-review-banner">
-            هذا المدخل قيد المراجعة العلمية — لا يُعرض كحقيقة قطعية.
-          </p>
-        )}
         <div className="knowledge-toolbar">
           <button type="button" className="asp-add-btn" onClick={() => setFontScale((s) => Math.min(1.6, s + 0.1))}>
             تكبير الخط

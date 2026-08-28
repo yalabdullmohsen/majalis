@@ -51,7 +51,7 @@ export default function ArbaeenLovePage() {
       {loading ? (
         <SkeletonCardGrid count={4} />
       ) : items.length === 0 ? (
-        <Empty text="لا توجد أحاديث منشورة بعد في هذه المجموعة — قيد المراجعة العلمية." />
+        <Empty text="لا توجد أحاديث منشورة بعد في هذه المجموعة." />
       ) : (
         <div className="fiqh-review-list">
           {items.map((item) => (

@@ -62,7 +62,7 @@ export default function ResearchDetailPage() {
       <div className="sr-page">
         <div className="sr-empty">
           <p><strong>البحث غير متاح</strong></p>
-          <p>قد يكون قيد المراجعة أو غير موجود.</p>
+          <p>قد يكون غير موجود أو غير منشور.</p>
           <Link href="/academic-research" className="sr-btn sr-btn--outline">العودة للمكتبة</Link>
         </div>
       </div>
@@ -73,8 +73,8 @@ export default function ResearchDetailPage() {
     return (
       <div className="sr-page">
         <div className="sr-empty">
-          <p><strong>بحث شخصي قيد المراجعة</strong></p>
-          <p>لا يُعرض للعامة حتى اعتماد مراجع مخوّل.</p>
+          <p><strong>بحث شخصي غير منشور</strong></p>
+          <p>لا يُعرض للعامة حتى يُعتمد للنشر.</p>
           <Link href="/academic-research" className="sr-btn sr-btn--outline">العودة</Link>
         </div>
       </div>

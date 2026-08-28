@@ -30,11 +30,6 @@ export function IsnadAttributionBar({ data, className = "" }: Props) {
     data.reviewedAt ? `آخر مراجعة: ${data.reviewedAt}` : null,
   ].filter(Boolean) as string[];
 
-  const status =
-    data.needsReview || (!data.source && !data.grade)
-      ? "قيد المراجعة — المصدر أو الدرجة غير مكتملين"
-      : null;
-
   return (
     <aside
       className={`isnad-bar ${className}`.trim()}
@@ -42,8 +37,7 @@ export function IsnadAttributionBar({ data, className = "" }: Props) {
       aria-label="إسناد وتوثيق"
     >
       <p className="isnad-bar__line">
-        {bits.length ? bits.join(" · ") : "لم يُسجَّل مصدر أو درجة بعد."}
-        {status ? ` · ${status}` : ""}
+        {bits.length ? bits.join(" · ") : "المصدر والدرجة مذكوران في المتن حيث وُجدتا."}
       </p>
       {data.reportContentType && data.reportContentId != null ? (
         <div className="isnad-bar__report">

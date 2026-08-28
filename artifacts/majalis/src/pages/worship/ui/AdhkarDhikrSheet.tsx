@@ -55,7 +55,6 @@ export function AdhkarDhikrSheet({ item, onClose }: Props) {
             grade: item.grade,
             narrator: item.narrator,
             reference: item.reference,
-            needsReview: !item.source || !item.grade,
             reportContentType: "adhkar",
             reportContentId: item.id,
           }}

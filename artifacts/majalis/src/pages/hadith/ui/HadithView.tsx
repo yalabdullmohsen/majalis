@@ -646,7 +646,6 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
             grade: h.grade,
             narrator: h.narrator,
             reference: h.hadith_number ? String(h.hadith_number) : takhrijText ? String(takhrijText) : null,
-            needsReview: !h.source_name || !h.grade,
             reportContentType: "hadith",
             reportContentId: h.id,
           }}
