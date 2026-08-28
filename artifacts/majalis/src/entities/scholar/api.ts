@@ -14,36 +14,45 @@ export type ScholarEntity = {
   specialty?: string[];
 };
 
-const HISTORY_PERSONALITIES = ISLAMIC_HISTORY_ITEMS.filter((item) => item.kind === "personality");
-
-function toEntity(item: (typeof HISTORY_PERSONALITIES)[number]): ScholarEntity {
-  return {
-    slug: item.id,
-    titleAr: item.title,
-    era: item.era,
-    specialty: item.category === "personalities" ? ["شخصية تاريخية"] : undefined,
-  };
+/** أسماء مرتبطة بأحداث الخط الزمني — بلا قسم «شخصيات تاريخية» منفصل. */
+function relatedPersonEntities(): ScholarEntity[] {
+  const map = new Map<string, ScholarEntity>();
+  for (const item of ISLAMIC_HISTORY_ITEMS) {
+    for (const name of item.relatedPersons ?? []) {
+      const slug = `related:${encodeURIComponent(name)}`;
+      if (!map.has(slug)) {
+        map.set(slug, {
+          slug,
+          titleAr: name,
+          era: item.era,
+          specialty: ["مذكور في أحداث التاريخ"],
+        });
+      }
+    }
+  }
+  return [...map.values()];
 }
+
+const HISTORY_FIGURES = relatedPersonEntities();
 
 export const scholarRepository: EntityRepository<ScholarEntity> = {
   async getAll() {
-    return HISTORY_PERSONALITIES.map(toEntity);
+    return HISTORY_FIGURES;
   },
   async getBySlug(slug: string) {
-    const hit = HISTORY_PERSONALITIES.find((s) => s.id === slug);
-    return hit ? toEntity(hit) : null;
+    return HISTORY_FIGURES.find((s) => s.slug === slug) ?? null;
   },
   async search(query: string) {
     const q = normalizeArabic(query);
     if (!q) return [];
-    const scored = HISTORY_PERSONALITIES.map((s) => {
-      const hay = [s.title, s.era, s.summary, ...(s.relatedPersons ?? [])].join(" ");
+    const scored = HISTORY_FIGURES.map((s) => {
+      const hay = [s.titleAr, s.era, ...(s.specialty ?? [])].join(" ");
       const hayNorm = normalizeArabic(hay);
       const m = scoreTolerantMatch(hay, query, hayNorm);
       return m ? { s, m } : null;
     }).filter((x): x is NonNullable<typeof x> => !!x);
     scored.sort((a, b) => compareTolerantMatches(a.m, b.m));
-    return scored.map(({ s }) => toEntity(s));
+    return scored.map(({ s }) => s);
   },
 };
 

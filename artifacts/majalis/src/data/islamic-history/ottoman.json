@@ -26,7 +26,8 @@
       }
     ],
     "startHere": true,
-    "featured": true
+    "featured": true,
+    "timelineOrder": 701
   },
   {
     "id": "ottoman-istanbul",
@@ -59,7 +60,8 @@
       }
     ],
     "featured": true,
-    "startHere": true
+    "startHere": true,
+    "timelineOrder": 702
   },
   {
     "id": "ottoman-suleyman",
@@ -89,7 +91,8 @@
         "label": "المكتبة العلمية"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 703
   },
   {
     "id": "ottoman-millet",
@@ -111,7 +114,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 704
   },
   {
     "id": "ottoman-waqf",
@@ -137,7 +141,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 705
   },
   {
     "id": "ottoman-science",
@@ -163,7 +168,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 706
   },
   {
     "id": "ottoman-decline",
@@ -185,7 +191,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 707
   },
   {
     "id": "ottoman-dissolution",
@@ -209,6 +216,7 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 708
   }
 ]

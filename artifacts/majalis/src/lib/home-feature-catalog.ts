@@ -125,7 +125,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/islamic-directory", Icon: Landmark, title: seoNavLabel("/islamic-directory", "دليل المؤسسات والمساجد"), desc: "مؤسسات ومساجد ومعالم إسلامية" },
       { href: "/universities", Icon: GraduationCap, title: seoNavLabel("/universities", "دليل الجامعات الشرعية"), desc: "جامعات وكليات الدراسات الشرعية حول العالم" },
       { href: "/academic-research", Icon: Scroll, title: seoNavLabel("/academic-research", "رسائل الماجستير والدكتوراه"), desc: "مكتبة الأبحاث والرسائل الشرعية الموثّقة" },
-      { href: "/tarikh-islami",   Icon: Users,       title: seoNavLabel("/tarikh-islami", "التاريخ الإسلامي"),          desc: "خط زمني في السيرة والدول والحضارة وشخصيات تاريخية مؤثرة" },
+      { href: "/tarikh-islami",   Icon: Users,       title: seoNavLabel("/tarikh-islami", "التاريخ الإسلامي"),          desc: "خط زمني بالأحداث من قبل البعثة إلى يومنا — مع بوابة للسيرة النبوية" },
     ],
   },
   {

@@ -24,7 +24,8 @@
         "label": "التاريخ الإسلامي"
       }
     ],
-    "startHere": true
+    "startHere": true,
+    "timelineOrder": 501
   },
   {
     "id": "seljuk-nizamiyya",
@@ -54,12 +55,13 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 502
   },
   {
     "id": "nur-ad-din",
     "title": "نور الدين محمود بن زنكي",
-    "kind": "personality",
+    "kind": "era",
     "category": "seljuk-ayyubid",
     "era": "541–569هـ",
     "summary": "أمير موحّد للشام بنى القوة العسكرية والعلمية قبل صلاح الدين.",
@@ -86,7 +88,8 @@
       }
     ],
     "featured": true,
-    "startHere": true
+    "startHere": true,
+    "timelineOrder": 503
   },
   {
     "id": "ayyubid-founding",
@@ -111,7 +114,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 504
   },
   {
     "id": "battle-hattin",
@@ -145,7 +149,8 @@
         "label": "المصحف"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 505
   },
   {
     "id": "jerusalem-liberation",
@@ -177,7 +182,8 @@
       }
     ],
     "featured": true,
-    "startHere": true
+    "startHere": true,
+    "timelineOrder": 506
   },
   {
     "id": "crusader-states",
@@ -199,7 +205,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 507
   },
   {
     "id": "ayyubid-legacy",
@@ -225,6 +232,7 @@
         "href": "/library",
         "label": "المكتبة العلمية"
       }
-    ]
+    ],
+    "timelineOrder": 508
   }
 ]

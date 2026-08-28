@@ -147,6 +147,62 @@
   color: var(--mj-muted, color-mix(in srgb, var(--foreground) 55%, transparent));
 }
 
+.tarikh-card--portal {
+  border-color: color-mix(in srgb, var(--primary) 42%, transparent);
+  background: color-mix(in srgb, var(--primary) 7%, var(--card, var(--background)));
+}
+
+.tarikh-card__portal {
+  margin-top: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 32px;
+  padding: 0.15rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 750;
+  color: #fff;
+  background: var(--primary);
+}
+
+.tarikh-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+  counter-reset: tarikh-step;
+}
+
+.tarikh-timeline__item {
+  position: relative;
+  counter-increment: tarikh-step;
+}
+
+.tarikh-timeline__item::before {
+  content: counter(tarikh-step);
+  position: absolute;
+  inset-inline-start: -0.15rem;
+  top: 0.85rem;
+  z-index: 1;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 14%, var(--card, #fff));
+  border: 1px solid color-mix(in srgb, var(--primary) 35%, transparent);
+  pointer-events: none;
+}
+
+.tarikh-timeline .tarikh-card {
+  padding-inline-start: 1.65rem;
+}
+
 .tarikh-related-links {
   display: flex;
   flex-wrap: wrap;

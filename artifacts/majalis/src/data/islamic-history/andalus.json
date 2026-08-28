@@ -33,7 +33,8 @@
       }
     ],
     "featured": true,
-    "startHere": true
+    "startHere": true,
+    "timelineOrder": 401
   },
   {
     "id": "andalus-umayyad-emirate",
@@ -56,12 +57,13 @@
         "label": "التاريخ الإسلامي"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 402
   },
   {
     "id": "andalus-abd-arrahman",
     "title": "عبد الرحمن الداخل",
-    "kind": "personality",
+    "kind": "era",
     "category": "andalus",
     "era": "138–172هـ",
     "summary": "مؤسّس الدولة الأموية في الأندلس بعد هروبه من العباسيين.",
@@ -81,7 +83,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 403
   },
   {
     "id": "andalus-cordoba-caliphate",
@@ -113,7 +116,8 @@
         "label": "المكتبة العلمية"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 404
   },
   {
     "id": "andalus-toledo-school",
@@ -139,7 +143,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 405
   },
   {
     "id": "andalus-muluk-tawaif",
@@ -163,7 +168,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 406
   },
   {
     "id": "andalus-alhambra",
@@ -193,7 +199,8 @@
         "href": "/library",
         "label": "المكتبة العلمية"
       }
-    ]
+    ],
+    "timelineOrder": 407
   },
   {
     "id": "andalus-fall-granada",
@@ -224,6 +231,7 @@
         "label": "التاريخ الإسلامي"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 408
   }
 ]

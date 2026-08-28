@@ -8,6 +8,7 @@ import {
   getFeaturedItems,
   getStartHereItems,
   HISTORY_CATEGORIES,
+  HISTORY_CATEGORY_ORDER,
   ISLAMIC_HISTORY_ITEMS,
   searchHistoryItems,
   type HistoryCategory,
@@ -17,19 +18,7 @@ import "@/styles/pages/tarikh-islami.css";
 
 type FilterId = HistoryCategory | "all";
 
-const FILTER_ORDER: FilterId[] = [
-  "all",
-  "seerah",
-  "rashidun",
-  "umayyad",
-  "abbasid",
-  "andalus",
-  "seljuk-ayyubid",
-  "mamluk",
-  "ottoman",
-  "civilization",
-  "personalities",
-];
+const FILTER_ORDER: FilterId[] = ["all", ...HISTORY_CATEGORY_ORDER];
 
 const LIBRARY_HISTORY = [
   { href: "/library", label: "المكتبة — كتب التاريخ" },
@@ -43,15 +32,27 @@ function filterLabel(id: FilterId): string {
   return HISTORY_CATEGORIES[id];
 }
 
+function itemHref(item: IslamicHistoryItem): string {
+  return item.portalHref || `/tarikh-islami/${item.id}`;
+}
+
 function HistoryCard({ item }: { item: IslamicHistoryItem }) {
+  const isPortal = Boolean(item.portalHref);
   return (
-    <Link href={`/tarikh-islami/${item.id}`} className="tarikh-card">
+    <Link
+      href={itemHref(item)}
+      className={`tarikh-card${isPortal ? " tarikh-card--portal" : ""}`}
+      data-portal={isPortal ? "1" : undefined}
+    >
       <span className="tarikh-card__cat">{HISTORY_CATEGORIES[item.category]}</span>
       <span className="tarikh-card__title">{item.title}</span>
       <span className="tarikh-card__summary">{item.summary}</span>
       <span className="tarikh-card__meta">
-        {[item.hijriDate, item.place].filter(Boolean).join(" · ")}
+        {[item.hijriDate || item.era, item.place].filter(Boolean).join(" · ")}
       </span>
+      {isPortal && item.portalLabel ? (
+        <span className="tarikh-card__portal">{item.portalLabel}</span>
+      ) : null}
     </Link>
   );
 }
@@ -66,15 +67,15 @@ export default function TarikhIslamiPage() {
       path: "/tarikh-islami",
       title: "التاريخ الإسلامي | المجلس العلمي",
       description:
-        "خط زمني منظم في السيرة النبوية والخلافة والدول الإسلامية والحضارة وشخصيات تاريخية مؤثرة — بمنهج أهل السنة وتمحيص الروايات.",
+        "خط زمني بالأحداث من قبل البعثة إلى يومنا هذا — مع بوابة للسيرة النبوية وعصور الخلافة والدول والحضارة.",
       keywords: [
         "التاريخ الإسلامي",
+        "خط زمني",
         "السيرة النبوية",
         "الخلفاء الراشدون",
         "الدولة الأموية",
         "الدولة العباسية",
         "الأندلس",
-        "صلاح الدين",
         "الحضارة الإسلامية",
         "الفتوحات الإسلامية",
       ],
@@ -84,7 +85,7 @@ export default function TarikhIslamiPage() {
           "@type": "CollectionPage",
           name: "التاريخ الإسلامي",
           url: "https://majlisilm.com/tarikh-islami",
-          description: "فهرس دراسي في تاريخ الإسلام والحضارة الإسلامية",
+          description: "خط زمني دراسي لأحداث التاريخ الإسلامي من قبل البعثة إلى يومنا",
         },
       ],
     });
@@ -93,6 +94,10 @@ export default function TarikhIslamiPage() {
   useEffect(() => {
     const params = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
     const tab = params.get("tab");
+    if (tab === "personalities") {
+      setFilter("all");
+      return;
+    }
     if (tab && tab in HISTORY_CATEGORIES) setFilter(tab as HistoryCategory);
   }, [location]);
 
@@ -117,11 +122,11 @@ export default function TarikhIslamiPage() {
   return (
     <div className="page-shell tarikh-page" dir="rtl">
       <header className="tarikh-hero">
-        <p className="tarikh-hero__eyebrow">السيرة والتاريخ</p>
+        <p className="tarikh-hero__eyebrow">خط زمني بالأحداث</p>
         <h1 className="tarikh-hero__title">التاريخ الإسلامي</h1>
         <p className="tarikh-hero__lead">
-          من السيرة النبوية إلى الحضارة والدول — نروي بعد التمحيص، ونُبيّن درجة التوثيق، ولا نملأ الفراغ بما
-          لم يثبت.
+          من قبل البعثة إلى يومنا هذا — أحداث مرتّبة زمنياً. قصة النبي ﷺ عبر بوابة السيرة النبوية حتى لا
+          نكرّر التفصيل هنا، ثم نتابع الخلافة والدول والحضارة.
         </p>
         <ShareButtons title="التاريخ الإسلامي — المجلس العلمي" />
       </header>
@@ -133,7 +138,7 @@ export default function TarikhIslamiPage() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="ابحث عن حدث أو عصر أو شخصية…"
+            placeholder="ابحث عن حدث أو عصر…"
             autoComplete="off"
           />
         </label>
@@ -181,18 +186,22 @@ export default function TarikhIslamiPage() {
 
       <section className="tarikh-section">
         <h2 className="tarikh-section__title">
-          {query ? `نتائج البحث (${visible.length})` : filter === "all" ? "الخط الزمني" : filterLabel(filter)}
+          {query
+            ? `نتائج البحث (${visible.length})`
+            : filter === "all"
+              ? "الخط الزمني — من قبل البعثة إلى يومنا"
+              : filterLabel(filter)}
         </h2>
         {visible.length === 0 ? (
           <p className="tarikh-empty">لا توجد نتائج مطابقة.</p>
         ) : (
-          <ul className="tarikh-card-list">
-            {visible.map((item) => (
-              <li key={item.id}>
+          <ol className="tarikh-card-list tarikh-timeline">
+            {visible.map((item, index) => (
+              <li key={item.id} className="tarikh-timeline__item" data-step={index + 1}>
                 <HistoryCard item={item} />
               </li>
             ))}
-          </ul>
+          </ol>
         )}
       </section>
 
@@ -210,6 +219,7 @@ export default function TarikhIslamiPage() {
       <section className="tarikh-section tarikh-method">
         <h2 className="tarikh-section__title">منهجنا في التاريخ</h2>
         <ul className="tarikh-method__list">
+          <li>نرتّب الأحداث زمنياً، ونُحيل التفصيل الطويل (كالسيرة) إلى أقسامه المخصصة.</li>
           <li>نُميّز بين ما ثبت وما اختلف فيه، ولا نُسقط أحكامًا على أعيان بلا دليل.</li>
           <li>في روايات الطبري وغيره: يُذكر السند ولا يُفهم تصحيح كل رواية تلقائيًا.</li>
           <li>نضبط الكلام في الصحابة والفتن بضوابط أهل السنة، ونجتنب الإسرائيليات.</li>

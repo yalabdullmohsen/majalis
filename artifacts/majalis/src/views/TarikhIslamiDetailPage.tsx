@@ -95,6 +95,11 @@ export default function TarikhIslamiDetailPage() {
             {VERIFICATION_LABEL[item.verification]}
           </span>
         </div>
+        {item.portalHref ? (
+          <Link href={item.portalHref} className="tarikh-chip tarikh-chip--portal">
+            {item.portalLabel || "ادخل القسم التفصيلي"}
+          </Link>
+        ) : null}
         <ShareButtons title={item.title} />
       </header>
 

@@ -124,7 +124,7 @@ export const CONTENT_TYPE_HREF: Record<ContentHrefType, (id: string) => string> 
   fatwa: (id) => hrefRulings(id),
   benefit: (id) => hrefFawaid(id),
   book: (id) => hrefLibrary(id),
-  scholar: (id) => hrefIslamicHistory(id),
+  scholar: (id) => hrefScholars(id),
   qa: (id) => hrefQa(id),
   ruling: (id) => hrefRulings(id),
   story: (id) => hrefStories(id),
@@ -137,7 +137,7 @@ export const CONTENT_TYPE_HREF: Record<ContentHrefType, (id: string) => string> 
 export type KnowledgeRelatedHrefType = "scholar" | "lesson" | "book" | "fawaid" | "question";
 
 export const KNOWLEDGE_RELATED_HREF: Record<KnowledgeRelatedHrefType, (id: string) => string> = {
-  scholar: (id) => hrefIslamicHistory(id),
+  scholar: (id) => hrefScholars(id),
   lesson: (id) => hrefLessons(id),
   book: (id) => hrefLibrary(id),
   fawaid: (id) => hrefFawaid(id),
@@ -170,7 +170,7 @@ export function hrefKnowledgeNode(
     case "fatwa":
       return hrefRulings(ref || null);
     case "scholar":
-      return hrefIslamicHistory(ref || null);
+      return hrefScholars(ref || null);
     case "book":
       return hrefLibrary(ref || null);
     case "lesson":

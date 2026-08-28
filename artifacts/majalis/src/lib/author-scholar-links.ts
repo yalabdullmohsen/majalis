@@ -60,8 +60,8 @@ for (const row of authorAliases as AliasRow[]) {
   });
 }
 
-for (const item of ISLAMIC_HISTORY_ITEMS.filter((i) => i.kind === "personality")) {
-  const href = `/tarikh-islami/${item.id}`;
+for (const item of ISLAMIC_HISTORY_ITEMS) {
+  const href = item.portalHref || `/tarikh-islami/${item.id}`;
   for (const label of [item.title, ...(item.relatedPersons ?? [])]) {
     const key = normalizeName(label);
     if (key && !BY_NAME.has(key)) BY_NAME.set(key, href);
