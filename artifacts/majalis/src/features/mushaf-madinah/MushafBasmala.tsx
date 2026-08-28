@@ -28,7 +28,8 @@ export function MushafBasmala({
   const body = qpcWords.filter((w) => w.charType !== "end");
   const end = qpcWords.find((w) => w.charType === "end") ?? null;
   const state = [selected ? "is-selected" : "", playing ? "is-playing" : ""].filter(Boolean).join(" ");
-  const tapRef = useRef<{ x: number; y: number } | null>(null);
+  const tapRef = useRef<{ x: number; y: number; timer: number; armed: boolean } | null>(null);
+  const SHORT_SELECT_MS = 220;
 
   return (
     <div
@@ -40,19 +41,38 @@ export function MushafBasmala({
       role={onSelect ? "button" : undefined}
       tabIndex={onSelect ? 0 : undefined}
       onPointerDown={(e) => {
-        tapRef.current = { x: e.clientX, y: e.clientY };
+        if (!onSelect) return;
+        if (tapRef.current) window.clearTimeout(tapRef.current.timer);
+        const timer = window.setTimeout(() => {
+          const cur = tapRef.current;
+          if (!cur || cur.armed) return;
+          cur.armed = true;
+          onSelect();
+        }, SHORT_SELECT_MS);
+        tapRef.current = { x: e.clientX, y: e.clientY, timer, armed: false };
+      }}
+      onPointerMove={(e) => {
+        const cur = tapRef.current;
+        if (!cur) return;
+        if (Math.abs(e.clientX - cur.x) > 40 || Math.abs(e.clientY - cur.y) > 40) {
+          window.clearTimeout(cur.timer);
+          tapRef.current = null;
+        }
+      }}
+      onPointerUp={() => {
+        const cur = tapRef.current;
+        if (!cur) return;
+        window.clearTimeout(cur.timer);
+        tapRef.current = null;
+      }}
+      onPointerCancel={() => {
+        const cur = tapRef.current;
+        if (cur) window.clearTimeout(cur.timer);
+        tapRef.current = null;
       }}
       onClick={(e) => {
-        if (!onSelect) return;
-        const start = tapRef.current;
-        tapRef.current = null;
-        if (
-          start &&
-          (Math.abs(e.clientX - start.x) > 40 || Math.abs(e.clientY - start.y) > 40)
-        ) {
-          return;
-        }
-        onSelect();
+        e.preventDefault();
+        e.stopPropagation();
       }}
       onKeyDown={
         onSelect

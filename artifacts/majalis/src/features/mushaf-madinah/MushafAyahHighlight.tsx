@@ -55,33 +55,31 @@ function collectBands(root: HTMLElement, verseKey: string): TextBand[] {
 }
 
 /**
- * طبقة تظليل آية: شريط واحد لكل سطر عبر دمج getClientRects.
- * قياس فوري عند التحديد + إعادة قياس خفيفة على scroll/resize.
+ * طبقة تظليل للتلاوة الجارية فقط (getClientRects).
+ * تحديد الآية يعتمد على class is-selected على الكلمات — لا مستطيلات فارغة.
  */
 export const MushafAyahHighlight = memo(function MushafAyahHighlight({
   container,
-  verseKey,
+  verseKey: _verseKey,
   playingKey = null,
 }: Props) {
-  const [selected, setSelected] = useState<TextBand[]>([]);
   const [playing, setPlaying] = useState<TextBand[]>([]);
   const rafRef = useRef<number | null>(null);
 
   useLayoutEffect(() => {
     if (!container) {
-      setSelected([]);
       setPlaying([]);
       return;
     }
 
     const measureNow = () => {
       rafRef.current = null;
-      setSelected(verseKey ? collectBands(container, verseKey) : []);
-      if (shouldThrottleUiRender() && !verseKey) {
+      if (shouldThrottleUiRender() && !playingKey) {
         setPlaying([]);
         return;
       }
-      setPlaying(playingKey && playingKey !== verseKey ? collectBands(container, playingKey) : []);
+      /* التحديد عبر CSS على الكلمات؛ الشريط أثناء التلاوة فقط */
+      setPlaying(playingKey ? collectBands(container, playingKey) : []);
     };
 
     const scheduleMeasure = () => {
@@ -109,7 +107,7 @@ export const MushafAyahHighlight = memo(function MushafAyahHighlight({
       ro?.disconnect();
       window.removeEventListener("resize", scheduleMeasure);
     };
-  }, [container, verseKey, playingKey]);
+  }, [container, playingKey]);
 
   useLayoutEffect(() => {
     return () => {
@@ -117,7 +115,7 @@ export const MushafAyahHighlight = memo(function MushafAyahHighlight({
     };
   }, [container]);
 
-  if (!selected.length && !playing.length) return null;
+  if (!playing.length) return null;
 
   return (
     <div className="mm-ayah-hl" data-testid="mushaf-ayah-highlight" aria-hidden="true">
@@ -125,13 +123,6 @@ export const MushafAyahHighlight = memo(function MushafAyahHighlight({
         <span
           key={`p-${playingKey ?? "x"}-${i}-${Math.round(b.left)}-${Math.round(b.top)}`}
           className="mm-ayah-hl__band is-playing"
-          style={{ left: b.left, top: b.top, width: b.width, height: b.height }}
-        />
-      ))}
-      {selected.map((b, i) => (
-        <span
-          key={`s-${verseKey ?? "x"}-${i}-${Math.round(b.left)}-${Math.round(b.top)}`}
-          className="mm-ayah-hl__band is-selected"
           style={{ left: b.left, top: b.top, width: b.width, height: b.height }}
         />
       ))}

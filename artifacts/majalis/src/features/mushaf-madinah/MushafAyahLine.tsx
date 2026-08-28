@@ -20,13 +20,17 @@ type Props = {
 };
 
 const TAP_SLOP_PX = 40;
+/** ضغط قصير لازم قبل التحديد — اللمس السريع وحده لا يفتح القائمة */
+const SHORT_SELECT_MS = 220;
 const LONG_PRESS_MS = 480;
 
 type PressState = {
   verseKey: string;
   x: number;
   y: number;
+  selectTimer: number;
   longTimer: number;
+  selectFired: boolean;
   longFired: boolean;
 };
 
@@ -44,6 +48,7 @@ const AyahWordSpan = memo(function AyahWordSpan({
   blanked,
   onSelectVerse,
   startPress,
+  movePress,
   endPress,
   clearPress,
 }: {
@@ -51,6 +56,7 @@ const AyahWordSpan = memo(function AyahWordSpan({
   blanked: boolean;
   onSelectVerse?: (verseKey: string) => void;
   startPress: (verseKey: string, e: ReactPointerEvent<HTMLElement>) => void;
+  movePress: (e: ReactPointerEvent<HTMLElement>) => void;
   endPress: (verseKey: string, e: ReactPointerEvent<HTMLElement>) => void;
   clearPress: () => void;
 }) {
@@ -60,7 +66,7 @@ const AyahWordSpan = memo(function AyahWordSpan({
   const ayahNum = Number(word.verseKey.split(":")[1]) || 0;
   const markTone = isEnd ? String(((ayahNum - 1) % 4 + 4) % 4) : undefined;
   const stateClass = [
-    selected ? "ayah-active" : "",
+    selected ? "ayah-active is-selected" : "",
     playing ? "is-playing" : "",
     blanked && !isEnd ? "is-blanked" : "",
   ]
@@ -81,6 +87,7 @@ const AyahWordSpan = memo(function AyahWordSpan({
       aria-label={verseAriaLabel(word.verseKey, blanked && !isEnd)}
       aria-pressed={selected}
       onPointerDown={(e: ReactPointerEvent<HTMLElement>) => startPress(word.verseKey, e)}
+      onPointerMove={(e: ReactPointerEvent<HTMLElement>) => movePress(e)}
       onPointerUp={(e: ReactPointerEvent<HTMLElement>) => endPress(word.verseKey, e)}
       onPointerCancel={() => {
         clearPress();
@@ -104,7 +111,7 @@ const AyahWordSpan = memo(function AyahWordSpan({
 
 /**
  * سطر آيات — كلمات flex بفجوة ثابتة؛ space-between فقط بعد قياس fill الآمن.
- * التظليل المتصل عبر طبقة getClientRects (.mm-ayah-hl) لا خلفية كل كلمة.
+ * التحديد عبر class is-selected على الكلمات؛ طبقة .mm-ayah-hl للتلاوة الجارية.
  */
 export const MushafAyahLine = memo(function MushafAyahLine({
   words,
@@ -139,26 +146,50 @@ export const MushafAyahLine = memo(function MushafAyahLine({
 
   const clearPress = () => {
     const p = pressRef.current;
-    if (p) window.clearTimeout(p.longTimer);
+    if (p) {
+      window.clearTimeout(p.selectTimer);
+      window.clearTimeout(p.longTimer);
+    }
     pressRef.current = null;
   };
 
   const startPress = (verseKey: string, e: ReactPointerEvent<HTMLElement>) => {
     clearPress();
+    const selectTimer = window.setTimeout(() => {
+      const cur = pressRef.current;
+      if (!cur || cur.verseKey !== verseKey || cur.selectFired || cur.longFired) return;
+      cur.selectFired = true;
+      if (hideLevel > 0 && !revealedVerses?.has(verseKey) && onToggleReveal) {
+        onToggleReveal(verseKey);
+        return;
+      }
+      onSelectVerse?.(verseKey);
+    }, SHORT_SELECT_MS);
     const longTimer = window.setTimeout(() => {
       const cur = pressRef.current;
       if (!cur || cur.verseKey !== verseKey) return;
       cur.longFired = true;
+      window.clearTimeout(cur.selectTimer);
       if (onLongPressVerse) onLongPressVerse(verseKey);
-      else onSelectVerse?.(verseKey);
+      else if (!cur.selectFired) onSelectVerse?.(verseKey);
     }, LONG_PRESS_MS);
     pressRef.current = {
       verseKey,
       x: e.clientX,
       y: e.clientY,
+      selectTimer,
       longTimer,
+      selectFired: false,
       longFired: false,
     };
+  };
+
+  const movePress = (e: ReactPointerEvent<HTMLElement>) => {
+    const p = pressRef.current;
+    if (!p) return;
+    if (Math.abs(e.clientX - p.x) > TAP_SLOP_PX || Math.abs(e.clientY - p.y) > TAP_SLOP_PX) {
+      clearPress();
+    }
   };
 
   const endPress = (verseKey: string, e: ReactPointerEvent<HTMLElement>) => {
@@ -169,15 +200,11 @@ export const MushafAyahLine = memo(function MushafAyahLine({
     }
     const dx = Math.abs(e.clientX - p.x);
     const dy = Math.abs(e.clientY - p.y);
-    const longFired = p.longFired;
+    const { selectFired, longFired } = p;
     clearPress();
-    if (longFired) return;
+    /* التحديد يحدث بعد SHORT_SELECT_MS أثناء الضغط — الرفع المبكر = لمسة سريعة بلا تحديد */
+    if (selectFired || longFired) return;
     if (dx > TAP_SLOP_PX || dy > TAP_SLOP_PX) return;
-    if (hideLevel > 0 && !revealedVerses?.has(verseKey) && onToggleReveal) {
-      onToggleReveal(verseKey);
-      return;
-    }
-    onSelectVerse?.(verseKey);
   };
 
   return (
@@ -195,6 +222,7 @@ export const MushafAyahLine = memo(function MushafAyahLine({
           blanked={blankedIds.has(w.id)}
           onSelectVerse={onSelectVerse}
           startPress={startPress}
+          movePress={movePress}
           endPress={endPress}
           clearPress={clearPress}
         />

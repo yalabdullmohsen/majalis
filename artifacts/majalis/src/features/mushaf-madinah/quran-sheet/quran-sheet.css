@@ -9,15 +9,15 @@
 .mm-reciter-sheet,
 .mm-search-sheet,
 .mm-tafsir.quran-sheet {
-  --quran-sheet-bg: var(--mm-paper, #fdfbf7);
-  --quran-sheet-bg-deep: var(--mm-paper-deep, #faf7f0);
+  --quran-sheet-bg: var(--mm-paper, #fdf9f3);
+  --quran-sheet-bg-deep: var(--mm-paper-deep, #faf6ee);
   --quran-sheet-border: color-mix(in srgb, var(--mm-gold, #a68b67) 28%, transparent);
   --quran-sheet-ink: var(--mm-ink, #111111);
   --quran-sheet-muted: color-mix(in srgb, var(--mm-ink, #111) 62%, transparent);
   --quran-action-primary: var(--mm-ui-accent, #135034);
   --quran-action-primary-deep: var(--mm-ui-accent-deep, #0e3d27);
   --quran-action-primary-fg: #fff;
-  --quran-action-selected-bg: color-mix(in srgb, var(--mm-ui-accent, #135034) 16%, var(--mm-paper, #fdfbf7));
+  --quran-action-selected-bg: color-mix(in srgb, var(--mm-ui-accent, #135034) 16%, var(--mm-paper, #fdf9f3));
   --quran-action-selected-border: color-mix(in srgb, var(--mm-ui-accent, #135034) 50%, transparent);
   --quran-radius-sheet: 1.25rem;
   --quran-radius-control: 1rem;
@@ -47,13 +47,13 @@ html.dark .mm-search-sheet {
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(0, 0, 0, 0.28);
+  background: rgba(0, 0, 0, 0.14);
   cursor: pointer;
 }
 
 html[data-theme="dark"] .quran-sheet__scrim,
 html.dark .quran-sheet__scrim {
-  background: rgba(0, 0, 0, 0.42);
+  background: rgba(0, 0, 0, 0.28);
 }
 
 .quran-sheet__panel {

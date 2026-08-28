@@ -40,8 +40,9 @@ assert.match(css, /\[data-type="end"\][^}]*color:\s*var\(--mm-ayah-mark\)|\.mm-a
 assert.match(css, /ayah-active/);
 assert.doesNotMatch(css, /transition:\s*background-color\s+150ms/);
 
-/* تظليل متصل عبر overlay — بلا خلفية كلمة-كلمة */
-assert.match(line, /ayah-active\.mm-ayah-line__word|ayah-active/);
+/* تظليل الآية عبر is-selected على الكلمات + طبقة hl للتلاوة */
+assert.match(line, /ayah-active\.mm-ayah-line__word|ayah-active|is-selected/);
+assert.match(line, /is-selected/);
 assert.match(css, /\.ayah-active\.mm-ayah-line__word/);
 assert.match(css, /\.mm-ayah-hl__band/);
 assert.match(css, /\.ayah-active\.mm-ayah-line__word:not\(\[data-type="end"\]\)/);
