@@ -749,6 +749,8 @@ function HomeInitialShell() {
       </section>
 
       <section className="mj-app-card mj-home-auth mj-home-auth--ph" aria-hidden="true" />
+
+      <div className="mj-home-below-fold-ph" id="mj-home-below-fold" aria-hidden="true" />
     </div>
   );
 }
