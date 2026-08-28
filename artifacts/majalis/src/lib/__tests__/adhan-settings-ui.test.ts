@@ -31,7 +31,9 @@ assert.match(css, /\.ads-prayer-row__top/);
 
 const typesSrc = readFileSync(resolve(appRoot, "src/lib/adhan-selectable-types.ts"), "utf8");
 
-assert.match(view, /إعدادات الأذان/);
+assert.match(view, /تنبيهات الصلاة والأذان/);
+assert.match(view, /\/adhan-help/);
+assert.match(view, /حذف القديمة وإعادة الضبط/);
 assert.match(view, /اختيار المؤذن وصيغة الإشعار/);
 assert.match(view, /listSelectableMuezzins/);
 assert.match(view, /تشغيل الأذان كاملاً/);

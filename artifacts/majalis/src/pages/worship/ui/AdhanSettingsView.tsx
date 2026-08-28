@@ -57,7 +57,7 @@ import { getMuezzin } from "@/lib/adhan-audio";
 import { resolveAdhanClip } from "@/lib/adhan-playback-modes";
 import "@/styles/pages/adhan-settings.css";
 
-const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20];
+const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
 
 const PRAYER_ICON_MAP: Record<string, LucideIcon> = {
   Moon, Sun, CloudSun, Sunset, CloudMoon,
@@ -99,11 +99,11 @@ type PermissionState = "granted" | "denied" | "default" | "prompt" | "unsupporte
 
 function PermissionBadge({ value }: { value: PermissionState }) {
   const MAP: Record<PermissionState, { label: string; cls: string }> = {
-    granted: { label: "مسموح", cls: "ads-perm--ok" },
-    denied: { label: "غير مسموح", cls: "ads-perm--err" },
-    default: { label: "غير محدد", cls: "ads-perm--warn" },
-    prompt: { label: "غير محدد", cls: "ads-perm--warn" },
-    unsupported: { label: "غير محدد", cls: "ads-perm--muted" },
+    granted: { label: "مفعّل", cls: "ads-perm--ok" },
+    denied: { label: "مرفوض", cls: "ads-perm--err" },
+    default: { label: "يحتاج تفعيل", cls: "ads-perm--warn" },
+    prompt: { label: "يحتاج تفعيل", cls: "ads-perm--warn" },
+    unsupported: { label: "غير مدعوم", cls: "ads-perm--muted" },
   };
   const { label, cls } = MAP[value];
   return <span className={`ads-perm-badge ${cls}`}>{label}</span>;
@@ -329,9 +329,9 @@ export default function AdhanSettingsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/adhan-settings",
-      title: "إعدادات الأذان | المجلس العلمي",
-      description: "اختر الأذان الافتراضي، اختبر الصوت، وفعّل إشعارات الصلاة والإقامة.",
-      keywords: ["إعدادات أذان", "تنبيه الصلاة", "إقامة", "أذان"],
+      title: "تنبيهات الصلاة والأذان | المجلس العلمي",
+      description: "فعّل تنبيهات الصلاة، اختر الأذان المختصر أو الكامل، واختبر الصوت مع مراعاة قيود iOS.",
+      keywords: ["تنبيهات الصلاة", "أذان", "إعدادات أذان", "إشعارات"],
       robots: "noindex, follow",
     });
   }, []);
@@ -525,25 +525,64 @@ export default function AdhanSettingsPage() {
       const pending = await listPendingPrayerNotifications();
       const diag = getAudioDiagnostics();
       const scheduleNote = formatScheduleStatusAr(loadPrayerScheduleStatus());
+      const byKind = pending.items.reduce<Record<string, number>>((acc, it) => {
+        const k = it.kind ?? "unknown";
+        acc[k] = (acc[k] ?? 0) + 1;
+        return acc;
+      }, {});
+      if (typeof console !== "undefined" && console.info) {
+        console.info("[adhan/debug] pending notifications", {
+          count: pending.count,
+          byKind,
+          sample: pending.items.slice(0, 8),
+        });
+      }
       const lines = [
         `إذن الإشعارات: ${perm}`,
         `نوع الأذان: ${selectedType.label}`,
         `ملف إشعار النظام: ${selectedType.notificationSound}`,
         `ملف داخل التطبيق: ${selectedType.inAppUrl.split("/").pop() ?? selectedType.inAppUrl}`,
         `الإشعارات المجدولة: ${pending.count}`,
+        `توزيع الأنواع: pre=${byKind.pre ?? 0} · enter=${byKind.enter ?? 0} · post=${byKind.post ?? 0}`,
         scheduleNote,
         `آخر نجاح تشغيل: ${diag.lastSuccessAt ?? "—"}`,
         `آخر خطأ صوت: ${diag.lastError ?? "—"}`,
         "تجاوز الرنين: غير متاح دون امتياز Apple الرسمي",
+        "قيد iOS: صوت الإشعار ≤٣٠ ثانية — الكامل داخل التطبيق أو مقاطع متتابعة",
       ];
       if (pending.items[0]?.friendlyKey) {
-        lines.splice(5, 0, `عيّنة معرّف: ${pending.items[0].friendlyKey}`);
+        lines.splice(6, 0, `عيّنة معرّف: ${pending.items[0].friendlyKey}`);
       }
       setStatusLines(lines);
     } catch {
       setStatusLines(["تعذّر فحص حالة الأذان."]);
     } finally {
       setStatusBusy(false);
+    }
+  }
+
+  async function runPurgeAndReschedule() {
+    setRescheduleBusy(true);
+    setRescheduleMsg(null);
+    try {
+      const { cancelAllPrayerNativeNotifications } = await import("@/lib/prayer-local-notifications");
+      await cancelAllPrayerNativeNotifications();
+      invalidatePrayerNativeSchedule();
+      const payload = await fetchPrayerTimes(selectedGovId);
+      const { startPrayerAlertScheduler } = await import("@/lib/prayer-alert-scheduler");
+      await startPrayerAlertScheduler(payload, { forceNativeReschedule: true });
+      await import("@/lib/adhan-scheduler").then((m) => m.startAdhanScheduler(payload));
+      setRescheduleMsg(
+        isNative
+          ? "حُذفت التنبيهات القديمة وأُعيدت الجدولة لليوم والغد."
+          : "أُعيدت الجدولة — على الويب تعمل أثناء فتح الصفحة.",
+      );
+      flashSaved();
+      void runAdhanStatusCheck();
+    } catch {
+      setRescheduleMsg("تعذّر الحذف وإعادة الجدولة. حاول مرة أخرى.");
+    } finally {
+      setRescheduleBusy(false);
     }
   }
 
@@ -572,9 +611,11 @@ export default function AdhanSettingsPage() {
 
   return (
     <div className="ads-page">
-      <h1 className="ads-title">إعدادات الأذان</h1>
+      <h1 className="ads-title">تنبيهات الصلاة والأذان</h1>
       <p className="ads-subtitle">
-        إشعار النظام صوت قصير (CAF) · الأذان الكامل يعمل داخل التطبيق فقط.
+        إشعار النظام صوت قصير مضمون (≤٣٠ث) · الأذان الكامل يعمل داخل التطبيق، وعلى iOS قد يُقسَّم إلى مقاطع متتابعة عند تفعيل الوضع الكامل.
+        {" "}
+        <a href="/adhan-help" className="ads-help-link">مساعدة الأذان والتنبيهات</a>
       </p>
 
       {saved ? (
@@ -616,8 +657,10 @@ export default function AdhanSettingsPage() {
               <span className="ads-gov-label">تشغيل الأذان كاملاً</span>
               <p className="ads-adhan-desc">
                 {isFullMode
-                  ? "إشعارات متتابعة على iOS (مكة/الحرم) أو إكمال داخل التطبيق"
-                  : "تنبيه مختصر — التكبيرات أو مقطع قصير فقط"}
+                  ? isIOS
+                    ? "على iOS: مقاطع متتابعة (≤٣٠ث) لمكة/الحرم ثم إكمال داخل التطبيق. الأذان الكامل الحقيقي يعمل داخل التطبيق دون انقطاع."
+                    : "إكمال الأذان داخل التطبيق بدون انقطاع"
+                  : "تنبيه مختصر مضمون — التكبيرات أو مقطع قصير فقط (≤٣٠ث)"}
               </p>
             </div>
             <Toggle
@@ -811,6 +854,14 @@ export default function AdhanSettingsPage() {
               onClick={() => void runRescheduleAlerts()}
             >
               {rescheduleBusy ? "جارٍ…" : "إعادة جدولة التنبيهات"}
+            </button>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              disabled={rescheduleBusy}
+              onClick={() => void runPurgeAndReschedule()}
+            >
+              حذف القديمة وإعادة الضبط
             </button>
             <button
               type="button"

@@ -26,31 +26,26 @@ type Template = {
 const STORE_KEY = "majalis-prayer-notif-copy-idx-v1";
 
 const TEMPLATES: Record<PrayerNotifKind, Template[]> = {
+  enter: [
+    { title: "أذان {{name}}", body: "حان وقت صلاة {{name}}" },
+    { title: "أذان {{name}}", body: "حيّ على الصلاة، {{name}}" },
+    { title: "أذان {{name}}", body: "دخل وقت {{name}}، تقبل الله" },
+    { title: "أذان {{name}}", body: "حان الآن وقت صلاة {{name}}" },
+  ],
   "pre-15": [
-    { title: "اقتربت الصلاة", body: "باقي {{mins}} دقيقة على صلاة {{name}}" },
-    { title: "اقتربت الصلاة", body: "اقترب وقت صلاة {{name}}، استعد للصلاة" },
-    { title: "تذكير بالصلاة", body: "صلاة {{name}} بعد {{mins}} دقيقة" },
-    { title: "اقتربت الصلاة", body: "اقتربت صلاة {{name}}، متبقي {{mins}} دقيقة" },
-    { title: "استعد للصلاة", body: "متبقي {{mins}} دقيقة على صلاة {{name}}" },
+    { title: "اقترب وقت {{name}}", body: "بقي {{mins}} دقيقة على صلاة {{name}}" },
+    { title: "اقترب وقت {{name}}", body: "اقترب وقت {{name}}، استعد للصلاة" },
+    { title: "اقترب وقت {{name}}", body: "صلاة {{name}} بعد {{mins}} دقيقة" },
   ],
   "pre-10": [
-    { title: "اقتربت الصلاة", body: "باقي {{mins}} دقائق على صلاة {{name}}" },
-    { title: "اقتربت الصلاة", body: "اقترب وقت صلاة {{name}}، استعد" },
-    { title: "تذكير بالصلاة", body: "صلاة {{name}} بعد عشر دقائق" },
-    { title: "اقتربت الصلاة", body: "اقتربت صلاة {{name}}، متبقي {{mins}} دقائق" },
+    { title: "اقترب وقت {{name}}", body: "بقي {{mins}} دقائق على صلاة {{name}}" },
+    { title: "اقترب وقت {{name}}", body: "اقترب وقت {{name}}، استعد" },
+    { title: "اقترب وقت {{name}}", body: "صلاة {{name}} بعد عشر دقائق" },
   ],
   "pre-5": [
-    { title: "اقتربت الصلاة", body: "باقي {{mins}} دقائق على صلاة {{name}}" },
-    { title: "اقتربت الصلاة", body: "صلاة {{name}} بعد قليل، استعد" },
-    { title: "تذكير بالصلاة", body: "اقتربت صلاة {{name}}" },
-    { title: "استعد للصلاة", body: "متبقي {{mins}} دقائق لصلاة {{name}}" },
-  ],
-  enter: [
-    { title: "حان وقت الصلاة", body: "حان وقت صلاة {{name}}" },
-    { title: "حان وقت الصلاة", body: "دخل وقت {{name}}، تقبل الله" },
-    { title: "حان وقت الصلاة", body: "حي على الصلاة، {{name}}" },
-    { title: "حان وقت الصلاة", body: "حان الآن وقت صلاة {{name}}" },
-    { title: "حان وقت الصلاة", body: "لا تنس صلاة {{name}}" },
+    { title: "اقترب وقت {{name}}", body: "بقي {{mins}} دقائق على صلاة {{name}}" },
+    { title: "اقترب وقت {{name}}", body: "صلاة {{name}} بعد قليل، استعد" },
+    { title: "اقترب وقت {{name}}", body: "اقتربت صلاة {{name}}" },
   ],
   after: [
     { title: "وقت الصلاة", body: "دخل وقت {{name}}، تقبل الله" },
@@ -120,18 +115,18 @@ export function buildScheduledPrayerNotificationCopy(opts: {
   if (opts.kind === "pre") {
     const mins = Math.max(1, Math.round(opts.minutesBefore ?? 15));
     return {
-      title: "استعد للصلاة",
-      body: `${name} ${clock} · بعد ${mins} دقيقة`,
+      title: `اقترب وقت ${name}`,
+      body: `بقي ${mins} دقائق على صلاة ${name}`,
     };
   }
   if (opts.kind === "enter") {
     return {
       title: `أذان ${name}`,
-      body: `${clock}`,
+      body: `حان وقت صلاة ${name}`,
     };
   }
   return {
-    title: "تذكير خفيف",
+    title: `تذكير ${name}`,
     body: `هل أديت صلاة ${name}؟ (${clock})`,
   };
 }
@@ -165,7 +160,7 @@ export function pickPrayerNotificationCopy(
 
     const tpl = pool[next] ?? pool[0];
     return {
-      title: tpl.title,
+      title: fill(tpl.title, prayerName, minutes),
       body: fill(tpl.body, prayerName, minutes),
     };
   } catch {

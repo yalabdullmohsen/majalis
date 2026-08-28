@@ -12,7 +12,7 @@ const STORE_KEY = "majalis-prayer-alert-prefs-v1";
 /** دقائق التنبيه المسبق الافتراضية. */
 export const PRE_ALERT_MINUTES = 15;
 
-export const PRE_ALERT_MINUTE_OPTIONS = [0, 5, 10, 15, 20] as const;
+export const PRE_ALERT_MINUTE_OPTIONS = [0, 5, 10, 15, 20, 30] as const;
 export type PreAlertMinutes = (typeof PRE_ALERT_MINUTE_OPTIONS)[number];
 
 /** دقائق بعد دخول الوقت لإشعار التذكير الخفيف. */

@@ -56,6 +56,7 @@ const PATHS = [
   "/account-deletion",
   "/adab-talab-ilm",
   "/adhan-settings",
+  "/adhan-help",
   "/adhkar",
   "/adhkar/:slug",
   "/admin",
