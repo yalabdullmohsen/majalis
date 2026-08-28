@@ -2,6 +2,7 @@
  * حالة صفحة التعريف عند أول زيارة — majlis_intro_seen في localStorage.
  */
 import { firstVisitIntroConfig } from "@/config/first-visit-intro";
+import { isNativeApp } from "@/lib/capacitor-utils";
 import { storageGetSync } from "./native-storage";
 
 export const FIRST_VISIT_INTRO_STORAGE_KEY = "majlis_intro_seen";
@@ -86,6 +87,7 @@ export function isFirstVisitIntroHomePath(pathname: string): boolean {
 }
 
 export function shouldShowFirstVisitIntro(pathname: string): boolean {
+  if (isNativeApp) return false;
   if (!firstVisitIntroConfig.enabled) return false;
   if (typeof navigator !== "undefined" && navigator.webdriver) return false;
   if (!isFirstVisitIntroHomePath(pathname)) return false;
