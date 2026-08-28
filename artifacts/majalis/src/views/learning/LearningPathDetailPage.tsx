@@ -129,7 +129,7 @@ function CourseCard({
           {course.description && <p className="lpd2-course-card__desc">{course.description}</p>}
 
           {course.items.length === 0 ? (
-            <p className="lpd2-course-card__empty">لا محتوى منشور بعد لهذا المقرر — قيد المراجعة العلمية.</p>
+            <p className="lpd2-course-card__empty">لا محتوى منشور بعد لهذا المقرر.</p>
           ) : (
             <div className="lpd2-modules">
               {course.items.map((item, i) => {
@@ -402,7 +402,7 @@ export default function LearningPathDetailPage() {
 
       <h2 className="lpd2-section-title">خطة المسار</h2>
       {path.stages.length === 0 && (
-        <p className="lpd2-course-card__empty">هذا المسار قيد المراجعة العلمية، لم يُنشَر محتواه بعد.</p>
+        <p className="lpd2-course-card__empty">هذا المسار لم يُنشَر محتواه بعد.</p>
       )}
       {path.stages.map((stage) => (
         <section key={stage.id} className="lpd2-stage">

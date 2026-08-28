@@ -5,7 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/not-found.css";
 
 const SUGGESTIONS = [
-  { href: "/quran-hub",    label: "مركز القرآن",       Icon: BookOpen   },
+  { href: "/quran-hub",    label: "مركز القرآن الكريم",       Icon: BookOpen   },
   { href: "/adhkar",       label: "الأذكار",           Icon: Scroll     },
   { href: "/lessons",      label: "الدروس",            Icon: BookText   },
   { href: "/hadith",       label: "الحديث وعلومه",          Icon: BookMarked },

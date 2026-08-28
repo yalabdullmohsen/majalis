@@ -6,9 +6,9 @@
 export type MeasureTextFn = (fontPx: number, text: string, family: string) => number;
 
 export const MUSHAF_FIT_MIN_PX = 12;
-export const MUSHAF_FIT_MAX_PX = 34;
+export const MUSHAF_FIT_MAX_PX = 35;
 /** سقف أعلى لصفحتي الفاتحة وبداية البقرة (أسطر أقل → تكبير دون قص). */
-export const MUSHAF_FIT_OPENING_MAX_PX = 42;
+export const MUSHAF_FIT_OPENING_MAX_PX = 46;
 import { releaseCanvasResources } from "@/lib/canvas-gl-cleanup";
 
 export const MUSHAF_FIT_LINE_RATIO = 1.85;
@@ -79,7 +79,7 @@ export function mushafUniformFitCacheKey(
   _family: string = "",
 ): string {
   /* الحجم موحّد من الهندسة فقط — لا نُفرّق حسب خط الصفحة (qpc-v2-pN). */
-  return `uniform-v1|${Math.round(containerWidth)}|${Math.round(blockHeightPx)}`;
+  return `uniform-v2|${Math.round(containerWidth)}|${Math.round(blockHeightPx)}`;
 }
 
 /** مفتاح مستقل لصفحتي الافتتاح — لا يُقيَّدان بسقف الصفحات الكثيفة. */
@@ -88,7 +88,7 @@ export function mushafOpeningFitCacheKey(
   containerWidth: number,
   blockHeightPx: number,
 ): string {
-  return `opening-v2|${page}|${Math.round(containerWidth)}|${Math.round(blockHeightPx)}`;
+  return `opening-v3|${page}|${Math.round(containerWidth)}|${Math.round(blockHeightPx)}`;
 }
 
 export function isMushafOpeningPage(pageNumber: number): boolean {

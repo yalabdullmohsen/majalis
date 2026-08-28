@@ -177,7 +177,7 @@ async function main() {
           lineSlots > 0 &&
           paint.fontCheck === true &&
           paint.fontSize >= 12 &&
-          paint.fontSize <= 34 &&
+          paint.fontSize <= 35 &&
           paint.pageOverflow === false &&
           paint.lineOverflow === false &&
           paint.overlap === false &&

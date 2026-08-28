@@ -27,7 +27,7 @@ export const ACCORDION_EXPLORE_LINKS = {
   arabic: [
     { href: "/quran-knowledge", label: "القرآن وعلومه" },
     { href: "/adab-talab-ilm", label: "آداب طالب العلم" },
-    { href: "/islamic-glossary", label: "المصطلحات الشرعية" },
+    { href: "/islamic-glossary", label: "مفاهيم شرعية" },
   ],
   tazkiya: [
     { href: "/akhlaq", label: "الأخلاق" },
@@ -71,7 +71,7 @@ export const ACCORDION_EXPLORE_LINKS = {
   ],
   tarikh: [
     { href: "/seerah", label: "السيرة النبوية" },
-    { href: "/scholars", label: "أعلام الإسلام" },
+    { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
     { href: "/prophets", label: "قصص الأنبياء" },
     { href: "/islamic-landmarks", label: "معالم إسلامية" },
     { href: "/nations", label: "الأمم السابقة" },
@@ -93,18 +93,18 @@ export function accordionExploreLinks(key: AccordionExploreKey): ExploreAlsoLink
 
 /** روابط ثابتة لصفحات غير أكورديونية */
 export const PAGE_EXPLORE_LINKS = {
-  scholar: [
-    { href: "/quran-knowledge", label: "القرآن وعلومه" },
+  historyDetail: [
+    { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
+    { href: "/seerah", label: "السيرة النبوية" },
+    { href: "/library", label: "المكتبة العلمية" },
     { href: "/lessons", label: "الدروس العلمية" },
-    { href: "/madhahib", label: "المذاهب الأربعة" },
-    { href: "/memorization", label: "الحفظ والمراجعة" },
   ],
   asmaHusna: [
     { href: "/tawhid", label: "التوحيد" },
     { href: "/arkan", label: "أركان الإسلام والإيمان" },
     { href: "/iman-topics", label: "موضوعات الإيمان" },
     { href: "/adhkar", label: "الأذكار" },
-    { href: "/quran-hub", label: "مركز القرآن" },
+    { href: "/quran-hub", label: "مركز القرآن الكريم" },
   ],
   adabTalabIlm: [
     { href: "/tawhid", label: "التوحيد" },

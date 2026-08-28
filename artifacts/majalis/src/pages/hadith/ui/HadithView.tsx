@@ -646,7 +646,6 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
             grade: h.grade,
             narrator: h.narrator,
             reference: h.hadith_number ? String(h.hadith_number) : takhrijText ? String(takhrijText) : null,
-            needsReview: !h.source_name || !h.grade,
             reportContentType: "hadith",
             reportContentId: h.id,
           }}
@@ -1282,7 +1281,7 @@ export default function HadithPage() {
           title="استكشف أيضًا"
           links={[
             { href: "/flashcards", label: "بطاقات الحفظ" },
-            { href: "/scholars", label: "أعلام وتراجم" },
+            { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
             { href: "/quiz", label: "سين جيم" },
           ]}
         />

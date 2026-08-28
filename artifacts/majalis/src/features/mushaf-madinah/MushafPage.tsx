@@ -56,7 +56,6 @@ export const MushafPage = memo(function MushafPage({
 
   useEffect(() => {
     setMushafAyahSyncKeys(selectedVerseKey ?? null, playingVerseKey ?? null);
-    return () => setMushafAyahSyncKeys(null, null);
   }, [selectedVerseKey, playingVerseKey]);
 
   return (

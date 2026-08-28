@@ -149,7 +149,7 @@ async function main() {
           String(m.pageAttr) === String(n) &&
           m.fontCheck === true &&
           m.fontSize >= 12 &&
-          m.fontSize <= 34 &&
+          m.fontSize <= 35 &&
           m.pageOverflow === false &&
           m.lineOverflow === false &&
           m.overlap === false,

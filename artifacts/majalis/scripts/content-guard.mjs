@@ -23,7 +23,7 @@ function read(rel) {
 
 /** 1) لا حشو بنقاط ≥ 4 في بذور المحتوى */
 for (const rel of [
-  "src/lib/scholars-data.ts",
+  "src/data/islamic-history/personalities.json",
   "src/lib/sheikhs-seed.ts",
   "src/lib/library-catalog.ts",
 ]) {
@@ -41,7 +41,7 @@ const BANNED_PHRASES = [
   "يُنصح به لطالب العلم؛ من مراجع",
 ];
 for (const rel of [
-  "src/lib/scholars-data.ts",
+  "src/data/islamic-history/personalities.json",
   "src/lib/sheikhs-seed.ts",
   "src/lib/library-catalog.ts",
 ]) {
@@ -78,8 +78,8 @@ if (!/"source"\s*:\s*"\/muezzins"/.test(vercel)) {
 /** 4) أوصاف SEO ≤ 160 حرفًا للعلماء (عيّنة من generate عند البناء؛ هنا نفحص البذرة) */
 {
   // نفحص أن applyPageSeo في ScholarProfile يقطع — والـguard يرفض bios تُستخدم كما هي بدون قطع في ملفات SEO الثابتة إن وُجدت
-  const seoScholarsDir = path.join(ROOT, "seo-prerender/scholars");
-  if (fs.existsSync(seoScholarsDir)) {
+  const seoHistoryDir = path.join(ROOT, "seo-prerender/tarikh-islami");
+  if (fs.existsSync(seoHistoryDir)) {
     const walk = (dir) => {
       for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
         const p = path.join(dir, ent.name);
@@ -95,7 +95,7 @@ if (!/"source"\s*:\s*"\/muezzins"/.test(vercel)) {
         }
       }
     };
-    walk(seoScholarsDir);
+    walk(seoHistoryDir);
   }
 }
 

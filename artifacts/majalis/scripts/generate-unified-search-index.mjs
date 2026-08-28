@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(__dirname, "..");
 
-const { SCHOLARS } = await import("../src/lib/scholars-data.ts");
+const { ISLAMIC_HISTORY_ITEMS } = await import("../src/data/islamic-history/index.ts");
 const { LIBRARY_CATALOG } = await import("../src/lib/library-catalog.ts");
 const { getSurahList } = await import("../src/lib/quran-api.ts");
 const { normalizeArabic } = await import("../src/shared/arabic-normalize.ts");
@@ -49,15 +49,15 @@ function pushDoc(id, kind, titleAr, href, parts = [], meta) {
   });
 }
 
-// ── علماء ──────────────────────────────────────────────────────────────────
-for (const s of SCHOLARS) {
+// ── التاريخ الإسلامي ─────────────────────────────────────────────────────
+for (const item of ISLAMIC_HISTORY_ITEMS) {
   pushDoc(
-    `scholar:${s.id}`,
-    "scholar",
-    s.name,
-    `/scholars/${s.id}`,
-    [s.fullName, s.era, ...(s.specialty ?? [])],
-    s.era,
+    `history:${item.id}`,
+    "history",
+    item.title,
+    `/tarikh-islami/${item.id}`,
+    [item.summary, item.era, ...(item.relatedPersons ?? [])],
+    item.era,
   );
 }
 
@@ -214,7 +214,7 @@ const APP_PAGES = [
   ["app:hadith", "hadith", "الحديث", "/hadith", ["سنة"]],
   ["app:fiqh", "fiqh", "الفقه والأحكام", "/fiqh", ["فقه", "أحكام"]],
   ["app:library", "book", "المكتبة", "/library", ["كتب"]],
-  ["app:scholars", "scholar", "أعلام الإسلام", "/scholars", ["علماء", "مشايخ"]],
+  ["app:tarikh-islami", "history", "التاريخ الإسلامي", "/tarikh-islami", ["تاريخ", "سيرة", "حضارة"]],
   ["app:seerah", "seerah", "السيرة النبوية", "/seerah", ["سيرة"]],
   ["app:prophets", "prophet", "قصص الأنبياء", "/prophets", ["أنبياء", "ابتلاءات"]],
   ["app:quran-people", "person", "الذين ذكروا في القرآن", "/quran/people", ["أعلام", "شخصيات", "مذكورون", "فرعون", "مريم", "أشخاص القرآن"]],
@@ -224,7 +224,7 @@ const APP_PAGES = [
   ["app:duas-quran", "dua", "أدعية القرآن", "/duas-quran", ["دعاء", "قرآن"]],
   ["app:lessons", "lesson", "الدروس", "/lessons", ["دروس"]],
   ["app:courses", "course", "الدورات العلمية", "/courses", ["دورات"]],
-  ["app:glossary", "app", "المصطلحات", "/glossary", ["مصطلحات", "glossary"]],
+  ["app:glossary", "app", "مفاهيم شرعية", "/glossary", ["مصطلحات", "المصطلحات", "glossary"]],
   ["app:reciters", "app", "القرّاء", "/reciters", ["قراء", "تلاوة"]],
   ["app:prayer", "app", "مواقيت الصلاة", "/prayer-times", ["صلاة", "أذان"]],
   ["app:adhan-settings", "settings", "إعدادات الأذان", "/adhan-settings", ["أذان", "مؤذن"]],
@@ -235,7 +235,7 @@ const APP_PAGES = [
   ["app:quiz", "app", "لعبة سين جيم", "/quiz", ["اختبار"]],
   ["app:ibtillaat", "prophet", "ابتلاءات الأنبياء", "/prophets", ["ابتلاء", "أنبياء"]],
   ["app:tafsir-audio", "tafsir-audio", "التفسير الصوتي", "/tafsir", ["تفسير صوتي", "استماع تفسير"]],
-  ["app:quran-hub", "quran", "مركز القرآن", "/quran-hub", ["مركز", "قرآن"]],
+  ["app:quran-hub", "quran", "مركز القرآن الكريم", "/quran-hub", ["مركز", "قرآن", "القرآن الكريم"]],
   [
     "app:quran-numbers",
     "quran",
@@ -354,9 +354,9 @@ try {
 pushDoc(
   "tool:glossary",
   "tool",
-  "المصطلحات الإسلامية",
+  "مفاهيم شرعية",
   "/islamic-glossary",
-  ["معجم", "مصطلحات", "بحث"],
+  ["معجم", "مصطلحات", "المصطلحات", "بحث"],
   "أداة بحث",
 );
 

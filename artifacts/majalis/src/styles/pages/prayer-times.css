@@ -141,6 +141,7 @@ html.pts-immersive .bottom-nav {
     max(1rem, var(--inset-left, 0px), 12px);
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.9rem;
   position: relative;
   overflow-x: clip;
@@ -173,8 +174,8 @@ html.pts-immersive .bottom-nav {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: none;
-  margin-inline: 0;
+  max-width: min(100%, 26rem);
+  margin-inline: auto;
   box-sizing: border-box;
 }
 
@@ -304,7 +305,7 @@ html.pts-immersive .bottom-nav {
   flex-wrap: wrap;
   gap: 0.45rem;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   font-family: var(--font-face, var(--font-body), "Amiri", serif);
   font-size: 0.84rem;
   font-weight: 600;
@@ -488,9 +489,10 @@ html.pts-immersive .bottom-nav {
 }
 .pts-row {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: center;
+  gap: 0.35rem;
   width: 100%;
   min-height: 3.65rem;
   padding: 0.95rem 1.15rem;
@@ -510,7 +512,7 @@ html.pts-immersive .bottom-nav {
     border-color 0.22s ease,
     box-shadow 0.22s ease,
     transform 0.18s ease;
-  text-align: start;
+  text-align: center;
   -webkit-tap-highlight-color: transparent;
 }
 .pts-row:hover {
@@ -550,7 +552,7 @@ html.pts-immersive .bottom-nav {
 .pts-row__meta {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.2rem;
   min-width: 0;
 }
@@ -582,8 +584,8 @@ html.pts-immersive .bottom-nav {
   direction: ltr;
   unicode-bidi: isolate;
   flex-shrink: 0;
-  min-width: 5.25rem;
-  text-align: end;
+  min-width: 0;
+  text-align: center;
 }
 .pts-row--next .pts-row__time {
   color: var(--pts-gold);
@@ -854,3 +856,86 @@ html.pts-immersive .bottom-nav {
 .pts-screen .pts-annual__table th,
 .pts-screen .pts-annual__table td { padding: 0.35rem 0.4rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); text-align: center; white-space: nowrap; }
 .pts-screen .pts-annual__table th { position: sticky; top: 0; background: var(--pts-bg-1); color: var(--pts-gold); }
+
+/* ── مراتب الصلاة (أسفل الصفحة) ── */
+.pts-ranks {
+  margin-top: 1.25rem;
+  padding: 1rem 1.05rem 1.1rem;
+  border-radius: var(--pts-radius-sm, var(--radius-tile, 24px));
+  border: 1px solid var(--pts-card-border);
+  background: rgba(255, 255, 255, 0.06);
+}
+.pts-ranks__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+.pts-ranks__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--pts-white);
+}
+.pts-ranks__more {
+  font-size: 0.78rem;
+  color: var(--pts-gold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.pts-ranks__more:hover { text-decoration: underline; }
+.pts-ranks__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.pts-ranks__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: calc(var(--pts-radius-sm, 24px) - 6px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.pts-ranks__num {
+  flex-shrink: 0;
+  width: 1.65rem;
+  height: 1.65rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--pts-gold-soft);
+  border: 1px solid var(--pts-gold-line);
+  color: var(--pts-gold);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.pts-ranks__body { min-width: 0; }
+.pts-ranks__label {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 650;
+  color: var(--pts-white);
+  line-height: 1.45;
+}
+.pts-ranks__ruling {
+  margin: 0.2rem 0 0;
+  font-size: 0.76rem;
+  color: var(--pts-muted);
+}
+.pts-screen .pts-ranks__title,
+.pts-screen .pts-ranks__label {
+  color: var(--pts-white) !important;
+}
+.pts-screen .pts-ranks__more,
+.pts-screen .pts-ranks__num {
+  color: var(--pts-gold) !important;
+}
+.pts-screen .pts-ranks__ruling {
+  color: var(--pts-muted) !important;
+}

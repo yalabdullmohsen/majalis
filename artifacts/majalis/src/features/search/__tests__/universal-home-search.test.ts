@@ -27,7 +27,7 @@ function read(rel: string) {
 
 assert.equal(UNIVERSAL_DEBOUNCE_MS, 120);
 assert.equal(UNIVERSAL_PREVIEW, 3);
-assert.deepEqual([...UNIVERSAL_SECTION_ORDER], ["quran", "book", "scholar", "adhkar", "quiz"]);
+assert.deepEqual([...UNIVERSAL_SECTION_ORDER], ["quran", "book", "history", "adhkar", "quiz"]);
 
 const indexPath = resolve(root, "public/data/search/index.json");
 const payload = JSON.parse(readFileSync(indexPath, "utf8")) as {
@@ -44,7 +44,7 @@ await runUniversalSearch("الصلاة");
   for (let i = 0; i < 5; i++) {
     const res = await runUniversalSearch("البخاري");
     times.push(res.responseMs);
-    assert.ok(res.counts.book + res.counts.scholar > 0, "نتائج كتب/علماء");
+    assert.ok(res.counts.book + res.counts.history > 0, "نتائج كتب/تاريخ");
   }
   const median = [...times].sort((a, b) => a - b)[2]!;
   assert.ok(median < 100, `وسيط استجابة الفهرس ≤100ms (الفعلي ${median.toFixed(1)}ms؛ العينات ${times.map((t) => t.toFixed(0)).join(",")})`);

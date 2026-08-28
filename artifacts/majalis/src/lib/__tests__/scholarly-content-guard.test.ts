@@ -127,10 +127,11 @@ console.log("\n=== بنية التوثيق العلمي (ScholarlyTrustBadge) �
   const prophetSrc = readSrc("src/views/ProphetStoriesPage.tsx");
   assert(prophetSrc.includes("ScholarlyTrustBadge"), "صفحة قصص الأنبياء تستخدم مكوّن شارة التوثيق العلمي الموجود أصلاً (لا مكوّن جديد مكرَّر)");
   const badgeSrc = readSrc("src/components/ScholarlyTrustBadge.tsx");
-  assert(badgeSrc.includes("قيد المراجعة الشرعية"), "الشارة تعرض \"قيد المراجعة الشرعية\" لأي محتوى بلا مراجِع بشري مُسمّى وتاريخ مراجعة");
   assert(badgeSrc.includes("hasKhilaf"), "الشارة تدعم عرض \"توجد أقوال فقهية أخرى\" (الخلاف العلمي) بالفعل");
   assert(badgeSrc.includes("isScholarlyVerified"),
-    "شارة \"محتوى موثّق\" مشروطة بدالة isScholarlyVerified (مراجِع + تاريخ + مصدر خارجي) لا تُعرض اعتباطًا");
+    "شارة \"محتوى موثّق\" مشروطة بدالة isScholarlyVerified (مصدر/مرجع) لا تُعرض اعتباطًا");
+  assert(!badgeSrc.includes("قيد المراجعة الشرعية"),
+    "لا وسم «قيد المراجعة الشرعية» في واجهة المستخدم");
 }
 
 console.log(`\n${"─".repeat(40)}`);

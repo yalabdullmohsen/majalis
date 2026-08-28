@@ -224,9 +224,6 @@ function TopicsGrid({ category }: { category: RightsCategory }) {
         <Link key={topic.id} href={`/sins-and-rights/${topic.slug}`} className="snr-topic-card">
           <div className="snr-topic-card-header">
             <span className="snr-topic-title">{topic.title}</span>
-            {topic.reviewStatus === "pending" && (
-              <span className="snr-badge snr-badge--pending" title="قيد المراجعة الشرعية">⏳</span>
-            )}
           </div>
           <p className="snr-topic-desc">{topic.shortDescription}</p>
           <div className="snr-topic-badges">
@@ -410,7 +407,7 @@ function MindMap() {
                       title="قيد الإعداد والمراجعة"
                     >
                       <span>{child.label}</span>
-                      <span className="snr-badge snr-badge--pending" style={{ fontSize: "0.65rem" }}>قريباً</span>
+                      <span className="snr-badge snr-badge--pending" style={{ fontSize: "0.65rem" }}>غير منشور</span>
                     </div>
                   )
                 )}
@@ -467,7 +464,7 @@ export default function SinsAndRightsPage() {
         <span className="snr-content-notice-icon">ℹ️</span>
         <span>
           المحتوى الشرعي مستند إلى القرآن الكريم والسنة النبوية الصحيحة وأقوال أهل العلم المعتبرين.
-          المحتوى المُشار إليه بـ «قيد المراجعة» لم يُعتمَد بعد. لا يُغني هذا القسم عن سؤال العلماء في المسائل الفردية المعقدة.
+          لا يُغني هذا القسم عن سؤال العلماء في المسائل الفردية المعقدة.
         </span>
       </div>
 
@@ -524,8 +521,7 @@ export default function SinsAndRightsPage() {
           {/* إحصائيات سريعة */}
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "2rem" }}>
             {[
-              { label: "موضوعاً موثقاً", value: SINS_TOPICS.filter((t) => t.reviewStatus === "reviewed").length },
-              { label: "قيد المراجعة", value: SINS_TOPICS.filter((t) => t.reviewStatus === "pending").length },
+              { label: "موضوعاً", value: SINS_TOPICS.length },
               { label: "أسئلة عملية", value: WHAT_IF_QA.length },
             ].map((stat) => (
               <div

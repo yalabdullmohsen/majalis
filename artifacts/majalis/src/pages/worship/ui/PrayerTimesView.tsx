@@ -24,6 +24,7 @@ import { PrayerLocationPicker } from "@/components/prayer/PrayerLocationPicker";
 import { PrayerAnnualTimetable } from "@/components/prayer/PrayerAnnualTimetable";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import { toArabicDigits } from "@/lib/utils";
+import { RANKS } from "@/pages/worship/PrayerRanksPage";
 import "@/styles/pages/prayer-times.css";
 
 const PRAYER_AR: Record<string, string> = {
@@ -478,6 +479,26 @@ export default function PrayerTimesPage() {
           <span>تنبيهات الأذان</span>
         </Link>
       </nav>
+
+      <section className="pts-ranks" aria-labelledby="pts-ranks-title">
+        <div className="pts-ranks__head">
+          <h2 id="pts-ranks-title" className="pts-ranks__title">مراتب الناس في الصلاة</h2>
+          <Link href="/prayer-ranks" className="pts-ranks__more">
+            التفاصيل والفضائل
+          </Link>
+        </div>
+        <ol className="pts-ranks__list">
+          {RANKS.map((rank, index) => (
+            <li key={rank.title} className="pts-ranks__item">
+              <span className="pts-ranks__num">{toArabicDigits(index + 1)}</span>
+              <div className="pts-ranks__body">
+                <p className="pts-ranks__label">{rank.label}</p>
+                <p className="pts-ranks__ruling">{rank.ruling}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
     </div>
   );
 }

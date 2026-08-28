@@ -77,7 +77,7 @@ export function resolveContentUrl(item) {
       return id ? `/fiqh-council/${item.slug || id}` : "/fiqh-council";
     case "sheikh":
     case "sheikhs":
-      return id ? `/scholars/${id}` : "/scholars";
+      return id ? `/tarikh-islami/${id}` : "/tarikh-islami";
     case "quran":
       return "/quran-hub";
     case "hadith":

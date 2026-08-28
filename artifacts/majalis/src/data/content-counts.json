@@ -1,7 +1,7 @@
 {
   "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
   "books": 173,
-  "scholars": 135,
+  "islamicHistory": 100,
   "fawaid": 616,
   "quizQuestions": 0,
   "mindMaps": 23,

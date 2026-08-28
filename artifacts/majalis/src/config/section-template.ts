@@ -150,12 +150,6 @@ export const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
     type: "ayah",
     sectionId: "aqidah",
   },
-  "/scholars": {
-    text: "يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ",
-    ref: "المجادلة: ١١",
-    type: "ayah",
-    sectionId: "biographies",
-  },
   "/lessons": {
     text: "وَقُل رَّبِّ زِدْنِي عِلْمًا",
     ref: "طه: ١١٤",

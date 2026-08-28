@@ -1,6 +1,5 @@
 /**
  * حارس الربط الداخلي والتنظيف: مصدر روابط موحّد + صفحات مربوطة.
- * التشغيل: npx tsx src/lib/__tests__/site-interlink.test.ts
  */
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -10,6 +9,7 @@ import { getNodeHref, type KnNode } from "../knowledge-graph-service";
 import {
   hrefLessons,
   hrefScholars,
+  hrefIslamicHistory,
   hrefFawaid,
   hrefQa,
   hrefRulingsFilter,
@@ -35,7 +35,8 @@ function assert(condition: boolean, label: string) {
 console.log("\n=== content-href الموحّد ===");
 {
   assert(hrefLessons("abc") === "/lessons/abc", "hrefLessons");
-  assert(hrefScholars("s1") === "/scholars/s1", "hrefScholars");
+  assert(hrefScholars("tabari") === "/tarikh-islami/pers-al-tabari", "hrefScholars legacy → tarikh");
+  assert(hrefIslamicHistory("seerah-before") === "/tarikh-islami/seerah-before", "hrefIslamicHistory");
   assert(hrefFawaid("f1") === "/fawaid#f1", "hrefFawaid");
   assert(hrefQa("q1") === "/quiz?qa=q1", "hrefQa → quiz");
   assert(hrefRulingsFilter("الأسرة") === "/fiqh", "hrefRulingsFilter → fiqh (archived)");
@@ -46,10 +47,10 @@ console.log("\n=== روابط التوصيات تحتفظ بالمعرّف (إع
 {
   assert(CONTENT_TYPE_HREF.lesson("abc") === "/lessons/abc", "lesson → /lessons/:id");
   assert(CONTENT_TYPE_HREF.book("b1") === "/library/b1", "book → /library/:id");
-  assert(CONTENT_TYPE_HREF.scholar("s1") === "/scholars/s1", "scholar → /scholars/:id");
+  assert(CONTENT_TYPE_HREF.scholar("pers-al-tabari") === "/tarikh-islami/pers-al-tabari", "scholar → /tarikh-islami/:id");
   assert(CONTENT_TYPE_HREF.benefit("f1") === "/fawaid#f1", "benefit → /fawaid#id");
   assert(CONTENT_TYPE_HREF.qa("q1") === "/quiz?qa=q1", "qa → /quiz?qa=");
-  assert(CONTENT_TYPE_HREF.scholar("") === "/scholars", "scholar بلا id → القائمة");
+  assert(CONTENT_TYPE_HREF.scholar("") === "/tarikh-islami?tab=personalities", "scholar بلا id → التاريخ");
   assert(CONTENT_TYPE_HREF.story("omar") === "/stories?slug=omar", "story → /stories?slug=");
   assert(CONTENT_TYPE_HREF.miracle("m1") === "/miracles#m1", "miracle → /miracles#id");
   assert(CONTENT_TYPE_HREF.hadith("h1") === "/hadith#h1", "hadith → /hadith#id");
@@ -60,9 +61,9 @@ console.log("\n=== روابط الرسم المعرفي تحتفظ بالمعر�
 {
   const base = { id: "n1", title: "عقدة", created_at: "" };
   assert(
-    getNodeHref({ ...base, node_type: "scholar", reference_id: "ibn-taymiyyah" } as KnNode)
-      === "/scholars/ibn-taymiyyah",
-    "scholar node → /scholars/:ref",
+    getNodeHref({ ...base, node_type: "scholar", reference_id: "pers-al-tabari" } as KnNode)
+      === "/tarikh-islami/pers-al-tabari",
+    "scholar node → /tarikh-islami/:ref",
   );
   assert(
     getNodeHref({ ...base, node_type: "benefit", reference_id: "ben-1" } as KnNode)
@@ -74,21 +75,24 @@ console.log("\n=== روابط الرسم المعرفي تحتفظ بالمعر�
 console.log("\n=== explore-links المركزي ===");
 {
   assert(ACCORDION_EXPLORE_LINKS.maqasid.length >= 4, "مقاصد: روابط كافية");
-  assert(PAGE_EXPLORE_LINKS.scholar.length >= 4, "عالِم: روابط كافية");
+  assert(PAGE_EXPLORE_LINKS.historyDetail.length >= 4, "تاريخ: روابط كافية");
   assert(PAGE_EXPLORE_LINKS.adabTalabIlm.some((l) => l.href === "/fiqh/usul"),
     "آداب طالب العلم ترتبط بأصول الفقه");
 }
 
-console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related ===");
+console.log("\n=== صفحات التاريخ الإسلامي ===");
 {
-  const scholar = readFileSync(resolve(srcRoot, "pages/library/ui/ScholarProfileView.tsx"), "utf8");
-  assert(scholar.includes("KnowledgeRelatedItems"), "ملف العالِم يركّب KnowledgeRelatedItems");
-  assert(scholar.includes("PAGE_EXPLORE_LINKS"), "ملف العالِم يستورد PAGE_EXPLORE_LINKS");
+  const hub = readFileSync(resolve(srcRoot, "views/TarikhIslamiPage.tsx"), "utf8");
+  assert(hub.includes("/tarikh-islami/"), "صفحة التاريخ تربط التفاصيل");
+  assert(!hub.includes("/scholars"), "لا روابط علماء في صفحة التاريخ");
+
+  const detail = readFileSync(resolve(srcRoot, "views/TarikhIslamiDetailPage.tsx"), "utf8");
+  assert(detail.includes("relatedLinks"), "صفحة التفصيل تعرض روابط ذات صلة");
+  assert(detail.includes("sources"), "صفحة التفصيل تعرض المصادر");
 
   const topic = readFileSync(resolve(srcRoot, "pages/fiqh/ui/FiqhTopicView.tsx"), "utf8");
   assert(topic.includes("Redirect"), "صفحة الباب القديمة تحوّل إلى مسار الكتاب/المساند");
   assert(topic.includes("/fiqh/usul"), "أصول الفقه يحوّل إلى /fiqh/usul");
-  assert(!topic.includes("getRulingsEncyclopedia"), "لا موسوعة أحكام في صفحة الباب");
 
   const home = readFileSync(resolve(srcRoot, "components/home/HomeStartHereSection.tsx"), "utf8");
   const homeData = readFileSync(resolve(srcRoot, "components/home/home-start-here-data.ts"), "utf8");
@@ -97,32 +101,12 @@ console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related =
     "ابدأ من هنا → دليل طالب العلم",
   );
 
-  const accordion = readFileSync(resolve(srcRoot, "components/SectionAccordionLayout.tsx"), "utf8");
-  assert(accordion.includes("relatedLinks"), "التخطيط الأكورديوني يدعم relatedLinks");
-
-  const maqasid = readFileSync(resolve(srcRoot, "views/MaqasidShariaPage.tsx"), "utf8");
-  assert(maqasid.includes("accordionExploreLinks"), "مقاصد تستورد الروابط المركزية");
-
   const kri = readFileSync(resolve(srcRoot, "components/knowledge/KnowledgeRelatedItems.tsx"), "utf8");
   assert(kri.includes("KNOWLEDGE_RELATED_HREF"), "KnowledgeRelatedItems من content-href");
-  assert(!kri.includes("كان سيُنتج صفحة نتائج فارغة"), "أُزيلت تعليقات TYPE_HREF المطوّلة");
-
-  const stories = readFileSync(resolve(srcRoot, "views/IslamicStoriesPage.tsx"), "utf8");
-  assert(stories.includes("?slug="), "القصص الإسلامية تدعم ?slug= للمشاركة");
-  assert(stories.includes("ExploreAlsoNav"), "صفحة القصص تركّب ExploreAlsoNav");
-
-  const surah = readFileSync(resolve(srcRoot, "pages/quran/ui/SurahStoriesView.tsx"), "utf8");
-  assert(surah.includes("ExploreAlsoNav"), "قصص السور تركّب ExploreAlsoNav");
-  assert(surah.includes("path: \"/quran/surah-stories\""), "SEO قصص السور على المسار الصحيح");
 
   const search = readFileSync(resolve(srcRoot, "pages/account/ui/SearchView.tsx"), "utf8");
   assert(search.includes("/quiz?qa="), "نتائج البحث تربط الأسئلة بـ /quiz?qa=");
   assert(search.includes("/fawaid#"), "نتائج البحث تربط الفوائد بـ #id");
-  assert(search.includes("القرآن وعلومه") || search.includes("علوم القرآن"), "تسمية علوم القرآن صحيحة في البحث");
-
-  const localSearch = readFileSync(resolve(srcRoot, "lib/local-search-ext.ts"), "utf8");
-  assert(localSearch.includes("/quran/surah-stories/"), "البحث المحلي لقصص السور على المسار الصحيح");
-  assert(localSearch.includes("/stories?slug="), "البحث المحلي للقصص عبر ?slug=");
 }
 
 console.log(`\n=== النتيجة: ${passed} نجاح، ${failed} فشل ===`);

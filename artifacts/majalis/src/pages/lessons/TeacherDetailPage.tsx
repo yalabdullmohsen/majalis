@@ -61,7 +61,7 @@ export default function TeacherDetailPage() {
           {" "}
           <Link href="/teachers">العودة لفهرس المشايخ</Link>
           {" · "}
-          <Link href="/scholars">أعلام الإسلام (علماء التراث)</Link></p>
+          <Link href="/tarikh-islami">التاريخ الإسلامي (علماء التراث)</Link></p>
       </PageShell>
     );
   }
@@ -78,7 +78,7 @@ export default function TeacherDetailPage() {
       <p className="tch-notice">
         تراجم علماء التراث والأئمة في
         {" "}
-        <Link href="/scholars">قسم أعلام الإسلام</Link>.
+        <Link href="/tarikh-islami">قسم التاريخ الإسلامي</Link>.
       </p>
 
       {active.length > 0 && (

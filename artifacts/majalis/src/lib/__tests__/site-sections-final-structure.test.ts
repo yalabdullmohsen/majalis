@@ -37,13 +37,13 @@ assert.deepEqual(
 );
 assert.deepEqual(
   BOTTOM_NAV_TABS.map((t) => t.label),
-  ["مركز القرآن", "الدروس", "الصلاة", "فقه", "الأقسام"],
+  ["مركز القرآن الكريم", "الدروس", "الصلاة", "فقه", "الأقسام"],
 );
 
 assert.deepEqual(MORE_IA_GROUP_TITLES.length, 7);
 assert.equal(MORE_IA_GROUP_TITLES.at(-1), "الحساب والإعدادات");
 
-assert.equal(MORE_FEATURED_SECTIONS.length, 6);
+assert.equal(MORE_FEATURED_SECTIONS.length, 7);
 assert.deepEqual(
   MORE_FEATURED_SECTIONS.map((s) => s.title),
   featuredSections().map((s) => s.label),
@@ -53,6 +53,7 @@ for (const required of [
   "الحديث وعلومه",
   "الفقه والأحكام",
   "السيرة النبوية",
+  "التاريخ الإسلامي",
   "قصص الأنبياء",
   "الأمم السابقة",
 ]) {

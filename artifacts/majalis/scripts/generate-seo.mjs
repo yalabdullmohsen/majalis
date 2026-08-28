@@ -125,7 +125,7 @@ const {
   bookHref,
   fiqhBookCounts,
 } = await importSrc("src/lib/fiqh-books.ts");
-const { SCHOLARS } = await importSrc("src/lib/scholars-data.ts");
+const { ISLAMIC_HISTORY_ITEMS } = await importSrc("src/data/islamic-history/index.ts");
 const { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS } = await importSrc("src/lib/adhkar-seed.ts");
 const { MUEZZINS } = await importSrc("src/lib/adhan-audio.ts");
 
@@ -507,28 +507,20 @@ function courseJsonLdScript(row) {
 }
 
 /**
- * Person للعلماء.
- * ملاحظة مقصودة: لا نُصدِر birthDate/deathDate — البيانات هجرية نصية («١٥٠ هـ»)
- * وschema.org يشترط ISO‑8601، وتحويلها تقريبي يُنتج سنة خاطئة أحياناً.
- * سنة الوفاة تظهر نصاً في متن الصفحة وفي الوصف.
+ * Article/HistoryEvent للتاريخ الإسلامي.
  */
-function scholarJsonLdScript(s) {
+function historyJsonLdScript(item) {
   const payload = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: s.name,
-    url: absoluteUrl(`/scholars/${s.id}`),
+    "@type": item.kind === "personality" ? "Person" : "Article",
+    name: item.title,
+    headline: item.title,
+    url: absoluteUrl(`/tarikh-islami/${item.id}`),
     inLanguage: "ar",
-    // وصف Person كامل — القصّ للـmeta فقط (D1)
-    description: String(s.bio || "").replace(/\s+/g, " ").trim(),
-    ...(s.fullName ? { alternateName: s.fullName } : {}),
-    ...(s.specialty?.length ? { jobTitle: s.specialty.join("، "), knowsAbout: s.specialty } : {}),
-    ...(s.died ? { disambiguatingDescription: `توفي سنة ${s.died}` } : {}),
-    ...(s.region ? { homeLocation: { "@type": "Place", name: s.region } } : {}),
-    ...(s.key_works?.length
-      ? { subjectOf: s.key_works.slice(0, 8).map((w) => ({ "@type": "Book", name: w, inLanguage: "ar" })) }
-      : {}),
-    ...(s.sources?.length ? { citation: s.sources } : {}),
+    description: String(item.summary || "").replace(/\s+/g, " ").trim(),
+    ...(item.hijriDate ? { temporalCoverage: item.hijriDate } : {}),
+    ...(item.place ? { contentLocation: { "@type": "Place", name: item.place } } : {}),
+    ...(item.sources?.length ? { citation: item.sources } : {}),
   };
   return jsonLdScript(payload);
 }
@@ -821,7 +813,10 @@ const LIST_JSON_LD = {
     QURAN_PEOPLE.map((p) => ({ name: p.nameAr, url: `/quran/people/${p.slug}` })),
     "الذين ذكروا في القرآن",
   ),
-  "/scholars": itemListJsonLdScript(SCHOLARS.map((s) => ({ name: s.name, url: `/scholars/${s.id}` })), "أعلام العلماء المسلمين"),
+  "/tarikh-islami": itemListJsonLdScript(
+    ISLAMIC_HISTORY_ITEMS.filter((i) => i.featured).map((i) => ({ name: i.title, url: `/tarikh-islami/${i.id}` })),
+    "التاريخ الإسلامي",
+  ),
   "/topics": itemListJsonLdScript(TOPICS.map((t) => ({ name: t.title, url: `/topics/${t.slug}` })), "المواضيع الإسلامية"),
   "/quran/surah-stories": itemListJsonLdScript(
     SURAH_STORIES.map((s) => ({ name: `سورة ${s.name}`, url: `/quran/surah-stories/${s.number}` })),
@@ -903,7 +898,7 @@ ${linkList(
 ${linkList("روابط ذات صلة", [
   { name: "دروس الكويت", url: "/kuwait-lessons" },
   { name: "الدورات السنوية", url: "/annual-courses" },
-  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
   { name: "البحث العلمي", url: "/search" },
 ])}`,
   "/library": `${linkList(
@@ -911,7 +906,7 @@ ${linkList("روابط ذات صلة", [
     LIBRARY_CATALOG.map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author })),
   )}
 ${linkList("روابط ذات صلة", [
-  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
   { name: "الفقه الإسلامي", url: "/fiqh" },
   { name: "علوم الحديث", url: "/hadith-science" },
   { name: "البحث", url: "/search" },
@@ -926,15 +921,15 @@ ${linkList("روابط ذات صلة", [
   { name: "السنن اليومية", url: "/sunan-yawmiyya" },
   { name: "أدعية القرآن", url: "/duas-quran" },
 ])}`,
-  "/scholars": `${linkList(
-    "أعلام العلماء المسلمين",
-    SCHOLARS.map((s) => ({ name: s.name, url: `/scholars/${s.id}`, note: s.died })),
+  "/tarikh-islami": `${linkList(
+    "مداخل التاريخ الإسلامي",
+    ISLAMIC_HISTORY_ITEMS.filter((i) => i.startHere).map((i) => ({ name: i.title, url: `/tarikh-islami/${i.id}`, note: i.era })),
   )}
 ${linkList("روابط ذات صلة", [
+  { name: "السيرة النبوية", url: "/seerah" },
   { name: "المكتبة العلمية", url: "/library" },
   { name: "الدروس الشرعية", url: "/lessons" },
-  { name: "الفقه الإسلامي", url: "/fiqh" },
-  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "قصص الأنبياء", url: "/prophets" },
 ])}`,
   "/quiz": linkList(
     "من أسئلة سين جيم",
@@ -1199,7 +1194,7 @@ ${linkList("روابط ذات صلة", [
   { name: "الدروس والدورات", url: "/lessons" },
   { name: "الدروس الشرعية", url: "/lessons" },
   { name: "المكتبة العلمية", url: "/library" },
-  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
   { name: "الفوائد", url: "/fawaid" },
   { name: "مكارم الأخلاق", url: "/akhlaq" },
 ])}`,
@@ -1320,7 +1315,7 @@ ${linkList("روابط ذات صلة", [
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
   { name: "بوابة الفقه", url: "/fiqh" },
-  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
   { name: "الفقه على المذاهب الأربعة (المكتبة)", url: "/library/book-al-fiqh-ala-madhahib-al-arba" },
   { name: "المعجم الشرعي", url: "/islamic-glossary" },
 ])}`,
@@ -1427,7 +1422,7 @@ ${linkList("روابط ذات صلة", [
   "/sahabah": `<p>أعلام الصحابة الكرام: تراجم مختارة وسيرهم في نصرة الدين، مع ربط بالسيرة والعلماء.</p>
 ${linkList("روابط ذات صلة", [
   { name: "السيرة النبوية", url: "/seerah" },
-  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
   { name: "القصص الإسلامية", url: "/stories" },
   { name: "حِكَم السلف", url: "/hikam-salaf" },
   { name: "مكارم الأخلاق", url: "/akhlaq" },
@@ -1435,7 +1430,7 @@ ${linkList("روابط ذات صلة", [
   "/hikam-salaf": `<p>حِكَم السلف الصالح وآثارهم في الزهد والأدب وطلب العلم — للانتفاع المختصر الموثّق.</p>
 ${linkList("روابط ذات صلة", [
   { name: "أعلام الصحابة", url: "/sahabah" },
-  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
   { name: "الرقائق والزهد", url: "/raqaiq" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
   { name: "الفوائد", url: "/fawaid" },
@@ -1523,16 +1518,16 @@ ${linkList("خطوات مقترحة", [
   { name: "الدروس والدورات", url: "/lessons" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
 ])}`,
-  "/methodology": `<p>هذه الصفحة تصف ما يفعله النظام فعلاً: لا وسم «موثّق» بلا مراجعة بشرية ومصدر خارجي، ووسم صريح للمحتوى قيد المراجعة أو المولَّد آلياً. آخر تحديث للمضمون: 2026-08-06.</p>
+  "/methodology": `<p>هذه الصفحة تصف ما يفعله النظام فعلاً: شارة «محتوى موثّق» عند وجود مصدر أو مرجع معروف، ووسم صريح للمحتوى المولَّد آلياً. آخر تحديث للمضمون: 2026-08-06.</p>
 <h2>لماذا هذه الصفحة؟</h2>
-<p>القاعدة: لا تُوسم مادة بـ«موثّقة» إلا إذا راجعها إنسان مُسمّى ولها مصدر خارجي مثبت. وما عدا ذلك يُعرض بوسم «قيد المراجعة الشرعية» للاطلاع لا للاحتجاج.</p>
+<p>القاعدة: تُوسم المادة «محتوى موثّق» عند وجود مصدر أو مرجع معروف — بلا اشتراط مراجع بشري مُسمّى. والمحتوى المولَّد آلياً يُوسم صراحةً ولا يُوثَّق تلقائياً.</p>
 <h2>درجات التوثيق</h2>
 <ul>
   <li><strong>نص أصلي:</strong> آية بسورة ورقم، أو حديث بمصنَّف ورقم مع حكم عند الحديث.</li>
   <li><strong>مصدر علمي:</strong> نقل عن عالم أو كتاب مسمّى بموضع يمكن الرجوع إليه.</li>
   <li><strong>قرار مؤسسي:</strong> قرار مجمع أو هيئة برقم وتاريخ.</li>
   <li><strong>استدلال عام:</strong> قاعدة أو مقصد بلا نص مسمّى — ليس دليلاً مكتملاً.</li>
-  <li><strong>بلا مصدر:</strong> يُعلَّم صراحةً ولا يُعرض كموثَّق.</li>
+  <li><strong>بلا مصدر:</strong> يُعلَّم صراحةً ولا يُعرض كموثَّق.</li>
 </ul>
 <h2>مرجعية المحتوى الشرعي</h2>
 <ul>
@@ -1544,9 +1539,8 @@ ${linkList("خطوات مقترحة", [
 <h2>خطوات التحقق والنشر</h2>
 <ol>
   <li>استيراد من مصدر معروف مع حفظ رابط المصدر.</li>
-  <li>كل استيراد يبقى «قيد المراجعة» ولا يُعتمد تلقائياً.</li>
-  <li>المراجعة البشرية شرط وسم «موثّق» مع اسم المراجع والتاريخ.</li>
-  <li>وسم المحتوى المولَّد آلياً صراحةً.</li>
+  <li>«محتوى موثّق» عند وجود مصدر أو مرجع — بلا اشتراط مراجع بشري.</li>
+  <li>وسم المحتوى المولَّد آلياً صراحةً.</li>
   <li>المساعد العلمي أداة تعليمية — لا يُفتي.</li>
 </ol>
 <h2>مصادر التحقق المعتمدة</h2>
@@ -1568,7 +1562,7 @@ ${linkList("خطوات مقترحة", [
 <ul>
   <li>لا نُفتي في النوازل الشخصية.</li>
   <li>لا نصحّح درجة حديث لم تثبت في مصدره.</li>
-  <li>لا نمنح شارة توثيق بلا مراجِع بشري ومصدر خارجي.</li>
+  <li>لا نمنح شارة «محتوى موثّق» إلا بمصدر أو مرجع معروف.</li>
 </ul>
 ${linkList("روابط ذات صلة", [
   { name: "من نحن", url: "/about" },
@@ -1577,11 +1571,12 @@ ${linkList("روابط ذات صلة", [
   { name: "تواصل معنا", url: "/contact" },
   { name: "علوم الحديث", url: "/hadith-science" },
 ])}`,
-  "/fatwa-policy": `<p>سياسة الفتوى والمراجعة توضّح كيف تُعرض المسائل والفتاوى في المنصة، وما لا تقوم به (لا فتوى آلية ولا ترجيح من عندها)، وسير المراجعة البشرية قبل الاعتماد.</p>
+  "/fatwa-policy": `<p>سياسة الفتوى والمراجعة توضّح كيف تُعرض المسائل والفتاوى في المنصة، وما لا تقوم به (لا فتوى آلية ولا ترجيح من عندها)، ومعايير التوثيق بالمصدر.</p>
 <h2>ما تعرضه المنصة</h2>
 <ul>
   <li>نقل فتاوى وقرارات من مصادر وهيئات مسمّاة مع الإحالة الظاهرة.</li>
   <li>مسائل وأحكام للتعليم العام مرتبطة بمراجعها حين تتوفّر.</li>
+  <li>شارة «محتوى موثّق» عند وجود مصدر أو مرجع معروف.</li>
 </ul>
 <h2>ما لا تقوم به المنصة</h2>
 <ul>
@@ -1609,7 +1604,7 @@ ${linkList("روابط ذات صلة", [
   { name: "الدروس والدورات", url: "/lessons" },
   { name: "الدروس الشرعية", url: "/lessons" },
   { name: "المشاهد الإسلامية", url: "/islamic-landmarks" },
-  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
 ])}`,
   "/quran-memorization": `<p>اختبارات الحفظ القرآني وخطط المراجعة — أدوات مساعدة مع المصحف وخطط الحفظ في مركز القرآن.</p>
 ${linkList("روابط ذات صلة", [
@@ -1827,7 +1822,7 @@ ${linkList("محاور أساسية", [
   { name: "مركز القرآن", url: "/quran-hub" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "الأحاديث النبوية", url: "/hadith" },
-  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
 ])}
 ${linkList("أدوات", [
   { name: "مواقيت الصلاة", url: "/prayer-times" },
@@ -2101,7 +2096,7 @@ ${linkList("أقسام المجمع", [
 ${linkList("روابط ذات صلة", [
   { name: "الدروس والدورات", url: "/lessons" },
   { name: "الفقه الإسلامي", url: "/fiqh" },
-  { name: "أعلام العلماء المسلمين", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
 ])}`,
   "/": `<p>المجلس العلمي منصة عربية لطلب العلم: دروس وكتب ومسارات وقرآن وأذكار وفقه وحديث — بمنهج موثّق وواجهة RTL.</p>
 ${linkList("ابدأ من هنا", [
@@ -2113,7 +2108,7 @@ ${linkList("ابدأ من هنا", [
   { name: "الأحاديث النبوية", url: "/hadith" },
   { name: "التوحيد والعقيدة", url: "/tawhid" },
   { name: "الدروس والدورات", url: "/lessons" },
-  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
   { name: "موسوعة الأذكار", url: "/adhkar" },
 ])}
 ${linkList("محاور دروس موسّعة", [
@@ -2201,7 +2196,7 @@ ${linkList("روابط ذات صلة", [
     [
       { name: "السيرة النبوية", url: "/seerah" },
       { name: "الصحابة", url: "/sahabah" },
-      { name: "أعلام العلماء", url: "/scholars" },
+      { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
       { name: "المشاهد الإسلامية", url: "/islamic-landmarks" },
       { name: "قصص الأنبياء", url: "/prophets" },
     ],
@@ -2422,7 +2417,7 @@ for (const row of lessonRows) {
 ${linkList("دروس ذات صلة", related)}
 ${linkList("روابط ذات صلة", [
   { name: "فهرس الدروس", url: "/lessons" },
-  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
   { name: "المكتبة العلمية", url: "/library" },
   { name: "الفقه الإسلامي", url: "/fiqh" },
 ])}`,
@@ -2524,7 +2519,7 @@ for (const row of LIBRARY_CATALOG) {
 ${linkList("كتب ذات صلة في نفس التصنيف", related)}
 ${linkList("روابط ذات صلة", [
   { name: "المكتبة العلمية", url: "/library" },
-  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
   ...(row.category === "حديث"
     ? [
         { name: "علوم الحديث", url: "/hadith-science" },
@@ -2546,44 +2541,39 @@ ${linkList("روابط ذات صلة", [
 // ٤) المسارات الديناميكية التي كانت تسقط على الرئيسية (صفر صفحات مُصيَّرة سابقاً)
 // ─────────────────────────────────────────────────────────────────────────────
 
-// العلماء — Person JSON-LD (٩٦ ترجمة). المعرّفات تُقرأ وقت البناء من scholars-data.ts.
-for (const s of SCHOLARS) {
-  const bioFull = String(s.bio || "").replace(/\s+/g, " ").trim();
-  const bioShort = clamp(bioFull, META_DESC_MAX);
+// التاريخ الإسلامي — صفحات تفصيلية
+for (const item of ISLAMIC_HISTORY_ITEMS) {
+  const detailFull = String(item.detail || "").replace(/\s+/g, " ").trim();
+  const detailShort = clamp(detailFull, META_DESC_MAX);
+  const related = ISLAMIC_HISTORY_ITEMS.filter(
+    (o) => o.id !== item.id && o.category === item.category,
+  )
+    .slice(0, 8)
+    .map((o) => ({ name: o.title, url: `/tarikh-islami/${o.id}`, note: o.era }));
   addPage(
     {
-      path: `/scholars/${s.id}`,
-      title: `${s.name} — سيرة العالم`,
-      // meta فقط — يجوز «…»
-      description: clamp(padDesc(bioShort, `ترجمة ${s.name} في ${SITE_NAME}`), META_DESC_MAX),
-      // النص الظاهر الكامل — بلا قصّ
-      body: bioFull,
-      ogType: "profile",
+      path: `/tarikh-islami/${item.id}`,
+      title: `${item.title} — التاريخ الإسلامي`,
+      description: clamp(padDesc(detailShort, `${item.title} في ${SITE_NAME}`), META_DESC_MAX),
+      body: detailFull,
+      ogType: "article",
     },
     {
-      extraJsonLd: scholarJsonLdScript(s),
-      parents: [{ name: "أعلام العلماء المسلمين", path: "/scholars" }],
-      // بيانات + مؤلفات؛ النبذة في route.body
-      richBody: `<ul>
-  ${s.fullName ? `<li>الاسم الكامل: ${escapeHtml(s.fullName)}</li>` : ""}
-  ${s.era ? `<li>التصنيف: ${escapeHtml(s.era)}</li>` : ""}
-  ${s.died ? `<li>الوفاة: ${escapeHtml(s.died)}</li>` : ""}
-  ${s.region ? `<li>الموطن: ${escapeHtml(s.region)}</li>` : ""}
-  ${s.madhhab ? `<li>المذهب: ${escapeHtml(s.madhhab)}</li>` : ""}
-  ${s.specialty?.length ? `<li>التخصص: ${escapeHtml(s.specialty.join("، "))}</li>` : ""}
+      extraJsonLd: historyJsonLdScript(item),
+      parents: [{ name: "التاريخ الإسلامي", path: "/tarikh-islami" }],
+      richBody: `<p>${escapeHtml(item.summary || "")}</p>
+<ul>
+  ${item.era ? `<li>العصر: ${escapeHtml(item.era)}</li>` : ""}
+  ${item.hijriDate ? `<li>التاريخ الهجري: ${escapeHtml(item.hijriDate)}</li>` : ""}
+  ${item.place ? `<li>المكان: ${escapeHtml(item.place)}</li>` : ""}
 </ul>
-${s.key_works?.length ? `<h2>أبرز المؤلفات</h2>\n<ul>\n  ${s.key_works.map((w) => `<li>${escapeHtml(w)}</li>`).join("\n  ")}\n</ul>` : ""}
-${linkList(
-  "علماء ذوو صلة",
-  SCHOLARS.filter((o) => o.id !== s.id && (o.madhhab === s.madhhab || o.era === s.era))
-    .slice(0, 8)
-    .map((o) => ({ name: o.name, url: `/scholars/${o.id}`, note: o.died })),
-)}
+${item.sources?.length ? `<h2>المصادر</h2>\n<ul>\n  ${item.sources.map((s) => `<li>${escapeHtml(s)}</li>`).join("\n  ")}\n</ul>` : ""}
+${related.length ? linkList("مواضيع ذات صلة", related) : ""}
 ${linkList("روابط ذات صلة", [
-  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
   { name: "المكتبة العلمية", url: "/library" },
+  { name: "السيرة النبوية", url: "/seerah" },
   { name: "الدروس الشرعية", url: "/lessons" },
-  { name: "الفقه الإسلامي", url: "/fiqh" },
 ])}`,
       priority: 0.75,
       changefreq: "monthly",
@@ -2847,7 +2837,7 @@ const LASTMOD_PATHS = new Set([
   "/prayer-times",
   "/fiqh",
   "/search",
-  "/scholars",
+  "/tarikh-islami",
   "/library",
 ]);
 
@@ -2957,7 +2947,7 @@ console.log(
   [
     `✓ ${SITE_URL}`,
     `  صفحات مُصيَّرة: ${pages.length}  (منها في sitemap: ${sitemapPages.length})`,
-    `  علماء: ${SCHOLARS.length} · أنبياء: ${PROPHETS.length} · قصص سور: ${SURAH_STORIES.length} · ذنوب وحقوق: ${SINS_TOPICS.length}`,
+    `  تاريخ إسلامي: ${ISLAMIC_HISTORY_ITEMS.length} · أنبياء: ${PROPHETS.length} · قصص سور: ${SURAH_STORIES.length} · ذنوب وحقوق: ${SINS_TOPICS.length}`,
     `  مسائل فقهية: ${PUBLIC_FIQH_ISSUES.length} · مواضيع: ${TOPICS.length} · مؤذنون: ${MUEZZINS.length}`,
     `  دروس: ${lessonRows.length} · كتب: ${LIBRARY_CATALOG.length}`,
   ].join("\n"),

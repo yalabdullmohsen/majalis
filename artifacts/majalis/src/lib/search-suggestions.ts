@@ -1,12 +1,12 @@
 import { arabicMatchAny } from "@/lib/arabic-search";
+import {
+  HISTORY_CATEGORIES,
+  ISLAMIC_HISTORY_ITEMS,
+  type IslamicHistoryItem,
+} from "@/data/islamic-history";
 
 /**
  * فهرس اقتراحات البحث — يُحمَّل كسولًا.
- *
- * ⚠️ لا تُعِد أي استيراد ساكن لملفات البذور هنا: هذه الوحدة مربوطة بـ NavBar
- *    الظاهر في كل صفحة، فأي استيراد ساكن يعني أن كل زائر ينزّل ~٩٦٠KB من
- *    البذور (adhkar + lessons + fawaid + qa + arbaeen + scholars) قبل أن يبحث.
- *    التحميل يتم عبر ensureSuggestionIndex() عند أول تفاعل مع مربّع البحث.
  */
 
 export type SearchSuggestion = {
@@ -14,7 +14,7 @@ export type SearchSuggestion = {
   label: string;
   meta?: string;
   href: string;
-  group: "lessons" | "fawaid" | "qa" | "adhkar" | "nawawi" | "scholars" | "prophets" | "library";
+  group: "lessons" | "fawaid" | "qa" | "adhkar" | "nawawi" | "history" | "prophets" | "library";
 };
 
 type AdhkarModule = typeof import("@/lib/adhkar-seed");
@@ -22,7 +22,6 @@ type LessonsModule = typeof import("@/lib/lessons-seed");
 type FawaidModule = typeof import("@/lib/fawaid-seed");
 type QaModule = typeof import("@/lib/qa-seed");
 type NawawiModule = typeof import("@/lib/arbaeen-nawawi-seed");
-type ScholarsModule = typeof import("@/lib/scholars-data");
 type ProphetsModule = typeof import("@/lib/prophets-data");
 type LibraryModule = typeof import("@/lib/library-catalog");
 
@@ -33,7 +32,7 @@ type SuggestionIndex = {
   SEED_FAWAID: FawaidModule["SEED_FAWAID"];
   SEED_QA: QaModule["SEED_QA"];
   ARBAEEN_NAWAWI: NawawiModule["ARBAEEN_NAWAWI"];
-  SCHOLARS: ScholarsModule["SCHOLARS"];
+  HISTORY_ITEMS: IslamicHistoryItem[];
   PROPHETS: ProphetsModule["PROPHETS"];
   LIBRARY_CATALOG: LibraryModule["LIBRARY_CATALOG"];
 };
@@ -41,22 +40,17 @@ type SuggestionIndex = {
 let index: SuggestionIndex | null = null;
 let pending: Promise<SuggestionIndex> | null = null;
 
-/**
- * يحمّل فهرس الاقتراحات مرة واحدة. آمن للاستدعاء المتكرر (يعيد نفس الـpromise).
- * استدعِه عند التركيز/الكتابة في مربّع البحث — لا عند تحميل الصفحة.
- */
 export function ensureSuggestionIndex(): Promise<SuggestionIndex> {
   if (index) return Promise.resolve(index);
   if (pending) return pending;
 
   const load = (async (): Promise<SuggestionIndex> => {
-    const [adhkar, lessons, fawaid, qa, nawawi, scholars, prophets, library] = await Promise.all([
+    const [adhkar, lessons, fawaid, qa, nawawi, prophets, library] = await Promise.all([
       import("@/lib/adhkar-seed"),
       import("@/lib/lessons-seed"),
       import("@/lib/fawaid-seed"),
       import("@/lib/qa-seed"),
       import("@/lib/arbaeen-nawawi-seed"),
-      import("@/lib/scholars-data"),
       import("@/lib/prophets-data"),
       import("@/lib/library-catalog"),
     ]);
@@ -73,7 +67,7 @@ export function ensureSuggestionIndex(): Promise<SuggestionIndex> {
       SEED_FAWAID: fawaid.SEED_FAWAID,
       SEED_QA,
       ARBAEEN_NAWAWI: nawawi.ARBAEEN_NAWAWI,
-      SCHOLARS: scholars.SCHOLARS,
+      HISTORY_ITEMS: ISLAMIC_HISTORY_ITEMS,
       PROPHETS: prophets.PROPHETS,
       LIBRARY_CATALOG: library.LIBRARY_CATALOG,
     };
@@ -84,14 +78,12 @@ export function ensureSuggestionIndex(): Promise<SuggestionIndex> {
   pending = load;
 
   load.catch(() => {
-    // اسمح بإعادة المحاولة عند الفشل (شبكة متقطّعة / chunk لم يُحمَّل)
     if (pending === load) pending = null;
   });
 
   return load;
 }
 
-/** هل الفهرس جاهز في الذاكرة؟ (لعرض حالة تحميل بسيطة) */
 export function isSuggestionIndexReady(): boolean {
   return index !== null;
 }
@@ -109,10 +101,6 @@ function pushUnique(
   list.push(item);
 }
 
-/**
- * يبني الاقتراحات من الفهرس المحمَّل.
- * يعيد [] إن لم يُحمَّل الفهرس بعد — نادِ ensureSuggestionIndex() أولًا.
- */
 export function buildSearchSuggestions(query: string, limit = 12): SearchSuggestion[] {
   const q = query.trim();
   if (q.length < 2) return [];
@@ -125,7 +113,7 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
     adhkarItems,
     ADHKAR_CATEGORIES,
     ARBAEEN_NAWAWI,
-    SCHOLARS,
+    HISTORY_ITEMS,
     PROPHETS,
     LIBRARY_CATALOG,
   } = index;
@@ -199,17 +187,17 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
     if (results.filter((r) => r.group === "nawawi").length >= MAX_PER_GROUP) break;
   }
 
-  for (const s of SCHOLARS) {
+  for (const item of HISTORY_ITEMS) {
     if (results.length >= limit) break;
-    if (!arabicMatchAny([s.name, s.fullName, s.bio, ...s.specialty], q)) continue;
+    if (!arabicMatchAny([item.title, item.summary, item.detail, item.era, ...(item.relatedPersons ?? [])], q)) continue;
     pushUnique(results, seen, {
-      id: s.id,
-      label: s.name,
-      meta: s.specialty.slice(0, 2).join(" · "),
-      href: `/scholars/${s.id}`,
-      group: "scholars",
+      id: item.id,
+      label: item.title,
+      meta: HISTORY_CATEGORIES[item.category],
+      href: `/tarikh-islami/${item.id}`,
+      group: "history",
     });
-    if (results.filter((r) => r.group === "scholars").length >= MAX_PER_GROUP) break;
+    if (results.filter((r) => r.group === "history").length >= MAX_PER_GROUP) break;
   }
 
   for (const p of PROPHETS) {
@@ -247,7 +235,7 @@ export const SUGGESTION_GROUP_LABELS: Record<SearchSuggestion["group"], string> 
   qa: "أسئلة",
   adhkar: "أذكار",
   nawawi: "الأربعون النووية",
-  scholars: "العلماء",
+  history: "التاريخ الإسلامي",
   prophets: "الأنبياء",
   library: "المكتبة",
 };

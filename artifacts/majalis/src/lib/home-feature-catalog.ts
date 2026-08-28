@@ -125,7 +125,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/islamic-directory", Icon: Landmark, title: seoNavLabel("/islamic-directory", "دليل المؤسسات والمساجد"), desc: "مؤسسات ومساجد ومعالم إسلامية" },
       { href: "/universities", Icon: GraduationCap, title: seoNavLabel("/universities", "دليل الجامعات الشرعية"), desc: "جامعات وكليات الدراسات الشرعية حول العالم" },
       { href: "/academic-research", Icon: Scroll, title: seoNavLabel("/academic-research", "رسائل الماجستير والدكتوراه"), desc: "مكتبة الأبحاث والرسائل الشرعية الموثّقة" },
-      { href: "/scholars",        Icon: Users,       title: seoNavLabel("/scholars", "أعلام الإسلام"),                desc: "مئات العلماء عبر التاريخ بالتخصص والحقبة" },
+      { href: "/tarikh-islami",   Icon: Users,       title: seoNavLabel("/tarikh-islami", "التاريخ الإسلامي"),          desc: "خط زمني في السيرة والدول والحضارة وشخصيات تاريخية مؤثرة" },
     ],
   },
   {
@@ -133,8 +133,8 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     Icon: BookMarked,
     label: "القرآن الكريم",
     items: [
-      { href: "/mushaf",               Icon: BookOpen,     title: seoNavLabel("/mushaf", "القرآن"), desc: "المصحف الشريف" },
-      { href: "/quran-hub",      Icon: BookMarked,   title: seoNavLabel("/quran-hub", "مركز القرآن"), desc: "المصحف والتجويد والحفظ وعلوم القرآن" },
+      { href: "/mushaf",               Icon: BookOpen,     title: seoNavLabel("/mushaf", "القرآن الكريم"), desc: "المصحف الشريف" },
+      { href: "/quran-hub",      Icon: BookMarked,   title: seoNavLabel("/quran-hub", "مركز القرآن الكريم"), desc: "المصحف والتجويد والحفظ وعلوم القرآن" },
       { href: "/tafsir",               Icon: BookOpen,     title: seoNavLabel("/tafsir", "علم التفسير"),            desc: "أنواع التفسير وأصوله وأشهر كتب المفسرين" },
       { href: "/quran-circles",        Icon: Users,        title: seoNavLabel("/quran-circles", "حلقات التحفيظ"),   desc: "دليل حلقات القرآن في الكويت والمنصات الموثوقة" },
     ],

@@ -26,7 +26,7 @@ export default function DiscoverIslamDoubtDetailPage() {
   }, [slug]);
 
   if (item === undefined) return <div className="page-shell narrow"><PageHeader eyebrow="التعريف بالإسلام" title="الشبهة" /></div>;
-  if (item === null) return <div className="page-shell narrow"><Empty text="لم يُعثر على هذه الشبهة، أو أنها لا تزال قيد المراجعة." /></div>;
+  if (item === null) return <div className="page-shell narrow"><Empty text="لم يُعثر على هذه الشبهة." /></div>;
 
   return (
     <div className="page-shell narrow dii-question-page">

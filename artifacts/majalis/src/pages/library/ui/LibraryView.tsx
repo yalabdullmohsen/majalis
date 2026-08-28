@@ -27,7 +27,7 @@ const STATUS_CHIPS: { id: StatusFilter; label: string }[] = [
   { id: "recommended", label: "موصى" },
   { id: "useful_with_caution", label: "مفيد بحذر" },
   { id: "reference_only", label: "مرجع فقط" },
-  { id: "needs_review", label: "يحتاج مراجعة" },
+  { id: "needs_review", label: "مرجع عام" },
   { id: "has_caution", label: "فيه تنبيه" },
 ];
 
@@ -36,7 +36,7 @@ function statusLabel(status?: LibraryContentStatus): string | null {
   if (status === "recommended") return "مكتمل/موصى";
   if (status === "useful_with_caution") return "مفيد بحذر";
   if (status === "reference_only") return "مرجع فقط";
-  if (status === "needs_review") return "يحتاج مراجعة";
+  if (status === "needs_review") return "مرجع عام";
   return null;
 }
 
@@ -315,7 +315,7 @@ export default function LibraryPage({
       </PageLoadingGuard>
 
       <p className="lib-review-note" role="note">
-        فهرس المكتبة متاح للتصفح. بيانات التحقق والمصادر تُستكمل تدريجيًا ولا تُعرض كحقيقة نهائية دون مراجعة.
+        فهرس المكتبة متاح للتصفح مع بيان المصدر والدرجة حيث وُجدت.
       </p>
       <div className="twh-share">
         <ShareButtons title="المكتبة الإسلامية — المجلس العلمي" url="https://majlisilm.com/library" />
@@ -324,7 +324,7 @@ export default function LibraryPage({
       <ExploreAlsoNav
         title="استكشف أيضًا"
         links={[
-          { href: "/scholars", label: "أعلام الإسلام" },
+          { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
           { href: "/fiqh", label: "الفقه" },
           { href: "/hadith", label: "الحديث" },
           { href: "/lessons", label: "الدروس" },

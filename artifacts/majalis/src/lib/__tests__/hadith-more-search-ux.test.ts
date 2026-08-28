@@ -35,12 +35,13 @@ assert.doesNotMatch(more, /onClose|button.*إغلاق|aria-label=["']إغلاق/
 assert.match(more, /الأقسام/);
 
 const titles = MORE_FEATURED_SECTIONS.map((s) => s.title);
-assert.equal(titles.length, 6);
+assert.equal(titles.length, 7);
 for (const t of [
   "العقيدة",
   "الحديث وعلومه",
   "الفقه والأحكام",
   "السيرة النبوية",
+  "التاريخ الإسلامي",
   "قصص الأنبياء",
   "الأمم السابقة",
 ]) {
@@ -54,8 +55,8 @@ assert.ok(
   "المزيد يتضمن الأذكار/الأدعية",
 );
 assert.ok(
-  secondary.some((t) => t.includes("المصطلحات") || t.includes("القاموس")),
-  "المزيد يتضمن القاموس/المصطلحات",
+  secondary.some((t) => t.includes("مفاهيم شرعية") || t.includes("القاموس")),
+  "المزيد يتضمن مفاهيم شرعية",
 );
 assert.equal(secondary.includes("الموضوعات"), false, "لا قسم الموضوعات في المزيد");
 assert.equal(secondary.includes("البحث"), false, "لا بطاقة بحث في المزيد");

@@ -21,7 +21,7 @@ const LABEL_MAP: Record<string, string> = {
 
   // ─── القرآن الكريم ────────────────────────────────────────────────
   "/quran-circles":                 "حلقات القرآن",
-  "/quran-hub":                     "مركز القرآن",
+  "/quran-hub":                     "مركز القرآن الكريم",
   "/quran/tajweed":                 "أحكام التجويد",
   "/quran-hub/tajweed":             "التجويد",
   "/quran-hub/qiraat":              "القراءات العشر",
@@ -175,10 +175,9 @@ const LABEL_MAP: Record<string, string> = {
   "/occasions":                     "المناسبات الإسلامية",
   "/transcribe":                    "تفريغ الصوت",
   "/search":                        "البحث",
-  "/islamic-glossary":              "المصطلحات الإسلامية",
+  "/islamic-glossary":              "مفاهيم شرعية",
 
   // ─── العلماء والمؤسسات ────────────────────────────────────────────
-  "/scholars":                      "العلماء",
   "/universities":                  "الجامعات",
   "/universities/compare":          "مقارنة الجامعات",
   "/institutions":                  "المؤسسات العلمية",

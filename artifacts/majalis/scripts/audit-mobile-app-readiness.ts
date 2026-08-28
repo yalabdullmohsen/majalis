@@ -42,14 +42,15 @@ assertNoMatch(
   "bottom-nav--hidden لا يعتمد display:none",
 );
 
-// 3) خلفية الإقلاع الأصلي = أخضر splash (لا أبيض) حتى يضبط PageChrome الصفحة
+// 3) خلفية الإقلاع الأصلي = سطح الصفحة (لا أبيض) حتى يضبط PageChrome الصفحة
 assertMatch(
   read("src/main.tsx"),
-  /--app-status-bg["']?\s*,\s*["']#0E1A15/,
-  "لون status عند الإقلاع الأصلي أخضر splash لا أبيض",
+  /bootTheme === "dark" \? "#101614" : "#F2F4F3"/,
+  "لون status عند الإقلاع الأصلي يطابق سطح الصفحة",
 );
 assertMatch(read("capacitor.config.ts"), /StatusBar:\s*\{[^}]*backgroundColor:\s*["']#F2F4F3/s, "StatusBar فاتح للصفحات العامة");
-assertMatch(read("capacitor.config.ts"), /ios:\s*\{[\s\S]*?backgroundColor:\s*["']#0E1A15/, "ios.backgroundColor أخضر لمنع فجوة بيضاء");
+assertMatch(read("capacitor.config.ts"), /ios:\s*\{[\s\S]*?backgroundColor:\s*["']#F2F4F3/, "ios.backgroundColor فاتح لمنع فجوة بيضاء");
+assertMatch(read("capacitor.config.ts"), /errorPath:\s*["']native-load-error\.html["']/, "errorPath عند فشل تحميل الإنتاج");
 assertMatch(read("capacitor.config.ts"), /overlaysWebView:\s*true/, "StatusBar overlaysWebView");
 
 // 4) احتواء الروابط الداخلية
@@ -90,7 +91,7 @@ for (const route of [
   "/lessons",
   "/adhkar",
   "/library",
-  "/scholars",
+  "/tarikh-islami",
   "/prophets",
   "/fiqh",
   "/more",

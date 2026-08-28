@@ -21,8 +21,8 @@ if (!/function visibleLeadHtml\s*\(/.test(gen)) {
 if (/<p>\$\{escapeHtml\(route\.description\)\}<\/p>/.test(gen)) {
   issues.push("generate-seo.mjs: لا يزال يضع route.description في الفقرة المرئية");
 }
-if (!/body:\s*bioFull/.test(gen) || !/body:\s*desc/.test(gen)) {
-  issues.push("generate-seo.mjs: صفحات العلماء/المكتبة يجب أن تمرّر route.body");
+if (!/body:\s*(bioFull|detailFull)/.test(gen) || !/body:\s*desc/.test(gen)) {
+  issues.push("generate-seo.mjs: صفحات التاريخ/المكتبة يجب أن تمرّر route.body");
 }
 
 function walkHtml(dir, out = []) {
@@ -36,12 +36,12 @@ function walkHtml(dir, out = []) {
   return out;
 }
 
-const scholarFiles = walkHtml(join(appRoot, "seo-prerender/scholars")).filter(
-  (f) => !/seo-prerender\/scholars\/index\.html$/.test(f.replaceAll("\\", "/")),
+const historyFiles = walkHtml(join(appRoot, "seo-prerender/tarikh-islami")).filter(
+  (f) => !/seo-prerender\/tarikh-islami\/index\.html$/.test(f.replaceAll("\\", "/")),
 );
 
 let checked = 0;
-for (const file of scholarFiles) {
+for (const file of historyFiles) {
   const rel = relative(appRoot, file);
   const html = readFileSync(file, "utf8");
   const meta = html.match(/<meta\s+name=["']description["']\s+content=["']([^"']*)["']/i)?.[1] || "";
@@ -66,8 +66,8 @@ for (const file of scholarFiles) {
   }
 }
 
-if (scholarFiles.length < 50) {
-  issues.push(`seo-prerender/scholars: عدد صفحات غير كافٍ (${scholarFiles.length})`);
+if (historyFiles.length < 50) {
+  issues.push(`seo-prerender/tarikh-islami: عدد صفحات غير كافٍ (${historyFiles.length})`);
 }
 
 if (issues.length) {
@@ -77,4 +77,4 @@ if (issues.length) {
   process.exit(1);
 }
 
-console.log(`✓ بوابة D1: ${checked} صفحة عالِم — ظاهر كامل ≠ meta مقصوص · مولّد مفصول`);
+console.log(`✓ بوابة D1: ${checked} صفحة تاريخ — ظاهر كامل ≠ meta مقصوص · مولّد مفصول`);

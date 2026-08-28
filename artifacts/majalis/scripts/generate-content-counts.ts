@@ -14,7 +14,7 @@ const appRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const outPath = resolve(appRoot, "src/data/content-counts.json");
 const checkOnly = process.argv.includes("--check");
 
-const { SCHOLARS } = await import("../src/lib/scholars-data.js");
+const { ISLAMIC_HISTORY_ITEMS } = await import("../src/data/islamic-history/index.js");
 const { SEED_FAWAID } = await import("../src/lib/fawaid-seed.js");
 const { DEMO_QUIZ_QUESTIONS } = await import("../src/lib/quiz-seed.js");
 const { MIND_MAPS } = await import("../src/lib/mind-maps-data.js");
@@ -38,7 +38,7 @@ const counts = {
   $comment:
     "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
   books: LIBRARY_CATALOG.length,
-  scholars: SCHOLARS.length,
+  islamicHistory: ISLAMIC_HISTORY_ITEMS.length,
   fawaid: SEED_FAWAID.length,
   quizQuestions: DEMO_QUIZ_QUESTIONS.length,
   mindMaps: MIND_MAPS.length,

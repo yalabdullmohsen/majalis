@@ -57,6 +57,8 @@ const AyahWordSpan = memo(function AyahWordSpan({
   const selected = useMushafAyahWordSelected(word.verseKey);
   const playing = useMushafAyahWordPlaying(word.verseKey);
   const isEnd = word.charType === "end";
+  const ayahNum = Number(word.verseKey.split(":")[1]) || 0;
+  const markTone = isEnd ? String(((ayahNum - 1) % 4 + 4) % 4) : undefined;
   const stateClass = [
     selected ? "ayah-active" : "",
     playing ? "is-playing" : "",
@@ -72,6 +74,7 @@ const AyahWordSpan = memo(function AyahWordSpan({
       data-key={word.verseKey}
       data-verse={word.verseKey}
       data-ayah={word.verseKey}
+      data-mark-tone={markTone}
       data-testid="mushaf-ayah-hit"
       role="button"
       tabIndex={0}

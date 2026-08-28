@@ -1,6 +1,6 @@
 /**
  * مسارات الواجهة الغامرة — المصحف واختبار التسميع بلا شريط مشترك.
- * مركز القرآن بوابة عادية (ليست غمرية).
+ * مركز القرآن الكريم بوابة عادية (ليست غمرية).
  * صفحة الصلاة تُبقي الشريط السفلي ظاهرًا (2026-08).
  * تشغيل: npx tsx src/lib/__tests__/immersive-chrome.test.ts
  */
@@ -30,13 +30,13 @@ assert.equal(isPrayerTimesPath("/fiqh"), false);
 
 assert.equal(isQuranImmersivePath("/mushaf"), true, "المصحف غمري أثناء القراءة");
 assert.equal(isQuranImmersivePath("/mushaf/page/1"), true);
-assert.equal(isQuranImmersivePath("/quran-hub"), false, "مركز القرآن ليس غمريًا");
+assert.equal(isQuranImmersivePath("/quran-hub"), false, "مركز القرآن الكريم ليس غمريًا");
 assert.equal(isQuranImmersivePath("/fiqh"), false);
 
 assert.equal(isImmersiveChromePath("/prayer-times"), false, "الصلاة ليست غمرية كاملة — الشريط السفلي وشريط الأقسام ظاهران");
 assert.equal(isImmersiveChromePath("/mushaf"), true, "قارئ المصحف غمري");
 assert.equal(isImmersiveChromePath("/mushaf/2"), true);
-assert.equal(isImmersiveChromePath("/quran-hub"), false, "مركز القرآن يظهر الشريط السفلي");
+assert.equal(isImmersiveChromePath("/quran-hub"), false, "مركز القرآن الكريم يظهر الشريط السفلي");
 assert.equal(isImmersiveChromePath("/quran/recitation-test-ai"), true);
 assert.equal(isImmersiveChromePath("/"), false);
 assert.equal(isImmersiveChromePath("/hadith"), false);
@@ -82,7 +82,7 @@ const prayerRanks = readFileSync(resolve(appRoot, "src/pages/worship/ui/PrayerRa
 assert.equal(prayerRanks.includes("SectionQuiz"), false, "مراتب الصلاة بلا SectionQuiz");
 
 const quranHub = readFileSync(resolve(appRoot, "src/pages/quran/ui/QuranHubView.tsx"), "utf8");
-assert.equal(quranHub.includes("SectionQuiz"), false, "مركز القرآن بلا SectionQuiz");
+assert.equal(quranHub.includes("SectionQuiz"), false, "مركز القرآن الكريم بلا SectionQuiz");
 assert.match(quranHub, /SectionLobby/);
 assert.match(quranHub, /فتح المصحف|open-mushaf/);
 assert.match(quranHub, /\/mushaf|loadLastPageSync/);

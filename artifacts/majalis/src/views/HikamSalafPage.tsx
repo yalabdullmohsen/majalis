@@ -1701,7 +1701,7 @@ export default function HikamSalafPage() {
         <h2 className="hk-related__title">استكشف أيضاً</h2>
         <div className="hk-related__grid">
           {[
-            { href: "/scholars",       label: "أعلام الإسلام" },
+            { href: "/tarikh-islami",       label: "التاريخ الإسلامي" },
             { href: "/flashcards",         label: "الفوائد الدينية" },
             { href: "/akhlaq",         label: "الأخلاق الإسلامية" },
             { href: "/arkan-iman",     label: "أركان الإيمان" },

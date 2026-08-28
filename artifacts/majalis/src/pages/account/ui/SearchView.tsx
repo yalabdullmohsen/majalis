@@ -116,7 +116,7 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   fiqh_decision: "المجمع الفقهي", fiqh_council: "المجمع الفقهي",
   knowledge: "محرك المعرفة",
   surah: "سور القرآن",
-  quran: "القرآن",
+  quran: "القرآن الكريم",
   tafsir: "التفسير",
   hadith: "الأحاديث الصحيحة",
   story: "القصص الإسلامية", stories: "القصص الإسلامية",
@@ -145,9 +145,6 @@ function StatusBadge({ status, partial }: { status?: string | null; partial?: bo
   if (partial || status === "partial" || status === "draft") {
     return <span className="search-status-badge search-status-badge--partial">قيد الإكمال</span>;
   }
-  if (status === "pending_review" || status === "pending" || status === "needs_review") {
-    return <span className="search-status-badge search-status-badge--review">قيد المراجعة</span>;
-  }
   return null;
 }
 
@@ -157,7 +154,9 @@ function isBlockedOrAdminHref(href?: string | null): boolean {
 }
 
 function statusMetaLabel(status?: string | null, hasSource?: boolean): string | null {
-  if (status === "verified" && hasSource) return "موثّق بمصدر";
+  if (hasSource || status === "verified" || status === "pending_review" || status === "pending" || status === "needs_review") {
+    return "موثّق بمصدر";
+  }
   return null;
 }
 
@@ -639,8 +638,7 @@ export default function SearchPage() {
               <span>حالة التوثيق</span>
               <select value={filters.status} onChange={(e) => setFilters({ ...filters, status: e.target.value })}>
                 <option value="">الكل</option>
-                <option value="verified">موثق</option>
-                <option value="needs_review">يحتاج مراجعة</option>
+                <option value="verified">موثّق</option>
               </select>
             </label>
             <label className="search-filter-field">

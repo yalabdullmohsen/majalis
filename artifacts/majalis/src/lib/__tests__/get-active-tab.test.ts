@@ -22,7 +22,7 @@ const cases: Array<{ path: string; expect: ReturnType<typeof getActiveTab> }> = 
   { path: "/fiqh", expect: "fiqh" },
   { path: "/quiz", expect: "sections" },
   { path: "/qa", expect: "sections" },
-  { path: "/scholars/ibn-taymiyyah", expect: "sections" },
+  { path: "/tarikh-islami/pers-al-tabari", expect: "sections" },
   { path: "/library", expect: "sections" },
   { path: "/start-here", expect: "lessons" },
   { path: "/hadith", expect: "sections" },

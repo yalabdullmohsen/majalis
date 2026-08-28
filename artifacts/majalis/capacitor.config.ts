@@ -9,6 +9,8 @@ const config: CapacitorConfig = {
     // Canonical apex (www → majlisilm.com is a 308). Load apex directly so
     // WKWebView cold starts do not depend on a redirect before first paint.
     url: "https://majlisilm.com",
+    // صفحة محلية عند فشل تحميل الإنتاج — Capacitor iOS/Android errorPath
+    errorPath: "native-load-error.html",
     cleartext: false,
     androidScheme: "https",
   },
