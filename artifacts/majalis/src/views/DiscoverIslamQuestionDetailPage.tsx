@@ -40,7 +40,7 @@ export default function DiscoverIslamQuestionDetailPage() {
   }, [slug]);
 
   if (item === undefined) return <div className="page-shell narrow"><PageHeader eyebrow="التعريف بالإسلام" title="السؤال" /></div>;
-  if (item === null) return <div className="page-shell narrow"><Empty text="لم يُعثر على هذا السؤال، أو أنه لا يزال قيد المراجعة." /></div>;
+  if (item === null) return <div className="page-shell narrow"><Empty text="لم يُعثر على هذا السؤال." /></div>;
 
   const activeTranslation = viewLang === "ar" ? null : translations.find((t) => t.lang === viewLang);
   const displayTitle = activeTranslation?.title || item.title;

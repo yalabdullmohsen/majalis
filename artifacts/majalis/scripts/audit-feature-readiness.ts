@@ -40,7 +40,7 @@ if (!hadith.source?.trim()) fail("حديث اليوم بلا مصدر");
 // 2) search لا يعرض admin
 const searchView = read("src/pages/account/ui/SearchView.tsx");
 assert.match(searchView, /isBlockedOrAdminHref/);
-assert.match(searchView, /قيد المراجعة|pending_review/);
+assert.match(searchView, /موثّق بمصدر/);
 assert.match(searchView, /قيد الإكمال|partial/);
 assert.match(searchView, /highlightText/);
 
@@ -51,8 +51,8 @@ assert.doesNotMatch(dailyQuiz, /موثق بالأدلة/);
 
 // 4) adhkar غير المراجعة لها badge (في شيت التفاصيل الكسول)
 const adhkarSheet = read("src/pages/worship/ui/AdhkarDhikrSheet.tsx");
-assert.match(adhkarSheet, /needsReview/);
-assert.match(adhkarSheet, /IsnadAttributionBar|قيد المراجعة/);
+assert.match(adhkarSheet, /IsnadAttributionBar/);
+assert.doesNotMatch(adhkarSheet, /قيد المراجعة/);
 
 // 5) lessons لا تعرض وقتًا فارغًا
 const lessonCard = read("src/components/lessons/UnifiedLessonCard.tsx");

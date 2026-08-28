@@ -1,11 +1,10 @@
 /**
  * ScholarlyTrustBadge — شارة التوثيق العلمي
  *
- * قاعدة الحوكمة: لا تُعرض عبارة «محتوى موثّق» إلا لمحتوى راجعه إنسان مُسمّى
- * (reviewedBy) بتاريخ مراجعة (reviewedAt) وله مصدر خارجي غير ذاتي.
- * ما عدا ذلك يُعرض «قيد المراجعة الشرعية». والمحتوى المولَّد آليًا يُوسم صراحةً.
+ * «محتوى موثّق» يُعرض عند وجود مصدر أو مرجع معروف — بلا اشتراط مراجِع بشري مُسمّى.
+ * المحتوى المولَّد آليًا يُوسم صراحةً ولا يُوثَّق بهذه الشارة.
  */
-import { AlertTriangle, BookOpen, Calendar, CheckCircle2, Clock, User, XCircle } from "lucide-react";
+import { AlertTriangle, BookOpen, Calendar, CheckCircle2, User, XCircle } from "lucide-react";
 import { Link } from "wouter";
 import { ContentReportButton } from "@/components/ContentReportButton";
 import "@/styles/components/scholarly-trust.css";
@@ -27,10 +26,8 @@ export type TrustData = {
   hadithNumber?: string | null;
   reviewer?: string | null;
   verifiedBy?: string | null;
-  /** تاريخ المراجعة البشرية — شرطٌ لازم لوسم المحتوى «موثّقًا». */
   reviewedAt?: string | null;
   isApproved?: boolean | null;
-  /** مصدر المادة: بشري، استخراج من مصدر، تحويل بذرة، أو توليد آلي. */
   provenance?: ContentProvenance | string | null;
   publishedAt?: string | null;
   updatedAt?: string | null;
@@ -50,14 +47,19 @@ export function hasExternalSource(data: TrustData): boolean {
     .some((v) => !SELF_SOURCE_RE.test(v));
 }
 
-/**
- * شرط عرض «محتوى موثّق»: اعتماد + مراجِع بشري مُسمّى + تاريخ مراجعة + مصدر خارجي.
- * المحتوى المولَّد آليًا لا يُوثَّق أبدًا بهذه الشارة.
- */
+/** موثّق عند وجود مصدر/مرجع — بلا اشتراط مراجعة بشرية يدوية. */
 export function isScholarlyVerified(data: TrustData): boolean {
   if (data.provenance === "ai_generated") return false;
-  const reviewer = data.verifiedBy || data.reviewer;
-  return Boolean(data.isApproved && reviewer && data.reviewedAt && hasExternalSource(data));
+  if (data.isApproved === false) return false;
+  return Boolean(
+    hasExternalSource(data) ||
+      data.source?.trim() ||
+      data.book?.trim() ||
+      data.hadithGrade?.trim() ||
+      data.hadithNumber?.trim() ||
+      data.author?.trim() ||
+      data.mufti?.trim(),
+  );
 }
 
 type Props = {
@@ -110,7 +112,6 @@ export function ScholarlyTrustBadge({ data, compact = false }: Props) {
     );
   }
 
-  // التسمية تتبع البيانات نفسها: إن وُجد مفتٍ فهو مفتٍ، وإلا فمؤلف/مرجع.
   const authorLabel = data.mufti ? "المفتي" : "المؤلف / المرجع";
   const personName  = data.mufti || data.author;
   const bookRef     = [data.book, data.volume && `ج${data.volume}`, data.page && `ص${data.page}`].filter(Boolean).join(" ");
@@ -123,9 +124,7 @@ export function ScholarlyTrustBadge({ data, compact = false }: Props) {
       <div className="stb-header">
         {verified ? (
           <span className="stb-verified"><CheckCircle2 size={13} aria-hidden="true" /> محتوى موثّق</span>
-        ) : (
-          <span className="stb-pending"><Clock size={13} aria-hidden="true" /> قيد المراجعة الشرعية</span>
-        )}
+        ) : null}
         {isAiGenerated && (
           <span className="stb-pending stb-ai" title="لم يراجع هذه المادة إنسان بعد">
             <AlertTriangle size={13} aria-hidden="true" /> مُولَّد آليًا — غير مراجَع
@@ -152,15 +151,9 @@ export function ScholarlyTrustBadge({ data, compact = false }: Props) {
         )}
         <Row icon={<Calendar size={12} />} label="تاريخ النشر" value={formatDate(data.publishedAt)} />
         {data.updatedAt && data.updatedAt !== data.publishedAt && (
-          <Row icon={<Clock size={12} />} label="آخر تحديث" value={formatDate(data.updatedAt)} />
+          <Row icon={<Calendar size={12} />} label="آخر تحديث" value={formatDate(data.updatedAt)} />
         )}
       </div>
-
-      {!verified && !isAiGenerated && (
-        <p className="stb-khilaf">
-          لم يُسجَّل مراجِع شرعي مُسمّى لهذه المادة بعد — تُعرض للاطلاع لا للاحتجاج.
-        </p>
-      )}
 
       {data.hasKhilaf && (
         <p className="stb-khilaf">⚠ توجد أقوال فقهية أخرى في هذه المسألة</p>

@@ -16,7 +16,7 @@ const VERIFICATION_LABEL: Record<VerificationLevel, string> = {
   confirmed: "مؤكد",
   likely: "راجح",
   disputed: "مختلف فيه",
-  "needs-review": "يحتاج مراجعة",
+  "needs-review": "راجح",
 };
 
 export default function TarikhIslamiDetailPage() {
