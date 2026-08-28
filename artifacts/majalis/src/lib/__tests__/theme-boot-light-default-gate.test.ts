@@ -11,7 +11,6 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const html = read("index.html");
-const stabilizer = read("public/startup-stabilizer.js");
 const theme = read("src/lib/theme-preference.ts");
 const settings = read("src/pages/account/ui/SettingsView.tsx");
 const versionHook = read("src/hooks/useVersionCheck.ts");
@@ -19,14 +18,15 @@ const purge = read("src/lib/runtime-cache-purge.ts");
 const sw = read("public/sw.js");
 const vercel = read("vercel.json");
 
-assert.match(stabilizer, /v10-pwa-single-paint-2026-08/);
+assert.match(html, /v10-pwa-single-paint-2026-08/);
 assert.match(html, /id="mj-version-boot"/);
 assert.match(html, /majlisilm-refreshing-version/);
 assert.match(html, /version\.json\?t=/);
 assert.match(html, /cache:\s*"no-store"/);
-assert.match(stabilizer, /classList\.add\("light"/);
-assert.match(stabilizer, /storedTheme === "auto"/);
-assert.match(stabilizer, /: "light"/);
+assert.match(html, /classList\.add\("light"/);
+assert.match(html, /classList\.remove\("dark"/);
+assert.match(html, /storedTheme === "auto"/);
+assert.match(html, /resolved = "light"/);
 assert.doesNotMatch(
   html,
   /media="\(prefers-color-scheme: dark\)"/,

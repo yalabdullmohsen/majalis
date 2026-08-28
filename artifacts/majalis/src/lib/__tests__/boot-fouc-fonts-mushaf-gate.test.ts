@@ -22,14 +22,12 @@ const main = read("src/main.tsx");
 const sw = read("public/sw.js");
 const theme = read("src/lib/theme-preference.ts");
 
-// 1) Startup Stabilizer قبل أول paint
+// 1) ثيم قبل أول paint
 {
-  const themeIdx = head.indexOf('id="mj-startup-stabilizer"');
+  const themeIdx = head.indexOf('id="mj-theme-boot"');
   const critIdx = head.indexOf('id="mj-lcp-critical"');
-  assert.ok(themeIdx >= 0, "startup-stabilizer في head");
-  assert.ok(critIdx > themeIdx, "stabilizer قبل CSS الحرج");
-  assert.match(head, /startup-lock/);
-  assert.match(head, /--ui-font-scale/);
+  assert.ok(themeIdx >= 0, "سكربت ثيم في head");
+  assert.ok(critIdx > themeIdx, "الثيم قبل CSS الحرج");
   assert.match(head, /setAttribute\("dir",\s*"rtl"\)/);
   assert.match(head, /theme-dark/);
   assert.match(head, /theme-light/);

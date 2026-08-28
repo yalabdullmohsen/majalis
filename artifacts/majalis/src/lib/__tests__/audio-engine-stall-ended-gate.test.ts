@@ -38,12 +38,9 @@ assert.match(sw, /pathname\.startsWith\("\/audio\/"\)/, "network-first للصو�
 const html = read("index.html");
 const head = html.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? "";
 assert.match(head.trimStart(), /^<meta charset=/i, "charset أول عنصر في head");
-assert.match(head, /id="mj-startup-stabilizer"|id="mj-theme-boot"/, "Startup Stabilizer في head قبل أي CSS مرئي");
+assert.match(head, /id="mj-theme-boot"/, "ثيم الإقلاع في head قبل أي CSS مرئي");
 {
-  const themeIdx = Math.max(
-    head.indexOf('id="mj-startup-stabilizer"'),
-    head.indexOf('id="mj-theme-boot"'),
-  );
+  const themeIdx = head.indexOf('id="mj-theme-boot"');
   const critIdx = head.indexOf('id="mj-lcp-critical"');
   assert.ok(themeIdx >= 0 && critIdx > themeIdx, "سكربت الثيم قبل CSS الحرج");
 }

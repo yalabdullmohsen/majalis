@@ -40,7 +40,7 @@ assert.doesNotMatch(html, /dns-prefetch/, "لا dns-prefetch في الإقلاع
 }
 assert.match(html, /MIN_MS\s*=\s*120/, "حد أدنى للدخولية");
 assert.match(html, /mj-launch-splash__tagline/, "عبارة الدخولية");
-assert.match(html, /id="mj-startup-stabilizer"|id="mj-theme-boot"|v6-direct-boot-2026-08/, "ثيم مبكر قبل الرسم");
+assert.match(html, /id="mj-theme-boot"|v6-direct-boot-2026-08/, "ثيم مبكر قبل الرسم");
 {
   const crit = html.match(/<style id="mj-lcp-critical">([\s\S]*?)<\/style>/)?.[1] ?? "";
   assert.doesNotMatch(crit, /Aref\s+Ruqaa/, "بلا رقعة في CSS الحرج");
@@ -83,7 +83,7 @@ assert.doesNotMatch(
 );
 assert.match(
   postBuild,
-  /mj-startup-stabilizer|mj-theme-boot|spaAssets/,
+  /mj-theme-boot|spaAssets/,
   "دمج SEO يعتمد ثيم الإقلاع من أصول SPA",
 );
 

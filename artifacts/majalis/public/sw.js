@@ -238,7 +238,6 @@ self.addEventListener("fetch", (event) => {
     url.pathname === "/version.json" ||
     url.pathname === "/sw-version.js" ||
     url.pathname === "/sw.js" ||
-    url.pathname === "/startup-stabilizer.js" ||
     url.pathname === "/manifest.json" ||
     url.pathname === "/site.webmanifest" ||
     url.pathname === "/manifest.webmanifest"

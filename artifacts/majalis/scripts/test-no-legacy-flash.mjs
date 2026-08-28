@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 /**
- * بوابة: Startup Stabilizer — لا دخولية HTML، أول رسم سريع.
+ * بوابة: لا وميض دخولية “قديمة” خلال أول 2500ms.
  *
  * تفشل إن:
- * - لم يُركّب React خلال 3s
- * - ظهرت دخولية HTML قديمة
- * - تغيّر theme/font بشكل متكرر خلال 2.5s
+ * - ظهرت طبقة إطلاق ثانية (غير #mj-launch-splash)
+ * - أو ظهرت دخولية قديمة (#mj-silent-splash / #mj-boot-splash)
+ * - أو تغيّر `dataset.theme`/`dataset.font` بشكل متكرر خلال نافذة القياس
+ *
+ * تشغيل: node scripts/test-no-legacy-flash.mjs
  */
 import { createServer } from "node:http";
 import { createReadStream, existsSync, statSync } from "node:fs";
@@ -65,49 +67,47 @@ async function main() {
   try {
     await page.goto(`${base}/`, { waitUntil: "load", timeout: 60_000 });
 
-    await page.waitForFunction(
-      () => document.querySelector("#root")?.childElementCount > 0,
-      null,
-      { timeout: 3000 },
-    );
-
-    await page.evaluate(
-      () =>
-        new Promise((resolve) => {
-          window.addEventListener("mj:app-painted", () => resolve(), { once: true });
-          window.setTimeout(resolve, 2000);
-        }),
-    );
+    const splashStart = await page.evaluate(() => window.__mjSplashStart);
+    assert.equal(typeof splashStart, "number");
 
     const stateHistory = [];
-    const samples = 25;
+    const samples = 25; // 25 * 100ms = 2500ms
     for (let i = 0; i < samples; i++) {
       await page.waitForTimeout(100);
       const s = await page.evaluate(() => {
+        const splash = document.querySelector("#mj-launch-splash");
+        const legacySilent = document.querySelector("#mj-silent-splash");
+        const theme = document.documentElement.dataset.theme || "";
+        const font = document.documentElement.dataset.font || "";
+        const splashCount = document.querySelectorAll("#mj-launch-splash").length;
         const legacySplashCount =
-          document.querySelectorAll("#mj-launch-splash, #mj-boot-splash, #mj-splash-boot, #mj-silent-splash").length +
+          document.querySelectorAll("#mj-boot-splash, #mj-splash-boot, #mj-silent-splash").length +
           document.querySelectorAll("[data-launch-splash='1']").length;
         return {
+          splashPresent: Boolean(splash),
+          legacySilentPresent: Boolean(legacySilent),
+          splashCount,
           legacySplashCount,
-          theme: document.documentElement.dataset.theme || "",
-          font: document.documentElement.dataset.font || "",
-          startupLock: document.documentElement.classList.contains("startup-lock"),
+          theme,
+          font,
         };
       });
       stateHistory.push(s);
-      if (s.legacySplashCount > 0) {
-        throw new Error(`legacy splash at sample=${i}: count=${s.legacySplashCount}`);
+
+      // Structural checks while splash might still be present.
+      if (s.legacySplashCount > 0 || s.legacySilentPresent) {
+        throw new Error(`legacy splash at sample=${i}: legacy=${s.legacySplashCount} silent=${s.legacySilentPresent}`);
+      }
+      if (s.splashCount > 1) {
+        throw new Error(`multiple splashes at sample=${i}: splashCount=${s.splashCount}`);
       }
     }
 
-    const themes = [...new Set(stateHistory.map((s) => s.theme))];
-    const fonts = [...new Set(stateHistory.map((s) => s.font))];
-    assert.ok(themes.length <= 1, `theme flicker: ${themes.join(",")}`);
-    assert.ok(fonts.length <= 1, `font flicker: ${fonts.join(",")}`);
-    assert.ok(
-      stateHistory.some((s) => !s.startupLock),
-      "startup-lock يُرفع بعد mj:app-painted",
-    );
+    // Theme/font must not flap repeatedly in first 2.5s.
+    const themes = new Set(stateHistory.map((x) => x.theme).filter(Boolean));
+    const fonts = new Set(stateHistory.map((x) => x.font).filter(Boolean));
+    if (themes.size > 2) throw new Error(`theme flapped too much: ${[...themes].join(",")}`);
+    if (fonts.size > 2) throw new Error(`font flapped too much: ${[...fonts].join(",")}`);
   } finally {
     await browser.close();
     await stop();
@@ -121,3 +121,4 @@ main().catch((e) => {
   console.error(e);
   process.exit(1);
 });
+

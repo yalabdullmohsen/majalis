@@ -6,8 +6,8 @@
     <meta name="mj-build-commit" content="__MJ_BUILD_COMMIT__" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#F2F4F3" />
-    <!-- Startup Stabilizer: ثيم + RTL + مقياس خط قبل CSS مرئي -->
-    <script id="mj-startup-stabilizer">
+    <!-- ثيم+RTL قبل أي CSS/JS — يمنع وميض ليلي وكاش قديم (v10-pwa-single-paint-2026-08) -->
+    <script id="mj-theme-boot">
       (function () {
         try {
           var html = document.documentElement;
@@ -73,9 +73,6 @@
               "--ui-density-scale",
               prefs.seniorMode ? "1" : prefs.uiDensity === "compact" ? "0.92" : "1",
             );
-            if (scale !== "1") {
-              html.style.fontSize = "calc(1rem * var(--ui-font-scale))";
-            }
           } catch (e) {}
           window.addEventListener(
             "mj:app-painted",
