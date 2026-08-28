@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useId, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { defaultSiteJsonLd } from "@/lib/seo-structured-data";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
@@ -9,6 +9,7 @@ import { scheduleOnIdle } from "@/lib/yield-to-main";
 import { getSurahMeta, loadPagePosition, loadReadingAyahKey } from "@/lib/quran-api";
 import { toArabicDigits } from "@/lib/utils";
 import { StartHeader } from "@/components/home/start/StartHeader";
+import { HOME_SEARCH_INPUT_ID } from "@/lib/home-search-id";
 import { PrayerSummaryCard } from "@/components/home/start/PrayerSummaryCard";
 import { DhikrSummaryCard } from "@/components/home/start/DhikrSummaryCard";
 import { HomeFeaturedSections } from "@/components/home/start/HomeFeaturedSections";
@@ -101,7 +102,6 @@ function resolveMushafLabel(): string {
 }
 
 export default function HomePage() {
-  const searchInputId = useId();
   const [mushafHref] = useState(resolveMushafHref);
   const [mushafLabel] = useState(resolveMushafLabel);
 
@@ -137,7 +137,7 @@ export default function HomePage() {
             width={72}
             height={72}
             decoding="async"
-            fetchPriority="high"
+            fetchPriority="low"
           />
         </div>
         <h1 className="mj-home-start__title">المجلس العلمي</h1>
@@ -155,7 +155,7 @@ export default function HomePage() {
         </div>
       )}
 
-      <StartHeader searchInputId={searchInputId} mushafHref={mushafHref} mushafLabel={mushafLabel} />
+      <StartHeader searchInputId={HOME_SEARCH_INPUT_ID} mushafHref={mushafHref} mushafLabel={mushafLabel} />
 
       {brand}
 
@@ -168,7 +168,7 @@ export default function HomePage() {
       </SectionErrorBoundary>
 
       <SectionErrorBoundary name="HomeUniversalSearch">
-        <HomeUniversalSearch inputId={searchInputId} variant="start" />
+        <HomeUniversalSearch inputId={HOME_SEARCH_INPUT_ID} variant="start" />
       </SectionErrorBoundary>
 
       <SectionErrorBoundary name="HomeFeatured">

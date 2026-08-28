@@ -374,7 +374,7 @@
   margin-top: 0.55rem;
   padding: 0.35rem;
   font-size: 0.78rem;
-  color: color-mix(in srgb, var(--mj-start-ink) 55%, transparent);
+  color: color-mix(in srgb, var(--mj-start-ink) 72%, transparent);
   background: transparent;
   border: none;
 }

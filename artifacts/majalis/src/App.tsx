@@ -32,6 +32,8 @@ import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
+import { StartHeader } from "@/components/home/start/StartHeader";
+import { HOME_SEARCH_INPUT_ID } from "@/lib/home-search-id";
 import {
   markFirstVisitIntroSeen,
   shouldShowFirstVisitIntro,
@@ -682,13 +684,7 @@ function NativeNotificationsBootstrap() {
 function HomeInitialShell() {
   return (
     <div className="mj-home-start m2030-home mj-home-lcp-ph" dir="rtl">
-      <header className="mj-start-header" aria-hidden="true">
-        <span className="mj-start-header__icon-btn mj-home-start-ph__icon" />
-        <div className="mj-start-header__end">
-          <span className="mj-start-header__pill mj-home-start-ph__pill" />
-          <span className="mj-start-header__pill mj-home-start-ph__pill" />
-        </div>
-      </header>
+      <StartHeader searchInputId={HOME_SEARCH_INPUT_ID} mushafHref="/mushaf" />
 
       <section className="mj-home-start__brand" aria-label="المجلس العلمي">
         <div className="mj-home-start__logo-wrap">
@@ -699,7 +695,7 @@ function HomeInitialShell() {
             width={72}
             height={72}
             decoding="async"
-            fetchPriority="high"
+            fetchPriority="low"
           />
         </div>
         <h1 className="mj-home-start__title">المجلس العلمي</h1>
