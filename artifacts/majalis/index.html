@@ -57,6 +57,21 @@
           var storedFont = localStorage.getItem("majalis-font-preference-v2");
           html.dataset.font =
             storedFont === "naskh" || storedFont === "default" ? storedFont : "naskh";
+          try {
+            var prefs = JSON.parse(localStorage.getItem("majalis-user-settings-v1") || "{}");
+            var scale = prefs.seniorMode
+              ? "1.16"
+              : prefs.fontSize === "صغير"
+                ? "0.92"
+                : prefs.fontSize === "كبير"
+                  ? "1.08"
+                  : "1";
+            html.style.setProperty("--ui-font-scale", scale);
+            html.style.setProperty(
+              "--ui-density-scale",
+              prefs.seniorMode ? "1" : prefs.uiDensity === "compact" ? "0.92" : "1",
+            );
+          } catch (e) {}
         } catch (e) {}
       })();
     </script>
@@ -64,6 +79,8 @@
     <script id="mj-version-boot">
       (function () {
         var FLAG = "majlisilm-refreshing-version";
+        if (navigator.webdriver) return;
+        if (location.hostname === "127.0.0.1" || location.hostname === "localhost") return;
         try {
           if (sessionStorage.getItem(FLAG) === "1") {
             sessionStorage.removeItem(FLAG);
