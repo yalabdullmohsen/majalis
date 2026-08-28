@@ -1,19 +1,19 @@
 {
   "version": 1,
-  "generated_at": "2026-08-28T01:02:21.588Z",
+  "generated_at": "2026-08-28T15:39:51.743Z",
   "items": [
     {
-      "id": "6f682218416429d03cc4a471c7f82d69c9904078",
-      "type": "درس",
-      "title_ar": "الآن مباشر شرح كتاب التوحيد للإمام محمد بن عبدالوهاب فضيلة الشيخ عمر مثيب العتي…",
-      "summary_ar": "الان مباشر (37) شرح كتاب&nbsp; التوحيد للامام محمد بن عبدالوهاب فضيله الشيخ عمر مثيب العتيبي رابط البث المباشر https://t.me/omar_muthib?livestream تحميل الكتاب…",
-      "sheikh": "عمر مثيب العتيبي 🔗 رابط البث المباشر https://t",
-      "place": null,
+      "id": "03677c54f5f98b8bbb98a14dce1ffa8a035137da",
+      "type": "دورة",
+      "title_ar": "ندعوكم اليوم لحضور الدورة العلمية غاية المريد في علم التجويد للشيخ محمد بن محيس…",
+      "summary_ar": "ندعوكم اليوم لحضور الدوره العلميه: ( غايه المريد في علم التجويد&nbsp;) للشيخ محمد بن محيسن الظبيان يومي الجمعه والاحد ⌚ بعد صلاه العصر مسجد مبارك عبدالله الصبا…",
+      "sheikh": null,
+      "place": "علم التجويد&nbsp;) 🎙️ للشيخ محمد بن محيسن الظبيان 🗓️ يومي الجمعة والأحد ⌚ بعد",
       "audience": "عام",
       "starts_at": null,
       "time_text": null,
-      "register_url": "https://t.me/omar_muthib?livestream",
-      "schedule_kind": null,
+      "register_url": "https://t.me/DrosQ8",
+      "schedule_kind": "upcoming",
       "women_attendance": "men_only",
       "women_attendance_note": null,
       "sources": [
@@ -21,12 +21,12 @@
           "id": "telegram-DrosQ8",
           "name_ar": "دروس الكويت",
           "url": "https://t.me/DrosQ8",
-          "post_url": "https://t.me/DrosQ8/27646",
+          "post_url": "https://t.me/DrosQ8/27667",
           "platform": "telegram"
         }
       ],
       "image_url": null,
-      "published_at": "2026-08-28T00:37:57.619Z",
+      "published_at": "2026-08-28T15:17:35.281Z",
       "confidence": 0.8
     },
     {
@@ -84,6 +84,33 @@
       "confidence": 0.95
     },
     {
+      "id": "e340e49b5677b8f673feeff1febbe422c74a1398",
+      "type": "محاضرة",
+      "title_ar": "لقاء الجمعة الأسبوعي كلنا شوق للقياكن أحبتنا في الله مع الدكتورة مريم مندكار حف…",
+      "summary_ar": "لقاء الجمعه الاسبوعي كلنا شوق للقياكن احبتنا في الله مع الدكتوره مريم مندكار حفظها الله Photo by مسجد راشد الخياط on August 27, 2026. May be an image of ‎pie, …",
+      "sheikh": "ة مريم مندكار حفظها الله 🍃",
+      "place": "الله 🍃",
+      "audience": "عام",
+      "starts_at": "2026-08-28T00:00:00.000Z",
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-m_alkhayatq8",
+          "name_ar": "مسجد راشد الخياط",
+          "url": "https://instagram.com/m_alkhayatq8",
+          "post_url": "https://www.instagram.com/p/DckS0kEIr3i/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-27T00:00:00.000Z",
+      "confidence": 0.95
+    },
+    {
       "id": "521409728e47b4bf644be0da76c2d29acd4a1ce5",
       "type": "حلقة",
       "title_ar": "ودج بإنجاز يفرحج كل أسبوع؟ حلقات إرواء للقرآن ودج يكون عندج إنجاز يفرحج كل اسبو…",
@@ -109,33 +136,6 @@
       "image_url": null,
       "published_at": "2026-08-26T16:34:23.140Z",
       "confidence": 0.65
-    },
-    {
-      "id": "5b3fa3511fd80095d69ac2ae9c971d9716e250bc",
-      "type": "محاضرة",
-      "title_ar": "لقاء الجمعة الأسبوعي بعنوان قم فأنذر لقاء الجمعه الاسبوعي بعنوان قم فانذر للدكت…",
-      "summary_ar": "لقاء الجمعه الاسبوعي بعنوان ( قم فانذر ) للدكتوره الفاضله مريم مندكار الدعوه عامه احبتنا في الله اهلا وحبا Photo by مسجد راشد الخياط on August 21, 2026. Puede …",
-      "sheikh": "ة الفاضلة مريم مندكار 🍃",
-      "place": "الله 🤍 أهلاً وحباً 🤍",
-      "audience": "عام",
-      "starts_at": null,
-      "time_text": null,
-      "register_url": null,
-      "schedule_kind": "weekly",
-      "women_attendance": "men_only",
-      "women_attendance_note": null,
-      "sources": [
-        {
-          "id": "ig-m_alkhayatq8",
-          "name_ar": "مسجد راشد الخياط",
-          "url": "https://instagram.com/m_alkhayatq8",
-          "post_url": "https://www.instagram.com/p/DcTl89_IEOm/",
-          "platform": "instagram"
-        }
-      ],
-      "image_url": null,
-      "published_at": "2026-08-21T00:00:00.000Z",
-      "confidence": 0.85
     }
   ]
 }
