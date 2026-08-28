@@ -7,12 +7,13 @@ html.pts-immersive body,
 html.pts-immersive #root,
 html.pts-immersive .app-shell,
 html.pts-immersive .app-main {
-  background-color: #06241d !important;
+  background-color: #06271f !important;
+  background-image: linear-gradient(180deg, #0f4a38 0%, #083528 55%, #06271f 100%) !important;
 }
 
 .pts-screen {
-  --pts-bg-0: #06241d;
-  --pts-bg-1: #0b3329;
+  --pts-bg-0: #06271f;
+  --pts-bg-1: #083528;
   --pts-bg-2: #0f4a38;
   --pts-gold: #E3CB8C;
   --pts-gold-soft: color-mix(in srgb, var(--em-400) 20%, transparent);
@@ -22,11 +23,9 @@ html.pts-immersive .app-main {
   --pts-muted: rgba(250, 250, 248, 0.88);
   --pts-radius: var(--radius-card, 28px);
   --pts-radius-sm: var(--radius-tile, 24px);
-  /* التدرّج على ::after في prayer-times.css — هنا نُبقي !important متوافقًا وناعمًا */
-  background-image:
-    radial-gradient(ellipse 90% 42% at 50% -8%, rgba(255, 255, 255, 0.09), transparent 58%),
-    linear-gradient(180deg, #0f4a38 0%, #0b3329 48%, #06241d 100%) !important;
-  background-color: #0b3329 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
   gap: 0.9rem !important;
   /* لا تتجاوز safe-area — .pts-screen--with-nav يملك الحشو العلوي */
   padding-block-start: unset !important;

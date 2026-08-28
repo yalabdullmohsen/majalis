@@ -13,13 +13,13 @@ const css = readFileSync(resolve(appRoot, "src/styles/pages/prayer-times.css"), 
 
 assert.match(
   css,
-  /html\.pts-immersive\s+\.bottom-nav[\s\S]*?background:\s*var\(--em-950/,
-  "شريط التبويب بنفس لون أسفل الصفحة",
+  /html\.pts-immersive[\s\S]*?linear-gradient\(180deg,\s*#0f4a38\s+0%,\s*#083528\s+55%,\s*#06271f\s+100%\)/,
+  "تدرّج موحّد على html/body/#root",
 );
 assert.match(css, /html\.pts-immersive\s+\.bottom-nav--m2030/, "يغطي صنف m2030");
 assert.match(
   css,
-  /html\.pts-immersive\s+\.top-section-bar[\s\S]*?background:\s*var\(--em-950[\s\S]*?!important/,
+  /html\.pts-immersive\s+\.top-section-bar[\s\S]*?background:\s*#06271f[\s\S]*?!important/,
   "شريط الأقسام موحّد اللون",
 );
 assert.match(
@@ -29,7 +29,7 @@ assert.match(
 );
 assert.match(
   css,
-  /html\.pts-immersive #root[\s\S]*?background-color:\s*var\(--em-950/,
+  /html\.pts-immersive #root[\s\S]*?background-color:\s*#06271f/,
   "#root مطلي بزمرد الصلاة لا --app-bg",
 );
 assert.doesNotMatch(
@@ -62,9 +62,14 @@ assert.doesNotMatch(
 assert.doesNotMatch(
   css,
   /\.pts-screen\s*\{[^}]*linear-gradient/,
-  "خلفية الشاشة الصلبة بلا تدرّج داخل الكتلة — التدرّج عبر ::after",
+  "خلفية الشاشة شفافة — التدرّج على html/body/#root",
 );
-assert.match(css, /\.pts-screen::after[\s\S]*?linear-gradient\(180deg,\s*#0f4a38/);
+assert.match(
+  css,
+  /html\.pts-immersive[\s\S]*?linear-gradient\(180deg,\s*#0f4a38\s+0%,\s*#083528\s+55%,\s*#06271f\s+100%\)/,
+);
+assert.match(css, /\.pts-screen\s*\{[\s\S]*?width:\s*100vw/);
+assert.match(css, /\.pts-screen\s*\{[\s\S]*?background:\s*transparent/);
 assert.match(css, /\.pts-row\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius/);
 assert.match(css, /\.pts-dock__item\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius-sm/);
 assert.match(css, /padding-bottom:\s*calc\(\s*96px\s*\+\s*var\(--inset-bottom/);
