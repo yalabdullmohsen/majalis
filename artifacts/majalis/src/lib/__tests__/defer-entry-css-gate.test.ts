@@ -70,6 +70,7 @@ for (const m of head.matchAll(/<script\b([^>]*)>/gi)) {
   const id = attrs.match(/\bid\s*=\s*["']([^"']+)["']/i)?.[1] || "";
   // mj-theme-boot / mj-version-boot: سكربتات إقلاع صغيرة قبل أول paint (ثيم + منع كاش قديم)
   assert.ok(
+    id === "mj-startup-stabilizer" ||
     id === "mj-theme-boot" ||
       id === "mj-version-boot" ||
       type === "application/ld+json" ||

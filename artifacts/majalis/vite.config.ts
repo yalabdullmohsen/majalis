@@ -18,7 +18,11 @@ if (Number.isNaN(port) || port <= 0) {
 
 const basePath = process.env.BASE_PATH || "/";
 
-const commitHash = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT || "dev";
+const commitHash =
+  process.env.VERCEL_GIT_COMMIT_SHA ||
+  process.env.GITHUB_SHA ||
+  process.env.GIT_COMMIT ||
+  "dev";
 const buildId = process.env.VERCEL_DEPLOYMENT_ID || process.env.BUILD_ID || "local";
 
 /**

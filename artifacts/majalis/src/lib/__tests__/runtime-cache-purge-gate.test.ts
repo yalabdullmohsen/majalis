@@ -13,6 +13,7 @@ const purge = read("src/lib/runtime-cache-purge.ts");
 const main = read("src/main.tsx");
 const sw = read("public/sw.js");
 const html = read("index.html");
+const stabilizer = read("public/startup-stabilizer.js");
 const staticJson = read("src/lib/static-json-cache.ts");
 const vercel = read("vercel.json");
 
@@ -38,10 +39,11 @@ assert.match(sw, /pathname === "\/sw-version\.js"/);
   assert.doesNotMatch(shell, /version\.json/);
 }
 
-assert.match(html, /v10-pwa-single-paint-2026-08/);
+assert.match(stabilizer, /v10-pwa-single-paint-2026-08/);
 assert.match(html, /majalis_force_cache_purge/);
-assert.match(html, /classList\.add\("light"/);
-assert.match(html, /storedTheme === "auto"/);
+assert.match(html, /id="mj-version-boot"/);
+assert.match(stabilizer, /classList\.add\("light"/);
+assert.match(stabilizer, /storedTheme === "auto"/);
 assert.doesNotMatch(
   html,
   /storedTheme === "light" \? "light"\s*: storedTheme === "dark" \? "dark"\s*: \(window\.matchMedia/,
