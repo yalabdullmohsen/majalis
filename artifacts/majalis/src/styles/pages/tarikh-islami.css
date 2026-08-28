@@ -1,6 +1,6 @@
 /* التاريخ الإسلامي — hub + detail */
 .tarikh-page {
-  max-width: min(100%, 44rem);
+  max-width: min(100%, 46rem);
   margin-inline: auto;
   padding-block: 1rem 2.5rem;
 }
@@ -34,6 +34,270 @@
   display: grid;
   gap: 0.75rem;
   margin-bottom: 1.25rem;
+}
+
+/* مسار تفاعلي أفقي للدول */
+.tarikh-rail {
+  display: flex;
+  gap: 0.45rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  padding: 0.15rem 0.1rem 0.55rem;
+  margin-bottom: 0.85rem;
+  scrollbar-width: thin;
+}
+
+.tarikh-rail__chip {
+  appearance: none;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  display: grid;
+  gap: 0.12rem;
+  min-width: 7.5rem;
+  max-width: 10.5rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--tarikh-accent, var(--primary)) 28%, transparent);
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--tarikh-accent, var(--primary)) 12%, transparent),
+      color-mix(in srgb, var(--background) 92%, transparent)
+    );
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
+}
+
+.tarikh-rail__chip:hover {
+  border-color: color-mix(in srgb, var(--tarikh-accent, var(--primary)) 55%, transparent);
+}
+
+.tarikh-rail__chip.is-active {
+  border-color: var(--tarikh-accent, var(--primary));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tarikh-accent, var(--primary)) 35%, transparent);
+  transform: translateY(-1px);
+}
+
+.tarikh-rail__n {
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #fff;
+  background: var(--tarikh-accent, var(--primary));
+}
+
+.tarikh-rail__label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.tarikh-rail__period {
+  font-size: 0.68rem;
+  color: var(--mj-muted, color-mix(in srgb, var(--foreground) 58%, transparent));
+}
+
+.tarikh-era-actions {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.tarikh-era-actions__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.tarikh-text-btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  width: fit-content;
+}
+
+.tarikh-eras {
+  display: grid;
+  gap: 0.75rem;
+  position: relative;
+  padding-inline-start: 0.35rem;
+}
+
+.tarikh-eras::before {
+  content: "";
+  position: absolute;
+  inset-block: 0.6rem;
+  inset-inline-start: 0.95rem;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--primary) 35%, transparent),
+    color-mix(in srgb, var(--primary) 8%, transparent)
+  );
+  pointer-events: none;
+}
+
+.tarikh-era {
+  --tarikh-accent: var(--primary);
+  position: relative;
+  border-radius: 1.15rem;
+  border: 1px solid color-mix(in srgb, var(--tarikh-accent) 22%, transparent);
+  background: color-mix(in srgb, var(--tarikh-accent) 5%, var(--card, var(--background)));
+  overflow: clip;
+}
+
+.tarikh-era__head {
+  appearance: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 0.65rem;
+  align-items: start;
+  padding: 0.85rem 0.9rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.tarikh-era__index {
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.15rem;
+  border-radius: 999px;
+  border: 2px solid var(--tarikh-accent);
+  background: color-mix(in srgb, var(--tarikh-accent) 18%, #fff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--background) 88%, transparent);
+  z-index: 1;
+}
+
+.tarikh-era.is-open .tarikh-era__index {
+  background: var(--tarikh-accent);
+}
+
+.tarikh-era__text {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.tarikh-era__title {
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.tarikh-era__period {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--tarikh-accent);
+}
+
+.tarikh-era__center {
+  font-size: 0.74rem;
+  color: var(--mj-muted, color-mix(in srgb, var(--foreground) 58%, transparent));
+}
+
+.tarikh-era__blurb {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--mj-muted, color-mix(in srgb, var(--foreground) 70%, transparent));
+}
+
+.tarikh-era__count {
+  font-size: 0.72rem;
+  font-weight: 750;
+  white-space: nowrap;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tarikh-accent) 12%, transparent);
+  color: var(--tarikh-accent);
+  margin-top: 0.15rem;
+}
+
+.tarikh-era__chevron {
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.45rem;
+  border-inline-end: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  opacity: 0.55;
+  transition: transform 0.2s ease;
+}
+
+.tarikh-era.is-open .tarikh-era__chevron {
+  transform: rotate(225deg);
+  margin-top: 0.65rem;
+}
+
+.tarikh-era__body {
+  padding: 0 0.85rem 0.9rem;
+  border-top: 1px solid color-mix(in srgb, var(--tarikh-accent) 16%, transparent);
+}
+
+.tarikh-era__body[hidden] {
+  display: none;
+}
+
+.tarikh-era__events {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+  counter-reset: era-event;
+}
+
+.tarikh-era__event {
+  position: relative;
+  counter-increment: era-event;
+}
+
+.tarikh-era__event::before {
+  content: counter(era-event);
+  position: absolute;
+  inset-inline-start: 0.55rem;
+  top: 0.85rem;
+  z-index: 1;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--tarikh-accent);
+  background: color-mix(in srgb, var(--tarikh-accent) 12%, var(--card, #fff));
+  border: 1px solid color-mix(in srgb, var(--tarikh-accent) 30%, transparent);
+  pointer-events: none;
+}
+
+.tarikh-era__event .tarikh-card {
+  padding-inline-start: 2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarikh-rail__chip,
+  .tarikh-era__chevron {
+    transition: none;
+  }
 }
 
 .tarikh-search input {

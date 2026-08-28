@@ -1,4 +1,5 @@
 import type { HistoryCategory, IslamicHistoryItem } from "./types";
+import { HISTORY_ERA_META, type HistoryEraMeta } from "./era-meta";
 
 import seerah from "./seerah.json";
 import rashidun from "./rashidun.json";
@@ -12,18 +13,20 @@ import civilization from "./civilization.json";
 import modern from "./modern.json";
 
 export type { HistoryCategory, HistoryKind, VerificationLevel, IslamicHistoryItem } from "./types";
+export type { HistoryEraMeta } from "./era-meta";
+export { HISTORY_ERA_META } from "./era-meta";
 
 export const HISTORY_CATEGORIES: Record<HistoryCategory, string> = {
-  seerah: "قبل البعثة والسيرة",
-  rashidun: "عصر الخلفاء الراشدين",
-  umayyad: "الدولة الأموية",
-  abbasid: "الدولة العباسية",
-  andalus: "الأندلس",
-  "seljuk-ayyubid": "السلاجقة والأيوبيون",
-  mamluk: "المماليك",
-  ottoman: "الدولة العثمانية",
-  civilization: "الحضارة الإسلامية",
-  modern: "إلى يومنا هذا",
+  seerah: HISTORY_ERA_META.seerah.title,
+  rashidun: HISTORY_ERA_META.rashidun.title,
+  umayyad: HISTORY_ERA_META.umayyad.title,
+  abbasid: HISTORY_ERA_META.abbasid.title,
+  andalus: HISTORY_ERA_META.andalus.title,
+  "seljuk-ayyubid": HISTORY_ERA_META["seljuk-ayyubid"].title,
+  mamluk: HISTORY_ERA_META.mamluk.title,
+  ottoman: HISTORY_ERA_META.ottoman.title,
+  civilization: HISTORY_ERA_META.civilization.title,
+  modern: HISTORY_ERA_META.modern.title,
 };
 
 /** ترتيب العصور في الخط الزمني */
@@ -89,4 +92,15 @@ export function searchHistoryItems(query: string): IslamicHistoryItem[] {
       (item.place?.includes(q) ?? false) ||
       (item.era.includes(q) ?? false),
   );
+}
+
+/** مجموعات الدول/العصور مع أحداثها مرتّبة زمنياً */
+export function getHistoryErasWithEvents(): Array<{
+  meta: HistoryEraMeta;
+  events: IslamicHistoryItem[];
+}> {
+  return HISTORY_CATEGORY_ORDER.map((id) => ({
+    meta: HISTORY_ERA_META[id],
+    events: getHistoryByCategory(id),
+  }));
 }
