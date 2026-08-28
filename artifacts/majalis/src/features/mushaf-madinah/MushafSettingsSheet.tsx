@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import { createPortal } from "react-dom";
+import { QuranSheetShell } from "./quran-sheet";
 
 export type MushafThemeChoice = "auto" | "paper" | "sepia" | "night" | "oled";
 /** 0 = كشف · 1 = إخفاء جزئي · 2 = إخفاء كامل (اختبار حفظ) */
@@ -14,7 +14,7 @@ type Props = {
   onClose: () => void;
 };
 
-/** إعدادات الصفحة — لوحة سفلية خفيفة بلا إعادة تحميل المصحف. */
+/** إعدادات المصحف — QuranSettingsSheet الموحّد. */
 export function MushafSettingsSheet({
   open,
   theme,
@@ -23,32 +23,34 @@ export function MushafSettingsSheet({
   onHideLevel,
   onClose,
 }: Props) {
-  if (!open) return null;
-  return createPortal(
-    <div className="mm-settings-sheet" role="dialog" aria-modal="true" aria-labelledby="mm-settings-title">
-      <button type="button" className="mm-settings-sheet__scrim" aria-label="إغلاق الإعدادات" onClick={onClose} />
-      <div className="mm-settings-sheet__panel">
-        <header className="mm-settings-sheet__head">
-          <h2 id="mm-settings-title">إعدادات الصفحة</h2>
-          <button type="button" onClick={onClose} aria-label="إغلاق">
-            إغلاق
-          </button>
-        </header>
-        <section className="mm-settings-sheet__card">
+  return (
+    <QuranSheetShell
+      open={open}
+      ariaLabel="إعدادات المصحف"
+      title="إعدادات الصفحة"
+      titleId="mm-settings-title"
+      onClose={onClose}
+      snap="half"
+      className="mm-settings-sheet"
+      panelClassName="mm-settings-sheet__panel"
+      zIndex={10000}
+    >
+      <div className="quran-sheet__body mm-settings-sheet__body">
+        <section className="mm-settings-sheet__card quran-card">
           <h3>نوع المصحف</h3>
-          <p className="mm-settings-sheet__row is-active">
+          <p className="mm-settings-sheet__row quran-row is-active">
             <span>المصحف</span>
             <Check size={18} aria-hidden="true" />
           </p>
         </section>
-        <section className="mm-settings-sheet__card">
+        <section className="mm-settings-sheet__card quran-card">
           <h3>اتجاه التمرير</h3>
-          <p className="mm-settings-sheet__row is-active">
+          <p className="mm-settings-sheet__row quran-row is-active">
             <span>صفحة</span>
             <Check size={18} aria-hidden="true" />
           </p>
         </section>
-        <section className="mm-settings-sheet__card">
+        <section className="mm-settings-sheet__card quran-card">
           <h3>المظهر</h3>
           {(
             [
@@ -62,7 +64,7 @@ export function MushafSettingsSheet({
             <button
               key={id}
               type="button"
-              className={`mm-settings-sheet__row${theme === id ? " is-active" : ""}`}
+              className={`mm-settings-sheet__row quran-row${theme === id ? " is-active" : ""}`}
               onClick={() => onTheme(id)}
             >
               <span>{label}</span>
@@ -70,7 +72,7 @@ export function MushafSettingsSheet({
             </button>
           ))}
         </section>
-        <section className="mm-settings-sheet__card">
+        <section className="mm-settings-sheet__card quran-card">
           <h3>اختبار الحفظ</h3>
           <p className="mm-settings-sheet__hint">
             أخفِ كلمات الآية أو الآية كاملة، ثم انقر للكشف أثناء المراجعة.
@@ -85,7 +87,7 @@ export function MushafSettingsSheet({
             <button
               key={level}
               type="button"
-              className={`mm-settings-sheet__row${hideLevel === level ? " is-active" : ""}`}
+              className={`mm-settings-sheet__row quran-row${hideLevel === level ? " is-active" : ""}`}
               onClick={() => onHideLevel(level)}
             >
               <span>{label}</span>
@@ -94,7 +96,9 @@ export function MushafSettingsSheet({
           ))}
         </section>
       </div>
-    </div>,
-    document.body,
+    </QuranSheetShell>
   );
 }
+
+/** الاسم الموحّد لشيت الإعدادات */
+export { MushafSettingsSheet as QuranSettingsSheet };

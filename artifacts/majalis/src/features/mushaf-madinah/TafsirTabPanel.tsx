@@ -160,12 +160,12 @@ export function TafsirTabPanel({
 
   return (
     <div className="ayah-action-sheet__tafsir" data-testid="tafsir-tab-panel">
-      <div className="ayah-action-sheet__tafsir-depth" role="tablist" aria-label="عمق التفسير">
+      <div className="mm-search-sheet__tafsir-depth quran-tabbar" role="tablist" aria-label="عمق التفسير">
         <button
           type="button"
           role="tab"
+          className={`quran-tab quran-btn--segment${depth === "brief" ? " is-active" : ""}`}
           aria-selected={depth === "brief"}
-          className={depth === "brief" ? "is-active" : undefined}
           disabled={!briefEdition}
           onClick={() => switchDepth("brief")}
         >
@@ -174,8 +174,8 @@ export function TafsirTabPanel({
         <button
           type="button"
           role="tab"
+          className={`quran-tab quran-btn--segment${depth === "extended" ? " is-active" : ""}`}
           aria-selected={depth === "extended"}
-          className={depth === "extended" ? "is-active" : undefined}
           disabled={!extendedEdition}
           onClick={() => switchDepth("extended")}
         >
@@ -188,10 +188,10 @@ export function TafsirTabPanel({
           <span className="ayah-action-sheet__tafsir-chip-level">{depthLabel(depth)}</span>
         </p>
       ) : null}
-      <div className="ayah-action-sheet__tafsir-font" role="group" aria-label="حجم خط التفسير">
+      <div className="ayah-action-sheet__tafsir-font quran-font-stepper" role="group" aria-label="حجم خط التفسير">
         <button
           type="button"
-          className="ayah-action-sheet__font-btn"
+          className="ayah-action-sheet__font-btn quran-font-stepper__btn quran-btn"
           aria-label="تصغير خط التفسير"
           disabled={fontScale === TAFSIR_FONT_SCALES[0]}
           onClick={() => {
@@ -202,12 +202,12 @@ export function TafsirTabPanel({
         >
           أ−
         </button>
-        <span className="ayah-action-sheet__font-label" aria-live="polite">
+        <span className="ayah-action-sheet__font-label quran-font-stepper__label" aria-live="polite">
           {fontLabel(fontScale)}
         </span>
         <button
           type="button"
-          className="ayah-action-sheet__font-btn"
+          className="ayah-action-sheet__font-btn quran-font-stepper__btn quran-btn"
           aria-label="تكبير خط التفسير"
           disabled={fontScale === TAFSIR_FONT_SCALES[TAFSIR_FONT_SCALES.length - 1]}
           onClick={() => {
