@@ -530,13 +530,15 @@ function AdhanSchedulerBootstrap() {
         m.startAdhanScheduler(data).catch(() => {}),
       );
     };
-    run();
+    // بعد أول إطار — لا فحص أذان ثقيل على مسار الإقلاع
+    const startTimer = window.setTimeout(run, 3500);
 
     const onPrefs = () => run();
     window.addEventListener("majalis:adhan-prefs-changed", onPrefs);
     const onBootReschedule = () => run();
     window.addEventListener("majalis:boot-adhan-reschedule", onBootReschedule);
     return () => {
+      window.clearTimeout(startTimer);
       window.removeEventListener("majalis:adhan-prefs-changed", onPrefs);
       window.removeEventListener("majalis:boot-adhan-reschedule", onBootReschedule);
     };
@@ -562,12 +564,16 @@ function PrayerAlertSchedulerBootstrap() {
   useEffect(() => {
     if (!data) return;
     let cancelled = false;
-    void import("@/lib/prayer-alert-scheduler").then((mod) => {
-      if (cancelled) return;
-      mod.startPrayerAlertScheduler(data).catch(() => {});
-    });
+    // بعد استقرار أول إطار — لا جدولة ثقيلة على مسار الإقلاع
+    const t = window.setTimeout(() => {
+      void import("@/lib/prayer-alert-scheduler").then((mod) => {
+        if (cancelled) return;
+        mod.startPrayerAlertScheduler(data).catch(() => {});
+      });
+    }, 3500);
     return () => {
       cancelled = true;
+      window.clearTimeout(t);
     };
   }, [data]);
 
@@ -580,9 +586,11 @@ function PrayerAlertSchedulerBootstrap() {
   }, []);
 
   useEffect(() => {
+    const bootAt = Date.now();
     const loadScheduler = () => import("@/lib/prayer-alert-scheduler");
     const rescheduleOnForeground = () => {
-      // force: يعيد جدولة الإشعار الأصلي بعد الخلفية/إعادة التشغيل بلا تكرار خاطئ.
+      // خلال نافذة الإقلاع: لا force-reschedule يعلّق الواجهة
+      if (Date.now() - bootAt < 8_000) return;
       void loadScheduler().then((mod) => {
         void mod.recheckPrayerAlertWindow(data, { force: true });
       });

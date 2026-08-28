@@ -41,17 +41,24 @@ const theme = read("src/lib/theme-preference.ts");
 {
   assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/);
   assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/amiri-400-ar\.woff2/);
-  assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/noto-naskh-400-ar\.woff2/);
+  assert.doesNotMatch(
+    html,
+    /rel="preload"[^>]+noto-naskh-400/,
+    "لا preload لـ Noto عند الإقلاع — Amiri فقط",
+  );
   assert.match(html, /rel="preload"[^>]+as="font"/);
+  assert.match(html, /app-booting/);
+  assert.match(html, /majalis-user-settings-v1/);
+  assert.match(html, /--ui-font-scale/);
   assert.match(fontsQuran, /font-display:\s*block/);
   assert.doesNotMatch(fontsQuran, /font-display:\s*swap/);
   const fontsUi = read("src/styles/fonts-ui.css");
   assert.match(fontsUi, /amiri-400-ar[\s\S]*font-display:\s*block/);
   assert.match(fontsUi, /noto-naskh-400-ar[\s\S]*font-display:\s*block/);
   assert.match(boot, /BOOT_FONT_TIMEOUT_MS\s*=\s*1_?200|BOOT_FONT_TIMEOUT_MS\s*=\s*1200/);
-  assert.match(boot, /dataset\.font/);
   assert.match(boot, /document\.fonts\.load\(primary\)/);
   assert.match(boot, /fonts\.check\(primary\)/);
+  assert.match(boot, /"Amiri"/);
   assert.match(boot, /registerBootStorageGate|storageReady/);
   assert.match(main, /registerBootStorageGate/);
 }
