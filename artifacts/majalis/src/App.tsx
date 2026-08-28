@@ -736,9 +736,9 @@ function HomeInitialShell() {
         </div>
       </section>
 
-      <div className="hus hus--start mj-home-lcp-ph__search" role="search" aria-label="بحث">
-        <div className="hus-field">
-          <span className="hus-input mj-home-lcp-ph__search-ph" aria-hidden="true">
+      <div className="mj-start-search mj-home-lcp-ph__search" role="search" aria-label="بحث">
+        <div className="mj-start-search__field">
+          <span className="mj-start-search__input mj-home-lcp-ph__search-ph" aria-hidden="true">
             &nbsp;
           </span>
         </div>

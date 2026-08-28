@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Clock } from "lucide-react";
 import { AppCard } from "@/components/home/start/AppCard";
 import { AppSectionHeader } from "@/components/home/start/AppSectionHeader";
 import { useNumerals } from "@/hooks/useNumerals";
@@ -55,12 +54,7 @@ function PrayerRow({ prayers, nextKey }: { prayers: PrayerSlot[]; nextKey: strin
         <div
           key={p.key}
           role="listitem"
-          className={[
-            "mj-prayer-summary__cell",
-            p.key === nextKey ? "is-next" : "",
-          ]
-            .filter(Boolean)
-            .join(" ")}
+          className={["mj-prayer-summary__cell", p.key === nextKey ? "is-next" : ""].filter(Boolean).join(" ")}
         >
           <span className="mj-prayer-summary__cell-name">{p.name}</span>
           <span className="mj-prayer-summary__cell-time" dir="ltr">
@@ -93,7 +87,6 @@ export function PrayerSummaryCard() {
           <div className="mj-prayer-summary__hero">
             <div className="mj-prayer-summary__next">
               <span className="mj-prayer-summary__next-label">
-                <Clock size={15} aria-hidden="true" />
                 {nextName ? `الصلاة القادمة: ${nextName}` : "الصلاة القادمة"}
               </span>
               <strong className="mj-prayer-summary__next-time" dir="ltr">
@@ -111,9 +104,7 @@ export function PrayerSummaryCard() {
           {(data?.date?.hijri || data?.date?.gregorian) && (
             <p className="mj-prayer-summary__dates">
               {data?.date?.hijri ? <span>{data.date.hijri}</span> : null}
-              {data?.date?.gregorian ? (
-                <span dir="ltr">{data.date.gregorian}</span>
-              ) : null}
+              {data?.date?.gregorian ? <span dir="ltr">{data.date.gregorian}</span> : null}
             </p>
           )}
 
@@ -127,22 +118,6 @@ export function PrayerSummaryCard() {
           </Link>
         </div>
       )}
-    </AppCard>
-  );
-}
-
-export function PrayerSummaryCardSkeleton() {
-  return (
-    <AppCard className="mj-prayer-summary mj-prayer-summary--ph" as="section" aria-label="مواقيت الصلاة">
-      <div className="mj-prayer-summary__hero mj-prayer-summary__hero--ph" aria-busy="true">
-        <span className="mj-home-start-ph__line mj-home-start-ph__line--md" />
-        <span className="mj-home-start-ph__line mj-home-start-ph__line--lg" />
-      </div>
-      <div className="mj-prayer-summary__row mj-prayer-summary__row--ph" aria-hidden="true">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <span key={i} className="mj-home-start-ph__chip" />
-        ))}
-      </div>
     </AppCard>
   );
 }

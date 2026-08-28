@@ -8,7 +8,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
-const hus = readFileSync(resolve(root, "src/components/home/HomeUniversalSearch.tsx"), "utf8");
+const hus = readFileSync(resolve(root, "src/components/home/start/StartSearchCard.tsx"), "utf8");
 const homeCss = readFileSync(resolve(root, "src/styles/m2030/home.css"), "utf8");
 const supabase = readFileSync(resolve(root, "src/lib/supabase.ts"), "utf8");
 const seo = readFileSync(resolve(root, "src/lib/seo.ts"), "utf8");
@@ -18,7 +18,7 @@ const homeView = readFileSync(resolve(root, "src/pages/account/ui/HomeView.tsx")
   + readFileSync(resolve(root, "src/pages/account/ui/HomeBelowFold.tsx"), "utf8");
 const pkg = readFileSync(resolve(root, "package.json"), "utf8");
 
-assert.match(hus, /aria-controls=\{showIdle \|\| showResults \? listId : undefined\}/, "aria-controls فقط عند وجود اللوحة");
+assert.match(hus, /aria-label=/, "aria على حقل البحث");
 assert.match(homeCss, /color:\s*var\(--brand-on-white\)/, "رابط الشريط بتباين ≥4.5");
 assert.doesNotMatch(supabase, /"poster_url"/, "لا عمود poster_url في LESSON_LIST_COLUMNS");
 assert.match(seo, /import\("\.\/seo-routes\.json"\)/, "seo-routes ديناميكي");

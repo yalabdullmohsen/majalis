@@ -2,13 +2,16 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { defaultSiteJsonLd } from "@/lib/seo-structured-data";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
-import { HomeUniversalSearch } from "@/components/home/HomeUniversalSearch";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { scheduleOnIdle } from "@/lib/yield-to-main";
 import { toArabicDigits } from "@/lib/utils";
 import { StartHeader } from "@/components/home/start/StartHeader";
 import { HOME_SEARCH_INPUT_ID } from "@/lib/home-search-id";
+import { StartSearchCard } from "@/components/home/start/StartSearchCard";
+import { PrayerSummaryCard } from "@/components/home/start/PrayerSummaryCard";
+import { DhikrSummaryCard } from "@/components/home/start/DhikrSummaryCard";
+import { HomeFeaturedSections } from "@/components/home/start/HomeFeaturedSections";
 import "@/styles/components/home/home-start.css";
 
 const PAGE_POS_KEY = "majalis-quran-page-pos";
@@ -46,30 +49,6 @@ const HomeAuthStrip = lazyWithRetry(
       default: m.HomeAuthStrip,
     })),
   "HomeAuthStrip",
-);
-
-const PrayerSummaryCard = lazyWithRetry(
-  () =>
-    import("@/components/home/start/PrayerSummaryCard").then((m) => ({
-      default: m.PrayerSummaryCard,
-    })),
-  "PrayerSummaryCard",
-);
-
-const DhikrSummaryCard = lazyWithRetry(
-  () =>
-    import("@/components/home/start/DhikrSummaryCard").then((m) => ({
-      default: m.DhikrSummaryCard,
-    })),
-  "DhikrSummaryCard",
-);
-
-const HomeFeaturedSections = lazyWithRetry(
-  () =>
-    import("@/components/home/start/HomeFeaturedSections").then((m) => ({
-      default: m.HomeFeaturedSections,
-    })),
-  "HomeFeaturedSections",
 );
 
 function HomeBelowFoldGate() {
@@ -122,52 +101,6 @@ function HomeBelowFoldGate() {
         </Suspense>
       </SectionErrorBoundary>
     </div>
-  );
-}
-
-function PrayerSkeleton() {
-  return (
-    <section className="mj-app-card mj-prayer-summary mj-prayer-summary--ph" aria-label="مواقيت الصلاة" aria-busy="true">
-      <div className="mj-prayer-summary__hero mj-prayer-summary__hero--ph">
-        <span className="mj-home-start-ph__line mj-home-start-ph__line--md" />
-        <span className="mj-home-start-ph__line mj-home-start-ph__line--lg" />
-      </div>
-      <div className="mj-prayer-summary__row mj-prayer-summary__row--ph" aria-hidden="true">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <span key={i} className="mj-home-start-ph__chip" />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function FeaturedSkeleton() {
-  return (
-    <section className="mj-app-card mj-home-featured mj-home-featured--ph" aria-label="أقسام بارزة" aria-busy="true">
-      <div className="mj-app-section-header">
-        <h2 className="mj-app-section-header__title">استكشف</h2>
-      </div>
-      <div className="mj-home-featured__grid" aria-hidden="true">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <span key={i} className="mj-home-start-ph__action mj-home-start-ph__chip" />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function DhikrSkeleton() {
-  return (
-    <section className="mj-app-card mj-dhikr-summary mj-dhikr-summary--ph" aria-label="الأذكار" aria-busy="true">
-      <div className="mj-app-section-header">
-        <h2 className="mj-app-section-header__title">الأذكار</h2>
-      </div>
-      <div className="mj-dhikr-summary__list" aria-hidden="true">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <span key={i} className="mj-dhikr-summary__row-ph mj-home-start-ph__chip" />
-        ))}
-      </div>
-    </section>
   );
 }
 
@@ -229,25 +162,19 @@ export default function HomePage() {
       {brand}
 
       <SectionErrorBoundary name="PrayerSummary">
-        <Suspense fallback={<PrayerSkeleton />}>
-          <PrayerSummaryCard />
-        </Suspense>
+        <PrayerSummaryCard />
       </SectionErrorBoundary>
 
       <SectionErrorBoundary name="DhikrSummary">
-        <Suspense fallback={<DhikrSkeleton />}>
-          <DhikrSummaryCard />
-        </Suspense>
+        <DhikrSummaryCard />
       </SectionErrorBoundary>
 
-      <SectionErrorBoundary name="HomeUniversalSearch">
-        <HomeUniversalSearch inputId={HOME_SEARCH_INPUT_ID} variant="start" />
+      <SectionErrorBoundary name="HomeStartSearch">
+        <StartSearchCard />
       </SectionErrorBoundary>
 
       <SectionErrorBoundary name="HomeFeatured">
-        <Suspense fallback={<FeaturedSkeleton />}>
-          <HomeFeaturedSections />
-        </Suspense>
+        <HomeFeaturedSections />
       </SectionErrorBoundary>
 
       <SectionErrorBoundary name="HomeAuthStrip">

@@ -1,4 +1,3 @@
-import { BookOpen, Search, Settings } from "lucide-react";
 import { Link } from "wouter";
 
 type Props = {
@@ -7,6 +6,7 @@ type Props = {
   mushafLabel?: string;
 };
 
+/** هيدر خفيف بلا lucide — يقلّل TBT على الشاشة الأولى. */
 export function StartHeader({ searchInputId, mushafHref, mushafLabel = "المصحف" }: Props) {
   const focusSearch = () => {
     const el = document.getElementById(searchInputId);
@@ -18,16 +18,14 @@ export function StartHeader({ searchInputId, mushafHref, mushafLabel = "المص
   return (
     <header className="mj-start-header" dir="rtl">
       <Link href="/settings" className="mj-start-header__icon-btn" aria-label="الإعدادات">
-        <Settings size={20} strokeWidth={1.75} aria-hidden="true" />
+        ⚙
       </Link>
       <div className="mj-start-header__end">
         <button type="button" className="mj-start-header__pill" onClick={focusSearch}>
-          <Search size={17} aria-hidden="true" />
-          <span>بحث</span>
+          بحث
         </button>
         <Link href={mushafHref} className="mj-start-header__pill mj-start-header__pill--accent">
-          <BookOpen size={17} aria-hidden="true" />
-          <span>{mushafLabel}</span>
+          {mushafLabel}
         </Link>
       </div>
     </header>

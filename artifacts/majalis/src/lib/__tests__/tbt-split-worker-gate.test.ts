@@ -13,13 +13,13 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 const prefetch = read("src/lib/prefetch-top-routes.ts");
 assert.match(prefetch, /10_000/, "تسخين المسارات بعد load + 10ث");
 
-const homeSearch = read("src/components/home/HomeUniversalSearch.tsx");
+const homeSearch = read("src/components/home/start/StartSearchCard.tsx");
 assert.doesNotMatch(
   homeSearch,
   /import \{[^}]*runUniversalSearch[^}]*\} from ["']@\/features\/search\/universal-home-search["']/,
   "محرك البحث ليس استيراداً ساكناً في الرئيسية",
 );
-assert.match(homeSearch, /import\(\s*["']@\/features\/search\/universal-home-search["']\s*\)/, "المحرك عند الاستعلام فقط");
+assert.match(homeSearch, /\/search\?q=/, "البحث يوجّه لصفحة البحث");
 
 const unified = read("src/features/search/unified-local.ts");
 assert.match(unified, /search-index\.worker/, "فهرس البحث عبر Worker");

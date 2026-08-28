@@ -231,7 +231,9 @@ body {
 }
 
 .mj-home-lcp-ph__search .hus-field,
-.hus-field {
+.hus-field,
+.mj-start-search__field,
+.mj-start-search__input {
   min-height: 52px;
   box-sizing: border-box;
 }

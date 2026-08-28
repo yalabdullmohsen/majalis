@@ -1,17 +1,7 @@
-import { BookMarked, BookOpen, GraduationCap, RotateCw, Scale } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Link } from "wouter";
 import { IA_HOME_PRIMARY } from "@/lib/ia-final-structure";
 import { AppCard } from "@/components/home/start/AppCard";
 import { AppSectionHeader } from "@/components/home/start/AppSectionHeader";
-import { QuickAction } from "@/components/home/start/QuickAction";
-
-const ICONS: Record<string, LucideIcon> = {
-  "/quran-hub": BookOpen,
-  "/lessons": GraduationCap,
-  "/fiqh": Scale,
-  "/adhkar": RotateCw,
-  "/library": BookMarked,
-};
 
 /** أقسام بارزة — مشتقة من IA_HOME_PRIMARY مع استبدال «المزيد» بالمكتبة */
 export const HOME_START_FEATURED = [
@@ -25,12 +15,11 @@ export function HomeFeaturedSections() {
       <AppSectionHeader title="استكشف" />
       <div className="mj-home-featured__grid">
         {HOME_START_FEATURED.map((item) => (
-          <QuickAction
-            key={item.href}
-            href={item.href}
-            title={item.title.replace(" والدورات", "").replace(" والأحكام", "").replace(" اليومية", "")}
-            icon={ICONS[item.href] ?? BookOpen}
-          />
+          <Link key={item.href} href={item.href} className="mj-quick-action">
+            <span className="mj-quick-action__label">
+              {item.title.replace(" والدورات", "").replace(" والأحكام", "").replace(" اليومية", "")}
+            </span>
+          </Link>
         ))}
       </div>
     </AppCard>
