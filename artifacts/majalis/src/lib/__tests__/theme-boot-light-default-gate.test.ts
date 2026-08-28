@@ -18,7 +18,7 @@ const purge = read("src/lib/runtime-cache-purge.ts");
 const sw = read("public/sw.js");
 const vercel = read("vercel.json");
 
-assert.match(html, /v10-pwa-single-paint-2026-08/);
+assert.match(html, /v11-startup-stable-2026-08/);
 assert.match(html, /id="mj-version-boot"/);
 assert.match(html, /majlisilm-refreshing-version/);
 assert.match(html, /version\.json\?t=/);
@@ -27,6 +27,8 @@ assert.match(html, /classList\.add\("light"/);
 assert.match(html, /classList\.remove\("dark"/);
 assert.match(html, /storedTheme === "auto"/);
 assert.match(html, /resolved = "light"/);
+assert.match(html, /app-booting/);
+assert.match(html, /majalis-user-settings-v1/);
 assert.doesNotMatch(
   html,
   /media="\(prefers-color-scheme: dark\)"/,

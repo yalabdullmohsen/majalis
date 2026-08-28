@@ -90,6 +90,7 @@ self.addEventListener("activate", (event) => {
           k === "majalis-audio-v1" ||
           k.startsWith("majalis-offline-") ||
           k.startsWith("majalis-data-") ||
+          k.startsWith("majlisilm-startup-") ||
           (k.startsWith("majlisilm-v") && !k.startsWith(CACHE_PREFIX)),
       );
       const isUpdate =

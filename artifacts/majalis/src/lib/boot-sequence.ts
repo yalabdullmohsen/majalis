@@ -17,6 +17,7 @@ import {
   purgeStaleRuntimeCaches,
 } from "@/lib/runtime-cache-purge";
 import { readThemePreference, resolveTheme } from "@/lib/theme-preference";
+import { applyPreferences, readPreferences } from "@/lib/user-preferences";
 
 export type BootPhase =
   | "idle"
@@ -58,6 +59,7 @@ export function runBootSequenceBeforeMount(): void {
     root.setAttribute("dir", "rtl");
     root.lang = "ar";
     applyFontPreference(readFontPreference());
+    applyPreferences(readPreferences());
     // سخّن ذاكرة آخر صفحة مصحف فورًا (قراءة sync) — يمنع وميض الصفحة 1
     loadLastPageSync();
   } catch {
