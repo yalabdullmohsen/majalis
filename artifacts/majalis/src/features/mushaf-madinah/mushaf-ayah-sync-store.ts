@@ -45,6 +45,11 @@ export function useMushafAyahWordPlaying(verseKey: string): boolean {
   );
 }
 
+/** مفتاح الآية الجارية فقط — لطبقة التظليل دون props من الصفحة. */
+export function useMushafAyahPlayingKey(): string | null {
+  return useSyncExternalStore(subscribe, () => playingVerseKey, () => null);
+}
+
 export function resetMushafAyahSyncStoreForTests(): void {
   selectedVerseKey = null;
   playingVerseKey = null;

@@ -119,7 +119,8 @@
   justify-content: stretch;
   background: var(--mushaf-bg);
   color: var(--mm-ink);
-  touch-action: none;
+  touch-action: pan-x;
+  -ms-touch-action: pan-x;
   user-select: none;
   -webkit-user-select: none;
   /* safe-area مرة واحدة هنا فقط — عناصر absolute لا تعيد إضافة inset */
@@ -298,8 +299,14 @@ html.dark .mm-viewport,
   -webkit-overflow-scrolling: touch;
   touch-action: pan-x;
   direction: ltr;
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0) translateZ(0);
   backface-visibility: hidden;
+  will-change: scroll-position;
+}
+
+.mm-pager-scroller.is-panning {
+  scroll-snap-type: none;
+  cursor: grabbing;
 }
 
 .mm-pager-scroller::-webkit-scrollbar {

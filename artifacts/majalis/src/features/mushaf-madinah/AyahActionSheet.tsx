@@ -30,6 +30,7 @@ import {
 } from "@/lib/quran-data/tafsir-audio";
 import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
 import { parseVerseKey, type RecitationRange } from "./mushaf-page-for-ayah";
+import { useMushafAudioClock } from "./mushaf-audio-clock-store";
 
 const TafsirTabPanel = lazy(() =>
   import("./TafsirTabPanel").then((m) => ({ default: m.TafsirTabPanel })),
@@ -46,9 +47,6 @@ type Props = {
   audioStatus?: string | null;
   playerState: PlayerState;
   reciterId: string;
-  currentTime?: number;
-  duration?: number;
-  playbackRate?: number;
   onPlay: () => void;
   onTogglePlay: () => void;
   onPrevAyah?: () => void;
@@ -85,9 +83,6 @@ export const AyahActionSheet = memo(function AyahActionSheet({
   audioStatus = null,
   playerState,
   reciterId,
-  currentTime = 0,
-  duration = 0,
-  playbackRate = 1,
   onPlay,
   onTogglePlay,
   onPrevAyah,
@@ -104,6 +99,7 @@ export const AyahActionSheet = memo(function AyahActionSheet({
   onPlayReciter,
   onClose,
 }: Props) {
+  const { currentTime, duration, playbackRate } = useMushafAudioClock();
   const [height, setHeight] = useState<SheetHeight>("collapsed");
   const [tab, setTab] = useState<SheetTab>("tilawa");
   const [, setTafsirTabAvailable] = useState(false);

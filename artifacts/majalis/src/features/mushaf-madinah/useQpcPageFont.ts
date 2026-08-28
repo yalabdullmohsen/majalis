@@ -24,6 +24,20 @@ async function waitUntilReady(pageNumber: number): Promise<boolean> {
 
 function loadFace(pageNumber: number): Promise<boolean> {
   if (pageNumber < 1 || pageNumber > 604) return Promise.resolve(false);
+  if (typeof document !== "undefined") {
+    const href = `/fonts/qpc-v2/p${pageNumber}.woff2`;
+    const marker = `link[data-mushaf-font-preload="${pageNumber}"]`;
+    if (!document.querySelector(marker)) {
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "font";
+      link.type = "font/woff2";
+      link.crossOrigin = "anonymous";
+      link.href = href;
+      link.dataset.mushafFontPreload = String(pageNumber);
+      document.head.appendChild(link);
+    }
+  }
   if (loaded.has(pageNumber)) return waitUntilReady(pageNumber);
 
   const fontFamily = fontFamilyName(pageNumber);

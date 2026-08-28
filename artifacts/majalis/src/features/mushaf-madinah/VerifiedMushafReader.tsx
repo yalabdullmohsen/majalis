@@ -39,6 +39,8 @@ import { MushafControls } from "./MushafControls";
 import { MushafPage } from "./MushafPage";
 import { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
 import { MushafSettingsSheet, type MushafHideLevel, type MushafThemeChoice } from "./MushafSettingsSheet";
+import { setMushafAudioClock, useMushafAudioClock } from "./mushaf-audio-clock-store";
+import { setMushafAyahSyncKeys } from "./mushaf-ayah-sync-store";
 import {
   findMushafPageForAyah,
   parseVerseKey,
@@ -147,7 +149,6 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   const [audioDockMini, setAudioDockMini] = useState(false);
   const [audioError, setAudioError] = useState<string | null>(null);
   const [audioStatus, setAudioStatus] = useState<string | null>(null);
-  const [audioTime, setAudioTime] = useState({ currentTime: 0, duration: 0, playbackRate: 1 });
   const [themeChoice, setThemeChoice] = useState<MushafThemeChoice>(() => loadThemeChoice());
   const theme = resolveTheme(themeChoice);
   const [hideLevel, setHideLevel] = useState<MushafHideLevel>(() => loadHideLevel());
@@ -321,6 +322,10 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   }, []);
 
   useEffect(() => {
+    setMushafAyahSyncKeys(selectedVerseKey, playingVerseKey);
+  }, [selectedVerseKey, playingVerseKey]);
+
+  useEffect(() => {
     audio.setReciter(loadReciterId());
     const syncPageIfAllowed = (surah: number, ayah: number) => {
       if (suppressPageSyncRef.current) return;
@@ -329,9 +334,10 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       if (targetPage !== pageRef.current) onPageChangeRef.current(targetPage);
     };
     const unSnap = audio.onSnapshot((snap) => {
-      setPlayerState(snap.playerState);
-      setReciterId(snap.reciterId);
-      setAudioTime({
+      setPlayerState((prev) => (prev === snap.playerState ? prev : snap.playerState));
+      setReciterId((prev) => (prev === snap.reciterId ? prev : snap.reciterId));
+      /* ساعة الصوت خارج شجرة الصفحة — لا تعيد رسم المصحف كل ~200ms */
+      setMushafAudioClock({
         currentTime: snap.currentTime,
         duration: snap.duration,
         playbackRate: snap.playbackRate,
@@ -720,6 +726,15 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     return () => shell.removeEventListener("scroll", onScroll);
   }, [actionsOpen, closeActions]);
 
+  const onToggleReveal = useCallback((verseKey: string) => {
+    setRevealedVerses((prev) => {
+      if (prev.has(verseKey)) return prev;
+      const next = new Set(prev);
+      next.add(verseKey);
+      return next;
+    });
+  }, []);
+
   const verseLabel = useMemo(() => {
     const key = playingVerseKey ?? selectedVerseKey;
     if (!key) return "التلاوة";
@@ -730,31 +745,6 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
 
   const mediaPlaying =
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
-  useMediaSession(
-    playingVerseKey || playerState === "paused" || mediaPlaying
-      ? {
-          title: verseLabel,
-          artist: getReciter(reciterId).nameAr,
-          album: "تلاوة القرآن — المجلس العلمي",
-          playing: mediaPlaying,
-          position: audioTime.currentTime,
-          duration: audioTime.duration,
-          playbackRate: audioTime.playbackRate,
-          onPlay: () => void togglePlay(),
-          onPause: () => audio.pause(),
-          onStop: () => audio.stop(),
-          onNext: () => {
-            suppressPageSyncRef.current = false;
-            void audio.skipNext();
-          },
-          onPrevious: () => {
-            suppressPageSyncRef.current = false;
-            void audio.skipPrev();
-          },
-        }
-      : null,
-  );
-
   const edgesDisabled = actionsOpen || tafsirOpen || searchOpen || indexOpen;
   const lowEndText = isLowEndTextProfile();
   const audioDockVisible =
@@ -832,25 +822,33 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
               layout={layout}
               fontFamily={fontFamily}
               displayPageNumber={page}
-              selectedVerseKey={selectedVerseKey}
-              playingVerseKey={playingVerseKey}
               onSelectVerse={onSelectVerse}
               onLongPressVerse={onLongPressVerse}
               hideLevel={hideLevel}
               revealedVerses={revealedVerses}
-              onToggleReveal={(verseKey) => {
-                setRevealedVerses((prev) => {
-                  if (prev.has(verseKey)) return prev;
-                  const next = new Set(prev);
-                  next.add(verseKey);
-                  return next;
-                });
-              }}
+              onToggleReveal={onToggleReveal}
             />
           ) : null}
         </div>
       }
     >
+      <MushafMediaSessionBridge
+        active={Boolean(playingVerseKey || playerState === "paused" || mediaPlaying)}
+        title={verseLabel}
+        artist={getReciter(reciterId).nameAr}
+        playing={mediaPlaying}
+        onPlay={() => void togglePlay()}
+        onPause={() => audio.pause()}
+        onStop={() => audio.stop()}
+        onNext={() => {
+          suppressPageSyncRef.current = false;
+          void audio.skipNext();
+        }}
+        onPrevious={() => {
+          suppressPageSyncRef.current = false;
+          void audio.skipPrev();
+        }}
+      />
 
       <Suspense fallback={null}>
         <MushafAudioDock
@@ -860,8 +858,6 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           reciterId={reciterId}
           audioError={audioError}
           audioStatus={audioStatus}
-          currentTime={audioTime.currentTime}
-          duration={audioTime.duration}
           mini={audioDockMini}
           onMiniChange={setAudioDockMini}
           onTogglePlay={() => void togglePlay()}
@@ -935,9 +931,6 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           audioStatus={audioStatus}
           playerState={playerState}
           reciterId={reciterId}
-          currentTime={audioTime.currentTime}
-          duration={audioTime.duration}
-          playbackRate={audioTime.playbackRate}
           onPlay={() => void playSelected()}
           onTogglePlay={() => void togglePlay()}
           onPrevAyah={() => {
@@ -1057,6 +1050,50 @@ function PrefetchedMushafPage({
       )}
     </div>
   );
+}
+
+/** Media Session يقرأ ساعة الصوت دون إعادة رسم صفحة المصحف. */
+function MushafMediaSessionBridge({
+  active,
+  title,
+  artist,
+  playing,
+  onPlay,
+  onPause,
+  onStop,
+  onNext,
+  onPrevious,
+}: {
+  active: boolean;
+  title: string;
+  artist: string;
+  playing: boolean;
+  onPlay: () => void;
+  onPause: () => void;
+  onStop: () => void;
+  onNext: () => void;
+  onPrevious: () => void;
+}) {
+  const clock = useMushafAudioClock();
+  useMediaSession(
+    active
+      ? {
+          title,
+          artist,
+          album: "تلاوة القرآن — المجلس العلمي",
+          playing,
+          position: clock.currentTime,
+          duration: clock.duration,
+          playbackRate: clock.playbackRate,
+          onPlay,
+          onPause,
+          onStop,
+          onNext,
+          onPrevious,
+        }
+      : null,
+  );
+  return null;
 }
 
 /** توافق المسار والبوابات */

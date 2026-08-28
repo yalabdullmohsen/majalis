@@ -1,8 +1,11 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useMemo, useRef, useState } from "react";
 import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
 import { MushafAyahHighlight } from "./MushafAyahHighlight";
 import { MushafAyahLine } from "./MushafAyahLine";
-import { setMushafAyahSyncKeys } from "./mushaf-ayah-sync-store";
+import {
+  useMushafAyahWordPlaying,
+  useMushafAyahWordSelected,
+} from "./mushaf-ayah-sync-store";
 import { MushafBasmala } from "./MushafBasmala";
 import { MushafPageFooter } from "./MushafPageFooter";
 import { MushafPageHeader } from "./MushafPageHeader";
@@ -15,8 +18,6 @@ type Props = {
   fontFamily: string;
   /** رقم العرض الفوري عند التقليب — لا ينتظر اكتمال تخطيط النص. */
   displayPageNumber?: number;
-  selectedVerseKey?: string | null;
-  playingVerseKey?: string | null;
   onSelectVerse?: (verseKey: string) => void;
   onLongPressVerse?: (verseKey: string) => void;
   hideLevel?: MushafHideLevel;
@@ -24,13 +25,25 @@ type Props = {
   onToggleReveal?: (verseKey: string) => void;
 };
 
+const FatihaBasmala = memo(function FatihaBasmala({
+  words,
+  onSelect,
+}: {
+  words: QpcWord[];
+  onSelect?: () => void;
+}) {
+  const selected = useMushafAyahWordSelected("1:1");
+  const playing = useMushafAyahWordPlaying("1:1");
+  return (
+    <MushafBasmala words={words} numbered selected={selected} playing={playing} onSelect={onSelect} />
+  );
+});
+
 /** صفحة مصحف واحدة — شبكة ١٥ خانة من بيانات QPC. */
 export const MushafPage = memo(function MushafPage({
   layout,
   fontFamily,
   displayPageNumber,
-  selectedVerseKey = null,
-  playingVerseKey = null,
   onSelectVerse,
   onLongPressVerse,
   hideLevel = 0,
@@ -48,15 +61,19 @@ export const MushafPage = memo(function MushafPage({
       : surahStart
         ? "surah-start"
         : "normal";
-  const slots = buildSlots(layout);
+  const slots = useMemo(() => buildSlots(layout), [layout]);
+  const slotOrder = useMemo(
+    () => (isFlexBody ? filledSlots(slots) : Array.from({ length: 15 }, (_, i) => i + 1)),
+    [isFlexBody, slots],
+  );
   const pageRef = useRef<HTMLElement | null>(null);
   const [pageEl, setPageEl] = useState<HTMLElement | null>(null);
-  useMushafPageFontFit(pageRef, true, layout.pageNumber, fontFamily, null);
+  useMushafPageFontFit(pageRef, true, layout.pageNumber, fontFamily);
   const footerPage = displayPageNumber ?? layout.pageNumber;
-
-  useEffect(() => {
-    setMushafAyahSyncKeys(selectedVerseKey ?? null, playingVerseKey ?? null);
-  }, [selectedVerseKey, playingVerseKey]);
+  const onSelectFatiha = useMemo(
+    () => (onSelectVerse ? () => onSelectVerse("1:1") : undefined),
+    [onSelectVerse],
+  );
 
   return (
     <article
@@ -73,17 +90,13 @@ export const MushafPage = memo(function MushafPage({
       style={{ ["--mm-qpc-family" as string]: fontFamily }}
       aria-label={`صفحة المصحف ${footerPage}`}
     >
-      <MushafAyahHighlight
-        container={pageEl}
-        verseKey={selectedVerseKey}
-        playingKey={playingVerseKey}
-      />
+      <MushafAyahHighlight container={pageEl} />
       <MushafPageHeader juzNumber={layout.juzNumber} surahName={layout.headerSurahName} />
       <div
         className={`mm-page__body${isOpeningP1 ? " mm-page__body--opening" : ""}${isFlexBody ? " mm-page__body--flex" : ""}`}
         data-testid="mushaf-page-frame"
       >
-        {(isFlexBody ? filledSlots(slots) : Array.from({ length: 15 }, (_, i) => i + 1)).map((slot) => {
+        {slotOrder.map((slot) => {
           const cell = slots.get(slot);
           return (
             <div key={slot} className="mm-slot" data-slot={slot} data-kind={cell?.kind ?? "empty"}>
@@ -95,13 +108,7 @@ export const MushafPage = memo(function MushafPage({
               {cell?.kind === "basmala" ? <MushafBasmala /> : null}
               {cell?.kind === "line" ? (
                 cell.words.length > 0 && cell.words.every((w) => w.verseKey === "1:1") ? (
-                  <MushafBasmala
-                    words={cell.words}
-                    numbered
-                    selected={selectedVerseKey === "1:1"}
-                    playing={playingVerseKey === "1:1"}
-                    onSelect={onSelectVerse ? () => onSelectVerse("1:1") : undefined}
-                  />
+                  <FatihaBasmala words={cell.words} onSelect={onSelectFatiha} />
                 ) : (
                   <MushafAyahLine
                     words={cell.words}

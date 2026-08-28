@@ -1,11 +1,10 @@
 import { memo, useLayoutEffect, useRef, useState } from "react";
 import { shouldThrottleUiRender } from "@/lib/power-saver-engine";
 import { clearTextMeasureCache, getCachedTextBands, type TextBand } from "@/lib/text-layout-geometry";
+import { useMushafAyahPlayingKey } from "./mushaf-ayah-sync-store";
 
 type Props = {
   container: HTMLElement | null;
-  verseKey: string | null;
-  playingKey?: string | null;
 };
 
 const LINE_TOL_PX = 6;
@@ -56,13 +55,10 @@ function collectBands(root: HTMLElement, verseKey: string): TextBand[] {
 
 /**
  * طبقة تظليل للتلاوة الجارية فقط (getClientRects).
- * تحديد الآية يعتمد على class is-selected على الكلمات — لا مستطيلات فارغة.
+ * تحديد الآية يعتمد على class على الكلمات عبر sync-store — بلا إعادة رسم الصفحة.
  */
-export const MushafAyahHighlight = memo(function MushafAyahHighlight({
-  container,
-  verseKey: _verseKey,
-  playingKey = null,
-}: Props) {
+export const MushafAyahHighlight = memo(function MushafAyahHighlight({ container }: Props) {
+  const playingKey = useMushafAyahPlayingKey();
   const [playing, setPlaying] = useState<TextBand[]>([]);
   const rafRef = useRef<number | null>(null);
 

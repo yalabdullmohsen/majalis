@@ -219,7 +219,6 @@ export function useMushafPageFontFit(
   ready: boolean,
   pageNumber: number,
   fontFamily: string,
-  _selectedVerseKey: string | null = null,
 ): void {
   useLayoutEffect(() => {
     if (!ready) return;
@@ -258,7 +257,10 @@ export function useMushafPageFontFit(
         markFit(node, false);
         return;
       }
-      const geom = `${width}x${height}`;
+      /* الصفحات العادية: العرض فقط — فتح الشيت/الرصيف لا يعيد قياس الخط.
+         صفحتا الافتتاح تعتمد على الارتفاع لهندسة خاصة. */
+      const opening = isMushafOpeningPage(pageNumber);
+      const geom = opening ? `${width}x${height}` : `w${width}`;
       if (!force && geom === lastGeom) return;
       lastGeom = geom;
       const family = normalizeMushafFontFamily(fontFamily);
