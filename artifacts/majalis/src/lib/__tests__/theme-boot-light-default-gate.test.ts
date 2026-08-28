@@ -18,7 +18,7 @@ const purge = read("src/lib/runtime-cache-purge.ts");
 const sw = read("public/sw.js");
 const vercel = read("vercel.json");
 
-assert.match(html, /v11-startup-stable-2026-08/);
+assert.match(html, /v12-startup-gate-2026-08/);
 assert.match(html, /id="mj-version-boot"/);
 assert.match(html, /majlisilm-refreshing-version/);
 assert.match(html, /version\.json\?t=/);

@@ -1,5 +1,5 @@
 /**
- * بوابة الإقلاع: دخولية MajlisSplash موحّدة — ويب + أصلي.
+ * بوابة الإقلاع: Startup Gate تقنية موحّدة — ويب + أصلي.
  * تشغيل: node --import tsx src/lib/__tests__/launch-splash-unified.test.ts
  */
 import assert from "node:assert/strict";
@@ -12,20 +12,24 @@ const root = resolve(__dirname, "../../..");
 const BG = "#F2F4F3";
 
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
-assert.match(indexHtml, /id="mj-launch-splash"/, "دخولية MajlisSplash في HTML الحرج");
-assert.match(indexHtml, /mj-launch-splash__(wordmark|title)/, "عنوان الدخولية");
-assert.match(indexHtml, /mj-launch-splash__tagline/, "عبارة الدخولية");
-assert.match(indexHtml, /علم نافع، وعمل صالح/);
+assert.match(indexHtml, /id="mj-(launch-splash|startup-gate)"/, "Startup Gate في HTML الحرج");
+assert.match(indexHtml, /mj-startup-gate__mark|splash-logo\.webp/, "شعار صغير فقط");
+assert.doesNotMatch(indexHtml, /mj-launch-splash__tagline/, "بلا عبارة تسويقية في البوابة");
+assert.doesNotMatch(indexHtml, /علم نافع، وعمل صالح/, "بلا شعار تسويقي في HTML الإقلاع");
+assert.doesNotMatch(indexHtml, /mj-launch-splash__ornament/, "بلا زخرفة تسويقية");
 assert.doesNotMatch(indexHtml, /id="mj-silent-splash"/, "لا دخولية صامتة قديمة");
 assert.doesNotMatch(indexHtml, /id="mj-boot-splash"/, "لا طبقة boot قديمة");
 assert.doesNotMatch(indexHtml, /#0E1A15/, "لا خلفية خضراء داكنة قديمة في الإقلاع");
 assert.match(indexHtml, /prefers-reduced-motion:\s*reduce/, "مسار بلا حركة");
-assert.match(indexHtml, /__mjDismissSplash/, "دالة dismiss للدخولية");
-assert.match(indexHtml, /MIN_MS\s*=\s*120/, "حد أدنى 120ms");
-assert.match(indexHtml, /SOFT_MAX_MS\s*=\s*420/, "هدف LCP ليّن 420ms");
-assert.match(indexHtml, /MAX_MS\s*=\s*1400/, "سقف صلب لخطوط الواجهة");
-assert.match(indexHtml, /splash_timing=1/, "معامل قياس توقيت الدخولية");
+assert.match(indexHtml, /__mjDismissSplash/, "دالة dismiss للبوابة");
+assert.match(indexHtml, /MIN_MS\s*=\s*500/, "حد أدنى 500ms");
+assert.match(indexHtml, /MAX_MS\s*=\s*1500/, "سقف 1500ms");
+assert.match(indexHtml, /EXIT_MS\s*=\s*120/, "تلاشي ≤120ms");
+assert.match(indexHtml, /app-booting[\s\S]*#root[\s\S]*visibility:\s*hidden/, "إخفاء التطبيق أثناء الإقلاع");
+assert.match(indexHtml, /app-ready/, "كشف الواجهة بـ app-ready");
+assert.match(indexHtml, /splash_timing=1/, "معامل قياس توقيت البوابة");
 assert.match(indexHtml, /127\.0\.0\.1/, "مسار سريع لمعاينة CI المحلية");
+assert.doesNotMatch(indexHtml, /sessionStorage\.getItem\(KEY\)/, "لا تخطٍّ بالجلسة — كل فتح مستند");
 assert.doesNotMatch(indexHtml, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل الشاشة");
 {
   const crit = indexHtml.match(/<style id="mj-lcp-critical">([\s\S]*?)<\/style>/)?.[1] ?? "";
@@ -59,16 +63,16 @@ assert.doesNotMatch(
 );
 
 const majlisSplash = readFileSync(resolve(root, "src/lib/majlis-splash.ts"), "utf8");
-assert.match(majlisSplash, /SPLASH_MIN_VISIBLE_MS\s*=\s*120/);
-assert.match(majlisSplash, /SPLASH_LCP_SOFT_MS\s*=\s*420/);
-assert.match(majlisSplash, /SPLASH_MAX_VISIBLE_MS\s*=\s*1_?400|SPLASH_MAX_VISIBLE_MS\s*=\s*1400/);
+assert.match(majlisSplash, /SPLASH_MIN_VISIBLE_MS\s*=\s*500/);
+assert.match(majlisSplash, /SPLASH_MAX_VISIBLE_MS\s*=\s*1_?500|SPLASH_MAX_VISIBLE_MS\s*=\s*1500/);
+assert.match(majlisSplash, /SPLASH_FADE_OUT_MS\s*=\s*120/);
 
 const mainSrc = readFileSync(resolve(root, "src/main.tsx"), "utf8");
 assert.match(mainSrc, /mj:app-painted/, "main يعلن أول رسم");
 assert.match(mainSrc, /armNativeSplashController/);
-assert.doesNotMatch(mainSrc, /__mjDismissSplash\?\.\(true\)/, "لا إزالة فورية للدخولية");
+assert.doesNotMatch(mainSrc, /__mjDismissSplash\?\.\(true\)/, "لا إزالة فورية للبوابة");
 
-assert.ok(existsSync(resolve(root, "src/components/MajlisSplash.tsx")), "مكوّن MajlisSplash");
+assert.ok(existsSync(resolve(root, "src/components/MajlisSplash.tsx")), "مكوّن MajlisSplash للتوافق");
 
 const launch = readFileSync(
   resolve(root, "ios/App/App/Base.lproj/LaunchScreen.storyboard"),
@@ -129,8 +133,11 @@ assert.doesNotMatch(appSrc, /MajlisLaunchScreen|isLaunching|MajalisLaunchScreen/
 assert.doesNotMatch(
   appSrc,
   /WelcomeScreen|IntroScreen|BrandReveal|AppFirstRunHost|FirstRunSetup|AppFirstLaunchScreen|AppFeatureTourGate|AppStartGate/,
-  "لا بوابة ترحيب أو شاشة بدء",
+  "لا بوابة ترحيب React تسويقية",
 );
+
+const introCfg = readFileSync(resolve(root, "src/config/first-visit-intro.ts"), "utf8");
+assert.match(introCfg, /enabled:\s*false/, "تعطيل صفحة التعريف التسويقية");
 
 const manifest = JSON.parse(readFileSync(resolve(root, "public/manifest.json"), "utf8"));
 assert.equal(manifest.background_color, BG);
@@ -140,6 +147,5 @@ const brand = readFileSync(resolve(root, "src/components/brand/MajlisWordmark.ts
 assert.match(brand, /MAJLIS_WORDMARK_PATH/);
 const majlisMark = readFileSync(resolve(root, "src/components/MajlisSplash.tsx"), "utf8");
 assert.match(majlisMark, /MajlisSplashWordmark/);
-assert.match(majlisMark, /SPLASH_TAGLINE/);
 
 console.log("launch-splash-unified.test.ts: ok");

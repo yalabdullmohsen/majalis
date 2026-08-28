@@ -39,8 +39,8 @@ beforeEach(() => {
   resetFirstVisitIntroStateForTests();
 });
 
-test("أول زيارة على الرئيسية تعرض التعريف", () => {
-  assert.equal(shouldShowFirstVisitIntro("/"), true);
+test("التعريف معطّل عبر الإعداد — لا يظهر عند الإقلاع", () => {
+  assert.equal(shouldShowFirstVisitIntro("/"), false);
 });
 
 test("مسار غير الرئيسية لا يعرض التعريف", () => {
@@ -62,7 +62,7 @@ test("ترحيل المفاتيح القديمة قبل المسح", () => {
   assert.equal(shouldShowFirstVisitIntro("/"), false);
 });
 
-test("ترحيل ترحيب الرئيسية القديم", () => {
+test("ترحيل ترحيب الرئيسية السابقة", () => {
   lsStore.set("majlis-home-welcomed-v1", "1");
   migrateLegacyFirstVisitIntroKeys();
   assert.equal(hasSeenFirstVisitIntroSync(), true);

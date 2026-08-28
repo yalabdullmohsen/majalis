@@ -57,12 +57,13 @@ console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");
   assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/, "لا Google Fonts في الإقلاع");
   assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/amiri-400-ar\.woff2/, "preload خط الواجهة Amiri");
   assert.doesNotMatch(html, /rel="preload"[^>]+noto-naskh-400/, "لا preload Noto عند الإقلاع");
-  assert.match(html, /id="mj-launch-splash"/, "دخولية MajlisSplash في HTML الحرج");
+  assert.match(html, /id="mj-(launch-splash|startup-gate)"/, "Startup Gate في HTML الحرج");
   assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل");
-  assert.match(html, /mj-launch-splash__(wordmark|title)/, "عنوان الدخولية");
+  assert.match(html, /mj-startup-gate__mark|splash-logo\.webp/, "شعار البوابة فقط");
+  assert.doesNotMatch(html, /mj-launch-splash__tagline/, "بلا عبارة تسويقية");
   assert.match(
     html,
-    /v6-direct-boot-2026-08|v7-boot-fouc-2026-08|v9-theme-light-default-2026-08|v10-pwa-single-paint-2026-08|v11-startup-stable-2026-08/,
+    /v6-direct-boot-2026-08|v7-boot-fouc-2026-08|v9-theme-light-default-2026-08|v10-pwa-single-paint-2026-08|v11-startup-stable-2026-08|v12-startup-gate-2026-08/,
     "ترحيل ثيم يمنع وميض التصميم القديم",
   );
 }

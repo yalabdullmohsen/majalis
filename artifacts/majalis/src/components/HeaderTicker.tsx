@@ -148,8 +148,8 @@ function useTransientPause() {
 function waitUntilBootSettled(): Promise<void> {
   return new Promise((resolve) => {
     const tryReady = () => {
-      const booting = document.documentElement.classList.contains("app-booting");
-      if (!booting) {
+      const root = document.documentElement;
+      if (root.classList.contains("app-ready") || !root.classList.contains("app-booting")) {
         resolve();
         return;
       }
