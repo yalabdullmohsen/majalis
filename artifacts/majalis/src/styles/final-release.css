@@ -107,7 +107,8 @@ html.dark .app-shell {
 .app-main:has(.quran-people-page),
 .app-main:has(.seerah-hero),
 .app-main:has(.twh-hub-hero),
-.app-main:has(.fqh-hub-hero){padding-inline:0}
+.app-main:has(.fqh-hub-hero),
+.app-main:has(.pts-screen){padding-inline:0}
 
 /* غلاف مع PageHero ممتد: عرض كامل · حشو للنسل غير البطل */
 .page-shell:has(.page-hero-mj--bleed){max-width:none;width:100%;padding-inline:0}
