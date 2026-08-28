@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>تعذّر التحميل — المجلس العلمي</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        background: #f2f4f3;
+        color: #14241c;
+        font-family: "Noto Naskh Arabic", system-ui, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: max(1.5rem, env(safe-area-inset-top)) 1.5rem
+          max(1.5rem, env(safe-area-inset-bottom));
+        box-sizing: border-box;
+      }
+      main {
+        max-width: 22rem;
+        text-align: center;
+      }
+      h1 {
+        margin: 0 0 0.75rem;
+        font-size: 1.35rem;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+      p {
+        margin: 0 0 1.25rem;
+        font-size: 0.95rem;
+        line-height: 1.65;
+        color: #4a6b5f;
+      }
+      button {
+        appearance: none;
+        border: 0;
+        border-radius: 999px;
+        padding: 0.75rem 1.5rem;
+        font: inherit;
+        font-size: 1rem;
+        cursor: pointer;
+        background: #1f7a5a;
+        color: #fff;
+      }
+      button:active {
+        opacity: 0.92;
+      }
+      @media (prefers-color-scheme: dark) {
+        html,
+        body {
+          background: #101614;
+          color: #e8efea;
+        }
+        p {
+          color: #9bb5a8;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>تعذّر تحميل المحتوى</h1>
+      <p>تحقق من الاتصال بالإنترنت ثم حاول مرة أخرى.</p>
+      <button type="button" id="retry">إعادة المحاولة</button>
+    </main>
+    <script>
+      document.getElementById("retry").addEventListener("click", function () {
+        location.replace("https://majlisilm.com/");
+      });
+    </script>
+  </body>
+</html>

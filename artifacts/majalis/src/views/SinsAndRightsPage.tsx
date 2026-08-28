@@ -407,7 +407,7 @@ function MindMap() {
                       title="قيد الإعداد والمراجعة"
                     >
                       <span>{child.label}</span>
-                      <span className="snr-badge snr-badge--pending" style={{ fontSize: "0.65rem" }}>قريباً</span>
+                      <span className="snr-badge snr-badge--pending" style={{ fontSize: "0.65rem" }}>غير منشور</span>
                     </div>
                   )
                 )}

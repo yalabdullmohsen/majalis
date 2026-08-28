@@ -396,7 +396,7 @@ export default function NotificationSettingsPage() {
       {isGranted && (
         <div className="notif-card">
           <button type="button" className="notif-test-btn" onClick={() => void handleTestTrigger()}>
-            إرسال إشعار تجريبي
+            إرسال إشعار اختباري
           </button>
           {testStatus && <p className="notif-row__sub" style={{ marginTop: "0.5rem" }}>{testStatus}</p>}
         </div>

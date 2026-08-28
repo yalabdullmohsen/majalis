@@ -12,9 +12,9 @@ export default function KidsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/kids",
-      title: "ركن الأطفال (قريبًا) | المجلس العلمي",
-      description: "ركن الأطفال في المجلس العلمي قيد التجهيز — محتوى تعليمي ميسّر وآمن قريبًا.",
-      keywords: ["الأطفال", "تعليم الأطفال", "قريبًا"],
+      title: "ركن الأطفال | المجلس العلمي",
+      description: "ركن الأطفال في المجلس العلمي — محتوى تعليمي ميسّر وآمن للصغار.",
+      keywords: ["الأطفال", "تعليم الأطفال"],
       robots: "noindex, follow",
     });
   }, []);
@@ -22,7 +22,7 @@ export default function KidsPage() {
   return (
     <div className="kids-hub-page kids-hub-page--soon" dir="rtl">
       <section className="kids-hub-intro kids-hub-soon" aria-labelledby="kids-soon-title">
-        <span className="kids-hub-soon__badge">قريبًا</span>
+        <span className="kids-hub-soon__badge">تحت الإعداد</span>
         <Baby size={36} className="kids-hub-intro__icon" aria-hidden="true" />
         <h1 id="kids-soon-title" className="kids-hub-intro__title">ركن الأطفال</h1>
         <p className="kids-hub-intro__sub">
