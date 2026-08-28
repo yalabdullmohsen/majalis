@@ -4,6 +4,7 @@ import { ChevronDown, ChevronUp, Pause, Play, SkipBack, SkipForward, X } from "l
 import type { PlayerState } from "@/core/audio/AudioEngine";
 import { DEFAULT_VERIFIED_RECITER_IDS } from "@/lib/audio-registry";
 import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
+import { useMushafAudioClock } from "./mushaf-audio-clock-store";
 
 /** @deprecated استخدم useVerifiedReciters — يُبقى للاختبارات والتوافق */
 export const MUSHAF_RECITER_IDS = DEFAULT_VERIFIED_RECITER_IDS;
@@ -15,8 +16,6 @@ type Props = {
   reciterId: string;
   audioError?: string | null;
   audioStatus?: string | null;
-  currentTime?: number;
-  duration?: number;
   mini?: boolean;
   onMiniChange?: (mini: boolean) => void;
   onTogglePlay: () => void;
@@ -33,8 +32,6 @@ export function MushafAudioDock({
   reciterId,
   audioError = null,
   audioStatus = null,
-  currentTime = 0,
-  duration = 0,
   mini = false,
   onMiniChange,
   onTogglePlay,
@@ -42,6 +39,7 @@ export function MushafAudioDock({
   onNext,
   onReciterChange,
 }: Props) {
+  const { currentTime, duration } = useMushafAudioClock();
   const [readersOpen, setReadersOpen] = useState(false);
   const [readerQuery, setReaderQuery] = useState("");
   const playing = playerState === "playing" || playerState === "buffering" || playerState === "loading";
