@@ -57,13 +57,27 @@ assert.match(typesSrc, /madinah-full.*makkah-full/); // ترحيل قديم فق
 assert.match(typesSrc, /الأذان الكامل/);
 assert.match(typesSrc, /تنبيه مختصر/);
 
-assert.match(alerts, /تفعيل إشعارات الصلاة/);
+assert.match(alerts, /تفعيل تنبيهات الصلاة/);
 assert.match(alerts, /تنبيه قبل الصلاة/);
-assert.match(alerts, /مدة التنبيه قبل الصلاة/);
-assert.match(alerts, /تنبيه دخول الوقت/);
+assert.match(alerts, /مدة التنبيه السابق/);
+assert.match(alerts, /تفعيل الأذان عند دخول الوقت/);
 assert.match(alerts, /اهتزاز مع التنبيه/);
 assert.match(alerts, /vibrateEnabled/);
 assert.match(alerts, /haptics\.selection/);
+assert.match(alerts, /5 \/ 10 \/ 15 \/ 30/);
+assert.match(alerts, /مفعّل|يحتاج تفعيل|محجوب/);
+
+const scheduler = readFileSync(resolve(appRoot, "src/lib/prayer-alert-scheduler.ts"), "utf8");
+assert.match(scheduler, /iosFullHandlesEnter/);
+assert.match(scheduler, /\[adhan\/debug\] pending after reschedule/);
+
+const localNotif = readFileSync(resolve(appRoot, "src/lib/prayer-local-notifications.ts"), "utf8");
+assert.match(localNotif, /cancelAdhanIosSegmentChain/);
+assert.match(localNotif, /adhanSegment/);
+
+const adhanSched = readFileSync(resolve(appRoot, "src/lib/adhan-scheduler.ts"), "utf8");
+assert.match(adhanSched, /visibilityState === "visible"/);
+assert.match(adhanSched, /cancelAdhanIosSegmentChain/);
 
 const forbiddenCopy = [
   "تجاوز التركيز",
