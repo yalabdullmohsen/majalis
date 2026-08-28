@@ -10,9 +10,7 @@
   --mj-start-gold: #b69245;
   --mj-start-radius: 24px;
   --mj-start-gap: clamp(0.75rem, 2.8vw, 1rem);
-  --mj-start-pad: clamp(0.85rem, 3.5vw, 1.25rem);
   color: var(--mj-start-ink);
-  padding-inline: var(--mj-start-pad);
   padding-block: calc(var(--inset-top, 0px) + 0.35rem) calc(var(--bottom-nav-h, 3.25rem) + 1rem);
   display: flex;
   flex-direction: column;
@@ -241,7 +239,7 @@
 }
 
 .mj-dhikr-summary {
-  min-height: 8.5rem;
+  min-height: 10rem;
 }
 
 .mj-dhikr-summary__list {
@@ -305,7 +303,7 @@
 }
 
 .mj-home-featured {
-  min-height: 9.5rem;
+  min-height: 11rem;
 }
 
 .mj-home-featured__grid {

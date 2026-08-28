@@ -123,9 +123,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: clamp(0.75rem, 2.8vw, 1rem);
-  padding-inline: clamp(0.85rem, 3.5vw, 1.25rem);
   max-width: 32rem;
   margin-inline: auto;
+  box-sizing: border-box;
 }
 
 .mj-start-header {
@@ -150,17 +150,64 @@ body {
 }
 
 .mj-dhikr-summary {
-  min-height: 8.5rem;
+  min-height: 10rem;
   box-sizing: border-box;
 }
 
 .mj-home-featured {
-  min-height: 9.5rem;
+  min-height: 11rem;
+  box-sizing: border-box;
+}
+
+.mj-home-auth,
+.mj-home-auth--ph {
+  min-height: 5.5rem;
   box-sizing: border-box;
 }
 
 .mj-app-card {
   border-radius: 24px;
+  box-sizing: border-box;
+  padding: 1rem 1.05rem;
+}
+
+.mj-app-section-header {
+  min-height: 1.55rem;
+  margin-bottom: 0.65rem;
+  box-sizing: border-box;
+}
+
+.mj-home-start__logo-wrap {
+  width: 4.5rem;
+  height: 4.5rem;
+  box-sizing: border-box;
+}
+
+.mj-dhikr-summary__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-height: 8.2rem;
+  box-sizing: border-box;
+}
+
+.mj-dhikr-summary__row,
+.mj-dhikr-summary__row-ph {
+  min-height: 2.55rem;
+  box-sizing: border-box;
+}
+
+.mj-home-featured__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  min-height: 9.2rem;
+  box-sizing: border-box;
+}
+
+.mj-quick-action,
+.mj-home-start-ph__action {
+  min-height: 3rem;
   box-sizing: border-box;
 }
 

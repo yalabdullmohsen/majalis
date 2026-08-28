@@ -176,7 +176,7 @@ export default function HomePage() {
       </SectionErrorBoundary>
 
       <SectionErrorBoundary name="HomeAuthStrip">
-        <Suspense fallback={null}>
+        <Suspense fallback={<section className="mj-app-card mj-home-auth mj-home-auth--ph" aria-hidden="true" />}>
           <HomeAuthStrip />
         </Suspense>
       </SectionErrorBoundary>

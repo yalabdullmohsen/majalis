@@ -32,7 +32,6 @@ import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
-import "@/styles/components/home/home-start.css";
 import {
   markFirstVisitIntroSeen,
   shouldShowFirstVisitIntro,
@@ -719,8 +718,15 @@ function HomeInitialShell() {
         </div>
       </section>
 
-      <section className="mj-app-card mj-dhikr-summary" aria-hidden="true">
-        <span className="mj-home-start-ph__line mj-home-start-ph__line--md" />
+      <section className="mj-app-card mj-dhikr-summary mj-dhikr-summary--ph" aria-label="الأذكار" aria-busy="true">
+        <div className="mj-app-section-header">
+          <h2 className="mj-app-section-header__title">الأذكار</h2>
+        </div>
+        <div className="mj-dhikr-summary__list" aria-hidden="true">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <span key={i} className="mj-dhikr-summary__row-ph mj-home-start-ph__chip" />
+          ))}
+        </div>
       </section>
 
       <div className="hus hus--start mj-home-lcp-ph__search" role="search" aria-label="بحث">
@@ -731,13 +737,18 @@ function HomeInitialShell() {
         </div>
       </div>
 
-      <section className="mj-app-card mj-home-featured" aria-hidden="true">
-        <div className="mj-home-featured__grid">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <span key={i} className="mj-home-start-ph__chip" />
+      <section className="mj-app-card mj-home-featured mj-home-featured--ph" aria-label="أقسام بارزة" aria-busy="true">
+        <div className="mj-app-section-header">
+          <h2 className="mj-app-section-header__title">استكشف</h2>
+        </div>
+        <div className="mj-home-featured__grid" aria-hidden="true">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <span key={i} className="mj-home-start-ph__action mj-home-start-ph__chip" />
           ))}
         </div>
       </section>
+
+      <section className="mj-app-card mj-home-auth mj-home-auth--ph" aria-hidden="true" />
     </div>
   );
 }
