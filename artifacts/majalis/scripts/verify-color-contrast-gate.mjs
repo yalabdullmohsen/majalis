@@ -43,6 +43,8 @@ const ASSERTIONS = [
   // أمام قاعدة "كل <a> أخضر في الوضع الليلي" العامة (تخصيص أعلى).
   { route: "/account-deletion", selector: ".btn-primary", mode: "dark", min: 3 },
   // الرئيسية — شاشة البداية الجديدة (2026-08): عناصر ثابتة فوق الطية.
+  { route: "/", selector: ".mj-start-search__btn", mode: "light", min: 4.5 },
+  { route: "/", selector: ".mj-start-search__btn", mode: "dark", min: 4.5 },
   { route: "/", selector: ".mj-start-header__pill--accent", mode: "light", min: 4.5 },
   { route: "/", selector: ".mj-start-header__pill--accent", mode: "dark", min: 4.5 },
   { route: "/", selector: ".mj-home-start__title", mode: "light", min: 3 },
