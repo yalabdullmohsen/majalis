@@ -55,7 +55,7 @@ export default function QuranNumbersPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/quran-hub/numbers",
-      title: "القرآن في أرقام — المجلس العلمي",
+      title: "القرآن في أرقام — سُنّة",
       description:
         "إحصاءات قرآنية موثّقة من مصادر مطبوعة: بنية المصحف، المعجم المفهرس، وعدّ الآي، بلا اشتقاق رقمي من نص المصحف.",
       keywords: ["إحصاءات", "عدد الآيات", "المعجم المفهرس", "عدّ الآي"],
@@ -76,7 +76,7 @@ export default function QuranNumbersPage() {
       QURAN_STAT_KIND_LABEL[stat.kind],
       `المصدر: ${formatStatSourceFull(stat.source)}`,
       stat.note ? `بيان: ${stat.note}` : "",
-      "— المجلس العلمي",
+      "— سُنّة",
     ]
       .filter(Boolean)
       .join("\n");
@@ -269,7 +269,7 @@ export default function QuranNumbersPage() {
             </div>
             <p>
               <Link href="/methodology" onClick={() => setActive(null)}>
-                منهجية التوثيق في المجلس العلمي
+                منهجية التوثيق في سُنّة
               </Link>
             </p>
           </div>

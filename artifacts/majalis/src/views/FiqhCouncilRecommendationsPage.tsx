@@ -7,7 +7,7 @@ export default function FiqhCouncilRecommendationsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-council/recommendations",
-      title: "توصيات المجمع الفقهي | المجلس العلمي",
+      title: "توصيات المجمع الفقهي | سُنّة",
       description: "التوصيات الرسمية الصادرة عن المجمع الفقهي الإسلامي في القضايا المعاصرة والشؤون الفقهية.",
       keywords: ["توصيات فقهية", "مجمع فقهي", "قرارات إسلامية", "فقه معاصر", "توصيات إسلامية"],
       jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "توصيات المجمع الفقهي", url: "https://majlisilm.com/fiqh-council/recommendations", about: { "@type": "Thing", name: "التوصيات الفقهية الجماعية" } }],

@@ -26,7 +26,7 @@ class MediaPlaybackService : Service() {
             }
             else -> {
                 val title = intent?.getStringExtra(EXTRA_TITLE) ?: "تلاوة القرآن"
-                val artist = intent?.getStringExtra(EXTRA_ARTIST) ?: "المجلس العلمي"
+                val artist = intent?.getStringExtra(EXTRA_ARTIST) ?: "سُنّة"
                 startForeground(NOTIFICATION_ID, buildNotification(title, artist))
             }
         }

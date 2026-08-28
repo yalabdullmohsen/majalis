@@ -27,9 +27,9 @@ export default function FiqhBookPage() {
     if (!book) return;
     applyPageSeo({
       path: `/fiqh/books/${book.id}`,
-      title: `${book.title} | الفقه | المجلس العلمي`,
+      title: `${book.title} | الفقه | سُنّة`,
       description: `${book.title}: أبواب ومسائل فقهية موثَّقة.`,
-      keywords: [book.title, "فقه", "المجلس العلمي"],
+      keywords: [book.title, "فقه", "سُنّة"],
       jsonLd: [
         bookJsonLd({
           name: book.title,

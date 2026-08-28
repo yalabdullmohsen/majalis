@@ -39,7 +39,7 @@ export const OFFICIAL_SOURCES = [
   },
   {
     slug: "majlis-seed",
-    name: "بذور المجلس العلمي",
+    name: "بذور سُنّة",
     country: "KW",
     entity_type: "publisher",
     official_url: "https://majlisilm.com",

@@ -36,9 +36,9 @@ export default function FiqhUsulPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh/usul",
-      title: "أصول الفقه | المجلس العلمي",
+      title: "أصول الفقه | سُنّة",
       description: "أدلة الأحكام: الكتاب والسنة والإجماع والقياس، من مباحث الفقه المساندة.",
-      keywords: ["أصول الفقه", "أدلة الأحكام", "المجلس العلمي"],
+      keywords: ["أصول الفقه", "أدلة الأحكام", "سُنّة"],
     });
   }, []);
 

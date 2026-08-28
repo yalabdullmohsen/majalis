@@ -76,7 +76,7 @@ const launch = readFileSync(
 );
 assert.doesNotMatch(launch, /image="LaunchMark"/, "بلا رمز نجمة في LaunchScreen");
 assert.doesNotMatch(launch, /<imageView\b/, "بلا ImageView");
-assert.doesNotMatch(launch, /المجلس العلمي/, "بلا عنوان دعائي أصلي");
+assert.doesNotMatch(launch, /سُنّة/, "بلا عنوان دعائي أصلي");
 assert.doesNotMatch(launch, /mk-progress/, "بلا شريط تقدّم");
 assert.doesNotMatch(launch, /image="Splash"/, "بلا Splash قديم");
 assert.doesNotMatch(launch, /systemBackgroundColor/, "بلا خلفية نظام بيضاء");
@@ -137,9 +137,10 @@ assert.equal(manifest.background_color, BG);
 assert.equal(manifest.theme_color, "#F2F4F3");
 
 const brand = readFileSync(resolve(root, "src/components/brand/MajlisWordmark.tsx"), "utf8");
-assert.match(brand, /MAJLIS_WORDMARK_PATH/);
+assert.match(brand, /سُنّة/, "وردمارك يعرض سُنّة");
+assert.doesNotMatch(brand, /MAJLIS_WORDMARK_PATH/, "بلا مسار SVG للاسم القديم");
 const majlisMark = readFileSync(resolve(root, "src/components/MajlisSplash.tsx"), "utf8");
 assert.match(majlisMark, /MajlisSplashWordmark/);
-assert.match(majlisMark, /SPLASH_TAGLINE/);
+assert.match(majlisMark, /MajlisWordmark/);
 
 console.log("launch-splash-unified.test.ts: ok");

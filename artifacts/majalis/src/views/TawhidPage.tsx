@@ -369,7 +369,7 @@ export default function TawhidPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/tawhid",
-      title: "العقيدة والتوحيد، أقسام وموضوعات كاملة | المجلس العلمي",
+      title: "العقيدة والتوحيد، أقسام وموضوعات كاملة | سُنّة",
       description:
         "بوابة العقيدة والتوحيد على منهج أهل السنة: أنواع التوحيد، أركان الإيمان، الأسماء الحسنى الثابتة، الجنة والنار، علامات الساعة، والملائكة.",
       ogType: "article",
@@ -603,7 +603,7 @@ export default function TawhidPage() {
       <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والتوحيد" count={4} />
 
       <div className="twh-share">
-        <ShareButtons title="العقيدة والتوحيد — المجلس العلمي" url="https://majlisilm.com/tawhid" />
+        <ShareButtons title="العقيدة والتوحيد — سُنّة" url="https://majlisilm.com/tawhid" />
       </div>
     </div>
   );

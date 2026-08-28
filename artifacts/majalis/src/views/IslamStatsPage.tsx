@@ -307,7 +307,7 @@ export default function IslamStatsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/islam-stats",
-      title: "الإسلام في أرقام | المجلس العلمي",
+      title: "الإسلام في أرقام | سُنّة",
       description: "إحصاءات وأرقام مثيرة عن الإسلام في العالم: المسلمون، القرآن، الحضارة الإسلامية، والدلالات الكونية. من انتشار الإسلام إلى إعجاز القرآن",
       keywords: ["الإسلام في أرقام", "إحصاءات المسلمين", "الإعجاز القرآني", "الحضارة الإسلامية"],
       jsonLd: [
@@ -507,7 +507,7 @@ export default function IslamStatsPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الإسلام في أرقام — المجلس العلمي" url="https://majlisilm.com/islam-stats" />
+        <ShareButtons title="الإسلام في أرقام — سُنّة" url="https://majlisilm.com/islam-stats" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في الإسلام والتاريخ" count={4} />

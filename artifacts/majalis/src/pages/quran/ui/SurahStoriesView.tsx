@@ -15,7 +15,7 @@ export default function SurahStoriesPage() {
     const allStories = getAllSurahStories();
     applyPageSeo({
       path: "/quran/surah-stories",
-      title: "قصص سور القرآن | المجلس العلمي",
+      title: "قصص سور القرآن | سُنّة",
       description: "سبب التسمية ومحاور السور وقصصها من القرآن والسنة الصحيحة — بلا إسرائيليات ولا روايات ضعيفة في الفضائل. يُستغنى بما ثبت في الصحيح — سياسة",
       keywords: ["قصص القرآن", "سور القرآن", "تفسير", "سبب التسمية"],
       jsonLd: [
@@ -23,7 +23,7 @@ export default function SurahStoriesPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "قصص سور القرآن الكريم",
-          description: "قصص وأسباب نزول ١١٤ سورة من سور القرآن الكريم؛ محتوى معتمد في منهج المجلس العلمي؛ ؛ يُعرض للتذكّر والاعتبار بما ثبت من القرآن والسنة الصحيحة",
+          description: "قصص وأسباب نزول ١١٤ سورة من سور القرآن الكريم؛ محتوى معتمد في منهج سُنّة؛ ؛ يُعرض للتذكّر والاعتبار بما ثبت من القرآن والسنة الصحيحة",
           numberOfItems: 114,
           itemListElement: allStories.slice(0, 20).map((s, i) => ({
             "@type": "ListItem",
@@ -92,7 +92,7 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
     const path = `/quran/surah-stories/${story.number}`;
     applyPageSeo({
       path,
-      title: `قصة سورة ${story.name} | المجلس العلمي`,
+      title: `قصة سورة ${story.name} | سُنّة`,
       description: `${story.namingReason} — ${story.revelationTime}، ${story.revelationPlace}، ${story.ayahCount} آية. ${story.virtues || ""}`.slice(0, 300),
       keywords: [story.name, "قصص القرآن", "أسباب النزول", ...story.keywords],
       ogType: "article",
@@ -181,7 +181,7 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
         <Link href={`/mushaf/${story.number}`} className="mj-btn">قراءة السورة</Link>
 
         <div className="twh-share">
-          <ShareButtons title={`${story.name} — قصص سور القرآن | المجلس العلمي`} url={`https://majlisilm.com/quran/surah-stories/${story.number}`} />
+          <ShareButtons title={`${story.name} — قصص سور القرآن | سُنّة`} url={`https://majlisilm.com/quran/surah-stories/${story.number}`} />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz sectionId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />

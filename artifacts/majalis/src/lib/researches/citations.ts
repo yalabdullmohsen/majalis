@@ -20,7 +20,7 @@ export function formatCitationChicago(r: ResearchRecord): string {
 export function formatCitationMla(r: ResearchRecord): string {
   const authors = r.authors.map((a) => a.name).join("، ");
   const year = r.year ?? "د.ت.";
-  const container = r.journalName || r.university || r.publisher || "المجلس العلمي";
+  const container = r.journalName || r.university || r.publisher || "سُنّة";
   const link = r.sourceUrl || (r.doi ? `https://doi.org/${r.doi}` : "");
   return `${authors}. "${r.title}." ${container}, ${year}${link ? `, ${link}` : ""}.`;
 }

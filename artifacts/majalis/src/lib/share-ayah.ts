@@ -197,7 +197,7 @@ export async function generateAyahImage(opts: ShareImageOptions): Promise<string
 
     ctx.font = `14px "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif`;
     ctx.fillStyle = "#4a4a4a";
-    ctx.fillText("المجلس العلمي", W / 2, H - 45);
+    ctx.fillText("سُنّة", W / 2, H - 45);
     ctx.restore();
 
     return canvas.toDataURL("image/png");

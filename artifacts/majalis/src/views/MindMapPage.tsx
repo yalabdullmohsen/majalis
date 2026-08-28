@@ -155,8 +155,8 @@ export default function MindMapPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/mind-map",
-      title: "الخرائط الذهنية | المجلس العلمي",
-      description: "خرائط ذهنية تفاعلية تُنظّم العلوم الإسلامية، الفقه والعقيدة والحديث والسيرة وطريق التعلم. محتوى معتمد في منهج المجلس العلمي",
+      title: "الخرائط الذهنية | سُنّة",
+      description: "خرائط ذهنية تفاعلية تُنظّم العلوم الإسلامية، الفقه والعقيدة والحديث والسيرة وطريق التعلم. محتوى معتمد في منهج سُنّة",
       keywords: ["خريطة ذهنية", "علوم إسلامية", "تنظيم المعرفة", "الفقه", "العقيدة"],
       jsonLd: [
         {
@@ -164,7 +164,7 @@ export default function MindMapPage() {
           "@type": "WebPage",
           name: "الخرائط الذهنية للعلوم الإسلامية",
           url: "https://majlisilm.com/mind-map",
-          description: "خرائط ذهنية تفاعلية تنظّم العلوم الإسلامية من فقه وعقيدة وحديث وسيرة؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "خرائط ذهنية تفاعلية تنظّم العلوم الإسلامية من فقه وعقيدة وحديث وسيرة؛ محتوى معتمد في منهج سُنّة",
           about: { "@type": "Thing", name: "العلوم الإسلامية وتنظيمها المعرفي" },
         },
       ],
@@ -294,7 +294,7 @@ export default function MindMapPage() {
         أيقونة <ExternalLink size={11} strokeWidth={2} className="icon-inline" /> تفتح الصفحة المرتبطة مباشرة.
       </p>
       <div className="twh-share">
-        <ShareButtons title="الخرائط الذهنية الإسلامية — المجلس العلمي" url="https://majlisilm.com/mind-map" />
+        <ShareButtons title="الخرائط الذهنية الإسلامية — سُنّة" url="https://majlisilm.com/mind-map" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/mind-map" title="اختبر معلوماتك في العلوم الشرعية" count={4} />

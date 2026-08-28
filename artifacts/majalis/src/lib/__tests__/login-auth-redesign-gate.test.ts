@@ -25,7 +25,7 @@ assert.match(fab, /isAuthStandalonePath/);
 
 assert.match(login, /login-app-icon/);
 assert.match(login, /\/brand\/icon-1024\.png/);
-assert.match(login, /المجلس العلمي/);
+assert.match(login, /سُنّة/);
 assert.match(login, /تسجيل الدخول/);
 assert.match(login, /إنشاء حساب/);
 assert.match(login, /المتابعة كزائر/);

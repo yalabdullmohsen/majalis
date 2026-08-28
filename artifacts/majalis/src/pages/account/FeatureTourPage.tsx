@@ -13,8 +13,8 @@ export default function FeatureTourPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/feature-tour",
-      title: "جولة المزايا | المجلس العلمي",
-      description: "تعرّف على أهم مزايا تطبيق المجلس العلمي.",
+      title: "جولة المزايا | سُنّة",
+      description: "تعرّف على أهم مزايا تطبيق سُنّة.",
       robots: "noindex, follow",
     });
   }, []);

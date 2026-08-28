@@ -46,7 +46,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
     if (!issue) {
       applyPageSeo({
         path: fiqhIssueHref(params.slug),
-        title: "المسألة غير موجودة | المجلس العلمي",
+        title: "المسألة غير موجودة | سُنّة",
         description: "لم يُعثر على هذه المسألة الفقهية أو لم تُنشَر بعد.",
         robots: "noindex, follow",
         jsonLd: [],
@@ -56,7 +56,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
     const path = fiqhIssueHref(issue.slug);
     applyPageSeo({
       path,
-      title: `${issue.title} | المسائل الفقهية، المجلس العلمي`,
+      title: `${issue.title} | المسائل الفقهية، سُنّة`,
       description: issue.summary || issue.title,
       keywords: [issue.category, "مسألة فقهية", "المجمع الفقهي"],
       ogType: "article",

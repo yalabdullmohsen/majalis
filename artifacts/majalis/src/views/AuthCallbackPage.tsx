@@ -13,7 +13,7 @@ export default function AuthCallbackPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/auth/callback",
-      title: "تسجيل الدخول | المجلس العلمي",
+      title: "تسجيل الدخول | سُنّة",
       description: "جارٍ إتمام تسجيل الدخول…",
       robots: "noindex, nofollow",
     });

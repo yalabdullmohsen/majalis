@@ -1,5 +1,5 @@
 /**
- * بوابة مشاركة «فائدة من المجلس العلمي».
+ * بوابة مشاركة «فائدة من سُنّة».
  * node --import tsx src/lib/__tests__/share-faida-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -12,7 +12,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const text = buildFaidaShareText("كتاب الصلاة", "https://majlisilm.com/fiqh/books/salah");
-assert.match(text, /فائدة من المجلس العلمي/);
+assert.match(text, /فائدة من سُنّة/);
 assert.match(text, /كتاب الصلاة/);
 assert.match(text, /https:\/\/majlisilm\.com/);
 assert.doesNotMatch(text, /www\.majlisilm/);
@@ -29,7 +29,7 @@ assert.match(shareFaida, /واتساب/);
 
 const contentActions = read("src/components/ContentActions.tsx");
 assert.match(contentActions, /ShareFaida/);
-assert.match(contentActions, /فائدة من المجلس العلمي/);
+assert.match(contentActions, /فائدة من سُنّة/);
 
 const contact = read("src/views/ContactPage.tsx");
 assert.doesNotMatch(contact, /ShareFaida/, "صفحة التواصل بلا ShareFaida");

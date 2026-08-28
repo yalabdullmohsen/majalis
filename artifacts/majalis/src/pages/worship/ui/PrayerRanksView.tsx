@@ -260,7 +260,7 @@ export function PrayerRanksContent() {
         </ul>
       </section>
       <div className="twh-share">
-        <ShareButtons title="فضائل الصلاة ومراتبها، المجلس العلمي" url="https://majlisilm.com/prayer-ranks" />
+        <ShareButtons title="فضائل الصلاة ومراتبها، سُنّة" url="https://majlisilm.com/prayer-ranks" />
       </div>
     </div>
   );
@@ -270,7 +270,7 @@ export default function PrayerRanksPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/prayer-ranks",
-      title: "فضائل الصلاة ومراتبها | المجلس العلمي",
+      title: "فضائل الصلاة ومراتبها | سُنّة",
       description: "مراتب الناس الخمسة في الصلاة بحسب ابن القيم، مع فضائل الصلاة من القرآن والسنة الصحيحة ووصايا في إصلاح الصلاة يُعرض بأسلوب تعليمي منضبط.",
       keywords: ["فضائل الصلاة", "مراتب الصلاة", "الصلاة في الإسلام", "أهمية الصلاة", "فقه الصلاة", "خشوع"],
       jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "فضائل الصلاة ومراتبها", url: "https://majlisilm.com/prayer-ranks", about: { "@type": "Thing", name: "فضائل الصلاة في الإسلام" } }],

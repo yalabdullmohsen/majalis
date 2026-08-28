@@ -36,7 +36,7 @@ export function detectIntent(query) {
 function buildEvidenceSummary(query, tiers, citations) {
   if (!citations.length) return NO_EVIDENCE_MESSAGE;
 
-  const intro = `وفق المواد الموثقة في قاعدة معرفة المجلس العلمي، إليك ما يرتبط بسؤالك «${query}»:`;
+  const intro = `وفق المواد الموثقة في قاعدة معرفة سُنّة، إليك ما يرتبط بسؤالك «${query}»:`;
   const sections = [];
 
   for (const tier of tiers) {
@@ -49,7 +49,7 @@ function buildEvidenceSummary(query, tiers, citations) {
   }
 
   const refs = citations.slice(0, 8).map((c, i) =>
-    `[${i + 1}] ${c.title} — ${c.source_name || "المجلس العلمي"} (${Math.round(c.trust_score)}% ثقة)`,
+    `[${i + 1}] ${c.title} — ${c.source_name || "سُنّة"} (${Math.round(c.trust_score)}% ثقة)`,
   );
 
   return [intro, ...sections, "\n\nالمراجع:", ...refs, `\n\n${REASONING_DISCLAIMER}`].join("\n");
@@ -68,7 +68,7 @@ export async function synthesizeGroundedAnswer(query, citations, tiers) {
   ).join("\n\n");
 
   const system =
-    "أنت مساعد علمي لمنصة المجلس العلمي. " +
+    "أنت مساعد علمي لمنصة سُنّة. " +
     "أجب فقط من المواد المقدمة — لا تُنشئ أحاديث أو آيات أو أقوال علماء. " +
     "رتّب الأدلة: قرآن ثم سنة ثم شروح ثم كتب ثم فتاوى ثم دروس. " +
     "اذكر درجة الثقة. إن لم تكفِ المواد فقل ذلك صراحة.";

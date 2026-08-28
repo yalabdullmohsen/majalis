@@ -43,8 +43,8 @@ export default function UpdatesPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/updates",
-      title: "آخر المستجدات | المجلس العلمي",
-      description: "آخر المستجدات العلمية والإضافات الجديدة في المجلس العلمي، قرارات وفتاوى ودروس ودورات حديثة.",
+      title: "آخر المستجدات | سُنّة",
+      description: "آخر المستجدات العلمية والإضافات الجديدة في سُنّة، قرارات وفتاوى ودروس ودورات حديثة.",
       keywords: ["مستجدات إسلامية", "أخبار علمية", "جديد المجلس", "تحديثات شرعية", "أخبار فقهية"],
       jsonLd: [
         {
@@ -52,8 +52,8 @@ export default function UpdatesPage() {
           "@type": "WebPage",
           name: "آخر المستجدات العلمية",
           url: "https://majlisilm.com/updates",
-          description: "مستجدات وتحديثات المجلس العلمي من دروس ودورات وفتاوى وقرارات حديثة",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          description: "مستجدات وتحديثات سُنّة من دروس ودورات وفتاوى وقرارات حديثة",
+          provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
         },
       ],
     });
@@ -172,7 +172,7 @@ export default function UpdatesPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="آخر التحديثات — المجلس العلمي" url="https://majlisilm.com/updates" />
+        <ShareButtons title="آخر التحديثات — سُنّة" url="https://majlisilm.com/updates" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في التاريخ الإسلامي والفقه" count={4} />

@@ -54,8 +54,8 @@ export const OFFICIAL_SOURCE_DEFAULTS = {
   },
   majlis: {
     slug: "majlisilm",
-    name: "المجلس العلمي",
-    entity_name: "المجلس العلمي",
+    name: "سُنّة",
+    entity_name: "سُنّة",
     source_type: "official",
     url: "https://majlisilm.com",
     trust_level: 88,

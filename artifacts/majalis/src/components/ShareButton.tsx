@@ -31,7 +31,7 @@ export function ShareButton({
   const shareText = useMemo(
     () =>
       text?.trim()
-        ? `فائدة من المجلس العلمي:\n${text.trim()}\n${shareUrl}`
+        ? `فائدة من سُنّة:\n${text.trim()}\n${shareUrl}`
         : buildFaidaShareText(title, shareUrl),
     [title, text, shareUrl],
   );
@@ -42,7 +42,7 @@ export function ShareButton({
     setBusy(true);
     try {
       if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
-        await navigator.share({ title: "المجلس العلمي", text: shareText, url: shareUrl });
+        await navigator.share({ title: "سُنّة", text: shareText, url: shareUrl });
       } else {
         const ok = await copyShareText(shareText);
         if (ok) {

@@ -217,7 +217,7 @@ export default function TawbaPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/tawba",
-      title: "التوبة والاستغفار، المجلس العلمي",
+      title: "التوبة والاستغفار، سُنّة",
       description: "دليل شامل للتوبة النصوح: شروطها وأنواعها وآداب الاستغفار وأفضل أدعية المغفرة.",
       keywords: ["التوبة", "الاستغفار", "التوبة النصوح", "شروط التوبة", "أدعية المغفرة"],
       jsonLd: [
@@ -468,7 +468,7 @@ export default function TawbaPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="التوبة والاستغفار، المجلس العلمي" url="https://majlisilm.com/tawba" />
+          <ShareButtons title="التوبة والاستغفار، سُنّة" url="https://majlisilm.com/tawba" />
         </div>
 
         {/* related */}

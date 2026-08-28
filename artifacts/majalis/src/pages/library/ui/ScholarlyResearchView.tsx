@@ -99,7 +99,7 @@ export default function ScholarlyResearchPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/scholarly-research",
-      title: "الباحث الشرعي | المجلس العلمي",
+      title: "الباحث الشرعي | سُنّة",
       description: "محرك بحث شرعي ذكي بتقنية RAG، ابحث في المصادر الإسلامية واحصل على إجابات دقيقة موثّقة.",
       keywords: ["بحث علمي شرعي", "ذكاء اصطناعي إسلامي", "محرك بحث فقهي", "RAG إسلامي", "إجابات شرعية"],
       jsonLd: [
@@ -490,7 +490,7 @@ export default function ScholarlyResearchPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الباحث الشرعي — المجلس العلمي" url="https://majlisilm.com/scholarly-research" />
+        <ShareButtons title="الباحث الشرعي — سُنّة" url="https://majlisilm.com/scholarly-research" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/research" title="اختبر معلوماتك في العلوم الشرعية" count={4} />

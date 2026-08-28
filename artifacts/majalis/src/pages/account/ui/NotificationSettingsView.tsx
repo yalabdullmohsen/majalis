@@ -195,8 +195,8 @@ export default function NotificationSettingsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/notification-settings",
-      title: "إعدادات الإشعارات | المجلس العلمي",
-      description: "إدارة إشعارات المجلس العلمي، صلاة الأذان والتذكيرات الشرعية والأحداث العلمية.",
+      title: "إعدادات الإشعارات | سُنّة",
+      description: "إدارة إشعارات سُنّة، صلاة الأذان والتذكيرات الشرعية والأحداث العلمية.",
       keywords: ["إشعارات", "إعدادات أذان", "تذكيرات إسلامية"],
       robots: "noindex, follow",
     });
@@ -315,7 +315,7 @@ export default function NotificationSettingsPage() {
       {isDenied && (
         <div className="notif-banner notif-banner--err">
           {isNative
-            ? "الإشعارات محجوبة من إعدادات النظام. افتح الإعدادات ← المجلس العلمي ← الإشعارات وفعّلها، ثم أعد فتح التطبيق."
+            ? "الإشعارات محجوبة من إعدادات النظام. افتح الإعدادات ← سُنّة ← الإشعارات وفعّلها، ثم أعد فتح التطبيق."
             : "الإشعارات محجوبة من إعدادات المتصفح. فعّلها يدوياً ثم أعد المحاولة."}
         </div>
       )}

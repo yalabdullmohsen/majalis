@@ -206,18 +206,18 @@ export default function MutashabihatPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/mutashabihat",
-      title: "الآيات المتشابهات في القرآن | المجلس العلمي",
+      title: "الآيات المتشابهات في القرآن | سُنّة",
       description:
-        "نظام متخصص لدراسة الآيات المتشابهات في القرآن الكريم مع نصوص الآيات وتلميحات الاختلاف الدقيق. محتوى معتمد في منهج المجلس العلمي",
+        "نظام متخصص لدراسة الآيات المتشابهات في القرآن الكريم مع نصوص الآيات وتلميحات الاختلاف الدقيق. محتوى معتمد في منهج سُنّة",
       keywords: ["الآيات المتشابهات", "متشابه القرآن", "حفظ القرآن", "تلاوة القرآن"],
       jsonLd: [{
         "@context": "https://schema.org",
         "@type": "WebPage",
         name: "الآيات المتشابهات في القرآن",
-        description: "نظام متخصص لدراسة الآيات المتشابهات في القرآن الكريم. محتوى معتمد في منهج المجلس العلمي",
+        description: "نظام متخصص لدراسة الآيات المتشابهات في القرآن الكريم. محتوى معتمد في منهج سُنّة",
         url: "https://majlisilm.com/mutashabihat",
         inLanguage: "ar",
-        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
         about: { "@type": "Book", name: "القرآن الكريم", inLanguage: "ar" },
       }],
     });

@@ -98,8 +98,8 @@ export default function AdhkarPage() {
       path,
       canonicalPath: path,
       title: active
-        ? `${active.name} | الأذكار | المجلس العلمي`
-        : "الأذكار والأدعية الإسلامية | المجلس العلمي",
+        ? `${active.name} | الأذكار | سُنّة`
+        : "الأذكار والأدعية الإسلامية | سُنّة",
       description: active
         ? `${active.description.slice(0, 140)}… مع بيان المصدر والدرجة قدر الإمكان.`
         : "أذكار وأدعية مأثورة مع بيان المصدر والدرجة قدر الإمكان.",
@@ -108,7 +108,7 @@ export default function AdhkarPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أقسام الأذكار الإسلامية",
-          description: "أذكار الصباح والمساء والصلاة والسفر والنوم وسائر المناسبات؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "أذكار الصباح والمساء والصلاة والسفر والنوم وسائر المناسبات؛ محتوى معتمد في منهج سُنّة",
           numberOfItems: ADHKAR_CATEGORIES.length,
           itemListElement: ADHKAR_CATEGORIES.map((c, i) => ({
             "@type": "ListItem",

@@ -94,7 +94,7 @@ export function QuranMiniPlayerBar() {
       ? {
           title: `${surahForSession} — آية ${toArabicDigits(snap.ayah)}`,
           artist: getReciter(snap.reciterId).nameAr,
-          album: "تلاوة القرآن — المجلس العلمي",
+          album: "تلاوة القرآن — سُنّة",
           playing,
           position: snap.currentTime,
           duration: snap.duration,

@@ -4,7 +4,7 @@
  */
 
 /** اسم الحساب الرسمي كما يظهر للمستخدم. */
-export const ACADEMY_NAME = "المجلس العلمي";
+export const ACADEMY_NAME = "سُنّة";
 
 /** معرّف حساب انستغرام (بلا @). */
 export const ACADEMY_INSTAGRAM_HANDLE = "Majlisalilm";

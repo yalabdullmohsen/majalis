@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>المجلس العلمي</title>
+    <title>سُنّة</title>
     <link>https://majlisilm.com</link>
     <description>آخر المستجدات العلمية — قرارات وفتاوى وأحكام ودورات</description>
     <language>ar</language>
     <lastBuildDate>Sat, 25 Jul 2026 00:00:00 GMT</lastBuildDate>
-    <managingEditor>Majlisilm.app@gmail.com (المجلس العلمي)</managingEditor>
+    <managingEditor>Majlisilm.app@gmail.com (سُنّة)</managingEditor>
     <image>
       <url>https://majlisilm.com/brand/official-og.png?v=20260825</url>
-      <title>المجلس العلمي</title>
+      <title>سُنّة</title>
       <link>https://majlisilm.com</link>
     </image>
     <atom:link href="https://majlisilm.com/feed.xml" rel="self" type="application/rss+xml"/>
@@ -48,7 +48,7 @@
     <item>
       <title>[دورة علمية] دورة الإجازة في التحرير — 1447هـ</title>
       <link>https://majlisilm.com/annual-courses/course-ijazah-tahrir-2026</link>
-      <description>دورة علمية: دورة الإجازة في التحرير — 1447هـ — المجلس العلمي</description>
+      <description>دورة علمية: دورة الإجازة في التحرير — 1447هـ — سُنّة</description>
       <pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate>
       <dc:subject>دورات علمية</dc:subject>
       <guid isPermaLink="true">https://majlisilm.com/annual-courses/course-ijazah-tahrir-2026</guid>
@@ -56,7 +56,7 @@
     <item>
       <title>[دورة علمية] البرنامج العلمي الرمضاني</title>
       <link>https://majlisilm.com/annual-courses/course-ramadan-intensive</link>
-      <description>دورة علمية: البرنامج العلمي الرمضاني — المجلس العلمي</description>
+      <description>دورة علمية: البرنامج العلمي الرمضاني — سُنّة</description>
       <pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate>
       <dc:subject>دورات علمية</dc:subject>
       <guid isPermaLink="true">https://majlisilm.com/annual-courses/course-ramadan-intensive</guid>
@@ -64,7 +64,7 @@
     <item>
       <title>[دورة علمية] برنامج الفقه المقارن</title>
       <link>https://majlisilm.com/annual-courses/course-alfiqh-almuqaran</link>
-      <description>دورة علمية: برنامج الفقه المقارن — المجلس العلمي</description>
+      <description>دورة علمية: برنامج الفقه المقارن — سُنّة</description>
       <pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate>
       <dc:subject>دورات علمية</dc:subject>
       <guid isPermaLink="true">https://majlisilm.com/annual-courses/course-alfiqh-almuqaran</guid>

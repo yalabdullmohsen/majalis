@@ -18,7 +18,7 @@ export default function FiqhCouncilResearchAssistantPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-council/assistant",
-      title: "مساعد البحث الفقهي | المجلس العلمي",
+      title: "مساعد البحث الفقهي | سُنّة",
       description: "مساعد بحث ذكي في قرارات المجمع الفقهي، ابحث وصنّف واستشهد بالمصادر الفقهية الموثوقة.",
       keywords: ["مساعد بحث فقهي", "ذكاء اصطناعي فقهي", "بحث إسلامي", "مجمع فقهي", "استشهاد علمي"],
       jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "مساعد البحث الفقهي", url: "https://majlisilm.com/fiqh-council/assistant", about: { "@type": "Thing", name: "أدوات البحث الفقهي الذكية" } }],

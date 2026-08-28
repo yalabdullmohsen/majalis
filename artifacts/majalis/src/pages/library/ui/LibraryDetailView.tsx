@@ -40,7 +40,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
       // أخرى ظاهراً للزواحف رغم أن الجسم الفعلي "الكتاب غير موجود").
       applyPageSeo({
         path: `/library/${params.id}`,
-        title: "الكتاب غير موجود | المجلس العلمي",
+        title: "الكتاب غير موجود | سُنّة",
         description: "لم يُعثر على هذا الكتاب في المكتبة العلمية.",
         robots: "noindex, follow",
         jsonLd: [],
@@ -52,7 +52,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
     const path = `/library/${params.id}`;
     applyPageSeo({
       path,
-      title: `${item.title} | المكتبة العلمية، المجلس العلمي`,
+      title: `${item.title} | المكتبة العلمية، سُنّة`,
       description: item.description || item.title,
       keywords: [...(item.keywords || []), item.category, item.author, "مكتبة", "كتب"],
       ogType: "book",

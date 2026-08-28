@@ -36,7 +36,7 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
     if (!session) {
       applyPageSeo({
         path: fiqhSessionHref(params.slug),
-        title: "الجلسة غير موجودة | المجلس العلمي",
+        title: "الجلسة غير موجودة | سُنّة",
         description: "لم يُعثر على هذه الجلسة أو لم تُنشَر بعد.",
         robots: "noindex, follow",
         jsonLd: [],
@@ -50,7 +50,7 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
 
     applyPageSeo({
       path,
-      title: `${session.session_title} | المجمع الفقهي، المجلس العلمي`,
+      title: `${session.session_title} | المجمع الفقهي، سُنّة`,
       description: `جلسة ${session.session_number || ""}، ${FIQH_SESSION_STATUS_LABELS[session.status]}`,
       canonicalPath: path,
       robots,

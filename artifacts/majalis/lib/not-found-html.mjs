@@ -1,5 +1,5 @@
 /** صفحة 404 HTML مشتركة — HTTP 404، RTL، هوية المجلس، روابط خروج. */
-const SITE_NAME = "المجلس العلمي";
+const SITE_NAME = "سُنّة";
 
 export function buildNotFoundHtml(options = {}) {
   const title = options.title || `الصفحة غير موجودة | ${SITE_NAME}`;

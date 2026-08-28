@@ -560,7 +560,7 @@ export default function SawmPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/sawm",
-      title: "الصيام وأحكامه، المجلس العلمي",
+      title: "الصيام وأحكامه، سُنّة",
       description: "دليل شامل لأحكام الصيام: أنواعه وشروطه ومفطراته والمعذورين وفضائل رمضان.",
       keywords: ["الصيام", "رمضان", "أحكام الصيام", "مفطرات", "شروط الصيام", "فضل الصيام"],
       jsonLd: [
@@ -801,7 +801,7 @@ export default function SawmPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="الصيام وأحكامه — المجلس العلمي" url="https://majlisilm.com/sawm" />
+          <ShareButtons title="الصيام وأحكامه — سُنّة" url="https://majlisilm.com/sawm" />
         </div>
 
         {/* related */}

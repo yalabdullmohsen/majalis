@@ -85,15 +85,15 @@ export default function FawaidPage({
   useEffect(() => {
     applyPageSeo({
       path: "/fawaid",
-      title: "الفوائد الشرعية | المجلس العلمي",
-      description: "منصة لنشر ومشاركة الفوائد الشرعية، فوائد قرآنية وحديثية وعقدية وفقهية وتربوية. محتوى معتمد في منهج المجلس العلمي",
+      title: "الفوائد الشرعية | سُنّة",
+      description: "منصة لنشر ومشاركة الفوائد الشرعية، فوائد قرآنية وحديثية وعقدية وفقهية وتربوية. محتوى معتمد في منهج سُنّة",
       keywords: ["فوائد شرعية", "فوائد علمية", "فوائد قرآنية", "فوائد حديثية", "الفوائد الإسلامية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أقسام الفوائد الشرعية",
-          description: "أقسام الفوائد الشرعية على المنصة؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "أقسام الفوائد الشرعية على المنصة؛ محتوى معتمد في منهج سُنّة",
           itemListElement: FAWAID_CATEGORIES.map((cat, i) => ({
             "@type": "ListItem",
             position: i + 1,
@@ -312,7 +312,7 @@ export default function FawaidPage({
         </aside>
 
         <div className="twh-share">
-          <ShareButtons title="الفوائد العلمية — المجلس العلمي" url="https://majlisilm.com/fawaid" />
+          <ShareButtons title="الفوائد العلمية — سُنّة" url="https://majlisilm.com/fawaid" />
         </div>
 
         <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">

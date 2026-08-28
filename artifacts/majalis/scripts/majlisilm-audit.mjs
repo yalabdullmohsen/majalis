@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * majlisilm-audit.mjs — فاحص شامل لموقع المجلس العلمي
+ * majlisilm-audit.mjs — فاحص شامل لموقع سُنّة
  * ------------------------------------------------------------------
  * بلا أي اعتماديات. يتطلب Node 18+ (يستعمل fetch المدمج).
  *
@@ -899,7 +899,7 @@ async function crawl(opts) {
     if (
       !isHome &&
       author &&
-      normalizeAr(author) === normalizeAr("المجلس العلمي") &&
+      normalizeAr(author) === normalizeAr("سُنّة") &&
       p.mainText.length > CONFIG.thinTextChars
     ) {
       report.add({
@@ -1010,7 +1010,7 @@ async function crawl(opts) {
       const target = pages.get(n);
       if (target && l.text && tokens(l.text).length >= 2) {
         const targetTitle = (target.headings.h1[0] || target.title || "").replace(
-          /\s*[|—–-]\s*المجلس العلمي\s*$/u,
+          /\s*[|—–-]\s*سُنّة\s*$/u,
           "",
         );
         // تجاهل الحالات الآمنة: عنوان الوجهة جزء من نص الرابط (مثل «المغني لابن قدامة»→«المغني»)
@@ -1505,7 +1505,7 @@ async function main() {
   }
 
   console.log(`
-فاحص المجلس العلمي
+فاحص سُنّة
 
   node scripts/majlisilm-audit.mjs crawl [--base URL] [--max N] [--concurrency N] [--out-dir DIR]
   node scripts/majlisilm-audit.mjs lint <مجلد> [--ext .json,.jsonl,.mdx] [--out-dir DIR]

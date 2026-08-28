@@ -51,7 +51,7 @@ export default function QuranSearchPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/quran/search",
-      title: "بحث في القرآن الكريم | المجلس العلمي",
+      title: "بحث في القرآن الكريم | سُنّة",
       description:
         "ابحث في نص آيات القرآن الكريم محليًا، واعرض النتائج في شاشة بحث منفصلة مع رابط مباشر إلى المصحف.",
       keywords: ["بحث القرآن", "بحث الآيات", "المصحف", "آيات قرآنية"],

@@ -43,7 +43,7 @@ assert.doesNotMatch(tour, /فعّل التنبيهات/);
 assert.doesNotMatch(tour, /requestNotificationPermission/);
 assert.match(tour, /markFeatureTourCompleted/);
 
-assert.match(intro, /مرحبًا بك في المجلس العلمي/);
+assert.match(intro, /مرحبًا بك في سُنّة/);
 assert.match(intro, /ابدأ الآن/);
 assert.match(intro, /تصفح مباشرة/);
 assert.doesNotMatch(intro, /requestPermission|Notification/);

@@ -87,7 +87,7 @@ function safeDecodeURIComponent(value: string): string {
 const META_DESC_MIN = 120;
 const META_DESC_MAX = 160;
 const TITLE_MAX = 60;
-const TITLE_SUFFIX = " | المجلس العلمي";
+const TITLE_SUFFIX = " | سُنّة";
 
 function tidySeoText(text: string): string {
   return String(text || "")
@@ -117,7 +117,7 @@ export function normalizeMetaDescription(text: string, hint = ""): string {
   return clampSeoText(t, META_DESC_MAX);
 }
 
-/** «[اسم] | المجلس العلمي» بحد ≈60 حرفًا. */
+/** «[اسم] | سُنّة» بحد ≈60 حرفًا. */
 export function normalizePageTitle(title: string): string {
   let name = tidySeoText(title);
   if (!name) return SEO_SITE.siteName;
@@ -136,8 +136,8 @@ function routeForPath(routes: SeoRoute[], path: string) {
     const term = safeDecodeURIComponent(normalized.slice("/search/".length));
     return {
       ...requiredRoute(routes, "/search"),
-      title: `نتائج البحث: ${term} | المجلس العلمي`,
-      description: `نتائج البحث عن «${term}» في الدروس والمكتبة والفوائد داخل المجلس العلمي.`,
+      title: `نتائج البحث: ${term} | سُنّة`,
+      description: `نتائج البحث عن «${term}» في الدروس والمكتبة والفوائد داخل سُنّة.`,
       robots: "noindex, follow",
     };
   }
@@ -150,23 +150,23 @@ function routeForPath(routes: SeoRoute[], path: string) {
     const name = safeDecodeURIComponent(normalized.slice("/sheikhs/".length));
     return {
       ...requiredRoute(routes, "/sheikhs"),
-      title: `${name} | المجلس العلمي`,
-      description: `ملف الشيخ ${name} — سيرة وإجازات ودروس مرتبطة على المجلس العلمي.`,
+      title: `${name} | سُنّة`,
+      description: `ملف الشيخ ${name} — سيرة وإجازات ودروس مرتبطة على سُنّة.`,
     };
   }
 
   if (normalized.startsWith("/lessons/")) {
     return {
       ...requiredRoute(routes, "/lessons"),
-      title: "تفاصيل الدرس | المجلس العلمي",
-      description: "تفاصيل الدرس الشرعي — الشيخ، المكان، الجدول، والوصف داخل المجلس العلمي.",
+      title: "تفاصيل الدرس | سُنّة",
+      description: "تفاصيل الدرس الشرعي — الشيخ، المكان، الجدول، والوصف داخل سُنّة.",
     };
   }
 
   if (normalized.startsWith("/scientific-announcements/")) {
     return {
       ...requiredRoute(routes, "/lessons"),
-      title: "تفاصيل الإعلان العلمي | المجلس العلمي",
+      title: "تفاصيل الإعلان العلمي | سُنّة",
       description: "تفاصيل إعلان درس علمي — الشيخ، المتن، الموعد، المكان، والروابط.",
     };
   }
@@ -174,7 +174,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
   if (normalized.startsWith("/fiqh-council/")) {
     return {
       ...requiredRoute(routes, "/fiqh-council"),
-      title: "قرار المجمع الفقهي | المجلس العلمي",
+      title: "قرار المجمع الفقهي | سُنّة",
       description: "تفاصيل قرار أو بحث أو توصية من المجمع الفقهي الإسلامي.",
     };
   }
@@ -182,7 +182,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
   if (normalized.startsWith("/rulings/")) {
     return {
       ...requiredRoute(routes, "/fiqh"),
-      title: "الفقه الإسلامي | المجلس العلمي",
+      title: "الفقه الإسلامي | سُنّة",
       description: "بوابة الفقه: قواعد فقهية، مذاهب، نوازل، قرارات المجامع، وأحكام العبادات.",
     };
   }
@@ -190,7 +190,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
   if (normalized.startsWith("/annual-courses/")) {
     return {
       ...requiredRoute(routes, "/annual-courses"),
-      title: "دورة علمية | المجلس العلمي",
+      title: "دورة علمية | سُنّة",
       description: "تفاصيل دورة علمية — الجدول والمشايخ والتسجيل.",
     };
   }
@@ -198,7 +198,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
   if (normalized.startsWith("/library/")) {
     return {
       ...requiredRoute(routes, "/library"),
-      title: "كتاب شرعي | المجلس العلمي",
+      title: "كتاب شرعي | سُنّة",
       description: "تفاصيل الكتاب — المؤلف، التصنيف، ملخص المحتوى، وروابط التحميل.",
       ogType: "book",
     };
@@ -207,7 +207,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
   if (normalized.startsWith("/universities/") && normalized !== "/universities/compare") {
     return {
       ...requiredRoute(routes, "/universities"),
-      title: "جامعة إسلامية | المجلس العلمي",
+      title: "جامعة إسلامية | سُنّة",
       description: "ملف الجامعة — التخصصات، شروط القبول، معلومات التواصل.",
     };
   }
@@ -215,7 +215,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
   if (normalized.startsWith("/lessons/")) {
     return {
       ...requiredRoute(routes, "/lessons"),
-      title: "مسار التعلم | المجلس العلمي",
+      title: "مسار التعلم | سُنّة",
       description: "مسار تعلم مفصّل — المراحل والكتب والاختبارات وشهادة الإتمام.",
     };
   }
@@ -223,7 +223,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
   if (normalized.startsWith("/learning/quiz/")) {
     return {
       ...requiredRoute(routes, "/learning/quiz"),
-      title: "اختبار علمي | المجلس العلمي",
+      title: "اختبار علمي | سُنّة",
       description: "اختبار في مسار التعلم — أسئلة متدرجة الصعوبة لتقييم مستواك.",
     };
   }
@@ -231,7 +231,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
   if (normalized.startsWith("/learning/certificates/")) {
     return {
       ...requiredRoute(routes, "/learning"),
-      title: "التحقق من الشهادة | المجلس العلمي",
+      title: "التحقق من الشهادة | سُنّة",
       description: "التحقق من صحة شهادة إتمام مسار التعلم الشرعي.",
     };
   }
@@ -239,7 +239,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
 if (normalized.startsWith("/quran/surah-stories/")) {
     return {
       ...requiredRoute(routes, "/quran/surah-stories"),
-      title: "قصة سورة | المجلس العلمي",
+      title: "قصة سورة | سُنّة",
       description: "تفاصيل سورة قرآنية — سبب النزول، المحاور، والفوائد.",
       ogType: "article",
     };
@@ -248,8 +248,8 @@ if (normalized.startsWith("/quran/surah-stories/")) {
   if (normalized.startsWith("/c/")) {
     return {
       ...requiredRoute(routes, "/fiqh-council"),
-      title: "مقالة علمية | المجلس العلمي",
-      description: "مقالة شرعية من المجلس العلمي — يُراجع المصدر في صفحة المقال عند توافره.",
+      title: "مقالة علمية | سُنّة",
+      description: "مقالة شرعية من سُنّة — يُراجع المصدر في صفحة المقال عند توافره.",
       ogType: "article",
     };
   }
@@ -267,7 +267,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
     return {
       ...requiredRoute(routes, "/nations"),
       path: normalized,
-      title: `الأمم السابقة: ${nationSlug} | المجلس العلمي`,
+      title: `الأمم السابقة: ${nationSlug} | سُنّة`,
       description: `قصة الأمة أو القوم «${nationSlug}» كما وردت في القرآن مع التمييز بين الثابت والمحتمل والمواقع التقريبية التي لا يُجزم بها.`,
       ogType: "article",
     };
@@ -282,7 +282,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
     return {
       ...requiredRoute(routes, "/quran/people"),
       path: normalized,
-      title: `${personSlug} في القرآن | المجلس العلمي`,
+      title: `${personSlug} في القرآن | سُنّة`,
       description: `من ذكروا في القرآن: «${personSlug}» — مواضع الآيات والتعريف بما ثبت دون توسع في غير الثابت.`,
       ogType: "article",
     };
@@ -303,7 +303,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
     return {
       ...requiredRoute(routes, "/prophets"),
       path: normalized,
-      title: `قصة ${arabicName} عليه السلام | المجلس العلمي`,
+      title: `قصة ${arabicName} عليه السلام | سُنّة`,
       description: `قصة نبي الله ${arabicName} عليه السلام — نبذة تعريفية وأبرز صفاته ومعجزاته والدروس المستخلصة من المصادر الموثوقة.`,
       ogType: "article",
     };
@@ -509,7 +509,7 @@ export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string, lo
       if (loading) return;
       applyPageSeo({
         path,
-        title: "الدرس غير موجود | المجلس العلمي",
+        title: "الدرس غير موجود | سُنّة",
         description: "لم يُعثر على هذا الدرس.",
         robots: "noindex, follow",
         jsonLd: [],

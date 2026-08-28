@@ -590,7 +590,7 @@ export default function WasayaNabawiyyaPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/wasaya-nabawiyya",
-      title: "الوصايا النبوية | المجلس العلمي",
+      title: "الوصايا النبوية | سُنّة",
       description: "أجمل الوصايا النبوية الصحيحة، وصايا جامعة ووصايا خاصة بأفراد الصحابة ووصايا للأمة مع كيفية التطبيق. وصية نبوية جامعة للسلوك.",
       keywords: ["الوصايا النبوية", "وصايا النبي", "أحاديث نبوية", "وصية لا تغضب", "وصية ابن عباس", "حديث معاذ"],
       jsonLd: [
@@ -791,7 +791,7 @@ export default function WasayaNabawiyyaPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الوصايا النبوية — المجلس العلمي" url="https://majlisilm.com/wasaya-nabawiyya" />
+        <ShareButtons title="الوصايا النبوية — سُنّة" url="https://majlisilm.com/wasaya-nabawiyya" />
       </div>
       <RelatedKnowledge kind="hadith" query="الوصايا النبوية" title="أحاديث ووصايا ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

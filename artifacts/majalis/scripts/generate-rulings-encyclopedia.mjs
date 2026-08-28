@@ -113,7 +113,7 @@ function splitEvidence(text, reference) {
  * مصادر «ذاتية» — المنصة نفسها ليست مصدرًا خارجيًا يُعتمد عليه في التوثيق.
  * أي مرجع يطابق هذه الأنماط لا يُحتسب مصدرًا خارجيًا.
  */
-const SELF_SOURCE_RE = /المجلس العلمي|المجمع الفقهي — مسائل فقهية|qa-seed|fawaid-seed|rulings-seed|fatwa-seed|fiqh-issues-seed|quiz_questions/i;
+const SELF_SOURCE_RE = /سُنّة|المجمع الفقهي — مسائل فقهية|qa-seed|fawaid-seed|rulings-seed|fatwa-seed|fiqh-issues-seed|quiz_questions/i;
 
 function hasExternalSource(partial) {
   const refs = [...(partial.references || []), ...(partial.evidence || [])];
@@ -281,7 +281,7 @@ function fromQaSeed() {
       const evidenceArr = ev ? splitEvidence(ev, ref) : [];
       const refs = ref
         ? [{ text: ref, source: ref }]
-        : [{ text: "المجلس العلمي — الأسئلة والأجوبة", source: "qa-seed" }];
+        : [{ text: "سُنّة — الأسئلة والأجوبة", source: "qa-seed" }];
 
       return makeRuling({
         external_key: `qa-ruling-${q.id}`,
@@ -347,7 +347,7 @@ function fromFawaidSeed() {
           body: unesc(body),
           category: "طلب العلم والدعوة",
           subcategory: "طلب العلم",
-          references: [{ text: "فوائد فقهية — المجلس العلمي", source: "fawaid-seed" }],
+          references: [{ text: "فوائد فقهية — سُنّة", source: "fawaid-seed" }],
           keywords: ["فوائد", "فقه"],
           source_origin: "fawaid-seed",
           importance_score: 55,

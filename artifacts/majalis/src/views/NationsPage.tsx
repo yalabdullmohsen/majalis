@@ -36,7 +36,7 @@ export default function NationsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/nations",
-      title: "الأمم السابقة | المجلس العلمي",
+      title: "الأمم السابقة | سُنّة",
       description:
         "موسوعة الأمم والأقوام المذكورين في القرآن والسنة الصحيحة: النبي المرسل إليهم، وذنبهم، ونوع العقوبة، ومن نجا، والدروس المستفادة — بالآيات",
       keywords: ["الأمم السابقة", "قوم نوح", "عاد", "ثمود", "قوم لوط", "أصحاب الفيل", "قصص القرآن"],
@@ -175,7 +175,7 @@ export default function NationsPage() {
       )}
 
       <div className="nations-share">
-        <ShareButtons title="الأمم السابقة — المجلس العلمي" url="https://majlisilm.com/nations" />
+        <ShareButtons title="الأمم السابقة — سُنّة" url="https://majlisilm.com/nations" />
       </div>
     </div>
     </SectionTemplatePage>

@@ -58,7 +58,7 @@ assert(generateSeo.includes('"/quran/recitation-test-ai":'), "RICH_BODY لاخت
 assert(generateSeo.includes("إذن الميكروفون"), "شرح الميكروفون في SSR");
 
 console.log("\n=== P1: brand ===");
-assert(brand.includes('"المجلس العلمي"'), "brand.ts موحّد");
+assert(brand.includes('"سُنّة"'), "brand.ts موحّد");
 assert(!recitation.includes("خوادم مجالس"), "RecitationTestView بلا brand قديم");
 
 console.log("\n=== P1: جلسات الدروس ===");

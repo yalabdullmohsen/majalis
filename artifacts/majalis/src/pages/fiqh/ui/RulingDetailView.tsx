@@ -80,7 +80,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
       const gone = resolveStatus === "removed";
       applyPageSeo({
         path: `/rulings/${params.id}`,
-        title: gone ? "الحكم محذوف | المجلس العلمي" : "الحكم غير موجود | المجلس العلمي",
+        title: gone ? "الحكم محذوف | سُنّة" : "الحكم غير موجود | سُنّة",
         description: gone ? "أُزيل هذا الحكم من الموسوعة." : "لم يُعثر على هذا الحكم الشرعي.",
         robots: "noindex, follow",
         jsonLd: [],
@@ -94,7 +94,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
       item.title;
     applyPageSeo({
       path,
-      title: `${item.title} | موسوعة الأحكام، المجلس العلمي`,
+      title: `${item.title} | موسوعة الأحكام، سُنّة`,
       description,
       keywords: [...(item.keywords || []), item.category, item.subcategory || "", "أحكام شرعية", "فقه"],
       ogType: "article",

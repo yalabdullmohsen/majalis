@@ -39,7 +39,7 @@ export default function ArbaeenHadithDetailPage() {
   useEffect(() => {
     applyPageSeo({
       path: `/arbaeen-nawawi/${hadith.id}`,
-      title: `${hadith.title} — الحديث ${hadith.id} من الأربعين النووية | المجلس العلمي`,
+      title: `${hadith.title} — الحديث ${hadith.id} من الأربعين النووية | سُنّة`,
       description: `${hadith.title}: نص الحديث وشرحه وفوائده مع اختبار تفاعلي لمراجعته — الحديث ${hadith.id} من الأربعين النووية.`,
       keywords: ["الأربعون النووية", hadith.title, "شرح حديث", "اختبار حديث"],
       jsonLd: [{

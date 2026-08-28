@@ -9,14 +9,14 @@ export default function AboutUsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/about",
-      title: "من نحن | المجلس العلمي",
-      description: "تعرّف على المجلس العلمي، رسالته، منهجه على منهج أهل السنة والجماعة وفق فهم السلف، ومنهجية إعداد المحتوى ومراجعته.",
-      keywords: ["المجلس العلمي", "من نحن", "منهج السلف", "منصة إسلامية", "الكويت"],
+      title: "من نحن | سُنّة",
+      description: "تعرّف على سُنّة، رسالته، منهجه على منهج أهل السنة والجماعة وفق فهم السلف، ومنهجية إعداد المحتوى ومراجعته.",
+      keywords: ["سُنّة", "من نحن", "منهج السلف", "منصة إسلامية", "الكويت"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "المجلس العلمي",
+          name: "سُنّة",
           url: "https://majlisilm.com",
           logo: "https://majlisilm.com/brand/official.png?v=20260825",
           description: "منصة شرعية رقمية كويتية تجمع الدروس والأحكام الشرعية والقرآن والأذكار في مرجع موثوق",
@@ -33,7 +33,7 @@ export default function AboutUsPage() {
     <LegalPageLayout eyebrow="تعرّف علينا" title="من نحن" updatedAt="2026-08-05">
       <LegalSection title="رسالة المجلس وغايته">
         <p>
-          المجلس العلمي منصة شرعية رقمية كويتية أُسِّست لتكون مرجعاً علمياً موثوقاً يجمع بين
+          سُنّة منصة شرعية رقمية كويتية أُسِّست لتكون مرجعاً علمياً موثوقاً يجمع بين
           الأصالة والحداثة؛ إذ تتضافر فيها الدروس الشرعية والمصحف الرقمي والأذكار المأثورة
           والأحكام الشرعية الموثّقة في منظومة متكاملة، سهلة الاستخدام للمسلم في كل مكان.
         </p>
@@ -81,7 +81,7 @@ export default function AboutUsPage() {
       </LegalSection>
 
       <LegalBackLink />
-      <ShareButtons title="من نحن — المجلس العلمي" url="https://majlisilm.com/about-us" />
+      <ShareButtons title="من نحن — سُنّة" url="https://majlisilm.com/about-us" />
     </LegalPageLayout>
   );
 }

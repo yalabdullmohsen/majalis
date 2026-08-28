@@ -113,7 +113,7 @@ function LessonUnavailable({ lessonId }: { lessonId: string }) {
   useEffect(() => {
     applyPageSeo({
       path: `/lessons/${lessonId}`,
-      title: "الدرس غير متاح | المجلس العلمي",
+      title: "الدرس غير متاح | سُنّة",
       description: "هذا الدرس غير متاح أو نُقل. تصفّح فهرس الدروس أو ابحث عن درس مشابه.",
       keywords: ["درس", "غير متاح"],
       robots: "noindex, follow",

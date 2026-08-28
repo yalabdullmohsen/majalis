@@ -29,7 +29,7 @@ export default function FiqhCouncilTopicIndexPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-council/index",
-      title: "الفهرس الموضوعي | المجمع الفقهي، المجلس العلمي",
+      title: "الفهرس الموضوعي | المجمع الفقهي، سُنّة",
       description: "فهرس موضوعي للمسائل والقرارات الفقهية، العبادات، المعاملات، النوازل، الاقتصاد، الطب، التقنية.",
       keywords: ["فهرس فقهي", "المجمع الفقهي", "مسائل فقهية", "تصنيفات"],
       jsonLd: [
@@ -111,7 +111,7 @@ export default function FiqhCouncilTopicIndexPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="الفهرس الموضوعي للمجمع الفقهي — المجلس العلمي" url="https://majlisilm.com/fiqh-council/index" />
+        <ShareButtons title="الفهرس الموضوعي للمجمع الفقهي — سُنّة" url="https://majlisilm.com/fiqh-council/index" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />

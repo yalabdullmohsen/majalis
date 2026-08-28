@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = resolve(__dirname, "../dist");
 const siteUrl = "https://majlisilm.com";
-const HOMEPAGE_H1_FRAGMENT = "المجلس العلمي — منصة الدروس";
+const HOMEPAGE_H1_FRAGMENT = "سُنّة — منصة الدروس";
 
 async function readHtml(filePath) {
   try {

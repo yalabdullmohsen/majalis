@@ -12,8 +12,8 @@ export default function KidsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/kids",
-      title: "ركن الأطفال | المجلس العلمي",
-      description: "ركن الأطفال في المجلس العلمي — محتوى تعليمي ميسّر وآمن للصغار.",
+      title: "ركن الأطفال | سُنّة",
+      description: "ركن الأطفال في سُنّة — محتوى تعليمي ميسّر وآمن للصغار.",
       keywords: ["الأطفال", "تعليم الأطفال"],
       robots: "noindex, follow",
     });

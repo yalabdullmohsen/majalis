@@ -158,7 +158,7 @@ export default function MadhahibPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/madhahib",
-      title: "المذاهب الفقهية الأربعة | المجلس العلمي",
+      title: "المذاهب الفقهية الأربعة | سُنّة",
       description: "تعرَّف على المذاهب الفقهية الأربعة: الحنفي والمالكي والشافعي والحنبلي؛ مع بيان منهج كل مذهب ومصادره؛ مرجع في المذاهب الفقهية الأربعة.",
       keywords: ["مذاهب فقهية", "فقه إسلامي", "حنفي مالكي شافعي حنبلي", "أصول الفقه"],
       jsonLd: [
@@ -317,7 +317,7 @@ export default function MadhahibPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="المذاهب الفقهية الأربعة — المجلس العلمي" url="https://majlisilm.com/madhahib" />
+        <ShareButtons title="المذاهب الفقهية الأربعة — سُنّة" url="https://majlisilm.com/madhahib" />
       </div>
 
       {/* صفحات ذات صلة */}

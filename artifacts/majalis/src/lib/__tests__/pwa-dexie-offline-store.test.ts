@@ -17,8 +17,8 @@ function read(rel: string) {
 
 // ── Manifest + iOS ──────────────────────────────────────────────────────────
 const manifest = JSON.parse(read("public/manifest.json"));
-assert.equal(manifest.name, "المجلس العلمي");
-assert.equal(manifest.short_name, "المجلس العلمي");
+assert.equal(manifest.name, "سُنّة");
+assert.equal(manifest.short_name, "سُنّة");
 assert.equal(manifest.lang, "ar");
 assert.equal(manifest.dir, "rtl");
 assert.equal(manifest.display, "standalone");
@@ -34,10 +34,10 @@ assert.ok(site.icons.some((i: { sizes: string }) => i.sizes.includes("1024")));
 
 const html = read("index.html");
 assert.match(html, /apple-mobile-web-app-capable/);
-assert.match(html, /apple-mobile-web-app-title" content="المجلس العلمي"/);
-assert.match(html, /manifest\.json/);
+assert.match(html, /apple-mobile-web-app-title" content="سُنّة"/);
+assert.match(html, /manifest\.webmanifest/);
 assert.match(html, /format-detection" content="telephone=no"/);
-assert.match(html, /application-name" content="المجلس العلمي"/);
+assert.match(html, /application-name" content="سُنّة"/);
 
 // ── Dexie stores ────────────────────────────────────────────────────────────
 assert.equal(OFFLINE_STORES.quran, "quran");

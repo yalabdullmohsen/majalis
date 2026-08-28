@@ -19,7 +19,7 @@ const __dirname = new URL(".", import.meta.url).pathname;
 const distDir = resolve(__dirname, "../dist");
 const siteUrl = "https://majlisilm.com";
 
-const HOMEPAGE_H1 = "المجلس العلمي — منصة الدروس الشرعية";
+const HOMEPAGE_H1 = "سُنّة — منصة الدروس الشرعية";
 
 interface CheckResult {
   path: string;

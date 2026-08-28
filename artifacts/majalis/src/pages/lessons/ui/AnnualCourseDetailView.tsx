@@ -43,7 +43,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
     if (!item) {
       applyPageSeo({
         path: `/annual-courses/${params.id}`,
-        title: "الدورة غير موجودة | المجلس العلمي",
+        title: "الدورة غير موجودة | سُنّة",
         description: "لم يُعثر على هذه الدورة العلمية.",
         robots: "noindex, follow",
         jsonLd: [],
@@ -55,7 +55,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
     const path = `/annual-courses/${params.id}`;
     applyPageSeo({
       path,
-      title: `${item.title} | الدورات العلمية، المجلس العلمي`,
+      title: `${item.title} | الدورات العلمية، سُنّة`,
       description: item.summary || item.title,
       keywords: [...(item.keywords || []), item.course_type, "دورات شرعية", "طلب العلم"],
       ogType: "website",
@@ -67,8 +67,8 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
           name: item.title,
           description: item.summary,
           learningResourceType: "دورة علمية",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
-          publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+          publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
           inLanguage: "ar",
         },
         breadcrumbJsonLd([

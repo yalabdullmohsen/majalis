@@ -1,4 +1,4 @@
-# App Review Notes — Majalis Al-Ilm (مجالس العلم)
+# App Review Notes — سُنّة (مجالس العلم)
 
 **Version:** 1.0  
 **Bundle ID:** com.majlisilm.app  
@@ -8,7 +8,7 @@
 
 ## App Overview
 
-Majalis Al-Ilm ("Islamic Knowledge Councils") is a comprehensive Arabic-language Islamic education platform. It provides:
+سُنّة ("Islamic Knowledge Councils") is a comprehensive Arabic-language Islamic education platform. It provides:
 
 - Full Quran browsing with audio streaming from multiple renowned reciters
 - Adhkar (daily remembrances) with a counter, morning/evening dhikr

@@ -55,7 +55,7 @@ export default function ScientificAnnouncementDetailPage({
       <div className="page-shell narrow">
         <MetaHead
           path={`/scientific-announcements/${params.id}`}
-          title="الإعلان غير موجود | المجلس العلمي"
+          title="الإعلان غير موجود | سُنّة"
           description="لم يُعثر على هذا الإعلان العلمي."
           robots="noindex, follow"
           jsonLd={[]}
@@ -87,7 +87,7 @@ export default function ScientificAnnouncementDetailPage({
     <>
     <MetaHead
       path={`/scientific-announcements/${params.id}`}
-      title={`${item.announcementTitle} | المجلس العلمي`}
+      title={`${item.announcementTitle} | سُنّة`}
       description={`${item.announcementTitle}، تفاصيل الإعلان العلمي والمؤتمرات والدورات الإسلامية.`}
       keywords={["إعلانات علمية", "مؤتمرات إسلامية", "دورات علمية", "فعاليات شرعية"]}
       ogImage={item.posterImage}
@@ -99,7 +99,7 @@ export default function ScientificAnnouncementDetailPage({
           name: item.announcementTitle,
           url: `https://majlisilm.com/scientific-announcements/${params.id}`,
           description: `${item.announcementTitle} — تفاصيل الحدث العلمي`,
-          organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          organizer: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
           ...(item.posterImage ? { image: item.posterImage } : {}),
         },
       ]}

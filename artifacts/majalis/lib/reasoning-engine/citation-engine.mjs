@@ -30,7 +30,7 @@ function stableKey(parts) {
 
 export function normalizeCitation(raw = {}) {
   const kind = raw.content_kind || raw.kind || "content";
-  const sourceName = raw.source_name || raw.publisher || raw.author || "المجلس العلمي";
+  const sourceName = raw.source_name || raw.publisher || raw.author || "سُنّة";
   const title = raw.title || raw.book_title || raw.excerpt?.slice?.(0, 80) || "مادة موثقة";
   const href = raw.href || raw.internal_href || raw.source_url || "/search";
 

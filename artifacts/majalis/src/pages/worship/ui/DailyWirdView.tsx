@@ -117,8 +117,8 @@ export default function DailyWirdPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/daily-wird",
-      title: "الورد اليومي من القرآن | المجلس العلمي",
-      description: "تتبّع وردك اليومي من القرآن الكريم، حدّد هدفك اليومي من الصفحات وتابع تقدمك نحو ختم القرآن. محتوى معتمد في منهج المجلس العلمي",
+      title: "الورد اليومي من القرآن | سُنّة",
+      description: "تتبّع وردك اليومي من القرآن الكريم، حدّد هدفك اليومي من الصفحات وتابع تقدمك نحو ختم القرآن. محتوى معتمد في منهج سُنّة",
       keywords: ["ورد يومي", "ختم القرآن", "قراءة قرآن", "حفظ قرآن", "مصحف يومي"],
       jsonLd: [
         {
@@ -126,7 +126,7 @@ export default function DailyWirdPage() {
           "@type": "WebApplication",
           name: "الورد اليومي من القرآن الكريم",
           url: "https://majlisilm.com/daily-wird",
-          description: "تتبّع وردك اليومي من القرآن الكريم وتابع تقدمك نحو ختم القرآن؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "تتبّع وردك اليومي من القرآن الكريم وتابع تقدمك نحو ختم القرآن؛ محتوى معتمد في منهج سُنّة",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",
           offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
@@ -385,7 +385,7 @@ export default function DailyWirdPage() {
 
       <RelatedKnowledge kind="lesson" query="الورد اليومي القرآن" title="دروس ومواد في الورد القرآني" limit={6} />
       <div className="twh-share">
-        <ShareButtons title="الورد اليومي — المجلس العلمي" url="https://majlisilm.com/daily-wird" />
+        <ShareButtons title="الورد اليومي — سُنّة" url="https://majlisilm.com/daily-wird" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/daily-wird" title="اختبر معلوماتك في القرآن والأخلاق" count={4} />

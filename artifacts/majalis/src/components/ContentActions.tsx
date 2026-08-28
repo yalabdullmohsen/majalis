@@ -13,14 +13,14 @@ interface Props {
 
 const REPORT_TYPES = ["خطأ_علمي", "خطأ_إملائي", "محتوى_غير_لائق", "رابط_مكسور", "أخرى"] as const;
 
-// ShareButtons — مشاركة «فائدة من المجلس العلمي» (Web Share · واتساب · نسخ).
+// ShareButtons — مشاركة «فائدة من سُنّة» (Web Share · واتساب · نسخ).
 
 export function ShareButtons(props: { title?: string; url?: string }) {
   const title =
     props.title ||
     (typeof document !== "undefined"
-      ? document.title.replace(/\s*\|\s*المجلس العلمي\s*$/, "").trim()
-      : "المجلس العلمي");
+      ? document.title.replace(/\s*\|\s*سُنّة\s*$/, "").trim()
+      : "سُنّة");
   const url = props.url;
   return <ShareFaida title={title} url={url} />;
 }

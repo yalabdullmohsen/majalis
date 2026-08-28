@@ -1029,7 +1029,7 @@ export default function FadailAamalPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fadail-aamal",
-      title: "فضائل الأعمال، المجلس العلمي",
+      title: "فضائل الأعمال، سُنّة",
       description: "فضائل العبادات والأعمال الصالحة من الأحاديث النبوية الصحيحة",
       keywords: ["فضائل الأعمال", "فضل الصلاة", "فضل الصيام", "الأجر والثواب", "الأحاديث النبوية"],
       jsonLd: [
@@ -1144,7 +1144,7 @@ export default function FadailAamalPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="فضائل الأعمال — المجلس العلمي" url="https://majlisilm.com/fadail-aamal" />
+          <ShareButtons title="فضائل الأعمال — سُنّة" url="https://majlisilm.com/fadail-aamal" />
         </div>
 
         {/* related */}

@@ -10,7 +10,7 @@ import "@/styles/pages/more-page.css";
 export default function MorePage() {
   useEffect(() => {
     applyPageSeo({
-      title: "المزيد — المجلس العلمي",
+      title: "المزيد — سُنّة",
       description:
         "المزيد: العلوم الشرعية، القصص، الدعوة، المكتبة، العبادة، التعلّم، والحساب.",
       path: "/more",

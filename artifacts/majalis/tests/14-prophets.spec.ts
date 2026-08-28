@@ -122,11 +122,11 @@ test.describe("قصص الأنبياء — /prophets", () => {
 
   // ── 7. SEO ───────────────────────────────────────────────────────────────────
 
-  test("title يحتوي على قصص الأنبياء أو المجلس العلمي", async ({ page }) => {
+  test("title يحتوي على قصص الأنبياء أو سُنّة", async ({ page }) => {
     await page.goto("/prophets");
     await page.waitForLoadState("networkidle");
     const title = await page.title();
-    expect(title).toMatch(/أنبياء|المجلس العلمي/);
+    expect(title).toMatch(/أنبياء|سُنّة/);
   });
 
   test("meta description موجودة", async ({ page }) => {

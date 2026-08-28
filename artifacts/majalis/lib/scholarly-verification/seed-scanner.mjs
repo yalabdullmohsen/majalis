@@ -65,7 +65,7 @@ function loadLessonsFromAds() {
       id: `lesson-ad-${i}`,
       title: t.replace(/title:\s*"/, '').replace('"', ''),
       source_url: 'https://majlisilm.com/lessons',
-      source_name: 'المجلس العلمي',
+      source_name: 'سُنّة',
       category: 'درس',
     }));
   } catch {
@@ -85,10 +85,10 @@ function loadFawaidFromSeed() {
       items.push({
         id: `fawaid-${i++}`,
         text: match[1].replace(/\\"/g, '"'),
-        author_name: 'المجلس العلمي',
+        author_name: 'سُنّة',
         category: 'عام',
         source_url: 'https://majlisilm.com',
-        source_name: 'المجلس العلمي',
+        source_name: 'سُنّة',
       });
     }
     return items;
@@ -111,7 +111,7 @@ function loadQaFromSeed() {
         answer: 'جواب',
         category: 'فقه',
         source_url: 'https://majlisilm.com',
-        source_name: 'المجلس العلمي',
+        source_name: 'سُنّة',
       });
     }
     return items;
@@ -197,7 +197,7 @@ function normalizeSeedItem(item, type) {
     title: item.title ?? item.text?.slice?.(0, 80) ?? item.question ?? item.name,
     content: item.content ?? item.text ?? item.answer ?? item.description ?? item.body ?? item.ruling_text,
     source_url: item.source_url ?? item.websiteUrl ?? item.book_url ?? item.external_url ?? defaultSourceUrl(type),
-    source_name: item.source_name ?? item.sourceName ?? item.organizer ?? item.author_name ?? item.mufti_name ?? 'المجلس العلمي',
+    source_name: item.source_name ?? item.sourceName ?? item.organizer ?? item.author_name ?? item.mufti_name ?? 'سُنّة',
     category: item.category ?? 'عام',
     trust_level: item.trust_level ?? (item.verification_status === 'verified' ? 85 : 55),
   };

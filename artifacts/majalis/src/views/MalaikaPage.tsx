@@ -327,7 +327,7 @@ export default function MalaikaPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/malaika",
-      title: "الملائكة في الإسلام | المجلس العلمي",
+      title: "الملائكة في الإسلام | سُنّة",
       description: "الإيمان بالملائكة، أسماؤهم ومهامهم وصفاتهم وفضائلهم وكيفية تعاملهم مع بني آدم من الأدلة الصحيحة يُعرض بأسلوب تعليمي منضبط يراعي أصول أهل.",
       keywords: ["الملائكة", "جبريل", "ميكائيل", "إسرافيل", "ملَك الموت", "صفات الملائكة", "أسماء الملائكة"],
       jsonLd: [
@@ -482,7 +482,7 @@ export default function MalaikaPage() {
         )}
 
       <div className="twh-share">
-        <ShareButtons title="الملائكة في الإسلام — المجلس العلمي" url="https://majlisilm.com/malaikah" />
+        <ShareButtons title="الملائكة في الإسلام — سُنّة" url="https://majlisilm.com/malaikah" />
       </div>
 
       <div className="px-4 pb-6 mt-6">

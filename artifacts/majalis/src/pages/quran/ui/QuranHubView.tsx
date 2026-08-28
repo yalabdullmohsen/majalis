@@ -16,7 +16,7 @@ export default function QuranHubPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/quran-hub",
-      title: "مركز القرآن الكريم — المجلس العلمي",
+      title: "مركز القرآن الكريم — سُنّة",
       description: "مركز القرآن الكريم: المصحف والتفسير والتلاوة وعلوم القرآن والإحصاءات الموثّقة.",
       keywords: ["القرآن الكريم", "المصحف", "تفسير", "تلاوة"],
     });
