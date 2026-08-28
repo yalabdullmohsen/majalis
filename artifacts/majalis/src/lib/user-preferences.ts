@@ -115,8 +115,12 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
         : 1;
   const fontScale = String(clampUiFontScale(rawFontScale));
   const densityScale = prefs.uiDensity === "compact" && !senior ? "0.92" : "1";
-  root.style.setProperty("--ui-font-scale", fontScale);
-  root.style.setProperty("--ui-density-scale", densityScale);
+  if (root.style.getPropertyValue("--ui-font-scale") !== fontScale) {
+    root.style.setProperty("--ui-font-scale", fontScale);
+  }
+  if (root.style.getPropertyValue("--ui-density-scale") !== densityScale) {
+    root.style.setProperty("--ui-density-scale", densityScale);
+  }
   const baseReading = Number(prefs.readingTextSize) || 17;
   const readingPx = clampReadingTextSize(senior ? Math.max(baseReading, 22) : baseReading);
   root.style.setProperty("--reading-font-size", `${readingPx}px`);
