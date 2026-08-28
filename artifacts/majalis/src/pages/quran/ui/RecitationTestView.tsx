@@ -1272,7 +1272,7 @@ function RecitationTestPageInner() {
         <div className="rai-header">
           <h1 className="rai-header__title">
             التلاوة
-            <span className="rai-experimental-badge">نسخة تجريبية</span>
+            <span className="rai-experimental-badge">مساعد تلاوة</span>
           </h1>
         </div>
         <div className="rai-detecting">
@@ -1297,7 +1297,7 @@ function RecitationTestPageInner() {
         <div className="rai-header">
           <h1 className="rai-header__title">
             التلاوة
-            <span className="rai-experimental-badge">نسخة تجريبية</span>
+            <span className="rai-experimental-badge">مساعد تلاوة</span>
           </h1>
           <p className="rai-header__sub">طابق تلاوتك من حفظك؛ يستمع التطبيق لحظيًا ويكشف المصحف الآية فور نطقها</p>
           <p className="rai-header__sub" style={{ fontSize: ".78rem", opacity: .85 }}>
@@ -1559,7 +1559,7 @@ function RecitationTestPageInner() {
           )}
 
           <p className="rai-pre-session-warning" role="alert">
-            هذه الميزة تجريبية وقد لا تكتشف جميع الأخطاء بدقة. لا تعتمد عليها بديلًا عن العرض على معلّم متقن.
+            هذه الميزة مساعدة للمراجعة وقد لا تكتشف جميع الأخطاء بدقة. لا تعتمد عليها بديلًا عن العرض على معلّم متقن.
           </p>
 
           <button

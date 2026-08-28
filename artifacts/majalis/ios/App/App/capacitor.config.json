@@ -4,6 +4,7 @@
 	"webDir": "dist",
 	"server": {
 		"url": "https://majlisilm.com",
+		"errorPath": "native-load-error.html",
 		"cleartext": false,
 		"androidScheme": "https"
 	},
