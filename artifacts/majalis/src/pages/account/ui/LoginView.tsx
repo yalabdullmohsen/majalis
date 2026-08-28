@@ -6,10 +6,6 @@ import { hasUnrestrictedAdminAccess, isOwnerAuthUser, resolveUserEmail } from "@
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
 import {
-  signInWithGoogle,
-  signInWithApple,
-  GOOGLE_OAUTH_ENABLED,
-  APPLE_OAUTH_ENABLED,
   resetPasswordForEmail,
   supabase,
 } from "@/lib/supabase";
@@ -20,13 +16,6 @@ import { sanitizeAuthNext } from "@/lib/auth-redirect";
 import "@/styles/pages/auth.css";
 
 type AuthTab = "login" | "register" | "forgot";
-
-const HIGHLIGHTS = [
-  { href: "/mushaf", label: "القرآن" },
-  { href: "/lessons", label: "الدروس" },
-  { href: "/fiqh", label: "الفقه" },
-  { href: "/prayer-times", label: "الصلاة" },
-] as const;
 
 function canAccessAdminUser(current: Awaited<ReturnType<typeof import("@/lib/supabase").getCurrentUser>>) {
   if (!current) return false;
@@ -100,8 +89,8 @@ export default function LoginPage() {
           ? "استعادة كلمة المرور | المجلس العلمي"
           : "تسجيل الدخول | المجلس العلمي",
       description: isRegister
-        ? "أنشئ حسابك في المجلس العلمي وابدأ رحلتك في تعلم العلوم الإسلامية."
-        : "سجّل دخولك إلى المجلس العلمي للوصول إلى محتوى شخصي وأدوات متقدمة.",
+        ? "إنشاء حساب في المجلس العلمي."
+        : "تسجيل الدخول إلى المجلس العلمي.",
       keywords: isRegister ? ["إنشاء حساب", "تسجيل", "المجلس العلمي"] : ["تسجيل دخول", "المجلس العلمي"],
       robots: "noindex, follow",
     });
@@ -243,9 +232,7 @@ export default function LoginPage() {
       ? "استعادة كلمة المرور"
       : adminLogin
         ? "دخول المسؤول"
-        : tab === "register"
-          ? "إنشاء حساب"
-          : "تسجيل الدخول";
+        : null;
 
   return (
     <div className="login-page" dir="rtl">
@@ -259,24 +246,12 @@ export default function LoginPage() {
               loading="eager"
               decoding="async"
               fetchPriority="high"
-              width={96}
-              height={96}
+              width={56}
+              height={56}
             />
           </div>
           <p className="login-card__brand">المجلس العلمي</p>
-          <p className="login-card__tagline">علم نافع، محتوى موثوق، ودروس ميسّرة</p>
-          {!adminLogin && tab !== "forgot" ? (
-            <ul className="login-highlights" aria-label="أبرز الأقسام">
-              {HIGHLIGHTS.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="login-chip">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-          <h1 className="login-card__title">{title}</h1>
+          {title ? <h1 className="login-card__title">{title}</h1> : null}
         </header>
 
         {!adminLogin && tab !== "forgot" ? (
@@ -430,46 +405,9 @@ export default function LoginPage() {
           </button>
         ) : null}
 
-        {!adminLogin &&
-          authEnabled &&
-          tab === "login" &&
-          (GOOGLE_OAUTH_ENABLED || APPLE_OAUTH_ENABLED) && (
-            <div className="login-oauth">
-              <div className="login-oauth__divider">
-                <span>أو</span>
-              </div>
-              {GOOGLE_OAUTH_ENABLED ? (
-                <button
-                  type="button"
-                  className="login-oauth__btn"
-                  onClick={async () => {
-                    const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
-                    await signInWithGoogle(getAuthCallbackUrl(nextPath !== "/" ? nextPath : "/"));
-                  }}
-                  disabled={loading}
-                >
-                  تسجيل الدخول بـ Google
-                </button>
-              ) : null}
-              {APPLE_OAUTH_ENABLED ? (
-                <button
-                  type="button"
-                  className="login-oauth__btn"
-                  onClick={async () => {
-                    const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
-                    await signInWithApple(getAuthCallbackUrl(nextPath !== "/" ? nextPath : "/"));
-                  }}
-                  disabled={loading}
-                >
-                  تسجيل الدخول بـ Apple
-                </button>
-              ) : null}
-            </div>
-          )}
-
         {!adminLogin ? (
           <div className="login-actions">
-            <Link href="/" className="login-guest-btn">
+            <Link href="/" className="login-guest-link">
               المتابعة كزائر
             </Link>
           </div>
