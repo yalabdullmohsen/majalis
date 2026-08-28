@@ -139,6 +139,10 @@ if (QURAN_SURAHS.length !== 114) {
 
 const SURAH_STORIES = getAllSurahStories();
 const PUBLIC_FIQH_ISSUES = FIQH_ISSUES_PUBLISHED_SEED.filter(isPublicIssue);
+/** مسائل منشورة في البذرة لكن غير مؤهّلة للعرض العام — قشرة noindex لمنع soft-404 بقشرة الرئيسية */
+const NONPUBLIC_FIQH_ISSUES = FIQH_ISSUES_PUBLISHED_SEED.filter(
+  (i) => i.status === "published" && !isPublicIssue(i),
+);
 const PUBLIC_FIQH_ITEMS = FIQH_COUNCIL_PUBLISHED_SEED.filter(isVerifiedPublicItem);
 const PUBLISHED_FIQH_BOOKS = publishedBooks();
 const FIQH_BOOK_STATS = (() => {
@@ -1028,7 +1032,24 @@ ${linkList("خدمات القرآن", [
   { name: "أدعية القرآن", url: "/duas-quran" },
   { name: "اختبار التلاوة", url: "/quran/recitation-test-ai" },
 ])}`,
-  "/hadith-science": `<p>مدخل إلى مصطلح الحديث ودرجاته وكتب الرواية، مع روابط إلى مكتبات الأحاديث الصحيحة والضعيفة والموضوعة والأربعين النووية.</p>
+  "/hadith-science": `<p>علم مصطلح الحديث يضبط نقل السنة: تعريف الحديث، شروط القبول، مراتب الصحة والضعف، والجرح والتعديل — قبل الاحتجاج بأي رواية في الأحكام أو العقائد.</p>
+<h2>تعريف مختصر</h2>
+<p>الحديث في الاصطلاح: ما أُضيف إلى النبي ﷺ من قول أو فعل أو تقرير أو صفة. و«مصطلح الحديث» قواعد يميّز بها المقبول من المردود.</p>
+<h2>أقسام عملية يهمّ طالب العلم</h2>
+<ul>
+  <li><strong>الصحيح:</strong> ما اتصل سنده بنقل العدل الضابط من مثله إلى منتهاه بلا شذوذ ولا علّة — وأصحّه ما في الصحيحين.</li>
+  <li><strong>الحسن:</strong> دون الصحيح في الضبط مع بقاء شروط القبول عند كثير من الأئمة.</li>
+  <li><strong>الضعيف:</strong> ما فقد شرطًا من شروط القبول؛ يُروى للمعرفة والتحذير لا للاحتجاج في العقيدة والأحكام.</li>
+  <li><strong>الموضوع:</strong> المكذوب المختلق؛ يُحذَّر منه ويُبيَّن وضعه.</li>
+</ul>
+<h2>أمثلة موثّقة للتصنيف</h2>
+<ul>
+  <li>مرجع الصحيحين: <a href="${escapeHtml(absoluteUrl("/hadith/sahih"))}">الأحاديث الصحيحة</a>.</li>
+  <li>روايات مشهورة مع بيان درجتها: <a href="${escapeHtml(absoluteUrl("/hadith/daif"))}">الأحاديث الضعيفة</a>.</li>
+  <li>موضوعات للتحذير: <a href="${escapeHtml(absoluteUrl("/hadith/mawdu"))}">الأحاديث الموضوعة</a>.</li>
+</ul>
+<h2>مصادر وتنبيه</h2>
+<p>درجات الأحاديث خارج الصحيحين مجال اجتهاد؛ المنصة تعرض العزو المنسوب ولا تغني عن المختص. راجع <a href="${escapeHtml(absoluteUrl("/methodology"))}">منهجيتنا</a>.</p>
 ${linkList("علوم الحديث وروابطه", [
   { name: "الأحاديث النبوية", url: "/hadith" },
   { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
@@ -1040,6 +1061,20 @@ ${linkList("علوم الحديث وروابطه", [
   { name: "صحيح مسلم (المكتبة)", url: "/library/book-muslim" },
 ])}`,
   "/islamic-glossary": `<p>معجم مبسّط لمصطلحات العلوم الشرعية: فقه، حديث، عقيدة، وأصول — لتعريف الطالب بالمفردات الشائعة قبل التوسّع في الأبواب.</p>
+<h2>تعريف مختصر</h2>
+<p>المفاهيم الشرعية ألفاظ اصطلاحية يختلف معناها عن المعنى اللغوي العام؛ ضبط التعريف يمنع الخلط عند قراءة المتون.</p>
+<h2>أقسام داخل المعجم</h2>
+<ul>
+  <li><strong>فقه وعبادات:</strong> الطهارة والصلاة والزكاة والصيام والحج.</li>
+  <li><strong>حديث ومصطلح:</strong> سند، متن، صحيح، ضعيف، جرح وتعديل.</li>
+  <li><strong>عقيدة:</strong> توحيد وإيمان على منهج أهل السنة.</li>
+  <li><strong>أصول:</strong> دليل وقياس وإجماع وقواعد فقهية.</li>
+</ul>
+<h2>روابط بعد التعريف</h2>
+<ul>
+  <li><a href="${escapeHtml(absoluteUrl("/hadith/sahih"))}">مرجع الصحيحين</a> · <a href="${escapeHtml(absoluteUrl("/fiqh-qawaid"))}">القواعد الفقهية</a> · <a href="${escapeHtml(absoluteUrl("/tawhid"))}">التوحيد</a></li>
+</ul>
+<p>التعريفات تمهيد تعليمي؛ راجع <a href="${escapeHtml(absoluteUrl("/methodology"))}">المنهجية</a> و<a href="${escapeHtml(absoluteUrl("/sources"))}">المصادر</a>.</p>
 ${linkList("روابط ذات صلة", [
   { name: "الأقسام", url: "/sections" },
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
@@ -1877,7 +1912,14 @@ ${linkList("أدوات", [
 </ul>
 <p>لا يُحفَظ التسجيل افتراضيًا ولا يُرسَل صوتك لخوادم المجلس العلمي (Majlisilm). راجع <a href="${escapeHtml(absoluteUrl("/privacy"))}">سياسة الخصوصية</a>.</p>
 <p><a href="${escapeHtml(absoluteUrl("/quran/recitation-test-ai"))}">ابدأ اختبار التلاوة</a></p>`,
-  "/hadith/sahih": `<p>مجموعة مختارة من الأحاديث الصحيحة من مصادر معتمدة، مع مداخل إلى علوم الحديث وكتب الرواية.</p>
+  "/hadith/sahih": `<p>مرجع عملي لأحاديث الصحيحين: الصحة بعضوية البخاري ومسلم، مع بحث وتصفية — بلا درجات اجتهادية إضافية خارج هذا الضابط.</p>
+<h2>تعريف مختصر</h2>
+<p>«الصحيحان» أصحّ كتب الحديث بعد كتاب الله عند أهل السنة. ما فيهما يُعامل هنا كمرجع صحيح بهذا المعنى.</p>
+<h2>مسارات</h2>
+<ul>
+  <li><a href="${escapeHtml(absoluteUrl("/library/book-bukhari"))}">صحيح البخاري</a> · <a href="${escapeHtml(absoluteUrl("/library/book-muslim"))}">صحيح مسلم</a> · <a href="${escapeHtml(absoluteUrl("/arbaeen-nawawi"))}">الأربعون النووية</a></li>
+</ul>
+<p>للتخريج الدقيق راجع الطبعات والشروح المعتمدة. <a href="${escapeHtml(absoluteUrl("/methodology"))}">المنهجية</a>.</p>
 ${linkList("أقسام الحديث", [
   { name: "الأحاديث النبوية", url: "/hadith" },
   { name: "الأحاديث الضعيفة", url: "/hadith/daif" },
@@ -1888,7 +1930,11 @@ ${linkList("أقسام الحديث", [
   { name: "صحيح البخاري", url: "/library/book-bukhari" },
   { name: "صحيح مسلم", url: "/library/book-muslim" },
 ])}`,
-  "/hadith/daif": `<p>أحاديث ضعيفة يُنبَّه إليها لتجنّب الاحتجاج بها في الأحكام والعقائد، مع ربط بدرجات الحديث وعلومه.</p>
+  "/hadith/daif": `<p>صفحة تنبيه: روايات مشهورة مقرونة بدرجتها وتخريجها المنسوب — لتجنّب الاحتجاج بها في الأحكام والعقائد دون تمييز.</p>
+<h2>تعريف مختصر</h2>
+<p>الضعيف: ما فقد شرطًا من شروط القبول. يُروى للمعرفة والتحذير لا لبناء حكم مستقل في العقيدة والأحكام عند جمهور المحققين.</p>
+<h2>تنبيه علمي</h2>
+<p>أحكام المحدّثين قد تختلف؛ العزو منسوب لمصادره. راجع <a href="${escapeHtml(absoluteUrl("/methodology"))}">منهجية التوثيق</a>.</p>
 ${linkList("أقسام الحديث", [
   { name: "الأحاديث النبوية", url: "/hadith" },
   { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
@@ -1897,7 +1943,11 @@ ${linkList("أقسام الحديث", [
   { name: "كتب الحديث", url: "/hadith/books" },
   { name: "منهجيتنا في التوثيق", url: "/methodology" },
 ])}`,
-  "/hadith/mawdu": `<p>أحاديث موضوعة ومكذوبة يُحذَّر منها، مع تمييزها عن الصحيح والضعيف عبر علوم الحديث.</p>
+  "/hadith/mawdu": `<p>صفحة تحذير من الموضوعات (المكذوبة على النبي ﷺ) مع عزو من حكم بالوضع حيث توفر — لرفع الجهل ومنع نسبة الكذب إلى السنة.</p>
+<h2>تعريف مختصر</h2>
+<p>الموضوع: ما اختُلق وكُذب على النبي ﷺ. يُحرَّم روايته مع العلم بوضعه إلا للتحذير وبيان حاله.</p>
+<h2>تنبيه</h2>
+<p>كتب الموضوعات والتخريج هي المرجع؛ المنصة أداة تنبيه. <a href="${escapeHtml(absoluteUrl("/methodology"))}">المنهجية</a>.</p>
 ${linkList("أقسام الحديث", [
   { name: "الأحاديث النبوية", url: "/hadith" },
   { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
@@ -2742,6 +2792,52 @@ ${issue.ruling_summary ? `<h2>الخلاصة</h2>\n<p>${escapeHtml(issue.ruling_
 ${issue.evidence_summary ? `<h2>المستند</h2>\n<p>${escapeHtml(issue.evidence_summary)}</p>` : ""}
 ${issue.category ? `<p>التصنيف: ${escapeHtml(issue.category)}</p>` : ""}`,
       priority: 0.69,
+      changefreq: "monthly",
+    },
+  );
+}
+
+// مسائل غير مؤهّلة للفهرسة العامة — قشرة noindex بعنوان/وصف/H1 صحيحين (لا قشرة الرئيسية)
+for (const issue of NONPUBLIC_FIQH_ISSUES) {
+  const levelLabel =
+    issue.documentation_level === "general_reasoning"
+      ? "استدلال عام — بلا مصدر رسمي مسمّى"
+      : issue.documentation_level === "imported_needs_review"
+        ? "مستورد — يحتاج مراجعة"
+        : "قيد المراجعة المنهجية";
+  addPage(
+    {
+      path: `/fiqh-council/issues/${issue.slug}`,
+      title: `${issue.title} — قيد المراجعة`,
+      description: clamp(
+        padDesc(
+          `${issue.title}: هذه المسألة غير معتمدة للفهرسة العامة بعد؛ ${levelLabel}. راجع المسائل الموثّقة في المجمع الفقهي.`,
+          "مسألة فقهية قيد المراجعة المنهجية في المجلس العلمي",
+        ),
+        META_DESC_MAX,
+      ),
+      keywords: [issue.title, "قيد المراجعة", "المجمع الفقهي"].filter(Boolean),
+      ogType: "article",
+      robots: "noindex, follow",
+      sitemap: false,
+    },
+    {
+      parents: [
+        { name: "المجمع الفقهي الإسلامي", path: "/fiqh-council" },
+        { name: "المسائل الفقهية — المجمع الفقهي", path: "/fiqh-council/issues" },
+      ],
+      richBody: `<h2>تنبيه منهجي</h2>
+<p>هذه الصفحة محفوظة لمسألة «${escapeHtml(issue.title)}» وهي <strong>غير معتمدة للعرض العام</strong> حتى تُستكمل المراجعة والتوثيق من مصدر رسمي.</p>
+<p>التصنيف الحالي: ${escapeHtml(levelLabel)}. لا تُعامل الملخّصات أدناه — إن وُجدت — كتزكية مطلقة أو فتوى نهائية.</p>
+${issue.summary ? `<h2>ملخّص أولي (غير معتمد)</h2>\n<p>${escapeHtml(issue.summary)}</p>` : ""}
+${linkList("بدائل موثّقة", [
+  { name: "المسائل الفقهية المعتمدة", url: "/fiqh-council/issues" },
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "منهجيتنا في التوثيق", url: "/methodology" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+])}`,
+      sitemap: false,
+      priority: 0.2,
       changefreq: "monthly",
     },
   );

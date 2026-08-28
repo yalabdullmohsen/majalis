@@ -43,9 +43,11 @@ assert.match(
 );
 assert.match(
   vercel,
-  /"proxy"\s*:\s*\{[\s\S]*"entrypoint"\s*:\s*"middleware\.js"[\s\S]*"matcher"\s*:\s*"\/lessons"/,
-  "vercel: proxy middleware لـ /lessons",
+  /"proxy"\s*:\s*\{[\s\S]*"entrypoint"\s*:\s*"middleware\.js"[\s\S]*"matcher"/,
+  "vercel: proxy middleware لـ /lessons و/admin",
 );
+assert.match(vercel, /"\/lessons"/, "vercel proxy: /lessons");
+assert.match(vercel, /"\/admin"/, "vercel proxy: /admin");
 assert.match(
   readFileSync(resolve(root, "middleware.js"), "utf8"),
   /searchParams\.delete\("tab"\)/,
@@ -60,6 +62,11 @@ assert.match(
   readFileSync(resolve(root, "middleware.js"), "utf8"),
   /return\s+next\(\)/,
   "middleware: return next() عند غياب tab",
+);
+assert.match(
+  readFileSync(resolve(root, "middleware.js"), "utf8"),
+  /isPrivateAppPath|\/admin/,
+  "middleware: يحجب زواحف الإدارة",
 );
 
 const sitemap = readFileSync(resolve(root, "public/sitemap.xml"), "utf8");
