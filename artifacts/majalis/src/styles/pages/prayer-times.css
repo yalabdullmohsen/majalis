@@ -511,7 +511,7 @@ html.pts-immersive .bottom-nav {
   padding: 0.62rem 0.95rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--pts-radius, 22px);
-  background-color: rgba(12, 42, 34, 0.45);
+  background-color: rgba(12, 42, 34, 0.92);
   background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.045));
   color: var(--pts-white);
   font-family: var(--font-face, var(--font-body), "Amiri", serif);
@@ -540,7 +540,7 @@ html.pts-immersive .bottom-nav {
   width: min(88vw, 440px);
   max-width: 100%;
   padding: 0.78rem 1.05rem;
-  background-color: rgba(40, 52, 28, 0.5);
+  background-color: rgba(40, 52, 28, 0.92);
   background-image: linear-gradient(145deg, rgba(222, 196, 128, 0.16), rgba(255, 255, 255, 0.05));
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow:
@@ -577,12 +577,13 @@ html.pts-immersive .bottom-nav {
 .pts-row__name {
   font-size: clamp(1rem, 3.8vw, 1.15rem);
   font-weight: 700;
-  color: var(--pts-white);
+  color: #FAFAF8;
   line-height: 1.25;
 }
 .pts-row--next .pts-row__name {
   font-weight: 800;
   font-size: clamp(1.05rem, 4vw, 1.22rem);
+  color: #FAFAF8;
 }
 .pts-row__status {
   font-size: 0.65rem;
