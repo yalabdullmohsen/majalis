@@ -32,13 +32,17 @@ function usePrayerSummary() {
 
   useEffect(() => {
     if (!data?.prayers?.length) return;
-    return subscribeSecondTick(() => {
+    const tick = () => {
       const cd = computePrayerCountdown(data.prayers);
       setNextKey(cd.next?.key ?? null);
       setCountdown(cd.remainingHms ?? "");
       setNextName(cd.next?.name ?? "");
       setNextTime(cd.next?.time ?? "");
-    });
+    };
+    tick();
+    /* تحديث كل ١٥ث — يكفي للرئيسية ويخفض TBT مقابل tick كل ثانية */
+    const id = window.setInterval(tick, 15_000);
+    return () => window.clearInterval(id);
   }, [data]);
 
   return { data, nextKey, countdown, nextName, nextTime };

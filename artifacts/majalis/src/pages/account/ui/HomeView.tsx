@@ -9,7 +9,6 @@ import { toArabicDigits } from "@/lib/utils";
 import { StartHeader } from "@/components/home/start/StartHeader";
 import { HOME_SEARCH_INPUT_ID } from "@/lib/home-search-id";
 import { StartSearchCard } from "@/components/home/start/StartSearchCard";
-import { PrayerSummaryCard } from "@/components/home/start/PrayerSummaryCard";
 import { DhikrSummaryCard } from "@/components/home/start/DhikrSummaryCard";
 import { HomeFeaturedSections } from "@/components/home/start/HomeFeaturedSections";
 import "@/styles/components/home/home-start.css";
@@ -50,6 +49,49 @@ const HomeAuthStrip = lazyWithRetry(
     })),
   "HomeAuthStrip",
 );
+
+const PrayerSummaryCard = lazyWithRetry(
+  () =>
+    import("@/components/home/start/PrayerSummaryCard").then((m) => ({
+      default: m.PrayerSummaryCard,
+    })),
+  "PrayerSummaryCard",
+);
+
+function PrayerSkeleton() {
+  return (
+    <section className="mj-app-card mj-prayer-summary mj-prayer-summary--ph" aria-label="مواقيت الصلاة" aria-busy="true">
+      <div className="mj-prayer-summary__hero mj-prayer-summary__hero--ph">
+        <span className="mj-home-start-ph__line mj-home-start-ph__line--md" />
+        <span className="mj-home-start-ph__line mj-home-start-ph__line--lg" />
+      </div>
+      <div className="mj-prayer-summary__row mj-prayer-summary__row--ph" aria-hidden="true">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <span key={i} className="mj-home-start-ph__chip" />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function PrayerSummaryGate() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    scheduleOnIdle(() => {
+      if (!cancelled) setShow(true);
+    }, 280);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  if (!show) return <PrayerSkeleton />;
+  return (
+    <Suspense fallback={<PrayerSkeleton />}>
+      <PrayerSummaryCard />
+    </Suspense>
+  );
+}
 
 function HomeBelowFoldGate() {
   const [show, setShow] = useState(false);
@@ -162,7 +204,7 @@ export default function HomePage() {
       {brand}
 
       <SectionErrorBoundary name="PrayerSummary">
-        <PrayerSummaryCard />
+        <PrayerSummaryGate />
       </SectionErrorBoundary>
 
       <SectionErrorBoundary name="DhikrSummary">
