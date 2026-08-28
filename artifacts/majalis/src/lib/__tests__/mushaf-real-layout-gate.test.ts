@@ -108,6 +108,7 @@ assert.match(viewport, /applyMushafThemeChrome/);
 
 assert.match(line, /stopPropagation/);
 assert.match(line, /LONG_PRESS_MS/);
+assert.match(line, /SHORT_SELECT_MS/);
 assert.match(line, /onPointerDown/);
 assert.match(line, /data-testid="mushaf-ayah-hit"/);
 
