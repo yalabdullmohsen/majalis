@@ -16,7 +16,7 @@ export const SITE_FOOTER_GROUPS: FooterGroup[] = [
     id: "sections",
     title: "الأقسام",
     links: [
-      { href: "/quran-hub", label: "القرآن" },
+      { href: "/quran-hub", label: "القرآن الكريم" },
       { href: "/lessons", label: "الدروس" },
       { href: "/teachers", label: "المشايخ" },
       { href: "/prayer-times", label: "الصلاة" },

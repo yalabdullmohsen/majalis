@@ -50,7 +50,7 @@ const FIXTURE: UnifiedSearchDoc[] = [
   doc("app:trials", "prophet", "ابتلاءات الأنبياء", "/prophets", ["ابتلاء"]),
   doc("app:seerah", "seerah", "السيرة النبوية", "/seerah", ["سيرة"]),
   doc("app:adhkar", "adhkar", "الأذكار والأدعية", "/adhkar", ["أذكار"]),
-  doc("app:glossary", "app", "المصطلحات", "/glossary", ["glossary"]),
+  doc("app:glossary", "app", "مفاهيم شرعية", "/glossary", ["glossary", "مصطلحات", "المصطلحات"]),
   doc("app:reciters", "app", "القرّاء", "/reciters", ["قراء", "تلاوة", "تسميع"]),
   doc("app:tafsir", "tafsir", "التفسير", "/tafsir", ["تفسير"]),
   doc("app:tafsir-audio", "tafsir-audio", "التفسير الصوتي", "/tafsir", ["تفسير صوتي"]),

@@ -36,7 +36,7 @@ export default function KidsPage() {
         <div className="kids-hub-soon__actions">
           <Link href="/quran-hub" className="kids-hub-soon__btn kids-hub-soon__btn--primary">
             <BookOpen size={18} strokeWidth={1.8} aria-hidden="true" />
-            مركز القرآن
+            مركز القرآن الكريم
           </Link>
           <Link href="/" className="kids-hub-soon__btn">
             <Home size={18} strokeWidth={1.8} aria-hidden="true" />

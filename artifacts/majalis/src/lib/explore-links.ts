@@ -27,7 +27,7 @@ export const ACCORDION_EXPLORE_LINKS = {
   arabic: [
     { href: "/quran-knowledge", label: "القرآن وعلومه" },
     { href: "/adab-talab-ilm", label: "آداب طالب العلم" },
-    { href: "/islamic-glossary", label: "المصطلحات الشرعية" },
+    { href: "/islamic-glossary", label: "مفاهيم شرعية" },
   ],
   tazkiya: [
     { href: "/akhlaq", label: "الأخلاق" },
@@ -104,7 +104,7 @@ export const PAGE_EXPLORE_LINKS = {
     { href: "/arkan", label: "أركان الإسلام والإيمان" },
     { href: "/iman-topics", label: "موضوعات الإيمان" },
     { href: "/adhkar", label: "الأذكار" },
-    { href: "/quran-hub", label: "مركز القرآن" },
+    { href: "/quran-hub", label: "مركز القرآن الكريم" },
   ],
   adabTalabIlm: [
     { href: "/tawhid", label: "التوحيد" },

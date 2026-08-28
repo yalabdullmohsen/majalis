@@ -11,7 +11,7 @@ const PUBLIC_ROUTES = [
   { path: "/hadith", name: "الحديث" },
   { path: "/duas", name: "الأدعية" },
   { path: "/adhkar/morning", name: "أذكار الصباح" },
-  { path: "/quran-hub", name: "مركز القرآن" },
+  { path: "/quran-hub", name: "مركز القرآن الكريم" },
   { path: "/mushaf", name: "المصحف" },
   { path: "/prayer-times", name: "مواقيت الصلاة" },
   { path: "/prayer", name: "اختصار الصلاة" },

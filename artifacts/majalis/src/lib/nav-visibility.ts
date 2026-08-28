@@ -25,7 +25,7 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/cards",
   "/mind-map",
   "/mushaf/page",
-  // التسميع ظاهر في مركز القرآن والمصحف وقوائم الاكتشاف
+  // التسميع ظاهر في مركز القرآن الكريم والمصحف وقوائم الاكتشاف
 
   "/quran-studies",
   "/anbiya",
@@ -55,7 +55,7 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/fiqh-council/fatwas",
   "/fiqh-qawaid",
   "/madhahib",
-  "/quran-knowledge", // تحت مركز القرآن
+  "/quran-knowledge", // تحت مركز القرآن الكريم
   "/knowledge-graph",
   "/flashcards",
   "/occasions",
@@ -75,7 +75,7 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/hadith-science",
   "/hadith/arbaeen",
   "/arbaeen-nawawi",
-  "/memorization", // تحت مركز القرآن
+  "/memorization", // تحت مركز القرآن الكريم
 ]);
 
 /**

@@ -47,7 +47,7 @@ export function TajweedChapterView() {
   return (
     <div className="tj-page" dir="rtl" data-quran-tajweed="1" data-tajweed-chapter={chapter.id}>
       <nav className="tj-crumb" aria-label="مسار">
-        <Link href="/quran-hub">مركز القرآن</Link>
+        <Link href="/quran-hub">مركز القرآن الكريم</Link>
         <span aria-hidden="true"> · </span>
         <Link href="/quran-hub/tajweed">التجويد</Link>
         <span aria-hidden="true"> · </span>

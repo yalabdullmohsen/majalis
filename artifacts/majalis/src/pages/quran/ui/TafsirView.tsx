@@ -224,7 +224,7 @@ export default function TafsirPage() {
           <span>لتمييز الرواية في التفسير</span>
         </Link>
         <Link href="/quran-hub" className="tf-cta__link">
-          <strong>مركز القرآن</strong>
+          <strong>مركز القرآن الكريم</strong>
           <span>بوابة أقسام القرآن</span>
         </Link>
       </nav>
@@ -460,7 +460,7 @@ export default function TafsirPage() {
         </div>
         <div className="tf-related__grid">
           {[
-            { href: "/quran-hub", label: "مركز القرآن" },
+            { href: "/quran-hub", label: "مركز القرآن الكريم" },
             { href: "/mushaf", label: "المصحف" },
             { href: "/ulum-quran", label: "علوم القرآن" },
             { href: "/quran-hub/tajweed", label: "علم التجويد" },

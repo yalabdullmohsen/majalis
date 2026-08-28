@@ -35,7 +35,7 @@ const GENDER = [
 ] as const;
 const HUB_LINKS = [
   { href: "/quran-circles", label: "حلقات التحفيظ", current: true },
-  { href: "/quran-hub", label: "مركز القرآن", current: false },
+  { href: "/quran-hub", label: "مركز القرآن الكريم", current: false },
   { href: "/quran-memorization", label: "اختبارات الحفظ", current: false },
   { href: "/quran/memorization-plans", label: "خطط الحفظ", current: false },
 ] as const;

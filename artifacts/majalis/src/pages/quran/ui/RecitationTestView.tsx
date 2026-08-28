@@ -1962,7 +1962,7 @@ export default function RecitationTestPage() {
             <p className="rai-header__sub">{AI_TARTEEL_DISABLED_MESSAGE}</p>
           </div>
           <Link href="/quran-hub" className="rai-start-btn">
-            العودة لمركز القرآن
+            العودة لمركز القرآن الكريم
           </Link>
         </div>
       </div>

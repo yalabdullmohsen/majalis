@@ -177,7 +177,7 @@ export function getLobby(id: LobbyId): LobbySpec {
   if (id === "quran") {
     return {
       id,
-      title: "مركز القرآن",
+      title: "مركز القرآن الكريم",
       path: "/quran-hub",
       primary: { ...must("open-mushaf"), dynamic: true },
       groups: QURAN_GROUPS.map((g) => ({

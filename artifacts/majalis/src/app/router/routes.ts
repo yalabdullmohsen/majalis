@@ -23,7 +23,7 @@ export type AppRoute = {
 function titleFromPath(path: string): string {
   const known: Record<string, string> = {
   "/": "الرئيسية",
-  "/quran-hub": "القرآن",
+  "/quran-hub": "القرآن الكريم",
   "/quran-knowledge": "علوم القرآن",
   "/mushaf": "المصحف",
   "/lessons": "الدروس",
@@ -35,7 +35,7 @@ function titleFromPath(path: string): string {
   "/prayer-times": "الصلاة",
   "/memorize": "الحفظ",
   "/search": "البحث",
-  "/islamic-glossary": "المصطلحات",
+  "/islamic-glossary": "مفاهيم شرعية",
   "/quiz": "المسابقة",
   "/competitions": "المسابقات",
   "/settings": "الإعدادات"

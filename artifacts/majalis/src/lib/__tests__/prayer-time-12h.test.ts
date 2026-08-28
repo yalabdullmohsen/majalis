@@ -37,11 +37,11 @@ assert.match(sidebarNav, /getSidebarGroupsFromNavMap|SIDEBAR_NAV_GROUPS/);
 
 const navMap = readFileSync(join(root, "lib/nav-map.ts"), "utf8");
 assert.match(navMap, /navFor|bottomNavSections/);
-assert.match(navMap, /مركز القرآن|الأقسام/);
+assert.match(navMap, /مركز القرآن الكريم|الأقسام/);
 const bottom = readFileSync(join(root, "components/BottomNavBar.tsx"), "utf8");
 assert.doesNotMatch(bottom, /MoreBottomSheet|المزيد/);
 assert.match(readFileSync(join(root, "config/sections.registry.ts"), "utf8"), /\/quran-hub/);
-assert.match(readFileSync(join(root, "config/sections.registry.ts"), "utf8"), /مركز القرآن/);
+assert.match(readFileSync(join(root, "config/sections.registry.ts"), "utf8"), /مركز القرآن الكريم/);
 
 const servicesNav = readFileSync(join(root, "lib/services-center-nav.ts"), "utf8");
 assert.match(servicesNav, /sections\.registry|الأبواب المميّزة|MORE_FEATURED/);

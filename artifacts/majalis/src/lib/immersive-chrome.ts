@@ -3,7 +3,7 @@
  * (شريط الأقسام، شريط الأحاديث، التذييل، شريط تحرير المشرف).
  *
  * /mushaf قارئ غمري — الأدوات داخل الصفحة عند اللمس فقط.
- * مركز القرآن (/quran-hub) ليس غمريًا.
+ * مركز القرآن الكريم (/quran-hub) ليس غمريًا.
  */
 export function isImmersiveChromePath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";

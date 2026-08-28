@@ -16,12 +16,12 @@ import {
 
 assert.equal(SECTION_GROUP_ORDER.length, 7);
 assert.equal(SECTION_GROUP_ORDER.at(-1), "account");
-assert.equal(featuredSections().length, 6);
+assert.equal(featuredSections().length, 7);
 assert.deepEqual(
   bottomNavSections().map((s) => s.id),
   ["quran", "lessons", "prayer", "fiqh", "sections"],
 );
-assert.equal(bottomNavSections()[0]?.label, "مركز القرآن");
+assert.equal(bottomNavSections()[0]?.label, "مركز القرآن الكريم");
 assert.equal(bottomNavSections()[4]?.label, "الأقسام");
 assert.ok(quranHubSections().some((s) => s.id === "open-mushaf" && s.label === "فتح المصحف"));
 assert.ok(quranHubSections().some((s) => s.id === "quran-numbers"));

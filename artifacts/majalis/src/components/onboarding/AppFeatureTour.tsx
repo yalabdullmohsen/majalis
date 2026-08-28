@@ -26,7 +26,7 @@ export const FEATURE_TOUR_SLIDES: FeatureTourSlide[] = [
     id: "mushaf",
     title: "المصحف والتلاوة",
     body: "قراءة بمصحف المدينة، تلاوة بالآية، تفسير، وتنزيل للاستماع بلا إنترنت.",
-    hint: "من تبويب مركز القرآن",
+    hint: "من تبويب مركز القرآن الكريم الكريم",
     Icon: BookOpen,
   },
   {

@@ -8,7 +8,7 @@ export const AI_TARTEEL_FEATURE_DEFAULT = true;
 const KILL_KEY = "majalis:ai-tarteel-kill";
 
 export const AI_TARTEEL_DISABLED_MESSAGE =
-  "ميزة التلاوة بالذكاء الاصطناعي متوقفة مؤقتًا. عُد لاحقًا أو جرّب من مركز القرآن.";
+  "ميزة التلاوة بالذكاء الاصطناعي متوقفة مؤقتًا. عُد لاحقًا أو جرّب من مركز القرآن الكريم.";
 
 function envFlag(name: string): string {
   try {

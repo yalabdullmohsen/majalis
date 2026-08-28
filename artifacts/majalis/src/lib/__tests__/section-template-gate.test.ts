@@ -35,7 +35,7 @@ const HUB_PAGES: Array<[string, string]> = [
   ["الأمم السابقة", "src/views/NationsPage.tsx"],
   ["المكتبة", "src/pages/library/ui/LibraryView.tsx"],
   ["الرسائل", "src/views/AcademicResearchPage.tsx"],
-  ["المصطلحات", "src/pages/account/ui/IslamicGlossaryView.tsx"],
+  ["مفاهيم شرعية", "src/pages/account/ui/IslamicGlossaryView.tsx"],
   ["دليل الجامعات", "src/views/UniversitiesPage.tsx"],
   ["اكتشف الإسلام", "src/views/DiscoverIslamPage.tsx"],
 ];

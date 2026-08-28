@@ -24,7 +24,7 @@ export const SMART_SEARCH_DATABASE: readonly SmartSearchItem[] = [
 
 export const SEARCH_CATEGORY_LABELS: Record<SearchCategory, string> = {
   all: "الكل",
-  quran: "القرآن",
+  quran: "القرآن الكريم",
   fiqh: "الفقه",
   sirah: "السيرة",
   hadith: "الحديث",
