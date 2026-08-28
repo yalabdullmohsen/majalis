@@ -56,8 +56,8 @@ assert.match(viewport, /PrefetchedMushafPage/);
 assert.match(viewport, /MUSHAF_CHROME_HIDE_MS/);
 
 assert.match(css, /--mm-ref-header-y:\s*8\.3%/);
-assert.match(css, /--mm-ref-text-start:\s*11\.9%/);
-assert.match(css, /--mm-ref-text-end:\s*91\.1%/);
+assert.match(css, /--mm-ref-text-start:\s*11\.5%/);
+assert.match(css, /--mm-ref-text-end:\s*91\.6%/);
 assert.match(css, /--mm-ref-open-banner-y:\s*27\.7%/);
 assert.match(css, /--mm-ref-open-text-end:\s*74\.8%/);
 assert.doesNotMatch(css, /--mm-ref-open-p2-text-end/);

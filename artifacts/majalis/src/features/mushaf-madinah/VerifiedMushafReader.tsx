@@ -957,7 +957,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           <MushafTafsirSheet
             open={tafsirOpen}
             verseKey={selectedVerseKey}
-            ayahText={selectedVerseKey ? versePreview(selectedVerseKey) : ""}
+            ayahText=""
             onClose={() => setTafsirOpen(false)}
           />
         </Suspense>

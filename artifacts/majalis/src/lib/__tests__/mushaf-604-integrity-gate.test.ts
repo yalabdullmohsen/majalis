@@ -26,8 +26,8 @@ type RawVerse = {
   words: RawWord[];
 };
 
-assert.match(css, /--mm-ref-text-start:\s*11\.9%/);
-assert.match(css, /--mm-ref-text-end:\s*91\.1%/);
+assert.match(css, /--mm-ref-text-start:\s*11\.5%/);
+assert.match(css, /--mm-ref-text-end:\s*91\.6%/);
 assert.match(fit, /fitPageFontSize/);
 assert.match(pageComp, /MushafBasmala/);
 assert.doesNotMatch(css, /\.mm-ayah-line\s*\{[^}]*overflow:\s*hidden/);

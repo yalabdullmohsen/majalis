@@ -25,7 +25,7 @@ const reader = read("src/features/mushaf-madinah/VerifiedMushafReader.tsx");
 assert.match(pageTsx, /"lead"/);
 assert.match(pageTsx, /data-page-type=\{pageType\}/);
 assert.match(css, /data-page-type="lead"/);
-assert.match(css, /--mm-ref-text-start:\s*11\.9%/);
+assert.match(css, /--mm-ref-text-start:\s*11\.5%/);
 assert.match(css, /var\(--inset-top/);
 assert.match(reader, /applyMushafThemeChrome/);
 

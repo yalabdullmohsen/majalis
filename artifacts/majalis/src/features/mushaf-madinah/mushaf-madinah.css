@@ -42,7 +42,7 @@
   --mm-ui-accent-deep: #0e3d27;
   --mm-audio-capsule: #faf7f0;
   --mm-outer-pad: 0;
-  --mm-inner-pad-x: clamp(0.7rem, 3.2vw, 1.25rem);
+  --mm-inner-pad-x: clamp(0.55rem, 2.8vw, 1.1rem);
   --mm-inner-pad-y: clamp(0.1rem, 0.8vw, 0.32rem);
   --mm-header-h: 8.3vh;
   --mm-footer-h: clamp(2.1rem, 5.2vh, 2.75rem);
@@ -80,8 +80,8 @@
   --mm-footer-below: calc(100% - var(--mm-ref-cartouche-y));
   /* نطاقات المرجع «آية» */
   --mm-ref-header-y: 8.3%;
-  --mm-ref-text-start: 11.9%;
-  --mm-ref-text-end: 91.1%;
+  --mm-ref-text-start: 11.5%;
+  --mm-ref-text-end: 91.6%;
   --mm-ref-cartouche-y: 94.3%;
   --mm-ref-ink-x-start: 1.5%;
   --mm-ref-ink-x-end: 98.4%;
@@ -2080,6 +2080,24 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   margin: 0 0 0.25rem;
   font-size: 0.72rem;
   color: color-mix(in srgb, var(--mm-ink) 45%, transparent);
+}
+
+.ayah-action-sheet.is-collapsed .ayah-action-sheet__body {
+  display: none;
+}
+
+.quran-quick-bar {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.quran-quick-bar--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.quran-tab--utility[aria-selected="true"] {
+  background: color-mix(in srgb, var(--quran-action-primary, var(--mm-ui-accent)) 12%, var(--quran-sheet-bg, var(--mm-paper)));
 }
 
 .ayah-action-sheet.is-collapsed .ayah-action-sheet__tafsir-toolbar {
