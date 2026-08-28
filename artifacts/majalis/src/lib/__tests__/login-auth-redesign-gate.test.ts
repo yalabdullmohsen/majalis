@@ -1,5 +1,5 @@
 /**
- * بوابة: صفحة دخول مستقلة مدمجة — تبويبان + أيقونة App + إخفاء chrome.
+ * بوابة: صفحة دخول هادئة — شعار + تبويبان + بلا تسويق.
  * تشغيل: node --import tsx src/lib/__tests__/login-auth-redesign-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -24,8 +24,8 @@ assert.match(app, /onAuthStandalone/);
 assert.match(fab, /isAuthStandalonePath/);
 
 assert.match(login, /login-app-icon/);
-assert.match(login, /border-radius:\s*32px|login-app-icon/);
-assert.match(login, /علم نافع، محتوى موثوق، ودروس ميسّرة/);
+assert.match(login, /\/brand\/icon-1024\.png/);
+assert.match(login, /المجلس العلمي/);
 assert.match(login, /تسجيل الدخول/);
 assert.match(login, /إنشاء حساب/);
 assert.match(login, /المتابعة كزائر/);
@@ -34,16 +34,18 @@ assert.match(login, /sanitizeAuthNext/);
 assert.match(login, /resetPasswordForEmail/);
 assert.match(login, /register\(/);
 assert.match(login, /login-tabs/);
-assert.match(login, /القرآن/);
-assert.match(login, /الدروس/);
-assert.match(login, /الفقه/);
-assert.match(login, /الصلاة/);
-assert.match(login, /\/brand\/icon-1024\.png/);
+assert.match(login, /login-guest-link/);
+
+assert.doesNotMatch(login, /علم نافع، محتوى موثوق/);
+assert.doesNotMatch(login, /login-highlights/);
+assert.doesNotMatch(login, /login-chip/);
+assert.doesNotMatch(login, /login-oauth/);
 
 assert.match(css, /border-radius:\s*28px/);
-assert.match(css, /border-radius:\s*32px/);
 assert.match(css, /object-fit:\s*cover/);
 assert.match(css, /\.login-tab\.is-active/);
+assert.match(css, /\.login-guest-link/);
+assert.doesNotMatch(css, /login-highlights/);
 assert.doesNotMatch(css, /linear-gradient\(160deg,\s*var\(--mj-brand-deep\)/);
 
 assert.match(msgs, /البريد غير صحيح/);
