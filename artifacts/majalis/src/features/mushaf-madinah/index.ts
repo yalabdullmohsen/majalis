@@ -1,6 +1,6 @@
 export { VerifiedMushafReader, MushafViewport } from "./VerifiedMushafReader";
 export { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
-export { AyahActionSheet, MushafAyahActions, QuranActionSheet } from "./AyahActionSheet";
+export { AyahActionSheet, MushafAyahActions, QuranActionSheet, QuranDetailsSheet } from "./AyahActionSheet";
 export { MushafSearchSheet } from "./MushafSearchSheet";
 export { MushafPage } from "./MushafPage";
 export { MushafPageHeader } from "./MushafPageHeader";

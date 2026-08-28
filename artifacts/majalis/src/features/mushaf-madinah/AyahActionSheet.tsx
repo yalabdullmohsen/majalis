@@ -1,7 +1,9 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   BookOpen,
+  Bookmark,
   Check,
+  Copy,
   Headphones,
   Mic,
   Pause,
@@ -102,7 +104,7 @@ export function AyahActionSheet({
   onPlayReciter,
   onClose,
 }: Props) {
-  const [height, setHeight] = useState<SheetHeight>("half");
+  const [height, setHeight] = useState<SheetHeight>("collapsed");
   const [tab, setTab] = useState<SheetTab>("tilawa");
   const [, setTafsirTabAvailable] = useState(false);
   const [readersOpen, setReadersOpen] = useState(false);
@@ -154,7 +156,7 @@ export function AyahActionSheet({
   void QURAN_DATA_FEATURES;
 
   useEffect(() => {
-    setHeight("half");
+    setHeight("collapsed");
     setTab("tilawa");
     setReadersOpen(false);
     setRange("ayah");
@@ -266,6 +268,8 @@ export function AyahActionSheet({
     if (height === "collapsed") setHeight("half");
   };
 
+  const showTajweedTab = QURAN_DATA_FEATURES.ayahTajweedTab;
+
   const stepHeight = (dir: "up" | "down") => {
     if (dir === "up") {
       if (height === "collapsed") setHeight("half");
@@ -285,6 +289,7 @@ export function AyahActionSheet({
       <div
         className={`mm-ayah-bar ayah-action-sheet quran-sheet is-${height}${expanded ? " is-expanded" : " is-collapsed"}`}
         data-testid="mushaf-ayah-actions"
+        data-sheet-mode={expanded ? "details" : "quick"}
         data-sheet-height={HEIGHT_ATTR[height]}
         data-opacity="1"
         style={{ opacity: 1 }}
@@ -338,13 +343,13 @@ export function AyahActionSheet({
             >
               <X size={18} aria-hidden="true" />
             </button>
-            <button type="button" className="mm-ayah-bar__close" onClick={onCopy} aria-label="نسخ الآية">
-              نسخ
-            </button>
           </div>
 
-
-          <div className="ayah-action-sheet__primary ayah-action-sheet__tabs quran-tabbar" role="tablist" aria-label="تبويبات الآية">
+          <div
+            className={`quran-quick-bar ayah-action-sheet__tabs quran-tabbar${showTajweedTab ? "" : " quran-quick-bar--4"}`}
+            role="tablist"
+            aria-label="إجراءات الآية"
+          >
             <button
               type="button"
               role="tab"
@@ -365,15 +370,25 @@ export function AyahActionSheet({
               <BookOpen size={18} aria-hidden="true" />
               <span>تفسير</span>
             </button>
-            <button
-              type="button"
-              role="tab"
-              className="quran-tab"
-              aria-selected={tab === "tajweed"}
-              onClick={() => selectTab("tajweed")}
-            >
-              <Sparkles size={18} aria-hidden="true" />
-              <span>تجويد</span>
+            {showTajweedTab ? (
+              <button
+                type="button"
+                role="tab"
+                className="quran-tab"
+                aria-selected={tab === "tajweed"}
+                onClick={() => selectTab("tajweed")}
+              >
+                <Sparkles size={18} aria-hidden="true" />
+                <span>تجويد</span>
+              </button>
+            ) : null}
+            <button type="button" className="quran-tab quran-tab--utility" onClick={onCopy} aria-label="نسخ الآية">
+              <Copy size={18} aria-hidden="true" />
+              <span>نسخ</span>
+            </button>
+            <button type="button" className="quran-tab quran-tab--utility" onClick={onBookmark} aria-label="حفظ الآية">
+              <Bookmark size={18} aria-hidden="true" />
+              <span>حفظ</span>
             </button>
           </div>
 
@@ -629,7 +644,7 @@ export function AyahActionSheet({
               </div>
             ) : null}
 
-            {tab === "tajweed" ? (
+            {showTajweedTab && tab === "tajweed" ? (
               <div className="ayah-action-sheet__tajweed" data-testid="mushaf-tajweed-empty">
                 <p className="mm-ayah-bar__status">
                   لا توجد أحكام تجويد متاحة لهذه الآية حاليًا.
@@ -763,4 +778,7 @@ export function AyahActionSheet({
 
 /** @deprecated استخدم QuranActionSheet — الاسم الموحّد */
 export { AyahActionSheet as MushafAyahActions };
+/** قائمة الآية السريعة (collapsed) + التفاصيل (half/full) */
 export { AyahActionSheet as QuranActionSheet };
+/** شيت التفاصيل — يُفعَّل تلقائيًا عند data-sheet-mode="details" */
+export { AyahActionSheet as QuranDetailsSheet };

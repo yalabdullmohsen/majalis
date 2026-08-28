@@ -8,7 +8,7 @@ export type MeasureTextFn = (fontPx: number, text: string, family: string) => nu
 export const MUSHAF_FIT_MIN_PX = 12;
 export const MUSHAF_FIT_MAX_PX = 34;
 /** سقف أعلى لصفحتي الفاتحة وبداية البقرة (أسطر أقل → تكبير دون قص). */
-export const MUSHAF_FIT_OPENING_MAX_PX = 40;
+export const MUSHAF_FIT_OPENING_MAX_PX = 42;
 import { releaseCanvasResources } from "@/lib/canvas-gl-cleanup";
 
 export const MUSHAF_FIT_LINE_RATIO = 1.85;
@@ -109,7 +109,7 @@ export function resolveOpeningMushafFontSize(
     blockHeightPx > 0
       ? Math.floor(blockHeightPx / lines / MUSHAF_FIT_LINE_RATIO)
       : MUSHAF_FIT_OPENING_MAX_PX;
-  const byWidth = Math.floor(containerWidthPx / 18.5);
+  const byWidth = Math.floor(containerWidthPx / 17);
   return Math.max(
     MUSHAF_FIT_MIN_PX,
     Math.min(MUSHAF_FIT_OPENING_MAX_PX, byHeight, byWidth),
@@ -130,7 +130,7 @@ export function resolveUniformMushafFontSize(
       ? Math.floor(blockHeightPx / 15 / MUSHAF_FIT_LINE_RATIO)
       : MUSHAF_FIT_MAX_PX;
   /** سعة أفقية تقريبية لسطر المصحف عند مقاس التصميم */
-  const byWidth = Math.floor(containerWidthPx / 19.5);
+  const byWidth = Math.floor(containerWidthPx / 18.5);
   return Math.max(
     MUSHAF_FIT_MIN_PX,
     Math.min(MUSHAF_FIT_MAX_PX, byHeight, byWidth),

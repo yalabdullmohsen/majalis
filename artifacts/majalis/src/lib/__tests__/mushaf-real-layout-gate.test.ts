@@ -39,8 +39,8 @@ assert.match(css, /\.mm-page--opening\s+\.mm-slot\[data-kind="empty"\]/);
 assert.match(css, /\.mm-page-shell[^{]*\{[^}]*padding-top:\s*0/);
 
 assert.match(css, /--mm-ref-header-y:\s*8\.3%/);
-assert.match(css, /--mm-ref-text-start:\s*11\.9%/);
-assert.match(css, /--mm-ref-text-end:\s*91\.1%/);
+assert.match(css, /--mm-ref-text-start:\s*11\.5%/);
+assert.match(css, /--mm-ref-text-end:\s*91\.6%/);
 assert.match(css, /--mm-ref-cartouche-y:\s*94\.3%/);
 assert.match(css, /--mm-ref-open-banner-y:\s*27\.7%/);
 assert.doesNotMatch(css, /--mm-ref-open-p2-text-end/);
