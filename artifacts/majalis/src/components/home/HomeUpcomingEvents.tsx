@@ -59,7 +59,7 @@ function sourceLabel(item: AutoImportedContent): string {
 function EventRow({ item }: { item: AutoImportedContent }) {
   const dateLabel = item.event_start_at
     ? new Intl.DateTimeFormat("ar", { dateStyle: "medium", timeStyle: "short" }).format(new Date(item.event_start_at))
-    : "الموعد قيد المراجعة";
+    : "الموعد غير محدد";
   return (
     <article className="hue__row ui-card">
       <span className="hue__row-badge hue__row-badge--event">فعالية</span>

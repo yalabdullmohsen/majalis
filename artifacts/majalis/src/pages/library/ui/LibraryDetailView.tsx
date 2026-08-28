@@ -151,7 +151,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
                   ? "نافع مع الحذر"
                   : item.contentStatus === "reference_only"
                     ? "مرجع فقط"
-                    : "يحتاج مراجعة"}
+                    : "مرجع عام"}
             </p>
           ) : null}
         </div>

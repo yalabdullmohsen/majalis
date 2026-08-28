@@ -183,7 +183,6 @@ export default function KnowledgeSectionPage() {
           <li key={it.id}>
             <Link href={`/knowledge/${section}/${it.id}`} className="knowledge-index-link surface-brand">
               <span>{it.title}</span>
-              {it.review_status === "needs_review" && <span className="knowledge-badge">مراجعة</span>}
             </Link>
           </li>
         ))}

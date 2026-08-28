@@ -638,8 +638,7 @@ export default function SearchPage() {
               <span>حالة التوثيق</span>
               <select value={filters.status} onChange={(e) => setFilters({ ...filters, status: e.target.value })}>
                 <option value="">الكل</option>
-                <option value="verified">موثق</option>
-                <option value="needs_review">يحتاج مراجعة</option>
+                <option value="verified">موثّق</option>
               </select>
             </label>
             <label className="search-filter-field">

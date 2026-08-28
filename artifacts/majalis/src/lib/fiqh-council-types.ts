@@ -417,7 +417,7 @@ export const FIQH_CONFIDENCE_LABELS: Record<FiqhConfidenceLevel, string> = {
 export const FIQH_SUMMARY_SOURCE_LABELS: Record<FiqhSummarySource, string> = {
   source: "منقول من المصدر",
   admin: "ملخص إداري",
-  auto: "تلخيص آلي — يحتاج مراجعة",
+  auto: "تلخيص آلي — غير مراجَع",
 };
 
 /** Statuses visible to public */
