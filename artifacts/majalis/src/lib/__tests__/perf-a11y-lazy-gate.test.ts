@@ -59,8 +59,8 @@ console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");
   assert.doesNotMatch(html, /rel="preload"[^>]+noto-naskh-400/, "لا preload Noto عند الإقلاع");
   assert.match(html, /id="mj-launch-splash"/, "دخولية MajlisSplash في HTML الحرج");
   assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل");
-  assert.match(html, /splash-logo\.webp/, "شعار Startup Gate");
-  assert.doesNotMatch(html, /mj-launch-splash__(wordmark|title)/, "بلا عنوان تسويقي في الدخولية");
+  assert.match(html, /mj-launch-splash__title/, "عنوان الهوية في الدخولية");
+  assert.doesNotMatch(html, /mj-launch-splash__tagline/, "بلا عبارة تسويقية");
   assert.match(
     html,
     /v6-direct-boot-2026-08|v7-boot-fouc-2026-08|v9-theme-light-default-2026-08|v10-pwa-single-paint-2026-08|v11-startup-stable-2026-08|v12-startup-gate-2026-08/,
