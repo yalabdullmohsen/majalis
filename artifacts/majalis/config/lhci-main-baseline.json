@@ -1,14 +1,14 @@
 {
-  "sourceRunId": "local-home-post-intro-disable-2026-08-29",
-  "sha": "startup-stable-v2",
-  "branch": "cursor/startup-stable-v2",
+  "sourceRunId": "local-home-chrome-stable-2026-08-29",
+  "sha": "startup-cls-chrome-stable",
+  "branch": "cursor/startup-cls-chrome-stable",
   "measuredAt": "2026-08-29",
   "environment": "lhci-preview",
-  "url": "http://127.0.0.1:24219/",
+  "url": "http://127.0.0.1:24222/",
   "runs": 3,
-  "notes": "معايرة بعد تعطيل FirstVisitIntro: LHCI كان يقيس صفحة التعريف (CLS≈0). الوسيط الآن للرئيسية الحقيقية (جوال preview).",
+  "notes": "حجز كروم كامل + نقل البث الحي بعد ابدأ من هنا. CLS≈0.069 على الرئيسية الحقيقية.",
   "median": {
-    "cls": 0.3966,
+    "cls": 0.0692,
     "lcpMs": 7056,
     "fcpMs": 4100,
     "siMs": 4100

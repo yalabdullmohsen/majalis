@@ -240,21 +240,14 @@
       h1, h2, h3, h4, strong, b, button {
         font-weight: 400;
       }
-      /* أثناء app-booting: بلا انتقالات + إخفاء الواجهة حتى ثبات الهيكل */
+      /* أثناء app-booting: بلا انتقالات مقاسات؛ الطبقة الثابتة هي #mj-launch-splash */
       html.app-booting,
       html.app-booting *,
       html.app-booting *::before,
       html.app-booting *::after {
-        transition-duration: 0s;
-        transition-delay: 0s;
-        animation-duration: 0s;
+        transition-property: opacity, color, background-color, border-color, box-shadow, transform, filter;
+        animation-duration: 0.001ms;
         animation-delay: 0s;
-      }
-      html.app-booting #root {
-        visibility: hidden;
-      }
-      html.app-booting #mj-launch-splash {
-        visibility: visible;
       }
       html.theme-dark, html[data-theme="dark"],
       html.theme-dark body, html[data-theme="dark"] body,
@@ -267,14 +260,31 @@
         --inset-bottom: env(safe-area-inset-bottom, 0px);
         --inset-right: env(safe-area-inset-right, 0px);
         --inset-left: env(safe-area-inset-left, 0px);
+        --ticker-h: 2.25rem;
         --header-chrome: 56px;
-        --top-sponsor-content-h: 48px;
-        --ad-banner-height: 0px;
+        --header-ad-h: 2.65rem;
+        --ad-row-h: calc(var(--header-ad-h) + 0.35rem);
+        /* الإعلان مفعّل في الهيدر — احجز ارتفاعه من أول إطار */
+        --ad-banner-height: var(--ad-row-h);
+        --search-height: 0px;
+        --ticker-row-h: 0px;
         --header-h: calc(var(--header-chrome) + var(--inset-top, 0px) + var(--ad-banner-height, 0px));
+        --app-top-chrome-h: calc(var(--header-h) + var(--search-height) + var(--ticker-row-h));
         --bottom-nav-h: 3.25rem;
         --bottom-nav-height: 3.25rem;
         --nav-h: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px));
         --mm-paper: #f7f1e3;
+      }
+      @media (max-width: 879px) {
+        :root {
+          --header-chrome: 48px;
+          --search-height: 3.25rem;
+          --ticker-row-h: calc(var(--ticker-h) + 0.65rem);
+          --app-top-chrome-h: calc(
+            var(--header-chrome) + var(--inset-top, 0px) + var(--ad-banner-height) +
+              var(--search-height) + var(--ticker-row-h)
+          );
+        }
       }
       html.theme-dark, html[data-theme="dark"] {
         --mm-paper: #1a221c;
@@ -286,10 +296,24 @@
           min-height: -webkit-fill-available;
         }
       }
+      .app-top-chrome {
+        min-height: var(--app-top-chrome-h);
+        box-sizing: border-box;
+      }
       .navbar-v3 { min-height: var(--header-h, 56px); box-sizing: border-box; }
+      .navbar-v3__ad-row {
+        min-height: var(--ad-row-h);
+        box-sizing: border-box;
+      }
+      .navbar-v3__search-row {
+        height: var(--search-height);
+        min-height: var(--search-height);
+        max-height: var(--search-height);
+        box-sizing: border-box;
+      }
       .navbar-ticker-row {
-        min-height: var(--ticker-h, 2.25rem);
-        height: var(--ticker-h, 2.25rem);
+        min-height: var(--ticker-row-h, var(--ticker-h, 2.25rem));
+        height: var(--ticker-row-h, var(--ticker-h, 2.25rem));
         box-sizing: border-box;
       }
       .header-ticker {
@@ -513,10 +537,18 @@
         try {
           var forceBench = /[?&]splash_timing=1(?:&|$)/.test(location.search);
           if (!forceBench && (navigator.webdriver || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
+            try {
+              document.documentElement.classList.remove("app-booting");
+              document.documentElement.dataset.appBooting = "0";
+            } catch (e2) {}
             dismiss(true);
             return;
           }
           if (!forceBench && sessionStorage.getItem(KEY) === "1") {
+            try {
+              document.documentElement.classList.remove("app-booting");
+              document.documentElement.dataset.appBooting = "0";
+            } catch (e2) {}
             dismiss(true);
             return;
           }

@@ -212,10 +212,6 @@ export default function HomePage() {
         }
       />
 
-      <SectionErrorBoundary name="HomeLiveNow">
-        <HomeLiveNowBanner />
-      </SectionErrorBoundary>
-
       <SectionErrorBoundary name="HomeUniversalSearch">
         <HomeUniversalSearch />
       </SectionErrorBoundary>
@@ -223,6 +219,11 @@ export default function HomePage() {
       <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
         <HomeStartHereSection />
       </section>
+
+      {/* بعد «ابدأ من هنا» حتى لا يدفع القسم عند ظهور البث الحي */}
+      <SectionErrorBoundary name="HomeLiveNow">
+        <HomeLiveNowBanner />
+      </SectionErrorBoundary>
 
       <HomeDailyWirdGate />
       <HomeBelowFoldGate />
