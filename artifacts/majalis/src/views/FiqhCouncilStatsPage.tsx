@@ -17,7 +17,7 @@ export default function FiqhCouncilStatsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-council/stats",
-      title: "إحصائيات المجمع الفقهي | المجلس العلمي",
+      title: "إحصائيات المجمع الفقهي | سُنّة",
       description: "إحصائيات المجمع الفقهي، عدد القرارات والفتاوى والبحوث وأكثر التصنيفات والمواد قراءة.",
       keywords: ["إحصائيات فقهية", "المجمع الفقهي"],
       jsonLd: [
@@ -134,7 +134,7 @@ export default function FiqhCouncilStatsPage() {
       </p>
 
       <div className="twh-share">
-        <ShareButtons title="إحصائيات مجلس الفقه — المجلس العلمي" url="https://majlisilm.com/fiqh-council/stats" />
+        <ShareButtons title="إحصائيات مجلس الفقه — سُنّة" url="https://majlisilm.com/fiqh-council/stats" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/fiqh-council/stats" title="اختبر معلوماتك في الفقه والتاريخ" count={4} />

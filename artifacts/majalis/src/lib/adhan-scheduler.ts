@@ -93,26 +93,34 @@ function prayerMs(slot: PrayerSlot): number | null {
   return slot.minutes * 60_000;
 }
 
+import { buildScheduledPrayerNotificationCopy } from "./prayer-notification-copy";
+
 function showBrowserNotification(event: AdhanEvent) {
   if (isNative) return;
   if (event.type === "adhan") return;
   if (!("Notification" in window) || Notification.permission !== "granted") return;
-  const title =
+  const copy =
     event.type === "advance"
-      ? `اقترب وقت ${event.prayerName}`
+      ? buildScheduledPrayerNotificationCopy({
+          kind: "pre",
+          prayerName: event.prayerName,
+          prayerTimeLabel: event.prayerTimeLabel ?? "",
+          minutesBefore: event.minutesBefore,
+        })
       : event.type === "iqamah"
-        ? `إقامة ${event.prayerName}`
-        : `أذان ${event.prayerName}`;
-  const body =
-    event.type === "advance"
-      ? `بقي ${event.minutesBefore} دقائق على صلاة ${event.prayerName}`
-      : event.type === "iqamah"
-        ? `${event.prayerTimeLabel ?? "حان وقت الإقامة"}`
-        : `حان وقت صلاة ${event.prayerName}`;
+        ? {
+            title: `إقامة ${event.prayerName}`,
+            body: event.prayerTimeLabel ?? "حان وقت الإقامة",
+          }
+        : buildScheduledPrayerNotificationCopy({
+            kind: "enter",
+            prayerName: event.prayerName,
+            prayerTimeLabel: event.prayerTimeLabel ?? "",
+          });
 
   try {
-    new Notification(title, {
-      body,
+    new Notification(copy.title, {
+      body: copy.body,
       icon: "/icon-192.png",
       badge: "/icon-72.png",
       tag: `adhan-${event.prayerKey}-${event.type}`,
@@ -187,10 +195,11 @@ function scheduleForPrayer(
     const fresh = loadAdhanPrefs();
     if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
     const mode = getEffectivePlaybackMode(fresh, key);
-    if (
-      mode === "full" &&
-      (isAdhanAndroidAlarmAvailable() || iosFullAdhanActive())
-    ) {
+    const muezzinId = getEffectiveMuezzinId(fresh, key);
+    const muezzin = getMuezzin(muezzinId);
+    const isFajr = key === "fajr";
+
+    if (mode === "full" && isAdhanAndroidAlarmAvailable()) {
       if (fresh.vibrateEnabled) void hapticTap("medium");
       dispatchAdhanEvent({
         type: "adhan",
@@ -201,9 +210,30 @@ function scheduleForPrayer(
       });
       return;
     }
-    const muezzinId = getEffectiveMuezzinId(fresh, key);
-    const muezzin = getMuezzin(muezzinId);
-    const isFajr = key === "fajr";
+
+    /**
+     * iOS كامل + التطبيق في الواجهة: شغّل الأذان الكامل داخل التطبيق بلا انقطاع،
+     * وألغِ بقية مقاطع الإشعار. إن كانت الشاشة مقفلة فالمقاطع المتتابعة تتولى الصوت.
+     */
+    if (mode === "full" && iosFullAdhanActive()) {
+      const inForeground =
+        typeof document !== "undefined" && document.visibilityState === "visible";
+      if (inForeground) {
+        void import("./adhan-ios-segments").then((m) => m.cancelAdhanIosSegmentChain());
+        const audio = playAdhan(muezzin, isFajr, "full", fresh.volume ?? 1);
+        if (!audio && isFajr) return;
+      }
+      if (fresh.vibrateEnabled) void hapticTap("medium");
+      dispatchAdhanEvent({
+        type: "adhan",
+        prayerKey: key,
+        prayerName: slot.name,
+        cityName,
+        prayerTimeLabel: slot.time,
+      });
+      return;
+    }
+
     const audio = playAdhan(muezzin, isFajr, mode, fresh.volume ?? 1);
     if (!audio && isFajr && mode !== "silent") return;
     if (fresh.vibrateEnabled) void hapticTap("medium");

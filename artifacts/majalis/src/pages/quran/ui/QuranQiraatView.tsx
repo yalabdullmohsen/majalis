@@ -31,7 +31,7 @@ export default function QuranQiraatView() {
   useEffect(() => {
     applyPageSeo({
       path: "/quran-hub/qiraat",
-      title: "القراءات العشر — المجلس العلمي",
+      title: "القراءات العشر — سُنّة",
       description: "تأصيل القراءات العشر ورواتها وأمثلة وصفية موثّقة دون تغيير نص مصحف حفص.",
       keywords: ["قراءات", "رواية", "حفص", "ورش", "شاطبية", "النشر"],
     });

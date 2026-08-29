@@ -62,11 +62,11 @@ export default function TopicPage() {
     applyPageSeo({
       path: `/topic/${topic?.slug || slug}`,
       title: missing
-        ? "موضوع غير متاح | المجلس العلمي"
-        : `${topic?.title || "موضوع"} | المجلس العلمي`,
+        ? "موضوع غير متاح | سُنّة"
+        : `${topic?.title || "موضوع"} | سُنّة`,
       description: missing
-        ? "هذا الموضوع غير متاح حالياً في فهرس المجلس العلمي."
-        : `استعرض محتوى موضوع "${topic?.title}" من الدروس والفتاوى والأحاديث في المجلس العلمي.`,
+        ? "هذا الموضوع غير متاح حالياً في فهرس سُنّة."
+        : `استعرض محتوى موضوع "${topic?.title}" من الدروس والفتاوى والأحاديث في سُنّة.`,
       keywords: missing ? ["موضوعات علمية"] : [topic?.title || "موضوع", "محتوى إسلامي", "فتاوى", "دروس", "أحاديث"],
       robots: missing ? "noindex,follow" : undefined,
       jsonLd: missing
@@ -143,7 +143,7 @@ export default function TopicPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="موضوعات المجلس العلمي" url="https://majlisilm.com/topics" />
+        <ShareButtons title="موضوعات سُنّة" url="https://majlisilm.com/topics" />
       </div>
       <RelatedKnowledge kind="lesson" query="موضوع علمي" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

@@ -158,15 +158,15 @@ export default function LibraryPage({
   useEffect(() => {
     applyPageSeo({
       path: "/library",
-      title: "المكتبة الشرعية الإسلامية | المجلس العلمي",
-      description: "مكتبة رقمية شاملة من الكتب والمراجع الشرعية، في الفقه والعقيدة والتفسير والحديث والسيرة والتزكية. محتوى معتمد في منهج المجلس العلمي",
+      title: "المكتبة الشرعية الإسلامية | سُنّة",
+      description: "مكتبة رقمية شاملة من الكتب والمراجع الشرعية، في الفقه والعقيدة والتفسير والحديث والسيرة والتزكية. محتوى معتمد في منهج سُنّة",
       keywords: ["مكتبة إسلامية", "كتب شرعية", "مراجع دينية", "مكتبة دينية", "كتب فقه"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "تصنيفات المكتبة الشرعية",
-          description: "تصنيفات كتب المكتبة الإسلامية في المجلس العلمي؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "تصنيفات كتب المكتبة الإسلامية في سُنّة؛ محتوى معتمد في منهج سُنّة",
           numberOfItems: LIBRARY_CATEGORIES.filter((c) => c !== "الكل").length,
           itemListElement: LIBRARY_CATEGORIES.filter((c) => c !== "الكل").map((cat, i) => ({
             "@type": "ListItem",
@@ -318,7 +318,7 @@ export default function LibraryPage({
         فهرس المكتبة متاح للتصفح مع بيان المصدر والدرجة حيث وُجدت.
       </p>
       <div className="twh-share">
-        <ShareButtons title="المكتبة الإسلامية — المجلس العلمي" url="https://majlisilm.com/library" />
+        <ShareButtons title="المكتبة الإسلامية — سُنّة" url="https://majlisilm.com/library" />
       </div>
       <RelatedKnowledge kind="book" query="مكتبة إسلامية" title="كتب ومواد ذات صلة" limit={6} />
       <ExploreAlsoNav

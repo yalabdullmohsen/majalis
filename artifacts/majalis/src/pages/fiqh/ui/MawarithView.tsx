@@ -248,7 +248,7 @@ export default function MawarithPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/mawarith",
-      title: "علم المواريث والفرائض، المجلس العلمي",
+      title: "علم المواريث والفرائض، سُنّة",
       description: "دليل شامل في علم الفرائض: الورثة وحصصهم وأسباب الإرث وموانعه وأحكام العَصَبة والحجب؛ مع أمثلة ومسائل شائعة وحاسبة تطبيقية؛ للتعلم.",
       keywords: ["المواريث", "الفرائض", "علم الإرث", "الورثة", "الحجب في الميراث"],
       jsonLd: [
@@ -537,7 +537,7 @@ export default function MawarithPage() {
 
         {/* related */}
         <div className="twh-share">
-          <ShareButtons title="علم المواريث — المجلس العلمي" url="https://majlisilm.com/mawarith" />
+          <ShareButtons title="علم المواريث — سُنّة" url="https://majlisilm.com/mawarith" />
         </div>
 
         <nav className="mw-related" aria-label="صفحات ذات صلة">

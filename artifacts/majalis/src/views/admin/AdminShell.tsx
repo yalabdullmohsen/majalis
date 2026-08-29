@@ -262,7 +262,7 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
           {/* شعار المنصة */}
           <div className="admin-sidebar-logo">
             <span className="admin-sidebar-logo__icon"><Building2 size={22} strokeWidth={1.5} aria-hidden="true" /></span>
-            <p className="admin-sidebar-logo__title">المجلس العلمي</p>
+            <p className="admin-sidebar-logo__title">سُنّة</p>
             <p className="admin-sidebar-logo__subtitle">Admin Dashboard</p>
           </div>
 

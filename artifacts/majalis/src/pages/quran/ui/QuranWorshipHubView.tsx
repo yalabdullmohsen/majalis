@@ -69,7 +69,7 @@ export default function QuranWorshipHubView() {
     applyPageSeo({
       title: `مركز العبادة القرآنية — ${meta.name.replace(/^سُورَةُ\s*/u, "")}`,
       description:
-        "مواقيت الصلاة، مشغّل تحفيظ A-B، وتنزيل التلاوات للاستماع دون اتصال — ضمن محرك المجلس العلمي.",
+        "مواقيت الصلاة، مشغّل تحفيظ A-B، وتنزيل التلاوات للاستماع دون اتصال — ضمن محرك سُنّة.",
       path: `/quran/worship-hub?surah=${surah}`,
     });
   }, [surah]);

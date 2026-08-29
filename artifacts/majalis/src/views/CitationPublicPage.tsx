@@ -41,7 +41,7 @@ export default function CitationPublicPage() {
           const c = r.citation;
           applyPageSeo({
             path: `/c/${slug}`,
-            title: `"${truncateAtWord(c.quoted_text, 60)}" | المجلس العلمي`,
+            title: `"${truncateAtWord(c.quoted_text, 60)}" | سُنّة`,
             description: truncateAtWord(c.quoted_text, 300),
             image: getCitationImageUrl(slug),
             keywords: ["مقتطف علمي", "استشهاد أكاديمي", "نص إسلامي", "مشاركة علمية"],
@@ -53,7 +53,7 @@ export default function CitationPublicPage() {
                 url: `https://majlisilm.com/c/${slug}`,
                 description: truncateAtWord(c.quoted_text, 200),
                 ...(c.source?.author_name ? { author: { "@type": "Person", name: c.source.author_name } } : {}),
-                publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+                publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
                 inLanguage: "ar",
               },
             ],
@@ -62,7 +62,7 @@ export default function CitationPublicPage() {
           setError(r.error || "الاقتباس غير موجود");
           applyPageSeo({
             path: `/c/${slug}`,
-            title: "الاقتباس غير موجود | المجلس العلمي",
+            title: "الاقتباس غير موجود | سُنّة",
             description: "لم يُعثر على هذا الاقتباس.",
             robots: "noindex, follow",
             jsonLd: [],
@@ -124,7 +124,7 @@ export default function CitationPublicPage() {
     <div className="cpp-root">
       {/* شريط التنقل */}
       <nav aria-label="تنقل الصفحة" className="cpp-nav">
-        <Link href="/" className="cpp-nav__brand">المجلس العلمي</Link>
+        <Link href="/" className="cpp-nav__brand">سُنّة</Link>
         <span className="cpp-nav__tagline">تطبيق العلم الشرعي</span>
       </nav>
 
@@ -222,9 +222,9 @@ export default function CitationPublicPage() {
           {/* تذييل */}
           <p className="cpp-footer">
             تم إنشاء هذا الاقتباس عبر{" "}
-            <Link href="/" className="cpp-link">المجلس العلمي</Link></p>
+            <Link href="/" className="cpp-link">سُنّة</Link></p>
           <div className="twh-share">
-            <ShareButtons title="اقتباس من المجلس العلمي" url={typeof window !== "undefined" ? window.location.href : "https://majlisilm.com"} />
+            <ShareButtons title="اقتباس من سُنّة" url={typeof window !== "undefined" ? window.location.href : "https://majlisilm.com"} />
           </div>
           <div className="px-4 pb-6 mt-4">
             <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في القرآن والحديث" count={4} />

@@ -12,17 +12,17 @@ export default function FatwaPolicyPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fatwa-policy",
-      title: "سياسة الفتوى والمراجعة | المجلس العلمي",
+      title: "سياسة الفتوى والمراجعة | سُنّة",
       description:
-        "كيف تُعرض الفتاوى والأحكام في المجلس العلمي، وما حدود المنصة، وسير المراجعة والاعتماد.",
-      keywords: ["سياسة الفتوى", "مراجعة شرعية", "المجلس العلمي", "توثيق"],
+        "كيف تُعرض الفتاوى والأحكام في سُنّة، وما حدود المنصة، وسير المراجعة والاعتماد.",
+      keywords: ["سياسة الفتوى", "مراجعة شرعية", "سُنّة", "توثيق"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "سياسة الفتوى والمراجعة",
           url: "https://majlisilm.com/fatwa-policy",
-          about: { "@type": "Organization", name: "المجلس العلمي" },
+          about: { "@type": "Organization", name: "سُنّة" },
         },
       ],
     });
@@ -82,7 +82,7 @@ export default function FatwaPolicyPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="سياسة الفتوى والمراجعة — المجلس العلمي" url="https://majlisilm.com/fatwa-policy" />
+        <ShareButtons title="سياسة الفتوى والمراجعة — سُنّة" url="https://majlisilm.com/fatwa-policy" />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

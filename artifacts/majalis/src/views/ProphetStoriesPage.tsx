@@ -342,7 +342,7 @@ function ProphetDetailView({
     ];
     applyPageSeo({
       path: `/prophets/${p.slug}`,
-      title: `قصة ${p.arabicName} عليه السلام | المجلس العلمي`,
+      title: `قصة ${p.arabicName} عليه السلام | سُنّة`,
       description: p.briefBio ? truncateAtWord(p.briefBio, 160) : `قصة نبي الله ${p.arabicName} عليه السلام من القرآن والسنة.`,
       keywords: ["قصص الأنبياء", p.arabicName, "أنبياء الإسلام", "معجزات الأنبياء"],
       ogType: "article",
@@ -1021,7 +1021,7 @@ export default function ProphetStoriesPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/prophets",
-      title: "الأنبياء والرسل | المجلس العلمي",
+      title: "الأنبياء والرسل | سُنّة",
       description: "قصص ٢٥ نبياً ورسولاً مذكورين في القرآن الكريم: سيرهم ومعجزاتهم وأقوامهم والدروس المستفادة، مع خط زمني ومقارنة وأولو العزم.",
       keywords: ["قصص الأنبياء", "الأنبياء في القرآن", "معجزات الأنبياء", "أولو العزم", "أنبياء الإسلام"],
     });
@@ -1218,7 +1218,7 @@ export default function ProphetStoriesPage() {
       <SectionQuiz sectionId="prophets" title="اختبر معلوماتك في قصص الأنبياء" count={4} />
 
       <div className="twh-share">
-        <ShareButtons title="قصص الأنبياء — المجلس العلمي" url="https://majlisilm.com/prophets" />
+        <ShareButtons title="قصص الأنبياء — سُنّة" url="https://majlisilm.com/prophets" />
       </div>
     </div>
   );

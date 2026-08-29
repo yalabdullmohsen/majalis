@@ -106,6 +106,6 @@ export function buildCompetitionShareText(c: ExternalCompetition): string {
   }
   if (c.registrationUrl) lines.push(c.registrationUrl);
   else if (c.sourceUrl) lines.push(c.sourceUrl);
-  lines.push("", "المجلس العلمي");
+  lines.push("", "سُنّة");
   return lines.join("\n");
 }

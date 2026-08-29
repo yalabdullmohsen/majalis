@@ -338,7 +338,7 @@ export default function AlamatSaahPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/alamat-saah",
-      title: "علامات الساعة | المجلس العلمي",
+      title: "علامات الساعة | سُنّة",
       description: "علامات الساعة الصغرى والكبرى من الأحاديث الصحيحة، ما وقع وما هو جارٍ وما لم يقع بعد، مع الاستعداد للآخرة — مع التنبيه على الفرق بين ما وقع.",
       keywords: ["علامات الساعة", "أشراط الساعة", "الدجال", "يأجوج مأجوج", "نزول عيسى", "العلامات الكبرى"],
       jsonLd: [
@@ -531,7 +531,7 @@ export default function AlamatSaahPage() {
       </nav>
 
       <div className="twh-share">
-        <ShareButtons title="علامات الساعة، المجلس العلمي" url="https://majlisilm.com/alamat-saah" />
+        <ShareButtons title="علامات الساعة، سُنّة" url="https://majlisilm.com/alamat-saah" />
       </div>
       <RelatedKnowledge kind="lesson" query="علامات الساعة" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-6">

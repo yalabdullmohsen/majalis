@@ -35,9 +35,9 @@ export default function LessonsArchivePage() {
     applyPageSeo({
       path: "/lessons/archive",
       canonicalPath: "/lessons/archive",
-      title: "أرشيف الدروس السابقة | المجلس العلمي",
+      title: "أرشيف الدروس السابقة | سُنّة",
       description:
-        "دروس ودورات انتهت مواعيدها — مؤرشفة تلقائياً من القائمة النشطة في المجلس العلمي.",
+        "دروس ودورات انتهت مواعيدها — مؤرشفة تلقائياً من القائمة النشطة في سُنّة.",
       jsonLd: [
         {
           "@context": "https://schema.org",

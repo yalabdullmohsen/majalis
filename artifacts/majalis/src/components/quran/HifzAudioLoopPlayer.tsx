@@ -103,7 +103,7 @@ export function HifzAudioLoopPlayer({ surah, reciterId }: HifzAudioLoopPlayerPro
       ? {
           title: `${surahTitle} — آية ${toArabicDigits(snap.ayah)}`,
           artist: reciter.nameAr,
-          album: "تحفيظ — المجلس العلمي",
+          album: "تحفيظ — سُنّة",
           playing,
           position: snap.currentTime,
           duration: snap.duration,

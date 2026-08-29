@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#F2F4F3" />
-    <!-- ثيم+RTL قبل أي CSS/JS — يمنع وميض ليلي وكاش قديم (v10-pwa-single-paint-2026-08) -->
+    <!-- ثيم+RTL+حجم خط قبل أي CSS/JS — أول إطار ثابت (v11-startup-stable-2026-08) -->
     <script id="mj-theme-boot">
       (function () {
         try {
           var html = document.documentElement;
           html.setAttribute("lang", "ar");
           html.setAttribute("dir", "rtl");
-          var _dsv = "v10-pwa-single-paint-2026-08";
+          html.classList.add("app-booting");
+          html.dataset.appBooting = "1";
+          var _dsv = "v11-startup-stable-2026-08";
           if (localStorage.getItem("majalis-design-v") !== _dsv) {
             localStorage.setItem("majalis-design-v", _dsv);
             localStorage.removeItem("majalis-font-preference");
@@ -57,6 +59,66 @@
           var storedFont = localStorage.getItem("majalis-font-preference-v2");
           html.dataset.font =
             storedFont === "naskh" || storedFont === "default" ? storedFont : "naskh";
+
+          /* حجم الخط/الكثافة من الإعدادات قبل React — لا قفزة بعد أول رسم */
+          var fontScale = 1;
+          var densityScale = 1;
+          var readingPx = 17;
+          var quranPx = 22;
+          var lineH = "1.85";
+          var maxW = "68ch";
+          var density = "comfortable";
+          var contrast = "normal";
+          var senior = false;
+          try {
+            var raw = JSON.parse(localStorage.getItem("majalis-user-settings-v1") || "{}") || {};
+            senior = raw.seniorMode === true;
+            var fs = raw.fontSize;
+            fontScale = senior ? 1.16 : fs === "صغير" ? 0.92 : fs === "كبير" ? 1.08 : 1;
+            if (fontScale < 0.85) fontScale = 0.85;
+            if (fontScale > 1.35) fontScale = 1.35;
+            density = senior ? "comfortable" : raw.uiDensity === "compact" ? "compact" : "comfortable";
+            densityScale = density === "compact" && !senior ? 0.92 : 1;
+            var baseReading = Number(raw.readingTextSize) || 17;
+            readingPx = senior ? Math.max(baseReading, 22) : baseReading;
+            if (readingPx < 14) readingPx = 14;
+            if (readingPx > 32) readingPx = 32;
+            quranPx = Number(raw.quranFontScale) || 22;
+            var spacing = raw.readingSpacing;
+            lineH =
+              senior || spacing === "واسع" ? "2.1" : spacing === "ضيق" ? "1.6" : "1.85";
+            var rw = raw.readingWidth;
+            maxW = rw === "ضيق" ? "52ch" : rw === "واسع" ? "78ch" : "68ch";
+            contrast = senior || raw.highContrast === true ? "high" : "normal";
+            if (raw.direction === "ltr" || raw.direction === "rtl") {
+              html.setAttribute("dir", raw.direction);
+            }
+            html.dataset.readingTheme = raw.readingTheme || "default";
+            html.dataset.readingMode = raw.readingMode ? "quiet" : "normal";
+            html.dataset.readingWidth = rw === "ضيق" || rw === "واسع" ? rw : "متوسط";
+          } catch (_) {}
+          html.style.setProperty("--ui-font-scale", String(fontScale));
+          html.style.setProperty("--ui-density-scale", String(densityScale));
+          html.style.setProperty("--reading-font-size", readingPx + "px");
+          html.style.setProperty("--quran-font-size", quranPx + "px");
+          html.style.setProperty("--reading-line-height", lineH);
+          html.style.setProperty("--reading-max-width", maxW);
+          html.dataset.uiDensity = density;
+          html.dataset.contrast = contrast;
+          html.dataset.seniorMode = senior ? "1" : "0";
+
+          function clearBooting() {
+            html.classList.remove("app-booting");
+            html.dataset.appBooting = "0";
+          }
+          window.addEventListener(
+            "mj:boot-ready",
+            function () {
+              window.setTimeout(clearBooting, 200);
+            },
+            { once: true },
+          );
+          window.setTimeout(clearBooting, 1500);
         } catch (e) {}
       })();
     </script>
@@ -132,21 +194,51 @@
     </script>
     <style id="mj-lcp-critical">
       /* سطح نهائي فورًا — بلا أبيض افتراضي وبلا انتظار خط ثلث/رقعة */
+      @font-face {
+        font-family: "Amiri";
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url("/fonts/ui/amiri-400-ar.woff2") format("woff2");
+        unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+0660-0669;
+        ascent-override: 95%;
+        descent-override: 25%;
+        line-gap-override: 0%;
+      }
+      @font-face {
+        font-family: "MajlisAmiriFallback";
+        src: local("Noto Naskh Arabic"), local("Geeza Pro"), local("Traditional Arabic");
+        ascent-override: 95%;
+        descent-override: 25%;
+        line-gap-override: 0%;
+        size-adjust: 105%;
+      }
       html {
         --ui-font-scale: 1;
         --ui-density-scale: 1;
+        --ticker-h: 2.25rem;
+        font-size: calc(100% * var(--ui-font-scale, 1));
       }
       html, body, #root {
         background-color: #F2F4F3;
         margin: 0;
         min-height: 100dvh;
         color: #14241c;
-        font-family: "Amiri", "Noto Naskh Arabic", system-ui, sans-serif;
+        font-family: "Amiri", "MajlisAmiriFallback", "Noto Naskh Arabic", serif;
         font-weight: 400;
       }
       /* يمنع طلب amiri-700 قبل CSS المكوّنات (h1 افتراضيًا bold) */
       h1, h2, h3, h4, strong, b, button {
         font-weight: 400;
+      }
+      /* أول 1500ms: بلا انتقالات مقاسات تُسبب قفزة خط/تخطيط */
+      html.app-booting,
+      html.app-booting *,
+      html.app-booting *::before,
+      html.app-booting *::after {
+        transition-property: opacity, color, background-color, border-color, box-shadow, transform, filter;
+        animation-duration: 0.001ms;
+        animation-delay: 0s;
       }
       html.theme-dark, html[data-theme="dark"],
       html.theme-dark body, html[data-theme="dark"] body,
@@ -178,8 +270,29 @@
           min-height: -webkit-fill-available;
         }
       }
-      .navbar-v3 { min-height: var(--header-chrome, 56px); box-sizing: border-box; }
-      .bottom-nav, [data-bottom-nav] { min-height: var(--nav-h); box-sizing: border-box; }
+      .navbar-v3 { min-height: var(--header-h, 56px); box-sizing: border-box; }
+      .navbar-ticker-row {
+        min-height: var(--ticker-h, 2.25rem);
+        height: var(--ticker-h, 2.25rem);
+        box-sizing: border-box;
+      }
+      .header-ticker {
+        height: var(--ticker-h, 2.25rem);
+        min-height: var(--ticker-h, 2.25rem);
+        max-height: var(--ticker-h, 2.25rem);
+        box-sizing: border-box;
+      }
+      .bottom-nav, [data-bottom-nav] {
+        min-height: var(--nav-h);
+        box-sizing: border-box;
+        background-color: #F2F4F3;
+      }
+      html.theme-dark .bottom-nav,
+      html[data-theme="dark"] .bottom-nav,
+      html.theme-dark [data-bottom-nav],
+      html[data-theme="dark"] [data-bottom-nav] {
+        background-color: #101614;
+      }
     </style>
     <style id="mj-splash-critical">
       :root{
@@ -264,42 +377,39 @@
     </style>
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="المجلس العلمي" />
+    <meta name="apple-mobile-web-app-title" content="سُنّة" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="format-detection" content="telephone=no" />
-    <meta name="application-name" content="المجلس العلمي" />
-    <title>المجلس العلمي | دروس شرعية ودورات علمية</title>
-    <meta name="description" content="تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
+    <meta name="application-name" content="سُنّة" />
+    <title>سُنّة | قرآن ودروس شرعية</title>
+    <meta name="description" content="تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة." />
     <meta name="robots" content="index, follow" />
-    <meta name="author" content="المجلس العلمي" />
+    <meta name="author" content="سُنّة" />
     <link rel="canonical" href="https://majlisilm.com/" />
-    <meta property="og:site_name" content="المجلس العلمي" />
+    <meta property="og:site_name" content="سُنّة" />
     <meta property="og:locale" content="ar_KW" />
-    <meta property="og:title" content="المجلس العلمي | دروس شرعية ودورات علمية" />
-    <meta property="og:description" content="تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
+    <meta property="og:title" content="سُنّة | قرآن ودروس شرعية" />
+    <meta property="og:description" content="تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://majlisilm.com/" />
     <meta property="og:image" content="https://majlisilm.com/brand/official-og.png?v=20260825" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="المجلس العلمي | دروس شرعية ودورات علمية" />
+    <meta property="og:image:alt" content="سُنّة | قرآن ودروس شرعية" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="المجلس العلمي | دروس شرعية ودورات علمية" />
-    <meta name="twitter:description" content="تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
+    <meta name="twitter:title" content="سُنّة | قرآن ودروس شرعية" />
+    <meta name="twitter:description" content="تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة." />
     <meta name="twitter:image" content="https://majlisilm.com/brand/official-og.png?v=20260825" />
-    <meta name="twitter:image:alt" content="المجلس العلمي | دروس شرعية ودورات علمية" />
+    <meta name="twitter:image:alt" content="سُنّة | قرآن ودروس شرعية" />
     <link rel="icon" href="/favicon.ico?v=20260825" sizes="any" />
     <link rel="icon" type="image/png" href="/icon-192.png?v=20260825" sizes="192x192" />
     <link rel="icon" type="image/png" href="/icon-512.png?v=20260825" sizes="512x512" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260825" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="manifest" href="/site.webmanifest" />
     <!-- preconnect واحد فقط (Lighthouse ≤٢) — الخطوط محلية؛ أصول الصوت بعد التفاعل -->
     <link rel="preconnect" href="https://ngmvmlulzacrlicuagyp.supabase.co" />
-    <!-- خطوط الواجهة محلية — بلا CDN. خط المصحف QPC يُحمَّل داخل /mushaf قبل الرسم -->
+    <!-- خط الواجهة الوحيد عند الإقلاع (Amiri 400) — Noto/أوزان 700 لاحقًا -->
     <link rel="preload" href="/fonts/ui/amiri-400-ar.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/ui/noto-naskh-400-ar.woff2" as="font" type="font/woff2" crossorigin />
     <!-- Aref Ruqaa اختياري + الوردمارك SVG — لا preload يزاحم خطوط النص على الإقلاع -->
 
     <script type="application/ld+json">
@@ -309,7 +419,7 @@
           {
             "@type": "Organization",
             "@id": "https://majlisilm.com/#organization",
-            "name": "المجلس العلمي",
+            "name": "سُنّة",
             "url": "https://majlisilm.com/",
             "logo": {
               "@type": "ImageObject",
@@ -318,17 +428,17 @@
               "height": 1024
             },
             "image": "https://majlisilm.com/brand/official-og.png?v=20260825",
-            "description": "منصة علمية عربية للدروس الشرعية والدورات العلمية وطلب العلم.",
+            "description": "تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة.",
             "inLanguage": "ar",
             "sameAs": ["https://www.instagram.com/Majlisalilm"]
           },
           {
             "@type": "WebSite",
             "@id": "https://majlisilm.com/#website",
-            "name": "المجلس العلمي",
+            "name": "سُنّة",
             "url": "https://majlisilm.com/",
             "image": "https://majlisilm.com/brand/official-og.png?v=20260825",
-            "description": "منصة علمية عربية تجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد.",
+            "description": "تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة.",
             "inLanguage": "ar",
             "publisher": { "@id": "https://majlisilm.com/#organization" },
             "potentialAction": {
@@ -343,7 +453,7 @@
           {
             "@type": "WebApplication",
             "@id": "https://majlisilm.com/#webapp",
-            "name": "المجلس العلمي",
+            "name": "سُنّة",
             "url": "https://majlisilm.com/",
             "applicationCategory": "EducationApplication",
             "operatingSystem": "Any",
@@ -368,7 +478,7 @@
         </g>
       </svg>
       <div class="mj-launch-splash__inner">
-        <p class="mj-launch-splash__title" id="mj-launch-splash__title">المجلس العلمي</p>
+        <p class="mj-launch-splash__title" id="mj-launch-splash__title">سُنّة</p>
         <p class="mj-launch-splash__tagline" id="mj-launch-splash__tagline">علم نافع، وعمل صالح</p>
       </div>
     </div>
@@ -473,7 +583,7 @@
         ul{line-height:2}a{color:#143F35}
       </style>
       <main>
-        <h1>المجلس العلمي — منصة الدروس الشرعية والعلوم الإسلامية</h1>
+        <h1>سُنّة — قرآن ودروس شرعية</h1>
         <p>منصة علمية شرعية تجمع الدروس والدورات والقرآن الكريم والأذكار والفقه والمكتبة لطالب العلم.</p>
         <nav aria-label="التنقل الرئيسي">
           <a href="/">الرئيسية</a>

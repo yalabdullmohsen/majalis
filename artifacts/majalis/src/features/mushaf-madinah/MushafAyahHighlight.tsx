@@ -74,8 +74,9 @@ export const MushafAyahHighlight = memo(function MushafAyahHighlight({ container
         setPlaying([]);
         return;
       }
-      /* التحديد عبر CSS على الكلمات؛ الشريط أثناء التلاوة فقط */
-      setPlaying(playingKey ? collectBands(container, playingKey) : []);
+      /* التظليل المرئي عبر class على الكلمات؛ الشرائط الخطّية معطّلة لتجنّب مستطيلات فارغة */
+      void collectBands;
+      setPlaying([]);
     };
 
     const scheduleMeasure = () => {

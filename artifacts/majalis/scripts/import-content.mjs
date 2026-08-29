@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Unified content import CLI — Majalis Al-Ilm
+ * Unified content import CLI — سُنّة
  *
  * Usage:
  *   node scripts/import-content.mjs --type=lessons --file=data/imports/lessons.sample.json
@@ -33,7 +33,7 @@ function parseArgs(argv) {
 
 function printHelp() {
   console.log(`
-Content Import Engine — المجلس العلمي
+Content Import Engine — سُنّة
 
 Usage:
   node scripts/import-content.mjs --type=<type> --file=<path> [--dry-run]

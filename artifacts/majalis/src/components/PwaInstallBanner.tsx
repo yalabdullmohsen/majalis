@@ -64,7 +64,7 @@ export function PwaInstallBanner() {
   return (
     <div className="pwa-soft-banner" role="dialog" aria-label="تثبيت التطبيق">
       <div className="pwa-soft-banner__text">
-        <strong>ثبّت المجلس العلمي</strong>
+        <strong>ثبّت سُنّة</strong>
         <span>تجربة أسرع كتطبيق على جهازك</span>
       </div>
       <button type="button" className="pwa-soft-banner__btn" onClick={() => void install()}>

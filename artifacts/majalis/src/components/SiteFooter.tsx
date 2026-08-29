@@ -98,7 +98,7 @@ export function SiteFooter() {
     >
       <div className="site-footer-inner site-footer-inner--global">
         <p id={labelId} className="sr-only">
-          تذييل موقع المجلس العلمي
+          تذييل موقع سُنّة
         </p>
 
         <div className="site-footer-groups">
@@ -115,7 +115,7 @@ export function SiteFooter() {
 
         <div className="site-footer-bottom">
           <p className="site-footer-copy">
-            © {year} المجلس العلمي — {SITE_FOOTER_TAGLINE}
+            © {year} سُنّة — {SITE_FOOTER_TAGLINE}
           </p>
           <p className="site-footer-email">
             <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>

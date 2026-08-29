@@ -111,8 +111,16 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   assert(tickerSrc.includes("PrayerCountdownChip"), "شريحة الصلاة مكوّن مستقل خارج اشتراك الأب");
   assert(!/offsetHeight|getBoundingClientRect/.test(tickerSrc), "ارتفاع الشريط من CSS لا من قياس JS");
   assert(!/useLayoutEffect/.test(tickerSrc), "لا useLayoutEffect يقيس ثم يكتب");
-  assert(tickerSrc.includes("ResizeObserver"), "عرض الماركي عبر ResizeObserver بعد التخطيط");
+  assert(
+    tickerSrc.includes("waitUntilBootSettled") || tickerSrc.includes("document.fonts"),
+    "قياس الماركي بعد ثبات الخطوط/الإقلاع لا قبله",
+  );
+  assert(
+    tickerSrc.includes("orientationchange") || tickerSrc.includes("scrollWidth"),
+    "عرض الماركي يُقاس مرة بعد الخطوط (وإعادة عند تدوير الشاشة)",
+  );
   assert(!/measure\(\);\s*const ro/.test(tickerSrc), "لا قياس متزامن قبل ResizeObserver");
+  assert(!tickerSrc.includes("ResizeObserver"), "لا ResizeObserver يعيد القياس قبل ثبات الخط");
   assert(
     tickerSrc.includes("حان وقت") ||
       readFileSync(resolve(appRoot, "src/lib/prayer-ticker-copy.ts"), "utf-8").includes("حان وقت"),

@@ -34,7 +34,7 @@ export default function CarModePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/car-mode",
-      title: "وضع السيارة، الاستماع أثناء القيادة | المجلس العلمي",
+      title: "وضع السيارة، الاستماع أثناء القيادة | سُنّة",
       description: "استمع إلى الدروس العلمية والقرآن الكريم أثناء القيادة، واجهة مبسطة آمنة للاستخدام في السيارة.",
       keywords: ["وضع السيارة", "استماع أثناء القيادة", "دروس صوتية", "قيادة وتعلم"],
       jsonLd: [{
@@ -43,7 +43,7 @@ export default function CarModePage() {
         name: "وضع السيارة",
         description: "استمع إلى الدروس العلمية والقرآن الكريم أثناء القيادة، واجهة مبسطة آمنة للاستخدام في السيارة.",
         url: "https://majlisilm.com/car-mode",
-        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
       }],
     });
   }, []);

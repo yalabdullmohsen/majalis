@@ -47,7 +47,7 @@ export default function LearningPathsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/learning/paths",
-      title: "المسارات العلمية الشرعية | المجلس العلمي",
+      title: "المسارات العلمية الشرعية | سُنّة",
       description: "مسارات تعليمية منظمة في العلوم الشرعية، فقه وعقيدة وقرآن وحديث وسيرة وأخلاق. من المبتدئ إلى المتقدم مع شهادات إتمام.",
       keywords: ["مسارات تعليمية", "طلب العلم", "تعلم الفقه", "تعلم القرآن", "شهادات إسلامية"],
       jsonLd: [
@@ -252,7 +252,7 @@ export default function LearningPathsPage() {
         </div>
       </section>
       <div className="twh-share">
-        <ShareButtons title="المسارات التعليمية الشرعية — المجلس العلمي" url="https://majlisilm.com/learning/paths" />
+        <ShareButtons title="المسارات التعليمية الشرعية — سُنّة" url="https://majlisilm.com/learning/paths" />
       </div>
       <RelatedKnowledge kind="lesson" query="مسارات التعلم" title="دروس ومسارات ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

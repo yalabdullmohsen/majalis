@@ -44,7 +44,7 @@ export default function AsmaaHusnaPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/asma-husna",
-      title: "الأسماء الحسنى، أسماء الله التسعة والتسعون | المجلس العلمي",
+      title: "الأسماء الحسنى، أسماء الله التسعة والتسعون | سُنّة",
       description: "أسماء الله الحسنى: أصل حديث الإحصاء في الصحيحين، مع بيان أن السرد التفصيلي في الترمذي ضعيف عند المحققين، وعرض الأسماء بمعانيها. رواية ضعيفة",
       keywords: ["أسماء الله الحسنى", "الله", "الرحمن", "الرحيم", "الأسماء الحسنى"],
       jsonLd: [
@@ -52,7 +52,7 @@ export default function AsmaaHusnaPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أسماء الله الحسنى",
-          description: "أسماء الله الحسنى مع المعنى والمصدر والتنبيه على ضعف السرد التفصيلي؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "أسماء الله الحسنى مع المعنى والمصدر والتنبيه على ضعف السرد التفصيلي؛ محتوى معتمد في منهج سُنّة",
           numberOfItems: ASMAA.length,
           itemListElement: ASMAA.map((a, i) => ({
             "@type": "ListItem",
@@ -205,7 +205,7 @@ export default function AsmaaHusnaPage() {
       <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والأسماء الحسنى" count={4} />
 
       <div className="twh-share">
-        <ShareButtons title="الأسماء الحسنى — المجلس العلمي" url="https://majlisilm.com/asma-husna" />
+        <ShareButtons title="الأسماء الحسنى — سُنّة" url="https://majlisilm.com/asma-husna" />
       </div>
 
       {/* ═══ نافذة التفاصيل ═══ */}

@@ -180,9 +180,22 @@
   direction: inherit;
 }
 
-/* سقف مقياس واجهة Dynamic Type عبر --ui-font-scale (يُضبط من user-preferences) */
+/* سقف مقياس واجهة Dynamic Type عبر --ui-font-scale (يُضبط من bootstrap + user-preferences) */
 :root {
   --ui-font-scale-min: 0.85;
   --ui-font-scale-max: 1.35;
+}
+
+html {
+  font-size: calc(100% * var(--ui-font-scale, 1));
+}
+
+/* أثناء app-booting: لا انتقالات على مقاسات تسبب CLS/قفزة خط */
+html.app-booting .reading-text,
+html.app-booting .page-shell,
+html.app-booting .navbar-v3,
+html.app-booting .header-ticker,
+html.app-booting .bottom-nav {
+  transition-property: color, background-color, border-color, opacity, box-shadow, transform;
 }
 

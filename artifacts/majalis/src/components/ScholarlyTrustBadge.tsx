@@ -11,7 +11,7 @@ import "@/styles/components/scholarly-trust.css";
 
 /** مراجع «ذاتية» — المنصة ليست مصدرًا خارجيًا يُستند إليه في التوثيق. */
 const SELF_SOURCE_RE =
-  /المجلس العلمي|majlisilm|qa-seed|fawaid-seed|rulings-seed|fatwa-seed|fiqh-issues-seed|fiqh-council-seed|curriculum|quiz/i;
+  /سُنّة|majlisilm|qa-seed|fawaid-seed|rulings-seed|fatwa-seed|fiqh-issues-seed|fiqh-council-seed|curriculum|quiz/i;
 
 export type ContentProvenance = "human_authored" | "source_extract" | "seed_transform" | "ai_generated";
 

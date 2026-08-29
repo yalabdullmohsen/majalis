@@ -113,9 +113,9 @@ export default function MySubmissionsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/my-submissions",
-      title: "مقدّماتي | المجلس العلمي",
+      title: "مقدّماتي | سُنّة",
       description: "تتبع حالة المحتوى الذي أرسلته للمجلس العلمي، قيد المراجعة، مقبول، أو مرفوض.",
-      keywords: ["مقدماتي", "تقديم محتوى", "متابعة مقدمة", "المجلس العلمي"],
+      keywords: ["مقدماتي", "تقديم محتوى", "متابعة مقدمة", "سُنّة"],
       robots: "noindex, follow",
     });
   }, []);
@@ -243,7 +243,7 @@ export default function MySubmissionsPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="مساهماتي — المجلس العلمي" url="https://majlisilm.com/my-submissions" />
+        <ShareButtons title="مساهماتي — سُنّة" url="https://majlisilm.com/my-submissions" />
       </div>
     </div>
   );

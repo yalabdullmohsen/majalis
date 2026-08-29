@@ -329,7 +329,7 @@ function FlashCardsPageInner() {
   useEffect(() => {
     applyPageSeo({
       path: "/flashcards",
-      title: "بطاقات المراجعة التعليمية | المجلس العلمي",
+      title: "بطاقات المراجعة التعليمية | سُنّة",
       description: "بطاقات مراجعة تعتمد نظام التكرار المتباعد لتثبيت المعلومات الشرعية في الذاكرة، مثالية لطلاب العلم.",
       keywords: ["بطاقات مراجعة", "تعلم", "مراجعة شرعية", "حفظ", "تكرار متباعد"],
       robots: "noindex, follow",
@@ -341,7 +341,7 @@ function FlashCardsPageInner() {
         url: "https://majlisilm.com/flashcards",
         inLanguage: "ar",
         learningResourceType: "Flashcard",
-        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
       }],
     });
   }, []);
@@ -424,7 +424,7 @@ function FlashCardsPageInner() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="البطاقات التعليمية الإسلامية — المجلس العلمي" url="https://majlisilm.com/flashcards" />
+        <ShareButtons title="البطاقات التعليمية الإسلامية — سُنّة" url="https://majlisilm.com/flashcards" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/flashcards" title="اختبر معلوماتك في العلوم الشرعية" count={4} />

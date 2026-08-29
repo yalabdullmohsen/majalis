@@ -79,8 +79,8 @@ export default function MawarithCalculatorPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/mawarith/calculator",
-      title: "حاسبة المواريث الإسلامية | المجلس العلمي",
-      description: "احسب أنصبة الورثة الشرعية تلقائيًا وفق الفرائض والتعصيب والحجب والعول والردّ، مع شرح خطوة بخطوة. محتوى معتمد في منهج المجلس العلمي",
+      title: "حاسبة المواريث الإسلامية | سُنّة",
+      description: "احسب أنصبة الورثة الشرعية تلقائيًا وفق الفرائض والتعصيب والحجب والعول والردّ، مع شرح خطوة بخطوة. محتوى معتمد في منهج سُنّة",
       keywords: ["حاسبة المواريث", "حاسبة الفرائض", "تقسيم التركة", "أنصبة الورثة"],
     });
   }, []);
@@ -460,7 +460,7 @@ export default function MawarithCalculatorPage() {
           </div>
 
           <div className="twh-share no-print">
-            <ShareButtons title="حاسبة المواريث الإسلامية — المجلس العلمي" url="https://majlisilm.com/mawarith/calculator" />
+            <ShareButtons title="حاسبة المواريث الإسلامية — سُنّة" url="https://majlisilm.com/mawarith/calculator" />
           </div>
         </div>
       )}

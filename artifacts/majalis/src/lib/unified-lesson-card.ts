@@ -216,7 +216,7 @@ export function buildLessonCopyText(lesson: UnifiedLesson): string {
   ].filter(Boolean);
 
   if (lesson.note) lines.push(lesson.note);
-  lines.push("", "المجلس العلمي");
+  lines.push("", "سُنّة");
   return lines.join("\n");
 }
 

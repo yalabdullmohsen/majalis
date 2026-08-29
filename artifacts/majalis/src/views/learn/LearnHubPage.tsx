@@ -49,7 +49,7 @@ export default function LearnHubPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/learn",
-      title: "تعلّم | المجلس العلمي",
+      title: "تعلّم | سُنّة",
       description:
         "بوابة التعلّم: الفقه والأحكام، السيرة النبوية، العقيدة، قصص الأنبياء، والأمم السابقة — مع فهرس أبواب العلم المنشورة.",
       keywords: [
@@ -60,7 +60,7 @@ export default function LearnHubPage() {
         "العقيدة",
         "قصص الأنبياء",
         "الأمم السابقة",
-        "المجلس العلمي",
+        "سُنّة",
       ],
       jsonLd: [
         {

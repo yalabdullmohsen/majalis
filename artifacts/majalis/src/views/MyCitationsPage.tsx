@@ -31,7 +31,7 @@ export default function MyCitationsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/my-citations",
-      title: "استشهاداتي | المجلس العلمي",
+      title: "استشهاداتي | سُنّة",
       description: "مجموعة استشهاداتي ومقتطفاتي العلمية المحفوظة، نظّمها في مجلدات وشاركها مع الآخرين.",
       keywords: ["استشهادات", "مقتطفات علمية", "حفظ نصوص", "مكتبة شخصية", "أكاديمية إسلامية"],
       robots: "noindex, follow",
@@ -399,7 +399,7 @@ export default function MyCitationsPage() {
         </main>
       </div>
       <div className="twh-share">
-        <ShareButtons title="اقتباساتي — المجلس العلمي" url="https://majlisilm.com/my-citations" />
+        <ShareButtons title="اقتباساتي — سُنّة" url="https://majlisilm.com/my-citations" />
       </div>
     </div>
   );

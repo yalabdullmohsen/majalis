@@ -114,7 +114,7 @@ export default function TarikhIslamiPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/tarikh-islami",
-      title: "التاريخ الإسلامي | المجلس العلمي",
+      title: "التاريخ الإسلامي | سُنّة",
       description:
         "ترتيب تفاعلي للدول والعصور الإسلامية وما حدث في كل منها — من قبل البعثة إلى يومنا، مع بوابة للسيرة النبوية.",
       keywords: [
@@ -211,7 +211,7 @@ export default function TarikhIslamiPage() {
           اسلك العصور بالترتيب: اضغط الدولة لترى ماذا حدث فيها. قصة النبي ﷺ عبر بوابة السيرة، ثم الخلافة
           والدول حتى يومنا هذا.
         </p>
-        <ShareButtons title="التاريخ الإسلامي — المجلس العلمي" />
+        <ShareButtons title="التاريخ الإسلامي — سُنّة" />
       </header>
 
       <nav className="tarikh-rail" aria-label="مسار الدول الإسلامية">

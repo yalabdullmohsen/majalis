@@ -28,9 +28,9 @@ export default function MergedSectionHubPage({ path, title, description, cards, 
   useEffect(() => {
     applyPageSeo({
       path,
-      title: `${title} | المجلس العلمي`,
+      title: `${title} | سُنّة`,
       description,
-      keywords: [title, "المجلس العلمي"],
+      keywords: [title, "سُنّة"],
     });
   }, [path, title, description]);
 
@@ -66,7 +66,7 @@ export default function MergedSectionHubPage({ path, title, description, cards, 
           />
         ))}
       </div>
-      <ShareButtons title={`${title} — المجلس العلمي`} url={`https://majlisilm.com${path}`} />
+      <ShareButtons title={`${title} — سُنّة`} url={`https://majlisilm.com${path}`} />
     </SectionTemplatePage>
   );
 }

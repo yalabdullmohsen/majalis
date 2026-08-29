@@ -176,7 +176,7 @@ export default function ArkanImanPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/arkan-iman",
-      title: "أركان الإيمان الستة | المجلس العلمي",
+      title: "أركان الإيمان الستة | سُنّة",
       description: "تعرَّف على أركان الإيمان الستة مع الأدلة القرآنية والنبوية وأقوال العلماء: الإيمان بالله والملائكة والكتب والرسل واليوم الآخر والقدر.",
       keywords: ["أركان الإيمان", "عقيدة", "الإيمان بالله", "الملائكة", "اليوم الآخر", "القدر"],
       jsonLd: [
@@ -326,7 +326,7 @@ export default function ArkanImanPage() {
         </div>
       </section>
       <div className="zk-share">
-        <ShareButtons title="أركان الإيمان الستة — المجلس العلمي" url="https://majlisilm.com/arkan-iman" />
+        <ShareButtons title="أركان الإيمان الستة — سُنّة" url="https://majlisilm.com/arkan-iman" />
       </div>
       <RelatedKnowledge kind="lesson" query="أركان الإيمان" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

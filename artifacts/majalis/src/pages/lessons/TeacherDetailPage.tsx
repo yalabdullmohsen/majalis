@@ -38,7 +38,7 @@ export default function TeacherDetailPage() {
     if (!teacher) return;
     applyPageSeo({
       path: hrefTeachers(teacher.slug),
-      title: `${teacher.name} — دروس الكويت | المجلس العلمي`,
+      title: `${teacher.name} — دروس الكويت | سُنّة`,
       description: `دروس ${teacher.name} في الكويت — ${toArabicDigits(String(teacher.lessonCount))} درسًا من جدول الدروس المعتمدة.`,
     });
   }, [teacher]);

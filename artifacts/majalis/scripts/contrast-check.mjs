@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * WCAG AA Contrast Check — منصة المجلس العلمي
+ * WCAG AA Contrast Check — منصة سُنّة
  * يفحص نسب التباين للألوان الجوهرية ويطبع تقريراً.
  *
  * معايير WCAG AA:
@@ -81,7 +81,7 @@ let failCount = 0;
 const failures = [];
 
 console.log("\n╔══════════════════════════════════════════════════════════╗");
-console.log("║      فحص تباين WCAG AA — المجلس العلمي                 ║");
+console.log("║      فحص تباين WCAG AA — سُنّة                 ║");
 console.log("╚══════════════════════════════════════════════════════════╝\n");
 
 for (const pair of PAIRS) {

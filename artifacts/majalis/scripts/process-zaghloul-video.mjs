@@ -420,7 +420,7 @@ ${cleaned}
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${escapeHtml(meta.title)} | المجلس العلمي</title>
+  <title>${escapeHtml(meta.title)} | سُنّة</title>
   <meta name="description" content="${escapeHtml(description)}" />
   <style>
     :root { --text:#1a1a1a; --muted:#555; --accent:#0f5132; --bg:#faf9f6; --line:#ddd; }

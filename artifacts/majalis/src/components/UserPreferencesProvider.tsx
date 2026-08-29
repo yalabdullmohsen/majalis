@@ -14,7 +14,11 @@ type UserPreferencesContextValue = {
 const UserPreferencesContext = createContext<UserPreferencesContextValue | null>(null);
 
 export function UserPreferencesProvider({ children }: { children: ReactNode }) {
-  const [preferences, setPreferences] = useState<UserPreferences>(() => readPreferences());
+  const [preferences, setPreferences] = useState<UserPreferences>(() => {
+    const prefs = readPreferences();
+    applyPreferences(prefs);
+    return prefs;
+  });
 
   useEffect(() => {
     applyPreferences(preferences);

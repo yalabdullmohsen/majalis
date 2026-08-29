@@ -1,5 +1,5 @@
 /**
- * بوابة علامة الآية: محرف بحجم النص، بلا زخرفة ولا تحجيم.
+ * بوابة علامة الآية: محرف بحجم النص + إطار زخرفي CSS موحّد مع السورة؛ بلا SVG ولا تحجيم.
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-ayah-marker-gate.test.ts
  */
 import assert from "node:assert/strict";

@@ -19,8 +19,8 @@ export default function NotFound() {
   useEffect(() => {
     applyPageSeo({
       path: "/404",
-      title: "الصفحة غير موجودة | المجلس العلمي",
-      description: "الصفحة التي تبحث عنها غير موجودة، استخدم القائمة للوصول إلى أقسام المجلس العلمي.",
+      title: "الصفحة غير موجودة | سُنّة",
+      description: "الصفحة التي تبحث عنها غير موجودة، استخدم القائمة للوصول إلى أقسام سُنّة.",
       keywords: ["404", "صفحة غير موجودة"],
       robots: "noindex, follow",
     });
@@ -31,7 +31,7 @@ export default function NotFound() {
       <section className="nf2-card">
         <div className="nf2-brand">
           <img src="/favicon.png" width={40} height={40} alt="" className="nf2-brand__logo" loading="eager" decoding="async" />
-          <span className="nf2-brand__name">المجلس العلمي</span>
+          <span className="nf2-brand__name">سُنّة</span>
         </div>
 
         {/* أيقونة زمردية */}

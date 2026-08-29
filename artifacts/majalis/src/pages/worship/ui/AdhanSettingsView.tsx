@@ -57,7 +57,7 @@ import { getMuezzin } from "@/lib/adhan-audio";
 import { resolveAdhanClip } from "@/lib/adhan-playback-modes";
 import "@/styles/pages/adhan-settings.css";
 
-const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
+const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 30];
 
 const PRAYER_ICON_MAP: Record<string, LucideIcon> = {
   Moon, Sun, CloudSun, Sunset, CloudMoon,
@@ -329,7 +329,7 @@ export default function AdhanSettingsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/adhan-settings",
-      title: "تنبيهات الصلاة والأذان | المجلس العلمي",
+      title: "تنبيهات الصلاة والأذان | سُنّة",
       description: "فعّل تنبيهات الصلاة، اختر الأذان المختصر أو الكامل، واختبر الصوت مع مراعاة قيود iOS.",
       keywords: ["تنبيهات الصلاة", "أذان", "إعدادات أذان", "إشعارات"],
       robots: "noindex, follow",

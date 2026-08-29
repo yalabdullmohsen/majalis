@@ -21,7 +21,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
     <AppBottomSheet
       open={open}
       onClose={handleSheetClose}
-      title="المجلس العلمي"
+      title="سُنّة"
       snap="full"
       closeLabel="إغلاق"
       className="bottom-sheet--services more-hub-sheet"

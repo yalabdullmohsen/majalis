@@ -3,8 +3,8 @@ type Props = {
 };
 
 /**
- * شريط اسم السورة — مستطيل بسيط بعرض كتلة النص (مصحف المدينة).
- * بلا SVG ولا تدرجات ولا تموضع مطلق.
+ * شريط اسم السورة — خرطوش زخرفي بهوية المجلس (مطابق لإطار فواصل الآيات).
+ * بلا SVG ولا تدرجات في المكوّن — الزخرفة من CSS فقط.
  */
 export function MushafSurahOrnament({ nameArabic }: Props) {
   const name = nameArabic.replace(/^سُورَةُ\s*/u, "").replace(/^سورة\s*/u, "").trim();

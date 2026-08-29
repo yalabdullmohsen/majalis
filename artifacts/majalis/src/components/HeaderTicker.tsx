@@ -49,12 +49,26 @@ const KIND_ICON: Record<TickerKind, LucideIcon> = {
 /**
  * دفعة مسار الإعلان: مجمّع محلّي كبير، دفعة متنوّعة تتبدّل دوريًا،
  * بلا تكرار ضمن آخر 20 عرضًا.
+ * الدفعة الأولى متزامنة — لا إطار فارغ ثم قفزة محتوى.
  */
 function useRotatingContent(): TickerContentItem[] {
-  const pool = useMemo(() => buildTickerPool(), []);
-  const recentRef = useRef<string[]>([]);
-  const [batch, setBatch] = useState<TickerContentItem[]>([]);
-  const lastPickAtRef = useRef(0);
+  const initRef = useRef<{ pool: TickerContentItem[]; batch: TickerContentItem[]; recent: string[] } | null>(
+    null,
+  );
+  if (!initRef.current) {
+    const pool = buildTickerPool();
+    const recent = readRecent();
+    const picked = pickNextBatch(pool, recent);
+    initRef.current = { pool, batch: picked.batch, recent: picked.recent };
+  }
+  const pool = initRef.current.pool;
+  const recentRef = useRef<string[]>(initRef.current.recent);
+  const [batch, setBatch] = useState<TickerContentItem[]>(initRef.current.batch);
+  const lastPickAtRef = useRef(Date.now());
+
+  useEffect(() => {
+    writeRecent(recentRef.current);
+  }, []);
 
   const rotate = useCallback(() => {
     const { batch: next, recent } = pickNextBatch(pool, recentRef.current);
@@ -63,11 +77,6 @@ function useRotatingContent(): TickerContentItem[] {
     lastPickAtRef.current = Date.now();
     setBatch(next);
   }, [pool]);
-
-  useEffect(() => {
-    recentRef.current = readRecent();
-    rotate();
-  }, [rotate]);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -136,6 +145,28 @@ function useTransientPause() {
   return { paused, handlers };
 }
 
+function waitUntilBootSettled(): Promise<void> {
+  return new Promise((resolve) => {
+    const tryReady = () => {
+      const booting = document.documentElement.classList.contains("app-booting");
+      if (!booting) {
+        resolve();
+        return;
+      }
+      window.setTimeout(tryReady, 50);
+    };
+    const afterFonts = () => {
+      tryReady();
+    };
+    if (document.fonts?.ready) {
+      void document.fonts.ready.then(afterFonts).catch(afterFonts);
+    } else {
+      afterFonts();
+    }
+    window.setTimeout(resolve, 1600);
+  });
+}
+
 /** شريط إعلان علوي متحرّك مستمر (marquee) — أحاديث وأذكار ونبذ أقسام/مميزات.
  * عدّاد الصلاة مكوّن ابن مستقل — لا اشتراك ثوانٍ هنا حتى لا يُعاد رسم الماركي. */
 export function HeaderTicker() {
@@ -146,6 +177,7 @@ export function HeaderTicker() {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [useRotateFallback, setUseRotateFallback] = useState(false);
+  const measuredKeyRef = useRef<string>("");
 
   const items = useMemo<TickerItem[]>(() => {
     return contentItems
@@ -161,19 +193,21 @@ export function HeaderTicker() {
       }));
   }, [contentItems]);
 
+  const itemsKey = useMemo(() => items.map((i) => i.key).join("|"), [items]);
+
   const [marqueeEnabled, setMarqueeEnabled] = useState(false);
   const preferRotate = reducedMotion || useRotateFallback;
 
-  /** ماركي بعد أول رسم — لا حركة على عنصر LCP */
+  /** ماركي بعد اكتمال الخطوط ورفع app-booting — لا قياس قبل ثبات المقاسات */
   useEffect(() => {
     if (reducedMotion) return;
-    const enable = () => setMarqueeEnabled(true);
-    if (typeof requestIdleCallback === "function") {
-      const id = requestIdleCallback(enable, { timeout: 1800 });
-      return () => cancelIdleCallback(id);
-    }
-    const t = window.setTimeout(enable, 400);
-    return () => window.clearTimeout(t);
+    let cancelled = false;
+    void waitUntilBootSettled().then(() => {
+      if (!cancelled) setMarqueeEnabled(true);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [reducedMotion]);
 
   useEffect(() => {
@@ -186,45 +220,37 @@ export function HeaderTicker() {
     if (activeIndex >= items.length) setActiveIndex(0);
   }, [activeIndex, items.length]);
 
-  /** إن كان عرض المحتوى ≤ الحاوية فلا مسافة للماركي → تدوير كل ٦ ثوانٍ.
-   *  القياس داخل ResizeObserver / rAF فقط — لا قراءة تخطيط متزامنة ثم setState. */
+  /** قياس عرض مرة واحدة لكل دفعة بعد الخطوط — تحديث الحالة فقط عند تغيّر النتيجة */
   useEffect(() => {
-    if (reducedMotion || items.length === 0) return;
+    if (reducedMotion || items.length === 0 || !marqueeEnabled) return;
     const vp = viewportRef.current;
     const track = trackRef.current;
     if (!vp || !track) return;
 
     const measure = () => {
       const contentWidth = track.scrollWidth / 2;
-      setUseRotateFallback(contentWidth <= vp.clientWidth + 8);
+      if (contentWidth < 8) return;
+      measuredKeyRef.current = itemsKey;
+      const next = contentWidth <= vp.clientWidth + 8;
+      setUseRotateFallback((prev) => (prev === next ? prev : next));
     };
 
-    if (typeof ResizeObserver !== "undefined") {
-      const ro = new ResizeObserver(measure);
-      ro.observe(vp);
-      ro.observe(track);
-      return () => ro.disconnect();
-    }
+    if (measuredKeyRef.current === itemsKey) return;
 
-    const id = window.requestAnimationFrame(measure);
-    window.addEventListener("resize", measure);
+    const id = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(measure);
+    });
+
+    const onOrient = () => {
+      measuredKeyRef.current = "";
+      measure();
+    };
+    window.addEventListener("orientationchange", onOrient);
     return () => {
       window.cancelAnimationFrame(id);
-      window.removeEventListener("resize", measure);
+      window.removeEventListener("orientationchange", onOrient);
     };
-  }, [reducedMotion, items]);
-
-  /** استئناف صريح عند العودة للتبويب — لا تبقى حالة لمس عالقة */
-  useEffect(() => {
-    const onVisible = () => {
-      if (document.visibilityState === "visible") {
-        /* pointer handlers يصفّرون الإيقاف؛ إعادة قياس بعد العودة */
-        setUseRotateFallback((v) => v);
-      }
-    };
-    document.addEventListener("visibilitychange", onVisible);
-    return () => document.removeEventListener("visibilitychange", onVisible);
-  }, []);
+  }, [reducedMotion, itemsKey, marqueeEnabled, items.length]);
 
   if (items.length === 0) {
     return (
@@ -235,7 +261,7 @@ export function HeaderTicker() {
             item={{
               key: "fallback",
               Icon: Sparkles,
-              label: "المجلس العلمي",
+              label: "سُنّة",
               text: "تصفّح المصحف والدروس والفتاوى",
               href: "/quran-hub",
             }}

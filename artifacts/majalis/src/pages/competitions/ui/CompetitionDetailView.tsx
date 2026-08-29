@@ -20,7 +20,7 @@ export default function CompetitionDetailView({ params }: { params: { id: string
     if (!item) {
       applyPageSeo({
         path: `/competitions/${params.id}`,
-        title: "المسابقة غير موجودة | المجلس العلمي",
+        title: "المسابقة غير موجودة | سُنّة",
         description: "لم يُعثر على إعلان هذه المسابقة.",
       });
       return;

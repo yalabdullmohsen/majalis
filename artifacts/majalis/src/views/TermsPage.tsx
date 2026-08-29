@@ -9,10 +9,10 @@ export default function TermsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/terms",
-      title: "شروط الاستخدام | المجلس العلمي",
-      description: "شروط وأحكام استخدام منصة المجلس العلمي، اقرأها قبل استخدام الخدمات.",
-      keywords: ["شروط الاستخدام", "المجلس العلمي", "الاستخدام المقبول"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "شروط الاستخدام", url: "https://majlisilm.com/terms", about: { "@type": "Organization", name: "المجلس العلمي" } }],
+      title: "شروط الاستخدام | سُنّة",
+      description: "شروط وأحكام استخدام منصة سُنّة، اقرأها قبل استخدام الخدمات.",
+      keywords: ["شروط الاستخدام", "سُنّة", "الاستخدام المقبول"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "شروط الاستخدام", url: "https://majlisilm.com/terms", about: { "@type": "Organization", name: "سُنّة" } }],
     });
   }, []);
 
@@ -20,7 +20,7 @@ export default function TermsPage() {
     <LegalPageLayout eyebrow="الاستخدام" title="شروط الاستخدام" updatedAt="2026-08-05">
       <LegalSection title="قبول الشروط">
         <p>
-          باستخدامك منصة المجلس العلمي فإنك توافق على هذه الشروط كاملةً. إن لم
+          باستخدامك منصة سُنّة فإنك توافق على هذه الشروط كاملةً. إن لم
           توافق على أي بند من بنودها، يرجى التوقف عن استخدام المنصة. يُعدّ
           استمرارك في الاستخدام بعد نشر أي تعديلات موافقةً ضمنية على الشروط
           المحدّثة.
@@ -63,7 +63,7 @@ export default function TermsPage() {
         <p>
           جميع محتويات المنصة من نصوص وتصميمات وشعارات وأكواد برمجية محمية
           بموجب حقوق الملكية الفكرية. يُسمح بالاقتباس والمشاركة للأغراض
-          التعليمية غير التجارية بشرط الإشارة الصريحة إلى المصدر (المجلس العلمي)
+          التعليمية غير التجارية بشرط الإشارة الصريحة إلى المصدر (سُنّة)
           مع رابط الصفحة الأصلية. يُحظر إعادة نشر المحتوى بشكل كامل أو نقله
           إلى منصات أخرى دون إذن كتابي مسبق.
         </p>
@@ -114,7 +114,7 @@ export default function TermsPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="شروط الاستخدام — المجلس العلمي" url="https://majlisilm.com/terms" />
+        <ShareButtons title="شروط الاستخدام — سُنّة" url="https://majlisilm.com/terms" />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

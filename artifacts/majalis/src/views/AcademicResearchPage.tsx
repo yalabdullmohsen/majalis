@@ -39,7 +39,7 @@ export default function AcademicResearchPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/academic-research",
-      title: "الأبحاث الشرعية | المجلس العلمي",
+      title: "الأبحاث الشرعية | سُنّة",
       description:
         "مكتبة أكاديمية متخصصة في جمع وتنظيم الأبحاث والدراسات الشرعية الموثقة، مع حفظ حقوق الباحثين والجهات العلمية.",
       keywords: ["أبحاث شرعية", "رسائل ماجستير", "دكتوراه", "فقه", "حديث", "تفسير", "مكتبة أكاديمية"],
@@ -235,7 +235,7 @@ export default function AcademicResearchPage() {
         </p>
       </section>
 
-      <ShareButtons title="الأبحاث الشرعية — المجلس العلمي" url="https://majlisilm.com/academic-research" />
+      <ShareButtons title="الأبحاث الشرعية — سُنّة" url="https://majlisilm.com/academic-research" />
     </div>
     </SectionTemplatePage>
   );

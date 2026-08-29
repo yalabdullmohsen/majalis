@@ -46,7 +46,7 @@ export default function TarikhIslamiDetailPage() {
     }
     applyPageSeo({
       path: `/tarikh-islami/${item.id}`,
-      title: `${item.title} | التاريخ الإسلامي | المجلس العلمي`,
+      title: `${item.title} | التاريخ الإسلامي | سُنّة`,
       description: item.summary,
       keywords: [item.title, "التاريخ الإسلامي", HISTORY_CATEGORIES[item.category]],
       jsonLd: [

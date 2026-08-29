@@ -302,7 +302,7 @@ export async function playTafsirAudioClip(
       navigator.mediaSession.metadata = new MediaMetadata({
         title: clip.titleAr || clip.tafsir_name || "تفسير صوتي",
         artist: displayScholarLabel(clip),
-        album: "المجلس العلمي — تفسير صوتي",
+        album: "سُنّة — تفسير صوتي",
       });
       navigator.mediaSession.playbackState = "playing";
       const seek = (d: number) => {

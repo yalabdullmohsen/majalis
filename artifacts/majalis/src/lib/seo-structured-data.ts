@@ -313,7 +313,7 @@ export function surahJsonLd(surah: {
     alternateName: `Surah ${surah.number}`,
     description:
       surah.description ||
-      `سورة ${surah.name} من القرآن الكريم — قراءة وتلاوة في المجلس العلمي.`,
+      `سورة ${surah.name} من القرآن الكريم — قراءة وتلاوة في سُنّة.`,
     url: absoluteUrl(surah.url),
     inLanguage: "ar",
     isPartOf: {

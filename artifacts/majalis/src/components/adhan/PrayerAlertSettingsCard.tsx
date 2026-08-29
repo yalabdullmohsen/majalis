@@ -129,16 +129,16 @@ export function PrayerAlertSettingsCard() {
 
   return (
     <div className="ads-card">
-      <div className="ads-card__head">
+        <div className="ads-card__head">
         <BellRing size={15} strokeWidth={2} />
-        <span>إشعارات الصلاة</span>
+        <span>تنبيهات الصلاة والأذان</span>
       </div>
       <div className="ads-card__body">
         {showExplainer && (
           <div className="pasc-explainer">
             <Bell size={16} strokeWidth={2} />
             <div>
-              <p className="pasc-explainer__title">تفعيل إشعارات الصلاة</p>
+              <p className="pasc-explainer__title">تفعيل تنبيهات الصلاة</p>
               <p className="pasc-explainer__desc">
                 لننبّهك قبل الصلاة وعند دخول وقتها، حتى لو كان التطبيق مغلقًا.
               </p>
@@ -170,17 +170,21 @@ export function PrayerAlertSettingsCard() {
 
         <div className="ads-row-sep">
           <div>
-            <div className="ads-global-label">تفعيل إشعارات الصلاة</div>
+            <div className="ads-global-label">تفعيل تنبيهات الصلاة</div>
             <div className="ads-global-desc">
               {permission === "denied"
-                ? "محجوب من إعدادات النظام"
-                : "جدولة تنبيهات المواقيت"}
+                ? "محجوب من إعدادات النظام — يحتاج تفعيل"
+                : permission === "granted"
+                  ? "الإذن مفعّل"
+                  : permission === "prompt"
+                    ? "يحتاج تفعيل الإذن"
+                    : "جدولة تنبيهات المواقيت"}
             </div>
           </div>
           <MiniToggle
             checked={prefs.alertsEnabled}
             onChange={handleEnableAlerts}
-            label="تفعيل إشعارات الصلاة"
+            label="تفعيل تنبيهات الصلاة"
           />
         </div>
 
@@ -200,8 +204,8 @@ export function PrayerAlertSettingsCard() {
         {alertsOn && prefs.preAlertEnabled ? (
           <div className="ads-row-sep ads-row-sep--stack">
             <div>
-              <div className="ads-global-label">مدة التنبيه قبل الصلاة</div>
-              <div className="ads-global-desc">بدون أو 5 إلى 20 دقيقة</div>
+              <div className="ads-global-label">مدة التنبيه السابق</div>
+              <div className="ads-global-desc">5 / 10 / 15 / 30 دقيقة</div>
             </div>
             <div className="ads-chip-scroll" role="group" aria-label="مدة التنبيه قبل الصلاة">
               {PRE_ALERT_MINUTE_OPTIONS.map((m) => (
@@ -220,13 +224,13 @@ export function PrayerAlertSettingsCard() {
 
         <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
           <div>
-            <div className="ads-global-label">تنبيه دخول الوقت</div>
+            <div className="ads-global-label">تفعيل الأذان عند دخول الوقت</div>
             <div className="ads-global-desc">إشعار فور دخول وقت كل صلاة</div>
           </div>
           <MiniToggle
             checked={prefs.enterAlertEnabled}
             onChange={(v) => patch({ enterAlertEnabled: v })}
-            label="تنبيه دخول الوقت"
+            label="تفعيل الأذان عند دخول الوقت"
             disabled={!alertsOn}
           />
         </div>

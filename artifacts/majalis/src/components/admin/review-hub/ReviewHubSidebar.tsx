@@ -71,7 +71,7 @@ export function ReviewHubSidebar({
       >
         <div className="rh-sidebar__brand">
           <Sparkles size={26} className="rh-sidebar__spark" aria-hidden="true" />
-          <p className="rh-sidebar__title">المجلس العلمي</p>
+          <p className="rh-sidebar__title">سُنّة</p>
         </div>
 
         <nav className="rh-sidebar__nav">

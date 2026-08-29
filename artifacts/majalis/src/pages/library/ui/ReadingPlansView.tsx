@@ -262,7 +262,7 @@ export default function ReadingPlansPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/reading-plans",
-      title: "خطط القراءة | المجلس العلمي",
+      title: "خطط القراءة | سُنّة",
       description: "أنشئ خطة قراءة ذكية لأي كتاب: تاريخ بداية ونهاية، أيام قراءة، وتتبّع تقدّمك مقابل الجدول تلقائيًا.",
       robots: "noindex, follow",
     });

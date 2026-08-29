@@ -1209,7 +1209,7 @@ export default function SahabahPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/sahabah",
-      title: "أعلام الصحابة الكرام، المجلس العلمي",
+      title: "أعلام الصحابة الكرام، سُنّة",
       description: "موسوعة كبار الصحابة رضي الله عنهم: سيرتهم وفضائلهم وإرثهم في الإسلام، مع ترتيب بالتصنيفات والبحث.",
       keywords: ["الصحابة", "الخلفاء الراشدون", "أصحاب النبي", "سيرة الصحابة", "فضائل الصحابة"],
       jsonLd: [
@@ -1364,7 +1364,7 @@ export default function SahabahPage() {
         <SectionQuiz route="/sahabah" title="اختبر معلوماتك في الصحابة والسيرة" count={4} />
 
         <div className="twh-share">
-          <ShareButtons title="الصحابة الكرام — المجلس العلمي" url="https://majlisilm.com/sahabah" />
+          <ShareButtons title="الصحابة الكرام — سُنّة" url="https://majlisilm.com/sahabah" />
         </div>
 
         {/* related */}

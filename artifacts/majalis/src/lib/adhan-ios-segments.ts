@@ -97,7 +97,7 @@ export function buildAdhanIosSegmentPlan(opts: {
       sound: adhanIosSoundName(opts.recordingId, kind, i + 1),
       atMs: opts.startAtMs + i * ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC * 1000,
       title: isFirst ? `أذان ${opts.prayerName}` : null,
-      body: isFirst ? "حيَّ على الصلاة" : null,
+      body: isFirst ? "حيّ على الصلاة" : null,
       prayerKey: opts.prayerKey,
       segmentIndex: i,
     });
@@ -271,7 +271,7 @@ export async function scheduleIosFullAdhan(opts: {
         sound,
         atMs: opts.startAtMs,
         title: `أذان ${opts.prayerName}`,
-        body: "حيَّ على الصلاة — افتح التطبيق لسماع الأذان الكامل",
+        body: "حيّ على الصلاة — افتح التطبيق لسماع الأذان الكامل",
         prayerKey: opts.prayerKey,
         segmentIndex: 0,
       },

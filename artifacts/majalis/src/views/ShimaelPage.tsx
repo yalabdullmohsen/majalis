@@ -449,7 +449,7 @@ export default function ShimaelPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/shamael",
-      title: "الشمائل المحمدية | المجلس العلمي",
+      title: "الشمائل المحمدية | سُنّة",
       description: "تعرّف على صفة النبي محمد ﷺ خَلقاً وخُلُقاً وهَديه في حياته من الروايات المشهورة المعزوة إلى مصادرها، مع عرض تربوي مختصر للقراءة والتدبر.",
       keywords: ["شمائل النبي", "صفة النبي", "الشمائل المحمدية", "سيرة نبوية", "حب النبي"],
       jsonLd: [
@@ -723,7 +723,7 @@ export default function ShimaelPage() {
         )}
 
       <div className="twh-share">
-        <ShareButtons title="الشمائل المحمدية، المجلس العلمي" url="https://majlisilm.com/shimail" />
+        <ShareButtons title="الشمائل المحمدية، سُنّة" url="https://majlisilm.com/shimail" />
       </div>
       <RelatedKnowledge kind="hadith" query="الشمائل المحمدية" title="أحاديث ومعارف ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

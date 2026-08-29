@@ -205,7 +205,7 @@ export default function UlumQuranPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/ulum-quran",
-      title: "علوم القرآن الكريم، المجلس العلمي",
+      title: "علوم القرآن الكريم، سُنّة",
       description: "مقدمة شاملة في علوم القرآن: النزول والجمع والتفسير والإعجاز والمحكم والمتشابه والناسخ والمنسوخ؛ مع شرح مبسّط لكل علم ومراجعه؛ مقدمة شاملة.",
       keywords: ["علوم القرآن", "أسباب النزول", "الناسخ والمنسوخ", "المحكم والمتشابه", "إعجاز القرآن"],
       jsonLd: [
@@ -497,7 +497,7 @@ export default function UlumQuranPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="علوم القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/ulum-quran" />
+          <ShareButtons title="علوم القرآن الكريم — سُنّة" url="https://majlisilm.com/ulum-quran" />
         </div>
 
         {/* related */}

@@ -165,9 +165,9 @@ export default function HomePage() {
     const run = () =>
       applyPageSeo({
         path: "/",
-        title: "المجلس العلمي، منصة العلوم الإسلامية",
+        title: "سُنّة، منصة العلوم الإسلامية",
         description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الأحكام الشرعية، والفقه المعاصر.",
-        keywords: ["المجلس العلمي", "علوم إسلامية", "قرآن كريم", "أذكار", "أحكام شرعية", "دروس علمية"],
+        keywords: ["سُنّة", "علوم إسلامية", "قرآن كريم", "أذكار", "أحكام شرعية", "دروس علمية"],
         jsonLd: defaultSiteJsonLd(),
       });
     scheduleOnIdle(run, 0);
@@ -193,7 +193,7 @@ export default function HomePage() {
         className="m2030-hero home-page-hero"
         fullBleed={false}
         eyebrow={dailyCtx.greeting}
-        title="المجلس العلمي"
+        title="سُنّة"
         actions={
           <>
             <Link

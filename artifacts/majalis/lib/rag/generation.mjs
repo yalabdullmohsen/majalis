@@ -111,7 +111,7 @@ export async function generateAnswer(query, docs) {
  */
 function buildFallbackAnswer(query, docs) {
   if (!docs.length) return NO_SOURCES_MSG;
-  const intro = `وفق المواد الموثّقة في قاعدة المجلس العلمي، إليك ما يرتبط بسؤالك «${query}»:\n\n`;
+  const intro = `وفق المواد الموثّقة في قاعدة سُنّة، إليك ما يرتبط بسؤالك «${query}»:\n\n`;
   const bullets = docs.slice(0, 6).map((d, i) => {
     const ref = d.source_ref ? ` — ${d.source_ref}` : "";
     return `${i + 1}. **${d.title}**${ref}\n   ${String(d.excerpt || "").slice(0, 180)}${d.excerpt?.length > 180 ? "…" : ""}`;

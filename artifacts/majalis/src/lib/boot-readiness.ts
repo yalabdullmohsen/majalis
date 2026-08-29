@@ -52,13 +52,10 @@ export function registerBootStorageGate(promise: Promise<unknown>): void {
 async function waitUiFonts(timeoutMs: number): Promise<boolean> {
   if (typeof document === "undefined" || !document.fonts) return true;
   try {
-    const preferNaskh = document.documentElement.dataset.font !== "default";
-    const primary = preferNaskh ? '16px "Noto Naskh Arabic"' : '16px "Amiri"';
-    const secondary = preferNaskh ? '16px "Amiri"' : '16px "Noto Naskh Arabic"';
+    // خط الواجهة الفعلي هو Amiri (--font-app) — لا ننتظر Noto في المسار الحرج
+    const primary = '16px "Amiri"';
     const load = (async () => {
-      // خط الواجهة النشط أولًا — يكفي لكشف النص بلا انتظار الخط البديل
       await document.fonts.load(primary);
-      void document.fonts.load(secondary);
     })();
     await Promise.race([load, raceTimeout(timeoutMs)]);
     return document.fonts.check(primary);

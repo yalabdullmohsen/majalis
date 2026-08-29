@@ -40,6 +40,9 @@ export const BLOCKED_DANGER_PATH_LABEL = "blocked:danger-path";
 /** Applied when policy requires human review. */
 export const RISKY_MANUAL_REVIEW_LABEL = "risky:manual-review";
 
+/** محتوى شرعي/علمي يحتاج مراجعة بشرية قبل الدمج. */
+export const NEEDS_CONTENT_REVIEW_LABEL = "needs-content-review";
+
 export const MAX_FILES_FOR_AUTO_MERGE = 40;
 
 /** Aggregate deletions across the PR (lines). */
@@ -112,6 +115,8 @@ export const AUTO_MERGE_PATH_ALLOWLIST = Object.freeze([
   /^\.github\/workflows\/production-bootstrap\.yml$/i,
   /^\.github\/workflows\/phase2-trial-import\.yml$/i,
   /^\.github\/workflows\/harvest-sources\.yml$/i,
+  /^\.github\/workflows\/auto-maintenance\.yml$/i,
+  /^scripts\/auto-maintenance\//i,
   /^artifacts\/majalis\/vercel\.json$/i,
 ]);
 
@@ -141,6 +146,7 @@ export const AUTH_SECURITY_TEXT =
 export const BLOCKING_LABELS = Object.freeze([
   "risky:manual-review",
   "blocked:danger-path",
+  "needs-content-review",
   "manual-review",
   "no-auto-merge",
   "sql",

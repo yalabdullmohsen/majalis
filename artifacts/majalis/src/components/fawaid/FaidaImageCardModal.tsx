@@ -57,7 +57,7 @@ export function FaidaImageCardModal({ text, source, category, onClose }: Props) 
         >
           <div className="fic-card__inner">
             <div className="fic-card__top">
-              <span className="fic-card__logo">✦ المجلس العلمي</span>
+              <span className="fic-card__logo">✦ سُنّة</span>
               {category && <span className="fic-card__cat">{category}</span>}
             </div>
 

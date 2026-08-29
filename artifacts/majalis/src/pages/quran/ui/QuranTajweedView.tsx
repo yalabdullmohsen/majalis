@@ -29,7 +29,7 @@ export function TajweedChapterView() {
     if (!chapter) return;
     applyPageSeo({
       path: `/quran-hub/tajweed/${chapter.id}`,
-      title: `${chapter.title} — التجويد | المجلس العلمي`,
+      title: `${chapter.title} — التجويد | سُنّة`,
       description: chapter.summary,
       keywords: ["تجويد", chapter.title],
     });
@@ -98,7 +98,7 @@ export default function QuranTajweedHubView() {
   useEffect(() => {
     applyPageSeo({
       path: "/quran-hub/tajweed",
-      title: "التجويد — المجلس العلمي",
+      title: "التجويد — سُنّة",
       description: TAJWEED_HUB_INTRO.paragraphs[0],
       keywords: ["تجويد", "أحكام النون", "المدود", "مخارج", "حفص"],
     });
