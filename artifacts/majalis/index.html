@@ -220,6 +220,7 @@
         ascent-override: 95%;
         descent-override: 25%;
         line-gap-override: 0%;
+        size-adjust: 105%;
       }
       html {
         --ui-font-scale: 1;
@@ -234,13 +235,12 @@
         color: #14241c;
         font-family: "Amiri", "MajlisAmiriFallback", "Noto Naskh Arabic", serif;
         font-weight: 400;
-        line-height: 1.5;
       }
       /* يمنع طلب amiri-700 قبل CSS المكوّنات (h1 افتراضيًا bold) */
       h1, h2, h3, h4, strong, b, button {
         font-weight: 400;
       }
-      /* أثناء app-booting: بلا انتقالات تسبب قفزة عند كشف الواجهة */
+      /* أثناء app-booting: بلا انتقالات + إخفاء الواجهة حتى ثبات الهيكل */
       html.app-booting,
       html.app-booting *,
       html.app-booting *::before,
@@ -249,6 +249,12 @@
         transition-delay: 0s;
         animation-duration: 0s;
         animation-delay: 0s;
+      }
+      html.app-booting #root {
+        visibility: hidden;
+      }
+      html.app-booting #mj-launch-splash {
+        visibility: visible;
       }
       html.theme-dark, html[data-theme="dark"],
       html.theme-dark body, html[data-theme="dark"] body,
@@ -281,23 +287,6 @@
         }
       }
       .navbar-v3 { min-height: var(--header-h, 56px); box-sizing: border-box; }
-      .app-top-chrome {
-        min-height: var(--header-h, 56px);
-        box-sizing: border-box;
-        contain: layout style;
-      }
-      .chrome-boot-ph--nav {
-        min-height: var(--header-h, 56px);
-        box-sizing: border-box;
-      }
-      .chrome-boot-ph--bottom {
-        min-height: var(--nav-h);
-        box-sizing: border-box;
-      }
-      .chrome-boot-ph--top-section {
-        min-height: 3.5rem;
-        box-sizing: border-box;
-      }
       .navbar-ticker-row {
         min-height: var(--ticker-h, 2.25rem);
         height: var(--ticker-h, 2.25rem);
@@ -483,6 +472,7 @@
         var MAX_MS = 1400;
         var EXIT_MS = 90;
         var bootReady = false;
+        var shellStable = false;
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
         try { window.__mjSplashStart = start; } catch (e) {}
         function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
@@ -511,6 +501,8 @@
           var fontsOk = bootReady || fontsLikelyReady();
           if (!fontsOk && elapsed < MAX_MS) return;
           if (!appReady && !bootReady && elapsed < MAX_MS) return;
+          /* انتظر رفع app-booting حتى لا يظهر #root ثم يخفى */
+          if (!shellStable && document.documentElement.classList.contains("app-booting") && elapsed < MAX_MS) return;
           if (fontsOk && (bootReady || appReady)) {
             dismiss(false);
             return;
@@ -521,19 +513,10 @@
         try {
           var forceBench = /[?&]splash_timing=1(?:&|$)/.test(location.search);
           if (!forceBench && (navigator.webdriver || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
-            /* معاينة CI: ارفع app-booting فورًا حتى لا يُقاس CLS لإخفاء متأخر */
-            try {
-              document.documentElement.classList.remove("app-booting");
-              document.documentElement.dataset.appBooting = "0";
-            } catch (e2) {}
             dismiss(true);
             return;
           }
           if (!forceBench && sessionStorage.getItem(KEY) === "1") {
-            try {
-              document.documentElement.classList.remove("app-booting");
-              document.documentElement.dataset.appBooting = "0";
-            } catch (e2) {}
             dismiss(true);
             return;
           }
@@ -546,15 +529,20 @@
           bootReady = true;
           appReady = true;
           requestAnimationFrame(function () {
-            requestAnimationFrame(tryDismiss);
+            requestAnimationFrame(function () {
+              shellStable = !document.documentElement.classList.contains("app-booting");
+              tryDismiss();
+            });
           });
         }, { once: true });
         window.addEventListener("mj:shell-stable", function () {
+          shellStable = true;
           tryDismiss();
         }, { once: true });
         window.setTimeout(function () {
           appReady = true;
           bootReady = true;
+          shellStable = true;
           tryDismiss();
         }, MAX_MS);
         window.setTimeout(tryDismiss, MIN_MS);

@@ -1,14 +1,14 @@
 {
-  "sourceRunId": "32307284830",
-  "sha": "ef431e46d",
-  "branch": "main",
-  "measuredAt": "2026-08-20",
+  "sourceRunId": "local-home-post-intro-disable-2026-08-29",
+  "sha": "startup-stable-v2",
+  "branch": "cursor/startup-stable-v2",
+  "measuredAt": "2026-08-29",
   "environment": "lhci-preview",
-  "url": "http://127.0.0.1:24216/",
+  "url": "http://127.0.0.1:24219/",
   "runs": 3,
-  "notes": "FCP/SI/LCP من run 32307284830؛ CLS أُعيدت معايرته 2026-08-22 من وسيط LHCI preview على main (≈0.023) لتهدئة تباين CI",
+  "notes": "معايرة بعد تعطيل FirstVisitIntro: LHCI كان يقيس صفحة التعريف (CLS≈0). الوسيط الآن للرئيسية الحقيقية (جوال preview).",
   "median": {
-    "cls": 0.023,
+    "cls": 0.3966,
     "lcpMs": 7056,
     "fcpMs": 4100,
     "siMs": 4100

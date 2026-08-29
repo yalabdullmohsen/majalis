@@ -1250,29 +1250,6 @@ function DeferredPrayerCountdownBanner({ defer }: { defer: boolean }) {
   return <PrayerCountdownBanner />;
 }
 
-function ChromeNavFallback() {
-  return <div className="navbar-v3 chrome-boot-ph chrome-boot-ph--nav" aria-hidden="true" />;
-}
-
-function ChromeBottomFallback() {
-  return (
-    <div
-      className="bottom-nav chrome-boot-ph chrome-boot-ph--bottom"
-      data-bottom-nav
-      aria-hidden="true"
-    />
-  );
-}
-
-function ChromeTopSectionFallback() {
-  return (
-    <div
-      className="top-section-bar chrome-boot-ph chrome-boot-ph--top-section"
-      aria-hidden="true"
-    />
-  );
-}
-
 function AppShellInner() {
   const { dir, t } = useLanguage();
   const { isAdmin } = useAuth();
@@ -1361,12 +1338,12 @@ function AppShellInner() {
       <IdleRuntimeBoot />
       {!hideSiteChrome ? (
         <div className="app-top-chrome">
-          <Suspense fallback={<ChromeNavFallback />}>
+          <Suspense fallback={null}>
             <NavBar />
           </Suspense>
         </div>
       ) : null}
-      <Suspense fallback={hideSiteChrome ? null : <ChromeTopSectionFallback />}>
+      <Suspense fallback={null}>
         <TopSectionBar />
       </Suspense>
       {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
@@ -1406,7 +1383,7 @@ function AppShellInner() {
         </Suspense>
       )}
       {!onAuthStandalone && (
-        <Suspense fallback={hideSiteChrome ? null : <ChromeBottomFallback />}>
+        <Suspense fallback={null}>
           <BottomNavBar isHidden={shouldHideChrome} />
         </Suspense>
       )}
