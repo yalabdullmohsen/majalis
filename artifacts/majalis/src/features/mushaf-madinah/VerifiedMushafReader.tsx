@@ -420,13 +420,21 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     [layout],
   );
 
+  const clearSelection = useCallback(() => {
+    if (playerState === "playing" || playerState === "buffering" || playerState === "loading") {
+      return;
+    }
+    setSelectedVerseKey(null);
+  }, [playerState]);
+
   const onSelectVerse = useCallback(
     (verseKey: string) => {
       if (selectedVerseKey === verseKey && actionsOpen) {
         setActionsOpen(false);
-        if (playerState !== "playing" && playerState !== "buffering" && playerState !== "loading") {
-          setSelectedVerseKey(null);
-        }
+        return;
+      }
+      if (selectedVerseKey === verseKey && !actionsOpen) {
+        clearSelection();
         return;
       }
       haptics.selection();
@@ -438,7 +446,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       setAudioStatus(null);
       /* بلا تمرير الصفحة — التحديد يظهر مكانه دون إحساس بتقليب */
     },
-    [actionsOpen, playerState, selectedVerseKey],
+    [actionsOpen, clearSelection, selectedVerseKey],
   );
 
   const onLongPressVerse = useCallback(
@@ -453,12 +461,10 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     [],
   );
 
+  /** يغلق الشيت دون مسح التحديد — يبقى ظاهرًا مع التلاوة/التفسير */
   const closeActions = useCallback(() => {
     const key = selectedVerseKey;
     setActionsOpen(false);
-    if (playerState !== "playing" && playerState !== "buffering" && playerState !== "loading") {
-      setSelectedVerseKey(null);
-    }
     if (!key) return;
     requestAnimationFrame(() => {
       const pane = document.querySelector('[data-pane="current"]');
@@ -466,7 +472,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         ?.querySelector<HTMLElement>(`[data-testid="mushaf-ayah-hit"][data-verse="${key}"]`)
         ?.focus();
     });
-  }, [playerState, selectedVerseKey]);
+  }, [selectedVerseKey]);
 
   const pageVerseKeys = useMemo(
     () => (layout ? uniqueVerseKeysFromRows(layout.rows) : []),
@@ -784,6 +790,10 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           closeActions();
           return;
         }
+        if (selectedVerseKey) {
+          clearSelection();
+          return;
+        }
         setChromeOpen((v) => !v);
         if (!chromeOpen) bumpChrome();
       }}
@@ -842,10 +852,12 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         onStop={() => audio.stop()}
         onNext={() => {
           suppressPageSyncRef.current = false;
+          audio.setReciter(reciterId);
           void audio.skipNext();
         }}
         onPrevious={() => {
           suppressPageSyncRef.current = false;
+          audio.setReciter(reciterId);
           void audio.skipPrev();
         }}
       />
@@ -863,10 +875,12 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           onTogglePlay={() => void togglePlay()}
           onPrev={() => {
             suppressPageSyncRef.current = false;
+            audio.setReciter(reciterId);
             void audio.skipPrev();
           }}
           onNext={() => {
             suppressPageSyncRef.current = false;
+            audio.setReciter(reciterId);
             void audio.skipNext();
           }}
           onReciterChange={(id) => void onReciterChange(id)}
@@ -935,10 +949,12 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           onTogglePlay={() => void togglePlay()}
           onPrevAyah={() => {
             suppressPageSyncRef.current = false;
+            audio.setReciter(reciterId);
             void audio.skipPrev();
           }}
           onNextAyah={() => {
             suppressPageSyncRef.current = false;
+            audio.setReciter(reciterId);
             void audio.skipNext();
           }}
           onPlayRange={(range, repeat) => void playRange(range, repeat)}
