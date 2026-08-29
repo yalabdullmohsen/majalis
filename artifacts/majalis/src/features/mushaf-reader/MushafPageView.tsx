@@ -99,6 +99,7 @@ export const MushafPageView = memo(function MushafPageView({
       data-page={footerPage}
       data-page-type={pageType}
       data-testid="mushaf-page"
+      data-opening={isFlexBody ? "1" : "0"}
       data-mm-fit="0"
       style={{ ["--nm-qpc-family" as string]: `"${fontFamily}"` }}
       aria-label={`صفحة المصحف ${footerPage}`}

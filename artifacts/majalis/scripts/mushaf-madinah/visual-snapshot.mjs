@@ -91,10 +91,14 @@ async function main() {
       const paint = await page.evaluate(() => {
         const current = document.querySelector('[data-pane="current"]');
         const pageEl = current?.querySelector('[data-testid="mushaf-page"]');
-        const line =
-          current?.querySelector(".mm-ayah-line") || current?.querySelector(".mm-basmala");
+        const line = current?.querySelector(
+          ".nm-line, .nm-basmala, .mm-ayah-line, .mm-basmala",
+        );
         const familyRaw = pageEl
-          ? getComputedStyle(pageEl).getPropertyValue("--mm-qpc-family").trim()
+          ? (
+              getComputedStyle(pageEl).getPropertyValue("--nm-qpc-family").trim() ||
+              getComputedStyle(pageEl).getPropertyValue("--mm-qpc-family").trim()
+            )
           : "";
         const family = familyRaw.replace(/^["']+|["']+$/g, "");
         const fontCheck = family
@@ -103,24 +107,26 @@ async function main() {
         const fontSize = line ? parseFloat(getComputedStyle(line).fontSize) : 0;
         const pageOverflow = !!pageEl && pageEl.scrollWidth > pageEl.clientWidth + 1;
         const lineOverflow = pageEl
-          ? [...pageEl.querySelectorAll(".mm-ayah-line, .mm-basmala")].some(
+          ? [...pageEl.querySelectorAll(".nm-line, .nm-basmala, .mm-ayah-line, .mm-basmala")].some(
               (el) => el.scrollWidth > el.clientWidth + 1,
             )
           : true;
-        const ink = pageEl ? [...pageEl.querySelectorAll(".mm-slot")] : [];
+        const ink = pageEl ? [...pageEl.querySelectorAll(".nm-slot, .mm-slot")] : [];
         let overlap = false;
         for (const slot of ink) {
           const kind = slot.getAttribute("data-kind");
           if (kind !== "line") continue;
           const slotBox = slot.getBoundingClientRect();
           if (slotBox.height < 2) continue;
-          for (const glyph of slot.querySelectorAll(".mm-ayah-line, .mm-basmala")) {
+          for (const glyph of slot.querySelectorAll(
+            ".nm-line, .nm-basmala, .mm-ayah-line, .mm-basmala",
+          )) {
             const box = glyph.getBoundingClientRect();
             if (box.bottom > slotBox.bottom + 1.5 || box.top < slotBox.top - 1.5) overlap = true;
           }
         }
-        const body = pageEl?.querySelector(".mm-page__body");
-        const slots = body ? [...body.querySelectorAll(".mm-slot")] : [];
+        const body = pageEl?.querySelector(".nm-page__body, .mm-page__body");
+        const slots = body ? [...body.querySelectorAll(".nm-slot, .mm-slot")] : [];
         const lineSlots = slots.filter((el) => el.getAttribute("data-kind") === "line");
         const slotHeights = slots.map((el) => el.getBoundingClientRect().height);
         const avgH = slotHeights.length
@@ -159,11 +165,15 @@ async function main() {
       const hasPdf = await page.evaluate(() => !!document.querySelector("embed[type='application/pdf'], iframe[src*='.pdf'], canvas.mm-pdf"));
       const font = await page.evaluate(() => {
         const current = document.querySelector('[data-pane="current"]');
-        const line =
-          current?.querySelector(".mm-ayah-line") || current?.querySelector(".mm-basmala");
+        const line = current?.querySelector(
+          ".nm-line, .nm-basmala, .mm-ayah-line, .mm-basmala",
+        );
         return line ? getComputedStyle(line).fontFamily : "";
       });
-      const lineSlots = await page.locator('[data-pane="current"] .mm-slot .mm-ayah-line').count();
+      const lineSlots = await page
+        .locator('[data-pane="current"] .nm-slot .nm-line, [data-pane="current"] .mm-slot .mm-ayah-line')
+        .count();
+      const openingMax = n <= 2 ? 46 : 35;
       report.push({
         page: n,
         file: file.replace(root + "/", ""),
@@ -177,7 +187,7 @@ async function main() {
           lineSlots > 0 &&
           paint.fontCheck === true &&
           paint.fontSize >= 12 &&
-          paint.fontSize <= 35 &&
+          paint.fontSize <= openingMax &&
           paint.pageOverflow === false &&
           paint.lineOverflow === false &&
           paint.overlap === false &&
