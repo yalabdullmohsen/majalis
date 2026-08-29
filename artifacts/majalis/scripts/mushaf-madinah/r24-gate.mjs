@@ -12,7 +12,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const read = (p) => readFileSync(resolve(root, p), "utf8");
 
 const css = read("src/features/mushaf-madinah/mushaf-madinah.css");
-const pager = read("src/features/mushaf-madinah/MushafPager.tsx");
+const pager = read("src/features/mushaf-reader/useMushafPager.ts") + read("src/features/mushaf-reader/MushafPager.tsx");
 const fit = read("src/features/mushaf-madinah/useMushafPageFontFit.ts");
 const font = read("src/features/mushaf-madinah/useQpcPageFont.ts");
 const page = read("src/features/mushaf-madinah/MushafPage.tsx");
@@ -39,9 +39,9 @@ assert.doesNotMatch(fit, /pageNumber\s*===\s*3/);
 assert.doesNotMatch(page, /pageNumber\s*===\s*3/);
 
 assert.match(pager, /SETTLE_MS\s*=\s*250|MUSHAF_SETTLE_MS/);
-assert.match(pager, /scroll-snap|data-snap/);
+assert.match(pager, /translate3d|data-snap/);
 assert.doesNotMatch(pager, /rotateY/);
-assert.match(css, /scroll-snap-type:\s*x\s+mandatory/);
+assert.match(css, /\.mm-pager-track/);
 
 assert.match(footer, /hizbStartingOnPage/);
 assert.match(footer, /hizb-start/);

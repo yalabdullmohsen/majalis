@@ -304,26 +304,29 @@ html.dark .mm-viewport,
   position: absolute;
   inset: 0;
   z-index: 5;
-  display: flex;
-  flex-direction: row;
   width: 100%;
   height: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scroll-snap-stop: always;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
+  overflow: hidden;
+  touch-action: pan-y;
   direction: ltr;
   transform: translate3d(0, 0, 0) translateZ(0);
   backface-visibility: hidden;
-  will-change: scroll-position;
+  contain: layout paint;
 }
 
 .mm-pager-scroller.is-panning {
-  scroll-snap-type: none;
   cursor: grabbing;
+  touch-action: none;
+}
+
+.mm-pager-track {
+  display: flex;
+  flex-direction: row;
+  width: 300%;
+  height: 100%;
+  will-change: transform;
+  transform: translate3d(-33.333333%, 0, 0);
+  backface-visibility: hidden;
 }
 
 .mm-pager-scroller::-webkit-scrollbar {
@@ -331,11 +334,9 @@ html.dark .mm-viewport,
 }
 
 .mm-pager__sheet {
-  flex: 0 0 100%;
-  width: 100%;
+  flex: 0 0 33.333333%;
+  width: 33.333333%;
   height: 100%;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
   position: relative;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
@@ -352,8 +353,8 @@ html.dark .mm-viewport,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mm-pager-scroller {
-    scroll-snap-type: none;
+  .mm-pager-track {
+    transition: none !important;
   }
 }
 

@@ -18,7 +18,7 @@ const actions = read("src/features/mushaf-madinah/AyahActionSheet.tsx");
 const controls = read("src/features/mushaf-madinah/MushafControls.tsx");
 const search = read("src/features/mushaf-madinah/MushafSearchSheet.tsx");
 const reader = read("src/features/mushaf-madinah/VerifiedMushafReader.tsx");
-const pager = read("src/features/mushaf-madinah/MushafPager.tsx");
+const pager = read("src/features/mushaf-reader/useMushafPager.ts") + read("src/features/mushaf-reader/MushafPager.tsx");
 const tafsir = read("src/features/mushaf-madinah/TafsirTabPanel.tsx");
 const highlight = read("src/features/mushaf-madinah/MushafAyahHighlight.tsx");
 

@@ -1,5 +1,5 @@
 export { NewMushafReader, MushafViewport } from "./NewMushafReader";
-export { MushafPageView } from "./MushafPageView";
-export { MushafVerseLayer, MushafBasmalaView } from "./MushafVerseLayer";
-export { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
-export { MushafSurahBanner } from "./MushafSurahBanner";
+export { MushafPage, MushafPageView } from "./MushafPage";
+export { MushafPager, MushafPageViewport, SWIPE_MIN_PX, SETTLE_MS } from "./MushafPageViewport";
+export { useMushafPager } from "./useMushafPager";
+export { useMushafFixedMetrics } from "./useMushafFixedMetrics";

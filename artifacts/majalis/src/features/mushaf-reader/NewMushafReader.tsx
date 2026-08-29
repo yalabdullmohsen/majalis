@@ -32,7 +32,7 @@ import {
 } from "@/lib/power-saver-engine";
 import { clampMushafPage, MUSHAF_PAGE_MAX } from "@/lib/quran-last-page";
 import { useMediaSession } from "@/hooks/useMediaSession";
-import { MushafPager } from "@/features/mushaf-madinah/MushafPager";
+import { MushafPager } from "./MushafPager";
 import {
   setMushafAudioClock,
   useMushafAudioClock,
@@ -46,10 +46,11 @@ import { useQpcPageFont } from "@/features/mushaf-madinah/useQpcPageFont";
 import { useMushafResourceGate } from "@/features/mushaf-madinah/useMushafResourceGate";
 import { prefetchAdjacentPageAudio } from "@/features/mushaf-madinah/prefetch-adjacent-audio";
 import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
-import { MushafPageView } from "./MushafPageView";
+import { MushafPage } from "./MushafPage";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
+import { useMushafFixedMetrics } from "./useMushafFixedMetrics";
 import "./mushaf-reader.css";
-/* شيتات التلاوة/البحث/التفسير — فئات صفحة المصحف القديمة غير مستخدمة في المسار */
+/* شيتات التلاوة/البحث/التفسير — فئات مشتركة */
 import "@/features/mushaf-madinah/mushaf-madinah.css";
 
 const MushafTafsirSheet = lazy(() =>
@@ -103,6 +104,9 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     Boolean(layout) && !error,
     page,
   );
+
+  const metricsRootRef = useRef<HTMLDivElement | null>(null);
+  useMushafFixedMetrics(metricsRootRef, canMountPage);
 
   const hideTimer = useRef<number | null>(null);
   const pageRef = useRef(page);
@@ -418,6 +422,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
 
   return (
     <MushafPager
+      ref={metricsRootRef}
       page={page}
       onPageChange={go}
       disabled={edgesDisabled}
@@ -456,12 +461,12 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
             <div
               className="nm-page-placeholder"
               role="status"
-              aria-label="جاري تحميل الصفحة"
+              aria-label="سُنّة"
               aria-busy="true"
             />
           ) : null}
           {canMountPage && layout ? (
-            <MushafPageView
+            <MushafPage
               layout={layout}
               fontFamily={fontFamily}
               displayPageNumber={page}
@@ -606,7 +611,7 @@ const PrefetchPage = memo(function PrefetchPage({ pageNumber }: { pageNumber: nu
   if (!ready || !layout) {
     return <div className="nm-page-placeholder" aria-hidden="true" />;
   }
-  return <MushafPageView layout={layout} fontFamily={fontFamily} displayPageNumber={pageNumber} />;
+  return <MushafPage layout={layout} fontFamily={fontFamily} displayPageNumber={pageNumber} />;
 });
 
 function MediaBridge({

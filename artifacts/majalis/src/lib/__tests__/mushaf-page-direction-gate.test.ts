@@ -8,7 +8,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
-const pager = readFileSync(resolve(root, "src/features/mushaf-madinah/MushafPager.tsx"), "utf8");
+const pager = readFileSync(resolve(root, "src/features/mushaf-reader/useMushafPager.ts"), "utf8") + readFileSync(resolve(root, "src/features/mushaf-reader/MushafPager.tsx"), "utf8");
 const controls = readFileSync(resolve(root, "src/features/mushaf-madinah/MushafControls.tsx"), "utf8");
 const css = readFileSync(resolve(root, "src/features/mushaf-madinah/mushaf-madinah.css"), "utf8");
 const reader = readFileSync(resolve(root, "src/features/mushaf-madinah/VerifiedMushafReader.tsx"), "utf8");
@@ -22,7 +22,7 @@ assert.match(pager, /data-pane="next"/);
 assert.match(pager, /data-pane="prev"/);
 assert.match(pager, /mm-page-edge--next/);
 assert.match(pager, /mm-page-edge--prev/);
-assert.match(pager, /dir.*rtl|scrollLeft/, "منطق بالفهرس لا scrollLeft السالب وحده");
+assert.match(pager, /dir="rtl"|translate3d/, "تقليب RTL عبر translate3d");
 assert.match(controls, /onNext/);
 assert.match(controls, /onPrev/);
 assert.match(controls, /onGoto/);
