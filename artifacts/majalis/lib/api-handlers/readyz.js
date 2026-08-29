@@ -1,5 +1,6 @@
 /**
- * GET/POST /api/readyz — readiness (real store checks, no DDL / no migrations).
+ * GET/POST /api/readyz — readiness سريع (وجود الجداول/الأعمدة فقط).
+ * عمق الطابور (COUNT) اختياري عبر ?deep=1 حتى لا يبطئ فحوص الجاهزية.
  * Public checks are boolean/status codes only — no secrets, no stack traces.
  */
 import { sendJson } from "../api/_http.mjs";
@@ -10,12 +11,25 @@ import {
   publicReadyReason,
 } from "../reliability/env.mjs";
 
+function wantsDeep(req) {
+  try {
+    const q = req.query?.deep;
+    if (q === "1" || q === "true") return true;
+    const raw = String(req.url || "");
+    return /[?&]deep=(1|true)(?:&|$)/i.test(raw);
+  } catch {
+    return false;
+  }
+}
+
 export default async function handler(req, res) {
   const version =
     process.env.VERCEL_GIT_COMMIT_SHA ||
     process.env.GIT_COMMIT ||
     process.env.npm_package_version ||
     "unknown";
+
+  const deep = wantsDeep(req);
 
   const checks = {
     app_alive: true,
@@ -109,19 +123,22 @@ export default async function handler(req, res) {
           );
         }
 
-        try {
-          const { rows: depthRows } = await pool.query(
-            `SELECT
-               COUNT(*) FILTER (WHERE status = 'queued')::int AS queued,
-               COUNT(*) FILTER (WHERE status = 'running')::int AS running,
-               COUNT(*) FILTER (WHERE status = 'dead_letter')::int AS dlq
-             FROM public.background_jobs`,
-          );
-          const { setGauge } = await import("../observability/metrics.mjs");
-          setGauge("queue.depth", (depthRows[0]?.queued || 0) + (depthRows[0]?.running || 0));
-          setGauge("queue.dlq_count", depthRows[0]?.dlq || 0);
-        } catch {
-          /* depth is non-blocking */
+        // COUNT على الجدول كامل يبطئ readiness — فقط مع ?deep=1
+        if (deep) {
+          try {
+            const { rows: depthRows } = await pool.query(
+              `SELECT
+                 COUNT(*) FILTER (WHERE status = 'queued')::int AS queued,
+                 COUNT(*) FILTER (WHERE status = 'running')::int AS running,
+                 COUNT(*) FILTER (WHERE status = 'dead_letter')::int AS dlq
+               FROM public.background_jobs`,
+            );
+            const { setGauge } = await import("../observability/metrics.mjs");
+            setGauge("queue.depth", (depthRows[0]?.queued || 0) + (depthRows[0]?.running || 0));
+            setGauge("queue.dlq_count", depthRows[0]?.dlq || 0);
+          } catch {
+            /* depth is non-blocking */
+          }
         }
       }
     }

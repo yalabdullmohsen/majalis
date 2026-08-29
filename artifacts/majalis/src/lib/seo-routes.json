@@ -2,8 +2,8 @@
   "$comment": "titleSuffix يُضاف برمجيًا من site.config.json — لا تكتب «| سُنّة» داخل title. siteUrl/siteName/defaultImage مرآة لـ site.config.json (يحرسها scripts/test-seo.mjs).",
   "siteUrl": "https://majlisilm.com",
   "siteName": "سُنّة",
-  "defaultImage": "/brand/official-og.png?v=20260825",
-  "logoImage": "/brand/official.png?v=20260825",
+  "defaultImage": "/brand/official-og.png?v=20260829",
+  "logoImage": "/brand/official.png?v=20260829",
   "ogImageWidth": 1200,
   "ogImageHeight": 630,
   "defaultKeywords": [

@@ -31,6 +31,46 @@
       "permanent": true
     },
     {
+      "source": "/scholars/malik",
+      "destination": "/madhahib",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/imam-malik",
+      "destination": "/madhahib",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/nawawi",
+      "destination": "/arbaeen-nawawi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-nawawi",
+      "destination": "/arbaeen-nawawi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/shafi",
+      "destination": "/madhahib",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/shafii",
+      "destination": "/madhahib",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-shafi",
+      "destination": "/madhahib",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-shafii",
+      "destination": "/madhahib",
+      "permanent": true
+    },
+    {
       "source": "/majlisilm-og-2026.jpg",
       "destination": "/brand/official-og.png",
       "permanent": true
@@ -1178,13 +1218,14 @@
       "source": "/quran/mushaf",
       "destination": "/mushaf",
       "permanent": true
+    },
+    {
+      "source": "/scholars/:path*",
+      "destination": "/tarikh-islami",
+      "permanent": true
     }
   ],
   "rewrites": [
-    {
-      "source": "/sitemap.xml",
-      "destination": "/api/sitemap"
-    },
     {
       "source": "/feed.xml",
       "destination": "/api/feed"
@@ -1203,6 +1244,30 @@
     },
     {
       "source": "/search/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/dashboard/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/madhahib",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/madhahib/:path*",
       "destination": "/index.html"
     },
     {
@@ -1402,7 +1467,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
+          "value": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
         },
         {
           "key": "Content-Type",
@@ -1415,7 +1480,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
+          "value": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
         },
         {
           "key": "Content-Type",
@@ -1436,6 +1501,23 @@
         {
           "key": "Content-Type",
           "value": "text/html; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
         }
       ]
     },

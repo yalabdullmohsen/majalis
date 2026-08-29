@@ -65,6 +65,11 @@ assert.match(
 );
 assert.match(
   readFileSync(resolve(root, "middleware.js"), "utf8"),
+  /hasSupabaseSession|auth-token/,
+  "middleware: يحجب الإدارة بلا جلسة",
+);
+assert.match(
+  readFileSync(resolve(root, "middleware.js"), "utf8"),
   /isPrivateAppPath|\/admin/,
   "middleware: يحجب زواحف الإدارة",
 );

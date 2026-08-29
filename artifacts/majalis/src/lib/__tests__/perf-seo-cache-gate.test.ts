@@ -14,8 +14,8 @@ const appSearch = readFileSync(resolve(root, "src/features/search/app-search.ts"
 
 assert.match(
   vercel,
-  /"source"\s*:\s*"\/"[\s\S]{0,220}"Cache-Control"[\s\S]{0,80}public,\s*max-age=0,\s*must-revalidate/,
-  "الرئيسية يجب أن تكون public,max-age=0,must-revalidate لا no-store",
+  /"source"\s*:\s*"\/"[\s\S]{0,280}"Cache-Control"[\s\S]{0,120}public,\s*max-age=0,\s*s-maxage=\d+/,
+  "الرئيسية: CDN cache مع s-maxage بلا no-store",
 );
 assert.match(
   vercel,
