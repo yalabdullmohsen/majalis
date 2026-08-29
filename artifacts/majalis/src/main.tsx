@@ -49,7 +49,7 @@ import "./styles/m2030/navigation.css";
 // m2030/pages.css + final-release.css — بعد load+idle (ليست حرجة لأول شاشة)
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
-import "./styles/dark-mode-surfaces.css";
+// dark-mode-surfaces بعد load — الإقلاع يضبط خلفية html عبر theme-boot
 
 // Lighthouse/Playwright: أزل أي SW قديم يتحكم بالصفحة قبل القياس
 if (
@@ -72,6 +72,7 @@ if (
 function loadNonCriticalCss() {
   void import("./styles/brand-v4-contrast-fixes.css");
   void import("./styles/a11y-release-gate.css");
+  void import("./styles/dark-mode-surfaces.css");
   void import("./styles/index-deferred-pages.css");
   void import("./styles/design-system.css").then(() => {
     void import("./styles/brand-v4-components.css");
