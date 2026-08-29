@@ -7,7 +7,7 @@
   --app-header-height: var(--header-chrome, 56px);
   --search-height: 0px;
   --ticker-height: var(--ticker-h, 2.25rem);
-  --bottom-nav-height: var(--nav-chrome, 64px);
+  --bottom-nav-height: var(--nav-chrome, 84px);
   --z-app-header: 200;
   --z-search: 190;
   --z-ticker: 180;
@@ -158,11 +158,65 @@ header.navbar-v3,
 }
 
 @media (max-width: 879px) {
+  .app-shell {
+    height: 100dvh;
+    height: 100svh;
+    max-height: 100dvh;
+    max-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+    /* حجز صلب لارتفاع الشريط الثابت — لا يُرسم محتوى خلفه */
+    padding-bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px));
+  }
+
+  .app-shell:has(.bottom-nav--hidden),
+  .app-shell.app-chrome-hidden {
+    padding-bottom: var(--inset-bottom, 0px);
+  }
+
+  .app-top-chrome {
+    flex: 0 0 auto;
+  }
+
   .app-main,
   #main-content.app-main {
-    padding-block-end: calc(var(--bottom-nav-total, var(--nav-h, 4.5rem)) + 1rem);
+    flex: 1 1 auto;
+    min-height: 0 !important;
+    overflow-x: clip;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    /* تنفّس داخل منفذ التمرير — ارتفاع الشريط محجوز في padding الصدفة */
+    padding-block-end: 24px !important;
+  }
+
+  /* التذييل داخل منفذ التمرير على الجوال لتفادي أكل ارتفاع الشريط */
+  .app-shell > .site-footer,
+  .app-shell > .site-footer--v3 {
+    display: none;
+  }
+
+  /* صفحات الصلاة/المصحف الغمرية تدير حوافها بنفسها */
+  html.pts-immersive .app-shell,
+  html.chrome-immersive .app-shell {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    padding-bottom: 0;
+    display: block;
+  }
+
+  html.pts-immersive .app-main,
+  html.chrome-immersive .app-main {
+    flex: none;
+    min-height: auto !important;
+    overflow: visible;
+    padding-block-end: 0 !important;
   }
 }
+
 
 html[data-theme="dark"] .navbar-ticker-row {
   background: var(--mj-bg, #0c1210);

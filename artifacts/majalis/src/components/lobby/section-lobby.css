@@ -12,8 +12,10 @@
   box-sizing: border-box;
   padding-inline: 16px;
   padding-top: 16px;
+  /* تعويض الشريط السفلي الثابت + مساحة تنفّس — بلا تداخل مع البطاقات */
   padding-bottom: calc(
-    var(--bottom-nav-total, var(--nav-h, 64px)) + var(--assistant-fab-size, 3.35rem) + 16px
+    var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
+      + var(--assistant-fab-size, 3.35rem)
   );
   color: var(--on-surface, var(--mj-ink, #16241e));
   background: var(--surface-app, var(--mj-bg));
@@ -294,4 +296,22 @@ html.dark .section-lobby__chip.is-active {
   background: #059669; /* emerald-600 */
   border-color: #059669;
   color: #ffffff;
+}
+
+/* جوال: إبقاء شبكة البطاقات فوق الشريط السفلي في الإطار الأول */
+@media (max-width: 879px) {
+  .section-lobby {
+    gap: 16px;
+    padding-top: 8px;
+    padding-bottom: calc(
+      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
+        + var(--assistant-fab-size, 3.35rem)
+    );
+  }
+  .section-lobby__shot {
+    gap: 16px;
+  }
+  .section-lobby__group {
+    gap: 8px;
+  }
 }

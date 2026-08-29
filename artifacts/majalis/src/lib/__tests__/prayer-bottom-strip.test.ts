@@ -72,9 +72,11 @@ assert.match(css, /\.pts-screen\s*\{[\s\S]*?width:\s*100vw/);
 assert.match(css, /\.pts-screen\s*\{[\s\S]*?background:\s*transparent/);
 assert.match(css, /\.pts-row\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius/);
 assert.match(css, /\.pts-dock__item\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius-sm/);
-assert.match(css, /padding-bottom:\s*calc\(\s*118px\s*\+\s*var\(--inset-bottom/);
+assert.match(css, /padding-bottom:\s*calc\(\s*var\(--bottom-nav-height(?:,\s*84px)?\)\s*\+\s*var\(--inset-bottom/);
 assert.match(css, /var\(--inset-top/);
 assert.match(css, /var\(--inset-bottom/);
 assert.doesNotMatch(css, /env\(\s*safe-area-inset/);
+assert.match(css, /max-width:\s*430px/);
+assert.match(css, /padding-inline:\s*16px/);
 
 console.log("prayer-bottom-strip.test.ts: ok");

@@ -85,8 +85,9 @@ header.navbar-v3,
   .bottom-nav--v2 {
     background-color: var(--surface-app, var(--mj-bg, #F2F4F3)) !important;
     background-image: none !important;
+    opacity: 1 !important;
     border-top: 1px solid var(--border) !important;
-    box-shadow: none !important;
+    box-shadow: 0 -4px 12px rgb(23 61 53 / 5%) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     padding-bottom: var(--inset-bottom) !important;
@@ -97,7 +98,7 @@ header.navbar-v3,
   border-radius: 14px !important;
   position: relative;
   min-height: 3rem;
-  margin: 0.2rem 0.12rem;
+  margin: 0;
   transition: background 0.18s ease, color 0.18s ease;
 }
 
