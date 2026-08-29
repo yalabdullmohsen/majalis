@@ -51,7 +51,7 @@ type Props = {
   onTogglePlay: () => void;
   onPrevAyah?: () => void;
   onNextAyah?: () => void;
-  onPlayRange: (range: RecitationRange, repeatCount: number) => void;
+  onPlayRange: (range: RecitationRange, repeatCount: number, delayMs?: number) => void;
   onSeek: (seconds: number) => void;
   onSpeed: (rate: number) => void;
   onTafsir: () => void;
@@ -112,6 +112,8 @@ export const AyahActionSheet = memo(function AyahActionSheet({
   const [tafsirAudioActiveClipId, setTafsirAudioActiveClipId] = useState<string | null>(null);
   const [range, setRange] = useState<RecitationRange>("ayah");
   const [repeatCount, setRepeatCount] = useState(1);
+  const [hifzOpen, setHifzOpen] = useState(false);
+  const [gapSec, setGapSec] = useState(1);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const closeRef = useRef<HTMLButtonElement | null>(null);
   const dragY = useRef<number | null>(null);
@@ -155,11 +157,24 @@ export const AyahActionSheet = memo(function AyahActionSheet({
     setReadersOpen(false);
     setTafsirAudioActiveClipId(null);
     setRange("ayah");
+    setHifzOpen(false);
   }, [verseKey]);
 
   const openTab = useCallback((next: SheetTab) => {
     setTab(next);
-    setHeight((h) => (h === "collapsed" ? "half" : h));
+    setHifzOpen(false);
+    /* التلاوة تبقى مطوية (مشغّل مضغوط) — التفسير يحتاج مساحة أكبر */
+    if (next === "tafsir" || next === "tafsir-audio" || next === "tajweed") {
+      setHeight((h) => (h === "collapsed" ? "half" : h));
+    } else {
+      setHeight("collapsed");
+    }
+  }, []);
+
+  const openHifzPanel = useCallback(() => {
+    setTab("tilawa");
+    setHifzOpen(true);
+    setHeight("half");
   }, []);
 
   useEffect(() => {
@@ -281,10 +296,11 @@ export const AyahActionSheet = memo(function AyahActionSheet({
   return createPortal(
     <>
       <div
-        className={`mm-ayah-bar ayah-action-sheet quran-sheet is-${height}${expanded ? " is-expanded" : " is-collapsed"}`}
+        className={`mm-ayah-bar ayah-action-sheet quran-sheet is-${height}${expanded ? " is-expanded" : " is-collapsed"}${tab === "tilawa" ? " is-tilawa" : ""}${hifzOpen ? " is-hifz" : ""}`}
         data-testid="mushaf-ayah-actions"
         data-sheet-mode={expanded ? "details" : "quick"}
         data-sheet-height={HEIGHT_ATTR[height]}
+        data-hifz={hifzOpen ? "1" : "0"}
         data-opacity="1"
         style={{ opacity: 1 }}
         role="dialog"
@@ -477,47 +493,121 @@ export const AyahActionSheet = memo(function AyahActionSheet({
 
             {tab === "tilawa" ? (
               <div className="ayah-action-sheet__tilawa">
-                <button
-                  type="button"
-                  className={[
-                    "ayah-action-sheet__play-hero",
-                    playerState === "playing" || playerState === "paused" ? "is-active" : "",
-                    loading ? "is-loading" : "",
-                    audioError || playerState === "error" ? "is-error" : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  onClick={handlePlayClick}
-                  data-testid="mushaf-ayah-play"
-                  aria-label={playLabel}
-                >
-                  {loading ? (
-                    <span className="ayah-action-sheet__play-spinner" aria-hidden="true" />
-                  ) : playerState === "playing" ? (
-                    <Pause size={22} aria-hidden="true" />
-                  ) : (
-                    <Play size={22} aria-hidden="true" />
-                  )}
-                  <span>{playLabel}</span>
-                </button>
-                <div className="ayah-action-sheet__tilawa-reader" role="group" aria-label="القارئ المختار">
-                  <p className="ayah-action-sheet__tilawa-reader-name" data-testid="mushaf-active-reciter">
-                    {currentReciter?.nameAr ?? "اختر القارئ"}
+                <div className="ayah-action-sheet__player" data-testid="mushaf-compact-player">
+                  <div className="ayah-action-sheet__player-top">
+                    <div className="ayah-action-sheet__player-meta">
+                      <p className="ayah-action-sheet__player-reciter" data-testid="mushaf-active-reciter">
+                        {currentReciter?.nameAr ?? "اختر القارئ"}
+                      </p>
+                      <p className="ayah-action-sheet__player-ayah">
+                        {surahName || "سورة"} · آية {parsed?.ayah ?? "—"}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      className="ayah-action-sheet__player-settings"
+                      onClick={() => setReadersOpen(true)}
+                      aria-label="إعدادات القارئ"
+                    >
+                      <Headphones size={18} aria-hidden="true" />
+                    </button>
+                  </div>
+
+                  <label className="ayah-action-sheet__seek">
+                    <span className="sr-only">تقدّم التلاوة</span>
+                    <input
+                      type="range"
+                      min={0}
+                      max={dur || 1}
+                      step={0.1}
+                      value={pos}
+                      disabled={dur <= 0}
+                      onChange={(e) => onSeek(Number(e.target.value))}
+                    />
+                  </label>
+
+                  <div className="ayah-action-sheet__player-controls" role="group" aria-label="مشغّل التلاوة">
+                    <button
+                      type="button"
+                      className="ayah-action-sheet__ctrl"
+                      onClick={() => onPrevAyah?.()}
+                      aria-label="الآية السابقة"
+                      disabled={!onPrevAyah}
+                    >
+                      <SkipBack size={18} aria-hidden="true" />
+                    </button>
+                    <button
+                      type="button"
+                      className={[
+                        "ayah-action-sheet__play-hero",
+                        playerState === "playing" || playerState === "paused" ? "is-active" : "",
+                        loading ? "is-loading" : "",
+                        audioError || playerState === "error" ? "is-error" : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                      onClick={handlePlayClick}
+                      data-testid="mushaf-ayah-play"
+                      aria-label={playLabel}
+                    >
+                      {loading ? (
+                        <span className="ayah-action-sheet__play-spinner" aria-hidden="true" />
+                      ) : playerState === "playing" ? (
+                        <Pause size={20} aria-hidden="true" />
+                      ) : (
+                        <Play size={20} aria-hidden="true" />
+                      )}
+                      <span>{playLabel}</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="ayah-action-sheet__ctrl"
+                      onClick={() => onNextAyah?.()}
+                      aria-label="الآية التالية"
+                      disabled={!onNextAyah}
+                    >
+                      <SkipForward size={18} aria-hidden="true" />
+                    </button>
+                  </div>
+
+                  <div className="ayah-action-sheet__rates" role="group" aria-label="سرعة التلاوة">
+                    {([0.75, 1, 1.25] as const).map((rate) => (
+                      <button
+                        key={rate}
+                        type="button"
+                        aria-pressed={Math.abs(playbackRate - rate) < 0.01}
+                        onClick={() => onSpeed(rate)}
+                      >
+                        {rate}×
+                      </button>
+                    ))}
+                  </div>
+
+                  <p className="ayah-action-sheet__audio-state" role="status" data-testid="mushaf-audio-state">
+                    {audioStateLabel}
                   </p>
+
                   <button
                     type="button"
-                    className="ayah-action-sheet__tilawa-reader-btn"
-                    onClick={() => setReadersOpen(true)}
+                    className={`ayah-action-sheet__hifz-toggle${hifzOpen ? " is-open" : ""}`}
+                    aria-expanded={hifzOpen}
+                    onClick={() => {
+                      if (hifzOpen) {
+                        setHifzOpen(false);
+                        setHeight("collapsed");
+                      } else {
+                        openHifzPanel();
+                      }
+                    }}
+                    data-testid="mushaf-hifz-toggle"
                   >
-                    <Headphones size={18} aria-hidden="true" />
-                    <span>تغيير القارئ</span>
+                    وضع الحفظ
                   </button>
                 </div>
-                <p className="ayah-action-sheet__audio-state" role="status" data-testid="mushaf-audio-state">
-                  {audioStateLabel}
-                </p>
-                {expanded ? (
-                  <>
+
+                {hifzOpen ? (
+                  <div className="ayah-action-sheet__hifz" data-testid="mushaf-hifz-panel" role="region" aria-label="وضع الحفظ">
+                    <p className="ayah-action-sheet__hifz-title">وضع الحفظ</p>
                     {isAiTarteelEnabled() && parsed ? (
                       <a
                         className="ayah-action-sheet__ai-tarteel"
@@ -548,30 +638,6 @@ export const AyahActionSheet = memo(function AyahActionSheet({
                         </button>
                       ))}
                     </div>
-                    <label className="ayah-action-sheet__seek">
-                      <span className="sr-only">تقدّم التلاوة</span>
-                      <input
-                        type="range"
-                        min={0}
-                        max={dur || 1}
-                        step={0.1}
-                        value={pos}
-                        disabled={dur <= 0}
-                        onChange={(e) => onSeek(Number(e.target.value))}
-                      />
-                    </label>
-                    <div className="ayah-action-sheet__rates" role="group" aria-label="سرعة التلاوة">
-                      {([0.75, 1, 1.25] as const).map((rate) => (
-                        <button
-                          key={rate}
-                          type="button"
-                          aria-pressed={Math.abs(playbackRate - rate) < 0.01}
-                          onClick={() => onSpeed(rate)}
-                        >
-                          {rate}×
-                        </button>
-                      ))}
-                    </div>
                     <label className="ayah-action-sheet__repeat">
                       التكرار
                       <select
@@ -587,36 +653,40 @@ export const AyahActionSheet = memo(function AyahActionSheet({
                         <option value={0}>لا نهائي</option>
                       </select>
                     </label>
+                    <label className="ayah-action-sheet__repeat">
+                      صمت بين التكرارات
+                      <select
+                        value={gapSec}
+                        onChange={(e) => setGapSec(Number(e.target.value))}
+                        aria-label="صمت بين التكرارات بالثواني"
+                      >
+                        {[0, 1, 2, 3, 5].map((n) => (
+                          <option key={n} value={n}>
+                            {n === 0 ? "بدون" : `${n} ث`}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <div className="ayah-action-sheet__rates" role="group" aria-label="سرعة الحفظ">
+                      {([0.75, 1, 1.25] as const).map((rate) => (
+                        <button
+                          key={`hifz-${rate}`}
+                          type="button"
+                          aria-pressed={Math.abs(playbackRate - rate) < 0.01}
+                          onClick={() => onSpeed(rate)}
+                        >
+                          {rate}×
+                        </button>
+                      ))}
+                    </div>
                     <button
                       type="button"
                       className="ayah-action-sheet__apply-range"
-                      onClick={() => onPlayRange(range, repeatCount)}
+                      onClick={() => onPlayRange(range, repeatCount, gapSec * 1000)}
                     >
-                      تشغيل النطاق
+                      بدء التكرار
                     </button>
-                    <div className="mm-ayah-bar__transport" role="group" aria-label="تنقل الآيات">
-                      <button
-                        type="button"
-                        className="mm-ayah-bar__skip"
-                        onClick={() => onPrevAyah?.()}
-                        aria-label="الآية السابقة"
-                        disabled={!onPrevAyah}
-                      >
-                        <SkipBack size={18} aria-hidden="true" />
-                        <span>السابقة</span>
-                      </button>
-                      <button
-                        type="button"
-                        className="mm-ayah-bar__skip"
-                        onClick={() => onNextAyah?.()}
-                        aria-label="الآية التالية"
-                        disabled={!onNextAyah}
-                      >
-                        <SkipForward size={18} aria-hidden="true" />
-                        <span>التالية</span>
-                      </button>
-                    </div>
-                  </>
+                  </div>
                 ) : null}
               </div>
             ) : null}

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import { ChevronDown, ChevronUp, Pause, Play, SkipBack, SkipForward, X } from "lucide-react";
+import { ChevronDown, Pause, Play, SkipBack, SkipForward, X } from "lucide-react";
 import type { PlayerState } from "@/core/audio/AudioEngine";
 import { DEFAULT_VERIFIED_RECITER_IDS } from "@/lib/audio-registry";
 import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
@@ -22,9 +22,12 @@ type Props = {
   onPrev: () => void;
   onNext: () => void;
   onReciterChange: (id: string) => void;
+  onClose?: () => void;
+  onSeek?: (seconds: number) => void;
+  onSpeed?: (rate: number) => void;
 };
 
-/** شريط تلاوة كبسولة عائم — تشغيل + قارئ + قائمة منبثقة. */
+/** شريط تلاوة مضغوط أسفل المصحف — بلا وضع حفظ. */
 export function MushafAudioDock({
   open,
   verseLabel,
@@ -38,8 +41,11 @@ export function MushafAudioDock({
   onPrev,
   onNext,
   onReciterChange,
+  onClose,
+  onSeek,
+  onSpeed,
 }: Props) {
-  const { currentTime, duration } = useMushafAudioClock();
+  const { currentTime, duration, playbackRate } = useMushafAudioClock();
   const [readersOpen, setReadersOpen] = useState(false);
   const [readerQuery, setReaderQuery] = useState("");
   const playing = playerState === "playing" || playerState === "buffering" || playerState === "loading";
@@ -77,6 +83,60 @@ export function MushafAudioDock({
         role="region"
         aria-label="مشغّل التلاوة"
       >
+        <div className="mm-audio-dock__head">
+          <div className="mm-audio-dock__meta">
+            <p className="mm-audio-dock__reciter-name">{activeReciter?.nameAr ?? "اختر القارئ"}</p>
+            <p className="mm-audio-dock__verse">{verseLabel}</p>
+          </div>
+          <div className="mm-audio-dock__head-actions">
+            {mini ? null : (
+              <button
+                type="button"
+                className="mm-audio-dock__reciter-btn"
+                aria-label="اختيار القارئ"
+                aria-haspopup="dialog"
+                aria-expanded={readersOpen}
+                onClick={() => setReadersOpen(true)}
+              >
+                <span>القارئ</span>
+                <ChevronDown size={14} aria-hidden="true" />
+              </button>
+            )}
+            {onClose ? (
+              <button type="button" className="mm-audio-dock__close" onClick={onClose} aria-label="إغلاق المشغّل">
+                <X size={18} aria-hidden="true" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="mm-audio-dock__mini"
+                aria-pressed={mini}
+                aria-label={mini ? "توسيع المشغل" : "تصغير المشغل"}
+                onClick={() => onMiniChange?.(!mini)}
+              >
+                <X size={18} aria-hidden="true" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {mini ? null : (
+          <label className="mm-audio-dock__seek">
+            <span className="sr-only">تقدم التلاوة</span>
+            <input
+              type="range"
+              className="mm-audio-dock__progress"
+              min={0}
+              max={progressMax}
+              step={0.1}
+              value={progressVal}
+              disabled={duration <= 0 || !onSeek}
+              onChange={(e) => onSeek?.(Number(e.target.value))}
+              aria-label="تقدم التلاوة"
+            />
+          </label>
+        )}
+
         <div className="mm-audio-dock__controls">
           {mini ? null : (
             <button type="button" onClick={onPrev} aria-label="الآية السابقة">
@@ -96,42 +156,22 @@ export function MushafAudioDock({
               <SkipForward size={16} aria-hidden="true" />
             </button>
           )}
-        </div>
-
-        <div className="mm-audio-dock__meta">
-          <span className="mm-audio-dock__verse">{verseLabel}</span>
-          {mini ? null : (
-            <div className="mm-audio-dock__reciter">
-              <button
-                type="button"
-                className="mm-audio-dock__reciter-btn"
-                aria-label="اختيار القارئ"
-                aria-haspopup="dialog"
-                aria-expanded={readersOpen}
-                onClick={() => setReadersOpen(true)}
-              >
-                <span>{activeReciter?.nameAr ?? "اختر القارئ"}</span>
-                <ChevronDown size={14} aria-hidden="true" />
-              </button>
+          {mini || !onSpeed ? null : (
+            <div className="mm-audio-dock__rates" role="group" aria-label="السرعة">
+              {([0.75, 1, 1.25] as const).map((rate) => (
+                <button
+                  key={rate}
+                  type="button"
+                  aria-pressed={Math.abs(playbackRate - rate) < 0.01}
+                  onClick={() => onSpeed(rate)}
+                >
+                  {rate}×
+                </button>
+              ))}
             </div>
           )}
-          <button
-            type="button"
-            className="mm-audio-dock__mini"
-            aria-pressed={mini}
-            aria-label={mini ? "توسيع المشغل" : "تصغير المشغل"}
-            onClick={() => onMiniChange?.(!mini)}
-          >
-            {mini ? <ChevronUp size={16} aria-hidden="true" /> : <ChevronDown size={16} aria-hidden="true" />}
-          </button>
         </div>
 
-        <progress
-          className="mm-audio-dock__progress"
-          max={progressMax}
-          value={progressVal}
-          aria-label="تقدم التلاوة"
-        />
         <p className="mm-audio-dock__status" role="status">
           {statusLabel}
           {loading ? " · جاري تحميل التلاوة…" : ""}
