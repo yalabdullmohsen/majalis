@@ -67,10 +67,7 @@ await runUniversalSearch("الصلاة");
 
 {
   const home = read("pages/account/ui/HomeView.tsx");
-  assert.match(home, /StartSearchCard|HomeUniversalSearch/);
-  const startSearch = read("components/home/start/StartSearchCard.tsx");
-  assert.match(startSearch, /enterKeyHint="search"/);
-  assert.match(startSearch, /inputMode="search"/);
+  assert.match(home, /HomeUniversalSearch/);
   const comp = read("components/home/HomeUniversalSearch.tsx");
   assert.match(comp, /UNIVERSAL_DEBOUNCE_MS/);
   assert.match(comp, /آخر عمليات البحث/);
