@@ -1,7 +1,6 @@
 /**
- * GET/POST /api/readyz — readiness سريع (وجود الجداول/الأعمدة فقط).
- * عمق الطابور (COUNT) اختياري عبر ?deep=1 حتى لا يبطئ فحوص الجاهزية.
- * Public checks are boolean/status codes only — no secrets, no stack traces.
+ * GET/POST /api/readyz — جاهزية سريعة افتراضيًا (عملية حيّة فقط).
+ * الفحص الثقيل لقاعدة البيانات عبر ?deep=1 فقط.
  */
 import { sendJson } from "../api/_http.mjs";
 import {
@@ -22,14 +21,32 @@ function wantsDeep(req) {
   }
 }
 
-export default async function handler(req, res) {
-  const version =
+function versionStamp() {
+  return String(
     process.env.VERCEL_GIT_COMMIT_SHA ||
-    process.env.GIT_COMMIT ||
-    process.env.npm_package_version ||
-    "unknown";
+      process.env.GIT_COMMIT ||
+      process.env.npm_package_version ||
+      "unknown",
+  ).slice(0, 40);
+}
 
+export default async function handler(req, res) {
+  const version = versionStamp();
   const deep = wantsDeep(req);
+
+  // المسار السريع: لا يستورد database ولا يفتح pool — مناسب لـ probes / CDN.
+  if (!deep) {
+    sendJson(res, 200, {
+      status: "ok",
+      version,
+      checks: {
+        app_alive: true,
+        deep: false,
+      },
+      hint: "استخدم ?deep=1 لفحص قاعدة البيانات والطابور",
+    });
+    return;
+  }
 
   const checks = {
     app_alive: true,
@@ -37,9 +54,9 @@ export default async function handler(req, res) {
     queue_tables_ready: false,
     queue_hardening_columns_ready: false,
     ai_circuit_table_ready: false,
+    deep: true,
   };
 
-  /** Internal diagnostics — logged only (plus allowlisted `reason` in JSON). */
   const details = {
     reason: null,
     attempts_table: null,
@@ -55,7 +72,6 @@ export default async function handler(req, res) {
     const pool = typeof getPgPool === "function" ? await getPgPool() : null;
     if (!pool) {
       ready = false;
-      // Production without a pool is almost always env wiring, not "healthy".
       details.reason = isProductionRuntime()
         ? DURABLE_REASONS.env_mismatch
         : DURABLE_REASONS.database_not_configured;
@@ -112,7 +128,6 @@ export default async function handler(req, res) {
           checks.queue_hardening_columns_ready = true;
         } catch {
           checks.queue_hardening_columns_ready = false;
-          // Soft: code degrades to next_run_at / finished_at until migration.
           console.error(
             JSON.stringify({
               level: "warn",
@@ -121,24 +136,6 @@ export default async function handler(req, res) {
               ts: new Date().toISOString(),
             }),
           );
-        }
-
-        // COUNT على الجدول كامل يبطئ readiness — فقط مع ?deep=1
-        if (deep) {
-          try {
-            const { rows: depthRows } = await pool.query(
-              `SELECT
-                 COUNT(*) FILTER (WHERE status = 'queued')::int AS queued,
-                 COUNT(*) FILTER (WHERE status = 'running')::int AS running,
-                 COUNT(*) FILTER (WHERE status = 'dead_letter')::int AS dlq
-               FROM public.background_jobs`,
-            );
-            const { setGauge } = await import("../observability/metrics.mjs");
-            setGauge("queue.depth", (depthRows[0]?.queued || 0) + (depthRows[0]?.running || 0));
-            setGauge("queue.dlq_count", depthRows[0]?.dlq || 0);
-          } catch {
-            /* depth is non-blocking */
-          }
         }
       }
     }
@@ -166,15 +163,14 @@ export default async function handler(req, res) {
         msg: "readyz_not_ready",
         checks,
         reason: details.reason,
-        version: String(version).slice(0, 40),
+        version,
       }),
     );
   }
 
-  // Never fake readiness: 503 stays 503. Public reason is allowlisted only.
   const payload = {
     status: ready ? "ok" : "not_ready",
-    version: String(version).slice(0, 40),
+    version,
     checks,
   };
   if (!ready) {

@@ -3,13 +3,15 @@ import { HadithSection } from "./HadithPage";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { HadithClassGuide } from "@/pages/hadith/ui/HadithClassGuide";
 
 export default function HadithSahihPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/hadith/sahih",
       title: "الأحاديث الصحيحة — مرجع الصحيحين | سُنّة",
-      description: "مرجع صحيح البخاري (٧٥٨٠) وصحيح مسلم (٧٣٦٠) كاملاً مع بحث وتصفية؛ الصحة بعضوية الصحيحين، بلا درجات ملفّقة.",
+      description:
+        "تعريف الحديث الصحيح وأمثلة من الصحيحين مع مصادر وروابط داخلية؛ مرجع البخاري ومسلم بلا درجات ملفّقة.",
       keywords: ["أحاديث صحيحة", "صحيح البخاري", "صحيح مسلم", "الصحيحان", "مرجع الحديث", "الحديث الصحيح"],
       jsonLd: [
         {
@@ -17,7 +19,7 @@ export default function HadithSahihPage() {
           "@type": "WebPage",
           name: "الأحاديث الصحيحة — مرجع الصحيحين",
           url: "https://majlisilm.com/hadith/sahih",
-          description: "مرجع الصحيحين الكامل مع عرض المتن بلا سند وبحث متعدد الطرق",
+          description: "تعريف الحديث الصحيح ومرجع الصحيحين مع أمثلة ومصادر",
           about: { "@type": "Thing", name: "صحيح البخاري وصحيح مسلم" },
         },
       ],
@@ -26,6 +28,7 @@ export default function HadithSahihPage() {
 
   return (
     <>
+      <HadithClassGuide kind="sahih" />
       <HadithSection authenticityClass="sahih" />
       <div className="twh-share">
         <ShareButtons title="الأحاديث الصحيحة — سُنّة" url="https://majlisilm.com/hadith/sahih" />

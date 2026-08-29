@@ -716,6 +716,56 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://majlisilm.com/scholars</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/scholars/malik</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/scholars/nawawi</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/scholars/abu-hanifa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/scholars/shafii</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/scholars/ahmad</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/scholars/bukhari</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/scholars/muslim</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/scholars/ibn-taymiyyah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/scholars/ibn-kathir</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majlisilm.com/lessons/kw-othman-tafsir-nahl-0</loc>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>

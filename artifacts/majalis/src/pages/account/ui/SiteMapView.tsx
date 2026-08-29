@@ -127,6 +127,7 @@ const SECTIONS = [
       { href: "/lessons", label: "الدورات العلمية",   desc: "برامج وكورسات ضمن جدول الدروس" },
       { href: "/kuwait-lessons",   label: "دروس الكويت",          desc: "دليل الدروس بالمساجد الكويتية" },
       { href: "/tarikh-islami",         label: "التاريخ الإسلامي",        desc: "التاريخ الإسلامي" },
+      { href: "/scholars",              label: "علماء الأمة",             desc: "تراجم موجزة للأئمة" },
       { href: "/quiz",             label: "سين جيم",   desc: "مسابقة أسئلة تفاعلية" },
       { href: "/my-learning",      label: "حسابي",                desc: "التقدم والبطاقات المراجعة" },
       { href: "/assistant",        label: "المساعد الذكي",        desc: "استفسر عن أي مسألة" },

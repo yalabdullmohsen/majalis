@@ -1535,3 +1535,15 @@ html.dark .hadith-card.ui-card {
   background: color-mix(in srgb, var(--mj-surface, #1a221f) 94%, #0f3d2e 6%);
   border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 22%, #2a3531);
 }
+
+/* Hadith class SEO guide */
+.hadith-class-guide{max-width:820px;margin:0 auto 1.5rem;padding:1rem 1rem 0;}
+.hadith-class-guide__title{font-size:1.15rem;margin:0 0 .5rem;}
+.hadith-class-guide__h{font-size:1rem;margin:1rem 0 .4rem;}
+.hadith-class-guide__p,.hadith-class-guide__list,.hadith-class-guide__faq{line-height:1.75;font-size:.95rem;}
+.hadith-class-guide__list{margin:.25rem 0 0;padding-inline-start:1.1rem;}
+.hadith-class-guide__nav{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.35rem;}
+.hadith-class-guide__link{font-size:.85rem;font-weight:600;padding:.35rem .7rem;border-radius:.5rem;border:1px solid color-mix(in srgb,var(--mj-brand,#1f4d3a) 22%,transparent);text-decoration:none;color:var(--mj-brand-deep,#163828);}
+.hadith-class-guide__faq{margin:0;}
+.hadith-class-guide__faq dt{font-weight:700;margin-top:.75rem;}
+.hadith-class-guide__faq dd{margin:.3rem 0 0;}
