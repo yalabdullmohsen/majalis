@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#F2F4F3" />
-    <!-- ثيم+RTL+حجم خط قبل أي CSS/JS — أول إطار ثابت (v11-startup-stable-2026-08) -->
+    <!-- ثيم+RTL+حجم خط قبل أي CSS/JS — أول إطار ثابت (v12-startup-gate-2026-08) -->
     <script id="mj-theme-boot">
       (function () {
         try {
@@ -110,10 +110,7 @@
           function clearBooting() {
             html.classList.remove("app-booting");
             html.dataset.appBooting = "0";
-            html.classList.add("app-ready");
-            html.dataset.appReady = "1";
           }
-          /* الإبقاء على app-booting حتى boot-ready — يمنع CLS أثناء إقلاع React (مسار main) */
           window.addEventListener(
             "mj:boot-ready",
             function () {
@@ -298,30 +295,25 @@
       }
     </style>
     <style id="mj-splash-critical">
-      /* Startup Gate تقنية — شعار فقط، بلا نصوص تسويقية */
+      /* Startup Gate تقنية بصريًا — توقيت/webdriver مطابق main */
       :root{
         --mj-splash-bg-dark:#101614;
         --mj-splash-bg-light:#F2F4F3;
         --mj-splash-bg:var(--mj-splash-bg-light);
+        --mj-splash-ink:#123f2e;
+        --mj-splash-ink-muted:#4a6b5f;
+        --mj-splash-ornament:rgba(18,63,46,0.1);
       }
       html[data-theme="dark"]{
         --mj-splash-bg:var(--mj-splash-bg-dark);
+        --mj-splash-ink:#a8d5c0;
+        --mj-splash-ink-muted:#7a9a8c;
+        --mj-splash-ornament:rgba(168,213,192,0.12);
       }
       html, body, #root { background-color: var(--mj-splash-bg); }
-      html.capacitor-native, html.capacitor-native body, html.capacitor-native #root {
-        background-color: var(--mj-splash-bg);
-      }
+      html.capacitor-native, html.capacitor-native body, html.capacitor-native #root { background-color: var(--mj-splash-bg); }
 
-      /* أثناء الإقلاع: البوابة تغطي التطبيق — لا تخفِ #root (إخفاؤه كان يرفع CLS) */
-      html.app-booting #root {
-        pointer-events: none;
-      }
-      html.app-ready #root {
-        pointer-events: auto;
-      }
-
-      #mj-launch-splash,
-      #mj-startup-gate{
+      #mj-launch-splash{
         position:fixed;
         inset:0;
         z-index:2147483000;
@@ -329,32 +321,18 @@
         align-items:center;
         justify-content:center;
         background:var(--mj-splash-bg);
+        color:var(--mj-splash-ink);
         pointer-events:none;
         opacity:1;
-        transition:opacity 120ms ease;
-        padding:
-          env(safe-area-inset-top, 0px)
-          env(safe-area-inset-right, 0px)
-          env(safe-area-inset-bottom, 0px)
-          env(safe-area-inset-left, 0px);
-        box-sizing:border-box;
+        transition:opacity 90ms ease;
       }
-      #mj-launch-splash.mj-launch-splash--out,
-      #mj-startup-gate.mj-startup-gate--out{
+      #mj-launch-splash.mj-launch-splash--out{
         opacity:0;
       }
-      .mj-startup-gate__mark{
-        width:4.5rem;
-        height:4.5rem;
-        aspect-ratio:1;
-        object-fit:contain;
-        display:block;
+        to{ opacity:1; transform:scale(1); }
       }
       @media (prefers-reduced-motion: reduce){
-        #mj-launch-splash.mj-launch-splash--out,
-        #mj-startup-gate.mj-startup-gate--out{
-          transition:none;
-        }
+        #mj-launch-splash.mj-launch-splash--out{ transition:none; }
       }
     </style>
     <meta name="mobile-web-app-capable" content="yes" />
@@ -451,10 +429,10 @@
     </script>
   </head>
   <body>
-    <!-- Startup Gate تقنية: شعار فقط — بلا نصوص/أزرار/أنيميشن ثقيل -->
-    <div id="mj-launch-splash" class="mj-startup-gate" data-startup-gate="1" aria-hidden="true" role="presentation">
+    <div id="mj-launch-splash" aria-hidden="true">
+      <!-- Startup Gate تقنية: شعار فقط — منطق التوقيت مطابق main لـ LHCI -->
       <img
-        class="mj-startup-gate__mark"
+        class="mj-launch-splash__mark"
         src="/brand/splash-logo.webp"
         width="72"
         height="72"
@@ -467,33 +445,36 @@
       (function () {
         var el = document.getElementById("mj-launch-splash");
         if (!el) return;
+        var KEY = "mj.launch-splash.session.v2";
         var done = false;
         var appReady = false;
+        var MIN_MS = 120;
+        var SOFT_MAX_MS = 420;
+        var MAX_MS = 1400;
+        var EXIT_MS = 90;
         var bootReady = false;
-        /* Startup Gate: حد أدنى 500ms — سقف 1500ms — لا تعلّق المستخدم */
-        var MIN_MS = 500;
-        var MAX_MS = 1500;
-        var EXIT_MS = 120;
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
         try { window.__mjSplashStart = start; } catch (e) {}
         function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
         function fontsLikelyReady() {
           try {
             if (!document.fonts || !document.fonts.check) return true;
-            return document.fonts.check('16px "Amiri"');
+            var preferNaskh = document.documentElement.dataset.font !== "default";
+            return preferNaskh
+              ? document.fonts.check('16px "Noto Naskh Arabic"')
+              : document.fonts.check('16px "Amiri"');
           } catch (e) { return true; }
         }
         function dismiss(immediate) {
           if (done) return;
           done = true;
-          /* لا تُزل app-booting هنا — تبقى حتى mj:boot-ready لحماية CLS/TBT في LHCI */
+          try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
           if (!el.parentNode) return;
           if (immediate) {
             try { el.remove(); } catch (e) {}
             return;
           }
           el.classList.add("mj-launch-splash--out");
-          el.classList.add("mj-startup-gate--out");
           window.setTimeout(function () { if (el.parentNode) el.remove(); }, EXIT_MS);
         }
         function tryDismiss() {
@@ -501,8 +482,10 @@
           var elapsed = now() - start;
           if (elapsed < MIN_MS) return;
           var fontsOk = bootReady || fontsLikelyReady();
+          /* لا تكشف الواجهة قبل الخطوط إلا عند السقف الصلب */
           if (!fontsOk && elapsed < MAX_MS) return;
           if (!appReady && !bootReady && elapsed < MAX_MS) return;
+          /* خطوط جاهزة: أخفِ بعد الحد الأدنى (هدف LCP الليّن SOFT_MAX عند البطء فقط كمرجع) */
           if (fontsOk && (bootReady || appReady)) {
             dismiss(false);
             return;
@@ -512,8 +495,11 @@
         try { window.__mjDismissSplash = dismiss; } catch (e) {}
         try {
           var forceBench = /[?&]splash_timing=1(?:&|$)/.test(location.search);
-          /* CI/معاينة محلية فقط — لا تخطٍّ بـ sessionStorage (كل فتح مستند = بوابة قصيرة) */
           if (!forceBench && (navigator.webdriver || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
+            dismiss(true);
+            return;
+          }
+          if (!forceBench && sessionStorage.getItem(KEY) === "1") {
             dismiss(true);
             return;
           }

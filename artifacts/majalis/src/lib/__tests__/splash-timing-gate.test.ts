@@ -1,5 +1,5 @@
 /**
- * بوابة: توقيت Startup Gate — حد أدنى 500ms وسقف 1500ms.
+ * بوابة: توقيت دخولية MajlisSplash — سريع (≈120–420ms) مع سقف 1400ms.
  * تشغيل: node --import tsx src/lib/__tests__/splash-timing-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -14,9 +14,9 @@ const main = readFileSync(resolve(root, "src/main.tsx"), "utf8");
 const html = readFileSync(resolve(root, "index.html"), "utf8");
 const majlisSplash = readFileSync(resolve(root, "src/lib/majlis-splash.ts"), "utf8");
 
-assert.match(majlisSplash, /SPLASH_MIN_VISIBLE_MS\s*=\s*500/);
-assert.match(majlisSplash, /SPLASH_MAX_VISIBLE_MS\s*=\s*1_?500|SPLASH_MAX_VISIBLE_MS\s*=\s*1500/);
-assert.match(majlisSplash, /SPLASH_FADE_OUT_MS\s*=\s*120/);
+assert.match(majlisSplash, /SPLASH_MIN_VISIBLE_MS\s*=\s*120/);
+assert.match(majlisSplash, /SPLASH_LCP_SOFT_MS\s*=\s*420/);
+assert.match(majlisSplash, /SPLASH_MAX_VISIBLE_MS\s*=\s*1_?400|SPLASH_MAX_VISIBLE_MS\s*=\s*1400/);
 assert.match(splash, /SPLASH_MIN_VISIBLE_MS/);
 assert.match(splash, /SPLASH_MAX_VISIBLE_MS/);
 assert.match(splash, /app:first-paint/);
@@ -24,12 +24,14 @@ assert.match(cap, /launchAutoHide:\s*false/);
 assert.match(main, /armNativeSplashController/);
 assert.match(main, /app:first-paint/);
 assert.ok(existsSync(resolve(root, "src/components/MajlisSplash.tsx")));
-assert.match(html, /id="mj-(launch-splash|startup-gate)"/);
-assert.match(html, /MIN_MS\s*=\s*500/);
-assert.match(html, /MAX_MS\s*=\s*1500/);
-assert.match(html, /EXIT_MS\s*=\s*120/);
+assert.match(html, /id="mj-launch-splash"/);
+assert.match(html, /MIN_MS\s*=\s*120/);
+assert.match(html, /SOFT_MAX_MS\s*=\s*420/);
+assert.match(html, /MAX_MS\s*=\s*1400/);
+assert.match(html, /EXIT_MS\s*=\s*90/);
+assert.match(html, /splash-logo\.webp/);
 assert.doesNotMatch(html, /mj-launch-splash__tagline/);
-assert.match(html, /splash_timing=1/, "معامل قياس توقيت البوابة");
+assert.match(html, /splash_timing=1/, "معامل قياس توقيت الدخولية");
 assert.doesNotMatch(html, /id="mj-silent-splash"/);
 assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل");
 

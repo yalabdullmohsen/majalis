@@ -10,5 +10,5 @@ export type FirstVisitIntroConfig = {
 };
 
 export const firstVisitIntroConfig: FirstVisitIntroConfig = {
-  enabled: false,
+  enabled: true,
 };

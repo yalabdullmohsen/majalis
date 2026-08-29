@@ -21,12 +21,13 @@ const main = read("src/main.tsx");
 const intro = read("src/components/onboarding/FirstVisitIntro.tsx");
 const navBack = read("src/lib/navigation-back.ts");
 
-assert.match(html, /MIN_MS\s*=\s*500/, "Startup Gate — حد أدنى 500ms");
-assert.match(html, /MAX_MS\s*=\s*1500/, "سقف صلب 1500ms — لا تعلّق المستخدم");
-assert.match(splash, /SPLASH_MIN_VISIBLE_MS\s*=\s*500/);
-assert.match(splash, /SPLASH_MAX_VISIBLE_MS\s*=\s*1_?500|SPLASH_MAX_VISIBLE_MS\s*=\s*1500/);
-assert.doesNotMatch(html, /sessionStorage\.getItem\(KEY\)/, "لا تخطٍّ بالجلسة — كل فتح مستند");
-assert.doesNotMatch(html, /mj-launch-splash__tagline/, "بلا عبارة تسويقية");
+assert.match(html, /MIN_MS\s*=\s*120/, "دخولية قصيرة — LCP");
+assert.match(html, /SOFT_MAX_MS\s*=\s*420/, "هدف LCP ليّن ≤420ms عند جاهزية الخطوط");
+assert.match(html, /MAX_MS\s*=\s*1400/, "سقف صلب لانتظار الخطوط — منع FOUT");
+assert.match(splash, /SPLASH_MIN_VISIBLE_MS\s*=\s*120/);
+assert.match(splash, /SPLASH_LCP_SOFT_MS\s*=\s*420/);
+assert.match(splash, /SPLASH_MAX_VISIBLE_MS\s*=\s*1_?400|SPLASH_MAX_VISIBLE_MS\s*=\s*1400/);
+assert.match(html, /sessionStorage\.getItem\(KEY\)/, "تخطّي الدخولية في نفس الجلسة");
 assert.match(html, /<meta charset="UTF-8"\s*\/>/, "charset موجود");
 {
   const head = html.split(/<head[^>]*>/i)[1] ?? "";
