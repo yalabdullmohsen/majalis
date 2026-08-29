@@ -295,7 +295,6 @@
       }
     </style>
     <style id="mj-splash-critical">
-      /* Startup Gate تقنية بصريًا — توقيت/webdriver مطابق main */
       :root{
         --mj-splash-bg-dark:#101614;
         --mj-splash-bg-light:#F2F4F3;
@@ -336,6 +335,15 @@
         gap:0.85rem;
         width:min(88vw,22rem);
         text-align:center;
+        animation:mj-launch-enter 220ms cubic-bezier(0.22,1,0.36,1) both;
+      }
+      .mj-launch-splash__ornament{
+        position:absolute;
+        width:min(72vw,18rem);
+        height:min(72vw,18rem);
+        color:var(--mj-splash-ornament);
+        opacity:1;
+        pointer-events:none;
       }
       .mj-launch-splash__title{
         position:relative;
@@ -348,10 +356,12 @@
         line-height:1.2;
         color:var(--mj-splash-ink);
       }
-
+      @keyframes mj-launch-enter{
+        from{ opacity:0; transform:scale(0.97); }
         to{ opacity:1; transform:scale(1); }
       }
       @media (prefers-reduced-motion: reduce){
+        .mj-launch-splash__inner{ animation:none; }
         #mj-launch-splash.mj-launch-splash--out{ transition:none; }
       }
     </style>
@@ -449,8 +459,15 @@
     </script>
   </head>
   <body>
+    <!-- Startup Gate: هوية سُنّة بلا عبارة تسويقية؛ توقيت LHCI مطابق main -->
     <div id="mj-launch-splash" aria-hidden="true">
-      <!-- Startup Gate تقنية: اسم التطبيق فقط — بلا عبارة تسويقية؛ التوقيت مطابق main -->
+      <svg class="mj-launch-splash__ornament" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="currentColor" stroke-width="0.55" opacity="0.85">
+          <circle cx="100" cy="100" r="78"/>
+          <circle cx="100" cy="100" r="54"/>
+          <path d="M100 22 L116 68 L164 68 L126 98 L140 146 L100 120 L60 146 L74 98 L36 68 L84 68 Z"/>
+        </g>
+      </svg>
       <div class="mj-launch-splash__inner">
         <p class="mj-launch-splash__title" id="mj-launch-splash__title">سُنّة</p>
       </div>
