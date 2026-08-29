@@ -44,7 +44,7 @@ export default function TasbihPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/tasbih",
-      title: "التسبيح الرقمي | المجلس العلمي",
+      title: "التسبيح الرقمي | سُنّة",
       description: "عداد التسبيح الرقمي مع أوراد قابلة للتخصيص، سبّح بحمد الله واذكر الله في أي وقت مع متابعة تقدمك اليومي.",
       keywords: ["تسبيح", "ذكر الله", "عداد تسبيح", "أوراد", "أذكار"],
       jsonLd: [
@@ -248,7 +248,7 @@ export default function TasbihPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="التسبيح الرقمي — المجلس العلمي" url={`${SITE_URL}/tasbih`} />
+        <ShareButtons title="التسبيح الرقمي — سُنّة" url={`${SITE_URL}/tasbih`} />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأذكار والأخلاق" count={4} />

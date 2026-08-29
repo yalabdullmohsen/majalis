@@ -46,7 +46,7 @@ test("BottomNavBar بلا شيت المزيد — الأقسام تبويب صف
 });
 
 test("هيدر وبطل الرئيسية مبسّطان بلا شعار طويل مكرر", () => {
-  assert.match(navBar, /المجلس العلمي/, "شعار الهيدر: المجلس العلمي");
+  assert.match(navBar, /سُنّة/, "شعار الهيدر: سُنّة");
   assert.doesNotMatch(navBar, /المعرفة الإسلامية الرقمية/, "أُزيل الشعار الطويل من الهيدر");
   assert.doesNotMatch(home, /heroCountdown|heroPrayers/, "لا شريط صلاة مكرر في أعلى الرئيسية");
   assert.doesNotMatch(home, /المسارات العلمية/, "زر ثانوي زائد أُزيل من هيرو الرئيسية");

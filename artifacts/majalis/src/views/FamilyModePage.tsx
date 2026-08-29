@@ -313,7 +313,7 @@ export default function FamilyModePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/family",
-      title: "الوضع العائلي | المجلس العلمي",
+      title: "الوضع العائلي | سُنّة",
       description: "إدارة التعلم العائلي، خصص المحتوى لكل فرد في العائلة وتابع التقدم في التعلم الشرعي.",
       keywords: ["وضع عائلي", "تعلم العائلة", "تعليم أطفال", "الأسرة المسلمة"],
       robots: "noindex, follow",

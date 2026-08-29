@@ -152,7 +152,7 @@ export default function ArkanIslamPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/arkan",
-      title: "أركان الإسلام الخمسة | المجلس العلمي",
+      title: "أركان الإسلام الخمسة | سُنّة",
       description: "شرح تفصيلي لأركان الإسلام الخمسة: الشهادتان والصلاة والزكاة والصوم والحج، مع الأدلة من القرآن والسنة وأقوال العلماء.",
       keywords: ["أركان الإسلام", "الشهادتان", "الصلاة", "الزكاة", "رمضان", "الحج"],
       jsonLd: [
@@ -301,7 +301,7 @@ export default function ArkanIslamPage() {
         </div>
       </div>
       <div className="zk-share">
-        <ShareButtons title="أركان الإسلام الخمسة — المجلس العلمي" url="https://majlisilm.com/arkan-islam" />
+        <ShareButtons title="أركان الإسلام الخمسة — سُنّة" url="https://majlisilm.com/arkan-islam" />
       </div>
       <RelatedKnowledge kind="lesson" query="أركان الإسلام" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

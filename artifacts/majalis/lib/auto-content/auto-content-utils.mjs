@@ -113,7 +113,7 @@ export function verifySourceUrl(originalUrl, sourceUrl, trustLevel = 80) {
 }
 
 export function generateSeoMetadata({ title, summary, category, slug, sourceName }) {
-  const seoTitle = `${title} | المجلس العلمي`.slice(0, 70);
+  const seoTitle = `${title} | سُنّة`.slice(0, 70);
   const seoDescription = (summary || title)
     .replace(/\s+/g, " ")
     .trim()
@@ -128,7 +128,7 @@ export function generateSeoMetadata({ title, summary, category, slug, sourceName
     articleSection: category || "علوم شرعية",
     publisher: {
       "@type": "Organization",
-      name: "المجلس العلمي",
+      name: "سُنّة",
     },
     isBasedOn: sourceName
       ? { "@type": "CreativeWork", name: sourceName }
@@ -253,7 +253,7 @@ export async function aiAnalyzeContent({ title, description, sourceName }) {
   if (!process.env.OPENAI_API_KEY) return fallback;
 
   const prompt = `
-حلل المادة التالية لموقع المجلس العلمي.
+حلل المادة التالية لموقع سُنّة.
 لا تخترع معلومة.
 لا تصدر فتوى.
 أعد JSON فقط:

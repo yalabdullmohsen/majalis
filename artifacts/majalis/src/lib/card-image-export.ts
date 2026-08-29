@@ -78,7 +78,7 @@ export async function exportCardImage(
         if (navigator.canShare?.({ files: [file] })) {
           await navigator.share({
             files: [file],
-            title: options?.title || "بطاقة المجلس العلمي",
+            title: options?.title || "بطاقة سُنّة",
             text: options?.text || "",
           });
           return { ok: true, method: "share", fileName };

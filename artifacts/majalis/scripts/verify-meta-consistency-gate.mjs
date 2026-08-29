@@ -27,7 +27,7 @@ const logoImage = site.logoImage || "/brand/official.png?v=20260825";
 const ogW = String(site.ogImageWidth || 1200);
 const ogH = String(site.ogImageHeight || 630);
 const navExpected = (site.prerenderNav || []).map((n) => n.label);
-const shortName = site.siteShortName || "المجلس العلمي";
+const shortName = site.siteShortName || "سُنّة";
 
 if (!/^#[0-9A-Fa-f]{6}$/.test(theme) || !/^#[0-9A-Fa-f]{6}$/.test(themeDark)) {
   issues.push("site.config.json: themeColor / themeColorDark يجب أن يكونا hex سداسي");
@@ -77,11 +77,11 @@ if (!indexHtml.includes("brand/official-og.png")) {
 if (/majlisilm-og-2026/.test(indexHtml)) {
   issues.push("index.html: لا تستخدم majlisilm-og-2026");
 }
-if (!indexHtml.includes('apple-mobile-web-app-title" content="المجلس العلمي"')) {
-  issues.push("index.html: apple-mobile-web-app-title يجب أن يكون المجلس العلمي");
+if (!indexHtml.includes('apple-mobile-web-app-title" content="سُنّة"')) {
+  issues.push("index.html: apple-mobile-web-app-title يجب أن يكون سُنّة");
 }
-if (!indexHtml.includes('application-name" content="المجلس العلمي"')) {
-  issues.push("index.html: application-name يجب أن يكون المجلس العلمي");
+if (!indexHtml.includes('application-name" content="سُنّة"')) {
+  issues.push("index.html: application-name يجب أن يكون سُنّة");
 }
 if (!indexHtml.includes("favicon.ico")) {
   issues.push("index.html: favicon.ico مطلوب");
@@ -89,7 +89,7 @@ if (!indexHtml.includes("favicon.ico")) {
 
 for (const rel of ["public/manifest.json", "public/manifest.webmanifest", "public/site.webmanifest"]) {
   const m = JSON.parse(read(rel));
-  if (m.name !== "المجلس العلمي") issues.push(`${rel}: name خاطئ`);
+  if (m.name !== "سُنّة") issues.push(`${rel}: name خاطئ`);
   if (m.short_name !== shortName) issues.push(`${rel}: short_name يجب «${shortName}»`);
   if (m.theme_color !== theme) issues.push(`${rel}: theme_color يجب ${theme}`);
   if (m.background_color !== "#F2F4F3") issues.push(`${rel}: background_color يجب #F2F4F3 (سطح التطبيق)`);

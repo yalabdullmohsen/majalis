@@ -33,7 +33,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
     if (!item) {
       applyPageSeo({
         path: `/updates/auto/${params.slug}`,
-        title: "المادة غير موجودة | المجلس العلمي",
+        title: "المادة غير موجودة | سُنّة",
         description: "لم يُعثر على هذه المادة أو لم تُعتمد بعد.",
         robots: "noindex, follow",
         jsonLd: [],
@@ -43,7 +43,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
     const path = `/updates/auto/${item.slug}`;
     applyPageSeo({
       path,
-      title: item.seo_title || `${item.title} | المستجدات، المجلس العلمي`,
+      title: item.seo_title || `${item.title} | المستجدات، سُنّة`,
       description: item.seo_description || item.summary || item.title,
       keywords: [...(item.tags || []), item.category || "", "مستجدات", "علوم شرعية"].filter(Boolean),
       ogType: "article",

@@ -1,12 +1,12 @@
 /**
- * نص مشاركة «فائدة من المجلس العلمي» — موحّد للصفحات المهمة.
+ * نص مشاركة «فائدة من سُنّة» — موحّد للصفحات المهمة.
  */
 import { absoluteUrl, normalizeCanonicalUrl } from "@/lib/site-config";
 
 export function buildFaidaShareText(title: string, url: string): string {
-  const cleanTitle = title.trim() || "المجلس العلمي";
+  const cleanTitle = title.trim() || "سُنّة";
   const cleanUrl = normalizeCanonicalUrl(url);
-  return `فائدة من المجلس العلمي:\n${cleanTitle}\n${cleanUrl}`;
+  return `فائدة من سُنّة:\n${cleanTitle}\n${cleanUrl}`;
 }
 
 export function resolveShareUrl(pathOrUrl?: string): string {
@@ -35,7 +35,7 @@ export async function nativeShareFaida(title: string, url: string): Promise<"sha
   const text = buildFaidaShareText(title, url);
   try {
     if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
-      await navigator.share({ title: "المجلس العلمي", text, url });
+      await navigator.share({ title: "سُنّة", text, url });
       return "shared";
     }
     const ok = await copyShareText(text);

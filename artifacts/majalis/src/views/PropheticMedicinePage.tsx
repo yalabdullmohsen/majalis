@@ -58,15 +58,15 @@ export default function PropheticMedicinePage() {
       setDataReady(true);
       applyPageSeo({
         path: "/prophetic-medicine",
-        title: "الطب النبوي | المجلس العلمي",
-        description: "موسوعة الطب النبوي، هدي النبي ﷺ في الصحة والتداوي بالأغذية والأعشاب والرقية الشرعية. محتوى معتمد في منهج المجلس العلمي",
+        title: "الطب النبوي | سُنّة",
+        description: "موسوعة الطب النبوي، هدي النبي ﷺ في الصحة والتداوي بالأغذية والأعشاب والرقية الشرعية. محتوى معتمد في منهج سُنّة",
         keywords: ["طب نبوي", "هدي النبي", "تداوي", "أعشاب إسلامية", "رقية شرعية"],
         jsonLd: [
           {
             "@context": "https://schema.org",
             "@type": "ItemList",
             name: "موسوعة الطب النبوي",
-            description: "هدي النبي ﷺ في الصحة والتداوي من الأغذية والأعشاب والرقية الشرعية؛ محتوى معتمد في منهج المجلس العلمي",
+            description: "هدي النبي ﷺ في الصحة والتداوي من الأغذية والأعشاب والرقية الشرعية؛ محتوى معتمد في منهج سُنّة",
             numberOfItems: m.PROPHETIC_MEDICINE_ITEMS.length,
             itemListElement: m.PROPHETIC_MEDICINE_ITEMS.slice(0, 20).map((item: { id: string; name: string }, i: number) => ({
               "@type": "ListItem",
@@ -200,7 +200,7 @@ export default function PropheticMedicinePage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الطب النبوي — المجلس العلمي" url="https://majlisilm.com/prophetic-medicine" />
+        <ShareButtons title="الطب النبوي — سُنّة" url="https://majlisilm.com/prophetic-medicine" />
       </div>
 
       <FilterBottomSheet

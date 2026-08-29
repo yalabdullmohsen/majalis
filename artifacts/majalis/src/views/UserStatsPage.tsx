@@ -285,9 +285,9 @@ export default function UserStatsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/my-profile",
-      title: "إحصائياتي | المجلس العلمي",
-      description: "إحصائياتي وشاراتي وسجل تعلمي في المجلس العلمي، تابع تقدمك في رحلتك العلمية.",
-      keywords: ["إحصائيات", "شارات", "نشاط المستخدم", "تقدم علمي", "المجلس العلمي"],
+      title: "إحصائياتي | سُنّة",
+      description: "إحصائياتي وشاراتي وسجل تعلمي في سُنّة، تابع تقدمك في رحلتك العلمية.",
+      keywords: ["إحصائيات", "شارات", "نشاط المستخدم", "تقدم علمي", "سُنّة"],
       robots: "noindex, follow",
     });
   }, []);
@@ -381,7 +381,7 @@ export default function UserStatsPage() {
       <PageHeader
         eyebrow="ملفك الشخصي"
         title={`أهلاً، ${displayName}`}
-        subtitle="إنجازاتك ومستواك وتقدمك في المجلس العلمي."
+        subtitle="إنجازاتك ومستواك وتقدمك في سُنّة."
       />
 
       {/* ── بطاقة الهوية ── */}
@@ -464,7 +464,7 @@ export default function UserStatsPage() {
       </nav>
 
       <div className="twh-share">
-        <ShareButtons title="إحصاءات التعلم — المجلس العلمي" url="https://majlisilm.com/my-stats" />
+        <ShareButtons title="إحصاءات التعلم — سُنّة" url="https://majlisilm.com/my-stats" />
       </div>
     </div>
   );

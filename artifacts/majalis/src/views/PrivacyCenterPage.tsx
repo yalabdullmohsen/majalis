@@ -19,7 +19,7 @@ export default function PrivacyCenterPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/privacy-center",
-      title: "مركز الخصوصية | المجلس العلمي",
+      title: "مركز الخصوصية | سُنّة",
       description: "إدارة موافقة الكوكيز، تصدير بياناتك، وحذف الحساب وفق حقوق الخصوصية.",
       robots: "index, follow",
     });

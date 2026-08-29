@@ -115,6 +115,19 @@ describe("path-classifier", () => {
     assert.equal(r.needFastLane, false);
   });
 
+  it("auto-maintenance workflow/scripts are policy paths", () => {
+    assert.equal(classifyOnePath(".github/workflows/auto-maintenance.yml"), "policy");
+    assert.equal(classifyOnePath("scripts/auto-maintenance/policy.mjs"), "policy");
+    const r = classifyChangedPaths([
+      ".github/workflows/auto-maintenance.yml",
+      "scripts/auto-maintenance/run.mjs",
+      "docs/AUTO_MAINTENANCE.md",
+    ]);
+    assert.equal(r.lane, "policy-only");
+    assert.equal(r.manualReview, false);
+    assert.equal(r.needPolicyTests, true);
+  });
+
   it("frontend requires build and color contrast on every UI lane", () => {
     const tsOnly = classifyChangedPaths([
       "artifacts/majalis/src/lib/format-date.ts",

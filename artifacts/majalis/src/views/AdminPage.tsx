@@ -188,8 +188,8 @@ export default function AdminPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/admin",
-      title: "لوحة الإدارة | المجلس العلمي",
-      description: "لوحة إدارة محتوى منصة المجلس العلمي — للمديرين المعتمدين فقط.",
+      title: "لوحة الإدارة | سُنّة",
+      description: "لوحة إدارة محتوى منصة سُنّة — للمديرين المعتمدين فقط.",
       robots: "noindex, nofollow",
     });
   }, []);

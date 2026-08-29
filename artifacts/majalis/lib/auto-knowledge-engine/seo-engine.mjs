@@ -2,7 +2,7 @@
  * SEO Engine — Title, OG, Twitter, JSON-LD, Breadcrumb, Schema.org
  */
 
-const SITE_NAME = "المجلس العلمي";
+const SITE_NAME = "سُنّة";
 const SITE_URL = "https://majlisilm.com";
 
 const SCHEMA_MAP = {

@@ -34,7 +34,7 @@ export function mailtoWithSubject(subject: string): string {
   return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`;
 }
 
-/** صيغة العنوان المعتمدة: «[اسم الصفحة] | المجلس العلمي». الرئيسية وحدها بلا لاحقة. */
+/** صيغة العنوان المعتمدة: «[اسم الصفحة] | سُنّة». الرئيسية وحدها بلا لاحقة. */
 export function pageTitle(pageName?: string | null): string {
   const name = (pageName || "").trim();
   if (!name || name === SITE_NAME) return SITE_NAME;

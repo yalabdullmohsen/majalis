@@ -39,7 +39,7 @@ export function useMediaSession(opts: Options) {
     const artworkSrc = opts.artwork || DEFAULT_ARTWORK;
     ms.metadata = new MediaMetadata({
       title: opts.title,
-      artist: opts.artist || "المجلس العلمي",
+      artist: opts.artist || "سُنّة",
       album: opts.album || "تلاوة القرآن",
       artwork: [
         { src: artworkSrc, sizes: "180x180", type: "image/png" },

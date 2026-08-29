@@ -1,4 +1,4 @@
-# تحويل المجلس العلمي إلى تطبيق
+# تحويل سُنّة إلى تطبيق
 
 الموقع مُهيّأ الآن كتطبيق ويب تقدّمي (PWA) قابل للتثبيت مباشرةً، ويمكن تغليفه
 لمتاجر التطبيقات بخطوات قليلة. هذا المستند يوضّح المسارات الثلاثة.
@@ -27,7 +27,7 @@
 # داخل artifacts/majalis
 pnpm add -D @capacitor/cli
 pnpm add @capacitor/core @capacitor/ios @capacitor/android
-npx cap init "المجلس العلمي" com.majlisilm.app --web-dir=dist
+npx cap init "سُنّة" com.majlisilm.app --web-dir=dist
 pnpm run build          # يولّد dist/
 npx cap add ios
 npx cap add android

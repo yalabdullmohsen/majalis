@@ -426,18 +426,18 @@ export default function SinsAndRightsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/sins-and-rights",
-      title: "الذنوب والحقوق | المجلس العلمي",
+      title: "الذنوب والحقوق | سُنّة",
       description: "منظومة معرفية شرعية مترابطة تشرح أنواع الذنوب والتمييز بين حقوق الله وحقوق العباد وشروط التوبة الصحيحة لكل نوع، مع الأدلة من القرآن والسنة.",
-      keywords: ["الذنوب والحقوق", "التوبة الصحيحة", "رد المظالم", "حقوق العباد", "حقوق الله", "الكبائر والصغائر", "المجلس العلمي"],
+      keywords: ["الذنوب والحقوق", "التوبة الصحيحة", "رد المظالم", "حقوق العباد", "حقوق الله", "الكبائر والصغائر", "سُنّة"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "Article",
           headline: "الذنوب والحقوق — منظومة معرفية شرعية",
-          description: "شرح أنواع الذنوب والتمييز بين حقوق الله وحقوق العباد وشروط التوبة الصحيحة. محتوى معتمد في منهج المجلس العلمي",
+          description: "شرح أنواع الذنوب والتمييز بين حقوق الله وحقوق العباد وشروط التوبة الصحيحة. محتوى معتمد في منهج سُنّة",
           url: "https://majlisilm.com/sins-and-rights",
           inLanguage: "ar",
-          publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },
@@ -451,7 +451,7 @@ export default function SinsAndRightsPage() {
     <div className="snr-page">
       {/* Hero */}
       <div className="snr-hero">
-        <div className="snr-hero-eyebrow">المجلس العلمي</div>
+        <div className="snr-hero-eyebrow">سُنّة</div>
         <h1 className="snr-hero-title">الذنوب والحقوق</h1>
         <p className="snr-hero-desc">
           منظومة معرفية شرعية مترابطة تساعدك على فهم أنواع الذنوب، والتمييز بين الحقوق،

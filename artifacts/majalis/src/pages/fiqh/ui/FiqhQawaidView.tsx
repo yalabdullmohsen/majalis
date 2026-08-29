@@ -393,7 +393,7 @@ export default function FiqhQawaidPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-qawaid",
-      title: "القواعد الفقهية الكبرى | المجلس العلمي",
+      title: "القواعد الفقهية الكبرى | سُنّة",
       description: "تعلّم القواعد الفقهية الخمس الكبرى وفروعها وتطبيقاتها المعاصرة بشرح موسّع وأمثلة عملية.",
       keywords: ["قواعد فقهية", "الأشباه والنظائر", "أصول الفقه", "الضوابط الفقهية", "فقه إسلامي"],
       jsonLd: [
@@ -686,7 +686,7 @@ export default function FiqhQawaidPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="القواعد الفقهية — المجلس العلمي" url="https://majlisilm.com/fiqh-qawaid" />
+        <ShareButtons title="القواعد الفقهية — سُنّة" url="https://majlisilm.com/fiqh-qawaid" />
       </div>
       <RelatedKnowledge kind="fatwa" query="القواعد الفقهية" title="معرفة ذات صلة بالقواعد الفقهية" limit={6} />
       <div className="px-4 pb-6 mt-4">

@@ -8,9 +8,9 @@ export type HistoryCategory =
   | "mamluk"
   | "ottoman"
   | "civilization"
-  | "personalities";
+  | "modern";
 
-export type HistoryKind = "era" | "event" | "personality" | "institution" | "city";
+export type HistoryKind = "era" | "event" | "institution" | "city";
 
 export type VerificationLevel = "confirmed" | "likely" | "disputed" | "needs-review";
 
@@ -32,6 +32,11 @@ export type IslamicHistoryItem = {
   sources: string[];
   verification: VerificationLevel;
   relatedLinks?: Array<{ href: string; label: string }>;
+  /** رابط بوابة لقسم تفصيلي (مثل السيرة) بدل تكرار المحتوى في الخط الزمني */
+  portalHref?: string;
+  portalLabel?: string;
+  /** ترتيب الخط الزمني من قبل البعثة إلى يومنا */
+  timelineOrder?: number;
   featured?: boolean;
   startHere?: boolean;
 };

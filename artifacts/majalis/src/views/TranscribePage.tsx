@@ -36,7 +36,7 @@ export default function TranscribePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/transcribe",
-      title: "تفريغ الدروس والمحاضرات | المجلس العلمي",
+      title: "تفريغ الدروس والمحاضرات | سُنّة",
       description: "أداة تفريغ الدروس والمحاضرات الإسلامية تلقائياً، حمّل ملفاً صوتياً أو رابط يوتيوب واحصل على ملخص وفوائد منظّمة.",
       keywords: ["تفريغ دروس", "تفريغ محاضرات", "تلخيص درس", "ذكاء اصطناعي إسلامي", "استخراج فوائد"],
       jsonLd: [{
@@ -47,7 +47,7 @@ export default function TranscribePage() {
         url: "https://majlisilm.com/transcribe",
         applicationCategory: "EducationApplication",
         inLanguage: "ar",
-        provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
       }],
     });
   }, []);
@@ -226,7 +226,7 @@ export default function TranscribePage() {
   return (
     <div className="trp-root">
       <div className="mx-auto max-w-4xl px-4">
-        <Link href="/" className="trp-back-link">← المجلس العلمي</Link>
+        <Link href="/" className="trp-back-link">← سُنّة</Link>
         <h1 className="trp-title">تفريغ الدروس</h1>
         <p className="trp-subtitle">حوّل الصوت والفيديو إلى نص مع تلخيص ذكي واستخراج الفوائد</p>
 

@@ -120,7 +120,7 @@ function parseTsSeedArray(raw, kind) {
       description: descs[i] || texts[i] || "",
       link: `https://majlisilm.com/${kind}`,
       content_kind: kind,
-      source_attribution: "المجلس العلمي — بذور موثقة",
+      source_attribution: "سُنّة — بذور موثقة",
     });
   }
   return items;

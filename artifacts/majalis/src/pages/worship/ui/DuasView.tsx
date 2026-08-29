@@ -1007,7 +1007,7 @@ export default function DuasPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/duas",
-      title: "الأدعية الشرعية، أدعية من القرآن والسنة | المجلس العلمي",
+      title: "الأدعية الشرعية، أدعية من القرآن والسنة | سُنّة",
       description: "مكتبة الأدعية الشرعية الموثقة: أدعية الصباح والمساء والصلاة والسفر والكرب مع المعنى والمصدر",
       keywords: ["أدعية", "دعاء", "أذكار", "دعاء الكرب", "دعاء الصباح", "دعاء المساء"],
       jsonLd: [
@@ -1171,7 +1171,7 @@ export default function DuasPage() {
       <SectionQuiz route="/duas" title="اختبر معلوماتك في الحديث الشريف" count={4} />
 
       <div className="twh-share">
-        <ShareButtons title="الأدعية الشرعية — المجلس العلمي" url="https://majlisilm.com/duas" />
+        <ShareButtons title="الأدعية الشرعية — سُنّة" url="https://majlisilm.com/duas" />
       </div>
     </PageShell>
   );

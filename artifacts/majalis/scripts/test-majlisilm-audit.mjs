@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * اختبار وحدات لفاحص المجلس العلمي (بدون شبكة).
+ * اختبار وحدات لفاحص سُنّة (بدون شبكة).
  */
 import assert from "node:assert/strict";
 import {
@@ -35,13 +35,13 @@ function testOverlap() {
 
 function testParseHtml() {
   const html = `<!doctype html><html lang="ar" dir="rtl"><head>
-<title>اختبار | المجلس العلمي</title>
+<title>اختبار | سُنّة</title>
 <meta name="description" content="وصف تجريبي كافٍ للفحص">
 <link rel="canonical" href="https://majlisilm.com/test">
 </head><body><main><h1>عنوان</h1><p>محتوى الصفحة</p>
 <a href="/fiqh">الفقه</a></main></body></html>`;
   const p = parseHtml(html, "https://majlisilm.com/test");
-  assert.equal(p.title, "اختبار | المجلس العلمي");
+  assert.equal(p.title, "اختبار | سُنّة");
   assert.equal(p.htmlAttrs.lang, "ar");
   assert.equal(p.htmlAttrs.dir, "rtl");
   assert.equal(p.headings.h1[0], "عنوان");

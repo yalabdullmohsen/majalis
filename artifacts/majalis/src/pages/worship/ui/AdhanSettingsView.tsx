@@ -329,7 +329,7 @@ export default function AdhanSettingsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/adhan-settings",
-      title: "تنبيهات الصلاة والأذان | المجلس العلمي",
+      title: "تنبيهات الصلاة والأذان | سُنّة",
       description: "فعّل تنبيهات الصلاة، اختر الأذان المختصر أو الكامل، واختبر الصوت مع مراعاة قيود iOS.",
       keywords: ["تنبيهات الصلاة", "أذان", "إعدادات أذان", "إشعارات"],
       robots: "noindex, follow",

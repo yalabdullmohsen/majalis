@@ -1,4 +1,4 @@
-# Design Tokens — المجلس العلمي
+# Design Tokens — سُنّة
 
 مصدر الحقيقة: `src/styles/design-tokens.css` (يُحمَّل بعد `tokens.css`) + لوحة `--mj-*` في `src/app/styles/theme.css`.
 

@@ -1,5 +1,5 @@
 # فحوصات التحقق — مجالس العلم
-# Verification Checklist — Majalis Al-Ilm
+# Verification Checklist — سُنّة
 
 **تاريخ التنفيذ:** يوليو 2026  
 **الفرع:** feat/app-store-readiness

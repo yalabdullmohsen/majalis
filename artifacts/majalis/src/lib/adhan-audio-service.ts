@@ -133,7 +133,7 @@ function syncAdhanMediaSessionPlaying(): void {
     const muezzin = lastMuezzinId ? getMuezzin(lastMuezzinId) : null;
     navigator.mediaSession.metadata = new MediaMetadata({
       title: "الأذان",
-      artist: muezzin?.name ?? "المجلس العلمي",
+      artist: muezzin?.name ?? "سُنّة",
       album: "Majlis — Adhan",
     });
     navigator.mediaSession.playbackState = "playing";
@@ -164,7 +164,7 @@ async function ensurePlaybackSession(): Promise<{ ok: boolean; message?: string 
     const { ensureNativePlaybackAudioSession } = await import("@/lib/native-playback-audio");
     await ensureNativePlaybackAudioSession({
       title: "الأذان",
-      artist: "المجلس العلمي",
+      artist: "سُنّة",
     });
     return { ok: true };
   } catch (e) {

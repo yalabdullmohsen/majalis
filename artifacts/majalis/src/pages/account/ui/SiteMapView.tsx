@@ -182,9 +182,9 @@ export default function SiteMapPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/sitemap",
-      title: "أهم الأقسام | المجلس العلمي",
-      description: "دليل لأهم أقسام المجلس العلمي: قرآن وحديث وفقه وعقيدة وسيرة وأدوات التعلم والخدمات.",
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "دليل أقسام المجلس العلمي", url: "https://majlisilm.com/sitemap", about: { "@type": "WebSite", name: "المجلس العلمي", url: "https://majlisilm.com" } }],
+      title: "أهم الأقسام | سُنّة",
+      description: "دليل لأهم أقسام سُنّة: قرآن وحديث وفقه وعقيدة وسيرة وأدوات التعلم والخدمات.",
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "دليل أقسام سُنّة", url: "https://majlisilm.com/sitemap", about: { "@type": "WebSite", name: "سُنّة", url: "https://majlisilm.com" } }],
     });
   }, []);
 
@@ -194,7 +194,7 @@ export default function SiteMapPage() {
       <header className="sm-hero">
         <p className="sm-hero__eye">استكشف</p>
         <h1 className="sm-hero__title">أهم الأقسام</h1>
-        <p className="sm-hero__sub">دليل لأهم أقسام ومحتويات المجلس العلمي — والخريطة الكاملة في sitemap.xml</p>
+        <p className="sm-hero__sub">دليل لأهم أقسام ومحتويات سُنّة — والخريطة الكاملة في sitemap.xml</p>
       </header>
 
       <main className="sm-content">
@@ -224,7 +224,7 @@ export default function SiteMapPage() {
         ))}
       </main>
       <div className="twh-share">
-        <ShareButtons title="دليل أقسام المجلس العلمي" url="https://majlisilm.com/sitemap" />
+        <ShareButtons title="دليل أقسام سُنّة" url="https://majlisilm.com/sitemap" />
       </div>
       <RelatedKnowledge kind="book" query="أقسام المجلس" title="مواد للبدء" limit={6} />
       <div className="px-4 pb-6 mt-4">

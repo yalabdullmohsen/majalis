@@ -44,7 +44,7 @@ export default function NationDetailPage() {
     if (!nation) return;
     applyPageSeo({
       path: `/nations/${nation.slug}`,
-      title: `${nation.name} | الأمم السابقة — المجلس العلمي`,
+      title: `${nation.name} | الأمم السابقة — سُنّة`,
       description: nation.summary.slice(0, 300),
       keywords: [nation.name, ...nation.aliases, nation.punishment.type],
       jsonLd: [
@@ -354,7 +354,7 @@ export default function NationDetailPage() {
 
       <div className="nations-share">
         <ShareButtons
-          title={`${nation.name} — الأمم السابقة | المجلس العلمي`}
+          title={`${nation.name} — الأمم السابقة | سُنّة`}
           url={`https://majlisilm.com/nations/${nation.slug}`}
         />
       </div>

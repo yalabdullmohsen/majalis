@@ -383,7 +383,7 @@ export default function InstitutionsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/institutions",
-      title: "المؤسسات الإسلامية | المجلس العلمي",
+      title: "المؤسسات الإسلامية | سُنّة",
       description: "دليل المؤسسات الإسلامية والمراكز الشرعية، مساجد ومعاهد وجامعات وهيئات إسلامية.",
       keywords: ["مؤسسات إسلامية", "مراكز إسلامية", "معاهد شرعية", "جامعات إسلامية", "هيئات دينية"],
       jsonLd: [
@@ -480,7 +480,7 @@ export default function InstitutionsPage() {
         </p>
 
         <div className="twh-share">
-          <ShareButtons title="المؤسسات الإسلامية — المجلس العلمي" url="https://majlisilm.com/institutions" />
+          <ShareButtons title="المؤسسات الإسلامية — سُنّة" url="https://majlisilm.com/institutions" />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في العلوم الإسلامية" count={4} />

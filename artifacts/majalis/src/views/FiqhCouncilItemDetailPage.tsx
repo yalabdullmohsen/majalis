@@ -71,7 +71,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
     if (!item) {
       applyPageSeo({
         path: fiqhItemHref(params.slug),
-        title: "المحتوى غير موجود | المجلس العلمي",
+        title: "المحتوى غير موجود | سُنّة",
         description: "لم يُعثر على هذا المحتوى في المجمع الفقهي.",
         robots: "noindex, follow",
         jsonLd: [],
@@ -82,7 +82,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
     const description = item.summary || item.title;
     applyPageSeo({
       path,
-      title: `${item.title} | المجمع الفقهي، المجلس العلمي`,
+      title: `${item.title} | المجمع الفقهي، سُنّة`,
       description,
       keywords: [...(item.tags || []), item.category, "المجمع الفقهي", "قرارات فقهية"],
       ogType: "article",

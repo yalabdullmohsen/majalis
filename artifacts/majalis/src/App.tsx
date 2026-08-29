@@ -891,7 +891,7 @@ function Router() {
       <Route path="/islamic-landmarks"><SafeLazyRoute component={IslamicLandmarksPage} /></Route>
       <Route path="/mutashabihat"><SafeLazyRoute component={MutashabihatPage} /></Route>
       <Route path="/scholars/:id"><ScholarLegacyRedirect /></Route>
-      <Route path="/scholars"><Redirect to="/tarikh-islami?tab=personalities" /></Route>
+      <Route path="/scholars"><Redirect to="/tarikh-islami" /></Route>
       <Route path="/tarikh-islami/:id"><SafeLazyRoute component={TarikhIslamiDetailPage} /></Route>
       <Route path="/asma-husna"><SafeLazyRoute component={AsmaaHusnaPage} /></Route>
       <Route path="/akhlaq"><SafeLazyRoute component={AkhlaqPage} /></Route>

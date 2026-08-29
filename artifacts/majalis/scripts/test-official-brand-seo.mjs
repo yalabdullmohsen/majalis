@@ -48,8 +48,8 @@ assert.doesNotMatch(indexHtml, /majlisilm-og-2026/);
 
 for (const man of ["public/manifest.webmanifest", "public/manifest.json", "public/site.webmanifest"]) {
   const m = JSON.parse(read(man));
-  assert.equal(m.name, "المجلس العلمي");
-  assert.equal(m.short_name, "المجلس العلمي");
+  assert.equal(m.name, "سُنّة");
+  assert.equal(m.short_name, "سُنّة");
   const srcs = (m.icons || []).map((i) => i.src).join("\n");
   assert.doesNotMatch(srcs, /majlisilm-og-2026|favicon\.svg/);
   assert.match(srcs, /icon-512\.png/);

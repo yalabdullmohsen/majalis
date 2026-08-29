@@ -21,8 +21,8 @@ assert.ok(!existsSync(resolve(root, "public/brand/apple-splash")), "لا صور 
 const siteManifest = JSON.parse(readFileSync(resolve(root, "public/site.webmanifest"), "utf8"));
 assert.equal(siteManifest.display, "standalone");
 assert.equal(siteManifest.orientation, "portrait-primary");
-assert.equal(siteManifest.name, "المجلس العلمي");
-assert.equal(siteManifest.short_name, "المجلس العلمي");
+assert.equal(siteManifest.name, "سُنّة");
+assert.equal(siteManifest.short_name, "سُنّة");
 assert.equal(siteManifest.start_url, "/");
 assert.equal(siteManifest.theme_color, "#F2F4F3");
 assert.equal(siteManifest.background_color, "#F2F4F3");
@@ -31,8 +31,8 @@ assert.ok(existsSync(resolve(root, "public/manifest.webmanifest")));
 assert.ok(existsSync(resolve(root, "public/manifest.json")));
 
 const jsonManifest = JSON.parse(readFileSync(resolve(root, "public/manifest.json"), "utf8"));
-assert.equal(jsonManifest.name, "المجلس العلمي");
-assert.equal(jsonManifest.short_name, "المجلس العلمي");
+assert.equal(jsonManifest.name, "سُنّة");
+assert.equal(jsonManifest.short_name, "سُنّة");
 assert.equal(jsonManifest.start_url, "/");
 assert.equal(jsonManifest.display, "standalone");
 assert.equal(jsonManifest.theme_color, "#F2F4F3");

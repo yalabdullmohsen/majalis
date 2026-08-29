@@ -184,7 +184,7 @@ export default function PrayerTimesPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/prayer-times",
-      title: "مواقيت الصلاة العالمية أوفلاين | المجلس العلمي",
+      title: "مواقيت الصلاة العالمية أوفلاين | سُنّة",
       description: "محرك مواقيت صلاة عالمي أوفلاين لأي مدينة، مع إمساكية سنوية وعدّ تنازلي وتنبيهات محلية.",
       keywords: ["مواقيت الصلاة", "إمساكية", "أوفلاين", "الفجر", "الأذان"],
       jsonLd: [
@@ -194,7 +194,7 @@ export default function PrayerTimesPage() {
           name: "مواقيت الصلاة العالمية",
           url: "https://majlisilm.com/prayer-times",
           description: "مواقيت الصلوات الخمس لأي مدينة في العالم بحساب فلكي محلي",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
         },
       ],
     });

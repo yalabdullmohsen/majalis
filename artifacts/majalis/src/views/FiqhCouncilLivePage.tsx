@@ -65,7 +65,7 @@ export default function FiqhCouncilLivePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-council/live",
-      title: "البيانات الحية | المجمع الفقهي، المجلس العلمي",
+      title: "البيانات الحية | المجمع الفقهي، سُنّة",
       description: "آخر جلسات المجمع الفقهي والقرارات والتوصيات والفتاوى الموثقة، بيانات حية من مصادر رسمية.",
       keywords: ["المجمع الفقهي", "جلسات", "قرارات", "بيانات حية"],
       jsonLd: [
@@ -142,7 +142,7 @@ export default function FiqhCouncilLivePage() {
       ))}
 
       <div className="twh-share">
-        <ShareButtons title="جلسات المجمع الفقهي الحية — المجلس العلمي" url="https://majlisilm.com/fiqh-council/live" />
+        <ShareButtons title="جلسات المجمع الفقهي الحية — سُنّة" url="https://majlisilm.com/fiqh-council/live" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />

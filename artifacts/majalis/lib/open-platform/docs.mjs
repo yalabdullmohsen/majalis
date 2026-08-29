@@ -119,7 +119,7 @@ export function generateOpenApiSpec(version = "v1") {
       title: "Majalis Open Islamic Platform API",
       description: "Official API for Islamic scholarly content — Quran, Hadith, Fatwas, Lessons, and more.",
       version,
-      contact: { name: "المجلس العلمي", url: "https://majalis.app" },
+      contact: { name: "سُنّة", url: "https://majalis.app" },
     },
     servers: [{ url: "https://majalis.app", description: "Production" }, { url: "http://localhost:5173", description: "Development" }],
     tags: [
@@ -205,7 +205,7 @@ export function generateDocsHtml(version = "v1") {
   </style>
 </head>
 <body>
-  <h1>المجلس العلمي — Open Islamic Platform API v${version}</h1>
+  <h1>سُنّة — Open Islamic Platform API v${version}</h1>
   <div class="auth">
     <strong>المصادقة:</strong> أرسل <code>X-API-Key: maj_...</code> أو <code>Authorization: Bearer maj_...</code>
   </div>

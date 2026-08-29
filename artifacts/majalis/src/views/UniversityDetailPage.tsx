@@ -258,7 +258,7 @@ function DetailContent({ university: u }: { university: University }) {
         </div>
 
         <div className="twh-share">
-          <ShareButtons title={`${u.name_ar} — دليل الجامعات الإسلامية | المجلس العلمي`} url={`https://majlisilm.com/universities/${u.slug}`} />
+          <ShareButtons title={`${u.name_ar} — دليل الجامعات الإسلامية | سُنّة`} url={`https://majlisilm.com/universities/${u.slug}`} />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz route="/universities" title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
@@ -282,7 +282,7 @@ export default function UniversityDetailPage() {
     if (university) {
       applyPageSeo({
         path: `/universities/${slug}`,
-        title: `${university.name_ar} | المجلس العلمي`,
+        title: `${university.name_ar} | سُنّة`,
         description: university.about || `تفاصيل ${university.name_ar}، البرامج الأكاديمية والتخصصات والاعتمادات.`,
         keywords: ["جامعة إسلامية", university.name_ar, "دراسة شرعية", "تعليم ديني"],
         jsonLd: [
@@ -299,7 +299,7 @@ export default function UniversityDetailPage() {
     } else {
       applyPageSeo({
         path: `/universities/${slug}`,
-        title: "الجامعة غير موجودة | المجلس العلمي",
+        title: "الجامعة غير موجودة | سُنّة",
         description: "لم يُعثر على هذه الجامعة.",
         robots: "noindex, follow",
         jsonLd: [],

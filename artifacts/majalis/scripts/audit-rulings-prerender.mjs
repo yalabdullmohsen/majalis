@@ -33,7 +33,7 @@ function assertRulingPage(file, homeFp) {
   if (fp === homeFp) {
     throw new Error(`بصمة مطابقة للرئيسية: ${file}`);
   }
-  if (/المجلس العلمي — منصة الدروس الشرعية/.test(html) && !/\/rulings\//.test(file)) {
+  if (/سُنّة — منصة الدروس الشرعية/.test(html) && !/\/rulings\//.test(file)) {
     /* ignore */
   }
   if (!/<h1[^>]*>/.test(html)) throw new Error(`بلا H1: ${file}`);

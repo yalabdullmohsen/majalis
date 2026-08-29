@@ -1,5 +1,5 @@
 # استبيان التصنيف العمري — مجالس العلم
-# Age Rating Questionnaire — Majalis Al-Ilm
+# Age Rating Questionnaire — سُنّة
 
 ## إجابات استبيان App Store Connect
 

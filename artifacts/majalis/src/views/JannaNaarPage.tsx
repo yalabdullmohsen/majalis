@@ -216,7 +216,7 @@ export default function JannaNaarPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/janna-naar",
-      title: "صفة الجنة والنار | المجلس العلمي",
+      title: "صفة الجنة والنار | سُنّة",
       description: "صفة الجنة وأبوابها وأنهارها ودرجاتها ونعيمها من الأدلة الصحيحة، مع بيان أسباب دخولها وأدعية الاستعداد للآخرة.",
       keywords: ["صفة الجنة", "صفة النار", "نعيم الجنة", "عذاب النار", "أسباب دخول الجنة"],
       jsonLd: [
@@ -347,7 +347,7 @@ export default function JannaNaarPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الجنة والنار — المجلس العلمي" url="https://majlisilm.com/janna-naar" />
+        <ShareButtons title="الجنة والنار — سُنّة" url="https://majlisilm.com/janna-naar" />
       </div>
       <div className="px-4 pb-6 mt-6">
         <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة" count={4} />

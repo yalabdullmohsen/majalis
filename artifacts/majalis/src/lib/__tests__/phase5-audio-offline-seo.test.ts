@@ -79,7 +79,7 @@ assert.equal(bookLd["@type"], "Book");
 
 const personLd = personJsonLd({
   name: "الطبري",
-  url: "/tarikh-islami/pers-al-tabari",
+  url: "/tarikh-islami/abbasid-house-of-wisdom",
   knowsAbout: ["تاريخ"],
 });
 assert.equal(personLd["@type"], "Person");

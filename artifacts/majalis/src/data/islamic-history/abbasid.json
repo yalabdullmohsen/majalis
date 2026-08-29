@@ -20,7 +20,8 @@
       }
     ],
     "featured": true,
-    "startHere": true
+    "startHere": true,
+    "timelineOrder": 301
   },
   {
     "id": "abbasid-baghdad-founded",
@@ -47,7 +48,8 @@
         "label": "المكتبة العلمية"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 302
   },
   {
     "id": "abbasid-house-of-wisdom",
@@ -74,7 +76,8 @@
         "label": "التاريخ الإسلامي"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 303
   },
   {
     "id": "abbasid-harun-rashid",
@@ -99,12 +102,13 @@
         "href": "/library",
         "label": "المكتبة العلمية"
       }
-    ]
+    ],
+    "timelineOrder": 304
   },
   {
     "id": "abbasid-al-mamun",
     "title": "خلافة المأمون",
-    "kind": "personality",
+    "kind": "era",
     "category": "abbasid",
     "era": "198–218هـ",
     "summary": "ركّب العلم والترجمة ووقعت المحنة في عهده.",
@@ -124,7 +128,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 305
   },
   {
     "id": "abbasid-mihna",
@@ -149,7 +154,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 306
   },
   {
     "id": "abbasid-decline",
@@ -170,7 +176,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 307
   },
   {
     "id": "abbasid-buyids",
@@ -190,7 +197,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 308
   },
   {
     "id": "abbasid-seljuk-entry",
@@ -211,7 +219,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 309
   },
   {
     "id": "abbasid-translation-movement",
@@ -237,7 +246,8 @@
         "label": "التاريخ الإسلامي"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 310
   },
   {
     "id": "abbasid-sack-baghdad",
@@ -261,6 +271,7 @@
         "label": "التاريخ الإسلامي"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 311
   }
 ]

@@ -8,7 +8,7 @@ export default function HadithMawduPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/hadith/mawdu",
-      title: "الأحاديث الموضوعة | المجلس العلمي",
+      title: "الأحاديث الموضوعة | سُنّة",
       description: "قائمة الأحاديث الموضوعة على النبي ﷺ مع بيان من حكم بالوضع، توعية علمية للتحذير لا للاحتجاج.",
       keywords: ["أحاديث موضوعة", "حديث موضوع", "علم الحديث", "الأحاديث المردودة", "وضع الحديث"],
       jsonLd: [
@@ -28,7 +28,7 @@ export default function HadithMawduPage() {
     <>
       <HadithSection authenticityClass="mawdu" />
       <div className="twh-share">
-        <ShareButtons title="الأحاديث الموضوعة — المجلس العلمي" url="https://majlisilm.com/hadith/mawdu" />
+        <ShareButtons title="الأحاديث الموضوعة — سُنّة" url="https://majlisilm.com/hadith/mawdu" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />

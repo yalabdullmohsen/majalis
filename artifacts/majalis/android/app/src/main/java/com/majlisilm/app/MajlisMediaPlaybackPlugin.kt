@@ -17,7 +17,7 @@ class MajlisMediaPlaybackPlugin : Plugin() {
     @PluginMethod
     fun startForeground(call: PluginCall) {
         val title = call.getString("title") ?: "تلاوة القرآن"
-        val artist = call.getString("artist") ?: "المجلس العلمي"
+        val artist = call.getString("artist") ?: "سُنّة"
         val intent = Intent(context, MediaPlaybackService::class.java).apply {
             putExtra(MediaPlaybackService.EXTRA_TITLE, title)
             putExtra(MediaPlaybackService.EXTRA_ARTIST, artist)

@@ -9,7 +9,7 @@ const SEED_SOURCES = [
   { slug: "alifta", name: "Saudi Ifta", name_ar: "الإفتاء السعودية", source_type: "official", url: "https://alifta.gov.sa", trust_level: 95 },
   { slug: "sunnah-com", name: "Sunnah.com", name_ar: "سنّة", source_type: "database", url: "https://sunnah.com", trust_level: 90 },
   { slug: "quran-com", name: "Quran.com", name_ar: "قرآن", source_type: "database", url: "https://quran.com", trust_level: 95 },
-  { slug: "majalis-local", name: "Majalis Scientific Council", name_ar: "المجلس العلمي", source_type: "official", url: "https://majalis.app", trust_level: 90 },
+  { slug: "majalis-local", name: "Majalis Scientific Council", name_ar: "سُنّة", source_type: "official", url: "https://majalis.app", trust_level: 90 },
 ];
 
 export async function getAllSources(admin) {

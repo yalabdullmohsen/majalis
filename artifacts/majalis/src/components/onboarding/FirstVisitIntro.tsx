@@ -63,11 +63,11 @@ export function FirstVisitIntro({ onContinue }: Props) {
   if (!firstVisitIntroConfig.enabled) return null;
 
   return (
-    <div className="first-visit-intro" role="region" aria-label="مرحبًا بك في المجلس العلمي">
+    <div className="first-visit-intro" role="region" aria-label="مرحبًا بك في سُنّة">
       <div className="first-visit-intro__inner">
         <header className="first-visit-intro__hero">
-          <p className="first-visit-intro__badge">المجلس العلمي</p>
-          <h1 className="first-visit-intro__title">مرحبًا بك في المجلس العلمي</h1>
+          <p className="first-visit-intro__badge">سُنّة</p>
+          <h1 className="first-visit-intro__title">مرحبًا بك في سُنّة</h1>
           <p className="first-visit-intro__lead">
             منصة تجمع القرآن، الدروس، الفقه، الصلاة، والأقسام العلمية في مكان واحد.
           </p>

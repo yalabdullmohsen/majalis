@@ -1446,8 +1446,8 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
     applyPageSeo({
       path: quranOnly && lockedCategory ? "/quran-hub/terms" : "/islamic-glossary",
       title: lockedCategory === "quran"
-        ? "مصطلحات علوم القرآن | المجلس العلمي"
-        : "القاموس الإسلامي | المجلس العلمي",
+        ? "مصطلحات علوم القرآن | سُنّة"
+        : "القاموس الإسلامي | سُنّة",
       description: lockedCategory === "quran"
         ? "مصطلحات علوم القرآن من القاموس الإسلامي الموحّد."
         : "قاموس المصطلحات الإسلامية في العقيدة والفقه وعلوم القرآن والحديث والسيرة والتزكية.",
@@ -1582,7 +1582,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
       <SectionQuiz route="/islamic-glossary" count={4} />
 
       <div className="twh-share">
-        <ShareButtons title="المعجم الإسلامي — المجلس العلمي" url="https://majlisilm.com/islamic-glossary" />
+        <ShareButtons title="المعجم الإسلامي — سُنّة" url="https://majlisilm.com/islamic-glossary" />
       </div>
     </div>
     </SectionTemplatePage>

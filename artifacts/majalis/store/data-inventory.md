@@ -1,5 +1,5 @@
 # جرد بيانات التطبيق — مجالس العلم
-# App Data Inventory — Majalis Al-Ilm
+# App Data Inventory — سُنّة
 
 **تاريخ الجرد:** يوليو 2026  
 **Inventory Date:** July 2026

@@ -64,8 +64,8 @@ export default function ArbaeenNawawiPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/arbaeen-nawawi",
-      title: "الأربعون النووية، أحاديث نووية مشروحة | المجلس العلمي",
-      description: "الأربعون حديثاً النووية مع شرح موجز وفوائد ومصدر لكل حديث، مرجع حديثي مختصر لطالب العلم. محتوى معتمد في منهج المجلس العلمي",
+      title: "الأربعون النووية، أحاديث نووية مشروحة | سُنّة",
+      description: "الأربعون حديثاً النووية مع شرح موجز وفوائد ومصدر لكل حديث، مرجع حديثي مختصر لطالب العلم. محتوى معتمد في منهج سُنّة",
       keywords: ["الأربعون النووية", "أحاديث نووية", "شرح الأحاديث", "الحديث النبوي", "نووي"],
       jsonLd: [
         {
@@ -73,7 +73,7 @@ export default function ArbaeenNawawiPage() {
           "@type": "Book",
           name: "الأربعون النووية",
           author: { "@type": "Person", name: "الإمام النووي" },
-          description: "الأربعون حديثاً النووية الجامعة لأحكام الإسلام؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "الأربعون حديثاً النووية الجامعة لأحكام الإسلام؛ محتوى معتمد في منهج سُنّة",
           url: "https://majlisilm.com/arbaeen-nawawi",
           inLanguage: "ar",
         },
@@ -275,7 +275,7 @@ export default function ArbaeenNawawiPage() {
         </div>
       )}
 
-      <ContentReportLink context="الأربعون النووية — المجلس العلمي" />
+      <ContentReportLink context="الأربعون النووية — سُنّة" />
       <RelatedKnowledge kind="hadith" query="الأربعون النووية" title="أحاديث ذات صلة" limit={6} />
       <div className="an-quiz-wrap">
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />

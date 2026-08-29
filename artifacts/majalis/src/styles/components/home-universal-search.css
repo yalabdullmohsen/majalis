@@ -19,22 +19,52 @@
   align-items: center;
   gap: 0.45rem;
   min-height: 52px;
-  padding: 0.35rem 0.75rem;
-  border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 18%, transparent);
-  background: color-mix(in srgb, var(--mj-surface, #fff) 92%, var(--mj-brand-deep, #0f3d2e));
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 6%, transparent);
+  padding: 0.35rem 0.85rem;
+  border-radius: 22px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 14%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #fff) 94%, var(--mj-ivory, #faf8f2));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 70%, transparent),
+    0 2px 10px color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 6%, transparent);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 
 .hus-field.is-focused {
-  border-color: color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 42%, transparent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mj-accent, #c4a35a) 28%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 36%, transparent);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--mj-accent, #c4a35a) 24%, transparent),
+    0 2px 10px color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 8%, transparent);
+}
+
+html[data-theme="dark"] .hus-field,
+html.dark .hus-field {
+  border-radius: 22px;
+  border-color: color-mix(in srgb, #fff 10%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #1b2421) 92%, #0f3d2e);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 6%, transparent),
+    0 2px 12px rgba(0, 0, 0, 0.22);
+  color: var(--mj-ink, #ecf2ef);
+}
+
+html[data-theme="dark"] .hus-field.is-focused,
+html.dark .hus-field.is-focused {
+  border-color: color-mix(in srgb, var(--mj-accent, #c4a35a) 42%, transparent);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--mj-accent, #c4a35a) 20%, transparent),
+    0 2px 12px rgba(0, 0, 0, 0.22);
 }
 
 .hus-icon {
   flex: 0 0 auto;
   color: var(--mj-brand-deep, #0f3d2e);
   opacity: 0.7;
+}
+
+html[data-theme="dark"] .hus-icon,
+html.dark .hus-icon {
+  color: var(--mj-accent, #c4a35a);
+  opacity: 0.85;
 }
 
 .hus-input {
@@ -50,6 +80,16 @@
 
 .hus-input:focus {
   outline: none;
+}
+
+html[data-theme="dark"] .hus-input,
+html.dark .hus-input {
+  color: var(--mj-ink, #ecf2ef);
+}
+
+html[data-theme="dark"] .hus-input::placeholder,
+html.dark .hus-input::placeholder {
+  color: color-mix(in srgb, var(--mj-ink, #ecf2ef) 55%, transparent);
 }
 
 .hus-clear {
@@ -72,12 +112,21 @@
   max-height: min(68vh, 28rem);
   overflow: auto;
   overscroll-behavior: contain;
-  border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 14%, transparent);
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 12%, transparent);
   background: var(--mj-surface, #fff);
   color: var(--mj-ink, #1a1a1a);
-  box-shadow: 0 12px 32px rgb(0 0 0 / 0.14);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.12);
   padding: 0.65rem 0.75rem 0.85rem;
+}
+
+html[data-theme="dark"] .hus-panel,
+html.dark .hus-panel {
+  border-radius: 20px;
+  border-color: color-mix(in srgb, #fff 10%, transparent);
+  background: var(--mj-surface, #1b2421);
+  color: var(--mj-ink, #ecf2ef);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
 }
 
 .hus-block + .hus-block {
@@ -108,6 +157,14 @@
   background: color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 5%, transparent);
   font: inherit;
   cursor: pointer;
+  color: inherit;
+}
+
+html[data-theme="dark"] .hus-chips button,
+html.dark .hus-chips button {
+  border-color: color-mix(in srgb, #fff 12%, transparent);
+  background: color-mix(in srgb, #fff 5%, transparent);
+  color: var(--mj-ink, #ecf2ef);
 }
 
 .hus-filters {
@@ -126,6 +183,7 @@
   font: inherit;
   font-size: 0.78rem;
   cursor: pointer;
+  color: inherit;
 }
 
 .hus-filters button.is-active {
@@ -134,10 +192,21 @@
   border-color: transparent;
 }
 
+html[data-theme="dark"] .hus-filters button.is-active,
+html.dark .hus-filters button.is-active {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 70%, #0f3d2e);
+  color: #fafaf8;
+}
+
 .hus-section + .hus-section {
   margin-top: 0.65rem;
   padding-top: 0.55rem;
   border-block-start: 1px solid color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 10%, transparent);
+}
+
+html[data-theme="dark"] .hus-section + .hus-section,
+html.dark .hus-section + .hus-section {
+  border-block-start-color: color-mix(in srgb, #fff 10%, transparent);
 }
 
 .hus-section__head h3 {
@@ -163,9 +232,9 @@
   gap: 0.15rem;
   width: 100%;
   min-height: 44px;
-  padding: 0.45rem 0.35rem;
+  padding: 0.45rem 0.45rem;
   border: 0;
-  border-radius: 10px;
+  border-radius: 14px;
   background: transparent;
   color: inherit;
   text-align: start;
@@ -176,6 +245,13 @@
 .hus-hit:hover,
 .hus-hit:focus-visible {
   background: color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 7%, transparent);
+}
+
+html[data-theme="dark"] .hus-hit:hover,
+html[data-theme="dark"] .hus-hit:focus-visible,
+html.dark .hus-hit:hover,
+html.dark .hus-hit:focus-visible {
+  background: color-mix(in srgb, #fff 7%, transparent);
 }
 
 .hus-hit strong {
@@ -206,6 +282,11 @@
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+}
+
+html[data-theme="dark"] .hus-more,
+html.dark .hus-more {
+  color: var(--mj-accent, #c4a35a);
 }
 
 .hus-empty {

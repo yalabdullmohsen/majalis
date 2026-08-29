@@ -321,7 +321,7 @@ export default function DuasQuranPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/duas-quran",
-      title: "أدعية القرآن الكريم، المجلس العلمي",
+      title: "أدعية القرآن الكريم، سُنّة",
       description: "أجمل الأدعية المأثورة من كتاب الله: دعاء الأنبياء والمؤمنين في القرآن الكريم يُعرض بأسلوب تعليمي منضبط يراعي أصول أهل السنة والجماعة دون",
       keywords: ["أدعية القرآن", "دعاء في القرآن", "دعاء الأنبياء", "أفضل الأدعية", "دعاء قرآني"],
       jsonLd: [
@@ -474,7 +474,7 @@ export default function DuasQuranPage() {
         </div>
 
         <div className="twh-share">
-          <ShareButtons title="أدعية القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/duas-quran" />
+          <ShareButtons title="أدعية القرآن الكريم — سُنّة" url="https://majlisilm.com/duas-quran" />
         </div>
 
         {/* related */}

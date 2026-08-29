@@ -76,8 +76,8 @@ export default function MyLearningPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/my-learning",
-      title: "حسابي | المجلس العلمي",
-      description: "لوحتي التعليمية الشخصية — تقدمي في طلب العلم وإنجازاتي ومكتبتي الشخصية؛ محتوى معتمد في منهج المجلس العلمي",
+      title: "حسابي | سُنّة",
+      description: "لوحتي التعليمية الشخصية — تقدمي في طلب العلم وإنجازاتي ومكتبتي الشخصية؛ محتوى معتمد في منهج سُنّة",
       keywords: ["حسابي", "تقدم التعلم", "شهادات إسلامية"],
       robots: "noindex, follow",
     });

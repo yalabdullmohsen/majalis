@@ -113,7 +113,7 @@ export default function ResearcherProfilePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/researcher-profile",
-      title: "الملف الشخصي للباحث | المجلس العلمي",
+      title: "الملف الشخصي للباحث | سُنّة",
       description: "أنشئ ملفك الشخصي كباحث إسلامي، تخصصاتك واهتماماتك ومنشوراتك العلمية.",
       keywords: ["باحث إسلامي", "ملف أكاديمي", "بحث شرعي", "باحث شرعي"],
       robots: "noindex, follow",
@@ -324,7 +324,7 @@ export default function ResearcherProfilePage() {
         </div>
       </div>
       <div className="twh-share">
-        <ShareButtons title="ملف الباحث الشرعي — المجلس العلمي" url="https://majlisilm.com/researcher-profile" />
+        <ShareButtons title="ملف الباحث الشرعي — سُنّة" url="https://majlisilm.com/researcher-profile" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/research" title="اختبر معلوماتك في العلوم الشرعية" count={4} />

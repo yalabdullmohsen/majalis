@@ -26,16 +26,16 @@ export default function CertificateVerifyPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/learning/certificates",
-      title: "التحقق من الشهادة | المجلس العلمي",
-      description: "تحقق من صحة الشهادة العلمية الصادرة من المجلس العلمي، أدخل رمز الشهادة للتحقق منها.",
-      keywords: ["تحقق شهادة", "شهادة علمية", "اعتماد علمي", "المجلس العلمي"],
+      title: "التحقق من الشهادة | سُنّة",
+      description: "تحقق من صحة الشهادة العلمية الصادرة من سُنّة، أدخل رمز الشهادة للتحقق منها.",
+      keywords: ["تحقق شهادة", "شهادة علمية", "اعتماد علمي", "سُنّة"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "التحقق من الشهادة العلمية",
           url: "https://majlisilm.com/learning/certificates",
-          description: "التحقق من صحة الشهادات العلمية الصادرة من المجلس العلمي",
+          description: "التحقق من صحة الشهادات العلمية الصادرة من سُنّة",
           about: { "@type": "Thing", name: "الشهادات العلمية الإسلامية" },
         },
       ],
@@ -156,7 +156,7 @@ export default function CertificateVerifyPage() {
             </div>
           </div>
           <p className="cvp-cert-note">
-            هذه الشهادة صادرة عن المجلس العلمي وهي موثّقة رقمياً.
+            هذه الشهادة صادرة عن سُنّة وهي موثّقة رقمياً.
           </p>
         </div>
       )}
@@ -205,7 +205,7 @@ export default function CertificateVerifyPage() {
         <Link href="/contact" className="cvp-back-link">تواصل معنا</Link>
       </div>
       <div className="twh-share">
-        <ShareButtons title="التحقق من الشهادة — المجلس العلمي" url="https://majlisilm.com/learning/certificate" />
+        <ShareButtons title="التحقق من الشهادة — سُنّة" url="https://majlisilm.com/learning/certificate" />
       </div>
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 1rem 1.5rem" }}>
         <SectionQuiz route="/learning-paths" title="اختبر معلوماتك الشرعية" count={3} />

@@ -86,7 +86,7 @@ export function buildShareText(item: ScientificAnnouncement): string {
     lines.push("", ...item.notes);
   }
 
-  lines.push("", "المجلس العلمي — majlisilm.com");
+  lines.push("", "سُنّة — majlisilm.com");
   return lines.join("\n");
 }
 

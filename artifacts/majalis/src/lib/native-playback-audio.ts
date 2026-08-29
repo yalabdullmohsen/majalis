@@ -82,7 +82,7 @@ export async function ensureNativePlaybackAudioSession(
   if (android) {
     await android.startForeground({
       title: meta?.title ?? "تلاوة القرآن",
-      artist: meta?.artist ?? "المجلس العلمي",
+      artist: meta?.artist ?? "سُنّة",
     });
   }
 

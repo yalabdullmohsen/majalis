@@ -22,7 +22,7 @@ export default function LearnSeriesPage() {
     if (!detail) return;
     applyPageSeo({
       path: `/learn/series/${detail.series.slug}`,
-      title: `${detail.series.title} | سلسلة دروس | المجلس العلمي`,
+      title: `${detail.series.title} | سلسلة دروس | سُنّة`,
       description: detail.series.description || detail.series.title,
     });
   }, [detail]);

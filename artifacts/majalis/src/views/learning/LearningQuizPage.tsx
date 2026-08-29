@@ -142,7 +142,7 @@ export default function LearningQuizPage() {
   useEffect(() => {
     applyPageSeo({
       path: `/learning/quiz/${slug}`,
-      title: "اختبار المسار الشرعي | المجلس العلمي",
+      title: "اختبار المسار الشرعي | سُنّة",
       description: "اختبر فهمك لمحتوى المسار الشرعي، أسئلة اختيار من متعدد مع نتيجة فورية وشهادة.",
       keywords: ["اختبار شرعي", "اختبار المسار", "تقييم علمي", "أسئلة إسلامية"],
       robots: "noindex, follow",
@@ -232,7 +232,7 @@ export default function LearningQuizPage() {
         <h1 className="page-status-shell__title">نتيجة الاختبار</h1>
         <DoneScreen result={result} slug={slug} onRetry={loadQuiz} />
         <div className="twh-share">
-          <ShareButtons title="اختبار المسار التعليمي — المجلس العلمي" url="https://majlisilm.com/learning/quiz" />
+          <ShareButtons title="اختبار المسار التعليمي — سُنّة" url="https://majlisilm.com/learning/quiz" />
         </div>
       </div>
     );
@@ -323,7 +323,7 @@ export default function LearningQuizPage() {
       </button>
 
       <div className="twh-share">
-        <ShareButtons title="اختبار المسار التعليمي — المجلس العلمي" url="https://majlisilm.com/learning/quiz" />
+        <ShareButtons title="اختبار المسار التعليمي — سُنّة" url="https://majlisilm.com/learning/quiz" />
       </div>
     </div>
   );

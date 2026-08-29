@@ -31,7 +31,7 @@ function buildJsonLd(route, siteUrl) {
     "url": url,
     "description": route.description,
     "inLanguage": "ar",
-    "isPartOf": { "@type": "WebSite", "url": siteUrl, "name": "المجلس العلمي" },
+    "isPartOf": { "@type": "WebSite", "url": siteUrl, "name": "سُنّة" },
   };
   if (route.path.startsWith("/lessons")) {
     base["@type"] = "ItemList";

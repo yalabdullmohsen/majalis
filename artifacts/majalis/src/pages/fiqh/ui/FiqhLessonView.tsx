@@ -70,7 +70,7 @@ export default function FiqhLessonPage() {
     if (!hit) return;
     applyPageSeo({
       path: hit.href,
-      title: `${hit.lesson.title} | ${hit.book.title} | المجلس العلمي`,
+      title: `${hit.lesson.title} | ${hit.book.title} | سُنّة`,
       description: hit.lesson.summary.slice(0, 160),
       keywords: [hit.lesson.title, hit.chapter.title, hit.book.title, "فقه"],
       jsonLd: [

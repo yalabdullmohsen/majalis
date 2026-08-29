@@ -288,7 +288,7 @@ export default function ZakatPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/zakat",
-      title: "الزكاة وأحكامها | المجلس العلمي",
+      title: "الزكاة وأحكامها | سُنّة",
       description: "دليل شامل لأحكام الزكاة: أنواعها وشروطها ونصابها ومصارفها، مع حاسبة مبسطة وأدلة من القرآن والسنة. مع حاسبة مبسّطة وأدلة من القرآن والسنة.",
       keywords: ["زكاة", "أحكام الزكاة", "نصاب الزكاة", "زكاة المال", "زكاة الفطر", "حاسبة زكاة"],
       jsonLd: [
@@ -427,7 +427,7 @@ export default function ZakatPage() {
 
       {/* مشاركة */}
       <div className="zk-share">
-        <ShareButtons title="الزكاة وأحكامها — المجلس العلمي" url="https://majlisilm.com/zakat" />
+        <ShareButtons title="الزكاة وأحكامها — سُنّة" url="https://majlisilm.com/zakat" />
       </div>
 
       {/* ذات صلة */}

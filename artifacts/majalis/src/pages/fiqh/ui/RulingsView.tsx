@@ -107,8 +107,8 @@ export default function RulingsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/rulings",
-      title: "الأحكام الشرعية | المجلس العلمي",
-      description: "موسوعة الأحكام الشرعية في الفقه الإسلامي، استعرض الأحكام مرتّبةً حسب الأبواب الفقهية والتصنيفات. محتوى معتمد في منهج المجلس العلمي",
+      title: "الأحكام الشرعية | سُنّة",
+      description: "موسوعة الأحكام الشرعية في الفقه الإسلامي، استعرض الأحكام مرتّبةً حسب الأبواب الفقهية والتصنيفات. محتوى معتمد في منهج سُنّة",
       keywords: ["أحكام شرعية", "فقه إسلامي", "الأحكام الفقهية", "حكم شرعي", "موسوعة فقهية"],
       jsonLd: [
         {
@@ -116,9 +116,9 @@ export default function RulingsPage() {
           "@type": "WebPage",
           name: "موسوعة الأحكام الشرعية",
           url: "https://majlisilm.com/rulings",
-          description: "أحكام الفقه الإسلامي مرتّبةً حسب الأبواب والتصنيفات الفقهية؛ محتوى معتمد في منهج المجلس العلمي",
+          description: "أحكام الفقه الإسلامي مرتّبةً حسب الأبواب والتصنيفات الفقهية؛ محتوى معتمد في منهج سُنّة",
           about: { "@type": "Thing", name: "الأحكام الشرعية في الفقه الإسلامي" },
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
         },
       ],
     });
@@ -328,7 +328,7 @@ export default function RulingsPage() {
       </aside>
 
       <div className="twh-share">
-        <ShareButtons title="الأحكام الشرعية — المجلس العلمي" url="https://majlisilm.com/rulings" />
+        <ShareButtons title="الأحكام الشرعية — سُنّة" url="https://majlisilm.com/rulings" />
       </div>
       <ExploreAlsoNav
         title="استكشف أيضًا"

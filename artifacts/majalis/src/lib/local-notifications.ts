@@ -162,7 +162,7 @@ function markSentToday(tag: string): void {
 export function scheduleFlashcardsReminder(dueCount: number): void {
   if (dueCount === 0 || alreadySentToday("flashcards")) return;
   sendLocalNotification("📇 لديك بطاقات مستحقة", {
-    body: `${dueCount} بطاقة تنتظر مراجعتك اليوم في المجلس العلمي.`,
+    body: `${dueCount} بطاقة تنتظر مراجعتك اليوم في سُنّة.`,
     tag: "flashcards",
   });
   markSentToday("flashcards");

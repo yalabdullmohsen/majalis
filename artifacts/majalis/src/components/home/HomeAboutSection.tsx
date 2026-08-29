@@ -35,14 +35,14 @@ export function HomeAboutSection() {
           </svg>
           <div>
             <p className="home-about__eyebrow home-eyebrow">من نحن</p>
-            <h2 id="about-home-heading" className="home-about__title">عن المجلس العلمي</h2>
+            <h2 id="about-home-heading" className="home-about__title">عن سُنّة</h2>
           </div>
         </div>
       </div>
 
       <div className="home-about__body">
         <p>
-          المجلس العلمي منصة إسلامية رقمية متخصصة تجمع طلاب العلم الشرعي وعموم المسلمين في مكان واحد،
+          سُنّة منصة إسلامية رقمية متخصصة تجمع طلاب العلم الشرعي وعموم المسلمين في مكان واحد،
           تُقدّم دروساً علمية من مشايخ متخصصين، ومحتوى يومياً في
           القرآن الكريم والسنة النبوية والأذكار والفقه والأحكام الشرعية، كل ذلك بلغة عربية واضحة مع حرص تام
           على الدقة والأمانة في نقل العلم الشرعي.

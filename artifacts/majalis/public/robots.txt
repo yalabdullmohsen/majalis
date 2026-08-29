@@ -1,5 +1,5 @@
 # https://majlisilm.com/robots.txt
-# المجلس العلمي
+# سُنّة
 
 User-agent: *
 Allow: /

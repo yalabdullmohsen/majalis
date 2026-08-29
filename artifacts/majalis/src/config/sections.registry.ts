@@ -1,5 +1,5 @@
 /**
- * SSOT — سجل أقسام المجلس العلمي.
+ * SSOT — سجل أقسام سُنّة.
  * كل سطح تنقّل (شريط سفلي · المزيد · الدرج · الرئيسية · البحث) يُولَّد من هنا.
  * ممنوع إضافة عنصر تنقّل يدوي خارج هذا الملف.
  */
@@ -181,7 +181,7 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/citations", to: "/flashcards", note: "citations → بطاقات الحفظ والمراجعة" },
   { from: "/support", to: "/contact", note: "الدعم → تواصل معنا (canonical)" },
   { from: "/privacy-center", to: "/privacy", note: "مركز الخصوصية → الخصوصية" },
-  { from: "/about-us", to: "/about", note: "من نحن → عن المجلس العلمي" },
+  { from: "/about-us", to: "/about", note: "من نحن → عن سُنّة" },
   { from: "/aqidah", to: "/tawhid", note: "عقيدة قديم → التوحيد/العقيدة" },
   { from: "/prayer", to: "/prayer-times", note: "صلاة مختصر → مواقيت الصلاة" },
   { from: "/more", to: "/sections", note: "المزيد → الأقسام" },
@@ -223,7 +223,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "home",
     label: "الرئيسية",
-    subtitle: "بوابة المجلس العلمي",
+    subtitle: "بوابة سُنّة",
     route: "/",
     icon: Home,
     group: "sciences",
@@ -273,7 +273,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "sections",
     label: "الأقسام",
-    subtitle: "كل أقسام المجلس العلمي",
+    subtitle: "كل أقسام سُنّة",
     route: "/sections",
     icon: Layers,
     group: "account",
@@ -683,7 +683,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "islamic-history",
     label: "التاريخ الإسلامي",
-    subtitle: "عصور ودول وحضارة وشخصيات تاريخية",
+    subtitle: "خط زمني بالأحداث من قبل البعثة إلى يومنا",
     route: "/tarikh-islami",
     icon: History,
     group: "sciences",
@@ -1024,7 +1024,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   },
   {
     id: "about",
-    label: "عن المجلس العلمي",
+    label: "عن سُنّة",
     subtitle: "رؤية المنصة ورسالتها",
     route: "/about",
     icon: Info,

@@ -9,9 +9,9 @@ import "@/components/sections/section-cards.css";
 export default function SectionsPage() {
   useEffect(() => {
     applyPageSeo({
-      title: "الأقسام — المجلس العلمي",
+      title: "الأقسام — سُنّة",
       description:
-        "أقسام المجلس العلمي: العلوم الشرعية، القصص، الدعوة، المكتبة، العبادة، التعلّم، والحساب.",
+        "أقسام سُنّة: العلوم الشرعية، القصص، الدعوة، المكتبة، العبادة، التعلّم، والحساب.",
       path: "/sections",
     });
   }, []);

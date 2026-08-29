@@ -62,9 +62,9 @@ const nonHistoryDetailRoutes = seoRoutes.routes.filter(
 const idxAfter = nonHistoryDetailRoutes.findIndex((r) => r.path === "/tarikh-islami");
 const historyRoutes = ISLAMIC_HISTORY_ITEMS.map((item) => ({
   path: `/tarikh-islami/${item.id}`,
-  title: `${item.title} — التاريخ الإسلامي | المجلس العلمي`,
+  title: `${item.title} — التاريخ الإسلامي | سُنّة`,
   description: clampDesc(item.summary),
-  keywords: [item.title, item.era, "التاريخ الإسلامي", "المجلس العلمي"].slice(0, 6),
+  keywords: [item.title, item.era, "التاريخ الإسلامي", "سُنّة"].slice(0, 6),
   sitemap: true,
   changefreq: "monthly",
   priority: 0.75,

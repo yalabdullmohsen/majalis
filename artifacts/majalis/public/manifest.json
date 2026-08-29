@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "المجلس العلمي",
-  "short_name": "المجلس العلمي",
-  "description": "تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم.",
+  "name": "سُنّة",
+  "short_name": "سُنّة",
+  "description": "قرآن ودروس شرعية",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "/",
@@ -10,8 +10,8 @@
   "display": "standalone",
   "display_override": [
     "standalone",
-    "minimal-ui",
-    "window-controls-overlay"
+    "fullscreen",
+    "minimal-ui"
   ],
   "background_color": "#F2F4F3",
   "theme_color": "#F2F4F3",

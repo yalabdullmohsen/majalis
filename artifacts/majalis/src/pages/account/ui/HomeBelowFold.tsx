@@ -200,7 +200,7 @@ export default function HomeBelowFold() {
       <HomeRecentPagesBar />
 
       <section className="m2030-band" aria-label="شارك الموقع">
-        <ShareFaida title="المجلس العلمي — منصة تعليمية إسلامية" url="https://majlisilm.com/" />
+        <ShareFaida title="سُنّة — منصة تعليمية إسلامية" url="https://majlisilm.com/" />
       </section>
 
       <div className="m2030-band" style={{ textAlign: "center" }}>

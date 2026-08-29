@@ -46,7 +46,7 @@ export default function TarikhIslamiDetailPage() {
     }
     applyPageSeo({
       path: `/tarikh-islami/${item.id}`,
-      title: `${item.title} | التاريخ الإسلامي | المجلس العلمي`,
+      title: `${item.title} | التاريخ الإسلامي | سُنّة`,
       description: item.summary,
       keywords: [item.title, "التاريخ الإسلامي", HISTORY_CATEGORIES[item.category]],
       jsonLd: [
@@ -95,6 +95,11 @@ export default function TarikhIslamiDetailPage() {
             {VERIFICATION_LABEL[item.verification]}
           </span>
         </div>
+        {item.portalHref ? (
+          <Link href={item.portalHref} className="tarikh-chip tarikh-chip--portal">
+            {item.portalLabel || "ادخل القسم التفصيلي"}
+          </Link>
+        ) : null}
         <ShareButtons title={item.title} />
       </header>
 

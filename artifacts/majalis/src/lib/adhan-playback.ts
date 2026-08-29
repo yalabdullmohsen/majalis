@@ -168,7 +168,7 @@ export async function playAdhanUrlAsync(
     .then((m) =>
       m.ensureNativePlaybackAudioSession({
         title: "الأذان",
-        artist: "المجلس العلمي",
+        artist: "سُنّة",
       }),
     )
     .catch((e) => console.warn("[adhan] native playback session:", e));
@@ -248,7 +248,7 @@ export function playAdhanUrl(
     .then((m) =>
       m.ensureNativePlaybackAudioSession({
         title: "الأذان",
-        artist: "المجلس العلمي",
+        artist: "سُنّة",
       }),
     )
     .catch(() => undefined);

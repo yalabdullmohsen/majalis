@@ -1,6 +1,6 @@
 /** ثوابت العلامة — مصدر موحّد للطبقات العليا (يُوسَّع في D/F). */
 export const BRAND = {
-  nameAr: "المجلس العلمي",
+  nameAr: "سُنّة",
   domain: "majlisilm.com",
   colorDay: "#1F7A5A",
   colorNight: "#4FB48B",

@@ -284,7 +284,7 @@ export function FiqhCouncilHubPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-council",
-      title: "الهيئات والمنظمات الإسلامية | المجلس العلمي",
+      title: "الهيئات والمنظمات الإسلامية | سُنّة",
       description: "مرجع قرارات وفتاوى وتوصيات المجامع الفقهية وهيئة كبار العلماء ودور الإفتاء ورابطة العالم الإسلامي.",
       keywords: ["مجمع فقهي", "قرارات فقهية", "هيئة كبار العلماء", "رابطة العالم الإسلامي", "دار الإفتاء", "فتاوى المجامع"],
       jsonLd: [
@@ -574,7 +574,7 @@ export function FiqhCouncilHubPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="مجلس الفقه الإسلامي — المجلس العلمي" url="https://majlisilm.com/fiqh-council" />
+        <ShareButtons title="مجلس الفقه الإسلامي — سُنّة" url="https://majlisilm.com/fiqh-council" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />

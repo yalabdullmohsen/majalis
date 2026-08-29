@@ -84,14 +84,14 @@ export default function LoginPage() {
     applyPageSeo({
       path: isRegister ? "/register" : "/login",
       title: isRegister
-        ? "إنشاء حساب | المجلس العلمي"
+        ? "إنشاء حساب | سُنّة"
         : tab === "forgot"
-          ? "استعادة كلمة المرور | المجلس العلمي"
-          : "تسجيل الدخول | المجلس العلمي",
+          ? "استعادة كلمة المرور | سُنّة"
+          : "تسجيل الدخول | سُنّة",
       description: isRegister
-        ? "إنشاء حساب في المجلس العلمي."
-        : "تسجيل الدخول إلى المجلس العلمي.",
-      keywords: isRegister ? ["إنشاء حساب", "تسجيل", "المجلس العلمي"] : ["تسجيل دخول", "المجلس العلمي"],
+        ? "إنشاء حساب في سُنّة."
+        : "تسجيل الدخول إلى سُنّة.",
+      keywords: isRegister ? ["إنشاء حساب", "تسجيل", "سُنّة"] : ["تسجيل دخول", "سُنّة"],
       robots: "noindex, follow",
     });
   }, [tab]);
@@ -250,7 +250,7 @@ export default function LoginPage() {
               height={56}
             />
           </div>
-          <p className="login-card__brand">المجلس العلمي</p>
+          <p className="login-card__brand">سُنّة</p>
           {title ? <h1 className="login-card__title">{title}</h1> : null}
         </header>
 

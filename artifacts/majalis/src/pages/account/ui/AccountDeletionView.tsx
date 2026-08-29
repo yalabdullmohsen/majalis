@@ -20,8 +20,8 @@ export default function AccountDeletionPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/account-deletion",
-      title: "حذف الحساب نهائياً | المجلس العلمي",
-      description: "طلب حذف حسابك وجميع بياناتك من منصة المجلس العلمي نهائياً.",
+      title: "حذف الحساب نهائياً | سُنّة",
+      description: "طلب حذف حسابك وجميع بياناتك من منصة سُنّة نهائياً.",
       robots: "noindex, nofollow",
     });
   }, []);
