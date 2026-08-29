@@ -7,7 +7,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "../../..");
-const app = readFileSync(resolve(root, "src/App.tsx"), "utf8");
+const app = readFileSync(resolve(root, "src/App.tsx"), "utf8") + "\n" + readFileSync(resolve(root, "src/AppRoutes.tsx"), "utf8");
 const nav = readFileSync(resolve(root, "src/components/NavBar.tsx"), "utf8");
 const cfg = readFileSync(resolve(root, "src/config/header-ad.ts"), "utf8");
 

@@ -11,7 +11,7 @@ import { SERVICES_CENTER_GROUPS } from "@/lib/services-center-nav";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
 
-const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8");
+const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8") + "\n" + readFileSync(resolve(appRoot, "src/AppRoutes.tsx"), "utf8");
 const settingsSrc = readFileSync(resolve(appRoot, "src/pages/account/ui/SettingsView.tsx"), "utf8");
 const servicesSrc = readFileSync(resolve(appRoot, "src/lib/services-center-nav.ts"), "utf8");
 const nativeCss = readFileSync(resolve(appRoot, "src/styles/capacitor-native-ux.css"), "utf8");

@@ -24,7 +24,7 @@ console.log("\n=== Lazy: تفسير / صوت / بحث المصحف ===");
     "لا استيراد ثابت لـ TafsirSheet",
   );
 
-  const app = read("src/App.tsx");
+  const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
   assert.match(app, /lazyWithRetry\([\s\S]*GlobalSearchModal/, "GlobalSearchModal lazy");
   assert.match(app, /lazyWithRetry\([\s\S]*QuranMiniPlayerBar/, "QuranMiniPlayerBar lazy");
   assert.match(app, /lazyWithRetry\([\s\S]*UpdateAvailableBanner/, "UpdateAvailableBanner lazy");
@@ -78,7 +78,7 @@ console.log("\n=== LCP أصول WebP موجودة ===");
 
 console.log("\n=== معالم دلالية ===");
 {
-  const app = read("src/App.tsx");
+  const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
   assert.match(app, /<main id="main-content"/, "main");
   assert.match(app, /aria-label="المحتوى الرئيسي"/, "main بعنوان واضح");
   assert.match(app, /skip-link|#main-content/, "رابط تخطّي");

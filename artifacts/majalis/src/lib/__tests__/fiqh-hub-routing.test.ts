@@ -70,7 +70,7 @@ console.log("\n=== فقه — صفحة المحور من books.json ===");
 
 console.log("\n=== فقه — المسارات في App ===");
 {
-  const appSrc = readFileSync(resolve(srcRoot, "App.tsx"), "utf8");
+  const appSrc = readFileSync(resolve(srcRoot, "App.tsx"), "utf8") + "\n" + readFileSync(resolve(srcRoot, "AppRoutes.tsx"), "utf8");
   assert(appSrc.includes('path="/fiqh/books/:bookId"'), "مسار الكتاب");
   assert(appSrc.includes("FiqhBookPage"), "FiqhBookPage موصول");
   assert(appSrc.includes('path="/fiqh/topics/:topicId"'), "مسار قديم /fiqh/topics يبقى للتحويل");

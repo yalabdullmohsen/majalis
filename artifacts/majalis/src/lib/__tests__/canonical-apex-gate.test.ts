@@ -84,7 +84,7 @@ assert.match(siteConfig, /"siteUrl"\s*:\s*"https:\/\/majlisilm\.com"/);
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
 assert.equal(/https:\/\/www\.majlisilm\.com/.test(indexHtml), false, "index.html: بلا www");
 
-const appTsx = readFileSync(resolve(srcRoot, "App.tsx"), "utf8");
+const appTsx = readFileSync(resolve(srcRoot, "App.tsx"), "utf8") + "\n" + readFileSync(resolve(srcRoot, "AppRoutes.tsx"), "utf8");
 assert.equal(/\/lessons\?tab=/.test(appTsx), false, "App.tsx: بلا /lessons?tab=");
 
 console.log("canonical-apex-gate.test.ts: ok");

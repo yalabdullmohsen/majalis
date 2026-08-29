@@ -115,7 +115,7 @@ for (const slug of lineageSlugs) {
 assert.ok(findNode(PROPHETS_LINEAGE, "zakariyya"), "عقدة زكريا في الشجرة يجب أن تكون zakariyya");
 assert.equal(findNode(PROPHETS_LINEAGE, "zakariya"), null);
 
-const app = readFileSync(resolve(root, "src/App.tsx"), "utf8");
+const app = readFileSync(resolve(root, "src/App.tsx"), "utf8") + "\n" + readFileSync(resolve(root, "src/AppRoutes.tsx"), "utf8");
 assert.match(
   app,
   /path="\/prophets\/zakariya"><Redirect\s+to="\/prophets\/zakariyya"/,

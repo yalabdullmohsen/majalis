@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 const dir = dirname(fileURLToPath(import.meta.url));
 const root = join(dir, "../..");
 
-const app = readFileSync(join(root, "App.tsx"), "utf8");
+const app = readFileSync(join(root, "App.tsx"), "utf8") + "\n" + readFileSync(join(root, "AppRoutes.tsx"), "utf8");
 const settings = readFileSync(join(root, "pages/account/ui/SettingsView.tsx"), "utf8");
 const state = readFileSync(join(root, "lib/onboarding-state.ts"), "utf8");
 const tour = readFileSync(join(root, "components/onboarding/AppFeatureTour.tsx"), "utf8");

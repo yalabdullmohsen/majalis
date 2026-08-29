@@ -26,7 +26,7 @@ const outboxSrc = readFileSync(join(appRoot, "src/lib/sync-outbox.ts"), "utf8");
 assert.match(outboxSrc, /Last-Write-Wins|updatedAt/, "LWW / updatedAt strategy");
 assert.match(outboxSrc, /shouldDeferHeavySync/, "data saver defer helper");
 
-const appSrc = readFileSync(join(appRoot, "src/App.tsx"), "utf8");
+const appSrc = readFileSync(join(appRoot, "src/App.tsx"), "utf8") + "\n" + readFileSync(join(appRoot, "src/AppRoutes.tsx"), "utf8");
 assert.match(appSrc, /CookieConsentBanner/, "consent bootstrap mounted (silent)");
 assert.match(appSrc, /privacy-center/, "privacy center route");
 

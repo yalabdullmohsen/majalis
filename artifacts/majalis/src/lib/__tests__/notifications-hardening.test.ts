@@ -122,7 +122,7 @@ console.log("  ✓ channel + test trigger constants");
   assert.match(scheduler, /listNativePrayerScheduleSlots/, "schedules all obligatory slots");
   assert.match(scheduler, /cancelAllPrayerNativeNotifications/, "cancels when both alerts off");
 
-  const app = read("src/App.tsx");
+  const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
   assert.match(app, /NativeNotificationsBootstrap/, "App boots native notifications");
   assert.match(app, /force:\s*true/, "visibility recheck forces reschedule");
   assert.match(app, /appStateChange/, "Capacitor appStateChange resume path");

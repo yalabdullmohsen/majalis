@@ -55,7 +55,7 @@ const navIntent = readFileSync(join(src, "lib/navigation-intent.ts"), "utf8");
 assert.match(navIntent, /mode === "state"/);
 assert.match(navIntent, /isSameHref/);
 
-const app = readFileSync(join(src, "App.tsx"), "utf8");
+const app = readFileSync(join(src, "App.tsx"), "utf8") + "\n" + readFileSync(join(src, "AppRoutes.tsx"), "utf8");
 assert.match(app, /NavigationBinder/);
 assert.match(app, /NativeBackButtonListener/);
 

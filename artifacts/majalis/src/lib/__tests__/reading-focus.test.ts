@@ -15,7 +15,7 @@ assert.equal(existsSync(resolve(root, "src/components/reading/AppReadingFocus.ts
 assert.equal(existsSync(resolve(root, "src/lib/reading-focus.ts")), false);
 assert.equal(existsSync(resolve(root, "src/styles/components/app-reading-focus.css")), false);
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.doesNotMatch(app, /AppReadingFocus/);
 assert.doesNotMatch(app, /app-reading-focus/);
 

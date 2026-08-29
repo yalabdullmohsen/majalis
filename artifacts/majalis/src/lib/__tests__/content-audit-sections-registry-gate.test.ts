@@ -64,7 +64,7 @@ const routes = new Set<string>();
 const live = sections.filter((s) => s.status === "live");
 assert.ok(live.length >= 40, `أقسام live ≥40 (الآن ${live.length})`);
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 const vercel = existsSync(resolve(appRoot, "vercel.json")) ? read("vercel.json") : "";
 const seoRoutes = JSON.parse(read("src/lib/seo-routes.json")) as {
   routes?: Array<{ path: string; robots?: string; title?: string; description?: string }>;

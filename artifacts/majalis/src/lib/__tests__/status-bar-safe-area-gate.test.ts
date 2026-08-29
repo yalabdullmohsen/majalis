@@ -47,7 +47,7 @@ const main = read("src/main.tsx");
 assert.doesNotMatch(main, /setProperty\("--inset-top",\s*"0px"\)/);
 assert.match(main, /--app-status-bg/);
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /PageChromeSync/);
 
 const debug = read("src/components/SafeAreaDebugOverlay.tsx");

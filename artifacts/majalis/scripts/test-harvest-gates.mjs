@@ -313,7 +313,7 @@ assert.doesNotMatch(read("scripts/harvest/run.mjs"), /appendHarvestReport|docs\/
 console.log("=== UI hooks ===");
 assert.match(read("src/pages/lessons/ui/LessonsView.tsx"), /HarvestFeedPanel/);
 assert.match(read("src/components/lessons/SourceItemCard.tsx"), /المصدر/);
-assert.match(read("src/App.tsx"), /SourcesDirectoryPage/);
+assert.match(read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx"), /SourcesDirectoryPage/);
 assert.doesNotMatch(read("src/components/lessons/SourceItemCard.tsx"), /إعلان/);
 
 console.log("=== qualityGate: منشور قديم بلا موعد ===");

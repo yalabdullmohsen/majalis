@@ -233,7 +233,7 @@ console.log("\n=== البنية والواجهة ===");
   const adj = adjacentFiqhLessons("taharah", "taharah-miyah-aqsam");
   assert(Boolean(adj.next), "للمسألة الأولى تالٍ");
   assert(!adj.prev, "لا سابق للأولى");
-  const app = read("src/App.tsx");
+  const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
   assert(app.includes('path="/fiqh/books/:bookId"'), "مسار الكتاب");
   assert(app.includes('path="/fiqh/books/:bookId/lessons/:lessonId"'), "مسار المسألة");
   assert(app.includes('path="/fiqh/usul"'), "مسار الأصول");

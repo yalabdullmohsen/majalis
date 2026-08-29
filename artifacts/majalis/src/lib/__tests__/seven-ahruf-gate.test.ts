@@ -13,7 +13,7 @@ const read = (p: string) => readFileSync(resolve(root, p), "utf8");
 
 const reg = read("src/config/sections.registry.ts");
 const routes = read("src/app/router/routes.ts");
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 const qiraat = read("src/pages/quran/ui/QuranQiraatView.tsx");
 const view = read("src/pages/quran/ui/QuranSevenAhrufView.tsx");
 

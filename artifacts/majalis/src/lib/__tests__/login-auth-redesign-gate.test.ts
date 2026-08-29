@@ -12,7 +12,7 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const login = read("src/pages/account/ui/LoginView.tsx");
 const css = read("src/styles/pages/auth.css");
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 const immersive = read("src/lib/immersive-chrome.ts");
 const fab = read("src/components/FloatingBackButton.tsx");
 const msgs = read("src/lib/auth-messages.ts");

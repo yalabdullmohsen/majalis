@@ -32,7 +32,7 @@ assert.match(mini, /quran-mini-player__range/);
 assert.match(mini, /onNext:/);
 assert.match(mini, /onPrevious:/);
 
-const app = read("App.tsx");
+const app = read("App.tsx") + "\n" + read("AppRoutes.tsx");
 assert.match(app, /QuranMiniPlayerBar/);
 
 // ── Local resume on home ────────────────────────────────────────────────────

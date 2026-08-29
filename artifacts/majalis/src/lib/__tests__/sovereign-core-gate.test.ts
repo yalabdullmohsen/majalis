@@ -37,7 +37,7 @@ assert.match(thermal, /getRenderFpsPolicy/);
 const platform = read("lib/platform-logic-bootstrap.ts");
 assert.match(platform, /startSovereignCore/);
 
-const app = read("App.tsx");
+const app = read("App.tsx") + "\n" + read("AppRoutes.tsx");
 assert.match(app, /SovereignNavigationBridge/);
 
 const search = read("lib/quran-search-verses.ts");

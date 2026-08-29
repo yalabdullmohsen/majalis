@@ -52,7 +52,7 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   assert(navBarSrc.includes("HeaderTicker"), "الشريط المتحرك مُدرَج فعليًا في الهيدر");
   assert(!navBarSrc.includes("navbar-v3__tabs-row"), "لا صف تبويبات مكرر في الهيدر — TopSectionBar يكفي");
 
-  const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8");
+  const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8") + "\n" + readFileSync(resolve(appRoot, "src/AppRoutes.tsx"), "utf-8");
   assert(
     appSrc.includes('e.key.toLowerCase() === "k"') || appSrc.includes('e.key === "k"'),
     "اختصار Ctrl/Cmd+K لفتح البحث الشامل ما زال مسجَّلاً في App.tsx",

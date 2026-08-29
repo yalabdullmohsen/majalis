@@ -12,7 +12,7 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const mushafPage = read("src/pages/quran/MushafReaderPage.tsx");
 const gate = read("src/hooks/useNavigationPaintGate.ts");
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 const adhanSvc = read("src/lib/adhan-audio-service.ts");
 const iosSeg = read("src/lib/adhan-ios-segments.ts");
 const lastPage = read("src/lib/quran-last-page.ts");

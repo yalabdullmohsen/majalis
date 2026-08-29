@@ -37,7 +37,7 @@ for (const rel of SURFACES) {
   assert.equal(src.includes("/learning/paths"), false, `${rel} بلا /learning/paths`);
 }
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /path="\/start-here"[^>]*>\s*<Redirect\s+to="\/lessons"/);
 assert.match(app, /path="\/qa"[^>]*>\s*<Redirect\s+to="\/quiz"/);
 assert.equal(/path="\/start-here"[^>]*>\s*<Redirect\s+to=["']\/["']/.test(app), false);

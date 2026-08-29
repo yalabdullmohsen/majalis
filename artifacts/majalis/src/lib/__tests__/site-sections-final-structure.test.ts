@@ -86,7 +86,7 @@ assert.match(home, /IA_HOME_PRIMARY/);
 assert.equal(home.includes("/quran-knowledge"), false, "لا بوابة قرآن قديمة في الرئيسية");
 assert.equal(home.includes("المسارات العلمية"), false);
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 for (const [from, to] of Object.entries(IA_REDIRECTS)) {
   if (from === "/learning/paths") {
     assert.match(app, /path="\/learning\/paths"[^>]*>\s*<Redirect\s+to="\/lessons"/);

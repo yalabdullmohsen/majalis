@@ -31,7 +31,7 @@ assert.equal(hits.length, 0, `صفر ظهور لسلسلة التحميل. بق�
 
 assert.ok(!existsSync(resolve(srcRoot, "components/BrandReveal.tsx")), "BrandReveal محذوف");
 
-const app = readFileSync(resolve(srcRoot, "App.tsx"), "utf8");
+const app = readFileSync(resolve(srcRoot, "App.tsx"), "utf8") + "\n" + readFileSync(resolve(srcRoot, "AppRoutes.tsx"), "utf8");
 assert.match(app, /<NavBar\s*\/>/);
 assert.match(app, /<TopSectionBar\s*\/>/);
 assert.match(app, /<BottomNavBar\b/);

@@ -121,7 +121,7 @@ ok(scheduler.includes("forceNativeReschedule"), "force reschedule");
 ok(scheduler.includes("listNativePrayerScheduleSlots"), "all-obligatory native slots");
 ok(scheduler.includes("cancelAllPrayerNativeNotifications"), "cancel-all when alerts off");
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 ok(app.includes("NativeNotificationsBootstrap"), "App native notifications bootstrap");
 ok(app.includes("PRAYER_ALERT_PREFS_CHANGED_EVENT"), "prefs-changed listener");
 ok(app.includes("appStateChange"), "Capacitor appStateChange resume");

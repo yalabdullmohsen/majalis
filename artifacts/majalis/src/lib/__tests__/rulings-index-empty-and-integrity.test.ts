@@ -51,7 +51,7 @@ assert.equal(audit.publicEligible, 0, "لا محتوى عام في الأرشي�
 assert.ok(existsSync(archiveReadme), "README الأرشيف موجود");
 assert.match(readFileSync(archiveReadme, "utf8"), /sharia_rulings/);
 
-const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8");
+const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8") + "\n" + readFileSync(resolve(root, "src/AppRoutes.tsx"), "utf8");
 assert.match(appSrc, /path="\/rulings"><Redirect to="\/fiqh"/);
 assert.match(appSrc, /path="\/rulings\/:id"><Redirect to="\/fiqh"/);
 

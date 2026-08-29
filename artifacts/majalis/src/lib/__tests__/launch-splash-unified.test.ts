@@ -124,7 +124,7 @@ for (const name of readdirSync(xcassets)) {
   }
 }
 
-const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8");
+const appSrc = readFileSync(resolve(root, "src/App.tsx"), "utf8") + "\n" + readFileSync(resolve(root, "src/AppRoutes.tsx"), "utf8");
 assert.doesNotMatch(appSrc, /MajlisLaunchScreen|isLaunching|MajalisLaunchScreen/);
 assert.doesNotMatch(
   appSrc,

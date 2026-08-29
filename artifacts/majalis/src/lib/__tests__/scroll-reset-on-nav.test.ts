@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const dir = dirname(fileURLToPath(import.meta.url));
-const appSrc = readFileSync(join(dir, "../../App.tsx"), "utf8");
+const appSrc = readFileSync(join(dir, "../../App.tsx"), "utf8") + "\n" + readFileSync(join(dir, "../../AppRoutes.tsx"), "utf8");
 const helper = readFileSync(join(dir, "../scroll-document-top.ts"), "utf8");
 const gate = readFileSync(join(dir, "../../../scripts/scroll-top-gate.mjs"), "utf8");
 
