@@ -36,15 +36,24 @@ export default async function handler(req, res) {
 
   // المسار السريع: لا يستورد database ولا يفتح pool — مناسب لـ probes / CDN.
   if (!deep) {
-    sendJson(res, 200, {
-      status: "ok",
-      version,
-      checks: {
-        app_alive: true,
-        deep: false,
+    sendJson(
+      res,
+      200,
+      {
+        status: "ok",
+        version,
+        checks: {
+          app_alive: true,
+          deep: false,
+        },
+        hint: "استخدم ?deep=1 لفحص قاعدة البيانات والطابور",
       },
-      hint: "استخدم ?deep=1 لفحص قاعدة البيانات والطابور",
-    });
+      {
+        // كاش حافة قصير — يقلّل cold start المتكرر للفحوص دون إخفاء أعطال طويلة
+        "Cache-Control": "public, max-age=0, s-maxage=30, stale-while-revalidate=60",
+        "CDN-Cache-Control": "public, s-maxage=30, stale-while-revalidate=60",
+      },
+    );
     return;
   }
 

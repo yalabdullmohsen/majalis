@@ -124,10 +124,12 @@ export default defineConfig({
       polyfill: true,
       resolveDependencies(_filename, deps) {
         // لا تُحمّل supabase/icons/charts في modulepreload للإقلاع — تُجلب عند الطلب
+        // HomePage كسول — لا modulepreload على كل مسار SPA (يُحمَّل عند / فقط عبر lazy)
         return deps.filter(
           (d) =>
             !/\/(supabase|icons|charts|adhan|animation|maps|html-export)-/.test(d) &&
-            !/seo-routes/.test(d),
+            !/seo-routes/.test(d) &&
+            !/HomePage-/.test(d),
         );
       },
     },

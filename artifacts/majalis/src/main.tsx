@@ -155,7 +155,7 @@ function scheduleNetworkWarm() {
       m.refreshTafsirAudioRemoteConfig(),
     );
   };
-  const start = () => window.setTimeout(() => scheduleOnIdle(run), 10_000);
+  const start = () => window.setTimeout(() => scheduleOnIdle(run), 20_000);
   if (document.readyState === "complete") start();
   else window.addEventListener("load", start, { once: true });
 }
