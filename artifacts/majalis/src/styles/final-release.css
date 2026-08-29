@@ -24,9 +24,10 @@
   --shadow-soft: var(--e-2);
   /* أبعاد الهيكل الموحّدة — الإنسِت من theme (--inset-*) مرة واحدة */
   --header-height: var(--header-chrome, 56px);
-  --bottom-nav-height: var(--nav-chrome, 64px);
+  --bottom-nav-height: var(--nav-chrome, 84px);
   --safe-bottom: 0px;
   --bottom-nav-total: var(--nav-h, calc(var(--bottom-nav-height) + var(--inset-bottom)));
+  --content-pb: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px) + 24px);
   --top-section-bar-h: 3.5rem;
   --sticky-below-chrome: calc(var(--header-h, calc(56px + var(--inset-top))) + var(--top-section-bar-h));
   /* ارتفاع الشريط المتحرك ≤ ٣٦px (٢٫٢٥rem) + توسيط flex؛ safe-area منفصل في صف الهيدر */
@@ -165,17 +166,18 @@ html.dark .app-shell {
   padding-block-start: var(--inset-top);
   z-index: var(--z-nav, 200);
   min-height: var(--header-h);
-  background: var(--mj-surface, var(--color-surface, #F2F4F3));
+  background: var(--surface-app, var(--mj-surface, var(--color-surface, #F2F4F3)));
   border: 0;
   border-block-end: 1px solid var(--mj-hairline, var(--color-border));
   box-shadow: none;
-  backdrop-filter: blur(20px) saturate(1.2);
-  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  opacity: 1;
   transition: min-height var(--motion-max, 200ms) ease, padding-block var(--motion-max, 200ms) ease;
 }
 @media (prefers-reduced-transparency: reduce) {
   .navbar-v3 {
-    background: var(--mj-surface, var(--color-surface));
+    background: var(--surface-app, var(--mj-surface, var(--color-surface)));
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
@@ -205,9 +207,11 @@ html.dark .app-shell {
   max-width: 100%;
   box-sizing: border-box;
   overflow: hidden;
-  background: color-mix(in srgb, var(--color-surface, #FAF8F5) 96%, transparent);
+  background: var(--surface-app, var(--mj-surface, var(--color-surface, #F2F4F3)));
   border-block-end: 1px solid var(--color-border, #E8E7E2);
-  backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  opacity: 1;
 }
 .top-section-bar__scroll {
   display: flex;
@@ -722,7 +726,25 @@ html.dark .nav-soon-badge {
   outline-offset: 2px;
 }
 
-/* Footer is a concise trust/navigation surface, not a duplicate sitemap. */
+html[data-theme="dark"] .bottom-nav,
+html[data-theme="dark"] .bottom-nav--v2,
+html.dark .bottom-nav,
+html.dark .bottom-nav--v2 {
+  background-color: var(--surface-app, #131A18) !important;
+  background-image: none !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .navbar-v3,
+html[data-theme="dark"] .top-section-bar,
+html.dark .navbar-v3,
+html.dark .top-section-bar {
+  background: var(--surface-app, #131A18) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+}
+
 .site-footer--v3 { margin-block-start: clamp(2rem, 5vw, 4rem); }
 .site-footer-inner--v3 {
   width: min(100%, var(--page-width));
@@ -741,8 +763,60 @@ html.dark .nav-soon-badge {
 @media (max-width: 879px) {
   :root {
     --header-height: 3rem;
-    --bottom-nav-h: 3.25rem;
-    --bottom-nav-height: 3.25rem; /* مساحة أوضح للتسمية ≥14px */
+    --bottom-nav-h: 84px;
+    --bottom-nav-height: 84px; /* مساحة واضحة للتسمية + لمس مريح */
+    --content-pb: 24px;
+  }
+
+  /* حجز صلب لارتفاع الشريط — يهزم #root,.app-shell{padding:0} */
+  .app-shell {
+    height: 100dvh !important;
+    height: 100svh !important;
+    max-height: 100dvh !important;
+    max-height: 100svh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    padding-bottom: calc(
+      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 0.5rem
+    ) !important;
+  }
+  .app-shell:has(.bottom-nav--hidden),
+  .app-shell.app-chrome-hidden {
+    padding-bottom: var(--inset-bottom, 0px) !important;
+  }
+  .app-top-chrome {
+    flex: 0 0 auto;
+  }
+  .app-main,
+  #main-content.app-main {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-x: clip !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    padding-block-end: 24px !important;
+  }
+  .app-shell > .site-footer,
+  .app-shell > .site-footer--v3 {
+    display: none !important;
+  }
+  html.pts-immersive .app-shell,
+  html.chrome-immersive .app-shell {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 0 !important;
+    display: block !important;
+  }
+  html.pts-immersive .app-main,
+  html.chrome-immersive .app-main {
+    flex: none !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    padding-block-end: 0 !important;
   }
 
   .bottom-nav,
@@ -772,13 +846,15 @@ html.dark .nav-soon-badge {
     margin: 0 !important;
     background-color: var(--surface-app, var(--mj-bg)) !important;
     background-image: none !important;
+    opacity: 1 !important;
     border-block-start: 1px solid var(--color-border) !important;
     border-top: 1px solid var(--color-border) !important;
-    box-shadow: 0 -6px 20px rgb(23 61 53 / 6%) !important;
+    box-shadow: 0 -4px 12px rgb(23 61 53 / 5%) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     /* لا overflow:hidden — يمنع قص التسميات؛ القص كان عَرَضًا لارتفاع مضغوط خاطئ */
     overflow: visible !important;
+    isolation: isolate !important;
   }
 
   .bottom-nav--v2 .bottom-nav__tab,
@@ -793,6 +869,7 @@ html.dark .nav-soon-badge {
     min-height: max(44px, var(--mj-touch-min, 48px)) !important;
     height: var(--bottom-nav-height) !important;
     max-height: none !important;
+    margin: 0 !important;
     padding: 0.15rem 0.1rem !important;
     border: 0 !important;
     border-radius: 14px !important;
@@ -852,11 +929,11 @@ html.dark .nav-soon-badge {
   }
 
   .app-main {
-    padding-block-end: calc(var(--bottom-nav-total) + 0.85rem) !important;
+    padding-block-end: 24px !important;
   }
 
   body.has-assistant-fab .app-main {
-    padding-block-end: calc(var(--bottom-nav-total) + 0.85rem) !important;
+    padding-block-end: calc(24px + var(--assistant-fab-size, 3.35rem)) !important;
   }
 
   .site-footer-inner--v3 {
@@ -1580,7 +1657,7 @@ a.twitter-timeline {
   .quran-hub-page,
   .qlive-page,
   .sch-page {
-    padding-bottom: 1rem;
+    padding-bottom: 24px;
   }
 }
 

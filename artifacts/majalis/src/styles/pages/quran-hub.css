@@ -5,8 +5,8 @@
   min-height: 100svh;
   background: var(--elite-white, var(--mj-bg));
   color: var(--elite-ink, #1A1A18);
-  /* ارتفاع الشريط السفلي (يشمل safe-area عبر --bottom-nav-total) + هامش إضافي */
-  padding-bottom: calc(var(--bottom-nav-total, 5rem) + 2rem);
+  /* هامش إضافي فوق حشو .app-main (--content-pb = nav + safe + 24px) */
+  padding-bottom: 24px;
   /* بطل ممتد بلا حشو جانبي على الحاوية — المحتوى التالي يستعيد الحشو */
   padding-inline: 0;
   box-sizing: border-box;
@@ -341,7 +341,8 @@
     max-width: 100%;
     min-width: 0;
     overflow-x: clip;
-    padding-bottom: 1rem;
+    /* لا تعتمد على 1rem فقط — المسافة الآمنة من .app-main عبر --content-pb */
+    padding-bottom: 24px;
   }
   .quran-hub-hero {
     padding: 1.75rem 1rem 1.5rem;

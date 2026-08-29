@@ -117,10 +117,10 @@
   --search-height: 0px;
   --ticker-height: 2.25rem;
   --bottom-nav-height: var(--nav-chrome);
-  --nav-chrome: 64px;
+  --nav-chrome: 84px;
   --header-h: calc(var(--header-chrome) + var(--inset-top) + var(--ad-banner-height, 0px));
   --nav-h: calc(var(--nav-chrome) + var(--inset-bottom));
-  --content-pb: calc(var(--nav-h) + 16px);
+  --content-pb: calc(var(--bottom-nav-height) + var(--inset-bottom) + 24px);
   --keyboard-inset: 0px;
   --edge-deadzone: 20px;
 
@@ -163,12 +163,12 @@
   --gutter-inline-start: max(var(--inset-right), 16px);
   --gutter-inline-end: max(var(--inset-left), 16px);
   --header-chrome: 56px;
-  --nav-chrome: 64px;
+  --nav-chrome: 84px;
   --top-sponsor-content-h: 48px;
   --ad-banner-height: calc(var(--header-ad-h, 2.65rem) + 0.35rem);
   --header-h: calc(var(--header-chrome) + var(--inset-top) + var(--ad-banner-height, 0px));
   --nav-h: calc(var(--nav-chrome) + var(--inset-bottom));
-  --content-pb: calc(var(--nav-h) + 16px);
+  --content-pb: calc(var(--nav-chrome) + var(--inset-bottom) + 24px);
   --keyboard-inset: 0px;
   --edge-deadzone: 20px;
 
