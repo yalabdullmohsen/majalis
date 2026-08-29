@@ -25,7 +25,12 @@ assert.match(indexHtml, /__mjDismissSplash/, "دالة dismiss للبوابة");
 assert.match(indexHtml, /MIN_MS\s*=\s*500/, "حد أدنى 500ms");
 assert.match(indexHtml, /MAX_MS\s*=\s*1500/, "سقف 1500ms");
 assert.match(indexHtml, /EXIT_MS\s*=\s*120/, "تلاشي ≤120ms");
-assert.match(indexHtml, /app-booting[\s\S]*#root[\s\S]*visibility:\s*hidden/, "إخفاء التطبيق أثناء الإقلاع");
+assert.match(indexHtml, /app-booting[\s\S]*#root[\s\S]*pointer-events:\s*none/, "تعطيل تفاعل #root أثناء الإقلاع");
+assert.doesNotMatch(
+  indexHtml,
+  /app-booting[\s\S]*#root[\s\S]*visibility:\s*hidden/,
+  "لا visibility:hidden على #root — كان مصدر CLS",
+);
 assert.match(indexHtml, /app-ready/, "كشف الواجهة بـ app-ready");
 assert.match(indexHtml, /splash_timing=1/, "معامل قياس توقيت البوابة");
 assert.match(indexHtml, /127\.0\.0\.1/, "مسار سريع لمعاينة CI المحلية");

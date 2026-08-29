@@ -1,6 +1,7 @@
 import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
-import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
+import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams, Link } from "wouter";
 import { AuthProvider, useAuth } from "@/components/AuthProvider";
+import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
 import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
@@ -32,7 +33,7 @@ import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
-import { HOME_SEARCH_INPUT_ID } from "@/lib/home-search-id";
+
 import {
   markFirstVisitIntroSeen,
   shouldShowFirstVisitIntro,
@@ -682,82 +683,69 @@ function NativeNotificationsBootstrap() {
 
 function HomeInitialShell() {
   return (
-    <div className="mj-home-start m2030-home mj-home-lcp-ph" dir="rtl">
-      <header className="mj-start-header">
-        <a href="/settings" className="mj-start-header__icon-btn" aria-label="الإعدادات">
-          ⚙
-        </a>
-        <div className="mj-start-header__end">
-          <a href={`#${HOME_SEARCH_INPUT_ID}`} className="mj-start-header__pill">
-            بحث
-          </a>
-          <a href="/mushaf" className="mj-start-header__pill mj-start-header__pill--accent">
-            المصحف
-          </a>
+    <div className="m2030-home mj-home-lcp-ph" dir="rtl">
+      <header className="page-hero-mj m2030-hero home-page-hero" dir="rtl">
+        <div className="page-hero-mj__content">
+          <p className="page-hero-mj__eyebrow mj-home-lcp-ph__hero-eyebrow">&nbsp;</p>
+          <h1 className="page-hero-mj__title">سُنّة</h1>
+          <div className="page-hero-mj__actions">
+            <span className="mj-btn m2030-btn m2030-btn--primary mj-home-lcp-ph__hero-cta">تابع التصفح</span>
+          </div>
         </div>
       </header>
 
-      <section className="mj-home-start__brand" aria-label="المجلس العلمي">
-        <div className="mj-home-start__logo-wrap">
-          <img
-            src="/brand/splash-logo.webp"
-            alt=""
-            className="mj-home-start__logo"
-            width={72}
-            height={72}
-            decoding="async"
-            fetchPriority="low"
-          />
-        </div>
-        <h1 className="mj-home-start__title">المجلس العلمي</h1>
-        <p className="mj-home-start__tagline">علم نافع، محتوى موثوق، ودروس ميسرة</p>
-      </section>
-
-      <section className="mj-app-card mj-prayer-summary mj-prayer-summary--ph" aria-label="مواقيت الصلاة" aria-busy="true">
-        <div className="mj-prayer-summary__hero mj-prayer-summary__hero--ph">
-          <span className="mj-home-start-ph__line mj-home-start-ph__line--md" />
-          <span className="mj-home-start-ph__line mj-home-start-ph__line--lg" />
-        </div>
-        <div className="mj-prayer-summary__row mj-prayer-summary__row--ph" aria-hidden="true">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <span key={i} className="mj-home-start-ph__chip" />
-          ))}
-        </div>
-      </section>
-
-      <section className="mj-app-card mj-dhikr-summary mj-dhikr-summary--ph" aria-label="الأذكار" aria-busy="true">
-        <div className="mj-app-section-header">
-          <h2 className="mj-app-section-header__title">الأذكار</h2>
-        </div>
-        <div className="mj-dhikr-summary__list" aria-hidden="true">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <span key={i} className="mj-dhikr-summary__row-ph mj-home-start-ph__chip" />
-          ))}
-        </div>
-      </section>
-
-      <div className="mj-start-search mj-home-lcp-ph__search" role="search" aria-label="بحث">
-        <div className="mj-start-search__field">
-          <span className="mj-start-search__input mj-home-lcp-ph__search-ph" aria-hidden="true">
+      <div className="hus mj-home-lcp-ph__search" role="search" aria-label="بحث موحّد">
+        <div className="hus-field">
+          <span className="hus-input mj-home-lcp-ph__search-ph" aria-hidden="true">
             &nbsp;
           </span>
         </div>
       </div>
 
-      <section className="mj-app-card mj-home-featured mj-home-featured--ph" aria-label="أقسام بارزة" aria-busy="true">
-        <div className="mj-app-section-header">
-          <h2 className="mj-app-section-header__title">استكشف</h2>
-        </div>
-        <div className="mj-home-featured__grid" aria-hidden="true">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <span key={i} className="mj-home-start-ph__action mj-home-start-ph__chip" />
-          ))}
-        </div>
+      <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
+        <section aria-label="ابدأ من هنا" className="home-start-here mj-home-lcp-ph__start-here">
+          <div className="hsh-header">
+            <span className="hsh-eyebrow">{HOME_START_HERE_COPY.eyebrow}</span>
+            <h2 className="hsh-title">{HOME_START_HERE_COPY.title}</h2>
+            <p className="hsh-lead">{HOME_START_HERE_COPY.lead}</p>
+            <div className="hsh-actions">
+              <Link href="/lessons" className="hsh-actions__primary" tabIndex={-1}>
+                {HOME_START_HERE_COPY.primaryCta}
+              </Link>
+              <Link href="/adab-talab-ilm" className="hsh-actions__secondary" tabIndex={-1}>
+                {HOME_START_HERE_COPY.secondaryCta}
+              </Link>
+            </div>
+          </div>
+          <ol className="hsh-steps">
+            {HOME_START_HERE_STEPS.map((step) => (
+              <li key={step.num} className="hsh-step">
+                <span className="hsh-step__num" aria-hidden="true">
+                  {step.num}
+                </span>
+                <div className="hsh-step__body">
+                  <strong className="hsh-step__title">{step.title}</strong>
+                  <p className="hsh-step__desc">{step.desc}</p>
+                  <Link href={step.href} className="hsh-step__cta" tabIndex={-1}>
+                    {step.cta} ←
+                  </Link>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
       </section>
 
-      <section className="mj-app-card mj-home-auth mj-home-auth--ph" aria-hidden="true" />
-
-      <div className="mj-home-below-fold-ph" id="mj-home-below-fold" aria-hidden="true" />
+      <section
+        className="m2030-band m2030-band--sage home-daily-wird daily-wird-card mj-home-lcp-ph__daily-band"
+        aria-label="ورد اليوم"
+        aria-busy="true"
+        data-testid="daily-wird-card"
+      >
+        <div className="m2030-band__head">
+          <h2 className="m2030-band__title">ورد اليوم</h2>
+        </div>
+      </section>
     </div>
   );
 }

@@ -22,6 +22,7 @@ const postBuild = readFileSync(resolve(root, "scripts/post-build-seo.mjs"), "utf
 const hero = readFileSync(resolve(root, "src/components/ui/PageHero.tsx"), "utf8");
 const app = readFileSync(resolve(root, "src/App.tsx"), "utf8");
 const homeCss = readFileSync(resolve(root, "src/styles/m2030/home.css"), "utf8");
+const finalCss = readFileSync(resolve(root, "src/styles/final-release.css"), "utf8");
 const critical = readFileSync(resolve(root, "src/styles/critical-first-paint.css"), "utf8");
 
 assert.doesNotMatch(html, /id="mj-lcp-chrome"/, "لا صدفة عنوان خارج #root");
@@ -37,32 +38,33 @@ assert.doesNotMatch(html, /dns-prefetch/, "لا dns-prefetch في الإقلاع
   const n = [...html.matchAll(/rel="preconnect"/g)].length;
   assert.ok(n <= 2, `preconnect ≤2 (الفعلي ${n})`);
 }
-assert.match(html, /MIN_MS\s*=\s*500/, "حد أدنى Startup Gate");
-assert.match(html, /mj-startup-gate__mark|splash-logo\.webp/, "شعار البوابة");
-assert.doesNotMatch(html, /mj-launch-splash__tagline/, "بلا عبارة تسويقية");
+assert.match(html, /MIN_MS\s*=\s*500/, "حد أدنى لـ Startup Gate");
+assert.doesNotMatch(html, /mj-launch-splash__tagline/, "بلا عبارة تسويقية في البوابة");
 assert.match(html, /id="mj-theme-boot"|v6-direct-boot-2026-08|v12-startup-gate/, "ثيم مبكر قبل الرسم");
 {
   const crit = html.match(/<style id="mj-lcp-critical">([\s\S]*?)<\/style>/)?.[1] ?? "";
   assert.doesNotMatch(crit, /Aref\s+Ruqaa/, "بلا رقعة في CSS الحرج");
 }
 
-assert.match(home, /mj-home-start__title|المجلس العلمي/, "عنوان الرئيسية في React");
+assert.match(home, /title="سُنّة"/, "عنوان الرئيسية في React");
 assert.doesNotMatch(home, /titleDomId/, "لا تبنّي عقدة HTML");
 assert.doesNotMatch(hero, /titleDomId/, "PageHero بلا نقل عقدة");
 assert.doesNotMatch(prewarm, /link\.rel = "preconnect"/, "prewarm لا يضيف preconnect");
 assert.doesNotMatch(mainSrc, /styles\/pages\/calendar\.css/, "تقويم خارج حزمة الإقلاع");
 assert.doesNotMatch(mainSrc, /homePageBoot|await homePageBoot/, "لا انتظار Home قبل createRoot");
 assert.doesNotMatch(mainSrc, /mj-app-mount/, "createRoot على #root");
-assert.match(home, /mj-home-lcp-ph|mj-home-start/, "حجز ارتفاع في الرئيسية");
+assert.match(home, /mj-home-lcp-ph/, "حجز ارتفاع في الرئيسية");
 assert.match(app, /function HomeInitialShell/, "fallback LCP فوري بلا aria-hidden");
 assert.doesNotMatch(app, /HomeInitialShell[\s\S]{0,120}aria-hidden/, "shell الرئيسية ليس مخفياً عن قارئ الشاشة");
 assert.doesNotMatch(app, /scheduleRemoveHomeLcpStaticShell/, "لا إزالة صدفة HTML");
-assert.match(critical, /\.mj-prayer-summary\s*\{[\s\S]*min-height:\s*11\.5rem/, "حجز CLS لمواقيت الصلاة");
+assert.match(critical, /\.hsh-steps\s*\{[\s\S]*min-height:\s*22rem/, "حجز CLS لشبكة hsh-steps");
 assert.match(critical, /ascent-override/, "size-adjust/override للخط الاحتياطي");
 assert.match(homeCss, /contain:\s*layout style/, "حاوية placeholder بلا min-height مبالغ");
-assert.match(critical, /\.mj-home-start__brand\s*\{[\s\S]*min-height:\s*7\.5rem/, "حجز الشعار في CSS الحرج");
-assert.match(critical, /\.mj-home-featured\s*\{[\s\S]*min-height:\s*11\.1rem/, "حجز الأقسام في CSS الحرج");
+assert.match(homeCss, /\.mj-home-lcp-ph__start-here\s*\{[\s\S]*min-height:\s*28rem/, "ارتفاع ابدأ من هنا يطابق المحتوى");
+assert.match(critical, /\.mj-home-lcp-ph__start-here\s*\{[\s\S]*min-height:\s*28rem/, "حجز ابدأ من هنا في CSS الحرج");
+assert.match(homeCss, /\.mj-home-lcp-ph__daily-band\s*\{[\s\S]*min-height:\s*28rem/, "ارتفاع الورد اليومي يطابق الحجز الحرج");
 assert.doesNotMatch(homeCss, /\.mj-home-lcp-ph\s*\{[\s\S]*min-height:\s*88rem/, "لا min-height مبالغ فيه على الحاوية");
+assert.doesNotMatch(finalCss, /\.hsh-steps[^}]*content-visibility/, "ابدأ من هنا فوق الطية بلا content-visibility");
 assert.doesNotMatch(html, /fonts\.googleapis\.com/, "لا Google Fonts في إقلاع /");
 assert.equal(
   lhciRc.ci.assert.assertions["cumulative-layout-shift"][1].maxNumericValue,

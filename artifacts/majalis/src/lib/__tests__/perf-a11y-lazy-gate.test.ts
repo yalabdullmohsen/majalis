@@ -59,7 +59,7 @@ console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");
   assert.doesNotMatch(html, /rel="preload"[^>]+noto-naskh-400/, "لا preload Noto عند الإقلاع");
   assert.match(html, /id="mj-(launch-splash|startup-gate)"/, "Startup Gate في HTML الحرج");
   assert.doesNotMatch(html, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل");
-  assert.match(html, /mj-startup-gate__mark|splash-logo\.webp/, "شعار البوابة فقط");
+  assert.match(html, /mj-startup-gate__mark|splash-logo\.webp/, "شعار البوابة التقنية");
   assert.doesNotMatch(html, /mj-launch-splash__tagline/, "بلا عبارة تسويقية");
   assert.match(
     html,
@@ -82,11 +82,9 @@ console.log("\n=== معالم دلالية ===");
   assert.match(app, /<main id="main-content"/, "main");
   assert.match(app, /aria-label="المحتوى الرئيسي"/, "main بعنوان واضح");
   assert.match(app, /skip-link|#main-content/, "رابط تخطّي");
-  const hus = read("src/components/home/start/StartSearchCard.tsx");
+  const hus = read("src/components/home/HomeUniversalSearch.tsx");
   assert.match(hus, /role="search"/, "منطقة بحث");
-  assert.match(hus, /aria-label=/, "حقل بحث بأريّة");
-  assert.match(hus, /enterKeyHint="search"/, "زر بحث في الكيبورد");
-  assert.match(hus, /inputMode="search"/, "inputMode للبحث");
+  assert.match(hus, /aria-label="بحث موحّد/, "حقل بحث بأريّة");
   const nav = read("src/components/NavBar.tsx");
   assert.match(nav, /<header/, "header");
   assert.match(nav, /aria-label="فتح البحث"/, "زر بحث بأريّة");

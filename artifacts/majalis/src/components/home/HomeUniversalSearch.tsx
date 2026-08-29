@@ -49,15 +49,9 @@ function Highlight({ text, query }: { text: string; query: string }) {
   );
 }
 
-type Props = {
-  inputId?: string;
-  variant?: "default" | "start";
-};
-
-export function HomeUniversalSearch({ inputId: inputIdProp, variant = "default" }: Props) {
+export function HomeUniversalSearch() {
   const [, navigate] = useLocation();
-  const generatedId = useId();
-  const inputId = inputIdProp ?? generatedId;
+  const inputId = useId();
   const listId = useId();
   const [raw, setRaw] = useState("");
   const [debounced, setDebounced] = useState("");
@@ -128,23 +122,10 @@ export function HomeUniversalSearch({ inputId: inputIdProp, variant = "default" 
   const showIdle = focused && !debounced;
   const showResults = focused && !!debounced && !!payload;
 
-  const placeholder =
-    variant === "start"
-      ? "ابحث في القرآن والكتب والدروس والأذكار..."
-      : "ابحث في الآيات والكتب والتاريخ والأذكار والأسئلة…";
-
-  const runSearch = (query: string) => {
-    const q = query.trim();
-    if (!q) return;
-    addSearchHistory(q);
-    setFocused(false);
-    navigate(`/search?q=${encodeURIComponent(q)}`);
-  };
-
   return (
-    <div className={`hus${variant === "start" ? " hus--start" : ""}`} ref={wrapRef} dir="rtl" role="search">
+    <div className="hus" ref={wrapRef} dir="rtl" role="search">
       <label className="hus-label" htmlFor={inputId}>
-        {variant === "start" ? "بحث" : "بحث موحّد"}
+        بحث موحّد
       </label>
       <div className={`hus-field${focused ? " is-focused" : ""}`}>
         <Search size={18} aria-hidden className="hus-icon" />
@@ -152,15 +133,10 @@ export function HomeUniversalSearch({ inputId: inputIdProp, variant = "default" 
           id={inputId}
           type="search"
           className="hus-input"
-          placeholder={placeholder}
-          aria-label={
-            variant === "start"
-              ? "ابحث في القرآن والكتب والدروس والأذكار"
-              : "بحث موحّد في الآيات والكتب والتاريخ والأذكار والأسئلة"
-          }
+          placeholder="ابحث في الآيات والكتب والتاريخ والأذكار والأسئلة…"
+          aria-label="بحث موحّد في الآيات والكتب والتاريخ والأذكار والأسئلة"
           value={raw}
           autoComplete="off"
-          inputMode="search"
           enterKeyHint="search"
           aria-autocomplete="list"
           aria-controls={showIdle || showResults ? listId : undefined}
@@ -172,11 +148,6 @@ export function HomeUniversalSearch({ inputId: inputIdProp, variant = "default" 
           }}
           onChange={(e) => setRaw(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              runSearch(raw);
-              return;
-            }
             if (e.key === "Escape") {
               setFocused(false);
               (e.target as HTMLInputElement).blur();

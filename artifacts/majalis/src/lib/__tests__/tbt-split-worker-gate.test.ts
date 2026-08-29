@@ -13,13 +13,13 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 const prefetch = read("src/lib/prefetch-top-routes.ts");
 assert.match(prefetch, /10_000/, "تسخين المسارات بعد load + 10ث");
 
-const homeSearch = read("src/components/home/start/StartSearchCard.tsx");
+const homeSearch = read("src/components/home/HomeUniversalSearch.tsx");
 assert.doesNotMatch(
   homeSearch,
   /import \{[^}]*runUniversalSearch[^}]*\} from ["']@\/features\/search\/universal-home-search["']/,
   "محرك البحث ليس استيراداً ساكناً في الرئيسية",
 );
-assert.match(homeSearch, /\/search\?q=/, "البحث يوجّه لصفحة البحث");
+assert.match(homeSearch, /import\(\s*["']@\/features\/search\/universal-home-search["']\s*\)/, "المحرك عند الاستعلام فقط");
 
 const unified = read("src/features/search/unified-local.ts");
 assert.match(unified, /search-index\.worker/, "فهرس البحث عبر Worker");
@@ -33,8 +33,8 @@ assert.match(app, /lazyWithRetry\([\s\S]*PrayerCountdownBanner/, "شريط ال�
 const homeView = read("src/pages/account/ui/HomeView.tsx");
 assert.match(homeView, /HomeBelowFold/, "جزيرة تحت الطية كسولة");
 assert.match(homeView, /IntersectionObserver/, "ترطيب تحت الطية عند الظهور");
-assert.match(homeView, /HomeBelowFoldGate/, "ورد اليوم ومحتوى إضافي تحت الطية");
-assert.doesNotMatch(homeView, /HomeDailyWirdGate/, "لا ورد يومي فوق الطية — صفحة أقصر");
+assert.match(homeView, /HomeDailyWirdGate/, "ورد اليوم مؤجّل عن أول شاشة");
+assert.match(homeView, /lazyWithRetry[\s\S]*DailyWirdCard/, "بيانات الورد كسولة");
 
 const mainSrc = read("src/main.tsx");
 assert.doesNotMatch(mainSrc, /import\("@\/pages\/account\/HomePage"\)/, "لا تسخين مزدوج لـ HomePage قبل الرسم");

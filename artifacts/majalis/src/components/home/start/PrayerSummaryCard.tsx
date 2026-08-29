@@ -10,7 +10,6 @@ import {
   type PrayerSlot,
   type PrayerTimesPayload,
 } from "@/lib/prayer-times";
-import { subscribeSecondTick } from "@/lib/second-tick";
 import { subscribePrayerDayRollover } from "@/lib/prayer-day-rollover";
 
 function usePrayerSummary() {

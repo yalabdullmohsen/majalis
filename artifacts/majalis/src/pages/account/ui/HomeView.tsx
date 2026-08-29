@@ -1,95 +1,85 @@
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { defaultSiteJsonLd } from "@/lib/seo-structured-data";
+import { useDailyContext } from "@/lib/daily-context";
+import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
+import { HomeUniversalSearch } from "@/components/home/HomeUniversalSearch";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
+import { PageHero } from "@/components/ui/PageHero";
+import "@/styles/components/home-brand-title.css";
+import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
+import { HomeLiveNowBanner } from "@/components/home/HomeLiveNowBanner";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { scheduleOnIdle } from "@/lib/yield-to-main";
-import { toArabicDigits } from "@/lib/utils";
-import { StartHeader } from "@/components/home/start/StartHeader";
-import { HOME_SEARCH_INPUT_ID } from "@/lib/home-search-id";
-import { StartSearchCard } from "@/components/home/start/StartSearchCard";
-import { DhikrSummaryCard } from "@/components/home/start/DhikrSummaryCard";
-import { HomeFeaturedSections } from "@/components/home/start/HomeFeaturedSections";
-import "@/styles/components/home/home-start.css";
-
-const PAGE_POS_KEY = "majalis-quran-page-pos";
-
-function readLocalMushafResume(): { href: string; label: string } {
-  try {
-    const raw = localStorage.getItem(PAGE_POS_KEY);
-    if (!raw) return { href: "/mushaf", label: "المصحف" };
-    const parsed = JSON.parse(raw) as { page?: number; ayahKey?: string };
-    const page = Number(parsed?.page);
-    if (!Number.isFinite(page) || page < 1 || page > 604) {
-      return { href: "/mushaf", label: "المصحف" };
-    }
-    const ayahKey =
-      typeof parsed?.ayahKey === "string" && /^\d{1,3}:\d{1,3}$/.test(parsed.ayahKey)
-        ? parsed.ayahKey
-        : null;
-    return {
-      href: ayahKey ? `/mushaf/page/${page}?ayah=${ayahKey}` : `/mushaf/page/${page}`,
-      label: `صفحة ${toArabicDigits(page)}`,
-    };
-  } catch {
-    return { href: "/mushaf", label: "المصحف" };
-  }
-}
+import "@/styles/m2030/home.css";
 
 const HomeBelowFold = lazyWithRetry(
   () => import("./HomeBelowFold"),
   "HomeBelowFold",
 );
 
-const HomeAuthStrip = lazyWithRetry(
-  () =>
-    import("@/components/home/start/HomeAuthStrip").then((m) => ({
-      default: m.HomeAuthStrip,
-    })),
-  "HomeAuthStrip",
+const HomeDailyWirdBand = lazyWithRetry(
+  () => import("@/components/home/DailyWirdCard").then((m) => ({ default: m.HomeDailyWirdBand })),
+  "HomeDailyWirdBand",
 );
 
-const PrayerSummaryCard = lazyWithRetry(
-  () =>
-    import("@/components/home/start/PrayerSummaryCard").then((m) => ({
-      default: m.PrayerSummaryCard,
-    })),
-  "PrayerSummaryCard",
-);
-
-function PrayerSkeleton() {
+function HomeDailyWirdSkeleton() {
   return (
-    <section className="mj-app-card mj-prayer-summary mj-prayer-summary--ph" aria-label="مواقيت الصلاة" aria-busy="true">
-      <div className="mj-prayer-summary__hero mj-prayer-summary__hero--ph">
-        <span className="mj-home-start-ph__line mj-home-start-ph__line--md" />
-        <span className="mj-home-start-ph__line mj-home-start-ph__line--lg" />
+    <section
+      className="m2030-band m2030-band--sage home-daily-wird daily-wird-card mj-home-lcp-ph__daily-band"
+      aria-label="ورد اليوم"
+      aria-busy="true"
+      data-testid="daily-wird-card"
+    >
+      <div className="m2030-band__head">
+        <h2 className="m2030-band__title">ورد اليوم</h2>
+        <div className="daily-wird-card__actions" aria-hidden="true">
+          <span className="daily-wird-card__done-btn mj-home-lcp-ph__daily-done">تم</span>
+          <span className="m2030-band__link mj-home-lcp-ph__daily-link">الورد الكامل</span>
+        </div>
       </div>
-      <div className="mj-prayer-summary__row mj-prayer-summary__row--ph" aria-hidden="true">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <span key={i} className="mj-home-start-ph__chip" />
+      <div className="home-daily-wird__grid">
+        {Array.from({ length: 4 }).map((_, idx) => (
+          <article key={idx} className="home-daily-wird__card mj-card mj-home-lcp-ph__daily-card">
+            <header className="home-daily-wird__card-head">
+              <span className="mj-home-lcp-ph__daily-icon" aria-hidden="true" />
+              <span className="mj-home-lcp-ph__daily-label">&nbsp;</span>
+            </header>
+            <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
+            <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
+            <div className="home-daily-wird__meta mj-home-lcp-ph__daily-meta skeleton-base" />
+            <div className="home-daily-wird__cta mj-home-lcp-ph__daily-cta skeleton-base" />
+          </article>
         ))}
       </div>
     </section>
   );
 }
 
-function PrayerSummaryGate() {
+function HomeDailyWirdGate() {
   const [show, setShow] = useState(false);
+
   useEffect(() => {
     let cancelled = false;
-    scheduleOnIdle(() => {
+    const reveal = () => {
       if (!cancelled) setShow(true);
-    }, 280);
+    };
+    scheduleOnIdle(reveal, 180);
     return () => {
       cancelled = true;
     };
   }, []);
-  if (!show) return <PrayerSkeleton />;
+
+  if (!show) return <HomeDailyWirdSkeleton />;
+
   return (
-    <Suspense fallback={<PrayerSkeleton />}>
-      <PrayerSummaryCard />
-    </Suspense>
+    <SectionErrorBoundary name="HomeDailyWird">
+      <Suspense fallback={<HomeDailyWirdSkeleton />}>
+        <HomeDailyWirdBand />
+      </Suspense>
+    </SectionErrorBoundary>
   );
 }
 
@@ -147,19 +137,40 @@ function HomeBelowFoldGate() {
 }
 
 export default function HomePage() {
-  const [{ href: mushafHref, label: mushafLabel }] = useState(readLocalMushafResume);
+  const dailyCtx = useDailyContext();
+  const [lastVisited, setLastVisited] = useState<RecentPage | null>(null);
+  const [isFirstVisit] = useState(() => {
+    try {
+      return localStorage.getItem("majlis-home-welcomed-v1") !== "1";
+    } catch {
+      return true;
+    }
+  });
 
   useEffect(() => {
     scheduleOnIdle(() => {
+      const pages = getRecentPages(2);
+      setLastVisited(pages.find((p) => p.href !== "/") ?? null);
+      try {
+        localStorage.setItem("majlis-home-welcomed-v1", "1");
+      } catch {
+        /* التخزين معطّل */
+      }
+    }, 0);
+  }, []);
+
+  const continueHref = lastVisited?.href ?? "/lessons";
+
+  useEffect(() => {
+    const run = () =>
       applyPageSeo({
         path: "/",
-        title: "المجلس العلمي، منصة العلوم الإسلامية",
-        description:
-          "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الأحكام الشرعية، والفقه المعاصر.",
-        keywords: ["المجلس العلمي", "علوم إسلامية", "قرآن كريم", "أذكار", "أحكام شرعية", "دروس علمية"],
+        title: "سُنّة، منصة العلوم الإسلامية",
+        description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الأحكام الشرعية، والفقه المعاصر.",
+        keywords: ["سُنّة", "علوم إسلامية", "قرآن كريم", "أذكار", "أحكام شرعية", "دروس علمية"],
         jsonLd: defaultSiteJsonLd(),
       });
-    }, 0);
+    scheduleOnIdle(run, 0);
   }, []);
 
   useEffect(() => {
@@ -170,61 +181,50 @@ export default function HomePage() {
     return () => window.cancelAnimationFrame(id);
   }, []);
 
-  const brand = useMemo(
-    () => (
-      <section className="mj-home-start__brand" aria-label="المجلس العلمي">
-        <div className="mj-home-start__logo-wrap">
-          <img
-            src="/brand/splash-logo.webp"
-            alt=""
-            className="mj-home-start__logo"
-            width={72}
-            height={72}
-            decoding="async"
-            fetchPriority="low"
-          />
-        </div>
-        <h1 className="mj-home-start__title">المجلس العلمي</h1>
-        <p className="mj-home-start__tagline">علم نافع، محتوى موثوق، ودروس ميسرة</p>
-      </section>
-    ),
-    [],
-  );
-
   return (
-    <div className="mj-home-start m2030-home" dir="rtl">
+    <div className="m2030-home" dir="rtl">
       {isMaintenanceMode() && (
         <div role="status" className="home-maintenance-banner">
           {getSiteSettings().maintenanceMessage}
         </div>
       )}
 
-      <StartHeader searchInputId={HOME_SEARCH_INPUT_ID} mushafHref={mushafHref} mushafLabel={mushafLabel} />
+      <PageHero
+        className="m2030-hero home-page-hero"
+        fullBleed={false}
+        eyebrow={dailyCtx.greeting}
+        title="سُنّة"
+        actions={
+          <>
+            <Link
+              href={continueHref}
+              className="mj-btn m2030-btn m2030-btn--primary"
+            >
+              {isFirstVisit ? "ابدأ بالدروس" : "تابع التصفح"}
+            </Link>
+            <Link
+              href="/sections"
+              className="mj-btn m2030-btn m2030-btn--ghost"
+            >
+              تصفح الأقسام
+            </Link>
+          </>
+        }
+      />
 
-      {brand}
-
-      <SectionErrorBoundary name="PrayerSummary">
-        <PrayerSummaryGate />
+      <SectionErrorBoundary name="HomeLiveNow">
+        <HomeLiveNowBanner />
       </SectionErrorBoundary>
 
-      <SectionErrorBoundary name="DhikrSummary">
-        <DhikrSummaryCard />
+      <SectionErrorBoundary name="HomeUniversalSearch">
+        <HomeUniversalSearch />
       </SectionErrorBoundary>
 
-      <SectionErrorBoundary name="HomeStartSearch">
-        <StartSearchCard />
-      </SectionErrorBoundary>
+      <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
+        <HomeStartHereSection />
+      </section>
 
-      <SectionErrorBoundary name="HomeFeatured">
-        <HomeFeaturedSections />
-      </SectionErrorBoundary>
-
-      <SectionErrorBoundary name="HomeAuthStrip">
-        <Suspense fallback={<section className="mj-app-card mj-home-auth mj-home-auth--ph" aria-hidden="true" />}>
-          <HomeAuthStrip />
-        </Suspense>
-      </SectionErrorBoundary>
-
+      <HomeDailyWirdGate />
       <HomeBelowFoldGate />
     </div>
   );
