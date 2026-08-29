@@ -2,19 +2,18 @@ import { useLayoutEffect, type RefObject } from "react";
 import {
   MUSHAF_FIT_MIN_PX,
   MUSHAF_FIT_MAX_PX,
-  MUSHAF_FIT_OPENING_MAX_PX,
   getCachedFontSize,
-  isMushafOpeningPage,
   isMushafPageFontReady,
-  mushafOpeningFitCacheKey,
   mushafUniformFitCacheKey,
   normalizeMushafFontFamily,
-  resolveOpeningMushafFontSize,
   resolveUniformMushafFontSize,
   setCachedFontSize,
   fitPageFontSize,
 } from "@/features/mushaf-madinah/fitPageFontSize";
 import { MUSHAF_LINE_FILL_RATIO } from "@/features/mushaf-madinah/layout-bands";
+
+/** شبكة المصحف القياسية — لا نكبّر الصفحات ذات الأسطر الأقل */
+const MUSHAF_LAYOUT_LINE_COUNT = 15;
 
 function applySize(pageEl: HTMLElement, size: number): void {
   pageEl.style.setProperty("--nm-qpc-size", `${size}px`);
@@ -22,7 +21,11 @@ function applySize(pageEl: HTMLElement, size: number): void {
   pageEl.style.setProperty("--mushaf-font-size", `${size}px`);
 }
 
-/** ملاءمة خط الصفحة الجديدة — يمنع وميض التكبير بعد التحميل */
+/**
+ * ملاءمة خط موحّدة لكل صفحات القارئ الجديد.
+ * نفس السقف ونفس مفتاح الكاش ونفس ميزانية الارتفاع (١٥ سطرًا) —
+ * حتى صفحتي الفاتحة وبداية البقرة لا تخرجان عن القياس.
+ */
 export function useNewMushafFontFit(
   pageRef: RefObject<HTMLElement | null>,
   enabled: boolean,
@@ -43,15 +46,10 @@ export function useNewMushafFontFit(
     const blockHeightPx = Math.round(body?.clientHeight || pageEl.clientHeight || 0);
     if (!containerPx) return;
 
-    const opening = isMushafOpeningPage(pageNumber);
-    const maxPx = opening ? MUSHAF_FIT_OPENING_MAX_PX : MUSHAF_FIT_MAX_PX;
-    const key = opening
-      ? mushafOpeningFitCacheKey(pageNumber, containerPx, blockHeightPx)
-      : mushafUniformFitCacheKey(containerPx, blockHeightPx, family);
+    const maxPx = MUSHAF_FIT_MAX_PX;
+    const key = mushafUniformFitCacheKey(containerPx, blockHeightPx, family);
     const cached = getCachedFontSize(key);
-    const geo = opening
-      ? resolveOpeningMushafFontSize(containerPx, blockHeightPx, 8)
-      : resolveUniformMushafFontSize(containerPx, blockHeightPx);
+    const geo = resolveUniformMushafFontSize(containerPx, blockHeightPx);
     let size = Math.max(
       MUSHAF_FIT_MIN_PX,
       Math.min(maxPx, cached != null ? Math.min(cached, geo) : geo),
@@ -77,7 +75,7 @@ export function useNewMushafFontFit(
       const measured = fitPageFontSize(texts, containerPx * MUSHAF_LINE_FILL_RATIO, family, undefined, {
         maxPx,
         blockHeightPx,
-        lineCount: texts.length,
+        lineCount: MUSHAF_LAYOUT_LINE_COUNT,
       });
       size = Math.max(MUSHAF_FIT_MIN_PX, Math.min(maxPx, Math.min(size, measured)));
       applySize(pageEl, size);

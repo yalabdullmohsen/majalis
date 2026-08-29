@@ -142,7 +142,7 @@ async function main() {
           overlap,
         };
       });
-      const openingMax = n <= 2 ? 46 : 35;
+      const openingMax = 35;
       measurements.push({
         page: n,
         ...m,
