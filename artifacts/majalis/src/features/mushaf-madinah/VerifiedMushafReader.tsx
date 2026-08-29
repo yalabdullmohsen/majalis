@@ -886,7 +886,6 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           onReciterChange={(id) => void onReciterChange(id)}
           onSeek={(seconds) => audio.seek(seconds)}
           onSpeed={(rate) => audio.setPlaybackRate(rate)}
-          playbackRate={audioTime.playbackRate}
           onClose={() => {
             setAudioDockOpen(false);
             setAudioDockMini(false);

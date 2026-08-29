@@ -25,7 +25,6 @@ type Props = {
   onClose?: () => void;
   onSeek?: (seconds: number) => void;
   onSpeed?: (rate: number) => void;
-  playbackRate?: number;
 };
 
 /** شريط تلاوة مضغوط أسفل المصحف — بلا وضع حفظ. */
@@ -45,9 +44,8 @@ export function MushafAudioDock({
   onClose,
   onSeek,
   onSpeed,
-  playbackRate = 1,
 }: Props) {
-  const { currentTime, duration } = useMushafAudioClock();
+  const { currentTime, duration, playbackRate } = useMushafAudioClock();
   const [readersOpen, setReadersOpen] = useState(false);
   const [readerQuery, setReaderQuery] = useState("");
   const playing = playerState === "playing" || playerState === "buffering" || playerState === "loading";
