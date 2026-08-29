@@ -39,7 +39,8 @@ assert.doesNotMatch(html, /dns-prefetch/, "لا dns-prefetch في الإقلاع
   assert.ok(n <= 2, `preconnect ≤2 (الفعلي ${n})`);
 }
 assert.match(html, /MIN_MS\s*=\s*120/, "حد أدنى للدخولية");
-assert.match(html, /mj-launch-splash__tagline/, "عبارة الدخولية");
+assert.match(html, /mj-launch-splash__title/, "عنوان الهوية");
+assert.doesNotMatch(html, /mj-launch-splash__tagline/, "بلا عبارة تسويقية");
 assert.match(html, /id="mj-theme-boot"|v6-direct-boot-2026-08/, "ثيم مبكر قبل الرسم");
 {
   const crit = html.match(/<style id="mj-lcp-critical">([\s\S]*?)<\/style>/)?.[1] ?? "";

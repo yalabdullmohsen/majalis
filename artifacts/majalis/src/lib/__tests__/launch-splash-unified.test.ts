@@ -13,9 +13,9 @@ const BG = "#F2F4F3";
 
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
 assert.match(indexHtml, /id="mj-launch-splash"/, "دخولية MajlisSplash في HTML الحرج");
-assert.match(indexHtml, /mj-launch-splash__(wordmark|title)/, "عنوان الدخولية");
-assert.match(indexHtml, /mj-launch-splash__tagline/, "عبارة الدخولية");
-assert.match(indexHtml, /علم نافع، وعمل صالح/);
+assert.doesNotMatch(indexHtml, /mj-launch-splash__tagline/, "بلا عبارة تسويقية في الدخولية");
+assert.match(indexHtml, /mj-launch-splash__title/, "عنوان الهوية سُنّة");
+assert.doesNotMatch(indexHtml, /علم نافع، وعمل صالح/, "بلا عبارة تسويقية");
 assert.doesNotMatch(indexHtml, /id="mj-silent-splash"/, "لا دخولية صامتة قديمة");
 assert.doesNotMatch(indexHtml, /id="mj-boot-splash"/, "لا طبقة boot قديمة");
 assert.doesNotMatch(indexHtml, /#0E1A15/, "لا خلفية خضراء داكنة قديمة في الإقلاع");
