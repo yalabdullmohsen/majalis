@@ -3,13 +3,16 @@
  */
 
 .nm-root {
-  /* —— متغيرات المصحف المركزية —— */
+  --mushaf-page-width: min(100%, 28rem);
+  --mushaf-page-height: 100%;
+  --mushaf-safe-top: calc(var(--inset-top, 0px) + 0.85rem);
+  --mushaf-safe-bottom: max(0.55rem, var(--inset-bottom, 0px));
+  --mushaf-body-width: min(100%, 28rem);
+  --mushaf-line-height: 1.78;
   --mushaf-page-bg: #fdf9f3;
   --mushaf-text-color: #1a1510;
   --mushaf-meta-color: #785e38;
-  --mushaf-body-width: min(100%, 28rem);
-  --mushaf-top-safe: calc(var(--inset-top, 0px) + 0.85rem);
-  --mushaf-line-height: 1.78;
+  --mushaf-top-safe: var(--mushaf-safe-top);
   --mushaf-font-size: 22px;
   --mushaf-side-pad: max(0.95rem, var(--inset-inline-start, var(--inset-left, 0px)), var(--inset-inline-end, var(--inset-right, 0px)));
   --mushaf-ayah-mark-size: 0.92em;
@@ -23,12 +26,12 @@
   --nm-select: color-mix(in srgb, var(--nm-gold) 18%, transparent);
   --nm-play: color-mix(in srgb, var(--nm-gold) 14%, transparent);
   --nm-qpc-size: 22px;
-  --nm-qpc-family: "qpc-v2";
+  --nm-qpc-family: qpc-v2;
   --nm-line-height: var(--mushaf-line-height);
   --nm-word-gap: 0.12em;
   --nm-side-pad: var(--mushaf-side-pad);
-  --nm-top-pad: max(1.1rem, var(--mushaf-top-safe));
-  --nm-bottom-pad: max(0.55rem, var(--inset-bottom, 0px));
+  --nm-top-pad: max(1.1rem, var(--mushaf-safe-top));
+  --nm-bottom-pad: var(--mushaf-safe-bottom);
   --nm-page-max-w: var(--mushaf-body-width);
   --nm-chrome-h: 2.75rem;
   --mm-page-max-w: var(--mushaf-body-width);
@@ -93,7 +96,7 @@
 }
 
 .nm-page[data-mm-fit="0"] .nm-page__body {
-  visibility: hidden;
+  visibility: visible;
 }
 
 .nm-page[data-mm-fit="1"] .nm-page__body {
@@ -146,7 +149,7 @@
   display: grid;
   grid-template-rows: repeat(15, minmax(0, 1fr));
   align-content: stretch;
-  font-family: var(--nm-qpc-family), var(--mm-qpc-family), serif;
+  font-family: var(--nm-qpc-family, var(--mm-qpc-family, serif));
   font-size: var(--nm-qpc-size, var(--mushaf-font-size, var(--mm-qpc-size, 22px)));
   line-height: var(--mushaf-line-height, var(--nm-line-height));
   letter-spacing: 0;
@@ -511,13 +514,57 @@
 .nm-page-placeholder {
   flex: 1;
   min-height: 70dvh;
+  display: grid;
+  place-items: center;
   background: var(--nm-paper);
+  color: var(--nm-meta);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+
+.nm-page-placeholder::before {
+  content: "سُنّة";
+}
+
+/* تقليب translate3d — بلا scroll-snap */
+.nm-pager-scroller,
+.nm-root .mm-pager-scroller {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow: hidden;
+  touch-action: pan-y;
+  direction: ltr;
+}
+
+.nm-pager-track,
+.nm-root .mm-pager-track {
+  display: flex;
+  flex-direction: row;
+  width: 300%;
+  height: 100%;
+  will-change: transform;
+  transform: translate3d(-33.333333%, 0, 0);
+  backface-visibility: hidden;
+}
+
+.nm-pager__sheet,
+.nm-root .mm-pager__sheet {
+  flex: 0 0 33.333333%;
+  width: 33.333333%;
+  height: 100%;
+  position: relative;
+  contain: layout paint;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .nm-controls__bar,
   .nm-word,
-  .nm-controls__exit {
-    transition: none;
+  .nm-controls__exit,
+  .nm-pager-track,
+  .nm-root .mm-pager-track {
+    transition: none !important;
   }
 }

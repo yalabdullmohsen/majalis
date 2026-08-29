@@ -36,7 +36,7 @@ const css = read("src/features/mushaf-madinah/mushaf-madinah.css");
 const pageComp = read("src/features/mushaf-madinah/MushafPage.tsx");
 const header = read("src/features/mushaf-madinah/MushafPageHeader.tsx");
 const footer = read("src/features/mushaf-madinah/MushafPageFooter.tsx");
-const pager = read("src/features/mushaf-madinah/MushafPager.tsx");
+const pager = read("src/features/mushaf-reader/useMushafPager.ts") + read("src/features/mushaf-reader/MushafPager.tsx");
 const readerPage = read("src/pages/quran/MushafReaderPage.tsx");
 const dataSrc = read("src/lib/quran-data/qpc-page-data.ts");
 

@@ -14,7 +14,7 @@ const REQUIRED_PAGES = [1, 2, 3, 5, 11, 13, 126, 221, 222, 294, 393, 604] as con
 
 const readerPage = read("src/pages/quran/MushafReaderPage.tsx");
 const newReader = read("src/features/mushaf-reader/NewMushafReader.tsx");
-const pageView = read("src/features/mushaf-reader/MushafPageView.tsx");
+const pageView = read("src/features/mushaf-reader/MushafPage.tsx");
 const verse = read("src/features/mushaf-reader/MushafVerseLayer.tsx");
 const css = read("src/features/mushaf-reader/mushaf-reader.css");
 
@@ -23,7 +23,7 @@ assert.match(readerPage, /features\/mushaf-reader/);
 assert.doesNotMatch(readerPage, /features\/mushaf-madinah/);
 assert.doesNotMatch(readerPage, /\.pdf/i);
 
-assert.match(newReader, /MushafPageView/);
+assert.match(newReader, /MushafPage\b/);
 assert.match(newReader, /MushafVerseMenu|MushafControlsLayer/);
 assert.match(newReader, /loadMushafPage/);
 assert.match(newReader, /prefetchMushafPage/);
@@ -38,6 +38,10 @@ assert.match(pageView, /MushafSurahBanner/);
 assert.doesNotMatch(pageView, /MushafDecorFrame/);
 assert.doesNotMatch(pageView, /DecorFrame/);
 
+assert.match(newReader, /MushafPager/);
+assert.match(newReader, /useMushafFixedMetrics/);
+assert.doesNotMatch(newReader, /features\/mushaf-madinah\/MushafPager/);
+
 assert.match(verse, /word\.glyphText/);
 assert.match(verse, /nm-ayah-mark/);
 assert.match(verse, /is-selected/);
@@ -48,9 +52,11 @@ assert.match(css, /--mushaf-page-bg:/);
 assert.match(css, /--mushaf-text-color:/);
 assert.match(css, /--mushaf-meta-color:/);
 assert.match(css, /--mushaf-body-width:/);
-assert.match(css, /--mushaf-top-safe:/);
+assert.match(css, /--mushaf-safe-top:|--mushaf-top-safe:/);
 assert.match(css, /--mushaf-line-height:/);
 assert.match(css, /--mushaf-font-size:/);
+assert.match(css, /--mushaf-page-width:/);
+assert.match(css, /--mushaf-page-height:/);
 assert.match(css, /var\(--inset-/);
 assert.match(css, /\.nm-verse-menu/);
 assert.match(css, /\.nm-line[^{]*\{[^}]*display:\s*block/);
@@ -61,12 +67,15 @@ assert.doesNotMatch(css, /\.nm-page__stage[^{]*\{[^}]*border:\s*1\.5px/);
 assert.doesNotMatch(css, /env\(safe-area/);
 assert.ok(!existsSync(resolve(root, "src/features/mushaf-reader/MushafDecorFrame.tsx")));
 
-const fitHook = read("src/features/mushaf-reader/useNewMushafFontFit.ts");
+const fitHook = read("src/features/mushaf-reader/useMushafFixedMetrics.ts");
 assert.match(fitHook, /resolveUniformMushafFontSize/);
-assert.match(fitHook, /mushafUniformFitCacheKey/);
-assert.match(fitHook, /MUSHAF_LAYOUT_LINE_COUNT\s*=\s*15|lineCount:\s*MUSHAF_LAYOUT_LINE_COUNT|lineCount:\s*15/);
-assert.doesNotMatch(fitHook, /MUSHAF_FIT_OPENING_MAX_PX/);
-assert.doesNotMatch(fitHook, /resolveOpeningMushafFontSize/);
+assert.match(fitHook, /--mushaf-font-size/);
+assert.match(fitHook, /useLayoutEffect/);
+assert.doesNotMatch(fitHook, /fitPageFontSize\(/);
+assert.doesNotMatch(read("src/features/mushaf-reader/MushafPage.tsx"), /useNewMushafFontFit|useMushafFixedMetrics/);
+assert.match(read("src/features/mushaf-reader/MushafPage.tsx"), /data-mm-fit="1"/);
+assert.match(read("src/features/mushaf-reader/useMushafPager.ts"), /translate3d/);
+assert.match(read("src/features/mushaf-reader/MushafPager.tsx"), /data-pane="next"/);
 
 for (const n of REQUIRED_PAGES) {
   const jsonPath = resolve(

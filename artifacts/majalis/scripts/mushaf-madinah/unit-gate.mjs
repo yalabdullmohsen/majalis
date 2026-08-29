@@ -97,7 +97,7 @@ assert.match(viewport, /addEventListener\("scroll"/);
 assert.match(viewport, /MUSHAF_CHROME_HIDE_MS|3200/);
 assert.doesNotMatch(viewport, /تعذّرت المشاركة/);
 
-const pager = read("src/features/mushaf-madinah/MushafPager.tsx");
+const pager = read("src/features/mushaf-reader/useMushafPager.ts") + read("src/features/mushaf-reader/MushafPager.tsx");
 assert.match(pager, /dx > 0/);
 assert.match(pager, /go\(page \+ 1\)/);
 assert.match(pager, /SWIPE_MIN_PX\s*=\s*40/);
