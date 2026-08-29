@@ -29,8 +29,8 @@ export const SEO_NAV_LABELS = byPath;
 export const SEO_SITE = {
   siteUrl: navData.siteUrl as string,
   siteName: navData.siteName as string,
-  defaultImage: (navData.defaultImage as string) || "/brand/official-og.png?v=20260825",
-  logoImage: (navData.logoImage as string) || "/brand/official.png?v=20260825",
+  defaultImage: (navData.defaultImage as string) || "/brand/official-og.png?v=20260829",
+  logoImage: (navData.logoImage as string) || "/brand/official.png?v=20260829",
   ogImageWidth: (navData.ogImageWidth as number) || 1200,
   ogImageHeight: (navData.ogImageHeight as number) || 630,
 };

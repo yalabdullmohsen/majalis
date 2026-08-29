@@ -24,8 +24,6 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import {
   isPrivateSeoPath,
-  ADMIN_DEFAULT_DESCRIPTION,
-  ADMIN_DEFAULT_ROBOTS,
 } from "./seo-path-class.mjs";
 import { IA_BREADCRUMB_PARENTS, IA_REDIRECTS } from "../src/lib/ia-final-structure.ts";
 import { dedupeLinksByHref } from "../src/lib/link-dedupe.ts";
@@ -623,6 +621,25 @@ function visibleLeadHtml(route, richBody) {
 }
 
 function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
+  const privatePage = isPrivateSeoPath(route.path);
+  // صفحات الإدارة: لا canonical ولا OG ولا JSON-LD — قشرة محلية فقط إن وُجدت.
+  if (privatePage) {
+    return `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="${escapeHtml(THEME_COLOR)}" />
+    <title>غير متاح</title>
+    ${HEAD_ASSETS}
+  </head>
+  <body>
+    <main><p>هذه الصفحة غير متاحة للعرض العام.</p></main>
+  </body>
+</html>`;
+  }
+
   const canonical = absoluteUrl(route.path);
   const image = absoluteUrl(route.image || DEFAULT_IMAGE);
   // meta keywords أُلغيت نهائيًا (A0 / الجولة الثالثة) — محركات البحث لا تعتمد عليها والحشو يضر.
@@ -2373,29 +2390,20 @@ ${linkList("روابط ذات صلة", [
 for (const route of seoConfig.routes) {
   if (route.path.includes(":")) continue;
   if (route.path === "/rulings") continue; // يُضاف يدويًا أدناه كإعادة توجيه
+  // لا قشرة SEO عامة لمسارات الإدارة/اللوحة — middleware يرجع 404 للعامة.
+  if (isPrivateSeoPath(route.path)) continue;
   const redirectTarget = IA_REDIRECTS[route.path];
-  const privateRoute = isPrivateSeoPath(route.path);
-  const effectiveRoute = privateRoute
+  const effectiveRoute = redirectTarget
     ? {
         ...route,
-        description:
-          String(route.description || "").trim().length >= META_DESC_MIN
-            ? route.description
-            : ADMIN_DEFAULT_DESCRIPTION,
-        robots: ADMIN_DEFAULT_ROBOTS,
+        robots: "noindex, follow",
         sitemap: false,
       }
-    : redirectTarget
-      ? {
-          ...route,
-          robots: "noindex, follow",
-          sitemap: false,
-        }
-      : route;
+    : route;
   addPage(effectiveRoute, {
     extraJsonLd: LIST_JSON_LD[route.path] || "",
     richBody: RICH_BODY_MAP[route.path] || "",
-    sitemap: privateRoute || redirectTarget ? false : Boolean(route.sitemap),
+    sitemap: redirectTarget ? false : Boolean(route.sitemap),
     priority: route.priority ?? 0.7,
     changefreq: route.changefreq ?? "weekly",
   });

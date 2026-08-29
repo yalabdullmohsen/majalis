@@ -29,9 +29,9 @@
     "yahoo.com"
   ],
   "$brandAssetsNote": "مصدر الصور الرسمي الوحيد — لا majlisilm-og-2026 ولا شعارات قديمة في meta/manifest/JSON-LD.",
-  "assetVersion": "20260825",
-  "defaultImage": "/brand/official-og.png?v=20260825",
-  "logoImage": "/brand/official.png?v=20260825",
+  "assetVersion": "20260829",
+  "defaultImage": "/brand/official-og.png?v=20260829",
+  "logoImage": "/brand/official.png?v=20260829",
   "ogImageWidth": 1200,
   "ogImageHeight": 630,
   "$themeNote": "theme-color = لون سطح الصفحة لشريط الحالة (ثابت عبر المسارات). لون العلامة يبقى --mj-brand في theme.css.",

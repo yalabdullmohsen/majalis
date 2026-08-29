@@ -1086,6 +1086,38 @@ export default function HadithSciencePage() {
       </div>
 
       {/* مصادر للمزيد */}
+      <section className="hs-related" aria-labelledby="hs-faq-title">
+        <h2 id="hs-faq-title" className="hs-related__title">أسئلة مختصرة</h2>
+        <div className="hs-related__grid">
+          <article className="hs-card">
+            <h3 className="hs-card__term">ما الفرق بين الصحيح والحسن؟</h3>
+            <p className="hs-card__def">
+              كلاهما مقبول يُحتج به؛ الفرق في درجة ضبط الرواة: الصحيح تام الضبط، والحسن خفيف الضبط مع اتصال السند وانتفاء الشذوذ والعلة.
+            </p>
+          </article>
+          <article className="hs-card">
+            <h3 className="hs-card__term">هل يُعمل بالحديث الضعيف؟</h3>
+            <p className="hs-card__def">
+              على منهج هذه المنصة: لا يُحتج به في العقائد ولا الأحكام ولا الترغيب؛ يُستغنى بالثابت، ويُعرض الضعيف هنا للتخريج والتمييز فقط.
+            </p>
+          </article>
+          <article className="hs-card">
+            <h3 className="hs-card__term">أين أقرأ أمثلة عملية؟</h3>
+            <p className="hs-card__def">
+              تصفّح <Link href="/hadith/sahih">الصحيح</Link> و<Link href="/hadith/daif">الضعيف</Link> و
+              <Link href="/hadith/mawdu">الموضوع</Link>، مع <Link href="/arbaeen-nawawi">الأربعين النووية</Link> كمختصر عملي.
+            </p>
+          </article>
+          <article className="hs-card">
+            <h3 className="hs-card__term">مصادر أولية للطلبة</h3>
+            <p className="hs-card__def">
+              مقدمة ابن الصلاح، نخبة الفكر لابن حجر، وتيسير مصطلح الحديث للطحان — مع الرجوع لأهل الاختصاص عند الإشكال دون الاكتفاء بالمختصرات وحدها.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      {/* مصادر للمزيد */}
       <section className="hs-related">
         <h2 className="hs-related__title">استكشف أيضاً</h2>
         <div className="hs-related__grid">
@@ -1095,6 +1127,7 @@ export default function HadithSciencePage() {
             { href: "/hadith/daif",    label: "الأحاديث الضعيفة" },
             { href: "/hadith/mawdu",   label: "الأحاديث الموضوعة" },
             { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
+            { href: "/islamic-glossary", label: "المصطلحات الشرعية" },
           ].map(({ href, label }) => (
             <Link key={href} href={href} className="hs-related__link">{label}</Link>
           ))}

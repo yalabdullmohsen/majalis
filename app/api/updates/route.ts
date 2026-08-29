@@ -19,7 +19,7 @@ export async function GET() {
     return NextResponse.json(updates, {
       headers: {
         "Cache-Control": "no-store, max-age=0",
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "https://majlisilm.com",
       },
     });
   } catch {

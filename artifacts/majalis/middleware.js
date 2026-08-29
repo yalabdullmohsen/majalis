@@ -1,7 +1,7 @@
 /**
  * Edge middleware:
  * 1) يزيل ?tab=courses|men|women من /lessons — يُبقي ?search= وغيره.
- * 2) يمنع فهرسة/عرض قشرة الإدارة للزواحف على /admin و/dashboard (404).
+ * 2) يحجب /admin و/dashboard عن الزواحف وعن الزوار بلا جلسة (404 + noindex).
  * يجب استدعاء next() لتمرير الطلبات العادية؛ وإلا يرجع Vercel جسمًا فارغًا.
  */
 import { next } from "@vercel/functions";
@@ -25,9 +25,25 @@ function isPrivateAppPath(pathname) {
   return /^\/(admin|dashboard)(\/|$)/.test(pathname);
 }
 
+/** جلسة Supabase في الكوكي — بدونها لا تُعرض قشرة الإدارة للعامة. */
+function hasSupabaseSession(request) {
+  try {
+    const cookies = request.cookies?.getAll?.() || [];
+    return cookies.some((c) => {
+      const n = String(c?.name || "");
+      return (
+        n.includes("-auth-token") ||
+        (n.startsWith("sb-") && /auth/i.test(n))
+      );
+    });
+  } catch {
+    return false;
+  }
+}
+
 function privateNotFound() {
   return new Response(
-    `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"/><meta name="robots" content="noindex, nofollow"/><title>غير متاح</title></head><body><h1>غير متاح</h1><p>هذه الصفحة غير متاحة للعرض العام.</p></body></html>`,
+    `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"/><meta name="robots" content="noindex, nofollow"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>غير متاح</title></head><body><h1>غير متاح</h1><p>هذه الصفحة غير متاحة للعرض العام.</p></body></html>`,
     {
       status: 404,
       headers: {
@@ -43,8 +59,10 @@ export default function middleware(request) {
   const url = new URL(request.url);
   const { pathname } = url;
 
-  if (isPrivateAppPath(pathname) && isHtmlDocument(request) && isLikelyBot(request)) {
-    return privateNotFound();
+  if (isPrivateAppPath(pathname) && isHtmlDocument(request)) {
+    if (isLikelyBot(request) || !hasSupabaseSession(request)) {
+      return privateNotFound();
+    }
   }
 
   const tab = url.searchParams.get("tab");

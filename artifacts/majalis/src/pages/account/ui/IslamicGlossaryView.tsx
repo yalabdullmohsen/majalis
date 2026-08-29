@@ -1581,6 +1581,51 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
 
       <SectionQuiz route="/islamic-glossary" count={4} />
 
+      <section className="gl-container" aria-labelledby="gl-faq-title">
+        <h2 id="gl-faq-title" className="gl-results-count">أسئلة مختصرة عن المعجم</h2>
+        <div className="gl-list">
+          <Card className="gl-term" raised={false}>
+            <div className="gl-term__head">
+              <div className="gl-term__title-wrap">
+                <h3 className="gl-term__title">كيف أستخدم هذا المعجم؟</h3>
+              </div>
+            </div>
+            <div className="gl-term__body">
+              <p>
+                اختر التصنيف أو ابحث بالكلمة، ثم افتح المصطلح لقراءة التعريف والتفصيل والمصدر عند توافره.
+                للمراجعة النشطة استخدم <Link href="/flashcards">البطاقات</Link>.
+              </p>
+            </div>
+          </Card>
+          <Card className="gl-term" raised={false}>
+            <div className="gl-term__head">
+              <div className="gl-term__title-wrap">
+                <h3 className="gl-term__title">أين أتابع علوم الحديث والفقه؟</h3>
+              </div>
+            </div>
+            <div className="gl-term__body">
+              <p>
+                راجع <Link href="/hadith-science">مصطلح الحديث</Link> و
+                <Link href="/fiqh">الفقه</Link> و
+                <Link href="/hadith/sahih">الأحاديث الصحيحة</Link> — روابط داخلية لتعميق الطلب دون تكرار المحتوى هنا.
+              </p>
+            </div>
+          </Card>
+          <Card className="gl-term" raised={false}>
+            <div className="gl-term__head">
+              <div className="gl-term__title-wrap">
+                <h3 className="gl-term__title">هل يغني المعجم عن كتب أهل العلم؟</h3>
+              </div>
+            </div>
+            <div className="gl-term__body">
+              <p>
+                لا؛ المعجم مدخل تعريفي موثّق للمنصة. عند التعارض أو التفصيل يرجع الطالب إلى المصادر المعتمدة وأهل الاختصاص.
+              </p>
+            </div>
+          </Card>
+        </div>
+      </section>
+
       <div className="twh-share">
         <ShareButtons title="المعجم الإسلامي — سُنّة" url="https://majlisilm.com/islamic-glossary" />
       </div>
