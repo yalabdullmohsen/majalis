@@ -1,7 +1,6 @@
 import { memo, useMemo, useRef } from "react";
 import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
 import { toArabicIndicDigits as toArabicDigits, toArabicPageDigits } from "@/lib/numerals";
-import { MushafDecorFrame } from "./MushafDecorFrame";
 import { MushafSurahBanner } from "./MushafSurahBanner";
 import { MushafBasmalaView, MushafVerseLayer } from "./MushafVerseLayer";
 import { useNewMushafFontFit } from "./useNewMushafFontFit";
@@ -52,7 +51,7 @@ function isLastSurahLine(words: QpcWord[], layout: MushafPageLayout): boolean {
   return !!chapter && ayah === chapter.versesCount;
 }
 
-/** عرض صفحة مصحف واحدة — خلفية عاجية، إطار، شبكة ١٥، بلا كروت */
+/** صفحة مصحف بسيطة — عاجي نظيف بلا إطار ولا زخارف */
 export const MushafPageView = memo(function MushafPageView({
   layout,
   fontFamily,
@@ -83,9 +82,7 @@ export const MushafPageView = memo(function MushafPageView({
   const hizbLabel =
     layout.hizbStartingOnPage != null
       ? `الحزب ${toArabicDigits(layout.hizbStartingOnPage)}`
-      : layout.hizbNumber
-        ? `الحزب ${toArabicDigits(layout.hizbNumber)}`
-        : "";
+      : "";
 
   const onSelectFatiha = useMemo(
     () => (onSelectVerse ? () => onSelectVerse("1:1") : undefined),
@@ -105,12 +102,11 @@ export const MushafPageView = memo(function MushafPageView({
       aria-label={`صفحة المصحف ${footerPage}`}
     >
       <header className="nm-page__header">
-        <span className="nm-page__header-juz">{`الجزء ${toArabicDigits(layout.juzNumber)}`}</span>
         <span className="nm-page__header-surah">{layout.headerSurahName}</span>
+        <span className="nm-page__header-juz">{`الجزء ${toArabicDigits(layout.juzNumber)}`}</span>
       </header>
 
       <div className="nm-page__stage" data-testid="mushaf-page-frame">
-        <MushafDecorFrame />
         <div
           className={`nm-page__body${isOpeningP1 ? " nm-page__body--opening" : ""}${isFlexBody ? " nm-page__body--flex" : ""}`}
         >

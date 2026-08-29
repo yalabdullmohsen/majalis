@@ -1,5 +1,5 @@
 /**
- * بوابة قبول القارئ الجديد — صفحات الاختبار الإلزامية + عزل المسار.
+ * بوابة قبول القارئ الجديد — مصحف بسيط بلا زخارف + صفحات إلزامية.
  * تشغيل: node --import tsx src/lib/__tests__/new-mushaf-reader-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (p: string) => readFileSync(resolve(root, p), "utf8");
 
-const REQUIRED_PAGES = [1, 2, 3, 11, 13, 126, 221, 222, 294, 393, 604] as const;
+const REQUIRED_PAGES = [1, 2, 3, 5, 11, 13, 126, 221, 222, 294, 393, 604] as const;
 
 const readerPage = read("src/pages/quran/MushafReaderPage.tsx");
 const newReader = read("src/features/mushaf-reader/NewMushafReader.tsx");
@@ -35,7 +35,8 @@ assert.match(newReader, /allowOffscreenPrefetch/);
 assert.match(pageView, /MushafVerseLayer/);
 assert.match(pageView, /bismillahPre === true/);
 assert.match(pageView, /MushafSurahBanner/);
-assert.match(pageView, /MushafDecorFrame/);
+assert.doesNotMatch(pageView, /MushafDecorFrame/);
+assert.doesNotMatch(pageView, /DecorFrame/);
 
 assert.match(verse, /word\.glyphText/);
 assert.match(verse, /nm-ayah-mark/);
@@ -43,11 +44,15 @@ assert.match(verse, /is-selected/);
 assert.match(verse, /is-playing/);
 
 assert.match(css, /#fdf9f3|--nm-paper:\s*#fdf9f3/i);
-assert.match(css, /border-radius:\s*50%/);
-assert.match(css, /aspect-ratio:\s*1\s*\/\s*1/);
 assert.match(css, /var\(--inset-/);
 assert.match(css, /\.nm-verse-menu/);
+assert.match(css, /\.nm-line[^{]*\{[^}]*display:\s*block/);
+assert.doesNotMatch(css, /\.nm-line[^{]*\{[^}]*justify-content:\s*space-between/);
+assert.doesNotMatch(css, /\.nm-line--center[^{]*\{[^}]*justify-content:\s*space-between/);
+assert.doesNotMatch(css, /MushafDecorFrame|nm-page__frame-svg/);
+assert.doesNotMatch(css, /\.nm-page__stage[^{]*\{[^}]*border:\s*1\.5px/);
 assert.doesNotMatch(css, /env\(safe-area/);
+assert.ok(!existsSync(resolve(root, "src/features/mushaf-reader/MushafDecorFrame.tsx")));
 
 for (const n of REQUIRED_PAGES) {
   const jsonPath = resolve(
