@@ -5,7 +5,7 @@ type Props = {
   nameArabic: string;
 };
 
-/** شريط عنوان سورة محلي — مطابق لهدوء المرجع */
+/** عنوان سورة كنص عادي — بلا زخرفة */
 export const MushafSurahBanner = memo(function MushafSurahBanner({ nameArabic }: Props) {
   const label = displaySurahNameFromLabel(nameArabic);
   return (
