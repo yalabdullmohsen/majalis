@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
+  "regions": ["fra1"],
   "installCommand": "corepack enable && cd ../.. && corepack pnpm install --frozen-lockfile --prod=false",
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
@@ -1405,8 +1406,12 @@
           "value": "same-origin-allow-popups"
         },
         {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://majlisilm.com"
+        },
+        {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://platform.twitter.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.alquran.cloud https://api.quran.com https://api.aladhan.com https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; frame-src 'self' https://platform.twitter.com https://syndication.twitter.com https://www.google.com https://maps.google.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+          "value": "default-src 'self'; script-src 'self' 'sha256-t/29DvhUprBZa4I9wqp5i0k9xA8BdFVFXq2e1zYcjDU=' 'sha256-BbY9KU1DPy5fwEGTuHoI4tbAw3+pUafi9FT8n/xYnEU=' 'sha256-nhf7vI1dFKDqYhb1a4WpnwDR9CTJkM6VnvqN9eyP5gI=' 'sha256-Qp6wZwNLoCeQNpNDNLXIiwgGoT5wyvRimcRRms6BHkY=' 'sha256-An6M4c9eW/HdAQbjnYOKxO/Xfou4R11AvCR8sBvSKUw=' https://cdn.jsdelivr.net https://platform.twitter.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.alquran.cloud https://api.quran.com https://api.aladhan.com https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; frame-src 'self' https://platform.twitter.com https://syndication.twitter.com https://www.google.com https://maps.google.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
         }
       ]
     },
@@ -1455,14 +1460,10 @@
         {
           "type": "header",
           "key": "accept",
-          "value": ".*text/html.*"
+          "value": "(text/html|\\*/\\*|application/xhtml)"
         }
       ],
       "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/html; charset=utf-8"
-        },
         {
           "key": "Cache-Control",
           "value": "public, max-age=0, s-maxage=900, stale-while-revalidate=86400"
@@ -1495,6 +1496,10 @@
       "source": "/sw.js",
       "headers": [
         {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        },
+        {
           "key": "Cache-Control",
           "value": "no-cache, no-store, must-revalidate"
         }
@@ -1503,6 +1508,10 @@
     {
       "source": "/sw-version.js",
       "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        },
         {
           "key": "Cache-Control",
           "value": "no-cache, no-store, must-revalidate"
@@ -1672,6 +1681,10 @@
       "source": "/robots.txt",
       "headers": [
         {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
           "key": "Cache-Control",
           "value": "public, max-age=3600, must-revalidate"
         }
@@ -1709,7 +1722,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=30, stale-while-revalidate=60"
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         }
       ]
     },
@@ -1718,7 +1731,20 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=30, stale-while-revalidate=60"
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ]
+    },
+    {
+      "source": "/api/deep-health",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
         }
       ]
     },
@@ -1744,7 +1770,11 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=3600, stale-while-revalidate=86400"
+          "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=86400"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json; charset=utf-8"
         }
       ]
     },

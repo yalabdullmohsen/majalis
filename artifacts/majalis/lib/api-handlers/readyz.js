@@ -46,12 +46,12 @@ export default async function handler(req, res) {
           app_alive: true,
           deep: false,
         },
-        hint: "استخدم ?deep=1 لفحص قاعدة البيانات والطابور",
+        hint: "الفحص العميق عبر /api/deep-health (محمي) أو ?deep=1",
       },
       {
-        // كاش حافة قصير — يقلّل cold start المتكرر للفحوص دون إخفاء أعطال طويلة
-        "Cache-Control": "public, max-age=0, s-maxage=30, stale-while-revalidate=60",
-        "CDN-Cache-Control": "public, s-maxage=30, stale-while-revalidate=60",
+        // كاش حافة — يقلّل cold start للفحوص العامة دون إخفاء أعطال طويلة
+        "Cache-Control": "public, max-age=0, s-maxage=60, stale-while-revalidate=300",
+        "CDN-Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
       },
     );
     return;
