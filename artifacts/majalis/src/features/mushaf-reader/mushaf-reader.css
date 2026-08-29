@@ -1,0 +1,586 @@
+/* مصحف جديد — واجهة قراءة مطابقة للمرجع العاجي · بلا كروت/ظلال/أزرار ظاهرة */
+
+.nm-root {
+  --nm-paper: #fdf9f3;
+  --nm-paper-deep: #faf6ee;
+  --nm-ink: #1a1510;
+  --nm-meta: #3d3428;
+  --nm-gold: #a68b67;
+  --nm-gold-soft: #c5b396;
+  --nm-gold-deep: #785e38;
+  --nm-olive: #7a6b4a;
+  --nm-frame: #8b7355;
+  --nm-frame-inner: #b09a78;
+  --nm-mark: #8a7348;
+  --nm-mark-fill: color-mix(in srgb, var(--nm-paper) 86%, var(--nm-gold) 14%);
+  --nm-select: color-mix(in srgb, var(--nm-gold) 26%, transparent);
+  --nm-play: color-mix(in srgb, var(--nm-olive) 22%, transparent);
+  --nm-qpc-size: 22px;
+  --nm-qpc-family: "qpc-v2";
+  --nm-line-height: 1.85;
+  --nm-word-gap: 0.28em;
+  --nm-side-pad: max(0.85rem, var(--inset-inline-start, var(--inset-left, 0px)), var(--inset-inline-end, var(--inset-right, 0px)));
+  --nm-top-pad: max(0.35rem, var(--inset-top, 0px));
+  --nm-bottom-pad: max(0.45rem, var(--inset-bottom, 0px));
+  --nm-page-max-w: min(100%, 28rem);
+  --nm-chrome-h: 2.75rem;
+  /* عزل متغيرات المصحف القديم حتى لا تفرض تخطيط mm-page على الطبقة الجديدة */
+  --mm-page-max-w: min(100%, 28rem);
+  --mm-outer-bg: var(--nm-paper);
+  --mm-paper: var(--nm-paper);
+
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  direction: rtl;
+  background: var(--nm-paper);
+  color: var(--nm-ink);
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  font-family: "Amiri", "Traditional Arabic", serif;
+  touch-action: pan-y;
+  height: 100svh;
+  height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.nm-root *,
+.nm-root *::before,
+.nm-root *::after {
+  box-sizing: border-box;
+}
+
+.nm-root .mm-page-shell,
+.nm-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: var(--nm-page-max-w);
+  margin-inline: auto;
+  padding: var(--nm-top-pad) var(--nm-side-pad) var(--nm-bottom-pad);
+  overflow-x: hidden;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--nm-paper);
+}
+
+/* —— صفحة —— */
+.nm-page {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: var(--nm-paper);
+  color: var(--nm-ink);
+  isolation: isolate;
+}
+
+.nm-page[data-mm-fit="0"] .nm-page__body {
+  visibility: hidden;
+}
+
+.nm-page[data-mm-fit="1"] .nm-page__body {
+  visibility: visible;
+}
+
+.nm-page__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.15rem 0.55rem 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--nm-meta);
+  letter-spacing: 0;
+  line-height: 1.2;
+  user-select: none;
+}
+
+.nm-page__header-surah,
+.nm-page__header-juz {
+  white-space: nowrap;
+}
+
+.nm-page__stage {
+  position: relative;
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-inline: 0.15rem;
+  padding: 0.55rem 0.65rem 0.7rem;
+  border: 1.5px solid var(--nm-frame);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--nm-frame-inner) 70%, transparent),
+    inset 0 0 0 4px var(--nm-paper),
+    inset 0 0 0 5px color-mix(in srgb, var(--nm-frame) 55%, transparent);
+}
+
+.nm-page__frame-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+.nm-page__body {
+  position: relative;
+  z-index: 2;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: repeat(15, minmax(0, 1fr));
+  align-content: stretch;
+  font-family: var(--nm-qpc-family), var(--mm-qpc-family), serif;
+  font-size: var(--nm-qpc-size, var(--mm-qpc-size, 22px));
+  line-height: var(--nm-line-height);
+  color: var(--nm-ink);
+}
+
+.nm-page--opening .nm-page__body,
+.nm-page--flex .nm-page__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.35em;
+  grid-template-rows: none;
+}
+
+.nm-page--opening .nm-page__body {
+  padding-block: 8% 4%;
+}
+
+.nm-slot {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.nm-slot[data-kind="empty"] {
+  visibility: hidden;
+}
+
+.nm-page--opening .nm-slot[data-kind="empty"] {
+  display: none;
+}
+
+.nm-slot__banner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-block: 0.1em;
+}
+
+/* شارة السورة */
+.nm-surah-banner {
+  position: relative;
+  width: min(100%, 22rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.85em;
+  padding: 0.28em 1.6em;
+  border: 1.25px solid var(--nm-frame);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--nm-gold-soft) 28%, var(--nm-paper)) 0%,
+      color-mix(in srgb, var(--nm-paper) 92%, var(--nm-gold) 8%) 100%
+    );
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--nm-gold-soft) 45%, transparent);
+  color: var(--nm-ink);
+  font-family: "Amiri", "Traditional Arabic", serif;
+  font-size: clamp(0.95rem, 3.6vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-align: center;
+  user-select: none;
+}
+
+.nm-surah-banner::before,
+.nm-surah-banner::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 1.1em;
+  height: 1.1em;
+  transform: translateY(-50%);
+  border: 1.5px solid var(--nm-olive);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, var(--nm-gold-soft) 0 28%, transparent 30%),
+    color-mix(in srgb, var(--nm-paper) 70%, var(--nm-gold) 30%);
+  box-shadow: inset 0 0 0 2px var(--nm-paper);
+}
+
+.nm-surah-banner::before {
+  inset-inline-start: 0.35em;
+}
+
+.nm-surah-banner::after {
+  inset-inline-end: 0.35em;
+}
+
+.nm-surah-banner__label {
+  position: relative;
+  z-index: 1;
+}
+
+/* بسملة */
+.nm-basmala {
+  width: 100%;
+  text-align: center;
+  font-family: "qpc-v2-p1", var(--nm-qpc-family), serif;
+  font-size: var(--nm-qpc-size, 22px);
+  line-height: var(--nm-line-height);
+  color: var(--nm-ink);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.nm-basmala.is-selected,
+.nm-basmala.is-playing {
+  background: var(--nm-select);
+  border-radius: 0.25em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.nm-basmala.is-playing {
+  background: var(--nm-play);
+}
+
+/* سطر الآيات */
+.nm-line {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0;
+  direction: rtl;
+  unicode-bidi: isolate;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.nm-line--center {
+  justify-content: center;
+  gap: var(--nm-word-gap);
+}
+
+.nm-word {
+  flex: 0 0 auto;
+  display: inline;
+  margin-inline: calc(var(--nm-word-gap) / 2);
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  /* مساحة ثابتة للتحديد — لا قفزة تخطيط */
+  box-shadow: inset 0 0 0 0 transparent;
+  border-radius: 0.18em;
+  transition: background-color 120ms ease, box-shadow 120ms ease;
+}
+
+.nm-word.is-selected {
+  background: var(--nm-select);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--nm-gold) 35%, transparent);
+}
+
+.nm-word.is-playing {
+  background: var(--nm-play);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--nm-olive) 40%, transparent);
+}
+
+.nm-word:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--nm-gold-deep) 70%, transparent);
+  outline-offset: 1px;
+}
+
+/* رقم آية دائري ثابت — بلا بيضاوي */
+.nm-ayah-mark {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 1.22em;
+  height: 1.22em;
+  min-width: 1.22em;
+  min-height: 1.22em;
+  max-width: 1.22em;
+  max-height: 1.22em;
+  aspect-ratio: 1 / 1;
+  margin-inline: 0.12em;
+  padding: 0;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: 1.5px solid var(--nm-mark);
+  background:
+    radial-gradient(circle at 50% 42%, color-mix(in srgb, #fff 35%, transparent), transparent 55%),
+    var(--nm-mark-fill);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--nm-gold-soft) 55%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--nm-paper) 100%, transparent);
+  color: var(--nm-gold-deep);
+  font-family: inherit;
+  font-size: 0.72em;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  overflow: hidden;
+  transform: none;
+  scale: 1;
+}
+
+.nm-ayah-mark__glyph {
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 1.22em;
+  text-align: center;
+  font-size: 1.35em;
+  color: var(--nm-olive);
+  transform: none;
+}
+
+.nm-word--end {
+  margin-inline: 0.05em;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.nm-word--end.is-selected .nm-ayah-mark,
+.nm-word--end.is-playing .nm-ayah-mark {
+  border-color: var(--nm-gold-deep);
+  background:
+    radial-gradient(circle at 50% 42%, color-mix(in srgb, #fff 40%, transparent), transparent 55%),
+    color-mix(in srgb, var(--nm-gold-soft) 40%, var(--nm-paper));
+}
+
+/* ذيل الصفحة */
+.nm-page__footer {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.35rem 0.15rem;
+  font-size: 0.75rem;
+  color: var(--nm-meta);
+  user-select: none;
+}
+
+.nm-page__footer-hizb {
+  justify-self: start;
+  opacity: 0.9;
+}
+
+.nm-page__footer-num {
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.6rem;
+  padding: 0.15rem 0.85rem;
+  border: 1px solid var(--nm-frame);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--nm-paper) 88%, var(--nm-gold-soft) 12%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--nm-gold-soft) 40%, transparent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--nm-ink);
+  position: relative;
+}
+
+.nm-page__footer-num::before,
+.nm-page__footer-num::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  border: 1px solid var(--nm-olive);
+  background: var(--nm-gold-soft);
+  transform: translateY(-50%);
+}
+
+.nm-page__footer-num::before {
+  inset-inline-start: -0.15rem;
+}
+
+.nm-page__footer-num::after {
+  inset-inline-end: -0.15rem;
+}
+
+.nm-page__footer-spacer {
+  justify-self: end;
+}
+
+/* —— طبقة التحكم —— */
+.nm-controls {
+  pointer-events: none;
+}
+
+.nm-controls__bar {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: calc(var(--nm-chrome-h) + var(--inset-top, 0px));
+  padding: calc(0.35rem + var(--inset-top, 0px)) 0.75rem 0.35rem;
+  background: color-mix(in srgb, var(--nm-paper) 92%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--nm-gold) 22%, transparent);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 160ms ease, transform 160ms ease;
+  pointer-events: none;
+}
+
+.nm-root[data-chrome="1"] .nm-controls__bar {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.nm-controls__btn {
+  pointer-events: auto;
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--nm-gold) 35%, transparent);
+  background: color-mix(in srgb, var(--nm-paper) 88%, var(--nm-gold-soft) 12%);
+  color: var(--nm-meta);
+  border-radius: 0.55rem;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.nm-controls__btn:active {
+  background: color-mix(in srgb, var(--nm-gold-soft) 28%, var(--nm-paper));
+}
+
+.nm-controls__exit {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.nm-root[data-chrome="1"] .nm-controls__exit,
+.nm-root[data-ayah-bar="1"] .nm-controls__exit {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* قائمة آية مختصرة من الأسفل */
+.nm-verse-menu {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 50;
+  padding: 0.65rem 0.85rem calc(0.75rem + var(--inset-bottom, 0px));
+  background: color-mix(in srgb, var(--nm-paper) 96%, #fff);
+  border-top: 1px solid color-mix(in srgb, var(--nm-gold) 28%, transparent);
+  box-shadow: 0 -8px 24px color-mix(in srgb, #000 6%, transparent);
+  pointer-events: auto;
+}
+
+.nm-verse-menu__label {
+  display: block;
+  margin-bottom: 0.55rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--nm-meta);
+}
+
+.nm-verse-menu__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.nm-verse-menu__action {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--nm-gold) 32%, transparent);
+  background: color-mix(in srgb, var(--nm-paper-deep) 90%, var(--nm-gold-soft) 10%);
+  color: var(--nm-ink);
+  border-radius: 0.65rem;
+  min-height: 2.6rem;
+  padding: 0.4rem 0.35rem;
+  font-size: 0.82rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.nm-verse-menu__action:active {
+  background: color-mix(in srgb, var(--nm-gold-soft) 30%, var(--nm-paper));
+}
+
+.nm-verse-menu__status {
+  margin-top: 0.45rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--nm-olive);
+  min-height: 1em;
+}
+
+.nm-status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--nm-meta);
+  font-size: 0.95rem;
+  z-index: 5;
+  background: var(--nm-paper);
+}
+
+.nm-page-placeholder {
+  flex: 1;
+  min-height: 70dvh;
+  background: var(--nm-paper);
+}
+
+/* تفضيل الحركة المخفّضة */
+@media (prefers-reduced-motion: reduce) {
+  .nm-controls__bar,
+  .nm-word,
+  .nm-controls__exit {
+    transition: none;
+  }
+}

@@ -1,4 +1,5 @@
 export { VerifiedMushafReader, MushafViewport } from "./VerifiedMushafReader";
+/** المسار الحي `/mushaf` يستخدم `@/features/mushaf-reader` (NewMushafReader). هذا المجلد أرشيفي للبوابات والتوافق. */
 export { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
 export { AyahActionSheet, MushafAyahActions, QuranActionSheet, QuranDetailsSheet } from "./AyahActionSheet";
 export { MushafSearchSheet } from "./MushafSearchSheet";

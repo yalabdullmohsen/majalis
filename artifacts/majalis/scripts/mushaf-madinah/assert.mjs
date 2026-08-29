@@ -30,10 +30,11 @@ if (!all.length) {
 const bad = all.filter((m) => {
   const pageNo = Number(m.page ?? m.pageAttr);
   const slotsOk = pageNo <= 2 ? m.slots > 0 && m.slots <= 15 : m.slots === 15;
+  const maxFont = pageNo <= 2 ? 46 : 35;
   const paintFail =
     "fontCheck" in m &&
     (m.fontCheck === false ||
-      !(m.fontSize >= 12 && m.fontSize <= 35) ||
+      !(m.fontSize >= 12 && m.fontSize <= maxFont) ||
       m.pageOverflow ||
       m.lineOverflow ||
       m.overlap);

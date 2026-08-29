@@ -21,7 +21,7 @@ const reader = read("src/pages/quran/MushafReaderPage.tsx");
 const data = read("src/lib/quran-data/qpc-page-data.ts");
 const fit = read("src/features/mushaf-madinah/useMushafPageFontFit.ts");
 
-assert.match(reader, /VerifiedMushafReader|MushafViewport/);
+assert.match(reader, /NewMushafReader|VerifiedMushafReader|MushafViewport/);
 assert.doesNotMatch(reader, /\.pdf/i);
 assert.doesNotMatch(reader, /demo-ayah/);
 

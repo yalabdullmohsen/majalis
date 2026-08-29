@@ -93,6 +93,7 @@ function isAllowed(rawValue) {
   // بطاقات الحفظ (/memorize): متغيّرات --fc-* مستقلة (Amiri/Tajawal/Alexandria)
   if (/^var\(\s*--fc-/i.test(value)) return true;
   if (/^var\(\s*--mm-qpc-family\b/i.test(value)) return true; // خط صفحة QPC للمصحف الجديد
+  if (/^var\(\s*--nm-qpc-family\b/i.test(value)) return true; // خط صفحة QPC — NewMushafReader
   if (/^var\(\s*--font-app\b/i.test(value)) return true;
   if (/^var\(\s*--mj-(face|ui|num)\b/i.test(value)) return true;
   if (/^var\(\s*--(mj-)?font-/i.test(value)) return true; // تُحلّ عبر :root إلى IBM Plex Sans Arabic (أو --font-quran المعتمد)
