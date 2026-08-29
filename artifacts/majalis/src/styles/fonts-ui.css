@@ -67,7 +67,6 @@
 @font-face {
   font-family: "MajlisFallback";
   src: local("Geeza Pro"), local("Noto Naskh Arabic"), local("Traditional Arabic");
-  size-adjust: 105%;
   ascent-override: 95%;
   descent-override: 25%;
   line-gap-override: 0%;
@@ -75,7 +74,6 @@
 @font-face {
   font-family: "MajlisAmiriFallback";
   src: local("Noto Naskh Arabic"), local("Geeza Pro"), local("Traditional Arabic");
-  size-adjust: 105%;
   ascent-override: 95%;
   descent-override: 25%;
   line-gap-override: 0%;

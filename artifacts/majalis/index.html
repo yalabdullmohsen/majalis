@@ -220,7 +220,6 @@
         ascent-override: 95%;
         descent-override: 25%;
         line-gap-override: 0%;
-        size-adjust: 105%;
       }
       html {
         --ui-font-scale: 1;
@@ -282,6 +281,23 @@
         }
       }
       .navbar-v3 { min-height: var(--header-h, 56px); box-sizing: border-box; }
+      .app-top-chrome {
+        min-height: var(--header-h, 56px);
+        box-sizing: border-box;
+        contain: layout style;
+      }
+      .chrome-boot-ph--nav {
+        min-height: var(--header-h, 56px);
+        box-sizing: border-box;
+      }
+      .chrome-boot-ph--bottom {
+        min-height: var(--nav-h);
+        box-sizing: border-box;
+      }
+      .chrome-boot-ph--top-section {
+        min-height: 3.5rem;
+        box-sizing: border-box;
+      }
       .navbar-ticker-row {
         min-height: var(--ticker-h, 2.25rem);
         height: var(--ticker-h, 2.25rem);
