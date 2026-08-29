@@ -1,5 +1,5 @@
 /**
- * بوابة: شاشة البدء القديمة محذوفة — التعريف عند أول زيارة + جولة المزايا من الإعدادات.
+ * بوابة: شاشة البدء القديمة محذوفة — التعريف معطّل؛ جولة المزايا من الإعدادات فقط.
  */
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
@@ -14,11 +14,14 @@ const settings = readFileSync(join(root, "pages/account/ui/SettingsView.tsx"), "
 const state = readFileSync(join(root, "lib/onboarding-state.ts"), "utf8");
 const tour = readFileSync(join(root, "components/onboarding/AppFeatureTour.tsx"), "utf8");
 const intro = readFileSync(join(root, "components/onboarding/FirstVisitIntro.tsx"), "utf8");
+const introCfg = readFileSync(join(root, "config/first-visit-intro.ts"), "utf8");
 
 assert.doesNotMatch(app, /AppStartGate/);
 assert.doesNotMatch(app, /AppFeatureTourGate/);
-assert.match(app, /FirstVisitIntro/);
-assert.match(app, /shouldShowFirstVisitIntro/);
+assert.doesNotMatch(app, /FirstVisitIntro/, "لا تركيب مقدمة أول زيارة في App");
+assert.doesNotMatch(app, /shouldShowFirstVisitIntro/);
+assert.doesNotMatch(app, /introActive/);
+assert.match(introCfg, /enabled:\s*false/, "التعريف معطّل نهائيًا");
 assert.match(app, /\/feature-tour/);
 assert.match(app, /FeatureTourPage/);
 assert.match(app, /FocusArrival/);

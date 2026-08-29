@@ -14,13 +14,15 @@
           html.setAttribute("dir", "rtl");
           html.classList.add("app-booting");
           html.dataset.appBooting = "1";
-          var _dsv = "v11-startup-stable-2026-08";
+          var _dsv = "v12-startup-stable-first-frame-2026-08";
           if (localStorage.getItem("majalis-design-v") !== _dsv) {
             localStorage.setItem("majalis-design-v", _dsv);
-            localStorage.removeItem("majalis-font-preference");
+            /* لا تمسح تفضيل الخط — مسحه يسبب قفزة خط بعد أول إطار */
             try {
-              localStorage.removeItem("majalis_app_version");
               localStorage.setItem("majalis_force_cache_purge", "1");
+              localStorage.removeItem("majlis_intro_seen");
+              localStorage.removeItem("majalis-intro-seen");
+              localStorage.removeItem("majlis-home-welcomed-v1");
             } catch (_) {}
           }
           /* أولوية: اختيار المستخدم (light|dark|auto) → الافتراضي نهاري.
@@ -108,21 +110,28 @@
           html.dataset.seniorMode = senior ? "1" : "0";
 
           function clearBooting() {
+            if (html.dataset.appBooting === "0") return;
             html.classList.remove("app-booting");
             html.dataset.appBooting = "0";
+            try {
+              window.dispatchEvent(new Event("mj:shell-stable"));
+            } catch (_) {}
           }
           window.addEventListener(
             "mj:boot-ready",
             function () {
-              window.setTimeout(clearBooting, 200);
+              /* إطاران مستقران بعد جاهزية الخطوط/الثيم — بلا تأخير ثابت اصطناعي */
+              requestAnimationFrame(function () {
+                requestAnimationFrame(clearBooting);
+              });
             },
             { once: true },
           );
-          window.setTimeout(clearBooting, 1500);
+          window.setTimeout(clearBooting, 900);
         } catch (e) {}
       })();
     </script>
-    <!-- فحص نسخة مبكر: يمنع رسم كاش قديم ثم استبداله بعد ثوانٍ -->
+    <!-- فحص نسخة مبكر: يجهّز المسح بهدوء — بلا reload أثناء أول إطار -->
     <script id="mj-version-boot">
       (function () {
         var FLAG = "majlisilm-refreshing-version";
@@ -165,27 +174,27 @@
               live.indexOf(prev) === 0;
             if (same) return;
             try {
-              sessionStorage.setItem(FLAG, "1");
               localStorage.setItem("majalis_force_cache_purge", "1");
+              localStorage.setItem("majalis_app_version", live);
             } catch (_) {}
-            var finish = function () {
-              location.reload();
-            };
-            if (!window.caches || !caches.keys) {
-              finish();
-              return;
-            }
+            /* مسح كاش قديم في الخلفية — لا reload مفاجئ أثناء أول فتح */
+            if (!window.caches || !caches.keys) return;
             caches
               .keys()
               .then(function (keys) {
                 return Promise.all(
                   keys.map(function (k) {
-                    return caches.delete(k);
+                    if (
+                      /intro|onboard|welcome|splash|boot-guide|first-?launch|first-?run/i.test(k) ||
+                      (k.indexOf("majlisilm-v") === 0 && k.indexOf(live) < 0)
+                    ) {
+                      return caches.delete(k);
+                    }
+                    return Promise.resolve(false);
                   }),
                 );
               })
-              .catch(function () {})
-              .then(finish);
+              .catch(function () {});
           })
           .catch(function () {
             if (timer) clearTimeout(timer);
@@ -231,14 +240,21 @@
       h1, h2, h3, h4, strong, b, button {
         font-weight: 400;
       }
-      /* أول 1500ms: بلا انتقالات مقاسات تُسبب قفزة خط/تخطيط */
+      /* أثناء app-booting: بلا انتقالات + إخفاء الواجهة حتى ثبات الهيكل */
       html.app-booting,
       html.app-booting *,
       html.app-booting *::before,
       html.app-booting *::after {
-        transition-property: opacity, color, background-color, border-color, box-shadow, transform, filter;
-        animation-duration: 0.001ms;
+        transition-duration: 0s;
+        transition-delay: 0s;
+        animation-duration: 0s;
         animation-delay: 0s;
+      }
+      html.app-booting #root {
+        visibility: hidden;
+      }
+      html.app-booting #mj-launch-splash {
+        visibility: visible;
       }
       html.theme-dark, html[data-theme="dark"],
       html.theme-dark body, html[data-theme="dark"] body,
@@ -300,14 +316,10 @@
         --mj-splash-bg-light:#F2F4F3;
         --mj-splash-bg:var(--mj-splash-bg-light);
         --mj-splash-ink:#123f2e;
-        --mj-splash-ink-muted:#4a6b5f;
-        --mj-splash-ornament:rgba(18,63,46,0.1);
       }
       html[data-theme="dark"]{
         --mj-splash-bg:var(--mj-splash-bg-dark);
         --mj-splash-ink:#a8d5c0;
-        --mj-splash-ink-muted:#7a9a8c;
-        --mj-splash-ornament:rgba(168,213,192,0.12);
       }
       html, body, #root { background-color: var(--mj-splash-bg); }
       html.capacitor-native, html.capacitor-native body, html.capacitor-native #root { background-color: var(--mj-splash-bg); }
@@ -330,38 +342,21 @@
       }
       .mj-launch-splash__inner{
         display:flex;
-        flex-direction:column;
         align-items:center;
-        gap:0.85rem;
-        width:min(88vw,22rem);
+        justify-content:center;
         text-align:center;
-        animation:mj-launch-enter 220ms cubic-bezier(0.22,1,0.36,1) both;
-      }
-      .mj-launch-splash__ornament{
-        position:absolute;
-        width:min(72vw,18rem);
-        height:min(72vw,18rem);
-        color:var(--mj-splash-ornament);
-        opacity:1;
-        pointer-events:none;
       }
       .mj-launch-splash__title{
-        position:relative;
-        z-index:1;
         margin:0;
         min-height:2.85rem;
-        font-family:"Amiri","Noto Naskh Arabic",serif;
+        font-family:"Amiri","MajlisAmiriFallback","Noto Naskh Arabic",serif;
         font-size:clamp(1.85rem,8.5vw,2.35rem);
         font-weight:400;
         line-height:1.2;
         color:var(--mj-splash-ink);
       }
-      @keyframes mj-launch-enter{
-        from{ opacity:0; transform:scale(0.97); }
-        to{ opacity:1; transform:scale(1); }
-      }
       @media (prefers-reduced-motion: reduce){
-        .mj-launch-splash__inner{ animation:none; }
+        #mj-launch-splash,
         #mj-launch-splash.mj-launch-splash--out{ transition:none; }
       }
     </style>
@@ -459,15 +454,8 @@
     </script>
   </head>
   <body>
-    <!-- Startup Gate: هوية سُنّة بلا عبارة تسويقية؛ توقيت LHCI مطابق main -->
+    <!-- Startup Gate: كلمة سُنّة فقط — بلا زخرفة ولا حركة -->
     <div id="mj-launch-splash" aria-hidden="true">
-      <svg class="mj-launch-splash__ornament" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
-        <g fill="none" stroke="currentColor" stroke-width="0.55" opacity="0.85">
-          <circle cx="100" cy="100" r="78"/>
-          <circle cx="100" cy="100" r="54"/>
-          <path d="M100 22 L116 68 L164 68 L126 98 L140 146 L100 120 L60 146 L74 98 L36 68 L84 68 Z"/>
-        </g>
-      </svg>
       <div class="mj-launch-splash__inner">
         <p class="mj-launch-splash__title" id="mj-launch-splash__title">سُنّة</p>
       </div>
@@ -484,16 +472,14 @@
         var MAX_MS = 1400;
         var EXIT_MS = 90;
         var bootReady = false;
+        var shellStable = false;
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
         try { window.__mjSplashStart = start; } catch (e) {}
         function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
         function fontsLikelyReady() {
           try {
             if (!document.fonts || !document.fonts.check) return true;
-            var preferNaskh = document.documentElement.dataset.font !== "default";
-            return preferNaskh
-              ? document.fonts.check('16px "Noto Naskh Arabic"')
-              : document.fonts.check('16px "Amiri"');
+            return document.fonts.check('16px "Amiri"');
           } catch (e) { return true; }
         }
         function dismiss(immediate) {
@@ -513,10 +499,10 @@
           var elapsed = now() - start;
           if (elapsed < MIN_MS) return;
           var fontsOk = bootReady || fontsLikelyReady();
-          /* لا تكشف الواجهة قبل الخطوط إلا عند السقف الصلب */
           if (!fontsOk && elapsed < MAX_MS) return;
           if (!appReady && !bootReady && elapsed < MAX_MS) return;
-          /* خطوط جاهزة: أخفِ بعد الحد الأدنى (هدف LCP الليّن SOFT_MAX عند البطء فقط كمرجع) */
+          /* انتظر رفع app-booting حتى لا يظهر #root ثم يخفى */
+          if (!shellStable && document.documentElement.classList.contains("app-booting") && elapsed < MAX_MS) return;
           if (fontsOk && (bootReady || appReady)) {
             dismiss(false);
             return;
@@ -542,14 +528,25 @@
         window.addEventListener("mj:boot-ready", function () {
           bootReady = true;
           appReady = true;
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              shellStable = !document.documentElement.classList.contains("app-booting");
+              tryDismiss();
+            });
+          });
+        }, { once: true });
+        window.addEventListener("mj:shell-stable", function () {
+          shellStable = true;
           tryDismiss();
         }, { once: true });
         window.setTimeout(function () {
           appReady = true;
           bootReady = true;
+          shellStable = true;
           tryDismiss();
         }, MAX_MS);
         window.setTimeout(tryDismiss, MIN_MS);
+        void SOFT_MAX_MS;
       })();
     </script>
     <script>

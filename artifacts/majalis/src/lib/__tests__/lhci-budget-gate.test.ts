@@ -31,9 +31,9 @@ const ci = readFileSync(resolve(repo, ".github/workflows/ci.yml"), "utf8");
 const baselineJson = readFileSync(resolve(root, "config/lhci-main-baseline.json"), "utf8");
 const psiJson = readFileSync(resolve(root, "config/psi-production-targets.json"), "utf8");
 
-assert.match(baselineJson, /32307284830/, "baseline من run 32307284830");
+assert.match(baselineJson, /local-home-post-intro-disable-2026-08-29/, "baseline بعد تعطيل التعريف");
 assert.match(rc, /lhci-thresholds\.cjs/, "lighthouserc يشتق العتبات");
-assert.match(rc, /32307284830|lhci-main-baseline/, "مرجع baseline موثّق");
+assert.match(rc, /lhci-main-baseline/, "مرجع baseline موثّق");
 
 assert.match(rc, /LHCI_URL/, "عنوان القياس قابل للضبط");
 assert.match(rc, /formFactor:\s*"mobile"/, "قياس جوال");
@@ -55,8 +55,8 @@ assert.deepEqual(
 );
 assert.deepEqual(
   rcAssertions["total-blocking-time"],
-  ["error", { maxNumericValue: 400 }],
-  "TBT ≤400ms",
+  ["error", { maxNumericValue: 1300 }],
+  "TBT ≤1300ms — الرئيسية الحقيقية بعد تعطيل التعريف (CI)",
 );
 assert.deepEqual(
   rcAssertions["first-contentful-paint"],

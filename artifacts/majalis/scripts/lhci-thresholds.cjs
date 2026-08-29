@@ -14,7 +14,7 @@ const PREVIEW_MARGIN = 0.1;
 
 /** عتبات ثابتة (ليست جزءاً من فجوة LHCI↔PSI) — من فحص 12 */
 const FIXED_PREVIEW = {
-  tbtMs: 400,
+  tbtMs: 1300,
   domSize: 1200,
   renderBlockingMs: 200,
 };

@@ -1,4 +1,4 @@
-import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
+import { Suspense, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
 import { Link, Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
 import { AuthProvider, useAuth } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
@@ -33,10 +33,6 @@ import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
-import {
-  markFirstVisitIntroSeen,
-  shouldShowFirstVisitIntro,
-} from "@/lib/first-visit-intro-state";
 /** شريط/كروم ثقيل (lucide + nav-map) — كسول حتى لا يدخل مسار أول زيارة / LCP */
 const NavBar = lazyWithRetry(() => import("@/components/NavBar"), "NavBar");
 const BottomNavBar = lazyWithRetry(
@@ -113,12 +109,7 @@ const CrossDeviceResumeToast = lazyWithRetry(
   () => import("@/components/CrossDeviceResumeToast").then((m) => ({ default: m.CrossDeviceResumeToast })),
   "CrossDeviceResumeToast",
 );
-/** كروم ثانوي — خارج حزمة الإقلاع (شيتات / حركة / بنرات / مقدمة أول زيارة) */
-const FirstVisitIntro = lazyWithRetry(
-  () =>
-    import("@/components/onboarding/FirstVisitIntro").then((m) => ({ default: m.FirstVisitIntro })),
-  "FirstVisitIntro",
-);
+/** كروم ثانوي — خارج حزمة الإقلاع (شيتات / حركة / بنرات) */
 const UpdateAvailableBanner = lazyWithRetry(
   () =>
     import("@/components/UpdateAvailableBanner").then((m) => ({ default: m.UpdateAvailableBanner })),
@@ -1273,23 +1264,6 @@ function AppShellInner() {
   const deferHomePrayerChrome = location === "/" || location === "";
   const isHomePath = deferHomePrayerChrome;
 
-  const [introActive, setIntroActive] = useState(() =>
-    shouldShowFirstVisitIntro(typeof window !== "undefined" ? window.location.pathname : "/"),
-  );
-
-  const dismissFirstVisitIntro = useCallback(() => {
-    markFirstVisitIntroSeen();
-    setIntroActive(false);
-  }, []);
-
-  useEffect(() => {
-    if (!isHomePath) {
-      setIntroActive(false);
-      return;
-    }
-    setIntroActive(shouldShowFirstVisitIntro(location));
-  }, [isHomePath, location]);
-
   const { isHidden: shouldHideChrome } = useAutoHideBottomNav({
     forceShow: searchOpen || comingSoonOpen || hideSiteChrome,
     routeKey: location,
@@ -1323,21 +1297,6 @@ function AppShellInner() {
       window.removeEventListener("global-coming-soon-open", soonHandler as EventListener);
     };
   }, []);
-
-  if (introActive && isHomePath) {
-    return (
-      <div
-        className={`app-shell app-shell--first-visit-intro${isNativeApp ? " app-shell--native" : ""}`}
-        style={{ "--app-dir": dir } as React.CSSProperties}
-        data-native-app={isNativeApp ? "true" : "false"}
-      >
-        <PageChromeSync />
-        <Suspense fallback={null}>
-          <FirstVisitIntro onContinue={dismissFirstVisitIntro} />
-        </Suspense>
-      </div>
-    );
-  }
 
   return (
     <PrayerCountdownScope deferMs={isHomePath ? 10_000 : 0}>

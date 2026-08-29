@@ -51,8 +51,26 @@ function armControlledSwReload(): void {
   if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
 
   let hadController = Boolean(navigator.serviceWorker.controller);
+  const bootStarted = performance.now();
+
+  const signalQuietUpdate = () => {
+    try {
+      window.dispatchEvent(new CustomEvent("mj:sw-updated-quiet"));
+    } catch {
+      /* ignore */
+    }
+  };
 
   const reloadOnce = () => {
+    /* لا reload أثناء أول ثوانٍ من الإقلاع — يمنع وميض النسخة القديمة→الجديدة */
+    if (performance.now() - bootStarted < 8_000) {
+      signalQuietUpdate();
+      return;
+    }
+    if (document.documentElement.classList.contains("app-booting")) {
+      signalQuietUpdate();
+      return;
+    }
     try {
       if (
         sessionStorage.getItem(SW_RELOAD_GUARD_KEY) === "1" ||
@@ -69,6 +87,10 @@ function armControlledSwReload(): void {
   };
 
   navigator.serviceWorker.addEventListener("message", (event) => {
+    if (event.data?.type === "SW_UPDATED_QUIET") {
+      signalQuietUpdate();
+      return;
+    }
     if (event.data?.type === "SW_UPDATED_RELOAD_ONCE") reloadOnce();
   });
 

@@ -91,6 +91,7 @@ self.addEventListener("activate", (event) => {
           k.startsWith("majalis-offline-") ||
           k.startsWith("majalis-data-") ||
           k.startsWith("majlisilm-startup-") ||
+          /intro|onboard|welcome|splash|boot-guide|first-?launch|first-?run/i.test(k) ||
           (k.startsWith("majlisilm-v") && !k.startsWith(CACHE_PREFIX)),
       );
       const isUpdate =
@@ -98,21 +99,25 @@ self.addEventListener("activate", (event) => {
 
       await Promise.all(
         keys
-          .filter((k) => k !== VERSION_CACHE && !k.startsWith(CACHE_PREFIX))
+          .filter(
+            (k) =>
+              k !== VERSION_CACHE &&
+              (!k.startsWith(CACHE_PREFIX) ||
+                /intro|onboard|welcome|splash|boot-guide|first-?launch|first-?run/i.test(k)),
+          )
           .map((k) => caches.delete(k)),
       );
 
       // تخزين النسخة الحالية
       await verCache.put("/sw-version", new Response(SW_BUILD_ID));
 
-      // السيطرة على كل النوافذ
+      // السيطرة على كل النوافذ — بلا reload فوري (العميل يحدّث بهدوء عبر البنر)
       await self.clients.claim();
 
-      // إعادة تحميل واحدة بعد تدوير الكاش — الحارس في العميل يمنع الوميض/التكرار
       if (isUpdate) {
         const windows = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
         for (const client of windows) {
-          client.postMessage({ type: "SW_UPDATED_RELOAD_ONCE" });
+          client.postMessage({ type: "SW_UPDATED_QUIET" });
         }
       }
     })(),
