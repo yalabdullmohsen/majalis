@@ -2111,52 +2111,12 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/tarikh-islami/seerah-first-revelation</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-portal</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/tarikh-islami/seerah-makkan-daawah</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/seerah-hijra</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/seerah-madinan-state</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/seerah-badr</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/seerah-uhud</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/seerah-khaybar</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/seerah-conquest-makkah</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/seerah-farewell-pilgrimage</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/seerah-death-prophet</loc>
+    <loc>https://majlisilm.com/tarikh-islami/seerah-after-prophet</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -2526,82 +2486,22 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-umar-abd-aziz</loc>
+    <loc>https://majlisilm.com/tarikh-islami/modern-colonialism</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-harun-rashid</loc>
+    <loc>https://majlisilm.com/tarikh-islami/modern-independence</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-al-mamun</loc>
+    <loc>https://majlisilm.com/tarikh-islami/modern-ummah-today</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-muhammad-fatih</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-ibn-khaldun</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-al-tabari</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-ibn-kathir</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-al-dhahabi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-ibn-hajar</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-al-baladhuri</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-ibn-al-athir</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-saladin</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-nur-ad-din</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-abu-bakr</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-umar-ibn-khattab</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/tarikh-islami/pers-uthman</loc>
+    <loc>https://majlisilm.com/tarikh-islami/modern-lessons</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>

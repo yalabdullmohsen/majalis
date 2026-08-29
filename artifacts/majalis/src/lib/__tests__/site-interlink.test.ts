@@ -35,7 +35,7 @@ function assert(condition: boolean, label: string) {
 console.log("\n=== content-href الموحّد ===");
 {
   assert(hrefLessons("abc") === "/lessons/abc", "hrefLessons");
-  assert(hrefScholars("tabari") === "/tarikh-islami/pers-al-tabari", "hrefScholars legacy → tarikh");
+  assert(hrefScholars("tabari") === "/tarikh-islami/abbasid-house-of-wisdom", "hrefScholars legacy → tarikh");
   assert(hrefIslamicHistory("seerah-before") === "/tarikh-islami/seerah-before", "hrefIslamicHistory");
   assert(hrefFawaid("f1") === "/fawaid#f1", "hrefFawaid");
   assert(hrefQa("q1") === "/quiz?qa=q1", "hrefQa → quiz");
@@ -47,10 +47,10 @@ console.log("\n=== روابط التوصيات تحتفظ بالمعرّف (إع
 {
   assert(CONTENT_TYPE_HREF.lesson("abc") === "/lessons/abc", "lesson → /lessons/:id");
   assert(CONTENT_TYPE_HREF.book("b1") === "/library/b1", "book → /library/:id");
-  assert(CONTENT_TYPE_HREF.scholar("pers-al-tabari") === "/tarikh-islami/pers-al-tabari", "scholar → /tarikh-islami/:id");
+  assert(CONTENT_TYPE_HREF.scholar("pers-al-tabari") === "/library", "scholar قديم → المكتبة");
   assert(CONTENT_TYPE_HREF.benefit("f1") === "/fawaid#f1", "benefit → /fawaid#id");
   assert(CONTENT_TYPE_HREF.qa("q1") === "/quiz?qa=q1", "qa → /quiz?qa=");
-  assert(CONTENT_TYPE_HREF.scholar("") === "/tarikh-islami?tab=personalities", "scholar بلا id → التاريخ");
+  assert(CONTENT_TYPE_HREF.scholar("") === "/tarikh-islami", "scholar بلا id → التاريخ");
   assert(CONTENT_TYPE_HREF.story("omar") === "/stories?slug=omar", "story → /stories?slug=");
   assert(CONTENT_TYPE_HREF.miracle("m1") === "/miracles#m1", "miracle → /miracles#id");
   assert(CONTENT_TYPE_HREF.hadith("h1") === "/hadith#h1", "hadith → /hadith#id");
@@ -62,8 +62,8 @@ console.log("\n=== روابط الرسم المعرفي تحتفظ بالمعر�
   const base = { id: "n1", title: "عقدة", created_at: "" };
   assert(
     getNodeHref({ ...base, node_type: "scholar", reference_id: "pers-al-tabari" } as KnNode)
-      === "/tarikh-islami/pers-al-tabari",
-    "scholar node → /tarikh-islami/:ref",
+      === "/library",
+    "scholar node قديم → المكتبة",
   );
   assert(
     getNodeHref({ ...base, node_type: "benefit", reference_id: "ben-1" } as KnNode)

@@ -24,7 +24,8 @@
       }
     ],
     "featured": true,
-    "startHere": true
+    "startHere": true,
+    "timelineOrder": 801
   },
   {
     "id": "civ-judiciary",
@@ -49,7 +50,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 802
   },
   {
     "id": "civ-education",
@@ -75,7 +77,8 @@
         "label": "التاريخ الإسلامي"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 803
   },
   {
     "id": "civ-medicine",
@@ -105,7 +108,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 804
   },
   {
     "id": "civ-astronomy",
@@ -135,7 +139,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 805
   },
   {
     "id": "civ-architecture",
@@ -160,7 +165,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 806
   },
   {
     "id": "civ-manuscripts",
@@ -186,7 +192,8 @@
         "label": "المصحف"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 807
   },
   {
     "id": "civ-travel",
@@ -216,7 +223,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 808
   },
   {
     "id": "civ-science",
@@ -247,7 +255,8 @@
         "label": "التاريخ الإسلامي"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 809
   },
   {
     "id": "civ-house-wisdom",
@@ -277,6 +286,7 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 810
   }
 ]

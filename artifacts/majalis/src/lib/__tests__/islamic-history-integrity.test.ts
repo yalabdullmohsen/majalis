@@ -5,6 +5,9 @@
 import {
   ISLAMIC_HISTORY_ITEMS,
   HISTORY_CATEGORIES,
+  HISTORY_CATEGORY_ORDER,
+  HISTORY_ERA_META,
+  getHistoryErasWithEvents,
   type HistoryCategory,
   type VerificationLevel,
 } from "@/data/islamic-history";
@@ -54,11 +57,37 @@ for (const cat of Object.keys(HISTORY_CATEGORIES) as HistoryCategory[]) {
   assert(count >= 3, `${HISTORY_CATEGORIES[cat]}: ${count} عناصر`);
 }
 
-console.log("\n=== شخصيات مميزة ===");
+console.log("\n=== عناصر مميزة ===");
 const featured = ISLAMIC_HISTORY_ITEMS.filter((i) => i.featured);
 const startHere = ISLAMIC_HISTORY_ITEMS.filter((i) => i.startHere);
 assert(featured.length >= 8, `أحداث مفصلية ≥8 (${featured.length})`);
 assert(startHere.length >= 5, `ابدأ من هنا ≥5 (${startHere.length})`);
+assert(
+  ISLAMIC_HISTORY_ITEMS.some((i) => i.portalHref === "/seerah"),
+  "بوابة السيرة النبوية موجودة في الخط الزمني",
+);
+assert(
+  !ISLAMIC_HISTORY_ITEMS.some((i) => (i as { category: string }).category === "personalities"),
+  "لا يوجد تصنيف شخصيات تاريخية",
+);
+
+console.log("\n=== ترتيب الدول التفاعلي ===");
+{
+  const eras = getHistoryErasWithEvents();
+  assert(eras.length === HISTORY_CATEGORY_ORDER.length, `عدد العصور = ${HISTORY_CATEGORY_ORDER.length}`);
+  assert(
+    eras.every((e, i) => e.meta.id === HISTORY_CATEGORY_ORDER[i]),
+    "ترتيب العصور مطابق HISTORY_CATEGORY_ORDER",
+  );
+  assert(
+    eras.every((e) => e.events.length >= 3 && HISTORY_ERA_META[e.meta.id]),
+    "كل دولة لديها ≥3 أحداث وmeta",
+  );
+  assert(
+    eras[0]!.meta.id === "seerah" && eras.at(-1)!.meta.id === "modern",
+    "يبدأ بالسيرة وينتهي بيومنا",
+  );
+}
 
 console.log(`\n=== النتيجة: ${passed} نجاح، ${failed} فشل ===`);
 if (failed > 0) process.exit(1);

@@ -26,12 +26,13 @@
       }
     ],
     "featured": true,
-    "startHere": true
+    "startHere": true,
+    "timelineOrder": 201
   },
   {
     "id": "umayyad-muawiyah",
     "title": "خلافة معاوية بن أبي سفيان",
-    "kind": "personality",
+    "kind": "era",
     "category": "umayyad",
     "era": "41–60هـ",
     "summary": "توحّد معاوية الأمة واستقرار السلطة في الشام.",
@@ -47,7 +48,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 202
   },
   {
     "id": "umayyad-abd-malik",
@@ -72,7 +74,8 @@
         "href": "/library",
         "label": "المكتبة العلمية"
       }
-    ]
+    ],
+    "timelineOrder": 203
   },
   {
     "id": "umayyad-conquest-spain",
@@ -95,7 +98,8 @@
         "label": "التاريخ الإسلامي"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 204
   },
   {
     "id": "umayyad-siege-constantinople",
@@ -116,7 +120,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 205
   },
   {
     "id": "umayyad-omar-ibn-abdul-aziz",
@@ -142,7 +147,8 @@
         "label": "المكتبة العلمية"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 206
   },
   {
     "id": "umayyad-fall",
@@ -163,7 +169,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 207
   },
   {
     "id": "umayyad-damascus",
@@ -184,7 +191,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 208
   },
   {
     "id": "umayyad-arabization",
@@ -209,6 +217,7 @@
         "href": "/library",
         "label": "المكتبة العلمية"
       }
-    ]
+    ],
+    "timelineOrder": 209
   }
 ]

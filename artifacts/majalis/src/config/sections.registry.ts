@@ -683,7 +683,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "islamic-history",
     label: "التاريخ الإسلامي",
-    subtitle: "عصور ودول وحضارة وشخصيات تاريخية",
+    subtitle: "خط زمني بالأحداث من قبل البعثة إلى يومنا",
     route: "/tarikh-islami",
     icon: History,
     group: "sciences",

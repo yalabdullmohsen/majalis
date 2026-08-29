@@ -1,115 +1,115 @@
 [
   {
     "from": "/scholars/ibn-al-qayyim-alt",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "slug باسم عالِم آخر — المعرّف باسم ابن القيّم (ت ٧٥١هـ) والسجل عن السخاوي (ت ٩٠٢هـ)؛ والسجل نفسه مكرر مع al-sakhawi فدُمج فيه — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/ibn-uthaymeen-older",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "slug باسم عالِم آخر — المعرّف باسم ابن عثيمين والصفحة عن الشيخ عبد الكريم الخضير — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/ibn-uthaymin-ext",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "slug باسم عالِم آخر — المعرّف باسم ابن عثيمين والصفحة عن الشيخ عبد الله بن جبرين — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/al-ghazali-junior",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "slug باسم عالِم آخر — المعرّف باسم الغزالي والصفحة عن ابن عطاء الله السكندري — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/amir-al-san'ani",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "المعرّف يحوي فاصلة عليا (') غير آمنة في المسار — تُرمَّز %27 وتكسر الروابط — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/al-qurtubi-scholar",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "لاحقة -scholar حيلة لفض تصادم معرّفات، لا معنى دلالي لها — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/ibn-mufli",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "خطأ إملائي في نقل الاسم — ابن مفلح = ibn-muflih — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/al-nawawi",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "تكرار — النووي (ت ٦٧٦هـ) بسجلين؛ دُمج الأغنى بيانًا في nawawi — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/al-bayhaqi",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "تكرار — البيهقي (ت ٤٥٨هـ) بسجلين؛ دُمج الأغنى بيانًا في bayhaki — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/al-mubarakfuri-2",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "تكرار — عبد الرحمن المباركفوري (ت ١٣٥٣هـ) بسجلين — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/al-izz-ibn-abdes-salam",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "تكرار — العز بن عبد السلام (ت ٦٦٠هـ) بسجلين — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/ibn-al-mubarak-senior",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "تكرار — عبد الله بن المبارك (ت ١٨١هـ) بسجلين — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/al-haytami",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "تكرار — ابن حجر الهيتمي (ت ٩٧٤هـ) بسجلين — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/al-khatib-baghdadi",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "تكرار — الخطيب البغدادي (ت ٤٦٣هـ) بسجلين — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/al-mizzi-2",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "تكرار — المزي (ت ٧٤٢هـ) بسجلين — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/ibn-juzayy-2",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "تكرار — ابن جزي الكلبي (ت ٧٤١هـ) بسجلين — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/ibn-al-salah",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "اختلاف تهجئة في المعرّف مع وجود سجل مطابق — كان مستعملًا في فهرس /scholars بلا صفحة تفصيل (صُحِّح في 0d7849033) — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/ibn-abi-shayba",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "اختلاف تهجئة في المعرّف مع وجود سجل مطابق — كان مستعملًا في فهرس /scholars بلا صفحة تفصيل (صُحِّح في 0d7849033) — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   },
   {
     "from": "/scholars/fakhr-al-razi",
-    "to": "/tarikh-islami?tab=personalities",
+    "to": "/tarikh-islami",
     "status": 301,
     "reason": "اختلاف تهجئة في المعرّف مع وجود سجل مطابق — كان مستعملًا في فهرس /scholars بلا صفحة تفصيل (صُحِّح في 0d7849033) — يُحوَّل إلى التاريخ الإسلامي بعد إزالة قسم العلماء"
   }

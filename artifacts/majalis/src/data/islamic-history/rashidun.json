@@ -2,7 +2,7 @@
   {
     "id": "rashidun-abu-bakr",
     "title": "خلافة أبي بكر الصديق",
-    "kind": "personality",
+    "kind": "era",
     "category": "rashidun",
     "era": "11–13هـ",
     "summary": "تولّي أبي بكر الخلافة بعد وفاة النبي ﷺ وجمعه الصحابة على حروب الردة.",
@@ -25,7 +25,8 @@
       }
     ],
     "startHere": true,
-    "featured": true
+    "featured": true,
+    "timelineOrder": 101
   },
   {
     "id": "rashidun-ridda-wars",
@@ -52,7 +53,8 @@
         "label": "التاريخ الإسلامي"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 102
   },
   {
     "id": "rashidun-quran-compilation",
@@ -78,12 +80,13 @@
         "label": "السيرة النبوية"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 103
   },
   {
     "id": "rashidun-umar",
     "title": "خلافة عمر بن الخطاب",
-    "kind": "personality",
+    "kind": "era",
     "category": "rashidun",
     "era": "13–23هـ",
     "summary": "عهد عمر انتشارت الفتوات والإدارة والعدل.",
@@ -105,7 +108,8 @@
         "label": "السيرة النبوية"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 104
   },
   {
     "id": "rashidun-conquest-jerusalem",
@@ -131,7 +135,8 @@
         "href": "/seerah",
         "label": "السيرة النبوية"
       }
-    ]
+    ],
+    "timelineOrder": 105
   },
   {
     "id": "rashidun-umar-martyrdom",
@@ -152,12 +157,13 @@
         "href": "/seerah",
         "label": "السيرة النبوية"
       }
-    ]
+    ],
+    "timelineOrder": 106
   },
   {
     "id": "rashidun-uthman",
     "title": "خلافة عثمان بن عفان",
-    "kind": "personality",
+    "kind": "era",
     "category": "rashidun",
     "era": "23–35هـ",
     "summary": "عهد عثمان انتشر الإسلام وتوحّد المصحف وامتداد الفتوات.",
@@ -177,12 +183,13 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 107
   },
   {
     "id": "rashidun-ali",
     "title": "خلافة علي بن أبي طالب",
-    "kind": "personality",
+    "kind": "era",
     "category": "rashidun",
     "era": "35–41هـ",
     "summary": "تولّي علي الخلافة في مرحلة الفتن الأولى، ووقعت معارك الجمل وصفين.",
@@ -203,7 +210,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 108
   },
   {
     "id": "rashidun-battle-camel",
@@ -224,7 +232,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 109
   },
   {
     "id": "rashidun-battle-siffin",
@@ -249,7 +258,8 @@
         "href": "/library",
         "label": "المكتبة العلمية"
       }
-    ]
+    ],
+    "timelineOrder": 110
   },
   {
     "id": "rashidun-arbitration",
@@ -270,7 +280,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 111
   },
   {
     "id": "rashidun-hasan-reconciliation",
@@ -291,7 +302,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 112
   },
   {
     "id": "rashidun-conquests-overview",
@@ -318,7 +330,8 @@
         "label": "السيرة النبوية"
       }
     ],
-    "featured": true
+    "featured": true,
+    "timelineOrder": 113
   },
   {
     "id": "rashidun-first-fitna",
@@ -341,6 +354,7 @@
         "label": "التاريخ الإسلامي"
       }
     ],
-    "lessons": "الوحدة والعدل من أسباب بقاء الأمة."
+    "lessons": "الوحدة والعدل من أسباب بقاء الأمة.",
+    "timelineOrder": 114
   }
 ]

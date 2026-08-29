@@ -25,7 +25,8 @@
       }
     ],
     "startHere": true,
-    "featured": true
+    "featured": true,
+    "timelineOrder": 601
   },
   {
     "id": "tartars-threat",
@@ -48,7 +49,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 602
   },
   {
     "id": "ain-jalut",
@@ -86,12 +88,13 @@
       }
     ],
     "featured": true,
-    "startHere": true
+    "startHere": true,
+    "timelineOrder": 603
   },
   {
     "id": "mamluk-baybars",
     "title": "الظاهر بيبرس وتوحيد الجبهة",
-    "kind": "personality",
+    "kind": "era",
     "category": "mamluk",
     "era": "658–676هـ",
     "summary": "بيبرس يقضي على بقايا المغول ويُعيد الأذان في بلاد الشام.",
@@ -111,7 +114,8 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 604
   },
   {
     "id": "mamluk-decline",
@@ -133,6 +137,7 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       }
-    ]
+    ],
+    "timelineOrder": 605
   }
 ]
