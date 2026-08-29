@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const help = readFileSync(resolve(root, "src/pages/worship/ui/AdhanHelpView.tsx"), "utf8");
-const app = readFileSync(resolve(root, "src/App.tsx"), "utf8");
+const app = readFileSync(resolve(root, "src/App.tsx"), "utf8") + "\n" + readFileSync(resolve(root, "src/AppRoutes.tsx"), "utf8");
 const routes = readFileSync(resolve(root, "src/app/router/routes.ts"), "utf8");
 
 assert.ok(existsSync(resolve(root, "src/pages/worship/AdhanHelpPage.tsx")));

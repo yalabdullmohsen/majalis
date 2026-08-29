@@ -26,7 +26,7 @@ assert.doesNotMatch(view, /AdhanCalculationService/);
 assert.doesNotMatch(view, /OfflineRecitationManager/);
 assert.doesNotMatch(view, /"use client"/);
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /QuranWorshipHubPage/);
 assert.match(app, /path="\/quran\/worship-hub"/);
 

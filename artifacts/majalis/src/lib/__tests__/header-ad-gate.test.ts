@@ -9,7 +9,7 @@ import { resolve } from "node:path";
 const root = resolve(import.meta.dirname, "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 const nav = read("src/components/NavBar.tsx");
 const cfg = read("src/config/header-ad.ts");
 const slot = read("src/components/header/HeaderAdSlot.tsx");

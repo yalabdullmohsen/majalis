@@ -12,7 +12,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const hook = readFileSync(resolve(root, "hooks/useAutoHideBottomNav.ts"), "utf8");
 const bar = readFileSync(resolve(root, "components/BottomNavBar.tsx"), "utf8");
 const css = readFileSync(resolve(root, "styles/components/app-chrome-scroll.css"), "utf8");
-const app = readFileSync(resolve(root, "App.tsx"), "utf8");
+const app = readFileSync(resolve(root, "App.tsx"), "utf8") + "\n" + readFileSync(resolve(root, "AppRoutes.tsx"), "utf8");
 
 assert.match(hook, /export function useAutoHideBottomNav/);
 assert.match(hook, /isHidden/);

@@ -43,7 +43,7 @@ assert.match(navSrc, /SPA_PUSH_KEY|nav-spa-pushes/);
 assert.match(navSrc, /canUseHistoryBack|spaPushes/);
 assert.match(navSrc, /normalizeNavPath/);
 
-const appSrc = read("src/App.tsx");
+const appSrc = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(appSrc, /HomeLazyRoute|SafeLazyRoute component=\{HomePage\}/);
 assert.match(appSrc, /const HomePage = lazy/);
 assert.match(appSrc, /auth\/update-password/);

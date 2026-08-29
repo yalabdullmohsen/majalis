@@ -74,7 +74,7 @@ function collectEntryLinks() {
 }
 
 function collectStaticRoutesAndRedirects() {
-  const app = readFileSync(join(srcRoot, "App.tsx"), "utf8");
+  const app = readFileSync(join(srcRoot, "App.tsx"), "utf8") + "\n" + readFileSync(join(srcRoot, "AppRoutes.tsx"), "utf8");
   const staticRoutes = [
     ...new Set(
       [...app.matchAll(/path=["'`](\/[^"'`:?*]+)["'`]/g)].map((m) => m[1]),

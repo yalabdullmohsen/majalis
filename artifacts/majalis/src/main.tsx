@@ -43,8 +43,7 @@ import "./styles/breakpoints.css";
 import "./styles/typography-scale.css";
 import "./styles/typography-app.css";
 import "./index.css";
-import "./styles/brand-v4-contrast-fixes.css";
-import "./styles/a11y-release-gate.css";
+// contrast/a11y الثقيلة + صفحات متخصصة — بعد load (انظر loadNonCriticalCss)
 import "./styles/m2030/foundation.css";
 import "./styles/m2030/navigation.css";
 // m2030/pages.css + final-release.css — بعد load+idle (ليست حرجة لأول شاشة)
@@ -71,6 +70,9 @@ if (
 
 // طبقات مظهر غير حرجة — بعد load + idle حتى لا تنافس LCP (كانت void import فوريًا)
 function loadNonCriticalCss() {
+  void import("./styles/brand-v4-contrast-fixes.css");
+  void import("./styles/a11y-release-gate.css");
+  void import("./styles/index-deferred-pages.css");
   void import("./styles/design-system.css").then(() => {
     void import("./styles/brand-v4-components.css");
   });

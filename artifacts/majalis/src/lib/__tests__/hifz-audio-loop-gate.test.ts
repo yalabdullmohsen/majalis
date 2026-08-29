@@ -21,7 +21,7 @@ const view = read("src/pages/quran/ui/QuranHifzLoopView.tsx");
 assert.match(view, /HifzAudioLoopPlayer/);
 assert.match(view, /\/quran\/hifz-loop/);
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /QuranHifzLoopPage/);
 assert.match(app, /path="\/quran\/hifz-loop"/);
 

@@ -23,7 +23,7 @@ function assert(cond: boolean, label: string) {
   }
 }
 
-const app = readFileSync(resolve(src, "App.tsx"), "utf8");
+const app = readFileSync(resolve(src, "App.tsx"), "utf8") + "\n" + readFileSync(resolve(src, "AppRoutes.tsx"), "utf8");
 const fiqh = readFileSync(resolve(src, "pages/fiqh/ui/FiqhView.tsx"), "utf8");
 const siteMap = readFileSync(resolve(src, "pages/account/ui/SiteMapView.tsx"), "utf8");
 const sitemap = readFileSync(resolve(root, "public/sitemap.xml"), "utf8");

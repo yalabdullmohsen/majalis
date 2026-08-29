@@ -1,0 +1,196 @@
+/* deferred from index.css: fiqh */
+/* ── Fiqh council mobile filters ──────────────────────────────────────────── */
+
+.fiqh-filter-toggle {
+  display: none;
+  width: 100%;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-3);
+  border: 1px solid var(--msk-border, #E8E7E2);
+  border-radius: 0.85rem;
+  background: transparent;
+  color: var(--majalis-emerald-deep);
+  padding: 0 0.9rem;
+  font-family: inherit;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
+
+.fiqh-filter-toggle span {
+  color: var(--msk-text-2, #5C5C56);
+  font-size: 0.78rem;
+}
+
+.fiqh-filter-panel {
+  display: block;
+}
+
+.fiqh-chip-strip {
+  align-items: center;
+}
+
+.fiqh-mobile-category-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--ds-space-3);
+  margin: 1rem 0 1.25rem;
+}
+
+.fiqh-mobile-category-card {
+  display: grid;
+  gap: var(--ds-space-1);
+  border: 1px solid var(--msk-border, #E8E7E2);
+  border-radius: var(--ds-radius-xl);
+  padding: 0.9rem;
+  background: transparent;
+  color: var(--majalis-ink);
+  min-height: 5rem;
+}
+
+.fiqh-mobile-category-card span {
+  color: var(--msk-text-2, #5C5C56);
+  font-size: 0.82rem;
+}
+
+/* shared (was with tasbih) */
+
+.prayer-stat-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--ds-space-3);
+  margin-bottom: 1rem;
+}
+
+.prayer-status-card__label {
+  color: var(--msk-text-2, #5C5C56);
+  font-size: 0.78rem;
+}
+
+.fiqh-mobile-category-deck::-webkit-scrollbar,
+.fiqh-chip-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.fiqh-mobile-category-deck,
+.fiqh-chip-strip {
+  scrollbar-width: none;
+}
+
+/* ── Template actions ── */
+
+.template-action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.template-btn {
+  width: 100%;
+  min-height: 44px;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.template-btn--ghost {
+  background: transparent;
+  color: var(--majalis-ink);
+  border: 1px solid var(--msk-border, #E8E7E2);
+}
+
+.template-btn--primary {
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+}
+
+
+/* deferred from index.css: books */
+/* ثيمات قارئ الكتب — Phase 6 */
+
+html[data-reading-theme="sepia"] .reading-text,
+html[data-reading-theme="sepia"] .highlighted-content,
+html[data-reading-theme="sepia"] .content-surface--reading {
+  background: #f4ecd8;
+  color: #3b2f1e;
+}
+
+html[data-reading-theme="night"] .reading-text,
+html[data-reading-theme="night"] .highlighted-content,
+html[data-reading-theme="night"] .content-surface--reading {
+  background: #0f1612;
+  color: #dce5df;
+}
+
+.content-action-bar__size {
+  font-size: 0.8rem;
+  font-weight: 700;
+  min-width: 2.6rem;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.faidah-card__meta,
+.qa-card__ref,
+.qa-card__evidence {
+  font-size: 0.8125rem;
+  color: var(--msk-text-2, #5C5C56);
+  line-height: 1.75;
+}
+
+.faidah-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-2);
+}
+
+
+/* deferred from index.css: admin */
+/* ── Admin lesson card toolbar ── */
+
+.lesson-admin-toolbar {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  background: color-mix(in srgb, var(--majalis-emerald) 6%, var(--majalis-panel));
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 15%, var(--majalis-line));
+  border-top: none;
+  border-radius: 0 0 0.75rem 0.75rem;
+  justify-content: flex-start;
+}
+
+.lesson-admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.35rem;
+  font-size: var(--ds-text-xs);
+  font-weight: 700;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid;
+  transition: background 140ms ease, color 140ms ease;
+}
+
+.lesson-admin-btn--edit {
+  border-color: color-mix(in srgb, var(--majalis-emerald) 30%, transparent);
+  color: var(--majalis-emerald-deep);
+  background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
+}
+
+.lesson-admin-btn--edit:hover {
+  background: color-mix(in srgb, var(--majalis-emerald) 16%, transparent);
+}
+
+.lesson-admin-btn--delete {
+  border-color: rgba(220, 38, 38, 0.25);
+  color: #9b1c1c;
+  background: rgba(254, 226, 226, 0.5);
+}
+
+.lesson-admin-btn--delete:hover {
+  background: rgba(254, 226, 226, 0.9);
+}
+

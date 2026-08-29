@@ -30,7 +30,7 @@ assert.match(native, /mj-smooth-image/);
 assert.match(native, /cubic-bezier\(0\.22/);
 assert.match(native, /mj-chrome-stable/);
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /EdgeSwipeBack/);
 assert.match(app, /RouteEnterMotion/);
 

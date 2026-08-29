@@ -61,7 +61,7 @@ assert.match(lessonCard, /أضف للتقويم|downloadUnifiedCalendar/);
 
 // 6) prophets = 25 + redirects
 assert.equal(PROPHETS.length, 25, `عدد الأنبياء ${PROPHETS.length} ≠ 25`);
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /\/prophets\/zakariya/);
 assert.match(app, /\/prophets\/zakaria/);
 assert.match(app, /zakariyya/);

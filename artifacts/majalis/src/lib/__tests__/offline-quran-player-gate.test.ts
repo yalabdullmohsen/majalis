@@ -35,7 +35,7 @@ assert.doesNotMatch(view, /TouchableOpacity|StyleSheet|ScrollView/i);
 const page = read("src/pages/quran/QuranOfflinePlayerPage.tsx");
 assert.match(page, /\/quran\/offline-player/);
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /QuranOfflinePlayerPage/);
 assert.match(app, /path="\/quran\/offline-player"/);
 

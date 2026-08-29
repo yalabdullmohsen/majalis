@@ -43,7 +43,7 @@ for (const rel of PUBLIC_SURFACES) {
   assert.equal(src.includes("/learning/paths"), false, `${rel} بلا رابط /learning/paths`);
 }
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /path="\/lessons"/, "/lessons يجب أن يبقى في الراوتر");
 assert.equal(/path="\/lessons"[^>]*>\s*<Redirect\s+to=["']\/["']/.test(app), false, "/lessons لا يحوّل للرئيسية");
 assert.match(

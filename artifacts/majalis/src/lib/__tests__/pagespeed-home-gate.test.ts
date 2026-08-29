@@ -13,7 +13,7 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 const html = read("index.html");
 const splash = read("src/lib/majlis-splash.ts");
 const auth = read("src/components/AuthProvider.tsx");
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 const home = read("src/pages/account/ui/HomeView.tsx");
 const below = read("src/pages/account/ui/HomeBelowFold.tsx");
 const ar = read("src/locales/ar.ts");

@@ -24,7 +24,7 @@ assert.doesNotMatch(fab, /\/prophets/, "قصص الأنبياء مشمولة ف�
 const legacy = read("src/components/GlobalBackButton.tsx");
 assert.match(legacy, /FloatingBackButton/);
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /FloatingBackButton/);
 
 const css = read("src/styles/final-release.css");

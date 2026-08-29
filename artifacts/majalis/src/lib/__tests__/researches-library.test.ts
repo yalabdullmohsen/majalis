@@ -93,7 +93,7 @@ assert(report.notes.length >= 1, "تقرير يوضح سبب الصفر");
 
 console.log("\n=== ربط المسارات والواجهة ===");
 {
-  const app = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8");
+  const app = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8") + "\n" + readFileSync(resolve(appRoot, "src/AppRoutes.tsx"), "utf8");
   assert(app.includes("/academic-research/submit"), "مسار الإضافة مسجّل");
   assert(app.includes("ResearchDetailPage"), "صفحة التفاصيل مسجّلة");
   const sql = readFileSync(resolve(appRoot, "supabase/researches_v1.sql"), "utf8");

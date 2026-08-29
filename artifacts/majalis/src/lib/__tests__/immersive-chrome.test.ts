@@ -56,7 +56,7 @@ const topBar = readFileSync(resolve(appRoot, "src/components/TopSectionBar.tsx")
 assert.match(topBar, /isImmersiveChromePath/);
 assert.equal(topBar.includes("isPrayerTimesPath"), false, "TopSectionBar لا يُخفى على الصلاة");
 
-const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8");
+const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8") + "\n" + readFileSync(resolve(appRoot, "src/AppRoutes.tsx"), "utf8");
 assert.match(appSrc, /quran-hub"><SafeLazyRoute component=\{QuranHubPage\}/);
 assert.match(appSrc, /MushafReaderPage/);
 assert.equal(appSrc.includes("MushafPageView"), false, "قارئ المصحف القديم أُزيل");

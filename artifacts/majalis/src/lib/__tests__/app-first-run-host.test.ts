@@ -8,7 +8,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
-const app = readFileSync(resolve(root, "App.tsx"), "utf8");
+const app = readFileSync(resolve(root, "App.tsx"), "utf8") + "\n" + readFileSync(resolve(root, "AppRoutes.tsx"), "utf8");
 
 assert.doesNotMatch(app, /AppFirstRunHost/);
 assert.doesNotMatch(app, /FirstRunSetup/);

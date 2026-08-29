@@ -11,7 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(__dirname, "..");
 const require = createRequire(import.meta.url);
 
-const appSrc = fs.readFileSync(path.join(appRoot, "src/App.tsx"), "utf8");
+const appSrc = fs.readFileSync(path.join(appRoot, "src/App.tsx"), "utf8") + "\n" + fs.readFileSync(path.join(appRoot, "src/AppRoutes.tsx"), "utf8");
 const appPaths = new Set(
   [...appSrc.matchAll(/path="(\/[^"]*)"/g)].map((m) => m[1]),
 );

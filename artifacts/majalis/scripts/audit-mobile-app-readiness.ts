@@ -85,7 +85,7 @@ assertMatch(mushafVp, /onSelectVerse|setSelected/, "اختيار الآية مح
 assertNoMatch(mushafVp, /setLocation\([^)]*ayah|navigate\([^)]*ayah/i, "لا تنقل route عند الآية");
 
 // 8) المسارات الأساسية في App
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 for (const route of [
   "/mushaf",
   "/lessons",

@@ -53,7 +53,7 @@ const teachers = buildTeachersFromLessons([
 assert.equal(teachers.length, 2, "اسم واحد بعد التطبيع");
 assert.equal(findTeacherBySlug(teachers, sheikhNameToSlug("سالم الطويل"))?.lessonCount, 2);
 
-const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8");
+const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8") + "\n" + readFileSync(resolve(appRoot, "src/AppRoutes.tsx"), "utf8");
 assert.match(appSrc, /path="\/teachers\/:slug"/);
 assert.match(appSrc, /path="\/teachers"/);
 assert.match(appSrc, /TeachersIndexPage/);

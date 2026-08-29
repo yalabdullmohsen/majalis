@@ -113,7 +113,7 @@ const SPACING = new Set([8, 12, 16, 24]);
 
 // ── 4) مسار في الراوتر بلا مدخل / مدخل بلا مسار ───────────────
 {
-  const appSrc = read("src/App.tsx");
+  const appSrc = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
   const appPaths = new Set([...appSrc.matchAll(/path="(\/[^"]*)"/g)].map((m) => m[1]));
   const missingInApp = SECTIONS.filter((s) => s.status === "live" && !appPaths.has(s.route));
   for (const s of missingInApp) {
@@ -346,7 +346,7 @@ const SPACING = new Set([8, 12, 16, 24]);
 
     // 15) تحويلات الدمج في App
     {
-      const appSrc = read("src/App.tsx");
+      const appSrc = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
       for (const r of SECTION_MERGE_REDIRECTS) {
         const escaped = r.from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         const re = new RegExp(

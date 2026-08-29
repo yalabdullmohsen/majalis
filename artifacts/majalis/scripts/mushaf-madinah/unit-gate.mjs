@@ -170,7 +170,7 @@ assert.match(line, /stopPropagation/);
 assert.match(line, /LONG_PRESS_MS/);
 assert.match(line, /data-testid="mushaf-ayah-hit"/);
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /MushafReaderPage/);
 assert.doesNotMatch(app, /MushafComingSoonPage/);
 assert.doesNotMatch(app, /demo-ayah-reader(?!.*Redirect)/);

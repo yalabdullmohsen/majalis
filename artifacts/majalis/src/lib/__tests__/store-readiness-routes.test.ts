@@ -10,7 +10,7 @@ import { SERVICES_CENTER_GROUPS } from "@/lib/services-center-nav";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const appRoot = join(here, "../../..");
-const appSrc = readFileSync(join(appRoot, "src/App.tsx"), "utf8");
+const appSrc = readFileSync(join(appRoot, "src/App.tsx"), "utf8") + "\n" + readFileSync(join(appRoot, "src/AppRoutes.tsx"), "utf8");
 const delSrc = readFileSync(join(appRoot, "src/pages/account/ui/AccountDeletionView.tsx"), "utf8");
 
 assert.match(appSrc, /path="\/who-we-are"/, "who-we-are alias");

@@ -31,7 +31,7 @@ const moreSections = readFileSync(resolve(root, "features/more/moreSections.ts")
 assert.match(moreSections, /sections\.registry/, "moreSections من السجل");
 assert.doesNotMatch(moreSections, /المسارات العلمية|مسارات التعلم|ابدأ من هنا/);
 
-const app = readFileSync(resolve(root, "App.tsx"), "utf8");
+const app = readFileSync(resolve(root, "App.tsx"), "utf8") + "\n" + readFileSync(resolve(root, "AppRoutes.tsx"), "utf8");
 for (const href of hubHrefs) {
   assert.ok(app.includes(`path="${href}"`), `مسار مسجّل في App: ${href}`);
 }

@@ -149,7 +149,7 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   const homeSrc = readFileSync(resolve(appRoot, "src/pages/account/ui/HomeView.tsx"), "utf-8")
     + readFileSync(resolve(appRoot, "src/pages/account/ui/HomeBelowFold.tsx"), "utf-8");
   const footerSrc = readFileSync(resolve(appRoot, "src/components/SiteFooter.tsx"), "utf-8");
-  const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8");
+  const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8") + "\n" + readFileSync(resolve(appRoot, "src/AppRoutes.tsx"), "utf-8");
   for (const src of [moreHubSrc, sideSrc, sidebarNavSrc]) {
     assert(!src.includes('href: "/rulings"'), "لا أحكام كقسم رئيسي في القوائم الجامدة");
     assert(!src.includes('"/knowledge-graph"'), "لا استكشف المعرفة");

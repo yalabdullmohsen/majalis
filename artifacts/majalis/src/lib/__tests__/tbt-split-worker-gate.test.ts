@@ -24,7 +24,7 @@ assert.match(homeSearch, /import\(\s*["']@\/features\/search\/universal-home-sea
 const unified = read("src/features/search/unified-local.ts");
 assert.match(unified, /search-index\.worker/, "فهرس البحث عبر Worker");
 
-const app = read("src/App.tsx");
+const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /IdleRuntimeBoot/, "منطق المنصة بعد الخمول");
 assert.match(app, /PrayerCountdownScope/, "جدولة الصلاة مؤجلة على الرئيسية");
 assert.match(app, /PrayerRuntimeBoot/, "منطق الأذان داخل مزوّد الصلاة");
