@@ -52,10 +52,6 @@ html.app-booting *::after {
   animation-delay: 0s;
 }
 
-html.app-booting #root {
-  visibility: hidden;
-}
-
 body {
   font-family: "Amiri", "MajlisAmiriFallback", "Noto Naskh Arabic", serif;
 }
