@@ -113,11 +113,15 @@
             html.classList.add("app-ready");
             html.dataset.appReady = "1";
           }
-          /* الإزالة النهائية من سكربت Startup Gate عند الجاهزية — سقف أمان فقط */
-          window.setTimeout(clearBooting, 1600);
-          try {
-            window.__mjClearBooting = clearBooting;
-          } catch (_) {}
+          /* الإبقاء على app-booting حتى boot-ready — يمنع CLS أثناء إقلاع React (مسار main) */
+          window.addEventListener(
+            "mj:boot-ready",
+            function () {
+              window.setTimeout(clearBooting, 200);
+            },
+            { once: true },
+          );
+          window.setTimeout(clearBooting, 1500);
         } catch (e) {}
       })();
     </script>
@@ -479,22 +483,10 @@
             return document.fonts.check('16px "Amiri"');
           } catch (e) { return true; }
         }
-        function markAppReady() {
-          try {
-            if (typeof window.__mjClearBooting === "function") window.__mjClearBooting();
-            else {
-              var html = document.documentElement;
-              html.classList.remove("app-booting");
-              html.dataset.appBooting = "0";
-              html.classList.add("app-ready");
-              html.dataset.appReady = "1";
-            }
-          } catch (e) {}
-        }
         function dismiss(immediate) {
           if (done) return;
           done = true;
-          markAppReady();
+          /* لا تُزل app-booting هنا — تبقى حتى mj:boot-ready لحماية CLS/TBT في LHCI */
           if (!el.parentNode) return;
           if (immediate) {
             try { el.remove(); } catch (e) {}
