@@ -3,13 +3,15 @@ import { HadithSection } from "./HadithPage";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { HadithClassGuide } from "@/pages/hadith/ui/HadithClassGuide";
 
 export default function HadithDaifPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/hadith/daif",
       title: "الأحاديث الضعيفة | سُنّة",
-      description: "روايات مشهورة على الألسنة، كلٌّ مقرونة بدرجتها وتخريجها المنسوب: منها الحسن، ومنها الضعيف، ومنها ما لا تصح نسبته — بيانٌ للتمييز.",
+      description:
+        "تعريف الحديث الضعيف وأمثلة ومصادر؛ روايات مشهورة مع درجتها وتخريجها — للتمييز لا للاحتجاج.",
       keywords: ["أحاديث ضعيفة", "درجة الحديث", "تخريج الحديث", "حديث مردود", "علم الحديث"],
       jsonLd: [
         {
@@ -17,7 +19,7 @@ export default function HadithDaifPage() {
           "@type": "WebPage",
           name: "الأحاديث الضعيفة",
           url: "https://majlisilm.com/hadith/daif",
-          description: "روايات مشهورة مقرونة بدرجتها وتخريجها المنسوب، للتوعية العلمية والتمييز",
+          description: "تعريف الضعيف مع أمثلة ومصادر وروابط لمصطلح الحديث",
           about: { "@type": "Thing", name: "درجات الحديث في علم مصطلح الحديث" },
         },
       ],
@@ -26,6 +28,7 @@ export default function HadithDaifPage() {
 
   return (
     <>
+      <HadithClassGuide kind="daif" />
       <HadithSection authenticityClass="daif" />
       <div className="twh-share">
         <ShareButtons title="الأحاديث الضعيفة — سُنّة" url="https://majlisilm.com/hadith/daif" />

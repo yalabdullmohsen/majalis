@@ -35,6 +35,7 @@ import { fetchSahihaynLocal } from "@/lib/sahihayn-local";
 import { loadLocalVerifiedHadith } from "@/lib/verified-hadith-local-seed";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
+import { HadithClassGuide } from "@/pages/hadith/ui/HadithClassGuide";
 import "@/styles/components/hadith-badge.css";
 import "@/styles/pages/hadith.css";
 
@@ -1272,6 +1273,7 @@ export default function HadithPage() {
       groupTitle="أقسام الحديث وعلومه"
     >
       <div className="hadith-page hadith-page--hub">
+        <HadithClassGuide kind="hub" />
         <div className="hub-card-grid">
           {hubCards.map((c) => (
             <HubCard

@@ -28,9 +28,12 @@ export function hrefIslamicHistory(id?: string | null): string {
   return pathWithId("/tarikh-islami", id);
 }
 
-/** @deprecated قسم العلماء أُزيل — يُوجَّه إلى التاريخ الإسلامي */
+/** صفحات علماء أساسية على /scholars — مجهول → فهرس العلماء */
 export function hrefScholars(id?: string | null): string {
-  return redirectScholarPath(id);
+  const target = redirectScholarPath(id);
+  if (target) return target;
+  const t = idOrEmpty(id);
+  return t ? `/scholars/${encodeURIComponent(t)}` : "/scholars";
 }
 
 /** مشايخ معاصرون من دروس الكويت — slug مُشتق من sheikhNameKey. */

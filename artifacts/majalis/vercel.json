@@ -6,7 +6,15 @@
   "outputDirectory": "dist",
   "proxy": {
     "entrypoint": "middleware.js",
-    "matcher": ["/lessons", "/admin", "/admin/:path*", "/dashboard", "/dashboard/:path*"]
+    "matcher": [
+      "/lessons",
+      "/admin",
+      "/admin/:path*",
+      "/dashboard",
+      "/dashboard/:path*",
+      "/scholars",
+      "/scholars/:path*"
+    ]
   },
   "git": {
     "deploymentEnabled": {
@@ -26,48 +34,98 @@
   },
   "redirects": [
     {
-      "source": "/scholars",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/malik",
-      "destination": "/madhahib",
-      "permanent": true
-    },
-    {
       "source": "/scholars/imam-malik",
-      "destination": "/madhahib",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/nawawi",
-      "destination": "/arbaeen-nawawi",
+      "destination": "/scholars/malik",
       "permanent": true
     },
     {
       "source": "/scholars/al-nawawi",
-      "destination": "/arbaeen-nawawi",
+      "destination": "/scholars/nawawi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/imam-nawawi",
+      "destination": "/scholars/nawawi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/hanafi",
+      "destination": "/scholars/abu-hanifa",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/imam-abu-hanifa",
+      "destination": "/scholars/abu-hanifa",
       "permanent": true
     },
     {
       "source": "/scholars/shafi",
-      "destination": "/madhahib",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/shafii",
-      "destination": "/madhahib",
+      "destination": "/scholars/shafii",
       "permanent": true
     },
     {
       "source": "/scholars/al-shafi",
-      "destination": "/madhahib",
+      "destination": "/scholars/shafii",
       "permanent": true
     },
     {
       "source": "/scholars/al-shafii",
-      "destination": "/madhahib",
+      "destination": "/scholars/shafii",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/imam-shafi",
+      "destination": "/scholars/shafii",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/imam-shafii",
+      "destination": "/scholars/shafii",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ahmad-ibn-hanbal",
+      "destination": "/scholars/ahmad",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/hanbali",
+      "destination": "/scholars/ahmad",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/imam-ahmad",
+      "destination": "/scholars/ahmad",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-bukhari",
+      "destination": "/scholars/bukhari",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/imam-bukhari",
+      "destination": "/scholars/bukhari",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/imam-muslim",
+      "destination": "/scholars/muslim",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-muslim",
+      "destination": "/scholars/muslim",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-taymiya",
+      "destination": "/scholars/ibn-taymiyyah",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/sheikh-ul-islam",
+      "destination": "/scholars/ibn-taymiyyah",
       "permanent": true
     },
     {
@@ -925,7 +983,7 @@
     },
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.majlisilm.com" }],
+      "has": [{"type": "host", "value": "www.majlisilm.com"}],
       "destination": "https://majlisilm.com/:path*",
       "permanent": true
     },
@@ -943,86 +1001,6 @@
       "source": "/search/%7Bsearch_term_string%7D(.*)",
       "destination": "/search",
       "permanent": false
-    },
-    {
-      "source": "/scholars/ibn-al-qayyim-alt",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/ibn-uthaymeen-older",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/ibn-uthaymin-ext",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/al-ghazali-junior",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/amir-al-san'ani",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/al-qurtubi-scholar",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/ibn-mufli",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/al-nawawi",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/al-bayhaqi",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/al-mubarakfuri-2",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/al-izz-ibn-abdes-salam",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/ibn-al-mubarak-senior",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/al-haytami",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/al-khatib-baghdadi",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/al-mizzi-2",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/ibn-juzayy-2",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
     },
     {
       "source": "/library/book-mustasfa",
@@ -1082,26 +1060,6 @@
     {
       "source": "/library/book-bulugh",
       "destination": "/library/book-bulugh-maram",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/amir-al-san%27ani",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/ibn-al-salah",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/ibn-abi-shayba",
-      "destination": "/tarikh-islami?tab=personalities",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/fakhr-al-razi",
-      "destination": "/tarikh-islami?tab=personalities",
       "permanent": true
     },
     {
@@ -1218,11 +1176,6 @@
       "source": "/quran/mushaf",
       "destination": "/mushaf",
       "permanent": true
-    },
-    {
-      "source": "/scholars/:path*",
-      "destination": "/tarikh-islami",
-      "permanent": true
     }
   ],
   "rewrites": [
@@ -1233,6 +1186,14 @@
     {
       "source": "/lessons/:id",
       "destination": "/api/lessons/:id"
+    },
+    {
+      "source": "/scholars",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scholars/:path*",
+      "destination": "/index.html"
     },
     {
       "source": "/api/(.*)",
@@ -1562,32 +1523,6 @@
       ]
     },
     {
-      "source": "/manifest.webmanifest",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, stale-while-revalidate=86400"
-        },
-        {
-          "key": "Content-Type",
-          "value": "application/manifest+json; charset=utf-8"
-        }
-      ]
-    },
-    {
-      "source": "/manifest.json",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, stale-while-revalidate=86400"
-        },
-        {
-          "key": "Content-Type",
-          "value": "application/manifest+json; charset=utf-8"
-        }
-      ]
-    },
-    {
       "source": "/icon-192.png",
       "headers": [
         {
@@ -1598,15 +1533,6 @@
     },
     {
       "source": "/icon-512.png",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/apple-touch-icon.png",
       "headers": [
         {
           "key": "Cache-Control",
@@ -1775,6 +1701,76 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.webmanifest",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/brand/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://majlisilm.com"
+        }
+      ]
+    },
+    {
+      "source": "/icon-(.*).png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/apple-touch-icon.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/dashboard",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store"
         }
       ]
     }

@@ -37,8 +37,6 @@ import {
   markFirstVisitIntroSeen,
   shouldShowFirstVisitIntro,
 } from "@/lib/first-visit-intro-state";
-import { redirectScholarPath } from "@/lib/scholar-to-history-redirect";
-
 /** شريط/كروم ثقيل (lucide + nav-map) — كسول حتى لا يدخل مسار أول زيارة / LCP */
 const NavBar = lazyWithRetry(() => import("@/components/NavBar"), "NavBar");
 const BottomNavBar = lazyWithRetry(
@@ -179,6 +177,7 @@ const LessonsPage = lazy(() => import("@/pages/lessons/LessonsPage"));
 const CompetitionsPage = lazy(() => import("@/pages/competitions/CompetitionsPage"));
 const CompetitionDetailPage = lazy(() => import("@/pages/competitions/CompetitionDetailPage"));
 const TeachersIndexPage = lazy(() => import("@/pages/lessons/TeachersIndexPage"));
+const ScholarProfilePage = lazy(() => import("@/pages/scholars/ScholarProfilePage"));
 const TeacherDetailPage = lazy(() => import("@/pages/lessons/TeacherDetailPage"));
 const LessonsArchivePage = lazy(() => import("@/pages/lessons/LessonsArchivePage"));
 const LessonDetailPage = lazy(() => import("@/pages/lessons/LessonDetailPage"));
@@ -772,11 +771,6 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType<any>
   );
 }
 
-function ScholarLegacyRedirect() {
-  const params = useParams<{ id?: string }>();
-  return <Redirect to={redirectScholarPath(params?.id)} />;
-}
-
 function AdminLazyRoute({ component: Component }: { component: ComponentType }) {
   return (
     <AdminRouteGuard>
@@ -889,8 +883,8 @@ function Router() {
       <Route path="/mind-map"><SafeLazyRoute component={MindMapPage} /></Route>
       <Route path="/islamic-landmarks"><SafeLazyRoute component={IslamicLandmarksPage} /></Route>
       <Route path="/mutashabihat"><SafeLazyRoute component={MutashabihatPage} /></Route>
-      <Route path="/scholars/:id"><ScholarLegacyRedirect /></Route>
-      <Route path="/scholars"><Redirect to="/tarikh-islami" /></Route>
+      <Route path="/scholars/:id"><SafeLazyRoute component={ScholarProfilePage} /></Route>
+      <Route path="/scholars"><SafeLazyRoute component={ScholarProfilePage} /></Route>
       <Route path="/tarikh-islami/:id"><SafeLazyRoute component={TarikhIslamiDetailPage} /></Route>
       <Route path="/asma-husna"><SafeLazyRoute component={AsmaaHusnaPage} /></Route>
       <Route path="/akhlaq"><SafeLazyRoute component={AkhlaqPage} /></Route>
