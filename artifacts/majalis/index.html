@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#F2F4F3" />
-    <!-- ثيم+RTL+حجم خط قبل أي CSS/JS — أول إطار ثابت (v12-startup-gate-2026-08) -->
+    <!-- ثيم+RTL+حجم خط قبل أي CSS/JS — أول إطار ثابت (v11-startup-stable-2026-08) -->
     <script id="mj-theme-boot">
       (function () {
         try {
@@ -14,7 +14,7 @@
           html.setAttribute("dir", "rtl");
           html.classList.add("app-booting");
           html.dataset.appBooting = "1";
-          var _dsv = "v12-startup-gate-2026-08";
+          var _dsv = "v11-startup-stable-2026-08";
           if (localStorage.getItem("majalis-design-v") !== _dsv) {
             localStorage.setItem("majalis-design-v", _dsv);
             localStorage.removeItem("majalis-font-preference");
