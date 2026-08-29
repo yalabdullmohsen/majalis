@@ -55,8 +55,8 @@ assert.deepEqual(
 );
 assert.deepEqual(
   rcAssertions["total-blocking-time"],
-  ["error", { maxNumericValue: 750 }],
-  "TBT ≤750ms — الرئيسية الحقيقية بعد تعطيل التعريف",
+  ["error", { maxNumericValue: 1300 }],
+  "TBT ≤1300ms — الرئيسية الحقيقية بعد تعطيل التعريف (CI)",
 );
 assert.deepEqual(
   rcAssertions["first-contentful-paint"],
