@@ -1428,7 +1428,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
+          "value": "public, max-age=0, s-maxage=900, stale-while-revalidate=86400"
         },
         {
           "key": "Content-Type",
@@ -1441,7 +1441,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
+          "value": "public, max-age=0, s-maxage=900, stale-while-revalidate=86400"
         },
         {
           "key": "Content-Type",
@@ -1465,7 +1465,7 @@
         },
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
+          "value": "public, max-age=0, s-maxage=900, stale-while-revalidate=86400"
         }
       ]
     },
@@ -1514,7 +1514,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=3600, stale-while-revalidate=86400"
+          "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800"
         },
         {
           "key": "Content-Type",
@@ -1705,6 +1705,24 @@
       ]
     },
     {
+      "source": "/api/readyz",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=30, stale-while-revalidate=60"
+        }
+      ]
+    },
+    {
+      "source": "/api/healthz",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=30, stale-while-revalidate=60"
+        }
+      ]
+    },
+    {
       "source": "/manifest.webmanifest",
       "headers": [
         {
@@ -1713,7 +1731,7 @@
         },
         {
           "key": "Cache-Control",
-          "value": "public, max-age=3600, stale-while-revalidate=86400"
+          "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800"
         },
         {
           "key": "X-Content-Type-Options",

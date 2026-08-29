@@ -19,7 +19,10 @@ export default async function handler(req, res) {
   const full = req.query?.full === "1";
 
   if (!full) {
-    sendJson(res, 200, litePayload());
+    sendJson(res, 200, litePayload(), {
+      "Cache-Control": "public, max-age=0, s-maxage=30, stale-while-revalidate=60",
+      "CDN-Cache-Control": "public, s-maxage=30, stale-while-revalidate=60",
+    });
     return;
   }
 
