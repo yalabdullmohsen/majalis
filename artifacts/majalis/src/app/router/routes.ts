@@ -434,12 +434,19 @@ function inferSection(path: string): AppRouteSection {
   return "other";
 }
 
+const SITEMAP_EXCLUDED =
+  /^\/(admin|dashboard|login|register|api|search|settings|account|auth)(\/|$)/;
+
 export const ROUTE_REGISTRY: readonly AppRoute[] = PATHS.map((path) => ({
   path,
   titleAr: titleFromPath(path),
   section: inferSection(path),
   inNav: NAV_PATHS.has(path),
-  inSitemap: !path.includes(":") && !path.startsWith("/admin") && !path.includes("*"),
+  inSitemap:
+    !path.includes(":") &&
+    !path.includes("*") &&
+    !path.startsWith("/admin") &&
+    !SITEMAP_EXCLUDED.test(path),
 }));
 
 export function getRouteByPath(path: string): AppRoute | undefined {
