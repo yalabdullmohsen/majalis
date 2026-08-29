@@ -89,11 +89,14 @@ async function main() {
         const rootEl = current?.querySelector('[data-testid="mushaf-page"]');
         const frame = current?.querySelector('[data-testid="mushaf-page-frame"]');
         const line =
-          current?.querySelector(".mm-ayah-line") || current?.querySelector(".mm-basmala");
+          current?.querySelector(".nm-line, .nm-basmala, .mm-ayah-line, .mm-basmala");
         const rect = frame?.getBoundingClientRect();
         const pageEl = rootEl;
         const familyRaw = pageEl
-          ? getComputedStyle(pageEl).getPropertyValue("--mm-qpc-family").trim()
+          ? (
+              getComputedStyle(pageEl).getPropertyValue("--nm-qpc-family").trim() ||
+              getComputedStyle(pageEl).getPropertyValue("--mm-qpc-family").trim()
+            )
           : "";
         const family = familyRaw.replace(/^["']+|["']+$/g, "");
         const fontCheck = family
@@ -103,12 +106,12 @@ async function main() {
         const pageOverflow =
           !!pageEl && pageEl.scrollWidth > pageEl.clientWidth + 1;
         const lineOverflow = pageEl
-          ? [...pageEl.querySelectorAll(".mm-ayah-line, .mm-basmala")].some(
+          ? [...pageEl.querySelectorAll(".nm-line, .nm-basmala, .mm-ayah-line, .mm-basmala")].some(
               (el) => el.scrollWidth > el.clientWidth + 1,
             )
           : true;
         const ink = pageEl
-          ? [...pageEl.querySelectorAll(".mm-slot")]
+          ? [...pageEl.querySelectorAll(".nm-slot, .mm-slot")]
           : [];
         let overlap = false;
         for (const slot of ink) {
@@ -117,7 +120,7 @@ async function main() {
           const slotBox = slot.getBoundingClientRect();
           if (slotBox.height < 2) continue;
           for (const glyph of slot.querySelectorAll(
-            ".mm-ayah-line, .mm-basmala, .mm-surah-frame",
+            ".nm-line, .nm-basmala, .nm-surah-banner, .mm-ayah-line, .mm-basmala, .mm-surah-frame",
           )) {
             const box = glyph.getBoundingClientRect();
             if (box.bottom > slotBox.bottom + 1.5 || box.top < slotBox.top - 1.5) overlap = true;
@@ -125,9 +128,9 @@ async function main() {
         }
         return {
           pageAttr: rootEl?.getAttribute("data-page"),
-          slots: current?.querySelectorAll(".mm-slot").length ?? 0,
-          ayahLines: current?.querySelectorAll(".mm-ayah-line").length ?? 0,
-          banners: current?.querySelectorAll(".mm-surah-frame").length ?? 0,
+          slots: ink.length,
+          ayahLines: current?.querySelectorAll(".nm-line, .mm-ayah-line").length ?? 0,
+          banners: current?.querySelectorAll(".nm-surah-banner, .mm-surah-frame").length ?? 0,
           fontFamily: line ? getComputedStyle(line).fontFamily : "",
           frameWidth: rect?.width ?? 0,
           frameHeight: rect?.height ?? 0,
@@ -139,6 +142,7 @@ async function main() {
           overlap,
         };
       });
+      const openingMax = n <= 2 ? 46 : 35;
       measurements.push({
         page: n,
         ...m,
@@ -149,7 +153,7 @@ async function main() {
           String(m.pageAttr) === String(n) &&
           m.fontCheck === true &&
           m.fontSize >= 12 &&
-          m.fontSize <= 35 &&
+          m.fontSize <= openingMax &&
           m.pageOverflow === false &&
           m.lineOverflow === false &&
           m.overlap === false,

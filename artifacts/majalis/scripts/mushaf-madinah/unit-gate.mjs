@@ -176,7 +176,8 @@ assert.doesNotMatch(app, /MushafComingSoonPage/);
 assert.doesNotMatch(app, /demo-ayah-reader(?!.*Redirect)/);
 
 const page = read("src/pages/quran/MushafReaderPage.tsx");
-assert.match(page, /VerifiedMushafReader|MushafViewport/);
+assert.match(page, /NewMushafReader|VerifiedMushafReader|MushafViewport/);
+assert.match(page, /features\/mushaf-reader/);
 assert.doesNotMatch(page, /\.pdf/i);
 
 assert.ok(existsSync(resolve(root, "public/fonts/qpc-v2/p1.woff2")));

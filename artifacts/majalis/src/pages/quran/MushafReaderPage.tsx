@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useParams, useSearch } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
-import { MushafViewport } from "@/features/mushaf-madinah";
+import { NewMushafReader as MushafViewport } from "@/features/mushaf-reader";
 import { applyPageSeo } from "@/lib/seo";
 import {
   clampMushafPage,
@@ -13,7 +13,7 @@ import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
 import { useNavigationPaintGate } from "@/hooks/useNavigationPaintGate";
 
 /**
- * مسار المصحف الحقيقي `/mushaf` — VerifiedMushafReader عبر alias MushafViewport، بلا PDF.
+ * مسار المصحف الحقيقي `/mushaf` — NewMushafReader (واجهة جديدة عبر alias MushafViewport)، بلا PDF.
  */
 export default function MushafReaderPage() {
   const params = useParams<{ page?: string; surah?: string }>();
