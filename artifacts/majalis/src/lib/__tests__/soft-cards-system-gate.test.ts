@@ -27,8 +27,8 @@ assert.match(main, /soft-cards\.css/, "استيراد soft-cards في main");
 assert.match(prayer, /--pts-radius:\s*22px/, "الصلاة تستخدم نصف قطر 22px");
 assert.match(prayer, /inset 0 1px 0 rgba\(255,\s*255,\s*255,\s*0\.12\)/, "highlight بطاقة البطل");
 assert.doesNotMatch(prayer, /\.pts-row--next[\s\S]{0,120}border:\s*1\.5px/, "لا إطار سميك للصلاة القادمة");
-assert.match(prayer, /\.pts-row\s*\{[\s\S]*?width:\s*min\(\s*88vw,\s*430px\)/, "بطاقات الصلاة متمركزة بعرض محدود");
-assert.match(prayer, /\.pts-row--next\s*\{[\s\S]*?width:\s*min\(\s*88vw,\s*440px\)/, "الصلاة القادمة أعرض قليلًا");
+assert.match(prayer, /\.pts-row\s*\{[\s\S]*?width:\s*min\(\s*78vw,\s*320px\)/, "بطاقات الصلاة متمركزة بعرض محدود");
+assert.match(prayer, /\.pts-row--next\s*\{[\s\S]*?width:\s*min\(\s*80vw,\s*328px\)/, "الصلاة القادمة أعرض قليلًا");
 assert.match(prayer, /\.pts-list\s*\{[\s\S]*?align-items:\s*center/, "قائمة المواقيت متمركزة");
 
 assert.match(prophets, /\.prophet-fact-card[\s\S]*?border-radius:\s*var\(--radius-tile/, "حقائق الأنبياء ناعمة");

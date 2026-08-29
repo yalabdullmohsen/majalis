@@ -61,15 +61,16 @@ html.pts-immersive .bottom-nav {
 html.pts-immersive .bottom-nav--v2 .bottom-nav__tab,
 html.pts-immersive .bottom-nav .bottom-nav__tab {
   color: rgba(250, 250, 248, 0.72) !important;
-  border-radius: 16px !important;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease !important;
+  border-radius: 14px !important;
+  margin: 0.2rem 0.15rem !important;
+  transition: background 0.18s ease, color 0.18s ease !important;
 }
 html.pts-immersive .bottom-nav--v2 .bottom-nav__tab.is-active,
 html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
   color: #E3CB8C !important;
-  background: color-mix(in srgb, var(--gold-400, #D2B063) 20%, transparent) !important;
-  border-radius: 16px !important;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, #E3CB8C 28%, transparent) !important;
+  background: color-mix(in srgb, var(--gold-400, #D2B063) 16%, transparent) !important;
+  border-radius: 14px !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #E3CB8C 22%, transparent) !important;
 }
 
 /* وضوح الشريط السفلي على شاشة الصلاة دون تكبير مبالغ */
@@ -98,7 +99,7 @@ html.pts-immersive .bottom-nav {
   padding-block-start: max(12px, var(--inset-top, 0px)) !important;
   /* فراغ آمن فوق الشريط السفلي — يمنع اختفاء آخر بطاقة */
   padding-bottom: calc(
-    110px + var(--inset-bottom, 0px)
+    118px + var(--inset-bottom, 0px)
   ) !important;
   box-sizing: border-box;
 }
@@ -111,13 +112,13 @@ html.pts-immersive .bottom-nav {
   --pts-radius: 22px;
   --pts-radius-sm: var(--radius-tile, 24px);
   --pts-gold: #E3CB8C;
-  --pts-gold-soft: color-mix(in srgb, #D2B063 28%, transparent);
-  --pts-gold-line: color-mix(in srgb, #D2B063 45%, transparent);
+  --pts-gold-soft: color-mix(in srgb, #D2B063 22%, transparent);
+  --pts-gold-line: color-mix(in srgb, #D2B063 32%, transparent);
   --pts-white: #FAFAF8;
-  --pts-muted: rgba(250, 250, 248, 0.88);
-  --pts-row: rgba(255, 255, 255, 0.08);
-  --pts-row-active: rgba(222, 196, 128, 0.18);
-  --pts-card-border: rgba(255, 255, 255, 0.08);
+  --pts-muted: rgba(250, 250, 248, 0.82);
+  --pts-row: rgba(255, 255, 255, 0.06);
+  --pts-row-active: rgba(222, 196, 128, 0.14);
+  --pts-card-border: rgba(255, 255, 255, 0.06);
 
   direction: rtl;
   min-height: 100svh;
@@ -142,9 +143,10 @@ html.pts-immersive .bottom-nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0.7rem;
   position: relative;
   overflow-x: clip;
+  -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
 }
 
@@ -179,10 +181,10 @@ html.pts-immersive .bottom-nav {
   box-sizing: border-box;
 }
 
-/* البطل وقائمة المواقيت: أعرض قليلًا للتمركز دون ملء الشاشة */
+/* البطل وقائمة المواقيت: عرض ثابت متمركز — بلا تمدد للأطراف */
 .pts-screen > .pts-hero,
 .pts-screen > .pts-list {
-  width: min(92vw, 440px);
+  width: min(82vw, 340px);
   max-width: 100%;
   margin-inline: auto;
 }
@@ -381,23 +383,23 @@ html.pts-immersive .bottom-nav {
 /* ── بطل العدّاد + بطاقة احترافية + ظلّ المسجد ── */
 .pts-hero {
   position: relative;
-  min-height: 9.5rem;
+  min-height: 8.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1.05rem 0.95rem 1.1rem;
+  padding: 0.85rem 0.85rem 0.9rem;
   overflow: hidden;
   border-radius: var(--pts-radius, 22px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   background-color: #12362C;
   background-image:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.045)),
-    linear-gradient(165deg, rgba(25, 83, 69, 0.55) 0%, rgba(8, 26, 22, 0.55) 100%);
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+    linear-gradient(165deg, rgba(25, 83, 69, 0.45) 0%, rgba(8, 26, 22, 0.45) 100%);
   color: var(--pts-white);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 10px 28px rgba(0, 0, 0, 0.14);
+    0 6px 18px rgba(0, 0, 0, 0.1);
 }
 .pts-mosque {
   position: absolute;
@@ -492,64 +494,63 @@ html.pts-immersive .bottom-nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.45rem;
-  width: min(92vw, 440px);
+  gap: 0.32rem;
+  width: min(82vw, 340px);
   max-width: 100%;
   margin-inline: auto;
-  margin-top: 0.15rem;
+  margin-top: 0.1rem;
 }
 .pts-row {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.22rem;
-  width: min(88vw, 430px);
+  gap: 0.12rem;
+  width: min(78vw, 320px);
   max-width: 100%;
   margin-inline: auto;
   min-height: 0;
-  padding: 0.62rem 0.95rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.42rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--pts-radius, 22px);
-  background-color: rgba(12, 42, 34, 0.92);
-  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.045));
+  background-color: rgba(12, 42, 34, 0.72);
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
   color: var(--pts-white);
   font-family: var(--font-face, var(--font-body), "Amiri", serif);
   cursor: pointer;
   overflow: hidden;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 8px 20px rgba(0, 0, 0, 0.12);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 3px 10px rgba(0, 0, 0, 0.08);
   transition:
-    background 0.22s ease,
-    border-color 0.22s ease,
-    box-shadow 0.22s ease,
-    transform 0.18s ease;
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
   text-align: center;
   -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
 }
 .pts-row:hover {
-  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
-  border-color: rgba(255, 255, 255, 0.14);
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+  border-color: rgba(255, 255, 255, 0.1);
 }
 .pts-row:active {
-  transform: translateY(1px) scale(0.995);
+  opacity: 0.92;
 }
 .pts-row--next {
-  width: min(88vw, 440px);
+  width: min(80vw, 328px);
   max-width: 100%;
-  padding: 0.78rem 1.05rem;
-  background-color: rgba(40, 52, 28, 0.92);
-  background-image: linear-gradient(145deg, rgba(222, 196, 128, 0.16), rgba(255, 255, 255, 0.05));
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.5rem 0.85rem;
+  background-color: rgba(28, 48, 34, 0.85);
+  background-image: linear-gradient(145deg, rgba(222, 196, 128, 0.14), rgba(15, 74, 56, 0.12));
+  border: 1px solid var(--pts-gold-line);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 10px 24px rgba(0, 0, 0, 0.14);
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 14px rgba(0, 0, 0, 0.1);
 }
 .pts-row--next:hover {
-  background-image: linear-gradient(145deg, rgba(222, 196, 128, 0.2), rgba(255, 255, 255, 0.07));
-  border-color: rgba(255, 255, 255, 0.14);
+  background-image: linear-gradient(145deg, rgba(222, 196, 128, 0.18), rgba(15, 74, 56, 0.14));
+  border-color: color-mix(in srgb, #D2B063 40%, transparent);
 }
 .pts-row--pinned:not(.pts-row--next) {
   background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
@@ -575,14 +576,14 @@ html.pts-immersive .bottom-nav {
   width: 100%;
 }
 .pts-row__name {
-  font-size: clamp(1rem, 3.8vw, 1.15rem);
+  font-size: clamp(0.92rem, 3.4vw, 1.05rem);
   font-weight: 700;
   color: #FAFAF8;
   line-height: 1.25;
 }
 .pts-row--next .pts-row__name {
   font-weight: 800;
-  font-size: clamp(1.05rem, 4vw, 1.22rem);
+  font-size: clamp(0.95rem, 3.5vw, 1.08rem);
   color: #FAFAF8;
 }
 .pts-row__status {
@@ -595,9 +596,10 @@ html.pts-immersive .bottom-nav {
   color: var(--pts-gold);
 }
 .pts-row__time {
-  font-size: clamp(1.15rem, 4.4vw, 1.4rem);
+  font-size: clamp(1.02rem, 3.8vw, 1.2rem);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
+  line-height: 1.2;
   letter-spacing: 0.02em;
   color: var(--pts-white);
   direction: ltr;

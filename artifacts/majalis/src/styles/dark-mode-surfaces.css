@@ -321,19 +321,28 @@ html.dark textarea::placeholder {
   opacity: 1;
 }
 
-/* تنقّل سفلي — وضوح نشط/خامل */
+/* تنقّل سفلي — وضوح نشط/خامل موحّد مع الهوية */
 html[data-theme="dark"] .bottom-nav__tab,
 html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab,
 html.dark .bottom-nav__tab,
 html.dark .bottom-nav--v2 .bottom-nav__tab {
   color: var(--txt-muted, #C5D0CB) !important;
+  border-radius: 14px !important;
 }
 html[data-theme="dark"] .bottom-nav__tab.is-active,
 html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
 html.dark .bottom-nav__tab.is-active,
 html.dark .bottom-nav--v2 .bottom-nav__tab.is-active {
-  color: var(--accent-strong, #7BD6AE) !important;
-  background: color-mix(in srgb, var(--accent, #5CC095) 14%, transparent) !important;
+  color: var(--mj-accent, #c4a35a) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mj-accent, #c4a35a) 18%, transparent) !important;
+}
+html[data-theme="dark"] .bottom-nav__tab.is-active::before,
+html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active::before,
+html.dark .bottom-nav__tab.is-active::before,
+html.dark .bottom-nav--v2 .bottom-nav__tab.is-active::before {
+  content: none !important;
+  display: none !important;
 }
 html[data-theme="dark"] .bottom-nav__tab-label,
 html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab-label,

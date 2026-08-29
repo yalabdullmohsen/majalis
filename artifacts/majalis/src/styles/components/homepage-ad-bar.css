@@ -3,7 +3,7 @@
  * في تدفق المستند فقط — بلا تثبيت فوق التطبيق.
  */
 .homepage-ad-bar {
-  --homepage-ad-bar-h: 48px;
+  --homepage-ad-bar-h: 42px;
   --ad-banner-height: var(--homepage-ad-bar-h);
   position: relative;
   z-index: var(--z-ad-banner, 140);
@@ -15,24 +15,14 @@
   max-height: calc(var(--inset-top) + var(--homepage-ad-bar-h));
   overflow: hidden;
   isolation: isolate;
-  border-block-end: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 12%, transparent);
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 6%, #fff) 0%,
-    #fff 42%,
-    color-mix(in srgb, var(--majalis-brass-deep, #8b6914) 5%, #fff) 100%
-  );
+  border-block-end: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 10%, transparent);
+  background: color-mix(in srgb, var(--majalis-ivory, #faf8f2) 88%, var(--majalis-emerald-deep, #173d35));
   color: var(--majalis-ink, #1a1a18);
 }
 
 html[data-theme="dark"] .homepage-ad-bar {
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--majalis-emerald-deep, #4fb48b) 14%, #101614) 0%,
-    #101614 50%,
-    color-mix(in srgb, var(--majalis-brass-deep, #c9a84c) 8%, #101614) 100%
-  );
-  border-block-end-color: color-mix(in srgb, #fff 10%, transparent);
+  background: color-mix(in srgb, #101614 92%, var(--majalis-emerald-deep, #173d35));
+  border-block-end-color: color-mix(in srgb, #fff 8%, transparent);
   color: #e8f0ec;
 }
 
@@ -40,8 +30,9 @@ html[data-theme="dark"] .homepage-ad-bar {
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
-  width: min(100%, 72rem);
+  width: min(100%, 36rem);
   height: var(--homepage-ad-bar-h);
   min-height: var(--homepage-ad-bar-h);
   max-height: var(--homepage-ad-bar-h);
@@ -51,29 +42,29 @@ html[data-theme="dark"] .homepage-ad-bar {
 
 .homepage-ad-bar__logo {
   flex: 0 0 auto;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 0.3rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 0.45rem;
   object-fit: contain;
 }
 
 .homepage-ad-bar__badge {
   flex: 0 0 auto;
-  padding: 0.12rem 0.4rem;
+  padding: 0.1rem 0.4rem;
   border-radius: 999px;
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 700;
   line-height: 1.2;
   white-space: nowrap;
   color: var(--majalis-emerald-deep, #173d35);
-  background: color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 10%, #fff);
-  border: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 18%, transparent);
+  background: color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 8%, #fff);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 14%, transparent);
 }
 
 html[data-theme="dark"] .homepage-ad-bar__badge {
-  color: #b8e8d4;
-  background: color-mix(in srgb, #4fb48b 16%, #101614);
-  border-color: color-mix(in srgb, #4fb48b 28%, transparent);
+  color: #d4e8dc;
+  background: color-mix(in srgb, #1f6b56 18%, #101614);
+  border-color: color-mix(in srgb, #1f6b56 28%, transparent);
 }
 
 .homepage-ad-bar__copy {
@@ -89,7 +80,7 @@ html[data-theme="dark"] .homepage-ad-bar__badge {
 
 .homepage-ad-bar__title {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
@@ -98,12 +89,18 @@ html[data-theme="dark"] .homepage-ad-bar__badge {
 
 .homepage-ad-bar__desc {
   margin: 0;
-  font-size: 0.68rem;
-  opacity: 0.82;
+  font-size: 0.65rem;
+  opacity: 0.78;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: none;
+  color: var(--majalis-muted, #5c6b66);
+}
+
+html[data-theme="dark"] .homepage-ad-bar__desc {
+  color: color-mix(in srgb, #e8f0ec 72%, transparent);
+  opacity: 1;
 }
 
 .homepage-ad-bar__cta {
@@ -111,25 +108,26 @@ html[data-theme="dark"] .homepage-ad-bar__badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 1.75rem;
-  max-height: 1.85rem;
-  padding: 0 0.55rem;
-  border-radius: 0.4rem;
-  font-size: 0.7rem;
+  min-height: 1.65rem;
+  max-height: 1.75rem;
+  padding: 0 0.65rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
   font-weight: 700;
   line-height: 1;
   text-decoration: none;
   white-space: nowrap;
   color: #fff;
   background: var(--majalis-emerald-deep, #173d35);
-  border: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 80%, #000);
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--majalis-brass-deep, #8b6914) 35%, transparent);
+  border: 1px solid transparent;
+  box-shadow: none;
+  transition: filter 0.15s ease;
 }
 
 .homepage-ad-bar__cta:hover,
 .homepage-ad-bar__cta:focus-visible {
   filter: brightness(1.06);
-  outline: 2px solid color-mix(in srgb, var(--majalis-brass-deep, #8b6914) 55%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--majalis-brass-deep, #8b6914) 45%, transparent);
   outline-offset: 1px;
 }
 
@@ -138,12 +136,12 @@ html[data-theme="dark"] .homepage-ad-bar__badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.65rem;
+  height: 1.65rem;
   margin-inline-start: 0.05rem;
   padding: 0;
   border: none;
-  border-radius: 0.35rem;
+  border-radius: 999px;
   background: transparent;
   color: inherit;
   opacity: 0.7;
@@ -159,7 +157,7 @@ html[data-theme="dark"] .homepage-ad-bar__badge {
 
 @media (max-width: 419px) {
   .homepage-ad-bar {
-    --homepage-ad-bar-h: 44px;
+    --homepage-ad-bar-h: 40px;
   }
 
   .homepage-ad-bar__badge {
@@ -167,46 +165,47 @@ html[data-theme="dark"] .homepage-ad-bar__badge {
   }
 
   .homepage-ad-bar__logo {
-    width: 1.35rem;
-    height: 1.35rem;
+    width: 1.25rem;
+    height: 1.25rem;
   }
 
   .homepage-ad-bar__cta {
-    padding: 0 0.45rem;
-    font-size: 0.65rem;
-    min-height: 1.65rem;
+    padding: 0 0.5rem;
+    font-size: 0.62rem;
+    min-height: 1.55rem;
   }
 }
 
 @media (min-width: 720px) {
   .homepage-ad-bar {
-    --homepage-ad-bar-h: 52px;
+    --homepage-ad-bar-h: 46px;
   }
 
   .homepage-ad-bar__inner {
-    gap: 0.65rem;
+    gap: 0.55rem;
+    width: min(100%, 42rem);
     padding-inline: calc(1rem + var(--inset-left, 0px)) calc(0.65rem + var(--inset-right, 0px));
   }
 
   .homepage-ad-bar__badge {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.55rem;
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
   }
 
   .homepage-ad-bar__title {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
   }
 
   .homepage-ad-bar__desc {
     display: block;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
   }
 
   .homepage-ad-bar__cta {
-    min-height: 2rem;
-    max-height: 2rem;
-    padding: 0 0.85rem;
-    font-size: 0.8rem;
+    min-height: 1.85rem;
+    max-height: 1.85rem;
+    padding: 0 0.8rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -218,7 +217,7 @@ html[data-home-ad="1"] .navbar-v3 {
 
 html[data-home-ad="1"] {
   --header-h: calc(
-    var(--inset-top) + var(--ad-banner-height, var(--homepage-ad-bar-h, 48px)) +
+    var(--inset-top) + var(--ad-banner-height, var(--homepage-ad-bar-h, 42px)) +
       var(--app-header-height, var(--header-chrome, 48px))
   );
 }
