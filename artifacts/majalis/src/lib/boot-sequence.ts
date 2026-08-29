@@ -112,11 +112,13 @@ export function markBootReady(): void {
 }
 
 /**
- * تسخين غير حاجب لتخطيط آخر صفحة مصحف بعد استقرار الإقلاع.
+ * تسخين غير حاجب لتخطيط آخر صفحة مصحف — بعد idle طويل وفقط إن كان المسار مصحفًا.
  */
 export function scheduleMushafLastPagePrewarm(): void {
   const run = () => {
     try {
+      const path = typeof location !== "undefined" ? location.pathname : "";
+      if (!path.includes("mushaf")) return;
       const page = loadLastPageSync();
       if (!page) return;
       void import("@/lib/quran-data/qpc-page-data")
@@ -126,9 +128,12 @@ export function scheduleMushafLastPagePrewarm(): void {
       /* ignore */
     }
   };
-  if (typeof requestIdleCallback === "function") {
-    requestIdleCallback(() => run(), { timeout: 4_000 });
-  } else {
-    window.setTimeout(run, 1_200);
-  }
+  const start = () => {
+    if (typeof requestIdleCallback === "function") {
+      requestIdleCallback(() => run(), { timeout: 8_000 });
+    } else {
+      window.setTimeout(run, 2_000);
+    }
+  };
+  window.setTimeout(start, 15_000);
 }

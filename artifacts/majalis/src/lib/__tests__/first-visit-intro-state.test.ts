@@ -1,5 +1,5 @@
 /**
- * بوابة صفحة التعريف عند أول زيارة.
+ * بوابة صفحة التعريف عند أول زيارة — التعريف معطّل نهائيًا.
  * node --import tsx src/lib/__tests__/first-visit-intro-state.test.ts
  */
 import assert from "node:assert/strict";
@@ -39,8 +39,8 @@ beforeEach(() => {
   resetFirstVisitIntroStateForTests();
 });
 
-test("أول زيارة على الرئيسية تعرض التعريف", () => {
-  assert.equal(shouldShowFirstVisitIntro("/"), true);
+test("التعريف معطّل — لا يُعرض على الرئيسية", () => {
+  assert.equal(shouldShowFirstVisitIntro("/"), false);
 });
 
 test("مسار غير الرئيسية لا يعرض التعريف", () => {
@@ -48,7 +48,7 @@ test("مسار غير الرئيسية لا يعرض التعريف", () => {
   assert.equal(shouldShowFirstVisitIntro("/fiqh"), false);
 });
 
-test("بعد الحفظ لا تعود الصفحة", () => {
+test("بعد الحفظ تبقى الحالة مقروءة", () => {
   markFirstVisitIntroSeen();
   assert.equal(hasSeenFirstVisitIntroSync(), true);
   assert.equal(shouldShowFirstVisitIntro("/"), false);

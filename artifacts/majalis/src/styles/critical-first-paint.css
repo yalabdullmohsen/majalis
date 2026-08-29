@@ -46,9 +46,14 @@ html.app-booting,
 html.app-booting *,
 html.app-booting *::before,
 html.app-booting *::after {
-  transition-property: opacity, color, background-color, border-color, box-shadow, transform, filter;
-  animation-duration: 0.001ms;
+  transition-duration: 0s;
+  transition-delay: 0s;
+  animation-duration: 0s;
   animation-delay: 0s;
+}
+
+html.app-booting #root {
+  visibility: hidden;
 }
 
 body {

@@ -1,8 +1,6 @@
 /**
- * صفحة التعريف عند أول زيارة — تظهر مرة واحدة على الرئيسية فقط.
- *
- * التحكم: غيّر `enabled` إلى `false` لتعطيل الصفحة على الويب.
- * التطبيق الأصلي (Capacitor) يتخطى التعريف دائمًا — انظر first-visit-intro-state.
+ * صفحة التعريف عند أول زيارة — معطّلة نهائيًا لاستقرار أول إطار.
+ * الملف والاختبارات تبقى للمراجع؛ لا تُعرض شاشة ترحيب تسويقية عند الإقلاع.
  */
 export type FirstVisitIntroConfig = {
   /** false = لا تُعرض صفحة التعريف نهائيًا */
@@ -10,5 +8,5 @@ export type FirstVisitIntroConfig = {
 };
 
 export const firstVisitIntroConfig: FirstVisitIntroConfig = {
-  enabled: true,
+  enabled: false,
 };

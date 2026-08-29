@@ -28,7 +28,7 @@ console.log("\n=== Lazy: تفسير / صوت / بحث المصحف ===");
   assert.match(app, /lazyWithRetry\([\s\S]*GlobalSearchModal/, "GlobalSearchModal lazy");
   assert.match(app, /lazyWithRetry\([\s\S]*QuranMiniPlayerBar/, "QuranMiniPlayerBar lazy");
   assert.match(app, /lazyWithRetry\([\s\S]*UpdateAvailableBanner/, "UpdateAvailableBanner lazy");
-  assert.match(app, /lazyWithRetry\([\s\S]*FirstVisitIntro/, "FirstVisitIntro lazy");
+  assert.doesNotMatch(app, /FirstVisitIntro/, "لا FirstVisitIntro في مسار الإقلاع");
   assert.match(app, /lazyWithRetry\([\s\S]*EdgeSwipeBack/, "EdgeSwipeBack lazy");
   assert.match(app, /lazyWithRetry\([\s\S]*RouteEnterMotion/, "RouteEnterMotion lazy");
   assert.match(app, /lazyWithRetry\([\s\S]*DeferredAchievementBoot/, "DeferredAchievementBoot lazy");
