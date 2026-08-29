@@ -51,7 +51,7 @@ function isLastSurahLine(words: QpcWord[], layout: MushafPageLayout): boolean {
   return !!chapter && ayah === chapter.versesCount;
 }
 
-/** صفحة مصحف بسيطة — عاجي نظيف بلا إطار ولا زخارف */
+/** صفحة مصحف بسيطة — عاجي نظيف بلا إطار ولا زخارف؛ قياس موحّد لكل الصفحات */
 export const MushafPageView = memo(function MushafPageView({
   layout,
   fontFamily,
@@ -59,6 +59,7 @@ export const MushafPageView = memo(function MushafPageView({
   onSelectVerse,
 }: Props) {
   const isOpeningP1 = layout.pageNumber === 1;
+  /** صفحات الافتتاح تخفي الخانات الفارغة فقط — نفس عرض النص وحجم الخط */
   const isFlexBody = layout.pageNumber === 1 || layout.pageNumber === 2;
   const surahStart = !isFlexBody && layout.surahsStartingOnPage.length > 0;
   const pageType = isOpeningP1
@@ -95,13 +96,14 @@ export const MushafPageView = memo(function MushafPageView({
       className={`nm-page${isOpeningP1 ? " nm-page--opening" : ""}${isFlexBody ? " nm-page--flex" : ""}`}
       data-page={footerPage}
       data-page-type={pageType}
+      data-layout="pageShell"
       data-testid="mushaf-page"
       data-opening={isFlexBody ? "1" : "0"}
       data-mm-fit="0"
       style={{ ["--nm-qpc-family" as string]: `"${fontFamily}"` }}
       aria-label={`صفحة المصحف ${footerPage}`}
     >
-      <header className="nm-page__header">
+      <header className="nm-page__header" data-layout="pageHeader">
         <span className="nm-page__header-surah">{layout.headerSurahName}</span>
         <span className="nm-page__header-juz">{`الجزء ${toArabicDigits(layout.juzNumber)}`}</span>
       </header>
@@ -109,11 +111,18 @@ export const MushafPageView = memo(function MushafPageView({
       <div className="nm-page__stage" data-testid="mushaf-page-frame">
         <div
           className={`nm-page__body${isOpeningP1 ? " nm-page__body--opening" : ""}${isFlexBody ? " nm-page__body--flex" : ""}`}
+          data-layout="pageBody"
         >
           {slotOrder.map((slot) => {
             const cell = slots.get(slot);
             return (
-              <div key={slot} className="nm-slot" data-slot={slot} data-kind={cell?.kind ?? "empty"}>
+              <div
+                key={slot}
+                className="nm-slot"
+                data-slot={slot}
+                data-kind={cell?.kind ?? "empty"}
+                data-layout="lineBlock"
+              >
                 {cell?.kind === "banner" ? (
                   <div className="nm-slot__banner">
                     <MushafSurahBanner nameArabic={cell.nameArabic} />
@@ -141,7 +150,7 @@ export const MushafPageView = memo(function MushafPageView({
         </div>
       </div>
 
-      <footer className="nm-page__footer">
+      <footer className="nm-page__footer" data-layout="pageFooter">
         <span className="nm-page__footer-hizb">{hizbLabel}</span>
         <span className="nm-page__footer-num">{toArabicPageDigits(footerPage)}</span>
         <span className="nm-page__footer-spacer" aria-hidden="true" />

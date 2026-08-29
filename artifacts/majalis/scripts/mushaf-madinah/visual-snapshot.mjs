@@ -173,7 +173,8 @@ async function main() {
       const lineSlots = await page
         .locator('[data-pane="current"] .nm-slot .nm-line, [data-pane="current"] .mm-slot .mm-ayah-line')
         .count();
-      const openingMax = n <= 2 ? 46 : 35;
+      /* سقف موحّد لكل الصفحات بما فيها الفاتحة وبداية البقرة */
+      const openingMax = 35;
       report.push({
         page: n,
         file: file.replace(root + "/", ""),
