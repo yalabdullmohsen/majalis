@@ -111,7 +111,7 @@
   --gutter-inline-start: max(var(--inset-right), 16px);
   --gutter-inline-end: max(var(--inset-left), 16px);
   --header-chrome: 56px;
-  --ad-banner-height: 0px;
+  --ad-banner-height: calc(var(--header-ad-h, 2.65rem) + 0.35rem);
   --top-sponsor-content-h: 48px;
   --app-header-height: var(--header-chrome);
   --search-height: 0px;
@@ -165,7 +165,7 @@
   --header-chrome: 56px;
   --nav-chrome: 64px;
   --top-sponsor-content-h: 48px;
-  --ad-banner-height: 0px;
+  --ad-banner-height: calc(var(--header-ad-h, 2.65rem) + 0.35rem);
   --header-h: calc(var(--header-chrome) + var(--inset-top) + var(--ad-banner-height, 0px));
   --nav-h: calc(var(--nav-chrome) + var(--inset-bottom));
   --content-pb: calc(var(--nav-h) + 16px);

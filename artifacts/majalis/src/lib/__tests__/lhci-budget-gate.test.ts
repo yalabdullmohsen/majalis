@@ -31,7 +31,7 @@ const ci = readFileSync(resolve(repo, ".github/workflows/ci.yml"), "utf8");
 const baselineJson = readFileSync(resolve(root, "config/lhci-main-baseline.json"), "utf8");
 const psiJson = readFileSync(resolve(root, "config/psi-production-targets.json"), "utf8");
 
-assert.match(baselineJson, /local-home-post-intro-disable-2026-08-29/, "baseline بعد تعطيل التعريف");
+assert.match(baselineJson, /local-home-chrome-stable-2026-08-29|local-home-post-intro-disable-2026-08-29/, "baseline موثّق");
 assert.match(rc, /lhci-thresholds\.cjs/, "lighthouserc يشتق العتبات");
 assert.match(rc, /lhci-main-baseline/, "مرجع baseline موثّق");
 

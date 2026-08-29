@@ -1250,6 +1250,21 @@ function DeferredPrayerCountdownBanner({ defer }: { defer: boolean }) {
   return <PrayerCountdownBanner />;
 }
 
+function ChromeNavFallback() {
+  return (
+    <header className="navbar-v3 chrome-boot-ph" aria-hidden="true">
+      <div className="navbar-v3__inner" />
+      <div className="navbar-v3__ad-row" />
+      <div className="navbar-v3__search-row" />
+      <div className="navbar-ticker-row" />
+    </header>
+  );
+}
+
+function ChromeBottomFallback() {
+  return <div className="bottom-nav chrome-boot-ph" data-bottom-nav aria-hidden="true" />;
+}
+
 function AppShellInner() {
   const { dir, t } = useLanguage();
   const { isAdmin } = useAuth();
@@ -1338,7 +1353,7 @@ function AppShellInner() {
       <IdleRuntimeBoot />
       {!hideSiteChrome ? (
         <div className="app-top-chrome">
-          <Suspense fallback={null}>
+          <Suspense fallback={<ChromeNavFallback />}>
             <NavBar />
           </Suspense>
         </div>
@@ -1383,7 +1398,7 @@ function AppShellInner() {
         </Suspense>
       )}
       {!onAuthStandalone && (
-        <Suspense fallback={null}>
+        <Suspense fallback={hideSiteChrome ? null : <ChromeBottomFallback />}>
           <BottomNavBar isHidden={shouldHideChrome} />
         </Suspense>
       )}
