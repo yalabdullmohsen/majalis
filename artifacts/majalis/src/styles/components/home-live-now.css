@@ -7,27 +7,45 @@
 .hlive__inner {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  padding: 0.85rem 1rem;
-  border-radius: var(--radius-lg, 12px);
-  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 35%, transparent);
+  gap: 0.75rem;
+  padding: 0.75rem 0.95rem;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 18%, transparent);
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 12%, var(--color-surface)) 0%,
-    var(--color-surface) 100%
+    color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 8%, var(--color-surface, #fff)) 0%,
+    var(--color-surface, #fff) 100%
   );
-  box-shadow: 0 2px 12px color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 10%, transparent);
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 6%, transparent);
+}
+
+html[data-theme="dark"] .hlive__inner,
+html.dark .hlive__inner {
+  border-color: color-mix(in srgb, #fff 10%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 22%, var(--mj-surface, #1b2421)) 0%,
+    var(--mj-surface, #1b2421) 100%
+  );
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+  color: var(--mj-ink, #ecf2ef);
 }
 
 .hlive__pulse {
   flex-shrink: 0;
   display: grid;
   place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.35rem;
+  height: 2.35rem;
   border-radius: 999px;
   color: var(--mj-brand-deep, #1a4d3e);
-  background: color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 14%, transparent);
+  background: color-mix(in srgb, var(--mj-brand-deep, #1a4d3e) 12%, transparent);
+}
+
+html[data-theme="dark"] .hlive__pulse,
+html.dark .hlive__pulse {
+  color: var(--mj-accent, #c4a35a);
+  background: color-mix(in srgb, var(--mj-accent, #c4a35a) 14%, transparent);
 }
 
 .hlive__copy {
@@ -41,7 +59,12 @@
   gap: 0.5rem;
   margin: 0 0 0.2rem;
   font-size: 0.78rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-muted, #5c6b66);
+}
+
+html[data-theme="dark"] .hlive__eyebrow,
+html.dark .hlive__eyebrow {
+  color: color-mix(in srgb, var(--mj-ink, #ecf2ef) 68%, transparent);
 }
 
 .hlive__badge {
@@ -54,54 +77,66 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   color: #fff;
-  background: #c0392b;
-  box-shadow: 0 0 0 2px color-mix(in srgb, #c0392b 25%, transparent);
-  animation: hlive-pulse 2s ease-in-out infinite;
+  background: #a33b30;
+  box-shadow: none;
 }
 
 .hlive__dot {
-  width: 0.45rem;
-  height: 0.45rem;
+  width: 0.4rem;
+  height: 0.4rem;
   border-radius: 50%;
   background: #fff;
-  animation: hlive-blink 1.2s step-end infinite;
-}
-
-@keyframes hlive-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.82; }
-}
-
-@keyframes hlive-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
 }
 
 .hlive__title {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-text, #1a1a18);
   line-height: 1.35;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+html[data-theme="dark"] .hlive__title,
+html.dark .hlive__title {
+  color: var(--mj-ink, #ecf2ef);
+}
+
 .hlive__meta,
 .hlive__more {
   margin: 0.15rem 0 0;
-  font-size: 0.78rem;
-  color: var(--color-text-muted);
+  font-size: 0.76rem;
+  color: var(--color-text-muted, #5c6b66);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+html[data-theme="dark"] .hlive__meta,
+html[data-theme="dark"] .hlive__more,
+html.dark .hlive__meta,
+html.dark .hlive__more {
+  color: color-mix(in srgb, var(--mj-ink, #ecf2ef) 68%, transparent);
+}
+
 .hlive__cta {
   flex-shrink: 0;
   white-space: nowrap;
-  min-height: 44px;
+  min-height: 42px;
+  border-radius: 999px !important;
+  padding-inline: 1rem;
+  background: var(--mj-brand-deep, #1a4d3e) !important;
+  color: #fafaf8 !important;
+  border: none !important;
+  box-shadow: none !important;
+  transition: filter 0.15s ease;
+}
+
+.hlive__cta:hover,
+.hlive__cta:focus-visible {
+  filter: brightness(1.06);
 }
 
 @media (max-width: 520px) {
@@ -111,5 +146,12 @@
   .hlive__cta {
     width: 100%;
     justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hlive__badge,
+  .hlive__dot {
+    animation: none !important;
   }
 }

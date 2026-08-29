@@ -348,17 +348,18 @@ html.dark .navbar-v3 .navbar-brand__mark {
   height: var(--ticker-h, 2.25rem) !important;
   min-height: var(--ticker-h, 2.25rem) !important;
   max-height: var(--ticker-h, 2.25rem) !important;
-  border: 1px solid var(--mj-hairline) !important;
-  border-radius: var(--mj-r-sm) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-hairline) 80%, transparent) !important;
+  border-radius: 18px !important;
   background: var(--mj-surface) !important;
   color: var(--mj-ink) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   padding-block: 0 !important;
-  padding-inline: 0.5rem !important;
+  padding-inline: 0.65rem !important;
   box-sizing: border-box !important;
   overflow: hidden !important;
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--mj-brand-deep, #0f3d2e) 4%, transparent) !important;
 }
 .header-ticker.header-ticker--with-prayer {
   /* منطقة لمس الشريحة قد تتجاوز ٣٦px رأسيًا — لا تقصّها */

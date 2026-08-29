@@ -94,24 +94,21 @@ header.navbar-v3,
 
 .bottom-nav__tab {
   color: var(--text-2) !important;
-  border-radius: 0 !important;
+  border-radius: 14px !important;
   position: relative;
   min-height: 3rem;
+  margin: 0.2rem 0.12rem;
+  transition: background 0.18s ease, color 0.18s ease;
 }
 
 .bottom-nav__tab.is-active {
   color: var(--brand) !important;
-  background: transparent !important;
+  background: color-mix(in srgb, var(--mj-brand-deep, #123f2e) 10%, transparent) !important;
 }
 
 .bottom-nav__tab.is-active::before {
-  content: "";
-  position: absolute;
-  top: 0.15rem;
-  inset-inline: 30%;
-  height: 2px;
-  background: var(--brand);
-  box-shadow: none;
+  content: none;
+  display: none;
 }
 
 .bottom-nav__tab-label {
