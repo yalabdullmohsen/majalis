@@ -22,7 +22,11 @@ assert.match(css, /\.section-lobby__back[\s\S]*min-width:\s*44px/);
 assert.match(css, /\.section-lobby__back[\s\S]*text-align:\s*center/);
 assert.match(css, /\.section-lobby__back[\s\S]*position:\s*fixed/, "عائم أسفل يمين كبقية الأقسام");
 assert.match(css, /\.section-lobby__back[\s\S]*inset-inline-start:\s*1rem/, "يمين في RTL");
-assert.match(css, /\.section-lobby__back[\s\S]*bottom:\s*calc\(var\(--bottom-nav-total/);
+assert.match(
+  css,
+  /\.section-lobby__back[\s\S]*bottom:\s*calc\(\s*var\(--bottom-nav-height[^)]*\)\s*\+\s*var\(--inset-bottom[^)]*\)\s*\+\s*16px/,
+  "فوق الشريط السفلي بـ16px دون تداخل",
+);
 
 const gate = read("scripts/section-back-button-gate.mjs");
 assert.match(gate, /\/fiqh/);

@@ -6,6 +6,9 @@
 :root {
   --radius-card: 28px;
   --radius-tile: 24px;
+  --radius-button: 18px;
+  --radius-sheet: 28px;
+  --radius-nav: 28px;
   --radius-pill: 999px;
 
   --soft-card-pad: clamp(1rem, 2.8vw, 1.35rem);

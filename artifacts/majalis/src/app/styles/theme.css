@@ -131,6 +131,9 @@
   --text-muted: var(--color-muted);
   --radius-card: 28px;
   --radius-tile: 24px;
+  --radius-button: 18px;
+  --radius-sheet: 28px;
+  --radius-nav: 28px;
   --radius-pill: 999px;
   --shadow-sheet: var(--shadow-mj);
   --page-gutter: var(--gutter-inline-start);
@@ -222,13 +225,16 @@
   /* بطاقات ناعمة موحّدة — لا تعتمد على mj-r-md الصغير */
   --radius-card: 28px;
   --radius-tile: 24px;
+  --radius-button: 18px;
+  --radius-sheet: 28px;
+  --radius-nav: 28px;
   --radius-pill: 999px;
   --shadow-sheet: var(--mj-sh);
   --page-gutter: var(--gutter-inline-start);
   --page-gutter-end: var(--gutter-inline-end);
-  --mj-r-sm: 12px;
-  --mj-r-md: 16px;
-  --mj-r-lg: 22px;
+  --mj-r-sm: 14px;
+  --mj-r-md: 18px;
+  --mj-r-lg: 24px;
   --mj-r-pill: var(--radius-pill);
   --mj-sh: 0 10px 26px -18px rgba(11, 32, 24, 0.45);
   --mj-s1: 4px;

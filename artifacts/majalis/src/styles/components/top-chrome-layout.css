@@ -140,16 +140,12 @@ header.navbar-v3,
 .global-back-btn,
 .floating-back-btn {
   z-index: var(--z-fab);
-  bottom: calc(
-    var(--bottom-nav-total, var(--nav-h, 4.5rem)) + 0.5rem + var(--inset-bottom, 0px)
-  );
+  bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 16px);
 }
 
 .section-lobby__back {
   z-index: var(--z-fab);
-  bottom: calc(
-    var(--bottom-nav-total, var(--nav-h, 4.5rem)) + 0.5rem + var(--inset-bottom, 0px)
-  );
+  bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 16px);
 }
 
 .bottom-nav,
