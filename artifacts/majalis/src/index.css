@@ -2773,9 +2773,16 @@ html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
   font-family: "Aref Ruqaa", "Amiri", serif;
   font-size: 0.95rem;
   font-weight: 700;
-  background: #fff;
-  color: var(--majalis-emerald-deep);
-  border-color: rgba(22,78,60,0.18);
+  background: var(--mj-surface-2, var(--color-surface-muted, #f5f5f4));
+  color: var(--mj-ink, var(--majalis-emerald-deep));
+  border-color: var(--mj-hairline, rgba(22, 78, 60, 0.18));
+}
+
+html[data-theme="dark"] .navbar-menu-btn--drawer,
+html.dark .navbar-menu-btn--drawer {
+  background: var(--mj-surface-2, #222d29);
+  color: var(--mj-ink, #f8fafc);
+  border-color: var(--mj-hairline, #35443f);
 }
 
 .navbar-search-global {
@@ -3533,23 +3540,7 @@ body.assistant-panel-open {
   }
 }
 
-.skip-link {
-  position: absolute;
-  inset-inline-start: 1rem;
-  top: -3rem;
-  z-index: 100;
-  padding: 0.5rem 0.875rem;
-  border-radius: var(--ds-radius-sm);
-  background: var(--majalis-emerald-deep);
-  color: #fff;
-  text-decoration: none;
-  font-size: var(--ds-text-sm);
-  transition: top 0.2s ease;
-}
-
-.skip-link:focus {
-  top: 1rem;
-}
+/* أنماط skip-link الموحّدة في theme.css — لا تُعاد هنا لتجنّب ظهور الرابط الأزرق */
 
 .search-suggestions-clear {
   display: block;

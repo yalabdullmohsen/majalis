@@ -158,23 +158,29 @@ header.navbar-v3,
 }
 
 @media (max-width: 879px) {
+  /*
+   * تمرير وثيقة واحد — لا height ثابت ولا overflow:hidden على الصدفة
+   * (كانا يسبّبان تمريرًا داخليًا + فراغًا عند إخفاء الهيدر بـ transform).
+   */
   .app-shell {
-    height: 100dvh;
-    height: 100svh;
-    max-height: 100dvh;
-    max-height: 100svh;
+    height: auto;
+    max-height: none;
+    min-height: 100dvh;
+    min-height: 100svh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: visible;
     box-sizing: border-box;
-    /* حجز صلب لارتفاع الشريط الثابت — لا يُرسم محتوى خلفه */
-    padding-bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px));
+    padding-bottom: calc(
+      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
+    );
   }
 
-  /* لا تُلغِ حجز الشريط عند الإخفاء بـ transform — يمنع تداخل المحتوى */
   .app-shell:has(.bottom-nav--hidden),
   .app-shell.app-chrome-hidden {
-    padding-bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px));
+    padding-bottom: calc(
+      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
+    );
   }
 
   .app-top-chrome {
@@ -183,23 +189,19 @@ header.navbar-v3,
 
   .app-main,
   #main-content.app-main {
-    flex: 1 1 auto;
-    min-height: 0 !important;
+    flex: 1 0 auto;
+    min-height: auto !important;
+    height: auto !important;
     overflow-x: clip;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: contain;
-    /* تنفّس داخل منفذ التمرير — ارتفاع الشريط محجوز في padding الصدفة */
-    padding-block-end: 24px !important;
+    overflow-y: visible;
+    padding-block-end: 0 !important;
   }
 
-  /* التذييل داخل منفذ التمرير على الجوال لتفادي أكل ارتفاع الشريط */
   .app-shell > .site-footer,
   .app-shell > .site-footer--v3 {
     display: none;
   }
 
-  /* صفحات الصلاة/المصحف الغمرية تدير حوافها بنفسها */
   html.pts-immersive .app-shell,
   html.chrome-immersive .app-shell {
     height: auto;

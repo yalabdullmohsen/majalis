@@ -536,25 +536,51 @@ a:active {
   outline-offset: 2px;
 }
 
+/* مخفي بصريًا حتى التركيز — لا تعتمد على transform (يظهر فوق الشاشة عند overflow:visible) */
 .skip-link.mj-skip-link,
-.mj-skip-link {
-  position: absolute;
-  inset-inline-start: var(--mj-s3);
-  top: var(--mj-s3);
+.mj-skip-link,
+.skip-link {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  transform: none !important;
+  top: 0 !important;
+  inset-inline-start: 0 !important;
   z-index: 100000;
-  padding: var(--mj-s2) var(--mj-s3);
-  background: var(--mj-brand);
-  color: var(--mj-on-brand);
-  border-radius: var(--mj-r-sm);
-  font-weight: 700;
-  text-decoration: none;
-  transform: translateY(-200%);
+  color: transparent !important;
+  background: transparent !important;
+  text-decoration: none !important;
+  pointer-events: none;
 }
 .skip-link.mj-skip-link:focus,
 .skip-link.mj-skip-link:focus-visible,
 .mj-skip-link:focus,
-.mj-skip-link:focus-visible {
-  transform: translateY(0);
+.mj-skip-link:focus-visible,
+.skip-link:focus,
+.skip-link:focus-visible {
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: var(--mj-s2, 0.5rem) var(--mj-s3, 0.75rem) !important;
+  overflow: visible !important;
+  clip: auto !important;
+  clip-path: none !important;
+  white-space: normal !important;
+  top: calc(var(--inset-top, 0px) + 0.5rem) !important;
+  inset-inline-start: var(--mj-s3, 0.75rem) !important;
+  background: var(--mj-brand, #1f7a5a) !important;
+  color: var(--mj-on-brand, #fff) !important;
+  border-radius: var(--mj-r-sm, 8px) !important;
+  font-weight: 700 !important;
+  pointer-events: auto;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 28%);
 }
 
 .mj-content-report {

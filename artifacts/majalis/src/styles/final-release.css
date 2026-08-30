@@ -358,6 +358,23 @@ html.dark .nav-soon-badge {
   text-decoration: none;
   transition: background var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast);
 }
+.navbar-menu-btn--drawer {
+  background: var(--mj-surface-2, var(--color-surface-muted)) !important;
+  color: var(--mj-ink, var(--color-text)) !important;
+  border-color: var(--mj-hairline, var(--color-border)) !important;
+}
+html[data-theme="dark"] .navbar-menu-btn,
+html.dark .navbar-menu-btn,
+html[data-theme="dark"] .navbar-theme-toggle,
+html.dark .navbar-theme-toggle,
+html[data-theme="dark"] .navbar-mobile-login,
+html.dark .navbar-mobile-login,
+html[data-theme="dark"] .navbar-menu-btn--drawer,
+html.dark .navbar-menu-btn--drawer {
+  background: var(--mj-surface-2, #222d29) !important;
+  color: var(--mj-ink, #f8fafc) !important;
+  border-color: var(--mj-hairline, #35443f) !important;
+}
 .navbar-menu-btn:active,
 .navbar-theme-toggle:active,
 .navbar-mobile-login:active {
@@ -767,28 +784,27 @@ html.dark .top-section-bar {
     --header-height: 3rem;
     --bottom-nav-h: 84px;
     --bottom-nav-height: 84px;
-    --content-pb: 24px;
+    --content-pb: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px);
   }
 
-  /* حجز صلب لارتفاع الشريط — يهزم #root,.app-shell{padding:0} */
+  /* تمرير وثيقة واحد — بلا قفل ارتفاع/overflow يمنع اكتمال الصفحة */
   .app-shell {
-    height: 100dvh !important;
-    height: 100svh !important;
-    max-height: 100dvh !important;
-    max-height: 100svh !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 100dvh !important;
+    min-height: 100svh !important;
     display: flex !important;
     flex-direction: column !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     box-sizing: border-box !important;
     padding-bottom: calc(
-      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 0.5rem
+      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
     ) !important;
   }
-  /* حجز دائم لارتفاع الشريط — حتى أثناء translateY للإخفاء */
   .app-shell:has(.bottom-nav--hidden),
   .app-shell.app-chrome-hidden {
     padding-bottom: calc(
-      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 0.5rem
+      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
     ) !important;
   }
   .app-top-chrome {
@@ -796,13 +812,12 @@ html.dark .top-section-bar {
   }
   .app-main,
   #main-content.app-main {
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
+    flex: 1 0 auto !important;
+    min-height: auto !important;
+    height: auto !important;
     overflow-x: clip !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: contain;
-    padding-block-end: 24px !important;
+    overflow-y: visible !important;
+    padding-block-end: 0 !important;
   }
   .app-shell > .site-footer,
   .app-shell > .site-footer--v3 {
@@ -1694,6 +1709,16 @@ body {
   padding-block: clamp(1rem, 3vw, 1.75rem) 1.25rem;
   padding-inline: var(--page-gutter);
   box-sizing: border-box;
+}
+@media (max-width: 879px) {
+  .page-shell {
+    padding-block-start: 0.65rem;
+    padding-block-end: 0.75rem;
+  }
+  .page-shell.narrow,
+  .lesson-detail-page.page-shell {
+    max-width: min(430px, 100%);
+  }
 }
 .page-shell.narrow {
   max-width: min(48rem, 100%);

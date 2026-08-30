@@ -366,5 +366,20 @@ html.dark .sections-hub__search {
   border-color: var(--mj-hairline, #2a3531);
 }
 
+html[data-theme="dark"] .sections-hub__group-title,
+html.dark .sections-hub__group-title {
+  color: #e8eeec;
+}
+
+html[data-theme="dark"] .sections-hub__group-title::after,
+html.dark .sections-hub__group-title::after {
+  background: #6ee7b7;
+}
+
+html[data-theme="dark"] .sections-hub__empty,
+html.dark .sections-hub__empty {
+  color: #c5d0cb;
+}
+
 /* توافق أسماء قديمة أثناء الانتقال */
 .section-card { /* لا يُستخدم — أُبقي فارغًا عمدًا */ }

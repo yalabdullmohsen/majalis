@@ -188,10 +188,19 @@ html.theme-dark .navbar-v3__ad-row {
 }
 
 .header-ad-slot--spacer {
+  flex: 1 1 auto;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none;
   pointer-events: none;
   visibility: hidden;
-  min-height: 0;
-  height: 0;
+  min-height: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  overflow: hidden !important;
 }
 
 @media (max-width: 379px) {

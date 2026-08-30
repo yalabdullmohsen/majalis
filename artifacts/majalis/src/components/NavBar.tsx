@@ -270,7 +270,7 @@ export default function NavBar() {
             </button>
           </div>
 
-          {/* منتصف الهيدر: spacer للتوازن — الكارت الإعلاني بجانب زر القمر */}
+          {/* منتصف الهيدر: spacer مرن شفاف — الإعلان في صف مستقل أسفل */}
           <div className="header-ad-slot header-ad-slot--spacer" aria-hidden="true" />
 
           {/* Desktop tabs */}
