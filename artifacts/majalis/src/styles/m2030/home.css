@@ -264,9 +264,6 @@
 
 .m2030-band--sage {
   background: var(--surface-2);
-  border-radius: var(--radius-tile, 24px);
-  border: 1px solid color-mix(in srgb, var(--mj-hairline, #d5ddd9) 80%, transparent);
-  overflow: hidden;
 }
 
 .m2030-band__head {
@@ -528,15 +525,6 @@ html.dark .m2030-feature__title {
   display: grid;
   gap: 0.4rem;
   padding: 0.85rem 0.95rem;
-  border-radius: var(--radius-tile, 24px);
-  border: 1px solid var(--mj-hairline, var(--color-border));
-  background: var(--mj-surface, var(--color-surface));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    0 10px 22px -14px rgba(11, 32, 24, 0.22);
-}
-.home-daily-wird__card.mj-card {
-  border-radius: var(--radius-tile, 24px);
 }
 .home-daily-wird__card-head {
   display: inline-flex;
