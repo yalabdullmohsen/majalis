@@ -60,7 +60,7 @@
   max-width: 36rem;
   margin-inline: auto;
   padding: 0.7rem 0.75rem 0.7rem 0.85rem;
-  border-radius: var(--radius-tile, 24px);
+  border-radius: 1rem;
   color: #ffffff !important;
   font-family: var(--font-nav, "Cairo", "Tajawal", "Alexandria", sans-serif);
   background:

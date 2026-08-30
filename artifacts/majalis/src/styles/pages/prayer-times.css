@@ -126,7 +126,8 @@ html.pts-immersive .bottom-nav {
   direction: rtl;
   min-height: 100svh;
   min-height: 100dvh;
-  width: 100vw;
+  /* 100% وليس 100vw — يمنع انزياح RTL/شريط التمرير لطرف الشاشة */
+  width: 100%;
   max-width: none;
   margin: 0;
   margin-block-start: 0;
@@ -144,6 +145,7 @@ html.pts-immersive .bottom-nav {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   justify-content: safe center;
   gap: 0.75rem;
   position: relative;
@@ -183,12 +185,13 @@ html.pts-immersive .bottom-nav {
   box-sizing: border-box;
 }
 
-/* البطل وقائمة المواقيت: بطاقات ناعمة متمركزة (التصميم السابق) */
+/* البطل وقائمة المواقيت: بطاقات ناعمة متمركزة في منتصف الشاشة */
 .pts-screen > .pts-hero,
 .pts-screen > .pts-list {
   width: min(82vw, 340px);
   max-width: 100%;
   margin-inline: auto;
+  align-self: center;
 }
 
 /* ── رأس ── */
@@ -498,11 +501,13 @@ html.pts-immersive .bottom-nav {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.55rem;
   width: min(82vw, 340px);
   max-width: 100%;
   margin-inline: auto;
   margin-top: 0.15rem;
+  align-self: center;
 }
 .pts-row {
   display: flex;
@@ -513,6 +518,7 @@ html.pts-immersive .bottom-nav {
   width: min(78vw, 320px);
   max-width: 100%;
   margin-inline: auto;
+  align-self: center;
   min-height: 0;
   padding: 0.42rem 0.8rem;
   border: 1px solid rgba(255, 255, 255, 0.06);
