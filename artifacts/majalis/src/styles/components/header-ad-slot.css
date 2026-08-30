@@ -1,31 +1,21 @@
 /**
- * Banner إعلان شراكة داخل الهيدر — تدرج أخضر/ذهبي، مضغوط، تباين عالٍ.
+ * إعلان شراكة مدمج داخل صف الهيدر العلوي (pill) — بلا صف منفصل.
  */
 .header-ad-slot {
-  --header-ad-h: 2.65rem;
+  --header-ad-h: 48px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  width: 100%;
+  flex: 1 1 auto;
+  width: auto;
   min-width: 0;
-  min-height: var(--header-ad-h);
-}
-
-@media (max-width: 640px) {
-  .header-ad-slot {
-    --header-ad-h: 2.35rem;
-  }
-
-  .header-ad-slot__cta-label {
-    display: none;
-  }
-
-  .header-ad-slot__cta {
-    min-width: 1.55rem;
-    padding-inline: 0.35rem;
-    justify-content: center;
-  }
+  max-width: 100%;
+  min-height: 0;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
 }
 
 .header-ad-slot__banner {
@@ -33,33 +23,25 @@
   min-width: 0;
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  min-height: var(--header-ad-h);
-  padding: 0.35rem 0.55rem;
-  border-radius: var(--mj-r-md, 0.65rem);
+  gap: 0.4rem;
+  height: var(--header-ad-h);
+  min-height: 44px;
+  max-height: 52px;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
   text-decoration: none;
   color: #f3faf6;
-  background-color: #0f2f28;
-  background-image: linear-gradient(
-    118deg,
-    #0a241f 0%,
-    #0f2f28 42%,
-    #14352c 72%,
-    #1a3020 100%
-  );
-  border: 1px solid color-mix(in srgb, #d4b76a 38%, #0f2f28);
-  box-shadow:
-    0 1px 0 color-mix(in srgb, #d4b76a 22%, transparent),
-    0 2px 10px color-mix(in srgb, #000 14%, transparent);
-  transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  background: #0f2f28;
+  background-image: none;
+  border: 1px solid color-mix(in srgb, #d4b76a 28%, #0f2f28);
+  box-shadow: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  overflow: hidden;
 }
 
 .header-ad-slot__banner:hover,
 .header-ad-slot__banner:focus-visible {
-  opacity: 0.92;
-  box-shadow:
-    0 1px 0 color-mix(in srgb, #d4b76a 30%, transparent),
-    0 3px 14px color-mix(in srgb, #000 18%, transparent);
+  opacity: 0.94;
   outline: 2px solid color-mix(in srgb, #d4b76a 55%, transparent);
   outline-offset: 1px;
 }
@@ -72,10 +54,12 @@
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
-  min-height: 1.25rem;
-  padding: 0.12rem 0.42rem;
+  justify-content: center;
+  min-height: 1.55rem;
+  max-height: 1.7rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 999px;
-  font-size: 0.58rem;
+  font-size: 0.62rem;
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0.01em;
@@ -90,15 +74,17 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.06rem;
+  justify-content: center;
+  gap: 0.02rem;
   overflow: hidden;
+  text-align: start;
 }
 
 .header-ad-slot__title {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.15;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
@@ -107,52 +93,25 @@
 
 .header-ad-slot__subtitle {
   margin: 0;
-  font-size: 0.64rem;
+  font-size: 0.58rem;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.2;
   color: color-mix(in srgb, #fff 82%, #d4b76a);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* CTA إنستقرام مخفي في الشكل المدمج — الشارة «شريك سُنّة» هي الزر الظاهر */
 .header-ad-slot__cta {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2rem;
-  min-height: 1.55rem;
-  padding: 0.2rem 0.5rem;
-  border-radius: 999px;
-  font-size: 0.62rem;
-  font-weight: 800;
-  line-height: 1;
-  white-space: nowrap;
-  color: #0f2f28;
-  background: color-mix(in srgb, #fff 92%, #d4b76a);
-  border: 1px solid color-mix(in srgb, #d4b76a 45%, #fff);
-  box-shadow: 0 1px 0 color-mix(in srgb, #fff 60%, transparent);
-}
-
-.header-ad-slot__cta-icon {
-  flex-shrink: 0;
+  display: none;
 }
 
 html[data-theme="dark"] .header-ad-slot__banner,
 html.theme-dark .header-ad-slot__banner {
   color: #edf7f2;
-  background-color: #121816;
-  background-image: linear-gradient(
-    118deg,
-    #0c1210 0%,
-    #121816 45%,
-    #152019 78%,
-    #181610 100%
-  );
-  border-color: color-mix(in srgb, #d4b76a 32%, #121816);
-  box-shadow:
-    0 1px 0 color-mix(in srgb, #d4b76a 18%, transparent),
-    0 2px 12px color-mix(in srgb, #000 32%, transparent);
+  background: #121816;
+  border-color: color-mix(in srgb, #d4b76a 28%, #121816);
 }
 
 html[data-theme="dark"] .header-ad-slot__title,
@@ -165,91 +124,53 @@ html.theme-dark .header-ad-slot__subtitle {
   color: color-mix(in srgb, #fff 78%, #c8ebd9);
 }
 
-html[data-theme="dark"] .header-ad-slot__cta,
-html.theme-dark .header-ad-slot__cta {
+html[data-theme="dark"] .header-ad-slot__badge,
+html.theme-dark .header-ad-slot__badge {
   color: #0f2f28;
   background: linear-gradient(135deg, #ebe4d4 0%, #d4b76a 100%);
 }
 
-.navbar-v3__ad-row {
-  box-sizing: border-box;
-  width: 100%;
-  min-height: 0;
-  margin: 0;
-  padding: 12px 0 14px;
-  border-block-start: 0;
-  background: var(--mj-bg, var(--color-bg, #f2f4f3));
-}
-
-.navbar-v3__ad-row .header-ad-slot {
-  width: calc(100% - 32px);
-  max-width: 430px;
-  margin-inline: auto;
-}
-
-html[data-theme="dark"] .navbar-v3__ad-row,
-html.theme-dark .navbar-v3__ad-row {
-  background: var(--mj-bg, #0c1210);
-  border-block-start-color: color-mix(in srgb, #fff 8%, transparent);
-}
-
-.header-ad-slot--spacer {
-  flex: 1 1 auto;
-  width: auto !important;
-  min-width: 0 !important;
-  max-width: none;
-  pointer-events: none;
-  visibility: hidden;
-  min-height: 0 !important;
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: transparent !important;
-  border: 0 !important;
-  overflow: hidden !important;
-}
-
 @media (max-width: 379px) {
   .header-ad-slot {
-    --header-ad-h: 2.5rem;
-    flex-wrap: wrap;
-    gap: 0.25rem 0.35rem;
-  }
-
-  .header-ad-slot__banner {
-    gap: 0.32rem;
-    padding: 0.3rem 0.42rem;
-  }
-
-  .header-ad-slot__badge {
-    font-size: 0.52rem;
-    padding-inline: 0.32rem;
-  }
-
-  .header-ad-slot__title {
-    font-size: 0.7rem;
+    --header-ad-h: 44px;
   }
 
   .header-ad-slot__subtitle {
-    font-size: 0.58rem;
+    display: none;
+  }
+
+  .header-ad-slot__title {
+    font-size: 0.68rem;
+  }
+
+  .header-ad-slot__badge {
+    font-size: 0.55rem;
+    padding-inline: 0.4rem;
   }
 }
 
 @media (min-width: 880px) {
   .header-ad-slot {
-    --header-ad-h: 2.75rem;
+    --header-ad-h: 48px;
+    max-width: 22rem;
   }
 
   .header-ad-slot__title {
-    font-size: 0.84rem;
+    font-size: 0.78rem;
   }
 
   .header-ad-slot__subtitle {
-    font-size: 0.68rem;
+    font-size: 0.62rem;
   }
+}
 
-  .header-ad-slot__cta {
-    font-size: 0.68rem;
-    padding-inline: 0.6rem;
-  }
+/* صف الإعلان المنفصل أُزيل — لا تحجز ارتفاعًا */
+.navbar-v3__ad-row {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
 }

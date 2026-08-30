@@ -1,5 +1,5 @@
 /**
- * بوابة إعلان المنصة: banner داخل الهيدر — بلا شريط فوق Status Bar.
+ * بوابة إعلان المنصة: pill مدمج داخل صف الهيدر — بلا صف منفصل.
  * تشغيل: node --import tsx src/lib/__tests__/header-ad-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -14,19 +14,22 @@ const nav = read("src/components/NavBar.tsx");
 const cfg = read("src/config/header-ad.ts");
 const slot = read("src/components/header/HeaderAdSlot.tsx");
 const css = read("src/styles/components/header-ad-slot.css");
+const theme = read("src/app/styles/theme.css");
+const critical = read("src/styles/critical-first-paint.css");
 
 assert.doesNotMatch(app, /HomepageAdBar/);
 assert.doesNotMatch(app, /homeAdSlot/);
 assert.doesNotMatch(app, /TopSponsorBanner/);
 assert.doesNotMatch(app, /PartnershipAdModal/);
 assert.match(app, /app-top-chrome/);
+assert.doesNotMatch(app, /navbar-v3__ad-row/);
 
 assert.match(nav, /HeaderAdSlot/);
 assert.match(nav, /shouldShowHeaderAd/);
-assert.match(nav, /navbar-v3__ad-row/);
+assert.doesNotMatch(nav, /navbar-v3__ad-row/);
+assert.doesNotMatch(nav, /header-ad-slot--spacer/);
 assert.doesNotMatch(nav, /MajlisWordmark/);
 assert.doesNotMatch(nav, /navbar-v3__tagline/);
-assert.match(nav, /header-ad-slot--spacer/);
 
 assert.match(cfg, /headerAdConfig/);
 assert.match(cfg, /export const headerAd\b/);
@@ -40,7 +43,6 @@ assert.match(cfg, /الثقة/);
 assert.match(cfg, /badgeLabel:\s*"شريك سُنّة"/);
 assert.match(cfg, /sponsorUrl:\s*"https:\/\/instagram\.com\/Al_abdalmhsn"/);
 assert.match(cfg, /sponsorAriaLabel:\s*"فتح حساب شركة العبد المحسن للحج في إنستقرام"/);
-assert.match(cfg, /ctaLabel:\s*"فتح إنستقرام"/);
 assert.doesNotMatch(cfg, /advertiseWithUsLabel/);
 assert.doesNotMatch(cfg, /للإعلان معنا/);
 
@@ -49,16 +51,24 @@ assert.match(slot, /HeaderAdBanner/);
 assert.match(slot, /openExternalUrl/);
 assert.match(slot, /sponsorUrl/);
 assert.match(slot, /header-ad-slot__banner/);
+assert.match(slot, /header-ad-slot__badge/);
 assert.match(slot, /target="_blank"/);
 assert.match(slot, /rel="noopener noreferrer"/);
+assert.doesNotMatch(slot, /header-ad-slot__cta/);
 assert.doesNotMatch(slot, /advertise-link|advertiseWithUsLabel|cfg\.ctaUrl/);
 assert.doesNotMatch(slot, /googlesyndication|adsbygoogle|gtag/i);
 assert.doesNotMatch(slot, /<img\b/);
 assert.doesNotMatch(slot, /openPartnershipAdModal/);
 
 assert.match(css, /--header-ad-h:/);
-assert.match(css, /navbar-v3__ad-row/);
+assert.match(css, /border-radius:\s*999px/);
+assert.match(css, /flex:\s*1\s+1\s+auto/);
+assert.match(css, /\.navbar-v3__ad-row[\s\S]*?display:\s*none/);
 assert.match(css, /header-ad-slot__banner/);
+assert.doesNotMatch(css.replace(/\/\*[\s\S]*?\*\//g, ""), /\.header-ad-slot--spacer/);
+
+assert.match(theme, /--ad-banner-height:\s*0px/);
+assert.match(critical, /--ad-banner-height:\s*0px/);
 
 const apply = read("src/lib/apply-page-chrome.ts");
 assert.match(apply, /TOP_SPONSOR_STATUS/);

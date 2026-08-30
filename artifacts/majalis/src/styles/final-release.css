@@ -293,14 +293,13 @@ html.dark .nav-soon-badge {
   width: min(100%, var(--page-width));
   min-height: var(--header-height);
   margin-inline: auto;
-  /* 16px + safe-area في الجهتين — لا عنصر تفاعلي يلامس الحافة */
-  padding-inline: max(16px, var(--gutter-inline-start, var(--inset-right, 0px)))
-    max(16px, var(--gutter-inline-end, var(--inset-left, 0px)));
+  /* 16px — لا عنصر تفاعلي يلامس الحافة */
+  padding-inline: 16px;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: clamp(.6rem, 1.5vw, 1.25rem);
+  gap: 10px;
   min-width: 0;
   max-width: 100%;
 }

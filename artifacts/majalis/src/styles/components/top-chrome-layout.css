@@ -38,9 +38,15 @@
     max-height: 56px;
     height: var(--app-header-height);
     padding-block: 0;
-    gap: 0.35rem;
+    padding-inline: 16px;
+    gap: 8px;
     align-items: center;
     box-sizing: border-box;
+  }
+
+  .navbar-v3__mid-spacer {
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
   /* الوضع الليلي في الهيدر؛ زر البحث المدمج يبقى مخفيًا */

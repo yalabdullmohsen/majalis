@@ -1,5 +1,5 @@
 /**
- * بوابة: هيدر الجوال بلا فراغ علوي زائد + skip-link مخفي بصريًا.
+ * بوابة: هيدر الجوال بلا فراغ علوي زائد + إعلان مدمج + skip-link مخفي.
  * node --import tsx src/lib/__tests__/mobile-header-gap-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -30,18 +30,24 @@ assert.doesNotMatch(
 assert.match(critical, /\.skip-link/);
 assert.match(critical, /padding-block-start:\s*max\(\s*var\(--inset-top,\s*0px\),\s*12px\s*\)/);
 assert.match(critical, /\.app-top-chrome\s*\{[^}]*min-height:\s*0/s);
+assert.match(critical, /--ad-banner-height:\s*0px/);
 
 assert.match(theme, /:focus-visible[\s\S]*?clip:\s*auto/);
+assert.match(theme, /--ad-banner-height:\s*0px/);
 assert.doesNotMatch(
   theme.replace(/\/\*[\s\S]*?\*\//g, ""),
   /\.skip-link\.mj-skip-link:focus\s*,/,
 );
 
-assert.match(adCss, /width:\s*calc\(100%\s*-\s*32px\)/);
-assert.match(adCss, /max-width:\s*430px/);
-assert.match(adCss, /padding:\s*12px\s+0\s+14px/);
+assert.match(adCss, /border-radius:\s*999px/);
+assert.match(adCss, /flex:\s*1\s+1\s+auto/);
+assert.match(adCss, /\.navbar-v3__ad-row[\s\S]*?display:\s*none/);
+assert.doesNotMatch(adCss, /padding:\s*12px\s+0\s+14px/);
 
 assert.match(topChrome, /max-height:\s*56px/);
+assert.match(topChrome, /gap:\s*8px/);
 assert.match(nav, /header-ad-slot\.css/);
+assert.doesNotMatch(nav, /navbar-v3__ad-row/);
+assert.match(nav, /shouldShowHeaderAd\(location\)\s*\?\s*\(\s*<HeaderAdSlot/);
 
 console.log("mobile-header-gap-gate.test.ts: ok");

@@ -69,12 +69,14 @@ test("NavBar يستهلك الخطاف الموحّد ولا يعرّف نقطة
 
 test("لا صفّا تبويبات على الجوال داخل الهيدر", () => {
   assert.doesNotMatch(navBar, /navbar-v3__tabs-row/, "لا صف تبويبات جوال في الهيدر");
-  // تبويبات سطح المكتب مشروطة بـ!isMobile
+  // تبويبات سطح المكتب فقط — خلف شرط !isMobile (مع إعلان مدمج عند التفعيل)
+  assert.match(navBar, /navbar-v3__tabs/, "تبويبات سطح المكتب موجودة");
   assert.match(
     navBar,
-    /\{!isMobile && \(\s*<nav className="navbar-v3__tabs"/,
-    "تبويبات الهيدر لسطح المكتب فقط",
+    /shouldShowHeaderAd\(location\)\s*\?[\s\S]*?!isMobile\s*\?[\s\S]*?<nav className="navbar-v3__tabs"/,
+    "تبويبات الهيدر لسطح المكتب فقط خلف شرط !isMobile",
   );
+  assert.doesNotMatch(navBar, /isMobile\s*&&\s*\(\s*<nav className="navbar-v3__tabs"/);
 });
 
 test("ارتفاع الشريط المتحرك من رمز واحد", () => {

@@ -30,8 +30,8 @@
   --gutter-inline-start: max(var(--inset-right, 0px), 16px);
   --gutter-inline-end: max(var(--inset-left, 0px), 16px);
   --header-chrome: 56px;
-  --header-ad-h: 2.65rem;
-  --ad-banner-height: calc(var(--header-ad-h) + 26px);
+  --header-ad-h: 48px;
+  --ad-banner-height: 0px;
   --search-height: 0px;
   --ticker-row-h: 0px;
   --header-h: calc(var(--header-chrome) + var(--inset-top, 0px) + var(--ad-banner-height, 0px));

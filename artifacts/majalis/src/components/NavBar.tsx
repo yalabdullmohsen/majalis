@@ -271,11 +271,10 @@ export default function NavBar() {
             </button>
           </div>
 
-          {/* منتصف الهيدر: spacer مرن شفاف — الإعلان في صف مستقل أسفل */}
-          <div className="header-ad-slot header-ad-slot--spacer" aria-hidden="true" />
-
-          {/* Desktop tabs */}
-          {!isMobile && (
+          {/* منتصف الهيدر: إعلان مدمج (جوال/سطح مكتب) أو تبويبات سطح المكتب */}
+          {shouldShowHeaderAd(location) ? (
+            <HeaderAdSlot />
+          ) : !isMobile ? (
             <nav className="navbar-v3__tabs" aria-label="التنقل الرئيسي">
               {PRIMARY_NAV_ITEMS.map((item) => (
                 <Link key={item.href} href={item.href} className={tabCls(isActive(item.href))} aria-current={isActive(item.href) ? "page" : undefined}>
@@ -288,6 +287,8 @@ export default function NavBar() {
                 </Link>
               )}
             </nav>
+          ) : (
+            <div className="navbar-v3__mid-spacer" aria-hidden="true" />
           )}
 
           <div className="navbar-v3__end">
@@ -336,12 +337,6 @@ export default function NavBar() {
           </div>
         </div>
 
-        {shouldShowHeaderAd(location) ? (
-          <div className="navbar-v3__ad-row">
-            <HeaderAdSlot />
-          </div>
-        ) : null}
-
         {/* صف بحث مستقل — لا يتداخل مع التبويبات أو التيكر */}
         {isMobile && !isImmersiveChromePath(location) && (
           <div className="navbar-v3__search-row">
@@ -356,8 +351,6 @@ export default function NavBar() {
             </button>
           </div>
         )}
-
-        {/* تبويبات الأقسام على الجوال عبر TopSectionBar فقط — تجنّب صفّين متداخلين */}
 
         {/* صف مستقل تحت أزرار الهيدر — يمنع تداخل التيكر مع القائمة/البحث/الحساب */}
         {isMobile && !isImmersiveChromePath(location) && (

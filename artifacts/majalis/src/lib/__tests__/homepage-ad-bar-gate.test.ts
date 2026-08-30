@@ -15,7 +15,7 @@ assert.doesNotMatch(app, /HomepageAdBar|homeAdSlot/);
 assert.doesNotMatch(app, /TopSponsorBanner/);
 assert.match(nav, /HeaderAdSlot/);
 assert.match(nav, /shouldShowHeaderAd/);
-assert.match(nav, /navbar-v3__ad-row/);
+assert.doesNotMatch(nav, /navbar-v3__ad-row/);
 assert.doesNotMatch(nav, /MajlisWordmark/);
 assert.match(cfg, /headerAdConfig/);
 assert.match(cfg, /enabled:\s*true/);
