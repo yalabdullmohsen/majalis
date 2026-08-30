@@ -262,10 +262,10 @@
         --inset-left: env(safe-area-inset-left, 0px);
         --ticker-h: 2.65rem;
         --header-chrome: 56px;
-        --header-ad-h: 2.65rem;
-        --ad-row-h: calc(var(--header-ad-h) + 0.35rem);
-        /* الإعلان مفعّل في الهيدر — احجز ارتفاعه من أول إطار */
-        --ad-banner-height: var(--ad-row-h);
+        --header-ad-h: 48px;
+        --ad-row-h: 0px;
+        /* الإعلان مدمج داخل صف الأزرار — بلا ارتفاع صف منفصل */
+        --ad-banner-height: 0px;
         --search-height: 0px;
         --ticker-row-h: 0px;
         --header-h: calc(var(--header-chrome) + var(--inset-top, 0px) + var(--ad-banner-height, 0px));
@@ -301,10 +301,13 @@
         min-height: var(--app-top-chrome-h);
         box-sizing: border-box;
       }
-      .navbar-v3 { min-height: var(--header-h, 56px); box-sizing: border-box; }
+      .navbar-v3 { min-height: 0; box-sizing: border-box; }
       .navbar-v3__ad-row {
-        min-height: var(--ad-row-h);
-        box-sizing: border-box;
+        display: none !important;
+        min-height: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
       .navbar-v3__search-row {
         height: var(--search-height);

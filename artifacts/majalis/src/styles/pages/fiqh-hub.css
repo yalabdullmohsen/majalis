@@ -11,6 +11,12 @@
   position: relative;
   overflow: hidden;
 }
+@media (max-width: 879px) {
+  .fqh-hub-hero {
+    padding: 1.15rem max(1rem, var(--page-gutter, 1rem)) 1.25rem;
+    margin-bottom: 1rem;
+  }
+}
 .fqh-hub-hero::after {
   content: "";
   position: absolute;

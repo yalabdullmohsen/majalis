@@ -1,5 +1,6 @@
 /**
- * بوابة: لا فراغ علوي عند إخفاء الكروم، وتمرير وثيقة واحد على الجوال.
+ * بوابة: لا فراغ علوي عند إخفاء الكروم، وتمرير وثيقة واحد على الجوال،
+ * وحجز سفلي على #main-content حتى لا يدخل المحتوى خلف الشريط.
  * تشغيل: node --import tsx src/lib/__tests__/scroll-layout-gap-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -32,6 +33,16 @@ assert.match(
   /@media\s*\(max-width:\s*879px\)[\s\S]*?#main-content\.app-main[\s\S]*?overflow-y:\s*visible/,
   "المحتوى بلا تمرير داخلي على الجوال",
 );
+assert.match(
+  top,
+  /#main-content\.app-main[\s\S]*?padding-block-end:\s*var\(--content-pb/,
+  "حجز سفلي على المحتوى عبر --content-pb",
+);
+assert.match(
+  top,
+  /--bottom-nav-height:\s*84px/,
+  "ارتفاع الشريط السفلي موحّد 84px على الجوال",
+);
 
 assert.match(
   finalCss,
@@ -39,7 +50,8 @@ assert.match(
 );
 assert.match(
   finalCss,
-  /padding-bottom:\s*calc\(\s*var\(--bottom-nav-height,\s*84px\)\s*\+\s*var\(--inset-bottom/,
+  /#main-content\.app-main[\s\S]*?padding-block-end:\s*calc\(\s*var\(--bottom-nav-height,\s*84px\)\s*\+\s*var\(--inset-bottom/,
+  "حجز سفلي صريح على #main-content",
 );
 assert.doesNotMatch(
   finalCss.replace(/html\.pts-immersive[\s\S]*?(?=@media|$)/g, ""),

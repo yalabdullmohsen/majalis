@@ -520,35 +520,3 @@ export function isOccurrencePast(day: string, time: string, recurring = true, no
   return false;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   اختبارات الوحدة الداخلية — تُنفَّذ عند استيراد الوحدة في وضع التطوير
-   ────────────────────────────────────────────────────────────── */
-if (import.meta.env?.DEV) {
-  void (async () => {
-    type Case = { label: string; day: string; time: string; nowKWT: string; expectTodayOrFuture: "today" | "future" };
-    const cases: Case[] = [
-      { label: "فجر السبت — من وقت العصر",   day: "السبت",    time: "بعد الفجر",  nowKWT: "2026-07-04T15:45:00+03:00", expectTodayOrFuture: "future" },
-      { label: "مغرب السبت — من وقت الظهر",  day: "السبت",    time: "بعد المغرب", nowKWT: "2026-07-04T12:00:00+03:00", expectTodayOrFuture: "today" },
-      { label: "درس الجمعة — من الأربعاء",    day: "الجمعة",   time: "9:00 م",     nowKWT: "2026-07-01T20:00:00+03:00", expectTodayOrFuture: "future" },
-      { label: "درس اليوم نفسه — لم يمرّ",    day: "الأربعاء", time: "8:00 م",     nowKWT: "2026-07-01T18:00:00+03:00", expectTodayOrFuture: "today" },
-      { label: "درس اليوم نفسه — مرّ",        day: "الأربعاء", time: "8:00 م",     nowKWT: "2026-07-01T22:05:00+03:00", expectTodayOrFuture: "future" },
-      { label: "عشاء الخميس — من العصر",      day: "الخميس",   time: "بعد العشاء", nowKWT: "2026-07-02T15:30:00+03:00", expectTodayOrFuture: "today" },
-      { label: "فجر يوم آخر — من منتصف الليل",day: "الجمعة",   time: "الفجر",      nowKWT: "2026-07-03T00:30:00+03:00", expectTodayOrFuture: "future" },
-    ];
-    let pass = 0;
-    for (const c of cases) {
-      const now  = new Date(c.nowKWT);
-      const msVal = computeNextOccurrenceMs(c.day, c.time, now);
-      const today = isLessonToday(msVal, now);
-      const ok    = c.expectTodayOrFuture === "today" ? today : !today;
-      if (!ok) {
-        console.warn(`[lesson-time] FAIL: ${c.label} — got today=${today}`);
-      } else {
-        pass++;
-      }
-    }
-    if (pass < cases.length) {
-      console.warn(`[lesson-time] ${pass}/${cases.length} passed`);
-    }
-  })();
-}

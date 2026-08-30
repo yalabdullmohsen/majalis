@@ -163,7 +163,6 @@ const SECTIONS = [
       { href: "/sources", label: "المصادر والتراخيص", desc: "مراجع البيانات وملاحظات الترخيص" },
       { href: "/universities", label: "الجامعات الشرعية", desc: "دليل الجامعات والمقارنة" },
       { href: "/universities/compare", label: "مقارنة الجامعات", desc: "مقارنة البرامج الشرعية" },
-      { href: "/academic-research", label: "رسائل الماجستير والدكتوراه", desc: "مكتبة الأبحاث والرسائل الشرعية" },
       { href: "/adhan-settings", label: "إعدادات الأذان", desc: "تنبيهات الصلاة والمؤذن" },
       { href: "/contact", label: "التواصل والدعم", desc: "للملاحظات والاقتراحات" },
       { href: "/privacy", label: "سياسة الخصوصية", desc: "كيف نحمي بياناتك" },

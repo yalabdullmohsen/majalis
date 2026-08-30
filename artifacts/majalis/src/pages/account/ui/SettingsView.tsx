@@ -199,7 +199,12 @@ export default function SettingsPage() {
   };
 
   return (
-    <LegalPageLayout eyebrow={t("settings_eyebrow")} title={t("settings_title")}>
+    <LegalPageLayout
+      eyebrow={t("settings_eyebrow")}
+      title={t("settings_title")}
+      density="medium"
+      className="settings-page"
+    >
       <div className="settings-search-wrap">
         <label className="settings-search-field">
           <span className="sr-only">بحث في الإعدادات</span>

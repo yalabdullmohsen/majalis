@@ -61,9 +61,15 @@ export function isPublicDisplayableItem(item: FiqhCouncilItem): boolean {
 /**
  * مسألة عامة فقط إن كانت منشورة وموثّقة رسميًا ولها مادّة كافية
  * (ملخص حكم + مستند) — لا تُعرض مسائل العنوان/سطر واحد فقط.
+ * مسائل حسّاسة/نوازل نسب تُستثنى من الفهرسة العامة حتى مراجعة تحريرية.
  */
+const SENSITIVE_NOINDEX_ISSUE_SLUGS = new Set([
+  "genetic-testing-ancestry-ruling",
+]);
+
 export function isPublicIssue(issue: FiqhCouncilIssue): boolean {
   if (issue.status !== "published") return false;
+  if (SENSITIVE_NOINDEX_ISSUE_SLUGS.has(String(issue.slug || ""))) return false;
   if (issue.documentation_level !== "official_verified") return false;
   const ruling = String(issue.ruling_summary ?? "").trim();
   const evidence = String(issue.evidence_summary ?? "").trim();

@@ -161,11 +161,11 @@ html.dark .app-shell {
   position: relative;
   inset-block-start: auto;
   top: auto;
-  /* على الويب/PWA: padding = safe-area. على Capacitor (overlay=false): --inset-top=0 */
+  /* safe-area مرة واحدة فقط — لا min-height يضمّ inset مع padding */
   margin-block-start: 0;
-  padding-block-start: var(--inset-top);
+  padding-block-start: max(var(--inset-top), 12px);
   z-index: var(--z-nav, 200);
-  min-height: var(--header-h);
+  min-height: 0;
   background: var(--surface-app, var(--mj-surface, var(--color-surface, #F2F4F3)));
   border: 0;
   border-block-end: 1px solid var(--mj-hairline, var(--color-border));
@@ -173,7 +173,7 @@ html.dark .app-shell {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   opacity: 1;
-  transition: min-height var(--motion-max, 200ms) ease, padding-block var(--motion-max, 200ms) ease;
+  transition: padding-block var(--motion-max, 200ms) ease;
 }
 @media (prefers-reduced-transparency: reduce) {
   .navbar-v3 {
@@ -293,14 +293,13 @@ html.dark .nav-soon-badge {
   width: min(100%, var(--page-width));
   min-height: var(--header-height);
   margin-inline: auto;
-  /* 16px + safe-area في الجهتين — لا عنصر تفاعلي يلامس الحافة */
-  padding-inline: max(16px, var(--gutter-inline-start, var(--inset-right, 0px)))
-    max(16px, var(--gutter-inline-end, var(--inset-left, 0px)));
+  /* 16px — لا عنصر تفاعلي يلامس الحافة */
+  padding-inline: 16px;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: clamp(.6rem, 1.5vw, 1.25rem);
+  gap: 10px;
   min-width: 0;
   max-width: 100%;
 }
@@ -797,15 +796,12 @@ html.dark .top-section-bar {
     flex-direction: column !important;
     overflow: visible !important;
     box-sizing: border-box !important;
-    padding-bottom: calc(
-      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
-    ) !important;
+    /* الحجز السفلي على المحتوى — الصدفة بلا padding مضاعف */
+    padding-bottom: 0 !important;
   }
   .app-shell:has(.bottom-nav--hidden),
   .app-shell.app-chrome-hidden {
-    padding-bottom: calc(
-      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
-    ) !important;
+    padding-bottom: 0 !important;
   }
   .app-top-chrome {
     flex: 0 0 auto;
@@ -817,7 +813,9 @@ html.dark .top-section-bar {
     height: auto !important;
     overflow-x: clip !important;
     overflow-y: visible !important;
-    padding-block-end: 0 !important;
+    padding-block-end: calc(
+      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
+    ) !important;
   }
   .app-shell > .site-footer,
   .app-shell > .site-footer--v3 {
@@ -832,10 +830,13 @@ html.dark .top-section-bar {
     display: block !important;
   }
   html.pts-immersive .app-main,
-  html.chrome-immersive .app-main {
+  html.chrome-immersive .app-main,
+  html.pts-immersive #main-content.app-main,
+  html.chrome-immersive #main-content.app-main {
     flex: none !important;
     min-height: auto !important;
     overflow: visible !important;
+    /* الحجز داخل .pts-screen — لا تضاعف */
     padding-block-end: 0 !important;
   }
 
@@ -1902,45 +1903,49 @@ header.navbar-v3,
   .navbar-ticker-row .header-ticker{width:100%;min-width:0;border-radius:var(--radius-button,18px);min-height:var(--ticker-h);height:var(--ticker-h);max-height:var(--ticker-h);display:flex;align-items:center;justify-content:center;padding-block:0;padding-inline:.65rem;border:1px solid color-mix(in srgb,var(--mj-hairline,var(--color-border)) 80%,transparent);background:var(--mj-surface,var(--color-surface))}
 }
 
-/* ══ Soft radius polish — بطاقات/أزرار/رجوع عائم (بلا مصحف) ══ */
-:where(
-  .lesson-unified-card__btn,
-  .lesson-detail-back,
-  .legal-back-btn,
-  .hadith-action-btn,
-  .lessons-v2-filter-toggle,
-  .filter-chips__chip,
-  .mj-filter-chip,
-  .ds-filter-toggle,
-  .ds-btn:not(.ds-btn--icon-only),
-  .bottom-sheet__close-btn
-) {
+/* ══ Soft radius polish — نصف قطر فقط (بلا فرض حدود تسبب CLS) ══ */
+.lesson-unified-card__btn,
+.lesson-detail-back,
+.legal-back-btn,
+.hadith-action-btn,
+.lessons-v2-filter-toggle,
+.filter-chips__chip,
+.mj-filter-chip,
+.ds-filter-toggle,
+.ds-btn:not(.ds-btn--icon-only),
+.bottom-sheet__close-btn {
   border-radius: var(--radius-button, 18px) !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, var(--color-border, transparent));
 }
-:where(
-  .fqh-hub-card,
-  .hadith-card,
-  .lesson-unified-card,
-  .lesson-detail-card,
-  .content-card,
-  .qa-card,
-  .book-card,
-  .library-card,
-  .lrn-hub-card,
-  .section-lobby__card,
-  .quran-hub-card
-) {
+.fqh-hub-card,
+.hadith-card,
+.lesson-unified-card,
+.lesson-detail-card,
+.content-card,
+.qa-card,
+.book-card,
+.library-card,
+.lrn-hub-card,
+.section-lobby__card,
+.quran-hub-card,
+.home-start-card,
+.soft-card,
+.ui-card {
   border-radius: var(--radius-card, 28px) !important;
-  border-width: 1px;
-  border-style: solid;
-  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--mj-hairline, var(--color-border)));
-  box-shadow: 0 10px 26px -18px rgba(11, 32, 24, 0.2);
+}
+.quran-hub-open-mushaf {
+  border-radius: var(--radius-card, 28px) !important;
 }
 .global-back-btn,
 .floating-back-btn,
-.section-lobby__back {
+.section-lobby__back,
+.scroll-to-top {
   border-radius: var(--radius-pill, 999px) !important;
+  overflow: hidden !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  aspect-ratio: 1;
   bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 16px) !important;
 }
 @media (max-width: 879px) {

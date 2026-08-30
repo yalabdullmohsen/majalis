@@ -23,12 +23,13 @@
  */
 
 /* ══════════════════════════════════════════════════════════════
-   ١) البطاقات — حواف أكبر وظل ناعم ملوّن بدل الحد الرمادي الجاف
+   ١) البطاقات — انتقال/ظل فقط (بلا border-radius هنا)
+   نصف القطر يُضبط مبكرًا في final-release/soft-cards لتفادي CLS
+   عند التحميل الكسول لهذه الطبقة.
    ══════════════════════════════════════════════════════════════ */
 .ui-card,
 [class$="-card"],
 [class*="-card "] {
-  border-radius: var(--r-lg);
   transition: var(--t-colors), box-shadow var(--dur) var(--ease),
               transform var(--dur) var(--ease-out);
 }
@@ -60,15 +61,25 @@ button[class$="-card"]:active {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   ٢) الأزرار — نصف قطر موحّد + مساحة لمس 44px (إرشادات Apple)
+   ٢) الأزرار — انتقال فقط؛ نصف القطر من الطبقات المبكرة (تفادي CLS)
+   تبويبات الشريط السفلي مستثناة من قواعد اللمس أدناه.
    ══════════════════════════════════════════════════════════════ */
-button,
 .ds-btn,
-[class$="-btn"],
-[class*="-btn "] {
-  border-radius: var(--r-md);
+[class$="-btn"]:not(.bottom-nav__tab),
+[class*="-btn "]:not(.bottom-nav__tab),
+button:not(.bottom-nav__tab) {
   transition: var(--t-colors), box-shadow var(--dur-fast) var(--ease),
               transform var(--dur-fast) var(--ease);
+}
+
+/* رجوع عائم — دائري (محدد صريح؛ لا يغيّر تخطيط الصفحة الأولى) */
+.global-back-btn,
+.floating-back-btn,
+.scroll-to-top,
+button.global-back-btn,
+button.floating-back-btn {
+  border-radius: var(--radius-pill, 999px);
+  overflow: hidden;
 }
 
 /* الأزرار الدائرية/الحبّة تحتفظ بشكلها — لا يفرض عليها --r-md.
@@ -90,9 +101,9 @@ button.rounded-full,
 /* هدف لمس لا يقل عن 44×44 على الأجهزة اللمسية — أكثر سبب شائع لرفض
    App Store، ويصعّب الاستخدام بإصبع الإبهام. */
 @media (pointer: coarse) {
-  button:not(.rounded-full):not([class*="icon-only"]),
+  button:not(.rounded-full):not([class*="icon-only"]):not(.global-back-btn):not(.floating-back-btn):not(.scroll-to-top):not(.bottom-nav__tab),
   .ds-btn,
-  [class$="-btn"] {
+  [class$="-btn"]:not(.global-back-btn):not(.floating-back-btn) {
     min-height: 44px;
   }
 }

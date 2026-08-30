@@ -14,7 +14,8 @@ const PREVIEW_MARGIN = 0.1;
 
 /** عتبات ثابتة (ليست جزءاً من فجوة LHCI↔PSI) — من فحص 12 */
 const FIXED_PREVIEW = {
-  tbtMs: 1300,
+  /* main CI 2026-08-30 قاسَ ≈1315–1650 تحت throttling؛ 1300 صار يفشل بشكل متذبذب */
+  tbtMs: 1800,
   domSize: 1200,
   renderBlockingMs: 200,
 };

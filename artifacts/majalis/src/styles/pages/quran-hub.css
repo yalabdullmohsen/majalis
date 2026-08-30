@@ -5,8 +5,8 @@
   min-height: 100svh;
   background: var(--elite-white, var(--mj-bg));
   color: var(--elite-ink, #1A1A18);
-  /* الشريط محجوز في .app-shell — هنا تنفّس خفيف فقط داخل منفذ التمرير */
-  padding-bottom: 24px;
+  /* الحجز السفلي من #main-content (--content-pb) */
+  padding-bottom: 0;
   /* بطل ممتد بلا حشو جانبي على الحاوية — المحتوى التالي يستعيد الحشو */
   padding-inline: 0;
   box-sizing: border-box;
@@ -104,6 +104,11 @@
   position: relative;
   overflow: hidden;
 }
+@media (max-width: 879px) {
+  .quran-hub-hero {
+    padding: 1.1rem 1rem 1.25rem;
+  }
+}
 .quran-hub-hero::before {
   content: "";
   position: absolute;
@@ -187,8 +192,8 @@
   display: flex;
   flex-direction: column;
   background: var(--mj-surface);
-  border: 1px solid rgba(23,61,53,0.12);
-  border-radius: var(--ds-radius-xl);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--mj-hairline, #d5ddd9));
+  border-radius: var(--radius-card, 28px);
   overflow: hidden;
   text-decoration: none;
   color: inherit;
