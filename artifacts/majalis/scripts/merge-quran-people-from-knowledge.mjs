@@ -87,7 +87,7 @@ function toPerson(item) {
     firstParagraph(section(body, "سبب الذكر")) ||
     "ذُكر في القرآن للعبرة والتوحيد وفق سياق الآيات.";
   const rawDef = firstParagraph(section(body, "التعريف")) || firstParagraph(body);
-  const isBoilerplate = /من الذين ذُكروا في القرآن|منهج المجلس|لا تُبنى عقيدة/.test(rawDef);
+  const isBoilerplate = /من الذين ذُكروا في القرآن|منهج سُنّة|منهج المجلس|لا تُبنى عقيدة/.test(rawDef);
   const title = String(item.title || "").trim();
   const definition = (isBoilerplate || !rawDef
     ? `${title} — ذُكر في القرآن؛ ${why}`
