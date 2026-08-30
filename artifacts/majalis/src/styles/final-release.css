@@ -1903,7 +1903,7 @@ header.navbar-v3,
   .navbar-ticker-row .header-ticker{width:100%;min-width:0;border-radius:var(--radius-button,18px);min-height:var(--ticker-h);height:var(--ticker-h);max-height:var(--ticker-h);display:flex;align-items:center;justify-content:center;padding-block:0;padding-inline:.65rem;border:1px solid color-mix(in srgb,var(--mj-hairline,var(--color-border)) 80%,transparent);background:var(--mj-surface,var(--color-surface))}
 }
 
-/* ══ Soft radius polish — بطاقات/أزرار/رجوع عائم (بلا مصحف) ══ */
+/* ══ Soft radius polish — نصف قطر فقط (بلا فرض حدود تسبب CLS) ══ */
 .lesson-unified-card__btn,
 .lesson-detail-back,
 .legal-back-btn,
@@ -1915,7 +1915,6 @@ header.navbar-v3,
 .ds-btn:not(.ds-btn--icon-only),
 .bottom-sheet__close-btn {
   border-radius: var(--radius-button, 18px) !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, var(--color-border, transparent));
 }
 .fqh-hub-card,
 .hadith-card,
@@ -1932,10 +1931,6 @@ header.navbar-v3,
 .soft-card,
 .ui-card {
   border-radius: var(--radius-card, 28px) !important;
-  border-width: 1px;
-  border-style: solid;
-  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--mj-hairline, var(--color-border))) !important;
-  box-shadow: 0 10px 26px -18px rgba(11, 32, 24, 0.2);
 }
 .quran-hub-open-mushaf {
   border-radius: var(--radius-card, 28px) !important;

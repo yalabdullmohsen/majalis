@@ -23,13 +23,13 @@
  */
 
 /* ══════════════════════════════════════════════════════════════
-   ١) البطاقات — حواف ناعمة عبر رموز الواجهة (--radius-card)
-   لا تستخدم --r-lg الحاد (0.625rem) — كان يكسر الواجهة بعد كل تحميل كسول.
+   ١) البطاقات — انتقال/ظل فقط (بلا border-radius هنا)
+   نصف القطر يُضبط مبكرًا في final-release/soft-cards لتفادي CLS
+   عند التحميل الكسول لهذه الطبقة.
    ══════════════════════════════════════════════════════════════ */
 .ui-card,
 [class$="-card"],
 [class*="-card "] {
-  border-radius: var(--radius-card, 28px);
   transition: var(--t-colors), box-shadow var(--dur) var(--ease),
               transform var(--dur) var(--ease-out);
 }
@@ -61,18 +61,18 @@ button[class$="-card"]:active {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   ٢) الأزرار — نصف قطر ناعم (--radius-button)؛ تبويبات الشريط السفلي مستثناة
+   ٢) الأزرار — انتقال فقط؛ نصف القطر من الطبقات المبكرة (تفادي CLS)
+   تبويبات الشريط السفلي مستثناة من قواعد اللمس أدناه.
    ══════════════════════════════════════════════════════════════ */
 .ds-btn,
 [class$="-btn"]:not(.bottom-nav__tab),
 [class*="-btn "]:not(.bottom-nav__tab),
 button:not(.bottom-nav__tab) {
-  border-radius: var(--radius-button, 18px);
   transition: var(--t-colors), box-shadow var(--dur-fast) var(--ease),
               transform var(--dur-fast) var(--ease);
 }
 
-/* رجوع عائم + أعلى الصفحة — دائري دائمًا */
+/* رجوع عائم — دائري (محدد صريح؛ لا يغيّر تخطيط الصفحة الأولى) */
 .global-back-btn,
 .floating-back-btn,
 .scroll-to-top,
@@ -81,8 +81,6 @@ button.floating-back-btn {
   border-radius: var(--radius-pill, 999px);
   overflow: hidden;
 }
-
-/* المصحف يحتفظ بأنماطه داخل .mushaf-reader — لا تُفرَض هنا */
 
 /* الأزرار الدائرية/الحبّة تحتفظ بشكلها — لا يفرض عليها --r-md.
    ⚠ :not(body):not(html) ضرورية وليست احتياطًا: صنف الجسم "has-assistant-fab"
