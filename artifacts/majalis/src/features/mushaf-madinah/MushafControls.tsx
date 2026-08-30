@@ -197,14 +197,14 @@ export function MushafControls({
           </h2>
           {/*
             iOS: inputMode=numeric يعرض لوحة أرقام بلا زر Go/بحث.
-            نستخدم text + enterKeyHint=go ليظهر «انتقال/Go» مع قبول الأرقام فقط.
+            نستخدم text + enterKeyHint=search ليظهر «بحث» مع قبول الأرقام فقط.
           */}
           <input
             ref={inputRef}
             type="text"
             name="mushaf-page"
             inputMode="text"
-            enterKeyHint="go"
+            enterKeyHint="search"
             pattern="[0-9٠-٩۰-۹]*"
             autoComplete="off"
             autoCorrect="off"
