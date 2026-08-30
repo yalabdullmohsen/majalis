@@ -966,9 +966,10 @@
         "المجمع الفقهي",
         "فقه معاصر"
       ],
-      "sitemap": true,
+      "sitemap": false,
+      "robots": "noindex, nofollow",
       "changefreq": "weekly",
-      "priority": 0.83
+      "priority": 0.3
     },
     {
       "path": "/fiqh-council/nawazil",
@@ -2309,9 +2310,10 @@
         "دراسات إسلامية",
         "مكتبة أكاديمية"
       ],
-      "sitemap": true,
+      "sitemap": false,
+      "robots": "noindex, nofollow",
       "changefreq": "weekly",
-      "priority": 0.8
+      "priority": 0.3
     },
     {
       "path": "/academic-research/submit",
@@ -2324,7 +2326,7 @@
       "sitemap": false,
       "changefreq": "yearly",
       "priority": 0.3,
-      "robots": "noindex, follow"
+      "robots": "noindex, nofollow"
     },
     {
       "path": "/academic-research/assistant",
@@ -2337,7 +2339,7 @@
       "sitemap": false,
       "changefreq": "monthly",
       "priority": 0.4,
-      "robots": "noindex, follow"
+      "robots": "noindex, nofollow"
     },
     {
       "path": "/prayer-countdown",
