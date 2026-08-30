@@ -875,6 +875,7 @@ html.dark .mj-btn--ghost {
   opacity: 1 !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  border-radius: 1.25rem 1.25rem 0 0;
 }
 .mj-nav-skin a[aria-current="page"],
 .mj-nav-skin .is-active {

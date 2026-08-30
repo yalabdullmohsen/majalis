@@ -681,7 +681,7 @@ html.dark .nav-soon-badge {
   min-height: 44px;
   padding: 0.15rem 0.1rem;
   border: 0;
-  border-radius: 0.5rem;
+  border-radius: var(--mj-r-md, 16px);
   background: transparent;
   color: var(--color-text-muted);
   font-size: var(--text-nav, var(--font-xs, 0.875rem));
@@ -698,7 +698,7 @@ html.dark .nav-soon-badge {
 .bottom-nav--v2 .bottom-nav__tab.is-active {
   color: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
   background: var(--color-active-tab-bg, color-mix(in srgb, var(--mj-brand-deep, #123f2e) 10%, transparent));
-  border-radius: 14px;
+  border-radius: var(--mj-r-md, 16px);
 }
 .bottom-nav--v2 .bottom-nav__tab-icon {
   display: flex;
@@ -854,6 +854,8 @@ html.dark .top-section-bar {
     opacity: 1 !important;
     border-block-start: 1px solid var(--color-border) !important;
     border-top: 1px solid var(--color-border) !important;
+    /* حواف علوية ناعمة — التصميم السابق دون شفافية */
+    border-radius: 1.25rem 1.25rem 0 0 !important;
     box-shadow: 0 -2px 8px rgb(23 61 53 / 6%) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
@@ -877,7 +879,7 @@ html.dark .top-section-bar {
     margin: 0 !important;
     padding: 0.15rem 0.1rem !important;
     border: 0 !important;
-    border-radius: 14px !important;
+    border-radius: var(--mj-r-md, 16px) !important;
     box-shadow: none !important;
     background: transparent !important;
     color: var(--color-text-muted) !important;
@@ -1031,7 +1033,7 @@ html[data-theme="dark"] .bottom-nav--v2 {
   html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab,
   html[data-theme="dark"] .bottom-nav .bottom-nav__tab {
     color: var(--color-text-muted) !important;
-    border-radius: 14px !important;
+    border-radius: var(--mj-r-md, 16px) !important;
   }
   html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
   html[data-theme="dark"] .bottom-nav .bottom-nav__tab.is-active {

@@ -11,18 +11,19 @@
   width: 100%;
   /* المحتوى تحت الـ status bar؛ الحشو العلوي = inset فقط */
   padding-block-start: var(--inset-top);
+  padding-inline: 0.65rem;
   min-height: calc(var(--inset-top) + var(--homepage-ad-bar-h));
-  max-height: calc(var(--inset-top) + var(--homepage-ad-bar-h));
-  overflow: hidden;
+  max-height: calc(var(--inset-top) + var(--homepage-ad-bar-h) + 0.35rem);
+  overflow: visible;
   isolation: isolate;
-  border-block-end: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 10%, transparent);
-  background: color-mix(in srgb, var(--majalis-ivory, #faf8f2) 88%, var(--majalis-emerald-deep, #173d35));
+  border-block-end: none;
+  background: transparent;
   color: var(--majalis-ink, #1a1a18);
 }
 
 html[data-theme="dark"] .homepage-ad-bar {
-  background: color-mix(in srgb, #101614 92%, var(--majalis-emerald-deep, #173d35));
-  border-block-end-color: color-mix(in srgb, #fff 8%, transparent);
+  background: transparent;
+  border-block-end-color: transparent;
   color: #e8f0ec;
 }
 
@@ -37,7 +38,18 @@ html[data-theme="dark"] .homepage-ad-bar {
   min-height: var(--homepage-ad-bar-h);
   max-height: var(--homepage-ad-bar-h);
   margin-inline: auto;
+  margin-block: 0.2rem 0.15rem;
   padding-inline: calc(0.55rem + var(--inset-left, 0px)) calc(0.35rem + var(--inset-right, 0px));
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald-deep, #173d35) 14%, transparent);
+  background: color-mix(in srgb, var(--majalis-ivory, #faf8f2) 88%, var(--majalis-emerald-deep, #173d35));
+  box-shadow: 0 4px 14px -10px rgba(11, 32, 24, 0.28);
+  overflow: hidden;
+}
+
+html[data-theme="dark"] .homepage-ad-bar__inner {
+  background: color-mix(in srgb, #101614 92%, var(--majalis-emerald-deep, #173d35));
+  border-color: color-mix(in srgb, #fff 10%, transparent);
 }
 
 .homepage-ad-bar__logo {
