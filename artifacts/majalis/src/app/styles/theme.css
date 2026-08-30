@@ -408,6 +408,10 @@ html.dark,
   --on-green: var(--on-dark-strong);
   --on-surface: var(--mj-ink);
   --on-surface-muted: var(--mj-ink-2);
+  /* تثبيت أنصاف القطر ليلاً — يمنع تصفير --mj-r-pill عند تعارض الجسور */
+  --radius-pill: 999px;
+  --mj-r-pill: 999px;
+  --r-full: 9999px;
 }
 
 /* نص فوق أخضر/داكن: يعيد رموز النص دون لمس لون الصفحة */

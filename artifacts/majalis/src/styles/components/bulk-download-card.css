@@ -1,0 +1,142 @@
+/* بطاقة تنزيل المصحف كاملاً (bdm-*) — مشتركة بين الإعدادات والمصحف */
+
+.bdm-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.bdm-card {
+  border: 1px solid var(--border, var(--mj-hairline));
+  border-radius: var(--radius-card, 1rem);
+  padding: 1rem 1.1rem;
+  background: var(--surface-raised, var(--mj-surface, #fff));
+}
+
+.bdm-card__header {
+  border-bottom: 1px solid var(--border, var(--mj-hairline));
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.bdm-card__title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.bdm-card__reciter {
+  margin: 0.25rem 0 0;
+  font-size: 0.82rem;
+  color: var(--brand-deep, var(--mj-brand-deep, #1a4d3e));
+  font-weight: 600;
+}
+
+.bdm-card__progress {
+  margin-bottom: 0.85rem;
+}
+
+.bdm-card__info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted, var(--mj-muted));
+  margin-bottom: 0.5rem;
+}
+
+.bdm-card__bar {
+  height: 0.55rem;
+  border-radius: var(--radius-pill, 999px);
+  background: var(--border, var(--mj-hairline));
+  overflow: hidden;
+}
+
+.bdm-card__bar-fill {
+  height: 100%;
+  background: var(--brand-deep, var(--mj-brand-deep, #1a4d3e));
+  border-radius: var(--radius-pill, 999px);
+  transition: width 0.2s ease;
+}
+
+.bdm-card__size {
+  margin: 0.4rem 0 0;
+  font-size: 0.72rem;
+  color: var(--text-muted, var(--mj-muted));
+}
+
+.bdm-card__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.bdm-card__action-row {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.bdm-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border: none;
+  border-radius: var(--radius-button, 18px);
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  color: #fff;
+}
+
+.bdm-card__btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.bdm-card__btn--start {
+  background: var(--brand-deep, var(--mj-brand-deep, #1a4d3e));
+}
+
+.bdm-card__btn--pause {
+  background: #d97706;
+}
+
+.bdm-card__btn--done {
+  background: #065f46;
+}
+
+.bdm-card__btn--delete {
+  width: auto;
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid var(--border, var(--mj-hairline));
+  color: var(--text, var(--mj-ink));
+}
+
+html[data-theme="dark"] .bdm-card,
+html.dark .bdm-card {
+  background: var(--mj-surface, #1b2421);
+  border-color: var(--mj-hairline, #35443f);
+}
+
+html[data-theme="dark"] .bdm-card__header,
+html.dark .bdm-card__header {
+  border-color: var(--mj-hairline, #35443f);
+}
+
+html[data-theme="dark"] .bdm-card__info,
+html[data-theme="dark"] .bdm-card__size,
+html.dark .bdm-card__info,
+html.dark .bdm-card__size {
+  color: var(--mj-muted, #c5d0cb);
+}
+
+html[data-theme="dark"] .bdm-card__bar,
+html.dark .bdm-card__bar {
+  background: var(--mj-hairline, #35443f);
+}
