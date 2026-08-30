@@ -31,7 +31,7 @@
   --gutter-inline-end: max(var(--inset-left, 0px), 16px);
   --header-chrome: 56px;
   --header-ad-h: 2.65rem;
-  --ad-banner-height: calc(var(--header-ad-h) + 0.35rem);
+  --ad-banner-height: calc(var(--header-ad-h) + 26px);
   --search-height: 0px;
   --ticker-row-h: 0px;
   --header-h: calc(var(--header-chrome) + var(--inset-top, 0px) + var(--ad-banner-height, 0px));
@@ -72,14 +72,41 @@ body {
   font-family: "Amiri", "MajlisAmiriFallback", "Noto Naskh Arabic", serif;
 }
 
+/* إخفاء رابط التجاوز من أول إطار — يمنع النص الأزرق قبل تحميل theme.css */
+.skip-link,
+.mj-skip-link,
+.skip-link.mj-skip-link {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  top: 0 !important;
+  inset-inline-start: -10000px !important;
+  left: -10000px !important;
+  color: transparent !important;
+  background: transparent !important;
+  text-decoration: none !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
 .navbar-v3 {
-  min-height: var(--header-h);
-  padding-block-start: var(--inset-top, 0px);
+  /* ارتفاع المحتوى + safe-area عبر padding فقط — لا min-height يضاعف الفراغ */
+  min-height: 0;
+  padding-block-start: max(var(--inset-top, 0px), 12px);
   box-sizing: border-box;
 }
 
 .app-top-chrome {
-  min-height: var(--app-top-chrome-h);
+  min-height: 0;
   box-sizing: border-box;
 }
 

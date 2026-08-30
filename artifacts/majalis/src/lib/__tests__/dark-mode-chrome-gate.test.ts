@@ -16,7 +16,12 @@ const nav = readFileSync(resolve(root, "src/components/NavBar.tsx"), "utf8");
 const indexCss = readFileSync(resolve(root, "src/index.css"), "utf8");
 
 assert.match(theme, /clip:\s*rect\(0,\s*0,\s*0,\s*0\)/, "skip-link مخفي بـ clip لا transform");
-assert.match(theme, /\.skip-link\.mj-skip-link:focus[\s\S]*?clip:\s*auto/, "يظهر عند التركيز فقط");
+assert.match(theme, /\.skip-link\.mj-skip-link:focus-visible[\s\S]*?clip:\s*auto/, "يظهر عند focus-visible فقط");
+assert.doesNotMatch(
+  theme.replace(/\/\*[\s\S]*?\*\//g, ""),
+  /\.skip-link\.mj-skip-link:focus\s*,/,
+  "لا إظهار skip-link عند :focus وحده (لمس iOS)",
+);
 assert.doesNotMatch(
   theme.replace(/\/\*[\s\S]*?\*\//g, ""),
   /\.mj-skip-link\s*\{[^}]*transform:\s*translateY\(-200%\)/,

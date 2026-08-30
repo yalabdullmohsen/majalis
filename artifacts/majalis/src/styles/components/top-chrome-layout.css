@@ -35,9 +35,12 @@
 @media (max-width: 879px) {
   .navbar-v3__inner {
     min-height: var(--app-header-height);
-    padding-block: 0.2rem;
+    max-height: 56px;
+    height: var(--app-header-height);
+    padding-block: 0;
     gap: 0.35rem;
     align-items: center;
+    box-sizing: border-box;
   }
 
   /* الوضع الليلي في الهيدر؛ زر البحث المدمج يبقى مخفيًا */

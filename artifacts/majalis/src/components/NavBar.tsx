@@ -18,6 +18,7 @@ import { shouldShowHeaderAd } from "@/config/header-ad";
 import "@/styles/components/dark-emerald-menus.css";
 import "@/styles/components/app-chrome-scroll.css";
 import "@/styles/components/top-chrome-layout.css";
+import "@/styles/components/header-ad-slot.css";
 
 const HeaderTicker = lazy(() =>
   import("./HeaderTicker").then((m) => ({ default: m.HeaderTicker })),

@@ -174,11 +174,17 @@ html.theme-dark .header-ad-slot__cta {
 .navbar-v3__ad-row {
   box-sizing: border-box;
   width: 100%;
-  min-height: calc(var(--header-ad-h, 2.65rem) + 0.35rem);
-  padding: 0.15rem max(16px, var(--gutter-inline-start, 16px))
-    0.2rem max(16px, var(--gutter-inline-end, 16px));
-  border-block-start: 1px solid var(--mj-hairline, var(--color-border));
+  min-height: 0;
+  margin: 0;
+  padding: 12px 0 14px;
+  border-block-start: 0;
   background: var(--mj-bg, var(--color-bg, #f2f4f3));
+}
+
+.navbar-v3__ad-row .header-ad-slot {
+  width: calc(100% - 32px);
+  max-width: 430px;
+  margin-inline: auto;
 }
 
 html[data-theme="dark"] .navbar-v3__ad-row,
