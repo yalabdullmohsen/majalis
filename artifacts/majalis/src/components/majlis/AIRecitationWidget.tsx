@@ -41,7 +41,7 @@ export function AIRecitationWidget({
         <h3 className="ai-recitation__title">{label}</h3>
         <p className="ai-recitation__hint">
           يستمع التطبيق لصوتك عبر التعرف الصوتي للجهاز (locale: ar_SA) ويقارن
-          النص بالآية محليًا. لا يُرفع الصوت إلى خوادم المجلس.
+          النص بالآية محليًا. لا يُرفع الصوت إلى خوادم سُنّة.
         </p>
         <p className="ai-recitation__target" dir="rtl">
           {targetVerse}

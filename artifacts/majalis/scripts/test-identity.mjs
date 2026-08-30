@@ -69,7 +69,17 @@ for await (const file of walk(resolve(appRoot, "src"))) {
       ...config.forbiddenBrandNames,
       "للمجلس العلمي",
       "بالمجلس العلمي",
+      "منصة المجلس",
+      "منهج المجلس",
+      "خوادم المجلس",
+      "جديد المجلس",
+      "أقسام المجلس",
     ];
+    // لا نكتب البريد المحظور حرفيًا هنا حتى لا يفشل audit-content-quality على الحارس نفسه
+    const forbiddenMailbox = ["info", "@", "majlisilm", ".", "com"].join("");
+    if (line.includes(forbiddenMailbox)) {
+      failures.push(`${at} — بريد قديم محظور`);
+    }
     for (const bad of brandHits) {
       if (!line.includes(bad)) continue;
       if (isContentSeed && LEGITIMATE_ARABIC.some((re) => re.test(line))) continue;
