@@ -24,7 +24,7 @@
   --shadow-soft: var(--e-2);
   /* أبعاد الهيكل الموحّدة — الإنسِت من theme (--inset-*) مرة واحدة */
   --header-height: var(--header-chrome, 56px);
-  --bottom-nav-height: var(--nav-chrome, 84px);
+  --bottom-nav-height: var(--nav-chrome, 64px);
   --safe-bottom: 0px;
   --bottom-nav-total: var(--nav-h, calc(var(--bottom-nav-height) + var(--inset-bottom)));
   --content-pb: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px) + 24px);
@@ -765,8 +765,8 @@ html.dark .top-section-bar {
 @media (max-width: 879px) {
   :root {
     --header-height: 3rem;
-    --bottom-nav-h: 84px;
-    --bottom-nav-height: 84px; /* مساحة واضحة للتسمية + لمس مريح */
+    --bottom-nav-h: 3.25rem;
+    --bottom-nav-height: 3.25rem; /* ارتفاع التبويب السابق — بلا مربعات عملاقة */
     --content-pb: 24px;
   }
 
@@ -781,14 +781,14 @@ html.dark .top-section-bar {
     overflow: hidden !important;
     box-sizing: border-box !important;
     padding-bottom: calc(
-      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 0.5rem
+      var(--bottom-nav-height, 3.25rem) + var(--inset-bottom, 0px) + 0.5rem
     ) !important;
   }
   /* حجز دائم لارتفاع الشريط — حتى أثناء translateY للإخفاء */
   .app-shell:has(.bottom-nav--hidden),
   .app-shell.app-chrome-hidden {
     padding-bottom: calc(
-      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 0.5rem
+      var(--bottom-nav-height, 3.25rem) + var(--inset-bottom, 0px) + 0.5rem
     ) !important;
   }
   .app-top-chrome {

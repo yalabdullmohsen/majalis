@@ -216,7 +216,7 @@
 
   /* أبعاد الهيكل — كروم بلا إنسِت؛ --header-h / --nav-h / --content-pb من theme.css */
   --header-chrome: 56px;
-  --nav-chrome: 84px;
+  --nav-chrome: 64px;
   --header-height: var(--header-chrome);
   --bottom-nav-h: var(--nav-chrome);
   --bottom-nav-height: var(--nav-chrome);

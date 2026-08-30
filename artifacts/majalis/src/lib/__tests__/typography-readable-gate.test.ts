@@ -37,7 +37,7 @@ assert.doesNotMatch(navM2030, /font-size:\s*0\.68rem/, "لا تصغير شريط
 assert.doesNotMatch(navM2030, /font-size:\s*0\.62rem/);
 
 const finalCss = read("src/styles/final-release.css");
-assert.match(finalCss, /--bottom-nav-height:\s*84px/);
+assert.match(finalCss, /--bottom-nav-height:\s*3\.25rem/);
 assert.match(finalCss, /--text-nav/);
 
 const indexCss = read("src/index.css");
