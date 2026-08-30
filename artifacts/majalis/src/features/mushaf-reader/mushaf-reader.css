@@ -8,14 +8,26 @@
   --mushaf-safe-top: calc(var(--inset-top, 0px) + 0.85rem);
   --mushaf-safe-bottom: max(0.55rem, var(--inset-bottom, 0px));
   --mushaf-body-width: min(100%, 28rem);
-  --mushaf-line-height: 1.78;
+  --mushaf-line-height: 1.85;
+  --mushaf-font-weight: 400;
   --mushaf-page-bg: #fdf9f3;
   --mushaf-text-color: #1a1510;
   --mushaf-meta-color: #785e38;
   --mushaf-top-safe: var(--mushaf-safe-top);
-  --mushaf-font-size: 22px;
-  --mushaf-side-pad: max(0.95rem, var(--inset-inline-start, var(--inset-left, 0px)), var(--inset-inline-end, var(--inset-right, 0px)));
+  --mushaf-font-size: 24px;
+  --mushaf-header-height: 36px;
+  --mushaf-footer-height: 32px;
+  --mushaf-body-top: var(--mushaf-header-height);
+  --mushaf-body-height: auto;
+  --mushaf-side-pad: max(0.7rem, var(--inset-inline-start, var(--inset-left, 0px)), var(--inset-inline-end, var(--inset-right, 0px)));
   --mushaf-ayah-mark-size: 0.92em;
+
+  /* طبقات سفلية داخل القارئ */
+  --bottom-nav-height: 84px;
+  --reader-action-height: 96px;
+  --audio-player-height: 112px;
+  --safe-bottom: var(--inset-bottom, 0px);
+  --reader-bottom-stack: 0px;
 
   --nm-paper: var(--mushaf-page-bg);
   --nm-paper-deep: #faf6ee;
@@ -23,12 +35,13 @@
   --nm-meta: var(--mushaf-meta-color);
   --nm-gold: #a68b67;
   --nm-gold-deep: #785e38;
-  --nm-select: color-mix(in srgb, var(--nm-gold) 18%, transparent);
-  --nm-play: color-mix(in srgb, var(--nm-gold) 14%, transparent);
-  --nm-qpc-size: 22px;
+  --nm-select: rgba(147, 121, 82, 0.14);
+  --nm-play: rgba(147, 121, 82, 0.1);
+  --nm-qpc-size: var(--mushaf-font-size);
   --nm-qpc-family: qpc-v2;
   --nm-line-height: var(--mushaf-line-height);
-  --nm-word-gap: 0.12em;
+  /* فجوة خفيفة — QPC يحمل تباعده؛ الزيادة تسبب lineOverflow على الأسطر الكثيفة */
+  --nm-word-gap: 0.04em;
   --nm-side-pad: var(--mushaf-side-pad);
   --nm-top-pad: max(1.1rem, var(--mushaf-safe-top));
   --nm-bottom-pad: var(--mushaf-safe-bottom);
@@ -73,12 +86,27 @@
   height: 100%;
   max-width: var(--nm-page-max-w);
   margin-inline: auto;
-  padding: var(--nm-top-pad) var(--nm-side-pad) var(--nm-bottom-pad);
+  padding: var(--nm-top-pad) var(--nm-side-pad)
+    calc(var(--nm-bottom-pad) + var(--reader-bottom-stack, 0px) + 16px);
+  /* يهزم حشو mm-page-shell المزدوج من mushaf-madinah.css */
+  padding-inline: var(--nm-side-pad) !important;
   overflow-x: hidden;
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
   background: var(--nm-paper);
+}
+
+.nm-root[data-ayah-bar="1"] {
+  --reader-bottom-stack: calc(var(--reader-action-height) + var(--safe-bottom));
+}
+.nm-root[data-audio-dock="1"] {
+  --reader-bottom-stack: calc(var(--audio-player-height) + var(--safe-bottom));
+}
+.nm-root[data-ayah-bar="1"][data-audio-dock="1"] {
+  --reader-bottom-stack: calc(
+    var(--reader-action-height) + var(--audio-player-height) + var(--safe-bottom)
+  );
 }
 
 .nm-page {
@@ -89,7 +117,10 @@
   max-width: 100%;
   overflow: hidden;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows:
+    var(--mushaf-header-height, 36px)
+    minmax(0, 1fr)
+    var(--mushaf-footer-height, 32px);
   background: var(--nm-paper);
   color: var(--nm-ink);
   isolation: isolate;
@@ -144,28 +175,30 @@
   z-index: 1;
   flex: 1 1 auto;
   min-height: 0;
+  height: 100%;
   width: 100%;
   max-width: 100%;
   display: grid;
   grid-template-rows: repeat(15, minmax(0, 1fr));
   align-content: stretch;
   font-family: var(--nm-qpc-family, var(--mm-qpc-family, serif));
-  font-size: var(--nm-qpc-size, var(--mushaf-font-size, var(--mm-qpc-size, 22px)));
+  font-size: var(--mushaf-font-size, var(--nm-qpc-size, 24px));
+  font-weight: var(--mushaf-font-weight, 400);
   line-height: var(--mushaf-line-height, var(--nm-line-height));
   letter-spacing: 0;
   word-spacing: 0;
   color: var(--mushaf-text-color, var(--nm-ink));
 }
 
-/* صفحات الافتتاح: إخفاء الخانات الفارغة مع نفس عرض/حجم الخط — بلا تكبير عشوائي */
+/* صفحات الافتتاح/المقدمة: نفس شبكة ١٥ — بلا توسيط يغيّر bodyTop */
 .nm-page--opening .nm-page__body,
-.nm-page--flex .nm-page__body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.28em;
-  grid-template-rows: none;
-  padding-block: 0.5rem 0.75rem;
+.nm-page--lead .nm-page__body {
+  display: grid;
+  grid-template-rows: repeat(15, minmax(0, 1fr));
+  justify-content: stretch;
+  align-content: stretch;
+  gap: 0;
+  padding-block: 0;
   width: 100%;
   max-width: 100%;
 }
@@ -184,8 +217,10 @@
 }
 
 .nm-page--opening .nm-slot[data-kind="empty"],
+.nm-page--lead .nm-slot[data-kind="empty"],
 .nm-page--flex .nm-slot[data-kind="empty"] {
-  display: none;
+  visibility: hidden;
+  display: flex;
 }
 
 .nm-slot__banner {
@@ -257,7 +292,8 @@
   unicode-bidi: isolate;
   white-space: nowrap;
   text-align: center;
-  overflow: visible;
+  overflow-x: hidden;
+  overflow-y: visible;
   line-height: inherit;
   word-spacing: 0;
   letter-spacing: 0;
@@ -274,6 +310,7 @@
   margin-inline: var(--nm-word-gap);
   font-family: inherit;
   font-size: inherit;
+  font-weight: inherit;
   line-height: inherit;
   color: inherit;
   background: transparent;
@@ -283,22 +320,47 @@
   user-select: none;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-  border-radius: 0.15em;
+  border-radius: 0;
   box-shadow: none;
-  transition: background-color 120ms ease;
+  transition: none;
 }
 
-.nm-word.is-selected {
-  background: var(--nm-select);
-}
-
-.nm-word.is-playing {
-  background: var(--nm-play);
+/* التحديد البصري عبر AyahSelectionOverlay فقط — بلا خلفية كلمة بكلمة */
+.nm-word.is-selected,
+.nm-word.is-playing,
+.nm-basmala.is-selected,
+.nm-basmala.is-playing {
+  background: transparent;
+  box-shadow: none;
 }
 
 .nm-word:focus-visible {
   outline: 2px solid color-mix(in srgb, var(--nm-gold-deep) 55%, transparent);
   outline-offset: 1px;
+}
+
+/* طبقة تحديد آية كاملة — شرائط سطرية */
+.nm-ayah-sel {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.nm-ayah-sel__band {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 8px;
+  background: rgba(147, 121, 82, 0.14);
+}
+
+.nm-ayah-sel__band--playing {
+  background: rgba(147, 121, 82, 0.1);
+}
+
+.nm-ayah-sel__band--selected {
+  background: rgba(147, 121, 82, 0.14);
 }
 
 /* رقم آية — دائرة نصية بسيطة ثابتة الحجم بلا رفع للسطر */
@@ -344,7 +406,7 @@
 .nm-word--end.is-selected .nm-ayah-mark,
 .nm-word--end.is-playing .nm-ayah-mark {
   border-color: var(--nm-gold-deep);
-  background: color-mix(in srgb, var(--nm-gold) 16%, var(--nm-paper));
+  background: transparent;
 }
 
 /* ذيل بسيط — رقم صفحة كنص فقط */
@@ -454,11 +516,27 @@
   inset-inline: 0;
   bottom: 0;
   z-index: 50;
-  padding: 0.65rem 0.85rem calc(0.75rem + var(--inset-bottom, 0px));
-  background: color-mix(in srgb, var(--nm-paper) 97%, #fff);
+  min-height: var(--reader-action-height, 96px);
+  padding: 0.65rem 0.85rem calc(0.75rem + var(--safe-bottom, 0px));
+  background: var(--nm-paper);
   border-top: 1px solid color-mix(in srgb, var(--nm-gold) 22%, transparent);
-  box-shadow: 0 -6px 18px color-mix(in srgb, #000 5%, transparent);
+  box-shadow: 0 -4px 12px color-mix(in srgb, #000 4%, transparent);
   pointer-events: auto;
+  opacity: 1;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.nm-root[data-audio-dock="1"] .nm-verse-menu {
+  bottom: calc(var(--audio-player-height, 112px) + var(--safe-bottom, 0px));
+}
+
+.nm-root .mm-audio-dock {
+  background: var(--nm-paper) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  min-height: var(--audio-player-height, 112px);
 }
 
 .nm-verse-menu__label {

@@ -32,7 +32,7 @@ assert.match(hook, /document\.fonts\.load\(spec\)/);
 assert.match(qpc, /document\.fonts\.check/);
 assert.match(qpc, /qpc-v2-p\$\{pageNumber\}/);
 assert.equal(MUSHAF_FIT_MIN_PX, 12);
-assert.equal(MUSHAF_FIT_MAX_PX, 35);
+assert.equal(MUSHAF_FIT_MAX_PX, 38);
 assert.equal(MUSHAF_FIT_LINE_RATIO, 1.85);
 
 const measure = (fontPx: number, text: string) => text.length * fontPx * 0.62;

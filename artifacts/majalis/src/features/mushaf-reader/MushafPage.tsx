@@ -1,14 +1,17 @@
-import { memo, useMemo, type CSSProperties } from "react";
+import { memo, useMemo, useRef, useState, type CSSProperties } from "react";
 import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
 import { toArabicIndicDigits as toArabicDigits, toArabicPageDigits } from "@/lib/numerals";
 import { MushafSurahBanner } from "./MushafSurahBanner";
 import { MushafBasmalaView, MushafVerseLayer } from "./MushafVerseLayer";
+import { AyahSelectionOverlay } from "./AyahSelectionOverlay";
 
 type Props = {
   layout: MushafPageLayout;
   fontFamily: string;
   displayPageNumber?: number;
   onSelectVerse?: (verseKey: string) => void;
+  /** قياس التحديد بعد استقرار القلب فقط */
+  selectionEnabled?: boolean;
 };
 
 type SlotCell =
@@ -32,10 +35,6 @@ function buildSlots(layout: MushafPageLayout): Map<number, SlotCell> {
   return raw;
 }
 
-function filledSlots(slots: Map<number, SlotCell>): number[] {
-  return [...slots.keys()].sort((a, b) => a - b);
-}
-
 function isLastSurahLine(words: QpcWord[], layout: MushafPageLayout): boolean {
   if (words.length === 0) return false;
   const last = words.reduce((a, b) => (a.id >= b.id ? a : b));
@@ -52,30 +51,31 @@ function isLastSurahLine(words: QpcWord[], layout: MushafPageLayout): boolean {
 
 /**
  * MushafPage — صفحة ثابتة القياس من أول إطار.
- * بلا ملاءمة خط بعد العرض، بلا visibility toggle، بلا إطارات.
+ * شبكة ١٥ سطرًا لكل الصفحات (نفس bodyTop) — بلا توسيط flex يقفز النص.
  */
 export const MushafPage = memo(function MushafPage({
   layout,
   fontFamily,
   displayPageNumber,
   onSelectVerse,
+  selectionEnabled = true,
 }: Props) {
+  const bodyRef = useRef<HTMLDivElement | null>(null);
+  const [bodyEl, setBodyEl] = useState<HTMLElement | null>(null);
+
   const isOpeningP1 = layout.pageNumber === 1;
-  const isFlexBody = layout.pageNumber === 1 || layout.pageNumber === 2;
-  const surahStart = !isFlexBody && layout.surahsStartingOnPage.length > 0;
+  const isLeadP2 = layout.pageNumber === 2;
+  const surahStart = !isOpeningP1 && !isLeadP2 && layout.surahsStartingOnPage.length > 0;
   const pageType = isOpeningP1
     ? "opening"
-    : layout.pageNumber === 2
+    : isLeadP2
       ? "lead"
       : surahStart
         ? "surah-start"
         : "normal";
 
   const slots = useMemo(() => buildSlots(layout), [layout]);
-  const slotOrder = useMemo(
-    () => (isFlexBody ? filledSlots(slots) : Array.from({ length: 15 }, (_, i) => i + 1)),
-    [isFlexBody, slots],
-  );
+  const slotOrder = useMemo(() => Array.from({ length: 15 }, (_, i) => i + 1), []);
 
   const footerPage = displayPageNumber ?? layout.pageNumber;
   const hizbLabel =
@@ -90,12 +90,12 @@ export const MushafPage = memo(function MushafPage({
 
   return (
     <article
-      className={`nm-page${isOpeningP1 ? " nm-page--opening" : ""}${isFlexBody ? " nm-page--flex" : ""}`}
+      className={`nm-page${isOpeningP1 ? " nm-page--opening" : ""}${isLeadP2 ? " nm-page--lead" : ""}`}
       data-page={footerPage}
       data-page-type={pageType}
       data-layout="pageShell"
       data-testid="mushaf-page"
-      data-opening={isFlexBody ? "1" : "0"}
+      data-opening={isOpeningP1 || isLeadP2 ? "1" : "0"}
       data-mm-fit="1"
       style={
         {
@@ -105,16 +105,25 @@ export const MushafPage = memo(function MushafPage({
       }
       aria-label={`صفحة المصحف ${footerPage}`}
     >
-      <header className="nm-page__header" data-layout="pageHeader">
+      <header
+        className="nm-page__header"
+        data-layout="pageHeader"
+        style={{ height: "var(--mushaf-header-height, 36px)", minHeight: "var(--mushaf-header-height, 36px)" }}
+      >
         <span className="nm-page__header-surah">{layout.headerSurahName}</span>
         <span className="nm-page__header-juz">{`الجزء ${toArabicDigits(layout.juzNumber)}`}</span>
       </header>
 
       <div className="nm-page__stage" data-testid="mushaf-page-frame">
         <div
-          className={`nm-page__body${isOpeningP1 ? " nm-page__body--opening" : ""}${isFlexBody ? " nm-page__body--flex" : ""}`}
+          ref={(node) => {
+            bodyRef.current = node;
+            setBodyEl(node);
+          }}
+          className="nm-page__body"
           data-layout="pageBody"
         >
+          <AyahSelectionOverlay container={bodyEl} enabled={selectionEnabled} />
           {slotOrder.map((slot) => {
             const cell = slots.get(slot);
             return (
@@ -141,7 +150,7 @@ export const MushafPage = memo(function MushafPage({
                   ) : (
                     <MushafVerseLayer
                       words={cell.words}
-                      centered={isFlexBody || isLastSurahLine(cell.words, layout)}
+                      centered={isOpeningP1 || isLeadP2 || isLastSurahLine(cell.words, layout)}
                       onSelectVerse={onSelectVerse}
                     />
                   )
@@ -152,7 +161,11 @@ export const MushafPage = memo(function MushafPage({
         </div>
       </div>
 
-      <footer className="nm-page__footer" data-layout="pageFooter">
+      <footer
+        className="nm-page__footer"
+        data-layout="pageFooter"
+        style={{ height: "var(--mushaf-footer-height, 32px)", minHeight: "var(--mushaf-footer-height, 32px)" }}
+      >
         <span className="nm-page__footer-hizb">{hizbLabel}</span>
         <span className="nm-page__footer-num">{toArabicPageDigits(footerPage)}</span>
         <span className="nm-page__footer-spacer" aria-hidden="true" />

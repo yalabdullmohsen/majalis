@@ -133,7 +133,12 @@ export const MushafVerseLayer = memo(function MushafVerseLayer({
     }
   };
 
-  const endPress = (_verseKey: string) => {
+  const endPress = (verseKey: string) => {
+    const cur = pressRef.current;
+    if (cur && !cur.fired && cur.verseKey === verseKey && onSelectVerse) {
+      cur.fired = true;
+      onSelectVerse(verseKey);
+    }
     clearPress();
   };
 
@@ -182,6 +187,8 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
       className={`nm-basmala ${state}`.trim()}
       data-testid="mushaf-basmala"
       data-basmala="qpc"
+      data-verse="1:1"
+      data-ayah="1:1"
       dir="rtl"
       lang="ar"
       role={onSelect ? "button" : undefined}
