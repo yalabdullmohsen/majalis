@@ -17,7 +17,6 @@ import {
   FIQH_CATEGORY_LABELS,
   FIQH_CATEGORY_ORDER,
   FIQH_SUPPORTING_TOPICS,
-  fiqhBookBlurb,
   fiqhBookCounts,
   publishedBooks,
   type FiqhBookCategory,
@@ -142,7 +141,7 @@ function fiqhBookItems(cat: FiqhBookCategory): LobbyItem[] {
       return item({
         id: `fiqh-book-${b.id}`,
         label: b.title,
-        subtitle: `${fiqhBookBlurb(b)} ${formatAbwabCount(counts.chapters)} · ${formatMasailCount(counts.lessons)}`,
+        subtitle: `${formatAbwabCount(counts.chapters)} · ${formatMasailCount(counts.lessons)}`,
         route: `/fiqh/books/${b.id}`,
         icon: BookOpen,
       });

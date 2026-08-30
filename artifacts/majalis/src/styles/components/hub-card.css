@@ -9,6 +9,13 @@
   padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 12px);
 }
 
+/* مساحة لزر الرجوع العائم حتى لا يغطي بطاقات الشبكة على الجوال */
+@media (max-width: 879px) {
+  .hub-card-grid {
+    padding-inline-start: 3.25rem;
+  }
+}
+
 @media (min-width: 720px) {
   .hub-card-grid {
     grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));

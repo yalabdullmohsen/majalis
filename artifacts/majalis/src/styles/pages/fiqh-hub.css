@@ -824,7 +824,7 @@ html.dark .fiqh-lux-page.section-lobby {
     var(--bottom-nav-total, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 20px
   );
   background: transparent;
-  gap: 16px;
+  gap: 12px;
 }
 
 .fiqh-lux-page .section-lobby__head {

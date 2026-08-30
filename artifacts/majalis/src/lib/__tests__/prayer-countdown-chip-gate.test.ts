@@ -62,25 +62,26 @@ console.log("\n=== عزل إعادة الرسم: الأب بلا usePrayerCountd
   assert.equal(/Clock/.test(chip), false, "لا أيقونة ساعة");
 }
 
-console.log("\n=== ارتفاع الشريط ≤ ٣٦px وعرض الشريحة ≤ ٣٠٪ ===");
+console.log("\n=== ارتفاع الشريط ≤ ٣٦px وعرض الشريحة ≤ ٤٢٪ ===");
 {
   const finalRelease = read("src/styles/final-release.css");
   assert.match(finalRelease, /--ticker-h:\s*2\.65rem/, "ارتفاع الشريط = ٢٫٦٥rem لوضوح المحتوى");
 
   const chipCss = read("src/styles/components/prayer-countdown-chip.css");
-  assert.match(chipCss, /max-width:\s*30%/, "أقصى عرض الشريحة ٣٠٪");
+  assert.match(chipCss, /max-width:\s*42%/, "أقصى عرض الشريحة ٤٢٪ — يكفي اسم الصلاة بلا قطع");
   assert.match(chipCss, /height:\s*24px/, "ارتفاع بصري ٢٤px");
   assert.match(chipCss, /padding:\s*4px\s+8px/, "حشو ٤×٨");
   assert.match(chipCss, /min-height:\s*44px/, "هدف لمس ≥٤٤px");
   assert.match(chipCss, /tabular-nums/, "أرقام ثابتة العرض");
   assert.match(chipCss, /prefers-reduced-motion/, "احترام تقليل الحركة");
+  assert.match(chipCss, /\.prayer-countdown-chip__name\s*\{[^}]*flex-shrink:\s*0/s, "اسم الصلاة لا يُضغط إلى القطع");
 
-  /* على ٣٩٠px: ٣٠٪ = ١١٧px — قبل: min(52vw,16.5rem) ≈ ٢٠٣px */
+  /* على ٣٩٠px: ٤٢٪ = ١٦٣٫٨px — قبل: min(52vw,16.5rem) ≈ ٢٠٣px */
   const beforeMaxPx = Math.min(0.52 * 390, 16.5 * 16);
-  const afterMaxPx = 0.3 * 390;
+  const afterMaxPx = 0.42 * 390;
   assert.ok(beforeMaxPx > 180, `قبل: عرض أقصى تقريبي ${beforeMaxPx}px`);
-  assert.equal(afterMaxPx, 117, `بعد: عرض أقصى ${afterMaxPx}px على ٣٩٠`);
-  console.log(`  عرض الشريحة أقصى (٣٩٠×٨٤٤): قبل ≈${Math.round(beforeMaxPx)}px → بعد ${afterMaxPx}px`);
+  assert.ok(afterMaxPx > 150 && afterMaxPx < 170, `بعد: عرض أقصى ≈${afterMaxPx}px على ٣٩٠`);
+  console.log(`  عرض الشريحة أقصى (٣٩٠×٨٤٤): قبل ≈${Math.round(beforeMaxPx)}px → بعد ${Math.round(afterMaxPx)}px`);
 }
 
 console.log("\n=== تنسيق العدّ + نافذة حان وقت + أرقام عربية ===");
