@@ -1273,7 +1273,6 @@ export default function HadithPage() {
       groupTitle="أقسام الحديث وعلومه"
     >
       <div className="hadith-page hadith-page--hub">
-        <HadithClassGuide kind="hub" />
         <div className="hub-card-grid">
           {hubCards.map((c) => (
             <HubCard
@@ -1284,6 +1283,7 @@ export default function HadithPage() {
             />
           ))}
         </div>
+        <HadithClassGuide kind="hub" />
         <ExploreAlsoNav
           title="استكشف أيضًا"
           links={[

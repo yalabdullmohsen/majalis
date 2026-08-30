@@ -198,24 +198,26 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           </div>
         )}
 
-        <div className={`lesson-unified-card__meta${compact ? " lesson-unified-card__meta--compact" : ""}`}>
-          {!compact && <MetaCell label="نوع النشاط" value={lesson.activityType} />}
-          {!compact && <MetaCell label="التاريخ" value={displayDate} />}
-          {!compact && <MetaCell label="اليوم" value={displayDay} />}
-          {!compact && <MetaCell label="الوقت" value={displayTime} />}
-          {!compact && <MetaCell label="المكان" value={displayPlace} />}
-          {!compact && lesson.womenAttendance === "متاح" && (
-            <MetaCell
-              label="حضور النساء"
-              value={lesson.womenAttendanceNote || "متاح"}
-            />
-          )}
-          {!compact && lesson.region && <MetaCell label="المنطقة" value={lesson.region} />}
-          {!compact && lesson.governorate && <MetaCell label="المحافظة" value={lesson.governorate} />}
-          {!compact && lesson.linkedLessons && lesson.linkedLessons.length > 0 && (
-            <MetaCell label="الجلسات" value={lesson.linkedLessons.join(" · ")} />
-          )}
-        </div>
+        {!compact ? (
+          <div className="lesson-unified-card__meta">
+            <MetaCell label="نوع النشاط" value={lesson.activityType} />
+            <MetaCell label="التاريخ" value={displayDate} />
+            <MetaCell label="اليوم" value={displayDay} />
+            <MetaCell label="الوقت" value={displayTime} />
+            <MetaCell label="المكان" value={displayPlace} />
+            {lesson.womenAttendance === "متاح" && (
+              <MetaCell
+                label="حضور النساء"
+                value={lesson.womenAttendanceNote || "متاح"}
+              />
+            )}
+            {lesson.region && <MetaCell label="المنطقة" value={lesson.region} />}
+            {lesson.governorate && <MetaCell label="المحافظة" value={lesson.governorate} />}
+            {lesson.linkedLessons && lesson.linkedLessons.length > 0 && (
+              <MetaCell label="الجلسات" value={lesson.linkedLessons.join(" · ")} />
+            )}
+          </div>
+        ) : null}
 
         {!compact && lesson.note && (
           <p className="lesson-unified-card__note">{lesson.note}</p>
