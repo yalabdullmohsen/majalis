@@ -7,7 +7,7 @@
   --app-header-height: var(--header-chrome, 56px);
   --search-height: 0px;
   --ticker-height: var(--ticker-h, 2.25rem);
-  --bottom-nav-height: var(--nav-chrome, 84px);
+  --bottom-nav-height: var(--nav-chrome, 64px);
   --z-app-header: 200;
   --z-search: 190;
   --z-ticker: 180;
@@ -168,13 +168,13 @@ header.navbar-v3,
     overflow: hidden;
     box-sizing: border-box;
     /* حجز صلب لارتفاع الشريط الثابت — لا يُرسم محتوى خلفه */
-    padding-bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px));
+    padding-bottom: calc(var(--bottom-nav-height, 3.25rem) + var(--inset-bottom, 0px));
   }
 
   /* لا تُلغِ حجز الشريط عند الإخفاء بـ transform — يمنع تداخل المحتوى */
   .app-shell:has(.bottom-nav--hidden),
   .app-shell.app-chrome-hidden {
-    padding-bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px));
+    padding-bottom: calc(var(--bottom-nav-height, 3.25rem) + var(--inset-bottom, 0px));
   }
 
   .app-top-chrome {
