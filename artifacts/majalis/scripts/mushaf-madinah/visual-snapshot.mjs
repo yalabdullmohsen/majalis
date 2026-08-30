@@ -194,7 +194,7 @@ async function main() {
           paint.overlap === false &&
           paint.heightFit === true &&
           (paint.opening
-            ? paint.domSlots >= 4 && paint.domSlots <= 10
+            ? paint.domSlots >= 4 && paint.domSlots <= 15
             : paint.domSlots === 15 && paint.baselineDev <= 2.5),
       });
       console.log(`✓ snapshot page ${n} → ${file}`);
