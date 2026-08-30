@@ -527,16 +527,42 @@
   -webkit-backdrop-filter: none;
 }
 
-.nm-root[data-audio-dock="1"] .nm-verse-menu {
-  bottom: calc(var(--audio-player-height, 112px) + var(--safe-bottom, 0px));
+/* إن ظهر الشريطان معًا: ارفع قائمة الآية فوق التلاوة بلا تكرار safe-area */
+.nm-root[data-audio-dock="1"][data-ayah-bar="1"] .nm-verse-menu {
+  bottom: var(--audio-player-height, 112px);
 }
 
 .nm-root .mm-audio-dock {
+  left: 0 !important;
+  right: 0 !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: none !important;
+  bottom: 0 !important;
+  z-index: 45 !important;
+  border-radius: 1rem 1rem 0 0 !important;
+  border-inline: 0 !important;
+  border-bottom: 0 !important;
+  min-height: var(--audio-player-height, 112px);
+  max-height: none !important;
+  padding-bottom: calc(0.55rem + var(--safe-bottom, 0px)) !important;
   background: var(--nm-paper) !important;
   opacity: 1 !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  min-height: var(--audio-player-height, 112px);
+  box-shadow: 0 -4px 12px color-mix(in srgb, #000 4%, transparent) !important;
+}
+
+.nm-root .mm-audio-dock[data-open="0"] {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translate3d(0, 12px, 0) !important;
+}
+
+.nm-root .mm-audio-dock[data-open="1"] {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: none !important;
 }
 
 .nm-verse-menu__label {

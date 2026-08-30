@@ -31,6 +31,16 @@ assert.match(newReader, /playAyah/);
 assert.match(newReader, /MushafTafsirSheet/);
 assert.match(newReader, /saveReciterId|loadReciterId/);
 assert.match(newReader, /allowOffscreenPrefetch/);
+assert.match(newReader, /readerBottomDataAttrs/);
+assert.match(
+  newReader,
+  /setAudioDockOpen\(true\);[\s\S]{0,120}setActionsOpen\(false\)/,
+  "بدء التلاوة يغلق شريط الآية ليمنع التراكب",
+);
+assert.match(newReader, /!actionsOpen/);
+assert.match(css, /data-audio-dock="1"\]\[data-ayah-bar="1"\]/);
+assert.match(css, /\.nm-root \.mm-audio-dock/);
+assert.match(css, /z-index:\s*45/);
 
 assert.match(pageView, /MushafVerseLayer/);
 assert.match(pageView, /bismillahPre === true/);

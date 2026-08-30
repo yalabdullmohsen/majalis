@@ -49,6 +49,7 @@ import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
 import { MushafPage } from "./MushafPage";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
 import { useMushafFixedMetrics } from "./useMushafFixedMetrics";
+import { readerBottomDataAttrs } from "./ReaderBottomLayer";
 import "./mushaf-reader.css";
 /* شيتات التلاوة/البحث/التفسير — فئات مشتركة */
 import "@/features/mushaf-madinah/mushaf-madinah.css";
@@ -326,6 +327,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     const ayahKey = `${parsed.surah}:${parsed.ayah}`;
     setAudioError(null);
     setAudioDockOpen(true);
+    /* أغلق شريط الآية حتى لا يتراكب مع شريط التلاوة */
+    setActionsOpen(false);
     bumpChrome();
     suppressPageSyncRef.current = true;
 
@@ -423,13 +426,19 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const mediaPlaying =
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const edgesDisabled = actionsOpen || tafsirOpen || searchOpen || indexOpen;
+  /* شريط التلاوة مستقل عن قائمة الآية — لا يظهران معًا فوق بعض */
   const audioDockVisible =
     audioDockOpen &&
+    !actionsOpen &&
     (chromeOpen ||
-      actionsOpen ||
-      playerState === "playing" ||
-      playerState === "buffering" ||
-      playerState === "error");
+      mediaPlaying ||
+      playerState === "paused" ||
+      playerState === "error" ||
+      playerState === "ended");
+  const bottomAttrs = readerBottomDataAttrs({
+    ayahBar: actionsOpen,
+    audioDock: audioDockVisible,
+  });
 
   return (
     <MushafPager
@@ -456,8 +465,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       }}
       className="nm-root mm-viewport mushaf-shell"
       data-chrome={chromeOpen ? "1" : "0"}
-      data-ayah-bar={actionsOpen ? "1" : "0"}
-      data-audio-dock={audioDockVisible ? "1" : "0"}
+      {...bottomAttrs}
       data-testid="mushaf-viewport"
       dir="rtl"
       nextPage={
