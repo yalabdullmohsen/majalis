@@ -737,7 +737,7 @@ html.dark .fiqh-lux-page.section-lobby {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border-radius: 14px;
+  border-radius: var(--radius-button, 18px);
   background: rgba(255, 255, 255, 0.1);
   color: var(--fq-on-hero);
   opacity: 1;
@@ -1004,7 +1004,7 @@ html.dark .fiqh-lux-page .card::after {
 .fiqh-lux-book-hero {
   margin-bottom: 1.25rem;
   padding: 1.5rem 1.15rem;
-  border-radius: 22px;
+  border-radius: var(--radius-card, 28px);
   background-color: var(--fq-emerald);
   background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
   border: 1px solid rgba(255, 255, 255, 0.1);

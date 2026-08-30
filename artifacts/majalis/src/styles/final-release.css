@@ -351,7 +351,7 @@ html.dark .nav-soon-badge {
   flex-shrink: 0;
   box-sizing: border-box;
   border: 1px solid var(--mj-hairline, var(--color-border));
-  border-radius: var(--mj-r-sm, var(--radius-md));
+  border-radius: var(--radius-button, 18px);
   background: var(--mj-surface-2, var(--color-surface-muted));
   color: var(--mj-ink-2, var(--color-text-muted));
   box-shadow: none;
