@@ -255,13 +255,21 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     };
   }, [audio]);
 
+  const [pagerSettled, setPagerSettled] = useState(true);
+
   const go = useCallback(
     (next: number) => {
       suppressPageSyncRef.current = false;
+      setPagerSettled(false);
       onPageChange(clampMushafPage(next));
     },
     [onPageChange],
   );
+
+  useEffect(() => {
+    const id = window.requestAnimationFrame(() => setPagerSettled(true));
+    return () => window.cancelAnimationFrame(id);
+  }, [page]);
 
   const versePreview = useCallback(
     (verseKey: string): string => {
@@ -416,9 +424,12 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const edgesDisabled = actionsOpen || tafsirOpen || searchOpen || indexOpen;
   const audioDockVisible =
-    !actionsOpen &&
     audioDockOpen &&
-    (chromeOpen || playerState === "playing" || playerState === "buffering" || playerState === "error");
+    (chromeOpen ||
+      actionsOpen ||
+      playerState === "playing" ||
+      playerState === "buffering" ||
+      playerState === "error");
 
   return (
     <MushafPager
@@ -426,7 +437,10 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       page={page}
       onPageChange={go}
       disabled={edgesDisabled}
-      onNavigateStart={() => setChromeOpen(false)}
+      onNavigateStart={() => {
+        setChromeOpen(false);
+        setPagerSettled(false);
+      }}
       ignoreSelector=".nm-controls, .nm-verse-menu, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
       onTapEmpty={() => {
         if (actionsOpen) {
@@ -471,6 +485,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
               fontFamily={fontFamily}
               displayPageNumber={page}
               onSelectVerse={onSelectVerse}
+              selectionEnabled={pagerSettled}
             />
           ) : null}
         </div>
@@ -611,7 +626,14 @@ const PrefetchPage = memo(function PrefetchPage({ pageNumber }: { pageNumber: nu
   if (!ready || !layout) {
     return <div className="nm-page-placeholder" aria-hidden="true" />;
   }
-  return <MushafPage layout={layout} fontFamily={fontFamily} displayPageNumber={pageNumber} />;
+  return (
+    <MushafPage
+      layout={layout}
+      fontFamily={fontFamily}
+      displayPageNumber={pageNumber}
+      selectionEnabled={false}
+    />
+  );
 });
 
 function MediaBridge({

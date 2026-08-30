@@ -50,6 +50,11 @@ export function useMushafAyahPlayingKey(): string | null {
   return useSyncExternalStore(subscribe, () => playingVerseKey, () => null);
 }
 
+/** مفتاح الآية المحددة — لطبقة التحديد السطري. */
+export function useMushafAyahSelectedKey(): string | null {
+  return useSyncExternalStore(subscribe, () => selectedVerseKey, () => null);
+}
+
 export function resetMushafAyahSyncStoreForTests(): void {
   selectedVerseKey = null;
   playingVerseKey = null;

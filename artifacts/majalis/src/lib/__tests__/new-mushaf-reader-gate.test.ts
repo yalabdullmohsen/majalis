@@ -47,6 +47,13 @@ assert.match(verse, /nm-ayah-mark/);
 assert.match(verse, /is-selected/);
 assert.match(verse, /is-playing/);
 
+assert.match(pageView, /AyahSelectionOverlay/);
+assert.match(css, /nm-ayah-sel__band/);
+assert.doesNotMatch(css, /\.nm-word\.is-selected\s*\{[^}]*background:\s*var\(--nm-select\)/);
+assert.match(css, /--mushaf-font-weight:/);
+assert.match(css, /--mushaf-header-height:/);
+assert.match(css, /--reader-action-height:/);
+assert.match(css, /--audio-player-height:/);
 assert.match(css, /#fdf9f3|--nm-paper:\s*#fdf9f3|--mushaf-page-bg:\s*#fdf9f3/i);
 assert.match(css, /--mushaf-page-bg:/);
 assert.match(css, /--mushaf-text-color:/);

@@ -142,7 +142,7 @@ async function main() {
           overlap,
         };
       });
-      const openingMax = 35;
+      const fontMaxPx = 38;
       measurements.push({
         page: n,
         ...m,
@@ -153,7 +153,7 @@ async function main() {
           String(m.pageAttr) === String(n) &&
           m.fontCheck === true &&
           m.fontSize >= 12 &&
-          m.fontSize <= openingMax &&
+          m.fontSize <= fontMaxPx &&
           m.pageOverflow === false &&
           m.lineOverflow === false &&
           m.overlap === false,
