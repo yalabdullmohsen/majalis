@@ -68,18 +68,16 @@ assert.match(
   css,
   /html\.pts-immersive[\s\S]*?linear-gradient\(180deg,\s*#0f4a38\s+0%,\s*#083528\s+55%,\s*#06271f\s+100%\)/,
 );
-assert.match(css, /\.pts-screen\s*\{[\s\S]*?width:\s*100%/);
+assert.match(css, /\.pts-screen\s*\{[\s\S]*?width:\s*100vw/);
 assert.match(css, /\.pts-screen\s*\{[\s\S]*?background:\s*transparent/);
 assert.match(css, /\.pts-row\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius/);
 assert.match(css, /\.pts-dock__item\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius-sm/);
-assert.match(css, /padding-bottom:\s*calc\(\s*var\(--bottom-nav-height(?:,\s*84px)?\)\s*\+\s*var\(--inset-bottom/);
+assert.match(css, /padding-bottom:\s*calc\(\s*var\(--bottom-nav-height(?:,\s*[^)]+)?\)\s*\+\s*var\(--inset-bottom/);
 assert.match(css, /var\(--inset-top/);
 assert.match(css, /var\(--inset-bottom/);
 assert.doesNotMatch(css, /env\(\s*safe-area-inset/);
-assert.match(css, /max-width:\s*430px/);
 assert.match(css, /padding-inline:\s*16px/);
-assert.match(css, /\.pts-screen\s*\{[\s\S]*?justify-content:\s*flex-start/);
-assert.doesNotMatch(css, /justify-content:\s*safe\s+center/);
+assert.match(css, /\.pts-row\s*\{[\s\S]*?width:\s*min\(\s*78vw,\s*320px\)/);
 
 const chromeScroll = readFileSync(
   resolve(appRoot, "src/styles/components/app-chrome-scroll.css"),

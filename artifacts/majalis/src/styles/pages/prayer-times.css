@@ -101,9 +101,8 @@ html.pts-immersive .bottom-nav {
   padding-block-start: max(12px, var(--inset-top, 0px)) !important;
   /* فراغ آمن فوق الشريط السفلي — يمنع اختفاء آخر بطاقة */
   padding-bottom: calc(
-    var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
+    var(--bottom-nav-height, 3.25rem) + var(--inset-bottom, 0px) + 24px
   ) !important;
-  justify-content: flex-start !important;
   box-sizing: border-box;
 }
 
@@ -126,7 +125,7 @@ html.pts-immersive .bottom-nav {
   direction: rtl;
   min-height: 100svh;
   min-height: 100dvh;
-  width: 100%;
+  width: 100vw;
   max-width: none;
   margin: 0;
   margin-block-start: 0;
@@ -144,9 +143,8 @@ html.pts-immersive .bottom-nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* من الأعلى بمسافة آمنة — بلا توسيط يفرّغ الأعلى أو يهبط البطاقات */
-  justify-content: flex-start;
-  gap: 0.85rem;
+  justify-content: safe center;
+  gap: 0.75rem;
   position: relative;
   overflow-x: clip;
   -webkit-overflow-scrolling: touch;
@@ -179,18 +177,16 @@ html.pts-immersive .bottom-nav {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 430px;
+  max-width: min(100%, 26rem);
   margin-inline: auto;
   box-sizing: border-box;
 }
 
-/* البطل وقائمة المواقيت: نفس محور الحاوية الثابتة */
+/* البطل وقائمة المواقيت: بطاقات ناعمة متمركزة (التصميم السابق) */
 .pts-screen > .pts-hero,
-.pts-screen > .pts-list,
-.pts-screen > .pts-header,
-.pts-screen > .pts-dates {
-  width: 100%;
-  max-width: 430px;
+.pts-screen > .pts-list {
+  width: min(82vw, 340px);
+  max-width: 100%;
   margin-inline: auto;
 }
 
@@ -389,7 +385,7 @@ html.pts-immersive .bottom-nav {
 .pts-hero {
   position: relative;
   width: 100%;
-  max-width: 430px;
+  max-width: 100%;
   min-height: 8.25rem;
   display: flex;
   align-items: center;
@@ -500,10 +496,10 @@ html.pts-immersive .bottom-nav {
 .pts-list {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 0.65rem;
-  width: 100%;
-  max-width: 430px;
+  align-items: center;
+  gap: 0.55rem;
+  width: min(82vw, 340px);
+  max-width: 100%;
   margin-inline: auto;
   margin-top: 0.15rem;
 }
@@ -513,7 +509,7 @@ html.pts-immersive .bottom-nav {
   align-items: center;
   justify-content: center;
   gap: 0.12rem;
-  width: 100%;
+  width: min(78vw, 320px);
   max-width: 100%;
   margin-inline: auto;
   min-height: 0;
@@ -545,7 +541,7 @@ html.pts-immersive .bottom-nav {
   opacity: 0.92;
 }
 .pts-row--next {
-  width: 100%;
+  width: min(80vw, 328px);
   max-width: 100%;
   padding: 0.5rem 0.85rem;
   background-color: rgba(28, 48, 34, 0.85);
