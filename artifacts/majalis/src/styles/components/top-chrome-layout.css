@@ -23,6 +23,10 @@
     --app-header-height: 48px;
     --search-height: 3.25rem;
     --ticker-height: 2.25rem;
+    /* يطابق final-release — لا تُعاد إلى 64px بعد تحميل NavBar */
+    --nav-chrome: 84px;
+    --bottom-nav-height: 84px;
+    --content-pb: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px);
   }
 }
 
@@ -176,16 +180,13 @@ header.navbar-v3,
     flex-direction: column;
     overflow: visible;
     box-sizing: border-box;
-    padding-bottom: calc(
-      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
-    );
+    /* الحجز السفلي على #main-content فقط — بلا تضاعف */
+    padding-bottom: 0;
   }
 
   .app-shell:has(.bottom-nav--hidden),
   .app-shell.app-chrome-hidden {
-    padding-bottom: calc(
-      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
-    );
+    padding-bottom: 0;
   }
 
   .app-top-chrome {
@@ -199,7 +200,7 @@ header.navbar-v3,
     height: auto !important;
     overflow-x: clip;
     overflow-y: visible;
-    padding-block-end: 0 !important;
+    padding-block-end: var(--content-pb, calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px)) !important;
   }
 
   .app-shell > .site-footer,
@@ -216,8 +217,11 @@ header.navbar-v3,
     display: block;
   }
 
+  /* الصفحات الغامرة: الحجز داخل .pts-screen — لا تضاعف على #main-content */
   html.pts-immersive .app-main,
-  html.chrome-immersive .app-main {
+  html.chrome-immersive .app-main,
+  html.pts-immersive #main-content.app-main,
+  html.chrome-immersive #main-content.app-main {
     flex: none;
     min-height: auto !important;
     overflow: visible;

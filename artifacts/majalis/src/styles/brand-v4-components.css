@@ -23,12 +23,13 @@
  */
 
 /* ══════════════════════════════════════════════════════════════
-   ١) البطاقات — حواف أكبر وظل ناعم ملوّن بدل الحد الرمادي الجاف
+   ١) البطاقات — حواف ناعمة عبر رموز الواجهة (--radius-card)
+   لا تستخدم --r-lg الحاد (0.625rem) — كان يكسر الواجهة بعد كل تحميل كسول.
    ══════════════════════════════════════════════════════════════ */
 .ui-card,
 [class$="-card"],
 [class*="-card "] {
-  border-radius: var(--r-lg);
+  border-radius: var(--radius-card, 28px);
   transition: var(--t-colors), box-shadow var(--dur) var(--ease),
               transform var(--dur) var(--ease-out);
 }
@@ -60,16 +61,28 @@ button[class$="-card"]:active {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   ٢) الأزرار — نصف قطر موحّد + مساحة لمس 44px (إرشادات Apple)
+   ٢) الأزرار — نصف قطر ناعم (--radius-button)؛ تبويبات الشريط السفلي مستثناة
    ══════════════════════════════════════════════════════════════ */
-button,
 .ds-btn,
-[class$="-btn"],
-[class*="-btn "] {
-  border-radius: var(--r-md);
+[class$="-btn"]:not(.bottom-nav__tab),
+[class*="-btn "]:not(.bottom-nav__tab),
+button:not(.bottom-nav__tab) {
+  border-radius: var(--radius-button, 18px);
   transition: var(--t-colors), box-shadow var(--dur-fast) var(--ease),
               transform var(--dur-fast) var(--ease);
 }
+
+/* رجوع عائم + أعلى الصفحة — دائري دائمًا */
+.global-back-btn,
+.floating-back-btn,
+.scroll-to-top,
+button.global-back-btn,
+button.floating-back-btn {
+  border-radius: var(--radius-pill, 999px);
+  overflow: hidden;
+}
+
+/* المصحف يحتفظ بأنماطه داخل .mushaf-reader — لا تُفرَض هنا */
 
 /* الأزرار الدائرية/الحبّة تحتفظ بشكلها — لا يفرض عليها --r-md.
    ⚠ :not(body):not(html) ضرورية وليست احتياطًا: صنف الجسم "has-assistant-fab"
@@ -90,9 +103,9 @@ button.rounded-full,
 /* هدف لمس لا يقل عن 44×44 على الأجهزة اللمسية — أكثر سبب شائع لرفض
    App Store، ويصعّب الاستخدام بإصبع الإبهام. */
 @media (pointer: coarse) {
-  button:not(.rounded-full):not([class*="icon-only"]),
+  button:not(.rounded-full):not([class*="icon-only"]):not(.global-back-btn):not(.floating-back-btn):not(.scroll-to-top):not(.bottom-nav__tab),
   .ds-btn,
-  [class$="-btn"] {
+  [class$="-btn"]:not(.global-back-btn):not(.floating-back-btn) {
     min-height: 44px;
   }
 }
