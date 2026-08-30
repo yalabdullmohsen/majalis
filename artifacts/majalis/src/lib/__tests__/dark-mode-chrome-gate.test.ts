@@ -16,7 +16,12 @@ const nav = readFileSync(resolve(root, "src/components/NavBar.tsx"), "utf8");
 const indexCss = readFileSync(resolve(root, "src/index.css"), "utf8");
 
 assert.match(theme, /clip:\s*rect\(0,\s*0,\s*0,\s*0\)/, "skip-link مخفي بـ clip لا transform");
-assert.match(theme, /\.skip-link\.mj-skip-link:focus[\s\S]*?clip:\s*auto/, "يظهر عند التركيز فقط");
+assert.match(theme, /\.skip-link\.mj-skip-link:focus-visible[\s\S]*?clip:\s*auto/, "يظهر عند focus-visible فقط");
+assert.doesNotMatch(
+  theme.replace(/\/\*[\s\S]*?\*\//g, ""),
+  /\.skip-link\.mj-skip-link:focus\s*,/,
+  "لا إظهار skip-link عند :focus وحده (لمس iOS)",
+);
 assert.doesNotMatch(
   theme.replace(/\/\*[\s\S]*?\*\//g, ""),
   /\.mj-skip-link\s*\{[^}]*transform:\s*translateY\(-200%\)/,
@@ -34,7 +39,8 @@ assert.match(
 );
 
 assert.match(nav, /HeaderAdSlot/, "إعلان الهيدر موجود");
-assert.match(nav, /header-ad-slot--spacer/, "spacer شفاف بلا كتلة بيضاء");
+assert.doesNotMatch(nav, /header-ad-slot--spacer/, "لا spacer شفاف — الإعلان مدمج");
+assert.doesNotMatch(nav, /navbar-v3__ad-row/, "لا صف إعلان منفصل");
 assert.doesNotMatch(nav, /MajlisWordmark/, "الشعار ليس في صف الأيقونات (سياسة الإعلان)");
 
 assert.doesNotMatch(
@@ -47,11 +53,8 @@ assert.match(
   /html\[data-theme="dark"\]\s+\.navbar-menu-btn--drawer[\s\S]*?background:\s*var\(--mj-surface-2/,
 );
 
-const spacerCss = readFileSync(resolve(root, "src/styles/components/header-ad-slot.css"), "utf8");
-assert.match(
-  spacerCss,
-  /\.header-ad-slot--spacer[\s\S]*?background:\s*transparent\s*!important/,
-  "spacer بلا خلفية بيضاء",
-);
+const adCss = readFileSync(resolve(root, "src/styles/components/header-ad-slot.css"), "utf8");
+assert.match(adCss, /border-radius:\s*999px/, "إعلان pill");
+assert.match(adCss, /\.navbar-v3__ad-row[\s\S]*?display:\s*none/, "صف الإعلان القديم مخفي");
 
 console.log("dark-mode-chrome-gate.test.ts: ok");

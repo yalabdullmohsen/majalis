@@ -58,8 +58,21 @@ const hero = read("src/styles/components/home-brand-title.css");
 assert.doesNotMatch(hero, /inset-top/);
 
 const navbar = read("src/styles/final-release.css");
-assert.match(navbar, /\.navbar-v3\s*\{[^}]*padding-block-start:\s*var\(--inset-top\)/s);
+assert.match(
+  navbar,
+  /\.navbar-v3\s*\{[^}]*padding-block-start:\s*max\(\s*var\(--inset-top\),\s*12px\s*\)/s,
+  "padding علوي = max(safe-area, 12px) بلا تضاعف",
+);
 assert.match(navbar, /\.navbar-menu-btn[^}]*min-height:\s*44px/s);
 assert.match(navbar, /--app-status-bg/);
+
+const critical = read("src/styles/critical-first-paint.css");
+assert.match(critical, /\.skip-link/, "skip-link في critical من أول إطار");
+assert.match(critical, /clip:\s*rect\(0,\s*0,\s*0,\s*0\)/, "إخفاء clip في critical");
+assert.match(
+  critical,
+  /padding-block-start:\s*max\(\s*var\(--inset-top,\s*0px\),\s*12px\s*\)/,
+  "critical: padding علوي مضبوط",
+);
 
 console.log("status-bar-safe-area-gate.test.ts: ok");

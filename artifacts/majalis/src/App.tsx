@@ -582,7 +582,6 @@ function ChromeNavFallback() {
   return (
     <header className="navbar-v3 chrome-boot-ph" aria-hidden="true">
       <div className="navbar-v3__inner" />
-      <div className="navbar-v3__ad-row" />
       <div className="navbar-v3__search-row" />
       <div className="navbar-ticker-row" />
     </header>

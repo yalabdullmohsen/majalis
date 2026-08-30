@@ -111,7 +111,7 @@
   --gutter-inline-start: max(var(--inset-right), 16px);
   --gutter-inline-end: max(var(--inset-left), 16px);
   --header-chrome: 56px;
-  --ad-banner-height: calc(var(--header-ad-h, 2.65rem) + 0.35rem);
+  --ad-banner-height: 0px;
   --top-sponsor-content-h: 48px;
   --app-header-height: var(--header-chrome);
   --search-height: 0px;
@@ -169,7 +169,7 @@
   --nav-chrome: 64px;
   --bottom-nav-height: 84px;
   --top-sponsor-content-h: 48px;
-  --ad-banner-height: calc(var(--header-ad-h, 2.65rem) + 0.35rem);
+  --ad-banner-height: 0px;
   --header-h: calc(var(--header-chrome) + var(--inset-top) + var(--ad-banner-height, 0px));
   --nav-h: calc(var(--nav-chrome) + var(--inset-bottom));
   --content-pb: calc(var(--bottom-nav-height) + var(--inset-bottom) + 24px);
@@ -542,7 +542,11 @@ a:active {
   outline-offset: 2px;
 }
 
-/* مخفي بصريًا حتى التركيز — لا تعتمد على transform (يظهر فوق الشاشة عند overflow:visible) */
+/*
+ * رابط التجاوز: مخفي بصريًا دائمًا على اللمس/الموبايل.
+ * يظهر فقط عند :focus-visible (كيبورد) — لا :focus وحده (iOS يفعّله باللمس).
+ * clip وليس translateY (overflow:visible يُظهر النص فوق الشاشة).
+ */
 .skip-link.mj-skip-link,
 .mj-skip-link,
 .skip-link {
@@ -558,18 +562,20 @@ a:active {
   border: 0 !important;
   transform: none !important;
   top: 0 !important;
-  inset-inline-start: 0 !important;
+  inset-inline-start: -10000px !important;
+  left: -10000px !important;
+  right: auto !important;
   z-index: 100000;
   color: transparent !important;
   background: transparent !important;
   text-decoration: none !important;
-  pointer-events: none;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
 }
-.skip-link.mj-skip-link:focus,
 .skip-link.mj-skip-link:focus-visible,
-.mj-skip-link:focus,
 .mj-skip-link:focus-visible,
-.skip-link:focus,
 .skip-link:focus-visible {
   width: auto !important;
   height: auto !important;
@@ -581,11 +587,16 @@ a:active {
   white-space: normal !important;
   top: calc(var(--inset-top, 0px) + 0.5rem) !important;
   inset-inline-start: var(--mj-s3, 0.75rem) !important;
+  left: auto !important;
+  right: auto !important;
   background: var(--mj-brand, #1f7a5a) !important;
   color: var(--mj-on-brand, #fff) !important;
   border-radius: var(--mj-r-sm, 8px) !important;
   font-weight: 700 !important;
-  pointer-events: auto;
+  font-size: 0.9rem !important;
+  line-height: 1.3 !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
   box-shadow: 0 4px 16px rgb(0 0 0 / 28%);
 }
 
