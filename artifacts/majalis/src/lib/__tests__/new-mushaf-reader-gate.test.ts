@@ -31,6 +31,14 @@ assert.match(newReader, /playAyah/);
 assert.match(newReader, /MushafTafsirSheet/);
 assert.match(newReader, /saveReciterId|loadReciterId/);
 assert.match(newReader, /allowOffscreenPrefetch/);
+assert.match(newReader, /data-page-ready/);
+assert.match(newReader, /nm-shell mm-page-shell/);
+assert.match(
+  newReader,
+  /PrefetchPage[\s\S]*nm-shell mm-page-shell/,
+  "صفحة المعاينة أثناء السحب بنفس غلاف الصفحة الحالية — يمنع قفزة أعلى→أسفل",
+);
+assert.match(newReader, /useMushafFixedMetrics\(metricsRootRef,\s*true\)/);
 
 assert.match(pageView, /MushafVerseLayer/);
 assert.match(pageView, /bismillahPre === true/);

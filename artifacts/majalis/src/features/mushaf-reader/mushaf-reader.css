@@ -97,6 +97,11 @@
   background: var(--nm-paper);
 }
 
+/* أخفِ النص حتى جاهزية الخط — بلا فك التركيب الذي يسبب قفزة أعلى→أسفل عند التقليب */
+.nm-shell[data-page-ready="0"] .nm-page__body {
+  visibility: hidden;
+}
+
 .nm-root[data-ayah-bar="1"] {
   --reader-bottom-stack: calc(var(--reader-action-height) + var(--safe-bottom));
 }

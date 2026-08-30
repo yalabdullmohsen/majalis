@@ -106,7 +106,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   );
 
   const metricsRootRef = useRef<HTMLDivElement | null>(null);
-  useMushafFixedMetrics(metricsRootRef, canMountPage);
+  /* المقاسات ثابتة من أول إطار — لا تنتظر canMountPage حتى لا تقفز الصفحة عند التقليب */
+  useMushafFixedMetrics(metricsRootRef, true);
 
   const hideTimer = useRef<number | null>(null);
   const pageRef = useRef(page);
@@ -469,9 +470,13 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         allowOffscreenPrefetch && page > 1 ? <PrefetchPage pageNumber={page - 1} /> : undefined
       }
       pageSlot={
-        <div className="nm-shell mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
+        <div
+          className="nm-shell mm-page-shell mushaf-page-frame"
+          data-testid="mushaf-page-shell"
+          data-page-ready={canMountPage ? "1" : "0"}
+        >
           {error ? <div className="nm-status">{error}</div> : null}
-          {!error && !canMountPage ? (
+          {!error && !layout ? (
             <div
               className="nm-page-placeholder"
               role="status"
@@ -479,13 +484,13 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
               aria-busy="true"
             />
           ) : null}
-          {canMountPage && layout ? (
+          {layout && !error ? (
             <MushafPage
               layout={layout}
               fontFamily={fontFamily}
               displayPageNumber={page}
               onSelectVerse={onSelectVerse}
-              selectionEnabled={pagerSettled}
+              selectionEnabled={pagerSettled && canMountPage}
             />
           ) : null}
         </div>
@@ -623,16 +628,24 @@ const PrefetchPage = memo(function PrefetchPage({ pageNumber }: { pageNumber: nu
     };
   }, [pageNumber]);
 
-  if (!ready || !layout) {
-    return <div className="nm-page-placeholder" aria-hidden="true" />;
-  }
+  /* نفس غلاف الصفحة الحالية (nm-shell) — بلا هامش علوي كانت الصفحة تبدو أعلى أثناء السحب ثم تقفز بعد الالتزام */
   return (
-    <MushafPage
-      layout={layout}
-      fontFamily={fontFamily}
-      displayPageNumber={pageNumber}
-      selectionEnabled={false}
-    />
+    <div
+      className="nm-shell mm-page-shell mushaf-page-frame"
+      aria-hidden="true"
+      data-page-ready={ready && layout ? "1" : "0"}
+    >
+      {!ready || !layout ? (
+        <div className="nm-page-placeholder" aria-hidden="true" />
+      ) : (
+        <MushafPage
+          layout={layout}
+          fontFamily={fontFamily}
+          displayPageNumber={pageNumber}
+          selectionEnabled={false}
+        />
+      )}
+    </div>
   );
 });
 
