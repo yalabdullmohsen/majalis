@@ -48,8 +48,17 @@ assert.match(verse, /is-selected/);
 assert.match(verse, /is-playing/);
 
 assert.match(pageView, /AyahSelectionOverlay/);
+assert.match(pageView, /onPageNumberPress/);
+assert.match(pageView, /mushaf-page-number/);
 assert.match(css, /nm-ayah-sel__band/);
+assert.match(css, /nm-ayah-sel__band--selected/);
+assert.match(css, /\.nm-word\.is-selected/);
+assert.match(css, /color-mix\(in srgb, var\(--nm-ink\)/);
 assert.doesNotMatch(css, /\.nm-word\.is-selected\s*\{[^}]*background:\s*var\(--nm-select\)/);
+assert.match(newReader, /gotoOpen|onGotoOpenChange|mushaf-goto/);
+assert.match(read("src/features/mushaf-reader/MushafControlsLayer.tsx"), /enterKeyHint="search"/);
+assert.match(read("src/features/mushaf-reader/MushafControlsLayer.tsx"), /mushaf-goto-form/);
+assert.match(css, /\.nm-goto\b/);
 assert.match(css, /--mushaf-font-weight:/);
 assert.match(css, /--mushaf-header-height:/);
 assert.match(css, /--reader-action-height:/);
