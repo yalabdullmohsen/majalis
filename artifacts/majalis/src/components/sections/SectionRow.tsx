@@ -14,7 +14,8 @@ type Props = {
 export function SectionRow({ section, className, onNavigate }: Props) {
   const [, setLocation] = useLocation();
   const Icon = section.icon;
-  const aria = `${section.label} — ${section.subtitle}`;
+  const subtitle = section.subtitle?.trim();
+  const aria = subtitle ? `${section.label} — ${subtitle}` : section.label;
 
   return (
     <button

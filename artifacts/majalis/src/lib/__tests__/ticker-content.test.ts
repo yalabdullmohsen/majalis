@@ -30,7 +30,7 @@ function seededRand(seed: number): () => number {
 }
 
 console.log("\n=== المجمّع الموحَّد ===");
-const pool = buildTickerPool();
+const pool = buildTickerPool(new Date("2026-08-30T08:00:00"));
 assert(pool.length >= RECENT_LIMIT * 4, `المجمّع أكبر بكثير من نافذة منع التكرار: ${pool.length} عنصرًا مقابل ${RECENT_LIMIT}`);
 assert(new Set(pool.map((p) => p.id)).size === pool.length, "كل المعرّفات فريدة عبر كل المصادر");
 assert(pool.every((p) => p.text.trim().length > 0), "لا عنصر بنص فارغ");
@@ -39,6 +39,13 @@ assert(new Set(pool.map((p) => p.kind)).size >= 4, "المجمّع يغطي أر
 assert(pool.some((p) => p.kind === "promo"), "يشمل نبذ أقسام/مميزات (promo)");
 assert(pool.some((p) => p.kind === "hadith"), "يشمل أحاديث");
 assert(pool.some((p) => p.kind === "dhikr"), "يشمل أذكارًا");
+assert(pool.some((p) => p.label === "أذكار الصباح"), "صباحًا: أذكار الصباح");
+assert(!pool.some((p) => p.label === "أذكار المساء"), "صباحًا: بلا أذكار المساء");
+{
+  const evening = buildTickerPool(new Date("2026-08-30T19:00:00"));
+  assert(evening.some((p) => p.label === "أذكار المساء"), "مساءً: أذكار المساء");
+  assert(!evening.some((p) => p.label === "أذكار الصباح"), "مساءً: بلا أذكار الصباح");
+}
 
 console.log("\n=== سلامة النص (بلا قصّ، بلا تكرار) ===");
 assert(!pool.some((p) => p.text.trim().endsWith("…")), "لا عنصر واحد ينتهي بعلامة حذف (لا قصّ للنص)");

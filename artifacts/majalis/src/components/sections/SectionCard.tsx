@@ -27,7 +27,8 @@ function go(href: string, setLocation: (h: string) => void) {
 export const SectionCard = memo(function SectionCard({ section, className, onNavigate }: Props) {
   const [, setLocation] = useLocation();
   const Icon = section.icon;
-  const aria = `${section.label} — ${section.subtitle}`;
+  const subtitle = section.subtitle?.trim();
+  const aria = subtitle ? `${section.label} — ${subtitle}` : section.label;
 
   return (
     <button
@@ -47,7 +48,7 @@ export const SectionCard = memo(function SectionCard({ section, className, onNav
         <Icon strokeWidth={1.75} aria-hidden />
       </span>
       <span className="card__label">{section.label}</span>
-      <span className="card__subtitle">{section.subtitle}</span>
+      {subtitle ? <span className="card__subtitle">{subtitle}</span> : null}
     </button>
   );
 });

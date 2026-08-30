@@ -1,7 +1,7 @@
 /* ── 193 — AdhanNotificationBar ───────────────────────────────────────────── */
 .anb-stack {
   position: fixed;
-  bottom: calc(var(--bottom-nav-total, 5rem) + 0.35rem); /* فوق شريط التنقل السفلي */
+  bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 12px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 9990;
@@ -38,10 +38,11 @@
   align-items: flex-start;
   gap: 0.85rem;
   padding: 1rem 1.1rem;
-  border-radius: var(--ds-radius-2xl);
+  border-radius: 22px;
   animation: anb-rise 0.38s cubic-bezier(0.34, 1.4, 0.64, 1) both;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  opacity: 1;
 }
 
 /* ── Adhan Toast — إشعار الأذان ── */
@@ -67,11 +68,15 @@
 
 /* ── Reminder Toast — تذكير ── */
 .anb-toast--reminder {
-  background: rgba(255,255,255,0.97);
-  border: 1.5px solid rgba(23,61,53,.18);
+  background: #ffffff;
+  border: 1.5px solid rgba(23, 61, 53, 0.18);
   color: var(--mj-brand-deep);
-  box-shadow: 0 4px 24px rgba(0,0,0,.14), 0 1px 4px rgba(0,0,0,.08),
-              0 0 0 1px rgba(23,61,53,.06);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.14), 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+html.dark .anb-toast--reminder {
+  background: #0f2f28;
+  border-color: rgba(227, 203, 140, 0.28);
+  color: #fafaf8;
 }
 
 /* ── emoji badge ── */

@@ -57,28 +57,39 @@ function normalizeText(text: string): string {
 }
 
 /** يبني المجمّع الموحَّد من المصادر المحلية. نقي: نفس المدخلات ⇒ نفس المخرجات. */
-export function buildTickerPool(): TickerContentItem[] {
+export function buildTickerPool(now: Date = new Date()): TickerContentItem[] {
   const pool: TickerContentItem[] = [];
+  const hour = now.getHours();
+  /* صباحًا حتى العصر تقريبًا؛ مساءً من العصر حتى الفجر — بلا فجوة منتصف النهار */
+  const isMorning = hour >= 4 && hour < 15;
+  const isEvening = hour >= 15 || hour < 4;
 
   for (const h of DAILY_HADITH_POOL) {
     if (!h?.text?.trim()) continue;
+    const text = normalizeText(h.text);
+    if (!text) continue;
+    const source = [h.narrator, h.source].filter(Boolean).join(" — ") || undefined;
     pool.push({
       id: `hadith:${h.id}`,
       kind: "hadith",
       label: "حديث",
-      text: normalizeText(h.text),
-      source: [h.narrator, h.source].filter(Boolean).join(" — ") || undefined,
+      text,
+      source,
       href: "/hadith",
     });
   }
 
   for (const d of DAILY_TICKER_DHIKR) {
     if (!d?.text?.trim()) continue;
+    if (d.categoryId === "adh-morning" && !isMorning) continue;
+    if (d.categoryId === "adh-evening" && !isEvening) continue;
+    const text = normalizeText(d.text);
+    if (!text) continue;
     pool.push({
       id: `dhikr:${d.id}`,
       kind: "dhikr",
       label: d.categoryId === "adh-morning" ? "أذكار الصباح" : "أذكار المساء",
-      text: normalizeText(d.text),
+      text,
       source: d.source || undefined,
       href: "/adhkar",
     });
@@ -86,11 +97,13 @@ export function buildTickerPool(): TickerContentItem[] {
 
   for (const v of DAILY_AYAH_POOL) {
     if (!v?.text?.trim()) continue;
+    const text = normalizeText(v.text);
+    if (!text) continue;
     pool.push({
       id: `ayah:${v.id}`,
       kind: "ayah",
       label: "آية",
-      text: normalizeText(v.text),
+      text,
       source: v.reference || v.surah || undefined,
       href: "/mushaf",
     });
@@ -98,48 +111,59 @@ export function buildTickerPool(): TickerContentItem[] {
 
   for (const f of DAILY_FAIDA_POOL) {
     if (!f?.text?.trim()) continue;
+    const text = normalizeText(f.text);
+    if (!text) continue;
     pool.push({
       id: `faida:${f.id}`,
       kind: "faida",
       label: f.category || "فائدة",
-      text: normalizeText(f.text),
+      text,
       source: f.source || undefined,
       href: "/flashcards",
     });
   }
 
   for (const p of SECTION_PROMOS) {
+    const text = normalizeText(p.text);
+    if (!text) continue;
     pool.push({
       id: p.id,
       kind: "promo",
       label: p.label,
-      text: normalizeText(p.text),
+      text,
       href: p.href,
     });
   }
 
   for (const f of FEATURED) {
+    const title = normalizeText(f.title);
+    const desc = normalizeText(f.desc || "");
+    if (!title || !desc) continue;
     pool.push({
       id: `feature:${f.href}`,
       kind: "promo",
       label: "ميزة",
-      text: normalizeText(`${f.title} — ${f.desc}`),
+      text: `${title} — ${desc}`,
       href: f.href,
     });
   }
 
   for (const q of QUICK_LINKS) {
+    const label = normalizeText(q.label);
+    const desc = normalizeText(q.desc || "");
+    if (!label || !desc) continue;
     pool.push({
       id: `quick:${q.href}`,
       kind: "promo",
       label: "اكتشف",
-      text: normalizeText(`${q.label} — ${q.desc}`),
+      text: `${label} — ${desc}`,
       href: q.href,
     });
   }
 
   const seenText = new Set<string>();
   return pool.filter((item) => {
+    if (!item.text?.trim()) return false;
     if (seenText.has(item.text)) return false;
     seenText.add(item.text);
     return true;
@@ -232,7 +256,7 @@ export const REFRESH_ON_RETURN_AFTER_MS = 45_000;
  * يمرّ الحديث/الآية كاملًا بسرعة قابلة للقراءة (~35 حرفًا/ث).
  */
 export function marqueeDurationSec(itemCount: number, totalChars = 0): number {
-  const byCount = itemCount * 5.5;
-  const byChars = totalChars > 0 ? totalChars / 35 : 0;
-  return Math.max(28, Math.min(120, Math.max(byCount, byChars)));
+  const byCount = itemCount * 7;
+  const byChars = totalChars > 0 ? totalChars / 28 : 0;
+  return Math.max(36, Math.min(140, Math.max(byCount, byChars)));
 }

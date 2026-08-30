@@ -102,7 +102,7 @@ html.pts-immersive .bottom-nav {
   padding-block-start: max(12px, var(--inset-top, 0px)) !important;
   /* فراغ آمن فوق الشريط السفلي — يمنع اختفاء آخر بطاقة */
   padding-bottom: calc(
-    var(--bottom-nav-height, 3.25rem) + var(--inset-bottom, 0px) + 24px
+    var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
   ) !important;
   box-sizing: border-box;
 }

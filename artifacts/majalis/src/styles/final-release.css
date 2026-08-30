@@ -31,7 +31,7 @@
   --top-section-bar-h: 3.5rem;
   --sticky-below-chrome: calc(var(--header-h, calc(56px + var(--inset-top))) + var(--top-section-bar-h));
   /* ارتفاع الشريط المتحرك ≤ ٣٦px (٢٫٢٥rem) + توسيط flex؛ safe-area منفصل في صف الهيدر */
-  --ticker-h: 2.25rem;
+  --ticker-h: 2.65rem;
   --ticker-row-pad-block: 0;
   --page-gutter: var(--gutter-inline-start, max(16px, var(--inset-right)));
   --page-width: var(--content-max, 70rem);
@@ -765,8 +765,8 @@ html.dark .top-section-bar {
 @media (max-width: 879px) {
   :root {
     --header-height: 3rem;
-    --bottom-nav-h: 3.25rem;
-    --bottom-nav-height: 3.25rem; /* ارتفاع التبويب السابق — بلا مربعات عملاقة */
+    --bottom-nav-h: 84px;
+    --bottom-nav-height: 84px;
     --content-pb: 24px;
   }
 
@@ -781,14 +781,14 @@ html.dark .top-section-bar {
     overflow: hidden !important;
     box-sizing: border-box !important;
     padding-bottom: calc(
-      var(--bottom-nav-height, 3.25rem) + var(--inset-bottom, 0px) + 0.5rem
+      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 0.5rem
     ) !important;
   }
   /* حجز دائم لارتفاع الشريط — حتى أثناء translateY للإخفاء */
   .app-shell:has(.bottom-nav--hidden),
   .app-shell.app-chrome-hidden {
     padding-bottom: calc(
-      var(--bottom-nav-height, 3.25rem) + var(--inset-bottom, 0px) + 0.5rem
+      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 0.5rem
     ) !important;
   }
   .app-top-chrome {
@@ -1153,7 +1153,7 @@ html[data-theme="dark"] .floating-back-btn:not(.floating-back-btn--top) {
   }
   /* ارفع زر المساعد فوق زر «للأعلى» حتى لا يتراكبا في الزاوية نفسها */
   .assistant-fab {
-    bottom: calc(1.5rem + 3.25rem + var(--inset-bottom));
+    bottom: calc(1.5rem + var(--bottom-nav-height, 84px) + var(--inset-bottom));
   }
 }
 
