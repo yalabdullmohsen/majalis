@@ -64,7 +64,13 @@ for await (const file of walk(resolve(appRoot, "src"))) {
     }
 
     // ٢) اسم تجاري قديم — مع استثناء المعنى اللغوي في بذور المحتوى الديني
-    for (const bad of config.forbiddenBrandNames) {
+    // «للمجلس العلمي» لا يحتوي حرف الألف من «ال»، فلا يُلتقط بـ includes وحدها.
+    const brandHits = [
+      ...config.forbiddenBrandNames,
+      "للمجلس العلمي",
+      "بالمجلس العلمي",
+    ];
+    for (const bad of brandHits) {
       if (!line.includes(bad)) continue;
       if (isContentSeed && LEGITIMATE_ARABIC.some((re) => re.test(line))) continue;
       failures.push(`${at} — اسم تجاري قديم: «${bad}»`);

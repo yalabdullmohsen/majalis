@@ -1740,7 +1740,7 @@ ${linkList("روابط ذات صلة", [
 </ul>
 <h2>الملكية الفكرية والخصوصية</h2>
 <ul>
-  <li>حقوق الواجهة والعلامة للمجلس العلمي؛ والمصادر الشرعية تُنسب لأصحابها.</li>
+  <li>حقوق الواجهة والعلامة لسُنّة؛ والمصادر الشرعية تُنسب لأصحابها.</li>
   <li>معالجة بياناتك خاضعة لـ<a href="https://majlisilm.com/privacy">سياسة الخصوصية</a>.</li>
 </ul>
 <h2>إخلاء المسؤولية</h2>
@@ -1911,7 +1911,7 @@ ${linkList("أدوات", [
 <p id="search-empty-state">ابدأ بكتابة كلمة أو عبارة في خانة البحث أعلاه، أو اختر اقتراحًا جاهزًا.</p>
 <p id="search-no-results" hidden>لا توجد نتائج مطابقة — جرّب كلمات أخرى أو تصفية مختلفة.</p>
 <p id="search-error" hidden>تعذّر تحميل نتائج البحث مؤقتًا — أعد المحاولة.</p>`,
-  "/quran/recitation-test-ai": `<p>اختبار تلاوة تجريبي: تختار سورة وآية (أو وضعًا حرًا)، ثم تُسمِع تلاوتك ليقارن النظام ما يُسمَع بالنص المرجعي.</p>
+  "/quran/recitation-test-ai": `<p>اختبار تلاوة: تختار سورة وآية (أو وضعًا حرًا)، ثم تُسمِع تلاوتك ليقارن النظام ما يُسمَع بالنص المرجعي.</p>
 <h2>خطوات الاستخدام</h2>
 <ol>
   <li>اقرأ التنبيهات ووافق على استخدام الميكروفون.</li>
@@ -1927,7 +1927,7 @@ ${linkList("أدوات", [
   <li>ثقة التعرّف الصوتي حسب ما يوفّره المتصفح/الجهاز.</li>
   <li>ملاحظات تجويد تقريبية عند تفعيل وضع «إتقان التجويد» وتوفر الاتصال بالمزوّد — وليست بديلًا عن معلّم متقن.</li>
 </ul>
-<p>لا يُحفَظ التسجيل افتراضيًا ولا يُرسَل صوتك لخوادم سُنّة (Majlisilm). راجع <a href="${escapeHtml(absoluteUrl("/privacy"))}">سياسة الخصوصية</a>.</p>
+<p>لا يُحفَظ التسجيل افتراضيًا ولا يُرسَل صوتك لخوادم سُنّة. راجع <a href="${escapeHtml(absoluteUrl("/privacy"))}">سياسة الخصوصية</a>.</p>
 <p><a href="${escapeHtml(absoluteUrl("/quran/recitation-test-ai"))}">ابدأ اختبار التلاوة</a></p>`,
   "/hadith/sahih": `<p>مرجع عملي لأحاديث الصحيحين: الصحة بعضوية البخاري ومسلم، مع بحث وتصفية — بلا درجات اجتهادية إضافية خارج هذا الضابط.</p>
 <h2>تعريف مختصر</h2>
@@ -2811,22 +2811,22 @@ for (const issue of NONPUBLIC_FIQH_ISSUES) {
     issue.documentation_level === "general_reasoning"
       ? "استدلال عام — بلا مصدر رسمي مسمّى"
       : issue.documentation_level === "imported_needs_review"
-        ? "مستورد — يحتاج مراجعة"
-        : "قيد المراجعة المنهجية";
+        ? "مستورد — يحتاج توثيقًا إضافيًا"
+        : "غير معتمدة للعرض العام بعد";
   addPage(
     {
       path: `/fiqh-council/issues/${issue.slug}`,
-      title: `${issue.title} — قيد المراجعة`,
+      title: issue.title,
       description: clamp(
         padDesc(
           `${issue.title}: هذه المسألة غير معتمدة للفهرسة العامة بعد؛ ${levelLabel}. راجع المسائل الموثّقة في المجمع الفقهي.`,
-          "مسألة فقهية قيد المراجعة المنهجية في سُنّة",
+          "مسألة فقهية غير معتمدة للعرض العام في سُنّة",
         ),
         META_DESC_MAX,
       ),
-      keywords: [issue.title, "قيد المراجعة", "المجمع الفقهي"].filter(Boolean),
+      keywords: [issue.title, "المجمع الفقهي", "غير معتمدة"].filter(Boolean),
       ogType: "article",
-      robots: "noindex, follow",
+      robots: "noindex, nofollow",
       sitemap: false,
     },
     {
@@ -2986,6 +2986,8 @@ Disallow: /auth/
 Disallow: /vault
 Disallow: /api/
 Disallow: /search/
+Disallow: /quran/recitation-test-ai
+Disallow: /fiqh-council/research-assistant
 
 Sitemap: ${SITE_URL}/sitemap.xml
 `;

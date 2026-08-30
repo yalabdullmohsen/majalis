@@ -66,7 +66,7 @@ export default function ContactPage() {
     applyPageSeo({
       path: "/contact",
       title: "تواصل معنا | سُنّة",
-      description: "يسعدنا استقبال ملاحظاتك واقتراحاتك وتصحيحاتك عبر البريد الرسمي للمجلس العلمي.",
+      description: "يسعدنا استقبال ملاحظاتك واقتراحاتك وتصحيحاتك عبر البريد الرسمي لسُنّة.",
       keywords: ["تواصل", "سُنّة", "الدعم", "اقتراحات", "إبلاغ عن خطأ"],
       jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "تواصل مع سُنّة", url: "https://majlisilm.com/contact", about: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" } }],
     });
