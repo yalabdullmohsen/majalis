@@ -117,7 +117,7 @@
   --search-height: 0px;
   --ticker-height: 2.25rem;
   --bottom-nav-height: var(--nav-chrome);
-  --nav-chrome: 84px;
+  --nav-chrome: 64px;
   --header-h: calc(var(--header-chrome) + var(--inset-top) + var(--ad-banner-height, 0px));
   --nav-h: calc(var(--nav-chrome) + var(--inset-bottom));
   --content-pb: calc(var(--bottom-nav-height) + var(--inset-bottom) + 24px);
@@ -163,7 +163,7 @@
   --gutter-inline-start: max(var(--inset-right), 16px);
   --gutter-inline-end: max(var(--inset-left), 16px);
   --header-chrome: 56px;
-  --nav-chrome: 84px;
+  --nav-chrome: 64px;
   --top-sponsor-content-h: 48px;
   --ad-banner-height: calc(var(--header-ad-h, 2.65rem) + 0.35rem);
   --header-h: calc(var(--header-chrome) + var(--inset-top) + var(--ad-banner-height, 0px));
@@ -866,6 +866,15 @@ html.dark .mj-btn--ghost {
   background: var(--mj-surface);
   border-color: var(--mj-hairline);
   color: var(--mj-ink);
+}
+/* سطح صلب للقائمة السفلية فقط — لا يعمَّم على الهيدر/البطاقات */
+.bottom-nav.mj-nav-skin,
+.bottom-nav--v2.mj-nav-skin {
+  background: var(--surface-app, var(--mj-surface, #F2F4F3)) !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 .mj-nav-skin a[aria-current="page"],
 .mj-nav-skin .is-active {

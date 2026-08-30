@@ -72,11 +72,26 @@ assert.match(css, /\.pts-screen\s*\{[\s\S]*?width:\s*100vw/);
 assert.match(css, /\.pts-screen\s*\{[\s\S]*?background:\s*transparent/);
 assert.match(css, /\.pts-row\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius/);
 assert.match(css, /\.pts-dock__item\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius-sm/);
-assert.match(css, /padding-bottom:\s*calc\(\s*var\(--bottom-nav-height(?:,\s*84px)?\)\s*\+\s*var\(--inset-bottom/);
+assert.match(css, /padding-bottom:\s*calc\(\s*var\(--bottom-nav-height(?:,\s*[^)]+)?\)\s*\+\s*var\(--inset-bottom/);
 assert.match(css, /var\(--inset-top/);
 assert.match(css, /var\(--inset-bottom/);
 assert.doesNotMatch(css, /env\(\s*safe-area-inset/);
-assert.match(css, /max-width:\s*430px/);
 assert.match(css, /padding-inline:\s*16px/);
+assert.match(css, /\.pts-row\s*\{[\s\S]*?width:\s*min\(\s*78vw,\s*320px\)/);
+
+const chromeScroll = readFileSync(
+  resolve(appRoot, "src/styles/components/app-chrome-scroll.css"),
+  "utf8",
+);
+assert.doesNotMatch(
+  chromeScroll,
+  /\.bottom-nav\.bottom-nav--hidden[\s\S]{0,120}opacity:\s*0/,
+  "إخفاء الشريط بلا opacity:0 — يمنع ظهور المحتوى خلفه",
+);
+assert.match(
+  chromeScroll,
+  /\.bottom-nav\.bottom-nav--hidden[\s\S]{0,160}opacity:\s*1\s*!important/,
+  "الشريط يبقى صلبًا أثناء الإخفاء بـ transform",
+);
 
 console.log("prayer-bottom-strip.test.ts: ok");

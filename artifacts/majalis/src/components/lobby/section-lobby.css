@@ -12,11 +12,8 @@
   box-sizing: border-box;
   padding-inline: 16px;
   padding-top: 16px;
-  /* تعويض الشريط السفلي الثابت + مساحة تنفّس — بلا تداخل مع البطاقات */
-  padding-bottom: calc(
-    var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
-      + var(--assistant-fab-size, 3.35rem)
-  );
+  /* الشريط محجوز في .app-shell — هنا تنفّس + مساحة زر المساعد فقط */
+  padding-bottom: calc(var(--assistant-fab-size, 3.35rem) + 24px);
   color: var(--on-surface, var(--mj-ink, #16241e));
   background: var(--surface-app, var(--mj-bg));
 }
@@ -298,15 +295,12 @@ html.dark .section-lobby__chip.is-active {
   color: #ffffff;
 }
 
-/* جوال: إبقاء شبكة البطاقات فوق الشريط السفلي في الإطار الأول */
+/* جوال: تباعد أخف دون تضاعف حجز الشريط (محجوز في .app-shell) */
 @media (max-width: 879px) {
   .section-lobby {
     gap: 16px;
     padding-top: 8px;
-    padding-bottom: calc(
-      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
-        + var(--assistant-fab-size, 3.35rem)
-    );
+    padding-bottom: calc(var(--assistant-fab-size, 3.35rem) + 24px);
   }
   .section-lobby__shot {
     gap: 16px;
