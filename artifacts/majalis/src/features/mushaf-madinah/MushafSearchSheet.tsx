@@ -239,8 +239,11 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
               <span className="sr-only">نص البحث أو رقم الصفحة</span>
               <input
                 ref={inputRef}
-                type="text"
-                inputMode={isPageQuery ? "numeric" : "search"}
+                type="search"
+                /* iOS: inputMode=numeric يخفي زر البحث من لوحة الأرقام.
+                   نثبّت search دائماً ليظهر «بحث» للأرقام والكلمات معاً. */
+                inputMode="search"
+                enterKeyHint="search"
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
@@ -259,15 +262,17 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
                     e.preventDefault();
                     e.stopPropagation();
                     submitQuery();
+                    e.currentTarget.blur();
                   }
                 }}
                 placeholder={
                   mode === "index" ? "اسم السورة أو رقمها…" : "كلمة، آية، اسم سورة، أو رقم صفحة…"
                 }
                 dir="rtl"
-                enterKeyHint={isPageQuery ? "go" : "search"}
                 autoComplete="off"
                 autoCorrect="off"
+                autoCapitalize="none"
+                spellCheck={false}
               />
             </label>
             <button
