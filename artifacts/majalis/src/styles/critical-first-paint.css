@@ -40,8 +40,7 @@
   --bottom-nav-height: 84px;
   --nav-h: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px));
   --bottom-nav-total: var(--nav-h);
-  /* حجز الشريط في padding الصدفة على الجوال؛ هنا تنفّس فقط */
-  --content-pb: 24px;
+  --content-pb: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px) + 24px);
 }
 
 @media (max-width: 879px) {
@@ -103,10 +102,22 @@ body {
 }
 
 #main-content.app-main {
-  min-height: calc(100dvh - var(--app-top-chrome-h, var(--header-h)));
+  min-height: auto;
   padding-block-end: var(--content-pb);
   padding-inline: var(--gutter-inline-start) var(--gutter-inline-end);
   box-sizing: border-box;
+}
+
+@media (min-width: 880px) {
+  #main-content.app-main {
+    min-height: calc(100dvh - var(--app-top-chrome-h, var(--header-h)));
+  }
+}
+
+@media (max-width: 879px) {
+  .app-shell.app-chrome-hidden .app-top-chrome {
+    min-height: 0;
+  }
 }
 
 .m2030-hero.page-hero-mj,

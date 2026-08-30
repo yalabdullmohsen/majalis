@@ -416,7 +416,11 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 
 /* ── Lessons page v3 — شريط ثابت خفيف + حجز الشريط السفلي ── */
 .lessons-page-v3 {
-  padding-bottom: calc(var(--bottom-nav-total, 72px) + var(--inset-bottom, 0px) + 1rem);
+  width: 100%;
+  max-width: 430px;
+  margin-inline: auto;
+  /* الحجز السفلي على .app-shell — لا تضاعف الفراغ */
+  padding-bottom: 0.5rem;
 }
 
 .lessons-page-v3 .section-lobby__shot {
@@ -435,8 +439,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
   gap: 0.55rem;
   padding-block: 0.15rem 0.55rem;
   margin-bottom: 0.35rem;
-  background: color-mix(in srgb, var(--mj-bg, var(--color-bg, #f5f7f6)) 92%, transparent);
-  backdrop-filter: blur(8px);
+  background: var(--mj-bg, var(--color-bg, #f5f7f6));
 }
 
 .lessons-page-v3 .page-hero-mj,
@@ -487,4 +490,42 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
   .lessons-v3-sticky {
     backdrop-filter: none;
   }
+}
+
+
+/* تفاصيل الدرس — امتلاء طبيعي بلا فراغ علوي زائد */
+.lesson-detail-page {
+  width: 100%;
+  max-width: 430px;
+  margin-inline: auto;
+  padding-block-start: 0.35rem;
+  padding-bottom: 0.5rem;
+  min-height: auto;
+  height: auto;
+  overflow: visible;
+}
+
+.lesson-detail-page .lesson-detail-breadcrumb {
+  margin-block-end: 0.45rem;
+}
+
+.lesson-detail-page .lesson-detail-back {
+  margin-block-end: 0.65rem;
+  border-radius: 14px;
+}
+
+.lesson-detail-page .lesson-detail-card {
+  border-radius: 24px;
+}
+
+.lesson-detail-page .lesson-detail-actions--row .lesson-unified-card__btn,
+.lesson-detail-page .lesson-unified-card__btn {
+  border-radius: 14px;
+  min-height: 44px;
+}
+
+.lesson-detail-page .lesson-detail-summary:empty,
+.lesson-detail-page .lesson-card-pro__sheikh:empty,
+.lesson-detail-page .lesson-detail-tags:empty {
+  display: none;
 }

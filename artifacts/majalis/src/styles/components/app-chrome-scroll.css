@@ -93,12 +93,17 @@ html:not(.pts-immersive) body {
     transform: translateY(-100%);
     opacity: 0;
     pointer-events: none;
+    /* انهيار الحجز في التدفق — transform وحده يترك فراغًا بمنتصف الشاشة */
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    flex: 0 0 0 !important;
   }
 
-  /*
-   * حجز ارتفاع الشريط يبقى دائمًا — حتى عند الإخفاء بـ transform —
-   * حتى لا ينزلق المحتوى خلف موضع القائمة عند العودة.
-   */
   .app-main {
     transition: none;
   }
