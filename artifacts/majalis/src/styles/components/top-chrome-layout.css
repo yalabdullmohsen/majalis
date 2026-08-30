@@ -171,9 +171,10 @@ header.navbar-v3,
     padding-bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px));
   }
 
+  /* لا تُلغِ حجز الشريط عند الإخفاء بـ transform — يمنع تداخل المحتوى */
   .app-shell:has(.bottom-nav--hidden),
   .app-shell.app-chrome-hidden {
-    padding-bottom: var(--inset-bottom, 0px);
+    padding-bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px));
   }
 
   .app-top-chrome {

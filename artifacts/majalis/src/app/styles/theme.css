@@ -863,9 +863,13 @@ html.dark .mj-btn--ghost {
 
 /* التنقل — طبقات مساعدة فوق NavBar/BottomNav الحاليين */
 .mj-nav-skin {
-  background: var(--mj-surface);
+  background: var(--surface-app, var(--mj-surface, #F2F4F3)) !important;
+  background-image: none !important;
   border-color: var(--mj-hairline);
   color: var(--mj-ink);
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 .mj-nav-skin a[aria-current="page"],
 .mj-nav-skin .is-active {

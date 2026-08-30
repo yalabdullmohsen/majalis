@@ -258,8 +258,8 @@ html.dark,
 
 .bottom-nav--m2030,
 .bottom-nav {
-  /* سطح صلب يطابق لون الصفحة — بلا شفافية */
-  background-color: var(--surface-app, var(--mj-bg)) !important;
+  /* سطح صلب يطابق لون الصفحة — بلا شفافية مطلقًا */
+  background-color: var(--surface-app, #F2F4F3) !important;
   background-image: none !important;
   opacity: 1 !important;
   border-top-color: var(--mj-hairline) !important;
