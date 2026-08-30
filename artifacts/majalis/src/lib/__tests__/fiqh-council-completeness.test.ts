@@ -28,4 +28,8 @@ for (const slug of ["cultured-meat", "smart-contracts", "encrypted-digital-curre
   assert.ok(issue && isPublicIssue(issue), `مسألة عامة مكتملة: ${slug}`);
 }
 
+const genetic = FIQH_ISSUES_PUBLISHED_SEED.find((i) => i.slug === "genetic-testing-ancestry-ruling");
+assert.ok(genetic, "مسألة DNA موجودة في البذرة");
+assert.equal(isPublicIssue(genetic!), false, "مسألة النسب/DNA خارج الفهرسة العامة (حسّاسة)");
+
 console.log("fiqh-council-completeness: OK", { publicItems: publicItems.length });
