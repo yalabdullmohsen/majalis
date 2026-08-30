@@ -9,7 +9,7 @@ import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/my-submissions.css";
 
 const STATUS_META: Record<SubmissionStatus, { Icon: LucideIcon; label: string; mod: string }> = {
-  pending:  { Icon: Clock,        label: "قيد المراجعة", mod: "msr-status--pending"  },
+  pending:  { Icon: Clock,        label: "قيد التدقيق", mod: "msr-status--pending"  },
   approved: { Icon: CheckCircle2, label: "مقبول",         mod: "msr-status--approved" },
   rejected: { Icon: XCircle,      label: "مرفوض",         mod: "msr-status--rejected" },
 };
@@ -114,7 +114,7 @@ export default function MySubmissionsPage() {
     applyPageSeo({
       path: "/my-submissions",
       title: "مقدّماتي | سُنّة",
-      description: "تتبع حالة المحتوى الذي أرسلته للمجلس العلمي، قيد المراجعة، مقبول، أو مرفوض.",
+      description: "تتبع حالة المحتوى الذي أرسلته لسُنّة: قيد التدقيق، مقبول، أو مرفوض.",
       keywords: ["مقدماتي", "تقديم محتوى", "متابعة مقدمة", "سُنّة"],
       robots: "noindex, follow",
     });
@@ -200,7 +200,7 @@ export default function MySubmissionsPage() {
           </div>
           <div className="msp-stat msp-stat--pending">
             <div className="msp-stat__val">{stats.pending}</div>
-            <div className="msp-stat__label"><Clock size={13} strokeWidth={2} aria-hidden="true" /> قيد المراجعة</div>
+            <div className="msp-stat__label"><Clock size={13} strokeWidth={2} aria-hidden="true" /> قيد التدقيق</div>
           </div>
           <div className="msp-stat msp-stat--approved">
             <div className="msp-stat__val">{stats.approved}</div>

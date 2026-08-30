@@ -24,5 +24,7 @@ Disallow: /auth/
 Disallow: /vault
 Disallow: /api/
 Disallow: /search/
+Disallow: /quran/recitation-test-ai
+Disallow: /fiqh-council/research-assistant
 
 Sitemap: https://majlisilm.com/sitemap.xml

@@ -95,7 +95,7 @@ function CompareContent() {
       <div className="max-w-5xl mx-auto px-2 py-6 overflow-x-auto">
         {/* تنبيه */}
         <div className="ucp-alert">
-          <AlertTriangle size={13} className="inline ms-1" />البيانات تجريبية، تحقق من الموقع الرسمي لكل جامعة قبل التقديم.
+          <AlertTriangle size={13} className="inline ms-1" />تحقّق من الموقع الرسمي لكل جامعة قبل التقديم؛ هذه البيانات إرشادية فقط.
         </div>
 
         {/* جدول المقارنة */}

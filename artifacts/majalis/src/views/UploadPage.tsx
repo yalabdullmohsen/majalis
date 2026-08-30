@@ -196,13 +196,13 @@ export default function UploadPage() {
     applyPageSeo({
       path: "/upload",
       title: "رفع درس علمي | سُنّة",
-      description: "أرسل درساً علمياً موثّقاً للمجلس العلمي للمراجعة قبل النشر.",
+      description: "أرسل درساً علمياً موثّقاً لسُنّة للمراجعة قبل النشر.",
       keywords: ["تسجيل درس", "رفع ملف صوتي", "مشاركة علمية", "سُنّة"],
       jsonLd: [{
         "@context": "https://schema.org",
         "@type": "WebPage",
         name: "رفع درس علمي",
-        description: "أرسل درساً علمياً للمجلس العلمي.",
+        description: "أرسل درساً علمياً لسُنّة.",
         url: "https://majlisilm.com/upload",
         publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
       }],

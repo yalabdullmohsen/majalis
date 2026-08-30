@@ -102,6 +102,13 @@ const submissionsRateLimit = createRateLimiter({
   keyPrefix: "submissions",
 });
 
+/** بحث عام/ذكي — حماية من الاستنزاف دون خنق الاستخدام العادي */
+const searchRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 60,
+  keyPrefix: "search",
+});
+
 const clientErrorLogRateLimit = createRateLimiter({
   windowMs: 60_000,
   max: 15,
@@ -163,7 +170,7 @@ export const API_ROUTES = [
   { prefix: "/api/admin/check-fiqh-links", module: "./api-handlers/admin/check-fiqh-links.js", allowGet: true },
   { prefix: "/api/admin/sync-fiqh-council", module: "./api-handlers/admin/sync-fiqh-council.js", allowGet: true },
   { prefix: "/api/admin/scholarly-verification", module: "./api-handlers/admin/scholarly-verification.js", allowGet: true },
-  { prefix: "/api/knowledge-search", module: "./api-handlers/knowledge-search.js", allowGet: true },
+  { prefix: "/api/knowledge-search", module: "./api-handlers/knowledge-search.js", allowGet: true, rateLimit: searchRateLimit },
   { prefix: "/api/cron/auto-content-sync", module: "./api-handlers/cron/auto-content-sync.js", allowGet: true, exact: true },
   { prefix: "/api/cron/auto-content-health", module: "./api-handlers/cron/auto-content-health.js", allowGet: true, exact: true },
   { prefix: "/api/cron/daily-benefit-rotation", module: "./api-handlers/cron/daily-benefit-rotation.js", allowGet: true, exact: true },
@@ -176,12 +183,12 @@ export const API_ROUTES = [
   { prefix: "/api/cron/connector-health", module: "./api-handlers/cron/connector-health.js", allowGet: true, exact: true },
   { prefix: "/api/auto-content", module: "./api-handlers/auto-content.js", allowGet: true },
   { prefix: "/api/knowledge-recommendations", module: "./api-handlers/knowledge-recommendations.js", allowGet: true },
-  { prefix: "/api/intelligent-search", module: "./api-handlers/intelligent-search.js", allowGet: true },
+  { prefix: "/api/intelligent-search", module: "./api-handlers/intelligent-search.js", allowGet: true, rateLimit: searchRateLimit },
   // محرك البحث العربي الموحد — GET /api/search?q=...&types=...&limit=...&offset=...
-  { prefix: "/api/search", module: "./api-handlers/search.js", allowGet: true, exact: true },
+  { prefix: "/api/search", module: "./api-handlers/search.js", allowGet: true, exact: true, rateLimit: searchRateLimit },
   { prefix: "/api/topic-content", module: "./api-handlers/topic-content.js", allowGet: true },
   { prefix: "/api/content-relations", module: "./api-handlers/content-relations.js", allowGet: true },
-  { prefix: "/api/scholarly-search", module: "./api-handlers/scholarly-search.js", allowGet: true },
+  { prefix: "/api/scholarly-search", module: "./api-handlers/scholarly-search.js", allowGet: true, rateLimit: searchRateLimit },
   { prefix: "/api/admin/search-analytics", module: "./api-handlers/admin/search-analytics.js", allowGet: true },
   { prefix: "/api/digital-learning", module: "./api-handlers/digital-learning.js", allowGet: true, rateLimit: digitalLearningRateLimit },
   { prefix: "/api/cron/autonomous-orchestrator", module: "./api-handlers/cron/autonomous-orchestrator.js", allowGet: true, exact: true },

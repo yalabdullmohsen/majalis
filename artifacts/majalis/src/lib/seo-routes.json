@@ -103,7 +103,7 @@
     {
       "path": "/adhkar",
       "title": "الأذكار",
-      "description": "أذكار وأدعية مأثورة — صباح ومساء ونوم وسفر وصلاة — مع بيان المصدر والدرجة قدر الإمكان، وما لم يُراجع يُوسم قيد المراجعة.",
+      "description": "أذكار وأدعية مأثورة — صباح ومساء ونوم وسفر وصلاة — مع بيان المصدر والدرجة قدر الإمكان.",
       "sitemap": true,
       "changefreq": "weekly",
       "priority": 0.82
@@ -1007,9 +1007,10 @@
         "المجمع الفقهي",
         "قرارات فقهية"
       ],
-      "sitemap": true,
+      "sitemap": false,
+      "robots": "noindex, nofollow",
       "changefreq": "weekly",
-      "priority": 0.87
+      "priority": 0.4
     },
     {
       "path": "/fiqh-council/compare",
@@ -1161,7 +1162,7 @@
     {
       "path": "/404",
       "title": "الصفحة غير موجودة",
-      "description": "تعذر العثور على الصفحة المطلوبة — استخدم البحث أو عد للصفحة الرئيسية للمجلس العلمي. — صفحة الصفحة غير موجودة ضمن منصة سُنّة — محتوى شرعي موثّق وروابط ذ…",
+      "description": "تعذر العثور على الصفحة المطلوبة — استخدم البحث أو عد للصفحة الرئيسية لسُنّة. — صفحة الصفحة غير موجودة ضمن منصة سُنّة — محتوى شرعي موثّق وروابط ذ…",
       "keywords": [
         "404",
         "الصفحة غير موجودة",
@@ -1343,7 +1344,7 @@
         "سُنّة"
       ],
       "sitemap": false,
-      "robots": "noindex, follow"
+      "robots": "noindex, nofollow"
     },
     {
       "path": "/vault",
@@ -2892,9 +2893,10 @@
         "مصحف تفاعلي",
         "التعرف الصوتي"
       ],
-      "sitemap": true,
+      "sitemap": false,
+      "robots": "noindex, nofollow",
       "changefreq": "monthly",
-      "priority": 0.8
+      "priority": 0.4
     },
     {
       "path": "/quran/surahs",
