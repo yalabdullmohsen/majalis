@@ -26,6 +26,7 @@ assert.match(nav, /shouldShowHeaderAd/);
 assert.match(nav, /navbar-v3__ad-row/);
 assert.doesNotMatch(nav, /MajlisWordmark/);
 assert.doesNotMatch(nav, /navbar-v3__tagline/);
+assert.match(nav, /header-ad-slot--spacer/);
 
 assert.match(cfg, /headerAdConfig/);
 assert.match(cfg, /export const headerAd\b/);
