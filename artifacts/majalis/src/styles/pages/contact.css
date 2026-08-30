@@ -4,6 +4,16 @@
   padding: 1.25rem 0 0.75rem;
 }
 
+@media (max-width: 879px) {
+  .contact-page.legal-page .legal-page-hero {
+    padding: 0.85rem 0 0.5rem;
+  }
+  .contact-page.legal-page .page-shell__intro {
+    margin-block-start: 0.35rem;
+    margin-block-end: 0.65rem;
+  }
+}
+
 .contact-page.legal-page .legal-page-body {
   padding: 1rem 0 2.5rem;
 }
@@ -117,7 +127,7 @@
   gap: 0.4rem;
   min-height: 44px;
   padding: 0.55rem 1rem;
-  border-radius: 0.7rem;
+  border-radius: var(--radius-button, 18px);
   font: inherit;
   font-size: 0.9rem;
   font-weight: 700;
@@ -136,8 +146,8 @@
 }
 
 .contact-btn--ghost {
-  background: transparent;
-  border-color: var(--majalis-line, color-mix(in srgb, currentColor 16%, transparent));
+  background: var(--mj-surface, #fff);
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, var(--mj-hairline, #d5ddd9));
   color: var(--majalis-ink);
 }
 
