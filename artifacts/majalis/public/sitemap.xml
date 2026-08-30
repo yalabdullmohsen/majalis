@@ -202,11 +202,6 @@
     <priority>0.84</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/fiqh-council/research</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.83</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/fiqh-council/nawazil</loc>
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
@@ -568,11 +563,6 @@
     <loc>https://majlisilm.com/islamic-glossary</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/academic-research</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/prophetic-medicine</loc>
@@ -3952,11 +3942,6 @@
   </url>
   <url>
     <loc>https://majlisilm.com/fiqh-council/issues/remote-work-friday-prayer-obligation</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.69</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/fiqh-council/issues/genetic-testing-ancestry-ruling</loc>
     <changefreq>monthly</changefreq>
     <priority>0.69</priority>
   </url>

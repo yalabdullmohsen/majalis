@@ -2988,6 +2988,10 @@ Disallow: /api/
 Disallow: /search/
 Disallow: /quran/recitation-test-ai
 Disallow: /fiqh-council/research-assistant
+Disallow: /fiqh-council/research
+Disallow: /academic-research
+Disallow: /academic-research/
+Disallow: /fiqh-council/issues/genetic-testing-ancestry-ruling
 
 Sitemap: ${SITE_URL}/sitemap.xml
 `;
