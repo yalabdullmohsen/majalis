@@ -52,9 +52,11 @@ html.pts-immersive .bottom-nav--m2030,
 html.pts-immersive .bottom-nav--v2,
 html.pts-immersive .bottom-nav {
   background: #06271f !important;
+  background-image: none !important;
+  opacity: 1 !important;
   border-block-start-color: rgba(255, 255, 255, 0.08) !important;
   border-top-color: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: none !important;
+  box-shadow: 0 -2px 8px rgb(0 0 0 / 18%) !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
@@ -101,6 +103,7 @@ html.pts-immersive .bottom-nav {
   padding-bottom: calc(
     var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
   ) !important;
+  justify-content: flex-start !important;
   box-sizing: border-box;
 }
 
@@ -123,7 +126,7 @@ html.pts-immersive .bottom-nav {
   direction: rtl;
   min-height: 100svh;
   min-height: 100dvh;
-  width: 100vw;
+  width: 100%;
   max-width: none;
   margin: 0;
   margin-block-start: 0;
@@ -141,8 +144,9 @@ html.pts-immersive .bottom-nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: safe center;
-  gap: 0.75rem;
+  /* من الأعلى بمسافة آمنة — بلا توسيط يفرّغ الأعلى أو يهبط البطاقات */
+  justify-content: flex-start;
+  gap: 0.85rem;
   position: relative;
   overflow-x: clip;
   -webkit-overflow-scrolling: touch;
@@ -497,7 +501,7 @@ html.pts-immersive .bottom-nav {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 0.55rem;
+  gap: 0.65rem;
   width: 100%;
   max-width: 430px;
   margin-inline: auto;

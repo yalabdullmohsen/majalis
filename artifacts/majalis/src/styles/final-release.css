@@ -733,6 +733,8 @@ html.dark .bottom-nav--v2 {
   background-color: var(--surface-app, #131A18) !important;
   background-image: none !important;
   opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 html[data-theme="dark"] .navbar-v3,
@@ -782,9 +784,12 @@ html.dark .top-section-bar {
       var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 0.5rem
     ) !important;
   }
+  /* حجز دائم لارتفاع الشريط — حتى أثناء translateY للإخفاء */
   .app-shell:has(.bottom-nav--hidden),
   .app-shell.app-chrome-hidden {
-    padding-bottom: var(--inset-bottom, 0px) !important;
+    padding-bottom: calc(
+      var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 0.5rem
+    ) !important;
   }
   .app-top-chrome {
     flex: 0 0 auto;
@@ -844,12 +849,12 @@ html.dark .top-section-bar {
     padding-bottom: var(--inset-bottom) !important;
     padding-inline: var(--gutter-inline-end) var(--gutter-inline-start) !important;
     margin: 0 !important;
-    background-color: var(--surface-app, var(--mj-bg)) !important;
+    background-color: var(--surface-app, #F2F4F3) !important;
     background-image: none !important;
     opacity: 1 !important;
     border-block-start: 1px solid var(--color-border) !important;
     border-top: 1px solid var(--color-border) !important;
-    box-shadow: 0 -4px 12px rgb(23 61 53 / 5%) !important;
+    box-shadow: 0 -2px 8px rgb(23 61 53 / 6%) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     /* لا overflow:hidden — يمنع قص التسميات؛ القص كان عَرَضًا لارتفاع مضغوط خاطئ */
