@@ -18,11 +18,29 @@ const prophets = read("src/styles/pages/prophet-stories.css");
 
 assert.match(theme, /--radius-card:\s*28px/, "رمز radius-card");
 assert.match(theme, /--radius-tile:\s*24px/, "رمز radius-tile");
+assert.match(theme, /--radius-button:\s*18px/, "رمز radius-button");
+assert.match(theme, /--radius-sheet:\s*28px/, "رمز radius-sheet");
+assert.match(theme, /--radius-nav:\s*28px/, "رمز radius-nav");
 assert.match(theme, /--radius-pill:\s*999px/, "رمز radius-pill");
+assert.match(soft, /--radius-button:\s*18px/, "soft-cards يحمل radius-button");
 assert.match(soft, /\.soft-card\s*\{/, "فئة soft-card");
 assert.match(soft, /\.soft-tile\s*\{/, "فئة soft-tile");
 assert.match(soft, /inset 0 1px 0 rgba\(255,\s*255,\s*255/, "highlight داخلي");
 assert.match(main, /soft-cards\.css/, "استيراد soft-cards في main");
+
+const finalRelease = read("src/styles/final-release.css");
+assert.match(
+  finalRelease,
+  /\.lesson-unified-card__btn\s*\{[^}]*border-radius:\s*var\(--radius-button/,
+  "زر التفاصيل ناعم عبر radius-button",
+);
+assert.match(
+  finalRelease,
+  /bottom:\s*calc\(\s*var\(--bottom-nav-height[^)]*\)\s*\+\s*var\(--inset-bottom[^)]*\)\s*\+\s*16px/,
+  "الرجوع العائم فوق الشريط السفلي بـ16px",
+);
+assert.doesNotMatch(soft, /\bbutton\s*\{/, "لا قاعدة button عامة في soft-cards");
+assert.doesNotMatch(finalRelease, /^\s*button\s*\{/m, "لا قاعدة button عامة في final-release");
 
 assert.match(prayer, /--pts-radius:\s*var\(--radius-card,\s*28px\)/, "الصلاة تستخدم نصف قطر البطاقة الناعمة 28px");
 assert.match(prayer, /inset 0 1px 0 rgba\(255,\s*255,\s*255,\s*0\.12\)/, "highlight بطاقة البطل");
