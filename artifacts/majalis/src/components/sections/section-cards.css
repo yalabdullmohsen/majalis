@@ -40,7 +40,7 @@
   background-color: var(--mj-surface, #ffffff);
   background-image: none;
   border: 1px solid var(--mj-hairline, #e3e8e6);
-  border-radius: var(--radius-card, 28px);
+  border-radius: var(--radius-tile, 24px);
   box-shadow: 0 4px 14px -10px rgba(11, 32, 24, 0.35);
   transition: filter 120ms ease, transform 120ms ease;
 }
@@ -112,7 +112,7 @@ a.card--featured,
   /* نفس أخضر الفقه الغامق (--mj-brand-deep) — موحّد لمركز القرآن والدروس */
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-card, 28px);
+  border-radius: var(--radius-tile, 24px);
   background-color: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
   background-image:
     linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, transparent 55%),
@@ -187,13 +187,13 @@ a.card--featured,
   background-color: var(--mj-surface, #ffffff);
   background-image: none;
   border: 1px solid var(--mj-hairline, #e3e8e6);
-  border-radius: var(--radius-card, 28px);
+  border-radius: var(--radius-tile, 24px);
 }
 
 .card--compact .card__icon {
   width: 36px;
   height: 36px;
-  border-radius: var(--radius-card, 28px);
+  border-radius: var(--radius-tile, 24px);
 }
 
 .card--compact .card__icon svg {
@@ -252,7 +252,7 @@ a.card--featured,
   min-height: 44px;
   padding: 12px 16px;
   border: 1px solid var(--mj-hairline, #e3e8e6);
-  border-radius: var(--radius-card, 28px);
+  border-radius: var(--radius-tile, 24px);
   background: var(--mj-surface, #fff);
   color: var(--mj-ink, #16241e);
   font: inherit;
