@@ -65,7 +65,7 @@ console.log("\n=== عزل إعادة الرسم: الأب بلا usePrayerCountd
 console.log("\n=== ارتفاع الشريط ≤ ٣٦px وعرض الشريحة ≤ ٣٠٪ ===");
 {
   const finalRelease = read("src/styles/final-release.css");
-  assert.match(finalRelease, /--ticker-h:\s*2\.25rem/, "ارتفاع الشريط = ٢٫٢٥rem (=٣٦px)");
+  assert.match(finalRelease, /--ticker-h:\s*2\.65rem/, "ارتفاع الشريط = ٢٫٦٥rem لوضوح المحتوى");
 
   const chipCss = read("src/styles/components/prayer-countdown-chip.css");
   assert.match(chipCss, /max-width:\s*30%/, "أقصى عرض الشريحة ٣٠٪");

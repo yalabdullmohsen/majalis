@@ -398,37 +398,6 @@ export default function PrayerTimesPage() {
         </div>
       )}
 
-      <section className="pts-hero" aria-label="العداد التنازلي">
-        <MosqueSilhouette />
-        <div className="pts-hero__content">
-          <p className="pts-hero__label">{heroLabel}</p>
-          <h2 className="pts-hero__name" key={displayKey}>
-            {displayKey === "Sunrise" ? displayName : `صلاة ${displayName}`}
-          </h2>
-          <div
-            className="pts-hero__countdown"
-            dir="ltr"
-            aria-live="polite"
-            aria-atomic="true"
-            aria-label={`الوقت: ${displayHms}`}
-            key={displayHms}
-          >
-            {displayHms}
-          </div>
-          {inGrace && !pinnedKey && (
-            <p className="pts-hero__hint">حتى مرور ٣٥ دقيقة ثم الانتقال للصلاة التالية</p>
-          )}
-          {pinnedKey && pinnedKey !== countdown.next.key && (
-            <div className="pts-hero__actions">
-              {isTomorrow && <span className="pts-badge">غداً</span>}
-              <button type="button" className="pts-hero__reset" onClick={() => setPinnedKey(null)}>
-                العودة للصلاة القادمة
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
-
       {prayers.length > 0 && (
         <nav className="pts-list" aria-label="صلوات اليوم">
           {prayers.map((p) => {
@@ -460,6 +429,37 @@ export default function PrayerTimesPage() {
           })}
         </nav>
       )}
+
+      <section className="pts-hero" aria-label="العداد التنازلي">
+        <MosqueSilhouette />
+        <div className="pts-hero__content">
+          <p className="pts-hero__label">{heroLabel}</p>
+          <h2 className="pts-hero__name" key={displayKey}>
+            {displayKey === "Sunrise" ? displayName : `صلاة ${displayName}`}
+          </h2>
+          <div
+            className="pts-hero__countdown"
+            dir="ltr"
+            aria-live="polite"
+            aria-atomic="true"
+            aria-label={`الوقت: ${displayHms}`}
+            key={displayHms}
+          >
+            {displayHms}
+          </div>
+          {inGrace && !pinnedKey && (
+            <p className="pts-hero__hint">حتى مرور ٣٥ دقيقة ثم الانتقال للصلاة التالية</p>
+          )}
+          {pinnedKey && pinnedKey !== countdown.next.key && (
+            <div className="pts-hero__actions">
+              {isTomorrow && <span className="pts-badge">غداً</span>}
+              <button type="button" className="pts-hero__reset" onClick={() => setPinnedKey(null)}>
+                العودة للصلاة القادمة
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
 
       <nav className="pts-dock" aria-label="أدوات الصلاة">
         <Link href="/adhkar" className="pts-dock__item">
