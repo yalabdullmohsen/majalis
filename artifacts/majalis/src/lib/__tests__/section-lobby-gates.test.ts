@@ -7,6 +7,7 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getLobby, LOBBY_IDS, isTabRootPath } from "@/config/section-lobbies";
+import { getFiqhLobby } from "@/config/section-lobbies-fiqh";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
@@ -101,7 +102,7 @@ const prayer = getLobby("prayer");
 assert.ok(prayer.primary);
 assert.equal(prayer.groups.length, 4);
 
-const fiqh = getLobby("fiqh");
+const fiqh = getFiqhLobby();
 assert.equal(fiqh.primary, undefined);
 assert.ok((fiqh.chips?.length ?? 0) === 5);
 assert.ok(fiqh.groups.some((g) => g.id === "ibadat" && g.items.length > 0));
@@ -116,9 +117,15 @@ assert.equal(isTabRootPath("/fiqh"), true);
 assert.equal(isTabRootPath("/quran-hub"), true);
 assert.equal(isTabRootPath("/mushaf"), false);
 
-const greenCount = (spec: ReturnType<typeof getLobby>) => (spec.primary ? 1 : 0);
+const greenCount = (spec: { primary?: unknown }) => (spec.primary ? 1 : 0);
 for (const id of LOBBY_IDS) {
-  assert.ok(greenCount(getLobby(id)) <= 1, `${id}: بطاقة خضراء واحدة كحد أقصى`);
+  const spec = id === "fiqh" ? getFiqhLobby() : getLobby(id);
+  assert.ok(greenCount(spec) <= 1, `${id}: بطاقة خضراء واحدة كحد أقصى`);
 }
+
+const coreLobby = read("src/config/section-lobbies.ts");
+assert.doesNotMatch(coreLobby, /@\/lib\/fiqh-books/, "اللوبي الأساسي بلا fiqh-books");
+assert.match(read("src/config/section-lobbies-fiqh.ts"), /@\/lib\/fiqh-books/, "لوبي الفقه يستورد الكتب");
+assert.match(read("src/pages/fiqh/ui/FiqhView.tsx"), /getFiqhLobby/, "FiqhView من getFiqhLobby");
 
 console.log("section-lobby-gates.test.ts: ok");

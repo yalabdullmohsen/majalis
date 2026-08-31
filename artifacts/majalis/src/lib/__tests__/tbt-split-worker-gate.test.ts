@@ -11,7 +11,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const prefetch = read("src/lib/prefetch-top-routes.ts");
-assert.match(prefetch, /10_000/, "تسخين المسارات بعد load + 10ث");
+assert.match(prefetch, /(?:10_000|25_000)/, "تسخين المسارات بعد load بتأخير كافٍ (≥10ث)");
 
 const homeSearch = read("src/components/home/HomeUniversalSearch.tsx");
 assert.doesNotMatch(

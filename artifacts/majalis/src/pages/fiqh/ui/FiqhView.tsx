@@ -7,7 +7,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
-import { getLobby } from "@/config/section-lobbies";
+import { getFiqhLobby } from "@/config/section-lobbies-fiqh";
 import {
   fiqhBookCounts,
   listPublishedLessons,
@@ -58,7 +58,7 @@ function FiqhLuxHero({
 }
 
 export default function FiqhPage() {
-  const lobby = useMemo(() => getLobby("fiqh"), []);
+  const lobby = useMemo(() => getFiqhLobby(), []);
   const stats = useMemo(() => {
     const books = publishedBooks();
     let chapters = 0;

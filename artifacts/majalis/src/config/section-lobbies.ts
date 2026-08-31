@@ -1,27 +1,12 @@
 /**
- * تشريح لوبيات التبويبات — يُقرأ من سجل الأقسام (+ كتب الفقه المنشورة).
- * الصفحات لا تبني رأسًا أو شبكة يدويًا؛ المصدر هنا فقط.
+ * تشريح لوبيات التبويبات — يُقرأ من سجل الأقسام.
+ * لوبي الفقه (كتب ثقيلة) في section-lobbies-fiqh.ts حتى لا يُحمَّل مع القرآن/الدروس/المزيد.
  */
 import {
-  BookOpen,
-  Building2,
   CircleDot,
-  FlaskConical,
   GraduationCap,
-  Landmark,
-  Scale,
-  ScrollText,
 } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-import {
-  FIQH_CATEGORY_LABELS,
-  FIQH_CATEGORY_ORDER,
-  FIQH_SUPPORTING_TOPICS,
-  fiqhBookCounts,
-  publishedBooks,
-  type FiqhBookCategory,
-} from "@/lib/fiqh-books";
-import { formatAbwabCount, formatMasailCount, NOUN_DURUS, NOUN_HALAQAT, NOUN_MUNASABAT, NOUN_MUSABAQAT, type ArabicCountNoun } from "@/lib/arabic-count";
+import { NOUN_DURUS, NOUN_HALAQAT, NOUN_MUNASABAT, NOUN_MUSABAQAT, type ArabicCountNoun } from "@/lib/arabic-count";
 import { totalExternalCompetitions } from "@/config/competitions-hub";
 import { QURAN_CIRCLES_SEED } from "@/lib/quran-circles-seed";
 import { ISLAMIC_OCCASIONS } from "@/lib/islamic-occasions-seed";
@@ -93,15 +78,6 @@ function item(partial: LobbyItem): LobbyItem {
   return partial;
 }
 
-const SUPPORT_ICONS: Record<string, LucideIcon> = {
-  usul: ScrollText,
-  qawaid: Scale,
-  madhahib: GraduationCap,
-  nawazil: FlaskConical,
-  majami: Building2,
-  fatawa: ScrollText,
-};
-
 const QURAN_GROUPS: Array<{ id: string; title: string; ids: string[] }> = [
   {
     id: "tilawa-tafsir",
@@ -133,46 +109,11 @@ const QURAN_GROUPS: Array<{ id: string; title: string; ids: string[] }> = [
   },
 ];
 
-function fiqhBookItems(cat: FiqhBookCategory): LobbyItem[] {
-  return publishedBooks()
-    .filter((b) => b.category === cat)
-    .map((b) => {
-      const counts = fiqhBookCounts(b);
-      return item({
-        id: `fiqh-book-${b.id}`,
-        label: b.title,
-        subtitle: `${formatAbwabCount(counts.chapters)} · ${formatMasailCount(counts.lessons)}`,
-        route: `/fiqh/books/${b.id}`,
-        icon: BookOpen,
-      });
-    });
-}
-
-function fiqhSupportingItems(): LobbyItem[] {
-  return FIQH_SUPPORTING_TOPICS.map((t) => {
-    if (t.id === "usul") {
-      const usul = getSectionById("usul-fiqh");
-      if (usul) {
-        return {
-          id: usul.id,
-          label: usul.label,
-          subtitle: usul.subtitle,
-          route: usul.route,
-          icon: usul.icon,
-        };
-      }
-    }
-    return item({
-      id: `fiqh-support-${t.id}`,
-      label: t.title,
-      subtitle: t.desc.slice(0, 45),
-      route: t.href,
-      icon: SUPPORT_ICONS[t.id] ?? Landmark,
-    });
-  });
-}
-
 export function getLobby(id: LobbyId): LobbySpec {
+  if (id === "fiqh") {
+    throw new Error("لوبي الفقه عبر getFiqhLobby من @/config/section-lobbies-fiqh");
+  }
+
   if (id === "quran") {
     return {
       id,
@@ -245,30 +186,6 @@ export function getLobby(id: LobbyId): LobbySpec {
         { id: "adhkar", title: "الأذكار", items: [must("adhkar")] },
         { id: "qibla", title: "القبلة", items: [must("qibla")] },
         { id: "settings", title: "الإعدادات", items: [must("athan-settings")] },
-      ],
-    };
-  }
-
-  if (id === "fiqh") {
-    return {
-      id,
-      title: "الفقه",
-      path: "/fiqh",
-      chips: FIQH_CATEGORY_ORDER.map((cat) => ({
-        id: cat,
-        label: FIQH_CATEGORY_LABELS[cat],
-      })),
-      groups: [
-        ...FIQH_CATEGORY_ORDER.map((cat) => ({
-          id: cat,
-          title: FIQH_CATEGORY_LABELS[cat],
-          items: fiqhBookItems(cat),
-        })),
-        {
-          id: "supporting",
-          title: "المباحث المساندة",
-          items: fiqhSupportingItems(),
-        },
       ],
     };
   }
