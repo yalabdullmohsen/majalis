@@ -48,14 +48,16 @@ const sample = `<!DOCTYPE html><html><head>
 const out = applyEntryCssDefer(sample);
 assert.match(out, /id="mj-cls-reserve"/, "يُحقن حجز CLS");
 assert.match(out, /media="print"/, "stylesheet بـ print");
-assert.match(out, /onload="this\.onload=null;this\.media='all'"/, "onload يعيد media=all");
+assert.match(out, /data-mj-css-defer/, "تأجيل بلا onload مضمّن");
+assert.match(out, /id="data-mj-css-boot"/, "سكربت تفعيل CSS متوافق مع CSP");
+assert.doesNotMatch(out, /\bonload\s*=/, "لا onload على stylesheet");
 assert.match(out, /<noscript><link rel="stylesheet"/, "noscript للزحف بلا JS");
 assert.equal(hasBlockingStylesheet(out), false, "لا stylesheet حاجب بعد التحويل");
 assert.doesNotMatch(out, /rel="modulepreload"[^>]*media="print"/, "modulepreload لا يُؤجَّل");
 assert.ok(inlineStyleBytes(out) <= INLINE_CSS_BUDGET, "المضمّن ≤14KiB");
 
 const already = deferStylesheets(
-  `<link rel="stylesheet" href="/a.css" media="print" onload="this.media='all'">`,
+  `<html><head><link rel="stylesheet" href="/a.css" media="print" data-mj-css-defer></head></html>`,
 );
 assert.equal(
   already.match(/media="print"/g)?.length,

@@ -624,7 +624,15 @@
       "sitemap": false,
       "changefreq": "weekly",
       "priority": 0.7,
-      "robots": "noindex, follow"
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/dashboard",
+      "title": "لوحة المستخدم",
+      "description": "صفحات داخلية لإدارة محتوى سُنّة ومراجعته، غير مخصصة للفهرسة العامة ولا تظهر في نتائج البحث. — صفحة لوحة المستخدم ضمن منصة سُنّة — محتوى شرعي موثّق.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
     },
     {
       "path": "/about",

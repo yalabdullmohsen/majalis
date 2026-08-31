@@ -8,7 +8,6 @@ import { LanguageProvider, useLanguage } from "@/components/LanguageProvider";
 import { PrayerCountdownProvider } from "@/components/prayer/PrayerCountdownProvider";
 import { NavigationBinder } from "@/components/NavigationBinder";
 import { NativeBackButtonListener } from "@/components/NativeBackButtonListener";
-import { SafeAreaDebugOverlay } from "@/components/SafeAreaDebugOverlay";
 import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
 import { PageChromeSync } from "@/components/PageChromeSync";
@@ -33,6 +32,13 @@ import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
 /** شريط/كروم ثقيل (lucide + nav-map) — كسول حتى لا يدخل مسار أول زيارة / LCP */
+const SafeAreaDebugOverlay = lazyWithRetry(
+  () =>
+    import("@/components/SafeAreaDebugOverlay").then((m) => ({
+      default: m.SafeAreaDebugOverlay,
+    })),
+  "SafeAreaDebugOverlay",
+);
 const NavBar = lazyWithRetry(() => import("@/components/NavBar"), "NavBar");
 const BottomNavBar = lazyWithRetry(
   () => import("@/components/BottomNavBar").then((m) => ({ default: m.BottomNavBar })),
@@ -735,7 +741,9 @@ function AppShellInner() {
         </Suspense>
       )}
       <VisualViewportKeyboardBridge />
-      <SafeAreaDebugOverlay />
+      <Suspense fallback={null}>
+        <SafeAreaDebugOverlay />
+      </Suspense>
       <Suspense fallback={null}>
         <DeferredAchievementBoot />
       </Suspense>
