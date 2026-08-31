@@ -5385,14 +5385,15 @@ html[data-theme="dark"] .home-library-card {
   border-radius: 4px;
 }
 
-/* ── حد أدنى لأهداف اللمس ── */
+/* ── حد أدنى لأهداف اللمس (بدون button{} عام — يسبب CLS/زوايا حادة) ── */
 
-button,
-[role="button"],
-.bottom-nav__tab,
-.content-hub-chip,
-.ds-btn {
-  min-height: 44px;
+@media (pointer: coarse) {
+  .ds-btn,
+  .content-hub-chip,
+  .bottom-nav__tab,
+  [role="button"]:not(.global-back-btn):not(.floating-back-btn):not(.scroll-to-top):not(.skip-link) {
+    min-height: 44px;
+  }
 }
 
 /* ── أنيميشن Skeleton ── */

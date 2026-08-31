@@ -92,7 +92,7 @@
   padding: 0.85rem 0.95rem;
   min-height: 7.25rem;
   height: auto;
-  border-radius: var(--radius-card, 28px);
+  border-radius: var(--radius-card, 24px);
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, var(--border, var(--mj-hairline)));
   background: var(--cardBackground, var(--surface));
   box-shadow: 0 10px 26px -18px rgba(11, 32, 24, 0.18);
@@ -824,7 +824,7 @@ html.dark .fiqh-lux-page.section-lobby {
     var(--bottom-nav-total, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 20px
   );
   background: transparent;
-  gap: 16px;
+  gap: 12px;
 }
 
 .fiqh-lux-page .section-lobby__head {
@@ -1010,7 +1010,7 @@ html.dark .fiqh-lux-page .card::after {
 .fiqh-lux-book-hero {
   margin-bottom: 1.25rem;
   padding: 1.5rem 1.15rem;
-  border-radius: var(--radius-card, 28px);
+  border-radius: var(--radius-card, 24px);
   background-color: var(--fq-emerald);
   background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
   border: 1px solid rgba(255, 255, 255, 0.1);

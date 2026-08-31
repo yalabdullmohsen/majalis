@@ -50,8 +50,8 @@ assert.match(
 );
 assert.match(
   css,
-  /\.pts-hero\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius,\s*var\(--radius-card,\s*28px\)\)/,
-  "بطاقة البطل بزوايا ناعمة (28px)",
+  /\.pts-hero\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius,\s*var\(--radius-card,\s*24px\)\)/,
+  "بطاقة البطل بزوايا ناعمة (24px)",
 );
 assert.doesNotMatch(
   css,

@@ -40,6 +40,7 @@ export const HubCard = memo(function HubCard({
     (Icon ? (
       <Icon size={20} strokeWidth={1.8} aria-hidden="true" />
     ) : null);
+  const hasHead = badge != null || soon || iconNode != null;
 
   return (
     <Link
@@ -52,11 +53,13 @@ export const HubCard = memo(function HubCard({
       )}
       aria-label={soon ? `${title} — قريبًا` : title}
     >
-      <div className="hub-card__head">
-        {badge != null ? <span className="hub-card__chip mj-badge">{badge}</span> : null}
-        {soon ? <span className="hub-card__soon">قريبًا</span> : null}
-        {iconNode ? <span className="hub-card__icon">{iconNode}</span> : null}
-      </div>
+      {hasHead ? (
+        <div className="hub-card__head">
+          {badge != null ? <span className="hub-card__chip mj-badge">{badge}</span> : null}
+          {soon ? <span className="hub-card__soon">قريبًا</span> : null}
+          {iconNode ? <span className="hub-card__icon">{iconNode}</span> : null}
+        </div>
+      ) : null}
       <div className="hub-card__body">
         <h3 className="hub-card__title">{title}</h3>
         {description ? <p className="hub-card__desc">{description}</p> : null}

@@ -120,7 +120,7 @@
   --color-success:           var(--ok-fg);
   --shadow-soft:             var(--e-1);
   --shadow-card:             0 10px 30px rgba(0, 0, 0, 0.04);
-  --radius-card:             28px;
+  --radius-card:             24px;
   --radius-tile:             24px;
   --radius-pill:             999px;
   --space-page:              var(--s-4);
@@ -405,7 +405,8 @@ html[data-theme="dark"] {
   --radius-lg:   var(--r-lg);
   --radius-xl:   var(--r-xl);
   --radius-2xl:  var(--r-2xl);
-  --radius-pill: var(--r-full);
+  /* قيمة صلبة — لا var(--r-full) هنا: theme-aliases يعرّف --r-full عبر --radius-pill فيصير دورة وتُصفَّر الزوايا ليلاً */
+  --radius-pill: 999px;
   --rd-sm: var(--r-sm); --rd-md: var(--r-md); --rd-lg: var(--r-lg);
   --rd-xl: var(--r-xl); --rd-full: var(--r-full);
 

@@ -442,6 +442,16 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
   background: var(--mj-bg, var(--color-bg, #f5f7f6));
 }
 
+/* زر التصفية: عرض المحتوى فقط — لا شريط فارغ بعرض الصفحة */
+.lessons-v3-sticky .ds-filter-toggle {
+  width: max-content;
+  max-width: 100%;
+  justify-self: start;
+  border-radius: 999px;
+  min-height: 2.5rem;
+  padding-inline: 0.95rem;
+}
+
 .lessons-page-v3 .page-hero-mj,
 .lessons-page-v3 .mj-page-head {
   padding-block: 0.35rem 0.45rem;
@@ -515,7 +525,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 }
 
 .lesson-detail-page .lesson-detail-card {
-  border-radius: var(--radius-card, 28px);
+  border-radius: var(--radius-card, 24px);
 }
 
 .lesson-detail-page .lesson-detail-actions--row .lesson-unified-card__btn,

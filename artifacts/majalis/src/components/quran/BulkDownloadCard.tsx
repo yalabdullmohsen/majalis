@@ -1,6 +1,7 @@
 import { Download, Pause, Play, Trash2 } from "lucide-react";
 import type { DownloadProgress, ReciterDownloadStatus } from "@/lib/quran-audio-downloads";
 import { toArabicDigits } from "@/lib/utils";
+import "@/styles/components/bulk-download-card.css";
 
 export type BulkDownloadCardProps = {
   reciterId: string;

@@ -325,7 +325,7 @@
 
 .contact-faq {
   border: 1px solid var(--majalis-line, color-mix(in srgb, currentColor 12%, transparent));
-  border-radius: 0.85rem;
+  border-radius: var(--radius-card, 24px);
   overflow: hidden;
   background: var(--majalis-panel, transparent);
 }
@@ -348,6 +348,12 @@
   gap: 0.75rem;
   padding-block: 0.85rem;
   text-align: start !important;
+  border-radius: var(--radius-button, 18px);
+  border: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
 }
 
 .contact-faq__a {

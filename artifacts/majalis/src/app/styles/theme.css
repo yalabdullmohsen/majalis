@@ -129,7 +129,7 @@
   --color-brand-strong: var(--color-brand-deep);
   --text-primary: var(--color-ink);
   --text-muted: var(--color-muted);
-  --radius-card: 28px;
+  --radius-card: 24px;
   --radius-tile: 24px;
   --radius-button: 18px;
   --radius-sheet: 28px;
@@ -223,7 +223,7 @@
   --text-primary: var(--mj-ink);
   --text-muted: var(--mj-muted);
   /* بطاقات ناعمة موحّدة — لا تعتمد على mj-r-md الصغير */
-  --radius-card: 28px;
+  --radius-card: 24px;
   --radius-tile: 24px;
   --radius-button: 18px;
   --radius-sheet: 28px;
@@ -408,6 +408,10 @@ html.dark,
   --on-green: var(--on-dark-strong);
   --on-surface: var(--mj-ink);
   --on-surface-muted: var(--mj-ink-2);
+  /* تثبيت أنصاف القطر ليلاً — يمنع تصفير --mj-r-pill عند تعارض الجسور */
+  --radius-pill: 999px;
+  --mj-r-pill: 999px;
+  --r-full: 9999px;
 }
 
 /* نص فوق أخضر/داكن: يعيد رموز النص دون لمس لون الصفحة */

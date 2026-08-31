@@ -404,9 +404,9 @@
   gap: 0.45rem;
 }
 
-.lesson-unified-card--compact .lesson-unified-card__meta {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.35rem;
+.lesson-unified-card--compact .lesson-unified-card__meta,
+.lesson-unified-card__meta--compact {
+  display: none;
 }
 
 .lesson-unified-card--compact .lesson-unified-card__meta-cell strong {
