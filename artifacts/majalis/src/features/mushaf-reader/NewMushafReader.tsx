@@ -326,6 +326,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     if (!parsed) return;
     const ayahKey = `${parsed.surah}:${parsed.ayah}`;
     setAudioError(null);
+    setActionsOpen(false);
     setAudioDockOpen(true);
     bumpChrome();
     suppressPageSyncRef.current = true;
@@ -369,6 +370,31 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       }
     },
     [audio, playerState, playingVerseKey, selectedVerseKey],
+  );
+
+  const onPlayReciter = useCallback(
+    async (id: string) => {
+      saveReciterId(id);
+      audio.setReciter(id);
+      setReciterId(id);
+      const key = selectedVerseKey ?? playingVerseKey;
+      if (!key) {
+        setAudioError("اختر آية أولاً");
+        return;
+      }
+      const parsed = parseVerseKey(key);
+      if (!parsed) {
+        setAudioError("اختر آية أولاً");
+        return;
+      }
+      setAudioError(null);
+      setActionsOpen(false);
+      setAudioDockOpen(true);
+      suppressPageSyncRef.current = true;
+      setAudioStatus("جاري تحميل التلاوة...");
+      await audio.playAyah(parsed.surah, parsed.ayah, id);
+    },
+    [audio, playingVerseKey, selectedVerseKey],
   );
 
   const onCopy = useCallback(async () => {
@@ -424,10 +450,11 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const mediaPlaying =
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const edgesDisabled = actionsOpen || tafsirOpen || searchOpen || indexOpen;
+  /* إخفاء الرصيف عند فتح قائمة الآية لتفادي تعارض أزرار التشغيل */
   const audioDockVisible =
+    !actionsOpen &&
     audioDockOpen &&
     (chromeOpen ||
-      actionsOpen ||
       playerState === "playing" ||
       playerState === "buffering" ||
       playerState === "error");
@@ -539,6 +566,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
             void audio.skipNext();
           }}
           onReciterChange={(id) => void onReciterChange(id)}
+          onPlayReciter={(id) => void onPlayReciter(id)}
           onSeek={(seconds) => audio.seek(seconds)}
           onSpeed={(rate) => audio.setPlaybackRate(rate)}
           onClose={() => {
