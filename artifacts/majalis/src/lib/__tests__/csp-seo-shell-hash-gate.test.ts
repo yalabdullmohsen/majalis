@@ -16,6 +16,7 @@ assert.match(post, /classList\.add\('js-ready'\)/, "سكربت js-ready في pos
 assert.match(post, /getElementById\('seo-shell'\)/, "إزالة seo-shell");
 assert.match(post, /MutationObserver/, "تأجيل إزالة seo-shell حتى يركّب React");
 assert.match(post, /setTimeout\(a,\s*3200\)/, "نافذة LCP قبل إخفاء الصدفة");
+assert.match(post, /#seo-shell\{[^}]*position:\s*fixed/, "الصدفة غطاء ثابت بلا تضخيم ارتفاع الصفحة");
 assert.match(post, /#seo-shell\{[^}]*z-index:\s*2/, "الصدفة فوق #root حتى الإزالة");
 
 /** النص الحرفي كما يُحقن في HTML (داخل <script>…</script>) */

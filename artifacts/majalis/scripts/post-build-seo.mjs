@@ -130,7 +130,7 @@ function buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody) {
     ${seoTags}
     <style>
       #root{min-height:40vh;position:relative;z-index:1}
-      #seo-shell{position:relative;z-index:2;min-height:70vh;background:#F2F4F3}
+      #seo-shell{position:fixed;inset:0;z-index:2;overflow:auto;background:#F2F4F3}
       html.dark #seo-shell,.dark #seo-shell{background:#101614}
       .js-ready #seo-shell{display:none!important}
     </style>
