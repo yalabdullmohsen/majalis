@@ -51,9 +51,9 @@ export default function UpdatesPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "آخر المستجدات العلمية",
-          url: "https://majlisilm.com/updates",
+          url: "https://www.ssunnah.com/updates",
           description: "مستجدات وتحديثات سُنّة من دروس ودورات وفتاوى وقرارات حديثة",
-          provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
         },
       ],
     });
@@ -172,7 +172,7 @@ export default function UpdatesPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="آخر التحديثات — سُنّة" url="https://majlisilm.com/updates" />
+        <ShareButtons title="آخر التحديثات — سُنّة" url="https://www.ssunnah.com/updates" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في التاريخ الإسلامي والفقه" count={4} />

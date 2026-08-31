@@ -151,7 +151,7 @@ export default function LearningQuizPage() {
           "@context": "https://schema.org",
           "@type": "Quiz",
           name: "اختبار المسار الشرعي",
-          url: `https://majlisilm.com/learning/quiz/${slug}`,
+          url: `https://www.ssunnah.com/learning/quiz/${slug}`,
           description: "اختبر فهمك لمحتوى المسار الشرعي بأسئلة اختيار من متعدد",
           educationalLevel: "متعدد المستويات",
           inLanguage: "ar",
@@ -232,7 +232,7 @@ export default function LearningQuizPage() {
         <h1 className="page-status-shell__title">نتيجة الاختبار</h1>
         <DoneScreen result={result} slug={slug} onRetry={loadQuiz} />
         <div className="twh-share">
-          <ShareButtons title="اختبار المسار التعليمي — سُنّة" url="https://majlisilm.com/learning/quiz" />
+          <ShareButtons title="اختبار المسار التعليمي — سُنّة" url="https://www.ssunnah.com/learning/quiz" />
         </div>
       </div>
     );
@@ -323,7 +323,7 @@ export default function LearningQuizPage() {
       </button>
 
       <div className="twh-share">
-        <ShareButtons title="اختبار المسار التعليمي — سُنّة" url="https://majlisilm.com/learning/quiz" />
+        <ShareButtons title="اختبار المسار التعليمي — سُنّة" url="https://www.ssunnah.com/learning/quiz" />
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ export default function FatwaPolicyPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "سياسة الفتوى والمراجعة",
-          url: "https://majlisilm.com/fatwa-policy",
+          url: "https://www.ssunnah.com/fatwa-policy",
           about: { "@type": "Organization", name: "سُنّة" },
         },
       ],
@@ -82,7 +82,7 @@ export default function FatwaPolicyPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="سياسة الفتوى والمراجعة — سُنّة" url="https://majlisilm.com/fatwa-policy" />
+        <ShareButtons title="سياسة الفتوى والمراجعة — سُنّة" url="https://www.ssunnah.com/fatwa-policy" />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

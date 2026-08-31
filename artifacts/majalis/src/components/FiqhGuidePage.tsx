@@ -42,7 +42,7 @@ export function FiqhGuidePage({ section }: Props) {
         <span className="fg-hero__badge">{section.badge}</span>
         <h1 className="fg-hero__title">{section.title}</h1>
         <p className="fg-hero__sub">{section.subtitle}</p>
-        <ShareButtons title={section.title} url={`https://majlisilm.com${section.path}`} />
+        <ShareButtons title={section.title} url={`https://www.ssunnah.com${section.path}`} />
       </header>
 
       {section.methodology && <p className="fg-method">{section.methodology}</p>}

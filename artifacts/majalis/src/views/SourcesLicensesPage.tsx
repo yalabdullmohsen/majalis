@@ -196,7 +196,7 @@ export default function SourcesLicensesPage() {
       <LegalBackLink />
       <ShareButtons
         title="المصادر والتراخيص — سُنّة"
-        url="https://majlisilm.com/sources"
+        url="https://www.ssunnah.com/sources"
       />
     </LegalPageLayout>
   );

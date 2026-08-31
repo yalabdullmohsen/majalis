@@ -4,5 +4,5 @@
 
 SUPABASE_URL = https:/$()/example.supabase.co
 SUPABASE_ANON_KEY =
-VERCEL_API_BASE_URL = https:/$()/example.com
+VERCEL_API_BASE_URL = https:/$()/www.ssunnah.com
 APP_ENVIRONMENT = debug

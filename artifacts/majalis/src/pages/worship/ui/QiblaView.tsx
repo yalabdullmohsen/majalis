@@ -194,7 +194,7 @@ export default function QiblaPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "اتجاه القبلة",
-          url: "https://majlisilm.com/qibla",
+          url: "https://www.ssunnah.com/qibla",
           about: { "@type": "Thing", name: "بوصلة القبلة للمسلمين" },
         },
       ],
@@ -389,7 +389,7 @@ export default function QiblaPage() {
 
       <RelatedKnowledge kind="fatwa" query="القبلة والصلاة" title="معرفة ذات صلة بالقبلة" limit={6} />
       <div className="twh-share">
-        <ShareButtons title="اتجاه القبلة — سُنّة" url="https://majlisilm.com/qibla" />
+        <ShareButtons title="اتجاه القبلة — سُنّة" url="https://www.ssunnah.com/qibla" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في أحكام القبلة والصلاة" count={4} />

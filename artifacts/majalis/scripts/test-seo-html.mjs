@@ -19,7 +19,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
 const PRE = resolve(appRoot, "seo-prerender");
 const seo = JSON.parse(readFileSync(resolve(appRoot, "src/lib/seo-routes.json"), "utf8"));
-const APPROVED_HOST = new URL(seo.siteUrl).host; // majlisilm.com
+const APPROVED_HOST = new URL(seo.siteUrl).host; // www.ssunnah.com from seo.siteUrl
 
 let passed = 0, failed = 0;
 const fail = (label) => { failed++; console.error(`  ✗ ${label}`); };

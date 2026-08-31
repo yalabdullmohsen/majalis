@@ -14,7 +14,7 @@ const site = JSON.parse(read("site.config.json"));
 const seo = JSON.parse(read("src/lib/seo-routes.json"));
 const siteUrl = site.siteUrl;
 
-assert.equal(siteUrl, "https://majlisilm.com", "canonical بلا www");
+assert.equal(siteUrl, "https://www.ssunnah.com", "canonical الحي www.ssunnah.com");
 assert.ok(String(site.defaultImage).startsWith("/brand/official-og.png"));
 assert.ok(String(site.logoImage).startsWith("/brand/official.png"));
 assert.equal(seo.defaultImage, site.defaultImage);
@@ -36,14 +36,14 @@ assert.equal(existsSync(resolve(root, "public/majlisilm-og-2026.jpg")), false, "
 const indexHtml = read("index.html");
 const og = indexHtml.match(/property="og:image"\s+content="([^"]+)"/)?.[1] || "";
 const tw = indexHtml.match(/name="twitter:image"\s+content="([^"]+)"/)?.[1] || "";
-assert.ok(/^https:\/\/majlisilm\.com\//.test(og), `og:image يجب absolute — وجد ${og}`);
-assert.ok(/^https:\/\/majlisilm\.com\//.test(tw), `twitter:image يجب absolute — وجد ${tw}`);
+assert.ok(/^https:\/\/www\.ssunnah\.com\//.test(og), `og:image يجب absolute — وجد ${og}`);
+assert.ok(/^https:\/\/www\.ssunnah\.com\//.test(tw), `twitter:image يجب absolute — وجد ${tw}`);
 assert.ok(og.includes("/brand/official-og.png"), "og:image = official-og");
 assert.ok(tw.includes("/brand/official-og.png"), "twitter:image = official-og");
 assert.match(indexHtml, /twitter:card" content="summary_large_image"/);
 assert.match(indexHtml, /og:image:width" content="1200"/);
 assert.match(indexHtml, /og:image:height" content="630"/);
-assert.match(indexHtml, /canonical" href="https:\/\/majlisilm\.com\/"/);
+assert.match(indexHtml, /canonical" href="https:\/\/www\.ssunnah\.com\/"/);
 assert.doesNotMatch(indexHtml, /majlisilm-og-2026/);
 
 for (const man of ["public/manifest.webmanifest", "public/manifest.json", "public/site.webmanifest"]) {

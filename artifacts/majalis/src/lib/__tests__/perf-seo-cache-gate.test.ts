@@ -11,6 +11,7 @@ const vercel = readFileSync(resolve(root, "vercel.json"), "utf8");
 const robots = readFileSync(resolve(root, "public/robots.txt"), "utf8");
 const sitemap = readFileSync(resolve(root, "public/sitemap.xml"), "utf8");
 const appSearch = readFileSync(resolve(root, "src/features/search/app-search.ts"), "utf8");
+const CANON = "https://www.ssunnah.com";
 
 assert.match(
   vercel,
@@ -22,11 +23,7 @@ assert.match(
   /"source"\s*:\s*"\/"[\s\S]{0,400}"Content-Type"[\s\S]{0,80}text\/html;\s*charset=utf-8/,
   "الرئيسية ترجع text/html; charset=utf-8",
 );
-assert.match(
-  vercel,
-  /charset=utf-8/,
-  "ترويسة charset لمسارات SPA",
-);
+assert.match(vercel, /charset=utf-8/, "ترويسة charset لمسارات SPA");
 assert.equal(
   /"source"\s*:\s*"\/"[\s\S]{0,220}no-store/.test(vercel),
   false,
@@ -34,11 +31,11 @@ assert.equal(
 );
 assert.match(robots, /Disallow:\s*\/search/);
 assert.match(robots, /Disallow:\s*\/admin/);
-assert.equal(/<loc>https:\/\/majlisilm\.com\/search<\/loc>/.test(sitemap), false);
-assert.match(sitemap, /<loc>https:\/\/majlisilm\.com\/hadith\/sahih<\/loc>/);
-assert.match(sitemap, /<loc>https:\/\/majlisilm\.com\/hadith\/daif<\/loc>/);
-assert.match(sitemap, /<loc>https:\/\/majlisilm\.com\/hadith\/books-and-rulings<\/loc>/);
-assert.match(sitemap, /<loc>https:\/\/majlisilm\.com\/hadith\/mawdu<\/loc>/);
+assert.equal(sitemap.includes(`<loc>${CANON}/search</loc>`), false);
+assert.match(sitemap, new RegExp(`<loc>${CANON.replace(/\./g, "\\.")}/hadith/sahih</loc>`));
+assert.match(sitemap, new RegExp(`<loc>${CANON.replace(/\./g, "\\.")}/hadith/daif</loc>`));
+assert.match(sitemap, new RegExp(`<loc>${CANON.replace(/\./g, "\\.")}/hadith/books-and-rulings</loc>`));
+assert.match(sitemap, new RegExp(`<loc>${CANON.replace(/\./g, "\\.")}/hadith/mawdu</loc>`));
 assert.match(appSearch, /export async function runAppSearch/);
 
 console.log("perf-seo-cache-gate.test.ts: ok");

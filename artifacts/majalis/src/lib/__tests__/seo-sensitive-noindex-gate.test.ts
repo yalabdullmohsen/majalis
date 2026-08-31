@@ -34,7 +34,7 @@ const MUST_NOT_SITEMAP = [
 for (const path of MUST_NOT_SITEMAP) {
   assert.doesNotMatch(
     sitemap,
-    new RegExp(`<loc>https://majlisilm\\.com${path.replace(/\//g, "\\/")}</loc>`),
+    new RegExp(`<loc>https://www\\.ssunnah\\.com${path.replace(/\//g, "\\/")}</loc>`),
     `sitemap بلا ${path}`,
   );
 }

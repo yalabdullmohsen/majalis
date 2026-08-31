@@ -245,10 +245,10 @@ export default function LearningPathDetailPage() {
           "@type": "LearningResource",
           name: path.title,
           description: path.description || undefined,
-          url: `https://majlisilm.com${path_}`,
+          url: `https://www.ssunnah.com${path_}`,
           learningResourceType: "مسار تعلّم",
-          provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
-          publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
+          publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
           inLanguage: "ar",
         },
         breadcrumbJsonLd([
@@ -441,7 +441,7 @@ export default function LearningPathDetailPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="تفاصيل المسار التعليمي — سُنّة" url="https://majlisilm.com/lessons" />
+        <ShareButtons title="تفاصيل المسار التعليمي — سُنّة" url="https://www.ssunnah.com/lessons" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/learning-paths" title="اختبر معلوماتك في العلوم الشرعية" count={4} />

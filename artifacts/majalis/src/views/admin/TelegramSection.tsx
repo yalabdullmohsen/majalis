@@ -190,7 +190,7 @@ function StatusTab() {
   const [data, setData] = useState<BotStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [acting, setActing] = useState<string | null>(null);
-  const [webhookUrl, setWebhookUrl] = useState("https://majlisilm.com/api/webhook/telegram");
+  const [webhookUrl, setWebhookUrl] = useState("https://www.ssunnah.com/api/webhook/telegram");
 
   const load = useCallback(async () => {
     setLoading(true);

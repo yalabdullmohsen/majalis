@@ -10,7 +10,9 @@
 			"ssunnah.com",
 			"majlisilm.com",
 			"www.majlisilm.com"
-		]
+		],
+		"url": "https://www.ssunnah.com",
+		"errorPath": "native-load-error.html"
 	},
 	"plugins": {
 		"SplashScreen": {

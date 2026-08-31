@@ -19,7 +19,7 @@ const distDir = resolve(appRoot, "dist");
 const prerenderDir = resolve(appRoot, "seo-prerender");
 
 const SITE = JSON.parse(await readFile(resolve(appRoot, "site.config.json"), "utf8"));
-const SITE_URL = SITE.siteUrl || "https://majlisilm.com";
+const SITE_URL = SITE.siteUrl || "https://www.ssunnah.com";
 const THEME_COLOR = SITE.themeColor || "#1F7A5A";
 const THEME_COLOR_DARK = SITE.themeColorDark || "#4FB48B";
 const PRERENDER_NAV =

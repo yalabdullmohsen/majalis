@@ -352,7 +352,7 @@ export default function AlamatSaahPage() {
             "@type": "ListItem",
             position: i + 1,
             name: a.title,
-            url: `https://majlisilm.com/alamat-saah#sughra-${i + 1}`,
+            url: `https://www.ssunnah.com/alamat-saah#sughra-${i + 1}`,
           })),
         },
       ],
@@ -531,7 +531,7 @@ export default function AlamatSaahPage() {
       </nav>
 
       <div className="twh-share">
-        <ShareButtons title="علامات الساعة، سُنّة" url="https://majlisilm.com/alamat-saah" />
+        <ShareButtons title="علامات الساعة، سُنّة" url="https://www.ssunnah.com/alamat-saah" />
       </div>
       <RelatedKnowledge kind="lesson" query="علامات الساعة" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-6">

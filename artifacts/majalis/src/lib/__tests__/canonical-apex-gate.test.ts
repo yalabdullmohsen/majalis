@@ -1,5 +1,5 @@
 /**
- * بوابة: canonical/sitemap/OG/روابط SEO على https://majlisilm.com (بلا www).
+ * بوابة: canonical/sitemap/OG على https://www.ssunnah.com (النطاق الحي بلا redirect).
  * تبويبات /lessons?tab= ممنوعة — تُحوَّل إلى /lessons (hash داخل التطبيق فقط).
  */
 import assert from "node:assert/strict";
@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const srcRoot = resolve(root, "src");
+const CANONICAL = "https://www.ssunnah.com";
 
 function walk(dir: string, acc: string[] = []): string[] {
   for (const name of readdirSync(dir)) {
@@ -20,26 +21,39 @@ function walk(dir: string, acc: string[] = []): string[] {
   return acc;
 }
 
-const allowWww = new Set([
+/** لا تُعتمد majlisilm.com كنطاق إنتاج في مصادر الواجهة بعد الترحيل */
+const allowLegacyHostMentions = new Set([
   resolve(srcRoot, "lib/site-config.ts"),
+  resolve(srcRoot, "lib/in-app-navigation.ts"),
+  resolve(srcRoot, "lib/capacitor-utils.ts"),
+  resolve(srcRoot, "lib/native-deep-link.ts"),
   resolve(srcRoot, "lib/__tests__/to-app-path.test.ts"),
   resolve(srcRoot, "lib/__tests__/ios-stability-audit.test.ts"),
+  resolve(srcRoot, "lib/__tests__/canonical-apex-gate.test.ts"),
   resolve(srcRoot, "lib/__tests__/religious-content-validator.test.ts"),
 ]);
 
 const offenders: string[] = [];
 for (const file of walk(srcRoot)) {
-  if (allowWww.has(file)) continue;
+  if (allowLegacyHostMentions.has(file)) continue;
   const text = readFileSync(file, "utf8");
-  if (/https:\/\/www\.majlisilm\.com/.test(text)) offenders.push(file.slice(root.length + 1));
+  // روابط إنتاج مطلقة على النطاق القديم — ممنوعة
+  if (/https:\/\/(?:www\.)?majlisilm\.com/.test(text)) {
+    offenders.push(file.slice(root.length + 1));
+  }
 }
-assert.equal(offenders.length, 0, `www في مصادر src:\n${offenders.join("\n")}`);
+assert.equal(offenders.length, 0, `majlisilm.com ما زال في مصادر src:\n${offenders.join("\n")}`);
 
 const vercel = readFileSync(resolve(root, "vercel.json"), "utf8");
 assert.match(
   vercel,
-  /"has"\s*:\s*\[\{\s*"type"\s*:\s*"host"\s*,\s*"value"\s*:\s*"www\.majlisilm\.com"\s*\}\][\s\S]*?"destination"\s*:\s*"https:\/\/majlisilm\.com/,
-  "vercel: 301 من www إلى apex",
+  /"has"\s*:\s*\[\{\s*"type"\s*:\s*"host"\s*,\s*"value"\s*:\s*"www\.majlisilm\.com"\s*\}\][\s\S]*?"destination"\s*:\s*"https:\/\/www\.ssunnah\.com/,
+  "vercel: تحويل www.majlisilm إلى www.ssunnah",
+);
+assert.match(
+  vercel,
+  /"Access-Control-Allow-Origin"[\s\S]*?"value"\s*:\s*"https:\/\/www\.ssunnah\.com"/,
+  "vercel: CORS على النطاق الحي",
 );
 assert.match(
   vercel,
@@ -75,16 +89,24 @@ assert.match(
 );
 
 const sitemap = readFileSync(resolve(root, "public/sitemap.xml"), "utf8");
-assert.equal(/https:\/\/www\.majlisilm\.com/.test(sitemap), false, "sitemap: بلا www");
-assert.match(sitemap, /<loc>https:\/\/majlisilm\.com\/lessons<\/loc>/);
+assert.equal(/https:\/\/(?:www\.)?majlisilm\.com/.test(sitemap), false, "sitemap: بلا majlisilm");
+assert.match(sitemap, new RegExp(`<loc>${CANONICAL.replace(/\./g, "\\.")}/lessons</loc>`));
 
 const siteConfig = readFileSync(resolve(root, "site.config.json"), "utf8");
-assert.match(siteConfig, /"siteUrl"\s*:\s*"https:\/\/majlisilm\.com"/);
+assert.match(siteConfig, /"siteUrl"\s*:\s*"https:\/\/www\.ssunnah\.com"/);
 
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
-assert.equal(/https:\/\/www\.majlisilm\.com/.test(indexHtml), false, "index.html: بلا www");
+assert.equal(/https:\/\/(?:www\.)?majlisilm\.com/.test(indexHtml), false, "index.html: بلا majlisilm");
+assert.match(indexHtml, /https:\/\/www\.ssunnah\.com/);
 
-const appTsx = readFileSync(resolve(srcRoot, "App.tsx"), "utf8") + "\n" + readFileSync(resolve(srcRoot, "AppRoutes.tsx"), "utf8");
+const appTsx =
+  readFileSync(resolve(srcRoot, "App.tsx"), "utf8") +
+  "\n" +
+  readFileSync(resolve(srcRoot, "AppRoutes.tsx"), "utf8");
 assert.equal(/\/lessons\?tab=/.test(appTsx), false, "App.tsx: بلا /lessons?tab=");
+
+const errorPage = readFileSync(resolve(root, "public/native-load-error.html"), "utf8");
+assert.match(errorPage, /https:\/\/www\.ssunnah\.com\//);
+assert.equal(/majlisilm\.com/.test(errorPage), false, "native-load-error: بلا majlisilm");
 
 console.log("canonical-apex-gate.test.ts: ok");

@@ -18,7 +18,7 @@ export default function HadithMawduPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "الأحاديث الموضوعة",
-          url: "https://majlisilm.com/hadith/mawdu",
+          url: "https://www.ssunnah.com/hadith/mawdu",
           description: "تعريف الموضوع مع أمثلة ومصادر للتحذير العلمي",
           about: { "@type": "Thing", name: "الأحاديث الموضوعة في علم مصطلح الحديث" },
         },
@@ -31,7 +31,7 @@ export default function HadithMawduPage() {
       <HadithClassGuide kind="mawdu" />
       <HadithSection authenticityClass="mawdu" />
       <div className="twh-share">
-        <ShareButtons title="الأحاديث الموضوعة — سُنّة" url="https://majlisilm.com/hadith/mawdu" />
+        <ShareButtons title="الأحاديث الموضوعة — سُنّة" url="https://www.ssunnah.com/hadith/mawdu" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />

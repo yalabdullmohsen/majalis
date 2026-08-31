@@ -17,8 +17,8 @@ export default function AboutUsPage() {
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "سُنّة",
-          url: "https://majlisilm.com",
-          logo: "https://majlisilm.com/brand/official.png?v=20260825",
+          url: "https://www.ssunnah.com",
+          logo: "https://www.ssunnah.com/brand/official.png?v=20260825",
           description: "منصة شرعية رقمية كويتية تجمع الدروس والأحكام الشرعية والقرآن والأذكار في مرجع موثوق",
           foundingDate: "2024",
           areaServed: { "@type": "Country", name: "الكويت" },
@@ -81,7 +81,7 @@ export default function AboutUsPage() {
       </LegalSection>
 
       <LegalBackLink />
-      <ShareButtons title="من نحن — سُنّة" url="https://majlisilm.com/about-us" />
+      <ShareButtons title="من نحن — سُنّة" url="https://www.ssunnah.com/about-us" />
     </LegalPageLayout>
   );
 }

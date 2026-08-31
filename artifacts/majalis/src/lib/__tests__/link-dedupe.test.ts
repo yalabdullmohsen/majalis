@@ -22,7 +22,7 @@ function assert(cond: boolean, label: string) {
 
 console.log("\n=== normalizeLinkHref ===");
 assert(normalizeLinkHref("/fiqh/") === "/fiqh", "يزيل الشرطة النهائية");
-assert(normalizeLinkHref("https://majlisilm.com/fiqh") === "/fiqh", "يُحوّل المطلق إلى مسار");
+assert(normalizeLinkHref("https://www.ssunnah.com/fiqh") === "/fiqh", "يُحوّل المطلق إلى مسار");
 assert(normalizeLinkHref("/lessons") === normalizeLinkHref("/lessons/"), "مساران متكافئان");
 
 console.log("\n=== dedupeLinksByHref ===");

@@ -184,7 +184,7 @@ export default function SiteMapPage() {
       path: "/sitemap",
       title: "أهم الأقسام | سُنّة",
       description: "دليل لأهم أقسام سُنّة: قرآن وحديث وفقه وعقيدة وسيرة وأدوات التعلم والخدمات.",
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "دليل أقسام سُنّة", url: "https://majlisilm.com/sitemap", about: { "@type": "WebSite", name: "سُنّة", url: "https://majlisilm.com" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "دليل أقسام سُنّة", url: "https://www.ssunnah.com/sitemap", about: { "@type": "WebSite", name: "سُنّة", url: "https://www.ssunnah.com" } }],
     });
   }, []);
 
@@ -224,7 +224,7 @@ export default function SiteMapPage() {
         ))}
       </main>
       <div className="twh-share">
-        <ShareButtons title="دليل أقسام سُنّة" url="https://majlisilm.com/sitemap" />
+        <ShareButtons title="دليل أقسام سُنّة" url="https://www.ssunnah.com/sitemap" />
       </div>
       <RelatedKnowledge kind="book" query="أقسام سُنّة" title="مواد للبدء" limit={6} />
       <div className="px-4 pb-6 mt-4">

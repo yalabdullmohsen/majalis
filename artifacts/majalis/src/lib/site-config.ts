@@ -8,8 +8,8 @@ export const SITE_NAME = config.siteName;
 export const SITE_SHORT_NAME = config.siteShortName;
 export const SITE_DESCRIPTION = config.siteDescription;
 export const SITE_URL = config.siteUrl;
-/** النطاق الأساسي للـ canonical/sitemap/OG — بلا www */
-export const CANONICAL_SITE_HOST = "majlisilm.com";
+/** النطاق الحي للـ canonical/sitemap/OG — www.ssunnah.com (بلا redirect) */
+export const CANONICAL_SITE_HOST = "www.ssunnah.com";
 export const TITLE_SUFFIX = config.titleSuffix;
 /** بريد التواصل الرسمي الوحيد للمنصة كاملةً — لا تكتب بريدًا آخر يدويًا في أي مكوّن. */
 export const CONTACT_EMAIL = config.contactEmail;
@@ -42,11 +42,17 @@ export function pageTitle(pageName?: string | null): string {
   return `${name}${TITLE_SUFFIX}`;
 }
 
-/** يحوّل أي رابط majlisilm (بما فيه www) إلى النطاق الأساسي بلا www. */
+/** يحوّل أي نطاق قديم/apex إلى الـ canonical الحي www.ssunnah.com. */
 export function normalizeCanonicalUrl(raw: string): string {
   try {
     const u = new URL(raw, SITE_URL);
-    if (u.hostname.toLowerCase() === `www.${CANONICAL_SITE_HOST}`) {
+    const host = u.hostname.toLowerCase();
+    if (
+      host === "ssunnah.com" ||
+      host === "www.ssunnah.com" ||
+      host === "majlisilm.com" ||
+      host === "www.majlisilm.com"
+    ) {
       u.hostname = CANONICAL_SITE_HOST;
     }
     if (u.pathname !== "/" && u.pathname.endsWith("/")) {
@@ -58,7 +64,7 @@ export function normalizeCanonicalUrl(raw: string): string {
   }
 }
 
-/** رابط مطلق على النطاق المعتمد (https://majlisilm.com — بلا www). */
+/** رابط مطلق على النطاق المعتمد (https://www.ssunnah.com). */
 export function absoluteUrl(path: string): string {
   if (/^https?:\/\//i.test(path)) return normalizeCanonicalUrl(path);
   return new URL(path || "/", SITE_URL).toString();
@@ -87,6 +93,8 @@ export function toAppPath(href: string, currentOrigin?: string): string | null {
   }
   const host = parsed.hostname.toLowerCase();
   const allowed = new Set<string>([
+    "www.ssunnah.com",
+    "ssunnah.com",
     "majlisilm.com",
     "www.majlisilm.com",
     ...((config.legacyOrigins || []) as string[]).map((o) => {
@@ -105,9 +113,6 @@ export function toAppPath(href: string, currentOrigin?: string): string | null {
     }
   }
   if (!allowed.has(host)) return null;
-  if (host === `www.${CANONICAL_SITE_HOST}`) {
-    parsed.hostname = CANONICAL_SITE_HOST;
-  }
   const path = `${parsed.pathname || "/"}${parsed.search}${parsed.hash}`;
   if (path.includes("..")) return null;
   return path;

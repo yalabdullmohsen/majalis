@@ -12,7 +12,7 @@ export default function TermsPage() {
       title: "شروط الاستخدام | سُنّة",
       description: "شروط وأحكام استخدام منصة سُنّة، اقرأها قبل استخدام الخدمات.",
       keywords: ["شروط الاستخدام", "سُنّة", "الاستخدام المقبول"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "شروط الاستخدام", url: "https://majlisilm.com/terms", about: { "@type": "Organization", name: "سُنّة" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "شروط الاستخدام", url: "https://www.ssunnah.com/terms", about: { "@type": "Organization", name: "سُنّة" } }],
     });
   }, []);
 
@@ -114,7 +114,7 @@ export default function TermsPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="شروط الاستخدام — سُنّة" url="https://majlisilm.com/terms" />
+        <ShareButtons title="شروط الاستخدام — سُنّة" url="https://www.ssunnah.com/terms" />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

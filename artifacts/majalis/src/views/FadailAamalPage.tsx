@@ -1043,7 +1043,7 @@ export default function FadailAamalPage() {
             "@type": "ListItem",
             position: i + 1,
             name: f.title,
-            url: `https://majlisilm.com/fadail-aamal#${f.id}`,
+            url: `https://www.ssunnah.com/fadail-aamal#${f.id}`,
           })),
         },
       ],
@@ -1144,7 +1144,7 @@ export default function FadailAamalPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="فضائل الأعمال — سُنّة" url="https://majlisilm.com/fadail-aamal" />
+          <ShareButtons title="فضائل الأعمال — سُنّة" url="https://www.ssunnah.com/fadail-aamal" />
         </div>
 
         {/* related */}

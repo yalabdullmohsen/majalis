@@ -128,7 +128,10 @@ const live = readFileSync(
   join(iosApp, "PrayerLiveActivity", "PrayerLiveActivityLiveActivity.swift"),
   "utf8",
 );
-ok(live.includes("https://majlisilm.com/prayer-times"), "Live Activity widgetURL uses https universal link");
+ok(
+  live.includes("https://www.ssunnah.com/prayer-times"),
+  "Live Activity widgetURL uses https universal link on www.ssunnah.com",
+);
 
 const entitlements = readFileSync(join(iosApp, "App", "App.entitlements"), "utf8");
 ok(entitlements.includes("applinks:majlisilm.com"), "associated domains applinks");
@@ -259,15 +262,26 @@ ok(existsSync(capJsonPath), "ios capacitor.config.json exists");
 const capJson = JSON.parse(readFileSync(capJsonPath, "utf8"));
 const capTs = readFileSync(join(root, "capacitor.config.ts"), "utf8");
 
-// بدون server.url البعيد — يمنع ارتداد تطبيق↔Safari مع Universal Links.
+// Production يحمّل الـ canonical الحي مباشرة (بلا 308 عبر majlisilm/apex).
 ok(
-  !capJson?.server?.url,
-  "capacitor.config.json must omit remote server.url (bundled webDir only)",
+  capJson?.server?.url === "https://www.ssunnah.com",
+  "capacitor.config.json server.url = https://www.ssunnah.com",
 );
 ok(
-  !/\burl:\s*"https:\/\/www\.ssunnah\.com"/.test(capTs) &&
-    !/\burl:\s*"https:\/\/majlisilm\.com"/.test(capTs),
-  "capacitor.config.ts must not set remote server.url",
+  /\burl:\s*"https:\/\/www\.ssunnah\.com"/.test(capTs),
+  "capacitor.config.ts server.url = https://www.ssunnah.com",
+);
+ok(
+  !/\burl:\s*"https:\/\/(www\.)?majlisilm\.com"/.test(capTs),
+  "capacitor.config.ts must not use majlisilm.com as server.url",
+);
+ok(
+  !/\burl:\s*"https:\/\/ssunnah\.com"/.test(capTs),
+  "capacitor.config.ts must not use apex ssunnah.com (308) as server.url",
+);
+ok(
+  /errorPath:\s*["']native-load-error\.html["']/.test(capTs),
+  "capacitor.config.ts errorPath = native-load-error.html",
 );
 ok(
   /allowNavigation:\s*\[/.test(capTs) || Array.isArray(capJson?.server?.allowNavigation),

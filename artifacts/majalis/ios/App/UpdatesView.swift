@@ -14,7 +14,7 @@ struct UpdatesView: View {
     @State private var loadError: String? = nil
 
     // رابط الـ API الخاص بموقعك
-    let apiURL = "https://majlisilm.com/api/updates"
+    let apiURL = "https://www.ssunnah.com/api/updates"
 
     var body: some View {
         NavigationStack {

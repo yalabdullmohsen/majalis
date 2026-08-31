@@ -233,10 +233,15 @@ async function searchQuranIndex(supabase, normQuery, limit) {
 const ALLOWED_ORIGINS = new Set(
   [
     process.env.SITE_ORIGIN,
-    "https://majlisilm.com", // siteUrl المعتمد
+    "https://www.ssunnah.com",
+    "https://ssunnah.com",
     "https://majlisilm.com",
-    "http://majlisilm.com",
-    "http://www.majlisilm.com",
+    "https://www.majlisilm.com",
+    "http://www.ssunnah.com",
+    "http://ssunnah.com",
+    "capacitor://localhost",
+    "http://localhost",
+    "https://localhost",
   ].filter(Boolean),
 );
 
@@ -246,7 +251,7 @@ function applyCors(req, res) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   } else {
     // نطاق افتراضي واحد — لا "*"
-    res.setHeader("Access-Control-Allow-Origin", "https://majlisilm.com");
+    res.setHeader("Access-Control-Allow-Origin", "https://www.ssunnah.com");
   }
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Vary", "Origin, Accept-Encoding");

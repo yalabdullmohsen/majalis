@@ -324,7 +324,7 @@ export default function ResearcherProfilePage() {
         </div>
       </div>
       <div className="twh-share">
-        <ShareButtons title="ملف الباحث الشرعي — سُنّة" url="https://majlisilm.com/researcher-profile" />
+        <ShareButtons title="ملف الباحث الشرعي — سُنّة" url="https://www.ssunnah.com/researcher-profile" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/research" title="اختبر معلوماتك في العلوم الشرعية" count={4} />

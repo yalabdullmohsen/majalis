@@ -71,7 +71,7 @@ export default function TopicPage() {
       robots: missing ? "noindex,follow" : undefined,
       jsonLd: missing
         ? []
-        : [{ "@context": "https://schema.org", "@type": "WebPage", name: topic?.title || "موضوع إسلامي", url: `https://majlisilm.com/topic/${topic?.slug || ""}`, about: { "@type": "Thing", name: topic?.title || "الموضوعات الإسلامية" } }],
+        : [{ "@context": "https://schema.org", "@type": "WebPage", name: topic?.title || "موضوع إسلامي", url: `https://www.ssunnah.com/topic/${topic?.slug || ""}`, about: { "@type": "Thing", name: topic?.title || "الموضوعات الإسلامية" } }],
     });
   }, [topic, slug]);
 
@@ -143,7 +143,7 @@ export default function TopicPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="موضوعات سُنّة" url="https://majlisilm.com/topics" />
+        <ShareButtons title="موضوعات سُنّة" url="https://www.ssunnah.com/topics" />
       </div>
       <RelatedKnowledge kind="lesson" query="موضوع علمي" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
