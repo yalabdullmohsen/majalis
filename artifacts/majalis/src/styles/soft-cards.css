@@ -101,3 +101,63 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.14),
     0 16px 36px rgba(0, 0, 0, 0.18);
 }
+
+/**
+ * قاعدة المنتج: لا عنوان/محتوى/زر عائم بلا إطار واضح.
+ * mj-framed = حاوية صلبة (خلفية + حد + نصف قطر البطاقة).
+ */
+.mj-framed,
+.m2030-band,
+.ds-empty,
+.lessons-empty-state,
+.search-empty-state,
+.kids-hub-intro {
+  border-radius: var(--radius-card, 24px);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, var(--mj-hairline, #d5ddd9));
+  background: color-mix(in srgb, var(--mj-surface, #fff) 92%, #eef4f1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 10px 22px -14px rgba(11, 32, 24, 0.18);
+  box-sizing: border-box;
+}
+
+html[data-theme="dark"] .mj-framed,
+html.dark .mj-framed,
+html[data-theme="dark"] .m2030-band,
+html.dark .m2030-band,
+html[data-theme="dark"] .ds-empty,
+html.dark .ds-empty,
+html[data-theme="dark"] .lessons-empty-state,
+html.dark .lessons-empty-state,
+html[data-theme="dark"] .search-empty-state,
+html.dark .search-empty-state,
+html[data-theme="dark"] .kids-hub-intro,
+html.dark .kids-hub-intro {
+  background: color-mix(in srgb, var(--mj-surface, #15201c) 88%, #0d1412);
+  border-color: color-mix(in srgb, var(--mj-brand, #4fb48b) 22%, rgba(255, 255, 255, 0.1));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+/* أزرار عائمة — إطار صلب دائمًا (لا border:none بلا بديل) */
+.global-back-btn,
+.floating-back-btn,
+.scroll-to-top,
+.assistant-fab {
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-radius: var(--radius-pill, 999px) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 8px 20px -10px rgba(11, 32, 24, 0.4) !important;
+}
+
+.scroll-to-top,
+.floating-back-btn--top {
+  border-color: color-mix(in srgb, var(--mj-brand-deep, #155a42) 35%, transparent) !important;
+}
+
+.assistant-fab {
+  border-color: rgba(31, 77, 58, 0.35) !important;
+}
