@@ -129,20 +129,20 @@ function buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody) {
     <meta name="color-scheme" content="light dark" />
     ${seoTags}
     <style>
-      #root{min-height:40vh}
+      #root{min-height:40vh;position:relative;z-index:1}
+      #seo-shell{position:relative;z-index:2;min-height:70vh;background:#F2F4F3}
+      html.dark #seo-shell,.dark #seo-shell{background:#101614}
       .js-ready #seo-shell{display:none!important}
     </style>
     ${spaAssets}
   </head>
   <body>
-    <!-- محتوى SEO مرئي للزواحف ولـ LCP حتى يركّب React -->
+    <!-- محتوى SEO فوق #root حتى يستقر LCP ثم يُزال بعد جاهزية React -->
     <div id="seo-shell">
       ${prerenderBody}
     </div>
-    <!-- جذر React — يُفعَّل بعد تشغيل JavaScript -->
     <div id="root"></div>
-    <!-- أخفِ/أزل الصدفة بعد أول رسم لـ #root — لا تسرق LCP من prerender -->
-    <script>(function(){function a(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove()}var r=document.getElementById('root');if(r&&r.hasChildNodes())a();else{var o=new MutationObserver(function(){if(r&&r.hasChildNodes()){o.disconnect();a()}});o.observe(r||document.documentElement,{childList:true,subtree:true});setTimeout(a,8000)}})()</script>
+    <script>(function(){function a(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove()}function arm(){setTimeout(a,3200)}var r=document.getElementById('root');if(r&&r.hasChildNodes())arm();else{var o=new MutationObserver(function(){if(r&&r.hasChildNodes()){o.disconnect();arm()}});o.observe(r||document.documentElement,{childList:true,subtree:true});setTimeout(a,9000)}})()</script>
   </body>
 </html>`;
 }
