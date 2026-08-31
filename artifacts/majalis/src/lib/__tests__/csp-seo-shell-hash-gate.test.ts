@@ -15,10 +15,13 @@ const vercel = readFileSync(resolve(root, "vercel.json"), "utf8");
 assert.match(post, /classList\.add\('js-ready'\)/, "سكربت js-ready في post-build-seo");
 assert.match(post, /getElementById\('seo-shell'\)/, "إزالة seo-shell");
 assert.match(post, /MutationObserver/, "تأجيل إزالة seo-shell حتى يركّب React");
+assert.match(post, /setTimeout\(a,\s*3200\)/, "نافذة LCP قبل إخفاء الصدفة");
+assert.match(post, /#seo-shell\{[^}]*position:\s*fixed/, "الصدفة غطاء ثابت بلا تضخيم ارتفاع الصفحة");
+assert.match(post, /#seo-shell\{[^}]*z-index:\s*2/, "الصدفة فوق #root حتى الإزالة");
 
 /** النص الحرفي كما يُحقن في HTML (داخل <script>…</script>) */
 const SCRIPT =
-  "(function(){function a(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove()}var r=document.getElementById('root');if(r&&r.hasChildNodes())a();else{var o=new MutationObserver(function(){if(r&&r.hasChildNodes()){o.disconnect();a()}});o.observe(r||document.documentElement,{childList:true,subtree:true});setTimeout(a,8000)}})()";
+  "(function(){function a(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove()}function arm(){setTimeout(a,3200)}var r=document.getElementById('root');if(r&&r.hasChildNodes())arm();else{var o=new MutationObserver(function(){if(r&&r.hasChildNodes()){o.disconnect();arm()}});o.observe(r||document.documentElement,{childList:true,subtree:true});setTimeout(a,9000)}})()";
 assert.ok(post.includes(`<script>${SCRIPT}</script>`), "نص السكربت ثابت بلا مسافات زائدة");
 assert.ok(SCRIPT.startsWith("(function"), "IIFE كامل بين وسمَي script");
 

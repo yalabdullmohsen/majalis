@@ -215,8 +215,9 @@ console.log("\n=== ١٠) البحث: ٥٠ عيّنة ===");
 console.log("\n=== البنية والواجهة ===");
 {
   const view = read("src/pages/fiqh/ui/FiqhView.tsx");
-  assert(view.includes("getFiqhLobby"), "خمس مجموعات من المصدر");
-  assert(view.includes('from "@/config/section-lobbies-fiqh"') || view.includes("section-lobbies-fiqh"), "لوبي فقه معزول عن اللوبيات المشتركة");
+  assert(view.includes("getFiqhLobby") || view.includes("section-lobbies-fiqh"), "خمس مجموعات من المصدر");
+  assert(view.includes('import("@/config/section-lobbies-fiqh")') || view.includes("section-lobbies-fiqh"), "لوبي فقه كسول/معزول");
+  assert(view.includes("FIQH_HUB_STATS") || view.includes("fiqh-hub-stats"), "بطل الفقه بلا fiqh-books متزامن");
   assert(view.includes("lobbyId=\"fiqh\""), "معرّف لوبي الفقه");
   assert(view.includes("title={lobby.title}"), "هيدر مختصر بلا فقرة طويلة");
   const bookView = read("src/pages/fiqh/ui/FiqhBookView.tsx");

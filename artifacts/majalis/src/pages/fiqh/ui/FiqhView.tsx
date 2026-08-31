@@ -1,18 +1,13 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Scale } from "lucide-react";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd, webPageJsonLd } from "@/lib/seo-structured-data";
 import { ShareButtons } from "@/components/ContentActions";
-import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
-import { getFiqhLobby } from "@/config/section-lobbies-fiqh";
-import {
-  fiqhBookCounts,
-  listPublishedLessons,
-  publishedBooks,
-} from "@/lib/fiqh-books";
+import type { LobbySpec } from "@/config/section-lobbies";
+import { FIQH_HUB_STATS } from "@/lib/fiqh-hub-stats";
 import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
 import "@/styles/components/safe-hero.css";
@@ -57,21 +52,47 @@ function FiqhLuxHero({
   );
 }
 
-export default function FiqhPage() {
-  const lobby = useMemo(() => getFiqhLobby(), []);
-  const stats = useMemo(() => {
-    const books = publishedBooks();
-    let chapters = 0;
-    for (const book of books) {
-      chapters += fiqhBookCounts(book).chapters;
-    }
-    return {
-      books: books.length,
-      chapters,
-      lessons: listPublishedLessons().length,
+function FiqhLobbyBody({ lobby }: { lobby: LobbySpec }) {
+  const [quiz, setQuiz] = useState<ReactNode>(null);
+  useEffect(() => {
+    let cancelled = false;
+    void import("@/components/ui/SectionQuiz").then((m) => {
+      if (!cancelled) {
+        setQuiz(<m.SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />);
+      }
+    });
+    return () => {
+      cancelled = true;
     };
   }, []);
 
+  return (
+    <SectionLobby
+      lobbyId="fiqh"
+      title={lobby.title}
+      chips={lobby.chips}
+      groups={lobby.groups}
+      className="fiqh-lux-page"
+    >
+      {quiz}
+      <div className="twh-share">
+        <ShareButtons title="الفقه الإسلامي — سُنّة" url="https://majlisilm.com/fiqh" />
+      </div>
+      <ExploreAlsoNav
+        title="استكشف أيضًا"
+        links={[
+          { href: "/hadith", label: "الحديث وعلومه" },
+          { href: "/lessons", label: "الدروس العلمية" },
+          { href: "/library", label: "المكتبة" },
+          { href: "/salah-guide", label: "دليل الصلاة" },
+        ]}
+      />
+    </SectionLobby>
+  );
+}
+
+export default function FiqhPage() {
+  const [lobby, setLobby] = useState<LobbySpec | null>(null);
   usePageView("fiqh", null);
 
   useEffect(() => {
@@ -95,34 +116,41 @@ export default function FiqhPage() {
     });
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    const run = () => {
+      void import("@/config/section-lobbies-fiqh").then((m) => {
+        if (!cancelled) setLobby(m.getFiqhLobby());
+      });
+    };
+    if (typeof requestIdleCallback === "function") {
+      const id = requestIdleCallback(run, { timeout: 1200 });
+      return () => {
+        cancelled = true;
+        cancelIdleCallback(id);
+      };
+    }
+    const t = window.setTimeout(run, 0);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+  }, []);
+
   return (
     <div className="fiqh-lux-shell" dir="rtl">
       <FiqhLuxHero
-        bookCount={stats.books}
-        chapterCount={stats.chapters}
-        lessonCount={stats.lessons}
+        bookCount={FIQH_HUB_STATS.books}
+        chapterCount={FIQH_HUB_STATS.chapters}
+        lessonCount={FIQH_HUB_STATS.lessons}
       />
-      <SectionLobby
-        lobbyId="fiqh"
-        title={lobby.title}
-        chips={lobby.chips}
-        groups={lobby.groups}
-        className="fiqh-lux-page"
-      >
-        <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
-        <div className="twh-share">
-          <ShareButtons title="الفقه الإسلامي — سُنّة" url="https://majlisilm.com/fiqh" />
+      {lobby ? (
+        <FiqhLobbyBody lobby={lobby} />
+      ) : (
+        <div className="fiqh-lux-page" aria-busy="true">
+          <p className="fiqh-lux-empty">جاري تجهيز أبواب الفقه…</p>
         </div>
-        <ExploreAlsoNav
-          title="استكشف أيضًا"
-          links={[
-            { href: "/hadith", label: "الحديث وعلومه" },
-            { href: "/lessons", label: "الدروس العلمية" },
-            { href: "/library", label: "المكتبة" },
-            { href: "/salah-guide", label: "دليل الصلاة" },
-          ]}
-        />
-      </SectionLobby>
+      )}
     </div>
   );
 }
