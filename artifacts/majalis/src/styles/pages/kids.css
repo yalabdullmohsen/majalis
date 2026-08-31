@@ -43,6 +43,34 @@
   color: var(--text-2);
   line-height: 1.55;
 }
+.kids-hub-soon__checklist {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0.85rem 1rem;
+  text-align: start;
+  border-radius: var(--radius-tile, 24px);
+  border: 1px solid color-mix(in srgb, var(--brand, var(--mj-brand)) 18%, transparent);
+  background: color-mix(in srgb, var(--bg, #fff) 88%, var(--brand-soft, #e8f0ec));
+}
+.kids-hub-soon__checklist li {
+  position: relative;
+  padding-inline-start: 1.1rem;
+  margin: 0.35rem 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--brand-deep, var(--mj-brand-deep));
+  line-height: 1.45;
+}
+.kids-hub-soon__checklist li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.45rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: var(--brand, var(--mj-brand));
+}
 .kids-hub-soon__actions {
   display: flex;
   flex-wrap: wrap;
@@ -55,7 +83,7 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.55rem 0.85rem;
-  border-radius: 10px;
+  border-radius: var(--radius-button, 18px);
   border: 1px solid color-mix(in srgb, var(--brand-deep, var(--mj-brand-deep)) 18%, transparent);
   background: var(--bg, #fff);
   color: var(--brand-deep, var(--mj-brand-deep));

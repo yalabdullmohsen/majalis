@@ -15,13 +15,13 @@ export default function KidsPage() {
       title: "ركن الأطفال | سُنّة",
       description: "ركن الأطفال في سُنّة — محتوى تعليمي ميسّر وآمن للصغار.",
       keywords: ["الأطفال", "تعليم الأطفال"],
-      robots: "noindex, follow",
+      robots: "noindex, nofollow",
     });
   }, []);
 
   return (
     <div className="kids-hub-page kids-hub-page--soon" dir="rtl">
-      <section className="kids-hub-intro kids-hub-soon" aria-labelledby="kids-soon-title">
+      <section className="kids-hub-intro kids-hub-soon soft-card soft-card--on-light mj-framed" aria-labelledby="kids-soon-title">
         <span className="kids-hub-soon__badge">تحت الإعداد</span>
         <Baby size={36} className="kids-hub-intro__icon" aria-hidden="true" />
         <h1 id="kids-soon-title" className="kids-hub-intro__title">ركن الأطفال</h1>
@@ -29,9 +29,14 @@ export default function KidsPage() {
           نجهّز ركنًا تعليميًا ميسّرًا وآمنًا للأطفال بمحتوى مخصّص —
           بلا مسائل خلافية وبأسلوب يناسب صغار السن.
         </p>
+        <ul className="kids-hub-soon__checklist" aria-label="ما سيُتضمَّن عند الإطلاق">
+          <li>قصص أنبياء بأسلوب ميسّر</li>
+          <li>آداب وأذكار يومية مناسبة للعمر</li>
+          <li>مسارات قصيرة بلا أحكام قطعية بلا مصدر</li>
+        </ul>
         <p className="kids-hub-soon__note">
           يمكنك الآن الاستفادة من الأقسام العامة للمنصة، وسيُفتح ركن الأطفال
-          الكامل عند اكتمال التجهيز.
+          الكامل عند اكتمال التجهيز والمراجعة.
         </p>
         <div className="kids-hub-soon__actions">
           <Link href="/quran-hub" className="kids-hub-soon__btn kids-hub-soon__btn--primary">

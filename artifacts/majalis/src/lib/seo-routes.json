@@ -2184,7 +2184,7 @@
       "sitemap": false,
       "changefreq": "monthly",
       "priority": 0.3,
-      "robots": "noindex, follow"
+      "robots": "noindex, nofollow"
     },
     {
       "path": "/mind-map",

@@ -448,7 +448,7 @@ export default function LessonDetailPage({
           </div>
         )}
 
-        <div className="lesson-detail-actions lesson-detail-actions--row">
+        <div className="lesson-detail-actions lesson-detail-actions--row lesson-detail-actions-panel">
           <AdminInlineEdit
             contentType="lesson"
             contentId={unified.id}
