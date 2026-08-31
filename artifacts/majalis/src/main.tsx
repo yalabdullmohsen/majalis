@@ -49,7 +49,15 @@ import "./styles/m2030/navigation.css";
 // m2030/pages.css + final-release.css — بعد load+idle (ليست حرجة لأول شاشة)
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
-import "./styles/dark-mode-surfaces.css";
+// dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
+{
+  const bootDark =
+    document.documentElement.classList.contains("dark") ||
+    document.documentElement.dataset.theme === "dark";
+  if (bootDark) {
+    void import("./styles/dark-mode-surfaces.css");
+  }
+}
 
 // Lighthouse/Playwright: أزل أي SW قديم يتحكم بالصفحة قبل القياس
 if (
@@ -82,6 +90,12 @@ function loadNonCriticalCss() {
   void import("./styles/m2030/interactions.css");
   void import("./styles/m2030/pages.css");
   void import("./styles/final-release.css");
+  const isDark =
+    document.documentElement.classList.contains("dark") ||
+    document.documentElement.dataset.theme === "dark";
+  if (!isDark) {
+    void import("./styles/dark-mode-surfaces.css");
+  }
 }
 function scheduleNonCriticalCss() {
   scheduleOnIdle(loadNonCriticalCss, 2500);

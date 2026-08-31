@@ -27,6 +27,13 @@ export function ThemePreferenceProvider({ children }: { children: ReactNode }) {
     setResolvedTheme(resolveTheme(preference));
   }, [preference]);
 
+  // طبقات الوضع الداكن — تُحمَّل عند الحاجة حتى لا تُضخَّم CSS الحرج للوضع الفاتح
+  useEffect(() => {
+    if (resolvedTheme === "dark") {
+      void import("@/styles/dark-mode-surfaces.css");
+    }
+  }, [resolvedTheme]);
+
   // شريط الحالة يتبع PageChrome للمسار الحالي + الوضع المحلول
   useEffect(() => {
     void reapplyPageChromeFromLocation(resolvedTheme);

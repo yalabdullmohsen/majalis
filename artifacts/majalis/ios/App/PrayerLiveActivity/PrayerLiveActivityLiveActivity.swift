@@ -2,7 +2,7 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-/// ألوان هوية المجلس العلمي — أخضر زمردي داكن، تُطابق التدرّج المستخدم في
+/// ألوان هوية سُنّة — أخضر زمردي داكن، تُطابق التدرّج المستخدم في
 /// شريط تنبيه الصلاة داخل التطبيق (index.css / elite-2026.css §193b).
 private enum MajalisColor {
     static let emeraldDeep = Color(red: 0x0B / 255, green: 0x4D / 255, blue: 0x35 / 255)

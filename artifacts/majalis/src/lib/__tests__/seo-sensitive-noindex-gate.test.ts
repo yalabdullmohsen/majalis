@@ -49,11 +49,16 @@ for (const path of [
   assert.match(robots, new RegExp(`Disallow:\\s*${path.replace(/\//g, "\\/")}`));
 }
 
-for (const path of ["/academic-research", "/fiqh-council/research", "/register", "/quran/recitation-test-ai"]) {
+for (const path of ["/academic-research", "/fiqh-council/research", "/register", "/quran/recitation-test-ai", "/search", "/login", "/dashboard"]) {
   const row = routes.routes.find((r) => r.path === path);
   assert.ok(row, `seo-routes: ${path}`);
   assert.equal(row!.sitemap, false, `${path} خارج sitemap`);
   assert.match(String(row!.robots || ""), /noindex/i, `${path} noindex`);
+}
+
+for (const path of ["/search", "/login", "/register", "/dashboard"]) {
+  const row = routes.routes.find((r) => r.path === path)!;
+  assert.match(String(row.robots || ""), /nofollow/i, `${path} nofollow`);
 }
 
 assert.match(trust, /genetic-testing-ancestry-ruling/);

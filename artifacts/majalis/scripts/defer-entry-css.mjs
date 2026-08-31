@@ -1,9 +1,11 @@
 /**
  * يحوّل <link rel="stylesheet"> الحاجب في HTML المُنتَج إلى تحميل غير حاجب
- * (media="print" + onload) ويحقن CSS حجز CLS للشاشة الأولى.
+ * (media="print" + script مُجزّأ بلا onload مضمّن — متوافق مع CSP بدون unsafe-hashes)
+ * ويحقن CSS حجز CLS للشاشة الأولى.
  *
  * يُستورد من vite.config.ts ويُختبر مباشرة دون بناء.
  */
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -11,6 +13,14 @@ import { fileURLToPath } from "node:url";
 const appRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const CRITICAL_PATH = resolve(appRoot, "src/styles/critical-first-paint.css");
 export const INLINE_CSS_BUDGET = 14 * 1024;
+
+/** نص السكربت حرفياً — أي تغيير يتطلب تحديث hash في vercel.json CSP */
+export const DEFER_CSS_BOOT_SCRIPT =
+  "(function(){document.querySelectorAll('link[data-mj-css-defer]').forEach(function(l){function a(){l.media='all';l.removeAttribute('data-mj-css-defer')}if(l.sheet)a();else l.addEventListener('load',a);});})();";
+
+export function deferCssBootScriptSha256() {
+  return createHash("sha256").update(DEFER_CSS_BOOT_SCRIPT, "utf8").digest("base64");
+}
 
 export function minifyCss(css) {
   return css
@@ -25,25 +35,52 @@ export function readCriticalCss() {
 }
 
 /**
- * أي stylesheet بلا media (أو media=all) يصبح print+onload.
+ * أي stylesheet بلا media (أو media=all) يصبح print + data-mj-css-defer.
  * لا يُمسّ preload/modulepreload ولا ما له media غير all.
  */
 export function deferStylesheets(html) {
-  return html.replace(/<link\b[^>]*>/gi, (tag) => {
+  let changed = false;
+  const next = html.replace(/<link\b[^>]*>/gi, (tag) => {
     if (!/\brel\s*=\s*["']stylesheet["']/i.test(tag)) return tag;
-    if (/\bonload\s*=/i.test(tag)) return tag;
+    if (/\bdata-mj-css-defer\b/i.test(tag)) return tag;
+
+    // ترحيل نمط onload القديم → data-attribute
+    if (/\bonload\s*=/i.test(tag)) {
+      changed = true;
+      const cleaned = tag
+        .replace(/\s*\/\s*>$/, "")
+        .replace(/\s+onload\s*=\s*["'][^"']*["']/i, "")
+        .replace(/>$/, "")
+        .trimEnd();
+      const withMedia = /\bmedia\s*=/i.test(cleaned)
+        ? cleaned
+        : `${cleaned} media="print"`;
+      const deferred = /\bdata-mj-css-defer\b/i.test(withMedia)
+        ? `${withMedia}>`
+        : `${withMedia} data-mj-css-defer>`;
+      const noscriptTag = `${cleaned
+        .replace(/\s+media\s*=\s*["'][^"']*["']/i, "")
+        .trimEnd()}>`;
+      return `${deferred}<noscript>${noscriptTag}</noscript>`;
+    }
+
     const media = tag.match(/\bmedia\s*=\s*["']([^"']+)["']/i);
     if (media && media[1].trim().toLowerCase() !== "all") return tag;
 
+    changed = true;
     const withoutMedia = tag
       .replace(/\s*\/\s*>$/, "")
       .replace(/\s+media\s*=\s*["'][^"']*["']/i, "")
       .replace(/>$/, "")
       .trimEnd();
-    const deferred = `${withoutMedia} media="print" onload="this.onload=null;this.media='all'">`;
+    const deferred = `${withoutMedia} media="print" data-mj-css-defer>`;
     const noscriptInner = `${withoutMedia}>`;
     return `${deferred}<noscript>${noscriptInner}</noscript>`;
   });
+
+  if (!changed || next.includes('id="data-mj-css-boot"')) return next;
+  const boot = `<script id="data-mj-css-boot">${DEFER_CSS_BOOT_SCRIPT}</script>`;
+  return next.replace(/<\/head>/i, `    ${boot}\n  </head>`);
 }
 
 export function injectCriticalReserve(html, css = readCriticalCss()) {
