@@ -18,12 +18,13 @@ export function prefetchTopRoutesOnIdle(): void {
   };
   const start = () => {
     if (typeof window.requestIdleCallback === "function") {
-      window.requestIdleCallback(run, { timeout: 2_000 });
+      window.requestIdleCallback(run, { timeout: 8_000 });
     } else {
-      window.setTimeout(run, 1_500);
+      window.setTimeout(run, 4_000);
     }
   };
-  const afterLoad = () => window.setTimeout(start, 10_000);
+  // بعد LCP بكثير — لا تنافس TBT في نافذة القياس
+  const afterLoad = () => window.setTimeout(start, 25_000);
   if (document.readyState === "complete") afterLoad();
   else window.addEventListener("load", afterLoad, { once: true });
 }
