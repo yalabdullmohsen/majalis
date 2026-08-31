@@ -43,6 +43,14 @@ check(
   "universal link www host",
 );
 check(
+  resolveNativeDeepLinkPath("https://www.ssunnah.com/mushaf") === "/mushaf",
+  "universal link www.ssunnah.com",
+);
+check(
+  resolveNativeDeepLinkPath("https://ssunnah.com/prayer-times") === "/prayer-times",
+  "universal link ssunnah.com apex",
+);
+check(
   resolveNativeDeepLinkPath("https://majlisilm.com/lessons/abc?x=1#y") === "/lessons/abc?x=1#y",
   "https keeps search+hash",
 );

@@ -3,9 +3,13 @@
   "siteName": "سُنّة",
   "siteShortName": "سُنّة",
   "siteDescription": "تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة.",
-  "$domainNote": "النطاق المعتمد هو المجرّد (بلا www) منذ 2026-07-22 — الخادم يحوّل www إليه بـ308 (Vercel Primary Domain غُيِّر من طرف المالك مباشرة بعد حلقة إعادة توجيه لا نهائية كانت تُعطِّل كل مسار غير الرئيسية). للعودة لـwww: اعكس القيم هنا وفي لوحة Vercel معًا، ثم أعد البناء.",
+  "$domainNote": "الإنتاج الحي يُخدم من https://www.ssunnah.com (200). majlisilm.com وssunnah.com وwww.majlisilm.com يحوّلان إليه بـ308 من لوحة Vercel Domains. siteUrl يبقى majlisilm.com للـSEO/canonical إلى حين ترحيل sitemap كامل؛ التطبيق الأصلي يحمّل www.ssunnah.com مباشرة بلا redirect.",
   "siteUrl": "https://majlisilm.com",
   "legacyOrigins": [
+    "https://www.ssunnah.com",
+    "https://ssunnah.com",
+    "http://www.ssunnah.com",
+    "http://ssunnah.com",
     "https://www.majlisilm.com",
     "http://majlisilm.com",
     "http://www.majlisilm.com"

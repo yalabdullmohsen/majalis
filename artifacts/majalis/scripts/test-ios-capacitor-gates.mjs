@@ -256,8 +256,8 @@ ok(!appDelegate.includes("allWebsiteDataTypes"), "AppDelegate does not wipe loca
 const capJsonPath = join(iosApp, "App", "capacitor.config.json");
 ok(existsSync(capJsonPath), "ios capacitor.config.json exists");
 const capJson = JSON.parse(readFileSync(capJsonPath, "utf8"));
-// Canonical apex — www.majlisilm.com 308-redirects to majlisilm.com.
-const LIVE_SERVER_URLS = new Set(["https://majlisilm.com", "https://majlisilm.com"]);
+// Live host must return 200 without redirect (majlisilm/ssunnah apex → 308 to www.ssunnah.com).
+const LIVE_SERVER_URLS = new Set(["https://www.ssunnah.com"]);
 const FORBIDDEN_SERVER_URL_RE =
   /localhost|127\.0\.0\.1|0\.0\.0\.0|:\d{2,5}|vercel\.app|netlify\.app|cloudfront\.net|ngrok|localtunnel/i;
 ok(LIVE_SERVER_URLS.has(capJson?.server?.url), "capacitor.config.json server.url is live site");
