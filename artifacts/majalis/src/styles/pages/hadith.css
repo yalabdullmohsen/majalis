@@ -273,7 +273,8 @@
   align-items: center;
   justify-content: center;
   padding: var(--ds-space-4);
-  backdrop-filter: blur(2px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 .hadith-modal {
   background: var(--majalis-surface, #fff);

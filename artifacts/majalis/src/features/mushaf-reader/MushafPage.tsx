@@ -1,4 +1,4 @@
-import { memo, useMemo, useRef, useState, type CSSProperties } from "react";
+import { memo, useMemo, useRef, type CSSProperties } from "react";
 import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
 import { toArabicIndicDigits as toArabicDigits, toArabicPageDigits } from "@/lib/numerals";
 import { MushafSurahBanner } from "./MushafSurahBanner";
@@ -64,7 +64,6 @@ export const MushafPage = memo(function MushafPage({
   onPageNumberPress,
 }: Props) {
   const bodyRef = useRef<HTMLDivElement | null>(null);
-  const [bodyEl, setBodyEl] = useState<HTMLElement | null>(null);
 
   const isOpeningP1 = layout.pageNumber === 1;
   const isLeadP2 = layout.pageNumber === 2;
@@ -119,14 +118,11 @@ export const MushafPage = memo(function MushafPage({
 
       <div className="nm-page__stage" data-testid="mushaf-page-frame">
         <div
-          ref={(node) => {
-            bodyRef.current = node;
-            setBodyEl(node);
-          }}
+          ref={bodyRef}
           className="nm-page__body"
           data-layout="pageBody"
         >
-          <AyahSelectionOverlay container={bodyEl} enabled={selectionEnabled} />
+          <AyahSelectionOverlay containerRef={bodyRef} enabled={selectionEnabled} />
           {slotOrder.map((slot) => {
             const cell = slots.get(slot);
             return (

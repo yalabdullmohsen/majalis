@@ -38,9 +38,15 @@ type Opts = {
   onPageChange: (page: number) => void;
   disabled?: boolean;
   onTapEmpty?: () => void;
+  /** قبل commit صفحة (لوحة مفاتيح/حافة) */
   onNavigateStart?: () => void;
+  /** بداية سحب أفقي — بلا setState ثقيل */
+  onPanStart?: () => void;
+  /** بعد انتهاء حركة القلب أو الرجوع دون تغيير صفحة */
+  onPagerSettled?: () => void;
   ignoreSelector: string;
   shellRef: RefObject<HTMLElement | null>;
+  panRootRef?: RefObject<HTMLElement | null>;
 };
 
 function prefersReducedMotion(): boolean {
@@ -60,8 +66,11 @@ export function useMushafPager({
   disabled = false,
   onTapEmpty,
   onNavigateStart,
+  onPanStart,
+  onPagerSettled,
   ignoreSelector,
   shellRef,
+  panRootRef,
 }: Opts): MushafPagerApi {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -89,7 +98,18 @@ export function useMushafPager({
     track.style.transform = `translate3d(${x}px, 0, 0)`;
   }, []);
 
-  const baseX = useCallback(() => -measureWidth(), [measureWidth]);
+  const cachedWidth = useCallback(() => {
+    if (widthRef.current > 0) return widthRef.current;
+    return measureWidth();
+  }, [measureWidth]);
+
+  const baseX = useCallback(() => -cachedWidth(), [cachedWidth]);
+
+  const endPanVisual = useCallback(() => {
+    panning.current = false;
+    scrollerRef.current?.classList.remove("is-panning");
+    panRootRef?.current?.removeAttribute("data-panning");
+  }, [panRootRef]);
 
   const resetToCurrent = useCallback(
     (animate: boolean) => {
@@ -151,6 +171,8 @@ export function useMushafPager({
       const commit = pendingCommit.current;
       if (commit == null) {
         locking.current = false;
+        endPanVisual();
+        onPagerSettled?.();
         return;
       }
       pendingCommit.current = null;
@@ -159,7 +181,7 @@ export function useMushafPager({
     };
     track.addEventListener("transitionend", onEnd);
     return () => track.removeEventListener("transitionend", onEnd);
-  }, [go, resetToCurrent]);
+  }, [endPanVisual, go, onPagerSettled, resetToCurrent]);
 
   const onPointerDown = (e: ReactPointerEvent) => {
     if (disabled || locking.current) {
@@ -173,7 +195,7 @@ export function useMushafPager({
     }
     panning.current = false;
     dragDx.current = 0;
-    measureWidth();
+    if (widthRef.current <= 0) measureWidth();
     setTrackX(baseX(), false);
     touchRef.current = { x: e.clientX, y: e.clientY, t: Date.now() };
     try {
@@ -192,12 +214,13 @@ export function useMushafPager({
       if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
         panning.current = true;
         scrollerRef.current?.classList.add("is-panning");
-        onNavigateStart?.();
+        panRootRef?.current?.setAttribute("data-panning", "1");
+        onPanStart?.();
       } else {
         return;
       }
     }
-    const w = widthRef.current || measureWidth();
+    const w = cachedWidth();
     const pageNow = pageRef.current;
     let clamped = dx;
     if (pageNow >= MUSHAF_PAGE_MAX && dx > 0) clamped = dx * 0.25;
@@ -221,7 +244,7 @@ export function useMushafPager({
     const horizontal = Math.abs(dx) > Math.abs(dy);
     const passSwipe = horizontal && Math.abs(dx) >= SWIPE_MIN_PX;
     const passFlick = horizontal && speed >= FLICK_PX_PER_MS && Math.abs(dx) >= SWIPE_MIN_PX * 0.7;
-    const w = widthRef.current || measureWidth();
+    const w = cachedWidth();
     const pageNow = pageRef.current;
 
     if (panning.current && (passSwipe || passFlick)) {
@@ -284,7 +307,7 @@ export function useMushafPager({
       )
     ) {
       touchRef.current = null;
-      scrollerRef.current?.classList.remove("is-panning");
+      endPanVisual();
       return;
     }
     finishGesture(e);
@@ -292,12 +315,11 @@ export function useMushafPager({
 
   const onPointerCancel = () => {
     touchRef.current = null;
-    scrollerRef.current?.classList.remove("is-panning");
     if (panning.current) {
       locking.current = true;
       resetToCurrent(true);
     }
-    panning.current = false;
+    endPanVisual();
   };
 
   return {

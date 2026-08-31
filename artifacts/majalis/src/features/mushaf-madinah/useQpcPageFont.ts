@@ -62,8 +62,19 @@ function loadFace(pageNumber: number): Promise<boolean> {
     });
 }
 
+type QpcFontOpts = {
+  /** صفحات الجوار فقط من القارئ المركزي — لا تُكرّر ±١ لكل لوحة prefetch */
+  prefetchNeighbors?: boolean;
+  /** تحميل p1 مرة واحدة للبسملة */
+  bootstrapPage1?: boolean;
+};
+
 /** يحمّل خط QPC V2 الخاص بالصفحة (`/fonts/qpc-v2/pN.woff2`) ويُحمّل مسبقاً ±١. */
-export function useQpcPageFont(pageNumber: number): { fontFamily: string; ready: boolean } {
+export function useQpcPageFont(
+  pageNumber: number,
+  options: QpcFontOpts = {},
+): { fontFamily: string; ready: boolean } {
+  const { prefetchNeighbors = true, bootstrapPage1 = false } = options;
   const fontFamily = fontFamilyName(pageNumber);
   const [ready, setReady] = useState(() => loaded.has(pageNumber));
 
@@ -74,16 +85,17 @@ export function useQpcPageFont(pageNumber: number): { fontFamily: string; ready:
       if (!cancelled && ok) setReady(true);
     });
     const saver = getPowerSaverState();
-    if (saver.mode !== "aggressive") {
+    if (prefetchNeighbors && saver.mode !== "aggressive") {
       void loadFace(pageNumber - 1);
       void loadFace(pageNumber + 1);
     }
-    /* بسملة المطلع تستخدم دائماً محارف الصفحة ١ → جهّز الخط مسبقاً */
-    void loadFace(1);
+    if (bootstrapPage1 && pageNumber !== 1 && !loaded.has(1)) {
+      void loadFace(1);
+    }
     return () => {
       cancelled = true;
     };
-  }, [pageNumber]);
+  }, [bootstrapPage1, pageNumber, prefetchNeighbors]);
 
   return { fontFamily: `"${fontFamily}"`, ready };
 }

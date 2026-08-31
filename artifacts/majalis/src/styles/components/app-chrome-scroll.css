@@ -1,10 +1,12 @@
 /**
- * إخفاء كروم الجوال عند التمرير للأسفل — transform فقط دون إخفاء عبر display.
+ * إخفاء كروم الجوال عند التمرير للأسفل — transform + opacity فقط (بلا display/height أثناء الحركة).
  * أصناف: .bottom-nav--hidden / .bottom-nav--visible و .app-chrome-hidden
  */
 
 :root {
   --app-bg: var(--surface-app, var(--mj-bg));
+  --chrome-motion-ms: 200ms;
+  --chrome-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
   /* 100% ارتفاع الشريط + safe-area حتى يختفي تمامًا تحت الشاشة */
   --bottom-nav-hide-shift: calc(100% + var(--inset-bottom, 0px));
 }
@@ -43,8 +45,13 @@ html:not(.pts-immersive) body {
     position: sticky;
     top: 0;
     z-index: var(--z-nav, 200);
-    transition: transform 220ms ease, opacity 220ms ease;
-    will-change: transform;
+    max-height: 160px;
+    overflow: hidden;
+    transition:
+      transform var(--chrome-motion-ms) var(--chrome-motion-ease),
+      opacity var(--chrome-motion-ms) var(--chrome-motion-ease),
+      max-height var(--chrome-motion-ms) var(--chrome-motion-ease);
+    will-change: transform, opacity;
     background: var(--app-bg) !important;
   }
 
@@ -63,7 +70,7 @@ html:not(.pts-immersive) body {
   .bottom-nav.bottom-nav--visible,
   .bottom-nav.bottom-nav--hidden {
     /* إخفاء بـ transform فقط — ممنوع opacity/blur يمرّر المحتوى خلف الشريط */
-    transition: transform 220ms ease;
+    transition: transform var(--chrome-motion-ms) var(--chrome-motion-ease);
     will-change: transform;
     pointer-events: auto;
     transform: translateY(0);
@@ -92,20 +99,20 @@ html:not(.pts-immersive) body {
   .app-shell.app-chrome-hidden .app-top-chrome {
     transform: translateY(-100%);
     opacity: 0;
+    max-height: 0;
     pointer-events: none;
-    /* انهيار الحجز في التدفق — transform وحده يترك فراغًا بمنتصف الشاشة */
-    height: 0 !important;
-    min-height: 0 !important;
-    max-height: 0 !important;
-    overflow: hidden !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    flex: 0 0 0 !important;
+    margin: 0;
+    padding: 0;
+    border: none;
+    flex: 0 0 0;
   }
 
-  .app-main {
-    transition: none;
+  #main-content.app-main {
+    transition: padding-block-end var(--chrome-motion-ms) var(--chrome-motion-ease);
+  }
+
+  .app-shell.app-chrome-hidden #main-content.app-main {
+    padding-block-end: calc(var(--inset-bottom, 0px) + 16px);
   }
 
   html:not(.pts-immersive) .app-shell.app-chrome-hidden {
@@ -119,7 +126,8 @@ html:not(.pts-immersive) body {
   .bottom-nav--v2.mj-chrome-scrollable,
   .bottom-nav.bottom-nav--visible,
   .bottom-nav.bottom-nav--hidden,
-  .app-main {
+  .app-top-chrome,
+  #main-content.app-main {
     transition-duration: 0.01ms !important;
   }
 }

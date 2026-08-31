@@ -4,6 +4,7 @@ import {
   Suspense,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -99,7 +100,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const [audioError, setAudioError] = useState<string | null>(null);
   const [audioStatus, setAudioStatus] = useState<string | null>(null);
 
-  const { fontFamily, ready: fontReady } = useQpcPageFont(page);
+  const { fontFamily, ready: fontReady } = useQpcPageFont(page, { bootstrapPage1: true });
   const { canMountPage, allowOffscreenPrefetch } = useMushafResourceGate(
     fontReady,
     Boolean(layout) && !error,
@@ -258,6 +259,18 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
 
   const [pagerSettled, setPagerSettled] = useState(true);
 
+  const handleNavigateStart = useCallback(() => {
+    setPagerSettled(false);
+  }, []);
+
+  const handlePanStart = useCallback(() => {
+    setChromeOpen(false);
+  }, []);
+
+  const handlePagerSettled = useCallback(() => {
+    setPagerSettled(true);
+  }, []);
+
   const go = useCallback(
     (next: number) => {
       suppressPageSyncRef.current = false;
@@ -267,9 +280,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     [onPageChange],
   );
 
-  useEffect(() => {
-    const id = window.requestAnimationFrame(() => setPagerSettled(true));
-    return () => window.cancelAnimationFrame(id);
+  useLayoutEffect(() => {
+    setPagerSettled(true);
   }, [page]);
 
   const versePreview = useCallback(
@@ -424,6 +436,12 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const mediaPlaying =
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const edgesDisabled = actionsOpen || tafsirOpen || searchOpen || indexOpen;
+  const onPageNumberPress = useCallback(() => {
+    setGotoOpen(true);
+    setChromeOpen(false);
+    setActionsOpen(false);
+  }, []);
+
   const audioDockVisible =
     audioDockOpen &&
     (chromeOpen ||
@@ -438,10 +456,9 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       page={page}
       onPageChange={go}
       disabled={edgesDisabled}
-      onNavigateStart={() => {
-        setChromeOpen(false);
-        setPagerSettled(false);
-      }}
+      onNavigateStart={handleNavigateStart}
+      onPanStart={handlePanStart}
+      onPagerSettled={handlePagerSettled}
       ignoreSelector=".nm-controls, .nm-verse-menu, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
       onTapEmpty={() => {
         if (actionsOpen) {
@@ -463,38 +480,25 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       dir="rtl"
       nextPage={
         allowOffscreenPrefetch && page < MUSHAF_PAGE_MAX ? (
-          <PrefetchPage pageNumber={page + 1} />
+          <AdjacentPrefetchPage pageNumber={page + 1} />
         ) : undefined
       }
       prevPage={
-        allowOffscreenPrefetch && page > 1 ? <PrefetchPage pageNumber={page - 1} /> : undefined
+        allowOffscreenPrefetch && page > 1 ? (
+          <AdjacentPrefetchPage pageNumber={page - 1} />
+        ) : undefined
       }
       pageSlot={
-        <div className="nm-shell mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
-          {error ? <div className="nm-status">{error}</div> : null}
-          {!error && !canMountPage ? (
-            <div
-              className="nm-page-placeholder"
-              role="status"
-              aria-label="سُنّة"
-              aria-busy="true"
-            />
-          ) : null}
-          {canMountPage && layout ? (
-            <MushafPage
-              layout={layout}
-              fontFamily={fontFamily}
-              displayPageNumber={page}
-              onSelectVerse={onSelectVerse}
-              selectionEnabled={pagerSettled}
-              onPageNumberPress={() => {
-                setGotoOpen(true);
-                setChromeOpen(false);
-                setActionsOpen(false);
-              }}
-            />
-          ) : null}
-        </div>
+        <CurrentMushafPageSlot
+          error={error}
+          canMountPage={canMountPage}
+          layout={layout}
+          fontFamily={fontFamily}
+          page={page}
+          selectionEnabled={pagerSettled}
+          onSelectVerse={onSelectVerse}
+          onPageNumberPress={onPageNumberPress}
+        />
       }
     >
       <MediaBridge
@@ -621,11 +625,50 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   );
 }
 
-const PrefetchPage = memo(function PrefetchPage({ pageNumber }: { pageNumber: number }) {
+const CurrentMushafPageSlot = memo(function CurrentMushafPageSlot({
+  error,
+  canMountPage,
+  layout,
+  fontFamily,
+  page,
+  selectionEnabled,
+  onSelectVerse,
+  onPageNumberPress,
+}: {
+  error: string | null;
+  canMountPage: boolean;
+  layout: MushafPageLayout | null;
+  fontFamily: string;
+  page: number;
+  selectionEnabled: boolean;
+  onSelectVerse: (verseKey: string) => void;
+  onPageNumberPress: () => void;
+}) {
+  return (
+    <div className="nm-shell mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
+      {error ? <div className="nm-status">{error}</div> : null}
+      {!error && !canMountPage ? (
+        <div className="nm-page-placeholder" role="status" aria-label="سُنّة" aria-busy="true" />
+      ) : null}
+      {canMountPage && layout ? (
+        <MushafPage
+          layout={layout}
+          fontFamily={fontFamily}
+          displayPageNumber={page}
+          onSelectVerse={onSelectVerse}
+          selectionEnabled={selectionEnabled}
+          onPageNumberPress={onPageNumberPress}
+        />
+      ) : null}
+    </div>
+  );
+});
+
+const AdjacentPrefetchPage = memo(function AdjacentPrefetchPage({ pageNumber }: { pageNumber: number }) {
   const [layout, setLayout] = useState<MushafPageLayout | null>(() =>
     getCachedMushafPage(pageNumber),
   );
-  const { fontFamily, ready } = useQpcPageFont(pageNumber);
+  const { fontFamily, ready } = useQpcPageFont(pageNumber, { prefetchNeighbors: false });
 
   useEffect(() => {
     let cancelled = false;

@@ -627,6 +627,22 @@
   pointer-events: auto;
 }
 
+.nm-root[data-panning="1"] .nm-controls {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.nm-root[data-panning="1"] .nm-verse-menu {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nm-pager-scroller.is-panning .mm-pager-track,
+.nm-pager-scroller.is-panning .nm-pager-track {
+  will-change: transform;
+}
+
 .nm-verse-menu {
   position: absolute;
   inset-inline: 0;

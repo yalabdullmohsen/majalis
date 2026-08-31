@@ -1,4 +1,4 @@
-import { memo, useLayoutEffect, useRef, useState } from "react";
+import { memo, useLayoutEffect, useRef, useState, type RefObject } from "react";
 import { clearTextMeasureCache, getCachedTextBands, type TextBand } from "@/lib/text-layout-geometry";
 import {
   useMushafAyahPlayingKey,
@@ -6,7 +6,7 @@ import {
 } from "@/features/mushaf-madinah/mushaf-ayah-sync-store";
 
 type Props = {
-  container: HTMLElement | null;
+  containerRef: RefObject<HTMLElement | null>;
   /** لا تقيس أثناء السحب/الانتقال */
   enabled?: boolean;
 };
@@ -61,7 +61,7 @@ function collectBands(root: HTMLElement, verseKey: string): TextBand[] {
  * تحديد آية كاملة بشرائط سطرية متصلة — بلا خلفية على كل كلمة.
  */
 export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
-  container,
+  containerRef,
   enabled = true,
 }: Props) {
   const selectedKey = useMushafAyahSelectedKey();
@@ -71,6 +71,7 @@ export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
   const rafRef = useRef<number | null>(null);
 
   useLayoutEffect(() => {
+    const container = containerRef.current;
     if (!container || !enabled) {
       setSelected([]);
       setPlaying([]);
@@ -103,13 +104,14 @@ export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
       ro?.disconnect();
       window.removeEventListener("resize", schedule);
     };
-  }, [container, enabled, playingKey, selectedKey]);
+  }, [containerRef, enabled, playingKey, selectedKey]);
 
   useLayoutEffect(() => {
+    const container = containerRef.current;
     return () => {
       if (!container) clearTextMeasureCache();
     };
-  }, [container]);
+  }, [containerRef, enabled]);
 
   if (!selected.length && !playing.length) return null;
 

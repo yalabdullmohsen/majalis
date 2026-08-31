@@ -30,7 +30,11 @@ assert.match(newReader, /prefetchMushafPage/);
 assert.match(newReader, /playAyah/);
 assert.match(newReader, /MushafTafsirSheet/);
 assert.match(newReader, /saveReciterId|loadReciterId/);
-assert.match(newReader, /allowOffscreenPrefetch/);
+assert.match(newReader, /AdjacentPrefetchPage|PrefetchPage/);
+assert.match(newReader, /onPageNumberPress = useCallback/);
+assert.match(newReader, /handlePanStart|onPanStart/);
+assert.match(newReader, /CurrentMushafPageSlot/);
+assert.doesNotMatch(newReader, /requestAnimationFrame\(\(\) => setPagerSettled\(true\)\)/);
 
 assert.match(pageView, /MushafVerseLayer/);
 assert.match(pageView, /bismillahPre === true/);

@@ -27,7 +27,7 @@ assert.match(bar, /bottom-nav--visible/);
 assert.match(bar, /isHidden/);
 
 assert.match(css, /bottom-nav--hidden/);
-assert.match(css, /220ms ease/);
+assert.match(css, /cubic-bezier\(0\.22,\s*1,\s*0\.36,\s*1\)/);
 assert.match(css, /translateY\(var\(--bottom-nav-hide-shift\)\)/);
 assert.match(css, /pointer-events:\s*none/);
 assert.match(css, /prefers-reduced-motion/);
