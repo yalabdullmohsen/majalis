@@ -85,6 +85,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const [layout, setLayout] = useState<MushafPageLayout | null>(() => getCachedMushafPage(page));
   const [error, setError] = useState<string | null>(null);
   const [chromeOpen, setChromeOpen] = useState(false);
+  const [gotoOpen, setGotoOpen] = useState(false);
   const [selectedVerseKey, setSelectedVerseKey] = useState<string | null>(null);
   const [actionsOpen, setActionsOpen] = useState(false);
   const [tafsirOpen, setTafsirOpen] = useState(false);
@@ -486,6 +487,11 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
               displayPageNumber={page}
               onSelectVerse={onSelectVerse}
               selectionEnabled={pagerSettled}
+              onPageNumberPress={() => {
+                setGotoOpen(true);
+                setChromeOpen(false);
+                setActionsOpen(false);
+              }}
             />
           ) : null}
         </div>
@@ -543,17 +549,25 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       </Suspense>
 
       <MushafControlsLayer
-        chromeOpen={chromeOpen && !actionsOpen}
+        chromeOpen={chromeOpen && !actionsOpen && !gotoOpen}
         pageNumber={page}
+        gotoOpen={gotoOpen}
+        onGotoOpenChange={setGotoOpen}
+        onGoto={(n) => {
+          go(n);
+          setGotoOpen(false);
+        }}
         onExit={onExit}
         onIndex={() => {
           setIndexOpen(true);
           setSearchOpen(false);
+          setGotoOpen(false);
           bumpChrome();
         }}
         onSearch={() => {
           setSearchOpen(true);
           setIndexOpen(false);
+          setGotoOpen(false);
           bumpChrome();
         }}
       />

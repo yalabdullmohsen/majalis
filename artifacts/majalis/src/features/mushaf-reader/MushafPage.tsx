@@ -12,6 +12,8 @@ type Props = {
   onSelectVerse?: (verseKey: string) => void;
   /** قياس التحديد بعد استقرار القلب فقط */
   selectionEnabled?: boolean;
+  /** فتح انتقال الصفحة عند الضغط على رقم الصفحة */
+  onPageNumberPress?: () => void;
 };
 
 type SlotCell =
@@ -59,6 +61,7 @@ export const MushafPage = memo(function MushafPage({
   displayPageNumber,
   onSelectVerse,
   selectionEnabled = true,
+  onPageNumberPress,
 }: Props) {
   const bodyRef = useRef<HTMLDivElement | null>(null);
   const [bodyEl, setBodyEl] = useState<HTMLElement | null>(null);
@@ -167,7 +170,24 @@ export const MushafPage = memo(function MushafPage({
         style={{ height: "var(--mushaf-footer-height, 32px)", minHeight: "var(--mushaf-footer-height, 32px)" }}
       >
         <span className="nm-page__footer-hizb">{hizbLabel}</span>
-        <span className="nm-page__footer-num">{toArabicPageDigits(footerPage)}</span>
+        <button
+          type="button"
+          className="nm-page__footer-num"
+          data-testid="mushaf-page-number"
+          disabled={!onPageNumberPress}
+          aria-label={
+            onPageNumberPress
+              ? `الصفحة ${footerPage} — انتقال إلى صفحة`
+              : `الصفحة ${footerPage}`
+          }
+          onClick={(e) => {
+            e.stopPropagation();
+            onPageNumberPress?.();
+          }}
+          onPointerDown={(e) => e.stopPropagation()}
+        >
+          {toArabicPageDigits(footerPage)}
+        </button>
         <span className="nm-page__footer-spacer" aria-hidden="true" />
       </footer>
     </article>

@@ -325,13 +325,18 @@
   transition: none;
 }
 
-/* التحديد البصري عبر AyahSelectionOverlay فقط — بلا خلفية كلمة بكلمة */
+/* التحديد البصري عبر AyahSelectionOverlay + تغميق خفيف للحبر */
 .nm-word.is-selected,
 .nm-word.is-playing,
 .nm-basmala.is-selected,
 .nm-basmala.is-playing {
   background: transparent;
   box-shadow: none;
+}
+
+.nm-word.is-selected,
+.nm-basmala.is-selected {
+  color: color-mix(in srgb, var(--nm-ink) 68%, #1a1208);
 }
 
 .nm-word:focus-visible {
@@ -352,15 +357,15 @@
   position: absolute;
   pointer-events: none;
   border-radius: 8px;
-  background: rgba(147, 121, 82, 0.14);
+  background: rgba(120, 92, 48, 0.22);
 }
 
 .nm-ayah-sel__band--playing {
-  background: rgba(147, 121, 82, 0.1);
+  background: rgba(147, 121, 82, 0.16);
 }
 
 .nm-ayah-sel__band--selected {
-  background: rgba(147, 121, 82, 0.14);
+  background: rgba(110, 82, 40, 0.3);
 }
 
 /* رقم آية — دائرة نصية بسيطة ثابتة الحجم بلا رفع للسطر */
@@ -409,7 +414,7 @@
   background: transparent;
 }
 
-/* ذيل بسيط — رقم صفحة كنص فقط */
+/* ذيل — رقم الصفحة قابل للنقر لفتح الانتقال */
 .nm-page__footer {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -428,17 +433,35 @@
 
 .nm-page__footer-num {
   justify-self: center;
-  display: inline;
-  min-width: 0;
-  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.4rem;
+  min-height: 1.75rem;
+  margin: 0;
+  padding: 0.15rem 0.45rem;
   border: 0;
-  border-radius: 0;
+  border-radius: 0.4rem;
   background: transparent;
   box-shadow: none;
+  font: inherit;
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--nm-meta);
   position: static;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
+  appearance: none;
+}
+
+.nm-page__footer-num:disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+.nm-page__footer-num:not(:disabled):active {
+  background: color-mix(in srgb, var(--nm-gold) 14%, transparent);
 }
 
 .nm-page__footer-num::before,
@@ -497,6 +520,99 @@
 
 .nm-controls__btn:active {
   background: color-mix(in srgb, var(--nm-gold) 18%, var(--nm-paper));
+}
+
+.nm-controls__page {
+  pointer-events: auto;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--nm-meta);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  min-height: 2.2rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.45rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nm-controls__page:active {
+  background: color-mix(in srgb, var(--nm-gold) 14%, transparent);
+}
+
+.nm-goto {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  z-index: 60;
+  transform: translate(-50%, -50%);
+  width: min(18rem, calc(100% - 2rem));
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--nm-gold) 45%, transparent);
+  border-radius: 0.75rem;
+  background: var(--nm-paper);
+  color: var(--nm-ink);
+  box-shadow: 0 12px 32px color-mix(in srgb, #000 18%, transparent);
+  pointer-events: auto;
+  font-family: inherit;
+}
+
+.nm-goto__title {
+  margin: 0;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--nm-meta);
+}
+
+.nm-goto input {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--nm-gold) 45%, #ccc);
+  border-radius: 0.45rem;
+  padding: 0.55rem;
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: center;
+  direction: ltr;
+  background: color-mix(in srgb, var(--nm-paper) 90%, #fff);
+  color: var(--nm-ink);
+}
+
+.nm-goto__error {
+  margin: 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #8b2e2e;
+}
+
+.nm-goto__actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.nm-goto__actions button {
+  flex: 1;
+  border: 0;
+  border-radius: 0.45rem;
+  min-height: 2.35rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nm-goto__actions button[data-primary="1"] {
+  background: color-mix(in srgb, var(--nm-gold) 55%, var(--nm-paper));
+  color: var(--nm-ink);
+}
+
+.nm-goto__actions button[data-primary="0"] {
+  background: color-mix(in srgb, var(--nm-paper) 88%, #000 6%);
+  color: var(--nm-meta);
 }
 
 .nm-controls__exit {
