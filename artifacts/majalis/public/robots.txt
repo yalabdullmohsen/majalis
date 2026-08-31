@@ -23,6 +23,7 @@ Disallow: /register
 Disallow: /auth/
 Disallow: /vault
 Disallow: /api/
+Disallow: /search
 Disallow: /search/
 Disallow: /quran/recitation-test-ai
 Disallow: /fiqh-council/research-assistant
