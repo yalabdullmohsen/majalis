@@ -135,9 +135,30 @@ export function buildScheduledPrayerNotificationCopy(opts: {
     };
   }
   return {
-    title: `تذكير ${name}`,
-    body: `هل أديت صلاة ${name}؟ (${clock})`,
+    title: `وقت الصلاة`,
+    body: pickPrayerRespectPostBody(name, clock),
   };
+}
+
+const POST_RESPECT_BODIES = [
+  (name: string) => `أغلق الجوال وقت صلاة ${name} أو اجعله على الصامت.`,
+  (name: string) => `لا تنسَ وضع الصامت أثناء صلاة ${name}.`,
+  (name: string, clock: string) => `إن كنت تصلّي ${name} (${clock}) أبقِ الجوال صامتًا.`,
+  (name: string) => `احفظ خشوع صلاة ${name}: صامت أو إغلاق للجوال.`,
+];
+
+function pickPrayerRespectPostBody(name: string, clock: string): string {
+  try {
+    const map = loadIndexMap();
+    const prev = map["post-respect"] ?? -1;
+    const next = (prev + 1) % POST_RESPECT_BODIES.length;
+    map["post-respect"] = next;
+    saveIndexMap(map);
+    const fn = POST_RESPECT_BODIES[next] ?? POST_RESPECT_BODIES[0]!;
+    return fn(name, clock);
+  } catch {
+    return `لا تنسَ وضع الصامت وقت صلاة ${name}.`;
+  }
 }
 
 /**

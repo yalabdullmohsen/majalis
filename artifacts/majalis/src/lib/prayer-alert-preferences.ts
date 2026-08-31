@@ -15,8 +15,8 @@ export const PRE_ALERT_MINUTES = 15;
 export const PRE_ALERT_MINUTE_OPTIONS = [0, 5, 10, 15, 30] as const;
 export type PreAlertMinutes = (typeof PRE_ALERT_MINUTE_OPTIONS)[number];
 
-/** دقائق بعد دخول الوقت لإشعار التذكير الخفيف. */
-export const POST_REMINDER_MINUTES = 5;
+/** دقائق بعد دخول الوقت لإشعار التذكير باحترام الصلاة (صامت/إغلاق الجوال). */
+export const POST_REMINDER_MINUTES = 10;
 
 /** مدة بقاء Live Activity بعد دخول وقت الصلاة قبل إنهائها تلقائياً. */
 export const LIVE_ACTIVITY_LINGER_MINUTES = 5;
@@ -58,7 +58,7 @@ function defaultPrefs(): PrayerAlertPreferences {
     preAlertEnabled: true,
     preAlertMinutes: PRE_ALERT_MINUTES,
     enterAlertEnabled: true,
-    postReminderEnabled: false,
+    postReminderEnabled: true,
     soundProfile: "auto",
     liveActivitiesEnabled: true,
   };
@@ -148,29 +148,35 @@ export function dismissBannerFor(prayerKey: string): void {
 }
 
 /**
- * تذكير "احترام وقت الصلاة" (ضع هاتفك على الصامت) — مرة واحدة فقط لكل صلاة
- * فعلياً، وليس لكل تبويب/جلسة فقط: نستخدم localStorage (لا sessionStorage)
- * كي لا يتكرر التنبيه إن أُغلق التطبيق وأُعيد فتحه ضمن نفس نافذة الصلاة
- * (مثلاً: فُتح مرتين خلال الـ١٥ دقيقة قبل الظهر). المفتاح المخزَّن هو
- * "تاريخ_مفتاحالصلاة" بتوقيت الكويت — يُعاد تلقائياً لصلاة جديدة غدًا لأن
- * التاريخ يختلف، بلا حاجة لتنظيف يدوي.
+ * إغلاق يدوي لتذكير احترام الصلاة — يبقى مخفيًا لنفس الصلاة حتى الغد
+ * (مفتاح تاريخ الكويت + مفتاح الصلاة). الظهور التلقائي يعتمد على نافذة
+ * الأذان → +١٠ دقائق عبر العدّ التنازلي، لا على «عُرض مرة واحدة».
  */
-const RESPECT_REMINDER_KEY = "majalis-prayer-respect-reminder-shown-v1";
+const RESPECT_DISMISSED_KEY = "majalis-prayer-respect-dismissed-v1";
 
 function kuwaitDateKeyForReminder(date = new Date()): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kuwait" }).format(date);
 }
 
-export function hasShownRespectReminder(prayerKey: string): boolean {
+export function isRespectReminderDismissed(prayerKey: string): boolean {
   try {
-    return localStorage.getItem(RESPECT_REMINDER_KEY) === `${kuwaitDateKeyForReminder()}_${prayerKey}`;
+    return localStorage.getItem(RESPECT_DISMISSED_KEY) === `${kuwaitDateKeyForReminder()}_${prayerKey}`;
   } catch {
     return false;
   }
 }
 
-export function markRespectReminderShown(prayerKey: string): void {
+export function dismissRespectReminder(prayerKey: string): void {
   try {
-    localStorage.setItem(RESPECT_REMINDER_KEY, `${kuwaitDateKeyForReminder()}_${prayerKey}`);
+    localStorage.setItem(RESPECT_DISMISSED_KEY, `${kuwaitDateKeyForReminder()}_${prayerKey}`);
   } catch { /* تجاهل */ }
+}
+
+/** توافق مع الاستدعاءات القديمة — يعامل «عُرض» كإغلاق يدوي لنفس المفتاح. */
+export function hasShownRespectReminder(prayerKey: string): boolean {
+  return isRespectReminderDismissed(prayerKey);
+}
+
+export function markRespectReminderShown(prayerKey: string): void {
+  dismissRespectReminder(prayerKey);
 }

@@ -1,61 +1,124 @@
 import { useEffect, useState } from "react";
 import { VolumeX, X } from "lucide-react";
+import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
+import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-events";
 import { PRAYER_ALERT_EVENT_NAME, type PrayerAlertEvent } from "@/lib/prayer-alert-events";
 import {
+  isRespectReminderDismissed,
+  dismissRespectReminder,
   loadPrayerAlertPrefs,
-  hasShownRespectReminder,
-  markRespectReminderShown,
 } from "@/lib/prayer-alert-preferences";
+import {
+  isWithinPrayerRespectWindow,
+  pickPrayerRespectMessage,
+  type PrayerRespectMessage,
+} from "@/lib/prayer-respect-nudge";
 
-const RESPECT_MESSAGE = "اقتربت الصلاة، ضع هاتفك على الصامت وأغلقه حتى لا تُشغِل المصلين";
-
-/** نافذة "خلال ١٠ دقائق قبل الصلاة" — أضيق من نافذة الـ١٥ دقيقة العامة
- * للمنسّق (prayer-alert-scheduler.ts)، خصيصًا لهذا التذكير الأدبي فقط، بلا
- * أي مؤقّت جديد موازٍ: نُصفّي حدث "pre-alert" الموجود فعلاً بفارق الوقت
- * الفعلي المتبقّي حتى الصلاة (من event.prayerTimeEpochMs)، فلا نعرض
- * التذكير إلا حين يتبقّى ١٠ دقائق أو أقل. */
-const RESPECT_WINDOW_MINUTES = 10;
+function respectNudgeEnabled(): boolean {
+  const prefs = loadPrayerAlertPrefs();
+  return prefs.alertsEnabled && prefs.postReminderEnabled;
+}
 
 /**
- * شريط تذكير "احترام وقت الصلاة" — يبني فوق منسّق التنبيه الموجود فعلاً
- * (prayer-alert-scheduler.ts) بدل نظام موازٍ: يستمع لحدثه العام
- * (PRAYER_ALERT_EVENT_NAME) الذي كان يُطلَق فعلاً بلا أي مستهلك واجهة —
- * Live Activity والإشعار المحلي فقط كانا يستفيدان منه. مرة واحدة فقط لكل
- * صلاة فعليًا (راجع hasShownRespectReminder — localStorage لا sessionStorage).
+ * شريط تذكير احترام وقت الصلاة — ظاهر من الأذان حتى ١٠ دقائق بعده
+ * (ما لم يغلقه المستخدم لتلك الصلاة). يعتمد العدّ التنازلي المشترك
+ * ويستمع أيضًا لأحداث الأذان/دخول الوقت للظهور فورًا.
  */
 export function PrayerRespectBanner() {
-  const [visible, setVisible] = useState(false);
+  const { countdown } = useSharedPrayerCountdown();
+  const [forcedKey, setForcedKey] = useState<string | null>(null);
+  const [forcedAt, setForcedAt] = useState<number | null>(null);
+  const [nowMs, setNowMs] = useState(() => Date.now());
+  const [prefsOn, setPrefsOn] = useState(() => respectNudgeEnabled());
+  const [message, setMessage] = useState<PrayerRespectMessage>(() =>
+    pickPrayerRespectMessage("Fajr", 0),
+  );
 
   useEffect(() => {
-    const handler = (e: Event) => {
+    const refresh = () => setPrefsOn(respectNudgeEnabled());
+    window.addEventListener("majalis:prayer-alert-prefs-changed", refresh);
+    return () => window.removeEventListener("majalis:prayer-alert-prefs-changed", refresh);
+  }, []);
+
+  const sinceFromCountdown = countdown?.sinceSeconds ?? null;
+  const keyFromCountdown =
+    sinceFromCountdown != null && countdown?.next?.key ? countdown.next.key : null;
+
+  const sinceForced =
+    forcedKey && forcedAt != null
+      ? Math.max(0, Math.floor((nowMs - forcedAt) / 1000))
+      : null;
+
+  const activeKey =
+    sinceFromCountdown != null && keyFromCountdown
+      ? keyFromCountdown
+      : sinceForced != null && isWithinPrayerRespectWindow(sinceForced)
+        ? forcedKey
+        : null;
+
+  const sinceSeconds =
+    activeKey && keyFromCountdown === activeKey && sinceFromCountdown != null
+      ? sinceFromCountdown
+      : activeKey && forcedKey === activeKey && sinceForced != null
+        ? sinceForced
+        : null;
+
+  const inWindow = isWithinPrayerRespectWindow(sinceSeconds);
+  const dismissed = activeKey ? isRespectReminderDismissed(activeKey) : true;
+  const visible = Boolean(prefsOn && activeKey && inWindow && !dismissed);
+
+  useEffect(() => {
+    const onPrayerAlert = (e: Event) => {
       const detail = (e as CustomEvent<PrayerAlertEvent>).detail;
-      if (!detail) return;
-
-      const prefs = loadPrayerAlertPrefs();
-      if (detail.type === "pre-alert") {
-        if (!prefs.preAlertEnabled) return;
-        const minutesLeft = (detail.prayerTimeEpochMs - Date.now()) / 60_000;
-        if (minutesLeft > RESPECT_WINDOW_MINUTES) return; // بعيد عن نافذة الـ١٠ دقائق بعد
-      } else if (detail.type === "entered") {
-        // "أثناء الأذان" — دخول الوقت فعليًا، حسب تفضيل "تنبيه دخول الوقت".
-        if (!prefs.enterAlertEnabled) return;
-      }
-
-      if (hasShownRespectReminder(detail.prayerKey)) return;
-      markRespectReminderShown(detail.prayerKey);
-      setVisible(true);
+      if (!detail || detail.type !== "entered") return;
+      if (!respectNudgeEnabled()) return;
+      if (isRespectReminderDismissed(detail.prayerKey)) return;
+      setForcedKey(detail.prayerKey);
+      setForcedAt(detail.prayerTimeEpochMs || Date.now());
+      setNowMs(Date.now());
     };
-    window.addEventListener(PRAYER_ALERT_EVENT_NAME, handler);
-    return () => window.removeEventListener(PRAYER_ALERT_EVENT_NAME, handler);
+    const onAdhan = (e: Event) => {
+      const detail = (e as CustomEvent<AdhanEvent>).detail;
+      if (!detail || detail.type !== "adhan") return;
+      if (!respectNudgeEnabled()) return;
+      if (isRespectReminderDismissed(detail.prayerKey)) return;
+      setForcedKey(detail.prayerKey);
+      setForcedAt(Date.now());
+      setNowMs(Date.now());
+    };
+    window.addEventListener(PRAYER_ALERT_EVENT_NAME, onPrayerAlert);
+    window.addEventListener(ADHAN_EVENT_NAME, onAdhan);
+    return () => {
+      window.removeEventListener(PRAYER_ALERT_EVENT_NAME, onPrayerAlert);
+      window.removeEventListener(ADHAN_EVENT_NAME, onAdhan);
+    };
   }, []);
 
   useEffect(() => {
-    if (!visible) return;
-    const t = setTimeout(() => setVisible(false), 12_000);
-    return () => clearTimeout(t);
-  }, [visible]);
+    if (!forcedKey || forcedAt == null) return;
+    if (sinceFromCountdown != null && keyFromCountdown === forcedKey) {
+      setForcedKey(null);
+      setForcedAt(null);
+      return;
+    }
+    const id = window.setInterval(() => setNowMs(Date.now()), 1000);
+    return () => window.clearInterval(id);
+  }, [forcedKey, forcedAt, sinceFromCountdown, keyFromCountdown]);
 
-  if (!visible) return null;
+  useEffect(() => {
+    if (forcedKey && sinceForced != null && !isWithinPrayerRespectWindow(sinceForced)) {
+      setForcedKey(null);
+      setForcedAt(null);
+    }
+  }, [forcedKey, sinceForced]);
+
+  useEffect(() => {
+    if (!visible || !activeKey || sinceSeconds == null) return;
+    const dayKey = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kuwait" }).format(new Date());
+    setMessage(pickPrayerRespectMessage(activeKey, sinceSeconds, dayKey));
+  }, [visible, activeKey, sinceSeconds]);
+
+  if (!visible || !activeKey) return null;
 
   return (
     <div className="anb-stack" role="region" aria-label="تذكير احترام وقت الصلاة" aria-live="polite">
@@ -64,13 +127,17 @@ export function PrayerRespectBanner() {
           <VolumeX size={22} strokeWidth={2} />
         </span>
         <div className="anb-toast__body">
-          <p className="anb-toast__title">اقتربت الصلاة</p>
-          <p className="anb-toast__sub">{RESPECT_MESSAGE}</p>
+          <p className="anb-toast__title">{message.title}</p>
+          <p className="anb-toast__sub">{message.body}</p>
         </div>
         <div className="anb-toast__actions">
           <button
             type="button"
-            onClick={() => setVisible(false)}
+            onClick={() => {
+              dismissRespectReminder(activeKey);
+              setForcedKey(null);
+              setForcedAt(null);
+            }}
             className="anb-btn anb-btn--close"
             aria-label="إغلاق التذكير"
           >
