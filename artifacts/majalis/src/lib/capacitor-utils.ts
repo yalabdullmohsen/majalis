@@ -32,10 +32,45 @@ export async function setupKeyboard() {
   await Keyboard.setResizeMode({ mode: KeyboardResize.Body });
 }
 
+const OWN_HOSTS = new Set([
+  "www.ssunnah.com",
+  "ssunnah.com",
+  "majlisilm.com",
+  "www.majlisilm.com",
+  "localhost",
+  "127.0.0.1",
+]);
+
+function isOwnHost(hostname: string): boolean {
+  const h = hostname.toLowerCase().replace(/\.$/, "");
+  return OWN_HOSTS.has(h) || h.endsWith(".ssunnah.com") || h.endsWith(".majlisilm.com");
+}
+
+/** روابط علامتنا تُفتح داخل التطبيق — لا Safari (يمنع ارتداد Universal Links). */
+function navigateOwnUrlInApp(url: string): boolean {
+  try {
+    const u = new URL(url, typeof window !== "undefined" ? window.location.href : "https://www.ssunnah.com");
+    if (u.protocol !== "http:" && u.protocol !== "https:") return false;
+    if (!isOwnHost(u.hostname)) return false;
+    const path = `${u.pathname}${u.search}${u.hash}` || "/";
+    if (!path.startsWith("/") || path.startsWith("//")) return false;
+    if (typeof window === "undefined") return false;
+    const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    if (current !== path) {
+      window.history.pushState({}, "", path);
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function openExternalUrl(
   url: string,
   opts?: { confirmLeave?: boolean },
 ) {
+  if (navigateOwnUrlInApp(url)) return;
   if (!isNative) {
     window.open(url, "_blank", "noopener,noreferrer");
     return;

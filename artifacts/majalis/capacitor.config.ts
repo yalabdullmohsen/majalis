@@ -6,17 +6,15 @@ const config: CapacitorConfig = {
   // مخرجات `vite build` — لا تستخدم public/ (أصول المصدر فقط).
   webDir: "dist",
   server: {
-    // الإنتاج الحي على www.ssunnah.com (200). majlisilm.com وssunnah.com
-    // يحوّلان 308 إليه — تحميلهما في WKWebView يعلّق الإقلاع قبل أول رسم.
-    url: "https://www.ssunnah.com",
+    // بلا server.url عن عمد: تحميل الموقع البعيد داخل WebView + Universal Links
+    // على نفس النطاقات يسبب ارتدادًا تطبيق↔Safari. الأصول من webDir (dist).
+    // OAuth/روابط العلامة تبقى داخل الـWebView عبر allowNavigation.
     allowNavigation: [
       "www.ssunnah.com",
       "ssunnah.com",
       "majlisilm.com",
       "www.majlisilm.com",
     ],
-    // صفحة محلية عند فشل تحميل الإنتاج — Capacitor iOS/Android errorPath
-    errorPath: "native-load-error.html",
     cleartext: false,
     androidScheme: "https",
   },

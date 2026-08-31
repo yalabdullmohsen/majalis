@@ -132,6 +132,8 @@ ok(live.includes("https://majlisilm.com/prayer-times"), "Live Activity widgetURL
 
 const entitlements = readFileSync(join(iosApp, "App", "App.entitlements"), "utf8");
 ok(entitlements.includes("applinks:majlisilm.com"), "associated domains applinks");
+ok(entitlements.includes("applinks:www.ssunnah.com"), "associated domains include production host");
+ok(entitlements.includes("applinks:ssunnah.com"), "associated domains include ssunnah apex");
 
 const deepLink = readFileSync(join(root, "src", "lib", "native-deep-link.ts"), "utf8");
 ok(deepLink.includes("majlisilm"), "native-deep-link handles custom scheme");
@@ -252,33 +254,47 @@ ok(appDelegate.includes("WKWebsiteDataTypeMemoryCache"), "AppDelegate purges mem
 ok(appDelegate.includes("WKWebsiteDataTypeServiceWorkerRegistrations"), "AppDelegate unregisters service workers");
 ok(!appDelegate.includes("allWebsiteDataTypes"), "AppDelegate does not wipe localStorage/cookies");
 
-// Live server URL must stay in the synced native capacitor.config.json
 const capJsonPath = join(iosApp, "App", "capacitor.config.json");
 ok(existsSync(capJsonPath), "ios capacitor.config.json exists");
 const capJson = JSON.parse(readFileSync(capJsonPath, "utf8"));
-// Live host must return 200 without redirect (majlisilm/ssunnah apex → 308 to www.ssunnah.com).
-const LIVE_SERVER_URLS = new Set(["https://www.ssunnah.com"]);
-const FORBIDDEN_SERVER_URL_RE =
-  /localhost|127\.0\.0\.1|0\.0\.0\.0|:\d{2,5}|vercel\.app|netlify\.app|cloudfront\.net|ngrok|localtunnel/i;
-ok(LIVE_SERVER_URLS.has(capJson?.server?.url), "capacitor.config.json server.url is live site");
-ok(
-  !FORBIDDEN_SERVER_URL_RE.test(String(capJson?.server?.url || "")),
-  "capacitor.config.json server.url is not localhost/preview",
-);
 const capTs = readFileSync(join(root, "capacitor.config.ts"), "utf8");
-const capTsUrl = (capTs.match(/url:\s*"(https:\/\/[^"]+)"/) || [])[1];
-ok(LIVE_SERVER_URLS.has(capTsUrl), "capacitor.config.ts server.url is live site");
+
+// بدون server.url البعيد — يمنع ارتداد تطبيق↔Safari مع Universal Links.
 ok(
-  !FORBIDDEN_SERVER_URL_RE.test(String(capTsUrl || "")),
-  "capacitor.config.ts server.url is not localhost/preview",
+  !capJson?.server?.url,
+  "capacitor.config.json must omit remote server.url (bundled webDir only)",
 );
 ok(
-  String(capTsUrl) === String(capJson?.server?.url),
-  "capacitor.config.ts and ios capacitor.config.json server.url match",
+  !/\burl:\s*"https:\/\/www\.ssunnah\.com"/.test(capTs) &&
+    !/\burl:\s*"https:\/\/majlisilm\.com"/.test(capTs),
+  "capacitor.config.ts must not set remote server.url",
 );
-// HTTPS-only live URL: cleartext must stay false (http cleartext unused).
+ok(
+  /allowNavigation:\s*\[/.test(capTs) || Array.isArray(capJson?.server?.allowNavigation),
+  "allowNavigation kept for first-party hosts",
+);
+// HTTPS-only: cleartext must stay false (http cleartext unused).
 ok(capJson?.server?.cleartext === false, "capacitor.config.json cleartext false (https-only)");
 ok(capJson?.webDir === "dist", "capacitor.config.json webDir is dist");
+
+const aasaPath = join(root, "public", ".well-known", "apple-app-site-association");
+ok(existsSync(aasaPath), "AASA file exists");
+const aasa = JSON.parse(readFileSync(aasaPath, "utf8"));
+const aasaComponents = aasa?.applinks?.details?.[0]?.components || [];
+ok(
+  aasaComponents.some((c) => c["/"] === "/" && c.exclude === true),
+  "AASA excludes homepage so Safari browsing does not force-open the app",
+);
+ok(
+  !aasaComponents.some((c) => c["/"] === "*" && !c.exclude),
+  "AASA must not claim all paths with /* wildcard",
+);
+ok(
+  entitlements.includes("applinks:www.ssunnah.com"),
+  "associated domains include www.ssunnah.com",
+);
+ok(entitlements.includes("applinks:ssunnah.com"), "associated domains include ssunnah.com");
+ok(entitlements.includes("applinks:majlisilm.com"), "associated domains applinks majlisilm");
 
 // Build Number must match between App target and PrayerLiveActivity extension.
 const projectVersions = [...pbx.matchAll(/CURRENT_PROJECT_VERSION = ([0-9]+);/g)].map((m) => m[1]);

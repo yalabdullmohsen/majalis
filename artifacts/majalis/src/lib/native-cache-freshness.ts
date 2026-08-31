@@ -1,7 +1,8 @@
 /**
  * تفريغ كاش Service Worker / CacheStorage داخل Capacitor Native فقط.
  * يكمّل مسح كاش WKWebView (بدون localStorage) في AppDelegate عند تحميل الموقع الحي
- * (server.url) داخل WKWebView، ويمنع بقاء SW قديم يخدم أصولًا عتيقة.
+ * يكمّل مسح كاش WKWebView (بدون localStorage) في AppDelegate عند إقلاع الحزمة المحلية،
+ * ويمنع بقاء SW قديم يخدم أصولًا عتيقة بعد التحديث.
  */
 import { isNative } from "./capacitor-utils";
 

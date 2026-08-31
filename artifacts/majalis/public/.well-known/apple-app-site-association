@@ -6,12 +6,32 @@
         "appIDs": ["5D8TX37HTS.com.yousef.majlisilm"],
         "appID": "5D8TX37HTS.com.yousef.majlisilm",
         "components": [
+          { "/": "/", "exclude": true },
           { "/": "/admin", "exclude": true },
           { "/": "/admin/*", "exclude": true },
           { "/": "/api/*", "exclude": true },
           { "/": "/.well-known/*", "exclude": true },
           { "/": "/auth/*", "exclude": true },
-          { "/": "*" }
+          { "/": "/privacy*", "exclude": true },
+          { "/": "/terms*", "exclude": true },
+          { "/": "/contact*", "exclude": true },
+          { "/": "/about*", "exclude": true },
+          { "/": "/prayer-times*" },
+          { "/": "/mushaf*" },
+          { "/": "/quran*" },
+          { "/": "/adhkar*" },
+          { "/": "/tasbih*" },
+          { "/": "/lessons*" },
+          { "/": "/hadith*" },
+          { "/": "/fiqh*" },
+          { "/": "/library*" },
+          { "/": "/search*" },
+          { "/": "/adhan*" },
+          { "/": "/qibla*" },
+          { "/": "/calendar*" },
+          { "/": "/settings*" },
+          { "/": "/account*" },
+          { "/": "/more*" }
         ]
       }
     ]
