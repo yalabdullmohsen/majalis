@@ -24,4 +24,8 @@ const hash = createHash("sha256").update(SCRIPT, "utf8").digest("base64");
 const token = `'sha256-${hash}'`;
 assert.ok(vercel.includes(token), `CSP يجب أن يحتوي ${token}`);
 
+
+assert.ok(!vercel.includes("''sha256"), "لا اقتباس مزدوج قبل sha256 في CSP");
+assert.ok(!/'sha256-[^']+=''/.test(vercel), "لا اقتباس زائد بعد hash في CSP");
+
 console.log(`csp-seo-shell-hash-gate.test.ts: ok — ${token}`);
