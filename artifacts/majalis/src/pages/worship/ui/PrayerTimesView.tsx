@@ -236,17 +236,8 @@ export default function PrayerTimesPage() {
     return (
       <div className="pts-screen pts-screen--with-nav" dir="rtl">
         <header className="pts-header">
-          <button
-            type="button"
-            className="pts-back"
-            onClick={handleBack}
-            aria-label="رجوع"
-          >
-            <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
-            <span>رجوع</span>
-          </button>
+          <h1 className="pts-title">الصلاة</h1>
         </header>
-        <h1 className="pts-title">الصلاة</h1>
         <p className="pts-error" role="alert">تعذّر تجهيز المواقيت محلياً. جرّب اختيار موقع آخر.</p>
         <button type="button" className="pts-retry" onClick={reload} aria-label="إعادة محاولة تحميل المواقيت">
           إعادة المحاولة
@@ -257,6 +248,21 @@ export default function PrayerTimesPage() {
             reload();
           }}
         />
+        <nav className="pts-chrome" aria-label="تنقّل الصفحة">
+          <button
+            type="button"
+            className="pts-back"
+            onClick={handleBack}
+            aria-label="رجوع"
+          >
+            <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
+            <span>رجوع</span>
+          </button>
+          <Link href="/adhan-settings" className="pts-settings" aria-label="إعدادات الصلاة والأذان">
+            <Settings2 size={16} strokeWidth={2} aria-hidden="true" />
+            <span>إعدادات</span>
+          </Link>
+        </nav>
       </div>
     );
   }
@@ -303,29 +309,14 @@ export default function PrayerTimesPage() {
         <div className="pts-header__top">
           <button
             type="button"
-            className="pts-back"
-            onClick={handleBack}
-            aria-label="رجوع إلى الصفحة السابقة"
+            className="pts-location"
+            onClick={() => setGovOpen((v) => !v)}
+            aria-expanded={govOpen}
+            aria-controls="pts-gov-panel"
           >
-            <ArrowRight size={18} strokeWidth={2.5} aria-hidden="true" />
-            <span>رجوع</span>
+            <MapPin size={15} strokeWidth={2} aria-hidden="true" />
+            <span>{locLabel}</span>
           </button>
-          <div className="pts-header__actions">
-            <Link href="/adhan-settings" className="pts-settings" aria-label="إعدادات الصلاة والأذان">
-              <Settings2 size={16} strokeWidth={2} aria-hidden="true" />
-              <span>إعدادات</span>
-            </Link>
-            <button
-              type="button"
-              className="pts-location"
-              onClick={() => setGovOpen((v) => !v)}
-              aria-expanded={govOpen}
-              aria-controls="pts-gov-panel"
-            >
-              <MapPin size={15} strokeWidth={2} aria-hidden="true" />
-              <span>{locLabel}</span>
-            </button>
-          </div>
         </div>
         <div className="pts-dates">
           {hijriStr && <span>{hijriStr}</span>}
@@ -499,6 +490,22 @@ export default function PrayerTimesPage() {
           ))}
         </ol>
       </section>
+
+      <nav className="pts-chrome" aria-label="تنقّل الصفحة">
+        <button
+          type="button"
+          className="pts-back"
+          onClick={handleBack}
+          aria-label="رجوع إلى الصفحة السابقة"
+        >
+          <ArrowRight size={18} strokeWidth={2.5} aria-hidden="true" />
+          <span>رجوع</span>
+        </button>
+        <Link href="/adhan-settings" className="pts-settings" aria-label="إعدادات الصلاة والأذان">
+          <Settings2 size={16} strokeWidth={2} aria-hidden="true" />
+          <span>إعدادات</span>
+        </Link>
+      </nav>
     </div>
   );
 }
