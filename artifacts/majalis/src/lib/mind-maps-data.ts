@@ -32,7 +32,7 @@ export const MIND_MAPS: MindMap[] = [
           label: "التوحيد",
           href: "/tawhid",
           children: [
-            { id: "tw-0", label: "مدخل إلى العقيدة", href: "/learn/aqeedah-intro" },
+            { id: "tw-0", label: "أصول العقيدة", href: "/learn/aqeedah-intro" },
             { id: "tw-1", label: "توحيد الربوبية", href: "/learn/aqsam-tawheed" },
             { id: "tw-2", label: "توحيد الألوهية", href: "/learn/aqsam-tawheed" },
             { id: "tw-3", label: "توحيد الأسماء والصفات", href: "/asma-husna" },

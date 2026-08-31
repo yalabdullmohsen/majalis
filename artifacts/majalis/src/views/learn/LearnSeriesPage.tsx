@@ -33,7 +33,7 @@ export default function LearnSeriesPage() {
     return (
       <div className="page-shell lrn-cat">
         <p className="lrn-empty">هذه السلسلة غير متاحة حاليًا.</p>
-        <Link href="/learn" className="lrn-back-link">← العودة لأبواب العلم</Link>
+        <Link href="/learn" className="lrn-back-link">← العودة للدروس</Link>
       </div>
     );
   }
