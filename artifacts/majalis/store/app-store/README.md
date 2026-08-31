@@ -1,4 +1,4 @@
-# دليل نشر مجالس العلم على App Store
+# دليل نشر سُنّة على App Store
 # سُنّة — App Store Readiness Guide
 
 **الفرع:** `feat/app-store-readiness`  
@@ -115,7 +115,7 @@ npx cap sync ios
 ```bash
 npx cap open ios
 ```
-- تأكد من Bundle ID: `com.majlisilm.app`
+- تأكد من Bundle ID: `com.yousef.majlisilm`
 - ضبط Signing & Capabilities بحساب Apple Developer
 - رفع Marketing Version و Build Number
 
@@ -127,7 +127,7 @@ npx tsx scripts/take-screenshots.ts
 ```
 
 ### الخطوة 5: App Store Connect
-1. أنشئ التطبيق: Identifier `com.majlisilm.app`
+1. أنشئ التطبيق: Identifier `com.yousef.majlisilm`
 2. انسخ النصوص من `store/app-store/listing.md`
 3. ارفع اللقطات من `store-assets/screenshots/`
 4. أجب على استبيان التصنيف كما في `store/app-store/age-rating.md`

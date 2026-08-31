@@ -1,4 +1,4 @@
-# جرد بيانات التطبيق — مجالس العلم
+# جرد بيانات التطبيق — سُنّة
 # App Data Inventory — سُنّة
 
 **تاريخ الجرد:** يوليو 2026  
@@ -10,8 +10,8 @@
 
 | الحقل | القيمة |
 |-------|--------|
-| appId | `com.majlisilm.app` |
-| appName | `مجالس العلم` |
+| appId | `com.yousef.majlisilm` |
+| appName | `سُنّة` |
 | webDir | `dist` |
 | Capacitor Version | 8.x |
 

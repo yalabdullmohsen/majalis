@@ -1,8 +1,8 @@
 {
   "id": "/quran-engine?source=pwa",
-  "name": "محرك القرآن — مجالس العلم",
+  "name": "محرك القرآن — سُنّة",
   "short_name": "محرك القرآن",
-  "description": "قراءة وتلاوة وتفسير أوفلاين عبر محرك القرآن في مجالس العلم.",
+  "description": "قراءة وتلاوة وتفسير أوفلاين عبر محرك القرآن في تطبيق سُنّة.",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "/quran-engine?source=pwa",

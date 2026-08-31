@@ -1,7 +1,7 @@
-# App Review Notes — سُنّة (مجالس العلم)
+# App Review Notes — سُنّة
 
 **Version:** 1.0  
-**Bundle ID:** com.majlisilm.app  
+**Bundle ID:** com.yousef.majlisilm  
 **Category:** Education / Reference  
 
 ---
