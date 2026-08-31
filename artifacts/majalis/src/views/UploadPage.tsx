@@ -203,8 +203,8 @@ export default function UploadPage() {
         "@type": "WebPage",
         name: "رفع درس علمي",
         description: "أرسل درساً علمياً لسُنّة.",
-        url: "https://majlisilm.com/upload",
-        publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+        url: "https://www.ssunnah.com/upload",
+        publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
       }],
     });
   }, []);

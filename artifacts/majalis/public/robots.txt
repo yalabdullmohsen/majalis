@@ -1,4 +1,4 @@
-# https://majlisilm.com/robots.txt
+# https://www.ssunnah.com/robots.txt
 # سُنّة
 
 User-agent: *
@@ -32,4 +32,4 @@ Disallow: /academic-research
 Disallow: /academic-research/
 Disallow: /fiqh-council/issues/genetic-testing-ancestry-ruling
 
-Sitemap: https://majlisilm.com/sitemap.xml
+Sitemap: https://www.ssunnah.com/sitemap.xml

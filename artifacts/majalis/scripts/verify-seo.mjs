@@ -2,7 +2,7 @@
  * verify-seo.mjs
  *
  * يتحقق من جودة ملفات prerender بعد البناء:
- * - canonical صحيح (بلا www)
+ * - canonical صحيح (www.ssunnah.com)
  * - title و description فريدان
  * - غياب display:none على #seo-shell
  * - عدم وجود H1 الصفحة الرئيسية في صفحات أخرى
@@ -17,7 +17,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = resolve(__dirname, "../dist");
-const siteUrl = "https://majlisilm.com";
+const siteUrl = "https://www.ssunnah.com";
 const HOMEPAGE_H1_FRAGMENT = "سُنّة — منصة الدروس";
 
 async function readHtml(filePath) {

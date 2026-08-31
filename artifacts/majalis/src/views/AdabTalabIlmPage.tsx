@@ -499,7 +499,7 @@ export default function AdabTalabIlmPage() {
             "@type": "ListItem",
             position: i + 1,
             name: f.title,
-            url: `https://majlisilm.com/adab-talab-ilm#fadl-${i + 1}`,
+            url: `https://www.ssunnah.com/adab-talab-ilm#fadl-${i + 1}`,
           })),
         },
       ],
@@ -744,7 +744,7 @@ export default function AdabTalabIlmPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="آداب طالب العلم — سُنّة" url="https://majlisilm.com/adab-talab-ilm" />
+        <ShareButtons title="آداب طالب العلم — سُنّة" url="https://www.ssunnah.com/adab-talab-ilm" />
       </div>
 
       <div className="px-4 mt-4">

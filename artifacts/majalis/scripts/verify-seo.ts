@@ -2,7 +2,7 @@
  * verify-seo.ts
  *
  * يتحقق من جودة ملفات الـ prerender بعد البناء:
- * - وجود canonical صحيح (بلا www)
+ * - وجود canonical صحيح (www.ssunnah.com)
  * - وجود <title> فريد
  * - وجود <meta description> لكل صفحة
  * - غياب display:none على #seo-shell
@@ -17,7 +17,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = new URL(".", import.meta.url).pathname;
 const distDir = resolve(__dirname, "../dist");
-const siteUrl = "https://majlisilm.com";
+const siteUrl = "https://www.ssunnah.com";
 
 const HOMEPAGE_H1 = "سُنّة — منصة الدروس الشرعية";
 
@@ -67,7 +67,7 @@ function checkPage(path: string, html: string, expectedTitle?: string): CheckRes
   if (!desc) errors.push("❌ لا يوجد meta description");
   else if (desc.length < 30) warnings.push(`⚠ description قصير جداً (${desc.length} حرف)`);
 
-  // 3. canonical صحيح (بلا www)
+  // 3. canonical صحيح (www.ssunnah.com)
   const canonical = extractCanonical(html);
   if (!canonical) {
     errors.push("❌ لا يوجد <link rel=canonical>");

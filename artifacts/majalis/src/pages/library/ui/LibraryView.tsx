@@ -172,7 +172,7 @@ export default function LibraryPage({
             "@type": "ListItem",
             position: i + 1,
             name: cat,
-            url: `https://majlisilm.com/library?cat=${encodeURIComponent(cat)}`,
+            url: `https://www.ssunnah.com/library?cat=${encodeURIComponent(cat)}`,
           })),
         },
       ],
@@ -318,7 +318,7 @@ export default function LibraryPage({
         فهرس المكتبة متاح للتصفح مع بيان المصدر والدرجة حيث وُجدت.
       </p>
       <div className="twh-share">
-        <ShareButtons title="المكتبة الإسلامية — سُنّة" url="https://majlisilm.com/library" />
+        <ShareButtons title="المكتبة الإسلامية — سُنّة" url="https://www.ssunnah.com/library" />
       </div>
       <RelatedKnowledge kind="book" query="مكتبة إسلامية" title="كتب ومواد ذات صلة" limit={6} />
       <ExploreAlsoNav

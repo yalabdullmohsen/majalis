@@ -399,7 +399,7 @@ export default function MyCitationsPage() {
         </main>
       </div>
       <div className="twh-share">
-        <ShareButtons title="اقتباساتي — سُنّة" url="https://majlisilm.com/my-citations" />
+        <ShareButtons title="اقتباساتي — سُنّة" url="https://www.ssunnah.com/my-citations" />
       </div>
     </div>
   );

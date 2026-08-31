@@ -243,7 +243,7 @@ export default function MySubmissionsPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="مساهماتي — سُنّة" url="https://majlisilm.com/my-submissions" />
+        <ShareButtons title="مساهماتي — سُنّة" url="https://www.ssunnah.com/my-submissions" />
       </div>
     </div>
   );

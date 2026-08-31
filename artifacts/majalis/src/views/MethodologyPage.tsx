@@ -100,13 +100,13 @@ export default function MethodologyPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "منهجيتنا في التوثيق",
-          url: "https://majlisilm.com/methodology",
+          url: "https://www.ssunnah.com/methodology",
           description:
             "منهجية سُنّة: شارة «محتوى موثّق» عند وجود مصدر أو مرجع، ووسم صريح للمحتوى المولَّد آلياً.",
           publisher: {
             "@type": "Organization",
             name: "سُنّة",
-            url: "https://majlisilm.com",
+            url: "https://www.ssunnah.com",
           },
           about: {
             "@type": "Thing",

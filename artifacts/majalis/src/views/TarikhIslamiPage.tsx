@@ -133,7 +133,7 @@ export default function TarikhIslamiPage() {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: "التاريخ الإسلامي",
-          url: "https://majlisilm.com/tarikh-islami",
+          url: "https://www.ssunnah.com/tarikh-islami",
           description: "ترتيب تفاعلي للدول الإسلامية وأحداثها من قبل البعثة إلى يومنا",
         },
       ],

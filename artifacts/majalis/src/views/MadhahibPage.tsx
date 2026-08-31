@@ -172,7 +172,7 @@ export default function MadhahibPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${m.fullName} — ${m.founder}`,
-            url: `https://majlisilm.com/madhahib#${m.id}`,
+            url: `https://www.ssunnah.com/madhahib#${m.id}`,
           })),
         },
       ],
@@ -317,7 +317,7 @@ export default function MadhahibPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="المذاهب الفقهية الأربعة — سُنّة" url="https://majlisilm.com/madhahib" />
+        <ShareButtons title="المذاهب الفقهية الأربعة — سُنّة" url="https://www.ssunnah.com/madhahib" />
       </div>
 
       {/* صفحات ذات صلة */}

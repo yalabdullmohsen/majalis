@@ -6,9 +6,10 @@ const config: CapacitorConfig = {
   // مخرجات `vite build` — لا تستخدم public/ (أصول المصدر فقط).
   webDir: "dist",
   server: {
-    // بلا server.url عن عمد: تحميل الموقع البعيد داخل WebView + Universal Links
-    // على نفس النطاقات يسبب ارتدادًا تطبيق↔Safari. الأصول من webDir (dist).
-    // OAuth/روابط العلامة تبقى داخل الـWebView عبر allowNavigation.
+    // Production: حمّل الـ canonical الحي مباشرة — بلا majlisilm.com (308)
+    // وبلا apex ssunnah.com (308). AASA يستثني `/` لمنع ارتداد Safari↔التطبيق.
+    url: "https://www.ssunnah.com",
+    errorPath: "native-load-error.html",
     allowNavigation: [
       "www.ssunnah.com",
       "ssunnah.com",

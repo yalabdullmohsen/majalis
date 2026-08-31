@@ -76,7 +76,7 @@ function FiqhLobbyBody({ lobby }: { lobby: LobbySpec }) {
     >
       {quiz}
       <div className="twh-share">
-        <ShareButtons title="الفقه الإسلامي — سُنّة" url="https://majlisilm.com/fiqh" />
+        <ShareButtons title="الفقه الإسلامي — سُنّة" url="https://www.ssunnah.com/fiqh" />
       </div>
       <ExploreAlsoNav
         title="استكشف أيضًا"

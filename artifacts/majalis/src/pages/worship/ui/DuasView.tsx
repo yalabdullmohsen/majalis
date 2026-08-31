@@ -1021,7 +1021,7 @@ export default function DuasPage() {
             "@type": "ListItem",
             position: i + 1,
             name: d.title,
-            url: `https://majlisilm.com/duas#${d.id}`,
+            url: `https://www.ssunnah.com/duas#${d.id}`,
           })),
         },
       ],
@@ -1171,7 +1171,7 @@ export default function DuasPage() {
       <SectionQuiz route="/duas" title="اختبر معلوماتك في الحديث الشريف" count={4} />
 
       <div className="twh-share">
-        <ShareButtons title="الأدعية الشرعية — سُنّة" url="https://majlisilm.com/duas" />
+        <ShareButtons title="الأدعية الشرعية — سُنّة" url="https://www.ssunnah.com/duas" />
       </div>
     </PageShell>
   );

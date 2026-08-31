@@ -10,7 +10,7 @@ export default function FiqhCouncilFatwasPage() {
       title: "فتاوى المجمع الفقهي الجماعية | سُنّة",
       description: "فتاوى جماعية صادرة عن المجمع الفقهي الإسلامي، موثقة بأدلتها ومراجعها الشرعية الصحيحة.",
       keywords: ["فتاوى جماعية", "فتاوى مجمع فقهي", "فتاوى هيئة", "إفتاء جماعي"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "فتاوى المجمع الفقهي الجماعية", url: "https://majlisilm.com/fiqh-council/fatwas", about: { "@type": "Thing", name: "الفتاوى الجماعية الإسلامية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "فتاوى المجمع الفقهي الجماعية", url: "https://www.ssunnah.com/fiqh-council/fatwas", about: { "@type": "Thing", name: "الفتاوى الجماعية الإسلامية" } }],
     });
   }, []);
 

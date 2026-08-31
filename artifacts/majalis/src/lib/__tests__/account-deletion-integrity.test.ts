@@ -54,7 +54,7 @@ const proven = [
 ];
 
 if (liveHttp) {
-  const base = process.env.MAJLIS_AUDIT_BASE_URL || "https://majlisilm.com";
+  const base = process.env.MAJLIS_AUDIT_BASE_URL || "https://www.ssunnah.com";
   const noAuth = await fetch(`${base}/api/account/delete`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

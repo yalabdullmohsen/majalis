@@ -23,7 +23,7 @@ export default function SubmitContentPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "إضافة محتوى — سُنّة",
-          url: "https://majlisilm.com/submit",
+          url: "https://www.ssunnah.com/submit",
           description: "أرسل درساً أو فائدة أو سؤالاً وشارك في إثراء سُنّة",
           about: { "@type": "Thing", name: "نشر العلم الشرعي والمشاركة المجتمعية" },
         },

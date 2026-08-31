@@ -369,7 +369,7 @@ export default function QaPage({
       </aside>
 
       <div className="twh-share">
-        <ShareButtons title="الأسئلة والأجوبة الشرعية — سُنّة" url="https://majlisilm.com/qa" />
+        <ShareButtons title="الأسئلة والأجوبة الشرعية — سُنّة" url="https://www.ssunnah.com/qa" />
       </div>
 
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">

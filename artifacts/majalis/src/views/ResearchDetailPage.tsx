@@ -50,7 +50,7 @@ export default function ResearchDetailPage() {
             datePublished: research.year ? String(research.year) : undefined,
             abstract: research.abstract,
             inLanguage: research.language,
-            url: `https://majlisilm.com/academic-research/${research.slug}`,
+            url: `https://www.ssunnah.com/academic-research/${research.slug}`,
             identifier: research.doi || undefined,
           }]
         : undefined,
@@ -258,7 +258,7 @@ export default function ResearchDetailPage() {
         </section>
       )}
 
-      <ShareButtons title={research.title} url={`https://majlisilm.com/academic-research/${research.slug}`} />
+      <ShareButtons title={research.title} url={`https://www.ssunnah.com/academic-research/${research.slug}`} />
     </div>
   );
 }

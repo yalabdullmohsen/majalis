@@ -192,9 +192,9 @@ export default function PrayerTimesPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "مواقيت الصلاة العالمية",
-          url: "https://majlisilm.com/prayer-times",
+          url: "https://www.ssunnah.com/prayer-times",
           description: "مواقيت الصلوات الخمس لأي مدينة في العالم بحساب فلكي محلي",
-          provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
         },
       ],
     });

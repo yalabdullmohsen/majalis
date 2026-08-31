@@ -23,7 +23,7 @@ export default function AboutPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "سُنّة",
-          url: "https://majlisilm.com",
+          url: "https://www.ssunnah.com",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",
           operatingSystem: "Web, iOS, Android",
@@ -86,7 +86,7 @@ export default function AboutPage() {
       </LegalSection>
 
       <LegalBackLink />
-      <ShareButtons title="حول التطبيق — سُنّة" url="https://majlisilm.com/about" />
+      <ShareButtons title="حول التطبيق — سُنّة" url="https://www.ssunnah.com/about" />
     </LegalPageLayout>
   );
 }

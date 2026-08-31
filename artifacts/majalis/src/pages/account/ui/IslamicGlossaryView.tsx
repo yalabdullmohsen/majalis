@@ -1627,7 +1627,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
       </section>
 
       <div className="twh-share">
-        <ShareButtons title="المعجم الإسلامي — سُنّة" url="https://majlisilm.com/islamic-glossary" />
+        <ShareButtons title="المعجم الإسلامي — سُنّة" url="https://www.ssunnah.com/islamic-glossary" />
       </div>
     </div>
     </SectionTemplatePage>

@@ -127,7 +127,7 @@ function UniversitiesContent() {
             "@type": "ListItem",
             position: i + 1,
             name: `الجامعات الإسلامية في ${country}`,
-            url: `https://majlisilm.com/universities?country=${encodeURIComponent(country)}`,
+            url: `https://www.ssunnah.com/universities?country=${encodeURIComponent(country)}`,
           })),
         },
       ],
@@ -264,7 +264,7 @@ function UniversitiesContent() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الجامعات الإسلامية — سُنّة" url="https://majlisilm.com/universities" />
+        <ShareButtons title="الجامعات الإسلامية — سُنّة" url="https://www.ssunnah.com/universities" />
       </div>
       <RelatedKnowledge kind="book" query="جامعات إسلامية" title="مواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

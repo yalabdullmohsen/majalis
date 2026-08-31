@@ -78,7 +78,7 @@ export default function DiscoverIslamArticleDetailPage() {
       )}
 
       <div className="twh-share" style={{ marginTop: "1.5rem" }}>
-        <ShareButtons title={displayTitle} url={`https://majlisilm.com/discover-islam/articles/${item.slug}`} />
+        <ShareButtons title={displayTitle} url={`https://www.ssunnah.com/discover-islam/articles/${item.slug}`} />
       </div>
     </div>
   );

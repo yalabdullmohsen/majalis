@@ -1,7 +1,7 @@
 /** ثوابت العلامة — مصدر موحّد للطبقات العليا (يُوسَّع في D/F). */
 export const BRAND = {
   nameAr: "سُنّة",
-  domain: "majlisilm.com",
+  domain: "www.ssunnah.com",
   colorDay: "#1F7A5A",
   colorNight: "#4FB48B",
   surfaceDay: "#F2F4F3",

@@ -50,10 +50,10 @@ export default function CitationPublicPage() {
                 "@context": "https://schema.org",
                 "@type": "Article",
                 name: c.source?.title_ar || "مقتطف علمي",
-                url: `https://majlisilm.com/c/${slug}`,
+                url: `https://www.ssunnah.com/c/${slug}`,
                 description: truncateAtWord(c.quoted_text, 200),
                 ...(c.source?.author_name ? { author: { "@type": "Person", name: c.source.author_name } } : {}),
-                publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+                publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
                 inLanguage: "ar",
               },
             ],
@@ -224,7 +224,7 @@ export default function CitationPublicPage() {
             تم إنشاء هذا الاقتباس عبر{" "}
             <Link href="/" className="cpp-link">سُنّة</Link></p>
           <div className="twh-share">
-            <ShareButtons title="اقتباس من سُنّة" url={typeof window !== "undefined" ? window.location.href : "https://majlisilm.com"} />
+            <ShareButtons title="اقتباس من سُنّة" url={typeof window !== "undefined" ? window.location.href : "https://www.ssunnah.com"} />
           </div>
           <div className="px-4 pb-6 mt-4">
             <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في القرآن والحديث" count={4} />

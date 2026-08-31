@@ -215,9 +215,9 @@ export default function MutashabihatPage() {
         "@type": "WebPage",
         name: "الآيات المتشابهات في القرآن",
         description: "نظام متخصص لدراسة الآيات المتشابهات في القرآن الكريم. محتوى معتمد في منهج سُنّة",
-        url: "https://majlisilm.com/mutashabihat",
+        url: "https://www.ssunnah.com/mutashabihat",
         inLanguage: "ar",
-        publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+        publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
         about: { "@type": "Book", name: "القرآن الكريم", inLanguage: "ar" },
       }],
     });

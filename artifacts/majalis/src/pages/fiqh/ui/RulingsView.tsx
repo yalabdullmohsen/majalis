@@ -115,10 +115,10 @@ export default function RulingsPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "موسوعة الأحكام الشرعية",
-          url: "https://majlisilm.com/rulings",
+          url: "https://www.ssunnah.com/rulings",
           description: "أحكام الفقه الإسلامي مرتّبةً حسب الأبواب والتصنيفات الفقهية؛ محتوى معتمد في منهج سُنّة",
           about: { "@type": "Thing", name: "الأحكام الشرعية في الفقه الإسلامي" },
-          provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
         },
       ],
     });
@@ -328,7 +328,7 @@ export default function RulingsPage() {
       </aside>
 
       <div className="twh-share">
-        <ShareButtons title="الأحكام الشرعية — سُنّة" url="https://majlisilm.com/rulings" />
+        <ShareButtons title="الأحكام الشرعية — سُنّة" url="https://www.ssunnah.com/rulings" />
       </div>
       <ExploreAlsoNav
         title="استكشف أيضًا"

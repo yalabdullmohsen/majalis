@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * زحف HTTP مركّز للمسارات الحرجة + عيّنة من sitemap (بلا Playwright).
- * MAJLIS_AUDIT_BASE_URL=https://majlisilm.com node scripts/audit-critical-routes-http.mjs
+ * MAJLIS_AUDIT_BASE_URL=https://www.ssunnah.com node scripts/audit-critical-routes-http.mjs
  */
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 
 const appRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repoRoot = resolve(appRoot, "../..");
-const baseUrl = (process.env.MAJLIS_AUDIT_BASE_URL || "https://majlisilm.com").replace(/\/$/, "");
+const baseUrl = (process.env.MAJLIS_AUDIT_BASE_URL || "https://www.ssunnah.com").replace(/\/$/, "");
 
 const CRITICAL = [
   "/",

@@ -144,7 +144,7 @@ for (const path of Object.keys(IA_REDIRECTS)) {
 if (existsSync(resolve(root, "public/sitemap.xml"))) {
   const sm = read("public/sitemap.xml");
   for (const path of Object.keys(IA_REDIRECTS)) {
-    assert.equal(sm.includes(`<loc>https://majlisilm.com${path}</loc>`), false, `sitemap بلا ${path}`);
+    assert.equal(sm.includes(`<loc>https://www.ssunnah.com${path}</loc>`), false, `sitemap بلا ${path}`);
   }
   assert.equal(sm.includes("/admin"), false);
 }

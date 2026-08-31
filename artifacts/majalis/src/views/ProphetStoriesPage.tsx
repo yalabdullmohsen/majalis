@@ -1218,7 +1218,7 @@ export default function ProphetStoriesPage() {
       <SectionQuiz sectionId="prophets" title="اختبر معلوماتك في قصص الأنبياء" count={4} />
 
       <div className="twh-share">
-        <ShareButtons title="قصص الأنبياء — سُنّة" url="https://majlisilm.com/prophets" />
+        <ShareButtons title="قصص الأنبياء — سُنّة" url="https://www.ssunnah.com/prophets" />
       </div>
     </div>
   );
