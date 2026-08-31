@@ -15,19 +15,23 @@ const vercel = readFileSync(resolve(root, "vercel.json"), "utf8");
 assert.match(post, /classList\.add\('js-ready'\)/, "سكربت js-ready في post-build-seo");
 assert.match(post, /getElementById\('seo-shell'\)/, "إزالة seo-shell");
 assert.match(post, /MutationObserver/, "تأجيل إزالة seo-shell حتى يركّب React");
-assert.match(post, /setTimeout\(a,\s*3200\)/, "نافذة LCP قبل إخفاء الصدفة");
+assert.match(post, /requestAnimationFrame\(function\(\)\{requestAnimationFrame\(a\)\}\)/, "إزالة الصدفة بعد إطارَي رسم لا بعد 3200ms");
+assert.match(post, /setTimeout\(a,\s*2500\)/, "سقف أمان إن تعذّر تركيب React");
+assert.doesNotMatch(post, /setTimeout\(a,\s*3200\)/);
 assert.match(post, /#seo-shell\{[^}]*position:\s*fixed/, "الصدفة غطاء ثابت بلا تضخيم ارتفاع الصفحة");
 assert.match(post, /#seo-shell\{[^}]*z-index:\s*2/, "الصدفة فوق #root حتى الإزالة");
 
 /** النص الحرفي كما يُحقن في HTML (داخل <script>…</script>) */
 const SCRIPT =
-  "(function(){function a(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove()}function arm(){setTimeout(a,3200)}var r=document.getElementById('root');if(r&&r.hasChildNodes())arm();else{var o=new MutationObserver(function(){if(r&&r.hasChildNodes()){o.disconnect();arm()}});o.observe(r||document.documentElement,{childList:true,subtree:true});setTimeout(a,9000)}})()";
+  "(function(){function a(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove()}function arm(){requestAnimationFrame(function(){requestAnimationFrame(a)})}var r=document.getElementById('root');if(r&&r.hasChildNodes())arm();else{var o=new MutationObserver(function(){if(r&&r.hasChildNodes()){o.disconnect();arm()}});o.observe(r||document.documentElement,{childList:true,subtree:true});setTimeout(a,2500)}})()";
 assert.ok(post.includes(`<script>${SCRIPT}</script>`), "نص السكربت ثابت بلا مسافات زائدة");
 assert.ok(SCRIPT.startsWith("(function"), "IIFE كامل بين وسمَي script");
 
 const hash = createHash("sha256").update(SCRIPT, "utf8").digest("base64");
 const token = `'sha256-${hash}'`;
 assert.ok(vercel.includes(token), `CSP يجب أن يحتوي ${token}`);
+assert.doesNotMatch(vercel, /fonts\.googleapis\.com/, "لا Google Fonts في CSP — خطوط محلية");
+assert.doesNotMatch(vercel, /Access-Control-Allow-Origin["']?\s*:\s*["']\*/);
 
 assert.ok(!vercel.includes("''sha256"), "لا اقتباس مزدوج قبل sha256 في CSP");
 assert.ok(!/'sha256-[^']+=''/.test(vercel), "لا اقتباس زائد بعد hash في CSP");

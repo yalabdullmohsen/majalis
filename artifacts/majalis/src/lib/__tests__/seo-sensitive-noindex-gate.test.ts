@@ -23,6 +23,7 @@ const MUST_NOT_SITEMAP = [
   "/dashboard",
   "/login",
   "/register",
+  "/auth",
   "/search",
   "/quran/recitation-test-ai",
   "/fiqh-council/research-assistant",
@@ -63,6 +64,10 @@ for (const path of ["/search", "/login", "/register", "/dashboard"]) {
 
 assert.match(trust, /genetic-testing-ancestry-ruling/);
 assert.match(trust, /SENSITIVE_NOINDEX_ISSUE_SLUGS/);
+const oldBrand = ["المجلس", "العلمي"].join(" ");
+assert.match(robots, /Disallow:\s*\/auth/);
+assert.doesNotMatch(JSON.stringify(routes), new RegExp(`${oldBrand}|منصة المجل`));
+assert.doesNotMatch(JSON.stringify(routes), new RegExp(["info", "@", "majlisilm", ".", "com"].join("")));
 assert.match(vercel, /academic-research[\s\S]*?noindex, nofollow/);
 assert.match(vercel, /genetic-testing-ancestry-ruling[\s\S]*?noindex, nofollow/);
 

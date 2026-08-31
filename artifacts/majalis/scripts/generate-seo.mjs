@@ -595,9 +595,7 @@ function breadcrumbFor(route, parents = []) {
 const HEAD_ASSETS = `<link rel="icon" href="/favicon.ico?v=${ASSET_VERSION}" sizes="any" />
     <link rel="icon" type="image/png" href="/icon-512.png?v=${ASSET_VERSION}" sizes="512x512" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=${ASSET_VERSION}" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`;
+    <link rel="manifest" href="/manifest.webmanifest" />`;
 
 /**
  * D1: فصل حقول المحتوى
