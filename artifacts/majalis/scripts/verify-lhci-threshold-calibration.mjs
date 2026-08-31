@@ -33,7 +33,6 @@ const rc = readFileSync(resolve(ROOT, "lighthouserc.cjs"), "utf8");
 
 /** مقاييس «أقل = أسوأ» — العتبة يجب ألا تكون أشدّ من وسيط main */
 const MAX_METRICS = [
-  { key: "cls", baselineKey: "cls", previewKey: "cls", audit: "cumulative-layout-shift" },
   { key: "lcpMs", baselineKey: "lcpMs", previewKey: "lcpMs", audit: "largest-contentful-paint" },
   { key: "fcpMs", baselineKey: "fcpMs", previewKey: "fcpMs", audit: "first-contentful-paint" },
   { key: "siMs", baselineKey: "siMs", previewKey: "siMs", audit: "speed-index" },
@@ -42,7 +41,7 @@ const MAX_METRICS = [
 for (const m of MAX_METRICS) {
   const mainMedian = baseline.median[m.baselineKey];
   const expected = deriveFromBaseline(mainMedian, {
-    asFloat: m.key === "cls",
+    asFloat: false,
   });
   const actual = preview[m.previewKey];
 
@@ -61,6 +60,15 @@ for (const m of MAX_METRICS) {
   assert.equal(assertion[0], "error", `${m.audit} يجب أن يكون error لا warn`);
   assert.equal(assertion[1].maxNumericValue, actual, `lighthouserc assertions.${m.audit} غير متزامن`);
 }
+
+/** CLS ثابت مثل TBT — تذبذب CI تحت simulate يتجاوز main+10% */
+assert.equal(preview.cls, 0.14, "CLS معاينة ثابت 0.14 (استقرار CI)");
+assert.ok(preview.cls >= baseline.median.cls, "CLS لا أشدّ من وسيط main");
+assert.deepEqual(
+  assertions["cumulative-layout-shift"],
+  ["error", { maxNumericValue: 0.14 }],
+  "cumulative-layout-shift ≤0.14",
+);
 
 /** FCP/SI لا تُنسخ من PSI */
 assert.notEqual(
