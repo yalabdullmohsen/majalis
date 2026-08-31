@@ -142,7 +142,7 @@ function buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody) {
       ${prerenderBody}
     </div>
     <div id="root"></div>
-    <script>(function(){function a(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove()}function arm(){setTimeout(a,3200)}var r=document.getElementById('root');if(r&&r.hasChildNodes())arm();else{var o=new MutationObserver(function(){if(r&&r.hasChildNodes()){o.disconnect();arm()}});o.observe(r||document.documentElement,{childList:true,subtree:true});setTimeout(a,9000)}})()</script>
+    <script>(function(){function a(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove()}function arm(){requestAnimationFrame(function(){requestAnimationFrame(a)})}var r=document.getElementById('root');if(r&&r.hasChildNodes())arm();else{var o=new MutationObserver(function(){if(r&&r.hasChildNodes()){o.disconnect();arm()}});o.observe(r||document.documentElement,{childList:true,subtree:true});setTimeout(a,2500)}})()</script>
   </body>
 </html>`;
 }
