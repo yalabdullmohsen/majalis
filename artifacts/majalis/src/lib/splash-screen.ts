@@ -79,7 +79,10 @@ export function armNativeSplashController(): void {
   window.addEventListener("mj:app-painted", hide, { once: true });
   window.addEventListener("app:first-paint", hide, { once: true });
   window.addEventListener("mj:boot-ready", hide, { once: true });
-  // لا double-rAF فوري — كان يخفي Splash قبل جاهزية الخطوط
+  // صمام إضافي: إن لم تصل أحداث الرسم خلال ضعف السقف، أخفِ فورًا
+  window.setTimeout(() => {
+    void hideNativeSplash(true);
+  }, SPLASH_MAX_VISIBLE_MS * 2);
 }
 
 /** @deprecated */

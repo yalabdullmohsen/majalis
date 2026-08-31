@@ -580,6 +580,12 @@
           bootReady = true;
           shellStable = true;
           tryDismiss();
+          try {
+            var C = window.Capacitor;
+            if (C && C.isNativePlatform && C.isNativePlatform() && C.Plugins && C.Plugins.SplashScreen) {
+              C.Plugins.SplashScreen.hide({ fadeOutDuration: 0 });
+            }
+          } catch (eCap) {}
         }, MAX_MS);
         window.setTimeout(tryDismiss, MIN_MS);
         void SOFT_MAX_MS;
