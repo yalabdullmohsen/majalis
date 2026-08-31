@@ -6,6 +6,8 @@ import { Capacitor } from "@capacitor/core";
 import { openExternalUrl } from "@/lib/capacitor-utils";
 
 const APP_HOSTS = new Set([
+  "www.ssunnah.com",
+  "ssunnah.com",
   "majlisilm.com",
   "www.majlisilm.com",
   "localhost",
@@ -22,7 +24,11 @@ function isNative(): boolean {
 
 export function isAppHost(hostname: string): boolean {
   const h = hostname.toLowerCase().replace(/\.$/, "");
-  return APP_HOSTS.has(h) || h.endsWith(".majlisilm.com");
+  return (
+    APP_HOSTS.has(h) ||
+    h.endsWith(".majlisilm.com") ||
+    h.endsWith(".ssunnah.com")
+  );
 }
 
 export function resolveInternalPath(href: string, base = window.location.href): string | null {

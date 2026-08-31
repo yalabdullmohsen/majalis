@@ -1,57 +1,64 @@
 {
-  "appId": "com.yousef.majlisilm",
-  "appName": "سُنّة",
-  "webDir": "dist",
-  "server": {
-    "url": "https://majlisilm.com",
-    "cleartext": false,
-    "androidScheme": "https"
-  },
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0,
-      "launchAutoHide": false,
-      "backgroundColor": "#F2F4F3",
-      "showSpinner": false,
-      "androidSplashResourceName": "splash",
-      "androidScaleType": "CENTER_CROP",
-      "splashImmersive": true,
-      "splashFullScreen": true
-    },
-    "StatusBar": {
-      "style": "DARK",
-      "backgroundColor": "#F2F4F3",
-      "overlaysWebView": true
-    },
-    "Keyboard": {
-      "resize": "body",
-      "resizeOnFullScreen": true
-    },
-    "LocalNotifications": {
-      "presentationOptions": [
-        "badge",
-        "sound",
-        "banner",
-        "list"
-      ]
-    },
-    "PushNotifications": {
-      "presentationOptions": [
-        "badge",
-        "sound",
-        "banner",
-        "list"
-      ]
-    }
-  },
-  "android": {
-    "allowMixedContent": false,
-    "captureInput": true,
-    "webContentsDebuggingEnabled": false
-  },
-  "ios": {
-    "contentInset": "never",
-    "backgroundColor": "#F2F4F3",
-    "scrollEnabled": true
-  }
+	"appId": "com.yousef.majlisilm",
+	"appName": "سُنّة",
+	"webDir": "dist",
+	"server": {
+		"url": "https://www.ssunnah.com",
+		"cleartext": false,
+		"androidScheme": "https",
+		"allowNavigation": [
+			"www.ssunnah.com",
+			"ssunnah.com",
+			"majlisilm.com",
+			"www.majlisilm.com"
+		],
+		"errorPath": "native-load-error.html"
+	},
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0,
+			"launchAutoHide": false,
+			"backgroundColor": "#F2F4F3",
+			"showSpinner": false,
+			"androidSplashResourceName": "splash",
+			"androidScaleType": "CENTER_CROP",
+			"splashImmersive": true,
+			"splashFullScreen": true
+		},
+		"StatusBar": {
+			"style": "DARK",
+			"backgroundColor": "#F2F4F3",
+			"overlaysWebView": true
+		},
+		"Keyboard": {
+			"resize": "body",
+			"resizeOnFullScreen": true
+		},
+		"LocalNotifications": {
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"banner",
+				"list"
+			]
+		},
+		"PushNotifications": {
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"banner",
+				"list"
+			]
+		}
+	},
+	"android": {
+		"allowMixedContent": false,
+		"captureInput": true,
+		"webContentsDebuggingEnabled": false
+	},
+	"ios": {
+		"contentInset": "never",
+		"backgroundColor": "#F2F4F3",
+		"scrollEnabled": true
+	}
 }
