@@ -16,13 +16,14 @@ const main = read("src/main.tsx");
 const prayer = read("src/styles/pages/prayer-times.css");
 const prophets = read("src/styles/pages/prophet-stories.css");
 
-assert.match(theme, /--radius-card:\s*28px/, "رمز radius-card");
+assert.match(theme, /--radius-card:\s*24px/, "رمز radius-card");
 assert.match(theme, /--radius-tile:\s*24px/, "رمز radius-tile");
 assert.match(theme, /--radius-button:\s*18px/, "رمز radius-button");
 assert.match(theme, /--radius-sheet:\s*28px/, "رمز radius-sheet");
 assert.match(theme, /--radius-nav:\s*28px/, "رمز radius-nav");
 assert.match(theme, /--radius-pill:\s*999px/, "رمز radius-pill");
 assert.match(soft, /--radius-button:\s*18px/, "soft-cards يحمل radius-button");
+assert.match(soft, /--radius-card:\s*24px/, "soft-cards يحمل radius-card 24");
 assert.match(soft, /\.soft-card\s*\{/, "فئة soft-card");
 assert.match(soft, /\.soft-tile\s*\{/, "فئة soft-tile");
 assert.match(soft, /inset 0 1px 0 rgba\(255,\s*255,\s*255/, "highlight داخلي");
@@ -39,20 +40,25 @@ assert.match(
   /bottom:\s*calc\(\s*var\(--bottom-nav-height[^)]*\)\s*\+\s*var\(--inset-bottom[^)]*\)\s*\+\s*16px/,
   "الرجوع العائم فوق الشريط السفلي بـ16px",
 );
+assert.match(finalRelease, /\.hub-card\s*,/, "HubCard ضمن polish الحواف الناعمة");
 assert.doesNotMatch(soft, /\bbutton\s*\{/, "لا قاعدة button عامة في soft-cards");
 assert.doesNotMatch(finalRelease, /^\s*button\s*\{/m, "لا قاعدة button عامة في final-release");
 
-assert.match(prayer, /--pts-radius:\s*var\(--radius-card,\s*28px\)/, "الصلاة تستخدم نصف قطر البطاقة الناعمة 28px");
+assert.match(prayer, /--pts-radius:\s*var\(--radius-card,\s*24px\)/, "الصلاة تستخدم نصف قطر البطاقة الناعمة 24px");
 assert.match(prayer, /inset 0 1px 0 rgba\(255,\s*255,\s*255,\s*0\.12\)/, "highlight بطاقة البطل");
 assert.doesNotMatch(prayer, /\.pts-row--next[\s\S]{0,120}border:\s*1\.5px/, "لا إطار سميك للصلاة القادمة");
 assert.match(prayer, /\.pts-row\s*\{[\s\S]*?width:\s*min\(\s*78vw,\s*320px\)/, "بطاقات الصلاة متمركزة بعرض محدود");
 assert.match(prayer, /\.pts-row--next\s*\{[\s\S]*?width:\s*min\(\s*80vw,\s*328px\)/, "الصلاة القادمة أعرض قليلًا");
 assert.match(prayer, /\.pts-list\s*\{[\s\S]*?align-items:\s*center/, "قائمة المواقيت متمركزة");
-assert.match(prayer, /border-radius:\s*1\.25rem\s+1\.25rem\s+0\s+0/, "حواف علوية ناعمة للشريط السفلي");
+assert.match(prayer, /border-radius:\s*1\.25rem\s+1\.25rem\s*0\s*0/, "حواف علوية ناعمة للشريط السفلي");
 
 assert.match(prophets, /\.prophet-fact-card[\s\S]*?border-radius:\s*var\(--radius-tile/, "حقائق الأنبياء ناعمة");
 assert.match(prophets, /\.prophet-lesson-card[\s\S]*?border-radius:\s*var\(--radius-card/, "دروس الأنبياء ناعمة");
 assert.match(prophets, /\.prophet-lux-back[\s\S]*?border-radius:\s*var\(--radius-pill/, "رجوع pill");
 assert.match(prophets, /\.prophet-chip-lux[\s\S]*?border-radius:\s*var\(--radius-pill/, "تصنيفات pill");
+
+const contact = read("src/styles/pages/contact.css");
+assert.match(contact, /\.contact-faq__trigger\s*\{[\s\S]*?border-radius:\s*var\(--radius-button/, "أسئلة التواصل بحواف ناعمة");
+assert.match(contact, /appearance:\s*none/, "لا مظهر زر المتصفح الافتراضي في FAQ");
 
 console.log("soft-cards-system-gate.test.ts: ok");

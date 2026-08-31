@@ -193,7 +193,7 @@
   flex-direction: column;
   background: var(--mj-surface);
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--mj-hairline, #d5ddd9));
-  border-radius: var(--radius-card, 28px);
+  border-radius: var(--radius-card, 24px);
   overflow: hidden;
   text-decoration: none;
   color: inherit;
