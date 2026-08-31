@@ -185,7 +185,7 @@ html.pts-immersive .bottom-nav {
   box-sizing: border-box;
 }
 
-/* البطل وقائمة المواقيت: بطاقات ناعمة متمركزة في منتصف الشاشة */
+/* البطل (أعلى) وقائمة المواقيت (أسفل): بطاقات ناعمة متمركزة */
 .pts-screen > .pts-hero,
 .pts-screen > .pts-list {
   width: min(82vw, 340px);
@@ -523,7 +523,8 @@ html.pts-immersive .bottom-nav {
   width: min(82vw, 340px);
   max-width: 100%;
   margin-inline: auto;
-  margin-top: 0.15rem;
+  margin-top: 0.55rem;
+  margin-bottom: 0.35rem;
   align-self: center;
 }
 .pts-row {
