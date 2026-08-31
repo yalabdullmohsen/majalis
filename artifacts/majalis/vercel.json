@@ -986,12 +986,7 @@
     },
     {
       "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.majlisilm.com"
-        }
-      ],
+      "has": [{"type": "host", "value": "www.majlisilm.com"}],
       "destination": "https://majlisilm.com/:path*",
       "permanent": true
     },
