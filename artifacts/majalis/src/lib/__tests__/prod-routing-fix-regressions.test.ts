@@ -62,8 +62,10 @@ assert(brand.includes('"سُنّة"'), "brand.ts موحّد");
 assert(!recitation.includes("خوادم مجالس"), "RecitationTestView بلا brand قديم");
 
 console.log("\n=== P1: جلسات الدروس ===");
-assert(card.includes("lesson-unified-card__session-subject"), "بطاقة تعرض مادة/جلسة");
-assert(card.includes("lesson-unified-card__schedule-line"), "بطاقة تعرض يوم · وقت");
+assert(card.includes("lesson-unified-card__facts"), "بطاقة تعرض حقائق الدرس داخل الإطار");
+assert(card.includes('label="اليوم"') || card.includes("اليوم"), "بطاقة تعرض اليوم");
+assert(card.includes('label="الوقت"') || card.includes("الوقت"), "بطاقة تعرض الوقت");
+assert(card.includes("التفاصيل"), "زر التفاصيل داخل البطاقة");
 
 const prerenderQuiz = resolve(root, "seo-prerender/quiz/index.html");
 if (existsSync(prerenderQuiz)) {

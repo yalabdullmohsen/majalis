@@ -424,7 +424,9 @@
 }
 
 .lesson-unified-card--compact .lesson-unified-card__note,
-.lesson-unified-card--compact .lesson-unified-card__flags {
+.lesson-unified-card--compact .lesson-unified-card__flags,
+.lesson-unified-card--compact .lesson-unified-card__compact-meta,
+.lesson-unified-card--compact .lesson-unified-card__schedule-line {
   display: none;
 }
 

@@ -81,14 +81,23 @@ html.pts-immersive .app-main {
   border-radius: var(--r-sm) !important;
 }
 
-.lesson-unified-card,
 .lesson-card,
 .course-card {
   background: var(--surface) !important;
   border: 1px solid var(--border) !important;
-  border-radius: var(--r-md) !important;
+  border-radius: var(--radius-card, 24px) !important;
   box-shadow: var(--e-1) !important;
   padding: 0.85rem !important;
+}
+
+/* بطاقة الدرس الموحّدة: بلا padding خارجي يكسر الرأس/الجسم */
+.lesson-unified-card {
+  background: var(--surface, var(--color-surface, #fff)) !important;
+  border: 1px solid var(--border, var(--color-border)) !important;
+  border-radius: var(--radius-card, 24px) !important;
+  box-shadow: 0 8px 24px -16px rgba(11, 32, 24, 0.2) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
 }
 
 .lesson-unified-card__btn--primary,
