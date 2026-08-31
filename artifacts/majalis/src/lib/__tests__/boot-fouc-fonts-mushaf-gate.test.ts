@@ -72,10 +72,31 @@ const theme = read("src/lib/theme-preference.ts");
   assert.match(reader, /layout && ready/);
   assert.match(fit, /dataset\.mmFit|data-mm-fit|resolveUniformMushafFontSize/);
   assert.match(fit, /isMushafPageFontReady|document\.fonts/);
+  assert.doesNotMatch(
+    fit,
+    /markFit\(el,\s*false\)/,
+    "لا إخفاء نص عند بدء قياس الخط — يمنع قفزة التقليب",
+  );
+  assert.match(
+    mushafCss,
+    /\.mm-page\[data-mm-fit="0"\]\s+\.mm-page__body/,
+    "الإخفاء فقط عند mm-fit=0 الصريح",
+  );
+  assert.doesNotMatch(
+    mushafCss,
+    /\.mm-page:not\(\[data-mm-fit="1"\]\)/,
+    "لا إخفاء عند غياب سمة mm-fit",
+  );
+  const madinahPage = read("src/features/mushaf-madinah/MushafPage.tsx");
+  assert.doesNotMatch(
+    madinahPage,
+    /data-mm-fit="0"/,
+    "لا فرض mm-fit=0 من JSX (يعيد الإخفاء عند كل رسم)",
+  );
   const liveReader = read("src/features/mushaf-reader/NewMushafReader.tsx");
   assert.match(liveReader, /useMushafFixedMetrics|canMountPage/);
   assert.match(read("src/features/mushaf-reader/MushafPage.tsx"), /data-mm-fit="1"/);
-  assert.match(mushafCss, /data-mm-fit="1"|mm-pager-track/);
+  assert.match(mushafCss, /data-mm-fit="1"|mm-pager-track|data-mm-fit="0"/);
   const qpc = read("src/features/mushaf-madinah/useQpcPageFont.ts");
   assert.match(qpc, /display:\s*"block"/);
   assert.match(qpc, /if \(!cancelled && ok\) setReady\(true\)/);

@@ -281,7 +281,7 @@ html.dark .mm-viewport,
   box-sizing: border-box;
   display: flex;
   align-items: stretch;
-  justify-content: center;
+  justify-content: flex-start;
   transition: none;
 }
 
@@ -2976,8 +2976,8 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   user-select: none;
 }
 
-/* أخفِ نص المصحف حتى اكتمال قياس الخط — يحجز المساحة بلا قفزة حجم */
-.mm-page:not([data-mm-fit="1"]) .mm-page__body {
+/* أخفِ النص فقط عند data-mm-fit="0" الصريح — لا تُخفِ عند غياب السمة (يمنع قفزة التقليب) */
+.mm-page[data-mm-fit="0"] .mm-page__body {
   visibility: hidden;
 }
 
