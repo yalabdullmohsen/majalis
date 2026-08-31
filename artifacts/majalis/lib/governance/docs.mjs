@@ -18,7 +18,7 @@ export function generateTechnicalDocs() {
 
   const docs = {
     generated_at: new Date().toISOString(),
-    title: "Majalis Enterprise Governance — Technical Documentation",
+    title: "سُنّة Enterprise Governance — Technical Documentation",
     architecture: {
       overview: "Monorepo with artifacts/majalis as deployable app; Supabase Postgres + Vercel serverless",
       layers: [

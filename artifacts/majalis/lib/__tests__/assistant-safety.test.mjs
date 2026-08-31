@@ -168,7 +168,7 @@ console.log("\n=== 2) بلا citations ⇒ ليس «مستندًا» + تنبي�
 console.log("\n=== 3) كشف system prompt — لا يُسرَّب ===");
 
 const LEAK_MARKERS = [
-  "أنت المساعد العلمي لمنصة مجالس",
+  "أنت المساعد العلمي لتطبيق سُنّة",
   "قواعد الإجابة",
   "system",
   "RICH_ISLAMIC_SYSTEM_PROMPT",

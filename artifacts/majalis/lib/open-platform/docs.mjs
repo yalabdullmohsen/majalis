@@ -116,12 +116,12 @@ export function generateOpenApiSpec(version = "v1") {
   return {
     openapi: "3.0.3",
     info: {
-      title: "Majalis Open Islamic Platform API",
+      title: "سُنّة Open Islamic Platform API",
       description: "Official API for Islamic scholarly content — Quran, Hadith, Fatwas, Lessons, and more.",
       version,
-      contact: { name: "سُنّة", url: "https://majalis.app" },
+      contact: { name: "سُنّة", url: "https://www.ssunnah.com" },
     },
-    servers: [{ url: "https://majalis.app", description: "Production" }, { url: "http://localhost:5173", description: "Development" }],
+    servers: [{ url: "https://www.ssunnah.com", description: "Production" }, { url: "http://localhost:5173", description: "Development" }],
     tags: [
       { name: "Meta", description: "API metadata" },
       { name: "Search", description: "Text and semantic search" },
@@ -195,7 +195,7 @@ export function generateDocsHtml(version = "v1") {
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>Majalis API Docs v${version}</title>
+  <title>سُنّة API Docs v${version}</title>
   <style>
     body { font-family: "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }
     code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; }

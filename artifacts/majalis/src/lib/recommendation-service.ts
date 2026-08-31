@@ -1,4 +1,4 @@
-// خدمة التوصيات الذكية — مجالس
+// خدمة التوصيات الذكية — سُنّة
 
 import { CONTENT_TYPE_HREF as SHARED_CONTENT_TYPE_HREF } from "@/lib/content-href";
 

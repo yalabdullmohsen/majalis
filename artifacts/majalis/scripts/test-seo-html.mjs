@@ -25,7 +25,7 @@ let passed = 0, failed = 0;
 const fail = (label) => { failed++; console.error(`  ✗ ${label}`); };
 const ok = () => { passed++; };
 
-const FORBIDDEN_BRANDS = ["مجالس العلم", "منصة المجالس", "فريق المجالس", "مجتمع المجالس", "مجالس العلمية"];
+const FORBIDDEN_BRANDS = ["مجالس العلم", "منصة المجالس", "منصة مجالس", "فريق المجالس", "مجتمع المجالس", "مجالس العلمية"];
 const PERSONAL_EMAIL_RX = /[a-zA-Z0-9._%+-]+@(?!majlisilm\.com)(gmail|hotmail|outlook|yahoo|icloud|proton)[a-zA-Z0-9.-]*\.[a-z]+/i;
 
 // اجمع كل صفحات prerender
