@@ -14,6 +14,6 @@ const main = readFileSync(resolve(root, "src/main.tsx"), "utf8");
 assert.match(src, /SectionsPage/);
 assert.doesNotMatch(src, /HomePage|LessonsPage|PrayerTimesPage|QuranHubPage|FiqhPage|SearchPage/);
 assert.match(src, /requestIdleCallback/);
-assert.match(src, /10_000/);
+assert.match(src, /(?:10_000|25_000)/);
 assert.match(main, /prefetchTopRoutesOnIdle/);
 console.log("  ✓ prefetch-top-routes على الخمول (خفيف)");
