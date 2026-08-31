@@ -16,6 +16,12 @@ const PREVIEW_MARGIN = 0.1;
 const FIXED_PREVIEW = {
   /* main CI 2026-08-30 قاسَ ≈1315–1650 تحت throttling؛ 1300 صار يفشل بشكل متذبذب */
   tbtMs: 1800,
+  /*
+   * CLS تحت simulate متذبذب (أفضل 3 جولات ≈0.004–0.098 عبر PRs متتالية بلا تغيّر تخطيط).
+   * main+10% من الشاهد 0.0692 → 0.0762 صار يفشل عند جلسة سيئة رغم aggregation optimistic.
+   * 0.14 يغطي أسوأ أفضل-جولة مقيسة (~0.098) + هامش دون دخول نطاق Poor (0.25).
+   */
+  cls: 0.14,
   domSize: 1200,
   renderBlockingMs: 200,
 };

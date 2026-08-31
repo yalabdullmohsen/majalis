@@ -525,7 +525,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 }
 
 .lesson-detail-page .lesson-detail-card {
-  border-radius: var(--radius-card, 28px);
+  border-radius: var(--radius-card, 24px);
 }
 
 .lesson-detail-page .lesson-detail-actions--row .lesson-unified-card__btn,

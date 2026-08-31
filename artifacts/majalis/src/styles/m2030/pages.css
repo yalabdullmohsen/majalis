@@ -21,7 +21,7 @@ html.pts-immersive .app-main {
   /* أبيض ثابت فوق الزمرد — لا يعتمد على --text-on-dark بعد أن أُسيء ربطه بـ --mj-ink */
   --pts-white: #FAFAF8;
   --pts-muted: rgba(250, 250, 248, 0.88);
-  --pts-radius: var(--radius-card, 28px);
+  --pts-radius: var(--radius-card, 24px);
   --pts-radius-sm: var(--radius-tile, 24px);
   background: transparent !important;
   background-color: transparent !important;
@@ -39,7 +39,7 @@ html.pts-immersive .app-main {
 .pts-next,
 .pts-hero-card,
 .pts-countdown {
-  border-radius: var(--pts-radius, var(--radius-card, 28px)) !important;
+  border-radius: var(--pts-radius, var(--radius-card, 24px)) !important;
   border: 1px solid rgba(255, 255, 255, 0.14) !important;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.045)) !important;
   box-shadow:

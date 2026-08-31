@@ -70,9 +70,10 @@ assert.deepEqual(
 );
 assert.deepEqual(
   rcAssertions["cumulative-layout-shift"],
-  previewAssertions["cumulative-layout-shift"],
-  `CLS ≤${preview.cls} — main+10%`,
+  ["error", { maxNumericValue: 0.14 }],
+  "CLS ≤0.14 — استقرار CI تحت simulate (أفضل جولة متذبذبة)",
 );
+assert.equal(preview.cls, 0.14, "CLS معاينة ثابت كـ TBT");
 assert.deepEqual(rcAssertions["dom-size"], ["error", { maxNumericValue: 1200 }], "DOM ≤1200");
 assert.deepEqual(
   rcAssertions["render-blocking-resources"],

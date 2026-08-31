@@ -540,7 +540,7 @@ html.dark .navbar-menu-btn--drawer {
   background: var(--color-surface);
   color: var(--color-text);
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--color-border));
-  border-radius: var(--radius-card, 28px);
+  border-radius: var(--radius-card, 24px);
   box-shadow: 0 10px 28px -18px rgba(11, 32, 24, 0.22);
 }
 :where(.card, .card-v2, .content-card, .lesson-unified-card, .book-card, .path-card, .scholar-card):hover {
@@ -1522,7 +1522,7 @@ html[data-theme="dark"] .ds-page-back-btn {
 .hadith-card,
 .library-card,
 .content-card {
-  border-radius: var(--radius-card, 28px);
+  border-radius: var(--radius-card, 24px);
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--color-border));
 }
 .settings-page,
@@ -1930,10 +1930,17 @@ header.navbar-v3,
 .home-start-card,
 .soft-card,
 .ui-card {
-  border-radius: var(--radius-card, 28px) !important;
+  border-radius: var(--radius-card, 24px) !important;
+}
+.hub-card,
+.bdm-card,
+.contact-faq,
+.contact-email-card,
+.contact-ig-card {
+  border-radius: var(--radius-card, 24px) !important;
 }
 .quran-hub-open-mushaf {
-  border-radius: var(--radius-card, 28px) !important;
+  border-radius: var(--radius-card, 24px) !important;
 }
 .global-back-btn,
 .floating-back-btn,
