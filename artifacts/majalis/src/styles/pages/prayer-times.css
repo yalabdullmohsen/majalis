@@ -100,9 +100,9 @@ html.pts-immersive .bottom-nav {
   margin-block-start: 0 !important;
   margin-inline: 0 !important;
   padding-block-start: max(12px, var(--inset-top, 0px)) !important;
-  /* فراغ آمن فوق الشريط السفلي — يمنع اختفاء آخر بطاقة */
+  /* فراغ آمن فوق الشريط السفلي + شريط رجوع/إعدادات */
   padding-bottom: calc(
-    var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
+    var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 4.5rem
   ) !important;
   box-sizing: border-box;
 }
@@ -194,28 +194,43 @@ html.pts-immersive .bottom-nav {
   align-self: center;
 }
 
-/* ── رأس ── */
+/* ── رأس: الموقع متمركز أعلى الصفحة ── */
 .pts-header {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
   gap: 0.55rem;
   padding-inline: 0.1rem;
+  text-align: center;
 }
 .pts-header__top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 0.75rem;
   width: 100%;
   min-height: 2.75rem;
 }
-.pts-header__actions {
+/* شريط رجوع + إعدادات أسفل صفحة الصلاة (فوق الشريط السفلي) */
+.pts-chrome {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 0.35rem);
+  z-index: 35;
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  margin-inline-start: auto;
-  min-width: 0;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: min(calc(100% - 1.5rem), 26rem);
+  max-width: 26rem;
+  margin-inline: auto;
+  padding: 0.35rem 0.25rem;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+.pts-chrome > * {
+  pointer-events: auto;
 }
 .pts-settings {
   display: inline-flex;
@@ -294,15 +309,16 @@ html.pts-immersive .bottom-nav {
 .pts-location {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
-  max-width: min(42vw, 11rem);
+  max-width: min(92vw, 20rem);
   min-height: 2.5rem;
-  padding: 0.4rem 0.75rem;
+  padding: 0.45rem 1rem;
   border-radius: 999px;
   border: 1px solid rgba(227, 203, 140, 0.35);
   background: rgba(250, 250, 248, 0.08);
   color: var(--pts-gold);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   font-weight: 700;
   font-family: var(--font-face, var(--font-body), "Amiri", serif);
   cursor: pointer;
@@ -310,6 +326,7 @@ html.pts-immersive .bottom-nav {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-inline: auto;
 }
 .pts-location:hover {
   opacity: 0.92;
