@@ -1,6 +1,6 @@
 # Quran Engine (محرك القرآن)
 
-Offline-first Quran reading surface inside **مجالس العلم** (`artifacts/majalis`).
+Offline-first Quran reading surface inside **سُنّة** (`artifacts/majalis`).
 
 Route: `/quran-engine` (dashboard) · `/quran-engine/viewer` (mushaf list + action bar)
 
