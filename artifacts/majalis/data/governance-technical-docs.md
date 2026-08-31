@@ -1,6 +1,6 @@
-# Majalis Enterprise Governance — Technical Documentation
+# سُنّة Enterprise Governance — Technical Documentation
 
-Generated: 2026-06-26T01:09:15.355Z
+Generated: 2026-08-31T21:52:52.273Z
 
 ## Architecture
 
@@ -24,6 +24,7 @@ Monorepo with artifacts/majalis as deployable app; Supabase Postgres + Vercel se
 - **مشرف** (`moderator`): content.moderate, review.editorial, content.read, users.read
 - **عارض التحليلات** (`analytics_viewer`): analytics.read, monitoring.read, content.read
 - **قراءة فقط** (`read_only`): content.read, audit.read
+- **داعية** (`dawah_counselor`): dawah.contact.read_assigned, dawah.contact.respond, content.read
 
 ## Content Lifecycle
 1. مسودة (`draft`)

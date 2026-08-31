@@ -64,7 +64,7 @@ export async function getWebhookInfo() {
 
 export function formatLessonMessage(payload) {
   const { title, sheikh, mosque, url } = payload;
-  const lines = ["🕌 <b>درس جديد في مجالس</b>", ""];
+  const lines = ["🕌 <b>درس جديد في سُنّة</b>", ""];
   if (title) lines.push(`📚 <b>${title}</b>`);
   if (sheikh) lines.push(`👤 ${sheikh}`);
   if (mosque) lines.push(`🕌 ${mosque}`);
@@ -72,6 +72,6 @@ export function formatLessonMessage(payload) {
     lines.push("");
     lines.push(`<a href="${url}">▶️ استماع الآن</a>`);
   }
-  lines.push("", "——", "<i>مجالس — تطبيق العلم الشرعي</i>");
+  lines.push("", "——", "<i>سُنّة — تطبيق العلم الشرعي</i>");
   return lines.join("\n");
 }

@@ -1,4 +1,4 @@
-// خدمة الاقتباسات — مجالس
+// خدمة الاقتباسات — سُنّة
 
 const BASE = "/api/citations";
 const USER_BASE = "/api/user/citations";

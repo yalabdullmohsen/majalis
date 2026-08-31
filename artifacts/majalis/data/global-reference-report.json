@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-06-26T00:54:37.865Z",
+  "generated_at": "2026-08-31T21:53:13.082Z",
   "system": "Global Scholarly Reference System v1",
-  "completion_pct": 88,
+  "completion_pct": 92,
   "features": [
     {
       "id": "global_ids",
@@ -64,8 +64,8 @@
       "label": "لوحة القيادة",
       "weight": 8,
       "file": "src/pages/admin/GlobalReferenceSection.tsx",
-      "complete": true,
-      "score": 8
+      "complete": false,
+      "score": 0
     },
     {
       "id": "reliability",
@@ -80,8 +80,8 @@
       "label": "خطة المستقبل",
       "weight": 12,
       "file": "data/global-reference-roadmap.json",
-      "complete": false,
-      "score": 0
+      "complete": true,
+      "score": 12
     }
   ],
   "automation": {
@@ -114,18 +114,18 @@
   "metrics": {
     "refs": 0,
     "relations": 0,
-    "sources": 6,
+    "sources": 5,
     "verified": 0,
     "needs_review": 0,
     "incomplete": 0
   },
   "dashboard": {
     "ok": true,
-    "at": "2026-06-26T00:54:37.864Z",
+    "at": "2026-08-31T21:53:13.081Z",
     "counts": {
       "refs": 0,
       "relations": 0,
-      "sources": 6,
+      "sources": 5,
       "verified": 0,
       "needs_review": 0,
       "incomplete": 0
@@ -150,14 +150,6 @@
         "trust_level": 95
       },
       {
-        "slug": "islamweb",
-        "name": "IslamWeb",
-        "name_ar": "إسلام ويب",
-        "source_type": "website",
-        "url": "https://islamweb.net",
-        "trust_level": 80
-      },
-      {
         "slug": "sunnah-com",
         "name": "Sunnah.com",
         "name_ar": "سنّة",
@@ -175,10 +167,10 @@
       },
       {
         "slug": "majalis-local",
-        "name": "Majalis Scientific Council",
+        "name": "سُنّة",
         "name_ar": "سُنّة",
         "source_type": "official",
-        "url": "https://majalis.app",
+        "url": "https://www.ssunnah.com",
         "trust_level": 90
       }
     ],
@@ -200,7 +192,7 @@
     }
   },
   "roadmap": {
-    "generated_at": "2026-06-26T00:54:37.865Z",
+    "generated_at": "2026-08-31T21:53:13.082Z",
     "horizon": "3 years",
     "principle": "لا تطوير جديد قبل استقرار الأنظمة الحالية",
     "phases": [
