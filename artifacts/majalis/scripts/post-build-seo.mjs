@@ -132,17 +132,17 @@ function buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody) {
       #root{min-height:40vh}
       .js-ready #seo-shell{display:none!important}
     </style>
-    <script>(function(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove();})()</script>
     ${spaAssets}
   </head>
   <body>
-    <!-- محتوى SEO مرئي للزواحف غير المُنفِّذة للـ JS -->
+    <!-- محتوى SEO مرئي للزواحف ولـ LCP حتى يركّب React -->
     <div id="seo-shell">
       ${prerenderBody}
     </div>
     <!-- جذر React — يُفعَّل بعد تشغيل JavaScript -->
     <div id="root"></div>
-    <!-- الثيم من mj-theme-boot داخل spaAssets فقط — لا سكربت body قديم يعيد design-v إلى v4 -->
+    <!-- أخفِ/أزل الصدفة بعد أول رسم لـ #root — لا تسرق LCP من prerender -->
+    <script>(function(){function a(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove()}var r=document.getElementById('root');if(r&&r.hasChildNodes())a();else{var o=new MutationObserver(function(){if(r&&r.hasChildNodes()){o.disconnect();a()}});o.observe(r||document.documentElement,{childList:true,subtree:true});setTimeout(a,8000)}})()</script>
   </body>
 </html>`;
 }
