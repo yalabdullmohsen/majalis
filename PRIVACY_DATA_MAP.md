@@ -1,4 +1,4 @@
-# خريطة بيانات الخصوصية — المجلس العلمي (جرد كود 2026-08-08)
+# خريطة بيانات الخصوصية — سُنّة (جرد كود 2026-08-08)
 
 لتعبئة بطاقات App Store / Play Data safety **بدون تخمين**.  
 آلية الحذف في التطبيق: `/account-deletion` → `POST /api/account/delete` → `auth.admin.deleteUser` (يعتمد `ON DELETE CASCADE` على الجداول المرتبطة بـ `auth.users`).

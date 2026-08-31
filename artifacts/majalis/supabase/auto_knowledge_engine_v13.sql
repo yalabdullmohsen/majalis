@@ -1,5 +1,5 @@
 -- =====================================================================
---  المجلس العلمي — Auto Knowledge Engine v13
+--  سُنّة — Auto Knowledge Engine v13
 --  Connectors · Queue · Cache · Audit · SEO · Health · Statistics
 --  نفّذ بعد knowledge_engine_v12.sql و auto_content_pipeline_v2.sql
 -- =====================================================================
@@ -201,7 +201,7 @@ VALUES
   ('alosaimi', 'موقع الشيخ صالح العصيمي', 'Al-Osaimi', 'SA', 'publisher', 'inactive', 'https://www.saadbinosaimi.com', NULL, 4, ARRAY['article','lesson'], 24, true, false),
   ('alsabt', 'موقع الشيخ خالد السبت', 'Al-Sabt', 'SA', 'publisher', 'inactive', 'https://alsabt.com', NULL, 4, ARRAY['article','lesson'], 24, true, false),
   ('hayat-kibar-ulama', 'هيئة كبار العلماء', 'Senior Scholars', 'SA', 'islamic_org', 'rss', 'https://www.alifta.com', NULL, 5, ARRAY['fatwa','resolution','news'], 24, true, false),
-  ('majlis-seed', 'بذور المجلس العلمي', 'Majlis Seed', 'KW', 'publisher', 'seed', 'https://majlisilm.com', NULL, 5, ARRAY['lesson','fawaid','book','miracle','qa','article'], 24, true, true),
+  ('majlis-seed', 'بذور سُنّة', 'Majlis Seed', 'KW', 'publisher', 'seed', 'https://majlisilm.com', NULL, 5, ARRAY['lesson','fawaid','book','miracle','qa','article'], 24, true, true),
   ('kuwait-lessons', 'دروس الكويت', 'Kuwait Lessons', 'KW', 'government', 'seed', 'https://majlisilm.com', NULL, 4, ARRAY['lesson','lecture','course'], 6, true, true)
 ON CONFLICT (slug) DO NOTHING;
 

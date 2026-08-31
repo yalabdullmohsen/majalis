@@ -192,7 +192,7 @@ export default function Slide6Library() {
           color: "#CFE0D3",
         }}
       >
-        مجالس العلم
+        سُنّة
       </div>
     </div>
   );

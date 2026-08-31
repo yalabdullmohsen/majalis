@@ -253,7 +253,7 @@ jobs:
           set -euo pipefail
           SITE="https://www.majlisilm.com"
           MSG=$(cat <<EOF
-          ✅ نُشر بنجاح — مجالس العلم
+          ✅ نُشر بنجاح — سُنّة
           PR: ${PRN:-—} — ${PRT:-—}
           Commit: ${SHORT} (${SHA})
           Build / run: ${RUN_ID}

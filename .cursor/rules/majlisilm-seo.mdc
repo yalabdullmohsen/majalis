@@ -4,7 +4,7 @@ globs: artifacts/majalis/src/**/*.{tsx,ts}
 alwaysApply: false
 ---
 
-# المجلس العلمي — SEO
+# سُنّة — SEO
 
 - كل صفحة عامة: `title` مستقل، `meta description`، `canonical`، Open Graph، Twitter Card.
 - لا تُدرج في `sitemap.xml` صفحات 404 أو محوّلة للرئيسية أو `noindex`.

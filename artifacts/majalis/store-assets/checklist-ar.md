@@ -1,4 +1,4 @@
-# قائمة تحقق النشر — مجالس العلم
+# قائمة تحقق النشر — سُنّة
 ## الخطوات اليدوية المتبقية بعد قبول الحسابات
 
 ---
@@ -13,7 +13,7 @@
 ## 1. إعداد حسابات المطورين (مرة واحدة)
 - [ ] إنشاء حساب Apple Developer: developer.apple.com ($99/سنة)
 - [ ] إنشاء حساب Google Play Console: play.google.com/console ($25 مرة واحدة)
-- [ ] إنشاء App Store Connect record لـ "مجالس العلم" (Bundle: com.majlisilm.app)
+- [ ] إنشاء App Store Connect record لـ "سُنّة" (Bundle: com.majlisilm.app)
 - [ ] إنشاء Google Play app listing
 
 ---

@@ -43,7 +43,7 @@ function padToNeed(original, need, suffixes) {
     if (candidate.length >= need) return candidate;
     out = candidate;
   }
-  const filler = " — مرجع معتمد في مجالس العلم.";
+  const filler = " — مرجع معتمد في سُنّة.";
   if (out.length < need) throw new Error("content-padding banned");
   return out;
 }
@@ -68,7 +68,7 @@ const FIQH_DESC = {
   "قارن بين القرارات والفتاوى":
     "أداة المقارنة الفقهية: قارن بين قرارات المجامع وفتاوى الهيئات في مسألة واحدة لمعرفة الخلاف والاتفاق.",
   "الوضوء والغسل والتيمم":
-    "أحكام الطهارة: الوضوء والغسل والتيمم ونواقضها، من مرجع الفقه المعتمد في مجالس العلم.",
+    "أحكام الطهارة: الوضوء والغسل والتيمم ونواقضها، من مرجع الفقه المعتمد في سُنّة.",
   "أحكام الصلاة وأوقاتها":
     "أحكام الصلاة: أركانها وشروطها وواجباتها وسننها وأوقاتها، مع ما يتعلق بالجماعة والمسافر.",
   "أحكام الزكاة وحسابها":
@@ -170,7 +170,7 @@ function enrichItem(item, kind, contextLine = "") {
     if (field === "description") {
       return padToNeed(value, need, [
         "مع الأدلة من القرآن والسنة وأقوال العلماء",
-        "مرجع معتمد في مجالس العلم",
+        "مرجع معتمد في سُنّة",
       ]);
     }
   }
@@ -381,12 +381,12 @@ function enrichItem(item, kind, contextLine = "") {
 
   if (field === "description" || field === "desc") {
     return padToNeed(value, need, [
-      "محتوى معتمد في مجالس العلم",
+      "محتوى معتمد في سُنّة",
       "يُستفاد منه في التعلم والتدبر",
     ]);
   }
 
-  return padToNeed(value, need, [" — من مراجع مجالس العلم المعتمدة."]);
+  return padToNeed(value, need, [" — من مراجع سُنّة المعتمدة."]);
 }
 
 function findContextLine(content, value) {

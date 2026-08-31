@@ -76,10 +76,10 @@ BEGIN
 
     INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
     VALUES
-      (gen_random_uuid(), v_i1, 'نخبة الفكر في مصطلح أهل الأثر', 'الإمام ابن حجر العسقلاني', 'أساسية إلزامية', 'مبحث الشاذ والمنكر', 'أشهر متن في مصطلح الحديث، موجود في مكتبة المنصة (/library/book-nukhbah)', 'مكتبة المجلس العلمي'),
-      (gen_random_uuid(), v_i2, 'نخبة الفكر في مصطلح أهل الأثر', 'الإمام ابن حجر العسقلاني', 'أساسية إلزامية', 'مبحث العلة والحديث المعلَّل', 'موجود في مكتبة المنصة (/library/book-nukhbah)', 'مكتبة المجلس العلمي'),
-      (gen_random_uuid(), v_i3, 'نخبة الفكر في مصطلح أهل الأثر', 'الإمام ابن حجر العسقلاني', 'أساسية إلزامية', 'مبحث الإدراج', 'موجود في مكتبة المنصة (/library/book-nukhbah)', 'مكتبة المجلس العلمي'),
-      (gen_random_uuid(), v_i4, 'نخبة الفكر في مصطلح أهل الأثر', 'الإمام ابن حجر العسقلاني', 'أساسية إلزامية', 'مبحث القلب والاضطراب', 'موجود في مكتبة المنصة (/library/book-nukhbah)', 'مكتبة المجلس العلمي');
+      (gen_random_uuid(), v_i1, 'نخبة الفكر في مصطلح أهل الأثر', 'الإمام ابن حجر العسقلاني', 'أساسية إلزامية', 'مبحث الشاذ والمنكر', 'أشهر متن في مصطلح الحديث، موجود في مكتبة المنصة (/library/book-nukhbah)', 'مكتبة سُنّة'),
+      (gen_random_uuid(), v_i2, 'نخبة الفكر في مصطلح أهل الأثر', 'الإمام ابن حجر العسقلاني', 'أساسية إلزامية', 'مبحث العلة والحديث المعلَّل', 'موجود في مكتبة المنصة (/library/book-nukhbah)', 'مكتبة سُنّة'),
+      (gen_random_uuid(), v_i3, 'نخبة الفكر في مصطلح أهل الأثر', 'الإمام ابن حجر العسقلاني', 'أساسية إلزامية', 'مبحث الإدراج', 'موجود في مكتبة المنصة (/library/book-nukhbah)', 'مكتبة سُنّة'),
+      (gen_random_uuid(), v_i4, 'نخبة الفكر في مصطلح أهل الأثر', 'الإمام ابن حجر العسقلاني', 'أساسية إلزامية', 'مبحث القلب والاضطراب', 'موجود في مكتبة المنصة (/library/book-nukhbah)', 'مكتبة سُنّة');
 
     UPDATE courses SET status = 'published' WHERE id = v_nukhbah_course_id;
     UPDATE learning_paths SET total_sessions = total_sessions + 4, updated_at = now() WHERE id = v_mustalah_path_id;
@@ -114,17 +114,17 @@ BEGIN
 
   IF v_bukhari_item_id IS NOT NULL AND NOT EXISTS (SELECT 1 FROM course_books WHERE learning_item_id = v_bukhari_item_id) THEN
     INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
-    VALUES (gen_random_uuid(), v_bukhari_item_id, 'صحيح البخاري', 'الإمام محمد بن إسماعيل البخاري', 'أساسية إلزامية', 'قراءة عامة موجَّهة', 'أصح كتاب بعد كتاب الله، موجود في مكتبة المنصة (/library/book-bukhari)', 'مكتبة المجلس العلمي');
+    VALUES (gen_random_uuid(), v_bukhari_item_id, 'صحيح البخاري', 'الإمام محمد بن إسماعيل البخاري', 'أساسية إلزامية', 'قراءة عامة موجَّهة', 'أصح كتاب بعد كتاب الله، موجود في مكتبة المنصة (/library/book-bukhari)', 'مكتبة سُنّة');
   END IF;
 
   IF v_muslim_item1_id IS NOT NULL AND NOT EXISTS (SELECT 1 FROM course_books WHERE learning_item_id = v_muslim_item1_id) THEN
     INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
-    VALUES (gen_random_uuid(), v_muslim_item1_id, 'صحيح مسلم', 'الإمام مسلم بن الحجاج النيسابوري', 'أساسية إلزامية', 'قراءة عامة موجَّهة', 'ثاني أصح كتب الحديث، موجود في مكتبة المنصة (/library/book-muslim)', 'مكتبة المجلس العلمي');
+    VALUES (gen_random_uuid(), v_muslim_item1_id, 'صحيح مسلم', 'الإمام مسلم بن الحجاج النيسابوري', 'أساسية إلزامية', 'قراءة عامة موجَّهة', 'ثاني أصح كتب الحديث، موجود في مكتبة المنصة (/library/book-muslim)', 'مكتبة سُنّة');
   END IF;
 
   IF v_muslim_item2_id IS NOT NULL AND NOT EXISTS (SELECT 1 FROM course_books WHERE learning_item_id = v_muslim_item2_id) THEN
     INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
-    VALUES (gen_random_uuid(), v_muslim_item2_id, 'صحيح مسلم', 'الإمام مسلم بن الحجاج النيسابوري', 'أساسية إلزامية', 'الحديث رقم 989', 'موجود في مكتبة المنصة (/library/book-muslim)', 'مكتبة المجلس العلمي');
+    VALUES (gen_random_uuid(), v_muslim_item2_id, 'صحيح مسلم', 'الإمام مسلم بن الحجاج النيسابوري', 'أساسية إلزامية', 'الحديث رقم 989', 'موجود في مكتبة المنصة (/library/book-muslim)', 'مكتبة سُنّة');
   END IF;
 
   RAISE NOTICE 'ربط sahih-bukhari/sahih-muslim: bukhari_item=%, muslim_item1=%, muslim_item2=%', v_bukhari_item_id, v_muslim_item1_id, v_muslim_item2_id;

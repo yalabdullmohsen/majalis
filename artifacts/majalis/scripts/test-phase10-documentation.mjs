@@ -28,7 +28,7 @@ for (const name of required) {
   assert.ok(st.isFile(), `${name} missing`);
   assert.ok(st.size > 200, `${name} too short`);
   const text = readFileSync(path, "utf8");
-  assert.match(text, /المجلس|Majalis|majalis/i, `${name} should reference the product`);
+  assert.match(text, /سُنّة|المجلس|Majalis|majalis/i, `${name} should reference the product`);
 }
 
 console.log("phase10-documentation: ok");

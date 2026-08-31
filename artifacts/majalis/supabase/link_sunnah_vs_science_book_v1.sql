@@ -33,7 +33,7 @@ BEGIN
   END IF;
 
   INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
-  VALUES (gen_random_uuid(), v_item_id, 'دعوى تعارض السنة النبوية مع العلم التجريبي: دراسة نقدية تطبيقية', 'د. راشد صليهم الصليهم الهاجري', 'أساسية إلزامية', 'الدراسة كاملة (جزءان)', 'الكتاب الوحيد لهذا العنوان بعينه، موجود الآن في مكتبة المنصة (/library/book-daawa-taarud-sunnah-ilm)', 'مكتبة المجلس العلمي');
+  VALUES (gen_random_uuid(), v_item_id, 'دعوى تعارض السنة النبوية مع العلم التجريبي: دراسة نقدية تطبيقية', 'د. راشد صليهم الصليهم الهاجري', 'أساسية إلزامية', 'الدراسة كاملة (جزءان)', 'الكتاب الوحيد لهذا العنوان بعينه، موجود الآن في مكتبة المنصة (/library/book-daawa-taarud-sunnah-ilm)', 'مكتبة سُنّة');
 
   RAISE NOTICE 'رُبط عنصر sunnah-vs-science: item_id=%', v_item_id;
 END $$;

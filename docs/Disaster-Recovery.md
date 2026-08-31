@@ -1,4 +1,4 @@
-# Disaster Recovery — المجلس العلمي
+# Disaster Recovery — سُنّة
 
 ## RPO / RTO targets (operational)
 

@@ -1,4 +1,4 @@
-# مصفوفة QA — المجلس العلمي (Capacitor / TestFlight)
+# مصفوفة QA — سُنّة (Capacitor / TestFlight)
 
 آخر تحديث: 2026-08-09
 

@@ -1,4 +1,4 @@
-# تدقيق استقرار iOS — المجلس العلمي (Capacitor)
+# تدقيق استقرار iOS — سُنّة (Capacitor)
 
 **الفرع:** `cursor/fix-ios-comprehensive-stability-audit-1f54`  
 **PR:** [#617](https://github.com/yalabdullmohsen/majalis/pull/617) (Draft — NO-AUTO-MERGE)  

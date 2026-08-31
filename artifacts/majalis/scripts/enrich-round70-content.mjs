@@ -169,7 +169,7 @@ function applyFieldReplacements(filePath, replacements, field) {
 function enrichQuizAnswer(q) {
   const existing = (q.answer || "").trim();
   if (existing.length >= QUIZ_ANSWER_MIN) return existing;
-  const ref = q.reference && q.reference.length > 5 ? q.reference : "مراجع مجالس العلم";
+  const ref = q.reference && q.reference.length > 5 ? q.reference : "مراجع سُنّة";
   const suffixes = [
     ` — يُستفاد منه في باب ${q.category || q.section || "عام"} مع الرجوع إلى ${ref}.`,
     ` الجواب يُختبر فهم ${q.section || "المادة"} لا الحفظ اللفظي فقط.`,
@@ -181,7 +181,7 @@ function enrichQuizAnswer(q) {
 function enrichExplanation(q) {
   const existing = (q.explanation || "").trim();
   if (existing.length >= QUIZ_EXPL_MIN) return existing;
-  const ref = q.reference && q.reference.length > 5 ? q.reference : "مراجع مجالس العلم";
+  const ref = q.reference && q.reference.length > 5 ? q.reference : "مراجع سُنّة";
   const suffixes = [
     `يُستفاد منه في باب ${q.category || q.section || "عام"} مع الرجوع إلى ${ref}.`,
     `الجواب يُختبر فهم ${q.section || "المادة"} لا الحفظ اللفظي فقط.`,

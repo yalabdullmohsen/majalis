@@ -51,7 +51,7 @@ export default function Slide1Title() {
             textWrap: "balance",
           }}
         >
-          مجالس العلم
+          سُنّة
         </div>
         <div
           style={{
@@ -163,7 +163,7 @@ export default function Slide1Title() {
           textTransform: "uppercase",
         }}
       >
-        Majalis Al-Ilm
+        سُنّة
       </div>
     </div>
   );

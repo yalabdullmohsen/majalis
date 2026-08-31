@@ -1,4 +1,4 @@
-# Documentation index — المجلس العلمي
+# Documentation index — سُنّة
 
 Enterprise runbooks and architecture references for long-term operations.
 

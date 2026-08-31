@@ -135,7 +135,7 @@ function makeFawaidItems() {
       text: `من فقه ${topic.title} في ${topic.section} أن ${topic.meaning}، وأن العلم النافع يثمر إنصافا ورفقا وثباتا على الدليل مع معرفة قدر النفس.${suffix}`,
       category: index % 2 === 0 ? topic.section : "تزكية",
       source: topic.reference,
-      author_name: index % 2 === 0 ? "أهل العلم" : "محررو مجالس العلم",
+      author_name: index % 2 === 0 ? "أهل العلم" : "محررو سُنّة",
     }));
 }
 

@@ -32,7 +32,7 @@ export function Scene5() {
         className="text-8xl font-display font-bold text-emerald mb-4 drop-shadow-sm"
         style={{ color: 'var(--color-emerald)' }}
       >
-        {'مجالس العلم'.split('').map((char, i) => (
+        {'سُنّة'.split('').map((char, i) => (
           <motion.span
             key={i}
             className="inline-block"

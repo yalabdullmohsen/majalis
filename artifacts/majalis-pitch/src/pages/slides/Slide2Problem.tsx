@@ -224,7 +224,7 @@ export default function Slide2Problem() {
           letterSpacing: "0.05em",
         }}
       >
-        مجالس العلم
+        سُنّة
       </div>
     </div>
   );

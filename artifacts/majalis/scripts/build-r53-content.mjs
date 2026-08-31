@@ -69,7 +69,7 @@ function padFawaid(text, min) {
 function enrichExplanation(q) {
   const existing = (q.explanation || "").trim();
   if (existing.length >= EXPL_MIN) return existing;
-  const ref = q.reference && q.reference.length > 5 ? q.reference : "مراجع مجالس العلم";
+  const ref = q.reference && q.reference.length > 5 ? q.reference : "مراجع سُنّة";
   const suffixes = [
     `يُستفاد منه في باب ${q.category || q.section || "عام"} مع الرجوع إلى ${ref}.`,
     `الجواب يُختبر فهم ${q.section || "المادة"} لا الحفظ اللفظي فقط.`,
@@ -149,7 +149,7 @@ if (fawaidPicked.length < 25) throw new Error(`Only ${fawaidPicked.length} fawai
 const quizLines = quizPicked.map((q, i) => {
   const id = String(1465 + i);
   const answer = padAnswer(q.answer, 60);
-  const ref = q.reference || "مراجع مجالس العلم";
+  const ref = q.reference || "مراجع سُنّة";
   const explanation = enrichExplanation({ ...q, reference: ref });
   return `  { id: "${id}", section: "${esc(q.section)}", category: "${esc(q.category || "عام")}", level: "${esc(q.level || "متوسط")}", question: "${esc(q.question)}", answer: "${esc(answer)}", explanation: "${esc(explanation)}", reference: "${esc(ref)}" }`;
 });
