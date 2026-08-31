@@ -758,15 +758,19 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     audioDockOpen &&
     (chromeOpen || playerState === "playing" || playerState === "buffering" || playerState === "error");
 
+  const prevAudioDockVisible = useRef(audioDockVisible);
   useEffect(() => {
     const shell = document.querySelector<HTMLElement>('[data-pane="current"] .mm-page-shell');
+    const wasDock = prevAudioDockVisible.current;
+    prevAudioDockVisible.current = audioDockVisible;
     if (!shell) return;
-    if (!audioDockVisible && !actionsOpen) {
+    /* أعد أعلى الصفحة فقط عند إغلاق رصيف التلاوة — لا عند كل تقليب/اختيار آية */
+    if (wasDock && !audioDockVisible && !actionsOpen) {
       shell.scrollTop = 0;
       return;
     }
-    /* لا تمرير عند الضغط على آية فقط — التحديد يبقى مكانه. تمرير عند رصيف التلاوة فقط. */
     if (!audioDockVisible) return;
+    /* لا تمرير عند الضغط على آية فقط — التحديد يبقى مكانه. تمرير عند رصيف التلاوة فقط. */
     const id = window.requestAnimationFrame(() => {
       const selected = shell.querySelector<HTMLElement>(".ayah-active, .is-playing");
       if (selected) {
