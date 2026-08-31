@@ -237,6 +237,19 @@ export function PrayerAlertSettingsCard() {
 
         <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
           <div>
+            <div className="ads-global-label">تذكير الصامت بعد الأذان</div>
+            <div className="ads-global-desc">شريط داخل التطبيق ١٠ دقائق + إشعار بعد ١٠ دقائق</div>
+          </div>
+          <MiniToggle
+            checked={prefs.postReminderEnabled}
+            onChange={(v) => patch({ postReminderEnabled: v })}
+            label="تذكير الصامت بعد الأذان"
+            disabled={!alertsOn}
+          />
+        </div>
+
+        <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
+          <div>
             <div className="ads-global-label">اهتزاز مع التنبيه</div>
             <div className="ads-global-desc">نبضة لمسية عند أذان الصلاة</div>
           </div>
