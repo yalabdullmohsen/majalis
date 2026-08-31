@@ -389,38 +389,6 @@ export default function PrayerTimesPage() {
         </div>
       )}
 
-      {prayers.length > 0 && (
-        <nav className="pts-list" aria-label="صلوات اليوم">
-          {prayers.map((p) => {
-            const next = isNext(p.key);
-            const pinned = isPinned(p.key);
-            const past = isPast(p);
-            const status = rowStatusLabel(p.key, countdown.next?.key, inGrace, ranKey, past);
-            return (
-              <button
-                key={p.key}
-                type="button"
-                className={[
-                  "pts-row",
-                  next || (inGrace && p.key === ranKey) ? "pts-row--next" : "",
-                  pinned && !next ? "pts-row--pinned" : "",
-                  past ? "pts-row--past" : "",
-                ].filter(Boolean).join(" ")}
-                onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
-                aria-pressed={pinned}
-                aria-label={`${PRAYER_AR[p.key] ?? p.name}، ${displayTime12(p)}، ${status}`}
-              >
-                <span className="pts-row__meta">
-                  <span className="pts-row__name">{PRAYER_AR[p.key] ?? p.name}</span>
-                  <span className="pts-row__status">{status}</span>
-                </span>
-                <span className="pts-row__time" dir="ltr">{displayTime12(p)}</span>
-              </button>
-            );
-          })}
-        </nav>
-      )}
-
       <section className="pts-hero" aria-label="العداد التنازلي">
         <MosqueSilhouette />
         <div className="pts-hero__content">
@@ -490,6 +458,38 @@ export default function PrayerTimesPage() {
           ))}
         </ol>
       </section>
+
+      {prayers.length > 0 && (
+        <nav className="pts-list" aria-label="صلوات اليوم">
+          {prayers.map((p) => {
+            const next = isNext(p.key);
+            const pinned = isPinned(p.key);
+            const past = isPast(p);
+            const status = rowStatusLabel(p.key, countdown.next?.key, inGrace, ranKey, past);
+            return (
+              <button
+                key={p.key}
+                type="button"
+                className={[
+                  "pts-row",
+                  next || (inGrace && p.key === ranKey) ? "pts-row--next" : "",
+                  pinned && !next ? "pts-row--pinned" : "",
+                  past ? "pts-row--past" : "",
+                ].filter(Boolean).join(" ")}
+                onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
+                aria-pressed={pinned}
+                aria-label={`${PRAYER_AR[p.key] ?? p.name}، ${displayTime12(p)}، ${status}`}
+              >
+                <span className="pts-row__meta">
+                  <span className="pts-row__name">{PRAYER_AR[p.key] ?? p.name}</span>
+                  <span className="pts-row__status">{status}</span>
+                </span>
+                <span className="pts-row__time" dir="ltr">{displayTime12(p)}</span>
+              </button>
+            );
+          })}
+        </nav>
+      )}
 
       <nav className="pts-chrome" aria-label="تنقّل الصفحة">
         <button
