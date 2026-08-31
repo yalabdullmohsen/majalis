@@ -408,7 +408,7 @@ BEGIN
       'book',
       li.title AS title,
       coalesce(li.description, li.title) AS body_text,
-      'مكتبة مجالس العلم' AS source_reference,
+      'مكتبة سُنّة' AS source_reference,
       coalesce(li.external_url, li.file_url, '') AS source_url,
       CASE WHEN li.trust_level IS NOT NULL THEN li.trust_level::numeric ELSE 75.0 END AS authority_score,
       jsonb_build_object(
@@ -448,7 +448,7 @@ BEGIN
       END AS content_type,
       n.title AS title,
       coalesce(n.summary, n.title) AS body_text,
-      'المجلس العلمي — المعرفة الإسلامية' AS source_reference,
+      'سُنّة — المعرفة الإسلامية' AS source_reference,
       '' AS source_url,
       70.0 AS authority_score,
       jsonb_build_object('node_type', n.node_type, 'ref', n.reference_id) AS metadata

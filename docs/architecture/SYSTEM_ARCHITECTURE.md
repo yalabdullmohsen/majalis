@@ -1,4 +1,4 @@
-# SYSTEM ARCHITECTURE — Majlis Al-Ilm (snapshot 2026-07-29)
+# SYSTEM ARCHITECTURE — سُنّة (snapshot 2026-07-29)
 
 ## Clients
 

@@ -1,4 +1,4 @@
-# تقرير التدقيق الشامل — منصة المجلس العلمي (majlisilm.com)
+# تقرير التدقيق الشامل — منصة سُنّة (majlisilm.com)
 
 **تاريخ التقرير:** 10 يوليو 2026  
 **المراجع:** كود المصدر في `/Users/alabdullmohsen/majalis-correct/artifacts/majalis/`  
@@ -399,7 +399,7 @@ const SHELL_ROUTES = [
 | المعيار | القيمة |
 |---------|--------|
 | **App ID** | `com.majlisilm.app` |
-| **App Name** | `مجالس العلم` |
+| **App Name** | `سُنّة` |
 | **webDir** | `dist` |
 | **androidScheme** | `https` |
 | **cleartext** | false (أمان) |

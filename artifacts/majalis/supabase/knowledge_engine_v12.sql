@@ -1,5 +1,5 @@
 -- =====================================================================
---  المجلس العلمي — AI Knowledge Engine v12
+--  سُنّة — AI Knowledge Engine v12
 --  مصادر رسمية + خط أنابيب المعرفة + فهرسة + بحث هجين
 --  آمن لإعادة التشغيل — نفّذ بعد cms_platform_v4.sql
 -- =====================================================================
@@ -61,7 +61,7 @@ VALUES
   ('quran-com', 'Quran.com — مرجع قرآني', 'Quran.com', 'INT', 'library',
    'https://quran.com', NULL, 5,
    ARRAY['book'], 'مراجع قرآنية رسمية'),
-  ('majlis-seed', 'بذور المجلس العلمي', 'Majlis Ilm', 'KW', 'publisher',
+  ('majlis-seed', 'بذور سُنّة', 'Majlis Ilm', 'KW', 'publisher',
    'https://majlisilm.com', NULL, 5,
    ARRAY['lesson','fawaid','book','miracle','qa'], 'محتوى داخلي موثق'),
   ('kuwait-lessons', 'دروس الكويت — مصادر محلية', 'Kuwait Lessons', 'KW', 'government',

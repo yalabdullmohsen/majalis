@@ -1,4 +1,4 @@
-# Performance — المجلس العلمي
+# Performance — سُنّة
 
 ## Scope
 

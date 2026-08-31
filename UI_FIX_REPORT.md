@@ -33,7 +33,7 @@
 
 - بعض صفحات المحتوى ما زالت تمرّر إيموجي كـمفتاح لـ `SectionIcon` (يُحوَّل لأيقونة Lucide عند العرض) — لا يظهر كإيموجي نصي في أغلب البطاقات.
 - أصول splash الأصلية على iOS/Android قد تحتاج تحديث بصري يدوي في Xcode/Android Studio لاحقًا (لم نلمس `capacitor.config.ts` حتى لا يُحظر Auto-merge).
-- `artifacts/mushafi` لم يُمسّ: لقطات الشاشة تطابق واجهة majalis (المجلس العلمي) لا مصحفي.
+- `artifacts/mushafi` لم يُمسّ: لقطات الشاشة تطابق واجهة majalis (سُنّة) لا مصحفي.
 
 ## أوامر الفحص
 
@@ -51,5 +51,5 @@ PORT=24216 BASE_PATH=/ pnpm run build
 - ESLint للمكوّنات المعدّلة: نجح.
 - اختبارات header-ticker / immersive-chrome / section-nav: نجحت.
 - `PORT=24216 BASE_PATH=/ pnpm run build`: نجح (ميزانية CSS الحرج ≤ 505000).
-- الإصلاح في `artifacts/majalis` فقط (واجهة المجلس العلمي / Capacitor).
+- الإصلاح في `artifacts/majalis` فقط (واجهة سُنّة / Capacitor).
 - لم يُمس `artifacts/mushafi` لأن لقطات الشاشة تطابق الموقع لا تطبيق مصحفي.

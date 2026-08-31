@@ -1,4 +1,4 @@
-# Reliability — المجلس العلمي
+# Reliability — سُنّة
 
 ## Contracts
 

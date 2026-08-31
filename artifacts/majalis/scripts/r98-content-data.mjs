@@ -135,7 +135,7 @@ function makeFawaidItems() {
       text: `من فقه ${topic.title} في ${topic.section} أن ${topic.meaning}، وأن صلاح العمل لا يتم إلا بعلم يضبط الدليل، وبصيرة تراعي الحال، وقلب يقصد وجه الله.${suffix}`,
       category: index % 2 === 0 ? topic.section : "تزكية",
       source: topic.reference,
-      author_name: index % 2 === 0 ? "أهل العلم" : "محررو مجالس العلم",
+      author_name: index % 2 === 0 ? "أهل العلم" : "محررو سُنّة",
     }));
 }
 

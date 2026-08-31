@@ -1,6 +1,6 @@
 # Automation Setup — iOS TestFlight + Supabase + Vercel + GitHub
 
-Unified CI/CD for **مجالس العلم (Majalis Al-Ilm)** monorepo.
+Unified CI/CD for **سُنّة** monorepo.
 
 | Component | Path in this repo |
 |---|---|

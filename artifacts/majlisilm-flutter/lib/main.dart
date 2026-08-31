@@ -56,7 +56,7 @@ class MajlisIlmUserApp extends StatelessWidget {
       child: Consumer<UserQuranAppController>(
         builder: (context, quran, _) {
           return MaterialApp(
-            title: 'المجلس العلمي',
+            title: 'سُنّة',
             debugShowCheckedModeBanner: false,
             locale: const Locale('ar'),
             builder: (context, child) => Directionality(

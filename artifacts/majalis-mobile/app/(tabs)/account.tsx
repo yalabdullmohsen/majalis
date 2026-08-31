@@ -69,7 +69,7 @@ export default function AccountScreen() {
             <Ionicons name="person" size={40} color={colors.primary} />
           </View>
           <Text style={[styles.email, { color: colors.foreground }]}>{user.email}</Text>
-          <Text style={[styles.memberLabel, { color: colors.mutedForeground }]}>عضو في مجالس العلم</Text>
+          <Text style={[styles.memberLabel, { color: colors.mutedForeground }]}>عضو في سُنّة</Text>
         </View>
 
         <View style={[styles.section, { marginTop: 24 }]}>
@@ -128,7 +128,7 @@ export default function AccountScreen() {
         <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
           {mode === "login"
             ? "ادخل للوصول إلى الدروس والمحتوى الكامل"
-            : "أنشئ حساباً جديداً للانضمام إلى مجالس العلم"}
+            : "أنشئ حساباً جديداً للانضمام إلى سُنّة"}
         </Text>
       </View>
 

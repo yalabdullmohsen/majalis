@@ -32,7 +32,7 @@ BEGIN
   END IF;
 
   INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
-  VALUES (gen_random_uuid(), v_item_id, 'القواعد المثلى في صفات الله وأسمائه الحسنى', 'الشيخ محمد بن صالح العثيمين', 'أساسية إلزامية', 'الرسالة كاملة', 'الكتاب الوحيد لهذا العنوان بعينه، موجود الآن في مكتبة المنصة (/library/book-qawaid-muthla)', 'مكتبة المجلس العلمي');
+  VALUES (gen_random_uuid(), v_item_id, 'القواعد المثلى في صفات الله وأسمائه الحسنى', 'الشيخ محمد بن صالح العثيمين', 'أساسية إلزامية', 'الرسالة كاملة', 'الكتاب الوحيد لهذا العنوان بعينه، موجود الآن في مكتبة المنصة (/library/book-qawaid-muthla)', 'مكتبة سُنّة');
 
   RAISE NOTICE 'رُبط عنصر qawaid-muthla: item_id=%', v_item_id;
 END $$;

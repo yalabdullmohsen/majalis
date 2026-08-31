@@ -19,7 +19,7 @@ const PLANS: Plan[] = [
   { id: "children", title: "خطة الأطفال", description: "نصف صفحة في الجلسة مع التلقين والمراجعة بإشراف المعلّم. محتوى معتمد في منهج سُنّة", sessions: 1208, kind: "memorization" },
   { id: "employee", title: "خطة الموظف", description: "صفحة في الجلسة وخمسة أيام أسبوعيًا، مع يومين مرنين. محتوى معتمد في منهج سُنّة", sessions: 604, kind: "memorization" },
   { id: "student", title: "خطة طالب العلم", description: "صفحتان تقريبًا في الجلسة مع اختبار أسبوعي وربط بالتسميع. محتوى معتمد في منهج سُنّة", sessions: 312, kind: "memorization" },
-  { id: "stabilize", title: "خطة التثبيت", description: "للحافظ: دورة مراجعة من 120 جلسة مع اختبار أسبوعي للمواضع الضعيفة. رواية ضعيفة لا تُعد حجةً ثابتة يُستغنى بما ثبت في الصحيح — سياسة مجالس", sessions: 120, kind: "review" },
+  { id: "stabilize", title: "خطة التثبيت", description: "للحافظ: دورة مراجعة من 120 جلسة مع اختبار أسبوعي للمواضع الضعيفة.", sessions: 120, kind: "review" },
 ];
 
 type SavedState = { planId: string; completed: number };

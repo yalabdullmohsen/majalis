@@ -83,7 +83,7 @@ async function probe(path) {
     const homepageFallback =
       path !== "/" &&
       status === 200 &&
-      /مجلس علمي|مجالس العلم/.test(title) &&
+      /مجلس علمي|سُنّة/.test(title) &&
       h1s === 1 &&
       /الصفحة الرئيسية|مرحبا/.test(html.slice(0, 2500));
     const sourcePlaceholder = /المصدر قيد الإضافة/.test(html);

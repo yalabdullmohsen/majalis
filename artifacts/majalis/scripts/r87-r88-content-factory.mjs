@@ -144,6 +144,6 @@ export function makeFawaidItems({ round }) {
       text: `${topic.title} يربي طالب العلم على ضبط باب ${topic.section}: ${topic.meaning}، ومن فقهه ألا يفصل المعنى عن مصدره ولا يوسع العبارة حتى تتجاوز دليلها.${suffix}`,
       category: index % 2 === 0 ? topic.section : "طلب العلم",
       source: topic.reference,
-      author_name: index % 2 === 0 ? "أهل العلم" : "محررو مجالس العلم",
+      author_name: index % 2 === 0 ? "أهل العلم" : "محررو سُنّة",
     }));
 }

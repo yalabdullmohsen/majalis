@@ -39,9 +39,9 @@
 
 ## React Improvements
 
-- Privacy: brand «المجلس العلمي»، grammar يُحتفَظ، drop raw `localStorage` wording.
+- Privacy: brand «سُنّة»، grammar يُحتفَظ، drop raw `localStorage` wording.
 - About/Methodology: Arabic-only review/provenance wording (no code field dumps).
-- Home hero: brand eyebrow «المجلس العلمي» + CSS.
+- Home hero: brand eyebrow «سُنّة» + CSS.
 - Unified About nav label to «من نحن» (footer + sitemap).
 - Spelling: تعرّف، تعذّر، تُرجَع؛ theme chip clearer; RecitationTest privacy brand fix.
 

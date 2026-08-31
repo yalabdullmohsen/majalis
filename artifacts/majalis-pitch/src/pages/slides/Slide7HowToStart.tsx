@@ -218,7 +218,7 @@ export default function Slide7HowToStart() {
           color: "rgba(207,224,211,0.35)",
         }}
       >
-        Majalis Al-Ilm
+        سُنّة
       </div>
     </div>
   );

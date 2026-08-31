@@ -165,7 +165,7 @@ function makeQuizItems({ start }) {
   const suffix =
     " وهذا تلخيص منهجي يقصد تقريب فقه السيرة للمتعلم، مع ترك الجزم بما لم يثبت وترك تنزيل الأحكام الخاصة لأهل العلم.";
   const explanation =
-    "منهج مجالس العلم في السيرة: تقديم الثابت، وذكر المشهور بتحفّظ، وتجنّب الإسرائيليات والجزم بتاريخٍ مختلف فيه بلا دليل تعبّدي.";
+    "منهج سُنّة في السيرة: تقديم الثابت، وذكر المشهور بتحفّظ، وتجنّب الإسرائيليات والجزم بتاريخٍ مختلف فيه بلا دليل تعبّدي.";
   return roundTopics().map((topic, index) => ({
     id: String(start + index),
     section: topic.section,
@@ -208,7 +208,7 @@ function makeFawaidItems() {
       text: `من فقه ${topic.title} في ${topic.section} أن ${topic.meaning}، وأن محبة النبي ﷺ تظهر في التأسّي العملي والتثبّت في الرواية وترك الاحتفال بما لم يُشرع.${suffix}`,
       category: index % 5 === 0 ? "السيرة" : topic.fawaidCategory,
       source: topic.reference,
-      author_name: index % 2 === 0 ? "أهل العلم" : "محررو مجالس العلم",
+      author_name: index % 2 === 0 ? "أهل العلم" : "محررو سُنّة",
     }));
 }
 

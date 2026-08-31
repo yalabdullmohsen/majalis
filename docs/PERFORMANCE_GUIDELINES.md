@@ -36,7 +36,7 @@ node artifacts/majalis/scripts/test-bundle-budget.mjs
 
 **قراءة التقرير:** المربعات الكبيرة = مكتبات/chunks ثقيلة. ركّز على ما يدخل مسار الإقلاع (entry / vendor المشترك). مكتبة كبيرة لمكوّن غير أساسي → `lazyWithRetry` أو `await import()` داخل المعالج، ثم أعد القياس وقارن gzip في `PERFORMANCE_BASELINE.md`.
 
-## مكتبات ثقيلة — سياسة المجلس (لا Moment / Axios / Lodash كامل)
+## مكتبات ثقيلة — سياسة سُنّة (لا Moment / Axios / Lodash كامل)
 
 | مكتبة ثقيلة | حالة المشروع | السياسة |
 |-------------|--------------|---------|

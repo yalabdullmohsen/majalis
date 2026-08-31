@@ -11,7 +11,7 @@ BEGIN
   SELECT li.id, 'الرحيق المختوم', 'الشيخ صفي الرحمن المباركفوري', 'أساسية إلزامية',
          'باب متصل بموضوع: ' || li.title,
          'مرجع سيرة معتمَد وشامل، مستخدَم فعلاً في كورسات السيرة الأخرى بالمسار — موجود في مكتبة المنصة (/library/book-raheeq)',
-         'مكتبة المجلس العلمي'
+         'مكتبة سُنّة'
   FROM learning_items li
   JOIN course_units cu ON cu.id = li.unit_id
   JOIN courses c ON c.id = cu.course_id

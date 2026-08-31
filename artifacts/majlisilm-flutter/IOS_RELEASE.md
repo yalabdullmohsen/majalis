@@ -4,7 +4,7 @@
 - **Marketing:** `1.0.0`
 - **Build:** `5` (`pubspec.yaml` → `1.0.0+5`)
 - **Bundle ID:** `com.majlisilm.majlisilmFlutter`
-- **Display name:** المجلس العلمي
+- **Display name:** سُنّة
 - **Min iOS:** 13.0
 
 ## ما يشمله هذا التحديث
