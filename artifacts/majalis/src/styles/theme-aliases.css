@@ -97,13 +97,22 @@
   /* color-* الدلالية */
   /* color-bg/primary/text من theme.css؛ بقية الجسور الدلالية */
   --color-background: var(--mj-bg);
+  --color-bg: var(--surface-app, var(--mj-bg));
   --color-bg-soft: var(--mj-surface-2);
-  --color-surface-elevated: var(--mj-surface);
+  --color-surface-elevated: var(--mj-surface-2);
+  --color-text: var(--mj-ink);
   --color-text-muted: var(--mj-muted);
+  --color-border: var(--mj-hairline);
+  --color-primary: var(--mj-brand);
+  --color-primary-foreground: var(--mj-on-brand);
+  --color-primary-deep: var(--mj-brand-deep);
+  --color-button-secondary-bg: var(--mj-surface-2);
+  --color-button-secondary-text: var(--mj-brand-deep);
+  --color-button-secondary-border: var(--mj-hairline);
+  --color-placeholder: var(--mj-muted);
   --color-primary-dark: var(--mj-brand-deep);
   --color-primary-strong: var(--mj-brand-deep);
   --color-primary-soft: var(--mj-brand-soft);
-  --color-border: var(--mj-hairline);
 
   /* خطوط — --font-app للنصوص؛ --font-quran للمصحف فقط */
   --font-face: var(--font-app);
@@ -226,8 +235,18 @@ html.dark,
   --n-900: var(--mj-ink);
 
   --color-background: var(--mj-bg);
+  --color-bg: var(--surface-app, var(--mj-bg));
+  --color-surface-elevated: var(--mj-surface-2);
+  --color-text: var(--mj-ink);
+  --color-text-muted: var(--mj-muted);
   --color-border: var(--mj-hairline);
+  --color-primary: var(--mj-brand);
   --color-primary-foreground: #06231A;
+  --color-primary-deep: #8FD4B0;
+  --color-button-secondary-bg: #222D29;
+  --color-button-secondary-text: #F8FAFC;
+  --color-button-secondary-border: #445651;
+  --color-placeholder: #C5D0CB;
 
   --majalis-emerald: var(--mj-brand);
   --majalis-emerald-deep: #4AA882;
@@ -343,7 +362,7 @@ html.dark .navbar-v3 .navbar-brand__mark {
   background: var(--mj-surface) !important;
   border: 1px solid var(--mj-hairline) !important;
   border-radius: var(--mj-r-pill) !important;
-  color: var(--mj-muted) !important;
+  color: var(--color-placeholder, var(--mj-muted)) !important;
 }
 
 /* الارتفاع من الرمز ‎--ticker-h‎ لا من رقم صلب: هذه القاعدة بـ!important كانت

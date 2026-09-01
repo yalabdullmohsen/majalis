@@ -303,8 +303,18 @@
   --font-display: var(--font-app);
   --font-body: var(--font-app);
   --color-bg: var(--mj-bg);
-  --color-primary: var(--mj-brand);
+  --color-surface-elevated: var(--mj-surface-2);
   --color-text: var(--mj-ink);
+  --color-text-muted: var(--mj-muted);
+  --color-border: var(--mj-hairline);
+  --color-primary: var(--mj-brand);
+  --color-primary-foreground: var(--mj-on-brand);
+  /* نص/روابط العلامة على سطح الصفحة (≠ brand-deep للخلفيات الداكنة) */
+  --color-primary-deep: var(--mj-brand-deep);
+  --color-button-secondary-bg: var(--mj-surface-2);
+  --color-button-secondary-text: var(--mj-brand-deep);
+  --color-button-secondary-border: var(--mj-hairline);
+  --color-placeholder: var(--mj-muted);
 }
 
 /* الوضع الليلي — أفتح قليلًا، أسطح متمايزة، نصوص صريحة (بلا fallback نهاري) */
@@ -371,6 +381,18 @@ html.dark,
   --color-bg: var(--surface-app);
   --color-surface: #1B2421;
   --color-surface-2: #222D29;
+  --color-surface-elevated: #222D29;
+  --color-text: #F8FAFC;
+  --color-text-muted: #C5D0CB;
+  --color-border: #35443F;
+  --color-primary: #5CC095;
+  --color-primary-foreground: #06231A;
+  /* نص العلامة على سطح داكن — mint فاتح (≠ --mj-brand-deep للخلفيات) */
+  --color-primary-deep: #8FD4B0;
+  --color-button-secondary-bg: #222D29;
+  --color-button-secondary-text: #F8FAFC;
+  --color-button-secondary-border: #445651;
+  --color-placeholder: #C5D0CB;
   --color-hairline: #35443F;
   --color-ink: #F8FAFC;
   --color-ink-2: #E2E8F0;
@@ -594,7 +616,7 @@ a:active {
   left: auto !important;
   right: auto !important;
   background: var(--mj-brand, #1f7a5a) !important;
-  color: var(--mj-on-brand, #fff) !important;
+  color: var(--color-primary-foreground, var(--mj-on-brand, #fff)) !important;
   border-radius: var(--mj-r-sm, 8px) !important;
   font-weight: 700 !important;
   font-size: 0.9rem !important;
