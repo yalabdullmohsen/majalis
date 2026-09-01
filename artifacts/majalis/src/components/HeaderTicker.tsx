@@ -20,7 +20,7 @@ type TickerItem = {
   key: string;
   Icon: LucideIcon;
   label: string;
-  text: string;
+  previewText: string;
   source?: string;
   href: string;
   kind?: TickerKind;
@@ -104,16 +104,16 @@ function useRotatingContent(): TickerContentItem[] {
 }
 
 function TickerEntry({ item }: { item: TickerItem & { kind?: TickerKind } }) {
+  const ariaLabel = item.source
+    ? `${item.label} — ${item.previewText} — المصدر: ${item.source}`
+    : `${item.label} — ${item.previewText}`;
   return (
-    <Link href={item.href} className="header-ticker__item">
+    <Link href={item.href} className="header-ticker__item" aria-label={ariaLabel}>
       <item.Icon size={13} strokeWidth={1.8} className="header-ticker__icon" aria-hidden="true" />
       <span className="header-ticker__label">{item.label}</span>
-      {item.kind === "hadith" ? (
-        <span className="header-ticker__warn">تنبيه الحديث</span>
-      ) : null}
-      <span className="header-ticker__text">{item.text}</span>
+      <span className="header-ticker__text" aria-hidden="true">{item.previewText}</span>
       {item.source ? (
-        <span className="header-ticker__source" aria-label={`المصدر: ${item.source}`}>
+        <span className="header-ticker__source" aria-hidden="true">
           — {item.source}
         </span>
       ) : null}
@@ -181,12 +181,12 @@ export function HeaderTicker() {
 
   const items = useMemo<TickerItem[]>(() => {
     return contentItems
-      .filter((c) => !!c.text?.trim())
+      .filter((c) => !!c.previewText?.trim())
       .map((c) => ({
         key: c.id,
         Icon: KIND_ICON[c.kind] ?? Sparkles,
         label: c.label,
-        text: c.text,
+        previewText: c.previewText,
         source: c.source,
         href: c.href,
         kind: c.kind,
@@ -262,7 +262,7 @@ export function HeaderTicker() {
               key: "fallback",
               Icon: Sparkles,
               label: "سُنّة",
-              text: "تصفّح المصحف والدروس والفتاوى",
+              previewText: "تصفّح المصحف والدروس والفتاوى",
               href: "/quran-hub",
             }}
           />
@@ -291,7 +291,7 @@ export function HeaderTicker() {
 
   const loop = [...items, ...items];
   const totalChars = items.reduce(
-    (sum, it) => sum + it.text.length + (it.source?.length ?? 0) + it.label.length,
+    (sum, it) => sum + it.previewText.length + (it.source?.length ?? 0) + it.label.length,
     0,
   );
   const durationSec = marqueeDurationSec(Math.max(items.length, 1), totalChars);

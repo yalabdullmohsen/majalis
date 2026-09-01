@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { X } from "lucide-react";
 import type { AdhkarItem } from "@/lib/adhkar-seed";
+import { formatPublicGrade, normalizePublicSource } from "@/lib/content-display-zones";
 import { ShareButton } from "@/components/ShareButton";
 import { IsnadAttributionBar } from "@/components/IsnadAttributionBar";
 
@@ -15,6 +16,9 @@ type Props = {
 
 /** شيت تفاصيل الذكر — كسول حتى يُفتح (خارج مسار قائمة الأذكار). */
 export function AdhkarDhikrSheet({ item, onClose }: Props) {
+  const displaySource = normalizePublicSource(item.source, item.grade) ?? item.source;
+  const displayGrade = formatPublicGrade(item.grade) ?? item.grade;
+
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -51,8 +55,8 @@ export function AdhkarDhikrSheet({ item, onClose }: Props) {
         </dl>
         <IsnadAttributionBar
           data={{
-            source: item.source,
-            grade: item.grade,
+            source: displaySource,
+            grade: displayGrade,
             narrator: item.narrator,
             reference: item.reference,
             reportContentType: "adhkar",
@@ -61,7 +65,7 @@ export function AdhkarDhikrSheet({ item, onClose }: Props) {
         />
         <ShareButton
           title="ذكر"
-          text={`${item.text}${item.source ? `\n— ${item.source}` : ""}`}
+          text={`${item.text}${displaySource ? `\n— ${displaySource}` : ""}`}
           size="sm"
           className="adhkar-sheet-share"
         />

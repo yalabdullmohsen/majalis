@@ -6,16 +6,18 @@ import { getPublishedAdhkarItems } from "@/lib/adhkar-admin";
 import type { AdhkarItem } from "@/lib/adhkar-seed";
 import { fetchVerifiedAdhkarItems } from "@/lib/adhkar-supabase";
 import { LruCache } from "@/lib/lru-cache";
+import { isBlockedFromPublic } from "@/lib/content-display-zones";
 
 /** Bounded merge-result cache — prevents retaining unbounded adhkar list snapshots. */
 const ADHKAR_LIST_CACHE = new LruCache<string, AdhkarItem[]>(4);
 
-/** لا تُعرض للعامة أذكارٌ صُرِّح بضعفها — منهج الموقع: لا ضعيف في الترغيب/التعبّد. */
+/** لا تُعرض للعامة أذكارٌ ضعيفة أو لم يثبت حكمها في المصدر. */
 export function isPublishableAdhkar(item: AdhkarItem): boolean {
-  const g = (item.grade || "").trim();
-  if (!g) return true;
-  if (/ضعيف|موضوع|منكر|واه/.test(g)) return false;
-  return true;
+  return !isBlockedFromPublic(item);
+}
+
+export function getUnverifiedAdhkarItems(items: AdhkarItem[]): AdhkarItem[] {
+  return items.filter((item) => isBlockedFromPublic(item));
 }
 
 export function mergeAdhkarSources(local: AdhkarItem[], remote: AdhkarItem[]): AdhkarItem[] {
@@ -24,7 +26,7 @@ export function mergeAdhkarSources(local: AdhkarItem[], remote: AdhkarItem[]): A
   for (const item of remote) {
     if (!byId.has(item.id)) byId.set(item.id, item);
   }
-  return [...byId.values()].filter(isPublishableAdhkar);
+  return [...byId.values()];
 }
 
 export function usePublishedAdhkarItems() {
