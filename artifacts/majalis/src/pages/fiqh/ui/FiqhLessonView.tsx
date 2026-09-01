@@ -82,7 +82,6 @@ export default function FiqhLessonPage() {
 
   useEffect(() => {
     if (!hit) return;
-    const status = getLessonContentStatus(hit.lesson);
     const severelyIncomplete = isSeverelyIncompleteLesson(hit.lesson);
     applyPageSeo({
       path: hit.href,

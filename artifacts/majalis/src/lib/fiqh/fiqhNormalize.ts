@@ -3,7 +3,6 @@
  */
 import {
   getAllFiqhBooks,
-  isPublishedLesson,
   publishedChapters,
   publishedLessonsInChapter,
   type FiqhBook,
