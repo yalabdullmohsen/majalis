@@ -27,6 +27,14 @@ assert.doesNotMatch(
 assert.match(healthz, /service:\s*"ssunnah-web"/, "healthz service name is ssunnah-web");
 assert.doesNotMatch(healthz, /VERCEL_GIT_COMMIT_SHA|uptimeMs/, "healthz must not expose internal deploy metadata");
 
+const readyz = readFileSync(join(root, "lib/api-handlers/readyz.js"), "utf8");
+assert.match(readyz, /service:\s*"ssunnah-web"/, "readyz lite exposes ssunnah-web service");
+assert.doesNotMatch(
+  readyz,
+  /status:\s*"ok"[\s\S]{0,220}version,/,
+  "readyz lite must not expose version/commit in public JSON",
+);
+
 // Dedicated light function files are optional Phase-1 stretch; do not require them
 // after Production deploy regressions from multi-function vercel.json configs.
 assert.equal(existsSync(join(root, "api/index.js")), true, "api/index.js is the serverless entry");
