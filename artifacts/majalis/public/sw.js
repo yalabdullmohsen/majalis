@@ -62,6 +62,13 @@ const STATIC_SHELL_ASSETS = [
   "/brand/official-og.png?v=20260825",
 ];
 
+/** عنوان الإشعار بلا اسم التطبيق — النظام يعرض الهوية في الرأس. */
+function swNotifTitle(title) {
+  const t = typeof title === "string" ? title.trim() : "";
+  if (!t || t === "سُنّة" || t === "سنّة") return "تذكير";
+  return t;
+}
+
 self.addEventListener("install", (event) => {
   event.waitUntil(
     // Never pre-cache /, index.html, or route documents. A cached document can
@@ -544,7 +551,7 @@ self.addEventListener("message", (event) => {
             resolve();
             return;
           }
-          self.registration.showNotification(item.title || "سُنّة", {
+          self.registration.showNotification(swNotifTitle(item.title), {
             body: item.body || "",
             icon: "/logo.png?v=20260825",
             badge: "/favicon.png?v=20260825",
@@ -650,9 +657,9 @@ self.addEventListener("message", (event) => {
 self.addEventListener("push", (event) => {
   if (!event.data) return;
   let payload;
-  try { payload = event.data.json(); } catch { payload = { title: "سُنّة", body: event.data.text() }; }
+  try { payload = event.data.json(); } catch { payload = { title: "تذكير", body: event.data.text() }; }
 
-  const title = payload.title || "سُنّة";
+  const title = swNotifTitle(payload.title);
   const options = {
     body: payload.body || "",
     icon: "/logo.png?v=20260825",

@@ -26,6 +26,10 @@ import {
   DHIKR_PHRASE_SLOTS,
   dhikrPhraseTag,
 } from "./dhikr-phrase-reminders";
+import {
+  notificationBodyWithoutBrand,
+  notificationTitleWithoutBrand,
+} from "./notifications/copy";
 
 export interface SmartNotifScheduleItem {
   id: string;
@@ -196,8 +200,8 @@ export async function pushScheduleToServiceWorker(
       const fireAt = minuteOfDayToDate(it.minuteOfDay).getTime();
       return {
         id: it.id,
-        title: it.title,
-        body: it.body,
+        title: notificationTitleWithoutBrand(it.title),
+        body: notificationBodyWithoutBrand(it.body),
         tag: it.tag,
         url: it.url || "/",
         fireAt,
