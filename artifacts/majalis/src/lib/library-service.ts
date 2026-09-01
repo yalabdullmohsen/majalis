@@ -5,10 +5,13 @@ import {
   type LibraryBook,
   type LibraryCategory,
 } from "./library-catalog";
+import { resolveLibraryProvenance } from "./library-provenance";
 
 export type LibraryItem = LibraryBook & {
   file_url?: string;
   author_name?: string;
+  source_name?: string;
+  source_url?: string;
 };
 
 export function isCatalogBookId(id: string) {
@@ -25,7 +28,19 @@ export function sortLibraryItems<T extends { sort_order?: number; title?: string
 }
 
 export function mapCatalogToItem(book: LibraryBook): LibraryItem {
-  return { ...book, author_name: book.author };
+  const prov = resolveLibraryProvenance(book);
+  return {
+    ...book,
+    author_name: book.author,
+    source_name: prov.sourceName,
+    source_url: prov.sourceUrl ?? undefined,
+    license: prov.license,
+    usageNote: prov.usageNote ?? undefined,
+    publicDomain: prov.publicDomain,
+    hostedBySsunnah: prov.hostedBySsunnah,
+    reviewed: prov.reviewed,
+    lastVerifiedAt: prov.lastVerifiedAt ?? undefined,
+  };
 }
 
 export function getLibraryCatalog(): LibraryItem[] {
