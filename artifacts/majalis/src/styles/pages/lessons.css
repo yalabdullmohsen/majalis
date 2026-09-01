@@ -488,7 +488,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
   padding: 0 0.1rem;
   font-size: 0.72rem;
   line-height: 1.5;
-  color: var(--mj-muted, #66756d);
+  color: var(--mj-ink-2, #3d5248);
   white-space: nowrap;
   overflow-x: auto;
   scrollbar-width: none;
@@ -545,7 +545,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 }
 
 .lessons-page-v3 .lessons-nearest-card__badge {
-  color: var(--mj-muted, #66756d);
+  color: var(--mj-ink-2, #3d5248);
 }
 
 .lessons-page-v3 .lessons-nearest-card__title {
@@ -580,7 +580,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
   margin: 0;
   font-size: 0.72rem;
   font-weight: 600;
-  color: var(--mj-muted, #66756d);
+  color: var(--mj-ink-2, #3d5248);
 }
 
 .lessons-page-v3 .lessons-nearest-card__facts dd {
@@ -656,7 +656,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
   margin: 0;
   font-size: 0.68rem;
   font-weight: 600;
-  color: var(--mj-muted, #66756d);
+  color: var(--mj-ink-2, #3d5248);
 }
 
 .lessons-page-v3 .lessons-upcoming-card__meta dd {
