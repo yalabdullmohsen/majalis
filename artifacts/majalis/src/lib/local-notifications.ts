@@ -15,6 +15,8 @@ export type NotifPrefs = {
   quranDailyReminder: boolean;
   /** تذكير أذكار الصباح/المساء — يُفعَّل من الإعدادات فقط (لا طلب إذن عند الإطلاق). */
   adhkarReminder: boolean;
+  /** تذكيرات صوتية بعبارات الذكر (سبحان الله، الحمد لله، …) طوال ساعات اليقظة. */
+  dhikrPhraseReminder: boolean;
   reminderHour: number;          // الساعة المفضلة للتذكير (0-23)
   reminderMinute: number;
 };
@@ -26,6 +28,7 @@ const DEFAULTS: NotifPrefs = {
   prayerReminder: false,
   quranDailyReminder: true,
   adhkarReminder: false,
+  dhikrPhraseReminder: true,
   reminderHour: 8,
   reminderMinute: 0,
 };

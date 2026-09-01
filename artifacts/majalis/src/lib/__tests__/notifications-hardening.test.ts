@@ -19,6 +19,10 @@ import {
   DEFAULT_ALERT_SOUND,
 } from "../notifications/channels";
 import { TEST_NOTIFICATION_NATIVE_ID } from "../notifications/test-trigger";
+import {
+  DHIKR_PHRASE_NATIVE_ID_BASE,
+  DHIKR_PHRASE_SLOTS,
+} from "../dhikr-phrase-reminders";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "../../..");
 
@@ -65,6 +69,8 @@ assert.ok(CHANNEL_QURAN.startsWith("majalis-"));
 assert.ok(CHANNEL_GENERAL.startsWith("majalis-"));
 assert.equal(DEFAULT_ALERT_SOUND, "default");
 assert.equal(TEST_NOTIFICATION_NATIVE_ID, 99901);
+assert.equal(DHIKR_PHRASE_NATIVE_ID_BASE, 9401);
+assert.equal(DHIKR_PHRASE_SLOTS.length, 7);
 console.log("  ✓ channel + test trigger constants");
 
 // ── Source gates: native hides web push; presentationOptions; Capacitor push wired ──
@@ -132,6 +138,15 @@ console.log("  ✓ channel + test trigger constants");
   const quranSrc = read("src/lib/quran-daily-reminder.ts");
   assert.match(quranSrc, /cancelNativeQuranReminder/, "cancel without flipping prefs");
   assert.match(quranSrc, /cancelNativeQuranReminder\(\)/, "ensure cancels when disabled");
+
+  const dhikr = read("src/lib/dhikr-phrase-reminders.ts");
+  assert.match(dhikr, /ensureDhikrPhraseRemindersScheduled/, "dhikr ensure helper");
+  assert.match(dhikr, /sound:\s*DEFAULT_ALERT_SOUND/, "dhikr sound set");
+  assert.match(dhikr, /repeats:\s*true/, "dhikr daily repeats");
+
+  const settingsDhikr = read("src/pages/account/ui/NotificationSettingsView.tsx");
+  assert.match(settingsDhikr, /تذكير الذكر/, "settings toggle for dhikr phrases");
+  assert.match(settingsDhikr, /dhikrPhraseReminder/, "prefs key wired in settings");
 
   const boot = read("src/lib/notifications/native-bootstrap.ts");
   assert.match(boot, /localNotificationActionPerformed/, "tap listener");
