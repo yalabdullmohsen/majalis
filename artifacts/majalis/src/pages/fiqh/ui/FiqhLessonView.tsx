@@ -4,14 +4,25 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
 import { Empty } from "@/components/ui-common";
-import { adjacentFiqhLessons, getFiqhLesson } from "@/lib/fiqh-books";
-import { CompactSources } from "@/components/content/CompactSources";
+import {
+  adjacentFiqhLessons,
+  getFiqhLesson,
+  getFiqhLessonAny,
+} from "@/lib/fiqh-books";
 import { ShareFaida } from "@/components/ShareFaida";
 import { cn } from "@/lib/utils";
 import {
   breadcrumbJsonLd,
   learningResourceJsonLd,
 } from "@/lib/seo-structured-data";
+import { FiqhSourceLine } from "@/components/fiqh/FiqhSourceLine";
+import { FiqhRelatedIssues } from "@/components/fiqh/FiqhRelatedIssues";
+import {
+  FIQH_STATUS_LABELS,
+  getLessonContentStatus,
+  isSeverelyIncompleteLesson,
+} from "@/lib/fiqh/fiqhNormalize";
+import { relatedFiqhIssues, fiqhDoorBackHref } from "@/lib/fiqh/fiqhRelated";
 import "@/styles/pages/fiqh-hub.css";
 
 function firstSentence(text: string): { intro: string; rest: string } {
@@ -48,19 +59,22 @@ function useReadingProgress(active: boolean): number {
 
 type SectionId =
   | "summary"
-  | "definition"
+  | "detail"
   | "evidence"
-  | "madhhab"
   | "preferred"
-  | "sources";
+  | "sources"
+  | "related";
 
 export default function FiqhLessonPage() {
   const params = useParams<{ bookId: string; lessonId: string }>();
-  const hit = getFiqhLesson(params.bookId ?? "", params.lessonId ?? "");
+  const publishedHit = getFiqhLesson(params.bookId ?? "", params.lessonId ?? "");
+  const anyHit = getFiqhLessonAny(params.bookId ?? "", params.lessonId ?? "");
+  const hit = publishedHit ?? anyHit;
   const nav = useMemo(
     () => adjacentFiqhLessons(params.bookId ?? "", params.lessonId ?? ""),
     [params.bookId, params.lessonId],
   );
+  const related = useMemo(() => (hit ? relatedFiqhIssues(hit) : []), [hit]);
   const progress = useReadingProgress(Boolean(hit));
   const [activeSection, setActiveSection] = useState<SectionId>("summary");
 
@@ -68,33 +82,38 @@ export default function FiqhLessonPage() {
 
   useEffect(() => {
     if (!hit) return;
+    const status = getLessonContentStatus(hit.lesson);
+    const severelyIncomplete = isSeverelyIncompleteLesson(hit.lesson);
     applyPageSeo({
       path: hit.href,
       title: `${hit.lesson.title} | ${hit.book.title} | سُنّة`,
       description: hit.lesson.summary.slice(0, 160),
       keywords: [hit.lesson.title, hit.chapter.title, hit.book.title, "فقه"],
-      jsonLd: [
-        learningResourceJsonLd({
-          name: hit.lesson.title,
-          description: hit.lesson.summary.slice(0, 200),
-          url: hit.href,
-          about: `${hit.book.title} — ${hit.chapter.title}`,
-          educationalLevel: hit.lesson.level,
-        }),
-        breadcrumbJsonLd([
-          { name: "الرئيسية", path: "/" },
-          { name: "الفقه", path: "/fiqh" },
-          { name: hit.book.title, path: `/fiqh/books/${hit.book.id}` },
-          { name: hit.lesson.title, path: hit.href },
-        ]),
-      ],
+      robots: severelyIncomplete ? "noindex, follow" : undefined,
+      jsonLd: severelyIncomplete
+        ? undefined
+        : [
+            learningResourceJsonLd({
+              name: hit.lesson.title,
+              description: hit.lesson.summary.slice(0, 200),
+              url: hit.href,
+              about: `${hit.book.title} — ${hit.chapter.title}`,
+              educationalLevel: hit.lesson.level,
+            }),
+            breadcrumbJsonLd([
+              { name: "الرئيسية", path: "/" },
+              { name: "الفقه", path: "/fiqh" },
+              { name: hit.book.title, path: `/fiqh/books/${hit.book.id}` },
+              { name: hit.lesson.title, path: hit.href },
+            ]),
+          ],
     });
   }, [hit]);
 
   if (!hit) {
     return (
       <div className="fiqh-lux-shell fiqh-lux-lesson page-shell" dir="rtl">
-        <Empty title="مسألة غير منشورة" text="هذه المسألة غير موجودة أو لم تُنشر بعد." />
+        <Empty title="مسألة غير موجودة" text="هذه المسألة غير مسجّلة في كتب الفقه." />
         <p className="fiqh-lux-empty">
           <Link href="/fiqh">العودة إلى الفقه</Link>
         </p>
@@ -103,16 +122,17 @@ export default function FiqhLessonPage() {
   }
 
   const { book, chapter, lesson } = hit;
+  const contentStatus = getLessonContentStatus(lesson);
   const { intro, rest } = firstSentence(lesson.summary);
-  const definition = rest || intro;
+  const detail = rest || (lesson.madhhabNotes ?? "");
 
   const sections: Array<{ id: SectionId; label: string; show: boolean }> = [
-    { id: "summary", label: "ملخص سريع", show: true },
-    { id: "definition", label: "التعريف", show: Boolean(rest) },
-    { id: "evidence", label: "الأدلة", show: true },
-    { id: "madhhab", label: "أقوال أهل العلم", show: Boolean(lesson.madhhabNotes) },
-    { id: "preferred", label: "الراجح بدليله", show: true },
-    { id: "sources", label: "المصادر", show: lesson.sources.length > 0 },
+    { id: "summary", label: "خلاصة", show: Boolean(intro) },
+    { id: "detail", label: "التفصيل", show: Boolean(detail) },
+    { id: "evidence", label: "الدليل", show: Boolean(lesson.evidence?.trim()) },
+    { id: "preferred", label: "الراجح", show: Boolean(lesson.preferred?.trim()) },
+    { id: "sources", label: "المصدر", show: true },
+    { id: "related", label: "مسائل مرتبطة", show: related.length > 0 },
   ];
 
   const scrollToSection = (id: SectionId) => {
@@ -146,8 +166,21 @@ export default function FiqhLessonPage() {
       <header className="fiqh-lux-lesson-hero">
         <p className="fiqh-lux-lesson-hero__chapter">{chapter.title}</p>
         <h1 className="fiqh-lux-lesson-hero__title">{lesson.title}</h1>
-        <p className="fiqh-lux-lesson-hero__level">{lesson.level}</p>
+        <div className="fiqh-lesson-hero__badges">
+          <span className="fiqh-lux-lesson-hero__level">{lesson.level}</span>
+          {contentStatus !== "complete" ? (
+            <span className={cn("fiqh-status-badge", `fiqh-status-badge--${contentStatus === "needs_completion" ? "needs" : "review"}`)}>
+              {FIQH_STATUS_LABELS[contentStatus]}
+            </span>
+          ) : null}
+        </div>
       </header>
+
+      {contentStatus !== "complete" ? (
+        <aside className="fiqh-lesson-alert" role="note">
+          هذه المسألة {FIQH_STATUS_LABELS[contentStatus].toLowerCase()}؛ لا يُعرض ما يلي كحكم نهائي بلا مصدر مكتمل.
+        </aside>
+      ) : null}
 
       <details className="fiqh-lesson-toc fiqh-lux-toc">
         <summary>فهرس الباب</summary>
@@ -180,39 +213,38 @@ export default function FiqhLessonPage() {
       </nav>
 
       <div className="fiqh-lux-sections">
-        <section id="fiqh-sec-summary" className="fiqh-lux-section">
-          <h2>ملخص سريع</h2>
-          <p>{intro}</p>
-        </section>
-        {rest ? (
-          <section id="fiqh-sec-definition" className="fiqh-lux-section">
-            <h2>التعريف</h2>
-            <p>{definition}</p>
+        {intro ? (
+          <section id="fiqh-sec-summary" className="fiqh-lux-section">
+            <h2>خلاصة مختصرة</h2>
+            <p>{intro}</p>
           </section>
         ) : null}
-        <section id="fiqh-sec-evidence" className="fiqh-lux-section">
-          <h2>الأدلة</h2>
-          <p>{lesson.evidence}</p>
-        </section>
-        {lesson.madhhabNotes ? (
-          <section id="fiqh-sec-madhhab" className="fiqh-lux-section">
-            <h2>أقوال أهل العلم</h2>
-            <p>{lesson.madhhabNotes}</p>
+        {detail ? (
+          <section id="fiqh-sec-detail" className="fiqh-lux-section">
+            <h2>التفصيل</h2>
+            <p>{detail}</p>
           </section>
         ) : null}
-        <section id="fiqh-sec-preferred" className="fiqh-lux-section">
-          <h2>الراجح بدليله</h2>
-          <p>{lesson.preferred}</p>
-        </section>
+        {lesson.evidence?.trim() ? (
+          <section id="fiqh-sec-evidence" className="fiqh-lux-section">
+            <h2>الدليل</h2>
+            <p>{lesson.evidence}</p>
+          </section>
+        ) : null}
+        {lesson.preferred?.trim() ? (
+          <section id="fiqh-sec-preferred" className="fiqh-lux-section">
+            <h2>الراجح</h2>
+            <p>{lesson.preferred}</p>
+          </section>
+        ) : null}
         <div id="fiqh-sec-sources">
-          <CompactSources
-            className="fiqh-lux-sources"
-            items={lesson.sources.map((s) => ({
-              summary: `${s.book} — ${s.ref}`,
-              detail: `${s.book} — ${s.author} — ${s.ref}`,
-            }))}
-          />
+          <FiqhSourceLine sources={lesson.sources} status={contentStatus} />
         </div>
+        {related.length > 0 ? (
+          <div id="fiqh-sec-related">
+            <FiqhRelatedIssues issues={related} className="fiqh-related" />
+          </div>
+        ) : null}
       </div>
 
       <ShareFaida title={lesson.title} url={hit.href} />
@@ -243,7 +275,9 @@ export default function FiqhLessonPage() {
       </nav>
 
       <p className="fiqh-lux-back">
-        <Link href={`/fiqh/books/${book.id}`}>العودة إلى أبواب {book.title}</Link>
+        <Link href={fiqhDoorBackHref(hit)}>العودة إلى {book.title}</Link>
+        <span aria-hidden="true"> · </span>
+        <Link href="/fiqh">بوابة الفقه</Link>
       </p>
       <div className="fiqh-fab-clearance" />
     </article>
