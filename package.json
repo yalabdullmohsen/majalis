@@ -42,6 +42,7 @@
     "test:auto-maintenance": "node --test scripts/auto-maintenance/__tests__/policy.test.mjs",
     "cap:sync:ios": "cap sync ios",
     "audit:public-site": "pnpm --filter @workspace/majalis run audit:public-site",
+    "audit:fiqh": "pnpm --filter @workspace/majalis run audit:fiqh",
     "audit:feature-readiness": "pnpm --filter @workspace/majalis run audit:feature-readiness",
     "audit:mobile-app": "pnpm --filter @workspace/majalis run audit:mobile-app",
     "audit:product-upgrade": "pnpm --filter @workspace/majalis run audit:product-upgrade",
