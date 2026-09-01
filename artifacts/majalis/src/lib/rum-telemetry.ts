@@ -14,7 +14,7 @@ export const RUM_INP_ALERT_MS = 200;
 export const RUM_CLS_ALERT = 0.1;
 export const RUM_TTFB_ALERT_MS = 800;
 
-export type RumMetricName = "LCP" | "INP" | "CLS" | "TTFB" | "FCP";
+export type RumMetricName = "LCP" | "INP" | "CLS" | "TTFB" | "FCP" | "LONG_TASK" | "ROUTE";
 
 export type RumMetric = {
   name: RumMetricName;
@@ -49,6 +49,16 @@ function ratingFor(name: RumMetricName, value: number): RumMetric["rating"] {
     if (value <= 3000) return "needs-improvement";
     return "poor";
   }
+  if (name === "LONG_TASK") {
+    if (value <= 50) return "good";
+    if (value <= 100) return "needs-improvement";
+    return "poor";
+  }
+  if (name === "ROUTE") {
+    if (value <= 300) return "good";
+    if (value <= 800) return "needs-improvement";
+    return "poor";
+  }
   // TTFB
   if (value <= 800) return "good";
   if (value <= 1800) return "needs-improvement";
@@ -60,6 +70,8 @@ function isAlert(name: RumMetricName, value: number): boolean {
   if (name === "INP") return value > RUM_INP_ALERT_MS;
   if (name === "CLS") return value > RUM_CLS_ALERT;
   if (name === "FCP") return value > 1800;
+  if (name === "LONG_TASK") return value > 100;
+  if (name === "ROUTE") return value > 800;
   return value > RUM_TTFB_ALERT_MS;
 }
 
@@ -201,6 +213,46 @@ function observeFcp(onReport: MetricHandler): () => void {
   }
 }
 
+function observeLongTasks(onReport: MetricHandler): () => void {
+  if (typeof PerformanceObserver === "undefined") return () => undefined;
+  try {
+    const po = new PerformanceObserver((list) => {
+      for (const entry of list.getEntries() as Array<PerformanceEntry & { duration: number }>) {
+        if (entry.duration >= 50) emit("LONG_TASK", entry.duration, onReport);
+      }
+    });
+    po.observe({ type: "longtask", buffered: true });
+    return () => {
+      try {
+        po.disconnect();
+      } catch {
+        /* ignore */
+      }
+    };
+  } catch {
+    return () => undefined;
+  }
+}
+
+function observeRouteTransitions(onReport: MetricHandler): () => void {
+  if (typeof window === "undefined") return () => undefined;
+  const onRoute = (e: Event) => {
+    const detail = (e as CustomEvent<{ path?: string; ms?: number }>).detail;
+    if (!detail?.ms || detail.ms <= 0) return;
+    const metric: RumMetric = {
+      name: "ROUTE",
+      value: detail.ms,
+      rating: ratingFor("ROUTE", detail.ms),
+      id: metricId("ROUTE"),
+      route: detail.path ?? window.location.pathname,
+      alert: isAlert("ROUTE", detail.ms),
+    };
+    onReport(metric);
+  };
+  window.addEventListener("majalis:route-transition", onRoute);
+  return () => window.removeEventListener("majalis:route-transition", onRoute);
+}
+
 async function postRum(metric: RumMetric): Promise<void> {
   const { commitHash, buildVersion } = getBuildMetadata();
   const payload = {
@@ -252,6 +304,8 @@ export function initRumTelemetry(): void {
   cleanups.push(observeCls(onReport));
   cleanups.push(observeInp(onReport));
   cleanups.push(observeFcp(onReport));
+  cleanups.push(observeLongTasks(onReport));
+  cleanups.push(observeRouteTransitions(onReport));
   observeTtfb(onReport);
 }
 
