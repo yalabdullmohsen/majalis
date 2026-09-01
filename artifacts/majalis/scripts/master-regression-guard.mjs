@@ -213,6 +213,22 @@ if (existsSync(sitemapPath)) {
 }
 
 runNode("scripts/check-seo-indexing.js", "check-seo-indexing");
+runNode("scripts/check-editorial-safety.js", "check-editorial-safety");
+runNode("scripts/check-pwa.js", "check-pwa");
+
+if (existsSync(resolve(root, "public/data/search/index.json"))) {
+  runNode("scripts/check-search-quality.js", "check-search-quality");
+}
+
+if (existsSync(resolve(root, "performance-budget.json"))) {
+  /* presence gate — full gzip check runs post-build via check:performance-budget */
+} else {
+  fail("high", "performance-budget.json مفقود");
+}
+
+if (!appRoutes.includes('path="/internal/status"')) {
+  fail("high", "AppRoutes: /internal/status غير مسجّل");
+}
 
 // ── تقرير ───────────────────────────────────────────────────────────────────
 console.log(`\n📊 master-regression-guard`);

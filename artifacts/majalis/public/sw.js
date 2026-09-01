@@ -59,7 +59,6 @@ const STATIC_SHELL_ASSETS = [
   "/icon-512.png",
   "/brand/icon-512-maskable.png",
   "/star-pattern.svg",
-  "/brand/official-og.png?v=20260825",
 ];
 
 /** عنوان الإشعار بلا اسم التطبيق — النظام يعرض الهوية في الرأس. */

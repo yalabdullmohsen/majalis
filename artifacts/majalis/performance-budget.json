@@ -1,0 +1,24 @@
+{
+  "$comment": "ميزانيات الأداء — CI يفشل عند تجاوزها بشكل كبير. LHCI يقرأ العتبات عبر scripts/check-performance-budget.mjs",
+  "assets": {
+    "jsInitialGzipKb": 250,
+    "cssInitialGzipKb": 80
+  },
+  "webVitals": {
+    "lcpMs": 2500,
+    "fcpMs": 1800,
+    "cls": 0.05,
+    "tbtMs": 100,
+    "inpMs": 200,
+    "ttfbMs": 800
+  },
+  "lighthouse": {
+    "mobile": {
+      "performanceMin": 95,
+      "accessibilityMin": 100,
+      "seoMin": 100,
+      "bestPracticesMin": 100
+    }
+  },
+  "regressionMargin": 0.1
+}
