@@ -34,7 +34,6 @@ export function organizationJsonLd() {
     description:
       "منصة علمية عربية تجمع الدروس الشرعية والدورات والقرآن والأذكار والفوائد في مكان واحد.",
     inLanguage: "ar",
-    sameAs: ["https://www.instagram.com/Majlisalilm"],
   };
 }
 

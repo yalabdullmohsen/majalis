@@ -288,17 +288,11 @@ app.get("/api/user/citations",              runHandler(citationsHandler, "citati
 app.post("/api/user/citations/folders",     express.json({ limit: "4kb" }), runHandler(citationsHandler, "citations-folders"));
 app.post("/api/user/citations/export",      express.json({ limit: "8kb" }), runHandler(citationsHandler, "citations-export"));
 
-const processStartedAt = Date.now();
-
 app.get("/api/healthz", (_req, res) => {
-  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Cache-Control", "public, max-age=0, s-maxage=60, stale-while-revalidate=300");
   res.json({
     ok: true,
-    service: "majalis-web",
-    at: new Date().toISOString(),
-    uptimeMs: Date.now() - processStartedAt,
-    commit: process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT || null,
-    buildId: process.env.VERCEL_DEPLOYMENT_ID || process.env.BUILD_ID || null,
+    service: "ssunnah-web",
   });
 });
 

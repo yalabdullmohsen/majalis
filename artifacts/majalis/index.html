@@ -134,7 +134,7 @@
     <!-- فحص نسخة مبكر: يجهّز المسح بهدوء — بلا reload أثناء أول إطار -->
     <script id="mj-version-boot">
       (function () {
-        var FLAG = "majlisilm-refreshing-version";
+        var FLAG = "ssunnah-refreshing-version";
         if (navigator.webdriver) return;
         if (location.hostname === "127.0.0.1" || location.hostname === "localhost") return;
         try {
@@ -186,7 +186,10 @@
                   keys.map(function (k) {
                     if (
                       /intro|onboard|welcome|splash|boot-guide|first-?launch|first-?run/i.test(k) ||
-                      (k.indexOf("majlisilm-v") === 0 && k.indexOf(live) < 0)
+                      (k.indexOf("ssunnah-v") === 0 && k.indexOf(live) < 0) ||
+                      k.indexOf("majlisilm-v") === 0 ||
+                      k.indexOf("majlisilm-startup-") === 0 ||
+                      k === "majlisilm-version"
                     ) {
                       return caches.delete(k);
                     }
@@ -442,8 +445,7 @@
             },
             "image": "https://www.ssunnah.com/brand/official-og.png?v=20260829",
             "description": "تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة.",
-            "inLanguage": "ar",
-            "sameAs": ["https://www.instagram.com/Majlisalilm"]
+            "inLanguage": "ar"
           },
           {
             "@type": "WebSite",

@@ -20,7 +20,7 @@ const vercel = read("vercel.json");
 
 assert.match(html, /v11-startup-stable-2026-08/);
 assert.match(html, /id="mj-version-boot"/);
-assert.match(html, /majlisilm-refreshing-version/);
+assert.match(html, /ssunnah-refreshing-version/);
 assert.match(html, /version\.json\?t=/);
 assert.match(html, /cache:\s*"no-store"/);
 assert.match(html, /classList\.add\("light"/);
@@ -43,7 +43,7 @@ assert.match(settings, /refreshAppAndPurgeCaches/);
 
 assert.match(versionHook, /purgeStaleRuntimeCaches/);
 assert.match(versionHook, /SKIP_WAITING/);
-assert.match(versionHook, /majlisilm-refreshing-version/);
+assert.match(versionHook, /ssunnah-refreshing-version/);
 assert.match(versionHook, /setTimeout\(\(\) => \{\s*void check\(\);\s*\}, 0\)/);
 assert.doesNotMatch(versionHook, /2_500/, "لا تأخير 2.5s قبل فحص النسخة");
 assert.match(purge, /refreshAppAndPurgeCaches/);

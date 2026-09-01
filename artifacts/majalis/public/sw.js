@@ -22,10 +22,13 @@ try {
   // /sw-version.js missing or failed to load — keep the fallback above.
 }
 
-const OFFLINE_CACHE = `majlisilm-v${SW_BUILD_ID}-offline`;
-const DATA_CACHE    = `majlisilm-v${SW_BUILD_ID}-data`;
-const CACHE_PREFIX  = `majlisilm-v${SW_BUILD_ID}`;
-const VERSION_CACHE = "majlisilm-version";
+const OFFLINE_CACHE = `ssunnah-v${SW_BUILD_ID}-offline`;
+const DATA_CACHE    = `ssunnah-v${SW_BUILD_ID}-data`;
+const CACHE_PREFIX  = `ssunnah-v${SW_BUILD_ID}`;
+const VERSION_CACHE = "ssunnah-version";
+/** بقايا العلامة القديمة — تُحذف عند activate ولا تُستخدم في كاش جديد */
+const LEGACY_CACHE_PREFIXES = ["majlisilm-v", "majlisilm-startup-"];
+const LEGACY_CACHE_EXACT = ["majlisilm-version"];
 const FETCH_TIMEOUT = 8000;
 
 // External API routes served cache-first (Quran API data, prayer times)
@@ -84,15 +87,17 @@ self.addEventListener("activate", (event) => {
       const prev = await verCache.match("/sw-version");
       const prevVersion = prev ? await prev.text() : null;
       const keys = await caches.keys();
+      const isLegacyCacheKey = (k) =>
+        k === "majalis-version" ||
+        k === "majalis-audio-v1" ||
+        k.startsWith("majalis-offline-") ||
+        k.startsWith("majalis-data-") ||
+        LEGACY_CACHE_EXACT.includes(k) ||
+        LEGACY_CACHE_PREFIXES.some((p) => k.startsWith(p)) ||
+        /intro|onboard|welcome|splash|boot-guide|first-?launch|first-?run/i.test(k);
+
       const hasLegacy = keys.some(
-        (k) =>
-          k === "majalis-version" ||
-          k === "majalis-audio-v1" ||
-          k.startsWith("majalis-offline-") ||
-          k.startsWith("majalis-data-") ||
-          k.startsWith("majlisilm-startup-") ||
-          /intro|onboard|welcome|splash|boot-guide|first-?launch|first-?run/i.test(k) ||
-          (k.startsWith("majlisilm-v") && !k.startsWith(CACHE_PREFIX)),
+        (k) => isLegacyCacheKey(k) || (k.startsWith("ssunnah-v") && !k.startsWith(CACHE_PREFIX)),
       );
       const isUpdate =
         (prevVersion !== null && prevVersion !== SW_BUILD_ID) || hasLegacy;
@@ -505,7 +510,13 @@ self.addEventListener("message", (event) => {
           const keys = await caches.keys();
           await Promise.all(
             keys
-              .filter((k) => k.startsWith("majlisilm-v") || k.startsWith("majalis-offline-") || k === OFFLINE_CACHE)
+              .filter(
+                (k) =>
+                  k.startsWith("ssunnah-v") ||
+                  LEGACY_CACHE_PREFIXES.some((p) => k.startsWith(p)) ||
+                  k.startsWith("majalis-offline-") ||
+                  k === OFFLINE_CACHE,
+              )
               .map((k) => caches.delete(k)),
           );
         } catch (_) {

@@ -579,7 +579,7 @@ async function main() {
           try {
             localStorage.setItem("theme", "dark");
             localStorage.setItem("mj-theme", "dark");
-            localStorage.setItem("majlisilm.theme", "dark");
+            localStorage.setItem("majalis-theme", "dark");
           } catch { /* ignore */ }
           document.documentElement.dataset.theme = "dark";
           document.documentElement.classList.add("dark");

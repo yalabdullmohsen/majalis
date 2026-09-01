@@ -90,8 +90,9 @@ function mockRes() {
   assert.equal(res.state.statusCode, 200);
   const body = JSON.parse(res.state.body);
   assert.equal(body.ok, true);
-  assert.equal(body.service, "majlisilm-web");
-  assert.equal(typeof body.uptimeMs, "number");
+  assert.equal(body.service, "ssunnah-web");
+  assert.equal(body.at, undefined);
+  assert.equal(body.commit, undefined);
 }
 
 {
