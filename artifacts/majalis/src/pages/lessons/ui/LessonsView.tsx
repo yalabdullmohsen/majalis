@@ -18,6 +18,14 @@ import {
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
+import {
+  LessonFilters,
+  DEFAULT_LESSON_QUICK_FILTERS,
+  applyLessonQuickFilters,
+  type LessonQuickFilters,
+} from "@/components/lessons/LessonFilters";
+import { LessonScheduleGroup } from "@/components/lessons/LessonScheduleGroup";
+import { groupLessonsForSchedule } from "@/lib/lessons/lessonGrouping";
 import { computeNextOccurrenceMs } from "@/lib/lesson-time";
 import { supabase } from "@/lib/supabase";
 import { safeLocationReload } from "@/lib/safe-reload";
@@ -229,6 +237,7 @@ export default function LessonsPage({
   });
   const [searchDraft, setSearchDraft] = useState(() => filters.search);
   const debouncedSearch = useDebouncedValue(searchDraft, 250);
+  const [quickFilters, setQuickFilters] = useState<LessonQuickFilters>(DEFAULT_LESSON_QUICK_FILTERS);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [myReg, setMyReg] = useState<string[]>([]);
   const [tab, setTab] = useTabFromUrl();
@@ -320,6 +329,11 @@ export default function LessonsPage({
     [tabLessons, filters],
   );
 
+  const quickFiltered = useMemo(
+    () => applyLessonQuickFilters(filtered, quickFilters),
+    [filtered, quickFilters],
+  );
+
   const featuredSections = useMemo(() => {
     const pool = filterFeaturedHomeLessons(tabLessons);
     const sorted = sortKuwaitLessons(pool);
@@ -356,8 +370,13 @@ export default function LessonsPage({
   }, [featuredSections, showFeatured]);
 
   const mainList = useMemo(
-    () => filtered.filter((l) => !featuredIds.has(l.id)),
-    [filtered, featuredIds],
+    () => quickFiltered.filter((l) => !featuredIds.has(l.id)),
+    [quickFiltered, featuredIds],
+  );
+
+  const scheduleEntries = useMemo(
+    () => groupLessonsForSchedule(mainList),
+    [mainList],
   );
 
   const setFilter = <K extends keyof KuwaitLessonFilters>(key: K, value: KuwaitLessonFilters[K]) => {
@@ -373,6 +392,7 @@ export default function LessonsPage({
   const clearAllFilters = useCallback(() => {
     setSearchDraft("");
     setFilters(DEFAULT_KUWAIT_FILTERS);
+    setQuickFilters(DEFAULT_LESSON_QUICK_FILTERS);
   }, []);
 
   const activeFilterCount = useMemo(() => countActiveFacetFilters(filters), [filters]);
@@ -565,7 +585,7 @@ export default function LessonsPage({
           <ActiveFilters
             items={activeFilterItems}
             onClearAll={clearAllFilters}
-            resultCount={activeFilterCount > 0 && !loading ? filtered.length : null}
+            resultCount={activeFilterCount > 0 && !loading ? quickFiltered.length : null}
           />
         </div>
       }
@@ -580,7 +600,7 @@ export default function LessonsPage({
           <PageLoadingGuard
             loading={loading}
             error={null}
-            empty={!loading && filtered.length === 0}
+            empty={!loading && quickFiltered.length === 0}
             emptyText="لا توجد دروس مطابقة للتصفية الحالية. جرّب مسح الفلاتر أو تصفّح الأرشيف."
             onRetry={() => safeLocationReload()}
           >
@@ -610,6 +630,25 @@ export default function LessonsPage({
                     </section>
                   )}
 
+                  <LessonFilters
+                    lessons={tabLessons}
+                    filters={quickFilters}
+                    onChange={setQuickFilters}
+                    searchSlot={
+                      <label className="lesson-filters__search-field">
+                        <span className="visually-hidden">بحث في الدروس</span>
+                        <input
+                          type="search"
+                          value={searchDraft}
+                          onChange={(e) => setSearchDraft(e.target.value)}
+                          placeholder="بحث في العنوان، الشيخ، المكان، التصنيف…"
+                          dir="rtl"
+                          enterKeyHint="search"
+                        />
+                      </label>
+                    }
+                  />
+
                   <section className="lessons-v2-section">
                     <h2 className="lessons-v2-section__title">
                       {tab === "courses"
@@ -620,10 +659,10 @@ export default function LessonsPage({
                             ? "دروس رجالية"
                             : "كل الدروس"}
                     </h2>
-                    {mainList.length === 0 ? (
+                    {scheduleEntries.length === 0 ? (
                       <Empty text="لا توجد دروس مطابقة — جرّب مسح الفلاتر أو توسيع البحث." />
                     ) : (
-                      renderGrid(mainList)
+                      <LessonScheduleGroup entries={scheduleEntries} />
                     )}
                   </section>
 
