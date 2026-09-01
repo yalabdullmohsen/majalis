@@ -1,0 +1,92 @@
+{
+  "generatedAt": "2026-09-01T20:49:00.805Z",
+  "product": "سُنّة",
+  "counts": {
+    "critical": 0,
+    "high": 0,
+    "medium": 2,
+    "low": 0
+  },
+  "reciters": [
+    {
+      "id": "husary",
+      "name": "محمود خليل الحصري",
+      "url": "https://everyayah.com/data/Husary_128kbps/001001.mp3",
+      "verified": true,
+      "visibleToUser": true,
+      "filesPresent": 6236,
+      "playbackErrors": [],
+      "iosSupport": true,
+      "issue": null,
+      "severity": "none",
+      "fix": null
+    },
+    {
+      "id": "minshawi",
+      "name": "محمد صديق المنشاوي",
+      "url": "https://everyayah.com/data/Minshawy_Murattal_128kbps/001001.mp3",
+      "verified": true,
+      "visibleToUser": true,
+      "filesPresent": 6236,
+      "playbackErrors": [],
+      "iosSupport": true,
+      "issue": null,
+      "severity": "none",
+      "fix": null
+    },
+    {
+      "id": "alafasy",
+      "name": "مشاري راشد العفاسي",
+      "url": "https://everyayah.com/data/Alafasy_128kbps/001001.mp3",
+      "verified": true,
+      "visibleToUser": true,
+      "filesPresent": 6236,
+      "playbackErrors": [],
+      "iosSupport": true,
+      "issue": null,
+      "severity": "none",
+      "fix": null
+    },
+    {
+      "id": "dosari",
+      "name": "ياسر الدوسري",
+      "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/001001.mp3",
+      "verified": true,
+      "visibleToUser": true,
+      "filesPresent": 6236,
+      "playbackErrors": [],
+      "iosSupport": true,
+      "issue": null,
+      "severity": "none",
+      "fix": null
+    },
+    {
+      "id": "shuraim",
+      "name": "سعود الشريم",
+      "url": "https://everyayah.com/data/Saood_ash-Shuraym_128kbps/001001.mp3",
+      "verified": true,
+      "visibleToUser": true,
+      "filesPresent": 6236,
+      "playbackErrors": [],
+      "iosSupport": true,
+      "issue": null,
+      "severity": "none",
+      "fix": null
+    }
+  ],
+  "findings": [
+    {
+      "severity": "medium",
+      "id": "typography-mushaf-reader.css",
+      "message": "تغييرات خط محتملة في mushaf-reader.css",
+      "fix": "لا تغيّر font-size/line-height للمصحف أو التفسير"
+    },
+    {
+      "severity": "medium",
+      "id": "typography-mushaf-madinah.css",
+      "message": "تغييرات خط محتملة في mushaf-madinah.css",
+      "fix": "لا تغيّر font-size/line-height للمصحف أو التفسير"
+    }
+  ],
+  "passed": true
+}
