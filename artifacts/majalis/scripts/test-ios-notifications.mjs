@@ -32,6 +32,7 @@ const required = [
   "src/lib/prayer-notification-copy.ts",
   "src/lib/prayer-notification-sounds.ts",
   "src/lib/quran-daily-reminder.ts",
+  "src/lib/dhikr-phrase-reminders.ts",
   "src/lib/local-notifications.ts",
   "src/lib/push-notifications.ts",
   "src/lib/pushNotifications.ts",
@@ -114,6 +115,15 @@ const quran = read("src/lib/quran-daily-reminder.ts");
 ok(quran.includes("ensureQuranDailyReminderScheduled"), "ensureQuranDailyReminderScheduled");
 ok(quran.includes("QURAN_DAILY_REMINDER_HOUR = 17"), "daily Quran at 17:00");
 
+const dhikr = read("src/lib/dhikr-phrase-reminders.ts");
+ok(dhikr.includes("ensureDhikrPhraseRemindersScheduled"), "ensureDhikrPhraseRemindersScheduled");
+ok(dhikr.includes("DEFAULT_ALERT_SOUND"), "dhikr uses audible default sound");
+ok(dhikr.includes("سبحان الله"), "dhikr includes سبحان الله");
+ok(dhikr.includes("الحمد لله"), "dhikr includes الحمد لله");
+
+ok(settings.includes("تذكير الذكر"), "settings has dhikr phrase toggle");
+ok(settings.includes("dhikrPhraseReminder"), "settings wires dhikrPhraseReminder");
+
 const scheduler = read("src/lib/prayer-alert-scheduler.ts");
 ok(scheduler.includes("buildPrayerScheduleSignature"), "schedule signature");
 ok(scheduler.includes("invalidatePrayerNativeSchedule"), "invalidate helper");
@@ -132,6 +142,7 @@ ok(quranSrc.includes("cancelNativeQuranReminder"), "cancelNativeQuranReminder ex
 const boot = read("src/lib/notifications/native-bootstrap.ts");
 ok(boot.includes("localNotificationActionPerformed"), "notification tap deep-link listener");
 ok(boot.includes("maybeRegisterRemotePush"), "APNs/remote push hook on boot");
+ok(boot.includes("ensureDhikrPhraseRemindersScheduled"), "boot schedules dhikr phrases");
 
 const apns = read("src/lib/notifications/apns-scaffold.ts");
 ok(apns.includes("REMOTE_PUSH_ENABLED"), "REMOTE_PUSH_ENABLED export");
@@ -154,6 +165,7 @@ ok(main.includes("if (!isNative)"), "SW registration skipped on native");
 console.log("\n--- unit suite ---\n");
 for (const unitFile of [
   "src/lib/__tests__/notifications-hardening.test.ts",
+  "src/lib/__tests__/dhikr-phrase-reminders.test.ts",
   "src/lib/__tests__/prayer-notification-copy-sounds.test.ts",
   "src/lib/__tests__/prayer-notif-timing.test.ts",
 ]) {

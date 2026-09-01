@@ -85,6 +85,8 @@ export async function bootstrapNativeNotifications(): Promise<void> {
       }
     }
     await ensureQuranDailyReminderScheduled();
+    const { ensureDhikrPhraseRemindersScheduled } = await import("@/lib/dhikr-phrase-reminders");
+    await ensureDhikrPhraseRemindersScheduled();
   } catch (e) {
     console.warn("[notifications] bootstrap failed", e);
   }

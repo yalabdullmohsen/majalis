@@ -70,7 +70,9 @@ const notifView = read("src/pages/account/ui/NotificationSettingsView.tsx");
 assertMatch(notifView, /تنبيهات الصلاة/, "إعداد تنبيهات الصلاة");
 assertMatch(notifView, /ورد اليوم/, "إعداد ورد اليوم");
 assertMatch(notifView, /تذكير الأذكار/, "إعداد تذكير الأذكار");
+assertMatch(notifView, /تذكير الذكر/, "إعداد تذكير الذكر الصوتي");
 assertMatch(read("src/lib/local-notifications.ts"), /adhkarReminder/, "تفضيل adhkarReminder");
+assertMatch(read("src/lib/local-notifications.ts"), /dhikrPhraseReminder/, "تفضيل dhikrPhraseReminder");
 
 // 6) تخزين التقدّم المحلي + Preferences adapter
 assertMatch(read("src/lib/native-storage.ts"), /hydrateNativeStorage/, "hydrateNativeStorage");

@@ -552,6 +552,7 @@ self.addEventListener("message", (event) => {
             lang: "ar",
             tag,
             renotify: true,
+            silent: false,
             data: { url: item.url || "/" },
           }).then(resolve).catch(resolve);
         }, Math.min(item.delayMs, 86_400_000));

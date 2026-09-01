@@ -114,12 +114,17 @@ console.log("\n=== 4. Smart local schedule ===");
       resumeReminder: true,
       prayerReminder: true,
       quranDailyReminder: true,
+      adhkarReminder: true,
+      dhikrPhraseReminder: true,
       reminderHour: 8,
       reminderMinute: 0,
     }),
   );
   const items = buildDailySmartSchedule({ khatmahBehind: true });
   assert(items.some((i) => i.kind === "adhkar"), "schedules adhkar");
+  assert(items.some((i) => i.kind === "dhikr"), "schedules dhikr phrases");
+  assert(items.filter((i) => i.kind === "dhikr").length === 7, "seven dhikr phrases");
+  assert(items.some((i) => i.title === "الحمد لله"), "includes alhamdulillah");
   assert(items.some((i) => i.kind === "prayer"), "schedules prayer");
   assert(items.some((i) => i.kind === "quran"), "schedules quran daily reminder");
   assert(items.some((i) => i.kind === "khatmah"), "schedules khatmah when behind");

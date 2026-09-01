@@ -298,7 +298,7 @@ export default function NotificationSettingsPage() {
         <section className="notif-card" aria-label="إشعارات التطبيق">
           <h2 className="notif-card__title">إشعارات التطبيق</h2>
           <p className="notif-row__sub">
-            على iOS تُستخدم الإشعارات المحلية لأوقات الصلاة وورد القرآن اليومي (٥ مساءً).
+            على iOS تُستخدم الإشعارات المحلية لأوقات الصلاة وورد القرآن اليومي (٥ مساءً) وتذكير الذكر الصوتي.
             إشعارات الويب (Web Push) معطّلة هنا عمداً لتفادي التعارض.
           </p>
         </section>
@@ -368,6 +368,13 @@ export default function NotificationSettingsPage() {
               setPrefs(loadNotifPrefs());
             })();
           }}
+          disabled={!canToggle}
+        />
+        <ToggleRow
+          label="تذكير الذكر"
+          sub="سبحان الله، الحمد لله، الله أكبر… إشعار صوتي كل ساعتين من 8 صباحًا حتى 8 مساءً"
+          checked={prefs.dhikrPhraseReminder}
+          onChange={v => update({ dhikrPhraseReminder: v })}
           disabled={!canToggle}
         />
         <ToggleRow
