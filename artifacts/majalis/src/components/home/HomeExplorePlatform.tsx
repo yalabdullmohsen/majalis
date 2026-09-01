@@ -36,7 +36,7 @@ export function HomeExplorePlatform() {
       </div>
 
       <div className="hp-explore__footer">
-        <Link href="/more" className="hp-explore__sitemap">
+        <Link href="/sections" className="hp-explore__sitemap">
           المزيد من العلوم ←
         </Link>
       </div>

@@ -152,11 +152,6 @@
     <priority>0.78</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/assistant</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
@@ -207,24 +202,9 @@
     <priority>0.86</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/fiqh-council/compare</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/fiqh-council/categories</loc>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/fiqh-council/recommendations</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.83</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/fiqh-council/live</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/fiqh-council/issues</loc>
@@ -235,11 +215,6 @@
     <loc>https://www.ssunnah.com/fiqh-council/index</loc>
     <changefreq>weekly</changefreq>
     <priority>0.87</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/fiqh-council/stats</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.82</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/fiqh-council/archive</loc>
@@ -265,11 +240,6 @@
     <loc>https://www.ssunnah.com/tawhid</loc>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/knowledge-graph</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/institutions</loc>
