@@ -700,9 +700,16 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 
 html[data-theme="dark"] .lessons-page-v3 .lessons-upcoming-card__btn:not(.lessons-upcoming-card__btn--primary),
 html.dark .lessons-page-v3 .lessons-upcoming-card__btn:not(.lessons-upcoming-card__btn--primary) {
-  background: color-mix(in srgb, var(--mj-surface-2, #1a2420) 55%, white 12%);
-  color: var(--mj-ink, #e8ece9);
-  border-color: color-mix(in srgb, var(--mj-ink-2, #c5cdc8) 28%, transparent);
+  background: color-mix(in srgb, var(--mj-surface-2, #1a2420) 55%, white 12%) !important;
+  color: var(--mj-ink, #e8ece9) !important;
+  border-color: color-mix(in srgb, var(--mj-ink-2, #c5cdc8) 28%, transparent) !important;
+}
+
+html[data-theme="dark"] .lessons-page-v3 .lessons-upcoming-card__btn--primary,
+html.dark .lessons-page-v3 .lessons-upcoming-card__btn--primary {
+  background: var(--mj-brand, #1f6b56) !important;
+  color: #fff !important;
+  border-color: transparent !important;
 }
 
 html[data-theme="dark"] .lessons-page-v3 .lessons-v3-chip,
