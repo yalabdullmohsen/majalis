@@ -30,7 +30,12 @@ for (const [id, rel] of PAGES) {
   }
   assert.doesNotMatch(src, /<PageHero/, `${id}: بلا PageHero`);
   assert.doesNotMatch(src, /showBack\s*=\s*true/, `${id}: بلا زر رجوع`);
-  assert.doesNotMatch(src, /type=["']search["']/, `${id}: بلا حقل بحث محلي`);
+  if (id === "fiqh") {
+    assert.match(src, /type=["']search["']/, `${id}: بحث فقهي محلي`);
+    assert.match(src, /بحث في الفقه/, `${id}: تسمية بحث الفقه`);
+  } else {
+    assert.doesNotMatch(src, /type=["']search["']/, `${id}: بلا حقل بحث محلي`);
+  }
   assert.doesNotMatch(src, /ابحث في الأقسام/, `${id}: بلا بحث أقسام مكرر`);
 }
 
