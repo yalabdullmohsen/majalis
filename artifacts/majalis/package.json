@@ -431,6 +431,7 @@
     "generate:official-brand": "node scripts/generate-official-brand-assets.mjs",
     "audit:public-site": "node --import tsx scripts/audit-public-site.ts",
     "audit:fiqh": "node --import tsx scripts/fiqh-section-audit.mjs",
+    "audit:legacy-routes": "node --import tsx scripts/legacy-routes-redirects-audit.mjs",
     "audit:data-completeness": "node scripts/audit-data-completeness.mjs",
     "audit:seo": "node scripts/audit-seo.mjs",
     "audit:feature-readiness": "node --import tsx scripts/audit-feature-readiness.ts",

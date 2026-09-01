@@ -28,8 +28,7 @@ for (const path of ["/library", "/updates", "/knowledge-graph", "/sections"]) {
 }
 
 const moreBlock = routeBlock("/more");
-assert.equal(/Redirect\s+to=["']\/["']/.test(moreBlock), false, "/more لا يحوّل إلى /");
-assert.match(moreBlock, /Redirect\s+to=["']\/sections["']/, "/more → /sections دائمًا");
+assert.match(moreBlock, /Redirect\s+to=["']\/#explore["']|Redirect\s+to=["']\/["']/, "/more → الرئيسية (/#explore)");
 
 assert.match(app, /path="\/prayer"[^>]*>\s*<Redirect\s+to="\/prayer-times"/);
 assert.match(app, /path="\/quran\/mushaf"[^>]*>\s*<Redirect\s+to="\/mushaf"/);

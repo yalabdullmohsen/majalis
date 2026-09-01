@@ -2512,6 +2512,7 @@ for (const route of seoConfig.routes) {
   if (route.path === "/rulings") continue; // يُضاف يدويًا أدناه كإعادة توجيه
   // لا قشرة SEO عامة لمسارات الإدارة/اللوحة — middleware يرجع 404 للعامة.
   if (isPrivateSeoPath(route.path)) continue;
+  if (route.redirect) continue;
   const redirectTarget = IA_REDIRECTS[route.path];
   const baseRoute = enforceSeoPolicy(route);
   const effectiveRoute = redirectTarget

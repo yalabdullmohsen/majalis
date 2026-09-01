@@ -321,7 +321,8 @@
         "فهرس"
       ],
       "sitemap": false,
-      "redirect": "/sections"
+      "robots": "noindex, follow",
+      "redirect": "/#explore"
     },
     {
       "path": "/sections",

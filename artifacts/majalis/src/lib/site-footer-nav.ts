@@ -25,6 +25,8 @@ export const SITE_FOOTER_GROUPS: FooterGroup[] = [
       { href: "/library", label: "المكتبة" },
       { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
       { href: "/hadith", label: "الحديث وعلومه" },
+      { href: "/scholars", label: "علماء الأمة" },
+      { href: "/competitions", label: "المسابقات" },
       { href: "/adhkar", label: "الأذكار" },
       { href: "/quiz", label: "سين جيم" },
     ],
