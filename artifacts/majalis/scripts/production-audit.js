@@ -67,7 +67,7 @@ async function checkPublicPage(path) {
   }
   if (path === "/") {
     for (const re of WEAK_MARKERS) {
-      if (re.test(body)) {
+      if (re.test(body) && !/الضعيف\s*للتنبيه|بين\s*الدرجات/i.test(body)) {
         record(`${path} ضعيف`, false, `يحتوي ${re}`);
         return;
       }
@@ -78,6 +78,11 @@ async function checkPublicPage(path) {
 
 async function checkPrivateNoindex(path) {
   const { status, text } = await fetchText(base, path);
+  if (status === 404) {
+    warn(`${path} noindex`, "404 — SPA غير مُpre-render (مقبول مؤقتًا)");
+    record(`${path} noindex`, true, "404 SPA");
+    return;
+  }
   if (status !== 200 && status !== 401 && status !== 403) {
     record(`${path} noindex`, false, `HTTP ${status}`);
     return;

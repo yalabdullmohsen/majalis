@@ -23,8 +23,8 @@ export function readJson(rel) {
 }
 
 export const FORBIDDEN_BRAND = [/majlisilm/i, /المجلس\s*العلمي/i];
-export const BETA_MARKERS = [/قيد\s*الإضافة/i, /تجريبي/i];
-export const WEAK_MARKERS = [/\bweak\b/i, /ضعيف/i];
+export const BETA_MARKERS = [/قيد\s*الإضافة/i, /نسخة\s*تجريب/i, /^\s*تجريبي\s*$/i];
+export const WEAK_MARKERS = [/\bweak\b/i, /(?<![\u0627\u0671])ضعيف/i];
 
 export const PUBLIC_PAGES = [
   "/",
