@@ -96,6 +96,19 @@ function mockRes() {
 }
 
 {
+  const readyz = (await import("../api-handlers/readyz.js")).default;
+  const res = mockRes();
+  await readyz({ method: "GET", query: {} }, res);
+  assert.equal(res.state.statusCode, 200);
+  const body = JSON.parse(res.state.body);
+  assert.equal(body.status, "ok");
+  assert.equal(body.service, "ssunnah-web");
+  assert.equal(body.checks?.app_alive, true);
+  assert.equal(body.version, undefined);
+  assert.equal(body.commit, undefined);
+}
+
+{
   __resetJobMemory();
   assert.equal(isAllowedJobType("source-monitor"), true);
   assert.equal(isAllowedJobType("rm -rf"), false);
