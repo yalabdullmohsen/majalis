@@ -145,6 +145,10 @@ const { isPublicIssue, isVerifiedPublicItem } = await importSrc("src/lib/fiqh-co
 const { FIQH_COUNCIL_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-council-seed.ts");
 const { FIQH_ITEM_TYPE_LABELS } = await importSrc("src/lib/fiqh-council-types.ts");
 const { SCHOLAR_PROFILES } = await importSrc("src/data/scholars-profiles.ts");
+const { ANNUAL_COURSES_SEED } = await importSrc("src/lib/annual-courses-seed.ts");
+const ANNUAL_COURSE_SUMMARY = new Map(
+  ANNUAL_COURSES_SEED.map((c) => [c.id, c.summary || c.title]),
+);
 const {
   publishedBooks,
   FIQH_CATEGORY_LABELS,
@@ -343,10 +347,6 @@ function padDesc(text, suffix) {
   if (!t) t = pad;
   else if (t.length < META_DESC_MIN && pad && !t.includes(pad.slice(0, Math.min(18, pad.length)))) {
     t = `${t} ${pad}`;
-  }
-  if (t.length < META_DESC_MIN) {
-    const extra = `اطّلع على التفاصيل والمصادر في ${SITE_NAME}.`;
-    if (!t.includes(extra.slice(0, 20))) t = `${t} ${extra}`.trim();
   }
   return clamp(t, META_DESC_MAX);
 }
@@ -2655,7 +2655,10 @@ for (const row of PLATFORM_SEED.courses || []) {
     {
       path: `/annual-courses/${row.id}`,
       title: row.title || row.name,
-      description: padDesc(row.description || row.title || row.name, `دورة علمية شرعية من ${SITE_NAME}`),
+      description: padDesc(
+        ANNUAL_COURSE_SUMMARY.get(row.id) || row.summary || row.description || row.title || row.name,
+        `دورة علمية شرعية من ${SITE_NAME}`,
+      ),
     },
     {
       extraJsonLd: courseJsonLdScript(row),
@@ -2981,7 +2984,7 @@ for (const t of TOPICS) {
       title: t.title,
       description: padDesc(
         `${t.title} — أدلة وأحكام ودروس وكتب ذات صلة من مصادر سُنّة.`,
-        `موضوع إسلامي ضمن منصة ${SITE_NAME}`,
+        t.title,
       ),
       keywords: [t.title, "مواضيع إسلامية", "أحكام شرعية"],
       robots: "noindex, follow",
