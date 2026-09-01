@@ -18,7 +18,7 @@ assert.match(hook, /export function useAutoHideBottomNav/);
 assert.match(hook, /isHidden/);
 assert.match(hook, /showNav/);
 assert.match(hook, /hideNav/);
-assert.match(hook, /DELTA_PX\s*=\s*10/);
+assert.match(hook, /DELTA_PX\s*=\s*24/);
 assert.match(hook, /capture:\s*true/);
 assert.match(hook, /mm-ayah-bar/);
 
@@ -37,15 +37,21 @@ assert.match(app, /useAutoHideBottomNav/);
 assert.match(app, /isHidden=\{shouldHideChrome\}/);
 
 assert.deepEqual(
-  resolveShouldHideChrome({ scrollY: 80, deltaY: 12, currentlyHidden: false, forceShow: false }),
+  resolveShouldHideChrome({ scrollY: 80, deltaY: 30, currentlyHidden: false, forceShow: false }),
   { isScrollingDown: true, shouldHideChrome: true },
   "نزول فوق العتبة يخفي",
 );
 
 assert.deepEqual(
-  resolveShouldHideChrome({ scrollY: 80, deltaY: -12, currentlyHidden: true, forceShow: false }),
+  resolveShouldHideChrome({ scrollY: 80, deltaY: -30, currentlyHidden: true, forceShow: false }),
   { isScrollingDown: false, shouldHideChrome: false },
   "صعود يظهر",
+);
+
+assert.deepEqual(
+  resolveShouldHideChrome({ scrollY: 80, deltaY: 12, currentlyHidden: false, forceShow: false }),
+  { isScrollingDown: false, shouldHideChrome: false },
+  "تمرير بسيط دون العتبة لا يخفي",
 );
 
 assert.deepEqual(

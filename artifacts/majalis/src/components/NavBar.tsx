@@ -12,7 +12,8 @@ import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { getActiveTab } from "@/lib/get-active-tab";
 import { LOBBY_SEARCH_FILTER } from "@/config/section-lobby-chrome";
-import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
+import { useSharedPrayerCountdownLive } from "@/components/prayer/PrayerCountdownProvider";
+import { isTickerQuietPath } from "@/lib/ticker-quiet-paths";
 import { HeaderAdSlot } from "@/components/header/HeaderAdSlot";
 import { shouldShowHeaderAd } from "@/config/header-ad";
 import "@/styles/components/dark-emerald-menus.css";
@@ -28,7 +29,7 @@ const SideNavDrawer = lazy(() =>
 );
 
 function PrayerChipLive() {
-  const { countdown: cd } = useSharedPrayerCountdown();
+  const cd = useSharedPrayerCountdownLive();
 
   if (!cd?.next) return null;
   const inGrace = cd.sinceSeconds != null;
@@ -319,7 +320,7 @@ export default function NavBar() {
                 <Search size={17} strokeWidth={1.8} aria-hidden="true" />
               </button>
             )}
-            {!isMobile && !isImmersiveChromePath(location) && <DeferredHeaderTicker />}
+            {!isMobile && !isImmersiveChromePath(location) && !isTickerQuietPath(location) && <DeferredHeaderTicker />}
             {!isMobile && desktopAuthLinks}
 
             {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
@@ -353,7 +354,7 @@ export default function NavBar() {
         )}
 
         {/* صف مستقل تحت أزرار الهيدر — يمنع تداخل التيكر مع القائمة/البحث/الحساب */}
-        {isMobile && !isImmersiveChromePath(location) && (
+        {isMobile && !isImmersiveChromePath(location) && !isTickerQuietPath(location) && (
           <div className="navbar-ticker-row" aria-label="شريط تنبيهات ومقتطفات">
             <DeferredHeaderTicker />
           </div>

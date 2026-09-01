@@ -15,12 +15,13 @@ const finalCss = readFileSync(resolve(root, "src/styles/final-release.css"), "ut
 
 assert.match(
   chrome,
-  /\.app-shell\.app-chrome-hidden\s+\.app-top-chrome[\s\S]*?height:\s*0\s*!important/,
-  "إخفاء الكروم ينهي حجز الارتفاع (لا فراغ منتصف الشاشة)",
+  /\.app-shell\.app-chrome-hidden\s+\.app-top-chrome[\s\S]*?transform:\s*translateY\(calc\(-100%\s*-\s*4px\)\)/,
+  "إخفاء الكروم تدريجي عبر transform (لا height:0 فجائي)",
 );
 assert.match(
   chrome,
-  /\.app-shell\.app-chrome-hidden\s+\.app-top-chrome[\s\S]*?min-height:\s*0\s*!important/,
+  /\.app-shell\.app-chrome-hidden\s+\.app-top-chrome[\s\S]*?opacity:\s*0/,
+  "تلاشي تدريجي للشريط العلوي",
 );
 
 assert.match(
